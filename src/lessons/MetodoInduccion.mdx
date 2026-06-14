@@ -1,0 +1,33 @@
+import { InductionVisualizer } from '../diagrams/MetodosDemostracion/InductionVisualizer';
+import { Link } from 'wouter';
+import { ConceptLink } from '../components/ConceptLink';
+
+<div className="pt-24 pb-8 mb-8 max-w-prose mx-auto text-center">
+# Inducción Matemática
+  <p className="font-serif text-salvia italic text-2xl font-bold">
+    El efecto dominó infinito
+  </p>
+  <div className="w-24 h-1 bg-carbon/20 mx-auto mt-6" />
+</div>
+
+La Inducción Matemática es el método estrella cuando queremos demostrar que una propiedad se cumple para **todos** los números naturales ($1, 2, 3, 4, \dots$). Es imposible comprobar infinitos números a mano, por lo que usamos una metáfora mecánica muy elegante: las fichas de dominó. (Si necesitas un repaso de demostraciones básicas, revisa el <ConceptLink to="metododirecto">Método Directo</ConceptLink>).
+
+Consta de dos pasos esenciales:
+
+### 1. El Caso Base
+Demostramos que la regla funciona para el primer número (generalmente $n=1$). Es decir, comprobamos que hemos empujado la primera ficha de dominó y que, efectivamente, cae.
+
+### 2. El Paso Inductivo
+Asumimos ciegamente que la propiedad funciona para un número arbitrario $k$ (esta es la **Hipótesis Inductiva**), y demostramos lógicamente que entonces *también* tiene que funcionar para el siguiente número ($k+1$). 
+
+Si hemos demostrado que la ficha $k$ siempre empuja a la $k+1$, y en el *Caso Base* comprobamos que la ficha 1 cayó... todas las infinitas fichas del universo caerán irremediablemente en cadena. $\blacksquare$
+
+<div className="mt-16 text-center pb-24">
+  <Link href="/metodosdemostracion">
+    <a className="inline-block px-8 py-4 bg-lienzo border-2 border-carbon/20 text-carbon rounded-xl font-bold hover:bg-carbon/5 transition-all">
+      &larr; Volver al Índice
+    </a>
+  </Link>
+</div>
+
+export const Simulation = InductionVisualizer;

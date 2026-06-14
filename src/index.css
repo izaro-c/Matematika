@@ -1,0 +1,96 @@
+@import "katex/dist/katex.min.css";
+@import "tailwindcss";
+
+@theme {
+  /* Nuestra Paleta Semántica referenciando a variables CSS */
+  --color-lienzo: var(--theme-lienzo);
+  --color-carbon: var(--theme-carbon);
+  --color-salvia: var(--theme-salvia);
+  --color-terracota: var(--theme-terracota);
+  --color-pizarra: var(--theme-pizarra);
+  --color-ocre: var(--theme-ocre);
+  --color-pavo: var(--theme-pavo);
+  --color-granada: var(--theme-granada);
+  --color-musgo: var(--theme-musgo);
+}
+
+:root {
+  --theme-lienzo: #F8F6F1;
+  --theme-carbon: #333333;
+  --theme-salvia: #A2C2A2;
+  --theme-terracota: #C86446;
+  --theme-pizarra: #5D7080;
+  --theme-ocre: #c49b4f;
+  --theme-pavo: #3b5e6b;
+  --theme-granada: #8b3a3a;
+  --theme-musgo: #4a5d23;
+}
+
+.dark {
+  /* El Códice Nocturno */
+  --theme-lienzo: #151618;
+  --theme-carbon: #E8E6E1;
+  --theme-salvia: #6B8C7A;
+  --theme-terracota: #E07A5F;
+  --theme-pizarra: #8D99AE;
+  --theme-ocre: #D4A373;
+  --theme-pavo: #6C8E9E;
+  --theme-granada: #B05252;
+  --theme-musgo: #6E8842;
+}
+
+body {
+  background-color: var(--theme-lienzo);
+  color: var(--theme-carbon);
+  transition: background-color 0.5s ease, color 0.5s ease;
+}
+
+.teoria-mdx {
+  /* Tipografía Serif para la teoría (puedes usar la de tu SO por defecto por ahora) */
+  font-family: ui-serif, Georgia, Cambria, "Times New Roman", Times, serif;
+  color: var(--color-carbon);
+  line-height: 1.8;
+  /* Espaciado generoso para lectura sosegada */
+}
+
+.teoria-mdx h1,
+.demo-container h1 {
+  font-size: 2.5rem;
+  color: var(--color-terracota);
+  margin-bottom: 1.5rem;
+  line-height: 1.2;
+  font-variant: small-caps;
+}
+
+.demo-container h1 {
+  font-family: ui-serif, Georgia, Cambria, "Times New Roman", Times, serif;
+  font-size: 3.75rem;
+  /* text-6xl equivalente para los demos que son a pantalla completa */
+  text-align: center;
+}
+
+.teoria-mdx p {
+  margin-bottom: 1.2rem;
+  color: var(--color-pizarra);
+}
+
+.color-test {
+  color: #F8F6F1;
+  color: #333333;
+  color: #A2C2A2;
+  color: #C86446;
+  color: #5D7080;
+  color: #c49b4f;
+  color: #3b5e6b;
+  color: #8b3a3a;
+  color: #4a5d23;
+}
+
+@keyframes simple-fade {
+  0% { opacity: 0; }
+  100% { opacity: 1; }
+}
+
+.animate-fade-in {
+  animation: simple-fade 0.3s ease-out forwards;
+}

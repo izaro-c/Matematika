@@ -1,0 +1,34 @@
+import { ContradictionVisualizer } from '../diagrams/MetodosDemostracion/ContradictionVisualizer';
+import { InductionVisualizer } from '../diagrams/MetodosDemostracion/InductionVisualizer';
+import { SimSection } from '../components/SimSection';
+import { Link } from 'wouter';
+
+<div className="pt-24 pb-8 mb-8 max-w-prose mx-auto text-center">
+# Reducción al Absurdo
+  <p className="font-serif text-terracota italic text-2xl font-bold">
+    Reductio ad absurdum
+  </p>
+  <div className="w-24 h-1 bg-carbon/20 mx-auto mt-6" />
+</div>
+<SimSection sim={ContradictionVisualizer}>
+La *Reductio ad absurdum* es uno de los métodos deductivos más elegantes. Consiste en asumir temporalmente que lo que queremos demostrar es **falso**, y seguir las consecuencias lógicas de esa mentira hasta chocar violentamente con una imposibilidad matemática.
+
+Como las matemáticas no admiten contradicciones (es decir, el universo no permite que $1 = 0$), nuestra asunción inicial debía estar equivocada. Por eliminación, nuestra premisa original tiene que ser cierta.
+</SimSection>
+
+<SimSection sim={InductionVisualizer}>
+### El Triunfo de la Razón
+Usando este método, los pitagóricos demostraron que $\sqrt{2}$ es un número irracional. Asumieron que *sí* era una fracción perfecta $\frac{p}{q}$, y jugando con el álgebra demostraron que, de ser así, ambos números tendrían que ser divisibles por 2 infinitas veces, lo cual es lógicamente imposible.
+
+*(Nota: Fíjate cómo al hacer scroll sobre esta sección, el simulador de la izquierda ha cambiado mágicamente por el efecto del `SimSection`).*
+</SimSection>
+
+<div className="mt-16 text-center pb-24">
+  <Link href="/metodosdemostracion">
+    <a className="inline-block px-8 py-4 bg-lienzo border-2 border-carbon/20 text-carbon rounded-xl font-bold hover:bg-carbon/5 transition-all">
+      &larr; Volver al Índice
+    </a>
+  </Link>
+</div>
+
+export const Simulation = ContradictionVisualizer;

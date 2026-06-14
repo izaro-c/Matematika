@@ -1,0 +1,27 @@
+import { ContrapositionVisualizer } from '../diagrams/MetodosDemostracion/ContrapositionVisualizer';
+import { Link } from 'wouter';
+
+<div className="pt-24 pb-8 mb-8 max-w-prose mx-auto text-center">
+# Contraposición
+  <p className="font-serif text-terracota italic text-2xl font-bold">
+    El camino inverso equivalente
+  </p>
+  <div className="w-24 h-1 bg-carbon/20 mx-auto mt-6" />
+</div>
+
+A veces, demostrar $P \implies Q$ de forma directa es extremadamente complejo algebraicamente. Sin embargo, la lógica proposicional nos enseña que $P \implies Q$ es exactamente equivalente a su contrapositiva: $\neg Q \implies \neg P$.
+
+En lugar de demostrar que si se cumple $P$ llegamos a $Q$, asumimos que $Q$ es *falso*, y demostramos que eso nos obliga a que $P$ también sea *falso*. 
+
+### El Concepto Lingüístico
+Si afirmamos que *"Si llueve, la calle está mojada"*, la contrapositiva es: *"Si la calle NO está mojada, entonces es imposible que haya llovido"*. Ambas frases expresan exactamente la misma verdad fundamental del universo.
+
+<div className="mt-16 text-center pb-24">
+  <Link href="/metodosdemostracion">
+    <a className="inline-block px-8 py-4 bg-lienzo border-2 border-carbon/20 text-carbon rounded-xl font-bold hover:bg-carbon/5 transition-all">
+      &larr; Volver al Índice
+    </a>
+  </Link>
+</div>
+
+export const Simulation = ContrapositionVisualizer;

@@ -1,0 +1,36 @@
+import { DirectProofVisualizer } from '../diagrams/MetodosDemostracion/DirectProofVisualizer';
+import { Link } from 'wouter';
+import { Term } from '../components/Term';
+
+<div className="pt-24 pb-8 mb-8 max-w-prose mx-auto text-center">
+# Demostración Directa
+  <p className="font-serif text-salvia italic text-2xl font-bold">
+    La vía deductiva recta
+  </p>
+  <div className="w-24 h-1 bg-carbon/20 mx-auto mt-6" />
+</div>
+
+Es el método más intuitivo. Partimos de una hipótesis o premisa ($P$) que sabemos que es cierta, y mediante una serie de pasos lógicos y deducciones legales (usando algún <Term id="axioma">axioma</Term> o <Term id="lema">lema</Term> previo), llegamos inevitablemente a la conclusión ($Q$).
+
+Matemáticamente se expresa como:
+$$ P \implies Q $$
+
+### Un Ejemplo Clásico
+*Demostrar que si un número $n$ es <Term id="par">par</Term>, entonces su cuadrado $n^2$ también es par.*
+
+1. Sabemos que $n$ es par. Por definición, existe un entero $k$ tal que $n = 2k$.
+2. Elevamos al cuadrado ambos lados: $n^2 = (2k)^2$
+3. Expandimos: $n^2 = 4k^2$
+4. Factorizamos un $2$: $n^2 = 2(2k^2)$
+
+Como $(2k^2)$ es claramente otro número entero, hemos demostrado que $n^2$ es un múltiplo de $2$. Es decir, es par. $\blacksquare$
+
+<div className="mt-16 text-center pb-24">
+  <Link href="/metodosdemostracion">
+    <a className="inline-block px-8 py-4 bg-lienzo border-2 border-carbon/20 text-carbon rounded-xl font-bold hover:bg-carbon/5 transition-all">
+      &larr; Volver al Índice
+    </a>
+  </Link>
+</div>
+
+export const Simulation = DirectProofVisualizer;
