@@ -6,36 +6,22 @@ export const metadata = {
   parentTheorem: "teorema_rouche_frobenius",
   proofMethod: "metodo-directo",
   authors: ["frobenius", "rouche"],
-  tags: ["álgebra"]
+  tags: ["álgebra"],
+  layout: "text"
 };
 
 import { Link } from 'wouter';
 import { MedievalStep } from '../../components/MedievalStep';
-
-<div className="pt-8 pb-8 mb-8 max-w-prose mx-auto text-center border-t border-carbon/10">
-  <p className="font-serif text-pizarra italic text-2xl font-bold mb-4" style={{ fontVariant: 'small-caps' }}>
-    Demostración por Isomorfismo de Espacios Columna
-  </p>
-  
-  <Link href="/teorema/teorema_rouche_frobenius">
-    <a className="inline-block border border-carbon/20 px-4 py-1 text-sm font-serif italic text-carbon/60 hover:text-carbon hover:bg-carbon/5 transition-all mb-4">
-      &larr; Volver al Teorema Principal
-    </a>
-  </Link>
-
-  <Separador />
-</div>
-
-<div className="px-6 md:px-12 max-w-prose mx-auto">
+import { ConceptLink } from '../../components/ui/ConceptLink';
 
 <MedievalStep number={1} title="Forma Vectorial del Sistema">
   Consideremos un sistema de ecuaciones lineales escrito en forma matricial $A\mathbf{x} = \mathbf{b}$, donde $A$ es una <ConceptLink targetId="matriz">matriz</ConceptLink> de $m \times n$, $\mathbf{x}$ es el vector columna de $n$ incógnitas, y $\mathbf{b}$ es el vector columna de términos independientes.
 
   Podemos reescribir el producto matriz-vector $A\mathbf{x}$ como una **combinación lineal** de los vectores columna de $A$. Si llamamos $\mathbf{c}_1, \mathbf{c}_2, \dots, \mathbf{c}_n$ a las columnas de $A$, el sistema equivale a:
 
-  $$
-  x_1 \mathbf{c}_1 + x_2 \mathbf{c}_2 + \dots + x_n \mathbf{c}_n = \mathbf{b}
-  $$
+  <Formula>
+    $x_1 \mathbf{c}_1 + x_2 \mathbf{c}_2 + \dots + x_n \mathbf{c}_n = \mathbf{b}$
+  </Formula>
 </MedievalStep>
 
 <MedievalStep number={2} title="Existencia de Solución">
@@ -54,11 +40,9 @@ import { MedievalStep } from '../../components/MedievalStep';
 
   La condición de que añadir $\mathbf{b}$ no aumenta la dimensión es exactamente:
 
-  $$
-  \text{rg}(A) = \text{rg}(A^*)
-  $$
+  <Formula title="Igualdad de Rangos">
+    $\text{rg}(A) = \text{rg}(A^*)$
+  </Formula>
 
-  Queda así demostrado que la igualdad de rangos es condición necesaria y suficiente para la existencia de soluciones. $\blacksquare$
+  Queda demostrado el teorema mediante isomorfismo de espacios columna. $\blacksquare$
 </MedievalStep>
-
-</div>

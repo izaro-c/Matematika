@@ -112,6 +112,7 @@ export interface Demo {
   proofMethod?: string;
   authors?: string[];
   tags?: string[];
+  layout?: 'split' | 'text';
   Component: any;
 }
 
@@ -395,8 +396,15 @@ class ContentStore {
     return this.studyPlans.get(id) || Array.from(this.studyPlans.values()).find(p => p.slug === id);
   }
 
+  getLesson(id: string): Lesson | undefined {
+    return this.lessons.get(id) || Array.from(this.lessons.values()).find(l => l.slug === id);
+  }
   getAllLessons(): Lesson[] { return Array.from(this.lessons.values()); }
   getAllDemos(): Demo[] { return Array.from(this.demos.values()); }
+  
+  getDemo(id: string): Demo | undefined {
+    return this.demos.get(id) || Array.from(this.demos.values()).find(d => d.slug === id);
+  }
 
   getUseCase(id: string): UseCase | undefined {
     return this.usecases.get(id) || Array.from(this.usecases.values()).find(u => u.slug === id);

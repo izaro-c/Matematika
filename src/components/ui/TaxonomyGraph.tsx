@@ -34,7 +34,7 @@ export const TaxonomyGraph: React.FC<TaxonomyGraphProps> = ({ taxonomy }) => {
     });
 
     // Items
-    taxonomy.directItems.forEach((itemObj, idx) => {
+    taxonomy.directItems.forEach((itemObj) => {
       const item = itemObj.item;
       const type = itemObj.type;
       

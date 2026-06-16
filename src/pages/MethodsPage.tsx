@@ -9,7 +9,7 @@ export const MethodsPage = () => {
   const methods = allLessons.filter(l => l.id.startsWith('metodo-'));
 
   return (
-    <div className="min-h-screen bg-lienzo text-carbon p-12 lg:p-24 flex justify-center">
+    <div className="min-h-screen bg-lienzo bg-arts-and-crafts text-carbon p-12 lg:p-24 flex justify-center">
       <div className="max-w-4xl w-full">
         
         <header className="mb-16 text-center">

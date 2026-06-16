@@ -17,6 +17,7 @@ import { ConceptLink } from './ConceptLink';
 import { GlossaryLink } from './GlossaryLink';
 import { VisualBind } from './VisualBind';
 import { Link } from 'wouter';
+import { useMathStore } from '../../store/MathStoreContext';
 
 // === SISTEMA DE DISEÑO ARTS & CRAFTS (IMPRESIÓN CLÁSICA) ===
 
@@ -35,11 +36,32 @@ export const OrnamentalDivider: React.FC = () => (
   </div>
 );
 
-export const Formula: React.FC<{ children: React.ReactNode }> = ({ children }) => (
+export const Formula: React.FC<{ title?: string, children: React.ReactNode }> = ({ title, children }) => (
   <div className="my-10 py-8 px-6 w-full flex flex-col items-center justify-center gap-4 text-xl font-serif border border-carbon/20 bg-carbon/[0.02]">
+    {title && <span className="italic block mb-2 text-sm text-carbon/50">{title}</span>}
     {children}
   </div>
 );
+
+export const EquationRow: React.FC<{ children: React.ReactNode }> = ({ children }) => (
+  <div className="flex items-center justify-center gap-2 flex-wrap w-full">
+    {children}
+  </div>
+);
+
+export const InteractiveElement: React.FC<{ target: string, color: string, children: React.ReactNode }> = ({ target, color, children }) => {
+  const setVariable = useMathStore(state => state.setVariable);
+  return (
+    <span 
+      style={{ color: `var(--color-${color})` }} 
+      className="font-bold cursor-pointer border-b-2 border-dashed border-current hover:bg-carbon/5 px-1 py-0.5 rounded transition-all inline-block"
+      onMouseEnter={() => setVariable('highlight', target)}
+      onMouseLeave={() => setVariable('highlight', null)}
+    >
+      {children}
+    </span>
+  );
+};
 
 export const Definicion: React.FC<{ title?: string, children: React.ReactNode }> = ({ title = "Definición", children }) => (
   <div className="my-12 py-6 border-t-4 border-b border-carbon/90 font-serif">
@@ -129,6 +151,8 @@ export const MDXBlocks = {
   ConceptLink,
   GlossaryLink,
   VisualBind,
+  EquationRow,
+  InteractiveElement,
   a: (props: any) => {
     if (props.href?.startsWith('/')) {
       return (

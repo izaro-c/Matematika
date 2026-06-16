@@ -76,6 +76,7 @@ export const DemoSchema = z.object({
   authors: z.array(z.string()).optional(),
   tags: z.array(z.string()).optional(),
   links: z.array(z.string()).optional(),
+  layout: z.enum(['split', 'text']).optional(),
 });
 
 /**

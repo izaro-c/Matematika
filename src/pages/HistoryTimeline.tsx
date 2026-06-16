@@ -78,7 +78,7 @@ export const HistoryTimeline = () => {
 
   return (
     <div
-      className="bg-lienzo text-carbon font-serif pt-20 pb-32 relative min-h-screen"
+      className="bg-lienzo bg-arts-and-crafts text-carbon font-serif pt-20 pb-32 relative min-h-screen"
       ref={containerRef}
     >
       {/* Fondo sutil */}

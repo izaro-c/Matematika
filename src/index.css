@@ -17,7 +17,7 @@
 :root {
   --theme-lienzo: #F8F6F1;
   --theme-carbon: #333333;
-  --theme-salvia: #A2C2A2;
+  --theme-salvia: #5A805A;
   --theme-terracota: #C86446;
   --theme-pizarra: #5D7080;
   --theme-ocre: #c49b4f;
@@ -45,6 +45,15 @@ body {
   transition: background-color 0.5s ease, color 0.5s ease;
 }
 
+.scale-animation {
+  animation: popIn 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+}
+
+@keyframes popIn {
+  0% { transform: scale(0.5); opacity: 0; }
+  100% { transform: scale(1); opacity: 1; }
+}
+
 .bg-arts-and-crafts {
   background-color: var(--theme-lienzo);
   background-image: url('/arts_and_crafts_bg.png');
@@ -57,29 +66,50 @@ body {
 .bg-arts-and-crafts::before {
   content: "";
   position: absolute;
-  top: 0; left: 0; right: 0; bottom: 0;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
   background-color: var(--theme-lienzo);
-  opacity: 0.90; /* Fondo mucho menos visible */
+  opacity: 0.90;
+  /* Fondo mucho menos visible */
   z-index: 0;
   pointer-events: none;
 }
 
-.bg-arts-and-crafts > * {
+.bg-arts-and-crafts>* {
   position: relative;
   z-index: 1;
 }
 
-.teoria-mdx {
-  /* Tipografía Serif para la teoría (puedes usar la de tu SO por defecto por ahora) */
-  font-family: ui-serif, Georgia, Cambria, "Times New Roman", Times, serif;
-  color: var(--color-carbon);
-  line-height: 1.8;
-  text-align: left;
-  hyphens: auto;
-  /* Espaciado generoso para lectura sosegada */
+
+/* Listas clásicas para nuestro estilo Arts and Crafts (Global) */
+.prose ul {
+  list-style-type: none;
+  padding-left: 1.5rem;
 }
 
-.teoria-mdx h1,
+.prose ul>li {
+  position: relative;
+  margin-bottom: 1rem;
+  line-height: 1.8;
+  padding-left: 0;
+}
+
+.prose ul>li::before {
+  content: "❖";
+  position: absolute;
+  left: -1.5rem;
+  color: var(--color-terracota);
+  font-size: 0.9em;
+  top: 0.2em;
+  opacity: 1;
+}
+
+.prose ul>li::marker {
+  content: none;
+}
+
 .demo-container h1 {
   font-size: 2.5rem;
   color: var(--color-terracota);
@@ -111,18 +141,6 @@ body {
 .teoria-mdx a:hover {
   color: var(--color-granada);
   text-decoration-thickness: 2px;
-}
-
-.color-test {
-  color: #F8F6F1;
-  color: #333333;
-  color: #A2C2A2;
-  color: #C86446;
-  color: #5D7080;
-  color: #c49b4f;
-  color: #3b5e6b;
-  color: #8b3a3a;
-  color: #4a5d23;
 }
 
 @keyframes simple-fade {

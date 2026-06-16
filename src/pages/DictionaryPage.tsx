@@ -77,7 +77,7 @@ export const DictionaryPage = () => {
   ];
 
   return (
-    <div className="min-h-screen font-serif text-carbon bg-lienzo flex flex-col items-center py-24 relative">
+    <div className="min-h-screen font-serif text-carbon bg-lienzo bg-arts-and-crafts flex flex-col items-center py-24 relative">
       <div className="absolute inset-4 border-2 border-carbon/10 pointer-events-none" />
       <div className="absolute inset-6 border border-carbon/5 pointer-events-none" />
 

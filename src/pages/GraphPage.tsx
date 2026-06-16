@@ -89,12 +89,10 @@ export const GraphPage: React.FC = () => {
     // Definiciones
     db.definitions.forEach((def, slug) => {
       nodes.push({ id: slug, name: def.title, group: 'definition', val: 10 });
-      if (!def.requires || def.requires.length === 0) {
-        if (def.tags?.[1]) {
-          links.push({ source: slug, target: `subrama-${slugify(def.tags[1])}` });
-        } else if (def.tags?.[0]) {
-          links.push({ source: slug, target: `rama-${slugify(def.tags[0])}` });
-        }
+      if (def.tags?.[1]) {
+        links.push({ source: slug, target: `subrama-${slugify(def.tags[1])}` });
+      } else if (def.tags?.[0]) {
+        links.push({ source: slug, target: `rama-${slugify(def.tags[0])}` });
       }
     });
 

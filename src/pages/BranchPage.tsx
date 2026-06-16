@@ -75,16 +75,31 @@ export const BranchPage = () => {
                     else if (entry.type === 'theorem') link = `/teorema/${entry.item.id}`;
                     else if (entry.type === 'definition') link = `/definicion/${entry.item.id}`;
 
+                    const typeStyles: Record<string, { borderClass: string, textClass: string, label: string }> = {
+                      'theorem': { borderClass: 'border-terracota/30 hover:border-terracota/60', textClass: 'text-terracota', label: 'Teorema' },
+                      'definition': { borderClass: 'border-pavo/30 hover:border-pavo/60', textClass: 'text-pavo', label: 'Definición' },
+                      'lesson': { borderClass: 'border-salvia/30 hover:border-salvia/60', textClass: 'text-salvia', label: 'Lección' },
+                      'exercise': { borderClass: 'border-ocre/40 border-dashed hover:border-solid hover:border-ocre/60', textClass: 'text-ocre', label: 'Ejercicio' },
+                      'example': { borderClass: 'border-granada/30 hover:border-granada/60', textClass: 'text-granada', label: 'Ejemplo' },
+                      'useCase': { borderClass: 'border-musgo/30 hover:border-musgo/60', textClass: 'text-musgo', label: 'Caso de Uso' },
+                    };
+                    const style = typeStyles[entry.type] || { borderClass: 'border-carbon/20 hover:border-carbon/40', textClass: 'text-carbon', label: entry.type };
+
                     return (
                       <Link key={idx} href={link}>
-                        <a className="group flex flex-col md:flex-row md:items-center justify-between p-6 border border-carbon/20 bg-lienzo hover:shadow-md transition-all duration-300">
+                        <a className={`group flex flex-col md:flex-row md:items-center justify-between p-6 border bg-lienzo hover:shadow-md transition-all duration-300 ${style.borderClass}`}>
                           <div>
-                            <h3 className="text-2xl font-bold group-hover:text-terracota transition-colors">§ {entry.item.title || entry.item.id}</h3>
+                            <h3 className={`text-2xl font-bold transition-colors opacity-90 group-hover:opacity-100 ${style.textClass}`} style={{ fontVariant: 'small-caps' }}>
+                              {entry.item.title || entry.item.id}
+                            </h3>
                             <p className="text-carbon/60 mt-2 font-sans text-sm">{entry.item.description || 'Documento formal.'}</p>
                           </div>
-                          <span className="mt-4 md:mt-0 px-3 py-1 border border-carbon/10 text-[10px] uppercase tracking-widest font-sans text-carbon/50 self-start md:self-auto group-hover:border-terracota/30 group-hover:text-terracota/80 transition-colors">
-                            {entry.type}
-                          </span>
+                          
+                          <div className="mt-4 md:mt-0">
+                            <span className={`font-serif italic text-lg transition-colors opacity-60 group-hover:opacity-100 ${style.textClass}`}>
+                              {style.label}
+                            </span>
+                          </div>
                         </a>
                       </Link>
                     );

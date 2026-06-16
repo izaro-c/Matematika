@@ -26,6 +26,7 @@ import { StudyPlanPage } from "./pages/StudyPlanPage";
 import { MethodsPage } from "./pages/MethodsPage";
 import { UseCasePage } from "./pages/UseCasePage";
 import { GraphPage } from "./pages/GraphPage";
+import { DemoPage } from "./pages/DemoPage";
 import { db } from './store/ContentStore';
 
 function App() {
@@ -33,7 +34,6 @@ function App() {
   const { toggleSearch } = useNavigationStore();
   const lessons = db.getAllLessons();
   const biographies = db.getAllMathematicians();
-  const demos = db.getAllDemos();
 
   // Scroll Sync Listener for Editor Live Preview
   useEffect(() => {
@@ -134,15 +134,11 @@ function App() {
             </Route>
 
             {/* RUTAS DE DEMOSTRACIONES ESTÁTICAS (SCROLLYTELLING) */}
-            {demos.map(({ id, Component }) => (
-              <Route key={`demo-${id}`} path={`/demo/${id}`}>
-                <MathProvider>
-                  <div className="w-full bg-transparent min-h-screen demo-container">
-                    <Component />
-                  </div>
-                </MathProvider>
-              </Route>
-            ))}
+            <Route path="/demo/:id">
+              <MathProvider>
+                <DemoPage />
+              </MathProvider>
+            </Route>
 
             {/* RUTAS DE BIOGRAFÍAS HISTÓRICAS */}
             {biographies.map((mat) => (
