@@ -38,6 +38,27 @@ const Slider: React.FC<SliderProps> = ({ label, value, onChange }) => (
   </label>
 );
 
+// Arrow helper
+const Arrow = ({ x1, y1, x2, y2, color, id }: { x1: number; y1: number; x2: number; y2: number; color: string; id: string }) => {
+  const [sx1, sy1] = wp(x1, y1);
+  const [sx2, sy2] = wp(x2, y2);
+  const dx = sx2 - sx1, dy = sy2 - sy1;
+  const len = Math.sqrt(dx * dx + dy * dy);
+  if (len < 2) return null;
+  // Acortar para la flecha
+  const ux = dx / len, uy = dy / len;
+  const arrowSize = 8;
+  const ax2 = sx2 - ux * arrowSize * 0.6;
+  const ay2 = sy2 - uy * arrowSize * 0.6;
+  return (
+    <line
+      x1={sx1} y1={sy1} x2={ax2} y2={ay2}
+      stroke={color} strokeWidth={2.5}
+      markerEnd={`url(#arr-${id})`}
+    />
+  );
+};
+
 /**
  * MatrizTransformVisualizer
  *
@@ -81,26 +102,6 @@ export const MatrizTransformVisualizer: React.FC = () => {
   const [ipx, ipy] = applyM(a, b, c, d, 1, 0);
   const [jpx, jpy] = applyM(a, b, c, d, 0, 1);
 
-  // Arrow helper
-  const Arrow = ({ x1, y1, x2, y2, color, id }: { x1: number; y1: number; x2: number; y2: number; color: string; id: string }) => {
-    const [sx1, sy1] = wp(x1, y1);
-    const [sx2, sy2] = wp(x2, y2);
-    const dx = sx2 - sx1, dy = sy2 - sy1;
-    const len = Math.sqrt(dx * dx + dy * dy);
-    if (len < 2) return null;
-    // Acortar para la flecha
-    const ux = dx / len, uy = dy / len;
-    const arrowSize = 8;
-    const ax2 = sx2 - ux * arrowSize * 0.6;
-    const ay2 = sy2 - uy * arrowSize * 0.6;
-    return (
-      <line
-        x1={sx1} y1={sy1} x2={ax2} y2={ay2}
-        stroke={color} strokeWidth={2.5}
-        markerEnd={`url(#arr-${id})`}
-      />
-    );
-  };
 
   // Polígono del paralelogramo
   const paraPoints = (() => {

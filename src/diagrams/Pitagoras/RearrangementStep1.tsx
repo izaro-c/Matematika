@@ -2,10 +2,16 @@ import { useRef, useEffect } from 'react';
 import JXG from 'jsxgraph';
 import { useMathStore } from '../../store/MathStoreContext';
 
+/**
+ * RearrangementStep1
+ *
+ * Componente de visualización matemática. Renderiza un diagrama interactivo 
+ * o estático para apoyar el contenido de las lecciones.
+ */
 export const RearrangementStep1 = () => {
     const boardRef = useRef<HTMLDivElement>(null);
     const highlight = useMathStore(state => state.variables['highlight']);
-    const elementsRef = useRef<any>({});
+    const elementsRef = useRef<Record<string, unknown>>({});
 
     useEffect(() => {
         if (!boardRef.current) return;
@@ -72,7 +78,8 @@ export const RearrangementStep1 = () => {
     }, []);
 
     useEffect(() => {
-        const { tri1, tri2, tri3, tri4, centerSquare, sideA1, sideB1, sideC1, labelC, board } = elementsRef.current;
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        const { tri1, tri2, tri3, tri4, centerSquare, sideA1, sideB1, sideC1, labelC, board } = elementsRef.current as Record<string, any>;
         if (!board) return;
 
         // Reset

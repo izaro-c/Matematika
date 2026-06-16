@@ -1,5 +1,11 @@
 import React, { useState } from 'react';
 
+/**
+ * BayesDiagnosticoSimulation
+ *
+ * Componente de visualización matemática. Renderiza un diagrama interactivo 
+ * o estático para apoyar el contenido de las lecciones.
+ */
 export const BayesDiagnosticoSimulation: React.FC = () => {
   const [step, setStep] = useState(0); // 0: Población, 1: Enfermos, 2: Tests, 3: Foco
 

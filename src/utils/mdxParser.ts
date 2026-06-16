@@ -1,9 +1,19 @@
+/**
+ * Representa un archivo MDX descompuesto en sus 3 partes lógicas.
+ */
 export interface ParsedMDX {
-  metadata: any;
+  metadata: Record<string, unknown>;
   imports: string;
   body: string;
 }
 
+/**
+ * Analiza sintácticamente un archivo MDX crudo para separar metadatos, importaciones y el cuerpo.
+ * Utilizado principalmente en el entorno de edición en vivo (EditorPage).
+ * 
+ * @param content El contenido en texto crudo del archivo MDX.
+ * @returns El objeto ParsedMDX estructurado.
+ */
 export function parseMDX(content: string): ParsedMDX {
   let metadata = {};
   
@@ -43,7 +53,16 @@ export function parseMDX(content: string): ParsedMDX {
   };
 }
 
-export function stringifyMDX(metadata: any, imports: string, body: string): string {
+/**
+ * Ensambla metadatos, importaciones y el cuerpo en un string MDX válido.
+ * Utilizado por el Editor para previsualizar/guardar archivos.
+ * 
+ * @param metadata Objeto serializable con el frontmatter (zod).
+ * @param imports Bloque de texto con los `import` de React.
+ * @param body Cuerpo en markdown/JSX.
+ * @returns El código fuente combinado.
+ */
+export function stringifyMDX(metadata: Record<string, unknown>, imports: string, body: string): string {
   // Convertir a string JSON con formato y limpiar comillas en claves si se desea (aunque JSON estándar es válido)
   const metaString = JSON.stringify(metadata, null, 2);
   

@@ -86,12 +86,19 @@ const PRESETS = {
  */
 export const LinearSystemVisualizer: React.FC = () => {
   const containerRef = useRef<HTMLDivElement>(null);
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const boardRef = useRef<any>(null);
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const p2aRef = useRef<any>(null);
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const p2bRef = useRef<any>(null);
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const line1Ref = useRef<any>(null);
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const line2Ref = useRef<any>(null);
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const intersectionRef = useRef<any>(null);
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const label2Ref = useRef<any>(null);
 
   const highlight = useMathStore(state => state.variables['highlight']);

@@ -11,8 +11,8 @@
  */
 import { useParams, Link } from 'wouter';
 import { Suspense } from 'react';
-import { db } from '../store/ContentStore';
-import { SimulationLayout } from '../components/SimulationLayout';
+import { db } from '../store/content';
+import { SimulationLayout } from "../components/layout/SimulationLayout";
 import { KatexText } from '../components/ui/KatexText';
 import { ReadingButton } from '../components/ui/ReadingButton';
 

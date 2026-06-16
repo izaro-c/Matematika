@@ -1,5 +1,11 @@
 import React, { useState, useMemo } from 'react';
 
+/**
+ * PitagorasConstruccionSimulation
+ *
+ * Componente de visualización matemática. Renderiza un diagrama interactivo 
+ * o estático para apoyar el contenido de las lecciones.
+ */
 export const PitagorasConstruccionSimulation: React.FC = () => {
   const [a, setA] = useState(3);
   const [b, setB] = useState(4);

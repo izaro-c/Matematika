@@ -2,6 +2,12 @@ import React, { useState } from 'react';
 import { useLessonStore } from '../../store/LessonStore';
 import { KatexText } from '../../components/ui/KatexText';
 
+/**
+ * BayesTreeVisualizer
+ *
+ * Componente de visualización matemática. Renderiza un diagrama interactivo 
+ * o estático para apoyar el contenido de las lecciones.
+ */
 export const BayesTreeVisualizer: React.FC = () => {
   const { activeStep } = useLessonStore();
   

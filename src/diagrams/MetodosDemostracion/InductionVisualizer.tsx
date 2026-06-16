@@ -1,5 +1,11 @@
 import { useState } from 'react';
 
+/**
+ * InductionVisualizer
+ *
+ * Componente de visualización matemática. Renderiza un diagrama interactivo 
+ * o estático para apoyar el contenido de las lecciones.
+ */
 export const InductionVisualizer = () => {
   const [baseCase, setBaseCase] = useState(false);
   const [induction, setInduction] = useState(false);

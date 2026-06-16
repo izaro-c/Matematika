@@ -1,10 +1,15 @@
 import React, { useMemo } from 'react';
-import type { Mathematician } from '../../store/ContentStore';
+import type { Mathematician } from '../../store/content';
 
 interface InteractiveTimePlotProps {
   nodes: Mathematician[];
 }
 
+/**
+ * Componente que muestra un histograma o línea de tiempo de la densidad de figuras 
+ * históricas (matemáticos) a lo largo de los siglos.
+ * Agrupa los datos de nacimiento/muerte en "bins" de 100 años (siglos).
+ */
 export const InteractiveTimePlot: React.FC<InteractiveTimePlotProps> = ({ nodes }) => {
   // Compute histogram of mathematicians over centuries
   const histogram = useMemo(() => {
@@ -51,12 +56,12 @@ export const InteractiveTimePlot: React.FC<InteractiveTimePlotProps> = ({ nodes 
             >
               {count > 0 && (
                 <div
-                  className="bg-carbon/20 hover:bg-terracota transition-colors w-full mx-[1px] rounded-t-sm"
+                  className="bg-carbon/20 hover:bg-terracota transition-colors w-full mx-[1px] rounded-none"
                   style={{ height: `${Math.max(2, h)}px` }}
                 />
               )}
               {/* Tooltip on hover */}
-              <div className="absolute bottom-full mb-1 opacity-0 group-hover/bar:opacity-100 transition-opacity bg-carbon text-lienzo text-[9px] px-1.5 py-0.5 rounded pointer-events-none whitespace-nowrap z-50">
+              <div className="absolute bottom-full mb-1 opacity-0 group-hover/bar:opacity-100 transition-opacity bg-carbon text-lienzo text-[9px] px-1.5 py-0.5 rounded-none pointer-events-none whitespace-nowrap z-50">
                 {century > 0 ? `Siglo ${(century/100)+1}` : `Siglo ${Math.abs(century/100)+1} a.C.`}: {count}
               </div>
             </div>

@@ -34,6 +34,9 @@ function numericMatch(a: string, b: string, tol: number) {
   return !isNaN(fa) && !isNaN(fb) && Math.abs(fa - fb) <= tol;
 }
 
+/**
+ * Componente principal para ejercicios de completar huecos (Fill in the blanks).
+ */
 export const Hueco: React.FC<HuecoProps> = ({
   id,
   pregunta,
@@ -72,7 +75,7 @@ export const Hueco: React.FC<HuecoProps> = ({
   if (!pregunta) {
     if (isDone) {
       return (
-        <span className="inline-block px-2 font-bold font-serif text-[#2a6a2a] transition-all duration-500">
+        <span className="inline-block px-2 font-bold font-serif text-salvia transition-all duration-500">
           {isRevealed && isCorrect !== true ? correct : input}
         </span>
       );
@@ -108,7 +111,7 @@ export const Hueco: React.FC<HuecoProps> = ({
         </span>
         {/* Tooltip de Pista Flotante */}
         {showHint && (
-          <span className="absolute top-full left-0 mt-1 w-48 p-2 bg-[#fdfbf7] border border-carbon/20 shadow-md text-xs font-serif italic text-carbon/70 z-10">
+          <span className="absolute top-full left-0 mt-1 w-48 p-2 bg-lienzo border border-carbon/20 shadow-md text-xs font-serif italic text-carbon/70 z-10">
             {pista}
           </span>
         )}
@@ -118,17 +121,17 @@ export const Hueco: React.FC<HuecoProps> = ({
 
   // Renderizado Bloque (con pregunta)
   const borderColor =
-    isCorrect === true ? 'border-[#2a6a2a]' :
-    isCorrect === false ? 'border-terracota' :
-    'border-carbon/20';
+    isCorrect === true ? 'border-salvia/40' :
+    isCorrect === false ? 'border-terracota/50' :
+    '';
 
   const bgColor =
-    isCorrect === true ? 'bg-[#f0faf0]' :
+    isCorrect === true ? 'bg-salvia/5' :
     isCorrect === false ? 'bg-terracota/5' :
-    'bg-[#fdfbf7]';
+    '';
 
   return (
-    <div className={`my-6 border border-carbon/10 border-l-4 ${borderColor} ${bgColor} p-6 font-serif transition-all duration-500 relative shadow-sm`}>
+    <div className={`my-8 p-8 elegant-panel font-serif transition-all duration-500 relative group ${borderColor} ${bgColor}`} style={{ '--hover-accent': isCorrect === true ? 'var(--theme-salvia)' : 'var(--theme-carbon)' } as React.CSSProperties}>
        <style>
         {`
           @keyframes shake {
@@ -139,10 +142,10 @@ export const Hueco: React.FC<HuecoProps> = ({
           .animate-shake { animation: shake 0.4s ease-in-out; }
         `}
       </style>
-      <p className="text-base text-carbon mb-4 leading-relaxed">{pregunta}</p>
+      <p className="text-base text-carbon mb-6 mt-2 leading-relaxed">{pregunta}</p>
 
       {isDone ? (
-        <div className="text-xl font-bold text-[#2a6a2a] transition-all duration-500">
+        <div className="text-xl font-bold text-salvia transition-all duration-500">
           {isRevealed && isCorrect !== true ? correct : input}
         </div>
       ) : (
@@ -160,7 +163,7 @@ export const Hueco: React.FC<HuecoProps> = ({
           <button
             onClick={check}
             disabled={!input.trim()}
-            className="px-4 py-1 text-xs font-sans uppercase tracking-widest border border-carbon/40 text-carbon/70 hover:border-carbon hover:text-carbon disabled:opacity-30 disabled:cursor-not-allowed transition-all"
+            className="px-6 py-2 text-xs font-sans uppercase tracking-widest border border-carbon/40 text-carbon/80 hover:border-carbon hover:text-carbon hover:bg-carbon/5 transition-all shadow-sm disabled:opacity-30 disabled:cursor-not-allowed hover:-translate-y-0.5 hover:shadow-md"
           >
             Comprobar
           </button>

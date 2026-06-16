@@ -1,7 +1,11 @@
 import React, { Suspense } from 'react';
 import { useRoute, Link } from 'wouter';
-import { db } from '../store/ContentStore';
+import { db } from '../store/content';
 
+/**
+ * Página dedicada a Demostraciones visuales/interactivas separadas.
+ * Carga metadatos y componentes desde `db` usando la ruta `/demo/:id`.
+ */
 export const DemoPage: React.FC = () => {
   const [, params] = useRoute('/demo/:id');
   const demoId = params?.id || '';
@@ -76,7 +80,7 @@ export const DemoPage: React.FC = () => {
             {demo.proofMethod && (
               <div className="flex items-center gap-2">
                 <span className="text-xs font-sans uppercase tracking-widest text-carbon/50">Método:</span>
-                <Link href={`/leccion/${demo.proofMethod}`}>
+                <Link href={`/${db.getLesson(demo.proofMethod)?.slug || demo.proofMethod}`}>
                   <a className="font-bold text-carbon border-b border-carbon/20 pb-0.5 hover:text-salvia transition-colors">
                     {db.getLesson(demo.proofMethod)?.title || demo.proofMethod.replace('-', ' ')}
                   </a>

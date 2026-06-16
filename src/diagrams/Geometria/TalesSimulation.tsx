@@ -1,6 +1,12 @@
 import React, { useState, useRef } from 'react';
 import { useLessonStore } from '../../store/LessonStore';
 
+/**
+ * TalesSimulation
+ *
+ * Componente de visualización matemática. Renderiza un diagrama interactivo 
+ * o estático para apoyar el contenido de las lecciones.
+ */
 export const TalesSimulation: React.FC = () => {
   const { activeStep } = useLessonStore();
   
@@ -24,7 +30,7 @@ export const TalesSimulation: React.FC = () => {
   };
 
   // Longitudes (escaladas para ser "visualmente" entendibles)
-  const dist = (p1: any, p2: any) => Math.sqrt((p2.x - p1.x)**2 + (p2.y - p1.y)**2) / 10;
+  const dist = (p1: { x: number; y: number }, p2: { x: number; y: number }) => Math.sqrt((p2.x - p1.x)**2 + (p2.y - p1.y)**2) / 10;
   
   const lenAD = dist(A, D).toFixed(1);
   const lenDB = dist(D, B).toFixed(1);

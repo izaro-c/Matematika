@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState, useMemo } from 'react';
 import { Link } from 'wouter';
-import { db } from '../store/ContentStore';
+import { db } from '../store/content';
 import { InteractiveTimePlot } from '../components/ui/InteractiveTimePlot';
 
 import { ArtsAndCraftsLiana } from '../components/ui/ArtsAndCraftsLiana';
@@ -29,6 +29,11 @@ const EraInsignia: React.FC<{ era: string; year: number }> = ({ era, year }) => 
 };
 
 // ── Página principal ──────────────────────────────────────────────────────────
+/**
+ * Página principal de la Línea de Tiempo Histórica.
+ * Muestra a todos los matemáticos ordenados cronológicamente a lo largo de 
+ * un gráfico dinámico, permitiendo filtrar y explorar sus vidas.
+ */
 export const HistoryTimeline = () => {
   const containerRef = useRef<HTMLDivElement>(null);
   const [scrollProgress, setScrollProgress] = useState(0);

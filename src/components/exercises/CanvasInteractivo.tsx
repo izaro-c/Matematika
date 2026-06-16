@@ -1,12 +1,21 @@
 import React, { useEffect } from 'react';
 import { useExercise } from './ExerciseContext';
 
+/**
+ * Propiedades del Canvas Interactivo
+ */
 interface CanvasInteractivoProps {
+  /** ID del ejercicio dentro del contexto */
   id: string;
   title?: string;
   children: React.ReactElement; // El componente hijo específico del diagrama
 }
 
+/**
+ * Envoltorio (Wrapper) para ejercicios interactivos visuales (ej. gráficos JXG o Three.js).
+ * Se encarga de inyectar las propiedades `onComplete` y `isCompleted` al hijo 
+ * para poder enganchar componentes interactivos genéricos al `ExerciseContext`.
+ */
 export const CanvasInteractivo: React.FC<CanvasInteractivoProps> = ({ id, title, children }) => {
   const { register, answer, state } = useExercise();
   const qState = state.questions[id];
@@ -22,29 +31,25 @@ export const CanvasInteractivo: React.FC<CanvasInteractivoProps> = ({ id, title,
   const isCompleted = qState?.isCorrect === true;
 
   // Clonar el hijo para inyectarle el callback onComplete y el estado isCompleted
-  const childWithProps = React.cloneElement(children as React.ReactElement<any>, {
+  const childWithProps = React.cloneElement(children as React.ReactElement<Record<string, unknown>>, {
     onComplete: handleComplete,
     isCompleted
   });
 
   return (
-    <div className="my-8 font-sans">
-      <div className={`p-1 rounded-lg transition-colors duration-500 ${isCompleted ? 'bg-[#2a6a2a]' : 'bg-carbon/10'}`}>
-        <div className="bg-lienzo rounded-md p-6">
-          <h4 className="font-bold text-carbon mb-4 flex items-center justify-between">
-            <span>{title || 'Lienzo Interactivo'}</span>
-            {isCompleted && <span className="text-[#2a6a2a] text-sm">✓ Objetivo cumplido</span>}
-          </h4>
+    <div className={`my-8 font-serif elegant-panel p-8 ${isCompleted ? 'bg-salvia/5 border-salvia/30' : ''}`} style={{ '--hover-accent': isCompleted ? 'var(--theme-salvia)' : 'var(--theme-carbon)' } as React.CSSProperties}>
+      <h4 className="font-bold text-carbon mb-6 flex items-center justify-between z-30 relative text-lg">
+        <span>{title || 'Lienzo Interactivo'}</span>
+        {isCompleted && <span className="text-salvia font-serif text-base">❦ Objetivo cumplido</span>}
+      </h4>
           <div className="relative">
             {childWithProps}
             
             {/* Overlay if completed to prevent further interaction, optional */}
             {isCompleted && (
-              <div className="absolute inset-0 z-50 pointer-events-none border-4 border-[#2a6a2a]/20 rounded-lg"></div>
+              <div className="absolute inset-0 z-50 pointer-events-none border-2 border-salvia/20 rounded-none bg-salvia/[0.02]"></div>
             )}
           </div>
-        </div>
-      </div>
     </div>
   );
 };

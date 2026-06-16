@@ -2,9 +2,15 @@ import { useRef, useEffect } from 'react';
 import JXG from 'jsxgraph';
 import { useMathStore } from '../../store/MathStoreContext';
 
+/**
+ * InteractiveSimulator
+ *
+ * Componente de visualización matemática. Renderiza un diagrama interactivo 
+ * o estático para apoyar el contenido de las lecciones.
+ */
 export const InteractiveSimulator = () => {
     const boardRef = useRef<HTMLDivElement>(null);
-    const elementsRef = useRef<any>({});
+    const elementsRef = useRef<Record<string, unknown>>({});
     
     // Obtenemos funciones y variables del store
     const setVariable = useMathStore(state => state.setVariable);
@@ -72,8 +78,8 @@ export const InteractiveSimulator = () => {
 
         // 5. REACTIVIDAD (Gráfico -> Zustand)
         board.on('update', () => {
-            const catetoA = Math.abs((pB as any).X()); // Lado a
-            const catetoB = Math.abs((pA as any).Y()); // Lado b
+            const catetoA = Math.abs((pB as unknown as { X: () => number }).X()); // Lado a
+            const catetoB = Math.abs((pA as unknown as { Y: () => number }).Y()); // Lado b
             const hipotenusa = Math.sqrt(catetoA*catetoA + catetoB*catetoB);
             
             setVariable('catetoA', catetoA);
@@ -91,7 +97,8 @@ export const InteractiveSimulator = () => {
 
     // 6. REACTIVIDAD INVERSA (Zustand -> Gráfico)
     useEffect(() => {
-        const { sqA, sqB, sqC, sideA, sideB, sideC, board } = elementsRef.current;
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        const { sqA, sqB, sqC, sideA, sideB, sideC, board } = elementsRef.current as Record<string, any>;
         if (!board) return;
 
         // Reset

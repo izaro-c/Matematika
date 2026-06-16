@@ -1,9 +1,15 @@
+import type { Demo, Theorem } from '../store/content/types';
 import { useParams, Link } from "wouter";
-import { db } from "../store/ContentStore";
+import { db } from "../store/content";
 import { Suspense } from 'react';
-import { SimulationLayout } from '../components/SimulationLayout';
+import { SimulationLayout } from "../components/layout/SimulationLayout";
 import { ReadingButton } from '../components/ui/ReadingButton';
 
+/**
+ * Página principal para un Teorema (Theorem).
+ * Carga su contenido MDX, renderiza simulaciones asociadas de manera reactiva
+ * y muestra componentes de demostraciones, ejemplos y casos de uso conectados.
+ */
 export const TheoremPage = () => {
   const { id } = useParams();
   const slug = id || '';
@@ -117,7 +123,7 @@ export const TheoremPage = () => {
               Demostraciones Disponibles
             </h2>
             <div className="flex flex-col gap-4">
-              {demos.map((demo: any) => (
+              {demos.filter((d): d is Demo => !!d).map((demo) => (
                 <Link key={demo.slug} href={`/demo/${demo.id}`}>
                   <a className="flex justify-between items-center p-6 border border-carbon/20 bg-carbon/5 hover:bg-carbon hover:text-lienzo transition-all group">
                     <div>
@@ -202,7 +208,7 @@ export const TheoremPage = () => {
             </h2>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-12 justify-center max-w-2xl mx-auto">
               <div className="flex flex-col gap-4 col-span-full">
-                {corollaries.map((cor: any) => (
+                {corollaries.filter((c): c is Theorem => !!c).map((cor) => (
                   <Link key={cor.slug} href={`/teorema/${cor.id}`}>
                     <a className="block p-5 border border-carbon/20 bg-carbon/5 hover:border-terracota hover:shadow-md transition-all group">
                       <h4 className="font-bold text-lg group-hover:text-terracota transition-colors">{cor.title}</h4>

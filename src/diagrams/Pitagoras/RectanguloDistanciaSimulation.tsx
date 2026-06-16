@@ -1,6 +1,12 @@
 import React, { useRef, useEffect } from 'react';
 import { useLessonStore } from '../../store/LessonStore';
 
+/**
+ * RectanguloDistanciaSimulation
+ *
+ * Componente de visualización matemática. Renderiza un diagrama interactivo 
+ * o estático para apoyar el contenido de las lecciones.
+ */
 export const RectanguloDistanciaSimulation: React.FC = () => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const { activeStep } = useLessonStore();

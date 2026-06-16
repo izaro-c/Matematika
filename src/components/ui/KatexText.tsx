@@ -2,11 +2,20 @@ import React from 'react';
 import katex from 'katex';
 import 'katex/dist/katex.min.css';
 
+/**
+ * Propiedades para KatexText
+ */
 interface KatexTextProps {
+  /** Texto en crudo que contiene expresiones matemáticas entre $ o $$ */
   text: string;
   className?: string;
 }
 
+/**
+ * Componente que renderiza expresiones matemáticas de LaTeX a HTML usando KaTeX.
+ * Convierte strings como `$x^2$` en HTML estilizado matemáticamente.
+ * También soporta resaltado básico en negrita con `**texto**`.
+ */
 export const KatexText: React.FC<KatexTextProps> = ({ text, className = '' }) => {
   // Regex to match $$ ... $$ and $ ... $
   const renderMath = (str: string) => {
@@ -20,7 +29,7 @@ export const KatexText: React.FC<KatexTextProps> = ({ text, className = '' }) =>
     html = html.replace(/\$\$([\s\S]+?)\$\$/g, (match, math) => {
       try {
         return katex.renderToString(math, { displayMode: true, throwOnError: false });
-      } catch (e) {
+      } catch {
         return match;
       }
     });
@@ -29,7 +38,7 @@ export const KatexText: React.FC<KatexTextProps> = ({ text, className = '' }) =>
     html = html.replace(/\$([^$]+?)\$/g, (match, math) => {
       try {
         return katex.renderToString(math, { displayMode: false, throwOnError: false });
-      } catch (e) {
+      } catch {
         return match;
       }
     });

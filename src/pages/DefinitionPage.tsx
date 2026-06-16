@@ -1,9 +1,14 @@
 import { useParams, Link } from "wouter";
-import { db } from "../store/ContentStore";
+import { db } from "../store/content";
 import { Suspense } from 'react';
-import { SimulationLayout } from '../components/SimulationLayout';
+import { SimulationLayout } from "../components/layout/SimulationLayout";
 import { ReadingButton } from '../components/ui/ReadingButton';
 
+/**
+ * Página principal para leer una Definición matemática (Definition).
+ * Carga su contenido MDX, renderiza simulaciones opcionales,
+ * y muestra ejemplos y ejercicios asociados.
+ */
 export const DefinitionPage = () => {
   const { id } = useParams();
   const slug = id || '';

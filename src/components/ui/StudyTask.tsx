@@ -1,22 +1,34 @@
 import React from 'react';
 import { Link } from 'wouter';
 import { useProgressStore } from '../../store/UserProgressStore';
-import { db } from '../../store/ContentStore';
+import { db } from '../../store/content';
 import { StudyPlanContext } from '../../contexts/StudyPlanContext';
 
+/**
+ * Define las propiedades de una tarea de estudio dentro del plan.
+ */
 interface StudyTaskProps {
+  /** ID único o slug del elemento de contenido */
   id: string;
+  /** Tipo de contenido para formatear el botón y el icono visualmente */
   type: 'teorema' | 'ejercicio' | 'ejemplo' | 'caso' | 'lección' | 'definicion';
+  /** Título human-readable que se mostrará en la lista */
   title: string;
 }
 
+/**
+ * Componente tipo "tarjeta" que se utiliza en la página del Plan de Estudio.
+ * Funciona como un enlace hacia el contenido específico, mostrando un rombo 
+ * que se rellena con color cuando la tarea se marca como leída.
+ * Soporta registro en `StudyPlanContext` para permitir scroll interactivo.
+ */
 export const StudyTask: React.FC<StudyTaskProps> = ({ id, type, title }) => {
   const { isRead } = useProgressStore();
   const completed = isRead(id);
   const context = React.useContext(StudyPlanContext);
   const registerTaskRef = context?.registerTaskRef;
   
-  let href = '';
+  let href: string;
   switch (type) {
     case 'teorema': href = `/teorema/${id}`; break;
     case 'ejercicio': href = `/ejercicio/${id}`; break;
@@ -43,14 +55,14 @@ export const StudyTask: React.FC<StudyTaskProps> = ({ id, type, title }) => {
 
   if (!exists && type !== 'lección') {
     return (
-      <div ref={(el) => registerTaskRef?.(id, el)} className={`flex flex-col md:flex-row md:items-center gap-4 p-5 my-6 border-carbon/20 opacity-60 ${containerStyle}`}>
-        <div className="w-5 h-5 border border-carbon/20 flex items-center justify-center shrink-0">
-          <span className="text-carbon/20 text-[10px]">◈</span>
+      <div ref={(el) => registerTaskRef?.(id, el)} className={`flex flex-col md:flex-row md:items-center gap-4 p-5 my-6 border-2 border-carbon/15 opacity-60 ${containerStyle}`}>
+        <div className="w-5 h-5 border-2 border-carbon/15 flex items-center justify-center shrink-0">
+          <span className="text-carbon/30 text-[10px]">◈</span>
         </div>
         <div>
-          <div className="text-[9px] font-sans uppercase tracking-[0.2em] text-carbon/40 mb-1">{type}</div>
+          <div className="text-[9px] font-sans uppercase tracking-[0.2em] text-carbon/50 mb-1 font-bold">{type}</div>
           <h3 className="text-xl font-serif text-carbon" style={{ fontVariant: 'small-caps' }}>{title}</h3>
-          <div className="text-xs italic text-carbon/40 mt-1">Próximamente</div>
+          <div className="text-xs italic text-carbon/50 mt-1">Próximamente</div>
         </div>
       </div>
     );
@@ -59,25 +71,28 @@ export const StudyTask: React.FC<StudyTaskProps> = ({ id, type, title }) => {
   return (
     <div ref={(el) => registerTaskRef?.(id, el)}>
       <Link href={href}>
-        <a className={`group flex flex-col md:flex-row md:items-center gap-4 p-5 my-6 transition-all duration-300 ${containerStyle} ${completed ? 'border-salvia/30 bg-salvia/5 hover:border-salvia/50 hover:shadow-sm' : 'border-carbon/20 hover:border-terracota/40 hover:shadow-md hover:-translate-y-0.5'}`}>
-          <div className={`w-5 h-5 border flex items-center justify-center shrink-0 transition-all duration-500 ${
+        <a 
+          className={`group elegant-panel flex flex-col md:flex-row md:items-center gap-4 p-5 my-6 ${completed ? 'bg-salvia/5 border-salvia/30' : ''}`}
+          style={{ '--hover-accent': completed ? 'var(--theme-salvia)' : 'var(--theme-terracota)' } as React.CSSProperties}
+        >
+          <div className={`w-5 h-5 border flex items-center justify-center shrink-0 transition-all duration-300 ${
             completed 
               ? 'border-salvia bg-transparent rotate-45' 
-              : 'border-carbon/40 rotate-0 group-hover:rotate-45 group-hover:border-terracota'
+              : 'border-carbon/30 rotate-0 group-hover:rotate-45 group-hover:border-terracota'
           }`}>
             {completed && (
-              <div className="w-3 h-3 bg-salvia scale-animation"></div>
+              <div className="w-2.5 h-2.5 bg-salvia scale-animation"></div>
             )}
           </div>
           <div className="flex-1">
-            <div className={`text-[9px] font-sans uppercase tracking-[0.2em] mb-1 transition-colors ${completed ? 'text-salvia/60' : 'text-carbon/40 group-hover:text-terracota/70'}`}>
+            <div className={`text-[9px] font-sans uppercase tracking-[0.2em] mb-1 font-bold transition-colors ${completed ? 'text-salvia/80' : 'text-carbon/50 group-hover:text-terracota'}`}>
               {type}
             </div>
             <h3 className={`text-xl font-serif font-bold transition-colors ${completed ? 'text-salvia' : 'text-carbon group-hover:text-terracota'}`} style={{ fontVariant: 'small-caps' }}>
               {title}
             </h3>
           </div>
-          <div className={`text-[10px] font-sans uppercase tracking-widest transition-colors ${completed ? 'text-salvia' : 'text-carbon/30 group-hover:text-terracota/80'}`}>
+          <div className={`text-[10px] font-sans uppercase tracking-widest font-bold transition-colors ${completed ? 'text-salvia' : 'text-carbon/40 group-hover:text-terracota'}`}>
             {completed ? 'Asimilado' : (isPractice ? 'Practicar →' : 'Estudiar →')}
           </div>
         </a>

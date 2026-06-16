@@ -2,14 +2,25 @@ import React, { useEffect, useRef } from 'react';
 
 import { useLessonStore } from '../../store/LessonStore';
 
+/**
+ * TrigCircleVisualizer
+ *
+ * Componente de visualización matemática. Renderiza un diagrama interactivo 
+ * o estático para apoyar el contenido de las lecciones.
+ */
 export const TrigCircleVisualizer: React.FC = () => {
   const { activeStep } = useLessonStore();
   const containerRef = useRef<HTMLDivElement>(null);
-  const boardRef = useRef<any>(null);
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const jxgBoardRef = useRef<any>(null);
   
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const pRef = useRef<any>(null);
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const cosRef = useRef<any>(null);
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const sinRef = useRef<any>(null);
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const angRef = useRef<any>(null);
 
   useEffect(() => {
@@ -25,7 +36,7 @@ export const TrigCircleVisualizer: React.FC = () => {
     const JXG = window.JXG;
 
     // Initialize board
-    boardRef.current = JXG.JSXGraph.initBoard(containerId, {
+    jxgBoardRef.current = JXG.JSXGraph.initBoard(containerId, {
       boundingbox: [-1.5, 1.5, 1.5, -1.5],
       axis: true,
       showNavigation: false,
@@ -33,7 +44,7 @@ export const TrigCircleVisualizer: React.FC = () => {
       keepaspectratio: true
     });
 
-    const board = boardRef.current;
+    const board = jxgBoardRef.current;
 
     // Center and Circle
     const origin = board.create('point', [0, 0], { name: '', fixed: true, visible: false });
@@ -80,14 +91,14 @@ export const TrigCircleVisualizer: React.FC = () => {
     });
 
     return () => {
-      if (boardRef.current) {
-        JXG.JSXGraph.freeBoard(boardRef.current);
+      if (jxgBoardRef.current) {
+        JXG.JSXGraph.freeBoard(jxgBoardRef.current);
       }
     };
   }, []);
 
   useEffect(() => {
-    if (!boardRef.current) return;
+    if (!jxgBoardRef.current) return;
     const isP = activeStep === 'punto_P' || !activeStep;
     const isAng = activeStep === 'angulo' || !activeStep;
     const isSin = activeStep === 'seno' || !activeStep;
@@ -118,7 +129,7 @@ export const TrigCircleVisualizer: React.FC = () => {
       });
     }
 
-    boardRef.current.update();
+    jxgBoardRef.current.update();
   }, [activeStep]);
 
   return (

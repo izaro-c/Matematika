@@ -1,6 +1,11 @@
 import { useLocation } from 'wouter';
-import { db } from '../store/ContentStore';
+import { db } from '../store/content';
 
+/**
+ * Página índice para los "Métodos de Demostración".
+ * Filtra las lecciones especiales (cuyos IDs empiezan por "metodo-") y las muestra
+ * en un diseño de cuadrícula (grid) para fácil acceso a las herramientas lógicas.
+ */
 export const MethodsPage = () => {
   const [, setLocation] = useLocation();
   const allLessons = db.getAllLessons();
@@ -27,7 +32,7 @@ export const MethodsPage = () => {
           {methods.map(method => (
             <div 
               key={method.id} 
-              onClick={() => setLocation(`/${method.id}`)}
+              onClick={() => setLocation(`/${method.slug}`)}
               className="group bg-white p-8 border border-carbon/10 shadow-sm hover:shadow-xl hover:-translate-y-1 transition-all cursor-pointer rounded-sm flex flex-col"
             >
               <h2 className="text-2xl font-serif text-salvia group-hover:text-terracota transition-colors mb-4">

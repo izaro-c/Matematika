@@ -1,7 +1,7 @@
 import React, { useMemo, useState, useCallback, useRef, useEffect } from 'react';
 import { useLocation } from 'wouter';
 import ForceGraph2D from 'react-force-graph-2d';
-import { db } from '../store/ContentStore';
+import { db } from '../store/content';
 import { useGlossaryStore } from '../store/GlossaryStore';
 import { useProgressStore } from '../store/UserProgressStore';
 
@@ -9,32 +9,44 @@ import { useProgressStore } from '../store/UserProgressStore';
 const slugify = (text: string) => text.toString().toLowerCase()
   .normalize('NFD').replace(/[\u0300-\u036f]/g, '')
   .replace(/\s+/g, '-')
-  .replace(/[^\w\-]+/g, '')
-  .replace(/\-\-+/g, '-')
+  .replace(/[^\w-]+/g, '')
+  .replace(/--+/g, '-')
   .replace(/^-+/, '')
   .replace(/-+$/, '');
 
 /**
- * GraphPage - Lienzo Interactivo del Grafo de Conocimiento
- * 
- * Renderiza una red tridimensional (2D) simulada con fuerzas físicas.
- * Representa matemáticos, lecciones, teoremas, definiciones, ejemplos, ejercicios y casos de uso
- * como nodos interconectados (edges) a través de sus dependencias lógicas y referenciales.
+ * Página Explorador (Knowledge Graph).
+ * Renderiza una red tridimensional (2D proyectada) de todos los conceptos matemáticos.
+ * Permite explorar conexiones entre teoremas, lecciones, biógrafias y demostraciones.
  */
+interface GraphNode {
+  id: string;
+  name: string;
+  group: string;
+  val: number;
+  x?: number;
+  y?: number;
+}
+
+interface GraphLink {
+  source: string | GraphNode;
+  target: string | GraphNode;
+}
+
 export const GraphPage: React.FC = () => {
   const [, setLocation] = useLocation();
   const { openTerm } = useGlossaryStore();
-  const graphRef = useRef<any>(null);
+  const graphRef = useRef<React.ElementRef<typeof ForceGraph2D> | null>(null);
   
   // Extraer datos del ContentStore
   const graphData = useMemo(() => {
-    const nodes: any[] = [];
-    const links: any[] = [];
+    const nodes: GraphNode[] = [];
+    const links: GraphLink[] = [];
     const branchNames = new Map<string, string>(); // slug -> Nombre Original
     const subBranchNames = new Map<string, {name: string, parentSlug: string}>(); // slug -> {name, parentSlug}
     
     // Recolectar ramas principales y subramas
-    const extractBranches = (item: any) => {
+    const extractBranches = (item: { tags?: string[] }) => {
       if (item.tags?.[0]) branchNames.set(slugify(item.tags[0]), item.tags[0]);
       if (item.tags?.[0] && item.tags?.[1]) {
         subBranchNames.set(slugify(item.tags[1]), { name: item.tags[1], parentSlug: slugify(item.tags[0]) });
@@ -131,26 +143,26 @@ export const GraphPage: React.FC = () => {
       ...Array.from(db.mathematicians.values())
     ];
 
-    allEntities.forEach((entity: any) => {
+    allEntities.forEach((entity: { slug?: string; id?: string; links?: string[] }) => {
       if (entity.links && Array.isArray(entity.links)) {
         entity.links.forEach((linkTarget: string) => {
-          links.push({ source: entity.slug || entity.id, target: linkTarget });
+          links.push({ source: (entity.slug || entity.id) as string, target: linkTarget });
         });
       }
     });
 
     // Filtrar enlaces rotos (react-force-graph explota si un target no existe en nodes)
     const nodeIds = new Set(nodes.map(n => n.id));
-    const validLinks = links.filter(l => nodeIds.has(l.source) && nodeIds.has(l.target));
+    const validLinks = links.filter(l => nodeIds.has(l.source as string) && nodeIds.has(l.target as string));
 
     return { nodes, links: validLinks };
   }, []);
 
-  const [hoverNode, setHoverNode] = useState<any>(null);
+  const [hoverNode, setHoverNode] = useState<GraphNode | null>(null);
   const [highlightNodes, setHighlightNodes] = useState(new Set());
   const [highlightLinks, setHighlightLinks] = useState(new Set());
   const [searchQuery, setSearchQuery] = useState('');
-  const [searchResults, setSearchResults] = useState<any[]>([]);
+  const [searchResults, setSearchResults] = useState<GraphNode[]>([]);
 
   const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const query = e.target.value;
@@ -165,7 +177,7 @@ export const GraphPage: React.FC = () => {
     }
   };
 
-  const handleSearchResultClick = (node: any) => {
+  const handleSearchResultClick = (node: GraphNode) => {
     setSearchQuery('');
     setSearchResults([]);
     if (graphRef.current && node.x !== undefined && node.y !== undefined) {
@@ -180,17 +192,17 @@ export const GraphPage: React.FC = () => {
     setHighlightLinks(highlightLinks);
   }, [highlightNodes, highlightLinks]);
 
-  const handleNodeHover = useCallback((node: any) => {
+  const handleNodeHover = useCallback((node: GraphNode | null) => {
     highlightNodes.clear();
     highlightLinks.clear();
     if (node) {
       highlightNodes.add(node);
-      graphData.links.forEach((link: any) => {
-        if (link.source === node || link.source.id === node.id) {
+      graphData.links.forEach((link: GraphLink) => {
+        if (link.source === node || (link.source as any).id === node.id) {
           highlightLinks.add(link);
           highlightNodes.add(typeof link.target === 'object' ? link.target : graphData.nodes.find(n => n.id === link.target));
         }
-        if (link.target === node || link.target.id === node.id) {
+        if (link.target === node || (link.target as any).id === node.id) {
           highlightLinks.add(link);
           highlightNodes.add(typeof link.source === 'object' ? link.source : graphData.nodes.find(n => n.id === link.source));
         }
@@ -198,9 +210,9 @@ export const GraphPage: React.FC = () => {
     }
     setHoverNode(node || null);
     updateHighlight();
-  }, [graphData, updateHighlight]);
+  }, [graphData, updateHighlight, highlightNodes, highlightLinks]);
 
-  const handleNodeClick = useCallback((node: any) => {
+  const handleNodeClick = useCallback((node: GraphNode) => {
     if (node.group === 'branch' || node.group === 'central') {
       if (node.group === 'branch') {
         // Soporte tanto para ramas principales como sub-ramas
@@ -213,7 +225,7 @@ export const GraphPage: React.FC = () => {
     }
   }, [setLocation, openTerm]);
 
-  const getNodeColor = (node: any) => {
+  const getNodeColor = (node: GraphNode) => {
     switch (node.group) {
       case 'central': return '#333333'; // Carbon
       case 'branch': return '#C86446'; // Terracota
@@ -228,8 +240,8 @@ export const GraphPage: React.FC = () => {
     }
   };
 
-  const drawNode = useCallback((node: any, ctx: CanvasRenderingContext2D, globalScale: number) => {
-    if (!Number.isFinite(node.x) || !Number.isFinite(node.y)) return;
+  const drawNode = useCallback((node: GraphNode, ctx: CanvasRenderingContext2D, globalScale: number) => {
+    if (node.x === undefined || node.y === undefined || !Number.isFinite(node.x) || !Number.isFinite(node.y)) return;
     
     const isHighlighted = hoverNode ? highlightNodes.has(node) : true;
     const isCompleted = useProgressStore.getState().isRead(node.id);
@@ -298,11 +310,11 @@ export const GraphPage: React.FC = () => {
   useEffect(() => {
     if (graphRef.current) {
       setTimeout(() => {
-        graphRef.current.zoomToFit(400, 50);
+        graphRef.current?.zoomToFit(400, 50);
         
         // Ajustes de física (expandir la red de forma controlada)
-        graphRef.current.d3Force('charge').strength(-120); // Repulsión más suave para mantener los nodos juntos
-        graphRef.current.d3Force('link').distance((link: any) => {
+        graphRef.current?.d3Force('charge')?.strength(-120); // Repulsión más suave para mantener los nodos juntos
+        graphRef.current?.d3Force('link')?.distance((link: { source: { group: string }, target: { group: string } }) => {
            if (link.source.group === 'central' || link.target.group === 'central') return 100;
            if (link.source.group === 'branch' || link.target.group === 'branch') return 60;
            return 30;
@@ -364,7 +376,8 @@ export const GraphPage: React.FC = () => {
 
       <div className="absolute inset-0 cursor-move">
         <ForceGraph2D
-          ref={graphRef}
+          // eslint-disable-next-line @typescript-eslint/no-explicit-any
+          ref={graphRef as any}
           width={dimensions.width}
           height={dimensions.height}
           graphData={graphData}

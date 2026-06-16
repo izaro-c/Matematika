@@ -1,0 +1,83 @@
+<!DOCTYPE html><html class="default" lang="en" data-base="./"><head><meta charset="utf-8"/><meta http-equiv="x-ua-compatible" content="IE=edge"/><title>Matematika</title><meta name="description" content="Documentation for Matematika"/><meta name="viewport" content="width=device-width, initial-scale=1"/><link rel="stylesheet" href="assets/style.css"/><link rel="stylesheet" href="assets/highlight.css"/><script defer src="assets/main.js"></script><script async src="assets/icons.js" id="tsd-icons-script"></script><script async src="assets/search.js" id="tsd-search-script"></script><script async src="assets/navigation.js" id="tsd-nav-script"></script><script async src="assets/hierarchy.js" id="tsd-hierarchy-script"></script></head><body><script>document.documentElement.dataset.theme = localStorage.getItem("tsd-theme") || "os";document.body.style.display="none";setTimeout(() => window.app?app.showPage():document.body.style.removeProperty("display"),500)</script><header class="tsd-page-toolbar"><div class="tsd-toolbar-contents container"><a href="index.html" class="title">Matematika</a><div id="tsd-toolbar-links"></div><button id="tsd-search-trigger" class="tsd-widget" aria-label="Search"><svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><use href="assets/icons.svg#icon-search"></use></svg></button><dialog id="tsd-search" aria-label="Search"><input role="combobox" id="tsd-search-input" aria-controls="tsd-search-results" aria-autocomplete="list" aria-expanded="true" autocapitalize="off" autocomplete="off" placeholder="Search the docs" maxLength="100"/><ul role="listbox" id="tsd-search-results"></ul><div id="tsd-search-status" aria-live="polite" aria-atomic="true"><div>Preparing search index...</div></div></dialog><a href="#" class="tsd-widget menu" id="tsd-toolbar-menu-trigger" data-toggle="menu" aria-label="Menu"><svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><use href="assets/icons.svg#icon-menu"></use></svg></a></div></header><div class="container container-main"><div class="col-content"><div class="tsd-page-title"><h1>Matematika</h1></div><div class="tsd-panel tsd-typography"><h1 id="matematika-enciclopedia-viva" class="tsd-anchor-link">Matematika - Enciclopedia Viva<a href="#matematika-enciclopedia-viva" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="assets/icons.svg#icon-anchor"></use></svg></a></h1>
+<p>Matematika es una plataforma enciclopédica interactiva y orgánica diseñada para explorar el conocimiento matemático. En lugar de presentar páginas aisladas, los conceptos, teoremas, y matemáticos están fuertemente entrelazados en una &quot;Red Semántica&quot; navegable, permitiendo a los estudiantes explorar las matemáticas como lo que realmente son: un ecosistema profundamente interconectado.</p>
+<h2 id="características-principales" class="tsd-anchor-link">Características Principales<a href="#características-principales" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="assets/icons.svg#icon-anchor"></use></svg></a></h2>
+<ol>
+<li><strong>Grafo de Conocimiento (Knowledge Graph)</strong>: Un lienzo interactivo bidimensional (basado en <code>react-force-graph-2d</code>) que mapea dinámicamente las relaciones semánticas entre conceptos. Si un teorema menciona una definición o una demostración, una conexión orgánica se renderiza automáticamente.</li>
+<li><strong>Validación Estricta de Contenido</strong>: Todo el contenido está escrito en MDX (Markdown + React). Los metadatos de cada artículo (<em>frontmatter</em>) se validan estrictamente mediante <strong>Zod</strong> para garantizar la integridad referencial y de esquemas.</li>
+<li><strong>Lectura Marginal (Marginalia)</strong>: Inspirado en los textos clásicos, los enlaces a otros conceptos no expulsan al usuario de su contexto de lectura. En su lugar, abren elegantes paneles laterales (<code>MarginaliaPanel</code>) con resúmenes rápidos, axiomas matemáticos (en LaTeX) y simulaciones interactivas incrustadas.</li>
+<li><strong>Simulaciones Reactivas</strong>: Los diagramas interactivos se inyectan en tiempo real dentro del contenido y en el panel lateral, proporcionando intuición geométrica o conceptual in situ.</li>
+</ol>
+<hr>
+<h2 id="🛠-stack-tecnológico" class="tsd-anchor-link">🛠 Stack Tecnológico<a href="#🛠-stack-tecnológico" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="assets/icons.svg#icon-anchor"></use></svg></a></h2>
+<ul>
+<li><strong>Framework</strong>: React 18 + TypeScript</li>
+<li><strong>Bundler</strong>: Vite + Rollup</li>
+<li><strong>Routing</strong>: Wouter (Routing ligero y declarativo)</li>
+<li><strong>Contenido</strong>: MDX (<code>@mdx-js/rollup</code>) + Remark/Rehype Math (Soporte KaTeX)</li>
+<li><strong>Validación</strong>: Zod</li>
+<li><strong>Visualización</strong>: <code>react-force-graph-2d</code> (Físicas d3-force)</li>
+<li><strong>Estilos</strong>: Tailwind CSS (con un sistema de diseño &quot;Arts and Crafts&quot; personalizado).</li>
+</ul>
+<hr>
+<h2 id="🚀-instalación-y-uso" class="tsd-anchor-link">🚀 Instalación y Uso<a href="#🚀-instalación-y-uso" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="assets/icons.svg#icon-anchor"></use></svg></a></h2>
+<ol>
+<li>
+<p><strong>Clonar e instalar dependencias</strong>:</p>
+<pre><code class="bash"><span class="hl-0">npm</span><span class="hl-1"> </span><span class="hl-2">install</span>
+</code><button type="button">Copy</button></pre>
+
+</li>
+<li>
+<p><strong>Ejecutar servidor de desarrollo</strong>:</p>
+<pre><code class="bash"><span class="hl-0">npm</span><span class="hl-1"> </span><span class="hl-2">run</span><span class="hl-1"> </span><span class="hl-2">dev</span>
+</code><button type="button">Copy</button></pre>
+
+<p>Abre <a href="http://localhost:5173">http://localhost:5173</a> para ver la aplicación en funcionamiento.</p>
+</li>
+<li>
+<p><strong>Compilar para producción</strong>:</p>
+<pre><code class="bash"><span class="hl-0">npm</span><span class="hl-1"> </span><span class="hl-2">run</span><span class="hl-1"> </span><span class="hl-2">build</span>
+</code><button type="button">Copy</button></pre>
+
+</li>
+</ol>
+<hr>
+<h2 id="✍️-cómo-añadir-contenido" class="tsd-anchor-link">✍️ Cómo Añadir Contenido<a href="#✍️-cómo-añadir-contenido" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="assets/icons.svg#icon-anchor"></use></svg></a></h2>
+<p>Matematika utiliza el sistema de archivos como base de datos (<code>src/store/ContentStore.ts</code>). Añadir contenido es tan sencillo como crear un archivo <code>.mdx</code> en la carpeta correspondiente.</p>
+<h3 id="1-ubicaciones" class="tsd-anchor-link">1. Ubicaciones<a href="#1-ubicaciones" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="assets/icons.svg#icon-anchor"></use></svg></a></h3>
+<ul>
+<li><code>src/content/theorems</code>: Teoremas principales.</li>
+<li><code>src/content/definitions</code>: Conceptos, axiomas y definiciones formales.</li>
+<li><code>src/content/examples</code>: Ejemplos prácticos y numéricos.</li>
+<li><code>src/content/exercises</code>: Ejercicios propuestos con pistas y soluciones.</li>
+<li><code>src/content/usecases</code>: Aplicaciones del mundo real.</li>
+<li><code>src/content/demonstrations</code>: Demostraciones formales paso a paso.</li>
+<li><code>src/content/mathematicians</code>: Biografías históricas.</li>
+</ul>
+<h3 id="2-formato-mdx-y-zod-frontmatter" class="tsd-anchor-link">2. Formato MDX y Zod (Frontmatter)<a href="#2-formato-mdx-y-zod-frontmatter" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="assets/icons.svg#icon-anchor"></use></svg></a></h3>
+<p>Todo archivo <code>.mdx</code> debe exportar obligatoriamente una constante <code>metadata</code> que cumpla con su esquema en <code>schemas.ts</code>.</p>
+<p>Ejemplo de un <code>teorema.mdx</code>:</p>
+<pre><code class="mdx">export const metadata = {
+  id: "teorema-ejemplo",
+  title: "Teorema de Ejemplo",
+  description: "Descripción breve que aparecerá en el panel lateral.",
+  statement: "El enunciado formal con matemáticas en LaTeX: $a^2 = b^2 + c^2$.",
+  links: ["definicion-asociada", "matematico-autor"],
+  requires: ["definicion-previa"], // Grafo de dependencias lógicas
+  tags: ["Geometría"],
+};
+
+Aquí va el cuerpo del artículo. Si quieres hacer referencia a otro concepto para que abra el panel lateral sin recargar, utiliza un ConceptLink:
+
+Como vimos en el <ConceptLink targetId="definicion-asociada">Concepto Asociado</ConceptLink>...
+</code><button type="button">Copy</button></pre>
+
+<h3 id="3-el-componente" class="tsd-anchor-link">3. El componente <code>&lt;ConceptLink&gt;</code><a href="#3-el-componente" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="assets/icons.svg#icon-anchor"></use></svg></a></h3>
+<p>Es el corazón de la navegación interna. <strong>Nunca uses <code>&lt;a&gt;</code> o <code>&lt;Link&gt;</code> estándar para navegar entre conceptos</strong>.
+Usa <code>&lt;ConceptLink targetId=&quot;slug-del-archivo&quot;&gt;Texto a mostrar&lt;/ConceptLink&gt;</code>. Esto alimenta automáticamente el Grafo de Conocimiento y habilita el panel interactivo.</p>
+<hr>
+<h2 id="📂-arquitectura-de-directorios" class="tsd-anchor-link">📂 Arquitectura de Directorios<a href="#📂-arquitectura-de-directorios" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="assets/icons.svg#icon-anchor"></use></svg></a></h2>
+<pre><code><span class="hl-3">src</span><span class="hl-1">/</span><br/><span class="hl-1">├── </span><span class="hl-3">components</span><span class="hl-1">/       # </span><span class="hl-3">Componentes</span><span class="hl-1"> </span><span class="hl-3">de</span><span class="hl-1"> </span><span class="hl-0">UI</span><span class="hl-1"> (</span><span class="hl-3">MarginaliaPanel</span><span class="hl-1">, </span><span class="hl-3">ConceptLink</span><span class="hl-1">, </span><span class="hl-3">Navbar</span><span class="hl-1">)</span><br/><span class="hl-1">├── </span><span class="hl-3">content</span><span class="hl-1">/          # </span><span class="hl-3">Artículos</span><span class="hl-1"> </span><span class="hl-4">MDX</span><span class="hl-1"> </span><span class="hl-3">y</span><span class="hl-1"> </span><span class="hl-3">metadatos</span><span class="hl-1"> </span><span class="hl-4">JSON</span><br/><span class="hl-1">├── </span><span class="hl-3">diagrams</span><span class="hl-1">/         # </span><span class="hl-3">Visualizaciones</span><span class="hl-1"> </span><span class="hl-3">y</span><span class="hl-1"> </span><span class="hl-0">simulaciones</span><span class="hl-1"> (</span><span class="hl-4">D3</span><span class="hl-1">/</span><span class="hl-3">React</span><span class="hl-1">/</span><span class="hl-3">Canvas</span><span class="hl-1">)</span><br/><span class="hl-1">├── </span><span class="hl-3">pages</span><span class="hl-1">/            # </span><span class="hl-3">Vistas</span><span class="hl-1"> </span><span class="hl-0">principales</span><span class="hl-1"> (</span><span class="hl-3">GraphPage</span><span class="hl-1">, </span><span class="hl-3">ContentLayout</span><span class="hl-1">, </span><span class="hl-3">Home</span><span class="hl-1">)</span><br/><span class="hl-1">├── </span><span class="hl-3">store</span><span class="hl-1">/            # </span><span class="hl-3">Lógica</span><span class="hl-1"> </span><span class="hl-3">de</span><span class="hl-1"> </span><span class="hl-0">Estado</span><span class="hl-1"> (</span><span class="hl-3">ContentStore</span><span class="hl-1">, </span><span class="hl-3">UIStore</span><span class="hl-1">, </span><span class="hl-3">schemas</span><span class="hl-1">)</span><br/><span class="hl-1">└── </span><span class="hl-3">App</span><span class="hl-1">.</span><span class="hl-3">tsx</span><span class="hl-1">           # </span><span class="hl-3">Punto</span><span class="hl-1"> </span><span class="hl-3">de</span><span class="hl-1"> </span><span class="hl-3">entrada</span><span class="hl-1"> </span><span class="hl-3">y</span><span class="hl-1"> </span><span class="hl-3">Routing</span><span class="hl-1"> </span><span class="hl-3">global</span><br/><span class="hl-3">docs</span><span class="hl-1">/                 # </span><span class="hl-3">Documentación</span><span class="hl-1"> </span><span class="hl-3">técnica</span><span class="hl-1">, </span><span class="hl-3">directrices</span><span class="hl-1"> </span><span class="hl-3">y</span><span class="hl-1"> </span><span class="hl-3">reglas</span><span class="hl-1"> </span><span class="hl-3">del</span><span class="hl-1"> </span><span class="hl-3">proyecto</span>
+</code><button>Copy</button></pre>
+
+</div></div><div class="col-sidebar"><div class="page-menu"><div class="tsd-navigation settings"><details class="tsd-accordion"><summary class="tsd-accordion-summary"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true"><use href="assets/icons.svg#icon-chevronDown"></use></svg><h3>Settings</h3></summary><div class="tsd-accordion-details"><div class="tsd-filter-visibility"><span class="settings-label">Member Visibility</span><ul id="tsd-filter-options"><li class="tsd-filter-item"><label class="tsd-filter-input"><input type="checkbox" id="tsd-filter-inherited" name="inherited" checked/><svg width="32" height="32" viewBox="0 0 32 32" aria-hidden="true"><rect class="tsd-checkbox-background" width="30" height="30" x="1" y="1" rx="6" fill="none"></rect><path class="tsd-checkbox-checkmark" d="M8.35422 16.8214L13.2143 21.75L24.6458 10.25" stroke="none" stroke-width="3.5" stroke-linejoin="round" fill="none"></path></svg><span>Inherited</span></label></li><li class="tsd-filter-item"><label class="tsd-filter-input"><input type="checkbox" id="tsd-filter-external" name="external"/><svg width="32" height="32" viewBox="0 0 32 32" aria-hidden="true"><rect class="tsd-checkbox-background" width="30" height="30" x="1" y="1" rx="6" fill="none"></rect><path class="tsd-checkbox-checkmark" d="M8.35422 16.8214L13.2143 21.75L24.6458 10.25" stroke="none" stroke-width="3.5" stroke-linejoin="round" fill="none"></path></svg><span>External</span></label></li></ul></div><div class="tsd-theme-toggle"><label class="settings-label" for="tsd-theme">Theme</label><select id="tsd-theme"><option value="os">OS</option><option value="light">Light</option><option value="dark">Dark</option></select></div></div></details></div><details open class="tsd-accordion tsd-page-navigation"><summary class="tsd-accordion-summary"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true"><use href="assets/icons.svg#icon-chevronDown"></use></svg><h3>On This Page</h3></summary><div class="tsd-accordion-details"><a href="#matematika-enciclopedia-viva"><span>Matematika -<wbr/> <wbr/>Enciclopedia <wbr/>Viva</span></a><ul><li><a href="#características-principales"><span>Características <wbr/>Principales</span></a></li><li><a href="#🛠-stack-tecnológico"><span>🛠 <wbr/>Stack <wbr/>Tecnológico</span></a></li><li><a href="#🚀-instalación-y-uso"><span>🚀 <wbr/>Instalación y <wbr/>Uso</span></a></li><li><a href="#✍️-cómo-añadir-contenido"><span>✍️ <wbr/>Cómo <wbr/>Añadir <wbr/>Contenido</span></a></li><li><ul><li><a href="#1-ubicaciones"><span>1. <wbr/>Ubicaciones</span></a></li><li><a href="#2-formato-mdx-y-zod-frontmatter"><span>2. <wbr/>Formato <wbr/>MDX y <wbr/>Zod (<wbr/>Frontmatter)</span></a></li><li><a href="#3-el-componente"><span>3. <wbr/>El componente </span></a></li></ul></li><li><a href="#📂-arquitectura-de-directorios"><span>📂 <wbr/>Arquitectura de <wbr/>Directorios</span></a></li></ul></div></details></div><div class="site-menu"><nav class="tsd-navigation"><a href="modules.html">Matematika</a><ul class="tsd-small-nested-navigation" id="tsd-nav-container"><li>Loading...</li></ul></nav></div></div></div><footer><p class="tsd-generator">Generated using <a href="https://typedoc.org/" target="_blank">TypeDoc</a></p></footer><div class="overlay"></div></body></html>

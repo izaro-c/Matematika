@@ -3,25 +3,47 @@ import { navigate } from 'wouter/use-browser-location';
 import ForceGraph2D from 'react-force-graph-2d';
 import { useProgressStore } from '../../store/UserProgressStore';
 
+/**
+ * Propiedades del Grafo Taxonómico
+ */
 interface TaxonomyGraphProps {
   taxonomy: {
     id: string;
     slug: string;
     subBranches: { name: string; slug: string }[];
-    directItems: { type: string; item: any; subBranchSlug?: string }[];
+    directItems: { type: string; item: { id: string; slug?: string; title?: string; requires?: string[] }; subBranchSlug?: string }[];
   };
 }
 
+/**
+ * Componente interactivo que renderiza un grafo de fuerza 2D.
+ * Visualiza la taxonomía matemática de una rama específica (teoremas, lecciones, definiciones).
+ * Muestra dependencias (requerimientos) entre conceptos de manera dinámica.
+ */
+interface GraphNode {
+  id: string;
+  name: string;
+  group: string;
+  val: number;
+  url?: string;
+  x?: number;
+  y?: number;
+}
+
+interface GraphLink {
+  source: string | GraphNode;
+  target: string | GraphNode;
+}
+
 export const TaxonomyGraph: React.FC<TaxonomyGraphProps> = ({ taxonomy }) => {
-  const graphRef = useRef<any>(null);
   const { isRead } = useProgressStore();
-  const [hoverNode, setHoverNode] = useState<any>(null);
+  const [hoverNode, setHoverNode] = useState<GraphNode | null>(null);
   const [highlightNodes, setHighlightNodes] = useState(new Set());
   const [highlightLinks, setHighlightLinks] = useState(new Set());
 
   const graphData = useMemo(() => {
-    const nodes: any[] = [];
-    const links: any[] = [];
+    const nodes: GraphNode[] = [];
+    const links: GraphLink[] = [];
 
     // Root (The branch itself) - Ahora se ve como una RAMA (Terracota), no como el nodo central de Matemáticas
     nodes.push({ id: taxonomy.slug, name: taxonomy.id || taxonomy.slug, group: 'branch', val: 35 });
@@ -39,9 +61,12 @@ export const TaxonomyGraph: React.FC<TaxonomyGraphProps> = ({ taxonomy }) => {
       const type = itemObj.type;
       
       let url = '/';
-      if (type === 'lesson') url = `/${item.id}`;
+      if (type === 'lesson') url = `/${item.slug}`;
       else if (type === 'theorem') url = `/teorema/${item.id}`;
       else if (type === 'definition') url = `/definicion/${item.id}`;
+      else if (type === 'example') url = `/ejemplo/${item.id}`;
+      else if (type === 'exercise') url = `/ejercicio/${item.id}`;
+      else if (type === 'usecase') url = `/caso/${item.id}`;
 
       nodes.push({ 
         id: item.id, // ID exacto para isRead
@@ -85,17 +110,17 @@ export const TaxonomyGraph: React.FC<TaxonomyGraphProps> = ({ taxonomy }) => {
     setHighlightLinks(new Set(highlightLinks));
   }, [highlightNodes, highlightLinks]);
 
-  const handleNodeHover = useCallback((node: any) => {
+  const handleNodeHover = useCallback((node: GraphNode | null) => {
     highlightNodes.clear();
     highlightLinks.clear();
     if (node) {
       highlightNodes.add(node);
-      graphData.links.forEach((link: any) => {
-        if (link.source === node || link.source.id === node.id) {
+      graphData.links.forEach((link: GraphLink) => {
+        if (link.source === node || (link.source as any).id === node.id) {
           highlightLinks.add(link);
           highlightNodes.add(typeof link.target === 'object' ? link.target : graphData.nodes.find(n => n.id === link.target));
         }
-        if (link.target === node || link.target.id === node.id) {
+        if (link.target === node || (link.target as any).id === node.id) {
           highlightLinks.add(link);
           highlightNodes.add(typeof link.source === 'object' ? link.source : graphData.nodes.find(n => n.id === link.source));
         }
@@ -103,15 +128,15 @@ export const TaxonomyGraph: React.FC<TaxonomyGraphProps> = ({ taxonomy }) => {
     }
     setHoverNode(node || null);
     updateHighlight();
-  }, [graphData, updateHighlight]);
+  }, [graphData, updateHighlight, highlightNodes, highlightLinks]);
 
-  const handleNodeClick = useCallback((node: any) => {
+  const handleNodeClick = useCallback((node: GraphNode) => {
     if (node.url) {
       navigate(node.url);
     }
   }, []);
 
-  const getNodeColor = (node: any) => {
+  const getNodeColor = (node: GraphNode) => {
     switch (node.group) {
       case 'central': return '#333333'; // Carbon
       case 'branch': return '#C86446'; // Terracota
@@ -127,8 +152,8 @@ export const TaxonomyGraph: React.FC<TaxonomyGraphProps> = ({ taxonomy }) => {
     }
   };
 
-  const drawNode = useCallback((node: any, ctx: CanvasRenderingContext2D, globalScale: number) => {
-    if (!Number.isFinite(node.x) || !Number.isFinite(node.y)) return;
+  const drawNode = useCallback((node: GraphNode, ctx: CanvasRenderingContext2D, globalScale: number) => {
+    if (node.x === undefined || node.y === undefined || !Number.isFinite(node.x) || !Number.isFinite(node.y)) return;
     
     const isHighlighted = hoverNode ? highlightNodes.has(node) : true;
     const isCompleted = isRead(node.id);
@@ -187,7 +212,7 @@ export const TaxonomyGraph: React.FC<TaxonomyGraphProps> = ({ taxonomy }) => {
       if (node.group === 'central') ctx.fillStyle = isHighlighted ? '#C86446' : '#C8644680';
       ctx.fillText(label, node.x, node.y + radius + (fontSize/2) + (4/globalScale));
     }
-  }, [hoverNode, highlightNodes, isRead]);
+  }, [hoverNode, highlightNodes, isRead, taxonomy.slug]);
 
   // Ajuste automático de tamaño del Canvas
   const [dimensions, setDimensions] = useState({ width: 0, height: 400 });
@@ -214,11 +239,10 @@ export const TaxonomyGraph: React.FC<TaxonomyGraphProps> = ({ taxonomy }) => {
 
   return (
     <div ref={containerRef} className="w-full h-[400px] border-y border-carbon/20 overflow-hidden bg-[#F8F6F1] relative shadow-inner cursor-move" style={{ backgroundImage: 'url(/images/bg_arts_crafts.png)', backgroundSize: '600px', backgroundRepeat: 'repeat' }}>
-      <div className="absolute z-10 top-4 left-4 text-[10px] font-sans uppercase tracking-widest text-carbon/60 select-none pointer-events-none bg-[#F8F6F1]/90 px-3 py-1.5 border border-carbon/10 shadow-sm backdrop-blur-sm rounded-sm">
+      <div className="absolute z-10 top-4 left-4 text-[10px] font-sans uppercase tracking-widest text-carbon/60 select-none pointer-events-none bg-[#F8F6F1]/90 px-3 py-1.5 border border-carbon/10 shadow-sm backdrop-blur-sm rounded-none">
         Grafo Topológico: {taxonomy.id}
       </div>
       <ForceGraph2D
-        ref={graphRef}
         width={dimensions.width}
         height={dimensions.height}
         graphData={graphData}
@@ -226,8 +250,8 @@ export const TaxonomyGraph: React.FC<TaxonomyGraphProps> = ({ taxonomy }) => {
         nodeCanvasObject={drawNode}
         onNodeHover={handleNodeHover}
         onNodeClick={handleNodeClick}
-        linkColor={(link: any) => highlightLinks.has(link) ? '#C86446' : 'rgba(51, 51, 51, 0.15)'}
-        linkWidth={(link: any) => highlightLinks.has(link) ? 2 : 1}
+        linkColor={(link: object) => highlightLinks.has(link) ? '#C86446' : 'rgba(51, 51, 51, 0.15)'}
+        linkWidth={(link: object) => highlightLinks.has(link) ? 2 : 1}
         enableNodeDrag={true}
         enableZoomInteraction={true}
         enablePanInteraction={true}

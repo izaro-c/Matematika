@@ -23,10 +23,15 @@ interface PasoProps {
   visible?: boolean;
 }
 
+/**
+ * Permite mostrar la solución de un ejemplo de forma progresiva.
+ * Cada paso puede revelarse individualmente haciendo clic en "Revelar paso".
+ * Los pasos se revelan en orden.
+ */
 export const Paso: React.FC<PasoProps> = ({ id, numero, titulo, children, visible = false }) => {
   const [revealed, setRevealed] = useState(visible);
   const { setActiveStep } = useLessonStore();
-  const displayId = numero || id;
+  const displayNum = numero;
 
   return (
     <div className="my-5 font-serif">
@@ -34,15 +39,15 @@ export const Paso: React.FC<PasoProps> = ({ id, numero, titulo, children, visibl
       <div 
         className="flex items-center gap-3 mb-2 cursor-pointer group"
         onClick={() => {
-          if (revealed && displayId) setActiveStep(displayId.toString());
+          if (revealed && id) setActiveStep(id);
         }}
         onMouseEnter={() => {
-          if (revealed && displayId) setActiveStep(displayId.toString());
+          if (revealed && id) setActiveStep(id);
         }}
       >
-        {displayId && (
-          <div className="flex items-center justify-center w-7 h-7 rounded-full bg-carbon/8 border border-carbon/20 text-xs font-mono font-bold text-carbon/60 shrink-0 group-hover:border-carbon/50 transition-colors">
-            {displayId}
+        {displayNum !== undefined && (
+          <div className="flex items-center justify-center w-7 h-7 bg-lienzo border border-carbon/30 rounded-none text-xs font-serif font-bold text-carbon/70 shrink-0 shadow-[inset_0_1px_2px_rgba(0,0,0,0.02)] group-hover:border-carbon/60 transition-all">
+            {displayNum}
           </div>
         )}
         {titulo && (
@@ -62,9 +67,9 @@ export const Paso: React.FC<PasoProps> = ({ id, numero, titulo, children, visibl
           <button
             onClick={() => {
               setRevealed(true);
-              if (displayId) setActiveStep(displayId.toString());
+              if (id) setActiveStep(id);
             }}
-            className="text-xs font-sans text-carbon/40 hover:text-carbon border border-dashed border-carbon/20 hover:border-carbon/40 px-4 py-2 rounded transition-all flex items-center gap-2 group"
+            className="text-xs font-sans text-carbon/50 hover:text-carbon border border-carbon/20 bg-lienzo hover:border-carbon/40 hover:bg-carbon/[0.02] px-4 py-2 rounded-none transition-all shadow-sm hover:shadow-md hover:-translate-y-0.5 flex items-center gap-2 group"
           >
             <span className="group-hover:scale-110 transition-transform">▷</span>
             Revelar paso

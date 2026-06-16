@@ -28,22 +28,57 @@
 
 .dark {
   /* El Códice Nocturno */
-  --theme-lienzo: #151618;
-  --theme-carbon: #E8E6E1;
-  --theme-salvia: #6B8C7A;
-  --theme-terracota: #E07A5F;
-  --theme-pizarra: #8D99AE;
-  --theme-ocre: #D4A373;
-  --theme-pavo: #6C8E9E;
-  --theme-granada: #B05252;
-  --theme-musgo: #6E8842;
+  --theme-lienzo: #121315; /* Un poco más oscuro para más profundidad */
+  --theme-carbon: #EFECE6; /* Un poco más claro y cálido */
+  --theme-salvia: #7A9B89;
+  --theme-terracota: #E58D76;
+  --theme-pizarra: #9FAABF;
+  --theme-ocre: #DDAA77;
+  --theme-pavo: #7A9CAE;
+  --theme-granada: #BC6060;
+  --theme-musgo: #7C964D;
 }
 
 body {
   background-color: var(--theme-lienzo);
   color: var(--theme-carbon);
-  transition: background-color 0.5s ease, color 0.5s ease;
+  transition: background-color 0.6s cubic-bezier(0.22, 1, 0.36, 1), color 0.6s cubic-bezier(0.22, 1, 0.36, 1);
+  font-feature-settings: "liga" 1, "kern" 1;
+  -webkit-font-smoothing: antialiased;
 }
+
+/* Scrollbar Clásica */
+::-webkit-scrollbar {
+  width: 12px;
+  height: 12px;
+}
+::-webkit-scrollbar-track {
+  background: var(--theme-lienzo);
+  border-left: 1px solid var(--theme-carbon);
+}
+::-webkit-scrollbar-thumb {
+  background-color: var(--theme-carbon);
+  border: 2px solid var(--theme-lienzo);
+}
+::-webkit-scrollbar-thumb:hover {
+  background-color: var(--theme-terracota);
+}
+
+/* Panel Elegante Impreso */
+.elegant-panel {
+  --hover-accent: var(--theme-terracota);
+  background-color: var(--theme-lienzo);
+  border: 1px solid color-mix(in srgb, var(--theme-carbon) 30%, transparent);
+  outline: 1px solid color-mix(in srgb, var(--theme-carbon) 15%, transparent);
+  outline-offset: -4px;
+  transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
+}
+
+.elegant-panel:hover {
+  border-color: color-mix(in srgb, var(--hover-accent) 70%, transparent);
+  outline-color: color-mix(in srgb, var(--hover-accent) 40%, transparent);
+}
+
 
 .scale-animation {
   animation: popIn 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
@@ -147,12 +182,16 @@ body {
   0% {
     opacity: 0;
   }
-
   100% {
     opacity: 1;
   }
 }
 
 .animate-fade-in {
-  animation: simple-fade 0.3s ease-out forwards;
+  animation: simple-fade 0.2s ease-in forwards;
+}
+
+/* Suavizado en enlaces globales pero menos elástico */
+a, button {
+  transition: all 0.15s ease-out;
 }

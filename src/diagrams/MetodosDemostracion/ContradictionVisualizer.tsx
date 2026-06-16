@@ -1,5 +1,11 @@
 import { useState } from 'react';
 
+/**
+ * ContradictionVisualizer
+ *
+ * Componente de visualización matemática. Renderiza un diagrama interactivo 
+ * o estático para apoyar el contenido de las lecciones.
+ */
 export const ContradictionVisualizer = () => {
   const [path, setPath] = useState<'none' | 'direct' | 'absurd'>('none');
   const [step, setStep] = useState(0);

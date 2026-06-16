@@ -2,9 +2,15 @@ import { useRef, useEffect } from 'react';
 import JXG from 'jsxgraph';
 import { useMathStore } from '../../store/MathStoreContext';
 
+/**
+ * StaticVisualizer
+ *
+ * Componente de visualización matemática. Renderiza un diagrama interactivo 
+ * o estático para apoyar el contenido de las lecciones.
+ */
 export const StaticVisualizer = () => {
     const boardRef = useRef<HTMLDivElement>(null);
-    const elementsRef = useRef<any>({});
+    const elementsRef = useRef<Record<string, unknown>>({});
     
     const highlight = useMathStore(state => state.variables['highlight']);
 
@@ -62,7 +68,8 @@ export const StaticVisualizer = () => {
 
     // 5. REACTIVIDAD INVERSA (Zustand -> Gráfico)
     useEffect(() => {
-        const { sideA, sideB, sideC, sqA, sqB, sqC, board } = elementsRef.current;
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        const { sideA, sideB, sideC, sqA, sqB, sqC, board } = elementsRef.current as Record<string, any>;
         if (!board) return;
 
         // Reset

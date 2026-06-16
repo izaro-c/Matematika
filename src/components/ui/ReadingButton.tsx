@@ -1,10 +1,19 @@
 import React from 'react';
 import { useProgressStore } from '../../store/UserProgressStore';
 
+/**
+ * Propiedades del botón de lectura
+ */
 interface ReadingButtonProps {
+  /** ID o slug del contenido que se marcará como completado */
   id: string;
 }
 
+/**
+ * Botón grande al final de las lecciones/conceptos para marcar un elemento como "Leído" (completado).
+ * Actualiza el `UserProgressStore` global y muestra una animación de rotación en el rombo
+ * cuando cambia de estado.
+ */
 export const ReadingButton: React.FC<ReadingButtonProps> = ({ id }) => {
   const { isRead, toggleRead } = useProgressStore();
   const alreadyRead = isRead(id);

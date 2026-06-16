@@ -7,6 +7,9 @@ interface Pair {
   right: string;
 }
 
+/**
+ * Propiedades de Emparejar
+ */
 interface EmparejarProps {
   id: string;
   pairs: Pair[];
@@ -21,6 +24,11 @@ function shuffle<T>(array: T[]): T[] {
   return arr;
 }
 
+/**
+ * Componente interactivo para ejercicios de "Unir con flechas" (Matching).
+ * Renderiza dos columnas de elementos y dibuja curvas SVG Bézier entre 
+ * las opciones seleccionadas. Comunica el éxito al `ExerciseContext`.
+ */
 export const Emparejar: React.FC<EmparejarProps> = ({ id, pairs }) => {
   const { register, answer, state } = useExercise();
   const qState = state.questions[id];
@@ -85,6 +93,7 @@ export const Emparejar: React.FC<EmparejarProps> = ({ id, pairs }) => {
     updateLines();
     window.addEventListener('resize', updateLines);
     return () => window.removeEventListener('resize', updateLines);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [matchedPairs, errorPair, selectedLeft, selectedRight]);
 
   useEffect(() => {
@@ -92,6 +101,7 @@ export const Emparejar: React.FC<EmparejarProps> = ({ id, pairs }) => {
       const isMatch = pairs.some(p => p.left === selectedLeft && p.right === selectedRight);
       
       if (isMatch) {
+        // eslint-disable-next-line react-hooks/set-state-in-effect
         setMatchedPairs(prev => [...prev, selectedLeft]);
         setSelectedLeft(null);
         setSelectedRight(null);
@@ -116,20 +126,24 @@ export const Emparejar: React.FC<EmparejarProps> = ({ id, pairs }) => {
 
   useEffect(() => {
     if (qState?.isCorrect === null && matchedPairs.length > 0) {
+      // eslint-disable-next-line react-hooks/set-state-in-effect
       setMatchedPairs([]);
       setSelectedLeft(null);
       setSelectedRight(null);
       setErrorPair(null);
     }
-  }, [qState?.isCorrect]); 
+  }, [qState?.isCorrect, matchedPairs.length]);
 
   const isCompleted = qState?.isCorrect === true;
 
   return (
     <div className="my-8 font-serif">
-      <div className={`p-8 bg-[#fdfbf7] border border-carbon/20 shadow-sm transition-all duration-500 ${isCompleted ? 'border-[#2a6a2a]/30 bg-[#f0faf0]/50' : ''}`}>
-        <h4 className="font-bold text-carbon mb-8 flex items-center gap-3 text-lg">
-          {isCompleted ? <span className="text-[#2a6a2a]">❦ Emparejamiento Completado</span> : <span>Une los conceptos correspondientes</span>}
+      <div 
+        className={`p-8 elegant-panel relative group ${isCompleted ? 'bg-salvia/5 border-salvia/30' : ''}`}
+        style={{ '--hover-accent': isCompleted ? 'var(--theme-salvia)' : 'var(--theme-carbon)' } as React.CSSProperties}
+      >
+        <h4 className="font-bold text-carbon mb-8 mt-2 flex items-center gap-3 text-lg z-30 relative">
+          {isCompleted ? <span className="text-salvia">❦ Completado</span> : <span>Une los conceptos correspondientes</span>}
         </h4>
 
         <div className="relative flex gap-16" ref={containerRef}>
@@ -147,7 +161,7 @@ export const Emparejar: React.FC<EmparejarProps> = ({ id, pairs }) => {
                   key={i}
                   d={`M ${line.x1} ${line.y1} C ${cx1} ${cy1}, ${cx2} ${cy2}, ${line.x2} ${line.y2}`}
                   fill="none"
-                  stroke={line.isMatched ? "#2a6a2a" : "#C86446"}
+                  stroke={line.isMatched ? "var(--theme-salvia)" : "var(--theme-terracota)"}
                   strokeWidth={line.isMatched ? "2" : "2"}
                   strokeDasharray={line.isMatched ? "none" : "4 4"}
                   className="transition-all duration-300 drop-shadow-sm"
@@ -163,11 +177,11 @@ export const Emparejar: React.FC<EmparejarProps> = ({ id, pairs }) => {
               const isSelected = selectedLeft === item;
               const isError = errorPair && errorPair[0] === item;
 
-              let btnClass = "px-5 py-4 border rounded-sm text-left shadow-sm transition-all duration-300 relative ";
-              if (isMatched) btnClass += "bg-[#f0faf0] border-[#2a6a2a]/40 text-[#1a4a1a] cursor-default";
+              let btnClass = "px-5 py-4 border rounded-none text-left transition-all duration-300 relative ";
+              if (isMatched) btnClass += "bg-salvia/10 border-salvia/40 text-salvia cursor-default shadow-[inset_0_2px_4px_rgba(0,0,0,0.05)]";
               else if (isError) btnClass += "bg-terracota/5 border-terracota/60 text-terracota animate-shake";
-              else if (isSelected) btnClass += "bg-[#F8F6F1] border-carbon text-carbon transform scale-[1.02] shadow-md z-30";
-              else btnClass += "bg-white border-carbon/20 hover:border-carbon/50 hover:bg-[#F8F6F1] cursor-pointer text-carbon";
+              else if (isSelected) btnClass += "bg-carbon/10 border-carbon text-carbon transform scale-[1.02] shadow-md z-30";
+              else btnClass += "bg-transparent border-carbon/20 hover:border-carbon/50 hover:bg-carbon/[0.02] cursor-pointer text-carbon hover:-translate-y-0.5 hover:shadow-sm";
 
               return (
                 <button
@@ -179,7 +193,7 @@ export const Emparejar: React.FC<EmparejarProps> = ({ id, pairs }) => {
                 >
                   <KatexText text={item} />
                   {/* Conector */}
-                  <div className={`absolute right-0 top-1/2 -translate-y-1/2 translate-x-1/2 w-3 h-3 rounded-full border-2 ${isMatched ? 'border-[#2a6a2a] bg-white' : isSelected ? 'border-carbon bg-carbon' : 'border-carbon/30 bg-white'}`} />
+                  <div className={`absolute right-0 top-1/2 -translate-y-1/2 translate-x-1/2 w-3 h-3 rounded-full border-2 ${isMatched ? 'border-salvia bg-lienzo' : isSelected ? 'border-carbon bg-carbon' : 'border-carbon/30 bg-lienzo'}`} />
                 </button>
               );
             })}
@@ -193,11 +207,11 @@ export const Emparejar: React.FC<EmparejarProps> = ({ id, pairs }) => {
               const isSelected = selectedRight === item;
               const isError = errorPair && errorPair[1] === item;
 
-              let btnClass = "px-5 py-4 border rounded-sm text-left shadow-sm transition-all duration-300 relative ";
-              if (isMatched) btnClass += "bg-[#f0faf0] border-[#2a6a2a]/40 text-[#1a4a1a] cursor-default";
+              let btnClass = "px-5 py-4 border rounded-none text-left transition-all duration-300 relative ";
+              if (isMatched) btnClass += "bg-salvia/10 border-salvia/40 text-salvia cursor-default shadow-[inset_0_2px_4px_rgba(0,0,0,0.05)]";
               else if (isError) btnClass += "bg-terracota/5 border-terracota/60 text-terracota animate-shake";
-              else if (isSelected) btnClass += "bg-[#F8F6F1] border-carbon text-carbon transform scale-[1.02] shadow-md z-30";
-              else btnClass += "bg-white border-carbon/20 hover:border-carbon/50 hover:bg-[#F8F6F1] cursor-pointer text-carbon";
+              else if (isSelected) btnClass += "bg-carbon/10 border-carbon text-carbon transform scale-[1.02] shadow-md z-30";
+              else btnClass += "bg-transparent border-carbon/20 hover:border-carbon/50 hover:bg-carbon/[0.02] cursor-pointer text-carbon hover:-translate-y-0.5 hover:shadow-sm";
 
               return (
                 <button
@@ -208,7 +222,7 @@ export const Emparejar: React.FC<EmparejarProps> = ({ id, pairs }) => {
                   className={btnClass}
                 >
                   {/* Conector */}
-                  <div className={`absolute left-0 top-1/2 -translate-y-1/2 -translate-x-1/2 w-3 h-3 rounded-full border-2 ${isMatched ? 'border-[#2a6a2a] bg-white' : isSelected ? 'border-carbon bg-carbon' : 'border-carbon/30 bg-white'}`} />
+                  <div className={`absolute left-0 top-1/2 -translate-y-1/2 -translate-x-1/2 w-3 h-3 rounded-full border-2 ${isMatched ? 'border-salvia bg-lienzo' : isSelected ? 'border-carbon bg-carbon' : 'border-carbon/30 bg-lienzo'}`} />
                   <KatexText text={item} />
                 </button>
               );

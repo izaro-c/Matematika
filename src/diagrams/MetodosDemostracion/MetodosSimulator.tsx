@@ -5,6 +5,12 @@ import { ContradictionVisualizer } from './ContradictionVisualizer';
 import { InductionVisualizer } from './InductionVisualizer';
 import { ContrapositionVisualizer } from './ContrapositionVisualizer';
 
+/**
+ * MetodosSimulator
+ *
+ * Componente de visualización matemática. Renderiza un diagrama interactivo 
+ * o estático para apoyar el contenido de las lecciones.
+ */
 export const MetodosSimulator = () => {
     const highlight = useMathStore(state => state.variables['highlight']);
 

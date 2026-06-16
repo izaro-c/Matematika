@@ -12,9 +12,9 @@
  */
 import { useParams, Link } from 'wouter';
 import { Suspense, useEffect } from 'react';
-import { db } from '../store/ContentStore';
+import { db } from '../store/content';
 import { ExerciseProvider, useExercise } from '../components/exercises/ExerciseContext';
-import { SimulationLayout } from '../components/SimulationLayout';
+import { SimulationLayout } from "../components/layout/SimulationLayout";
 import { KatexText } from '../components/ui/KatexText';
 import { useProgressStore } from '../store/UserProgressStore';
 

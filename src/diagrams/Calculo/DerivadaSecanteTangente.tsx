@@ -1,6 +1,12 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { useLessonStore } from '../../store/LessonStore';
 
+/**
+ * DerivadaSecanteTangente
+ *
+ * Componente de visualización matemática. Renderiza un diagrama interactivo 
+ * o estático para apoyar el contenido de las lecciones.
+ */
 export const DerivadaSecanteTangente: React.FC = () => {
   const { activeStep } = useLessonStore();
   
@@ -64,7 +70,7 @@ export const DerivadaSecanteTangente: React.FC = () => {
     const ex = e.clientX - rect.left;
     
     // Invertir px to x
-    let newX = (ex - origin.x) / scaleX;
+    const newX = (ex - origin.x) / scaleX;
     let newH = newX - x0;
     
     // Limitar h entre 0.01 y 3
@@ -78,6 +84,7 @@ export const DerivadaSecanteTangente: React.FC = () => {
   // Si está en el paso tangente, forzamos animación suave hacia h=0.001
   useEffect(() => {
     if (isTangente) {
+      // eslint-disable-next-line react-hooks/set-state-in-effect
       setH(0.001);
     } else if (isSecante) {
       setH(2);

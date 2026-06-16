@@ -1,13 +1,24 @@
-import { createContext, useContext, useRef } from 'react';
+import { createContext, useContext, useState } from 'react';
 import { createStore, useStore } from 'zustand';
 
-// 1. Aquí definimos QUÉ datos va a guardar nuestro store matemático.
+/**
+ * Interfaz que define la estructura del estado matemático.
+ * 
+ * Almacena variables y permite modificarlas, para que cualquier componente 
+ * (ej. un slider o una gráfica) pueda leer o actualizar los valores globales
+ * del contexto matemático de una lección particular.
+ */
 export interface MathState {
     variables: Record<string, number | number[] | string | null>;
     setVariable: (name: string, value: number | number[] | string | null) => void;
 }
 
-// 2. Creamos la "fábrica" del store.
+/**
+ * Función fábrica para crear una instancia aislada del MathStore usando Zustand.
+ * 
+ * A diferencia de los stores globales, instanciamos un store por contexto 
+ * para aislar las variables de cada lección de otras lecciones abiertas.
+ */
 const createMathStore = () => {
     return createStore<MathState>()((set) => ({
         variables: {},
@@ -20,27 +31,39 @@ const createMathStore = () => {
     }));
 };
 
+/** Tipo inferido para el store creado por la fábrica */
 type MathStore = ReturnType<typeof createMathStore>;
 
-// 3. Creamos el Contexto de React.
+/** Contexto de React para inyectar el store Zustand en el árbol de componentes */
 const MathContext = createContext<MathStore | null>(null);
 
-// 4. EL PROVIDER: Instancia un Store NUEVO usando useRef.
+/**
+ * Proveedor del Contexto Matemático.
+ * 
+ * Envuelve una sección de la aplicación (usualmente una lección interactiva) 
+ * proporcionándole un store de Zustand completamente aislado para evitar colisión de variables.
+ */
 export const MathProvider = ({ children }: { children: React.ReactNode }) => {
-    const storeRef = useRef<MathStore>(null);
-
-    if (!storeRef.current) {
-        storeRef.current = createMathStore();
-    }
+    const [store] = useState(() => createMathStore());
 
     return (
-        <MathContext.Provider value={storeRef.current}>
+        <MathContext.Provider value={store}>
             {children}
         </MathContext.Provider>
     );
 };
 
-// 5. CUSTOM HOOK
+/**
+ * Custom hook para acceder al estado matemático desde componentes hijos del MathProvider.
+ * 
+ * Envuelve el hook `useStore` de Zustand para que consuma de la instancia que provee el Contexto
+ * en lugar de una instancia global única.
+ * 
+ * @param selector Función para seleccionar qué parte del estado (o acciones) se requiere.
+ * @returns La parte del estado seleccionada, fuertemente tipada.
+ * @throws Error si se llama fuera de un MathProvider.
+ */
+// eslint-disable-next-line react-refresh/only-export-components
 export function useMathStore<T>(selector: (state: MathState) => T): T {
     const store = useContext(MathContext);
     if (!store) {

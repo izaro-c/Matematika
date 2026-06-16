@@ -5,6 +5,12 @@ interface PitagorasCanvasEjProps {
   isCompleted?: boolean;
 }
 
+/**
+ * PitagorasCanvasEj
+ *
+ * Componente de visualización matemática. Renderiza un diagrama interactivo 
+ * o estático para apoyar el contenido de las lecciones.
+ */
 export const PitagorasCanvasEj: React.FC<PitagorasCanvasEjProps> = ({ onComplete, isCompleted }) => {
   const svgRef = useRef<SVGSVGElement>(null);
   

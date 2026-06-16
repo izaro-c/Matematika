@@ -2,11 +2,18 @@ import { useRef, useEffect } from 'react';
 import JXG from 'jsxgraph';
 import { useMathStore } from '../../store/MathStoreContext';
 
+/**
+ * RearrangementConclusion
+ *
+ * Componente de visualización matemática. Renderiza un diagrama interactivo 
+ * o estático para apoyar el contenido de las lecciones.
+ */
 export const RearrangementConclusion = () => {
     const boardRef = useRef<HTMLDivElement>(null);
     const highlight = useMathStore(state => state.variables['highlight'] as string | null);
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const elementsRef = useRef<Record<string, any[]>>({});
-    const boardInstance = useRef<any>(null);
+    const boardInstance = useRef<Record<string, unknown> & { update: () => void } | null>(null);
 
     useEffect(() => {
         if (!boardRef.current) return;
@@ -18,7 +25,8 @@ export const RearrangementConclusion = () => {
             showCopyright: false,
             keepaspectratio: true        
         });
-        boardInstance.current = board;
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        boardInstance.current = board as any;
 
         // ==========================================
         // LADO IZQUIERDO: CONFIGURACIÓN 1

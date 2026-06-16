@@ -1,18 +1,23 @@
 import { useState, useMemo } from 'react';
 import { Link } from 'wouter';
-import { Logo } from '../components/Logo';
+import { Logo } from "../components/ui/Logo";
 import { dictionary } from '../store/GlossaryStore';
-import { db } from '../store/ContentStore';
+import { db } from '../store/content';
 import type { GlossaryCategory, GlossaryEntry } from '../store/GlossaryStore';
 import katex from 'katex';
 
+/**
+ * Página Diccionario (Glossary).
+ * Muestra todos los términos matemáticos registrados en `GlossaryStore`,
+ * organizados por categorías, con barra de búsqueda y enlaces rápidos a conceptos y demostraciones.
+ */
 export const DictionaryPage = () => {
   const [search, setSearch] = useState('');
 
   // Organizar y filtrar el diccionario
   const groupedEntries = useMemo(() => {
     const term = search.toLowerCase();
-    const groups: Record<string, [string, GlossaryEntry][]> = {};
+    const groups: Record<string, [string, GlossaryEntry & { id?: string }][]> = {};
 
     Object.entries(dictionary).forEach(([key, entry]) => {
       // Filtrar por término
@@ -45,9 +50,9 @@ export const DictionaryPage = () => {
         groups[catName]!.push([def.id, {
           title: def.title,
           definition: def.description,
-          category: catName as any,
+          category: catName as GlossaryCategory,
           id: def.id // prop especial
-        } as any]);
+        } as GlossaryEntry & { id?: string }]);
       }
     });
 
@@ -62,7 +67,7 @@ export const DictionaryPage = () => {
   const renderMath = (mathString: string) => {
     try {
       return { __html: katex.renderToString(mathString, { displayMode: true, throwOnError: false }) };
-    } catch (e) {
+    } catch {
       return { __html: mathString };
     }
   };
@@ -137,8 +142,8 @@ export const DictionaryPage = () => {
                       />
                     )}
 
-                    {(data as any).id && (
-                      <Link href={`/definicion/${(data as any).id}`}>
+                    {data.id && (
+                      <Link href={`/definicion/${data.id}`}>
                         <a className="inline-block mt-4 text-xs font-sans tracking-widest uppercase text-terracota hover:text-carbon transition-colors border-b border-terracota/30 pb-1">
                           Leer Artículo Completo →
                         </a>

@@ -1,6 +1,12 @@
 import React, { useState } from 'react';
 import { KatexText } from '../../components/ui/KatexText';
 
+/**
+ * CrossProductVisualizer
+ *
+ * Componente de visualización matemática. Renderiza un diagrama interactivo 
+ * o estático para apoyar el contenido de las lecciones.
+ */
 export const CrossProductVisualizer: React.FC = () => {
   const [ux, setUx] = useState(3);
   const [uy, setUy] = useState(1);
@@ -16,6 +22,7 @@ export const CrossProductVisualizer: React.FC = () => {
   const cx = 250;
   const cy = 250;
 
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const isoX = (x: number, y: number, _z?: number) => {
     return cx + (x - y) * Math.cos(Math.PI / 6) * scale;
   };
@@ -61,7 +68,7 @@ export const CrossProductVisualizer: React.FC = () => {
     <div className="w-full h-full min-h-[550px] bg-lienzo flex flex-col items-center justify-center p-6">
       <svg 
         viewBox="0 0 500 500" 
-        className="w-full max-w-[400px] bg-white border border-carbon/10 rounded shadow-sm overflow-hidden"
+        className="w-full max-w-[400px] bg-[#fdfbf7] elegant-panel overflow-hidden"
       >
         <defs>
           <marker id="arrowU" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto">
@@ -101,8 +108,8 @@ export const CrossProductVisualizer: React.FC = () => {
 
       <div className="mt-6 flex flex-col w-full max-w-[400px] gap-4">
         <div className="flex gap-4">
-          <div className="flex flex-col flex-1 gap-2 p-3 bg-terracota/10 rounded">
-            <div className="text-center font-bold text-terracota mb-1 border-b border-terracota/20 pb-1">Vector u</div>
+          <div className="flex flex-col flex-1 gap-3 p-4 bg-terracota/5 border border-terracota/20 border-t-4 border-t-terracota/60 rounded-none shadow-[inset_0_1px_2px_rgba(0,0,0,0.02)]">
+            <div className="text-center font-sans font-bold uppercase tracking-widest text-xs text-terracota/80 mb-1 border-b border-terracota/10 pb-2">Vector u</div>
             <label className="flex items-center gap-2">
               <span className="text-xs font-bold text-carbon/60 w-4">X:</span>
               <input type="range" min="-5" max="5" step="1" value={ux} onChange={(e)=>setUx(parseFloat(e.target.value))} className="accent-terracota w-full" />
@@ -115,8 +122,8 @@ export const CrossProductVisualizer: React.FC = () => {
             </label>
           </div>
 
-          <div className="flex flex-col flex-1 gap-2 p-3 bg-salvia/10 rounded">
-            <div className="text-center font-bold text-salvia mb-1 border-b border-salvia/20 pb-1">Vector v</div>
+          <div className="flex flex-col flex-1 gap-3 p-4 bg-salvia/5 border border-salvia/20 border-t-4 border-t-salvia/60 rounded-none shadow-[inset_0_1px_2px_rgba(0,0,0,0.02)]">
+            <div className="text-center font-sans font-bold uppercase tracking-widest text-xs text-salvia/80 mb-1 border-b border-salvia/10 pb-2">Vector v</div>
             <label className="flex items-center gap-2">
               <span className="text-xs font-bold text-carbon/60 w-4">X:</span>
               <input type="range" min="-5" max="5" step="1" value={vx} onChange={(e)=>setVx(parseFloat(e.target.value))} className="accent-salvia w-full" />
@@ -130,9 +137,9 @@ export const CrossProductVisualizer: React.FC = () => {
           </div>
         </div>
 
-        <div className="p-3 bg-pizarra/10 rounded border border-pizarra/20 text-center flex flex-col gap-2">
+        <div className="p-5 mt-2 bg-carbon/[0.02] border border-carbon/15 border-l-[3px] border-l-pizarra/60 rounded-none text-center flex flex-col gap-3 font-serif relative">
           <KatexText text={`$$ \\vec{u} \\times \\vec{v} = \\begin{vmatrix} \\hat{i} & \\hat{j} & \\hat{k} \\\\ ${ux} & ${uy} & 0 \\\\ ${vx} & ${vy} & 0 \\end{vmatrix} = (0, 0, ${wz}) $$`} />
-          <p className="text-sm font-sans text-carbon/70 mt-1">El área del paralelogramo (base gris) es de <strong>{Math.abs(wz)}</strong> unidades cuadradas.</p>
+          <p className="text-sm font-serif text-carbon/70 mt-1 italic">El área del paralelogramo (base gris) es de <strong>{Math.abs(wz)}</strong> unidades cuadradas.</p>
         </div>
       </div>
     </div>

@@ -37,6 +37,12 @@ function toPolyStr(pts: { x: number; y: number }[]) {
   return pts.map(p => `${p.x.toFixed(1)},${p.y.toFixed(1)}`).join(' ');
 }
 
+/**
+ * InvarianzaAreaVisualizer
+ *
+ * Componente de visualización matemática. Renderiza un diagrama interactivo 
+ * o estático para apoyar el contenido de las lecciones.
+ */
 export const InvarianzaAreaVisualizer: React.FC = () => {
   const originalArea = calcArea(ORIGINAL_POLY).toFixed(1);
   const [mode, setMode] = useState<'traslacion' | 'rotacion'>('traslacion');

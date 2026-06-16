@@ -1,5 +1,13 @@
 import React from 'react';
 
+/**
+ * Renderiza una "liana" decorativa al estilo Arts and Crafts (inspirada en William Morris).
+ * Se dibuja como un SVG vertical que revela hojas y flores a medida que el usuario hace scroll,
+ * actuando como un medidor de progreso estético a lo largo de un artículo.
+ * 
+ * @param scrollProgress Porcentaje de scroll (0.0 a 1.0).
+ * @param totalHeight Altura total de la página para calcular cuántos segmentos SVG generar.
+ */
 export const ArtsAndCraftsLiana = ({
   scrollProgress,
   totalHeight,

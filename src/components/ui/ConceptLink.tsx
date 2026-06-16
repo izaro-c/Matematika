@@ -1,6 +1,6 @@
 import React from 'react';
 import { useGlossaryStore } from '../../store/GlossaryStore';
-import { db } from '../../store/ContentStore';
+import { db } from '../../store/content';
 import { useProgressStore } from '../../store/UserProgressStore';
 
 interface ConceptLinkProps {
@@ -35,7 +35,7 @@ export const ConceptLink: React.FC<ConceptLinkProps> = ({ targetId, children }) 
   if (!entity) {
     return (
       <span
-        className="text-red-500 font-bold border-b-2 border-red-500 border-dashed cursor-help"
+        className="text-granada font-bold border-b-2 border-granada border-dashed cursor-help"
         title={`Link roto: "${targetId}" no existe en el ContentStore`}
       >
         {children}
@@ -51,7 +51,7 @@ export const ConceptLink: React.FC<ConceptLinkProps> = ({ targetId, children }) 
       onClick={() => openTerm(targetId)}
       title={`Ver: ${(entity as any).title || (entity as any).name}`}
       className={[
-        'font-bold border-b-2 cursor-pointer transition-all duration-150 px-[2px] rounded-sm',
+        'font-bold border-b-2 cursor-pointer transition-all duration-150 px-[2px] rounded-none',
         isActive
           // Estado activo: fondo sólido terracota, texto crema — muy visible
           ? 'bg-terracota text-lienzo border-terracota'

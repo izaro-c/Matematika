@@ -1,7 +1,12 @@
 import { useParams, Link } from 'wouter';
-import { db } from '../store/ContentStore';
+import { db } from '../store/content';
 import { TaxonomyGraph } from '../components/ui/TaxonomyGraph';
 
+/**
+ * Página principal de una Rama (ej. "Álgebra Lineal").
+ * Renderiza la red/taxonomía completa de temas, lecciones y teoremas
+ * asociados a esta rama en un grafo interactivo.
+ */
 export const BranchPage = () => {
   const { id } = useParams();
   const branchSlug = id || '';
@@ -71,7 +76,7 @@ export const BranchPage = () => {
                 <div className="flex flex-col gap-4">
                   {taxonomy.directItems.map((entry, idx) => {
                     let link = '/';
-                    if (entry.type === 'lesson') link = `/${entry.item.id}`;
+                    if (entry.type === 'lesson') link = `/${entry.item.slug}`;
                     else if (entry.type === 'theorem') link = `/teorema/${entry.item.id}`;
                     else if (entry.type === 'definition') link = `/definicion/${entry.item.id}`;
 
@@ -90,9 +95,9 @@ export const BranchPage = () => {
                         <a className={`group flex flex-col md:flex-row md:items-center justify-between p-6 border bg-lienzo hover:shadow-md transition-all duration-300 ${style.borderClass}`}>
                           <div>
                             <h3 className={`text-2xl font-bold transition-colors opacity-90 group-hover:opacity-100 ${style.textClass}`} style={{ fontVariant: 'small-caps' }}>
-                              {entry.item.title || entry.item.id}
+                              {(entry.item as any).title || entry.item.id}
                             </h3>
-                            <p className="text-carbon/60 mt-2 font-sans text-sm">{entry.item.description || 'Documento formal.'}</p>
+                            <p className="text-carbon/60 mt-2 font-sans text-sm">{(entry.item as any).description || 'Documento formal.'}</p>
                           </div>
                           
                           <div className="mt-4 md:mt-0">

@@ -1,0 +1,15 @@
+{
+  "$schema": "https://typedoc.org/schema.json",
+  "entryPoints": ["src/store/content/index.ts", "src/store/LessonStore.ts", "src/store/GlossaryStore.ts", "src/store/UserProgressStore.ts", "src/contexts/StudyPlanContext.tsx", "src/components/exercises/ExerciseContext.tsx"],
+  "out": "docs/api",
+  "name": "Matematika",
+  "readme": "README.md",
+  "exclude": [
+    "**/*.(test|spec).ts"
+  ],
+  "excludePrivate": true,
+  "excludeProtected": true,
+  "excludeInternal": true,
+  "theme": "default",
+  "plugin": []
+}

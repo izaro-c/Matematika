@@ -30,8 +30,6 @@ function shuffle<T>(array: T[]): T[] {
 }
 
 /**
- * Clasificador.tsx
- * 
  * Un componente donde el estudiante arrastra "etiquetas" matemáticas a diferentes "cubos" (categorías).
  * Por ejemplo: Arrastrar ecuaciones a "Lineales" o "Cuadráticas".
  */
@@ -109,7 +107,7 @@ export const Clasificador: React.FC<ClasificadorProps> = ({ id, pregunta, bucket
   const unplacedItems = shuffledItems.filter(item => !placedItems[item.id]);
 
   return (
-    <div className={`my-8 border border-carbon/15 p-6 shadow-sm transition-all duration-500 font-serif ${isCompleted ? 'bg-[#f0faf0]/50 border-[#2a6a2a]/30' : 'bg-[#fdfbf7]'}`}>
+    <div className={`my-8 p-8 elegant-panel relative font-serif group ${isCompleted ? 'bg-salvia/5 border-salvia/30' : ''}`} style={{ '--hover-accent': isCompleted ? 'var(--theme-salvia)' : 'var(--theme-carbon)' } as React.CSSProperties}>
        <style>
         {`
           @keyframes shake {
@@ -121,8 +119,8 @@ export const Clasificador: React.FC<ClasificadorProps> = ({ id, pregunta, bucket
         `}
       </style>
       
-      <h4 className="font-bold text-carbon mb-6 flex items-center gap-3 text-lg">
-        {isCompleted ? <span className="text-[#2a6a2a]">❦ Clasificación Completada</span> : <span>{pregunta || 'Clasifica los siguientes elementos:'}</span>}
+      <h4 className="font-bold text-carbon mb-6 mt-2 flex items-center gap-3 text-lg z-30 relative">
+        {isCompleted ? <span className="text-salvia">❦ Clasificación Completada</span> : <span>{pregunta || 'Clasifica los siguientes elementos:'}</span>}
       </h4>
 
       <div className={`${isShaking ? 'animate-shake' : ''}`}>
@@ -130,18 +128,20 @@ export const Clasificador: React.FC<ClasificadorProps> = ({ id, pregunta, bucket
         {/* Zona de Ítems sin asignar */}
         {!isCompleted && unplacedItems.length > 0 && (
           <div 
-            className="mb-8 p-4 bg-carbon/[0.03] border border-carbon/10 border-dashed rounded-sm min-h-[80px]"
+            className="mb-8 p-4 relative flex flex-col items-center"
             onDrop={(e) => handleDrop(e, null)}
             onDragOver={handleDragOver}
           >
-            <div className="text-xs uppercase tracking-widest font-sans text-carbon/40 mb-3 text-center">Arrastra las etiquetas a las categorías</div>
+            <div className="text-xs font-serif italic text-carbon/60 mb-3">
+              Elementos a clasificar:
+            </div>
             <div className="flex flex-wrap gap-3 justify-center">
               {unplacedItems.map(item => (
                 <div
                   key={item.id}
                   draggable
                   onDragStart={(e) => handleDragStart(e, item.id)}
-                  className={`px-4 py-2 bg-white border border-carbon/20 shadow-sm cursor-grab active:cursor-grabbing hover:border-carbon/50 transition-all ${dragItem === item.id ? 'opacity-40' : 'opacity-100'}`}
+                  className={`px-3 py-1 bg-lienzo border border-carbon/40 cursor-grab active:cursor-grabbing transition-opacity ${dragItem === item.id ? 'opacity-40' : 'opacity-100'}`}
                 >
                   <KatexText text={item.content} />
                 </div>
@@ -150,9 +150,9 @@ export const Clasificador: React.FC<ClasificadorProps> = ({ id, pregunta, bucket
           </div>
         )}
 
-        {/* Cubos (Categorías) */}
-        <div className="grid gap-4" style={{ gridTemplateColumns: `repeat(auto-fit, minmax(200px, 1fr))` }}>
-          {buckets.map(bucket => {
+        {/* Cubos (Categorías) - Estilo Tabla Clásica (Escalable) */}
+        <div className={`border-y-[3px] grid grid-cols-1 sm:grid-cols-[repeat(auto-fit,minmax(180px,1fr))] gap-[1px] relative transition-colors duration-500 ${isCompleted ? 'border-salvia bg-salvia/30' : 'border-carbon/80 bg-carbon/30'}`}>
+          {buckets.map((bucket) => {
             const bucketItems = items.filter(item => placedItems[item.id] === bucket.id);
 
             return (
@@ -160,15 +160,15 @@ export const Clasificador: React.FC<ClasificadorProps> = ({ id, pregunta, bucket
                 key={bucket.id}
                 onDrop={(e) => handleDrop(e, bucket.id)}
                 onDragOver={handleDragOver}
-                className={`flex flex-col bg-white border border-carbon/15 rounded-sm overflow-hidden transition-all duration-300 min-h-[160px] ${isCompleted ? 'border-[#2a6a2a]/30' : 'hover:border-carbon/30'}`}
+                className="flex flex-col min-h-[160px] bg-lienzo"
               >
                 {/* Cabecera del Cubo */}
-                <div className={`p-3 text-center text-sm font-bold uppercase tracking-widest font-sans border-b ${isCompleted ? 'bg-[#2a6a2a]/5 text-[#2a6a2a] border-[#2a6a2a]/20' : 'bg-carbon/5 text-carbon/70 border-carbon/10'}`}>
+                <div className={`py-3 text-center text-sm font-bold uppercase tracking-widest font-sans border-b transition-colors ${isCompleted ? 'text-salvia border-salvia/40' : 'text-carbon border-carbon/60'}`}>
                   {bucket.title}
                 </div>
 
                 {/* Zona de caída */}
-                <div className="flex-1 p-4 flex flex-col gap-2 relative bg-carbon/[0.01]">
+                <div className={`flex-1 p-4 flex flex-col gap-2 relative items-center transition-colors ${dragItem ? 'bg-carbon/[0.02]' : 'bg-transparent'}`}>
                   {bucketItems.map(item => {
                     const isWrong = qState?.isCorrect === false && placedItems[item.id] && item.bucketId !== bucket.id;
                     
@@ -177,21 +177,16 @@ export const Clasificador: React.FC<ClasificadorProps> = ({ id, pregunta, bucket
                         key={item.id}
                         draggable={!isCompleted}
                         onDragStart={(e) => handleDragStart(e, item.id)}
-                        className={`px-3 py-2 bg-white border shadow-sm text-center transition-all ${
-                          isCompleted ? 'border-[#2a6a2a]/40 text-[#1a4a1a]' : 
-                          isWrong ? 'border-terracota/60 text-terracota' :
-                          'border-carbon/20 cursor-grab active:cursor-grabbing hover:border-carbon/50'
+                        className={`px-3 py-1 bg-lienzo border transition-colors ${
+                          isCompleted ? 'border-salvia/40 bg-salvia/[0.02] text-salvia cursor-default' : 
+                          isWrong ? 'border-terracota bg-terracota/[0.02] text-terracota' :
+                          'border-carbon/40 cursor-grab active:cursor-grabbing hover:bg-carbon/[0.02]'
                         } ${dragItem === item.id ? 'opacity-40' : 'opacity-100'}`}
                       >
                         <KatexText text={item.content} />
                       </div>
                     );
                   })}
-                  {!isCompleted && bucketItems.length === 0 && (
-                    <div className="absolute inset-0 flex items-center justify-center text-xs text-carbon/20 italic font-serif">
-                      Suelta aquí...
-                    </div>
-                  )}
                 </div>
               </div>
             );
@@ -202,7 +197,7 @@ export const Clasificador: React.FC<ClasificadorProps> = ({ id, pregunta, bucket
           <div className="mt-8 flex justify-end border-t border-carbon/10 pt-5">
             <button
               onClick={check}
-              className="px-6 py-2 text-xs font-sans uppercase tracking-widest border border-carbon/40 text-carbon/80 hover:border-carbon hover:text-carbon hover:bg-carbon/5 transition-all shadow-sm"
+              className="px-6 py-3 text-xs font-sans uppercase tracking-widest border border-carbon/30 text-carbon hover:border-carbon hover:bg-carbon/[0.02] transition-colors"
             >
               Comprobar Clasificación
             </button>

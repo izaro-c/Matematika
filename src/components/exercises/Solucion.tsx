@@ -13,6 +13,9 @@ interface SolucionProps {
   label?: string;
 }
 
+/**
+ * Componente principal para renderizar la solución detallada de un ejercicio.
+ */
 export const Solucion: React.FC<SolucionProps> = ({ children, label = 'Ver Solución Completa' }) => {
   const [revealed, setRevealed] = useState(false);
   const { setActiveStep } = useLessonStore();
@@ -25,15 +28,14 @@ export const Solucion: React.FC<SolucionProps> = ({ children, label = 'Ver Soluc
             setRevealed(true);
             setActiveStep('Solucion');
           }}
-          className="w-full flex items-center justify-center gap-3 py-4 bg-[#fdfbf7] border-y border-carbon/10 text-carbon/60 hover:text-carbon hover:bg-carbon/[0.02] text-[11px] font-sans uppercase tracking-widest transition-all group"
+          className="w-full flex items-center justify-center gap-3 py-4 elegant-panel text-carbon/60 hover:text-carbon text-[11px] font-sans uppercase tracking-widest group"
+          style={{ '--hover-accent': 'var(--theme-terracota)' } as React.CSSProperties}
         >
           <span className="text-terracota/80 group-hover:text-terracota transition-colors">{label}</span>
         </button>
       ) : (
         <div 
-          className="bg-[#fdfbf7] border-y border-carbon/10 p-8 animate-fade-in cursor-pointer shadow-inner relative"
-          onClick={() => setActiveStep('Solucion')}
-          onMouseEnter={() => setActiveStep('Solucion')}
+          className="elegant-panel p-8 animate-fade-in relative"
         >
           {/* Ocultar arriba (opcional) */}
           <button

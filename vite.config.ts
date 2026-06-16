@@ -11,17 +11,26 @@ const __dirname = path.dirname(fileURLToPath(import.meta.url))
 import remarkMath from 'remark-math'
 import rehypeKatex from 'rehype-katex'
 
+import type { Plugin, ViteDevServer } from 'vite';
+import type { IncomingMessage, ServerResponse } from 'http';
+
 const drafts = new Map<string, string>();
 
-function editorAPI() {
-  let viteServer: any;
+/**
+ * Plugin personalizado de Vite (`editorAPI`) para Matematika.
+ * Intercepta peticiones al servidor de desarrollo para proporcionar una API REST
+ * ligera (lectura/escritura/listado) que permite al Editor Web modificar 
+ * archivos locales (.mdx, .tsx) y usar el HMR de Vite para Live Preview.
+ */
+function editorAPI(): Plugin {
+  let viteServer: ViteDevServer;
   return {
     name: 'editor-api',
     enforce: 'pre' as const,
-    configureServer(server: any) {
+    configureServer(server: ViteDevServer) {
       viteServer = server;
-      server.middlewares.use('/api/content', (req: any, res: any) => {
-        const url = new URL(req.originalUrl || req.url, `http://${req.headers.host}`)
+      server.middlewares.use('/api/content', (req: IncomingMessage, res: ServerResponse) => {
+        const url = new URL(req.url || '/', `http://${req.headers.host}`)
         
         if (req.method === 'GET') {
           const rawPath = url.searchParams.get('path')
@@ -42,7 +51,7 @@ function editorAPI() {
 
         if (req.method === 'POST') {
           let body = ''
-          req.on('data', (chunk: any) => { body += chunk.toString() })
+          req.on('data', (chunk: Buffer) => { body += chunk.toString() })
           req.on('end', () => {
             try {
               const data = JSON.parse(body)
@@ -59,9 +68,9 @@ function editorAPI() {
               drafts.delete(absolutePath) // Remove draft on save
               res.setHeader('Content-Type', 'application/json')
               res.end(JSON.stringify({ success: true }))
-            } catch (err: any) {
+            } catch (err: unknown) {
               res.statusCode = 500
-              res.end(err.message)
+              res.end(err instanceof Error ? err.message : String(err))
             }
           })
           return
@@ -71,10 +80,10 @@ function editorAPI() {
         res.end('Method not allowed')
       })
 
-      server.middlewares.use('/api/draft', (req: any, res: any) => {
+      server.middlewares.use('/api/draft', (req: IncomingMessage, res: ServerResponse) => {
         if (req.method === 'POST') {
           let body = ''
-          req.on('data', (chunk: any) => { body += chunk.toString() })
+          req.on('data', (chunk: Buffer) => { body += chunk.toString() })
           req.on('end', () => {
             try {
               const data = JSON.parse(body)
@@ -90,9 +99,9 @@ function editorAPI() {
               
               res.setHeader('Content-Type', 'application/json')
               res.end(JSON.stringify({ success: true }))
-            } catch (err: any) {
+            } catch (err: unknown) {
               res.statusCode = 500
-              res.end(err.message)
+              res.end(err instanceof Error ? err.message : String(err))
             }
           })
           return
@@ -101,7 +110,7 @@ function editorAPI() {
         res.end('Method not allowed')
       })
 
-      server.middlewares.use('/api/list-content', (req: any, res: any) => {
+      server.middlewares.use('/api/list-content', (req: IncomingMessage, res: ServerResponse) => {
         if (req.method === 'GET') {
           const contentDir = path.resolve(__dirname, 'src', 'content');
           const diagramsDir = path.resolve(__dirname, 'src', 'diagrams');

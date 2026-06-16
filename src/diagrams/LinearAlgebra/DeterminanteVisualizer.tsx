@@ -16,6 +16,7 @@ import JXG from 'jsxgraph';
  */
 export const DeterminanteVisualizer: React.FC = () => {
   const containerRef = useRef<HTMLDivElement>(null);
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const boardRef = useRef<any>(null);
   const [det, setDet] = useState(1);
   const [v1, setV1] = useState([1, 0]);

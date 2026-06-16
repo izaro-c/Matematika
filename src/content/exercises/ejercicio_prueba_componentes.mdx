@@ -10,8 +10,6 @@ export const metadata = {
 
 import { PitagorasCanvasEj } from '../../diagrams/Ejercicios/PitagorasCanvasEj';
 
-# El Gran Reto de Prueba
-
 Bienvenidos al patio de recreo interactivo de Matematika. En este ejercicio comprobaremos cómo reaccionan las nuevas mecánicas de la plataforma. Prepárate para teclear, ordenar y descubrir.
 
 <ErrorComun title="Atención al Estudiante">
@@ -106,13 +104,16 @@ Una alternativa al drag & drop lineal es el clasificador. Clasifica las siguient
   pregunta="Clasifica las ecuaciones en Lineales o Cuadráticas:"
   buckets={[
     { id: "lineal", title: "Lineales (Grado 1)" },
-    { id: "cuadratica", title: "Cuadráticas (Grado 2)" }
+    { id: "cuadratica", title: "Cuadráticas (Grado 2)" },
+    { id: "cubica", title: "Cúbicas (Grado 3)" },
   ]}
   items={[
     { id: "i1", content: "$2x + 5 = 0$", bucketId: "lineal" },
     { id: "i2", content: "$x^2 - 4 = 0$", bucketId: "cuadratica" },
     { id: "i3", content: "$-x = 7$", bucketId: "lineal" },
-    { id: "i4", content: "$3x^2 + 2x - 1 = 0$", bucketId: "cuadratica" }
+    { id: "i4", content: "$3x^2 + 2x - 1 = 0$", bucketId: "cuadratica" },
+    { id: "i5", content: "$x^3 + 2x^2 + x - 1 = 0$", bucketId: "cubica" },
+    { id: "i6", content: "$4x^3 - 2x^2 + 5x - 10 = 0$", bucketId: "cubica" },
   ]}
 />
 
@@ -132,8 +133,15 @@ También podemos organizar explicaciones de la vieja escuela y conectarlas a lie
 
 Si en algún momento el alumno se atasca, siempre podemos ofrecer una explicación desplegable elegante y sin estridencias:
 
-<Solucion label="Ver el Secreto de este Playground">
+<Solucion label="Ver la solución">
   ¡Felicidades! Has interactuado con todos los nuevos componentes de la Enciclopedia Viva. 
   
   Con estas herramientas, los ejercicios de **Matematika** nunca serán aburridos cuestionarios de colegio, sino experiencias orgánicas, táctiles y reactivas.
 </Solucion>
+
+## 9. Prueba de paso
+
+<Paso id="paso_demo_2" title="Segundo paso de la explicación">
+  Este es un paso adicional que puedes usar para explicar de forma más detallada un tema o un ejercicio.
+</Paso>
+

@@ -1,5 +1,11 @@
 import React, { useState } from 'react';
 
+/**
+ * TalesCartografiaSimulation
+ *
+ * Componente de visualización matemática. Renderiza un diagrama interactivo 
+ * o estático para apoyar el contenido de las lecciones.
+ */
 export const TalesCartografiaSimulation: React.FC = () => {
   const [scale, setScale] = useState(0.5); // Escala de 0.1 a 1.0
 

@@ -100,6 +100,7 @@ const ExerciseContext = createContext<ExerciseContextType | null>(null);
  * useExercise — hook para acceder al contexto desde cualquier componente hijo.
  * Retorna valores neutros si se usa fuera del proveedor (modo previsualización).
  */
+// eslint-disable-next-line react-refresh/only-export-components
 export function useExercise(): ExerciseContextType {
   const ctx = useContext(ExerciseContext);
   if (!ctx) {
@@ -118,6 +119,11 @@ export function useExercise(): ExerciseContextType {
 
 // ── Proveedor ─────────────────────────────────────────────────────────────────
 
+/**
+ * Componente Proveedor que debe envolver a un conjunto de preguntas
+ * (normalmente toda la página de un bloque de ejercicios).
+ * Inicializa el `useReducer` interno y expone la API y estado.
+ */
 export const ExerciseProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const [state, dispatch] = useReducer(reducer, { questions: {} });
 

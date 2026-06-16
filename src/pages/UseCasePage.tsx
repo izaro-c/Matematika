@@ -12,9 +12,9 @@
  */
 import { useParams, Link } from 'wouter';
 import { Suspense, useEffect } from 'react';
-import { db } from '../store/ContentStore';
+import { db } from '../store/content';
 import { KatexText } from '../components/ui/KatexText';
-import { SimulationLayout } from '../components/SimulationLayout';
+import { SimulationLayout } from "../components/layout/SimulationLayout";
 import { useProgressStore } from '../store/UserProgressStore';
 import { ReadingButton } from '../components/ui/ReadingButton';
 
@@ -115,7 +115,7 @@ export const UseCasePage: React.FC = () => {
             {concept && (
               <>
                 <Link href={`/teorema/${(concept as any).slug || usecase.concept}`}>
-                  <a className="hover:text-carbon transition-colors">{(concept as any).title}</a>
+                  <a className="hover:text-carbon transition-colors">{(concept as any).title as string}</a>
                 </Link>
                 <span>/</span>
               </>
@@ -172,7 +172,7 @@ export const UseCasePage: React.FC = () => {
               </div>
               <Link href={`/teorema/${(concept as any).slug || usecase.concept}`}>
                 <a className="inline-flex items-center gap-2 px-4 py-2 border border-terracota/25 text-terracota text-sm font-sans hover:border-terracota hover:bg-terracota/5 transition-all">
-                  {(concept as any).title}
+                  {(concept as any).title as string}
                   <span className="text-xs opacity-60">→</span>
                 </a>
               </Link>

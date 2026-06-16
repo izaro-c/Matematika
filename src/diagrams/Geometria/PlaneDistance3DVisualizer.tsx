@@ -1,9 +1,16 @@
 import React, { useEffect, useRef } from 'react';
 import { useLessonStore } from '../../store/LessonStore';
 
+/**
+ * PlaneDistance3DVisualizer
+ *
+ * Componente de visualización matemática. Renderiza un diagrama interactivo 
+ * o estático para apoyar el contenido de las lecciones.
+ */
 export const PlaneDistance3DVisualizer: React.FC = () => {
   const { activeStep } = useLessonStore();
   const containerRef = useRef<HTMLDivElement>(null);
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const boardRef = useRef<any>(null);
 
   useEffect(() => {
@@ -59,7 +66,7 @@ export const PlaneDistance3DVisualizer: React.FC = () => {
     for (let i = -3; i <= 3; i++) {
       // Lines with constant x = i
       view.create('curve3d', [
-        (_t: number) => i,
+        () => i,
         (t: number) => t,
         (t: number) => 2 - i - t,
         [-3, 3]
@@ -72,7 +79,7 @@ export const PlaneDistance3DVisualizer: React.FC = () => {
       // Lines with constant y = i
       view.create('curve3d', [
         (t: number) => t,
-        (_t: number) => i,
+        () => i,
         (t: number) => 2 - t - i,
         [-3, 3]
       ], { 

@@ -1,7 +1,14 @@
 import React, { useEffect, useRef } from 'react';
 
+/**
+ * LimitVisualizer
+ *
+ * Componente de visualización matemática. Renderiza un diagrama interactivo 
+ * o estático para apoyar el contenido de las lecciones.
+ */
 export const LimitVisualizer: React.FC = () => {
   const containerRef = useRef<HTMLDivElement>(null);
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const boardRef = useRef<any>(null);
 
   useEffect(() => {

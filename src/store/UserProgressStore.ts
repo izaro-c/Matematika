@@ -1,25 +1,44 @@
 import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
 
+/**
+ * Estado persistente para gamificación y progreso del usuario en Matematika.
+ */
 export interface UserProgressState {
-  readConcepts: string[]; // IDs de teoremas, definiciones, lecciones
-  completedExercises: string[]; // IDs de ejercicios completados 100%
-  visitedUseCases: string[]; // IDs de casos de uso vistos
-  discoveredMathematicians: string[]; // IDs de matemáticos descubiertos
+  /** IDs de teoremas, definiciones o lecciones marcados como completados/leídos */
+  readConcepts: string[];
+  /** IDs de ejercicios donde se ha conseguido un 100% de precisión */
+  completedExercises: string[];
+  /** IDs de casos de uso prácticos que han sido consultados */
+  visitedUseCases: string[];
+  /** IDs de perfiles biográficos de matemáticos que se han desbloqueado/visitado */
+  discoveredMathematicians: string[];
   
-  // Actions
+  // -- Actions --
+  /** Marca un concepto (Teorema, Definición) como asimilado */
   markAsRead: (id: string) => void;
+  /** Elimina el marcado de un concepto */
   unmarkAsRead: (id: string) => void;
+  /** Alterna el estado de asimilación de un concepto */
   toggleRead: (id: string) => void;
+  /** Registra que un ejercicio fue resuelto de forma perfecta */
   markExerciseComplete: (id: string) => void;
+  /** Registra la visita a un caso práctico en el mundo real */
   markUseCaseVisited: (id: string) => void;
+  /** Desbloquea a un matemático histórico en la biblioteca personal */
   discoverMathematician: (id: string) => void;
   
-  // Queries
+  // -- Queries --
+  /** Verifica si el usuario ha asimilado el ID provisto */
   isRead: (id: string) => boolean;
+  /** Verifica si el ejercicio provisto fue completado */
   isExerciseComplete: (id: string) => boolean;
 }
 
+/**
+ * Store persistente de Zustand (localStorage) para guardar el estado educativo
+ * del usuario en todas las sesiones.
+ */
 export const useProgressStore = create<UserProgressState>()(
   persist(
     (set, get) => ({

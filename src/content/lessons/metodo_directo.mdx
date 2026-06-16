@@ -1,14 +1,17 @@
 export const metadata = {
-  id: 'metodo-directo',
-  title: 'El Método Directo',
-  description: 'La estrategia de demostración más fundamental: conectar hipótesis y conclusión mediante una cadena de deducciones lógicas válidas.',
-  tags: ['Lógica', 'Filosofía de las Matemáticas'],
-  hasSimulation: true
+  "id": "metodo-directo",
+  "title": "El Método Directo",
+  "description": "La estrategia de demostración más fundamental: conectar hipótesis y conclusión mediante una cadena de deducciones lógicas válidas.",
+  "tags": [
+    "Lógica",
+    "Filosofía de las Matemáticas"
+  ],
+  "hasSimulation": true
 };
-import { DirectProofVisualizer } from '../../diagrams/MetodosDemostracion/DirectProofVisualizer';
-export const Simulation = DirectProofVisualizer;
 
-# El Método Directo
+import { DirectProofVisualizer } from '../../diagrams/MetodosDemostracion/DirectProofVisualizer';
+
+export const Simulation = DirectProofVisualizer;
 
 <Capitular letra="E" />l **Método Directo** es la estrategia de demostración más natural en matemáticas: asumimos que la hipótesis $P$ es verdadera y, mediante una cadena finita de inferencias lógicamente válidas, llegamos inevitablemente a la conclusión $Q$.
 

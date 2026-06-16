@@ -20,8 +20,6 @@ function normalizeStr(s: string) {
 }
 
 /**
- * MatrizInteractiva.tsx
- * 
  * Un componente para ejercicios de Álgebra Lineal. Muestra una cuadrícula (matriz)
  * donde el usuario puede introducir valores celda por celda.
  * Diseño clásico con corchetes grandes.
@@ -75,7 +73,7 @@ export const MatrizInteractiva: React.FC<MatrizInteractivaProps> = ({ id, pregun
   };
 
   return (
-    <div className={`my-8 border border-carbon/10 p-6 font-serif relative transition-all duration-500 ${isCompleted ? 'bg-[#f0faf0]/50 border-l-4 border-l-[#2a6a2a]' : 'bg-[#fdfbf7] shadow-sm'}`}>
+    <div className={`my-8 p-8 font-serif elegant-panel relative transition-all duration-500 ${isCompleted ? 'bg-salvia/5 border-salvia/30' : ''}`} style={{ '--hover-accent': isCompleted ? 'var(--theme-salvia)' : 'var(--theme-carbon)' } as React.CSSProperties}>
       <style>
         {`
           @keyframes shake {
@@ -88,8 +86,8 @@ export const MatrizInteractiva: React.FC<MatrizInteractivaProps> = ({ id, pregun
       </style>
       
       {pregunta && (
-        <p className="text-base font-bold text-carbon mb-6 leading-relaxed flex items-center gap-2">
-          {isCompleted && <span className="text-[#2a6a2a]">✓</span>}
+        <p className="text-base font-bold text-carbon mb-6 leading-relaxed flex items-center gap-2 relative z-30">
+          {isCompleted && <span className="text-salvia">❦</span>}
           {pregunta}
         </p>
       )}
@@ -99,23 +97,21 @@ export const MatrizInteractiva: React.FC<MatrizInteractivaProps> = ({ id, pregun
         {/* Renderizado de la matriz con corchetes */}
         <div className="relative flex items-center">
           {/* Corchete Izquierdo */}
-          <div className={`border-l-2 border-y-2 w-3 absolute left-0 top-0 bottom-0 transition-colors ${isCompleted ? 'border-[#2a6a2a]' : 'border-carbon/70'}`} />
+          <div className={`border-l-2 border-y-2 w-3 absolute left-0 top-0 bottom-0 transition-colors ${isCompleted ? 'border-salvia' : 'border-carbon/70'}`} />
           
           <div className="grid gap-2 p-4" style={{ gridTemplateColumns: `repeat(${cols}, minmax(0, 1fr))` }}>
             {grid.map((row, r) =>
               row.map((val, c) => {
-                // eslint-disable-next-line @typescript-eslint/no-unused-vars
                 return (
                   <input
                     key={`${r}-${c}`}
                     type="text"
                     value={isCompleted ? correct[r][c] : val}
                     onChange={e => handleCellChange(r, c, e.target.value)}
-                    disabled={isCompleted}
                     className={`w-14 h-12 text-center text-lg font-serif outline-none transition-all ${
                       isCompleted 
-                        ? 'bg-transparent text-[#2a6a2a] font-bold border-none' 
-                        : 'bg-white border-b-2 border-dashed border-carbon/40 focus:border-terracota focus:bg-terracota/5 text-carbon'
+                        ? 'bg-transparent text-salvia font-bold border-none' 
+                        : 'bg-lienzo border-b-2 border-dashed border-carbon/40 focus:border-terracota focus:bg-terracota/5 text-carbon'
                     }`}
                   />
                 );
@@ -124,13 +120,13 @@ export const MatrizInteractiva: React.FC<MatrizInteractivaProps> = ({ id, pregun
           </div>
 
           {/* Corchete Derecho */}
-          <div className={`border-r-2 border-y-2 w-3 absolute right-0 top-0 bottom-0 transition-colors ${isCompleted ? 'border-[#2a6a2a]' : 'border-carbon/70'}`} />
+          <div className={`border-r-2 border-y-2 w-3 absolute right-0 top-0 bottom-0 transition-colors ${isCompleted ? 'border-salvia' : 'border-carbon/70'}`} />
         </div>
 
         {!isCompleted && (
           <button
             onClick={check}
-            className="mt-2 px-6 py-2 text-xs font-sans uppercase tracking-widest border border-carbon/40 text-carbon/80 hover:border-carbon hover:text-carbon hover:bg-carbon/5 transition-all shadow-sm"
+            className="mt-4 px-6 py-3 text-xs font-sans uppercase tracking-widest border border-carbon/30 text-carbon hover:border-carbon hover:bg-carbon/[0.02] transition-all shadow-sm hover:shadow-md hover:-translate-y-0.5"
           >
             Comprobar Matriz
           </button>

@@ -1,5 +1,11 @@
 import { useState } from 'react';
 
+/**
+ * ContrapositionVisualizer
+ *
+ * Componente de visualización matemática. Renderiza un diagrama interactivo 
+ * o estático para apoyar el contenido de las lecciones.
+ */
 export const ContrapositionVisualizer = () => {
   const [isContrapositive, setIsContrapositive] = useState(false);
 

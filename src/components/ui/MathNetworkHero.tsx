@@ -8,6 +8,12 @@ interface Point {
   radius: number;
 }
 
+/**
+ * Componente visual de fondo interactivo basado en Canvas.
+ * Renderiza una red de nodos que flotan lentamente y forman conexiones 
+ * dinámicas al acercarse entre sí o hacia el cursor del usuario.
+ * Utilizado como fondo estético (hero) en pantallas principales.
+ */
 export const MathNetworkHero: React.FC = () => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
 

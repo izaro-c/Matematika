@@ -2,6 +2,12 @@ import React from 'react';
 import { useLessonStore } from '../../store/LessonStore';
 import { KatexText } from '../../components/ui/KatexText';
 
+/**
+ * CramerVisualizer
+ *
+ * Componente de visualización matemática. Renderiza un diagrama interactivo 
+ * o estático para apoyar el contenido de las lecciones.
+ */
 export const CramerVisualizer: React.FC = () => {
   const { activeStep } = useLessonStore();
   

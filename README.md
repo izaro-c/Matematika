@@ -92,4 +92,5 @@ src/
 ├── pages/            # Vistas principales (GraphPage, ContentLayout, Home)
 ├── store/            # Lógica de Estado (ContentStore, UIStore, schemas)
 └── App.tsx           # Punto de entrada y Routing global
+docs/                 # Documentación técnica, directrices y reglas del proyecto
 ```

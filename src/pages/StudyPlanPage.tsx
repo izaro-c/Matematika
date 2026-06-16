@@ -1,7 +1,7 @@
 import { Suspense, useEffect, useState, useRef, useCallback } from 'react';
 import { Link, useParams } from 'wouter';
 import { MDXProvider } from '@mdx-js/react';
-import { db } from '../store/ContentStore';
+import { db } from '../store/content';
 import { useProgressStore } from '../store/UserProgressStore';
 import { Capitular, BlockTitle, OrnamentalDivider } from '../components/ui/MDXBlocks';
 import { StudyPlanContext } from '../contexts/StudyPlanContext';
@@ -18,6 +18,11 @@ const mdxComponents = {
   GlossaryLink,
 };
 
+/**
+ * Página de Plan de Estudio.
+ * Renderiza un MDX que sirve como ruta de aprendizaje guiada. Inyecta componentes
+ * específicos como `StudyTask` que persisten el progreso del usuario.
+ */
 export const StudyPlanPage = () => {
   const { id } = useParams();
   const slug = id || '';
@@ -29,6 +34,7 @@ export const StudyPlanPage = () => {
   const containerRef = useRef<HTMLDivElement>(null);
   const taskRefs = useRef<Record<string, HTMLElement | null>>({});
 
+  // eslint-disable-next-line react-hooks/set-state-in-effect
   useEffect(() => { setMounted(true); }, []);
 
   const registerTaskRef = useCallback((nodeId: string, el: HTMLElement | null) => {
@@ -135,7 +141,7 @@ export const StudyPlanPage = () => {
                   style={{ height: `${fillHeight}px` }}
                />
                <div 
-                  className="absolute left-[-4px] w-[9px] h-[9px] border-2 border-terracota bg-lienzo rotate-45 transition-all duration-1000 ease-[cubic-bezier(0.23,1,0.32,1)] shadow-[0_0_10px_rgba(200,100,80,0.4)]"
+                  className="absolute left-[-4px] w-[9px] h-[9px] border-2 border-terracota bg-lienzo rotate-45 transition-all duration-1000 ease-[cubic-bezier(0.23,1,0.32,1)] shadow-[1px_1px_0px_var(--theme-terracota)]"
                   style={{ top: `calc(${fillHeight}px - 4px)`, opacity: fillHeight > 0 ? 1 : 0 }}
                />
             </div>
