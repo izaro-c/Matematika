@@ -1,0 +1,52 @@
+export const metadata = {
+  id: "distribucion-normal",
+  title: "Distribución Normal (Campana de Gauss)",
+  description: "La distribución de probabilidad continua más importante de la estadística, conocida como Campana de Gauss.",
+  links: ["gauss","teorema-fundamental-calculo"],
+  statement: "La suma de variables aleatorias independientes tiende a una distribución normal (Campana de Gauss) a medida que aumenta el tamaño de la muestra.",
+  era: "Siglo XIX",
+  color: "ocre",
+  authors: ["Carl Friedrich Gauss", "Pierre-Simon Laplace"],
+  tags: ["Estadística", "Probabilidad"],
+  hasSimulation: true
+};
+
+import { NormalDistributionVisualizer } from '../../diagrams/Estadistica/NormalDistributionVisualizer';
+
+export const Simulation = NormalDistributionVisualizer;
+
+<Capitular letra="L" />a **Distribución Normal** o **Campana de <ConceptLink targetId="gauss">Gauss</ConceptLink>** es el pilar central de la estadística inferencial y el modelo probabilístico continuo más importante.
+
+Matemáticamente, decimos que una variable aleatoria continua $X$ sigue una distribución normal con media $\mu$ y desviación típica $\sigma$, denotado como $X \sim N(\mu, \sigma)$, si su Función de Densidad de Probabilidad (PDF) viene dada por la ecuación:
+
+<Formula>
+$$ f(x) = \frac{1}{\sigma \sqrt{2\pi}} e^{-\frac{1}{2}\left(\frac{x-\mu}{\sigma}\right)^2} $$
+</Formula>
+
+Esta imponente ecuación genera la característica forma de campana simétrica asintótica. Sus dos únicos parámetros controlan absolutamente toda su geometría:
+- La <HighlightLink target="mu">**media** ($\mu$)</HighlightLink>: Determina el centro exacto de la campana (su eje de simetría) y el punto de máxima probabilidad.
+- La <HighlightLink target="sigma">**desviación típica** ($\sigma$)</HighlightLink>: Determina la anchura o dispersión. Si es pequeña, los datos están muy concentrados alrededor de la media (campana alta y estrecha). Si es grande, los datos están muy dispersos (campana baja y ancha).
+
+Mueve los dos primeros deslizadores en la gráfica interactiva para comprobar visualmente cómo alteran estos parámetros la función de densidad.
+
+<Separador />
+
+### Intuición: Probabilidad como Área Bajo la Curva
+
+Como en cualquier distribución de probabilidad continua, la probabilidad de que una variable $X$ tome un valor exacto es cero. Lo que calculamos es la probabilidad de que $X$ caiga dentro de un **intervalo** $[a, b]$.
+
+Y esto se corresponde, ni más ni menos, que con el **área bajo la curva** de la campana entre esos dos valores (¡usando <ConceptLink targetId="teorema-fundamental-calculo">integrales</ConceptLink>!). El área total bajo toda la campana es siempre $1$ (o el $100\%$).
+
+Mueve los límites $a$ y $b$ para ver qué porcentaje del área (probabilidad) queda atrapado en esa franja. Fíjate que el máximo porcentaje se concentra cerca de la media $\mu$.
+
+### Estandarización a N(0, 1)
+
+En los problemas aplicados, te pedirán calcular probabilidades para distribuciones como $N(170, 12)$ (ej. estaturas medias). Dado que integrar esta función a mano es analíticamente imposible (no tiene primitiva elemental), usamos tablas precalculadas.
+
+Pero para no tener una tabla infinita para cada combinación de media y desviación, **estandarizamos** la variable para convertirla en una variable $Z$ que sigue una Normal de media 0 y desviación 1, denotada $N(0, 1)$.
+
+<Formula>
+$$ Z = \frac{X - \mu}{\sigma} $$
+</Formula>
+
+Al restar la media "centramos" la campana en el cero. Al dividir entre la desviación, "aplastamos" la campana a un ancho estándar.

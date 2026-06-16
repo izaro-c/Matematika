@@ -1,0 +1,122 @@
+export const metadata = {
+  id: "selectividad",
+  title: "Selectividad",
+  subtitle: "Preparación EBAU",
+  description: "Ruta de aprendizaje narrativa para asimilar y dominar los conceptos que construyen la base de la prueba universitaria de matemáticas.",
+  requiredNodes: [
+    "matriz",
+    "determinante",
+    "sistemas_ecuaciones_lineales",
+    "teorema_rouche_frobenius",
+    "ejemplo-rouche-frobenius",
+    "ejercicio-rouche-frobenius-incompatible",
+    "regla-cramer",
+    "producto-vectorial",
+    "distancia-punto-plano",
+    "tales_proporciones",
+    "limite",
+    "definicion-derivada",
+    "teorema-fundamental-calculo",
+    "teorema-bayes",
+    "ejemplo-falso-positivo",
+    "bayes_diagnostico_medico",
+    "bayes_aplicado",
+    "distribucion-normal"
+  ]
+};
+
+import { StudyTask } from '../../components/ui/StudyTask';
+import { Capitular, BlockTitle, OrnamentalDivider } from '../../components/ui/MDXBlocks';
+
+<Capitular letra="E" />l desafío de la prueba de acceso a la universidad no reside en la memorización de fórmulas desconectadas, sino en la capacidad de comprender el paisaje general. Las matemáticas que enfrentarás son un idioma articulado, una narrativa continua donde cada capítulo se apoya invariablemente en el anterior.
+
+Esta ruta está diseñada para guiarte por los cuatro grandes bloques estructurales de la matemática preuniversitaria, tal y como se estructuran en el currículo clásico, tejiendo conexiones lógicas entre las distintas piezas para que, el día de la prueba, no dependas de la memoria, sino de la deducción geométrica y analítica.
+
+<OrnamentalDivider />
+
+<BlockTitle subtitle="Bloque I">Álgebra Lineal</BlockTitle>
+
+Nuestra primera parada conceptual es la teoría de sistemas y la estructuración de datos múltiples. El corazón del álgebra lineal que entra en Selectividad se basa en nuestra capacidad de condensar variables e incógnitas en tablas rectangulares manejables, y poder predecir si un problema tiene solución *antes* siquiera de intentar resolverlo.
+
+Comenzaremos entendiendo qué son exactamente estas tablas y la magnitud geométrica que representan:
+
+<StudyTask type="definicion" id="matriz" title="Matriz y Transformaciones" />
+<StudyTask type="definicion" id="determinante" title="El Determinante" />
+
+Una vez que entendemos que el determinante nos habla sobre la independencia lineal y el colapso geométrico de nuestra matriz, podemos abordar formalmente la clasificación de los sistemas.
+
+<StudyTask type="lección" id="sistemas_ecuaciones_lineales" title="Sistemas de Ecuaciones Lineales" />
+
+Con la teoría clara, entra en escena el teorema que diagnostica la salud de cualquier sistema de ecuaciones. Léelo con calma e interactúa con su visualización para afianzarlo.
+
+<StudyTask type="teorema" id="teorema_rouche_frobenius" title="Teorema de Rouché-Frobenius" />
+
+Comprender por qué los rangos dictaminan el destino del sistema abre las puertas a la mecánica de resolución y el uso de herramientas matriciales avanzadas.
+
+<StudyTask type="ejemplo" id="ejemplo-rouche-frobenius" title="Análisis de Sistemas Lineales" />
+
+En Selectividad siempre tratarán de tenderte una trampa añadiendo una variable abstracta (un parámetro $k$ o $m$) al sistema, lo que te obligará a discutir su compatibilidad en función de dicho parámetro. Pon a prueba tu comprensión pura con este ejercicio diseñado para evitar los errores comunes:
+
+<StudyTask type="ejercicio" id="ejercicio-rouche-frobenius-incompatible" title="Sistemas Incompatibles" />
+
+Y cuando el sistema resulte ser Compatible Determinado y cuadrado, podrás aplicar la herramienta más elegante de todas, una coreografía pura de determinantes para extraer directamente los valores de las variables:
+
+<StudyTask type="teorema" id="regla-cramer" title="Regla de Cramer" />
+
+<OrnamentalDivider />
+
+<BlockTitle subtitle="Bloque II">Geometría Analítica</BlockTitle>
+
+Una vez que sabemos manejar múltiples variables, podemos dar el salto físico al espacio euclidiano tridimensional. Aquí, las matrices y determinantes que aprendimos en el bloque anterior se convierten en las herramientas que calculan volúmenes y dictaminan colisiones entre vectores, rectas y planos.
+
+La Geometría Analítica en la prueba evalúa tu capacidad para traducir problemas geométricos reales a un lenguaje algebraico. Primero, necesitaremos dominar cómo crear vectores <GlossaryLink term="Ortogonalidad" description="La cualidad de formar ángulos de 90 grados exactos. Dos vectores son ortogonales si su producto escalar es cero.">ortogonales</GlossaryLink> a la carta en el espacio 3D, una herramienta sin la que es imposible construir los planos de Selectividad:
+
+<StudyTask type="definicion" id="producto-vectorial" title="El Producto Vectorial" />
+
+A partir del concepto de normalidad e independencia lineal, surge uno de los cálculos más repetidos en todos los exámenes: medir distancias absolutas proyectadas a lo largo de un vector normal.
+
+<StudyTask type="teorema" id="distancia-punto-plano" title="Distancia de un Punto a un Plano" />
+
+Y por supuesto, nunca olvides las proporciones clásicas que gobiernan el espacio euclidiano. La semejanza de triángulos sigue apareciendo como base para múltiples problemas geométricos.
+
+<StudyTask type="ejercicio" id="tales_proporciones" title="Semejanza y Proporciones" />
+
+<OrnamentalDivider />
+
+<BlockTitle subtitle="Bloque III">Cálculo Diferencial</BlockTitle>
+
+El Análisis Matemático nos lleva de la quietud algebraica a la matemática del movimiento y el cambio continuo. A través del cálculo, se nos dota de una lente para observar cómo las cosas varían en instantes infinitesimales.
+
+El cimiento absoluto sobre el que todo esto se construye exige abandonar la aritmética tradicional y abrazar la paradoja matemática de acercarse a algo sin llegar a tocarlo:
+
+<StudyTask type="definicion" id="limite" title="El Concepto de Límite" />
+
+Comprendido el límite, el cálculo se despliega. Para medir velocidades instantáneas o hallar las tangentes de curvas (el problema central del diferencial), construimos una nueva herramienta basada puramente en límites:
+
+<StudyTask type="definicion" id="definicion-derivada" title="La Derivada" />
+
+El grandioso final del análisis en bachillerato revela un secreto majestuoso: resulta que calcular áreas bajo curvas intrincadas (integrar) y medir tasas de cambio instantáneas (derivar) son, sorprendentemente, las caras de una misma moneda.
+
+<StudyTask type="teorema" id="teorema-fundamental-calculo" title="Teorema Fundamental del Cálculo" />
+
+<OrnamentalDivider />
+
+<BlockTitle subtitle="Bloque IV">Azar y Estadística</BlockTitle>
+
+Finalmente, abandonamos la certidumbre determinista para medir empíricamente la ignorancia humana: el Azar. El último bloque evalúa tu rigor al trazar árboles de probabilidad y manipular la información parcial que posees sobre un evento incierto.
+
+La clave maestra de la probabilidad condicionada, y la que probablemente te salvará un punto entero en el examen final, es la inferencia inversa para actualizar probabilidades con nueva información.
+
+<StudyTask type="teorema" id="teorema-bayes" title="El Teorema de Bayes" />
+
+Para comprender a fondo la probabilidad condicional, nada mejor que un impacto real. Observa qué sucede cuando interpretamos la precisión de un test de laboratorio y aplica la inferencia para salvar diagnósticos:
+
+<StudyTask type="ejemplo" id="ejemplo-falso-positivo" title="Falsos Positivos Clínicos" />
+<StudyTask type="caso" id="bayes_diagnostico_medico" title="Diagnóstico de Enfermedades" />
+<StudyTask type="ejercicio" id="bayes_aplicado" title="Inferencia Probabilística Aplicada" />
+
+Al mismo tiempo, la estadística inferencial y de variables continuas tiene a una reina absoluta. Aquella forma de campana en la que todo ruido natural parece ordenarse cuando muestras a suficientes sujetos:
+
+<StudyTask type="teorema" id="distribucion-normal" title="La Distribución Normal" />
+
+Llegar hasta aquí y dominar estos nodos significa estar firmemente anclado a la base lógica de las matemáticas. No importa de qué manera camuflen las preguntas el día del examen: el entramado fundamental siempre será este. ¡Adelante!

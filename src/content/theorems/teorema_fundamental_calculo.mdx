@@ -1,0 +1,29 @@
+export const metadata = {
+  id: "teorema-fundamental-calculo",
+  title: "Teorema Fundamental del Cálculo",
+  description: "El teorema que unifica las dos ramas del cálculo: la derivación (tasas de cambio) y la integración (acumulación de áreas).",
+  links: ["definicion-derivada"],
+  statement: "La derivación y la integración son operaciones inversas. Si $f$ es continua, la derivada de su integral definida respecto a su límite superior es: $\\frac{d}{dx} \\int_a^x f(t) dt = f(x)$.",
+  era: "Siglo XVII",
+  color: "salvia",
+  authors: ["Isaac Newton", "Gottfried Leibniz"],
+  tags: ["Análisis"],
+  corollaries: ["Regla de Barrow"],
+  hasSimulation: true
+};
+
+import { IntegralAreaVisualizer } from '../../diagrams/Calculo/IntegralAreaVisualizer';
+
+export const Simulation = IntegralAreaVisualizer;
+
+<Capitular letra="E" />l **Teorema Fundamental del Cálculo** (TFC) consiste en la afirmación matemática de que la <ConceptLink targetId="definicion-derivada">derivación</ConceptLink> y la integración de una función son operaciones mutuamente inversas.
+
+### Intuición: El Problema de la Piscina
+
+Para entender por qué derivadas e integrales son dos caras de la misma moneda, imagina que estás llenando una piscina. 
+
+La función $f(x)$ describe la *velocidad* a la que entra el agua en cada momento $x$ (esto es, la derivada del volumen). El área bajo la gráfica de esa velocidad entre dos instantes $a$ y $b$ representa el *volumen total* de agua que ha entrado a la piscina.
+
+Por otro lado, si tenemos una función $F(x)$ que directamente nos dice la cantidad de agua acumulada hasta el instante $x$ (la primitiva), es evidente que el agua que entró entre $a$ y $b$ es simplemente la diferencia de volumen: $F(b) - F(a)$.
+
+Juega con la gráfica interactiva: arrastra los límites $a$ y $b$. Verás cómo el área bajo la curva se calcula mágicamente al instante solo restando los valores de la primitiva en esos dos puntos. ¡Así de potente es el Teorema Fundamental del Cálculo!

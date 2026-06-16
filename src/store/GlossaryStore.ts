@@ -2,6 +2,9 @@ import { create } from 'zustand';
 
 export type GlossaryCategory = 'Conceptos Fundamentales' | 'Lógica' | 'Álgebra' | 'Análisis' | 'Geometría' | 'Teoría de Conjuntos';
 
+/**
+ * GlossaryEntry - Representa un término en el glosario matemático.
+ */
 export interface GlossaryEntry {
   title: string;
   definition: string;
@@ -9,6 +12,9 @@ export interface GlossaryEntry {
   category: GlossaryCategory;
 }
 
+/**
+ * GlossaryState - Estado global de Zustand para el Glosario y Fórmulas
+ */
 export interface GlossaryState {
   activeTerm: string | null;
   activeFormulaTerms: string[] | null;
@@ -19,7 +25,10 @@ export interface GlossaryState {
   toggleDisplayMode: () => void;
 }
 
-// Nuestra base de datos de términos de la Enciclopedia
+/**
+ * Diccionario centralizado de términos del glosario
+ * Contiene definiciones de conceptos, símbolos lógicos y álgebra.
+ */
 export const dictionary: Record<string, GlossaryEntry> = {
   // CONCEPTOS FUNDAMENTALES
   axioma: {
@@ -144,6 +153,36 @@ export const dictionary: Record<string, GlossaryEntry> = {
     equation: "\\pi \\approx 3.14159",
     category: "Álgebra"
   },
+  rank: {
+    title: "Rango de una Matriz ( rg )",
+    definition: "El número máximo de filas o columnas de una matriz que son linealmente independientes. Representa la dimensión de la imagen de la transformación lineal asociada.",
+    equation: "\\text{rg}(A)",
+    category: "Álgebra"
+  },
+  det: {
+    title: "Determinante ( det, | | )",
+    definition: "Un valor escalar asociado a una matriz cuadrada que se puede interpretar como el factor de escala o volumen del paralelepípedo que forman sus vectores columna.",
+    equation: "\\det(A)",
+    category: "Álgebra"
+  },
+  transpose: {
+    title: "Matriz Traspuesta ( T )",
+    definition: "La matriz resultante de intercambiar sistemáticamente las filas y columnas de una matriz original.",
+    equation: "A^T",
+    category: "Álgebra"
+  },
+  identity: {
+    title: "Matriz Identidad ( I )",
+    definition: "Matriz cuadrada con unos en su diagonal principal y ceros en el resto. Es el elemento neutro de la multiplicación de matrices.",
+    equation: "I_n",
+    category: "Álgebra"
+  },
+  augmented: {
+    title: "Matriz Ampliada ( * )",
+    definition: "Matriz resultante de añadir a la matriz de coeficientes de un sistema, la columna de términos independientes.",
+    equation: "A^*",
+    category: "Álgebra"
+  },
   par: {
     title: "Número Par",
     definition: "Un número entero que es múltiplo de 2.",
@@ -217,6 +256,48 @@ export const dictionary: Record<string, GlossaryEntry> = {
     definition: "Aplicar el resultado de una función como entrada de otra función.",
     equation: "(f \\circ g)(x) = f(g(x))",
     category: "Análisis"
+  },
+  derivada: {
+    title: "Derivada ( f' )",
+    definition: "Mide la tasa de cambio instantánea de una función. Visualmente equivale a la pendiente de la recta tangente a la curva en un punto.",
+    equation: "f'(x) = \\lim_{h \\to 0} \\frac{f(x+h) - f(x)}{h}",
+    category: "Análisis"
+  },
+  diferencial: {
+    title: "Diferencial ( dx )",
+    definition: "Representa un cambio infinitesimal en la variable independiente x. En integrales, denota el ancho infinitesimal de los rectángulos bajo la curva.",
+    equation: "dx",
+    category: "Análisis"
+  },
+  primitiva: {
+    title: "Primitiva ( F )",
+    definition: "Una función F(x) es primitiva de f(x) si la derivada de F(x) es exactamente f(x). Es el proceso inverso de derivar.",
+    equation: "F'(x) = f(x)",
+    category: "Análisis"
+  },
+  pendiente_secante: {
+    title: "Pendiente Secante ( m_{sec} )",
+    definition: "Tasa de cambio promedio de una función calculada cortando la curva en dos puntos discretos.",
+    equation: "m_{sec} = \\frac{\\Delta y}{\\Delta x}",
+    category: "Análisis"
+  },
+  tiende_a: {
+    title: "Tiende a ( → )",
+    definition: "Operador central del concepto de límite. Indica que una variable se aproxima infinitamente a un valor objetivo, sin llegar necesariamente a tocarlo.",
+    equation: "x \\to 0",
+    category: "Análisis"
+  },
+  fraccion: {
+    title: "Fracción ( / )",
+    definition: "Cociente entre un numerador y un denominador. Expresa la división o la proporción entre dos cantidades.",
+    equation: "\\frac{a}{b}",
+    category: "Álgebra"
+  },
+  producto_cruz: {
+    title: "Producto Vectorial ( × )",
+    definition: "Operación geométrica en R³ que toma dos vectores y devuelve un tercero ortogonal a ambos, cuyo módulo es el área del paralelogramo que forman.",
+    equation: "\\vec{u} \\times \\vec{v}",
+    category: "Geometría"
   },
 
   // GEOMETRÍA
@@ -311,6 +392,32 @@ export const dictionary: Record<string, GlossaryEntry> = {
     definition: "Delimitadores utilizados para enumerar explícitamente los elementos que componen un conjunto.",
     equation: "A = \\{ 1, 2, 3 \\}",
     category: "Teoría de Conjuntos"
+  },
+
+  // ÁLGEBRA LINEAL
+  sistema_lineal: {
+    title: "Sistema de Ecuaciones Lineales",
+    definition: "Un conjunto de ecuaciones en las que cada término es una constante o el producto de una constante por una incógnita. La solución es el conjunto de valores que satisfacen simultáneamente todas las ecuaciones.",
+    equation: "\\begin{cases} a_{11}x_1 + a_{12}x_2 = b_1 \\\\ a_{21}x_1 + a_{22}x_2 = b_2 \\end{cases}",
+    category: "Álgebra"
+  },
+  incognita: {
+    title: "Incógnita",
+    definition: "Variable cuyo valor se desconoce y se desea determinar al resolver un sistema de ecuaciones. Convencionalmente se denota con letras como $x$, $y$, $z$.",
+    equation: "Ax = b, \\quad x \\text{ es la incógnita}",
+    category: "Álgebra"
+  },
+  menor: {
+    title: "Menor de una Matriz",
+    definition: "El determinante de la submatriz cuadrada que se obtiene al eliminar cierto número de filas y columnas de la matriz original. Se usa para calcular el rango: el rango de A es el orden del mayor menor no nulo.",
+    equation: "M_{ij} = \\det(A_{ij})",
+    category: "Álgebra"
+  },
+  grado_libertad: {
+    title: "Grado de Libertad",
+    definition: "En un sistema indeterminado, el número de parámetros independientes necesarios para expresar la solución general. Equivale a la diferencia entre el número de incógnitas y el rango de la matriz de coeficientes.",
+    equation: "\\text{grados de libertad} = n - \\text{rg}(A)",
+    category: "Álgebra"
   }
 };
 
@@ -344,12 +451,24 @@ export const texSymbolMap: Record<string, string> = {
   '\\cdot': 'times',
   '\\div': 'divide',
   '\\pm': 'pm',
+  '\\det': 'det',
+  '\\text{rg}': 'rank',
+  '^T': 'transpose',
+  'I_n': 'identity',
+  '^*': 'augmented',
   
   // Análisis
   '\\int': 'integral',
   '\\infty': 'infinity',
   '\\lim': 'limit',
   '\\circ': 'composition',
+  "f'": 'derivada',
+  "dx": 'diferencial',
+  "F(": 'primitiva',
+  "m_{sec}": 'pendiente_secante',
+  "\\to": 'tiende_a',
+  "\\frac": 'fraccion',
+  // "\\times": 'producto_cruz',
   
   // Geometría
   '\\pi': 'pi',
@@ -378,6 +497,10 @@ export const texSymbolMap: Record<string, string> = {
   '\\text{Q.E.D.}': 'qed'
 };
 
+/**
+ * Hook global de Zustand para acceder al estado del Glosario interactivo.
+ * Controla qué término o fórmulas están seleccionadas para mostrarse en la UI.
+ */
 export const useGlossaryStore = create<GlossaryState>((set) => ({
   activeTerm: null,
   activeFormulaTerms: null,

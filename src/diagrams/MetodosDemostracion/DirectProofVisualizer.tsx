@@ -1,114 +1,141 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
+
+/**
+ * DirectProofVisualizer — Ejemplo Concreto
+ *
+ * En lugar de letras abstractas P/Q, muestra el método directo
+ * aplicado a una demostración real paso a paso:
+ * "Si n es par, entonces n² es par"
+ */
+
+const STEPS = [
+  {
+    icon: 'H',
+    label: 'Hipótesis',
+    color: '#2a6a2a',
+    bg: '#f0faf0',
+    border: '#a3d9a3',
+    title: 'Asumimos que n es par',
+    formula: 'n = 2k, \\quad k \\in \\mathbb{Z}',
+    note: 'Definición de número par: múltiplo de 2.',
+  },
+  {
+    icon: '①',
+    label: 'Deducción',
+    color: '#2b5a9a',
+    bg: '#f0f4ff',
+    border: '#90aaf0',
+    title: 'Elevamos al cuadrado',
+    formula: 'n^2 = (2k)^2 = 4k^2',
+    note: 'Axioma del álgebra: $(ab)^2 = a^2 b^2$',
+  },
+  {
+    icon: '②',
+    label: 'Reescribir',
+    color: '#2b5a9a',
+    bg: '#f0f4ff',
+    border: '#90aaf0',
+    title: 'Factorizamos',
+    formula: '4k^2 = 2 \\cdot (2k^2)',
+    note: 'Propiedad distributiva.',
+  },
+  {
+    icon: 'Q',
+    label: 'Conclusión',
+    color: '#A42A04',
+    bg: '#fff4f0',
+    border: '#f4a08a',
+    title: 'n² es par',
+    formula: 'n^2 = 2m, \\; m = 2k^2 \\in \\mathbb{Z}',
+    note: 'Definición de número par: n² es múltiplo de 2. ∎',
+  },
+];
 
 export const DirectProofVisualizer = () => {
-  const [step, setStep] = useState(0);
+  const [revealed, setRevealed] = useState(0); // cuántos pasos están visibles
 
-  const nextStep = () => {
-    if (step < 3) setStep(step + 1);
-  };
-
-  const reset = () => {
-    setStep(0);
-  };
+  const next = () => setRevealed(r => Math.min(r + 1, STEPS.length));
+  const reset = () => setRevealed(0);
 
   return (
-    <div className="w-full h-full min-h-[500px] flex flex-col items-center justify-center p-8 bg-transparent relative font-serif">
-      <div className="text-center relative z-10 w-full max-w-2xl">
-        <h3 className="text-3xl text-pizarra mb-12 italic border-b border-carbon/20 pb-4 inline-block px-8">
-          El Silogismo en Acción
-        </h3>
-
-        {/* Contenedor Principal */}
-        <div className="relative flex flex-col items-center justify-center h-64 w-full border-2 border-carbon/10 bg-lienzo p-8 shadow-sm">
-          
-          <div className="flex items-center justify-between w-full h-full relative">
-            
-            {/* Nodo 1: Premisa P */}
-            <div className={`transition-all duration-500 flex flex-col items-center z-10 
-              ${step >= 0 ? 'opacity-100 scale-100' : 'opacity-0 scale-90'}`}>
-              <div className="w-20 h-20 bg-salvia text-lienzo border-2 border-carbon flex items-center justify-center text-4xl shadow-md rounded-sm">
-                P
-              </div>
-              <span className="mt-4 text-carbon font-bold uppercase tracking-widest text-sm">Premisa</span>
-            </div>
-
-            {/* Cable 1 */}
-            <div className="flex-1 h-1 bg-carbon/10 mx-2 relative overflow-hidden">
-              <div className={`absolute top-0 left-0 h-full bg-salvia transition-all duration-1000 ease-out 
-                ${step >= 1 ? 'w-full' : 'w-0'}`} />
-            </div>
-
-            {/* Nodo 2: Deducción A */}
-            <div className={`transition-all duration-700 flex flex-col items-center z-10 
-              ${step >= 1 ? 'opacity-100 scale-100 translate-y-0' : 'opacity-0 scale-90 -translate-y-4'}`}>
-              <div className="w-16 h-16 bg-lienzo text-salvia border-2 border-salvia flex items-center justify-center text-2xl shadow-sm rounded-full">
-                A
-              </div>
-              <span className="mt-2 text-carbon/60 italic text-xs">Axioma</span>
-            </div>
-
-            {/* Cable 2 */}
-            <div className="flex-1 h-1 bg-carbon/10 mx-2 relative overflow-hidden">
-              <div className={`absolute top-0 left-0 h-full bg-salvia transition-all duration-1000 ease-out 
-                ${step >= 2 ? 'w-full' : 'w-0'}`} />
-            </div>
-
-            {/* Nodo 3: Deducción B */}
-            <div className={`transition-all duration-700 flex flex-col items-center z-10 
-              ${step >= 2 ? 'opacity-100 scale-100 translate-y-0' : 'opacity-0 scale-90 translate-y-4'}`}>
-              <div className="w-16 h-16 bg-lienzo text-salvia border-2 border-salvia flex items-center justify-center text-2xl shadow-sm rotate-45">
-                <span className="-rotate-45">B</span>
-              </div>
-              <span className="mt-2 text-carbon/60 italic text-xs">Lema</span>
-            </div>
-
-            {/* Cable 3 */}
-            <div className="flex-1 h-1 bg-carbon/10 mx-2 relative overflow-hidden">
-              <div className={`absolute top-0 left-0 h-full bg-terracota transition-all duration-1000 ease-out 
-                ${step >= 3 ? 'w-full' : 'w-0'}`} />
-            </div>
-
-            {/* Nodo 4: Conclusión Q */}
-            <div className={`transition-all duration-1000 flex flex-col items-center z-10 
-              ${step >= 3 ? 'opacity-100 scale-100 shadow-xl' : 'opacity-0 scale-75'}`}>
-              <div className={`w-20 h-20 text-lienzo border-2 border-carbon flex items-center justify-center text-4xl rounded-sm transition-colors duration-500 
-                ${step >= 3 ? 'bg-terracota' : 'bg-carbon/20'}`}>
-                Q
-              </div>
-              <span className="mt-4 text-carbon font-bold uppercase tracking-widest text-sm">Conclusión</span>
-            </div>
-
-          </div>
-
-          {/* Flecha General decorativa de fondo */}
-          <div className="absolute inset-0 pointer-events-none flex items-center justify-center opacity-5">
-            <svg viewBox="0 0 100 20" className="w-3/4 h-32 fill-carbon">
-              <polygon points="0,5 90,5 90,0 100,10 90,20 90,15 0,15" />
-            </svg>
-          </div>
+    <div className="w-full h-full flex flex-col justify-center p-6 font-serif gap-4">
+      {/* Enunciado */}
+      <div className="text-center pb-4 border-b border-carbon/15">
+        <div className="text-xs uppercase tracking-widest text-carbon/40 mb-1">Demostrar que:</div>
+        <div className="text-lg italic text-carbon">
+          "Si <strong>n</strong> es par, entonces <strong>n²</strong> es par"
         </div>
+      </div>
 
-        {/* Controles */}
-        <div className="mt-8 flex justify-center gap-4">
-          <button 
-            onClick={nextStep}
-            disabled={step === 3}
-            className={`px-6 py-3 border-2 border-carbon font-bold tracking-widest uppercase text-sm transition-all shadow-sm
-              ${step === 3 ? 'opacity-30 cursor-not-allowed bg-transparent' : 'bg-carbon text-lienzo hover:bg-carbon/90 hover:-translate-y-1 hover:shadow-md'}`}
+      {/* Cadena de pasos */}
+      <div className="flex flex-col gap-2 min-h-[280px]">
+        {STEPS.map((s, i) => (
+          <div
+            key={i}
+            className="flex items-start gap-3 transition-all duration-500"
+            style={{
+              opacity: i < revealed ? 1 : 0,
+              transform: i < revealed ? 'translateY(0)' : 'translateY(8px)',
+              pointerEvents: i < revealed ? 'auto' : 'none',
+            }}
           >
-            {step === 0 ? "Deducir Paso 1" : step === 1 ? "Deducir Paso 2" : step === 2 ? "Concluir" : "Demostrado ✓"}
-          </button>
-          
-          {step > 0 && (
-            <button 
-              onClick={reset}
-              className="px-4 py-3 text-terracota border border-terracota/30 hover:bg-terracota/10 transition-colors uppercase text-xs tracking-wider"
+            {/* Icono */}
+            <div
+              className="w-9 h-9 rounded-sm flex items-center justify-center text-sm font-bold shrink-0 mt-0.5"
+              style={{ backgroundColor: s.bg, border: `1px solid ${s.border}`, color: s.color }}
             >
-              Reiniciar
-            </button>
-          )}
-        </div>
+              {s.icon}
+            </div>
 
+            {/* Contenido */}
+            <div
+              className="flex-1 rounded px-3 py-2 text-sm"
+              style={{ backgroundColor: s.bg, borderLeft: `3px solid ${s.border}` }}
+            >
+              <div className="font-bold text-xs uppercase tracking-wide mb-0.5" style={{ color: s.color }}>
+                {s.label} — {s.title}
+              </div>
+              <div className="font-mono text-sm" style={{ color: s.color }}>
+                {s.formula.replace(/\\/g, '').replace(/\{/g, '').replace(/\}/g, '')}
+              </div>
+              <div className="text-[10px] text-carbon/50 italic mt-1">{s.note}</div>
+            </div>
+
+            {/* Conector (excepto el último) */}
+            {i < STEPS.length - 1 && i < revealed - 1 && (
+              <div className="absolute -mt-1 ml-4 pl-[18px] text-carbon/30 text-xs">↓</div>
+            )}
+          </div>
+        ))}
+
+        {/* Conector entre pasos */}
+        {revealed > 0 && revealed < STEPS.length && (
+          <div className="flex items-center gap-2 pl-11 text-carbon/30 text-xs italic">
+            ↓ siguiente deducción...
+          </div>
+        )}
+      </div>
+
+      {/* Controles */}
+      <div className="flex justify-center gap-3 pt-2 border-t border-carbon/10">
+        <button
+          onClick={next}
+          disabled={revealed >= STEPS.length}
+          className={`px-5 py-2 border text-xs uppercase tracking-wider font-bold transition-all
+            ${revealed >= STEPS.length
+              ? 'border-carbon/20 text-carbon/30 cursor-not-allowed'
+              : 'border-carbon text-carbon hover:bg-carbon hover:text-lienzo'}`}
+        >
+          {revealed === 0 ? 'Comenzar' : revealed >= STEPS.length ? '∎ Demostrado' : 'Siguiente deducción'}
+        </button>
+        {revealed > 0 && (
+          <button
+            onClick={reset}
+            className="px-4 py-2 text-xs text-terracota border border-terracota/30 hover:bg-terracota/10 transition-colors uppercase tracking-wider"
+          >
+            Reiniciar
+          </button>
+        )}
       </div>
     </div>
   );

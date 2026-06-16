@@ -1,0 +1,29 @@
+export const metadata = {
+  id: '{{ID}}',
+  title: '{{TITLE}}',
+  description: '{{DESCRIPTION}}',
+  parentTheorem: '',
+  proofMethod: '',
+  authors: [],
+  tags: []
+};
+
+<div className="pt-8 pb-8 mb-8 max-w-prose mx-auto text-center border-t border-carbon/10">
+  <p className="font-serif text-pizarra italic text-2xl font-bold" style={{ fontVariant: 'small-caps' }}>
+    Demostración de {{TITLE}}
+  </p>
+  <Separador />
+</div>
+
+<Demostracion>
+
+<MedievalStep number={1} title="Paso Inicial" />
+
+Descripción del primer paso.
+
+<MedievalStep number={2} title="Desarrollo Lógico" />
+
+Siguientes implicaciones formales.
+
+<div className="text-right mt-8 text-2xl font-bold text-carbon">$\blacksquare$</div>
+</Demostracion>

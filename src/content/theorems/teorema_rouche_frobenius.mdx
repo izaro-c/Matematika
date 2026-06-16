@@ -1,0 +1,70 @@
+export const metadata = {
+  id: "teorema_rouche_frobenius",
+  title: "Teorema de Rouché-Frobenius",
+  description: "Establece la condición necesaria y suficiente para que un sistema de ecuaciones lineales tenga solución, basándose en los rangos de las matrices asociadas al sistema.",
+  links: ["frobenius","sistemas_ecuaciones_lineales","matriz","determinante","regla-cramer"],
+  statement: "Un sistema de ecuaciones lineales es compatible si y solo si el rango de la matriz de coeficientes es igual al rango de la matriz ampliada: $\\text{rg}(A) = \\text{rg}(A|b)$.",
+  tags: ["álgebra"],
+  branches: ["álgebra"],
+  mathematician: "frobenius",
+  era: "siglo xix",
+  hasSimulation: true,
+  demos: ["demo_rouche_frobenius"]
+};
+
+import { LinearSystemVisualizer } from '../../diagrams/LinearAlgebra/LinearSystemVisualizer';
+export const Simulation = LinearSystemVisualizer;
+
+<Capitular letra="E" />l **Teorema de Rouché-<ConceptLink targetId="frobenius">Frobenius</ConceptLink>** establece la condición necesaria y suficiente para que un <ConceptLink targetId="sistemas_ecuaciones_lineales">sistema de ecuaciones lineales</ConceptLink> tenga solución. Para ello, compara el rango de dos matrices derivadas del propio sistema.
+
+<Definicion title="Planteamiento">
+  Dado un sistema de $m$ ecuaciones lineales con $n$ incógnitas, se definen dos <ConceptLink targetId="matriz">matrices</ConceptLink>:
+
+  - La **matriz de coeficientes** $A$, de tamaño $m \times n$, formada por los coeficientes de las incógnitas.
+  - La **matriz ampliada** $A^*$, de tamaño $m \times (n+1)$, que resulta de añadir a $A$ la columna de términos independientes.
+</Definicion>
+
+<Nota>
+  El rango de una matriz es el número máximo de filas (o columnas) linealmente independientes. Se calcula buscando el menor no nulo de mayor orden usando el <ConceptLink targetId="determinante">determinante</ConceptLink>.
+</Nota>
+
+### Enunciado
+
+El sistema tiene solución (es compatible) **si y solo si** los rangos de ambas matrices coinciden:
+
+$$
+\text{rg}(A) = \text{rg}(A^*)
+$$
+
+### Clasificación del Sistema
+
+Una vez comprobada la compatibilidad, el rango permite clasificar el sistema comparándolo con $n$:
+
+<Separador />
+
+<MedievalStep number={1} title="Sistema Compatible Determinado (SCD)" target="step1">
+  Existe una y solo una solución. Ocurre cuando el <ConceptLink targetId="determinante">determinante</ConceptLink> de $A$ es no nulo, y por tanto su rango es máximo:
+  $$
+  \text{rg}(A) = \text{rg}(A^*) = n
+  $$
+  Para resolver el sistema, aplica la <ConceptLink targetId="regla-cramer">Regla de Cramer</ConceptLink>.
+</MedievalStep>
+
+<MedievalStep number={2} title="Sistema Compatible Indeterminado (SCI)" target="step3">
+  Existen infinitas soluciones que dependen de uno o más parámetros libres. Ocurre cuando:
+  $$
+  \text{rg}(A) = \text{rg}(A^*) < n
+  $$
+  El número de grados de libertad de la solución general es $n - \text{rg}(A)$.
+</MedievalStep>
+
+<MedievalStep number={3} title="Sistema Incompatible (SI)" target="step2">
+  El sistema no tiene solución alguna. Las ecuaciones representan geometrías paralelas sin intersección. Ocurre cuando:
+  $$
+  \text{rg}(A) \neq \text{rg}(A^*)
+  $$
+</MedievalStep>
+
+<Separador />
+
+El cálculo de los rangos se apoya en los **menores** de la <ConceptLink targetId="matriz">matriz</ConceptLink> — subdeterminantes obtenidos eligiendo filas y columnas — y en el <ConceptLink targetId="determinante">determinante</ConceptLink> de la matriz original.

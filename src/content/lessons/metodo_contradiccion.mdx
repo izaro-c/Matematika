@@ -1,0 +1,35 @@
+export const metadata = {
+  "id": "metodo-contradiccion",
+  "title": "Demostración por Contradicción",
+  "description": "Reductio ad absurdum: asumir lo contrario a lo que se quiere demostrar y llegar a una imposibilidad lógica.",
+  "tags": [
+    "Lógica",
+    "Filosofía de las Matemáticas"
+  ],
+  "hasSimulation": true
+};
+
+import { ContradictionVisualizer } from '../../diagrams/MetodosDemostracion/ContradictionVisualizer';
+
+export const Simulation = ContradictionVisualizer;
+
+# Demostración por Contradicción
+
+<Capitular letra="E" />l **Método por Contradicción** (*Reductio ad absurdum* o reducción al absurdo) es, en palabras de G. H. Hardy, "uno de los gambitos más finos del matemático". Es una técnica de demostración indirecta sumamente poderosa.
+
+<Separador />
+
+### El Funcionamiento del Absurdo
+En lugar de intentar construir un camino lógico desde los axiomas fundamentales hasta el teorema, el matemático asume el papel del "abogado del diablo": **asume deliberadamente que el teorema es falso**.
+
+El proceso sigue estos pasos:
+1. **Negación**: Se formula la negación estricta de la afirmación original.
+2. **Desarrollo**: Se exploran lógicamente las consecuencias de esta nueva "realidad" invertida.
+3. **Colapso**: Tarde o temprano, la cadena deductiva colisiona contra un hecho axiomático innegable (como afirmar que $1 = 0$, o que un número es simultáneamente par e impar).
+4. **Conclusión**: Dado que la lógica de los pasos era correcta, el error debe residir forzosamente en la premisa inicial (la negación del teorema). Por lo tanto, si la negación es falsa, la afirmación original tiene que ser **necesariamente verdadera**.
+
+Esta técnica fue empleada por los antiguos griegos para realizar algunos de los descubrimientos más profundos de la historia de la ciencia, como la demostración de la irracionalidad de $\sqrt{2}$ por los pitagóricos, o la demostración de <ConceptLink targetId="euclides">Euclides</ConceptLink> de que existen infinitos números primos.
+
+<Nota>
+Esta técnica y el <ConceptLink targetId="metodo-directo">Método de la Contrapositiva</ConceptLink>.
+</Nota>

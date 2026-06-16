@@ -45,11 +45,37 @@ body {
   transition: background-color 0.5s ease, color 0.5s ease;
 }
 
+.bg-arts-and-crafts {
+  background-color: var(--theme-lienzo);
+  background-image: url('/arts_and_crafts_bg.png');
+  background-repeat: repeat;
+  background-size: 800px;
+  background-attachment: fixed;
+  position: relative;
+}
+
+.bg-arts-and-crafts::before {
+  content: "";
+  position: absolute;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background-color: var(--theme-lienzo);
+  opacity: 0.90; /* Fondo mucho menos visible */
+  z-index: 0;
+  pointer-events: none;
+}
+
+.bg-arts-and-crafts > * {
+  position: relative;
+  z-index: 1;
+}
+
 .teoria-mdx {
   /* Tipografía Serif para la teoría (puedes usar la de tu SO por defecto por ahora) */
   font-family: ui-serif, Georgia, Cambria, "Times New Roman", Times, serif;
   color: var(--color-carbon);
   line-height: 1.8;
+  text-align: left;
+  hyphens: auto;
   /* Espaciado generoso para lectura sosegada */
 }
 
@@ -66,12 +92,25 @@ body {
   font-family: ui-serif, Georgia, Cambria, "Times New Roman", Times, serif;
   font-size: 3.75rem;
   /* text-6xl equivalente para los demos que son a pantalla completa */
-  text-align: center;
+  text-align: left;
 }
 
 .teoria-mdx p {
   margin-bottom: 1.2rem;
   color: var(--color-pizarra);
+}
+
+.teoria-mdx a {
+  color: var(--color-terracota);
+  text-decoration: underline;
+  text-underline-offset: 4px;
+  text-decoration-thickness: 1px;
+  transition: all 0.2s ease;
+}
+
+.teoria-mdx a:hover {
+  color: var(--color-granada);
+  text-decoration-thickness: 2px;
 }
 
 .color-test {
@@ -87,8 +126,13 @@ body {
 }
 
 @keyframes simple-fade {
-  0% { opacity: 0; }
-  100% { opacity: 1; }
+  0% {
+    opacity: 0;
+  }
+
+  100% {
+    opacity: 1;
+  }
 }
 
 .animate-fade-in {

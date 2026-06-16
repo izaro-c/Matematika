@@ -1,157 +1,231 @@
-import React, { useEffect, useRef, useState, useMemo } from 'react';
+import { useEffect, useRef, useState, useMemo } from 'react';
 import { Link } from 'wouter';
+import { db } from '../store/ContentStore';
+import { InteractiveTimePlot } from '../components/ui/InteractiveTimePlot';
 
-type TimelineNode = {
-  id: string;
-  name: string;
-  era: string;
-  description: string;
-  slug: string;
-  image?: string;
-  year: number;
+import { ArtsAndCraftsLiana } from '../components/ui/ArtsAndCraftsLiana';
+
+// ── Insignia de época ─────────────────────────────────────────────────────────
+const EraInsignia: React.FC<{ era: string; year: number }> = ({ era, year }) => {
+  const period =
+    year < -200 ? { label: 'Antigüedad', color: '#c49b4f' } :
+    year < 500  ? { label: 'Mundo Clásico', color: '#A2C2A2' } :
+    year < 1400 ? { label: 'Medievo', color: '#5D7080' } :
+    year < 1700 ? { label: 'Renacimiento', color: '#C86446' } :
+    year < 1900 ? { label: 'Ilustración', color: '#333' } :
+                  { label: 'Época Moderna', color: '#333' };
+
+  return (
+    <div className="flex items-center gap-2">
+      <span
+        className="inline-block w-2 h-2 rounded-full"
+        style={{ backgroundColor: period.color }}
+      />
+      <span className="text-[10px] font-sans uppercase tracking-[0.2em]" style={{ color: period.color }}>
+        {era}
+      </span>
+    </div>
+  );
 };
 
-// Cargar todas las biografías dinámicamente
-const bioModules = import.meta.glob('../biographies/*.mdx', { eager: true });
-
+// ── Página principal ──────────────────────────────────────────────────────────
 export const HistoryTimeline = () => {
   const containerRef = useRef<HTMLDivElement>(null);
   const [scrollProgress, setScrollProgress] = useState(0);
+  const [totalHeight, setTotalHeight] = useState(2000);
+  const [filter, setFilter] = useState<string>('Todos');
 
-  // Parsear la metadata de los MDX
-  const nodes = useMemo(() => {
-    const extracted: TimelineNode[] = [];
-    
-    for (const path in bioModules) {
-      const mod = bioModules[path] as any;
-      const slug = path.split('/').pop()?.replace('.mdx', '').toLowerCase() || '';
-      const meta = mod.metadata;
-      
-      if (meta) {
-        extracted.push({
-          id: slug,
-          slug,
-          name: meta.name || slug,
-          era: meta.era || '',
-          description: meta.description || '',
-          image: meta.image,
-          year: meta.year || 0
-        });
-      }
-    }
-    
-    // Ordenar cronológicamente
-    return extracted.sort((a, b) => a.year - b.year);
-  }, []);
+  const nodes = db.getAllMathematicians(); // ya ordenados por año
+
+  // Épocas disponibles para filtro
+  const eras = useMemo(() => {
+    const set = new Set(nodes.map(n =>
+      n.year < -200 ? 'Antigüedad' :
+      n.year < 500  ? 'Mundo Clásico' :
+      n.year < 1400 ? 'Medievo' :
+      n.year < 1700 ? 'Renacimiento' :
+      n.year < 1900 ? 'Ilustración' : 'Época Moderna'
+    ));
+    return ['Todos', ...Array.from(set)];
+  }, [nodes]);
+
+  const filtered = filter === 'Todos' ? nodes : nodes.filter(n => {
+    const era =
+      n.year < -200 ? 'Antigüedad' :
+      n.year < 500  ? 'Mundo Clásico' :
+      n.year < 1400 ? 'Medievo' :
+      n.year < 1700 ? 'Renacimiento' :
+      n.year < 1900 ? 'Ilustración' : 'Época Moderna';
+    return era === filter;
+  });
 
   useEffect(() => {
     const handleScroll = () => {
       if (!containerRef.current) return;
       const rect = containerRef.current.getBoundingClientRect();
-      const windowHeight = window.innerHeight;
-      
-      const scrolled = windowHeight / 2 - rect.top;
-      let progress = scrolled / rect.height;
-      progress = Math.max(0, Math.min(1, progress));
-      setScrollProgress(progress);
+      setTotalHeight(containerRef.current.scrollHeight);
+      const scrolled = window.innerHeight / 2 - rect.top;
+      setScrollProgress(Math.max(0, Math.min(1, scrolled / rect.height)));
     };
-
     window.addEventListener('scroll', handleScroll);
-    handleScroll();
-    return () => window.removeEventListener('scroll', handleScroll);
+    window.addEventListener('resize', handleScroll);
+    setTimeout(handleScroll, 100);
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+      window.removeEventListener('resize', handleScroll);
+    };
   }, []);
 
   return (
-    <div className="bg-lienzo text-carbon font-serif pt-24 pb-32 relative" ref={containerRef}>
-      
-      {/* Cabecera Académica Clásica */}
-      <div className="text-center mb-24 relative z-20">
-        <h1 className="text-5xl text-pizarra font-bold mb-4" style={{ fontVariant: 'small-caps' }}>
-          El Códice de Eruditos
-        </h1>
-        <p className="text-base text-carbon/60 max-w-xl mx-auto px-6 uppercase tracking-widest font-mono">
-          Las mentes ilustres que forjaron el rigor matemático
-        </p>
-        <div className="flex items-center justify-center gap-4 mt-8 opacity-40">
-          <div className="w-12 h-px bg-carbon"></div>
-          <span className="text-xl">❦</span>
-          <div className="w-12 h-px bg-carbon"></div>
+    <div
+      className="bg-lienzo text-carbon font-serif pt-20 pb-32 relative min-h-screen"
+      ref={containerRef}
+    >
+      {/* Fondo sutil */}
+      <div
+        className="absolute inset-0 z-0 pointer-events-none opacity-[0.025] mix-blend-multiply"
+        style={{ backgroundImage: 'url(/william_morris_botanical.png)', backgroundSize: '400px' }}
+      />
+
+      {/* ── Cabecera ──────────────────────────────────────────────── */}
+      <div className="relative z-20 max-w-4xl mx-auto px-6 md:px-0 mb-16">
+        <Link href="/">
+          <a className="inline-flex items-center gap-2 text-xs font-sans tracking-widest uppercase text-carbon/40 hover:text-carbon transition-colors mb-10">
+            ← Biblioteca
+          </a>
+        </Link>
+
+        <div className="border-b border-carbon/10 pb-8 flex flex-col md:flex-row md:items-end justify-between gap-6">
+          <div>
+            <div className="text-xs font-sans uppercase tracking-[0.3em] text-terracota/60 mb-2">
+              Crónica Universal
+            </div>
+            <h1 className="text-5xl text-carbon font-bold leading-none" style={{ fontVariant: 'small-caps' }}>
+              Índice Biográfico
+            </h1>
+            <p className="mt-3 text-sm italic text-carbon/50">
+              {nodes.length} matemáticos · {Math.abs(nodes[0]?.year ?? 0)} a.C. — presente
+            </p>
+            <InteractiveTimePlot nodes={nodes} />
+          </div>
+
+          {/* Filtros de época */}
+          <div className="flex flex-wrap gap-2">
+            {eras.map(era => (
+              <button
+                key={era}
+                onClick={() => setFilter(era)}
+                className={`px-3 py-1.5 text-[10px] font-sans uppercase tracking-widest border transition-all ${
+                  filter === era
+                    ? 'bg-carbon text-lienzo border-carbon'
+                    : 'border-carbon/20 text-carbon/50 hover:border-carbon/50 hover:text-carbon'
+                }`}
+              >
+                {era}
+              </button>
+            ))}
+          </div>
         </div>
       </div>
 
-      {nodes.length === 0 ? (
-        <div className="text-center py-32 text-carbon/50 italic">
-          El códice está vacío. Los manuscritos aguardan ser descubritos.
+      {/* ── Línea de tiempo ──────────────────────────────────────── */}
+      {filtered.length === 0 ? (
+        <div className="text-center py-32 text-carbon/40 italic font-sans text-sm">
+          Sin entradas en esta época.
         </div>
       ) : (
         <div className="relative w-full max-w-4xl mx-auto px-4 md:px-0">
-          
-          {/* Eje Central Clásico */}
-          <div className="absolute top-0 bottom-0 left-8 md:left-1/2 md:-translate-x-1/2 w-[2px] bg-carbon/10 shadow-[1px_0_0_rgba(255,255,255,0.5)] flex flex-col items-center">
-            {/* Ornamento Superior e Inferior */}
-            <div className="absolute top-0 w-4 h-4 border border-carbon/20 rotate-45 bg-lienzo" />
-            <div className="absolute bottom-0 w-4 h-4 border border-carbon/20 rotate-45 bg-lienzo" />
-          </div>
+          <ArtsAndCraftsLiana scrollProgress={scrollProgress} totalHeight={totalHeight} />
 
-          <div className="flex flex-col gap-16 md:gap-32 relative z-10 py-12">
-            {nodes.map((node, index) => {
+          <div className="flex flex-col gap-20 md:gap-28 relative z-20 py-4">
+            {filtered.map((node, index) => {
               const isEven = index % 2 === 0;
-              
+              const theorems = db.getTheoremsByAuthor(node.id);
+
               return (
-                <div 
+                <div
                   key={node.id}
-                  className={`flex flex-col md:flex-row items-center w-full group
-                    ${isEven ? 'md:flex-row' : 'md:flex-row-reverse'}
-                  `}
+                  className={`flex items-center w-full ${isEven ? 'md:flex-row' : 'md:flex-row-reverse'}`}
                 >
-                  
-                  {/* Nodo Central (Medallón en la línea) */}
-                  <div className="hidden md:flex absolute left-1/2 -translate-x-1/2 w-8 h-8 items-center justify-center z-20">
-                    <div className="w-6 h-6 rotate-45 border-2 border-carbon/20 bg-lienzo group-hover:border-terracota/50 group-hover:bg-terracota/10 transition-colors duration-500 shadow-sm" />
+                  {/* Nodo central */}
+                  <div className="hidden md:flex absolute left-1/2 -translate-x-1/2 z-30 items-center justify-center">
+                    <div className="w-3 h-3 rounded-full bg-lienzo border-2 border-carbon/30 shadow-sm" />
                   </div>
 
-                  {/* Tarjeta del Autor */}
-                  <div className={`w-full md:w-1/2 pl-16 md:pl-0 flex
-                    ${isEven ? 'md:justify-end md:pr-16' : 'md:justify-start md:pl-16'}
-                  `}>
-                    
+                  {/* Tarjeta */}
+                  <div
+                    className={`w-full md:w-[46%] flex ${
+                      isEven ? 'md:ml-auto md:pr-[7%]' : 'md:mr-auto md:pl-[7%]'
+                    }`}
+                  >
                     <Link href={`/bio/${node.slug}`}>
-                      <a className="w-full bg-lienzo border border-carbon/10 p-6 md:p-8 flex flex-col items-center text-center relative overflow-hidden transition-all duration-500 hover:shadow-xl hover:border-carbon/30 hover:-translate-y-1">
-                        
-                        {/* Marco interior sutil */}
-                        <div className="absolute inset-2 border border-carbon/5 pointer-events-none" />
-                        
-                        {/* Ornamento Esquinas */}
-                        <div className="absolute top-3 left-3 w-4 h-4 border-t border-l border-carbon/20" />
-                        <div className="absolute bottom-3 right-3 w-4 h-4 border-b border-r border-carbon/20" />
+                      <a className="w-full group relative bg-lienzo border border-carbon/15 hover:border-carbon/40 transition-all duration-300 hover:shadow-lg hover:-translate-y-0.5 flex flex-col">
+                        {/* Esquinas ornamentales */}
+                        <div className="absolute top-1.5 left-1.5 w-3 h-3 border-t border-l border-carbon/25" />
+                        <div className="absolute top-1.5 right-1.5 w-3 h-3 border-t border-r border-carbon/25" />
+                        <div className="absolute bottom-1.5 left-1.5 w-3 h-3 border-b border-l border-carbon/25" />
+                        <div className="absolute bottom-1.5 right-1.5 w-3 h-3 border-b border-r border-carbon/25" />
 
-                        {/* Retrato */}
-                        <div className="w-24 h-24 md:w-32 md:h-32 rounded-full border-[3px] border-carbon/10 bg-carbon/5 flex items-center justify-center overflow-hidden mb-6 group-hover:border-terracota/40 transition-colors duration-500 shadow-inner">
-                          {node.image ? (
-                            <img src={node.image} alt={node.name} className="w-full h-full object-cover grayscale-[0.3] contrast-110 group-hover:grayscale-0 transition-all duration-700" />
-                          ) : (
-                            <span className="font-serif text-4xl text-carbon/20 font-bold">{node.name.charAt(0)}</span>
-                          )}
+                        <div className="p-5 flex gap-5">
+                          {/* Retrato */}
+                          <div className="w-20 h-24 border border-carbon/10 bg-carbon/5 shrink-0 overflow-hidden relative">
+                            {node.image ? (
+                              <img
+                                src={node.image}
+                                alt={node.name}
+                                className="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-700"
+                              />
+                            ) : (
+                              <div className="w-full h-full flex items-center justify-center font-serif text-3xl text-carbon/20">
+                                {node.name.charAt(0)}
+                              </div>
+                            )}
+                            <div className="absolute inset-0 bg-terracota/5 mix-blend-overlay pointer-events-none" />
+                          </div>
+
+                          {/* Info */}
+                          <div className="flex-1 min-w-0">
+                            <EraInsignia era={node.era} year={node.year} />
+                            <h2
+                              className="text-2xl font-bold text-carbon group-hover:text-terracota transition-colors leading-tight mt-1 mb-2"
+                              style={{ fontVariant: 'small-caps' }}
+                            >
+                              {node.name}
+                            </h2>
+                            <p className="text-xs text-carbon/55 italic leading-relaxed line-clamp-2">
+                              {node.description}
+                            </p>
+                          </div>
                         </div>
 
-                        {/* Metadatos */}
-                        <p className="text-[10px] font-mono tracking-widest uppercase text-terracota mb-2">{node.era}</p>
-                        <h2 className="text-3xl font-serif text-pizarra mb-3 group-hover:text-terracota transition-colors" style={{ fontVariant: 'small-caps' }}>{node.name}</h2>
-                        <div className="w-8 h-px bg-carbon/20 mb-4" />
-                        <p className="text-sm text-carbon/70 italic leading-relaxed px-4">{node.description}</p>
-                        
-                        <div className="mt-8 font-sans text-[10px] uppercase tracking-widest text-carbon/40 font-bold group-hover:text-carbon transition-colors">
-                          [ Leer Manuscrito ]
+                        {/* Teoremas */}
+                        {theorems.length > 0 && (
+                          <div className="px-5 pb-4 flex flex-wrap gap-1.5 border-t border-carbon/8 pt-3">
+                            {theorems.map(t => (
+                              <span
+                                key={t.id}
+                                className="text-[9px] font-sans uppercase tracking-widest border border-carbon/15 px-2 py-0.5 text-carbon/50"
+                              >
+                                {t.title}
+                              </span>
+                            ))}
+                          </div>
+                        )}
+
+                        {/* Año — fondo decorativo */}
+                        <div
+                          className="absolute top-3 right-3 text-5xl font-serif text-carbon/[0.04] select-none pointer-events-none leading-none"
+                          aria-hidden
+                        >
+                          {Math.abs(node.year)}
                         </div>
                       </a>
                     </Link>
-
                   </div>
                 </div>
               );
             })}
           </div>
-
         </div>
       )}
     </div>

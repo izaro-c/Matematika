@@ -1,0 +1,42 @@
+export const metadata = {
+  id: 'tales_proporciones',
+  title: 'Proporciones en Sombras',
+  description: 'Calcula la altura de un edificio usando proporciones de sombras y empareja segmentos equivalentes.',
+  relatedTheorem: 'teorema-tales',
+  tags: ['Geometría', 'Proporciones'],
+  difficulty: 'básico',
+  hint: 'Si la sombra del poste es la mitad que su altura, lo mismo ocurrirá con el edificio.'
+};
+
+### 1. El Problema Clásico de Tales
+
+Un edificio proyecta una sombra de **$15$ metros**. En ese mismo momento, un poste vertical de **$2$ metros** proyecta una sombra de **$0.5$ metros**. 
+
+Queremos calcular la altura $h$ del edificio.
+
+<Paso id="paso1_proporcion" title="Establecer la proporción">
+  Según el Teorema de Tales, los triángulos formados por los objetos y sus sombras son semejantes.
+  Por tanto:
+  $$ \frac{\text{Altura Edificio}}{\text{Sombra Edificio}} = \frac{\text{Altura Poste}}{\text{Sombra Poste}} $$
+  $$ \frac{h}{15} = \frac{2}{0.5} $$
+</Paso>
+
+Despejando $h$, la altura del edificio es:
+<Hueco id="q1_altura" answer="60" /> metros.
+
+---
+
+### 2. Equivalencias Proporcionales
+
+Observa el Teorema general de Tales. Si tenemos tres rectas paralelas cortadas por dos secantes $r$ y $s$, generando los segmentos $A, B$ en $r$ y $A', B'$ en $s$:
+
+Empareja cada relación geométrica con su equivalente proporcional correcto:
+
+<Emparejar 
+  id="q2_relaciones"
+  pairs={[
+    { left: "A / B", right: "A' / B'" },
+    { left: "A / (A + B)", right: "A' / (A' + B')" },
+    { left: "B / A", right: "B' / A'" }
+  ]}
+/>

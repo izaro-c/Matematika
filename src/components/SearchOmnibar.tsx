@@ -1,62 +1,138 @@
-import React, { useEffect, useState, useMemo, useRef } from 'react';
+import { useEffect, useState, useMemo, useRef } from 'react';
 import { useLocation } from 'wouter';
 import { useNavigationStore } from '../store/NavigationStore';
+import { db } from '../store/ContentStore';
 import { dictionary } from '../store/GlossaryStore';
 import { useGlossaryStore } from '../store/GlossaryStore';
 
-// Tipos de resultados
+// ── Tipos ─────────────────────────────────────────────────────────────────────
+
 type SearchResult = {
   id: string;
-  type: 'leccion' | 'demo' | 'glosario' | 'biografia';
+  type: 'teorema' | 'lección' | 'definición' | 'ejemplo' | 'ejercicio' | 'demo' | 'glosario' | 'matemático' | 'caso_uso';
   title: string;
   subtitle?: string;
-  slug: string; // url o id del glosario
+  href: string;
 };
 
-// Indexación Estática de Vite
-const rawLessons = import.meta.glob('../lessons/*.mdx', { query: '?raw', import: 'default', eager: true });
-const rawDemos = import.meta.glob('../demonstrations/*.mdx', { query: '?raw', import: 'default', eager: true });
-const rawBios = import.meta.glob('../biographies/*.mdx', { query: '?raw', import: 'default', eager: true });
+// ── Iconos por tipo ───────────────────────────────────────────────────────────
 
-const extractTitle = (rawContent: string, fallback: string): string => {
-  if (typeof rawContent !== 'string') return fallback;
-  const match = rawContent.match(/^#\s+(.+)$/m);
-  return match ? match[1] : fallback;
+const TYPE_ICONS: Record<SearchResult['type'], string> = {
+  teorema: 'T',
+  lección: '§',
+  definición: 'D',
+  ejemplo: 'E',
+  ejercicio: 'P',
+  demo: '∴',
+  glosario: 'Σ',
+  matemático: '✦',
+  caso_uso: '◈',
 };
 
-// Construir el índice una sola vez al cargar la app
+// ── Construcción del índice ───────────────────────────────────────────────────
+// Se construye una única vez usando el ContentStore, que ya tiene los títulos
+// correctos extraídos del frontmatter de cada MDX.
+
 const buildIndex = (): SearchResult[] => {
   const index: SearchResult[] = [];
 
-  // 1. Lecciones
-  for (const path in rawLessons) {
-    const slug = path.split('/').pop()?.replace('.mdx', '').toLowerCase() || '';
-    const title = extractTitle(rawLessons[path] as string, slug);
-    index.push({ id: `lesson-${slug}`, type: 'leccion', title, slug, subtitle: 'Lección Interactiva' });
+  // 1. Teoremas, Lemas y Corolarios
+  for (const thm of db.theorems.values()) {
+    const typeLabel = thm.type === 'lemma' ? 'lema' : thm.type === 'corollary' ? 'corolario' : 'teorema';
+    index.push({
+      id: `thm-${thm.id}`,
+      type: 'teorema',
+      title: thm.title,
+      subtitle: thm.description,
+      href: `/teorema/${thm.slug}`,
+    });
+    void typeLabel;
   }
 
-  // 2. Demostraciones
-  for (const path in rawDemos) {
-    const slug = path.split('/').pop()?.replace('.mdx', '').replace(/demo$/, '').toLowerCase() || '';
-    const title = extractTitle(rawDemos[path] as string, slug);
-    index.push({ id: `demo-${slug}`, type: 'demo', title, slug: `demo/${slug}`, subtitle: 'Demostración Visual' });
+  // 2. Lecciones
+  for (const lesson of db.lessons.values()) {
+    index.push({
+      id: `lesson-${lesson.id}`,
+      type: 'lección',
+      title: lesson.title || lesson.id,
+      href: `/${lesson.slug}`,
+    });
   }
 
-  // 3. Biografías Históricas
-  for (const path in rawBios) {
-    const slug = path.split('/').pop()?.replace('.mdx', '').toLowerCase() || '';
-    const title = extractTitle(rawBios[path] as string, slug);
-    index.push({ id: `bio-${slug}`, type: 'biografia', title, slug: `bio/${slug}`, subtitle: 'Biografía Histórica' });
+  // 3. Definiciones
+  for (const def of db.definitions.values()) {
+    index.push({
+      id: `def-${def.id}`,
+      type: 'definición',
+      title: def.title,
+      subtitle: def.description,
+      href: `/definicion/${def.slug}`,
+    });
   }
 
-  // 4. Glosario
+  // 4. Ejemplos
+  for (const ex of db.examples.values()) {
+    index.push({
+      id: `ex-${ex.id}`,
+      type: 'ejemplo',
+      title: ex.title,
+      subtitle: ex.description,
+      href: `/ejemplo/${ex.slug}`,
+    });
+  }
+
+  // 5. Ejercicios
+  for (const ez of db.exercises.values()) {
+    index.push({
+      id: `ez-${ez.id}`,
+      type: 'ejercicio',
+      title: ez.title,
+      subtitle: ez.description,
+      href: `/ejercicio/${ez.slug}`,
+    });
+  }
+
+  // 6. Demostraciones
+  for (const demo of db.demos.values()) {
+    index.push({
+      id: `demo-${demo.id}`,
+      type: 'demo',
+      title: demo.title,
+      subtitle: demo.description,
+      href: `/demo/${demo.slug}`,
+    });
+  }
+
+  // 7. Matemáticos
+  for (const bio of db.mathematicians.values()) {
+    index.push({
+      id: `bio-${bio.id}`,
+      type: 'matemático',
+      title: bio.name || bio.fullName,
+      subtitle: bio.description,
+      href: `/bio/${bio.slug}`,
+    });
+  }
+
+  // 8. Casos de Uso
+  for (const uc of db.usecases.values()) {
+    index.push({
+      id: `uc-${uc.id}`,
+      type: 'caso_uso',
+      title: uc.title,
+      subtitle: uc.description,
+      href: `/caso/${uc.slug}`,
+    });
+  }
+
+  // 9. Glosario de Símbolos
   for (const [key, term] of Object.entries(dictionary)) {
-    index.push({ 
-      id: `glossary-${key}`, 
-      type: 'glosario', 
-      title: term.title, 
-      slug: key, 
-      subtitle: term.definition.slice(0, 60) + '...' 
+    index.push({
+      id: `glossary-${key}`,
+      type: 'glosario',
+      title: term.title,
+      subtitle: term.definition.slice(0, 80) + '…',
+      href: key, // El glosario se abre en el panel, no navega
     });
   }
 
@@ -65,112 +141,174 @@ const buildIndex = (): SearchResult[] => {
 
 const searchIndex = buildIndex();
 
+// ── Componente ────────────────────────────────────────────────────────────────
+
 export const SearchOmnibar = () => {
   const { isSearchOpen, closeSearch } = useNavigationStore();
   const [, setLocation] = useLocation();
-  const { setActiveTerm } = useGlossaryStore();
+  const { openTerm } = useGlossaryStore();
   const [query, setQuery] = useState('');
+  const [selectedIndex, setSelectedIndex] = useState(0);
   const inputRef = useRef<HTMLInputElement>(null);
+  const listRef = useRef<HTMLDivElement>(null);
 
+  // Keyboard shortcuts: Cmd+K y Escape
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
       if ((e.metaKey || e.ctrlKey) && e.key === 'k') {
         e.preventDefault();
         useNavigationStore.getState().toggleSearch();
       }
-      if (e.key === 'Escape') {
-        closeSearch();
-      }
+      if (e.key === 'Escape') closeSearch();
     };
-
     window.addEventListener('keydown', handleKeyDown);
     return () => window.removeEventListener('keydown', handleKeyDown);
   }, [closeSearch]);
 
+  // Focus al abrir, limpiar al cerrar
   useEffect(() => {
     if (isSearchOpen) {
       setTimeout(() => inputRef.current?.focus(), 50);
     } else {
       setQuery('');
+      setSelectedIndex(0);
     }
   }, [isSearchOpen]);
 
+  // Normalización de texto para búsqueda acentuada
+  const normalize = (s: string) =>
+    s.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '');
+
   const results = useMemo(() => {
     if (!query.trim()) return [];
-    const lowerQuery = query.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "");
-    
-    return searchIndex.filter(item => {
-      const searchStr = `${item.title} ${item.subtitle}`.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "");
-      return searchStr.includes(lowerQuery);
-    }).slice(0, 8); // Max 8 results
+    const q = normalize(query);
+    return searchIndex
+      .filter(item => {
+        const haystack = normalize(`${item.title} ${item.subtitle ?? ''} ${item.type}`);
+        return haystack.includes(q);
+      })
+      .slice(0, 9);
   }, [query]);
+
+  // Restablecer selección cuando cambian los resultados
+  useEffect(() => setSelectedIndex(0), [results]);
+
+  // Navegación con teclado dentro de los resultados
+  const handleKeyDown = (e: React.KeyboardEvent) => {
+    if (e.key === 'ArrowDown') {
+      e.preventDefault();
+      setSelectedIndex(i => Math.min(i + 1, results.length - 1));
+    } else if (e.key === 'ArrowUp') {
+      e.preventDefault();
+      setSelectedIndex(i => Math.max(i - 1, 0));
+    } else if (e.key === 'Enter' && results[selectedIndex]) {
+      handleSelect(results[selectedIndex]);
+    }
+  };
 
   const handleSelect = (item: SearchResult) => {
     closeSearch();
     if (item.type === 'glosario') {
-      setActiveTerm(item.slug);
+      openTerm(item.href);
     } else {
-      setLocation(`/${item.slug}`);
+      setLocation(item.href);
     }
   };
 
   if (!isSearchOpen) return null;
 
   return (
-    <div className="fixed inset-0 z-[100] flex items-start justify-center pt-[15vh]">
+    <div className="fixed inset-0 z-[100] flex items-start justify-center pt-[12vh]" onKeyDown={handleKeyDown}>
       {/* Backdrop */}
-      <div 
-        className="absolute inset-0 bg-carbon/40 backdrop-blur-sm" 
-        onClick={closeSearch}
-      />
-      
+      <div className="absolute inset-0 bg-carbon/40 backdrop-blur-sm" onClick={closeSearch} />
+
       {/* Modal */}
-      <div className="relative w-full max-w-2xl bg-lienzo rounded-2xl shadow-2xl overflow-hidden border border-carbon/10 flex flex-col font-sans">
-        <div className="flex items-center p-4 border-b border-carbon/10 text-carbon/50">
-          <svg className="w-6 h-6 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+      <div className="relative w-full max-w-2xl bg-lienzo shadow-2xl overflow-hidden flex flex-col font-sans"
+        style={{ border: '1px solid rgba(51,51,51,0.12)', borderRadius: '2px' }}>
+
+        {/* Input */}
+        <div className="flex items-center px-5 py-4 border-b border-carbon/10">
+          <svg className="w-5 h-5 mr-3 text-carbon/40 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
           </svg>
           <input
             ref={inputRef}
             type="text"
-            className="w-full bg-transparent text-xl text-carbon outline-none placeholder-carbon/30"
-            placeholder="Buscar lecciones, teoremas o conceptos (Cmd+K)..."
+            className="w-full bg-transparent text-lg text-carbon outline-none placeholder-carbon/30 font-serif"
+            placeholder="Buscar teoremas, definiciones, matemáticos…"
             value={query}
-            onChange={(e) => setQuery(e.target.value)}
+            onChange={e => setQuery(e.target.value)}
           />
-          <button onClick={closeSearch} className="px-2 text-sm font-semibold opacity-50 hover:opacity-100">ESC</button>
+          <kbd className="ml-3 px-2 py-1 text-xs font-sans text-carbon/40 border border-carbon/15 rounded shrink-0">ESC</kbd>
         </div>
 
+        {/* Resultados */}
         {results.length > 0 && (
-          <div className="max-h-[60vh] overflow-y-auto p-2">
+          <div ref={listRef} className="overflow-y-auto" style={{ maxHeight: '60vh' }}>
             {results.map((item, idx) => (
               <button
                 key={item.id}
                 onClick={() => handleSelect(item)}
-                className={`w-full text-left p-4 rounded-xl flex items-center justify-between group transition-colors
-                  hover:bg-carbon hover:text-lienzo`}
+                className={`w-full text-left px-5 py-3 flex items-center gap-4 transition-colors group
+                  ${idx === selectedIndex
+                    ? 'bg-carbon text-lienzo'
+                    : 'hover:bg-carbon/5 text-carbon'
+                  }`}
               >
-                <div>
-                  <h3 className="text-lg font-serif font-bold group-hover:text-lienzo text-carbon">{item.title}</h3>
-                  {item.subtitle && <p className="text-sm opacity-60 mt-1">{item.subtitle}</p>}
+                {/* Icono de tipo */}
+                <span className={`w-8 h-8 shrink-0 flex items-center justify-center text-sm font-bold font-serif
+                  rounded-sm border
+                  ${idx === selectedIndex
+                    ? 'border-lienzo/30 text-lienzo/70'
+                    : 'border-carbon/15 text-carbon/40'
+                  }`}>
+                  {TYPE_ICONS[item.type]}
+                </span>
+
+                {/* Texto */}
+                <div className="flex-1 min-w-0">
+                  <div className={`font-serif font-bold text-base leading-tight truncate
+                    ${idx === selectedIndex ? 'text-lienzo' : 'text-carbon'}`}>
+                    {item.title}
+                  </div>
+                  {item.subtitle && (
+                    <div className={`text-xs mt-0.5 leading-snug line-clamp-1
+                      ${idx === selectedIndex ? 'text-lienzo/60' : 'text-carbon/45'}`}>
+                      {item.subtitle}
+                    </div>
+                  )}
                 </div>
-                <div className="text-xs uppercase font-bold tracking-wider opacity-40 group-hover:opacity-80">
+
+                {/* Tipo badge */}
+                <span className={`text-xs uppercase tracking-widest font-bold shrink-0
+                  ${idx === selectedIndex ? 'text-lienzo/50' : 'text-carbon/30'}`}>
                   {item.type}
-                </div>
+                </span>
               </button>
             ))}
           </div>
         )}
-        
-        {query.trim() !== '' && results.length === 0 && (
+
+        {/* Estado vacío */}
+        {query.trim() && results.length === 0 && (
           <div className="p-12 text-center text-carbon/40 italic font-serif">
-            No se encontraron teoremas ni conceptos para "{query}".
+            Sin resultados para "<span className="not-italic font-bold">{query}</span>"
           </div>
         )}
-        
+
+        {/* Estado inicial */}
         {!query.trim() && (
-          <div className="p-8 text-center text-carbon/40 text-sm">
-            Busca cualquier término para saltar a su lección o definición.
+          <div className="px-5 py-6 flex flex-wrap gap-2">
+            {(['teorema', 'lección', 'definición', 'matemático'] as const).map(type => (
+              <button
+                key={type}
+                onClick={() => setQuery(type === 'lección' ? '' : type)}
+                className="px-3 py-1.5 text-xs font-sans border border-carbon/15 text-carbon/50 hover:border-carbon/40 hover:text-carbon transition-colors rounded-sm capitalize"
+              >
+                {TYPE_ICONS[type]} {type}s
+              </button>
+            ))}
+            <span className="ml-auto text-xs text-carbon/30 self-center">↑↓ navegar · ↵ abrir</span>
           </div>
         )}
       </div>

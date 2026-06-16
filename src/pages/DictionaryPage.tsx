@@ -1,7 +1,8 @@
-import React, { useState, useMemo } from 'react';
+import { useState, useMemo } from 'react';
 import { Link } from 'wouter';
 import { Logo } from '../components/Logo';
 import { dictionary } from '../store/GlossaryStore';
+import { db } from '../store/ContentStore';
 import type { GlossaryCategory, GlossaryEntry } from '../store/GlossaryStore';
 import katex from 'katex';
 
@@ -11,7 +12,7 @@ export const DictionaryPage = () => {
   // Organizar y filtrar el diccionario
   const groupedEntries = useMemo(() => {
     const term = search.toLowerCase();
-    const groups: Partial<Record<GlossaryCategory, [string, GlossaryEntry][]>> = {};
+    const groups: Record<string, [string, GlossaryEntry][]> = {};
 
     Object.entries(dictionary).forEach(([key, entry]) => {
       // Filtrar por término
@@ -28,9 +29,31 @@ export const DictionaryPage = () => {
       }
     });
 
+    db.getAllDefinitions().forEach((def) => {
+      const match = 
+        def.title.toLowerCase().includes(term) || 
+        def.description.toLowerCase().includes(term);
+
+      if (match) {
+        const cat = def.tags?.[0] || 'Conceptos Fundamentales';
+        // Mapear branch simple a categoría formal si hace falta, o usarlo tal cual
+        const catName = cat.charAt(0).toUpperCase() + cat.slice(1);
+        
+        if (!groups[catName]) {
+          groups[catName] = [];
+        }
+        groups[catName]!.push([def.id, {
+          title: def.title,
+          definition: def.description,
+          category: catName as any,
+          id: def.id // prop especial
+        } as any]);
+      }
+    });
+
     // Ordenar alfabéticamente dentro de cada grupo
     Object.keys(groups).forEach(cat => {
-      groups[cat as GlossaryCategory]!.sort((a, b) => a[1].title.localeCompare(b[1].title));
+      groups[cat]!.sort((a, b) => a[1].title.localeCompare(b[1].title));
     });
 
     return groups;
@@ -83,7 +106,7 @@ export const DictionaryPage = () => {
           </div>
         </div>
 
-        {categoriesOrder.map(category => {
+        {Array.from(new Set([...categoriesOrder, ...Object.keys(groupedEntries)] as GlossaryCategory[])).map(category => {
           const entries = groupedEntries[category];
           if (!entries || entries.length === 0) return null;
 
@@ -112,6 +135,14 @@ export const DictionaryPage = () => {
                         className="bg-carbon/5 p-4 rounded-sm border border-carbon/10 text-center text-xl overflow-x-auto"
                         dangerouslySetInnerHTML={renderMath(data.equation)}
                       />
+                    )}
+
+                    {(data as any).id && (
+                      <Link href={`/definicion/${(data as any).id}`}>
+                        <a className="inline-block mt-4 text-xs font-sans tracking-widest uppercase text-terracota hover:text-carbon transition-colors border-b border-terracota/30 pb-1">
+                          Leer Artículo Completo →
+                        </a>
+                      </Link>
                     )}
                   </div>
                 ))}

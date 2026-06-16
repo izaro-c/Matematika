@@ -1,0 +1,32 @@
+export const metadata = {
+  id: 'metodo-contraposicion',
+  title: 'Demostración por Contraposición',
+  description: 'Demostrar que una afirmación es cierta probando que si la conclusión fuera falsa, la premisa tendría que ser falsa.',
+  tags: ['Lógica', 'Filosofía de las Matemáticas'],
+  hasSimulation: true
+};
+
+import { ContrapositionVisualizer } from '../../diagrams/MetodosDemostracion/ContrapositionVisualizer';
+export const Simulation = ContrapositionVisualizer;
+
+# Demostración por Contraposición
+
+<Capitular letra="E" />l **Método por Contraposición** es una técnica lógica fundamental que aprovecha una propiedad intrínseca de las sentencias condicionales: una sentencia y su contrapositiva son lógicamente equivalentes.
+
+<Separador />
+
+### La Equivalencia Lógica
+En lógica proposicional, la afirmación condicional $P \implies Q$ (Si $P$, entonces $Q$) siempre comparte el mismo valor de verdad que su afirmación contrapositiva $\neg Q \implies \neg P$ (Si NO $Q$, entonces NO $P$).
+
+A veces, probar directamente que $P \implies Q$ es matemáticamente complicado porque la premisa $P$ no proporciona suficiente información manipulable algebraicamente. En estos casos, invertimos el espejo lógico:
+
+1. **Afirmación Original**: "Si $n^2$ es par ($P$), entonces $n$ es par ($Q$)."
+2. **Contrapositiva**: "Si $n$ es impar ($\neg Q$), entonces $n^2$ es impar ($\neg P$)."
+
+Demostrar la segunda afirmación suele ser mecánicamente mucho más sencillo. Puesto que ambas son caras de la misma moneda lógica, al probar la segunda, automáticamente hemos probado la primera.
+
+Esta simetría lógica es una de las herramientas deductivas más poderosas, permitiendo a los matemáticos "atacar el problema desde el final" cuando la ruta directa está bloqueada.
+
+<Nota>
+Comparar con el <ConceptLink targetId="metodo-contradiccion">Método Directo</ConceptLink> (cuando la negación de la conclusión no es suficientemente clara).
+</Nota>

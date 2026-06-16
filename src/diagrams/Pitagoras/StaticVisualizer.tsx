@@ -86,5 +86,19 @@ export const StaticVisualizer = () => {
         board.update();
     }, [highlight]);
 
-    return <div ref={boardRef} className="w-full h-full min-h-[500px]" />;
+    return (
+        <div className="w-full h-full min-h-[500px] relative overflow-hidden bg-lienzo">
+            {/* Filtro SVG de ruido/textura de papel */}
+            <svg style={{ position: 'absolute', width: 0, height: 0 }} aria-hidden="true">
+                <defs>
+                    <filter id="paper-texture" x="0" y="0" width="100%" height="100%">
+                        <feTurbulence type="fractalNoise" baseFrequency="0.04" numOctaves="3" result="noise" />
+                        <feColorMatrix type="matrix" values="1 0 0 0 0  0 0.95 0 0 0  0 0.85 0 0 0  0 0 0 0.15 0" in="noise" result="coloredNoise" />
+                        <feBlend in="SourceGraphic" in2="coloredNoise" mode="multiply" />
+                    </filter>
+                </defs>
+            </svg>
+            <div ref={boardRef} className="w-full h-full absolute inset-0" style={{ filter: 'url(#paper-texture)' }} />
+        </div>
+    );
 };

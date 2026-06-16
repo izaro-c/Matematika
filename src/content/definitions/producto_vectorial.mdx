@@ -1,0 +1,38 @@
+export const metadata = {
+  id: "producto-vectorial",
+  title: "El Producto Vectorial",
+  description: "Una operación exclusiva del espacio en 3 dimensiones (R³) que genera un nuevo vector perpendicular a dos dados.",
+  links: ["distancia-punto-plano"],
+  statement: "El producto vectorial de dos vectores $\\vec{u}$ y $\\vec{v}$ en $\\mathbb{R}^3$ es un nuevo vector ortogonal a ambos, cuya magnitud es $|\\vec{u} \\times \\vec{v}| = |\\vec{u}||\\vec{v}|\\sin(\\theta)$.",
+  era: "Siglo XIX",
+  color: "pizarra",
+  authors: ["William Rowan Hamilton", "Josiah Willard Gibbs"],
+  tags: ["Geometría"],
+  hasSimulation: true
+};
+
+import { CrossProductVisualizer } from '../../diagrams/Geometria/CrossProductVisualizer';
+
+export const Simulation = CrossProductVisualizer;
+
+<Capitular letra="E" />n Geometría, cuando multiplicamos números ordinarios obtenemos un nuevo número. Cuando multiplicamos un vector por un escalar (un número), lo alargamos o lo encogemos. Pero, ¿qué pasa cuando "multiplicamos" dos vectores entre sí?
+
+El **Producto Vectorial** ($\times$) es una operación mágica que solo existe en el espacio tridimensional. Al operar dos vectores $\vec{u}$ y $\vec{v}$, el resultado no es un número, sino **un nuevo vector** ($\vec{w}$) con propiedades muy especiales.
+
+### La Perpendicularidad Absoluta
+
+La propiedad más importante a efectos prácticos es que el nuevo vector $\vec{w} = \vec{u} \times \vec{v}$ es siempre **completamente perpendicular (ortogonal)** tanto a $\vec{u}$ como a $\vec{v}$.
+
+Si $\vec{u}$ y $\vec{v}$ están apoyados en el suelo (el plano XY), su producto vectorial saldrá disparado como un cohete en el eje Z (hacia arriba o hacia abajo). 
+
+Mueve las coordenadas de los vectores $\vec{u}$ y $\vec{v}$ en el interactivo de abajo. Fíjate cómo el producto vectorial $\vec{u} \times \vec{v}$ (el vector oscuro) reacciona estirándose o encogiéndose a lo largo del eje Z, pero nunca pierde su ortogonalidad absoluta.
+
+### Significado Geométrico (El Área)
+
+El producto vectorial no solo te da una dirección perpendicular, su "longitud" (el módulo del vector, $|\vec{u} \times \vec{v}|$) nos está dando una información geométrica brutal: **coincide exactamente con el área del paralelogramo** que forman los dos vectores base.
+
+Si haces que $\vec{u}$ y $\vec{v}$ sean idénticos o paralelos, verás que el paralelogramo desaparece (área 0), y en consecuencia el vector producto cruz cae a $0$ también. 
+
+### Cálculo con Determinantes
+
+La forma de operar el producto cruz a mano es calculando el <ConceptLink targetId="distancia-punto-plano">determinante</ConceptLink>, donde el vector normal del plano se obtiene precisamente como un producto vectorial.

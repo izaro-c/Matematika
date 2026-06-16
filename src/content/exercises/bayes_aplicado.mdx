@@ -1,0 +1,54 @@
+export const metadata = {
+  id: 'bayes_aplicado',
+  title: 'El Caso del Falso Positivo',
+  description: 'Aplica el Teorema de Bayes para resolver un problema de diagnóstico médico y empareja los conceptos con sus valores.',
+  relatedTheorem: 'teorema-bayes',
+  tags: ['Probabilidad', 'Estadística'],
+  difficulty: 'intermedio',
+  hint: 'Recuerda que Prevalencia = Probabilidad a Priori. La Precisión del test es la Verosimilitud.'
+};
+
+En una clínica se realiza una prueba para detectar un virus que afecta a 1 de cada 10,000 personas (0.01%).
+El fabricante del test afirma que tiene un **95% de precisión** (detecta al 95% de los enfermos, y da negativo en el 95% de los sanos).
+
+### 1. Identificación de Conceptos
+Empareja los términos matemáticos del Teorema de Bayes con el valor que le corresponde en el enunciado:
+
+<Emparejar 
+  id="q1_conceptos"
+  pairs={[
+    { left: "Probabilidad a Priori P(Enfermo)", right: "0.0001 (0.01%)" },
+    { left: "Verosimilitud P(Positivo | Enfermo)", right: "0.95 (95%)" },
+    { left: "Tasa de Falsos Positivos P(Positivo | Sano)", right: "0.05 (5%)" }
+  ]}
+/>
+
+### 2. Cálculo Final
+
+Un paciente se hace la prueba y da positivo. ¿Cuál es la probabilidad de que **realmente tenga el virus**?
+
+<Paso id="paso1_denominador" title="Calcular la Probabilidad Total de dar Positivo P(Positivo)">
+  Usamos la ley de probabilidad total:
+  $$ P(Positivo) = P(Positivo|Enfermo)P(Enfermo) + P(Positivo|Sano)P(Sano) $$
+  $$ P(Positivo) = (0.95 \times 0.0001) + (0.05 \times 0.9999) = 0.000095 + 0.049995 = 0.05009 $$
+</Paso>
+
+<Paso id="paso2_teorema" title="Aplicar Teorema de Bayes">
+  $$ P(Enfermo|Positivo) = \frac{0.95 \times 0.0001}{0.05009} \approx 0.001896 $$
+</Paso>
+
+Expresado en porcentaje (y redondeado a un decimal, por ejemplo 0.2), ¿cuál es la probabilidad real?
+
+<Pregunta 
+  id="q2_probabilidad_real"
+  options={[
+    { text: "95.0%", isCorrect: false },
+    { text: "5.0%", isCorrect: false },
+    { text: "0.2%", isCorrect: true },
+    { text: "1.0%", isCorrect: false }
+  ]}
+/>
+
+<ErrorComun titulo="La Paradoja del Falso Positivo">
+  Fíjate bien: la prueba tiene un 95% de precisión, pero si das positivo tu probabilidad de tener el virus es de apenas un **0.2%**. ¡Es 500 veces más probable que sea un error del test a que realmente estés enfermo! Esto se debe a la bajísima prevalencia original (0.01%).
+</ErrorComun>

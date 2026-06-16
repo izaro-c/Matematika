@@ -1,0 +1,20 @@
+export const metadata = {
+  id: "definicion-derivada",
+  title: "Definición de la Derivada",
+  description: "La derivada representa la tasa de cambio instantánea de una función en un punto. Visualmente, es la pendiente de la recta tangente.",
+  links: ["limite"],
+  statement: "La derivada de una función $f(x)$ en un punto $x$ se define como el límite: $f'(x) = \\lim_{h \\to 0} \\frac{f(x+h) - f(x)}{h}$.",
+  era: "Siglo XVII",
+  color: "terracota",
+  authors: ["Isaac Newton", "Gottfried Leibniz"],
+  tags: ["Análisis", "Cálculo Diferencial"],
+  hasSimulation: true
+};
+
+import { DerivadaSecanteTangente } from '../../diagrams/Calculo/DerivadaSecanteTangente';
+
+export const Simulation = DerivadaSecanteTangente;
+
+<Nota>
+<Capitular letra="L" />a **derivada** de una función $f$ en un punto $x$ se define formalmente como el <ConceptLink targetId="limite">límite</ConceptLink>.
+</Nota>

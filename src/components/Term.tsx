@@ -1,4 +1,4 @@
-import React from 'react';
+
 import { useGlossaryStore } from '../store/GlossaryStore';
 
 interface TermProps {

@@ -1,0 +1,98 @@
+export const metadata = {
+  "id": "demo-pitagoras-euclides",
+  "title": "Demostración Geométrica por Reorganización",
+  "description": "Demostración interactiva visual mediante movimiento de áreas.",
+  "parentTheorem": "teorema-pitagoras",
+  "lemmas": [
+    "lema-invarianza-area"
+  ],
+  "proofMethod": "metodo-directo",
+  "authors": [
+    "pitagoras"
+  ],
+  "tags": [
+    "Geometría Euclidiana"
+  ]
+};
+
+import { RearrangementStep1 } from '../../diagrams/Pitagoras/RearrangementStep1';
+import { RearrangementStep2 } from '../../diagrams/Pitagoras/RearrangementStep2';
+import { RearrangementConclusion } from '../../diagrams/Pitagoras/RearrangementConclusion';
+import { DemonstrationSection } from '../../components/DemonstrationSection';
+import { MedievalStep } from '../../components/MedievalStep';
+import { useMathStore } from '../../store/MathStoreContext';
+import { Link } from 'wouter';
+
+export const InteractiveElement = ({ target, color, children }) => {
+  const setVariable = useMathStore(state => state.setVariable);
+  return (
+    <span 
+      style={{ color: `var(--color-${color})` }} 
+      className="font-bold cursor-pointer border-b-2 border-dashed border-current hover:bg-carbon/5 px-1 py-0.5 rounded transition-all inline-block"
+      onMouseEnter={() => setVariable('highlight', target)}
+      onMouseLeave={() => setVariable('highlight', null)}
+    >
+      {children}
+    </span>
+  );
+};
+
+<div className="pt-8 pb-8 mb-8 max-w-prose mx-auto text-center border-t border-carbon/10">
+  <p className="font-serif text-pizarra italic text-2xl font-bold mb-4" style={{ fontVariant: 'small-caps' }}>
+    Demostración Rigurosa por Reorganización de Áreas
+  </p>
+  
+  <div className="flex justify-center items-center gap-4 mb-6">
+    <Link href="/bio/pitagoras">
+      <a className="px-3 py-1 bg-carbon/5 rounded text-xs font-bold text-carbon/70 uppercase tracking-widest hover:bg-terracota hover:text-lienzo transition-colors">
+        Autor: <ConceptLink targetId="pitagoras">Pitágoras</ConceptLink>
+      </a>
+    </Link>
+    <Link href="/metodo-directo">
+      <a className="px-3 py-1 bg-carbon/5 rounded text-xs font-bold text-carbon/70 uppercase tracking-widest hover:bg-salvia hover:text-lienzo transition-colors">
+        Método: Directo
+      </a>
+    </Link>
+  </div>
+
+  <Link href="/teorema/teorema-pitagoras">
+    <a className="inline-block border border-carbon/20 px-4 py-1 text-sm font-serif italic text-carbon/60 hover:text-carbon hover:bg-carbon/5 transition-all">
+      &larr; Volver al Teorema Principal
+    </a>
+  </Link>
+  <Separador />
+</div>
+
+<DemonstrationSection diagram={<RearrangementStep1 />}>
+
+<MedievalStep number={1} title="Definición del Cuadrado Maestro" />
+
+Partimos de la premisa de poseer cuatro copias idénticas de un triángulo rectángulo de catetos <InteractiveElement target="ladoA" color="terracota">$a$</InteractiveElement> y <InteractiveElement target="ladoB" color="terracota">$b$</InteractiveElement>, y de hipotenusa <InteractiveElement target="ladoC" color="salvia">$c$</InteractiveElement>.
+
+Alineando estas <InteractiveElement target="triangles" color="terracota">cuatro piezas</InteractiveElement> ortogonalmente, construimos el perímetro de un cuadrado exterior de lado $(a+b)$.
+
+El área total del lienzo queda por tanto definida analíticamente como $(a+b)^2$.
+
+Al inspeccionar su geometría interna, el área total está particionada en cinco regiones:
+- 4 triángulos de área individual $\frac{ab}{2}$.
+- 1 cuadrado interior delimitado por las hipotenusas de área <InteractiveElement target="areaC" color="salvia">$c^2$</InteractiveElement>.
+
+<Formula>
+  <span className="italic block mb-2 text-sm text-carbon/50">Igualdad de Partición Inicial:</span>
+     $(a+b)² =$  
+    <InteractiveElement target="areaC" color="salvia">$c²$</InteractiveElement> 
+     + 
+    <InteractiveElement target="triangles" color="terracota">$4(ab/2)$</InteractiveElement>
+</Formula>
+
+</DemonstrationSection>
+
+<DemonstrationSection diagram={<RearrangementStep2 />}>
+
+<MedievalStep number={2} title="Traslación e Invarianza" />
+
+Invocamos el <ConceptLink targetId="lema-invarianza-area">Lema de Invarianza de Área</ConceptLink>. Aplicamos una isometría a los <InteractiveElement target="triangles" color="terracota">cuatro triángulos</InteractiveElement> sin alterar las barreras del cuadrado maestro $(a+b)^2$. 
+
+La demostración por el <ConceptLink targetId="metodo-directo">Método Directo</ConceptLink> queda probada, revelando el código estructural inamovible de los espacios euclidianos. $\blacksquare$
+
+</DemonstrationSection>

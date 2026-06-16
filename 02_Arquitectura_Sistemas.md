@@ -1,31 +1,92 @@
-# Documento de Arquitectura de Software (SAD)
+# 02 — Arquitectura del Sistema
 
-## 1. Stack Tecnológico Elegido y Justificación
-Para una SPA interactiva donde el performance en cliente es crítico y se requiere tipado fuerte para modelado matemático, el stack más "apto" y estándar en la industria es:
+## Stack Tecnológico y Justificación
 
-*   **Core:** React.js 18+ (Functional Components, Hooks).
-*   **Lenguaje:** TypeScript (`strict: true`). Previene errores críticos en estructuras de datos matemáticos y matrices.
-*   **Build Tool:** Vite. Ofrece un HMR (Hot Module Replacement) instantáneo y soporte nativo para resolución de módulos glob (`import.meta.glob`) necesario para cargar los MDX.
-*   **Enrutador:** Wouter. Minimalista, pesa fracciones de lo que pesa react-router, ideal para un "Jardín Digital".
-*   **State Management:** Zustand. Permite crear stores de contexto aislados sin el boilerplate excesivo de Redux. Fundamental para suscribir los motores de canvas a cambios de estado sin re-renderizar React.
-*   **Estilos:** Tailwind CSS con variables inyectadas (Design Tokens).
-*   **Motores Gráficos:** JSXGraph (para Geometría Analítica 2D) y Three.js (para Geometría Espacial 3D).
+| Tecnología | Rol | Porqué |
+|---|---|---|
+| React 19 | UI framework | Componentes funcionales, Hooks, integración perfecta con MDX |
+| Vite 8 | Build tool | `import.meta.glob` para el ContentStore + HMR instantáneo |
+| TypeScript strict | Lenguaje | Modelado tipado de estructuras matemáticas y schemas de contenido |
+| Tailwind CSS v4 | Estilos | Tokens semánticos + utilidades atómicas |
+| Wouter | Router | Minimalista y sin boilerplate; rutas generadas dinámicamente |
+| Zustand | Estado | Stores locales (por lección) y globales (navegación/búsqueda) |
+| MDX | Contenido | Markdown con JSX: permite integrar componentes React en los textos |
+| JSXGraph | Gráficos 2D | Geometría plana, funciones, sistemas de ecuaciones |
+| Three.js | Gráficos 3D | Geometría espacial, planos, vectores en el espacio |
+| KaTeX | Tipografía matemática | Alto rendimiento; integración con `remark-math` y `rehype-katex` |
 
-## 2. Patrones de Diseño a Implementar
+---
 
-### A. MDX Export Bridge (Inyección de Dependencias Invertida)
-En lugar de un router monolítico que mapee rutas a simuladores, aplicaremos *Inversión de Control*.
-El archivo MDX contiene la teoría, pero exporta dinámicamente su propio simulador:
-```tsx
-import { MiSimulador } from '@components/simulators';
-export const Simulation = MiSimulador;
+## Estructura de Carpetas
+
 ```
-El contenedor principal simplemente pregunta: "¿Este MDX exporta un `Simulation`? Si es así, lo monto".
+src/
+├── App.tsx                    # Rutas dinámicas generadas desde ContentStore
+├── store/
+│   ├── ContentStore.ts        # import.meta.glob → índice maestro de todo el contenido
+│   ├── MathStoreContext.tsx   # Provider de Zustand local por lección/teorema
+│   ├── NavigationStore.ts     # Estado global: Marginalia, Omnibar, tema
+│   └── GlossaryStore.ts       # Diccionario de símbolos globales
+├── components/
+│   ├── ui/
+│   │   └── MDXBlocks.tsx      # Componentes inyectados en el MDXProvider global
+│   ├── MarginaliaPanel.tsx    # Panel lateral derecho de navegación contextual
+│   ├── SearchOmnibar.tsx      # Buscador universal (Cmd+K)
+│   ├── BiographyLayout.tsx    # Layout para páginas de matemáticos
+│   ├── InteractiveLessonLayout.tsx
+│   └── ...
+├── pages/
+│   ├── HomePage.tsx           # Portada / índice visual
+│   ├── TheoremPage.tsx
+│   ├── DefinitionPage.tsx
+│   ├── ExamplePage.tsx        # Página de ejemplos resueltos
+│   ├── ExercisePage.tsx       # Página de ejercicios interactivos
+│   ├── BranchPage.tsx         # Vista por rama matemática
+│   ├── StudyPlanPage.tsx      # Roadmap de un plan de estudio concreto
+│   ├── HistoryTimeline.tsx    # Índice visual de matemáticos
+│   └── DictionaryPage.tsx
+├── diagrams/                  # Simuladores JSXGraph/Three.js organizados por tema
+│   ├── LinearAlgebra/
+│   ├── Pitagoras/
+│   └── MetodosDemostracion/
+├── content/                   # TODO el contenido en MDX
+│   ├── lessons/
+│   ├── theorems/
+│   ├── definitions/
+│   ├── examples/
+│   ├── exercises/
+│   ├── mathematicians/
+│   ├── demonstrations/
+│   └── plans/
+scripts/
+├── auto_maths.cjs             # Generación automática de MDX en lote
+└── populate_maths.cjs         # Relleno de contenido existente
+```
 
-### B. Single Source of Truth (SSOT) para Diseño Visual
-Los colores no son estéticos, son semánticos (indican relaciones matemáticas). 
-Se creará un `designTokens.ts`. Tailwind, Three.js y KaTeX leerán los colores exclusivamente de ahí. Si el color de un "Plano" cambia, se actualizará en todo el sistema.
+---
 
-### C. Estado Aislado por Contexto (Zustand + React Context)
-El estado de la simulación del "Teorema de Pitágoras" es basura cuando el usuario navega a "Matrices". 
-El store de Zustand no debe ser global. Se instanciará a través de un Provider en la raíz de cada Nodo, de forma que al desmontar el nodo, el *Garbage Collector* limpie el estado matemático en memoria.
+## Patrones Arquitectónicos
+
+### A. ContentStore (Data Layer)
+`import.meta.glob` escanea todas las carpetas de `src/content/` y genera un índice en tiempo de build. Cada archivo MDX exporta su `metadata` (frontmatter tipado por `schemas.ts`) y su componente React. El ContentStore provee getters: `getAllTheorems()`, `getLessonById()`, `getAllMathematicians()`, etc.
+
+### B. Rutas Dinámicas (No hardcoding)
+`App.tsx` itera el ContentStore para registrar rutas en Wouter. No se añaden rutas a mano. Añadir un `.mdx` nuevo en la carpeta correcta es suficiente para que aparezca en la app.
+
+### C. Estado Aislado por Contexto (MathProvider)
+El estado matemático de la simulación de un nodo es **local**. Al entrar en `/teorema/pitagoras`, se monta un `MathProvider` con un store de Zustand virgen. Al salir, React desmonta el Provider y el Garbage Collector limpia los listeners de JSXGraph/Three.js (evitando memory leaks).
+
+**Excepción:** Los stores de navegación (`NavigationStore`) y glosario (`GlossaryStore`) sí son globales: persisten entre rutas.
+
+### D. Panel Marginalia (Navegación sin cambio de ruta)
+Cuando el usuario hace clic en un `<ConceptLink>`, no navega. El componente emite una acción al `NavigationStore` global que desliza el `MarginaliaPanel` desde la derecha, mostrando la información del nodo destino (con un botón "Leer artículo completo" que sí navega si el usuario quiere).
+
+> **Por qué no tooltips/popups:** Se descartaron el 2026-06-15 porque al estar el link cerca del borde del viewport, el popup se cortaba visualmente. El panel lateral no tiene este problema.
+
+### E. Schemas Tipados (src/store/schemas.ts)
+Cada tipo de contenido tiene un schema Zod que valida el frontmatter del MDX:
+- `TheoremSchema`: `{ id, title, branch, tags, requires[], summary }`
+- `LessonSchema`: `{ id, title, branch, summary, simulation? }`
+- `ExerciseSchema`: `{ id, title, difficulty, relatedTheorems[] }`
+- `ExampleSchema`: `{ id, title, relatedTheorems[] }`
+- `MathematicianSchema`: `{ slug, name, born, died, nationality, contributions[] }`

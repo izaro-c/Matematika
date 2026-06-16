@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 
 export const ContradictionVisualizer = () => {
   const [path, setPath] = useState<'none' | 'direct' | 'absurd'>('none');

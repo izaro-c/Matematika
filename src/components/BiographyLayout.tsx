@@ -1,15 +1,11 @@
-import React from 'react';
+
 import { Link } from 'wouter';
-import { ConceptLink } from './ConceptLink';
 
-interface Theorem {
-  title: string;
-  description: string;
-  link?: string;
-  color?: string; // 'terracota', 'salvia', 'carbon', 'lienzo', 'pizarra'
-}
+import { db } from '../store/ContentStore';
 
+// (saltando interfaces porque usamos las del store ahora si queremos, o las mantenemos)
 interface BiographyMetadata {
+  id: string;
   name: string;
   fullName?: string;
   era: string;
@@ -18,7 +14,6 @@ interface BiographyMetadata {
   year: number;
   birth?: string;
   death?: string;
-  theorems?: Theorem[];
 }
 
 interface BiographyLayoutProps {
@@ -29,15 +24,11 @@ interface BiographyLayoutProps {
 
 export const BiographyLayout: React.FC<BiographyLayoutProps> = ({ Component, Sidebar, metadata }) => {
   
-  // Si no hay metadatos, mostramos el Sidebar antiguo (por compatibilidad hacia atrás) o nada
   const renderSidebarContent = () => {
-    if (Sidebar && !metadata?.theorems) {
-      return <Sidebar />;
-    }
+    if (!metadata) return Sidebar ? <Sidebar /> : null;
 
-    if (!metadata) return null;
-
-    const { name, fullName, birth, death, image, theorems } = metadata;
+    const { id, name, fullName, birth, death, image } = metadata;
+    const theorems = db.getTheoremsByAuthor(id);
     const displayName = fullName || name;
     
     // Extraer partes del nombre (ej: "Pitágoras" y "de Samos")
@@ -100,16 +91,16 @@ export const BiographyLayout: React.FC<BiographyLayoutProps> = ({ Component, Sid
                                         'group-hover:text-white';
 
                 return (
-                  <div key={idx} className="bg-white/5 border border-white/10 p-4 rounded-md hover:bg-white/10 transition-colors group cursor-pointer">
-                    <h4 className={`${colorClass} font-serif text-lg mb-1 ${hoverColorClass}`}>{th.title}</h4>
-                    <p className="text-xs text-white/60 line-clamp-2 mb-2">{th.description}</p>
-                    
-                    {th.link && (
-                      <ConceptLink to={th.link} className="text-xs font-bold text-white/40 uppercase tracking-wider group-hover:text-white transition-colors">
-                        Explorar Manuscrito &rarr;
-                      </ConceptLink>
-                    )}
-                  </div>
+                  <Link key={idx} href={`/teorema/${th.id}`}>
+                    <a className="block bg-white/5 border border-white/10 p-4 rounded-md hover:bg-white/10 transition-colors group cursor-pointer">
+                      <h4 className={`${colorClass} font-serif text-lg mb-1 ${hoverColorClass}`}>{th.title}</h4>
+                      <p className="text-xs text-white/60 line-clamp-2 mb-2">{th.description}</p>
+                      
+                      <span className="text-xs font-bold text-white/40 uppercase tracking-wider group-hover:text-white transition-colors">
+                        Explorar Teorema &rarr;
+                      </span>
+                    </a>
+                  </Link>
                 );
               })}
             </div>

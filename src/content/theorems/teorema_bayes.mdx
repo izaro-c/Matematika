@@ -1,0 +1,39 @@
+export const metadata = {
+  id: "teorema-bayes",
+  title: "Teorema de Bayes",
+  description: "La regla fundamental de la inferencia estadística que nos permite actualizar la probabilidad de una hipótesis cuando tenemos nueva evidencia.",
+  links: ["bayes","ejemplo-falso-positivo"],
+  statement: "Si $A$ y $B$ son sucesos y $P(B) \\neq 0$, la probabilidad condicional de $A$ dado $B$ es: $P(A|B) = \\frac{P(B|A)P(A)}{P(B)}$.",
+  era: "Siglo XVIII",
+  color: "ocre",
+  authors: ["Thomas Bayes", "Pierre-Simon Laplace"],
+  tags: ["Probabilidad"],
+  examples: ["ejemplo-falso-positivo"],
+  hasSimulation: true
+};
+
+import { BayesTreeVisualizer } from '../../diagrams/Probabilidad/BayesTreeVisualizer';
+
+export const Simulation = BayesTreeVisualizer;
+
+<Capitular letra="E" />l **Teorema de <ConceptLink targetId="bayes">Bayes</ConceptLink>** es una proposición fundamental en la teoría de la probabilidad que expresa la probabilidad condicional de un evento aleatorio $A$ dado $B$, en términos de la probabilidad condicional de $B$ dado $A$ y las probabilidades marginales de $A$ y $B$.
+
+Formalmente, si $A$ y $B$ son sucesos y $P(B) \neq 0$, el teorema se enuncia como:
+
+<Formula>
+$$ P(A|B) = \frac{P(B|A) \cdot P(A)}{P(B)} $$
+</Formula>
+
+Donde:
+- $P(A)$ es la **probabilidad a priori**: la probabilidad inicial de que ocurra el suceso $A$.
+- $P(B|A)$ es la **verosimilitud**: la probabilidad de observar la evidencia $B$ dado que la hipótesis $A$ es cierta.
+- $P(A|B)$ es la **probabilidad a posteriori**: la probabilidad actualizada de la hipótesis $A$ tras observar la nueva evidencia $B$.
+- $P(B)$ es la **probabilidad marginal** total de observar la evidencia $B$.
+
+<Separador />
+
+### Intuición
+
+El teorema de <ConceptLink targetId="bayes">Bayes</ConceptLink> es esencialmente una herramienta para **actualizar nuestras creencias** basadas en nueva evidencia. Comenzamos con una probabilidad *a priori* (nuestro estado de conocimiento original), y cuando recibimos una nueva pieza de información (la verosimilitud de la evidencia), multiplicamos y normalizamos para obtener un nuevo estado de conocimiento (la probabilidad *a posteriori*).
+
+Este mecanismo iterativo de actualización es la base del aprendizaje automático (Machine Learning) y de la inferencia estadística bayesiana moderna. Para ver una aplicación contraintuitiva y práctica de esto, consulta el ejemplo del <ConceptLink targetId="ejemplo-falso-positivo">Falso Positivo en los test médicos</ConceptLink>.

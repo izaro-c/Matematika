@@ -1,0 +1,139 @@
+export const metadata = {
+  id: "ejercicio-prueba-componentes",
+  title: "Playground de Componentes Interactivos",
+  description: "Un espacio de pruebas para probar todos los nuevos componentes desarrollados para la plataforma de Matematika.",
+  links: [],
+  tags: ["Demo", "UI", "Playground"],
+  difficulty: "básico",
+  hint: "Trastea con todos los elementos y mira cómo reaccionan visualmente."
+};
+
+import { PitagorasCanvasEj } from '../../diagrams/Ejercicios/PitagorasCanvasEj';
+
+# El Gran Reto de Prueba
+
+Bienvenidos al patio de recreo interactivo de Matematika. En este ejercicio comprobaremos cómo reaccionan las nuevas mecánicas de la plataforma. Prepárate para teclear, ordenar y descubrir.
+
+<ErrorComun title="Atención al Estudiante">
+  No olvides que algunos de estos componentes guardan estado. Si fallas demasiadas veces, te darán una pista automáticamente.
+</ErrorComun>
+
+## 1. El Componente Hueco
+
+Puedes rellenar valores de forma aislada para resolver preguntas clásicas.
+
+<Hueco 
+  id="hueco_bloque" 
+  pregunta="¿Cuál es la raíz cuadrada de 144?" 
+  correct="12" 
+  pista="Es una docena de docenas..." 
+/>
+
+Pero también, el componente `<Hueco>` es extremadamente potente para usarlo **inline**. Por ejemplo, podemos decir que la respuesta de $5 \times 5$ es <Hueco id="hueco_inline" correct="25" /> directamente en el texto sin romper el flujo de lectura. Y si quiero calcular $7 + 3$, sé que el resultado es <Hueco id="hueco_inline_2" correct="10" />.
+
+## 2. Preguntas Multi-Opción (Tarjetas Elegantes)
+
+A continuación, una pregunta clásica. Fíjate en cómo cambian las tarjetas y aparece el sello (✓ o ✗) al responder.
+
+<Pregunta
+  id="pregunta_1"
+  texto="¿Quién es considerado el 'Príncipe de las Matemáticas'?"
+  correct="gauss"
+  opciones={[
+    { value: "euler", texto: "Leonhard Euler" },
+    { value: "gauss", texto: "Carl Friedrich Gauss" },
+    { value: "newton", texto: "Isaac Newton" }
+  ]}
+/>
+
+## 3. Emparejamiento por Trazado (SVG)
+
+Prueba a hacer clic en un elemento de la izquierda y luego en su contraparte de la derecha. Verás cómo los hilos tejen la relación geométrica.
+
+<Emparejar 
+  id="emparejar_1"
+  pairs={[
+    { left: "Triángulo", right: "3 lados" },
+    { left: "Cuadrado", right: "4 lados" },
+    { left: "Pentágono", right: "5 lados" },
+    { left: "Hexágono", right: "6 lados" }
+  ]}
+/>
+
+## 4. Ordenación Lógica (Puzles Matemáticos)
+
+Ordena los siguientes pasos arrastrándolos con los botones de flecha (▲ ▼) para construir la demostración.
+
+<Ordenacion 
+  id="orden_1"
+  pasos={[
+    "Definimos un triángulo rectángulo con catetos $a$ y $b$, y la hipotenusa $c$.",
+    "Construimos cuatro copias de este triángulo.",
+    "Las disponemos formando un cuadrado mayor de lado $a+b$.",
+    "El área del cuadrado interior formado es $c^2$.",
+    "Por equivalencia de áreas, llegamos a $a^2 + b^2 = c^2$."
+  ]}
+/>
+
+## 5. Álgebra Lineal: Matrices Interactivas
+
+Añade los valores que faltan para formar la **Matriz Identidad** de $3 \times 3$. Fíjate en los corchetes clásicos.
+
+<MatrizInteractiva 
+  id="matriz_identidad"
+  pregunta="Rellena las celdas para completar la matriz identidad:"
+  correct={[
+    ["1", "0", "0"],
+    ["0", "1", "0"],
+    ["0", "0", "1"]
+  ]}
+/>
+
+## 6. Variables Dinámicas (Deslizadores)
+
+Puedes inyectar interactividad real en el texto usando un deslizador. Cambia el valor de $X$ a continuación y fíjate cómo se actualiza la frase matemática de abajo en tiempo real.
+
+> Modifica la variable $X$: <DeslizadorEnLine name="x" min={1} max={10} initial={5} label="Valor de X =" />
+
+Si multiplicamos nuestro valor por dos, el resultado de $2X$ es igual a: <DynamicValue name="x" fallback={5} /> $\times 2$. *(La simulación calcularía esto reactivamente)*.
+
+## 7. Clasificador Analítico (Cubos Lógicos)
+
+Una alternativa al drag & drop lineal es el clasificador. Clasifica las siguientes ecuaciones según su tipo.
+
+<Clasificador 
+  id="clasificador_1"
+  pregunta="Clasifica las ecuaciones en Lineales o Cuadráticas:"
+  buckets={[
+    { id: "lineal", title: "Lineales (Grado 1)" },
+    { id: "cuadratica", title: "Cuadráticas (Grado 2)" }
+  ]}
+  items={[
+    { id: "i1", content: "$2x + 5 = 0$", bucketId: "lineal" },
+    { id: "i2", content: "$x^2 - 4 = 0$", bucketId: "cuadratica" },
+    { id: "i3", content: "$-x = 7$", bucketId: "lineal" },
+    { id: "i4", content: "$3x^2 + 2x - 1 = 0$", bucketId: "cuadratica" }
+  ]}
+/>
+
+## 8. Componentes Clásicos (Pasos y Simulaciones)
+
+También podemos organizar explicaciones de la vieja escuela y conectarlas a lienzos dinámicos.
+
+<Paso id="paso_demo_1" title="Primer paso de la explicación">
+  Los pasos son útiles para no saturar al estudiante con toda la información matemática de golpe.
+</Paso>
+
+<CanvasInteractivo id="canvas_demo" title="Un lienzo D3/React embebido">
+  <PitagorasCanvasEj />
+</CanvasInteractivo>
+
+## 8. Las Soluciones Ocultas
+
+Si en algún momento el alumno se atasca, siempre podemos ofrecer una explicación desplegable elegante y sin estridencias:
+
+<Solucion label="Ver el Secreto de este Playground">
+  ¡Felicidades! Has interactuado con todos los nuevos componentes de la Enciclopedia Viva. 
+  
+  Con estas herramientas, los ejercicios de **Matematika** nunca serán aburridos cuestionarios de colegio, sino experiencias orgánicas, táctiles y reactivas.
+</Solucion>

@@ -1,0 +1,50 @@
+export const metadata = {
+  id: "determinante",
+  title: "Determinante",
+  description: "Valor escalar que se puede calcular a partir de los elementos de una matriz cuadrada, determinando ciertas propiedades matemáticas de la matriz.",
+  links: ["matriz","regla-cramer","sarrus","teorema_rouche_frobenius"],
+  statement: "El determinante de una matriz cuadrada $A$ de orden $n$, denotado como $\\det(A)$ o $|A|$, es un valor escalar que resume ciertas propiedades de la matriz, como su invertibilidad y el factor de escala de la transformación lineal que representa.",
+  tags: ["álgebra"],
+  hasSimulation: true
+};
+
+import { DeterminanteVisualizer } from '../../diagrams/LinearAlgebra/DeterminanteVisualizer';
+export const Simulation = DeterminanteVisualizer;
+
+<Capitular letra="E" />l **determinante** es un número escalar asociado a toda <ConceptLink targetId="matriz">matriz cuadrada</ConceptLink>. Se denota $\det(A)$ o $|A|$. Su interpretación más inmediata es **geométrica**: el valor absoluto del determinante es el área (en 2D) o el volumen (en 3D) del paralelepípedo formado por los vectores columna de la matriz.
+
+<Definicion title="Determinante de una Matriz 2×2">
+  Dada una matriz cuadrada $A$ de orden $2$:
+
+  $$
+  A = \begin{pmatrix} a & b \\ c & d \end{pmatrix}
+  $$
+
+  Su determinante se define como:
+
+  $$
+  \det(A) = ad - bc
+  $$
+
+  Geométricamente, si las columnas de $A$ son los vectores $\mathbf{v}_1 = (a, c)^T$ y $\mathbf{v}_2 = (b, d)^T$, entonces $|\det(A)|$ es el área del paralelogramo que forman.
+</Definicion>
+
+<Nota>
+  El **signo** del determinante indica la orientación relativa de los vectores. Si $\det(A) > 0$, el par $(\mathbf{v}_1, \mathbf{v}_2)$ forma un giro antihorario (orientación positiva). Si $\det(A) < 0$, el giro es horario (orientación invertida). Si $\det(A) = 0$, los vectores son paralelos y el paralelogramo se colapsa.
+</Nota>
+
+### Propiedades Fundamentales
+
+1. **Inversibilidad.** Si $\det(A) \neq 0$, la <ConceptLink targetId="matriz">matriz</ConceptLink> es **inversible** (o regular): el sistema $A\mathbf{x} = \mathbf{b}$ tiene solución única, calculable con la <ConceptLink targetId="regla-cramer">Regla de Cramer</ConceptLink>.
+2. **Singularidad.** Si $\det(A) = 0$, la matriz es **singular**: sus filas o columnas son linealmente dependientes.
+3. **Multiplicatividad.** $\det(AB) = \det(A) \cdot \det(B)$.
+4. **Traspuesta.** $\det(A^T) = \det(A)$.
+
+### Cálculo en Matrices 3×3 — Regla de <ConceptLink targetId="sarrus">Sarrus</ConceptLink>
+
+$$
+\det\begin{pmatrix} a & b & c \\ d & e & f \\ g & h & i \end{pmatrix}
+= aei + bfg + cdh - ceg - bdi - afh
+$$
+
+El determinante es la herramienta fundamental para calcular el **rango** de una <ConceptLink targetId="matriz">matriz</ConceptLink>, comprobando si sus **menores** son nulos o no. Esto conecta el determinante directamente con el <ConceptLink targetId="teorema_rouche_frobenius">Teorema de Rouché-Frobenius</ConceptLink>.

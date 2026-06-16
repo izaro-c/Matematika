@@ -1,0 +1,50 @@
+export const metadata = {
+  id: "ejemplo-rouche-frobenius",
+  title: "Sistema Compatible Determinado",
+  description: "Clasificación y resolución de un sistema de ecuaciones lineales usando el Teorema de Rouché-Frobenius.",
+  links: ["teorema_rouche_frobenius","determinante","frobenius"],
+  relatedTheorem: "teorema_rouche_frobenius",
+  tags: ["Álgebra"],
+  difficulty: "intermedio",
+  hasSimulation: true
+};
+
+export { RoucheFrobeniusExampleSimulation as Simulation } from "../../diagrams/LinearAlgebra/RoucheFrobeniusExampleSimulation";
+
+Vamos a analizar el siguiente sistema de ecuaciones lineales aplicando el <ConceptLink targetId="teorema_rouche_frobenius">Teorema de Rouché-Frobenius</ConceptLink>:
+
+$$ 2x + y = 5 $$
+$$ x - y = 1 $$
+
+<Paso id="1">
+  Primero, escribimos la **matriz de coeficientes** ($A$) y la **matriz ampliada** ($A^*$):
+  
+  $$ A = \begin{pmatrix} 2 & 1 \\ 1 & -1 \end{pmatrix} \quad A^* = \begin{pmatrix} 2 & 1 & | & 5 \\ 1 & -1 & | & 1 \end{pmatrix} $$
+</Paso>
+
+<Paso id="2">
+  Calculamos el rango de $A$. Para ello, hallamos su <ConceptLink targetId="determinante">determinante</ConceptLink>:
+  
+  $$ |A| = (2)(-1) - (1)(1) = -2 - 1 = -3 $$
+  
+  Como $|A| \neq 0$, el rango de la matriz $A$ es 2. Esto es, $\text{rango}(A) = 2$.
+</Paso>
+
+<Paso id="3">
+  Dado que la matriz ampliada $A^*$ contiene a $A$ y no puede tener un rango mayor que el número de filas (que es 2), necesariamente $\text{rango}(A^*) = 2$.
+</Paso>
+
+<Solucion title="Clasificación y Resolución">
+  Según el **Teorema de Rouché-<ConceptLink targetId="frobenius">Frobenius</ConceptLink>**:
+  $$ \text{rango}(A) = \text{rango}(A^*) = 2 $$
+  
+  Como este valor coincide con el número de incógnitas ($n = 2$), el sistema es **Compatible Determinado**, es decir, tiene una única solución.
+  
+  Podemos hallar la solución sumando ambas ecuaciones directamente:
+  $(2x + y) + (x - y) = 5 + 1 \implies 3x = 6 \implies x = 2$
+  
+  Sustituyendo $x=2$ en la primera:
+  $2(2) + y = 5 \implies y = 1$.
+  
+  La solución es $(x, y) = (2, 1)$, representada por la intersección única de ambas rectas.
+</Solucion>

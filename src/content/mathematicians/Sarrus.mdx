@@ -1,0 +1,27 @@
+export const metadata = {
+  id: 'sarrus',
+  name: 'Sarrus',
+  fullName: 'Pierre Frédéric Sarrus',
+  era: '1798 - 1861',
+  description: 'Matemático francés conocido por la regla mnemotécnica para calcular el determinante de matrices 3×3 que lleva su nombre.',
+  image: '',
+  year: 1798,
+  birth: '10 de marzo de 1798, Saint-Affrique, Francia',
+  death: '20 de noviembre de 1861, Estrasburgo, Francia'
+};
+
+<Capitular letra="P" />ierre Frédéric Sarrus fue un matemático francés que ejerció como profesor en Estrasburgo. Su lugar en la historia de las matemáticas está asegurado por un resultado modesto pero extraordinariamente útil: la regla que lleva su nombre para calcular determinantes de matrices $3 \times 3$.
+
+<Separador />
+
+### La Regla de Sarrus
+
+La **Regla de Sarrus** es un método visual para calcular el <ConceptLink targetId="determinante">determinante</ConceptLink> de una matriz $3 \times 3$. Se extienden las dos primeras columnas al lado derecho de la matriz y se suman los productos de las diagonales descendentes, restando los de las ascendentes:
+
+$$
+\det(A) = a_{11}a_{22}a_{33} + a_{12}a_{23}a_{31} + a_{13}a_{21}a_{32} - a_{13}a_{22}a_{31} - a_{11}a_{23}a_{32} - a_{12}a_{21}a_{33}
+$$
+
+<ErrorComun titulo="Aplicar la Regla de Sarrus a matrices de otro orden">
+La Regla de Sarrus **solo funciona para matrices 3×3**. Es un error frecuente intentar aplicarla a matrices 4×4 o superiores — para esas dimensiones se debe usar el método de cofactores o la eliminación de Gauss.
+</ErrorComun>

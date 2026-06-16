@@ -83,8 +83,17 @@ export const SymbolDictionaryManager = () => {
       });
     };
 
-    const timeoutId = setTimeout(makeFormulasInteractive, 300);
-    return () => clearTimeout(timeoutId);
+    // Run once immediately
+    makeFormulasInteractive();
+
+    // Set up a MutationObserver to watch for newly loaded lazy components
+    const observer = new MutationObserver(() => {
+      makeFormulasInteractive();
+    });
+
+    observer.observe(document.body, { childList: true, subtree: true });
+
+    return () => observer.disconnect();
   }, [location, openTerm, openFormulaTerms]);
 
   return null;

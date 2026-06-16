@@ -1,0 +1,23 @@
+export const metadata = {
+  id: "ejemplo-falso-positivo",
+  title: "El Peligro del Falso Positivo",
+  description: "Un caso clásico de probabilidad condicional donde el Teorema de Bayes demuestra por qué nuestra intuición falla en los test médicos.",
+  links: ["teorema-bayes","bayes"],
+  relatedTheorem: "teorema-bayes",
+  tags: ["Probabilidad", "Estadística Aplicada"],
+  hasSimulation: true
+};
+
+import { BayesTreeVisualizer } from '../../diagrams/Probabilidad/BayesTreeVisualizer';
+
+export const Simulation = BayesTreeVisualizer;
+
+<Capitular letra="I" />magina que vas al médico, te hacen un test para una enfermedad rara y das positivo. El test tiene una fiabilidad del 95%. ¿Significa eso que tienes un 95% de probabilidades de estar enfermo? 
+
+**¡La respuesta contraintuitiva es NO!** El <ConceptLink targetId="teorema-bayes">Teorema de Bayes</ConceptLink> nos demuestra matemáticamente por qué nuestra intuición falla miserablemente al evaluar evidencias en situaciones de baja probabilidad.
+
+Digamos que la enfermedad afecta a 1 de cada 100 personas ($P(E) = 1\%$). Tienes un test muy bueno: si estás enfermo, siempre da positivo. Y si estás sano, el test dice la verdad el 95% de las veces, pero se equivoca un 5% de las veces (falso positivo).
+
+Si coges a 10,000 personas al azar, habrá 100 enfermos (que darán 100 positivos verdaderos) y 9,900 sanos. Pero de esos 9,900 sanos, un 5% dará un falso positivo. Eso son ¡495 falsos positivos! Es decir, hay casi 5 veces más positivos falsos que verdaderos.
+
+En nuestro diagrama, si mueves el deslizador verás que la probabilidad inicial (*a priori*) afecta drásticamente al resultado final. Si la enfermedad es muy rara (1%), aunque des positivo, lo más probable es que estés sano. Esta es la razón de ser del Teorema de <ConceptLink targetId="bayes">Bayes</ConceptLink>, omnipresente hoy en día en algoritmos de Inteligencia Artificial y Machine Learning.

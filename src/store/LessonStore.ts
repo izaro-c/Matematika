@@ -6,6 +6,8 @@ interface LessonState {
   setActiveSimulation: (sim: React.ComponentType<any> | null) => void;
   defaultSimulation: React.ComponentType<any> | null;
   setDefaultSimulation: (sim: React.ComponentType<any> | null) => void;
+  activeStep: string | null;
+  setActiveStep: (step: string | null) => void;
 }
 
 export const useLessonStore = create<LessonState>((set) => ({
@@ -13,4 +15,6 @@ export const useLessonStore = create<LessonState>((set) => ({
   setActiveSimulation: (sim) => set({ activeSimulation: sim }),
   defaultSimulation: null,
   setDefaultSimulation: (sim) => set({ defaultSimulation: sim }),
+  activeStep: null,
+  setActiveStep: (step) => set({ activeStep: step }),
 }));

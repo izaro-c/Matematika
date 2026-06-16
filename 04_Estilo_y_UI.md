@@ -1,39 +1,117 @@
-# Guía de Estilo y UI (Design Tokens y Estética)
+# 04 — Guía de Estilo y Sistema de Diseño (UI/UX)
 
-**ATENCIÓN AGENTE:** Este documento define las reglas visuales, estructurales y estéticas del proyecto. Tu misión es garantizar que cualquier componente o gráfico desarrollado refleje el "alma" de este proyecto y mantenga el rigor académico.
+## Filosofía Visual
 
-## 1. Filosofía Estética y Objetivo Visual
-El objetivo es crear una **"Enciclopedia Técnica Moderna"** inspirada en obras clásicas de geometría ilustrada (como los Elementos de Euclides por Oliver Byrne).
-*   **Claridad Axiomática:** La estética jamás debe interferir con las matemáticas. Se prohíbe cualquier tipo de decoración innecesaria, texturas, gradientes pesados, brillos artificiales o fotorrealismo.
-*   **Espacio Negativo:** Es obligatorio maximizar el uso del "espacio en blanco" (fondo crema) para reducir el ruido cognitivo. Los lienzos 2D/3D no deben tener bordes duros que los encuadren, sino que deben fundirse visualmente con el fondo de la aplicación.
-*   **Minimalismo Técnico:** Las líneas deben ser finas y precisas. Las tipografías deben tener un contraste perfecto evitando estridencias visuales.
+Matematika debe sentirse como un **libro de matemáticas clásico que ha cobrado vida**. La inspiración es la obra *"Elementos de Euclides"* de Oliver Byrne — ilustraciones geométricas precisas, colores semánticos, tipografía controlada y silencio visual (espacio negativo generoso).
 
-## 2. Layout y Estructura (Grid System)
-La vista de aprendizaje debe evocar un libro técnico interactivo:
-*   **Estructura Base:** El contenido se dividirá típicamente en un diseño asimétrico (ej. CSS Grid o Flexbox 60/40 o 70/30).
-*   **Lienzo Visual (Izquierda):** El 60-70% del espacio alojará el motor gráfico (JSXGraph / Three.js). Debe sentirse como una extensión infinita de la página para manipular las formas geométricas con libertad.
-*   **Panel Teórico (Derecha):** El 30-40% restante contendrá la teoría matemática en formato MDX. Requerirá un `line-height` amplio (mínimo 1.6) y espaciado generoso para invitar a la lectura sosegada.
+**El diseño nunca compite con las matemáticas. Las sirve.**
 
-## 3. Directrices de Renderizado Geométrico (Motores)
-*   **Iluminación (3D):** Rechaza sombras duras (Shadow Maps desactivados). Utiliza Iluminación Ambiental (AmbientLight) y luces de área muy suaves para generar sombreados planos (Flat Shading o Lambert difuso) que evoquen ilustraciones de tinta en papel.
-*   **Cámaras:** Usa un campo de visión (FOV) bajo para minimizar la distorsión de la perspectiva de las figuras, o derechamente utiliza una Cámara Ortográfica para mantener el paralelismo.
-*   **Materiales y Superficies:** Los planos 3D deben usar materiales semi-transparentes (`opacity: ~0.25`) combinados obligatoriamente con *wireframes* (cuadrículas finas superpuestas) para facilitar la percepción de profundidad sin ocultar los elementos posteriores.
+### Qué NO hacer:
+- ❌ Gradientes decorativos, sombras duras, brillos, fotorrealismo.
+- ❌ Animaciones que distraigan de la lectura o el cálculo.
+- ❌ Fondos distintos del Crema Lienzo (`#F8F6F1`).
+- ❌ Colores de Tailwind directos (`bg-red-500`, `text-blue-600`). Solo tokens semánticos.
+- ❌ Encuadrar los lienzos gráficos en cajas con bordes. Deben fundirse con el fondo.
 
-## 4. El Single Source of Truth (Paleta Semántica)
-Se prohíbe el uso de colores genéricos de Tailwind (como `bg-red-500`). Todos los sistemas (CSS, KaTeX, JSXGraph, Three.js) deben inyectar y utilizar **únicamente** estos 5 colores semánticos:
+### Qué SÍ hacer:
+- ✅ Espacio en blanco abundante. `padding` y `margin` amplios.
+- ✅ Transiciones suaves y sutiles (nada de 0.8s de duración).
+- ✅ Lienzos JSXGraph/Three.js con fondo `#F8F6F1` para que se fusionen con la página.
+- ✅ Tipografía precisa y con contraste perfecto.
 
-| Nombre Semántico | Hex Code | Función en UI | Función Matemática (Data-Binding) |
-| :--- | :--- | :--- | :--- |
-| **Crema Lienzo** | `#F8F6F1` | Fondo general y lienzos gráficos. | N/A |
-| **Carbón Técnico** | `#333333` | Texto base, bordes finos. | Ejes cartesianos (X, Y, Z), marcos de referencia. |
-| **Verde Salvia** | `#A2C2A2` | Fondos suaves, badges. | Representa los **Planos** y coeficientes (A, B, C, D). |
-| **Terracota** | `#C86446` | Estados de hover, alertas. | Representa **Puntos**, incógnitas (x, y, z) y vectores. |
-| **Azul Pizarra** | `#5D7080` | Texto secundario explicativo. | Representa **Distancias**, resultados y rectas de cruce. |
+---
 
-## 5. Regla Absoluta de Data-Binding Visual
-Existe una relación inmutable (1:1) entre el texto teórico y la figura geométrica. Si la teoría matemática describe un plano usando la variable $A$ y se renderiza en KaTeX empleando el color **Verde Salvia**, el componente de JSXGraph o Three.js **debe obligatoriamente** dibujar ese plano en el lienzo 3D utilizando exactamente el mismo código Hex (`#A2C2A2`).
+## Tipografía
 
-## 6. Tipografía Dual
-El proyecto separa la capa de "interfaz" de la capa "académica" mediante el uso de dos familias tipográficas:
-*   **UI y Controles:** Fuente `Sans-Serif` (ej. Inter, Roboto, Helvetica). Usada en menús, controles de cámara y títulos estructurales.
-*   **Teoría y Matemáticas:** Fuente `Serif` (ej. Garamond, Computer Modern, Playfair). Usada para la teoría MDX, fórmulas y demostraciones. Las variables matemáticas siempre deben ir en *cursiva* siguiendo el estándar académico.
+| Capa | Fuente | Uso |
+|---|---|---|
+| Interfaz (UI) | **Inter** (Google Fonts) | Menús, botones, buscador, etiquetas, paneles |
+| Académica | **EB Garamond** o **Playfair Display** | Cuerpo de Lecciones, Teoremas, Biografías |
+| Matemáticas | **KaTeX** (Computer Modern) | Todas las fórmulas (inline `$x$` y bloque `$$...$$`) |
+
+- `line-height`: mínimo `1.7` en el texto académico para legibilidad.
+- Las variables matemáticas en prosa (fuera de KaTeX) van en cursiva: *x*, *A*, *n*.
+
+---
+
+## Paleta Semántica Completa
+
+```css
+/* src/index.css */
+:root {
+  --color-lienzo:    #F8F6F1;
+  --color-carbon:    #333333;
+  --color-salvia:    #A2C2A2;
+  --color-terracota: #C86446;
+  --color-pizarra:   #5D7080;
+  /* Variante adicional documentada en sesión: */
+  --color-granada:   #8B2635; /* Para warnings, errores, negaciones */
+}
+```
+
+Las clases Tailwind correspondientes (`bg-lienzo`, `text-carbon`, etc.) están configuradas en `tailwind.config.ts` mapeadas sobre estas variables.
+
+---
+
+## Layouts de Página
+
+### Layout Interactivo (Lecciones)
+```
+┌──────────────────────────────────────────────────────────┐
+│  [Logo]                               [🔍] [🌙]         │
+├────────────────────────┬─────────────────────────────────┤
+│                        │                                  │
+│   Simulador/Canvas     │   Texto MDX (Serif)              │
+│   JSXGraph / Three.js  │   ConceptLinks, VisualBinds      │
+│   (~60% de ancho)      │   (~40% de ancho)                │
+│                        │                                  │
+└────────────────────────┴─────────────────────────────────┘
+```
+
+### Layout Centrado (Teoremas, Definiciones)
+```
+┌──────────────────────────────────────────────────────────┐
+│  [Logo]                               [🔍] [🌙]         │
+├──────────────────────────────────────────────────────────┤
+│                                                          │
+│   [Simulador, si hay]                                    │
+│                                                          │
+│   Texto MDX — columna centrada de anchura máxima ~70ch   │
+│                                                          │
+└──────────────────────────────────────────────────────────┘
+```
+
+### Layout Biografía (Matemáticos)
+- Cabecera elegante con nombre, años de vida y área.
+- Retrato si existe (estilizado, no fotorrealista).
+- Cuerpo con tipografía Serif en columna estrecha.
+- Sidebar derecho con lista de teoremas/conceptos asociados del propio ContentStore.
+
+---
+
+## Panel Lateral Derecho (MarginaliaPanel)
+
+Se desliza desde la derecha del viewport. Contiene:
+1. El título del nodo (con su tipo: Teorema, Definición, Matemático, etc.).
+2. Un resumen breve o el primer párrafo del contenido.
+3. Lista de sus dependencias (`requires[]`) como links navegables.
+4. Botón "Leer artículo completo" → navega con Wouter a la ruta del nodo.
+
+**Por qué panel y no popup/tooltip:** Los tooltips se cortaban cuando el link estaba cerca del borde del viewport. El panel lateral siempre tiene espacio y es consistente con el diseño general.
+
+---
+
+## Directivas para Motores Gráficos
+
+### JSXGraph (2D)
+- Fondo del board: `#F8F6F1` (Crema Lienzo). Sin bordes duros.
+- Grosor de líneas: fino (1–1.5px). Estilo "ilustración de tinta".
+- Puntos: pequeños, sólidos, en Terracota `#C86446`.
+- Rectas/ejes: en Carbón `#333333`.
+- Planos/superficies: Salvia `#A2C2A2` con opacidad ~0.3.
+
+### Three.js (3D)
+- Sin Shadow Maps. Iluminación Ambiental suave (flat shading).
+- Cámara: FOV bajo (≤45°) o Ortográfica para evitar distorsión perspectiva.
+- Materiales: semi-transparentes (`opacity: 0.25`) con wireframe superpuesto.
+- Fondo del canvas: `#F8F6F1`.

@@ -1,11 +1,72 @@
-import React from 'react';
-import { useGlossaryStore, dictionary } from '../store/GlossaryStore';
-import katex from 'katex';
 
+import { useGlossaryStore, dictionary } from '../store/GlossaryStore';
+import { db } from '../store/ContentStore';
+import katex from 'katex';
+import { Link } from 'wouter';
+
+/**
+ * Panel lateral (Marginalia) que aparece cuando el usuario interactúa con un <ConceptLink>.
+ * 
+ * Permite leer sobre un concepto referenciado (definición, teorema, matemático) 
+ * de forma no disruptiva, manteniendo el artículo actual en contexto.
+ * Contiene soporte para renderizar LaTeX directamente en el panel.
+ */
 export const MarginaliaPanel = () => {
   const { activeTerm, activeFormulaTerms, closeTerm, displayMode, toggleDisplayMode } = useGlossaryStore();
 
-  const termData = activeTerm ? dictionary[activeTerm] : null;
+  let termData: any = activeTerm ? dictionary[activeTerm] : null;
+  let isDefinition = false;
+
+  if (activeTerm && !termData) {
+    const theorem = db.getTheorem(activeTerm);
+    const definition = db.getDefinition(activeTerm);
+    const bio = db.getMathematicianById(activeTerm);
+    const lesson = db.lessons.get(activeTerm);
+    const example = db.examples.get(activeTerm);
+    const exercise = db.exercises.get(activeTerm);
+    const useCase = db.usecases.get(activeTerm);
+    
+    const entity = theorem || definition || bio || lesson || example || exercise || useCase;
+
+    if (entity) {
+      let typeLabel = "Concepto";
+      let href = "/";
+
+      if (theorem) {
+        typeLabel = theorem.type === 'lemma' ? "Lema" : theorem.type === 'corollary' ? "Corolario" : "Teorema";
+        href = `/teorema/${theorem.slug}`;
+      } else if (definition) {
+        typeLabel = "Definición";
+        href = `/definicion/${definition.slug}`;
+      } else if (bio) {
+        typeLabel = "Biografía";
+        href = `/bio/${bio.slug}`;
+      } else if (lesson) {
+        typeLabel = "Lección";
+        href = `/${lesson.slug}`;
+      } else if (example) {
+        typeLabel = "Ejemplo";
+        href = `/ejemplo/${example.slug}`;
+      } else if (exercise) {
+        typeLabel = "Ejercicio";
+        href = `/ejercicio/${exercise.slug}`;
+      } else if (useCase) {
+        typeLabel = "Caso de Uso";
+        href = `/uso/${useCase.slug}`;
+      }
+
+      termData = {
+        title: (entity as any).title || (entity as any).name,
+        definition: (entity as any).description,
+        statement: (entity as any).statement,
+        id: entity.slug,
+        typeLabel,
+        href
+      };
+      isDefinition = true;
+    }
+  }
+
   const formulaData = activeFormulaTerms ? activeFormulaTerms.map(id => dictionary[id]).filter(Boolean) : null;
 
   const isActive = activeTerm !== null || activeFormulaTerms !== null;
@@ -16,6 +77,22 @@ export const MarginaliaPanel = () => {
     } catch (e) {
       return { __html: mathString };
     }
+  };
+
+  const renderTextWithMath = (text: string) => {
+    if (!text) return null;
+    const parts = text.split(/(\$.*?\$)/g);
+    return parts.map((part, i) => {
+      if (part.startsWith('$') && part.endsWith('$')) {
+        const math = part.slice(1, -1);
+        try {
+          return <span key={i} dangerouslySetInnerHTML={{ __html: katex.renderToString(math, { throwOnError: false, displayMode: false }) }} />;
+        } catch (e) {
+          return <span key={i}>{part}</span>;
+        }
+      }
+      return <span key={i}>{part}</span>;
+    });
   };
 
   const isSidebar = displayMode === 'sidebar';
@@ -57,18 +134,41 @@ export const MarginaliaPanel = () => {
             {termData ? (
               // Vista de TÉRMINO ÚNICO
               <div className="mb-12">
-                <h2 className="text-4xl text-carbon mb-6 font-bold" style={{ fontVariant: 'small-caps' }}>
+                <h2 className="text-4xl text-carbon mb-2 font-bold" style={{ fontVariant: 'small-caps' }}>
                   {termData.title}
                 </h2>
+                {termData.typeLabel && (
+                  <div className="text-xs uppercase tracking-widest text-carbon/40 font-sans font-bold mb-6">
+                    {termData.typeLabel}
+                  </div>
+                )}
                 <div className="w-12 h-[1px] bg-terracota/50 mb-6" />
                 <p className="text-lg text-carbon/80 leading-relaxed italic border-l-2 border-carbon/10 pl-4">
                   {termData.definition}
                 </p>
+                {termData.statement && (
+                  <div className="mt-6 p-4 bg-terracota/5 border-l-4 border-terracota rounded-r-md">
+                    <h5 className="text-terracota font-bold text-xs uppercase tracking-widest mb-2">Enunciado</h5>
+                    <p className="italic text-carbon/90 m-0 leading-relaxed text-sm">
+                      {renderTextWithMath(termData.statement)}
+                    </p>
+                  </div>
+                )}
                 {termData.equation && (
                   <div 
                     className="mt-8 p-4 bg-carbon/5 border border-carbon/10 text-center font-mono text-xl text-carbon shadow-inner overflow-x-auto"
                     dangerouslySetInnerHTML={renderMath(termData.equation)}
                   />
+                )}
+                
+                {isDefinition && termData.href && (
+                  <div className="mt-12 text-center">
+                    <Link href={termData.href}>
+                      <a onClick={closeTerm} className="inline-block px-8 py-3 border border-carbon/20 hover:border-carbon hover:text-carbon transition-colors rounded-sm shadow-sm hover:shadow-md text-sm font-sans tracking-widest uppercase">
+                        Leer Artículo Completo
+                      </a>
+                    </Link>
+                  </div>
                 )}
               </div>
             ) : formulaData && formulaData.length > 0 ? (

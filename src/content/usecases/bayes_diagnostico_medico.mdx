@@ -1,0 +1,70 @@
+export const metadata = {
+  id: 'bayes-diagnostico-medico',
+  title: 'Diagnóstico Médico y Falsos Positivos',
+  description: 'Por qué un test médico con 99% de precisión puede ser engañoso, y cómo el Teorema de Bayes explica la contraintuitiva realidad de los diagnósticos clínicos.',
+  concept: 'teorema-bayes',
+  domain: 'Medicina',
+  tags: ['Probabilidad', 'Estadística', 'Aplicaciones'],
+  difficulty: 'intermedio',
+  hasSimulation: true
+};
+
+import { BayesDiagnosticoSimulation } from '../../diagrams/CasosUso/BayesDiagnosticoSimulation';
+
+export const Simulation = BayesDiagnosticoSimulation;
+
+<Capitular letra="I" />magina que te hacen una prueba para detectar una enfermedad rara. El test tiene una **precisión del 99%**: si tienes la enfermedad, el test es positivo en el 99% de los casos; si no la tienes, el test es negativo en el 99% de los casos.
+
+El resultado es positivo. ¿Cuál es la probabilidad de que realmente tengas la enfermedad?
+
+La respuesta intuitiva es: 99%. La respuesta matemática puede ser radicalmente diferente.
+
+<Separador />
+
+### El Cálculo con el Teorema de Bayes
+
+Supongamos que la enfermedad afecta al **0.1%** de la población (es relativamente rara). El <ConceptLink targetId="teorema_bayes">Teorema de Bayes</ConceptLink> nos dice cómo actualizar nuestra probabilidad a la vista del resultado positivo:
+
+$$
+P(\text{enfermo} \mid \text{positivo}) = \frac{P(\text{positivo} \mid \text{enfermo}) \cdot P(\text{enfermo})}{P(\text{positivo})}
+$$
+
+Calculamos el denominador con la Ley de la Probabilidad Total:
+
+$$
+P(\text{positivo}) = 0.99 \times 0.001 + 0.01 \times 0.999 = 0.00099 + 0.00999 = 0.01098
+$$
+
+Por lo tanto:
+
+$$
+P(\text{enfermo} \mid \text{positivo}) = \frac{0.99 \times 0.001}{0.01098} \approx 0.09 = 9\%
+$$
+
+**Pese a un test con 99% de precisión, si el resultado es positivo, la probabilidad real de tener la enfermedad es solo del 9%.**
+
+<Separador />
+
+### Por Qué Ocurre Esto
+
+La clave está en la **prevalencia** de la enfermedad — la probabilidad *a priori*. Si la enfermedad es muy rara (0.1% de la población), por cada persona enferma que da positivo, hay aproximadamente **10 personas sanas que también dan positivo** (falsos positivos).
+
+Cuando la población es grande, esos raros errores del test (1% de falsos positivos) producen un número absoluto de falsos alarmas que supera con creces los verdaderos positivos.
+
+<ErrorComun titulo="Confundir P(positivo | enfermo) con P(enfermo | positivo)">
+Este error se llama **falacia del fiscal** (*prosecutor's fallacy*). Son probabilidades completamente diferentes:
+- $P(\text{positivo} \mid \text{enfermo}) = 99\%$ — si estás enfermo, el test lo detecta
+- $P(\text{enfermo} \mid \text{positivo}) \approx 9\%$ — si el test es positivo, probablemente no estás enfermo
+
+Confundir estas dos probabilidades ha llevado a diagnósticos erróneos, prescripciones innecesarias y, en contextos jurídicos, a condenas injustas.
+</ErrorComun>
+
+<Separador />
+
+### Implicaciones en la Práctica Médica
+
+Esta es la razón por la que los protocolos médicos **no recomiendan hacer tests de cribado masivo** para enfermedades raras en la población general. Un test de cribado del cáncer de páncreas en adultos jóvenes sanos produciría mayoritariamente falsos positivos, generando ansiedad, pruebas innecesarias y riesgos médicos sin beneficio estadístico real.
+
+La solución es hacer el test en **poblaciones de riesgo** donde la prevalencia es mayor: un test de tuberculosis en inmigrantes recientes de zonas endémicas tendrá una prevalencia *a priori* mucho mayor, y la probabilidad de que un positivo sea real será significativamente más alta.
+
+El <ConceptLink targetId="teorema_bayes">Teorema de Bayes</ConceptLink> es, literalmente, la herramienta matemática que subyace a las guías de práctica clínica en todo el mundo.
