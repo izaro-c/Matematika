@@ -7,7 +7,7 @@
   "scripts": {
     "dev": "npm run validate-graph && vite",
     "prebuild": "npm run validate-graph",
-    "build": "tsc -b && vite build",
+    "build": "tsc -b && vite build && cp dist/index.html dist/404.html",
     "lint": "eslint .",
     "preview": "vite preview",
     "docs:generate": "node scripts/generate_schema_docs.cjs",
