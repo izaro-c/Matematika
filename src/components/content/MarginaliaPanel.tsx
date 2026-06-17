@@ -35,8 +35,9 @@ export const MarginaliaPanel = () => {
     const example = db.examples.get(activeTerm);
     const exercise = db.exercises.get(activeTerm);
     const useCase = db.usecases.get(activeTerm);
+    const axiom = db.axioms.get(activeTerm);
     
-    const entity = theorem || definition || bio || lesson || example || exercise || useCase;
+    const entity = theorem || definition || bio || lesson || example || exercise || useCase || axiom;
 
     if (entity) {
       let typeLabel = "Concepto";
@@ -63,6 +64,9 @@ export const MarginaliaPanel = () => {
       } else if (useCase) {
         typeLabel = "Caso de Uso";
         href = `/caso/${useCase.slug}`;
+      } else if (axiom) {
+        typeLabel = "Axioma";
+        href = `/axioma/${axiom.slug}`;
       }
 
       const e = entity as any;

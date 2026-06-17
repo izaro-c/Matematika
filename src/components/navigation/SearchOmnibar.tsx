@@ -9,7 +9,7 @@ import { useGlossaryStore } from '../../store/GlossaryStore';
 
 type SearchResult = {
   id: string;
-  type: 'teorema' | 'lección' | 'definición' | 'ejemplo' | 'ejercicio' | 'demo' | 'glosario' | 'matemático' | 'caso_uso';
+  type: 'teorema' | 'lección' | 'definición' | 'ejemplo' | 'ejercicio' | 'demo' | 'glosario' | 'matemático' | 'caso_uso' | 'axioma';
   title: string;
   subtitle?: string;
   href: string;
@@ -27,6 +27,7 @@ const TYPE_ICONS: Record<SearchResult['type'], string> = {
   glosario: 'Σ',
   matemático: '✦',
   caso_uso: '◈',
+  axioma: ' A',
 };
 
 // ── Construcción del índice ───────────────────────────────────────────────────
@@ -125,7 +126,18 @@ const buildIndex = (): SearchResult[] => {
     });
   }
 
-  // 9. Glosario de Símbolos
+  // 9. Axiomas
+  for (const axm of db.axioms.values()) {
+    index.push({
+      id: `axm-${axm.id}`,
+      type: 'axioma',
+      title: axm.title,
+      subtitle: axm.description,
+      href: `/axioma/${axm.slug}`,
+    });
+  }
+
+  // 10. Glosario de Símbolos
   for (const [key, term] of Object.entries(dictionary)) {
     index.push({
       id: `glossary-${key}`,

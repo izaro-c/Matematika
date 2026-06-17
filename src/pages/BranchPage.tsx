@@ -89,6 +89,7 @@ export const BranchPage = () => {
                     if (entry.type === 'lesson') link = `/${entry.item.slug}`;
                     else if (entry.type === 'theorem') link = `/teorema/${entry.item.id}`;
                     else if (entry.type === 'definition') link = `/definicion/${entry.item.id}`;
+                    else if (entry.type === 'axiom') link = `/axioma/${entry.item.id}`;
 
                     const typeStyles: Record<string, { borderClass: string, textClass: string, label: string }> = {
                       'theorem': { borderClass: 'border-terracota/30 hover:border-terracota/60', textClass: 'text-terracota', label: 'Teorema' },
