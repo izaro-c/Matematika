@@ -173,4 +173,5 @@ export default defineConfig({
     react(),
     tailwindcss(),
   ],
+  base: "/Matematika/"
 })

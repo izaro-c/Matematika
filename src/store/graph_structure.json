@@ -870,7 +870,9 @@
           ]
         }
       ],
-      "directDependencies": []
+      "directDependencies": [
+        "axioma-congruencia-triangulos"
+      ]
     },
     "teorema-congruencia-lll": {
       "id": "teorema-congruencia-lll",

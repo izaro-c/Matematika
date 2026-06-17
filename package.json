@@ -3,6 +3,7 @@
   "private": true,
   "version": "0.0.0",
   "type": "module",
+  "homepage": "https://izaro-c.github.io/Matematika/",
   "scripts": {
     "dev": "npm run validate-graph && vite",
     "prebuild": "npm run validate-graph",
@@ -11,7 +12,9 @@
     "preview": "vite preview",
     "docs:generate": "node scripts/generate_schema_docs.cjs",
     "docs:build": "typedoc",
-    "validate-graph": "tsx scripts/validate-logical-graph.ts"
+    "validate-graph": "tsx scripts/validate-logical-graph.ts",
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d dist"
   },
   "dependencies": {
     "@mdx-js/react": "^3.1.1",
@@ -20,6 +23,7 @@
     "@tailwindcss/vite": "^4.3.1",
     "@xyflow/react": "^12.11.0",
     "dagre": "^0.8.5",
+    "ghpages": "^0.0.10",
     "jsxgraph": "^1.12.2",
     "katex": "^0.17.0",
     "react": "^19.2.6",
