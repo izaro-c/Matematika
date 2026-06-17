@@ -27,7 +27,7 @@ export const HeroSection = () => {
 
         {/* Lema */}
         <p className="text-lg md:text-xl text-carbon/60 italic max-w-xl leading-relaxed mb-10">
-          Enciclopedia de estructuras formales — teoremas, definiciones y demostraciones vivas
+          Enciclopedia de estructuras formales — teoremas, definiciones y demostraciones
         </p>
 
         {/* Separador ornamental */}
@@ -38,13 +38,13 @@ export const HeroSection = () => {
         </div>
 
         {/* Accesos rápidos */}
-        <div className="mt-12 flex flex-col sm:flex-row gap-6 justify-center w-full max-w-4xl px-4">
+        <div className="mt-12 flex flex-col sm:flex-row flex-wrap items-stretch gap-6 justify-center w-full max-w-6xl mx-auto px-4">
           <Link href="/plan/selectividad">
             <a className="group relative flex-1 bg-terracota text-lienzo px-6 py-8 flex flex-col items-center justify-center overflow-hidden border border-carbon/30 outline outline-1 outline-carbon/15 outline-offset-[-6px] shadow-[0_10px_30px_-10px_rgba(74,59,50,0.3)] transition-all duration-500 hover:-translate-y-1 hover:shadow-[0_20px_40px_-10px_rgba(74,59,50,0.5)] rounded-[2px]">
               <div className="absolute inset-[6px] border border-lienzo/20 pointer-events-none transition-all duration-500 group-hover:inset-[8px] group-hover:border-lienzo/40" />
               <div className="absolute inset-[10px] border border-lienzo/10 pointer-events-none transition-all duration-500 group-hover:inset-[12px] group-hover:border-lienzo/20" />
               <span className="text-[10px] tracking-[0.2em] uppercase font-sans opacity-80 mb-2">Plan de Estudio</span>
-              <span className="text-2xl font-bold" style={{ fontVariant: 'small-caps' }}>Ruta Guiada</span>
+              <span className="text-2xl font-bold" style={{ fontVariant: 'small-caps' }}>Selectividad</span>
               <span className="mt-3 text-xs font-sans tracking-widest uppercase opacity-70 group-hover:opacity-100 transition-opacity">Acceder al Temario →</span>
             </a>
           </Link>
@@ -53,9 +53,9 @@ export const HeroSection = () => {
             <a className="group relative flex-1 bg-salvia text-lienzo px-6 py-8 flex flex-col items-center justify-center overflow-hidden border border-carbon/30 outline outline-1 outline-carbon/15 outline-offset-[-6px] shadow-[0_10px_30px_-10px_rgba(60,80,60,0.3)] transition-all duration-500 hover:-translate-y-1 hover:shadow-[0_20px_40px_-10px_rgba(60,80,60,0.5)] rounded-[2px]">
               <div className="absolute inset-[6px] border border-lienzo/20 pointer-events-none transition-all duration-500 group-hover:inset-[8px] group-hover:border-lienzo/40" />
               <div className="absolute inset-[10px] border border-lienzo/10 pointer-events-none transition-all duration-500 group-hover:inset-[12px] group-hover:border-lienzo/20" />
-              <span className="text-[10px] tracking-[0.2em] uppercase font-sans opacity-80 mb-2">Arsenal Lógico</span>
+              <span className="text-[10px] tracking-[0.2em] uppercase font-sans opacity-80 mb-2">Demostraciones lógicas</span>
               <span className="text-2xl font-bold" style={{ fontVariant: 'small-caps' }}>Métodos de Prueba</span>
-              <span className="mt-3 text-xs font-sans tracking-widest uppercase opacity-70 group-hover:opacity-100 transition-opacity">Explorar Filosofía →</span>
+              <span className="mt-3 text-xs font-sans tracking-widest uppercase opacity-70 group-hover:opacity-100 transition-opacity">Explorar →</span>
             </a>
           </Link>
 
@@ -65,7 +65,7 @@ export const HeroSection = () => {
               <div className="absolute inset-[10px] border border-lienzo/10 pointer-events-none transition-all duration-500 group-hover:inset-[12px] group-hover:border-lienzo/20" />
               <span className="text-[10px] tracking-[0.2em] uppercase font-sans opacity-80 mb-2">Mapa Interactivo</span>
               <span className="text-2xl font-bold" style={{ fontVariant: 'small-caps' }}>Grafo Visual</span>
-              <span className="mt-3 text-xs font-sans tracking-widest uppercase opacity-70 group-hover:opacity-100 transition-opacity">Ver Conexiones →</span>
+              <span className="mt-3 text-xs font-sans tracking-widest uppercase opacity-70 group-hover:opacity-100 transition-opacity">Ver Dependencias →</span>
             </a>
           </Link>
 
