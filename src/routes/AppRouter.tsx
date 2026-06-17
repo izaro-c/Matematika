@@ -1,4 +1,4 @@
-import { Route, Switch } from "wouter";
+import { Router, Route, Switch } from "wouter";
 import { MathProvider } from "../store/MathStoreContext";
 import { Suspense } from 'react';
 import { HomePage } from "../pages/Home/HomePage";
@@ -25,16 +25,19 @@ import { db } from '../store/content';
 
 /**
  * Componente principal de enrutamiento de la aplicación.
- * 
- * Lee dinámicamente el contenido indexado en el `ContentStore` y
+ * * Lee dinámicamente el contenido indexado en el `ContentStore` y
  * genera las rutas necesarias para Lecciones y Biografías. Además,
  * define las rutas estáticas para páginas especiales (Grafo, Diccionario, etc.).
- * 
- * @returns {JSX.Element} Un componente `Switch` de wouter con todas las rutas.
+ * * @returns {JSX.Element} Un componente de wouter con todas las rutas.
  */
 export const AppRouter = () => {
   const lessons = db.getAllLessons();
   const biographies = db.getAllMathematicians();
+
+  // Tratamiento riguroso de la variable de entorno para compatibilidad Vite-Wouter.
+  // Vite exporta "/repo/" pero Wouter exige "/repo" para calcular el offset correctamente.
+  const rawBase = import.meta.env.BASE_URL;
+  const wouterBase = rawBase === '/' ? '' : rawBase.replace(/\/$/, '');
 
   return (
     <Suspense fallback={
@@ -45,93 +48,96 @@ export const AppRouter = () => {
         </div>
       </div>
     }>
-      <Switch>
-        <Route path="/" component={HomePage} />
-        <Route path="/editor" component={EditorPage} />
-        <Route path="/diccionario" component={DictionaryPage} />
-        <Route path="/historia" component={HistoryTimeline} />
-        <Route path="/metodos" component={MethodsPage} />
-        <Route path="/grafo" component={GraphPage} />
-        <Route path="/axiomas" component={AxiomGraphPage} />
+      {/* El Router inyecta el prefijo base a todas las definiciones de Route subyacentes */}
+      <Router base={wouterBase}>
+        <Switch>
+          <Route path="/" component={HomePage} />
+          <Route path="/editor" component={EditorPage} />
+          <Route path="/diccionario" component={DictionaryPage} />
+          <Route path="/historia" component={HistoryTimeline} />
+          <Route path="/metodos" component={MethodsPage} />
+          <Route path="/grafo" component={GraphPage} />
+          <Route path="/axiomas" component={AxiomGraphPage} />
 
-        {/* RUTAS DE AXIOMAS Y MODELOS */}
-        <Route path="/axioma/:id">
-          <MathProvider>
-            <AxiomPage />
-          </MathProvider>
-        </Route>
-        <Route path="/modelo/:id">
-          <MathProvider>
-            <ModelPage />
-          </MathProvider>
-        </Route>
-        
-        {/* RUTAS DE LECCIONES INTERACTIVAS */}
-        {lessons.map(({ id, slug, Component, Simulation }) => (
-          <Route key={`lesson-${id}`} path={`/${slug}`}>
+          {/* RUTAS DE AXIOMAS Y MODELOS */}
+          <Route path="/axioma/:id">
             <MathProvider>
-              <InteractiveLessonLayout id={id} Component={Component} SimulationFallback={Simulation || null} />
+              <AxiomPage />
             </MathProvider>
           </Route>
-        ))}
-
-        {/* RUTAS DE TEOREMAS */}
-        <Route path="/teorema/:id">
-          <MathProvider>
-            <TheoremPage />
-          </MathProvider>
-        </Route>
-
-        {/* RUTAS DE DEFINICIONES */}
-        <Route path="/definicion/:id">
-          <MathProvider>
-            <DefinitionPage />
-          </MathProvider>
-        </Route>
-
-        {/* RUTAS DE EJEMPLOS Y EJERCICIOS */}
-        <Route path="/ejemplo/:id">
-          <MathProvider>
-            <ExamplePage />
-          </MathProvider>
-        </Route>
-
-        <Route path="/ejercicio/:id">
-          <MathProvider>
-            <ExercisePage />
-          </MathProvider>
-        </Route>
-
-        {/* RUTAS DE DEMOSTRACIONES ESTÁTICAS */}
-        <Route path="/demo/:id">
-          <MathProvider>
-            <DemoPage />
-          </MathProvider>
-        </Route>
-
-        {/* RUTAS DE BIOGRAFÍAS HISTÓRICAS */}
-        {biographies.map((mat) => (
-          <Route key={`bio-${mat.slug}`} path={`/bio/${mat.slug}`}>
+          <Route path="/modelo/:id">
             <MathProvider>
-              {/* eslint-disable-next-line @typescript-eslint/no-explicit-any */}
-              <BiographyLayout Component={mat.Component} metadata={mat as any} />
+              <ModelPage />
             </MathProvider>
           </Route>
-        ))}
 
-        {/* RUTAS DE RAMAS Y PLANES DE ESTUDIO */}
-        <Route path="/rama/:id" component={BranchPage} />
-        <Route path="/plan/:id" component={StudyPlanPage} />
+          {/* RUTAS DE LECCIONES INTERACTIVAS */}
+          {lessons.map(({ id, slug, Component, Simulation }) => (
+            <Route key={`lesson-${id}`} path={`/${slug}`}>
+              <MathProvider>
+                <InteractiveLessonLayout id={id} Component={Component} SimulationFallback={Simulation || null} />
+              </MathProvider>
+            </Route>
+          ))}
 
-        {/* RUTAS DE CASOS DE USO REAL */}
-        <Route path="/caso/:id">
-          <MathProvider>
-            <UseCasePage />
-          </MathProvider>
-        </Route>
+          {/* RUTAS DE TEOREMAS */}
+          <Route path="/teorema/:id">
+            <MathProvider>
+              <TheoremPage />
+            </MathProvider>
+          </Route>
 
-        <Route path="/:rest*" component={() => <div>404</div>} />
-      </Switch>
+          {/* RUTAS DE DEFINICIONES */}
+          <Route path="/definicion/:id">
+            <MathProvider>
+              <DefinitionPage />
+            </MathProvider>
+          </Route>
+
+          {/* RUTAS DE EJEMPLOS Y EJERCICIOS */}
+          <Route path="/ejemplo/:id">
+            <MathProvider>
+              <ExamplePage />
+            </MathProvider>
+          </Route>
+
+          <Route path="/ejercicio/:id">
+            <MathProvider>
+              <ExercisePage />
+            </MathProvider>
+          </Route>
+
+          {/* RUTAS DE DEMOSTRACIONES ESTÁTICAS */}
+          <Route path="/demo/:id">
+            <MathProvider>
+              <DemoPage />
+            </MathProvider>
+          </Route>
+
+          {/* RUTAS DE BIOGRAFÍAS HISTÓRICAS */}
+          {biographies.map((mat) => (
+            <Route key={`bio-${mat.slug}`} path={`/bio/${mat.slug}`}>
+              <MathProvider>
+                {/* eslint-disable-next-line @typescript-eslint/no-explicit-any */}
+                <BiographyLayout Component={mat.Component} metadata={mat as any} />
+              </MathProvider>
+            </Route>
+          ))}
+
+          {/* RUTAS DE RAMAS Y PLANES DE ESTUDIO */}
+          <Route path="/rama/:id" component={BranchPage} />
+          <Route path="/plan/:id" component={StudyPlanPage} />
+
+          {/* RUTAS DE CASOS DE USO REAL */}
+          <Route path="/caso/:id">
+            <MathProvider>
+              <UseCasePage />
+            </MathProvider>
+          </Route>
+
+          <Route path="/:rest*" component={() => <div>404</div>} />
+        </Switch>
+      </Router>
     </Suspense>
   );
 };
