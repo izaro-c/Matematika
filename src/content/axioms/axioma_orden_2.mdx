@@ -1,0 +1,30 @@
+export const metadata = {
+  id: "axioma-orden-2",
+  type: "axioma",
+  title: "Segundo Axioma de Orden (Extensión Infinita)",
+  description: "Postulado que garantiza que toda recta puede extenderse infinitamente más allá de cualquiera de sus puntos.",
+  statement: "Dados dos puntos colineales A y C, siempre existe al menos un punto B en la misma recta tal que C está entre A y B.",
+  tags: ["Geometría", "Geometría Euclidiana", "Geometría Absoluta"],
+  authors: ["David Hilbert"],
+  links: ["axioma-incidencia-1"]
+};
+
+import { InteractiveElement } from "../../components/ui/VisualBind";
+
+<Capitular letra="E" />l **Segundo Axioma de Orden** (Hilbert II.2) es el responsable topológico de garantizar que el universo geométrico es infinito en extensión y que las líneas rectas no poseen "fronteras" ni "puntos finales".
+
+<Separador />
+
+### Enunciado Formal
+
+Dados dos puntos distintos <InteractiveElement target="puntoA" color="terracota">$A$</InteractiveElement> y <InteractiveElement target="puntoC" color="ocre">$C$</InteractiveElement>, existe siempre al menos un punto <InteractiveElement target="puntoB" color="pavo">$B$</InteractiveElement> que incide sobre la misma recta que conecta a $A$ y $C$, tal que $C$ se encuentra posicionado entre $A$ y $B$.
+
+<Formula title="Garantía de Extensión">
+  <EquationRow>
+    \forall A, C \ (A \neq C) \implies \exists B : (A * C * B)
+  </EquationRow>
+</Formula>
+
+### Consecuencias Lógicas
+
+Sin la inclusión estricta de este axioma, el sistema formal permitiría la existencia de geometrías "finitas" o "acotadas" (donde el espacio termina abruptamente). Al adoptarlo, aseguramos que siempre podemos prolongar un segmento de recta tanto como sea necesario, un principio que Euclides utilizaba constantemente en sus construcciones (Regla y Compás) pero que rara vez enunciaba de forma explícita.

@@ -1,0 +1,954 @@
+{
+  "topologicalOrder": [
+    "axioma-congruencia-angulos",
+    "axioma-congruencia-segmentos",
+    "axioma-congruencia-triangulos",
+    "axioma-continuidad-arquimedes",
+    "axioma-incidencia-1",
+    "axioma-incidencia-2",
+    "axioma-incidencia-3",
+    "axioma-orden-1",
+    "axioma-orden-2",
+    "axioma-orden-3",
+    "axioma-orden-pasch",
+    "axioma-paralelas",
+    "axioma-paralelas-hiperbolico",
+    "axioma-test-1",
+    "limite",
+    "definicion-derivada",
+    "matriz",
+    "determinante",
+    "producto-vectorial",
+    "recta-paralela",
+    "segmento",
+    "triangulo-rectangulo",
+    "demo-congruencia-ala",
+    "lema-pons-asinorum",
+    "demo_congruencia_lll",
+    "lema-invarianza-area",
+    "demo-pitagoras-euclides",
+    "demo_rouche_frobenius",
+    "demo-test-1",
+    "teorema-bayes",
+    "bayes",
+    "ejemplo-falso-positivo",
+    "teorema-pitagoras",
+    "ejemplo-pitagoras-escalera",
+    "regla-cramer",
+    "teorema_rouche_frobenius",
+    "newton",
+    "leibniz",
+    "weierstrass",
+    "frobenius",
+    "ejemplo-rouche-frobenius",
+    "bayes_aplicado",
+    "ejercicio-pitagoras-distancia",
+    "ejercicio-prueba-componentes",
+    "ejercicio-rouche-frobenius-incompatible",
+    "pitagoras_interactivo",
+    "tales_proporciones",
+    "pitagoras",
+    "leccion-pitagoras",
+    "euclides",
+    "metodo-directo",
+    "metodo-contradiccion",
+    "metodo-contraposicion",
+    "metodo-induccion",
+    "euler",
+    "cramer",
+    "sistemas_ecuaciones_lineales",
+    "arquimedes",
+    "barrow",
+    "cauchy",
+    "gauss",
+    "gibbs",
+    "hamilton",
+    "hipatia",
+    "laplace",
+    "riemann",
+    "rouche",
+    "sarrus",
+    "tales",
+    "modelo-euclidiano",
+    "modelo-geometria-absoluta",
+    "modelo-hiperbolico",
+    "modelo-test",
+    "selectividad",
+    "corolario-trigonometria",
+    "distancia-punto-plano",
+    "teorema-fundamental-calculo",
+    "distribucion-normal",
+    "teorema-congruencia-ala",
+    "teorema-congruencia-lll",
+    "teorema-tales",
+    "teorema-test",
+    "bayes-diagnostico-medico",
+    "pitagoras-construccion",
+    "tales-cartografia"
+  ],
+  "nodes": {
+    "axioma-congruencia-angulos": {
+      "id": "axioma-congruencia-angulos",
+      "type": "axioma",
+      "title": "Axioma de Congruencia de Ángulos",
+      "description": "Postulado (Hilbert III.4) que formaliza el transporte de ángulos a una semirrecta dada sobre un semiplano.",
+      "proofs": [],
+      "directDependencies": []
+    },
+    "axioma-congruencia-segmentos": {
+      "id": "axioma-congruencia-segmentos",
+      "type": "axioma",
+      "title": "Axioma de Congruencia de Segmentos",
+      "description": "Postulado que formaliza el transporte de segmentos y la igualdad métrica mediante la relación de congruencia.",
+      "proofs": [],
+      "directDependencies": []
+    },
+    "axioma-congruencia-triangulos": {
+      "id": "axioma-congruencia-triangulos",
+      "type": "axioma",
+      "title": "Axioma de Congruencia de Triángulos (LAL)",
+      "description": "Postulado (Hilbert III.5) que establece la condición mínima de Lado-Ángulo-Lado para la congruencia triangular.",
+      "proofs": [],
+      "directDependencies": []
+    },
+    "axioma-continuidad-arquimedes": {
+      "id": "axioma-continuidad-arquimedes",
+      "type": "axioma",
+      "title": "Axioma de Continuidad de Arquímedes",
+      "description": "Postulado (Hilbert V.1) que descarta la existencia de magnitudes infinitesimales, conectando la geometría con los números reales.",
+      "proofs": [],
+      "directDependencies": []
+    },
+    "axioma-incidencia-1": {
+      "id": "axioma-incidencia-1",
+      "type": "axioma",
+      "title": "Primer Axioma de Incidencia",
+      "description": "Postulado fundamental sobre la determinación de una recta a partir de dos puntos en el plano euclidiano.",
+      "proofs": [],
+      "directDependencies": []
+    },
+    "axioma-incidencia-2": {
+      "id": "axioma-incidencia-2",
+      "type": "axioma",
+      "title": "Segundo Axioma de Incidencia",
+      "description": "Postulado que garantiza la cardinalidad mínima de puntos sobre cualquier recta euclidiana.",
+      "proofs": [],
+      "directDependencies": [
+        "axioma-incidencia-1"
+      ]
+    },
+    "axioma-incidencia-3": {
+      "id": "axioma-incidencia-3",
+      "type": "axioma",
+      "title": "Tercer Axioma de Incidencia",
+      "description": "Postulado que garantiza la bidimensionalidad del espacio métrico euclidiano.",
+      "proofs": [],
+      "directDependencies": [
+        "axioma-incidencia-1",
+        "axioma-incidencia-2"
+      ]
+    },
+    "axioma-orden-1": {
+      "id": "axioma-orden-1",
+      "type": "axioma",
+      "title": "Primer Axioma de Orden (Simetría)",
+      "description": "Postulado topológico que establece la simetría de la relación primitiva 'estar entre'.",
+      "proofs": [],
+      "directDependencies": [
+        "axioma-incidencia-1"
+      ]
+    },
+    "axioma-orden-2": {
+      "id": "axioma-orden-2",
+      "type": "axioma",
+      "title": "Segundo Axioma de Orden (Extensión Infinita)",
+      "description": "Postulado que garantiza que toda recta puede extenderse infinitamente más allá de cualquiera de sus puntos.",
+      "proofs": [],
+      "directDependencies": [
+        "axioma-incidencia-1"
+      ]
+    },
+    "axioma-orden-3": {
+      "id": "axioma-orden-3",
+      "type": "axioma",
+      "title": "Tercer Axioma de Orden (Tricotomía)",
+      "description": "Postulado que garantiza un ordenamiento estricto y sin ambigüedades entre tres puntos cualesquiera de una recta.",
+      "proofs": [],
+      "directDependencies": [
+        "axioma-incidencia-1"
+      ]
+    },
+    "axioma-orden-pasch": {
+      "id": "axioma-orden-pasch",
+      "type": "axioma",
+      "title": "Axioma de Pasch",
+      "description": "Postulado de orden bidimensional que garantiza que las rectas separan el plano euclidiano en dos regiones aisladas.",
+      "proofs": [],
+      "directDependencies": [
+        "axioma-incidencia-1",
+        "axioma-orden-1"
+      ]
+    },
+    "axioma-paralelas": {
+      "id": "axioma-paralelas",
+      "type": "axioma",
+      "title": "Postulado de las Paralelas",
+      "description": "Axioma que garantiza la unicidad de la recta paralela. Su negación da origen a las geometrías no euclidianas.",
+      "proofs": [],
+      "directDependencies": [
+        "axioma-incidencia-1",
+        "axioma-incidencia-2",
+        "axioma-incidencia-3"
+      ]
+    },
+    "axioma-paralelas-hiperbolico": {
+      "id": "axioma-paralelas-hiperbolico",
+      "type": "axioma",
+      "title": "Axioma Hiperbólico de las Paralelas",
+      "description": "Postulado de Lobachevski que establece la existencia de múltiples líneas paralelas a una dada por un punto exterior.",
+      "proofs": [],
+      "directDependencies": []
+    },
+    "axioma-test-1": {
+      "id": "axioma-test-1",
+      "type": "axioma",
+      "title": "Axioma de Prueba",
+      "description": "Este es un axioma de prueba para validar la nueva arquitectura.",
+      "proofs": [],
+      "directDependencies": []
+    },
+    "definicion-derivada": {
+      "id": "definicion-derivada",
+      "type": "definicion",
+      "title": "Definición de la Derivada",
+      "description": "La derivada representa la tasa de cambio instantánea de una función en un punto. Visualmente, es la pendiente de la recta tangente.",
+      "proofs": [],
+      "directDependencies": [
+        "limite"
+      ]
+    },
+    "determinante": {
+      "id": "determinante",
+      "type": "definicion",
+      "title": "Determinante",
+      "description": "Valor escalar que se puede calcular a partir de los elementos de una matriz cuadrada, determinando ciertas propiedades matemáticas de la matriz.",
+      "proofs": [],
+      "directDependencies": [
+        "matriz"
+      ]
+    },
+    "limite": {
+      "id": "limite",
+      "type": "definicion",
+      "title": "Límite de una Función",
+      "description": "El concepto fundacional del análisis matemático que describe el comportamiento de una función a medida que sus parámetros se acercan a un valor específico.",
+      "proofs": [],
+      "directDependencies": []
+    },
+    "matriz": {
+      "id": "matriz",
+      "type": "definicion",
+      "title": "Matriz",
+      "description": "Tabla bidimensional de números dispuestos en filas y columnas, y el lenguaje fundamental del álgebra lineal.",
+      "proofs": [],
+      "directDependencies": []
+    },
+    "producto-vectorial": {
+      "id": "producto-vectorial",
+      "type": "definicion",
+      "title": "El Producto Vectorial",
+      "description": "Una operación exclusiva del espacio en 3 dimensiones (R³) que genera un nuevo vector perpendicular a dos dados.",
+      "proofs": [],
+      "directDependencies": []
+    },
+    "recta-paralela": {
+      "id": "recta-paralela",
+      "type": "definicion",
+      "title": "Rectas Paralelas",
+      "description": "Condición topológica de no intersección entre dos líneas que residen en el mismo plano.",
+      "proofs": [],
+      "directDependencies": []
+    },
+    "segmento": {
+      "id": "segmento",
+      "type": "definicion",
+      "title": "Segmento de Recta",
+      "description": "Subconjunto topológico unidimensional acotado por dos puntos extremos sobre una misma recta.",
+      "proofs": [],
+      "directDependencies": [
+        "axioma-incidencia-1",
+        "axioma-orden-1"
+      ]
+    },
+    "triangulo-rectangulo": {
+      "id": "triangulo-rectangulo",
+      "type": "definicion",
+      "title": "Triángulo Rectángulo",
+      "description": "Polígono de tres lados caracterizado por contener exactamente un ángulo interno ortogonal (recto).",
+      "proofs": [],
+      "directDependencies": []
+    },
+    "demo-congruencia-ala": {
+      "id": "demo-congruencia-ala",
+      "type": "demostracion",
+      "title": "Demostración por Reducción al Absurdo",
+      "description": "Prueba formal por reducción al absurdo del criterio Ángulo-Lado-Ángulo utilizando los postulados de Hilbert.",
+      "proofs": [],
+      "directDependencies": []
+    },
+    "demo_congruencia_lll": {
+      "id": "demo_congruencia_lll",
+      "type": "demostracion",
+      "title": "Demostración mediante Construcción y Pons Asinorum",
+      "description": "Prueba formal del criterio Lado-Lado-Lado apoyándose en construcciones auxiliares y en el lema del triángulo isósceles.",
+      "proofs": [],
+      "directDependencies": []
+    },
+    "demo-pitagoras-euclides": {
+      "id": "demo-pitagoras-euclides",
+      "type": "demostracion",
+      "title": "Demostración Geométrica por Reorganización",
+      "description": "Demostración interactiva visual mediante movimiento de áreas.",
+      "proofs": [],
+      "directDependencies": []
+    },
+    "demo_rouche_frobenius": {
+      "id": "demo_rouche_frobenius",
+      "type": "demostracion",
+      "title": "Demostración por Espacios Vectoriales Columna",
+      "description": "Demostración formal del Teorema de Rouché-Frobenius utilizando el concepto de rango y combinaciones lineales de columnas.",
+      "proofs": [],
+      "directDependencies": []
+    },
+    "demo-test-1": {
+      "id": "demo-test-1",
+      "type": "demostracion",
+      "title": "Demostración de Prueba",
+      "description": "Demostración del teorema de prueba.",
+      "proofs": [],
+      "directDependencies": []
+    },
+    "ejemplo-falso-positivo": {
+      "id": "ejemplo-falso-positivo",
+      "type": "ejemplo",
+      "title": "El Peligro del Falso Positivo",
+      "description": "Un caso clásico de probabilidad condicional donde el Teorema de Bayes demuestra por qué nuestra intuición falla en los test médicos.",
+      "proofs": [],
+      "directDependencies": [
+        "teorema-bayes",
+        "bayes"
+      ]
+    },
+    "ejemplo-pitagoras-escalera": {
+      "id": "ejemplo-pitagoras-escalera",
+      "type": "ejemplo",
+      "title": "La escalera apoyada",
+      "description": "Cálculo de la altura que alcanza una escalera apoyada en una pared utilizando el Teorema de Pitágoras.",
+      "proofs": [],
+      "directDependencies": [
+        "teorema-pitagoras"
+      ]
+    },
+    "ejemplo-rouche-frobenius": {
+      "id": "ejemplo-rouche-frobenius",
+      "type": "ejemplo",
+      "title": "Sistema Compatible Determinado",
+      "description": "Clasificación y resolución de un sistema de ecuaciones lineales usando el Teorema de Rouché-Frobenius.",
+      "proofs": [],
+      "directDependencies": [
+        "teorema_rouche_frobenius",
+        "determinante",
+        "frobenius"
+      ]
+    },
+    "bayes_aplicado": {
+      "id": "bayes_aplicado",
+      "type": "ejercicio",
+      "title": "El Caso del Falso Positivo",
+      "description": "Aplica el Teorema de Bayes para resolver un problema de diagnóstico médico y empareja los conceptos con sus valores.",
+      "proofs": [],
+      "directDependencies": []
+    },
+    "ejercicio-pitagoras-distancia": {
+      "id": "ejercicio-pitagoras-distancia",
+      "type": "ejercicio",
+      "title": "Diagonal del rectángulo",
+      "description": "Encuentra la longitud de la diagonal de un campo rectangular aplicando el Teorema de Pitágoras.",
+      "proofs": [],
+      "directDependencies": [
+        "teorema-pitagoras"
+      ]
+    },
+    "ejercicio-prueba-componentes": {
+      "id": "ejercicio-prueba-componentes",
+      "type": "ejercicio",
+      "title": "Playground de Componentes Interactivos",
+      "description": "Un espacio de pruebas para probar todos los nuevos componentes desarrollados para la plataforma de Matematika.",
+      "proofs": [],
+      "directDependencies": []
+    },
+    "ejercicio-rouche-frobenius-incompatible": {
+      "id": "ejercicio-rouche-frobenius-incompatible",
+      "type": "ejercicio",
+      "title": "Análisis de Incompatibilidad",
+      "description": "Determina si un sistema dado tiene solución analizando los rangos de las matrices.",
+      "proofs": [],
+      "directDependencies": [
+        "teorema_rouche_frobenius",
+        "frobenius"
+      ]
+    },
+    "pitagoras_interactivo": {
+      "id": "pitagoras_interactivo",
+      "type": "ejercicio",
+      "title": "Encontrando el Ángulo Recto",
+      "description": "Manipula el triángulo hasta encontrar un ángulo recto y calcula la hipotenusa resultante.",
+      "proofs": [],
+      "directDependencies": []
+    },
+    "tales_proporciones": {
+      "id": "tales_proporciones",
+      "type": "ejercicio",
+      "title": "Proporciones en Sombras",
+      "description": "Calcula la altura de un edificio usando proporciones de sombras y empareja segmentos equivalentes.",
+      "proofs": [],
+      "directDependencies": []
+    },
+    "leccion-pitagoras": {
+      "id": "leccion-pitagoras",
+      "type": "leccion",
+      "title": "El Teorema de Pitágoras y sus Secretos",
+      "description": "Un viaje desde la intuición babilónica hasta el rigor euclidiano del triángulo rectángulo.",
+      "proofs": [],
+      "directDependencies": [
+        "pitagoras",
+        "teorema-pitagoras"
+      ]
+    },
+    "metodo-contradiccion": {
+      "id": "metodo-contradiccion",
+      "type": "leccion",
+      "title": "Demostración por Contradicción",
+      "description": "Reductio ad absurdum: asumir lo contrario a lo que se quiere demostrar y llegar a una imposibilidad lógica.",
+      "proofs": [],
+      "directDependencies": [
+        "euclides",
+        "metodo-directo"
+      ]
+    },
+    "metodo-contraposicion": {
+      "id": "metodo-contraposicion",
+      "type": "leccion",
+      "title": "Demostración por Contraposición",
+      "description": "Demostrar que una afirmación es cierta probando que si la conclusión fuera falsa, la premisa tendría que ser falsa.",
+      "proofs": [],
+      "directDependencies": [
+        "metodo-contradiccion"
+      ]
+    },
+    "metodo-directo": {
+      "id": "metodo-directo",
+      "type": "leccion",
+      "title": "El Método Directo",
+      "description": "La estrategia de demostración más fundamental: conectar hipótesis y conclusión mediante una cadena de deducciones lógicas válidas.",
+      "proofs": [],
+      "directDependencies": [
+        "euclides"
+      ]
+    },
+    "metodo-induccion": {
+      "id": "metodo-induccion",
+      "type": "leccion",
+      "title": "Inducción Matemática",
+      "description": "Demostrar una propiedad para todos los números naturales mediante el efecto dominó lógico.",
+      "proofs": [],
+      "directDependencies": [
+        "metodo-directo"
+      ]
+    },
+    "sistemas_ecuaciones_lineales": {
+      "id": "sistemas_ecuaciones_lineales",
+      "type": "leccion",
+      "title": "Sistemas de Ecuaciones Lineales",
+      "description": "Resolución y discusión de sistemas de ecuaciones mediante herramientas matriciales. El nexo de unión entre el álgebra pura y la geometría analítica.",
+      "proofs": [],
+      "directDependencies": [
+        "matriz",
+        "determinante",
+        "teorema_rouche_frobenius",
+        "cramer",
+        "regla-cramer"
+      ]
+    },
+    "arquimedes": {
+      "id": "arquimedes",
+      "type": "matematico",
+      "title": "arquimedes",
+      "description": "Anticipó el cálculo integral y descubrió el principio de flotabilidad.",
+      "proofs": [],
+      "directDependencies": []
+    },
+    "barrow": {
+      "id": "barrow",
+      "type": "matematico",
+      "title": "barrow",
+      "description": "Matemático y teólogo inglés, primer ocupante de la Cátedra Lucasiana de Cambridge y maestro de Newton. Precursor del cálculo diferencial e integral.",
+      "proofs": [],
+      "directDependencies": [
+        "newton",
+        "leibniz"
+      ]
+    },
+    "bayes": {
+      "id": "bayes",
+      "type": "matematico",
+      "title": "bayes",
+      "description": "Estadístico y ministro presbiteriano inglés que formuló el teorema de probabilidad condicional que lleva su nombre, publicado póstumamente.",
+      "proofs": [],
+      "directDependencies": []
+    },
+    "cauchy": {
+      "id": "cauchy",
+      "type": "matematico",
+      "title": "cauchy",
+      "description": "Matemático francés que estableció las bases del análisis moderno, definió formalmente el concepto de límite y contribuyó a la teoría de funciones de variable compleja.",
+      "proofs": [],
+      "directDependencies": [
+        "newton",
+        "leibniz"
+      ]
+    },
+    "cramer": {
+      "id": "cramer",
+      "type": "matematico",
+      "title": "cramer",
+      "description": "Matemático suizo que formuló la regla de resolución de sistemas de ecuaciones lineales mediante determinantes que lleva su nombre.",
+      "proofs": [],
+      "directDependencies": [
+        "euler",
+        "leibniz"
+      ]
+    },
+    "euclides": {
+      "id": "euclides",
+      "type": "matematico",
+      "title": "euclides",
+      "description": "Padre de la geometría y autor de 'Los Elementos'.",
+      "proofs": [],
+      "directDependencies": []
+    },
+    "euler": {
+      "id": "euler",
+      "type": "matematico",
+      "title": "euler",
+      "description": "El matemático más prolífico de la historia. Unificó gran parte de la notación moderna.",
+      "proofs": [],
+      "directDependencies": []
+    },
+    "frobenius": {
+      "id": "frobenius",
+      "type": "matematico",
+      "title": "frobenius",
+      "description": "Algebraista alemán, codescubridor del Teorema de Rouché-Frobenius y pionero en la teoría de representaciones de grupos.",
+      "proofs": [],
+      "directDependencies": [
+        "weierstrass",
+        "teorema_rouche_frobenius"
+      ]
+    },
+    "gauss": {
+      "id": "gauss",
+      "type": "matematico",
+      "title": "gauss",
+      "description": "Conocido como el 'Príncipe de los Matemáticos'.",
+      "proofs": [],
+      "directDependencies": []
+    },
+    "gibbs": {
+      "id": "gibbs",
+      "type": "matematico",
+      "title": "gibbs",
+      "description": "Físico-matemático estadounidense, padre de la termodinámica química y pionero del análisis vectorial moderno.",
+      "proofs": [],
+      "directDependencies": []
+    },
+    "hamilton": {
+      "id": "hamilton",
+      "type": "matematico",
+      "title": "hamilton",
+      "description": "Matemático y físico irlandés, inventor de los cuaterniones y reformulador de la mecánica clásica en términos hamiltonianos.",
+      "proofs": [],
+      "directDependencies": []
+    },
+    "hipatia": {
+      "id": "hipatia",
+      "type": "matematico",
+      "title": "hipatia",
+      "description": "Matemática, astrónoma y filósofa.",
+      "proofs": [],
+      "directDependencies": []
+    },
+    "laplace": {
+      "id": "laplace",
+      "type": "matematico",
+      "title": "laplace",
+      "description": "Matemático y astrónomo francés, maestro del cálculo probabilístico y de la mecánica celeste.",
+      "proofs": [],
+      "directDependencies": []
+    },
+    "leibniz": {
+      "id": "leibniz",
+      "type": "matematico",
+      "title": "leibniz",
+      "description": "Filósofo y matemático alemán, coinventor del cálculo diferencial e integral con notación que aún usamos hoy: dx, dy, ∫.",
+      "proofs": [],
+      "directDependencies": [
+        "newton"
+      ]
+    },
+    "newton": {
+      "id": "newton",
+      "type": "matematico",
+      "title": "newton",
+      "description": "Co-inventor del cálculo diferencial y fundador de la mecánica clásica.",
+      "proofs": [],
+      "directDependencies": []
+    },
+    "pitagoras": {
+      "id": "pitagoras",
+      "type": "matematico",
+      "title": "pitagoras",
+      "description": "Geometría deductiva y descubridor de las proporciones musicales y los números irracionales.",
+      "proofs": [],
+      "directDependencies": [
+        "teorema-pitagoras"
+      ]
+    },
+    "riemann": {
+      "id": "riemann",
+      "type": "matematico",
+      "title": "riemann",
+      "description": "Revolucionó la geometría sentando las bases topológicas para la teoría de la Relatividad General de Einstein.",
+      "proofs": [],
+      "directDependencies": []
+    },
+    "rouche": {
+      "id": "rouche",
+      "type": "matematico",
+      "title": "rouche",
+      "description": "Matemático francés, codescubridor del Teorema de Rouché-Frobenius y conocido por el Teorema de Rouché en análisis complejo.",
+      "proofs": [],
+      "directDependencies": [
+        "frobenius",
+        "teorema_rouche_frobenius"
+      ]
+    },
+    "sarrus": {
+      "id": "sarrus",
+      "type": "matematico",
+      "title": "sarrus",
+      "description": "Matemático francés conocido por la regla mnemotécnica para calcular el determinante de matrices 3×3 que lleva su nombre.",
+      "proofs": [],
+      "directDependencies": [
+        "determinante"
+      ]
+    },
+    "tales": {
+      "id": "tales",
+      "type": "matematico",
+      "title": "tales",
+      "description": "Filósofo y matemático griego de la Antigüedad, considerado el primer matemático de la historia occidental.",
+      "proofs": [],
+      "directDependencies": []
+    },
+    "weierstrass": {
+      "id": "weierstrass",
+      "type": "matematico",
+      "title": "weierstrass",
+      "description": "Matemático alemán considerado 'el padre del análisis moderno'. Formalizó la definición épsilon-delta de límite y continuidad.",
+      "proofs": [],
+      "directDependencies": [
+        "leibniz"
+      ]
+    },
+    "modelo-euclidiano": {
+      "id": "modelo-euclidiano",
+      "type": "modelo",
+      "title": "Geometría Euclidiana Plana",
+      "description": "Sistema formal estructurado sobre los postulados clásicos y la axiomatización de Hilbert, asumiendo la unicidad de las paralelas.",
+      "proofs": [],
+      "directDependencies": [
+        "axioma-paralelas",
+        "teorema-pitagoras",
+        "axioma-incidencia-1",
+        "axioma-incidencia-2",
+        "axioma-incidencia-3",
+        "axioma-orden-1",
+        "axioma-orden-2",
+        "axioma-orden-3",
+        "axioma-orden-pasch",
+        "axioma-congruencia-segmentos",
+        "axioma-congruencia-angulos",
+        "axioma-congruencia-triangulos",
+        "axioma-continuidad-arquimedes"
+      ]
+    },
+    "modelo-geometria-absoluta": {
+      "id": "modelo-geometria-absoluta",
+      "type": "modelo",
+      "title": "Geometría Absoluta (Neutral)",
+      "description": "Sistema formal que incluye los axiomas de incidencia, orden y congruencia, pero excluye deliberadamente el postulado de las paralelas.",
+      "proofs": [],
+      "directDependencies": [
+        "modelo-euclidiano",
+        "axioma-incidencia-1",
+        "axioma-incidencia-2",
+        "axioma-incidencia-3",
+        "axioma-orden-1",
+        "axioma-orden-2",
+        "axioma-orden-3",
+        "axioma-orden-pasch",
+        "axioma-congruencia-segmentos",
+        "axioma-congruencia-angulos",
+        "axioma-congruencia-triangulos",
+        "axioma-continuidad-arquimedes"
+      ]
+    },
+    "modelo-hiperbolico": {
+      "id": "modelo-hiperbolico",
+      "type": "modelo",
+      "title": "Geometría Hiperbólica",
+      "description": "Sistema formal no euclidiano de curvatura negativa constante, donde rige el postulado de Lobachevski.",
+      "proofs": [],
+      "directDependencies": [
+        "modelo-geometria-absoluta",
+        "axioma-paralelas-hiperbolico",
+        "axioma-incidencia-1",
+        "axioma-incidencia-2",
+        "axioma-incidencia-3",
+        "axioma-orden-1",
+        "axioma-orden-2",
+        "axioma-orden-3",
+        "axioma-orden-pasch",
+        "axioma-congruencia-segmentos",
+        "axioma-congruencia-angulos",
+        "axioma-congruencia-triangulos",
+        "axioma-continuidad-arquimedes"
+      ]
+    },
+    "modelo-test": {
+      "id": "modelo-test",
+      "type": "modelo",
+      "title": "Modelo de Prueba",
+      "description": "Un modelo matemático básico para testing del DAG.",
+      "proofs": [],
+      "directDependencies": [
+        "axioma-test-1"
+      ]
+    },
+    "selectividad": {
+      "id": "selectividad",
+      "type": "plan_de_estudio",
+      "title": "Selectividad",
+      "description": "Ruta de aprendizaje narrativa para asimilar y dominar los conceptos que construyen la base de la prueba universitaria de matemáticas.",
+      "proofs": [],
+      "directDependencies": []
+    },
+    "corolario-trigonometria": {
+      "id": "corolario-trigonometria",
+      "type": "corolario",
+      "title": "Identidad Trigonométrica Fundamental",
+      "description": "Consecuencia directa del Teorema de Pitágoras al ser aplicado sobre el círculo unitario.",
+      "proofs": [],
+      "directDependencies": [
+        "teorema-pitagoras"
+      ]
+    },
+    "distancia-punto-plano": {
+      "id": "distancia-punto-plano",
+      "type": "teorema",
+      "title": "Distancia de un Punto a un Plano",
+      "description": "Fórmula geométrica que calcula la longitud del segmento perpendicular más corto que une un punto del espacio con un plano.",
+      "proofs": [],
+      "directDependencies": [
+        "producto-vectorial"
+      ]
+    },
+    "distribucion-normal": {
+      "id": "distribucion-normal",
+      "type": "teorema",
+      "title": "Distribución Normal (Campana de Gauss)",
+      "description": "La distribución de probabilidad continua más importante de la estadística, conocida como Campana de Gauss.",
+      "proofs": [],
+      "directDependencies": [
+        "teorema-fundamental-calculo"
+      ]
+    },
+    "lema-invarianza-area": {
+      "id": "lema-invarianza-area",
+      "type": "lema",
+      "title": "Lema de Invarianza de Área Euclidiana",
+      "description": "Las traslaciones y rotaciones en un plano no alteran el área total de una figura cerrada.",
+      "proofs": [],
+      "directDependencies": []
+    },
+    "lema-pons-asinorum": {
+      "id": "lema-pons-asinorum",
+      "type": "lema",
+      "title": "Pons Asinorum (Euclides I.5)",
+      "description": "En todo triángulo isósceles, los ángulos de la base son iguales entre sí.",
+      "proofs": [],
+      "directDependencies": [
+        "axioma-congruencia-triangulos",
+        "axioma-congruencia-angulos"
+      ]
+    },
+    "regla-cramer": {
+      "id": "regla-cramer",
+      "type": "teorema",
+      "title": "La Regla de Cramer",
+      "description": "Resolución de Sistemas de Ecuaciones Lineales mediante el uso de determinantes. Un método fundamental en el Álgebra Lineal.",
+      "proofs": [],
+      "directDependencies": [
+        "matriz",
+        "determinante"
+      ]
+    },
+    "teorema-bayes": {
+      "id": "teorema-bayes",
+      "type": "teorema",
+      "title": "Teorema de Bayes",
+      "description": "La regla fundamental de la inferencia estadística que nos permite actualizar la probabilidad de una hipótesis cuando tenemos nueva evidencia.",
+      "proofs": [],
+      "directDependencies": []
+    },
+    "teorema-congruencia-ala": {
+      "id": "teorema-congruencia-ala",
+      "type": "teorema",
+      "title": "Teorema de Congruencia ALA",
+      "description": "Criterio Ángulo-Lado-Ángulo para la congruencia de triángulos, deducido a partir de la Geometría Absoluta.",
+      "proofs": [
+        {
+          "id": "demo-congruencia-ala",
+          "dependencies": [
+            "axioma-congruencia-segmentos",
+            "axioma-congruencia-triangulos",
+            "axioma-congruencia-angulos"
+          ]
+        }
+      ],
+      "directDependencies": []
+    },
+    "teorema-congruencia-lll": {
+      "id": "teorema-congruencia-lll",
+      "type": "teorema",
+      "title": "Teorema de Congruencia LLL",
+      "description": "Criterio Lado-Lado-Lado para la congruencia de triángulos, basado en la Geometría Absoluta y el teorema del triángulo isósceles.",
+      "proofs": [
+        {
+          "id": "demo_congruencia_lll",
+          "dependencies": [
+            "lema-pons-asinorum",
+            "axioma-congruencia-angulos"
+          ]
+        }
+      ],
+      "directDependencies": []
+    },
+    "teorema-fundamental-calculo": {
+      "id": "teorema-fundamental-calculo",
+      "type": "teorema",
+      "title": "Teorema Fundamental del Cálculo",
+      "description": "El teorema que unifica las dos ramas del cálculo: la derivación (tasas de cambio) y la integración (acumulación de áreas).",
+      "proofs": [],
+      "directDependencies": [
+        "definicion-derivada"
+      ]
+    },
+    "teorema-pitagoras": {
+      "id": "teorema-pitagoras",
+      "type": "teorema",
+      "title": "Teorema de Pitágoras",
+      "description": "Relación euclidiana fundamental entre los tres lados de un triángulo rectángulo.",
+      "proofs": [
+        {
+          "id": "demo-pitagoras-euclides",
+          "dependencies": [
+            "lema-invarianza-area"
+          ]
+        }
+      ],
+      "directDependencies": []
+    },
+    "teorema_rouche_frobenius": {
+      "id": "teorema_rouche_frobenius",
+      "type": "teorema",
+      "title": "Teorema de Rouché-Frobenius",
+      "description": "Establece la condición necesaria y suficiente para que un sistema de ecuaciones lineales tenga solución, basándose en los rangos de las matrices asociadas al sistema.",
+      "proofs": [
+        {
+          "id": "demo_rouche_frobenius",
+          "dependencies": [
+            "matriz"
+          ]
+        }
+      ],
+      "directDependencies": [
+        "matriz",
+        "determinante",
+        "regla-cramer"
+      ]
+    },
+    "teorema-tales": {
+      "id": "teorema-tales",
+      "type": "teorema",
+      "title": "Teorema de Tales",
+      "description": "Si dos rectas cualesquiera son cortadas por rectas paralelas, los segmentos que determina en una de las rectas son proporcionales a los segmentos correspondientes de la otra.",
+      "proofs": [],
+      "directDependencies": [
+        "teorema-pitagoras"
+      ]
+    },
+    "teorema-test": {
+      "id": "teorema-test",
+      "type": "teorema",
+      "title": "Teorema de Prueba",
+      "description": "Un teorema que depende del modelo de prueba a través de su demostración.",
+      "proofs": [
+        {
+          "id": "demo-test-1",
+          "dependencies": [
+            "axioma-test-1"
+          ]
+        }
+      ],
+      "directDependencies": []
+    },
+    "bayes-diagnostico-medico": {
+      "id": "bayes-diagnostico-medico",
+      "type": "caso_de_uso",
+      "title": "Diagnóstico Médico y Falsos Positivos",
+      "description": "Por qué un test médico con 99% de precisión puede ser engañoso, y cómo el Teorema de Bayes explica la contraintuitiva realidad de los diagnósticos clínicos.",
+      "proofs": [],
+      "directDependencies": []
+    },
+    "pitagoras-construccion": {
+      "id": "pitagoras-construccion",
+      "type": "caso_de_uso",
+      "title": "El Triángulo 3-4-5 en la Construcción",
+      "description": "Cómo los albañiles y arquitectos llevan siglos usando el Teorema de Pitágoras para asegurar ángulos rectos perfectos sin un instrumento de medición sofisticado.",
+      "proofs": [],
+      "directDependencies": []
+    },
+    "tales-cartografia": {
+      "id": "tales-cartografia",
+      "type": "caso_de_uso",
+      "title": "Mapas, Escalas y Cartografía",
+      "description": "Cómo el principio de proporcionalidad de Tales es el fundamento matemático de todos los mapas, planos arquitectónicos y modelos a escala.",
+      "proofs": [],
+      "directDependencies": [
+        "tales"
+      ]
+    }
+  }
+}

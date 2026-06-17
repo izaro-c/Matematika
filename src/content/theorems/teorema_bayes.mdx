@@ -1,15 +1,26 @@
 export const metadata = {
-  id: "teorema-bayes",
-  title: "Teorema de Bayes",
-  description: "La regla fundamental de la inferencia estadística que nos permite actualizar la probabilidad de una hipótesis cuando tenemos nueva evidencia.",
-  links: ["bayes","ejemplo-falso-positivo"],
-  statement: "Si $A$ y $B$ son sucesos y $P(B) \\neq 0$, la probabilidad condicional de $A$ dado $B$ es: $P(A|B) = \\frac{P(B|A)P(A)}{P(B)}$.",
-  era: "Siglo XVIII",
-  color: "ocre",
-  authors: ["Thomas Bayes", "Pierre-Simon Laplace"],
-  tags: ["Probabilidad"],
-  examples: ["ejemplo-falso-positivo"],
-  hasSimulation: true
+  "id": "teorema-bayes",
+  "title": "Teorema de Bayes",
+  "description": "La regla fundamental de la inferencia estadística que nos permite actualizar la probabilidad de una hipótesis cuando tenemos nueva evidencia.",
+  "links": [
+    "bayes",
+    "ejemplo-falso-positivo"
+  ],
+  "statement": "Si $A$ y $B$ son sucesos y $P(B) \\neq 0$, la probabilidad condicional de $A$ dado $B$ es: $P(A|B) = \\frac{P(B|A)P(A)}{P(B)}$.",
+  "era": "Siglo XVIII",
+  "color": "ocre",
+  "authors": [
+    "Thomas Bayes",
+    "Pierre-Simon Laplace"
+  ],
+  "tags": [
+    "Probabilidad"
+  ],
+  "examples": [
+    "ejemplo-falso-positivo"
+  ],
+  "hasSimulation": true,
+  "type": "teorema"
 };
 
 import { BayesTreeVisualizer } from '../../diagrams/Probabilidad/BayesTreeVisualizer';

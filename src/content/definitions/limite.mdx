@@ -1,14 +1,23 @@
 export const metadata = {
-  id: "limite",
-  title: "Límite de una Función",
-  description: "El concepto fundacional del análisis matemático que describe el comportamiento de una función a medida que sus parámetros se acercan a un valor específico.",
-  links: ["teorema-fundamental-calculo"],
-  statement: "Se dice que $\\lim_{x \\to a} f(x) = L$ si para todo $\\epsilon > 0$ existe un $\\delta > 0$ tal que si $0 < |x - a| < \\delta$, entonces $|f(x) - L| < \\epsilon$.",
-  era: "Siglo XIX",
-  color: "salvia",
-  authors: ["Augustin-Louis Cauchy", "Karl Weierstrass"],
-  tags: ["Análisis", "Cálculo"],
-  hasSimulation: true
+  "id": "limite",
+  "title": "Límite de una Función",
+  "description": "El concepto fundacional del análisis matemático que describe el comportamiento de una función a medida que sus parámetros se acercan a un valor específico.",
+  "links": [
+    "teorema-fundamental-calculo"
+  ],
+  "statement": "Se dice que $\\lim_{x \\to a} f(x) = L$ si para todo $\\epsilon > 0$ existe un $\\delta > 0$ tal que si $0 < |x - a| < \\delta$, entonces $|f(x) - L| < \\epsilon$.",
+  "era": "Siglo XIX",
+  "color": "salvia",
+  "authors": [
+    "Augustin-Louis Cauchy",
+    "Karl Weierstrass"
+  ],
+  "tags": [
+    "Análisis",
+    "Cálculo"
+  ],
+  "hasSimulation": true,
+  "type": "definicion"
 };
 
 import { LimitVisualizer } from '../../diagrams/Analisis/LimitVisualizer';

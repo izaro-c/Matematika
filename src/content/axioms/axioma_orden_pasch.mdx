@@ -1,0 +1,32 @@
+export const metadata = {
+  id: "axioma-orden-pasch",
+  type: "axioma",
+  title: "Axioma de Pasch",
+  description: "Postulado de orden bidimensional que garantiza que las rectas separan el plano euclidiano en dos regiones aisladas.",
+  statement: "Dada una recta y tres puntos no colineales, si la recta pasa por un punto entre el primer y segundo punto, debe pasar por un punto entre el primero y el tercero, o entre el segundo y el tercero.",
+  tags: ["Geometría", "Geometría Euclidiana", "Geometría Absoluta"],
+  authors: ["Moritz Pasch", "Hilbert"],
+  links: ["axioma-incidencia-1", "axioma-orden-1"]
+};
+
+import { InteractiveElement } from "../../components/ui/VisualBind";
+
+<Capitular letra="E" />l **Axioma de Pasch** es la ley topológica suprema que conecta el orden unidimensional de una recta con la estructura bidimensional del plano. Asegura formalmente que las líneas rectas actúan como muros impenetrables que "cortan" el espacio en dos mitades, impidiendo que existan "agujeros" por los que las figuras puedan cruzarse sin intersecarlas.
+
+<Separador />
+
+### Enunciado Formal
+
+Consideremos tres puntos no colineales <InteractiveElement target="puntoA" color="terracota">$A$</InteractiveElement>, <InteractiveElement target="puntoB" color="pavo">$B$</InteractiveElement> y <InteractiveElement target="puntoC" color="ocre">$C$</InteractiveElement> (los cuales definen de forma unívoca un plano). Consideremos además una recta <InteractiveElement target="rectaR" color="salvia">$r$</InteractiveElement> coplanaria que no pasa por ninguno de estos tres vértices.
+
+Si la recta $r$ contiene un punto que está **entre** $A$ y $B$ (es decir, corta ese "borde"), entonces debe obligatoriamente contener un punto que esté entre $A$ y $C$, o bien un punto que esté entre $B$ y $C$.
+
+<Formula title="Separación del Plano">
+  <EquationRow>
+    \exists X \in r : (A * X * B) \implies (\exists Y \in r : A * Y * C) \veebar (\exists Z \in r : B * Z * C)
+  </EquationRow>
+</Formula>
+
+<Nota>
+  Geométricamente, este axioma afirma que "si una recta entra en un triángulo por uno de sus lados, tiene que salir por uno de los otros dos lados". Dado que la entidad 'triángulo' requiere la definición estricta de 'segmento', el axioma se formula a nivel fundamental ($Nivel \ 0$) utilizando únicamente puntos, rectas y la relación primitiva de intermediación.
+</Nota>

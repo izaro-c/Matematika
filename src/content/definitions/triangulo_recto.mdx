@@ -1,0 +1,34 @@
+export const metadata = {
+  id: 'triangulo-rectangulo',
+  type: 'definicion',
+  title: 'Triángulo Rectángulo',
+  description: 'Polígono de tres lados caracterizado por contener exactamente un ángulo interno ortogonal (recto).',
+  statement: 'Un triángulo es rectángulo si y solo si la medida de uno de sus ángulos interiores es exactamente $\pi/2$ radianes.',
+  usedBy: ['teorema-pitagoras'],
+  tags: ['Geometría', 'Polígonos', 'Trigonometría'],
+};
+
+import { InteractiveElement } from '../../components/ui/VisualBind';
+
+<Capitular letra="E" />n la geometría euclidiana, la clasificación de los polígonos atiende a las propiedades métricas de sus ángulos interiores y las proporciones de sus aristas. 
+
+<Definicion>
+  Un **triángulo rectángulo** es todo aquel polígono de tres lados cuyos vértices definen exactamente un ángulo interior recto (es decir, un ángulo que mide $\pi/2$ radianes o $90^\circ$). Las dos aristas que convergen para formar dicho ángulo recto se denominan **catetos**, y la arista restante, subtendida frente al ángulo recto, se denomina **hipotenusa**.
+</Definicion>
+
+<Separador />
+
+### Propiedades Analíticas
+
+Dado un triángulo con vértices $A$, $B$ y $C$, donde el ángulo en el vértice $C$ es el ángulo recto, denotamos las longitudes de los lados opuestos como <InteractiveElement target="ladoA" color="terracota">$a$</InteractiveElement>, <InteractiveElement target="ladoB" color="terracota">$b$</InteractiveElement> (catetos) y <InteractiveElement target="ladoC" color="salvia">$c$</InteractiveElement> (hipotenusa).
+
+Dado que la suma de los ángulos interiores de todo triángulo en el plano euclidiano es estrictamente $\pi$ radianes ($180^\circ$), se deduce como corolario inmediato que los dos ángulos restantes en los vértices $A$ y $B$ deben ser agudos y mutuamente complementarios:
+
+<Formula>
+  <span className="text-2xl font-bold mt-2">
+    $\angle A + \angle B = \frac{\pi}{2}$
+  </span>
+</Formula>
+
+### Observaciones Topológicas
+Por el principio de desigualdad triangular y la relación entre ángulos y lados opuestos, la hipotenusa $c$ es siempre y de forma estricta la arista de mayor magnitud métrica en el conjunto, cumpliéndose que $c > a$ y $c > b$.

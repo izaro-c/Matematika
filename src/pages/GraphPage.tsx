@@ -1,5 +1,5 @@
 import React, { useMemo, useState, useCallback, useRef, useEffect } from 'react';
-import { useLocation } from 'wouter';
+import { useLocation, Link } from 'wouter';
 import ForceGraph2D from 'react-force-graph-2d';
 import { db } from '../store/content';
 import { useGlossaryStore } from '../store/GlossaryStore';
@@ -370,6 +370,13 @@ export const GraphPage: React.FC = () => {
             <div className="flex items-center gap-3"><div className="w-4 h-4 border border-carbon bg-[#C86446]"></div> Ramas Clásicas</div>
             <div className="flex items-center gap-3"><div className="w-4 h-4 border border-carbon bg-[#A2C2A2]"></div> Teoremas / Ejercicios</div>
             <div className="flex items-center gap-3"><div className="w-4 h-4 border border-carbon bg-[#5D7080]"></div> Definiciones / Ejemplos</div>
+          </div>
+          <div className="mt-4 pt-3 border-t border-carbon/20">
+            <Link href="/axiomas">
+              <a className="flex items-center justify-center gap-2 text-xs font-sans uppercase tracking-widest text-terracota hover:text-carbon transition-colors font-bold">
+                <span className="font-serif">☙</span> Árbol Axiomático &rarr;
+              </a>
+            </Link>
           </div>
         </div>
       </div>

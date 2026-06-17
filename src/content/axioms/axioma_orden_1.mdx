@@ -1,0 +1,34 @@
+export const metadata = {
+  id: "axioma-orden-1",
+  type: "axioma",
+  title: "Primer Axioma de Orden (Simetría)",
+  description: "Postulado topológico que establece la simetría de la relación primitiva 'estar entre'.",
+  statement: "Si un punto B está entre los puntos A y C, entonces A, B y C son puntos distintos de una misma recta, y B también está entre C y A.",
+  tags: ["Geometría", "Geometría Euclidiana", "Geometría Absoluta"],
+  authors: ["David Hilbert"],
+  links: ["axioma-incidencia-1"]
+};
+
+import { InteractiveElement } from "../../components/ui/VisualBind";
+
+<Capitular letra="E" />l **Primer Axioma de Orden** (identificado como II.1 en la axiomatización de Hilbert) introduce formalmente la relación topológica primitiva de "estar entre", estableciendo su propiedad fundamental de simetría y su vinculación con la colinealidad.
+
+<Separador />
+
+### Enunciado Formal
+
+Dada la relación no definida "estar entre", si afirmamos que un punto <InteractiveElement target="puntoB" color="pavo">$B$</InteractiveElement> está entre un punto <InteractiveElement target="puntoA" color="terracota">$A$</InteractiveElement> y un punto <InteractiveElement target="puntoC" color="ocre">$C$</InteractiveElement> (denotado lógicamente como $A * B * C$), el modelo asume como verdades fundacionales que:
+
+1. Los puntos $A$, $B$ y $C$ son tres puntos mutuamente distintos.
+2. Existe una única recta que contiene a los tres puntos (son colineales).
+3. La relación es bidireccional; es decir, el punto $B$ también se encuentra entre $C$ y $A$.
+
+<Formula title="Simetría del Orden Lineal">
+  <EquationRow>
+    (A * B * C) \implies (C * B * A) \land (A \neq B \neq C)
+  </EquationRow>
+</Formula>
+
+<Nota>
+  Este axioma permite que los <ConceptLink targetId="segmento">segmentos de recta</ConceptLink> no tengan un sentido direccional obligatorio en la geometría clásica, garantizando que el segmento $\overline{AB}$ sea el mismo objeto matemático que el segmento $\overline{BA}$.
+</Nota>

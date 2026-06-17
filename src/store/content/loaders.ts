@@ -25,4 +25,10 @@ export const contentLoaders = {
 
   planLoaders: import.meta.glob('../../content/plans/*.mdx'),
   planMetas: import.meta.glob('../../content/plans/*.mdx', { import: 'metadata', eager: true }),
+
+  axiomLoaders: import.meta.glob('../../content/axioms/*.mdx'),
+  axiomMetas: import.meta.glob('../../content/axioms/*.mdx', { import: 'metadata', eager: true }),
+
+  modelLoaders: import.meta.glob('../../content/models/*.mdx'),
+  modelMetas: import.meta.glob('../../content/models/*.mdx', { import: 'metadata', eager: true }),
 };

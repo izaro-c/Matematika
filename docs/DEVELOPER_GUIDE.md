@@ -9,6 +9,7 @@ Valida los datos históricos y biográficos de las figuras matemáticas.
 | Campo | Tipo | Requerido | Descripción |
 |-------|------|-----------|-------------|
 | `id` | `string` | ❌ | - |
+| `type` | `literal` | ✅ | - |
 | `name` | `string` | ✅ | - |
 | `birthYear` | `number` | ❌ | - |
 | `deathYear` | `number` | ❌ | - |
@@ -26,6 +27,7 @@ Estructura principal de la enciclopedia. Valida el enunciado formal, dependencia
 | Campo | Tipo | Requerido | Descripción |
 |-------|------|-----------|-------------|
 | `id` | `string` | ❌ | - |
+| `type` | `enum([teorema, lema, corolario])` | ✅ | - |
 | `title` | `string` | ✅ | - |
 | `description` | `string` | ✅ | - |
 | `statement` | `string` | ❌ | - |
@@ -36,6 +38,7 @@ Estructura principal de la enciclopedia. Valida el enunciado formal, dependencia
 | `lemmas` | `array` | ✅ | - |
 | `corollaries` | `array` | ✅ | - |
 | `demos` | `array` | ✅ | - |
+| `demostraciones` | `array` | ✅ | - |
 | `requires` | `array` | ✅ | IDs de definiciones que este teorema usa formalmente (grafo de dependencia) |
 | `examples` | `array` | ✅ | IDs de ejemplos resueltos asociados |
 | `exercises` | `array` | ✅ | IDs de ejercicios propuestos asociados |
@@ -53,6 +56,7 @@ Agrupa múltiples teoremas y definiciones bajo una misma categoría de aprendiza
 | Campo | Tipo | Requerido | Descripción |
 |-------|------|-----------|-------------|
 | `id` | `string` | ❌ | - |
+| `type` | `literal` | ✅ | - |
 | `title` | `string` | ✅ | - |
 | `description` | `string` | ❌ | - |
 | `tags` | `array` | ✅ | - |
@@ -68,15 +72,17 @@ Valida la estructura de una demostración formal de un teorema,  incluyendo el m
 | Campo | Tipo | Requerido | Descripción |
 |-------|------|-----------|-------------|
 | `id` | `string` | ❌ | - |
+| `type` | `literal` | ✅ | - |
 | `title` | `string` | ✅ | - |
 | `description` | `string` | ❌ | - |
 | `parentTheorem` | `string` | ❌ | - |
 | `lemmas` | `array` | ✅ | - |
-| `proofMethod` | `string` | ❌ | - |
+| `proofMethod` | `enum([directo, contradiccion, induccion, contraposicion, constructivo, geometrico, exhaustivo, reduccion])` | ❌ | - |
 | `authors` | `array` | ✅ | - |
 | `tags` | `array` | ✅ | - |
 | `links` | `array` | ✅ | - |
 | `layout` | `enum([split, text])` | ❌ | - |
+| `dependencias` | `array` | ✅ | - |
 
 ---
 
@@ -87,6 +93,7 @@ Valida axiomas y definiciones base. Incluye el enunciado matemático (`statement
 | Campo | Tipo | Requerido | Descripción |
 |-------|------|-----------|-------------|
 | `id` | `string` | ❌ | - |
+| `type` | `literal` | ✅ | - |
 | `title` | `string` | ✅ | - |
 | `description` | `string` | ✅ | - |
 | `statement` | `string` | ❌ | - |
@@ -105,6 +112,7 @@ Un ejemplo concreto que ilustra cómo aplicar un teorema o definición. Incluye 
 | Campo | Tipo | Requerido | Descripción |
 |-------|------|-----------|-------------|
 | `id` | `string` | ❌ | - |
+| `type` | `literal` | ✅ | - |
 | `title` | `string` | ✅ | - |
 | `description` | `string` | ❌ | - |
 | `relatedTheorem` | `string` | ❌ | ID del teorema o definición principal que ilustra |
@@ -122,6 +130,7 @@ Un ejercicio con enunciado y solución oculta que el estudiante puede revelar.
 | Campo | Tipo | Requerido | Descripción |
 |-------|------|-----------|-------------|
 | `id` | `string` | ❌ | - |
+| `type` | `literal` | ✅ | - |
 | `title` | `string` | ✅ | - |
 | `description` | `string` | ❌ | - |
 | `relatedTheorem` | `string` | ❌ | ID del teorema o definición que pone en práctica |
@@ -133,6 +142,34 @@ Un ejercicio con enunciado y solución oculta que el estudiante puede revelar.
 
 ---
 
+## AxiomSchema - Esquema para Axiomas (Nodos Raíz lógicos)
+
+| Campo | Tipo | Requerido | Descripción |
+|-------|------|-----------|-------------|
+| `id` | `string` | ❌ | - |
+| `type` | `literal` | ✅ | - |
+| `title` | `string` | ✅ | - |
+| `description` | `string` | ✅ | - |
+| `statement` | `string` | ❌ | - |
+| `tags` | `array` | ✅ | - |
+| `authors` | `array` | ✅ | - |
+| `links` | `array` | ✅ | - |
+
+---
+
+## ModelSchema - Esquema para Modelos (Axiom Sets)
+
+| Campo | Tipo | Requerido | Descripción |
+|-------|------|-----------|-------------|
+| `id` | `string` | ❌ | - |
+| `type` | `literal` | ✅ | - |
+| `title` | `string` | ✅ | - |
+| `description` | `string` | ❌ | - |
+| `axiomas` | `array` | ✅ | - |
+| `tags` | `array` | ✅ | - |
+
+---
+
 ## UseCaseSchema — Caso de Uso en el Mundo Real
 
 Página propia que muestra cómo un concepto matemático aparece en una disciplina o situación concreta del mundo real. Ruta: /caso/:id
@@ -140,6 +177,7 @@ Página propia que muestra cómo un concepto matemático aparece en una discipli
 | Campo | Tipo | Requerido | Descripción |
 |-------|------|-----------|-------------|
 | `id` | `string` | ❌ | - |
+| `type` | `literal` | ✅ | - |
 | `title` | `string` | ✅ | - |
 | `description` | `string` | ❌ | - |
 | `concept` | `string` | ❌ | ID del teorema o concepto matemático que ilustra |
@@ -157,6 +195,7 @@ Rutas de aprendizaje narrativas a través del grafo.
 | Campo | Tipo | Requerido | Descripción |
 |-------|------|-----------|-------------|
 | `id` | `string` | ✅ | - |
+| `type` | `literal` | ✅ | - |
 | `title` | `string` | ✅ | - |
 | `subtitle` | `string` | ❌ | - |
 | `description` | `string` | ✅ | - |

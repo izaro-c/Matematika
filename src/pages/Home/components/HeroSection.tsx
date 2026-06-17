@@ -68,6 +68,16 @@ export const HeroSection = () => {
               <span className="mt-3 text-xs font-sans tracking-widest uppercase opacity-70 group-hover:opacity-100 transition-opacity">Ver Conexiones →</span>
             </a>
           </Link>
+
+          <Link href="/axiomas">
+            <a className="group relative flex-1 bg-pizarra text-lienzo px-6 py-8 flex flex-col items-center justify-center overflow-hidden border border-lienzo/30 outline outline-1 outline-lienzo/15 outline-offset-[-6px] shadow-[0_10px_30px_-10px_rgba(0,0,0,0.4)] transition-all duration-500 hover:-translate-y-1 hover:shadow-[0_20px_40px_-10px_rgba(0,0,0,0.6)] rounded-[2px]">
+              <div className="absolute inset-[6px] border border-lienzo/20 pointer-events-none transition-all duration-500 group-hover:inset-[8px] group-hover:border-lienzo/40" />
+              <div className="absolute inset-[10px] border border-lienzo/10 pointer-events-none transition-all duration-500 group-hover:inset-[12px] group-hover:border-lienzo/20" />
+              <span className="text-[10px] tracking-[0.2em] uppercase font-sans opacity-80 mb-2">Axiomas</span>
+              <span className="text-2xl font-bold" style={{ fontVariant: 'small-caps' }}>Axiomas</span>
+              <span className="mt-3 text-xs font-sans tracking-widest uppercase opacity-70 group-hover:opacity-100 transition-opacity">Ver Relaciones →</span>
+            </a>
+          </Link>
         </div>
       </div>
     </header>

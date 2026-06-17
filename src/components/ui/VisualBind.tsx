@@ -47,3 +47,7 @@ export const VisualBind: React.FC<VisualBindProps> = ({ element, color = 'salvia
     </span>
   );
 };
+
+export const InteractiveElement: React.FC<Omit<VisualBindProps, 'element'> & { target: string }> = ({ target, color, children }) => (
+  <VisualBind element={target} color={color}>{children}</VisualBind>
+);

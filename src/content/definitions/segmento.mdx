@@ -1,0 +1,41 @@
+export const metadata = {
+  id: "segmento",
+  type: "definicion",
+  title: "Segmento de Recta",
+  description: "Subconjunto topológico unidimensional acotado por dos puntos extremos sobre una misma recta.",
+  statement: "El segmento AB es el conjunto formado por los puntos A y B, junto con todos los puntos colineales que se encuentran entre ellos.",
+  tags: ["Geometría", "Geometría Afín", "Topología"],
+  hasSimulation: true,
+  prerequisites: [
+    "axioma-congruencia-segmentos",
+    "axioma-congruencia-triangulos-lal",
+    "axioma-congruencia-angulos",
+    "modelo-geometria-absoluta"
+  ],
+};
+
+import { SegmentoVisualizer } from '../../diagrams/Geometria/SegmentVisualizer';
+import { InteractiveElement } from "../../components/ui/VisualBind";
+
+<Capitular letra="E" />l concepto de segmento permite acotar la extensión infinita de las rectas definidas en los <ConceptLink targetId="axioma-incidencia-1">Axiomas de Incidencia</ConceptLink>, constituyendo las "aristas" fundamentales de todos los polígonos del plano.
+
+<Definicion>
+  Dados dos puntos distintos <InteractiveElement target="puntoA" color="terracota">$A$</InteractiveElement> y <InteractiveElement target="puntoB" color="pavo">$B$</InteractiveElement>, el **segmento de recta** (denotado analíticamente como $\overline{AB}$) se define como la unión del conjunto de los propios extremos $\{A, B\}$ y el conjunto de todos los puntos $X$ colineales con ellos que satisfacen la relación de intermediación $A * X * B$.
+</Definicion>
+
+<Separador />
+
+### Formulación Conjuntista
+
+Basándonos en la relación topológica primitiva definida en el <ConceptLink targetId="axioma-orden-1">Primer Axioma de Orden</ConceptLink>, el segmento cerrado se formula estáticamente como:
+
+<Formula title="Conjunto de Puntos del Segmento">
+  <EquationRow>
+    $\overline{AB} = \{A, B\} \cup \{ X \in \mathbb{R}^2 \ | \ A * X * B \}$
+  </EquationRow>
+</Formula>
+
+### Observaciones Topológicas
+
+* Por la propiedad de simetría del orden lineal ($A * X * B \iff B * X * A$), el segmento $\overline{AB}$ es estrictamente el mismo conjunto de puntos que el segmento $\overline{BA}$. 
+* Un segmento, al contrario que una recta o una semirrecta, tiene una medida de longitud finita y acotada, la cual se formaliza mediante la introducción axiomática de la Congruencia.

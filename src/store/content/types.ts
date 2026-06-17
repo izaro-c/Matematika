@@ -35,9 +35,10 @@ export interface Theorem {
   color?: string;
   authors: string[];
   lesson?: string;
-  type?: 'theorem' | 'lemma' | 'corollary';
+  type?: 'theorem' | 'lemma' | 'corollary' | 'teorema';
   corollaries?: string[];
   demos?: string[];
+  demostraciones?: string[];
   requires?: string[];
   examples?: string[];
   exercises?: string[];
@@ -63,6 +64,7 @@ export interface Lesson {
 export interface Demo {
   id: string;
   slug: string;
+  type?: 'demostracion';
   title: string;
   description: string;
   parentTheorem?: string;
@@ -71,6 +73,7 @@ export interface Demo {
   authors?: string[];
   tags?: string[];
   layout?: 'split' | 'text';
+  dependencias?: string[];
   Component: MDXComponent;
 }
 
@@ -127,3 +130,27 @@ export interface UseCase {
   Component: MDXComponent;
   Simulation?: MDXComponent;
 }
+
+export interface Axiom {
+  id: string;
+  slug: string;
+  type?: 'axioma';
+  title: string;
+  description: string;
+  statement?: string;
+  tags?: string[];
+  authors?: string[];
+  Component: MDXComponent;
+}
+
+export interface Model {
+  id: string;
+  slug: string;
+  type?: 'modelo';
+  title: string;
+  description?: string;
+  axiomas?: string[];
+  tags?: string[];
+  Component: MDXComponent;
+}
+

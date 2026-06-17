@@ -1,0 +1,30 @@
+export const metadata = {
+  id: "axioma-incidencia-2",
+  type: "axioma",
+  title: "Segundo Axioma de Incidencia",
+  description: "Postulado que garantiza la cardinalidad mínima de puntos sobre cualquier recta euclidiana.",
+  statement: "Toda recta contiene al menos dos puntos distintos.",
+  tags: ["Geometría Euclidiana", "Geometría de Incidencia"],
+  authors: ["Hilbert"],
+  links: ["axioma-incidencia-1"]
+};
+
+import { InteractiveElement } from "../../components/ui/VisualBind";
+
+<Capitular letra="E" />l **Segundo Axioma de Incidencia**, en la formalización de David Hilbert, complementa la definición axiomática de la recta asegurando que no existen rectas sin contenido o rectas degeneradas conformadas por un único punto aislado.
+
+<Separador />
+
+### Enunciado Formal
+
+Dada cualquier recta <InteractiveElement target="rectaR" color="salvia">$r$</InteractiveElement>, existen al menos dos puntos distintos <InteractiveElement target="puntoA" color="terracota">$A$</InteractiveElement> y <InteractiveElement target="puntoB" color="pavo">$B$</InteractiveElement> tales que ambos inciden en $r$.
+
+<Formula title="Cardinalidad Mínima de la Recta">
+  <EquationRow>
+    \forall r \implies \exists A, B : (A \neq B) \land (A \in r) \land (B \in r)
+  </EquationRow>
+</Formula>
+
+### Implicaciones Lógicas
+
+Este postulado es el responsable algorítmico de dotar a la recta de su naturaleza de objeto extenso. Sin este axioma, un modelo matemático donde las rectas fueran asimilables a puntos singulares podría satisfacer el <ConceptLink targetId="axioma-incidencia-1">Primer Axioma de Incidencia</ConceptLink>, lo cual generaría una contradicción topológica en la construcción métrica del plano.

@@ -1,6 +1,7 @@
 import React, { Suspense } from 'react';
 import { useRoute, Link } from 'wouter';
 import { db } from '../store/content';
+import { ModelBadgeList } from '../components/ui/ModelBadge';
 
 /**
  * Página dedicada a Demostraciones visuales/interactivas separadas.
@@ -43,9 +44,12 @@ export const DemoPage: React.FC = () => {
 
         {/* CABECERA AUTOMÁTICA CLÁSICA */}
         <div className="text-center mb-16 relative">
-          <span className="text-sm font-sans tracking-widest uppercase text-terracota/80 font-bold mb-4 block">
-            Demostración
-          </span>
+          <div className="flex justify-center items-center gap-4 mb-4">
+            <span className="text-sm font-sans tracking-widest uppercase text-terracota/80 font-bold block">
+              Demostración
+            </span>
+            <ModelBadgeList nodeId={demo.id} />
+          </div>
           <h1 className="text-4xl md:text-5xl font-bold mb-6 text-pizarra leading-tight" style={{ fontVariant: 'small-caps' }}>
             {demo.title}
           </h1>

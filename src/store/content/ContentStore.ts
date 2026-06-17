@@ -9,6 +9,8 @@ import {
   ExerciseSchema,
   UseCaseSchema,
   StudyPlanSchema,
+  AxiomSchema,
+  ModelSchema,
 } from '../schemas';
 import { contentLoaders } from './loaders';
 import type {
@@ -21,6 +23,8 @@ import type {
   Exercise,
   UseCase,
   StudyPlan,
+  Axiom,
+  Model,
   BaseContent
 } from './types';
 
@@ -43,6 +47,8 @@ export class ContentStore {
   public exercises: Map<string, Exercise> = new Map();
   public usecases: Map<string, UseCase> = new Map();
   public studyPlans: Map<string, StudyPlan> = new Map();
+  public axioms: Map<string, Axiom> = new Map();
+  public models: Map<string, Model> = new Map();
 
   constructor() {
     this.init();
@@ -85,7 +91,9 @@ export class ContentStore {
       exampleLoaders, exampleMetas,
       exerciseLoaders, exerciseMetas,
       usecaseLoaders, usecaseMetas,
-      planLoaders, planMetas
+      planLoaders, planMetas,
+      axiomLoaders, axiomMetas,
+      modelLoaders, modelMetas
     } = contentLoaders;
 
     // 1. Matemáticos
@@ -209,6 +217,32 @@ export class ContentStore {
         Simulation: this.createLazyComponent(usecaseLoaders[path] as () => Promise<Record<string, unknown>>, 'Simulation')
       });
     }
+
+    // 10. Axiomas
+    for (const path in axiomMetas) {
+      const meta = axiomMetas[path] as Record<string, unknown>;
+      const slug = this.extractSlug(path);
+      const id = (meta.id as string) || slug;
+      if (!AxiomSchema.safeParse(meta).success) console.warn(`[ContentStore] Axioma inválido ${path}`);
+
+      this.axioms.set(id, {
+        ...(meta as unknown as Axiom), id, slug,
+        Component: this.createLazyComponent(axiomLoaders[path] as () => Promise<Record<string, unknown>>)
+      });
+    }
+
+    // 11. Modelos
+    for (const path in modelMetas) {
+      const meta = modelMetas[path] as Record<string, unknown>;
+      const slug = this.extractSlug(path);
+      const id = (meta.id as string) || slug;
+      if (!ModelSchema.safeParse(meta).success) console.warn(`[ContentStore] Modelo inválido ${path}`);
+
+      this.models.set(id, {
+        ...(meta as unknown as Model), id, slug,
+        Component: this.createLazyComponent(modelLoaders[path] as () => Promise<Record<string, unknown>>)
+      });
+    }
   }
 
   // ── Queries ──────────────────────────────────────────────────────────────
@@ -278,6 +312,16 @@ export class ContentStore {
   getStudyPlan(id: string): StudyPlan | undefined {
     return this.studyPlans.get(id) || Array.from(this.studyPlans.values()).find(p => p.slug === id);
   }
+
+  getAxiom(id: string): Axiom | undefined {
+    return this.axioms.get(id) || Array.from(this.axioms.values()).find(a => a.slug === id);
+  }
+  getAllAxioms(): Axiom[] { return Array.from(this.axioms.values()); }
+
+  getModel(id: string): Model | undefined {
+    return this.models.get(id) || Array.from(this.models.values()).find(m => m.slug === id);
+  }
+  getAllModels(): Model[] { return Array.from(this.models.values()); }
 
   getLesson(id: string): Lesson | undefined {
     return this.lessons.get(id) || Array.from(this.lessons.values()).find(l => l.slug === id);

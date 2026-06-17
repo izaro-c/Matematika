@@ -4,6 +4,7 @@ import { db } from "../store/content";
 import { Suspense } from 'react';
 import { SimulationLayout } from "../components/layout/SimulationLayout";
 import { ReadingButton } from '../components/ui/ReadingButton';
+import { ModelBadgeList } from '../components/ui/ModelBadge';
 
 /**
  * Página principal para un Teorema (Theorem).
@@ -80,10 +81,11 @@ export const TheoremPage = () => {
 
         {/* Cabecera del Teorema */}
         <div className="mb-16 border-b border-carbon/10 pb-12">
-          <div className="flex flex-col md:flex-row md:items-baseline gap-4 mb-4">
+          <div className="flex flex-col md:flex-row md:items-baseline justify-between gap-4 mb-4">
             <span className={`text-sm uppercase tracking-widest font-sans font-bold text-${theorem.color || 'carbon'}/80`}>
               {displayType}
             </span>
+            <ModelBadgeList nodeId={theorem.id} />
           </div>
           <h1 className="text-5xl md:text-6xl font-bold tracking-tight mb-6" style={{ fontVariant: 'small-caps' }}>
             {theorem.title}

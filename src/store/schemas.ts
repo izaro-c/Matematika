@@ -7,6 +7,7 @@ import { z } from 'zod';
  */
 export const MathematicianSchema = z.object({
   id: z.string().optional(),
+  type: z.literal('matematico'),
   name: z.string(),
   birthYear: z.number().optional(),
   deathYear: z.number().optional(),
@@ -24,6 +25,7 @@ export const MathematicianSchema = z.object({
  */
 export const TheoremSchema = z.object({
   id: z.string().optional(),
+  type: z.enum(['teorema', 'lema', 'corolario']),
   title: z.string(),
   description: z.string(),
   statement: z.string().optional(),
@@ -34,6 +36,7 @@ export const TheoremSchema = z.object({
   lemmas: z.array(z.string()).optional(),
   corollaries: z.array(z.string()).optional(),
   demos: z.array(z.string()).optional(),
+  demostraciones: z.array(z.string()).optional(),
   /** IDs de definiciones que este teorema usa formalmente (grafo de dependencia) */
   requires: z.array(z.string()).optional(),
   /** IDs de ejemplos resueltos asociados */
@@ -53,6 +56,7 @@ export const TheoremSchema = z.object({
  */
 export const LessonSchema = z.object({
   id: z.string().optional(),
+  type: z.literal('leccion'),
   title: z.string(),
   description: z.string().optional(),
   tags: z.array(z.string()).optional(),
@@ -68,15 +72,17 @@ export const LessonSchema = z.object({
  */
 export const DemoSchema = z.object({
   id: z.string().optional(),
+  type: z.literal('demostracion'),
   title: z.string(),
   description: z.string().optional(),
   parentTheorem: z.string().optional(),
   lemmas: z.array(z.string()).optional(),
-  proofMethod: z.string().optional(),
+  proofMethod: z.enum(['directo', 'contradiccion', 'induccion', 'contraposicion', 'constructivo', 'geometrico', 'exhaustivo', 'reduccion']).optional(),
   authors: z.array(z.string()).optional(),
   tags: z.array(z.string()).optional(),
   links: z.array(z.string()).optional(),
   layout: z.enum(['split', 'text']).optional(),
+  dependencias: z.array(z.string()).optional(),
 });
 
 /**
@@ -86,6 +92,7 @@ export const DemoSchema = z.object({
  */
 export const DefinitionSchema = z.object({
   id: z.string().optional(),
+  type: z.literal('definicion'),
   title: z.string(),
   description: z.string(),
   statement: z.string().optional(),
@@ -105,6 +112,7 @@ export const DefinitionSchema = z.object({
  */
 export const ExampleSchema = z.object({
   id: z.string().optional(),
+  type: z.literal('ejemplo'),
   title: z.string(),
   description: z.string().optional(),
   /** ID del teorema o definición principal que ilustra */
@@ -123,6 +131,7 @@ export const ExampleSchema = z.object({
  */
 export const ExerciseSchema = z.object({
   id: z.string().optional(),
+  type: z.literal('ejercicio'),
   title: z.string(),
   description: z.string().optional(),
   /** ID del teorema o definición que pone en práctica */
@@ -143,6 +152,34 @@ export type DemoMeta = z.infer<typeof DemoSchema>;
 export type DefinitionMeta = z.infer<typeof DefinitionSchema>;
 export type ExampleMeta = z.infer<typeof ExampleSchema>;
 export type ExerciseMeta = z.infer<typeof ExerciseSchema>;
+export type AxiomMeta = z.infer<typeof AxiomSchema>;
+export type ModelMeta = z.infer<typeof ModelSchema>;
+
+/**
+ * AxiomSchema - Esquema para Axiomas (Nodos Raíz lógicos)
+ */
+export const AxiomSchema = z.object({
+  id: z.string().optional(),
+  type: z.literal('axioma'),
+  title: z.string(),
+  description: z.string(),
+  statement: z.string().optional(),
+  tags: z.array(z.string()).optional(),
+  authors: z.array(z.string()).optional(),
+  links: z.array(z.string()).optional(),
+});
+
+/**
+ * ModelSchema - Esquema para Modelos (Axiom Sets)
+ */
+export const ModelSchema = z.object({
+  id: z.string().optional(),
+  type: z.literal('modelo'),
+  title: z.string(),
+  description: z.string().optional(),
+  axiomas: z.array(z.string()).optional(),
+  tags: z.array(z.string()).optional(),
+});
 
 /**
  * UseCaseSchema — Caso de Uso en el Mundo Real
@@ -153,6 +190,7 @@ export type ExerciseMeta = z.infer<typeof ExerciseSchema>;
  */
 export const UseCaseSchema = z.object({
   id: z.string().optional(),
+  type: z.literal('caso_de_uso'),
   title: z.string(),
   description: z.string().optional(),
   /** ID del teorema o concepto matemático que ilustra */
@@ -175,6 +213,7 @@ export type UseCaseMeta = z.infer<typeof UseCaseSchema>;
  */
 export const StudyPlanSchema = z.object({
   id: z.string(),
+  type: z.literal('plan_de_estudio'),
   title: z.string(),
   subtitle: z.string().optional(),
   description: z.string(),

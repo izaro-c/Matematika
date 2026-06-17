@@ -1,0 +1,30 @@
+export const metadata = {
+  id: "axioma-incidencia-3",
+  type: "axioma",
+  title: "Tercer Axioma de Incidencia",
+  description: "Postulado que garantiza la bidimensionalidad del espacio métrico euclidiano.",
+  statement: "Existen al menos tres puntos distintos que no pertenecen a una misma recta.",
+  tags: ["Geometría Euclidiana", "Geometría de Incidencia"],
+  authors: ["Hilbert"],
+  links: ["axioma-incidencia-1", "axioma-incidencia-2"]
+};
+
+import { InteractiveElement } from "../../components/ui/VisualBind";
+
+<Capitular letra="E" />l **Tercer Axioma de Incidencia** actúa como la salvaguarda métrica que asegura que el universo geométrico sobre el que opera nuestro modelo formal tiene, como mínimo, dos dimensiones espaciales, impidiendo que el espacio colapse en una única línea infinita.
+
+<Separador />
+
+### Enunciado Formal
+
+Existen al menos tres puntos <InteractiveElement target="puntoA" color="terracota">$A$</InteractiveElement>, <InteractiveElement target="puntoB" color="pavo">$B$</InteractiveElement> y <InteractiveElement target="puntoC" color="ocre">$C$</InteractiveElement> tales que no existe ninguna recta <InteractiveElement target="rectaR" color="salvia">$r$</InteractiveElement> que los contenga a los tres de forma simultánea.
+
+<Formula title="No Colinealidad Fundamental">
+  <EquationRow>
+    \exists A, B, C : \neg \exists r \ (A \in r \land B \in r \land C \in r)
+  </EquationRow>
+</Formula>
+
+### Observaciones Topológicas
+
+Decir que tres puntos no inciden sobre la misma recta es el requisito lógico mínimo e insalvable para poder definir un plano bidimensional de manera unívoca. Este axioma obliga al sistema formal a expandirse más allá de $\mathbb{R}^1$, habilitando posteriormente la topología necesaria para construir polígonos elementales como los triángulos.

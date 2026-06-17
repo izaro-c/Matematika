@@ -1,0 +1,30 @@
+export const metadata = {
+  id: "axioma-paralelas",
+  type: "axioma",
+  title: "Postulado de las Paralelas",
+  description: "Axioma que garantiza la unicidad de la recta paralela. Su negación da origen a las geometrías no euclidianas.",
+  statement: "Por un punto exterior a una recta, se puede trazar una y solo una paralela a dicha recta.",
+  tags: ["Geometría Euclidiana", "Geometría Afín"],
+  authors: ["Euclides", "John Playfair"],
+  links: ["axioma-incidencia-1", "axioma-incidencia-2", "axioma-incidencia-3"]
+};
+
+import { InteractiveElement } from "../../components/ui/VisualBind";
+
+<Capitular letra="E" />l **Quinto Postulado** es la piedra angular que separa de manera estricta a la geometría euclidiana del resto de geometrías posibles. Se presenta aquí en su formulación lógica equivalente más extendida, conocida formalmente como el *Axioma de Playfair*.
+
+<Separador />
+
+### Enunciado Formal
+
+Dada una línea recta <InteractiveElement target="rectaR" color="salvia">$r$</InteractiveElement> y un punto <InteractiveElement target="puntoP" color="terracota">$P$</InteractiveElement> que no pertenece a ella ($P \notin r$), existe una y **solo una** recta <InteractiveElement target="rectaS" color="pavo">$s$</InteractiveElement> en el mismo plano que pasa por $P$ y no interseca a $r$ en ningún punto.
+
+<Formula title="Unicidad del Paralelismo">
+  <EquationRow>
+    \forall r, \forall P \notin r \implies \exists! s : (P \in s) \land (s \cap r = \emptyset)
+  </EquationRow>
+</Formula>
+
+<Nota>
+  Históricamente, la demostración de este postulado a partir de los axiomas previos fue el mayor problema abierto de la geometría. La demostración de su independencia lógica en el siglo XIX demostró que su modificación sistemática (asumiendo cero paralelas o infinitas paralelas) genera modelos matemáticos consistentes alternativos.
+</Nota>

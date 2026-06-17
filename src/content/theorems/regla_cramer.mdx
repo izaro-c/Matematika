@@ -1,14 +1,25 @@
 export const metadata = {
-  id: "regla-cramer",
-  title: "La Regla de Cramer",
-  description: "Resolución de Sistemas de Ecuaciones Lineales mediante el uso de determinantes. Un método fundamental en el Álgebra Lineal.",
-  links: ["sistemas_ecuaciones_lineales","cramer","matriz","determinante","teorema_rouche_frobenius"],
-  statement: "Si un sistema de $n$ ecuaciones con $n$ incógnitas tiene determinante no nulo, el sistema tiene solución única dada por $x_i = \\frac{\\det(A_i)}{\\det(A)}$.",
-  era: "Siglo XVIII",
-  color: "pizarra",
-  authors: ["Gabriel Cramer"],
-  tags: ["Álgebra"],
-  hasSimulation: true
+  "id": "regla-cramer",
+  "title": "La Regla de Cramer",
+  "description": "Resolución de Sistemas de Ecuaciones Lineales mediante el uso de determinantes. Un método fundamental en el Álgebra Lineal.",
+  "links": [
+    "sistemas_ecuaciones_lineales",
+    "cramer",
+    "matriz",
+    "determinante",
+    "teorema_rouche_frobenius"
+  ],
+  "statement": "Si un sistema de $n$ ecuaciones con $n$ incógnitas tiene determinante no nulo, el sistema tiene solución única dada por $x_i = \\frac{\\det(A_i)}{\\det(A)}$.",
+  "era": "Siglo XVIII",
+  "color": "pizarra",
+  "authors": [
+    "Gabriel Cramer"
+  ],
+  "tags": [
+    "Álgebra"
+  ],
+  "hasSimulation": true,
+  "type": "teorema"
 };
 
 import { CramerVisualizer } from '../../diagrams/Algebra/CramerVisualizer';

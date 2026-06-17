@@ -1,0 +1,159 @@
+{
+  "axioma-test-1": [
+    "modelo-test"
+  ],
+  "definicion-derivada": [
+    "modelo-test"
+  ],
+  "determinante": [
+    "modelo-test"
+  ],
+  "limite": [
+    "modelo-test"
+  ],
+  "matriz": [
+    "modelo-test"
+  ],
+  "producto-vectorial": [
+    "modelo-test"
+  ],
+  "demo-pitagoras-euclides": [],
+  "demo_rouche_frobenius": [],
+  "demo-test-1": [
+    "modelo-test"
+  ],
+  "ejemplo-falso-positivo": [
+    "modelo-test"
+  ],
+  "ejemplo-pitagoras-escalera": [
+    "modelo-test"
+  ],
+  "ejemplo-rouche-frobenius": [
+    "modelo-test"
+  ],
+  "bayes_aplicado": [
+    "modelo-test"
+  ],
+  "ejercicio-pitagoras-distancia": [
+    "modelo-test"
+  ],
+  "ejercicio-prueba-componentes": [
+    "modelo-test"
+  ],
+  "ejercicio-rouche-frobenius-incompatible": [
+    "modelo-test"
+  ],
+  "pitagoras_interactivo": [
+    "modelo-test"
+  ],
+  "tales_proporciones": [
+    "modelo-test"
+  ],
+  "leccion-pitagoras": [
+    "modelo-test"
+  ],
+  "metodo-contradiccion": [
+    "modelo-test"
+  ],
+  "metodo-contraposicion": [
+    "modelo-test"
+  ],
+  "metodo-directo": [
+    "modelo-test"
+  ],
+  "metodo-induccion": [
+    "modelo-test"
+  ],
+  "sistemas_ecuaciones_lineales": [
+    "modelo-test"
+  ],
+  "arquimedes": [
+    "modelo-test"
+  ],
+  "barrow": [
+    "modelo-test"
+  ],
+  "bayes": [
+    "modelo-test"
+  ],
+  "cauchy": [
+    "modelo-test"
+  ],
+  "cramer": [
+    "modelo-test"
+  ],
+  "euclides": [
+    "modelo-test"
+  ],
+  "euler": [
+    "modelo-test"
+  ],
+  "frobenius": [
+    "modelo-test"
+  ],
+  "gauss": [
+    "modelo-test"
+  ],
+  "gibbs": [
+    "modelo-test"
+  ],
+  "hamilton": [
+    "modelo-test"
+  ],
+  "hipatia": [
+    "modelo-test"
+  ],
+  "laplace": [
+    "modelo-test"
+  ],
+  "leibniz": [
+    "modelo-test"
+  ],
+  "newton": [
+    "modelo-test"
+  ],
+  "pitagoras": [
+    "modelo-test"
+  ],
+  "riemann": [
+    "modelo-test"
+  ],
+  "rouche": [
+    "modelo-test"
+  ],
+  "sarrus": [
+    "modelo-test"
+  ],
+  "tales": [
+    "modelo-test"
+  ],
+  "weierstrass": [
+    "modelo-test"
+  ],
+  "modelo-test": [],
+  "selectividad": [
+    "modelo-test"
+  ],
+  "corolario-trigonometria": [],
+  "distancia-punto-plano": [],
+  "distribucion-normal": [],
+  "lema-invarianza-area": [],
+  "regla-cramer": [],
+  "teorema-bayes": [],
+  "teorema-fundamental-calculo": [],
+  "teorema-pitagoras": [],
+  "teorema_rouche_frobenius": [],
+  "teorema-tales": [],
+  "teorema-test": [
+    "modelo-test"
+  ],
+  "bayes-diagnostico-medico": [
+    "modelo-test"
+  ],
+  "pitagoras-construccion": [
+    "modelo-test"
+  ],
+  "tales-cartografia": [
+    "modelo-test"
+  ]
+}

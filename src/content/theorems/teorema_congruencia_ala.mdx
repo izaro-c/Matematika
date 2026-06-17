@@ -1,0 +1,33 @@
+export const metadata = {
+  id: "teorema-congruencia-ala",
+  type: "teorema",
+  title: "Teorema de Congruencia ALA",
+  description: "Criterio Ángulo-Lado-Ángulo para la congruencia de triángulos, deducido a partir de la Geometría Absoluta.",
+  tags: ["Geometría", "Triángulos", "Congruencia"],
+  prerequisites: ["axioma-congruencia-triangulos-lal", "axioma-congruencia-segmentos", "axioma-congruencia-angulos"],
+  demos: ["demo-congruencia-ala"],
+};
+
+<Capitular letra="A" /> diferencia de LAL, que es asumido axiomáticamente (Hilbert III.5), el criterio **Ángulo-Lado-Ángulo (ALA)** es un teorema demostrable en la Geometría Absoluta. Garantiza que si dos triángulos comparten un lado y los dos ángulos adyacentes a este, son isomorfos en todas sus métricas.
+
+<Separador />
+
+### Enunciado
+
+Sean $\triangle ABC$ y $\triangle A'B'C'$ dos triángulos cualesquiera. Si se cumple que $\angle BAC \cong \angle B'A'C'$, el lado comprendido $\overline{AB} \cong \overline{A'B'}$, y el ángulo $\angle ABC \cong \angle A'B'C'$, entonces $\triangle ABC \cong \triangle A'B'C'$.
+
+<Formula title="Proposición ALA">
+  <EquationRow>
+    $(\angle A \cong \angle A') \land (\overline{AB} \cong \overline{A'B'}) \land (\angle B \cong \angle B') \implies \triangle ABC \cong \triangle A'B'C'$
+  </EquationRow>
+</Formula>
+
+### Interpretación y Significado Geométrico
+
+El teorema ALA establece que la estructura geométrica de un triángulo queda rígidamente fijada si se conoce la longitud de uno de sus lados y la amplitud de los dos ángulos que se apoyan sobre él. Es decir, los grados de libertad del sistema se reducen a cero con estos tres parámetros.
+
+Desde una perspectiva analítica y aplicada, este teorema es el fundamento lógico de la **triangulación topográfica**. Permite determinar la distancia exacta a un punto inaccesible midiendo únicamente una "línea base" (el lado conocido) y los ángulos de observación hacia el objetivo desde los extremos de dicha línea.
+
+<Nota>
+  Al ser deducido estrictamente dentro de los confines de la <ConceptLink targetId="modelo-geometria-absoluta">Geometría Absoluta</ConceptLink> (es decir, sin invocar el Postulado de las Paralelas), el criterio ALA es una verdad matemática universalmente válida tanto en el plano Euclidiano como en el plano Hiperbólico.
+</Nota>

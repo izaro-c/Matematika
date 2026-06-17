@@ -1,0 +1,41 @@
+export const metadata = {
+    id: "lema-pons-asinorum",
+    title: "Pons Asinorum (Euclides I.5)",
+    type: "lema",
+    description: "En todo triángulo isósceles, los ángulos de la base son iguales entre sí.",
+};
+
+<Capitular letra="E" />l **Pons Asinorum** (del latín "Puente de los Asnos") es la Proposición 5 del Libro I de los Elementos de Euclides.
+
+<Separador />
+
+### Teorema
+
+En todo triángulo isósceles, los ángulos de la base son iguales entre sí.
+<ConceptLink targetId="axioma-congruencia-triangulos">LAL</ConceptLink>
+<ConceptLink targetId="axioma-congruencia-lados">Lados</ConceptLink>
+<ConceptLink targetId="axioma-congruencia-angulos">Ángulos</ConceptLink>
+
+### Demostración
+
+Para demostrar que en un triángulo $\triangle ABC$ con $AB = AC$ se cumple que $\angle ABC = \angle ACB$, realizamos la siguiente construcción:
+
+<MedievalStep number={1} title="Construcción Auxiliary">
+
+
+  Prolongamos $AB$ hasta $D$ y $AC$ hasta $E$ tales que $BD = CE$.
+  
+
+</MedievalStep>
+
+<MedievalStep number={2} title="Congruencia de Triángulos">
+
+  Aplicando el criterio  a los triángulos $\triangle ADC$ y $\triangle AEB$, demostramos su congruencia.
+
+</MedievalStep>
+
+<MedievalStep number={3} title="Conclusión">
+
+  Por igualdad de partes correspondientes, se deduce que $\angle ABC = \angle ACB$.
+
+</MedievalStep>

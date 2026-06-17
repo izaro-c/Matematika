@@ -3,6 +3,7 @@ import { db } from "../store/content";
 import { Suspense } from 'react';
 import { SimulationLayout } from "../components/layout/SimulationLayout";
 import { ReadingButton } from '../components/ui/ReadingButton';
+import { ModelBadgeList } from '../components/ui/ModelBadge';
 
 /**
  * Página principal para leer una Definición matemática (Definition).
@@ -56,10 +57,11 @@ export const DefinitionPage = () => {
 
         {/* Cabecera de la Definición */}
         <div className="mb-16 border-b border-carbon/10 pb-12">
-          <div className="flex flex-col md:flex-row md:items-baseline gap-4 mb-4">
+          <div className="flex flex-col md:flex-row md:items-baseline justify-between gap-4 mb-4">
             <span className={`text-sm uppercase tracking-widest font-sans font-bold text-${definition.color || 'carbon'}/80`}>
               Definición
             </span>
+            <ModelBadgeList nodeId={definition.id} />
           </div>
           <h1 className="text-5xl md:text-6xl font-bold tracking-tight mb-6" style={{ fontVariant: 'small-caps' }}>
             {definition.title}

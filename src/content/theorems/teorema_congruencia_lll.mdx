@@ -1,0 +1,36 @@
+export const metadata = {
+  id: "teorema-congruencia-lll",
+  type: "teorema",
+  title: "Teorema de Congruencia LLL",
+  description: "Criterio Lado-Lado-Lado para la congruencia de triángulos, basado en la Geometría Absoluta y el teorema del triángulo isósceles.",
+  tags: ["Geometría", "Triángulos", "Congruencia"],
+  authors: ["Euclides", "Hilbert"],
+  demos: ["demo-congruencia-lll"],
+};
+
+import { ConceptLink } from "../../components/ui/ConceptLink";
+import { InteractiveElement } from "../../components/ui/VisualBind";
+
+<Capitular letra="E" />l criterio **Lado-Lado-Lado (LLL)** es una de las demostraciones más sofisticadas de la Geometría Absoluta temprana. Afirma que la rígida estructura de un triángulo está completamente determinada por las longitudes de sus tres bordes, sin necesidad de conocer a priori ningún ángulo interno.
+
+<Separador />
+
+### Enunciado del Teorema
+
+Sean $\triangle ABC$ y $\triangle A'B'C'$ dos triángulos cualesquiera del plano. Si sus tres lados correspondientes son mutuamente congruentes, es decir: $\overline{AB} \cong \overline{A'B'}$, $\overline{BC} \cong \overline{B'C'}$, y $\overline{CA} \cong \overline{C'A'}$, entonces los triángulos son congruentes en su totalidad.
+
+<Formula title="Proposición LLL">
+  <EquationRow>
+    $(\overline{AB} \cong \overline{A'B'}) \land (\overline{BC} \cong \overline{B'C'}) \land (\overline{CA} \cong \overline{C'A'}) \implies \triangle ABC \cong \triangle A'B'C'$
+  </EquationRow>
+</Formula>
+
+### Relevancia Estructural
+
+Este teorema es la justificación matemática de por qué **el triángulo es la única figura geométrica indeformable**. 
+
+Un cuadrilátero con cuatro lados de longitudes fijas puede deformarse infinitamente (cambiando sus ángulos internos para pasar de un rectángulo a un romboide, por ejemplo). Sin embargo, LLL demuestra que un conjunto de tres lados fijos "bloquea" automáticamente los tres ángulos internos en un valor único, dotando a las estructuras triangulares de su característica rigidez mecánica, explotada extensamente en ingeniería civil y arquitectura.
+
+<Nota>
+  Para demostrar este teorema sin recurrir al movimiento físico (superposición), el sistema lógico de Hilbert requiere construir triángulos auxiliares y apoyarse en el *Pons Asinorum* (el lema que establece que los ángulos de la base de un triángulo isósceles son congruentes).
+</Nota>

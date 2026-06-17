@@ -1,15 +1,25 @@
 export const metadata = {
-  id: "teorema-fundamental-calculo",
-  title: "Teorema Fundamental del Cálculo",
-  description: "El teorema que unifica las dos ramas del cálculo: la derivación (tasas de cambio) y la integración (acumulación de áreas).",
-  links: ["definicion-derivada"],
-  statement: "La derivación y la integración son operaciones inversas. Si $f$ es continua, la derivada de su integral definida respecto a su límite superior es: $\\frac{d}{dx} \\int_a^x f(t) dt = f(x)$.",
-  era: "Siglo XVII",
-  color: "salvia",
-  authors: ["Isaac Newton", "Gottfried Leibniz"],
-  tags: ["Análisis"],
-  corollaries: ["Regla de Barrow"],
-  hasSimulation: true
+  "id": "teorema-fundamental-calculo",
+  "title": "Teorema Fundamental del Cálculo",
+  "description": "El teorema que unifica las dos ramas del cálculo: la derivación (tasas de cambio) y la integración (acumulación de áreas).",
+  "links": [
+    "definicion-derivada"
+  ],
+  "statement": "La derivación y la integración son operaciones inversas. Si $f$ es continua, la derivada de su integral definida respecto a su límite superior es: $\\frac{d}{dx} \\int_a^x f(t) dt = f(x)$.",
+  "era": "Siglo XVII",
+  "color": "salvia",
+  "authors": [
+    "Isaac Newton",
+    "Gottfried Leibniz"
+  ],
+  "tags": [
+    "Análisis"
+  ],
+  "corollaries": [
+    "Regla de Barrow"
+  ],
+  "hasSimulation": true,
+  "type": "teorema"
 };
 
 import { IntegralAreaVisualizer } from '../../diagrams/Calculo/IntegralAreaVisualizer';

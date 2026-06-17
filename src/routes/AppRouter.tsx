@@ -14,6 +14,9 @@ import { StudyPlanPage } from "../pages/StudyPlanPage";
 import { MethodsPage } from "../pages/MethodsPage";
 import { UseCasePage } from "../pages/UseCasePage";
 import { GraphPage } from "../pages/GraphPage";
+import { AxiomGraphPage } from "../pages/AxiomGraphPage";
+import { AxiomPage } from "../pages/AxiomPage";
+import { ModelPage } from "../pages/ModelPage";
 import { DemoPage } from "../pages/DemoPage";
 import { InteractiveLessonLayout } from "../components/layout/InteractiveLessonLayout";
 import { BiographyLayout } from "../components/layout/BiographyLayout";
@@ -49,6 +52,19 @@ export const AppRouter = () => {
         <Route path="/historia" component={HistoryTimeline} />
         <Route path="/metodos" component={MethodsPage} />
         <Route path="/grafo" component={GraphPage} />
+        <Route path="/axiomas" component={AxiomGraphPage} />
+
+        {/* RUTAS DE AXIOMAS Y MODELOS */}
+        <Route path="/axioma/:id">
+          <MathProvider>
+            <AxiomPage />
+          </MathProvider>
+        </Route>
+        <Route path="/modelo/:id">
+          <MathProvider>
+            <ModelPage />
+          </MathProvider>
+        </Route>
         
         {/* RUTAS DE LECCIONES INTERACTIVAS */}
         {lessons.map(({ id, slug, Component, Simulation }) => (

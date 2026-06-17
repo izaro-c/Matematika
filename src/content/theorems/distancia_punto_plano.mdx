@@ -1,13 +1,19 @@
 export const metadata = {
-  id: "distancia-punto-plano",
-  title: "Distancia de un Punto a un Plano",
-  description: "Fórmula geométrica que calcula la longitud del segmento perpendicular más corto que une un punto del espacio con un plano.",
-  links: ["producto-vectorial"],
-  statement: "La distancia más corta desde un punto $P(x_0,y_0,z_0)$ a un plano $Ax+By+Cz+D=0$ viene dada por la proyección ortogonal del punto sobre el plano: $d = \\frac{|Ax_0+By_0+Cz_0+D|}{\\sqrt{A^2+B^2+C^2}}$.",
-  color: "pizarra",
-  authors: [],
-  tags: ["Geometría", "Geometría Analítica en el Espacio"],
-  hasSimulation: true
+  "id": "distancia-punto-plano",
+  "title": "Distancia de un Punto a un Plano",
+  "description": "Fórmula geométrica que calcula la longitud del segmento perpendicular más corto que une un punto del espacio con un plano.",
+  "links": [
+    "producto-vectorial"
+  ],
+  "statement": "La distancia más corta desde un punto $P(x_0,y_0,z_0)$ a un plano $Ax+By+Cz+D=0$ viene dada por la proyección ortogonal del punto sobre el plano: $d = \\frac{|Ax_0+By_0+Cz_0+D|}{\\sqrt{A^2+B^2+C^2}}$.",
+  "color": "pizarra",
+  "authors": [],
+  "tags": [
+    "Geometría",
+    "Geometría Analítica en el Espacio"
+  ],
+  "hasSimulation": true,
+  "type": "teorema"
 };
 
 import { PlaneDistance3DVisualizer } from '../../diagrams/Geometria/PlaneDistance3DVisualizer';
