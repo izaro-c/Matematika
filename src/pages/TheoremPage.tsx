@@ -44,7 +44,7 @@ export const TheoremPage = () => {
   if (theorem.tags && theorem.tags.length > 0) {
     const mainBranch = theorem.tags[0];
     const taxonomy = db.getBranchTaxonomy(mainBranch);
-    breadcrumbs = taxonomy.breadcrumbs.concat([{ name: taxonomy.id, slug: taxonomy.slug }]);
+    breadcrumbs = taxonomy.breadcrumbs.concat([{ name: taxonomy.name || taxonomy.id, slug: taxonomy.slug }]);
   }
 
   const renderContent = () => (

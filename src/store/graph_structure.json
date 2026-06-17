@@ -24,15 +24,19 @@
     "triangulo-rectangulo",
     "demo-congruencia-ala",
     "lema-pons-asinorum",
-    "demo_congruencia_lll",
+    "demo-congruencia-lll",
     "lema-invarianza-area",
     "demo-pitagoras-euclides",
+    "teorema-pitagoras",
+    "corolario-trigonometria",
+    "demo-coseno-euclides",
     "demo_rouche_frobenius",
+    "teorema-tales",
+    "demo-seno-circunferencia",
     "demo-test-1",
     "teorema-bayes",
     "bayes",
     "ejemplo-falso-positivo",
-    "teorema-pitagoras",
     "ejemplo-pitagoras-escalera",
     "regla-cramer",
     "teorema_rouche_frobenius",
@@ -50,9 +54,9 @@
     "pitagoras",
     "leccion-pitagoras",
     "euclides",
-    "metodo-directo",
-    "metodo-contradiccion",
     "metodo-contraposicion",
+    "metodo-contradiccion",
+    "metodo-directo",
     "metodo-induccion",
     "euler",
     "cramer",
@@ -74,13 +78,13 @@
     "modelo-hiperbolico",
     "modelo-test",
     "selectividad",
-    "corolario-trigonometria",
     "distancia-punto-plano",
     "teorema-fundamental-calculo",
     "distribucion-normal",
     "teorema-congruencia-ala",
     "teorema-congruencia-lll",
-    "teorema-tales",
+    "teorema-coseno",
+    "teorema-seno",
     "teorema-test",
     "bayes-diagnostico-medico",
     "pitagoras-construccion",
@@ -259,7 +263,9 @@
       "title": "El Producto Vectorial",
       "description": "Una operación exclusiva del espacio en 3 dimensiones (R³) que genera un nuevo vector perpendicular a dos dados.",
       "proofs": [],
-      "directDependencies": []
+      "directDependencies": [
+        "determinante"
+      ]
     },
     "recta-paralela": {
       "id": "recta-paralela",
@@ -267,7 +273,10 @@
       "title": "Rectas Paralelas",
       "description": "Condición topológica de no intersección entre dos líneas que residen en el mismo plano.",
       "proofs": [],
-      "directDependencies": []
+      "directDependencies": [
+        "axioma-paralelas",
+        "axioma-incidencia-1"
+      ]
     },
     "segmento": {
       "id": "segmento",
@@ -286,7 +295,10 @@
       "title": "Triángulo Rectángulo",
       "description": "Polígono de tres lados caracterizado por contener exactamente un ángulo interno ortogonal (recto).",
       "proofs": [],
-      "directDependencies": []
+      "directDependencies": [
+        "axioma-congruencia-angulos",
+        "segmento"
+      ]
     },
     "demo-congruencia-ala": {
       "id": "demo-congruencia-ala",
@@ -296,11 +308,19 @@
       "proofs": [],
       "directDependencies": []
     },
-    "demo_congruencia_lll": {
-      "id": "demo_congruencia_lll",
+    "demo-congruencia-lll": {
+      "id": "demo-congruencia-lll",
       "type": "demostracion",
       "title": "Demostración mediante Construcción y Pons Asinorum",
       "description": "Prueba formal del criterio Lado-Lado-Lado apoyándose en construcciones auxiliares y en el lema del triángulo isósceles.",
+      "proofs": [],
+      "directDependencies": []
+    },
+    "demo-coseno-euclides": {
+      "id": "demo-coseno-euclides",
+      "type": "demostracion",
+      "title": "Demostración del Teorema del Coseno por Descomposición Geométrica",
+      "description": "Demostración del teorema del coseno mediante la descomposición del triángulo general en dos triángulos rectángulos.",
       "proofs": [],
       "directDependencies": []
     },
@@ -317,6 +337,14 @@
       "type": "demostracion",
       "title": "Demostración por Espacios Vectoriales Columna",
       "description": "Demostración formal del Teorema de Rouché-Frobenius utilizando el concepto de rango y combinaciones lineales de columnas.",
+      "proofs": [],
+      "directDependencies": []
+    },
+    "demo-seno-circunferencia": {
+      "id": "demo-seno-circunferencia",
+      "type": "demostracion",
+      "title": "Demostración del Teorema del Seno mediante Circunferencia Circunscrita",
+      "description": "Demostración geométrica clásica que utiliza la circunferencia circunscrita y el Teorema de Tales para establecer la proporcionalidad entre lados y senos.",
       "proofs": [],
       "directDependencies": []
     },
@@ -433,7 +461,7 @@
       "proofs": [],
       "directDependencies": [
         "euclides",
-        "metodo-directo"
+        "metodo-contraposicion"
       ]
     },
     "metodo-contraposicion": {
@@ -442,9 +470,7 @@
       "title": "Demostración por Contraposición",
       "description": "Demostrar que una afirmación es cierta probando que si la conclusión fuera falsa, la premisa tendría que ser falsa.",
       "proofs": [],
-      "directDependencies": [
-        "metodo-contradiccion"
-      ]
+      "directDependencies": []
     },
     "metodo-directo": {
       "id": "metodo-directo",
@@ -453,6 +479,7 @@
       "description": "La estrategia de demostración más fundamental: conectar hipótesis y conclusión mediante una cadena de deducciones lógicas válidas.",
       "proofs": [],
       "directDependencies": [
+        "metodo-contradiccion",
         "euclides"
       ]
     },
@@ -505,7 +532,9 @@
       "title": "bayes",
       "description": "Estadístico y ministro presbiteriano inglés que formuló el teorema de probabilidad condicional que lleva su nombre, publicado póstumamente.",
       "proofs": [],
-      "directDependencies": []
+      "directDependencies": [
+        "teorema-bayes"
+      ]
     },
     "cauchy": {
       "id": "cauchy",
@@ -659,7 +688,9 @@
       "title": "tales",
       "description": "Filósofo y matemático griego de la Antigüedad, considerado el primer matemático de la historia occidental.",
       "proofs": [],
-      "directDependencies": []
+      "directDependencies": [
+        "teorema-tales"
+      ]
     },
     "weierstrass": {
       "id": "weierstrass",
@@ -678,6 +709,7 @@
       "description": "Sistema formal estructurado sobre los postulados clásicos y la axiomatización de Hilbert, asumiendo la unicidad de las paralelas.",
       "proofs": [],
       "directDependencies": [
+        "euclides",
         "axioma-paralelas",
         "teorema-pitagoras",
         "axioma-incidencia-1",
@@ -800,7 +832,8 @@
       "proofs": [],
       "directDependencies": [
         "axioma-congruencia-triangulos",
-        "axioma-congruencia-angulos"
+        "axioma-congruencia-angulos",
+        "axioma-congruencia-segmentos"
       ]
     },
     "regla-cramer": {
@@ -846,14 +879,33 @@
       "description": "Criterio Lado-Lado-Lado para la congruencia de triángulos, basado en la Geometría Absoluta y el teorema del triángulo isósceles.",
       "proofs": [
         {
-          "id": "demo_congruencia_lll",
+          "id": "demo-congruencia-lll",
           "dependencies": [
             "lema-pons-asinorum",
-            "axioma-congruencia-angulos"
+            "axioma-congruencia-angulos",
+            "axioma-congruencia-triangulos"
           ]
         }
       ],
       "directDependencies": []
+    },
+    "teorema-coseno": {
+      "id": "teorema-coseno",
+      "type": "teorema",
+      "title": "Teorema del Coseno",
+      "description": "Generalización del Teorema de Pitágoras para triángulos no rectángulos, relacionando la longitud de un lado con el cuadrado de los otros dos y el coseno del ángulo opuesto.",
+      "proofs": [
+        {
+          "id": "demo-coseno-euclides",
+          "dependencies": [
+            "teorema-pitagoras",
+            "corolario-trigonometria"
+          ]
+        }
+      ],
+      "directDependencies": [
+        "teorema-pitagoras"
+      ]
     },
     "teorema-fundamental-calculo": {
       "id": "teorema-fundamental-calculo",
@@ -874,6 +926,7 @@
         {
           "id": "demo-pitagoras-euclides",
           "dependencies": [
+            "triangulo-rectangulo",
             "lema-invarianza-area"
           ]
         }
@@ -899,15 +952,32 @@
         "regla-cramer"
       ]
     },
+    "teorema-seno": {
+      "id": "teorema-seno",
+      "type": "teorema",
+      "title": "Teorema del Seno",
+      "description": "Relación fundamental entre los lados de un triángulo y los senos de sus ángulos opuestos, con constante de proporcionalidad igual al diámetro de la circunferencia circunscrita.",
+      "proofs": [
+        {
+          "id": "demo-seno-circunferencia",
+          "dependencies": [
+            "teorema-tales"
+          ]
+        }
+      ],
+      "directDependencies": [
+        "teorema-tales",
+        "teorema-coseno",
+        "teorema-pitagoras"
+      ]
+    },
     "teorema-tales": {
       "id": "teorema-tales",
       "type": "teorema",
       "title": "Teorema de Tales",
       "description": "Si dos rectas cualesquiera son cortadas por rectas paralelas, los segmentos que determina en una de las rectas son proporcionales a los segmentos correspondientes de la otra.",
       "proofs": [],
-      "directDependencies": [
-        "teorema-pitagoras"
-      ]
+      "directDependencies": []
     },
     "teorema-test": {
       "id": "teorema-test",
@@ -930,7 +1000,9 @@
       "title": "Diagnóstico Médico y Falsos Positivos",
       "description": "Por qué un test médico con 99% de precisión puede ser engañoso, y cómo el Teorema de Bayes explica la contraintuitiva realidad de los diagnósticos clínicos.",
       "proofs": [],
-      "directDependencies": []
+      "directDependencies": [
+        "teorema-bayes"
+      ]
     },
     "pitagoras-construccion": {
       "id": "pitagoras-construccion",
@@ -938,7 +1010,9 @@
       "title": "El Triángulo 3-4-5 en la Construcción",
       "description": "Cómo los albañiles y arquitectos llevan siglos usando el Teorema de Pitágoras para asegurar ángulos rectos perfectos sin un instrumento de medición sofisticado.",
       "proofs": [],
-      "directDependencies": []
+      "directDependencies": [
+        "teorema-pitagoras"
+      ]
     },
     "tales-cartografia": {
       "id": "tales-cartografia",
@@ -947,6 +1021,7 @@
       "description": "Cómo el principio de proporcionalidad de Tales es el fundamento matemático de todos los mapas, planos arquitectónicos y modelos a escala.",
       "proofs": [],
       "directDependencies": [
+        "teorema-tales",
         "tales"
       ]
     }

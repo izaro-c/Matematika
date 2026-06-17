@@ -1,9 +1,7 @@
 import { create } from 'zustand';
-import type { FlowNode, FlowEdge, WorkerInput, WorkerOutput } from '../workers/graph.worker';
+import { computeGraph } from '../workers/graph.worker';
+import type { FlowNode, FlowEdge } from '../workers/graph.worker';
 import { db } from '../store/content';
-
-// @ts-ignore - Vite worker import syntax
-import GraphWorker from '../workers/graph.worker?worker';
 
 interface ModelInfo {
   id: string;
@@ -17,6 +15,8 @@ interface GraphState {
   edges: FlowEdge[];
   /** Lista de adyacencia bidireccional para BFS local en el componente */
   adjacency: Record<string, string[]>;
+  /** Para cada nodo, lista de IDs de los que depende directamente */
+  dependsOn: Record<string, string[]>;
   activeStates: Record<string, boolean>;
   disabledAxioms: string[];
   isLoading: boolean;
@@ -28,26 +28,16 @@ interface GraphState {
   toggleModel: (modelId: string) => void;
   initWorker: () => void;
   getAdjacency: () => Record<string, string[]>;
+  getDependsOn: () => Record<string, string[]>;
 }
 
-const worker = new GraphWorker();
 let initialized = false;
-
-// El worker actualiza el store directamente: no hay callback circular
-worker.onmessage = (e: MessageEvent<WorkerOutput>) => {
-  useGraphStore.setState({
-    baseNodes: e.data.nodes,
-    edges: e.data.edges,
-    adjacency: e.data.adjacency,
-    activeStates: e.data.activeStates,
-    isLoading: false,
-  });
-};
 
 export const useGraphStore = create<GraphState>((set, get) => ({
   baseNodes: [],
   edges: [],
   adjacency: {},
+  dependsOn: {},
   activeStates: {},
   disabledAxioms: [],
   isLoading: true,
@@ -65,7 +55,9 @@ export const useGraphStore = create<GraphState>((set, get) => ({
       ? state.disabledAxioms.filter((id) => id !== axiomId)
       : [...state.disabledAxioms, axiomId];
     set({ disabledAxioms: newDisabled, isLoading: true });
-    worker.postMessage({ disabledAxioms: newDisabled } as WorkerInput);
+    computeGraph(newDisabled).then((result) =>
+      set({ baseNodes: result.nodes, edges: result.edges, adjacency: result.adjacency, dependsOn: result.dependsOn, activeStates: result.activeStates, isLoading: false }),
+    );
   },
 
   toggleModel: (modelId: string) => {
@@ -73,15 +65,12 @@ export const useGraphStore = create<GraphState>((set, get) => ({
     const isActive = !state.inactiveModels.includes(modelId);
     let newInactive: string[];
     if (isActive) {
-      // Model is currently active. Deactivate it (all models become inactive).
       newInactive = state.models.map(m => m.id);
     } else {
-      // Activate this model and deactivate all others (only one active at a time).
       newInactive = state.models.filter(m => m.id !== modelId).map(m => m.id);
     }
     set({ inactiveModels: newInactive });
 
-    // Recompute disabled axioms based on active models only if at least one model is active
     const activeModels = state.models.filter(m => !newInactive.includes(m.id));
     if (activeModels.length > 0) {
       const enabledAxioms = new Set<string>();
@@ -89,19 +78,25 @@ export const useGraphStore = create<GraphState>((set, get) => ({
       const allAxioms = state.models.flatMap(m => m.axioms);
       const newDisabled = allAxioms.filter(ax => !enabledAxioms.has(ax));
       set({ disabledAxioms: newDisabled, isLoading: true });
-      worker.postMessage({ disabledAxioms: newDisabled } as WorkerInput);
+      computeGraph(newDisabled).then((result) =>
+        set({ baseNodes: result.nodes, edges: result.edges, adjacency: result.adjacency, dependsOn: result.dependsOn, activeStates: result.activeStates, isLoading: false }),
+      );
     } else {
-      // No model active: allow free toggling of axioms
       set({ disabledAxioms: [], isLoading: true });
-      worker.postMessage({ disabledAxioms: [] } as WorkerInput);
+      computeGraph([]).then((result) =>
+        set({ baseNodes: result.nodes, edges: result.edges, adjacency: result.adjacency, dependsOn: result.dependsOn, activeStates: result.activeStates, isLoading: false }),
+      );
     }
   },
 
   initWorker: () => {
     if (initialized) return;
     initialized = true;
-    worker.postMessage({ disabledAxioms: get().disabledAxioms } as WorkerInput);
+    computeGraph(get().disabledAxioms).then((result) =>
+      set({ baseNodes: result.nodes, edges: result.edges, adjacency: result.adjacency, dependsOn: result.dependsOn, activeStates: result.activeStates, isLoading: false }),
+    );
   },
 
   getAdjacency: () => get().adjacency,
+  getDependsOn: () => get().dependsOn,
 }));

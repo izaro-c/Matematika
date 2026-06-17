@@ -28,8 +28,11 @@ export const ConceptLink: React.FC<ConceptLinkProps> = ({ targetId, children }) 
   const example = db.examples.get(targetId);
   const exercise = db.exercises.get(targetId);
   const useCase = db.usecases.get(targetId);
+  const axiom = db.axioms.get(targetId);
+  const model = db.models.get(targetId);
+  const demo = db.demos.get(targetId);
   
-  const entity = theorem || definition || bio || lesson || example || exercise || useCase;
+  const entity = theorem || definition || bio || lesson || example || exercise || useCase || axiom || model || demo;
 
   // Link roto — el targetId no existe en el ContentStore
   if (!entity) {

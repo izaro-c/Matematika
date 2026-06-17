@@ -31,13 +31,18 @@ export const BranchPage = () => {
             </span>
           ))}
           <span>/</span>
-          <span className="text-carbon/80 font-bold">{taxonomy.id || branchSlug}</span>
+          <span className="text-carbon/80 font-bold">{taxonomy.name || taxonomy.id || branchSlug}</span>
         </div>
 
         <div className="mb-16 border-b border-carbon/10 pb-8">
-          <h1 className="text-5xl mb-4 font-bold tracking-tight" style={{ fontVariant: 'small-caps' }}>
-            {taxonomy.id || branchSlug}
-          </h1>
+          <div className="flex items-baseline gap-4">
+            {taxonomy.id && /^\d{2}[A-Z]?$/.test(taxonomy.id) && taxonomy.id !== taxonomy.name && (
+              <span className="text-2xl font-sans font-bold text-carbon/40 tracking-wider">{taxonomy.id}</span>
+            )}
+            <h1 className="text-5xl font-bold tracking-tight" style={{ fontVariant: 'small-caps' }}>
+              {taxonomy.name || taxonomy.id || branchSlug}
+            </h1>
+          </div>
         </div>
 
         {taxonomy.subBranches.length === 0 && taxonomy.directItems.length === 0 ? (
@@ -60,7 +65,12 @@ export const BranchPage = () => {
                   {taxonomy.subBranches.map(sub => (
                     <Link key={sub.slug} href={`/rama/${sub.slug}`}>
                       <a className="group flex items-center justify-between p-6 bg-carbon/5 border border-carbon/10 hover:bg-carbon hover:text-lienzo transition-all duration-300">
-                        <span className="text-xl font-bold" style={{ fontVariant: 'small-caps' }}>{sub.name}</span>
+                        <span className="flex items-baseline gap-3">
+                          {/^\d{2}[A-Z]?$/.test(sub.slug) && (
+                            <span className="text-base font-sans font-bold text-carbon/40">{sub.slug}</span>
+                          )}
+                          <span className="text-xl font-bold" style={{ fontVariant: 'small-caps' }}>{sub.name}</span>
+                        </span>
                         <span className="text-xs font-sans tracking-widest opacity-50 group-hover:opacity-100">Explorar →</span>
                       </a>
                     </Link>
@@ -87,6 +97,7 @@ export const BranchPage = () => {
                       'exercise': { borderClass: 'border-ocre/40 border-dashed hover:border-solid hover:border-ocre/60', textClass: 'text-ocre', label: 'Ejercicio' },
                       'example': { borderClass: 'border-granada/30 hover:border-granada/60', textClass: 'text-granada', label: 'Ejemplo' },
                       'useCase': { borderClass: 'border-musgo/30 hover:border-musgo/60', textClass: 'text-musgo', label: 'Caso de Uso' },
+                      'axiom': { borderClass: 'border-carbon/30 hover:border-carbon/60', textClass: 'text-carbon', label: 'Axioma' },
                     };
                     const style = typeStyles[entry.type] || { borderClass: 'border-carbon/20 hover:border-carbon/40', textClass: 'text-carbon', label: entry.type };
 
@@ -99,7 +110,7 @@ export const BranchPage = () => {
                             </h3>
                             <p className="text-carbon/60 mt-2 font-sans text-sm">{(entry.item as any).description || 'Documento formal.'}</p>
                           </div>
-                          
+
                           <div className="mt-4 md:mt-0">
                             <span className={`font-serif italic text-lg transition-colors opacity-60 group-hover:opacity-100 ${style.textClass}`}>
                               {style.label}

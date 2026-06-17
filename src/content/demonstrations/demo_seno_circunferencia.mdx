@@ -1,0 +1,74 @@
+export const metadata = {
+  "id": "demo-seno-circunferencia",
+  "title": "Demostración del Teorema del Seno mediante Circunferencia Circunscrita",
+  "description": "Demostración geométrica clásica que utiliza la circunferencia circunscrita y el Teorema de Tales para establecer la proporcionalidad entre lados y senos.",
+  "parentTheorem": "teorema-seno",
+  "layout": "split",
+  "proofMethod": "geometrico",
+  "authors": ["euclides"],
+  "tags": ["geometría", "geometría euclidiana", "triángulos", "trigonometría", "circunferencia circunscrita"],
+  "type": "demostracion"
+};
+
+import { LeySenoVisualizer } from '../../diagrams/Geometria/LeySenoVisualizer';
+import { DemonstrationSection } from "../../components/content/DemonstrationSection";
+import { MedievalStep } from "../../components/content/MedievalStep";
+import { ConceptLink } from "../../components/ui/ConceptLink";
+
+<DemonstrationSection diagram={<LeySenoVisualizer />}>
+
+<MedievalStep number={1} title="Circunferencia Circunscrita y Diámetro" target="step1" />
+
+Sea $\triangle ABC$ un triángulo cualquiera inscrito en una circunferencia $\Gamma$ de centro $O$ y radio $R$.
+
+Trazamos el diámetro $BD$ que pasa por $O$. Por construcción, la longitud del segmento $\overline{BD}$ es $2R$. Observa en el diagrama cómo el diámetro <InteractiveElement target="diametro" color="carbon">$BD$</InteractiveElement> subtiende la circunferencia desde el vértice $B$.
+
+</DemonstrationSection>
+
+<DemonstrationSection diagram={<LeySenoVisualizer />}>
+
+<MedievalStep number={2} title="Aplicación del Teorema de Tales" target="step2" />
+
+Unimos $D$ con $C$. El triángulo $\triangle BCD$ está inscrito en $\Gamma$ con el lado $BD$ como diámetro. Por el <ConceptLink targetId="teorema-tales">Teorema de Tales</ConceptLink>, $\angle BCD = 90^\circ$.
+
+En el triángulo rectángulo $\triangle BCD$, el seno del ángulo $\angle BDC$ se obtiene como el cateto opuesto <InteractiveElement target="ladoA" color="terracota">$a = BC$</InteractiveElement> dividido por la hipotenusa $BD = 2R$:
+
+$$ \sin(\angle BDC) = \frac{a}{2R} $$
+
+Puedes ver en el diagrama el ángulo recto en $C$ y el lado $a$ resaltados.
+
+</DemonstrationSection>
+
+<DemonstrationSection diagram={<LeySenoVisualizer />}>
+
+<MedievalStep number={3} title="Igualdad de Ángulos Inscritos" target="step3" />
+
+Observamos que $\angle BDC$ y $\angle BAC = \alpha$ subtienden **el mismo arco** $BC$ de la circunferencia $\Gamma$. Por el teorema del ángulo inscrito, ambos ángulos son iguales:
+
+$$ \angle BDC = \alpha $$
+
+El diagrama muestra ambos ángulos <InteractiveElement target="anguloA" color="terracota">$\alpha$</InteractiveElement> (en $A$) y <InteractiveElement target="anguloD" color="salvia">$\angle BDC$</InteractiveElement> (en $D$) resaltados simultáneamente, verificando visualmente su igualdad. Sustituyendo:
+
+$$ \sin(\alpha) = \frac{a}{2R} \quad\Longrightarrow\quad \frac{a}{\sin(\alpha)} = 2R $$
+
+</DemonstrationSection>
+
+<DemonstrationSection diagram={<LeySenoVisualizer />}>
+
+<MedievalStep number={4} title="Extensión a los Demás Lados" target="step4" />
+
+Repitiendo el mismo argumento desde los vértices $A$ y $C$, obtenemos relaciones análogas para los otros lados y sus ángulos opuestos:
+
+$$
+\frac{b}{\sin(\beta)} = 2R, \qquad \frac{c}{\sin(\gamma)} = 2R
+$$
+
+Las tres relaciones comparten la misma constante $2R$, por lo que:
+
+<Formula>
+  $$ \frac{a}{\sin(\alpha)} = \frac{b}{\sin(\beta)} = \frac{c}{\sin(\gamma)} = 2R $$
+</Formula>
+
+Queda demostrado que en todo triángulo, la razón entre un lado y el seno de su ángulo opuesto es constante e igual al diámetro de la circunferencia circunscrita. $\blacksquare$
+
+</DemonstrationSection>

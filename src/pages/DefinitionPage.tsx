@@ -31,7 +31,7 @@ export const DefinitionPage = () => {
   if (definition.tags && definition.tags.length > 0) {
     const mainBranch = definition.tags[0];
     const taxonomy = db.getBranchTaxonomy(mainBranch);
-    breadcrumbs = taxonomy.breadcrumbs.concat([{ name: taxonomy.id, slug: taxonomy.slug }]);
+    breadcrumbs = taxonomy.breadcrumbs.concat([{ name: taxonomy.name || taxonomy.id, slug: taxonomy.slug }]);
   }
 
   const renderContent = () => (

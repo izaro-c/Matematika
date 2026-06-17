@@ -20,11 +20,11 @@ interface TypeStyle {
 }
 
 const TYPE_STYLES: Record<string, TypeStyle> = {
-  axioma:    { bg: '#1c1917', border: '#1c1917', text: '#f8f6f1', badge: 'AXIOMA',    ringColor: '#f5c542' },
-  lema:      { bg: '#4a6070', border: '#4a6070', text: '#ffffff', badge: 'LEMA',      ringColor: '#a0c4d8' },
+  axioma: { bg: '#1c1917', border: '#1c1917', text: '#f8f6f1', badge: 'AXIOMA', ringColor: '#f5c542' },
+  lema: { bg: '#4a6070', border: '#4a6070', text: '#ffffff', badge: 'LEMA', ringColor: '#a0c4d8' },
   corolario: { bg: '#b85c38', border: '#b85c38', text: '#ffffff', badge: 'COROLARIO', ringColor: '#f5a07a' },
-  teorema:   { bg: '#6b9e6b', border: '#6b9e6b', text: '#ffffff', badge: 'TEOREMA',   ringColor: '#a8d5a8' },
-  definicion:{ bg: '#8b7355', border: '#8b7355', text: '#ffffff', badge: 'DEFINICION',ringColor: '#d2b48c' },
+  teorema: { bg: '#6b9e6b', border: '#6b9e6b', text: '#ffffff', badge: 'TEOREMA', ringColor: '#a8d5a8' },
+  definicion: { bg: '#8b7355', border: '#8b7355', text: '#ffffff', badge: 'DEFINICION', ringColor: '#d2b48c' },
 };
 
 export function MathNode({ data }: NodeProps) {
@@ -40,25 +40,10 @@ export function MathNode({ data }: NodeProps) {
      * NUNCA cambia de tamaño → posiciones dagre estables en hover.
      */
     <div style={{ width: '100%', height: '100%', position: 'relative' }}>
-      {/* Handle target: arista entrante en la parte superior */}
-      <Handle
-        type="target"
-        position={Position.Top}
-        style={{
-          background: 'transparent',
-          width: 1,
-          height: 1,
-          border: 'none',
-          opacity: 0,
-          zIndex: -1,
-        }}
-      />
-
       {/**
-       * Contenedor INTERNO: escala visual pura con CSS transform.
-       * `transformOrigin: center center` + `pointer-events: none`
-       * garantiza que los handles siguen en la posición correcta
-       * mientras el contenido visual se encoge/agranda suavemente.
+       * Contenedor escalado: incluye los handles para que escalen
+       * con el contenido y React Flow detecte sus posiciones correctas
+       * mediante getBoundingClientRect().
        */}
       <div
         style={{
@@ -68,32 +53,47 @@ export function MathNode({ data }: NodeProps) {
           transformOrigin: 'center center',
           opacity: contentOpacity,
           transition: 'transform 0.22s ease, opacity 0.22s ease',
-          pointerEvents: 'none',
         }}
       >
+        {/* Handle target: arista entrante en la parte superior */}
+        <Handle
+          type="target"
+          position={Position.Top}
+          style={{
+            width: 12,
+            height: 12,
+            background: s.ringColor,
+            border: `2px solid ${s.bg}`,
+            borderRadius: '50%',
+            opacity: 0.25,
+          }}
+        />
+
         <div
           style={{
             width: '100%',
             height: '100%',
             backgroundColor: s.bg,
-            border: `2px solid ${isHighlighted ? s.ringColor : s.border}`,
-            borderRadius: 7,
+            border: `${isHighlighted ? 4 : 2}px solid ${isHighlighted ? s.ringColor : s.border}`,
+            borderRadius: '50%',
             outline: isHighlighted ? `3px solid ${s.ringColor}` : 'none',
-            outlineOffset: 2,
+            outlineOffset: isHighlighted ? 3 : 2,
             display: 'flex',
             flexDirection: 'column',
             alignItems: 'center',
             justifyContent: 'center',
-            padding: '5px 10px',
+            padding: '8px 12px',
             boxSizing: 'border-box',
-            boxShadow: '0 2px 8px rgba(0,0,0,0.18)',
+            boxShadow: isHighlighted
+              ? `0 0 0 2px ${s.bg}, 0 0 18px ${s.ringColor}80`
+              : '0 2px 8px rgba(0,0,0,0.18)',
             gap: 3,
           }}
         >
           {/* Badge de tipo */}
           <span
             style={{
-              fontSize: 7.5,
+              fontSize: 13,
               fontFamily: '"Inter", "system-ui", sans-serif',
               letterSpacing: '0.14em',
               textTransform: 'uppercase',
@@ -109,14 +109,14 @@ export function MathNode({ data }: NodeProps) {
           {/* Título del nodo */}
           <span
             style={{
-              fontSize: 11,
+              fontSize: 15,
               fontFamily: '"Georgia", "Times New Roman", serif',
               fontWeight: 'bold',
               color: s.text,
               textAlign: 'center',
               lineHeight: 1.25,
               display: '-webkit-box',
-              WebkitLineClamp: 2,
+              WebkitLineClamp: 3,
               WebkitBoxOrient: 'vertical',
               overflow: 'hidden',
               userSelect: 'none',
@@ -126,21 +126,21 @@ export function MathNode({ data }: NodeProps) {
             {label}
           </span>
         </div>
-      </div>
 
-      {/* Handle source: arista saliente en la parte inferior */}
-      <Handle
-        type="source"
-        position={Position.Bottom}
-        style={{
-          background: 'transparent',
-          width: 1,
-          height: 1,
-          border: 'none',
-          opacity: 0,
-          zIndex: -1,
-        }}
-      />
+        {/* Handle source: arista saliente en la parte inferior */}
+        <Handle
+          type="source"
+          position={Position.Bottom}
+          style={{
+            width: 12,
+            height: 12,
+            background: s.ringColor,
+            border: `2px solid ${s.bg}`,
+            borderRadius: '50%',
+            opacity: 0.25,
+          }}
+        />
+      </div>
     </div>
   );
 }

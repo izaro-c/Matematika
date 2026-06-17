@@ -4,7 +4,7 @@ export const metadata = {
   title: "Axioma de Congruencia de Segmentos",
   description: "Postulado que formaliza el transporte de segmentos y la igualdad métrica mediante la relación de congruencia.",
   statement: "Si tenemos un segmento AB y una semirrecta de origen C, existe un único punto D sobre dicha semirrecta tal que el segmento AB es congruente con el segmento CD.",
-  tags: ["Geometría", "Congruencia", "Euclides"],
+  tags: ["geometría", "congruencia"],
   authors: ["Hilbert"]
 };
 
@@ -14,11 +14,11 @@ export const metadata = {
 
 ### Enunciado Formal
 
-Dada una semirrecta con origen en un punto <InteractiveElement target="puntoC" color="pavo">$C$</InteractiveElement> y un segmento cualquiera $\overline{AB}$, existe un único punto <InteractiveElement target="puntoD" color="terracota">$D$</InteractiveElement> situado sobre la semirrecta tal que el segmento $\overline{AB}$ es congruente con el segmento $\overline{CD}$ ($\overline{AB} \cong \overline{CD}$).
+Dada una semirrecta con origen en un punto <InteractiveElement target="puntoC" color="pavo">$C$</InteractiveElement> y un <ConceptLink targetId="segmento"> segmento </ConceptLink> cualquiera $\overline{AB}$, existe un único punto <InteractiveElement target="puntoD" color="terracota">$D$</InteractiveElement> situado sobre la semirrecta tal que el segmento $\overline{AB}$ es congruente con el segmento $\overline{CD}$ ($\overline{AB} \cong \overline{CD}$).
 
 <Formula title="Transporte de Segmentos">
   <EquationRow>
-    \forall \overline{AB}, \exists! D \in \text{semirrecta}(C) : \overline{AB} \cong \overline{CD}
+    $\forall \overline{AB}, \exists! D \in \text{semirrecta}(C) : \overline{AB} \cong \overline{CD}$
   </EquationRow>
 </Formula>
 

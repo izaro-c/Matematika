@@ -46,12 +46,16 @@ export const TaxonomyGraph: React.FC<TaxonomyGraphProps> = ({ taxonomy }) => {
     const links: GraphLink[] = [];
 
     // Root (The branch itself) - Ahora se ve como una RAMA (Terracota), no como el nodo central de Matemáticas
-    nodes.push({ id: taxonomy.slug, name: taxonomy.id || taxonomy.slug, group: 'branch', val: 35 });
+    const branchName = (taxonomy as any).name || taxonomy.id || taxonomy.slug;
+    const branchCode = (taxonomy as any).id;
+    const showCode = branchCode && /^\d{2}[A-Z]?$/.test(branchCode) && branchCode !== branchName;
+    nodes.push({ id: taxonomy.slug, name: showCode ? `${branchCode} ${branchName}` : branchName, group: 'branch', val: 35 });
 
     // SubBranches
     taxonomy.subBranches.forEach(sub => {
       const branchId = `branch-${sub.slug}`;
-      nodes.push({ id: branchId, name: sub.name.toUpperCase(), group: 'branch', val: 20, url: `/rama/${sub.slug}` });
+      const subName = /^\d{2}[A-Z]?$/.test(sub.slug) ? `${sub.slug} ${sub.name.toUpperCase()}` : sub.name;
+      nodes.push({ id: branchId, name: subName, group: 'branch', val: 20, url: `/rama/${sub.slug}` });
       links.push({ source: branchId, target: taxonomy.slug });
     });
 
@@ -240,7 +244,7 @@ export const TaxonomyGraph: React.FC<TaxonomyGraphProps> = ({ taxonomy }) => {
   return (
     <div ref={containerRef} className="w-full h-[400px] border-y border-carbon/20 overflow-hidden bg-[#F8F6F1] relative shadow-inner cursor-move" style={{ backgroundImage: 'url(/images/bg_arts_crafts.png)', backgroundSize: '600px', backgroundRepeat: 'repeat' }}>
       <div className="absolute z-10 top-4 left-4 text-[10px] font-sans uppercase tracking-widest text-carbon/60 select-none pointer-events-none bg-[#F8F6F1]/90 px-3 py-1.5 border border-carbon/10 shadow-sm backdrop-blur-sm rounded-none">
-        Grafo Topológico: {taxonomy.id}
+        Grafo Topológico: {(taxonomy as any).name || taxonomy.id}
       </div>
       <ForceGraph2D
         width={dimensions.width}

@@ -1,0 +1,72 @@
+export const metadata = {
+  "id": "demo-coseno-euclides",
+  "title": "Demostración del Teorema del Coseno por Descomposición Geométrica",
+  "description": "Demostración del teorema del coseno mediante la descomposición del triángulo general en dos triángulos rectángulos.",
+  "parentTheorem": "teorema-coseno",
+  "layout": "text",
+  "proofMethod": "geometrico",
+  "authors": ["euclides"],
+  "tags": ["geometría", "geometría euclidiana", "triángulos", "trigonometría", "demostración geométrica"],
+  "type": "demostracion"
+};
+
+import { ConceptLink } from "../../components/ui/ConceptLink";
+import { InteractiveElement } from "../../components/ui/VisualBind";
+
+<Capitular letra="D" />ado un triángulo $\triangle ABC$ cualquiera, trazamos la altura desde $C$ hasta el lado $AB$ y llamamos $H$ al pie de dicha altura. Sean $h = CH$ la altura y $d = AH$ la proyección del lado $CA$ sobre $AB$.
+
+<Separador />
+
+<MedievalStep number={1} title="Descomposición en Triángulos Rectángulos" />
+
+La altura $CH$ descompone $\triangle ABC$ en dos triángulos rectángulos: $\triangle AHC$ y $\triangle BHC$. En $\triangle AHC$ se cumple:
+
+$$
+d = b \cdot \cos(\alpha), \qquad h = b \cdot \sin(\alpha)
+$$
+
+La longitud del lado $AB$ queda así particionada como $AB = AH + HB = d + HB$, de donde $HB = c - d$.
+
+<Separador />
+
+<MedievalStep number={2} title="Aplicación del Teorema de Pitágoras" />
+
+Aplicamos el <ConceptLink targetId="teorema-pitagoras">Teorema de Pitágoras</ConceptLink> al triángulo rectángulo $\triangle BHC$, donde $a$ es la hipotenusa:
+
+$$
+a^2 = h^2 + (c - d)^2
+$$
+
+<Separador />
+
+<MedievalStep number={3} title="Sustitución y Desarrollo Algebraico" />
+
+Sustituimos $d = b\cos(\alpha)$ y $h = b\sin(\alpha)$:
+
+$$
+a^2 = b^2\sin^2(\alpha) + (c - b\cos(\alpha))^2
+$$
+
+Desarrollamos el cuadrado:
+
+$$
+a^2 = b^2\sin^2(\alpha) + c^2 - 2bc\cos(\alpha) + b^2\cos^2(\alpha)
+$$
+
+<Separador />
+
+<MedievalStep number={4} title="Simplificación por la Identidad Pitagórica" />
+
+Agrupamos los términos en $b^2$:
+
+$$
+a^2 = b^2\bigl(\sin^2(\alpha) + \cos^2(\alpha)\bigr) + c^2 - 2bc\cos(\alpha)
+$$
+
+Por la <ConceptLink targetId="corolario-trigonometria">identidad trigonométrica fundamental</ConceptLink>, $\sin^2(\alpha) + \cos^2(\alpha) = 1$, luego:
+
+<Formula>
+  $$ a^2 = b^2 + c^2 - 2bc\cos(\alpha) $$
+</Formula>
+
+Análogamente se obtienen las expresiones para $b^2$ y $c^2$. $\blacksquare$

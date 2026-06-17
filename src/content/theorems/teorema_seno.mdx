@@ -1,0 +1,70 @@
+export const metadata = {
+  "id": "teorema-seno",
+  "title": "Teorema del Seno",
+  "description": "Relación fundamental entre los lados de un triángulo y los senos de sus ángulos opuestos, con constante de proporcionalidad igual al diámetro de la circunferencia circunscrita.",
+  "color": "terracota",
+  "authors": ["euclides"],
+  "type": "teorema",
+  "demos": ["demo-seno-circunferencia"],
+  "tags": ["geometría", "geometría euclidiana", "triángulos", "trigonometría"],
+  "hasSimulation": true
+};
+
+import { LeySenoVisualizer } from '../../diagrams/Geometria/LeySenoVisualizer';
+import { useMathStore } from '../../store/MathStoreContext';
+
+export const Simulation = LeySenoVisualizer;
+
+export const InteractiveElement = ({ target, color, children }) => {
+  const setVariable = useMathStore(state => state.setVariable);
+  return (
+    <span 
+      style={{ color: `var(--color-${color})` }} 
+      className="font-bold cursor-pointer border-b-2 border-dashed border-current hover:bg-carbon/5 px-1 py-0.5 rounded transition-all"
+      onMouseEnter={() => setVariable('highlight', target)}
+      onMouseLeave={() => setVariable('highlight', null)}
+    >
+      {children}
+    </span>
+  );
+};
+
+<Capitular letra="E" />l **teorema del seno** establece que, dado un triángulo cualquiera $\triangle ABC$ con lados $a = BC$, $b = CA$, $c = AB$ y ángulos $\alpha = \angle BAC$, $\beta = \angle CBA$, $\gamma = \angle ACB$, se cumple la siguiente proporción:
+
+<Formula>
+  $$ \frac{a}{\sin(\alpha)} = \frac{b}{\sin(\beta)} = \frac{c}{\sin(\gamma)} = 2R $$
+</Formula>
+
+donde $R$ es el radio de la circunferencia circunscrita al triángulo.
+
+<Separador />
+
+### Enunciado Formal
+
+Sea $\triangle ABC$ un triángulo en el plano euclidiano, y sea $\Gamma$ su circunferencia circunscrita de radio $R$. Entonces las longitudes de los lados y los senos de los ángulos opuestos satisfacen:
+
+$$
+\frac{a}{\sin(\alpha)} = \frac{b}{\sin(\beta)} = \frac{c}{\sin(\gamma)} = 2R
+$$
+
+<Nota>
+  El teorema del seno es una herramienta fundamental en la resolución de triángulos. Conociendo dos ángulos y un lado (criterio AAL), o dos lados y un ángulo no comprendido (criterio LLA), es posible determinar completamente el triángulo. Además, esta relación revela que el diámetro de la circunferencia circunscrita es la constante de proporcionalidad universal entre lados y senos.
+</Nota>
+
+<Separador />
+
+### Interpretación Geométrica
+
+Geométricamente, el teorema del seno expresa que todos los lados del triángulo son cuerdas de la misma circunferencia circunscrita, y el seno de cada ángulo mide la proporción entre la cuerda opuesta y el diámetro de dicha circunferencia.
+
+Si el triángulo es:
+
+- **Rectángulo** con hipotenusa $c$: entonces $\gamma = 90^\circ$, $\sin(\gamma) = 1$, y la relación se reduce a $c = 2R$, es decir, la hipotenusa es el diámetro de la circunferencia circunscrita (recíproco del <ConceptLink targetId="teorema-tales">Teorema de Tales</ConceptLink>).
+- **Acutángulo**: todos los ángulos son menores a $90^\circ$, y el circuncentro $O$ yace en el interior del triángulo.
+- **Obtusángulo**: el circuncentro $O$ yace en el exterior del triángulo, y el seno del ángulo obtuso es igual al seno de su suplemento.
+
+<Separador />
+
+### Relación con el Teorema del Coseno
+
+Mientras que el <ConceptLink targetId="teorema-coseno">teorema del coseno</ConceptLink> relaciona un lado con los otros dos y el coseno del ángulo comprendido, el teorema del seno conecta todos los lados con todos los ángulos mediante una única constante $2R$. Ambos teoremas, junto con el <ConceptLink targetId="teorema-pitagoras">Teorema de Pitágoras</ConceptLink> como caso particular, constituyen el núcleo de la trigonometría euclidiana.

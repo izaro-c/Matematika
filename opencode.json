@@ -1,0 +1,16 @@
+{
+  "$schema": "https://opencode.ai/config.json",
+  "skills": {
+    "paths": [".opencode/skills"]
+  },
+  "references": {
+    "stg": {
+      "path": ".",
+      "description": "STYLEGUIDE.md — Use for design rules, color palette, and content conventions"
+    },
+    "schemas": {
+      "path": "src/store/schemas.ts",
+      "description": "Zod validation schemas — Use for metadata field definitions"
+    }
+  }
+}

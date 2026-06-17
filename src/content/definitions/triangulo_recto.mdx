@@ -5,15 +5,16 @@ export const metadata = {
   description: 'Polígono de tres lados caracterizado por contener exactamente un ángulo interno ortogonal (recto).',
   statement: 'Un triángulo es rectángulo si y solo si la medida de uno de sus ángulos interiores es exactamente $\pi/2$ radianes.',
   usedBy: ['teorema-pitagoras'],
-  tags: ['Geometría', 'Polígonos', 'Trigonometría'],
+  tags: ['geometría', 'geometría euclidiana', 'triángulos', 'polígonos', 'trigonometría'],
 };
 
+import { ConceptLink } from "../../components/ui/ConceptLink";
 import { InteractiveElement } from '../../components/ui/VisualBind';
 
-<Capitular letra="E" />n la geometría euclidiana, la clasificación de los polígonos atiende a las propiedades métricas de sus ángulos interiores y las proporciones de sus aristas. 
+<Capitular letra="E" />n la geometría euclidiana, la clasificación de los polígonos atiende a las propiedades métricas de sus <ConceptLink targetId="axioma-congruencia-angulos">ángulos</ConceptLink> interiores y las proporciones de sus aristas.
 
 <Definicion>
-  Un **triángulo rectángulo** es todo aquel polígono de tres lados cuyos vértices definen exactamente un ángulo interior recto (es decir, un ángulo que mide $\pi/2$ radianes o $90^\circ$). Las dos aristas que convergen para formar dicho ángulo recto se denominan **catetos**, y la arista restante, subtendida frente al ángulo recto, se denomina **hipotenusa**.
+  Un **triángulo rectángulo** es todo aquel <ConceptLink targetId="segmento">polígono de tres lados</ConceptLink> cuyos vértices definen exactamente un ángulo interior recto (es decir, un ángulo que mide $\pi/2$ radianes o $90^\circ$). Las dos aristas que convergen para formar dicho ángulo recto se denominan **catetos**, y la arista restante, subtendida frente al ángulo recto, se denomina **hipotenusa**.
 </Definicion>
 
 <Separador />

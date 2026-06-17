@@ -4,15 +4,16 @@ export const metadata = {
   title: 'Rectas Paralelas',
   description: 'Condición topológica de no intersección entre dos líneas que residen en el mismo plano.',
   usedBy: ['axioma-paralelas', 'teorema-tales'],
-  tags: ['Geometría', 'Paralelismo']
+  tags: ['geometría', 'geometría euclidiana', 'paralelismo']
 };
 
+import { ConceptLink } from "../../components/ui/ConceptLink";
 import { InteractiveElement } from '../../components/ui/VisualBind';
 
-<Capitular letra="E" />n geometría euclidiana, el paralelismo describe una relación geométrica estricta de no incidencia entre subespacios de dimensión $1$.
+<Capitular letra="E" />n geometría euclidiana, el paralelismo describe una relación geométrica estricta de no incidencia entre subespacios de dimensión $1$, gobernada por el <ConceptLink targetId="axioma-paralelas">Axioma de las Paralelas</ConceptLink>.
 
 <Definicion>
-  Dos rectas coplanarias (que residen en un mismo plano $\Pi$) se denominan **paralelas** si, y solo si, no comparten ningún punto en común, extendiéndose infinitamente en ambas direcciones sin llegar a intersecarse jamás.
+  Dos rectas coplanarias (que residen en un mismo plano $\Pi$, según los <ConceptLink targetId="axioma-incidencia-1">Axiomas de Incidencia</ConceptLink>) se denominan **paralelas** si, y solo si, no comparten ningún punto en común, extendiéndose infinitamente en ambas direcciones sin llegar a intersecarse jamás.
 </Definicion>
 
 <Separador />

@@ -115,7 +115,7 @@ export class ContentStore {
       const slug = this.extractSlug(path);
       const id = (meta.id as string) || slug;
       if (!TheoremSchema.safeParse(meta).success) console.warn(`[ContentStore] Teorema inválido ${path}`);
-      
+
       this.theorems.set(id, {
         ...(meta as unknown as Theorem), id, slug,
         Component: this.createLazyComponent(thmLoaders[path] as () => Promise<Record<string, unknown>>),
@@ -328,7 +328,7 @@ export class ContentStore {
   }
   getAllLessons(): Lesson[] { return Array.from(this.lessons.values()); }
   getAllDemos(): Demo[] { return Array.from(this.demos.values()); }
-  
+
   getDemo(id: string): Demo | undefined {
     return this.demos.get(id) || Array.from(this.demos.values()).find(d => d.slug === id);
   }
@@ -358,38 +358,396 @@ export class ContentStore {
       .replace(/-+$/, '');
   }
 
-  // ── Taxonomía de ramas ───────────────────────────────────────────────────
+  // ── Taxonomía MSC2020 ────────────────────────────────────────────────────
+
+  /**
+   * Mapeo de tags existentes en los archivos MDX a códigos MSC2020.
+   */
+  private static readonly tagToMSC: Record<string, string> = {
+    // IV. Geometría y Topología
+    "geometría": "51",
+    "geometría de incidencia": "51A",
+    "geometría absoluta": "51M",
+    "geometría euclidiana": "51M",
+    "geometría hiperbólica": "51M",
+    "geometría analítica": "51P",
+    "geometría afín": "51A",
+    "congruencia": "51M",
+    "continuidad": "51M",
+    // I. Fundamentos y Lógica
+    "lógica": "03",
+    "sistemas formales": "03",
+    "filosofía de las matemáticas": "00A",
+    // II. Álgebra
+    "álgebra": "15",
+    "álgebra lineal": "15A",
+    // III. Análisis
+    "análisis": "26",
+    "cálculo": "26",
+    // VI. Probabilidad y Estadística
+    "probabilidad": "60",
+    "estadística": "62",
+  };
+
+  /**
+   * Nombres display para códigos MSC2020 (Nivel 1 y Nivel 2).
+   */
+  private static readonly mscNames: Record<string, string> = {
+    // -- Nodos de Metadatos y Divulgación --
+    "00": "Temas generales y globales; colecciones",
+    "00A": "Generalidades, recreación, divulgación y filosofía de la matemática",
+    "00B": "Actas de congresos y colecciones de artículos",
+    "01": "Historia y biografía",
+    "01A": "Historia de las matemáticas y biografías de matemáticos",
+    "97": "Educación matemática",
+    "97B": "Política educativa y sistemas educacionales",
+    "97C": "Psicología de la educación matemática",
+    "97G": "Geometría (educación)",
+    "97H": "Álgebra (educación)",
+    "97I": "Análisis (educación)",
+    // I. Fundamentos y Lógica
+    "03": "Lógica matemática y fundamentos",
+    "03A": "Aspectos filosóficos y fundacionales",
+    "03B": "Lógica general (proposicional, primer orden, modal)",
+    "03C": "Teoría de modelos",
+    "03D": "Teoría de la computabilidad y recursión",
+    "03E": "Teoría de conjuntos (cardinales, ordinales, axioma de elección)",
+    "03F": "Teoría de la demostración y matemática constructiva",
+    "03G": "Lógica algebraica (álgebras de Boole)",
+    "08": "Sistemas algebraicos generales",
+    "08A": "Estructuras algebraicas y homomorfismos",
+    "08B": "Variedades de álgebras",
+    "08C": "Clases de álgebras",
+    // II. Álgebra y Teoría de Números
+    "11": "Teoría de números",
+    "11A": "Teoría de números elemental",
+    "11D": "Ecuaciones diofánticas",
+    "11F": "Formas modulares y automorfas",
+    "11R": "Teoría de números algebraica",
+    "11Y": "Teoría de números computacional",
+    "12": "Teoría de cuerpos y polinomios",
+    "12F": "Extensiones de cuerpos y Teoría de Galois",
+    "12H": "Álgebra diferencial",
+    "13": "Álgebra conmutativa",
+    "13B": "Extensiones de anillos",
+    "13F": "Anillos aritméticos y de factorización única",
+    "14": "Geometría algebraica",
+    "14H": "Curvas algebraicas",
+    "14J": "Superficies y variedades de dimensión superior",
+    "14K": "Variedades abelianas",
+    "15": "Álgebra lineal y multilineal; teoría de matrices",
+    "15A": "Espacios vectoriales y transformaciones lineales básicas",
+    "15B": "Matrices especiales (ortogonales, simétricas, booleanas)",
+    // --- sub-ramas de generalización ---
+    "geometria-algebraica": "Geometría Algebraica",
+    "algebra-abstracta": "Álgebra Abstracta (Anillos y Cuerpos)",
+    "teoria-de-grupos-y-categorias": "Teoría de Grupos y Categorías",
+    "18": "Teoría de categorías; álgebra homológica",
+    "18A": "Teoría de categorías general",
+    "18B": "Categorías especiales (topos)",
+    "18G": "Álgebra homológica",
+    "20": "Teoría de grupos y generalizaciones",
+    "20D": "Grupos finitos abstractos",
+    "20F": "Grupos infinitos especiales (presentaciones)",
+    "20M": "Semigrupos",
+    // III. Análisis Matemático
+    "analisis-real-y-funciones": "Análisis Real y Funciones",
+    "analisis-complejo": "Análisis Complejo",
+    "ecuaciones-diferenciales": "Ecuaciones Diferenciales",
+    "analisis-funcional-y-armonico": "Análisis Funcional y Armónico",
+    "26": "Funciones reales",
+    "26A": "Funciones de una variable",
+    "26B": "Funciones de varias variables",
+    "30": "Funciones de una variable compleja",
+    "30C": "Teoría geométrica de funciones",
+    "30D": "Funciones analíticas y meromorfas",
+    "34": "Ecuaciones diferenciales ordinarias",
+    "34A": "Teoría general (existencia, unicidad)",
+    "34C": "Teoría cualitativa",
+    "34D": "Teoría de estabilidad",
+    "46": "Análisis funcional",
+    "46B": "Espacios de Banach",
+    "46C": "Espacios de Hilbert",
+    "46L": "Álgebras de operadores (Álgebras C*)",
+    // IV. Geometría y Topología
+    "geometria-clasica-y-diferencial": "Geometría Clásica y Diferencial",
+    "topologia-general-y-algebraica": "Topología General y Algebraica",
+    "51": "Geometría",
+    "51A": "Geometría de incidencia lineal",
+    "51M": "Geometría euclidiana y absoluta real",
+    "51P": "Geometría y física",
+    "53": "Geometría diferencial",
+    "53A": "Geometría diferencial clásica",
+    "53C": "Geometría global (variedades de Riemann)",
+    "53D": "Geometría simpléctica y de contacto",
+    "54": "Topología general",
+    "54D": "Propiedades de recubrimiento y separación (compacidad)",
+    "54E": "Espacios con estructuras más ricas (espacios métricos)",
+    "54F": "Espacios topológicos especiales (curvas, dimensión)",
+    "55": "Topología algebraica",
+    "55M": "Topología algebraica clásica",
+    "55N": "Homología y cohomología",
+    "55Q": "Teoría de homotopía",
+    // V. Matemática Discreta y Computacional
+    "05": "Combinatoria",
+    "05A": "Combinatoria enumerativa",
+    "05B": "Diseños y configuraciones",
+    "05C": "Teoría de grafos",
+    "68": "Ciencias de la computación",
+    "68Q": "Teoría de la computación (Algoritmos, Complejidad P/NP)",
+    "68R": "Informática discreta (Grafos en computación)",
+    "68T": "Inteligencia artificial",
+    "68W": "Algoritmos computacionales especializados",
+    // VI. Probabilidad, Estadística y Aplicaciones
+    "optimizacion-y-teoria-de-juegos": "Optimización y Teoría de Juegos",
+    "fisica-matematica-y-biologia": "Física Matemática y Biología",
+    "49": "Cálculo de variaciones y control óptimo; optimización",
+    "49J": "Existencia de soluciones",
+    "49K": "Condiciones de optimalidad",
+    "49L": "Ecuaciones de Hamilton-Jacobi",
+    "60": "Teoría de la probabilidad y procesos estocásticos",
+    "60B": "Probabilidad en estructuras algebraicas y topológicas",
+    "60C": "Probabilidad combinatoria",
+    "60E": "Distribuciones, funciones características",
+    "60F": "Teoremas límite (Ley de los grandes números, Teorema central del límite)",
+    "60G": "Procesos estocásticos",
+    "60H": "Análisis estocástico (Integrales de Itô)",
+    "60J": "Cadenas de Markov, procesos de salto",
+    "62": "Estadística",
+    "62C": "Teoría de decisión estadística",
+    "62D": "Muestreo, encuestas",
+    "62F": "Inferencia paramétrica (Estimación de máxima verosimilitud)",
+    "62G": "Inferencia no paramétrica",
+    "62H": "Análisis multivariante",
+    "62J": "Modelos lineales (Regresión, ANOVA)",
+    "62M": "Inferencia en procesos estocásticos",
+    "62P": "Aplicaciones estadísticas (Biometría, Econometría)",
+    "65": "Análisis numérico",
+    "65D": "Aproximación numérica (Interpolación, Cuadratura)",
+    "65F": "Álgebra lineal numérica",
+    "65H": "Sistemas de ecuaciones no lineales",
+    "65L": "Ecuaciones diferenciales ordinarias numéricas",
+    "65M": "Ecuaciones en derivadas parciales numéricas (Elementos finitos)",
+    "70": "Mecánica de partículas y sistemas",
+    "70E": "Dinámica de cuerpos rígidos",
+    "70F": "Dinámica de sistemas de partículas (Problema de los N cuerpos)",
+    "70H": "Mecánica hamiltoniana y lagrangiana",
+    "74": "Mecánica de sólidos deformables",
+    "74B": "Elasticidad lineal",
+    "74F": "Acoplamiento de campos mecánicos con térmicos/electromagnéticos",
+    "76": "Mecánica de fluidos",
+    "76B": "Fluidos incompresibles no viscosos",
+    "76D": "Fluidos incompresibles viscosos (Ecuaciones de Navier-Stokes)",
+    "78": "Óptica, teoría electromagnética",
+    "78A": "Óptica clásica y electromagnetismo (Ecuaciones de Maxwell)",
+    "80": "Termodinámica clásica, transferencia de calor",
+    "80A": "Termodinámica y transferencia de calor",
+    "81": "Teoría cuántica",
+    "81P": "Fundamentos, teoría cuántica de la información y entrelazamiento",
+    "81Q": "Mecánica cuántica general",
+    "81T": "Teoría cuántica de campos",
+    "82": "Mecánica estadística, estructura de la materia",
+    "82B": "Mecánica estadística de equilibrio",
+    "82C": "Mecánica estadística dependiente del tiempo",
+    "83": "Relatividad y teoría gravitacional",
+    "83C": "Relatividad general",
+    "83E": "Teorías unificadas y gravedad cuántica (Teoría de cuerdas)",
+    "85": "Astronomía y astrofísica",
+    "85A": "Modelos matemáticos en astronomía",
+    "86": "Geofísica",
+    "86A": "Modelos matemáticos en geofísica (Sismología, meteorología)",
+    "90": "Investigación operativa, programación matemática",
+    "90B": "Investigación operativa (Inventario, logística, teoría de colas)",
+    "90C": "Programación matemática (Lineal, entera, convexa)",
+    "91": "Teoría de juegos, economía, ciencias sociales y del comportamiento",
+    "91A": "Teoría de juegos (Juegos cooperativos y no cooperativos)",
+    "91B": "Economía matemática (Finanzas, teoría del equilibrio)",
+    "92": "Biología y otras ciencias naturales",
+    "92B": "Biología matemática en general",
+    "92C": "Biomecánica y fisiología",
+    "92D": "Genética y dinámica de poblaciones",
+    // -- Secciones generales MSC2020 (nodos de agrupación) --
+    "metadatos-y-divulgacion": "Ciencia y Técnica",
+    "fundamentos-y-logica": "Fundamentos y Lógica",
+    "algebra-y-teoria-de-numeros": "Álgebra y Teoría de Números",
+    "analisis-matematico": "Análisis Matemático",
+    "geometria-y-topologia": "Geometría y Topología",
+    "matematica-discreta-y-computacional": "Matemática Discreta y Computacional",
+    "probabilidad-estadistica-y-aplicaciones": "Probabilidad, Estadística y Aplicaciones",
+  };
+
+  /**
+   * Jerarquía MSC2020: padres → hijos.
+   * Cuando se navega un código de Nivel 1, se incluyen sus hijos de Nivel 2.
+   */
+  private static readonly mscHierarchy: Record<string, string[]> = {
+    "00": ["00A", "00B"],
+    "01": ["01A"],
+    "97": ["97B", "97C", "97G", "97H", "97I"],
+    "03": ["03A", "03B", "03C", "03D", "03E", "03F", "03G"],
+    "08": ["08A", "08B", "08C"],
+    // II. Álgebra y Teoría de Números — sub-ramas de generalización
+    "geometria-algebraica": ["14"],
+    "algebra-abstracta": ["12", "13"],
+    "teoria-de-grupos-y-categorias": ["18", "20"],
+    "11": ["11A", "11D", "11F", "11R", "11Y"],
+    "12": ["12F", "12H"],
+    "13": ["13B", "13F"],
+    "14": ["14H", "14J", "14K"],
+    "15": ["15A", "15B"],
+    "18": ["18A", "18B", "18G"],
+    "20": ["20D", "20F", "20M"],
+    // III. Análisis Matemático — sub-ramas de generalización
+    "analisis-real-y-funciones": ["26"],
+    "analisis-complejo": ["30"],
+    "ecuaciones-diferenciales": ["34"],
+    "analisis-funcional-y-armonico": ["46"],
+    "26": ["26A", "26B"],
+    "30": ["30C", "30D"],
+    "34": ["34A", "34C", "34D"],
+    "46": ["46B", "46C", "46L"],
+    // IV. Geometría y Topología — sub-ramas de generalización
+    "geometria-clasica-y-diferencial": ["51", "53"],
+    "topologia-general-y-algebraica": ["54", "55"],
+    "51": ["51A", "51M", "51P"],
+    "53": ["53A", "53C", "53D"],
+    "54": ["54D", "54E", "54F"],
+    "55": ["55M", "55N", "55Q"],
+    "05": ["05A", "05B", "05C"],
+    "68": ["68Q", "68R", "68T", "68W"],
+    // VI. Probabilidad, Estadística y Aplicaciones — sub-ramas de generalización
+    "optimizacion-y-teoria-de-juegos": ["49", "90", "91"],
+    "fisica-matematica-y-biologia": ["70", "74", "76", "78", "80", "81", "82", "83", "85", "86", "92"],
+    "49": ["49J", "49K", "49L"],
+    "60": ["60B", "60C", "60E", "60F", "60G", "60H", "60J"],
+    "62": ["62C", "62D", "62F", "62G", "62H", "62J", "62M", "62P"],
+    "65": ["65D", "65F", "65H", "65L", "65M"],
+    "70": ["70E", "70F", "70H"],
+    "74": ["74B", "74F"],
+    "76": ["76B", "76D"],
+    "78": ["78A"],
+    "80": ["80A"],
+    "81": ["81P", "81Q", "81T"],
+    "82": ["82B", "82C"],
+    "83": ["83C", "83E"],
+    "85": ["85A"],
+    "86": ["86A"],
+    "90": ["90B", "90C"],
+    "91": ["91A", "91B"],
+    "92": ["92B", "92C", "92D"],
+    // -- Secciones generales MSC2020 (nodos de agrupación) --
+    "metadatos-y-divulgacion": ["00", "01", "97"],
+    "fundamentos-y-logica": ["03", "08"],
+    "algebra-y-teoria-de-numeros": ["11", "15", "geometria-algebraica", "algebra-abstracta", "teoria-de-grupos-y-categorias"],
+    "analisis-matematico": ["analisis-real-y-funciones", "analisis-complejo", "ecuaciones-diferenciales", "analisis-funcional-y-armonico"],
+    "geometria-y-topologia": ["geometria-clasica-y-diferencial", "topologia-general-y-algebraica"],
+    "matematica-discreta-y-computacional": ["05", "68"],
+    "probabilidad-estadistica-y-aplicaciones": ["optimizacion-y-teoria-de-juegos", "fisica-matematica-y-biologia", "60", "62", "65"],
+  };
+
+  /**
+   * Mapa inverso: código hijo → código padre.
+   */
+  private static readonly mscParent: Record<string, string> = (() => {
+    const map: Record<string, string> = {};
+    for (const [parent, children] of Object.entries(ContentStore.mscHierarchy)) {
+      for (const child of children) {
+        map[child] = parent;
+      }
+    }
+    return map;
+  })();
+
+  /**
+   * Mapa de herencia entre códigos (equivalente a subBranchInheritance).
+   * Un código de Nivel 1 hereda los ítems de sus códigos hijo de Nivel 2.
+   */
+  private static readonly codeInheritance: Record<string, string[]> = ContentStore.mscHierarchy;
+
+  /**
+   * Resuelve un identificador de rama a un código MSC2020.
+   * Acepta tanto códigos MSC ("51M") como nombres de tag españoles ("geometría euclidiana").
+   */
+  private static resolveBranchCode(input: string): string {
+    const trimmed = input.trim();
+    if (ContentStore.mscNames[trimmed]) return trimmed;
+    const upper = trimmed.toUpperCase();
+    if (ContentStore.mscNames[upper]) return upper;
+    const mapped = ContentStore.tagToMSC[trimmed.toLowerCase()] || ContentStore.tagToMSC[trimmed];
+    if (mapped) return mapped;
+    const slugMapped = ContentStore.tagToMSC[trimmed.replace(/-/g, ' ')];
+    if (slugMapped) return slugMapped;
+    return trimmed;
+  }
+
+  /**
+   * Devuelve los códigos hijo que deben incluirse al consultar un código padre.
+   */
+  private static getChildCodes(parentCode: string): string[] {
+    return ContentStore.codeInheritance[parentCode] || [];
+  }
+
+  private static getAllDescendantCodes(code: string): string[] {
+    const children = ContentStore.getChildCodes(code);
+    const descendants = [...children];
+    for (const child of children) {
+      const grand = ContentStore.getAllDescendantCodes(child);
+      descendants.push(...grand);
+    }
+    return descendants;
+  }
 
   getBranchTaxonomy(branchId: string): {
     id: string;
     slug: string;
+    name: string;
     subBranches: { name: string; slug: string }[];
     directItems: { type: string; item: BaseContent & { tags?: string[] }; subBranchSlug?: string }[];
     breadcrumbs: { name: string; slug: string }[];
   } {
+    const branchCode = ContentStore.resolveBranchCode(branchId);
+    const branchName = ContentStore.mscNames[branchCode] || branchId;
+    const childCodes = ContentStore.getChildCodes(branchCode);
+    const allDescendantCodes = ContentStore.getAllDescendantCodes(branchCode);
     const directItems: { type: string; item: BaseContent & { tags?: string[] }; subBranchSlug?: string }[] = [];
-    const subBranchesMap = new Map<string, string>();
-    const branchSlug = ContentStore.slugify(branchId);
-    let originalName = branchId.charAt(0).toUpperCase() + branchId.slice(1);
-    let breadcrumbs: { name: string; slug: string }[] = [];
+
+    // Breadcrumbs: ancestors of the current branch code (excluding the code itself)
+    const breadcrumbs: { name: string; slug: string }[] = [];
+    const chain: string[] = [];
+    const seen = new Set<string>();
+    let cur: string | undefined = branchCode;
+    while (cur && !seen.has(cur)) {
+      seen.add(cur);
+      chain.unshift(cur);
+      cur = ContentStore.mscParent[cur];
+    }
+    for (let i = 0; i < chain.length - 1; i++) {
+      const code = chain[i];
+      breadcrumbs.push({ name: ContentStore.mscNames[code] || code, slug: code });
+    }
 
     const processItem = (item: BaseContent & { tags?: string[] }, type: string) => {
       if (!item.tags || item.tags.length === 0) return;
-      const tagSlugs = item.tags.map(ContentStore.slugify);
-      const branchIndex = tagSlugs.indexOf(branchSlug);
-      if (branchIndex === -1) return;
-      originalName = item.tags[branchIndex];
-      if (breadcrumbs.length === 0) {
-        breadcrumbs = item.tags.slice(0, branchIndex).map((t: string) => ({
-          name: t, slug: ContentStore.slugify(t),
-        }));
+      const tagCodes = item.tags
+        .map(t => ContentStore.tagToMSC[t])
+        .filter((c): c is string => !!c);
+      if (tagCodes.length === 0) return;
+
+      const directMatch = tagCodes.includes(branchCode);
+      let inheritedChildCode: string | undefined;
+      if (!directMatch) {
+        inheritedChildCode = allDescendantCodes.find(c => tagCodes.includes(c));
       }
-      let subBranchSlug = undefined;
-      if (branchIndex < item.tags.length - 1) {
-        const nextTag = item.tags[branchIndex + 1];
-        subBranchSlug = tagSlugs[branchIndex + 1];
-        subBranchesMap.set(subBranchSlug, nextTag);
+
+      if (!directMatch && !inheritedChildCode) return;
+
+      let subBranchSlug: string | undefined;
+      if (directMatch) {
+        subBranchSlug = childCodes.find(c => tagCodes.includes(c));
+      } else if (inheritedChildCode) {
+        subBranchSlug = inheritedChildCode;
       }
+
       directItems.push({ type, item, subBranchSlug });
     };
 
@@ -398,27 +756,45 @@ export class ContentStore {
     for (const def of this.definitions.values()) processItem(def, 'definition');
     for (const ex of this.examples.values()) processItem(ex, 'example');
     for (const ez of this.exercises.values()) processItem(ez, 'exercise');
+    for (const axm of this.axioms.values()) processItem(axm, 'axiom');
 
-    const subBranches = Array.from(subBranchesMap.entries())
-      .map(([slug, name]) => ({ slug, name }))
+    const subBranches = childCodes
+      .map(code => ({ name: ContentStore.mscNames[code] || code, slug: code }))
       .sort((a, b) => a.name.localeCompare(b.name));
 
-    return { id: originalName, slug: branchSlug, subBranches, directItems, breadcrumbs };
+    return {
+      id: branchCode,
+      slug: branchCode.toLowerCase(),
+      name: branchName,
+      subBranches,
+      directItems,
+      breadcrumbs,
+    };
   }
 
   getItemsByBranch(branch: string): { type: string; item: BaseContent & { tags?: string[] } }[] {
+    const branchCode = ContentStore.resolveBranchCode(branch);
+    const allDescendantCodes = ContentStore.getAllDescendantCodes(branchCode);
     const results: { type: string; item: BaseContent & { tags?: string[] } }[] = [];
-    const branchSlug = ContentStore.slugify(branch);
+
     const check = (item: BaseContent & { tags?: string[] }, type: string) => {
-      if (item.tags?.some((t: string) => ContentStore.slugify(t) === branchSlug)) {
+      if (!item.tags) return;
+      const tagCodes = item.tags
+        .map(t => ContentStore.tagToMSC[t])
+        .filter((c): c is string => !!c);
+      if (tagCodes.includes(branchCode)) {
+        results.push({ type, item });
+      } else if (allDescendantCodes.some(c => tagCodes.includes(c))) {
         results.push({ type, item });
       }
     };
+
     for (const thm of this.theorems.values()) check(thm, 'theorem');
     for (const lesson of this.lessons.values()) check(lesson, 'lesson');
     for (const def of this.definitions.values()) check(def, 'definition');
     for (const ex of this.examples.values()) check(ex, 'example');
     for (const ez of this.exercises.values()) check(ez, 'exercise');
+    for (const axm of this.axioms.values()) check(axm, 'axiom');
     return results;
   }
 }

@@ -15,56 +15,42 @@ import { useGraphStore } from '../../store/graphStore';
 import { MathNode } from './CustomNode';
 import type { MathNodeData } from './CustomNode';
 
-// ── nodeTypes estable: definido fuera del componente ────────────────────────
 const nodeTypes = { mathNode: MathNode };
 
-// ── BFS local (rápido, en hilo principal) ───────────────────────────────────
-function bfsDistances(
-  sourceId: string,
-  adjacency: Record<string, string[]>,
-): Record<string, number> {
-  const dist: Record<string, number> = { [sourceId]: 0 };
-  const queue = [sourceId];
+function computeDependencyChain(
+  nodeId: string,
+  dependsOn: Record<string, string[]>,
+): Set<string> {
+  const chain = new Set<string>();
+  const queue = [nodeId];
   while (queue.length > 0) {
     const cur = queue.shift()!;
-    for (const neighbor of adjacency[cur] || []) {
-      if (dist[neighbor] === undefined) {
-        dist[neighbor] = dist[cur] + 1;
-        queue.push(neighbor);
+    for (const dep of dependsOn[cur] || []) {
+      if (!chain.has(dep)) {
+        chain.add(dep);
+        queue.push(dep);
       }
     }
   }
-  return dist;
+  return chain;
 }
 
-/** Calcula la escala visual a partir de la distancia topológica y el tipo de nodo. */
-function scaleForDistance(dist: number | undefined, nodeType: string): number {
-  const d = dist ?? Infinity;
-  // Los axiomas siempre son legibles (mínimo 0.75)
-  if (nodeType === 'axioma') return Math.max(0.75, 1 - d * 0.06);
-  if (d === 0) return 1.08; // nodo enfocado
-  if (d === 1) return 0.88;
-  if (d === 2) return 0.72;
-  if (d === 3) return 0.55;
-  return 0.38;
-}
-
-// ── Componente interno (necesita useReactFlow → dentro del Provider) ─────────
 function FlowContent() {
-  const { 
-    baseNodes, edges: baseEdges, isLoading, 
-    toggleAxiom, initWorker, getAdjacency,
+  const {
+    baseNodes, edges: baseEdges, isLoading,
+    toggleAxiom, initWorker,
+    dependsOn,
     models, inactiveModels, toggleModel
   } = useGraphStore();
 
   const [rfNodes, setRfNodes, onNodesChange] = useNodesState<Node>([]);
-  const [rfEdges, setRfEdges, onEdgesChange] = useEdgesState<Edge>([]);
+  const [, , onEdgesChange] = useEdgesState<Edge>([]);
   const { fitView } = useReactFlow();
 
-  // ── Buscador y Panel ────────────────────────────────────────────────────
   const [searchQuery, setSearchQuery] = useState('');
   const [searchOpen, setSearchOpen] = useState(false);
   const [selectedNodeId, setSelectedNodeId] = useState<string | null>(null);
+  const [hoveredNodeId, setHoveredNodeId] = useState<string | null>(null);
 
   const searchResults = useMemo(() => {
     if (searchQuery.trim().length < 2) return [];
@@ -80,12 +66,10 @@ function FlowContent() {
 
   const searchRef = useRef<HTMLInputElement>(null);
 
-  // ── Inicializar worker UNA sola vez ─────────────────────────────────────
   useEffect(() => {
     initWorker();
   }, []);
 
-  // ── Sincronizar con el store cuando llegan nuevos datos del worker ───────
   useEffect(() => {
     if (baseNodes.length === 0) return;
     const nodes = baseNodes.map((n) => ({
@@ -93,50 +77,32 @@ function FlowContent() {
       data: { ...n.data, scale: 1, isHighlighted: false },
     }));
     setRfNodes(nodes);
-    setRfEdges((baseEdges as unknown) as Edge[]);
-    // fitView después del render
     requestAnimationFrame(() => {
       setTimeout(() => fitView({ padding: 0.12, duration: 500 }), 30);
     });
   }, [baseNodes, baseEdges]);
 
-  // ── Hover: BFS local, actualizar scale SIN cambiar positions ────────────
+  const selectedChain = useMemo(() => {
+    if (!selectedNodeId) return new Set<string>();
+    return computeDependencyChain(selectedNodeId, dependsOn);
+  }, [selectedNodeId, dependsOn]);
+
+  const activeModels = models.filter(m => !inactiveModels.includes(m.id));
+
   const onNodeMouseEnter: NodeMouseHandler = useCallback(
     (_, node) => {
-      const adjacency = getAdjacency();
-      const distances = bfsDistances(node.id, adjacency);
-      setRfNodes((nodes) =>
-        nodes.map((n) => {
-          const d = (n.data as unknown) as MathNodeData;
-          return {
-            ...n,
-            data: {
-              ...d,
-              scale: scaleForDistance(distances[n.id], d.nodeType),
-              isHighlighted: n.id === node.id,
-            },
-          };
-        }),
-      );
+      setHoveredNodeId(node.id);
     },
-    [getAdjacency],
+    [],
   );
 
   const onNodeMouseLeave: NodeMouseHandler = useCallback(() => {
-    setRfNodes((nodes) =>
-      nodes.map((n) => ({
-        ...n,
-        data: { ...((n.data as unknown) as MathNodeData), scale: 1, isHighlighted: false },
-      })),
-    );
+    setHoveredNodeId(null);
   }, []);
 
-  const activeModels = models.filter(m => !inactiveModels.includes(m.id));
-  // ── Click: seleccionar nodo y opcionalmente hacer toggle de axioma ───────
   const onNodeClick: NodeMouseHandler = useCallback(
     (_, node) => {
-      setSelectedNodeId(node.id);
-      // Solo permitir toggle manual cuando no hay modelos activos
+      setSelectedNodeId(prev => prev === node.id ? null : node.id);
       if (activeModels.length === 0 && ((node.data as unknown) as MathNodeData).nodeType === 'axioma') {
         toggleAxiom(node.id);
       }
@@ -144,36 +110,19 @@ function FlowContent() {
     [toggleAxiom, activeModels]
   );
 
-  // ── Búsqueda: centrar en el nodo seleccionado ────────────────────────────
   const handleSearchSelect = useCallback(
     (id: string) => {
       setSearchQuery('');
       setSearchOpen(false);
-
+      setSelectedNodeId(id);
       const node = rfNodes.find((n) => n.id === id);
       if (node) {
         fitView({ nodes: [node as Node], padding: 0.6, duration: 700 });
       }
-      // Resaltar 3 segundos
-      setRfNodes((nodes) =>
-        nodes.map((n) => ({
-          ...n,
-          data: { ...((n.data as unknown) as MathNodeData), isHighlighted: n.id === id, scale: n.id === id ? 1.05 : 1 },
-        })),
-      );
-      setTimeout(() => {
-        setRfNodes((nodes) =>
-          nodes.map((n) => ({
-            ...n,
-            data: { ...((n.data as unknown) as MathNodeData), isHighlighted: false, scale: 1 },
-          })),
-        );
-      }, 3000);
     },
     [rfNodes, fitView],
   );
 
-  // ── Nodo Seleccionado (Detalles) ────────────────────────────────────────
   const selectedNodeData = useMemo(() => {
     if (!selectedNodeId) return null;
     const node = rfNodes.find(n => n.id === selectedNodeId);
@@ -181,7 +130,16 @@ function FlowContent() {
     return (node.data as unknown) as MathNodeData;
   }, [selectedNodeId, rfNodes]);
 
-  // ── Loading state ────────────────────────────────────────────────────────
+  const dependencyList = useMemo(() => {
+    if (!selectedNodeId) return [];
+    const chain = computeDependencyChain(selectedNodeId, dependsOn);
+    const ordered = [...chain].reverse();
+    return ordered.map(id => {
+      const found = rfNodes.find(n => n.id === id);
+      return found ? { id, label: ((found.data as unknown) as MathNodeData).label, nodeType: ((found.data as unknown) as MathNodeData).nodeType } : { id, label: id, nodeType: '' };
+    });
+  }, [selectedNodeId, dependsOn, rfNodes]);
+
   if (isLoading && rfNodes.length === 0) {
     return (
       <div
@@ -193,6 +151,18 @@ function FlowContent() {
         </p>
       </div>
     );
+  }
+
+  const relatedEdgesSet = new Set<string>();
+  if (selectedNodeId) {
+    for (const edge of (baseEdges as Array<{ source: string; target: string; id: string }>)) {
+      if (selectedChain.has(edge.source) && selectedChain.has(edge.target)) {
+        relatedEdgesSet.add(edge.id);
+      }
+      if (edge.source === selectedNodeId || edge.target === selectedNodeId) {
+        relatedEdgesSet.add(edge.id);
+      }
+    }
   }
 
   return (
@@ -271,9 +241,8 @@ function FlowContent() {
                   <button
                     key={m.id}
                     onClick={() => toggleModel(m.id)}
-                    className={`flex items-center gap-2 text-left text-xs font-serif px-1.5 py-1 rounded transition-all duration-200 ${
-                      isOn ? 'text-carbon opacity-100' : 'text-carbon/35 opacity-60'
-                    }`}
+                    className={`flex items-center gap-2 text-left text-xs font-serif px-1.5 py-1 rounded transition-all duration-200 ${isOn ? 'text-carbon opacity-100' : 'text-carbon/35 opacity-60'
+                      }`}
                   >
                     <span
                       className="w-2.5 h-2.5 rounded-sm shrink-0 border transition-colors"
@@ -293,22 +262,22 @@ function FlowContent() {
 
       {/* ── Panel de Detalles (Lateral Derecho) ──────────────────────────────── */}
       {selectedNodeData && (
-        <div className="absolute top-4 right-4 z-30 bg-white/95 border border-carbon/20 shadow p-4 w-[280px]">
+        <div className="absolute top-4 right-4 z-30 bg-white/95 border border-carbon/20 shadow p-4 w-[300px] max-h-[calc(100vh-2rem)] overflow-y-auto">
           <div className="flex justify-between items-start mb-2">
             <span
               className="text-[9px] uppercase tracking-widest px-1.5 py-0.5 rounded font-sans font-bold"
               style={{
                 background:
                   selectedNodeData.nodeType === 'axioma' ? '#1c1917' :
-                  selectedNodeData.nodeType === 'lema'   ? '#4a6070' :
-                  selectedNodeData.nodeType === 'corolario' ? '#b85c38' :
-                  selectedNodeData.nodeType === 'definicion' ? '#8b7355' : '#6b9e6b',
+                    selectedNodeData.nodeType === 'lema' ? '#4a6070' :
+                      selectedNodeData.nodeType === 'corolario' ? '#b85c38' :
+                        selectedNodeData.nodeType === 'definicion' ? '#8b7355' : '#6b9e6b',
                 color: '#fff',
               }}
             >
               {selectedNodeData.nodeType}
             </span>
-            <button 
+            <button
               onClick={() => setSelectedNodeId(null)}
               className="text-carbon/40 hover:text-carbon text-sm"
             >
@@ -321,15 +290,49 @@ function FlowContent() {
           <p className="font-sans text-sm text-carbon/70 leading-relaxed mb-4">
             {selectedNodeData.description || 'Sin descripción disponible.'}
           </p>
-          {/* Link to the page for this node */}
+
+          {/* ── Dependencias transitivas ──────────────────────────────── */}
+          {dependencyList.length > 0 && (
+            <div className="mb-3">
+              <h4 className="font-sans text-[9px] uppercase tracking-widest text-carbon/50 mb-1.5">
+                Depende de
+              </h4>
+              <ul className="space-y-0.5">
+                {dependencyList.map((dep) => (
+                  <li key={dep.id} className="flex items-center gap-1.5">
+                    <span
+                      className="w-2 h-2 rounded-sm shrink-0"
+                      style={{
+                        background:
+                          dep.nodeType === 'axioma' ? '#1c1917' :
+                            dep.nodeType === 'lema' ? '#4a6070' :
+                              dep.nodeType === 'definicion' ? '#8b7355' : '#6b9e6b',
+                      }}
+                    />
+                    <span
+                      className="text-xs font-serif text-carbon/70 cursor-pointer hover:text-carbon capitalize"
+                      onClick={() => {
+                        setSelectedNodeId(dep.id);
+                        const node = rfNodes.find(n => n.id === dep.id);
+                        if (node) fitView({ nodes: [node as Node], padding: 0.5, duration: 400 });
+                      }}
+                    >
+                      {dep.label}
+                    </span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          )}
+
           <a
-            href={`/${selectedNodeData.nodeType === 'axioma' ? 'axioma' : selectedNodeData.nodeType === 'definicion' ? 'definicion' : 'teorema'}/${selectedNodeData.id}`}
-            className="inline-flex items-center gap-1.5 mt-1 mb-3 text-sm font-sans text-[#4a6070] hover:text-carbon transition-colors"
+            href={`/${selectedNodeData.nodeType === 'axioma' ? 'axioma' : selectedNodeData.nodeType === 'definicion' ? 'definicion' : 'teorema'}/${selectedNodeId}`}
+            className="inline-flex items-center gap-1.5 mt-1 text-sm font-sans text-[#4a6070] hover:text-carbon transition-colors"
           >
             <span>Ver página →</span>
           </a>
           {selectedNodeData.nodeType === 'axioma' && (
-            <p className="text-xs font-sans italic text-terracota">
+            <p className="text-xs font-sans italic text-terracota mt-2">
               * Haz clic en el nodo en el grafo para activarlo/desactivarlo.
             </p>
           )}
@@ -338,8 +341,33 @@ function FlowContent() {
 
       {/* ── React Flow ───────────────────────────────────────────────────────── */}
       <ReactFlow
-        nodes={rfNodes}
-        edges={rfEdges}
+        nodes={rfNodes.map((n) => {
+          const isSelected = n.id === selectedNodeId;
+          const inChain = selectedChain.has(n.id);
+          const isHovered = n.id === hoveredNodeId;
+          const isDimmed = selectedNodeId && !isSelected && !inChain;
+          return {
+            ...n,
+            data: {
+              ...(n.data as unknown as MathNodeData),
+              isHighlighted: isSelected || inChain || isHovered,
+              scale: isSelected || inChain ? 1.2 : 1,
+              isDimmed,
+            },
+            style: {
+              ...n.style,
+              opacity: isDimmed ? 0.5 : 1,
+            },
+          };
+        })}
+        edges={baseEdges.map((e) => {
+          const isRelated = selectedNodeId ? relatedEdgesSet.has(e.id) : true;
+          const baseStyle = e.style || {};
+          return {
+            ...e,
+            style: { ...baseStyle, opacity: isRelated ? 1 : 0.12 },
+          } as Edge;
+        })}
         onNodesChange={onNodesChange}
         onEdgesChange={onEdgesChange}
         onNodeMouseEnter={onNodeMouseEnter}
@@ -350,8 +378,8 @@ function FlowContent() {
         minZoom={0.05}
         maxZoom={2.5}
         proOptions={{ hideAttribution: true }}
-        nodesDraggable={true}
-        elementsSelectable={true}
+        nodesDraggable={false}
+        elementsSelectable={false}
         nodesConnectable={false}
       >
         <Background color="rgba(51,51,51,0.07)" gap={24} size={1} />
@@ -383,7 +411,6 @@ function FlowContent() {
   );
 }
 
-// ── Componente público: envuelve con el Provider para poder usar useReactFlow ─
 export function AxiomaticTree() {
   return (
     <ReactFlowProvider>
