@@ -36,7 +36,7 @@ export const MarginaliaPanel = () => {
     const exercise = db.exercises.get(activeTerm);
     const useCase = db.usecases.get(activeTerm);
     const axiom = db.axioms.get(activeTerm);
-    
+
     const entity = theorem || definition || bio || lesson || example || exercise || useCase || axiom;
 
     if (entity) {
@@ -45,28 +45,28 @@ export const MarginaliaPanel = () => {
 
       if (theorem) {
         typeLabel = theorem.type === 'lemma' ? "Lema" : theorem.type === 'corollary' ? "Corolario" : "Teorema";
-        href = `/teorema/${theorem.slug}`;
+        href = `/Matematika/teorema/${theorem.slug}`;
       } else if (definition) {
         typeLabel = "Definición";
-        href = `/definicion/${definition.slug}`;
+        href = `/Matematika/definicion/${definition.slug}`;
       } else if (bio) {
         typeLabel = "Biografía";
-        href = `/bio/${bio.slug}`;
+        href = `/Matematika/bio/${bio.slug}`;
       } else if (lesson) {
         typeLabel = "Lección";
-        href = `/${lesson.slug}`;
+        href = `/Matematika/${lesson.slug}`;
       } else if (example) {
         typeLabel = "Ejemplo";
-        href = `/ejemplo/${example.slug}`;
+        href = `/Matematika/ejemplo/${example.slug}`;
       } else if (exercise) {
         typeLabel = "Ejercicio";
-        href = `/ejercicio/${exercise.slug}`;
+        href = `/Matematika/ejercicio/${exercise.slug}`;
       } else if (useCase) {
         typeLabel = "Caso de Uso";
-        href = `/caso/${useCase.slug}`;
+        href = `/Matematika/caso/${useCase.slug}`;
       } else if (axiom) {
         typeLabel = "Axioma";
-        href = `/axioma/${axiom.slug}`;
+        href = `/Matematika/axioma/${axiom.slug}`;
       }
 
       const e = entity as any;
@@ -114,30 +114,30 @@ export const MarginaliaPanel = () => {
 
   return (
     <>
-      <div 
+      <div
         className={`fixed inset-0 bg-carbon/20 backdrop-blur-sm z-40 transition-opacity duration-500
           ${isActive ? 'opacity-100 pointer-events-auto' : 'opacity-0 pointer-events-none'}`}
         onClick={closeTerm}
       />
 
-      <div 
+      <div
         className={`fixed z-50 bg-lienzo shadow-2xl overflow-y-auto flex flex-col font-serif
           transition-all duration-500 ease-[cubic-bezier(0.2,0.8,0.2,1)]
-          ${isSidebar 
-            ? `top-0 right-0 h-full w-full max-w-sm border-l-4 border-double border-carbon/20 ${isActive ? 'translate-x-0' : 'translate-x-full'}` 
+          ${isSidebar
+            ? `top-0 right-0 h-full w-full max-w-sm border-l-4 border-double border-carbon/20 ${isActive ? 'translate-x-0' : 'translate-x-full'}`
             : `top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-11/12 max-w-lg max-h-[80vh] rounded-xl border-2 border-carbon/10 ${isActive ? 'opacity-100 scale-100' : 'opacity-0 scale-95 pointer-events-none'}`
           }`}
       >
         <div className="p-8 h-full flex flex-col relative">
           <div className="absolute top-4 right-4 flex gap-4 text-carbon/40 font-sans z-10">
-            <button 
+            <button
               onClick={toggleDisplayMode}
               className="hover:text-terracota transition-colors text-sm"
               title={isSidebar ? "Cambiar a ventana flotante" : "Cambiar a panel lateral"}
             >
               {isSidebar ? '⧉' : '◫'}
             </button>
-            <button 
+            <button
               onClick={closeTerm}
               className="hover:text-terracota transition-colors text-2xl leading-none"
             >
@@ -170,12 +170,12 @@ export const MarginaliaPanel = () => {
                   </div>
                 )}
                 {termData.equation && (
-                  <div 
+                  <div
                     className="mt-8 p-4 bg-carbon/5 border border-carbon/10 text-center font-mono text-xl text-carbon shadow-inner overflow-x-auto"
                     dangerouslySetInnerHTML={renderMath(termData.equation)}
                   />
                 )}
-                
+
                 {isDefinition && termData.href && (
                   <div className="mt-12 text-center">
                     <Link href={termData.href}>
@@ -199,7 +199,7 @@ export const MarginaliaPanel = () => {
                       {data.definition}
                     </p>
                     {data.equation && (
-                      <div 
+                      <div
                         className="mt-8 p-4 bg-carbon/5 border border-carbon/10 text-center font-mono text-xl text-carbon shadow-inner overflow-x-auto"
                         dangerouslySetInnerHTML={renderMath(data.equation)}
                       />
@@ -216,7 +216,7 @@ export const MarginaliaPanel = () => {
               <p className="italic text-carbon/50 text-center mt-12">No se han encontrado símbolos reconocidos en esta expresión.</p>
             )}
           </div>
-          
+
           {isSidebar && (
             <div className="mt-auto pt-12 pb-4 flex justify-center opacity-30 text-carbon">
               ❦

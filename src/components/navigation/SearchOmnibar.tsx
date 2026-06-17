@@ -45,7 +45,7 @@ const buildIndex = (): SearchResult[] => {
       type: 'teorema',
       title: thm.title,
       subtitle: thm.description,
-      href: `/teorema/${thm.slug}`,
+      href: `/Matematika/teorema/${thm.slug}`,
     });
     void typeLabel;
   }
@@ -56,7 +56,7 @@ const buildIndex = (): SearchResult[] => {
       id: `lesson-${lesson.id}`,
       type: 'lección',
       title: lesson.title || lesson.id,
-      href: `/${lesson.slug}`,
+      href: `/Matematika/${lesson.slug}`,
     });
   }
 
@@ -67,7 +67,7 @@ const buildIndex = (): SearchResult[] => {
       type: 'definición',
       title: def.title,
       subtitle: def.description,
-      href: `/definicion/${def.slug}`,
+      href: `/Matematika/definicion/${def.slug}`,
     });
   }
 
@@ -78,7 +78,7 @@ const buildIndex = (): SearchResult[] => {
       type: 'ejemplo',
       title: ex.title,
       subtitle: ex.description,
-      href: `/ejemplo/${ex.slug}`,
+      href: `/Matematika/ejemplo/${ex.slug}`,
     });
   }
 
@@ -89,7 +89,7 @@ const buildIndex = (): SearchResult[] => {
       type: 'ejercicio',
       title: ez.title,
       subtitle: ez.description,
-      href: `/ejercicio/${ez.slug}`,
+      href: `/Matematika/ejercicio/${ez.slug}`,
     });
   }
 
@@ -100,7 +100,7 @@ const buildIndex = (): SearchResult[] => {
       type: 'demo',
       title: demo.title,
       subtitle: demo.description,
-      href: `/demo/${demo.slug}`,
+      href: `/Matematika/demo/${demo.slug}`,
     });
   }
 
@@ -111,7 +111,7 @@ const buildIndex = (): SearchResult[] => {
       type: 'matemático',
       title: bio.name || bio.fullName,
       subtitle: bio.description,
-      href: `/bio/${bio.slug}`,
+      href: `/Matematika/bio/${bio.slug}`,
     });
   }
 
@@ -122,7 +122,7 @@ const buildIndex = (): SearchResult[] => {
       type: 'caso_uso',
       title: uc.title,
       subtitle: uc.description,
-      href: `/caso/${uc.slug}`,
+      href: `/Matematika/caso/${uc.slug}`,
     });
   }
 
@@ -133,7 +133,7 @@ const buildIndex = (): SearchResult[] => {
       type: 'axioma',
       title: axm.title,
       subtitle: axm.description,
-      href: `/axioma/${axm.slug}`,
+      href: `/Matematika/axioma/${axm.slug}`,
     });
   }
 

@@ -326,7 +326,7 @@ function FlowContent() {
           )}
 
           <a
-            href={`/${selectedNodeData.nodeType === 'axioma' ? 'axioma' : selectedNodeData.nodeType === 'definicion' ? 'definicion' : 'teorema'}/${selectedNodeId}`}
+            href={`/Matematika/${selectedNodeData.nodeType === 'axioma' ? 'axioma' : selectedNodeData.nodeType === 'definicion' ? 'definicion' : 'teorema'}/${selectedNodeId}`}
             className="inline-flex items-center gap-1.5 mt-1 text-sm font-sans text-[#4a6070] hover:text-carbon transition-colors"
           >
             <span>Ver página →</span>
