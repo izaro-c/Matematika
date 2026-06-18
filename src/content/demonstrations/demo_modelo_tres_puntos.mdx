@@ -1,0 +1,81 @@
+export const metadata = {
+  "id": "demo-modelo-tres-puntos",
+  "title": "Demostración del Modelo de Tres Puntos",
+  "description": "Verificación detallada de que el modelo de tres puntos satisface los axiomas de incidencia I-1, I-2 e I-3.",
+  "parentTheorem": "modelo-tres-puntos",
+  "layout": "text",
+  "proofMethod": "constructivo",
+  "tags": ["geometría", "geometría de incidencia", "modelos"],
+  "type": "demostracion"
+};
+
+import { MedievalStep } from "../../components/content/MedievalStep";
+import { ConceptLink } from "../../components/ui/ConceptLink";
+
+<MedievalStep number={1} title="Definición del Modelo">
+
+Definimos el modelo $\mathfrak{M}_3 = (\mathcal{P}, \mathcal{L})$ donde:
+
+- $\mathcal{P} = \{A, B, C\}$ (tres puntos)
+- $\mathcal{L} = \{\overline{AB}, \overline{AC}, \overline{BC}\}$ (tres rectas)
+- Relación de incidencia: $X \in \overline{YZ}$ si y solo si $X = Y$ o $X = Z$
+
+Las tres rectas son, explícitamente:
+- $\overline{AB} = \{A, B\}$
+- $\overline{AC} = \{A, C\}$
+- $\overline{BC} = \{B, C\}$
+
+</MedievalStep>
+
+<MedievalStep number={2} title="Verificación de I-1">
+
+**Axioma I-1**: Dados dos puntos distintos, existe una única recta que los contiene.
+
+Verificamos cada par posible:
+
+| Par de puntos | Recta que los contiene | ¿Es única? |
+|--------------|----------------------|-----------|
+| $A, B$ | $\overline{AB}$ | Sí, ninguna otra recta contiene ambos |
+| $A, C$ | $\overline{AC}$ | Sí, ninguna otra recta contiene ambos |
+| $B, C$ | $\overline{BC}$ | Sí, ninguna otra recta contiene ambos |
+
+Como $\mathcal{P}$ solo tiene tres puntos, no hay más pares que verificar. El axioma I-1 se cumple.
+
+</MedievalStep>
+
+<MedievalStep number={3} title="Verificación de I-2">
+
+**Axioma I-2**: Toda recta contiene al menos dos puntos.
+
+| Recta | Puntos que contiene | ¿Cumple? |
+|-------|-------------------|----------|
+| $\overline{AB}$ | $A$ y $B$ (2 puntos) | Sí |
+| $\overline{AC}$ | $A$ y $C$ (2 puntos) | Sí |
+| $\overline{BC}$ | $B$ y $C$ (2 puntos) | Sí |
+
+Cada recta contiene exactamente dos puntos, cumpliendo I-2.
+
+</MedievalStep>
+
+<MedievalStep number={4} title="Verificación de I-3">
+
+**Axioma I-3**: Existen tres puntos no colineales.
+
+Los puntos $A, B, C$ no son colineales. Para que lo fueran, debería existir una recta que los contenga a los tres, pero cada recta del modelo contiene solo dos puntos:
+
+$$
+\overline{AB} = \{A, B\} \quad \overline{AC} = \{A, C\} \quad \overline{BC} = \{B, C\}
+$$
+
+Ninguna recta contiene a $A, B, C$ simultáneamente, luego son no colineales. El axioma I-3 se cumple.
+
+</MedievalStep>
+
+<MedievalStep number={5} title="Conclusión">
+
+El modelo $\mathfrak{M}_3$ satisface los tres axiomas de incidencia I-1, I-2 e I-3. Por tanto:
+
+- El sistema $\{I_1, I_2, I_3\}$ es **consistente** (tiene al menos un modelo)
+- $\mathfrak{M}_3$ es el modelo más pequeño posible (no puede haber un modelo con menos de 3 puntos, pues I-3 exige al menos tres puntos no colineales). $\blacksquare$
+
+</MedievalStep>

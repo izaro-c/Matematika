@@ -5,14 +5,18 @@
   "type": "module",
   "homepage": "https://izaro-c.github.io/Matematika/",
   "scripts": {
-    "dev": "npm run validate-graph && vite",
-    "prebuild": "npm run validate-graph",
+    "dev": "npm run validate-graph && npm run validate-references && vite",
+    "prebuild": "npm run validate-graph && npm run validate-references",
     "build": "tsc -b && vite build && cp dist/index.html dist/404.html",
     "lint": "eslint .",
     "preview": "vite preview",
     "docs:generate": "node scripts/generate_schema_docs.cjs",
     "docs:build": "typedoc",
     "validate-graph": "tsx scripts/validate-logical-graph.ts",
+    "validate-references": "tsx scripts/validate-cross-references.ts",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "test:coverage": "vitest run --coverage",
     "predeploy": "npm run build",
     "deploy": "gh-pages -d dist"
   },
@@ -30,6 +34,7 @@
     "react-dom": "^19.2.6",
     "react-force-graph-2d": "^1.29.1",
     "rehype-katex": "^7.0.1",
+    "remark-gfm": "^4.0.1",
     "remark-math": "^6.0.0",
     "wouter": "^3.10.0",
     "zod": "^4.4.3",
@@ -37,6 +42,8 @@
   },
   "devDependencies": {
     "@eslint/js": "^10.0.1",
+    "@testing-library/jest-dom": "^6.9.1",
+    "@testing-library/react": "^16.3.2",
     "@types/dagre": "^0.7.54",
     "@types/node": "^24.12.3",
     "@types/react": "^19.2.14",
@@ -47,12 +54,14 @@
     "eslint-plugin-react-hooks": "^7.1.1",
     "eslint-plugin-react-refresh": "^0.5.2",
     "globals": "^17.6.0",
+    "jsdom": "^29.1.1",
     "postcss": "^8.5.15",
     "tailwindcss": "^4.3.1",
     "tsx": "^4.22.4",
     "typedoc": "^0.28.19",
     "typescript": "~6.0.2",
     "typescript-eslint": "^8.59.2",
-    "vite": "^8.0.12"
+    "vite": "^8.0.12",
+    "vitest": "^4.1.9"
   }
 }

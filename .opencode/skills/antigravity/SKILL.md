@@ -253,7 +253,7 @@ Content with mathematics $x^2 + y^2 = z^2$.
 - Epigraphs/quotes MUST use `<Cita author="...">...</Cita>`
 - Corollaries embedded in theorem/definition pages MUST use `<Corolario>...</Corolario>`
 - Multi-line equations MUST use `<EquationRow>...</EquationRow>`
-- Sequential steps MUST use `<MedievalStep number={1} title="..." target="...">...</MedievalStep>`
+- Sequential steps MUST use `<MedievalStep number={1} title="...">...</MedievalStep>`
 
 ### Demonstrations (Proofs) — ALWAYS in Their Own Page
 
@@ -271,28 +271,47 @@ The flow:
 
 The `<Demostracion>` component is still available and can be used for embedding a short inline proof or partial derivation within definition pages, lessons, or other explanatory content — but NEVER for a theorem's full proof.
 
-### MedievalStep `target` Prop (MANDATORY in split-layout demos)
+### MedievalStep `target` Prop — DO NOT USE
 
-When a demonstration uses `layout: "split"`, EVERY `<MedievalStep>` MUST include a `target` prop:
+`<MedievalStep>` MUST NOT include a `target` prop. Diagram highlights are driven ONLY by `<InteractiveElement>` (hover) in the body text, NOT by MedievalStep's IntersectionObserver.
+
+The `target` prop on MedievalStep was previously used for auto-highlighting via `MathStore.highlight`, but this conflicted with the proper hover-based highlight flow. Remove it entirely.
 
 ```mdx
-<MedievalStep number={1} title="..." target="step1" />
+<MedievalStep number={1} title="Hipótesis" />
 ```
 
-The `target` value must match a mode/state handled by the step's diagram component. This enables:
-1. **Auto-highlighting** via `IntersectionObserver` — when the step scrolls into view, `MathStore.highlight` is set to the target value
-2. **Step-specific visuals** — the diagram reads `highlight` and shows only elements relevant to the current step
+### MedievalStep per-step diagram (when needed)
 
-Without `target`, the diagram cannot synchronize with the proof step.
+In demonstration MDX files (`layout: "split"`), each step can have its own diagram by wrapping it in its own `<DemonstrationSection>`:
+
+```mdx
+<DemonstrationSection diagram={<Step1Diagram />}>
+  <MedievalStep number={1} title="Primer paso" />
+  ...
+</DemonstrationSection>
+
+<DemonstrationSection diagram={<Step2Diagram />}>
+  <MedievalStep number={2} title="Segundo paso" />
+  ...
+</DemonstrationSection>
+```
 
 ### InteractiveElement Cross-References (MANDATORY)
 
-Every `<InteractiveElement target="...">` in the MDX body MUST have a corresponding named element in the diagram's `elementsRef` or switch logic. The diagram responds to `MathStore.highlight` — if the highlight value doesn't match any element, the hover has no visual effect.
+Every `<InteractiveElement target="...">` in the MDX body MUST have a corresponding named element in the diagram's `elementsRef`. The diagram responds to `LessonStore.activeStep` — if the highlight value doesn't match any element, the hover has no visual effect.
+
+IMPORTANT: All demonstration MDX files MUST import `InteractiveElement` from `"../../components/ui/VisualBind"`, NOT from `"../../components/ui/MDXBlocks"`. The VisualBind variant writes to `LessonStore`, which is what the Euclides diagrams read.
+
+```mdx
+import { InteractiveElement } from "../../components/ui/VisualBind";
+```
 
 Rules:
 - Each proof step MUST include at least one `<InteractiveElement>` referencing the diagram element being discussed
 - The `target` string MUST be identical in the MDX and the diagram component
-- Test by tracing: `MDX: target="ladoA"` → `MathStore.setVariable('highlight', 'ladoA')` → `diagram useEffect: if (highlight === 'ladoA')`
+- Test by tracing: `MDX: target="ladoA"` → `VisualBind setActiveStep('ladoA')` → `LessonStore.activeStep = 'ladoA'` → `diagram useEffect: if (highlight === 'ladoA')`
+- Every attribute changed in the highlight block MUST be explicitly reset to its default in the effect's reset block
 
 ## 5. Semantic Linking System (MANDATORY)
 

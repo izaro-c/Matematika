@@ -1,0 +1,83 @@
+export const metadata = {
+  "id": "demo-proposicion-1-1",
+  "title": "Demostración Constructiva del Triángulo Equilátero",
+  "description": "Demostración paso a paso de la construcción del triángulo equilátero sobre un segmento dado, usando regla y compás.",
+  "parentTheorem": "proposicion-1-1",
+  "layout": "split",
+  "proofMethod": "constructivo",
+  "authors": ["Euclides"],
+  "tags": ["geometría", "geometría euclidiana", "construcciones", "triángulos"],
+  "type": "demostracion"
+};
+
+import { EquilateralTriangle } from '../../diagrams/Euclides/EquilateralTriangle';
+import { DemonstrationSection } from "../../components/content/DemonstrationSection";
+import { MedievalStep } from "../../components/content/MedievalStep";
+import { ConceptLink } from "../../components/ui/ConceptLink";
+import { InteractiveElement } from "../../components/ui/VisualBind";
+
+<DemonstrationSection diagram={<EquilateralTriangle />}>
+
+<MedievalStep number={1} title="Segmento Base" />
+
+Dado el segmento <InteractiveElement target="sideAB" color="terracota">$\overline{AB}$</InteractiveElement> como base, deseamos construir un triángulo equilátero sobre él.
+
+El segmento $\overline{AB}$ es el dato inicial de la construcción. Todo triángulo equilátero tendrá sus tres lados iguales a $\overline{AB}$.
+
+<Formula>
+  $\text{Dato: } \overline{AB} \text{ (longitud } r)$
+</Formula>
+
+</DemonstrationSection>
+
+<DemonstrationSection diagram={<EquilateralTriangle />}>
+
+<MedievalStep number={2} title="Primer Círculo" />
+
+Con centro en <InteractiveElement target="pA" color="terracota">$A$</InteractiveElement> y radio $\overline{AB}$, trazamos el círculo <InteractiveElement target="circleA" color="pizarra">$\mathcal{C}(A, AB)$</InteractiveElement>.
+
+Por la definición de círculo (<ConceptLink targetId="postulado-iii">Postulado III</ConceptLink>), todos los puntos de esta circunferencia están a distancia $\overline{AB}$ de $A$.
+
+<Formula>
+  $\mathcal{C}(A, AB) = \{ X \mid \overline{AX} = \overline{AB} \}$
+</Formula>
+
+Cualquier punto $C$ que elijamos sobre esta circunferencia cumplirá $\overline{AC} = \overline{AB}$.
+
+</DemonstrationSection>
+
+<DemonstrationSection diagram={<EquilateralTriangle />}>
+
+<MedievalStep number={3} title="Segundo Círculo" />
+
+Con centro en <InteractiveElement target="pB" color="terracota">$B$</InteractiveElement> y el mismo radio $\overline{AB}$, trazamos el círculo <InteractiveElement target="circleB" color="pizarra">$\mathcal{C}(B, AB)$</InteractiveElement>.
+
+Cualquier punto $C$ sobre esta segunda circunferencia cumplirá $\overline{BC} = \overline{AB}$.
+
+<Formula>
+  $\mathcal{C}(B, AB) = \{ X \mid \overline{BX} = \overline{AB} \}$
+</Formula>
+
+</DemonstrationSection>
+
+<DemonstrationSection diagram={<EquilateralTriangle />}>
+
+<MedievalStep number={4} title="Intersección y Triángulo" />
+
+La intersección de ambos círculos nos da el punto <InteractiveElement target="pC" color="terracota">$C$</InteractiveElement>. Como $C$ pertenece a ambos círculos:
+
+$$
+\overline{AC} = \overline{AB} \quad \text{y} \quad \overline{BC} = \overline{AB}
+$$
+
+Trazamos los segmentos <InteractiveElement target="sideAC" color="salvia">$\overline{CA}$</InteractiveElement> y <InteractiveElement target="sideBC" color="salvia">$\overline{CB}$</InteractiveElement> (<ConceptLink targetId="postulado-i">Postulado I</ConceptLink>).
+
+Por la <ConceptLink targetId="nociones-comunes">Noción Común 1</ConceptLink>:
+
+$$
+\overline{AC} = \overline{BC} = \overline{AB}
+$$
+
+Por tanto, $\triangle ABC$ es equilátero. $\blacksquare$
+
+</DemonstrationSection>

@@ -1,0 +1,40 @@
+export const metadata = {
+  id: "proposicion-2-1",
+  type: "teorema",
+  title: "Proposición 2.1: Intersección de Rectas",
+  description: "Dos rectas distintas se intersecan en a lo sumo un punto.",
+  statement: "Si r y s son dos rectas distintas en un plano de incidencia, entonces r ∩ s contiene a lo sumo un punto.",
+  tags: ["geometría", "geometría de incidencia"],
+  difficulty: "básico",
+  requires: ["axioma-incidencia-1"],
+  demos: ["demo-proposicion-2-1"],
+  links: ["axioma-incidencia-1", "axioma-incidencia-2", "proposicion-2-2"]
+};
+
+import { ConceptLink } from "../../components/ui/ConceptLink";
+
+<Capitular letra="E" />sta proposición establece la propiedad fundamental de que dos rectas distintas no pueden compartir más de un punto. Es consecuencia directa del <ConceptLink targetId="axioma-incidencia-1">Axioma de Incidencia I-1</ConceptLink>.
+
+<Separador />
+
+### Enunciado
+
+<Definicion>
+  Sean $r$ y $s$ dos rectas distintas. Si $P$ y $Q$ son puntos tales que $P, Q \in r \cap s$, entonces necesariamente $P = Q$.
+</Definicion>
+
+<Separador />
+
+### Demostración
+
+La demostración es inmediata a partir del Axioma I-1 y está disponible en su página dedicada:
+
+<ConceptLink targetId="demo-proposicion-2-1">Demostración de la Proposición 2.1</ConceptLink>
+
+<Separador />
+
+### Importancia
+
+1. **Fundamento de unicidad**: garantiza que la intersección de rectas es un concepto bien definido (a lo sumo un punto).
+2. **Dualidad**: junto con la <ConceptLink targetId="proposicion-2-2">Proposición 2.2</ConceptLink>, establece las propiedades básicas de la geometría de incidencia.
+3. **Base para el plano afín**: es necesaria para definir correctamente las nociones de paralelismo y las propiedades del <ConceptLink targetId="plano-afin">plano afín</ConceptLink>.

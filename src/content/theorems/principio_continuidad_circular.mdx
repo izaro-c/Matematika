@@ -1,0 +1,30 @@
+export const metadata = {
+  id: "principio-continuidad-circular",
+  type: "teorema",
+  title: "Principio de Continuidad Circular",
+  description: "Teorema que garantiza la intersección de una línea recta con un círculo y de dos círculos entre sí, bajo ciertas condiciones de continuidad.",
+  color: "salvia",
+  tags: ["geometría", "continuidad", "construcciones", "circunferencia"],
+  links: ["axioma-dedekind", "axioma-continuidad-arquimedes", "postulado-iii"],
+  hasSimulation: true
+};
+
+import { EquilateralTriangle } from '../../diagrams/Euclides/EquilateralTriangle';
+import { ConceptLink } from "../../components/ui/ConceptLink";
+
+export const Simulation = EquilateralTriangle;
+
+<Capitular letra="E" />l **Principio de Continuidad Circular** asegura que las intersecciones necesarias para las construcciones clásicas de regla y compás existen realmente en la recta real. Euclides asumió estas intersecciones implícitamente; Hilbert demostró que requieren axiomas de continuidad.
+
+<Separador />
+
+### Enunciado
+
+<Definicion>
+  Dada una recta $l$ y un círculo $\mathcal{C}(O, r)$, si existe un punto de $l$ dentro del círculo y otro fuera, entonces $l \cap \mathcal{C}(O, r) \neq \emptyset$.
+  Análogamente, para dos círculos $\mathcal{C}(O_1, r_1)$ y $\mathcal{C}(O_2, r_2)$ con $|r_1 - r_2| < d(O_1, O_2) < r_1 + r_2$, la intersección es no vacía.
+</Definicion>
+
+<Nota>
+  Este principio es necesario para validar construcciones como la de la <ConceptLink targetId="proposicion-1-1">Proposición I.1</ConceptLink> (triángulo equilátero), que requiere la intersección de dos círculos. Sin continuidad, dicha intersección no está garantizada en modelos como $\mathbb{Q}^2$.
+</Nota>

@@ -1,0 +1,56 @@
+export const metadata = {
+  id: "postulado-ii",
+  type: "axioma",
+  title: "Postulado II: Extensión de la Recta",
+  description: "Postulado que garantiza que toda recta puede prolongarse continuamente de manera rectilínea.",
+  statement: "Postúlese el prolongar una línea recta finita continuamente en línea recta.",
+  tags: ["geometría", "geometría euclidiana", "elementos de euclides", "postulados"],
+  authors: ["Euclides"],
+  links: ["terminos-primitivos-euclides", "postulado-i", "postulado-iii"]
+};
+
+import { InteractiveElement } from "../../components/ui/VisualBind";
+import { ConceptLink } from "../../components/ui/ConceptLink";
+
+<Capitular letra="E" />l **Segundo Postulado** afirma que cualquier segmento rectilíneo puede extenderse más allá de sus extremos, generando una recta de longitud ilimitada.
+
+<Separador />
+
+### Enunciado
+
+<Definicion>
+  Postúlese el prolongar una línea recta finita continuamente en línea recta.
+</Definicion>
+
+Dado un segmento <InteractiveElement target="segmentoAB" color="terracota">$\overline{AB}$</InteractiveElement>, es posible extenderlo en la dirección de $A$ hacia $B$ y de $B$ hacia $A$, generando una recta <InteractiveElement target="rectaR" color="salvia">$\overleftrightarrow{AB}$</InteractiveElement> de extensión infinita.
+
+<Formula title="Extensión Rectilínea">
+  $\forall A, B \ \exists \overleftrightarrow{AB} \text{ tal que } \overline{AB} \subset \overleftrightarrow{AB}$
+</Formula>
+
+<Separador />
+
+### Naturaleza del Postulado
+
+Mientras que el <ConceptLink targetId="postulado-i">Postulado I</ConceptLink> garantiza la existencia del segmento, el Postulado II asegura que dicho segmento no está confinado a sus extremos, sino que es parte de una estructura lineal más vasta: la recta infinita.
+
+<Nota>
+  Este postulado introduce implícitamente el concepto de **infinito potencial** en geometría. Una recta no es un objeto finito, sino que se extiende sin límite en ambas direcciones. En la axiomática de Hilbert, esta propiedad se captura mediante el <ConceptLink targetId="axioma-orden-2">Axioma de Orden B-2</ConceptLink>.
+</Nota>
+
+<Separador />
+
+### Implicaciones
+
+1. **Semirrectas**: la extensión del segmento en una sola dirección define una semirrecta.
+2. **Rectas paralelas**: la prolongación indefinida es necesaria para determinar si dos rectas se intersecan o son paralelas.
+3. **Continuidad**: la extensión ilimitada apunta hacia la necesidad de completitud del continuo geométrico, que culmina en el <ConceptLink targetId="axioma-dedekind">Axioma de Dedekind</ConceptLink>.
+
+<Separador />
+
+### Equivalencia Moderna
+
+| Euclides (Postulado II) | Hilbert |
+|---|---|
+| "Prolongar una línea recta finita continuamente" | <ConceptLink targetId="axioma-orden-2">Axioma de Orden B-2</ConceptLink>: "Dados dos puntos $A$ y $B$, existe un punto $C$ tal que $A*B*C$". Este axioma garantiza que todo segmento puede extenderse más allá de cualquiera de sus extremos. |
+| **Diferencia clave**: Euclides asume la existencia de toda la recta infinita de un golpe; Hilbert la construye paso a paso, punto a punto. La noción de "infinito potencial" de Hilbert es más débil y rigurosa. El <ConceptLink targetId="axioma-dedekind">Axioma de Dedekind</ConceptLink> es necesario para obtener la recta completa (infinito actual). |

@@ -1,0 +1,69 @@
+export const metadata = {
+  id: "interior-angulo",
+  type: "definicion",
+  title: "Interior de un Ángulo",
+  description: "Región del plano delimitada por dos semirrectas con origen común, definida como intersección de dos semirplanos.",
+  statement: "El interior de un ángulo ∠ABC es la intersección del semiplano determinado por AB que contiene a C y el semiplano determinado por BC que contiene a A.",
+  tags: ["geometría", "geometría absoluta", "orden"],
+  usedBy: ["teorema-barra-transversal"],
+  links: ["semirrecta-segmento", "teorema-separacion-plano", "orden-relacion"]
+};
+
+import { InteractiveElement } from "../../components/ui/VisualBind";
+import { ConceptLink } from "../../components/ui/ConceptLink";
+
+<Capitular letra="E" />l **interior de un ángulo** es una región del plano definida exclusivamente a partir de la relación de orden y el <ConceptLink targetId="teorema-separacion-plano">Teorema de Separación del Plano</ConceptLink>. No requiere ninguna noción métrica: depende únicamente de la topología del plano.
+
+<Separador />
+
+### Definición
+
+Consideremos un ángulo $\angle ABC$ formado por dos <ConceptLink targetId="semirrecta-segmento">semirrectas</ConceptLink> distintas con origen común en el vértice <InteractiveElement target="verticeB" color="terracota">$B$</InteractiveElement>:
+
+- $\overrightarrow{BA}$: semirrecta que pasa por <InteractiveElement target="puntoA" color="pavo">$A$</InteractiveElement>
+- $\overrightarrow{BC}$: semirrecta que pasa por <InteractiveElement target="puntoC" color="ocre">$C$</InteractiveElement>
+
+<Definicion>
+  El **interior** del ángulo $\angle ABC$ es la intersección de dos semirplanos:
+  
+  $$
+  \text{Int}(\angle ABC) = H_{BA}(C) \cap H_{BC}(A)
+  $$
+  
+  donde $H_{BA}(C)$ es el semiplano determinado por la recta $\overleftrightarrow{BA}$ que contiene a $C$, y $H_{BC}(A)$ es el semiplano determinado por la recta $\overleftrightarrow{BC}$ que contiene a $A$.
+</Definicion>
+
+<Formula title="Interior del Ángulo como Intersección de Semirplanos">
+  <EquationRow>
+    $\text{Int}(\angle ABC) = \{ X \mid X \text{ está al mismo lado de } \overleftrightarrow{BA} \text{ que } C \} \cap \{ X \mid X \text{ está al mismo lado de } \overleftrightarrow{BC} \text{ que } A \}$
+  </EquationRow>
+</Formula>
+
+<Separador />
+
+### Propiedades
+
+1. **Convexidad:** El interior de un ángulo es un conjunto convexo (intersección de dos conjuntos convexos).
+2. **Acotación parcial:** El interior no es acotado, pero está confinado a la región entre las dos semirrectas.
+3. **Exclusión de los lados:** Los puntos de las semirrectas $\overrightarrow{BA}$ y $\overrightarrow{BC}$ (excepto el vértice $B$) no pertenecen al interior.
+4. **Contención:** Si $X \in \text{Int}(\angle ABC)$, entonces $X$ no es colineal con $B$ y $A$, ni con $B$ y $C$.
+
+<Separador />
+
+### Relación con el Teorema de la Barra Transversal
+
+El interior del ángulo es el escenario del <ConceptLink targetId="teorema-barra-transversal">Teorema de la Barra Transversal</ConceptLink> (Crossbar Theorem): si una semirrecta $\overrightarrow{BD}$ está dentro del ángulo $\angle ABC$ (es decir, $D \in \text{Int}(\angle ABC)$), entonces $\overrightarrow{BD}$ interseca a cualquier segmento $\overline{AC}$ donde $A$ y $C$ están en los lados del ángulo.
+
+<Separador />
+
+### Visualización
+
+Dado $\angle ABC$:
+
+- La recta $\overleftrightarrow{BA}$ divide el plano en dos semirplanos. El semiplano $H_{BA}(C)$ es el que contiene a $C$.
+- La recta $\overleftrightarrow{BC}$ divide el plano en dos semirplanos. El semiplano $H_{BC}(A)$ es el que contiene a $A$.
+- La intersección de ambos semirplanos es la región interior del ángulo.
+
+<Nota>
+  Esta definición del interior es esencialmente topológica y precede a cualquier noción de medida angular. Es la definición que utiliza Hilbert en *Grundlagen der Geometrie* y es la base para la demostración de resultados como el <ConceptLink targetId="teorema-barra-transversal">Crossbar Theorem</ConceptLink> y el <ConceptLink targetId="proposicion-1-27">Teorema de los Ángulos Alternos Internos</ConceptLink>.
+</Nota>

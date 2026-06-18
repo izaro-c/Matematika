@@ -1,0 +1,98 @@
+export const metadata = {
+  "id": "falacia-triangulo-isosceles",
+  "type": "ejemplo",
+  "title": "Falacia del Triángulo Isósceles",
+  "description": "Demostración falaz de que todo triángulo es isósceles. El error revela la necesidad de los axiomas de orden en geometría.",
+  "relatedTheorem": "proposicion-1-1",
+  "requires": ["axioma-orden-1", "axioma-orden-2", "axioma-orden-3", "axioma-orden-pasch"],
+  "tags": ["geometría", "lógica", "falacias", "axiomas de orden", "demostraciones"],
+  "difficulty": "intermedio",
+  "hasSimulation": true,
+  "links": ["axioma-orden-1", "axioma-orden-pasch", "terminos-primitivos-euclides"]
+};
+
+import { IsoscelesFallacy } from '../../diagrams/Euclides/IsoscelesFallacy';
+import { InteractiveElement } from "../../components/ui/VisualBind";
+import { ConceptLink } from "../../components/ui/ConceptLink";
+
+export const Simulation = IsoscelesFallacy;
+
+<Capitular letra="E" />xiste una célebre falacia geométrica que pretende demostrar que **todo triángulo es isósceles**. El razonamiento es aparentemente correcto y utiliza teoremas válidos, pero comete un error sutil que solo puede detectarse mediante los <ConceptLink targetId="axioma-orden-1">axiomas de orden</ConceptLink> de Hilbert.
+
+<Separador />
+
+### La Demostración Falaz
+
+Dado un triángulo $\triangle ABC$ arbitrario:
+
+<MedievalStep number={1} title="Construcciones Auxiliares">
+
+1. Trácese la bisectriz del ángulo <InteractiveElement target="pA" color="terracota">$\angle A$</InteractiveElement>.
+2. Trácese la mediatriz (perpendicular por el punto medio) del lado <InteractiveElement target="sideBC" color="salvia">$\overline{BC}$</InteractiveElement>.
+3. Sea <InteractiveElement target="intersectionO" color="terracota">$O$</InteractiveElement> la intersección de ambas rectas.
+
+</MedievalStep>
+
+<MedievalStep number={2} title="Perpendiculares desde O">
+
+4. Desde <InteractiveElement target="intersectionO" color="terracota">$O$</InteractiveElement>, trácense perpendiculares a los lados $\overline{AB}$ y $\overline{AC}$.
+5. Sean $D$ y $E$ los respectivos pies de estas perpendiculares.
+
+</MedievalStep>
+
+<MedievalStep number={3} title="Congruencias (correctas en apariencia)">
+
+6. $\triangle AOD \cong \triangle AOE$ (congruencia por hipotenusa-ángulo agudo, ya que $\angle OAD = \angle OAE$ por ser $AO$ bisectriz).
+   - Por tanto: $\overline{OD} = \overline{OE}$ y $\overline{AD} = \overline{AE}$.
+7. $\triangle ODB \cong \triangle OEC$ (congruencia por hipotenusa-cateto, ya que $\overline{OD} = \overline{OE}$ y $O$ está en la mediatriz de $\overline{BC}$, luego $\overline{OB} = \overline{OC}$).
+   - Por tanto: $\overline{DB} = \overline{EC}$.
+
+</MedievalStep>
+
+<MedievalStep number={4} title="Conclusión falaz">
+
+8. Sumando: $\overline{AD} + \overline{DB} = \overline{AE} + \overline{EC}$.
+9. Luego $\overline{AB} = \overline{AC}$ y $\triangle ABC$ es isósceles.
+
+</MedievalStep>
+
+<Separador />
+
+### El Error: ¿Dónde está la trampa?
+
+La demostración parece impecable, pero contiene un error fundamental. ¿Puedes detectarlo?
+
+<Nota>
+  El error está en el **paso 8**: la suposición de que $D$ está entre $A$ y $B$, y $E$ entre $A$ y $C$. Esto **no** es necesariamente cierto. El punto $O$ puede caer **fuera** del triángulo, y entonces los pies $D$ y $E$ caen sobre las prolongaciones de los lados, no sobre los segmentos mismos.
+</Nota>
+
+<Separador />
+
+### La Lección: Necesidad de los Axiomas de Orden
+
+Esta falacia demuestra por qué los <ConceptLink targetId="axioma-orden-1">axiomas de orden</ConceptLink> (betweenness) son indispensables en una axiomática rigurosa:
+
+1. Sin ellos, no podemos garantizar que un punto esté "entre" otros dos.
+2. El <ConceptLink targetId="axioma-orden-pasch">Axioma de Pasch</ConceptLink> (B-4) es necesario para asegurar cómo las rectas intersectan a los triángulos.
+3. En la geometría de Euclides, este tipo de argumentos se basaban en la intuición visual. Hilbert demostró que la intuición no basta: se requiere una axiomatización completa del orden.
+
+<Separador />
+
+### El Error en Términos Modernos
+
+Dependiendo de si el triángulo es o no isósceles, la intersección $O$ de la bisectriz de $\angle A$ con la mediatriz de $\overline{BC}$ cae:
+
+- **Dentro** del triángulo si $\overline{AB} = \overline{AC}$ (el triángulo es isósceles).
+- **Fuera** del triángulo si $\overline{AB} \neq \overline{AC}$ (el triángulo no es isósceles).
+
+En el segundo caso, los pies $D$ y $E$ no están en los segmentos $\overline{AB}$ y $\overline{AC}$, sino en sus prolongaciones, y la "suma" del paso 8 es en realidad una **diferencia**:
+
+$$
+\overline{AD} - \overline{DB} = \overline{AE} - \overline{EC}
+$$
+
+lo que no implica $\overline{AB} = \overline{AC}$.
+
+<Formula title="El Error Esencial">
+  $\overline{AD} + \overline{DB} \neq \overline{AB} \quad \text{si } D \text{ no está entre } A \text{ y } B$
+</Formula>

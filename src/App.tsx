@@ -56,18 +56,18 @@ function App() {
       </button>
       <SearchOmnibar />
       <MarginaliaPanel />
-      
+
       {/* Botón Flotante para Volver al Inicio (Solo visible si no estamos en la portada) */}
       {location !== '/' && (
         <div className="fixed top-6 left-6 z-40">
-          <Link href="/">
+          <Link href="/Matematika">
             <a className="flex items-center justify-center w-12 h-12 elegant-panel" title="Volver a la Biblioteca">
               <Logo className="w-8 h-8" />
             </a>
           </Link>
         </div>
       )}
-      
+
       <PageTransition>
         <ErrorBoundary>
           <AppRouter />

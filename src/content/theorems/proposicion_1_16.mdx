@@ -1,0 +1,78 @@
+export const metadata = {
+  "id": "proposicion-1-16",
+  "title": "Proposición I.16: Teorema del Ángulo Exterior (versión débil)",
+  "description": "En todo triángulo, el ángulo exterior es mayor que cada uno de los ángulos interiores no adyacentes a él.",
+  "color": "terracota",
+  "authors": ["Euclides"],
+  "type": "teorema",
+  "demos": ["demo-proposicion-1-16"],
+  "tags": ["geometría", "geometría euclidiana", "triángulos", "ángulos", "elementos de euclides"],
+  "hasSimulation": true,
+  "links": ["postulado-i", "postulado-ii", "nociones-comunes", "proposicion-1-1"]
+};
+
+import { ExteriorAngle } from '../../diagrams/Euclides/ExteriorAngle';
+import { InteractiveElement } from "../../components/ui/VisualBind";
+import { ConceptLink } from "../../components/ui/ConceptLink";
+
+export const Simulation = ExteriorAngle;
+
+<Capitular letra="E" />l **Teorema del Ángulo Exterior** establece una relación fundamental entre los ángulos de un triángulo. Euclides lo demuestra en la Proposición I.16 de los *Elementos*. Es una **versión débil** porque solo afirma la desigualdad, no la igualdad con la suma de los interiores (que requiere el <ConceptLink targetId="postulado-v">Quinto Postulado</ConceptLink>).
+
+<Separador />
+
+### Enunciado
+
+<Definicion>
+  En todo triángulo, si se prolonga uno de sus lados, el ángulo exterior así formado es mayor que cada uno de los ángulos interiores no adyacentes a él.
+</Definicion>
+
+Dado $\triangle ABC$, prolonguemos el lado <InteractiveElement target="sideBC" color="salvia">$\overline{BC}$</InteractiveElement> hasta <InteractiveElement target="pD" color="pizarra">$D$</InteractiveElement> (<ConceptLink targetId="postulado-ii">Postulado II</ConceptLink>). Entonces:
+
+<Formula title="Ángulo Exterior">
+  $\angle ACD > \angle BAC \quad \text{y} \quad \angle ACD > \angle ABC$
+</Formula>
+
+<Separador />
+
+### Interpretación Geométrica
+
+En la figura, <InteractiveElement target="exteriorAngle" color="terracota">$\angle ACD$</InteractiveElement> es el ángulo exterior formado por la prolongación del lado $\overline{BC}$. Los ángulos <InteractiveElement target="interiorAngle" color="salvia">$\angle BAC$</InteractiveElement> y $\angle ABC$ son los ángulos interiores no adyacentes al exterior.
+
+<Nota>
+  Esta proposición es notable porque se demuestra **sin** utilizar el Quinto Postulado. Es, por tanto, un resultado válido en <ConceptLink targetId="geometria-neutral">geometría neutral</ConceptLink>. La versión fuerte (que el ángulo exterior es **igual** a la suma de los interiores opuestos) sí requiere el Quinto Postulado.
+</Nota>
+
+<Separador />
+
+### Importancia
+
+La Proposición I.16 es fundamental por varias razones:
+
+1. Es la base para la <ConceptLink targetId="proposicion-1-27">Proposición I.27</ConceptLink> (criterio de rectas paralelas).
+2. Permite demostrar que la suma de dos ángulos de un triángulo es menor que $180^\circ$.
+3. Es un resultado de geometría absoluta, válido en geometría euclidiana e hiperbólica.
+4. Conduce al <ConceptLink targetId="teorema-angulo-exterior">Teorema del Ángulo Exterior</ConceptLink> fuerte en geometría neutral.
+
+<Separador />
+
+### Demostración
+
+La demostración completa y detallada, con diagrama interactivo paso a paso, está disponible en su página dedicada:
+
+<ConceptLink targetId="demo-proposicion-1-16">Demostración de la Proposición I.16</ConceptLink>
+
+<Separador />
+
+<Separador />
+
+### Equivalencia Moderna
+
+La Proposición I.16 es la **versión débil** del Teorema del Ángulo Exterior. En la axiomática moderna:
+
+| Versión | Enunciado | Requiere Postulado V? |
+|---|---|---|
+| **Débil** (Euclides I.16) | $\angle ACD > \angle BAC$ y $\angle ACD > \angle ABC$ | No (geometría neutral) |
+| **Fuerte** (geometría moderna) | $\angle ACD = \angle BAC + \angle ABC$ | **Sí** (equivale al Postulado V) |
+
+En geometría neutral, el teorema fuerte es falso: en geometría hiperbólica, el ángulo exterior es **mayor** que la suma de los interiores no adyacentes. Esta diferencia es una de las maneras más intuitivas de distinguir las geometrías.

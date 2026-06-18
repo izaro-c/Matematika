@@ -18,6 +18,7 @@ import { AxiomGraphPage } from "../pages/AxiomGraphPage";
 import { AxiomPage } from "../pages/AxiomPage";
 import { ModelPage } from "../pages/ModelPage";
 import { DemoPage } from "../pages/DemoPage";
+import { NotFoundPage } from "../pages/NotFoundPage";
 import { InteractiveLessonLayout } from "../components/layout/InteractiveLessonLayout";
 import { BiographyLayout } from "../components/layout/BiographyLayout";
 import { Logo } from "../components/ui/Logo";
@@ -135,7 +136,7 @@ export const AppRouter = () => {
             </MathProvider>
           </Route>
 
-          <Route path="/:rest*" component={() => <div>404</div>} />
+          <Route path="/:rest*" component={NotFoundPage} />
         </Switch>
       </Router>
     </Suspense>

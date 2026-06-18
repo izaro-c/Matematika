@@ -1,0 +1,96 @@
+export const metadata = {
+  "id": "demo-proposicion-1-16",
+  "title": "Demostración del Teorema del Ángulo Exterior",
+  "description": "Demostración geométrica paso a paso de la Proposición I.16 de Euclides: el ángulo exterior es mayor que cada ángulo interior no adyacente.",
+  "parentTheorem": "proposicion-1-16",
+  "layout": "split",
+  "proofMethod": "geometrico",
+  "authors": ["Euclides"],
+  "tags": ["geometría", "geometría euclidiana", "triángulos", "ángulos"],
+  "type": "demostracion"
+};
+
+import { ExteriorAngle } from '../../diagrams/Euclides/ExteriorAngle';
+import { DemonstrationSection } from "../../components/content/DemonstrationSection";
+import { MedievalStep } from "../../components/content/MedievalStep";
+import { ConceptLink } from "../../components/ui/ConceptLink";
+import { InteractiveElement } from "../../components/ui/VisualBind";
+
+<DemonstrationSection diagram={<ExteriorAngle />}>
+
+<MedievalStep number={1} title="Configuración Inicial" />
+
+Consideremos el triángulo <InteractiveElement target="sideAB" color="terracota">$\triangle ABC$</InteractiveElement>. Prolongamos el lado <InteractiveElement target="sideBC" color="salvia">$\overline{BC}$</InteractiveElement> más allá de $C$ hasta el punto <InteractiveElement target="pD" color="pizarra">$D$</InteractiveElement> (<ConceptLink targetId="postulado-ii">Postulado II</ConceptLink>).
+
+El ángulo <InteractiveElement target="exteriorAngle" color="terracota">$\angle ACD$</InteractiveElement> es el ángulo exterior. Debemos demostrar que:
+
+$$
+\angle ACD > \angle BAC \quad \text{y} \quad \angle ACD > \angle ABC
+$$
+
+</DemonstrationSection>
+
+<DemonstrationSection diagram={<ExteriorAngle />}>
+
+<MedievalStep number={2} title="Construcción del Punto Medio" />
+
+Sea $E$ el punto medio del segmento <InteractiveElement target="sideAC" color="salvia">$\overline{AC}$</InteractiveElement>. La existencia del punto medio se demuestra mediante la construcción de un triángulo equilátero (<ConceptLink targetId="proposicion-1-1">Proposición I.1</ConceptLink>) y la bisectriz.
+
+Trácese el segmento <InteractiveElement target="sideBC" color="salvia">$\overline{BE}$</InteractiveElement> y prolónguese (<ConceptLink targetId="postulado-ii">Postulado II</ConceptLink>) hasta $F$ tal que $\overline{BE} = \overline{EF}$.
+
+</DemonstrationSection>
+
+<DemonstrationSection diagram={<ExteriorAngle />}>
+
+<MedievalStep number={3} title="Congruencia de Triángulos" />
+
+Trácese <InteractiveElement target="sideAC" color="salvia">$\overline{CF}$</InteractiveElement>. Ahora tenemos dos triángulos:
+
+- $\triangle ABE$ y $\triangle CFE$ comparten:
+  - $\overline{AE} = \overline{EC}$ (por ser $E$ el punto medio)
+  - $\overline{BE} = \overline{EF}$ (por construcción)
+  - $\angle AEB = \angle CEF$ (opuestos por el vértice)
+
+Por el criterio de congruencia <ConceptLink targetId="axioma-congruencia-triangulos">LAL</ConceptLink>:
+
+$$
+\triangle ABE \cong \triangle CFE
+$$
+
+Luego $\angle BAE = \angle ECF$.
+
+</DemonstrationSection>
+
+<DemonstrationSection diagram={<ExteriorAngle />}>
+
+<MedievalStep number={4} title="Comparación de Ángulos" />
+
+Observamos que:
+
+- $\angle BAC = \angle BAE$ (son el mismo ángulo)
+- $\angle ACF = \angle ECF$ (son el mismo ángulo)
+- Por tanto: $\angle BAC = \angle ACF$
+
+Pero $\angle ACD > \angle ACF$ (el todo es mayor que la parte, <ConceptLink targetId="nociones-comunes">Noción Común 5</ConceptLink>).
+
+Luego $\angle ACD > \angle BAC$.
+
+<Formula>
+  $\angle ACD > \angle ACF = \angle BAC \implies \angle ACD > \angle BAC$
+</Formula>
+
+</DemonstrationSection>
+
+<DemonstrationSection diagram={<ExteriorAngle />}>
+
+<MedievalStep number={5} title="Segunda Desigualdad" />
+
+De manera análoga, bisecando $\overline{BC}$ y repitiendo la construcción, se demuestra que:
+
+$$
+\angle ACD > \angle ABC
+$$
+
+Por tanto, el ángulo exterior es mayor que **ambos** ángulos interiores no adyacentes. $\blacksquare$
+
+</DemonstrationSection>

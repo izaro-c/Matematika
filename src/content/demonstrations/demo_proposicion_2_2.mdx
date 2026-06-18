@@ -1,0 +1,45 @@
+export const metadata = {
+  "id": "demo-proposicion-2-2",
+  "title": "Demostración de la Proposición 2.2",
+  "description": "Demostración de que por cada punto pasan al menos dos rectas distintas.",
+  "parentTheorem": "proposicion-2-2",
+  "layout": "text",
+  "proofMethod": "constructivo",
+  "tags": ["geometría", "geometría de incidencia"],
+  "type": "demostracion"
+};
+
+import { MedievalStep } from "../../components/content/MedievalStep";
+import { ConceptLink } from "../../components/ui/ConceptLink";
+
+<MedievalStep number={1} title="Dato Inicial">
+
+Sea $P$ un punto arbitrario. Por el <ConceptLink targetId="axioma-incidencia-3">Axioma de Incidencia I-3</ConceptLink>, existen tres puntos no colineales. Llamémoslos $A, B, C$.
+
+</MedievalStep>
+
+<MedievalStep number={2} title="Dos casos">
+
+Consideramos dos posibilidades: $P$ coincide con alguno de $A, B, C$, o es un cuarto punto.
+
+**Caso 1:** $P$ es uno de $A, B, C$, digamos $P = A$.
+
+Entonces $A, B, C$ son no colineales. Consideramos las rectas $\overline{AB}$ y $\overline{AC}$. Ambas contienen a $A = P$. Además, son distintas porque si fueran la misma recta, $A, B, C$ serían colineales (contradiciendo I-3). Por tanto, por $P$ pasan al menos dos rectas: $\overline{AB}$ y $\overline{AC}$.
+
+</MedievalStep>
+
+<MedievalStep number={3} title="Caso general">
+
+**Caso 2:** $P$ no es ninguno de $A, B, C$.
+
+Por el <ConceptLink targetId="axioma-incidencia-1">Axioma I-1</ConceptLink>, existen las rectas $\overline{PA}$, $\overline{PB}$ y $\overline{PC}$. Veamos que al menos dos de ellas son distintas.
+
+Si $P, A, B$ fueran colineales y $P, A, C$ también fueran colineales, entonces $A, B, C$ estarían en la misma recta (la que pasa por $P$ y $A$), contradiciendo I-3. Por tanto, no todas las rectas $\overline{PA}$, $\overline{PB}$, $\overline{PC}$ pueden coincidir. Existen al menos dos distintas.
+
+</MedievalStep>
+
+<MedievalStep number={4} title="Conclusión">
+
+En cualquier caso, hemos demostrado que por todo punto $P$ pasan al menos dos rectas distintas. $\blacksquare$
+
+</MedievalStep>

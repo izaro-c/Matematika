@@ -1,0 +1,80 @@
+export const metadata = {
+  id: "terminos-primitivos-euclides",
+  type: "definicion",
+  title: "Términos Primitivos de Euclides",
+  description: "Las nociones fundamentales e indefinibles sobre las que se erige toda la geometría euclidiana: punto, línea y superficie.",
+  statement: "Punto es aquello que no tiene partes. Línea es una longitud sin anchura. Superficie es aquello que solo tiene longitud y anchura.",
+  tags: ["geometría", "geometría euclidiana", "elementos de euclides", "fundamentos"],
+  authors: ["Euclides"],
+  links: ["nociones-comunes", "postulado-i", "postulado-ii", "postulado-iii"]
+};
+
+import { InteractiveElement } from "../../components/ui/VisualBind";
+import { ConceptLink } from "../../components/ui/ConceptLink";
+
+<Capitular letra="T" />odo edificio matemático requiere de fundamentos últimos que no pueden ser definidos en términos más simples. En los *Elementos*, Euclides introduce tres **términos primitivos** —punto, línea y superficie— que constituyen el sustrato ontológico de la geometría.
+
+<Separador />
+
+### Punto
+
+<Definicion>
+  <InteractiveElement target="punto" color="terracota">**Punto**</InteractiveElement> es aquello que no tiene partes.
+</Definicion>
+
+El punto es la noción más elemental. Carece de dimensión: no tiene longitud, anchura ni profundidad. Es una posición en el espacio, desprovista de extensión. Todo punto es indivisible.
+
+<Nota>
+  En la axiomática moderna de Hilbert, el punto se conserva como término primitivo. La noción de que "no tiene partes" se traduce en que no puede descomponerse en objetos más simples dentro de la geometría.
+</Nota>
+
+<Separador />
+
+### Línea
+
+<Definicion>
+  <InteractiveElement target="linea" color="salvia">**Línea**</InteractiveElement> es una longitud sin anchura.
+</Definicion>
+
+La línea posee una sola dimensión: la longitud. Carece de anchura y profundidad. Euclides distingue además:
+
+- **Línea recta**: la que yace por igual respecto de todos sus puntos.
+- **Línea curva**: aquella que no es recta.
+
+<Formula>
+  $\text{Una línea recta } \overleftrightarrow{AB} \text{ es la trayectoria más corta entre dos puntos } A \text{ y } B.$
+</Formula>
+
+<Separador />
+
+### Superficie
+
+<Definicion>
+  <InteractiveElement target="superficie" color="pizarra">**Superficie**</InteractiveElement> es aquello que solo tiene longitud y anchura.
+</Definicion>
+
+La superficie posee dos dimensiones: longitud y anchura, pero carece de profundidad. Es la noción primitiva del plano bidimensional.
+
+<Nota>
+  Euclides también define el **extremo** de una línea como punto, y el **extremo** de una superficie como línea. Estas observaciones establecen una jerarquía dimensional: el punto es borde de la línea, y la línea es borde de la superficie.
+</Nota>
+
+<Separador />
+
+### Importancia Axiomática
+
+Estos términos no se definen formalmente en el sentido moderno; son **primitivos**. Su significado emerge de las relaciones que establecen los <ConceptLink targetId="nociones-comunes">postulados y nociones comunes</ConceptLink>. Esta aproximación, revolucionaria para su época, anticipa el método axiomático formal que culminaría con <ConceptLink targetId="axioma-incidencia-1">Hilbert</ConceptLink> en el siglo XIX.
+
+<Separador />
+
+### Equivalencia Moderna
+
+| Euclides | Hilbert vs. Contraparte Moderna |
+|---|---|
+| **Punto**: "lo que no tiene partes" | Término primitivo en la axiomática de Hilbert, junto con *recta* y *plano*. No se define, solo se relacionan mediante los axiomas de incidencia. |
+| **Línea**: "longitud sin anchura" | La **recta** es un término primitivo. Hilbert distingue además entre *segmento* (conjunto acotado de puntos) y *recta* (extensión infinita), cosa que Euclides confunde. |
+| **Superficie**: "longitud y anchura sin profundidad" | El **plano** es el tercer término primitivo de Hilbert. La relación de incidencia punto-recta-plano se axiomatiza mediante los tres axiomas de incidencia. |
+| **Extremo de una línea** = punto | Axioma de Incidencia I-2: toda recta contiene al menos dos puntos. |
+| **Extremo de una superficie** = línea | Axioma de Incidencia I-3: existen tres puntos no colineales, que determinan un plano. |
+
+La principal diferencia es que Hilbert separa explícitamente los conceptos de *incidencia* (pertenencia), *orden* (betweenness) y *congruencia* (igualdad de magnitudes), mientras que Euclides los mezcla implícitamente en sus definiciones intuitivas.
