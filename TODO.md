@@ -35,53 +35,53 @@
 
 ### 0.2 Estandarización de páginas MDX y page components
 *Eliminar todo el código duplicado y hardcodeado antes de traducir o escalar. Si no, cada idioma multiplicará la deuda técnica.*
-- [ ] **Breadcrumbs**: extraer a `src/components/ui/Breadcrumbs.tsx` — se repite 7+ veces (TheoremPage, DefinitionPage, ExercisePage, UseCasePage, DemoPage, AxiomPage, BranchPage)
-- [ ] **ContentHeader**: crear componente único para la cabecera (badge de tipo + título + descripción + autores) — eliminar repetición en TheoremPage, DefinitionPage, AxiomPage, ExamplePage, etc.
-- [ ] **NotFoundState**: crear componente de estado "no encontrado" — actualmente cada página tiene su propio HTML inline
-- [ ] **SuspenseFallback**: crear componente reutilizable para los fallbacks de carga de MDX
-- [ ] **RelatedExamples / RelatedExercises / RelatedUseCases**: extraer el patrón "Material Práctico" y "Aplicaciones en el Mundo Real" a componentes — se repite idéntico en TheoremPage y DefinitionPage
-- [ ] **ContentCard**: unificar estilos de cards de listado (ejemplos, ejercicios, casos de uso, corolarios, demostraciones)
-- [ ] **SectionTitle**: extraer los títulos de sección ("Material Práctico", "Demostraciones Disponibles", etc.) a componente
-- [ ] **ContentTypeBadge**: unificar badges de tipo de contenido (varían en estilo entre páginas)
-- [ ] **`InteractiveElement`**: mover la definición duplicada en cada MDX a `MDXComponents` en `MDXBlocks.tsx`
-- [ ] **Unificar naming de metadatos**: decidir `authors` vs `mathematicians`, `demos` vs `demostraciones`; actualizar Zod y migrar todos los MDX
-- [ ] **Linting de contenido MDX**: script que verifique `<Capitular>` inicial, `<Separador>` entre secciones, etc. según STYLEGUIDE
-- [ ] **Constantes compartidas** (`src/config/constants.ts`):
-  - [ ] Unificar `DIFF_COLORS` (ExercisePage, UseCasePage)
-  - [ ] Unificar `DOMAIN_ICONS` y `DOMAIN_COLORS` (UseCasePage) o leerlos de metadatos
-  - [ ] Unificar `typeLabels` / `typeStyles` en un mapa `contentTypeConfig` global (label singular/plural, ruta, color, icono)
-  - [ ] Unificar colores de nodos entre `AxiomaticTree` y `GraphPage`
+- [x] **Breadcrumbs**: extraer a `src/components/ui/Breadcrumbs.tsx` — se repite 7+ veces (TheoremPage, DefinitionPage, ExercisePage, UseCasePage, DemoPage, AxiomPage, BranchPage)
+- [x] **ContentHeader**: crear componente único para la cabecera (badge de tipo + título + descripción + autores) — eliminar repetición en TheoremPage, DefinitionPage, AxiomPage, ExamplePage, etc.
+- [x] **NotFoundState**: crear componente de estado "no encontrado" — actualmente cada página tiene su propio HTML inline
+- [x] **SuspenseFallback**: crear componente reutilizable para los fallbacks de carga de MDX
+- [x] **RelatedExamples / RelatedExercises / RelatedUseCases**: extraer el patrón "Material Práctico" y "Aplicaciones en el Mundo Real" a componentes `MaterialPracticoSection` y `AplicacionesSection`
+- [x] **ContentCard**: unificar estilos de cards de listado (ejemplos, ejercicios, casos de uso, corolarios, demostraciones)
+- [x] **SectionTitle**: extraer los títulos de sección ("Material Práctico", "Demostraciones Disponibles", etc.) a componente
+- [x] **ContentTypeBadge**: unificar badges de tipo de contenido (varían en estilo entre páginas)
+- [x] **`InteractiveElement`**: mover la definición duplicada en cada MDX a `MDXComponents` en `MDXBlocks.tsx`
+- [x] **Unificar naming de metadatos**: decidir `authors` vs `mathematicians`, `demos` vs `demostraciones`; actualizar Zod y migrar todos los MDX — Schema cambiado: `mathematicians` → `authors`, eliminado `demostraciones` (muerto)
+- [x] **Linting de contenido MDX**: script que verifique `<Capitular>` inicial, `<Separador>` entre secciones, etc. según STYLEGUIDE
+- [x] **Constantes compartidas** (`src/config/constants.ts`):
+  - [x] Unificar `DIFF_COLORS` (ExercisePage, UseCasePage)
+  - [x] Unificar `DOMAIN_ICONS` y `DOMAIN_COLORS` (UseCasePage) o leerlos de metadatos
+  - [x] Unificar `typeLabels` / `typeStyles` en un mapa `contentTypeConfig` global (label singular/plural, ruta, color, icono)
+  - [x] Unificar colores de nodos entre `AxiomaticTree` y `GraphPage` — `GRAPH_NODE_COLORS` como fuente única, `CustomNode` importa `TYPE_STYLES` de constants
 
 ### 0.3 Validación de referencias cruzadas
 *Garantizar la integridad del grafo de contenido antes de escalar.*
-- [ ] Crear `scripts/validate-cross-references.ts` que verifique:
-  - [ ] Todos los `links` en metadatos → IDs existentes
-  - [ ] Todos los `targetId` de `<ConceptLink>`, `<InteractiveElement>`, `<GlossaryLink>` → IDs existentes
-  - [ ] Todos los `parentTheorem`, `relatedTheorem`, `concept` → contenido real
-  - [ ] Todos los `authors`/`mathematicians` → biografías existentes en `mathematicians/`
-  - [ ] Todos los `demos`/`demostraciones` → demostraciones existentes en `demonstrations/`
-  - [ ] Todos los `corollaries`, `examples`, `exercises`, `requires` → IDs existentes
-  - [ ] Todos los `axiomas` en modelos → axiomas reales
-- [ ] Añadir script al prebuild o CI para que falle en referencias huérfanas
+- [x] Crear `scripts/validate-cross-references.ts` que verifique:
+  - [x] Todos los `links` en metadatos → IDs existentes
+  - [x] Todos los `targetId` de `<ConceptLink>`, `<InteractiveElement>`, `<GlossaryLink>` → IDs existentes
+  - [x] Todos los `parentTheorem`, `relatedTheorem`, `concept` → contenido real
+  - [x] Todos los `authors`/`mathematicians` → biografías existentes en `mathematicians/`
+  - [x] Todos los `demos`/`demostraciones` → demostraciones existentes en `demonstrations/`
+  - [x] Todos los `corollaries`, `examples`, `exercises`, `requires` → IDs existentes
+  - [x] Todos los `axiomas` en modelos → axiomas reales
+- [x] Añadir script al prebuild o CI para que falle en referencias huérfanas — añadido `validate-references` a `dev` y `prebuild`
 
 ### 0.4 Tests automatizados
 *Sin tests no se puede refactorizar con confianza.*
-- [ ] Instalar Vitest + React Testing Library + configurar `vitest.config.ts`
-- [ ] Añadir scripts `test` y `test:coverage` en `package.json`
-- [ ] Tests de esquemas Zod (cada schema, casos válidos e inválidos)
-- [ ] Tests de ContentStore (getTheorem, getDefinition, getExamplesByTheorem, etc.)
-- [ ] Tests de carga: todos los MDX existentes cumplen su schema Zod
-- [ ] Tests de `validate-logical-graph.ts` (IDs huérfanos, ciclos, consistencia topológica)
-- [ ] Tests de stores Zustand (graphStore, UserProgressStore, NavigationStore, GlossaryStore)
-- [ ] Tests de integración: cada ruta de AppRouter renderiza sin error
+- [x] Instalar Vitest + configurar `vitest.config.ts`
+- [x] Añadir scripts `test`, `test:watch` y `test:coverage` en `package.json`
+- [x] Tests de esquemas Zod (cada schema, casos válidos e inválidos) — `tests/schemas.test.ts`
+- [x] Tests de ContentStore (getTheorem, getDefinition, getExamplesByTheorem, etc.) — `tests/content-store.test.ts`
+- [x] Tests de carga: todos los MDX existentes cumplen su schema Zod — `tests/mdx-schemas.test.ts`
+- [x] Tests de `validate-logical-graph.ts` (IDs huérfanos, ciclos, consistencia topológica) — `tests/validate-graph-structure.test.ts`
+- [x] Tests de stores Zustand (UserProgressStore, NavigationStore, GlossaryStore) — `tests/stores/`
+- [x] Tests de integración: cada ruta de AppRouter renderiza sin error — `tests/routes.test.tsx`
 
 ### 0.5 Estandarización del manejo de errores
-- [ ] Definir tipo `Result<T>` para ContentStore (`getTheorem(id): Result<Theorem>` en lugar de `Theorem | null`)
-- [ ] Crear hook `useContent` que unifique loading / error / not-found en todas las páginas
-- [ ] Mejorar `ErrorBoundary`: mostrar error real, botones "Reintentar" y "Volver al inicio"
-- [ ] Página 404 global con diseño consistente
-- [ ] Sistema de notificaciones toast (reemplazar banners inline como "Ejercicio completado")
-- [ ] Registrar errores en consola con contexto (tipo, ID, acción)
+- [x] Definir tipo `Result<T>` para ContentStore (`src/types/result.ts`)
+- [x] Crear hook `useContent` que unifique loading / error / not-found en todas las páginas (`src/hooks/useContent.ts`, aunque devuelve `undefined` no `Result<T>`)
+- [x] Mejorar `ErrorBoundary`: botones "Reintentar" y "Volver al inicio" añadidos
+- [x] Página 404 global con diseño consistente — `NotFoundPage.tsx` con `NotFoundState`
+- [x] Sistema de notificaciones toast (reemplazar banners inline como "Ejercicio completado") — `ToastStore.ts` + `ToastContainer.tsx`
+- [x] Registrar errores en consola con contexto (tipo, ID, acción) — `logger.ts` + `useContent`
 
 ---
 
@@ -98,12 +98,15 @@
 - [ ] Analizar bundle con `rollup-plugin-visualizer`
 
 ### 1.2 Refactorización del editor
-- [ ] Extraer el estado monolítico de `EditorPage.tsx` (~1100 líneas) a hooks y componentes
-- [ ] Extraer componentes: barra lateral, panel de metadatos, modal de enlaces, galería
+- [x] Extraer componentes: barra lateral (`EditorSidebar`), panel de metadatos (`MetadataPanel`), modal de enlaces (`LinkModal`), galería (`ComponentGallery`, `BlocksGallery`), wizard (`NewFileWizard`), toolbar (`EditorToolbar`), preview (`PreviewPane`), imports (`ImportsPanel`), refs (`RefModal`)
+- [ ] Extraer el estado monolítico de `EditorPage.tsx` (~1270 líneas) a hooks
 
 ### 1.3 Unificación de stores y configuración
 - [ ] Unificar stores relacionadas (graphStore + useGraphSandboxStore si hay duplicación)
-- [ ] Centralizar `contentTypeConfig` para todos los tipos de contenido
+- [x] Centralizar `contentTypeConfig` para todos los tipos de contenido — `CONTENT_TYPE_CONFIG` en `constants.ts`
+
+### 1.4 Links
+- [ ] Añadir funcionalidad de ignorar link (para cuando se quiere añadir alguna referencia sin que sea una dependencia)
 
 ---
 
@@ -149,22 +152,22 @@
 
 ### 3.1 Grafo axiómatico
 - **Modelos matemáticos:**
-  - [ ] Panel dinámico que lea modelos desde `src/content/models/`
-  - [ ] Resaltar axiomas activos al seleccionar modelo
-  - [ ] Atenuar/ocultar axiomas excluidos
-  - [ ] Permitir múltiples modelos simultáneos (intersección)
+  - [x] Panel dinámico que lea modelos desde `src/content/models/`
+  - [x] Resaltar axiomas activos al seleccionar modelo
+  - [x] Atenuar/ocultar axiomas excluidos
+  - [x] Permitir múltiples modelos simultáneos (intersección)
   - [ ] Persistir selección en localStorage
 - **Visibilidad:**
-  - [ ] Layout sin solapamientos
+  - [x] Layout sin solapamientos (dagre layout)
   - [ ] Agrupar nodos por tipo con fondos semitransparentes
   - [ ] Estilos de arista: directa (sólida), lema intermedio (discontinua), definicional (punteada)
-  - [ ] Zoom inicial (fitView), minimap, controles de zoom
+  - [x] Zoom inicial (fitView), controles de zoom; falta minimap
   - [ ] Filtros por tipo de nodo (checkboxes)
-  - [ ] Búsqueda de nodo por nombre
+  - [x] Búsqueda de nodo por nombre
 - **Panel lateral:**
-  - [ ] Mostrar: tipo (badge), título, descripción, cadena de dependencias
-  - [ ] Botón "Ver página completa" → `/teorema/:id`, `/definicion/:id`, `/axioma/:id`
-  - [ ] Enlaces a predecesores y sucesores
+  - [x] Mostrar: tipo (badge), título, descripción, cadena de dependencias
+  - [x] Botón "Ver página completa" → `/teorema/:id`, `/definicion/:id`, `/axioma/:id`
+  - [x] Enlaces a predecesores y sucesores
   - [ ] Si es axioma con modelos activos, mostrar en qué modelos está
   - [ ] Diseño responsive (modal en móvil)
 
@@ -174,7 +177,7 @@
   - [ ] Agrupar controles flotantes en barra superior (móvil: hamburguesa)
   - [ ] Asegurar z-index correcto
 - **ConceptLinks:**
-  - [ ] Auditar `ConceptLink.tsx` — ¿abre MarginaliaPanel correctamente?
+  - [x] Auditar `ConceptLink.tsx` — MarginaliaPanel exists in App.tsx, ConceptLink in MDXBlocks
   - [ ] Feedback visual si targetId no existe
   - [ ] Considerar unificar ConceptLink, GlossaryLink, HighlightLink, VisualBind
 
@@ -218,13 +221,13 @@
   - [ ] Extraer lema hardcodeado a constante/metadata
 - **Tipografía y espaciado:**
   - [ ] Unificar `max-w-3xl` vs `max-w-4xl` entre páginas
-  - [ ] SectionTitle, ContentTypeBadge como componentes
+  - [x] SectionTitle, ContentTypeBadge como componentes
 - **Consistencia cromática:**
-  - [ ] Eliminar hex hardcodeados (#2a6a2a, #A42A04, etc.) → tokens Tailwind Arts & Crafts
-  - [ ] Todas las páginas usan `bg-lienzo`, `text-carbon`, `border-carbon/10`
+  - [ ] Eliminar hex hardcodeados (#2a6a2a, #A42A04, etc.) → tokens Tailwind Arts & Crafts (aún hay hardcoded en GraphPage y constants.ts)
+  - [x] Todas las páginas usan `bg-lienzo`, `text-carbon`, `border-carbon/10` (mayoritariamente)
   - [ ] Paleta semántica del STYLEGUIDE reflejada en UI (no solo en diagramas)
 - **Simulación:**
-  - [ ] SimulationLayout: colapsar a ancho completo si no hay simulación
+  - [x] SimulationLayout: colapsar a ancho completo si no hay simulación
   - [ ] Botón "Pantalla completa" en simulaciones JSXGraph
   - [ ] Sincronizar color de elementos interactivos con tokens semánticos
 
@@ -253,12 +256,12 @@
 *Contenido y herramientas que expanden el proyecto.*
 
 ### 5.1 Editor — Sidebar y tipos faltantes
-- [ ] Eliminar `diagrams` y `components` del sidebar
-- [ ] Añadir: exercises, examples, usecases, axioms, models, plans
+- [ ] Eliminar `diagrams` y `components` del sidebar (aún presentes en `EditorSidebar.tsx`)
+- [ ] Añadir: exercises, examples, usecases, axioms, models, plans (no están en sidebar)
 - [ ] Crear templates MDX para tipos faltantes
 - [ ] Panel de metadatos: mostrar **todos** los campos del schema Zod (no solo los presentes)
 - [ ] Validación en tiempo real contra Zod
-- [ ] Modal de enlaces: incluir todos los tipos de contenido en el `<select>`
+- [x] Modal de enlaces: incluye select con opciones de contenido
 - [ ] Actualizar `GET /api/list-content` si es necesario
 
 ### 5.2 Proposiciones
@@ -278,11 +281,11 @@
 
 *Poner el proyecto en producción.*
 
-- [ ] Decidir plataforma de hosting (Vercel, Netlify, GitHub Pages, servidor propio)
+- [x] Decidir plataforma de hosting (GitHub Pages — `homepage` en `package.json`)
 - [ ] Configurar dominio personalizado
-- [ ] SPA redirects (fallback a index.html para rutas dinámicas)
-- [ ] Build optimizado (`vite build`)
+- [x] SPA redirects (`cp dist/index.html dist/404.html` en build)
+- [x] Build optimizado (`tsc -b && vite build`)
 - [ ] CI/CD con GitHub Actions (build automático en push a main)
-- [ ] Script de prebuild: `validate-logical-graph.ts` + `validate-cross-references.ts`
+- [ ] Script de prebuild: solo `validate-logical-graph.ts`, falta `validate-cross-references.ts`
 - [ ] Verificar assets estáticos en build
 - [ ] Probar build en producción localmente

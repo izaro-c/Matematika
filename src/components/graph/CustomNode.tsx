@@ -1,5 +1,6 @@
 import { Handle, Position } from '@xyflow/react';
 import type { NodeProps } from '@xyflow/react';
+import { TYPE_STYLES } from '../../config/constants';
 
 export interface MathNodeData {
   label: string;
@@ -10,22 +11,6 @@ export interface MathNodeData {
   scale: number;
   isHighlighted: boolean;
 }
-
-interface TypeStyle {
-  bg: string;
-  border: string;
-  text: string;
-  badge: string;
-  ringColor: string;
-}
-
-const TYPE_STYLES: Record<string, TypeStyle> = {
-  axioma: { bg: '#1c1917', border: '#1c1917', text: '#f8f6f1', badge: 'AXIOMA', ringColor: '#f5c542' },
-  lema: { bg: '#4a6070', border: '#4a6070', text: '#ffffff', badge: 'LEMA', ringColor: '#a0c4d8' },
-  corolario: { bg: '#b85c38', border: '#b85c38', text: '#ffffff', badge: 'COROLARIO', ringColor: '#f5a07a' },
-  teorema: { bg: '#6b9e6b', border: '#6b9e6b', text: '#ffffff', badge: 'TEOREMA', ringColor: '#a8d5a8' },
-  definicion: { bg: '#8b7355', border: '#8b7355', text: '#ffffff', badge: 'DEFINICION', ringColor: '#d2b48c' },
-};
 
 export function MathNode({ data }: NodeProps) {
   const { label, nodeType, isActive, scale, isHighlighted } = (data as unknown) as MathNodeData;

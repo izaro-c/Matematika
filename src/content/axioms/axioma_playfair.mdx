@@ -1,0 +1,81 @@
+export const metadata = {
+  id: "axioma-playfair",
+  type: "axioma",
+  title: "Postulado de Playfair",
+  description: "Formulación equivalente del Quinto Postulado de Euclides debida a John Playfair: por un punto exterior a una recta pasa una y solo una paralela.",
+  statement: "Por un punto exterior a una recta dada, se puede trazar una y solo una recta paralela a la recta dada.",
+  tags: ["geometría", "geometría euclidiana", "paralelismo", "postulados"],
+  authors: ["Euclides", "John Playfair"],
+  links: ["postulado-v", "postulado-i", "axioma-incidencia-1", "proposicion-1-27", "axioma-paralelas"],
+  hasSimulation: true
+};
+
+import { ParallelLines } from '../../diagrams/Euclides/ParallelLines';
+import { InteractiveElement } from "../../components/ui/VisualBind";
+
+export const Simulation = ParallelLines;
+import { ConceptLink } from "../../components/ui/ConceptLink";
+
+<Capitular letra="E" />l **Postulado de Playfair** es la formulación más conocida y didáctica del Quinto Postulado de Euclides. Fue popularizada por John Playfair en su obra *Elements of Geometry* (1795) y es la versión que suele enseñarse en los cursos modernos de geometría.
+
+<Separador />
+
+### Enunciado
+
+<Definicion>
+  Por un punto exterior a una recta dada, se puede trazar una y solo una recta paralela a la recta dada.
+</Definicion>
+
+Dada una recta <InteractiveElement target="lineR" color="terracota">$r$</InteractiveElement> y un punto $P$ tal que $P \notin r$, existe una única recta <InteractiveElement target="lineS" color="salvia">$s$</InteractiveElement> que satisface $P \in s$ y $s \cap r = \emptyset$.
+
+<Formula title="Existencia y Unicidad de la Paralela">
+  $\forall r, \forall P \notin r \ \exists! s : P \in s \land s \cap r = \emptyset$
+</Formula>
+
+<Separador />
+
+### Equivalencia con el Quinto Postulado
+
+El Postulado de Playfair es **equivalente** al enunciado original de Euclides (<ConceptLink targetId="postulado-v">Postulado V</ConceptLink>), asumiendo los demás postulados y nociones comunes. La equivalencia se demuestra en dos direcciones:
+
+**Playfair $\implies$ Euclides V**: Dadas dos rectas $l_1, l_2$ y una transversal $t$, si los ángulos internos de un lado suman menos de $180^\circ$, entonces $l_1$ y $l_2$ no pueden ser paralelas (por Playfair), luego se cortan.
+
+**Euclides V $\implies$ Playfair**: Si por $P$ hubiera dos paralelas distintas a $r$, se podría construir una configuración que contradice el Quinto Postulado.
+
+<Nota>
+  La equivalencia entre ambas formulaciones es un resultado clásico que presupone los restantes postulados de Euclides. Sin ellos, la equivalencia no se sostiene. En particular, la <ConceptLink targetId="geometria-neutral">geometría neutral</ConceptLink> acepta los cuatro primeros postulados pero no el Quinto, y en ella no puede demostrarse el Postulado de Playfair.
+</Nota>
+
+<Separador />
+
+### Importancia del Postulado de Playfair
+
+La formulación de Playfair tiene ventajas pedagógicas evidentes:
+1. **Simplicidad**: es más fácil de entender que el enunciado original de Euclides.
+2. **Intuición**: captura directamente la noción de paralelismo.
+3. **Contraste geométrico**: permite comparar directamente las geometrías:
+   - **Euclidiana**: una paralela (Postulado de Playfair).
+   - **Hiperbólica**: infinitas paralelas.
+   - **Elíptica**: ninguna paralela.
+
+<Separador />
+
+### Relación con la Axiomática de Hilbert
+
+En la axiomática de Hilbert, el Postulado de Playfair se demuestra como un teorema a partir de los axiomas de <ConceptLink targetId="axioma-incidencia-1">incidencia</ConceptLink>, <ConceptLink targetId="axioma-orden-1">orden</ConceptLink> y <ConceptLink targetId="axioma-congruencia-segmentos">congruencia</ConceptLink>, junto con el axioma de las paralelas de Hilbert (que es esencialmente el Postulado de Playfair).
+
+<Separador />
+
+### Equivalencia con el Postulado V de Euclides
+
+| Postulado de Playfair | Postulado V de Euclides |
+|---|---|
+| "Por un punto exterior a una recta pasa una y solo una paralela" | "Si los ángulos internos de un mismo lado suman menos de $180^\circ$, las rectas se cortan" |
+
+**Equivalencia mutua** (asumiendo los demás axiomas):
+
+- **Playfair $\Rightarrow$ Euclides V**: Si $\alpha + \beta < 180^\circ$, construimos la recta que hace $\alpha' + \beta = 180^\circ$ con la transversal. Esta recta es paralela a la segunda (por la <ConceptLink targetId="proposicion-1-27">Proposición I.27</ConceptLink>). Por Playfair, la recta original (con $\alpha + \beta < 180^\circ$) debe cortar a la segunda, pues si fuera paralela coincidiría con la primera, contradiciendo que $\alpha \neq \alpha'$.
+
+- **Euclides V $\Rightarrow$ Playfair**: Si por $P$ hubiera dos paralelas a $r$, se podría construir una configuración con ángulos internos menores que $180^\circ$ que no se cortan, contradiciendo Euclides V.
+
+La equivalencia es un resultado clásico que aparece en todas las geometrías euclidianas. Es también el punto de partida para definir las geometrías no euclidianas por negación del axioma de paralelas.

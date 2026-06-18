@@ -1,0 +1,92 @@
+export const metadata = {
+  id: "sistema-axiomatico",
+  type: "definicion",
+  title: "Sistema Axiomático, Consistencia, Independencia y Completitud",
+  description: "Definición formal de sistema axiomático y las propiedades metalógicas de consistencia, independencia y completitud.",
+  tags: ["lógica", "fundamentos", "sistemas formales", "metamatemática"],
+  links: ["isomorfismo-modelos", "axioma-incidencia-1"]
+};
+
+import { ConceptLink } from "../../components/ui/ConceptLink";
+import { InteractiveElement } from "../../components/ui/VisualBind";
+
+<Capitular letra="U" />n **sistema axiomático** es la formalización más rigurosa de una teoría matemática. Consiste en un conjunto finito de enunciados primitivos (los **axiomas**) a partir de los cuales, mediante reglas de inferencia lógica, se deducen todos los teoremas de la teoría.
+
+<Separador />
+
+### Definición Formal
+
+<Definicion>
+  Un **sistema axiomático** $\Sigma$ es un par $(\mathcal{A}, \mathcal{R})$ donde:
+  - $\mathcal{A}$ es un conjunto de **axiomas** (enunciados que se aceptan sin demostración)
+  - $\mathcal{R}$ es un conjunto de **reglas de inferencia** que permiten derivar teoremas a partir de los axiomas
+
+  Los **términos primitivos** son aquellos que no se definen explícitamente, sino que su significado queda determinado por las relaciones que establecen los axiomas.
+</Definicion>
+
+<Separador />
+
+### Propiedades Metalógicas
+
+#### Consistencia
+
+<Definicion>
+  Un sistema axiomático es **consistente** (o no contradictorio) si no es posible derivar simultáneamente un enunciado $P$ y su negación $\neg P$ a partir de sus axiomas.
+</Definicion>
+
+La consistencia es la propiedad más fundamental: un sistema inconsistente es trivial, pues de él se sigue cualquier enunciado (*ex falso quodlibet*). La demostración de consistencia suele realizarse exhibiendo un modelo concreto que satisface todos los axiomas.
+
+<Formula>
+  $\Sigma \text{ es consistente } \iff \neg \exists P : \Sigma \vdash P \land \Sigma \vdash \neg P$
+</Formula>
+
+#### Independencia
+
+<Definicion>
+  Un axioma $A \in \mathcal{A}$ es **independiente** del resto de axiomas $\mathcal{A} \setminus \{A\}$ si no puede demostrarse a partir de ellos. Equivalentemente, si existe un modelo que satisface todos los axiomas excepto $A$.
+</Definicion>
+
+La independencia es crucial para la economía axiomática. El ejemplo clásico es el <ConceptLink targetId="postulado-v">Quinto Postulado de Euclides</ConceptLink>, cuya independencia se demostró mediante la construcción de las geometrías no euclidianas. Para probar que un axioma es independiente, se construye un modelo donde todos los demás axiomas se cumplen pero él no.
+
+<Formula>
+  $A \text{ es independiente de } \mathcal{A}\setminus\{A\} \iff \exists \mathfrak{M} : \mathfrak{M} \models (\mathcal{A}\setminus\{A\}) \land \mathfrak{M} \not\models A$
+</Formula>
+
+#### Completitud
+
+<Definicion>
+  Un sistema axiomático es **completo** si para todo enunciado $P$ expresable en su lenguaje, se cumple $P$ o su negación $\neg P$ es demostrable a partir de los axiomas.
+</Definicion>
+
+<Formula>
+  $\Sigma \text{ es completo } \iff \forall P : \Sigma \vdash P \ \lor \ \Sigma \vdash \neg P$
+</Formula>
+
+Un sistema completo no deja preguntas abiertas: toda afirmación bien formulada tiene un valor de verdad decidible dentro del sistema. Los Teoremas de Incompletitud de Gödel demostraron que ningún sistema axiomático lo suficientemente expresivo (que incluya la aritmética) puede ser completo y consistente a la vez.
+
+<Separador />
+
+### Taxonomía de Sistemas Axiomáticos
+
+| Propiedad | Significado | Ejemplo |
+|-----------|-------------|---------|
+| **Consistente** | No genera contradicciones | Geometría euclidiana |
+| **Inconsistente** | Permite demostrar cualquier cosa | Teoría de conjuntos ingenua (paradoja de Russell) |
+| **Independiente** | Ningún axioma es redundante | Axiomas de Hilbert para la geometría |
+| **Dependiente** | Algún axioma es demostrable desde otros | Postulado de Playfair (equivale al V de Euclides) |
+| **Completo** | Toda afirmación es decidible | Geometría elemental de Tarski |
+| **Incompleto** | Existen afirmaciones indecidibles | Aritmética de Peano (Gödel) |
+
+<Nota>
+  La geometría elemental de Tarski es un ejemplo notable de sistema axiomático **completo** y **decidible**. Sin embargo, para ser completo, Tarski tuvo que sacrificar la expresividad: su lenguaje no incluye la noción de conjunto ni la multiplicación de números reales arbitrarios, solo relaciones entre puntos.
+</Nota>
+
+<Separador />
+
+### Relación con la Geometría de Incidencia
+
+Los <ConceptLink targetId="axioma-incidencia-1">axiomas de incidencia</ConceptLink> (I-1, I-2, I-3) forman un pequeño sistema axiomático que ilustra perfectamente estas propiedades:
+
+- **Consistencia**: el <ConceptLink targetId="modelo-tres-puntos">Modelo de Tres Puntos</ConceptLink> demuestra que son consistentes
+- **Independencia**: cada axioma es independiente de los otros dos (se pueden construir modelos que violen uno pero cumplan los otros)
+- **Completitud**: el sistema de incidencia solo **no** es completo — existen muchas geometrías de incidencia no isomorfas que satisfacen I-1, I-2, I-3 (<ConceptLink targetId="modelo-tres-puntos">modelo de 3 puntos</ConceptLink>, <ConceptLink targetId="plano-afin">plano afín</ConceptLink>, <ConceptLink targetId="plano-proyectivo">plano proyectivo</ConceptLink>)

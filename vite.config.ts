@@ -7,8 +7,9 @@ import path from 'path'
 import { fileURLToPath } from 'url'
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url))
-
 import remarkMath from 'remark-math'
+import remarkGfm from 'remark-gfm'
+
 import rehypeKatex from 'rehype-katex'
 
 import type { Plugin, ViteDevServer } from 'vite';
@@ -165,7 +166,7 @@ export default defineConfig({
     {
       enforce: 'pre',
       ...mdx({
-        remarkPlugins: [remarkMath],
+        remarkPlugins: [remarkGfm, remarkMath],
         rehypePlugins: [rehypeKatex],
         providerImportSource: "@mdx-js/react"
       }),

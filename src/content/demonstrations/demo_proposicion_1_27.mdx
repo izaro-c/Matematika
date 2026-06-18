@@ -1,0 +1,88 @@
+export const metadata = {
+  "id": "demo-proposicion-1-27",
+  "title": "Demostración del Criterio de Rectas Paralelas",
+  "description": "Demostración por contradicción de la Proposición I.27 de Euclides: la igualdad de ángulos alternos internos implica paralelismo.",
+  "parentTheorem": "proposicion-1-27",
+  "layout": "split",
+  "proofMethod": "contradiccion",
+  "authors": ["Euclides"],
+  "tags": ["geometría", "geometría euclidiana", "paralelismo", "ángulos"],
+  "type": "demostracion"
+};
+
+import { ParallelLines } from '../../diagrams/Euclides/ParallelLines';
+import { DemonstrationSection } from "../../components/content/DemonstrationSection";
+import { MedievalStep } from "../../components/content/MedievalStep";
+import { ConceptLink } from "../../components/ui/ConceptLink";
+import { InteractiveElement } from "../../components/ui/VisualBind";
+
+<DemonstrationSection diagram={<ParallelLines />}>
+
+<MedievalStep number={1} title="Hipótesis" />
+
+Supongamos que la recta transversal <InteractiveElement target="transversal" color="pizarra">$t$</InteractiveElement> corta a las rectas <InteractiveElement target="lineR" color="terracota">$r$</InteractiveElement> y <InteractiveElement target="lineS" color="salvia">$s$</InteractiveElement> formando los ángulos alternos internos <InteractiveElement target="altAngle1" color="terracota">$\alpha$</InteractiveElement> y <InteractiveElement target="altAngle2" color="terracota">$\beta$</InteractiveElement> tales que $\alpha = \beta$.
+
+<Formula>
+  $\alpha = \beta$
+</Formula>
+
+Debemos demostrar que $r \parallel s$.
+
+</DemonstrationSection>
+
+<DemonstrationSection diagram={<ParallelLines />}>
+
+<MedievalStep number={2} title="Suposición para la Contradicción" />
+
+Supongamos, por el contrario, que $r$ y $s$ **no** son paralelas. Entonces, al prolongarlas indefinidamente (<ConceptLink targetId="postulado-ii">Postulado II</ConceptLink>), se encontrarán en algún punto. Sin pérdida de generalidad, supongamos que se cortan del lado de $\alpha$ y $\beta$.
+
+Llamemos $P$ al punto de intersección de $r$ y $s$.
+
+</DemonstrationSection>
+
+<DemonstrationSection diagram={<ParallelLines />}>
+
+<MedievalStep number={3} title="Aplicación del Teorema del Ángulo Exterior" />
+
+Si $r$ y $s$ se cortan en $P$, entonces junto con la transversal $t$ forman un triángulo. En este triángulo:
+
+<ul>
+  <li><InteractiveElement target="altAngle2" color="terracota">$\beta$</InteractiveElement> es uno de los ángulos interiores.</li>
+  <li><InteractiveElement target="altAngle1" color="terracota">$\alpha$</InteractiveElement> es un ángulo exterior (adyacente al otro ángulo interior formado por $r$ y $t$).</li>
+</ul>
+
+Por la <ConceptLink targetId="proposicion-1-16">Proposición I.16</ConceptLink> (Teorema del Ángulo Exterior):
+
+$$
+\alpha > \beta
+$$
+
+</DemonstrationSection>
+
+<DemonstrationSection diagram={<ParallelLines />}>
+
+<MedievalStep number={4} title="Contradicción" />
+
+Hemos obtenido $\alpha > \beta$, pero esto contradice la hipótesis inicial $\alpha = \beta$.
+
+<Formula>
+  $\alpha = \beta \quad \text{y} \quad \alpha > \beta \quad \text{(contradicción)}$
+</Formula>
+
+La contradicción proviene de suponer que $r$ y $s$ se cortan. Por tanto, dicha suposición es falsa.
+
+</DemonstrationSection>
+
+<DemonstrationSection diagram={<ParallelLines />}>
+
+<MedievalStep number={5} title="Conclusión" />
+
+Como $r$ y $s$ no se cortan en ningún punto, por definición son **paralelas**:
+
+$$
+r \parallel s
+$$
+
+Queda demostrado que la igualdad de los ángulos alternos internos es condición suficiente para el paralelismo. $\blacksquare$
+
+</DemonstrationSection>

@@ -191,6 +191,48 @@ body {
   animation: simple-fade 0.2s ease-in forwards;
 }
 
+/* Tablas con estilo clásico de libro de matemáticas */
+.prose table {
+  width: 100%;
+  border-collapse: collapse;
+  font-family: ui-serif, Georgia, Cambria, "Times New Roman", Times, serif;
+  margin: 2.5rem 0;
+  font-size: 0.9375rem;
+  line-height: 1.7;
+  border: 1px solid color-mix(in srgb, var(--theme-carbon) 20%, transparent);
+}
+
+.prose thead {
+  border-bottom: 1px solid color-mix(in srgb, var(--theme-terracota) 40%, transparent);
+}
+
+.prose th {
+  text-align: left;
+  font-weight: 600;
+  font-style: italic;
+  font-size: 1rem;
+  color: var(--theme-terracota);
+  padding: 0.7rem 1rem;
+  line-height: 1.5;
+  background: color-mix(in srgb, var(--theme-terracota) 6%, transparent);
+}
+
+.prose td {
+  padding: 0.7rem 1rem;
+  color: var(--theme-carbon);
+  line-height: 1.7;
+  vertical-align: top;
+  border-bottom: 1px solid color-mix(in srgb, var(--theme-carbon) 8%, transparent);
+}
+
+.prose tbody tr:last-child td {
+  border-bottom: none;
+}
+
+.prose tbody tr:hover {
+  background-color: color-mix(in srgb, var(--theme-carbon) 2%, transparent);
+}
+
 /* Suavizado en enlaces globales pero menos elástico */
 a, button {
   transition: all 0.15s ease-out;

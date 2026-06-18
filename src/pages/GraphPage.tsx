@@ -2,6 +2,7 @@ import React, { useMemo, useState, useCallback, useRef, useEffect } from 'react'
 import { useLocation, Link } from 'wouter';
 import ForceGraph2D from 'react-force-graph-2d';
 import { db } from '../store/content';
+import { GRAPH_NODE_COLORS } from '../config/constants';
 import { useGlossaryStore } from '../store/GlossaryStore';
 import { useProgressStore } from '../store/UserProgressStore';
 
@@ -226,18 +227,23 @@ export const GraphPage: React.FC = () => {
   }, [setLocation, openTerm]);
 
   const getNodeColor = (node: GraphNode) => {
-    switch (node.group) {
-      case 'central': return '#333333'; // Carbon
-      case 'branch': return '#C86446'; // Terracota
-      case 'theorem': return '#A2C2A2'; // Salvia
-      case 'lemma': return '#A2C2A2'; 
-      case 'corollary': return '#A2C2A2';
-      case 'definition': return '#5D7080'; // Pizarra
-      case 'usecase': return '#C86446'; // Terracota (Diferente forma/val)
-      case 'example': return '#5D7080'; // Pizarra
-      case 'exercise': return '#A2C2A2'; // Salvia
-      default: return '#cccccc';
-    }
+    const groupMap: Record<string, string> = {
+      'teorema': 'theorem',
+      'lema': 'lemma',
+      'corolario': 'corollary',
+      'definicion': 'definition',
+      'ejemplo': 'example',
+      'ejercicio': 'exercise',
+      'demostracion': 'demostracion',
+      'caso_de_uso': 'usecase',
+      'matematico': 'mathematician',
+      'leccion': 'lesson',
+      'modelo': 'modelo',
+      'plan_de_estudio': 'plan_de_estudio',
+      'axioma': 'axioma',
+    };
+    const key = groupMap[node.group] || node.group;
+    return GRAPH_NODE_COLORS[key] || '#cccccc';
   };
 
   const drawNode = useCallback((node: GraphNode, ctx: CanvasRenderingContext2D, globalScale: number) => {

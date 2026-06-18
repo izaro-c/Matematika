@@ -54,23 +54,49 @@ Diagram (left panel)
 
 | Store | Import | When to Use | How Text Connects |
 |---|---|---|---|
-| **MathStore** | `import { useMathStore } from '../../store/MathStoreContext'` | Per-page isolated state. Use when the diagram has specific named elements to highlight or variables to share. | `<InteractiveElement target="name" color="token">` (from MDXBlocks) calls `setVariable('highlight', target)` |
-| **LessonStore** | `import { useLessonStore } from '../../store/LessonStore'` | Global lesson state. Use when the diagram responds to step changes or when multiple diagrams share state. | `<VisualBind element="name" color="token">` (from VisualBind.tsx) calls `setActiveStep(element)` |
+| **MathStore** | `import { useMathStore } from '../../store/MathStoreContext'` | Per-page isolated state. Use when the diagram reads or sets variables other than highlight. The `InteractiveElement` in `MDXBlocks.tsx` writes to MathStore. | `setVariable('highlight', target)` on hover |
+| **LessonStore** | `import { useLessonStore } from '../../store/LessonStore'` | Global lesson state. Use when the diagram responds to step changes or hover highlights. The `InteractiveElement` from `VisualBind.tsx` writes to LessonStore. | `setActiveStep(element)` on hover, `setActiveStep(null)` on leave |
 
-**IMPORTANT:** `InteractiveElement` and `VisualBind` are both registered in `MDXComponents` (MDXBlocks.tsx). `InteractiveElement` uses MathStore; `VisualBind` uses LessonStore. Pick one communication channel and be consistent.
+**CRITICAL DISTINCTION:** There are TWO `InteractiveElement` components in the codebase:
 
-### 2.2 MathStore Pattern (for JSXGraph / SVG diagrams)
+| File | Import Path | Writes to | Used By |
+|---|---|---|---|
+| `VisualBind.tsx` | `../../components/ui/VisualBind` | `LessonStore.activeStep` | All content pages and demonstrations |
+| `MDXBlocks.tsx` | `../../components/ui/MDXBlocks` | `MathStore.variables['highlight']` | (Not used by content — avoid) |
+
+**All demonstration and content MDX files use the VisualBind variant.** Therefore, Euclides diagrams MUST read from `LessonStore`.
+
+### 2.2 Store Bridge Pattern (REQUIRED for Euclides diagrams)
+
+Euclides diagrams must listen to BOTH `MathStore.variables.highlight` (for `MedievalStep` backward compat) AND `LessonStore.activeStep` (for `InteractiveElement`/`VisualBind` hovers):
+
+```typescript
+import { useMathStore } from '../../store/MathStoreContext';
+import { useLessonStore } from '../../store/LessonStore';
+
+// Inside component:
+const mathHighlight = useMathStore(state => state.variables['highlight']);
+const lessonHighlight = useLessonStore(state => state.activeStep);
+const highlight = mathHighlight || lessonHighlight;
+```
+
+This ensures that both hover-based (`InteractiveElement`→LessonStore) and scroll-based (`MedievalStep`→MathStore) highlighting work, even though the primary mechanism is now LessonStore.
+
+### 2.3 MathStore Pattern (for JSXGraph / SVG diagrams)
 
 ```typescript
 import { useRef, useEffect } from 'react';
 import JXG from 'jsxgraph';
 import { useMathStore } from '../../store/MathStoreContext';
+import { useLessonStore } from '../../store/LessonStore';
 
 export const MyDiagram = () => {
     const boardRef = useRef<HTMLDivElement>(null);
     const elementsRef = useRef<Record<string, unknown>>({});
     const setVariable = useMathStore(state => state.setVariable);
-    const highlight = useMathStore(state => state.variables['highlight']);
+    const mathHighlight = useMathStore(state => state.variables['highlight']);
+    const lessonHighlight = useLessonStore(state => state.activeStep);
+    const highlight = mathHighlight || lessonHighlight;
 
     // 1. INIT — Create board once
     useEffect(() => {
@@ -101,8 +127,11 @@ export const MyDiagram = () => {
         const { myPoint, board } = elementsRef.current as Record<string, any>;
         if (!board) return;
 
-        // Reset all
-        myPoint.setAttribute({ size: 4, fillColor: '#C86446' });
+        // Reset ALL elements to defaults
+        // CRITICAL: EVERY attribute changed below in the highlight section
+        // MUST be explicitly reset here. Otherwise the highlight "sticks"
+        // permanently after the first mouse leave.
+        myPoint.setAttribute({ size: 4, fillColor: '#C86446', strokeColor: '#C86446' });
 
         // Apply highlight
         if (highlight === 'myPoint') myPoint.setAttribute({ size: 10, fillColor: '#f5c542' });
@@ -371,27 +400,33 @@ Each step has its own diagram (e.g., `RearrangementStep1`, `RearrangementStep2`)
 - Wrap each step in `<DemonstrationSection diagram={<StepComponent />}>`
 - Steps use `<MedievalStep>` for sequential progression
 
-### Approach B — Single Component with Step Modes (Recommended)
+### Approach B — Single Component with Step Modes (Recommended when steps share a diagram)
 A single diagram component handles all steps via the `highlight` variable:
-- The diagram renders ALL geometry upfront but toggles visibility/emphasis via `switch (highlight)`
-- Each MedievalStep sets `target="stepN"` which triggers `MathStore.highlight = "stepN"` via IntersectionObserver
-- The diagram's `useEffect` on `highlight` adjusts `setAttribute({ visible }), strokeWidth, fillOpacity` per step
+- The diagram renders ALL geometry upfront but toggles visibility/emphasis via `if (highlight === 'stepValue')`
+- Each step body contains `<InteractiveElement>` (not MedievalStep target) for hover-based highlight
+- The diagram's `useEffect` on `highlight` adjusts `setAttribute` per matched value
 
 ```
-MDX: <MedievalStep number={1} title="..." target="step1" />
-       ↓ IntersectionObserver
-MathStore: highlight = "step1"
+MDX: <InteractiveElement target="sideAB" color="terracota">texto</InteractiveElement>
+       ↓ onMouseEnter
+LessonStore: activeStep = "sideAB"
+       ↓ useEffect (store bridge)
+Diagram: if (highlight === 'sideAB') sideAB.setAttribute({ strokeWidth: 6 });
+       ↓ onMouseLeave
+VisualBind: setActiveStep(null)
        ↓ useEffect
-Diagram: switch(highlight) { case 'step1': showOnlyDiameter(); ... }
+Diagram: resets all elements to default values
 ```
 
 ### CRITICAL Rules for Split-Layout Demos
 
-1. **Every MedievalStep MUST have a `target` prop** — without it, the diagram cannot react to the current step
-2. **Every step must produce a different visual state** — the diagram should not look identical across steps
-3. **Each step's body MUST contain `<InteractiveElement>` references** — these create hover-based cross-references between text and diagram
-4. **Element/target names MUST match exactly** between the diagram logic and the MDX `<InteractiveElement target="...">` prop
-5. **`\sen` is forbidden** in all diagram code — use `sin` as plain text (e.g. `a/sin(α)`), never `sen`
+1. **`<MedievalStep>` MUST NOT have a `target` prop** — highlights come from `<InteractiveElement>` body text only, not from MedievalStep's IntersectionObserver
+2. **Every step's body MUST contain `<InteractiveElement>` references** — these create hover-based cross-references between text and diagram
+3. **Element/target names MUST match exactly** between the diagram logic and the MDX `<InteractiveElement target="...">` prop
+4. **The highlight `useEffect` MUST reset EVERY attribute** that any highlight block changes. Missing a reset attribute causes that attribute to "stick" permanently after first hover
+5. **Demonstration MDX files import `InteractiveElement` from `VisualBind.tsx`** (NOT from `MDXBlocks.tsx`), so diagrams must listen to `LessonStore` (via the store bridge pattern in §2.2)
+6. **Each step can have its own diagram** by wrapping it in separate `<DemonstrationSection>` blocks
+7. **`\sen` is forbidden** in all diagram code — use `sin` as plain text (e.g. `a/sin(α)`), never `sen`
 
 ## 12. Quality Checklist (Run Before Completing)
 
@@ -407,7 +442,11 @@ Diagram: switch(highlight) { case 'step1': showOnlyDiameter(); ... }
 - [ ] The diagram has `touch-none` class for mobile compatibility
 - [ ] The diagram has adequate minimum height (`min-h-[400px]` SVG, `min-h-[500px]` JSXGraph)
 - [ ] Interactive elements have visual feedback on hover/highlight (opacity change, size change, color change)
-- [ ] All `<MedievalStep>` in split-layout demos have a `target` prop matching a diagram mode
+- [ ] Spanish: `<MedievalStep>` has NO `target` prop (highlight is from `<InteractiveElement>` only)
 - [ ] Each step body has at least one `<InteractiveElement>` pointing to the diagram
+- [ ] `InteractiveElement` is imported from `VisualBind.tsx` (not `MDXBlocks.tsx`)
+- [ ] The diagram uses the **store bridge**: reads from both `MathStore.variables['highlight']` AND `LessonStore.activeStep`
+- [ ] The highlight `useEffect` reset block restores EVERY attribute that any highlight condition modifies — no "sticky" highlights
+- [ ] Demonstration files import `InteractiveElement` from `"../../components/ui/VisualBind"` (not MDXBlocks)
 - [ ] No `\sen` anywhere — LaTeX uses `\sin`, plain text uses `sin`
-- [ ] The diagram's highlight handler produces a distinct visual state for each step value
+- [ ] The diagram's highlight handler produces a distinct visual state for each target value

@@ -46,12 +46,20 @@ export class ErrorBoundary extends Component<Props, State> {
             <pre className="text-xs bg-carbon/5 p-4 overflow-auto text-carbon/60 rounded">
               {this.state.error?.toString()}
             </pre>
-            <button 
-              className="mt-4 px-4 py-2 bg-carbon text-white text-sm tracking-widest uppercase hover:bg-carbon/80 transition-colors"
-              onClick={() => window.location.reload()}
-            >
-              Recargar página
-            </button>
+            <div className="mt-4 flex gap-3">
+              <button 
+                className="px-4 py-2 bg-carbon text-white text-sm tracking-widest uppercase hover:bg-carbon/80 transition-colors"
+                onClick={() => window.location.reload()}
+              >
+                Reintentar
+              </button>
+              <a 
+                href="/"
+                className="px-4 py-2 border border-carbon/30 text-carbon text-sm tracking-widest uppercase hover:bg-carbon/5 transition-colors"
+              >
+                Volver al inicio
+              </a>
+            </div>
           </div>
         </div>
       );

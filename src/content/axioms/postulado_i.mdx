@@ -1,0 +1,58 @@
+export const metadata = {
+  id: "postulado-i",
+  type: "axioma",
+  title: "Postulado I: Trazado de la Recta",
+  description: "Postulado fundamental que garantiza la posibilidad de trazar una línea recta entre dos puntos cualesquiera.",
+  statement: "Postúlese el trazar una línea recta desde un punto cualquiera hasta un punto cualquiera.",
+  tags: ["geometría", "geometría euclidiana", "elementos de euclides", "postulados"],
+  authors: ["Euclides"],
+  links: ["terminos-primitivos-euclides", "nociones-comunes", "axioma-incidencia-1", "postulado-ii"]
+};
+
+import { InteractiveElement } from "../../components/ui/VisualBind";
+import { ConceptLink } from "../../components/ui/ConceptLink";
+
+<Capitular letra="E" />l **Primer Postulado** de Euclides establece la operación geométrica más básica: la conexión rectilínea entre dos puntos. Es la primera piedra de la construcción geométrica.
+
+<Separador />
+
+### Enunciado
+
+<Definicion>
+  Postúlese el trazar una línea recta desde un punto cualquiera hasta un punto cualquiera.
+</Definicion>
+
+Dados dos puntos <InteractiveElement target="puntoA" color="terracota">$A$</InteractiveElement> y <InteractiveElement target="puntoB" color="pavo">$B$</InteractiveElement>, se puede construir un segmento rectilíneo $\overline{AB}$ que los une.
+
+<Formula title="Notación">
+  $\text{Sea } \overline{AB} \text{ el segmento de recta con extremos } A \text{ y } B.$
+</Formula>
+
+<Separador />
+
+### Relación con la Axiomática de Hilbert
+
+Este postulado se corresponde directamente con el <ConceptLink targetId="axioma-incidencia-1">Primer Axioma de Incidencia</ConceptLink> de Hilbert: "Dados dos puntos distintos, existe una y solo una recta que los contiene". Sin embargo, Euclides añade un matiz constructivo: no solo afirma la existencia, sino que la postula como una operación realizable.
+
+<Separador />
+
+### Implicaciones
+
+El Postulado I es necesario para:
+
+1. **La construcción del triángulo**: sin poder trazar segmentos, no hay polígonos.
+2. **La definición de distancia**: la recta entre dos puntos es la base de la métrica euclidiana.
+3. **Toda la geometría de incidencia**: las relaciones entre puntos y rectas se fundan en esta operación.
+
+<Nota>
+  En la geometría moderna, este postulado es equivalente a dotar al espacio de una **estructura métrica** basada en la distancia euclidiana $d(A,B) = \sqrt{(x_B - x_A)^2 + (y_B - y_A)^2}$.
+</Nota>
+
+<Separador />
+
+### Equivalencia Moderna
+
+| Euclides (Postulado I) | Hilbert |
+|---|---|
+| "Trazar una línea recta desde un punto hasta otro" | <ConceptLink targetId="axioma-incidencia-1">Axioma de Incidencia I-1</ConceptLink>: "Dados dos puntos distintos $A$ y $B$, existe una única recta $r$ que los contiene". |
+| **Diferencia clave**: Euclides lo concibe como una **acción constructiva** (se puede trazar), mientras que Hilbert lo formula como una **existencia lógica**. En la axiomática moderna, el acto constructivo se recupera mediante las reglas de la regla y compás, pero no forma parte de los axiomas de incidencia. |

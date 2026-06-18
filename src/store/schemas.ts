@@ -32,11 +32,10 @@ export const TheoremSchema = z.object({
   color: z.string().optional(),
   branch: z.string().optional(),
   branches: z.array(z.string()).optional(),
-  mathematicians: z.array(z.string()).optional(),
+  authors: z.array(z.string()).optional(),
   lemmas: z.array(z.string()).optional(),
   corollaries: z.array(z.string()).optional(),
   demos: z.array(z.string()).optional(),
-  demostraciones: z.array(z.string()).optional(),
   /** IDs de definiciones que este teorema usa formalmente (grafo de dependencia) */
   requires: z.array(z.string()).optional(),
   /** IDs de ejemplos resueltos asociados */

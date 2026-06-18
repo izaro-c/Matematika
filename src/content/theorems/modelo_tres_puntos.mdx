@@ -1,0 +1,74 @@
+export const metadata = {
+  id: "modelo-tres-puntos",
+  type: "teorema",
+  title: "Modelo de Tres Puntos",
+  description: "La geometría de incidencia mínima: demostración de consistencia de los axiomas I-1, I-2 e I-3.",
+  statement: "Existe un modelo finito de la geometría de incidencia con exactamente 3 puntos y 3 rectas.",
+  tags: ["geometría", "geometría de incidencia", "modelos", "consistencia"],
+  difficulty: "básico",
+  requires: ["axioma-incidencia-1", "axioma-incidencia-2", "axioma-incidencia-3"],
+  demos: ["demo-modelo-tres-puntos"],
+  links: ["axioma-incidencia-1", "axioma-incidencia-2", "axioma-incidencia-3", "plano-afin", "plano-proyectivo", "sistema-axiomatico"]
+};
+
+import { ConceptLink } from "../../components/ui/ConceptLink";
+
+<Capitular letra="E" />l **Modelo de Tres Puntos** (también llamado geometría de incidencia mínima) es el modelo más pequeño posible que satisface los tres <ConceptLink targetId="axioma-incidencia-1">axiomas de incidencia</ConceptLink> de Hilbert. Su existencia demuestra la **consistencia** de dichos axiomas.
+
+<Separador />
+
+### El Modelo
+
+<Definicion>
+  Sea $\mathfrak{M}_3 = (\mathcal{P}, \mathcal{L})$ donde:
+
+  - **Puntos**: $\mathcal{P} = \{A, B, C\}$ (tres puntos distintos)
+  - **Rectas**: $\mathcal{L} = \{\overline{AB}, \overline{AC}, \overline{BC}\}$ (tres rectas, cada una definida por un par de puntos)
+
+  La relación de incidencia es la pertenencia de conjuntos: $X \in \overline{YZ}$ si y solo si $X = Y$ o $X = Z$.
+</Definicion>
+
+En este modelo, cada recta contiene exactamente dos puntos, y cada par de puntos determina exactamente una recta.
+
+<Separador />
+
+### Verificación de los Axiomas
+
+| Axioma | Enunciado | Verificación en $\mathfrak{M}_3$ |
+|--------|-----------|--------------------------------|
+| **I-1** | Dados dos puntos, existe una única recta que los contiene | Dados $A$ y $B$, la única recta es $\overline{AB}$. Análogamente para los otros pares. |
+| **I-2** | Toda recta contiene al menos dos puntos | $\overline{AB}$ contiene $A$ y $B$; $\overline{AC}$ contiene $A$ y $C$; $\overline{BC}$ contiene $B$ y $C$. |
+| **I-3** | Existen tres puntos no colineales | $A, B, C$ no son colineales: no existe recta que contenga a los tres simultáneamente (cada recta contiene solo dos puntos). |
+
+<Separador />
+
+### Consistencia de los Axiomas de Incidencia
+
+El Modelo de Tres Puntos es una **demostración de consistencia** del sistema $\{I_1, I_2, I_3\}$: al exhibir una realización concreta de los axiomas (un modelo), demostramos que no pueden generar una contradicción. Si los axiomas fueran inconsistentes, ningún modelo podría satisfacerlos.
+
+La demostración completa, con diagrama interactivo, está disponible en su página dedicada:
+
+<ConceptLink targetId="demo-modelo-tres-puntos">Demostración del Modelo de Tres Puntos</ConceptLink>
+
+<Separador />
+
+### Limitaciones del Modelo
+
+El Modelo de Tres Puntos es minimalista, y por tanto no satisface propiedades geométricas más avanzadas:
+
+| Propiedad | ¿Se cumple en $\mathfrak{M}_3$? | ¿Por qué? |
+|-----------|-------------------------------|-----------|
+| <ConceptLink targetId="axioma-playfair">Paralelismo (Playfair)</ConceptLink> | Sí (trivialmente) | No hay rectas paralelas porque no hay rectas disjuntas: toda recta se corta con toda otra recta en un punto. |
+| <ConceptLink targetId="axioma-orden-1">Betweenness (Orden)</ConceptLink> | No | Se necesitan más puntos para definir la relación "estar entre". |
+| <ConceptLink targetId="axioma-congruencia-segmentos">Congruencia</ConceptLink> | No | No hay métrica ni transporte de segmentos. |
+| <ConceptLink targetId="plano-afin">Estructura de plano afín</ConceptLink> | Sí | Es un plano afín de orden 2 (sobre $\mathbb{F}_2$). |
+
+<Nota>
+  El Modelo de Tres Puntos es isomorfo al <ConceptLink targetId="plano-afin">plano afín</ConceptLink> sobre el cuerpo $\mathbb{F}_2$, que tiene 4 puntos. ¡Pero solo usamos 3! Esto se debe a que $\mathfrak{M}_3$ satisface I-1, I-2, I-3 pero **no** es un plano afín completo: el plano afín sobre $\mathbb{F}_2$ requiere 4 puntos. La diferencia es que en $\mathfrak{M}_3$ hemos omitido el cuarto punto que completa la estructura afín.
+</Nota>
+
+<Separador />
+
+### Generalización: Planos Afines Finitos
+
+El Modelo de Tres Puntos es el caso más simple de una familia infinita de estructuras: los <ConceptLink targetId="plano-afin">planos afín finitos</ConceptLink>. Si el cuerpo tiene $q$ elementos, el plano afín tiene $q^2$ puntos. El caso $q = 2$ da 4 puntos; nuestro modelo de 3 puntos es una subestructura de dicho plano.

@@ -1,0 +1,75 @@
+export const metadata = {
+  id: "postulado-iii",
+  type: "axioma",
+  title: "Postulado III: Trazado del Círculo",
+  description: "Postulado que garantiza la construcción de una circunferencia con cualquier centro y cualquier radio.",
+  statement: "Postúlese el describir un círculo con cualquier centro y cualquier radio.",
+  tags: ["geometría", "geometría euclidiana", "elementos de euclides", "postulados", "circunferencia"],
+  authors: ["Euclides"],
+  links: ["terminos-primitivos-euclides", "postulado-i", "postulado-ii", "proposicion-1-1"],
+  hasSimulation: true
+};
+
+import { EquilateralTriangle } from '../../diagrams/Euclides/EquilateralTriangle';
+import { InteractiveElement } from "../../components/ui/VisualBind";
+
+export const Simulation = EquilateralTriangle;
+import { ConceptLink } from "../../components/ui/ConceptLink";
+
+<Capitular letra="E" />l **Tercer Postulado** introduce la segunda herramienta constructiva fundamental: el compás. Con él, Euclides habilita la construcción de circunferencias, esenciales para trasladar distancias y definir puntos de intersección.
+
+<Separador />
+
+### Enunciado
+
+<Definicion>
+  Postúlese el describir un círculo con cualquier centro y cualquier radio.
+</Definicion>
+
+Dado un punto <InteractiveElement target="pA" color="terracota">$C$</InteractiveElement> como centro y una distancia <InteractiveElement target="sideAB" color="salvia">$r$</InteractiveElement> como radio, se puede construir la circunferencia de centro $C$ y radio $r$: el conjunto de todos los puntos del plano cuya distancia a $C$ es exactamente $r$.
+
+<Formula title="Definición de Circunferencia">
+  $\mathcal{C}(C, r) = \{ P \in \mathbb{R}^2 \mid d(C, P) = r \}$
+</Formula>
+
+<Separador />
+
+### Importancia Constructiva
+
+Junto con los Postulados I y II, el Postulado III completa el conjunto de herramientas de la **regla y compás** que Euclides utiliza en todas sus construcciones:
+
+- La **regla** (Postulados I y II) permite trazar rectas entre puntos.
+- El **compás** (Postulado III) permite trazar círculos con centro y radio dados.
+
+<Nota>
+  En la geometría euclidiana clásica, el compás se considera **colapsable**: al levantarlo del plano, el radio se pierde. Sin embargo, la <ConceptLink targetId="proposicion-1-1">Proposición I.2</ConceptLink> de los *Elementos* demuestra que es posible trasladar distancias con un compás colapsable, haciendo esta restricción inocua.
+</Nota>
+
+<Separador />
+
+### Implicaciones
+
+1. **Proposición I.1**: la construcción del triángulo equilátero utiliza dos círculos de igual radio para determinar el tercer vértice.
+2. **Transporte de distancias**: las circunferencias permiten marcar longitudes iguales sobre una recta.
+3. **Intersecciones**: la intersección de dos círculos o de un círculo con una recta genera nuevos puntos que amplían el dominio construible.
+
+<Separador />
+
+### Visualización Constructiva
+
+Dado un segmento $\overline{AB}$, trazar la circunferencia de centro <InteractiveElement target="pA" color="terracota">$A$</InteractiveElement> con radio $\overline{AB}$ y la de centro <InteractiveElement target="pB" color="pavo">$B$</InteractiveElement> con el mismo radio produce dos puntos de intersección, que son los vértices de los dos posibles triángulos equiláteros sobre la base $\overline{AB}$:
+
+<Formula>
+  $\mathcal{C}(A, \overline{AB}) \cap \mathcal{C}(B, \overline{AB}) = \{C_1, C_2\}$
+</Formula>
+
+<Separador />
+
+### Equivalencia Moderna
+
+El Postulado III de Euclides no tiene un axioma correspondiente en la axiomática de Hilbert, porque Hilbert asume la existencia de una **métrica** (vía congruencia de segmentos) que permite definir el círculo como un conjunto derivado:
+
+| Euclides (Postulado III) | Hilbert |
+|---|---|
+| "Describir un círculo con cualquier centro y cualquier radio" | No hay un axioma específico. El círculo se **define** como $\mathcal{C}(O, r) = \{P \mid \overline{OP} \cong \overline{AB}\}$ para algún segmento $\overline{AB}$ dado, usando los <ConceptLink targetId="axioma-congruencia-segmentos">axiomas de congruencia de segmentos</ConceptLink> (C-1, C-2, C-3) y el <ConceptLink targetId="principio-continuidad-circular">Principio de Continuidad Circular</ConceptLink> para garantizar intersecciones. |
+| **Diferencia clave**: Euclides postula el círculo como una herramienta constructiva primitiva; Hilbert lo deriva de la congruencia y la continuidad. La ventaja de Hilbert es que la existencia de puntos de intersección (necesaria para la <ConceptLink targetId="proposicion-1-1">Proposición I.1</ConceptLink>) no es automática: requiere el Principio de Continuidad Circular. |

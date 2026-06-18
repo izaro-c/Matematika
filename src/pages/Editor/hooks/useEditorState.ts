@@ -1,6 +1,24 @@
 import { useState, useRef, useCallback } from 'react';
 import { parseMDX, stringifyMDX } from '../../../utils/mdxParser';
 
+export interface WizardData {
+  type: string;
+  id: string;
+  title: string;
+  description: string;
+  era: string;
+  birth: string;
+  death: string;
+  color: string;
+  authors: string;
+  tags: string;
+  corollaries: string;
+  demos: string;
+  parentTheorem: string;
+  proofMethod: string;
+  lemmas: string;
+}
+
 export interface FileNode {
   path: string;
   name: string;
@@ -53,7 +71,7 @@ export const useEditorState = () => {
 
   // New File Wizard State
   const [wizardModalOpen, setWizardModalOpen] = useState(false);
-  const [wizardData, setWizardData] = useState({
+  const [wizardData, setWizardData] = useState<WizardData>({
     type: 'theorems',
     id: '',
     title: '',
