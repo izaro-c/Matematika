@@ -3,6 +3,7 @@ import { useRoute, Link } from 'wouter';
 import { db } from '../store/content';
 import { Logo } from '../components/ui/Logo';
 import { EmptyState } from '../components/ui/EmptyState';
+import { SimulationLayout } from '../components/layout/SimulationLayout';
 
 export function ModelPage() {
   const [, params] = useRoute('/modelo/:id');
@@ -24,7 +25,7 @@ export function ModelPage() {
   const system = model.satisfies ? db.getAxiomaticSystem(model.satisfies) : undefined;
   const verifiedAxioms = (model.axioms_verified || []).map(axId => db.getAxiom(axId)).filter(Boolean);
 
-  return (
+  const renderContent = () => (
     <div className="min-h-screen bg-lienzo text-carbon">
       <header className="border-b border-carbon/10 bg-white/80 backdrop-blur-sm sticky top-0 z-40">
         <div className="max-w-4xl mx-auto px-6 py-4 flex items-center gap-4">
@@ -147,5 +148,11 @@ export function ModelPage() {
         </section>
       </main>
     </div>
+  );
+
+  return (
+    <SimulationLayout simulationComponent={model.Simulation}>
+      {renderContent()}
+    </SimulationLayout>
   );
 }

@@ -4,7 +4,7 @@ import { TYPE_STYLES } from '../../config/constants';
 
 export interface MathNodeData {
   label: string;
-  nodeType: 'axioma' | 'lema' | 'corolario' | 'teorema' | 'definicion';
+  nodeType: 'axioma' | 'lema' | 'corolario' | 'teorema' | 'definicion' | 'modelo';
   description: string;
   isActive: boolean;
   /** Escala visual pura (CSS transform); no afecta la posición dagre */

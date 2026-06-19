@@ -1,4 +1,4 @@
-# Plan de Acción — Euclides Digital
+# Plan de Acción — Matematika
 
 > **Leyenda:** [ ] pendiente · [x] completado
 
@@ -120,17 +120,17 @@
 
 ## FASE 2 — Integración completa de modelos
 *Integrar completamente el concepto de "Modelo" en toda la aplicación.*
-- [ ] 1. SearchOmnibar: tipo 'modelo', loop db.models, icon/color/href
-- [ ] 2. ContentStore: getBranchTaxonomy + getItemsByBranch incluyen modelos
-- [ ] 3. BranchLibrary + BranchPage: caso 'model' en href/labels/estilos
-- [ ] 4. DictionaryPage: modelos en glosario, categoría "Modelos"
-- [ ] 5. graph.worker.ts: 'modelo' en VISIBLE_TYPES, edges desde axioms_verified + satisfies
-- [ ] 6. AxiomaticTree: modelos como nodos de pleno derecho, toggle en "Tipos de Nodo", color en leyenda
-- [ ] 7. GraphPage: click en modelo → /modelo/:id, entrada en leyenda
-- [ ] 8. NewFileWizard: opción "Modelo" con campos satisfies + axioms_verified + hasDiagram
-- [ ] 9. ModelPage: SimulationLayout opcional además de Diagram
-- [ ] 10. TaxonomyGraph: caso 'model' en color + click
-- [ ] 11. Revisión contenido: auditar modelo-tres-puntos.mdx — ¿es suficiente o necesita más modelos (Fano, cartesiano, Poincaré)? Evaluar si la verificación de axiomas es completa o superficial
+- [x] 1. SearchOmnibar: tipo 'modelo', loop db.models, icon/color/href
+- [x] 2. ContentStore: getBranchTaxonomy + getItemsByBranch incluyen modelos
+- [x] 3. BranchLibrary + BranchPage: caso 'model' en href/labels/estilos
+- [x] 4. DictionaryPage: modelos en glosario, categoría "Modelos"
+- [x] 5. graph.worker.ts: 'modelo' en VISIBLE_TYPES, edges desde axioms_verified + satisfies
+- [x] 6. AxiomaticTree: modelos como nodos de pleno derecho, toggle en "Tipos de Nodo", color en leyenda
+- [x] 7. GraphPage: click en modelo → /modelo/:id, entrada en leyenda
+- [x] 8. NewFileWizard: opción "Modelo" con campos satisfies + axioms_verified + hasDiagram
+- [x] 9. ModelPage: SimulationLayout opcional además de Diagram
+- [x] 10. TaxonomyGraph: caso 'model' en color + click
+- [x] 11. Revisión contenido: auditar modelo-tres-puntos.mdx — ¿es suficiente o necesita más modelos (Fano, cartesiano, Poincaré)? Evaluar si la verificación de axiomas es completa o superficial. (Análisis: El modelo de tres puntos solo demuestra consistencia para los axiomas de Incidencia. Faltan modelos para Orden, Congruencia y Paralelas).
 
 ---
 
@@ -141,7 +141,8 @@
 - [ ] 3. Lemas: verificar parentTheorem en todos
 - [ ] 4. TheoremPage: listar lemas, corolarios, demos, ejemplos, ejercicios desde metadata automáticamente
 - [ ] 5. Sistemas: cada axioma mencionado con ConceptLink en el cuerpo, no solo listado
-- [ ] 6. Revisión contenido por archivo (eliminar/añadir/modificar/reorganizar):
+- [ ] 6. Crear modelos adicionales para enriquecer la biblioteca de geometrías (Plano Cartesiano, Plano de Fano, Disco de Poincaré).
+- [ ] 7. Revisión contenido por archivo (eliminar/añadir/modificar/reorganizar):
   - [ ] Axiomas: ¿enunciado formal preciso? ¿discusión aporta contexto o repite? Eliminar redundancias entre "Discusión" y "Observaciones" si las hay. Añadir ejemplos concretos si faltan
   - [ ] Definiciones: ¿usa solo términos primitivos o definidos? ¿statement formal coincide con descripción? Reorganizar: intuición → enunciado → discusión
   - [ ] Teoremas: ¿hipótesis y tesis claramente separadas? Eliminar demostraciones embebidas (ya en demos). Añadir "Aplicaciones" si faltan

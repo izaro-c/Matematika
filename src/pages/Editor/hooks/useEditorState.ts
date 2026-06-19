@@ -17,6 +17,9 @@ export interface WizardData {
   parentTheorem: string;
   proofMethod: string;
   lemmas: string;
+  satisfies: string;
+  axioms_verified: string;
+  hasDiagram: boolean;
 }
 
 export interface FileNode {
@@ -86,7 +89,10 @@ export const useEditorState = () => {
     demos: '',
     parentTheorem: '',
     proofMethod: '',
-    lemmas: ''
+    lemmas: '',
+    satisfies: '',
+    axioms_verified: '',
+    hasDiagram: false
   });
 
   const loadFileList = async () => {

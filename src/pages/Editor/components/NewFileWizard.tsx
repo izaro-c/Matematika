@@ -35,6 +35,7 @@ export const NewFileWizard: React.FC<NewFileWizardProps> = ({
               <option value="lessons">Lección</option>
               <option value="demonstrations">Demostración</option>
               <option value="mathematicians">Biografía (Matemático)</option>
+              <option value="models">Modelo</option>
             </select>
           </div>
 
@@ -157,6 +158,23 @@ export const NewFileWizard: React.FC<NewFileWizardProps> = ({
                 <div>
                   <label className="block text-xs font-bold text-carbon/70 mb-1 uppercase tracking-wider">Tags (separados por coma)</label>
                   <input type="text" placeholder="ej: algebra, logica" className="w-full bg-white p-2 border border-carbon/20 rounded" value={wizardData.tags} onChange={(e) => onDataChange({...wizardData, tags: e.target.value})} />
+                </div>
+              </div>
+            )}
+
+            {wizardData.type === 'models' && (
+              <div className="space-y-4">
+                <div>
+                  <label className="block text-xs font-bold text-carbon/70 mb-1 uppercase tracking-wider">Sistema Axiomático que Satisface (ID)</label>
+                  <input type="text" placeholder="ej: sistema-euclidiano" className="w-full bg-white p-2 border border-carbon/20 rounded focus:outline-none focus:border-salvia" value={wizardData.satisfies} onChange={(e) => onDataChange({...wizardData, satisfies: e.target.value})} />
+                </div>
+                <div>
+                  <label className="block text-xs font-bold text-carbon/70 mb-1 uppercase tracking-wider">Axiomas Verificados (IDs separados por coma)</label>
+                  <input type="text" placeholder="ej: ax-1, ax-2, ax-3" className="w-full bg-white p-2 border border-carbon/20 rounded focus:outline-none focus:border-salvia" value={wizardData.axioms_verified} onChange={(e) => onDataChange({...wizardData, axioms_verified: e.target.value})} />
+                </div>
+                <div className="flex items-center gap-2 mt-2">
+                  <input type="checkbox" id="hasDiagram" className="accent-salvia w-4 h-4" checked={wizardData.hasDiagram} onChange={(e) => onDataChange({...wizardData, hasDiagram: e.target.checked})} />
+                  <label htmlFor="hasDiagram" className="text-xs font-bold text-carbon/70 uppercase tracking-wider">¿Tiene diagrama JSXGraph?</label>
                 </div>
               </div>
             )}
