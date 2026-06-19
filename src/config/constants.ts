@@ -174,8 +174,8 @@ export const CONTENT_TYPE_CONFIG: Record<string, ContentTypeConfig> = {
     labelPlural: 'Modelos',
     routePrefix: 'modelo',
     graphGroup: 'modelo',
-    graphColor: '#C86446',
-    nodeStyle: { bg: '#a84426', border: '#a84426', text: '#ffffff', badge: 'MODELO', ringColor: '#f0a082' },
+    graphColor: '#8b3a3a',
+    nodeStyle: { bg: '#6b1a1a', border: '#6b1a1a', text: '#ffffff', badge: 'MODELO', ringColor: '#f0a082' },
     hierarchyLevel: 10,
   },
   plan_de_estudio: {

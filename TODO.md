@@ -136,18 +136,18 @@
 
 ## FASE 3 — Modularización + interconexión con ConceptLinks
 *Mejorar la navegabilidad del contenido existente.*
-- [ ] 1. Script Python: detectar menciones de conceptos sin ConceptLink en los 51 MDX
-- [ ] 2. Corolarios: separar a archivos propios (type: "corolario", parentTheorem). Teorema padre los lista automáticamente
-- [ ] 3. Lemas: verificar parentTheorem en todos
-- [ ] 4. TheoremPage: listar lemas, corolarios, demos, ejemplos, ejercicios desde metadata automáticamente
-- [ ] 5. Sistemas: cada axioma mencionado con ConceptLink en el cuerpo, no solo listado
-- [ ] 6. Crear modelos adicionales para enriquecer la biblioteca de geometrías (Plano Cartesiano, Plano de Fano, Disco de Poincaré).
-- [ ] 7. Revisión contenido por archivo (eliminar/añadir/modificar/reorganizar):
-  - [ ] Axiomas: ¿enunciado formal preciso? ¿discusión aporta contexto o repite? Eliminar redundancias entre "Discusión" y "Observaciones" si las hay. Añadir ejemplos concretos si faltan
-  - [ ] Definiciones: ¿usa solo términos primitivos o definidos? ¿statement formal coincide con descripción? Reorganizar: intuición → enunciado → discusión
-  - [ ] Teoremas: ¿hipótesis y tesis claramente separadas? Eliminar demostraciones embebidas (ya en demos). Añadir "Aplicaciones" si faltan
-  - [ ] Sistemas: ¿lista de axiomas completa y ordenada? Añadir "Propiedades" (consistencia, independencia, completitud) si faltan
-  - [ ] Matemáticos: ¿contribuciones enlazadas a sus teoremas? Eliminar adjectivación innecesaria
+- [x] 1. Script Python: detectar menciones de conceptos sin ConceptLink en los 51 MDX
+- [x] 2. Corolarios: separar a archivos propios (type: "corolario", parentTheorem). Teorema padre los lista automáticamente
+- [x] 3. Lemas: verificar parentTheorem en todos
+- [x] 4. TheoremPage: listar lemas, corolarios, demos, ejemplos, ejercicios desde metadata automáticamente
+- [x] 5. Sistemas: cada axioma mencionado con ConceptLink en el cuerpo, no solo listado
+- [x] 6. Crear modelos adicionales para enriquecer la biblioteca de geometrías (Plano Cartesiano, Plano de Fano, Disco de Poincaré).
+- [x] 7. Revisión contenido por archivo (eliminar/añadir/modificar/reorganizar):
+  - [x] Axiomas: ¿enunciado formal preciso? ¿discusión aporta contexto o repite? Eliminar redundancias entre "Discusión" y "Observaciones" si las hay. Añadir ejemplos concretos si faltan
+  - [x] Definiciones: ¿usa solo términos primitivos o definidos? ¿statement formal coincide con descripción? Reorganizar: intuición → enunciado → discusión
+  - [x] Teoremas: ¿hipótesis y tesis claramente separadas? Eliminar demostraciones embebidas (ya en demos). Añadir "Aplicaciones" si faltan
+  - [x] Sistemas: ¿lista de axiomas completa y ordenada? Añadir "Propiedades" (consistencia, independencia, completitud) si faltan
+  - [x] Matemáticos: ¿contribuciones enlazadas a sus teoremas? Eliminar adjectivación innecesaria
 
 ---
 

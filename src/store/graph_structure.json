@@ -47,9 +47,13 @@
     "hilbert",
     "lobachevski",
     "pasch",
+    "modelo-cartesiano",
+    "modelo-fano",
+    "modelo-poincare",
     "modelo-tres-puntos",
-    "teorema-angulos-opuestos-verticales",
     "teorema-dos-rectas-un-punto",
+    "corolario-rectas-coincidentes",
+    "teorema-angulos-opuestos-verticales",
     "teorema-punto-medio-perpendicular"
   ],
   "nodes": {
@@ -510,6 +514,65 @@
       "proofs": [],
       "directDependencies": []
     },
+    "modelo-cartesiano": {
+      "id": "modelo-cartesiano",
+      "type": "modelo",
+      "title": "Plano Cartesiano",
+      "description": "El modelo analítico estándar para la geometría euclídea bidimensional, utilizando pares ordenados de números reales.",
+      "proofs": [],
+      "directDependencies": [
+        "axioma-incidencia-1",
+        "axioma-incidencia-2",
+        "axioma-incidencia-3",
+        "axioma-orden-1",
+        "axioma-orden-2",
+        "axioma-orden-3",
+        "axioma-orden-4",
+        "axioma-congruencia-1",
+        "axioma-congruencia-2",
+        "axioma-congruencia-3",
+        "axioma-congruencia-4",
+        "axioma-congruencia-5",
+        "axioma-arquimedes",
+        "axioma-completitud",
+        "axioma-paralelas-euclides"
+      ]
+    },
+    "modelo-fano": {
+      "id": "modelo-fano",
+      "type": "modelo",
+      "title": "Plano de Fano",
+      "description": "El plano proyectivo finito más pequeño posible, consistente de 7 puntos y 7 rectas. Un modelo clave en geometría de incidencia.",
+      "proofs": [],
+      "directDependencies": [
+        "axioma-incidencia-1",
+        "axioma-incidencia-2"
+      ]
+    },
+    "modelo-poincare": {
+      "id": "modelo-poincare",
+      "type": "modelo",
+      "title": "Disco de Poincaré",
+      "description": "El modelo conforme del plano hiperbólico que representa el espacio como el interior de un círculo unitario y las rectas como arcos ortogonales a la frontera.",
+      "proofs": [],
+      "directDependencies": [
+        "axioma-incidencia-1",
+        "axioma-incidencia-2",
+        "axioma-incidencia-3",
+        "axioma-orden-1",
+        "axioma-orden-2",
+        "axioma-orden-3",
+        "axioma-orden-4",
+        "axioma-congruencia-1",
+        "axioma-congruencia-2",
+        "axioma-congruencia-3",
+        "axioma-congruencia-4",
+        "axioma-congruencia-5",
+        "axioma-arquimedes",
+        "axioma-completitud",
+        "axioma-paralelas-hiperbolico"
+      ]
+    },
     "modelo-tres-puntos": {
       "id": "modelo-tres-puntos",
       "type": "modelo",
@@ -526,6 +589,17 @@
         "axioma-incidencia-6",
         "axioma-incidencia-7",
         "axioma-incidencia-8"
+      ]
+    },
+    "corolario-rectas-coincidentes": {
+      "id": "corolario-rectas-coincidentes",
+      "type": "corolario",
+      "title": "Corolario: Identidad de rectas con dos puntos en común",
+      "description": "Si dos rectas tienen dos puntos en común, entonces son la misma recta.",
+      "proofs": [],
+      "directDependencies": [
+        "axioma-incidencia-1",
+        "teorema-dos-rectas-un-punto"
       ]
     },
     "lema-punto-medio": {
