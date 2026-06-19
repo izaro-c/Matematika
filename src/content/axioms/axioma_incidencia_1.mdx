@@ -1,3 +1,6 @@
+import { InteractiveElement } from "../../components/ui/VisualBind";
+import { IncidenciaVisualizer } from "../../diagrams/Axiomas/Incidencia1Visualizer";
+
 export const metadata = {
   id: "axioma-incidencia-1",
   type: "axioma",
@@ -6,10 +9,12 @@ export const metadata = {
   statement: "Dados dos puntos distintos, existe una y solo una recta que los contiene a ambos.",
   tags: ["geometría", "geometría de incidencia"],
   authors: ["Euclides", "Hilbert"],
-  links: []
+  links: [],
+  hasSimulation: true,
 };
 
-import { InteractiveElement } from "../../components/ui/VisualBind";
+
+export const Simulation = IncidenciaVisualizer;
 
 <Capitular letra="E" />l **Primer Axioma de Incidencia** es el bloque fundacional de la geometría afín y euclidiana. Establece la relación más básica posible entre los dos objetos primordiales del espacio métrico: el punto y la recta.
 
@@ -21,7 +26,7 @@ Si tomamos un punto <InteractiveElement target="puntoA" color="terracota">$A$</I
 
 <Formula title="Existencia y Unicidad de la Recta">
   <EquationRow>
-    \forall A, B \ (A \neq B) \implies \exists! r : A \in r \land B \in r
+    $\forall A, B \ (A \neq B) \implies \exists! r : A \in r \land B \in r$
   </EquationRow>
 </Formula>
 

@@ -1,10 +1,9 @@
 import { Router, Route, Switch } from "wouter";
 import { MathProvider } from "../store/MathStoreContext";
-import { Suspense } from 'react';
+import { Suspense, lazy } from 'react';
 import { HomePage } from "../pages/Home/HomePage";
 import { DictionaryPage } from "../pages/DictionaryPage";
 import { HistoryTimeline } from "../pages/HistoryTimeline";
-import { EditorPage } from "../pages/Editor/EditorPage";
 import { BranchPage } from "../pages/BranchPage";
 import { TheoremPage } from "../pages/TheoremPage";
 import { DefinitionPage } from "../pages/DefinitionPage";
@@ -13,8 +12,6 @@ import { ExercisePage } from "../pages/ExercisePage";
 import { StudyPlanPage } from "../pages/StudyPlanPage";
 import { MethodsPage } from "../pages/MethodsPage";
 import { UseCasePage } from "../pages/UseCasePage";
-import { GraphPage } from "../pages/GraphPage";
-import { AxiomGraphPage } from "../pages/AxiomGraphPage";
 import { AxiomPage } from "../pages/AxiomPage";
 import { ModelPage } from "../pages/ModelPage";
 import { DemoPage } from "../pages/DemoPage";
@@ -23,6 +20,10 @@ import { InteractiveLessonLayout } from "../components/layout/InteractiveLessonL
 import { BiographyLayout } from "../components/layout/BiographyLayout";
 import { Logo } from "../components/ui/Logo";
 import { db } from '../store/content';
+
+const EditorPage = lazy(() => import("../pages/Editor/EditorPage").then(m => ({ default: m.EditorPage })));
+const GraphPage = lazy(() => import("../pages/GraphPage").then(m => ({ default: m.GraphPage })));
+const AxiomGraphPage = lazy(() => import("../pages/AxiomGraphPage").then(m => ({ default: m.AxiomGraphPage })));
 
 /**
  * Componente principal de enrutamiento de la aplicación.

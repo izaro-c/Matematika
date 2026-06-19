@@ -1,24 +1,4 @@
-export interface GraphNodeProof {
-  id: string;
-  dependencies: string[];
-}
-
-export interface GraphNodeMeta {
-  type: string;
-  proofs: GraphNodeProof[];
-  directDependencies: string[];
-}
-
-export interface GraphStructure {
-  topologicalOrder: string[];
-  nodes: Record<string, GraphNodeMeta>;
-}
-
-export interface ModelInfo {
-  id: string;
-  title: string;
-  axioms: string[];
-}
+import type { GraphStructure, ModelInfo } from './graphTypes';
 
 /**
  * Evalúa qué nodos son lógicamente válidos a partir de un conjunto de axiomas activos,

@@ -90,23 +90,31 @@
 *Optimizar la arquitectura antes de añadir funcionalidades.*
 
 ### 1.1 Code splitting y lazy loading
-- [ ] Evaluar impacto de `import.meta.glob({ eager: true })` en bundle inicial
-- [ ] Migrar a `{ eager: false }` con carga bajo demanda (o por tipo de contenido)
-- [ ] Lazy loading de páginas pesadas: EditorPage, GraphPage, AxiomGraphPage (`React.lazy`)
-- [ ] Lazy loading de diagramas JSXGraph (no cargar todos hasta que se necesiten)
-- [ ] Code splitting del ContentStore por tipo de contenido
-- [ ] Analizar bundle con `rollup-plugin-visualizer`
+- [x] Evaluar impacto de `import.meta.glob({ eager: true })` en bundle inicial — **causaba 4.5 MB en bundle principal por procesar todo MDX aunque solo se usara metadata**
+- [x] Migrar a `{ eager: false }` — **reemplazado por `scripts/generate-content-index.ts` que extrae metadata a JSON (176 KB), eliminando el procesamiento MDX eager**
+- [x] Lazy loading de páginas pesadas: EditorPage, GraphPage, AxiomGraphPage (`React.lazy`)
+- [x] Lazy loading de diagramas JSXGraph — **ya lazy por estar dentro de MDX con `React.lazy()`**
+- [x] Code splitting del ContentStore — **taxonomía MSC2020 extraída a `msc2020.ts` (438 líneas → módulo separado)**
+- [x] Analizar bundle con `rollup-plugin-visualizer` — **instalado y configurado, genera `dist/stats.html`**
+
+**Resultados:** Bundle principal reducido de **4,587 kB → 1,050 kB** (77% menos, 613 kB → 290 kB gzip). Cada MDX es ahora un chunk independiente. Sin warnings `INEFFECTIVE_DYNAMIC_IMPORT`.
 
 ### 1.2 Refactorización del editor
 - [x] Extraer componentes: barra lateral (`EditorSidebar`), panel de metadatos (`MetadataPanel`), modal de enlaces (`LinkModal`), galería (`ComponentGallery`, `BlocksGallery`), wizard (`NewFileWizard`), toolbar (`EditorToolbar`), preview (`PreviewPane`), imports (`ImportsPanel`), refs (`RefModal`)
-- [ ] Extraer el estado monolítico de `EditorPage.tsx` (~1270 líneas) a hooks
+- [x] Extraer el estado monolítico de `EditorPage.tsx` (~1270 líneas) a hooks — **`useEditorState` (198 líneas) + `useEditorActions` (382 líneas). `EditorPage.tsx` reducido de 1270→592 líneas, solo JSX + lógica de integración**
 
 ### 1.3 Unificación de stores y configuración
-- [ ] Unificar stores relacionadas (graphStore + useGraphSandboxStore si hay duplicación)
+- [x] Crear `src/store/graphTypes.ts` con tipos compartidos (`GraphNodeProof`, `GraphNodeMeta`, `GraphStructure`, `ModelInfo`, `GraphEdge`)
+- [x] `graphUtils.ts`: eliminar interfaces duplicadas, importar desde `graphTypes.ts`
+- [x] `useGraphSandboxStore.ts`: eliminar `evaluateActiveGraph` duplicado (usar el de `graphUtils.ts`), eliminar interfaces inline (importar desde `graphTypes.ts`)
+- [x] `graphStore.ts`: eliminar `ModelInfo` inline, importar desde `graphTypes.ts`; usar `computeDisabledAxiomsFromModels` de `graphUtils.ts`
 - [x] Centralizar `contentTypeConfig` para todos los tipos de contenido — `CONTENT_TYPE_CONFIG` en `constants.ts`
 
 ### 1.4 Links
-- [ ] Añadir funcionalidad de ignorar link (para cuando se quiere añadir alguna referencia sin que sea una dependencia)
+- [x] Añadir campo `seeAlso: z.array(z.string()).optional()` a todos los Zod schemas (contenido no-grafo)
+- [x] Añadir `seeAlso?: string[]` a los TypeScript interfaces en `types.ts`
+- [x] Validar `seeAlso` en `scripts/validate-cross-references.ts` (mismos IDs existentes que `links`)
+- [x] `validate-logical-graph.ts` NO incluye `seeAlso` en dependencias del grafo — **es el comportamiento deseado** (referencia sin dependencia formal)
 
 ---
 
@@ -156,30 +164,30 @@
   - [x] Resaltar axiomas activos al seleccionar modelo
   - [x] Atenuar/ocultar axiomas excluidos
   - [x] Permitir múltiples modelos simultáneos (intersección)
-  - [ ] Persistir selección en localStorage
+  - [x] Persistir selección en localStorage
 - **Visibilidad:**
   - [x] Layout sin solapamientos (dagre layout)
-  - [ ] Agrupar nodos por tipo con fondos semitransparentes
-  - [ ] Estilos de arista: directa (sólida), lema intermedio (discontinua), definicional (punteada)
-  - [x] Zoom inicial (fitView), controles de zoom; falta minimap
-  - [ ] Filtros por tipo de nodo (checkboxes)
+  - [x] Agrupar nodos por tipo con fondos semitransparentes → **anillos de color por grupo axiomático en CustomNode** (Incidencia/Orden/Congruencia/Paralelas/Lobachevski)
+  - [x] Estilos de arista: directa (sólida), lema intermedio (discontinua), definicional (punteada)
+  - [x] Zoom inicial (fitView), controles de zoom, minimap
+  - [x] Filtros por tipo de nodo (checkboxes)
   - [x] Búsqueda de nodo por nombre
 - **Panel lateral:**
   - [x] Mostrar: tipo (badge), título, descripción, cadena de dependencias
   - [x] Botón "Ver página completa" → `/teorema/:id`, `/definicion/:id`, `/axioma/:id`
   - [x] Enlaces a predecesores y sucesores
   - [ ] Si es axioma con modelos activos, mostrar en qué modelos está
-  - [ ] Diseño responsive (modal en móvil)
+  - [x] Diseño responsive (modal en móvil)
 
 ### 3.2 Navegabilidad
 - **Logo:**
-  - [ ] Revisar solapamientos con ThemeToggle, SearchOmnibar, MarginaliaPanel
-  - [ ] Agrupar controles flotantes en barra superior (móvil: hamburguesa)
-  - [ ] Asegurar z-index correcto
+  - [x] Revisar solapamientos con ThemeToggle, SearchOmnibar, MarginaliaPanel — **creado TopBar.tsx, z-index reorganizado (TopBar z-[60], MarginaliaPanel z-50, SearchOmnibar z-[100])**
+  - [x] Agrupar controles flotantes en barra superior — **TopBar component con pointer-events-none + pointer-events-auto en hijos**
+  - [x] Asegurar z-index correcto — **TopBar z-[60] sobre MarginaliaPanel (z-50), bajo SearchOmnibar (z-[100])**
 - **ConceptLinks:**
-  - [x] Auditar `ConceptLink.tsx` — MarginaliaPanel exists in App.tsx, ConceptLink in MDXBlocks
-  - [ ] Feedback visual si targetId no existe
-  - [ ] Considerar unificar ConceptLink, GlossaryLink, HighlightLink, VisualBind
+  - [x] Auditar ConceptLink.tsx — MarginaliaPanel exists in App.tsx, ConceptLink in MDXBlocks
+  - [x] Feedback visual si targetId no existe — **ya implementado en ConceptLink.tsx:38-47 (borde granada discontinuo)**
+  - [ ] Considerar unificar ConceptLink, GlossaryLink, HighlightLink, VisualBind — **evaluado: propósitos distintos (navegación, tooltip, simulación), no unificar**
 
 ### 3.3 Onboarding / Tour interactivo
 - [ ] Evaluar driver.js (más ligero) vs shepherd.js vs intro.js
@@ -189,18 +197,19 @@
 - [ ] Tour contextual para el editor (sidebar, metadatos, preview)
 
 ### 3.4 Atajos de teclado
-- [ ] `g` + `h` → Home · `g` + `t` → Teorema · `g` + `d` → Definición
-- [ ] `g` + `g` → Grafo · `g` + `a` → Axiomas · `g` + `e` → Editor
-- [ ] `g` + `s` → SearchOmnibar · `?` → paleta de comandos
-- [ ] `Escape` → cerrar paneles y modales
-- [ ] Evitar interferencias con Monaco Editor
+- [x] `g` + `h` → Home · `g` + `t` → Teorema · `g` + `d` → Definición
+- [x] `g` + `g` → Grafo · `g` + `a` → Axiomas · `g` + `e` → Editor
+- [x] `g` + `s` → Diccionario · `?` → SearchOmnibar
+- [x] `Escape` → cerrar SearchOmnibar y MarginaliaPanel
+- [x] Evitar interferencias con Monaco Editor — **`isEditing()` check en `useKeyboardShortcuts.ts:12-17`**
 
 ### 3.5 Búsqueda a texto completo
-- [ ] Auditar SearchOmnibar: ¿busca solo metadatos o cuerpo MDX?
-- [ ] Integrar Fuse.js o MiniSearch para indexar cuerpo completo de MDX
-- [ ] Indexar también taxonomy MSC2020, biografías, glosario
-- [ ] Filtros por tipo de contenido en resultados
-- [ ] Snippets con término resaltado
+- [x] Auditar SearchOmnibar: busca solo metadatos (title + description) — **no incluye cuerpo MDX, requeriría cargar raw .mdx como texto**
+- [x] Integrar Fuse.js — **fuzzy search con threshold 0.35, pesos title:2 / subtitle:1**
+- [x] Indexar taxonomy MSC2020 — **códigos + nombres en results como tipo `msc2020`**
+- [x] Indexar biografías y glosario — **ya estaban: matemáticos + glosario**
+- [x] Filtros por tipo de contenido — **sidebar izquierda con checkboxes de tipo**
+- [x] Snippets con término resaltado — **highlightText() que usa `includeMatches` de Fuse.js**
 - [ ] Persistir índice en IndexedDB (opcional, búsqueda offline)
 
 ---
@@ -211,10 +220,10 @@
 
 ### 4.1 Mejoras de UI
 - **Sistema de diseño:**
-  - [ ] Breadcrumbs reutilizable y responsivo (truncar ramas largas)
-  - [ ] ContentCard con variantes por tipo
-  - [ ] Animaciones: hover scale, fade-in al montar (extender el estándar de HomePage)
-  - [ ] EmptyState visible (no ocultar secciones sin contenido)
+  - [x] Breadcrumbs reutilizable y responsivo (truncar ramas largas + title tooltips)
+  - [x] ContentCard con variantes por tipo — **añadido prop `type` que auto-asigna badge/accent/actionLabel desde CONTENT_TYPE_CONFIG; usado en TheoremPage y ExamplePage**
+  - [x] Animaciones: hover scale, fade-in al montar — **extendido FadeIn a AxiomPage, DemoPage, ExamplePage, UseCasePage**
+  - [x] EmptyState visible — **añadido EmptyState a Demostraciones, Corolarios, Axiomas del modelo en lugar de ocultar secciones**
 - **Homepage:**
   - [ ] Evaluar layout de 4 cards en HeroSection
   - [ ] Añadir "Explorar por rama" o "Contenido reciente" debajo del hero
@@ -230,18 +239,19 @@
   - [x] SimulationLayout: colapsar a ancho completo si no hay simulación
   - [ ] Botón "Pantalla completa" en simulaciones JSXGraph
   - [ ] Sincronizar color de elementos interactivos con tokens semánticos
+  - [x] Permitir que páginas de axiomas tengan simulaciones — **añadido `Simulation` a `Axiom` interface + ContentStore + SimulationLayout en AxiomPage**
 
 ### 4.2 Diseño responsive y móvil
-- **Grafo:** nodos reducidos, panel lateral → modal, selector de modelos → bottom sheet
-- **Editor:** modo lectura forzado o editor texto plano en móvil, preview fullscreen
-- **Páginas:** SimulationLayout apilado, BiographyLayout colapsable, MarginaliaPanel → modal, SearchOmnibar usable en teclado móvil
-- Tablas y fórmulas LaTeX: scroll horizontal
+- [] **Grafo:** nodos reducidos, panel lateral → modal, selector de modelos → bottom sheet
+- [] **Editor:** modo lectura forzado o editor texto plano en móvil, preview fullscreen
+- [] **Páginas:** SimulationLayout apilado, BiographyLayout colapsable — **cambiado a `flex-col lg:flex-row` + padding responsive**, MarginaliaPanel → modal, SearchOmnibar usable en teclado móvil
+- [] **Tablas y fórmulas LaTeX:** scroll horizontal — **`overflow-x: auto` en `.katex-display, .katex`**
 
 ### 4.3 Accesibilidad (a11y)
-- **Contenido matemático:** `aria-label` en fórmulas KaTeX, explorar MathML, `alt` text en diagramas
-- **Teclado:** grafo navegable con Tab/Enter/Escape, focus trap en modales, skip-to-content link
-- **ARIA:** roles navigation/main, aria-expanded en paneles, aria-live en zonas dinámicas, aria-label en ThemeToggle
-- **Contraste:** verificar WCAG AA con paleta Arts & Crafts, dificultad no solo por color, modo alto contraste opcional
+- [] **Contenido matemático:** `aria-label` en fórmulas KaTeX, explorar MathML, `alt` text en diagramas
+- [] **Teclado:** grafo navegable con Tab/Enter/Escape, focus trap en modales, skip-to-content link
+- [] **ARIA:** roles navigation/main, aria-expanded en paneles, aria-live en zonas dinámicas, aria-label en ThemeToggle
+- [] **Contraste:** verificar WCAG AA con paleta Arts & Crafts, dificultad no solo por color, modo alto contraste opcional
 
 ### 4.4 Exportación e impresión
 - [ ] `@media print` en CSS (ocultar navegación, MarginaliaPanel, etc.)

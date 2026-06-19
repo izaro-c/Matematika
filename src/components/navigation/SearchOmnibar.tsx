@@ -1,22 +1,20 @@
 import { useEffect, useState, useMemo, useRef } from 'react';
+import Fuse from 'fuse.js';
 import { useLocation } from 'wouter';
 import { useNavigationStore } from '../../store/NavigationStore';
 import { db } from '../../store/content';
 import { dictionary } from '../../store/GlossaryStore';
 import { useGlossaryStore } from '../../store/GlossaryStore';
+import { mscNames } from '../../store/content/msc2020';
 import { EmptyState } from '../ui/EmptyState';
-
-// ── Tipos ─────────────────────────────────────────────────────────────────────
 
 type SearchResult = {
   id: string;
-  type: 'teorema' | 'lección' | 'definición' | 'ejemplo' | 'ejercicio' | 'demo' | 'glosario' | 'matemático' | 'caso_uso' | 'axioma';
+  type: 'teorema' | 'lección' | 'definición' | 'ejemplo' | 'ejercicio' | 'demo' | 'glosario' | 'matemático' | 'caso_uso' | 'axioma' | 'msc2020';
   title: string;
   subtitle?: string;
   href: string;
 };
-
-// ── Iconos por tipo ───────────────────────────────────────────────────────────
 
 const TYPE_ICONS: Record<SearchResult['type'], string> = {
   teorema: 'T',
@@ -29,18 +27,13 @@ const TYPE_ICONS: Record<SearchResult['type'], string> = {
   matemático: '✦',
   caso_uso: '◈',
   axioma: ' A',
+  msc2020: '⊞',
 };
-
-// ── Construcción del índice ───────────────────────────────────────────────────
-// Se construye una única vez usando el ContentStore, que ya tiene los títulos
-// correctos extraídos del frontmatter de cada MDX.
 
 const buildIndex = (): SearchResult[] => {
   const index: SearchResult[] = [];
 
-  // 1. Teoremas, Lemas y Corolarios
   for (const thm of db.theorems.values()) {
-    const typeLabel = thm.type === 'lemma' ? 'lema' : thm.type === 'corollary' ? 'corolario' : 'teorema';
     index.push({
       id: `thm-${thm.id}`,
       type: 'teorema',
@@ -48,10 +41,8 @@ const buildIndex = (): SearchResult[] => {
       subtitle: thm.description,
       href: `/Matematika/teorema/${thm.slug}`,
     });
-    void typeLabel;
   }
 
-  // 2. Lecciones
   for (const lesson of db.lessons.values()) {
     index.push({
       id: `lesson-${lesson.id}`,
@@ -61,7 +52,6 @@ const buildIndex = (): SearchResult[] => {
     });
   }
 
-  // 3. Definiciones
   for (const def of db.definitions.values()) {
     index.push({
       id: `def-${def.id}`,
@@ -72,7 +62,6 @@ const buildIndex = (): SearchResult[] => {
     });
   }
 
-  // 4. Ejemplos
   for (const ex of db.examples.values()) {
     index.push({
       id: `ex-${ex.id}`,
@@ -83,7 +72,6 @@ const buildIndex = (): SearchResult[] => {
     });
   }
 
-  // 5. Ejercicios
   for (const ez of db.exercises.values()) {
     index.push({
       id: `ez-${ez.id}`,
@@ -94,7 +82,6 @@ const buildIndex = (): SearchResult[] => {
     });
   }
 
-  // 6. Demostraciones
   for (const demo of db.demos.values()) {
     index.push({
       id: `demo-${demo.id}`,
@@ -105,7 +92,6 @@ const buildIndex = (): SearchResult[] => {
     });
   }
 
-  // 7. Matemáticos
   for (const bio of db.mathematicians.values()) {
     index.push({
       id: `bio-${bio.id}`,
@@ -116,7 +102,6 @@ const buildIndex = (): SearchResult[] => {
     });
   }
 
-  // 8. Casos de Uso
   for (const uc of db.usecases.values()) {
     index.push({
       id: `uc-${uc.id}`,
@@ -127,7 +112,6 @@ const buildIndex = (): SearchResult[] => {
     });
   }
 
-  // 9. Axiomas
   for (const axm of db.axioms.values()) {
     index.push({
       id: `axm-${axm.id}`,
@@ -138,14 +122,23 @@ const buildIndex = (): SearchResult[] => {
     });
   }
 
-  // 10. Glosario de Símbolos
   for (const [key, term] of Object.entries(dictionary)) {
     index.push({
       id: `glossary-${key}`,
       type: 'glosario',
       title: term.title,
-      subtitle: term.definition.slice(0, 80) + '…',
-      href: key, // El glosario se abre en el panel, no navega
+      subtitle: term.definition.slice(0, 120),
+      href: key,
+    });
+  }
+
+  for (const [code, name] of Object.entries(mscNames)) {
+    index.push({
+      id: `msc-${code}`,
+      type: 'msc2020',
+      title: `${code} — ${name}`,
+      subtitle: `Clasificación MSC2020`,
+      href: '',
     });
   }
 
@@ -154,23 +147,28 @@ const buildIndex = (): SearchResult[] => {
 
 const searchIndex = buildIndex();
 
-/**
- * SearchOmnibar
- *
- * Barra de búsqueda global y omnisciente. 
- * Se abre pulsando Cmd+K o desde un botón. Construye un índice en memoria 
- * leyendo de `db` (ContentStore) y permite navegación rápida y accesible por teclado.
- */
+const ALL_TYPES: SearchResult['type'][] = [
+  'teorema', 'lección', 'definición', 'axioma',
+  'ejemplo', 'ejercicio', 'demo', 'matemático', 'caso_uso', 'glosario', 'msc2020',
+];
+
+const TYPE_COLORS: Record<string, string> = {
+  teorema: '#6b9e6b', lección: '#4a6070', definición: '#8b7355',
+  axioma: '#1c1917', ejemplo: '#6b9e6b', ejercicio: '#b85c38',
+  demo: '#4a6070', matemático: '#c9a87c', caso_uso: '#6b9e6b',
+  glosario: '#8b7355', msc2020: '#4a6070',
+};
+
 export const SearchOmnibar = () => {
   const { isSearchOpen, closeSearch } = useNavigationStore();
   const [, setLocation] = useLocation();
   const { openTerm } = useGlossaryStore();
   const [query, setQuery] = useState('');
   const [selectedIndex, setSelectedIndex] = useState(0);
+  const [activeTypes, setActiveTypes] = useState<Set<string>>(new Set(ALL_TYPES));
   const inputRef = useRef<HTMLInputElement>(null);
   const listRef = useRef<HTMLDivElement>(null);
 
-  // Keyboard shortcuts: Cmd+K y Escape
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
       if ((e.metaKey || e.ctrlKey) && e.key === 'k') {
@@ -183,37 +181,37 @@ export const SearchOmnibar = () => {
     return () => window.removeEventListener('keydown', handleKeyDown);
   }, [closeSearch]);
 
-  // Focus al abrir, limpiar al cerrar
   useEffect(() => {
     if (isSearchOpen) {
       setTimeout(() => inputRef.current?.focus(), 50);
     } else {
-      // eslint-disable-next-line react-hooks/set-state-in-effect
       setQuery('');
       setSelectedIndex(0);
     }
   }, [isSearchOpen]);
 
-  // Normalización de texto para búsqueda acentuada
-  const normalize = (s: string) =>
-    s.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '');
+  const fuse = useMemo(() => {
+    const filtered = activeTypes.size < ALL_TYPES.length
+      ? searchIndex.filter(item => activeTypes.has(item.type))
+      : searchIndex;
+    return new Fuse(filtered, {
+      keys: [
+        { name: 'title', weight: 2 },
+        { name: 'subtitle', weight: 1 },
+      ],
+      threshold: 0.35,
+      includeMatches: true,
+      minMatchCharLength: 2,
+    });
+  }, [activeTypes]);
 
   const results = useMemo(() => {
     if (!query.trim()) return [];
-    const q = normalize(query);
-    return searchIndex
-      .filter(item => {
-        const haystack = normalize(`${item.title} ${item.subtitle ?? ''} ${item.type}`);
-        return haystack.includes(q);
-      })
-      .slice(0, 9);
-  }, [query]);
+    return fuse.search(query).slice(0, 12);
+  }, [query, fuse]);
 
-  // Restablecer selección cuando cambian los resultados
-  // eslint-disable-next-line react-hooks/set-state-in-effect
   useEffect(() => setSelectedIndex(0), [results]);
 
-  // Navegación con teclado dentro de los resultados
   const handleKeyDown = (e: React.KeyboardEvent) => {
     if (e.key === 'ArrowDown') {
       e.preventDefault();
@@ -222,7 +220,7 @@ export const SearchOmnibar = () => {
       e.preventDefault();
       setSelectedIndex(i => Math.max(i - 1, 0));
     } else if (e.key === 'Enter' && results[selectedIndex]) {
-      handleSelect(results[selectedIndex]);
+      handleSelect(results[selectedIndex].item);
     }
   };
 
@@ -230,20 +228,48 @@ export const SearchOmnibar = () => {
     closeSearch();
     if (item.type === 'glosario') {
       openTerm(item.href);
+    } else if (item.type === 'msc2020') {
+      return;
     } else {
       setLocation(item.href);
     }
   };
 
+  const toggleType = (type: string) => {
+    setActiveTypes(prev => {
+      const next = new Set(prev);
+      if (next.has(type)) next.delete(type);
+      else next.add(type);
+      return next;
+    });
+  };
+
+  function highlightText(text: string, matches: ReadonlyArray<{ indices: ReadonlyArray<[number, number]> }>): React.ReactNode {
+    if (!matches || matches.length === 0) return text;
+    const allIndices = matches.flatMap(m => m.indices).sort((a, b) => a[0] - b[0]);
+    if (allIndices.length === 0) return text;
+    const parts: React.ReactNode[] = [];
+    let lastEnd = 0;
+    for (const [start, end] of allIndices) {
+      if (start > lastEnd) {
+        parts.push(<span key={`t-${lastEnd}`}>{text.slice(lastEnd, start)}</span>);
+      }
+      parts.push(<span key={`h-${start}`} className="bg-terracota/30 text-carbon font-bold">{text.slice(start, end + 1)}</span>);
+      lastEnd = end + 1;
+    }
+    if (lastEnd < text.length) {
+      parts.push(<span key={`t-${lastEnd}`}>{text.slice(lastEnd)}</span>);
+    }
+    return <>{parts}</>;
+  }
+
   if (!isSearchOpen) return null;
 
   return (
-    <div className="fixed inset-0 z-[100] flex items-start justify-center pt-[12vh]" onKeyDown={handleKeyDown}>
-      {/* Backdrop */}
+    <div className="fixed inset-0 z-[100] flex items-start justify-center pt-[8vh]" onKeyDown={handleKeyDown}>
       <div className="absolute inset-0 bg-carbon/40 backdrop-blur-sm" onClick={closeSearch} />
 
-      {/* Modal */}
-      <div className="relative w-full max-w-2xl bg-lienzo shadow-2xl overflow-hidden flex flex-col font-sans"
+      <div className="relative w-full max-w-3xl bg-lienzo shadow-2xl overflow-hidden flex flex-col font-sans"
         style={{ border: '1px solid rgba(51,51,51,0.12)', borderRadius: '2px' }}>
 
         {/* Input */}
@@ -262,76 +288,100 @@ export const SearchOmnibar = () => {
           <kbd className="ml-3 px-2 py-1 text-xs font-sans text-carbon/40 border border-carbon/15 rounded shrink-0">ESC</kbd>
         </div>
 
-        {/* Resultados */}
-        {results.length > 0 && (
-          <div ref={listRef} className="overflow-y-auto" style={{ maxHeight: '60vh' }}>
-            {results.map((item, idx) => (
-              <button
-                key={item.id}
-                onClick={() => handleSelect(item)}
-                className={`w-full text-left px-5 py-3 flex items-center gap-4 transition-colors group
-                  ${idx === selectedIndex
-                    ? 'bg-carbon text-lienzo'
-                    : 'hover:bg-carbon/5 text-carbon'
-                  }`}
-              >
-                {/* Icono de tipo */}
-                <span className={`w-8 h-8 shrink-0 flex items-center justify-center text-sm font-bold font-serif
-                  rounded-sm border
-                  ${idx === selectedIndex
-                    ? 'border-lienzo/30 text-lienzo/70'
-                    : 'border-carbon/15 text-carbon/40'
-                  }`}>
-                  {TYPE_ICONS[item.type]}
-                </span>
-
-                {/* Texto */}
-                <div className="flex-1 min-w-0">
-                  <div className={`font-serif font-bold text-base leading-tight truncate
-                    ${idx === selectedIndex ? 'text-lienzo' : 'text-carbon'}`}>
-                    {item.title}
-                  </div>
-                  {item.subtitle && (
-                    <div className={`text-xs mt-0.5 leading-snug line-clamp-1
-                      ${idx === selectedIndex ? 'text-lienzo/60' : 'text-carbon/45'}`}>
-                      {item.subtitle}
-                    </div>
-                  )}
-                </div>
-
-                {/* Tipo badge */}
-                <span className={`text-xs uppercase tracking-widest font-bold shrink-0
-                  ${idx === selectedIndex ? 'text-lienzo/50' : 'text-carbon/30'}`}>
-                  {item.type}
-                </span>
-              </button>
-            ))}
-          </div>
-        )}
-
-        {/* Estado vacío */}
-        {query.trim() && results.length === 0 && (
-          <EmptyState
-            message={`Sin resultados para "${query}"`}
-            icon="◎"
-          />
-        )}
-
-        {/* Estado inicial */}
-        {!query.trim() && (
-          <div className="px-5 py-6 flex flex-wrap gap-2">
-            {(['teorema', 'lección', 'definición', 'matemático'] as const).map(type => (
+        <div className="flex" style={{ minHeight: 200 }}>
+          {/* Type filters sidebar */}
+          <div className="w-36 shrink-0 border-r border-carbon/8 p-3 space-y-1">
+            {ALL_TYPES.map(type => (
               <button
                 key={type}
-                onClick={() => setQuery(type === 'lección' ? '' : type)}
-                className="px-3 py-1.5 text-xs font-sans border border-carbon/15 text-carbon/50 hover:border-carbon/40 hover:text-carbon transition-colors rounded-sm capitalize"
+                onClick={() => toggleType(type)}
+                className={`w-full text-left text-xs px-2 py-1 rounded transition-colors flex items-center gap-2 ${
+                  activeTypes.has(type) ? 'text-carbon' : 'text-carbon/30'
+                }`}
               >
-                {TYPE_ICONS[type]} {type}s
+                <span
+                  className="w-2 h-2 rounded-sm shrink-0 border"
+                  style={{
+                    background: activeTypes.has(type) ? TYPE_COLORS[type] || '#999' : 'transparent',
+                    borderColor: TYPE_COLORS[type] || '#999',
+                  }}
+                />
+                <span className="capitalize">{type.replace('_', ' ')}</span>
               </button>
             ))}
-            <span className="ml-auto text-xs text-carbon/30 self-center">↑↓ navegar · ↵ abrir</span>
           </div>
-        )}
+
+          {/* Results */}
+          <div className="flex-1">
+            {results.length > 0 && (
+              <div ref={listRef} className="overflow-y-auto" style={{ maxHeight: '55vh' }}>
+                {results.map(({ item, matches }, idx) => (
+                  <button
+                    key={item.id}
+                    onClick={() => handleSelect(item)}
+                    className={`w-full text-left px-5 py-3 flex items-center gap-4 transition-colors group border-b border-carbon/5 last:border-0
+                      ${idx === selectedIndex
+                        ? 'bg-carbon text-lienzo'
+                        : 'hover:bg-carbon/5 text-carbon'
+                      }`}
+                  >
+                    <span className={`w-8 h-8 shrink-0 flex items-center justify-center text-sm font-bold font-serif rounded-sm border ${
+                      idx === selectedIndex
+                        ? 'border-lienzo/30 text-lienzo/70'
+                        : 'border-carbon/15 text-carbon/40'
+                    }`}>
+                      {TYPE_ICONS[item.type]}
+                    </span>
+
+                    <div className="flex-1 min-w-0">
+                      <div className={`font-serif font-bold text-base leading-tight truncate ${
+                        idx === selectedIndex ? 'text-lienzo' : 'text-carbon'
+                      }`}>
+                        {query.trim() && matches
+                          ? highlightText(item.title, matches.filter(m => m.key === 'title'))
+                          : item.title}
+                      </div>
+                      {item.subtitle && (
+                        <div className={`text-xs mt-0.5 leading-snug line-clamp-1 ${
+                          idx === selectedIndex ? 'text-lienzo/60' : 'text-carbon/45'
+                        }`}>
+                          {query.trim() && matches
+                            ? highlightText(item.subtitle, matches.filter(m => m.key === 'subtitle'))
+                            : item.subtitle}
+                        </div>
+                      )}
+                    </div>
+
+                    <span className={`text-xs uppercase tracking-widest font-bold shrink-0 ${
+                      idx === selectedIndex ? 'text-lienzo/50' : 'text-carbon/30'
+                    }`}>
+                      {item.type}
+                    </span>
+                  </button>
+                ))}
+              </div>
+            )}
+
+            {query.trim() && results.length === 0 && (
+              <EmptyState message={`Sin resultados para "${query}"`} icon="◎" />
+            )}
+
+            {!query.trim() && (
+              <div className="px-5 py-6 flex flex-wrap gap-2">
+                {(['teorema', 'lección', 'definición', 'matemático'] as const).map(type => (
+                  <button
+                    key={type}
+                    onClick={() => setQuery(type === 'lección' ? '' : type)}
+                    className="px-3 py-1.5 text-xs font-sans border border-carbon/15 text-carbon/50 hover:border-carbon/40 hover:text-carbon transition-colors rounded-sm capitalize"
+                  >
+                    {TYPE_ICONS[type]} {type}s
+                  </button>
+                ))}
+                <span className="ml-auto text-xs text-carbon/30 self-center">↑↓ navegar · ↵ abrir</span>
+              </div>
+            )}
+          </div>
+        </div>
       </div>
     </div>
   );

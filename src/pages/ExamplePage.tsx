@@ -12,9 +12,13 @@
 import { useParams, Link } from 'wouter';
 import { Suspense } from 'react';
 import { db } from '../store/content';
+import { DIFF_COLORS } from '../config/constants';
 import { SimulationLayout } from "../components/layout/SimulationLayout";
 import { KatexText } from '../components/ui/KatexText';
 import { ReadingButton } from '../components/ui/ReadingButton';
+import { ContentCard } from '../components/ui/ContentCard';
+import { EmptyState } from '../components/ui/EmptyState';
+import { FadeIn } from '../components/ui/FadeIn';
 
 export const ExamplePage: React.FC = () => {
   const { id } = useParams();
@@ -32,19 +36,15 @@ export const ExamplePage: React.FC = () => {
   const relatedTheorem = example.relatedTheorem ? db.getTheorem(example.relatedTheorem) : null;
   const relatedExercises = relatedTheorem ? db.getExercisesByTheorem(relatedTheorem.id) : [];
 
-  const DIFF_COLORS: Record<string, string> = {
-    básico: '#2a6a2a',
-    intermedio: '#c49b4f',
-    avanzado: '#A42A04',
-  };
-  const diffColor = DIFF_COLORS[example.difficulty ?? 'básico'] ?? '#333';
+  const diffColor = DIFF_COLORS[example.difficulty ?? 'básico'] ?? 'var(--theme-carbon)';
 
   return (
     <SimulationLayout simulationComponent={example.Simulation}>
       <div className="min-h-screen bg-transparent text-carbon font-serif">
-        <div className="max-w-3xl mx-auto px-6 md:px-10 pt-16 pb-32">
+        <div className="max-w-4xl mx-auto px-6 md:px-10 pt-16 pb-32">
 
         {/* Migas de pan */}
+        <FadeIn>
         <div className="flex items-center gap-2 text-[10px] font-sans uppercase tracking-widest text-carbon/35 mb-10">
           <Link href="/"><a className="hover:text-carbon transition-colors">Biblioteca</a></Link>
           {relatedTheorem && (
@@ -64,7 +64,7 @@ export const ExamplePage: React.FC = () => {
           <div className="flex items-center gap-3 mb-3">
             <span
               className="text-[10px] font-sans font-bold uppercase tracking-widest px-2 py-1 rounded"
-              style={{ color: diffColor, backgroundColor: `${diffColor}15` }}
+              style={{ color: diffColor, backgroundColor: `color-mix(in srgb, ${diffColor}, transparent 92%)` }}
             >
               {example.difficulty ?? 'básico'}
             </span>
@@ -117,36 +117,33 @@ export const ExamplePage: React.FC = () => {
         </div>
 
         {/* Ejercicios relacionados */}
-        {relatedExercises.length > 0 && (
-          <div className="mt-8">
-            <h3 className="text-xs font-sans font-bold uppercase tracking-widest text-carbon/40 mb-4">
-              Practica con ejercicios relacionados
-            </h3>
+        <div className="mt-8">
+          <h3 className="text-xs font-sans font-bold uppercase tracking-widest text-carbon/40 mb-4">
+            Practica con ejercicios relacionados
+          </h3>
+          {relatedExercises.length > 0 ? (
             <div className="flex flex-col gap-3">
               {relatedExercises.map(ex => (
-                <Link key={ex.id} href={`/ejercicio/${ex.id}`}>
-                  <a className="flex items-center justify-between p-4 border border-carbon/15 hover:border-carbon/40 hover:shadow-sm transition-all group">
-                    <div>
-                      <span className="text-sm font-medium text-carbon group-hover:text-terracota transition-colors">
-                        {ex.title}
-                      </span>
-                      {ex.description && (
-                        <p className="text-xs text-carbon/45 italic mt-0.5">{ex.description}</p>
-                      )}
-                    </div>
-                    <span className="text-xs font-sans text-carbon/30 group-hover:text-carbon/60 transition-colors shrink-0 ml-4">
-                      Practicar →
-                    </span>
-                  </a>
-                </Link>
+                <ContentCard
+                  key={ex.id}
+                  href={`/ejercicio/${ex.id}`}
+                  title={ex.title}
+                  description={ex.description}
+                  type="ejercicio"
+                  layout="row"
+                  actionLabel="Practicar"
+                />
               ))}
             </div>
-          </div>
-        )}
+          ) : (
+            <EmptyState message="No hay ejercicios relacionados con este ejemplo." icon="✎" />
+          )}
+        </div>
 
         {/* Botón de Lectura */}
         <ReadingButton id={slug} />
 
+        </FadeIn>
       </div>
     </div>
     </SimulationLayout>

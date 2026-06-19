@@ -5,6 +5,9 @@ import { Suspense } from 'react';
 import { SimulationLayout } from "../components/layout/SimulationLayout";
 import { ReadingButton } from '../components/ui/ReadingButton';
 import { ModelBadgeList } from '../components/ui/ModelBadge';
+import { FadeIn } from '../components/ui/FadeIn';
+import { EmptyState } from '../components/ui/EmptyState';
+import { ContentCard } from '../components/ui/ContentCard';
 import { MaterialPracticoSection } from '../components/ui/MaterialPracticoSection';
 import { AplicacionesSection } from '../components/ui/AplicacionesSection';
 
@@ -51,7 +54,7 @@ export const TheoremPage = () => {
 
   const renderContent = () => (
     <div className="min-h-screen bg-transparent text-carbon font-serif pb-32">
-        <div className="max-w-4xl mx-auto px-6 md:px-12 pt-24">
+        <FadeIn className="max-w-4xl mx-auto px-6 md:px-12 pt-24">
         
         {/* Breadcrumbs */}
         {breadcrumbs.length > 0 && (
@@ -121,59 +124,60 @@ export const TheoremPage = () => {
         </div>
 
         {/* Demostraciones */}
-        {demos.length > 0 && (
-          <div className="mb-24">
-            <h2 className="text-2xl font-bold mb-8 border-b border-carbon/10 pb-4" style={{ fontVariant: 'small-caps' }}>
-              Demostraciones Disponibles
-            </h2>
+        <div className="mb-24">
+          <h2 className="text-2xl font-bold mb-8 border-b border-carbon/10 pb-4" style={{ fontVariant: 'small-caps' }}>
+            Demostraciones Disponibles
+          </h2>
+          {demos.length > 0 ? (
             <div className="flex flex-col gap-4">
               {demos.filter((d): d is Demo => !!d).map((demo) => (
-                <Link key={demo.slug} href={`/demo/${demo.id}`}>
-                  <a className="flex justify-between items-center p-6 border border-carbon/20 bg-carbon/5 hover:bg-carbon hover:text-lienzo transition-all group">
-                    <div>
-                      <h3 className="font-bold text-xl group-hover:text-lienzo transition-colors">{demo.title}</h3>
-                      <p className="text-sm opacity-70 mt-2 font-sans">{demo.description}</p>
-                    </div>
-                    <span className="text-xs font-sans tracking-widest uppercase opacity-50 group-hover:opacity-100">
-                      Explorar Demostración &rarr;
-                    </span>
-                  </a>
-                </Link>
+                <ContentCard
+                  key={demo.slug}
+                  href={`/demo/${demo.id}`}
+                  title={demo.title}
+                  description={demo.description}
+                  type="demostracion"
+                  layout="row"
+                  actionLabel="Explorar Demostración"
+                />
               ))}
             </div>
-          </div>
-        )}
+          ) : (
+            <EmptyState message="No hay demostraciones documentadas para este teorema." icon="▤" />
+          )}
+        </div>
 
         <MaterialPracticoSection examples={examples} exercises={exercises} />
         <AplicacionesSection useCases={useCases} />
 
         {/* Referencias Relacionales (Corolarios) */}
-        {corollaries.length > 0 && (
-          <div className="mt-24 border-t border-carbon/20 pt-16">
-            <h2 className="text-3xl font-bold mb-12 text-center" style={{ fontVariant: 'small-caps' }}>
-              Corolarios Derivados
-            </h2>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-12 justify-center max-w-2xl mx-auto">
-              <div className="flex flex-col gap-4 col-span-full">
-                {corollaries.filter((c): c is Theorem => !!c).map((cor) => (
-                  <Link key={cor.slug} href={`/teorema/${cor.id}`}>
-                    <a className="block p-5 border border-carbon/20 bg-carbon/5 hover:border-terracota hover:shadow-md transition-all group">
-                      <h4 className="font-bold text-lg group-hover:text-terracota transition-colors">{cor.title}</h4>
-                      <p className="text-sm text-carbon/60 mt-2 font-sans">{cor.description}</p>
-                    </a>
-                  </Link>
-                ))}
-              </div>
+        <div className="mt-24 border-t border-carbon/20 pt-16">
+          <h2 className="text-3xl font-bold mb-12 text-center" style={{ fontVariant: 'small-caps' }}>
+            Corolarios Derivados
+          </h2>
+          {corollaries.length > 0 ? (
+            <div className="flex flex-col gap-4 max-w-2xl mx-auto">
+              {corollaries.filter((c): c is Theorem => !!c).map((cor) => (
+                <ContentCard
+                  key={cor.slug}
+                  href={`/teorema/${cor.id}`}
+                  title={cor.title}
+                  description={cor.description}
+                  type="corolario"
+                />
+              ))}
             </div>
-          </div>
-        )}
+          ) : (
+            <EmptyState message="No hay corolarios derivados de este teorema." icon="◇" />
+          )}
+        </div>
 
         {/* Botón de Lectura */}
         <ReadingButton id={slug} />
 
+        </FadeIn>
       </div>
-    </div>
-  );
+    );
 
   return (
     <SimulationLayout simulationComponent={theorem.Simulation}>

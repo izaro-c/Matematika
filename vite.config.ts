@@ -14,6 +14,7 @@ import rehypeKatex from 'rehype-katex'
 
 import type { Plugin, ViteDevServer } from 'vite';
 import type { IncomingMessage, ServerResponse } from 'http';
+import { visualizer } from 'rollup-plugin-visualizer';
 
 const drafts = new Map<string, string>();
 
@@ -173,6 +174,12 @@ export default defineConfig({
     },
     react(),
     tailwindcss(),
+    visualizer({
+      filename: 'dist/stats.html',
+      open: false,
+      gzipSize: true,
+      brotliSize: true,
+    }),
   ],
   base: "/Matematika/"
 })

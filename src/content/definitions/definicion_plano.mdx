@@ -1,0 +1,62 @@
+import { PlaneVisualizer } from '../../diagrams/Geometria/PlaneVisualizer';
+
+export const metadata = {
+  id: "definicion-plano",
+  type: "definicion",
+  title: "Plano",
+  description: "Superficie infinita y plana que se extiende indefinidamente en dos dimensiones.",
+  statement: "Un plano es una superficie infinita y plana que contiene puntos, líneas y figuras geométricas, extendiéndose indefinidamente en dos direcciones.",
+  tags: ["geometría", "fundamentos", "espacios"],
+  authors: [],
+  color: "salvia",
+  hasSimulation: true
+};
+
+export const Simulation = PlaneVisualizer;
+
+<Capitular letra="U" />
+
+n plano es una **superficie infinita, completamente plana y bidimensional** que contiene <ConceptLink targetId="definicion-punto">puntos</ConceptLink>, rectas y todas las figuras geométricas planas como <ConceptLink targetId="definicion-triangulo">triángulos</ConceptLink>, círculos, etc.
+
+### Propiedades Formales
+
+Un plano tiene:
+
+- **Dos dimensiones**: Se extiende en dos direcciones perpendiculares entre sí (largo y ancho, pero no altura).
+- **Infinitud**: No tiene bordes ni límites; se extiende indefinidamente en todas las direcciones.
+- **Planitud**: Todos sus <ConceptLink targetId="definicion-punto">puntos</ConceptLink> están al mismo "nivel"; no hay curvatura ni irregularidades. En el diagrama 3D interactivo, ve cómo <InteractiveElement target="pA" color="terracota">A</InteractiveElement>, <InteractiveElement target="pB" color="terracota">B</InteractiveElement> y <InteractiveElement target="pC" color="salvia">C</InteractiveElement> yacen sobre el plano verde.
+- **Contiene líneas infinitas**: Cada plano contiene infinitas líneas rectas
+
+### Notación
+
+Los planos se denotan típicamente con:
+
+- **Una letra griega**: $\pi$, $\sigma$, $\tau$, etc.
+- **Tres puntos no colineales**: El plano que contiene los puntos $A$, $B$ y $C$ se puede escribir como "plano $ABC$".
+
+### Determinación de un Plano
+
+Un plano queda completamente determinado por:
+
+1. **Tres puntos no colineales**: Si tienes tres puntos que no están en la misma recta, existe un único plano que los contiene.
+2. **Una recta y un punto exterior**: Una ecta y un <ConceptLink targetId="definicion-punto">punto</ConceptLink> que no está en ella determinan un único plano.
+3. **Dos rectas que se intersectan**: Dos rectas que se cruzan en un punto determinan un único plano.
+4. **Dos rectas paralelas**: Dos rectas paralelas determinan un único plano que las contiene.
+
+<Separador />
+
+### El Plano Cartesiano
+
+En coordenadas, el plano euclidiano se representa como $\mathbb{R}^2$, el conjunto de todos los pares ordenados $(x, y)$ donde $x$ e $y$ son números reales. Este es el "plano cartesiano" donde ubicamos todos los problemas de geometría analítica.
+
+Un plano en el espacio 3D puede describirse con la ecuación:
+$$Ax + By + Cz + D = 0$$
+donde $A$, $B$, $C$ son coeficientes y $D$ es una constante.
+
+<Separador />
+
+### Importancia Geométrica
+
+Toda la geometría clásica que estudiaremos (incluyendo la teoría de <ConceptLink targetId="definicion-triangulo">triángulos</ConceptLink>, congruencia y semejanza) ocurre **dentro de un plano**. 
+
+En el diagrama 3D interactivo de la derecha, puedes rotar la vista usando los controles de rotación para visualizar cómo el plano (en verde Salvia) contiene los tres <InteractiveElement target="A" color="terracota">puntos</InteractiveElement>. Los ejes X e Y definen el plano, mientras que el eje Z (en pizarra) es perpendicular a él. La geometría euclidiana plana es la más intuitiva y la base para entender geometrías más complejas.

@@ -23,6 +23,9 @@
     "axioma-playfair",
     "limite",
     "definicion-derivada",
+    "definicion-triangulo",
+    "definicion-punto",
+    "definicion-plano",
     "matriz",
     "determinante",
     "geometria-neutral",
@@ -358,6 +361,35 @@
       "directDependencies": [
         "limite"
       ]
+    },
+    "definicion-plano": {
+      "id": "definicion-plano",
+      "type": "definicion",
+      "title": "Plano",
+      "description": "Superficie infinita y plana que se extiende indefinidamente en dos dimensiones.",
+      "proofs": [],
+      "directDependencies": [
+        "definicion-punto",
+        "definicion-triangulo"
+      ]
+    },
+    "definicion-punto": {
+      "id": "definicion-punto",
+      "type": "definicion",
+      "title": "Punto",
+      "description": "Concepto geométrico fundamental sin dimensión que marca una localización en el espacio.",
+      "proofs": [],
+      "directDependencies": [
+        "definicion-triangulo"
+      ]
+    },
+    "definicion-triangulo": {
+      "id": "definicion-triangulo",
+      "type": "definicion",
+      "title": "Triángulo",
+      "description": "Polígono de tres lados formado por tres segmentos que conectan tres puntos no colineales.",
+      "proofs": [],
+      "directDependencies": []
     },
     "determinante": {
       "id": "determinante",

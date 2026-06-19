@@ -20,7 +20,7 @@ const SECTIONS: SectionDef[] = [
     roman: 'I',
     codes: ['03', '08'],
     groups: [],
-    accent: '#A2C2A2',
+    accent: 'var(--theme-salvia)',
     desc: 'Formalización de los sistemas deductivos, teoría de la demostración y fundamentos de la matemática.',
     icon: '⊢',
   },
@@ -34,7 +34,7 @@ const SECTIONS: SectionDef[] = [
       { id: 'algebra-abstracta', codes: ['12', '13'] },
       { id: 'teoria-de-grupos-y-categorias', codes: ['18', '20'] },
     ],
-    accent: '#333333',
+    accent: 'var(--theme-carbon)',
     desc: 'Abstracción de las operaciones y estructuras algebraicas sobre conjuntos y espacios.',
     icon: '⊕',
   },
@@ -49,7 +49,7 @@ const SECTIONS: SectionDef[] = [
       { id: 'ecuaciones-diferenciales', codes: ['34'] },
       { id: 'analisis-funcional-y-armonico', codes: ['46'] },
     ],
-    accent: '#5D7080',
+    accent: 'var(--theme-pizarra)',
     desc: 'Estudio del cambio continuo, los límites, las funciones y las convergencias infinitas.',
     icon: '∫',
   },
@@ -62,7 +62,7 @@ const SECTIONS: SectionDef[] = [
       { id: 'geometria-clasica-y-diferencial', codes: ['51', '53'] },
       { id: 'topologia-general-y-algebraica', codes: ['54', '55'] },
     ],
-    accent: '#C86446',
+    accent: 'var(--theme-terracota)',
     desc: 'Estudio formal de las propiedades métricas, diferenciales y topológicas del espacio.',
     icon: '△',
   },
@@ -72,7 +72,7 @@ const SECTIONS: SectionDef[] = [
     roman: 'V',
     codes: ['05', '68'],
     groups: [],
-    accent: '#8B5CF6',
+    accent: 'var(--theme-pavo)',
     desc: 'Estructuras discretas, combinatoria, teoría de grafos y fundamentos algorítmicos.',
     icon: '◇',
   },
@@ -85,7 +85,7 @@ const SECTIONS: SectionDef[] = [
       { id: 'optimizacion-y-teoria-de-juegos', codes: ['49', '90', '91'] },
       { id: 'fisica-matematica-y-biologia', codes: ['70', '74', '76', '78', '80', '81', '82', '83', '85', '86', '92'] },
     ],
-    accent: '#c49b4f',
+    accent: 'var(--theme-ocre)',
     desc: 'Tratamiento axiomático de los fenómenos aleatorios, inferencia y modelado de procesos.',
     icon: '∑',
   },
@@ -127,9 +127,9 @@ export const BranchLibrary = () => {
           </span>
         </div>
         <div className="flex items-center gap-4 text-xs font-sans tracking-widest uppercase text-carbon/60 bg-carbon/5 px-4 py-2 rounded">
-          <span>Leídos: <strong className="text-[#2a6a2a]">{readConcepts.length}</strong></span>
+          <span>Leídos: <strong className="text-salvia">{readConcepts.length}</strong></span>
           <span>·</span>
-          <span>Ejercicios: <strong className="text-[#2a6a2a]">{completedExercises.length}</strong></span>
+          <span>Ejercicios: <strong className="text-salvia">{completedExercises.length}</strong></span>
         </div>
       </div>
 
@@ -182,7 +182,7 @@ export const BranchLibrary = () => {
 
                 <p
                   className="text-sm italic text-carbon/60 leading-relaxed mb-3 pl-3"
-                  style={{ borderLeft: `2px solid ${section.accent}40` }}
+                  style={{ borderLeft: `2px solid color-mix(in srgb, ${section.accent}, transparent 75%)` }}
                 >
                   {section.desc}
                 </p>
@@ -196,7 +196,7 @@ export const BranchLibrary = () => {
                           className="text-[10px] font-sans font-bold tracking-wider px-2 py-0.5 rounded border border-dashed transition-colors hover:bg-carbon/5 flex items-center gap-1"
                           style={{
                             color: section.accent,
-                            borderColor: `${section.accent}30`,
+                            borderColor: `color-mix(in srgb, ${section.accent}, transparent 81%)`,
                           }}
                         >
                           <span className="opacity-60">{group.codes.join('/')}</span>
@@ -211,7 +211,7 @@ export const BranchLibrary = () => {
                           className="text-[10px] font-sans font-bold uppercase tracking-wider px-2 py-0.5 rounded border transition-colors hover:bg-carbon/5"
                           style={{
                             color: section.accent,
-                            borderColor: `${section.accent}40`,
+                            borderColor: `color-mix(in srgb, ${section.accent}, transparent 75%)`,
                           }}
                         >
                           {code}
@@ -231,7 +231,7 @@ export const BranchLibrary = () => {
                           </span>
                           <span
                             className="text-[9px] uppercase tracking-wider font-sans px-1.5 py-0.5 rounded"
-                            style={{ color: section.accent, backgroundColor: `${section.accent}15` }}
+                            style={{ color: section.accent, backgroundColor: `color-mix(in srgb, ${section.accent}, transparent 92%)` }}
                           >
                             {TYPE_LABELS[entry.type] || entry.type}
                           </span>

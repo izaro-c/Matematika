@@ -2,11 +2,9 @@ import { Suspense } from 'react';
 import { useRoute, Link } from 'wouter';
 import { db } from '../store/content';
 import { Logo } from '../components/ui/Logo';
+import { SimulationLayout } from "../components/layout/SimulationLayout";
+import { FadeIn } from '../components/ui/FadeIn';
 
-/**
- * Página individual para un axioma.
- * Renderiza el contenido MDX del axioma correspondiente al ID de la URL.
- */
 export function AxiomPage() {
   const [, params] = useRoute('/axioma/:id');
   const id = params?.id;
@@ -24,9 +22,8 @@ export function AxiomPage() {
 
   const Component = axiom.Component;
 
-  return (
+  const content = (
     <div className="min-h-screen bg-lienzo text-carbon">
-      {/* Header */}
       <header className="border-b border-carbon/10 bg-white/80 backdrop-blur-sm sticky top-0 z-40">
         <div className="max-w-4xl mx-auto px-6 py-4 flex items-center gap-4">
           <Link href="/" className="shrink-0">
@@ -47,37 +44,44 @@ export function AxiomPage() {
         </div>
       </header>
 
-      {/* Content */}
       <main className="max-w-4xl mx-auto px-6 py-12">
-        <h1 className="font-serif text-3xl md:text-4xl font-bold text-carbon mb-3 leading-tight">
-          {axiom.title}
-        </h1>
-        {axiom.description && (
-          <p className="font-sans text-lg text-pizarra mb-8 leading-relaxed">
-            {axiom.description}
-          </p>
-        )}
-        {axiom.tags && axiom.tags.length > 0 && (
-          <div className="flex flex-wrap gap-2 mb-8">
-            {axiom.tags.map(tag => (
-              <Link
-                key={tag}
-                href={`/rama/${tag.toLowerCase().replace(/\s+/g, '-')}`}
-                className="text-xs font-sans px-2.5 py-1 bg-carbon/5 text-pizarra rounded-full hover:bg-carbon/10 transition-colors"
-              >
-                {tag}
-              </Link>
-            ))}
+        <FadeIn>
+          <h1 className="font-serif text-3xl md:text-4xl font-bold text-carbon mb-3 leading-tight">
+            {axiom.title}
+          </h1>
+          {axiom.description && (
+            <p className="font-sans text-lg text-pizarra mb-8 leading-relaxed">
+              {axiom.description}
+            </p>
+          )}
+          {axiom.tags && axiom.tags.length > 0 && (
+            <div className="flex flex-wrap gap-2 mb-8">
+              {axiom.tags.map(tag => (
+                <Link
+                  key={tag}
+                  href={`/rama/${tag.toLowerCase().replace(/\s+/g, '-')}`}
+                  className="text-xs font-sans px-2.5 py-1 bg-carbon/5 text-pizarra rounded-full hover:bg-carbon/10 transition-colors"
+                >
+                  {tag}
+                </Link>
+              ))}
+            </div>
+          )}
+          <div className="prose prose-slate max-w-none font-serif">
+            <Suspense fallback={
+              <div className="animate-pulse text-pizarra italic py-8">Cargando contenido...</div>
+            }>
+              <Component />
+            </Suspense>
           </div>
-        )}
-        <div className="prose prose-slate max-w-none font-serif">
-          <Suspense fallback={
-            <div className="animate-pulse text-pizarra italic py-8">Cargando contenido...</div>
-          }>
-            <Component />
-          </Suspense>
-        </div>
+        </FadeIn>
       </main>
     </div>
+  );
+
+  return (
+    <SimulationLayout simulationComponent={axiom.Simulation}>
+      {content}
+    </SimulationLayout>
   );
 }

@@ -1,4 +1,11 @@
 @import "katex/dist/katex.min.css";
+
+.katex-display,
+.katex {
+  overflow-x: auto;
+  overflow-y: hidden;
+  max-width: 100%;
+}
 @import "tailwindcss";
 
 @theme {

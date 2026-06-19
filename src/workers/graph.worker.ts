@@ -333,9 +333,18 @@ export async function computeGraph(disabledAxioms: string[]): Promise<WorkerOutp
   });
 
   const flowEdges: FlowEdge[] = edgeList.map(({ source, target }) => {
+    const srcNode = filtered[source];
     const srcActive = activeStates[source] ?? true;
     const tgtActive = activeStates[target] ?? true;
     const isLive = srcActive && tgtActive;
+
+    let strokeDasharray: string | undefined;
+    if (srcNode?.type === 'lema') {
+      strokeDasharray = '6,4';
+    } else if (srcNode?.type === 'definicion') {
+      strokeDasharray = '2,3';
+    }
+
     return {
       id: `e-${source}-${target}`,
       source,
@@ -344,6 +353,7 @@ export async function computeGraph(disabledAxioms: string[]): Promise<WorkerOutp
       style: {
         stroke: isLive ? '#333333AA' : '#33333322',
         strokeWidth: isLive ? 1.5 : 1,
+        ...(strokeDasharray ? { strokeDasharray } : {}),
       },
       markerEnd: {
         type: 'arrowclosed',

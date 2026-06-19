@@ -30,7 +30,7 @@ export const ThemeToggle = () => {
   return (
     <button
       onClick={toggleTheme}
-      className="fixed top-6 right-24 md:right-28 z-50 w-12 h-12 flex items-center justify-center elegant-panel text-carbon"
+      className="w-12 h-12 flex items-center justify-center elegant-panel text-carbon"
       title={isDark ? "Volver al Papiro (Modo Día)" : "Leer el Códice Nocturno (Modo Noche)"}
     >
       {isDark ? (

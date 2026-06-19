@@ -10,14 +10,16 @@ export interface MathNodeData {
   /** Escala visual pura (CSS transform); no afecta la posición dagre */
   scale: number;
   isHighlighted: boolean;
+  axiomGroupColor?: string;
+  axiomGroupLabel?: string;
 }
 
 export function MathNode({ data }: NodeProps) {
-  const { label, nodeType, isActive, scale, isHighlighted } = (data as unknown) as MathNodeData;
+  const { label, nodeType, isActive, scale, isHighlighted, axiomGroupColor } = (data as unknown) as MathNodeData;
   const s = TYPE_STYLES[nodeType] || TYPE_STYLES.teorema;
 
-  // Opacidad base según estado activo
   const contentOpacity = isActive ? 1 : 0.28;
+  const groupColor = nodeType === 'axioma' ? axiomGroupColor : undefined;
 
   return (
     /**
@@ -59,9 +61,9 @@ export function MathNode({ data }: NodeProps) {
             width: '100%',
             height: '100%',
             backgroundColor: s.bg,
-            border: `${isHighlighted ? 4 : 2}px solid ${isHighlighted ? s.ringColor : s.border}`,
+            border: `${isHighlighted ? 4 : groupColor ? 5 : 2}px solid ${groupColor || (isHighlighted ? s.ringColor : s.border)}`,
             borderRadius: '50%',
-            outline: isHighlighted ? `3px solid ${s.ringColor}` : 'none',
+            outline: isHighlighted ? `3px solid ${s.ringColor}` : groupColor ? 'none' : 'none',
             outlineOffset: isHighlighted ? 3 : 2,
             display: 'flex',
             flexDirection: 'column',
@@ -71,7 +73,9 @@ export function MathNode({ data }: NodeProps) {
             boxSizing: 'border-box',
             boxShadow: isHighlighted
               ? `0 0 0 2px ${s.bg}, 0 0 18px ${s.ringColor}80`
-              : '0 2px 8px rgba(0,0,0,0.18)',
+              : groupColor
+                ? `0 0 0 8px ${groupColor}45, 0 0 0 18px ${groupColor}15, 0 0 50px ${groupColor}40, 0 2px 8px rgba(0,0,0,0.18)`
+                : '0 2px 8px rgba(0,0,0,0.18)',
             gap: 3,
           }}
         >

@@ -26,20 +26,6 @@ import { useMathStore } from '../../store/MathStoreContext';
 
 export const Simulation = InteractiveSimulator;
 
-export const InteractiveElement = ({ target, color, children }) => {
-  const setVariable = useMathStore(state => state.setVariable);
-  return (
-    <span 
-      style={{ color: `var(--color-${color})` }} 
-      className="font-bold cursor-pointer border-b-2 border-dashed border-current hover:bg-carbon/5 px-1 py-0.5 rounded transition-all"
-      onMouseEnter={() => setVariable('highlight', target)}
-      onMouseLeave={() => setVariable('highlight', null)}
-    >
-      {children}
-    </span>
-  );
-};
-
 <Capitular letra="E" />l **Teorema de <ConceptLink targetId="pitagoras">Pitágoras</ConceptLink>** establece que en todo triángulo rectángulo, el área del cuadrado construido sobre la hipotenusa (el lado de mayor longitud, <InteractiveElement target="ladoC" color="salvia">**$c$**</InteractiveElement>) es exactamente igual a la suma de las áreas de los cuadrados construidos sobre los catetos (los dos lados menores, <InteractiveElement target="ladoA" color="terracota">**$a$**</InteractiveElement> y <InteractiveElement target="ladoB" color="terracota">**$b$**</InteractiveElement>, que conforman el ángulo recto).
 
 Algebráicamente, si <InteractiveElement target="ladoA" color="terracota">$a$</InteractiveElement> y <InteractiveElement target="ladoB" color="terracota">$b$</InteractiveElement> son las longitudes de los catetos y <InteractiveElement target="ladoC" color="salvia">$c$</InteractiveElement> es la longitud de la hipotenusa, la relación se formula como:

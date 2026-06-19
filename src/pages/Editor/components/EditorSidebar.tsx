@@ -50,7 +50,7 @@ export const EditorSidebar: React.FC<EditorSidebarProps> = ({
       </div>
       
       <div className="p-4 flex-1 whitespace-nowrap overflow-y-auto overflow-x-hidden">
-        {['theorems', 'definitions', 'lessons', 'demonstrations', 'mathematicians', 'diagrams', 'components'].map(type => {
+        {['theorems', 'definitions', 'lessons', 'demonstrations', 'mathematicians', 'exercises', 'examples', 'usecases', 'axioms', 'models', 'plans'].map(type => {
           const typeFiles = files.filter(f => f.type === type && f.name.toLowerCase().includes(searchQuery.toLowerCase()));
           if (typeFiles.length === 0 && type !== 'definitions') return null;
           return (

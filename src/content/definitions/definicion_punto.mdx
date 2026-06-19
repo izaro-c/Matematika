@@ -1,0 +1,51 @@
+import { PointAndLineVisualizer } from '../../diagrams/Geometria/PointAndLineVisualizer';
+
+export const metadata = {
+  id: "definicion-punto",
+  type: "definicion",
+  title: "Punto",
+  description: "Concepto geométrico fundamental sin dimensión que marca una localización en el espacio.",
+  statement: "Un punto es una localización en el espacio sin extensión, área ni volumen.",
+  tags: ["geometría", "fundamentos"],
+  authors: [],
+  color: "terracota",
+  hasSimulation: true
+};
+
+export const Simulation = PointAndLineVisualizer;
+
+<Capitular letra="U" />
+
+n punto es el concepto más básico y primitivo de la geometría. No tiene partes ni dimensión; es simplemente **una posición en el espacio**.
+
+### Propiedades Formales
+
+Un punto es una entidad geométrica que:
+- **No tiene dimensión**: No tiene longitud, área ni volumen.
+- **No tiene parte alguna**: Es indivisible; no puedes "cortar" un punto por la mitad.
+- **Marca una localización única**: Especifica exactamente dónde en el espacio (en un sistema de coordenadas, se representa como un par ordenado $(x, y)$ en 2D o $(x, y, z)$ en 3D).
+
+### Notación
+
+Los puntos se denotan típicamente con **letras mayúsculas**: $A$, $B$, $P$, $Q$, etc.
+
+En coordenadas cartesianas, escribimos $A = (2, 3)$ para indicar que el punto $A$ está ubicado en la posición con abscisa $2$ y ordenada $3$.
+
+<Separador />
+
+### Relación con Otros Conceptos
+
+Los puntos son los "átomos" de los que se construye la geometría:
+
+- Dos puntos distintos determinan unívocamente una recta (por el axioma de puntos y rectas). <InteractiveElement target="pointA" color="terracota">El punto A</InteractiveElement> y <InteractiveElement target="pointB" color="terracota">el punto B</InteractiveElement> generan la <InteractiveElement target="line" color="carbon">recta</InteractiveElement> en el diagrama.
+- Un punto puede pertenecer a una recta, un segmento, un rayo, o ninguno de ellos.
+- Tres puntos no colineales determinan un <ConceptLink targetId="definicion-plano">plano</ConceptLink>.
+- Los vértices de un <ConceptLink targetId="definicion-triangulo">triángulo</ConceptLink> son tres puntos conectados por segmentos.
+
+<Separador />
+
+### Una Observación Filosófica
+
+En la matemática antigua, los griegos debatían: *¿qué es un punto realmente?* <ConceptLink targetId="euclides">Euclides</ConceptLink> lo definió como "aquello que no tiene partes", una descripción negativa. En la geometría moderna, el punto es un **objeto primitivo** que no se define en términos de conceptos más simples, sino que se caracteriza por las relaciones que mantiene con otros puntos (a través de axiomas como el postulado de puntos y rectas).
+
+Es decir, el punto es lo que es porque se comporta de cierta manera, no porque tenga una "naturaleza interna".

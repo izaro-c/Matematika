@@ -14,6 +14,7 @@ import { useParams, Link } from 'wouter';
 import { Suspense, useEffect } from 'react';
 import { db } from '../store/content';
 import { ExerciseProvider, useExercise } from '../components/exercises/ExerciseContext';
+import { DIFF_COLORS } from '../config/constants';
 import { SimulationLayout } from "../components/layout/SimulationLayout";
 import { KatexText } from '../components/ui/KatexText';
 import { useProgressStore } from '../store/UserProgressStore';
@@ -28,20 +29,20 @@ const ProgressBar: React.FC = () => {
 
   return (
     <div className="sticky top-0 z-30 bg-lienzo/95 backdrop-blur-sm border-b border-carbon/10 px-6 py-3">
-      <div className="max-w-3xl mx-auto flex items-center gap-4">
+      <div className="max-w-4xl mx-auto flex items-center gap-4">
         {/* Barra */}
         <div className="flex-1 h-1.5 bg-carbon/10 rounded-full overflow-hidden">
           <div
             className="h-full rounded-full transition-all duration-500"
             style={{
               width: `${pct}%`,
-              backgroundColor: pct === 100 ? '#2a6a2a' : '#C86446',
+              backgroundColor: pct === 100 ? 'var(--theme-musgo)' : 'var(--theme-terracota)',
             }}
           />
         </div>
         {/* Texto */}
         <span className="text-xs font-sans text-carbon/50 shrink-0">
-          <strong className={pct === 100 ? 'text-[#2a6a2a]' : 'text-carbon'}>{correct}</strong>
+          <strong className={pct === 100 ? 'text-musgo' : 'text-carbon'}>{correct}</strong>
           <span className="text-carbon/30"> / {total} correctas</span>
         </span>
         {/* Reiniciar */}
@@ -80,19 +81,14 @@ const ExerciseContent: React.FC<{ id: string }> = ({ id }) => {
 
   const relatedTheorem = exercise.relatedTheorem ? db.getTheorem(exercise.relatedTheorem) : null;
 
-  const DIFF_COLORS: Record<string, string> = {
-    básico: '#2a6a2a',
-    intermedio: '#c49b4f',
-    avanzado: '#A42A04',
-  };
-  const diffColor = DIFF_COLORS[exercise.difficulty ?? 'básico'] ?? '#333';
+  const diffColor = DIFF_COLORS[exercise.difficulty ?? 'básico'] ?? 'var(--theme-carbon)';
 
   return (
     <SimulationLayout simulationComponent={exercise.Simulation}>
       <div className="min-h-screen bg-transparent text-carbon font-serif">
         <ProgressBar />
 
-      <div className="max-w-3xl mx-auto px-6 md:px-10 pt-16 pb-32">
+      <div className="max-w-4xl mx-auto px-6 md:px-10 pt-16 pb-32">
         {/* Migas de pan */}
         <div className="flex items-center gap-2 text-[10px] font-sans uppercase tracking-widest text-carbon/35 mb-10">
           <Link href="/"><a className="hover:text-carbon transition-colors">Biblioteca</a></Link>
@@ -113,7 +109,7 @@ const ExerciseContent: React.FC<{ id: string }> = ({ id }) => {
           <div className="flex items-center gap-3 mb-3">
             <span
               className="text-[10px] font-sans font-bold uppercase tracking-widest px-2 py-1 rounded"
-              style={{ color: diffColor, backgroundColor: `${diffColor}15` }}
+              style={{ color: diffColor, backgroundColor: `color-mix(in srgb, ${diffColor}, transparent 92%)` }}
             >
               {exercise.difficulty ?? 'básico'}
             </span>
@@ -153,9 +149,9 @@ const ExerciseContent: React.FC<{ id: string }> = ({ id }) => {
 
         {/* Banner de completado */}
         {score.total > 0 && score.correct === score.total && (
-          <div className="mt-16 p-6 border border-[#2a6a2a]/30 bg-[#f7fbf7] text-center rounded">
+          <div className="mt-16 p-6 border border-musgo/30 bg-musgo/5 text-center rounded">
             <div className="text-3xl mb-2">✦</div>
-            <p className="font-serif font-bold text-[#2a6a2a] text-lg">
+            <p className="font-serif font-bold text-musgo text-lg">
               Ejercicio completado — {score.correct}/{score.total} correctas
             </p>
             {relatedTheorem && (
