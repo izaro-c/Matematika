@@ -4,6 +4,7 @@ import { useNavigationStore } from '../../store/NavigationStore';
 import { db } from '../../store/content';
 import { dictionary } from '../../store/GlossaryStore';
 import { useGlossaryStore } from '../../store/GlossaryStore';
+import { EmptyState } from '../ui/EmptyState';
 
 // ── Tipos ─────────────────────────────────────────────────────────────────────
 
@@ -310,9 +311,10 @@ export const SearchOmnibar = () => {
 
         {/* Estado vacío */}
         {query.trim() && results.length === 0 && (
-          <div className="p-12 text-center text-carbon/40 italic font-serif">
-            Sin resultados para "<span className="not-italic font-bold">{query}</span>"
-          </div>
+          <EmptyState
+            message={`Sin resultados para "${query}"`}
+            icon="◎"
+          />
         )}
 
         {/* Estado inicial */}

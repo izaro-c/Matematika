@@ -1,5 +1,6 @@
 import React, { useEffect, useState, Suspense } from 'react';
 import { useLessonStore } from '../../store/LessonStore';
+import { EmptyState } from '../ui/EmptyState';
 
 interface SimulationLayoutProps {
   children: React.ReactNode;
@@ -56,7 +57,7 @@ export const SimulationLayout: React.FC<SimulationLayoutProps> = ({
                </Suspense>
              </div>
           ) : (
-            <div className="text-carbon/30 italic">No hay simulación activa.</div>
+            <EmptyState message="No hay simulación activa." icon="⊡" />
           )}
         </div>
       )}
