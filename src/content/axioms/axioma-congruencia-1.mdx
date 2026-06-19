@@ -1,0 +1,40 @@
+export const metadata = {
+  "id": "axioma-congruencia-1",
+  "type": "axioma",
+  "title": "Axioma III-1 (Congruencia)",
+  "description": "Dado un segmento AB y una semirrecta con origen en C, existe un único punto D sobre la semirrecta tal que AB es congruente con CD.",
+  "statement": "Si AB es un segmento y r una semirrecta con origen C, entonces existe un único punto D ∈ r tal que AB ≅ CD.",
+  "tags": ["geometria", "congruencia", "geometria-absoluta"],
+  "authors": ["hilbert"],
+};
+
+<Capitular letra="D" />
+ado un segmento y una semirrecta, existe un único punto sobre esta que determina un segmento congruente al original. Este axioma permite transportar segmentos mediante regla y compás.
+
+<Separador />
+
+### Enunciado Formal
+
+<Formula>
+  $$ \forall \overline{AB} \; \forall \text{semirrecta } r \text{ con origen } C \; \exists! D \in r : \overline{AB} \cong \overline{CD}. $$
+</Formula>
+
+<Nota>
+  La notación $\overline{AB} \cong \overline{CD}$ significa que los segmentos AB y CD son congruentes (tienen la misma longitud).
+</Nota>
+
+<Separador />
+
+### Discusión
+
+Este axioma establece la noción primitiva de congruencia de segmentos. La congruencia no se define en términos de longitud numérica (que aún no existe en la teoría), sino como una relación primitiva que satisface estos axiomas.
+
+La unicidad es esencial: asegura que la operación de transportar un segmento sobre una semirrecta está bien definida y produce un resultado único. Esto es análogo a la unicidad de la recta por dos puntos (axioma I-1).
+
+Nótese que la semirrecta proporciona tanto el origen C como una dirección: el punto D debe estar sobre la semirrecta, no simplemente sobre la recta que la contiene. Esto elimina la ambigüedad de elegir entre dos posibles puntos (uno a cada lado de C).
+
+<Separador />
+
+### Observaciones
+
+Este axioma corresponde a la primera noción común de Euclides ("cosas iguales a una misma cosa son iguales entre sí") y al postulado 3 de Euclides (transportar un segmento). En la axiomática moderna, permite definir la comparación de segmentos: AB < CD si AB ≅ CE para algún punto E entre C y D.

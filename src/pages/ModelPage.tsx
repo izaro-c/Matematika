@@ -4,10 +4,6 @@ import { db } from '../store/content';
 import { Logo } from '../components/ui/Logo';
 import { EmptyState } from '../components/ui/EmptyState';
 
-/**
- * Página individual para un modelo matemático.
- * Renderiza el contenido MDX del modelo correspondiente al ID de la URL.
- */
 export function ModelPage() {
   const [, params] = useRoute('/modelo/:id');
   const id = params?.id;
@@ -24,13 +20,12 @@ export function ModelPage() {
   }
 
   const Component = model.Component;
-
-  // Get the axioms this model includes
-  const modelAxioms = (model.axiomas || []).map(axId => db.getAxiom(axId)).filter(Boolean);
+  const Diagram = model.Diagram;
+  const system = model.satisfies ? db.getAxiomaticSystem(model.satisfies) : undefined;
+  const verifiedAxioms = (model.axioms_verified || []).map(axId => db.getAxiom(axId)).filter(Boolean);
 
   return (
     <div className="min-h-screen bg-lienzo text-carbon">
-      {/* Header */}
       <header className="border-b border-carbon/10 bg-white/80 backdrop-blur-sm sticky top-0 z-40">
         <div className="max-w-4xl mx-auto px-6 py-4 flex items-center gap-4">
           <Link href="/" className="shrink-0">
@@ -51,7 +46,6 @@ export function ModelPage() {
         </div>
       </header>
 
-      {/* Content */}
       <main className="max-w-4xl mx-auto px-6 py-12">
         <h1 className="font-serif text-3xl md:text-4xl font-bold text-carbon mb-3 leading-tight">
           {model.title}
@@ -83,14 +77,53 @@ export function ModelPage() {
           </Suspense>
         </div>
 
-        {/* Axioms list */}
+        {/* Diagram */}
+        {Diagram && (
+          <section className="mb-12">
+            <h2 className="font-serif text-xl font-bold text-carbon mb-4">
+              Diagrama del modelo
+            </h2>
+            <div className="border border-carbon/10 rounded-lg overflow-hidden bg-white/60">
+              <Suspense fallback={
+                <div className="animate-pulse text-pizarra italic py-8 text-center">Cargando diagrama...</div>
+              }>
+                <Diagram />
+              </Suspense>
+            </div>
+          </section>
+        )}
+
+        {/* Axiomatic system reference */}
+        {system && (
+          <section className="border-t border-carbon/10 pt-8 mb-8">
+            <h2 className="font-serif text-xl font-bold text-carbon mb-4">
+              Sistema axiomático
+            </h2>
+            <Link
+              href={`/sistema/${system.id}`}
+              className="flex items-center gap-3 p-3 rounded border border-carbon/10 bg-white/60 hover:bg-white hover:border-carbon/20 transition-all group"
+            >
+              <span
+                className="text-[8px] uppercase tracking-widest px-1.5 py-0.5 rounded font-sans font-bold shrink-0"
+                style={{ background: '#3b5e6b', color: '#fff' }}
+              >
+                Sistema
+              </span>
+              <span className="font-serif text-sm text-carbon group-hover:text-carbon/80 capitalize">
+                {system.title}
+              </span>
+            </Link>
+          </section>
+        )}
+
+        {/* Verified axioms list */}
         <section className="border-t border-carbon/10 pt-8">
           <h2 className="font-serif text-xl font-bold text-carbon mb-4">
-            Axiomas del modelo ({modelAxioms.length})
+            Axiomas verificados en este modelo ({verifiedAxioms.length})
           </h2>
-          {modelAxioms.length > 0 ? (
+          {verifiedAxioms.length > 0 ? (
             <div className="grid gap-2">
-              {modelAxioms.map(ax => ax && (
+              {verifiedAxioms.map(ax => ax && (
                 <Link
                   key={ax.id}
                   href={`/axioma/${ax.id}`}
@@ -109,7 +142,7 @@ export function ModelPage() {
               ))}
             </div>
           ) : (
-            <EmptyState message="Este modelo no tiene axiomas definidos." icon="△" />
+            <EmptyState message="Este modelo no tiene axiomas verificados." icon="△" />
           )}
         </section>
       </main>

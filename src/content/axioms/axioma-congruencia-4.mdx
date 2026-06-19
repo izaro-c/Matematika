@@ -1,0 +1,40 @@
+export const metadata = {
+  "id": "axioma-congruencia-4",
+  "type": "axioma",
+  "title": "Axioma III-4 (Congruencia)",
+  "description": "Dado un ángulo y una semirrecta, existe un único ángulo congruente sobre un lado dado de la semirrecta.",
+  "statement": "Dado un ángulo ∠(h,k) y una semirrecta h' sobre una recta l, existe una única semirrecta k' en un lado dado de l tal que ∠(h,k) ≅ ∠(h',k').",
+  "tags": ["geometria", "congruencia", "geometria-absoluta"],
+  "authors": ["hilbert"],
+};
+
+<Capitular letra="D" />
+ado un ángulo y una semirrecta, existe un único ángulo congruente sobre un lado dado. Este axioma extiende la noción de congruencia de segmentos a los ángulos.
+
+<Separador />
+
+### Enunciado Formal
+
+<Formula>
+  $$ \forall \angle(h,k) \; \forall \text{semirrecta } h' \; \exists! k' : \angle(h,k) \cong \angle(h',k'). $$
+</Formula>
+
+<Nota>
+  Un lado dado significa que la semirrecta k' debe estar en el semiplano elegido respecto de la recta que contiene a h'.
+</Nota>
+
+<Separador />
+
+### Discusión
+
+Así como el axioma III-1 permite transportar segmentos sobre una semirrecta, el axioma III-4 permite transportar ángulos sobre una semirrecta. La unicidad y la elección del lado (semiplano) son esenciales para que la construcción esté bien definida.
+
+La congruencia de ángulos es una relación primitiva, no definida en términos de medida angular. Al igual que con los segmentos, se establece mediante axiomas y más tarde se demostrará que corresponde a la igualdad de medidas.
+
+El "lado dado" elimina la ambigüedad de construir el ángulo hacia un lado o hacia el otro de la semirrecta h'. Sin esta elección, habría dos ángulos congruentes posibles (simétricos respecto a h').
+
+<Separador />
+
+### Observaciones
+
+Este axioma corresponde al postulado 4 de Euclides ("todos los ángulos rectos son iguales") y al postulado de transportar ángulos que Euclides usa implícitamente en sus construcciones. Es fundamental para la construcción de figuras congruentes y para la demostración de los criterios de congruencia de triángulos.

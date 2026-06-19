@@ -10,6 +10,7 @@ import {
   UseCaseSchema,
   StudyPlanSchema,
   AxiomSchema,
+  AxiomaticSystemSchema,
   ModelSchema,
 } from '../schemas';
 import { contentLoaders } from './loaders';
@@ -26,6 +27,7 @@ import type {
   UseCase,
   StudyPlan,
   Axiom,
+  AxiomaticSystem,
   Model,
   BaseContent
 } from './types';
@@ -58,6 +60,7 @@ export class ContentStore {
   public usecases: Map<string, UseCase> = new Map();
   public studyPlans: Map<string, StudyPlan> = new Map();
   public axioms: Map<string, Axiom> = new Map();
+  public axiomaticSystems: Map<string, AxiomaticSystem> = new Map();
   public models: Map<string, Model> = new Map();
 
   constructor() {
@@ -179,8 +182,19 @@ export class ContentStore {
         Simulation: meta.hasSimulation ? this.createLazyComponent(loader, 'Simulation') : undefined,
       }));
 
+    processType(contentLoaders.axiomaticSystemLoaders, 'axiomatic-systems', AxiomaticSystemSchema, this.axiomaticSystems,
+      (meta, id, slug, loader) => ({
+        ...(meta as unknown as AxiomaticSystem), id, slug,
+        Component: this.createLazyComponent(loader),
+        Simulation: meta.hasSimulation ? this.createLazyComponent(loader, 'Simulation') : undefined,
+      }));
+
     processType(contentLoaders.modelLoaders, 'models', ModelSchema, this.models,
-      (meta, id, slug, loader) => ({ ...(meta as unknown as Model), id, slug, Component: this.createLazyComponent(loader) }));
+      (meta, id, slug, loader) => ({
+        ...(meta as unknown as Model), id, slug,
+        Component: this.createLazyComponent(loader),
+        Diagram: meta.hasDiagram ? this.createLazyComponent(loader, 'Diagram') : undefined,
+      }));
   }
 
   // ── Queries ──────────────────────────────────────────────────────────────
@@ -255,6 +269,14 @@ export class ContentStore {
     return this.axioms.get(id) || Array.from(this.axioms.values()).find(a => a.slug === id);
   }
   getAllAxioms(): Axiom[] { return Array.from(this.axioms.values()); }
+
+  getAxiomaticSystem(id: string): AxiomaticSystem | undefined {
+    return this.axiomaticSystems.get(id) || Array.from(this.axiomaticSystems.values()).find(s => s.slug === id);
+  }
+  getAllAxiomaticSystems(): AxiomaticSystem[] { return Array.from(this.axiomaticSystems.values()); }
+  getModelsForSystem(systemId: string): Model[] {
+    return Array.from(this.models.values()).filter(m => m.satisfies === systemId);
+  }
 
   getModel(id: string): Model | undefined {
     return this.models.get(id) || Array.from(this.models.values()).find(m => m.slug === id);

@@ -46,7 +46,7 @@ describe('graph_structure.json', () => {
   });
 
   it('all nodes have a valid type', () => {
-    const validTypes = ['axioma', 'definicion', 'teorema', 'lema', 'corolario', 'demostracion', 'modelo', 'matematico', 'leccion', 'ejercicio', 'ejemplo', 'caso_de_uso', 'plan_de_estudio', 'unknown'];
+    const validTypes = ['axioma', 'definicion', 'sistema-axiomatico', 'teorema', 'lema', 'corolario', 'demostracion', 'modelo', 'matematico', 'leccion', 'ejercicio', 'ejemplo', 'caso_de_uso', 'plan_de_estudio', 'unknown'];
     for (const node of Object.values(graph.nodes)) {
       expect(validTypes).toContain(node.type);
     }

@@ -1,0 +1,64 @@
+export const metadata = {
+  "id": "demo-punto-medio",
+  "type": "demostracion",
+  "title": "Demostración: Existencia y unicidad del punto medio",
+  "description": "Prueba de existencia y unicidad usando axiomas de congruencia y orden.",
+  "parentTheorem": "lema-punto-medio",
+  "proofMethod": "constructivo",
+  "authors": ["hilbert"],
+  "tags": ["geometria", "congruencia", "orden"],
+  "layout": "text",
+  "links": ["axioma-congruencia-1", "axioma-congruencia-2", "axioma-orden-1"],
+};
+
+import { InteractiveElement } from "../../components/ui/VisualBind";
+
+<Capitular letra="T" />
+
+odo segmento admite un único punto medio. La existencia se construye mediante el transporte de segmentos; la unicidad se sigue de los axiomas de orden y congruencia.
+
+<Separador />
+
+### Hipótesis
+
+Sea $\overline{AB}$ un segmento con $A \neq B$.
+
+<Separador />
+
+### Tesis
+
+Existe un único punto $M \in \overline{AB}$ tal que $\overline{AM} \cong \overline{MB}$.
+
+<Separador />
+
+### Demostración
+
+**Existencia.**
+
+*Paso 1: Construir el punto medio.* Por el <ConceptLink targetId="axioma-congruencia-1">axioma III-1 de transporte de segmentos</ConceptLink>, sobre la semirrecta $\overrightarrow{AB}$ podemos transportar segmentos. Construyamos el punto $M$ sobre $\overline{AB}$ tal que $\overline{AM}$ sea congruente a un segmento de longitud $\frac{|\overline{AB}|}{2}$.
+
+La existencia de este punto $M$ entre $A$ y $B$ se garantiza mediante los <ConceptLink targetId="axioma-orden-1">axiomas de orden</ConceptLink> (que aseguran la densidad de los puntos sobre la recta) y el axioma de Arquímedes (que permite la división de segmentos en partes iguales).
+
+*Paso 2: Verificar la congruencia.* Por construcción, $\overline{AM} \cong \overline{MB}$, pues ambos segmentos tienen la misma longitud.
+
+**Unicidad.**
+
+Supongamos que existen dos puntos medios $M$ y $M'$ con $\overline{AM} \cong \overline{MB}$ y $\overline{AM'} \cong \overline{M'B}$.
+
+Por el <ConceptLink targetId="axioma-congruencia-2">axioma III-2 de transitividad de la congruencia</ConceptLink>:
+
+$$ \overline{AM} \cong \overline{AM'} \quad \text{y} \quad \overline{MB} \cong \overline{M'B}. $$
+
+Sin embargo, sobre la recta $\overline{AB}$, y dado un punto $A$, el <ConceptLink targetId="axioma-congruencia-1">axioma III-1</ConceptLink> garantiza que sobre la semirrecta $\overrightarrow{AB}$ existe un **único** punto a una distancia dada de $A$. Pues $M$ y $M'$ están ambos sobre $\overrightarrow{AB}$ y a la misma distancia de $A$, se tiene $M = M'$.
+
+Por tanto, el punto medio es único. $\blacksquare$
+
+<Separador />
+
+### Análisis
+
+La existencia del punto medio requiere los axiomas de continuidad (Arquímedes y completitud) en el sentido general: sin ellos, pueden existir modelos donde ciertos segmentos no admitan punto medio. Con los axiomas de congruencia y orden solos se garantiza la unicidad.
+
+<Nota>
+  El punto medio permite definir la **mediatriz** de un segmento: el lugar geométrico de los puntos equidistantes de los extremos. La mediatriz es perpendicular al segmento en su punto medio.
+</Nota>

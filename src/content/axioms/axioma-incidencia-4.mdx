@@ -1,0 +1,45 @@
+export const metadata = {
+  "id": "axioma-incidencia-4",
+  "type": "axioma",
+  "title": "Axioma I-4 (Incidencia)",
+  "description": "Por tres puntos no colineales pasa exactamente un plano.",
+  "statement": "Dados tres puntos A, B, C no colineales, existe un único plano π que los contiene.",
+  "tags": ["geometria", "incidencia", "geometria-absoluta"],
+  "authors": ["hilbert"],
+  "hasSimulation": true,
+};
+
+import { Incidence4 } from '../../diagrams/Axiomas/Incidence4';
+export const Simulation = Incidence4;
+import { InteractiveElement } from "../../components/ui/VisualBind";
+
+<Capitular letra="P" />
+or tres puntos no colineales pasa exactamente un plano. Este axioma extiende al espacio tridimensional la noción de unicidad que el axioma I-1 estableció para la recta.
+
+<Separador />
+
+### Enunciado Formal
+
+<Formula>
+  $$ \text{Dados } A, B, C \text{ no colineales, existe un único plano } \pi \text{ con } A, B, C \in \pi. $$
+</Formula>
+
+<Nota>
+  El plano determinado por tres puntos no colineales se denota como $\pi(A,B,C)$ o simplemente $ABC$.
+</Nota>
+
+<Separador />
+
+### Discusión
+
+Así como dos puntos determinan una recta, tres <InteractiveElement target="pA" color="terracota">puntos</InteractiveElement> no colineales determinan un <InteractiveElement target="polygonABC" color="salvia">plano</InteractiveElement>. La no colinealidad es condición necesaria: si los tres puntos estuvieran alineados, existirían infinitos planos conteniendo la recta que determinan, y la unicidad se perdería.
+
+Este axioma establece el plano como un objeto primitivo de la geometría, al mismo nivel que el punto y la recta. El plano contiene puntos y rectas, y es la superficie bidimensional fundamental sobre la que se desarrolla la geometría euclídea.
+
+Junto con los axiomas I-1, I-2, I-3, define la estructura básica de incidencia del espacio tridimensional: puntos, rectas y planos relacionados por pertenencia.
+
+<Separador />
+
+### Observaciones
+
+En geometría plana —que estudia exclusivamente las figuras contenidas en un plano fijo— los axiomas I-4 a I-8 suelen omitirse, pues solo hay un plano y todos los puntos y rectas están en él. Pero en geometría espacial son imprescindibles para definir la estructura tridimensional.

@@ -14,6 +14,7 @@ import { MethodsPage } from "../pages/MethodsPage";
 import { UseCasePage } from "../pages/UseCasePage";
 import { AxiomPage } from "../pages/AxiomPage";
 import { ModelPage } from "../pages/ModelPage";
+import { AxiomaticSystemPage } from "../pages/AxiomaticSystemPage";
 import { DemoPage } from "../pages/DemoPage";
 import { NotFoundPage } from "../pages/NotFoundPage";
 import { InteractiveLessonLayout } from "../components/layout/InteractiveLessonLayout";
@@ -70,6 +71,11 @@ export const AppRouter = () => {
           <Route path="/modelo/:id">
             <MathProvider>
               <ModelPage />
+            </MathProvider>
+          </Route>
+          <Route path="/sistema/:id">
+            <MathProvider>
+              <AxiomaticSystemPage />
             </MathProvider>
           </Route>
 

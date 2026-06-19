@@ -1,0 +1,40 @@
+export const metadata = {
+  "type": "definicion",
+  "title": "Plano",
+  "description": "Concepto primitivo de la geometría. Un plano es una superficie bidimensional plana que se extiende infinitamente en todas direcciones. Se define implícitamente mediante los axiomas de incidencia.",
+  "tags": ["geometria", "primitivo", "bidimensional"],
+  "authors": ["hilbert"],
+  "links": ["punto", "recta", "axioma-incidencia-4", "axioma-incidencia-5", "axioma-incidencia-6", "axioma-incidencia-7", "axioma-incidencia-8"],
+  "seeAlso": ["axioma-incidencia-1", "axioma-incidencia-2", "axioma-incidencia-3"],
+  "hasSimulation": true,
+};
+
+import { Plano } from '../../diagrams/Definiciones/Plano';
+export const Simulation = Plano;
+import { InteractiveElement } from "../../components/ui/VisualBind";
+
+<Capitular letra="E" />
+l plano es un concepto primitivo de la geometría que representa una superficie bidimensional ilimitada. Es el tercer concepto primitivo del sistema de Hilbert, junto con el <RefLink targetId="punto">punto</RefLink> y la <RefLink targetId="recta">recta</RefLink>.
+
+<Separador />
+
+### Enunciado Informal
+
+Un plano es una superficie plana que se extiende infinitamente en dos direcciones independientes. Se denota con letras griegas ($\alpha$, $\beta$, $\pi$, etc.) o mediante tres puntos no colineales ($\alpha = (ABC)$). En el diagrama tridimensional se muestran los puntos <InteractiveElement target="pA" color="carbon">A</InteractiveElement>, <InteractiveElement target="pB" color="carbon">B</InteractiveElement> y <InteractiveElement target="pC" color="carbon">C</InteractiveElement> sobre el <InteractiveElement target="planeMesh" color="carbon">plano</InteractiveElement>.
+
+<Separador />
+
+### Definición Axiomática
+
+Las propiedades del plano vienen dadas por los axiomas de incidencia:
+
+- **Existencia**: tres puntos no colineales determinan un único plano (<RefLink targetId="axioma-incidencia-4">I-4</RefLink>). Todo plano contiene al menos tres puntos no colineales (<RefLink targetId="axioma-incidencia-5">I-5</RefLink>).
+- **Cerradura**: si dos puntos de una recta están en un plano, la recta entera está en el plano (<RefLink targetId="axioma-incidencia-6">I-6</RefLink>).
+- **Intersección**: dos planos distintos se intersectan en una recta (<RefLink targetId="axioma-incidencia-7">I-7</RefLink>).
+- **Dimensión**: existen al menos cuatro puntos no coplanares (<RefLink targetId="axioma-incidencia-8">I-8</RefLink>).
+
+<Separador />
+
+### Observaciones
+
+En $\mathbb{R}^3$, un plano se representa como el conjunto de puntos $(x, y, z)$ que satisfacen $ax + by + cz = d$ con $(a, b, c) \neq (0, 0, 0)$. Es un subespacio afín de dimensión 2. En geometría plana, se considera un único plano que contiene toda la configuración geométrica. En geometría espacial, existen infinitos planos relacionados por los axiomas de incidencia.

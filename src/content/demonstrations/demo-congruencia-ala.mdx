@@ -1,0 +1,80 @@
+export const metadata = {
+  "id": "demo-congruencia-ala",
+  "type": "demostracion",
+  "title": "Demostración: Criterio de congruencia ALA",
+  "description": "Prueba por transporte de segmentos y aplicación del axioma LAL con unicidad.",
+  "parentTheorem": "teorema-congruencia-ala",
+  "proofMethod": "constructivo",
+  "authors": ["euclides"],
+  "tags": ["geometria", "congruencia", "triangulos"],
+  "layout": "text",
+  "links": ["axioma-congruencia-1", "axioma-congruencia-4", "axioma-congruencia-5"],
+};
+
+import { InteractiveElement } from "../../components/ui/VisualBind";
+import { CongruenciaALA } from '../../diagrams/Theorems/CongruenciaALA';
+export const Simulation = CongruenciaALA;
+
+<Capitular letra="E" />
+
+l criterio ALA (Ángulo-Lado-Ángulo) se demuestra transportando un lado del primer triángulo al segundo y aplicando el axioma LAL para forzar la coincidencia. La unicidad del transporte de ángulos garantiza que el punto transportado coincide con el del segundo triángulo.
+
+<Separador />
+
+### Hipótesis
+
+Sean $\triangle ABC$ y $\triangle A'B'C'$ tales que:
+
+$$ \overline{AB} \cong \overline{A'B'}, \quad \angle A \cong \angle A', \quad \angle B \cong \angle B'. $$
+
+<Separador />
+
+### Tesis
+
+$$ \triangle ABC \cong \triangle A'B'C'. $$
+
+<Separador />
+
+### Demostración
+
+**Paso 1: Transportar el lado $\overline{AC}$.** Por el <ConceptLink targetId="axioma-congruencia-1">axioma III-1 de transporte de segmentos</ConceptLink>, sobre la semirrecta $\overrightarrow{A'C'}$ se puede transportar el segmento $\overline{AC}$. Obtenemos un punto $C^*$ tal que:
+
+$$ \overline{A'C^*} \cong \overline{AC}. $$
+
+**Paso 2: Aplicar el axioma LAL.** Consideremos los triángulos $\triangle ABC$ y $\triangle A'B'C^*$. Tenemos:
+
+- $\overline{AB} \cong \overline{A'B'}$ (por hipótesis),
+- $\angle A \cong \angle A' = \angle C^*A'B'$ (por hipótesis y construcción),
+- $\overline{AC} \cong \overline{A'C^*}$ (por construcción del Paso 1).
+
+Por el <ConceptLink targetId="axioma-congruencia-5">axioma LAL (III-5)</ConceptLink>, los triángulos son congruentes:
+
+$$ \triangle ABC \cong \triangle A'B'C^*. $$
+
+En particular, los ángulos correspondientes son congruentes:
+
+$$ \angle B \cong \angle A'B'C^*. $$
+
+**Paso 3: Concluir por unicidad.** Pero $\angle B \cong \angle B'$ por hipótesis. Por tanto:
+
+$$ \angle A'B'C^* \cong \angle A'B'C'. $$
+
+Ambos ángulos están sobre el mismo lado de $\overline{A'B'}$ (pues $C^*$ se construyó sobre la semirrecta $\overrightarrow{A'C'}$). Por el <ConceptLink targetId="axioma-congruencia-4">axioma III-4 de unicidad del transporte de ángulos</ConceptLink>, sobre una semirrecta dada solo puede transportarse un ángulo de una medida dada. Luego:
+
+$$ C^* = C'. $$
+
+Por tanto $\triangle A'B'C^* = \triangle A'B'C'$, y concluimos:
+
+$$ \triangle ABC \cong \triangle A'B'C'. \quad \blacksquare $$
+
+<Separador />
+
+### Análisis
+
+La técnica empleada — **transportar y forzar la coincidencia** — es fundamental en la teoría de congruencia de Hilbert. Se transporta un elemento del primer triángulo al segundo, se aplica un axioma de congruencia (aquí LAL), y la unicidad garantiza que el resultado coincide con el triángulo original.
+
+<Nota>
+  Euclides demostró ALA en la Proposición I.26 usando el método de superposición. Hilbert reemplazó la superposición por los axiomas de transporte (III-1 y III-4), haciendo la demostración puramente formal.
+</Nota>
+
+El criterio ALA es válido en geometría absoluta: no requiere el postulado de las paralelas.

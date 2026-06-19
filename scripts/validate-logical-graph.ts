@@ -18,8 +18,8 @@ function parseMetadata(content: string, filePath: string) {
   return null;
 }
 
-// Extract ConceptLink targets from MDX body
-function extractDependenciesFromContent(content: string): string[] {
+// Extract ConceptLink targets from MDX body — for reference only, NOT graph edges
+function extractConceptLinksFromContent(content: string): string[] {
   const regex = /<ConceptLink[^>]*targetId=["']([^"']+)["']/g;
   const deps = new Set<string>();
   let match;
@@ -51,6 +51,7 @@ const mdxFiles = getMdxFiles(contentDir);
 const allNodes = new Set<string>();
 const metadataMap = new Map<string, any>();
 const contentDepsMap = new Map<string, string[]>();
+const conceptLinksMap = new Map<string, string[]>();
 
 // Pass 1: Extract all metadata and auto-infer dependencies from text
 mdxFiles.forEach(file => {
@@ -64,18 +65,24 @@ mdxFiles.forEach(file => {
     metadataMap.set(id, metadata);
     allNodes.add(id);
 
-    // Auto-extract dependencies from MDX body using <ConceptLink>
-    const contentDeps = extractDependenciesFromContent(content);
+    // Auto-extract ConceptLink targets for cross-reference validation (NOT graph edges)
+    const conceptLinks = extractConceptLinksFromContent(content);
 
-    // Solución Arquitectónica: Extraer todas las claves posibles
+    // Graph edges come ONLY from explicit metadata fields (strict dependencies)
+    const contentDeps: string[] = [];
+    if (Array.isArray(metadata.links)) contentDeps.push(...metadata.links);
+    if (Array.isArray(metadata.requires)) contentDeps.push(...metadata.requires);
     if (Array.isArray(metadata.dependencias)) contentDeps.push(...metadata.dependencias);
     if (Array.isArray(metadata.axiomas)) contentDeps.push(...metadata.axiomas);
     if (Array.isArray(metadata.lemmas)) contentDeps.push(...metadata.lemmas);
-    if (Array.isArray(metadata.links)) contentDeps.push(...metadata.links); // <--- AÑADIDO
-    if (Array.isArray(metadata.teoremas)) contentDeps.push(...metadata.teoremas); // <--- AÑADIDO
+    if (Array.isArray(metadata.demos)) contentDeps.push(...metadata.demos);
+    if (metadata.parentTheorem && typeof metadata.parentTheorem === 'string') contentDeps.push(metadata.parentTheorem);
+    if (Array.isArray(metadata.corollaries)) contentDeps.push(...metadata.corollaries);
+    // NOTE: seeAlso and ConceptLink targets are NOT included — they are informational only
 
     // Remove duplicates
     contentDepsMap.set(id, Array.from(new Set(contentDeps)));
+    conceptLinksMap.set(id, conceptLinks);
   }
 });
 
@@ -130,7 +137,9 @@ for (const id of allNodes) {
   if (meta.type === 'demostracion') {
     const parentTheoremId = meta.parentTheorem;
     if (parentTheoremId && graphNodes[parentTheoremId]) {
+      // Exclude parentTheorem from dependencies — it's the theorem being proved, not a dependency
       const filteredDeps = deps.filter(depId => {
+        if (depId === parentTheoremId) return false;
         const depMeta = metadataMap.get(depId);
         if (!depMeta) return false;
         const depLevel = HIERARCHY_LEVEL[depMeta.type] ?? 100;

@@ -1,0 +1,43 @@
+export const metadata = {
+  "id": "axioma-orden-4",
+  "type": "axioma",
+  "title": "Axioma II-4 (Pasch)",
+  "description": "Si una recta corta a un lado de un triángulo sin pasar por sus vértices, entonces corta también a otro de los lados.",
+  "statement": "Dado un triángulo ABC y una recta l que no pasa por A, B ni C, si l intersecta el lado AB en un punto entre A y B, entonces l intersecta también AC o BC.",
+  "tags": ["geometria", "orden", "geometria-absoluta", "pasch"],
+  "authors": ["hilbert", "pasch"],
+  "hasSimulation": true,
+};
+
+import { Pasch } from '../../diagrams/Axiomas/Pasch';
+export const Simulation = Pasch;
+import { InteractiveElement } from "../../components/ui/VisualBind";
+
+<Capitular letra="S" />
+i una <InteractiveElement target="lineL" color="pizarra">recta</InteractiveElement> corta a un lado de un <InteractiveElement target="triangle" color="terracota">triángulo</InteractiveElement> sin pasar por sus vértices, entonces corta también a otro de los lados. Conocido como axioma de Pasch, es fundamental para la estructura de orden en el plano.
+
+<Separador />
+
+### Enunciado Formal
+
+<Formula>
+  $$ \text{Sea } \triangle ABC \text{ y } l \text{ una recta que no pasa por } A, B, C. \text{ Si } l \cap \overline{AB} \neq \emptyset \text{ y } A * P * B \text{ para } P \in l, \text{ entonces } l \cap \overline{AC} \neq \emptyset \text{ o } l \cap \overline{BC} \neq \emptyset. $$
+</Formula>
+
+<Nota>
+  En el diagrama, la <InteractiveElement target="lineL" color="pizarra">recta l</InteractiveElement> corta al lado $\overline{AB}$ en el <InteractiveElement target="pP" color="terracota">punto P</InteractiveElement> y al lado $\overline{BC}$ en <InteractiveElement target="pQ" color="terracota">Q</InteractiveElement>.
+</Nota>
+
+<Separador />
+
+### Discusión
+
+El axioma de Pasch es probablemente el axioma de orden más profundo. Garantiza que una recta no puede "entrar" en un triángulo por un lado y "salir" sin cruzar otro lado —una propiedad esencial de la planaridad. Sin este axioma, existirían configuraciones patológicas en las que una recta cruza un segmento sin cruzar los otros dos, lo que contradiría la intuición geométrica.
+
+La demostración de que una recta divide al plano en dos semiplanos separados (el teorema de separación de la recta) depende crucialmente de este axioma. También es necesario para demostrar que los ángulos pueden ordenarse por tamaño y que los triángulos tienen área bien definida.
+
+<Separador />
+
+### Observaciones
+
+El axioma de Pasch fue formulado originalmente por el matemático alemán Moritz Pasch en 1882. Hilbert lo incorporó como axioma II-4 en sus *Fundamentos de la Geometría*, reconociendo que los Elementos de Euclides usaban implícitamente esta propiedad sin haberla enunciado. Es un axioma de la geometría absoluta.

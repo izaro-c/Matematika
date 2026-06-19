@@ -1,0 +1,51 @@
+export const metadata = {
+  "type": "definicion",
+  "title": "Recta",
+  "description": "Concepto primitivo de la geometría. Una recta es un conjunto de puntos con extensión unidimensional, infinita en ambas direcciones, que se define implícitamente mediante los axiomas de incidencia y orden.",
+  "tags": ["geometria", "primitivo", "unidimensional"],
+  "authors": ["hilbert"],
+  "links": ["punto", "axioma-incidencia-1", "axioma-incidencia-2"],
+  "seeAlso": ["plano", "segmento", "semirrecta"],
+  "hasSimulation": true,
+};
+
+import { Recta } from '../../diagrams/Definiciones/Recta';
+export const Simulation = Recta;
+import { InteractiveElement } from "../../components/ui/VisualBind";
+
+<Capitular letra="U" />
+na recta es un conjunto de puntos con una única dimensión. Es ilimitada en longitud pero sin grosor. Al igual que el punto, es un concepto primitivo definido implícitamente por los axiomas.
+
+<Separador />
+
+### Enunciado Informal
+
+Una recta es una línea recta que se extiende infinitamente en ambas direcciones. Se denota con letras minúsculas ($l$, $m$, $n$, etc.) o mediante dos de sus puntos ($\overleftrightarrow{AB}$). En el diagrama interactivo, la <InteractiveElement target="lineAB" color="carbon">recta</InteractiveElement> está determinada por los puntos <InteractiveElement target="pA" color="carbon">A</InteractiveElement> y <InteractiveElement target="pB" color="carbon">B</InteractiveElement>.
+
+<Separador />
+
+### Definición Axiomática
+
+Las propiedades fundamentales de la recta en el sistema de Hilbert son:
+
+- **Incidencia**: por dos puntos distintos pasa una única recta (<RefLink targetId="axioma-incidencia-1">I-1</RefLink>). Toda recta contiene al menos dos puntos (<RefLink targetId="axioma-incidencia-2">I-2</RefLink>).
+- **Orden**: los puntos sobre una recta están totalmente ordenados por la relación "estar entre" (<RefLink targetId="axioma-orden-1">II-1</RefLink> a <RefLink targetId="axioma-orden-3">II-3</RefLink>). Este orden es denso y continuo.
+- **Extensión**: la recta es infinita —dado cualquier punto sobre ella, existen puntos a ambos lados (<RefLink targetId="axioma-orden-2">II-2</RefLink>).
+
+<Separador />
+
+### Notación
+
+| Notación | Significado |
+|---|---|
+| $\overleftrightarrow{AB}$ | Recta que pasa por $A$ y $B$ |
+| $l$, $m$, $n$ | Rectas nombradas con letras minúsculas |
+| $A \in l$ | El punto $A$ pertenece a la recta $l$ |
+| $A \notin l$ | El punto $A$ no pertenece a la recta $l$ |
+| $l \parallel m$ | La recta $l$ es paralela a la recta $m$ |
+
+<Separador />
+
+### Observaciones
+
+En geometría absoluta, la recta es un conjunto infinito de puntos. El axioma de completitud garantiza que es isomorfa a $\mathbb{R}$ como conjunto ordenado. En geometría euclídea, la recta es la línea de mínima distancia entre dos puntos (geodésica). En geometría hiperbólica, las rectas (geodésicas) son arcos de círculo ortogonales al borde del modelo.

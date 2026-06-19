@@ -1,4 +1,4 @@
-import type { StudyPlanMeta } from '../schemas';
+import type { StudyPlanMeta, AxiomaticSystemMeta } from '../schemas';
 import type { ComponentType, LazyExoticComponent } from 'react';
 
 export type MDXComponent = LazyExoticComponent<ComponentType<Record<string, unknown>>> | ComponentType<Record<string, unknown>>;
@@ -153,15 +153,26 @@ export interface Axiom {
   seeAlso?: string[];
 }
 
+export interface AxiomaticSystem extends AxiomaticSystemMeta {
+  id: string;
+  slug: string;
+  Component: MDXComponent;
+  Simulation?: MDXComponent;
+}
+
 export interface Model {
   id: string;
   slug: string;
   type?: 'modelo';
   title: string;
   description?: string;
-  axiomas?: string[];
+  satisfies: string;
+  axioms_verified?: string[];
+  hasDiagram?: boolean;
   tags?: string[];
+  links?: string[];
   seeAlso?: string[];
   Component: MDXComponent;
+  Diagram?: MDXComponent;
 }
 

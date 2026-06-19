@@ -1,0 +1,47 @@
+export const metadata = {
+  "id": "axioma-incidencia-7",
+  "type": "axioma",
+  "title": "Axioma I-7 (Incidencia)",
+  "description": "Si dos planos se intersectan, su intersección es una recta.",
+  "statement": "Dados dos planos distintos π y σ con π ∩ σ ≠ ∅, entonces π ∩ σ es una recta.",
+  "tags": ["geometria", "incidencia", "geometria-absoluta"],
+  "authors": ["hilbert"],
+};
+
+export const Simulation = () => (
+    <svg viewBox="0 0 340 200" xmlns="http://www.w3.org/2000/svg" className="w-full max-w-lg mx-auto my-4">
+      <polygon points="20,140 180,160 200,60 40,50" fill="#A2C2A2" fillOpacity="0.2" stroke="#A2C2A2" strokeWidth="1.5" />
+      <text x="30" y="50" fontSize="13" fill="#5D7080" fontFamily="serif" fontStyle="italic">π</text>
+      <polygon points="160,130 320,140 300,40 140,40" fill="#A2C2A2" fillOpacity="0.15" stroke="#A2C2A2" strokeWidth="1.5" strokeDasharray="6,3" />
+      <text x="310" y="38" fontSize="13" fill="#5D7080" fontFamily="serif" fontStyle="italic">σ</text>
+      <line x1="100" y1="90" x2="280" y2="80" stroke="#333333" strokeWidth="2.5" />
+      <text x="290" y="76" fontSize="13" fill="#5D7080" fontFamily="serif" fontStyle="italic">l</text>
+      <circle cx="160" cy="85" r="4" fill="#C86446" />
+      <circle cx="220" cy="82" r="4" fill="#C86446" />
+    </svg>
+  );
+
+<Capitular letra="S" />
+i dos planos se intersectan, su intersección es una recta. Este axioma describe la única forma posible de intersección entre dos planos distintos en el espacio tridimensional.
+
+<Separador />
+
+### Enunciado Formal
+
+<Formula>
+  $$ \text{Si } \pi \neq \sigma \text{ son planos con } \pi \cap \sigma \neq \emptyset, \text{ entonces } \pi \cap \sigma \text{ es una recta.} $$
+</Formula>
+
+<Separador />
+
+### Discusión
+
+En el espacio tridimensional, dos planos distintos pueden estar en una de tres posiciones relativas: paralelos (sin intersección), coincidentes (el mismo plano), o secantes (intersectándose en una recta). Este axioma describe el caso secante: cuando dos planos se intersectan, la intersección no es un punto ni un conjunto amorfo de puntos, sino una recta completa.
+
+La demostración de que la intersección debe ser una recta se apoya en los axiomas anteriores: si dos planos comparten dos puntos, por I-6 la recta que esos puntos determinan está contenida en ambos planos, y por I-1 es la única recta posible.
+
+<Separador />
+
+### Observaciones
+
+En geometría de dimensión superior (4 o más dimensiones), dos planos pueden intersectarse en un punto. Este axioma es, por tanto, una propiedad característica del espacio tridimensional y no se generaliza a dimensiones superiores.

@@ -1,0 +1,51 @@
+export const metadata = {
+  "type": "definicion",
+  "title": "Ángulo",
+  "description": "Dadas dos semirrectas con el mismo origen, el ángulo es la figura formada por ambas. La congruencia de ángulos es una relación primitiva definida por los axiomas de congruencia.",
+  "tags": ["geometria", "congruencia", "medida"],
+  "authors": ["hilbert"],
+  "links": ["punto", "semirrecta", "axioma-congruencia-4", "axioma-congruencia-5"],
+  "seeAlso": ["segmento"],
+  "hasSimulation": true,
+};
+
+import { Angulo } from '../../diagrams/Definiciones/Angulo';
+export const Simulation = Angulo;
+import { InteractiveElement } from "../../components/ui/VisualBind";
+
+<Capitular letra="E" />
+l ángulo es la figura formada por dos semirrectas que comparten el mismo origen (vértice). Es uno de los conceptos centrales de la geometría, fundamental para la congruencia, la semejanza y la trigonometría.
+
+<Separador />
+
+### Enunciado Formal
+
+Dadas dos <RefLink targetId="semirrecta">semirrectas</RefLink> $OA^{\rightarrow}$ y $OB^{\rightarrow}$ con el mismo origen $O$, el ángulo $\angle AOB$ es la figura formada por ambas. El punto $O$ es el vértice y $OA^{\rightarrow}$, $OB^{\rightarrow}$ son los lados del ángulo. En el diagrama se muestran las semirrectas <InteractiveElement target="rayOA" color="carbon">OA</InteractiveElement> y <InteractiveElement target="rayOB" color="carbon">OB</InteractiveElement> con el <InteractiveElement target="angleArc" color="carbon">arco del ángulo</InteractiveElement>.
+
+$$ \angle AOB = \{OA^{\rightarrow}, OB^{\rightarrow}\} $$
+
+<Separador />
+
+### Definición Axiomática
+
+En el sistema de Hilbert, la congruencia de ángulos se define axiomáticamente:
+
+- **Transporte**: dado un ángulo $\angle AOB$ y una semirrecta $O'A'^{\rightarrow}$, existe una única semirrecta $O'B'^{\rightarrow}$ a cada lado de $O'A'^{\rightarrow}$ tal que $\angle AOB \cong \angle A'O'B'$ (<RefLink targetId="axioma-congruencia-4">III-4</RefLink>).
+- **Criterio SAS**: si dos lados y el ángulo comprendido son congruentes, los triángulos son congruentes (<RefLink targetId="axioma-congruencia-5">III-5</RefLink>).
+
+<Separador />
+
+### Clasificación
+
+| Tipo | Descripción | Medida |
+|---|---|---|
+| Agudo | Menor que un recto | $< 90^\circ$ |
+| Recto | Igual a su suplementario | $90^\circ$ |
+| Obtuso | Mayor que un recto | $> 90^\circ$ |
+| Llano | Los lados son semirrectas opuestas | $180^\circ$ |
+
+<Separador />
+
+### Observaciones
+
+En geometría absoluta, un ángulo recto es aquel congruente con su suplementario. El quinto postulado establece que si una recta al cortar a otras dos forma ángulos internos menores que un recto, las rectas se cortan. En geometría hiperbólica, los ángulos de un triángulo suman menos de $180^\circ$; en geometría elíptica, más de $180^\circ$.

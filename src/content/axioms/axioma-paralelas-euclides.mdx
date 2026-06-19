@@ -1,0 +1,45 @@
+export const metadata = {
+  "id": "axioma-paralelas-euclides",
+  "type": "axioma",
+  "title": "Axioma de las Paralelas (Euclides)",
+  "description": "Por un punto exterior a una recta pasa exactamente una recta paralela a la dada.",
+  "statement": "Dada una recta l y un punto P no perteneciente a l, existe una única recta m que pasa por P y es paralela a l.",
+  "tags": ["geometria", "paralelas", "geometria-euclidiana"],
+  "authors": ["euclides", "hilbert"],
+  "hasSimulation": true,
+};
+
+import { EuclidParallel } from '../../diagrams/Axiomas/EuclidParallel';
+export const Simulation = EuclidParallel;
+import { InteractiveElement } from "../../components/ui/VisualBind";
+
+<Capitular letra="P" />
+or un <InteractiveElement target="pP" color="terracota">punto</InteractiveElement> exterior a una <InteractiveElement target="lineL" color="carbon">recta</InteractiveElement> pasa exactamente una <InteractiveElement target="lineM" color="terracota">recta paralela</InteractiveElement>. Este es el célebre quinto postulado de Euclides, el axioma que distingue la geometría euclídea de las no euclídeas.
+
+<Separador />
+
+### Enunciado Formal
+
+<Formula>
+  $$ \forall l \; \forall P \notin l \; \exists! m : P \in m \land m \cap l = \emptyset. $$
+</Formula>
+
+<Nota>
+  Dos rectas son paralelas si están en el mismo plano y no se intersectan: $l \parallel m \iff l \subset \pi \land m \subset \pi \land l \cap m = \emptyset$.
+</Nota>
+
+<Separador />
+
+### Discusión
+
+Este axioma es el más famoso y controvertido de la historia de las matemáticas. Durante más de dos milenios, los matemáticos intentaron demostrarlo a partir de los demás axiomas de Euclides, sin éxito. Finalmente, en el siglo XIX, Lobachevski, Bolyai y Riemann demostraron de forma independiente que el quinto postulado es independiente de los demás, dando origen a las geometrías no euclídeas.
+
+El enunciado que usamos aquí ("por un punto exterior pasa una única paralela") es la formulación de Playfair (1795), equivalente al quinto postulado original de Euclides. La equivalencia no es trivial y requiere demostración, pero hoy es la formulación estándar.
+
+Junto con los axiomas de incidencia, orden, congruencia y continuidad, este axioma define la **geometría euclídea**. Si en lugar de este axioma se adopta su negación, se obtienen geometrías no euclídeas.
+
+<Separador />
+
+### Observaciones
+
+El quinto postulado tiene muchas formulaciones equivalentes: la suma de los ángulos de un triángulo es 180°, el teorema de Pitágoras, la existencia de rectángulos, el teorema de Tales, entre otras. Cualquiera de ellas puede adoptarse como axioma en lugar de esta. En la geometría absoluta (sin quinto postulado), la suma de ángulos de un triángulo es siempre $\leq 180^\circ$.

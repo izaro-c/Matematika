@@ -1,0 +1,70 @@
+export const metadata = {
+  "id": "modelo-tres-puntos",
+  "type": "modelo",
+  "title": "Modelo de Tres Puntos",
+  "description": "El modelo más simple de la geometría de incidencia: tres puntos no colineales con tres rectas que los conectan pairwise.",
+  "satisfies": "sistema-incidencia",
+  "axioms_verified": [
+    "axioma-incidencia-1",
+    "axioma-incidencia-2",
+    "axioma-incidencia-3",
+    "axioma-incidencia-4",
+    "axioma-incidencia-5",
+    "axioma-incidencia-6",
+    "axioma-incidencia-7",
+    "axioma-incidencia-8"
+  ],
+  "hasDiagram": true,
+  "tags": ["geometria", "incidencia", "modelo"],
+  "links": ["sistema-incidencia"],
+};
+
+import { ModeloTresPuntos } from '../../diagrams/Models/ModeloTresPuntos';
+export const Diagram = ModeloTresPuntos;
+
+<Capitular letra="E" />
+l **modelo de tres puntos** es la estructura más simple que satisface los <ConceptLink targetId="axioma-incidencia-1">axiomas de incidencia</ConceptLink> de <ConceptLink targetId="hilbert">Hilbert</ConceptLink>. Consiste en exactamente tres puntos no colineales, conectados pairwise por tres rectas, formando un triángulo. Es el modelo minimalista que demuestra la consistencia relativa del <ConceptLink targetId="sistema-incidencia">sistema de incidencia</ConceptLink>.
+
+<Separador />
+
+### Definición del Modelo
+
+Sea el universo:
+
+- **Puntos:** $\mathcal{P} = \{A, B, C\}$ — tres puntos distintos.
+- **Rectas:** $\mathcal{R} = \{r_{AB}, r_{BC}, r_{CA}\}$ — tres rectas, una por cada par de puntos.
+- **Plano:** $\Pi = \{A, B, C, r_{AB}, r_{BC}, r_{CA}\}$ — un único plano que contiene todo.
+
+La relación de incidencia se define naturalmente: un punto $P$ incide en una recta $r$ si y solo si $P$ es uno de los dos puntos que determinan $r$.
+
+<Formula>
+  $$ \mathcal{P} = \{A, B, C\}, \quad \mathcal{R} = \{\overline{AB}, \overline{BC}, \overline{CA}\} $$
+</Formula>
+
+<Separador />
+
+### Verificación de Axiomas
+
+**<ConceptLink targetId="axioma-incidencia-1">I-1</ConceptLink> (Unicidad de recta por dos puntos).** Dados dos puntos distintos cualesquiera, existe exactamente una recta que los contiene. Por construcción, cada par de puntos determina una única recta: $A$ y $B$ determinan $r_{AB}$, etc.
+
+**<ConceptLink targetId="axioma-incidencia-2">I-2</ConceptLink> (Toda recta tiene al menos dos puntos).** Cada recta $r_{AB}$, $r_{BC}$, $r_{CA}$ contiene exactamente dos puntos.
+
+**<ConceptLink targetId="axioma-incidencia-3">I-3</ConceptLink> (Existencia de tres puntos no colineales).** $A$, $B$ y $C$ son no colineales: no existe ninguna recta que contenga los tres puntos. Cada recta contiene exactamente dos.
+
+**<ConceptLink targetId="axioma-incidencia-4">I-4</ConceptLink> (Tres puntos no colineales determinan un plano).** Existe un único plano $\Pi$ que contiene a $A$, $B$ y $C$.
+
+**<ConceptLink targetId="axioma-incidencia-5">I-5</ConceptLink>–<ConceptLink targetId="axioma-incidencia-8">I-8</ConceptLink> (Axiomas sobre planos).** Se satisfacen trivialmente, pues existe un único plano que contiene todos los puntos y rectas.
+
+<Separador />
+
+### Propiedades
+
+Este modelo tiene propiedades notables:
+
+- Es **finito**: contiene exactamente 3 puntos y 3 rectas.
+- Es **minimal**: ningún modelo con menos de 3 puntos puede satisfacer el <ConceptLink targetId="axioma-incidencia-3">axioma I-3</ConceptLink>.
+- Cada par de rectas se corta en un punto (no hay rectas paralelas).
+
+<Nota>
+  El modelo de tres puntos satisface los axiomas de incidencia pero **no** los de <ConceptLink targetId="axioma-orden-1">orden</ConceptLink> ni <ConceptLink targetId="axioma-congruencia-1">congruencia</ConceptLink>. Para verificar la consistencia de la <ConceptLink targetId="sistema-absoluto">geometría absoluta</ConceptLink> completa se requieren modelos más ricos, como el plano cartesiano.
+</Nota>

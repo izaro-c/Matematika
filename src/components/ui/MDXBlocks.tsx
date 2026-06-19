@@ -14,6 +14,7 @@ import { MatrizInteractiva } from '../exercises/MatrizInteractiva';
 import { DeslizadorEnLine, DynamicValue } from '../exercises/DeslizadorEnLine';
 import { HighlightLink } from './HighlightLink';
 import { ConceptLink } from "./ConceptLink";
+import { RefLink } from "./RefLink";
 import { GlossaryLink } from './GlossaryLink';
 import { VisualBind } from './VisualBind';
 import { Link } from 'wouter';
@@ -210,6 +211,7 @@ export const MDXComponents = {
   DynamicValue,
   HighlightLink,
   ConceptLink,
+  RefLink,
   GlossaryLink,
   VisualBind,
   EquationRow,

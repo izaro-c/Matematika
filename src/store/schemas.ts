@@ -159,6 +159,7 @@ export type ExampleMeta = z.infer<typeof ExampleSchema>;
 export type ExerciseMeta = z.infer<typeof ExerciseSchema>;
 export type AxiomMeta = z.infer<typeof AxiomSchema>;
 export type ModelMeta = z.infer<typeof ModelSchema>;
+export type AxiomaticSystemMeta = z.infer<typeof AxiomaticSystemSchema>;
 
 /**
  * AxiomSchema - Esquema para Axiomas (Nodos Raíz lógicos)
@@ -176,15 +177,47 @@ export const AxiomSchema = z.object({
 });
 
 /**
- * ModelSchema - Esquema para Modelos (Axiom Sets)
+ * AxiomaticSystemSchema - Esquema para Sistemas Axiomáticos
+ *
+ * Define un conjunto de axiomas que constituyen una teoría formal.
+ * Los modelos son estructuras concretas que satisfacen estos axiomas.
+ */
+export const AxiomaticSystemSchema = z.object({
+  id: z.string().optional(),
+  type: z.literal('sistema-axiomatico'),
+  title: z.string(),
+  description: z.string(),
+  /** IDs de los axiomas que forman parte de este sistema */
+  axiomas: z.array(z.string()),
+  /** IDs de los modelos que satisfacen este sistema */
+  models: z.array(z.string()).optional(),
+  /** IDs de matemáticos asociados a este sistema */
+  mathematicians: z.array(z.string()).optional(),
+  tags: z.array(z.string()).optional(),
+  links: z.array(z.string()).optional(),
+  seeAlso: z.array(z.string()).optional(),
+  hasSimulation: z.boolean().optional(),
+});
+
+/**
+ * ModelSchema - Esquema para Modelos (Estructuras Concretas)
+ *
+ * Un modelo es una estructura matemática concreta que satisface
+ * los axiomas de un sistema axiomático. Puede tener un diagrama asociado.
  */
 export const ModelSchema = z.object({
   id: z.string().optional(),
   type: z.literal('modelo'),
   title: z.string(),
   description: z.string().optional(),
-  axiomas: z.array(z.string()).optional(),
+  /** ID del sistema axiomático que este modelo satisface */
+  satisfies: z.string(),
+  /** IDs de los axiomas verificados en este modelo */
+  axioms_verified: z.array(z.string()).optional(),
+  /** Indica si este modelo tiene un diagrama interactivo asociado */
+  hasDiagram: z.boolean().optional(),
   tags: z.array(z.string()).optional(),
+  links: z.array(z.string()).optional(),
   seeAlso: z.array(z.string()).optional(),
 });
 

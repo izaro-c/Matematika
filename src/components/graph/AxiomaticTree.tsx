@@ -56,7 +56,8 @@ function FlowContent() {
     baseNodes, edges: baseEdges, isLoading,
     toggleAxiom, initWorker,
     dependsOn,
-    models, inactiveModels, toggleModel
+    models, inactiveModels, toggleModel,
+    systems, inactiveSystems, toggleSystem,
   } = useGraphStore();
 
   const [rfNodes, setRfNodes, onNodesChange] = useNodesState<Node>([]);
@@ -188,8 +189,6 @@ function FlowContent() {
       .filter(e => visibleNodeIds.has(e.source) && visibleNodeIds.has(e.target));
   }, [baseEdges, selectedNodeId, relatedEdgesSet, visibleNodeIds]);
 
-  const activeModels = models.filter(m => !inactiveModels.includes(m.id));
-
   const onNodeMouseEnter: NodeMouseHandler = useCallback(
     (_, node) => {
       setHoveredNodeId(node.id);
@@ -204,11 +203,11 @@ function FlowContent() {
   const onNodeClick: NodeMouseHandler = useCallback(
     (_, node) => {
       setSelectedNodeId(prev => prev === node.id ? null : node.id);
-      if (activeModels.length === 0 && ((node.data as unknown) as MathNodeData).nodeType === 'axioma') {
+      if (((node.data as unknown) as MathNodeData).nodeType === 'axioma') {
         toggleAxiom(node.id);
       }
     },
-    [toggleAxiom, activeModels]
+    [toggleAxiom]
   );
 
   const handleSearchSelect = useCallback(
@@ -244,23 +243,23 @@ function FlowContent() {
   if (isLoading && rfNodes.length === 0) {
     return (
       <div
-        className="w-full h-full flex items-center justify-center"
-        style={{ background: '#f8f6f1', backgroundImage: 'url(/images/bg_arts_crafts.png)', backgroundSize: '600px', backgroundRepeat: 'repeat' }}
+        className="w-full h-full flex items-center justify-center bg-lienzo"
+        style={{ backgroundImage: 'url(/images/bg_arts_crafts.png)', backgroundSize: '600px', backgroundRepeat: 'repeat' }}
       >
         <p className="font-serif italic text-carbon/50 text-xl animate-pulse">
-          Calculando Ontología Matemática...
+          Calculando estructura axiomática…
         </p>
       </div>
     );
   }
 
   return (
-    <div className="w-full h-full relative" style={{ background: '#f8f6f1', backgroundImage: 'url(/images/bg_arts_crafts.png)', backgroundSize: '600px', backgroundRepeat: 'repeat' }}>
+    <div className="w-full h-full relative bg-lienzo" style={{ backgroundImage: 'url(/images/bg_arts_crafts.png)', backgroundSize: '600px', backgroundRepeat: 'repeat' }}>
 
       {/* ── Buscador centrado ─────────────────────────────────────────────── */}
       <div className="absolute top-4 left-1/2 -translate-x-1/2 z-30" style={{ width: 340 }}>
         <div className="relative">
-          <div className="flex items-center bg-white border-2 border-carbon/50 shadow-md">
+          <div className="flex items-center bg-lienzo border-2 border-carbon/50 shadow-md">
             <span className="pl-3 text-carbon/40 text-lg select-none">⌕</span>
             <input
               ref={searchRef}
@@ -286,7 +285,7 @@ function FlowContent() {
           </div>
 
           {searchOpen && searchResults.length > 0 && (
-            <div className="absolute top-full left-0 right-0 bg-white border-2 border-carbon/50 border-t-0 shadow-xl max-h-64 overflow-y-auto z-50">
+            <div className="absolute top-full left-0 right-0 bg-lienzo border-2 border-carbon/50 border-t-0 shadow-xl max-h-64 overflow-y-auto z-50">
               {searchResults.map((r) => (
                 <button
                   key={r.id}
@@ -318,7 +317,7 @@ function FlowContent() {
       {isMobile && (
         <button
           onClick={() => setLeftPanelOpen(o => !o)}
-          className="absolute top-4 left-4 z-30 w-9 h-9 bg-white border border-carbon/20 shadow flex items-center justify-center text-sm text-carbon/60 hover:text-carbon"
+          className="absolute top-4 left-4 z-30 w-9 h-9 bg-lienzo border border-carbon/20 shadow flex items-center justify-center text-sm text-carbon/60 hover:text-carbon"
         >
           {leftPanelOpen ? '✕' : '☰'}
         </button>
@@ -327,7 +326,7 @@ function FlowContent() {
         <div
           className={
             isMobile
-              ? 'fixed bottom-0 left-0 right-0 z-40 bg-white border-t border-carbon/20 shadow-xl p-4 max-h-[60vh] overflow-y-auto rounded-t-xl'
+              ? 'fixed bottom-0 left-0 right-0 z-40 bg-lienzo border-t border-carbon/20 shadow-xl p-4 max-h-[60vh] overflow-y-auto rounded-t-xl'
               : 'absolute top-4 left-4 z-30 flex flex-col gap-4'
           }
           style={isMobile ? {} : { maxWidth: 210, maxHeight: 'calc(100vh - 2rem)' }}
@@ -340,8 +339,36 @@ function FlowContent() {
               ✕
             </button>
           )}
+          {systems && systems.length > 0 && (
+            <div className="bg-lienzo/95 border border-carbon/20 shadow p-3 shrink-0">
+              <h3 className="font-sans text-[9px] uppercase tracking-widest text-carbon/50 mb-2">
+                Sistemas Axiomáticos
+              </h3>
+              <div className="flex flex-col gap-1.5">
+                {systems.map((s) => {
+                  const isOn = !inactiveSystems.includes(s.id);
+                  return (
+                    <button
+                      key={s.id}
+                      onClick={() => toggleSystem(s.id)}
+                      className={`flex items-center gap-2 text-left text-xs font-serif px-1.5 py-1 rounded transition-all duration-200 ${isOn ? 'text-carbon opacity-100' : 'text-carbon/35 opacity-60'}`}
+                    >
+                      <span
+                        className="w-2.5 h-2.5 rounded-sm shrink-0 border transition-colors"
+                        style={{
+                          background: isOn ? '#C86446' : 'transparent',
+                          borderColor: '#C86446',
+                        }}
+                      />
+                      <span className="capitalize leading-tight">{s.title}</span>
+                    </button>
+                  );
+                })}
+              </div>
+            </div>
+          )}
           {models && models.length > 0 && (
-            <div className="bg-white/95 border border-carbon/20 shadow p-3 shrink-0">
+            <div className="bg-lienzo/95 border border-carbon/20 shadow p-3 shrink-0">
               <h3 className="font-sans text-[9px] uppercase tracking-widest text-carbon/50 mb-2">
                 Modelos Matemáticos
               </h3>
@@ -371,7 +398,7 @@ function FlowContent() {
           )}
 
           {/* ── Filtros por tipo de nodo ──────────────────────────────── */}
-          <div className="bg-white/95 border border-carbon/20 shadow p-3 shrink-0">
+          <div className="bg-lienzo/95 border border-carbon/20 shadow p-3 shrink-0">
             <h3 className="font-sans text-[9px] uppercase tracking-widest text-carbon/50 mb-2">
               Tipos de Nodo
             </h3>
@@ -407,17 +434,11 @@ function FlowContent() {
       {/* ── Panel de Detalles (Lateral Derecho / Modal en móvil) ──────────────── */}
       {selectedNodeData && (
         <>
-          {isMobile && (
-            <div
-              className="fixed inset-0 z-40 bg-black/30"
-              onClick={() => setSelectedNodeId(null)}
-            />
-          )}
           <div
             className={
               isMobile
-                ? 'fixed bottom-0 left-0 right-0 z-50 bg-white border-t border-carbon/20 shadow-xl p-4 max-h-[70vh] overflow-y-auto rounded-t-xl'
-                : 'absolute top-4 right-4 z-30 bg-white/95 border border-carbon/20 shadow p-4 w-[300px] max-h-[calc(100vh-2rem)] overflow-y-auto'
+                ? 'fixed bottom-0 left-0 right-0 z-50 bg-lienzo border-t border-carbon/20 shadow-xl p-4 max-h-[70vh] overflow-y-auto rounded-t-xl'
+                : 'absolute top-4 right-4 z-30 bg-lienzo/95 border border-carbon/20 shadow p-4 w-[300px] max-h-[calc(100vh-2rem)] overflow-y-auto'
             }
           >
             <div className="flex justify-between items-start mb-2">
@@ -447,6 +468,29 @@ function FlowContent() {
             <p className="font-sans text-sm text-carbon/70 leading-relaxed mb-4">
               {selectedNodeData.description || 'Sin descripción disponible.'}
             </p>
+
+            {/* ── Sistemas a los que pertenece ──────────────────────────── */}
+            {(() => {
+              const nodeSystems = systems.filter(s => s.axioms.includes(selectedNodeId!));
+              if (nodeSystems.length === 0) return null;
+              return (
+                <div className="mb-3">
+                  <h4 className="font-sans text-[9px] uppercase tracking-widest text-carbon/50 mb-1.5">
+                    Sistemas
+                  </h4>
+                  <div className="flex flex-wrap gap-1">
+                    {nodeSystems.map(s => (
+                      <span
+                        key={s.id}
+                        className="text-[10px] font-serif px-2 py-0.5 rounded bg-terracota/10 text-terracota capitalize"
+                      >
+                        {s.title}
+                      </span>
+                    ))}
+                  </div>
+                </div>
+              );
+            })()}
 
             {/* ── Modelos a los que pertenece ──────────────────────────── */}
             {(() => {
@@ -506,8 +550,8 @@ function FlowContent() {
             )}
 
             <a
-              href={`/Matematika/${selectedNodeData.nodeType === 'axioma' ? 'axioma' : selectedNodeData.nodeType === 'definicion' ? 'definicion' : 'teorema'}/${selectedNodeId}`}
-              className="inline-flex items-center gap-1.5 mt-1 text-sm font-sans text-[#4a6070] hover:text-carbon transition-colors"
+              href={`/${selectedNodeData.nodeType === 'axioma' ? 'axioma' : selectedNodeData.nodeType === 'definicion' ? 'definicion' : 'teorema'}/${selectedNodeId}`}
+              className="inline-flex items-center gap-1.5 mt-1 text-sm font-sans text-pizarra hover:text-carbon transition-colors"
             >
               <span>Ver página →</span>
             </a>
@@ -540,9 +584,9 @@ function FlowContent() {
       >
         <MiniMap
           nodeStrokeColor="rgba(51,51,51,0.3)"
-          nodeColor="#f8f6f1"
+          nodeColor="var(--theme-lienzo)"
           nodeBorderRadius={2}
-          maskColor="rgba(0,0,0,0.1)"
+          maskColor="rgba(0,0,0,0.08)"
           style={{ border: '1px solid rgba(51,51,51,0.15)' }}
         />
         <Background color="rgba(51,51,51,0.07)" gap={24} size={1} />
@@ -550,7 +594,7 @@ function FlowContent() {
       </ReactFlow>
 
       {/* ── Leyenda ───────────────────────────────────────────────────────── */}
-      <div className="absolute bottom-14 right-4 z-30 bg-white/95 border border-carbon/20 shadow p-3">
+      <div className="absolute bottom-14 right-4 z-30 bg-lienzo/95 border border-carbon/20 shadow p-3">
         <h3 className="font-sans text-[9px] uppercase tracking-widest text-carbon/50 mb-2">Leyenda</h3>
         {([
           { type: 'axioma', bg: '#1c1917', label: 'Axioma (fundamento)' },

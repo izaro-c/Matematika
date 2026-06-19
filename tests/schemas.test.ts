@@ -8,6 +8,7 @@ import {
   ExampleSchema,
   ExerciseSchema,
   AxiomSchema,
+  AxiomaticSystemSchema,
   ModelSchema,
   UseCaseSchema,
   StudyPlanSchema,
@@ -151,12 +152,30 @@ describe('AxiomSchema', () => {
   it('rejects missing title', () => expectInvalid(AxiomSchema, { type: 'axioma', description: 'd' }));
 });
 
+describe('AxiomaticSystemSchema', () => {
+  const valid = { type: 'sistema-axiomatico', title: 'System', description: 'desc', axiomas: ['ax-1', 'ax-2'] };
+
+  it('accepts minimal valid metadata', () => expectValid(AxiomaticSystemSchema, valid));
+  it('accepts full metadata', () => {
+    expectValid(AxiomaticSystemSchema, {
+      ...valid, id: 'sys-1',
+      models: ['model-1'], mathematicians: ['hilbert'],
+      tags: ['geo'], links: ['link-1'],
+    });
+  });
+  it('rejects missing title', () => expectInvalid(AxiomaticSystemSchema, { type: 'sistema-axiomatico', description: 'd', axiomas: [] }));
+  it('rejects missing axiomas', () => expectInvalid(AxiomaticSystemSchema, { type: 'sistema-axiomatico', title: 'S', description: 'd' }));
+  it('rejects wrong type', () => expectInvalid(AxiomaticSystemSchema, { ...valid, type: 'modelo' }));
+});
+
 describe('ModelSchema', () => {
-  const valid = { type: 'modelo', title: 'Model' };
+  const valid = { type: 'modelo', title: 'Model', satisfies: 'sistema-absoluto' };
 
   it('accepts minimal valid metadata', () => expectValid(ModelSchema, valid));
-  it('accepts with axioms', () => expectValid(ModelSchema, { ...valid, axiomas: ['ax-1', 'ax-2'] }));
-  it('rejects missing title', () => expectInvalid(ModelSchema, { type: 'modelo' }));
+  it('accepts with axioms_verified', () => expectValid(ModelSchema, { ...valid, axioms_verified: ['ax-1', 'ax-2'] }));
+  it('accepts with hasDiagram', () => expectValid(ModelSchema, { ...valid, hasDiagram: true }));
+  it('rejects missing title', () => expectInvalid(ModelSchema, { type: 'modelo', satisfies: 'sys' }));
+  it('rejects missing satisfies', () => expectInvalid(ModelSchema, { type: 'modelo', title: 'M' }));
 });
 
 describe('UseCaseSchema', () => {

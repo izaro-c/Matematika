@@ -1,0 +1,36 @@
+export const metadata = {
+  "id": "axioma-congruencia-3",
+  "type": "axioma",
+  "title": "Axioma III-3 (Congruencia)",
+  "description": "Si B está entre A y C, B' está entre A' y C', y AB ≅ A'B' y BC ≅ B'C', entonces AC ≅ A'C'.",
+  "statement": "La congruencia de segmentos se preserva bajo suma: si A*B*C, A'*B'*C', AB ≅ A'B' y BC ≅ B'C', entonces AC ≅ A'C'.",
+  "tags": ["geometria", "congruencia", "geometria-absoluta"],
+  "authors": ["hilbert"],
+};
+
+<Capitular letra="L" />
+a congruencia de segmentos se preserva bajo concatenación. Si dos segmentos adyacentes son congruentes a otros dos, entonces los segmentos suma también lo son.
+
+<Separador />
+
+### Enunciado Formal
+
+<Formula>
+  $$ (A * B * C) \land (A' * B' * C') \land (\overline{AB} \cong \overline{A'B'}) \land (\overline{BC} \cong \overline{B'C'}) \implies (\overline{AC} \cong \overline{A'C'}). $$
+</Formula>
+
+<Separador />
+
+### Discusión
+
+Este axioma permite sumar segmentos congruentes: si descomponemos dos segmentos en partes respectivamente congruentes, los segmentos completos también lo son. Es la base para definir la adición de longitudes.
+
+Nótese que el axioma no solo requiere que los segmentos parciales sean congruentes, sino también que los puntos intermedios B y B' estén efectivamente entre los extremos. Esto asegura que la descomposición es genuina y que los segmentos AC y A'C' se obtienen por suma, no por otra operación.
+
+Sin este axioma, no podríamos garantizar que la suma de segmentos preserve la congruencia, y la aritmética de segmentos sería imposible.
+
+<Separador />
+
+### Observaciones
+
+Este axioma, junto con III-1 y III-2, permite definir una relación de orden entre segmentos. Decimos que AB < CD si existe un punto E entre C y D tal que AB ≅ CE. La suma de segmentos se define entonces de manera natural, y III-3 asegura que esta suma es compatible con la congruencia.

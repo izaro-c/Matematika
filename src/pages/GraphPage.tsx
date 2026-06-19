@@ -5,15 +5,7 @@ import { db } from '../store/content';
 import { GRAPH_NODE_COLORS } from '../config/constants';
 import { useGlossaryStore } from '../store/GlossaryStore';
 import { useProgressStore } from '../store/UserProgressStore';
-
-// Acceso directo a ContentStore.slugify
-const slugify = (text: string) => text.toString().toLowerCase()
-  .normalize('NFD').replace(/[\u0300-\u036f]/g, '')
-  .replace(/\s+/g, '-')
-  .replace(/[^\w-]+/g, '')
-  .replace(/--+/g, '-')
-  .replace(/^-+/, '')
-  .replace(/-+$/, '');
+import { mscHierarchy, mscNames, tagToMSC } from '../store/content/msc2020';
 
 /**
  * Página Explorador (Knowledge Graph).
@@ -25,6 +17,7 @@ interface GraphNode {
   name: string;
   group: string;
   val: number;
+  url?: string;
   x?: number;
   y?: number;
 }
@@ -39,115 +32,127 @@ export const GraphPage: React.FC = () => {
   const { openTerm } = useGlossaryStore();
   const graphRef = useRef<React.ElementRef<typeof ForceGraph2D> | null>(null);
   
-  // Extraer datos del ContentStore
+  // Extraer datos del ContentStore usando jerarquía MSC2020 definida
   const graphData = useMemo(() => {
     const nodes: GraphNode[] = [];
     const links: GraphLink[] = [];
-    const branchNames = new Map<string, string>(); // slug -> Nombre Original
-    const subBranchNames = new Map<string, {name: string, parentSlug: string}>(); // slug -> {name, parentSlug}
-    
-    // Recolectar ramas principales y subramas
-    const extractBranches = (item: { tags?: string[] }) => {
-      if (item.tags?.[0]) branchNames.set(slugify(item.tags[0]), item.tags[0]);
-      if (item.tags?.[0] && item.tags?.[1]) {
-        subBranchNames.set(slugify(item.tags[1]), { name: item.tags[1], parentSlug: slugify(item.tags[0]) });
-      }
-    };
 
-    db.theorems.forEach(extractBranches);
-    db.definitions.forEach(extractBranches);
-    db.lessons.forEach(extractBranches);
+    // Las 7 ramas raíz de la jerarquía MSC2020
+    const ROOT_BRANCHES = Object.keys(mscHierarchy).filter(
+      key => !/^\d/.test(key) && key.includes('-')
+    );
 
-    // Añadir Nodo Central
-    nodes.push({ id: 'matematicas', name: 'MATEMÁTICAS', group: 'central', val: 60 });
+    // Nodo Central
+    nodes.push({ id: 'matematicas', name: 'MATEMÁTICAS', group: 'central', val: 50 });
 
-    // Añadir Nodos: Ramas (como "raíces")
-    branchNames.forEach((name, slug) => {
-      const branchId = `rama-${slug}`;
-      nodes.push({ id: branchId, name: name.toUpperCase(), group: 'branch', val: 35 });
-      links.push({ source: branchId, target: 'matematicas' });
+    // Ramas raíz
+    ROOT_BRANCHES.forEach(branchSlug => {
+      nodes.push({ id: `rama-${branchSlug}`, name: (mscNames[branchSlug] || branchSlug).toUpperCase(), group: 'branch', val: 25, url: `/rama/${branchSlug}` });
+      links.push({ source: `rama-${branchSlug}`, target: 'matematicas' });
+
+      // Sub-ramas (hijas)
+      const children = mscHierarchy[branchSlug] || [];
+      children.forEach(childCode => {
+        const childName = mscNames[childCode] || childCode;
+        nodes.push({ id: `subrama-${childCode}`, name: childName.toUpperCase(), group: 'branch', val: 15, url: `/rama/${childCode}` });
+        links.push({ source: `subrama-${childCode}`, target: `rama-${branchSlug}` });
+      });
     });
 
-    // Añadir Nodos: Sub-Ramas
-    subBranchNames.forEach((data, slug) => {
-      const subBranchId = `subrama-${slug}`;
-      nodes.push({ id: subBranchId, name: data.name.toUpperCase(), group: 'branch', val: 25 });
-      links.push({ source: subBranchId, target: `rama-${data.parentSlug}` });
-    });
-
-    // Teoremas
-    db.theorems.forEach((thm, slug) => {
-      nodes.push({ id: slug, name: thm.title, group: thm.type || 'theorem', val: 15 });
-      
-      // Enlace a la rama principal
-      if (!thm.requires || thm.requires.length === 0) {
-        if (thm.tags?.[1]) {
-          links.push({ source: slug, target: `subrama-${slugify(thm.tags[1])}` });
-        } else if (thm.tags?.[0]) {
-          links.push({ source: slug, target: `rama-${slugify(thm.tags[0])}` });
+    // Resolver el MSC code de un item a partir de sus tags
+    const resolveItemBranch = (tags?: string[]): string | null => {
+      if (!tags || tags.length === 0) return null;
+      for (const tag of tags) {
+        const mscCode = tagToMSC[tag] || tagToMSC[tag.toLowerCase()] || tagToMSC[tag.replace(/-/g, ' ')];
+        if (mscCode) {
+          // Encontrar la sub-rama o rama raíz que contiene este código
+          for (const root of ROOT_BRANCHES) {
+            const allDescendants = (code: string): string[] => {
+              const children = mscHierarchy[code] || [];
+              let desc = [...children];
+              for (const c of children) desc = desc.concat(allDescendants(c));
+              return desc;
+            };
+            if (mscCode === root) return `rama-${root}`;
+            if (allDescendants(root).includes(mscCode)) return `subrama-${mscCode}`;
+          }
         }
       }
+      return null;
+    };
 
-      // Enlaces lógicos (requires, parentTheorem)
-      if (thm.requires) {
-        thm.requires.forEach(req => {
-          links.push({ source: slug, target: req });
-        });
-      }
-      if (thm.parentTheorem) {
-        links.push({ source: slug, target: thm.parentTheorem });
-      }
+    // Axiomas
+    db.axioms.forEach((ax, slug) => {
+      nodes.push({ id: slug, name: ax.title, group: 'axioma', val: 10 });
+      const branchNode = resolveItemBranch(ax.tags);
+      if (branchNode) links.push({ source: slug, target: branchNode });
     });
 
     // Definiciones
     db.definitions.forEach((def, slug) => {
-      nodes.push({ id: slug, name: def.title, group: 'definition', val: 10 });
-      if (def.tags?.[1]) {
-        links.push({ source: slug, target: `subrama-${slugify(def.tags[1])}` });
-      } else if (def.tags?.[0]) {
-        links.push({ source: slug, target: `rama-${slugify(def.tags[0])}` });
+      nodes.push({ id: slug, name: def.title, group: 'definition', val: 8 });
+      const branchNode = resolveItemBranch(def.tags);
+      if (branchNode) links.push({ source: slug, target: branchNode });
+    });
+
+    // Teoremas
+    db.theorems.forEach((thm, slug) => {
+      nodes.push({ id: slug, name: thm.title, group: thm.type || 'theorem', val: 10 });
+      const branchNode = resolveItemBranch(thm.tags);
+      if (branchNode) links.push({ source: slug, target: branchNode });
+      // Enlaces lógicos (requires)
+      if (thm.requires) {
+        thm.requires.forEach((req: string) => {
+          links.push({ source: slug, target: req });
+        });
       }
     });
 
-    // Casos de Uso
-    db.usecases.forEach((uc, slug) => {
-      nodes.push({ id: slug, name: uc.title, group: 'usecase', val: 8 });
-      if (uc.concept) {
-        links.push({ source: slug, target: uc.concept });
+    // Sistemas axiomáticos
+    db.axiomaticSystems.forEach((sys, slug) => {
+      nodes.push({ id: slug, name: sys.title, group: 'modelo', val: 10 });
+      const branchNode = resolveItemBranch(sys.tags);
+      if (branchNode) links.push({ source: slug, target: branchNode });
+      // Enlace a cada axioma del sistema
+      if (sys.axiomas) {
+        sys.axiomas.forEach((axId: string) => {
+          links.push({ source: slug, target: axId });
+        });
       }
     });
 
-    // Ejemplos
-    db.examples.forEach((ex, slug) => {
-      nodes.push({ id: slug, name: ex.title, group: 'example', val: 6 });
-      if (ex.relatedTheorem) {
-        links.push({ source: slug, target: ex.relatedTheorem });
+    // Modelos
+    db.models.forEach((model, slug) => {
+      nodes.push({ id: slug, name: model.title, group: 'modelo', val: 7 });
+      if (model.satisfies) {
+        links.push({ source: slug, target: model.satisfies });
       }
     });
 
-    // Ejercicios
-    db.exercises.forEach((ez, slug) => {
-      nodes.push({ id: slug, name: ez.title, group: 'exercise', val: 6 });
-      if (ez.relatedTheorem) {
-        links.push({ source: slug, target: ez.relatedTheorem });
-      }
+    // Matemáticos
+    db.mathematicians.forEach((math, slug) => {
+      nodes.push({ id: slug, name: math.name, group: 'mathematician', val: 6 });
     });
 
-    // Enlaces Orgánicos (Semánticos) extraídos de los ConceptLinks
-    const allEntities = [
-      ...Array.from(db.theorems.values()),
-      ...Array.from(db.definitions.values()),
-      ...Array.from(db.usecases.values()),
-      ...Array.from(db.examples.values()),
-      ...Array.from(db.exercises.values()),
-      ...Array.from(db.lessons.values()),
-      ...Array.from(db.mathematicians.values())
-    ];
-
-    allEntities.forEach((entity: { slug?: string; id?: string; links?: string[] }) => {
-      if (entity.links && Array.isArray(entity.links)) {
-        entity.links.forEach((linkTarget: string) => {
-          links.push({ source: (entity.slug || entity.id) as string, target: linkTarget });
+    // Enlaces desde sistemas que mencionan matemáticos
+    db.axiomaticSystems.forEach(sys => {
+      if (sys.mathematicians) {
+        sys.mathematicians.forEach(mId => {
+          links.push({ source: mId, target: sys.id });
+        });
+      }
+    });
+    db.axioms.forEach(ax => {
+      if (ax.authors) {
+        ax.authors.forEach(aId => {
+          links.push({ source: aId, target: ax.id });
+        });
+      }
+    });
+    db.theorems.forEach(thm => {
+      if (thm.authors) {
+        thm.authors.forEach(aId => {
+          links.push({ source: aId, target: thm.id });
         });
       }
     });
@@ -338,7 +343,7 @@ export const GraphPage: React.FC = () => {
   }, []);
 
   return (
-    <div className="w-full h-screen bg-[#F8F6F1] overflow-hidden font-serif relative" style={{ backgroundImage: 'url(/images/bg_arts_crafts.png)', backgroundSize: '600px', backgroundRepeat: 'repeat' }}>
+    <div className="w-full h-screen bg-lienzo overflow-hidden font-serif relative" style={{ backgroundImage: 'url(/images/bg_arts_crafts.png)', backgroundSize: '600px', backgroundRepeat: 'repeat' }}>
       
       {/* Buscador */}
       <div className="absolute top-8 left-1/2 -translate-x-1/2 z-50">
@@ -348,10 +353,10 @@ export const GraphPage: React.FC = () => {
             value={searchQuery}
             onChange={handleSearchChange}
             placeholder="Buscar concepto..." 
-            className="w-64 bg-[#F8F6F1] border-2 border-carbon/80 px-4 py-2 text-carbon outline-none focus:border-terracota placeholder:text-carbon/40 italic shadow-lg"
+            className="w-64 bg-lienzo border-2 border-carbon/80 px-4 py-2 text-carbon outline-none focus:border-terracota placeholder:text-carbon/40 italic shadow-lg"
           />
           {searchResults.length > 0 && (
-            <div className="absolute top-full left-0 mt-1 w-full bg-[#F8F6F1] border-2 border-carbon/80 shadow-xl max-h-60 overflow-y-auto">
+            <div className="absolute top-full left-0 mt-1 w-full bg-lienzo border-2 border-carbon/80 shadow-xl max-h-60 overflow-y-auto">
               {searchResults.map((node) => (
                 <div 
                   key={node.id} 
@@ -367,20 +372,23 @@ export const GraphPage: React.FC = () => {
         </div>
       </div>
 
-      {/* Leyenda Clásica */}
-      <div className="absolute bottom-8 right-8 z-50 bg-[#F8F6F1] border-2 border-carbon/80 p-5 shadow-2xl">
+      {/* Leyenda */}
+      <div className="absolute bottom-8 right-8 z-50 bg-lienzo border-2 border-carbon/80 p-5 shadow-2xl">
         <div className="border border-carbon/20 p-4 relative">
           <h4 className="font-bold text-sm uppercase tracking-widest mb-4 text-carbon/80 text-center mt-2" style={{ fontVariant: 'small-caps' }}>Leyenda</h4>
           <div className="flex flex-col gap-3 text-sm italic text-carbon/80">
             <div className="flex items-center gap-3"><div className="w-4 h-4 border border-carbon bg-[#333333]"></div> Matemáticas</div>
-            <div className="flex items-center gap-3"><div className="w-4 h-4 border border-carbon bg-[#C86446]"></div> Ramas Clásicas</div>
-            <div className="flex items-center gap-3"><div className="w-4 h-4 border border-carbon bg-[#A2C2A2]"></div> Teoremas / Ejercicios</div>
-            <div className="flex items-center gap-3"><div className="w-4 h-4 border border-carbon bg-[#5D7080]"></div> Definiciones / Ejemplos</div>
+            <div className="flex items-center gap-3"><div className="w-4 h-4 border border-carbon bg-[#C86446]"></div> Ramas</div>
+            <div className="flex items-center gap-3"><div className="w-4 h-4 border border-carbon bg-[#f5c542]"></div> Axiomas</div>
+            <div className="flex items-center gap-3"><div className="w-4 h-4 border border-carbon bg-[#A2C2A2]"></div> Teoremas / Lemas</div>
+            <div className="flex items-center gap-3"><div className="w-4 h-4 border border-carbon bg-[#5D7080]"></div> Definiciones</div>
+            <div className="flex items-center gap-3"><div className="w-4 h-4 border border-carbon bg-[#9FAABF]"></div> Sistemas / Modelos</div>
+            <div className="flex items-center gap-3"><div className="w-4 h-4 border border-carbon bg-[#c49b4f]"></div> Matemáticos</div>
           </div>
           <div className="mt-4 pt-3 border-t border-carbon/20">
             <Link href="/axiomas">
               <a className="flex items-center justify-center gap-2 text-xs font-sans uppercase tracking-widest text-terracota hover:text-carbon transition-colors font-bold">
-                <span className="font-serif">☙</span> Árbol Axiomático &rarr;
+                Grafo de axiomas &rarr;
               </a>
             </Link>
           </div>
