@@ -216,6 +216,7 @@ export const ModelSchema = z.object({
   axioms_verified: z.array(z.string()).optional(),
   /** Indica si este modelo tiene un diagrama interactivo asociado */
   hasDiagram: z.boolean().optional(),
+  hasSimulation: z.boolean().optional(),
   tags: z.array(z.string()).optional(),
   links: z.array(z.string()).optional(),
   seeAlso: z.array(z.string()).optional(),

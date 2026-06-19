@@ -226,6 +226,8 @@ export const GraphPage: React.FC = () => {
         const slug = node.id.replace(isSubBranch ? 'subrama-' : 'rama-', '');
         setLocation(`/rama/${slug}`);
       }
+    } else if (node.group === 'modelo') {
+      setLocation(`/modelo/${node.id}`);
     } else {
       openTerm(node.id);
     }

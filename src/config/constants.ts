@@ -26,16 +26,16 @@ function mix(color: string, bg: string, pct: number): string {
 }
 
 export const DOMAIN_COLORS: Record<string, { bg: string; text: string; border: string }> = {
-  ingeniería:   { bg: mix('var(--theme-ocre)', 'var(--theme-lienzo)', 85), text: 'var(--theme-ocre)', border: mix('var(--theme-ocre)', 'transparent', 50) },
+  ingeniería: { bg: mix('var(--theme-ocre)', 'var(--theme-lienzo)', 85), text: 'var(--theme-ocre)', border: mix('var(--theme-ocre)', 'transparent', 50) },
   arquitectura: { bg: mix('var(--theme-pizarra)', 'var(--theme-lienzo)', 85), text: 'var(--theme-pizarra)', border: mix('var(--theme-pizarra)', 'transparent', 50) },
-  medicina:     { bg: mix('var(--theme-salvia)', 'var(--theme-lienzo)', 85), text: 'var(--theme-salvia)', border: mix('var(--theme-salvia)', 'transparent', 50) },
-  biología:     { bg: mix('var(--theme-musgo)', 'var(--theme-lienzo)', 85), text: 'var(--theme-musgo)', border: mix('var(--theme-musgo)', 'transparent', 50) },
-  economía:     { bg: mix('var(--theme-ocre)', 'var(--theme-lienzo)', 85), text: 'var(--theme-ocre)', border: mix('var(--theme-ocre)', 'transparent', 50) },
-  finanzas:     { bg: mix('var(--theme-ocre)', 'var(--theme-lienzo)', 85), text: 'var(--theme-ocre)', border: mix('var(--theme-ocre)', 'transparent', 50) },
-  naturaleza:   { bg: mix('var(--theme-salvia)', 'var(--theme-lienzo)', 85), text: 'var(--theme-salvia)', border: mix('var(--theme-salvia)', 'transparent', 50) },
-  física:       { bg: mix('var(--theme-pavo)', 'var(--theme-lienzo)', 85), text: 'var(--theme-pavo)', border: mix('var(--theme-pavo)', 'transparent', 50) },
-  astronomía:   { bg: mix('var(--theme-pizarra)', 'var(--theme-lienzo)', 85), text: 'var(--theme-pizarra)', border: mix('var(--theme-pizarra)', 'transparent', 50) },
-  cartografía:  { bg: mix('var(--theme-salvia)', 'var(--theme-lienzo)', 85), text: 'var(--theme-salvia)', border: mix('var(--theme-salvia)', 'transparent', 50) },
+  medicina: { bg: mix('var(--theme-salvia)', 'var(--theme-lienzo)', 85), text: 'var(--theme-salvia)', border: mix('var(--theme-salvia)', 'transparent', 50) },
+  biología: { bg: mix('var(--theme-musgo)', 'var(--theme-lienzo)', 85), text: 'var(--theme-musgo)', border: mix('var(--theme-musgo)', 'transparent', 50) },
+  economía: { bg: mix('var(--theme-ocre)', 'var(--theme-lienzo)', 85), text: 'var(--theme-ocre)', border: mix('var(--theme-ocre)', 'transparent', 50) },
+  finanzas: { bg: mix('var(--theme-ocre)', 'var(--theme-lienzo)', 85), text: 'var(--theme-ocre)', border: mix('var(--theme-ocre)', 'transparent', 50) },
+  naturaleza: { bg: mix('var(--theme-salvia)', 'var(--theme-lienzo)', 85), text: 'var(--theme-salvia)', border: mix('var(--theme-salvia)', 'transparent', 50) },
+  física: { bg: mix('var(--theme-pavo)', 'var(--theme-lienzo)', 85), text: 'var(--theme-pavo)', border: mix('var(--theme-pavo)', 'transparent', 50) },
+  astronomía: { bg: mix('var(--theme-pizarra)', 'var(--theme-lienzo)', 85), text: 'var(--theme-pizarra)', border: mix('var(--theme-pizarra)', 'transparent', 50) },
+  cartografía: { bg: mix('var(--theme-salvia)', 'var(--theme-lienzo)', 85), text: 'var(--theme-salvia)', border: mix('var(--theme-salvia)', 'transparent', 50) },
 };
 
 export interface ContentTypeStyle {
@@ -74,8 +74,8 @@ export const CONTENT_TYPE_CONFIG: Record<string, ContentTypeConfig> = {
     labelPlural: 'Definiciones',
     routePrefix: 'definicion',
     graphGroup: 'definition',
-    graphColor: '#5D7080',
-    nodeStyle: { bg: '#8b7355', border: '#8b7355', text: '#ffffff', badge: 'DEFINICION', ringColor: '#d2b48c' },
+    graphColor: '#c49b4f',
+    nodeStyle: { bg: '#a47b2f', border: '#a47b2f', text: '#ffffff', badge: 'DEFINICION', ringColor: '#d2b48c' },
     hierarchyLevel: 1,
   },
   lema: {
@@ -174,8 +174,8 @@ export const CONTENT_TYPE_CONFIG: Record<string, ContentTypeConfig> = {
     labelPlural: 'Modelos',
     routePrefix: 'modelo',
     graphGroup: 'modelo',
-    graphColor: '#9FAABF',
-    nodeStyle: { bg: '#4a5a70', border: '#4a5a70', text: '#ffffff', badge: 'MODELO', ringColor: '#9FAABF' },
+    graphColor: '#C86446',
+    nodeStyle: { bg: '#a84426', border: '#a84426', text: '#ffffff', badge: 'MODELO', ringColor: '#f0a082' },
     hierarchyLevel: 10,
   },
   plan_de_estudio: {

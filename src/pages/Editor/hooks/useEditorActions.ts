@@ -127,6 +127,10 @@ export const useEditorActions = ({
         if (wizardData.lemmas) meta.lemmas = parseArray(wizardData.lemmas);
       } else if (wizardData.type === 'lessons') {
         if (wizardData.tags) meta.tags = parseArray(wizardData.tags);
+      } else if (wizardData.type === 'models') {
+        if (wizardData.satisfies) meta.satisfies = wizardData.satisfies;
+        if (wizardData.axioms_verified) meta.axioms_verified = parseArray(wizardData.axioms_verified);
+        if (wizardData.hasDiagram) meta.hasDiagram = wizardData.hasDiagram;
       }
 
       setCurrentFile(path);

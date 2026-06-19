@@ -81,7 +81,7 @@ function FlowContent() {
   const [searchOpen, setSearchOpen] = useState(false);
   const [selectedNodeId, setSelectedNodeId] = useState<string | null>(null);
   const [hoveredNodeId, setHoveredNodeId] = useState<string | null>(null);
-  const [visibleTypes, setVisibleTypes] = useState<Set<string>>(new Set(['axioma', 'lema', 'teorema', 'corolario', 'definicion']));
+  const [visibleTypes, setVisibleTypes] = useState<Set<string>>(new Set(['axioma', 'lema', 'teorema', 'corolario', 'definicion', 'modelo']));
 
   const toggleType = useCallback((type: string) => {
     setVisibleTypes(prev => {
@@ -94,7 +94,7 @@ function FlowContent() {
 
   const typeLabel: Record<string, string> = {
     axioma: 'Axiomas', lema: 'Lemas', teorema: 'Teoremas',
-    corolario: 'Corolarios', definicion: 'Definiciones',
+    corolario: 'Corolarios', definicion: 'Definiciones', modelo: 'Modelos',
   };
 
   const searchResults = useMemo(() => {
@@ -551,7 +551,7 @@ function FlowContent() {
             )}
 
             <a
-              href={`/${selectedNodeData.nodeType === 'axioma' ? 'axioma' : selectedNodeData.nodeType === 'definicion' ? 'definicion' : 'teorema'}/${selectedNodeId}`}
+              href={`/Matematika/${selectedNodeData.nodeType === 'axioma' ? 'axioma' : selectedNodeData.nodeType === 'definicion' ? 'definicion' : selectedNodeData.nodeType === 'modelo' ? 'modelo' : 'teorema'}/${selectedNodeId}`}
               className="inline-flex items-center gap-1.5 mt-1 text-sm font-sans text-pizarra hover:text-carbon transition-colors"
             >
               <span>Ver página →</span>

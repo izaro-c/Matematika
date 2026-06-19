@@ -55,7 +55,7 @@ export const TaxonomyGraph: React.FC<TaxonomyGraphProps> = ({ taxonomy }) => {
     taxonomy.subBranches.forEach(sub => {
       const branchId = `branch-${sub.slug}`;
       const subName = /^\d{2}[A-Z]?$/.test(sub.slug) ? `${sub.slug} ${sub.name.toUpperCase()}` : sub.name;
-      nodes.push({ id: branchId, name: subName, group: 'branch', val: 12, url: `/rama/${sub.slug}` });
+      nodes.push({ id: branchId, name: subName, group: 'branch', val: 12, url: `${sub.slug}` });
       links.push({ source: branchId, target: taxonomy.slug });
     });
 
@@ -65,12 +65,14 @@ export const TaxonomyGraph: React.FC<TaxonomyGraphProps> = ({ taxonomy }) => {
       const type = itemObj.type;
 
       let url = '/';
-      if (type === 'lesson') url = `/${item.slug}`;
-      else if (type === 'theorem') url = `/teorema/${item.id}`;
-      else if (type === 'definition') url = `/definicion/${item.id}`;
-      else if (type === 'example') url = `/ejemplo/${item.id}`;
-      else if (type === 'exercise') url = `/ejercicio/${item.id}`;
-      else if (type === 'usecase') url = `/caso/${item.id}`;
+      if (type === 'lesson') url = `/Matematika/${item.slug}`;
+      else if (type === 'theorem') url = `/Matematika/teorema/${item.id}`;
+      else if (type === 'definition') url = `/Matematika/definicion/${item.id}`;
+      else if (type === 'example') url = `/Matematika/ejemplo/${item.id}`;
+      else if (type === 'exercise') url = `/Matematika/ejercicio/${item.id}`;
+      else if (type === 'usecase') url = `/Matematika/caso/${item.id}`;
+      else if (type === 'model') url = `/Matematika/modelo/${item.id}`;
+      else if (type === 'axiom') url = `/Matematika/axioma/${item.id}`;
 
       nodes.push({
         id: item.id, // ID exacto para isRead
@@ -152,6 +154,7 @@ export const TaxonomyGraph: React.FC<TaxonomyGraphProps> = ({ taxonomy }) => {
       case 'example': return '#5D7080'; // Pizarra
       case 'exercise': return '#A2C2A2'; // Salvia
       case 'lesson': return '#A2C2A2';
+      case 'model': return '#8b3a3a'; //granate
       default: return '#cccccc';
     }
   };

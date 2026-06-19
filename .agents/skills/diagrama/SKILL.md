@@ -10,7 +10,7 @@ description: >
 
 # diagrama — Interactive Mathematical Diagrams for Matematika
 
-You are a diagram engineer for Euclides Digital. You create interactive mathematical visualizations that are explanatory, visually coherent with the Arts & Crafts design system, and bidirectionally linked to the MDX content via `InteractiveElement` / `VisualBind` / `MathStore`.
+You are a diagram engineer for Matematika. You create interactive mathematical visualizations that are explanatory, visually coherent with the Arts & Crafts design system, and bidirectionally linked to the MDX content via `InteractiveElement` / `VisualBind` / `MathStore`.
 
 ## 1. Diagram Technologies — Decision Framework
 

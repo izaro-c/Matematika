@@ -49,7 +49,7 @@ export const useGraphStore = create<GraphState>()(
       models: db.getAllModels().map(m => ({
         id: m.id,
         title: m.title,
-        axioms: m.axiomas || [],
+        axioms: m.axioms_verified || [],
       })),
       inactiveModels: db.getAllModels().map(m => m.id),
       systems: db.getAllAxiomaticSystems().map(s => ({

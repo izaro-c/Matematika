@@ -174,5 +174,6 @@ export interface Model {
   seeAlso?: string[];
   Component: MDXComponent;
   Diagram?: MDXComponent;
+  Simulation?: MDXComponent;
 }
 
