@@ -2,6 +2,7 @@ import { Suspense } from 'react';
 import { useRoute, Link } from 'wouter';
 import { db } from '../store/content';
 import { Logo } from '../components/ui/Logo';
+import { EmptyState } from '../components/ui/EmptyState';
 
 /**
  * Página individual para un modelo matemático.
@@ -83,11 +84,11 @@ export function ModelPage() {
         </div>
 
         {/* Axioms list */}
-        {modelAxioms.length > 0 && (
-          <section className="border-t border-carbon/10 pt-8">
-            <h2 className="font-serif text-xl font-bold text-carbon mb-4">
-              Axiomas del modelo ({modelAxioms.length})
-            </h2>
+        <section className="border-t border-carbon/10 pt-8">
+          <h2 className="font-serif text-xl font-bold text-carbon mb-4">
+            Axiomas del modelo ({modelAxioms.length})
+          </h2>
+          {modelAxioms.length > 0 ? (
             <div className="grid gap-2">
               {modelAxioms.map(ax => ax && (
                 <Link
@@ -107,8 +108,10 @@ export function ModelPage() {
                 </Link>
               ))}
             </div>
-          </section>
-        )}
+          ) : (
+            <EmptyState message="Este modelo no tiene axiomas definidos." icon="△" />
+          )}
+        </section>
       </main>
     </div>
   );

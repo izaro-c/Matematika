@@ -2,6 +2,7 @@ import React, { Suspense } from 'react';
 import { useRoute, Link } from 'wouter';
 import { db } from '../store/content';
 import { ModelBadgeList } from '../components/ui/ModelBadge';
+import { FadeIn } from '../components/ui/FadeIn';
 
 /**
  * Página dedicada a Demostraciones visuales/interactivas separadas.
@@ -26,6 +27,7 @@ export const DemoPage: React.FC = () => {
   const parentTheorem = demo.parentTheorem ? db.getTheorem(demo.parentTheorem) : null;
 
   return (
+    <FadeIn>
     <div className="min-h-screen bg-lienzo bg-arts-and-crafts font-serif text-carbon selection:bg-terracota/20 relative w-full">
       
       {/* Contenedor centralizado solo para la cabecera */}
@@ -122,5 +124,6 @@ export const DemoPage: React.FC = () => {
         </Suspense>
       </div>
     </div>
+    </FadeIn>
   );
 };

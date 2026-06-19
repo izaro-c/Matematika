@@ -116,17 +116,17 @@ export const BiographyLayout: React.FC<BiographyLayoutProps> = ({ Component, Sid
   };
 
   return (
-    <div className="h-screen w-full overflow-hidden flex bg-lienzo">
-      
-      {/* PANEL IZQUIERDO: FIJO Y OSCURO (MUSEO) */}
-      <div className="w-[40%] bg-zinc-900 border-r border-carbon/20 text-white overflow-y-auto custom-scrollbar relative">
+    <div className="min-h-screen w-full lg:h-screen lg:overflow-hidden flex flex-col lg:flex-row bg-lienzo">
+
+      {/* PANEL IZQUIERDO: FIJO Y OSCURO (MUSEO) — colapsa en móvil */}
+      <div className="lg:w-[40%] bg-zinc-900 lg:border-r border-carbon/20 text-white lg:overflow-y-auto custom-scrollbar relative">
         <div className="absolute inset-0 bg-noise opacity-5 pointer-events-none" />
-        
-        <div className="p-12 relative z-10 flex flex-col min-h-full">
+
+        <div className="p-6 sm:p-8 lg:p-12 relative z-10 flex flex-col min-h-full">
           {renderSidebarContent()}
 
           {/* Navegación de retorno */}
-          <div className="mt-auto pt-16 w-full text-center">
+          <div className="mt-auto pt-8 lg:pt-16 w-full text-center">
             <Link href="/historia">
               <a className="inline-flex items-center gap-2 text-white/50 font-serif font-bold hover:text-white transition-colors tracking-widest uppercase text-xs">
                 <span>&larr;</span> Volver al Códice
@@ -137,13 +137,13 @@ export const BiographyLayout: React.FC<BiographyLayoutProps> = ({ Component, Sid
       </div>
 
       {/* PANEL DERECHO: LECTURA CON SCROLL */}
-      <div className="w-[60%] p-12 lg:p-20 overflow-y-auto scroll-smooth relative bg-transparent text-carbon">
+      <div className="lg:w-[60%] p-6 sm:p-8 lg:p-12 xl:p-20 lg:overflow-y-auto scroll-smooth relative bg-transparent text-carbon">
         <div className="prose prose-pizarra prose-lg max-w-none mx-auto biography-mdx text-carbon font-serif">
           <Component />
         </div>
 
         {/* Ornamentación final */}
-        <div className="mt-24 pb-12 flex justify-center text-carbon/20">
+        <div className="mt-16 lg:mt-24 pb-12 flex justify-center text-carbon/20">
           <span className="text-3xl">❦</span>
         </div>
       </div>

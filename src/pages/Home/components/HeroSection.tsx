@@ -1,5 +1,7 @@
 import { Link } from 'wouter';
 import { Logo } from "../../../components/ui/Logo";
+import { FadeIn } from "../../../components/ui/FadeIn";
+import { SITE_TAGLINE } from '../../../config/constants';
 
 /**
  * Componente de la sección principal (Hero) de la página de inicio.
@@ -12,7 +14,7 @@ import { Logo } from "../../../components/ui/Logo";
  */
 export const HeroSection = () => {
   return (
-    <header className="relative w-full overflow-hidden border-b border-carbon/15">
+    <FadeIn as="header" className="relative w-full overflow-hidden border-b border-carbon/15">
       <div className="relative z-10 max-w-5xl mx-auto px-8 pt-24 pb-20 flex flex-col items-center text-center">
         {/* Logo + título en inline */}
         <div className="flex items-end gap-3 mb-6">
@@ -27,7 +29,7 @@ export const HeroSection = () => {
 
         {/* Lema */}
         <p className="text-lg md:text-xl text-carbon/60 italic max-w-xl leading-relaxed mb-10">
-          Enciclopedia de estructuras formales — teoremas, definiciones y demostraciones
+          {SITE_TAGLINE}
         </p>
 
         {/* Separador ornamental */}
@@ -80,6 +82,6 @@ export const HeroSection = () => {
           </Link>
         </div>
       </div>
-    </header>
+    </FadeIn>
   );
 };

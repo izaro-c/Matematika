@@ -7,6 +7,7 @@ export interface BaseContent {
   id: string;
   slug: string;
   links?: string[];
+  seeAlso?: string[];
 }
 
 export interface Mathematician extends BaseContent {
@@ -47,6 +48,7 @@ export interface Theorem {
   difficulty?: 'básico' | 'intermedio' | 'avanzado';
   Component: MDXComponent;
   Simulation?: MDXComponent;
+  seeAlso?: string[];
 }
 
 export interface Lesson {
@@ -59,6 +61,7 @@ export interface Lesson {
   Component: MDXComponent;
   Simulation?: MDXComponent;
   Visualizer?: MDXComponent;
+  seeAlso?: string[];
 }
 
 export interface Demo {
@@ -75,6 +78,7 @@ export interface Demo {
   layout?: 'split' | 'text';
   dependencias?: string[];
   Component: MDXComponent;
+  seeAlso?: string[];
 }
 
 export interface Definition {
@@ -89,6 +93,7 @@ export interface Definition {
   usedBy?: string[];
   Component: MDXComponent;
   Simulation?: MDXComponent;
+  seeAlso?: string[];
 }
 
 export interface Example {
@@ -102,6 +107,7 @@ export interface Example {
   difficulty?: 'básico' | 'intermedio' | 'avanzado';
   Component: MDXComponent;
   Simulation?: MDXComponent;
+  seeAlso?: string[];
 }
 
 export interface Exercise {
@@ -116,6 +122,7 @@ export interface Exercise {
   hint?: string;
   Component: MDXComponent;
   Simulation?: MDXComponent;
+  seeAlso?: string[];
 }
 
 export interface UseCase {
@@ -129,6 +136,7 @@ export interface UseCase {
   difficulty?: 'básico' | 'intermedio' | 'avanzado';
   Component: MDXComponent;
   Simulation?: MDXComponent;
+  seeAlso?: string[];
 }
 
 export interface Axiom {
@@ -141,6 +149,8 @@ export interface Axiom {
   tags?: string[];
   authors?: string[];
   Component: MDXComponent;
+  Simulation?: MDXComponent;
+  seeAlso?: string[];
 }
 
 export interface Model {
@@ -151,6 +161,7 @@ export interface Model {
   description?: string;
   axiomas?: string[];
   tags?: string[];
+  seeAlso?: string[];
   Component: MDXComponent;
 }
 

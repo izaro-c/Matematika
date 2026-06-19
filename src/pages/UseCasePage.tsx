@@ -17,42 +17,13 @@ import { KatexText } from '../components/ui/KatexText';
 import { SimulationLayout } from "../components/layout/SimulationLayout";
 import { useProgressStore } from '../store/UserProgressStore';
 import { ReadingButton } from '../components/ui/ReadingButton';
-
-// Iconos por dominio real
-const DOMAIN_ICONS: Record<string, string> = {
-  ingeniería: '⚙',
-  arquitectura: '🏛',
-  medicina: '⚕',
-  biología: '🌿',
-  economía: '📈',
-  finanzas: '💹',
-  naturaleza: '🌊',
-  arte: '🎨',
-  música: '♩',
-  astronomía: '✦',
-  física: '⚛',
-  geografía: '🗺',
-  cartografía: '🗺',
-  informática: '◻',
-};
-
-const DOMAIN_COLORS: Record<string, { bg: string; text: string; border: string }> = {
-  ingeniería:   { bg: '#F5F0E8', text: '#7A5C2A', border: '#C4A06A' },
-  arquitectura: { bg: '#F0EEF5', text: '#5A4878', border: '#9A82C2' },
-  medicina:     { bg: '#F0F5F0', text: '#2A6A4A', border: '#6AAA82' },
-  biología:     { bg: '#F0F5EC', text: '#3A6A2A', border: '#7AAA62' },
-  economía:     { bg: '#F5F2E8', text: '#7A6A2A', border: '#C4B06A' },
-  finanzas:     { bg: '#F5F2E8', text: '#7A6A2A', border: '#C4B06A' },
-  naturaleza:   { bg: '#EEF5F0', text: '#2A6A4A', border: '#6AAA82' },
-  física:       { bg: '#EEF2F5', text: '#2A4A7A', border: '#6A82C4' },
-  astronomía:   { bg: '#EEEEF5', text: '#3A2A7A', border: '#7A6AC4' },
-  cartografía:  { bg: '#F0F5F0', text: '#2A6A4A', border: '#6AAA82' },
-};
+import { FadeIn } from '../components/ui/FadeIn';
+import { DOMAIN_ICONS, DOMAIN_COLORS, DIFF_COLORS } from '../config/constants';
 
 function getDomainStyle(domain?: string) {
-  if (!domain) return { bg: '#F5F5F0', text: '#666655', border: '#CCCC99' };
+  if (!domain) return { bg: 'color-mix(in srgb, var(--theme-carbon), var(--theme-lienzo) 90%)', text: 'color-mix(in srgb, var(--theme-carbon), var(--theme-lienzo) 60%)', border: 'color-mix(in srgb, var(--theme-carbon), transparent 60%)' };
   const key = domain.toLowerCase();
-  return DOMAIN_COLORS[key] ?? { bg: '#F5F5F0', text: '#5A5A48', border: '#AAAA88' };
+  return DOMAIN_COLORS[key] ?? { bg: 'color-mix(in srgb, var(--theme-carbon), var(--theme-lienzo) 90%)', text: 'color-mix(in srgb, var(--theme-carbon), var(--theme-lienzo) 50%)', border: 'color-mix(in srgb, var(--theme-carbon), transparent 55%)' };
 }
 
 export const UseCasePage: React.FC = () => {
@@ -94,19 +65,15 @@ export const UseCasePage: React.FC = () => {
   const domainIcon = DOMAIN_ICONS[domainKey] ?? '◈';
   const domainStyle = getDomainStyle(usecase.domain);
 
-  const DIFF_COLORS: Record<string, string> = {
-    básico:     '#2a6a2a',
-    intermedio: '#c49b4f',
-    avanzado:   '#A42A04',
-  };
-  const diffColor = DIFF_COLORS[usecase.difficulty ?? 'básico'] ?? '#333';
+  const diffColor = DIFF_COLORS[usecase.difficulty ?? 'básico'] ?? 'var(--theme-carbon)';
 
   const renderContent = () => (
     <div className="min-h-screen bg-transparent text-carbon font-serif">
 
       {/* ── Cabecera ─────────────────────────────────────────────────────── */}
+      <FadeIn>
       <div className="border-b border-carbon/10">
-        <div className="max-w-3xl mx-auto px-6 md:px-10 pt-16 pb-10">
+        <div className="max-w-4xl mx-auto px-6 md:px-10 pt-16 pb-10">
 
           {/* Breadcrumb */}
           <div className="flex items-center gap-2 text-[10px] font-sans uppercase tracking-widest text-carbon/35 mb-8">
@@ -138,7 +105,7 @@ export const UseCasePage: React.FC = () => {
             {usecase.difficulty && (
               <span
                 className="text-[10px] font-sans font-bold uppercase tracking-widest px-2.5 py-1.5 rounded-sm"
-                style={{ color: diffColor, backgroundColor: `${diffColor}15`, border: `1px solid ${diffColor}30` }}
+                style={{ color: diffColor, backgroundColor: `color-mix(in srgb, ${diffColor}, transparent 92%)`, border: `1px solid color-mix(in srgb, ${diffColor}, transparent 81%)` }}
               >
                 {usecase.difficulty}
               </span>
@@ -182,7 +149,7 @@ export const UseCasePage: React.FC = () => {
       </div>
 
       {/* ── Contenido MDX ────────────────────────────────────────────────── */}
-      <div className="max-w-3xl mx-auto px-6 md:px-10 py-16">
+      <div className="max-w-4xl mx-auto px-6 md:px-10 py-16">
         <div className="prose prose-base max-w-none [&_p]:text-carbon/85 [&_p]:leading-relaxed [&_strong]:text-carbon [&_h3]:text-2xl [&_h3]:font-serif [&_h3]:text-terracota [&_h3]:mt-12 [&_h3]:mb-6 [&_h3]:italic">
           <Suspense fallback={<div className="animate-pulse h-64 bg-carbon/5 rounded" />}>
             <usecase.Component />
@@ -193,7 +160,7 @@ export const UseCasePage: React.FC = () => {
       {/* ── Pie: otros casos de uso relacionados ─────────────────────────── */}
       {related.length > 0 && (
         <div className="border-t border-carbon/10 bg-carbon/[0.015]">
-          <div className="max-w-3xl mx-auto px-6 md:px-10 py-12">
+          <div className="max-w-4xl mx-auto px-6 md:px-10 py-12">
             <div className="text-[10px] font-sans uppercase tracking-widest text-carbon/40 mb-6">
               Más aplicaciones de este concepto
             </div>
@@ -232,6 +199,7 @@ export const UseCasePage: React.FC = () => {
 
       {/* Botón de Lectura */}
       <ReadingButton id={slug} />
+      </FadeIn>
     </div>
   );
 

@@ -15,6 +15,7 @@ export const MathematicianSchema = z.object({
   description: z.string(),
   image: z.string().optional(),
   links: z.array(z.string()).optional(),
+  seeAlso: z.array(z.string()).optional(),
 });
 
 /**
@@ -46,6 +47,7 @@ export const TheoremSchema = z.object({
   tags: z.array(z.string()).optional(),
   difficulty: z.enum(['básico', 'intermedio', 'avanzado']).optional(),
   links: z.array(z.string()).optional(),
+  seeAlso: z.array(z.string()).optional(),
 });
 
 /**
@@ -61,6 +63,7 @@ export const LessonSchema = z.object({
   tags: z.array(z.string()).optional(),
   difficulty: z.enum(['básico', 'intermedio', 'avanzado']).optional(),
   links: z.array(z.string()).optional(),
+  seeAlso: z.array(z.string()).optional(),
 });
 
 /**
@@ -101,6 +104,7 @@ export const DefinitionSchema = z.object({
   /** IDs de teoremas que usan esta definición */
   usedBy: z.array(z.string()).optional(),
   links: z.array(z.string()).optional(),
+  seeAlso: z.array(z.string()).optional(),
 });
 
 /**
@@ -121,6 +125,7 @@ export const ExampleSchema = z.object({
   tags: z.array(z.string()).optional(),
   difficulty: z.enum(['básico', 'intermedio', 'avanzado']).optional(),
   links: z.array(z.string()).optional(),
+  seeAlso: z.array(z.string()).optional(),
 });
 
 /**
@@ -141,6 +146,7 @@ export const ExerciseSchema = z.object({
   /** Pista visible antes de revelar la solución */
   hint: z.string().optional(),
   links: z.array(z.string()).optional(),
+  seeAlso: z.array(z.string()).optional(),
 });
 
 // Tipos Inferidos
@@ -166,6 +172,7 @@ export const AxiomSchema = z.object({
   tags: z.array(z.string()).optional(),
   authors: z.array(z.string()).optional(),
   links: z.array(z.string()).optional(),
+  seeAlso: z.array(z.string()).optional(),
 });
 
 /**
@@ -178,6 +185,7 @@ export const ModelSchema = z.object({
   description: z.string().optional(),
   axiomas: z.array(z.string()).optional(),
   tags: z.array(z.string()).optional(),
+  seeAlso: z.array(z.string()).optional(),
 });
 
 /**
@@ -199,6 +207,7 @@ export const UseCaseSchema = z.object({
   tags: z.array(z.string()).optional(),
   difficulty: z.enum(['básico', 'intermedio', 'avanzado']).optional(),
   links: z.array(z.string()).optional(),
+  seeAlso: z.array(z.string()).optional(),
 });
 
 export type UseCaseMeta = z.infer<typeof UseCaseSchema>;
@@ -218,6 +227,7 @@ export const StudyPlanSchema = z.object({
   description: z.string(),
   requiredNodes: z.array(z.string()).optional(),
   links: z.array(z.string()).optional(),
+  seeAlso: z.array(z.string()).optional(),
 });
 
 export type StudyPlanMeta = z.infer<typeof StudyPlanSchema>;

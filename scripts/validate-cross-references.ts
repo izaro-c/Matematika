@@ -186,6 +186,9 @@ for (const file of allFiles) {
   // 9. exercises → existing exercises
   checkIds('exercises', meta.exercises);
 
+  // 9b. seeAlso → existing content (non-graph references)
+  checkIds('seeAlso', meta.seeAlso);
+
   // 10. requires → existing content
   checkIds('requires', meta.requires);
 

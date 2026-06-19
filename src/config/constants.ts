@@ -1,7 +1,7 @@
 export const DIFF_COLORS: Record<string, string> = {
-  básico: '#2a6a2a',
-  intermedio: '#c49b4f',
-  avanzado: '#A42A04',
+  básico: 'var(--theme-musgo)',
+  intermedio: 'var(--theme-ocre)',
+  avanzado: 'var(--theme-granada)',
 };
 
 export const DOMAIN_ICONS: Record<string, string> = {
@@ -21,17 +21,21 @@ export const DOMAIN_ICONS: Record<string, string> = {
   informática: '◻',
 };
 
+function mix(color: string, bg: string, pct: number): string {
+  return `color-mix(in srgb, ${color}, ${bg} ${pct}%)`;
+}
+
 export const DOMAIN_COLORS: Record<string, { bg: string; text: string; border: string }> = {
-  ingeniería:   { bg: '#F5F0E8', text: '#7A5C2A', border: '#C4A06A' },
-  arquitectura: { bg: '#F0EEF5', text: '#5A4878', border: '#9A82C2' },
-  medicina:     { bg: '#F0F5F0', text: '#2A6A4A', border: '#6AAA82' },
-  biología:     { bg: '#F0F5EC', text: '#3A6A2A', border: '#7AAA62' },
-  economía:     { bg: '#F5F2E8', text: '#7A6A2A', border: '#C4B06A' },
-  finanzas:     { bg: '#F5F2E8', text: '#7A6A2A', border: '#C4B06A' },
-  naturaleza:   { bg: '#EEF5F0', text: '#2A6A4A', border: '#6AAA82' },
-  física:       { bg: '#EEF2F5', text: '#2A4A7A', border: '#6A82C4' },
-  astronomía:   { bg: '#EEEEF5', text: '#3A2A7A', border: '#7A6AC4' },
-  cartografía:  { bg: '#F0F5F0', text: '#2A6A4A', border: '#6AAA82' },
+  ingeniería:   { bg: mix('var(--theme-ocre)', 'var(--theme-lienzo)', 85), text: 'var(--theme-ocre)', border: mix('var(--theme-ocre)', 'transparent', 50) },
+  arquitectura: { bg: mix('var(--theme-pizarra)', 'var(--theme-lienzo)', 85), text: 'var(--theme-pizarra)', border: mix('var(--theme-pizarra)', 'transparent', 50) },
+  medicina:     { bg: mix('var(--theme-salvia)', 'var(--theme-lienzo)', 85), text: 'var(--theme-salvia)', border: mix('var(--theme-salvia)', 'transparent', 50) },
+  biología:     { bg: mix('var(--theme-musgo)', 'var(--theme-lienzo)', 85), text: 'var(--theme-musgo)', border: mix('var(--theme-musgo)', 'transparent', 50) },
+  economía:     { bg: mix('var(--theme-ocre)', 'var(--theme-lienzo)', 85), text: 'var(--theme-ocre)', border: mix('var(--theme-ocre)', 'transparent', 50) },
+  finanzas:     { bg: mix('var(--theme-ocre)', 'var(--theme-lienzo)', 85), text: 'var(--theme-ocre)', border: mix('var(--theme-ocre)', 'transparent', 50) },
+  naturaleza:   { bg: mix('var(--theme-salvia)', 'var(--theme-lienzo)', 85), text: 'var(--theme-salvia)', border: mix('var(--theme-salvia)', 'transparent', 50) },
+  física:       { bg: mix('var(--theme-pavo)', 'var(--theme-lienzo)', 85), text: 'var(--theme-pavo)', border: mix('var(--theme-pavo)', 'transparent', 50) },
+  astronomía:   { bg: mix('var(--theme-pizarra)', 'var(--theme-lienzo)', 85), text: 'var(--theme-pizarra)', border: mix('var(--theme-pizarra)', 'transparent', 50) },
+  cartografía:  { bg: mix('var(--theme-salvia)', 'var(--theme-lienzo)', 85), text: 'var(--theme-salvia)', border: mix('var(--theme-salvia)', 'transparent', 50) },
 };
 
 export interface ContentTypeStyle {
@@ -197,6 +201,8 @@ export const GRAPH_NODE_COLORS: Record<string, string> = {
 export const TYPE_STYLES: Record<string, ContentTypeStyle> = Object.fromEntries(
   Object.entries(CONTENT_TYPE_CONFIG).map(([id, cfg]) => [id, cfg.nodeStyle]),
 );
+
+export const SITE_TAGLINE = 'Enciclopedia de estructuras formales — teoremas, definiciones y demostraciones';
 
 export const typeLabels: Record<string, string> = {
   ...Object.fromEntries(
