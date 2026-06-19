@@ -96,10 +96,10 @@ function itemHref(entry: { type: string; item: { slug?: string; id?: string } })
   if (entry.type === 'theorem') return `/teorema/${entry.item.id}`;
   if (entry.type === 'definition') return `/definicion/${entry.item.id}`;
   if (entry.type === 'axiom') return `/axioma/${entry.item.id}`;
+  if (entry.type === 'model') return `/modelo/${entry.item.id}`;
   if (entry.type === 'exercise') return `/ejercicio/${entry.item.slug}`;
   if (entry.type === 'example') return `/ejemplo/${entry.item.slug}`;
   if (entry.type === 'useCase') return `/caso/${entry.item.slug}`;
-  if (entry.type === 'lesson') return `/${entry.item.slug}`;
   return '/';
 }
 
@@ -108,6 +108,7 @@ const TYPE_LABELS: Record<string, string> = {
   theorem: 'Teorema',
   definition: 'Definición',
   axiom: 'Axioma',
+  model: 'Modelo',
   exercise: 'Ejercicio',
   example: 'Ejemplo',
 };

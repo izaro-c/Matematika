@@ -63,7 +63,7 @@ export const TaxonomyGraph: React.FC<TaxonomyGraphProps> = ({ taxonomy }) => {
     taxonomy.directItems.forEach((itemObj) => {
       const item = itemObj.item;
       const type = itemObj.type;
-      
+
       let url = '/';
       if (type === 'lesson') url = `/${item.slug}`;
       else if (type === 'theorem') url = `/teorema/${item.id}`;
@@ -72,18 +72,18 @@ export const TaxonomyGraph: React.FC<TaxonomyGraphProps> = ({ taxonomy }) => {
       else if (type === 'exercise') url = `/ejercicio/${item.id}`;
       else if (type === 'usecase') url = `/caso/${item.id}`;
 
-      nodes.push({ 
+      nodes.push({
         id: item.id, // ID exacto para isRead
-        name: item.title || item.id, 
+        name: item.title || item.id,
         group: type, // 'theorem', 'definition', 'lesson'
         val: 7,
-        url 
+        url
       });
 
       // Lógica de extracto: si el item tiene dependencias (requires) hacia otros items
       // que también pertenecen a esta rama, creamos una conexión directa entre ellos.
       let hasLocalDependency = false;
-      
+
       if (item.requires && Array.isArray(item.requires)) {
         item.requires.forEach((reqId: string) => {
           // Comprobar si la dependencia existe en este grafo local
@@ -145,7 +145,7 @@ export const TaxonomyGraph: React.FC<TaxonomyGraphProps> = ({ taxonomy }) => {
       case 'central': return '#333333'; // Carbon
       case 'branch': return '#C86446'; // Terracota
       case 'theorem': return '#A2C2A2'; // Salvia
-      case 'lemma': return '#A2C2A2'; 
+      case 'lemma': return '#A2C2A2';
       case 'corollary': return '#A2C2A2';
       case 'definition': return '#5D7080'; // Pizarra
       case 'usecase': return '#C86446'; // Terracota
@@ -158,10 +158,10 @@ export const TaxonomyGraph: React.FC<TaxonomyGraphProps> = ({ taxonomy }) => {
 
   const drawNode = useCallback((node: GraphNode, ctx: CanvasRenderingContext2D, globalScale: number) => {
     if (node.x === undefined || node.y === undefined || !Number.isFinite(node.x) || !Number.isFinite(node.y)) return;
-    
+
     const isHighlighted = hoverNode ? highlightNodes.has(node) : true;
     const isCompleted = isRead(node.id);
-    
+
     const radius = node.val / 2;
     let color = getNodeColor(node);
 
@@ -179,7 +179,7 @@ export const TaxonomyGraph: React.FC<TaxonomyGraphProps> = ({ taxonomy }) => {
     ctx.arc(node.x, node.y, radius, 0, 2 * Math.PI, false);
     ctx.fillStyle = isHighlighted ? color : color + '40';
     ctx.fill();
-    
+
     // Borde de tinta clásico
     ctx.strokeStyle = '#333333';
     ctx.lineWidth = (isHighlighted ? 1.5 : 0.5) / globalScale;
@@ -190,10 +190,10 @@ export const TaxonomyGraph: React.FC<TaxonomyGraphProps> = ({ taxonomy }) => {
 
     const isActivelyHovered = hoverNode ? highlightNodes.has(node) : false;
 
-    const shouldDrawText = 
-      isActivelyHovered || 
-      isRoot || 
-      (isSubBranch && globalScale >= 1.5) || 
+    const shouldDrawText =
+      isActivelyHovered ||
+      isRoot ||
+      (isSubBranch && globalScale >= 1.5) ||
       (globalScale >= 2.5);
 
     // Dibujar Texto legíble tipo imprenta
@@ -203,25 +203,25 @@ export const TaxonomyGraph: React.FC<TaxonomyGraphProps> = ({ taxonomy }) => {
       ctx.font = `${node.group === 'central' ? 'bold' : 'normal'} ${fontSize}px "Georgia", serif`;
       ctx.textAlign = 'center';
       ctx.textBaseline = 'middle';
-      
+
       // Sombra para legibilidad sobre los enlaces (ajustada por la escala)
       ctx.shadowColor = 'rgba(248, 246, 241, 0.9)';
       ctx.shadowBlur = 4 / globalScale;
       ctx.lineWidth = 3 / globalScale;
       ctx.strokeStyle = 'rgba(248, 246, 241, 0.9)';
-      ctx.strokeText(label, node.x, node.y + radius + (fontSize/2) + (4/globalScale));
-      
+      ctx.strokeText(label, node.x, node.y + radius + (fontSize / 2) + (4 / globalScale));
+
       ctx.shadowBlur = 0;
       ctx.fillStyle = isHighlighted ? '#333333' : '#33333380';
       if (node.group === 'central') ctx.fillStyle = isHighlighted ? '#C86446' : '#C8644680';
-      ctx.fillText(label, node.x, node.y + radius + (fontSize/2) + (4/globalScale));
+      ctx.fillText(label, node.x, node.y + radius + (fontSize / 2) + (4 / globalScale));
     }
   }, [hoverNode, highlightNodes, isRead, taxonomy.slug]);
 
   // Ajuste automático de tamaño del Canvas
   const [dimensions, setDimensions] = useState({ width: 0, height: 400 });
   const containerRef = useRef<HTMLDivElement>(null);
-  
+
   useEffect(() => {
     if (containerRef.current) {
       setDimensions({
@@ -242,7 +242,7 @@ export const TaxonomyGraph: React.FC<TaxonomyGraphProps> = ({ taxonomy }) => {
   }, []);
 
   return (
-    <div ref={containerRef} className="w-full h-[400px] border-y border-carbon/20 overflow-hidden bg-lienzo relative shadow-inner cursor-move" style={{ backgroundImage: 'url(/images/bg_arts_crafts.png)', backgroundSize: '600px', backgroundRepeat: 'repeat' }}>
+    <div ref={containerRef} className="w-full h-[400px] border-y border-carbon/20 overflow-hidden relative shadow-inner cursor-move" style={{ backgroundImage: 'url(/Matematika/images/bg_arts_crafts.png)', backgroundSize: '600px', backgroundRepeat: 'repeat' }}>
       <div className="absolute z-10 top-4 left-4 text-[10px] font-sans uppercase tracking-widest text-carbon/60 select-none pointer-events-none bg-lienzo/90 px-3 py-1.5 border border-carbon/10 shadow-sm backdrop-blur-sm rounded-none">
         Grafo de dependencias: {(taxonomy as any).name || taxonomy.id}
       </div>

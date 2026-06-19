@@ -323,6 +323,7 @@ export class ContentStore {
     for (const ex of this.examples.values()) items.push({ type: 'example', item: ex });
     for (const ez of this.exercises.values()) items.push({ type: 'exercise', item: ez });
     for (const axm of this.axioms.values()) items.push({ type: 'axiom', item: axm });
+    for (const model of this.models.values()) items.push({ type: 'model', item: model });
     return buildBranchTaxonomy(branchId, items);
   }
 
@@ -334,6 +335,7 @@ export class ContentStore {
     for (const ex of this.examples.values()) items.push({ type: 'example', item: ex });
     for (const ez of this.exercises.values()) items.push({ type: 'exercise', item: ez });
     for (const axm of this.axioms.values()) items.push({ type: 'axiom', item: axm });
+    for (const model of this.models.values()) items.push({ type: 'model', item: model });
     return getItemsByBranch(branch, items);
   }
 }

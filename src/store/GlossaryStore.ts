@@ -1,6 +1,6 @@
 import { create } from 'zustand';
 
-export type GlossaryCategory = 'Conceptos Fundamentales' | 'Lógica' | 'Álgebra' | 'Análisis' | 'Geometría' | 'Teoría de Conjuntos';
+export type GlossaryCategory = 'Conceptos Fundamentales' | 'Lógica' | 'Álgebra' | 'Análisis' | 'Geometría' | 'Teoría de Conjuntos' | 'Modelos';
 
 /**
  * GlossaryEntry - Representa un término en el glosario matemático.

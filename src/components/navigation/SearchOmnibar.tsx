@@ -10,7 +10,7 @@ import { EmptyState } from '../ui/EmptyState';
 
 type SearchResult = {
   id: string;
-  type: 'teorema' | 'lección' | 'definición' | 'ejemplo' | 'ejercicio' | 'demo' | 'glosario' | 'matemático' | 'caso_uso' | 'axioma' | 'msc2020';
+  type: 'teorema' | 'lección' | 'definición' | 'ejemplo' | 'ejercicio' | 'demo' | 'glosario' | 'matemático' | 'caso_uso' | 'axioma' | 'msc2020' | 'modelo';
   title: string;
   subtitle?: string;
   href: string;
@@ -28,6 +28,7 @@ const TYPE_ICONS: Record<SearchResult['type'], string> = {
   caso_uso: '◈',
   axioma: ' A',
   msc2020: '⊞',
+  modelo: 'M',
 };
 
 const buildIndex = (): SearchResult[] => {
@@ -122,6 +123,16 @@ const buildIndex = (): SearchResult[] => {
     });
   }
 
+  for (const model of db.models.values()) {
+    index.push({
+      id: `model-${model.id}`,
+      type: 'modelo',
+      title: model.title,
+      subtitle: model.description,
+      href: `/Matematika/modelo/${model.slug}`,
+    });
+  }
+
   for (const [key, term] of Object.entries(dictionary)) {
     index.push({
       id: `glossary-${key}`,
@@ -148,13 +159,13 @@ const buildIndex = (): SearchResult[] => {
 const searchIndex = buildIndex();
 
 const ALL_TYPES: SearchResult['type'][] = [
-  'teorema', 'lección', 'definición', 'axioma',
+  'teorema', 'lección', 'definición', 'axioma', 'modelo',
   'ejemplo', 'ejercicio', 'demo', 'matemático', 'caso_uso', 'glosario', 'msc2020',
 ];
 
 const TYPE_COLORS: Record<string, string> = {
   teorema: '#6b9e6b', lección: '#4a6070', definición: '#8b7355',
-  axioma: '#1c1917', ejemplo: '#6b9e6b', ejercicio: '#b85c38',
+  axioma: '#1c1917', modelo: '#9FAABF', ejemplo: '#6b9e6b', ejercicio: '#b85c38',
   demo: '#4a6070', matemático: '#c9a87c', caso_uso: '#6b9e6b',
   glosario: '#8b7355', msc2020: '#4a6070',
 };
@@ -290,14 +301,13 @@ export const SearchOmnibar = () => {
 
         <div className="flex" style={{ minHeight: 200 }}>
           {/* Type filters sidebar */}
-          <div className="w-36 shrink-0 border-r border-carbon/8 p-3 space-y-1">
+          <div className="w-30 shrink-0 border-r border-carbon/8 p-3 space-y-1">
             {ALL_TYPES.map(type => (
               <button
                 key={type}
                 onClick={() => toggleType(type)}
-                className={`w-full text-left text-xs px-2 py-1 rounded transition-colors flex items-center gap-2 ${
-                  activeTypes.has(type) ? 'text-carbon' : 'text-carbon/30'
-                }`}
+                className={`w-full text-left text-xs px-2 py-1 rounded transition-colors flex items-center gap-2 ${activeTypes.has(type) ? 'text-carbon' : 'text-carbon/30'
+                  }`}
               >
                 <span
                   className="w-2 h-2 rounded-sm shrink-0 border"
@@ -314,7 +324,7 @@ export const SearchOmnibar = () => {
           {/* Results */}
           <div className="flex-1">
             {results.length > 0 && (
-              <div ref={listRef} className="overflow-y-auto" style={{ maxHeight: '55vh' }}>
+              <div ref={listRef} className="overflow-y-auto overflow-x-hidden w-full flex flex-col" style={{ maxHeight: '55vh' }}>
                 {results.map(({ item, matches }, idx) => (
                   <button
                     key={item.id}
@@ -325,26 +335,25 @@ export const SearchOmnibar = () => {
                         : 'hover:bg-carbon/5 text-carbon'
                       }`}
                   >
-                    <span className={`w-8 h-8 shrink-0 flex items-center justify-center text-sm font-bold font-serif rounded-sm border ${
-                      idx === selectedIndex
-                        ? 'border-lienzo/30 text-lienzo/70'
-                        : 'border-carbon/15 text-carbon/40'
-                    }`}>
+                    {/* Icono estructural */}
+                    <span className={`w-8 h-8 shrink-0 flex items-center justify-center text-sm font-bold font-serif rounded-sm border ${idx === selectedIndex
+                      ? 'border-lienzo/30 text-lienzo/70'
+                      : 'border-carbon/15 text-carbon/40'
+                      }`}>
                       {TYPE_ICONS[item.type]}
                     </span>
 
-                    <div className="flex-1 min-w-0">
-                      <div className={`font-serif font-bold text-base leading-tight truncate ${
-                        idx === selectedIndex ? 'text-lienzo' : 'text-carbon'
-                      }`}>
+                    {/* Contenedor central - Se ha añadido explícitamente overflow-hidden para garantizar que el truncamiento actúe como un sumidero espacial absoluto */}
+                    <div className="flex-1 min-w-0 overflow-hidden">
+                      <div className={`font-serif font-bold text-base leading-tight truncate ${idx === selectedIndex ? 'text-lienzo' : 'text-carbon'
+                        }`}>
                         {query.trim() && matches
                           ? highlightText(item.title, matches.filter(m => m.key === 'title'))
                           : item.title}
                       </div>
                       {item.subtitle && (
-                        <div className={`text-xs mt-0.5 leading-snug line-clamp-1 ${
-                          idx === selectedIndex ? 'text-lienzo/60' : 'text-carbon/45'
-                        }`}>
+                        <div className={`text-xs mt-0.5 leading-snug line-clamp-1 ${idx === selectedIndex ? 'text-lienzo/60' : 'text-carbon/45'
+                          }`}>
                           {query.trim() && matches
                             ? highlightText(item.subtitle, matches.filter(m => m.key === 'subtitle'))
                             : item.subtitle}
@@ -352,9 +361,9 @@ export const SearchOmnibar = () => {
                       )}
                     </div>
 
-                    <span className={`text-xs uppercase tracking-widest font-bold shrink-0 ${
-                      idx === selectedIndex ? 'text-lienzo/50' : 'text-carbon/30'
-                    }`}>
+                    {/* Elemento terminal - Inmune a la compresión (w-max shrink-0) */}
+                    <span className={`text-xs flex uppercase tracking-widest font-bold w-max shrink-0 whitespace-nowrap ${idx === selectedIndex ? 'text-lienzo/50' : 'text-carbon/30'
+                      }`}>
                       {item.type}
                     </span>
                   </button>

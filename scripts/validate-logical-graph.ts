@@ -78,6 +78,8 @@ mdxFiles.forEach(file => {
     if (Array.isArray(metadata.demos)) contentDeps.push(...metadata.demos);
     if (metadata.parentTheorem && typeof metadata.parentTheorem === 'string') contentDeps.push(metadata.parentTheorem);
     if (Array.isArray(metadata.corollaries)) contentDeps.push(...metadata.corollaries);
+    if (Array.isArray(metadata.axioms_verified)) contentDeps.push(...metadata.axioms_verified);
+    if (metadata.satisfies && typeof metadata.satisfies === 'string') contentDeps.push(metadata.satisfies);
     // NOTE: seeAlso and ConceptLink targets are NOT included — they are informational only
 
     // Remove duplicates
@@ -117,7 +119,8 @@ const HIERARCHY_LEVEL: Record<string, number> = {
   'teorema': 3,
   'corolario': 4,
   'demostracion': 5,
-  'modelo': 10,
+  'sistema-axiomatico': 6,
+  'modelo': 7,
   'matematico': 10,
   'leccion': 10,
   'ejercicio': 10,

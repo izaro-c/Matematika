@@ -41,7 +41,6 @@ export const DictionaryPage = () => {
 
       if (match) {
         const cat = def.tags?.[0] || 'Conceptos Fundamentales';
-        // Mapear branch simple a categoría formal si hace falta, o usarlo tal cual
         const catName = cat.charAt(0).toUpperCase() + cat.slice(1);
         
         if (!groups[catName]) {
@@ -51,7 +50,26 @@ export const DictionaryPage = () => {
           title: def.title,
           definition: def.description,
           category: catName as GlossaryCategory,
-          id: def.id // prop especial
+          id: def.id
+        } as GlossaryEntry & { id?: string }]);
+      }
+    });
+
+    db.getAllModels().forEach((model) => {
+      const match =
+        model.title.toLowerCase().includes(term) ||
+        (model.description?.toLowerCase().includes(term) ?? false);
+
+      if (match) {
+        const cat = 'Modelos';
+        if (!groups[cat]) {
+          groups[cat] = [];
+        }
+        groups[cat]!.push([model.id, {
+          title: model.title,
+          definition: model.description || '',
+          category: cat as GlossaryCategory,
+          id: model.id
         } as GlossaryEntry & { id?: string }]);
       }
     });
@@ -78,6 +96,7 @@ export const DictionaryPage = () => {
     'Teoría de Conjuntos',
     'Álgebra',
     'Geometría',
+    'Modelos',
     'Análisis'
   ];
 

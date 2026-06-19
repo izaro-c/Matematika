@@ -31,7 +31,7 @@ export const GraphPage: React.FC = () => {
   const [, setLocation] = useLocation();
   const { openTerm } = useGlossaryStore();
   const graphRef = useRef<React.ElementRef<typeof ForceGraph2D> | null>(null);
-  
+
   // Extraer datos del ContentStore usando jerarquía MSC2020 definida
   const graphData = useMemo(() => {
     const nodes: GraphNode[] = [];
@@ -253,10 +253,10 @@ export const GraphPage: React.FC = () => {
 
   const drawNode = useCallback((node: GraphNode, ctx: CanvasRenderingContext2D, globalScale: number) => {
     if (node.x === undefined || node.y === undefined || !Number.isFinite(node.x) || !Number.isFinite(node.y)) return;
-    
+
     const isHighlighted = hoverNode ? highlightNodes.has(node) : true;
     const isCompleted = useProgressStore.getState().isRead(node.id);
-    
+
     // Configuración base
     const radius = node.val / 2;
     let color = getNodeColor(node);
@@ -276,7 +276,7 @@ export const GraphPage: React.FC = () => {
     ctx.arc(node.x, node.y, radius, 0, 2 * Math.PI, false);
     ctx.fillStyle = isHighlighted ? color : color + '40'; // Añadir transparencia si no está resaltado
     ctx.fill();
-    
+
     // Borde de tinta clásico
     ctx.strokeStyle = '#333333';
     ctx.lineWidth = (isHighlighted ? 1.5 : 0.5) / globalScale;
@@ -284,14 +284,14 @@ export const GraphPage: React.FC = () => {
 
     const isMainBranch = node.id?.startsWith('rama-');
     const isSubBranch = node.id?.startsWith('subrama-');
-    
+
     const isActivelyHovered = hoverNode ? highlightNodes.has(node) : false;
 
-    const shouldDrawText = 
-      isActivelyHovered || 
-      node.group === 'central' || 
-      (isMainBranch && globalScale >= 0.4) || 
-      (isSubBranch && globalScale >= 0.8) || 
+    const shouldDrawText =
+      isActivelyHovered ||
+      node.group === 'central' ||
+      (isMainBranch && globalScale >= 0.4) ||
+      (isSubBranch && globalScale >= 0.8) ||
       (globalScale >= 1.2);
 
     // Dibujar Texto legíble tipo imprenta
@@ -302,18 +302,18 @@ export const GraphPage: React.FC = () => {
       ctx.font = `${node.group === 'central' ? 'bold' : 'normal'} ${fontSize}px "Georgia", serif`;
       ctx.textAlign = 'center';
       ctx.textBaseline = 'middle';
-      
+
       // Sombra para legibilidad sobre los enlaces (ajustada por la escala global para que no reviente al hacer zoom)
       ctx.shadowColor = 'rgba(248, 246, 241, 0.9)';
       ctx.shadowBlur = 4 / globalScale;
       ctx.lineWidth = 3 / globalScale;
       ctx.strokeStyle = 'rgba(248, 246, 241, 0.9)';
-      ctx.strokeText(label, node.x, node.y + radius + (fontSize/2) + (4/globalScale));
-      
+      ctx.strokeText(label, node.x, node.y + radius + (fontSize / 2) + (4 / globalScale));
+
       ctx.shadowBlur = 0;
       ctx.fillStyle = isHighlighted ? '#333333' : '#33333380';
       if (node.group === 'central') ctx.fillStyle = isHighlighted ? '#C86446' : '#C8644680';
-      ctx.fillText(label, node.x, node.y + radius + (fontSize/2) + (4/globalScale));
+      ctx.fillText(label, node.x, node.y + radius + (fontSize / 2) + (4 / globalScale));
     }
   }, [hoverNode, highlightNodes]);
 
@@ -322,13 +322,13 @@ export const GraphPage: React.FC = () => {
     if (graphRef.current) {
       setTimeout(() => {
         graphRef.current?.zoomToFit(400, 50);
-        
+
         // Ajustes de física (expandir la red de forma controlada)
         graphRef.current?.d3Force('charge')?.strength(-120); // Repulsión más suave para mantener los nodos juntos
         graphRef.current?.d3Force('link')?.distance((link: { source: { group: string }, target: { group: string } }) => {
-           if (link.source.group === 'central' || link.target.group === 'central') return 100;
-           if (link.source.group === 'branch' || link.target.group === 'branch') return 60;
-           return 30;
+          if (link.source.group === 'central' || link.target.group === 'central') return 100;
+          if (link.source.group === 'branch' || link.target.group === 'branch') return 60;
+          return 30;
         });
       }, 500);
     }
@@ -343,23 +343,23 @@ export const GraphPage: React.FC = () => {
   }, []);
 
   return (
-    <div className="w-full h-screen bg-lienzo overflow-hidden font-serif relative" style={{ backgroundImage: 'url(/images/bg_arts_crafts.png)', backgroundSize: '600px', backgroundRepeat: 'repeat' }}>
-      
+    <div className="w-full h-screen bg-lienzo overflow-hidden font-serif relative" style={{ backgroundImage: 'url(/Matematika/images/bg_arts_crafts.png)', backgroundSize: '600px', backgroundRepeat: 'repeat' }}>
+
       {/* Buscador */}
       <div className="absolute top-8 left-1/2 -translate-x-1/2 z-50">
         <div className="relative">
-          <input 
-            type="text" 
+          <input
+            type="text"
             value={searchQuery}
             onChange={handleSearchChange}
-            placeholder="Buscar concepto..." 
+            placeholder="Buscar concepto..."
             className="w-64 bg-lienzo border-2 border-carbon/80 px-4 py-2 text-carbon outline-none focus:border-terracota placeholder:text-carbon/40 italic shadow-lg"
           />
           {searchResults.length > 0 && (
             <div className="absolute top-full left-0 mt-1 w-full bg-lienzo border-2 border-carbon/80 shadow-xl max-h-60 overflow-y-auto">
               {searchResults.map((node) => (
-                <div 
-                  key={node.id} 
+                <div
+                  key={node.id}
                   className="px-4 py-2 hover:bg-carbon/5 cursor-pointer text-carbon text-sm border-b border-carbon/10 last:border-0"
                   onClick={() => handleSearchResultClick(node)}
                 >
