@@ -1,6 +1,7 @@
 import { useParams, Link } from 'wouter';
 import { db } from '../store/content';
 import { TaxonomyGraph } from '../components/ui/TaxonomyGraph';
+import { EmptyState } from '../components/ui/EmptyState';
 
 /**
  * Página principal de una Rama (ej. "Álgebra Lineal").
@@ -46,9 +47,11 @@ export const BranchPage = () => {
         </div>
 
         {taxonomy.subBranches.length === 0 && taxonomy.directItems.length === 0 ? (
-          <div className="text-center py-20 text-carbon/50 italic border border-carbon/10 bg-carbon/5">
-            No hay registros catalogados en esta rama actualmente.
-          </div>
+          <EmptyState
+            message="No hay registros catalogados en esta rama actualmente."
+            actionLabel="Volver a la biblioteca"
+            actionHref="/"
+          />
         ) : (
           <div className="flex flex-col gap-16">
 
