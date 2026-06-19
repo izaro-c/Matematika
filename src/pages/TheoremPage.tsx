@@ -31,6 +31,7 @@ export const TheoremPage = () => {
 
   // Resolver metadatos relacionales
   const corollaries = theorem.corollaries?.map(cId => db.getTheorem(cId)).filter(Boolean) || [];
+  const lemmas = theorem.lemmas?.map(lId => db.getTheorem(lId)).filter(Boolean) || [];
   const demos = theorem.demos?.map(dId => db.demos.get(dId) || Array.from(db.demos.values()).find(d => d.slug === dId)).filter(Boolean) || [];
   const parentTheorem = theorem.parentTheorem ? db.getTheorem(theorem.parentTheorem) : null;
   const examples = db.getExamplesByTheorem(theorem.id);
@@ -149,6 +150,27 @@ export const TheoremPage = () => {
 
         <MaterialPracticoSection examples={examples} exercises={exercises} />
         <AplicacionesSection useCases={useCases} />
+
+        {/* Referencias Relacionales (Lemas) */}
+        {lemmas.length > 0 && (
+          <div className="mt-24 border-t border-carbon/20 pt-16">
+            <h2 className="text-3xl font-bold mb-12 text-center" style={{ fontVariant: 'small-caps' }}>
+              Lemas Previos
+            </h2>
+            <div className="flex flex-col gap-4 max-w-2xl mx-auto">
+              {lemmas.filter((l): l is Theorem => !!l).map((lem) => (
+                <ContentCard
+                  key={lem.slug}
+                  href={`/teorema/${lem.id}`}
+                  title={lem.title}
+                  description={lem.description}
+                  type="lema"
+                  layout="row"
+                />
+              ))}
+            </div>
+          </div>
+        )}
 
         {/* Referencias Relacionales (Corolarios) */}
         <div className="mt-24 border-t border-carbon/20 pt-16">

@@ -1078,6 +1078,111 @@
       "description": "Matemático alemán pionero en la axiomática moderna de la geometría. Demostró que muchos resultados dados por intuitivos en los Elementos de Euclides requerían axiomas explícitos."
     }
   },
+  "modelo-cartesiano": {
+    "id": "modelo-cartesiano",
+    "slug": "modelo-cartesiano",
+    "filePath": "models/modelo-cartesiano.mdx",
+    "contentType": "modelo",
+    "metadata": {
+      "id": "modelo-cartesiano",
+      "type": "modelo",
+      "title": "Plano Cartesiano",
+      "description": "El modelo analítico estándar para la geometría euclídea bidimensional, utilizando pares ordenados de números reales.",
+      "satisfies": [
+        "sistema-euclidiano",
+        "sistema-absoluto"
+      ],
+      "axioms_verified": [
+        "axioma-incidencia-1",
+        "axioma-incidencia-2",
+        "axioma-incidencia-3",
+        "axioma-orden-1",
+        "axioma-orden-2",
+        "axioma-orden-3",
+        "axioma-orden-4",
+        "axioma-congruencia-1",
+        "axioma-congruencia-2",
+        "axioma-congruencia-3",
+        "axioma-congruencia-4",
+        "axioma-congruencia-5",
+        "axioma-arquimedes",
+        "axioma-completitud",
+        "axioma-paralelas-euclides"
+      ],
+      "tags": [
+        "geometria",
+        "modelo",
+        "euclidiana",
+        "analitica"
+      ]
+    }
+  },
+  "modelo-fano": {
+    "id": "modelo-fano",
+    "slug": "modelo-fano",
+    "filePath": "models/modelo-fano.mdx",
+    "contentType": "modelo",
+    "metadata": {
+      "id": "modelo-fano",
+      "type": "modelo",
+      "title": "Plano de Fano",
+      "description": "El plano proyectivo finito más pequeño posible, consistente de 7 puntos y 7 rectas. Un modelo clave en geometría de incidencia.",
+      "satisfies": [
+        "sistema-incidencia"
+      ],
+      "axioms_verified": [
+        "axioma-incidencia-1",
+        "axioma-incidencia-2"
+      ],
+      "tags": [
+        "geometria",
+        "modelo",
+        "finito",
+        "proyectiva",
+        "incidencia"
+      ]
+    }
+  },
+  "modelo-poincare": {
+    "id": "modelo-poincare",
+    "slug": "modelo-poincare",
+    "filePath": "models/modelo-poincare.mdx",
+    "contentType": "modelo",
+    "metadata": {
+      "id": "modelo-poincare",
+      "type": "modelo",
+      "title": "Disco de Poincaré",
+      "description": "El modelo conforme del plano hiperbólico que representa el espacio como el interior de un círculo unitario y las rectas como arcos ortogonales a la frontera.",
+      "satisfies": [
+        "sistema-hiperbolico",
+        "sistema-absoluto"
+      ],
+      "axioms_verified": [
+        "axioma-incidencia-1",
+        "axioma-incidencia-2",
+        "axioma-incidencia-3",
+        "axioma-orden-1",
+        "axioma-orden-2",
+        "axioma-orden-3",
+        "axioma-orden-4",
+        "axioma-congruencia-1",
+        "axioma-congruencia-2",
+        "axioma-congruencia-3",
+        "axioma-congruencia-4",
+        "axioma-congruencia-5",
+        "axioma-arquimedes",
+        "axioma-completitud",
+        "axioma-paralelas-hiperbolico"
+      ],
+      "tags": [
+        "geometria",
+        "modelo",
+        "hiperbolica",
+        "poincare",
+        "conforme"
+      ]
+    }
+  },
   "modelo-tres-puntos": {
     "id": "modelo-tres-puntos",
     "slug": "modelo-tres-puntos",
@@ -1108,6 +1213,28 @@
       "links": [
         "sistema-incidencia"
       ]
+    }
+  },
+  "corolario-rectas-coincidentes": {
+    "id": "corolario-rectas-coincidentes",
+    "slug": "corolario-rectas-coincidentes",
+    "filePath": "theorems/corolario-rectas-coincidentes.mdx",
+    "contentType": "teorema",
+    "metadata": {
+      "id": "corolario-rectas-coincidentes",
+      "type": "corolario",
+      "title": "Corolario: Identidad de rectas con dos puntos en común",
+      "description": "Si dos rectas tienen dos puntos en común, entonces son la misma recta.",
+      "statement": "Sean l y m dos rectas, y A, B dos puntos distintos. Si A ∈ l, B ∈ l y A ∈ m, B ∈ m, entonces l = m.",
+      "parentTheorem": "teorema-dos-rectas-un-punto",
+      "requires": [
+        "axioma-incidencia-1"
+      ],
+      "tags": [
+        "geometria",
+        "incidencia"
+      ],
+      "difficulty": "básico"
     }
   },
   "lema-punto-medio": {
@@ -1288,6 +1415,9 @@
       "links": [
         "axioma-incidencia-1",
         "axioma-incidencia-2"
+      ],
+      "corollaries": [
+        "corolario-rectas-coincidentes"
       ]
     }
   },

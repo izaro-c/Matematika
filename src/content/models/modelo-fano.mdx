@@ -1,0 +1,46 @@
+export const metadata = {
+  "id": "modelo-fano",
+  "type": "modelo",
+  "title": "Plano de Fano",
+  "description": "El plano proyectivo finito más pequeño posible, consistente de 7 puntos y 7 rectas. Un modelo clave en geometría de incidencia.",
+  "satisfies": ["sistema-incidencia"],
+  "axioms_verified": [
+    "axioma-incidencia-1",
+    "axioma-incidencia-2"
+  ],
+  "tags": ["geometria", "modelo", "finito", "proyectiva", "incidencia"]
+};
+
+<Capitular letra="E" />
+l Plano de Fano es un modelo finito y discreto que proporciona un ejemplo de un espacio geométrico con exactamente 7 puntos y 7 rectas. Recibe su nombre de Gino Fano, quien fue pionero en el estudio de geometrías finitas en el siglo XIX.
+
+<Separador />
+
+### Definición del Modelo
+
+El modelo se define de manera exhaustiva listando sus elementos y relaciones de pertenencia. Frecuentemente se representa gráficamente como un triángulo con sus tres alturas inscritas y un círculo que pasa por los puntos medios de los lados.
+
+- **Puntos (7)**: $P = \{1, 2, 3, 4, 5, 6, 7\}$
+- **Rectas (7)**: $L = \{l_1, l_2, l_3, l_4, l_5, l_6, l_7\}$
+- **Incidencia**: Cada recta es un subconjunto de tres puntos. Las rectas se definen como:
+  - $l_1 = \{1, 2, 3\}$
+  - $l_2 = \{3, 4, 5\}$
+  - $l_3 = \{1, 5, 6\}$
+  - $l_4 = \{1, 4, 7\}$
+  - $l_5 = \{2, 5, 7\}$
+  - $l_6 = \{3, 6, 7\}$
+  - $l_7 = \{2, 4, 6\}$
+
+<Separador />
+
+### Verificación de Axiomas Clave
+
+El plano de Fano satisface los axiomas fundamentales de un plano proyectivo, lo que significa que cumple una versión modificada del <ConceptLink targetId="sistema-incidencia">sistema de incidencia</ConceptLink>.
+
+1. **<ConceptLink targetId="axioma-incidencia-1">Axioma de Incidencia I-1</ConceptLink>**: Todo par de puntos distintos determina exactamente una recta. (Por ejemplo, los puntos $1$ y $2$ pertenecen únicamente a la recta $l_1$; los puntos $1$ y $4$ a la recta $l_4$).
+2. **<ConceptLink targetId="axioma-incidencia-2">Axioma de Incidencia I-2</ConceptLink>**: Toda recta contiene al menos dos puntos. En este modelo, toda recta contiene exactamente 3 puntos.
+3. **Intersección de Rectas**: A diferencia del plano euclídeo, en el plano de Fano todo par de rectas distintas se interseca en exactamente un punto. No existen las rectas paralelas. (Por ejemplo, $l_1 \cap l_2 = \{3\}$). Por esto, **falla** el axioma de las paralelas.
+
+<Nota>
+  El plano de Fano es equivalente algebraicamente al plano proyectivo sobre el cuerpo finito de dos elementos: $PG(2, \mathbb{F}_2)$. Su existencia demuestra que los axiomas de incidencia no son suficientes para garantizar una geometría infinita o un orden geométrico. De hecho, los <ConceptLink targetId="axioma-orden-1">axiomas de orden</ConceptLink> **no pueden** satisfacerse en el plano de Fano.
+</Nota>
