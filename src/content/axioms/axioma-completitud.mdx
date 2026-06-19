@@ -1,0 +1,38 @@
+export const metadata = {
+  "id": "axioma-completitud",
+  "type": "axioma",
+  "title": "Axioma de Completitud (Dedekind)",
+  "description": "El conjunto de puntos de una recta no puede extenderse sin violar los axiomas de incidencia, orden, congruencia y continuidad.",
+  "statement": "El sistema de puntos sobre una recta, con las relaciones de incidencia, orden y congruencia establecidas, es maximal: no admite extensiones que preserven todos los axiomas.",
+  "tags": ["geometria", "continuidad", "geometria-absoluta", "fundamentos"],
+  "authors": ["hilbert", "dedekind"],
+};
+
+<Capitular letra="E" />
+l sistema de puntos sobre una recta es completo: no puede extenderse sin romper los axiomas. Este axioma cierra la axiomática de Hilbert garantizando la continuidad del continuo geométrico.
+
+<Separador />
+
+### Enunciado Formal
+
+<Formula>
+  $$ \text{No existe un sistema de puntos que extienda propiamente el sistema dado y que satisfaga todos los axiomas I, II, III y IV-1.} $$
+</Formula>
+
+<Nota>
+  Este enunciado, conocido como axioma de completitud de Hilbert, es equivalente al axioma de Dedekind sobre cortaduras: toda cortadura de los puntos de una recta determina un punto.
+</Nota>
+
+<Separador />
+
+### Discusión
+
+El axioma de completitud es sutil pero esencial. Los axiomas anteriores (incidencia, orden, congruencia, Arquímedes) son compatibles con un sistema de puntos isomorfo a los números racionales $\mathbb{Q}$, que no es completo en el sentido de que contiene "huecos" (como $\sqrt{2}$ o $\pi$). El axioma de completitud sella esos huecos, forzando que el sistema de puntos sea isomorfo a los números reales $\mathbb{R}$.
+
+En términos de cortaduras de Dedekind: si dividimos los puntos de una recta en dos clases $L$ y $R$ tales que todo punto de $L$ está a la izquierda de todo punto de $R$, entonces existe un punto que es el supremo de $L$ (o el ínfimo de $R$). Esto es exactamente el axioma de completitud de los números reales.
+
+<Separador />
+
+### Observaciones
+
+El axioma de completitud no es necesario para la mayor parte de la geometría elemental. Muchos teoremas pueden demostrarse usando solo el axioma de Arquímedes. Sin embargo, para demostrar que una recta y la recta real son isomorfas, o para garantizar la existencia de puntos definidos por límites, este axioma es imprescindible. En geometrías no euclídeas también se asume la completitud para que los modelos estándar funcionen.

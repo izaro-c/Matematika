@@ -1,0 +1,39 @@
+export const metadata = {
+  "id": "axioma-incidencia-2",
+  "type": "axioma",
+  "title": "Axioma I-2 (Incidencia)",
+  "description": "Toda recta contiene al menos dos puntos distintos.",
+  "statement": "Para toda recta l, existen al menos dos puntos distintos A y B tales que A ∈ l y B ∈ l.",
+  "tags": ["geometria", "incidencia", "geometria-absoluta"],
+  "authors": ["hilbert"],
+  "hasSimulation": true,
+};
+
+import { Incidence2 } from '../../diagrams/Axiomas/Incidence2';
+export const Simulation = Incidence2;
+import { InteractiveElement } from "../../components/ui/VisualBind";
+
+<Capitular letra="T" />
+oda recta contiene al menos dos puntos distintos. Este axioma complementa al anterior asegurando que las rectas no son objetos vacíos o degenerados.
+
+<Separador />
+
+### Enunciado Formal
+
+<Formula>
+  $$ \forall l \; \exists A, B \; (A \neq B \land A \in l \land B \in l). $$
+</Formula>
+
+<Separador />
+
+### Discusión
+
+El axioma I-1 establece que un par de puntos determina una recta; el axioma I-2 establece el recíproco parcial: una <InteractiveElement target="lineAB" color="carbon">recta</InteractiveElement> contiene al menos <InteractiveElement target="pA" color="terracota">dos</InteractiveElement> <InteractiveElement target="pB" color="terracota">puntos</InteractiveElement>. En conjunto, definen un emparejamiento entre rectas y pares de puntos: cada recta puede identificarse con el par de puntos que la determinan.
+
+Nótese que el axioma no requiere que la recta contenga *exactamente* dos puntos. En la geometría euclídea clásica, una recta contiene infinitos puntos; este axioma solo exige un mínimo de dos para evitar rectas con un único punto (degeneradas).
+
+<Separador />
+
+### Observaciones
+
+Este axioma excluye la posibilidad de rectas con un solo punto, que corresponderían a espacios de dimensión cero. También excluye el caso de rectas vacías, garantizando que toda recta es un objeto geométrico no trivial.

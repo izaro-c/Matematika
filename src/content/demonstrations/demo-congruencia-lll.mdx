@@ -1,0 +1,76 @@
+export const metadata = {
+  "id": "demo-congruencia-lll",
+  "type": "demostracion",
+  "title": "Demostración: Criterio de congruencia LLL",
+  "description": "Prueba por transporte de un ángulo y aplicación de LAL, seguida de unicidad de intersección.",
+  "parentTheorem": "teorema-congruencia-lll",
+  "proofMethod": "constructivo",
+  "authors": ["euclides"],
+  "tags": ["geometria", "congruencia", "triangulos"],
+  "layout": "text",
+  "links": ["axioma-congruencia-1", "axioma-congruencia-4", "axioma-congruencia-5", "teorema-congruencia-ala"],
+};
+
+import { InteractiveElement } from "../../components/ui/VisualBind";
+import { CongruenciaLLL } from '../../diagrams/Theorems/CongruenciaLLL';
+export const Simulation = CongruenciaLLL;
+
+<Capitular letra="E" />
+
+l criterio LLL (Lado-Lado-Lado) se demuestra reduciéndolo a LAL: se transporta un ángulo del primer triángulo al segundo, se aplica LAL, y la unicidad de la intersección de circunferencias garantiza la coincidencia total.
+
+<Separador />
+
+### Hipótesis
+
+Sean $\triangle ABC$ y $\triangle A'B'C'$ tales que:
+
+$$ \overline{AB} \cong \overline{A'B'}, \quad \overline{BC} \cong \overline{B'C'}, \quad \overline{CA} \cong \overline{C'A'}. $$
+
+<Separador />
+
+### Tesis
+
+$$ \triangle ABC \cong \triangle A'B'C'. $$
+
+<Separador />
+
+### Demostración
+
+**Paso 1: Transportar el ángulo $\angle A$.** Por el <ConceptLink targetId="axioma-congruencia-4">axioma III-4 de transporte de ángulos</ConceptLink>, transportamos el ángulo $\angle A$ al vértice $A'$ sobre el lado $\overline{A'B'}$, obteniendo una semirrecta $\overrightarrow{r}$ desde $A'$.
+
+**Paso 2: Transportar el lado $\overline{AC}$.** Sobre la semirrecta $\overrightarrow{r}$, por el <ConceptLink targetId="axioma-congruencia-1">axioma III-1 de transporte de segmentos</ConceptLink>, transportamos el segmento $\overline{AC}$, obteniendo el punto $C^*$:
+
+$$ \overline{A'C^*} \cong \overline{AC}, \quad \angle C^*A'B' \cong \angle A. $$
+
+**Paso 3: Aplicar LAL.** En los triángulos $\triangle ABC$ y $\triangle A'B'C^*$:
+
+- $\overline{AB} \cong \overline{A'B'}$ (hipótesis),
+- $\angle A \cong \angle C^*A'B'$ (construcción),
+- $\overline{AC} \cong \overline{A'C^*}$ (construcción).
+
+Por el <ConceptLink targetId="axioma-congruencia-5">axioma LAL (III-5)</ConceptLink>, $\triangle ABC \cong \triangle A'B'C^*$, y en particular:
+
+$$ \overline{BC} \cong \overline{B'C^*}. $$
+
+**Paso 4: Unicidad por intersección de circunferencias.** Ahora bien:
+- $\overline{B'C'} \cong \overline{BC}$ por hipótesis, y $\overline{B'C^*} \cong \overline{BC}$ por el paso anterior.
+- $\overline{A'C'} \cong \overline{AC} \cong \overline{A'C^*}$.
+
+Los puntos $C'$ y $C^*$ están del mismo lado de $\overline{A'B'}$ (por la construcción del transporte) y satisfacen las mismas distancias a $A'$ y $B'$. Geométricamente, $C'$ y $C^*$ son puntos de intersección de las circunferencias de centro $A'$ y radio $\overline{AC}$, y de centro $B'$ y radio $\overline{BC}$. Del mismo lado de $\overline{A'B'}$, esta intersección es única (por los axiomas de incidencia y congruencia). Por tanto:
+
+$$ C^* = C'. $$
+
+Luego $\triangle A'B'C^* = \triangle A'B'C'$ y $\triangle ABC \cong \triangle A'B'C'$. $\blacksquare$
+
+<Separador />
+
+### Análisis
+
+La demostración de LLL es más sutil que la de ALA. En ALA, la unicidad provenía directamente del axioma III-4 (transporte único de ángulos). En LLL, la unicidad requiere un argumento geométrico adicional: dos circunferencias se cortan en a lo sumo dos puntos, y del mismo lado de la línea que une sus centros, la intersección es única.
+
+<Nota>
+  Euclides demostró LLL en la Proposición I.8 usando el principio de superposición. La demostración de Hilbert lo evita usando transporte de segmentos y ángulos, pero requiere el argumento de unicidad de intersección de circunferencias, que se sigue de los axiomas de incidencia y orden.
+</Nota>
+
+El criterio LLL implica la **rigidez triangular**: un triángulo queda completamente determinado por las longitudes de sus tres lados. Este principio es la base de las estructuras trianguladas en arquitectura e ingeniería.

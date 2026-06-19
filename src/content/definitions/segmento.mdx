@@ -1,41 +1,54 @@
 export const metadata = {
-  id: "segmento",
-  type: "definicion",
-  title: "Segmento de Recta",
-  description: "Subconjunto topológico unidimensional acotado por dos puntos extremos sobre una misma recta.",
-  statement: "El segmento AB es el conjunto formado por los puntos A y B, junto con todos los puntos colineales que se encuentran entre ellos.",
-  tags: ["geometría", "geometría afín"],
-  hasSimulation: true,
-  prerequisites: [
-    "axioma-congruencia-segmentos",
-    "axioma-congruencia-triangulos",
-    "axioma-congruencia-angulos",
-    "modelo-geometria-absoluta"
-  ],
+  "type": "definicion",
+  "title": "Segmento",
+  "description": "Dados dos puntos A y B, el segmento AB es el conjunto de puntos de la recta AB que están entre A y B, incluyendo los extremos. Es la noción fundamental para la congruencia y la medida.",
+  "tags": ["geometria", "orden", "congruencia"],
+  "authors": ["hilbert"],
+  "links": ["punto", "recta", "axioma-orden-1", "axioma-orden-2", "axioma-congruencia-1"],
+  "seeAlso": ["semirrecta", "axioma-orden-3", "axioma-orden-4", "axioma-congruencia-2"],
+  "hasSimulation": true,
 };
 
-import { SegmentoVisualizer } from '../../diagrams/Geometria/SegmentVisualizer';
+import { Segmento } from '../../diagrams/Definiciones/Segmento';
+export const Simulation = Segmento;
 import { InteractiveElement } from "../../components/ui/VisualBind";
 
-<Capitular letra="E" />l concepto de segmento permite acotar la extensión infinita de las rectas definidas en los <ConceptLink targetId="axioma-incidencia-1">Axiomas de Incidencia</ConceptLink>, constituyendo las "aristas" fundamentales de todos los polígonos del plano.
-
-<Definicion>
-  Dados dos puntos distintos <InteractiveElement target="puntoA" color="terracota">$A$</InteractiveElement> y <InteractiveElement target="puntoB" color="pavo">$B$</InteractiveElement>, el **segmento de recta** (denotado analíticamente como $\overline{AB}$) se define como la unión del conjunto de los propios extremos $\{A, B\}$ y el conjunto de todos los puntos $X$ colineales con ellos que satisfacen la relación de intermediación $A * X * B$.
-</Definicion>
+<Capitular letra="U" />
+n segmento es la porción de una recta comprendida entre dos puntos, llamados extremos. A diferencia de la recta, el segmento tiene longitud finita y es la unidad básica para las relaciones de congruencia.
 
 <Separador />
 
-### Formulación Conjuntista
+### Enunciado Formal
 
-Basándonos en la relación topológica primitiva definida en el <ConceptLink targetId="axioma-orden-1">Primer Axioma de Orden</ConceptLink>, el segmento cerrado se formula estáticamente como:
+Dados dos puntos $A$ y $B$ sobre una recta $l$, el segmento $AB$ es el conjunto:
 
-<Formula title="Conjunto de Puntos del Segmento">
-  <EquationRow>
-    $\overline{AB} = \{A, B\} \cup \{ X \in \mathbb{R}^2 \ | \ A * X * B \}$
-  </EquationRow>
-</Formula>
+$$ AB = \{X \in l \mid A X B \text{ o } X = A \text{ o } X = B \} $$
 
-### Observaciones Topológicas
+donde $AXB$ denota que $X$ está entre $A$ y $B$ en el sentido del <RefLink targetId="axioma-orden-1">axioma II-1</RefLink>. En el diagrama interactivo, el <InteractiveElement target="segmentAB" color="carbon">segmento</InteractiveElement> une los puntos <InteractiveElement target="pA" color="carbon">A</InteractiveElement> y <InteractiveElement target="pB" color="carbon">B</InteractiveElement>.
 
-* Por la propiedad de simetría del orden lineal ($A * X * B \iff B * X * A$), el segmento $\overline{AB}$ es estrictamente el mismo conjunto de puntos que el segmento $\overline{BA}$. 
-* Un segmento, al contrario que una recta o una semirrecta, tiene una medida de longitud finita y acotada, la cual se formaliza mediante la introducción axiomática de la Congruencia.
+<Separador />
+
+### Definición Axiomática
+
+El segmento se construye a partir de la relación de intermediación:
+
+- **Existencia**: dados dos puntos $A \neq B$, el segmento $AB$ existe y contiene infinitos puntos.
+- **Congruencia**: los segmentos pueden ser congruentes entre sí (<RefLink targetId="axioma-congruencia-1">III-1</RefLink>). Dado un segmento $AB$ y un punto $A'$ sobre una recta $l'$, existe un único punto $B'$ sobre cada semirrecta de $l'$ tal que $AB \cong A'B'$ (<RefLink targetId="axioma-congruencia-1">III-1</RefLink>).
+- **Suma**: si $B$ está entre $A$ y $C$, entonces $AB + BC = AC$ (<RefLink targetId="axioma-congruencia-3">III-3</RefLink>).
+
+<Separador />
+
+### Notación
+
+| Notación | Significado |
+|---|---|
+| $AB$ | Segmento con extremos $A$ y $B$ |
+| $\overline{AB}$ | Notación alternativa |
+| $\cong$ | Relación de congruencia entre segmentos |
+| $|AB|$ | Longitud del segmento |
+
+<Separador />
+
+### Observaciones
+
+En geometría absoluta, el segmento es un concepto definido a partir de la relación primitiva "estar entre". No requiere la noción de distancia numérica, aunque en el modelo cartesiano la longitud del segmento $AB$ se calcula como $\sqrt{(x_B - x_A)^2 + (y_B - y_A)^2}$.

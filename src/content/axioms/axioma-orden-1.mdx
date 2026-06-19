@@ -1,0 +1,38 @@
+export const metadata = {
+  "id": "axioma-orden-1",
+  "type": "axioma",
+  "title": "Axioma II-1 (Orden)",
+  "description": "Si un punto B está entre A y C, entonces A, B, C son tres puntos distintos y colineales, y B está también entre C y A.",
+  "statement": "Si A, B, C son puntos y B está entre A y C, entonces A, B, C son tres puntos distintos sobre una misma recta y B está entre C y A.",
+  "tags": ["geometria", "orden", "geometria-absoluta"],
+  "authors": ["hilbert"],
+};
+
+<Capitular letra="S" />
+i un punto B está entre A y C, entonces A, B, C son puntos distintos y colineales, y la relación de intermediación es simétrica: B está también entre C y A.
+
+<Separador />
+
+### Enunciado Formal
+
+<Formula>
+  $$ \text{Si } A * B * C \text{, entonces } A, B, C \text{ son colineales y } C * B * A. $$
+</Formula>
+
+<Nota>
+  La notación $A * B * C$ se lee "B está entre A y C". Es la relación de intermediación primitiva de la geometría de Hilbert.
+</Nota>
+
+<Separador />
+
+### Discusión
+
+Este axioma establece las propiedades básicas de la relación de intermediación. En primer lugar, exige que los tres puntos implicados sean distintos: ningún punto puede estar entre sí mismo y otro. En segundo lugar, exige que sean colineales: la intermediación solo tiene sentido sobre una recta. En tercer lugar, establece la simetría de la relación: si B está entre A y C, automáticamente está entre C y A.
+
+La intermediación es una noción primitiva en la axiomática de Hilbert. No se define a partir de conceptos más básicos, sino que sus propiedades se establecen mediante axiomas. La recta, que ya conocemos de los axiomas de incidencia, adquiere ahora una estructura de orden.
+
+<Separador />
+
+### Observaciones
+
+Nótese que el axioma no afirma la existencia de puntos intermedios —eso se hará en el axioma II-2— sino que regula el comportamiento de la relación cuando existe. Tampoco dice nada sobre cuál de los tres puntos es el del medio en una recta; esa cuestión se aborda en el axioma II-3.

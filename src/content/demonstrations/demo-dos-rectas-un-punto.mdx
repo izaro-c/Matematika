@@ -1,0 +1,60 @@
+export const metadata = {
+  "id": "demo-dos-rectas-un-punto",
+  "type": "demostracion",
+  "title": "Demostración: Dos rectas se cortan en a lo sumo un punto",
+  "description": "Prueba por contradicción usando el axioma de unicidad I-1.",
+  "parentTheorem": "teorema-dos-rectas-un-punto",
+  "proofMethod": "contradiccion",
+  "authors": ["hilbert"],
+  "tags": ["geometria", "incidencia"],
+  "layout": "text",
+  "links": ["axioma-incidencia-1", "axioma-incidencia-2"],
+};
+
+import { InteractiveElement } from "../../components/ui/VisualBind";
+
+<Capitular letra="S" />
+
+e demuestra que dos rectas distintas no pueden compartir más de un punto, usando el axioma de unicidad de la recta determinada por dos puntos.
+
+<Separador />
+
+### Hipótesis
+
+Sean $l$ y $m$ dos rectas distintas: $l \neq m$.
+
+<Separador />
+
+### Tesis
+
+Existe a lo sumo un punto $P$ tal que $P \in l$ y $P \in m$.
+
+<Separador />
+
+### Demostración
+
+Supongamos, por <ConceptLink targetId="axioma-incidencia-1">contradicción</ConceptLink>, que existen dos puntos distintos $A$ y $B$ que pertenecen simultáneamente a $l$ y a $m$:
+
+$$ A \in l \cap m, \quad B \in l \cap m, \quad A \neq B. $$
+
+Por el <ConceptLink targetId="axioma-incidencia-1">axioma I-1 de incidencia</ConceptLink>, dados dos puntos distintos $A$ y $B$, existe **una única** recta que los contiene. Denotemos esta recta única como $r$.
+
+Ahora bien, tanto $l$ como $m$ contienen a los puntos $A$ y $B$ (por nuestra suposición). Por la unicidad garantizada por el axioma I-1:
+
+$$ l = r \quad \text{y} \quad m = r. $$
+
+Por tanto $l = m$, lo cual contradice la hipótesis de que $l \neq m$.
+
+Esta contradicción proviene de suponer que existen dos puntos distintos en la intersección $l \cap m$. Luego, la intersección contiene a lo sumo un punto. $\blacksquare$
+
+<Separador />
+
+### Análisis
+
+La demostración es una aplicación directa del principio de unicidad. El axioma I-1 afirma no solo la existencia de una recta por dos puntos, sino su **unicidad** — es esta unicidad la que impide que dos rectas distintas compartan dos puntos.
+
+Nótese que el <ConceptLink targetId="axioma-incidencia-2">axioma I-2</ConceptLink> (toda recta tiene al menos dos puntos) garantiza que toda recta tiene efectivamente pares de puntos, pero no interviene directamente en esta prueba. Su rol es asegurar que las rectas son objetos no degenerados.
+
+<Nota>
+  Este resultado es la base para definir rectas secantes (un punto de corte) y rectas paralelas (cero puntos de corte) como categorías disjuntas.
+</Nota>

@@ -1,0 +1,39 @@
+export const metadata = {
+  "id": "axioma-incidencia-3",
+  "type": "axioma",
+  "title": "Axioma I-3 (Incidencia)",
+  "description": "Existen al menos tres puntos no colineales, es decir, que no están todos sobre una misma recta.",
+  "statement": "Existen tres puntos A, B, C que no pertenecen a una misma recta.",
+  "tags": ["geometria", "incidencia", "geometria-absoluta"],
+  "authors": ["hilbert"],
+  "hasSimulation": true,
+};
+
+import { Incidence3 } from '../../diagrams/Axiomas/Incidence3';
+export const Simulation = Incidence3;
+import { InteractiveElement } from "../../components/ui/VisualBind";
+
+<Capitular letra="E" />
+xisten al menos tres puntos no colineales. Este axioma asegura que el espacio geométrico tiene al menos dos dimensiones: no todos los puntos pueden alinearse sobre una misma recta.
+
+<Separador />
+
+### Enunciado Formal
+
+<Formula>
+  $$ \exists A, B, C \; \neg \exists l \; (A \in l \land B \in l \land C \in l). $$
+</Formula>
+
+<Separador />
+
+### Discusión
+
+Los dos primeros axiomas de incidencia son compatibles con un universo unidimensional (todos los puntos sobre una misma recta). El axioma I-3 rompe esa posibilidad al exigir la existencia de <InteractiveElement target="pA" color="terracota">tres</InteractiveElement> <InteractiveElement target="pB" color="terracota">puntos</InteractiveElement> <InteractiveElement target="pC" color="terracota">no colineales</InteractiveElement>, es decir, que no comparten ninguna recta común. Esto fuerza la dimensionalidad del espacio a ser al menos 2.
+
+En el plano, tres puntos no colineales determinan un <InteractiveElement target="triangle" color="terracota">triángulo</InteractiveElement>. En el espacio tridimensional, tres puntos no colineales determinan un plano (axioma I-4). La no colinealidad es, por tanto, la condición mínima para hablar de figuras bidimensionales.
+
+<Separador />
+
+### Observaciones
+
+Este es el primer axioma existencial de la geometría: no se limita a describir relaciones entre objetos ya dados, sino que postula la existencia de objetos concretos. Sin este axioma, el universo podría consistir en una única recta con todos sus puntos colineales.

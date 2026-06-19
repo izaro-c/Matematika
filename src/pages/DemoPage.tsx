@@ -15,7 +15,7 @@ export const DemoPage: React.FC = () => {
   const demo = db.getDemo(demoId);
   if (!demo) {
     return (
-      <div className="min-h-screen bg-[#F8F6F1] font-serif flex items-center justify-center text-carbon">
+      <div className="min-h-screen bg-lienzo font-serif flex items-center justify-center text-carbon">
         <div className="text-center">
           <h1 className="text-4xl font-bold mb-4">Demostración no encontrada</h1>
           <Link href="/"><a className="text-terracota hover:underline">Volver al inicio</a></Link>

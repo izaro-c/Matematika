@@ -1,0 +1,48 @@
+export const metadata = {
+  "id": "teorema-dos-rectas-un-punto",
+  "type": "teorema",
+  "title": "Teorema: Dos rectas se cortan en a lo sumo un punto",
+  "description": "Dos rectas distintas del plano o del espacio se cortan en a lo sumo un punto.",
+  "statement": "Sean l y m dos rectas distintas. Entonces existe a lo sumo un punto P tal que P ∈ l y P ∈ m.",
+  "requires": ["axioma-incidencia-1", "axioma-incidencia-2"],
+  "demos": ["demo-dos-rectas-un-punto"],
+  "tags": ["geometria", "incidencia", "geometria-absoluta"],
+  "authors": ["hilbert"],
+  "difficulty": "básico",
+  "links": ["axioma-incidencia-1", "axioma-incidencia-2"],
+};
+
+<Capitular letra="D" />
+os rectas distintas no pueden compartir dos o más puntos. Si lo hicieran, el axioma de incidencia I-1 garantizaría que son la misma recta, contradiciendo la hipótesis de que son distintas.
+
+<Separador />
+
+### Enunciado
+
+<Formula>
+  $$ \text{Sean } l \neq m \text{ dos rectas. Existe a lo sumo un punto } P \text{ tal que } P \in l \cap m. $$
+</Formula>
+
+<Separador />
+
+### Demostración
+
+La demostración se realiza por contradicción, usando el axioma de unicidad de la recta determinada por dos puntos. Se encuentra en la página dedicada: <ConceptLink targetId="demo-dos-rectas-un-punto">Demostración: Dos rectas se cortan en a lo sumo un punto</ConceptLink>.
+
+<Separador />
+
+### Discusión
+
+Este teorema establece que la intersección de dos rectas distintas es vacía o un único punto. En la geometría de incidencia, dos rectas que se cortan en un punto se llaman **secantes**; dos rectas que no se cortan se llaman **paralelas** (en el sentido amplio de la geometría absoluta).
+
+La importancia de este resultado radica en que justifica la definición de rectas secantes y paralelas como categorías disjuntas: dos rectas son secantes (un punto de corte) o paralelas (cero puntos de corte), sin término medio.
+
+<Separador />
+
+### Corolario
+
+De este teorema se sigue inmediatamente que si dos rectas tienen dos puntos en común, entonces son la misma recta — un resultado que se usa constantemente en demostraciones geométricas para identificar rectas.
+
+<Nota>
+  En <ConceptLink targetId="sistema-hiperbolico">geometría proyectiva</ConceptLink>, dos rectas siempre se cortan (en el plano proyectivo, las rectas paralelas se cortan en el infinito). Esto muestra que el teorema depende esencialmente del <ConceptLink targetId="axioma-incidencia-1">axioma I-1</ConceptLink>, que no se mantiene en la geometría proyectiva.
+</Nota>

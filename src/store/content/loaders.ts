@@ -19,5 +19,7 @@ export const contentLoaders = {
 
   axiomLoaders: import.meta.glob('../../content/axioms/*.mdx'),
 
+  axiomaticSystemLoaders: import.meta.glob('../../content/axiomatic-systems/*.mdx'),
+
   modelLoaders: import.meta.glob('../../content/models/*.mdx'),
 };

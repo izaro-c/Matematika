@@ -1,0 +1,34 @@
+export const metadata = {
+  "id": "axioma-orden-3",
+  "type": "axioma",
+  "title": "Axioma II-3 (Orden)",
+  "description": "Dados tres puntos distintos sobre una recta, exactamente uno de ellos está entre los otros dos.",
+  "statement": "Si A, B, C son tres puntos distintos sobre una misma recta, entonces se cumple exactamente una de las relaciones: A * B * C, A * C * B, o B * A * C.",
+  "tags": ["geometria", "orden", "geometria-absoluta"],
+  "authors": ["hilbert"],
+};
+
+<Capitular letra="D" />
+ados tres puntos distintos sobre una recta, exactamente uno de ellos está entre los otros dos. Este axioma establece que el orden sobre la recta es total y lineal.
+
+<Separador />
+
+### Enunciado Formal
+
+<Formula>
+  $$ A, B, C \in l \land A \neq B \neq C \implies \text{exactamente una de:}\; A * B * C,\; A * C * B,\; B * A * C. $$
+</Formula>
+
+<Separador />
+
+### Discusión
+
+Los axiomas II-1 y II-2 establecen propiedades de la intermediación sobre pares de puntos. El axioma II-3 regula cómo se comporta la intermediación sobre ternas de puntos. La propiedad clave es la *linealidad* del orden: siempre podemos determinar cuál de los tres puntos es el del medio, sin ambigüedad.
+
+Esta propiedad permite definir segmentos y semirrectas. Dado un segmento AB, los puntos entre A y B son exactamente aquellos C tales que A * C * B. Dada una semirrecta con origen en A que pasa por B, los puntos de la semirrecta son aquellos X tales que A * B * X o A * X * B.
+
+<Separador />
+
+### Observaciones
+
+Este axioma no se cumple en geometrías circulares o en espacios donde el orden no sea lineal. En una circunferencia, por ejemplo, no hay una noción clara de "estar entre" que satisfaga esta propiedad. Es, por tanto, un axioma característico de la geometría rectilínea clásica.

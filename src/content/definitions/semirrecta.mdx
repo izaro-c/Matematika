@@ -1,0 +1,51 @@
+export const metadata = {
+  "type": "definicion",
+  "title": "Semirrecta (Rayo)",
+  "description": "Dados dos puntos A y B sobre una recta, la semirrecta de origen A que pasa por B es el conjunto de puntos de la recta que están del mismo lado que B respecto a A.",
+  "tags": ["geometria", "orden"],
+  "authors": ["hilbert"],
+  "links": ["punto", "recta", "axioma-orden-1", "axioma-orden-2"],
+  "seeAlso": ["segmento", "angulo", "axioma-orden-3"],
+  "hasSimulation": true,
+};
+
+import { Semirrecta } from '../../diagrams/Definiciones/Semirrecta';
+export const Simulation = Semirrecta;
+import { InteractiveElement } from "../../components/ui/VisualBind";
+
+<Capitular letra="U" />
+na semirrecta, también llamada rayo, es cada una de las dos partes en que un punto divide a una recta. Tiene origen en ese punto y se extiende infinitamente en una dirección.
+
+<Separador />
+
+### Enunciado Formal
+
+Dado un punto $A$ sobre una recta $l$ y otro punto $B$ de $l$ distinto de $A$, la semirrecta $AB$ (de origen $A$ que pasa por $B$) es el conjunto:
+
+$$ AB^{\rightarrow} = \{X \in l \mid X = A \text{ o } A \text{ está entre } X \text{ y } B \} $$
+
+Equivalentemente, es el conjunto de puntos $X$ de $l$ tales que $B$ y $X$ están del mismo lado de $A$. En el diagrama, el origen <InteractiveElement target="pO" color="carbon">O</InteractiveElement> y el punto <InteractiveElement target="pA" color="carbon">A</InteractiveElement> determinan la <InteractiveElement target="rayOA" color="carbon">semirrecta</InteractiveElement>.
+
+<Separador />
+
+### Propiedades
+
+- Toda recta queda dividida por cualquiera de sus puntos en dos semirrectas opuestas.
+- Dos puntos distintos sobre una misma semirrecta determinan la misma semirrecta.
+- Las semirrectas son fundamentales para la definición de <RefLink targetId="angulo">ángulo</RefLink> (dos semirrectas con el mismo origen) y para el <RefLink targetId="axioma-congruencia-1">transporte de segmentos</RefLink>.
+
+<Separador />
+
+### Notación
+
+| Notación | Significado |
+|---|---|
+| $AB^{\rightarrow}$ o $\overrightarrow{AB}$ | Semirrecta con origen $A$ que pasa por $B$ |
+| $AX^{\rightarrow} \uparrow AY^{\rightarrow}$ | Semirrectas coincidentes (misma dirección) |
+| $AX^{\rightarrow} \downarrow AY^{\rightarrow}$ | Semirrectas opuestas |
+
+<Separador />
+
+### Observaciones
+
+La noción de semirrecta depende exclusivamente de la relación de orden sobre la recta (<RefLink targetId="axioma-orden-1">II-1</RefLink> a <RefLink targetId="axioma-orden-3">II-3</RefLink>). No requiere la noción de distancia o ángulo, aunque es esencial para definir ángulos. En geometría absoluta, el <RefLink targetId="axioma-congruencia-5">criterio SAS</RefLink> utiliza semirrectas para transportar ángulos.

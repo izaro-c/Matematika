@@ -1,0 +1,43 @@
+export const metadata = {
+  "id": "teorema-punto-medio-perpendicular",
+  "type": "teorema",
+  "title": "Teorema: La mediatriz es perpendicular al segmento en su punto medio",
+  "description": "El lugar geométrico de los puntos equidistantes de los extremos de un segmento es la perpendicular al segmento en su punto medio.",
+  "statement": "Sea AB un segmento con punto medio M. El conjunto de puntos P tales que PA ≅ PB es la recta perpendicular a AB que pasa por M.",
+  "requires": ["lema-punto-medio", "axioma-congruencia-5", "axioma-congruencia-1", "teorema-congruencia-lll"],
+  "demos": ["demo-punto-medio-perpendicular"],
+  "lemmas": ["lema-punto-medio"],
+  "tags": ["geometria", "congruencia", "orden", "geometria-absoluta"],
+  "authors": ["euclides"],
+  "difficulty": "intermedio",
+  "links": ["lema-punto-medio", "axioma-congruencia-5", "teorema-congruencia-lll"],
+};
+
+import { InteractiveElement } from "../../components/ui/VisualBind";
+
+<Capitular letra="L" />
+a **mediatriz** de un segmento es el lugar geométrico de todos los puntos que equidistan de sus extremos. Este teorema caracteriza la mediatriz como la perpendicular al segmento en su <ConceptLink targetId="lema-punto-medio">punto medio</ConceptLink>, conectando así las nociones de congruencia, perpendicularidad y simetría.
+
+<Separador />
+
+### Enunciado
+
+<Formula>
+  $$ \text{Sea } \overline{AB} \text{ con punto medio } M. \text{ El conjunto } \{P : \overline{PA} \cong \overline{PB}\} \text{ es la perpendicular a } \overline{AB} \text{ por } M. $$
+</Formula>
+
+<Separador />
+
+### Demostración
+
+La demostración es bidireccional: todo punto de la perpendicular equidista (usando <ConceptLink targetId="axioma-congruencia-5">LAL</ConceptLink>), y todo punto equidistante está en la perpendicular (usando <ConceptLink targetId="teorema-congruencia-lll">LLL</ConceptLink>). Se encuentra en la página dedicada: <ConceptLink targetId="demo-punto-medio-perpendicular">Demostración: La mediatriz es perpendicular al segmento</ConceptLink>.
+
+<Separador />
+
+### Discusión
+
+La mediatriz es un objeto central en geometría. Es el eje de simetría del segmento: la reflexión respecto a ella intercambia los extremos. Además, las tres mediatrices de un triángulo concurren en el **circuncentro**, el centro de la circunferencia circunscrita.
+
+<Nota>
+  Este teorema es válido en <ConceptLink targetId="sistema-absoluto">geometría absoluta</ConceptLink>: no requiere el <ConceptLink targetId="axioma-paralelas-euclides">postulado de las paralelas</ConceptLink>. La existencia del circuncentro, en cambio, depende de que las tres mediatrices concurran, lo cual sí puede fallar en <ConceptLink targetId="sistema-hiperbolico">geometría hiperbólica</ConceptLink> para triángulos muy grandes.
+</Nota>

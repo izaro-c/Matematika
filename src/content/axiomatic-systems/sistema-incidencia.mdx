@@ -1,0 +1,57 @@
+export const metadata = {
+  "id": "sistema-incidencia",
+  "type": "sistema-axiomatico",
+  "title": "Sistema de Incidencia",
+  "description": "Sistema axiomático que define las relaciones básicas de pertenencia entre puntos, rectas y planos. Es la estructura más débil de la geometía —solo postula cómo se relacionan estos objetos primitivos sin nociones de orden, congruencia o medida.",
+  "axiomas": [
+    "axioma-incidencia-1",
+    "axioma-incidencia-2",
+    "axioma-incidencia-3",
+    "axioma-incidencia-4",
+    "axioma-incidencia-5",
+    "axioma-incidencia-6",
+    "axioma-incidencia-7",
+    "axioma-incidencia-8"
+  ],
+  "mathematicians": ["hilbert"],
+  "models": ["modelo-tres-puntos"],
+  "tags": ["geometria", "incidencia", "fundamentos"],
+};
+
+<Capitular letra="E" />
+sistema de incidencia es el conjunto de axiomas que definen las relaciones primitivas de pertenencia entre puntos, rectas y planos. Es la base sobre la que se construye toda la geometía.
+
+<Separador />
+
+### Axiomas
+
+El sistema de incidencia consta de ocho axiomas que establecen:
+
+- <ConceptLink targetId="axioma-incidencia-1">I-1</ConceptLink>: Dos puntos determinan una única recta.
+- <ConceptLink targetId="axioma-incidencia-2">I-2</ConceptLink>: Toda recta contiene al menos dos puntos.
+- <ConceptLink targetId="axioma-incidencia-3">I-3</ConceptLink>: Existen tres puntos no colineales.
+- <ConceptLink targetId="axioma-incidencia-4">I-4</ConceptLink>: Tres puntos no colineales determinan un único plano.
+- <ConceptLink targetId="axioma-incidencia-5">I-5</ConceptLink>: Todo plano contiene al menos tres puntos no colineales.
+- <ConceptLink targetId="axioma-incidencia-6">I-6</ConceptLink>: Si dos puntos de una recta están en un plano, la recta entera está en el plano.
+- <ConceptLink targetId="axioma-incidencia-7">I-7</ConceptLink>: Dos planos se intersectan en una recta.
+- <ConceptLink targetId="axioma-incidencia-8">I-8</ConceptLink>: Existen cuatro puntos no coplanares.
+
+Estos axiomas definen la estructura tridimensional del espacio: los primeros tres gobiernan la relación punto-recta, los siguientes tres la relación recta-plano, y los últimos dos la relación entre planos.
+
+<Separador />
+
+### Modelos
+
+El sistema de incidencia es satisfecho por numerosas estructuras. Las más simples son:
+
+- **Modelo de 3 puntos**: tres puntos no colineales con las rectas que determinan. Satisface I-1, I-2, I-3.
+- **Plano de Fano**: el plano proyectivo de orden 2, con 7 puntos y 7 rectas. Satisface todos los axiomas de incidencia plana.
+- **Espacio cartesiano** $\mathbb{R}^3$: el modelo estándar de la geometía euclídea.
+
+<Separador />
+
+### Propiedades
+
+El sistema de incidencia es **consistente**: existe un modelo (el espacio cartesiano) que lo satisface. Es **independiente**: ningún axioma puede deducirse de los demás. No es **completo**: muchas geometías diferentes satisfacen estos axiomas (geometía absoluta, euclídea, hiperbólica).
+
+Los axiomas I-1 a I-3 definen la geometía plana de incidencia. Los axiomas I-4 a I-8 extienden la teoría al espacio tridimensional.

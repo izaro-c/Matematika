@@ -1,0 +1,68 @@
+export const metadata = {
+  "id": "sistema-hiperbolico",
+  "type": "sistema-axiomatico",
+  "title": "Geometría Hiperbólica",
+  "description": "Geometría no euclídea que satisface todos los axiomas de la geometría absoluta pero reemplaza el quinto postulado de Euclides por su negación: por un punto exterior a una recta pasan infinitas paralelas.",
+  "axiomas": [
+    "axioma-incidencia-1",
+    "axioma-incidencia-2",
+    "axioma-incidencia-3",
+    "axioma-incidencia-4",
+    "axioma-incidencia-5",
+    "axioma-incidencia-6",
+    "axioma-incidencia-7",
+    "axioma-incidencia-8",
+    "axioma-orden-1",
+    "axioma-orden-2",
+    "axioma-orden-3",
+    "axioma-orden-4",
+    "axioma-congruencia-1",
+    "axioma-congruencia-2",
+    "axioma-congruencia-3",
+    "axioma-congruencia-4",
+    "axioma-congruencia-5",
+    "axioma-arquimedes",
+    "axioma-completitud",
+    "axioma-paralelas-hiperbolico"
+  ],
+  "models": [],
+  "mathematicians": ["lobachevski", "bolyai", "hilbert"],
+  "tags": ["geometria", "hiperbolica", "no-euclidiana", "fundamentos"],
+};
+
+<Capitular letra="L" />
+a geometría hiperbólica es la teoría axiomática que reemplaza el quinto postulado de Euclides por el <ConceptLink targetId="axioma-paralelas-hiperbolico">axioma de Lobachevski</ConceptLink>: por un punto exterior a una recta pasan infinitas rectas paralelas a la dada. Fue descubierta independientemente por Lobachevski (1829) y Bolyai (1832).
+
+<Separador />
+
+### Axiomas
+
+La geometría hiperbólica comprende los 19 axiomas de la geometría absoluta más el axioma hiperbólico de las paralelas:
+
+<ConceptLink targetId="axioma-paralelas-hiperbolico">Axioma V' (Paralela Hiperbólica)</ConceptLink>: Por un punto exterior a una recta pasan al menos dos rectas paralelas a la dada.
+
+De este axioma se sigue que pasan infinitas paralelas. En geometría hiperbólica, la suma de los ángulos de un triángulo es siempre **menor** que $180^\circ$, y el área del triángulo es proporcional a su defecto angular $\delta = 180^\circ - (\alpha + \beta + \gamma)$.
+
+<Separador />
+
+### Modelos
+
+La geometría hiperbólica no puede realizarse en el plano euclídeo estándar, pero admite varios modelos dentro de $\mathbb{R}^n$ o $\mathbb{C}$:
+
+- **Disco de Poincaré**: el interior del círculo unitario $\{z \in \mathbb{C} : |z| < 1\}$ con métrica hiperbólica. Las rectas son arcos de círculo ortogonales al borde.
+- **Semiplano de Poincaré**: $\{z \in \mathbb{C} : \Im(z) > 0\}$ con métrica $ds^2 = (dx^2 + dy^2)/y^2$.
+- **Modelo de Klein-Beltrami**: el interior de un círculo con rectas como cuerdas.
+- **Modelo del hiperboloide**: $\{x \in \mathbb{R}^{2,1} : \langle x, x \rangle = -1\}$ con la métrica de Minkowski.
+
+<Separador />
+
+### Propiedades
+
+La geometría hiperbólica es **consistente** (relativamente a la geometría euclídea, mediante los modelos de Poincaré). Su descubrimiento en el siglo XIX demostró la independencia del quinto postulado y transformó nuestra comprensión de la naturaleza del espacio matemático.
+
+En geometría hiperbólica:
+- La suma de ángulos de un triángulo es $< 180^\circ$ y variable.
+- Triángulos con los mismos ángulos son congruentes (no hay semejanza sin congruencia).
+- Existe un radio máximo para círculos inscritos.
+- La circunferencia de un círculo de radio $r$ es $2\pi \sinh(r)$.
+- El área de un triángulo está acotada por $\pi$.

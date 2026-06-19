@@ -65,7 +65,7 @@ export const AxiomSandboxPanel: React.FC = () => {
             {models.map(model => (
               <button
                 key={model.id}
-                onClick={() => loadModel(model.id, model.axiomas || [])}
+                onClick={() => loadModel(model.id, model.axioms_verified || [])}
                 className="text-left px-3 py-2 border border-carbon/20 hover:border-terracota hover:bg-carbon/5 transition-colors group flex justify-between items-center"
               >
                 <span className="font-bold font-serif text-carbon" style={{ fontVariant: 'small-caps' }}>
@@ -124,7 +124,7 @@ export const AxiomSandboxPanel: React.FC = () => {
       </div>
 
       {/* Footer Stats */}
-      <div className="border-t border-carbon/20 p-3 bg-[#F8F6F1] flex justify-between items-center text-[10px] font-sans tracking-widest uppercase text-carbon/60">
+      <div className="border-t border-carbon/20 p-3 bg-lienzo flex justify-between items-center text-[10px] font-sans tracking-widest uppercase text-carbon/60">
         <span>Axiomas: {Object.values(activeAxioms).filter(Boolean).length}</span>
         <span>Conceptos Válidos: {validNodes.size}</span>
       </div>

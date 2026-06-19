@@ -11,6 +11,7 @@ import {
   ExampleSchema,
   ExerciseSchema,
   AxiomSchema,
+  AxiomaticSystemSchema,
   ModelSchema,
   UseCaseSchema,
   StudyPlanSchema,
@@ -18,6 +19,7 @@ import {
 const SCHEMA_MAP: Record<string, import('zod').ZodTypeAny> = {
   axioma: AxiomSchema,
   definicion: DefinitionSchema,
+  'sistema-axiomatico': AxiomaticSystemSchema,
   teorema: TheoremSchema,
   lema: TheoremSchema,
   corolario: TheoremSchema,
@@ -34,6 +36,7 @@ const SCHEMA_MAP: Record<string, import('zod').ZodTypeAny> = {
 const CONTENT_DIRS: Record<string, string> = {
   axioms: 'axioma',
   definitions: 'definicion',
+  'axiomatic-systems': 'sistema-axiomatico',
   theorems: 'teorema',
   demonstrations: 'demostracion',
   examples: 'ejemplo',

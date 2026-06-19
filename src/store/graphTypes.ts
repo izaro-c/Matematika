@@ -20,6 +20,12 @@ export interface ModelInfo {
   axioms: string[];
 }
 
+export interface SystemInfo {
+  id: string;
+  title: string;
+  axioms: string[];
+}
+
 export interface GraphEdge {
   source: string;
   target: string;

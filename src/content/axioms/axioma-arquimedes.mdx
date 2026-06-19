@@ -1,0 +1,40 @@
+export const metadata = {
+  "id": "axioma-arquimedes",
+  "type": "axioma",
+  "title": "Axioma de Arquímedes",
+  "description": "Dados dos segmentos AB y CD, existe un número natural n tal que n copias de AB sumadas superan a CD.",
+  "statement": "Para cualquier par de segmentos AB y CD, existe un entero positivo n tal que n · AB > CD.",
+  "tags": ["geometria", "continuidad", "geometria-absoluta", "medida"],
+  "authors": ["hilbert", "arquimedes"],
+};
+
+<Capitular letra="D" />
+ados dos segmentos, existe un número natural de copias del menor que supera al mayor. El axioma de Arquímedes garantiza que ningún segmento es infinitamente grande comparado con otro.
+
+<Separador />
+
+### Enunciado Formal
+
+<Formula>
+  $$ \forall \overline{AB}, \overline{CD} \; \exists n \in \mathbb{N} : n \cdot \overline{AB} > \overline{CD}. $$
+</Formula>
+
+<Nota>
+  La expresión $n \cdot \overline{AB}$ denota la suma de $n$ copias del segmento $AB$ colocadas consecutivamente sobre una recta.
+</Nota>
+
+<Separador />
+
+### Discusión
+
+El axioma de Arquímedes establece que la recta no contiene segmentos "infinitamente grandes" ni "infinitamente pequeños" con respecto a otros. Dado cualquier segmento, por pequeño que sea, podemos repetirlo suficientes veces para superar cualquier otro segmento, por grande que sea.
+
+Este axioma conecta la geometría con la aritmética: permite definir la razón entre dos segmentos y, en última instancia, asignar números reales como longitudes. Sin él, la recta podría contener elementos no arquimedianos, como ocurre en los números hiperreales del análisis no estándar.
+
+En la axiomática de Hilbert, este axioma (junto con el de completitud) garantiza que el sistema de segmentos sobre una recta es isomorfo a los números reales positivos.
+
+<Separador />
+
+### Observaciones
+
+Históricamente, Arquímedes atribuyó este principio a Eudoxo (siglo IV a.C.). Es un axioma de la geometría absoluta: tanto la geometría euclídea como la hiperbólica lo satisfacen. Las geometrías no arquimedianas existen formalmente, pero no modelan el espacio físico intuitivo.

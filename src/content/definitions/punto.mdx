@@ -1,0 +1,40 @@
+export const metadata = {
+  "type": "definicion",
+  "title": "Punto",
+  "description": "Concepto primitivo de la geometría. Un punto es una entidad sin dimensión que ocupa una posición en el espacio. Se define implícitamente mediante los axiomas de pertenencia e intermediación.",
+  "tags": ["geometria", "primitivo", "espacio"],
+  "authors": ["hilbert"],
+  "links": ["axioma-incidencia-1", "axioma-incidencia-2", "axioma-incidencia-3", "axioma-orden-1", "axioma-congruencia-1"],
+  "hasSimulation": true,
+};
+
+import { Punto } from '../../diagrams/Definiciones/Punto';
+export const Simulation = Punto;
+import { InteractiveElement } from "../../components/ui/VisualBind";
+
+<Capitular letra="E" />
+l punto es el concepto más elemental de la geometría. Según la definición clásica de Euclides: "un punto es lo que no tiene partes". En la axiomatización moderna de Hilbert, el punto es un **concepto primitivo**: no se define explícitamente, sino que su significado viene dado por las relaciones que establecen los axiomas.
+
+<Separador />
+
+### Enunciado Informal
+
+Un punto es una ubicación en el espacio que carece de extensión, área o volumen. Se representa mediante una letra mayúscula ($A$, $B$, $P$, $Q$, etc.) y gráficamente como un pequeño disco, como se muestra en el diagrama interactivo: <InteractiveElement target="pPoint" color="carbon">P</InteractiveElement>.
+
+<Separador />
+
+### Definición Axiomática
+
+En el sistema de Hilbert, el punto es uno de los tres conceptos primitivos (junto con la <RefLink targetId="recta">recta</RefLink> y el <RefLink targetId="plano">plano</RefLink>). Sus propiedades fundamentales vienen dadas por:
+
+- **Incidencia**: dos puntos distintos determinan una única recta (<RefLink targetId="axioma-incidencia-1">I-1</RefLink>). Toda recta contiene al menos dos puntos (<RefLink targetId="axioma-incidencia-2">I-2</RefLink>). Existen al menos tres puntos no colineales (<RefLink targetId="axioma-incidencia-3">I-3</RefLink>).
+- **Orden**: los puntos sobre una recta admiten una relación de intermediación (<RefLink targetId="axioma-orden-1">II-1</RefLink> a <RefLink targetId="axioma-orden-4">II-4</RefLink>).
+- **Congruencia**: los pares de puntos definen segmentos que pueden ser congruentes entre sí (<RefLink targetId="axioma-congruencia-1">III-1</RefLink> a <RefLink targetId="axioma-congruencia-5">III-5</RefLink>).
+
+<Separador />
+
+### Observaciones
+
+En geometría, los puntos no tienen tamaño, color ni ninguna propiedad intrínseca excepto su posición relativa determinada por las relaciones axiomáticas. Dos puntos distintos son, por definición, objetos separados; si coinciden, se trata del mismo punto.
+
+En el modelo cartesiano $\mathbb{R}^3$, los puntos se identifican con ternas $(x, y, z)$ de números reales.

@@ -1,0 +1,72 @@
+export const metadata = {
+  "id": "demo-angulos-opuestos-verticales",
+  "type": "demostracion",
+  "title": "Demostración: Ángulos opuestos por el vértice",
+  "description": "Prueba directa usando axiomas de congruencia de ángulos y resta de congruentes.",
+  "parentTheorem": "teorema-angulos-opuestos-verticales",
+  "proofMethod": "directo",
+  "authors": ["euclides"],
+  "tags": ["geometria", "congruencia"],
+  "layout": "text",
+  "links": ["axioma-congruencia-2", "axioma-congruencia-3", "axioma-congruencia-4"],
+};
+
+import { InteractiveElement } from "../../components/ui/VisualBind";
+import { AngulosOpuestos } from '../../diagrams/Theorems/AngulosOpuestos';
+export const Simulation = AngulosOpuestos;
+
+<Capitular letra="C" />
+
+uando dos rectas se cortan en un punto, se forman cuatro ángulos. Los ángulos opuestos por el vértice son congruentes. La demostración usa los axiomas de congruencia de ángulos: la posibilidad de sumar y restar ángulos congruentes.
+
+<Separador />
+
+### Hipótesis
+
+Sean $l$ y $m$ dos rectas que se cortan en el punto $O$. Se forman cuatro ángulos: $\angle AOB$, $\angle BOA'$, $\angle A'OB'$, $\angle B'OA$, donde $A, A' \in l$ y $B, B' \in m$ están a ambos lados de $O$.
+
+<Separador />
+
+### Tesis
+
+Los ángulos opuestos por el vértice son congruentes:
+
+$$ \angle AOB \cong \angle A'OB' \quad \text{y} \quad \angle BOA' \cong \angle B'OA. $$
+
+<Separador />
+
+### Demostración
+
+**Paso 1: Identificar ángulos adyacentes.** Los ángulos $\angle AOB$ y $\angle BOA'$ son adyacentes (comparten el lado $\overrightarrow{OB}$ y sus otros lados $\overrightarrow{OA}$ y $\overrightarrow{OA'}$ son opuestos). Por la <ConceptLink targetId="axioma-congruencia-4">definición de ángulos adyacentes suplementarios</ConceptLink> y los <ConceptLink targetId="axioma-congruencia-3">axiomas de suma de ángulos congruentes</ConceptLink>:
+
+$$ \angle AOB + \angle BOA' \cong \text{ángulo llano}. $$
+
+Análogamente, los ángulos $\angle BOA'$ y $\angle A'OB'$ son adyacentes (comparten el lado $\overrightarrow{OA'}$):
+
+$$ \angle BOA' + \angle A'OB' \cong \text{ángulo llano}. $$
+
+**Paso 2: Restar el ángulo común.** Ambas expresiones son congruentes al ángulo llano. Por transitividad de la congruencia:
+
+$$ \angle AOB + \angle BOA' \cong \angle BOA' + \angle A'OB'. $$
+
+Por el <ConceptLink targetId="axioma-congruencia-2">axioma de resta de ángulos congruentes</ConceptLink>, podemos restar el ángulo común $\angle BOA'$ de ambos lados:
+
+$$ \angle AOB \cong \angle A'OB'. $$
+
+**Paso 3: Repetir para el otro par.** Un argumento análogo con los ángulos adyacentes $\angle A'OB'$ y $\angle B'OA$ muestra que:
+
+$$ \angle BOA' \cong \angle B'OA. $$
+
+Por tanto, los ángulos opuestos por el vértice son congruentes. $\blacksquare$
+
+<Separador />
+
+### Análisis
+
+La demostración es una aplicación elegante del principio algebraico: si $a + b = c$ y $b + d = c$, entonces $a = d$. En geometría, este principio se sustituye por los axiomas de congruencia: la suma y resta de ángulos congruentes preserva la congruencia.
+
+<Nota>
+  Euclides demostró este resultado en la Proposición I.15 de los Elementos usando el mismo argumento. Su formulación hablaba de "dos ángulos rectos" donde nosotros decimos "ángulo llano".
+</Nota>
+
+Este teorema no requiere el postulado de las paralelas: es válido en geometría absoluta (euclidiana e hiperbólica).

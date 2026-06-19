@@ -240,6 +240,24 @@ body {
   background-color: color-mix(in srgb, var(--theme-carbon) 2%, transparent);
 }
 
+/* Etiquetas de JSXGraph — tipografía editorial */
+.JXGtext {
+  font-family: ui-serif, Georgia, Cambria, "Times New Roman", Times, serif !important;
+  font-style: italic !important;
+  font-weight: 600 !important;
+  font-size: 16px !important;
+  paint-order: stroke;
+  stroke: var(--theme-lienzo);
+  stroke-width: 3px;
+  stroke-linejoin: round;
+}
+
+/* Etiquetas de puntos — terracota */
+.JXGtext.JXgpointLabel {
+  fill: var(--theme-terracota) !important;
+  color: var(--theme-terracota) !important;
+}
+
 /* Suavizado en enlaces globales pero menos elástico */
 a, button {
   transition: all 0.15s ease-out;

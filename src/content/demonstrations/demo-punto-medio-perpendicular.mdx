@@ -1,0 +1,76 @@
+export const metadata = {
+  "id": "demo-punto-medio-perpendicular",
+  "type": "demostracion",
+  "title": "Demostración: La mediatriz es perpendicular al segmento",
+  "description": "Prueba bidireccional usando LAL y LLL.",
+  "parentTheorem": "teorema-punto-medio-perpendicular",
+  "proofMethod": "directo",
+  "authors": ["euclides"],
+  "tags": ["geometria", "congruencia", "orden"],
+  "layout": "text",
+  "links": ["lema-punto-medio", "axioma-congruencia-5", "axioma-congruencia-1", "teorema-congruencia-lll"],
+};
+
+import { InteractiveElement } from "../../components/ui/VisualBind";
+
+<Capitular letra="L" />
+
+a mediatriz de un segmento es el lugar geométrico de los puntos equidistantes de sus extremos. Se demuestra que coincide con la perpendicular al segmento en su punto medio, usando los criterios de congruencia LAL y LLL.
+
+<Separador />
+
+### Hipótesis
+
+Sea $\overline{AB}$ un segmento con punto medio $M$ ($\overline{AM} \cong \overline{MB}$). Sea $\ell$ la perpendicular a $\overline{AB}$ por $M$.
+
+<Separador />
+
+### Tesis
+
+El conjunto $\{P : \overline{PA} \cong \overline{PB}\}$ es exactamente la recta $\ell$.
+
+<Separador />
+
+### Demostración
+
+Se demuestra en dos pasos: todo punto de $\ell$ equidista, y todo punto equidistante está en $\ell$.
+
+**Paso 1: Todo punto de $\ell$ equidista de $A$ y $B$.**
+
+Sea $P \in \ell$. Consideremos los triángulos $\triangle PAM$ y $\triangle PBM$:
+- $\overline{PM}$ es común a ambos triángulos,
+- $\overline{AM} \cong \overline{MB}$ por el <ConceptLink targetId="lema-punto-medio">lema del punto medio</ConceptLink>,
+- $\angle PMA \cong \angle PMB$, pues ambos son ángulos rectos (ya que $\ell \perp \overline{AB}$).
+
+Por el <ConceptLink targetId="axioma-congruencia-5">axioma LAL (III-5)</ConceptLink>:
+
+$$ \triangle PAM \cong \triangle PBM. $$
+
+En particular, $\overline{PA} \cong \overline{PB}$.
+
+**Paso 2: Todo punto equidistante está en $\ell$.**
+
+Sea $P$ tal que $\overline{PA} \cong \overline{PB}$. Sea $M$ el punto medio de $\overline{AB}$. Consideremos los triángulos $\triangle PAM$ y $\triangle PBM$:
+- $\overline{PA} \cong \overline{PB}$ (por hipótesis),
+- $\overline{AM} \cong \overline{MB}$ (punto medio),
+- $\overline{PM}$ es común a ambos triángulos.
+
+Por el <ConceptLink targetId="teorema-congruencia-lll">teorema LLL</ConceptLink>:
+
+$$ \triangle PAM \cong \triangle PBM. $$
+
+En particular, $\angle PMA \cong \angle PMB$. Pero estos ángulos son adyacentes y suplementarios (pues $M$ está entre $A$ y $B$), por lo que ambos son rectos. Esto significa que $P$ está en la perpendicular a $\overline{AB}$ por $M$, es decir, $P \in \ell$.
+
+Por tanto, $\{P : \overline{PA} \cong \overline{PB}\} = \ell$. $\blacksquare$
+
+<Separador />
+
+### Análisis
+
+La demostración es bidireccional: inclusión en ambos sentidos. El Paso 1 usa LAL (un axioma), el Paso 2 usa LLL (un teorema). La diferencia es significativa: en el Paso 1 conocemos el ángulo (recto), en el Paso 2 lo deducimos.
+
+<Nota>
+  La mediatriz es el eje de simetría del segmento: la reflexión respecto a ella intercambia $A$ y $B$. Las tres mediatrices de un triángulo concurren en el **circuncentro**, centro de la circunferencia circunscrita.
+</Nota>
+
+Este teorema es válido en geometría absoluta. La existencia del circuncentro, sin embargo, puede fallar en geometría hiperbólica para triángulos muy grandes.

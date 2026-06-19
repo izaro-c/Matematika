@@ -1,0 +1,41 @@
+export const metadata = {
+  "id": "axioma-paralelas-hiperbolico",
+  "type": "axioma",
+  "title": "Axioma de las Paralelas (Lobachevski)",
+  "description": "Por un punto exterior a una recta pasan al menos dos rectas paralelas a la dada.",
+  "statement": "Dada una recta l y un punto P no perteneciente a l, existen al menos dos rectas m y n distintas que pasan por P y son paralelas a l.",
+  "tags": ["geometria", "paralelas", "geometria-hiperbolica"],
+  "authors": ["lobachevski", "bolyai"],
+  "hasSimulation": true,
+};
+
+import { HyperbolicParallel } from '../../diagrams/Axiomas/HyperbolicParallel';
+export const Simulation = HyperbolicParallel;
+import { InteractiveElement } from "../../components/ui/VisualBind";
+
+<Capitular letra="P" />
+or un <InteractiveElement target="pP" color="terracota">punto</InteractiveElement> exterior a una recta pasan al menos dos <InteractiveElement target="lineM" color="terracota">rectas</InteractiveElement> <InteractiveElement target="lineN" color="pizarra">paralelas</InteractiveElement> a la dada. Este axioma niega el quinto postulado de Euclides y da origen a la geometría hiperbólica.
+
+<Separador />
+
+### Enunciado Formal
+
+<Formula>
+  $$ \forall l \; \forall P \notin l \; \exists m, n : P \in m \land P \in n \land m \neq n \land m \cap l = \emptyset \land n \cap l = \emptyset. $$
+</Formula>
+
+<Separador />
+
+### Discusión
+
+Este axioma es la negación del quinto postulado de Euclides. Mientras que Euclides afirma que por un punto exterior pasa *exactamente una* paralela, Lobachevski postula que pasan *al menos dos*. De aquí se sigue que pasan infinitas.
+
+A partir de este axioma se desarrolla la **geometría hiperbólica**, descubierta independientemente por Nikolái Lobachevski (1829) y János Bolyai (1832). En esta geometría, la suma de los ángulos de un triángulo es siempre menor que $180^\circ$, el área de un triángulo es proporcional a su defecto angular, y existen rectas paralelas que divergen exponencialmente.
+
+Existe un tercer caso —ninguna paralela— que corresponde a la geometría elíptica de Riemann, donde no hay rectas paralelas porque toda recta se corta con todas las demás. En esta clasificación, la geometría euclídea corresponde a curvatura cero, la hiperbólica a curvatura negativa y la elíptica a curvatura positiva.
+
+<Separador />
+
+### Observaciones
+
+La independencia del quinto postulado fue uno de los descubrimientos matemáticos más importantes del siglo XIX. Demostró que la geometría euclídea no es la única geometría posible, sino una entre varias, y abrió el camino a la geometría diferencial de Riemann y, finalmente, a la teoría de la relatividad general de Einstein.

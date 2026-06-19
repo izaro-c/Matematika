@@ -1,0 +1,34 @@
+export const metadata = {
+  "id": "axioma-orden-2",
+  "type": "axioma",
+  "title": "Axioma II-2 (Orden)",
+  "description": "Dados dos puntos distintos A y C, existe al menos un punto B sobre la recta AC que está entre A y C.",
+  "statement": "Para cualquier par de puntos distintos A y C, existe al menos un punto B tal que A * B * C.",
+  "tags": ["geometria", "orden", "geometria-absoluta"],
+  "authors": ["hilbert"],
+};
+
+<Capitular letra="D" />
+ados dos puntos distintos, existe al menos un punto entre ellos. Este axioma garantiza que el orden sobre la recta es denso: entre dos puntos cualesquiera siempre hay otro punto.
+
+<Separador />
+
+### Enunciado Formal
+
+<Formula>
+  $$ \forall A \neq C \; \exists B \; (A * B * C). $$
+</Formula>
+
+<Separador />
+
+### Discusión
+
+El axioma II-1 describía cómo se comporta la intermediación cuando existe; el axioma II-2 garantiza que siempre existe. Esto hace que la recta sea un conjunto infinito: entre dos puntos siempre podemos encontrar un tercero, y entre ese tercero y cualquiera de los extremos podemos encontrar otro, y así sucesivamente.
+
+La densidad del orden es una propiedad fundamental de la geometría clásica. Sin embargo, este axioma solo garantiza que entre dos puntos hay *al menos* un punto intermedio. Que haya *infinitos* puntos intermedios es una consecuencia de aplicar este axioma repetidamente, combinado con los axiomas de continuidad.
+
+<Separador />
+
+### Observaciones
+
+Este axioma, junto con el axioma de Arquímedes (IV-1), permitirá demostrar que la recta es isomorfa a los números reales. Por sí solo, solo garantiza la densidad —que puede satisfacerse con conjuntos densos numerables, como los racionales.

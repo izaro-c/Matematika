@@ -1,0 +1,43 @@
+export const metadata = {
+  "id": "lema-punto-medio",
+  "type": "lema",
+  "title": "Lema: Existencia y unicidad del punto medio",
+  "description": "Todo segmento tiene un único punto medio que lo divide en dos segmentos congruentes.",
+  "statement": "Sea AB un segmento. Existe un único punto M ∈ AB tal que AM ≅ MB.",
+  "requires": ["axioma-congruencia-1", "axioma-congruencia-2", "axioma-orden-1"],
+  "demos": ["demo-punto-medio"],
+  "parentTheorem": "teorema-punto-medio-perpendicular",
+  "tags": ["geometria", "congruencia", "orden", "geometria-absoluta"],
+  "authors": ["hilbert"],
+  "difficulty": "intermedio",
+  "links": ["axioma-congruencia-1", "axioma-congruencia-2", "axioma-orden-1"],
+};
+
+import { InteractiveElement } from "../../components/ui/VisualBind";
+
+<Capitular letra="T" />
+odo segmento posee un único punto medio —un punto que lo divide en dos partes congruentes. Este resultado, esencial para la geometría métrica, se demuestra usando los <ConceptLink targetId="axioma-congruencia-1">axiomas de congruencia</ConceptLink> y <ConceptLink targetId="axioma-orden-1">orden</ConceptLink>.
+
+<Separador />
+
+### Enunciado
+
+<Formula>
+  $$ \forall \, \overline{AB}, \; \exists! \; M \in \overline{AB} : \overline{AM} \cong \overline{MB}. $$
+</Formula>
+
+<Separador />
+
+### Demostración
+
+La demostración se realiza en dos partes: existencia (por transporte de segmentos) y unicidad (por el axioma de unicidad del transporte). Se encuentra en la página dedicada: <ConceptLink targetId="demo-punto-medio">Demostración: Existencia y unicidad del punto medio</ConceptLink>.
+
+<Separador />
+
+### Discusión
+
+El punto medio es uno de los constructos más útiles de la geometría. Permite definir la **mediatriz** de un segmento (el lugar geométrico de los puntos equidistantes de los extremos) y, posteriormente, las simetrías axiales. Se usa en el <ConceptLink targetId="teorema-punto-medio-perpendicular">teorema de la mediatriz perpendicular</ConceptLink>.
+
+<Nota>
+  La existencia del punto medio depende crucialmente de los axiomas de continuidad (<ConceptLink targetId="axioma-arquimedes">Arquímedes</ConceptLink> y <ConceptLink targetId="axioma-completitud">completitud</ConceptLink>) en el sentido de que, sin ellos, pueden existir modelos donde ciertos segmentos no admitan punto medio. Con los axiomas de congruencia y orden solos se garantiza la unicidad; para la existencia general se requiere continuidad.
+</Nota>
