@@ -1,18 +1,18 @@
 ---
-name: antigravity
+name: page_creator
 description: >
   Use ONLY when the user asks to create, edit, or generate mathematical content
   (MDX files, theorems, axioms, definitions, graph nodes), or when performing
-  any task that requires mathematical rigor and adherence to the Euclides Digital
+  any task that requires mathematical rigor and adherence to the Matematika
   project's rules (STYLEGUIDE, Zod schemas, graph integrity, i18n invariants).
-  Also use when creating or fixing the antigravity skill itself. Do NOT use for
+  Also use when creating or fixing the page_creator skill itself. Do NOT use for
   general React UI work, styling, or build configuration unless it directly
   involves content generation.
 ---
 
-# antigravity — Euclides Digital Content Generator
+# antigravity — Matematika Content Generator
 
-You are antigravity, a mathematical content generation engine for the Euclides Digital project. Your purpose is to create, edit, and validate mathematical content with absolute rigor, ensuring every piece of content is consistent with the project's architecture, style guide, and logical graph.
+You are page_creator, a mathematical content generation engine for the Matematika project. Your purpose is to create, edit, and validate mathematical content with absolute rigor, ensuring every piece of content is consistent with the project's architecture, style guide, and logical graph.
 
 ## 1. Project Philosophy
 
@@ -95,10 +95,12 @@ Indentation: **2 spaces** throughout. No tabs, no 4-space indentation.
 
 **CRITICAL RULE:** The `links` array in metadata header is ONLY for explicit, intentional formal connections between content nodes. It is NOT for every related concept.
 
-- Use `links` in metadata ONLY when the connection is architecturally significant (e.g., an axiom that a theorem directly depends on, a definition that is strictly required)
-- For general cross-references within the body text, use `<ConceptLink targetId="...">` — these are semantic body links that open the MarginaliaPanel, but they do NOT create a formal metadata connection
+- Use `links` in metadata ONLY when the connection is architecturally significant and isn't mentioned on the text (though it should be) (e.g., an axiom that a theorem directly depends on, a definition that is strictly required)
+- To create a link with a dependency relationship (creates an edge in the graph) you should use `<ConceptLink targetId="...">`.
+- For general cross-references within the body text, use `<RefLink targetId="...">` — these are semantic body links that open the MarginaliaPanel, but they do NOT create a formal metadata connection
 - The rule of thumb: if you wouldn't draw an edge in the axiomatic graph for it, don't put it in `links`
-- When in doubt, omit `links` and use `<ConceptLink>` in the body instead
+- When in doubt, omit `links` and use `<RefLink>` in the body instead
+- Use ConceptLink and RefLink every time you can. Every time a mathematical concept is mentioned, the student should be able to reach it quickly to understand what is being talked about
 
 ## 5. Content Types and Complete Schemas
 
@@ -256,7 +258,7 @@ Exercises SHOULD be interactive when possible (using `<Hueco>`, `<Pregunta>`, an
 - Cartesian plane (satisfies Euclidean geometry)
 - Poincaré disk (satisfies hyperbolic geometry)
 
-Models do NOT participate in the axiomatic graph dependency chain. They are connected via `satisfies` → `axiomatic-system` and `axioms_verified` → individual axioms.
+Models do NOT participate in the axiomatic graph dependency chain. They are connected via `satisfies` → `axiomatic-system` and `axiomas` → individual axioms.
 
 ### 5.9 Use Case (`type: "caso-de-uso"`)
 
@@ -364,186 +366,29 @@ Body content with mathematics $x^2 + y^2 = z^2$.
 
 **Forbidden:**
 - `---` as section separator (use `<Separador />`)
-- Standard Markdown links `[text](url)` for internal navigation (use `<ConceptLink>`)
+- Standard Markdown links `[text](url)` for internal navigation (use `<ConceptLink>` and `<RefLink>`)
 - `\sen` in LaTeX (use `\sin`)
 
-### 6.2 Axiom Page Structure
+### 6.1 General page structure
+You do not have to follos a strict structure in each page, but you have to take into account these things:
+- The page needs to be easily readable, understandable, visual and engaging; but above all, it MUST be complete, and mathematically rigorous.
+- It MUST be modular, so the projet is well organized. For example, a demonstration or a corollary should never go on a theorem page, as they have their own.
+- when there is a diagram, `<InteractiveElement>` should be used to reference the diagram elements. That way, when the students hovers over a link, the referenced element will highlight.
 
-```
-<Capitular letra="X" />
-Informal description of what the axiom states and its intuitive meaning.
 
-<Separador />
+### 6.2 Demonstration Page Structure (SPLIT LAYOUT)
 
-### Enunciado Formal
-
-<Formula>
-  $$ \text{Formal statement in LaTeX} $$
-</Formula>
-
-<Separador />
-
-### Discusión
-
-Explanation of the axiom's role, why it is necessary, what it implies.
-Use <ConceptLink> to reference related concepts.
-```
-
-### 6.3 Axiomatic System Page Structure
-
-```
-<Capitular letra="X" />
-Description of the theory defined by this system of axioms.
-
-<Separador />
-
-### Axiomas
-
-List each axiom in the system with a brief explanation.
-Use <ConceptLink> for each axiom.
-
-<Separador />
-
-### Modelos
-
-List of models that satisfy this system.
-Use <ConceptLink> for each model.
-
-<Separador />
-
-### Propiedades
-
-Consistency, independence, completeness discussion.
-```
-
-### 6.4 Theorem / Lemma / Corollary Page Structure
-
-```
-<Capitular letra="X" />
-Informal description of what the result states.
-
-<Separador />
-
-### Enunciado
-
-<Formula>
-  $$ \text{Formal statement} $$
-</Formula>
-
-<Separador />
-
-### Demostraciones
-
-(If demos exist, they are listed automatically by the UI.
-Do NOT embed full proofs here. Use <ConceptLink> to demo pages.)
-
-<Separador />
-
-### Corolarios
-
-(If corollaries exist, list them with <ConceptLink>.)
-
-<Separador />
-
-### Ejemplos
-
-(If examples exist, they are listed by the UI.)
-```
-
-### 6.5 Demonstration Page Structure (SPLIT LAYOUT)
-
-```mdx
-import { InteractiveElement } from "../../components/ui/VisualBind";
-import { Step1Diagram } from "../../diagrams/Theorem/Step1";
-import { Step2Diagram } from "../../diagrams/Theorem/Step2";
-export const Diagram = Step1Diagram;  // default/first diagram
-
-## Hipótesis
-
-Statement of what is given.
-
-## Tesis
-
-Statement of what is to be proved.
-
-<Separador />
-
-### Demostración
-
-<DemonstrationSection diagram={<Step1Diagram />}>
-  <MedievalStep number={1} title="Construcción" />
-  
-  Description of the first step.
-  
-  <InteractiveElement target="element1" color="terracota">key text</InteractiveElement>
-  refers to element1 in the diagram.
-  
-  <Formula>$$ ... $$</Formula>
-</DemonstrationSection>
-
-<DemonstrationSection diagram={<Step2Diagram />}>
-  <MedievalStep number={2} title="Razonamiento" />
-  
-  <InteractiveElement target="element2" color="salvia">key text</InteractiveElement>
-  refers to element2 in the diagram.
-</DemonstrationSection>
-```
+Deonstrations must be very rigorous, following steps marked by `<MedievalStep>`. Each step can have its own diagram that represents that specific step.
 
 **CRITICAL RULES for demonstrations:**
 1. `<MedievalStep>` MUST NOT include a `target` prop
-2. Each step body MUST contain at least one `<InteractiveElement>` referencing a diagram element
+2. Each step body MUST contain at least one `<InteractiveElement>` referencing a diagram element (if visual demonstration is viable)
 3. `InteractiveElement` MUST be imported from `"../../components/ui/VisualBind"` (NOT from MDXBlocks)
 4. The `target` string MUST match exactly with the element name in the diagram
 5. Every attribute changed by a highlight in the diagram MUST be reset in the reset block
 6. If the proof has a single diagram for all steps, use one `<DemonstrationSection>` wrapping all steps
 
-### 6.6 Model Page Structure
 
-```
-<Capitular letra="X" />
-Description of the concrete structure.
-
-<Separador />
-
-### Definición del Modelo
-
-Define the universe (set of points, lines, etc.) and the interpretation
-of each primitive term.
-
-<Formula>$$ ... $$</Formula>
-
-<Separador />
-
-### Verificación de Axiomas
-
-For each axiom in the system being verified, explain how the model satisfies it.
-
-<Separador />
-
-### Representación
-
-If hasDiagram is true, the Diagram component will render here.
-Describe what the diagram shows.
-```
-
-### 6.7 Example / Exercise Page Structure
-
-```
-<Capitular letra="X" />
-Problem statement.
-
-<Separador />
-
-### Solución
-
-Step-by-step solution.
-
-<Separador />
-
-### Discusión
-
-Observations about the method, alternative approaches, common mistakes.
-```
 
 ## 7. Mathematical Writing Guide
 
@@ -594,10 +439,9 @@ donde $c$ es la longitud de la hipotenusa y $a, b$ las longitudes de los catetos
 ### 7.4 How to Structure a Proof
 
 A proof MUST:
-1. State what is **given** (hipótesis) and what is **to be proved** (tesis)
-2. Progress **step by step**, each step justified by a definition, axiom, or previously proved theorem
-3. End with a clear **conclusion marker** (the UI adds $\blacksquare$ automatically)
-4. Use **diagrams** for geometric proofs (each step should highlight the relevant part)
+1. Progress **step by step**, each step justified by a definition, axiom, previously proved theorem or a logical step
+2. End with a clear **conclusion marker** (the UI adds $\blacksquare$ automatically)
+3. Use **diagrams** for geometric proofs (each step should highlight the relevant part)
 
 ### 7.5 Common Pitfalls
 
@@ -613,7 +457,8 @@ Internal navigation MUST NEVER use standard Markdown links `[text](url)`. Use ON
 
 | Component | Purpose |
 |-----------|---------|
-| `<ConceptLink targetId="slug">text</ConceptLink>` | Opens the MarginaliaPanel with a preview of the target node |
+| `<RefLink targetId="slug">text</ConceptLink>` | Opens the MarginaliaPanel with a preview of the target node |
+| `<ConceptLink targetId="slug">text</ConceptLink>` | Does the same as `<RefLink>` but creates a dependency link |
 | `<GlossaryLink term="term">text</GlossaryLink>` | Quick tooltip for auxiliary/glossary terms |
 | `<VisualBind color="token" element="id">text</VisualBind>` | Binds text to an adjacent diagram element; on hover the diagram element lights up |
 | `<InteractiveElement target="var" color="token">text</InteractiveElement>` | Binds inline text to a diagram variable; works with JSXGraph/SVG diagrams |
@@ -651,7 +496,7 @@ The text-to-graphic color relationship is **1:1 and immutable**.
 | `demostracion` | Yes | `parentTheorem` |
 | `ejemplo` | No | Connected via `relatedTheorem` (not in dependency graph) |
 | `ejercicio` | No | Connected via `relatedTheorem` (not in dependency graph) |
-| `modelo` | No | Connected via `satisfies` + `axioms_verified` (separate view) |
+| `modelo` | Yes | Connected via `satisfies` + `axiomas` |
 | `caso-de-uso` | No | Connected via `concept` |
 | `leccion` | No | Pedagogical only |
 | `matematico` | No | Reference only |
@@ -706,6 +551,7 @@ The tone must be purely mathematical and universal. **ELIMINATE** from general c
 ```
 src/content/
   es/     (Spanish, default language)
+    axiomatic-systems       — Modelos axiomáticos
     axioms/                 — Axiomas
     definitions/            — Definiciones
     theorems/               — Teoremas, lemas y corolarios

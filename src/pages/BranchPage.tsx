@@ -93,6 +93,7 @@ export const BranchPage = () => {
                     else if (entry.type === 'theorem') link = `/teorema/${entry.item.id}`;
                     else if (entry.type === 'definition') link = `/definicion/${entry.item.id}`;
                     else if (entry.type === 'axiom') link = `/axioma/${entry.item.id}`;
+                    else if (entry.type === 'model') link = `/modelo/${entry.item.id}`;
 
                     const typeStyles: Record<string, { borderClass: string, textClass: string, label: string }> = {
                       'theorem': { borderClass: 'border-terracota/30 hover:border-terracota/60', textClass: 'text-terracota', label: 'Teorema' },
@@ -102,6 +103,7 @@ export const BranchPage = () => {
                       'example': { borderClass: 'border-granada/30 hover:border-granada/60', textClass: 'text-granada', label: 'Ejemplo' },
                       'useCase': { borderClass: 'border-musgo/30 hover:border-musgo/60', textClass: 'text-musgo', label: 'Caso de Uso' },
                       'axiom': { borderClass: 'border-carbon/30 hover:border-carbon/60', textClass: 'text-carbon', label: 'Axioma' },
+                      'model': { borderClass: 'border-pizarra/30 hover:border-pizarra/60', textClass: 'text-pizarra', label: 'Modelo' },
                     };
                     const style = typeStyles[entry.type] || { borderClass: 'border-carbon/20 hover:border-carbon/40', textClass: 'text-carbon', label: entry.type };
 

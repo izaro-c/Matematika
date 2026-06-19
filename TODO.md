@@ -118,107 +118,169 @@
 
 ---
 
-## FASE 2 — INTERNACIONALIZACIÓN (i18n)
+## FASE 2 — Integración completa de modelos
+*Integrar completamente el concepto de "Modelo" en toda la aplicación.*
+- [ ] 1. SearchOmnibar: tipo 'modelo', loop db.models, icon/color/href
+- [ ] 2. ContentStore: getBranchTaxonomy + getItemsByBranch incluyen modelos
+- [ ] 3. BranchLibrary + BranchPage: caso 'model' en href/labels/estilos
+- [ ] 4. DictionaryPage: modelos en glosario, categoría "Modelos"
+- [ ] 5. graph.worker.ts: 'modelo' en VISIBLE_TYPES, edges desde axioms_verified + satisfies
+- [ ] 6. AxiomaticTree: modelos como nodos de pleno derecho, toggle en "Tipos de Nodo", color en leyenda
+- [ ] 7. GraphPage: click en modelo → /modelo/:id, entrada en leyenda
+- [ ] 8. NewFileWizard: opción "Modelo" con campos satisfies + axioms_verified + hasDiagram
+- [ ] 9. ModelPage: SimulationLayout opcional además de Diagram
+- [ ] 10. TaxonomyGraph: caso 'model' en color + click
+- [ ] 11. Revisión contenido: auditar modelo-tres-puntos.mdx — ¿es suficiente o necesita más modelos (Fano, cartesiano, Poincaré)? Evaluar si la verificación de axiomas es completa o superficial
+
+---
+
+## FASE 3 — Modularización + interconexión con ConceptLinks
+*Mejorar la navegabilidad del contenido existente.*
+- [ ] 1. Script Python: detectar menciones de conceptos sin ConceptLink en los 51 MDX
+- [ ] 2. Corolarios: separar a archivos propios (type: "corolario", parentTheorem). Teorema padre los lista automáticamente
+- [ ] 3. Lemas: verificar parentTheorem en todos
+- [ ] 4. TheoremPage: listar lemas, corolarios, demos, ejemplos, ejercicios desde metadata automáticamente
+- [ ] 5. Sistemas: cada axioma mencionado con ConceptLink en el cuerpo, no solo listado
+- [ ] 6. Revisión contenido por archivo (eliminar/añadir/modificar/reorganizar):
+  - [ ] Axiomas: ¿enunciado formal preciso? ¿discusión aporta contexto o repite? Eliminar redundancias entre "Discusión" y "Observaciones" si las hay. Añadir ejemplos concretos si faltan
+  - [ ] Definiciones: ¿usa solo términos primitivos o definidos? ¿statement formal coincide con descripción? Reorganizar: intuición → enunciado → discusión
+  - [ ] Teoremas: ¿hipótesis y tesis claramente separadas? Eliminar demostraciones embebidas (ya en demos). Añadir "Aplicaciones" si faltan
+  - [ ] Sistemas: ¿lista de axiomas completa y ordenada? Añadir "Propiedades" (consistencia, independencia, completitud) si faltan
+  - [ ] Matemáticos: ¿contribuciones enlazadas a sus teoremas? Eliminar adjectivación innecesaria
+
+---
+
+## FASE 4 — Demostraciones paso a paso con MedievalStep + diagramas
+*Hacer las demostraciones visuales e interactivas.*
+- [ ] 1. Convertir 6 demos a layout: "split"
+- [ ] 2. Estructura: `<DemonstrationSection diagram={...}>` + `<MedievalStep number target title />` por cada paso lógico
+- [ ] 3. Reglas por paso: justificado por axioma (ConceptLink), definición (ConceptLink), hipótesis, o resultado previo (ConceptLink al teorema/lema)
+- [ ] 4. Diagrama reactivo: un diagrama único por demo que responde a useMathStore.highlight cambiado por MedievalStep. Cada paso highlights el elemento relevante
+- [ ] 5. Crear diagramas por demo (6 diagramas nuevos o reutilizar existentes con highlights):
+  - [ ] demo-dos-rectas-un-punto: diagrama con 2 rectas + 2 puntos shared → contradicción visual
+  - [ ] demo-angulos-opuestos: diagrama existente AngulosOpuestos con highlights por step
+  - [ ] demo-congruencia-ala: diagrama con transporte de segmento paso a paso
+  - [ ] demo-congruencia-lll: diagrama con intersección de circunferencias
+  - [ ] demo-punto-medio: diagrama con construcción del punto medio
+  - [ ] demo-punto-medio-perpendicular: diagrama con mediatriz + LAL/LLL
+- [ ] 6. Revisión contenido: cada demo debe tener hipótesis/tesis explícitas, pasos numerados, justificación por paso, conclusión con □. Eliminar pasos innecesarios, añadir pasos faltantes si hay saltos lógicos
+
+---
+
+## FASE 5 — Métodos de prueba + contenido nuevo
+*Añadir nuevas demostraciones y lecciones.*
+- [ ] 1. Métodos de prueba (lecciones con diagramas):
+  - [ ] leccion-metodo-directo — qué es, cuándo usar, ejemplo (dos-rectas-un-punto)
+  - [ ] leccion-metodo-contradiccion — qué es, cuándo usar, ejemplo (dos-rectas-un-punto)
+  - [ ] leccion-metodo-contraposicion — qué es, ejemplo
+  - [ ] leccion-metodo-induccion — qué es, ejemplo
+  - [ ] leccion-metodo-exhaustivo — qué es, ejemplo
+  - [ ] Cada una con diagrama interactivo si aporta (ej: contradicción muestra suposición → contradicción visual)
+- [ ] 2. Contenido nuevo:
+  - [ ] Teoremas: Pitágoras, suma de ángulos del triángulo, desigualdad triangular, criterio LLA (con condiciones), teorema del ángulo exterior
+  - [ ] Definiciones: triángulo, circunferencia, perpendicular, paralelas, bisectriz, mediana, altura
+  - [ ] Ejercicios: 3-5 por teorema clave (interactivos con `<Hueco>`, `<Pregunta>`)
+  - [ ] Ejemplos: 2-3 por teorema clave (resueltos paso a paso)
+  - [ ] Casos de uso: arquitectura (rigidez triangular via LLL), navegación (Pitágoras), diseño (ángulos opuestos)
+  - [ ] Plan de estudio: "Fundamentos de Geometría" — secuencia axiomática
+- [ ] 3. Revisión contenido: cada nuevo archivo debe pasar el criterio de calidad (riguroso, completo, comprensible, visual). No añadir por añadir — solo si aporta valor pedagógico
+
+---
+
+## FASE 6 — Matemáticos + estilo liana
+*Mejorar las biografías.*
+- [ ] 1. Alinear schema: BiographyLayout usa birth/death/era/fullName (strings) pero MathematicianSchema tiene birthYear/deathYear (números). Unificar
+- [ ] 2. Mejorar schema: añadir field (campo), knownFor (array IDs), portrait (image path)
+- [ ] 3. Estilo liana: panel izquierdo con timeline vertical (nodos diamond por año clave: nacimiento, publicación principal, fallecimiento). Clickable → teorema o contexto
+- [ ] 4. Contenido MDX (7 archivos): secciones Vida, Contribuciones (con ConceptLinks), Contexto histórico, Legado. Lenguaje natural y riguroso
+- [ ] 5. Conexión: db.getTheoremsByAuthor ya existe. Añadir getAxiomsByAuthor, getSystemsByMathematician
+- [ ] 6. Revisión contenido: eliminar adjetivación teatral ("célebre", "genio", "revolucionario"). Mantener hechos verificables. Añadir contexto matemático real (qué problema resolvió, qué cambió)
+
+---
+
+## FASE 7 — Fórmulas clicables + glosario automático
+*Mejorar la comprensión matemática básica.*
+- [ ] 1. Formula component: click handler → popover con explicación de símbolos. Extraer variables de la fórmula (parse KaTeX) y mapear a glosario
+- [ ] 2. Glosario automático: GlossaryStore.init() itera db.getAllDefinitions() → añade cada definición como término (title → término, description → definición)
+- [ ] 3. Tooltip: al clicar fórmula $a^2+b^2=c^2$ → popover "a, b: catetos; c: hipotenusa" con links a definiciones
+- [ ] 4. DictionaryPage: ya muestra definiciones. Verificar que se sincroniza con GlossaryStore
+- [ ] 5. Revisión contenido: auditar fórmulas en MDX — ¿usan símbolos definidos? Si una fórmula usa $\angle$ sin que "ángulo" esté en el glosario, añadirlo
+
+---
+
+## FASE 8 — Modo oscuro + UI (solapamientos)
+*Pulido final de la interfaz.*
+- [ ] 1. Persistencia tema: ThemeToggle → localStorage + prefers-color-scheme
+- [ ] 2. Reemplazar hardcoded: buscar bg-zinc-900, bg-white, text-white, bg-black/30 → semánticos (bg-carbon, bg-lienzo, text-lienzo). Especialmente BiographyLayout.tsx
+- [ ] 3. Monaco: theme dinámico (vs-light/vs-dark)
+- [ ] 4. Solapamientos: revisar AxiomaticTree (panel izq + búsqueda + panel der + leyenda en pantallas medianas), GraphPage (leyenda + búsqueda), BranchPage (grafo + listas). Añadir responsive breakpoints
+- [ ] 5. JSXGraph en oscuro: verificar .JXGtext stroke se ajusta
+- [ ] 6. Revisión contenido: auditar etiquetas UI teatrales ("Códice", "Papiro") → nombres neutros manteniendo estilo visual Arts & Crafts
+
+---
+
+## FASE 9 — Mejora del editor
+*Mejorar la experiencia de creación.*
+- [ ] 1. Deduplicar: usar componentes extraídos (EditorToolbar, LinkModal, NewFileWizard) en vez de inline en EditorPage.tsx. Eliminar código muerto
+- [ ] 2. Links externos: LinkModal → toggle Interno/Externo. Externo: URL libre. Interno: dropdown (actual)
+- [ ] 3. ConceptLink inserter: botón en toolbar → modal con dropdown de todos los IDs → inserta `<ConceptLink targetId="...">`
+- [ ] 4. Wizard modelos: ya cubierto en Fase 2
+- [ ] 5. UX: agrupar botones (Texto | Matemática | Bloques | Referencias), tooltips español, iconos claros
+- [ ] 6. Revisión contenido: auditar plantillas MDX que genera el wizard — ¿includen todos los componentes necesarios? ¿El metadata scaffolding es correcto?
+
+---
+
+## FASE 10 — Revisión de lenguaje (natural y técnico)
+*Validar calidad final.*
+- [ ] 1. Script Python: buscar lenguaje teatral en MDX ("célebre", "elegante", "Nótese", "He aquí", "❦", epígrafes ornamentales excesivos)
+- [ ] 2. Reemplazar por natural y técnico: "célebre" → eliminar, "elegante" → eliminar o justificar, "Nótese que" → "Obsérvese que" o directo
+- [ ] 3. Mantener rigurosidad: definiciones formales y demostraciones precisas. Solo cambiar tono expositivo
+- [ ] 4. Componentes UI: renombrar "Códice Nocturno" → "Modo oscuro", "Papiro" → "Modo claro", "Biblioteca" → "Inicio" o mantener si conviene
+- [ ] 5. Revisión final por archivo: cada página pasa el criterio (riguroso, completo, comprensible, visual). Eliminar lo redundante, reorganizar lo desordenado
+
+---
+
+## FASE 11 — INTERNACIONALIZACIÓN (i18n)
 
 *Una vez que la base es consistente, se puede bifurcar por idiomas sin riesgo.*
 
-### 2.0 Principio del ID Invariante
+### 11.0 Principio del ID Invariante
 - [ ] Documentar y aplicar: `metadata.id`, `targetId`, `links`, MSC2020 nunca se traducen
 - [ ] Verificar que ningún componente usa cadenas traducibles como clave
 - [ ] Asegurar que `validate-logical-graph.ts` ignora locale
 
-### 2.1 Bifurcación del sistema de archivos MDX
+### 11.1 Bifurcación del sistema de archivos MDX
 - [ ] Reestructurar `src/content/` → `src/content/es/`, `src/content/en/`, `src/content/eu/`
 - [ ] Migrar MDX existentes a `src/content/es/`
 - [ ] Adaptar `import.meta.glob` para cargar desde el locale activo
 - [ ] Traducir title, description y cuerpo a inglés y euskera
 - [ ] Decidir si `taxonomyData.ts` se traduce
 
-### 2.2 Grafos paralelos
+### 11.2 Grafos paralelos
 - [ ] Evaluar Opción A (monolítico) vs **Opción B** (grafos paralelos por idioma)
 - [ ] Implementar en `validate-logical-graph.ts`
 - [ ] Adaptar GraphWorker para cargar grafo del locale activo
 - [ ] Verificar topología idéntica entre idiomas
 
-### 2.3 Gestión de estado global
+### 11.3 Gestión de estado global
 - [ ] Instalar e integrar `i18next` + `react-i18next`
 - [ ] Crear archivos `locales/{es,en,eu}/common.json`
 - [ ] Añadir `locale` a Zustand store
 - [ ] Conectar cambio de idioma: i18next → ContentStore → GraphWorker
 - [ ] Selector de idioma en la interfaz
 
-### 2.4 LaTeX y geometría
+### 11.4 LaTeX y geometría
 - [ ] Documentar guía de traducción matemática (LAL→SAS, ALA→ASA, \text{sen}→\sin)
 - [ ] Aplicar guía a MDX traducidos
 - [ ] Nota aclaratoria en glosario si se mantiene notación de Hilbert
 
 ---
 
-## FASE 3 — GRAFO Y EXPERIENCIA DE NAVEGACIÓN
-
-*Mejoras que el usuario nota inmediatamente.*
-
-### 3.1 Grafo axiómatico
-- **Modelos matemáticos:**
-  - [x] Panel dinámico que lea modelos desde `src/content/models/`
-  - [x] Resaltar axiomas activos al seleccionar modelo
-  - [x] Atenuar/ocultar axiomas excluidos
-  - [x] Permitir múltiples modelos simultáneos (intersección)
-  - [x] Persistir selección en localStorage
-- **Visibilidad:**
-  - [x] Layout sin solapamientos (dagre layout)
-  - [x] Agrupar nodos por tipo con fondos semitransparentes → **anillos de color por grupo axiomático en CustomNode** (Incidencia/Orden/Congruencia/Paralelas/Lobachevski)
-  - [x] Estilos de arista: directa (sólida), lema intermedio (discontinua), definicional (punteada)
-  - [x] Zoom inicial (fitView), controles de zoom, minimap
-  - [x] Filtros por tipo de nodo (checkboxes)
-  - [x] Búsqueda de nodo por nombre
-- **Panel lateral:**
-  - [x] Mostrar: tipo (badge), título, descripción, cadena de dependencias
-  - [x] Botón "Ver página completa" → `/teorema/:id`, `/definicion/:id`, `/axioma/:id`
-  - [x] Enlaces a predecesores y sucesores
-  - [ ] Si es axioma con modelos activos, mostrar en qué modelos está
-  - [x] Diseño responsive (modal en móvil)
-
-### 3.2 Navegabilidad
-- **Logo:**
-  - [x] Revisar solapamientos con ThemeToggle, SearchOmnibar, MarginaliaPanel — **creado TopBar.tsx, z-index reorganizado (TopBar z-[60], MarginaliaPanel z-50, SearchOmnibar z-[100])**
-  - [x] Agrupar controles flotantes en barra superior — **TopBar component con pointer-events-none + pointer-events-auto en hijos**
-  - [x] Asegurar z-index correcto — **TopBar z-[60] sobre MarginaliaPanel (z-50), bajo SearchOmnibar (z-[100])**
-- **ConceptLinks:**
-  - [x] Auditar ConceptLink.tsx — MarginaliaPanel exists in App.tsx, ConceptLink in MDXBlocks
-  - [x] Feedback visual si targetId no existe — **ya implementado en ConceptLink.tsx:38-47 (borde granada discontinuo)**
-  - [ ] Considerar unificar ConceptLink, GlossaryLink, HighlightLink, VisualBind — **evaluado: propósitos distintos (navegación, tooltip, simulación), no unificar**
-
-### 3.3 Onboarding / Tour interactivo
-- [ ] Evaluar driver.js (más ligero) vs shepherd.js vs intro.js
-- [ ] Tour de primera visita al grafo (5 pasos: qué son los nodos, selector de modelos, filtros, panel de detalle, búsqueda)
-- [ ] Botón "Reiniciar tour"
-- [ ] Tour breve para HomePage (tarjetas de acceso rápido, filosofía)
-- [ ] Tour contextual para el editor (sidebar, metadatos, preview)
-
-### 3.4 Atajos de teclado
-- [x] `g` + `h` → Home · `g` + `t` → Teorema · `g` + `d` → Definición
-- [x] `g` + `g` → Grafo · `g` + `a` → Axiomas · `g` + `e` → Editor
-- [x] `g` + `s` → Diccionario · `?` → SearchOmnibar
-- [x] `Escape` → cerrar SearchOmnibar y MarginaliaPanel
-- [x] Evitar interferencias con Monaco Editor — **`isEditing()` check en `useKeyboardShortcuts.ts:12-17`**
-
-### 3.5 Búsqueda a texto completo
-- [x] Auditar SearchOmnibar: busca solo metadatos (title + description) — **no incluye cuerpo MDX, requeriría cargar raw .mdx como texto**
-- [x] Integrar Fuse.js — **fuzzy search con threshold 0.35, pesos title:2 / subtitle:1**
-- [x] Indexar taxonomy MSC2020 — **códigos + nombres en results como tipo `msc2020`**
-- [x] Indexar biografías y glosario — **ya estaban: matemáticos + glosario**
-- [x] Filtros por tipo de contenido — **sidebar izquierda con checkboxes de tipo**
-- [x] Snippets con término resaltado — **highlightText() que usa `includeMatches` de Fuse.js**
-- [ ] Persistir índice en IndexedDB (opcional, búsqueda offline)
-
----
-
-## FASE 4 — POLISH VISUAL Y CALIDAD
+## FASE 12 — POLISH VISUAL Y CALIDAD
 
 *Pulir la interfaz para que esté lista para usuarios reales.*
 
-### 4.1 Mejoras de UI
+### 12.1 Mejoras de UI
 - **Sistema de diseño:**
   - [x] Breadcrumbs reutilizable y responsivo (truncar ramas largas + title tooltips)
   - [x] ContentCard con variantes por tipo — **añadido prop `type` que auto-asigna badge/accent/actionLabel desde CONTENT_TYPE_CONFIG; usado en TheoremPage y ExamplePage**
@@ -241,19 +303,19 @@
   - [ ] Sincronizar color de elementos interactivos con tokens semánticos
   - [x] Permitir que páginas de axiomas tengan simulaciones — **añadido `Simulation` a `Axiom` interface + ContentStore + SimulationLayout en AxiomPage**
 
-### 4.2 Diseño responsive y móvil
-- [] **Grafo:** nodos reducidos, panel lateral → modal, selector de modelos → bottom sheet
-- [] **Editor:** modo lectura forzado o editor texto plano en móvil, preview fullscreen
-- [] **Páginas:** SimulationLayout apilado, BiographyLayout colapsable — **cambiado a `flex-col lg:flex-row` + padding responsive**, MarginaliaPanel → modal, SearchOmnibar usable en teclado móvil
-- [] **Tablas y fórmulas LaTeX:** scroll horizontal — **`overflow-x: auto` en `.katex-display, .katex`**
+### 12.2 Diseño responsive y móvil
+- [ ] **Grafo:** nodos reducidos, panel lateral → modal, selector de modelos → bottom sheet
+- [ ] **Editor:** modo lectura forzado o editor texto plano en móvil, preview fullscreen
+- [ ] **Páginas:** SimulationLayout apilado, BiographyLayout colapsable — **cambiado a `flex-col lg:flex-row` + padding responsive**, MarginaliaPanel → modal, SearchOmnibar usable en teclado móvil
+- [ ] **Tablas y fórmulas LaTeX:** scroll horizontal — **`overflow-x: auto` en `.katex-display, .katex`**
 
-### 4.3 Accesibilidad (a11y)
-- [] **Contenido matemático:** `aria-label` en fórmulas KaTeX, explorar MathML, `alt` text en diagramas
-- [] **Teclado:** grafo navegable con Tab/Enter/Escape, focus trap en modales, skip-to-content link
-- [] **ARIA:** roles navigation/main, aria-expanded en paneles, aria-live en zonas dinámicas, aria-label en ThemeToggle
-- [] **Contraste:** verificar WCAG AA con paleta Arts & Crafts, dificultad no solo por color, modo alto contraste opcional
+### 12.3 Accesibilidad (a11y)
+- [ ] **Contenido matemático:** `aria-label` en fórmulas KaTeX, explorar MathML, `alt` text en diagramas
+- [ ] **Teclado:** grafo navegable con Tab/Enter/Escape, focus trap en modales, skip-to-content link
+- [ ] **ARIA:** roles navigation/main, aria-expanded en paneles, aria-live en zonas dinámicas, aria-label en ThemeToggle
+- [ ] **Contraste:** verificar WCAG AA con paleta Arts & Crafts, dificultad no solo por color, modo alto contraste opcional
 
-### 4.4 Exportación e impresión
+### 12.4 Exportación e impresión
 - [ ] `@media print` en CSS (ocultar navegación, MarginaliaPanel, etc.)
 - [ ] Forzar modo claro en impresión
 - [ ] Botón "Imprimir / Exportar PDF" en páginas de contenido
@@ -261,33 +323,7 @@
 
 ---
 
-## FASE 5 — NUEVAS FUNCIONALIDADES
-
-*Contenido y herramientas que expanden el proyecto.*
-
-### 5.1 Editor — Sidebar y tipos faltantes
-- [ ] Eliminar `diagrams` y `components` del sidebar (aún presentes en `EditorSidebar.tsx`)
-- [ ] Añadir: exercises, examples, usecases, axioms, models, plans (no están en sidebar)
-- [ ] Crear templates MDX para tipos faltantes
-- [ ] Panel de metadatos: mostrar **todos** los campos del schema Zod (no solo los presentes)
-- [ ] Validación en tiempo real contra Zod
-- [x] Modal de enlaces: incluye select con opciones de contenido
-- [ ] Actualizar `GET /api/list-content` si es necesario
-
-### 5.2 Proposiciones
-- [ ] Evaluar si es tipo distinto o subtipo de teorema
-- [ ] Crear `PropositionSchema`, directorio `propositions/`, métodos en ContentStore
-- [ ] Ruta `/proposicion/:id`, tipo en grafo con color propio, tipo en editor
-
-### 5.3 Equivalencias
-- [ ] Definir alcance: ¿entre teoremas? ¿entre sistemas axiomáticos?
-- [ ] Crear `EquivalenceSchema` con `statements: string[]` y `proof: string`
-- [ ] Directorio `equivalences/`, métodos en ContentStore, ruta `/equivalencia/:id`
-- [ ] Aristas bidireccionales en el grafo con estilo especial
-
----
-
-## FASE 6 — LANZAMIENTO
+## FASE 13 — LANZAMIENTO
 
 *Poner el proyecto en producción.*
 
@@ -299,3 +335,4 @@
 - [ ] Script de prebuild: solo `validate-logical-graph.ts`, falta `validate-cross-references.ts`
 - [ ] Verificar assets estáticos en build
 - [ ] Probar build en producción localmente
+

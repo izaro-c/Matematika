@@ -244,7 +244,7 @@ function FlowContent() {
     return (
       <div
         className="w-full h-full flex items-center justify-center bg-lienzo"
-        style={{ backgroundImage: 'url(/images/bg_arts_crafts.png)', backgroundSize: '600px', backgroundRepeat: 'repeat' }}
+        style={{ backgroundImage: 'url(/Matematika/images/bg_arts_crafts.png)', backgroundSize: '600px', backgroundRepeat: 'repeat' }}
       >
         <p className="font-serif italic text-carbon/50 text-xl animate-pulse">
           Calculando estructura axiomática…
@@ -254,7 +254,7 @@ function FlowContent() {
   }
 
   return (
-    <div className="w-full h-full relative bg-lienzo" style={{ backgroundImage: 'url(/images/bg_arts_crafts.png)', backgroundSize: '600px', backgroundRepeat: 'repeat' }}>
+    <div className="w-full h-full relative bg-lienzo" style={{ backgroundImage: 'url(/Matematika/images/bg_arts_crafts.png)', backgroundSize: '600px', backgroundRepeat: 'repeat' }}>
 
       {/* ── Buscador centrado ─────────────────────────────────────────────── */}
       <div className="absolute top-4 left-1/2 -translate-x-1/2 z-30" style={{ width: 340 }}>
@@ -299,7 +299,8 @@ function FlowContent() {
                         r.nodeType === 'axioma' ? '#1c1917' :
                           r.nodeType === 'lema' ? '#4a6070' :
                             r.nodeType === 'teorema' ? '#6b9e6b' :
-                              r.nodeType === 'corolario' ? '#b85c38' : '#8b7355',
+                              r.nodeType === 'corolario' ? '#b85c38' :
+                                r.nodeType === 'definicion' ? '#c49b4f' : '#8b3a3a',
                       color: '#fff',
                     }}
                   >
@@ -403,11 +404,11 @@ function FlowContent() {
               Tipos de Nodo
             </h3>
             <div className="flex flex-col gap-1.5">
-              {(['axioma', 'lema', 'teorema', 'corolario', 'definicion'] as const).map((type) => {
+              {(['axioma', 'lema', 'teorema', 'corolario', 'definicion', 'modelo'] as const).map((type) => {
                 const isOn = visibleTypes.has(type);
                 const colors: Record<string, string> = {
                   axioma: '#1c1917', lema: '#4a6070', teorema: '#6b9e6b',
-                  corolario: '#b85c38', definicion: '#8b7355',
+                  corolario: '#b85c38', definicion: '#c49b4f', modelo: '#8b3a3a',
                 };
                 return (
                   <button
@@ -449,7 +450,7 @@ function FlowContent() {
                     selectedNodeData.nodeType === 'axioma' ? '#1c1917' :
                       selectedNodeData.nodeType === 'lema' ? '#4a6070' :
                         selectedNodeData.nodeType === 'corolario' ? '#b85c38' :
-                          selectedNodeData.nodeType === 'definicion' ? '#8b7355' : '#6b9e6b',
+                          selectedNodeData.nodeType === 'definicion' ? '#c49b4f' : '#8b3a3a',
                   color: '#fff',
                 }}
               >
@@ -590,7 +591,7 @@ function FlowContent() {
           style={{ border: '1px solid rgba(51,51,51,0.15)' }}
         />
         <Background color="rgba(51,51,51,0.07)" gap={24} size={1} />
-        <Controls position="bottom-right" />
+        <Controls position="bottom-left" />
       </ReactFlow>
 
       {/* ── Leyenda ───────────────────────────────────────────────────────── */}
@@ -601,7 +602,8 @@ function FlowContent() {
           { type: 'lema', bg: '#4a6070', label: 'Lema (auxiliar)' },
           { type: 'teorema', bg: '#6b9e6b', label: 'Teorema' },
           { type: 'corolario', bg: '#b85c38', label: 'Corolario' },
-          { type: 'definicion', bg: '#8b7355', label: 'Definición' },
+          { type: 'definicion', bg: '#c49b4f', label: 'Definición' },
+          { type: 'modelo', bg: '#8b3a3a', label: 'Modelo' },
         ] as const).map(({ type, bg, label }) => (
           <div key={type} className="flex items-center gap-2 text-xs font-serif text-carbon mb-1 last:mb-0">
             <div

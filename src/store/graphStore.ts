@@ -22,6 +22,7 @@ interface GraphState {
   inactiveModels: string[];
   systems: SystemInfo[];
   inactiveSystems: string[];
+  axioms: string[];
 
   toggleAxiom: (axiomId: string) => void;
   toggleModel: (modelId: string) => void;
@@ -43,11 +44,12 @@ export const useGraphStore = create<GraphState>()(
       activeStates: {},
       disabledAxioms: [],
       isLoading: true,
-      
+
+      axioms: db.getAllAxioms().map(a => (a.id)),
       models: db.getAllModels().map(m => ({
         id: m.id,
         title: m.title,
-        axioms: m.axioms_verified || [],
+        axioms: m.axiomas || [],
       })),
       inactiveModels: db.getAllModels().map(m => m.id),
       systems: db.getAllAxiomaticSystems().map(s => ({
@@ -83,7 +85,7 @@ export const useGraphStore = create<GraphState>()(
         set({ inactiveModels: newInactive, inactiveSystems: allSystemsOff });
 
         const activeModels = state.models.filter(m => !newInactive.includes(m.id));
-        const newDisabled = computeDisabledAxiomsFromModels(state.models, activeModels.map(m => m.id));
+        const newDisabled = computeDisabledAxiomsFromModels(state.models.map(s => ({ id: s.id, title: s.title, axioms: s.axioms })), activeModels.map(m => m.id), state.axioms);
         set({ disabledAxioms: newDisabled, isLoading: true });
         computeGraph(newDisabled).then((result) =>
           set({ baseNodes: result.nodes, edges: result.edges, adjacency: result.adjacency, dependsOn: result.dependsOn, activeStates: result.activeStates, isLoading: false }),
@@ -106,6 +108,7 @@ export const useGraphStore = create<GraphState>()(
         const newDisabled = computeDisabledAxiomsFromModels(
           state.systems.map(s => ({ id: s.id, title: s.title, axioms: s.axioms })),
           activeSystems.map(s => s.id),
+          state.axioms,
         );
         set({ disabledAxioms: newDisabled, isLoading: true });
         computeGraph(newDisabled).then((result) =>
@@ -149,10 +152,11 @@ export const useGraphStore = create<GraphState>()(
           disabledAxioms = computeDisabledAxiomsFromModels(
             current.systems.map(s => ({ id: s.id, title: s.title, axioms: s.axioms })),
             activeSystems.map(s => s.id),
+            current.axioms,
           );
         } else {
           const activeModels = current.models.filter(m => !inactiveModels.includes(m.id));
-          disabledAxioms = computeDisabledAxiomsFromModels(current.models, activeModels.map(m => m.id));
+          disabledAxioms = computeDisabledAxiomsFromModels(current.models.map(s => ({ id: s.id, title: s.title, axioms: s.axioms })), activeModels.map(m => m.id), current.axioms);
         }
         return { ...current, inactiveModels, inactiveSystems, disabledAxioms };
       },

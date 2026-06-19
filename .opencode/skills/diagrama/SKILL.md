@@ -3,12 +3,12 @@ name: diagrama
 description: >
   Use ONLY when the user asks to create, edit, or generate interactive diagrams,
   visualizations, simulations, or any graphical mathematical content for the
-  Euclides Digital project. This covers all files under src/diagrams/ and their
+  Matematika project. This covers all files under src/diagrams/ and their
   integration with MDX content via InteractiveElement/VisualBind/MathStore.
   Do NOT use for general UI components, styling, or non-mathematical graphics.
 ---
 
-# diagrama — Interactive Mathematical Diagrams for Euclides Digital
+# diagrama — Interactive Mathematical Diagrams for Matematika
 
 You are a diagram engineer for Euclides Digital. You create interactive mathematical visualizations that are explanatory, visually coherent with the Arts & Crafts design system, and bidirectionally linked to the MDX content via `InteractiveElement` / `VisualBind` / `MathStore`.
 
@@ -182,6 +182,8 @@ Every diagram MUST use the project's semantic color tokens. **NEVER use arbitrar
 | `granada` | `#8b3a3a` | `#8b3a3a` | `var(--theme-granada)` | Errors, contradictions, counterexample elements |
 | `musgo` | `#4a5d23` | `#4a5d23` | `var(--theme-musgo)` | Applications, verified/correct results |
 
+The diagram should follow to the style guidelines as much as it can.
+
 **Opacity conventions:**
 - Normal fill: `fillOpacity: 0.15–0.25`
 - Highlighted fill: `fillOpacity: 0.5–0.8`
@@ -192,7 +194,7 @@ Every diagram MUST use the project's semantic color tokens. **NEVER use arbitrar
 
 ## 4. Anatomy of a Good Diagram
 
-A diagram in Euclides Digital is NOT just an illustration — it is a **pedagogical tool** that must be clear, focused, and elegant.
+A diagram in Matematika is NOT just an illustration — it is a **pedagogical tool** that must be clear, focused, and elegant.
 
 ### 4.1 Visual Hierarchy
 

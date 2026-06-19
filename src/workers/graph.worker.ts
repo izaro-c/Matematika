@@ -1,6 +1,6 @@
 import graphData from '../store/graph_structure.json';
 
-const VISIBLE_TYPES = new Set(['axioma', 'lema', 'corolario', 'teorema', 'definicion']);
+const VISIBLE_TYPES = new Set(['axioma', 'lema', 'corolario', 'teorema', 'definicion', 'modelo']);
 
 interface JsonNode {
   id: string;
@@ -83,6 +83,8 @@ function buildEdgeList(filtered: Record<string, JsonNode>): Array<{ source: stri
         }
       }
     } else if (node.type === 'lema' || node.type === 'definicion') {
+      deps = [...node.directDependencies];
+    } else if (node.type === 'modelo') {
       deps = [...node.directDependencies];
     }
 

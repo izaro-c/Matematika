@@ -55,13 +55,13 @@ export function evaluateActiveGraph(
 export function computeDisabledAxiomsFromModels(
   models: ModelInfo[],
   activeModelIds: string[],
+  allAxioms: string[],
 ): string[] {
   if (activeModelIds.length === 0) return [];
 
   const activeModels = models.filter(m => activeModelIds.includes(m.id));
   const enabledAxioms = new Set<string>();
   activeModels.forEach(m => m.axioms.forEach(ax => enabledAxioms.add(ax)));
-
-  const allAxioms = models.flatMap(m => m.axioms);
-  return allAxioms.filter(ax => !enabledAxioms.has(ax));
+  const disabledAxioms = allAxioms.filter(ax => (!enabledAxioms.has(ax)));
+  return disabledAxioms;
 }

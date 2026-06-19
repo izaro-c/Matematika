@@ -9,11 +9,11 @@ import { ArtsAndCraftsLiana } from '../components/ui/ArtsAndCraftsLiana';
 const EraInsignia: React.FC<{ era: string; year: number }> = ({ era, year }) => {
   const period =
     year < -200 ? { label: 'Antigüedad', color: '#c49b4f' } :
-    year < 500  ? { label: 'Mundo Clásico', color: '#A2C2A2' } :
-    year < 1400 ? { label: 'Medievo', color: '#5D7080' } :
-    year < 1700 ? { label: 'Renacimiento', color: '#C86446' } :
-    year < 1900 ? { label: 'Ilustración', color: '#333' } :
-                  { label: 'Época Moderna', color: '#333' };
+      year < 500 ? { label: 'Mundo Clásico', color: '#A2C2A2' } :
+        year < 1400 ? { label: 'Medievo', color: '#5D7080' } :
+          year < 1700 ? { label: 'Renacimiento', color: '#C86446' } :
+            year < 1900 ? { label: 'Ilustración', color: '#333' } :
+              { label: 'Época Moderna', color: '#333' };
 
   return (
     <div className="flex items-center gap-2">
@@ -46,10 +46,10 @@ export const HistoryTimeline = () => {
   const eras = useMemo(() => {
     const set = new Set(nodes.map(n =>
       n.year < -200 ? 'Antigüedad' :
-      n.year < 500  ? 'Mundo Clásico' :
-      n.year < 1400 ? 'Medievo' :
-      n.year < 1700 ? 'Renacimiento' :
-      n.year < 1900 ? 'Ilustración' : 'Época Moderna'
+        n.year < 500 ? 'Mundo Clásico' :
+          n.year < 1400 ? 'Medievo' :
+            n.year < 1700 ? 'Renacimiento' :
+              n.year < 1900 ? 'Ilustración' : 'Época Moderna'
     ));
     return ['Todos', ...Array.from(set)];
   }, [nodes]);
@@ -57,10 +57,10 @@ export const HistoryTimeline = () => {
   const filtered = filter === 'Todos' ? nodes : nodes.filter(n => {
     const era =
       n.year < -200 ? 'Antigüedad' :
-      n.year < 500  ? 'Mundo Clásico' :
-      n.year < 1400 ? 'Medievo' :
-      n.year < 1700 ? 'Renacimiento' :
-      n.year < 1900 ? 'Ilustración' : 'Época Moderna';
+        n.year < 500 ? 'Mundo Clásico' :
+          n.year < 1400 ? 'Medievo' :
+            n.year < 1700 ? 'Renacimiento' :
+              n.year < 1900 ? 'Ilustración' : 'Época Moderna';
     return era === filter;
   });
 
@@ -84,12 +84,12 @@ export const HistoryTimeline = () => {
   return (
     <div
       className="bg-lienzo bg-arts-and-crafts text-carbon font-serif pt-20 pb-32 relative min-h-screen"
+      style={{ backgroundImage: 'url(/Matematika/william_morris_botanical.png)', backgroundSize: '500px' }}
       ref={containerRef}
     >
       {/* Fondo sutil */}
       <div
         className="absolute inset-0 z-0 pointer-events-none opacity-[0.025] mix-blend-multiply"
-        style={{ backgroundImage: 'url(/william_morris_botanical.png)', backgroundSize: '400px' }}
       />
 
       {/* ── Cabecera ──────────────────────────────────────────────── */}
@@ -120,11 +120,10 @@ export const HistoryTimeline = () => {
               <button
                 key={era}
                 onClick={() => setFilter(era)}
-                className={`px-3 py-1.5 text-[10px] font-sans uppercase tracking-widest border transition-all ${
-                  filter === era
-                    ? 'bg-carbon text-lienzo border-carbon'
-                    : 'border-carbon/20 text-carbon/50 hover:border-carbon/50 hover:text-carbon'
-                }`}
+                className={`px-3 py-1.5 text-[10px] font-sans uppercase tracking-widest border transition-all ${filter === era
+                  ? 'bg-carbon text-lienzo border-carbon'
+                  : 'border-carbon/20 text-carbon/50 hover:border-carbon/50 hover:text-carbon'
+                  }`}
               >
                 {era}
               </button>
@@ -159,9 +158,8 @@ export const HistoryTimeline = () => {
 
                   {/* Tarjeta */}
                   <div
-                    className={`w-full md:w-[46%] flex ${
-                      isEven ? 'md:ml-auto md:pr-[7%]' : 'md:mr-auto md:pl-[7%]'
-                    }`}
+                    className={`w-full md:w-[46%] flex ${isEven ? 'md:ml-auto md:pr-[7%]' : 'md:mr-auto md:pl-[7%]'
+                      }`}
                   >
                     <Link href={`/bio/${node.slug}`}>
                       <a className="w-full group relative bg-lienzo border border-carbon/15 hover:border-carbon/40 transition-all duration-300 hover:shadow-lg hover:-translate-y-0.5 flex flex-col">
