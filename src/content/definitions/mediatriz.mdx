@@ -5,18 +5,46 @@ export const metadata = {
   "description": "La mediatriz de un segmento es la recta perpendicular al mismo que pasa por su punto medio.",
   "tags": ["geometria", "rectas"],
   "authors": ["euclides"],
-  "links": ["recta", "segmento", "punto"],
-  "seeAlso": ["teorema-punto-medio-perpendicular"],
+  "links": ["recta", "segmento", "punto", "perpendicular"],
+  "seeAlso": [],
   "hasSimulation": true,
 };
 
 import { InteractiveElement } from "../../components/ui/VisualBind";
 import { Mediatriz } from '../../diagrams/Definiciones/Mediatriz';
 
-export const Simulation = <ConceptLink targetId="mediatriz" isDependency={false}>Mediatriz</ConceptLink>;
+export const Simulation = Mediatriz;
 
-<Capitular letra="L" />a <InteractiveElement target="mediatriz">mediatriz</InteractiveElement> es una <ConceptLink targetId="recta" isDependency={false}>recta</ConceptLink> que goza de la propiedad de ser el lugar geométrico de todos los <ConceptLink targetId="punto" isDependency={false}>puntos</ConceptLink> que <InteractiveElement target="equidistancia">equidistan</InteractiveElement> de los dos <InteractiveElement target="extremo">extremos</InteractiveElement> de un <InteractiveElement target="segmento"><ConceptLink targetId="segmento" isDependency={false}>segmento</ConceptLink></InteractiveElement>. Corta al segmento por su <InteractiveElement target="punto-medio"><ConceptLink targetId={["lema-punto-medio", "punto"]}>punto medio</ConceptLink></InteractiveElement> de manera ortogonal.
+<Capitular letra="L" />a <InteractiveElement target="mediatriz"><ConceptLink targetId="mediatriz" isDependency={false}>mediatriz</ConceptLink></InteractiveElement> (o simetral) de un <InteractiveElement target="segmento"><ConceptLink targetId="segmento" isDependency={false}>segmento</ConceptLink></InteractiveElement> es la <ConceptLink targetId="recta" isDependency={false}>recta</ConceptLink> <ConceptLink targetId="perpendicular" isDependency={false}>perpendicular</ConceptLink> a dicho <ConceptLink targetId="segmento" isDependency={false}>segmento</ConceptLink> trazada por su <InteractiveElement target="punto-medio"><ConceptLink targetId={["lema-punto-medio", "punto"]}>punto medio</ConceptLink></InteractiveElement>. Es, junto con la <ConceptLink targetId="bisectriz" isDependency={false}>bisectriz</ConceptLink>, uno de los <ConceptLink targetId="lugar-geometrico" isDependency={false}>lugares geométricos</ConceptLink> fundamentales de la <ConceptLink targetId="geometria-euclidiana" isDependency={false}>geometría euclidiana</ConceptLink>.
 
 <Separador />
 
-Todo punto libre <InteractiveElement target="punto-p">$P$</InteractiveElement> situado sobre la mediatriz siempre mantiene la misma distancia hacia $A$ y hacia $B$.
+### Enunciado Formal
+
+Dado un <ConceptLink targetId="segmento" isDependency={false}>segmento</ConceptLink> $\overline{AB}$ de <InteractiveElement target="punto-medio"><ConceptLink targetId="punto" isDependency={false}>punto medio</ConceptLink></InteractiveElement> $M$, la <ConceptLink targetId="mediatriz" isDependency={false}>mediatriz</ConceptLink> de $\overline{AB}$ es la <ConceptLink targetId="recta" isDependency={false}>recta</ConceptLink> $\ell$ tal que $\ell \perp \overline{AB}$ y $M \in \ell$.
+
+<Separador />
+
+### Definición como lugar geométrico
+
+Analíticamente, la <ConceptLink targetId="mediatriz" isDependency={false}>mediatriz</ConceptLink> se define como el <ConceptLink targetId="lugar-geometrico" isDependency={false}>lugar geométrico</ConceptLink> de todos los <ConceptLink targetId="punto" isDependency={false}>puntos</ConceptLink> del <ConceptLink targetId="plano" isDependency={false}>plano</ConceptLink> que <InteractiveElement target="equidistancia">equidistan</InteractiveElement> (se hallan a la misma <ConceptLink targetId="distancia" isDependency={false}>distancia</ConceptLink>) de los dos <InteractiveElement target="extremo"><ConceptLink targetId="extremo" isDependency={false}>extremos</ConceptLink></InteractiveElement> del <ConceptLink targetId="segmento" isDependency={false}>segmento</ConceptLink>:
+
+<Formula>
+  $$ \{\, P \in \Pi \mid \overline{PA} = \overline{PB} \,\} $$
+</Formula>
+
+En consecuencia, cualquier <ConceptLink targetId="punto" isDependency={false}>punto</ConceptLink> arbitrario <InteractiveElement target="punto-p">$P$</InteractiveElement> sobre la <ConceptLink targetId="mediatriz" isDependency={false}>mediatriz</ConceptLink> forma, junto con los <ConceptLink targetId="extremo" isDependency={false}>extremos</ConceptLink> $A$ y $B$, un <ConceptLink targetId="triangulo" isDependency={false}>triángulo</ConceptLink> <ConceptLink targetId="triangulo-isosceles" isDependency={false}>isósceles</ConceptLink> con <ConceptLink targetId="base" isDependency={false}>base</ConceptLink> $\overline{AB}$.
+
+<Separador />
+
+### Circuncentro
+
+Las tres <ConceptLink targetId="mediatriz" isDependency={false}>mediatrices</ConceptLink> de los <ConceptLink targetId="lado" isDependency={false}>lados</ConceptLink> de un <ConceptLink targetId="triangulo" isDependency={false}>triángulo</ConceptLink> <ConceptLink targetId="concurrencia" isDependency={false}>concurren</ConceptLink> en un único <ConceptLink targetId="punto" isDependency={false}>punto</ConceptLink> denominado <ConceptLink targetId="circuncentro" isDependency={false}>circuncentro</ConceptLink>, que equidista de los tres <ConceptLink targetId="vertice" isDependency={false}>vértices</ConceptLink> y constituye el centro de la <ConceptLink targetId="circunferencia" isDependency={false}>circunferencia</ConceptLink> circunscrita al <ConceptLink targetId="triangulo" isDependency={false}>triángulo</ConceptLink>.
+
+<Separador />
+
+### Observaciones
+
+- La <ConceptLink targetId="mediatriz" isDependency={false}>mediatriz</ConceptLink> es el concepto dual de la <ConceptLink targetId="bisectriz" isDependency={false}>bisectriz</ConceptLink>: mientras que la <ConceptLink targetId="bisectriz" isDependency={false}>bisectriz</ConceptLink> divide un <ConceptLink targetId="angulo" isDependency={false}>ángulo</ConceptLink> en dos partes <ConceptLink targetId="congruencia" isDependency={false}>congruentes</ConceptLink>, la <ConceptLink targetId="mediatriz" isDependency={false}>mediatriz</ConceptLink> divide un <ConceptLink targetId="segmento" isDependency={false}>segmento</ConceptLink>.
+- La <ConceptLink targetId="mediatriz" isDependency={false}>mediatriz</ConceptLink> de un <ConceptLink targetId="segmento" isDependency={false}>segmento</ConceptLink> es el eje de <ConceptLink targetId="simetria-axial" isDependency={false}>simetría</ConceptLink> del <ConceptLink targetId="segmento" isDependency={false}>segmento</ConceptLink>: la reflexión de $A$ a través de la <ConceptLink targetId="mediatriz" isDependency={false}>mediatriz</ConceptLink> coincide con $B$.
+- A diferencia de la <ConceptLink targetId="bisectriz" isDependency={false}>bisectriz</ConceptLink>, que es una <ConceptLink targetId="semirrecta" isDependency={false}>semirrecta</ConceptLink>, la <ConceptLink targetId="mediatriz" isDependency={false}>mediatriz</ConceptLink> es una <ConceptLink targetId="recta" isDependency={false}>recta</ConceptLink> completa.

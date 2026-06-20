@@ -3,23 +3,41 @@ export const metadata = {
   "type": "teorema",
   "title": "Teorema de la suma de los ángulos de un triángulo",
   "description": "La suma de los ángulos interiores de un triángulo en el plano euclidiano es siempre igual a dos ángulos rectos (180 grados).",
+  "statement": "Sea △ABC un triángulo con ángulos interiores α = ∠A, β = ∠B, γ = ∠C. Entonces α + β + γ = 180° = π rad.",
   "tags": ["geometria", "triangulos", "angulos"],
   "authors": ["euclides"],
   "difficulty": "básico",
-  "demos": ["demo-suma-angulos-triangulo"]
+  "demos": ["demo-suma-angulos-triangulo"],
+  "hasSimulation": true
 };
 
 import { InteractiveElement } from "../../components/ui/VisualBind";
+import { SumaAngulos } from '../../diagrams/Teoremas/SumaAngulos';
 
-<Capitular letra="E" />l <ConceptLink targetId="teorema" isDependency={false}>teorema</ConceptLink> de la suma de los <ConceptLink targetId="angulo" isDependency={false}>ángulos</ConceptLink> de un <ConceptLink targetId="triangulo" isDependency={false}>triángulo</ConceptLink> establece que, en la <ConceptLink targetId="geometria" isDependency={false}>geometría</ConceptLink> de <ConceptLink targetId="euclides" isDependency={false}>Euclides</ConceptLink>, la suma de las medidas de los ángulos interiores de cualquier triángulo es constante e igual a $180^\circ$ (o $\pi$ radianes).
+export const Simulation = SumaAngulos;
+
+<Capitular letra="E" />l <ConceptLink targetId={["teorema-suma-angulos-triangulo", "teorema"]}>teorema de la suma de los ángulos de un triángulo</ConceptLink> establece que, en la <ConceptLink targetId="geometria-euclidiana" isDependency={false}>geometría</ConceptLink> de <ConceptLink targetId="euclides" isDependency={false}>Euclides</ConceptLink>, la <ConceptLink targetId="suma" isDependency={false}>suma</ConceptLink> de las medidas de los <InteractiveElement target="angulos"><ConceptLink targetId="angulo" isDependency={false}>ángulos</ConceptLink> interiores</InteractiveElement> de cualquier <InteractiveElement target="triangulo"><ConceptLink targetId="triangulo" isDependency={false}>triángulo</ConceptLink></InteractiveElement> es constante e igual a $180^\circ$ ($\pi$ <ConceptLink targetId="radian" isDependency={false}>radianes</ConceptLink>).
 
 <Separador />
 
-## Enunciado Formal
+### Enunciado Formal
 
-Dado un triángulo con vértices $A, B, C$ y ángulos interiores $\alpha, \beta, \gamma$, se cumple que:
-$$ \alpha + \beta + \gamma = 180^\circ $$
+Dado un <InteractiveElement target="triangulo"><ConceptLink targetId="triangulo" isDependency={false}>triángulo</ConceptLink> $\triangle ABC$</InteractiveElement> con <InteractiveElement target="angulos"><ConceptLink targetId="angulo" isDependency={false}>ángulos</ConceptLink></InteractiveElement> interiores $\alpha = \angle A$, $\beta = \angle B$, $\gamma = \angle C$:
 
-## Importancia Histórica
+<Formula>
+  $$ \alpha + \beta + \gamma = 180^\circ = \pi \text{ rad} $$
+</Formula>
 
-Este resultado es profundamente dependiente del <ConceptLink targetId="axioma-paralelas-euclides">axioma de las paralelas</ConceptLink>. En geometrías no euclidianas (como la hiperbólica o la esférica), la suma de los ángulos es estrictamente menor o mayor a $180^\circ$, respectivamente.
+<Separador />
+
+### Importancia Histórica
+
+Este resultado es profundamente dependiente del <ConceptLink targetId="axioma-paralelas-euclides">axioma de las paralelas</ConceptLink>. En <ConceptLink targetId="geometria-hiperbolica" isDependency={false}>geometrías no euclidianas</ConceptLink> —como la <ConceptLink targetId="geometria-hiperbolica" isDependency={false}>hiperbólica</ConceptLink> o la <ConceptLink targetId="geometria-esferica" isDependency={false}>esférica</ConceptLink>— la suma de los <ConceptLink targetId="angulo" isDependency={false}>ángulos</ConceptLink> es estrictamente menor o mayor a $180^\circ$, respectivamente. Este <ConceptLink targetId="teorema" isDependency={false}>teorema</ConceptLink> es, de hecho, equivalente al <ConceptLink targetId="axioma-paralelas-euclides">axioma de las paralelas</ConceptLink> en el <ConceptLink targetId="sistema-absoluto" isDependency={false}>sistema absoluto</ConceptLink>.
+
+<Separador />
+
+### Observaciones
+
+- En un <ConceptLink targetId="triangulo-rectangulo" isDependency={false}>triángulo rectángulo</ConceptLink>, los dos <ConceptLink targetId="angulo" isDependency={false}>ángulos</ConceptLink> no rectos suman $90^\circ$ y son <ConceptLink targetId="angulo-complementario" isDependency={false}>complementarios</ConceptLink>.
+- En un <ConceptLink targetId="triangulo-equilatero" isDependency={false}>triángulo equilátero</ConceptLink>, cada <ConceptLink targetId="angulo" isDependency={false}>ángulo</ConceptLink> mide exactamente $60^\circ$.
+- La suma de los <ConceptLink targetId="angulo" isDependency={false}>ángulos</ConceptLink> exteriores de cualquier <ConceptLink targetId="triangulo" isDependency={false}>triángulo</ConceptLink> es $360^\circ$.

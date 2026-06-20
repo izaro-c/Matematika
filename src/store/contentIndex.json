@@ -696,7 +696,7 @@
       "id": "cuadrilatero",
       "type": "definicion",
       "title": "Cuadrilátero",
-      "description": "Un cuadrilátero es un polígono de cuatro lados y cuatro vértices.",
+      "description": "Un cuadrilátero es un polígono de cuatro lados y cuatro vértices sin tres puntos colineales y sin lados que se crucen.",
       "tags": [
         "geometria",
         "poligonos"
@@ -764,11 +764,10 @@
       "links": [
         "recta",
         "segmento",
-        "punto"
+        "punto",
+        "perpendicular"
       ],
-      "seeAlso": [
-        "teorema-punto-medio-perpendicular"
-      ],
+      "seeAlso": [],
       "hasSimulation": true
     }
   },
@@ -1190,6 +1189,21 @@
       "layout": "split"
     }
   },
+  "demo-rectas-coincidentes": {
+    "id": "demo-rectas-coincidentes",
+    "slug": "demo-rectas-coincidentes",
+    "filePath": "demonstrations/demo-rectas-coincidentes.mdx",
+    "contentType": "demostracion",
+    "metadata": {
+      "id": "demo-rectas-coincidentes",
+      "type": "demostracion",
+      "title": "Demostración: Identidad de rectas con dos puntos en común",
+      "description": "Prueba por reducción al absurdo: si dos rectas comparten dos puntos distintos, son la misma recta.",
+      "parentTheorem": "corolario-rectas-coincidentes",
+      "proofMethod": "reduccion",
+      "layout": "text"
+    }
+  },
   "demo-suma-angulos-triangulo": {
     "id": "demo-suma-angulos-triangulo",
     "slug": "demo-suma-angulos-triangulo",
@@ -1606,7 +1620,10 @@
         "geometria",
         "incidencia"
       ],
-      "difficulty": "básico"
+      "difficulty": "básico",
+      "demos": [
+        "demo-rectas-coincidentes"
+      ]
     }
   },
   "lema-punto-medio": {
@@ -1633,7 +1650,8 @@
       "difficulty": "intermedio",
       "demos": [
         "demo-punto-medio"
-      ]
+      ],
+      "hasSimulation": true
     }
   },
   "teorema-angulos-opuestos-verticales": {
@@ -1646,7 +1664,7 @@
       "type": "teorema",
       "title": "Teorema de los ángulos opuestos por el vértice",
       "description": "Cuando dos rectas se cortan, los ángulos opuestos por el vértice son congruentes entre sí.",
-      "statement": "Sean l y m dos rectas que se cortan en el punto O. Sean α y β un par de ángulos opuestos por el vértice. Entonces α ≅ β.",
+      "statement": "Sean l y m dos rectas que se cortan en el punto O. Si α y β son ángulos opuestos por el vértice, entonces α ≅ β.",
       "tags": [
         "geometria",
         "congruencia",
@@ -1726,6 +1744,7 @@
       "type": "teorema",
       "title": "Desigualdad triangular",
       "description": "En cualquier triángulo, la suma de las longitudes de dos de sus lados es estrictamente mayor que la longitud del tercer lado.",
+      "statement": "Sea △ABC un triángulo con lados a = BC, b = CA, c = AB. Entonces a + b > c, a + c > b y b + c > a.",
       "tags": [
         "geometria",
         "triangulos",
@@ -1737,7 +1756,8 @@
       "difficulty": "básico",
       "demos": [
         "demo-desigualdad-triangular"
-      ]
+      ],
+      "hasSimulation": true
     }
   },
   "teorema-dos-rectas-un-punto": {
@@ -1765,7 +1785,8 @@
       ],
       "corollaries": [
         "corolario-rectas-coincidentes"
-      ]
+      ],
+      "hasSimulation": true
     }
   },
   "teorema-pitagoras": {
@@ -1791,7 +1812,8 @@
       "difficulty": "básico",
       "demos": [
         "demo-pitagoras-euclides"
-      ]
+      ],
+      "hasSimulation": true
     }
   },
   "teorema-punto-medio-perpendicular": {
@@ -1820,7 +1842,8 @@
       ],
       "lemmas": [
         "lema-punto-medio"
-      ]
+      ],
+      "hasSimulation": true
     }
   },
   "teorema-suma-angulos-triangulo": {
@@ -1833,6 +1856,7 @@
       "type": "teorema",
       "title": "Teorema de la suma de los ángulos de un triángulo",
       "description": "La suma de los ángulos interiores de un triángulo en el plano euclidiano es siempre igual a dos ángulos rectos (180 grados).",
+      "statement": "Sea △ABC un triángulo con ángulos interiores α = ∠A, β = ∠B, γ = ∠C. Entonces α + β + γ = 180° = π rad.",
       "tags": [
         "geometria",
         "triangulos",
@@ -1844,7 +1868,8 @@
       "difficulty": "básico",
       "demos": [
         "demo-suma-angulos-triangulo"
-      ]
+      ],
+      "hasSimulation": true
     }
   },
   "teorema-tales": {
@@ -1856,8 +1881,8 @@
       "id": "teorema-tales",
       "type": "teorema",
       "title": "Teorema de Tales",
-      "description": "Si varias rectas paralelas cortan a dos rectas transversales, entonces los segmentos que determinan en ellas son proporcionales.",
-      "statement": "Sean r₁ ∥ r₂ ∥ r₃ tres rectas paralelas cortadas por dos transversales t₁ y t₂. Si Aᵢ = rᵢ ∩ t₁ y Bᵢ = rᵢ ∩ t₂, entonces A₁A₂/A₂A₃ = B₁B₂/B₂B₃.",
+      "description": "Si una recta paralela a uno de los lados de un triángulo corta a los otros dos lados, entonces los segmentos que determina en ellos son proporcionales.",
+      "statement": "Sea △ABC un triángulo y D ∈ AB, E ∈ AC tales que DE ∥ BC. Entonces AD/DB = AE/EC.",
       "tags": [
         "geometria",
         "proporcionalidad",
@@ -1869,7 +1894,8 @@
       "difficulty": "intermedio",
       "demos": [
         "demo-tales"
-      ]
+      ],
+      "hasSimulation": true
     }
   },
   "teorema-triangulo-isosceles": {
@@ -1882,6 +1908,7 @@
       "type": "teorema",
       "title": "Teorema del triángulo isósceles",
       "description": "En un triángulo isósceles, los ángulos opuestos a los lados iguales son también iguales (Pons Asinorum).",
+      "statement": "Sea △ABC un triángulo con AC ≅ BC. Entonces ∠A ≅ ∠B.",
       "tags": [
         "geometria",
         "triangulos",
@@ -1893,7 +1920,8 @@
       "difficulty": "básico",
       "demos": [
         "demo-triangulo-isosceles"
-      ]
+      ],
+      "hasSimulation": true
     }
   }
 }

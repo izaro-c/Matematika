@@ -25,6 +25,26 @@
 18. [Rendimiento](#18-rendimiento)
 19. [Organización de Archivos](#19-organización-de-archivos)
 20. [Checklist de Calidad](#20-checklist-de-calidad)
+21. [Ángulos Rectos Robustos](#21-ángulos-rectos-robustos)
+22. [Pies de Perpendicular y Extensiones de Base](#22-pies-de-perpendicular-y-extensiones-de-base)
+23. [Semirrectas (Rayos) — Bisectrices y Alturas](#23-semirrectas-rayos--bisectrices-y-alturas)
+24. [Restricciones Geométricas con Drag Handlers](#24-restricciones-geométricas-con-drag-handlers)
+25. [Marcado de Ángulos Internos en Polígonos Deformables](#25-marcado-de-ángulos-internos-en-polígonos-deformables)
+26. [Clasificación Dinámica en Diagramas](#26-clasificación-dinámica-en-diagramas)
+27. [Marcas de Congruencia y Paralelismo Diferenciadas](#27-marcas-de-congruencia-y-paralelismo-diferenciadas)
+28. [Puntos Derivados (Computados)](#28-puntos-derivados-computados)
+29. [Gliders para Lugares Geométricos](#29-gliders-para-lugares-geométricos)
+30. [Prevención de Deformación en Diagramas con Puntos Derivados](#30-prevención-de-deformación-en-diagramas-con-puntos-derivados)
+31. [Separación infoText / useEffect — Coordinación Limpia](#31-separación-infotext--useeffect--coordinación-limpia)
+32. [InteractiveElement Auto-Referente en MDX](#32-interactiveelement-auto-referente-en-mdx)
+33. [Gliders sobre Ejes para Ángulos Rectos Forzados](#33-gliders-sobre-ejes-para-ángulos-rectos-forzados)
+34. [Arrastre Mutuo entre Puntos Vinculados](#34-arrastre-mutuo-entre-puntos-vinculados)
+35. [Atractores para Ángulos Notables](#35-atractores-para-ángulos-notables)
+36. [Visibilidad Dependiente de Geometría vs Highlight](#36-visibilidad-dependiente-de-geometría-vs-highlight)
+37. [Uso de Refs para Comunicar Highlight a infoText](#37-uso-de-refs-para-comunicar-highlight-a-infotext)
+38. [Diagramas de Congruencia: Dos Triángulos Vinculados](#38-diagramas-de-congruencia-dos-triángulos-vinculados)
+39. [Visibilidad Condicional por Highlight Global](#39-visibilidad-condicional-por-highlight-global)
+40. [Demostraciones sin Diagrama (layout: text)](#40-demostraciones-sin-diagrama-layout-text)
 
 ---
 
@@ -1000,6 +1020,626 @@ src/diagrams/
 - [ ] Para teoremas/axiomas: exportado como `Simulation` con `"hasSimulation": true`
 - [ ] Para modelos: exportado como `Diagram` con `"hasDiagram": true`
 - [ ] No hay `\sen` en ningún sitio — LaTeX usa `\sin`, texto plano usa `sin`
+
+---
+
+## 21. Ángulos Rectos Robustos
+
+El `angle` de JSXGraph con `orthotype: 'square'` puede fallar cuando la orientación de los puntos produce un ángulo CCW de 270° en lugar de 90°. Para diagramas donde los puntos se reordenan libremente (ej. triángulos deformables), **NO usar `angle` con `orthotype`**. En su lugar, construir un **polígono cuadrado manual** con cuatro puntos dinámicos:
+
+```typescript
+// Robust right-angle square marker at foot H
+const sqSize = 0.5;
+const baseDir = () => {
+  const mx = (A.X() + B.X()) / 2, my = (A.Y() + B.Y()) / 2;
+  const dx = mx - H.X(), dy = my - H.Y();
+  const len = Math.hypot(dx, dy);
+  if (len < 1e-6) return { x: 1, y: 0 };
+  return { x: dx / len, y: dy / len };
+};
+const altDir = () => {
+  const dx = C.X() - H.X(), dy = C.Y() - H.Y();
+  const len = Math.hypot(dx, dy);
+  if (len < 1e-6) return { x: 0, y: 1 };
+  return { x: dx / len, y: dy / len };
+};
+
+const sq0 = board.create('point', [() => H.X(), () => H.Y()], { visible: false });
+const sq1 = board.create('point', [
+  () => { const d = baseDir(); return H.X() + d.x * sqSize; },
+  () => { const d = baseDir(); return H.Y() + d.y * sqSize; }
+], { visible: false });
+const sq2 = board.create('point', [
+  () => { const d = baseDir(); const a = altDir(); return H.X() + d.x * sqSize + a.x * sqSize; },
+  () => { const d = baseDir(); const a = altDir(); return H.Y() + d.y * sqSize + a.y * sqSize; }
+], { visible: false });
+const sq3 = board.create('point', [
+  () => { const a = altDir(); return H.X() + a.x * sqSize; },
+  () => { const a = altDir(); return H.Y() + a.y * sqSize; }
+], { visible: false });
+
+const angRecto = board.create('polygon', [sq0, sq1, sq2, sq3], {
+  fillColor: C_ORTHO, fillOpacity: 0.3,
+  strokeColor: C_ORTHO, strokeWidth: 1.5,
+  vertices: { visible: false },
+  borders: { strokeColor: C_ORTHO, strokeWidth: 1.5 },
+  visible: false
+});
+```
+
+Este cuadrado se orienta siempre correctamente: `baseDir` apunta hacia el interior del segmento base (calculado desde el punto medio de AB) y `altDir` apunta hacia el vértice opuesto. El polígono es inmune a reordenamientos de puntos.
+
+---
+
+## 22. Pies de Perpendicular y Extensiones de Base
+
+Cuando en un triángulo obtusángulo el **pie de la altura cae fuera del segmento base**, hay que mostrar la extensión de la base para que el estudiante entienda dónde está el pie. Patrón:
+
+```typescript
+// extEnd = punto extremo de AB más cercano a H (o H si está dentro)
+const extEnd = board.create('point', [
+  () => {
+    const dx = B.X() - A.X(), dy = B.Y() - A.Y();
+    const len2 = dx*dx + dy*dy;
+    if (len2 < 1e-10) return A.X();
+    const t = ((H.X()-A.X())*dx + (H.Y()-A.Y())*dy) / len2;
+    if (t < 0) return A.X();
+    if (t > 1) return B.X();
+    return H.X();
+  },
+  () => { /* análogo para Y */ }
+], { visible: false });
+
+const baseExtension = board.create('segment', [extEnd, H], {
+  dash: 2, strokeWidth: 1.5, strokeColor: C_BASE, visible: false
+});
+
+// Gestionar visibilidad en board.on('update'):
+const updateExtension = () => {
+  const dx = B.X() - A.X(), dy = B.Y() - A.Y();
+  const len2 = dx*dx + dy*dy;
+  let outside = false;
+  if (len2 > 1e-10) {
+    const t = ((H.X()-A.X())*dx + (H.Y()-A.Y())*dy) / len2;
+    outside = t < -0.001 || t > 1.001;
+  }
+  baseExtension.setAttribute({ visible: outside });
+};
+board.on('update', updateExtension);
+```
+
+**Regla:** Siempre que un punto de intersección (pie de perpendicular, proyección) pueda caer fuera del segmento visible, añadir una extensión discontinua que una el extremo más cercano al pie. Esto aplica a alturas, medianas, mediatrices y cualquier perpendicular a un lado.
+
+---
+
+## 23. Semirrectas (Rayos) — Bisectrices y Alturas
+
+Cuando la definición matemática habla de **semirrecta**, el diagrama DEBE mostrar una semirrecta, NO una recta infinita ni un segmento. **JSXGraph NO tiene el tipo `ray`** — usar `line` con `straightFirst: false, straightLast: true`:
+
+```typescript
+// Bisectriz COMO SEMIRRECTA usando line + straightFirst/straightLast:
+const bisecDir = board.create('point', [
+  () => {
+    // Suma de vectores unitarios BA y BC = dirección de la bisectriz
+    const ux = A.X() - B.X(), uy = A.Y() - B.Y();
+    const vx = C.X() - B.X(), vy = C.Y() - B.Y();
+    const uLen = Math.hypot(ux, uy) || 1, vLen = Math.hypot(vx, vy) || 1;
+    const dx = ux/uLen + vx/vLen, dy = uy/uLen + vy/vLen;
+    const dLen = Math.hypot(dx, dy) || 1;
+    return B.X() + dx/dLen;
+  },
+  () => { /* análogo */ }
+], { visible: false });
+
+const bisectriz = board.create('line', [B, bisecDir], {
+  strokeColor: C_BIS, strokeWidth: 2.5, dash: 2,
+  straightFirst: false, straightLast: true
+});
+```
+
+**No usar `board.create('bisector', [A, B, C])`** porque devuelve una línea (recta completa), no una semirrecta. Solo usar el elemento `bisector` nativo para líneas auxiliares invisibles.
+
+**Regla para interactividad en ángulos:** Los puntos que definen los lados del ángulo (A y C en el ejemplo) DEBEN ser visibles y arrastrables para que el estudiante pueda ampliar/reducir el ángulo y comprobar que la bisectriz siempre lo divide en dos mitades congruentes. Añadir texto dinámico que muestre la medida del ángulo total y la mitad.
+
+---
+
+## 24. Restricciones Geométricas con Drag Handlers
+
+Los diagramas de polígonos deformables DEBEN imponer restricciones geométricas mediante handlers de drag para garantizar la corrección matemática del diagrama.
+
+### 24.1 Prevención de Colinealidad
+
+Para vértices de polígonos (triángulos, cuadriláteros), **ningún trío de puntos debe ser colineal**. Implementar con un handler `on('drag')`:
+
+```typescript
+const collinear = (p1, p2, p3, tol = 0.01) => {
+  const area = (p2.X()-p1.X())*(p3.Y()-p1.Y()) - (p3.X()-p1.X())*(p2.Y()-p1.Y());
+  return Math.abs(area) < tol;
+};
+
+const nudgeOffLine = (draggedPoint, otherPoints, snapStep = 0.5) => {
+  const directions = [[snapStep,0],[-snapStep,0],[0,snapStep],[0,-snapStep],
+                      [snapStep,snapStep],[-snapStep,snapStep],[snapStep,-snapStep],[-snapStep,-snapStep]];
+  for (const [dx, dy] of directions) {
+    const nx = draggedPoint.X() + dx, ny = draggedPoint.Y() + dy;
+    let ok = true;
+    for (let i = 0; i < otherPoints.length && ok; i++)
+      for (let j = i+1; j < otherPoints.length && ok; j++)
+        if (collinearXY(nx, ny, otherPoints[i], otherPoints[j])) ok = false;
+    if (ok) { draggedPoint.moveTo([snap(nx), snap(ny)], 0); return true; }
+  }
+  return false;
+};
+```
+
+### 24.2 Prevención de Auto-Intersección (Cuadriláteros)
+
+Para cuadriláteros, **los lados no deben cruzarse**. Comprobar intersección de segmentos no adyacentes (AB-CD y BC-DA) en el handler de drag y revertir al último punto válido:
+
+```typescript
+const segmentsIntersect = (p1, p2, q1, q2) => {
+  const d1 = cross(q1,q2,p1), d2 = cross(q1,q2,p2), d3 = cross(p1,p2,q1), d4 = cross(p1,p2,q2);
+  return ((d1>0&&d2<0)||(d1<0&&d2>0)) && ((d3>0&&d4<0)||(d3<0&&d4>0));
+};
+const cross = (o, a, b) => (a.X()-o.X())*(b.Y()-o.Y()) - (a.Y()-o.Y())*(b.X()-o.X());
+```
+
+Guardar `lastValid` para cada vértice y revertir si la nueva posición causa intersección o colinealidad. Aplicar snapping a grid (`snapToGrid`) + snap manual para consistencia.
+
+### 24.3 Atractores para Snapping Suave a Formas Especiales
+
+Para diagramas de polígonos deformables con clasificación (triángulos, cuadriláteros), usar **attractors de JSXGraph** para crear un imán suave hacia formas notables. Esto hace que el movimiento sea más fluido y que el estudiante "descubra" las clases especiales al arrastrar:
+
+```typescript
+// Thales circles: attract to right angles at opposite vertices
+const midAC = board.create('midpoint', [A, C], { visible: false });
+const midBD = board.create('midpoint', [B, D], { visible: false });
+const thalesAC = board.create('circle', [midAC, A], { visible: false });
+const thalesBD = board.create('circle', [midBD, B], { visible: false });
+
+// Perpendicular bisectors: attract to equal adjacent sides (AB=BC, etc.)
+const lineAC = board.create('line', [A, C], { visible: false });
+const lineBD = board.create('line', [B, D], { visible: false });
+const bisectorAC = board.create('perpendicular', [lineAC, midAC], { visible: false });
+const bisectorBD = board.create('perpendicular', [lineBD, midBD], { visible: false });
+
+A.setAttribute({ attractors: [thalesBD, bisectorBD], attractorDistance: 0.4, snatchDistance: 0.6 });
+B.setAttribute({ attractors: [thalesAC, bisectorAC], attractorDistance: 0.4, snatchDistance: 0.6 });
+C.setAttribute({ attractors: [thalesBD, bisectorBD], attractorDistance: 0.4, snatchDistance: 0.6 });
+D.setAttribute({ attractors: [thalesAC, bisectorAC], attractorDistance: 0.4, snatchDistance: 0.6 });
+```
+
+- `thalesBD` atrae A y C para formar ángulos rectos en esos vértices (∠DAB y ∠BCD).
+- `bisectorBD` atrae A y C para lados adyacentes iguales (DA=AB, BC=CD).
+- `attractorDistance`: radio de atracción progresiva. `snatchDistance`: distancia de captura instantánea.
+- Usar `snapToGrid: true` junto con atractores para máxima fluidez.
+
+**Regla:** Todo diagrama de polígono deformable con clasificación DEBE tener atractores para las formas notables de su taxonomía. Esto transforma el diagrama de una ilustración en una herramienta de descubrimiento.
+
+---
+
+## 25. Marcado de Ángulos Internos en Polígonos Deformables
+
+Para un polígono simple en orden antihorario (CCW), el ángulo interno en cada vértice se obtiene con el orden `[vérticeSiguiente, vértice, vérticeAnterior]`:
+
+```typescript
+const angleA = board.create('angle', [B, A, D], { type: 'sector', ... });
+const angleB = board.create('angle', [C, B, A], { type: 'sector', ... });
+const angleC = board.create('angle', [D, C, B], { type: 'sector', ... });
+const angleD = board.create('angle', [A, D, C], { type: 'sector', ... });
+```
+
+Este orden funciona para polígonos CCW tanto convexos como cóncavos (el ángulo reflejo >180° se dibuja correctamente como sector mayor). Si el polígono pudiera invertir su orientación, añadir lógica de `swapOrientation` en el handler de `update`.
+
+No obstante, si se previenen las auto-intersecciones (§24.2), la orientación se mantiene constante y el orden `[next, vertex, prev]` produce siempre el ángulo interno.
+
+---
+
+## 26. Clasificación Dinámica en Diagramas
+
+Los diagramas de definiciones con clasificación (triángulos, cuadriláteros, ángulos) DEBEN incluir un **texto dinámico** que actualice en tiempo real la clase del objeto según el usuario arrastra los puntos. Patrón:
+
+```typescript
+const infoText = board.create('text', [x, y, function() {
+  // Calcular distancias, ángulos, paralelismo...
+  let clase = "Trapezoide";
+  if (eqSides && rightAngles) clase = "Cuadrado";
+  else if (rightAngles) clase = "Rectángulo";
+  // ... más condiciones
+  return `<div style="font-family: var(--font-serif); ...">
+    <strong>${clase}</strong><br/><i>detalles...</i>
+  </div>`;
+}], { fixed: true });
+```
+
+Esto convierte el diagrama de una ilustración pasiva en una **herramienta de exploración**: el estudiante descubre las clases arrastrando los vértices y viendo la clasificación actualizarse.
+
+---
+
+## 27. Marcas de Congruencia y Paralelismo Diferenciadas
+
+Cuando un diagrama muestra **dos pares distintos** de lados congruentes o paralelos, usar marcas visuales diferenciadas para que el estudiante distinga qué lados pertenecen a cada par.
+
+### 27.1 Ticks de congruencia (simple vs doble)
+
+Usar segmentos perpendiculares manuales (§24.3, `mkTick`). **NUNCA usar `board.create('hatch', ...)`** — es inestable en JSXGraph 1.x.
+
+```typescript
+const mkTick = (p, q, centerOffset = 0) => {
+  // Segmento corto perpendicular en el punto medio (con offset opcional)
+  // Retorna un segment visible cuando el lado es congruente
+};
+// Primer par congruente → tick simple (centerOffset=0)
+// Segundo par congruente (longitud ≠ primer par) → tick doble (centerOffset=-0.18,+0.18)
+```
+
+Para cada lado, crear tanto el tick simple como el doble. Mostrar uno u otro según a qué grupo de congruencia pertenezca:
+- `showCong1(['AB','CD'])` → tick simple en AB y CD
+- `showCong2(['BC','DA'])` → tick doble en BC y DA
+- Todos los lados iguales (cuadrado, rombo) → tick simple en los 4
+
+### 27.2 Colores distintos por par paralelo
+
+Usar **dos colores distintos** para los dos pares de lados paralelos:
+- Primer par (AB ∥ CD) → `terracota` (`C_ACC`)
+- Segundo par (BC ∥ DA) → `pavo` (`C_ACC2`)
+
+```typescript
+const C_ACC  = getCSSVar('--theme-terracota');
+const C_ACC2 = getCSSVar('--theme-pavo');
+
+// En la clasificación:
+colorPar1(['AB', 'CD']);  // terracota
+colorPar2(['BC', 'DA']);  // pavo
+```
+
+### 27.3 Tolerancia de paralelismo
+
+El test de paralelismo debe ser **normalizado** (sin(θ) < tol) para ser independiente de la escala. Usar tolerancia **estricta** (~0.06, ≈ 3.4°) para evitar falsos positivos:
+
+```typescript
+const areParallel = (p1, p2, q1, q2) => {
+  const dx1 = p2.X()-p1.X(), dy1 = p2.Y()-p1.Y();
+  const dx2 = q2.X()-q1.X(), dy2 = q2.Y()-q1.Y();
+  const cross = Math.abs(dx1*dy2 - dy1*dx2);
+  const len1 = Math.hypot(dx1, dy1) || 1;
+  const len2 = Math.hypot(dx2, dy2) || 1;
+  return cross / (len1 * len2) < 0.06;
+};
+```
+
+---
+
+## 28. Puntos Derivados (Computados)
+
+Cuando un punto del diagrama **depende matemáticamente** de otros (no es independiente), debe crearse como punto computado, no como punto libre. Ejemplos:
+
+### 28.1 Cuarto vértice de un paralelogramo
+
+Dados A, B, C libres, D DEBE cumplir AB ∥ CD y BC ∥ AD. Se calcula como intersección de paralelas:
+
+```typescript
+const lineAB = board.create('line', [A, B], { visible: false });
+const lineBC = board.create('line', [B, C], { visible: false });
+const parCD = board.create('parallel', [lineAB, C], { visible: false });
+const parAD = board.create('parallel', [lineBC, A], { visible: false });
+const D = board.create('intersection', [parCD, parAD, 0], {
+  name: 'D', size: 5, fillColor: C_PRIM, strokeColor: C_PRIM
+});
+```
+
+D se actualiza automáticamente al arrastrar A, B o C. **D NO debe ser arrastrable** (JSXGraph lo marca como dependiente y rechaza el drag). Esto garantiza que el cuadrilátero siempre es un paralelogramo.
+
+### 28.2 Baricentro (intersección de medianas)
+
+```typescript
+const medA = board.create('segment', [A, M_BC], { ... });
+const medB = board.create('segment', [B, M_CA], { ... });
+const G = board.create('intersection', [medA, medB, 0], {
+  name: 'G', size: 5, fillColor: C_BAR, strokeColor: C_BAR
+});
+```
+
+G se recalcula cuando los vértices se mueven. Es un punto derivado, no arrastrable.
+
+---
+
+## 29. Gliders para Lugares Geométricos
+
+Para definiciones basadas en **lugares geométricos** (mediatriz, bisectriz), usar un **glider** sobre la línea/circunferencia para que el estudiante explore la propiedad:
+
+```typescript
+const mediatriz = board.create('perpendicular', [segmento, M], {
+  strokeColor: C_MED, strokeWidth: 2
+});
+const P = board.create('glider', [0, 3, mediatriz], {
+  name: 'P', size: 4, fillColor: C_EQ, strokeColor: C_EQ
+});
+const distPA = board.create('segment', [P, A], { strokeColor: C_EQ, dash: 2 });
+const distPB = board.create('segment', [P, B], { strokeColor: C_EQ, dash: 2 });
+```
+
+El glider P solo puede moverse sobre la mediatriz. Al arrastrarlo, PA y PB se actualizan y el estudiante verifica visualmente que PA = PB para todo P sobre la mediatriz.
+
+**Mostrar texto dinámico** con las distancias para reforzar la propiedad:
+```typescript
+const infoText = board.create('text', [x, y, () => {
+  const dPA = P.Dist(A), dPB = P.Dist(B);
+  return `PA = ${dPA.toFixed(2)} &nbsp; PB = ${dPB.toFixed(2)}`;
+}], { fixed: true });
+```
+
+---
+
+## 30. Prevención de Deformación en Diagramas con Puntos Derivados
+
+Cuando un diagrama tiene **puntos derivados** (ej. D en un paralelogramo, computado desde A, B, C), hay que **impedir que la orientación del polígono se invierta** al arrastrar los puntos libres. Si la orientación cambia (CCW → CW), los sectores de ángulo dibujados con order `[next, vertex, prev]` mostrarán ángulos externos en lugar de internos.
+
+### 30.1 Patrón de enforcement de orientación
+
+```typescript
+const orientABC = () => (B.X() - A.X()) * (C.Y() - A.Y()) - (B.Y() - A.Y()) * (C.X() - A.X());
+const initialOrient = orientABC();
+const lastValid = { A: [A.X(), A.Y()], B: [B.X(), B.Y()], C: [C.X(), C.Y()] };
+
+[A, B, C].forEach((p, idx) => {
+  const name = String.fromCharCode(65 + idx);
+  p.on('drag', () => {
+    const cur = orientABC();
+    if (Math.abs(cur) < 0.01 || (initialOrient > 0.01 && cur < 0) || (initialOrient < -0.01 && cur > 0)) {
+      p.moveTo([lastValid[name][0], lastValid[name][1]], 0);
+    } else {
+      lastValid[name][0] = p.X();
+      lastValid[name][1] = p.Y();
+    }
+  });
+});
+```
+
+Esto garantiza:
+- Los 3 puntos libres nunca se vuelven **colineales** (`Math.abs(cur) < 0.01`)
+- La **orientación no se invierte** (mismo signo que la inicial)
+- Los ángulos `[next, vertex, prev]` siempre muestran ángulos internos
+- El polígono nunca se cruza ni se deforma
+
+---
+
+## 31. Separación infoText / useEffect — Coordinación Limpia
+
+**Regla:** El `infoText` (función de texto dinámico en `board.create('text', ...)`) **NUNCA debe llamar a `setAttribute`** sobre elementos del diagrama. Su única responsabilidad es devolver una cadena HTML.
+
+Toda la gestión de visibilidad y atributos de elementos DEBE residir en el `useEffect` de highlight:
+
+```typescript
+// ❌ INCORRECTO — infoText modifica elementos
+const infoText = board.create('text', [x, y, () => {
+  if (someCondition) elemento.setAttribute({ visible: true });  // PROHIBIDO
+  return '<div>...</div>';
+}]);
+
+// ✅ CORRECTO — infoText solo devuelve HTML
+const infoText = board.create('text', [x, y, () => {
+  let clase = "Paralelogramo";
+  if (allRight) clase = "Rectángulo";
+  return `<div><strong>${clase}</strong></div>`;
+}]);
+
+// Toda la visibilidad en el useEffect de highlight
+useEffect(() => {
+  const showAngles = showAll && !isRectOrSquare;
+  angleA.setAttribute({ visible: showAngles });
+  rightA.setAttribute({ visible: showAll && isRectOrSquare });
+  board.update();
+}, [highlight]);
+```
+
+**Motivo:** `infoText` se ejecuta en cada `board.update()`, lo que incluye los updates disparados por el `useEffect` de highlight. Si `infoText` modifica atributos, **sobrescribe** los cambios del highlight, rompiendo la interactividad.
+
+---
+
+## 32. InteractiveElement Auto-Referente en MDX
+
+Cuando un `InteractiveElement` envuelve el nombre de la propia definición (ej. "la mediatriz"), debe incluir también un `ConceptLink` auto-referente para cumplir la regla de oro de enlazar todo concepto:
+
+```mdx
+// ✅ CORRECTO — InteractiveElement + ConceptLink auto-referente
+<InteractiveElement target="mediatriz">
+  <ConceptLink targetId="mediatriz" isDependency={false}>mediatriz</ConceptLink>
+</InteractiveElement>
+
+// ❌ INCORRECTO — falta el ConceptLink
+<InteractiveElement target="mediatriz">mediatriz</InteractiveElement>
+```
+
+El `isDependency={false}` evita un ciclo en el grafo de dependencias (una definición no puede depender de sí misma).
+
+---
+
+## 33. Gliders sobre Ejes para Ángulos Rectos Forzados
+
+Para diagramas que requieren un **ángulo recto garantizado** (ej. teorema de Pitágoras), usar `glider`s sobre líneas perpendiculares que pasan por el vértice del ángulo recto:
+
+```typescript
+const C = board.create('point', [0, 0], { fixed: true });
+const axisY = board.create('line', [C, [0, 1]], { visible: false });
+const axisX = board.create('line', [C, [1, 0]], { visible: false });
+const A = board.create('glider', [0, 4, axisY], { name: 'A', ... });
+const B = board.create('glider', [3, 0, axisX], { name: 'B', ... });
+```
+
+- A solo se desplaza verticalmente, B solo horizontalmente
+- El ángulo en C siempre es 90° — **no es necesario forzarlo con atractores**
+- Añadir restricción de signo para evitar que crucen el origen: `A.Y() > 0`, `B.X() > 0`
+- Para triángulos que DEBEN mantener un ángulo fijo, esta es la solución más robusta
+
+---
+
+## 34. Arrastre Mutuo entre Puntos Vinculados
+
+Cuando dos puntos están vinculados geométricamente (ej. D en AB y E en AC con DE ∥ BC en Tales), ambos deben ser arrastrables pero **manteniendo la restricción**. Usar `glider`s + handlers con flag anti-recursión:
+
+```typescript
+const updatingRef = useRef(false);
+
+const D = board.create('glider', [0, 0, segAB], { ... });
+const E = board.create('intersection', [parDE, lineCA, 0], { ... });
+const Dcomp = board.create('intersection', [parE_line, lineAB, 0], { visible: false });
+
+D.on('drag', () => {
+  if (updatingRef.current) return;
+  // E se actualiza automáticamente vía parDE
+});
+
+E.on('drag', () => {
+  if (updatingRef.current) return;
+  updatingRef.current = true;
+  D.moveTo([Dcomp.X(), Dcomp.Y()], 0);
+  updatingRef.current = false;
+});
+```
+
+**Regla:** Crear los elementos geométricos de soporte (líneas paralelas, intersecciones) como invisibles pero presentes. Usar `intersection` para computar la posición vinculada. El flag `updatingRef` evita bucles infinitos de arrastre.
+
+---
+
+## 35. Atractores para Ángulos Notables
+
+Para diagramas de triángulos donde interesa explorar configuraciones angulares (suma de ángulos, etc.), añadir **círculos de Thales** como atractores para snapping a ángulos rectos:
+
+```typescript
+const midAB = board.create('midpoint', [A, B], { visible: false });
+const thalesAB = board.create('circle', [midAB, A], { visible: false });
+// ... para los tres lados
+
+C.setAttribute({ attractors: [thalesAB], attractorDistance: 0.3, snatchDistance: 0.5 });
+A.setAttribute({ attractors: [thalesBC], attractorDistance: 0.3, snatchDistance: 0.5 });
+B.setAttribute({ attractors: [thalesCA], attractorDistance: 0.3, snatchDistance: 0.5 });
+```
+
+Cuando un punto se aproxima a su Thales correspondiente, el triángulo se vuelve rectángulo en ese vértice. Esto permite al estudiante «descubrir» que los ángulos agudos de un triángulo rectángulo suman 90°.
+
+---
+
+## 36. Visibilidad Dependiente de Geometría vs Highlight
+
+**Regla crítica:** La visibilidad de elementos que depende de la **geometría** (clasificación, congruencia, paralelismo) debe gestionarse en `infoText` o en un `board.on('update')`, **NUNCA** en el `useEffect` de highlight.
+
+```typescript
+// ❌ INCORRECTO — los ticks solo se actualizan al cambiar el highlight
+useEffect(() => {
+  const isIsosc = Math.abs(C.Dist(A) - C.Dist(B)) < 0.15;
+  congAC.setAttribute({ visible: isIsosc });
+}, [highlight]); // ← solo se ejecuta cuando cambia highlight, no al arrastrar
+
+// ✅ CORRECTO — infoText se ejecuta en CADA board.update()
+const infoText = board.create('text', [x, y, () => {
+  const isIsosc = Math.abs(C.Dist(A) - C.Dist(B)) < 0.15;
+  congAC.setAttribute({ visible: isIsosc });  // se actualiza al arrastrar
+  if (isIsosc) { angleA.setAttribute({ visible: true }); }
+  else        { angleA.setAttribute({ visible: false }); }
+  return '<div>...</div>';
+}]);
+
+// El useEffect de highlight SOLO atenúa/colorea elementos YA visibles:
+useEffect(() => {
+  if (isHighlight('lados-iguales')) {
+    sides.AC.setAttribute({ strokeColor: C_ACC, strokeWidth: 4 }); // resaltar
+  }
+}, [highlight]);
+```
+
+**Principio:** 
+- `infoText` → visibilidad basada en geometría (qué se muestra según la forma)
+- `useEffect(highlight)` → estilo basado en hover (cómo se ve lo ya mostrado)
+
+---
+
+## 37. Uso de Refs para Comunicar Highlight a infoText
+
+Cuando el texto dinámico necesita reaccionar al estado de highlight (cambiar color, tamaño), usar un `useRef` que se sincroniza con el highlight:
+
+```typescript
+const hlRef = useRef<any>(null);
+useEffect(() => { hlRef.current = highlight; }, [highlight]);
+
+const infoText = board.create('text', [x, y, () => {
+  const h = hlRef.current;
+  const isActive = h === 'desigualdad' || (Array.isArray(h) && h.includes('desigualdad'));
+  const col = isActive ? getCSSVar('--theme-terracota') : getCSSVar('--theme-carbon');
+  return `<div style="color:${col}; ...">...</div>`;
+}]);
+```
+
+Esto permite que el texto del panel refleje visualmente qué InteractiveElement está activo, cerrando el circuito de feedback entre el MDX y el diagrama.
+
+---
+
+## 38. Diagramas de Congruencia: Dos Triángulos Vinculados
+
+Para teoremas de congruencia (ALA, LLL), el diagrama DEBE mostrar dos triángulos donde uno es **copia congruente** del otro.
+
+### 38.1 Triángulo 2 como copia computada
+
+El segundo triángulo se construye a partir del primero, NO como elementos independientes:
+
+**Reflexión (válido para ALA cuando la base es horizontal):**
+```typescript
+const A2 = board.create('point', [0, -3], { fixed: true, ... });
+const B2 = board.create('point', [() => A2.X() + A1.Dist(B1), () => A2.Y()], { ... });
+const C2 = board.create('point', [
+  () => A2.X() + (C1.X() - A1.X()),
+  () => A2.Y() - (C1.Y() - A1.Y())  // Y invertida = reflexión
+], { ... });
+```
+
+**Círculos (LLL):**
+```typescript
+const circA2 = board.create('circle', [A2, () => A1.Dist(C1)], { visible: false });
+const circB2 = board.create('circle', [B2, () => B1.Dist(C1)], { visible: false });
+const C2 = board.create('intersection', [circA2, circB2, 0], { ... });
+```
+
+### 38.2 Ángulos internos en la copia reflejada
+
+Si el triángulo original está sobre la base (CCW, interior arriba) y la copia está bajo la base (CW, interior abajo), los órdenes de ángulo DEBEN invertirse:
+
+```typescript
+// Original (CCW, sobre la base):
+const angleA1 = board.create('angle', [B1, A1, C1], { ... });  // [next, vertex, prev] CCW
+// Copia (CW, bajo la base):
+const angleA2 = board.create('angle', [C2, A2, B2], { ... });  // [prev, vertex, next] CW
+```
+
+**Regla:** Para CW, usar `[prev, vertex, next]`. Para CCW, `[next, vertex, prev]`. Si no se invierte, los sectores de la copia mostrarán ángulos exteriores.
+
+### 38.3 Separación vertical
+
+Dejar al menos 3 unidades entre las bases de ambos triángulos para evitar solapamiento al arrastrar:
+```typescript
+A1 = (0, 0), A2 = (0, -3)  // gap de 3 unidades
+```
+
+---
+
+## 39. Visibilidad Condicional por Highlight Global
+
+En diagramas con múltiples propiedades (congruencia de varios pares de lados/ángulos), **por defecto solo se muestran los elementos dados por el teorema**. Las propiedades derivadas se revelan con un highlight «global»:
+
+```typescript
+// hGlobal = isHighlight('globalmente-congruentes')
+const bright = (target: any) => showAll || target || hGlobal;
+const op = (target: any) => bright(target) ? 1 : 0.15;
+
+// Elementos SIEMPRE visibles (dados por el teorema):
+ticksAB.forEach(t => t.setAttribute({ visible: true, strokeOpacity: op(hLadoAB) }));
+angleA.setAttribute({ visible: true, fillOpacity: (hAngA||hGlobal) ? 0.5 : 0.25 });
+
+// Elementos SOLO con highlight global (consecuencias):
+ticksAC.forEach(t => t.setAttribute({ visible: hGlobal, strokeOpacity: op(hGlobal) }));
+angleC.setAttribute({ visible: hGlobal });
+```
+
+**Principio:** `bright = showAll || target || hGlobal` asegura que cuando el highlight global está activo, **todos** los elementos se iluminan (no solo los del target específico). Esto resuelve el patrón donde varios InteractiveElements comparten elementos visuales.
 
 ---
 

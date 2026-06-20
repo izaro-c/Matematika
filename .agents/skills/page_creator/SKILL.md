@@ -18,10 +18,14 @@
 11. [Convenciones de Naming](#11-convenciones-de-naming)
 12. [Estructura de Archivos](#12-estructura-de-archivos)
 13. [Exportación de Simulaciones y Diagramas](#13-exportación-de-simulaciones-y-diagramas)
-21. [Fuentes de Referencia](#15-fuentes-de-referencia)
-22. [Validación Automática (OBLIGATORIA)](#16-validación-automática-obligatorio)
-23. [Checklist de Integridad Referencial](#17-checklist-de-integridad-referencial)
-24. [Checklist de Calidad por Tipo](#18-checklist-de-calidad-por-tipo)
+15. [Diseño de Diagramas e Interactividad (JSXGraph)](#14-diseño-de-diagramas-e-interactividad-jsxgraph)
+16. [Fuentes de Referencia](#15-fuentes-de-referencia)
+17. [Validación Automática (OBLIGATORIA)](#16-validación-automática-obligatorio)
+18. [Checklist de Integridad Referencial](#17-checklist-de-integridad-referencial)
+19. [Checklist de Calidad por Tipo](#18-checklist-de-calidad-por-tipo)
+20. [Clasificación de Conceptos Derivados](#19-clasificación-de-conceptos-derivados)
+21. [Rigor en Definiciones y Casos Límite](#20-rigor-en-definiciones-y-casos-límite)
+22. [Clasificaciones Jerárquicas](#21-clasificaciones-jerárquicas)
 
 ---
 
@@ -1242,6 +1246,90 @@ Antes de finalizar CUALQUIER contenido, verificar:
 - [ ] El teorema/definición referenciado existe
 - [ ] La solución/razonamiento es completo y correcto
 - [ ] El nivel de dificultad es apropiado
+
+---
+
+## 19. Clasificación de Conceptos Derivados
+
+Cuando un concepto definido admite subtipos o categorías (ej. triángulos, cuadriláteros, ángulos), la página DEBE incluir una **sección de clasificación** con los siguientes elementos:
+
+### 19.1 Estructura de la sección de clasificación
+
+1. **Párrafo introductorio** que explique los criterios de clasificación
+2. **Tabla de clasificación** con columnas: Clase, Criterio, Descripción (y opcionalmente Diagrama)
+3. **Nota** si la clasificación es jerárquica (ver §21)
+
+**Ejemplo canónico — triángulos:**
+
+```mdx
+### Clasificación
+
+Los triángulos se clasifican por sus lados y por sus ángulos:
+
+| Por lados | Descripción | Por ángulos | Descripción |
+|---|---|---|---|
+| Equilátero | 3 lados congruentes | Acutángulo | 3 ángulos agudos |
+| Isósceles | 2 lados congruentes | Rectángulo | 1 ángulo recto |
+| Escaleno | 0 lados congruentes | Obtusángulo | 1 ángulo obtuso |
+```
+
+**Ejemplo canónico — cuadriláteros:** Clasificación jerárquica de menor a mayor especificidad: Trapezoide → Trapecio → Cometa → Paralelogramo → Rombo/Rectángulo → Cuadrado.
+
+### 19.2 Requisitos
+
+- Cada clase mencionada en la tabla DEBE tener su propio `<ConceptLink>` (aunque la página aún no exista).
+- La tabla debe ser **auto-contenida**: legible sin depender del diagrama.
+- La clasificación debe ser **exhaustiva** dentro del alcance de la página.
+
+---
+
+## 20. Rigor en Definiciones y Casos Límite
+
+Toda definición debe **mencionar explícitamente los casos límite** y condiciones de borde para ser rigurosa:
+
+### 20.1 Elementos obligatorios en definiciones geométricas
+
+| Caso | Ejemplo | Dónde mencionarlo |
+|---|---|---|
+| Condiciones de existencia | Triángulo: puntos no colineales | En el enunciado formal |
+| Pie fuera del segmento | Altura en triángulo obtuso: el pie cae en la prolongación | En una sección "Pie de la altura" |
+| Casos degenerados | Cuadrilátero: tres puntos colineales no forman cuadrilátero | En observaciones |
+| Casos especiales | Triángulo rectángulo: dos alturas coinciden con catetos | En la sección correspondiente |
+| Convexidad / concavidad | Cuadriláteros cóncavos tienen un ángulo > 180° | En sección propia |
+| Extensión a otras geometrías | La suma de ángulos varía en geometría hiperbólica | En observaciones |
+
+### 20.2 Regla de rigor
+
+> **Toda definición geométrica DEBE mencionar qué sucede cuando las condiciones ideales no se cumplen.** No basta con definir el caso "feliz"; hay que contemplar los casos límite. Si el pie de una altura puede caer fuera del triángulo, decirlo. Si un cuadrilátero puede ser cóncavo, explicarlo. Si tres puntos alineados invalidan la definición, explicitarlo.
+
+### 20.3 Relación con el diagrama
+
+El diagrama DEBE reflejar estos casos límite visualmente (extensión de base para altura fuera del triángulo, marcado de ángulos internos >180° en cóncavos, prevención de colinealidad en vértices arrastrables). Ver §22 y §24 del skill `diagrama`.
+
+---
+
+## 21. Clasificaciones Jerárquicas
+
+Cuando una clasificación es jerárquica (una clase es subconjunto de otra), hay que explicitarlo:
+
+```mdx
+<Nota>
+La clasificación es **jerárquica**: todo <ConceptLink targetId="cuadrado">cuadrado</ConceptLink> es también 
+<ConceptLink targetId="rectangulo">rectángulo</ConceptLink>, <ConceptLink targetId="rombo">rombo</ConceptLink> y 
+<ConceptLink targetId="paralelogramo">paralelogramo</ConceptLink>.
+</Nota>
+```
+
+### 21.1 Cuándo usar Nota jerárquica
+
+- Cuadriláteros (cuadrado ⊂ rectángulo ⊂ paralelogramo ⊂ trapecio ⊂ trapezoide)
+- Triángulos (las clasificaciones por lados y por ángulos son ortogonales, pero un triángulo puede ser simultáneamente isósceles y rectángulo)
+- Ángulos (agudo, recto, obtuso, llano, cóncavo, completo)
+- Cualquier taxonomía donde se cumpla $A \subset B$
+
+### 21.2 Orden en la tabla
+
+La tabla de clasificación jerárquica debe ordenarse de **menor a mayor especificidad** (de la clase más general a la más específica), para que el lector entienda la cadena de inclusiones.
 
 ---
 

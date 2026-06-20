@@ -2,42 +2,51 @@ export const metadata = {
   "id": "teorema-tales",
   "type": "teorema",
   "title": "Teorema de Tales",
-  "description": "Si varias rectas paralelas cortan a dos rectas transversales, entonces los segmentos que determinan en ellas son proporcionales.",
-  "statement": "Sean r₁ ∥ r₂ ∥ r₃ tres rectas paralelas cortadas por dos transversales t₁ y t₂. Si Aᵢ = rᵢ ∩ t₁ y Bᵢ = rᵢ ∩ t₂, entonces A₁A₂/A₂A₃ = B₁B₂/B₂B₃.",
+  "description": "Si una recta paralela a uno de los lados de un triángulo corta a los otros dos lados, entonces los segmentos que determina en ellos son proporcionales.",
+  "statement": "Sea △ABC un triángulo y D ∈ AB, E ∈ AC tales que DE ∥ BC. Entonces AD/DB = AE/EC.",
   "tags": ["geometria", "proporcionalidad", "paralelas"],
   "authors": ["tales"],
   "difficulty": "intermedio",
-  "demos": ["demo-tales"]
+  "demos": ["demo-tales"],
+  "hasSimulation": true
 };
 
 import { InteractiveElement } from "../../components/ui/VisualBind";
+import { Tales } from '../../diagrams/Teoremas/Tales';
 
-<Capitular letra="E" />l <ConceptLink targetId={["teorema-tales", "teorema", "tales"]}>teorema de Tales</ConceptLink> es una piedra angular de la <ConceptLink targetId="geometria" isDependency={false}>geometría</ConceptLink> proyectiva y la noción de semejanza. Establece que <ConceptLink targetId="recta">rectas</ConceptLink> <ConceptLink targetId="paralelas">paralelas</ConceptLink> que cortan a dos transversales producen <ConceptLink targetId="segmento">segmentos</ConceptLink> proporcionales en un <ConceptLink targetId="triangulo">triángulo</ConceptLink>.
+export const Simulation = Tales;
+
+<Capitular letra="E" />l <ConceptLink targetId={["teorema-tales", "teorema"]}>teorema de Tales</ConceptLink> es una piedra angular de la <ConceptLink targetId="geometria-euclidiana" isDependency={false}>geometría</ConceptLink> y la noción de <ConceptLink targetId="semejanza" isDependency={false}>semejanza</ConceptLink>. Establece que si una <InteractiveElement target="recta-de"><ConceptLink targetId="recta" isDependency={false}>recta</ConceptLink> <ConceptLink targetId="paralelas" isDependency={false}>paralela</ConceptLink></InteractiveElement> a uno de los <ConceptLink targetId="lado" isDependency={false}>lados</ConceptLink> de un <InteractiveElement target="triangulo-abc"><ConceptLink targetId="triangulo" isDependency={false}>triángulo</ConceptLink> $\triangle ABC$</InteractiveElement> corta a los otros dos <ConceptLink targetId="lado" isDependency={false}>lados</ConceptLink>, entonces los <ConceptLink targetId="segmento" isDependency={false}>segmentos</ConceptLink> que determina en ellos son <ConceptLink targetId="proporcionalidad" isDependency={false}>proporcionales</ConceptLink>.
 
 <Separador />
 
 ### Enunciado Formal
 
-Sean $r_1 \parallel r_2 \parallel r_3$ tres rectas paralelas cortadas por dos transversales $t_1$ y $t_2$. Sean $A_i = r_i \cap t_1$ y $B_i = r_i \cap t_2$. Entonces:
+Sea <InteractiveElement target="triangulo-abc">$\triangle ABC$</InteractiveElement> un <ConceptLink targetId="triangulo" isDependency={false}>triángulo</ConceptLink> y sean <InteractiveElement target="segmento-ad">$D \in \overline{AB}$</InteractiveElement>, <InteractiveElement target="segmento-ae">$E \in \overline{AC}$</InteractiveElement> tales que <InteractiveElement target="recta-de">$DE \parallel BC$</InteractiveElement>. Entonces:
 
 <Formula>
-  $$ \frac{\overline{A_1 A_2}}{\overline{A_2 A_3}} = \frac{\overline{B_1 B_2}}{\overline{B_2 B_3}} $$
+  $$ \frac{\overline{AD}}{\overline{DB}} = \frac{\overline{AE}}{\overline{EC}} $$
 </Formula>
 
-En el diagrama, una <InteractiveElement target="recta-de" color="salvia">recta paralela</InteractiveElement> corta los lados del <InteractiveElement target="triangulo-abc" color="terracota"><ConceptLink targetId="triangulo" isDependency={false}>triángulo</ConceptLink> $\triangle ABC$</InteractiveElement>, dividiéndolos proporcionalmente.
+Equivalentemente, el <ConceptLink targetId="triangulo" isDependency={false}>triángulo</ConceptLink> $\triangle ADE$ es <ConceptLink targetId="semejanza" isDependency={false}>semejante</ConceptLink> a $\triangle ABC$:
 
+<Formula>
+  $$ \triangle ADE \sim \triangle ABC $$
+</Formula>
 
+<Separador />
 
 ### Discusión
 
-Una formulación equivalente y muy práctica: si trazamos una recta paralela a uno de los lados de un triángulo que interseca a los otros dos, entonces divide a esos lados en segmentos proporcionales, originando un triángulo semejante al original.
+Una formulación equivalente y muy práctica: si trazamos una <ConceptLink targetId="recta" isDependency={false}>recta</ConceptLink> <InteractiveElement target="recta-de"><ConceptLink targetId="paralelas" isDependency={false}>paralela</ConceptLink></InteractiveElement> a uno de los <ConceptLink targetId="lado" isDependency={false}>lados</ConceptLink> de un <InteractiveElement target="triangulo-abc"><ConceptLink targetId="triangulo" isDependency={false}>triángulo</ConceptLink></InteractiveElement> que interseca a los otros dos, entonces divide a esos <ConceptLink targetId="lado" isDependency={false}>lados</ConceptLink> en <ConceptLink targetId="segmento" isDependency={false}>segmentos</ConceptLink> <InteractiveElement target="proporcion"><ConceptLink targetId="proporcionalidad" isDependency={false}>proporcionales</ConceptLink></InteractiveElement>, originando un <ConceptLink targetId="triangulo" isDependency={false}>triángulo</ConceptLink> <ConceptLink targetId="semejanza" isDependency={false}>semejante</ConceptLink> al original.
 
-El teorema es la base de la **semejanza de triángulos**: dos triángulos son semejantes si tienen ángulos congruentes, y sus lados correspondientes son proporcionales. Esto es fundamental para la trigonometría y para la definición de funciones trigonométricas.
+El <ConceptLink targetId="teorema" isDependency={false}>teorema</ConceptLink> es la base de la <ConceptLink targetId="semejanza" isDependency={false}>semejanza de triángulos</ConceptLink>: dos <ConceptLink targetId="triangulo" isDependency={false}>triángulos</ConceptLink> son <ConceptLink targetId="semejanza" isDependency={false}>semejantes</ConceptLink> si tienen <ConceptLink targetId="angulo" isDependency={false}>ángulos</ConceptLink> <ConceptLink targetId="congruencia" isDependency={false}>congruentes</ConceptLink>, y sus <ConceptLink targetId="lado" isDependency={false}>lados</ConceptLink> correspondientes son <ConceptLink targetId="proporcionalidad" isDependency={false}>proporcionales</ConceptLink>. Esto es fundamental para la <ConceptLink targetId="trigonometria" isDependency={false}>trigonometría</ConceptLink> y para la definición de <ConceptLink targetId="razon-trigonometrica" isDependency={false}>funciones trigonométricas</ConceptLink>.
 
 <Separador />
 
 ### Observaciones
 
-- El teorema requiere el axioma de las paralelas: es propio de la geometría euclidiana.
-- Atribuido a Tales de Mileto (siglo VI a.C.), quien supuestamente lo usó para medir la altura de las pirámides egipcias mediante las sombras proyectadas.
-- El <ConceptLink targetId="teorema-pitagoras" isDependency={false}>teorema de Pitágoras</ConceptLink> puede demostrarse usando Tales, y ambos son equivalentes al axioma de las paralelas.
+- El <ConceptLink targetId="teorema" isDependency={false}>teorema</ConceptLink> requiere el <ConceptLink targetId="axioma-paralelas-euclides">axioma de las paralelas</ConceptLink>: es propio de la <ConceptLink targetId="geometria-euclidiana" isDependency={false}>geometría euclidiana</ConceptLink>.
+- Atribuido a <ConceptLink targetId="tales" isDependency={false}>Tales de Mileto</ConceptLink> (siglo VI a.C.), quien supuestamente lo usó para medir la altura de las pirámides egipcias mediante las sombras proyectadas.
+- El <ConceptLink targetId="teorema-pitagoras" isDependency={false}>teorema de Pitágoras</ConceptLink> puede demostrarse usando el <ConceptLink targetId="teorema-tales" isDependency={false}>teorema de Tales</ConceptLink>, y ambos son equivalentes al <ConceptLink targetId="axioma-paralelas-euclides">axioma de las paralelas</ConceptLink>.
+- La recíproca también es cierta: si $AD/DB = AE/EC$, entonces $DE \parallel BC$.

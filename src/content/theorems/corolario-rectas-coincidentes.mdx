@@ -6,11 +6,12 @@ export const metadata = {
   "statement": "Sean l y m dos rectas, y A, B dos puntos distintos. Si A ∈ l, B ∈ l y A ∈ m, B ∈ m, entonces l = m.",
   "parentTheorem": "teorema-dos-rectas-un-punto",
   "tags": ["geometria", "incidencia"],
-  "difficulty": "básico"
+  "difficulty": "básico",
+  "demos": ["demo-rectas-coincidentes"]
 };
 
 <Capitular letra="D" />
-el <ConceptLink targetId="teorema-dos-rectas-un-punto">teorema de intersección única</ConceptLink> precedente se colige inmediatamente que, si dos <ConceptLink targetId="recta" isDependency={false}>rectas</ConceptLink> inciden simultáneamente en dos o más <ConceptLink targetId="punto" isDependency={false}>puntos</ConceptLink>, ambas deben coincidir geométricamente en su totalidad. Este <ConceptLink targetId="corolario" isDependency={false}>corolario</ConceptLink> fundamental vertebra la unicidad en las construcciones geométricas elementales.
+el <ConceptLink targetId="teorema-dos-rectas-un-punto">teorema de intersección única</ConceptLink> precedente se colige inmediatamente que, si dos <ConceptLink targetId="recta" isDependency={false}>rectas</ConceptLink> inciden simultáneamente en dos o más <ConceptLink targetId="punto" isDependency={false}>puntos</ConceptLink>, ambas deben coincidir geométricamente en su totalidad. Este <ConceptLink targetId="corolario" isDependency={false}>corolario</ConceptLink> fundamental vertebra la <ConceptLink targetId="unicidad" isDependency={false}>unicidad</ConceptLink> en las construcciones geométricas elementales.
 
 <Separador />
 
@@ -22,12 +23,12 @@ el <ConceptLink targetId="teorema-dos-rectas-un-punto">teorema de intersección 
 
 <Separador />
 
-<Demostracion>
-Si $l \neq m$, por el <ConceptLink targetId="teorema-dos-rectas-un-punto">teorema de intersección única</ConceptLink>, $l$ y $m$ comparten a lo sumo un punto. Sin embargo, por hipótesis, comparten los puntos distintos $A$ y $B$. Esta contradicción implica que nuestra suposición inicial es falsa, por lo tanto $l = m$. $\blacksquare$
-</Demostracion>
+### Demostración
+
+La prueba completa, por <ConceptLink targetId="contradiccion" isDependency={false}>reducción al absurdo</ConceptLink> a partir del <ConceptLink targetId="teorema-dos-rectas-un-punto">teorema de intersección única</ConceptLink>, se desarrolla en la <RefLink targetId="demo-rectas-coincidentes">página de demostración dedicada</RefLink>.
 
 <Separador />
 
 <Nota>
-  En la geometría proyectiva (ver <ConceptLink targetId="sistema-hiperbolico" isDependency={false}>modelo de hiperbólico</ConceptLink>), dos rectas siempre se cortan (en el <ConceptLink targetId="plano-proyectivo" isDependency={false}>plano proyectivo</ConceptLink>, las rectas <ConceptLink targetId="paralelas" isDependency={false}>paralelas</ConceptLink> se cortan en el infinito). Esto muestra que el teorema original depende esencialmente del <ConceptLink targetId="axioma-incidencia-1">axioma I-1</ConceptLink>, que no se mantiene en la geometría proyectiva en su forma original.
+  En la <ConceptLink targetId="geometria-proyectiva" isDependency={false}>geometría proyectiva</ConceptLink>, dos <ConceptLink targetId="recta" isDependency={false}>rectas</ConceptLink> siempre se cortan (en el <ConceptLink targetId="plano-proyectivo" isDependency={false}>plano proyectivo</ConceptLink>, las <ConceptLink targetId="paralelas" isDependency={false}>rectas paralelas</ConceptLink> se cortan en el infinito). Esto muestra que el <ConceptLink targetId="teorema" isDependency={false}>teorema</ConceptLink> original depende esencialmente del <ConceptLink targetId="axioma-incidencia-1">axioma I-1</ConceptLink>, que no se mantiene en la geometría proyectiva en su forma original.
 </Nota>
