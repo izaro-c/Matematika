@@ -14,8 +14,8 @@ export const JSXGraphWrapper = () => {
     useEffect(() => {
         if (!boardRef.current) return;
 
-        // Le pasamos el Nodo DOM real a JSXGraph en vez de usar un ID de texto ("box")
-        const board = JXG.JSXGraph.initBoard(boardRef.current, {
+        if (!boardRef.current.id) boardRef.current.id = "jxgbox_" + Math.random().toString(36).substring(2, 9);
+        const board = JXG.JSXGraph.initBoard(boardRef.current.id, {
             boundingbox: [-5, 5, 5, -5], // Eje X de -5 a 5, Eje Y de -5 a 5
             axis: true,                  // Dibuja los ejes cartesianos
             showCopyright: false         // Quitamos la marca de agua

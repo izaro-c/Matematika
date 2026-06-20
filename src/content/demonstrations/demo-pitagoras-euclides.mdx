@@ -5,33 +5,23 @@ export const metadata = {
   "description": "La célebre demostración de Euclides basada en la equivalencia de áreas (Proposición I.47).",
   "tags": ["geometria", "triangulos", "areas"],
   "authors": ["euclides"],
-  "links": ["triangulo", "perpendicular", "segmento", "angulo"],
   "parentTheorem": "teorema-pitagoras",
+  "proofMethod": "directo",
+  "layout": "split"
 };
 
-import { DemonstrationSection } from "../../components/content/DemonstrationSection";
-import { MedievalStep } from "../../components/content/MedievalStep";
-import { InteractiveElement } from "../../components/ui/VisualBind";
 import { DemoPitagorasEuclides } from "../../diagrams/Teoremas/DemoPitagorasEuclides";
 
-export const Component = () => {
-  const diagrams = {
-    "default": DemoPitagorasEuclides
-  };
-
-  return (
-    <DemonstrationSection diagrams={diagrams}>
-      <MedievalStep number={1} target="triangulo" title="El triángulo rectángulo">
-        Partimos de un <ConceptLink targetId="triangulo"><ConceptLink targetId="triangulo">triángulo</ConceptLink> rectángulo</ConceptLink> con <ConceptLink targetId="angulo">ángulo</ConceptLink> recto en el vértice $C$. Los lados adyacentes a $C$ se denominan catetos (<ConceptLink targetId="longitud">longitudes</ConceptLink> $a$ y $b$), y el lado opuesto es la hipotenusa (<ConceptLink targetId="longitud">longitud</ConceptLink> $c$).
-      </MedievalStep>
+<DemonstrationSection diagram={<DemoPitagorasEuclides />}>
+  <MedievalStep number={1} target="triangulo" title="El triángulo rectángulo">
+    Partimos de un <ConceptLink targetId="triangulo" isDependency={false}>triángulo rectángulo</ConceptLink> con <ConceptLink targetId="angulo" isDependency={false}>ángulo</ConceptLink> recto en el vértice $C$. Los lados adyacentes a $C$ se denominan catetos (<ConceptLink targetId="longitud" isDependency={false}>longitudes</ConceptLink> $a$ y $b$), y el lado opuesto es la hipotenusa (longitud $c$).
+  </MedievalStep>
       
       <MedievalStep number={2} target={["cuadrado-a", "cuadrado-b", "cuadrado-c"]} title="Construcción de los cuadrados">
-        Sobre cada uno de los lados del <ConceptLink targetId="triangulo">triángulo</ConceptLink>, construimos geométricamente un cuadrado perfecto hacia el exterior. Obtenemos así un <InteractiveElement target="cuadrado-a">cuadrado de <ConceptLink targetId="area">área</ConceptLink> $a^2$</InteractiveElement>, otro <InteractiveElement target="cuadrado-b">cuadrado de <ConceptLink targetId="area">área</ConceptLink> $b^2$</InteractiveElement>, y el <InteractiveElement target="cuadrado-c">gran cuadrado sobre la hipotenusa de <ConceptLink targetId="area">área</ConceptLink> $c^2$</InteractiveElement>. El objetivo es demostrar que las áreas de los dos primeros caben exactamente dentro del tercero.
+        Sobre cada uno de los lados del triángulo, construimos geométricamente un cuadrado perfecto hacia el exterior. Obtenemos así un <InteractiveElement target="cuadrado-a">cuadrado de <ConceptLink targetId="area" isDependency={false}>área</ConceptLink> $a^2$</InteractiveElement>, otro <InteractiveElement target="cuadrado-b">cuadrado de área $b^2$</InteractiveElement>, y el <InteractiveElement target="cuadrado-c">gran cuadrado sobre la hipotenusa de área $c^2$</InteractiveElement>. El objetivo es demostrar que las áreas de los dos primeros caben exactamente dentro del tercero.
       </MedievalStep>
 
       <MedievalStep number={3} target={["altura-c", "cuadrado-c"]} title="División ortogonal del cuadrado mayor">
-        Desde el vértice recto $C$, trazamos una <InteractiveElement target="altura-c">línea <ConceptLink targetId="perpendicular">perpendicular</ConceptLink> a la hipotenusa</InteractiveElement> y la prolongamos a través del <InteractiveElement target="cuadrado-c">cuadrado mayor</InteractiveElement>. Esta línea divide al cuadrado de la hipotenusa en dos rectángulos. <ConceptLink targetId="euclides">Euclides</ConceptLink> demuestra magistralmente (mediante cizalladura de <ConceptLink targetId="triangulo">triángulos</ConceptLink>) que el rectángulo izquierdo tiene la misma <ConceptLink targetId="area">área</ConceptLink> que el cuadrado $b^2$, y el rectángulo derecho la misma <ConceptLink targetId="area">área</ConceptLink> que el cuadrado $a^2$. Por consiguiente, $a^2 + b^2 = c^2$. $\blacksquare$
+        Desde el vértice recto $C$, trazamos una <InteractiveElement target="altura-c">línea <ConceptLink targetId="perpendicular" isDependency={false}>perpendicular</ConceptLink> a la hipotenusa</InteractiveElement> y la prolongamos a través del <InteractiveElement target="cuadrado-c">cuadrado mayor</InteractiveElement>. Esta línea divide al cuadrado de la hipotenusa en dos rectángulos. <ConceptLink targetId="euclides" isDependency={false}>Euclides</ConceptLink> demuestra magistralmente (mediante cizalladura de triángulos) que el rectángulo izquierdo tiene la misma área que el cuadrado $b^2$, y el rectángulo derecho la misma área que el cuadrado $a^2$. Por consiguiente, $a^2 + b^2 = c^2$. $\blacksquare$
       </MedievalStep>
-    </DemonstrationSection>
-  );
-};
+</DemonstrationSection>

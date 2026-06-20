@@ -14,7 +14,7 @@ export const Simulation = Congruence1;
 import { InteractiveElement } from "../../components/ui/VisualBind";
 
 <Capitular letra="D" />
-ado un <InteractiveElement target="segmento-ab" color="terracota"><ConceptLink targetId="segmento">segmento</ConceptLink> $AB$</InteractiveElement> y una <InteractiveElement target="rayo-r" color="pizarra"><ConceptLink targetId="semirrecta">semirrecta</ConceptLink> $r$</InteractiveElement>, existe un único <InteractiveElement target="punto-d" color="salvia"><ConceptLink targetId="punto">punto</ConceptLink> $D$</InteractiveElement> sobre dicha <ConceptLink targetId="semirrecta">semirrecta</ConceptLink> que determina un <InteractiveElement target="segmento-cd" color="salvia"><ConceptLink targetId="segmento">segmento</ConceptLink> $CD$</InteractiveElement> <ConceptLink targetId="congruencia">congruente</ConceptLink> al original. Este <ConceptLink targetId="axioma">axioma</ConceptLink> formaliza el transporte <ConceptLink targetId="isometria" isDependency={false}>isométrico</ConceptLink> de distancias, operación clásica realizada en la antigüedad mediante el uso del <ConceptLink targetId="compas" isDependency={false}>compás</ConceptLink>.
+ado un <InteractiveElement target="segmento-ab" color="terracota"><ConceptLink targetId="segmento" isDependency={false}>segmento</ConceptLink> $AB$</InteractiveElement> y una <InteractiveElement target="rayo-r" color="pizarra"><ConceptLink targetId="semirrecta" isDependency={false}>semirrecta</ConceptLink> $r$</InteractiveElement>, existe un único <InteractiveElement target="punto-d" color="salvia"><ConceptLink targetId="punto" isDependency={false}>punto</ConceptLink> $D$</InteractiveElement> sobre dicha semirrecta que determina un <InteractiveElement target="segmento-cd" color="salvia">segmento $CD$</InteractiveElement> <ConceptLink targetId="congruencia" isDependency={false}>congruente</ConceptLink> al original. Este <ConceptLink targetId="axioma" isDependency={false}>axioma</ConceptLink> formaliza el transporte <ConceptLink targetId="isometria" isDependency={false}>isométrico</ConceptLink> de distancias, operación clásica realizada en la antigüedad mediante el uso del <ConceptLink targetId="compas" isDependency={false}>compás</ConceptLink>.
 
 <Separador />
 
@@ -25,21 +25,21 @@ ado un <InteractiveElement target="segmento-ab" color="terracota"><ConceptLink t
 </Formula>
 
 <Nota>
-  $r_{C}$ denota una <ConceptLink targetId="semirrecta">semirrecta</ConceptLink> con origen en $C$. La relación $\cong$ indica <ConceptLink targetId="congruencia">congruencia</ConceptLink> geométrica.
+  $r_{C}$ denota una semirrecta con origen en $C$. La relación $\cong$ indica congruencia geométrica.
 </Nota>
 
 <Separador />
 
 ### Discusión
 
-Este <ConceptLink targetId="axioma">axioma</ConceptLink> establece la noción primitiva de <ConceptLink targetId="congruencia">congruencia</ConceptLink> de <ConceptLink targetId="segmento">segmentos</ConceptLink>. La <ConceptLink targetId="congruencia">congruencia</ConceptLink> no se define en términos de <ConceptLink targetId="longitud" isDependency={false}><ConceptLink targetId="longitud">longitud</ConceptLink></ConceptLink> numérica (que aún no existe en la teoría), sino como una relación primitiva que satisface estos <ConceptLink targetId="axioma">axiomas</ConceptLink>.
+Este axioma establece la noción primitiva de congruencia de segmentos. La congruencia no se define en términos de <ConceptLink targetId="longitud" isDependency={false}>longitud</ConceptLink> numérica (que aún no existe en la teoría), sino como una relación primitiva que satisface estos axiomas.
 
-La <ConceptLink targetId="unicidad" isDependency={false}>unicidad</ConceptLink> es esencial: asegura que la operación de transportar un <ConceptLink targetId="segmento">segmento</ConceptLink> sobre una <ConceptLink targetId="semirrecta">semirrecta</ConceptLink> está bien definida y produce un resultado único. Esto es análogo a la unicidad de la <ConceptLink targetId="recta">recta</ConceptLink> por dos <ConceptLink targetId="punto">puntos</ConceptLink> (<ConceptLink targetId="axioma-incidencia-1"><ConceptLink targetId="axioma">axioma</ConceptLink> I-1</ConceptLink>).
+La <ConceptLink targetId="unicidad" isDependency={false}>unicidad</ConceptLink> es esencial: asegura que la operación de transportar un segmento sobre una semirrecta está bien definida y produce un resultado único. Esto es análogo a la unicidad de la <ConceptLink targetId="recta" isDependency={false}>recta</ConceptLink> por dos puntos (<ConceptLink targetId="axioma-incidencia-1" isDependency={false}>axioma I-1</ConceptLink>).
 
-Nótese que la <ConceptLink targetId="semirrecta">semirrecta</ConceptLink> proporciona tanto el origen $C$ como una <ConceptLink targetId="direccion" isDependency={false}>dirección</ConceptLink>: el <ConceptLink targetId="punto">punto</ConceptLink> $D$ debe estar sobre la <ConceptLink targetId="semirrecta">semirrecta</ConceptLink>, no simplemente sobre la <ConceptLink targetId="recta">recta</ConceptLink> que la contiene. Esto elimina la ambigüedad de elegir entre dos posibles <ConceptLink targetId="punto">puntos</ConceptLink> (uno a cada lado de $C$).
+Nótese que la semirrecta proporciona tanto el origen $C$ como una <ConceptLink targetId="direccion" isDependency={false}>dirección</ConceptLink>: el punto $D$ debe estar sobre la semirrecta, no simplemente sobre la recta que la contiene. Esto elimina la ambigüedad de elegir entre dos posibles puntos (uno a cada lado de $C$).
 
 <Separador />
 
 ### Observaciones
 
-Este <ConceptLink targetId="axioma">axioma</ConceptLink> corresponde a la primera noción común de <ConceptLink targetId="euclides">Euclides</ConceptLink> ("cosas iguales a una misma cosa son iguales entre sí") y al <ConceptLink targetId="postulado">postulado</ConceptLink> 3 de <ConceptLink targetId="euclides">Euclides</ConceptLink> (transportar un <ConceptLink targetId="segmento">segmento</ConceptLink>). En la <ConceptLink targetId="sistema-axiomatico">axiomática</ConceptLink> moderna, permite definir la comparación de <ConceptLink targetId="segmento">segmentos</ConceptLink>: AB < CD si AB ≅ CE para algún <ConceptLink targetId="punto">punto</ConceptLink> E entre C y D.
+Este axioma corresponde a la primera noción común de <ConceptLink targetId="euclides" isDependency={false}>Euclides</ConceptLink> ("cosas iguales a una misma cosa son iguales entre sí") y al <ConceptLink targetId="postulado" isDependency={false}>postulado</ConceptLink> 3 de Euclides (transportar un segmento). En la <ConceptLink targetId="sistema-axiomatico" isDependency={false}>axiomática</ConceptLink> moderna, permite definir la comparación de segmentos: AB < CD si AB ≅ CE para algún punto E entre C y D.

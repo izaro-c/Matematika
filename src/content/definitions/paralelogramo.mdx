@@ -15,12 +15,12 @@ import { Paralelogramo } from '../../diagrams/Definiciones/Paralelogramo';
 
 export const Simulation = Paralelogramo;
 
-<Capitular letra="U" />n <InteractiveElement target="paralelogramo">paralelogramo</InteractiveElement> es un tipo especial de <ConceptLink targetId="cuadrilatero">cuadrilátero</ConceptLink> caracterizado porque sus dos pares de lados opuestos son, respectivamente, <ConceptLink targetId="paralelas">paralelos</ConceptLink> entre sí.
+<Capitular letra="U" />n <InteractiveElement target="paralelogramo">paralelogramo</InteractiveElement> es un tipo especial de <ConceptLink targetId="cuadrilatero" isDependency={false}>cuadrilátero</ConceptLink> caracterizado porque sus dos pares de lados opuestos son, respectivamente, <ConceptLink targetId="paralelas" isDependency={false}>paralelos</ConceptLink> entre sí.
 
 De esta definición primordial se derivan numerosas propiedades equivalentes:
-- Sus <InteractiveElement target="lados-opuestos">lados opuestos tienen la misma <ConceptLink targetId="longitud">longitud</ConceptLink></InteractiveElement>.
-- Sus <InteractiveElement target="angulos-opuestos"><ConceptLink targetId="angulo">ángulos</ConceptLink> opuestos son <ConceptLink targetId="congruencia">congruentes</ConceptLink></InteractiveElement> (es decir, tienen la misma medida).
-- Los <ConceptLink targetId="angulo">ángulos</ConceptLink> consecutivos son suplementarios (suman $180^\circ$).
-- Sus <InteractiveElement target="diagonales">diagonales se cortan en su <ConceptLink targetId="punto">punto</ConceptLink> medio</InteractiveElement>.
+- Sus <InteractiveElement target="lados-opuestos">lados opuestos tienen la misma <ConceptLink targetId="longitud" isDependency={false}>longitud</ConceptLink></InteractiveElement>.
+- Sus <InteractiveElement target="angulos-opuestos"><ConceptLink targetId="angulo" isDependency={false}>ángulos</ConceptLink> opuestos son <ConceptLink targetId="congruencia" isDependency={false}>congruentes</ConceptLink></InteractiveElement> (es decir, tienen la misma medida).
+- Los ángulos consecutivos son suplementarios (suman $180^\circ$).
+- Sus <InteractiveElement target="diagonales">diagonales se cortan en su <ConceptLink targetId={["lema-punto-medio", "punto"]}>punto medio</ConceptLink></InteractiveElement>.
 
-Si un paralelogramo tiene todos sus <ConceptLink targetId="angulo">ángulos</ConceptLink> rectos, se denomina rectángulo. Si además tiene todos sus lados iguales, es un cuadrado. Si solo tiene sus lados iguales (sin requerir <ConceptLink targetId="angulo">ángulos</ConceptLink> rectos), se llama rombo.
+Si un paralelogramo tiene todos sus ángulos rectos, se denomina rectángulo. Si además tiene todos sus lados iguales, es un cuadrado. Si solo tiene sus lados iguales (sin requerir ángulos rectos), se llama rombo.

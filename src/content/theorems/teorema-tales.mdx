@@ -4,52 +4,40 @@ export const metadata = {
   "title": "Teorema de Tales",
   "description": "Si varias rectas paralelas cortan a dos rectas transversales, entonces los segmentos que determinan en ellas son proporcionales.",
   "statement": "Sean r₁ ∥ r₂ ∥ r₃ tres rectas paralelas cortadas por dos transversales t₁ y t₂. Si Aᵢ = rᵢ ∩ t₁ y Bᵢ = rᵢ ∩ t₂, entonces A₁A₂/A₂A₃ = B₁B₂/B₂B₃.",
-  "requires": ["recta", "paralelas", "segmento", "triangulo"],
-  "demos": ["demo-tales"],
   "tags": ["geometria", "proporcionalidad", "paralelas"],
   "authors": ["tales"],
   "difficulty": "intermedio",
-  "links": ["recta", "paralelas", "segmento", "triangulo"],
-  "seeAlso": ["teorema-congruencia-ala", "teorema-pitagoras"],
-  "hasSimulation": true
+  "demos": ["demo-tales"]
 };
 
-import { DemoTales } from '../../diagrams/Teoremas/DemoTales';
-export const Simulation = DemoTales;
 import { InteractiveElement } from "../../components/ui/VisualBind";
 
-<Capitular letra="E" />l <ConceptLink targetId="teorema">teorema</ConceptLink> de <ConceptLink targetId="tales">Tales</ConceptLink> es una piedra angular de la <ConceptLink targetId="geometria">geometría</ConceptLink> proyectiva y la noción de semejanza. Establece que <ConceptLink targetId="recta">rectas</ConceptLink> <ConceptLink targetId="paralelas">paralelas</ConceptLink> que cortan a dos transversales producen <ConceptLink targetId="segmento">segmentos</ConceptLink> proporcionales.
+<Capitular letra="E" />l <ConceptLink targetId={["teorema-tales", "teorema", "tales"]}>teorema de Tales</ConceptLink> es una piedra angular de la <ConceptLink targetId="geometria" isDependency={false}>geometría</ConceptLink> proyectiva y la noción de semejanza. Establece que <ConceptLink targetId="recta">rectas</ConceptLink> <ConceptLink targetId="paralelas">paralelas</ConceptLink> que cortan a dos transversales producen <ConceptLink targetId="segmento">segmentos</ConceptLink> proporcionales en un <ConceptLink targetId="triangulo">triángulo</ConceptLink>.
 
 <Separador />
 
 ### Enunciado Formal
 
-Sean $r_1 \parallel r_2 \parallel r_3$ tres <ConceptLink targetId="paralelas"><ConceptLink targetId="recta">rectas</ConceptLink> <ConceptLink targetId="paralelas">paralelas</ConceptLink></ConceptLink> cortadas por dos transversales $t_1$ y $t_2$. Sean $A_i = r_i \cap t_1$ y $B_i = r_i \cap t_2$. Entonces:
+Sean $r_1 \parallel r_2 \parallel r_3$ tres rectas paralelas cortadas por dos transversales $t_1$ y $t_2$. Sean $A_i = r_i \cap t_1$ y $B_i = r_i \cap t_2$. Entonces:
 
 <Formula>
   $$ \frac{\overline{A_1 A_2}}{\overline{A_2 A_3}} = \frac{\overline{B_1 B_2}}{\overline{B_2 B_3}} $$
 </Formula>
 
-En el diagrama, una <InteractiveElement target="recta-de" color="salvia"><ConceptLink targetId="recta">recta</ConceptLink> <ConceptLink targetId="paralelas">paralela</ConceptLink></InteractiveElement> corta los lados del <InteractiveElement target="triangulo-abc" color="terracota"><ConceptLink targetId="triangulo">triángulo</ConceptLink> $\triangle ABC$</InteractiveElement>, dividiéndolos proporcionalmente.
+En el diagrama, una <InteractiveElement target="recta-de" color="salvia">recta paralela</InteractiveElement> corta los lados del <InteractiveElement target="triangulo-abc" color="terracota"><ConceptLink targetId="triangulo" isDependency={false}>triángulo</ConceptLink> $\triangle ABC$</InteractiveElement>, dividiéndolos proporcionalmente.
 
-<Separador />
 
-### <ConceptLink targetId="demostracion">Demostración</ConceptLink>
-
-La <ConceptLink targetId="demostracion">demostración</ConceptLink> se encuentra en la página dedicada: <ConceptLink targetId="demo-tales"><ConceptLink targetId="demostracion">Demostración</ConceptLink>: <ConceptLink targetId="teorema">Teorema</ConceptLink> de Tales</ConceptLink>, basada en <ConceptLink targetId="triangulo">triángulos</ConceptLink> que comparten <ConceptLink targetId="altura">altura</ConceptLink>.
-
-<Separador />
 
 ### Discusión
 
-Una formulación equivalente y muy práctica: si trazamos una <ConceptLink targetId="recta">recta</ConceptLink> <ConceptLink targetId="paralelas">paralela</ConceptLink> a uno de los lados de un <ConceptLink targetId="triangulo">triángulo</ConceptLink> que interseca a los otros dos, entonces divide a esos lados en <ConceptLink targetId="segmento">segmentos</ConceptLink> proporcionales, originando un <ConceptLink targetId="triangulo">triángulo</ConceptLink> semejante al original.
+Una formulación equivalente y muy práctica: si trazamos una recta paralela a uno de los lados de un triángulo que interseca a los otros dos, entonces divide a esos lados en segmentos proporcionales, originando un triángulo semejante al original.
 
-El <ConceptLink targetId="teorema">teorema</ConceptLink> es la base de la **semejanza de <ConceptLink targetId="triangulo">triángulos</ConceptLink>**: dos <ConceptLink targetId="triangulo">triángulos</ConceptLink> son semejantes si tienen <ConceptLink targetId="angulo">ángulos</ConceptLink> <ConceptLink targetId="congruencia">congruentes</ConceptLink>, y sus lados correspondientes son proporcionales. Esto es fundamental para la trigonometría y para la definición de funciones trigonométricas.
+El teorema es la base de la **semejanza de triángulos**: dos triángulos son semejantes si tienen ángulos congruentes, y sus lados correspondientes son proporcionales. Esto es fundamental para la trigonometría y para la definición de funciones trigonométricas.
 
 <Separador />
 
 ### Observaciones
 
-- El <ConceptLink targetId="teorema">teorema</ConceptLink> requiere el <ConceptLink targetId="axioma-paralelas-euclides"><ConceptLink targetId="axioma">axioma</ConceptLink> de las <ConceptLink targetId="paralelas">paralelas</ConceptLink></ConceptLink>: es propio de la <ConceptLink targetId="sistema-euclidiano"><ConceptLink targetId="geometria">geometría</ConceptLink> <ConceptLink targetId="euclides">euclidiana</ConceptLink></ConceptLink>.
-- Atribuido a <ConceptLink targetId="tales">Tales de Mileto</ConceptLink> (siglo VI a.C.), quien supuestamente lo usó para medir la <ConceptLink targetId="altura">altura</ConceptLink> de las pirámides egipcias mediante las sombras proyectadas.
-- <RefLink targetId="teorema-pitagoras">El <ConceptLink targetId="teorema">teorema</ConceptLink> de Pitágoras</RefLink> puede demostrarse usando Tales, y ambos son equivalentes al <ConceptLink targetId="axioma">axioma</ConceptLink> de las <ConceptLink targetId="paralelas">paralelas</ConceptLink>.
+- El teorema requiere el axioma de las paralelas: es propio de la geometría euclidiana.
+- Atribuido a Tales de Mileto (siglo VI a.C.), quien supuestamente lo usó para medir la altura de las pirámides egipcias mediante las sombras proyectadas.
+- El <ConceptLink targetId="teorema-pitagoras" isDependency={false}>teorema de Pitágoras</ConceptLink> puede demostrarse usando Tales, y ambos son equivalentes al axioma de las paralelas.

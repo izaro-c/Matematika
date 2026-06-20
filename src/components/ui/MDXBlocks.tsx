@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { MedievalStep } from "../content/MedievalStep";
 import { DemonstrationSection } from "../content/DemonstrationSection";
 import { Concept } from "../content/Concept";
@@ -57,14 +57,76 @@ export const OrnamentalDivider: React.FC = () => (
 interface FormulaProps {
   title?: string, children: React.ReactNode;
 }
-export const Formula: React.FC<FormulaProps> = ({ title, children }) => (
-  <div className="my-10 py-8 px-6 w-full border border-carbon/20 bg-carbon/[0.02] overflow-x-auto overflow-y-hidden">
-    <div className="flex flex-col items-center justify-center min-w-max mx-auto gap-4 text-xl font-serif">
-      {title && <span className="italic block mb-2 text-sm text-carbon/50">{title}</span>}
-      {children}
+export const Formula: React.FC<FormulaProps> = ({ title, children }) => {
+  const scrollRef = useRef<HTMLDivElement>(null);
+  const [canScrollLeft, setCanScrollLeft] = useState(false);
+  const [canScrollRight, setCanScrollRight] = useState(false);
+
+  const checkScroll = () => {
+    if (scrollRef.current) {
+      const { scrollLeft, scrollWidth, clientWidth } = scrollRef.current;
+      setCanScrollLeft(scrollLeft > 0);
+      // use Math.ceil to avoid sub-pixel rounding errors keeping it stuck
+      setCanScrollRight(Math.ceil(scrollLeft + clientWidth) < scrollWidth);
+    }
+  };
+
+  useEffect(() => {
+    checkScroll();
+    // Re-check after a small delay to ensure rendering fonts is done
+    const timeoutId = setTimeout(checkScroll, 100);
+    window.addEventListener('resize', checkScroll);
+    return () => {
+      clearTimeout(timeoutId);
+      window.removeEventListener('resize', checkScroll);
+    };
+  }, [children]);
+
+  return (
+    <div className="relative my-10 w-full group">
+      {/* Indicador Arts & Crafts izquierdo */}
+      <div className={`absolute left-0 top-0 bottom-0 w-16 bg-gradient-to-r from-lienzo via-lienzo/80 to-transparent z-10 pointer-events-none transition-opacity duration-500 flex items-center justify-start pl-3 ${canScrollLeft ? 'opacity-100' : 'opacity-0'}`}>
+        <div className="text-terracota/80 text-2xl font-serif animate-pulse select-none drop-shadow-sm">
+          ❧
+        </div>
+      </div>
+      
+      {/* Indicador Arts & Crafts derecho */}
+      <div className={`absolute right-0 top-0 bottom-0 w-16 bg-gradient-to-l from-lienzo via-lienzo/80 to-transparent z-10 pointer-events-none transition-opacity duration-500 flex items-center justify-end pr-3 ${canScrollRight ? 'opacity-100' : 'opacity-0'}`}>
+        <div className="text-terracota/80 text-2xl font-serif animate-pulse select-none drop-shadow-sm">
+          ☙
+        </div>
+      </div>
+
+      <div 
+        ref={scrollRef}
+        onScroll={checkScroll}
+        className="py-8 px-6 w-full border border-carbon/20 bg-carbon/[0.02] overflow-x-auto overflow-y-hidden formula-scrollbar"
+      >
+        <div className="flex flex-col items-center justify-center min-w-max mx-auto gap-4 text-xl font-serif">
+          {title && <span className="italic block mb-2 text-sm text-carbon/50">{title}</span>}
+          {children}
+        </div>
+      </div>
+      
+      <style>{`
+        .formula-scrollbar::-webkit-scrollbar {
+          height: 6px;
+        }
+        .formula-scrollbar::-webkit-scrollbar-track {
+          background: transparent;
+        }
+        .formula-scrollbar::-webkit-scrollbar-thumb {
+          background-color: rgba(181, 90, 48, 0.2);
+          border-radius: 10px;
+        }
+        .formula-scrollbar:hover::-webkit-scrollbar-thumb {
+          background-color: rgba(181, 90, 48, 0.6);
+        }
+      `}</style>
     </div>
-  </div>
-);
+  );
+};
 
 /**
  * Agrupa múltiples ecuaciones en línea y las centra horizontalmente.

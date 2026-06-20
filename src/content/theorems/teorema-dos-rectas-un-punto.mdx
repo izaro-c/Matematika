@@ -4,17 +4,17 @@ export const metadata = {
   "title": "Teorema: Dos rectas se cortan en a lo sumo un punto",
   "description": "Dos rectas distintas del plano o del espacio se cortan en a lo sumo un punto.",
   "statement": "Sean l y m dos rectas distintas. Entonces existe a lo sumo un punto P tal que P ∈ l y P ∈ m.",
-  "requires": ["axioma-incidencia-1", "axioma-incidencia-2"],
-  "demos": ["demo-dos-rectas-un-punto"],
   "tags": ["geometria", "incidencia", "geometria-absoluta"],
   "authors": ["hilbert"],
   "difficulty": "básico",
-  "links": ["axioma-incidencia-1", "axioma-incidencia-2"],
+  "demos": ["demo-dos-rectas-un-punto"],
   "corollaries": ["corolario-rectas-coincidentes"]
 };
 
+import { InteractiveElement } from "../../components/ui/VisualBind";
+
 <Capitular letra="D" />
-os <ConceptLink targetId="recta">rectas</ConceptLink> distintas no admiten intersección en más de un único <ConceptLink targetId="punto">punto</ConceptLink> topológico. Si exhibieran multiplicidad de <ConceptLink targetId="punto">puntos</ConceptLink> comunes, el <ConceptLink targetId="axioma">axioma</ConceptLink> fundamental de <ConceptLink targetId="incidencia">incidencia</ConceptLink> (I-1) colapsaría su identidad, contradiciendo axiomáticamente la hipótesis inicial de su distinción geométrica.
+os <ConceptLink targetId="recta" isDependency={false}>rectas</ConceptLink> distintas no admiten intersección en más de un único <ConceptLink targetId="punto" isDependency={false}>punto</ConceptLink> topológico. Si exhibieran multiplicidad de puntos comunes, el <ConceptLink targetId="axioma-incidencia-1">axioma fundamental de incidencia (I-1)</ConceptLink> colapsaría su identidad, contradiciendo axiomáticamente la hipótesis inicial de su distinción geométrica. Además, la validez lógica presupone el <ConceptLink targetId="axioma-incidencia-2">axioma I-2</ConceptLink>.
 
 <Separador />
 
@@ -24,17 +24,11 @@ os <ConceptLink targetId="recta">rectas</ConceptLink> distintas no admiten inter
   $$ \text{Sean } l \neq m \text{ dos rectas. Existe a lo sumo un punto } P \text{ tal que } P \in l \cap m. $$
 </Formula>
 
-<Separador />
 
-### <ConceptLink targetId="demostracion">Demostración</ConceptLink>
-
-La <ConceptLink targetId="demostracion">demostración</ConceptLink> se realiza por contradicción, usando el <ConceptLink targetId="axioma">axioma</ConceptLink> de unicidad de la <ConceptLink targetId="recta">recta</ConceptLink> determinada por dos <ConceptLink targetId="punto">puntos</ConceptLink>. Se encuentra en la página dedicada: <ConceptLink targetId="demo-dos-rectas-un-punto"><ConceptLink targetId="demostracion">Demostración</ConceptLink>: Dos <ConceptLink targetId="recta">rectas</ConceptLink> se cortan en a lo sumo un <ConceptLink targetId="punto">punto</ConceptLink></ConceptLink>.
-
-<Separador />
 
 ### Discusión
 
-Este <ConceptLink targetId="teorema">teorema</ConceptLink> establece que la intersección de dos <ConceptLink targetId="recta">rectas</ConceptLink> distintas es vacía o un único <ConceptLink targetId="punto">punto</ConceptLink>. En la <ConceptLink targetId="geometria">geometría</ConceptLink> de <ConceptLink targetId="incidencia">incidencia</ConceptLink>, dos <ConceptLink targetId="recta">rectas</ConceptLink> que se cortan en un <ConceptLink targetId="punto">punto</ConceptLink> se llaman **secantes**; dos <ConceptLink targetId="recta">rectas</ConceptLink> que no se cortan se llaman **<ConceptLink targetId="paralelas">paralelas</ConceptLink>** (en el sentido amplio de la <ConceptLink targetId="sistema-absoluto"><ConceptLink targetId="geometria">geometría</ConceptLink> absoluta</ConceptLink>).
+Este <ConceptLink targetId="teorema" isDependency={false}>teorema</ConceptLink> establece que la intersección de dos rectas distintas es vacía o un único punto. En la <ConceptLink targetId="geometria" isDependency={false}>geometría</ConceptLink> de incidencia, dos rectas que se cortan en un punto se llaman **secantes**; dos rectas que no se cortan se llaman **<ConceptLink targetId="paralelas" isDependency={false}>paralelas</ConceptLink>** (en el sentido amplio de la <ConceptLink targetId={["sistema-absoluto", "geometria"]}>geometría absoluta</ConceptLink>).
 
-La importancia de este resultado radica en que justifica la definición de <ConceptLink targetId="recta">rectas</ConceptLink> secantes y <ConceptLink targetId="paralelas">paralelas</ConceptLink> como categorías disjuntas: dos <ConceptLink targetId="recta">rectas</ConceptLink> son secantes (un <ConceptLink targetId="punto">punto</ConceptLink> de corte) o <ConceptLink targetId="paralelas">paralelas</ConceptLink> (cero <ConceptLink targetId="punto">puntos</ConceptLink> de corte), sin término medio.
+La importancia de este resultado radica en que justifica la definición de rectas secantes y paralelas como categorías disjuntas: dos rectas son secantes (un punto de corte) o paralelas (cero puntos de corte), sin término medio.
 

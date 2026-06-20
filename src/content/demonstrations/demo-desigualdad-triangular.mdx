@@ -5,42 +5,45 @@ export const metadata = {
   "description": "Demostración euclidiana clásica extendiendo uno de los lados para formar un triángulo isósceles.",
   "tags": ["geometria", "triangulos", "desigualdades"],
   "authors": ["euclides"],
-  "links": ["triangulo", "segmento", "angulo"],
   "parentTheorem": "teorema-desigualdad-triangular",
+  "proofMethod": "directo",
+  "layout": "split"
 };
 
-import { DemonstrationSection } from "../../components/content/DemonstrationSection";
-import { MedievalStep } from "../../components/content/MedievalStep";
-import { InteractiveElement } from "../../components/ui/VisualBind";
 import { DemoDesigualdadTriangular } from "../../diagrams/Teoremas/DemoDesigualdadTriangular";
 
-export const Component = () => {
-  const diagrams = {
-    "default": DemoDesigualdadTriangular
-  };
+<DemonstrationSection diagram={<DemoDesigualdadTriangular />}>
 
-  return (
-    <DemonstrationSection diagrams={diagrams}>
-      <MedievalStep number={1} target={["lado-ab", "lado-bc", "lado-ac"]} title="El triángulo base">
-        Consideremos un <ConceptLink targetId="triangulo">triángulo</ConceptLink> con vértices $A, B, C$. Sus <ConceptLink targetId="longitud">longitudes</ConceptLink> laterales son <InteractiveElement target="lado-ab">$c$</InteractiveElement>, <InteractiveElement target="lado-bc">$a$</InteractiveElement> y <InteractiveElement target="lado-ac">$b$</InteractiveElement>. Queremos demostrar que $b + a \gt c$.
+<Capitular letra="L" />a demostración euclidiana clásica de la <ConceptLink targetId="teorema-desigualdad-triangular">desigualdad triangular</ConceptLink> emplea un argumento constructivo astuto: extiende un lado para formar un <ConceptLink targetId="teorema-triangulo-isosceles">triángulo isósceles</ConceptLink> auxiliar. Esto permite trasladar longitudes a ángulos correspondientes y, mediante la relación de orden entre ángulos y lados opuestos, concluir la desigualdad buscada.
+
+<Separador />
+
+### Hipótesis y Tesis
+
+**Hipótesis:** Sea <InteractiveElement target="triangle">$\triangle ABC$</InteractiveElement> un triángulo con lados de longitudes $a$, $b$, y $c$.
+**Tesis:** $a + b > c$.
+
+<Separador />
+
+<MedievalStep number={1} target={["lado-ab", "lado-bc", "lado-ac"]} title="El triángulo base">
+        Consideremos un <ConceptLink targetId="triangulo" isDependency={false}>triángulo</ConceptLink> con vértices $A, B, C$. Sus <ConceptLink targetId="longitud" isDependency={false}>longitudes</ConceptLink> laterales son <InteractiveElement target="lado-ab">$c$</InteractiveElement>, <InteractiveElement target="lado-bc">$a$</InteractiveElement> y <InteractiveElement target="lado-ac">$b$</InteractiveElement>. Queremos demostrar que $b + a \gt c$.
       </MedievalStep>
       
       <MedievalStep number={2} target={["lado-cd", "punto-d"]} title="Extensión del lado">
-        Prolonguemos el lado $AC$ más allá de $C$ hasta un nuevo <ConceptLink targetId="punto">punto</ConceptLink> <InteractiveElement target="punto-d">$D$</InteractiveElement>, de manera que el <InteractiveElement target="lado-cd"><ConceptLink targetId="segmento">segmento</ConceptLink> $CD$</InteractiveElement> tenga exactamente la misma <ConceptLink targetId="longitud">longitud</ConceptLink> que el lado $BC$ (es decir, $CD = a$).
+        Prolonguemos el lado $AC$ más allá de $C$ hasta un nuevo <ConceptLink targetId="punto" isDependency={false}>punto</ConceptLink> <InteractiveElement target="punto-d">$D$</InteractiveElement>, de manera que el <InteractiveElement target="lado-cd"><ConceptLink targetId="segmento" isDependency={false}>segmento</ConceptLink> $CD$</InteractiveElement> tenga exactamente la misma longitud que el lado $BC$ (es decir, $CD = a$).
       </MedievalStep>
 
-      <MedievalStep number={3} target={["triangulo-isosceles", "angulo-cbd", "angulo-cdb"]} title="Triángulo isósceles auxiliar">
-        Trazamos el <InteractiveElement target="lado-bd"><ConceptLink targetId="segmento">segmento</ConceptLink> $BD$</InteractiveElement>. Al hacerlo, hemos formado el <ConceptLink targetId="triangulo">triángulo</ConceptLink> $\triangle BCD$. Como por construcción $BC = CD = a$, este es un <InteractiveElement target="triangulo-isosceles"><ConceptLink targetId="triangulo">triángulo</ConceptLink> isósceles</InteractiveElement>. Por lo tanto, los <ConceptLink targetId="angulo">ángulos</ConceptLink> opuestos a estos lados iguales también son iguales: <InteractiveElement target="angulo-cbd">$\angle CBD$</InteractiveElement> $=$ <InteractiveElement target="angulo-cdb">$\angle CDB$</InteractiveElement>.
-      </MedievalStep>
+<MedievalStep number={3} target={["triangulo-isosceles", "angulo-cbd", "angulo-cdb"]} title="Triángulo isósceles auxiliar">
+  Trazamos el <InteractiveElement target="lado-bd">segmento $BD$</InteractiveElement>. Al hacerlo, hemos formado el triángulo $\triangle BCD$. Como por construcción $BC = CD = a$, este es un <InteractiveElement target="triangulo-isosceles"><ConceptLink targetId={["teorema-triangulo-isosceles", "triangulo"]}>triángulo isósceles</ConceptLink></InteractiveElement>. Por lo tanto, los <ConceptLink targetId="angulo" isDependency={false}>ángulos</ConceptLink> opuestos a estos lados iguales también son congruentes: <InteractiveElement target="angulo-cbd">$\angle CBD \cong \angle CDB$</InteractiveElement>.
+</MedievalStep>
 
-      <MedievalStep number={4} target={["angulo-abd", "angulo-cdb"]} title="Relación de ángulos mayores">
-        Observemos el <InteractiveElement target="angulo-abd"><ConceptLink targetId="angulo">ángulo</ConceptLink> completo $\angle ABD$</InteractiveElement>. Es obvio que $\angle ABD = \angle ABC + \angle CBD$. Por lo tanto, $\angle ABD \gt \angle CBD$. Y como sabíamos del paso anterior que $\angle CBD = \angle CDB$, deducimos que el <InteractiveElement target="angulo-abd">$\angle ABD$</InteractiveElement> es estrictamente mayor que el <InteractiveElement target="angulo-cdb">$\angle CDB$</InteractiveElement> (que es el mismo que $\angle ADB$).
-      </MedievalStep>
+<MedievalStep number={4} target={["angulo-abd", "angulo-cdb"]} title="Relación de ángulos mayores">
+  Observemos el <InteractiveElement target="angulo-abd">ángulo completo $\angle ABD$</InteractiveElement>. Es obvio que $\angle ABD = \angle ABC + \angle CBD$. Por lo tanto, $\angle ABD \gt \angle CBD$. Y como sabíamos del paso anterior que $\angle CBD \cong \angle CDB$, deducimos que el <InteractiveElement target="angulo-abd">$\angle ABD$</InteractiveElement> es estrictamente mayor que el <InteractiveElement target="angulo-cdb">$\angle CDB$</InteractiveElement> (que es el mismo que $\angle ADB$).
+</MedievalStep>
 
-      <MedievalStep number={5} target={["lado-ab", "lado-ac", "lado-cd"]} title="Lado mayor se opone a ángulo mayor">
-        En todo <ConceptLink targetId="triangulo">triángulo</ConceptLink> (en este caso el $\triangle ABD$), al <ConceptLink targetId="angulo">ángulo</ConceptLink> mayor se le opone el lado de mayor <ConceptLink targetId="longitud">longitud</ConceptLink>. Como $\angle ABD \gt \angle ADB$, el lado opuesto a $\angle ABD$ (que es todo el <ConceptLink targetId="segmento">segmento</ConceptLink> $AD$) debe ser mayor que el lado opuesto a $\angle ADB$ (que es el <InteractiveElement target="lado-ab"><ConceptLink targetId="segmento">segmento</ConceptLink> $AB = c$</InteractiveElement>). Es decir, $AD \gt c$.
-        Pero $AD$ se compone de <InteractiveElement target="lado-ac">$AC (b)$</InteractiveElement> y <InteractiveElement target="lado-cd">$CD (a)$</InteractiveElement>. Por tanto, $b + a \gt c$. $\blacksquare$
-      </MedievalStep>
-    </DemonstrationSection>
-  );
-};
+<MedievalStep number={5} target={["lado-ab", "lado-ac", "lado-cd"]} title="Lado mayor se opone a ángulo mayor">
+  En todo triángulo (en este caso el $\triangle ABD$), al ángulo mayor se le opone el lado de mayor longitud (por el <ConceptLink targetId="teorema-angulo-mayor-lado-mayor">teorema de desigualdad angular</ConceptLink>). Como $\angle ABD \gt \angle ADB$, el lado opuesto a $\angle ABD$ (que es todo el segmento $AD$) debe ser mayor que el lado opuesto a $\angle ADB$ (que es el <InteractiveElement target="lado-ab">segmento $AB = c$</InteractiveElement>). Es decir, $AD \gt c$.
+  Pero $AD$ se compone de <InteractiveElement target="lado-ac">$AC (b)$</InteractiveElement> y <InteractiveElement target="lado-cd">$CD (a)$</InteractiveElement>. Por tanto, $b + a \gt c$. $\blacksquare$
+</MedievalStep>
+
+</DemonstrationSection>

@@ -5,41 +5,31 @@ export const metadata = {
   "description": "Demostración euclidiana clásica trazando una paralela por el vértice opuesto.",
   "tags": ["geometria", "triangulos", "angulos"],
   "authors": ["euclides"],
-  "links": ["triangulo", "angulo", "axioma-paralelas-euclides", "recta", "paralelas"],
   "parentTheorem": "teorema-suma-angulos-triangulo",
+  "proofMethod": "directo",
+  "layout": "split"
 };
 
-import { DemonstrationSection } from "../../components/content/DemonstrationSection";
-import { MedievalStep } from "../../components/content/MedievalStep";
-import { InteractiveElement } from "../../components/ui/VisualBind";
 import { DemoSumaAngulos } from "../../diagrams/Teoremas/DemoSumaAngulos";
 
-export const Component = () => {
-  const diagrams = {
-    "default": DemoSumaAngulos
-  };
-
-  return (
-    <DemonstrationSection diagrams={diagrams}>
-      <MedievalStep number={1} target="triangulo" title="El triángulo base">
-        Consideremos un <InteractiveElement target="triangulo"><ConceptLink targetId="triangulo">triángulo</ConceptLink></InteractiveElement> cualquiera con vértices $A, B$ y $C$. Nuestro objetivo es demostrar que la suma de sus <ConceptLink targetId="angulo">ángulos</ConceptLink> interiores, <InteractiveElement target="angulo-a">$\alpha$</InteractiveElement>, <InteractiveElement target="angulo-b">$\beta$</InteractiveElement> y <InteractiveElement target="angulo-c">$\gamma$</InteractiveElement>, equivale a dos <ConceptLink targetId="angulo">ángulos</ConceptLink> rectos ($180^\circ$).
+<DemonstrationSection diagram={<DemoSumaAngulos />}>
+  <MedievalStep number={1} target="triangulo" title="El triángulo base">
+        Consideremos un <InteractiveElement target="triangulo"><ConceptLink targetId="triangulo" isDependency={false}>triángulo</ConceptLink></InteractiveElement> cualquiera con vértices $A, B$ y $C$. Nuestro objetivo es demostrar que la suma de sus <ConceptLink targetId="angulo" isDependency={false}>ángulos</ConceptLink> interiores, <InteractiveElement target="angulo-a">$\alpha$</InteractiveElement>, <InteractiveElement target="angulo-b">$\beta$</InteractiveElement> y <InteractiveElement target="angulo-c">$\gamma$</InteractiveElement>, equivale a dos ángulos rectos ($180^\circ$).
       </MedievalStep>
       
-      <MedievalStep number={2} target="paralela" title="Construcción auxiliar">
-        Fijémonos en el <InteractiveElement target="vertice-c">vértice $C$</InteractiveElement>. Según el <ConceptLink targetId="axioma-paralelas-euclides"><ConceptLink targetId="axioma">Axioma</ConceptLink> de las <ConceptLink targetId="paralelas">paralelas</ConceptLink></ConceptLink>, por el <ConceptLink targetId="punto">punto</ConceptLink> $C$ podemos trazar una <InteractiveElement target="paralela"><ConceptLink targetId="recta">recta</ConceptLink> <ConceptLink targetId="paralelas">paralela</ConceptLink></InteractiveElement> al <InteractiveElement target="base-ab">lado $AB$</InteractiveElement>.
-      </MedievalStep>
+  <MedievalStep number={2} target="paralela" title="Construcción auxiliar">
+    Fijémonos en el <InteractiveElement target="vertice-c">vértice $C$</InteractiveElement>. Según el <ConceptLink targetId="axioma-paralelas-euclides">axioma de las paralelas</ConceptLink>, por el <ConceptLink targetId="punto" isDependency={false}>punto</ConceptLink> $C$ podemos trazar una <InteractiveElement target="paralela"><ConceptLink targetId="recta" isDependency={false}>recta</ConceptLink> <ConceptLink targetId="paralelas" isDependency={false}>paralela</ConceptLink></InteractiveElement> al <InteractiveElement target="base-ab">lado $AB$</InteractiveElement>.
+  </MedievalStep>
 
-      <MedievalStep number={3} target={["alterno-a", "transversal-ac", "angulo-a"]} title="Ángulos alternos internos (I)">
-        Al trazar la <ConceptLink targetId="paralelas">paralela</ConceptLink>, el lado $AC$ actúa como una <InteractiveElement target="transversal-ac"><ConceptLink targetId="recta">recta</ConceptLink> secante transversal</InteractiveElement>. Por el <ConceptLink targetId="teorema">teorema</ConceptLink> de los <ConceptLink targetId="angulo">ángulos</ConceptLink> alternos internos entre <ConceptLink targetId="paralelas">paralelas</ConceptLink>, el <InteractiveElement target="angulo-a"><ConceptLink targetId="angulo">ángulo</ConceptLink> $\alpha$</InteractiveElement> en el vértice $A$ es <ConceptLink targetId="congruencia">congruente</ConceptLink> con el <InteractiveElement target="alterno-a"><ConceptLink targetId="angulo">ángulo</ConceptLink> $\alpha'$</InteractiveElement> formado junto al vértice $C$.
-      </MedievalStep>
+  <MedievalStep number={3} target={["alterno-a", "transversal-ac", "angulo-a"]} title="Ángulos alternos internos (I)">
+    Al trazar la paralela, el lado $AC$ actúa como una <InteractiveElement target="transversal-ac">recta secante transversal</InteractiveElement>. Por el <ConceptLink targetId="teorema-angulos-alternos-internos">teorema de los ángulos alternos internos</ConceptLink> entre paralelas, el <InteractiveElement target="angulo-a">ángulo $\alpha$</InteractiveElement> en el vértice $A$ es <ConceptLink targetId="congruencia" isDependency={false}>congruente</ConceptLink> con el <InteractiveElement target="alterno-a">ángulo $\alpha'$</InteractiveElement> formado junto al vértice $C$.
+  </MedievalStep>
 
-      <MedievalStep number={4} target={["alterno-b", "transversal-bc", "angulo-b"]} title="Ángulos alternos internos (II)">
-        De manera análoga, el lado $BC$ actúa como otra <InteractiveElement target="transversal-bc">transversal</InteractiveElement>. Por lo tanto, el <InteractiveElement target="angulo-b"><ConceptLink targetId="angulo">ángulo</ConceptLink> $\beta$</InteractiveElement> en el vértice $B$ es <ConceptLink targetId="congruencia">congruente</ConceptLink> con el <InteractiveElement target="alterno-b"><ConceptLink targetId="angulo">ángulo</ConceptLink> $\beta'$</InteractiveElement> formado al otro lado del vértice $C$.
-      </MedievalStep>
+  <MedievalStep number={4} target={["alterno-b", "transversal-bc", "angulo-b"]} title="Ángulos alternos internos (II)">
+    De manera análoga, el lado $BC$ actúa como otra <InteractiveElement target="transversal-bc">transversal</InteractiveElement>. Por lo tanto, el <InteractiveElement target="angulo-b">ángulo $\beta$</InteractiveElement> en el vértice $B$ es congruente con el <InteractiveElement target="alterno-b">ángulo $\beta'$</InteractiveElement> formado al otro lado del vértice $C$.
+  </MedievalStep>
 
-      <MedievalStep number={5} target={["angulo-llano", "angulo-c", "alterno-a", "alterno-b"]} title="Conclusión">
-        Si observamos ahora el vértice $C$, tenemos tres <ConceptLink targetId="angulo">ángulos</ConceptLink> adyacentes a lo largo de la <ConceptLink targetId="recta">recta</ConceptLink> <ConceptLink targetId="paralelas">paralela</ConceptLink>: $\alpha', \gamma,$ y $\beta'$. Dado que conforman una línea <ConceptLink targetId="recta">recta</ConceptLink>, su suma define un <InteractiveElement target="angulo-llano"><ConceptLink targetId="angulo">ángulo</ConceptLink> llano ($180^\circ$)</InteractiveElement>. Como $\alpha' = \alpha$ y $\beta' = \beta$, concluimos que $\alpha + \beta + \gamma = 180^\circ$. $\blacksquare$
-      </MedievalStep>
-    </DemonstrationSection>
-  );
-};
+  <MedievalStep number={5} target={["angulo-llano", "angulo-c", "alterno-a", "alterno-b"]} title="Conclusión">
+    Si observamos ahora el vértice $C$, tenemos tres ángulos adyacentes a lo largo de la recta paralela: $\alpha', \gamma,$ y $\beta'$. Dado que conforman una línea recta, su suma define un <InteractiveElement target="angulo-llano">ángulo llano ($180^\circ$)</InteractiveElement>. Como $\alpha' = \alpha$ y $\beta' = \beta$, concluimos que $\alpha + \beta + \gamma = 180^\circ$. $\blacksquare$
+  </MedievalStep>
+</DemonstrationSection>

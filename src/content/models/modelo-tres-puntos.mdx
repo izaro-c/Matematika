@@ -16,7 +16,7 @@ import { ModeloTresPuntos } from '../../diagrams/Models/ModeloTresPuntos';
 import { InteractiveElement } from "../../components/ui/VisualBind";
 export const Simulation = ModeloTresPuntos;
 
-<Capitular letra="E" />l **modelo de tres <ConceptLink targetId="punto">puntos</ConceptLink>** es la estructura minimal que satisface los <ConceptLink targetId={["axioma-incidencia-1", "axioma-incidencia-2", "axioma-incidencia-3"]} isDependency={false}><ConceptLink targetId="axioma">axiomas</ConceptLink> de <ConceptLink targetId="incidencia">incidencia</ConceptLink></ConceptLink> de <ConceptLink targetId="hilbert">Hilbert</ConceptLink>. Con apenas tres <ConceptLink targetId="punto">puntos</ConceptLink> no <ConceptLink targetId="colineal" isDependency={false}><ConceptLink targetId="colineal">colineales</ConceptLink></ConceptLink> y tres <ConceptLink targetId="recta">rectas</ConceptLink>, demuestra la consistencia relativa del <ConceptLink targetId="sistema-incidencia">sistema axiomático de <ConceptLink targetId="incidencia">incidencia</ConceptLink></ConceptLink>.
+<Capitular letra="E" />l **modelo de tres <ConceptLink targetId="punto" isDependency={false}>puntos</ConceptLink>** es la estructura minimal que satisface los <ConceptLink targetId={["sistema-incidencia", "axioma", "incidencia"]}>axiomas de incidencia</ConceptLink> de <ConceptLink targetId="hilbert" isDependency={false}>Hilbert</ConceptLink>. Con apenas tres puntos no <ConceptLink targetId="colineal" isDependency={false}>colineales</ConceptLink> y tres <ConceptLink targetId="recta" isDependency={false}>rectas</ConceptLink>, demuestra la consistencia relativa del <ConceptLink targetId="sistema-incidencia" isDependency={false}>sistema axiomático de incidencia</ConceptLink>.
 
 <Separador />
 
@@ -24,11 +24,11 @@ export const Simulation = ModeloTresPuntos;
 
 Sea el universo:
 
-- **<ConceptLink targetId="punto">Puntos</ConceptLink>:** $\mathcal{P} = \{$<InteractiveElement target="A">$A$</InteractiveElement>, <InteractiveElement target="B">$B$</InteractiveElement>, <InteractiveElement target="C">$C$</InteractiveElement>$\}$ — tres <ConceptLink targetId="punto">puntos</ConceptLink> distintos.
-- **<ConceptLink targetId="recta">Rectas</ConceptLink>:** $\mathcal{R} = \{$<InteractiveElement target="rAB">$r_{AB}$</InteractiveElement>, <InteractiveElement target="rBC">$r_{BC}$</InteractiveElement>, <InteractiveElement target="rCA">$r_{CA}$</InteractiveElement>$\}$ — tres <ConceptLink targetId="recta">rectas</ConceptLink>, una por cada par de <ConceptLink targetId="punto">puntos</ConceptLink>.
-- **<ConceptLink targetId="plano">Plano</ConceptLink>:** <InteractiveElement target="plano">$\Pi$</InteractiveElement> $= \{A, B, C, r_{AB}, r_{BC}, r_{CA}\}$ — un único <ConceptLink targetId="plano">plano</ConceptLink> que contiene todo.
+- **Puntos:** $\mathcal{P} = \{$<InteractiveElement target="A">$A$</InteractiveElement>, <InteractiveElement target="B">$B$</InteractiveElement>, <InteractiveElement target="C">$C$</InteractiveElement>$\}$ — tres puntos distintos.
+- **Rectas:** $\mathcal{R} = \{$<InteractiveElement target="rAB">$r_{AB}$</InteractiveElement>, <InteractiveElement target="rBC">$r_{BC}$</InteractiveElement>, <InteractiveElement target="rCA">$r_{CA}$</InteractiveElement>$\}$ — tres rectas, una por cada par de puntos.
+- **<ConceptLink targetId="plano" isDependency={false}>Plano</ConceptLink>:** <InteractiveElement target="plano">$\Pi$</InteractiveElement> $= \{A, B, C, r_{AB}, r_{BC}, r_{CA}\}$ — un único plano que contiene todo.
 
-La relación de <ConceptLink targetId="incidencia">incidencia</ConceptLink> se define naturalmente: un <ConceptLink targetId="punto">punto</ConceptLink> $P$ incide en una <ConceptLink targetId="recta">recta</ConceptLink> $r$ si y solo si $P$ es uno de los dos <ConceptLink targetId="punto">puntos</ConceptLink> que determinan $r$.
+La relación de <ConceptLink targetId="incidencia" isDependency={false}>incidencia</ConceptLink> se define naturalmente: un punto $P$ incide en una recta $r$ si y solo si $P$ es uno de los dos puntos que determinan $r$.
 
 <Formula>
   $$
@@ -41,38 +41,38 @@ La relación de <ConceptLink targetId="incidencia">incidencia</ConceptLink> se d
 
 <Separador />
 
-### Verificación de <ConceptLink targetId="axioma">Axiomas</ConceptLink>
+### Verificación de <ConceptLink targetId="axioma" isDependency={false}>Axiomas</ConceptLink>
 
-**<ConceptLink targetId="axioma-incidencia-1">I-1</ConceptLink> (Unicidad de <ConceptLink targetId="recta">recta</ConceptLink> por dos <ConceptLink targetId="punto">puntos</ConceptLink>).** Dados dos <ConceptLink targetId="punto">puntos</ConceptLink> distintos, existe exactamente una <ConceptLink targetId="recta">recta</ConceptLink> que los contiene. Por construcción, cada par determina una única <ConceptLink targetId="recta">recta</ConceptLink>: $A$ y $B$ determinan $r_{AB}$, etc.
+**<ConceptLink targetId="axioma-incidencia-1" isDependency={false}>I-1</ConceptLink> (Unicidad de recta por dos puntos).** Dados dos puntos distintos, existe exactamente una recta que los contiene. Por construcción, cada par determina una única recta: $A$ y $B$ determinan $r_{AB}$, etc.
 
-**<ConceptLink targetId="axioma-incidencia-2">I-2</ConceptLink> (Toda <ConceptLink targetId="recta">recta</ConceptLink> tiene al menos dos <ConceptLink targetId="punto">puntos</ConceptLink>).** Cada <ConceptLink targetId="recta">recta</ConceptLink> $r_{AB}$, $r_{BC}$, $r_{CA}$ contiene exactamente dos <ConceptLink targetId="punto">puntos</ConceptLink>.
+**<ConceptLink targetId="axioma-incidencia-2" isDependency={false}>I-2</ConceptLink> (Toda recta tiene al menos dos puntos).** Cada recta $r_{AB}$, $r_{BC}$, $r_{CA}$ contiene exactamente dos puntos.
 
-**<ConceptLink targetId="axioma-incidencia-3">I-3</ConceptLink> (Existencia de tres <ConceptLink targetId="punto">puntos</ConceptLink> no <ConceptLink targetId="colineal">colineales</ConceptLink>).** $A$, $B$ y $C$ son no <ConceptLink targetId="colineal" isDependency={false}><ConceptLink targetId="colineal">colineales</ConceptLink></ConceptLink>: no existe ninguna <ConceptLink targetId="recta">recta</ConceptLink> que contenga los tres <ConceptLink targetId="punto">puntos</ConceptLink>. Cada <ConceptLink targetId="recta">recta</ConceptLink> contiene exactamente dos.
+**<ConceptLink targetId="axioma-incidencia-3" isDependency={false}>I-3</ConceptLink> (Existencia de tres puntos no colineales).** $A$, $B$ y $C$ son no colineales: no existe ninguna recta que contenga los tres puntos. Cada recta contiene exactamente dos.
 
-**<ConceptLink targetId="axioma">Axiomas</ConceptLink> sobre <ConceptLink targetId="plano">planos</ConceptLink> (<ConceptLink targetId="axioma-incidencia-4" isDependency={false}>I-4</ConceptLink> a <ConceptLink targetId="axioma-incidencia-8" isDependency={false}>I-8</ConceptLink>).** Al ser un modelo estrictamente bidimensional, **no satisface** el <ConceptLink targetId="axioma">axioma</ConceptLink> I-8 (que requiere la existencia de al menos cuatro <ConceptLink targetId="punto">puntos</ConceptLink> no <ConceptLink targetId="coplanares">coplanares</ConceptLink>). Por tanto, es un modelo válido para la **<ConceptLink targetId="geometria">geometría</ConceptLink> plana** de <ConceptLink targetId="incidencia">incidencia</ConceptLink>, pero no para la espacial.
+**Axiomas sobre planos (<ConceptLink targetId="axioma-incidencia-4" isDependency={false}>I-4</ConceptLink> a <ConceptLink targetId="axioma-incidencia-8" isDependency={false}>I-8</ConceptLink>).** Al ser un modelo estrictamente bidimensional, **no satisface** el axioma I-8 (que requiere la existencia de al menos cuatro puntos no <ConceptLink targetId="coplanares" isDependency={false}>coplanares</ConceptLink>). Por tanto, es un modelo válido para la **<ConceptLink targetId="geometria" isDependency={false}>geometría</ConceptLink> plana** de incidencia, pero no para la espacial.
 
 <Separador />
 
 ### Propiedades
 
-- Es **finito**: contiene exactamente 3 <ConceptLink targetId="punto">puntos</ConceptLink> y 3 <ConceptLink targetId="recta">rectas</ConceptLink>.
-- Es **minimal**: ningún modelo con menos de 3 <ConceptLink targetId="punto">puntos</ConceptLink> puede satisfacer el <ConceptLink targetId="axioma-incidencia-3"><ConceptLink targetId="axioma">axioma</ConceptLink> I-3</ConceptLink>.
-- Cada par de <ConceptLink targetId="recta">rectas</ConceptLink> se corta en un <ConceptLink targetId="punto">punto</ConceptLink> (no hay <ConceptLink targetId="recta">rectas</ConceptLink> <ConceptLink targetId="paralela" isDependency={false}><ConceptLink targetId="paralelas">paralelas</ConceptLink></ConceptLink>).
+- Es **finito**: contiene exactamente 3 puntos y 3 rectas.
+- Es **minimal**: ningún modelo con menos de 3 puntos puede satisfacer el axioma I-3.
+- Cada par de rectas se corta en un punto (no hay rectas <ConceptLink targetId="paralela" isDependency={false}>paralelas</ConceptLink>).
 
 <Separador />
 
 ### Contraejemplos
 
-Este modelo **no** satisface los <ConceptLink targetId="axioma">axiomas</ConceptLink> de orden ni <ConceptLink targetId="congruencia">congruencia</ConceptLink>:
+Este modelo **no** satisface los <ConceptLink targetId={["axioma-orden-1", "axioma"]}>axiomas de orden</ConceptLink> ni <ConceptLink targetId="congruencia" isDependency={false}>congruencia</ConceptLink>:
 
-- **<ConceptLink targetId="axioma-orden-1" isDependency={false}>Orden (II-1 a II-4)</ConceptLink>**: la relación "estar entre" no puede definirse de manera no trivial con solo 3 <ConceptLink targetId="punto">puntos</ConceptLink>. No hay <ConceptLink targetId="punto">puntos</ConceptLink> intermedios en las <ConceptLink targetId="recta">rectas</ConceptLink> (cada <ConceptLink targetId="recta">recta</ConceptLink> tiene solo 2 <ConceptLink targetId="punto">puntos</ConceptLink>). El <ConceptLink targetId="axioma-orden-4" isDependency={false}><ConceptLink targetId="axioma">axioma</ConceptLink> de Pasch</ConceptLink> falla porque no hay suficientes <ConceptLink targetId="punto">puntos</ConceptLink> para que una <ConceptLink targetId="recta">recta</ConceptLink> cruce un <ConceptLink targetId="triangulo" isDependency={false}><ConceptLink targetId="triangulo">triángulo</ConceptLink></ConceptLink>.
+- **<ConceptLink targetId="axioma-orden-1" isDependency={false}>Orden (II-1 a II-4)</ConceptLink>**: la relación "estar entre" no puede definirse de manera no trivial con solo 3 puntos. No hay puntos intermedios en las rectas (cada recta tiene solo 2 puntos). El <ConceptLink targetId="axioma-orden-4" isDependency={false}>axioma de Pasch</ConceptLink> falla porque no hay suficientes puntos para que una recta cruce un <ConceptLink targetId="triangulo" isDependency={false}>triángulo</ConceptLink>.
 
-- **<ConceptLink targetId="axioma-congruencia-1" isDependency={false}><ConceptLink targetId="congruencia">Congruencia</ConceptLink> (III-1 a III-5)</ConceptLink>**: la <ConceptLink targetId="congruencia">congruencia</ConceptLink> de <ConceptLink targetId="segmento" isDependency={false}><ConceptLink targetId="segmento">segmentos</ConceptLink></ConceptLink> requiere transporte, pero con solo 2 <ConceptLink targetId="punto">puntos</ConceptLink> por <ConceptLink targetId="recta">recta</ConceptLink> no hay dónde transportar. La noción de "<ConceptLink targetId="punto">punto</ConceptLink> medio" es vacía.
+- **<ConceptLink targetId="axioma-congruencia-1" isDependency={false}>Congruencia (III-1 a III-5)</ConceptLink>**: la congruencia de <ConceptLink targetId="segmento" isDependency={false}>segmentos</ConceptLink> requiere transporte, pero con solo 2 puntos por recta no hay dónde transportar. La noción de "<ConceptLink targetId={["lema-punto-medio", "punto"]}>punto medio</ConceptLink>" es vacía.
 
-- **Continuidad**: los <ConceptLink targetId="axioma" isDependency={false}><ConceptLink targetId="axioma">axiomas</ConceptLink></ConceptLink> de <ConceptLink targetId="axioma-arquimedes" isDependency={false}>Arquímedes</ConceptLink> y completitud requieren infinitos <ConceptLink targetId="punto">puntos</ConceptLink>, lo cual es imposible en un modelo finito.
+- **Continuidad**: los axiomas de <ConceptLink targetId="axioma-arquimedes" isDependency={false}>Arquímedes</ConceptLink> y completitud requieren infinitos puntos, lo cual es imposible en un modelo finito.
 
-Esto demuestra que los <ConceptLink targetId="axioma" isDependency={false}><ConceptLink targetId="axioma">axiomas</ConceptLink></ConceptLink> de orden y <ConceptLink targetId="congruencia">congruencia</ConceptLink> son **independientes** de los de <ConceptLink targetId="incidencia">incidencia</ConceptLink>: no pueden deducirse de ellos.
+Esto demuestra que los <ConceptLink targetId={["axioma-orden-1", "axioma"]}>axiomas de orden</ConceptLink> y congruencia son **independientes** de los de incidencia: no pueden deducirse de ellos.
 
 <Nota>
-  Para verificar la consistencia de la <ConceptLink targetId="sistema-absoluto" isDependency={false}><ConceptLink targetId="geometria">geometría</ConceptLink> absoluta</ConceptLink> completa se requieren modelos más ricos, como el <ConceptLink targetId="modelo-cartesiano" isDependency={false}><ConceptLink targetId="plano">plano</ConceptLink> cartesiano</ConceptLink>. El modelo de tres <ConceptLink targetId="punto">puntos</ConceptLink> solo valida la capa más básica (<ConceptLink targetId="incidencia">incidencia</ConceptLink>).
+  Para verificar la consistencia de la <ConceptLink targetId={["sistema-absoluto", "geometria"]}>geometría absoluta</ConceptLink> completa se requieren modelos más ricos, como el <ConceptLink targetId="modelo-cartesiano" isDependency={false}>plano cartesiano</ConceptLink>. El modelo de tres puntos solo valida la capa más básica (incidencia).
 </Nota>

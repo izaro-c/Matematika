@@ -185,7 +185,8 @@
       "authors": [
         "hilbert",
         "arquimedes"
-      ]
+      ],
+      "hasSimulation": true
     }
   },
   "axioma-completitud": {
@@ -208,7 +209,8 @@
       "authors": [
         "hilbert",
         "dedekind"
-      ]
+      ],
+      "hasSimulation": true
     }
   },
   "axioma-congruencia-1": {
@@ -1023,12 +1025,7 @@
         "geometria",
         "congruencia"
       ],
-      "layout": "split",
-      "links": [
-        "axioma-congruencia-2",
-        "axioma-congruencia-3",
-        "axioma-congruencia-4"
-      ]
+      "layout": "split"
     }
   },
   "demo-congruencia-ala": {
@@ -1051,12 +1048,7 @@
         "congruencia",
         "triangulos"
       ],
-      "layout": "split",
-      "links": [
-        "axioma-congruencia-1",
-        "axioma-congruencia-4",
-        "axioma-congruencia-5"
-      ]
+      "layout": "split"
     }
   },
   "demo-congruencia-lll": {
@@ -1079,13 +1071,7 @@
         "congruencia",
         "triangulos"
       ],
-      "layout": "split",
-      "links": [
-        "axioma-congruencia-1",
-        "axioma-congruencia-4",
-        "axioma-congruencia-5",
-        "teorema-congruencia-ala"
-      ]
+      "layout": "split"
     }
   },
   "demo-desigualdad-triangular": {
@@ -1106,12 +1092,9 @@
       "authors": [
         "euclides"
       ],
-      "links": [
-        "triangulo",
-        "segmento",
-        "angulo"
-      ],
-      "parentTheorem": "teorema-desigualdad-triangular"
+      "parentTheorem": "teorema-desigualdad-triangular",
+      "proofMethod": "directo",
+      "layout": "split"
     }
   },
   "demo-dos-rectas-un-punto": {
@@ -1133,11 +1116,7 @@
         "geometria",
         "incidencia"
       ],
-      "layout": "split",
-      "links": [
-        "axioma-incidencia-1",
-        "axioma-incidencia-2"
-      ]
+      "layout": "split"
     }
   },
   "demo-pitagoras-euclides": {
@@ -1158,13 +1137,9 @@
       "authors": [
         "euclides"
       ],
-      "links": [
-        "triangulo",
-        "perpendicular",
-        "segmento",
-        "angulo"
-      ],
-      "parentTheorem": "teorema-pitagoras"
+      "parentTheorem": "teorema-pitagoras",
+      "proofMethod": "directo",
+      "layout": "split"
     }
   },
   "demo-punto-medio-perpendicular": {
@@ -1187,13 +1162,7 @@
         "congruencia",
         "orden"
       ],
-      "layout": "split",
-      "links": [
-        "lema-punto-medio",
-        "axioma-congruencia-5",
-        "axioma-congruencia-1",
-        "teorema-congruencia-lll"
-      ]
+      "layout": "split"
     }
   },
   "demo-punto-medio": {
@@ -1216,12 +1185,7 @@
         "congruencia",
         "orden"
       ],
-      "layout": "split",
-      "links": [
-        "axioma-congruencia-1",
-        "axioma-congruencia-2",
-        "axioma-orden-1"
-      ]
+      "layout": "split"
     }
   },
   "demo-suma-angulos-triangulo": {
@@ -1242,14 +1206,9 @@
       "authors": [
         "euclides"
       ],
-      "links": [
-        "triangulo",
-        "angulo",
-        "axioma-paralelas-euclides",
-        "recta",
-        "paralelas"
-      ],
-      "parentTheorem": "teorema-suma-angulos-triangulo"
+      "parentTheorem": "teorema-suma-angulos-triangulo",
+      "proofMethod": "directo",
+      "layout": "split"
     }
   },
   "demo-tales": {
@@ -1269,12 +1228,9 @@
       "authors": [
         "euclides"
       ],
-      "links": [
-        "triangulo",
-        "altura",
-        "paralelas"
-      ],
-      "parentTheorem": "teorema-tales"
+      "parentTheorem": "teorema-tales",
+      "proofMethod": "directo",
+      "layout": "split"
     }
   },
   "demo-triangulo-isosceles": {
@@ -1295,13 +1251,9 @@
       "authors": [
         "euclides"
       ],
-      "links": [
-        "triangulo",
-        "bisectriz",
-        "axioma-congruencia-5",
-        "angulo"
-      ],
-      "parentTheorem": "teorema-triangulo-isosceles"
+      "parentTheorem": "teorema-triangulo-isosceles",
+      "proofMethod": "directo",
+      "layout": "split"
     }
   },
   "leccion-metodo-contradiccion": {
@@ -1648,9 +1600,6 @@
       "description": "Si dos rectas tienen dos puntos en común, entonces son la misma recta.",
       "statement": "Sean l y m dos rectas, y A, B dos puntos distintos. Si A ∈ l, B ∈ l y A ∈ m, B ∈ m, entonces l = m.",
       "parentTheorem": "teorema-dos-rectas-un-punto",
-      "requires": [
-        "axioma-incidencia-1"
-      ],
       "tags": [
         "geometria",
         "incidencia"
@@ -1669,14 +1618,6 @@
       "title": "Lema: Existencia y unicidad del punto medio",
       "description": "Todo segmento tiene un único punto medio que lo divide en dos segmentos congruentes.",
       "statement": "Sea AB un segmento. Existe un único punto M ∈ AB tal que AM ≅ MB.",
-      "requires": [
-        "axioma-congruencia-1",
-        "axioma-congruencia-2",
-        "axioma-orden-1"
-      ],
-      "demos": [
-        "demo-punto-medio"
-      ],
       "parentTheorem": "teorema-punto-medio-perpendicular",
       "tags": [
         "geometria",
@@ -1688,10 +1629,8 @@
         "hilbert"
       ],
       "difficulty": "intermedio",
-      "links": [
-        "axioma-congruencia-1",
-        "axioma-congruencia-2",
-        "axioma-orden-1"
+      "demos": [
+        "demo-punto-medio"
       ]
     }
   },
@@ -1706,14 +1645,6 @@
       "title": "Teorema de los ángulos opuestos por el vértice",
       "description": "Cuando dos rectas se cortan, los ángulos opuestos por el vértice son congruentes entre sí.",
       "statement": "Sean l y m dos rectas que se cortan en el punto O. Sean α y β un par de ángulos opuestos por el vértice. Entonces α ≅ β.",
-      "requires": [
-        "axioma-congruencia-2",
-        "axioma-congruencia-3",
-        "axioma-congruencia-4"
-      ],
-      "demos": [
-        "demo-angulos-opuestos-verticales"
-      ],
       "tags": [
         "geometria",
         "congruencia",
@@ -1724,9 +1655,8 @@
       ],
       "difficulty": "básico",
       "hasSimulation": true,
-      "links": [
-        "axioma-congruencia-2",
-        "axioma-congruencia-4"
+      "demos": [
+        "demo-angulos-opuestos-verticales"
       ]
     }
   },
@@ -1741,14 +1671,6 @@
       "title": "Teorema de Congruencia ALA",
       "description": "Si dos triángulos tienen un lado y los dos ángulos adyacentes a ese lado congruentes, entonces los triángulos son congruentes.",
       "statement": "Sean △ABC y △A'B'C' tales que AB ≅ A'B', ∠A ≅ ∠A' y ∠B ≅ ∠B'. Entonces △ABC ≅ △A'B'C'.",
-      "requires": [
-        "axioma-congruencia-1",
-        "axioma-congruencia-4",
-        "axioma-congruencia-5"
-      ],
-      "demos": [
-        "demo-congruencia-ala"
-      ],
       "tags": [
         "geometria",
         "congruencia",
@@ -1760,10 +1682,8 @@
       ],
       "difficulty": "intermedio",
       "hasSimulation": true,
-      "links": [
-        "axioma-congruencia-1",
-        "axioma-congruencia-4",
-        "axioma-congruencia-5"
+      "demos": [
+        "demo-congruencia-ala"
       ]
     }
   },
@@ -1778,15 +1698,6 @@
       "title": "Teorema de Congruencia LLL",
       "description": "Si los tres lados de un triángulo son congruentes con los tres lados de otro, entonces los triángulos son congruentes.",
       "statement": "Sean △ABC y △A'B'C' tales que AB ≅ A'B', BC ≅ B'C' y CA ≅ C'A'. Entonces △ABC ≅ △A'B'C'.",
-      "requires": [
-        "axioma-congruencia-1",
-        "axioma-congruencia-4",
-        "axioma-congruencia-5",
-        "teorema-congruencia-ala"
-      ],
-      "demos": [
-        "demo-congruencia-lll"
-      ],
       "tags": [
         "geometria",
         "congruencia",
@@ -1798,11 +1709,8 @@
       ],
       "difficulty": "intermedio",
       "hasSimulation": true,
-      "links": [
-        "axioma-congruencia-1",
-        "axioma-congruencia-4",
-        "axioma-congruencia-5",
-        "teorema-congruencia-ala"
+      "demos": [
+        "demo-congruencia-lll"
       ]
     }
   },
@@ -1824,15 +1732,10 @@
       "authors": [
         "euclides"
       ],
-      "links": [
-        "triangulo",
-        "segmento",
-        "punto"
-      ],
-      "seeAlso": [
-        "teorema-suma-angulos-triangulo"
-      ],
-      "satisfies": []
+      "difficulty": "básico",
+      "demos": [
+        "demo-desigualdad-triangular"
+      ]
     }
   },
   "teorema-dos-rectas-un-punto": {
@@ -1846,13 +1749,6 @@
       "title": "Teorema: Dos rectas se cortan en a lo sumo un punto",
       "description": "Dos rectas distintas del plano o del espacio se cortan en a lo sumo un punto.",
       "statement": "Sean l y m dos rectas distintas. Entonces existe a lo sumo un punto P tal que P ∈ l y P ∈ m.",
-      "requires": [
-        "axioma-incidencia-1",
-        "axioma-incidencia-2"
-      ],
-      "demos": [
-        "demo-dos-rectas-un-punto"
-      ],
       "tags": [
         "geometria",
         "incidencia",
@@ -1862,9 +1758,8 @@
         "hilbert"
       ],
       "difficulty": "básico",
-      "links": [
-        "axioma-incidencia-1",
-        "axioma-incidencia-2"
+      "demos": [
+        "demo-dos-rectas-un-punto"
       ],
       "corollaries": [
         "corolario-rectas-coincidentes"
@@ -1882,15 +1777,6 @@
       "title": "Teorema de Pitágoras",
       "description": "En un triángulo rectángulo, el cuadrado de la hipotenusa es igual a la suma de los cuadrados de los catetos.",
       "statement": "Sea △ABC un triángulo rectángulo con ángulo recto en C. Si a = |BC|, b = |CA| y c = |AB| (hipotenusa), entonces a² + b² = c².",
-      "requires": [
-        "triangulo",
-        "perpendicular",
-        "angulo",
-        "segmento"
-      ],
-      "demos": [
-        "demo-pitagoras-euclides"
-      ],
       "tags": [
         "geometria",
         "triangulos",
@@ -1901,17 +1787,9 @@
         "pitagoras"
       ],
       "difficulty": "básico",
-      "links": [
-        "triangulo",
-        "perpendicular",
-        "segmento",
-        "angulo"
-      ],
-      "seeAlso": [
-        "teorema-tales",
-        "teorema-suma-angulos-triangulo"
-      ],
-      "hasSimulation": true
+      "demos": [
+        "demo-pitagoras-euclides"
+      ]
     }
   },
   "teorema-punto-medio-perpendicular": {
@@ -1925,18 +1803,6 @@
       "title": "Teorema: La mediatriz es perpendicular al segmento en su punto medio",
       "description": "El lugar geométrico de los puntos equidistantes de los extremos de un segmento es la perpendicular al segmento en su punto medio.",
       "statement": "Sea AB un segmento con punto medio M. El conjunto de puntos P tales que PA ≅ PB es la recta perpendicular a AB que pasa por M.",
-      "requires": [
-        "lema-punto-medio",
-        "axioma-congruencia-5",
-        "axioma-congruencia-1",
-        "teorema-congruencia-lll"
-      ],
-      "demos": [
-        "demo-punto-medio-perpendicular"
-      ],
-      "lemmas": [
-        "lema-punto-medio"
-      ],
       "tags": [
         "geometria",
         "congruencia",
@@ -1947,10 +1813,11 @@
         "euclides"
       ],
       "difficulty": "intermedio",
-      "links": [
-        "lema-punto-medio",
-        "axioma-congruencia-5",
-        "teorema-congruencia-lll"
+      "demos": [
+        "demo-punto-medio-perpendicular"
+      ],
+      "lemmas": [
+        "lema-punto-medio"
       ]
     }
   },
@@ -1972,18 +1839,10 @@
       "authors": [
         "euclides"
       ],
-      "links": [
-        "triangulo",
-        "angulo",
-        "axioma-paralelas-euclides",
-        "recta",
-        "paralelas"
-      ],
-      "seeAlso": [
-        "teorema-desigualdad-triangular",
-        "teorema-pitagoras"
-      ],
-      "satisfies": []
+      "difficulty": "básico",
+      "demos": [
+        "demo-suma-angulos-triangulo"
+      ]
     }
   },
   "teorema-tales": {
@@ -1997,15 +1856,6 @@
       "title": "Teorema de Tales",
       "description": "Si varias rectas paralelas cortan a dos rectas transversales, entonces los segmentos que determinan en ellas son proporcionales.",
       "statement": "Sean r₁ ∥ r₂ ∥ r₃ tres rectas paralelas cortadas por dos transversales t₁ y t₂. Si Aᵢ = rᵢ ∩ t₁ y Bᵢ = rᵢ ∩ t₂, entonces A₁A₂/A₂A₃ = B₁B₂/B₂B₃.",
-      "requires": [
-        "recta",
-        "paralelas",
-        "segmento",
-        "triangulo"
-      ],
-      "demos": [
-        "demo-tales"
-      ],
       "tags": [
         "geometria",
         "proporcionalidad",
@@ -2015,17 +1865,9 @@
         "tales"
       ],
       "difficulty": "intermedio",
-      "links": [
-        "recta",
-        "paralelas",
-        "segmento",
-        "triangulo"
-      ],
-      "seeAlso": [
-        "teorema-congruencia-ala",
-        "teorema-pitagoras"
-      ],
-      "hasSimulation": true
+      "demos": [
+        "demo-tales"
+      ]
     }
   },
   "teorema-triangulo-isosceles": {
@@ -2046,14 +1888,9 @@
       "authors": [
         "euclides"
       ],
-      "links": [
-        "triangulo",
-        "angulo",
-        "segmento",
-        "axioma-congruencia-5"
-      ],
-      "seeAlso": [
-        "teorema-congruencia-lll"
+      "difficulty": "básico",
+      "demos": [
+        "demo-triangulo-isosceles"
       ]
     }
   }

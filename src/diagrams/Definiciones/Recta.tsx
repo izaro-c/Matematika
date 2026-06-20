@@ -24,7 +24,8 @@ export const Recta = () => {
   useEffect(() => {
     if (!boardRef.current) return;
 
-    const board = JXG.JSXGraph.initBoard(boardRef.current.id, {
+    if (!boardRef.current.id) boardRef.current.id = "jxgbox_" + Math.random().toString(36).substring(2, 9);
+      const board = JXG.JSXGraph.initBoard(boardRef.current.id, {
       boundingbox: [-5, 4, 5, -4],
       axis: false,
       showCopyright: false,

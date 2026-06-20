@@ -10,17 +10,17 @@ export const metadata = {
 };
 
 import { Angulo } from '../../diagrams/Definiciones/Angulo';
-export const Simulation = <ConceptLink targetId="angulo">Angulo</ConceptLink>;
+export const Simulation = <ConceptLink targetId="angulo" isDependency={false}>Angulo</ConceptLink>;
 import { InteractiveElement } from "../../components/ui/VisualBind";
 
 <Capitular letra="E" />
-l <ConceptLink targetId="angulo">ángulo</ConceptLink> es la figura formada por dos <ConceptLink targetId="semirrecta">semirrectas</ConceptLink> que comparten el mismo origen (vértice). Es uno de los conceptos centrales de la <ConceptLink targetId="geometria">geometría</ConceptLink>, fundamental para la <ConceptLink targetId="congruencia">congruencia</ConceptLink>, la semejanza y la trigonometría.
+l ángulo es la figura formada por dos <ConceptLink targetId="semirrecta" isDependency={false}>semirrectas</ConceptLink> que comparten el mismo origen (vértice). Es uno de los conceptos centrales de la <ConceptLink targetId="geometria" isDependency={false}>geometría</ConceptLink>, fundamental para la <ConceptLink targetId="congruencia" isDependency={false}>congruencia</ConceptLink>, la semejanza y la trigonometría.
 
 <Separador />
 
 ### Enunciado Formal
 
-Dadas dos <ConceptLink targetId="semirrecta">semirrectas</ConceptLink> $OA^{\rightarrow}$ y $OB^{\rightarrow}$ con el mismo origen $O$, el <ConceptLink targetId="angulo">ángulo</ConceptLink> $\angle AOB$ es la figura formada por la unión de ambas. El <ConceptLink targetId="punto">punto</ConceptLink> $O$ se denomina vértice y $OA^{\rightarrow}$, $OB^{\rightarrow}$ constituyen los lados del <ConceptLink targetId="angulo">ángulo</ConceptLink>. En el diagrama se muestran las <ConceptLink targetId="semirrecta">semirrectas</ConceptLink> <InteractiveElement target="rayOA" color="terracota">OA</InteractiveElement> y <InteractiveElement target="rayOB" color="terracota">OB</InteractiveElement> junto con el <InteractiveElement target="angleArc" color="terracota">arco del <ConceptLink targetId="angulo">ángulo</ConceptLink></InteractiveElement>.
+Dadas dos semirrectas $OA^{\rightarrow}$ y $OB^{\rightarrow}$ con el mismo origen $O$, el ángulo $\angle AOB$ es la figura formada por la unión de ambas. El <ConceptLink targetId="punto" isDependency={false}>punto</ConceptLink> $O$ se denomina vértice y $OA^{\rightarrow}$, $OB^{\rightarrow}$ constituyen los lados del ángulo. En el diagrama se muestran las semirrectas <InteractiveElement target="rayOA" color="terracota">OA</InteractiveElement> y <InteractiveElement target="rayOB" color="terracota">OB</InteractiveElement> junto con el <InteractiveElement target="angleArc" color="terracota">arco del ángulo</InteractiveElement>.
 
 <Formula>
   $$ \angle AOB = \{OA^{\rightarrow}, OB^{\rightarrow}\} $$
@@ -30,10 +30,10 @@ Dadas dos <ConceptLink targetId="semirrecta">semirrectas</ConceptLink> $OA^{\rig
 
 ### Definición Axiomática
 
-En el sistema de <ConceptLink targetId="hilbert">Hilbert</ConceptLink>, la <ConceptLink targetId="congruencia">congruencia</ConceptLink> de <ConceptLink targetId="angulo">ángulos</ConceptLink> se define axiomáticamente:
+En el sistema de <ConceptLink targetId="hilbert" isDependency={false}>Hilbert</ConceptLink>, la congruencia de ángulos se define axiomáticamente:
 
-- **Transporte**: dado un <ConceptLink targetId="angulo">ángulo</ConceptLink> $\angle AOB$ y una <ConceptLink targetId="semirrecta">semirrecta</ConceptLink> $O'A'^{\rightarrow}$, existe una única <ConceptLink targetId="semirrecta">semirrecta</ConceptLink> $O'B'^{\rightarrow}$ a cada lado de $O'A'^{\rightarrow}$ tal que $\angle AOB \cong \angle A'O'B'$ (<ConceptLink targetId="axioma-congruencia-4" isDependency={false}>III-4</ConceptLink>).
-- **Criterio SAS**: si dos lados y el <ConceptLink targetId="angulo">ángulo</ConceptLink> comprendido son <ConceptLink targetId="congruencia">congruentes</ConceptLink>, los <ConceptLink targetId="triangulo">triángulos</ConceptLink> son <ConceptLink targetId="congruencia">congruentes</ConceptLink> (<ConceptLink targetId="axioma-congruencia-5" isDependency={false}>III-5</ConceptLink>).
+- **Transporte**: dado un ángulo $\angle AOB$ y una semirrecta $O'A'^{\rightarrow}$, existe una única semirrecta $O'B'^{\rightarrow}$ a cada lado de $O'A'^{\rightarrow}$ tal que $\angle AOB \cong \angle A'O'B'$ (<ConceptLink targetId="axioma-congruencia-4" isDependency={false}>III-4</ConceptLink>).
+- **Criterio SAS**: si dos lados y el ángulo comprendido son congruentes, los <ConceptLink targetId="triangulo" isDependency={false}>triángulos</ConceptLink> son congruentes (<ConceptLink targetId="axioma-congruencia-5" isDependency={false}>III-5</ConceptLink>).
 
 <Separador />
 
@@ -44,10 +44,10 @@ En el sistema de <ConceptLink targetId="hilbert">Hilbert</ConceptLink>, la <Conc
 | Agudo | Menor que un recto | $< 90^\circ$ |
 | Recto | Igual a su suplementario | $90^\circ$ |
 | Obtuso | Mayor que un recto | $> 90^\circ$ |
-| Llano | Los lados son <ConceptLink targetId="semirrecta">semirrectas</ConceptLink> opuestas | $180^\circ$ |
+| Llano | Los lados son semirrectas opuestas | $180^\circ$ |
 
 <Separador />
 
 ### Observaciones
 
-En <ConceptLink targetId="sistema-absoluto"><ConceptLink targetId="geometria">geometría</ConceptLink> absoluta</ConceptLink>, un <ConceptLink targetId="angulo">ángulo</ConceptLink> recto es aquel <ConceptLink targetId="congruencia">congruente</ConceptLink> con su suplementario. El quinto <ConceptLink targetId="postulado">postulado</ConceptLink> establece que si una <ConceptLink targetId="recta">recta</ConceptLink> al cortar a otras dos forma <ConceptLink targetId="angulo">ángulos</ConceptLink> internos menores que un recto, las <ConceptLink targetId="recta">rectas</ConceptLink> se cortan. En <ConceptLink targetId="sistema-hiperbolico"><ConceptLink targetId="geometria">geometría</ConceptLink> hiperbólica</ConceptLink>, los <ConceptLink targetId="angulo">ángulos</ConceptLink> de un <ConceptLink targetId="triangulo">triángulo</ConceptLink> suman menos de $180^\circ$; en <ConceptLink targetId="geometria">geometría</ConceptLink> elíptica, más de $180^\circ$.
+En <ConceptLink targetId={["sistema-absoluto", "geometria"]}>geometría absoluta</ConceptLink>, un ángulo recto es aquel congruente con su suplementario. El <ConceptLink targetId={["axioma-paralelas-euclides", "postulado", "paralelas"]}>quinto postulado</ConceptLink> establece que si una <ConceptLink targetId="recta" isDependency={false}>recta</ConceptLink> al cortar a otras dos forma ángulos internos menores que un recto, las rectas se cortan. En <ConceptLink targetId={["sistema-hiperbolico", "geometria"]}>geometría hiperbólica</ConceptLink>, los ángulos de un triángulo suman menos de $180^\circ$; en geometría elíptica, más de $180^\circ$.

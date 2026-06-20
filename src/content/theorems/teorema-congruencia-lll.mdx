@@ -4,13 +4,11 @@ export const metadata = {
   "title": "Teorema de Congruencia LLL",
   "description": "Si los tres lados de un triángulo son congruentes con los tres lados de otro, entonces los triángulos son congruentes.",
   "statement": "Sean △ABC y △A'B'C' tales que AB ≅ A'B', BC ≅ B'C' y CA ≅ C'A'. Entonces △ABC ≅ △A'B'C'.",
-  "requires": ["axioma-congruencia-1", "axioma-congruencia-4", "axioma-congruencia-5", "teorema-congruencia-ala"],
-  "demos": ["demo-congruencia-lll"],
   "tags": ["geometria", "congruencia", "geometria-absoluta", "triangulos"],
   "authors": ["euclides"],
   "difficulty": "intermedio",
   "hasSimulation": true,
-  "links": ["axioma-congruencia-1", "axioma-congruencia-4", "axioma-congruencia-5", "teorema-congruencia-ala"],
+  "demos": ["demo-congruencia-lll"]
 };
 
 import { CongruenciaLLL } from '../../diagrams/Theorems/CongruenciaLLL';
@@ -18,7 +16,7 @@ export const Simulation = CongruenciaLLL;
 import { InteractiveElement } from "../../components/ui/VisualBind";
 
 <Capitular letra="E" />
-l criterio de <ConceptLink targetId="congruencia">congruencia</ConceptLink> **LLL** (Lado-Lado-Lado) afirma que dos <ConceptLink targetId="triangulo">triángulos</ConceptLink> cuyos tres lados resultan recíprocamente <ConceptLink targetId="congruencia">congruentes</ConceptLink> adquieren <ConceptLink targetId="congruencia">congruencia</ConceptLink> geométrica total. Este resultado, demostrado primigeniamente en la Proposición I.8 de los Elementos de <ConceptLink targetId="euclides">Euclides</ConceptLink>, se deriva formalmente en el sistema de <ConceptLink targetId="hilbert">Hilbert</ConceptLink> a partir del <ConceptLink targetId="axioma-congruencia-5"><ConceptLink targetId="axioma">axioma</ConceptLink> LAL</ConceptLink> mediante un riguroso proceso de reducción lógica.
+l criterio de <ConceptLink targetId="congruencia" isDependency={false}>congruencia</ConceptLink> **LLL** (Lado-Lado-Lado) afirma que dos <ConceptLink targetId="triangulo" isDependency={false}>triángulos</ConceptLink> cuyos tres lados resultan recíprocamente congruentes adquieren congruencia geométrica total. Este resultado, demostrado primigeniamente en la Proposición I.8 de los Elementos de <ConceptLink targetId="euclides" isDependency={false}>Euclides</ConceptLink>, se deriva formalmente en el sistema de <ConceptLink targetId="hilbert" isDependency={false}>Hilbert</ConceptLink> a partir del <ConceptLink targetId="axioma-congruencia-5">axioma LAL (III-5)</ConceptLink>, el <ConceptLink targetId="axioma-congruencia-1">axioma de transporte de segmentos</ConceptLink>, el <ConceptLink targetId="axioma-congruencia-4">axioma de unicidad de transporte angular</ConceptLink> y el <ConceptLink targetId="teorema-triangulo-isosceles">teorema del triángulo isósceles</ConceptLink> mediante un riguroso proceso de reducción lógica.
 
 <Separador />
 
@@ -28,20 +26,14 @@ l criterio de <ConceptLink targetId="congruencia">congruencia</ConceptLink> **LL
   $$ \text{Sean } \triangle ABC \text{ y } \triangle A'B'C' \text{ tales que } \overline{AB} \cong \overline{A'B'}, \; \overline{BC} \cong \overline{B'C'}, \; \overline{CA} \cong \overline{C'A'}. \text{ Entonces } \triangle ABC \cong \triangle A'B'C'. $$
 </Formula>
 
-<Separador />
 
-### <ConceptLink targetId="demostracion">Demostración</ConceptLink>
-
-La <ConceptLink targetId="demostracion">demostración</ConceptLink> reduce LLL a LAL: se transporta un <ConceptLink targetId="angulo">ángulo</ConceptLink> del primer <ConceptLink targetId="triangulo">triángulo</ConceptLink> al segundo, se aplica LAL, y la unicidad de la intersección de <ConceptLink targetId="circunferencia">circunferencias</ConceptLink> garantiza la coincidencia. Se encuentra en la página dedicada: <ConceptLink targetId="demo-congruencia-lll"><ConceptLink targetId="demostracion">Demostración</ConceptLink>: Criterio LLL</ConceptLink>.
-
-<Separador />
 
 ### Discusión
 
-El criterio LLL es el más potente de los tres criterios clásicos: con solo conocer las <ConceptLink targetId="longitud">longitudes</ConceptLink> de los lados se determina un <ConceptLink targetId="triangulo">triángulo</ConceptLink> completamente. Esto tiene una consecuencia práctica inmediata: la **rigidez triangular**, principio fundamental en arquitectura e ingeniería.
+El criterio LLL es el más potente de los tres criterios clásicos: con solo conocer las <ConceptLink targetId="longitud" isDependency={false}>longitudes</ConceptLink> de los lados se determina un triángulo completamente. Esto tiene una consecuencia práctica inmediata: la **rigidez triangular**, principio fundamental en arquitectura e ingeniería.
 
 <Nota>
-  El método de <ConceptLink targetId="euclides">Euclides</ConceptLink> para LLL (Proposición I.8) usaba el principio de superposición. <ConceptLink targetId="hilbert">Hilbert</ConceptLink> reemplazó este método geométrico por los <ConceptLink targetId="axioma">axiomas</ConceptLink> de transporte, haciendo la <ConceptLink targetId="demostracion">demostración</ConceptLink> plenamente rigurosa dentro del sistema formal.
+  El método de Euclides para LLL (Proposición I.8) usaba el principio de superposición. Hilbert reemplazó este método geométrico por los <ConceptLink targetId="axioma" isDependency={false}>axiomas</ConceptLink> de transporte, haciendo la demostración plenamente rigurosa dentro del sistema formal.
 </Nota>
 
-Una vez demostrados <ConceptLink targetId="axioma-congruencia-5">LAL</ConceptLink> (<ConceptLink targetId="axioma">axioma</ConceptLink>), <ConceptLink targetId="teorema-congruencia-ala">ALA</ConceptLink> y LLL, el sistema de <ConceptLink targetId="congruencia">congruencia</ConceptLink> de <ConceptLink targetId="triangulo">triángulos</ConceptLink> queda completo. Nótese que el criterio LLA (Lado-Lado-<ConceptLink targetId="angulo">Ángulo</ConceptLink> no incluido) **no** es un criterio general de <ConceptLink targetId="congruencia">congruencia</ConceptLink>: requiere que el <ConceptLink targetId="angulo">ángulo</ConceptLink> sea recto o que el lado opuesto sea el mayor.
+Una vez demostrados LAL (axioma), <ConceptLink targetId="teorema-congruencia-ala" isDependency={false}>ALA</ConceptLink> y LLL, el sistema de congruencia de triángulos queda completo. Nótese que el criterio LLA (Lado-Lado-Ángulo no incluido) **no** es un criterio general de congruencia: requiere que el ángulo sea recto o que el lado opuesto sea el mayor.

@@ -4,40 +4,32 @@ export const metadata = {
   "title": "Teorema: La mediatriz es perpendicular al segmento en su punto medio",
   "description": "El lugar geométrico de los puntos equidistantes de los extremos de un segmento es la perpendicular al segmento en su punto medio.",
   "statement": "Sea AB un segmento con punto medio M. El conjunto de puntos P tales que PA ≅ PB es la recta perpendicular a AB que pasa por M.",
-  "requires": ["lema-punto-medio", "axioma-congruencia-5", "axioma-congruencia-1", "teorema-congruencia-lll"],
-  "demos": ["demo-punto-medio-perpendicular"],
-  "lemmas": ["lema-punto-medio"],
   "tags": ["geometria", "congruencia", "orden", "geometria-absoluta"],
   "authors": ["euclides"],
   "difficulty": "intermedio",
-  "links": ["lema-punto-medio", "axioma-congruencia-5", "teorema-congruencia-lll"],
+  "demos": ["demo-punto-medio-perpendicular"],
+  "lemmas": ["lema-punto-medio"]
 };
 
 import { InteractiveElement } from "../../components/ui/VisualBind";
 
 <Capitular letra="L" />
-a **<ConceptLink targetId="mediatriz">mediatriz</ConceptLink>** correspondiente a un <ConceptLink targetId="segmento">segmento</ConceptLink> conforma el lugar geométrico estricto de aquellos <ConceptLink targetId="punto">puntos</ConceptLink> equidistantes a los vértices extremos del mismo. Este <ConceptLink targetId="teorema">teorema</ConceptLink> fundamental caracteriza unívocamente a dicha <ConceptLink targetId="mediatriz">mediatriz</ConceptLink> como la <ConceptLink targetId="recta">recta</ConceptLink> ortogonal que interseca al <ConceptLink targetId="segmento">segmento</ConceptLink> precisamente por su <ConceptLink targetId="lema-punto-medio"><ConceptLink targetId="punto">punto</ConceptLink> medio</ConceptLink>, anudando analíticamente los constructos de <ConceptLink targetId="congruencia">congruencia</ConceptLink>, perpendicularidad y simetría axial.
+a **<ConceptLink targetId="mediatriz" isDependency={false}>mediatriz</ConceptLink>** correspondiente a un <ConceptLink targetId="segmento" isDependency={false}>segmento</ConceptLink> conforma el lugar geométrico estricto de aquellos <ConceptLink targetId="punto" isDependency={false}>puntos</ConceptLink> equidistantes a los vértices extremos del mismo. Este <ConceptLink targetId="teorema" isDependency={false}>teorema</ConceptLink> fundamental caracteriza unívocamente a dicha mediatriz como la <ConceptLink targetId="recta" isDependency={false}>recta</ConceptLink> ortogonal que interseca al segmento precisamente por su <ConceptLink targetId="lema-punto-medio">punto medio</ConceptLink>, apoyándose analíticamente en el <ConceptLink targetId="axioma-congruencia-5">axioma LAL</ConceptLink> y el <ConceptLink targetId="teorema-congruencia-lll">teorema LLL</ConceptLink>.
 
 <Separador />
 
 ### Enunciado
 
 <Formula>
-  $$ \text{Sea } \overline{AB} \text{ con punto medio } M. \text{ El conjunto } \{P : \overline{PA} \cong \overline{PB}\} \text{ es la perpendicular a } \overline{AB} \text{ por } M. $$
+  $$ \text{Sea } \overline{AB} \text{ con <ConceptLink targetId={["lema-punto-medio", "punto"]}>punto medio</ConceptLink> } M. \text{ El conjunto } \{P : \overline{PA} \cong \overline{PB}\} \text{ es la perpendicular a } \overline{AB} \text{ por } M. $$
 </Formula>
 
-<Separador />
 
-### <ConceptLink targetId="demostracion">Demostración</ConceptLink>
-
-La <ConceptLink targetId="demostracion">demostración</ConceptLink> es bidireccional: todo <ConceptLink targetId="punto">punto</ConceptLink> de la <ConceptLink targetId="perpendicular">perpendicular</ConceptLink> equidista (usando <ConceptLink targetId="axioma-congruencia-5">LAL</ConceptLink>), y todo <ConceptLink targetId="punto">punto</ConceptLink> equidistante está en la <ConceptLink targetId="perpendicular">perpendicular</ConceptLink> (usando <ConceptLink targetId="teorema-congruencia-lll">LLL</ConceptLink>). Se encuentra en la página dedicada: <ConceptLink targetId="demo-punto-medio-perpendicular"><ConceptLink targetId="demostracion">Demostración</ConceptLink>: La <ConceptLink targetId="mediatriz">mediatriz</ConceptLink> es <ConceptLink targetId="perpendicular">perpendicular</ConceptLink> al <ConceptLink targetId="segmento">segmento</ConceptLink></ConceptLink>.
-
-<Separador />
 
 ### Discusión
 
-La <ConceptLink targetId="mediatriz">mediatriz</ConceptLink> es un objeto central en <ConceptLink targetId="geometria">geometría</ConceptLink>. Es el eje de simetría del <ConceptLink targetId="segmento">segmento</ConceptLink>: la reflexión respecto a ella intercambia los extremos. Además, las tres <ConceptLink targetId="mediatriz">mediatrices</ConceptLink> de un <ConceptLink targetId="triangulo">triángulo</ConceptLink> concurren en el **circuncentro**, el centro de la <ConceptLink targetId="circunferencia">circunferencia</ConceptLink> circunscrita.
+La mediatriz es un objeto central en <ConceptLink targetId="geometria" isDependency={false}>geometría</ConceptLink>. Es el eje de simetría del segmento: la reflexión respecto a ella intercambia los extremos. Además, las tres mediatrices de un <ConceptLink targetId="triangulo" isDependency={false}>triángulo</ConceptLink> concurren en el **circuncentro**, el centro de la <ConceptLink targetId="circunferencia" isDependency={false}>circunferencia</ConceptLink> circunscrita.
 
 <Nota>
-  Este <ConceptLink targetId="teorema">teorema</ConceptLink> es válido en <ConceptLink targetId="sistema-absoluto"><ConceptLink targetId="geometria">geometría</ConceptLink> absoluta</ConceptLink>: no requiere el <ConceptLink targetId="axioma-paralelas-euclides"><ConceptLink targetId="postulado">postulado</ConceptLink> de las <ConceptLink targetId="paralelas">paralelas</ConceptLink></ConceptLink>. La existencia del circuncentro, en cambio, depende de que las tres <ConceptLink targetId="mediatriz">mediatrices</ConceptLink> concurran, lo cual sí puede fallar en <ConceptLink targetId="sistema-hiperbolico"><ConceptLink targetId="geometria">geometría</ConceptLink> hiperbólica</ConceptLink> para <ConceptLink targetId="triangulo">triángulos</ConceptLink> muy grandes.
+  Este teorema es válido en <ConceptLink targetId={["sistema-absoluto", "geometria"]}>geometría absoluta</ConceptLink>: no requiere el <ConceptLink targetId="axioma-paralelas-euclides" isDependency={false}>postulado de las paralelas</ConceptLink>. La existencia del circuncentro, en cambio, depende de que las tres mediatrices concurran, lo cual sí puede fallar en <ConceptLink targetId={["sistema-hiperbolico", "geometria"]}>geometría hiperbólica</ConceptLink> para triángulos muy grandes.
 </Nota>

@@ -24,7 +24,8 @@ export const HyperbolicParallel = () => {
   useEffect(() => {
     if (!boardRef.current) return;
 
-    const board = JXG.JSXGraph.initBoard(boardRef.current.id, {
+    if (!boardRef.current.id) boardRef.current.id = "jxgbox_" + Math.random().toString(36).substring(2, 9);
+      const board = JXG.JSXGraph.initBoard(boardRef.current.id, {
       boundingbox: [-5, 4, 5, -4],
       axis: false,
       showCopyright: false,
@@ -38,7 +39,7 @@ export const HyperbolicParallel = () => {
     });
 
     board.create('text', [4.2, 1.8, 'l'], {
-      fontSize: 14, fillColor: getCSSVar('--theme-lienzo'), highlightFillColor: getCSSVar('--theme-lienzo'),
+      fontSize: 14, fillColor: getCSSVar('--theme-carbon'), highlightFillColor: getCSSVar('--theme-carbon'),
     });
 
     const pP = board.create('point', [0, -1.5], {
@@ -46,20 +47,30 @@ export const HyperbolicParallel = () => {
       showInfobox: false, fixed: false,
     });
 
-    const lineM = board.create('line', [pP, function() { return [pP.X() - 2, pP.Y() + 2]; }], {
+    const lineM = board.create('functiongraph', [
+      function(x: number) {
+        const dx = x - pP.X();
+        return pP.Y() + 2 * (1 - Math.exp(-0.2 * dx * dx));
+      }
+    ], {
       strokeColor: getCSSVar('--theme-terracota'), strokeWidth: 2.5,
     });
 
     board.create('text', [4.2, function() { return pP.Y() + 2.3; }, 'm'], {
-      fontSize: 14, fillColor: getCSSVar('--theme-lienzo'), highlightFillColor: getCSSVar('--theme-lienzo'),
+      fontSize: 14, fillColor: getCSSVar('--theme-carbon'), highlightFillColor: getCSSVar('--theme-carbon'),
     });
 
-    const lineN = board.create('line', [pP, function() { return [pP.X() - 2, pP.Y() - 2]; }], {
+    const lineN = board.create('functiongraph', [
+      function(x: number) {
+        const dx = x - pP.X();
+        return pP.Y() + 2.8 * (1 - Math.exp(-0.1 * dx * dx));
+      }
+    ], {
       strokeColor: getCSSVar('--theme-pizarra'), strokeWidth: 2.5,
     });
 
-    board.create('text', [4.2, function() { return pP.Y() - 1.7; }, 'n'], {
-      fontSize: 14, fillColor: getCSSVar('--theme-lienzo'), highlightFillColor: getCSSVar('--theme-lienzo'),
+    board.create('text', [4.2, function() { return pP.Y() + 3.1; }, 'n'], {
+      fontSize: 14, fillColor: getCSSVar('--theme-carbon'), highlightFillColor: getCSSVar('--theme-carbon'),
     });
 
     elementsRef.current = { pP, lineM, lineN, board };

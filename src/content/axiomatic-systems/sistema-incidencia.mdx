@@ -19,39 +19,39 @@ export const metadata = {
 };
 
 <Capitular letra="E" />
-l <ConceptLink targetId="sistema-incidencia">sistema de <ConceptLink targetId="incidencia">incidencia</ConceptLink></ConceptLink> es la estructura axiomática fundamental que define las relaciones primitivas de pertenencia entre <ConceptLink targetId="punto">puntos</ConceptLink>, <ConceptLink targetId="recta">rectas</ConceptLink> y <ConceptLink targetId="plano">planos</ConceptLink>. Constituye la base topológica sobre la cual se erige toda la <ConceptLink targetId="geometria">geometría</ConceptLink> formal.
+l <ConceptLink targetId={["sistema-incidencia", "axioma", "incidencia"]}>sistema de incidencia</ConceptLink> es la estructura axiomática fundamental que define las relaciones primitivas de pertenencia entre <ConceptLink targetId="punto" isDependency={false}>puntos</ConceptLink>, <ConceptLink targetId="recta" isDependency={false}>rectas</ConceptLink> y <ConceptLink targetId="plano" isDependency={false}>planos</ConceptLink>. Constituye la base topológica sobre la cual se erige toda la <ConceptLink targetId="geometria" isDependency={false}>geometría</ConceptLink> formal.
 
 <Separador />
 
-### <ConceptLink targetId="axioma">Axiomas</ConceptLink>
+### <ConceptLink targetId="axioma" isDependency={false}>Axiomas</ConceptLink>
 
-El <ConceptLink targetId="sistema-incidencia">sistema de <ConceptLink targetId="incidencia">incidencia</ConceptLink></ConceptLink> consta de ocho <ConceptLink targetId="axioma">axiomas</ConceptLink> que establecen:
+El <ConceptLink targetId={["sistema-incidencia", "axioma", "incidencia"]}>sistema de incidencia</ConceptLink> consta de ocho axiomas que establecen:
 
-- <ConceptLink targetId="axioma-incidencia-1">I-1</ConceptLink>: Dos <ConceptLink targetId="punto">puntos</ConceptLink> determinan una única <ConceptLink targetId="recta">recta</ConceptLink>.
-- <ConceptLink targetId="axioma-incidencia-2">I-2</ConceptLink>: Toda <ConceptLink targetId="recta">recta</ConceptLink> contiene al menos dos <ConceptLink targetId="punto">puntos</ConceptLink>.
-- <ConceptLink targetId="axioma-incidencia-3">I-3</ConceptLink>: Existen tres <ConceptLink targetId="punto">puntos</ConceptLink> no <ConceptLink targetId="colineal">colineales</ConceptLink>.
-- <ConceptLink targetId="axioma-incidencia-4">I-4</ConceptLink>: Tres <ConceptLink targetId="punto">puntos</ConceptLink> no <ConceptLink targetId="colineal">colineales</ConceptLink> determinan un único <ConceptLink targetId="plano">plano</ConceptLink>.
-- <ConceptLink targetId="axioma-incidencia-5">I-5</ConceptLink>: Todo <ConceptLink targetId="plano">plano</ConceptLink> contiene al menos tres <ConceptLink targetId="punto">puntos</ConceptLink> no <ConceptLink targetId="colineal">colineales</ConceptLink>.
-- <ConceptLink targetId="axioma-incidencia-6">I-6</ConceptLink>: Si dos <ConceptLink targetId="punto">puntos</ConceptLink> de una <ConceptLink targetId="recta">recta</ConceptLink> están en un <ConceptLink targetId="plano">plano</ConceptLink>, la <ConceptLink targetId="recta">recta</ConceptLink> entera está en el <ConceptLink targetId="plano">plano</ConceptLink>.
-- <ConceptLink targetId="axioma-incidencia-7">I-7</ConceptLink>: Dos <ConceptLink targetId="plano">planos</ConceptLink> se intersectan en una <ConceptLink targetId="recta">recta</ConceptLink>.
-- <ConceptLink targetId="axioma-incidencia-8">I-8</ConceptLink>: Existen cuatro <ConceptLink targetId="punto">puntos</ConceptLink> no <ConceptLink targetId="coplanares">coplanares</ConceptLink>.
+- <ConceptLink targetId="axioma-incidencia-1" isDependency={false}>I-1</ConceptLink>: Dos puntos determinan una única recta.
+- <ConceptLink targetId="axioma-incidencia-2" isDependency={false}>I-2</ConceptLink>: Toda recta contiene al menos dos puntos.
+- <ConceptLink targetId="axioma-incidencia-3" isDependency={false}>I-3</ConceptLink>: Existen tres puntos no <ConceptLink targetId="colineal" isDependency={false}>colineales</ConceptLink>.
+- <ConceptLink targetId="axioma-incidencia-4" isDependency={false}>I-4</ConceptLink>: Tres puntos no colineales determinan un único plano.
+- <ConceptLink targetId="axioma-incidencia-5" isDependency={false}>I-5</ConceptLink>: Todo plano contiene al menos tres puntos no colineales.
+- <ConceptLink targetId="axioma-incidencia-6" isDependency={false}>I-6</ConceptLink>: Si dos puntos de una recta están en un plano, la recta entera está en el plano.
+- <ConceptLink targetId="axioma-incidencia-7" isDependency={false}>I-7</ConceptLink>: Dos planos se intersectan en una recta.
+- <ConceptLink targetId="axioma-incidencia-8" isDependency={false}>I-8</ConceptLink>: Existen cuatro puntos no <ConceptLink targetId="coplanares" isDependency={false}>coplanares</ConceptLink>.
 
-Estos <ConceptLink targetId="axioma">axiomas</ConceptLink> definen la estructura tridimensional del espacio: los primeros tres gobiernan la relación <ConceptLink targetId="punto">punto</ConceptLink>-<ConceptLink targetId="recta">recta</ConceptLink>, los siguientes tres la relación <ConceptLink targetId="recta">recta</ConceptLink>-<ConceptLink targetId="plano">plano</ConceptLink>, y los últimos dos la relación entre <ConceptLink targetId="plano">planos</ConceptLink>.
+Estos axiomas definen la estructura tridimensional del espacio: los primeros tres gobiernan la relación punto-recta, los siguientes tres la relación recta-plano, y los últimos dos la relación entre planos.
 
 <Separador />
 
 ### Modelos
 
-El <ConceptLink targetId="sistema-incidencia">sistema de <ConceptLink targetId="incidencia">incidencia</ConceptLink></ConceptLink> es satisfecho por numerosas estructuras. Las más simples son:
+El <ConceptLink targetId={["sistema-incidencia", "axioma", "incidencia"]}>sistema de incidencia</ConceptLink> es satisfecho por numerosas estructuras. Las más simples son:
 
-- **Modelo de 3 <ConceptLink targetId="punto">puntos</ConceptLink>**: tres <ConceptLink targetId="punto">puntos</ConceptLink> no <ConceptLink targetId="colineal">colineales</ConceptLink> con las <ConceptLink targetId="recta">rectas</ConceptLink> que determinan. Satisface I-1, I-2, I-3.
-- **<ConceptLink targetId="modelo-fano"><ConceptLink targetId="plano">Plano</ConceptLink> de Fano</ConceptLink>**: el <ConceptLink targetId="plano">plano</ConceptLink> proyectivo de orden 2, con 7 <ConceptLink targetId="punto">puntos</ConceptLink> y 7 <ConceptLink targetId="recta">rectas</ConceptLink>. Satisface todos los <ConceptLink targetId="axioma">axiomas</ConceptLink> de <ConceptLink targetId="incidencia">incidencia</ConceptLink> plana.
-- **Espacio cartesiano** $\mathbb{R}^3$: el modelo estándar de la <ConceptLink targetId="sistema-euclidiano"><ConceptLink targetId="geometria">geometría</ConceptLink> euclídea</ConceptLink>.
+- **Modelo de 3 puntos**: tres puntos no colineales con las rectas que determinan. Satisface I-1, I-2, I-3.
+- **<ConceptLink targetId={["modelo-fano", "plano"]}>Plano de Fano</ConceptLink>**: el <ConceptLink targetId={["plano-proyectivo", "plano"]}>plano proyectivo</ConceptLink> de orden 2, con 7 puntos y 7 rectas. Satisface todos los <ConceptLink targetId={["sistema-incidencia", "axioma", "incidencia"]}>axiomas de incidencia</ConceptLink> plana.
+- **Espacio cartesiano** $\mathbb{R}^3$: el modelo estándar de la <ConceptLink targetId={["sistema-euclidiano", "geometria", "euclides"]}>geometría euclídea</ConceptLink>.
 
 <Separador />
 
 ### Propiedades
 
-El <ConceptLink targetId="sistema-incidencia">sistema de <ConceptLink targetId="incidencia">incidencia</ConceptLink></ConceptLink> es **consistente**: existe un modelo (el espacio cartesiano) que lo satisface. Es **independiente**: ningún <ConceptLink targetId="axioma">axioma</ConceptLink> puede deducirse lógicamente de los demás. No es **completo**: multitud de geometrías divergentes satisfacen estos <ConceptLink targetId="axioma">axiomas</ConceptLink> (<ConceptLink targetId="sistema-absoluto"><ConceptLink targetId="geometria">geometría</ConceptLink> absoluta</ConceptLink>, euclídea, hiperbólica).
+El <ConceptLink targetId={["sistema-incidencia", "axioma", "incidencia"]}>sistema de incidencia</ConceptLink> es **consistente**: existe un modelo (el espacio cartesiano) que lo satisface. Es **independiente**: ningún axioma puede deducirse lógicamente de los demás. No es **completo**: multitud de geometrías divergentes satisfacen estos axiomas (<ConceptLink targetId={["sistema-absoluto", "geometria"]}>geometría absoluta</ConceptLink>, euclídea, hiperbólica).
 
-Los <ConceptLink targetId="axioma">axiomas</ConceptLink> I-1 a I-3 definen la <ConceptLink targetId="geometria">geometría</ConceptLink> plana de <ConceptLink targetId="incidencia">incidencia</ConceptLink>. Los <ConceptLink targetId="axioma">axiomas</ConceptLink> I-4 a I-8 extienden la teoría al espacio tridimensional.
+Los axiomas I-1 a I-3 definen la geometría plana de <ConceptLink targetId="incidencia" isDependency={false}>incidencia</ConceptLink>. Los axiomas I-4 a I-8 extienden la teoría al espacio tridimensional.
