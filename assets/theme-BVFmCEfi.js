@@ -1,0 +1,1 @@
+var e={palette:{primary:`#3b82f6`,secondary:`#10b981`,tertiary:`#f59e0b`,text:`#1f2937`,background:`#f9fafb`},point:{size:3,fillColor:`#3b82f6`,strokeColor:`#3b82f6`},line:{strokeWidth:2,strokeColor:`#3b82f6`},angle:{fillColor:`#10b981`,strokeColor:`#10b981`,fillOpacity:.2}};export{e as t};

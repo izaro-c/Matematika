@@ -1,1 +1,0 @@
-import{i as e}from"./jsx-runtime-BYoHz2Ni.js";import{t}from"./react-B4OclSsO.js";e();var n=t(e=>({activeSimulation:null,setActiveSimulation:t=>e({activeSimulation:t}),defaultSimulation:null,setDefaultSimulation:t=>e({defaultSimulation:t}),activeStep:null,setActiveStep:t=>e({activeStep:t})}));export{n as t};
