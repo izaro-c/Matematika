@@ -15,29 +15,29 @@ import { DemoDosRectasUnPunto } from "../../diagrams/Demos/DemoDosRectasUnPunto"
 
 <DemonstrationSection diagram={<DemoDosRectasUnPunto />}>
 
-<Capitular letra="S" />e demuestra rigurosamente que dos rectas distintas no pueden compartir multiplicidad de puntos topológicos, basándose en la reducción al absurdo aplicada sobre el axioma fundamental de unicidad geométrica de incidencia.
+<Capitular letra="S" />e demuestra rigurosamente que dos <ConceptLink targetId="recta">rectas</ConceptLink> distintas no pueden compartir multiplicidad de <ConceptLink targetId="punto">puntos</ConceptLink> topológicos, basándose en la reducción al absurdo aplicada sobre el <ConceptLink targetId="axioma">axioma</ConceptLink> fundamental de unicidad geométrica de <ConceptLink targetId="incidencia">incidencia</ConceptLink>.
 
 <Separador />
 
 ### Hipótesis y Tesis
 
-**Hipótesis:** Sean <InteractiveElement target="rectaL" color="terracota">$l$</InteractiveElement> y <InteractiveElement target="rectaM" color="terracota">$m$</InteractiveElement> dos rectas distintas ($l \neq m$).  
-**Tesis:** Existe a lo sumo un punto <InteractiveElement target="puntoP" color="terracota">$P$</InteractiveElement> tal que $P \in l$ y $P \in m$.
+**Hipótesis:** Sean <InteractiveElement target="rectaL" color="terracota">$l$</InteractiveElement> y <InteractiveElement target="rectaM" color="terracota">$m$</InteractiveElement> dos <ConceptLink targetId="recta">rectas</ConceptLink> distintas ($l \neq m$).  
+**Tesis:** Existe a lo sumo un <ConceptLink targetId="punto">punto</ConceptLink> <InteractiveElement target="puntoP" color="terracota">$P$</InteractiveElement> tal que $P \in l$ y $P \in m$.
 
 <Separador />
 
 <MedievalStep number={1} title="Suposición por contradicción" target="contradiction">
-Supongamos, por contradicción, que existen dos puntos distintos <InteractiveElement target="puntoP" color="terracota">$P$</InteractiveElement> y <InteractiveElement target="puntoQ" color="terracota">$Q$</InteractiveElement> que pertenecen simultáneamente a $l$ y a $m$:
+Supongamos, por contradicción, que existen dos <ConceptLink targetId="punto">puntos</ConceptLink> distintos <InteractiveElement target="puntoP" color="terracota">$P$</InteractiveElement> y <InteractiveElement target="puntoQ" color="terracota">$Q$</InteractiveElement> que pertenecen simultáneamente a $l$ y a $m$:
 
 $$ P \in l \cap m, \quad Q \in l \cap m, \quad P \neq Q. $$
 </MedievalStep>
 
 <MedievalStep number={2} title="Aplicación del Axioma de Unicidad" target="rectas">
-Por el <ConceptLink targetId="axioma-incidencia-1">axioma I-1 de incidencia</ConceptLink>, dados dos puntos distintos $P$ y $Q$, existe **una única** recta que los contiene. Denotemos esta recta única como $r$.
+Por el <ConceptLink targetId="axioma-incidencia-1"><ConceptLink targetId="axioma">axioma</ConceptLink> I-1 de <ConceptLink targetId="incidencia">incidencia</ConceptLink></ConceptLink>, dados dos <ConceptLink targetId="punto">puntos</ConceptLink> distintos $P$ y $Q$, existe **una única** <ConceptLink targetId="recta">recta</ConceptLink> que los contiene. Denotemos esta <ConceptLink targetId="recta">recta</ConceptLink> única como $r$.
 </MedievalStep>
 
 <MedievalStep number={3} title="La Contradicción" target="contradiction">
-Tanto $l$ como $m$ contienen a los puntos $P$ y $Q$. Por la unicidad garantizada por el axioma I-1, esto significa que:
+Tanto $l$ como $m$ contienen a los <ConceptLink targetId="punto">puntos</ConceptLink> $P$ y $Q$. Por la unicidad garantizada por el <ConceptLink targetId="axioma">axioma</ConceptLink> I-1, esto significa que:
 
 $$ l = r \quad \text{y} \quad m = r \implies l = m $$
 
@@ -45,19 +45,19 @@ Lo cual contradice la hipótesis inicial de que $l \neq m$.
 </MedievalStep>
 
 <MedievalStep number={4} title="Conclusión" target="puntoP">
-Esta contradicción proviene de suponer que existen dos puntos distintos en la intersección $l \cap m$. Luego, la intersección contiene a lo sumo un punto. $\blacksquare$
+Esta contradicción proviene de suponer que existen dos <ConceptLink targetId="punto">puntos</ConceptLink> distintos en la intersección $l \cap m$. Luego, la intersección contiene a lo sumo un <ConceptLink targetId="punto">punto</ConceptLink>. $\blacksquare$
 </MedievalStep>
 
 <Separador />
 
 ### Análisis
 
-La demostración es una aplicación directa del principio de unicidad. El axioma I-1 afirma no solo la existencia de una recta por dos puntos, sino su **unicidad** — es esta unicidad la que impide que dos rectas distintas compartan dos puntos.
+La <ConceptLink targetId="demostracion">demostración</ConceptLink> es una aplicación directa del principio de unicidad. El <ConceptLink targetId="axioma">axioma</ConceptLink> I-1 afirma no solo la existencia de una <ConceptLink targetId="recta">recta</ConceptLink> por dos <ConceptLink targetId="punto">puntos</ConceptLink>, sino su **unicidad** — es esta unicidad la que impide que dos <ConceptLink targetId="recta">rectas</ConceptLink> distintas compartan dos <ConceptLink targetId="punto">puntos</ConceptLink>.
 
-Nótese que el <ConceptLink targetId="axioma-incidencia-2">axioma I-2</ConceptLink> (toda recta tiene al menos dos puntos) garantiza que toda recta tiene efectivamente pares de puntos, pero no interviene directamente en esta prueba. Su rol es asegurar que las rectas son objetos no degenerados.
+Nótese que el <ConceptLink targetId="axioma-incidencia-2"><ConceptLink targetId="axioma">axioma</ConceptLink> I-2</ConceptLink> (toda <ConceptLink targetId="recta">recta</ConceptLink> tiene al menos dos <ConceptLink targetId="punto">puntos</ConceptLink>) garantiza que toda <ConceptLink targetId="recta">recta</ConceptLink> tiene efectivamente pares de <ConceptLink targetId="punto">puntos</ConceptLink>, pero no interviene directamente en esta prueba. Su rol es asegurar que las <ConceptLink targetId="recta">rectas</ConceptLink> son objetos no degenerados.
 
 <Nota>
-  Este resultado es la base para definir rectas secantes (un punto de corte) y rectas <ConceptLink targetId="paralelas">paralelas</ConceptLink> (cero puntos de corte) como categorías disjuntas.
+  Este resultado es la base para definir <ConceptLink targetId="recta">rectas</ConceptLink> secantes (un <ConceptLink targetId="punto">punto</ConceptLink> de corte) y <ConceptLink targetId="recta">rectas</ConceptLink> <ConceptLink targetId="paralelas">paralelas</ConceptLink> (cero <ConceptLink targetId="punto">puntos</ConceptLink> de corte) como categorías disjuntas.
 </Nota>
 
 </DemonstrationSection>

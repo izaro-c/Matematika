@@ -15,7 +15,7 @@ import { DemoCongruenciaLLL } from '../../diagrams/Demos/DemoCongruenciaLLL';
 
 <DemonstrationSection diagram={<DemoCongruenciaLLL />}>
 
-<Capitular letra="E" />l riguroso criterio LLL (Lado-Lado-Lado) se demuestra mediante una reducción directa al postulado de LAL: se transporta un ángulo estructurador del primer <ConceptLink targetId="triangulo">triángulo</ConceptLink> sobre el segundo, induciendo un emparejamiento que, al interactuar con triángulos isósceles auxiliares, fuerza la plena congruencia geométrica de ambas figuras tridimensionales.
+<Capitular letra="E" />l riguroso criterio LLL (Lado-Lado-Lado) se demuestra mediante una reducción directa al <ConceptLink targetId="postulado">postulado</ConceptLink> de LAL: se transporta un <ConceptLink targetId="angulo">ángulo</ConceptLink> estructurador del primer <ConceptLink targetId="triangulo">triángulo</ConceptLink> sobre el segundo, induciendo un emparejamiento que, al interactuar con <ConceptLink targetId="triangulo">triángulos</ConceptLink> isósceles auxiliares, fuerza la plena <ConceptLink targetId="congruencia">congruencia</ConceptLink> geométrica de ambas figuras tridimensionales.
 
 <Separador />
 
@@ -30,26 +30,26 @@ $$ \overline{AB} \cong \overline{A'B'}, \quad \overline{BC} \cong \overline{B'C'
 <Separador />
 
 <MedievalStep number={1} title="Transporte del Ángulo y Lado" target="triangleABCprime">
-Por el <ConceptLink targetId="axioma-congruencia-4">axioma de transporte de ángulos</ConceptLink> y el <ConceptLink targetId="axioma-congruencia-1">axioma de transporte de segmentos</ConceptLink>, podemos reproducir el <ConceptLink targetId="triangulo">triángulo</ConceptLink> original adosándolo al segundo. Transportamos el ángulo $\angle A$ al vértice $A'$ y copiamos la longitud $\overline{AC}$, obteniendo un nuevo vértice $C^*$.
+Por el <ConceptLink targetId="axioma-congruencia-4"><ConceptLink targetId="axioma">axioma</ConceptLink> de transporte de <ConceptLink targetId="angulo">ángulos</ConceptLink></ConceptLink> y el <ConceptLink targetId="axioma-congruencia-1"><ConceptLink targetId="axioma">axioma</ConceptLink> de transporte de <ConceptLink targetId="segmento">segmentos</ConceptLink></ConceptLink>, podemos reproducir el <ConceptLink targetId="triangulo">triángulo</ConceptLink> original adosándolo al segundo. Transportamos el <ConceptLink targetId="angulo">ángulo</ConceptLink> $\angle A$ al vértice $A'$ y copiamos la <ConceptLink targetId="longitud">longitud</ConceptLink> $\overline{AC}$, obteniendo un nuevo vértice $C^*$.
 </MedievalStep>
 
 <MedievalStep number={2} title="Aplicar el Axioma LAL" target="triangleABCprime">
-En los triángulos $\triangle ABC$ y $\triangle A'B'C^*$:
+En los <ConceptLink targetId="triangulo">triángulos</ConceptLink> $\triangle ABC$ y $\triangle A'B'C^*$:
 - $\overline{AB} \cong \overline{A'B'}$ (hipótesis)
 - $\angle A \cong \angle C^*A'B'$ (construcción)
 - $\overline{AC} \cong \overline{A'C^*}$ (construcción)
 
-Por el <ConceptLink targetId="axioma-congruencia-5">axioma LAL</ConceptLink>, tenemos $\triangle ABC \cong \triangle A'B'C^*$. En particular, sus lados correspondientes son iguales: $\overline{BC} \cong \overline{B'C^*}$.
+Por el <ConceptLink targetId="axioma-congruencia-5"><ConceptLink targetId="axioma">axioma</ConceptLink> LAL</ConceptLink>, tenemos $\triangle ABC \cong \triangle A'B'C^*$. En particular, sus lados correspondientes son iguales: $\overline{BC} \cong \overline{B'C^*}$.
 </MedievalStep>
 
 <MedievalStep number={3} title="Triángulos Isósceles" target="triangleABCprime">
-Construimos la línea $\overline{C'C^*}$. Obtenemos dos triángulos isósceles $\triangle A'C'C^*$ (porque $\overline{A'C'} \cong \overline{A'C^*}$) y $\triangle B'C'C^*$ (porque $\overline{B'C'} \cong \overline{B'C^*}$).
+Construimos la línea $\overline{C'C^*}$. Obtenemos dos <ConceptLink targetId="triangulo">triángulos</ConceptLink> isósceles $\triangle A'C'C^*$ (porque $\overline{A'C'} \cong \overline{A'C^*}$) y $\triangle B'C'C^*$ (porque $\overline{B'C'} \cong \overline{B'C^*}$).
 </MedievalStep>
 
 <MedievalStep number={4} title="Conclusión LLL" target="triangleABCprime">
-Por el teorema de que los ángulos base de un <ConceptLink targetId="triangulo">triángulo</ConceptLink> isósceles son congruentes, los ángulos en $C'$ y $C^*$ son iguales. Esto implica que $\angle A'C'B' \cong \angle A'C^*B'$.
+Por el <ConceptLink targetId="teorema">teorema</ConceptLink> de que los <ConceptLink targetId="angulo">ángulos</ConceptLink> base de un <ConceptLink targetId="triangulo">triángulo</ConceptLink> isósceles son <ConceptLink targetId="congruencia">congruentes</ConceptLink>, los <ConceptLink targetId="angulo">ángulos</ConceptLink> en $C'$ y $C^*$ son iguales. Esto implica que $\angle A'C'B' \cong \angle A'C^*B'$.
 
-Como $\triangle ABC \cong \triangle A'B'C^*$, los tres triángulos coinciden perfectamente. En consecuencia:
+Como $\triangle ABC \cong \triangle A'B'C^*$, los tres <ConceptLink targetId="triangulo">triángulos</ConceptLink> coinciden perfectamente. En consecuencia:
 
 $$ \triangle ABC \cong \triangle A'B'C'. \quad \blacksquare $$
 </MedievalStep>
@@ -58,12 +58,12 @@ $$ \triangle ABC \cong \triangle A'B'C'. \quad \blacksquare $$
 
 ### Análisis
 
-La demostración de LLL es más sutil que la de ALA. En ALA, la unicidad provenía directamente del axioma III-4 (transporte único de ángulos). En LLL, la unicidad requiere un argumento geométrico adicional: dos circunferencias se cortan en a lo sumo dos puntos, y del mismo lado de la línea que une sus centros, la intersección es única.
+La <ConceptLink targetId="demostracion">demostración</ConceptLink> de LLL es más sutil que la de ALA. En ALA, la unicidad provenía directamente del <ConceptLink targetId="axioma">axioma</ConceptLink> III-4 (transporte único de <ConceptLink targetId="angulo">ángulos</ConceptLink>). En LLL, la unicidad requiere un argumento geométrico adicional: dos <ConceptLink targetId="circunferencia">circunferencias</ConceptLink> se cortan en a lo sumo dos <ConceptLink targetId="punto">puntos</ConceptLink>, y del mismo lado de la línea que une sus centros, la intersección es única.
 
 <Nota>
-  <ConceptLink targetId="euclides">Euclides</ConceptLink> demostró LLL en la Proposición I.8 usando el principio de superposición. La demostración de Hilbert lo evita usando transporte de segmentos y ángulos, pero requiere el argumento de unicidad de intersección de circunferencias, que se sigue de los axiomas de incidencia y orden.
+  <ConceptLink targetId="euclides">Euclides</ConceptLink> demostró LLL en la Proposición I.8 usando el principio de superposición. La <ConceptLink targetId="demostracion">demostración</ConceptLink> de <ConceptLink targetId="hilbert">Hilbert</ConceptLink> lo evita usando transporte de <ConceptLink targetId="segmento">segmentos</ConceptLink> y <ConceptLink targetId="angulo">ángulos</ConceptLink>, pero requiere el argumento de unicidad de intersección de <ConceptLink targetId="circunferencia">circunferencias</ConceptLink>, que se sigue de los <ConceptLink targetId="axioma">axiomas</ConceptLink> de <ConceptLink targetId="incidencia">incidencia</ConceptLink> y orden.
 </Nota>
 
-El criterio LLL implica la **rigidez triangular**: un <ConceptLink targetId="triangulo">triángulo</ConceptLink> queda completamente determinado por las longitudes de sus tres lados. Este principio es la base de las estructuras trianguladas en arquitectura e ingeniería.
+El criterio LLL implica la **rigidez triangular**: un <ConceptLink targetId="triangulo">triángulo</ConceptLink> queda completamente determinado por las <ConceptLink targetId="longitud">longitudes</ConceptLink> de sus tres lados. Este principio es la base de las estructuras trianguladas en arquitectura e ingeniería.
 
 </DemonstrationSection>

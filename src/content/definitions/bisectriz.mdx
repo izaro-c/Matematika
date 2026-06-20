@@ -13,10 +13,10 @@ export const metadata = {
 import { InteractiveElement } from "../../components/ui/VisualBind";
 import { Bisectriz } from '../../diagrams/Definiciones/Bisectriz';
 
-export const Simulation = Bisectriz;
+export const Simulation = <ConceptLink targetId="bisectriz">Bisectriz</ConceptLink>;
 
-<Capitular letra="L" />a <InteractiveElement target="bisectriz">bisectriz</InteractiveElement> divide un <InteractiveElement target="angulo">ángulo</InteractiveElement> geométrico en <InteractiveElement target="angulos-congruentes">dos partes de exactamente la misma medida angular</InteractiveElement>. Tiene su origen común en el <InteractiveElement target="vertice">vértice</InteractiveElement> del ángulo.
+<Capitular letra="L" />a <InteractiveElement target="bisectriz"><ConceptLink targetId="bisectriz">bisectriz</ConceptLink></InteractiveElement> divide un <InteractiveElement target="angulo"><ConceptLink targetId="angulo">ángulo</ConceptLink></InteractiveElement> geométrico en <InteractiveElement target="angulos-congruentes">dos partes de exactamente la misma medida angular</InteractiveElement>. Tiene su origen común en el <InteractiveElement target="vertice">vértice</InteractiveElement> del <ConceptLink targetId="angulo">ángulo</ConceptLink>.
 
 <Separador />
 
-Al igual que la <ConceptLink targetId="mediatriz">mediatriz</ConceptLink> es el lugar geométrico de los puntos equidistantes a dos extremos, la <ConceptLink targetId="bisectriz">bisectriz</ConceptLink> es el lugar geométrico de los puntos que equidistan de los dos lados que forman el ángulo.
+Al igual que la <ConceptLink targetId="mediatriz">mediatriz</ConceptLink> es el lugar geométrico de los <ConceptLink targetId="punto">puntos</ConceptLink> equidistantes a dos extremos, la <ConceptLink targetId="bisectriz">bisectriz</ConceptLink> es el lugar geométrico de los <ConceptLink targetId="punto">puntos</ConceptLink> que equidistan de los dos lados que forman el <ConceptLink targetId="angulo">ángulo</ConceptLink>.

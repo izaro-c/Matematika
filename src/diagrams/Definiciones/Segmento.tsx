@@ -14,6 +14,7 @@ function getCSSVar(name: string): string {
 
 export const Segmento = () => {
   const boardRef = useRef<HTMLDivElement>(null);
+  const jxgBoard = useRef<any>(null);
   const elementsRef = useRef<Record<string, unknown>>({});
 
   const mathHighlight = useMathStore(state => state.variables?.['highlight']);
@@ -23,13 +24,14 @@ export const Segmento = () => {
   useEffect(() => {
     if (!boardRef.current) return;
 
-    const board = JXG.JSXGraph.initBoard(boardRef.current, {
+    const board = JXG.JSXGraph.initBoard(boardRef.current.id, {
       boundingbox: [-4, 3, 4, -3],
       axis: false,
       showCopyright: false,
       keepaspectratio: true,
       grid: false,
     });
+    jxgBoard.current = board;
 
     const pA = board.create('point', [-2, 0.5], {
       name: 'A',
@@ -71,6 +73,7 @@ export const Segmento = () => {
     return () => {
       observer.disconnect();
       JXG.JSXGraph.freeBoard(board);
+      jxgBoard.current = null;
       elementsRef.current = {};
     };
   }, []);

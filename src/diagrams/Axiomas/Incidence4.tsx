@@ -14,6 +14,7 @@ function getCSSVar(name: string): string {
 
 export const Incidence4 = () => {
   const boardRef = useRef<HTMLDivElement>(null);
+  const jxgBoard = useRef<any>(null);
   const elementsRef = useRef<Record<string, unknown>>({});
 
   const mathHighlight = useMathStore(state => state.variables?.['highlight']);
@@ -23,13 +24,14 @@ export const Incidence4 = () => {
   useEffect(() => {
     if (!boardRef.current) return;
 
-    const board = JXG.JSXGraph.initBoard(boardRef.current, {
+    const board = JXG.JSXGraph.initBoard(boardRef.current.id, {
       boundingbox: [-4, 4, 4, -3],
       axis: false,
       showCopyright: false,
       keepaspectratio: true,
       grid: false,
     });
+    jxgBoard.current = board;
 
     // Triángulo: tres puntos no colineales
     const A = board.create('point', [-2.5, -1], {
@@ -80,6 +82,7 @@ export const Incidence4 = () => {
     return () => {
       observer.disconnect();
       JXG.JSXGraph.freeBoard(board);
+      jxgBoard.current = null;
       elementsRef.current = {};
     };
   }, []);

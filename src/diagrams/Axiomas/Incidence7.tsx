@@ -12,6 +12,7 @@ function getCSSVar(name: string): string {
 function SceneContent() {
   const { camera } = useThree();
   const highlight = useMathStore(state => state.variables?.['highlight']);
+  const controlsRef = useRef<any>(null);
   
   useEffect(() => {
     camera.position.set(4, 4, 5);
@@ -55,7 +56,7 @@ function SceneContent() {
   );
 }
 
-export const Incidence7 = () => (
+export const Incidence7: React.FC = () => (
   <div className="w-full h-full min-h-[350px] relative bg-lienzo/40 border border-pizarra/10 rounded-sm overflow-hidden">
     <Canvas gl={{ antialias: true }}><SceneContent /></Canvas>
   </div>

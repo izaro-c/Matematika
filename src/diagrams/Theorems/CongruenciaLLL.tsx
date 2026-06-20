@@ -12,18 +12,20 @@ function getCSSVar(name: string): string {
 
 export const CongruenciaLLL = () => {
   const boardRef = useRef<HTMLDivElement>(null);
+  const jxgBoard = useRef<any>(null);
   const elementsRef = useRef<Record<string, unknown>>({});
 
   useEffect(() => {
     if (!boardRef.current) return;
 
-    const board = JXG.JSXGraph.initBoard(boardRef.current, {
+    const board = JXG.JSXGraph.initBoard(boardRef.current.id, {
       boundingbox: [-2, 5, 8, -3],
       axis: false,
       showCopyright: false,
       keepaspectratio: true,
       grid: false,
     });
+    jxgBoard.current = board;
 
     // Primer triángulo
     const A1 = board.create('point', [0, 0], {
@@ -90,6 +92,7 @@ export const CongruenciaLLL = () => {
     return () => {
       observer.disconnect();
       JXG.JSXGraph.freeBoard(board);
+      jxgBoard.current = null;
       elementsRef.current = {};
     };
   }, []);

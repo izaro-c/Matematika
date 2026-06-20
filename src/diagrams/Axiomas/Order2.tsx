@@ -10,6 +10,7 @@ function getCSSVar(name: string): string {
 
 export const Order2 = () => {
   const boardRef = useRef<HTMLDivElement>(null);
+  const jxgBoard = useRef<any>(null);
   const elementsRef = useRef<Record<string, unknown>>({});
   const mathHighlight = useMathStore(state => state.variables?.['highlight']);
   const lessonHighlight = useLessonStore(state => state.activeStep);
@@ -17,9 +18,10 @@ export const Order2 = () => {
 
   useEffect(() => {
     if (!boardRef.current) return;
-    const board = JXG.JSXGraph.initBoard(boardRef.current, {
+    const board = JXG.JSXGraph.initBoard(boardRef.current.id, {
       boundingbox: [-5, 2, 5, -2], axis: false, showCopyright: false, keepaspectratio: true,
     });
+    jxgBoard.current = board;
 
     const line = board.create('line', [[-10, 0], [10, 0]], {
       name: 'l', withLabel: true, label: { position: 'bot', offset: [-15, -15], strokeColor: getCSSVar('--theme-carbon'), fontSize: 16 },
@@ -42,6 +44,7 @@ export const Order2 = () => {
 
     return () => {
       JXG.JSXGraph.freeBoard(board);
+      jxgBoard.current = null;
     };
   }, []);
 

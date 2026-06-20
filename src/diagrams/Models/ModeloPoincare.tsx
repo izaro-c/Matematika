@@ -12,17 +12,19 @@ function getCSSVar(name: string): string {
 
 export const ModeloPoincare = () => {
   const boardRef = useRef<HTMLDivElement>(null);
+  const jxgBoard = useRef<any>(null);
 
   useEffect(() => {
     if (!boardRef.current) return;
 
-    const board = JXG.JSXGraph.initBoard(boardRef.current, {
+    const board = JXG.JSXGraph.initBoard(boardRef.current.id, {
       boundingbox: [-1.5, 1.5, 1.5, -1.5],
       axis: false,
       showCopyright: false,
       keepaspectratio: true,
       grid: false,
     });
+    jxgBoard.current = board;
 
     const origin = board.create('point', [0, 0], { visible: false });
     board.create('circle', [origin, 1], {
@@ -51,6 +53,7 @@ export const ModeloPoincare = () => {
     return () => {
       observer.disconnect();
       JXG.JSXGraph.freeBoard(board);
+      jxgBoard.current = null;
     };
   }, []);
 

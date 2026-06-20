@@ -12,17 +12,19 @@ function getCSSVar(name: string): string {
 
 export const ModeloCartesiano = () => {
   const boardRef = useRef<HTMLDivElement>(null);
+  const jxgBoard = useRef<any>(null);
 
   useEffect(() => {
     if (!boardRef.current) return;
 
-    const board = JXG.JSXGraph.initBoard(boardRef.current, {
+    const board = JXG.JSXGraph.initBoard(boardRef.current.id, {
       boundingbox: [-5, 5, 5, -5],
       axis: true,
       showCopyright: false,
       keepaspectratio: true,
       grid: true,
     });
+    jxgBoard.current = board;
 
     const A = board.create('point', [1, 2], {
       name: 'A', size: 4, fillColor: getCSSVar('--theme-terracota'), strokeColor: getCSSVar('--theme-terracota')
@@ -50,6 +52,7 @@ export const ModeloCartesiano = () => {
     return () => {
       observer.disconnect();
       JXG.JSXGraph.freeBoard(board);
+      jxgBoard.current = null;
     };
   }, []);
 

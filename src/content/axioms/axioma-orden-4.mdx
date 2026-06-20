@@ -12,7 +12,7 @@ import { Pasch } from '../../diagrams/Axiomas/Pasch';
 export const Simulation = Pasch;
 import { InteractiveElement } from "../../components/ui/VisualBind";
 
-<Capitular letra="S" />i una <InteractiveElement target="lineL" color="carbon">recta</InteractiveElement> atraviesa un lado de un <InteractiveElement target="triangle" color="terracota">triángulo</InteractiveElement> por su interior, entonces irremediablemente debe salir cortando a otro de los lados. Esta norma fundamental, universalmente conocida como el axioma de <ConceptLink targetId="pasch">Pasch</ConceptLink>, es la columna vertebral de la topología bidimensional.
+<Capitular letra="S" />i una <InteractiveElement target="lineL" color="carbon"><ConceptLink targetId="recta">recta</ConceptLink></InteractiveElement> atraviesa un lado de un <InteractiveElement target="triangle" color="terracota"><ConceptLink targetId="triangulo">triángulo</ConceptLink></InteractiveElement> por su interior, entonces irremediablemente debe salir cortando a otro de los lados. Esta norma fundamental, universalmente conocida como el <ConceptLink targetId="axioma">axioma</ConceptLink> de <ConceptLink targetId="pasch">Pasch</ConceptLink>, es la columna vertebral de la topología bidimensional.
 
 <Separador />
 
@@ -30,19 +30,19 @@ import { InteractiveElement } from "../../components/ui/VisualBind";
 </Formula>
 
 <Nota>
-  En el diagrama interactivo, puedes ver cómo la <InteractiveElement target="lineL" color="carbon">recta l</InteractiveElement> perfora al lado $\overline{AB}$ en el <InteractiveElement target="pP" color="ocre">punto P</InteractiveElement> y busca inexorablemente la salida rompiendo el lado $\overline{BC}$ en el <InteractiveElement target="pQ" color="ocre">punto Q</InteractiveElement>.
+  En el diagrama interactivo, puedes ver cómo la <InteractiveElement target="lineL" color="carbon"><ConceptLink targetId="recta">recta</ConceptLink> l</InteractiveElement> perfora al lado $\overline{AB}$ en el <InteractiveElement target="pP" color="ocre"><ConceptLink targetId="punto">punto</ConceptLink> P</InteractiveElement> y busca inexorablemente la salida rompiendo el lado $\overline{BC}$ en el <InteractiveElement target="pQ" color="ocre"><ConceptLink targetId="punto">punto</ConceptLink> Q</InteractiveElement>.
 </Nota>
 
 <Separador />
 
 ### Discusión
 
-El <ConceptLink targetId="axioma-pasch">axioma de Pasch</ConceptLink> es probablemente el <ConceptLink targetId="postulado">postulado</ConceptLink> de orden más trascendental de la geometría. Garantiza la existencia de una frontera infranqueable: una <ConceptLink targetId="recta">recta</ConceptLink> infinita no puede penetrar furtivamente en un <ConceptLink targetId="triangulo">triángulo</ConceptLink> por una de sus vallas y luego evaporarse en el interior sin llegar a cruzar otra frontera para salir. De alguna manera, formaliza rigurosamente que el "interior" y el "exterior" están separados.
+El <ConceptLink targetId="axioma-pasch"><ConceptLink targetId="axioma">axioma</ConceptLink> de Pasch</ConceptLink> es probablemente el <ConceptLink targetId="postulado">postulado</ConceptLink> de orden más trascendental de la <ConceptLink targetId="geometria">geometría</ConceptLink>. Garantiza la existencia de una frontera infranqueable: una <ConceptLink targetId="recta">recta</ConceptLink> infinita no puede penetrar furtivamente en un <ConceptLink targetId="triangulo">triángulo</ConceptLink> por una de sus vallas y luego evaporarse en el interior sin llegar a cruzar otra frontera para salir. De alguna manera, formaliza rigurosamente que el "interior" y el "exterior" están separados.
 
-Su inmensa potencia matemática reside en que, gracias a él, podemos demostrar formalmente el <ConceptLink targetId="teorema-separacion" isDependency={false}>teorema de separación</ConceptLink> (toda recta corta el <ConceptLink targetId="plano" isDependency={false}>plano</ConceptLink> en dos <ConceptLink targetId="semiplano" isDependency={false}>semiplanos</ConceptLink> perfectamente aislados). También es la base subyacente para entender que los <ConceptLink targetId="angulo" isDependency={false}>ángulos</ConceptLink> tienen interiores, y que un triángulo encierra un <ConceptLink targetId="area" isDependency={false}>área</ConceptLink> bien definida.
+Su inmensa potencia matemática reside en que, gracias a él, podemos demostrar formalmente el <ConceptLink targetId="teorema-separacion" isDependency={false}><ConceptLink targetId="teorema">teorema</ConceptLink> de separación</ConceptLink> (toda <ConceptLink targetId="recta">recta</ConceptLink> corta el <ConceptLink targetId="plano" isDependency={false}><ConceptLink targetId="plano">plano</ConceptLink></ConceptLink> en dos <ConceptLink targetId="semiplano" isDependency={false}>semiplanos</ConceptLink> perfectamente aislados). También es la base subyacente para entender que los <ConceptLink targetId="angulo" isDependency={false}><ConceptLink targetId="angulo">ángulos</ConceptLink></ConceptLink> tienen interiores, y que un <ConceptLink targetId="triangulo">triángulo</ConceptLink> encierra un <ConceptLink targetId="area" isDependency={false}><ConceptLink targetId="area">área</ConceptLink></ConceptLink> bien definida.
 
 <Separador />
 
 ### Observaciones
 
-- Fue el matemático alemán Moritz Pasch quien descubrió en 1882 que <ConceptLink targetId="euclides">Euclides</ConceptLink> llevaba más de dos milenios usando esta propiedad geométrica de contrabando en sus demostraciones, sin haberla escrito jamás como un axioma base. <ConceptLink targetId="hilbert">Hilbert</ConceptLink> corrigió esta laguna histórica incorporándolo a su famosa lista de fundamentos, dentro de la <ConceptLink targetId="sistema-absoluto">geometría absoluta</ConceptLink>.
+- Fue el matemático alemán Moritz Pasch quien descubrió en 1882 que <ConceptLink targetId="euclides">Euclides</ConceptLink> llevaba más de dos milenios usando esta propiedad geométrica de contrabando en sus <ConceptLink targetId="demostracion">demostraciones</ConceptLink>, sin haberla escrito jamás como un <ConceptLink targetId="axioma">axioma</ConceptLink> base. <ConceptLink targetId="hilbert">Hilbert</ConceptLink> corrigió esta laguna histórica incorporándolo a su famosa lista de fundamentos, dentro de la <ConceptLink targetId="sistema-absoluto"><ConceptLink targetId="geometria">geometría</ConceptLink> absoluta</ConceptLink>.

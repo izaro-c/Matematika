@@ -22,23 +22,23 @@ export const Component = () => {
   return (
     <DemonstrationSection diagrams={diagrams}>
       <MedievalStep number={1} target={["triangulo-abc", "recta-de"]} title="El triángulo base y la paralela">
-        Imaginemos un <InteractiveElement target="triangulo-abc">triángulo $\triangle ABC$</InteractiveElement>. Ahora trazamos una <InteractiveElement target="recta-de">línea $DE$</InteractiveElement> que atraviesa el triángulo de tal forma que es perfectamente paralela a la base $BC$. Queremos demostrar que esta línea divide a los otros dos lados proporcionalmente, es decir: $AD / DB = AE / EC$.
+        Imaginemos un <InteractiveElement target="triangulo-abc"><ConceptLink targetId="triangulo">triángulo</ConceptLink> $\triangle ABC$</InteractiveElement>. Ahora trazamos una <InteractiveElement target="recta-de">línea $DE$</InteractiveElement> que atraviesa el <ConceptLink targetId="triangulo">triángulo</ConceptLink> de tal forma que es perfectamente <ConceptLink targetId="paralelas">paralela</ConceptLink> a la base $BC$. Queremos demostrar que esta línea divide a los otros dos lados proporcionalmente, es decir: $AD / DB = AE / EC$.
       </MedievalStep>
       
       <MedievalStep number={2} target={["triangulo-ade", "triangulo-bde"]} title="Triángulos compartiendo base">
-        Tracemos las líneas cruzadas $BE$ y $CD$. Fijémonos primero en dos triángulos internos: el <InteractiveElement target="triangulo-ade">$\triangle ADE$</InteractiveElement> y el <InteractiveElement target="triangulo-bde">$\triangle BDE$</InteractiveElement>. Ambos triángulos pueden verse como teniendo bases que residen en la misma línea ($AD$ y $DB$ respectivamente) y comparten el mismo vértice opuesto $E$.
+        Tracemos las líneas cruzadas $BE$ y $CD$. Fijémonos primero en dos <ConceptLink targetId="triangulo">triángulos</ConceptLink> internos: el <InteractiveElement target="triangulo-ade">$\triangle ADE$</InteractiveElement> y el <InteractiveElement target="triangulo-bde">$\triangle BDE$</InteractiveElement>. Ambos <ConceptLink targetId="triangulo">triángulos</ConceptLink> pueden verse como teniendo bases que residen en la misma línea ($AD$ y $DB$ respectivamente) y comparten el mismo vértice opuesto $E$.
       </MedievalStep>
 
       <MedievalStep number={3} target={["altura-h1"]} title="Relación de áreas I">
-        Dado que comparten el mismo vértice $E$ y sus bases están alineadas, ambos triángulos comparten la misma <InteractiveElement target="altura-h1">altura $h_1$</InteractiveElement>. Por tanto, la proporción de sus áreas es exactamente la proporción de sus bases: $\text{Área}(\triangle ADE) / \text{Área}(\triangle BDE) = AD / DB$.
+        Dado que comparten el mismo vértice $E$ y sus bases están alineadas, ambos <ConceptLink targetId="triangulo">triángulos</ConceptLink> comparten la misma <InteractiveElement target="altura-h1"><ConceptLink targetId="altura">altura</ConceptLink> $h_1$</InteractiveElement>. Por tanto, la proporción de sus áreas es exactamente la proporción de sus bases: $\text{Área}(\triangle ADE) / \text{Área}(\triangle BDE) = AD / DB$.
       </MedievalStep>
 
       <MedievalStep number={4} target={["triangulo-ade", "triangulo-cde", "altura-h2"]} title="Relación de áreas II">
-        De manera idéntica, miremos ahora a la derecha: el <InteractiveElement target="triangulo-ade">$\triangle ADE$</InteractiveElement> y el <InteractiveElement target="triangulo-cde">$\triangle CDE$</InteractiveElement> comparten el vértice $D$ y bases a lo largo de $AC$. Como comparten la misma <InteractiveElement target="altura-h2">altura $h_2$</InteractiveElement>, se cumple que: $\text{Área}(\triangle ADE) / \text{Área}(\triangle CDE) = AE / EC$.
+        De manera idéntica, miremos ahora a la derecha: el <InteractiveElement target="triangulo-ade">$\triangle ADE$</InteractiveElement> y el <InteractiveElement target="triangulo-cde">$\triangle CDE$</InteractiveElement> comparten el vértice $D$ y bases a lo largo de $AC$. Como comparten la misma <InteractiveElement target="altura-h2"><ConceptLink targetId="altura">altura</ConceptLink> $h_2$</InteractiveElement>, se cumple que: $\text{Área}(\triangle ADE) / \text{Área}(\triangle CDE) = AE / EC$.
       </MedievalStep>
 
       <MedievalStep number={5} target={["triangulo-bde", "triangulo-cde", "recta-de"]} title="Igualdad de las áreas inferiores">
-        El paso crucial: ¿Qué relación hay entre $\text{Área}(\triangle BDE)$ y $\text{Área}(\triangle CDE)$? Ambos comparten la misma <InteractiveElement target="recta-de">base $DE$</InteractiveElement> y ambos tienen su tercer vértice ($B$ y $C$) situados en una recta que es paralela a $DE$. Las paralelas mantienen siempre la misma distancia entre ellas, por lo que las alturas de estos dos triángulos son idénticas. Por consiguiente, $\text{Área}(\triangle BDE) = \text{Área}(\triangle CDE)$.
+        El paso crucial: ¿Qué relación hay entre $\text{Área}(\triangle BDE)$ y $\text{Área}(\triangle CDE)$? Ambos comparten la misma <InteractiveElement target="recta-de">base $DE$</InteractiveElement> y ambos tienen su tercer vértice ($B$ y $C$) situados en una <ConceptLink targetId="recta">recta</ConceptLink> que es <ConceptLink targetId="paralelas">paralela</ConceptLink> a $DE$. Las <ConceptLink targetId="paralelas">paralelas</ConceptLink> mantienen siempre la misma distancia entre ellas, por lo que las <ConceptLink targetId="altura">alturas</ConceptLink> de estos dos <ConceptLink targetId="triangulo">triángulos</ConceptLink> son idénticas. Por consiguiente, $\text{Área}(\triangle BDE) = \text{Área}(\triangle CDE)$.
       </MedievalStep>
 
       <MedievalStep number={6} target={["proporcion"]} title="Conclusión de proporcionalidad">

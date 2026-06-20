@@ -12,6 +12,7 @@ import JXG from 'jsxgraph';
 
 export const Congruence2: React.FC = () => {
   const boardRef = useRef<HTMLDivElement>(null);
+  const jxgBoard = useRef<any>(null);
   const elementsRef = useRef<any>({});
 
   useEffect(() => {
@@ -24,8 +25,9 @@ export const Congruence2: React.FC = () => {
       showCopyright: false,
       keepaspectratio: true,
       pan: { enabled: true, needShift: false, needTwoFingers: false },
-      zoom: { enabled: true, wheel: true, needShift: false }
+      zoom: { wheel: true, needShift: false }
     });
+    jxgBoard.current = board;
 
     // Segmento maestro AB
     const pA = board.create('point', [-2, 1.5], {
@@ -69,13 +71,14 @@ export const Congruence2: React.FC = () => {
     });
 
     // Arcos decorativos para indicar congruencia
-    const tickAB = board.create('ticks', [segAB, 2], { strokeColor: getCSSVar('--theme-carbon') });
-    const tickCD = board.create('ticks', [segCD, 2], { strokeColor: getCSSVar('--theme-carbon') });
-    const tickEF = board.create('ticks', [segEF, 2], { strokeColor: getCSSVar('--theme-carbon') });
+    board.create('ticks', [segAB, 2], { strokeColor: getCSSVar('--theme-carbon') });
+    board.create('ticks', [segCD, 2], { strokeColor: getCSSVar('--theme-carbon') });
+    board.create('ticks', [segEF, 2], { strokeColor: getCSSVar('--theme-carbon') });
 
     elementsRef.current = { pA, pB, pC, pD, pE, pF, segAB, segCD, segEF, board };
 
     return () => JXG.JSXGraph.freeBoard(board);
+      jxgBoard.current = null;
   }, []);
 
   const mathHighlight = useMathStore(state => state.variables?.['highlight']);

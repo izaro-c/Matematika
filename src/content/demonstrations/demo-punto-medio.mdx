@@ -15,21 +15,21 @@ import { DemoPuntoMedio } from "../../diagrams/Demos/DemoPuntoMedio";
 
 <DemonstrationSection diagram={<DemoPuntoMedio />}>
 
-<Capitular letra="T" />odo <ConceptLink targetId="segmento">segmento</ConceptLink> admite exactamente un punto medio topológico. La prueba de existencia se articula constructivamente mediante el transporte axiomático de segmentos; su unicidad estricta se colige deductivamente de los postulados fundamentales de orden y congruencia.
+<Capitular letra="T" />odo <ConceptLink targetId="segmento">segmento</ConceptLink> admite exactamente un <ConceptLink targetId="punto">punto</ConceptLink> medio topológico. La prueba de existencia se articula constructivamente mediante el transporte axiomático de <ConceptLink targetId="segmento">segmentos</ConceptLink>; su unicidad estricta se colige deductivamente de los <ConceptLink targetId="postulado">postulados</ConceptLink> fundamentales de orden y <ConceptLink targetId="congruencia">congruencia</ConceptLink>.
 
 <Separador />
 
 ### Hipótesis y Tesis
 
 **Hipótesis:** Sea <InteractiveElement target="segmentAB" color="terracota">$\overline{AB}$</InteractiveElement> un <ConceptLink targetId="segmento">segmento</ConceptLink> con $A \neq B$.  
-**Tesis:** Existe un único punto <InteractiveElement target="pointM" color="terracota">$M$</InteractiveElement> $\in \overline{AB}$ tal que <InteractiveElement target="congruence" color="terracota">$\overline{AM} \cong \overline{MB}$</InteractiveElement>.
+**Tesis:** Existe un único <ConceptLink targetId="punto">punto</ConceptLink> <InteractiveElement target="pointM" color="terracota">$M$</InteractiveElement> $\in \overline{AB}$ tal que <InteractiveElement target="congruence" color="terracota">$\overline{AM} \cong \overline{MB}$</InteractiveElement>.
 
 <Separador />
 
 <MedievalStep number={1} title="Existencia: Construcción del punto" target="pointM">
-Por el <ConceptLink targetId="axioma-congruencia-1">axioma de transporte de segmentos</ConceptLink>, sobre la semirrecta $\overrightarrow{AB}$ podemos transportar segmentos. Construyamos el punto <InteractiveElement target="pointM" color="terracota">$M$</InteractiveElement> sobre $\overline{AB}$ tal que $\overline{AM}$ sea congruente a un <ConceptLink targetId="segmento">segmento</ConceptLink> de longitud $\frac{|\overline{AB}|}{2}$.
+Por el <ConceptLink targetId="axioma-congruencia-1"><ConceptLink targetId="axioma">axioma</ConceptLink> de transporte de <ConceptLink targetId="segmento">segmentos</ConceptLink></ConceptLink>, sobre la <ConceptLink targetId="semirrecta">semirrecta</ConceptLink> $\overrightarrow{AB}$ podemos transportar <ConceptLink targetId="segmento">segmentos</ConceptLink>. Construyamos el <ConceptLink targetId="punto">punto</ConceptLink> <InteractiveElement target="pointM" color="terracota">$M$</InteractiveElement> sobre $\overline{AB}$ tal que $\overline{AM}$ sea <ConceptLink targetId="congruencia">congruente</ConceptLink> a un <ConceptLink targetId="segmento">segmento</ConceptLink> de <ConceptLink targetId="longitud">longitud</ConceptLink> $\frac{|\overline{AB}|}{2}$.
 
-La existencia de este punto $M$ entre $A$ y $B$ se garantiza mediante los <ConceptLink targetId="axioma-orden-1">axiomas de orden</ConceptLink> y de <ConceptLink targetId="arquimedes">Arquímedes</ConceptLink>.
+La existencia de este <ConceptLink targetId="punto">punto</ConceptLink> $M$ entre $A$ y $B$ se garantiza mediante los <ConceptLink targetId="axioma-orden-1"><ConceptLink targetId="axioma">axiomas</ConceptLink> de orden</ConceptLink> y de <ConceptLink targetId="arquimedes">Arquímedes</ConceptLink>.
 </MedievalStep>
 
 <MedievalStep number={2} title="Verificar congruencia" target="congruence">
@@ -41,23 +41,23 @@ Esto demuestra la existencia.
 </MedievalStep>
 
 <MedievalStep number={3} title="Unicidad: Suposición" target="segmentAB">
-Supongamos que existen dos puntos medios $M$ y $M'$ con $\overline{AM} \cong \overline{MB}$ y $\overline{AM'} \cong \overline{M'B}$.
+Supongamos que existen dos <ConceptLink targetId="punto">puntos</ConceptLink> medios $M$ y $M'$ con $\overline{AM} \cong \overline{MB}$ y $\overline{AM'} \cong \overline{M'B}$.
 </MedievalStep>
 
 <MedievalStep number={4} title="Conclusión por unicidad de transporte" target="pointM">
-Sobre la recta $\overline{AB}$, y dado un punto $A$, el <ConceptLink targetId="axioma-congruencia-1">axioma III-1</ConceptLink> garantiza que sobre la semirrecta $\overrightarrow{AB}$ existe un **único** punto a una distancia dada de $A$.
+Sobre la <ConceptLink targetId="recta">recta</ConceptLink> $\overline{AB}$, y dado un <ConceptLink targetId="punto">punto</ConceptLink> $A$, el <ConceptLink targetId="axioma-congruencia-1"><ConceptLink targetId="axioma">axioma</ConceptLink> III-1</ConceptLink> garantiza que sobre la <ConceptLink targetId="semirrecta">semirrecta</ConceptLink> $\overrightarrow{AB}$ existe un **único** <ConceptLink targetId="punto">punto</ConceptLink> a una distancia dada de $A$.
 
-Pues $M$ y $M'$ están ambos sobre $\overrightarrow{AB}$ y a la misma distancia de $A$, se tiene $M = M'$. Por tanto, el punto medio es único. $\blacksquare$
+Pues $M$ y $M'$ están ambos sobre $\overrightarrow{AB}$ y a la misma distancia de $A$, se tiene $M = M'$. Por tanto, el <ConceptLink targetId="punto">punto</ConceptLink> medio es único. $\blacksquare$
 </MedievalStep>
 
 <Separador />
 
 ### Análisis
 
-La existencia del punto medio requiere los axiomas de continuidad (<ConceptLink targetId="axioma-arquimedes">axioma de <ConceptLink targetId="arquimedes">Arquímedes</ConceptLink></ConceptLink> y <ConceptLink targetId="axioma-completitud">completitud</ConceptLink>) en el sentido general: sin ellos, pueden existir modelos donde ciertos segmentos no admitan punto medio. Con los axiomas de congruencia y orden solos se garantiza la unicidad.
+La existencia del <ConceptLink targetId="punto">punto</ConceptLink> medio requiere los <ConceptLink targetId="axioma">axiomas</ConceptLink> de continuidad (<ConceptLink targetId="axioma-arquimedes"><ConceptLink targetId="axioma">axioma</ConceptLink> de <ConceptLink targetId="arquimedes">Arquímedes</ConceptLink></ConceptLink> y <ConceptLink targetId="axioma-completitud">completitud</ConceptLink>) en el sentido general: sin ellos, pueden existir modelos donde ciertos <ConceptLink targetId="segmento">segmentos</ConceptLink> no admitan <ConceptLink targetId="punto">punto</ConceptLink> medio. Con los <ConceptLink targetId="axioma">axiomas</ConceptLink> de <ConceptLink targetId="congruencia">congruencia</ConceptLink> y orden solos se garantiza la unicidad.
 
 <Nota>
-  El punto medio permite definir la **<ConceptLink targetId="mediatriz">mediatriz</ConceptLink>** de un <ConceptLink targetId="segmento">segmento</ConceptLink>: el lugar geométrico de los puntos equidistantes de los extremos. La <ConceptLink targetId="mediatriz">mediatriz</ConceptLink> es <ConceptLink targetId="perpendicular">perpendicular</ConceptLink> al <ConceptLink targetId="segmento">segmento</ConceptLink> en su punto medio.
+  El <ConceptLink targetId="punto">punto</ConceptLink> medio permite definir la **<ConceptLink targetId="mediatriz">mediatriz</ConceptLink>** de un <ConceptLink targetId="segmento">segmento</ConceptLink>: el lugar geométrico de los <ConceptLink targetId="punto">puntos</ConceptLink> equidistantes de los extremos. La <ConceptLink targetId="mediatriz">mediatriz</ConceptLink> es <ConceptLink targetId="perpendicular">perpendicular</ConceptLink> al <ConceptLink targetId="segmento">segmento</ConceptLink> en su <ConceptLink targetId="punto">punto</ConceptLink> medio.
 </Nota>
 
 </DemonstrationSection>

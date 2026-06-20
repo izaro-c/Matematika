@@ -10,7 +10,7 @@ interface RefLinkProps {
 }
 
 export const RefLink: React.FC<RefLinkProps> = ({ targetId, children }) => {
-  const { openTerm, activeTerm } = useGlossaryStore();
+  const { openTerm, activeTerms } = useGlossaryStore();
   const isRead = useProgressStore(state => state.isRead(targetId));
 
   const entity =
@@ -26,7 +26,7 @@ export const RefLink: React.FC<RefLinkProps> = ({ targetId, children }) => {
     db.models.get(targetId) ||
     db.demos.get(targetId);
 
-  const isActive = activeTerm === targetId;
+  const isActive = activeTerms ? activeTerms.includes(targetId) : false;
 
   if (!entity) {
     return (

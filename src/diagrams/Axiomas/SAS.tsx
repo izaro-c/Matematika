@@ -14,6 +14,7 @@ function getCSSVar(name: string): string {
 
 export const SAS = () => {
   const boardRef = useRef<HTMLDivElement>(null);
+  const jxgBoard = useRef<any>(null);
   const elementsRef = useRef<Record<string, unknown>>({});
 
   const mathHighlight = useMathStore(state => state.variables?.['highlight']);
@@ -23,13 +24,14 @@ export const SAS = () => {
   useEffect(() => {
     if (!boardRef.current) return;
 
-    const board = JXG.JSXGraph.initBoard(boardRef.current, {
+    const board = JXG.JSXGraph.initBoard(boardRef.current.id, {
       boundingbox: [-5, 5, 7, -5],
       axis: false,
       showCopyright: false,
       keepaspectratio: true,
       grid: false,
     });
+    jxgBoard.current = board;
 
     const pA = board.create('point', [-3, 2], {
       name: 'A', size: 5, fillColor: getCSSVar('--theme-terracota'), strokeColor: getCSSVar('--theme-terracota'),
@@ -135,6 +137,7 @@ export const SAS = () => {
     return () => {
       observer.disconnect();
       JXG.JSXGraph.freeBoard(board);
+      jxgBoard.current = null;
       elementsRef.current = {};
     };
   }, []);

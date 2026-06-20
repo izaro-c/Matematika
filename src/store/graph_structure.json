@@ -23,8 +23,8 @@
     "sistema-euclidiano",
     "axioma-paralelas-hiperbolico",
     "sistema-hiperbolico",
-    "sistema-incidencia",
     "sistema-absoluto",
+    "sistema-incidencia",
     "demo-angulos-opuestos-verticales",
     "demo-congruencia-ala",
     "teorema-congruencia-lll",
@@ -41,16 +41,16 @@
     "demo-triangulo-isosceles",
     "teorema-dos-rectas-un-punto",
     "leccion-metodo-contradiccion",
-    "leccion-metodo-directo",
-    "arquimedes",
-    "bolyai",
-    "dedekind",
     "teorema-pitagoras",
     "teorema-tales",
     "teorema-suma-angulos-triangulo",
     "hilbert",
+    "bolyai",
     "lobachevski",
     "euclides",
+    "leccion-metodo-directo",
+    "arquimedes",
+    "dedekind",
     "pasch",
     "pitagoras",
     "tales",
@@ -82,7 +82,6 @@
         "axioma-congruencia-5",
         "axioma-arquimedes",
         "axioma-completitud",
-        "sistema-incidencia",
         "axioma-incidencia-2",
         "axioma-incidencia-3",
         "axioma-incidencia-4",
@@ -170,7 +169,8 @@
         "axioma-incidencia-6",
         "axioma-incidencia-7",
         "axioma-incidencia-8",
-        "sistema-euclidiano"
+        "sistema-euclidiano",
+        "sistema-absoluto"
       ]
     },
     "axioma-arquimedes": {
@@ -474,6 +474,7 @@
       "description": "Introducción a la forma más básica de demostración matemática: inferir Q a partir de P mediante pasos lógicos secuenciales.",
       "proofs": [],
       "directDependencies": [
+        "euclides",
         "teorema-congruencia-ala"
       ]
     },
@@ -552,7 +553,8 @@
       "description": "Matemático alemán pionero en la axiomática moderna de la geometría. Demostró que muchos resultados dados por intuitivos en los Elementos de Euclides requerían axiomas explícitos.",
       "proofs": [],
       "directDependencies": [
-        "euclides"
+        "euclides",
+        "hilbert"
       ]
     },
     "pitagoras": {
@@ -677,8 +679,11 @@
           "id": "demo-punto-medio",
           "dependencies": [
             "segmento",
+            "punto",
             "axioma-congruencia-1",
+            "semirrecta",
             "axioma-orden-1",
+            "recta",
             "axioma-arquimedes",
             "axioma-completitud",
             "mediatriz",
@@ -704,6 +709,9 @@
         {
           "id": "demo-angulos-opuestos-verticales",
           "dependencies": [
+            "recta",
+            "punto",
+            "angulo",
             "axioma-congruencia-2",
             "paralelas",
             "axioma-congruencia-3",
@@ -726,9 +734,12 @@
         {
           "id": "demo-congruencia-ala",
           "dependencies": [
+            "angulo",
             "triangulo",
             "axioma-congruencia-1",
             "segmento",
+            "semirrecta",
+            "punto",
             "axioma-congruencia-5",
             "axioma-congruencia-4",
             "paralelas"
@@ -751,10 +762,14 @@
         {
           "id": "demo-congruencia-lll",
           "dependencies": [
+            "angulo",
             "triangulo",
             "axioma-congruencia-4",
             "axioma-congruencia-1",
+            "segmento",
             "axioma-congruencia-5",
+            "circunferencia",
+            "punto",
             "teorema-congruencia-ala"
           ]
         }
@@ -775,6 +790,7 @@
           "id": "demo-desigualdad-triangular",
           "dependencies": [
             "triangulo",
+            "punto",
             "segmento",
             "angulo"
           ]
@@ -791,6 +807,8 @@
         {
           "id": "demo-dos-rectas-un-punto",
           "dependencies": [
+            "recta",
+            "punto",
             "axioma-incidencia-1",
             "axioma-incidencia-2",
             "paralelas"
@@ -812,9 +830,9 @@
           "id": "demo-pitagoras-euclides",
           "dependencies": [
             "triangulo",
+            "angulo",
             "perpendicular",
-            "segmento",
-            "angulo"
+            "segmento"
           ]
         }
       ],
@@ -833,12 +851,15 @@
           "dependencies": [
             "mediatriz",
             "segmento",
+            "punto",
+            "recta",
             "perpendicular",
-            "lema-punto-medio",
-            "axioma-congruencia-5",
-            "teorema-congruencia-lll",
             "triangulo",
+            "lema-punto-medio",
+            "angulo",
+            "axioma-congruencia-5",
             "circunferencia",
+            "teorema-congruencia-lll",
             "axioma-congruencia-1"
           ]
         }
@@ -860,10 +881,11 @@
         {
           "id": "demo-suma-angulos-triangulo",
           "dependencies": [
-            "axioma-paralelas-euclides",
-            "paralelas",
             "triangulo",
             "angulo",
+            "axioma-paralelas-euclides",
+            "paralelas",
+            "punto",
             "recta"
           ]
         }
@@ -882,8 +904,9 @@
           "id": "demo-tales",
           "dependencies": [
             "triangulo",
+            "paralelas",
             "altura",
-            "paralelas"
+            "recta"
           ]
         }
       ],
@@ -900,10 +923,12 @@
         {
           "id": "demo-triangulo-isosceles",
           "dependencies": [
-            "axioma-congruencia-5",
             "triangulo",
+            "segmento",
             "bisectriz",
-            "angulo"
+            "angulo",
+            "punto",
+            "axioma-congruencia-5"
           ]
         }
       ],

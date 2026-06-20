@@ -13,10 +13,10 @@ export const metadata = {
 import { InteractiveElement } from "../../components/ui/VisualBind";
 import { Mediana } from '../../diagrams/Definiciones/Mediana';
 
-export const Simulation = Mediana;
+export const Simulation = <ConceptLink targetId="mediana">Mediana</ConceptLink>;
 
-<Capitular letra="L" />a <InteractiveElement target="mediana">mediana</InteractiveElement> de un <ConceptLink targetId="triangulo">triángulo</ConceptLink> es el <ConceptLink targetId="segmento">segmento</ConceptLink> que une un <InteractiveElement target="vertice">vértice</InteractiveElement> con el <InteractiveElement target="punto-medio">punto medio</InteractiveElement> del lado opuesto.
+<Capitular letra="L" />a <InteractiveElement target="mediana"><ConceptLink targetId="mediana">mediana</ConceptLink></InteractiveElement> de un <ConceptLink targetId="triangulo">triángulo</ConceptLink> es el <ConceptLink targetId="segmento">segmento</ConceptLink> que une un <InteractiveElement target="vertice">vértice</InteractiveElement> con el <InteractiveElement target="punto-medio"><ConceptLink targetId="punto">punto</ConceptLink> medio</InteractiveElement> del lado opuesto.
 
 <Separador />
 
-En geometría, cada <ConceptLink targetId="triangulo">triángulo</ConceptLink> posee tres medianas, una por cada vértice, y las tres concurren invariablemente en un único punto interior denominado <InteractiveElement target="baricentro">baricentro</InteractiveElement>.
+En <ConceptLink targetId="geometria">geometría</ConceptLink>, cada <ConceptLink targetId="triangulo">triángulo</ConceptLink> posee tres <ConceptLink targetId="mediana">medianas</ConceptLink>, una por cada vértice, y las tres concurren invariablemente en un único <ConceptLink targetId="punto">punto</ConceptLink> interior denominado <InteractiveElement target="baricentro">baricentro</InteractiveElement>.

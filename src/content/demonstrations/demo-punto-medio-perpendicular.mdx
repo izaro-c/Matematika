@@ -15,48 +15,48 @@ import { DemoPuntoMedioPerpendicular } from "../../diagrams/Demos/DemoPuntoMedio
 
 <DemonstrationSection diagram={<DemoPuntoMedioPerpendicular />}>
 
-<Capitular letra="L" />a <ConceptLink targetId="mediatriz">mediatriz</ConceptLink> correspondiente a un <ConceptLink targetId="segmento">segmento</ConceptLink> conforma el lugar geométrico estricto de aquellos puntos equidistantes a sus vértices extremos. Se demuestra rigurosamente su coincidencia topológica con la recta ortogonal trazada por el punto medio, aplicando conjugadamente los postulados de congruencia LAL y LLL.
+<Capitular letra="L" />a <ConceptLink targetId="mediatriz">mediatriz</ConceptLink> correspondiente a un <ConceptLink targetId="segmento">segmento</ConceptLink> conforma el lugar geométrico estricto de aquellos <ConceptLink targetId="punto">puntos</ConceptLink> equidistantes a sus vértices extremos. Se demuestra rigurosamente su coincidencia topológica con la <ConceptLink targetId="recta">recta</ConceptLink> ortogonal trazada por el <ConceptLink targetId="punto">punto</ConceptLink> medio, aplicando conjugadamente los <ConceptLink targetId="postulado">postulados</ConceptLink> de <ConceptLink targetId="congruencia">congruencia</ConceptLink> LAL y LLL.
 
 <Separador />
 
 ### Hipótesis y Tesis
 
-**Hipótesis:** Sea <InteractiveElement target="segmentAB" color="terracota">$\overline{AB}$</InteractiveElement> un <ConceptLink targetId="segmento">segmento</ConceptLink> con punto medio <InteractiveElement target="pointM" color="terracota">$M$</InteractiveElement> ($\overline{AM} \cong \overline{MB}$). Sea <InteractiveElement target="lineCD" color="terracota">$\ell$</InteractiveElement> la <ConceptLink targetId="perpendicular">perpendicular</ConceptLink> a $\overline{AB}$ por $M$.  
-**Tesis:** El conjunto $\{P : \overline{PA} \cong \overline{PB}\}$ es exactamente la recta $\ell$.
+**Hipótesis:** Sea <InteractiveElement target="segmentAB" color="terracota">$\overline{AB}$</InteractiveElement> un <ConceptLink targetId="segmento">segmento</ConceptLink> con <ConceptLink targetId="punto">punto</ConceptLink> medio <InteractiveElement target="pointM" color="terracota">$M$</InteractiveElement> ($\overline{AM} \cong \overline{MB}$). Sea <InteractiveElement target="lineCD" color="terracota">$\ell$</InteractiveElement> la <ConceptLink targetId="perpendicular">perpendicular</ConceptLink> a $\overline{AB}$ por $M$.  
+**Tesis:** El conjunto $\{P : \overline{PA} \cong \overline{PB}\}$ es exactamente la <ConceptLink targetId="recta">recta</ConceptLink> $\ell$.
 
 <Separador />
 
-### Dirección 1: Todo punto de $\ell$ equidista
+### Dirección 1: Todo <ConceptLink targetId="punto">punto</ConceptLink> de $\ell$ equidista
 
 <MedievalStep number={1} title="Triángulos sobre la mediatriz" target="triangleACM">
-Sea $P \in \ell$. Consideremos los triángulos <InteractiveElement target="triangleACM" color="terracota">$\triangle PAM$</InteractiveElement> y <InteractiveElement target="triangleBCM" color="terracota">$\triangle PBM$</InteractiveElement>:
-- $\overline{PM}$ es común a ambos triángulos.
-- $\overline{AM} \cong \overline{MB}$ por el <ConceptLink targetId="lema-punto-medio">lema del punto medio</ConceptLink>.
-- $\angle PMA \cong \angle PMB$, pues ambos son ángulos rectos (ya que $\ell \perp \overline{AB}$).
+Sea $P \in \ell$. Consideremos los <ConceptLink targetId="triangulo">triángulos</ConceptLink> <InteractiveElement target="triangleACM" color="terracota">$\triangle PAM$</InteractiveElement> y <InteractiveElement target="triangleBCM" color="terracota">$\triangle PBM$</InteractiveElement>:
+- $\overline{PM}$ es común a ambos <ConceptLink targetId="triangulo">triángulos</ConceptLink>.
+- $\overline{AM} \cong \overline{MB}$ por el <ConceptLink targetId="lema-punto-medio"><ConceptLink targetId="lema">lema</ConceptLink> del <ConceptLink targetId="punto">punto</ConceptLink> medio</ConceptLink>.
+- $\angle PMA \cong \angle PMB$, pues ambos son <ConceptLink targetId="angulo">ángulos</ConceptLink> rectos (ya que $\ell \perp \overline{AB}$).
 </MedievalStep>
 
 <MedievalStep number={2} title="Congruencia LAL" target="triangleBCM">
-Por el <ConceptLink targetId="axioma-congruencia-5">axioma LAL</ConceptLink>, los triángulos son congruentes:
+Por el <ConceptLink targetId="axioma-congruencia-5"><ConceptLink targetId="axioma">axioma</ConceptLink> LAL</ConceptLink>, los <ConceptLink targetId="triangulo">triángulos</ConceptLink> son <ConceptLink targetId="congruencia">congruentes</ConceptLink>:
 
 $$ \triangle PAM \cong \triangle PBM \implies \overline{PA} \cong \overline{PB} $$
 </MedievalStep>
 
-### Dirección 2: Todo punto equidistante está en $\ell$
+### Dirección 2: Todo <ConceptLink targetId="punto">punto</ConceptLink> equidistante está en $\ell$
 
 <MedievalStep number={3} title="Triángulos isósceles" target="intersections">
-Sea un punto <InteractiveElement target="pointC" color="terracota">$C$</InteractiveElement> tal que $\overline{CA} \cong \overline{CB}$ (es decir, $C$ equidista de los extremos, equivalente a construir <InteractiveElement target="circleA" color="terracota">dos circunferencias intersecantes</InteractiveElement>).
-Consideremos los triángulos <InteractiveElement target="triangleACD" color="terracota">$\triangle CAM$</InteractiveElement> y <InteractiveElement target="triangleBCD" color="terracota">$\triangle CBM$</InteractiveElement>:
+Sea un <ConceptLink targetId="punto">punto</ConceptLink> <InteractiveElement target="pointC" color="terracota">$C$</InteractiveElement> tal que $\overline{CA} \cong \overline{CB}$ (es decir, $C$ equidista de los extremos, equivalente a construir <InteractiveElement target="circleA" color="terracota">dos <ConceptLink targetId="circunferencia">circunferencias</ConceptLink> intersecantes</InteractiveElement>).
+Consideremos los <ConceptLink targetId="triangulo">triángulos</ConceptLink> <InteractiveElement target="triangleACD" color="terracota">$\triangle CAM$</InteractiveElement> y <InteractiveElement target="triangleBCD" color="terracota">$\triangle CBM$</InteractiveElement>:
 - $\overline{CA} \cong \overline{CB}$ (por hipótesis).
-- $\overline{AM} \cong \overline{MB}$ (punto medio).
-- $\overline{CM}$ es común a ambos triángulos.
+- $\overline{AM} \cong \overline{MB}$ (<ConceptLink targetId="punto">punto</ConceptLink> medio).
+- $\overline{CM}$ es común a ambos <ConceptLink targetId="triangulo">triángulos</ConceptLink>.
 </MedievalStep>
 
 <MedievalStep number={4} title="Congruencia LLL" target="lineCD">
-Por el <ConceptLink targetId="teorema-congruencia-lll">teorema LLL</ConceptLink>:
+Por el <ConceptLink targetId="teorema-congruencia-lll"><ConceptLink targetId="teorema">teorema</ConceptLink> LLL</ConceptLink>:
 
 $$ \triangle CAM \cong \triangle CBM $$
 
-En particular, $\angle CMA \cong \angle CMB$. Pero estos ángulos son adyacentes y suplementarios (pues $M$ está entre $A$ y $B$), por lo que ambos son rectos. 
+En particular, $\angle CMA \cong \angle CMB$. Pero estos <ConceptLink targetId="angulo">ángulos</ConceptLink> son adyacentes y suplementarios (pues $M$ está entre $A$ y $B$), por lo que ambos son rectos. 
 </MedievalStep>
 
 <MedievalStep number={5} title="Conclusión" target="lineCD">
@@ -67,12 +67,12 @@ Esto significa que $C$ está en la <ConceptLink targetId="perpendicular">perpend
 
 ### Análisis
 
-La demostración es bidireccional: inclusión en ambos sentidos. El Paso 1 usa LAL (un axioma), el Paso 2 usa LLL (un teorema). La diferencia es significativa: en el Paso 1 conocemos el ángulo (recto), en el Paso 2 lo deducimos.
+La <ConceptLink targetId="demostracion">demostración</ConceptLink> es bidireccional: inclusión en ambos sentidos. El Paso 1 usa LAL (un <ConceptLink targetId="axioma">axioma</ConceptLink>), el Paso 2 usa LLL (un <ConceptLink targetId="teorema">teorema</ConceptLink>). La diferencia es significativa: en el Paso 1 conocemos el <ConceptLink targetId="angulo">ángulo</ConceptLink> (recto), en el Paso 2 lo deducimos.
 
 <Nota>
-  La <ConceptLink targetId="mediatriz">mediatriz</ConceptLink> es el eje de simetría del <ConceptLink targetId="segmento">segmento</ConceptLink>: la reflexión respecto a ella intercambia $A$ y $B$. Las tres mediatrices de un <ConceptLink targetId="triangulo">triángulo</ConceptLink> concurren en el **circuncentro**, centro de la <ConceptLink targetId="circunferencia">circunferencia</ConceptLink> circunscrita.
+  La <ConceptLink targetId="mediatriz">mediatriz</ConceptLink> es el eje de simetría del <ConceptLink targetId="segmento">segmento</ConceptLink>: la reflexión respecto a ella intercambia $A$ y $B$. Las tres <ConceptLink targetId="mediatriz">mediatrices</ConceptLink> de un <ConceptLink targetId="triangulo">triángulo</ConceptLink> concurren en el **circuncentro**, centro de la <ConceptLink targetId="circunferencia">circunferencia</ConceptLink> circunscrita.
 </Nota>
 
-Este teorema es válido en <ConceptLink targetId="sistema-absoluto">geometría absoluta</ConceptLink>. La existencia del circuncentro, sin embargo, puede fallar en <ConceptLink targetId="sistema-hiperbolico">geometría hiperbólica</ConceptLink> para triángulos muy grandes.
+Este <ConceptLink targetId="teorema">teorema</ConceptLink> es válido en <ConceptLink targetId="sistema-absoluto"><ConceptLink targetId="geometria">geometría</ConceptLink> absoluta</ConceptLink>. La existencia del circuncentro, sin embargo, puede fallar en <ConceptLink targetId="sistema-hiperbolico"><ConceptLink targetId="geometria">geometría</ConceptLink> hiperbólica</ConceptLink> para <ConceptLink targetId="triangulo">triángulos</ConceptLink> muy grandes.
 
 </DemonstrationSection>

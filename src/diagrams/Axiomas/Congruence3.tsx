@@ -12,6 +12,7 @@ import JXG from 'jsxgraph';
 
 export const Congruence3: React.FC = () => {
   const boardRef = useRef<HTMLDivElement>(null);
+  const jxgBoard = useRef<any>(null);
   const elementsRef = useRef<any>({});
 
   useEffect(() => {
@@ -24,8 +25,9 @@ export const Congruence3: React.FC = () => {
       showCopyright: false,
       keepaspectratio: true,
       pan: { enabled: true, needShift: false, needTwoFingers: false },
-      zoom: { enabled: true, wheel: true, needShift: false }
+      zoom: { wheel: true, needShift: false }
     });
+    jxgBoard.current = board;
 
     // Recta 1
     const pA = board.create('point', [-3, 2], {
@@ -61,7 +63,7 @@ export const Congruence3: React.FC = () => {
     });
     const pDir = board.create('point', [4, -2], { visible: false });
     
-    const ray = board.create('line', [pA_prime, pDir], {
+    board.create('line', [pA_prime, pDir], {
       strokeColor: getCSSVar('--theme-pizarra'), strokeWidth: 1,
       straightFirst: false, straightLast: true, visible: false
     });
@@ -93,6 +95,7 @@ export const Congruence3: React.FC = () => {
     elementsRef.current = { pA, pB, pC, pA_prime, pB_prime, pC_prime, segAB, segBC, segAB_prime, segBC_prime, board };
 
     return () => JXG.JSXGraph.freeBoard(board);
+      jxgBoard.current = null;
   }, []);
 
   const mathHighlight = useMathStore(state => state.variables?.['highlight']);
