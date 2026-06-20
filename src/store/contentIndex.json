@@ -668,7 +668,7 @@
       "type": "definicion",
       "title": "Circunferencia",
       "description": "Lugar geométrico de los puntos de un plano que equidistan de un punto fijo llamado centro.",
-      "statement": "La circunferencia C(O,r) es el conjunto de puntos P del plano tales que |OP| = r.",
+      "statement": "La circunferencia C(O,r) es el conjunto de puntos P del plano tales que \\vert OP \\vert = r.",
       "tags": [
         "geometria",
         "curvas"
@@ -917,6 +917,7 @@
     "filePath": "definitions/segmento.mdx",
     "contentType": "definicion",
     "metadata": {
+      "id": "segmento",
       "type": "definicion",
       "title": "Segmento",
       "description": "Dados dos puntos A y B, el segmento AB es el conjunto de puntos de la recta AB que están entre A y B, incluyendo los extremos. Es la noción fundamental para la congruencia y la medida.",
@@ -950,9 +951,10 @@
     "filePath": "definitions/semirrecta.mdx",
     "contentType": "definicion",
     "metadata": {
+      "id": "semirrecta",
       "type": "definicion",
       "title": "Semirrecta (Rayo)",
-      "description": "Dados dos puntos A y B sobre una recta, la semirrecta de origen A que pasa por B es el conjunto de puntos de la recta que están del mismo lado que B respecto a A.",
+      "description": "Dados un origen O y un punto A sobre una recta, la semirrecta de origen O que pasa por A es el conjunto de puntos de la recta que están del mismo lado que A respecto a O.",
       "tags": [
         "geometria",
         "orden"

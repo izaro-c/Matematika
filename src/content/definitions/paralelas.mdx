@@ -13,10 +13,26 @@ export const metadata = {
 import { InteractiveElement } from "../../components/ui/VisualBind";
 import { Paralelas } from '../../diagrams/Definiciones/Paralelas';
 
-export const Simulation = <ConceptLink targetId="paralelas" isDependency={false}>Paralelas</ConceptLink>;
+export const Simulation = Paralelas;
 
-<Capitular letra="E" />n <ConceptLink targetId={["sistema-euclidiano", "geometria", "euclides"]}>geometría euclídea</ConceptLink>, dada una <InteractiveElement target="recta-base"><ConceptLink targetId="recta" isDependency={false}>recta</ConceptLink> base</InteractiveElement> y un <InteractiveElement target="punto-p"><ConceptLink targetId="punto" isDependency={false}>punto</ConceptLink></InteractiveElement> exterior a ella, existe una única <InteractiveElement target="recta-paralela">recta paralela</InteractiveElement> que pasa por dicho punto. Dos rectas coplanarias son paralelas si su intersección es el conjunto vacío.
+<Capitular letra="D" />os <ConceptLink targetId="recta" isDependency={false}>rectas</ConceptLink> se denominan paralelas si están contenidas en un mismo <ConceptLink targetId="plano" isDependency={false}>plano</ConceptLink> y no comparten ningún <ConceptLink targetId="punto" isDependency={false}>punto</ConceptLink>. Es una relación fundamental para clasificar los sistemas axiomáticos geométricos.
 
 <Separador />
 
-Este concepto es el foco del <ConceptLink targetId={["axioma-paralelas-euclides", "postulado", "paralelas"]}>quinto postulado</ConceptLink> de <ConceptLink targetId="euclides" isDependency={false}>Euclides</ConceptLink>, también conocido como el <ConceptLink targetId={["axioma-paralelas-euclides", "axioma", "paralelas"]}>axioma de las paralelas</ConceptLink>.
+### Enunciado Formal
+
+Dadas dos rectas coplanarias <InteractiveElement target="recta-base">$l$</InteractiveElement> y <InteractiveElement target="recta-paralela">$m$</InteractiveElement>, decimos que son paralelas (denotado $l \parallel m$) si su <ConceptLink targetId="interseccion" isDependency={false}>intersección</ConceptLink> es el <ConceptLink targetId="conjunto-vacio" isDependency={false}>conjunto vacío</ConceptLink>:
+
+<Formula>
+  $$ l \parallel m \iff l \cap m = \emptyset $$
+</Formula>
+
+<Separador />
+
+### Existencia: El Quinto Postulado
+
+La existencia de rectas paralelas no es inherente a la definición, sino que depende de los axiomas del sistema. En la <ConceptLink targetId="sistema-euclidiano">geometría euclídea</ConceptLink>, el <ConceptLink targetId="axioma-paralelas-euclides">quinto postulado</ConceptLink> de Euclides establece que, dada una <InteractiveElement target="recta-base">recta base $l$</InteractiveElement> y un <InteractiveElement target="punto-p">punto $P$</InteractiveElement> exterior a ella, existe una **única** recta $m$ que pasa por $P$ y es paralela a $l$.
+
+En sistemas no euclidianos:
+- En <ConceptLink targetId="sistema-hiperbolico">geometría hiperbólica</ConceptLink>, existen infinitas rectas que pasan por $P$ y no intersecan a $l$.
+- En <ConceptLink targetId="sistema-eliptico">geometría elíptica</ConceptLink>, no existen líneas paralelas (toda recta interseca a cualquier otra).

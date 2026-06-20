@@ -52,12 +52,21 @@ export const Segmento = () => {
       fixed: false,
     });
 
+    const lineL = board.create('line', [pA, pB], {
+      strokeColor: getCSSVar('--theme-pizarra'),
+      strokeWidth: 1,
+      dash: 2,
+      name: 'l',
+      withLabel: true,
+      label: { position: 'rt', offset: [10, 10] }
+    });
+
     const seg = board.create('segment', [pA, pB], {
       strokeColor: getCSSVar('--theme-carbon'),
       strokeWidth: 3,
     });
 
-    elementsRef.current = { pA, pB, seg, board };
+    elementsRef.current = { pA, pB, seg, lineL, board };
 
     board.update();    (board.renderer as any).container.style.backgroundColor = getCSSVar('--theme-lienzo');
 
@@ -80,12 +89,13 @@ export const Segmento = () => {
   }, []);
 
   useEffect(() => {
-    const { pA, pB, seg, board } = elementsRef.current as Record<string, any>;
+    const { pA, pB, seg, lineL, board } = elementsRef.current as Record<string, any>;
     if (!board) return;
 
     pA.setAttribute({ size: 6, fillColor: getCSSVar('--theme-terracota'), strokeColor: getCSSVar('--theme-terracota') });
     pB.setAttribute({ size: 6, fillColor: getCSSVar('--theme-terracota'), strokeColor: getCSSVar('--theme-terracota') });
     seg.setAttribute({ strokeColor: getCSSVar('--theme-carbon'), strokeWidth: 3 });
+    lineL.setAttribute({ strokeColor: getCSSVar('--theme-pizarra'), strokeWidth: 1, dash: 2 });
 
     if (highlight === 'pA') {
       pA.setAttribute({ size: 10, fillColor: getCSSVar('--theme-ocre'), strokeColor: getCSSVar('--theme-ocre') });
@@ -95,6 +105,9 @@ export const Segmento = () => {
     }
     if (highlight === 'segmentAB') {
       seg.setAttribute({ strokeColor: getCSSVar('--theme-terracota'), strokeWidth: 5 });
+    }
+    if (highlight === 'lineL') {
+      lineL.setAttribute({ strokeColor: getCSSVar('--theme-terracota'), strokeWidth: 2, dash: 0 });
     }
 
     board.update();

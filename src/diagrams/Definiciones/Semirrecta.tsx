@@ -57,13 +57,22 @@ export const Semirrecta = () => {
       function () { return pO.Y() + 20 * (pA.Y() - pO.Y()); },
     ], { visible: false, fixed: true });
 
+    const lineL = board.create('line', [pO, pA], {
+      strokeColor: getCSSVar('--theme-pizarra'),
+      strokeWidth: 1,
+      dash: 2,
+      name: 'l',
+      withLabel: true,
+      label: { position: 'rt', offset: [10, 10] }
+    });
+
     const ray = board.create('segment', [pO, farEnd], {
       strokeColor: getCSSVar('--theme-carbon'),
       strokeWidth: 2,
       lastArrow: { type: 2 },
     });
 
-    elementsRef.current = { pO, pA, ray, board };
+    elementsRef.current = { pO, pA, ray, lineL, board };
 
     board.update();    (board.renderer as any).container.style.backgroundColor = getCSSVar('--theme-lienzo');
 
@@ -86,12 +95,13 @@ export const Semirrecta = () => {
   }, []);
 
   useEffect(() => {
-    const { pO, pA, ray, board } = elementsRef.current as Record<string, any>;
+    const { pO, pA, ray, lineL, board } = elementsRef.current as Record<string, any>;
     if (!board) return;
 
     pO.setAttribute({ size: 6, fillColor: getCSSVar('--theme-pizarra'), strokeColor: getCSSVar('--theme-pizarra') });
     pA.setAttribute({ size: 6, fillColor: getCSSVar('--theme-terracota'), strokeColor: getCSSVar('--theme-terracota') });
     ray.setAttribute({ strokeColor: getCSSVar('--theme-carbon'), strokeWidth: 2 });
+    lineL.setAttribute({ strokeColor: getCSSVar('--theme-pizarra'), strokeWidth: 1, dash: 2 });
 
     if (highlight === 'pO') {
       pO.setAttribute({ size: 10, fillColor: getCSSVar('--theme-ocre'), strokeColor: getCSSVar('--theme-ocre') });
@@ -101,6 +111,9 @@ export const Semirrecta = () => {
     }
     if (highlight === 'rayOA') {
       ray.setAttribute({ strokeColor: getCSSVar('--theme-terracota'), strokeWidth: 4 });
+    }
+    if (highlight === 'lineL') {
+      lineL.setAttribute({ strokeColor: getCSSVar('--theme-terracota'), strokeWidth: 2, dash: 0 });
     }
 
     board.update();

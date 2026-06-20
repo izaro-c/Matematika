@@ -3,7 +3,7 @@ export const metadata = {
   "type": "definicion",
   "title": "Circunferencia",
   "description": "Lugar geométrico de los puntos de un plano que equidistan de un punto fijo llamado centro.",
-  "statement": "La circunferencia C(O,r) es el conjunto de puntos P del plano tales que |OP| = r.",
+  "statement": "La circunferencia C(O,r) es el conjunto de puntos P del plano tales que \\vert OP \\vert = r.",
   "tags": ["geometria", "curvas"],
   "authors": ["euclides"],
   "links": ["punto", "segmento", "plano"],
@@ -12,7 +12,7 @@ export const metadata = {
 };
 
 import { Circunferencia } from '../../diagrams/Definiciones/Circunferencia';
-export const Simulation = <ConceptLink targetId="circunferencia" isDependency={false}>Circunferencia</ConceptLink>;
+export const Simulation = Circunferencia;
 import { InteractiveElement } from "../../components/ui/VisualBind";
 
 <Capitular letra="L" />a <InteractiveElement target="circunferencia" color="terracota">circunferencia</InteractiveElement> es una curva plana y cerrada tal que todos sus <ConceptLink targetId="punto" isDependency={false}>puntos</ConceptLink> están a igual distancia de un <InteractiveElement target="centro" color="carbon">centro</InteractiveElement> fijo. Es una de las figuras más fundamentales de la <ConceptLink targetId="geometria" isDependency={false}>geometría</ConceptLink>.
@@ -21,13 +21,13 @@ import { InteractiveElement } from "../../components/ui/VisualBind";
 
 ### Enunciado Formal
 
-Dado un punto $O$ (centro) y una distancia $r > 0$ (radio), la circunferencia $C(O, r)$ es el conjunto:
+Dado un <ConceptLink targetId="punto" isDependency={false}>punto</ConceptLink> <InteractiveElement target="centro" color="carbon">$O$ (centro)</InteractiveElement> y una distancia <InteractiveElement target="radio" color="pizarra">$r > 0$ (radio)</InteractiveElement>, la <InteractiveElement target="circunferencia" color="terracota">circunferencia $C(O, r)$</InteractiveElement> es el conjunto:
 
 <Formula>
   $$ C(O, r) = \{ P \in \pi \mid \overline{OP} = r \} $$
 </Formula>
 
-donde $\pi$ es el <ConceptLink targetId="plano" isDependency={false}>plano</ConceptLink>. Un <ConceptLink targetId="segmento" isDependency={false}>segmento</ConceptLink> que une el <InteractiveElement target="centro" color="carbon">centro</InteractiveElement> con cualquier punto de la circunferencia se llama <InteractiveElement target="radio" color="pizarra">radio</InteractiveElement>.
+donde $\pi$ es el <ConceptLink targetId="plano" isDependency={false}>plano</ConceptLink>. Un <ConceptLink targetId="segmento" isDependency={false}>segmento</ConceptLink> que une el centro con cualquier punto de la circunferencia también se llama radio.
 
 <Separador />
 
@@ -35,18 +35,18 @@ donde $\pi$ es el <ConceptLink targetId="plano" isDependency={false}>plano</Conc
 
 | Elemento | Descripción |
 |---|---|
-| Centro | Punto $O$ equidistante de todos los puntos de la circunferencia |
-| Radio | Segmento $\overline{OP}$ que une el centro con un punto de la circunferencia |
-| Diámetro | Segmento que pasa por el centro y une dos puntos opuestos ($d = 2r$) |
-| Cuerda | Segmento que une dos puntos de la circunferencia |
-| Arco | Porción de la circunferencia entre dos puntos |
-| Tangente | <ConceptLink targetId="recta" isDependency={false}>Recta</ConceptLink> que toca la circunferencia en un único punto |
+| <InteractiveElement target="centro" color="carbon">Centro</InteractiveElement> | Punto $O$ equidistante de todos los puntos de la circunferencia |
+| <InteractiveElement target="radio" color="pizarra">Radio</InteractiveElement> | Segmento $\overline{OP}$ que une el centro con un punto de la circunferencia |
+| <InteractiveElement target="diametro" color="salvia">Diámetro</InteractiveElement> | Segmento que pasa por el centro y une dos puntos opuestos ($d = 2r$) |
+| <InteractiveElement target="cuerda" color="ocre">Cuerda</InteractiveElement> | Segmento que une dos puntos de la circunferencia |
+| <InteractiveElement target="arco" color="salvia">Arco</InteractiveElement> | Porción de la circunferencia entre dos puntos |
+| <InteractiveElement target="tangente" color="carbon">Tangente</InteractiveElement> | <ConceptLink targetId="recta" isDependency={false}>Recta</ConceptLink> que interseca la circunferencia en un único punto |
 
 <Separador />
 
 ### Observaciones
 
-- La definición depende íntimamente del concepto de distancia o métrica euclídea definida en un plano.
-- El **círculo** es la región encerrada por la circunferencia (incluye el interior); la circunferencia es solo la curva.
-- En coordenadas cartesianas, la circunferencia de centro $(h, k)$ y radio $r$ verifica $(x-h)^2 + (y-k)^2 = r^2$.
-- <RefLink targetId="angulo">Los <ConceptLink targetId="angulo" isDependency={false}>ángulos</ConceptLink></RefLink> inscritos en una circunferencia tienen propiedades notables (<ConceptLink targetId="teorema" isDependency={false}>teorema</ConceptLink> del ángulo inscrito).
+- La definición depende íntimamente del concepto de <ConceptLink targetId="metrica-euclidea" isDependency={false}>métrica euclídea</ConceptLink> definida en un <ConceptLink targetId="plano" isDependency={false}>plano</ConceptLink>.
+- El <InteractiveElement target="circulo" color="salvia">círculo</InteractiveElement> es la región encerrada por la circunferencia (incluye el interior); la circunferencia es solo la curva.
+- En <ConceptLink targetId="sistema-coordenadas" isDependency={false}>coordenadas cartesianas</ConceptLink>, la circunferencia de centro $(h, k)$ y radio $r$ verifica $(x-h)^2 + (y-k)^2 = r^2$.
+- Los <ConceptLink targetId="angulo" isDependency={false}>ángulos</ConceptLink> inscritos en una circunferencia tienen propiedades notables (<ConceptLink targetId="teorema-angulo-inscrito" isDependency={false}>teorema del ángulo inscrito</ConceptLink>).
