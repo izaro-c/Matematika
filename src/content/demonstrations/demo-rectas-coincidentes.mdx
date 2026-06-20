@@ -1,0 +1,43 @@
+export const metadata = {
+  "id": "demo-rectas-coincidentes",
+  "type": "demostracion",
+  "title": "Demostración: Identidad de rectas con dos puntos en común",
+  "description": "Prueba por reducción al absurdo: si dos rectas comparten dos puntos distintos, son la misma recta.",
+  "parentTheorem": "corolario-rectas-coincidentes",
+  "proofMethod": "reduccion",
+  "layout": "text"
+};
+
+import { MedievalStep } from "../../components/content/MedievalStep";
+
+<Capitular letra="S" />e demuestra que si dos <ConceptLink targetId="recta" isDependency={false}>rectas</ConceptLink> comparten dos <ConceptLink targetId="punto" isDependency={false}>puntos</ConceptLink> distintos, entonces son la misma <ConceptLink targetId="recta" isDependency={false}>recta</ConceptLink>. El argumento es una consecuencia inmediata del <ConceptLink targetId="teorema-dos-rectas-un-punto">teorema de intersección única</ConceptLink>.
+
+<Separador />
+
+<MedievalStep number={1} title="Suposición para reducción al absurdo">
+  Supongamos que $l$ y $m$ son dos <ConceptLink targetId="recta" isDependency={false}>rectas</ConceptLink> **distintas** ($l \neq m$) que comparten los <ConceptLink targetId="punto" isDependency={false}>puntos</ConceptLink> $A$ y $B$, con $A \neq B$.
+</MedievalStep>
+
+<MedievalStep number={2} title="Aplicación del teorema de intersección única">
+  Por el <ConceptLink targetId="teorema-dos-rectas-un-punto">teorema de intersección única</ConceptLink>, dos <ConceptLink targetId="recta" isDependency={false}>rectas</ConceptLink> distintas tienen **a lo sumo un** <ConceptLink targetId="punto" isDependency={false}>punto</ConceptLink> en común. Como hemos supuesto $l \neq m$, se sigue que:
+  <Formula>$$ |l \cap m| \leq 1 $$</Formula>
+</MedievalStep>
+
+<MedievalStep number={3} title="Conteo de puntos comunes">
+  Sin embargo, por la hipótesis del corolario, $A \in l \cap m$ y $B \in l \cap m$, con $A \neq B$. Por tanto, $l$ y $m$ comparten **al menos dos** <ConceptLink targetId="punto" isDependency={false}>puntos</ConceptLink>:
+  <Formula>$$ |l \cap m| \geq 2 $$</Formula>
+</MedievalStep>
+
+<MedievalStep number={4} title="Contradicción">
+  Las conclusiones de los pasos $2$ y $3$ son contradictorias: no puede ocurrir simultáneamente que $|l \cap m| \leq 1$ y $|l \cap m| \geq 2$.
+</MedievalStep>
+
+<MedievalStep number={5} title="Conclusión">
+  La <ConceptLink targetId="contradiccion" isDependency={false}>contradicción</ConceptLink> proviene de haber supuesto $l \neq m$ en el paso $1$. Por tanto, nuestra suposición inicial es falsa y concluimos que $l = m$. $\blacksquare$
+</MedievalStep>
+
+<Separador />
+
+### Análisis
+
+El <ConceptLink targetId="corolario" isDependency={false}>corolario</ConceptLink> se desprende directamente del <ConceptLink targetId="teorema-dos-rectas-un-punto">teorema de intersección única</ConceptLink> mediante un argumento de conteo: si dos <ConceptLink targetId="recta" isDependency={false}>rectas</ConceptLink> comparten dos <ConceptLink targetId="punto" isDependency={false}>puntos</ConceptLink>, no pueden ser distintas (porque el <ConceptLink targetId="teorema" isDependency={false}>teorema</ConceptLink> limita la intersección a un punto), luego son la misma.

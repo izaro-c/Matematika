@@ -37,9 +37,10 @@
     "lema-punto-medio",
     "teorema-congruencia-lll",
     "demo-punto-medio-perpendicular",
+    "teorema-dos-rectas-un-punto",
+    "demo-rectas-coincidentes",
     "demo-suma-angulos-triangulo",
     "demo-tales",
-    "teorema-dos-rectas-un-punto",
     "leccion-metodo-contradiccion",
     "leccion-metodo-directo",
     "arquimedes",
@@ -400,6 +401,14 @@
       "proofs": [],
       "directDependencies": []
     },
+    "demo-rectas-coincidentes": {
+      "id": "demo-rectas-coincidentes",
+      "type": "demostracion",
+      "title": "Demostración: Identidad de rectas con dos puntos en común",
+      "description": "Prueba por contradicción: si dos rectas comparten dos puntos distintos, son la misma recta.",
+      "proofs": [],
+      "directDependencies": []
+    },
     "demo-suma-angulos-triangulo": {
       "id": "demo-suma-angulos-triangulo",
       "type": "demostracion",
@@ -602,7 +611,14 @@
       "type": "corolario",
       "title": "Corolario: Identidad de rectas con dos puntos en común",
       "description": "Si dos rectas tienen dos puntos en común, entonces son la misma recta.",
-      "proofs": [],
+      "proofs": [
+        {
+          "id": "demo-rectas-coincidentes",
+          "dependencies": [
+            "teorema-dos-rectas-un-punto"
+          ]
+        }
+      ],
       "directDependencies": [
         "teorema-dos-rectas-un-punto",
         "axioma-incidencia-1"
@@ -646,9 +662,7 @@
         }
       ],
       "directDependencies": [
-        "axioma-congruencia-2",
-        "axioma-congruencia-3",
-        "axioma-congruencia-4"
+        "axioma-paralelas-euclides"
       ]
     },
     "teorema-congruencia-ala": {
@@ -709,7 +723,7 @@
         }
       ],
       "directDependencies": [
-        "teorema-triangulo-isosceles"
+        "axioma-paralelas-euclides"
       ]
     },
     "teorema-dos-rectas-un-punto": {
@@ -727,8 +741,7 @@
         }
       ],
       "directDependencies": [
-        "axioma-incidencia-1",
-        "axioma-incidencia-2"
+        "axioma-incidencia-1"
       ]
     },
     "teorema-pitagoras": {
@@ -764,7 +777,8 @@
       "directDependencies": [
         "lema-punto-medio",
         "axioma-congruencia-5",
-        "teorema-congruencia-lll"
+        "teorema-congruencia-lll",
+        "axioma-paralelas-euclides"
       ]
     },
     "teorema-suma-angulos-triangulo": {
@@ -788,7 +802,7 @@
       "id": "teorema-tales",
       "type": "teorema",
       "title": "Teorema de Tales",
-      "description": "Si varias rectas paralelas cortan a dos rectas transversales, entonces los segmentos que determinan en ellas son proporcionales.",
+      "description": "Si una recta paralela a uno de los lados de un triángulo corta a los otros dos lados, entonces los segmentos que determina en ellos son proporcionales.",
       "proofs": [
         {
           "id": "demo-tales",
@@ -799,7 +813,9 @@
           ]
         }
       ],
-      "directDependencies": []
+      "directDependencies": [
+        "axioma-paralelas-euclides"
+      ]
     },
     "teorema-triangulo-isosceles": {
       "id": "teorema-triangulo-isosceles",
