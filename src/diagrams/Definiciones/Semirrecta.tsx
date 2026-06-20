@@ -3,6 +3,15 @@ import JXG from 'jsxgraph';
 import { useMathStore } from '../../store/MathStoreContext';
 import { useLessonStore } from '../../store/LessonStore';
 
+
+function getCSSVar(name: string): string {
+  if (typeof document !== 'undefined') {
+    return getComputedStyle(document.documentElement).getPropertyValue(name).trim();
+  }
+  return '#000';
+}
+
+
 export const Semirrecta = () => {
   const boardRef = useRef<HTMLDivElement>(null);
   const elementsRef = useRef<Record<string, unknown>>({});
@@ -25,8 +34,8 @@ export const Semirrecta = () => {
     const pO = board.create('point', [-1, 0], {
       name: 'O',
       size: 6,
-      fillColor: '#5D7080',
-      strokeColor: '#5D7080',
+      fillColor: getCSSVar('--theme-pizarra'),
+      strokeColor: getCSSVar('--theme-pizarra'),
       showInfobox: false,
       fixed: true,
     });
@@ -34,8 +43,8 @@ export const Semirrecta = () => {
     const pA = board.create('point', [2, 0.5], {
       name: 'A',
       size: 6,
-      fillColor: '#C86446',
-      strokeColor: '#C86446',
+      fillColor: getCSSVar('--theme-terracota'),
+      strokeColor: getCSSVar('--theme-terracota'),
       showInfobox: false,
       fixed: false,
     });
@@ -46,16 +55,27 @@ export const Semirrecta = () => {
     ], { visible: false, fixed: true });
 
     const ray = board.create('segment', [pO, farEnd], {
-      strokeColor: '#333333',
+      strokeColor: getCSSVar('--theme-carbon'),
       strokeWidth: 2,
       lastArrow: { type: 2 },
     });
 
     elementsRef.current = { pO, pA, ray, board };
 
-    board.update();
+    board.update();    (board.renderer as any).container.style.backgroundColor = getCSSVar('--theme-lienzo');
+
+
+
+        const observer = new MutationObserver(() => {
+      if (board) {
+        (board.renderer as any).container.style.backgroundColor = getCSSVar('--theme-lienzo');
+        board.update();
+      }
+    });
+    observer.observe(document.documentElement, { attributes: true, attributeFilter: ['class'] });
 
     return () => {
+      observer.disconnect();
       JXG.JSXGraph.freeBoard(board);
       elementsRef.current = {};
     };
@@ -65,18 +85,18 @@ export const Semirrecta = () => {
     const { pO, pA, ray, board } = elementsRef.current as Record<string, any>;
     if (!board) return;
 
-    pO.setAttribute({ size: 6, fillColor: '#5D7080', strokeColor: '#5D7080' });
-    pA.setAttribute({ size: 6, fillColor: '#C86446', strokeColor: '#C86446' });
-    ray.setAttribute({ strokeColor: '#333333', strokeWidth: 2 });
+    pO.setAttribute({ size: 6, fillColor: getCSSVar('--theme-pizarra'), strokeColor: getCSSVar('--theme-pizarra') });
+    pA.setAttribute({ size: 6, fillColor: getCSSVar('--theme-terracota'), strokeColor: getCSSVar('--theme-terracota') });
+    ray.setAttribute({ strokeColor: getCSSVar('--theme-carbon'), strokeWidth: 2 });
 
     if (highlight === 'pO') {
-      pO.setAttribute({ size: 10, fillColor: '#f5c542', strokeColor: '#f5c542' });
+      pO.setAttribute({ size: 10, fillColor: getCSSVar('--theme-ocre'), strokeColor: getCSSVar('--theme-ocre') });
     }
     if (highlight === 'pA') {
-      pA.setAttribute({ size: 10, fillColor: '#f5c542', strokeColor: '#f5c542' });
+      pA.setAttribute({ size: 10, fillColor: getCSSVar('--theme-ocre'), strokeColor: getCSSVar('--theme-ocre') });
     }
     if (highlight === 'rayOA') {
-      ray.setAttribute({ strokeColor: '#C86446', strokeWidth: 4 });
+      ray.setAttribute({ strokeColor: getCSSVar('--theme-terracota'), strokeWidth: 4 });
     }
 
     board.update();

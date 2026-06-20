@@ -1,0 +1,22 @@
+export const metadata = {
+  "id": "paralelas",
+  "type": "definicion",
+  "title": "Paralelas",
+  "description": "Dos rectas en un mismo plano son paralelas si no comparten ningún punto (no se intersecan).",
+  "tags": ["geometria", "rectas"],
+  "authors": ["euclides"],
+  "links": ["recta", "plano", "punto"],
+  "seeAlso": ["axioma-paralelas-euclides", "axioma-paralelas-hiperbolico"],
+  "hasSimulation": true,
+};
+
+import { InteractiveElement } from "../../components/ui/VisualBind";
+import { Paralelas } from '../../diagrams/Definiciones/Paralelas';
+
+export const Simulation = Paralelas;
+
+<Capitular letra="E" />n <ConceptLink targetId="sistema-euclidiano">geometría euclídea</ConceptLink>, dada una <InteractiveElement target="recta-base">recta base</InteractiveElement> y un <InteractiveElement target="punto-p">punto</InteractiveElement> exterior a ella, existe una única <InteractiveElement target="recta-paralela">recta paralela</InteractiveElement> que pasa por dicho punto. Dos rectas coplanarias son <ConceptLink targetId="paralelas">paralelas</ConceptLink> si su intersección es el conjunto vacío.
+
+<Separador />
+
+Este concepto es el foco del quinto postulado de <ConceptLink targetId="euclides">Euclides</ConceptLink>, también conocido como el <ConceptLink targetId="axioma-paralelas-euclides" isDependency={false}>axioma de las <ConceptLink targetId="paralelas">paralelas</ConceptLink></ConceptLink>.

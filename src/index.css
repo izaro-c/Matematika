@@ -262,3 +262,227 @@ body {
 a, button {
   transition: all 0.15s ease-out;
 }
+
+/* === ESCALA TIPOGRÁFICA CANÓNICA DE MATEMATIKA ===
+ * Aplicada globalmente a .prose dentro de páginas de contenido.
+ * Jerarquía: h1 (small-caps 5xl) → h2 (3xl serif) → h3 (2xl italic terracota)
+ *             → body (lg serif) → captions (xs sans uppercase tracking-widest)
+ */
+.prose {
+  font-family: ui-serif, Georgia, Cambria, "Times New Roman", Times, serif;
+  color: var(--theme-carbon);
+  line-height: 1.75;
+  font-size: 1.125rem;
+}
+
+.prose h1 {
+  font-size: 3rem;
+  line-height: 1.15;
+  font-variant: small-caps;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+  margin-top: 0;
+  margin-bottom: 1.5rem;
+  color: var(--theme-carbon);
+}
+
+.prose h2 {
+  font-size: 1.875rem;
+  line-height: 1.25;
+  font-weight: 700;
+  margin-top: 3rem;
+  margin-bottom: 1.25rem;
+  padding-bottom: 0.5rem;
+  border-bottom: 1px solid color-mix(in srgb, var(--theme-carbon) 12%, transparent);
+  color: var(--theme-carbon);
+}
+
+.prose h3 {
+  font-size: 1.375rem;
+  line-height: 1.3;
+  font-style: italic;
+  font-weight: 700;
+  color: var(--theme-terracota);
+  margin-top: 2rem;
+  margin-bottom: 1rem;
+}
+
+.prose h4 {
+  font-size: 1.125rem;
+  font-weight: 700;
+  color: var(--theme-carbon);
+  margin-top: 1.5rem;
+  margin-bottom: 0.75rem;
+}
+
+.prose p {
+  margin-bottom: 1.25rem;
+  color: color-mix(in srgb, var(--theme-carbon) 88%, transparent);
+  line-height: 1.8;
+}
+
+.prose strong {
+  color: var(--theme-carbon);
+  font-weight: 700;
+}
+
+.prose em {
+  font-style: italic;
+}
+
+/* Captions / small uppercase labels (used in badges, breadcrumbs, meta) */
+.prose .caption,
+.prose [class*="tracking-widest"][class*="uppercase"] {
+  font-family: ui-sans-serif, system-ui, -apple-system, sans-serif;
+}
+
+/* Links inside prose inherit terracota with subtle hover */
+.prose a {
+  color: var(--theme-terracota);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  text-decoration-thickness: 1px;
+  transition: all 0.2s ease;
+}
+
+.prose a:hover {
+  color: var(--theme-granada);
+  text-decoration-thickness: 2px;
+}
+
+/* Blockquote con estilo pergamino */
+.prose blockquote {
+  border-left: 3px solid color-mix(in srgb, var(--theme-terracota) 40%, transparent);
+  padding-left: 1.25rem;
+  font-style: italic;
+  color: color-mix(in srgb, var(--theme-carbon) 75%, transparent);
+  margin: 1.5rem 0;
+}
+
+/* Code inline sutil */
+.prose code {
+  font-family: ui-monospace, "SF Mono", Menlo, monospace;
+  font-size: 0.9em;
+  background: color-mix(in srgb, var(--theme-carbon) 6%, transparent);
+  padding: 0.1rem 0.35rem;
+  border-radius: 2px;
+}
+
+/* === SEPARADOR SUTIL PARA SECCIONES RELACIONALES ===
+ * Usado entre bloques relacionales (Material Práctico, Aplicaciones, etc.)
+ * Más sutil que el <Separador /> MDX (que lleva ornamento ✦).
+ */
+.subtle-separator {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin: 4rem 0;
+  opacity: 0.5;
+}
+
+.subtle-separator::before,
+.subtle-separator::after {
+  content: "";
+  flex: 1;
+  height: 1px;
+  background: color-mix(in srgb, var(--theme-carbon) 25%, transparent);
+}
+
+.subtle-separator-ornament {
+  color: color-mix(in srgb, var(--theme-terracota) 60%, transparent);
+  font-size: 0.75rem;
+}
+
+/* === PAPPER/PERGAMINO TEXTURE para MarginaliaPanel === */
+.parchment-panel {
+  background-color: var(--theme-lienzo);
+  background-image:
+    radial-gradient(circle at 20% 30%, color-mix(in srgb, var(--theme-ocre) 5%, transparent) 0%, transparent 40%),
+    radial-gradient(circle at 80% 70%, color-mix(in srgb, var(--theme-terracota) 4%, transparent) 0%, transparent 40%);
+}
+
+.parchment-panel::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border: 1px solid color-mix(in srgb, var(--theme-carbon) 15%, transparent);
+  outline: 1px solid color-mix(in srgb, var(--theme-carbon) 8%, transparent);
+  outline-offset: -6px;
+  pointer-events: none;
+}
+
+/* === TOUCH TARGETS MÓVIL ===
+ * Aumenta áreas tocables en pantallas pequeñas para mejor UX móvil.
+ */
+@media (max-width: 768px) {
+  .prose {
+    font-size: 1rem;
+    line-height: 1.7;
+  }
+  .prose h1 { font-size: 2.25rem; }
+  .prose h2 { font-size: 1.5rem; }
+  .prose h3 { font-size: 1.25rem; }
+}
+
+/* === ARTS & CRAFTS PILL — Estilo unificado para badges, tags y píldoras ===
+ * Basado en el ModelBadge canon: esquinas vivas, borde + outline doble,
+ * sombra dura letterpress, tipografía serif small-caps.
+ */
+.ac-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-family: ui-sans-serif, system-ui, -apple-system, sans-serif;
+  font-size: 10px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  padding: 0.25rem 0.6rem;
+  border-radius: 0;
+  border: 1px solid color-mix(in srgb, var(--theme-carbon) 20%, transparent);
+  outline: 1px solid color-mix(in srgb, var(--theme-carbon) 10%, transparent);
+  outline-offset: -3px;
+  background-color: var(--theme-lienzo);
+  box-shadow: 1px 1px 0px color-mix(in srgb, var(--theme-carbon) 8%, transparent);
+  transition: all 0.2s ease;
+  line-height: 1.4;
+  white-space: nowrap;
+}
+
+.ac-pill:hover {
+  border-color: color-mix(in srgb, var(--theme-carbon) 40%, transparent);
+  box-shadow: 2px 2px 0px color-mix(in srgb, var(--theme-carbon) 12%, transparent);
+}
+
+/* Variante con color semántico (token Arts & Crafts) */
+.ac-pill-accent {
+  border-color: color-mix(in srgb, var(--pill-accent, var(--theme-carbon)) 35%, transparent);
+  outline-color: color-mix(in srgb, var(--pill-accent, var(--theme-carbon)) 18%, transparent);
+  color: var(--pill-accent, var(--theme-carbon));
+  background-color: color-mix(in srgb, var(--pill-accent, var(--theme-carbon)) 6%, var(--theme-lienzo));
+}
+
+.ac-pill-accent:hover {
+  border-color: color-mix(in srgb, var(--pill-accent, var(--theme-carbon)) 55%, transparent);
+  background-color: color-mix(in srgb, var(--pill-accent, var(--theme-carbon)) 12%, var(--theme-lienzo));
+}
+
+/* Ornamento opcional antes del texto */
+.ac-pill-ornament {
+  font-family: ui-serif, Georgia, serif;
+  font-style: normal;
+  font-weight: 400;
+  font-size: 11px;
+  line-height: 1;
+  opacity: 0.7;
+}
+
+/* Variante serif con small-caps (para badges de contenido con nombre) */
+.ac-pill-serif {
+  font-family: ui-serif, Georgia, serif;
+  font-weight: 600;
+  font-size: 11px;
+  letter-spacing: 0.08em;
+  font-variant: small-caps;
+  text-transform: none;
+}

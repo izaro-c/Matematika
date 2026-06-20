@@ -14,8 +14,6 @@ export const MathematicianSchema = z.object({
   country: z.string().optional(),
   description: z.string(),
   image: z.string().optional(),
-  links: z.array(z.string()).optional(),
-  seeAlso: z.array(z.string()).optional(),
 });
 
 /**
@@ -37,17 +35,12 @@ export const TheoremSchema = z.object({
   lemmas: z.array(z.string()).optional(),
   corollaries: z.array(z.string()).optional(),
   demos: z.array(z.string()).optional(),
-  /** IDs de definiciones que este teorema usa formalmente (grafo de dependencia) */
-  requires: z.array(z.string()).optional(),
   /** IDs de ejemplos resueltos asociados */
   examples: z.array(z.string()).optional(),
   /** IDs de ejercicios propuestos asociados */
   exercises: z.array(z.string()).optional(),
   parentTheorem: z.string().optional(),
-  tags: z.array(z.string()).optional(),
   difficulty: z.enum(['básico', 'intermedio', 'avanzado']).optional(),
-  links: z.array(z.string()).optional(),
-  seeAlso: z.array(z.string()).optional(),
 });
 
 /**
@@ -60,10 +53,7 @@ export const LessonSchema = z.object({
   type: z.literal('leccion'),
   title: z.string(),
   description: z.string().optional(),
-  tags: z.array(z.string()).optional(),
   difficulty: z.enum(['básico', 'intermedio', 'avanzado']).optional(),
-  links: z.array(z.string()).optional(),
-  seeAlso: z.array(z.string()).optional(),
 });
 
 /**
@@ -81,8 +71,6 @@ export const DemoSchema = z.object({
   lemmas: z.array(z.string()).optional(),
   proofMethod: z.enum(['directo', 'contradiccion', 'induccion', 'contraposicion', 'constructivo', 'geometrico', 'exhaustivo', 'reduccion']).optional(),
   authors: z.array(z.string()).optional(),
-  tags: z.array(z.string()).optional(),
-  links: z.array(z.string()).optional(),
   layout: z.enum(['split', 'text']).optional(),
   dependencias: z.array(z.string()).optional(),
 });
@@ -98,13 +86,8 @@ export const DefinitionSchema = z.object({
   title: z.string(),
   description: z.string(),
   statement: z.string().optional(),
-  tags: z.array(z.string()).optional(),
   authors: z.array(z.string()).optional(),
   color: z.string().optional(),
-  /** IDs de teoremas que usan esta definición */
-  usedBy: z.array(z.string()).optional(),
-  links: z.array(z.string()).optional(),
-  seeAlso: z.array(z.string()).optional(),
 });
 
 /**
@@ -120,12 +103,7 @@ export const ExampleSchema = z.object({
   description: z.string().optional(),
   /** ID del teorema o definición principal que ilustra */
   relatedTheorem: z.string().optional(),
-  /** IDs de definiciones que usa */
-  requires: z.array(z.string()).optional(),
-  tags: z.array(z.string()).optional(),
   difficulty: z.enum(['básico', 'intermedio', 'avanzado']).optional(),
-  links: z.array(z.string()).optional(),
-  seeAlso: z.array(z.string()).optional(),
 });
 
 /**
@@ -140,13 +118,9 @@ export const ExerciseSchema = z.object({
   description: z.string().optional(),
   /** ID del teorema o definición que pone en práctica */
   relatedTheorem: z.string().optional(),
-  requires: z.array(z.string()).optional(),
-  tags: z.array(z.string()).optional(),
   difficulty: z.enum(['básico', 'intermedio', 'avanzado']).optional(),
   /** Pista visible antes de revelar la solución */
   hint: z.string().optional(),
-  links: z.array(z.string()).optional(),
-  seeAlso: z.array(z.string()).optional(),
 });
 
 // Tipos Inferidos
@@ -170,10 +144,7 @@ export const AxiomSchema = z.object({
   title: z.string(),
   description: z.string(),
   statement: z.string().optional(),
-  tags: z.array(z.string()).optional(),
   authors: z.array(z.string()).optional(),
-  links: z.array(z.string()).optional(),
-  seeAlso: z.array(z.string()).optional(),
 });
 
 /**
@@ -192,10 +163,7 @@ export const AxiomaticSystemSchema = z.object({
   /** IDs de los modelos que satisfacen este sistema */
   models: z.array(z.string()).optional(),
   /** IDs de matemáticos asociados a este sistema */
-  mathematicians: z.array(z.string()).optional(),
-  tags: z.array(z.string()).optional(),
-  links: z.array(z.string()).optional(),
-  seeAlso: z.array(z.string()).optional(),
+  authors: z.array(z.string()).optional(),
   hasSimulation: z.boolean().optional(),
 });
 
@@ -217,9 +185,6 @@ export const ModelSchema = z.object({
   /** Indica si este modelo tiene un diagrama interactivo asociado */
   hasDiagram: z.boolean().optional(),
   hasSimulation: z.boolean().optional(),
-  tags: z.array(z.string()).optional(),
-  links: z.array(z.string()).optional(),
-  seeAlso: z.array(z.string()).optional(),
 });
 
 /**
@@ -231,17 +196,14 @@ export const ModelSchema = z.object({
  */
 export const UseCaseSchema = z.object({
   id: z.string().optional(),
-  type: z.literal('caso_de_uso'),
+  type: z.literal('caso-de-uso'),
   title: z.string(),
   description: z.string().optional(),
   /** ID del teorema o concepto matemático que ilustra */
   concept: z.string().optional(),
   /** Ámbito real: 'ingeniería', 'medicina', 'economía', 'naturaleza', 'arte', etc. */
   domain: z.string().optional(),
-  tags: z.array(z.string()).optional(),
   difficulty: z.enum(['básico', 'intermedio', 'avanzado']).optional(),
-  links: z.array(z.string()).optional(),
-  seeAlso: z.array(z.string()).optional(),
 });
 
 export type UseCaseMeta = z.infer<typeof UseCaseSchema>;
@@ -255,13 +217,11 @@ export type UseCaseMeta = z.infer<typeof UseCaseSchema>;
  */
 export const StudyPlanSchema = z.object({
   id: z.string(),
-  type: z.literal('plan_de_estudio'),
+  type: z.literal('plan-de-estudio'),
   title: z.string(),
   subtitle: z.string().optional(),
   description: z.string(),
   requiredNodes: z.array(z.string()).optional(),
-  links: z.array(z.string()).optional(),
-  seeAlso: z.array(z.string()).optional(),
 });
 
 export type StudyPlanMeta = z.infer<typeof StudyPlanSchema>;

@@ -24,8 +24,11 @@ export const metadata = {
   "tags": ["geometria", "modelo", "hiperbolica", "poincare", "conforme"]
 };
 
+import { ModeloPoincare } from '../../diagrams/Models/ModeloPoincare';
+export const Diagram = ModeloPoincare;
+
 <Capitular letra="E" />
-l Disco de Poincaré es un modelo matemático extraordinariamente elegante para la <ConceptLink targetId="sistema-hiperbolico">geometría hiperbólica</ConceptLink>, introducido por Henri Poincaré a finales del siglo XIX. Su principal virtud geométrica es que preserva los ángulos (es un modelo *conforme*), lo que hace que las representaciones de figuras geométricas sean intuitivas respecto a sus ángulos euclídeos.
+l <ConceptLink targetId="modelo-poincare">Disco de Poincaré</ConceptLink> representa un modelo analítico de profunda elegancia para visualizar axiomáticamente la topología de la <ConceptLink targetId="sistema-hiperbolico">geometría hiperbólica</ConceptLink>. Su principal propiedad métrica radica en su carácter *conforme*, preservando la congruencia local de los ángulos euclídeos originarios de intersección.
 
 <Separador />
 
@@ -34,7 +37,7 @@ l Disco de Poincaré es un modelo matemático extraordinariamente elegante para 
 Este modelo se construye sobre el plano complejo $\mathbb{C}$ euclídeo, pero redefiniendo qué se considera una "recta" y cómo se miden las "distancias".
 
 - **Puntos**: El espacio está formado únicamente por los puntos en el interior del disco unitario abierto $\mathbb{D} = \{z \in \mathbb{C} : |z| < 1\}$. El borde del disco ($|z|=1$) se denomina el "infinito" o "horizonte absoluto", y no forma parte del espacio hiperbólico.
-- **Rectas Hiperbólicas (Geodésicas)**: Son los arcos de circunferencia euclídeos contenidos en $\mathbb{D}$ que intersecan ortogonalmente (en un ángulo de $90^\circ$) el horizonte absoluto. Los diámetros del disco también se consideran rectas, ya que intersecan la frontera en ángulo recto.
+- **Rectas Hiperbólicas (Geodésicas)**: Son los arcos de <ConceptLink targetId="circunferencia">circunferencia</ConceptLink> euclídeos contenidos en $\mathbb{D}$ que intersecan ortogonalmente (en un ángulo de $90^\circ$) el horizonte absoluto. Los diámetros del disco también se consideran rectas, ya que intersecan la frontera en ángulo recto.
 - **Distancia Hiperbólica**: Dados dos puntos $z, w \in \mathbb{D}$, la distancia hiperbólica $d_H(z,w)$ se calcula utilizando la métrica de Poincaré $ds = \frac{2|dz|}{1 - |z|^2}$. Esta distancia tiende a infinito conforme los puntos se acercan al horizonte absoluto.
 - **Ángulos**: Como el modelo es conforme, el ángulo entre dos rectas hiperbólicas en su punto de intersección es exactamente el mismo que el ángulo euclídeo entre las tangentes a dichos arcos circulares en ese punto.
 
@@ -42,12 +45,12 @@ Este modelo se construye sobre el plano complejo $\mathbb{C}$ euclídeo, pero re
 
 ### Verificación de Axiomas Clave
 
-El disco de Poincaré satisface todos los postulados de la <ConceptLink targetId="sistema-absoluto">geometría absoluta</ConceptLink> de Hilbert, y reemplaza el axioma euclídeo por el hiperbólico:
+El <ConceptLink targetId="modelo-poincare">disco de Poincaré</ConceptLink> satisface todos los postulados de la <ConceptLink targetId="sistema-absoluto">geometría absoluta</ConceptLink> de Hilbert, y reemplaza el axioma euclídeo por el hiperbólico:
 
-1. **<ConceptLink targetId="axioma-incidencia-1">Axioma de Incidencia I-1</ConceptLink>**: Dados dos puntos cualesquiera dentro del disco, existe un único arco de circunferencia que pasa por ellos e interseca el borde del disco ortogonalmente.
+1. **<ConceptLink targetId="axioma-incidencia-1">Axioma de Incidencia I-1</ConceptLink>**: Dados dos puntos cualesquiera dentro del disco, existe un único arco de <ConceptLink targetId="circunferencia">circunferencia</ConceptLink> que pasa por ellos e interseca el borde del disco ortogonalmente.
 2. **<ConceptLink targetId="axioma-orden-1">Axioma de Orden II-1</ConceptLink> y Congruencia**: Debido a que la métrica diverge al acercarse al borde, la recta es "infinitamente larga". El orden se comporta de la misma forma analítica que en el <ConceptLink targetId="modelo-cartesiano">plano cartesiano</ConceptLink>.
-3. **<ConceptLink targetId="axioma-paralelas-hiperbolico">Axioma Hiperbólico de las Paralelas</ConceptLink>**: Esta es la característica central del modelo. Dada una recta hiperbólica $l$ y un punto $P \notin l$, se pueden dibujar *infinitos* arcos circulares que pasan por $P$, son ortogonales a la frontera, y nunca intersecan a $l$.
+3. **<ConceptLink targetId="axioma-paralelas-hiperbolico">Axioma Hiperbólico de las <ConceptLink targetId="paralelas">Paralelas</ConceptLink></ConceptLink>**: Esta es la característica central del modelo. Dada una recta hiperbólica $l$ y un punto $P \notin l$, se pueden dibujar *infinitos* arcos circulares que pasan por $P$, son ortogonales a la frontera, y nunca intersecan a $l$.
 
 <Nota>
-  El modelo de Poincaré (junto con el modelo del semiplano y de Klein) demostró de forma concluyente que la geometría hiperbólica es **equiconsistente** con la <ConceptLink targetId="sistema-euclidiano">geometría euclídea</ConceptLink>. Si el plano euclídeo existe y carece de contradicciones, entonces la geometría hiperbólica también lo es, resolviendo así el misterio de 2000 años sobre el quinto postulado.
+  El modelo de Poincaré (junto con el modelo del semiplano y de Klein) demostró de forma concluyente que la <ConceptLink targetId="sistema-hiperbolico">geometría hiperbólica</ConceptLink> es **equiconsistente** con la <ConceptLink targetId="sistema-euclidiano">geometría euclídea</ConceptLink>. Si el plano euclídeo existe y carece de contradicciones, entonces la <ConceptLink targetId="sistema-hiperbolico">geometría hiperbólica</ConceptLink> también lo es, resolviendo así el misterio de 2000 años sobre el quinto postulado.
 </Nota>

@@ -3,6 +3,15 @@ import JXG from 'jsxgraph';
 import { useMathStore } from '../../store/MathStoreContext';
 import { useLessonStore } from '../../store/LessonStore';
 
+
+function getCSSVar(name: string): string {
+  if (typeof document !== 'undefined') {
+    return getComputedStyle(document.documentElement).getPropertyValue(name).trim();
+  }
+  return '#000';
+}
+
+
 export const Incidence3 = () => {
   const boardRef = useRef<HTMLDivElement>(null);
   const elementsRef = useRef<Record<string, unknown>>({});
@@ -22,11 +31,11 @@ export const Incidence3 = () => {
       grid: false,
     });
 
-    const pA = board.create('point', [-1, 3], {
+    const pA = board.create('point', [-1, 2.5], {
       name: 'A',
       size: 6,
-      fillColor: '#C86446',
-      strokeColor: '#C86446',
+      fillColor: getCSSVar('--theme-terracota'),
+      strokeColor: getCSSVar('--theme-terracota'),
       showInfobox: false,
       fixed: false,
     });
@@ -34,8 +43,8 @@ export const Incidence3 = () => {
     const pB = board.create('point', [-3, -2], {
       name: 'B',
       size: 6,
-      fillColor: '#C86446',
-      strokeColor: '#C86446',
+      fillColor: getCSSVar('--theme-terracota'),
+      strokeColor: getCSSVar('--theme-terracota'),
       showInfobox: false,
       fixed: false,
     });
@@ -43,32 +52,32 @@ export const Incidence3 = () => {
     const pC = board.create('point', [3, -1], {
       name: 'C',
       size: 6,
-      fillColor: '#C86446',
-      strokeColor: '#C86446',
+      fillColor: getCSSVar('--theme-terracota'),
+      strokeColor: getCSSVar('--theme-terracota'),
       showInfobox: false,
       fixed: false,
     });
 
     const sideAB = board.create('segment', [pA, pB], {
-      strokeColor: '#5D7080',
+      strokeColor: getCSSVar('--theme-pizarra'),
       strokeWidth: 1.5,
       dash: 2,
     });
 
     const sideBC = board.create('segment', [pB, pC], {
-      strokeColor: '#5D7080',
+      strokeColor: getCSSVar('--theme-pizarra'),
       strokeWidth: 1.5,
       dash: 2,
     });
 
     const sideCA = board.create('segment', [pC, pA], {
-      strokeColor: '#5D7080',
+      strokeColor: getCSSVar('--theme-pizarra'),
       strokeWidth: 1.5,
       dash: 2,
     });
 
     const triangle = board.create('polygon', [pA, pB, pC], {
-      fillColor: '#C86446',
+      fillColor: getCSSVar('--theme-terracota'),
       fillOpacity: 0.06,
       borders: { visible: false },
       vertices: { visible: false },
@@ -76,9 +85,20 @@ export const Incidence3 = () => {
 
     elementsRef.current = { pA, pB, pC, sideAB, sideBC, sideCA, triangle, board };
 
-    board.update();
+    board.update();    (board.renderer as any).container.style.backgroundColor = getCSSVar('--theme-lienzo');
+
+
+
+        const observer = new MutationObserver(() => {
+      if (board) {
+        (board.renderer as any).container.style.backgroundColor = getCSSVar('--theme-lienzo');
+        board.update();
+      }
+    });
+    observer.observe(document.documentElement, { attributes: true, attributeFilter: ['class'] });
 
     return () => {
+      observer.disconnect();
       JXG.JSXGraph.freeBoard(board);
       elementsRef.current = {};
     };
@@ -88,17 +108,17 @@ export const Incidence3 = () => {
     const { pA, pB, pC, sideAB, sideBC, sideCA, triangle, board } = elementsRef.current as Record<string, any>;
     if (!board) return;
 
-    pA.setAttribute({ size: 6, fillColor: '#C86446', strokeColor: '#C86446' });
-    pB.setAttribute({ size: 6, fillColor: '#C86446', strokeColor: '#C86446' });
-    pC.setAttribute({ size: 6, fillColor: '#C86446', strokeColor: '#C86446' });
-    sideAB.setAttribute({ strokeColor: '#5D7080', strokeWidth: 1.5 });
-    sideBC.setAttribute({ strokeColor: '#5D7080', strokeWidth: 1.5 });
-    sideCA.setAttribute({ strokeColor: '#5D7080', strokeWidth: 1.5 });
+    pA.setAttribute({ size: 6, fillColor: getCSSVar('--theme-terracota'), strokeColor: getCSSVar('--theme-terracota') });
+    pB.setAttribute({ size: 6, fillColor: getCSSVar('--theme-terracota'), strokeColor: getCSSVar('--theme-terracota') });
+    pC.setAttribute({ size: 6, fillColor: getCSSVar('--theme-terracota'), strokeColor: getCSSVar('--theme-terracota') });
+    sideAB.setAttribute({ strokeColor: getCSSVar('--theme-pizarra'), strokeWidth: 1.5 });
+    sideBC.setAttribute({ strokeColor: getCSSVar('--theme-pizarra'), strokeWidth: 1.5 });
+    sideCA.setAttribute({ strokeColor: getCSSVar('--theme-pizarra'), strokeWidth: 1.5 });
     triangle.setAttribute({ fillOpacity: 0.06 });
 
-    if (highlight === 'pA') pA.setAttribute({ size: 10, fillColor: '#f5c542', strokeColor: '#f5c542' });
-    if (highlight === 'pB') pB.setAttribute({ size: 10, fillColor: '#f5c542', strokeColor: '#f5c542' });
-    if (highlight === 'pC') pC.setAttribute({ size: 10, fillColor: '#f5c542', strokeColor: '#f5c542' });
+    if (highlight === 'pA') pA.setAttribute({ size: 10, fillColor: getCSSVar('--theme-ocre'), strokeColor: getCSSVar('--theme-ocre') });
+    if (highlight === 'pB') pB.setAttribute({ size: 10, fillColor: getCSSVar('--theme-ocre'), strokeColor: getCSSVar('--theme-ocre') });
+    if (highlight === 'pC') pC.setAttribute({ size: 10, fillColor: getCSSVar('--theme-ocre'), strokeColor: getCSSVar('--theme-ocre') });
     if (highlight === 'triangle') triangle.setAttribute({ fillOpacity: 0.2 });
 
     board.update();

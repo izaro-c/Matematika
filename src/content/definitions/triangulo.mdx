@@ -1,0 +1,51 @@
+export const metadata = {
+  "id": "triangulo",
+  "type": "definicion",
+  "title": "Triángulo",
+  "description": "Figura geométrica formada por tres segmentos (lados) que unen tres puntos no colineales (vértices).",
+  "statement": "Un triángulo △ABC es la unión de tres segmentos AB, BC y CA donde A, B y C son puntos no colineales.",
+  "tags": ["geometria", "poligono", "basico"],
+  "authors": ["euclides"],
+  "links": ["punto", "segmento", "angulo"],
+  "seeAlso": ["teorema-congruencia-ala", "teorema-congruencia-lll", "teorema-suma-angulos-triangulo"],
+  "hasSimulation": true
+};
+
+import { Triangulo } from '../../diagrams/Definiciones/Triangulo';
+export const Simulation = Triangulo;
+import { InteractiveElement } from "../../components/ui/VisualBind";
+
+<Capitular letra="U" />n <ConceptLink targetId="triangulo">triángulo</ConceptLink> es el polígono más simple y la base de la trigonometría. Está constituido por tres <ConceptLink targetId="punto">puntos</ConceptLink> no colineales y los tres <ConceptLink targetId="segmento">segmentos</ConceptLink> que los conectan.
+
+<Separador />
+
+### Enunciado Formal
+
+Dados tres puntos no colineales $A$, $B$ y $C$, el triángulo $\triangle ABC$ es la unión de los segmentos:
+
+<Formula>
+  $$ \triangle ABC = \overline{AB} \cup \overline{BC} \cup \overline{CA} $$
+</Formula>
+
+Los puntos $A$, $B$, $C$ son los <InteractiveElement target="vertice-a" color="terracota">vértices</InteractiveElement>, y los segmentos $\overline{AB}$, $\overline{BC}$, $\overline{CA}$ son los <InteractiveElement target="lado-ab" color="salvia">lados</InteractiveElement>. El <InteractiveElement target="triangulo" color="pizarra">triángulo</InteractiveElement> encierra una región del plano y define tres <ConceptLink targetId="angulo">ángulos</ConceptLink> interiores.
+
+<Separador />
+
+### Clasificación
+
+Los triángulos se clasifican por sus lados y por sus ángulos:
+
+| Por lados | Descripción | Por ángulos | Descripción |
+|---|---|---|---|
+| Equilátero | 3 lados congruentes | Acutángulo | 3 ángulos agudos |
+| Isósceles | 2 lados congruentes | Rectángulo | 1 ángulo recto |
+| Escaleno | 0 lados congruentes | Obtusángulo | 1 ángulo obtuso |
+
+<Separador />
+
+### Observaciones
+
+- La condición de **no colinealidad** es esencial: si $A$, $B$, $C$ están en una misma recta, no se forma un triángulo (la región encerrada es vacía).
+- Los triángulos son la base de la congruencia (<RefLink targetId="teorema-congruencia-ala">ALA</RefLink>, <RefLink targetId="teorema-congruencia-lll">LLL</RefLink>) y de la semejanza.
+- En <ConceptLink targetId="sistema-euclidiano">geometría euclidiana</ConceptLink>, la suma de los ángulos interiores es $180^\circ$. En geometría hiperbólica, es estrictamente menor.
+- <RefLink targetId="teorema-suma-angulos-triangulo">Teorema de la suma de ángulos</RefLink>: el resultado sobre la suma de ángulos depende del axioma de las paralelas.

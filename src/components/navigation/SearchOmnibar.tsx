@@ -97,7 +97,7 @@ const buildIndex = (): SearchResult[] => {
     index.push({
       id: `bio-${bio.id}`,
       type: 'matemático',
-      title: bio.name || bio.fullName,
+      title: bio.name,
       subtitle: bio.description,
       href: `/Matematika/bio/${bio.slug}`,
     });

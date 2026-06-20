@@ -4,42 +4,42 @@ export const metadata = {
   "title": "Axioma I-1 (Incidencia)",
   "description": "Por dos puntos distintos del espacio pasa exactamente una recta.",
   "statement": "Dados dos puntos distintos A y B, existe una única recta que los contiene.",
-  "tags": ["geometria", "incidencia", "geometria-absoluta"],
   "authors": ["hilbert"],
-  "hasSimulation": true,
+  "hasSimulation": true
 };
 
 import { Incidence1 } from '../../diagrams/Axiomas/Incidence1';
 export const Simulation = Incidence1;
 import { InteractiveElement } from "../../components/ui/VisualBind";
 
-<Capitular letra="P" />
-or dos puntos distintos del espacio pasa exactamente una recta. Este es el primer axioma de incidencia y establece la relación fundamental entre los objetos primitivos punto y recta.
+<Capitular letra="P" />or dos puntos distintos <ConceptLink targetId="punto">A</ConceptLink> y <ConceptLink targetId="punto">B</ConceptLink> del <ConceptLink targetId="espacio">espacio</ConceptLink> pasa exactamente una única <ConceptLink targetId="recta">recta</ConceptLink>. Este es el primer <ConceptLink targetId="axioma">axioma</ConceptLink> de <ConceptLink targetId="incidencia">incidencia</ConceptLink> y establece la relación matemática fundamental entre los dos objetos geométricos elementales.
 
 <Separador />
 
 ### Enunciado Formal
 
 <Formula>
-  $$ \text{Dados } A \neq B \text{, existe una única recta } l \text{ tal que } A \in l \text{ y } B \in l. $$
+  $$
+  \forall A, B \ (A \neq B) \implies \exists! l \ (A \in l \land B \in l)
+  $$
 </Formula>
 
 <Nota>
-  La recta determinada por A y B se denota como $\overline{AB}$ o simplemente $AB$.
+  La recta única determinada por los puntos <InteractiveElement target="pA" color="terracota">A</InteractiveElement> y <InteractiveElement target="pB" color="terracota">B</InteractiveElement> se denota comúnmente como $\overleftrightarrow{AB}$, o simplemente $AB$.
 </Nota>
 
 <Separador />
 
 ### Discusión
 
-Este axioma garantiza que dos puntos siempre determinan una <InteractiveElement target="lineAB" color="carbon">recta</InteractiveElement> de manera única. Sin él, la noción de recta quedaría indeterminada: un par de puntos podría pertenecer a ninguna, una, o múltiples rectas simultáneamente, lo cual haría imposible construir una geometría consistente.
+Este <ConceptLink targetId="postulado">postulado</ConceptLink> garantiza que dos puntos siempre determinan de manera única a una <InteractiveElement target="lineAB" color="carbon">recta</InteractiveElement>. Sin esta regla estructural, la noción misma de "línea recta" carecería de sentido: un par de puntos podría pertenecer a infinitas líneas distintas o a ninguna, haciendo imposible construir una teoría consistente.
 
-Nótese que el axioma no afirma la existencia de puntos —esto se establece en axiomas posteriores— sino que, dados <InteractiveElement target="pA" color="terracota">dos</InteractiveElement> <InteractiveElement target="pB" color="terracota">puntos</InteractiveElement>, la <InteractiveElement target="lineAB" color="carbon">recta</InteractiveElement> que los une es única. La unicidad es esencial: permite hablar de *la recta* determinada por <InteractiveElement target="pA" color="terracota">A</InteractiveElement> y <InteractiveElement target="pB" color="terracota">B</InteractiveElement>.
+Es importante notar que este axioma no afirma que existan puntos, sino que establece una regla condicional: si existen dos puntos distintos <InteractiveElement target="pA" color="terracota">A</InteractiveElement> y <InteractiveElement target="pB" color="terracota">B</InteractiveElement>, entonces la <InteractiveElement target="lineAB" color="carbon">recta</InteractiveElement> que los une existe y es única. Esta propiedad de unicidad es vital porque nos permite referirnos a "*la* recta determinada por $A$ y $B$" sin ambigüedad.
 
-Junto con el axioma I-2 (toda recta contiene al menos dos puntos), este par de axiomas define la relación de incidencia como una correspondencia biunívoca entre pares de puntos y rectas: cada par de puntos determina una recta, y cada recta está determinada por algún par de puntos.
+Junto con el <ConceptLink targetId="axioma-incidencia-2">axioma I-2</ConceptLink> (que declara que toda recta alberga al menos dos puntos), establece una correspondencia biunívoca entre pares de puntos y la recta que conforman.
 
 <Separador />
 
 ### Observaciones
 
-En geometrías no euclídeas y en espacios más generales, este axioma se mantiene vigente. Incluso en la geometría hiperbólica, dos puntos distintos siguen determinando una única recta. Es, por tanto, un axioma de la geometría absoluta.
+- Esta verdad fundacional no es exclusiva de la <ConceptLink targetId="sistema-euclidiano">geometría euclidiana</ConceptLink>. En espacios formales no euclidianos, como la <ConceptLink targetId="sistema-hiperbolico">geometría hiperbólica</ConceptLink>, el principio se mantiene: dos puntos distintos siguen trazando una sola recta (o <ConceptLink targetId="geodesica">geodésica</ConceptLink>). Por ello, este <ConceptLink targetId="postulado">postulado</ConceptLink> pertenece a la <ConceptLink targetId="sistema-absoluto">geometría absoluta</ConceptLink>.

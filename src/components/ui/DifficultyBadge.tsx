@@ -6,12 +6,14 @@ interface DifficultyBadgeProps {
 }
 
 export const DifficultyBadge: React.FC<DifficultyBadgeProps> = ({ difficulty }) => {
-  const color = DIFF_COLORS[difficulty] ?? '#333';
+  const color = DIFF_COLORS[difficulty] ?? 'var(--theme-carbon)';
+
   return (
     <span
-      className="text-[10px] font-sans font-bold uppercase tracking-widest px-2 py-1 rounded"
-      style={{ color, backgroundColor: `${color}15` }}
+      className="ac-pill ac-pill-accent"
+      style={{ ['--pill-accent' as string]: color }}
     >
+      <span className="ac-pill-ornament" aria-hidden>◆</span>
       {difficulty}
     </span>
   );

@@ -18,7 +18,7 @@ export const InteractiveTimePlot: React.FC<InteractiveTimePlotProps> = ({ nodes 
     let maxYear = -Infinity;
 
     nodes.forEach(n => {
-      const century = Math.floor(n.year / 100) * 100;
+      const century = Math.floor((n.birthYear || 0) / 100) * 100;
       bins.set(century, (bins.get(century) || 0) + 1);
       if (century < minYear) minYear = century;
       if (century > maxYear) maxYear = century;

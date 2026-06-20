@@ -17,6 +17,7 @@ import { ModelPage } from "../pages/ModelPage";
 import { AxiomaticSystemPage } from "../pages/AxiomaticSystemPage";
 import { DemoPage } from "../pages/DemoPage";
 import { NotFoundPage } from "../pages/NotFoundPage";
+import { ConstructionPage } from "../pages/ConstructionPage";
 import { InteractiveLessonLayout } from "../components/layout/InteractiveLessonLayout";
 import { BiographyLayout } from "../components/layout/BiographyLayout";
 import { Logo } from "../components/ui/Logo";
@@ -61,6 +62,7 @@ export const AppRouter = () => {
           <Route path="/metodos" component={MethodsPage} />
           <Route path="/grafo" component={GraphPage} />
           <Route path="/axiomas" component={AxiomGraphPage} />
+          <Route path="/construccion/:id" component={ConstructionPage} />
 
           {/* RUTAS DE AXIOMAS Y MODELOS */}
           <Route path="/axioma/:id">

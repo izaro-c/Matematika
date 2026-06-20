@@ -4,44 +4,37 @@ export const metadata = {
   "title": "Axioma I-6 (Incidencia)",
   "description": "Si dos puntos de una recta pertenecen a un plano, entonces toda la recta está contenida en dicho plano.",
   "statement": "Si A y B son puntos de una recta l, y A, B ∈ π, entonces l ⊂ π.",
-  "tags": ["geometria", "incidencia", "geometria-absoluta"],
   "authors": ["hilbert"],
+  "hasSimulation": true
 };
 
-export const Simulation = () => (
-    <svg viewBox="0 0 320 180" xmlns="http://www.w3.org/2000/svg" className="w-full max-w-md mx-auto my-4">
-      <polygon points="30,130 290,140 250,30 10,40" fill="#A2C2A2" fillOpacity="0.2" stroke="#A2C2A2" strokeWidth="1.5" />
-      <text x="260" y="28" fontSize="13" fill="#5D7080" fontFamily="serif" fontStyle="italic">π</text>
-      <line x1="60" y1="100" x2="240" y2="60" stroke="#333333" strokeWidth="2" />
-      <text x="250" y="56" fontSize="13" fill="#5D7080" fontFamily="serif" fontStyle="italic">l</text>
-      <circle cx="100" cy="88" r="5" fill="#C86446" />
-      <text x="86" y="78" fontSize="16" fill="#333333" fontFamily="serif" fontStyle="italic">A</text>
-      <circle cx="200" cy="72" r="5" fill="#C86446" />
-      <text x="200" y="64" fontSize="16" fill="#333333" fontFamily="serif" fontStyle="italic">B</text>
-    </svg>
-  );
+import { Incidence6 } from '../../diagrams/Axiomas/Incidence6';
+export const Simulation = Incidence6;
+import { InteractiveElement } from "../../components/ui/VisualBind";
 
-<Capitular letra="S" />
-i dos puntos de una recta pertenecen a un plano, entonces toda la recta está contenida en dicho plano. Este axioma conecta las relaciones de incidencia entre rectas y planos.
+<Capitular letra="S" />i dos <ConceptLink targetId="punto">puntos</ConceptLink> distintos de una <ConceptLink targetId="recta">recta</ConceptLink> están contenidos en un <ConceptLink targetId="plano">plano</ConceptLink>, entonces toda la recta está incrustada en dicho plano. Este <ConceptLink targetId="axioma">axioma</ConceptLink> gobierna la relación de cerradura topológica entre líneas y superficies en el <ConceptLink targetId="espacio">espacio</ConceptLink>.
 
 <Separador />
 
 ### Enunciado Formal
 
 <Formula>
-  $$ \text{Si } l \text{ es una recta, } \pi \text{ un plano, y } A, B \in l \cap \pi \text{ con } A \neq B, \text{ entonces } l \subset \pi. $$
+  $$
+  \forall l, \pi \ ( \exists A, B \in l \cap \pi \land A \neq B ) \implies l \subset \pi
+  $$
 </Formula>
 
 <Separador />
 
 ### Discusión
 
-Este axioma establece que la relación de incidencia entre rectas y planos es *cerrada*: si una recta comparte dos puntos con un plano, entonces comparte todos sus puntos. Intuitivamente, una recta no puede "atravesar" un plano compartiendo solo algunos puntos; o está completamente contenida en él, o lo intersecta en un único punto, o no lo intersecta en absoluto.
+Este <ConceptLink targetId="postulado">postulado</ConceptLink> establece que la relación de <ConceptLink targetId="incidencia">incidencia</ConceptLink> entre rectas y planos es de naturaleza "cerrada": si una <InteractiveElement target="recta" color="carbon">recta</InteractiveElement> comparte apenas <InteractiveElement target="pA" color="terracota">dos</InteractiveElement> <InteractiveElement target="pB" color="terracota">puntos</InteractiveElement> con un <InteractiveElement target="plano" color="salvia">plano</InteractiveElement>, cae atrapada entera dentro de él. Intuitivamente, una recta recta no puede "atravesar" curviéndose un plano compartiendo solo un trozo; o está completamente pegada en él, o lo pincha en un único punto, o vuela paralela sin tocarlo.
 
-Nótese que el axioma I-1 es esencial aquí: como dos puntos determinan una única recta, si esos dos puntos están en el plano, la recta que determinan debe estar enteramente en el plano. No hay ambigüedad.
+Nótese que el <ConceptLink targetId="axioma-incidencia-1">axioma I-1</ConceptLink> es vital aquí: como dos puntos siempre determinan una y solo una recta, si anclas esos dos puntos en el plano, toda la recta tensada entre ellos no tiene más remedio que descansar en el plano entero.
 
 <Separador />
 
 ### Observaciones
 
-Este axioma es característico de la geometría tridimensional. En el plano, todas las rectas están contenidas en el único plano del espacio, por lo que el axioma se cumple trivialmente. En cambio, en el espacio, permite clasificar las posiciones relativas de una recta y un plano: contenida (si tiene dos puntos en común), secante (si tiene un punto en común), o paralela (si no tiene puntos en común).
+- Este comportamiento es exclusivo y característico de la <ConceptLink targetId="geometria-espacial">geometría tridimensional</ConceptLink>. En la <ConceptLink targetId="geometria-plana">geometría plana</ConceptLink> estricta, todas las rectas viven en el único plano del universo, por lo que la regla se cumple por defecto trivialmente.
+- En el espacio 3D, gracias a este axioma podemos clasificar las posiciones relativas exactas: recta contenida (comparte dos puntos), recta <ConceptLink targetId="rectas-secantes">secante</ConceptLink> (comparte un solo punto) o recta <ConceptLink targetId="paralela">paralela</ConceptLink> (cero puntos en común).

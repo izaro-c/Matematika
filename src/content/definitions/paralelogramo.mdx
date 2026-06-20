@@ -1,0 +1,26 @@
+export const metadata = {
+  "id": "paralelogramo",
+  "type": "definicion",
+  "title": "Paralelogramo",
+  "description": "Un paralelogramo es un cuadrilátero cuyos pares de lados opuestos son paralelos.",
+  "tags": ["geometria", "poligonos", "cuadrilateros"],
+  "authors": ["euclides"],
+  "links": ["cuadrilatero", "recta", "paralelas", "segmento", "angulo"],
+  "seeAlso": [],
+  "hasSimulation": true,
+};
+
+import { InteractiveElement } from "../../components/ui/VisualBind";
+import { Paralelogramo } from '../../diagrams/Definiciones/Paralelogramo';
+
+export const Simulation = Paralelogramo;
+
+<Capitular letra="U" />n <InteractiveElement target="paralelogramo">paralelogramo</InteractiveElement> es un tipo especial de <ConceptLink targetId="cuadrilatero">cuadrilátero</ConceptLink> caracterizado porque sus dos pares de lados opuestos son, respectivamente, <ConceptLink targetId="paralelas">paralelos</ConceptLink> entre sí.
+
+De esta definición primordial se derivan numerosas propiedades equivalentes:
+- Sus <InteractiveElement target="lados-opuestos">lados opuestos tienen la misma longitud</InteractiveElement>.
+- Sus <InteractiveElement target="angulos-opuestos">ángulos opuestos son congruentes</InteractiveElement> (es decir, tienen la misma medida).
+- Los ángulos consecutivos son suplementarios (suman $180^\circ$).
+- Sus <InteractiveElement target="diagonales">diagonales se cortan en su punto medio</InteractiveElement>.
+
+Si un paralelogramo tiene todos sus ángulos rectos, se denomina rectángulo. Si además tiene todos sus lados iguales, es un cuadrado. Si solo tiene sus lados iguales (sin requerir ángulos rectos), se llama rombo.

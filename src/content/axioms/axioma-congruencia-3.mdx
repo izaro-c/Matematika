@@ -6,31 +6,45 @@ export const metadata = {
   "statement": "La congruencia de segmentos se preserva bajo suma: si A*B*C, A'*B'*C', AB ≅ A'B' y BC ≅ B'C', entonces AC ≅ A'C'.",
   "tags": ["geometria", "congruencia", "geometria-absoluta"],
   "authors": ["hilbert"],
+  "hasSimulation": true
 };
 
+import { Congruence3 } from '../../diagrams/Axiomas/Congruence3';
+export const Simulation = Congruence3;
+import { InteractiveElement } from "../../components/ui/VisualBind";
+
 <Capitular letra="L" />
-a congruencia de segmentos se preserva bajo concatenación. Si dos segmentos adyacentes son congruentes a otros dos, entonces los segmentos suma también lo son.
+os <ConceptLink targetId="segmento">segmentos</ConceptLink> pueden sumarse axiomáticamente. Si el <ConceptLink targetId="punto">punto</ConceptLink> $B$ está entre $A$ y $C$, el <ConceptLink targetId="segmento">segmento</ConceptLink> $AC$ se compone de los <InteractiveElement target="ab" color="terracota"><ConceptLink targetId="segmento">segmentos</ConceptLink> $AB$</InteractiveElement> y <InteractiveElement target="bc" color="ocre">$BC$</InteractiveElement>. Este axioma asegura que si sumamos <ConceptLink targetId="segmento">segmentos</ConceptLink> <ConceptLink targetId="congruencia">congruentes</ConceptLink>, el <InteractiveElement target="ac" color="salvia"><ConceptLink targetId="segmento">segmento</ConceptLink> resultante será congruente</InteractiveElement>.
 
 <Separador />
 
 ### Enunciado Formal
 
 <Formula>
-  $$ (A * B * C) \land (A' * B' * C') \land (\overline{AB} \cong \overline{A'B'}) \land (\overline{BC} \cong \overline{B'C'}) \implies (\overline{AC} \cong \overline{A'C'}). $$
+  $$
+  \begin{cases}
+    A * B * C \land A' * B' * C' \\
+    \land \\
+    \overline{AB} \cong \overline{A'B'} \\
+    \land \\
+    \overline{BC} \cong \overline{B'C'}
+  \end{cases}
+  \implies \overline{AC} \cong \overline{A'C'}
+  $$
 </Formula>
 
 <Separador />
 
 ### Discusión
 
-Este axioma permite sumar segmentos congruentes: si descomponemos dos segmentos en partes respectivamente congruentes, los segmentos completos también lo son. Es la base para definir la adición de longitudes.
+Este axioma permite sumar <ConceptLink targetId="segmento">segmentos</ConceptLink> <ConceptLink targetId="congruencia">congruentes</ConceptLink>: si descomponemos dos segmentos en partes respectivamente congruentes, los segmentos completos también lo son. Es la base para definir la adición de longitudes.
 
-Nótese que el axioma no solo requiere que los segmentos parciales sean congruentes, sino también que los puntos intermedios B y B' estén efectivamente entre los extremos. Esto asegura que la descomposición es genuina y que los segmentos AC y A'C' se obtienen por suma, no por otra operación.
+Nótese que el <ConceptLink targetId="axioma">axioma</ConceptLink> no solo requiere que los <ConceptLink targetId="segmento">segmentos</ConceptLink> parciales sean congruentes, sino también que los <ConceptLink targetId="punto">puntos</ConceptLink> intermedios $B$ y $B'$ estén efectivamente entre los extremos. Esto asegura que la <ConceptLink targetId="descomposicion" isDependency={false}>descomposición</ConceptLink> es genuina y que los segmentos $AC$ y $A'C'$ se obtienen por <ConceptLink targetId="suma-segmentos" isDependency={false}>suma</ConceptLink>, no por otra operación.
 
-Sin este axioma, no podríamos garantizar que la suma de segmentos preserve la congruencia, y la aritmética de segmentos sería imposible.
+Sin este <ConceptLink targetId="axioma">axioma</ConceptLink>, no podríamos garantizar que la <ConceptLink targetId="suma-segmentos" isDependency={false}>suma</ConceptLink> de <ConceptLink targetId="segmento">segmentos</ConceptLink> preserve la <ConceptLink targetId="congruencia">congruencia</ConceptLink>, y la <ConceptLink targetId="aritmetica" isDependency={false}>aritmética</ConceptLink> de segmentos sería imposible.
 
 <Separador />
 
 ### Observaciones
 
-Este axioma, junto con III-1 y III-2, permite definir una relación de orden entre segmentos. Decimos que AB < CD si existe un punto E entre C y D tal que AB ≅ CE. La suma de segmentos se define entonces de manera natural, y III-3 asegura que esta suma es compatible con la congruencia.
+Este <ConceptLink targetId="axioma">axioma</ConceptLink>, junto con III-1 y III-2, permite definir una <ConceptLink targetId="relacion-orden" isDependency={false}>relación de orden</ConceptLink> entre segmentos. Decimos que AB < CD si existe un punto E entre C y D tal que AB ≅ CE. La <ConceptLink targetId="suma-segmentos" isDependency={false}>suma</ConceptLink> de segmentos se define entonces de manera natural, y III-3 asegura que esta suma es compatible con la congruencia.

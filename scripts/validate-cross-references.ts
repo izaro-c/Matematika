@@ -215,7 +215,7 @@ for (const file of allFiles) {
   const conceptLinkTargets = extractTargetIds(content, 'ConceptLink', 'targetId');
   for (const targetId of conceptLinkTargets) {
     if (!allContent.has(targetId)) {
-      error(`${relPath}: <ConceptLink targetId="${targetId}"> apunta a ID inexistente`);
+      console.warn(`  [WARN] ${relPath}: <ConceptLink targetId="${targetId}"> apunta a ID inexistente (Generará página 'En construcción')`);
     }
   }
 

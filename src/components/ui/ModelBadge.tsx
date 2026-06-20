@@ -8,21 +8,19 @@ interface ModelBadgeProps {
 
 export const ModelBadge: React.FC<ModelBadgeProps> = ({ modelId }) => {
   const model = db.getModel(modelId);
-  
+
   if (!model) return null;
 
-  // Diseño Arts and Crafts (clásico, enciclopedia, sello de papel)
   return (
-    <div 
-      className="inline-flex items-center gap-2 px-3 py-1 bg-lienzo border border-carbon/20 shadow-sm transition-all hover:bg-carbon/5 hover:border-carbon/40 cursor-default"
-      title={model.description}
-      style={{ boxShadow: '2px 2px 0px rgba(0,0,0,0.05)' }} // Sutil sombra dura clásica
+    <a
+      href={`/Matematika/modelo/${model.id}`}
+      className="ac-pill"
+      title={model.description || `Modelo: ${model.title}`}
+      style={{ ['--pill-accent' as string]: 'var(--theme-pavo)', textDecoration: 'none' }}
     >
-      <span className="text-terracota font-serif leading-none mt-1">☙</span>
-      <span className="text-[11px] font-serif uppercase tracking-widest text-carbon/90" style={{ fontVariant: 'small-caps' }}>
-        Modelo: <span className="font-bold">{model.title}</span>
-      </span>
-    </div>
+      <span className="ac-pill-ornament" aria-hidden style={{ color: 'var(--theme-terracota)' }}>☙</span>
+      <span className="ac-pill-serif">Modelo: <strong>{model.title}</strong></span>
+    </a>
   );
 };
 

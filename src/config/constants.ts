@@ -138,8 +138,8 @@ export const CONTENT_TYPE_CONFIG: Record<string, ContentTypeConfig> = {
     nodeStyle: { bg: '#4a6a4a', border: '#4a6a4a', text: '#ffffff', badge: 'EJERCICIO', ringColor: '#8aba8a' },
     hierarchyLevel: 10,
   },
-  caso_de_uso: {
-    id: 'caso_de_uso',
+  'caso-de-uso': {
+    id: 'caso-de-uso',
     labelSingular: 'Caso de Uso',
     labelPlural: 'Casos de Uso',
     routePrefix: 'caso',
@@ -178,12 +178,12 @@ export const CONTENT_TYPE_CONFIG: Record<string, ContentTypeConfig> = {
     nodeStyle: { bg: '#6b1a1a', border: '#6b1a1a', text: '#ffffff', badge: 'MODELO', ringColor: '#f0a082' },
     hierarchyLevel: 10,
   },
-  plan_de_estudio: {
-    id: 'plan_de_estudio',
+  'plan-de-estudio': {
+    id: 'plan-de-estudio',
     labelSingular: 'Plan de Estudio',
     labelPlural: 'Planes de Estudio',
     routePrefix: 'plan',
-    graphGroup: 'plan_de_estudio',
+    graphGroup: 'plan-de-estudio',
     graphColor: '#8B9DC4',
     nodeStyle: { bg: '#3a4a6a', border: '#3a4a6a', text: '#ffffff', badge: 'PLAN', ringColor: '#8B9DC4' },
     hierarchyLevel: 10,

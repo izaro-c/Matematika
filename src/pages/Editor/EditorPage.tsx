@@ -90,6 +90,7 @@ export const EditorPage: React.FC = () => {
       era: '', birth: '', death: '', color: 'terracota',
       authors: '', tags: '', corollaries: '', demos: '',
       parentTheorem: '', proofMethod: '', lemmas: '',
+      satisfies: '', axioms_verified: '', hasDiagram: false,
     });
     setWizardModalOpen(true);
   };

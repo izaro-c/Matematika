@@ -194,6 +194,7 @@ export class ContentStore {
         ...(meta as unknown as Model), id, slug,
         Component: this.createLazyComponent(loader),
         Diagram: meta.hasDiagram ? this.createLazyComponent(loader, 'Diagram') : undefined,
+        Simulation: meta.hasSimulation ? this.createLazyComponent(loader, 'Simulation') : undefined,
       }));
   }
 
@@ -204,7 +205,7 @@ export class ContentStore {
    * @returns Un array de objetos `Mathematician`.
    */
   getAllMathematicians(): Mathematician[] {
-    return Array.from(this.mathematicians.values()).sort((a, b) => a.year - b.year);
+    return Array.from(this.mathematicians.values()).sort((a, b) => (a.birthYear || 0) - (b.birthYear || 0));
   }
 
   /**

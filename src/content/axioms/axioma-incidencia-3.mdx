@@ -2,19 +2,17 @@ export const metadata = {
   "id": "axioma-incidencia-3",
   "type": "axioma",
   "title": "Axioma I-3 (Incidencia)",
-  "description": "Existen al menos tres puntos no colineales, es decir, que no están todos sobre una misma recta.",
+  "description": "Existen al menos tres puntos no colineales, forzando la dimensionalidad del espacio.",
   "statement": "Existen tres puntos A, B, C que no pertenecen a una misma recta.",
-  "tags": ["geometria", "incidencia", "geometria-absoluta"],
   "authors": ["hilbert"],
-  "hasSimulation": true,
+  "hasSimulation": true
 };
 
 import { Incidence3 } from '../../diagrams/Axiomas/Incidence3';
 export const Simulation = Incidence3;
 import { InteractiveElement } from "../../components/ui/VisualBind";
 
-<Capitular letra="E" />
-xisten al menos tres puntos no colineales. Este axioma asegura que el espacio geométrico tiene al menos dos dimensiones: no todos los puntos pueden alinearse sobre una misma recta.
+<Capitular letra="E" />xisten en el <ConceptLink targetId="espacio">espacio</ConceptLink> al menos tres <ConceptLink targetId="punto">puntos</ConceptLink> que no son <ConceptLink targetId="colineal">colineales</ConceptLink> (es decir, que no pertenecen todos a la misma <ConceptLink targetId="recta">recta</ConceptLink>). Esta declaración garantiza que nuestro universo geométrico tiene, como mínimo, dos <ConceptLink targetId="dimension">dimensiones</ConceptLink>.
 
 <Separador />
 
@@ -28,12 +26,15 @@ xisten al menos tres puntos no colineales. Este axioma asegura que el espacio ge
 
 ### Discusión
 
-Los dos primeros axiomas de incidencia son compatibles con un universo unidimensional (todos los puntos sobre una misma recta). El axioma I-3 rompe esa posibilidad al exigir la existencia de <InteractiveElement target="pA" color="terracota">tres</InteractiveElement> <InteractiveElement target="pB" color="terracota">puntos</InteractiveElement> <InteractiveElement target="pC" color="terracota">no colineales</InteractiveElement>, es decir, que no comparten ninguna recta común. Esto fuerza la dimensionalidad del espacio a ser al menos 2.
+Si analizamos los dos primeros postulados de incidencia (<ConceptLink targetId="axioma-incidencia-1">I-1</ConceptLink> e <ConceptLink targetId="axioma-incidencia-2">I-2</ConceptLink>), notaremos que serían lógicamente compatibles con un universo unidimensional donde absolutamente todos los puntos existieran sobre una única recta.
 
-En el plano, tres puntos no colineales determinan un <InteractiveElement target="triangle" color="terracota">triángulo</InteractiveElement>. En el espacio tridimensional, tres puntos no colineales determinan un plano (axioma I-4). La no colinealidad es, por tanto, la condición mínima para hablar de figuras bidimensionales.
+El axioma I-3 elimina esa posibilidad. Exige la existencia de <InteractiveElement target="pA" color="terracota">tres</InteractiveElement> <InteractiveElement target="pB" color="terracota">puntos</InteractiveElement> <InteractiveElement target="pC" color="terracota">dispersos</InteractiveElement> de tal forma que ninguna recta pueda contenerlos a la vez.
+
+Al forzar que al menos un punto quede fuera de la recta formada por los otros dos, el espacio se despliega y da lugar a un <ConceptLink targetId="plano">plano</ConceptLink> bidimensional. En este entorno, los tres puntos no colineales forman la estructura elemental geométrica más simple: el <ConceptLink targetId="triangulo">triángulo</ConceptLink>.
 
 <Separador />
 
 ### Observaciones
 
-Este es el primer axioma existencial de la geometría: no se limita a describir relaciones entre objetos ya dados, sino que postula la existencia de objetos concretos. Sin este axioma, el universo podría consistir en una única recta con todos sus puntos colineales.
+- Mientras que los axiomas I-1 e I-2 establecen reglas condicionales ("si hay puntos, entonces hay rectas"), el I-3 es el **primer axioma puramente existencial** del sistema propuesto por <ConceptLink targetId="hilbert">Hilbert</ConceptLink>. Decreta de manera directa la existencia material de tres entidades.
+- En la <ConceptLink targetId="geometria-finita">geometría finita</ConceptLink>, el <ConceptLink targetId="modelo-tres-puntos">modelo de los tres puntos</ConceptLink> se fundamenta exclusivamente en estos tres primeros axiomas, creando un sistema minúsculo pero matemáticamente consistente.

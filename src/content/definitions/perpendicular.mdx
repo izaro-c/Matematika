@@ -1,0 +1,22 @@
+export const metadata = {
+  "id": "perpendicular",
+  "type": "definicion",
+  "title": "Perpendicular",
+  "description": "Dos rectas son perpendiculares si al intersecarse forman cuatro ángulos congruentes (rectos).",
+  "tags": ["geometria", "rectas", "angulos"],
+  "authors": ["euclides"],
+  "links": ["recta", "angulo", "punto"],
+  "seeAlso": ["mediatriz", "teorema-punto-medio-perpendicular"],
+  "hasSimulation": true,
+};
+
+import { InteractiveElement } from "../../components/ui/VisualBind";
+import { Perpendicular } from '../../diagrams/Definiciones/Perpendicular';
+
+export const Simulation = Perpendicular;
+
+<Capitular letra="L" />a noción de perpendicularidad se establece cuando una <InteractiveElement target="perpendicular">recta secante</InteractiveElement> se interseca con otra <InteractiveElement target="recta">recta</InteractiveElement> de tal forma que dividen el plano en <InteractiveElement target="angulos-rectos">cuatro regiones angulares exactamente iguales</InteractiveElement>, cada una de las cuales se denomina ángulo recto.
+
+<Separador />
+
+La perpendicularidad es un caso particular de intersección y está íntimamente relacionada con la métrica del espacio euclidiano.

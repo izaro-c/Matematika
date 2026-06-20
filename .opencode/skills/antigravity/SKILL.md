@@ -1,227 +1,273 @@
+# Skill: page_creator — Generador de Contenido Matemático para Matematika
+
+> **Fuente de verdad única.** Este documento absorbe y reemplaza `STYLEGUIDE.md`.
+> Toda decisión arquitectónica, estética y de contenido de Matematika vive aquí.
+
+## Índice
+
+1. [Filosofía del Proyecto](#1-filosofía-del-proyecto)
+2. [Regla de IDs Invariante (CRÍTICO)](#2-regla-de-ids-invariante-crítico)
+3. [Formato de Metadata](#3-formato-de-metadata)
+4. [El Campo `links` — Conexiones Explícitas](#4-el-campo-links--conexiones-explícitas)
+5. [Tipos de Contenido y Schemas Completos](#5-tipos-de-contenido-y-schemas-completos)
+6. [Estructura de Páginas MDX](#6-estructura-de-páginas-mdx)
+7. [Guía de Escritura Matemática](#7-guía-de-escritura-matemática)
+8. [Sistema de Enlazado Semántico](#8-sistema-de-enlazado-semántico)
+9. [Paleta Arts & Crafts](#9-paleta-arts--crafts)
+10. [Grafo y Red de Dependencias](#10-grafo-y-red-de-dependencias)
+11. [Convenciones de Naming](#11-convenciones-de-naming)
+12. [Estructura de Archivos](#12-estructura-de-archivos)
+13. [Exportación de Simulaciones y Diagramas](#13-exportación-de-simulaciones-y-diagramas)
+14. [Fuentes de Referencia](#14-fuentes-de-referencia)
+15. [Validación Automática (OBLIGATORIA)](#15-validación-automática-obligatorio)
+16. [Checklist de Integridad Referencial](#16-checklist-de-integridad-referencial)
+17. [Checklist de Calidad por Tipo](#17-checklist-de-calidad-por-tipo)
+
 ---
-name: page_creator
-description: >
-  Use ONLY when the user asks to create, edit, or generate mathematical content
-  (MDX files, theorems, axioms, definitions, graph nodes), or when performing
-  any task that requires mathematical rigor and adherence to the Matematika
-  project's rules (STYLEGUIDE, Zod schemas, graph integrity, i18n invariants).
-  Also use when creating or fixing the page_creator skill itself. Do NOT use for
-  general React UI work, styling, or build configuration unless it directly
-  involves content generation.
+
+## 1. Filosofía del Proyecto
+
+- **Jardín Digital, no PDF interactivo:** Cada concepto es un nodo navegable en una red de conocimiento. La lectura puede ser lineal o exploratoria.
+- **Universalidad absoluta:** El contenido matemático no tiene país, currículo ni sistema educativo. Es atemporal.
+- **Interactividad como norma:** Si un concepto puede visualizarse, se visualiza. Si un ejercicio puede hacerse interactivo, lo es.
+- **Elegante y limpio:** El diseño sirve a las matemáticas, no compite con ellas.
+- **Rigor sobre accesibilidad:** Todo enunciado está justificado. Toda definición es precisa. Toda demostración es completa.
+- **Orden topológico:** El contenido se construye de abajo arriba, desde los axiomas. Un concepto no puede referenciar algo que depende lógicamente de él.
+
 ---
 
-# antigravity — Matematika Content Generator
+## 2. Regla de IDs Invariante (CRÍTICO)
 
-You are page_creator, a mathematical content generation engine for the Matematika project. Your purpose is to create, edit, and validate mathematical content with absolute rigor, ensuring every piece of content is consistent with the project's architecture, style guide, and logical graph.
+Los IDs son las claves primarias de la base de datos de contenido. **NUNCA** se traducen, **NUNCA** se modifican, **NUNCA** se duplican.
 
-## 1. Project Philosophy
+### 2.1 Formato — kebab-case ESTRICTO
 
-- **Digital Garden, not interactive PDF:** Every concept is a navigable node in a knowledge network. Reading can be linear or exploratory.
-- **Absolute universality:** Mathematical content has no country, curriculum, or educational system. It is timeless.
-- **Interactivity as default:** If a concept can be visualized, it should be. If an exercise can be interactive, it must be.
-- **Elegant and clean:** Design serves mathematics, not competes with it.
-- **Rigor over accessibility:** Every statement is justified. Every definition is precise. Every proof is complete.
-- **Topological order:** Content is built bottom-up from axioms. A concept cannot reference something that logically depends on it.
-
-## 2. The Invariant ID Rule (CRITICAL)
-
-IDs are the primary keys of the content database. They are **NEVER** translated, **NEVER** modified, and **NEVER** duplicated.
-
-### 2.1 Format — kebab-case ONLY
-
-All IDs MUST use **kebab-case** (lowercase letters separated by hyphens). **snake_case is forbidden.**
+Todos los IDs DEBEN usar **kebab-case** (minúsculas separadas por guiones). **snake_case está prohibido.**
 
 ```
-Correct:   "teorema-pitagoras", "axioma-incidencia-1", "demo-pons-asinorum"
-Incorrect: "teorema_pitagoras", "axioma_incidencia_1", "demo_pons_asinorum"
+Correcto:   "teorema-pitagoras", "axioma-incidencia-1", "demo-pons-asinorum"
+Incorrecto: "teorema_pitagoras", "axioma_incidencia_1", "demo_pons_asinorum"
 ```
 
-This includes:
-- `metadata.id` in every MDX file
-- `targetId` on `<ConceptLink>`
-- All references in `requires`, `demos`, `lemmas`, `corollaries`, `parentTheorem`, `relatedTheorem`, `concept`, `axiomas`, `satisfies`, `axioms_verified`, `authors`, `mathematicians`
-- File names: `teorema-pitagoras.mdx`, `demo-pons-asinorum.mdx`
+Esto incluye:
+- `metadata.id` en cada archivo MDX
+- `targetId` en `<ConceptLink>` y `<RefLink>`
+- Todas las referencias en `requires`, `demos`, `lemmas`, `corollaries`, `parentTheorem`, `relatedTheorem`, `concept`, `axiomas`, `satisfies`, `axioms_verified`, `authors`, `mathematicians`, `links`, `seeAlso`
+- Los literales `type` en metadata: `"caso-de-uso"`, `"plan-de-estudio"` (kebab-case)
+- Nombres de archivo: `teorema-pitagoras.mdx`, `demo-pons-asinorum.mdx`
 
-### 2.2 Invariance across languages
+### 2.2 Invariancia
 
-```
-// Spanish
-src/content/es/theorems/teorema-congruencia-ala.mdx
-  → id: "teorema-congruencia-ala"
-  → title: "Teorema de Congruencia ALA"
-  → links: ["axioma-congruencia-triangulos"]
+El ID es el mismo en todos los contextos. El título puede traducirse o adaptarse, pero el ID nunca cambia.
 
-// English — SAME id, translated title, SAME links
-src/content/en/theorems/teorema-congruencia-ala.mdx
-  → id: "teorema-congruencia-ala"
-  → title: "ASA Congruence Theorem"
-  → links: ["axioma-congruencia-triangulos"]
-```
+### 2.3 IDs de Matemáticos
 
-### 2.3 Mathematician IDs
-
-Mathematician IDs use the **last name in kebab-case**, lowercase. If the last name is ambiguous, add a disambiguating word.
+Los IDs de matemáticos usan el **apellido en kebab-case**, en minúsculas. Si el apellido es ambiguo, se añade una palabra disambiguadora.
 
 ```
-Correct:   "euclides", "hilbert", "lobachevski", "dedekind", "gauss"
-Correct (disambiguation needed): "newton-isaac"
-Incorrect: "richard-dedekind" (first name not needed)
-Incorrect: "C.F. Gauss" (no spaces or dots in IDs)
+Correcto:   "euclides", "hilbert", "lobachevski", "dedekind", "gauss"
+Correcto (disambiguación): "newton-isaac"
+Incorrecto: "richard-dedekind" (nombre propio innecesario)
+Incorrecto: "C.F. Gauss" (sin espacios ni puntos en IDs)
 ```
 
-## 3. Metadata Format (REQUIRED)
+---
 
-Every MDX file MUST export a `metadata` object with **quoted keys** (double quotes). Unquoted keys or single quotes are **FORBIDDEN**.
+## 3. Formato de Metadata
+
+Todo archivo MDX DEBE exportar un objeto `metadata` con **claves entre comillas dobles**. Las claves sin comillas o con comillas simples están **PROHIBIDAS**.
 
 ```typescript
-// CORRECT
+// CORRECTO
 export const metadata = {
   "id": "teorema-pitagoras",
   "title": "Teorema de Pitágoras",
   ...
 };
 
-// INCORRECT
+// INCORRECTO
 export const metadata = {
-  id: "teorema-pitagoras",     // ← no quotes
-  'title': 'Teorema...',       // ← single quotes
+  id: "teorema-pitagoras",     // ← sin comillas
+  'title': 'Teorema...',       // ← comillas simples
   ...
 };
 ```
 
-Indentation: **2 spaces** throughout. No tabs, no 4-space indentation.
+**Indentación:** 2 espacios en todo el archivo. No tabs, no indentación de 4 espacios.
 
-## 4. The `links` Field — Explicit Connections Only
+---
 
-**CRITICAL RULE:** The `links` array in metadata header is ONLY for explicit, intentional formal connections between content nodes. It is NOT for every related concept.
+## 4. El Campo `links` — Conexiones Explícitas
 
-- Use `links` in metadata ONLY when the connection is architecturally significant and isn't mentioned on the text (though it should be) (e.g., an axiom that a theorem directly depends on, a definition that is strictly required)
-- To create a link with a dependency relationship (creates an edge in the graph) you should use `<ConceptLink targetId="...">`.
-- For general cross-references within the body text, use `<RefLink targetId="...">` — these are semantic body links that open the MarginaliaPanel, but they do NOT create a formal metadata connection
-- The rule of thumb: if you wouldn't draw an edge in the axiomatic graph for it, don't put it in `links`
-- When in doubt, omit `links` and use `<RefLink>` in the body instead
-- Use ConceptLink and RefLink every time you can. Every time a mathematical concept is mentioned, the student should be able to reach it quickly to understand what is being talked about
+**REGLA CRÍTICA:** El array `links` en metadata es SOLO para conexiones formales explícitas e intencionales entre nodos de contenido. NO es para todo concepto relacionado.
 
-## 5. Content Types and Complete Schemas
+- Usar `links` en metadata SOLO cuando la conexión es arquitectónicamente significativa (p. ej. un axioma del que depende directamente un teorema, una definición estrictamente requerida)
+- Para crear un enlace con relación de dependencia (crea una arista en el grafo) usar `<ConceptLink targetId="...">` o `<RefLink targetId="...">` en el cuerpo
+- Para referencias cruzadas generales en el texto, usar `<RefLink targetId="...">` — son enlaces semánticos de cuerpo que abren el MarginaliaPanel, pero NO crean una conexión formal en metadata
+- Regla práctica: si no dibujarías una arista en el grafo axiomático para ello, no lo pongas en `links`
+- En caso de duda, omitir `links` y usar `<RefLink>` en el cuerpo
+- Usar `<ConceptLink>` y `<RefLink>` siempre que sea posible. Cada vez que se menciona un concepto matemático, el estudiante debe poder acceder rápidamente a él
 
-Every MDX file MUST export a `metadata` object. Below are the **complete schemas** for each content type.
+### Distinción `links` vs `seeAlso` vs `requires`
 
-### 5.1 Axiom (`type: "axioma"`)
+| Campo | Propósito | ¿Crea arista en grafo? |
+|-------|-----------|------------------------|
+| `links` | Conexiones formales explícitas entre nodos | Sí |
+| `seeAlso` | Referencias cruzadas suaves ("véase también") | No |
+| `requires` | Dependencias estrictas (solo teoremas/lemas/corolarios) | Sí |
+| `parentTheorem` | Relación padre-hijo (lemas/corolarios/demos) | Sí |
+| `relatedTheorem` | Teorema ilustrado (ejemplos/ejercicios) | No (conexión semántica) |
+
+---
+
+## 5. Tipos de Contenido y Schemas Completos
+
+Cada archivo MDX DEBE exportar un objeto `metadata`. Los schemas Zod (`src/store/schemas.ts`) son la fuente de verdad para los campos. A continuación, los **schemas completos** para cada tipo.
+
+### 5.1 Axioma (`type: "axioma"`)
 
 ```
 "id": string (kebab-case)
 "type": "axioma"
 "title": string
-"description": string — informal explanation of what the axiom states
-"statement": string — formal statement (optional, can use LaTeX)
+"description": string — explicación informal de lo que afirma el axioma
+"statement"?: string — enunciado formal (opcional, puede usar LaTeX)
 "tags"?: string[]
-"authors"?: string[] — mathematician IDs
+"authors"?: string[] — IDs de matemáticos
 "links"?: string[]
+"seeAlso"?: string[]
+"hasSimulation"?: boolean — si tiene diagrama interactivo
 ```
 
-### 5.2 Definition (`type: "definicion"`)
+**Reglas:**
+- El axioma debe ser independiente (no demostrable desde otros axiomas de su sistema)
+- Usa solo términos primitivos o previamente definidos
+- La descripción informal debe reflejar fielmente el enunciado formal
+
+### 5.2 Definición (`type: "definicion"`)
 
 ```
 "id": string (kebab-case)
 "type": "definicion"
 "title": string
-"description": string — informal explanation
-"statement"?: string — formal definition (optional)
+"description": string — explicación informal
+"statement"?: string — definición formal (opcional)
 "tags"?: string[]
 "authors"?: string[]
-"requires"?: string[] — IDs of definitions this one depends on
-"color"?: string — one of the Arts & Crafts tokens
+"color"?: string — uno de los tokens Arts & Crafts
 "links"?: string[]
+"seeAlso"?: string[]
+"hasSimulation"?: boolean — si tiene diagrama interactivo
 ```
 
-Every definition MUST be formulated using only previously defined or primitive terms. If `requires` is non-empty, all referenced definitions MUST exist.
+**Reglas:**
+- Toda definición DEBE formularse usando solo términos previamente definidos o primitivos
+- Las dependencias de una definición se expresan через `links` (NO existe `requires` ni `usedBy` en definiciones; las dependencias se generan automáticamente desde los `links`)
+- La definición debe ser minimal (sin condiciones extra más allá de lo necesario)
+- La notación formal debe coincidir con la descripción verbal
 
-### 5.3 Axiomatic System (`type: "sistema-axiomatico"`)
+### 5.3 Sistema Axiomático (`type: "sistema-axiomatico"`)
 
 ```
 "id": string (kebab-case)
 "type": "sistema-axiomatico"
 "title": string
-"description": string — what theory this system defines
-"axiomas": string[] — IDs of the axioms that compose this system (IN ORDER)
-"models"?: string[] — IDs of models that satisfy this system
+"description": string — qué teoría define este sistema
+"axiomas": string[] — IDs de los axiomas que componen el sistema (EN ORDEN)
+"models"?: string[] — IDs de modelos que satisfacen este sistema
 "mathematicians"?: string[]
 "tags"?: string[]
 "links"?: string[]
+"seeAlso"?: string[]
+"hasSimulation"?: boolean
 ```
 
-An axiomatic system is a **set of axioms** that defines a mathematical theory. It is NOT a model. Examples: "Geometría Absoluta" (axiomas de incidencia + orden + congruencia + continuidad), "Geometría Euclídea" (absoluta + paralelas), "Geometría Hiperbólica" (absoluta + paralela hiperbólica).
+**Reglas:**
+- Un sistema axiomático es un **conjunto de axiomas** que define una teoría matemática. NO es un modelo.
+- El array `axiomas` DEBE listar los IDs en el orden lógico convencional
+- Todos los IDs en `axiomas` DEBEN existir en `src/content/axioms/`
+- Todos los IDs en `models` DEBEN existir en `src/content/models/`
+- Ejemplos: "Geometría Absoluta", "Geometría Euclídea", "Geometría Hiperbólica"
 
-The `axiomas` array MUST list the axiom IDs in the conventional logical order. ALL referenced axiom IDs MUST exist in `src/content/axioms/`.
-
-### 5.4 Theorem / Lemma / Corollary (`type: "teorema" | "lema" | "corolario"`)
+### 5.4 Teorema / Lema / Corolario (`type: "teorema" | "lema" | "corolario"`)
 
 ```
 "id": string (kebab-case)
 "type": "teorema" | "lema" | "corolario"
 "title": string
 "description": string
-"statement": string — formal statement (required for theorems, optional for lemmas/corollaries)
-"requires": string[] — IDs of definitions/theorems/axioms this depends on
-"demos"?: string[] — IDs of demonstration files that prove this
-"lemmas"?: string[] — IDs of lemmas used in the proof
-"corollaries"?: string[] — IDs of corollaries that follow from this
-"parentTheorem"?: string — REQUIRED if type is "lema" or "corolario"
+"statement"?: string — enunciado formal (requerido para teoremas, opcional para lemas/corolarios)
+"color"?: string — token Arts & Crafts
+"branch"?: string — código de rama MSC2020 (singular, forma corta)
+"branches"?: string[] — códigos de rama MSC2020 (plural)
+"authors"?: string[] — IDs de matemáticos
+"requires": string[] — IDs de definiciones/teoremas/axiomas de los que depende
+"demos"?: string[] — IDs de archivos de demostración que prueban esto
+"lemmas"?: string[] — IDs de lemas usados en la demostración
+"corollaries"?: string[] — IDs de corolarios que se derivan
+"parentTheorem"?: string — REQUERIDO si type es "lema" o "corolario"
 "mathematicians"?: string[]
-"branches"?: string[] — MSC2020 branch codes
-"examples"?: string[]
-"exercises"?: string[]
+"examples"?: string[] — IDs de ejemplos asociados
+"exercises"?: string[] — IDs de ejercicios asociados
 "tags"?: string[]
 "difficulty"?: "básico" | "intermedio" | "avanzado"
 "links"?: string[]
+"seeAlso"?: string[]
+"hasSimulation"?: boolean
 ```
 
-**Classification rules:**
-- **Theorem**: A major result that is a goal of the theory. Has its own proof.
-- **Lemma**: An auxiliary result used specifically to prove a theorem. Set `parentTheorem`.
-- **Corollary**: A direct consequence of a theorem, usually requiring little or no additional proof. Set `parentTheorem`.
+**Reglas de clasificación:**
+- **Teorema:** Resultado principal que es objetivo de la teoría. Tiene su propia demostración.
+- **Lema:** Resultado auxiliar usado específicamente para probar un teorema. Debe tener `parentTheorem`.
+- **Corolario:** Consecuencia directa de un teorema, usualmente con poca o ninguna demostración adicional. Debe tener `parentTheorem`.
 
-Every theorem MUST have at least one demonstration (proof) unless it is a postulate or axiom. The `demos` array links to demonstration MDX files.
+- Todo teorema DEBE tener al menos una demostración (salvo que sea postulado o axioma)
+- El array `requires` debe formar un orden topológico válido (no dependencias circulares)
 
-### 5.5 Demonstration (`type: "demostracion"`)
+### 5.5 Demostración (`type: "demostracion"`)
 
 ```
 "id": string (kebab-case)
 "type": "demostracion"
 "title": string
 "description"?: string
-"parentTheorem": string — ID of the theorem being proved
-"lemmas"?: string[] — IDs of lemmas used
-"proofMethod": "directo" | "contradiccion" | "induccion" | "contraposicion" | "constructivo" | "geometrico" | "exhaustivo" | "reduccion"
+"parentTheorem": string — ID del teorema que se prueba
+"lemmas"?: string[] — IDs de lemas usados
+"proofMethod"?: "directo" | "contradiccion" | "induccion" | "contraposicion" | "constructivo" | "geometrico" | "exhaustivo" | "reduccion"
 "authors"?: string[]
 "tags"?: string[]
-"layout"?: "split" | "text" — split (default for geometric proofs): diagram left, text right; text: full-width
 "links"?: string[]
+"seeAlso"?: string[]
+"layout"?: "split" | "text" — split (por defecto para pruebas geométricas): diagrama izquierda, texto derecha; text: ancho completo
+"dependencias"?: string[] — IDs de contenido del que depende esta demostración
 ```
 
-**Rules:**
-- Every demonstration MUST have a `parentTheorem` pointing to an existing theorem
-- The `layout` field determines the page rendering: `"split"` for side-by-side diagram+text, `"text"` for full-width
-- Geometric proofs SHOULD use `layout: "split"`
-- Each step in the proof SHOULD have a corresponding `MedievalStep` in the MDX body and a matching `InteractiveElement` connecting to a diagram element
+**Reglas:**
+- Toda demostración DEBE tener un `parentTheorem` apuntando a un teorema existente
+- El campo `layout` determina el renderizado: `"split"` para diagrama+lado a lado, `"text"` para ancho completo
+- Las demostraciones geométricas DEBEN usar `layout: "split"`
+- Cada paso de la demostración DEBE tener un `<MedievalStep>` correspondiente en el cuerpo y un `<InteractiveElement>` conectando a un elemento del diagrama
+- **PATRÓN DE EXPORT:** Las demostraciones exportan `Component` (no body MDX plano). Ver §6.2.
 
-### 5.6 Example (`type: "ejemplo"`)
+### 5.6 Ejemplo (`type: "ejemplo"`)
 
 ```
 "id": string (kebab-case)
 "type": "ejemplo"
 "title": string
 "description"?: string
-"relatedTheorem": string — ID of the theorem being exemplified
+"relatedTheorem"?: string — ID del teorema o definición ilustrado
 "requires"?: string[]
 "tags"?: string[]
 "difficulty"?: "básico" | "intermedio" | "avanzado"
 "links"?: string[]
+"seeAlso"?: string[]
+"hasSimulation"?: boolean
 ```
 
-An example is a **worked, solved problem** that illustrates a theorem or definition. It MUST show complete reasoning.
+Un ejemplo es un **problema resuelto y desarrollado** que ilustra un teorema o definición. DEBE mostrar razonamiento completo.
 
-### 5.7 Exercise (`type: "ejercicio"`)
+### 5.7 Ejercicio (`type: "ejercicio"`)
 
 ```
 "id": string (kebab-case)
@@ -232,51 +278,56 @@ An example is a **worked, solved problem** that illustrates a theorem or definit
 "requires"?: string[]
 "tags"?: string[]
 "difficulty"?: "básico" | "intermedio" | "avanzado"
-"hint"?: string
+"hint"?: string — pista visible antes de revelar la solución
 "links"?: string[]
+"seeAlso"?: string[]
+"hasSimulation"?: boolean
 ```
 
-Exercises SHOULD be interactive when possible (using `<Hueco>`, `<Pregunta>`, and other exercise components in the MDX body).
+Los ejercicios DEBEN ser interactivos cuando sea posible (usando `<Hueco>`, `<Pregunta>`, y otros componentes de ejercicio en el cuerpo MDX).
 
-### 5.8 Model (`type: "modelo"`)
+### 5.8 Modelo (`type: "modelo"`)
 
 ```
 "id": string (kebab-case)
 "type": "modelo"
 "title": string
-"description": string — description of the concrete structure
-"satisfies": string — ID of the axiomatic system this is a model of
-"axioms_verified": string[] — IDs of specific axioms verified by this model
-"hasDiagram"?: boolean — whether the model has a visual representation
+"description"?: string — descripción de la estructura concreta
+"satisfies": string — ID del sistema axiomático que este modelo satisface
+"axioms_verified"?: string[] — IDs de axiomas específicos verificados por este modelo
+"hasDiagram"?: boolean — si el modelo tiene representación visual
+"hasSimulation"?: boolean
 "tags"?: string[]
 "links"?: string[]
+"seeAlso"?: string[]
 ```
 
-**CRITICAL DISTINCTION:** A model is a **concrete structure** that satisfies a set of axioms. It is NOT an axiomatic system. Examples:
-- Model of 3 points (satisfies incidence axioms)
-- Fano plane (satisfies projective plane axioms)
-- Cartesian plane (satisfies Euclidean geometry)
-- Poincaré disk (satisfies hyperbolic geometry)
+**DISTINCIÓN CRÍTICA:** Un modelo es una **estructura concreta** que satisface un conjunto de axiomas. NO es un sistema axiomático. Ejemplos:
+- Modelo de 3 puntos (satisface axiomas de incidencia)
+- Plano de Fano (satisface axiomas de plano proyectivo)
+- Plano cartesiano (satisface geometría euclídea)
+- Disco de Poincaré (satisface geometría hiperbólica)
 
-Models do NOT participate in the axiomatic graph dependency chain. They are connected via `satisfies` → `axiomatic-system` and `axiomas` → individual axioms.
+Los modelos NO participan en la cadena de dependencias del grafo axiomático. Se conectan vía `satisfies` → `sistema-axiomatico` y `axioms_verified` → axiomas individuales.
 
-### 5.9 Use Case (`type: "caso-de-uso"`)
+### 5.9 Caso de Uso (`type: "caso-de-uso"`)
 
 ```
 "id": string (kebab-case)
 "type": "caso-de-uso"
 "title": string
 "description"?: string
-"concept"?: string — ID of the theorem/definition being illustrated
-"domain"?: string — e.g. "ingeniería", "medicina", "economía", "arte", "naturaleza", "física", "astronomía"
+"concept"?: string — ID del teorema/definición ilustrado
+"domain"?: string — p. ej. "ingeniería", "medicina", "economía", "arte", "naturaleza", "física", "astronomía"
 "tags"?: string[]
 "difficulty"?: "básico" | "intermedio" | "avanzado"
 "links"?: string[]
+"seeAlso"?: string[]
 ```
 
-A use case shows how a mathematical concept applies to a real-world domain. It is narrative-driven with minimal formal notation.
+Un caso de uso muestra cómo un concepto matemático se aplica a un dominio del mundo real. Es narrativo, con notación formal mínima.
 
-### 5.10 Lesson (`type: "leccion"`)
+### 5.10 Lección (`type: "leccion"`)
 
 ```
 "id": string (kebab-case)
@@ -286,127 +337,555 @@ A use case shows how a mathematical concept applies to a real-world domain. It i
 "tags"?: string[]
 "difficulty"?: "básico" | "intermedio" | "avanzado"
 "links"?: string[]
+"seeAlso"?: string[]
+"hasSimulation"?: boolean
+"hasVisualizer"?: boolean
 ```
 
-Lessons are pedagogical explanations. They can span multiple concepts and are not bound by the strict dependency graph of theorems/definitions.
+Las lecciones son explicaciones pedagógicas. Pueden abarcar múltiples conceptos y no están sujetas al grafo estricto de dependencias de teoremas/definiciones.
 
-### 5.11 Mathematician (`type: "matematico"`)
+### 5.11 Matemático (`type: "matematico"`)
 
 ```
-"id": string (kebab-case) — last name only, disambiguate if needed
+"id": string (kebab-case) — apellido solo, disambiguar si es necesario
 "type": "matematico"
-"name": string — full display name
+"name": string — nombre completo para mostrar
 "birthYear"?: number
 "deathYear"?: number
 "country"?: string
 "description": string
 "image"?: string
 "links"?: string[]
+"seeAlso"?: string[]
 ```
 
-### 5.12 Study Plan (`type: "plan-de-estudio"`)
+### 5.12 Plan de Estudio (`type: "plan-de-estudio"`)
 
 ```
-"id": string (kebab-case)
+"id": string (kebab-case) — REQUERIDO (no opcional)
 "type": "plan-de-estudio"
 "title": string
 "subtitle"?: string
 "description": string
 "requiredNodes"?: string[]
 "links"?: string[]
+"seeAlso"?: string[]
 ```
 
-Study plans MAY reference specific curricula (e.g. "Selectividad", "EBAU"), but this is the ONLY content type where such references are allowed.
+Los planes de estudio PUEDEN referenciar currículos específicos (p. ej. "Selectividad", "EBAU"). Esta es la ÚNICA excepción a la regla de universalidad.
 
-## 6. MDX Standard Page Structure
+---
 
-### 6.1 General Rules (ALL content types)
+## 6. Estructura de Páginas MDX
+
+### 6.1 Reglas Generales (TODOS los tipos de contenido)
+
+**Componentes requeridos/disponibles:**
+- `<Capitular letra="X" />` — capitular decorativa al inicio de cada página (OBLIGATORIO al principio)
+- `<Separador />` — entre cada sección principal (NUNCA usar `---`)
+- `<Formula>` — para ecuaciones destacadas/importantes
+- `<Definicion title="...">` — para definiciones formales inline dentro de una página
+- `<Nota>` — para observaciones, comentarios, casos límite
+- `<Cita author="...">` — para citas y epígrafes
+- `<Corolario>` — para corolarios embebidos en páginas de teoremas
+- `<EquationRow>` — para ecuaciones multi-línea alineadas
+- `<Demostracion>` — bloque formal de demostración (para pruebas cortas inline)
+
+**PROHIBIDO:**
+- `---` como separador de sección (usar `<Separador />`)
+- Enlaces Markdown estándar `[texto](url)` para navegación interna (usar `<ConceptLink>` y `<RefLink>`)
+- `\sen` en LaTeX (usar `\sin`)
+- `<ConceptLink>` anidados con el mismo `targetId` (ej: `<ConceptLink targetId="x"><ConceptLink targetId="x">...</ConceptLink></ConceptLink>` es un BUG)
+
+**Principios de estructura:**
+- La página debe ser legible, comprensible, visual y atractiva; pero sobre todo, DEBE ser completa y rigurosa matemáticamente
+- La página DEBE ser modular: una demostración o corolario NUNCA va en la página de un teorema, tienen su propio archivo
+- Cuando hay un diagrama, usar `<InteractiveElement>` para referenciar elementos del diagrama. Al hacer hover sobre el enlace, el elemento referenciado se ilumina
+- La estructura se adapta al contenido: el orden y la presencia de secciones depende de lo que mejor explique el concepto. Lo importante es que quede rigurosamente explicado, comprensible, visual y completo
+- Las conexiones con otros conceptos se tejen en el cuerpo con `<ConceptLink>` (crea relación) o `<RefLink>` (sin relación). En las observaciones finales se pueden añadir relaciones a otras páginas usando `<RefLink>` (sin crear dependencia)
+
+### 6.2 Estructura Canónica por Tipo de Contenido
+
+A continuación, las estructuras canónicas para cada tipo de página. Estas son **guías adaptables**, no plantillas rígidas. Lo importante es que el contenido quede completo, riguroso y pedagógicamente claro.
+
+#### 6.2.1 Axioma
 
 ```
-export const metadata = {
-  "id": "...",
-  "title": "...",
-  ...
-};
+<Capitular letra="X" />
+Intro: qué afirma el axioma y por qué es fundamental.
 
-// If the concept has a visual diagram, import and export it
-import { MyDiagram } from '../../diagrams/Category/MyDiagram';
-export const Diagram = MyDiagram;
+<Separador />
+
+### Enunciado Formal
+<Formula>$$ ... $$</Formula>
+<Nota>Notación o aclaración.</Nota>
+
+<Separador />
+
+### Discusión
+Qué afirma, por qué es necesario, qué pasaría sin él.
+
+<Separador />
+
+### Relación con otros axiomas
+Cómo se conecta con los demás axiomas de su sistema.
+
+<Separador />
+
+### Observaciones
+Validez en geometrías no euclídeas, formulaciones equivalentes, contexto histórico si es relevante.
+```
+
+#### 6.2.2 Definición — Primitiva (punto, recta, plano)
+
+Las definiciones de conceptos primitivos tienen estructura rica porque no se definen explícitamente, sino vía los axiomas que las gobiernan.
+
+```
+<Capitular letra="X" />
+Intro: definición euclidiana clásica + enfoque moderno (concepto primitivo).
+
+<Separador />
+
+### Enunciado Informal
+Descripción intuitiva del concepto.
+
+<Separador />
+
+### Definición Axiomática
+Qué axiomas gobiernan este concepto (incidencia, orden, congruencia). Lista con ConceptLinks a cada axioma.
+
+<Separador />
+
+### Notación
+Tabla con notaciones usuales ($A$, $\overline{AB}$, etc.)
+
+<Separador />
+
+### Observaciones
+Modelos donde aparece, propiedades clave.
+```
+
+#### 6.2.3 Definición — Derivada (triángulo, circunferencia, ángulo, etc.)
+
+Las definiciones de conceptos derivados son más concisas: se construyen a partir de los primitivos.
+
+```
+<Capitular letra="X" />
+Intro: qué es el concepto y de qué primitivos se construye.
+
+<Separador />
+
+### Enunciado Formal
+<Formula>$$ ... $$</Formula>
+Descripción formal con InteractiveElement si hay diagrama.
+
+<Separador />
+
+### [Sección opcional según relevancia]
+- "Definición Axiomática" si el concepto está gobernado por axiomas específicos
+- "Clasificación" si hay tipos (ej. ángulos agudo/recto/obtuso)
+- "Notación" si hay notaciones variadas
+
+<Separador />
+
+### Observaciones
+Contexto, propiedades clave, conexiones con otros conceptos.
+```
+
+#### 6.2.4 Teorema / Lema / Corolario
+
+La estructura se adapta al teorema. Lo importante es que quede rigurosamente explicado, comprensible, visual (diagrama interactivo apropiado) y completo. **El teorema se enfoca en sí mismo**: lemas, corolarios y demostraciones tienen sus propias páginas (los links se generan automáticamente desde metadata).
+
+```
+<Capitular letra="X" />
+Intro: qué establece el teorema y por qué importa.
+
+<Separador />
+
+### Enunciado Formal
+<Formula>$$ ... $$</Formula>
+Hipótesis y tesis claras con cuantificadores precisos.
+
+<Separador />
+
+### Demostración
+Link a la demostración dedicada: <ConceptLink targetId="demo-x">Demostración: ...</ConceptLink>
+(Sin prueba inline — la demo tiene su propia página)
+
+<Separador />
+
+### Discusión
+Por qué importa, qué técnicas usa, contexto si es relevante.
+
+<Separador />
+
+### Observaciones
+Casos límite, validez en otras geometrías, relaciones a otras páginas (usar <RefLink> para no crear dependencia).
+```
+
+**Notas:**
+- El contexto histórico se incluye cuando es relevante para entender el teorema (ej. Pitágoras, Paralelas), no como sección obligatoria
+- Si el teorema tiene diagrama interactivo, importar y exportar como `Simulation`
+- Los lemas y corolarios siguen la misma estructura, con `parentTheorem` en metadata
+
+#### 6.2.5 Demostración
+
+Las demostraciones son el corazón pedagógico de Matematika. Su diseño es el más exigente.
+
+**DIAGRAMAS EN DEMOSTRACIONES — REGLA FUNDAMENTAL:**
+
+Cada paso de una demostración DEBE tener su propio diagrama que ilustre ese paso específico. La excepción es cuando **conviene unificar** los diagramas: si varios pasos comparten la misma construcción geométrica y solo cambia qué elemento se resalta, un solo diagrama con highlight reactivo es más claro que múltiples diagramas casi idénticos.
+
+| Patrón | Cuándo usar | Diagramas |
+|---|---|---|
+| **Un diagrama por paso** | POR DEFECTO. Cuando cada paso introduce elementos nuevos o cambia la construcción visiblemente | `diagrams={{ "step1": Step1Diagram, "step2": Step2Diagram, ... }}` |
+| **Un diagrama unificado** | Cuando los pasos comparten la misma construcción y solo cambia el highlight | `diagrams={{ "default": SharedDiagram }}` o `diagram={<SharedDiagram />}` |
+| **Híbrido** | Algunos pasos comparten construcción, otros introducen elementos nuevos | `diagrams={{ "default": SharedDiagram, "step3": Step3Diagram }}` |
+
+Cuando hay varios diagramas, el `DemonstrationSection` los muestra con **transiciones sticky**: el panel izquierdo permanece fijo mientras el texto scrollea, y los diagramas cambian con una transición de fundido suave (opacity 700ms). El estudiante ve el diagrama correcto para cada paso sin perder el contexto visual.
+
+**REFERENCIAS AL DIAGRAMA — REGLA CRÍTICA:**
+
+TODO en el texto que se refiera a un elemento del diagrama DEBE tener un `<InteractiveElement>` correspondiente. Esto incluye:
+
+- Nombres de puntos, segmentos, ángulos, polígonos en el texto → `<InteractiveElement target="lado-ab">lado AB</InteractiveElement>`
+- Variables mencionadas en prosa que corresponden a elementos visuales → `<InteractiveElement target="altura-c">la altura $h$</InteractiveElement>`
+- **Referencias dentro de fórmulas**: si una fórmula menciona un elemento del diagrama (ej. $a^2 + b^2 = c^2$ donde $a$, $b$, $c$ son lados visibles), envolver cada variable en `<InteractiveElement>`:
+  ```mdx
+  <InteractiveElement target="cateto-a" color="terracota">$a$</InteractiveElement>^2 +
+  <InteractiveElement target="cateto-b" color="salvia">$b$</InteractiveElement>^2 =
+  <InteractiveElement target="hipotenusa-c" color="pizarra">$c$</InteractiveElement>^2
+  ```
+- **Si dentro de una fórmula no se puede** (ej. LaTeX complejo con fracciones, subíndices, etc.), especificar **fuera de la fórmula** a qué se refiere cada símbolo:
+  ```mdx
+  <Formula>
+    $$ \frac{AD}{DB} = \frac{AE}{EC} $$
+  </Formula>
+  donde <InteractiveElement target="seg-ad">$AD$</InteractiveElement> y <InteractiveElement target="seg-db">$DB$</InteractiveElement> son los segmentos en el lado $AB$, y <InteractiveElement target="seg-ae">$AE$</InteractiveElement>, <InteractiveElement target="seg-ec">$EC$</InteractiveElement> los correspondientes en el lado $AC$.
+  ```
+
+Cada `<MedievalStep>` DEBE contener al menos un `<InteractiveElement>` referenciando un elemento del diagrama. No hay excepciones: si un paso no tiene nada que resaltar en el diagrama, el paso no necesita diagrama (y probablemente pertenece a la sección de análisis, no a un paso de la demostración).
+
+**CONCEPTLINK UNIVERSAL — REGLA DE ORO:**
+
+En TODAS las páginas (teoremas, definiciones, axiomas, demos, modelos, sistemas, lecciones, ejemplos, ejercicios, casos de uso), **absolutamente todos los conceptos matemáticos** mencionados en el texto DEBEN tener un `<ConceptLink>` a su página respectiva. Esto incluye:
+
+- Conceptos formales (triángulo, recta, ángulo, segmento, circunferencia, paralelas, perpendicular...)
+- Axiomas referenciados (axioma-incidencia-1, axioma-paralelas-euclides...)
+- Teoremas referenciados (teorema-pitagoras, teorema-tales...)
+- Sistemas axiomáticos (sistema-absoluto, sistema-euclidiano...)
+- Modelos (modelo-tres-puntos, modelo-fano...)
+- Matemáticos (euclides, hilbert, pitagoras...)
+
+Si el concepto aún no tiene página creada, el `<ConceptLink>` se pone igualmente con el `targetId` que tendrá cuando se cree. El sistema enlaza automáticamente a una **página "en construcción"** que indica al estudiante que ese contenido está siendo desarrollado. **NUNCA omitir un ConceptLink porque la página destino no exista todavía.**
+
+```mdx
+// CORRECTO — aunque "semejanza" no tenga página aún
+El concepto de <ConceptLink targetId="semejanza">semejanza</ConceptLink> es fundamental.
+
+// INCORRECTO — omitir el link
+El concepto de semejanza es fundamental.
+```
+
+**Dos patrones de demostración según complejidad:**
+
+**Patrón A — MDX body (demostraciones simples, 1-3 pasos, diagrama unificado):**
+
+```mdx
+export const metadata = { ... "layout": "split" ... };
+
+import { DemonstrationSection } from "../../components/content/DemonstrationSection";
+import { MedievalStep } from "../../components/content/MedievalStep";
+import { InteractiveElement } from "../../components/ui/VisualBind";
+import { MiDiagrama } from "../../diagrams/Teoremas/MiDiagrama";
+
+<DemonstrationSection diagram={<MiDiagrama />}>
 
 <Capitular letra="X" />
-Introductory paragraph explaining the concept.
+Intro breve del método de demostración.
 
 <Separador />
 
-### Section Title
+### Hipótesis y Tesis
+**Hipótesis:** ... **Tesis:** ...
 
-Body content with mathematics $x^2 + y^2 = z^2$.
+<MedievalStep number={1} title="..." target="elemento">
+  Paso con <InteractiveElement target="elemento">elemento</InteractiveElement>.
+</MedievalStep>
 
-<Formula>
-  $$ E = mc^2 $$
-</Formula>
-
-<Nota>An observation.</Nota>
+<MedievalStep number={2} title="...">
+  ...
+  $\blacksquare$
+</MedievalStep>
 
 <Separador />
 
-### Next Section
-...
+### Análisis
+Comentario sobre la técnica empleada.
+
+</DemonstrationSection>
 ```
 
-**Required components:**
-- `<Capitular letra="X" />` — decorative drop-cap with the first letter of the content, MUST be at the very start of every page
-- `<Separador />` — between every major section (NEVER use `---`)
-- `<Formula>` — for highlighted/important equations
-- `<Definicion title="...">` — for inline formal definitions within a page
-- `<Nota>` — for observations, remarks, edge cases
-- `<Cita author="...">` — for quotations and epigraphs
-- `<Corolario>` — for corollaries embedded in theorem pages
-- `<EquationRow>` — for multi-line aligned equations
+**Patrón B — Component + JSX (demostraciones complejas, 4+ pasos, diagrama por paso):**
 
-**Forbidden:**
-- `---` as section separator (use `<Separador />`)
-- Standard Markdown links `[text](url)` for internal navigation (use `<ConceptLink>` and `<RefLink>`)
-- `\sen` in LaTeX (use `\sin`)
+```mdx
+export const metadata = { ... "layout": "split" ... };
 
-### 6.1 General page structure
-You do not have to follos a strict structure in each page, but you have to take into account these things:
-- The page needs to be easily readable, understandable, visual and engaging; but above all, it MUST be complete, and mathematically rigorous.
-- It MUST be modular, so the projet is well organized. For example, a demonstration or a corollary should never go on a theorem page, as they have their own.
-- when there is a diagram, `<InteractiveElement>` should be used to reference the diagram elements. That way, when the students hovers over a link, the referenced element will highlight.
+import { DemonstrationSection } from "../../components/content/DemonstrationSection";
+import { MedievalStep } from "../../components/content/MedievalStep";
+import { InteractiveElement } from "../../components/ui/VisualBind";
+import { Step1Diagram } from "../../diagrams/Teoremas/Step1Diagram";
+import { Step2Diagram } from "../../diagrams/Teoremas/Step2Diagram";
+import { Step3Diagram } from "../../diagrams/Teoremas/Step3Diagram";
 
+export const Component = () => {
+  const diagrams = {
+    "step1": Step1Diagram,
+    "step2": Step2Diagram,
+    "step3": Step3Diagram
+  };
 
-### 6.2 Demonstration Page Structure (SPLIT LAYOUT)
+  return (
+    <DemonstrationSection diagrams={diagrams}>
+      <MedievalStep number={1} target="step1" title="Construcción">
+        Partimos de <InteractiveElement target="punto-a" color="terracota">$A$</InteractiveElement> y
+        <InteractiveElement target="punto-b" color="terracota">$B$</InteractiveElement>...
+      </MedievalStep>
 
-Deonstrations must be very rigorous, following steps marked by `<MedievalStep>`. Each step can have its own diagram that represents that specific step.
+      <MedievalStep number={2} target="step2" title="Razonamiento">
+        Por el <ConceptLink targetId="axioma-congruencia-1">axioma de transporte</ConceptLink>,
+        el <InteractiveElement target="segmento-cd" color="salvia">segmento $CD$</InteractiveElement>...
+      </MedievalStep>
 
-**CRITICAL RULES for demonstrations:**
-1. `<MedievalStep>` MUST NOT include a `target` prop
-2. Each step body MUST contain at least one `<InteractiveElement>` referencing a diagram element (if visual demonstration is viable)
-3. `InteractiveElement` MUST be imported from `"../../components/ui/VisualBind"` (NOT from MDXBlocks)
-4. The `target` string MUST match exactly with the element name in the diagram
-5. Every attribute changed by a highlight in the diagram MUST be reset in the reset block
-6. If the proof has a single diagram for all steps, use one `<DemonstrationSection>` wrapping all steps
+      <MedievalStep number={3} target="step3" title="Conclusión">
+        Por lo tanto:
+        <Formula>
+          $$ \frac{<InteractiveElement target="seg-ad">AD</InteractiveElement>}{DB} = \frac{AE}{EC} $$
+        </Formula>
+        donde $AD$ es el segmento entre $A$ y $D$, y $DB$ entre $D$ y $B$. $\blacksquare$
+      </MedievalStep>
+    </DemonstrationSection>
+  );
+};
+```
 
+**Reglas CRÍTICAS para demostraciones:**
+1. **Diagrama por paso por defecto** — cada paso tiene su propio diagrama a menos que convenga unificar
+2. **Transiciones sticky** — cuando hay varios diagramas, el panel izquierdo es sticky y los diagramas cambian con fundido
+3. **Importar `InteractiveElement` desde `../../components/ui/VisualBind`** (NUNCA desde MDXBlocks)
+4. **Importar `DemonstrationSection` y `MedievalStep` desde `../../components/content/`**
+5. `InteractiveElement` escribe en `MathStore.highlight` — el diagrama lee de ahí para iluminar elementos
+6. El `target` string DEBE coincidir exactamente con el nombre del elemento en el diagrama
+7. **TODO lo que se refiera al diagrama DEBE tener `<InteractiveElement>`**, incluyendo variables dentro de fórmulas (o explicación fuera de la fórmula si no se puede dentro)
+8. **Cada `MedievalStep` DEBE contener al menos un `<InteractiveElement>`** referenciando un elemento del diagrama
+9. **Todos los conceptos matemáticos mencionados DEBEN tener `<ConceptLink>`** — aunque la página destino no exista aún
+10. El último MedievalStep termina con $\blacksquare$
 
+#### 6.2.6 Sistema Axiomático
 
-## 7. Mathematical Writing Guide
+```
+<Capitular letra="X" />
+Intro: qué teoría define este sistema y su importancia.
 
-### 7.1 Tone and Style
+<Separador />
 
-- Write in **impersonal third person**: "Se define...", "Se demuestra...", "Nótese que..."
-- Be **precise and concise**. Every sentence should convey information.
-- No rhetorical questions, no exclamation marks, no casual language.
-- Use **bold** for key terms being introduced or emphasized.
-- Use *italics* for mathematical variables in text (e.g., "sea *x* un número real").
+### Contexto Histórico (si es relevante)
+Quién formuló el sistema, qué problema resolvía, evolución histórica.
 
-### 7.2 How to Write a Rigorous Definition
+<Separador />
 
-A definition MUST:
-1. Specify the **type of thing** being defined (set, relation, function, property, structure)
-2. Use only **previously defined or primitive terms**
-3. Be **minimal**: no extra conditions beyond what is necessary
-4. Include the **formal notation** (LaTeX) when applicable
+### Axiomas
+Lista agrupada por grupos (Incidencia, Orden, Congruencia, Continuidad) con ConceptLinks a cada axioma.
+
+<Separador />
+
+### Modelos
+Qué modelos satisfacen este sistema (con ConceptLinks).
+
+<Separador />
+
+### Propiedades
+Consistencia, independencia, completitud del sistema.
+
+<Separador />
+
+### Comparación con otros sistemas
+Diferencias con sistemas relacionados (ej. absoluto vs euclidiano vs hiperbólico). Tabla comparativa si aplica.
+```
+
+#### 6.2.7 Modelo
+
+```
+<Capitular letra="X" />
+Intro: qué estructura concreta es este modelo y qué sistema satisface.
+
+<Separador />
+
+### Definición del Modelo
+Universo (puntos, rectas, planos), interpretación de primitivos. Fórmula con la definición formal.
+
+<Separador />
+
+### Verificación de Axiomas
+Uno por uno, verificar cada axioma del sistema que satisface.
+
+<Separador />
+
+### Propiedades
+Características notables del modelo (finito, minimal, etc.).
+
+<Separador />
+
+### Contraejemplos
+Qué axiomas NO se satisfacen y por qué. Útil para entender independencia de axiomas.
+
+<Separador />
+
+### Nota
+Limitaciones del modelo, conexión con modelos más ricos.
+```
+
+#### 6.2.8 Matemático
+
+```
+<Capitular letra="X" />
+Bio: vida, época, contexto cultural y académico.
+
+<Separador />
+
+### Contribuciones
+Obras principales, teoremas, axiomas, técnicas. Con ConceptLinks a cada contribución.
+
+<Separador />
+
+### Influencia
+Impacto en las matemáticas, legado, cómo influyó en generaciones posteriores.
+
+<Separador />
+
+### Obras
+Lista de obras principales con fechas.
+```
+
+#### 6.2.9 Ejemplo
+
+```
+<Capitular letra="X" />
+Contexto: problema real o motivación que lleva al ejemplo.
+
+<Separador />
+
+### Enunciado
+Planteamiento del problema.
+
+<Separador />
+
+### Resolución
+Paso a paso con <Paso> si es complejo, o prose normal si es simple.
+
+<Separador />
+
+### Resultado
+Respuesta final clara.
+
+<Separador />
+
+### Generalización
+Qué se puede generalizar del ejemplo. Conexión al teorema relacionado.
+```
+
+#### 6.2.10 Ejercicio
+
+La estructura se adapta al ejercicio pedagógicamente. Elementos disponibles:
+
+- `<Pregunta>` con `<Hueco respuesta="...">` para preguntas interactivas
+- `<Solucion>` revelable con desarrollo paso a paso (usar `<Paso>` para pasos)
+- `<ErrorComun>` para advertir sobre errores típicos
+- `<Nota>` para pistas o comentarios
+
+El ejercicio se construye con los elementos que mejor se adapten a su pedagogía. No hay plantilla rígida.
+
+#### 6.2.11 Caso de Uso
+
+```
+<Capitular letra="X" />
+Contexto: dominio real (ingeniería, naturaleza, arte, etc.) y situación concreta.
+
+<Separador />
+
+### Problema
+Planteamiento del problema real, sin formalismo excesivo.
+
+<Separador />
+
+### El concepto matemático
+Link al teorema/definición que aplica: <ConceptLink targetId="...">...</ConceptLink>
+
+<Separador />
+
+### Aplicación
+Cómo se aplica el concepto al problema.
+
+<Separador />
+
+### Resultado
+Solución y su interpretación en el contexto real.
+
+<Separador />
+
+### Nota
+Limitaciones, otras aplicaciones, conexiones.
+```
+
+#### 6.2.12 Lección
+
+Estructura libre adaptada al contenido pedagógico. Las lecciones explican técnicas, métodos o conceptos transversales y no están sujetas al grafo estricto de dependencias.
+
+### 6.3 MedievalStep con `target`
+
+`MedievalStep` soporta el prop `target` para **auto-highlight al hacer scroll**. Usando `IntersectionObserver`, cuando el paso entra en la zona central de la pantalla, activa `MathStore.highlight` automáticamente.
+
+```tsx
+// target como string — un solo elemento se resalta
+<MedievalStep number={1} target="triangulo" title="El triángulo">
+  ...
+</MedievalStep>
+
+// target como array — múltiples elementos se resaltan simultáneamente
+<MedievalStep number={2} target={["cuadrado-a", "cuadrado-b", "cuadrado-c"]} title="Construcción">
+  ...
+</MedievalStep>
+
+// sin target — el paso no activa auto-highlight (solo hover manual)
+<MedievalStep number={3} title="Conclusión">
+  ...
+</MedievalStep>
+```
+
+**Cuándo usar `target`:**
+- Siempre que el paso tenga elementos visuales correspondientes en el diagrama
+- Usar array cuando el paso involucra múltiples elementos simultáneamente
+- Omitir `target` solo en pasos de razonamiento puro sin correspondencia visual
+
+---
+
+## 7. Guía de Escritura Matemática
+
+### 7.1 Tono y Estilo
+
+- Escribir en **tercera persona impersonal**: "Se define...", "Se demuestra...", "Nótese que..."
+- Ser **preciso y conciso**. Cada frase debe transmitir información.
+- Sin preguntas retóricas, sin signos de exclamación, sin lenguaje casual.
+- Usar **negrita** para términos clave que se introducen o enfatizan.
+- Usar *cursiva* para variables matemáticas en texto (p. ej. "sea *x* un número real").
+
+### 7.2 Cómo Escribir una Definición Rigurosa
+
+Una definición DEBE:
+1. Especificar el **tipo de cosa** que se define (conjunto, relación, función, propiedad, estructura)
+2. Usar solo **términos previamente definidos o primitivos**
+3. Ser **minimal**: sin condiciones extra más allá de lo necesario
+4. Incluir la **notación formal** (LaTeX) cuando corresponda
 
 ```
 Una **circunferencia** es el conjunto de puntos del plano que equidistan
@@ -418,12 +897,12 @@ de un punto fijo llamado **centro**. La distancia constante se denomina
 </Formula>
 ```
 
-### 7.3 How to State a Theorem
+### 7.3 Cómo Enunciar un Teorema
 
-Every theorem MUST:
-1. State the **hypotheses** clearly (what is given)
-2. State the **conclusion** clearly (what is proved)
-3. Use precise **quantifiers** ("para todo", "existe", "si... entonces...")
+Todo teorema DEBE:
+1. Enunciar las **hipótesis** claramente (qué se da)
+2. Enunciar la **conclusión** claramente (qué se prueba)
+3. Usar **cuantificadores** precisos ("para todo", "existe", "si... entonces...")
 
 ```
 **Teorema de Pitágoras.** En un triángulo rectángulo, el cuadrado de la
@@ -436,237 +915,346 @@ hipotenusa es igual a la suma de los cuadrados de los catetos.
 donde $c$ es la longitud de la hipotenusa y $a, b$ las longitudes de los catetos.
 ```
 
-### 7.4 How to Structure a Proof
+### 7.4 Cómo Estructurar una Demostración
 
-A proof MUST:
-1. Progress **step by step**, each step justified by a definition, axiom, previously proved theorem or a logical step
-2. End with a clear **conclusion marker** (the UI adds $\blacksquare$ automatically)
-3. Use **diagrams** for geometric proofs (each step should highlight the relevant part)
+Una demostración DEBE:
+1. Progresar **paso a paso**, cada paso justificado por una definición, axioma, teorema previo o paso lógico
+2. Terminar con un **marcador de conclusión** claro (la UI añade $\blacksquare$ automáticamente)
+3. Usar **diagramas** para pruebas geométricas (cada paso debe iluminar la parte relevante)
 
-### 7.5 Common Pitfalls
+### 7.5 Errores Comunes
 
-- **Circular reasoning:** A theorem cannot depend on a result that depends on it
-- **Ambiguous quantifiers:** Specify "para todo" vs "existe" explicitly
-- **Missing cases:** Ensure all cases are covered (e.g., acute/obtuse/right triangles)
-- **Overloading notation:** Define every symbol before using it
-- **False converse:** Distinguish between a theorem and its converse
+- **Razonamiento circular:** Un teorema no puede depender de un resultado que depende de él
+- **Cuantificadores ambiguos:** Especificar "para todo" vs "existe" explícitamente
+- **Casos omitidos:** Asegurar que todos los casos están cubiertos (p. ej. triángulos acutángulos/obtusángulos/rectángulos)
+- **Sobrecarga de notación:** Definir todo símbolo antes de usarlo
+- **Converso falso:** Distinguir entre un teorema y su converso
 
-## 8. Semantic Linking System (MANDATORY)
+---
 
-Internal navigation MUST NEVER use standard Markdown links `[text](url)`. Use ONLY these semantic components:
+## 8. Sistema de Enlazado Semántico
 
-| Component | Purpose |
-|-----------|---------|
-| `<RefLink targetId="slug">text</ConceptLink>` | Opens the MarginaliaPanel with a preview of the target node |
-| `<ConceptLink targetId="slug">text</ConceptLink>` | Does the same as `<RefLink>` but creates a dependency link |
-| `<GlossaryLink term="term">text</GlossaryLink>` | Quick tooltip for auxiliary/glossary terms |
-| `<VisualBind color="token" element="id">text</VisualBind>` | Binds text to an adjacent diagram element; on hover the diagram element lights up |
-| `<InteractiveElement target="var" color="token">text</InteractiveElement>` | Binds inline text to a diagram variable; works with JSXGraph/SVG diagrams |
+La navegación interna NUNCA usa enlaces Markdown estándar `[texto](url)`. Usar EXCLUSIVAMENTE estos componentes:
 
-Color tokens for VisualBind/InteractiveElement: `terracota`, `salvia`, `pizarra`, `carbon`, `granada`, `ocre`, `musgo`.
+| Componente | Propósito | Import path |
+|-----------|---------|-------------|
+| `<ConceptLink targetId="slug">texto</ConceptLink>` | Abre el MarginaliaPanel con preview del nodo. Crea relación semántica. | Global (MDXComponents) |
+| `<RefLink targetId="slug">texto</RefLink>` | Igual que ConceptLink pero sin crear dependencia formal. | Global (MDXComponents) |
+| `<GlossaryLink term="term">texto</GlossaryLink>` | Tooltip rápido para términos auxiliares/glosario. | Global (MDXComponents) |
+| `<VisualBind color="token" element="id">texto</VisualBind>` | Vincula texto a elemento del diagrama adyacente; al hover ilumina el elemento. | Global (MDXComponents) |
+| `<InteractiveElement target="var" color="token">text</InteractiveElement>` | Vincula texto inline a una variable del diagrama; escribe en `MathStore.highlight`. | `../../components/ui/VisualBind` (importar explícitamente) |
 
-## 9. Arts & Crafts Color Palette (Single Source of Truth)
+**Distinción ConceptLink vs RefLink:**
+- `ConceptLink` — terracota, para referencias que son parte del flujo lógico del contenido
+- `RefLink` — pizarra, para referencias cruzadas suaves o complementarias
+- Ambos abren el MarginaliaPanel; la diferencia es visual y semántica
 
-| Token | Tailwind Class | Hex | Mathematical Meaning |
+**Tokens de color** para VisualBind/InteractiveElement: `terracota`, `salvia`, `pizarra`, `carbon`, `granada`, `ocre`, `pavo`, `musgo`.
+
+**IMPORTANTÍSIMO:** `InteractiveElement` DEBE importarse desde `../../components/ui/VisualBind`. Hay un solo `InteractiveElement` en el proyecto — el de VisualBind — que escribe en `MathStore.highlight`. Los diagramas leen de `MathStore.highlight` para iluminar elementos.
+
+---
+
+## 9. Paleta Arts & Crafts
+
+**Fuente única de verdad** para colores. La relación texto ↔ gráfico en color es **1:1 e inmutable**.
+
+| Token | Clase Tailwind | Hex | Significado matemático |
 |-------|---------------|-----|---------------------|
-| `lienzo` | `bg-lienzo` | `#F8F6F1` | Background canvas |
-| `carbon` | `text-carbon` | `#333333` | Axes, borders, main text |
-| `salvia` | `text-salvia` | `#A2C2A2` | Planes, coefficients, secondary geometry |
-| `terracota` | `text-terracota` | `#C86446` | Points, vectors, unknowns, primary elements |
-| `pizarra` | `text-pizarra` | `#5D7080` | Distances, results, secondary measurements |
-| `ocre` | `text-ocre` | `#c49b4f` | Highlighting, special values |
-| `pavo` | `text-pavo` | `#3b5e6b` | Alternative accent, tertiary elements |
-| `granada` | `text-granada` | `#8b3a3a` | Errors, contradictions, critical elements |
-| `musgo` | `text-musgo` | `#4a5d23` | Applications, verified results |
+| `lienzo` | `bg-lienzo` | `#F8F6F1` | Fondo general, lienzo |
+| `carbon` | `text-carbon` | `#333333` | Ejes, bordes, texto principal, grid |
+| `salvia` | `text-salvia` | `#A2C2A2` | Planos, coeficientes, geometría secundaria, líneas de construcción |
+| `terracota` | `text-terracota` | `#C86446` | Puntos, vectores, incógnitas, elementos interactivos primarios |
+| `pizarra` | `text-pizarra` | `#5D7080` | Distancias, resultados, mediciones secundarias, valores calculados |
+| `ocre` | `text-ocre` | `#c49b4f` | Resaltados, valores especiales, elementos auxiliares |
+| `pavo` | `text-pavo` | `#3b5e6b` | Acento alternativo, elementos terciarios |
+| `granada` | `text-granada` | `#8b3a3a` | Errores, contradicciones, elementos críticos, contraejemplos |
+| `musgo` | `text-musgo` | `#4a5d23` | Aplicaciones, resultados verificados/correctos |
 
-The text-to-graphic color relationship is **1:1 and immutable**.
+**Variables CSS:** `var(--theme-<token>)` — p. ej. `var(--theme-terracota)`.
+**En JSXGraph:** usar el hex directamente (`#C86446`).
 
-## 10. Graph and Dependency Network
+---
 
-### 10.1 Which Types Participate
+## 10. Grafo y Red de Dependencias
 
-| Type | In Graph? | Edge Type |
-|------|-----------|-----------|
-| `axioma` | Yes | Source (no incoming edges) |
-| `definicion` | Yes | `requires` |
-| `teorema` | Yes | `requires`, `demos`, `lemmas`, `corollaries` |
-| `lema` | Yes | `requires`, `parentTheorem` |
-| `corolario` | Yes | `requires`, `parentTheorem` |
-| `sistema-axiomatico` | Yes | Organizes axioms (group node) |
-| `demostracion` | Yes | `parentTheorem` |
-| `ejemplo` | No | Connected via `relatedTheorem` (not in dependency graph) |
-| `ejercicio` | No | Connected via `relatedTheorem` (not in dependency graph) |
-| `modelo` | Yes | Connected via `satisfies` + `axiomas` |
-| `caso-de-uso` | No | Connected via `concept` |
-| `leccion` | No | Pedagogical only |
-| `matematico` | No | Reference only |
-| `plan-de-estudio` | No | Separate |
+### 10.1 Qué Tipos Participan
 
-### 10.2 Topological Ordering
+| Tipo | ¿En grafo? | Tipo de arista |
+|------|-----------|----------------|
+| `axioma` | Sí | Fuente (sin aristas entrantes) |
+| `definicion` | Sí | `links` |
+| `teorema` | Sí | `requires`, `demos`, `lemmas`, `corollaries` |
+| `lema` | Sí | `requires`, `parentTheorem` |
+| `corolario` | Sí | `requires`, `parentTheorem` |
+| `sistema-axiomatico` | Sí | Organiza axiomas (nodo grupo) |
+| `demostracion` | Sí | `parentTheorem` |
+| `ejemplo` | No | Conectado vía `relatedTheorem` |
+| `ejercicio` | No | Conectado vía `relatedTheorem` |
+| `modelo` | Sí | Conectado vía `satisfies` + `axioms_verified` |
+| `caso-de-uso` | No | Conectado vía `concept` |
+| `leccion` | No | Solo pedagógico |
+| `matematico` | No | Solo referencia |
+| `plan-de-estudio` | No | Separado |
 
-The graph MUST be a DAG (directed acyclic graph). The topological order is:
+### 10.2 Orden Topológico
+
+El grafo DEBE ser un DAG (grafo dirigido acíclico). El orden topológico es:
 
 ```
 axiomas → definiciones → lemas → teoremas → corolarios → demostraciones
 ```
 
-A theorem cannot `require` something that depends on it. If theorem A requires theorem B, then B must be proved before A — B must have been created and its demonstration must exist.
+Un teorema no puede `require` algo que depende de él. Si el teorema A requiere el teorema B, entonces B debe probarse antes que A — B debe existir y su demostración debe existir.
 
-### 10.3 Model Connections
+### 10.3 Conexiones de Modelos
 
-Models do NOT add edges to the dependency graph. Instead:
-- A model links to an `axiomatic-system` via `satisfies`
-- A model links to individual `axiomas` via `axioms_verified`
-- An axiomatic system links to its models via `models`
+Los modelos NO añaden aristas al grafo de dependencias. En su lugar:
+- Un modelo enlaza a un `sistema-axiomatico` vía `satisfies`
+- Un modelo enlaza a `axiomas` individuales vía `axioms_verified`
+- Un sistema axiomático enlaza a sus modelos vía `models`
 
-These connections are displayed in a separate "Modelos" view, not in the main dependency graph.
+Estas conexiones se muestran en una vista "Modelos" separada, no en el grafo principal de dependencias.
 
-## 11. Naming Conventions
+---
 
-- **IDs:** `kebab-case` (e.g., `teorema-pitagoras`, `axioma-incidencia-1`). **snake_case is forbidden.**
-- **File names:** `kebab-case.mdx` (must match the ID exactly)
-- **React components:** `PascalCase.tsx`
-- **Diagram imports:** explicit relative paths, e.g. `../../diagrams/Geometria/TriangleVisualizer`
-- **Routes:**
-  - `/teorema/:id` — theorems, lemmas, corollaries
-  - `/definicion/:id` — definitions
-  - `/axioma/:id` — axioms
-  - `/sistema/:id` — axiomatic systems
-  - `/demo/:id` — demonstrations
-  - `/ejemplo/:id` — examples
-  - `/ejercicio/:id` — exercises
-  - `/modelo/:id` — models
-  - `/caso/:id` — use cases
-  - `/leccion/:slug` — lessons
-  - `/bio/:slug` — mathematician biographies
-  - `/plan/:id` — study plans
-  - `/rama/:id` — MSC2020 branches
+## 11. Convenciones de Naming
 
-## 12. Universality Rule (Zero Tolerance)
+- **IDs:** `kebab-case` (p. ej. `teorema-pitagoras`, `axioma-incidencia-1`). **snake_case prohibido.**
+- **Nombres de archivo:** `kebab-case.mdx` (debe coincidir exactamente con el ID)
+- **Componentes React:** `PascalCase.tsx`
+- **Imports de diagramas:** rutas relativas explícitas, p. ej. `../../diagrams/Teoremas/DemoPitagorasEuclides`
+- **Rutas:**
+  - `/teorema/:id` — teoremas, lemas, corolarios
+  - `/definicion/:id` — definiciones
+  - `/axioma/:id` — axiomas
+  - `/sistema/:id` — sistemas axiomáticos
+  - `/demo/:id` — demostraciones
+  - `/ejemplo/:id` — ejemplos
+  - `/ejercicio/:id` — ejercicios
+  - `/modelo/:id` — modelos
+  - `/caso/:id` — casos de uso
+  - `/leccion/:slug` — lecciones
+  - `/bio/:slug` — biografías de matemáticos
+  - `/plan/:id` — planes de estudio
+  - `/rama/:id` — ramas MSC2020
 
-The tone must be purely mathematical and universal. **ELIMINATE** from general content any references to specific curricula ("Selectividad", "EBAU", "Evaluación de acceso", "PAU", "Bachillerato"). Those references are ONLY allowed in `StudyPlans` under `src/content/plans/`.
+---
 
-## 13. File Structure
+## 12. Estructura de Archivos
 
 ```
 src/content/
-  es/     (Spanish, default language)
-    axiomatic-systems       — Modelos axiomáticos
-    axioms/                 — Axiomas
-    definitions/            — Definiciones
-    theorems/               — Teoremas, lemas y corolarios
-    axiomatic-systems/      — Sistemas axiomáticos
-    demonstrations/         — Demostraciones
-    models/                 — Modelos (estructuras concretas)
-    examples/               — Ejemplos resueltos
-    exercises/              — Ejercicios interactivos
-    usecases/               — Casos de uso reales
-    lessons/                — Lecciones pedagógicas
-    mathematicians/         — Biografías de matemáticos
-    plans/                  — Planes de estudio
-  en/     (English, future)
-    (same structure, same IDs, translated content)
-  eu/     (Basque, future)
-    (same structure, same IDs, translated content)
+  axioms/                 — Axiomas
+  definitions/            — Definiciones
+  theorems/               — Teoremas, lemas y corolarios
+  axiomatic-systems/      — Sistemas axiomáticos
+  demonstrations/         — Demostraciones
+  models/                 — Modelos (estructuras concretas)
+  examples/               — Ejemplos resueltos
+  exercises/              — Ejercicios interactivos
+  usecases/               — Casos de uso reales
+  lessons/                — Lecciones pedagógicas
+  mathematicians/         — Biografías de matemáticos
+  plans/                  — Planes de estudio
+
+src/diagrams/
+  Axiomas/                — Visualizaciones de axiomas
+  Definiciones/           — Diagramas de definiciones
+  Teoremas/               — Diagramas de teoremas y demos
+  Models/                 — Diagramas de modelos
+  Demos/                  — Diagramas de demostraciones adicionales
+  Theorems/               — Visualizaciones de teoremas (a consolidar con Teoremas/)
 ```
 
-## 14. Simulation and Diagram Export
+> **Nota de reorganización:** Los directorios vacíos (`Pitagoras/`, `Geometria/`, `Euclides/`, `Algebra/`, `Calculo/`, `Analisis/`, `Estadistica/`, `Probabilidad/`, `LinearAlgebra/`, `MetodosDemostracion/`, `Ejercicios/`, `CasosUso/`) están reservados para contenido futuro. Usar la categoría existente más adecuada al crear nuevos diagramas.
 
-For concepts that have a visual representation:
+---
 
-- **Theorems, definitions, axioms, demonstrations**: export as `Simulation` (wraps in SimulationLayout with interactive controls). Set `hasSimulation: true`.
-- **Models**: export as `Diagram` (renders in ModelPage inline, no SimulationLayout). Set `hasDiagram: true`.
-- **Examples, exercises**: can export either depending on content.
+## 13. Exportación de Simulaciones y Diagramas
 
+El `ContentStore` carga los exports de los archivos MDX según los campos de metadata:
+
+| Tipo de contenido | Export `Component` | Export `Simulation` | Export `Diagram` |
+|-------------------|-------------------|--------------------|--------------------|
+| Teorema, Lema, Corolario | default (body MDX) | Si `hasSimulation: true` | — |
+| Definición | default (body MDX) | Si `hasSimulation: true` | — |
+| Axioma | default (body MDX) | Si `hasSimulation: true` | — |
+| Sistema axiomático | default (body MDX) | Si `hasSimulation: true` | — |
+| Demostración | `export const Component` | — | — |
+| Ejemplo | default (body MDX) | Si `hasSimulation: true` | — |
+| Ejercicio | default (body MDX) | Si `hasSimulation: true` | — |
+| Modelo | default (body MDX) | Si `hasSimulation: true` | Si `hasDiagram: true` |
+| Caso de uso | default (body MDX) | Automático (si existe) | — |
+| Lección | default (body MDX) | Si `hasSimulation: true` | — |
+| Matemático | default (body MDX) | — | — |
+| Plan de estudio | default (body MDX) | — | — |
+
+**Patrón para teoremas/axiomas/definiciones (SimulationLayout):**
 ```typescript
-// For theorems/axioms (SimulationLayout):
-import { MyVisualizer } from '../../diagrams/Category/MyVisualizer';
-export const Simulation = MyVisualizer;
+import { MyDiagram } from '../../diagrams/Categoria/MyDiagram';
+export const Simulation = MyDiagram;
 
-// For models (inline in ModelPage):
+export const metadata = {
+  ...
+  "hasSimulation": true,
+};
+```
+
+**Patrón para modelos (inline en ModelPage):**
+```typescript
 import { ModelDiagram } from '../../diagrams/Models/ModelDiagram';
 export const Diagram = ModelDiagram;
+
+export const metadata = {
+  ...
+  "hasDiagram": true,
+};
 ```
 
-## 15. Reference Sources
+**Patrón para demostraciones (Component export):**
+```typescript
+export const Component = () => {
+  return (
+    <DemonstrationSection diagrams={{ "default": MyDiagram }}>
+      <MedievalStep ...>...</MedievalStep>
+    </DemonstrationSection>
+  );
+};
+```
 
-When generating mathematical content, use these sources for rigor:
+---
 
-| Source | Content |
-|--------|---------|
-| Euclid / Heath, *The Thirteen Books of the Elements* | Classical geometric propositions (Books I–IV) |
-| Hilbert, *Grundlagen der Geometrie* (1899) | Modern axiomatic foundation |
-| Hartshorne, *Geometry: Euclid and Beyond* | Bridge between Euclid and Hilbert |
-| Greenberg, *Euclidean and Non-Euclidean Geometries* | Non-Euclidean geometry, rigorous proofs |
-| Venema, *Foundations of Geometry* | Accessible modern treatment |
-| MSC2020 (Mathematical Subject Classification) | Branch/category codes |
+## 14. Fuentes de Referencia
 
-## 16. Cross-Reference Integrity (MANDATORY CHECK)
+Al generar contenido matemático, usar estas fuentes para rigor:
 
-Before finalizing ANY content, verify:
+| Fuente | Contenido |
+|--------|-----------|
+| Euclid / Heath, *The Thirteen Books of the Elements* | Proposiciones geométricas clásicas (Libros I–IV) |
+| Hilbert, *Grundlagen der Geometrie* (1899) | Fundación axiomática moderna |
+| Hartshorne, *Geometry: Euclid and Beyond* | Puente entre Euclides y Hilbert |
+| Greenberg, *Euclidean and Non-Euclidean Geometries* | Geometría no euclídea, demostraciones rigurosas |
+| Venema, *Foundations of Geometry* | Tratamiento moderno accesible |
+| MSC2020 (Mathematical Subject Classification) | Códigos de rama/categoría |
 
-- [ ] ID is in kebab-case (no underscores)
-- [ ] All metadata keys use double quotes
-- [ ] File name matches `metadata.id` exactly (e.g., `teorema-pitagoras.mdx` → `"id": "teorema-pitagoras"`)
-- [ ] All IDs in `requires`, `demos`, `lemmas`, `corollaries`, `parentTheorem`, `relatedTheorem`, `concept` exist as content files
-- [ ] All IDs in `axiomas` (in axiomatic-system) exist in `src/content/axioms/`
-- [ ] All IDs in `models` (in axiomatic-system) exist in `src/content/models/`
-- [ ] `satisfies` (in model) points to an existing axiomatic-system
-- [ ] All IDs in `axioms_verified` (in model) exist in `src/content/axioms/`
-- [ ] All `mathematicians`/`authors` IDs exist in `src/content/mathematicians/`
-- [ ] All `targetId` on `<ConceptLink>` point to existing IDs
-- [ ] If `hasSimulation: true`, the file exports a `Simulation` component
-- [ ] If `hasDiagram: true`, the file exports a `Diagram` component
-- [ ] No standard Markdown internal links `[text](url)` — only `<ConceptLink>` or `<GlossaryLink>`
-- [ ] No references to specific curricula in non-plan content
-- [ ] `<Capitular>` is present at the start
-- [ ] `<Separador />` is used between sections (not `---`)
-- [ ] No `\sen` in LaTeX — use `\sin`
-- [ ] The topological order is respected (no circular dependencies)
+---
 
-## 17. Quality Checklist by Content Type
+## 15. Validación Automática (OBLIGATORIA)
 
-### Axiom
-- [ ] The axiom is independent (not provable from other axioms in its system)
-- [ ] Uses only primitive or previously defined terms
-- [ ] The informal description accurately conveys the formal statement
-- [ ] Links to the axiomatic systems that include it
+**Tras crear o editar contenido, el agente DEBE ejecutar estas validaciones:**
 
-### Definition
-- [ ] Uses only previously defined or primitive terms (check `requires`)
-- [ ] Is minimal (no extra conditions)
-- [ ] The formal notation matches the verbal description
-- [ ] Would be accepted in a contemporary mathematics textbook
+### 15.1 Validación de schemas y referencias
+```bash
+npm run generate-index
+npm run validate-graph
+npm run validate-references
+```
 
-### Theorem / Lemma / Corollary
-- [ ] The `requires` dependencies form a valid topological order
-- [ ] If lemma or corollary, `parentTheorem` is set
-- [ ] Has at least one demonstration (except axioms/postulates)
-- [ ] If type is "lema", it is genuinely used as a lemma (not a major theorem)
-- [ ] The statement is precise with proper quantifiers
+### 15.2 Typecheck y lint
+```bash
+npx tsc --noEmit -p tsconfig.app.json
+npx eslint <archivos-modificados>
+```
 
-### Demonstration
-- [ ] `parentTheorem` points to an existing theorem
-- [ ] Every step is justified (by axiom, definition, or previous theorem)
-- [ ] Every MedievalStep has a corresponding InteractiveElement in the body
-- [ ] InteractiveElement is imported from VisualBind (not MDXBlocks)
-- [ ] The proof method (`proofMethod`) accurately describes the approach
-- [ ] For split-layout: each step has a diagram or uses a shared one
-- [ ] The proof is complete (no gaps)
+### 15.3 Si alguna validación falla
+- Corregir los errores antes de dar el contenido por terminado
+- Re-ejecutar las validaciones hasta que pasen
 
-### Axiomatic System
-- [ ] All `axiomas` exist and form a coherent theory
-- [ ] The ordering of axioms follows conventional mathematical practice
-- [ ] Description explains what makes this system distinct
-- [ ] Models listed are genuine models of the system
+### 15.4 Script de validación del skill
+```bash
+node .opencode/skills/antigravity/scripts/validate.mjs
+```
+Este script verifica: IDs kebab-case, claves entre comillas, integridad referencial, nombre de archivo = ID, y más.
 
-### Model
-- [ ] `satisfies` points to a valid axiomatic system
-- [ ] `axioms_verified` lists axioms that the model demonstrably satisfies
-- [ ] The description defines the universe and interpretation of primitives
-- [ ] If `hasDiagram: true`, the diagram accurately represents the structure
+---
 
-### Example / Exercise / Use Case
-- [ ] The referenced theorem/definition exists
-- [ ] The solution/reasoning is complete and correct
-- [ ] Difficulty level is appropriate
+## 16. Checklist de Integridad Referencial
+
+Antes de finalizar CUALQUIER contenido, verificar:
+
+- [ ] El ID está en kebab-case (sin guiones bajos)
+- [ ] Todas las claves de metadata usan comillas dobles
+- [ ] El nombre del archivo coincide exactamente con `metadata.id` (p. ej. `teorema-pitagoras.mdx` → `"id": "teorema-pitagoras"`)
+- [ ] Todos los IDs en `requires`, `demos`, `lemmas`, `corollaries`, `parentTheorem`, `relatedTheorem`, `concept` existen como archivos de contenido
+- [ ] Todos los IDs en `axiomas` (en sistema-axiomatico) existen en `src/content/axioms/`
+- [ ] Todos los IDs en `models` (en sistema-axiomatico) existen en `src/content/models/`
+- [ ] `satisfies` (en modelo) apunta a un sistema-axiomatico existente
+- [ ] Todos los IDs en `axioms_verified` (en modelo) existen en `src/content/axioms/`
+- [ ] Todos los IDs en `mathematicians`/`authors` existen en `src/content/mathematicians/`
+- [ ] Todos los `targetId` en `<ConceptLink>` y `<RefLink>` apuntan a IDs existentes
+- [ ] Si `hasSimulation: true`, el archivo exporta un componente `Simulation`
+- [ ] Si `hasDiagram: true`, el archivo exporta un componente `Diagram`
+- [ ] No hay enlaces Markdown internos `[texto](url)` — solo `<ConceptLink>`, `<RefLink>` o `<GlossaryLink>`
+- [ ] No hay referencias a currículos específicos en contenido que no sea `plan-de-estudio`
+- [ ] `<Capitular>` está presente al inicio
+- [ ] `<Separador />` se usa entre secciones (no `---`)
+- [ ] No hay `\sen` en LaTeX — usar `\sin`
+- [ ] El orden topológico se respeta (no dependencias circulares)
+- [ ] `InteractiveElement` se importa desde `../../components/ui/VisualBind` (no desde MDXBlocks)
+
+---
+
+## 17. Checklist de Calidad por Tipo
+
+### Axioma
+- [ ] El axioma es independiente (no demostrable desde otros axiomas de su sistema)
+- [ ] Usa solo términos primitivos o previamente definidos
+- [ ] La descripción informal refleja fielmente el enunciado formal
+- [ ] Enlaza con los sistemas axiomáticos que lo incluyen
+
+### Definición
+- [ ] Usa solo términos primitivos o previamente definidos (verificar `links`)
+- [ ] Es minimal (sin condiciones extra)
+- [ ] La notación formal coincide con la descripción verbal
+- [ ] Sería aceptada en un libro de texto de matemáticas contemporáneo
+
+### Teorema / Lema / Corolario
+- [ ] Las dependencias `requires` forman un orden topológico válido
+- [ ] Si es lema o corolario, `parentTheorem` está establecido
+- [ ] Tiene al menos una demostración (salvo axiomas/postulados)
+- [ ] Si es lema, es genuinamente auxiliar (no un teorema mayor)
+- [ ] El enunciado es preciso con cuantificadores adecuados
+
+### Demostración
+- [ ] `parentTheorem` apunta a un teorema existente
+- [ ] Cada paso está justificado (por axioma, definición, o teorema previo)
+- [ ] Cada `MedievalStep` tiene un `<InteractiveElement>` correspondiente en el cuerpo
+- [ ] `InteractiveElement` está importado desde VisualBind (no desde MDXBlocks)
+- [ ] El método de demostración (`proofMethod`) describe correctamente el enfoque
+- [ ] Para split-layout: cada paso tiene diagrama o usa uno compartido
+- [ ] La demostración es completa (sin huecos)
+- [ ] Usa `export const Component` (no body MDX plano)
+
+### Sistema Axiomático
+- [ ] Todos los `axiomas` existen y forman una teoría coherente
+- [ ] El orden de los axiomas sigue la práctica matemática convencional
+- [ ] La descripción explica qué hace distintivo a este sistema
+- [ ] Los modelos listados son modelos genuinos del sistema
+
+### Modelo
+- [ ] `satisfies` apunta a un sistema axiomático válido
+- [ ] `axioms_verified` lista axiomas que el modelo demuestrablemente satisface
+- [ ] La descripción define el universo y la interpretación de los primitivos
+- [ ] Si `hasDiagram: true`, el diagrama representa correctamente la estructura
+
+### Ejemplo / Ejercicio / Caso de Uso
+- [ ] El teorema/definición referenciado existe
+- [ ] La solución/razonamiento es completo y correcto
+- [ ] El nivel de dificultad es apropiado
+
+---
+
+## Plantillas de referencia
+
+Las plantillas MDX listas para copiar están en `templates/`:
+- `templates/teorema.mdx` — Plantilla de teorema
+- `templates/demostracion.mdx` — Plantilla de demostración
+- `templates/definicion.mdx` — Plantilla de definición
+- `templates/axioma.mdx` — Plantilla de axioma
+- `templates/modelo.mdx` — Plantilla de modelo
+- `templates/ejercicio.mdx` — Plantilla de ejercicio
+
+## Referencia de componentes
+
+La API completa de componentes MDX está en `reference/components.md`.

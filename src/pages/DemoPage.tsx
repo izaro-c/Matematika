@@ -1,17 +1,13 @@
 import React, { Suspense } from 'react';
 import { useRoute, Link } from 'wouter';
 import { db } from '../store/content';
-import { ModelBadgeList } from '../components/ui/ModelBadge';
 import { FadeIn } from '../components/ui/FadeIn';
+import { ContentHeader } from '../components/ui/ContentHeader';
 
-/**
- * Página dedicada a Demostraciones visuales/interactivas separadas.
- * Carga metadatos y componentes desde `db` usando la ruta `/demo/:id`.
- */
 export const DemoPage: React.FC = () => {
   const [, params] = useRoute('/demo/:id');
   const demoId = params?.id || '';
-  
+
   const demo = db.getDemo(demoId);
   if (!demo) {
     return (
@@ -25,105 +21,52 @@ export const DemoPage: React.FC = () => {
   }
 
   const parentTheorem = demo.parentTheorem ? db.getTheorem(demo.parentTheorem) : null;
+  const breadcrumbs = parentTheorem
+    ? [{ name: parentTheorem.title, href: `/teorema/${parentTheorem.id}` }]
+    : [];
 
   return (
     <FadeIn>
-    <div className="min-h-screen bg-lienzo bg-arts-and-crafts font-serif text-carbon selection:bg-terracota/20 relative w-full">
-      
-      {/* Contenedor centralizado solo para la cabecera */}
-      <div className="max-w-4xl mx-auto px-6 pt-24 pb-12">
-        
-        {/* RETORNO AL TEOREMA (Elegante y en la parte superior) */}
-        {parentTheorem && (
-          <div className="mb-16 flex justify-center">
-            <Link href={`/teorema/${parentTheorem.id}`}>
-              <a className="inline-flex items-center gap-2 text-xs font-sans tracking-widest uppercase text-carbon/50 hover:text-carbon transition-colors border-b border-transparent hover:border-carbon pb-1">
-                &larr; Volver al {parentTheorem.title}
-              </a>
-            </Link>
-          </div>
-        )}
-
-        {/* CABECERA AUTOMÁTICA CLÁSICA */}
-        <div className="text-center mb-16 relative">
-          <div className="flex justify-center items-center gap-4 mb-4">
-            <span className="text-sm font-sans tracking-widest uppercase text-terracota/80 font-bold block">
-              Demostración
-            </span>
-            <ModelBadgeList nodeId={demo.id} />
-          </div>
-          <h1 className="text-4xl md:text-5xl font-bold mb-6 text-pizarra leading-tight" style={{ fontVariant: 'small-caps' }}>
-            {demo.title}
-          </h1>
-          {demo.description && (
-            <p className="text-lg text-carbon/70 italic max-w-2xl mx-auto">
-              {demo.description}
-            </p>
-          )}
-          
-          <div className="flex justify-center items-center gap-4 mt-8">
-            {demo.authors && demo.authors.length > 0 && (
-              <div className="flex items-center gap-2">
-                <span className="text-xs font-sans uppercase tracking-widest text-carbon/50">Por:</span>
-                {demo.authors.map((authorId, idx) => {
-                  const author = db.getMathematicianById(authorId);
-                  return (
-                    <span key={authorId} className="font-bold text-carbon border-b border-carbon/20 pb-0.5">
-                      <Link href={`/bio/${author?.slug || authorId}`}>
-                        <a className="hover:text-terracota transition-colors">{author?.name || authorId}</a>
-                      </Link>
-                      {idx < demo.authors!.length - 1 ? ', ' : ''}
-                    </span>
-                  );
-                })}
-              </div>
-            )}
-            
-            {demo.authors && demo.authors.length > 0 && demo.proofMethod && (
-              <span className="text-carbon/20">&bull;</span>
-            )}
-
-            {demo.proofMethod && (
-              <div className="flex items-center gap-2">
-                <span className="text-xs font-sans uppercase tracking-widest text-carbon/50">Método:</span>
-                <Link href={`/${db.getLesson(demo.proofMethod)?.slug || demo.proofMethod}`}>
-                  <a className="font-bold text-carbon border-b border-carbon/20 pb-0.5 hover:text-salvia transition-colors">
-                    {db.getLesson(demo.proofMethod)?.title || demo.proofMethod.replace('-', ' ')}
-                  </a>
-                </Link>
-              </div>
-            )}
-          </div>
+      <div className="min-h-screen bg-lienzo bg-arts-and-crafts font-serif text-carbon selection:bg-terracota/20 relative w-full">
+        <div className="max-w-4xl mx-auto px-6 md:px-12 pt-16 md:pt-24 pb-12">
+          <ContentHeader
+            type="demostracion"
+            typeLabel="Demostración"
+            title={demo.title}
+            description={demo.description}
+            breadcrumbs={breadcrumbs}
+            authors={demo.authors || []}
+            color="var(--theme-pizarra)"
+            nodeId={demo.id}
+            backLink={parentTheorem ? {
+              href: `/teorema/${parentTheorem.id}`,
+              label: `← ${parentTheorem.title}`,
+            } : undefined}
+            badgesSlot={demo.proofMethod ? (
+              <span className="text-[10px] font-sans uppercase tracking-widest text-carbon/50 border border-carbon/15 px-2 py-1 rounded-sm">
+                Método: {demo.proofMethod}
+              </span>
+            ) : undefined}
+          />
         </div>
 
-        {/* SEPARADOR ORNAMENTAL */}
-        <div className="flex justify-center items-center gap-4 mb-20 opacity-40">
-          <div className="h-px w-16 bg-carbon"></div>
-          <div className="w-2 h-2 rounded-full bg-terracota"></div>
-          <div className="h-px w-16 bg-carbon"></div>
+        <div className={`mx-auto bg-lienzo shadow-xl border border-carbon/15 relative mb-32 ${demo.layout === 'split' ? 'max-w-7xl' : 'max-w-4xl p-8 md:p-16'}`}>
+          <div className="absolute top-2 left-2 w-4 h-4 border-t border-l border-terracota/30 hidden md:block" aria-hidden />
+          <div className="absolute top-2 right-2 w-4 h-4 border-t border-r border-terracota/30 hidden md:block" aria-hidden />
+          <div className="absolute bottom-2 left-2 w-4 h-4 border-b border-l border-terracota/30 hidden md:block" aria-hidden />
+          <div className="absolute bottom-2 right-2 w-4 h-4 border-b border-r border-terracota/30 hidden md:block" aria-hidden />
+
+          <Suspense fallback={
+            <div className="py-20 text-center text-carbon/50 italic animate-pulse">
+              Desenrollando pergamino...
+            </div>
+          }>
+            <div className={demo.layout !== 'split' ? 'prose prose-pizarra prose-lg max-w-none' : ''}>
+              <demo.Component />
+            </div>
+          </Suspense>
         </div>
-
       </div>
-
-      {/* Contenido MDX de la demostración envuelto en tarjeta Papiro */}
-      <div className={`mx-auto bg-lienzo shadow-xl border border-carbon/15 relative mb-32 ${demo.layout === 'split' ? 'max-w-7xl' : 'max-w-4xl p-12 md:p-20'}`}>
-        {/* Esquinas decorativas sutiles */}
-        <div className="absolute top-2 left-2 w-4 h-4 border-t border-l border-terracota/30 hidden md:block"></div>
-        <div className="absolute top-2 right-2 w-4 h-4 border-t border-r border-terracota/30 hidden md:block"></div>
-        <div className="absolute bottom-2 left-2 w-4 h-4 border-b border-l border-terracota/30 hidden md:block"></div>
-        <div className="absolute bottom-2 right-2 w-4 h-4 border-b border-r border-terracota/30 hidden md:block"></div>
-
-        <Suspense fallback={
-          <div className="py-20 text-center text-carbon/50 italic animate-pulse">
-            Desenrollando pergaminos...
-          </div>
-        }>
-          <div className={demo.layout !== 'split' ? 'prose prose-pizarra prose-lg max-w-none' : ''}>
-            <demo.Component />
-          </div>
-        </Suspense>
-      </div>
-    </div>
     </FadeIn>
   );
 };

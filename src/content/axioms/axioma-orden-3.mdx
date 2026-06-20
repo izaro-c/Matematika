@@ -4,31 +4,43 @@ export const metadata = {
   "title": "Axioma II-3 (Orden)",
   "description": "Dados tres puntos distintos sobre una recta, exactamente uno de ellos está entre los otros dos.",
   "statement": "Si A, B, C son tres puntos distintos sobre una misma recta, entonces se cumple exactamente una de las relaciones: A * B * C, A * C * B, o B * A * C.",
-  "tags": ["geometria", "orden", "geometria-absoluta"],
   "authors": ["hilbert"],
+  "hasSimulation": true
 };
 
-<Capitular letra="D" />
-ados tres puntos distintos sobre una recta, exactamente uno de ellos está entre los otros dos. Este axioma establece que el orden sobre la recta es total y lineal.
+import { Order3 } from '../../diagrams/Axiomas/Order3';
+export const Simulation = Order3;
+import { InteractiveElement } from "../../components/ui/VisualBind";
+
+<Capitular letra="D" />ados tres <ConceptLink targetId="punto">puntos</ConceptLink> distintos que descansan sobre una misma <ConceptLink targetId="recta">recta</ConceptLink>, siempre habrá exactamente uno que yace atrapado entre los otros dos. Este <ConceptLink targetId="axioma">axioma</ConceptLink> consolida la linealidad perfecta y absoluta de la recta.
 
 <Separador />
 
 ### Enunciado Formal
 
 <Formula>
-  $$ A, B, C \in l \land A \neq B \neq C \implies \text{exactamente una de:}\; A * B * C,\; A * C * B,\; B * A * C. $$
+  $$
+  A, B, C \text{ colineales} \implies \text{solo una cierta: }
+  \begin{cases}
+    A * B * C \\
+    \lor \\
+    A * C * B \\
+    \lor \\
+    B * A * C
+  \end{cases}
+  $$
 </Formula>
 
 <Separador />
 
 ### Discusión
 
-Los axiomas II-1 y II-2 establecen propiedades de la intermediación sobre pares de puntos. El axioma II-3 regula cómo se comporta la intermediación sobre ternas de puntos. La propiedad clave es la *linealidad* del orden: siempre podemos determinar cuál de los tres puntos es el del medio, sin ambigüedad.
+Imagina tres puntos <InteractiveElement target="p1" color="terracota">A</InteractiveElement>, <InteractiveElement target="p2" color="terracota">B</InteractiveElement> y <InteractiveElement target="p3" color="terracota">C</InteractiveElement> sueltos en una <InteractiveElement target="line" color="carbon">recta</InteractiveElement>. Este <ConceptLink targetId="postulado">postulado</ConceptLink> ordena el caos y establece una jerarquía estricta: no pueden cruzarse extrañamente ni formar un bucle temporal o espacial. Inevitablemente, uno de los tres será el punto central, y los otros dos quedarán posicionados como los extremos.
 
-Esta propiedad permite definir segmentos y semirrectas. Dado un segmento AB, los puntos entre A y B son exactamente aquellos C tales que A * C * B. Dada una semirrecta con origen en A que pasa por B, los puntos de la semirrecta son aquellos X tales que A * B * X o A * X * B.
+Esta propiedad, que parece evidente en nuestro día a día, es la piedra angular matemática que nos permite construir objetos rigurosos como el <ConceptLink targetId="segmento">segmento</ConceptLink> (los puntos interiores a dos extremos) y la <ConceptLink targetId="semirrecta">semirrecta</ConceptLink> (los puntos proyectados hacia un solo lado).
 
 <Separador />
 
 ### Observaciones
 
-Este axioma no se cumple en geometrías circulares o en espacios donde el orden no sea lineal. En una circunferencia, por ejemplo, no hay una noción clara de "estar entre" que satisfaga esta propiedad. Es, por tanto, un axioma característico de la geometría rectilínea clásica.
+- Para comprender verdaderamente la necesidad de escribir este axioma, piensa en una <ConceptLink targetId="circunferencia">circunferencia</ConceptLink>. Si tomas tres puntos en un anillo, no hay un único punto "central"; puedes ir de cualquiera a cualquiera en ambas direcciones rodeando el anillo. Este axioma asegura que nuestras rectas no son anillos cerrados, sino hilos abiertos y estrictamente rectilíneos.

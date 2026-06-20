@@ -1,0 +1,38 @@
+export const metadata = {
+  "id": "ejercicio-<kebab-id>",
+  "type": "ejercicio",
+  "title": "Ejercicio: Título",
+  "description": "Descripción del ejercicio.",
+  "relatedTheorem": "teorema-kebab-id",
+  "requires": ["definicion-usada"],
+  "tags": ["geometria"],
+  "difficulty": "básico",
+  "hint": "Pista opcional para el estudiante.",
+  "links": ["teorema-kebab-id"]
+};
+
+<Capitular letra="D" />ado un triángulo con lados $a = 3$ y $b = 4$, calcula la hipotenusa $c$.
+
+<Separador />
+
+## Planteamiento
+
+Usando el <ConceptLink targetId="teorema-kebab-id">teorema correspondiente</ConceptLink>, resuelve:
+
+<Formula>
+  $$ c = \sqrt{a^2 + b^2} $$
+</Formula>
+
+<Pregunta>
+  ¿Cuál es el valor de $c$?
+  <Hueco respuesta="5">Escribe tu respuesta aquí</Hueco>
+</Pregunta>
+
+<Solucion>
+  Sustituyendo: $c = \sqrt{3^2 + 4^2} = \sqrt{9 + 16} = \sqrt{25} = 5$.
+</Solucion>
+
+<ErrorComun>
+  Un error común es sumar los lados directamente: $c = a + b = 7$. Esto es incorrecto;
+  el teorema establece que $c^2 = a^2 + b^2$, no $c = a + b$.
+</ErrorComun>

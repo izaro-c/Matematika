@@ -10,8 +10,8 @@ export const MethodsPage = () => {
   const [, setLocation] = useLocation();
   const allLessons = db.getAllLessons();
   
-  // Filtrar solo los métodos de demostración (ID empieza por metodo-)
-  const methods = allLessons.filter(l => l.id.startsWith('metodo-'));
+  // Filtrar solo los métodos de demostración (ID empieza por leccion-metodo-)
+  const methods = allLessons.filter(l => l.id.startsWith('leccion-metodo-'));
 
   return (
     <div className="min-h-screen bg-lienzo bg-arts-and-crafts text-carbon p-12 lg:p-24 flex justify-center">
@@ -36,9 +36,13 @@ export const MethodsPage = () => {
               className="group bg-white p-8 border border-carbon/10 shadow-sm hover:shadow-xl hover:-translate-y-1 transition-all cursor-pointer rounded-sm flex flex-col"
             >
               <h2 className="text-2xl font-serif text-salvia group-hover:text-terracota transition-colors mb-4">
-                {method.id.split('-').map(w => w.charAt(0).toUpperCase() + w.slice(1)).join(' ')}
+                {method.title}
               </h2>
-              {/* Intentamos obtener la descripción si está expuesta, o simplemente mostramos un enlace visual */}
+              {method.description && (
+                <p className="text-sm text-carbon/70 font-sans mb-4 flex-grow">
+                  {method.description}
+                </p>
+              )}
               <div className="mt-auto pt-8 flex justify-end">
                 <span className="text-xs font-bold tracking-widest uppercase text-carbon/40 group-hover:text-carbon transition-colors">
                   Estudiar Método &rarr;

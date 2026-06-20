@@ -3,6 +3,15 @@ import JXG from 'jsxgraph';
 import { useMathStore } from '../../store/MathStoreContext';
 import { useLessonStore } from '../../store/LessonStore';
 
+
+function getCSSVar(name: string): string {
+  if (typeof document !== 'undefined') {
+    return getComputedStyle(document.documentElement).getPropertyValue(name).trim();
+  }
+  return '#000';
+}
+
+
 export const Angulo = () => {
   const boardRef = useRef<HTMLDivElement>(null);
   const elementsRef = useRef<Record<string, unknown>>({});
@@ -25,8 +34,8 @@ export const Angulo = () => {
     const pO = board.create('point', [0, 0], {
       name: 'O',
       size: 6,
-      fillColor: '#5D7080',
-      strokeColor: '#5D7080',
+      fillColor: getCSSVar('--theme-pizarra'),
+      strokeColor: getCSSVar('--theme-pizarra'),
       showInfobox: false,
       fixed: true,
     });
@@ -34,8 +43,8 @@ export const Angulo = () => {
     const pA = board.create('point', [2.5, 0.8], {
       name: 'A',
       size: 6,
-      fillColor: '#C86446',
-      strokeColor: '#C86446',
+      fillColor: getCSSVar('--theme-terracota'),
+      strokeColor: getCSSVar('--theme-terracota'),
       showInfobox: false,
       fixed: false,
     });
@@ -43,8 +52,8 @@ export const Angulo = () => {
     const pB = board.create('point', [-1, 2], {
       name: 'B',
       size: 6,
-      fillColor: '#C86446',
-      strokeColor: '#C86446',
+      fillColor: getCSSVar('--theme-terracota'),
+      strokeColor: getCSSVar('--theme-terracota'),
       showInfobox: false,
       fixed: false,
     });
@@ -60,30 +69,41 @@ export const Angulo = () => {
     ], { visible: false, fixed: true });
 
     const rayOA = board.create('segment', [pO, farA], {
-      strokeColor: '#333333',
+      strokeColor: getCSSVar('--theme-carbon'),
       strokeWidth: 2,
       lastArrow: { type: 2 },
     });
 
     const rayOB = board.create('segment', [pO, farB], {
-      strokeColor: '#333333',
+      strokeColor: getCSSVar('--theme-carbon'),
       strokeWidth: 2,
       lastArrow: { type: 2 },
     });
 
     const arc = board.create('angle', [pB, pO, pA], {
       radius: 0.8,
-      fillColor: '#A2C2A2',
+      fillColor: getCSSVar('--theme-salvia'),
       fillOpacity: 0.25,
-      strokeColor: '#333333',
+      strokeColor: getCSSVar('--theme-carbon'),
       strokeWidth: 1.5,
     });
 
     elementsRef.current = { pO, pA, pB, rayOA, rayOB, arc, board };
 
-    board.update();
+    board.update();    (board.renderer as any).container.style.backgroundColor = getCSSVar('--theme-lienzo');
+
+
+
+        const observer = new MutationObserver(() => {
+      if (board) {
+        (board.renderer as any).container.style.backgroundColor = getCSSVar('--theme-lienzo');
+        board.update();
+      }
+    });
+    observer.observe(document.documentElement, { attributes: true, attributeFilter: ['class'] });
 
     return () => {
+      observer.disconnect();
       JXG.JSXGraph.freeBoard(board);
       elementsRef.current = {};
     };
@@ -93,29 +113,29 @@ export const Angulo = () => {
     const { pO, pA, pB, rayOA, rayOB, arc, board } = elementsRef.current as Record<string, any>;
     if (!board) return;
 
-    pO.setAttribute({ size: 6, fillColor: '#5D7080', strokeColor: '#5D7080' });
-    pA.setAttribute({ size: 6, fillColor: '#C86446', strokeColor: '#C86446' });
-    pB.setAttribute({ size: 6, fillColor: '#C86446', strokeColor: '#C86446' });
-    rayOA.setAttribute({ strokeColor: '#333333', strokeWidth: 2 });
-    rayOB.setAttribute({ strokeColor: '#333333', strokeWidth: 2 });
+    pO.setAttribute({ size: 6, fillColor: getCSSVar('--theme-pizarra'), strokeColor: getCSSVar('--theme-pizarra') });
+    pA.setAttribute({ size: 6, fillColor: getCSSVar('--theme-terracota'), strokeColor: getCSSVar('--theme-terracota') });
+    pB.setAttribute({ size: 6, fillColor: getCSSVar('--theme-terracota'), strokeColor: getCSSVar('--theme-terracota') });
+    rayOA.setAttribute({ strokeColor: getCSSVar('--theme-carbon'), strokeWidth: 2 });
+    rayOB.setAttribute({ strokeColor: getCSSVar('--theme-carbon'), strokeWidth: 2 });
 
     if (highlight === 'pO') {
-      pO.setAttribute({ size: 10, fillColor: '#f5c542', strokeColor: '#f5c542' });
+      pO.setAttribute({ size: 10, fillColor: getCSSVar('--theme-ocre'), strokeColor: getCSSVar('--theme-ocre') });
     }
     if (highlight === 'pA') {
-      pA.setAttribute({ size: 10, fillColor: '#f5c542', strokeColor: '#f5c542' });
+      pA.setAttribute({ size: 10, fillColor: getCSSVar('--theme-ocre'), strokeColor: getCSSVar('--theme-ocre') });
     }
     if (highlight === 'pB') {
-      pB.setAttribute({ size: 10, fillColor: '#f5c542', strokeColor: '#f5c542' });
+      pB.setAttribute({ size: 10, fillColor: getCSSVar('--theme-ocre'), strokeColor: getCSSVar('--theme-ocre') });
     }
     if (highlight === 'rayOA') {
-      rayOA.setAttribute({ strokeColor: '#C86446', strokeWidth: 4 });
+      rayOA.setAttribute({ strokeColor: getCSSVar('--theme-terracota'), strokeWidth: 4 });
     }
     if (highlight === 'rayOB') {
-      rayOB.setAttribute({ strokeColor: '#C86446', strokeWidth: 4 });
+      rayOB.setAttribute({ strokeColor: getCSSVar('--theme-terracota'), strokeWidth: 4 });
     }
     if (highlight === 'angleArc') {
-      arc.setAttribute({ fillColor: '#C86446', fillOpacity: 0.4, strokeColor: '#C86446' });
+      arc.setAttribute({ fillColor: getCSSVar('--theme-terracota'), fillOpacity: 0.4, strokeColor: getCSSVar('--theme-terracota') });
     }
 
     board.update();

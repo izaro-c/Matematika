@@ -12,13 +12,12 @@ export interface BaseContent {
 
 export interface Mathematician extends BaseContent {
   name: string;
-  fullName: string;
-  era: string;
+  fullName?: string;
+  country?: string;
   description: string;
   image?: string;
-  year: number;
-  birth?: string;
-  death?: string;
+  birthYear?: number;
+  deathYear?: number;
   Component: MDXComponent;
 }
 
@@ -40,6 +39,7 @@ export interface Theorem {
   corollaries?: string[];
   demos?: string[];
   demostraciones?: string[];
+  lemmas?: string[];
   requires?: string[];
   examples?: string[];
   exercises?: string[];
@@ -90,7 +90,6 @@ export interface Definition {
   tags?: string[];
   authors?: string[];
   color?: string;
-  usedBy?: string[];
   Component: MDXComponent;
   Simulation?: MDXComponent;
   seeAlso?: string[];

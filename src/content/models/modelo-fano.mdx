@@ -6,41 +6,56 @@ export const metadata = {
   "satisfies": ["sistema-incidencia"],
   "axioms_verified": [
     "axioma-incidencia-1",
-    "axioma-incidencia-2"
+    "axioma-incidencia-2",
+    "axioma-incidencia-3"
   ],
-  "tags": ["geometria", "modelo", "finito", "proyectiva", "incidencia"]
+  "hasSimulation": true,
 };
 
+import { ModeloFano } from '../../diagrams/Models/ModeloFano';
+import { InteractiveElement } from "../../components/ui/VisualBind";
+export const Simulation = ModeloFano;
+
 <Capitular letra="E" />
-l Plano de Fano es un modelo finito y discreto que proporciona un ejemplo de un espacio geométrico con exactamente 7 puntos y 7 rectas. Recibe su nombre de Gino Fano, quien fue pionero en el estudio de geometrías finitas en el siglo XIX.
+l <ConceptLink targetId="modelo-fano">Plano de Fano</ConceptLink> constituye el arquetipo de modelo proyectivo finito y discreto, instanciando rigurosamente un <ConceptLink targetId="espacio" isDependency={false}>espacio topológico</ConceptLink> conformado por exactamente 7 <ConceptLink targetId="punto">puntos</ConceptLink> e intersecado por 7 <ConceptLink targetId="recta">rectas</ConceptLink> <ConceptLink targetId="congruencia">congruentes</ConceptLink>. Recibe su nomenclatura del matemático Gino Fano, artífice del estudio formal de las <ConceptLink targetId="geometria-finita" isDependency={false}>geometrías finitas</ConceptLink>.
 
 <Separador />
 
 ### Definición del Modelo
 
-El modelo se define de manera exhaustiva listando sus elementos y relaciones de pertenencia. Frecuentemente se representa gráficamente como un triángulo con sus tres alturas inscritas y un círculo que pasa por los puntos medios de los lados.
+El modelo se define de manera exhaustiva listando sus elementos y relaciones de pertenencia. Frecuentemente se representa gráficamente como un <ConceptLink targetId="triangulo" isDependency={false}>triángulo</ConceptLink> con sus tres alturas inscritas y un círculo que pasa por los puntos medios de los lados.
 
-- **Puntos (7)**: $P = \{1, 2, 3, 4, 5, 6, 7\}$
-- **Rectas (7)**: $L = \{l_1, l_2, l_3, l_4, l_5, l_6, l_7\}$
-- **Incidencia**: Cada recta es un subconjunto de tres puntos. Las rectas se definen como:
-  - $l_1 = \{1, 2, 3\}$
-  - $l_2 = \{3, 4, 5\}$
-  - $l_3 = \{1, 5, 6\}$
-  - $l_4 = \{1, 4, 7\}$
-  - $l_5 = \{2, 5, 7\}$
-  - $l_6 = \{3, 6, 7\}$
-  - $l_7 = \{2, 4, 6\}$
+- **<ConceptLink targetId="punto">Puntos</ConceptLink> (7)**: $P = \{$<InteractiveElement target="1">$1$</InteractiveElement>, <InteractiveElement target="2">$2$</InteractiveElement>, <InteractiveElement target="3">$3$</InteractiveElement>, <InteractiveElement target="4">$4$</InteractiveElement>, <InteractiveElement target="5">$5$</InteractiveElement>, <InteractiveElement target="6">$6$</InteractiveElement>, <InteractiveElement target="7">$7$</InteractiveElement>$\}$
+- **<ConceptLink targetId="recta">Rectas</ConceptLink> (7)**: $L = \{$<InteractiveElement target="l1">$l_1$</InteractiveElement>, <InteractiveElement target="l2">$l_2$</InteractiveElement>, <InteractiveElement target="l3">$l_3$</InteractiveElement>, <InteractiveElement target="l4">$l_4$</InteractiveElement>, <InteractiveElement target="l5">$l_5$</InteractiveElement>, <InteractiveElement target="l6">$l_6$</InteractiveElement>, <InteractiveElement target="l7">$l_7$</InteractiveElement>$\}$
+- **<ConceptLink targetId="incidencia">Incidencia</ConceptLink>**: Cada <ConceptLink targetId="recta">recta</ConceptLink> es un subconjunto de tres <ConceptLink targetId="punto">puntos</ConceptLink>. Las rectas se definen visualmente como:
+  - <InteractiveElement target="l1">$l_1 = \{1, 6, 2\}$</InteractiveElement> (lado izquierdo)
+  - <InteractiveElement target="l2">$l_2 = \{2, 4, 3\}$</InteractiveElement> (lado inferior)
+  - <InteractiveElement target="l3">$l_3 = \{3, 5, 1\}$</InteractiveElement> (lado derecho)
+  - <InteractiveElement target="l4">$l_4 = \{1, 7, 4\}$</InteractiveElement> (altura central)
+  - <InteractiveElement target="l5">$l_5 = \{2, 7, 5\}$</InteractiveElement> (altura derecha)
+  - <InteractiveElement target="l6">$l_6 = \{3, 7, 6\}$</InteractiveElement> (altura izquierda)
+  - <InteractiveElement target="l7">$l_7 = \{6, 4, 5\}$</InteractiveElement> (círculo inscrito)
+
+<Formula>
+  $$
+  \begin{cases}
+    |P| = 7 \\
+    |L| = 7
+  \end{cases}
+  $$
+</Formula>
 
 <Separador />
 
 ### Verificación de Axiomas Clave
 
-El plano de Fano satisface los axiomas fundamentales de un plano proyectivo, lo que significa que cumple una versión modificada del <ConceptLink targetId="sistema-incidencia">sistema de incidencia</ConceptLink>.
+El <ConceptLink targetId="modelo-fano">plano de Fano</ConceptLink> satisface los axiomas fundamentales de un <ConceptLink targetId="plano-proyectivo" isDependency={false}>plano proyectivo</ConceptLink>, lo que significa que cumple una versión modificada del <ConceptLink targetId="sistema-incidencia">sistema de incidencia</ConceptLink>.
 
-1. **<ConceptLink targetId="axioma-incidencia-1">Axioma de Incidencia I-1</ConceptLink>**: Todo par de puntos distintos determina exactamente una recta. (Por ejemplo, los puntos $1$ y $2$ pertenecen únicamente a la recta $l_1$; los puntos $1$ y $4$ a la recta $l_4$).
-2. **<ConceptLink targetId="axioma-incidencia-2">Axioma de Incidencia I-2</ConceptLink>**: Toda recta contiene al menos dos puntos. En este modelo, toda recta contiene exactamente 3 puntos.
-3. **Intersección de Rectas**: A diferencia del plano euclídeo, en el plano de Fano todo par de rectas distintas se interseca en exactamente un punto. No existen las rectas paralelas. (Por ejemplo, $l_1 \cap l_2 = \{3\}$). Por esto, **falla** el axioma de las paralelas.
+1. **<ConceptLink targetId="axioma-incidencia-1">Axioma de Incidencia I-1</ConceptLink>**: Todo par de <ConceptLink targetId="punto">puntos</ConceptLink> distintos determina exactamente una <ConceptLink targetId="recta">recta</ConceptLink>. (Por ejemplo, los puntos $1$ y $2$ pertenecen únicamente a la recta $l_1$; los puntos $1$ y $4$ a la recta $l_4$).
+2. **<ConceptLink targetId="axioma-incidencia-2">Axioma de Incidencia I-2</ConceptLink>**: Toda <ConceptLink targetId="recta">recta</ConceptLink> contiene al menos dos <ConceptLink targetId="punto">puntos</ConceptLink>. En este modelo, toda <ConceptLink targetId="recta">recta</ConceptLink> contiene exactamente 3 puntos.
+3. **<ConceptLink targetId="axioma-incidencia-3">Axioma de Incidencia I-3</ConceptLink>**: Existen tres <ConceptLink targetId="punto">puntos</ConceptLink> que no son <ConceptLink targetId="colineal" isDependency={false}>colineales</ConceptLink>. (Por ejemplo, $1$, $2$ y $3$ no comparten recta común).
+4. **Intersección de Rectas**: A diferencia del <ConceptLink targetId="plano" isDependency={false}>plano</ConceptLink> euclídeo, en el <ConceptLink targetId="modelo-fano">plano de Fano</ConceptLink> todo par de <ConceptLink targetId="recta">rectas</ConceptLink> distintas se interseca en exactamente un <ConceptLink targetId="punto">punto</ConceptLink>. No existen las <ConceptLink targetId="recta">rectas</ConceptLink> <ConceptLink targetId="paralela" isDependency={false}>paralelas</ConceptLink>. (Por ejemplo, $l_1 \cap l_2 = \{3\}$). Por esto, **falla** el <ConceptLink targetId={["axioma-paralelas-euclides", "axioma-paralelas-hiperbolico"]} isDependency={false}>axioma de las paralelas</ConceptLink>.
 
 <Nota>
-  El plano de Fano es equivalente algebraicamente al plano proyectivo sobre el cuerpo finito de dos elementos: $PG(2, \mathbb{F}_2)$. Su existencia demuestra que los axiomas de incidencia no son suficientes para garantizar una geometría infinita o un orden geométrico. De hecho, los <ConceptLink targetId="axioma-orden-1">axiomas de orden</ConceptLink> **no pueden** satisfacerse en el plano de Fano.
+  El <ConceptLink targetId="modelo-fano">plano de Fano</ConceptLink> es equivalente algebraicamente al <ConceptLink targetId="plano-proyectivo" isDependency={false}>plano proyectivo</ConceptLink> sobre el cuerpo finito de dos elementos: $PG(2, \mathbb{F}_2)$. Su existencia demuestra que los <ConceptLink targetId="axioma" isDependency={false}>axiomas</ConceptLink> de <ConceptLink targetId="incidencia">incidencia</ConceptLink> no son suficientes para garantizar una geometría infinita o un orden geométrico. De hecho, los <ConceptLink targetId={["axioma-orden-1", "axioma-orden-2", "axioma-orden-3", "axioma-orden-4"]} isDependency={false}>axiomas de orden</ConceptLink> **no pueden** satisfacerse en el <ConceptLink targetId="modelo-fano">plano de Fano</ConceptLink>.
 </Nota>

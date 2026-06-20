@@ -3,6 +3,15 @@ import JXG from 'jsxgraph';
 import { useMathStore } from '../../store/MathStoreContext';
 import { useLessonStore } from '../../store/LessonStore';
 
+
+function getCSSVar(name: string): string {
+  if (typeof document !== 'undefined') {
+    return getComputedStyle(document.documentElement).getPropertyValue(name).trim();
+  }
+  return '#000';
+}
+
+
 export const Incidence2 = () => {
   const boardRef = useRef<HTMLDivElement>(null);
   const elementsRef = useRef<Record<string, unknown>>({});
@@ -23,44 +32,68 @@ export const Incidence2 = () => {
     });
 
     const l = board.create('line', [[-3.5, 0], [3.5, 0]], {
-      strokeColor: '#333333', strokeWidth: 2, fixed: true, highlight: false,
-      name: 'l', label: { fontSize: 16, position: "rt" },
+      strokeColor: getCSSVar('--theme-carbon'), strokeWidth: 2, fixed: true, highlight: false,
+      name: 'l', withLabel: true, label: { 
+        position: 'top', 
+        offset: [20, 10],
+        display: 'internal',
+        fontFamily: 'Charter, Georgia, serif',
+        fontStyle: 'italic',
+        fontSize: 24,
+        strokeColor: getCSSVar('--theme-carbon')
+      },
     });
 
-    const A = board.create('point', [-2.5, 0], {
-      name: 'A', size: 5, fillColor: '#C86446', strokeColor: '#C86446', showInfobox: false,
+    const A = board.create('glider', [-2.5, 0, l], {
+      name: 'A', size: 5, fillColor: getCSSVar('--theme-terracota'), strokeColor: getCSSVar('--theme-terracota'), showInfobox: false,
     });
 
-    const B = board.create('point', [2.5, 0], {
-      name: 'B', size: 5, fillColor: '#C86446', strokeColor: '#C86446', showInfobox: false,
+    const B = board.create('glider', [2.5, 0, l], {
+      name: 'B', size: 5, fillColor: getCSSVar('--theme-terracota'), strokeColor: getCSSVar('--theme-terracota'), showInfobox: false,
     });
 
     // Marca visual: al menos dos puntos en la recta
     board.create('segment', [A, B], {
-      strokeColor: '#C86446', strokeWidth: 1, dash: 2, highlight: false,
+      strokeColor: getCSSVar('--theme-terracota'), strokeWidth: 1, dash: 2, highlight: false,
     });
 
     elementsRef.current = { board, l, A, B };
 
-    board.update();
+    board.update();    (board.renderer as any).container.style.backgroundColor = getCSSVar('--theme-lienzo');
+
+
+
+        const observer = new MutationObserver(() => {
+      if (board) {
+        (board.renderer as any).container.style.backgroundColor = getCSSVar('--theme-lienzo');
+        board.update();
+      }
+    });
+    observer.observe(document.documentElement, { attributes: true, attributeFilter: ['class'] });
 
     return () => {
+      observer.disconnect();
       JXG.JSXGraph.freeBoard(board);
       elementsRef.current = {};
     };
   }, []);
 
   useEffect(() => {
-    const { board, A, B } = elementsRef.current as Record<string, any>;
+    const { board, l, A, B } = elementsRef.current as Record<string, any>;
     if (!board) return;
 
     if (highlight === 'pA') {
-      A.setAttribute({ size: 10, fillColor: '#f5c542', strokeColor: '#f5c542' });
+      A.setAttribute({ size: 10, fillColor: getCSSVar('--theme-ocre'), strokeColor: getCSSVar('--theme-ocre') });
     } else if (highlight === 'pB') {
-      B.setAttribute({ size: 10, fillColor: '#f5c542', strokeColor: '#f5c542' });
+      B.setAttribute({ size: 10, fillColor: getCSSVar('--theme-ocre'), strokeColor: getCSSVar('--theme-ocre') });
+    } else if (highlight === 'lineAB' || highlight === 'l') {
+      l.setAttribute({ strokeColor: getCSSVar('--theme-terracota'), strokeWidth: 4 });
+      if (l.label) l.label.setAttribute({ strokeColor: getCSSVar('--theme-terracota') });
     } else {
-      A.setAttribute({ size: 5, fillColor: '#C86446', strokeColor: '#C86446' });
-      B.setAttribute({ size: 5, fillColor: '#C86446', strokeColor: '#C86446' });
+      A.setAttribute({ size: 5, fillColor: getCSSVar('--theme-terracota'), strokeColor: getCSSVar('--theme-terracota') });
+      B.setAttribute({ size: 5, fillColor: getCSSVar('--theme-terracota'), strokeColor: getCSSVar('--theme-terracota') });
+      l.setAttribute({ strokeColor: getCSSVar('--theme-carbon'), strokeWidth: 2 });
+      if (l.label) l.label.setAttribute({ strokeColor: getCSSVar('--theme-carbon') });
     }
 
     board.update();

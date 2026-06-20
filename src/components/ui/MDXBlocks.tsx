@@ -1,5 +1,6 @@
 import React from 'react';
 import { MedievalStep } from "../content/MedievalStep";
+import { DemonstrationSection } from "../content/DemonstrationSection";
 import { Concept } from "../content/Concept";
 import { Paso } from '../exercises/Paso';
 import { Solucion } from '../exercises/Solucion';
@@ -16,9 +17,8 @@ import { HighlightLink } from './HighlightLink';
 import { ConceptLink } from "./ConceptLink";
 import { RefLink } from "./RefLink";
 import { GlossaryLink } from './GlossaryLink';
-import { VisualBind } from './VisualBind';
+import { VisualBind, InteractiveElement } from './VisualBind';
 import { Link } from 'wouter';
-import { useMathStore } from '../../store/MathStoreContext';
 
 // === SISTEMA DE DISEÑO ARTS & CRAFTS (IMPRESIÓN CLÁSICA) ===
 
@@ -58,9 +58,11 @@ interface FormulaProps {
   title?: string, children: React.ReactNode;
 }
 export const Formula: React.FC<FormulaProps> = ({ title, children }) => (
-  <div className="my-10 py-8 px-6 w-full flex flex-col items-center justify-center gap-4 text-xl font-serif border border-carbon/20 bg-carbon/[0.02]">
-    {title && <span className="italic block mb-2 text-sm text-carbon/50">{title}</span>}
-    {children}
+  <div className="my-10 py-8 px-6 w-full border border-carbon/20 bg-carbon/[0.02] overflow-x-auto overflow-y-hidden">
+    <div className="flex flex-col items-center justify-center min-w-max mx-auto gap-4 text-xl font-serif">
+      {title && <span className="italic block mb-2 text-sm text-carbon/50">{title}</span>}
+      {children}
+    </div>
   </div>
 );
 
@@ -75,31 +77,6 @@ export const EquationRow: React.FC<EquationRowProps> = ({ children }) => (
     {children}
   </div>
 );
-
-/**
- * Elemento de texto interactivo que se comunica con el estado global `useMathStore`.
- * Se usa típicamente para resaltar variables o partes de un diagrama cuando
- * se pasa el cursor por encima del texto de la lección MDX.
- * 
- * @param target Clave de la variable a resaltar (ej. 'triangle').
- * @param color Nombre del color en CSS variables (ej. 'terracota').
- */
-interface InteractiveElementProps {
-  target: string, color: string, children: React.ReactNode;
-}
-export const InteractiveElement: React.FC<InteractiveElementProps> = ({ target, color, children }) => {
-  const setVariable = useMathStore(state => state.setVariable);
-  return (
-    <span 
-      style={{ color: `var(--color-${color})` }} 
-      className="font-bold cursor-pointer border-b-2 border-dashed border-current hover:bg-carbon/5 px-1 py-0.5 rounded-none transition-all inline-block"
-      onMouseEnter={() => setVariable('highlight', target)}
-      onMouseLeave={() => setVariable('highlight', null)}
-    >
-      {children}
-    </span>
-  );
-};
 
 interface DefinicionProps {
   title?: string, children: React.ReactNode;
@@ -195,6 +172,7 @@ export const MDXComponents = {
   Corolario,
   Separador,
   Capitular,
+  DemonstrationSection,
   MedievalStep,
   Concept,
   Paso,

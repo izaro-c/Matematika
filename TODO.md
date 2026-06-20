@@ -153,18 +153,18 @@
 
 ## FASE 4 — Demostraciones paso a paso con MedievalStep + diagramas
 *Hacer las demostraciones visuales e interactivas.*
-- [ ] 1. Convertir 6 demos a layout: "split"
-- [ ] 2. Estructura: `<DemonstrationSection diagram={...}>` + `<MedievalStep number target title />` por cada paso lógico
-- [ ] 3. Reglas por paso: justificado por axioma (ConceptLink), definición (ConceptLink), hipótesis, o resultado previo (ConceptLink al teorema/lema)
-- [ ] 4. Diagrama reactivo: un diagrama único por demo que responde a useMathStore.highlight cambiado por MedievalStep. Cada paso highlights el elemento relevante
-- [ ] 5. Crear diagramas por demo (6 diagramas nuevos o reutilizar existentes con highlights):
-  - [ ] demo-dos-rectas-un-punto: diagrama con 2 rectas + 2 puntos shared → contradicción visual
-  - [ ] demo-angulos-opuestos: diagrama existente AngulosOpuestos con highlights por step
-  - [ ] demo-congruencia-ala: diagrama con transporte de segmento paso a paso
-  - [ ] demo-congruencia-lll: diagrama con intersección de circunferencias
-  - [ ] demo-punto-medio: diagrama con construcción del punto medio
-  - [ ] demo-punto-medio-perpendicular: diagrama con mediatriz + LAL/LLL
-- [ ] 6. Revisión contenido: cada demo debe tener hipótesis/tesis explícitas, pasos numerados, justificación por paso, conclusión con □. Eliminar pasos innecesarios, añadir pasos faltantes si hay saltos lógicos
+- [x] 1. Convertir 6 demos a layout: "split"
+- [x] 2. Estructura: `<DemonstrationSection diagram={...}>` + `<MedievalStep number target title />` por cada paso lógico
+- [x] 3. Reglas por paso: justificado por axioma (ConceptLink), definición (ConceptLink), hipótesis, o resultado previo (ConceptLink al teorema/lema)
+- [x] 4. Diagrama reactivo: un diagrama único por demo que responde a useMathStore.highlight cambiado por MedievalStep. Cada paso highlights el elemento relevante
+- [x] 5. Crear diagramas por demo (6 diagramas nuevos o reutilizar existentes con highlights):
+  - [x] demo-dos-rectas-un-punto: diagrama con 2 rectas + 2 puntos shared → contradicción visual
+  - [x] demo-angulos-opuestos: diagrama existente AngulosOpuestos con highlights por step
+  - [x] demo-congruencia-ala: diagrama con transporte de segmento paso a paso
+  - [x] demo-congruencia-lll: diagrama con intersección de circunferencias
+  - [x] demo-punto-medio: diagrama con construcción del punto medio
+  - [x] demo-punto-medio-perpendicular: diagrama con mediatriz + LAL/LLL
+- [x] 6. Revisión contenido: cada demo debe tener hipótesis/tesis explícitas, pasos numerados, justificación por paso, conclusión con □. Eliminar pasos innecesarios, añadir pasos faltantes si hay saltos lógicos
 
 ---
 
