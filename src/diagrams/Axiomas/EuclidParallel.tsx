@@ -14,6 +14,7 @@ function getCSSVar(name: string): string {
 
 export const EuclidParallel = () => {
   const boardRef = useRef<HTMLDivElement>(null);
+  const jxgBoard = useRef<any>(null);
   const elementsRef = useRef<Record<string, unknown>>({});
 
   const mathHighlight = useMathStore(state => state.variables?.['highlight']);
@@ -23,13 +24,14 @@ export const EuclidParallel = () => {
   useEffect(() => {
     if (!boardRef.current) return;
 
-    const board = JXG.JSXGraph.initBoard(boardRef.current, {
+    const board = JXG.JSXGraph.initBoard(boardRef.current.id, {
       boundingbox: [-5, 4, 5, -4],
       axis: false,
       showCopyright: false,
       keepaspectratio: true,
       grid: false,
     });
+    jxgBoard.current = board;
 
     const lineL = board.create('line', [[-4, 2], [4, 1.5]], {
       strokeColor: getCSSVar('--theme-carbon'), strokeWidth: 2.5,
@@ -69,6 +71,7 @@ export const EuclidParallel = () => {
     return () => {
       observer.disconnect();
       JXG.JSXGraph.freeBoard(board);
+      jxgBoard.current = null;
       elementsRef.current = {};
     };
   }, []);

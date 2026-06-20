@@ -22,7 +22,7 @@ export function ModelPage() {
     );
   }
 
-  const Diagram = model.Diagram;
+  // const Diagram = model.Diagram;
   const system = model.satisfies ? db.getAxiomaticSystem(model.satisfies) : undefined;
   const verifiedAxioms = (model.axioms_verified || []).map(axId => db.getAxiom(axId)).filter(Boolean);
 

@@ -12,6 +12,7 @@ import JXG from 'jsxgraph';
 
 export const Congruence1: React.FC = () => {
   const boardRef = useRef<HTMLDivElement>(null);
+  const jxgBoard = useRef<any>(null);
   const elementsRef = useRef<any>({});
 
   useEffect(() => {
@@ -24,8 +25,9 @@ export const Congruence1: React.FC = () => {
       showCopyright: false,
       keepaspectratio: true,
       pan: { enabled: true, needShift: false, needTwoFingers: false },
-      zoom: { enabled: true, wheel: true, needShift: false }
+      zoom: { wheel: true, needShift: false }
     });
+    jxgBoard.current = board;
 
     // Puntos originales A y B
     const pA = board.create('point', [-3, 3], {
@@ -75,7 +77,7 @@ export const Congruence1: React.FC = () => {
         const distDir = Math.hypot(dx, dy);
         if (distDir === 0) return [pC.X(), pC.Y()];
         const ux = dx / distDir;
-        const uy = dy / distDir;
+        // Removed uy
         return pC.X() + ux * d;
       },
       () => {
@@ -84,7 +86,7 @@ export const Congruence1: React.FC = () => {
         const dy = pDir.Y() - pC.Y();
         const distDir = Math.hypot(dx, dy);
         if (distDir === 0) return [pC.X(), pC.Y()];
-        const ux = dx / distDir;
+        // Removed ux
         const uy = dy / distDir;
         return pC.Y() + uy * d;
       }
@@ -100,6 +102,7 @@ export const Congruence1: React.FC = () => {
     elementsRef.current = { pA, pB, pC, pDir, pD, segAB, rayR, segCD, circle, board };
 
     return () => JXG.JSXGraph.freeBoard(board);
+      jxgBoard.current = null;
   }, []);
 
   const mathHighlight = useMathStore(state => state.variables?.['highlight']);

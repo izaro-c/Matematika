@@ -22,27 +22,27 @@ export const Component = () => {
   return (
     <DemonstrationSection diagrams={diagrams}>
       <MedievalStep number={1} target={["triangulo-abc", "lado-ab", "lado-ac"]} title="El triángulo isósceles">
-        Consideremos un <InteractiveElement target="triangulo-abc">triángulo $\triangle ABC$</InteractiveElement> isósceles, en el cual por definición se cumple que el <InteractiveElement target="lado-ab">segmento $AB$</InteractiveElement> tiene la misma longitud que el <InteractiveElement target="lado-ac">segmento $AC$</InteractiveElement> ($AB \cong AC$).
+        Consideremos un <InteractiveElement target="triangulo-abc"><ConceptLink targetId="triangulo">triángulo</ConceptLink> $\triangle ABC$</InteractiveElement> isósceles, en el cual por definición se cumple que el <InteractiveElement target="lado-ab"><ConceptLink targetId="segmento">segmento</ConceptLink> $AB$</InteractiveElement> tiene la misma <ConceptLink targetId="longitud">longitud</ConceptLink> que el <InteractiveElement target="lado-ac"><ConceptLink targetId="segmento">segmento</ConceptLink> $AC$</InteractiveElement> ($AB \cong AC$).
       </MedievalStep>
       
       <MedievalStep number={2} target={["bisectriz", "punto-d", "angulo-bad", "angulo-cad"]} title="Construcción de la bisectriz">
-        Trazamos la <InteractiveElement target="bisectriz">bisectriz del $\angle BAC$</InteractiveElement>, es decir, la línea que divide al ángulo superior en dos ángulos idénticos. Sea <InteractiveElement target="punto-d">$D$</InteractiveElement> el punto donde esta bisectriz intersecta la base $BC$. Por construcción, sabemos que <InteractiveElement target="angulo-bad">$\angle BAD$</InteractiveElement> $\cong$ <InteractiveElement target="angulo-cad">$\angle CAD$</InteractiveElement>.
+        Trazamos la <InteractiveElement target="bisectriz"><ConceptLink targetId="bisectriz">bisectriz</ConceptLink> del $\angle BAC$</InteractiveElement>, es decir, la línea que divide al <ConceptLink targetId="angulo">ángulo</ConceptLink> superior en dos <ConceptLink targetId="angulo">ángulos</ConceptLink> idénticos. Sea <InteractiveElement target="punto-d">$D$</InteractiveElement> el <ConceptLink targetId="punto">punto</ConceptLink> donde esta <ConceptLink targetId="bisectriz">bisectriz</ConceptLink> intersecta la base $BC$. Por construcción, sabemos que <InteractiveElement target="angulo-bad">$\angle BAD$</InteractiveElement> $\cong$ <InteractiveElement target="angulo-cad">$\angle CAD$</InteractiveElement>.
       </MedievalStep>
 
       <MedievalStep number={3} target={["lado-ad"]} title="El lado compartido">
-        El <InteractiveElement target="lado-ad">segmento $AD$</InteractiveElement> es un lado compartido por ambos triángulos formados, el $\triangle ABD$ y el $\triangle ACD$. Obviamente, $AD \cong AD$ por identidad.
+        El <InteractiveElement target="lado-ad"><ConceptLink targetId="segmento">segmento</ConceptLink> $AD$</InteractiveElement> es un lado compartido por ambos <ConceptLink targetId="triangulo">triángulos</ConceptLink> formados, el $\triangle ABD$ y el $\triangle ACD$. Obviamente, $AD \cong AD$ por identidad.
       </MedievalStep>
 
       <MedievalStep number={4} target={["triangulo-izq", "triangulo-der"]} title="Congruencia LAL">
-        Ahora observemos los dos triángulos internos: <InteractiveElement target="triangulo-izq">$\triangle ABD$</InteractiveElement> y <InteractiveElement target="triangulo-der">$\triangle ACD$</InteractiveElement>. Tenemos:
+        Ahora observemos los dos <ConceptLink targetId="triangulo">triángulos</ConceptLink> internos: <InteractiveElement target="triangulo-izq">$\triangle ABD$</InteractiveElement> y <InteractiveElement target="triangulo-der">$\triangle ACD$</InteractiveElement>. Tenemos:
         1. $AB \cong AC$ (Dado inicialmente).
-        2. $\angle BAD \cong \angle CAD$ (Construcción de la bisectriz).
+        2. $\angle BAD \cong \angle CAD$ (Construcción de la <ConceptLink targetId="bisectriz">bisectriz</ConceptLink>).
         3. $AD \cong AD$ (Lado común).
-        Por el <ConceptLink targetId="axioma-congruencia-5">Axioma de Congruencia LAL</ConceptLink>, concluimos que los dos triángulos son exactamente congruentes.
+        Por el <ConceptLink targetId="axioma-congruencia-5"><ConceptLink targetId="axioma">Axioma</ConceptLink> de <ConceptLink targetId="congruencia">Congruencia</ConceptLink> LAL</ConceptLink>, concluimos que los dos <ConceptLink targetId="triangulo">triángulos</ConceptLink> son exactamente <ConceptLink targetId="congruencia">congruentes</ConceptLink>.
       </MedievalStep>
 
       <MedievalStep number={5} target={["angulo-b", "angulo-c"]} title="Conclusión de ángulos">
-        Puesto que los triángulos $\triangle ABD$ y $\triangle ACD$ son congruentes, todas sus partes correspondientes deben ser iguales. En consecuencia, el <InteractiveElement target="angulo-b">$\angle B$</InteractiveElement> debe ser igual al <InteractiveElement target="angulo-c">$\angle C$</InteractiveElement>. $\blacksquare$
+        Puesto que los <ConceptLink targetId="triangulo">triángulos</ConceptLink> $\triangle ABD$ y $\triangle ACD$ son <ConceptLink targetId="congruencia">congruentes</ConceptLink>, todas sus partes correspondientes deben ser iguales. En consecuencia, el <InteractiveElement target="angulo-b">$\angle B$</InteractiveElement> debe ser igual al <InteractiveElement target="angulo-c">$\angle C$</InteractiveElement>. $\blacksquare$
       </MedievalStep>
     </DemonstrationSection>
   );

@@ -13,10 +13,10 @@ export const metadata = {
 import { InteractiveElement } from "../../components/ui/VisualBind";
 import { Perpendicular } from '../../diagrams/Definiciones/Perpendicular';
 
-export const Simulation = Perpendicular;
+export const Simulation = <ConceptLink targetId="perpendicular">Perpendicular</ConceptLink>;
 
-<Capitular letra="L" />a noción de perpendicularidad se establece cuando una <InteractiveElement target="perpendicular">recta secante</InteractiveElement> se interseca con otra <InteractiveElement target="recta">recta</InteractiveElement> de tal forma que dividen el plano en <InteractiveElement target="angulos-rectos">cuatro regiones angulares exactamente iguales</InteractiveElement>, cada una de las cuales se denomina ángulo recto.
+<Capitular letra="L" />a noción de perpendicularidad se establece cuando una <InteractiveElement target="perpendicular"><ConceptLink targetId="recta">recta</ConceptLink> secante</InteractiveElement> se interseca con otra <InteractiveElement target="recta"><ConceptLink targetId="recta">recta</ConceptLink></InteractiveElement> de tal forma que dividen el <ConceptLink targetId="plano">plano</ConceptLink> en <InteractiveElement target="angulos-rectos">cuatro regiones angulares exactamente iguales</InteractiveElement>, cada una de las cuales se denomina <ConceptLink targetId="angulo">ángulo</ConceptLink> recto.
 
 <Separador />
 
-La perpendicularidad es un caso particular de intersección y está íntimamente relacionada con la métrica del espacio euclidiano.
+La perpendicularidad es un caso particular de intersección y está íntimamente relacionada con la métrica del espacio <ConceptLink targetId="euclides">euclidiano</ConceptLink>.

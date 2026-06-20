@@ -10,31 +10,31 @@ export const metadata = {
 };
 
 import { Semirrecta } from '../../diagrams/Definiciones/Semirrecta';
-export const Simulation = Semirrecta;
+export const Simulation = <ConceptLink targetId="semirrecta">Semirrecta</ConceptLink>;
 import { InteractiveElement } from "../../components/ui/VisualBind";
 
 <Capitular letra="U" />
-na semirrecta, también llamada rayo, es cada una de las dos partes en que un punto divide a una recta. Tiene origen en ese punto y se extiende infinitamente en una dirección.
+na <ConceptLink targetId="semirrecta">semirrecta</ConceptLink>, también llamada rayo, es cada una de las dos partes en que un <ConceptLink targetId="punto">punto</ConceptLink> divide a una <ConceptLink targetId="recta">recta</ConceptLink>. Tiene origen en ese <ConceptLink targetId="punto">punto</ConceptLink> y se extiende infinitamente en una dirección.
 
 <Separador />
 
 ### Enunciado Formal
 
-Dado un punto $A$ sobre una recta $l$ y otro punto $B$ de $l$ distinto de $A$, la semirrecta $AB$ (de origen $A$ que pasa por $B$) es el conjunto:
+Dado un <ConceptLink targetId="punto">punto</ConceptLink> $A$ sobre una <ConceptLink targetId="recta">recta</ConceptLink> $l$ y otro <ConceptLink targetId="punto">punto</ConceptLink> $B$ de $l$ distinto de $A$, la <ConceptLink targetId="semirrecta">semirrecta</ConceptLink> $AB$ (de origen $A$ que pasa por $B$) es el conjunto:
 
 <Formula>
   $$ AB^{\rightarrow} = \{X \in l \mid X = A \text{ o } A \text{ está entre } X \text{ y } B \} $$
 </Formula>
 
-Equivalentemente, es el conjunto de puntos $X$ de $l$ tales que $B$ y $X$ residen en el mismo lado respecto a $A$. En el diagrama, el origen <InteractiveElement target="pO" color="terracota">O</InteractiveElement> y el punto <InteractiveElement target="pA" color="terracota">A</InteractiveElement> determinan la <InteractiveElement target="rayOA" color="terracota">semirrecta</InteractiveElement>.
+Equivalentemente, es el conjunto de <ConceptLink targetId="punto">puntos</ConceptLink> $X$ de $l$ tales que $B$ y $X$ residen en el mismo lado respecto a $A$. En el diagrama, el origen <InteractiveElement target="pO" color="terracota">O</InteractiveElement> y el <ConceptLink targetId="punto">punto</ConceptLink> <InteractiveElement target="pA" color="terracota">A</InteractiveElement> determinan la <InteractiveElement target="rayOA" color="terracota"><ConceptLink targetId="semirrecta">semirrecta</ConceptLink></InteractiveElement>.
 
 <Separador />
 
 ### Propiedades
 
-- Toda recta queda dividida por cualquiera de sus puntos en dos semirrectas opuestas.
-- Dos puntos distintos sobre una misma semirrecta determinan la misma semirrecta.
-- Las semirrectas son fundamentales para la definición de <ConceptLink targetId="angulo">ángulo</ConceptLink> (dos semirrectas con el mismo origen) y para el <ConceptLink targetId="axioma-congruencia-1" isDependency={false}>transporte de segmentos</ConceptLink>.
+- Toda <ConceptLink targetId="recta">recta</ConceptLink> queda dividida por cualquiera de sus <ConceptLink targetId="punto">puntos</ConceptLink> en dos <ConceptLink targetId="semirrecta">semirrectas</ConceptLink> opuestas.
+- Dos <ConceptLink targetId="punto">puntos</ConceptLink> distintos sobre una misma <ConceptLink targetId="semirrecta">semirrecta</ConceptLink> determinan la misma <ConceptLink targetId="semirrecta">semirrecta</ConceptLink>.
+- Las <ConceptLink targetId="semirrecta">semirrectas</ConceptLink> son fundamentales para la definición de <ConceptLink targetId="angulo">ángulo</ConceptLink> (dos <ConceptLink targetId="semirrecta">semirrectas</ConceptLink> con el mismo origen) y para el <ConceptLink targetId="axioma-congruencia-1" isDependency={false}>transporte de <ConceptLink targetId="segmento">segmentos</ConceptLink></ConceptLink>.
 
 <Separador />
 
@@ -42,12 +42,12 @@ Equivalentemente, es el conjunto de puntos $X$ de $l$ tales que $B$ y $X$ reside
 
 | Notación | Significado |
 |---|---|
-| $AB^{\rightarrow}$ o $\overrightarrow{AB}$ | Semirrecta con origen $A$ que pasa por $B$ |
-| $AX^{\rightarrow} \uparrow AY^{\rightarrow}$ | Semirrectas coincidentes (misma dirección) |
-| $AX^{\rightarrow} \downarrow AY^{\rightarrow}$ | Semirrectas opuestas |
+| $AB^{\rightarrow}$ o $\overrightarrow{AB}$ | <ConceptLink targetId="semirrecta">Semirrecta</ConceptLink> con origen $A$ que pasa por $B$ |
+| $AX^{\rightarrow} \uparrow AY^{\rightarrow}$ | <ConceptLink targetId="semirrecta">Semirrectas</ConceptLink> coincidentes (misma dirección) |
+| $AX^{\rightarrow} \downarrow AY^{\rightarrow}$ | <ConceptLink targetId="semirrecta">Semirrectas</ConceptLink> opuestas |
 
 <Separador />
 
 ### Observaciones
 
-La noción de semirrecta depende exclusivamente de la relación de orden sobre la recta (<ConceptLink targetId="axioma-orden-1" isDependency={false}>II-1</ConceptLink> a <ConceptLink targetId="axioma-orden-3" isDependency={false}>II-3</ConceptLink>). No requiere la noción de distancia o ángulo, aunque es esencial para definir ángulos. En <ConceptLink targetId="sistema-absoluto">geometría absoluta</ConceptLink>, el <ConceptLink targetId="axioma-congruencia-5" isDependency={false}>criterio SAS</ConceptLink> utiliza semirrectas para transportar ángulos.
+La noción de <ConceptLink targetId="semirrecta">semirrecta</ConceptLink> depende exclusivamente de la relación de orden sobre la <ConceptLink targetId="recta">recta</ConceptLink> (<ConceptLink targetId="axioma-orden-1" isDependency={false}>II-1</ConceptLink> a <ConceptLink targetId="axioma-orden-3" isDependency={false}>II-3</ConceptLink>). No requiere la noción de distancia o <ConceptLink targetId="angulo">ángulo</ConceptLink>, aunque es esencial para definir <ConceptLink targetId="angulo">ángulos</ConceptLink>. En <ConceptLink targetId="sistema-absoluto"><ConceptLink targetId="geometria">geometría</ConceptLink> absoluta</ConceptLink>, el <ConceptLink targetId="axioma-congruencia-5" isDependency={false}>criterio SAS</ConceptLink> utiliza <ConceptLink targetId="semirrecta">semirrectas</ConceptLink> para transportar <ConceptLink targetId="angulo">ángulos</ConceptLink>.

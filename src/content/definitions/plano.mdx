@@ -8,34 +8,34 @@ export const metadata = {
 };
 
 import { Plano } from '../../diagrams/Definiciones/Plano';
-export const Simulation = Plano;
+export const Simulation = <ConceptLink targetId="plano">Plano</ConceptLink>;
 import { InteractiveElement } from "../../components/ui/VisualBind";
 
-<Capitular letra="E" />l plano es el tercer **concepto primitivo** de la geometría de <ConceptLink targetId="hilbert" isDependency={false}>Hilbert</ConceptLink>, junto con el <ConceptLink targetId="punto">punto</ConceptLink> y la <ConceptLink targetId="recta">recta</ConceptLink>. Al igual que ellos, carece de una definición analítica intrínseca en la base de la teoría axiomática; es una entidad abstracta cuya existencia concebimos visualmente como una <ConceptLink targetId="superficie" isDependency={false}>superficie</ConceptLink> de dos <ConceptLink targetId="dimension" isDependency={false}>dimensiones</ConceptLink> que no tiene grosor ni bordes.
+<Capitular letra="E" />l <ConceptLink targetId="plano">plano</ConceptLink> es el tercer **concepto primitivo** de la <ConceptLink targetId="geometria">geometría</ConceptLink> de <ConceptLink targetId="hilbert" isDependency={false}><ConceptLink targetId="hilbert">Hilbert</ConceptLink></ConceptLink>, junto con el <ConceptLink targetId="punto">punto</ConceptLink> y la <ConceptLink targetId="recta">recta</ConceptLink>. Al igual que ellos, carece de una definición analítica intrínseca en la base de la teoría axiomática; es una entidad abstracta cuya existencia concebimos visualmente como una <ConceptLink targetId="superficie" isDependency={false}><ConceptLink targetId="superficie">superficie</ConceptLink></ConceptLink> de dos <ConceptLink targetId="dimension" isDependency={false}>dimensiones</ConceptLink> que no tiene grosor ni bordes.
 
 <Separador />
 
 ### Enunciado Informal
 
-Podemos imaginar un plano como una hoja de papel perfectamente lisa que se extiende sin fin en todas direcciones. Se nombra usando letras griegas ($\alpha, \beta, \pi$) o nombrando tres puntos suyos que no estén alineados, como $(ABC)$.
+Podemos imaginar un <ConceptLink targetId="plano">plano</ConceptLink> como una hoja de papel perfectamente lisa que se extiende sin fin en todas direcciones. Se nombra usando letras griegas ($\alpha, \beta, \pi$) o nombrando tres <ConceptLink targetId="punto">puntos</ConceptLink> suyos que no estén alineados, como $(ABC)$.
 
-En el diagrama interactivo, vemos los puntos <InteractiveElement target="pA" color="terracota">A</InteractiveElement>, <InteractiveElement target="pB" color="terracota">B</InteractiveElement> y <InteractiveElement target="pC" color="terracota">C</InteractiveElement>, todos situados dentro de un mismo <InteractiveElement target="planeMesh" color="carbon">plano $\pi$</InteractiveElement>.
+En el diagrama interactivo, vemos los <ConceptLink targetId="punto">puntos</ConceptLink> <InteractiveElement target="pA" color="terracota">A</InteractiveElement>, <InteractiveElement target="pB" color="terracota">B</InteractiveElement> y <InteractiveElement target="pC" color="terracota">C</InteractiveElement>, todos situados dentro de un mismo <InteractiveElement target="planeMesh" color="carbon"><ConceptLink targetId="plano">plano</ConceptLink> $\pi$</InteractiveElement>.
 
 <Separador />
 
 ### Definición Axiomática
 
-Las reglas de los <ConceptLink targetId="sistema-incidencia">axiomas de incidencia</ConceptLink> nos dictan cómo funciona el plano:
+Las reglas de los <ConceptLink targetId="sistema-incidencia"><ConceptLink targetId="axioma">axiomas</ConceptLink> de <ConceptLink targetId="incidencia">incidencia</ConceptLink></ConceptLink> nos dictan cómo funciona el <ConceptLink targetId="plano">plano</ConceptLink>:
 
-- **Determinación**: Tres <ConceptLink targetId="punto">puntos</ConceptLink> no alineados definen exactamente un único plano (<ConceptLink targetId="axioma-incidencia-4" isDependency={false}>I-4</ConceptLink>).
-- **Planitud (Cerradura)**: Si dos puntos de una <ConceptLink targetId="recta">recta</ConceptLink> están en el plano, entonces toda la recta entera debe estar contenida en él (<ConceptLink targetId="axioma-incidencia-6" isDependency={false}>I-6</ConceptLink>). Esto garantiza que el plano es "plano" y no se curva.
-- **Intersección**: Si dos planos distintos se cruzan, no lo hacen en un solo punto, sino a lo largo de toda una <ConceptLink targetId="recta">recta</ConceptLink> común (<ConceptLink targetId="axioma-incidencia-7" isDependency={false}>I-7</ConceptLink>).
-- **Espacio 3D**: Para asegurar que exista el <ConceptLink targetId="espacio-tridimensional">espacio tridimensional</ConceptLink>, se exige que haya al menos cuatro puntos que no pertenezcan al mismo plano (<ConceptLink targetId="axioma-incidencia-8" isDependency={false}>I-8</ConceptLink>).
+- **Determinación**: Tres <ConceptLink targetId="punto">puntos</ConceptLink> no alineados definen exactamente un único <ConceptLink targetId="plano">plano</ConceptLink> (<ConceptLink targetId="axioma-incidencia-4" isDependency={false}>I-4</ConceptLink>).
+- **Planitud (Cerradura)**: Si dos <ConceptLink targetId="punto">puntos</ConceptLink> de una <ConceptLink targetId="recta">recta</ConceptLink> están en el <ConceptLink targetId="plano">plano</ConceptLink>, entonces toda la <ConceptLink targetId="recta">recta</ConceptLink> entera debe estar contenida en él (<ConceptLink targetId="axioma-incidencia-6" isDependency={false}>I-6</ConceptLink>). Esto garantiza que el <ConceptLink targetId="plano">plano</ConceptLink> es "<ConceptLink targetId="plano">plano</ConceptLink>" y no se curva.
+- **Intersección**: Si dos <ConceptLink targetId="plano">planos</ConceptLink> distintos se cruzan, no lo hacen en un solo <ConceptLink targetId="punto">punto</ConceptLink>, sino a lo largo de toda una <ConceptLink targetId="recta">recta</ConceptLink> común (<ConceptLink targetId="axioma-incidencia-7" isDependency={false}>I-7</ConceptLink>).
+- **Espacio 3D**: Para asegurar que exista el <ConceptLink targetId="espacio-tridimensional">espacio tridimensional</ConceptLink>, se exige que haya al menos cuatro <ConceptLink targetId="punto">puntos</ConceptLink> que no pertenezcan al mismo <ConceptLink targetId="plano">plano</ConceptLink> (<ConceptLink targetId="axioma-incidencia-8" isDependency={false}>I-8</ConceptLink>).
 
 <Separador />
 
 ### Observaciones
 
-- Siguiendo el célebre ejemplo de Hilbert sobre los conceptos primitivos, los axiomas funcionarían exactamente igual de bien si en lugar de "puntos, rectas y planos" estuviésemos hablando de "sillas, mesas y jarras de cerveza", siempre que cumplan las mismas reglas lógicas de incidencia.
-- En la <ConceptLink targetId="geometria-analitica">geometría analítica</ConceptLink>, un plano es un <ConceptLink targetId="subespacio-afin">subespacio afín</ConceptLink> bidimensional. Es el conjunto de puntos $(x, y, z)$ cuyas <ConceptLink targetId="coordenadas">coordenadas</ConceptLink> cumplen una <ConceptLink targetId="ecuacion-lineal">ecuación lineal</ConceptLink> del tipo $ax + by + cz = d$.
-- Cuando estudiamos <ConceptLink targetId="geometria-plana">geometría plana</ConceptLink>, asumimos que todo ocurre dentro de un único plano. Al estudiar la <ConceptLink targetId="geometria-espacial">geometría del espacio</ConceptLink>, trabajamos con múltiples planos que se cruzan e interactúan entre sí.
+- Siguiendo el célebre ejemplo de <ConceptLink targetId="hilbert">Hilbert</ConceptLink> sobre los conceptos primitivos, los <ConceptLink targetId="axioma">axiomas</ConceptLink> funcionarían exactamente igual de bien si en lugar de "<ConceptLink targetId="punto">puntos</ConceptLink>, <ConceptLink targetId="recta">rectas</ConceptLink> y <ConceptLink targetId="plano">planos</ConceptLink>" estuviésemos hablando de "sillas, mesas y jarras de cerveza", siempre que cumplan las mismas reglas lógicas de <ConceptLink targetId="incidencia">incidencia</ConceptLink>.
+- En la <ConceptLink targetId="geometria-analitica"><ConceptLink targetId="geometria">geometría</ConceptLink> analítica</ConceptLink>, un <ConceptLink targetId="plano">plano</ConceptLink> es un <ConceptLink targetId="subespacio-afin">subespacio afín</ConceptLink> bidimensional. Es el conjunto de <ConceptLink targetId="punto">puntos</ConceptLink> $(x, y, z)$ cuyas <ConceptLink targetId="coordenadas">coordenadas</ConceptLink> cumplen una <ConceptLink targetId="ecuacion-lineal">ecuación lineal</ConceptLink> del tipo $ax + by + cz = d$.
+- Cuando estudiamos <ConceptLink targetId="geometria-plana"><ConceptLink targetId="geometria">geometría</ConceptLink> plana</ConceptLink>, asumimos que todo ocurre dentro de un único <ConceptLink targetId="plano">plano</ConceptLink>. Al estudiar la <ConceptLink targetId="geometria-espacial"><ConceptLink targetId="geometria">geometría</ConceptLink> del espacio</ConceptLink>, trabajamos con múltiples <ConceptLink targetId="plano">planos</ConceptLink> que se cruzan e interactúan entre sí.

@@ -28,7 +28,7 @@ import { ModeloCartesiano } from '../../diagrams/Models/ModeloCartesiano';
 export const Diagram = ModeloCartesiano;
 
 <Capitular letra="E" />
-l <ConceptLink targetId="modelo-cartesiano">Plano Cartesiano</ConceptLink> $\mathbb{R}^2$ constituye el modelo analítico canónico para la <ConceptLink targetId="sistema-euclidiano">geometría euclídea</ConceptLink>. Al establecer una biyección rigurosa entre las variedades geométricas y los pares ordenados formados por números reales, propulsó la completa algebrización de la geometría, un logro monumental cristalizado analíticamente durante el siglo XVII.
+l <ConceptLink targetId="modelo-cartesiano"><ConceptLink targetId="plano">Plano</ConceptLink> Cartesiano</ConceptLink> $\mathbb{R}^2$ constituye el modelo analítico canónico para la <ConceptLink targetId="sistema-euclidiano"><ConceptLink targetId="geometria">geometría</ConceptLink> euclídea</ConceptLink>. Al establecer una biyección rigurosa entre las variedades geométricas y los pares ordenados formados por números reales, propulsó la completa algebrización de la <ConceptLink targetId="geometria">geometría</ConceptLink>, un logro monumental cristalizado analíticamente durante el siglo XVII.
 
 <Separador />
 
@@ -36,23 +36,23 @@ l <ConceptLink targetId="modelo-cartesiano">Plano Cartesiano</ConceptLink> $\mat
 
 En este modelo analítico, los elementos geométricos primitivos se defininen algebraicamente mediante la teoría de conjuntos y el cuerpo de los números reales $\mathbb{R}$:
 
-- **Puntos**: Son pares ordenados $(x, y) \in \mathbb{R}^2$.
-- **Rectas**: Son los conjuntos de puntos $(x, y)$ que satisfacen una ecuación lineal de la forma $ax + by + c = 0$, donde $a, b \in \mathbb{R}$ no son simultáneamente nulos.
-- **Incidencia**: Un punto pertenece a una recta si sus coordenadas satisfacen la ecuación de dicha recta.
-- **Distancia**: Dados dos puntos $P_1(x_1, y_1)$ y $P_2(x_2, y_2)$, la distancia euclídea se define mediante la fórmula: $d(P_1, P_2) = \sqrt{(x_2 - x_1)^2 + (y_2 - y_1)^2}$. Esta función de distancia permite definir la congruencia de segmentos.
-- **Orden e Intermediación**: Un punto $B$ está *entre* $A$ y $C$ si y solo si $d(A, B) + d(B, C) = d(A, C)$. Alternativamente, $B$ puede expresarse como una combinación convexa estricta $B = (1-t)A + tC$ para algún $t \in (0,1)$.
+- **<ConceptLink targetId="punto">Puntos</ConceptLink>**: Son pares ordenados $(x, y) \in \mathbb{R}^2$.
+- **<ConceptLink targetId="recta">Rectas</ConceptLink>**: Son los conjuntos de <ConceptLink targetId="punto">puntos</ConceptLink> $(x, y)$ que satisfacen una ecuación lineal de la forma $ax + by + c = 0$, donde $a, b \in \mathbb{R}$ no son simultáneamente nulos.
+- **<ConceptLink targetId="incidencia">Incidencia</ConceptLink>**: Un <ConceptLink targetId="punto">punto</ConceptLink> pertenece a una <ConceptLink targetId="recta">recta</ConceptLink> si sus coordenadas satisfacen la ecuación de dicha <ConceptLink targetId="recta">recta</ConceptLink>.
+- **Distancia**: Dados dos <ConceptLink targetId="punto">puntos</ConceptLink> $P_1(x_1, y_1)$ y $P_2(x_2, y_2)$, la distancia euclídea se define mediante la fórmula: $d(P_1, P_2) = \sqrt{(x_2 - x_1)^2 + (y_2 - y_1)^2}$. Esta función de distancia permite definir la <ConceptLink targetId="congruencia">congruencia</ConceptLink> de <ConceptLink targetId="segmento">segmentos</ConceptLink>.
+- **Orden e Intermediación**: Un <ConceptLink targetId="punto">punto</ConceptLink> $B$ está *entre* $A$ y $C$ si y solo si $d(A, B) + d(B, C) = d(A, C)$. Alternativamente, $B$ puede expresarse como una combinación convexa estricta $B = (1-t)A + tC$ para algún $t \in (0,1)$.
 
 <Separador />
 
-### Verificación de Axiomas Clave
+### Verificación de <ConceptLink targetId="axioma">Axiomas</ConceptLink> Clave
 
-El <ConceptLink targetId="modelo-cartesiano">plano cartesiano</ConceptLink> satisface todos los axiomas de la <ConceptLink targetId="sistema-euclidiano">geometría euclídea</ConceptLink>:
+El <ConceptLink targetId="modelo-cartesiano"><ConceptLink targetId="plano">plano</ConceptLink> cartesiano</ConceptLink> satisface todos los <ConceptLink targetId="axioma">axiomas</ConceptLink> de la <ConceptLink targetId="sistema-euclidiano"><ConceptLink targetId="geometria">geometría</ConceptLink> euclídea</ConceptLink>:
 
-1.  **Axiomas de Incidencia**: Dados dos puntos distintos $P_1(x_1, y_1)$ y $P_2(x_2, y_2)$, existe una y solo una ecuación de la forma $ax + by + c = 0$ (salvo multiplicación por un escalar no nulo) que ambos satisfacen. Esto verifica el <ConceptLink targetId="axioma-incidencia-1">axioma de incidencia de la recta</ConceptLink>.
-2.  **Axiomas de Congruencia**: Se verifican a través de la invariancia de la métrica euclídea ante isometrías afines (traslaciones, rotaciones y reflexiones).
-3.  **Axiomas de Continuidad**: Se heredan directamente de la completitud topológica del cuerpo de los números reales $\mathbb{R}$ (axioma del supremo de Dedekind), garantizando que los <ConceptLink targetId="axioma-arquimedes">axiomas de <ConceptLink targetId="arquimedes">Arquímedes</ConceptLink></ConceptLink> y Completitud se cumplan.
-4.  **Axioma de <ConceptLink targetId="paralelas">Paralelas</ConceptLink>**: Dada una recta $ax + by + c = 0$ y un punto $(x_0, y_0)$ que no pertenece a ella, la única recta paralela a la dada que pasa por el punto tiene la ecuación $ax + by - (ax_0 + by_0) = 0$. Esto demuestra formalmente el <ConceptLink targetId="axioma-paralelas-euclides">postulado de las <ConceptLink targetId="paralelas">paralelas</ConceptLink> de <ConceptLink targetId="euclides">Euclides</ConceptLink></ConceptLink>.
+1.  **<ConceptLink targetId="axioma">Axiomas</ConceptLink> de <ConceptLink targetId="incidencia">Incidencia</ConceptLink>**: Dados dos <ConceptLink targetId="punto">puntos</ConceptLink> distintos $P_1(x_1, y_1)$ y $P_2(x_2, y_2)$, existe una y solo una ecuación de la forma $ax + by + c = 0$ (salvo multiplicación por un escalar no nulo) que ambos satisfacen. Esto verifica el <ConceptLink targetId="axioma-incidencia-1"><ConceptLink targetId="axioma">axioma</ConceptLink> de <ConceptLink targetId="incidencia">incidencia</ConceptLink> de la <ConceptLink targetId="recta">recta</ConceptLink></ConceptLink>.
+2.  **<ConceptLink targetId="axioma">Axiomas</ConceptLink> de <ConceptLink targetId="congruencia">Congruencia</ConceptLink>**: Se verifican a través de la invariancia de la métrica euclídea ante isometrías afines (traslaciones, rotaciones y reflexiones).
+3.  **<ConceptLink targetId="axioma">Axiomas</ConceptLink> de Continuidad**: Se heredan directamente de la completitud topológica del cuerpo de los números reales $\mathbb{R}$ (<ConceptLink targetId="axioma">axioma</ConceptLink> del supremo de Dedekind), garantizando que los <ConceptLink targetId="axioma-arquimedes"><ConceptLink targetId="axioma">axiomas</ConceptLink> de <ConceptLink targetId="arquimedes">Arquímedes</ConceptLink></ConceptLink> y Completitud se cumplan.
+4.  **<ConceptLink targetId="axioma">Axioma</ConceptLink> de <ConceptLink targetId="paralelas">Paralelas</ConceptLink>**: Dada una <ConceptLink targetId="recta">recta</ConceptLink> $ax + by + c = 0$ y un <ConceptLink targetId="punto">punto</ConceptLink> $(x_0, y_0)$ que no pertenece a ella, la única <ConceptLink targetId="recta">recta</ConceptLink> <ConceptLink targetId="paralelas">paralela</ConceptLink> a la dada que pasa por el <ConceptLink targetId="punto">punto</ConceptLink> tiene la ecuación $ax + by - (ax_0 + by_0) = 0$. Esto demuestra formalmente el <ConceptLink targetId="axioma-paralelas-euclides"><ConceptLink targetId="postulado">postulado</ConceptLink> de las <ConceptLink targetId="paralelas">paralelas</ConceptLink> de <ConceptLink targetId="euclides">Euclides</ConceptLink></ConceptLink>.
 
 <Nota>
-  La consistencia de la <ConceptLink targetId="sistema-euclidiano">geometría euclídea</ConceptLink> se reduce, gracias a este modelo, a la consistencia del análisis real y la teoría de conjuntos axiomática. Esto proporciona una prueba de consistencia relativa profunda e incuestionable en las matemáticas modernas.
+  La consistencia de la <ConceptLink targetId="sistema-euclidiano"><ConceptLink targetId="geometria">geometría</ConceptLink> euclídea</ConceptLink> se reduce, gracias a este modelo, a la consistencia del análisis real y la teoría de conjuntos axiomática. Esto proporciona una prueba de consistencia relativa profunda e incuestionable en las matemáticas modernas.
 </Nota>

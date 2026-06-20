@@ -14,6 +14,7 @@ function getCSSVar(name: string): string {
 
 export const Incidence3 = () => {
   const boardRef = useRef<HTMLDivElement>(null);
+  const jxgBoard = useRef<any>(null);
   const elementsRef = useRef<Record<string, unknown>>({});
 
   const mathHighlight = useMathStore(state => state.variables?.['highlight']);
@@ -23,13 +24,14 @@ export const Incidence3 = () => {
   useEffect(() => {
     if (!boardRef.current) return;
 
-    const board = JXG.JSXGraph.initBoard(boardRef.current, {
+    const board = JXG.JSXGraph.initBoard(boardRef.current.id, {
       boundingbox: [-5, 5, 5, -5],
       axis: false,
       showCopyright: false,
       keepaspectratio: true,
       grid: false,
     });
+    jxgBoard.current = board;
 
     const pA = board.create('point', [-1, 2.5], {
       name: 'A',
@@ -100,6 +102,7 @@ export const Incidence3 = () => {
     return () => {
       observer.disconnect();
       JXG.JSXGraph.freeBoard(board);
+      jxgBoard.current = null;
       elementsRef.current = {};
     };
   }, []);

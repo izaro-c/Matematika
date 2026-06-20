@@ -10,7 +10,7 @@ interface ConceptLinkProps {
   children: React.ReactNode;
 }
 
-export const ConceptLink: React.FC<ConceptLinkProps> = ({ targetId, isDependency, children }) => {
+export const ConceptLink: React.FC<ConceptLinkProps> = ({ targetId, children }) => {
   const { openTerm, activeTerms } = useGlossaryStore();
   const targetIds = Array.isArray(targetId) ? targetId : [targetId];
   
@@ -37,7 +37,7 @@ export const ConceptLink: React.FC<ConceptLinkProps> = ({ targetId, isDependency
       <Link href={`/construccion/${firstInvalid}`}>
         <a
           // eslint-disable-next-line @typescript-eslint/no-unused-vars
-          onClick={() => { const _ = isDependency; }} // just to silence unused var error if any
+          onClick={() => { /* silenced unused var isDependency */ }} // just to silence unused var error if any
           className="font-bold text-terracota/70 underline decoration-dashed decoration-terracota/40 decoration-2 underline-offset-4 hover:decoration-terracota hover:text-terracota transition-all duration-150 rounded-none cursor-pointer"
           title={`"${firstInvalid}" — página en construcción`}
         >

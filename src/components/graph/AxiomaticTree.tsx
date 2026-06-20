@@ -167,7 +167,7 @@ function FlowContent() {
         selectable: false,
         zIndex: -1,
         style: {}
-      } as unknown as Node);
+      } as any);
     }
 
     setRfNodes(nodes);

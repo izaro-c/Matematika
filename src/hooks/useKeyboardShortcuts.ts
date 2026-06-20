@@ -23,7 +23,7 @@ const NAV_ACTIONS: Record<string, string> = {
 export function useKeyboardShortcuts() {
   const [, navigate] = useLocation();
   const { isSearchOpen, toggleSearch, closeSearch } = useNavigationStore();
-  const { closeTerm, activeTerm } = useGlossaryStore();
+  const { closeTerm, activeTerms } = useGlossaryStore();
   const gRef = useRef<{ timer: ReturnType<typeof setTimeout> | null }>({ timer: null });
 
   useEffect(() => {
@@ -36,7 +36,7 @@ export function useKeyboardShortcuts() {
           e.preventDefault();
           return;
         }
-        if (activeTerm) {
+        if (activeTerms && activeTerms.length > 0) {
           closeTerm();
           e.preventDefault();
           return;
@@ -81,5 +81,5 @@ export function useKeyboardShortcuts() {
 
     window.addEventListener('keydown', handleKey);
     return () => window.removeEventListener('keydown', handleKey);
-  }, [navigate, isSearchOpen, closeSearch, activeTerm, closeTerm, toggleSearch]);
+  }, [navigate, isSearchOpen, closeSearch, activeTerms, closeTerm, toggleSearch]);
 }

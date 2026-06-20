@@ -12,6 +12,7 @@ import JXG from 'jsxgraph';
 
 export const Congruence4: React.FC = () => {
   const boardRef = useRef<HTMLDivElement>(null);
+  const jxgBoard = useRef<any>(null);
   const elementsRef = useRef<any>({});
 
   useEffect(() => {
@@ -24,8 +25,9 @@ export const Congruence4: React.FC = () => {
       showCopyright: false,
       keepaspectratio: true,
       pan: { enabled: true, needShift: false, needTwoFingers: false },
-      zoom: { enabled: true, wheel: true, needShift: false }
+      zoom: { wheel: true, needShift: false }
     });
+    jxgBoard.current = board;
 
     // Ángulo original
     const pO = board.create('point', [-2, 2], {
@@ -132,6 +134,7 @@ export const Congruence4: React.FC = () => {
     };
 
     return () => JXG.JSXGraph.freeBoard(board);
+      jxgBoard.current = null;
   }, []);
 
   const mathHighlight = useMathStore(state => state.variables?.['highlight']);
