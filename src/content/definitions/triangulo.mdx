@@ -12,7 +12,7 @@ export const metadata = {
 };
 
 import { Triangulo } from '../../diagrams/Definiciones/Triangulo';
-export const Simulation = <ConceptLink targetId="triangulo" isDependency={false}>Triangulo</ConceptLink>;
+export const Simulation = Triangulo;
 import { InteractiveElement } from "../../components/ui/VisualBind";
 
 <Capitular letra="U" />n triángulo es el <ConceptLink targetId="poligono" isDependency={false}>polígono</ConceptLink> más simple y la base de la trigonometría. Está constituido por tres <ConceptLink targetId="punto" isDependency={false}>puntos</ConceptLink> no <ConceptLink targetId="colineal" isDependency={false}>colineales</ConceptLink> y los tres <ConceptLink targetId="segmento" isDependency={false}>segmentos</ConceptLink> que los conectan.
@@ -21,13 +21,13 @@ import { InteractiveElement } from "../../components/ui/VisualBind";
 
 ### Enunciado Formal
 
-Dados tres puntos no colineales $A$, $B$ y $C$, el triángulo $\triangle ABC$ es la unión de los segmentos:
+Dados tres <ConceptLink targetId="punto" isDependency={false}>puntos</ConceptLink> no colineales <InteractiveElement target="vertice-a" color="terracota">$A$</InteractiveElement>, <InteractiveElement target="vertice-b" color="terracota">$B$</InteractiveElement> y <InteractiveElement target="vertice-c" color="terracota">$C$</InteractiveElement>, el <InteractiveElement target="triangulo" color="pizarra">triángulo $\triangle ABC$</InteractiveElement> es la unión de los segmentos correspondientes:
 
 <Formula>
   $$ \triangle ABC = \overline{AB} \cup \overline{BC} \cup \overline{CA} $$
 </Formula>
 
-Los puntos $A$, $B$, $C$ son los <InteractiveElement target="vertice-a" color="terracota">vértices</InteractiveElement>, y los segmentos $\overline{AB}$, $\overline{BC}$, $\overline{CA}$ son los <InteractiveElement target="lado-ab" color="salvia">lados</InteractiveElement>. El <InteractiveElement target="triangulo" color="pizarra">triángulo</InteractiveElement> encierra una región del <ConceptLink targetId="plano" isDependency={false}>plano</ConceptLink> y define tres <ConceptLink targetId="angulo" isDependency={false}>ángulos</ConceptLink> interiores.
+Los puntos $A$, $B$, $C$ se denominan vértices, y los segmentos <InteractiveElement target="lado-ab" color="salvia">$\overline{AB}$</InteractiveElement>, <InteractiveElement target="lado-bc" color="salvia">$\overline{BC}$</InteractiveElement>, <InteractiveElement target="lado-ca" color="salvia">$\overline{CA}$</InteractiveElement> son los lados. El triángulo encierra una región del <ConceptLink targetId="plano" isDependency={false}>plano</ConceptLink> y define tres <ConceptLink targetId="angulo" isDependency={false}>ángulos</ConceptLink> interiores.
 
 <Separador />
 
@@ -47,5 +47,5 @@ Los triángulos se clasifican por sus lados y por sus ángulos:
 
 - La condición de **no colinealidad** es esencial: si $A$, $B$, $C$ están en una misma <ConceptLink targetId="recta" isDependency={false}>recta</ConceptLink>, no se forma un triángulo (la región encerrada es vacía).
 - Los triángulos son la base de la congruencia (<RefLink targetId="teorema-congruencia-ala">ALA</RefLink>, <RefLink targetId="teorema-congruencia-lll">LLL</RefLink>) y de la semejanza.
-- En <ConceptLink targetId={["sistema-euclidiano", "geometria", "euclides"]}>geometría euclidiana</ConceptLink>, la suma de los ángulos interiores es $180^\circ$. En <ConceptLink targetId={["sistema-hiperbolico", "geometria"]}>geometría hiperbólica</ConceptLink>, es estrictamente menor.
-- <RefLink targetId="teorema-suma-angulos-triangulo"><ConceptLink targetId="teorema" isDependency={false}>Teorema</ConceptLink> de la suma de ángulos</RefLink>: el resultado sobre la suma de ángulos depende del <ConceptLink targetId={["axioma-paralelas-euclides", "axioma", "paralelas"]}>axioma de las paralelas</ConceptLink>.
+- En <ConceptLink targetId="sistema-euclidiano">geometría euclidiana</ConceptLink>, la suma de los ángulos interiores es $180^\circ$. En <ConceptLink targetId="sistema-hiperbolico">geometría hiperbólica</ConceptLink>, es estrictamente menor.
+- <RefLink targetId="teorema-suma-angulos-triangulo">Teorema de la suma de ángulos</RefLink>: el resultado sobre la suma de ángulos depende del <ConceptLink targetId={["axioma-paralelas-euclides", "axioma-paralelas-hiperbolico"]}>axioma de las paralelas</ConceptLink>.

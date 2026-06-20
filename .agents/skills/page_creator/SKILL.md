@@ -77,6 +77,9 @@ Incorrecto: "C.F. Gauss" (sin espacios ni puntos en IDs)
 
 Todo archivo MDX DEBE exportar un objeto `metadata` con **claves entre comillas dobles**. Las claves sin comillas o con comillas simples están **PROHIBIDAS**.
 
+> [!WARNING]
+> **REGLA DEL ID OBLIGATORIO:** Absolutamente TODOS los archivos de contenido DEBEN incluir el campo `"id"` explícitamente en el objeto `metadata`. Su ausencia corrompe la indexación y la resolución de referencias cruzadas, causando fallos catastróficos.
+
 ```typescript
 // CORRECTO
 export const metadata = {
@@ -355,6 +358,10 @@ Los planes de estudio PUEDEN referenciar currículos específicos (p. ej. "Selec
 - `<ConceptLink>` anidados con el mismo `targetId` (ej: `<ConceptLink targetId="x"><ConceptLink targetId="x">...</ConceptLink></ConceptLink>` es un BUG)
 - **Falta de línea en blanco tras imports/exports:** El parser de MDX (Acorn) falla catastróficamente si no hay un salto de línea en blanco entre las declaraciones `import`/`export` y las etiquetas JSX/Markdown (como `<Capitular>`).
 - **Símbolos LaTeX sin doble escape en propiedades JS/TSX:** Cuando se pasa código LaTeX como string literal a una prop de componente (ej. `<KatexText text={"$\\overline{AB}$"} />`), las barras invertidas deben estar **doblemente escapadas** (`\\`) para que no se interpreten como secuencias de escape de JavaScript.
+- **JSXGraph Textos sin MathJax:** No uses `useMathJax: true` en textos dinámicos interactivos dentro de JSXGraph en este proyecto, ya que el compilador no lo interpreta correctamente en tiempo real en los diagramas. Para notación matemática dinámica en un diagrama, usa HTML/Unicode puro (`&pi;`, `&theta;`, `&deg;`, `&pi;/2`).
+- **JSXGraph Transparencias Reactivas:** Si quieres animar la opacidad de un elemento (como el relleno de un círculo de `0` a `0.2` on hover), **NUNCA** uses `fillColor: 'transparent'`. Créalo con su color temático (ej: `fillColor: getCSSVar('--theme-salvia')`) y pon `fillOpacity: 0` por defecto. Si usas 'transparent', cambiar la opacidad no revelará nada.
+- **Marcas Geométricas JSXGraph:** Para indicar congruencia en lados o ángulos, prioriza el uso de elementos visuales estándar. Por ejemplo, altera el `strokeWidth` y añade guiones a las líneas, o usa los elementos nativos `hatch` de JSXGraph.
+- **Atractores Nativos:** Usa la física de JSXGraph a tu favor. En vez de reescribir coordenadas durante el drag (`on('drag')`), usa attractors (`attractorDistance`, `snatchDistance`) ligando puntos libres a rectas o circunferencias invisibles para lograr un comportamiento magnético ("snap").
 - **JSXGraph Clipping:** En los gráficos, asegurar `keepaspectratio: true` y `axis: false` por defecto para evitar errores visuales de recorte fuera del viewport.
 - **Variables CSS:** Usar estrictamente las variables definidas en `styles/tokens.css` (e.g., `--color-terracota`, `--color-salvia`). No usar colores hardcoded.
 
@@ -364,6 +371,7 @@ Los planes de estudio PUEDEN referenciar currículos específicos (p. ej. "Selec
 - La página DEBE ser modular: una demostración o corolario NUNCA va en la página de un teorema, tienen su propio archivo.
 - **Enunciados formales:** Deben usar **exclusivamente símbolos matemáticos puros** (`\forall, \exists, \implies, \in, \exists!`) sin palabras intercaladas en la fórmula. Poner siempre los `$$` en líneas independientes para que MDX los centre como bloque.
 - **InteractiveElement vs ConceptLink:** Usar `<InteractiveElement target="id">` para hacer brillar elementos de un diagrama interactivo de la página actual. Usar `<ConceptLink targetId="concepto">` para enlazar términos del glosario.
+- **Integración natural del InteractiveElement (CRÍTICO):** Evitar meta-texto como "En el diagrama vemos que el punto...". En su lugar, integrar el InteractiveElement directamente en el flujo natural de la prosa: `Dado un punto <InteractiveElement target="pA">A</InteractiveElement>...`.
 - **Evitar LaTeX dentro de ConceptLinks:** NUNCA envolver código LaTeX (`$A$`) directamente dentro de un `ConceptLink` porque puede romper el parser MDX. Usar texto puro: `<ConceptLink targetId="punto">A</ConceptLink>`.
 
 > [!IMPORTANT]
@@ -853,6 +861,8 @@ Una definición DEBE:
 2. Usar solo **términos previamente definidos o primitivos**
 3. Ser **minimal**: sin condiciones extra más allá de lo necesario
 4. Incluir la **notación formal** (LaTeX) cuando corresponda
+5. **Rigor vs Teoremas (CRÍTICO):** Nunca incluir propiedades derivadas en la definición axiomática básica. Por ejemplo, afirmar que "un segmento tiene infinitos puntos" es un teorema (Densidad), no parte de la definición del segmento. Diferenciar estrictamente la definición base de sus consecuencias.
+6. **Notación estandarizada:** Para la relación "estar entre", usar siempre la notación estandarizada de Hilbert `A * B * C` en lugar de texto como "B está entre A y C" dentro de las definiciones formales o fórmulas.
 
 ```
 Una **circunferencia** es el conjunto de puntos del plano que equidistan
@@ -896,6 +906,7 @@ Una demostración DEBE:
 - **Casos omitidos:** Asegurar que todos los casos están cubiertos (p. ej. triángulos acutángulos/obtusángulos/rectángulos)
 - **Sobrecarga de notación:** Definir todo símbolo antes de usarlo
 - **Converso falso:** Distinguir entre un teorema y su converso
+- **Tablas Markdown:** Al escribir fórmulas con valor absoluto o cardinalidad (como `|AB|`) dentro de una tabla Markdown, DEBES escapar la barra usando `\vert` (ej. `\vert AB \vert`), de lo contrario romperás el renderizado de la tabla.
 
 ---
 
@@ -963,6 +974,9 @@ La navegación interna NUNCA usa enlaces Markdown estándar `[texto](url)`. Usar
 | `leccion` | No | Solo pedagógico |
 | `matematico` | No | Solo referencia |
 | `plan-de-estudio` | No | Separado |
+
+> [!IMPORTANT]
+> **Links a categorías o grupos de conceptos:** Al mencionar un conjunto de axiomas u otros conceptos agrupados (ej. "axiomas de orden", "axiomas de incidencia", "polígonos"), el `<ConceptLink>` debe usar un array en `targetId` listando **todos** los IDs específicos a los que hace referencia (ej. `targetId={["axioma-orden-1", "axioma-orden-2", "axioma-orden-3"]}`). **NUNCA** apuntes a una página genérica ficticia como `"axiomas-orden"`, ya que el array permite vincular el grupo completo de dependencias correctas en el grafo lógico.
 
 ### 10.2 Orden Topológico
 
@@ -1062,7 +1076,13 @@ El `ContentStore` carga los exports de los archivos MDX según los campos de met
 import { MyDiagram } from '../../diagrams/Categoria/MyDiagram';
 export const Simulation = MyDiagram;
 
+// ¡PROHIBIDO Y CRÍTICO! NUNCA HAGAS ESTO:
+// export const Simulation = <ConceptLink targetId="...">MyDiagram</ConceptLink>;
+// Asignar JSX explícito al export Simulation corrompe el loader dinámico de Vite.
+```
+
 export const metadata = {
+  "id": "tu-id-aqui", // OBLIGATORIO: El campo "id" es necesario para la indexación.
   ...
   "hasSimulation": true,
 };

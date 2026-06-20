@@ -20,6 +20,8 @@ export const Angulo = () => {
   const mathHighlight = useMathStore(state => state.variables?.['highlight']);
   const lessonHighlight = useLessonStore(state => state.activeStep);
   const highlight = mathHighlight || lessonHighlight;
+  
+  const isHighlight = (id: string) => Array.isArray(highlight) ? (highlight as unknown as string[]).includes(id) : highlight === id;
 
   useEffect(() => {
     if (!boardRef.current) return;
@@ -52,6 +54,9 @@ export const Angulo = () => {
       fixed: false,
     });
 
+    const lHoriz = board.create('line', [pO, pA], { visible: false });
+    const lPerp = board.create('perpendicular', [lHoriz, pO], { visible: false });
+
     const pB = board.create('point', [-1, 2], {
       name: 'B',
       size: 6,
@@ -59,6 +64,9 @@ export const Angulo = () => {
       strokeColor: getCSSVar('--theme-terracota'),
       showInfobox: false,
       fixed: false,
+      attractors: [lHoriz, lPerp],
+      attractorDistance: 0.3,
+      snatchDistance: 0.5,
     });
 
     const farA = board.create('point', [
@@ -84,14 +92,42 @@ export const Angulo = () => {
     });
 
     const arc = board.create('angle', [pB, pO, pA], {
-      radius: 0.8,
+      radius: 1.2,
       fillColor: getCSSVar('--theme-salvia'),
       fillOpacity: 0.25,
       strokeColor: getCSSVar('--theme-carbon'),
       strokeWidth: 1.5,
+      name: '',
+      withLabel: false,
     });
 
-    elementsRef.current = { pO, pA, pB, rayOA, rayOB, arc, board };
+    const infoText = board.create('text', [
+      -3.8, 3.5,
+      function() {
+        let val = arc.Value();
+        let deg = Math.round(val * 180 / Math.PI);
+        let name = "Agudo (0 &lt; &theta; &lt; &pi;/2)";
+        if (deg === 90) name = "Recto (&theta; = &pi;/2)";
+        else if (deg === 180) name = "Llano (&theta; = &pi;)";
+        else if (deg > 90 && deg < 180) name = "Obtuso (&pi;/2 &lt; &theta; &lt; &pi;)";
+        else if (deg > 180 && deg < 360) name = "Cóncavo (&pi; &lt; &theta; &lt; 2&pi;)";
+        else if (deg === 0 || deg === 360) name = "Nulo / Completo (&theta; = 0 | 2&pi;)";
+
+        let piFrac = (val / Math.PI).toFixed(2);
+        let piStr = deg === 90 ? "&pi;/2" : 
+                    deg === 180 ? "&pi;" : 
+                    deg === 270 ? "3&pi;/2" : 
+                    `${piFrac}&pi;`;
+        
+        return `<div style="font-family: var(--font-serif); color: ${getCSSVar('--theme-carbon')};">
+          <strong style="font-size: 1.2rem;">Ángulo ${name}</strong><br/>
+          Medida: ${deg}&deg; <br/>
+          Radianes: ${piStr} rad
+        </div>`;
+      }
+    ], { fixed: true, anchorX: 'left', anchorY: 'top' });
+
+    elementsRef.current = { pO, pA, pB, rayOA, rayOB, arc, infoText, board };
 
     board.update();    (board.renderer as any).container.style.backgroundColor = getCSSVar('--theme-lienzo');
 
@@ -122,23 +158,24 @@ export const Angulo = () => {
     pB.setAttribute({ size: 6, fillColor: getCSSVar('--theme-terracota'), strokeColor: getCSSVar('--theme-terracota') });
     rayOA.setAttribute({ strokeColor: getCSSVar('--theme-carbon'), strokeWidth: 2 });
     rayOB.setAttribute({ strokeColor: getCSSVar('--theme-carbon'), strokeWidth: 2 });
+    arc.setAttribute({ fillColor: getCSSVar('--theme-salvia'), fillOpacity: 0.25, strokeColor: getCSSVar('--theme-carbon'), strokeWidth: 1.5 });
 
-    if (highlight === 'pO') {
+    if (isHighlight('pO')) {
       pO.setAttribute({ size: 10, fillColor: getCSSVar('--theme-ocre'), strokeColor: getCSSVar('--theme-ocre') });
     }
-    if (highlight === 'pA') {
+    if (isHighlight('pA')) {
       pA.setAttribute({ size: 10, fillColor: getCSSVar('--theme-ocre'), strokeColor: getCSSVar('--theme-ocre') });
     }
-    if (highlight === 'pB') {
+    if (isHighlight('pB')) {
       pB.setAttribute({ size: 10, fillColor: getCSSVar('--theme-ocre'), strokeColor: getCSSVar('--theme-ocre') });
     }
-    if (highlight === 'rayOA') {
+    if (isHighlight('rayOA')) {
       rayOA.setAttribute({ strokeColor: getCSSVar('--theme-terracota'), strokeWidth: 4 });
     }
-    if (highlight === 'rayOB') {
+    if (isHighlight('rayOB')) {
       rayOB.setAttribute({ strokeColor: getCSSVar('--theme-terracota'), strokeWidth: 4 });
     }
-    if (highlight === 'angleArc') {
+    if (isHighlight('angleArc')) {
       arc.setAttribute({ fillColor: getCSSVar('--theme-terracota'), fillOpacity: 0.4, strokeColor: getCSSVar('--theme-terracota') });
     }
 

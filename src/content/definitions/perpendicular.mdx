@@ -13,10 +13,30 @@ export const metadata = {
 import { InteractiveElement } from "../../components/ui/VisualBind";
 import { Perpendicular } from '../../diagrams/Definiciones/Perpendicular';
 
-export const Simulation = <ConceptLink targetId="perpendicular" isDependency={false}>Perpendicular</ConceptLink>;
+export const Simulation = Perpendicular;
 
-<Capitular letra="L" />a noción de perpendicularidad se establece cuando una <InteractiveElement target="perpendicular"><ConceptLink targetId="recta" isDependency={false}>recta</ConceptLink> secante</InteractiveElement> se interseca con otra <InteractiveElement target="recta">recta</InteractiveElement> de tal forma que dividen el <ConceptLink targetId="plano" isDependency={false}>plano</ConceptLink> en <InteractiveElement target="angulos-rectos">cuatro regiones angulares exactamente iguales</InteractiveElement>, cada una de las cuales se denomina <ConceptLink targetId="angulo" isDependency={false}>ángulo</ConceptLink> recto.
+<Capitular letra="D" />os <ConceptLink targetId="recta" isDependency={false}>rectas</ConceptLink> que se intersecan son perpendiculares si dividen el <ConceptLink targetId="plano" isDependency={false}>plano</ConceptLink> en cuatro <ConceptLink targetId="angulo" isDependency={false}>ángulos</ConceptLink> congruentes entre sí. A cada uno de estos ángulos se le llama ángulo recto.
 
 <Separador />
 
-La perpendicularidad es un caso particular de intersección y está íntimamente relacionada con la métrica del espacio <ConceptLink targetId="euclides" isDependency={false}>euclidiano</ConceptLink>.
+### Enunciado Formal
+
+Dos <ConceptLink targetId="recta" isDependency={false}>rectas</ConceptLink> secantes <InteractiveElement target="recta">$l_1$</InteractiveElement> y <InteractiveElement target="perpendicular">$l_2$</InteractiveElement> son perpendiculares (denotado $l_1 \perp l_2$) si forman cuatro <InteractiveElement target="angulos-rectos">ángulos adyacentes congruentes</InteractiveElement>. Por definición, cada uno de estos ángulos es recto (mide $90^\circ$ o $\frac{\pi}{2}$ radianes):
+
+<Formula>
+  $$ l_1 \perp l_2 \iff \angle_1 \cong \angle_2 \cong \angle_3 \cong \angle_4 $$
+</Formula>
+
+<Separador />
+
+### Definición Axiomática
+
+La noción formal de perpendicularidad se cimienta en los <ConceptLink targetId={["axioma-congruencia-1", "axioma-congruencia-2", "axioma-congruencia-3", "axioma-congruencia-4", "axioma-congruencia-5", "axioma-congruencia-6"]}>axiomas de congruencia</ConceptLink>. Particularmente, el axioma sobre ángulos rectos postula que todos los ángulos rectos son congruentes entre sí. La perpendicularidad es, por tanto, una relación geométrica deducida directamente de la congruencia angular de rectas secantes.
+
+<Separador />
+
+### Observaciones
+
+- En un <ConceptLink targetId="sistema-euclidiano">plano euclídeo</ConceptLink>, dada una recta $l$ y un <ConceptLink targetId="punto" isDependency={false}>punto</ConceptLink> $P$, existe una única recta perpendicular a $l$ que pasa por $P$.
+- Dos rectas perpendiculares a una tercera son, bajo los axiomas euclídeos, <ConceptLink targetId="paralelas" isDependency={false}>paralelas</ConceptLink> entre sí.
+- La noción de perpendicularidad está estrictamente ligada al concepto de <ConceptLink targetId="distancia" isDependency={false}>distancia</ConceptLink> o métrica ortogonal en un <ConceptLink targetId="espacio" isDependency={false}>espacio</ConceptLink>.
