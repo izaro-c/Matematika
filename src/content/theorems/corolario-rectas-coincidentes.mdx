@@ -5,14 +5,29 @@ export const metadata = {
   "description": "Si dos rectas tienen dos puntos en común, entonces son la misma recta.",
   "statement": "Sean l y m dos rectas, y A, B dos puntos distintos. Si A ∈ l, B ∈ l y A ∈ m, B ∈ m, entonces l = m.",
   "parentTheorem": "teorema-dos-rectas-un-punto",
-  "requires": ["axioma-incidencia-1"],
   "tags": ["geometria", "incidencia"],
   "difficulty": "básico"
 };
 
 <Capitular letra="D" />
-el <ConceptLink targetId="teorema">teorema</ConceptLink> precedente se colige inmediatamente que, si dos <ConceptLink targetId="recta">rectas</ConceptLink> inciden simultáneamente en dos o más <ConceptLink targetId="punto">puntos</ConceptLink>, ambas deben coincidir geométricamente en su totalidad. Este <ConceptLink targetId="corolario">corolario</ConceptLink> fundamental vertebra la unicidad en las construcciones geométricas elementales.
+el <ConceptLink targetId="teorema-dos-rectas-un-punto">teorema de intersección única</ConceptLink> precedente se colige inmediatamente que, si dos <ConceptLink targetId="recta" isDependency={false}>rectas</ConceptLink> inciden simultáneamente en dos o más <ConceptLink targetId="punto" isDependency={false}>puntos</ConceptLink>, ambas deben coincidir geométricamente en su totalidad. Este <ConceptLink targetId="corolario" isDependency={false}>corolario</ConceptLink> fundamental vertebra la unicidad en las construcciones geométricas elementales.
+
+<Separador />
+
+### Enunciado Formal
+
+<Formula>
+  $$ \text{Sean } l, m \text{ dos rectas y } A, B \text{ puntos distintos. Si } A \in l, B \in l \text{ y } A \in m, B \in m \implies l = m. $$
+</Formula>
+
+<Separador />
+
+<Demostracion>
+Si $l \neq m$, por el <ConceptLink targetId="teorema-dos-rectas-un-punto">teorema de intersección única</ConceptLink>, $l$ y $m$ comparten a lo sumo un punto. Sin embargo, por hipótesis, comparten los puntos distintos $A$ y $B$. Esta contradicción implica que nuestra suposición inicial es falsa, por lo tanto $l = m$. $\blacksquare$
+</Demostracion>
+
+<Separador />
 
 <Nota>
-  En <ConceptLink targetId="sistema-hiperbolico"><ConceptLink targetId="geometria">geometría</ConceptLink> proyectiva</ConceptLink>, dos <ConceptLink targetId="recta">rectas</ConceptLink> siempre se cortan (en el <ConceptLink targetId="plano">plano</ConceptLink> proyectivo, las <ConceptLink targetId="recta">rectas</ConceptLink> <ConceptLink targetId="paralelas">paralelas</ConceptLink> se cortan en el infinito). Esto muestra que el <ConceptLink targetId="teorema">teorema</ConceptLink> original depende esencialmente del <ConceptLink targetId="axioma-incidencia-1"><ConceptLink targetId="axioma">axioma</ConceptLink> I-1</ConceptLink>, que no se mantiene en la <ConceptLink targetId="geometria">geometría</ConceptLink> proyectiva en su forma original.
+  En la geometría proyectiva (ver <ConceptLink targetId="sistema-hiperbolico" isDependency={false}>modelo de hiperbólico</ConceptLink>), dos rectas siempre se cortan (en el <ConceptLink targetId="plano-proyectivo" isDependency={false}>plano proyectivo</ConceptLink>, las rectas <ConceptLink targetId="paralelas" isDependency={false}>paralelas</ConceptLink> se cortan en el infinito). Esto muestra que el teorema original depende esencialmente del <ConceptLink targetId="axioma-incidencia-1">axioma I-1</ConceptLink>, que no se mantiene en la geometría proyectiva en su forma original.
 </Nota>

@@ -12,7 +12,7 @@ import { Order1 } from '../../diagrams/Axiomas/Order1';
 export const Simulation = Order1;
 import { InteractiveElement } from "../../components/ui/VisualBind";
 
-<Capitular letra="S" />i un <ConceptLink targetId="punto">punto</ConceptLink> B descansa entre A y C, entonces obligatoriamente A, B y C son <ConceptLink targetId="punto">puntos</ConceptLink> distintos ubicados sobre una misma <ConceptLink targetId="recta">recta</ConceptLink>, y esta relación geométrica funciona en ambos sentidos: B también está entre C y A.
+<Capitular letra="S" />i un <ConceptLink targetId="punto" isDependency={false}>punto</ConceptLink> B descansa entre A y C, entonces obligatoriamente A, B y C son puntos distintos ubicados sobre una misma <ConceptLink targetId="recta" isDependency={false}>recta</ConceptLink>, y esta relación geométrica funciona en ambos sentidos: B también está entre C y A.
 
 <Separador />
 
@@ -30,18 +30,18 @@ import { InteractiveElement } from "../../components/ui/VisualBind";
 </Formula>
 
 <Nota>
-  La expresión matemática $A * B * C$ se lee como "<InteractiveElement target="pB" color="terracota">B</InteractiveElement> está entre <InteractiveElement target="pA" color="terracota">A</InteractiveElement> y <InteractiveElement target="pC" color="terracota">C</InteractiveElement>". Esta es la relación fundamental de orden en la <ConceptLink targetId="geometria">geometría</ConceptLink> de <ConceptLink targetId="hilbert">Hilbert</ConceptLink>.
+  La expresión matemática $A * B * C$ se lee como "<InteractiveElement target="pB" color="terracota">B</InteractiveElement> está entre <InteractiveElement target="pA" color="terracota">A</InteractiveElement> y <InteractiveElement target="pC" color="terracota">C</InteractiveElement>". Esta es la relación fundamental de orden en la <ConceptLink targetId="geometria" isDependency={false}>geometría</ConceptLink> de <ConceptLink targetId="hilbert" isDependency={false}>Hilbert</ConceptLink>.
 </Nota>
 
 <Separador />
 
 ### Discusión
 
-Este primer <ConceptLink targetId="axioma">axioma</ConceptLink> de orden dictamina las reglas más primitivas de cómo los <ConceptLink targetId="punto">puntos</ConceptLink> se alinean. Primero, exige que para que alguien esté "en medio", los tres <ConceptLink targetId="punto">puntos</ConceptLink> deben ser diferentes (ningún <ConceptLink targetId="punto">punto</ConceptLink> puede estar entre sí mismo y otro). Segundo, exige que compartan una única <ConceptLink targetId="recta">recta</ConceptLink> (<InteractiveElement target="line" color="carbon">la <ConceptLink targetId="recta">recta</ConceptLink> l</InteractiveElement>). Tercero, establece una simetría natural: no importa desde qué extremo de la <ConceptLink targetId="recta">recta</ConceptLink> mires el <ConceptLink targetId="segmento">segmento</ConceptLink>, el <ConceptLink targetId="punto">punto</ConceptLink> de en medio sigue estando en medio.
+Este primer <ConceptLink targetId="axioma" isDependency={false}>axioma</ConceptLink> de orden dictamina las reglas más primitivas de cómo los puntos se alinean. Primero, exige que para que alguien esté "en medio", los tres puntos deben ser diferentes (ningún punto puede estar entre sí mismo y otro). Segundo, exige que compartan una única recta (<InteractiveElement target="line" color="carbon">la recta l</InteractiveElement>). Tercero, establece una simetría natural: no importa desde qué extremo de la recta mires el <ConceptLink targetId="segmento" isDependency={false}>segmento</ConceptLink>, el punto de en medio sigue estando en medio.
 
 <Separador />
 
 ### Observaciones
 
-- Fíjate que este <ConceptLink targetId="axioma">axioma</ConceptLink> no afirma que existan <ConceptLink targetId="punto">puntos</ConceptLink> intermedios (de eso se encargará el <ConceptLink targetId="axioma-orden-2"><ConceptLink targetId="axioma">axioma</ConceptLink> II-2</ConceptLink>), sino que impone las condiciones básicas si es que la relación llega a darse.
-- La relación de orden no nos dice cuál de los tres <ConceptLink targetId="punto">puntos</ConceptLink> está en medio; solo nos confirma que, si lo sabemos, podemos darle la vuelta a la lectura.
+- Fíjate que este axioma no afirma que existan puntos intermedios (de eso se encargará el <ConceptLink targetId="axioma-orden-2" isDependency={false}>axioma II-2</ConceptLink>), sino que impone las condiciones básicas si es que la relación llega a darse.
+- La relación de orden no nos dice cuál de los tres puntos está en medio; solo nos confirma que, si lo sabemos, podemos darle la vuelta a la lectura.

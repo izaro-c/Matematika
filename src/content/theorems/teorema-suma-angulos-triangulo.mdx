@@ -5,20 +5,21 @@ export const metadata = {
   "description": "La suma de los ángulos interiores de un triángulo en el plano euclidiano es siempre igual a dos ángulos rectos (180 grados).",
   "tags": ["geometria", "triangulos", "angulos"],
   "authors": ["euclides"],
-  "links": ["triangulo", "angulo", "axioma-paralelas-euclides", "recta", "paralelas"],
-  "seeAlso": ["teorema-desigualdad-triangular", "teorema-pitagoras"],
-  "satisfies": [],
+  "difficulty": "básico",
+  "demos": ["demo-suma-angulos-triangulo"]
 };
 
-<Capitular letra="E" />l <ConceptLink targetId="teorema">teorema</ConceptLink> de la suma de los <ConceptLink targetId="angulo">ángulos</ConceptLink> de un <ConceptLink targetId="triangulo">triángulo</ConceptLink> establece que, en la <ConceptLink targetId="geometria">geometría</ConceptLink> de <ConceptLink targetId="euclides">Euclides</ConceptLink>, la suma de las medidas de los <ConceptLink targetId="angulo">ángulos</ConceptLink> interiores de cualquier <ConceptLink targetId="triangulo">triángulo</ConceptLink> es constante e igual a $180^\circ$ (o $\pi$ radianes).
+import { InteractiveElement } from "../../components/ui/VisualBind";
+
+<Capitular letra="E" />l <ConceptLink targetId="teorema" isDependency={false}>teorema</ConceptLink> de la suma de los <ConceptLink targetId="angulo" isDependency={false}>ángulos</ConceptLink> de un <ConceptLink targetId="triangulo" isDependency={false}>triángulo</ConceptLink> establece que, en la <ConceptLink targetId="geometria" isDependency={false}>geometría</ConceptLink> de <ConceptLink targetId="euclides" isDependency={false}>Euclides</ConceptLink>, la suma de las medidas de los ángulos interiores de cualquier triángulo es constante e igual a $180^\circ$ (o $\pi$ radianes).
 
 <Separador />
 
 ## Enunciado Formal
 
-Dado un <ConceptLink targetId="triangulo">triángulo</ConceptLink> con vértices $A, B, C$ y <ConceptLink targetId="angulo">ángulos</ConceptLink> interiores $\alpha, \beta, \gamma$, se cumple que:
+Dado un triángulo con vértices $A, B, C$ y ángulos interiores $\alpha, \beta, \gamma$, se cumple que:
 $$ \alpha + \beta + \gamma = 180^\circ $$
 
 ## Importancia Histórica
 
-Este resultado es profundamente dependiente del <ConceptLink targetId="axioma-paralelas-euclides"><ConceptLink targetId="axioma">Axioma</ConceptLink> de las <ConceptLink targetId="paralelas">paralelas</ConceptLink></ConceptLink>. En geometrías no euclidianas (como la hiperbólica o la esférica), la suma de los <ConceptLink targetId="angulo">ángulos</ConceptLink> es estrictamente menor o mayor a $180^\circ$, respectivamente.
+Este resultado es profundamente dependiente del <ConceptLink targetId="axioma-paralelas-euclides">axioma de las paralelas</ConceptLink>. En geometrías no euclidianas (como la hiperbólica o la esférica), la suma de los ángulos es estrictamente menor o mayor a $180^\circ$, respectivamente.

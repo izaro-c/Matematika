@@ -13,10 +13,10 @@ export const metadata = {
 import { InteractiveElement } from "../../components/ui/VisualBind";
 import { Paralelas } from '../../diagrams/Definiciones/Paralelas';
 
-export const Simulation = <ConceptLink targetId="paralelas">Paralelas</ConceptLink>;
+export const Simulation = <ConceptLink targetId="paralelas" isDependency={false}>Paralelas</ConceptLink>;
 
-<Capitular letra="E" />n <ConceptLink targetId="sistema-euclidiano"><ConceptLink targetId="geometria">geometría</ConceptLink> euclídea</ConceptLink>, dada una <InteractiveElement target="recta-base"><ConceptLink targetId="recta">recta</ConceptLink> base</InteractiveElement> y un <InteractiveElement target="punto-p"><ConceptLink targetId="punto">punto</ConceptLink></InteractiveElement> exterior a ella, existe una única <InteractiveElement target="recta-paralela"><ConceptLink targetId="recta">recta</ConceptLink> <ConceptLink targetId="paralelas">paralela</ConceptLink></InteractiveElement> que pasa por dicho <ConceptLink targetId="punto">punto</ConceptLink>. Dos <ConceptLink targetId="recta">rectas</ConceptLink> coplanarias son <ConceptLink targetId="paralelas">paralelas</ConceptLink> si su intersección es el conjunto vacío.
+<Capitular letra="E" />n <ConceptLink targetId={["sistema-euclidiano", "geometria", "euclides"]}>geometría euclídea</ConceptLink>, dada una <InteractiveElement target="recta-base"><ConceptLink targetId="recta" isDependency={false}>recta</ConceptLink> base</InteractiveElement> y un <InteractiveElement target="punto-p"><ConceptLink targetId="punto" isDependency={false}>punto</ConceptLink></InteractiveElement> exterior a ella, existe una única <InteractiveElement target="recta-paralela">recta paralela</InteractiveElement> que pasa por dicho punto. Dos rectas coplanarias son paralelas si su intersección es el conjunto vacío.
 
 <Separador />
 
-Este concepto es el foco del quinto <ConceptLink targetId="postulado">postulado</ConceptLink> de <ConceptLink targetId="euclides">Euclides</ConceptLink>, también conocido como el <ConceptLink targetId="axioma-paralelas-euclides" isDependency={false}><ConceptLink targetId="axioma">axioma</ConceptLink> de las <ConceptLink targetId="paralelas">paralelas</ConceptLink></ConceptLink>.
+Este concepto es el foco del <ConceptLink targetId={["axioma-paralelas-euclides", "postulado", "paralelas"]}>quinto postulado</ConceptLink> de <ConceptLink targetId="euclides" isDependency={false}>Euclides</ConceptLink>, también conocido como el <ConceptLink targetId={["axioma-paralelas-euclides", "axioma", "paralelas"]}>axioma de las paralelas</ConceptLink>.

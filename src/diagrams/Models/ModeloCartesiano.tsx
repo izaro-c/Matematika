@@ -17,7 +17,8 @@ export const ModeloCartesiano = () => {
   useEffect(() => {
     if (!boardRef.current) return;
 
-    const board = JXG.JSXGraph.initBoard(boardRef.current.id, {
+    if (!boardRef.current.id) boardRef.current.id = "jxgbox_" + Math.random().toString(36).substring(2, 9);
+      const board = JXG.JSXGraph.initBoard(boardRef.current.id, {
       boundingbox: [-5, 5, 5, -5],
       axis: true,
       showCopyright: false,

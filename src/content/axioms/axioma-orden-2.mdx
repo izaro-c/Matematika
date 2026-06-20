@@ -12,7 +12,7 @@ import { Order2 } from '../../diagrams/Axiomas/Order2';
 export const Simulation = Order2;
 import { InteractiveElement } from "../../components/ui/VisualBind";
 
-<Capitular letra="D" />ados dos <ConceptLink targetId="punto">puntos</ConceptLink> distintos, siempre existe al menos un <ConceptLink targetId="punto">punto</ConceptLink> intermedio entre ellos. Este <ConceptLink targetId="postulado">postulado</ConceptLink> garantiza la densidad topológica de la <ConceptLink targetId="recta">recta</ConceptLink>: entre dos posiciones cualesquiera siempre podemos encontrar una tercera.
+<Capitular letra="D" />ados dos <ConceptLink targetId="punto" isDependency={false}>puntos</ConceptLink> distintos, siempre existe al menos un punto intermedio entre ellos. Este <ConceptLink targetId="postulado" isDependency={false}>postulado</ConceptLink> garantiza la densidad topológica de la <ConceptLink targetId="recta" isDependency={false}>recta</ConceptLink>: entre dos posiciones cualesquiera siempre podemos encontrar una tercera.
 
 <Separador />
 
@@ -28,12 +28,12 @@ import { InteractiveElement } from "../../components/ui/VisualBind";
 
 ### Discusión
 
-Mientras que el <ConceptLink targetId="axioma-orden-1"><ConceptLink targetId="axioma">axioma</ConceptLink> II-1</ConceptLink> regulaba cómo funcionaba la idea de "estar en medio", el <ConceptLink targetId="axioma">axioma</ConceptLink> II-2 decreta matemáticamente que esta situación es siempre posible. Toma dos <ConceptLink targetId="punto">puntos</ConceptLink> cualquiera (<InteractiveElement target="pA" color="terracota">A</InteractiveElement> y <InteractiveElement target="pC" color="terracota">C</InteractiveElement>); el <ConceptLink targetId="axioma">axioma</ConceptLink> te promete que siempre habrá un <ConceptLink targetId="punto">punto</ConceptLink> <InteractiveElement target="pB" color="ocre">B</InteractiveElement> viviendo exactamente entre ellos.
+Mientras que el <ConceptLink targetId="axioma-orden-1" isDependency={false}>axioma II-1</ConceptLink> regulaba cómo funcionaba la idea de "estar en medio", el <ConceptLink targetId="axioma" isDependency={false}>axioma</ConceptLink> II-2 decreta matemáticamente que esta situación es siempre posible. Toma dos puntos cualquiera (<InteractiveElement target="pA" color="terracota">A</InteractiveElement> y <InteractiveElement target="pC" color="terracota">C</InteractiveElement>); el axioma te promete que siempre habrá un punto <InteractiveElement target="pB" color="ocre">B</InteractiveElement> viviendo exactamente entre ellos.
 
-Al aplicar esta regla infinitas veces (encontrando un <ConceptLink targetId="punto">punto</ConceptLink> entre A y B, y luego otro entre ese y A, y así eternamente), descubrimos que la <ConceptLink targetId="recta">recta</ConceptLink> no es una sucesión discreta de <ConceptLink targetId="punto">puntos</ConceptLink> saltando como píxeles, sino una amalgama continua.
+Al aplicar esta regla infinitas veces (encontrando un punto entre A y B, y luego otro entre ese y A, y así eternamente), descubrimos que la recta no es una sucesión discreta de puntos saltando como píxeles, sino una amalgama continua.
 
 <Separador />
 
 ### Observaciones
 
-- Aunque este <ConceptLink targetId="axioma">axioma</ConceptLink> garantiza que hay infinidad de <ConceptLink targetId="punto">puntos</ConceptLink> atrapados entre dos extremos, no asegura que la <ConceptLink targetId="recta">recta</ConceptLink> esté "llena" sin agujeros (por ejemplo, el conjunto de los <ConceptLink targetId="numeros-racionales">números racionales</ConceptLink> cumple esto perfectamente pero sigue teniendo agujeros). Para tapar esos agujeros se necesitarán los <ConceptLink targetId="axiomas-continuidad"><ConceptLink targetId="axioma">axiomas</ConceptLink> de continuidad</ConceptLink>.
+- Aunque este axioma garantiza que hay infinidad de puntos atrapados entre dos extremos, no asegura que la recta esté "llena" sin agujeros (por ejemplo, el conjunto de los <ConceptLink targetId="numeros-racionales" isDependency={false}>números racionales</ConceptLink> cumple esto perfectamente pero sigue teniendo agujeros). Para tapar esos agujeros se necesitarán los <ConceptLink targetId="axiomas-continuidad" isDependency={false}>axiomas de continuidad</ConceptLink>.

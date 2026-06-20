@@ -11,19 +11,19 @@ export const metadata = {
   "hasSimulation": false,
 };
 
-<Capitular letra="L" />a <ConceptLink targetId="demostracion">demostración</ConceptLink> por contradicción (*Reductio ad absurdum*) es una de las herramientas analíticas más poderosas del arsenal matemático. Cuando la conexión directa entre la hipótesis $P$ y la tesis $Q$ es esquiva, este método indirecto provee un elegante atajo.
+<Capitular letra="L" />a <ConceptLink targetId="demostracion" isDependency={false}>demostración</ConceptLink> por contradicción (*Reductio ad absurdum*) es una de las herramientas analíticas más poderosas del arsenal matemático. Cuando la conexión directa entre la hipótesis $P$ y la tesis $Q$ es esquiva, este método indirecto provee un elegante atajo.
 
 <Separador />
 
 ### Estructura Lógica
 
 En lugar de demostrar $P \implies Q$ directamente, el matemático **asume deliberadamente lo contrario** de lo que quiere probar, es decir, asume que la proposición es falsa ($\neg Q$).
-Luego, demuestra que esta suposición, combinada con <ConceptLink targetId="axioma">axiomas</ConceptLink> y hechos conocidos, conduce inevitablemente a una contradicción o imposibilidad lógica. Como la lógica matemática no admite contradicciones, la suposición original ($\neg Q$) tiene que ser falsa. Por descarte, $Q$ debe ser verdadera.
+Luego, demuestra que esta suposición, combinada con <ConceptLink targetId="axioma" isDependency={false}>axiomas</ConceptLink> y hechos conocidos, conduce inevitablemente a una contradicción o imposibilidad lógica. Como la lógica matemática no admite contradicciones, la suposición original ($\neg Q$) tiene que ser falsa. Por descarte, $Q$ debe ser verdadera.
 
 ### Un Ejemplo Clásico
 
 import { ContradictionSimulation } from "../../diagrams/Demos/ContradictionSimulation";
 
-Un excelente ejemplo en esta base de datos es el <ConceptLink targetId="teorema-dos-rectas-un-punto"><ConceptLink targetId="teorema">Teorema</ConceptLink> de intersección única</ConceptLink>. Para probar que dos <ConceptLink targetId="recta">rectas</ConceptLink> distintas no pueden cortarse en más de un <ConceptLink targetId="punto">punto</ConceptLink>, se asume temporalmente que **sí** se cortan en dos <ConceptLink targetId="punto">puntos</ConceptLink>. Esto violaría inmediatamente el <ConceptLink targetId="axioma">Axioma</ConceptLink> de <ConceptLink targetId="incidencia">Incidencia</ConceptLink> 1 (por dos <ConceptLink targetId="punto">puntos</ConceptLink> pasa una *única* <ConceptLink targetId="recta">recta</ConceptLink>). Al chocar contra un <ConceptLink targetId="axioma">axioma</ConceptLink> inquebrantable, la suposición se destruye, probando el <ConceptLink targetId="teorema">teorema</ConceptLink>.
+Un excelente ejemplo en esta base de datos es el <ConceptLink targetId="teorema-dos-rectas-un-punto" isDependency={false}>Teorema de intersección única</ConceptLink>. Para probar que dos <ConceptLink targetId="recta" isDependency={false}>rectas</ConceptLink> distintas no pueden cortarse en más de un <ConceptLink targetId="punto" isDependency={false}>punto</ConceptLink>, se asume temporalmente que **sí** se cortan en dos puntos. Esto violaría inmediatamente el Axioma de <ConceptLink targetId="incidencia" isDependency={false}>Incidencia</ConceptLink> 1 (por dos puntos pasa una *única* recta). Al chocar contra un axioma inquebrantable, la suposición se destruye, probando el <ConceptLink targetId="teorema" isDependency={false}>teorema</ConceptLink>.
 
 <ContradictionSimulation />

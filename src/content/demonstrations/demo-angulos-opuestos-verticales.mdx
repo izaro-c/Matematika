@@ -7,63 +7,66 @@ export const metadata = {
   "proofMethod": "directo",
   "authors": ["euclides"],
   "tags": ["geometria", "congruencia"],
-  "layout": "split",
-  "links": ["axioma-congruencia-2", "axioma-congruencia-3", "axioma-congruencia-4"],
+  "layout": "split"
 };
 
 import { DemoAngulosOpuestos } from '../../diagrams/Demos/DemoAngulosOpuestos';
 
 <DemonstrationSection diagram={<DemoAngulosOpuestos />}>
 
-<Capitular letra="C" />uando dos <ConceptLink targetId="recta">rectas</ConceptLink> se intersecan en un único <ConceptLink targetId="punto">punto</ConceptLink>, determinan topológicamente cuatro regiones angulares. Aquellos <ConceptLink targetId="angulo">ángulos</ConceptLink> opuestos por el vértice exhiben recíproca <ConceptLink targetId="congruencia">congruencia</ConceptLink> estricta. Esta <ConceptLink targetId="demostracion">demostración</ConceptLink> clásica emplea las nociones algebraicas axiomáticas de adición y sustracción sobre clases de <ConceptLink targetId="congruencia">congruencia</ConceptLink> angular.
+<Capitular letra="C" />uando dos <ConceptLink targetId="recta" isDependency={false}>rectas</ConceptLink> se intersecan en un único <ConceptLink targetId="punto" isDependency={false}>punto</ConceptLink>, determinan topológicamente cuatro regiones angulares. Aquellos <ConceptLink targetId="angulo" isDependency={false}>ángulos</ConceptLink> opuestos por el vértice exhiben recíproca <ConceptLink targetId="congruencia" isDependency={false}>congruencia</ConceptLink> estricta. Esta <ConceptLink targetId="demostracion" isDependency={false}>demostración</ConceptLink> clásica emplea las nociones algebraicas axiomáticas de adición y sustracción sobre clases de congruencia angular garantizadas por el <ConceptLink targetId="axioma-congruencia-2">axioma I-2</ConceptLink>, el <ConceptLink targetId="axioma-congruencia-3">axioma I-3</ConceptLink> y el <ConceptLink targetId="axioma-congruencia-4">axioma I-4</ConceptLink>.
 
 <Separador />
 
 ### Hipótesis y Tesis
 
-**Hipótesis:** Sean <InteractiveElement target="lineL" color="terracota">$l$</InteractiveElement> y <InteractiveElement target="lineM" color="terracota">$m$</InteractiveElement> dos <ConceptLink targetId="recta">rectas</ConceptLink> que se cortan en el <ConceptLink targetId="punto">punto</ConceptLink> $O$. Se forman cuatro <ConceptLink targetId="angulo">ángulos</ConceptLink>: <InteractiveElement target="angle1" color="terracota">$\angle 1$</InteractiveElement>, <InteractiveElement target="angle2" color="terracota">$\angle 2$</InteractiveElement>, <InteractiveElement target="angle3" color="terracota">$\angle 3$</InteractiveElement>, y <InteractiveElement target="angle4" color="terracota">$\angle 4$</InteractiveElement>.  
+**Hipótesis:** Sean <InteractiveElement target="lineL" color="terracota">$l$</InteractiveElement> y <InteractiveElement target="lineM" color="terracota">$m$</InteractiveElement> dos rectas que se cortan en el punto $O$. Se forman cuatro ángulos: <InteractiveElement target="angle1" color="terracota">$\angle 1$</InteractiveElement>, <InteractiveElement target="angle2" color="terracota">$\angle 2$</InteractiveElement>, <InteractiveElement target="angle3" color="terracota">$\angle 3$</InteractiveElement>, y <InteractiveElement target="angle4" color="terracota">$\angle 4$</InteractiveElement>.  
 **Tesis:** $\angle 1 \cong \angle 3$ y $\angle 2 \cong \angle 4$.
 
 <Separador />
 
 <MedievalStep number={1} title="Ángulos adyacentes suman un llano" target="supp12">
-Los <ConceptLink targetId="angulo">ángulos</ConceptLink> <InteractiveElement target="angle1" color="terracota">$\angle 1$</InteractiveElement> y <InteractiveElement target="angle2" color="terracota">$\angle 2$</InteractiveElement> son adyacentes (comparten un lado y forman la <ConceptLink targetId="recta">recta</ConceptLink> <InteractiveElement target="lineL" color="terracota">$l$</InteractiveElement>). Por la definición de <ConceptLink targetId="angulo">ángulos</ConceptLink> suplementarios:
+Los ángulos <InteractiveElement target="angle1" color="terracota">$\angle 1$</InteractiveElement> y <InteractiveElement target="angle2" color="terracota">$\angle 2$</InteractiveElement> son adyacentes (comparten un lado y forman la recta <InteractiveElement target="lineL" color="terracota">$l$</InteractiveElement>). Por la definición de ángulos suplementarios:
 
 $$ \angle 1 + \angle 2 \cong 180^\circ $$
 </MedievalStep>
 
 <MedievalStep number={2} title="Segundo par de adyacentes" target="supp23">
-Análogamente, los <ConceptLink targetId="angulo">ángulos</ConceptLink> <InteractiveElement target="angle2" color="terracota">$\angle 2$</InteractiveElement> y <InteractiveElement target="angle3" color="terracota">$\angle 3$</InteractiveElement> forman la <ConceptLink targetId="recta">recta</ConceptLink> <InteractiveElement target="lineM" color="terracota">$m$</InteractiveElement>:
+Análogamente, los ángulos <InteractiveElement target="angle2" color="terracota">$\angle 2$</InteractiveElement> y <InteractiveElement target="angle3" color="terracota">$\angle 3$</InteractiveElement> forman la recta <InteractiveElement target="lineM" color="terracota">$m$</InteractiveElement>:
 
 $$ \angle 2 + \angle 3 \cong 180^\circ $$
 </MedievalStep>
 
 <MedievalStep number={3} title="Transitividad" target="angle2">
-Ambas expresiones son <ConceptLink targetId="congruencia">congruentes</ConceptLink> al <ConceptLink targetId="angulo">ángulo</ConceptLink> llano. Por transitividad de la <ConceptLink targetId="congruencia">congruencia</ConceptLink>:
+Ambas expresiones son congruentes al ángulo llano. Por el <ConceptLink targetId="axioma-congruencia-4">axioma de transitividad de la congruencia angular</ConceptLink>:
 
-$$ \angle 1 + \angle 2 \cong \angle 2 + \angle 3 $$
+<Formula>
+  $$ \angle 1 + \angle 2 \cong \angle 2 + \angle 3 $$
+</Formula>
 </MedievalStep>
 
 <MedievalStep number={4} title="Resta de ángulo común" target="congruence13">
-Por el <ConceptLink targetId="axioma-congruencia-2"><ConceptLink targetId="axioma">axioma</ConceptLink> de resta</ConceptLink>, podemos cancelar el <ConceptLink targetId="angulo">ángulo</ConceptLink> común <InteractiveElement target="angle2" color="terracota">$\angle 2$</InteractiveElement> de ambos lados de la <ConceptLink targetId="congruencia">congruencia</ConceptLink>:
+Por el <ConceptLink targetId="axioma-congruencia-3">axioma de resta de ángulos congruentes</ConceptLink>, podemos cancelar el ángulo común <InteractiveElement target="angle2" color="terracota">$\angle 2$</InteractiveElement> de ambos lados de la congruencia:
 
-$$ \angle 1 \cong \angle 3 $$
+<Formula>
+  $$ \angle 1 \cong \angle 3 $$
+</Formula>
 </MedievalStep>
 
 <MedievalStep number={5} title="Conclusión para el otro par" target="angle4">
-Un argumento idéntico con los <ConceptLink targetId="angulo">ángulos</ConceptLink> adyacentes <InteractiveElement target="angle3" color="terracota">$\angle 3$</InteractiveElement> y <InteractiveElement target="angle4" color="terracota">$\angle 4$</InteractiveElement> demuestra que $\angle 2 \cong \angle 4$. $\blacksquare$
+Un argumento idéntico con los ángulos adyacentes <InteractiveElement target="angle3" color="terracota">$\angle 3$</InteractiveElement> y <InteractiveElement target="angle4" color="terracota">$\angle 4$</InteractiveElement> demuestra que $\angle 2 \cong \angle 4$. $\blacksquare$
 </MedievalStep>
 
 <Separador />
 
 ### Análisis
 
-La <ConceptLink targetId="demostracion">demostración</ConceptLink> es una aplicación elegante del principio algebraico: si $a + b = c$ y $b + d = c$, entonces $a = d$. En <ConceptLink targetId="geometria">geometría</ConceptLink>, este principio se sustituye por los <ConceptLink targetId="axioma">axiomas</ConceptLink> de <ConceptLink targetId="congruencia">congruencia</ConceptLink>: la suma y resta de <ConceptLink targetId="angulo">ángulos</ConceptLink> <ConceptLink targetId="congruencia">congruentes</ConceptLink> preserva la <ConceptLink targetId="congruencia">congruencia</ConceptLink>.
+La demostración es una aplicación elegante del principio algebraico: si $a + b = c$ y $b + d = c$, entonces $a = d$. En <ConceptLink targetId="geometria" isDependency={false}>geometría</ConceptLink>, este principio se sustituye por los <ConceptLink targetId={["congruencia", "axioma"]}>axiomas de congruencia</ConceptLink>: la suma y resta de ángulos congruentes preserva la congruencia.
 
 <Nota>
-  <ConceptLink targetId="euclides">Euclides</ConceptLink> demostró este resultado en la Proposición I.15 de los Elementos usando el mismo argumento. Su formulación hablaba de "dos <ConceptLink targetId="angulo">ángulos</ConceptLink> rectos" donde nosotros decimos "<ConceptLink targetId="angulo">ángulo</ConceptLink> llano".
+  <ConceptLink targetId="euclides" isDependency={false}>Euclides</ConceptLink> demostró este resultado en la Proposición I.15 de los Elementos usando el mismo argumento. Su formulación hablaba de "dos ángulos rectos" donde nosotros decimos "ángulo llano".
 </Nota>
 
-Este <ConceptLink targetId="teorema">teorema</ConceptLink> no requiere el <ConceptLink targetId="postulado">postulado</ConceptLink> de las <ConceptLink targetId="paralelas">paralelas</ConceptLink>: es válido en <ConceptLink targetId="sistema-absoluto"><ConceptLink targetId="geometria">geometría</ConceptLink> absoluta</ConceptLink> (<ConceptLink targetId="euclides">euclidiana</ConceptLink> e hiperbólica).
+Este <ConceptLink targetId="teorema" isDependency={false}>teorema</ConceptLink> no requiere el <ConceptLink targetId="postulado" isDependency={false}>postulado</ConceptLink> de las <ConceptLink targetId="paralelas" isDependency={false}>paralelas</ConceptLink>: es válido en <ConceptLink targetId={["sistema-absoluto", "geometria"]}>geometría absoluta</ConceptLink> (euclidiana e hiperbólica).
 
 </DemonstrationSection>

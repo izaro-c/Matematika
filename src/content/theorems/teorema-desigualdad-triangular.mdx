@@ -5,22 +5,28 @@ export const metadata = {
   "description": "En cualquier triángulo, la suma de las longitudes de dos de sus lados es estrictamente mayor que la longitud del tercer lado.",
   "tags": ["geometria", "triangulos", "desigualdades"],
   "authors": ["euclides"],
-  "links": ["triangulo", "segmento", "punto"],
-  "seeAlso": ["teorema-suma-angulos-triangulo"],
-  "satisfies": [],
+  "difficulty": "básico",
+  "demos": ["demo-desigualdad-triangular"]
 };
 
-<Capitular letra="L" />a desigualdad triangular es un <ConceptLink targetId="teorema">teorema</ConceptLink> fundamental de la <ConceptLink targetId="geometria">geometría</ConceptLink> <ConceptLink targetId="euclides">euclidiana</ConceptLink> y una propiedad definitoria de cualquier espacio métrico. Afirma que el camino más corto entre dos <ConceptLink targetId="punto">puntos</ConceptLink> siempre es la línea <ConceptLink targetId="recta">recta</ConceptLink> que los une.
+import { InteractiveElement } from "../../components/ui/VisualBind";
+
+<Capitular letra="L" />a <ConceptLink targetId={["teorema-desigualdad-triangular", "triangulo"]}>desigualdad triangular</ConceptLink> es un <ConceptLink targetId="teorema" isDependency={false}>teorema</ConceptLink> fundamental de la <ConceptLink targetId={["sistema-euclidiano", "geometria", "euclides"]}>geometría euclidiana</ConceptLink> y una propiedad definitoria de cualquier espacio métrico. Afirma que el camino más corto entre dos <ConceptLink targetId="punto" isDependency={false}>puntos</ConceptLink> siempre es la línea <ConceptLink targetId="recta" isDependency={false}>recta</ConceptLink> que los une.
 
 <Separador />
 
-## Enunciado Formal
+### Enunciado
 
-Sea un <ConceptLink targetId="triangulo">triángulo</ConceptLink> de vértices $A, B$ y $C$. Se cumplen siempre las tres siguientes desigualdades:
-1. $AB + BC > AC$
-2. $AB + AC > BC$
-3. $AC + BC > AB$
+<Formula>
+  $$ \text{Sea un } \triangle ABC. \text{ Entonces } AB + BC > AC, \; AB + AC > BC \; \text{ y } \; AC + BC > AB. $$
+</Formula>
 
-## Implicación
+<Separador />
 
-Si no se cumple la desigualdad triangular estricta (es decir, si la suma es igual al tercer lado), los tres <ConceptLink targetId="punto">puntos</ConceptLink> no formarán un <ConceptLink targetId="triangulo">triángulo</ConceptLink>, sino que serán <ConceptLink targetId="colineal">colineales</ConceptLink> y el <ConceptLink targetId="triangulo">triángulo</ConceptLink> se encontrará "degenerado".
+### Discusión
+
+Si no se cumple la <ConceptLink targetId={["teorema-desigualdad-triangular", "triangulo"]}>desigualdad triangular</ConceptLink> estricta (es decir, si la suma es igual al tercer lado), los tres puntos no formarán un triángulo, sino que serán <ConceptLink targetId="colineal" isDependency={false}>colineales</ConceptLink> y el triángulo se encontrará "degenerado".
+
+<Nota>
+  La demostración euclidiana clásica usa el <ConceptLink targetId="teorema-triangulo-isosceles">teorema del triángulo isósceles</ConceptLink> y la propiedad de que a mayor ángulo se opone mayor lado.
+</Nota>

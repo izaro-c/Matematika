@@ -13,10 +13,10 @@ export const metadata = {
 import { InteractiveElement } from "../../components/ui/VisualBind";
 import { Altura } from '../../diagrams/Definiciones/Altura';
 
-export const Simulation = <ConceptLink targetId="altura">Altura</ConceptLink>;
+export const Simulation = <ConceptLink targetId="altura" isDependency={false}>Altura</ConceptLink>;
 
-<Capitular letra="L" />a <InteractiveElement target="altura"><ConceptLink targetId="altura">altura</ConceptLink></InteractiveElement> es el <ConceptLink targetId="segmento">segmento</ConceptLink> que representa la distancia más corta (es decir, de forma <InteractiveElement target="ortogonal">ortogonal</InteractiveElement>) desde un <InteractiveElement target="vertice-opuesto">vértice</InteractiveElement> superior hasta la línea del <InteractiveElement target="lado-opuesto">lado opuesto</InteractiveElement> subyacente. Todo <ConceptLink targetId="triangulo">triángulo</ConceptLink> tiene tres <ConceptLink targetId="altura">alturas</ConceptLink> que concurren en un <ConceptLink targetId="punto">punto</ConceptLink> llamado ortocentro.
+<Capitular letra="L" />a <InteractiveElement target="altura">altura</InteractiveElement> es el <ConceptLink targetId="segmento" isDependency={false}>segmento</ConceptLink> que representa la distancia más corta (es decir, de forma <InteractiveElement target="ortogonal">ortogonal</InteractiveElement>) desde un <InteractiveElement target="vertice-opuesto">vértice</InteractiveElement> superior hasta la línea del <InteractiveElement target="lado-opuesto">lado opuesto</InteractiveElement> subyacente. Todo <ConceptLink targetId="triangulo" isDependency={false}>triángulo</ConceptLink> tiene tres alturas que concurren en un <ConceptLink targetId="punto" isDependency={false}>punto</ConceptLink> llamado ortocentro.
 
 <Separador />
 
-La <ConceptLink targetId="altura">altura</ConceptLink> es fundamental para calcular el <ConceptLink targetId="area">área</ConceptLink> de cualquier <ConceptLink targetId="poligono">polígono</ConceptLink>, sirviendo como multiplicador de la base.
+La altura es fundamental para calcular el <ConceptLink targetId="area" isDependency={false}>área</ConceptLink> de cualquier <ConceptLink targetId="poligono" isDependency={false}>polígono</ConceptLink>, sirviendo como multiplicador de la base.

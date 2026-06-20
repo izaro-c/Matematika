@@ -12,7 +12,7 @@ import { Incidence4 } from '../../diagrams/Axiomas/Incidence4';
 export const Simulation = Incidence4;
 import { InteractiveElement } from "../../components/ui/VisualBind";
 
-<Capitular letra="P" />or tres <ConceptLink targetId="punto">puntos</ConceptLink> que no son <ConceptLink targetId="colineal">colineales</ConceptLink> pasa siempre exactamente un único <ConceptLink targetId="plano">plano</ConceptLink>. Este cuarto <ConceptLink targetId="postulado">postulado</ConceptLink> hace por las <ConceptLink targetId="superficie">superficies</ConceptLink> lo mismo que el <ConceptLink targetId="axioma-incidencia-1"><ConceptLink targetId="axioma">axioma</ConceptLink> I-1</ConceptLink> hace por las líneas, definiendo la base sólida para estructurar el <ConceptLink targetId="espacio-tridimensional">espacio tridimensional</ConceptLink>.
+<Capitular letra="P" />or tres <ConceptLink targetId="punto" isDependency={false}>puntos</ConceptLink> que no son <ConceptLink targetId="colineal" isDependency={false}>colineales</ConceptLink> pasa siempre exactamente un único <ConceptLink targetId="plano" isDependency={false}>plano</ConceptLink>. Este cuarto <ConceptLink targetId="postulado" isDependency={false}>postulado</ConceptLink> hace por las <ConceptLink targetId="superficie" isDependency={false}>superficies</ConceptLink> lo mismo que el <ConceptLink targetId="axioma-incidencia-1" isDependency={false}>axioma I-1</ConceptLink> hace por las líneas, definiendo la base sólida para estructurar el <ConceptLink targetId="espacio-tridimensional" isDependency={false}>espacio tridimensional</ConceptLink>.
 
 <Separador />
 
@@ -28,22 +28,22 @@ import { InteractiveElement } from "../../components/ui/VisualBind";
 </Formula>
 
 <Nota>
-  El <ConceptLink targetId="plano">plano</ConceptLink> único determinado por estos tres <ConceptLink targetId="punto">puntos</ConceptLink> se denota comúnmente como $\pi(A,B,C)$ o simplemente utilizando paréntesis $(ABC)$.
+  El plano único determinado por estos tres puntos se denota comúnmente como $\pi(A,B,C)$ o simplemente utilizando paréntesis $(ABC)$.
 </Nota>
 
 <Separador />
 
 ### Discusión
 
-Así como dos <ConceptLink targetId="punto">puntos</ConceptLink> determinan unívocamente una <ConceptLink targetId="recta">recta</ConceptLink>, se necesitan exactamente <InteractiveElement target="pA" color="terracota">tres</InteractiveElement> <InteractiveElement target="pB" color="terracota"><ConceptLink targetId="punto">puntos</ConceptLink></InteractiveElement> <InteractiveElement target="pC" color="terracota">no alineados</InteractiveElement> para fijar de forma única un <InteractiveElement target="polygonABC" color="salvia"><ConceptLink targetId="plano">plano</ConceptLink> bidimensional</InteractiveElement>.
+Así como dos puntos determinan unívocamente una <ConceptLink targetId="recta" isDependency={false}>recta</ConceptLink>, se necesitan exactamente <InteractiveElement target="pA" color="terracota">tres</InteractiveElement> <InteractiveElement target="pB" color="terracota">puntos</InteractiveElement> <InteractiveElement target="pC" color="terracota">no alineados</InteractiveElement> para fijar de forma única un <InteractiveElement target="polygonABC" color="salvia">plano bidimensional</InteractiveElement>.
 
-La condición de que sean *no <ConceptLink targetId="colineal">colineales</ConceptLink>* es el requisito fundamental: si los tres <ConceptLink targetId="punto">puntos</ConceptLink> estuvieran alineados sobre la misma <ConceptLink targetId="recta">recta</ConceptLink>, existirían infinitos <ConceptLink targetId="plano">planos</ConceptLink> rotando alrededor de ellos (como las páginas de un libro girando sobre su lomo), y perderíamos la propiedad de la unicidad.
+La condición de que sean *no colineales* es el requisito fundamental: si los tres puntos estuvieran alineados sobre la misma recta, existirían infinitos planos rotando alrededor de ellos (como las páginas de un libro girando sobre su lomo), y perderíamos la propiedad de la unicidad.
 
-Este <ConceptLink targetId="axioma">axioma</ConceptLink> formaliza al <ConceptLink targetId="plano">plano</ConceptLink> como un objeto geométrico abstracto por derecho propio, ubicándolo en la base del universo <ConceptLink targetId="euclides">euclidiano</ConceptLink> junto con el <ConceptLink targetId="punto">punto</ConceptLink> y la <ConceptLink targetId="recta">recta</ConceptLink>.
+Este <ConceptLink targetId="axioma" isDependency={false}>axioma</ConceptLink> formaliza al plano como un objeto geométrico abstracto por derecho propio, ubicándolo en la base del universo <ConceptLink targetId="euclides" isDependency={false}>euclidiano</ConceptLink> junto con el punto y la recta.
 
 <Separador />
 
 ### Observaciones
 
-- Los <ConceptLink targetId="axioma">axiomas</ConceptLink> del I-4 en adelante (que involucran <ConceptLink targetId="plano">planos</ConceptLink> y dimensiones adicionales) no se aplican cuando nos restringimos estrictamente al estudio de la <ConceptLink targetId="geometria-plana"><ConceptLink targetId="geometria">geometría</ConceptLink> plana en 2D</ConceptLink>, ya que en ella se asume por defecto la existencia de un único <ConceptLink targetId="plano">plano</ConceptLink> universal.
-- Su utilidad es clave al estudiar la <ConceptLink targetId="geometria-espacial"><ConceptLink targetId="geometria">geometría</ConceptLink> espacial o tridimensional</ConceptLink>. En ella, el <ConceptLink targetId="axioma">axioma</ConceptLink> I-4 nos permite interceptar, inclinar y definir diferentes <ConceptLink targetId="superficie">superficies</ConceptLink>, constituyendo el soporte estructural de la <ConceptLink targetId="sistema-absoluto"><ConceptLink targetId="geometria">geometría</ConceptLink> absoluta</ConceptLink> del espacio.
+- Los axiomas del I-4 en adelante (que involucran planos y dimensiones adicionales) no se aplican cuando nos restringimos estrictamente al estudio de la <ConceptLink targetId="geometria-plana" isDependency={false}>geometría plana en 2D</ConceptLink>, ya que en ella se asume por defecto la existencia de un único plano universal.
+- Su utilidad es clave al estudiar la <ConceptLink targetId="geometria-espacial" isDependency={false}>geometría espacial o tridimensional</ConceptLink>. En ella, el axioma I-4 nos permite interceptar, inclinar y definir diferentes superficies, constituyendo el soporte estructural de la <ConceptLink targetId={["sistema-absoluto", "geometria"]}>geometría absoluta</ConceptLink> del espacio.

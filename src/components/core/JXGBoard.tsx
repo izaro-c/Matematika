@@ -28,6 +28,7 @@ const JXGBoard: React.FC<JXGBoardProps> = ({
     }
 
     // Initialize board
+    if (!boardRef.current.id) boardRef.current.id = "jxgbox_" + Math.random().toString(36).substring(2, 9);
     boardInstance.current = JXG.JSXGraph.initBoard(boardRef.current.id, {
       boundingbox: bounds,
       axis: axis,

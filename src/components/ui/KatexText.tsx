@@ -25,10 +25,12 @@ export const KatexText: React.FC<KatexTextProps> = ({ text, className = '' }) =>
       .replace(/</g, '&lt;')
       .replace(/>/g, '&gt;');
 
+    const unescapeMath = (m: string) => m.replace(/&lt;/g, '<').replace(/&gt;/g, '>').replace(/&amp;/g, '&');
+
     // Reemplazar $$ math $$
     html = html.replace(/\$\$([\s\S]+?)\$\$/g, (match, math) => {
       try {
-        return katex.renderToString(math, { displayMode: true, throwOnError: false });
+        return katex.renderToString(unescapeMath(math), { displayMode: true, throwOnError: false });
       } catch {
         return match;
       }
@@ -37,7 +39,7 @@ export const KatexText: React.FC<KatexTextProps> = ({ text, className = '' }) =>
     // Reemplazar $ math $
     html = html.replace(/\$([^$]+?)\$/g, (match, math) => {
       try {
-        return katex.renderToString(math, { displayMode: false, throwOnError: false });
+        return katex.renderToString(unescapeMath(math), { displayMode: false, throwOnError: false });
       } catch {
         return match;
       }

@@ -28,53 +28,53 @@ export const metadata = {
   "tags": ["geometria", "absoluta", "neutral", "fundamentos"]
 };
 
-<Capitular letra="L" />a <ConceptLink targetId="sistema-absoluto"><ConceptLink targetId="geometria">geometría</ConceptLink> absoluta</ConceptLink>, también denominada <ConceptLink targetId="geometria">geometría</ConceptLink> neutral, es la estructura axiomática conformada por los <ConceptLink targetId="axioma">axiomas</ConceptLink> de <ConceptLink targetId="incidencia">incidencia</ConceptLink>, orden, <ConceptLink targetId="congruencia">congruencia</ConceptLink> y continuidad, excluyendo explícitamente cualquier <ConceptLink targetId="postulado">postulado</ConceptLink> sobre <ConceptLink targetId="recta">rectas</ConceptLink> <ConceptLink targetId="paralelas">paralelas</ConceptLink>. Todo <ConceptLink targetId="teorema">teorema</ConceptLink> demostrado en este marco conserva su validez tanto en la <ConceptLink targetId="sistema-euclidiano"><ConceptLink targetId="geometria">geometría</ConceptLink> <ConceptLink targetId="euclides">euclidiana</ConceptLink></ConceptLink> como en la <ConceptLink targetId="sistema-hiperbolico">hiperbólica</ConceptLink>.
+<Capitular letra="L" />a <ConceptLink targetId={["sistema-absoluto", "geometria"]}>geometría absoluta</ConceptLink>, también denominada <ConceptLink targetId={["sistema-absoluto", "geometria"]}>geometría neutral</ConceptLink>, es la estructura axiomática conformada por los <ConceptLink targetId={["sistema-incidencia", "axioma", "incidencia"]}>axiomas de incidencia</ConceptLink>, orden, <ConceptLink targetId="congruencia" isDependency={false}>congruencia</ConceptLink> y continuidad, excluyendo explícitamente cualquier <ConceptLink targetId="postulado" isDependency={false}>postulado</ConceptLink> sobre <ConceptLink targetId="recta" isDependency={false}>rectas</ConceptLink> <ConceptLink targetId="paralelas" isDependency={false}>paralelas</ConceptLink>. Todo <ConceptLink targetId="teorema" isDependency={false}>teorema</ConceptLink> demostrado en este marco conserva su validez tanto en la <ConceptLink targetId={["sistema-euclidiano", "geometria", "euclides"]}>geometría euclidiana</ConceptLink> como en la <ConceptLink targetId="sistema-hiperbolico" isDependency={false}>hiperbólica</ConceptLink>.
 
 <Separador />
 
 ### Contexto Histórico
 
-Durante más de dos milenios, los matemáticos intentaron demostrar el quinto <ConceptLink targetId="postulado">postulado</ConceptLink> de <ConceptLink targetId="euclides">Euclides</ConceptLink> a partir de los demás <ConceptLink targetId="axioma">axiomas</ConceptLink>, sin éxito. En el siglo XIX, <ConceptLink targetId="lobachevski">Lobachevski</ConceptLink>, <ConceptLink targetId="bolyai">Bolyai</ConceptLink> y Gauss demostraron independientemente que el <ConceptLink targetId="postulado">postulado</ConceptLink> de las <ConceptLink targetId="paralelas">paralelas</ConceptLink> es independiente de los demás. Esto reveló que existe una <ConceptLink targetId="geometria">geometría</ConceptLink> "neutra" —la absoluta— que no toma partido sobre las <ConceptLink targetId="paralelas">paralelas</ConceptLink>, y de la cual tanto la <ConceptLink targetId="euclides">euclidiana</ConceptLink> como la hiperbólica son extensiones.
+Durante más de dos milenios, los matemáticos intentaron demostrar el <ConceptLink targetId={["axioma-paralelas-euclides", "postulado", "paralelas"]}>quinto postulado</ConceptLink> de <ConceptLink targetId="euclides" isDependency={false}>Euclides</ConceptLink> a partir de los demás <ConceptLink targetId="axioma" isDependency={false}>axiomas</ConceptLink>, sin éxito. En el siglo XIX, <ConceptLink targetId="lobachevski" isDependency={false}>Lobachevski</ConceptLink>, <ConceptLink targetId="bolyai" isDependency={false}>Bolyai</ConceptLink> y Gauss demostraron independientemente que el postulado de las paralelas es independiente de los demás. Esto reveló que existe una <ConceptLink targetId="geometria" isDependency={false}>geometría</ConceptLink> "neutra" —la absoluta— que no toma partido sobre las paralelas, y de la cual tanto la euclidiana como la hiperbólica son extensiones.
 
-<ConceptLink targetId="hilbert">Hilbert</ConceptLink> formalizó esta estructura en *Grundlagen der Geometrie* (1899), estableciendo el marco axiomático moderno que usamos hoy.
+<ConceptLink targetId="hilbert" isDependency={false}>Hilbert</ConceptLink> formalizó esta estructura en *Grundlagen der Geometrie* (1899), estableciendo el marco axiomático moderno que usamos hoy.
 
 <Separador />
 
-### <ConceptLink targetId="axioma">Axiomas</ConceptLink>
+### Axiomas
 
-La <ConceptLink targetId="geometria">geometría</ConceptLink> absoluta consta de 19 <ConceptLink targetId="axioma">axiomas</ConceptLink>, agrupados en cuatro grupos:
+La <ConceptLink targetId={["sistema-absoluto", "geometria"]}>geometría absoluta</ConceptLink> consta de 19 axiomas, agrupados en cuatro grupos:
 
-**Grupo I — <ConceptLink targetId="incidencia">Incidencia</ConceptLink>** (<ConceptLink targetId="axioma-incidencia-1">I-1</ConceptLink> al <ConceptLink targetId="axioma-incidencia-8">I-8</ConceptLink>): relaciones de pertenencia entre <ConceptLink targetId="punto">puntos</ConceptLink>, <ConceptLink targetId="recta">rectas</ConceptLink> y <ConceptLink targetId="plano">planos</ConceptLink>.
+**Grupo I — <ConceptLink targetId="incidencia" isDependency={false}>Incidencia</ConceptLink>** (<ConceptLink targetId="axioma-incidencia-1" isDependency={false}>I-1</ConceptLink> al <ConceptLink targetId="axioma-incidencia-8" isDependency={false}>I-8</ConceptLink>): relaciones de pertenencia entre <ConceptLink targetId="punto" isDependency={false}>puntos</ConceptLink>, rectas y <ConceptLink targetId="plano" isDependency={false}>planos</ConceptLink>.
 
-**Grupo II — Orden** (<ConceptLink targetId="axioma-orden-1">II-1</ConceptLink> al <ConceptLink targetId="axioma-orden-4">II-4</ConceptLink>): relación de intermediación entre <ConceptLink targetId="punto">puntos</ConceptLink> sobre una <ConceptLink targetId="recta">recta</ConceptLink>, incluyendo el <ConceptLink targetId="axioma-orden-4"><ConceptLink targetId="axioma">axioma</ConceptLink> de Pasch</ConceptLink>.
+**Grupo II — Orden** (<ConceptLink targetId="axioma-orden-1" isDependency={false}>II-1</ConceptLink> al <ConceptLink targetId="axioma-orden-4" isDependency={false}>II-4</ConceptLink>): relación de intermediación entre puntos sobre una recta, incluyendo el axioma de Pasch.
 
-**Grupo III — <ConceptLink targetId="congruencia">Congruencia</ConceptLink>** (<ConceptLink targetId="axioma-congruencia-1">III-1</ConceptLink> al <ConceptLink targetId="axioma-congruencia-5">III-5</ConceptLink>): relaciones de <ConceptLink targetId="congruencia">congruencia</ConceptLink> entre <ConceptLink targetId="segmento">segmentos</ConceptLink> y <ConceptLink targetId="angulo">ángulos</ConceptLink>, incluyendo el <ConceptLink targetId="axioma-congruencia-5">criterio SAS</ConceptLink>.
+**Grupo III — Congruencia** (<ConceptLink targetId="axioma-congruencia-1" isDependency={false}>III-1</ConceptLink> al <ConceptLink targetId="axioma-congruencia-5" isDependency={false}>III-5</ConceptLink>): relaciones de congruencia entre <ConceptLink targetId="segmento" isDependency={false}>segmentos</ConceptLink> y <ConceptLink targetId="angulo" isDependency={false}>ángulos</ConceptLink>, incluyendo el criterio SAS.
 
-**Grupo IV — Continuidad** (<ConceptLink targetId="axioma-arquimedes">V-1</ConceptLink> y <ConceptLink targetId="axioma-completitud">V-2</ConceptLink>): <ConceptLink targetId="axioma">axioma</ConceptLink> de <ConceptLink targetId="arquimedes">Arquímedes</ConceptLink> y <ConceptLink targetId="axioma">axioma</ConceptLink> de completitud.
+**Grupo IV — Continuidad** (<ConceptLink targetId="axioma-arquimedes" isDependency={false}>V-1</ConceptLink> y <ConceptLink targetId="axioma-completitud" isDependency={false}>V-2</ConceptLink>): <ConceptLink targetId={["axioma-arquimedes", "axioma", "arquimedes"]}>axioma de Arquímedes</ConceptLink> y <ConceptLink targetId={["axioma-completitud", "axioma"]}>axioma de completitud</ConceptLink>.
 
 <Separador />
 
 ### Modelos
 
-El modelo estándar es el <ConceptLink targetId="modelo-cartesiano">espacio cartesiano</ConceptLink> $\mathbb{R}^3$ con la métrica euclídea restringida a los <ConceptLink targetId="axioma">axiomas</ConceptLink> absolutos. La <ConceptLink targetId="sistema-hiperbolico"><ConceptLink targetId="geometria">geometría</ConceptLink> hiperbólica</ConceptLink> (<ConceptLink targetId="modelo-poincare">disco de Poincaré</ConceptLink>, semiplano de Lobachevski) también satisface todos estos <ConceptLink targetId="axioma">axiomas</ConceptLink>.
+El modelo estándar es el <ConceptLink targetId="modelo-cartesiano" isDependency={false}>espacio cartesiano</ConceptLink> $\mathbb{R}^3$ con la métrica euclídea restringida a los axiomas absolutos. La <ConceptLink targetId={["sistema-hiperbolico", "geometria"]}>geometría hiperbólica</ConceptLink> (<ConceptLink targetId={["modelo-poincare", "plano"]}>disco de Poincaré</ConceptLink>, semiplano de Lobachevski) también satisface todos estos axiomas.
 
 <Separador />
 
 ### Propiedades
 
-La <ConceptLink targetId="geometria">geometría</ConceptLink> absoluta es **consistente**: tiene modelos (cartesiano, hiperbólico). Es **independiente** del <ConceptLink targetId="axioma">axioma</ConceptLink> de las <ConceptLink targetId="paralelas">paralelas</ConceptLink>: ni el <ConceptLink targetId="postulado">postulado</ConceptLink> ni su negación pueden demostrarse de los demás <ConceptLink targetId="axioma">axiomas</ConceptLink>. Contiene los <ConceptLink targetId="teorema">teoremas</ConceptLink> clásicos que no dependen del quinto <ConceptLink targetId="postulado">postulado</ConceptLink>, como los cuatro primeros libros de los *Elementos* de <ConceptLink targetId="euclides">Euclides</ConceptLink>.
+La <ConceptLink targetId={["sistema-absoluto", "geometria"]}>geometría absoluta</ConceptLink> es **consistente**: tiene modelos (cartesiano, hiperbólico). Es **independiente** del <ConceptLink targetId={["axioma-paralelas-euclides", "axioma", "paralelas"]}>axioma de las paralelas</ConceptLink>: ni el postulado ni su negación pueden demostrarse de los demás axiomas. Contiene los teoremas clásicos que no dependen del <ConceptLink targetId={["axioma-paralelas-euclides", "postulado", "paralelas"]}>quinto postulado</ConceptLink>, como los cuatro primeros libros de los *Elementos* de Euclides.
 
-En <ConceptLink targetId="geometria">geometría</ConceptLink> absoluta, la suma de los <ConceptLink targetId="angulo">ángulos</ConceptLink> de un <ConceptLink targetId="triangulo">triángulo</ConceptLink> es siempre $\leq 180^\circ$. La igualdad solo se cumple si se asume el quinto <ConceptLink targetId="postulado">postulado</ConceptLink>.
+En <ConceptLink targetId={["sistema-absoluto", "geometria"]}>geometría absoluta</ConceptLink>, la suma de los ángulos de un <ConceptLink targetId="triangulo" isDependency={false}>triángulo</ConceptLink> es siempre $\leq 180^\circ$. La igualdad solo se cumple si se asume el <ConceptLink targetId={["axioma-paralelas-euclides", "postulado", "paralelas"]}>quinto postulado</ConceptLink>.
 
 <Separador />
 
 ### Comparación con otros sistemas
 
-| Sistema | <ConceptLink targetId="axioma">Axioma</ConceptLink> de <ConceptLink targetId="paralelas">paralelas</ConceptLink> | Suma de <ConceptLink targetId="angulo">ángulos</ConceptLink> | Modelos |
+| Sistema | Axioma de paralelas | Suma de ángulos | Modelos |
 |---|---|---|---|
-| <ConceptLink targetId="incidencia">Incidencia</ConceptLink> | No incluye | Libre | Tres <ConceptLink targetId="punto">puntos</ConceptLink>, Fano, cartesiano |
+| Incidencia | No incluye | Libre | Tres puntos, Fano, cartesiano |
 | **Absoluto** | **No decide** | **$\leq 180^\circ$** | Cartesiano, Poincaré |
-| <ConceptLink targetId="euclides">Euclidiano</ConceptLink> | Una <ConceptLink targetId="paralelas">paralela</ConceptLink> | $= 180^\circ$ | Cartesiano |
-| <ConceptLink targetId="sistema-hiperbolico">Hiperbólico</ConceptLink> | Infinitas <ConceptLink targetId="paralelas">paralelas</ConceptLink> | $< 180^\circ$ | Poincaré, semiplano |
+| Euclidiano | Una paralela | $= 180^\circ$ | Cartesiano |
+| Hiperbólico | Infinitas paralelas | $< 180^\circ$ | Poincaré, semiplano |
 
-La <ConceptLink targetId="geometria">geometría</ConceptLink> absoluta es el **mínimo común denominador**: todo <ConceptLink targetId="teorema">teorema</ConceptLink> válido en absoluta es válido en ambas geometrías. Añadir el <ConceptLink targetId="axioma">axioma</ConceptLink> de las <ConceptLink targetId="paralelas">paralelas</ConceptLink> produce la <ConceptLink targetId="euclides">euclidiana</ConceptLink>; añadir su negación produce la hiperbólica.
+La <ConceptLink targetId={["sistema-absoluto", "geometria"]}>geometría absoluta</ConceptLink> es el **mínimo común denominador**: todo teorema válido en absoluta es válido en ambas geometrías. Añadir el <ConceptLink targetId={["axioma-paralelas-euclides", "axioma", "paralelas"]}>axioma de las paralelas</ConceptLink> produce la euclidiana; añadir su negación produce la hiperbólica.

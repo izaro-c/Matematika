@@ -8,26 +8,26 @@ export const metadata = {
 };
 
 import { Recta } from '../../diagrams/Definiciones/Recta';
-export const Simulation = <ConceptLink targetId="recta">Recta</ConceptLink>;
+export const Simulation = <ConceptLink targetId="recta" isDependency={false}>Recta</ConceptLink>;
 import { InteractiveElement } from "../../components/ui/VisualBind";
 
-<Capitular letra="U" />na <ConceptLink targetId="recta">recta</ConceptLink> es una línea continua de una sola <ConceptLink targetId="dimension" isDependency={false}><ConceptLink targetId="dimension">dimensión</ConceptLink></ConceptLink> que se extiende infinitamente en ambas direcciones, sin curvarse y sin grosor. Al igual que el <ConceptLink targetId="punto" isDependency={false}><ConceptLink targetId="punto">punto</ConceptLink></ConceptLink>, en la <ConceptLink targetId="geometria">geometría</ConceptLink> formal de <ConceptLink targetId="hilbert" isDependency={false}><ConceptLink targetId="hilbert">Hilbert</ConceptLink></ConceptLink> la <ConceptLink targetId="recta">recta</ConceptLink> es un **concepto primitivo**. Esto significa que carece de una definición explícita o constructiva; no podemos definir analíticamente "qué es" una <ConceptLink targetId="recta">recta</ConceptLink>, sino que deducimos su comportamiento exclusivamente por las relaciones que mantiene con los <ConceptLink targetId="punto">puntos</ConceptLink> a través de los <ConceptLink targetId="axioma">axiomas</ConceptLink>.
+<Capitular letra="U" />na recta es una línea continua de una sola <ConceptLink targetId="dimension" isDependency={false}>dimensión</ConceptLink> que se extiende infinitamente en ambas direcciones, sin curvarse y sin grosor. Al igual que el <ConceptLink targetId="punto" isDependency={false}>punto</ConceptLink>, en la <ConceptLink targetId="geometria" isDependency={false}>geometría</ConceptLink> formal de <ConceptLink targetId="hilbert" isDependency={false}>Hilbert</ConceptLink> la recta es un **concepto primitivo**. Esto significa que carece de una definición explícita o constructiva; no podemos definir analíticamente "qué es" una recta, sino que deducimos su comportamiento exclusivamente por las relaciones que mantiene con los puntos a través de los <ConceptLink targetId="axioma" isDependency={false}>axiomas</ConceptLink>.
 
 <Separador />
 
 ### Enunciado Informal
 
-Una <ConceptLink targetId="recta">recta</ConceptLink> está formada por infinitos <ConceptLink targetId="punto">puntos</ConceptLink>. Se suele nombrar con letras minúsculas ($l, m, n$) o indicando dos <ConceptLink targetId="punto">puntos</ConceptLink> distintos que pertenecen a ella ($\overleftrightarrow{AB}$). En el diagrama, la <InteractiveElement target="lineAB" color="carbon"><ConceptLink targetId="recta">recta</ConceptLink> $l$</InteractiveElement> pasa exactamente por los <ConceptLink targetId="punto">puntos</ConceptLink> <InteractiveElement target="pA" color="terracota">A</InteractiveElement> y <InteractiveElement target="pB" color="terracota">B</InteractiveElement>.
+Una recta está formada por infinitos puntos. Se suele nombrar con letras minúsculas ($l, m, n$) o indicando dos puntos distintos que pertenecen a ella ($\overleftrightarrow{AB}$). En el diagrama, la <InteractiveElement target="lineAB" color="carbon">recta $l$</InteractiveElement> pasa exactamente por los puntos <InteractiveElement target="pA" color="terracota">A</InteractiveElement> y <InteractiveElement target="pB" color="terracota">B</InteractiveElement>.
 
 <Separador />
 
 ### Definición Axiomática
 
-Las reglas que controlan a la <ConceptLink targetId="recta">recta</ConceptLink> se definen en los <ConceptLink targetId="axioma">axiomas</ConceptLink>:
+Las reglas que controlan a la recta se definen en los axiomas:
 
-- **Determinación**: Por dos <ConceptLink targetId="punto">puntos</ConceptLink> pasa siempre una y solo una <ConceptLink targetId="recta">recta</ConceptLink> (<ConceptLink targetId="axioma-incidencia-1" isDependency={false}>I-1</ConceptLink>). Toda <ConceptLink targetId="recta">recta</ConceptLink> contiene al menos dos <ConceptLink targetId="punto">puntos</ConceptLink> (<ConceptLink targetId="axioma-incidencia-2" isDependency={false}>I-2</ConceptLink>).
-- **Orden**: Tres <ConceptLink targetId="punto">puntos</ConceptLink> sobre una <ConceptLink targetId="recta">recta</ConceptLink> pueden ordenarse con la relación "estar entre".
-- **Extensión**: La <ConceptLink targetId="recta">recta</ConceptLink> no tiene fin. Cualquier <ConceptLink targetId="segmento">segmento</ConceptLink> puede alargarse indefinidamente (<ConceptLink targetId="axioma-orden-2" isDependency={false}>II-2</ConceptLink>).
+- **Determinación**: Por dos puntos pasa siempre una y solo una recta (<ConceptLink targetId="axioma-incidencia-1" isDependency={false}>I-1</ConceptLink>). Toda recta contiene al menos dos puntos (<ConceptLink targetId="axioma-incidencia-2" isDependency={false}>I-2</ConceptLink>).
+- **Orden**: Tres puntos sobre una recta pueden ordenarse con la relación "estar entre".
+- **Extensión**: La recta no tiene fin. Cualquier <ConceptLink targetId="segmento" isDependency={false}>segmento</ConceptLink> puede alargarse indefinidamente (<ConceptLink targetId="axioma-orden-2" isDependency={false}>II-2</ConceptLink>).
 
 <Separador />
 
@@ -35,14 +35,14 @@ Las reglas que controlan a la <ConceptLink targetId="recta">recta</ConceptLink> 
 
 | Notación | Significado |
 |---|---|
-| $\overleftrightarrow{AB}$ | La <ConceptLink targetId="recta">recta</ConceptLink> que pasa por los <ConceptLink targetId="punto">puntos</ConceptLink> $A$ y $B$. |
-| $A \in l$ | <ConceptLink targetId="incidencia">Incidencia</ConceptLink>: El <ConceptLink targetId="punto">punto</ConceptLink> $A$ está sobre la <ConceptLink targetId="recta">recta</ConceptLink> $l$. |
-| $l \parallel m$ | <ConceptLink targetId="recta">Rectas</ConceptLink> <ConceptLink targetId="paralelas">paralelas</ConceptLink>: $l$ y $m$ están en el mismo <ConceptLink targetId="plano">plano</ConceptLink> y nunca se cruzan ($l \cap m = \emptyset$). |
+| $\overleftrightarrow{AB}$ | La recta que pasa por los puntos $A$ y $B$. |
+| $A \in l$ | <ConceptLink targetId="incidencia" isDependency={false}>Incidencia</ConceptLink>: El punto $A$ está sobre la recta $l$. |
+| $l \parallel m$ | Rectas <ConceptLink targetId="paralelas" isDependency={false}>paralelas</ConceptLink>: $l$ y $m$ están en el mismo <ConceptLink targetId="plano" isDependency={false}>plano</ConceptLink> y nunca se cruzan ($l \cap m = \emptyset$). |
 
 <Separador />
 
 ### Observaciones
 
-- En el <ConceptLink targetId="modelo-cartesiano">modelo cartesiano <ConceptLink targetId="euclides">euclidiano</ConceptLink></ConceptLink>, la <ConceptLink targetId="recta">recta</ConceptLink> representa la <ConceptLink targetId="geodesica">geodésica</ConceptLink> (el camino más corto) entre dos <ConceptLink targetId="punto">puntos</ConceptLink>.
-- Gracias al <ConceptLink targetId="axioma-completitud" isDependency={false}><ConceptLink targetId="axioma">axioma</ConceptLink> de completitud</ConceptLink>, se garantiza que la <ConceptLink targetId="recta">recta</ConceptLink> es matemáticamente idéntica al conjunto de los <ConceptLink targetId="numeros-reales">números reales</ConceptLink>.
-- En la <ConceptLink targetId="sistema-hiperbolico"><ConceptLink targetId="geometria">geometría</ConceptLink> hiperbólica</ConceptLink> (como el modelo del <ConceptLink targetId="modelo-poincare">Disco de Poincaré</ConceptLink>), las "<ConceptLink targetId="recta">rectas</ConceptLink>" se dibujan visualmente como arcos de <ConceptLink targetId="circunferencia">circunferencia</ConceptLink>.
+- En el <ConceptLink targetId="modelo-cartesiano" isDependency={false}>modelo cartesiano euclidiano</ConceptLink>, la recta representa la <ConceptLink targetId="geodesica" isDependency={false}>geodésica</ConceptLink> (el camino más corto) entre dos puntos.
+- Gracias al <ConceptLink targetId={["axioma-completitud", "axioma"]}>axioma de completitud</ConceptLink>, se garantiza que la recta es matemáticamente idéntica al conjunto de los <ConceptLink targetId="numeros-reales" isDependency={false}>números reales</ConceptLink>.
+- En la <ConceptLink targetId={["sistema-hiperbolico", "geometria"]}>geometría hiperbólica</ConceptLink> (como el modelo del <ConceptLink targetId={["modelo-poincare", "plano"]}>Disco de Poincaré</ConceptLink>), las "rectas" se dibujan visualmente como arcos de <ConceptLink targetId="circunferencia" isDependency={false}>circunferencia</ConceptLink>.

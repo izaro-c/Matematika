@@ -4,13 +4,11 @@ export const metadata = {
   "title": "Teorema de los ángulos opuestos por el vértice",
   "description": "Cuando dos rectas se cortan, los ángulos opuestos por el vértice son congruentes entre sí.",
   "statement": "Sean l y m dos rectas que se cortan en el punto O. Sean α y β un par de ángulos opuestos por el vértice. Entonces α ≅ β.",
-  "requires": ["axioma-congruencia-2", "axioma-congruencia-3", "axioma-congruencia-4"],
-  "demos": ["demo-angulos-opuestos-verticales"],
   "tags": ["geometria", "congruencia", "geometria-absoluta"],
   "authors": ["euclides"],
   "difficulty": "básico",
   "hasSimulation": true,
-  "links": ["axioma-congruencia-2", "axioma-congruencia-4"],
+  "demos": ["demo-angulos-opuestos-verticales"]
 };
 
 import { AngulosOpuestos } from '../../diagrams/Theorems/AngulosOpuestos';
@@ -18,7 +16,7 @@ export const Simulation = AngulosOpuestos;
 import { InteractiveElement } from "../../components/ui/VisualBind";
 
 <Capitular letra="C" />
-uando dos <ConceptLink targetId="recta">rectas</ConceptLink> se intersecan en un único <ConceptLink targetId="punto">punto</ConceptLink>, determinan topológicamente cuatro regiones angulares. Aquellos <ConceptLink targetId="angulo">ángulos</ConceptLink> ubicados en semiplanos alternos —separados estrictamente por el vértice de intersección— se denominan **opuestos por el vértice**. Este célebre <ConceptLink targetId="teorema">teorema</ConceptLink>, consignado fundacionalmente en los <ConceptLink targetId="euclides">Elementos de <ConceptLink targetId="euclides">Euclides</ConceptLink></ConceptLink>, demuestra analíticamente que tales pares angulares conservan siempre una <ConceptLink targetId="congruencia">congruencia</ConceptLink> estricta.
+uando dos <ConceptLink targetId="recta" isDependency={false}>rectas</ConceptLink> se intersecan en un único <ConceptLink targetId="punto" isDependency={false}>punto</ConceptLink>, determinan topológicamente cuatro regiones angulares. Aquellos <ConceptLink targetId="angulo" isDependency={false}>ángulos</ConceptLink> ubicados en semiplanos alternos —separados estrictamente por el vértice de intersección— se denominan **opuestos por el vértice**. Este célebre <ConceptLink targetId="teorema" isDependency={false}>teorema</ConceptLink>, consignado fundacionalmente en los <ConceptLink targetId="euclides" isDependency={false}>Elementos de Euclides</ConceptLink>, demuestra analíticamente que tales pares angulares conservan siempre una <ConceptLink targetId="congruencia" isDependency={false}>congruencia</ConceptLink> estricta. Esta propiedad emana fundamentalmente del <ConceptLink targetId="axioma-congruencia-2">axioma de adición</ConceptLink>, el <ConceptLink targetId="axioma-congruencia-3">axioma de sustracción</ConceptLink> y el <ConceptLink targetId="axioma-congruencia-4">axioma de transitividad de ángulos</ConceptLink>.
 
 <Separador />
 
@@ -28,20 +26,14 @@ uando dos <ConceptLink targetId="recta">rectas</ConceptLink> se intersecan en un
   $$ \text{Sean } l \text{ y } m \text{ dos rectas que se cortan en } O. \text{ Si } \alpha \text{ y } \beta \text{ son opuestos por el vértice, entonces } \alpha \cong \beta. $$
 </Formula>
 
-<Separador />
 
-### <ConceptLink targetId="demostracion">Demostración</ConceptLink>
-
-La <ConceptLink targetId="demostracion">demostración</ConceptLink> usa los <ConceptLink targetId="axioma-congruencia-4"><ConceptLink targetId="axioma">axiomas</ConceptLink> de <ConceptLink targetId="congruencia">congruencia</ConceptLink> de <ConceptLink targetId="angulo">ángulos</ConceptLink></ConceptLink>: la posibilidad de sumar y restar <ConceptLink targetId="angulo">ángulos</ConceptLink> <ConceptLink targetId="congruencia">congruentes</ConceptLink>. Se encuentra en la página dedicada: <ConceptLink targetId="demo-angulos-opuestos-verticales"><ConceptLink targetId="demostracion">Demostración</ConceptLink>: <ConceptLink targetId="angulo">Ángulos</ConceptLink> opuestos por el vértice</ConceptLink>.
-
-<Separador />
 
 ### Discusión
 
-Este <ConceptLink targetId="teorema">teorema</ConceptLink> es uno de los primeros resultados no triviales de la <ConceptLink targetId="geometria">geometría</ConceptLink>. Su <ConceptLink targetId="demostracion">demostración</ConceptLink> no requiere el <ConceptLink targetId="axioma">axioma</ConceptLink> de <ConceptLink targetId="paralelas">paralelas</ConceptLink>, por lo que pertenece a la <ConceptLink targetId="sistema-absoluto"><ConceptLink targetId="geometria">geometría</ConceptLink> absoluta</ConceptLink>.
+Este teorema es uno de los primeros resultados no triviales de la <ConceptLink targetId="geometria" isDependency={false}>geometría</ConceptLink>. Su demostración no requiere el <ConceptLink targetId="axioma" isDependency={false}>axioma</ConceptLink> de <ConceptLink targetId="paralelas" isDependency={false}>paralelas</ConceptLink>, por lo que pertenece a la <ConceptLink targetId={["sistema-absoluto", "geometria"]}>geometría absoluta</ConceptLink>.
 
 <Nota>
-  <ConceptLink targetId="euclides">Euclides</ConceptLink> probó este resultado en los Elementos (Proposición I.15) usando esencialmente el mismo argumento: los <ConceptLink targetId="angulo">ángulos</ConceptLink> adyacentes suman dos rectos, y restando el <ConceptLink targetId="angulo">ángulo</ConceptLink> común se obtiene la <ConceptLink targetId="congruencia">congruencia</ConceptLink> de los opuestos.
+  Euclides probó este resultado en los Elementos (Proposición I.15) usando esencialmente el mismo argumento: los ángulos adyacentes suman dos rectos, y restando el ángulo común se obtiene la congruencia de los opuestos.
 </Nota>
 
-El <ConceptLink targetId="teorema">teorema</ConceptLink> tiene aplicación inmediata en el estudio de <ConceptLink targetId="recta">rectas</ConceptLink> <ConceptLink targetId="paralelas">paralelas</ConceptLink> cortadas por una transversal: los <ConceptLink targetId="angulo">ángulos</ConceptLink> correspondientes y alternos internos se definen precisamente usando las relaciones entre <ConceptLink targetId="angulo">ángulos</ConceptLink> opuestos por el vértice.
+El teorema tiene aplicación inmediata en el estudio de rectas paralelas cortadas por una transversal: los ángulos correspondientes y alternos internos se definen precisamente usando las relaciones entre ángulos opuestos por el vértice.

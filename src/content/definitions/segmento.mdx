@@ -10,32 +10,32 @@ export const metadata = {
 };
 
 import { Segmento } from '../../diagrams/Definiciones/Segmento';
-export const Simulation = <ConceptLink targetId="segmento">Segmento</ConceptLink>;
+export const Simulation = <ConceptLink targetId="segmento" isDependency={false}>Segmento</ConceptLink>;
 import { InteractiveElement } from "../../components/ui/VisualBind";
 
 <Capitular letra="U" />
-n <ConceptLink targetId="segmento">segmento</ConceptLink> es la porción de una <ConceptLink targetId="recta">recta</ConceptLink> comprendida entre dos <ConceptLink targetId="punto">puntos</ConceptLink>, llamados extremos. A diferencia de la <ConceptLink targetId="recta">recta</ConceptLink>, el <ConceptLink targetId="segmento">segmento</ConceptLink> tiene <ConceptLink targetId="longitud">longitud</ConceptLink> finita y es la unidad básica para las relaciones de <ConceptLink targetId="congruencia">congruencia</ConceptLink>.
+n segmento es la porción de una <ConceptLink targetId="recta" isDependency={false}>recta</ConceptLink> comprendida entre dos <ConceptLink targetId="punto" isDependency={false}>puntos</ConceptLink>, llamados extremos. A diferencia de la recta, el segmento tiene <ConceptLink targetId="longitud" isDependency={false}>longitud</ConceptLink> finita y es la unidad básica para las relaciones de <ConceptLink targetId="congruencia" isDependency={false}>congruencia</ConceptLink>.
 
 <Separador />
 
 ### Enunciado Formal
 
-Dados dos <ConceptLink targetId="punto">puntos</ConceptLink> $A$ y $B$ sobre una <ConceptLink targetId="recta">recta</ConceptLink> $l$, el <ConceptLink targetId="segmento">segmento</ConceptLink> $AB$ es el conjunto:
+Dados dos puntos $A$ y $B$ sobre una recta $l$, el segmento $AB$ es el conjunto:
 
 <Formula>
   $$ AB = \{X \in l \mid A X B \text{ o } X = A \text{ o } X = B \} $$
 </Formula>
 
-donde $AXB$ denota que el <ConceptLink targetId="punto">punto</ConceptLink> $X$ incide entre $A$ y $B$ en el sentido de la relación primitiva del <ConceptLink targetId="axioma-orden-1" isDependency={false}><ConceptLink targetId="axioma">axioma</ConceptLink> II-1</ConceptLink>. En el diagrama interactivo, el <InteractiveElement target="segmentAB" color="terracota"><ConceptLink targetId="segmento">segmento</ConceptLink></InteractiveElement> une los extremos <InteractiveElement target="pA" color="terracota">A</InteractiveElement> y <InteractiveElement target="pB" color="terracota">B</InteractiveElement>.
+donde $AXB$ denota que el punto $X$ incide entre $A$ y $B$ en el sentido de la relación primitiva del <ConceptLink targetId="axioma-orden-1" isDependency={false}>axioma II-1</ConceptLink>. En el diagrama interactivo, el <InteractiveElement target="segmentAB" color="terracota">segmento</InteractiveElement> une los extremos <InteractiveElement target="pA" color="terracota">A</InteractiveElement> y <InteractiveElement target="pB" color="terracota">B</InteractiveElement>.
 
 <Separador />
 
 ### Definición Axiomática
 
-El <ConceptLink targetId="segmento">segmento</ConceptLink> se construye a partir de la relación de intermediación:
+El segmento se construye a partir de la relación de intermediación:
 
-- **Existencia**: dados dos <ConceptLink targetId="punto">puntos</ConceptLink> $A \neq B$, el <ConceptLink targetId="segmento">segmento</ConceptLink> $AB$ existe y contiene infinitos <ConceptLink targetId="punto">puntos</ConceptLink>.
-- **<ConceptLink targetId="congruencia">Congruencia</ConceptLink>**: los <ConceptLink targetId="segmento">segmentos</ConceptLink> pueden ser <ConceptLink targetId="congruencia">congruentes</ConceptLink> entre sí (<ConceptLink targetId="axioma-congruencia-1" isDependency={false}>III-1</ConceptLink>). Dado un <ConceptLink targetId="segmento">segmento</ConceptLink> $AB$ y un <ConceptLink targetId="punto">punto</ConceptLink> $A'$ sobre una <ConceptLink targetId="recta">recta</ConceptLink> $l'$, existe un único <ConceptLink targetId="punto">punto</ConceptLink> $B'$ sobre cada <ConceptLink targetId="semirrecta">semirrecta</ConceptLink> de $l'$ tal que $AB \cong A'B'$ (<ConceptLink targetId="axioma-congruencia-1" isDependency={false}>III-1</ConceptLink>).
+- **Existencia**: dados dos puntos $A \neq B$, el segmento $AB$ existe y contiene infinitos puntos.
+- **Congruencia**: los segmentos pueden ser congruentes entre sí (<ConceptLink targetId="axioma-congruencia-1" isDependency={false}>III-1</ConceptLink>). Dado un segmento $AB$ y un punto $A'$ sobre una recta $l'$, existe un único punto $B'$ sobre cada <ConceptLink targetId="semirrecta" isDependency={false}>semirrecta</ConceptLink> de $l'$ tal que $AB \cong A'B'$ (III-1).
 - **Suma**: si $B$ está entre $A$ y $C$, entonces $AB + BC = AC$ (<ConceptLink targetId="axioma-congruencia-3" isDependency={false}>III-3</ConceptLink>).
 
 <Separador />
@@ -44,13 +44,13 @@ El <ConceptLink targetId="segmento">segmento</ConceptLink> se construye a partir
 
 | Notación | Significado |
 |---|---|
-| $AB$ | <ConceptLink targetId="segmento">Segmento</ConceptLink> con extremos $A$ y $B$ |
+| $AB$ | Segmento con extremos $A$ y $B$ |
 | $\overline{AB}$ | Notación alternativa |
-| $\cong$ | Relación de <ConceptLink targetId="congruencia">congruencia</ConceptLink> entre <ConceptLink targetId="segmento">segmentos</ConceptLink> |
-| $|AB|$ | <ConceptLink targetId="longitud">Longitud</ConceptLink> del <ConceptLink targetId="segmento">segmento</ConceptLink> |
+| $\cong$ | Relación de congruencia entre segmentos |
+| $|AB|$ | Longitud del segmento |
 
 <Separador />
 
 ### Observaciones
 
-En <ConceptLink targetId="sistema-absoluto"><ConceptLink targetId="geometria">geometría</ConceptLink> absoluta</ConceptLink>, el <ConceptLink targetId="segmento">segmento</ConceptLink> es un concepto definido a partir de la relación primitiva "estar entre". No requiere la noción de distancia numérica, aunque en el modelo cartesiano la <ConceptLink targetId="longitud">longitud</ConceptLink> del <ConceptLink targetId="segmento">segmento</ConceptLink> $AB$ se calcula como $\sqrt{(x_B - x_A)^2 + (y_B - y_A)^2}$.
+En <ConceptLink targetId={["sistema-absoluto", "geometria"]}>geometría absoluta</ConceptLink>, el segmento es un concepto definido a partir de la relación primitiva "estar entre". No requiere la noción de distancia numérica, aunque en el modelo cartesiano la longitud del segmento $AB$ se calcula como $\sqrt{(x_B - x_A)^2 + (y_B - y_A)^2}$.

@@ -353,6 +353,8 @@ Los planes de estudio PUEDEN referenciar currículos específicos (p. ej. "Selec
 - Enlaces Markdown estándar `[texto](url)` para navegación interna (usar `<ConceptLink>` y `<RefLink>`)
 - `\sen` en LaTeX (usar `\sin`)
 - `<ConceptLink>` anidados con el mismo `targetId` (ej: `<ConceptLink targetId="x"><ConceptLink targetId="x">...</ConceptLink></ConceptLink>` es un BUG)
+- **Falta de línea en blanco tras imports/exports:** El parser de MDX (Acorn) falla catastróficamente si no hay un salto de línea en blanco entre las declaraciones `import`/`export` y las etiquetas JSX/Markdown (como `<Capitular>`).
+- **Símbolos LaTeX sin doble escape en propiedades JS/TSX:** Cuando se pasa código LaTeX como string literal a una prop de componente (ej. `<KatexText text={"$\\overline{AB}$"} />`), las barras invertidas deben estar **doblemente escapadas** (`\\`) para que no se interpreten como secuencias de escape de JavaScript.
 - **JSXGraph Clipping:** En los gráficos, asegurar `keepaspectratio: true` y `axis: false` por defecto para evitar errores visuales de recorte fuera del viewport.
 - **Variables CSS:** Usar estrictamente las variables definidas en `styles/tokens.css` (e.g., `--color-terracota`, `--color-salvia`). No usar colores hardcoded.
 
@@ -1098,6 +1100,8 @@ Al diseñar diagramas con JSXGraph, asegúrate de cumplir con estas directrices 
 2. **Tokens de Color CSS:** Solo puedes usar los tokens documentados en la **Paleta Arts & Crafts**. Si usas un token inexistente (ej. `--theme-ambar`), la variable evaluará a vacío y JSXGraph dibujará elementos transparentes e invisibles. Usa siempre validaciones de color válidas (ej. `--theme-ocre`, `--theme-salvia`).
 3. **Mapeo de InteractiveElement:** El atributo `target` de un `<InteractiveElement>` debe enrutar 1:1 a un string en la lógica `if (highlight === 'foo')` del diagrama. Presta atención especial a los estados de reset o default (`!highlight`) para restaurar correctamente la visibilidad y opacidades.
 4. **Libertad de Modificación:** Si un diagrama ilustra conceptos abstractos de congruencia, permite que los vértices del modelo "maestro" sean arrastrables (`fixed: false`). Esto demuestra dinámicamente cómo las construcciones derivadas (clones o dependientes) responden al cambio en tiempo real, aumentando el valor pedagógico.
+5. **Restricción Geométrica Rigurosa (`gliders`):** Si un punto representa conceptualmente un valor estrictamente sobre una recta o segmento (ej. en cortaduras de Dedekind o axiomas de orden), NUNCA uses `point` libre (`fixed: false`). Usa `glider` atado al objeto base para garantizar matemáticamente que el estudiante no pueda arrastrarlo fuera del dominio válido de 1D.
+6. **Controles Reactivos (Sliders Dinámicos):** Cuando tengas controles HTML (`<input type="range">`) cuyo rango dependa de dimensiones variables del diagrama (ej. un multiplicador $n$ para superar un segmento), actualiza dinámicamente el límite `max` escuchando los eventos de arrastre (`point.on('drag', ...)`) para asegurar que el usuario siempre pueda alcanzar la condición demostrativa.
 
 ---
 

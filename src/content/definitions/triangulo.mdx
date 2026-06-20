@@ -12,40 +12,40 @@ export const metadata = {
 };
 
 import { Triangulo } from '../../diagrams/Definiciones/Triangulo';
-export const Simulation = <ConceptLink targetId="triangulo">Triangulo</ConceptLink>;
+export const Simulation = <ConceptLink targetId="triangulo" isDependency={false}>Triangulo</ConceptLink>;
 import { InteractiveElement } from "../../components/ui/VisualBind";
 
-<Capitular letra="U" />n <ConceptLink targetId="triangulo">triángulo</ConceptLink> es el <ConceptLink targetId="poligono">polígono</ConceptLink> más simple y la base de la trigonometría. Está constituido por tres <ConceptLink targetId="punto">puntos</ConceptLink> no <ConceptLink targetId="colineal">colineales</ConceptLink> y los tres <ConceptLink targetId="segmento">segmentos</ConceptLink> que los conectan.
+<Capitular letra="U" />n triángulo es el <ConceptLink targetId="poligono" isDependency={false}>polígono</ConceptLink> más simple y la base de la trigonometría. Está constituido por tres <ConceptLink targetId="punto" isDependency={false}>puntos</ConceptLink> no <ConceptLink targetId="colineal" isDependency={false}>colineales</ConceptLink> y los tres <ConceptLink targetId="segmento" isDependency={false}>segmentos</ConceptLink> que los conectan.
 
 <Separador />
 
 ### Enunciado Formal
 
-Dados tres <ConceptLink targetId="punto">puntos</ConceptLink> no <ConceptLink targetId="colineal">colineales</ConceptLink> $A$, $B$ y $C$, el <ConceptLink targetId="triangulo">triángulo</ConceptLink> $\triangle ABC$ es la unión de los <ConceptLink targetId="segmento">segmentos</ConceptLink>:
+Dados tres puntos no colineales $A$, $B$ y $C$, el triángulo $\triangle ABC$ es la unión de los segmentos:
 
 <Formula>
   $$ \triangle ABC = \overline{AB} \cup \overline{BC} \cup \overline{CA} $$
 </Formula>
 
-Los <ConceptLink targetId="punto">puntos</ConceptLink> $A$, $B$, $C$ son los <InteractiveElement target="vertice-a" color="terracota">vértices</InteractiveElement>, y los <ConceptLink targetId="segmento">segmentos</ConceptLink> $\overline{AB}$, $\overline{BC}$, $\overline{CA}$ son los <InteractiveElement target="lado-ab" color="salvia">lados</InteractiveElement>. El <InteractiveElement target="triangulo" color="pizarra"><ConceptLink targetId="triangulo">triángulo</ConceptLink></InteractiveElement> encierra una región del <ConceptLink targetId="plano">plano</ConceptLink> y define tres <ConceptLink targetId="angulo">ángulos</ConceptLink> interiores.
+Los puntos $A$, $B$, $C$ son los <InteractiveElement target="vertice-a" color="terracota">vértices</InteractiveElement>, y los segmentos $\overline{AB}$, $\overline{BC}$, $\overline{CA}$ son los <InteractiveElement target="lado-ab" color="salvia">lados</InteractiveElement>. El <InteractiveElement target="triangulo" color="pizarra">triángulo</InteractiveElement> encierra una región del <ConceptLink targetId="plano" isDependency={false}>plano</ConceptLink> y define tres <ConceptLink targetId="angulo" isDependency={false}>ángulos</ConceptLink> interiores.
 
 <Separador />
 
 ### Clasificación
 
-Los <ConceptLink targetId="triangulo">triángulos</ConceptLink> se clasifican por sus lados y por sus <ConceptLink targetId="angulo">ángulos</ConceptLink>:
+Los triángulos se clasifican por sus lados y por sus ángulos:
 
-| Por lados | Descripción | Por <ConceptLink targetId="angulo">ángulos</ConceptLink> | Descripción |
+| Por lados | Descripción | Por ángulos | Descripción |
 |---|---|---|---|
-| Equilátero | 3 lados <ConceptLink targetId="congruencia">congruentes</ConceptLink> | Acutángulo | 3 <ConceptLink targetId="angulo">ángulos</ConceptLink> agudos |
-| Isósceles | 2 lados <ConceptLink targetId="congruencia">congruentes</ConceptLink> | Rectángulo | 1 <ConceptLink targetId="angulo">ángulo</ConceptLink> recto |
-| Escaleno | 0 lados <ConceptLink targetId="congruencia">congruentes</ConceptLink> | Obtusángulo | 1 <ConceptLink targetId="angulo">ángulo</ConceptLink> obtuso |
+| Equilátero | 3 lados <ConceptLink targetId="congruencia" isDependency={false}>congruentes</ConceptLink> | Acutángulo | 3 ángulos agudos |
+| Isósceles | 2 lados congruentes | Rectángulo | 1 ángulo recto |
+| Escaleno | 0 lados congruentes | Obtusángulo | 1 ángulo obtuso |
 
 <Separador />
 
 ### Observaciones
 
-- La condición de **no colinealidad** es esencial: si $A$, $B$, $C$ están en una misma <ConceptLink targetId="recta">recta</ConceptLink>, no se forma un <ConceptLink targetId="triangulo">triángulo</ConceptLink> (la región encerrada es vacía).
-- Los <ConceptLink targetId="triangulo">triángulos</ConceptLink> son la base de la <ConceptLink targetId="congruencia">congruencia</ConceptLink> (<RefLink targetId="teorema-congruencia-ala">ALA</RefLink>, <RefLink targetId="teorema-congruencia-lll">LLL</RefLink>) y de la semejanza.
-- En <ConceptLink targetId="sistema-euclidiano"><ConceptLink targetId="geometria">geometría</ConceptLink> <ConceptLink targetId="euclides">euclidiana</ConceptLink></ConceptLink>, la suma de los <ConceptLink targetId="angulo">ángulos</ConceptLink> interiores es $180^\circ$. En <ConceptLink targetId="geometria">geometría</ConceptLink> hiperbólica, es estrictamente menor.
-- <RefLink targetId="teorema-suma-angulos-triangulo"><ConceptLink targetId="teorema">Teorema</ConceptLink> de la suma de <ConceptLink targetId="angulo">ángulos</ConceptLink></RefLink>: el resultado sobre la suma de <ConceptLink targetId="angulo">ángulos</ConceptLink> depende del <ConceptLink targetId="axioma">axioma</ConceptLink> de las <ConceptLink targetId="paralelas">paralelas</ConceptLink>.
+- La condición de **no colinealidad** es esencial: si $A$, $B$, $C$ están en una misma <ConceptLink targetId="recta" isDependency={false}>recta</ConceptLink>, no se forma un triángulo (la región encerrada es vacía).
+- Los triángulos son la base de la congruencia (<RefLink targetId="teorema-congruencia-ala">ALA</RefLink>, <RefLink targetId="teorema-congruencia-lll">LLL</RefLink>) y de la semejanza.
+- En <ConceptLink targetId={["sistema-euclidiano", "geometria", "euclides"]}>geometría euclidiana</ConceptLink>, la suma de los ángulos interiores es $180^\circ$. En <ConceptLink targetId={["sistema-hiperbolico", "geometria"]}>geometría hiperbólica</ConceptLink>, es estrictamente menor.
+- <RefLink targetId="teorema-suma-angulos-triangulo"><ConceptLink targetId="teorema" isDependency={false}>Teorema</ConceptLink> de la suma de ángulos</RefLink>: el resultado sobre la suma de ángulos depende del <ConceptLink targetId={["axioma-paralelas-euclides", "axioma", "paralelas"]}>axioma de las paralelas</ConceptLink>.
