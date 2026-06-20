@@ -14,28 +14,37 @@ export const Simulation = SAS;
 import { InteractiveElement } from "../../components/ui/VisualBind";
 
 <Capitular letra="S" />
-i dos <InteractiveElement target="side1" color="terracota">lados</InteractiveElement> y el <InteractiveElement target="angle1" color="salvia">ángulo comprendido</InteractiveElement> de un triángulo son congruentes a los de otro, entonces los triángulos son congruentes. Este es el célebre criterio LAL (Lado-Ángulo-Lado), también conocido como SAS.
+i dos <InteractiveElement target="side1" color="terracota"><ConceptLink targetId="segmento">lados</ConceptLink></InteractiveElement> y el <InteractiveElement target="angle1" color="salvia"><ConceptLink targetId="angulo">ángulo</ConceptLink> comprendido</InteractiveElement> entre ellos de un <ConceptLink targetId="triangulo">triángulo</ConceptLink> son respectivamente <ConceptLink targetId="congruencia">congruentes</ConceptLink> a los de un segundo <ConceptLink targetId="triangulo">triángulo</ConceptLink>, entonces ambos <ConceptLink targetId="triangulo">triángulos</ConceptLink> son globalmente <ConceptLink targetId="congruencia">congruentes</ConceptLink>. Este poderoso postulado constituye el célebre criterio LAL (Lado-Ángulo-Lado).
 
 <Separador />
 
 ### Enunciado Formal
 
 <Formula>
-  $$ (\overline{AB} \cong \overline{A'B'}) \land (\overline{AC} \cong \overline{A'C'}) \land (\angle BAC \cong \angle B'A'C') \implies \triangle ABC \cong \triangle A'B'C'. $$
+  $$
+  \begin{cases}
+    \overline{AB} \cong \overline{A'B'} \\
+    \land \\
+    \overline{AC} \cong \overline{A'C'} \\
+    \land \\
+    \angle BAC \cong \angle B'A'C'
+  \end{cases}
+  \implies \triangle ABC \cong \triangle A'B'C'
+  $$
 </Formula>
 
 <Separador />
 
 ### Discusión
 
-El axioma SAS (Side-Angle-Side) es el quinto y último axioma de congruencia, y posiblemente el más potente. Establece que, para determinar la congruencia de dos triángulos, no es necesario verificar todos los seis pares de partes correspondientes (tres lados y tres ángulos); basta con verificar dos lados y el ángulo entre ellos.
+El <ConceptLink targetId="axioma">axioma</ConceptLink> SAS (Side-Angle-Side) es el quinto y último <ConceptLink targetId="axioma">axioma</ConceptLink> de <ConceptLink targetId="congruencia">congruencia</ConceptLink>, y posiblemente el más potente. Establece que, para determinar la congruencia de dos <ConceptLink targetId="triangulo">triángulos</ConceptLink>, no es necesario verificar todos los seis pares de partes correspondientes (tres <ConceptLink targetId="segmento">lados</ConceptLink> y tres <ConceptLink targetId="angulo">ángulos</ConceptLink>); basta con verificar dos lados y el ángulo entre ellos.
 
-La posición de este axioma en la teoría es peculiar: en la presentación de Euclides, SAS era una proposición (el teorema I-4 de los *Elementos*), pero su "demostración" dependía de superponer figuras, un método no riguroso. Hilbert, al axiomatizar la geometría, reconoció que SAS no puede demostrarse a partir de los axiomas anteriores y debe postularse como axioma.
+La posición de este <ConceptLink targetId="axioma">axioma</ConceptLink> en la teoría es peculiar: en la presentación de <ConceptLink targetId="euclides">Euclides</ConceptLink>, SAS era una <ConceptLink targetId="teorema" isDependency={false}>proposición</ConceptLink> (el <ConceptLink targetId="teorema-lal">teorema I-4</ConceptLink> de los *Elementos*), pero su "<ConceptLink targetId="demostracion" isDependency={false}>demostración</ConceptLink>" dependía de <ConceptLink targetId="superposicion" isDependency={false}>superponer</ConceptLink> figuras, un método no riguroso. <ConceptLink targetId="hilbert">Hilbert</ConceptLink>, al <ConceptLink targetId="sistema-axiomatico">axiomatizar</ConceptLink> la geometría, reconoció que SAS no puede demostrarse a partir de los <ConceptLink targetId="axioma">axiomas</ConceptLink> anteriores y debe postularse como <ConceptLink targetId="axioma">axioma</ConceptLink>.
 
-Los otros criterios de congruencia (ALA, LLL, LLA) se demuestran como teoremas a partir de SAS y los demás axiomas.
+Los otros criterios de congruencia (<ConceptLink targetId="teorema-congruencia-ala" isDependency={false}>ALA</ConceptLink>, <ConceptLink targetId="teorema-congruencia-lll" isDependency={false}>LLL</ConceptLink>, <ConceptLink targetId="teorema-congruencia-lla" isDependency={false}>LLA</ConceptLink>) se demuestran como teoremas a partir de SAS y los demás <ConceptLink targetId="axioma">axiomas</ConceptLink>.
 
 <Separador />
 
 ### Observaciones
 
-SAS es un axioma exclusivo de la geometría absoluta. En geometrías no euclídeas, SAS sigue siendo válido porque no depende del quinto postulado. Sin embargo, en espacios métricos más generales, la noción de congruencia debe definirse de otra manera y SAS puede no cumplirse.
+SAS es un <ConceptLink targetId="axioma">axioma</ConceptLink> exclusivo de la <ConceptLink targetId="sistema-absoluto">geometría absoluta</ConceptLink>. En geometrías no euclídeas, SAS sigue siendo válido porque no depende del quinto postulado. Sin embargo, en <ConceptLink targetId="espacio-metrico" isDependency={false}>espacios métricos</ConceptLink> más generales, la noción de congruencia debe definirse de otra manera y SAS puede no cumplirse.

@@ -4,31 +4,36 @@ export const metadata = {
   "title": "Axioma II-2 (Orden)",
   "description": "Dados dos puntos distintos A y C, existe al menos un punto B sobre la recta AC que está entre A y C.",
   "statement": "Para cualquier par de puntos distintos A y C, existe al menos un punto B tal que A * B * C.",
-  "tags": ["geometria", "orden", "geometria-absoluta"],
   "authors": ["hilbert"],
+  "hasSimulation": true
 };
 
-<Capitular letra="D" />
-ados dos puntos distintos, existe al menos un punto entre ellos. Este axioma garantiza que el orden sobre la recta es denso: entre dos puntos cualesquiera siempre hay otro punto.
+import { Order2 } from '../../diagrams/Axiomas/Order2';
+export const Simulation = Order2;
+import { InteractiveElement } from "../../components/ui/VisualBind";
+
+<Capitular letra="D" />ados dos <ConceptLink targetId="punto">puntos</ConceptLink> distintos, siempre existe al menos un punto intermedio entre ellos. Este <ConceptLink targetId="postulado">postulado</ConceptLink> garantiza la densidad topológica de la <ConceptLink targetId="recta">recta</ConceptLink>: entre dos posiciones cualesquiera siempre podemos encontrar una tercera.
 
 <Separador />
 
 ### Enunciado Formal
 
 <Formula>
-  $$ \forall A \neq C \; \exists B \; (A * B * C). $$
+  $$
+  \forall A, C \ (A \neq C) \implies \exists B \ (A * B * C)
+  $$
 </Formula>
 
 <Separador />
 
 ### Discusión
 
-El axioma II-1 describía cómo se comporta la intermediación cuando existe; el axioma II-2 garantiza que siempre existe. Esto hace que la recta sea un conjunto infinito: entre dos puntos siempre podemos encontrar un tercero, y entre ese tercero y cualquiera de los extremos podemos encontrar otro, y así sucesivamente.
+Mientras que el <ConceptLink targetId="axioma-orden-1">axioma II-1</ConceptLink> regulaba cómo funcionaba la idea de "estar en medio", el axioma II-2 decreta matemáticamente que esta situación es siempre posible. Toma dos puntos cualquiera (<InteractiveElement target="pA" color="terracota">A</InteractiveElement> y <InteractiveElement target="pC" color="terracota">C</InteractiveElement>); el axioma te promete que siempre habrá un punto <InteractiveElement target="pB" color="ocre">B</InteractiveElement> viviendo exactamente entre ellos.
 
-La densidad del orden es una propiedad fundamental de la geometría clásica. Sin embargo, este axioma solo garantiza que entre dos puntos hay *al menos* un punto intermedio. Que haya *infinitos* puntos intermedios es una consecuencia de aplicar este axioma repetidamente, combinado con los axiomas de continuidad.
+Al aplicar esta regla infinitas veces (encontrando un punto entre A y B, y luego otro entre ese y A, y así eternamente), descubrimos que la recta no es una sucesión discreta de puntos saltando como píxeles, sino una amalgama continua.
 
 <Separador />
 
 ### Observaciones
 
-Este axioma, junto con el axioma de Arquímedes (IV-1), permitirá demostrar que la recta es isomorfa a los números reales. Por sí solo, solo garantiza la densidad —que puede satisfacerse con conjuntos densos numerables, como los racionales.
+- Aunque este <ConceptLink targetId="axioma">axioma</ConceptLink> garantiza que hay infinidad de puntos atrapados entre dos extremos, no asegura que la recta esté "llena" sin agujeros (por ejemplo, el conjunto de los <ConceptLink targetId="numeros-racionales">números racionales</ConceptLink> cumple esto perfectamente pero sigue teniendo agujeros). Para tapar esos agujeros se necesitarán los <ConceptLink targetId="axiomas-continuidad">axiomas de continuidad</ConceptLink>.

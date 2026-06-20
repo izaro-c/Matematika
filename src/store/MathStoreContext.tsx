@@ -9,8 +9,8 @@ import { createStore, useStore } from 'zustand';
  * del contexto matemático de una lección particular.
  */
 export interface MathState {
-    variables: Record<string, number | number[] | string | null>;
-    setVariable: (name: string, value: number | number[] | string | null) => void;
+    variables: Record<string, number | number[] | string | string[] | null>;
+    setVariable: (name: string, value: number | number[] | string | string[] | null) => void;
 }
 
 /**

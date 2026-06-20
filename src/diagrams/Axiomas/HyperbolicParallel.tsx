@@ -3,6 +3,15 @@ import JXG from 'jsxgraph';
 import { useMathStore } from '../../store/MathStoreContext';
 import { useLessonStore } from '../../store/LessonStore';
 
+
+function getCSSVar(name: string): string {
+  if (typeof document !== 'undefined') {
+    return getComputedStyle(document.documentElement).getPropertyValue(name).trim();
+  }
+  return '#000';
+}
+
+
 export const HyperbolicParallel = () => {
   const boardRef = useRef<HTMLDivElement>(null);
   const elementsRef = useRef<Record<string, unknown>>({});
@@ -23,39 +32,50 @@ export const HyperbolicParallel = () => {
     });
 
     board.create('line', [[-4, 2], [4, 1.5]], {
-      strokeColor: '#333333', strokeWidth: 2.5,
+      strokeColor: getCSSVar('--theme-carbon'), strokeWidth: 2.5,
     });
 
     board.create('text', [4.2, 1.8, 'l'], {
-      fontSize: 14, fillColor: '#F8F6F1', highlightFillColor: '#F8F6F1',
+      fontSize: 14, fillColor: getCSSVar('--theme-lienzo'), highlightFillColor: getCSSVar('--theme-lienzo'),
     });
 
     const pP = board.create('point', [0, -1.5], {
-      name: 'P', size: 6, fillColor: '#C86446', strokeColor: '#C86446',
+      name: 'P', size: 6, fillColor: getCSSVar('--theme-terracota'), strokeColor: getCSSVar('--theme-terracota'),
       showInfobox: false, fixed: false,
     });
 
     const lineM = board.create('line', [pP, function() { return [pP.X() - 2, pP.Y() + 2]; }], {
-      strokeColor: '#C86446', strokeWidth: 2.5,
+      strokeColor: getCSSVar('--theme-terracota'), strokeWidth: 2.5,
     });
 
     board.create('text', [4.2, function() { return pP.Y() + 2.3; }, 'm'], {
-      fontSize: 14, fillColor: '#F8F6F1', highlightFillColor: '#F8F6F1',
+      fontSize: 14, fillColor: getCSSVar('--theme-lienzo'), highlightFillColor: getCSSVar('--theme-lienzo'),
     });
 
     const lineN = board.create('line', [pP, function() { return [pP.X() - 2, pP.Y() - 2]; }], {
-      strokeColor: '#5D7080', strokeWidth: 2.5,
+      strokeColor: getCSSVar('--theme-pizarra'), strokeWidth: 2.5,
     });
 
     board.create('text', [4.2, function() { return pP.Y() - 1.7; }, 'n'], {
-      fontSize: 14, fillColor: '#F8F6F1', highlightFillColor: '#F8F6F1',
+      fontSize: 14, fillColor: getCSSVar('--theme-lienzo'), highlightFillColor: getCSSVar('--theme-lienzo'),
     });
 
     elementsRef.current = { pP, lineM, lineN, board };
 
-    board.update();
+    board.update();    (board.renderer as any).container.style.backgroundColor = getCSSVar('--theme-lienzo');
+
+
+
+        const observer = new MutationObserver(() => {
+      if (board) {
+        (board.renderer as any).container.style.backgroundColor = getCSSVar('--theme-lienzo');
+        board.update();
+      }
+    });
+    observer.observe(document.documentElement, { attributes: true, attributeFilter: ['class'] });
 
     return () => {
+      observer.disconnect();
       JXG.JSXGraph.freeBoard(board);
       elementsRef.current = {};
     };
@@ -65,13 +85,13 @@ export const HyperbolicParallel = () => {
     const { pP, lineM, lineN, board } = elementsRef.current as Record<string, any>;
     if (!board) return;
 
-    pP.setAttribute({ size: 6, fillColor: '#C86446', strokeColor: '#C86446' });
-    lineM.setAttribute({ strokeColor: '#C86446', strokeWidth: 2.5 });
-    lineN.setAttribute({ strokeColor: '#5D7080', strokeWidth: 2.5 });
+    pP.setAttribute({ size: 6, fillColor: getCSSVar('--theme-terracota'), strokeColor: getCSSVar('--theme-terracota') });
+    lineM.setAttribute({ strokeColor: getCSSVar('--theme-terracota'), strokeWidth: 2.5 });
+    lineN.setAttribute({ strokeColor: getCSSVar('--theme-pizarra'), strokeWidth: 2.5 });
 
-    if (highlight === 'pP') pP.setAttribute({ size: 10, fillColor: '#f5c542' });
-    if (highlight === 'lineM') lineM.setAttribute({ strokeColor: '#f5c542', strokeWidth: 4 });
-    if (highlight === 'lineN') lineN.setAttribute({ strokeColor: '#f5c542', strokeWidth: 4 });
+    if (highlight === 'pP') pP.setAttribute({ size: 10, fillColor: getCSSVar('--theme-ocre') });
+    if (highlight === 'lineM') lineM.setAttribute({ strokeColor: getCSSVar('--theme-ocre'), strokeWidth: 4 });
+    if (highlight === 'lineN') lineN.setAttribute({ strokeColor: getCSSVar('--theme-ocre'), strokeWidth: 4 });
 
     board.update();
   }, [highlight]);

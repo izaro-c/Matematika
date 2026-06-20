@@ -1,66 +1,61 @@
 import React from 'react';
-import { useGlossaryStore } from '../../store/GlossaryStore';
+import { Link } from 'wouter';
+import { useGlossaryStore, dictionary } from '../../store/GlossaryStore';
 import { db } from '../../store/content';
 import { useProgressStore } from '../../store/UserProgressStore';
 
 interface ConceptLinkProps {
-  /** El slug o ID del contenido que queremos enlazar (ej. "teorema-pitagoras") */
-  targetId: string;
-  /** El texto que será clickeable */
+  targetId: string | string[];
+  isDependency?: boolean;
   children: React.ReactNode;
 }
 
-/**
- * Enlace Semántico (ConceptLink)
- * 
- * Es el componente principal para referenciar otros conceptos en los artículos MDX.
- * Al hacer click, en lugar de navegar a una nueva URL, abre el `MarginaliaPanel`
- * con la información del `targetId` para no romper el flujo de lectura actual.
- */
-export const ConceptLink: React.FC<ConceptLinkProps> = ({ targetId, children }) => {
-  const { openTerm, activeTerm } = useGlossaryStore();
-  const isRead = useProgressStore(state => state.isRead(targetId));
-
-  const theorem = db.getTheorem(targetId);
-  const definition = db.getDefinition(targetId);
-  const bio = db.getMathematicianById(targetId);
-  const lesson = db.lessons.get(targetId);
-  const example = db.examples.get(targetId);
-  const exercise = db.exercises.get(targetId);
-  const useCase = db.usecases.get(targetId);
-  const axiom = db.axioms.get(targetId);
-  const system = db.getAxiomaticSystem(targetId);
-  const model = db.models.get(targetId);
-  const demo = db.demos.get(targetId);
+export const ConceptLink: React.FC<ConceptLinkProps> = ({ targetId, isDependency, children }) => {
+  const { openTerm, activeTerms } = useGlossaryStore();
+  const targetIds = Array.isArray(targetId) ? targetId : [targetId];
   
-  const entity = theorem || definition || bio || lesson || example || exercise || useCase || axiom || system || model || demo;
+  const isRead = useProgressStore(state => targetIds.every(id => state.isRead(id)));
+  
+  const allValid = targetIds.every(id => 
+    dictionary[id] || db.getTheorem(id) || db.getDefinition(id) || db.getMathematicianById(id) || 
+    db.lessons.get(id) || db.examples.get(id) || db.exercises.get(id) || 
+    db.usecases.get(id) || db.axioms.get(id) || db.getAxiomaticSystem(id) || 
+    db.models.get(id) || db.demos.get(id)
+  );
 
-  // Link roto — el targetId no existe en el ContentStore
-  if (!entity) {
+  const isActive = activeTerms ? targetIds.some(id => activeTerms.includes(id)) : false;
+
+  if (!allValid) {
+    const firstInvalid = targetIds.find(id => !(
+      dictionary[id] || db.getTheorem(id) || db.getDefinition(id) || db.getMathematicianById(id) || 
+      db.lessons.get(id) || db.examples.get(id) || db.exercises.get(id) || 
+      db.usecases.get(id) || db.axioms.get(id) || db.getAxiomaticSystem(id) || 
+      db.models.get(id) || db.demos.get(id)
+    )) || targetIds[0];
+
     return (
-      <span
-        className="text-granada font-bold border-b-2 border-granada border-dashed cursor-help"
-        title={`Link roto: "${targetId}" no existe en el ContentStore`}
-      >
-        {children}
-      </span>
+      <Link href={`/construccion/${firstInvalid}`}>
+        <a
+          // eslint-disable-next-line @typescript-eslint/no-unused-vars
+          onClick={() => { const _ = isDependency; }} // just to silence unused var error if any
+          className="font-bold text-terracota/70 underline decoration-dashed decoration-terracota/40 decoration-2 underline-offset-4 hover:decoration-terracota hover:text-terracota transition-all duration-150 rounded-none cursor-pointer"
+          title={`"${firstInvalid}" — página en construcción`}
+        >
+          {children}
+        </a>
+      </Link>
     );
   }
 
-  // Activo: este es el nodo que el MarginaliaPanel está mostrando ahora mismo
-  const isActive = activeTerm === targetId;
-
   return (
     <span
-      onClick={() => openTerm(targetId)}
-      title={`Ver: ${(entity as any).title || (entity as any).name}`}
+      onClick={() => openTerm(targetIds)}
+      title={`Ver contenido relacionado`}
       className={[
-        'font-bold border-b-2 cursor-pointer transition-all duration-150 px-[2px] rounded-none',
+        'font-bold cursor-pointer transition-all duration-150 rounded-none',
         isActive
-          // Estado activo: fondo sólido terracota, texto crema — muy visible
-          ? 'bg-terracota text-lienzo border-terracota'
-          // Estado normal: subrayado tenue, hover suave
-          : 'text-terracota border-terracota/40 hover:border-terracota hover:bg-terracota/10',
+          ? 'bg-terracota text-lienzo underline decoration-terracota decoration-2 underline-offset-4'
+          : 'text-terracota underline decoration-terracota/40 decoration-2 underline-offset-4 hover:decoration-terracota hover:bg-terracota/10',
       ].join(' ')}
     >
       {children}

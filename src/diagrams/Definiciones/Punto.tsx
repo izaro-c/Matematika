@@ -3,6 +3,15 @@ import JXG from 'jsxgraph';
 import { useMathStore } from '../../store/MathStoreContext';
 import { useLessonStore } from '../../store/LessonStore';
 
+
+function getCSSVar(name: string): string {
+  if (typeof document !== 'undefined') {
+    return getComputedStyle(document.documentElement).getPropertyValue(name).trim();
+  }
+  return '#000';
+}
+
+
 export const Punto = () => {
   const boardRef = useRef<HTMLDivElement>(null);
   const elementsRef = useRef<Record<string, unknown>>({});
@@ -25,17 +34,28 @@ export const Punto = () => {
     const p = board.create('point', [0, 0], {
       name: 'P',
       size: 6,
-      fillColor: '#C86446',
-      strokeColor: '#C86446',
+      fillColor: getCSSVar('--theme-terracota'),
+      strokeColor: getCSSVar('--theme-terracota'),
       showInfobox: false,
       fixed: false,
     });
 
     elementsRef.current = { p, board };
 
-    board.update();
+    board.update();    (board.renderer as any).container.style.backgroundColor = getCSSVar('--theme-lienzo');
+
+
+
+        const observer = new MutationObserver(() => {
+      if (board) {
+        (board.renderer as any).container.style.backgroundColor = getCSSVar('--theme-lienzo');
+        board.update();
+      }
+    });
+    observer.observe(document.documentElement, { attributes: true, attributeFilter: ['class'] });
 
     return () => {
+      observer.disconnect();
       JXG.JSXGraph.freeBoard(board);
       elementsRef.current = {};
     };
@@ -45,10 +65,10 @@ export const Punto = () => {
     const { p, board } = elementsRef.current as Record<string, any>;
     if (!board) return;
 
-    p.setAttribute({ size: 6, fillColor: '#C86446', strokeColor: '#C86446' });
+    p.setAttribute({ size: 6, fillColor: getCSSVar('--theme-terracota'), strokeColor: getCSSVar('--theme-terracota') });
 
     if (highlight === 'pPoint') {
-      p.setAttribute({ size: 12, fillColor: '#f5c542', strokeColor: '#f5c542' });
+      p.setAttribute({ size: 12, fillColor: getCSSVar('--theme-ocre'), strokeColor: getCSSVar('--theme-ocre') });
     }
 
     board.update();

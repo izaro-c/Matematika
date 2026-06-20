@@ -1,40 +1,39 @@
 export const metadata = {
+  "id": "punto",
   "type": "definicion",
   "title": "Punto",
-  "description": "Concepto primitivo de la geometría. Un punto es una entidad sin dimensión que ocupa una posición en el espacio. Se define implícitamente mediante los axiomas de pertenencia e intermediación.",
-  "tags": ["geometria", "primitivo", "espacio"],
-  "authors": ["hilbert"],
-  "links": ["axioma-incidencia-1", "axioma-incidencia-2", "axioma-incidencia-3", "axioma-orden-1", "axioma-congruencia-1"],
-  "hasSimulation": true,
+  "description": "Concepto primitivo de la geometría que carece de dimensión, área o volumen, representando una posición exacta en el espacio. Su naturaleza matemática emerge estrictamente de las relaciones axiomáticas de incidencia e intermediación.",
+  "authors": ["hilbert", "euclides"],
+  "hasSimulation": true
 };
 
 import { Punto } from '../../diagrams/Definiciones/Punto';
 export const Simulation = Punto;
 import { InteractiveElement } from "../../components/ui/VisualBind";
 
-<Capitular letra="E" />
-l punto es el concepto más elemental de la geometría. Según la definición clásica de Euclides: "un punto es lo que no tiene partes". En la axiomatización moderna de Hilbert, el punto es un **concepto primitivo**: no se define explícitamente, sino que su significado viene dado por las relaciones que establecen los axiomas.
+<Capitular letra="E" />l punto es el concepto más básico de la geometría. Representa una posición exacta en el <ConceptLink targetId="espacio">espacio</ConceptLink>, sin tamaño, <ConceptLink targetId="area">área</ConceptLink> ni <ConceptLink targetId="volumen">volumen</ConceptLink>. Al ser un **concepto primitivo**, no tiene una definición estricta; su significado se deduce de las reglas (axiomas) que lo conectan con otros elementos.
 
 <Separador />
 
 ### Enunciado Informal
 
-Un punto es una ubicación en el espacio que carece de extensión, área o volumen. Se representa mediante una letra mayúscula ($A$, $B$, $P$, $Q$, etc.) y gráficamente como un pequeño disco, como se muestra en el diagrama interactivo: <InteractiveElement target="pPoint" color="carbon">P</InteractiveElement>.
+Un punto carece por completo de <ConceptLink targetId="dimension">dimensión</ConceptLink>. Se denota convencionalmente con letras mayúsculas ($A, B, P, Q$) y se dibuja como una marca pequeña, como el punto <InteractiveElement target="pPoint" color="terracota">P</InteractiveElement> en el diagrama interactivo.
+
+<Capitular letra="E" />l punto es el primer **concepto primitivo** de la geometría de <ConceptLink targetId="hilbert" isDependency={false}>Hilbert</ConceptLink>. Al ser primitivo, no tiene una definición analítica ni se construye a partir de otras entidades más básicas. No tiene longitud, ni área, ni volumen; representa únicamente una posición exacta en el espacio abstracto. Su comportamiento y su relación geométrica con la <ConceptLink targetId="recta" isDependency={false}>recta</ConceptLink> y el <ConceptLink targetId="plano" isDependency={false}>plano</ConceptLink> se define exclusivamente a través de los axiomas.
 
 <Separador />
 
 ### Definición Axiomática
 
-En el sistema de Hilbert, el punto es uno de los tres conceptos primitivos (junto con la <ConceptLink targetId="recta">recta</ConceptLink> y el <ConceptLink targetId="plano">plano</ConceptLink>). Sus propiedades fundamentales vienen dadas por:
+En la formalización de <ConceptLink targetId="hilbert" isDependency={false}>Hilbert</ConceptLink>, el punto es uno de los tres conceptos básicos, junto a la <ConceptLink targetId="recta" isDependency={false}>recta</ConceptLink> y el <ConceptLink targetId="plano" isDependency={false}>plano</ConceptLink>. Su comportamiento está dictado por los axiomas:
 
-- **Incidencia**: dos puntos distintos determinan una única recta (<ConceptLink targetId="axioma-incidencia-1">I-1</ConceptLink>). Toda recta contiene al menos dos puntos (<ConceptLink targetId="axioma-incidencia-2">I-2</ConceptLink>). Existen al menos tres puntos no colineales (<ConceptLink targetId="axioma-incidencia-3">I-3</ConceptLink>).
-- **Orden**: los puntos sobre una recta admiten una relación de intermediación (<ConceptLink targetId="axioma-orden-1">II-1</ConceptLink> a <ConceptLink targetId="axioma-orden-4">II-4</ConceptLink>).
-- **Congruencia**: los pares de puntos definen segmentos que pueden ser congruentes entre sí (<ConceptLink targetId="axioma-congruencia-1">III-1</ConceptLink> a <ConceptLink targetId="axioma-congruencia-5">III-5</ConceptLink>).
+- **Incidencia**: Dos puntos distintos definen exactamente una <ConceptLink targetId="recta" isDependency={false}>recta</ConceptLink> (<ConceptLink targetId="axioma-incidencia-1" isDependency={false}>I-1</ConceptLink>). Existen al menos tres puntos que no están en la misma recta (<ConceptLink targetId="axioma-incidencia-3" isDependency={false}>I-3</ConceptLink>).
+- **Orden**: Tres puntos sobre una recta pueden ordenarse usando la relación de "estar entre" (<ConceptLink targetId="sistema-orden">axiomas de orden</ConceptLink>).
+- **Congruencia**: Dos puntos forman un <ConceptLink targetId="segmento">segmento</ConceptLink>, cuya <ConceptLink targetId="longitud">longitud</ConceptLink> se puede comparar con otros usando los <ConceptLink targetId="sistema-congruencia">axiomas de congruencia</ConceptLink>.
 
 <Separador />
 
 ### Observaciones
 
-En geometría, los puntos no tienen tamaño, color ni ninguna propiedad intrínseca excepto su posición relativa determinada por las relaciones axiomáticas. Dos puntos distintos son, por definición, objetos separados; si coinciden, se trata del mismo punto.
-
-En el modelo cartesiano $\mathbb{R}^3$, los puntos se identifican con ternas $(x, y, z)$ de números reales.
+- Los puntos no tienen propiedades físicas reales. Son identidades puramente lógicas.
+- En la <ConceptLink targetId="geometria-analitica">geometría analítica</ConceptLink>, como en el <ConceptLink targetId="modelo-cartesiano">plano cartesiano</ConceptLink>, un punto se define de forma algebraica mediante <ConceptLink targetId="coordenadas">coordenadas</ConceptLink>, por ejemplo, usando una pareja de <ConceptLink targetId="numeros-reales">números reales</ConceptLink> $(x, y)$.

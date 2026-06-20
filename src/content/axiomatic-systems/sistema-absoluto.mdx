@@ -25,17 +25,24 @@ export const metadata = {
     "axioma-completitud"
   ],
   "mathematicians": ["hilbert"],
-  "tags": ["geometria", "absoluta", "neutral", "fundamentos"],
+  "tags": ["geometria", "absoluta", "neutral", "fundamentos"]
 };
 
-<Capitular letra="L" />
-a geometría absoluta, también llamada geometría neutral, es la teoría axiomática que comprende los axiomas de incidencia, orden, congruencia y continuidad, pero excluye cualquier axioma sobre paralelas. Todo teorema demostrado en este sistema es válido tanto en la geometría euclídea como en la hiperbólica.
+<Capitular letra="L" />a <ConceptLink targetId="sistema-absoluto">geometría absoluta</ConceptLink>, también denominada geometría neutral, es la estructura axiomática conformada por los axiomas de incidencia, orden, congruencia y continuidad, excluyendo explícitamente cualquier postulado sobre rectas <ConceptLink targetId="paralelas">paralelas</ConceptLink>. Todo teorema demostrado en este marco conserva su validez tanto en la <ConceptLink targetId="sistema-euclidiano">geometría euclidiana</ConceptLink> como en la <ConceptLink targetId="sistema-hiperbolico">hiperbólica</ConceptLink>.
+
+<Separador />
+
+### Contexto Histórico
+
+Durante más de dos milenios, los matemáticos intentaron demostrar el quinto postulado de <ConceptLink targetId="euclides">Euclides</ConceptLink> a partir de los demás axiomas, sin éxito. En el siglo XIX, <ConceptLink targetId="lobachevski">Lobachevski</ConceptLink>, <ConceptLink targetId="bolyai">Bolyai</ConceptLink> y Gauss demostraron independientemente que el postulado de las paralelas es independiente de los demás. Esto reveló que existe una geometría "neutra" —la absoluta— que no toma partido sobre las paralelas, y de la cual tanto la euclidiana como la hiperbólica son extensiones.
+
+<ConceptLink targetId="hilbert">Hilbert</ConceptLink> formalizó esta estructura en *Grundlagen der Geometrie* (1899), estableciendo el marco axiomático moderno que usamos hoy.
 
 <Separador />
 
 ### Axiomas
 
-La geometría absoluta de Hilbert consta de 19 axiomas, agrupados en cuatro grupos:
+La geometría absoluta consta de 19 axiomas, agrupados en cuatro grupos:
 
 **Grupo I — Incidencia** (<ConceptLink targetId="axioma-incidencia-1">I-1</ConceptLink> al <ConceptLink targetId="axioma-incidencia-8">I-8</ConceptLink>): relaciones de pertenencia entre puntos, rectas y planos.
 
@@ -43,18 +50,31 @@ La geometría absoluta de Hilbert consta de 19 axiomas, agrupados en cuatro grup
 
 **Grupo III — Congruencia** (<ConceptLink targetId="axioma-congruencia-1">III-1</ConceptLink> al <ConceptLink targetId="axioma-congruencia-5">III-5</ConceptLink>): relaciones de congruencia entre segmentos y ángulos, incluyendo el <ConceptLink targetId="axioma-congruencia-5">criterio SAS</ConceptLink>.
 
-**Grupo IV — Continuidad** (<ConceptLink targetId="axioma-arquimedes">V-1</ConceptLink> y <ConceptLink targetId="axioma-completitud">V-2</ConceptLink>): <ConceptLink targetId="axioma-arquimedes">axioma de Arquímedes</ConceptLink> y <ConceptLink targetId="axioma-completitud">axioma de completitud</ConceptLink>.
+**Grupo IV — Continuidad** (<ConceptLink targetId="axioma-arquimedes">V-1</ConceptLink> y <ConceptLink targetId="axioma-completitud">V-2</ConceptLink>): axioma de <ConceptLink targetId="arquimedes">Arquímedes</ConceptLink> y axioma de completitud.
 
 <Separador />
 
 ### Modelos
 
-El modelo estándar de la geometría absoluta es el espacio cartesiano $\mathbb{R}^3$ con la métrica euclídea restringida a los axiomas absolutos. La geometría hiperbólica (disco de Poincaré, semiplano de Lobachevski) también satisface todos estos axiomas.
+El modelo estándar es el <ConceptLink targetId="modelo-cartesiano">espacio cartesiano</ConceptLink> $\mathbb{R}^3$ con la métrica euclídea restringida a los axiomas absolutos. La <ConceptLink targetId="sistema-hiperbolico">geometría hiperbólica</ConceptLink> (<ConceptLink targetId="modelo-poincare">disco de Poincaré</ConceptLink>, semiplano de Lobachevski) también satisface todos estos axiomas.
 
 <Separador />
 
 ### Propiedades
 
-La geometría absoluta es **consistente** y tiene modelos tanto euclídeos como hiperbólicos. Contiene los teoremas clásicos que no dependen del quinto postulado, como los cuatro primeros libros de los *Elementos* de Euclides.
+La geometría absoluta es **consistente**: tiene modelos (cartesiano, hiperbólico). Es **independiente** del axioma de las paralelas: ni el postulado ni su negación pueden demostrarse de los demás axiomas. Contiene los teoremas clásicos que no dependen del quinto postulado, como los cuatro primeros libros de los *Elementos* de <ConceptLink targetId="euclides">Euclides</ConceptLink>.
 
-En geometría absoluta, la suma de los ángulos de un triángulo es siempre $\leq 180^\circ$. La igualdad solo se cumple si se asume el quinto postulado.
+En geometría absoluta, la suma de los ángulos de un <ConceptLink targetId="triangulo">triángulo</ConceptLink> es siempre $\leq 180^\circ$. La igualdad solo se cumple si se asume el quinto postulado.
+
+<Separador />
+
+### Comparación con otros sistemas
+
+| Sistema | Axioma de paralelas | Suma de ángulos | Modelos |
+|---|---|---|---|
+| <ConceptLink targetId="sistema-incidencia">Incidencia</ConceptLink> | No incluye | Libre | Tres puntos, Fano, cartesiano |
+| **Absoluto** | **No decide** | **$\leq 180^\circ$** | Cartesiano, Poincaré |
+| <ConceptLink targetId="sistema-euclidiano">Euclidiano</ConceptLink> | Una paralela | $= 180^\circ$ | Cartesiano |
+| <ConceptLink targetId="sistema-hiperbolico">Hiperbólico</ConceptLink> | Infinitas paralelas | $< 180^\circ$ | Poincaré, semiplano |
+
+La geometría absoluta es el **mínimo común denominador**: todo teorema válido en absoluta es válido en ambas geometrías. Añadir el axioma de las paralelas produce la euclidiana; añadir su negación produce la hiperbólica.

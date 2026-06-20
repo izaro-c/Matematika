@@ -1,108 +1,221 @@
+# Skill: diagrama — Diagramas Matemáticos Interactivos para Matematika
+
+> Motor de generación de visualizaciones matemáticas interactivas, bidireccionales
+> y coherentes con el sistema de diseño Arts & Crafts.
+
+## Índice
+
+1. [Tecnologías de Renderizado](#1-tecnologías-de-renderizado)
+2. [Arquitectura de Comunicación Bidireccional](#2-arquitectura-de-comunicación-bidireccional)
+3. [Paleta Arts & Crafts (Completa)](#3-paleta-arts--crafts-completa)
+4. [Anatomía de un Buen Diagrama](#4-anatomía-de-un-buen-diagrama)
+5. [Convención de Nombres de Elementos Interactivos](#5-convención-de-nombres-de-elementos-interactivos)
+6. [Patrón Canonical JSXGraph](#6-patrón-canonical-jsxgraph)
+7. [Patrón SVG + React](#7-patrón-svg--react)
+8. [Patrón Canvas 2D](#8-patrón-canvas-2d)
+9. [Patrón HTML/CSS](#9-patrón-htmlcss)
+10. [Diagramas de Modelo](#10-diagramas-de-modelo)
+11. [Diagramas de Falacias / Contraejemplos](#11-diagramas-de-falacias--contraejemplos)
+12. [Principios de Animación](#12-principios-de-animación)
+13. [Conexión con MDX](#13-conexión-con-mdx)
+14. [Diseño Responsivo](#14-diseño-responsivo)
+15. [Diagramas de Demostración (Split Layout)](#15-diagramas-de-demostración-split-layout)
+16. [Modo Oscuro](#16-modo-oscuro)
+17. [Accesibilidad](#17-accesibilidad)
+18. [Rendimiento](#18-rendimiento)
+19. [Organización de Archivos](#19-organización-de-archivos)
+20. [Checklist de Calidad](#20-checklist-de-calidad)
+
 ---
-name: diagrama
-description: >
-  Use ONLY when the user asks to create, edit, or generate interactive diagrams,
-  visualizations, simulations, or any graphical mathematical content for the
-  Matematika project. This covers all files under src/diagrams/ and their
-  integration with MDX content via InteractiveElement/VisualBind/MathStore.
-  Do NOT use for general UI components, styling, or non-mathematical graphics.
----
 
-# diagrama — Interactive Mathematical Diagrams for Matematika
+## 1. Tecnologías de Renderizado
 
-You are a diagram engineer for Matematika. You create interactive mathematical visualizations that are explanatory, visually coherent with the Arts & Crafts design system, and bidirectionally linked to the MDX content via `InteractiveElement` / `VisualBind` / `MathStore`.
+El proyecto soporta cuatro enfoques de renderizado.
 
-## 1. Diagram Technologies — Decision Framework
-
-The project supports four rendering approaches.
-
-| Technology | When to Use | Interactivity | Best For |
+| Tecnología | Cuándo usar | Interactividad | Mejor para |
 |---|---|---|---|
-| **JSXGraph** | Complex geometric constructions, coordinate math, precise axes, draggable points with snapping, function plots, 3D views | High — draggable points, gliders, sliders, reactive updates | Geometry, trig, linear algebra, calculus |
-| **SVG + React** | Custom 2D diagrams, vector illustrations, simple drag/hover, responsive scaling, animated transitions | Medium — pointer events, state-driven, declarative | Custom geometry, area fills, diagrams needing precise styling |
-| **Canvas 2D + rAF** | Real-time animations, particle systems, continuous motion, frame-by-frame rendering | Medium — imperative, requestAnimationFrame | Animations, live data, physics simulations |
-| **HTML/CSS** | Structured info (trees, cards, matrices), non-spatial data, probability trees, step-by-step logic | Low-medium — click, hover, CSS transitions | Logic, probability, statistics, proof methods |
+| **JSXGraph** | Construcciones geométricas complejas, matemática de coordenadas, ejes precisos, puntos arrastrables con snapping, gráficas de funciones, vistas 3D | Alta — puntos arrastrables, gliders, sliders, updates reactivos | Geometría, trigonometría, álgebra lineal, cálculo |
+| **SVG + React** | Diagramas 2D personalizados, ilustraciones vectoriales, drag/hover simple, escalado responsivo, transiciones animadas | Media — pointer events, state-driven, declarativo | Geometría personalizada, rellenos de áreas, diagramas con estilo preciso |
+| **Canvas 2D + rAF** | Animaciones en tiempo real, sistemas de partículas, movimiento continuo, renderizado frame a frame | Media — imperativo, requestAnimationFrame | Animaciones, datos en vivo, simulaciones físicas |
+| **HTML/CSS** | Información estructurada (árboles, tarjetas, matrices), datos no espaciales, árboles de probabilidad, lógica paso a paso | Baja-media — click, hover, transiciones CSS | Lógica, probabilidad, estadística, métodos de demostración |
 
-### Decision Tree
+### Árbol de Decisión
 
 ```
-Is the concept geometric or spatial?
-  ├── Yes → Does it need precise coordinate math?
-  │   ├── Yes → JSXGraph
-  │   └── No  → Is it a custom illustration?
-  │       ├── Yes → SVG
+¿El concepto es geométrico o espacial?
+  ├── Sí → ¿Necesita matemática de coordenadas precisa?
+  │   ├── Sí → JSXGraph
+  │   └── No  → ¿Es una ilustración personalizada?
+  │       ├── Sí → SVG
   │       └── No  → HTML/CSS
-  └── No  → Is it a real-time animation?
-      ├── Yes → Canvas 2D
-      └── No  → Is it structured/non-spatial?
-          ├── Yes → HTML/CSS
+  └── No  → ¿Es una animación en tiempo real?
+      ├── Sí → Canvas 2D
+      └── No  → ¿Es estructurada/no espacial?
+          ├── Sí → HTML/CSS
           └── No  → SVG
 ```
 
-## 2. Two-Way Communication Architecture
+---
 
-Every interactive diagram must support TWO directions of communication:
+## 2. Arquitectura de Comunicación Bidireccional
+
+Todo diagrama interactivo soporta DOS direcciones de comunicación:
 
 ```
-MDX Text (right panel)
+Texto MDX (panel derecho)
   │
   ├── <InteractiveElement target="ladoA" color="terracota">a</InteractiveElement>
-  │     onMouseEnter → LessonStore.setActiveStep('ladoA')
-  │     onMouseLeave → LessonStore.setActiveStep(null)
+  │     onMouseEnter → MathStore.setVariable('highlight', 'ladoA')
+  │     onMouseLeave → MathStore.setVariable('highlight', null)
   │     ▼
-  └── Diagram receives highlight → illuminates element 'ladoA'
+  └── El diagrama recibe highlight → ilumina el elemento 'ladoA'
   
-Diagram (left panel)
+Diagrama (panel izquierdo)
   │
-  ├── Dragging a point → board.on('update') → setVariable('catetoA', value)
+  ├── Arrastrar un punto → board.on('update') → setVariable('distancia', valor)
   │     ▼
-  └── MDX text or other components read the value via useMathStore
+  └── El texto MDX u otros componentes leen el valor via useMathStore
 ```
 
-### 2.1 Store Selection
+### 2.1 Store — MathStore ÚNICO
 
-| Store | When to Use | Writes From | Read By |
+**Hay un solo store para highlight:** `MathStore`. No se usa `LessonStore` para highlights.
+
+| Store | Cuándo usar | Escribe | Leído por |
 |---|---|---|---|
-| **LessonStore** | When diagram responds to text hovers (Primary). `InteractiveElement` from VisualBind writes here. | `setActiveStep(element)` on hover | Diagram reads `useLessonStore(s => s.activeStep)` |
-| **MathStore** | Per-page state (slider values, measurements, computed data). Diagram writes values here. | `setVariable('distance', val)` on diagram update | Text/UI reads `useMathStore(s => s.variables.distance)` |
+| **MathStore** | Estado por página (highlight, valores de sliders, mediciones, datos calculados) | `setVariable('highlight', valor)` en hover/scroll | Diagramas leen `useMathStore(s => s.variables['highlight'])` |
 
-**CRITICAL:** There are TWO `InteractiveElement` components:
+**`InteractiveElement`** (from `VisualBind.tsx`) escribe en `MathStore.highlight`. Los diagramas leen `MathStore.highlight`. **Un solo store, una sola dirección.**
 
-| File | Import Path | Writes To | Used By |
-|---|---|---|---|
-| `VisualBind.tsx` | `../../components/ui/VisualBind` | `LessonStore.activeStep` | All content MDX files |
-| `MDXBlocks.tsx` | `../../components/ui/MDXBlocks` | `MathStore.variables['highlight']` | (Avoid — use VisualBind) |
+### 2.2 Highlight como string o array
 
-**All content MDX files MUST import `InteractiveElement` from `VisualBind.tsx`.** Therefore, Euclides diagrams MUST read from `LessonStore`.
+El valor de `highlight` puede ser:
+- `string` — un solo elemento resaltado: `"ladoA"`
+- `string[]` — múltiples elementos resaltados simultáneamente: `["cuadrado-a", "cuadrado-b", "cuadrado-c"]`
+- `null` — ningún elemento resaltado
 
-### 2.2 Store Bridge Pattern (REQUIRED)
-
-Diagrams must listen to BOTH stores for compatibility:
+Los diagramas DEBEN manejar los tres casos:
 
 ```typescript
-import { useMathStore } from '../../store/MathStoreContext';
-import { useLessonStore } from '../../store/LessonStore';
-
-const mathHighlight = useMathStore(state => state.variables['highlight']);
-const lessonHighlight = useLessonStore(state => state.activeStep);
-const highlight = mathHighlight || lessonHighlight;
+const highlight = useMathStore(state => state.variables['highlight']);
+const isHighlight = (id: string) =>
+    Array.isArray(highlight)
+        ? (highlight as string[]).includes(id)
+        : highlight === id;
 ```
 
-### 2.3 Full JSXGraph Pattern
+---
+
+## 3. Paleta Arts & Crafts (Completa)
+
+Todo diagrama DEBE usar los tokens semánticos de color del proyecto. **NUNCA usar colores hex arbitrarios.** Esto es innegociable.
+
+| Token | Hex | JSXGraph | SVG / CSS | Significado matemático |
+|---|---|---|---|---|
+| `carbon` | `#333333` | `#333333` | `var(--theme-carbon)` | Ejes, bordes, etiquetas, texto principal, grid |
+| `salvia` | `#A2C2A2` | `#A2C2A2` | `var(--theme-salvia)` | Planos, coeficientes, geometría secundaria, líneas de construcción |
+| `terracota` | `#C86446` | `#C86446` | `var(--theme-terracota)` | Puntos, vectores, incógnitas, elementos interactivos primarios |
+| `pizarra` | `#5D7080` | `#5D7080` | `var(--theme-pizarra)` | Distancias, resultados, mediciones secundarias, valores calculados |
+| `lienzo` | `#F8F6F1` | `#F8F6F1` | `var(--theme-lienzo)` | Fondo del diagrama, áreas de relleno |
+| `ocre` | `#c49b4f` | `#c49b4f` | `var(--theme-ocre)` | Resaltados, valores especiales, elementos auxiliares |
+| `pavo` | `#3b5e6b` | `#3b5e6b` | `var(--theme-pavo)` | Acento alternativo, elementos terciarios, construcciones alternativas |
+| `granada` | `#8b3a3a` | `#8b3a3a` | `var(--theme-granada)` | Errores, contradicciones, elementos de contraejemplo |
+| `musgo` | `#4a5d23` | `#4a5d23` | `var(--theme-musgo)` | Aplicaciones, resultados verificados/correctos |
+
+**Convenciones de opacidad:**
+- Relleno normal: `fillOpacity: 0.15–0.25`
+- Relleno resaltado: `fillOpacity: 0.5–0.8`
+- Trazo normal: `strokeWidth: 1.5–3`
+- Trazo resaltado: `strokeWidth: 4–6`
+- Punto normal: `size: 4`
+- Punto resaltado: `size: 8–10`
+
+---
+
+## 4. Anatomía de un Buen Diagrama
+
+Un diagrama en Matematika NO es solo una ilustración — es una **herramienta pedagógica** que debe ser clara, focalizada y elegante.
+
+### 4.1 Jerarquía Visual
+
+Cada diagrama debe tener exactamente **un elemento primario** por estado de vista. La mirada debe ir a lo que importa.
+
+1. **Primario** (terracota, bold) — el elemento geométrico principal en discusión
+2. **Secundario** (salvia, más fino) — líneas de construcción, elementos de soporte
+3. **Terciario** (carbon, fino) — ejes, grid, etiquetas
+4. **Fondo** (lienzo, opacidad baja) — áreas de relleno
+
+### 4.2 Espacio en Blanco y Composición
+
+- **Padding:** Dejar siempre `boundingbox` con 15–20% de margen alrededor del contenido
+- **Densidad:** Si un diagrama tiene más de 8–10 elementos etiquetados, considerar dividirlo en múltiples pasos
+- **Etiquetas:** Usar `font-serif` para etiquetas matemáticas, estilo cursiva. Posicionar etiquetas para evitar solapamiento con líneas
+- **Balance:** Centrar la geometría relevante en el viewport. No forzar al usuario a hacer pan
+
+### 4.3 Tipografía en Diagramas
+
+- Usar **clases CSS** para estilo de texto en JSXGraph: `cssClass: 'font-serif font-bold italic'`
+- Etiquetas de puntos: letras mayúsculas cursivas (p. ej. $A$, $B$, $C$)
+- Etiquetas de medidas: pequeñas con unidades (p. ej. $a = 5\text{ cm}$)
+- Tamaño de fuente: 16–20px para etiquetas de puntos, 14–16px para medidas
+
+### 4.4 Semántica de Color
+
+Cada color DEBE tener un significado consistente dentro de un mismo diagrama:
+
+| Elemento | Color | Ejemplo |
+|---|---|---|
+| Dado / conocido | `carbon` | Puntos, segmentos dados por hipótesis |
+| Incógnita / a encontrar | `terracota` | El lado o ángulo que se busca |
+| Construcción | `salvia` | Líneas auxiliares, pasos intermedios |
+| Resultado | `pizarra` | Valor calculado, relación demostrada |
+| Error / contradicción | `granada` | Elementos inconsistentes, falacias |
+| Verificado | `musgo` | Respuesta correcta, condición verificada |
+
+Dentro de un diagrama, un color NO debe usarse para dos roles semánticos diferentes.
+
+---
+
+## 5. Convención de Nombres de Elementos Interactivos
+
+El string `target` en `<InteractiveElement>` DEBE coincidir exactamente con el nombre usado en la lógica de highlight del diagrama.
+
+| Tipo de elemento | Patrón de naming | Ejemplo |
+|---|---|---|
+| Puntos / vértices | `p<Letra>` | `pA`, `pB`, `pC` |
+| Lados / segmentos | `seg<Letras>` | `segAB`, `segBC` |
+| Líneas | `line<Nombre>` | `lineAB`, `lineTangente` |
+| Ángulos | `angle<Etiqueta>` | `angleC`, `angleGamma`, `angleABC` |
+| Arcos | `arc<Nombre>` | `arcAB`, `arcCirculo` |
+| Polígonos / áreas | `poly<Nombre>` | `polyTriangulo`, `polyCuadrado` |
+| Mediciones | `meas<Nombre>` | `measDistancia`, `measAngulo` |
+| Vectores | `vec<Nombre>` | `vecAB`, `vecResultado` |
+| Coordenadas | `coord<Nombre>` | `coordX`, `coordY` |
+| Sliders / controles | `slider<Nombre>` | `sliderN`, `sliderZoom` |
+| Específico de paso | `step<N><Elemento>` | `step1Line`, `step2Point` |
+
+> **Nota:** Los diagramas existentes usan convenciones como `vertice-a`, `lado-ab`, `cuadrado-a`, `altura-c`. Estas son igualmente válidas mientras el `target` del `InteractiveElement` coincida exactamente. Lo importante es la consistencia dentro de cada diagrama.
+
+---
+
+## 6. Patrón Canonical JSXGraph
+
+Este es el patrón **canónico** para diagramas JSXGraph. Usar `initBoard` directo con `useRef`/`useEffect`/`elementsRef`.
 
 ```typescript
 import { useRef, useEffect } from 'react';
 import JXG from 'jsxgraph';
 import { useMathStore } from '../../store/MathStoreContext';
-import { useLessonStore } from '../../store/LessonStore';
 
 export const MyDiagram = () => {
     const boardRef = useRef<HTMLDivElement>(null);
     const elementsRef = useRef<Record<string, unknown>>({});
     const setVariable = useMathStore(state => state.setVariable);
-    const mathHighlight = useMathStore(state => state.variables['highlight']);
-    const lessonHighlight = useLessonStore(state => state.activeStep);
-    const highlight = mathHighlight || lessonHighlight;
+    const highlight = useMathStore(state => state.variables['highlight']);
+    const isHighlight = (id: string) =>
+        Array.isArray(highlight)
+            ? (highlight as string[]).includes(id)
+            : highlight === id;
 
     useEffect(() => {
         if (!boardRef.current) return;
@@ -110,198 +223,156 @@ export const MyDiagram = () => {
             boundingbox: [-5, 5, 5, -5],
             axis: true,
             showCopyright: false,
+            showNavigation: false,
             keepaspectratio: true,
+            pan: { enabled: false },
+            zoom: { wheel: false },
         });
 
-        // IMPORTANT: store elements by the SAME name used in InteractiveElement
-        const myPoint = board.create('point', [1, 2], { /* ... */ });
-        elementsRef.current = { myPoint, board };
+        // Crear elementos — guardar en elementsRef con el MISMO nombre usado en InteractiveElement
+        const pA = board.create('point', [-2, -2], {
+            name: 'A', size: 4, fillColor: '#C86446', strokeColor: '#C86446',
+            label: { fontSize: 20, cssClass: 'font-serif font-bold italic' }
+        });
+        const pB = board.create('point', [3, -1], {
+            name: 'B', size: 4, fillColor: '#C86446', strokeColor: '#C86446',
+            label: { fontSize: 20, cssClass: 'font-serif font-bold italic' }
+        });
+        const pC = board.create('point', [0, 3], {
+            name: 'C', size: 4, fillColor: '#C86446', strokeColor: '#C86446',
+            label: { fontSize: 20, cssClass: 'font-serif font-bold italic' }
+        });
 
+        const poly = board.create('polygon', [pA, pB, pC], {
+            fillColor: '#C86446', fillOpacity: 0.15,
+            borders: { strokeColor: '#C86446', strokeWidth: 2 },
+            vertices: { visible: false }
+        });
+
+        // Asignar IDs para highlight
+        pA.setAttribute({ id: 'vertice-a' });
+        pB.setAttribute({ id: 'vertice-b' });
+        pC.setAttribute({ id: 'vertice-c' });
+        poly.borders[0].setAttribute({ id: 'lado-ab' });
+        poly.borders[1].setAttribute({ id: 'lado-bc' });
+        poly.borders[2].setAttribute({ id: 'lado-ca' });
+        poly.setAttribute({ id: 'triangulo' });
+
+        elementsRef.current = { pA, pB, pC, poly, board };
+
+        // Escribir valores al store cuando el usuario interactúa
         board.on('update', () => {
-            setVariable('distance', computeDistance());
+            setVariable('area', board.area ? board.area() : 0);
         });
 
         board.update();
-        return () => { JXG.JSXGraph.freeBoard(board); elementsRef.current = {}; };
+        return () => {
+            JXG.JSXGraph.freeBoard(board);
+            elementsRef.current = {};
+        };
     }, [setVariable]);
 
-    // Reactivity: store → diagram
+    // Reactividad: store → diagrama (highlight)
     useEffect(() => {
-        const { myPoint, board } = elementsRef.current as Record<string, any>;
+        const { pA, pB, pC, poly, board } = elementsRef.current as Record<string, any>;
         if (!board) return;
 
-        // RESET every attribute that any highlight condition changes
-        myPoint.setAttribute({ size: 4, fillColor: '#C86446', strokeColor: '#C86446' });
+        // RESET — cada atributo modificado por highlight DEBE restaurarse
+        const resetPoint = (p: any) => p.setAttribute({ size: 4, strokeOpacity: 1, fillOpacity: 1 });
+        const resetBorder = (b: any) => b.setAttribute({ strokeWidth: 2, strokeOpacity: 1 });
+        resetPoint(pA); resetPoint(pB); resetPoint(pC);
+        poly.borders.forEach(resetBorder);
+        poly.setAttribute({ fillOpacity: 0.15 });
 
-        // APPLY highlight
-        if (highlight === 'myPoint') {
-            myPoint.setAttribute({ size: 10, fillColor: '#f5c542' });
+        // APLICAR highlight
+        const highlightPoint = (p: any, id: string) => {
+            if (isHighlight(id) || isHighlight('triangulo')) {
+                p.setAttribute({ size: 8, strokeOpacity: 1, fillOpacity: 1 });
+            }
+        };
+        highlightPoint(pA, 'vertice-a');
+        highlightPoint(pB, 'vertice-b');
+        highlightPoint(pC, 'vertice-c');
+
+        const highlightBorder = (b: any, id: string) => {
+            if (isHighlight(id) || isHighlight('triangulo')) {
+                b.setAttribute({ strokeWidth: 5, strokeOpacity: 1 });
+            }
+        };
+        highlightBorder(poly.borders[0], 'lado-ab');
+        highlightBorder(poly.borders[1], 'lado-bc');
+        highlightBorder(poly.borders[2], 'lado-ca');
+
+        if (isHighlight('triangulo')) {
+            poly.setAttribute({ fillOpacity: 0.4 });
         }
 
         board.update();
     }, [highlight]);
 
-    return <div ref={boardRef} className="w-full h-full min-h-[500px]" />;
-};
-```
-
-### 2.4 SVG + LessonStore Pattern
-
-```typescript
-import React from 'react';
-import { useLessonStore } from '../../store/LessonStore';
-
-export const MySvgDiagram: React.FC = () => {
-    const activeStep = useLessonStore(state => state.activeStep);
-    const isActive = (step: string) => activeStep === step;
-
     return (
-        <svg viewBox="0 0 400 400" className="w-full h-full touch-none">
-            <circle cx="200" cy="200" r="50"
-                fill={isActive('myCircle') ? 'var(--theme-terracota)' : 'var(--theme-carbon)'}
-                opacity={isActive('myCircle') ? 1 : 0.3}
-            />
-        </svg>
+        <div
+            ref={boardRef}
+            className="w-full h-full min-h-[500px]"
+            role="img"
+            aria-label="Diagrama interactivo: triángulo con vértices A, B, C. Arrastre los puntos para explorar."
+            tabIndex={0}
+        />
     );
 };
 ```
 
-## 3. Color Palette — Arts & Crafts (Complete)
+### 6.1 Configuración del Board
 
-Every diagram MUST use the project's semantic color tokens. **NEVER use arbitrary hex colors.**
-
-| Token | Hex | JSXGraph | SVG / CSS | Mathematical Meaning |
-|---|---|---|---|---|
-| `carbon` | `#333333` | `#333333` | `var(--theme-carbon)` | Axes, borders, labels, main text, grid |
-| `salvia` | `#A2C2A2` | `#A2C2A2` | `var(--theme-salvia)` | Planes, coefficients, secondary geometry, construction lines |
-| `terracota` | `#C86446` | `#C86446` | `var(--theme-terracota)` | Points, vectors, unknowns, primary interactive elements |
-| `pizarra` | `#5D7080` | `#5D7080` | `var(--theme-pizarra)` | Distances, results, secondary measurements, computed values |
-| `lienzo` | `#F8F6F1` | `#F8F6F1` | `var(--theme-lienzo)` | Diagram background, fill areas |
-| `ocre` | `#c49b4f` | `#c49b4f` | `var(--theme-ocre)` | Highlighting, special values, auxiliary elements |
-| `pavo` | `#3b5e6b` | `#3b5e6b` | `var(--theme-pavo)` | Alternative accent, tertiary elements, alternative constructions |
-| `granada` | `#8b3a3a` | `#8b3a3a` | `var(--theme-granada)` | Errors, contradictions, counterexample elements |
-| `musgo` | `#4a5d23` | `#4a5d23` | `var(--theme-musgo)` | Applications, verified/correct results |
-
-The diagram should follow to the style guidelines as much as it can.
-
-**Opacity conventions:**
-- Normal fill: `fillOpacity: 0.15–0.25`
-- Highlighted fill: `fillOpacity: 0.5–0.8`
-- Normal stroke: `strokeWidth: 1.5–3`
-- Highlighted stroke: `strokeWidth: 4–6`
-- Normal point size: `4`
-- Highlighted point size: `8–10`
-
-## 4. Anatomy of a Good Diagram
-
-A diagram in Matematika is NOT just an illustration — it is a **pedagogical tool** that must be clear, focused, and elegant.
-
-### 4.1 Visual Hierarchy
-
-Every diagram should have exactly **one primary element** per view state. The eye should be drawn to what matters.
-
-1. **Primary** (terracota, bold) — the main geometric element being discussed
-2. **Secondary** (salvia, thinner) — construction lines, supporting elements
-3. **Tertiary** (carbon, thin) — axes, grid, labels
-4. **Background** (lienzo, low opacity) — fill areas
-
-### 4.2 Whitespace and Composition
-
-- **Padding:** Always leave `boundingbox` with 15–20% margin around the content
-- **Clutter:** If a diagram has more than 8–10 labeled elements, consider splitting into multiple steps
-- **Labels:** Use `font-serif` for mathematical labels, italic style. Position labels to avoid overlapping lines
-- **Balance:** Center the relevant geometry in the viewport. Don't force the user to pan
-
-### 4.3 Typography in Diagrams
-
-- Use **CSS classes** for text styling in JSXGraph: `cssClass: 'font-serif font-bold italic'`
-- Labels for points: capital italic letters (e.g., $A$, $B$, $C$)
-- Labels for measurements: small with units (e.g., $a = 5\text{ cm}$)
-- Font size: 16–20px for point labels, 14–16px for measurements
-
-### 4.4 Color Semantics
-
-Each color MUST have a consistent meaning within a single diagram:
-
-| Element | Color | Example |
-|---|---|---|
-| Given / known | `carbon` | Points, segments given by hypothesis |
-| Unknown / to find | `terracota` | The side or angle being solved for |
-| Construction | `salvia` | Auxiliary lines, intermediate steps |
-| Result | `pizarra` | Computed value, proven relationship |
-| Error / contradiction | `granada` | Inconsistent elements, fallacies |
-| Verified | `musgo` | Correct answer, verified condition |
-
-Within one diagram, a color MUST NOT be used for two different semantic roles.
-
-## 5. Interactive Element Naming Convention (CRITICAL)
-
-The `target` string in `<InteractiveElement>` MUST match exactly the name used in the diagram's `elementsRef` or highlight logic.
-
-| Element Type | Naming Pattern | Example |
-|---|---|---|
-| Points / vertices | `p<Letter>` | `pA`, `pB`, `pC` |
-| Sides / segments | `seg<Letters>` | `segAB`, `segBC` |
-| Lines | `line<Name>` | `lineAB`, `lineTangent` |
-| Angles | `angle<Label>` | `angleC`, `angleGamma`, `angleABC` |
-| Arcs | `arc<Name>` | `arcAB`, `arcCircle` |
-| Polygons / areas | `poly<Name>` | `polyTriangle`, `polySquare` |
-| Measurements | `meas<Name>` | `measDistance`, `measAngle` |
-| Vectors | `vec<Name>` | `vecAB`, `vecResult` |
-| Coordinates | `coord<Name>` | `coordX`, `coordY` |
-| Sliders / controls | `slider<Name>` | `sliderN`, `sliderZoom` |
-| Step-specific | `step<N><Element>` | `step1Line`, `step2Point` |
-
-## 6. Technology-Specific Best Practices
-
-### 6.1 JSXGraph
-
-**Board configuration:**
 ```typescript
 const board = JXG.JSXGraph.initBoard(boardRef.current, {
-    boundingbox: [-5, 8, 8, -5],
-    axis: true,
-    showCopyright: false,       // NEVER show watermark
-    keepaspectratio: true,      // CRUCIAL for geometry
-    grid: false,                // Enable only when needed
+    boundingbox: [-5, 8, 8, -5],    // [left, top, right, bottom] — dejar 15-20% de margen
+    axis: true,                      // Solo cuando se necesite
+    showCopyright: false,            // NUNCA mostrar watermark
+    showNavigation: false,           // Ocultar navegación de JSXGraph
+    keepaspectratio: true,           // CRUCIAL para geometría
+    grid: false,                     // Habilitar solo cuando sea necesario
+    pan: { enabled: false },         // Deshabilitar pan
+    zoom: { wheel: false },          // Deshabilitar zoom con rueda
 });
 ```
 
-**Element creation:**
+### 6.2 Creación de Elementos Comunes
+
 ```typescript
-// Fixed point (invisible, for construction)
+// Punto fijo (invisible, para construcción)
 board.create('point', [x, y], { fixed: true, withLabel: false, visible: false });
 
-// Draggable point with snapping
+// Punto arrastrable con snapping
 board.create('glider', [x, y, board.defaultAxes.x], {
     withLabel: false, color: '#333333', size: 4,
     snapToGrid: true, snapSizeX: 1
 });
 
-// Segment with semantic color
+// Segmento con color semántico
 board.create('segment', [p1, p2], {
     strokeColor: '#C86446', strokeWidth: 3,
     label: { fontSize: 20, cssClass: 'font-serif font-bold italic', strokeColor: '#C86446' }
 });
 
-// Regular polygon
+// Polígono regular
 board.create('regularpolygon', [p1, p2, 4], {
     fillColor: '#C86446', fillOpacity: 0.2,
     borders: { strokeColor: '#C86446' },
     vertices: { visible: false }
 });
 
-// Angle
+// Ángulo
 board.create('angle', [p1, vertex, p3], {
     radius: 1, fillColor: '#A2C2A2', fillOpacity: 0.3
 });
 
-// Function plot
+// Gráfica de función
 board.create('functiongraph', [x => Math.sin(x), -Math.PI, Math.PI], {
     strokeColor: '#C86446', strokeWidth: 3
 });
 
-// Text label
+// Etiqueta de texto
 board.create('text', [x, y, 'formula'], { fontSize: 18, cssClass: 'font-serif' });
 
 // Slider
@@ -310,7 +381,8 @@ board.create('slider', [[x, y], [x2, y2], [initial, min, max]], {
 });
 ```
 
-**Cleanup (MANDATORY):**
+### 6.3 Limpieza (OBLIGATORIA)
+
 ```typescript
 return () => {
     JXG.JSXGraph.freeBoard(board);
@@ -318,16 +390,44 @@ return () => {
 };
 ```
 
-### 6.2 SVG + React
+### 6.4 Wrapper JXGBoard (alternativa existente)
+
+El proyecto incluye un wrapper `src/components/core/JXGBoard.tsx` que simplifica la inicialización. Algunos diagramas existentes lo usan:
 
 ```typescript
-import { useRef, useState } from 'react';
+import JXGBoard from '../../components/core/JXGBoard';
 
-export const MySVG = () => {
+export const MyDiagram = () => {
+    const highlight = useMathStore(state => state.variables['highlight']);
+    const isHighlight = (id: string) => Array.isArray(highlight)
+        ? (highlight as string[]).includes(id) : highlight === id;
+
+    const logic = (board: any) => {
+        // Crear elementos y registrar board.on('update', ...) aquí
+    };
+
+    return <JXGBoard logic={logic} bounds={[-5, 5, 5, -5]} className="w-full aspect-square" />;
+};
+```
+
+> **Preferencia:** El patrón canónico es `initBoard` directo (§6). El wrapper JXGBoard existe en diagramas legacy y puede usarse para casos simples, pero los nuevos diagramas DEBEN usar el patrón canónico para tener control total sobre highlight reactivos, cleanup y accesibilidad.
+
+---
+
+## 7. Patrón SVG + React
+
+```typescript
+import React, { useRef, useState } from 'react';
+import { useMathStore } from '../../store/MathStoreContext';
+
+export const MySvgDiagram: React.FC = () => {
     const svgRef = useRef<SVGSVGElement>(null);
     const [dragging, setDragging] = useState<string | null>(null);
+    const highlight = useMathStore(state => state.variables['highlight']);
+    const isActive = (id: string) =>
+        Array.isArray(highlight) ? (highlight as string[]).includes(id) : highlight === id;
 
-    // Coordinate mapping
+    // Mapeo de coordenadas
     const scale = 50;
     const origin = { x: 50, y: 350 };
     const toPx = (x: number, y: number) => ({
@@ -340,6 +440,7 @@ export const MySVG = () => {
         const rect = svgRef.current.getBoundingClientRect();
         const mathX = (e.clientX - rect.left - origin.x) / scale;
         const mathY = (origin.y - (e.clientY - rect.top)) / scale;
+        // Actualizar estado...
     };
 
     return (
@@ -349,28 +450,44 @@ export const MySVG = () => {
                 className="w-full max-w-[400px] h-auto touch-none"
                 onPointerMove={handlePointerMove}
                 onPointerUp={() => setDragging(null)}
+                role="img"
+                aria-label="Diagrama interactivo SVG"
             >
                 {/* Grid */}
                 <line stroke="var(--theme-carbon)" strokeWidth="1" strokeDasharray="4" />
-                {/* Geometry — ALWAYS use CSS variables */}
-                <line stroke="var(--theme-terracota)" strokeWidth="3" />
-                <circle fill="var(--theme-terracota)" />
-                <text fill="var(--theme-carbon)" className="font-serif font-bold" />
+                {/* Geometría — SIEMPRE usar CSS variables */}
+                <line
+                    stroke="var(--theme-terracota)"
+                    strokeWidth={isActive('miLinea') ? 6 : 3}
+                    opacity={isActive('miLinea') ? 1 : 0.5}
+                />
+                <circle
+                    fill="var(--theme-terracota)"
+                    r={isActive('miCirculo') ? 10 : 6}
+                />
+                <text
+                    fill="var(--theme-carbon)"
+                    className="font-serif font-bold"
+                />
             </svg>
         </div>
     );
 };
 ```
 
-**CRITICAL:** SVG MUST use `var(--theme-<token>)` for ALL colors. This ensures dark mode support. **Never use hex values directly in SVG.**
+**CRÍTICO:** SVG DEBE usar `var(--theme-<token>)` para TODOS los colores. Esto asegura soporte de modo oscuro. **NUNCA usar valores hex directamente en SVG.**
 
-### 6.3 Canvas 2D
+---
+
+## 8. Patrón Canvas 2D
 
 ```typescript
 import { useRef, useEffect } from 'react';
+import { useMathStore } from '../../store/MathStoreContext';
 
 export const MyCanvas = () => {
     const canvasRef = useRef<HTMLCanvasElement>(null);
+    const highlight = useMathStore(state => state.variables['highlight']);
 
     useEffect(() => {
         const canvas = canvasRef.current;
@@ -379,28 +496,76 @@ export const MyCanvas = () => {
         if (!ctx) return;
         let animId: number;
 
+        // Leer colores desde CSS variables
+        const getVar = (name: string) =>
+            getComputedStyle(document.documentElement).getPropertyValue(name).trim();
+
         const render = () => {
             ctx.clearRect(0, 0, canvas.width, canvas.height);
-            // Read colors from CSS variables:
-            // getComputedStyle(document.documentElement).getPropertyValue('--theme-terracota')
+            const terracota = getVar('--theme-terracota');
+            const carbon = getVar('--theme-carbon');
+
+            ctx.strokeStyle = terracota;
+            ctx.lineWidth = 3;
+            ctx.beginPath();
+            // ... dibujar
+            ctx.stroke();
+
             animId = requestAnimationFrame(render);
         };
         animId = requestAnimationFrame(render);
         return () => cancelAnimationFrame(animId);
-    }, []);
+    }, [highlight]);
 
-    return <canvas ref={canvasRef} className="w-full h-full touch-none" width={600} height={400} />;
+    return (
+        <canvas
+            ref={canvasRef}
+            className="w-full h-full touch-none"
+            width={600}
+            height={400}
+            role="img"
+            aria-label="Animación interactiva"
+        />
+    );
 };
 ```
 
-### 6.4 Model Diagrams (Pattern for Models)
+---
 
-Model diagrams do NOT use `InteractiveElement` or `LessonStore`. They display a **complete concrete structure** — the entire model at once, often as a static or explorable visualization.
+## 9. Patrón HTML/CSS
+
+Para datos estructurados (árboles, matrices, tarjetas, árboles de probabilidad):
+
+```typescript
+import React from 'react';
+import { useMathStore } from '../../store/MathStoreContext';
+
+export const ProbabilityTree: React.FC = () => {
+    const highlight = useMathStore(state => state.variables['highlight']);
+    const isActive = (id: string) => highlight === id;
+
+    return (
+        <div className="w-full p-8 font-serif">
+            <div className={`transition-all ${isActive('rama-a') ? 'scale-105 text-terracota' : 'text-carbon'}`}>
+                Rama A
+            </div>
+            {/* ... */}
+        </div>
+    );
+};
+```
+
+---
+
+## 10. Diagramas de Modelo
+
+Los diagramas de modelo NO usan `InteractiveElement` ni highlight. Muestran una **estructura concreta completa** — todo el modelo a la vez, como visualización estática o explorable.
 
 ```typescript
 import { useRef, useEffect } from 'react';
+import JXG from 'jsxgraph';
 
-export const ThreePointModel = () => {
+export const ModeloTresPuntos = () => {
     const boardRef = useRef<HTMLDivElement>(null);
 
     useEffect(() => {
@@ -409,36 +574,30 @@ export const ThreePointModel = () => {
             boundingbox: [-1, 4, 4, -1],
             axis: false,
             showCopyright: false,
+            showNavigation: false,
             keepaspectratio: true,
         });
 
-        // Three non-collinear points (the universe)
+        // Tres puntos no colineales (el universo)
         const pA = board.create('point', [1, 1], {
-            fixed: true, color: '#C86446', size: 6,
-            label: { fontSize: 20, cssClass: 'font-serif font-bold', color: '#C86446' }
+            fixed: true, fillColor: '#C86446', strokeColor: '#C86446', size: 6,
+            name: 'A', label: { fontSize: 20, cssClass: 'font-serif font-bold' }
         });
         const pB = board.create('point', [3, 2], {
-            fixed: true, color: '#C86446', size: 6,
-            label: { fontSize: 20, cssClass: 'font-serif font-bold', color: '#C86446' }
+            fixed: true, fillColor: '#C86446', strokeColor: '#C86446', size: 6,
+            name: 'B', label: { fontSize: 20, cssClass: 'font-serif font-bold' }
         });
         const pC = board.create('point', [2, 3], {
-            fixed: true, color: '#C86446', size: 6,
-            label: { fontSize: 20, cssClass: 'font-serif font-bold', color: '#C86446' }
+            fixed: true, fillColor: '#C86446', strokeColor: '#C86446', size: 6,
+            name: 'C', label: { fontSize: 20, cssClass: 'font-serif font-bold' }
         });
 
-        // The "lines" (pairs of points) — in this model, lines are just pairs
-        board.create('segment', [pA, pB], {
-            strokeColor: '#5D7080', strokeWidth: 2, dash: 2
-        });
-        board.create('segment', [pB, pC], {
-            strokeColor: '#5D7080', strokeWidth: 2, dash: 2
-        });
-        board.create('segment', [pC, pA], {
-            strokeColor: '#5D7080', strokeWidth: 2, dash: 2
-        });
+        // Las "rectas" (pares de puntos)
+        board.create('segment', [pA, pB], { strokeColor: '#5D7080', strokeWidth: 2, dash: 2 });
+        board.create('segment', [pB, pC], { strokeColor: '#5D7080', strokeWidth: 2, dash: 2 });
+        board.create('segment', [pC, pA], { strokeColor: '#5D7080', strokeWidth: 2, dash: 2 });
 
-        // Label showing what this model satisfies
-        board.create('text', [0.5, 3.5, 'Modelo de 3 puntos — Geometría de Incidencia'], {
+        board.create('text', [0.5, 3.5, 'Modelo de 3 puntos'], {
             fontSize: 14, cssClass: 'font-serif italic', color: '#333333'
         });
 
@@ -446,82 +605,87 @@ export const ThreePointModel = () => {
         return () => { JXG.JSXGraph.freeBoard(board); };
     }, []);
 
-    return <div ref={boardRef} className="w-full h-full min-h-[400px]" />;
+    return (
+        <div
+            ref={boardRef}
+            className="w-full h-full min-h-[400px]"
+            role="img"
+            aria-label="Modelo de 3 puntos: geometría de incidencia minimal"
+        />
+    );
 };
 ```
 
-Model diagrams:
-- Do NOT use `useMathStore` or `useLessonStore`
-- Do NOT have `InteractiveElement` connections
-- Are exported as `Diagram` (not `Simulation`) in the MDX file
-- Have `"hasDiagram": true` in metadata (not `hasSimulation`)
+**Diagramas de modelo:**
+- NO usan `useMathStore` ni highlight
+- NO tienen conexiones `InteractiveElement`
+- Se exportan como `Diagram` (no `Simulation`) en el MDX
+- Tienen `"hasDiagram": true` en metadata (no `hasSimulation`)
 
-### 6.5 Fallacy / Counterexample Diagrams
+---
 
-For diagrams that show an **incorrect** reasoning or fallacious proof:
+## 11. Diagramas de Falacias / Contraejemplos
 
-```typescript
-// Show the incorrect step in granada (error color)
-// Show the correct version alongside in musgo (verified color)
-// Use annotations explaining WHY it is wrong
-```
+Para diagramas que muestran un razonamiento **incorrecto** o una demostración falaz:
 
-Example: The "Isosceles Triangle Fallacy" diagram shows a flawed proof that all triangles are isosceles, with the error highlighted in `granada` and the correct construction in `carbon`.
+- Mostrar el paso incorrecto en `granada` (color de error)
+- Mostrar la versión correcta junto a ella en `musgo` (color de verificado)
+- Usar anotaciones explicando POR QUÉ es incorrecto
 
-## 7. Animation Principles
+Ejemplo: La "Falacia del triángulo isósceles" muestra una demostración defectuosa de que todos los triángulos son isósceles, con el error resaltado en `granada` y la construcción correcta en `carbon`.
 
-### 7.1 When to Animate
+---
 
-- **Reveal:** Show elements appearing one by one to match proof steps
-- **Transition:** Smoothly move between states (e.g., dragging a point updates measurements in real-time)
-- **Emphasis:** Pulse or highlight an element when the user hovers over related text
+## 12. Principios de Animación
 
-### 7.2 When NOT to Animate
+### 12.1 Cuándo Animar
 
-- Continuous rotation or oscillation that serves no pedagogical purpose
-- Animations faster than 200ms or slower than 800ms (cognitive discomfort)
-- Animations that change the diagram layout while the user is interacting
-- Gratuitous effects (particles, glow, shadows) — these violate the Arts & Crafts aesthetic
+- **Reveal:** Mostrar elementos apareciendo uno a uno para coincidir con los pasos de la demostración
+- **Transición:** Mover suavemente entre estados (p. ej. arrastrar un punto actualiza mediciones en tiempo real)
+- **Énfasis:** Pulsar o resaltar un elemento cuando el usuario pasa el cursor sobre texto relacionado
 
-### 7.3 Animation Patterns
+### 12.2 Cuándo NO Animar
 
-**Reveal (elements appear on step change):**
+- Rotación u oscilación continua sin propósito pedagógico
+- Animaciones más rápidas que 200ms o más lentas que 800ms (incomodidad cognitiva)
+- Animaciones que cambian el layout mientras el usuario interactúa
+- Efectos gratuitos (partículas, glow, sombras) — violan la estética Arts & Crafts
+
+### 12.3 Patrones de Animación
+
+**Reveal (elementos aparecen al cambiar paso):**
 ```typescript
 useEffect(() => {
-    // On highlight change, reveal elements with opacity transition
-    element.setAttribute({ visible: highlight === 'step2' });
+    element.setAttribute({ visible: isHighlight('step2') });
     board.update();
 }, [highlight]);
 ```
 
-**Smooth value transitions (when dragging updates a value):**
+**Énfasis (pulso al hacer hover):**
 ```typescript
-// JSXGraph handles this natively — elements update on every board.update()
+// Usar CSS transition o setAttribute con un breve setTimeout
 ```
 
-**Emphasis (pulse on hover):**
+### 12.4 Rendimiento
+
+- Para JSXGraph: minimizar llamadas `board.update()`. Agrupar cambios en un solo `useEffect`
+- Para SVG: usar CSS `transition` en lugar de bucles de animación JavaScript
+- Para Canvas: mantener los bucles `requestAnimationFrame` ligeros — sin cómputo pesado por frame
+- Evitar animar más de 3–4 elementos simultáneamente
+
+---
+
+## 13. Conexión con MDX
+
+### Paso 1: Crear el componente del diagrama
+
+Archivo: `src/diagrams/<Categoria>/<Nombre>.tsx`
+
+### Paso 2: En el MDX, importar y exportar
+
+**Para teoremas/axiomas/definiciones (SimulationLayout):**
 ```typescript
-// Use a CSS transition or setAttribute with a brief setTimeout
-```
-
-### 7.4 Performance
-
-- For JSXGraph: limit `board.update()` calls. Batch changes in a single `useEffect`
-- For SVG: use CSS `transition` instead of JavaScript animation where possible
-- For Canvas: keep `requestAnimationFrame` loops lean — no heavy computation per frame
-- Avoid animating more than 3–4 elements simultaneously
-
-## 8. Connecting to MDX
-
-### Step 1: Create the diagram component
-
-File: `src/diagrams/<Category>/<Name>.tsx`
-
-### Step 2: In the MDX file, import and export
-
-For theorems/axioms (uses SimulationLayout):
-```typescript
-import { MyDiagram } from '../../diagrams/Category/MyDiagram';
+import { MyDiagram } from '../../diagrams/Categoria/MyDiagram';
 export const Simulation = MyDiagram;
 
 export const metadata = {
@@ -530,7 +694,7 @@ export const metadata = {
 };
 ```
 
-For models (inline rendering):
+**Para modelos (renderizado inline):**
 ```typescript
 import { ModelDiagram } from '../../diagrams/Models/ModelDiagram';
 export const Diagram = ModelDiagram;
@@ -541,7 +705,20 @@ export const metadata = {
 };
 ```
 
-### Step 3: In the MDX body, reference diagram elements
+**Para demostraciones (dentro de Component):**
+```typescript
+import { MyDiagram } from '../../diagrams/Teoremas/MyDiagram';
+
+export const Component = () => (
+    <DemonstrationSection diagrams={{ "default": MyDiagram }}>
+        <MedievalStep number={1} target="miElemento" title="...">
+            <InteractiveElement target="miElemento" color="terracota">texto</InteractiveElement>
+        </MedievalStep>
+    </DemonstrationSection>
+);
+```
+
+### Paso 3: En el cuerpo MDX, referenciar elementos del diagrama
 
 ```mdx
 <InteractiveElement target="segAB" color="terracota">
@@ -549,79 +726,138 @@ export const metadata = {
 </InteractiveElement>
 ```
 
-## 9. Responsive Design
+**IMPORTANTÍSIMO:** `InteractiveElement` DEBE importarse desde `../../components/ui/VisualBind`. Es el ÚNICO `InteractiveElement` del proyecto. Escribe en `MathStore.highlight`.
 
-- **JSXGraph:** Container `min-h-[500px]` + `w-full h-full`. Use `keepaspectratio: true`.
-- **SVG:** `viewBox` + `className="w-full max-w-[400px] h-auto"`. Scales proportionally.
-- **Canvas:** Explicit `width`/`height` attributes + `w-full h-full` CSS container.
-- **Always use `touch-none`** on SVG/Canvas to prevent scroll interference on mobile.
-- Minimum heights: `min-h-[400px]` (SVG/Canvas), `min-h-[500px]` (JSXGraph).
+---
 
-## 10. Demonstration Diagrams (Split Layout)
+## 14. Diseño Responsivo
 
-For multi-step proofs with `layout: "split"`:
+- **JSXGraph:** Container `min-h-[500px]` + `w-full h-full`. Usar `keepaspectratio: true`.
+- **SVG:** `viewBox` + `className="w-full max-w-[400px] h-auto"`. Escala proporcionalmente.
+- **Canvas:** Atributos `width`/`height` explícitos + container CSS `w-full h-full`.
+- **Siempre usar `touch-none`** en SVG/Canvas para evitar interferencia de scroll en móvil.
+- Alturas mínimas: `min-h-[400px]` (SVG/Canvas), `min-h-[500px]` (JSXGraph).
 
-### Approach A — Dedicated Components Per Step
+---
 
-Each step has its own diagram component:
+## 15. Diagramas de Demostración (Split Layout)
+
+Para demostraciones multi-paso con `layout: "split"`:
+
+### 15.1 Regla Fundamental: Diagrama por Paso
+
+**CADA PASO de una demostración DEBE tener su propio diagrama** que ilustre ese paso específico. Esta es la regla por defecto.
+
+La **excepción** es cuando conviene unificar los diagramas: si varios pasos comparten la misma construcción geométrica y solo cambia qué elemento se resalta, un solo diagrama con highlight reactivo es más claro que múltiples diagramas casi idénticos.
+
+| Patrón | Cuándo usar | Cómo |
+|---|---|---|
+| **Un diagrama por paso** | POR DEFECTO. Cada paso introduce elementos nuevos o cambia la construcción | `diagrams={{ "step1": Step1, "step2": Step2, ... }}` |
+| **Un diagrama unificado** | Los pasos comparten construcción, solo cambia el highlight | `diagrams={{ "default": Shared }}` o `diagram={<Shared />}` |
+| **Híbrido** | Algunos pasos comparten, otros introducen elementos | `diagrams={{ "default": Shared, "step3": Step3 }}` |
+
+### 15.2 Transiciones Sticky
+
+Cuando hay varios diagramas (patrón por paso o híbrido), el `DemonstrationSection` implementa **transiciones sticky**:
+
+- El panel izquierdo (diagrama) es **`position: sticky`** — permanece fijo en pantalla mientras el texto scrollea
+- Los diagramas cambian con una **transición de fundido suave** (opacity 700ms ease-in-out)
+- El diagrama activo se determina por `MathStore.variables['highlight']`: si el `target` del `MedievalStep` visible coincide con una clave de `diagrams`, ese diagrama se muestra
+- Si ningún `target` coincide, se muestra el primer diagrama del mapa
+
+Esto asegura que el estudiante siempre vea el diagrama correcto para el paso que está leyendo, sin perder el contexto visual.
+
+### 15.3 Referencias al Diagrama — Obligatorias
+
+**TODO en el texto que se refiera a un elemento del diagrama DEBE tener un `<InteractiveElement>` correspondiente.** Sin excepciones.
+
+Esto incluye:
+- Puntos, segmentos, ángulos, polígonos mencionados en prosa
+- Variables que corresponden a elementos visuales ($a$, $b$, $c$ si son lados visibles)
+- **Referencias dentro de fórmulas**: envolver cada variable en `<InteractiveElement>`:
+  ```mdx
+  <InteractiveElement target="cateto-a" color="terracota">$a$</InteractiveElement>^2 +
+  <InteractiveElement target="cateto-b" color="salvia">$b$</InteractiveElement>^2 =
+  <InteractiveElement target="hipotenusa" color="pizarra">$c$</InteractiveElement>^2
+  ```
+- **Si dentro de una fórmula no se puede** (LaTeX complejo con fracciones, subíndices...), **explicar fuera de la fórmula** a qué se refiere cada símbolo:
+  ```mdx
+  <Formula>
+    $$ \frac{AD}{DB} = \frac{AE}{EC} $$
+  </Formula>
+  donde <InteractiveElement target="seg-ad">$AD$</InteractiveElement> es el segmento entre $A$ y $D$,
+  <InteractiveElement target="seg-db">$DB$</InteractiveElement> entre $D$ y $B$, etc.
+  ```
+
+Cada `<MedievalStep>` DEBE contener al menos un `<InteractiveElement>`. Si un paso no tiene nada que resaltar en el diagrama, no necesita diagrama (y probablemente pertenece a la sección de análisis, no a un paso de demostración).
+
+### 15.4 Approach A — Un Diagrama por Paso (POR DEFECTO)
+
+Cada paso tiene su propio componente de diagrama:
 
 ```mdx
-<DemonstrationSection diagram={<Step1Diagram />}>
-  <MedievalStep number={1} title="Construcción" />
-  <InteractiveElement target="step1Line" color="terracota">texto</InteractiveElement>
-</DemonstrationSection>
-
-<DemonstrationSection diagram={<Step2Diagram />}>
-  <MedievalStep number={2} title="Razonamiento" />
-  <InteractiveElement target="step2Angle" color="salvia">texto</InteractiveElement>
+<DemonstrationSection diagrams={{
+    "step1": Step1Diagram,
+    "step2": Step2Diagram,
+    "step3": Step3Diagram
+}}>
+  <MedievalStep number={1} target="step1" title="Construcción">
+    Partimos de <InteractiveElement target="punto-a" color="terracota">$A$</InteractiveElement>...
+  </MedievalStep>
+  <MedievalStep number={2} target="step2" title="Razonamiento">
+    Por la propiedad de <ConceptLink targetId="axioma-congruencia-1">transporte</ConceptLink>,
+    el <InteractiveElement target="segmento-cd" color="salvia">segmento $CD$</InteractiveElement>...
+  </MedievalStep>
+  <MedievalStep number={3} target="step3" title="Conclusión">
+    ... $\blacksquare$
+  </MedievalStep>
 </DemonstrationSection>
 ```
 
-### Approach B — Single Component (Recommended)
+Cada `StepNDiagram` es un componente independiente que muestra la construcción geométrica tal como está en ese paso del razonamiento.
 
-One diagram handles all steps via the highlight variable:
+### 15.5 Approach B — Un Solo Diagrama Unificado (EXCEPCIÓN)
+
+Cuando los pasos comparten la misma construcción y solo cambia el highlight, un solo diagrama con lógica reactiva:
 
 ```typescript
 useEffect(() => {
-    // Reset ALL
-    lineAB.setAttribute({ strokeWidth: 2, strokeColor: '#5D7080', visible: true });
+    // RESET — TODOS los atributos modificados
+    lineAB.setAttribute({ strokeWidth: 2, strokeColor: '#5D7080', strokeOpacity: 1 });
     angleC.setAttribute({ fillColor: '#A2C2A2', fillOpacity: 0.2 });
 
-    // Apply highlight
-    if (highlight === 'segAB') lineAB.setAttribute({ strokeWidth: 6, strokeColor: '#C86446' });
-    if (highlight === 'angleC') angleC.setAttribute({ fillColor: '#C86446', fillOpacity: 0.5 });
+    // APLICAR highlight
+    if (isHighlight('segAB')) lineAB.setAttribute({ strokeWidth: 6, strokeColor: '#C86446' });
+    if (isHighlight('angleC')) angleC.setAttribute({ fillColor: '#C86446', fillOpacity: 0.5 });
 
     board.update();
 }, [highlight]);
 ```
 
-**CRITICAL:** Every attribute modified by any highlight condition MUST be explicitly reset to its default value in the reset block. Missing a reset causes "sticky" highlights.
+**CRÍTICO:** Todo atributo modificado por cualquier condición de highlight DEBE restaurarse explícitamente a su valor por defecto en el bloque de reset. Omitir un reset causa highlights "pegados".
 
-## 11. Dark Mode
+### 15.6 `DemonstrationSection` — cómo funciona
 
-Diagrams MUST work in both light and dark modes.
+- Lee `MathStore.variables['highlight']` para decidir qué diagrama mostrar
+- Si se pasa `diagrams` (mapa), busca el diagrama cuya clave coincide con `highlight`; si no coincide, muestra el primero
+- Si se pasa `diagram` (single), lo muestra siempre
+- Layout: panel izquierdo sticky (diagrama), panel derecho scrolleable (texto con MedievalSteps)
+- Transiciones entre diagramas: opacity 700ms ease-in-out (fundido suave)
 
-### JSXGraph (read CSS variables at runtime)
+---
+
+## 16. Modo Oscuro
+
+Los diagramas DEBEN funcionar en modo claro y oscuro.
+
+### JSXGraph (leer CSS variables en runtime)
 
 ```typescript
 function getCSSVar(name: string): string {
     return getComputedStyle(document.documentElement).getPropertyValue(name).trim();
 }
 
-// In board creation:
-const carbon = getCSSVar('--theme-carbon');
-const lienzo = getCSSVar('--theme-lienzo');
-
-board = JXG.JSXGraph.initBoard(boardRef.current, {
-    // ...
-    // Cannot CSS-vary the board background directly, so set it:
-});
-board.renderer.container.style.backgroundColor = lienzo;
-```
-
-For JSXGraph, colors are set at init time. The diagram component should watch for theme changes:
-
-```typescript
+// Observar cambios de tema para re-leer colores
 useEffect(() => {
     const observer = new MutationObserver(() => {
         if (board) {
@@ -630,33 +866,38 @@ useEffect(() => {
             board.update();
         }
     });
-    observer.observe(document.documentElement, { attributes: true, attributeFilter: ['class'] });
+    observer.observe(document.documentElement, {
+        attributes: true,
+        attributeFilter: ['class']
+    });
     return () => observer.disconnect();
 }, []);
 ```
 
-### SVG (use CSS variables — automatic dark mode)
+### SVG (usar CSS variables — modo oscuro automático)
 
-SVG using `var(--theme-*)` adapts automatically to dark mode because the CSS variables change when `.dark` is applied to `<html>`.
+SVG usando `var(--theme-*)` se adapta automáticamente al modo oscuro porque las CSS variables cambian cuando se aplica `.dark` al `<html>`.
 
-**NEVER use hex values in SVG.** Always use `var(--theme-<token>)`.
+**NUNCA usar valores hex en SVG.** Siempre usar `var(--theme-<token>)`.
 
-## 12. Accessibility
+---
 
-### Color and Contrast
+## 17. Accesibilidad
 
-- All interactive elements MUST have **sufficient contrast** against the background:
-  - Text: minimum contrast ratio 4.5:1 against background
-  - Interactive elements (points, lines): minimum 3:1 against background
-- **Do NOT rely solely on color** to convey information. Use shape, size, position, and labels in addition to color.
+### Color y Contraste
 
-### Keyboard Navigation
+- Todos los elementos interactivos DEBEN tener **contraste suficiente** contra el fondo:
+  - Texto: ratio de contraste mínimo 4.5:1 contra el fondo
+  - Elementos interactivos (puntos, líneas): mínimo 3:1 contra el fondo
+- **NO depender solo del color** para transmitir información. Usar forma, tamaño, posición y etiquetas además de color.
 
-- Diagrams SHOULD be focusable: `<div ref={...} tabIndex={0} role="img" aria-label="...">`
-- For interactive controls (sliders, draggable points), ensure keyboard equivalents exist (e.g., arrow keys for sliders)
-- JSXGraph sliders support keyboard input natively; ensure they are reachable via Tab
+### Navegación por Teclado
 
-### ARIA Labels
+- Los diagramas DEBERÍAN ser focusables: `<div ref={...} tabIndex={0} role="img" aria-label="...">`
+- Para controles interactivos (sliders, puntos arrastrables), asegurar equivalentes de teclado (p. ej. flechas para sliders)
+- Los sliders de JSXGraph soportan input de teclado nativamente; asegurar que sean alcanzables vía Tab
+
+### Etiquetas ARIA
 
 ```typescript
 <div
@@ -668,86 +909,100 @@ SVG using `var(--theme-*)` adapts automatically to dark mode because the CSS var
 />
 ```
 
-## 13. Performance Guidelines
+---
 
-- **JSXGraph:** Minimize elements. Remove unnecessary axes/grid when not needed. Use `freeBoard` in cleanup.
-- **SVG:** Use CSS for transitions (`transition: all 0.3s`) instead of JavaScript animation loops.
-- **Canvas:** Keep `requestAnimationFrame` animations under 16ms per frame. Use `will-change: transform` on the canvas container.
-- **General:** Avoid unnecessary re-renders. Memoize diagram components with `React.memo` if they receive stable props.
-- **Highlight effects:** Batch all `setAttribute` calls and call `board.update()` once, not per element.
+## 18. Rendimiento
 
-## 14. File Organization
+- **JSXGraph:** Minimizar elementos. Eliminar ejes/grid innecesarios. Usar `freeBoard` en cleanup.
+- **SVG:** Usar CSS para transiciones (`transition: all 0.3s`) en lugar de bucles de animación JavaScript.
+- **Canvas:** Mantener animaciones `requestAnimationFrame` por debajo de 16ms por frame. Usar `will-change: transform` en el container del canvas.
+- **General:** Evitar re-renders innecesarios. Memoizar componentes de diagrama con `React.memo` si reciben props estables.
+- **Efectos de highlight:** Agrupar todas las llamadas `setAttribute` y llamar `board.update()` una sola vez, no por elemento.
+
+---
+
+## 19. Organización de Archivos
 
 ```
 src/diagrams/
-  <Category>/
-    <Name>.tsx           (diagram component — PascalCase)
+  <Categoria>/
+    <Nombre>.tsx           (componente del diagrama — PascalCase)
 ```
 
-**Category conventions:**
+**Categorías existentes con contenido:**
 
-| Category | Content |
-|---|---|
-| `Axiomas/` | Axiom visualizations (incidence, order, continuity) |
-| `Geometria/` | Geometric concepts (segments, angles, circles, Thales) |
-| `Pitagoras/` | Pythagoras-specific diagrams (proof steps, applications) |
-| `Calculo/` | Calculus (derivatives, integrals, limits) |
-| `Analisis/` | Analysis (epsilon-delta, convergence) |
-| `Algebra/` | Algebra (Cramer's rule, systems) |
-| `AlgebraLineal/` | Linear algebra (determinants, matrices, transformations) |
-| `Estadistica/` | Statistics (normal distribution, hypothesis tests) |
-| `Probabilidad/` | Probability (Bayes trees, conditional probability) |
-| `MetodosDemostracion/` | Proof method visualizations |
-| `Modelos/` | Model diagrams (3-point, Fano, Poincaré) |
-| `CasosUso/` | Real-world application simulations |
-| `Ejercicios/` | Interactive exercise diagrams |
+| Categoría | Contenido | Estado |
+|---|---|---|
+| `Definiciones/` | Diagramas de definiciones (triángulo, ángulo, circunferencia, etc.) | Activa |
+| `Axiomas/` | Visualizaciones de axiomas (incidencia, paralelas, Pasch, SAS) | Activa |
+| `Teoremas/` | Diagramas de demostraciones de teoremas (Pitágoras, Tales, etc.) | Activa |
+| `Demos/` | Diagramas de demostraciones adicionales | Activa |
+| `Theorems/` | Visualizaciones de teoremas (a consolidar con Teoremas/) | Activa |
+| `Models/` | Diagramas de modelos (3 puntos, Fano, Poincaré, cartesiano) | Activa |
 
-## 15. Quality Checklist
+**Categorías reservadas (vacías, para contenido futuro):**
 
-### Technical
+`Algebra/`, `Analisis/`, `Calculo/`, `CasosUso/`, `Estadistica/`, `Euclides/`, `Ejercicios/`, `Geometria/`, `LinearAlgebra/`, `MetodosDemostracion/`, `Pitagoras/`, `Probabilidad/`
 
-- [ ] The diagram uses the correct rendering technology (JSXGraph/SVG/Canvas/HTML)
-- [ ] All colors use the Arts & Crafts palette (tokens from §3)
-- [ ] SVG uses `var(--theme-<token>)` CSS variables (never hex)
-- [ ] JSXGraph has `showCopyright: false` and `keepaspectratio: true`
-- [ ] JSXGraph has proper cleanup (`freeBoard` in useEffect return)
-- [ ] The diagram has `touch-none` class (SVG/Canvas)
-- [ ] Adequate minimum height (`min-h-[400px]` SVG, `min-h-[500px]` JSXGraph)
+> Al crear un nuevo diagrama, usar la categoría existente más adecuada. Si ninguna encaja, crear una nueva siguiendo el naming PascalCase.
 
-### Interactivity
+---
 
-- [ ] The diagram reads from LessonStore (via store bridge in §2.2)
-- [ ] Element/target names match exactly between diagram and MDX `<InteractiveElement>`
-- [ ] The highlight `useEffect` reset block restores EVERY modified attribute
-- [ ] Each proof step body has at least one `<InteractiveElement>` referencing the diagram
-- [ ] Interactive elements have visual feedback on hover/highlight
-- [ ] The diagram produces a distinct visual state for each target value
+## 20. Checklist de Calidad
 
-### Visual Design
+### Técnico
 
-- [ ] One primary element per view state (visual hierarchy §4.1)
-- [ ] Whitespace: 15–20% margin around content
-- [ ] No gratuitous animations or effects
-- [ ] Labels use `font-serif` and are positioned to avoid overlapping lines
-- [ ] Colors have consistent semantic meaning within the diagram
+- [ ] El diagrama usa la tecnología de renderizado correcta (JSXGraph/SVG/Canvas/HTML)
+- [ ] TODOS los colores usan la paleta Arts & Crafts (tokens de §3) — sin hex arbitrarios
+- [ ] SVG usa `var(--theme-<token>)` CSS variables (nunca hex)
+- [ ] JSXGraph tiene `showCopyright: false`, `showNavigation: false` y `keepaspectratio: true`
+- [ ] JSXGraph tiene cleanup adecuado (`freeBoard` en return de useEffect)
+- [ ] El diagrama tiene clase `touch-none` (SVG/Canvas)
+- [ ] Altura mínima adecuada (`min-h-[400px]` SVG, `min-h-[500px]` JSXGraph)
 
-### Dark Mode
+### Interactividad
 
-- [ ] SVG uses CSS variables (automatic dark mode support)
-- [ ] JSXGraph has MutationObserver for theme changes (§11)
-- [ ] All colors are readable in both light and dark mode
+- [ ] El diagrama lee de `MathStore.variables['highlight']`
+- [ ] Maneja highlight como string, string[] y null (usar `isHighlight` helper)
+- [ ] Los nombres de elementos/target coinciden exactamente entre diagrama y MDX `<InteractiveElement>`
+- [ ] El `useEffect` de highlight restaura CADA atributo modificado en el bloque de reset
+- [ ] Cada paso del cuerpo de la demostración tiene al menos un `<InteractiveElement>`
+- [ ] Los elementos interactivos tienen feedback visual en hover/highlight
+- [ ] El diagrama produce un estado visual distinto para cada valor de target
 
-### Accessibility
+### Diseño Visual
 
-- [ ] Sufficient contrast (4.5:1 text, 3:1 interactive elements)
-- [ ] Information is not conveyed by color alone
-- [ ] The diagram container has `role="img"` and `aria-label`
-- [ ] Interactive controls have keyboard alternatives
+- [ ] Un elemento primario por estado de vista (jerarquía visual §4.1)
+- [ ] Espacio en blanco: 15–20% de margen alrededor del contenido
+- [ ] Sin animaciones gratuitas o efectos
+- [ ] Las etiquetas usan `font-serif` y están posicionadas para evitar solapamiento
+- [ ] Los colores tienen significado semántico consistente dentro del diagrama
 
-### Organization
+### Modo Oscuro
 
-- [ ] File is in the correct category directory (§14)
-- [ ] Component name matches the convention
-- [ ] For theorems/axioms: exported as `Simulation` with `"hasSimulation": true`
-- [ ] For models: exported as `Diagram` with `"hasDiagram": true`
-- [ ] No `\sen` anywhere — LaTeX uses `\sin`, plain text uses `sin`
+- [ ] SVG usa CSS variables (soporte automático de modo oscuro)
+- [ ] JSXGraph tiene MutationObserver para cambios de tema (§16)
+- [ ] Todos los colores son legibles en modo claro y oscuro
+
+### Accesibilidad
+
+- [ ] Contraste suficiente (4.5:1 texto, 3:1 elementos interactivos)
+- [ ] La información no se transmite solo por color
+- [ ] El container del diagrama tiene `role="img"` y `aria-label`
+- [ ] Los controles interactivos tienen alternativas de teclado
+
+### Organización
+
+- [ ] El archivo está en el directorio de categoría correcto (§19)
+- [ ] El nombre del componente sigue la convención PascalCase
+- [ ] Para teoremas/axiomas: exportado como `Simulation` con `"hasSimulation": true`
+- [ ] Para modelos: exportado como `Diagram` con `"hasDiagram": true`
+- [ ] No hay `\sen` en ningún sitio — LaTeX usa `\sin`, texto plano usa `sin`
+
+---
+
+## Ejemplos de referencia
+
+Diagramas canónicos bien hechos están en `examples/`:
+- `examples/JSXGraphCanon.tsx` — Patrón JSXGraph completo con highlight, store y cleanup
+- `examples/SVGCanon.tsx` — Patrón SVG con CSS variables y dark mode

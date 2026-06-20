@@ -1,0 +1,26 @@
+export const metadata = {
+  "id": "teorema-desigualdad-triangular",
+  "type": "teorema",
+  "title": "Desigualdad triangular",
+  "description": "En cualquier triángulo, la suma de las longitudes de dos de sus lados es estrictamente mayor que la longitud del tercer lado.",
+  "tags": ["geometria", "triangulos", "desigualdades"],
+  "authors": ["euclides"],
+  "links": ["triangulo", "segmento", "punto"],
+  "seeAlso": ["teorema-suma-angulos-triangulo"],
+  "satisfies": [],
+};
+
+<Capitular letra="L" />a desigualdad triangular es un teorema fundamental de la geometría euclidiana y una propiedad definitoria de cualquier espacio métrico. Afirma que el camino más corto entre dos puntos siempre es la línea recta que los une.
+
+<Separador />
+
+## Enunciado Formal
+
+Sea un <ConceptLink targetId="triangulo">triángulo</ConceptLink> de vértices $A, B$ y $C$. Se cumplen siempre las tres siguientes desigualdades:
+1. $AB + BC > AC$
+2. $AB + AC > BC$
+3. $AC + BC > AB$
+
+## Implicación
+
+Si no se cumple la desigualdad triangular estricta (es decir, si la suma es igual al tercer lado), los tres puntos no formarán un <ConceptLink targetId="triangulo">triángulo</ConceptLink>, sino que serán colineales y el <ConceptLink targetId="triangulo">triángulo</ConceptLink> se encontrará "degenerado".

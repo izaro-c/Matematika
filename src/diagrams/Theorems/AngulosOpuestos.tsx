@@ -3,6 +3,15 @@ import JXG from 'jsxgraph';
 import { useMathStore } from '../../store/MathStoreContext';
 import { useLessonStore } from '../../store/LessonStore';
 
+
+function getCSSVar(name: string): string {
+  if (typeof document !== 'undefined') {
+    return getComputedStyle(document.documentElement).getPropertyValue(name).trim();
+  }
+  return '#000';
+}
+
+
 export const AngulosOpuestos = () => {
   const boardRef = useRef<HTMLDivElement>(null);
   const elementsRef = useRef<Record<string, unknown>>({});
@@ -23,58 +32,69 @@ export const AngulosOpuestos = () => {
     });
 
     const O = board.create('point', [0, 0], {
-      name: 'O', size: 5, fillColor: '#C86446', strokeColor: '#C86446', showInfobox: false, fixed: true,
+      name: 'O', size: 5, fillColor: getCSSVar('--theme-terracota'), strokeColor: getCSSVar('--theme-terracota'), showInfobox: false, fixed: true,
     });
 
     const A = board.create('point', [-3.5, 2], {
-      name: 'A', size: 4, fillColor: '#C86446', strokeColor: '#C86446', showInfobox: false,
+      name: 'A', size: 4, fillColor: getCSSVar('--theme-terracota'), strokeColor: getCSSVar('--theme-terracota'), showInfobox: false,
     });
 
     const Ap = board.create('point', [3.5, -2], {
-      name: "A'", size: 4, fillColor: '#C86446', strokeColor: '#C86446', showInfobox: false,
+      name: "A'", size: 4, fillColor: getCSSVar('--theme-terracota'), strokeColor: getCSSVar('--theme-terracota'), showInfobox: false,
     });
 
     const B = board.create('point', [3.5, 2], {
-      name: 'B', size: 4, fillColor: '#5D7080', strokeColor: '#5D7080', showInfobox: false,
+      name: 'B', size: 4, fillColor: getCSSVar('--theme-pizarra'), strokeColor: getCSSVar('--theme-pizarra'), showInfobox: false,
     });
 
     const Bp = board.create('point', [-3.5, -2], {
-      name: "B'", size: 4, fillColor: '#5D7080', strokeColor: '#5D7080', showInfobox: false,
+      name: "B'", size: 4, fillColor: getCSSVar('--theme-pizarra'), strokeColor: getCSSVar('--theme-pizarra'), showInfobox: false,
     });
 
     const l = board.create('line', [A, Ap], {
-      strokeColor: '#333333', strokeWidth: 2, fixed: true, highlight: false,
+      strokeColor: getCSSVar('--theme-carbon'), strokeWidth: 2, fixed: true, highlight: false,
     });
 
     const m = board.create('line', [B, Bp], {
-      strokeColor: '#333333', strokeWidth: 2, fixed: true, highlight: false,
+      strokeColor: getCSSVar('--theme-carbon'), strokeWidth: 2, fixed: true, highlight: false,
     });
 
     const angle1 = board.create('angle', [B, O, Ap], {
-      strokeColor: '#C86446', fillColor: '#C86446', fillOpacity: 0.15,
+      strokeColor: getCSSVar('--theme-terracota'), fillColor: getCSSVar('--theme-terracota'), fillOpacity: 0.15,
       radius: 0.8, name: 'α', label: { fontSize: 16 },
     });
 
     const angle2 = board.create('angle', [Bp, O, A], {
-      strokeColor: '#C86446', fillColor: '#C86446', fillOpacity: 0.15,
+      strokeColor: getCSSVar('--theme-terracota'), fillColor: getCSSVar('--theme-terracota'), fillOpacity: 0.15,
       radius: 0.8, name: 'α', label: { fontSize: 16 },
     });
 
     const angle3 = board.create('angle', [A, O, B], {
-      strokeColor: '#5D7080', fillColor: '#5D7080', fillOpacity: 0.15,
+      strokeColor: getCSSVar('--theme-pizarra'), fillColor: getCSSVar('--theme-pizarra'), fillOpacity: 0.15,
       radius: 0.8, name: 'β', label: { fontSize: 16 },
     });
 
     const angle4 = board.create('angle', [Ap, O, Bp], {
-      strokeColor: '#5D7080', fillColor: '#5D7080', fillOpacity: 0.15,
+      strokeColor: getCSSVar('--theme-pizarra'), fillColor: getCSSVar('--theme-pizarra'), fillOpacity: 0.15,
       radius: 0.8, name: 'β', label: { fontSize: 16 },
     });
 
     elementsRef.current = { board, angle1, angle2, angle3, angle4, O, A, B, Ap, Bp, l, m };
 
-    board.update();
+    board.update();    (board.renderer as any).container.style.backgroundColor = getCSSVar('--theme-lienzo');
+
+
+
+        const observer = new MutationObserver(() => {
+      if (board) {
+        (board.renderer as any).container.style.backgroundColor = getCSSVar('--theme-lienzo');
+        board.update();
+      }
+    });
+    observer.observe(document.documentElement, { attributes: true, attributeFilter: ['class'] });
 
     return () => {
+      observer.disconnect();
       JXG.JSXGraph.freeBoard(board);
       elementsRef.current = {};
     };
@@ -85,13 +105,13 @@ export const AngulosOpuestos = () => {
     if (!board) return;
 
     if (highlight === 'alpha') {
-      angle1.setAttribute({ fillOpacity: 0.4, strokeColor: '#C86446', strokeWidth: 3 });
-      angle2.setAttribute({ fillOpacity: 0.4, strokeColor: '#C86446', strokeWidth: 3 });
+      angle1.setAttribute({ fillOpacity: 0.4, strokeColor: getCSSVar('--theme-terracota'), strokeWidth: 3 });
+      angle2.setAttribute({ fillOpacity: 0.4, strokeColor: getCSSVar('--theme-terracota'), strokeWidth: 3 });
       angle3.setAttribute({ fillOpacity: 0.05 });
       angle4.setAttribute({ fillOpacity: 0.05 });
     } else if (highlight === 'beta') {
-      angle3.setAttribute({ fillOpacity: 0.4, strokeColor: '#5D7080', strokeWidth: 3 });
-      angle4.setAttribute({ fillOpacity: 0.4, strokeColor: '#5D7080', strokeWidth: 3 });
+      angle3.setAttribute({ fillOpacity: 0.4, strokeColor: getCSSVar('--theme-pizarra'), strokeWidth: 3 });
+      angle4.setAttribute({ fillOpacity: 0.4, strokeColor: getCSSVar('--theme-pizarra'), strokeWidth: 3 });
       angle1.setAttribute({ fillOpacity: 0.05 });
       angle2.setAttribute({ fillOpacity: 0.05 });
     }

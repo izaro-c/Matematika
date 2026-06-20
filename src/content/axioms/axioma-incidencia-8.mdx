@@ -4,53 +4,37 @@ export const metadata = {
   "title": "Axioma I-8 (Incidencia)",
   "description": "Existen al menos cuatro puntos que no están todos en un mismo plano.",
   "statement": "Existen cuatro puntos A, B, C, D tales que no existe un plano π que los contenga a todos.",
-  "tags": ["geometria", "incidencia", "geometria-absoluta"],
   "authors": ["hilbert"],
+  "hasSimulation": true
 };
 
-export const Simulation = () => (
-    <svg viewBox="0 0 280 220" xmlns="http://www.w3.org/2000/svg" className="w-full max-w-sm mx-auto my-4">
-      <polygon points="140,20 30,160 250,160" fill="#A2C2A2" fillOpacity="0.15" stroke="#A2C2A2" strokeWidth="1" strokeDasharray="4,3" />
-      <text x="250" y="156" fontSize="12" fill="#5D7080" fontFamily="serif" fontStyle="italic">π</text>
-      <circle cx="140" cy="20" r="5" fill="#C86446" />
-      <text x="128" y="12" fontSize="16" fill="#333333" fontFamily="serif" fontStyle="italic">A</text>
-      <circle cx="30" cy="160" r="5" fill="#C86446" />
-      <text x="14" y="178" fontSize="16" fill="#333333" fontFamily="serif" fontStyle="italic">B</text>
-      <circle cx="250" cy="160" r="5" fill="#C86446" />
-      <text x="238" y="178" fontSize="16" fill="#333333" fontFamily="serif" fontStyle="italic">C</text>
-      <circle cx="100" cy="100" r="5" fill="#C86446" />
-      <text x="86" y="94" fontSize="16" fill="#333333" fontFamily="serif" fontStyle="italic">D</text>
-      <line x1="140" y1="20" x2="100" y2="100" stroke="#C86446" strokeWidth="1" strokeDasharray="3,3" />
-      <line x1="30" y1="160" x2="100" y2="100" stroke="#C86446" strokeWidth="1" strokeDasharray="3,3" />
-      <line x1="250" y1="160" x2="100" y2="100" stroke="#C86446" strokeWidth="1" strokeDasharray="3,3" />
-    </svg>
-  );
+import { Incidence8 } from '../../diagrams/Axiomas/Incidence8';
+export const Simulation = Incidence8;
+import { InteractiveElement } from "../../components/ui/VisualBind";
 
-<Capitular letra="E" />
-xisten al menos cuatro puntos que no están todos en un mismo plano. Este axioma asegura que el espacio tiene tres dimensiones: no todos los puntos pueden colocarse en un único plano.
+<Capitular letra="E" />xisten al menos cuatro <ConceptLink targetId="punto">puntos</ConceptLink> espaciales que no son <ConceptLink targetId="coplanares">coplanares</ConceptLink> (es decir, que no encajan todos juntos dentro de un único <ConceptLink targetId="plano">plano</ConceptLink>). Este <ConceptLink targetId="postulado">postulado</ConceptLink> existencial asegura matemáticamente que la geometría goza de volumen, impidiendo que nuestro universo quede aplastado y reducido a una sola hoja bidimensional.
 
 <Separador />
 
 ### Enunciado Formal
 
 <Formula>
-  $$ \exists A, B, C, D \; \neg \exists \pi \; (A, B, C, D \in \pi). $$
+  $$
+  \exists A, B, C, D \implies \neg \exists \pi \ (A, B, C, D \in \pi)
+  $$
 </Formula>
-
-<Nota>
-  Se dice que cuatro puntos en esta configuración son *no coplanares*.
-</Nota>
 
 <Separador />
 
 ### Discusión
 
-Los axiomas I-1 a I-7 son compatibles con un universo puramente bidimensional (todos los puntos contenidos en un plano). El axioma I-8 rompe esa posibilidad al exigir la existencia de cuatro puntos que no yacen en un plano común.
+Si analizamos detenidamente los axiomas anteriores (del I-1 al I-7), descubrimos que funcionan a la perfección incluso si el universo entero fuera completa y estrictamente plano. El axioma I-8 llega para expandir el cosmos matemáticamente: fuerza la existencia de cuatro puntos independientes que no caben de ninguna manera en una misma superficie plana.
 
-Así como el axioma I-3 forzó el salto de una a dos dimensiones, el axioma I-8 fuerza el salto de dos a tres dimensiones. Entre los cuatro puntos, cualesquiera tres son coplanares (determinan un plano), pero no existe un único plano que los contenga a todos simultáneamente. En el diagrama, el punto D yace fuera del plano π determinado por A, B, C, formando un tetraedro.
+Si tomas los tres primeros puntos (<InteractiveElement target="pA" color="terracota">A</InteractiveElement>, <InteractiveElement target="pB" color="terracota">B</InteractiveElement> y <InteractiveElement target="pC" color="terracota">C</InteractiveElement>), el <ConceptLink targetId="axioma-incidencia-4">axioma I-4</ConceptLink> ya nos garantizó que generan un <InteractiveElement target="plano-pi" color="salvia">plano base</InteractiveElement>. Al obligar a que exista incondicionalmente un cuarto punto (<InteractiveElement target="pD" color="carbon">D</InteractiveElement>) levitando fuera de esa base de sustentación, dotamos al <ConceptLink targetId="espacio-tridimensional">espacio tridimensional</ConceptLink> de altura y profundidad. Esta estructura esquelética forma las aristas de un <ConceptLink targetId="tetraedro">tetraedro</ConceptLink> elemental.
 
 <Separador />
 
 ### Observaciones
 
-Este es el último axioma existencial de incidencia: junto con I-3, establece que el espacio tiene *exactamente* tres dimensiones. En geometrías de dimensión superior se necesitarían axiomas adicionales análogos. Con este axioma se completa la axiomática de incidencia de Hilbert para el espacio tridimensional.
+- Este es el segundo y último axioma puramente existencial de <ConceptLink targetId="hilbert">Hilbert</ConceptLink> en todo el bloque de <ConceptLink targetId="incidencia">incidencia</ConceptLink>. Junto con el <ConceptLink targetId="axioma-incidencia-3">axioma I-3</ConceptLink> (que exigía tres puntos libres), anclan sólidamente el hecho de que el espacio tiene *al menos* tres <ConceptLink targetId="dimension">dimensiones</ConceptLink>.
+- Con este paso culmina la base fundacional del bloque de incidencia. Ya hemos construido matemáticamente puntos sueltos, rectas que los conectan rígidamente como cuerdas tensas, y planos infinitos cortándose libremente en el aire.

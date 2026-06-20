@@ -1,0 +1,22 @@
+export const metadata = {
+  "id": "mediana",
+  "type": "definicion",
+  "title": "Mediana",
+  "description": "La mediana de un triángulo es el segmento que une un vértice con el punto medio del lado opuesto.",
+  "tags": ["geometria", "triangulos", "segmentos"],
+  "authors": ["euclides"],
+  "links": ["segmento", "punto", "triangulo"],
+  "seeAlso": ["teorema-punto-medio-perpendicular"],
+  "hasSimulation": true,
+};
+
+import { InteractiveElement } from "../../components/ui/VisualBind";
+import { Mediana } from '../../diagrams/Definiciones/Mediana';
+
+export const Simulation = Mediana;
+
+<Capitular letra="L" />a <InteractiveElement target="mediana">mediana</InteractiveElement> de un <ConceptLink targetId="triangulo">triángulo</ConceptLink> es el <ConceptLink targetId="segmento">segmento</ConceptLink> que une un <InteractiveElement target="vertice">vértice</InteractiveElement> con el <InteractiveElement target="punto-medio">punto medio</InteractiveElement> del lado opuesto.
+
+<Separador />
+
+En geometría, cada <ConceptLink targetId="triangulo">triángulo</ConceptLink> posee tres medianas, una por cada vértice, y las tres concurren invariablemente en un único punto interior denominado <InteractiveElement target="baricentro">baricentro</InteractiveElement>.

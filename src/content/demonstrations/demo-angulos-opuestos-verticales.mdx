@@ -7,57 +7,52 @@ export const metadata = {
   "proofMethod": "directo",
   "authors": ["euclides"],
   "tags": ["geometria", "congruencia"],
-  "layout": "text",
+  "layout": "split",
   "links": ["axioma-congruencia-2", "axioma-congruencia-3", "axioma-congruencia-4"],
 };
 
-import { InteractiveElement } from "../../components/ui/VisualBind";
-import { AngulosOpuestos } from '../../diagrams/Theorems/AngulosOpuestos';
-export const Simulation = AngulosOpuestos;
+import { DemoAngulosOpuestos } from '../../diagrams/Demos/DemoAngulosOpuestos';
 
-<Capitular letra="C" />
+<DemonstrationSection diagram={<DemoAngulosOpuestos />}>
 
-uando dos rectas se cortan en un punto, se forman cuatro ángulos. Los ángulos opuestos por el vértice son congruentes. La demostración usa los axiomas de congruencia de ángulos: la posibilidad de sumar y restar ángulos congruentes.
+<Capitular letra="C" />uando dos rectas se intersecan en un único punto, determinan topológicamente cuatro regiones angulares. Aquellos ángulos opuestos por el vértice exhiben recíproca congruencia estricta. Esta demostración clásica emplea las nociones algebraicas axiomáticas de adición y sustracción sobre clases de congruencia angular.
 
 <Separador />
 
-### Hipótesis
+### Hipótesis y Tesis
 
-Sean $l$ y $m$ dos rectas que se cortan en el punto $O$. Se forman cuatro ángulos: $\angle AOB$, $\angle BOA'$, $\angle A'OB'$, $\angle B'OA$, donde $A, A' \in l$ y $B, B' \in m$ están a ambos lados de $O$.
-
-<Separador />
-
-### Tesis
-
-Los ángulos opuestos por el vértice son congruentes:
-
-$$ \angle AOB \cong \angle A'OB' \quad \text{y} \quad \angle BOA' \cong \angle B'OA. $$
+**Hipótesis:** Sean <InteractiveElement target="lineL" color="terracota">$l$</InteractiveElement> y <InteractiveElement target="lineM" color="terracota">$m$</InteractiveElement> dos rectas que se cortan en el punto $O$. Se forman cuatro ángulos: <InteractiveElement target="angle1" color="terracota">$\angle 1$</InteractiveElement>, <InteractiveElement target="angle2" color="terracota">$\angle 2$</InteractiveElement>, <InteractiveElement target="angle3" color="terracota">$\angle 3$</InteractiveElement>, y <InteractiveElement target="angle4" color="terracota">$\angle 4$</InteractiveElement>.  
+**Tesis:** $\angle 1 \cong \angle 3$ y $\angle 2 \cong \angle 4$.
 
 <Separador />
 
-### Demostración
+<MedievalStep number={1} title="Ángulos adyacentes suman un llano" target="supp12">
+Los ángulos <InteractiveElement target="angle1" color="terracota">$\angle 1$</InteractiveElement> y <InteractiveElement target="angle2" color="terracota">$\angle 2$</InteractiveElement> son adyacentes (comparten un lado y forman la recta <InteractiveElement target="lineL" color="terracota">$l$</InteractiveElement>). Por la definición de ángulos suplementarios:
 
-**Paso 1: Identificar ángulos adyacentes.** Los ángulos $\angle AOB$ y $\angle BOA'$ son adyacentes (comparten el lado $\overrightarrow{OB}$ y sus otros lados $\overrightarrow{OA}$ y $\overrightarrow{OA'}$ son opuestos). Por la <ConceptLink targetId="axioma-congruencia-4">definición de ángulos adyacentes suplementarios</ConceptLink> y los <ConceptLink targetId="axioma-congruencia-3">axiomas de suma de ángulos congruentes</ConceptLink>:
+$$ \angle 1 + \angle 2 \cong 180^\circ $$
+</MedievalStep>
 
-$$ \angle AOB + \angle BOA' \cong \text{ángulo llano}. $$
+<MedievalStep number={2} title="Segundo par de adyacentes" target="supp23">
+Análogamente, los ángulos <InteractiveElement target="angle2" color="terracota">$\angle 2$</InteractiveElement> y <InteractiveElement target="angle3" color="terracota">$\angle 3$</InteractiveElement> forman la recta <InteractiveElement target="lineM" color="terracota">$m$</InteractiveElement>:
 
-Análogamente, los ángulos $\angle BOA'$ y $\angle A'OB'$ son adyacentes (comparten el lado $\overrightarrow{OA'}$):
+$$ \angle 2 + \angle 3 \cong 180^\circ $$
+</MedievalStep>
 
-$$ \angle BOA' + \angle A'OB' \cong \text{ángulo llano}. $$
+<MedievalStep number={3} title="Transitividad" target="angle2">
+Ambas expresiones son congruentes al ángulo llano. Por transitividad de la congruencia:
 
-**Paso 2: Restar el ángulo común.** Ambas expresiones son congruentes al ángulo llano. Por transitividad de la congruencia:
+$$ \angle 1 + \angle 2 \cong \angle 2 + \angle 3 $$
+</MedievalStep>
 
-$$ \angle AOB + \angle BOA' \cong \angle BOA' + \angle A'OB'. $$
+<MedievalStep number={4} title="Resta de ángulo común" target="congruence13">
+Por el <ConceptLink targetId="axioma-congruencia-2">axioma de resta</ConceptLink>, podemos cancelar el ángulo común <InteractiveElement target="angle2" color="terracota">$\angle 2$</InteractiveElement> de ambos lados de la congruencia:
 
-Por el <ConceptLink targetId="axioma-congruencia-2">axioma de resta de ángulos congruentes</ConceptLink>, podemos restar el ángulo común $\angle BOA'$ de ambos lados:
+$$ \angle 1 \cong \angle 3 $$
+</MedievalStep>
 
-$$ \angle AOB \cong \angle A'OB'. $$
-
-**Paso 3: Repetir para el otro par.** Un argumento análogo con los ángulos adyacentes $\angle A'OB'$ y $\angle B'OA$ muestra que:
-
-$$ \angle BOA' \cong \angle B'OA. $$
-
-Por tanto, los ángulos opuestos por el vértice son congruentes. $\blacksquare$
+<MedievalStep number={5} title="Conclusión para el otro par" target="angle4">
+Un argumento idéntico con los ángulos adyacentes <InteractiveElement target="angle3" color="terracota">$\angle 3$</InteractiveElement> y <InteractiveElement target="angle4" color="terracota">$\angle 4$</InteractiveElement> demuestra que $\angle 2 \cong \angle 4$. $\blacksquare$
+</MedievalStep>
 
 <Separador />
 
@@ -66,7 +61,9 @@ Por tanto, los ángulos opuestos por el vértice son congruentes. $\blacksquare$
 La demostración es una aplicación elegante del principio algebraico: si $a + b = c$ y $b + d = c$, entonces $a = d$. En geometría, este principio se sustituye por los axiomas de congruencia: la suma y resta de ángulos congruentes preserva la congruencia.
 
 <Nota>
-  Euclides demostró este resultado en la Proposición I.15 de los Elementos usando el mismo argumento. Su formulación hablaba de "dos ángulos rectos" donde nosotros decimos "ángulo llano".
+  <ConceptLink targetId="euclides">Euclides</ConceptLink> demostró este resultado en la Proposición I.15 de los Elementos usando el mismo argumento. Su formulación hablaba de "dos ángulos rectos" donde nosotros decimos "ángulo llano".
 </Nota>
 
-Este teorema no requiere el postulado de las paralelas: es válido en geometría absoluta (euclidiana e hiperbólica).
+Este teorema no requiere el postulado de las <ConceptLink targetId="paralelas">paralelas</ConceptLink>: es válido en <ConceptLink targetId="sistema-absoluto">geometría absoluta</ConceptLink> (euclidiana e hiperbólica).
+
+</DemonstrationSection>

@@ -7,58 +7,57 @@ export const metadata = {
   "proofMethod": "constructivo",
   "authors": ["hilbert"],
   "tags": ["geometria", "congruencia", "orden"],
-  "layout": "text",
+  "layout": "split",
   "links": ["axioma-congruencia-1", "axioma-congruencia-2", "axioma-orden-1"],
 };
 
-import { InteractiveElement } from "../../components/ui/VisualBind";
+import { DemoPuntoMedio } from "../../diagrams/Demos/DemoPuntoMedio";
 
-<Capitular letra="T" />
+<DemonstrationSection diagram={<DemoPuntoMedio />}>
 
-odo segmento admite un único punto medio. La existencia se construye mediante el transporte de segmentos; la unicidad se sigue de los axiomas de orden y congruencia.
-
-<Separador />
-
-### Hipótesis
-
-Sea $\overline{AB}$ un segmento con $A \neq B$.
+<Capitular letra="T" />odo <ConceptLink targetId="segmento">segmento</ConceptLink> admite exactamente un punto medio topológico. La prueba de existencia se articula constructivamente mediante el transporte axiomático de segmentos; su unicidad estricta se colige deductivamente de los postulados fundamentales de orden y congruencia.
 
 <Separador />
 
-### Tesis
+### Hipótesis y Tesis
 
-Existe un único punto $M \in \overline{AB}$ tal que $\overline{AM} \cong \overline{MB}$.
+**Hipótesis:** Sea <InteractiveElement target="segmentAB" color="terracota">$\overline{AB}$</InteractiveElement> un <ConceptLink targetId="segmento">segmento</ConceptLink> con $A \neq B$.  
+**Tesis:** Existe un único punto <InteractiveElement target="pointM" color="terracota">$M$</InteractiveElement> $\in \overline{AB}$ tal que <InteractiveElement target="congruence" color="terracota">$\overline{AM} \cong \overline{MB}$</InteractiveElement>.
 
 <Separador />
 
-### Demostración
+<MedievalStep number={1} title="Existencia: Construcción del punto" target="pointM">
+Por el <ConceptLink targetId="axioma-congruencia-1">axioma de transporte de segmentos</ConceptLink>, sobre la semirrecta $\overrightarrow{AB}$ podemos transportar segmentos. Construyamos el punto <InteractiveElement target="pointM" color="terracota">$M$</InteractiveElement> sobre $\overline{AB}$ tal que $\overline{AM}$ sea congruente a un <ConceptLink targetId="segmento">segmento</ConceptLink> de longitud $\frac{|\overline{AB}|}{2}$.
 
-**Existencia.**
+La existencia de este punto $M$ entre $A$ y $B$ se garantiza mediante los <ConceptLink targetId="axioma-orden-1">axiomas de orden</ConceptLink> y de <ConceptLink targetId="arquimedes">Arquímedes</ConceptLink>.
+</MedievalStep>
 
-*Paso 1: Construir el punto medio.* Por el <ConceptLink targetId="axioma-congruencia-1">axioma III-1 de transporte de segmentos</ConceptLink>, sobre la semirrecta $\overrightarrow{AB}$ podemos transportar segmentos. Construyamos el punto $M$ sobre $\overline{AB}$ tal que $\overline{AM}$ sea congruente a un segmento de longitud $\frac{|\overline{AB}|}{2}$.
+<MedievalStep number={2} title="Verificar congruencia" target="congruence">
+Por construcción, la distancia de $A$ a $M$ es la misma que de $M$ a $B$. Por lo tanto:
 
-La existencia de este punto $M$ entre $A$ y $B$ se garantiza mediante los <ConceptLink targetId="axioma-orden-1">axiomas de orden</ConceptLink> (que aseguran la densidad de los puntos sobre la recta) y el axioma de Arquímedes (que permite la división de segmentos en partes iguales).
+$$ \overline{AM} \cong \overline{MB} $$
 
-*Paso 2: Verificar la congruencia.* Por construcción, $\overline{AM} \cong \overline{MB}$, pues ambos segmentos tienen la misma longitud.
+Esto demuestra la existencia.
+</MedievalStep>
 
-**Unicidad.**
-
+<MedievalStep number={3} title="Unicidad: Suposición" target="segmentAB">
 Supongamos que existen dos puntos medios $M$ y $M'$ con $\overline{AM} \cong \overline{MB}$ y $\overline{AM'} \cong \overline{M'B}$.
+</MedievalStep>
 
-Por el <ConceptLink targetId="axioma-congruencia-2">axioma III-2 de transitividad de la congruencia</ConceptLink>:
+<MedievalStep number={4} title="Conclusión por unicidad de transporte" target="pointM">
+Sobre la recta $\overline{AB}$, y dado un punto $A$, el <ConceptLink targetId="axioma-congruencia-1">axioma III-1</ConceptLink> garantiza que sobre la semirrecta $\overrightarrow{AB}$ existe un **único** punto a una distancia dada de $A$.
 
-$$ \overline{AM} \cong \overline{AM'} \quad \text{y} \quad \overline{MB} \cong \overline{M'B}. $$
-
-Sin embargo, sobre la recta $\overline{AB}$, y dado un punto $A$, el <ConceptLink targetId="axioma-congruencia-1">axioma III-1</ConceptLink> garantiza que sobre la semirrecta $\overrightarrow{AB}$ existe un **único** punto a una distancia dada de $A$. Pues $M$ y $M'$ están ambos sobre $\overrightarrow{AB}$ y a la misma distancia de $A$, se tiene $M = M'$.
-
-Por tanto, el punto medio es único. $\blacksquare$
+Pues $M$ y $M'$ están ambos sobre $\overrightarrow{AB}$ y a la misma distancia de $A$, se tiene $M = M'$. Por tanto, el punto medio es único. $\blacksquare$
+</MedievalStep>
 
 <Separador />
 
 ### Análisis
 
-La existencia del punto medio requiere los axiomas de continuidad (Arquímedes y completitud) en el sentido general: sin ellos, pueden existir modelos donde ciertos segmentos no admitan punto medio. Con los axiomas de congruencia y orden solos se garantiza la unicidad.
+La existencia del punto medio requiere los axiomas de continuidad (<ConceptLink targetId="axioma-arquimedes">axioma de <ConceptLink targetId="arquimedes">Arquímedes</ConceptLink></ConceptLink> y <ConceptLink targetId="axioma-completitud">completitud</ConceptLink>) en el sentido general: sin ellos, pueden existir modelos donde ciertos segmentos no admitan punto medio. Con los axiomas de congruencia y orden solos se garantiza la unicidad.
 
 <Nota>
-  El punto medio permite definir la **mediatriz** de un segmento: el lugar geométrico de los puntos equidistantes de los extremos. La mediatriz es perpendicular al segmento en su punto medio.
+  El punto medio permite definir la **<ConceptLink targetId="mediatriz">mediatriz</ConceptLink>** de un <ConceptLink targetId="segmento">segmento</ConceptLink>: el lugar geométrico de los puntos equidistantes de los extremos. La <ConceptLink targetId="mediatriz">mediatriz</ConceptLink> es <ConceptLink targetId="perpendicular">perpendicular</ConceptLink> al <ConceptLink targetId="segmento">segmento</ConceptLink> en su punto medio.
 </Nota>
+
+</DemonstrationSection>

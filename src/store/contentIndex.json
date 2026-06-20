@@ -229,7 +229,8 @@
       ],
       "authors": [
         "hilbert"
-      ]
+      ],
+      "hasSimulation": true
     }
   },
   "axioma-congruencia-2": {
@@ -250,7 +251,8 @@
       ],
       "authors": [
         "hilbert"
-      ]
+      ],
+      "hasSimulation": true
     }
   },
   "axioma-congruencia-3": {
@@ -271,7 +273,8 @@
       ],
       "authors": [
         "hilbert"
-      ]
+      ],
+      "hasSimulation": true
     }
   },
   "axioma-congruencia-4": {
@@ -292,7 +295,8 @@
       ],
       "authors": [
         "hilbert"
-      ]
+      ],
+      "hasSimulation": true
     }
   },
   "axioma-congruencia-5": {
@@ -329,11 +333,6 @@
       "title": "Axioma I-1 (Incidencia)",
       "description": "Por dos puntos distintos del espacio pasa exactamente una recta.",
       "statement": "Dados dos puntos distintos A y B, existe una única recta que los contiene.",
-      "tags": [
-        "geometria",
-        "incidencia",
-        "geometria-absoluta"
-      ],
       "authors": [
         "hilbert"
       ],
@@ -351,11 +350,6 @@
       "title": "Axioma I-2 (Incidencia)",
       "description": "Toda recta contiene al menos dos puntos distintos.",
       "statement": "Para toda recta l, existen al menos dos puntos distintos A y B tales que A ∈ l y B ∈ l.",
-      "tags": [
-        "geometria",
-        "incidencia",
-        "geometria-absoluta"
-      ],
       "authors": [
         "hilbert"
       ],
@@ -371,13 +365,8 @@
       "id": "axioma-incidencia-3",
       "type": "axioma",
       "title": "Axioma I-3 (Incidencia)",
-      "description": "Existen al menos tres puntos no colineales, es decir, que no están todos sobre una misma recta.",
+      "description": "Existen al menos tres puntos no colineales, forzando la dimensionalidad del espacio.",
       "statement": "Existen tres puntos A, B, C que no pertenecen a una misma recta.",
-      "tags": [
-        "geometria",
-        "incidencia",
-        "geometria-absoluta"
-      ],
       "authors": [
         "hilbert"
       ],
@@ -393,13 +382,8 @@
       "id": "axioma-incidencia-4",
       "type": "axioma",
       "title": "Axioma I-4 (Incidencia)",
-      "description": "Por tres puntos no colineales pasa exactamente un plano.",
+      "description": "Por tres puntos no colineales pasa exactamente un único plano.",
       "statement": "Dados tres puntos A, B, C no colineales, existe un único plano π que los contiene.",
-      "tags": [
-        "geometria",
-        "incidencia",
-        "geometria-absoluta"
-      ],
       "authors": [
         "hilbert"
       ],
@@ -417,14 +401,10 @@
       "title": "Axioma I-5 (Incidencia)",
       "description": "Todo plano contiene al menos tres puntos no colineales.",
       "statement": "Para todo plano π, existen tres puntos A, B, C ∈ π que no son colineales.",
-      "tags": [
-        "geometria",
-        "incidencia",
-        "geometria-absoluta"
-      ],
       "authors": [
         "hilbert"
-      ]
+      ],
+      "hasSimulation": true
     }
   },
   "axioma-incidencia-6": {
@@ -438,14 +418,10 @@
       "title": "Axioma I-6 (Incidencia)",
       "description": "Si dos puntos de una recta pertenecen a un plano, entonces toda la recta está contenida en dicho plano.",
       "statement": "Si A y B son puntos de una recta l, y A, B ∈ π, entonces l ⊂ π.",
-      "tags": [
-        "geometria",
-        "incidencia",
-        "geometria-absoluta"
-      ],
       "authors": [
         "hilbert"
-      ]
+      ],
+      "hasSimulation": true
     }
   },
   "axioma-incidencia-7": {
@@ -457,16 +433,12 @@
       "id": "axioma-incidencia-7",
       "type": "axioma",
       "title": "Axioma I-7 (Incidencia)",
-      "description": "Si dos planos se intersectan, su intersección es una recta.",
+      "description": "Si dos planos se intersecan, su intersección es una recta.",
       "statement": "Dados dos planos distintos π y σ con π ∩ σ ≠ ∅, entonces π ∩ σ es una recta.",
-      "tags": [
-        "geometria",
-        "incidencia",
-        "geometria-absoluta"
-      ],
       "authors": [
         "hilbert"
-      ]
+      ],
+      "hasSimulation": true
     }
   },
   "axioma-incidencia-8": {
@@ -480,14 +452,10 @@
       "title": "Axioma I-8 (Incidencia)",
       "description": "Existen al menos cuatro puntos que no están todos en un mismo plano.",
       "statement": "Existen cuatro puntos A, B, C, D tales que no existe un plano π que los contenga a todos.",
-      "tags": [
-        "geometria",
-        "incidencia",
-        "geometria-absoluta"
-      ],
       "authors": [
         "hilbert"
-      ]
+      ],
+      "hasSimulation": true
     }
   },
   "axioma-orden-1": {
@@ -499,16 +467,12 @@
       "id": "axioma-orden-1",
       "type": "axioma",
       "title": "Axioma II-1 (Orden)",
-      "description": "Si un punto B está entre A y C, entonces A, B, C son tres puntos distintos y colineales, y B está también entre C y A.",
+      "description": "Si un punto B está entre A y C, entonces A, B, C son colineales y B está entre C y A.",
       "statement": "Si A, B, C son puntos y B está entre A y C, entonces A, B, C son tres puntos distintos sobre una misma recta y B está entre C y A.",
-      "tags": [
-        "geometria",
-        "orden",
-        "geometria-absoluta"
-      ],
       "authors": [
         "hilbert"
-      ]
+      ],
+      "hasSimulation": true
     }
   },
   "axioma-orden-2": {
@@ -522,14 +486,10 @@
       "title": "Axioma II-2 (Orden)",
       "description": "Dados dos puntos distintos A y C, existe al menos un punto B sobre la recta AC que está entre A y C.",
       "statement": "Para cualquier par de puntos distintos A y C, existe al menos un punto B tal que A * B * C.",
-      "tags": [
-        "geometria",
-        "orden",
-        "geometria-absoluta"
-      ],
       "authors": [
         "hilbert"
-      ]
+      ],
+      "hasSimulation": true
     }
   },
   "axioma-orden-3": {
@@ -543,14 +503,10 @@
       "title": "Axioma II-3 (Orden)",
       "description": "Dados tres puntos distintos sobre una recta, exactamente uno de ellos está entre los otros dos.",
       "statement": "Si A, B, C son tres puntos distintos sobre una misma recta, entonces se cumple exactamente una de las relaciones: A * B * C, A * C * B, o B * A * C.",
-      "tags": [
-        "geometria",
-        "orden",
-        "geometria-absoluta"
-      ],
       "authors": [
         "hilbert"
-      ]
+      ],
+      "hasSimulation": true
     }
   },
   "axioma-orden-4": {
@@ -564,12 +520,6 @@
       "title": "Axioma II-4 (Pasch)",
       "description": "Si una recta corta a un lado de un triángulo sin pasar por sus vértices, entonces corta también a otro de los lados.",
       "statement": "Dado un triángulo ABC y una recta l que no pasa por A, B ni C, si l intersecta el lado AB en un punto entre A y B, entonces l intersecta también AC o BC.",
-      "tags": [
-        "geometria",
-        "orden",
-        "geometria-absoluta",
-        "pasch"
-      ],
       "authors": [
         "hilbert",
         "pasch"
@@ -623,6 +573,34 @@
       "hasSimulation": true
     }
   },
+  "altura": {
+    "id": "altura",
+    "slug": "altura",
+    "filePath": "definitions/altura.mdx",
+    "contentType": "definicion",
+    "metadata": {
+      "id": "altura",
+      "type": "definicion",
+      "title": "Altura",
+      "description": "La altura de un triángulo es el segmento perpendicular trazado desde un vértice al lado opuesto (o su prolongación).",
+      "tags": [
+        "geometria",
+        "triangulos",
+        "rectas"
+      ],
+      "authors": [
+        "euclides"
+      ],
+      "links": [
+        "segmento",
+        "triangulo",
+        "perpendicular",
+        "punto"
+      ],
+      "seeAlso": [],
+      "hasSimulation": true
+    }
+  },
   "angulo": {
     "id": "angulo",
     "slug": "angulo",
@@ -652,36 +630,247 @@
       "hasSimulation": true
     }
   },
+  "bisectriz": {
+    "id": "bisectriz",
+    "slug": "bisectriz",
+    "filePath": "definitions/bisectriz.mdx",
+    "contentType": "definicion",
+    "metadata": {
+      "id": "bisectriz",
+      "type": "definicion",
+      "title": "Bisectriz",
+      "description": "La bisectriz de un ángulo es la semirrecta con origen en el vértice que divide al ángulo en dos ángulos congruentes.",
+      "tags": [
+        "geometria",
+        "angulos"
+      ],
+      "authors": [
+        "euclides"
+      ],
+      "links": [
+        "angulo",
+        "semirrecta",
+        "punto"
+      ],
+      "seeAlso": [],
+      "hasSimulation": true
+    }
+  },
+  "circunferencia": {
+    "id": "circunferencia",
+    "slug": "circunferencia",
+    "filePath": "definitions/circunferencia.mdx",
+    "contentType": "definicion",
+    "metadata": {
+      "id": "circunferencia",
+      "type": "definicion",
+      "title": "Circunferencia",
+      "description": "Lugar geométrico de los puntos de un plano que equidistan de un punto fijo llamado centro.",
+      "statement": "La circunferencia C(O,r) es el conjunto de puntos P del plano tales que |OP| = r.",
+      "tags": [
+        "geometria",
+        "curvas"
+      ],
+      "authors": [
+        "euclides"
+      ],
+      "links": [
+        "punto",
+        "segmento",
+        "plano"
+      ],
+      "seeAlso": [
+        "angulo"
+      ],
+      "hasSimulation": true
+    }
+  },
+  "cuadrilatero": {
+    "id": "cuadrilatero",
+    "slug": "cuadrilatero",
+    "filePath": "definitions/cuadrilatero.mdx",
+    "contentType": "definicion",
+    "metadata": {
+      "id": "cuadrilatero",
+      "type": "definicion",
+      "title": "Cuadrilátero",
+      "description": "Un cuadrilátero es un polígono de cuatro lados y cuatro vértices.",
+      "tags": [
+        "geometria",
+        "poligonos"
+      ],
+      "authors": [
+        "euclides"
+      ],
+      "links": [
+        "punto",
+        "segmento",
+        "angulo"
+      ],
+      "seeAlso": [
+        "paralelogramo"
+      ],
+      "hasSimulation": true
+    }
+  },
+  "mediana": {
+    "id": "mediana",
+    "slug": "mediana",
+    "filePath": "definitions/mediana.mdx",
+    "contentType": "definicion",
+    "metadata": {
+      "id": "mediana",
+      "type": "definicion",
+      "title": "Mediana",
+      "description": "La mediana de un triángulo es el segmento que une un vértice con el punto medio del lado opuesto.",
+      "tags": [
+        "geometria",
+        "triangulos",
+        "segmentos"
+      ],
+      "authors": [
+        "euclides"
+      ],
+      "links": [
+        "segmento",
+        "punto",
+        "triangulo"
+      ],
+      "seeAlso": [
+        "teorema-punto-medio-perpendicular"
+      ],
+      "hasSimulation": true
+    }
+  },
+  "mediatriz": {
+    "id": "mediatriz",
+    "slug": "mediatriz",
+    "filePath": "definitions/mediatriz.mdx",
+    "contentType": "definicion",
+    "metadata": {
+      "id": "mediatriz",
+      "type": "definicion",
+      "title": "Mediatriz",
+      "description": "La mediatriz de un segmento es la recta perpendicular al mismo que pasa por su punto medio.",
+      "tags": [
+        "geometria",
+        "rectas"
+      ],
+      "authors": [
+        "euclides"
+      ],
+      "links": [
+        "recta",
+        "segmento",
+        "punto"
+      ],
+      "seeAlso": [
+        "teorema-punto-medio-perpendicular"
+      ],
+      "hasSimulation": true
+    }
+  },
+  "paralelas": {
+    "id": "paralelas",
+    "slug": "paralelas",
+    "filePath": "definitions/paralelas.mdx",
+    "contentType": "definicion",
+    "metadata": {
+      "id": "paralelas",
+      "type": "definicion",
+      "title": "Paralelas",
+      "description": "Dos rectas en un mismo plano son paralelas si no comparten ningún punto (no se intersecan).",
+      "tags": [
+        "geometria",
+        "rectas"
+      ],
+      "authors": [
+        "euclides"
+      ],
+      "links": [
+        "recta",
+        "plano",
+        "punto"
+      ],
+      "seeAlso": [
+        "axioma-paralelas-euclides",
+        "axioma-paralelas-hiperbolico"
+      ],
+      "hasSimulation": true
+    }
+  },
+  "paralelogramo": {
+    "id": "paralelogramo",
+    "slug": "paralelogramo",
+    "filePath": "definitions/paralelogramo.mdx",
+    "contentType": "definicion",
+    "metadata": {
+      "id": "paralelogramo",
+      "type": "definicion",
+      "title": "Paralelogramo",
+      "description": "Un paralelogramo es un cuadrilátero cuyos pares de lados opuestos son paralelos.",
+      "tags": [
+        "geometria",
+        "poligonos",
+        "cuadrilateros"
+      ],
+      "authors": [
+        "euclides"
+      ],
+      "links": [
+        "cuadrilatero",
+        "recta",
+        "paralelas",
+        "segmento",
+        "angulo"
+      ],
+      "seeAlso": [],
+      "hasSimulation": true
+    }
+  },
+  "perpendicular": {
+    "id": "perpendicular",
+    "slug": "perpendicular",
+    "filePath": "definitions/perpendicular.mdx",
+    "contentType": "definicion",
+    "metadata": {
+      "id": "perpendicular",
+      "type": "definicion",
+      "title": "Perpendicular",
+      "description": "Dos rectas son perpendiculares si al intersecarse forman cuatro ángulos congruentes (rectos).",
+      "tags": [
+        "geometria",
+        "rectas",
+        "angulos"
+      ],
+      "authors": [
+        "euclides"
+      ],
+      "links": [
+        "recta",
+        "angulo",
+        "punto"
+      ],
+      "seeAlso": [
+        "mediatriz",
+        "teorema-punto-medio-perpendicular"
+      ],
+      "hasSimulation": true
+    }
+  },
   "plano": {
     "id": "plano",
     "slug": "plano",
     "filePath": "definitions/plano.mdx",
     "contentType": "definicion",
     "metadata": {
+      "id": "plano",
       "type": "definicion",
       "title": "Plano",
-      "description": "Concepto primitivo de la geometría. Un plano es una superficie bidimensional plana que se extiende infinitamente en todas direcciones. Se define implícitamente mediante los axiomas de incidencia.",
-      "tags": [
-        "geometria",
-        "primitivo",
-        "bidimensional"
-      ],
+      "description": "Concepto primitivo que representa una superficie bidimensional plana de extensión infinita. En geometría formal, su naturaleza se deriva únicamente de los axiomas de incidencia.",
       "authors": [
-        "hilbert"
-      ],
-      "links": [
-        "punto",
-        "recta",
-        "axioma-incidencia-4",
-        "axioma-incidencia-5",
-        "axioma-incidencia-6",
-        "axioma-incidencia-7",
-        "axioma-incidencia-8"
-      ],
-      "seeAlso": [
-        "axioma-incidencia-1",
-        "axioma-incidencia-2",
-        "axioma-incidencia-3"
+        "hilbert",
+        "euclides"
       ],
       "hasSimulation": true
     }
@@ -692,23 +881,13 @@
     "filePath": "definitions/punto.mdx",
     "contentType": "definicion",
     "metadata": {
+      "id": "punto",
       "type": "definicion",
       "title": "Punto",
-      "description": "Concepto primitivo de la geometría. Un punto es una entidad sin dimensión que ocupa una posición en el espacio. Se define implícitamente mediante los axiomas de pertenencia e intermediación.",
-      "tags": [
-        "geometria",
-        "primitivo",
-        "espacio"
-      ],
+      "description": "Concepto primitivo de la geometría que carece de dimensión, área o volumen, representando una posición exacta en el espacio. Su naturaleza matemática emerge estrictamente de las relaciones axiomáticas de incidencia e intermediación.",
       "authors": [
-        "hilbert"
-      ],
-      "links": [
-        "axioma-incidencia-1",
-        "axioma-incidencia-2",
-        "axioma-incidencia-3",
-        "axioma-orden-1",
-        "axioma-congruencia-1"
+        "hilbert",
+        "euclides"
       ],
       "hasSimulation": true
     }
@@ -719,26 +898,13 @@
     "filePath": "definitions/recta.mdx",
     "contentType": "definicion",
     "metadata": {
+      "id": "recta",
       "type": "definicion",
       "title": "Recta",
-      "description": "Concepto primitivo de la geometría. Una recta es un conjunto de puntos con extensión unidimensional, infinita en ambas direcciones, que se define implícitamente mediante los axiomas de incidencia y orden.",
-      "tags": [
-        "geometria",
-        "primitivo",
-        "unidimensional"
-      ],
+      "description": "Concepto primitivo de la geometría de naturaleza unidimensional. En el sistema de Hilbert, carece de definición explícita y su estructura emerge de las relaciones de incidencia y orden.",
       "authors": [
-        "hilbert"
-      ],
-      "links": [
-        "punto",
-        "axioma-incidencia-1",
-        "axioma-incidencia-2"
-      ],
-      "seeAlso": [
-        "plano",
-        "segmento",
-        "semirrecta"
+        "hilbert",
+        "euclides"
       ],
       "hasSimulation": true
     }
@@ -806,6 +972,38 @@
       "hasSimulation": true
     }
   },
+  "triangulo": {
+    "id": "triangulo",
+    "slug": "triangulo",
+    "filePath": "definitions/triangulo.mdx",
+    "contentType": "definicion",
+    "metadata": {
+      "id": "triangulo",
+      "type": "definicion",
+      "title": "Triángulo",
+      "description": "Figura geométrica formada por tres segmentos (lados) que unen tres puntos no colineales (vértices).",
+      "statement": "Un triángulo △ABC es la unión de tres segmentos AB, BC y CA donde A, B y C son puntos no colineales.",
+      "tags": [
+        "geometria",
+        "poligono",
+        "basico"
+      ],
+      "authors": [
+        "euclides"
+      ],
+      "links": [
+        "punto",
+        "segmento",
+        "angulo"
+      ],
+      "seeAlso": [
+        "teorema-congruencia-ala",
+        "teorema-congruencia-lll",
+        "teorema-suma-angulos-triangulo"
+      ],
+      "hasSimulation": true
+    }
+  },
   "demo-angulos-opuestos-verticales": {
     "id": "demo-angulos-opuestos-verticales",
     "slug": "demo-angulos-opuestos-verticales",
@@ -825,7 +1023,7 @@
         "geometria",
         "congruencia"
       ],
-      "layout": "text",
+      "layout": "split",
       "links": [
         "axioma-congruencia-2",
         "axioma-congruencia-3",
@@ -853,7 +1051,7 @@
         "congruencia",
         "triangulos"
       ],
-      "layout": "text",
+      "layout": "split",
       "links": [
         "axioma-congruencia-1",
         "axioma-congruencia-4",
@@ -881,13 +1079,39 @@
         "congruencia",
         "triangulos"
       ],
-      "layout": "text",
+      "layout": "split",
       "links": [
         "axioma-congruencia-1",
         "axioma-congruencia-4",
         "axioma-congruencia-5",
         "teorema-congruencia-ala"
       ]
+    }
+  },
+  "demo-desigualdad-triangular": {
+    "id": "demo-desigualdad-triangular",
+    "slug": "demo-desigualdad-triangular",
+    "filePath": "demonstrations/demo-desigualdad-triangular.mdx",
+    "contentType": "demostracion",
+    "metadata": {
+      "id": "demo-desigualdad-triangular",
+      "type": "demostracion",
+      "title": "Demostración: Desigualdad triangular",
+      "description": "Demostración euclidiana clásica extendiendo uno de los lados para formar un triángulo isósceles.",
+      "tags": [
+        "geometria",
+        "triangulos",
+        "desigualdades"
+      ],
+      "authors": [
+        "euclides"
+      ],
+      "links": [
+        "triangulo",
+        "segmento",
+        "angulo"
+      ],
+      "parentTheorem": "teorema-desigualdad-triangular"
     }
   },
   "demo-dos-rectas-un-punto": {
@@ -909,11 +1133,38 @@
         "geometria",
         "incidencia"
       ],
-      "layout": "text",
+      "layout": "split",
       "links": [
         "axioma-incidencia-1",
         "axioma-incidencia-2"
       ]
+    }
+  },
+  "demo-pitagoras-euclides": {
+    "id": "demo-pitagoras-euclides",
+    "slug": "demo-pitagoras-euclides",
+    "filePath": "demonstrations/demo-pitagoras-euclides.mdx",
+    "contentType": "demostracion",
+    "metadata": {
+      "id": "demo-pitagoras-euclides",
+      "type": "demostracion",
+      "title": "Demostración: Teorema de Pitágoras (El molino de viento)",
+      "description": "La célebre demostración de Euclides basada en la equivalencia de áreas (Proposición I.47).",
+      "tags": [
+        "geometria",
+        "triangulos",
+        "areas"
+      ],
+      "authors": [
+        "euclides"
+      ],
+      "links": [
+        "triangulo",
+        "perpendicular",
+        "segmento",
+        "angulo"
+      ],
+      "parentTheorem": "teorema-pitagoras"
     }
   },
   "demo-punto-medio-perpendicular": {
@@ -936,7 +1187,7 @@
         "congruencia",
         "orden"
       ],
-      "layout": "text",
+      "layout": "split",
       "links": [
         "lema-punto-medio",
         "axioma-congruencia-5",
@@ -965,12 +1216,143 @@
         "congruencia",
         "orden"
       ],
-      "layout": "text",
+      "layout": "split",
       "links": [
         "axioma-congruencia-1",
         "axioma-congruencia-2",
         "axioma-orden-1"
       ]
+    }
+  },
+  "demo-suma-angulos-triangulo": {
+    "id": "demo-suma-angulos-triangulo",
+    "slug": "demo-suma-angulos-triangulo",
+    "filePath": "demonstrations/demo-suma-angulos-triangulo.mdx",
+    "contentType": "demostracion",
+    "metadata": {
+      "id": "demo-suma-angulos-triangulo",
+      "type": "demostracion",
+      "title": "Demostración: Suma de los ángulos de un triángulo",
+      "description": "Demostración euclidiana clásica trazando una paralela por el vértice opuesto.",
+      "tags": [
+        "geometria",
+        "triangulos",
+        "angulos"
+      ],
+      "authors": [
+        "euclides"
+      ],
+      "links": [
+        "triangulo",
+        "angulo",
+        "axioma-paralelas-euclides",
+        "recta",
+        "paralelas"
+      ],
+      "parentTheorem": "teorema-suma-angulos-triangulo"
+    }
+  },
+  "demo-tales": {
+    "id": "demo-tales",
+    "slug": "demo-tales",
+    "filePath": "demonstrations/demo-tales.mdx",
+    "contentType": "demostracion",
+    "metadata": {
+      "id": "demo-tales",
+      "type": "demostracion",
+      "title": "Demostración: Teorema de Tales",
+      "description": "Demostración geométrica usando triángulos con la misma altura para demostrar proporcionalidad.",
+      "tags": [
+        "geometria",
+        "proporcionalidad"
+      ],
+      "authors": [
+        "euclides"
+      ],
+      "links": [
+        "triangulo",
+        "altura",
+        "paralelas"
+      ],
+      "parentTheorem": "teorema-tales"
+    }
+  },
+  "demo-triangulo-isosceles": {
+    "id": "demo-triangulo-isosceles",
+    "slug": "demo-triangulo-isosceles",
+    "filePath": "demonstrations/demo-triangulo-isosceles.mdx",
+    "contentType": "demostracion",
+    "metadata": {
+      "id": "demo-triangulo-isosceles",
+      "type": "demostracion",
+      "title": "Demostración: Pons Asinorum (Bisección)",
+      "description": "Demostración trazando la bisectriz del ángulo superior y usando el criterio LAL.",
+      "tags": [
+        "geometria",
+        "congruencia",
+        "triangulos"
+      ],
+      "authors": [
+        "euclides"
+      ],
+      "links": [
+        "triangulo",
+        "bisectriz",
+        "axioma-congruencia-5",
+        "angulo"
+      ],
+      "parentTheorem": "teorema-triangulo-isosceles"
+    }
+  },
+  "leccion-metodo-contradiccion": {
+    "id": "leccion-metodo-contradiccion",
+    "slug": "leccion-metodo-contradiccion",
+    "filePath": "lessons/leccion-metodo-contradiccion.mdx",
+    "contentType": "leccion",
+    "metadata": {
+      "id": "leccion-metodo-contradiccion",
+      "type": "lesson",
+      "title": "Demostración por Contradicción",
+      "description": "También conocida como Reducción al absurdo, demuestra que una afirmación es verdadera al mostrar que si fuera falsa, llevaría a una imposibilidad lógica.",
+      "tags": [
+        "logica",
+        "metodos",
+        "demostracion",
+        "absurdo"
+      ],
+      "authors": [],
+      "links": [
+        "teorema-dos-rectas-un-punto"
+      ],
+      "seeAlso": [
+        "leccion-metodo-directo"
+      ],
+      "satisfies": [],
+      "hasSimulation": false
+    }
+  },
+  "leccion-metodo-directo": {
+    "id": "leccion-metodo-directo",
+    "slug": "leccion-metodo-directo",
+    "filePath": "lessons/leccion-metodo-directo.mdx",
+    "contentType": "leccion",
+    "metadata": {
+      "id": "leccion-metodo-directo",
+      "type": "lesson",
+      "title": "Método Directo",
+      "description": "Introducción a la forma más básica de demostración matemática: inferir Q a partir de P mediante pasos lógicos secuenciales.",
+      "tags": [
+        "logica",
+        "metodos",
+        "demostracion"
+      ],
+      "authors": [],
+      "links": [],
+      "seeAlso": [
+        "leccion-metodo-contradiccion"
+      ],
+      "satisfies": [],
+      "hasSimulation": false
     }
   },
   "arquimedes": {
@@ -1030,7 +1412,19 @@
       "birthYear": -325,
       "deathYear": -265,
       "country": "Grecia",
-      "description": "Matemático griego de la antigüedad, autor de los Elementos, la obra matemática más influyente de la historia."
+      "description": "Matemático griego de la antigüedad, autor de los Elementos, la obra matemática más influyente de la historia.",
+      "links": [
+        "axioma-paralelas-euclides",
+        "teorema-pitagoras",
+        "teorema-tales",
+        "teorema-suma-angulos-triangulo",
+        "sistema-euclidiano"
+      ],
+      "seeAlso": [
+        "hilbert",
+        "pitagoras",
+        "tales"
+      ]
     }
   },
   "hilbert": {
@@ -1076,6 +1470,51 @@
       "deathYear": 1930,
       "country": "Alemania",
       "description": "Matemático alemán pionero en la axiomática moderna de la geometría. Demostró que muchos resultados dados por intuitivos en los Elementos de Euclides requerían axiomas explícitos."
+    }
+  },
+  "pitagoras": {
+    "id": "pitagoras",
+    "slug": "pitagoras",
+    "filePath": "mathematicians/pitagoras.mdx",
+    "contentType": "matematico",
+    "metadata": {
+      "id": "pitagoras",
+      "type": "matematico",
+      "name": "Pitágoras de Samos",
+      "birthYear": -570,
+      "deathYear": -495,
+      "country": "Grecia",
+      "description": "Filósofo y matemático de la antigua Grecia, fundador de la hermandad pitagórica. Es célebre por la relación fundamental en los triángulos rectángulos que lleva su nombre.",
+      "image": "/Matematika/public/images/pitagoras_real.jpg",
+      "links": [
+        "teorema-pitagoras"
+      ],
+      "seeAlso": [
+        "euclides",
+        "tales"
+      ]
+    }
+  },
+  "tales": {
+    "id": "tales",
+    "slug": "tales",
+    "filePath": "mathematicians/tales.mdx",
+    "contentType": "matematico",
+    "metadata": {
+      "id": "tales",
+      "type": "matematico",
+      "name": "Tales de Mileto",
+      "birthYear": -624,
+      "deathYear": -546,
+      "country": "Grecia",
+      "description": "Filósofo y matemático griego considerado el primer matemático verdadero y uno de los Siete Sabios de Grecia.",
+      "links": [
+        "teorema-tales"
+      ],
+      "seeAlso": [
+        "euclides",
+        "pitagoras"
+      ]
     }
   },
   "modelo-cartesiano": {
@@ -1132,15 +1571,10 @@
       ],
       "axioms_verified": [
         "axioma-incidencia-1",
-        "axioma-incidencia-2"
+        "axioma-incidencia-2",
+        "axioma-incidencia-3"
       ],
-      "tags": [
-        "geometria",
-        "modelo",
-        "finito",
-        "proyectiva",
-        "incidencia"
-      ]
+      "hasSimulation": true
     }
   },
   "modelo-poincare": {
@@ -1197,22 +1631,9 @@
       "axioms_verified": [
         "axioma-incidencia-1",
         "axioma-incidencia-2",
-        "axioma-incidencia-3",
-        "axioma-incidencia-4",
-        "axioma-incidencia-5",
-        "axioma-incidencia-6",
-        "axioma-incidencia-7",
-        "axioma-incidencia-8"
+        "axioma-incidencia-3"
       ],
-      "hasDiagram": true,
-      "tags": [
-        "geometria",
-        "incidencia",
-        "modelo"
-      ],
-      "links": [
-        "sistema-incidencia"
-      ]
+      "hasSimulation": true
     }
   },
   "corolario-rectas-coincidentes": {
@@ -1385,6 +1806,35 @@
       ]
     }
   },
+  "teorema-desigualdad-triangular": {
+    "id": "teorema-desigualdad-triangular",
+    "slug": "teorema-desigualdad-triangular",
+    "filePath": "theorems/teorema-desigualdad-triangular.mdx",
+    "contentType": "teorema",
+    "metadata": {
+      "id": "teorema-desigualdad-triangular",
+      "type": "teorema",
+      "title": "Desigualdad triangular",
+      "description": "En cualquier triángulo, la suma de las longitudes de dos de sus lados es estrictamente mayor que la longitud del tercer lado.",
+      "tags": [
+        "geometria",
+        "triangulos",
+        "desigualdades"
+      ],
+      "authors": [
+        "euclides"
+      ],
+      "links": [
+        "triangulo",
+        "segmento",
+        "punto"
+      ],
+      "seeAlso": [
+        "teorema-suma-angulos-triangulo"
+      ],
+      "satisfies": []
+    }
+  },
   "teorema-dos-rectas-un-punto": {
     "id": "teorema-dos-rectas-un-punto",
     "slug": "teorema-dos-rectas-un-punto",
@@ -1419,6 +1869,49 @@
       "corollaries": [
         "corolario-rectas-coincidentes"
       ]
+    }
+  },
+  "teorema-pitagoras": {
+    "id": "teorema-pitagoras",
+    "slug": "teorema-pitagoras",
+    "filePath": "theorems/teorema-pitagoras.mdx",
+    "contentType": "teorema",
+    "metadata": {
+      "id": "teorema-pitagoras",
+      "type": "teorema",
+      "title": "Teorema de Pitágoras",
+      "description": "En un triángulo rectángulo, el cuadrado de la hipotenusa es igual a la suma de los cuadrados de los catetos.",
+      "statement": "Sea △ABC un triángulo rectángulo con ángulo recto en C. Si a = |BC|, b = |CA| y c = |AB| (hipotenusa), entonces a² + b² = c².",
+      "requires": [
+        "triangulo",
+        "perpendicular",
+        "angulo",
+        "segmento"
+      ],
+      "demos": [
+        "demo-pitagoras-euclides"
+      ],
+      "tags": [
+        "geometria",
+        "triangulos",
+        "areas"
+      ],
+      "authors": [
+        "euclides",
+        "pitagoras"
+      ],
+      "difficulty": "básico",
+      "links": [
+        "triangulo",
+        "perpendicular",
+        "segmento",
+        "angulo"
+      ],
+      "seeAlso": [
+        "teorema-tales",
+        "teorema-suma-angulos-triangulo"
+      ],
+      "hasSimulation": true
     }
   },
   "teorema-punto-medio-perpendicular": {
@@ -1457,6 +1950,109 @@
       "links": [
         "lema-punto-medio",
         "axioma-congruencia-5",
+        "teorema-congruencia-lll"
+      ]
+    }
+  },
+  "teorema-suma-angulos-triangulo": {
+    "id": "teorema-suma-angulos-triangulo",
+    "slug": "teorema-suma-angulos-triangulo",
+    "filePath": "theorems/teorema-suma-angulos-triangulo.mdx",
+    "contentType": "teorema",
+    "metadata": {
+      "id": "teorema-suma-angulos-triangulo",
+      "type": "teorema",
+      "title": "Teorema de la suma de los ángulos de un triángulo",
+      "description": "La suma de los ángulos interiores de un triángulo en el plano euclidiano es siempre igual a dos ángulos rectos (180 grados).",
+      "tags": [
+        "geometria",
+        "triangulos",
+        "angulos"
+      ],
+      "authors": [
+        "euclides"
+      ],
+      "links": [
+        "triangulo",
+        "angulo",
+        "axioma-paralelas-euclides",
+        "recta",
+        "paralelas"
+      ],
+      "seeAlso": [
+        "teorema-desigualdad-triangular",
+        "teorema-pitagoras"
+      ],
+      "satisfies": []
+    }
+  },
+  "teorema-tales": {
+    "id": "teorema-tales",
+    "slug": "teorema-tales",
+    "filePath": "theorems/teorema-tales.mdx",
+    "contentType": "teorema",
+    "metadata": {
+      "id": "teorema-tales",
+      "type": "teorema",
+      "title": "Teorema de Tales",
+      "description": "Si varias rectas paralelas cortan a dos rectas transversales, entonces los segmentos que determinan en ellas son proporcionales.",
+      "statement": "Sean r₁ ∥ r₂ ∥ r₃ tres rectas paralelas cortadas por dos transversales t₁ y t₂. Si Aᵢ = rᵢ ∩ t₁ y Bᵢ = rᵢ ∩ t₂, entonces A₁A₂/A₂A₃ = B₁B₂/B₂B₃.",
+      "requires": [
+        "recta",
+        "paralelas",
+        "segmento",
+        "triangulo"
+      ],
+      "demos": [
+        "demo-tales"
+      ],
+      "tags": [
+        "geometria",
+        "proporcionalidad",
+        "paralelas"
+      ],
+      "authors": [
+        "tales"
+      ],
+      "difficulty": "intermedio",
+      "links": [
+        "recta",
+        "paralelas",
+        "segmento",
+        "triangulo"
+      ],
+      "seeAlso": [
+        "teorema-congruencia-ala",
+        "teorema-pitagoras"
+      ],
+      "hasSimulation": true
+    }
+  },
+  "teorema-triangulo-isosceles": {
+    "id": "teorema-triangulo-isosceles",
+    "slug": "teorema-triangulo-isosceles",
+    "filePath": "theorems/teorema-triangulo-isosceles.mdx",
+    "contentType": "teorema",
+    "metadata": {
+      "id": "teorema-triangulo-isosceles",
+      "type": "teorema",
+      "title": "Teorema del triángulo isósceles",
+      "description": "En un triángulo isósceles, los ángulos opuestos a los lados iguales son también iguales (Pons Asinorum).",
+      "tags": [
+        "geometria",
+        "triangulos",
+        "congruencia"
+      ],
+      "authors": [
+        "euclides"
+      ],
+      "links": [
+        "triangulo",
+        "angulo",
+        "segmento",
+        "axioma-congruencia-5"
+      ],
+      "seeAlso": [
         "teorema-congruencia-lll"
       ]
     }

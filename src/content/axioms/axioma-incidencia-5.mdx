@@ -4,44 +4,37 @@ export const metadata = {
   "title": "Axioma I-5 (Incidencia)",
   "description": "Todo plano contiene al menos tres puntos no colineales.",
   "statement": "Para todo plano π, existen tres puntos A, B, C ∈ π que no son colineales.",
-  "tags": ["geometria", "incidencia", "geometria-absoluta"],
   "authors": ["hilbert"],
+  "hasSimulation": true
 };
 
-export const Simulation = () => (
-    <svg viewBox="0 0 300 160" xmlns="http://www.w3.org/2000/svg" className="w-full max-w-md mx-auto my-4">
-      <polygon points="40,110 270,120 230,30 10,40" fill="#A2C2A2" fillOpacity="0.2" stroke="#A2C2A2" strokeWidth="1.5" />
-      <text x="220" y="26" fontSize="13" fill="#5D7080" fontFamily="serif" fontStyle="italic">π</text>
-      <circle cx="80" cy="60" r="5" fill="#C86446" />
-      <text x="66" y="50" fontSize="16" fill="#333333" fontFamily="serif" fontStyle="italic">A</text>
-      <circle cx="190" cy="80" r="5" fill="#C86446" />
-      <text x="190" y="96" fontSize="16" fill="#333333" fontFamily="serif" fontStyle="italic">B</text>
-      <circle cx="140" cy="100" r="5" fill="#C86446" />
-      <text x="126" y="118" fontSize="16" fill="#333333" fontFamily="serif" fontStyle="italic">C</text>
-    </svg>
-  );
+import { Incidence5 } from '../../diagrams/Axiomas/Incidence5';
+export const Simulation = Incidence5;
+import { InteractiveElement } from "../../components/ui/VisualBind";
 
-<Capitular letra="T" />
-odo plano contiene al menos tres puntos no colineales. Este axioma asegura que los planos no son objetos degenerados, sino que poseen extensión bidimensional genuina.
+<Capitular letra="T" />odo <ConceptLink targetId="plano">plano</ConceptLink> contiene al menos tres <ConceptLink targetId="punto">puntos</ConceptLink> no <ConceptLink targetId="colineal">colineales</ConceptLink>. Este <ConceptLink targetId="axioma">axioma</ConceptLink> asegura que los planos no son entidades unidimensionales disfrazadas, sino que poseen una verdadera extensión bidimensional.
 
 <Separador />
 
 ### Enunciado Formal
 
 <Formula>
-  $$ \forall \pi \; \exists A, B, C \in \pi \; \neg \exists l \; (A \in l \land B \in l \land C \in l). $$
+  $$
+  \forall \pi \implies \exists A, B, C \in \pi \; \text{ no colineales}
+  $$
 </Formula>
 
 <Separador />
 
 ### Discusión
 
-Así como el axioma I-2 exige que toda recta contenga al menos dos puntos (evitando rectas degeneradas), el axioma I-5 exige que todo plano contenga al menos tres puntos no colineales, evitando planos degenerados. Sin este axioma, podría existir un plano que solo contuviera una recta completa —esencialmente un plano unidimensional— lo cual contradice la noción intuitiva de plano como superficie bidimensional.
+Así como el <ConceptLink targetId="axioma-incidencia-2">axioma I-2</ConceptLink> exige que toda <ConceptLink targetId="recta">recta</ConceptLink> contenga al menos dos puntos para no ser un punto disfrazado, este <ConceptLink targetId="postulado">postulado</ConceptLink> exige que todo <ConceptLink targetId="plano">plano</ConceptLink> contenga al menos tres puntos sueltos, evitando planos "degenerados". Sin esta regla, matemáticamente podría existir un plano que solo contuviera una recta completa, lo cual contradice nuestra definición formal de plano como <ConceptLink targetId="superficie">superficie</ConceptLink>.
 
-La condición de no colinealidad es crucial: exige que los tres puntos no estén alineados, forzando así que el plano tenga dos dimensiones independientes.
+La condición de no colinealidad es estricta: exige que los tres puntos (<InteractiveElement target="pA" color="terracota">A</InteractiveElement>, <InteractiveElement target="pB" color="terracota">B</InteractiveElement> y <InteractiveElement target="pC" color="terracota">C</InteractiveElement>) no estén alineados en fila india, forzando que el <InteractiveElement target="plano" color="salvia">plano</InteractiveElement> se extienda efectivamente en dos direcciones distintas.
 
 <Separador />
 
 ### Observaciones
 
-En la práctica, el axioma I-4 garantiza que tres puntos no colineales determinan un plano; el axioma I-5 asegura que ese plano contiene al menos esos tres puntos, pero no excluye que contenga más. En la geometría euclídea, un plano contiene infinitos puntos.
+- En la práctica, el <ConceptLink targetId="axioma-incidencia-4">axioma I-4</ConceptLink> garantiza que tres puntos no colineales construyen un plano. El axioma I-5 devuelve el favor: asegura que ese plano retiene permanentemente esos tres puntos en su interior.
+- En la <ConceptLink targetId="sistema-euclidiano">geometría euclidiana</ConceptLink>, sabemos que un plano aloja infinitos puntos. Sin embargo, en el austero nivel de la <ConceptLink targetId="sistema-absoluto">geometría absoluta</ConceptLink>, basta exigir tres para garantizar su <ConceptLink targetId="cardinalidad">cardinalidad</ConceptLink> bidimensional.

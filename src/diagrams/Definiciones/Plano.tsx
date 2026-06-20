@@ -1,74 +1,56 @@
-import { useRef, useMemo, useEffect } from 'react';
+import { useRef, useEffect } from 'react';
 import { Canvas, useThree } from '@react-three/fiber';
 import * as THREE from 'three';
-import { OrbitControls } from 'three-stdlib';
+import { OrbitControls, Html } from '@react-three/drei';
 import { useMathStore } from '../../store/MathStoreContext';
 import { useLessonStore } from '../../store/LessonStore';
 
-function makeTextSprite(text: string, color = '#C86446') {
-  const canvas = document.createElement('canvas');
-  canvas.width = 128;
-  canvas.height = 64;
-  const ctx = canvas.getContext('2d')!;
-  ctx.font = 'Bold 36px Charter, Georgia, serif';
-  ctx.textAlign = 'center';
-  ctx.textBaseline = 'middle';
-  ctx.fillStyle = color;
-  ctx.fillText(text, 64, 34);
-  const texture = new THREE.CanvasTexture(canvas);
-  texture.needsUpdate = true;
-  const mat = new THREE.SpriteMaterial({ map: texture, transparent: true, depthTest: false });
-  const sprite = new THREE.Sprite(mat);
-  sprite.scale.set(0.5, 0.25, 1);
-  return sprite;
+function getCSSVar(name: string): string {
+  if (typeof document !== 'undefined') {
+    return getComputedStyle(document.documentElement).getPropertyValue(name).trim();
+  }
+  return '#000';
 }
 
 function SceneContent() {
-  const { camera, gl } = useThree();
+  const { camera } = useThree();
 
   const mathHighlight = useMathStore(state => state.variables?.['highlight']);
   const lessonHighlight = useLessonStore(state => state.activeStep);
   const highlight = mathHighlight || lessonHighlight;
 
-  const controlsRef = useRef<OrbitControls | null>(null);
+  const controlsRef = useRef<any>(null);
   const meshRef = useRef<THREE.Mesh>(null);
 
   useEffect(() => {
     camera.position.set(5, 4, 6);
     camera.lookAt(0, 0, 0);
-    const controls = new OrbitControls(camera, gl.domElement);
-    controls.enablePan = true;
-    controls.enableZoom = true;
-    controls.target.set(0, 0, 0);
-    controls.update();
-    controlsRef.current = controls;
-    return () => controls.dispose();
-  }, [camera, gl.domElement]);
+    if (controlsRef.current) {
+      controlsRef.current.target.set(0, 0, 0);
+      controlsRef.current.update();
+    }
+  }, [camera]);
 
-  const planeColor = highlight === 'planeMesh' ? '#f5c542' : '#5D7080';
-  const planeOpacity = highlight === 'planeMesh' ? 0.45 : 0.2;
-  const pointColorA = highlight === 'pA' ? '#f5c542' : '#C86446';
-  const pointColorB = highlight === 'pB' ? '#f5c542' : '#C86446';
-  const pointColorC = highlight === 'pC' ? '#f5c542' : '#C86446';
+  const salvia = getCSSVar('--theme-salvia') || '#A2C2A2';
+  const terracota = getCSSVar('--theme-terracota') || '#C86446';
+  const carbon = getCSSVar('--theme-carbon') || '#333333';
+  const ocre = getCSSVar('--theme-ocre') || '#c49b4f';
+
+  const planeColor = highlight === 'planeMesh' ? ocre : salvia;
+  const planeOpacity = highlight === 'planeMesh' ? 0.4 : 0.3;
+  const pointColorA = highlight === 'pA' ? ocre : terracota;
+  const pointColorB = highlight === 'pB' ? ocre : terracota;
+  const pointColorC = highlight === 'pC' ? ocre : terracota;
   const pointSize = (t: string) => (highlight === t ? 0.25 : 0.15);
-
-  const labelA = useMemo(() => makeTextSprite('A', pointColorA), [pointColorA]);
-  const labelB = useMemo(() => makeTextSprite('B', pointColorB), [pointColorB]);
-  const labelC = useMemo(() => makeTextSprite('C', pointColorC), [pointColorC]);
-
-  useEffect(() => {
-    labelA.position.set(0.3, 0, 0);
-    labelB.position.set(2.3, 0, 0);
-    labelC.position.set(0.8, 0, 1.8);
-  }, [labelA, labelB, labelC]);
 
   return (
     <>
-      <gridHelper args={[8, 8, '#5D7080', '#3b5e6b']} />
-      <axesHelper args={[3]} />
+      <OrbitControls ref={controlsRef} enablePan={true} enableZoom={true} autoRotate={true} autoRotateSpeed={1.0} />
+      <gridHelper args={[8, 8, carbon, carbon]} material-opacity={0.08} material-transparent />
+      
       <mesh ref={meshRef} rotation={[-Math.PI / 2, 0, 0]}>
         <planeGeometry args={[5, 5]} />
-        <meshStandardMaterial
+        <meshBasicMaterial
           color={planeColor}
           transparent
           opacity={planeOpacity}
@@ -76,21 +58,34 @@ function SceneContent() {
           depthWrite={false}
         />
       </mesh>
+      
       <mesh position={[0, 0, 0]}>
-        <sphereGeometry args={[0.15, 16, 16]} />
-        <meshStandardMaterial color={pointColorA} />
+        <sphereGeometry args={[pointSize('pA'), 32, 32]} />
+        <meshBasicMaterial color={pointColorA} />
+        <Html position={[0.3, 0.3, 0]} center className={`font-serif italic font-bold text-xl select-none pointer-events-none transition-colors duration-300 ${highlight === 'pA' ? 'text-ocre drop-shadow-md' : 'text-carbon'}`}>
+          A
+        </Html>
       </mesh>
-      <primitive object={labelA} />
+      
       <mesh position={[2, 0, 0]}>
-        <sphereGeometry args={[pointSize('pB'), 16, 16]} />
-        <meshStandardMaterial color={pointColorB} />
+        <sphereGeometry args={[pointSize('pB'), 32, 32]} />
+        <meshBasicMaterial color={pointColorB} />
+        <Html position={[0.3, 0.3, 0]} center className={`font-serif italic font-bold text-xl select-none pointer-events-none transition-colors duration-300 ${highlight === 'pB' ? 'text-ocre drop-shadow-md' : 'text-carbon'}`}>
+          B
+        </Html>
       </mesh>
-      <primitive object={labelB} />
+      
       <mesh position={[0.5, 0, 1.8]}>
-        <sphereGeometry args={[pointSize('pC'), 16, 16]} />
-        <meshStandardMaterial color={pointColorC} />
+        <sphereGeometry args={[pointSize('pC'), 32, 32]} />
+        <meshBasicMaterial color={pointColorC} />
+        <Html position={[0.3, 0.3, 0]} center className={`font-serif italic font-bold text-xl select-none pointer-events-none transition-colors duration-300 ${highlight === 'pC' ? 'text-ocre drop-shadow-md' : 'text-carbon'}`}>
+          C
+        </Html>
       </mesh>
-      <primitive object={labelC} />
+      
+      <Html position={[-2, 0.1, 2]} center className={`font-serif italic text-2xl select-none pointer-events-none transition-colors duration-300 ${highlight === 'planeMesh' ? 'text-ocre font-bold drop-shadow-md' : 'text-carbon/60'}`}>
+        π
+      </Html>
     </>
   );
 }
@@ -98,13 +93,10 @@ function SceneContent() {
 export const Plano = () => {
   return (
     <div className="w-full h-full min-h-[400px] relative bg-lienzo/40 border border-pizarra/10 rounded-sm overflow-hidden">
-      <div className="absolute top-2 left-3 z-10 text-xs font-serif italic text-pizarra/50">
-        Rota la escena con el ratón
+      <div className="absolute top-2 left-3 z-10 text-xs font-serif italic text-pizarra/50 pointer-events-none">
+        Rota la escena en 3D con el ratón
       </div>
       <Canvas gl={{ antialias: true }} style={{ width: '100%', height: '100%' }}>
-        <ambientLight intensity={1} />
-        <directionalLight position={[5, 8, 6]} intensity={0.8} />
-        <directionalLight position={[-3, 2, -4]} intensity={0.4} />
         <SceneContent />
       </Canvas>
     </div>

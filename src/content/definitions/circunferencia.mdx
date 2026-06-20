@@ -1,0 +1,52 @@
+export const metadata = {
+  "id": "circunferencia",
+  "type": "definicion",
+  "title": "Circunferencia",
+  "description": "Lugar geométrico de los puntos de un plano que equidistan de un punto fijo llamado centro.",
+  "statement": "La circunferencia C(O,r) es el conjunto de puntos P del plano tales que |OP| = r.",
+  "tags": ["geometria", "curvas"],
+  "authors": ["euclides"],
+  "links": ["punto", "segmento", "plano"],
+  "seeAlso": ["angulo"],
+  "hasSimulation": true
+};
+
+import { Circunferencia } from '../../diagrams/Definiciones/Circunferencia';
+export const Simulation = Circunferencia;
+import { InteractiveElement } from "../../components/ui/VisualBind";
+
+<Capitular letra="L" />a <InteractiveElement target="circunferencia" color="terracota">circunferencia</InteractiveElement> es una curva plana y cerrada tal que todos sus puntos están a igual distancia de un <InteractiveElement target="centro" color="carbon">centro</InteractiveElement> fijo. Es una de las figuras más fundamentales de la geometría.
+
+<Separador />
+
+### Enunciado Formal
+
+Dado un <ConceptLink targetId="punto">punto</ConceptLink> $O$ (centro) y una distancia $r > 0$ (radio), la circunferencia $C(O, r)$ es el conjunto:
+
+<Formula>
+  $$ C(O, r) = \{ P \in \pi \mid \overline{OP} = r \} $$
+</Formula>
+
+donde $\pi$ es el <ConceptLink targetId="plano">plano</ConceptLink>. Un <ConceptLink targetId="segmento">segmento</ConceptLink> que une el <InteractiveElement target="centro" color="carbon">centro</InteractiveElement> con cualquier punto de la circunferencia se llama <InteractiveElement target="radio" color="pizarra">radio</InteractiveElement>.
+
+<Separador />
+
+### Elementos Notables
+
+| Elemento | Descripción |
+|---|---|
+| Centro | Punto $O$ equidistante de todos los puntos de la circunferencia |
+| Radio | Segmento $\overline{OP}$ que une el centro con un punto de la circunferencia |
+| Diámetro | Segmento que pasa por el centro y une dos puntos opuestos ($d = 2r$) |
+| Cuerda | Segmento que une dos puntos de la circunferencia |
+| Arco | Porción de la circunferencia entre dos puntos |
+| Tangente | Recta que toca la circunferencia en un único punto |
+
+<Separador />
+
+### Observaciones
+
+- La definición depende íntimamente del concepto de distancia o métrica euclídea definida en un <ConceptLink targetId="plano">plano</ConceptLink>.
+- El **círculo** es la región encerrada por la circunferencia (incluye el interior); la circunferencia es solo la curva.
+- En coordenadas cartesianas, la circunferencia de centro $(h, k)$ y radio $r$ verifica $(x-h)^2 + (y-k)^2 = r^2$.
+- <RefLink targetId="angulo">Los ángulos</RefLink> inscritos en una circunferencia tienen propiedades notables (teorema del ángulo inscrito).

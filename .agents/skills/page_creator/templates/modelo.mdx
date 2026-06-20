@@ -1,0 +1,56 @@
+export const metadata = {
+  "id": "modelo-<kebab-id>",
+  "type": "modelo",
+  "title": "Modelo de Tres Puntos",
+  "description": "Estructura concreta con tres puntos no colineales que satisface los axiomas de incidencia.",
+  "satisfies": "sistema-axiomatico-id",
+  "axioms_verified": ["axioma-incidencia-1", "axioma-incidencia-2", "axioma-incidencia-3"],
+  "hasDiagram": true,
+  "tags": ["geometria", "incidencia", "modelo-finito"],
+  "links": ["sistema-axiomatico-id"]
+};
+
+import { MiModeloDiagram } from '../../diagrams/Models/MiModeloDiagram';
+export const Diagram = MiModeloDiagram;
+
+<Capitular letra="X" />l **modelo de [nombre]** es [qué estructura concreta es]. Satisface el <ConceptLink targetId="sistema-axiomatico-id">sistema axiomático de [nombre]</ConceptLink>.
+
+<Separador />
+
+### Definición del Modelo
+
+- **Puntos:** $\mathcal{P} = \{A, B, C\}$
+- **Rectas:** $\mathcal{R} = \{r_{AB}, r_{BC}, r_{CA}\}$
+- **Incidencia:** [definición de la relación]
+
+<Formula>
+  $$ \mathcal{P} = \{A, B, C\}, \quad \mathcal{R} = \{\overline{AB}, \overline{BC}, \overline{CA}\} $$
+</Formula>
+
+<Separador />
+
+### Verificación de Axiomas
+
+**<ConceptLink targetId="axioma-incidencia-1">I-1</ConceptLink> (Unicidad).** [Verificación.]
+
+**<ConceptLink targetId="axioma-incidencia-2">I-2</ConceptLink> (Existencia).** [Verificación.]
+
+<Separador />
+
+### Propiedades
+
+- [Propiedad notable 1]
+- [Propiedad notable 2]
+
+<Separador />
+
+### Contraejemplos
+
+Qué axiomas NO se satisfacen y por qué:
+
+- **[Ax-ioma-no-satisfecho]**: [Por qué falla.]
+- **[Otro-axioma-no-satisfecho]**: [Por qué falla.]
+
+Esto demuestra que el modelo es [minimal/parcial], y que los axiomas no satisfechos son independientes de los verificados.
+
+<Nota>[Limitaciones del modelo, conexión con modelos más ricos.]</Nota>

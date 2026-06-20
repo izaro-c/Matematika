@@ -1,15 +1,16 @@
 {
   "topologicalOrder": [
-    "axioma-incidencia-1",
+    "axioma-paralelas-euclides",
     "axioma-incidencia-2",
+    "axioma-incidencia-1",
     "axioma-incidencia-3",
     "axioma-incidencia-4",
     "axioma-incidencia-5",
     "axioma-incidencia-6",
     "axioma-incidencia-7",
     "axioma-incidencia-8",
-    "axioma-orden-1",
     "axioma-orden-2",
+    "axioma-orden-1",
     "axioma-orden-3",
     "axioma-orden-4",
     "axioma-congruencia-1",
@@ -19,42 +20,49 @@
     "axioma-congruencia-5",
     "axioma-arquimedes",
     "axioma-completitud",
-    "sistema-absoluto",
-    "axioma-paralelas-euclides",
     "sistema-euclidiano",
     "axioma-paralelas-hiperbolico",
     "sistema-hiperbolico",
     "sistema-incidencia",
-    "punto",
-    "recta",
-    "semirrecta",
-    "angulo",
-    "plano",
-    "segmento",
+    "sistema-absoluto",
     "demo-angulos-opuestos-verticales",
     "demo-congruencia-ala",
+    "teorema-congruencia-lll",
     "teorema-congruencia-ala",
     "demo-congruencia-lll",
+    "demo-desigualdad-triangular",
     "demo-dos-rectas-un-punto",
+    "demo-pitagoras-euclides",
     "demo-punto-medio",
     "lema-punto-medio",
-    "teorema-congruencia-lll",
     "demo-punto-medio-perpendicular",
+    "demo-suma-angulos-triangulo",
+    "demo-tales",
+    "demo-triangulo-isosceles",
+    "teorema-dos-rectas-un-punto",
+    "leccion-metodo-contradiccion",
+    "leccion-metodo-directo",
     "arquimedes",
     "bolyai",
     "dedekind",
-    "euclides",
+    "teorema-pitagoras",
+    "teorema-tales",
+    "teorema-suma-angulos-triangulo",
     "hilbert",
     "lobachevski",
+    "euclides",
     "pasch",
+    "pitagoras",
+    "tales",
     "modelo-cartesiano",
     "modelo-fano",
     "modelo-poincare",
     "modelo-tres-puntos",
-    "teorema-dos-rectas-un-punto",
     "corolario-rectas-coincidentes",
     "teorema-angulos-opuestos-verticales",
-    "teorema-punto-medio-perpendicular"
+    "teorema-desigualdad-triangular",
+    "teorema-punto-medio-perpendicular",
+    "teorema-triangulo-isosceles"
   ],
   "nodes": {
     "sistema-absoluto": {
@@ -64,6 +72,38 @@
       "description": "Geometría que no depende del quinto postulado: incidencia, orden, congruencia y continuidad. También conocida como geometría neutral. Todo teorema demostrable en geometría absoluta lo es tanto en la euclídea como en la hiperbólica.",
       "proofs": [],
       "directDependencies": [
+        "sistema-euclidiano",
+        "sistema-hiperbolico",
+        "axioma-incidencia-1",
+        "axioma-incidencia-8",
+        "axioma-orden-1",
+        "axioma-orden-4",
+        "axioma-congruencia-1",
+        "axioma-congruencia-5",
+        "axioma-arquimedes",
+        "axioma-completitud",
+        "sistema-incidencia",
+        "axioma-incidencia-2",
+        "axioma-incidencia-3",
+        "axioma-incidencia-4",
+        "axioma-incidencia-5",
+        "axioma-incidencia-6",
+        "axioma-incidencia-7",
+        "axioma-orden-2",
+        "axioma-orden-3",
+        "axioma-congruencia-2",
+        "axioma-congruencia-3",
+        "axioma-congruencia-4"
+      ]
+    },
+    "sistema-euclidiano": {
+      "id": "sistema-euclidiano",
+      "type": "sistema-axiomatico",
+      "title": "Geometría Euclídea",
+      "description": "Geometría clásica del plano y el espacio tridimensional, basada en los axiomas de incidencia, orden, congruencia, continuidad y el quinto postulado de Euclides.",
+      "proofs": [],
+      "directDependencies": [
+        "axioma-paralelas-euclides",
         "axioma-incidencia-1",
         "axioma-incidencia-2",
         "axioma-incidencia-3",
@@ -85,35 +125,6 @@
         "axioma-completitud"
       ]
     },
-    "sistema-euclidiano": {
-      "id": "sistema-euclidiano",
-      "type": "sistema-axiomatico",
-      "title": "Geometría Euclídea",
-      "description": "Geometría clásica del plano y el espacio tridimensional, basada en los axiomas de incidencia, orden, congruencia, continuidad y el quinto postulado de Euclides.",
-      "proofs": [],
-      "directDependencies": [
-        "axioma-incidencia-1",
-        "axioma-incidencia-2",
-        "axioma-incidencia-3",
-        "axioma-incidencia-4",
-        "axioma-incidencia-5",
-        "axioma-incidencia-6",
-        "axioma-incidencia-7",
-        "axioma-incidencia-8",
-        "axioma-orden-1",
-        "axioma-orden-2",
-        "axioma-orden-3",
-        "axioma-orden-4",
-        "axioma-congruencia-1",
-        "axioma-congruencia-2",
-        "axioma-congruencia-3",
-        "axioma-congruencia-4",
-        "axioma-congruencia-5",
-        "axioma-arquimedes",
-        "axioma-completitud",
-        "axioma-paralelas-euclides"
-      ]
-    },
     "sistema-hiperbolico": {
       "id": "sistema-hiperbolico",
       "type": "sistema-axiomatico",
@@ -121,6 +132,8 @@
       "description": "Geometría no euclídea que satisface todos los axiomas de la geometría absoluta pero reemplaza el quinto postulado de Euclides por su negación: por un punto exterior a una recta pasan infinitas paralelas.",
       "proofs": [],
       "directDependencies": [
+        "axioma-paralelas-hiperbolico",
+        "sistema-euclidiano",
         "axioma-incidencia-1",
         "axioma-incidencia-2",
         "axioma-incidencia-3",
@@ -139,8 +152,7 @@
         "axioma-congruencia-4",
         "axioma-congruencia-5",
         "axioma-arquimedes",
-        "axioma-completitud",
-        "axioma-paralelas-hiperbolico"
+        "axioma-completitud"
       ]
     },
     "sistema-incidencia": {
@@ -157,7 +169,8 @@
         "axioma-incidencia-5",
         "axioma-incidencia-6",
         "axioma-incidencia-7",
-        "axioma-incidencia-8"
+        "axioma-incidencia-8",
+        "sistema-euclidiano"
       ]
     },
     "axioma-arquimedes": {
@@ -174,7 +187,9 @@
       "title": "Axioma de Completitud (Dedekind)",
       "description": "El conjunto de puntos de una recta no puede extenderse sin violar los axiomas de incidencia, orden, congruencia y continuidad.",
       "proofs": [],
-      "directDependencies": []
+      "directDependencies": [
+        "axioma-arquimedes"
+      ]
     },
     "axioma-congruencia-1": {
       "id": "axioma-congruencia-1",
@@ -182,7 +197,9 @@
       "title": "Axioma III-1 (Congruencia)",
       "description": "Dado un segmento AB y una semirrecta con origen en C, existe un único punto D sobre la semirrecta tal que AB es congruente con CD.",
       "proofs": [],
-      "directDependencies": []
+      "directDependencies": [
+        "axioma-incidencia-1"
+      ]
     },
     "axioma-congruencia-2": {
       "id": "axioma-congruencia-2",
@@ -190,7 +207,9 @@
       "title": "Axioma III-2 (Congruencia)",
       "description": "La congruencia de segmentos es transitiva: si AB ≅ CD y AB ≅ EF, entonces CD ≅ EF.",
       "proofs": [],
-      "directDependencies": []
+      "directDependencies": [
+        "axioma-congruencia-1"
+      ]
     },
     "axioma-congruencia-3": {
       "id": "axioma-congruencia-3",
@@ -206,7 +225,9 @@
       "title": "Axioma III-4 (Congruencia)",
       "description": "Dado un ángulo y una semirrecta, existe un único ángulo congruente sobre un lado dado de la semirrecta.",
       "proofs": [],
-      "directDependencies": []
+      "directDependencies": [
+        "axioma-congruencia-1"
+      ]
     },
     "axioma-congruencia-5": {
       "id": "axioma-congruencia-5",
@@ -222,7 +243,9 @@
       "title": "Axioma I-1 (Incidencia)",
       "description": "Por dos puntos distintos del espacio pasa exactamente una recta.",
       "proofs": [],
-      "directDependencies": []
+      "directDependencies": [
+        "axioma-incidencia-2"
+      ]
     },
     "axioma-incidencia-2": {
       "id": "axioma-incidencia-2",
@@ -236,17 +259,22 @@
       "id": "axioma-incidencia-3",
       "type": "axioma",
       "title": "Axioma I-3 (Incidencia)",
-      "description": "Existen al menos tres puntos no colineales, es decir, que no están todos sobre una misma recta.",
+      "description": "Existen al menos tres puntos no colineales, forzando la dimensionalidad del espacio.",
       "proofs": [],
-      "directDependencies": []
+      "directDependencies": [
+        "axioma-incidencia-1",
+        "axioma-incidencia-2"
+      ]
     },
     "axioma-incidencia-4": {
       "id": "axioma-incidencia-4",
       "type": "axioma",
       "title": "Axioma I-4 (Incidencia)",
-      "description": "Por tres puntos no colineales pasa exactamente un plano.",
+      "description": "Por tres puntos no colineales pasa exactamente un único plano.",
       "proofs": [],
-      "directDependencies": []
+      "directDependencies": [
+        "axioma-incidencia-1"
+      ]
     },
     "axioma-incidencia-5": {
       "id": "axioma-incidencia-5",
@@ -254,7 +282,10 @@
       "title": "Axioma I-5 (Incidencia)",
       "description": "Todo plano contiene al menos tres puntos no colineales.",
       "proofs": [],
-      "directDependencies": []
+      "directDependencies": [
+        "axioma-incidencia-2",
+        "axioma-incidencia-4"
+      ]
     },
     "axioma-incidencia-6": {
       "id": "axioma-incidencia-6",
@@ -262,15 +293,20 @@
       "title": "Axioma I-6 (Incidencia)",
       "description": "Si dos puntos de una recta pertenecen a un plano, entonces toda la recta está contenida en dicho plano.",
       "proofs": [],
-      "directDependencies": []
+      "directDependencies": [
+        "axioma-incidencia-1"
+      ]
     },
     "axioma-incidencia-7": {
       "id": "axioma-incidencia-7",
       "type": "axioma",
       "title": "Axioma I-7 (Incidencia)",
-      "description": "Si dos planos se intersectan, su intersección es una recta.",
+      "description": "Si dos planos se intersecan, su intersección es una recta.",
       "proofs": [],
-      "directDependencies": []
+      "directDependencies": [
+        "axioma-incidencia-6",
+        "axioma-incidencia-1"
+      ]
     },
     "axioma-incidencia-8": {
       "id": "axioma-incidencia-8",
@@ -278,15 +314,20 @@
       "title": "Axioma I-8 (Incidencia)",
       "description": "Existen al menos cuatro puntos que no están todos en un mismo plano.",
       "proofs": [],
-      "directDependencies": []
+      "directDependencies": [
+        "axioma-incidencia-4",
+        "axioma-incidencia-3"
+      ]
     },
     "axioma-orden-1": {
       "id": "axioma-orden-1",
       "type": "axioma",
       "title": "Axioma II-1 (Orden)",
-      "description": "Si un punto B está entre A y C, entonces A, B, C son tres puntos distintos y colineales, y B está también entre C y A.",
+      "description": "Si un punto B está entre A y C, entonces A, B, C son colineales y B está entre C y A.",
       "proofs": [],
-      "directDependencies": []
+      "directDependencies": [
+        "axioma-orden-2"
+      ]
     },
     "axioma-orden-2": {
       "id": "axioma-orden-2",
@@ -328,88 +369,6 @@
       "proofs": [],
       "directDependencies": []
     },
-    "angulo": {
-      "id": "angulo",
-      "type": "definicion",
-      "title": "Ángulo",
-      "description": "Dadas dos semirrectas con el mismo origen, el ángulo es la figura formada por ambas. La congruencia de ángulos es una relación primitiva definida por los axiomas de congruencia.",
-      "proofs": [],
-      "directDependencies": [
-        "punto",
-        "semirrecta",
-        "axioma-congruencia-4",
-        "axioma-congruencia-5"
-      ]
-    },
-    "plano": {
-      "id": "plano",
-      "type": "definicion",
-      "title": "Plano",
-      "description": "Concepto primitivo de la geometría. Un plano es una superficie bidimensional plana que se extiende infinitamente en todas direcciones. Se define implícitamente mediante los axiomas de incidencia.",
-      "proofs": [],
-      "directDependencies": [
-        "punto",
-        "recta",
-        "axioma-incidencia-4",
-        "axioma-incidencia-5",
-        "axioma-incidencia-6",
-        "axioma-incidencia-7",
-        "axioma-incidencia-8"
-      ]
-    },
-    "punto": {
-      "id": "punto",
-      "type": "definicion",
-      "title": "Punto",
-      "description": "Concepto primitivo de la geometría. Un punto es una entidad sin dimensión que ocupa una posición en el espacio. Se define implícitamente mediante los axiomas de pertenencia e intermediación.",
-      "proofs": [],
-      "directDependencies": [
-        "axioma-incidencia-1",
-        "axioma-incidencia-2",
-        "axioma-incidencia-3",
-        "axioma-orden-1",
-        "axioma-congruencia-1"
-      ]
-    },
-    "recta": {
-      "id": "recta",
-      "type": "definicion",
-      "title": "Recta",
-      "description": "Concepto primitivo de la geometría. Una recta es un conjunto de puntos con extensión unidimensional, infinita en ambas direcciones, que se define implícitamente mediante los axiomas de incidencia y orden.",
-      "proofs": [],
-      "directDependencies": [
-        "punto",
-        "axioma-incidencia-1",
-        "axioma-incidencia-2"
-      ]
-    },
-    "segmento": {
-      "id": "segmento",
-      "type": "definicion",
-      "title": "Segmento",
-      "description": "Dados dos puntos A y B, el segmento AB es el conjunto de puntos de la recta AB que están entre A y B, incluyendo los extremos. Es la noción fundamental para la congruencia y la medida.",
-      "proofs": [],
-      "directDependencies": [
-        "punto",
-        "recta",
-        "axioma-orden-1",
-        "axioma-orden-2",
-        "axioma-congruencia-1"
-      ]
-    },
-    "semirrecta": {
-      "id": "semirrecta",
-      "type": "definicion",
-      "title": "Semirrecta (Rayo)",
-      "description": "Dados dos puntos A y B sobre una recta, la semirrecta de origen A que pasa por B es el conjunto de puntos de la recta que están del mismo lado que B respecto a A.",
-      "proofs": [],
-      "directDependencies": [
-        "punto",
-        "recta",
-        "axioma-orden-1",
-        "axioma-orden-2"
-      ]
-    },
     "demo-angulos-opuestos-verticales": {
       "id": "demo-angulos-opuestos-verticales",
       "type": "demostracion",
@@ -434,11 +393,27 @@
       "proofs": [],
       "directDependencies": []
     },
+    "demo-desigualdad-triangular": {
+      "id": "demo-desigualdad-triangular",
+      "type": "demostracion",
+      "title": "Demostración: Desigualdad triangular",
+      "description": "Demostración euclidiana clásica extendiendo uno de los lados para formar un triángulo isósceles.",
+      "proofs": [],
+      "directDependencies": []
+    },
     "demo-dos-rectas-un-punto": {
       "id": "demo-dos-rectas-un-punto",
       "type": "demostracion",
       "title": "Demostración: Dos rectas se cortan en a lo sumo un punto",
       "description": "Prueba por contradicción usando el axioma de unicidad I-1.",
+      "proofs": [],
+      "directDependencies": []
+    },
+    "demo-pitagoras-euclides": {
+      "id": "demo-pitagoras-euclides",
+      "type": "demostracion",
+      "title": "Demostración: Teorema de Pitágoras (El molino de viento)",
+      "description": "La célebre demostración de Euclides basada en la equivalencia de áreas (Proposición I.47).",
       "proofs": [],
       "directDependencies": []
     },
@@ -458,13 +433,59 @@
       "proofs": [],
       "directDependencies": []
     },
+    "demo-suma-angulos-triangulo": {
+      "id": "demo-suma-angulos-triangulo",
+      "type": "demostracion",
+      "title": "Demostración: Suma de los ángulos de un triángulo",
+      "description": "Demostración euclidiana clásica trazando una paralela por el vértice opuesto.",
+      "proofs": [],
+      "directDependencies": []
+    },
+    "demo-tales": {
+      "id": "demo-tales",
+      "type": "demostracion",
+      "title": "Demostración: Teorema de Tales",
+      "description": "Demostración geométrica usando triángulos con la misma altura para demostrar proporcionalidad.",
+      "proofs": [],
+      "directDependencies": []
+    },
+    "demo-triangulo-isosceles": {
+      "id": "demo-triangulo-isosceles",
+      "type": "demostracion",
+      "title": "Demostración: Pons Asinorum (Bisección)",
+      "description": "Demostración trazando la bisectriz del ángulo superior y usando el criterio LAL.",
+      "proofs": [],
+      "directDependencies": []
+    },
+    "leccion-metodo-contradiccion": {
+      "id": "leccion-metodo-contradiccion",
+      "type": "lesson",
+      "title": "Demostración por Contradicción",
+      "description": "También conocida como Reducción al absurdo, demuestra que una afirmación es verdadera al mostrar que si fuera falsa, llevaría a una imposibilidad lógica.",
+      "proofs": [],
+      "directDependencies": [
+        "teorema-dos-rectas-un-punto"
+      ]
+    },
+    "leccion-metodo-directo": {
+      "id": "leccion-metodo-directo",
+      "type": "lesson",
+      "title": "Método Directo",
+      "description": "Introducción a la forma más básica de demostración matemática: inferir Q a partir de P mediante pasos lógicos secuenciales.",
+      "proofs": [],
+      "directDependencies": [
+        "teorema-congruencia-ala"
+      ]
+    },
     "arquimedes": {
       "id": "arquimedes",
       "type": "matematico",
       "title": "arquimedes",
       "description": "El más grande matemático y científico de la antigüedad. Pionero en el método exhaustivo para calcular áreas y volúmenes.",
       "proofs": [],
-      "directDependencies": []
+      "directDependencies": [
+        "axioma-arquimedes"
+      ]
     },
     "bolyai": {
       "id": "bolyai",
@@ -472,7 +493,9 @@
       "title": "bolyai",
       "description": "Matemático húngaro que descubrió de forma independiente la geometría hiperbólica, desafiando la creencia milenaria en la unicidad de la geometría euclídea.",
       "proofs": [],
-      "directDependencies": []
+      "directDependencies": [
+        "sistema-hiperbolico"
+      ]
     },
     "dedekind": {
       "id": "dedekind",
@@ -480,7 +503,9 @@
       "title": "dedekind",
       "description": "Matemático alemán que formalizó los números reales mediante cortaduras y realizó contribuciones fundamentales a la teoría de números y álgebra.",
       "proofs": [],
-      "directDependencies": []
+      "directDependencies": [
+        "axioma-completitud"
+      ]
     },
     "euclides": {
       "id": "euclides",
@@ -488,7 +513,16 @@
       "title": "euclides",
       "description": "Matemático griego de la antigüedad, autor de los Elementos, la obra matemática más influyente de la historia.",
       "proofs": [],
-      "directDependencies": []
+      "directDependencies": [
+        "axioma-paralelas-euclides",
+        "teorema-pitagoras",
+        "teorema-tales",
+        "teorema-suma-angulos-triangulo",
+        "hilbert",
+        "lobachevski",
+        "bolyai",
+        "sistema-euclidiano"
+      ]
     },
     "hilbert": {
       "id": "hilbert",
@@ -496,7 +530,9 @@
       "title": "hilbert",
       "description": "Uno de los matemáticos más influyentes del siglo XIX y XX. Reformuló la geometría euclídea sobre una base axiomática rigurosa en sus Fundamentos de la Geometría (1899).",
       "proofs": [],
-      "directDependencies": []
+      "directDependencies": [
+        "sistema-euclidiano"
+      ]
     },
     "lobachevski": {
       "id": "lobachevski",
@@ -504,7 +540,10 @@
       "title": "lobachevski",
       "description": "Matemático ruso que descubrió la geometría hiperbólica al negar el quinto postulado de Euclides.",
       "proofs": [],
-      "directDependencies": []
+      "directDependencies": [
+        "sistema-hiperbolico",
+        "bolyai"
+      ]
     },
     "pasch": {
       "id": "pasch",
@@ -512,7 +551,31 @@
       "title": "pasch",
       "description": "Matemático alemán pionero en la axiomática moderna de la geometría. Demostró que muchos resultados dados por intuitivos en los Elementos de Euclides requerían axiomas explícitos.",
       "proofs": [],
-      "directDependencies": []
+      "directDependencies": [
+        "euclides"
+      ]
+    },
+    "pitagoras": {
+      "id": "pitagoras",
+      "type": "matematico",
+      "title": "pitagoras",
+      "description": "Filósofo y matemático de la antigua Grecia, fundador de la hermandad pitagórica. Es célebre por la relación fundamental en los triángulos rectángulos que lleva su nombre.",
+      "proofs": [],
+      "directDependencies": [
+        "teorema-pitagoras",
+        "euclides"
+      ]
+    },
+    "tales": {
+      "id": "tales",
+      "type": "matematico",
+      "title": "tales",
+      "description": "Filósofo y matemático griego considerado el primer matemático verdadero y uno de los Siete Sabios de Grecia.",
+      "proofs": [],
+      "directDependencies": [
+        "teorema-tales",
+        "euclides"
+      ]
     },
     "modelo-cartesiano": {
       "id": "modelo-cartesiano",
@@ -521,7 +584,10 @@
       "description": "El modelo analítico estándar para la geometría euclídea bidimensional, utilizando pares ordenados de números reales.",
       "proofs": [],
       "directDependencies": [
+        "sistema-euclidiano",
         "axioma-incidencia-1",
+        "axioma-arquimedes",
+        "axioma-paralelas-euclides",
         "axioma-incidencia-2",
         "axioma-incidencia-3",
         "axioma-orden-1",
@@ -533,9 +599,7 @@
         "axioma-congruencia-3",
         "axioma-congruencia-4",
         "axioma-congruencia-5",
-        "axioma-arquimedes",
-        "axioma-completitud",
-        "axioma-paralelas-euclides"
+        "axioma-completitud"
       ]
     },
     "modelo-fano": {
@@ -545,8 +609,10 @@
       "description": "El plano proyectivo finito más pequeño posible, consistente de 7 puntos y 7 rectas. Un modelo clave en geometría de incidencia.",
       "proofs": [],
       "directDependencies": [
+        "sistema-incidencia",
         "axioma-incidencia-1",
-        "axioma-incidencia-2"
+        "axioma-incidencia-2",
+        "axioma-incidencia-3"
       ]
     },
     "modelo-poincare": {
@@ -556,10 +622,15 @@
       "description": "El modelo conforme del plano hiperbólico que representa el espacio como el interior de un círculo unitario y las rectas como arcos ortogonales a la frontera.",
       "proofs": [],
       "directDependencies": [
+        "sistema-hiperbolico",
+        "sistema-absoluto",
         "axioma-incidencia-1",
+        "axioma-orden-1",
+        "modelo-cartesiano",
+        "axioma-paralelas-hiperbolico",
+        "sistema-euclidiano",
         "axioma-incidencia-2",
         "axioma-incidencia-3",
-        "axioma-orden-1",
         "axioma-orden-2",
         "axioma-orden-3",
         "axioma-orden-4",
@@ -569,8 +640,7 @@
         "axioma-congruencia-4",
         "axioma-congruencia-5",
         "axioma-arquimedes",
-        "axioma-completitud",
-        "axioma-paralelas-hiperbolico"
+        "axioma-completitud"
       ]
     },
     "modelo-tres-puntos": {
@@ -583,12 +653,7 @@
         "sistema-incidencia",
         "axioma-incidencia-1",
         "axioma-incidencia-2",
-        "axioma-incidencia-3",
-        "axioma-incidencia-4",
-        "axioma-incidencia-5",
-        "axioma-incidencia-6",
-        "axioma-incidencia-7",
-        "axioma-incidencia-8"
+        "axioma-incidencia-3"
       ]
     },
     "corolario-rectas-coincidentes": {
@@ -611,16 +676,23 @@
         {
           "id": "demo-punto-medio",
           "dependencies": [
+            "segmento",
             "axioma-congruencia-1",
-            "axioma-congruencia-2",
-            "axioma-orden-1"
+            "axioma-orden-1",
+            "axioma-arquimedes",
+            "axioma-completitud",
+            "mediatriz",
+            "perpendicular",
+            "axioma-congruencia-2"
           ]
         }
       ],
       "directDependencies": [
         "axioma-congruencia-1",
-        "axioma-congruencia-2",
-        "axioma-orden-1"
+        "axioma-orden-1",
+        "axioma-arquimedes",
+        "axioma-completitud",
+        "axioma-congruencia-2"
       ]
     },
     "teorema-angulos-opuestos-verticales": {
@@ -633,14 +705,15 @@
           "id": "demo-angulos-opuestos-verticales",
           "dependencies": [
             "axioma-congruencia-2",
+            "paralelas",
             "axioma-congruencia-3",
             "axioma-congruencia-4"
           ]
         }
       ],
       "directDependencies": [
-        "axioma-congruencia-2",
         "axioma-congruencia-4",
+        "axioma-congruencia-2",
         "axioma-congruencia-3"
       ]
     },
@@ -653,16 +726,20 @@
         {
           "id": "demo-congruencia-ala",
           "dependencies": [
+            "triangulo",
             "axioma-congruencia-1",
+            "segmento",
+            "axioma-congruencia-5",
             "axioma-congruencia-4",
-            "axioma-congruencia-5"
+            "paralelas"
           ]
         }
       ],
       "directDependencies": [
+        "axioma-congruencia-5",
         "axioma-congruencia-1",
-        "axioma-congruencia-4",
-        "axioma-congruencia-5"
+        "teorema-congruencia-lll",
+        "axioma-congruencia-4"
       ]
     },
     "teorema-congruencia-lll": {
@@ -674,19 +751,36 @@
         {
           "id": "demo-congruencia-lll",
           "dependencies": [
-            "axioma-congruencia-1",
+            "triangulo",
             "axioma-congruencia-4",
+            "axioma-congruencia-1",
             "axioma-congruencia-5",
             "teorema-congruencia-ala"
           ]
         }
       ],
       "directDependencies": [
-        "axioma-congruencia-1",
-        "axioma-congruencia-4",
         "axioma-congruencia-5",
-        "teorema-congruencia-ala"
+        "axioma-congruencia-1",
+        "axioma-congruencia-4"
       ]
+    },
+    "teorema-desigualdad-triangular": {
+      "id": "teorema-desigualdad-triangular",
+      "type": "teorema",
+      "title": "Desigualdad triangular",
+      "description": "En cualquier triángulo, la suma de las longitudes de dos de sus lados es estrictamente mayor que la longitud del tercer lado.",
+      "proofs": [
+        {
+          "id": "demo-desigualdad-triangular",
+          "dependencies": [
+            "triangulo",
+            "segmento",
+            "angulo"
+          ]
+        }
+      ],
+      "directDependencies": []
     },
     "teorema-dos-rectas-un-punto": {
       "id": "teorema-dos-rectas-un-punto",
@@ -698,13 +792,34 @@
           "id": "demo-dos-rectas-un-punto",
           "dependencies": [
             "axioma-incidencia-1",
-            "axioma-incidencia-2"
+            "axioma-incidencia-2",
+            "paralelas"
           ]
         }
       ],
       "directDependencies": [
         "axioma-incidencia-1",
         "axioma-incidencia-2"
+      ]
+    },
+    "teorema-pitagoras": {
+      "id": "teorema-pitagoras",
+      "type": "teorema",
+      "title": "Teorema de Pitágoras",
+      "description": "En un triángulo rectángulo, el cuadrado de la hipotenusa es igual a la suma de los cuadrados de los catetos.",
+      "proofs": [
+        {
+          "id": "demo-pitagoras-euclides",
+          "dependencies": [
+            "triangulo",
+            "perpendicular",
+            "segmento",
+            "angulo"
+          ]
+        }
+      ],
+      "directDependencies": [
+        "axioma-paralelas-euclides"
       ]
     },
     "teorema-punto-medio-perpendicular": {
@@ -716,10 +831,15 @@
         {
           "id": "demo-punto-medio-perpendicular",
           "dependencies": [
+            "mediatriz",
+            "segmento",
+            "perpendicular",
             "lema-punto-medio",
             "axioma-congruencia-5",
-            "axioma-congruencia-1",
-            "teorema-congruencia-lll"
+            "teorema-congruencia-lll",
+            "triangulo",
+            "circunferencia",
+            "axioma-congruencia-1"
           ]
         }
       ],
@@ -727,7 +847,68 @@
         "lema-punto-medio",
         "axioma-congruencia-5",
         "teorema-congruencia-lll",
+        "axioma-paralelas-euclides",
         "axioma-congruencia-1"
+      ]
+    },
+    "teorema-suma-angulos-triangulo": {
+      "id": "teorema-suma-angulos-triangulo",
+      "type": "teorema",
+      "title": "Teorema de la suma de los ángulos de un triángulo",
+      "description": "La suma de los ángulos interiores de un triángulo en el plano euclidiano es siempre igual a dos ángulos rectos (180 grados).",
+      "proofs": [
+        {
+          "id": "demo-suma-angulos-triangulo",
+          "dependencies": [
+            "axioma-paralelas-euclides",
+            "paralelas",
+            "triangulo",
+            "angulo",
+            "recta"
+          ]
+        }
+      ],
+      "directDependencies": [
+        "axioma-paralelas-euclides"
+      ]
+    },
+    "teorema-tales": {
+      "id": "teorema-tales",
+      "type": "teorema",
+      "title": "Teorema de Tales",
+      "description": "Si varias rectas paralelas cortan a dos rectas transversales, entonces los segmentos que determinan en ellas son proporcionales.",
+      "proofs": [
+        {
+          "id": "demo-tales",
+          "dependencies": [
+            "triangulo",
+            "altura",
+            "paralelas"
+          ]
+        }
+      ],
+      "directDependencies": [
+        "axioma-paralelas-euclides"
+      ]
+    },
+    "teorema-triangulo-isosceles": {
+      "id": "teorema-triangulo-isosceles",
+      "type": "teorema",
+      "title": "Teorema del triángulo isósceles",
+      "description": "En un triángulo isósceles, los ángulos opuestos a los lados iguales son también iguales (Pons Asinorum).",
+      "proofs": [
+        {
+          "id": "demo-triangulo-isosceles",
+          "dependencies": [
+            "axioma-congruencia-5",
+            "triangulo",
+            "bisectriz",
+            "angulo"
+          ]
+        }
+      ],
+      "directDependencies": [
+        "axioma-congruencia-5"
       ]
     }
   }

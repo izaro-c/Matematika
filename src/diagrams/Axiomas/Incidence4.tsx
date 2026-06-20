@@ -3,6 +3,15 @@ import JXG from 'jsxgraph';
 import { useMathStore } from '../../store/MathStoreContext';
 import { useLessonStore } from '../../store/LessonStore';
 
+
+function getCSSVar(name: string): string {
+  if (typeof document !== 'undefined') {
+    return getComputedStyle(document.documentElement).getPropertyValue(name).trim();
+  }
+  return '#000';
+}
+
+
 export const Incidence4 = () => {
   const boardRef = useRef<HTMLDivElement>(null);
   const elementsRef = useRef<Record<string, unknown>>({});
@@ -24,41 +33,52 @@ export const Incidence4 = () => {
 
     // Triángulo: tres puntos no colineales
     const A = board.create('point', [-2.5, -1], {
-      name: 'A', size: 5, fillColor: '#C86446', strokeColor: '#C86446', showInfobox: false,
+      name: 'A', size: 5, fillColor: getCSSVar('--theme-terracota'), strokeColor: getCSSVar('--theme-terracota'), showInfobox: false,
     });
     const B = board.create('point', [2.5, -1], {
-      name: 'B', size: 5, fillColor: '#C86446', strokeColor: '#C86446', showInfobox: false,
+      name: 'B', size: 5, fillColor: getCSSVar('--theme-terracota'), strokeColor: getCSSVar('--theme-terracota'), showInfobox: false,
     });
     const C = board.create('point', [0, 2.5], {
-      name: 'C', size: 5, fillColor: '#C86446', strokeColor: '#C86446', showInfobox: false,
+      name: 'C', size: 5, fillColor: getCSSVar('--theme-terracota'), strokeColor: getCSSVar('--theme-terracota'), showInfobox: false,
     });
 
     // Lados del triángulo
     const lab = board.create('line', [A, B], {
-      strokeColor: '#333333', strokeWidth: 1.5, highlight: false, dash: 1,
+      strokeColor: getCSSVar('--theme-carbon'), strokeWidth: 1.5, highlight: false, dash: 1,
     });
     const lac = board.create('line', [A, C], {
-      strokeColor: '#333333', strokeWidth: 1.5, highlight: false, dash: 1,
+      strokeColor: getCSSVar('--theme-carbon'), strokeWidth: 1.5, highlight: false, dash: 1,
     });
     const lbc = board.create('line', [B, C], {
-      strokeColor: '#333333', strokeWidth: 1.5, highlight: false, dash: 1,
+      strokeColor: getCSSVar('--theme-carbon'), strokeWidth: 1.5, highlight: false, dash: 1,
     });
 
     // Segmentos destacados
-    board.create('segment', [A, B], { strokeColor: '#5A805A', strokeWidth: 2.5, highlight: false });
-    board.create('segment', [A, C], { strokeColor: '#5A805A', strokeWidth: 2.5, highlight: false });
-    board.create('segment', [B, C], { strokeColor: '#5A805A', strokeWidth: 2.5, highlight: false });
+    board.create('segment', [A, B], { strokeColor: getCSSVar('--theme-musgo'), strokeWidth: 2.5, highlight: false });
+    board.create('segment', [A, C], { strokeColor: getCSSVar('--theme-musgo'), strokeWidth: 2.5, highlight: false });
+    board.create('segment', [B, C], { strokeColor: getCSSVar('--theme-musgo'), strokeWidth: 2.5, highlight: false });
 
     // Etiqueta "plano" con relleno suave
     const polygonABC = board.create('polygon', [A, B, C], {
-      fillColor: '#5D7080', fillOpacity: 0.08, borders: { visible: false }, vertices: { visible: false },
+      fillColor: getCSSVar('--theme-pizarra'), fillOpacity: 0.08, borders: { visible: false }, vertices: { visible: false },
     });
 
     elementsRef.current = { board, A, B, C, lab, lac, lbc, polygonABC };
 
-    board.update();
+    board.update();    (board.renderer as any).container.style.backgroundColor = getCSSVar('--theme-lienzo');
+
+
+
+        const observer = new MutationObserver(() => {
+      if (board) {
+        (board.renderer as any).container.style.backgroundColor = getCSSVar('--theme-lienzo');
+        board.update();
+      }
+    });
+    observer.observe(document.documentElement, { attributes: true, attributeFilter: ['class'] });
 
     return () => {
+      observer.disconnect();
       JXG.JSXGraph.freeBoard(board);
       elementsRef.current = {};
     };
@@ -69,17 +89,17 @@ export const Incidence4 = () => {
     if (!board) return;
 
     const reset = () => {
-      A.setAttribute({ size: 5, fillColor: '#C86446', strokeColor: '#C86446' });
-      B.setAttribute({ size: 5, fillColor: '#C86446', strokeColor: '#C86446' });
-      C.setAttribute({ size: 5, fillColor: '#C86446', strokeColor: '#C86446' });
-      if (polygonABC) polygonABC.setAttribute({ fillOpacity: 0.08, fillColor: '#5D7080' });
+      A.setAttribute({ size: 5, fillColor: getCSSVar('--theme-terracota'), strokeColor: getCSSVar('--theme-terracota') });
+      B.setAttribute({ size: 5, fillColor: getCSSVar('--theme-terracota'), strokeColor: getCSSVar('--theme-terracota') });
+      C.setAttribute({ size: 5, fillColor: getCSSVar('--theme-terracota'), strokeColor: getCSSVar('--theme-terracota') });
+      if (polygonABC) polygonABC.setAttribute({ fillOpacity: 0.08, fillColor: getCSSVar('--theme-pizarra') });
     };
 
     reset();
-    if (highlight === 'pA') A.setAttribute({ size: 10, fillColor: '#f5c542', strokeColor: '#f5c542' });
-    else if (highlight === 'pB') B.setAttribute({ size: 10, fillColor: '#f5c542', strokeColor: '#f5c542' });
-    else if (highlight === 'pC') C.setAttribute({ size: 10, fillColor: '#f5c542', strokeColor: '#f5c542' });
-    else if (highlight === 'polygonABC' && polygonABC) polygonABC.setAttribute({ fillOpacity: 0.25, fillColor: '#5A805A' });
+    if (highlight === 'pA') A.setAttribute({ size: 10, fillColor: getCSSVar('--theme-ocre'), strokeColor: getCSSVar('--theme-ocre') });
+    else if (highlight === 'pB') B.setAttribute({ size: 10, fillColor: getCSSVar('--theme-ocre'), strokeColor: getCSSVar('--theme-ocre') });
+    else if (highlight === 'pC') C.setAttribute({ size: 10, fillColor: getCSSVar('--theme-ocre'), strokeColor: getCSSVar('--theme-ocre') });
+    else if (highlight === 'polygonABC' && polygonABC) polygonABC.setAttribute({ fillOpacity: 0.25, fillColor: getCSSVar('--theme-musgo') });
 
     board.update();
   }, [highlight]);

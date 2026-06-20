@@ -1,0 +1,55 @@
+export const metadata = {
+  "id": "teorema-tales",
+  "type": "teorema",
+  "title": "Teorema de Tales",
+  "description": "Si varias rectas paralelas cortan a dos rectas transversales, entonces los segmentos que determinan en ellas son proporcionales.",
+  "statement": "Sean r₁ ∥ r₂ ∥ r₃ tres rectas paralelas cortadas por dos transversales t₁ y t₂. Si Aᵢ = rᵢ ∩ t₁ y Bᵢ = rᵢ ∩ t₂, entonces A₁A₂/A₂A₃ = B₁B₂/B₂B₃.",
+  "requires": ["recta", "paralelas", "segmento", "triangulo"],
+  "demos": ["demo-tales"],
+  "tags": ["geometria", "proporcionalidad", "paralelas"],
+  "authors": ["tales"],
+  "difficulty": "intermedio",
+  "links": ["recta", "paralelas", "segmento", "triangulo"],
+  "seeAlso": ["teorema-congruencia-ala", "teorema-pitagoras"],
+  "hasSimulation": true
+};
+
+import { DemoTales } from '../../diagrams/Teoremas/DemoTales';
+export const Simulation = DemoTales;
+import { InteractiveElement } from "../../components/ui/VisualBind";
+
+<Capitular letra="E" />l teorema de <ConceptLink targetId="tales">Tales</ConceptLink> es una piedra angular de la geometría proyectiva y la noción de semejanza. Establece que rectas <ConceptLink targetId="paralelas">paralelas</ConceptLink> que cortan a dos transversales producen <ConceptLink targetId="segmento">segmentos</ConceptLink> proporcionales.
+
+<Separador />
+
+### Enunciado Formal
+
+Sean $r_1 \parallel r_2 \parallel r_3$ tres <ConceptLink targetId="paralelas">rectas paralelas</ConceptLink> cortadas por dos transversales $t_1$ y $t_2$. Sean $A_i = r_i \cap t_1$ y $B_i = r_i \cap t_2$. Entonces:
+
+<Formula>
+  $$ \frac{\overline{A_1 A_2}}{\overline{A_2 A_3}} = \frac{\overline{B_1 B_2}}{\overline{B_2 B_3}} $$
+</Formula>
+
+En el diagrama, una <InteractiveElement target="recta-de" color="salvia">recta paralela</InteractiveElement> corta los lados del <InteractiveElement target="triangulo-abc" color="terracota">triángulo $\triangle ABC$</InteractiveElement>, dividiéndolos proporcionalmente.
+
+<Separador />
+
+### Demostración
+
+La demostración se encuentra en la página dedicada: <ConceptLink targetId="demo-tales">Demostración: Teorema de Tales</ConceptLink>, basada en triángulos que comparten altura.
+
+<Separador />
+
+### Discusión
+
+Una formulación equivalente y muy práctica: si trazamos una <ConceptLink targetId="recta">recta</ConceptLink> paralela a uno de los lados de un <ConceptLink targetId="triangulo">triángulo</ConceptLink> que interseca a los otros dos, entonces divide a esos lados en segmentos proporcionales, originando un triángulo semejante al original.
+
+El teorema es la base de la **semejanza de triángulos**: dos triángulos son semejantes si tienen ángulos congruentes, y sus lados correspondientes son proporcionales. Esto es fundamental para la trigonometría y para la definición de funciones trigonométricas.
+
+<Separador />
+
+### Observaciones
+
+- El teorema requiere el <ConceptLink targetId="axioma-paralelas-euclides">axioma de las paralelas</ConceptLink>: es propio de la <ConceptLink targetId="sistema-euclidiano">geometría euclidiana</ConceptLink>.
+- Atribuido a <ConceptLink targetId="tales">Tales de Mileto</ConceptLink> (siglo VI a.C.), quien supuestamente lo usó para medir la altura de las pirámides egipcias mediante las sombras proyectadas.
+- <RefLink targetId="teorema-pitagoras">El teorema de Pitágoras</RefLink> puede demostrarse usando Tales, y ambos son equivalentes al axioma de las paralelas.

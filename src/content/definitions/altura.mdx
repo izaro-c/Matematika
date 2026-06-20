@@ -1,0 +1,22 @@
+export const metadata = {
+  "id": "altura",
+  "type": "definicion",
+  "title": "Altura",
+  "description": "La altura de un triángulo es el segmento perpendicular trazado desde un vértice al lado opuesto (o su prolongación).",
+  "tags": ["geometria", "triangulos", "rectas"],
+  "authors": ["euclides"],
+  "links": ["segmento", "triangulo", "perpendicular", "punto"],
+  "seeAlso": [],
+  "hasSimulation": true,
+};
+
+import { InteractiveElement } from "../../components/ui/VisualBind";
+import { Altura } from '../../diagrams/Definiciones/Altura';
+
+export const Simulation = Altura;
+
+<Capitular letra="L" />a <InteractiveElement target="altura">altura</InteractiveElement> es el <ConceptLink targetId="segmento">segmento</ConceptLink> que representa la distancia más corta (es decir, de forma <InteractiveElement target="ortogonal">ortogonal</InteractiveElement>) desde un <InteractiveElement target="vertice-opuesto">vértice</InteractiveElement> superior hasta la línea del <InteractiveElement target="lado-opuesto">lado opuesto</InteractiveElement> subyacente. Todo <ConceptLink targetId="triangulo">triángulo</ConceptLink> tiene tres alturas que concurren en un punto llamado ortocentro.
+
+<Separador />
+
+La <ConceptLink targetId="altura">altura</ConceptLink> es fundamental para calcular el área de cualquier polígono, sirviendo como multiplicador de la base.

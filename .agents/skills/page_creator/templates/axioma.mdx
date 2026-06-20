@@ -1,0 +1,48 @@
+export const metadata = {
+  "id": "axioma-<kebab-id>",
+  "type": "axioma",
+  "title": "Axioma de Incidencia I",
+  "description": "Explicación informal de lo que afirma el axioma.",
+  "statement": "Para todo par de puntos distintos, existe exactamente una recta que los contiene.",
+  "tags": ["geometria", "incidencia"],
+  "authors": ["hilbert"],
+  "links": ["punto", "recta"],
+  "seeAlso": ["axioma-incidencia-2"],
+  "hasSimulation": true
+};
+
+import { MiAxiomaDiagram } from '../../diagrams/Axiomas/MiAxiomaDiagram';
+export const Simulation = MiAxiomaDiagram;
+import { InteractiveElement } from "../../components/ui/VisualBind";
+
+<Capitular letra="X" />l [primer/segundo...] axioma de [grupo] establece [qué afirma]. [Por qué es fundamental.]
+
+<Separador />
+
+### Enunciado Formal
+
+<Formula>
+  $$ \forall P \neq Q, \; \exists! \, r : P, Q \in r $$
+</Formula>
+
+<Nota>Notación o aclaración sobre el enunciado.</Nota>
+
+<Separador />
+
+### Discusión
+
+[Qué afirma, por qué es necesario, qué pasaría sin él. Conciso.]
+
+<Separador />
+
+### Relación con otros axiomas
+
+[Cómo se conecta con los demás axiomas de su sistema. Con ConceptLinks a axiomas relacionados.]
+
+<Separador />
+
+### Observaciones
+
+- [Validez en geometrías no euclídeas]
+- [Formulaciones equivalentes si las hay]
+- <RefLink targetId="otro-axioma">Relación con otro axioma</RefLink>

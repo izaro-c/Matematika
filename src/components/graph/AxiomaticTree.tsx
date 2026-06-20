@@ -16,6 +16,24 @@ import { useGraphStore } from '../../store/graphStore';
 import { MathNode } from './CustomNode';
 import type { MathNodeData } from './CustomNode';
 
+function GroupBraceNode({ data }: { data: { width: number; label: string } }) {
+  const w = data.width;
+  return (
+    <div style={{ width: w, position: 'relative', textAlign: 'center' }} className="pointer-events-none">
+      <div className="text-lg font-serif italic text-carbon/70 mb-1 tracking-wide">{data.label}</div>
+      <svg width={w} height={30} viewBox={`0 0 ${w} 30`} preserveAspectRatio="none" className="overflow-visible">
+        <path 
+          d={`M 0 30 Q 0 15 15 15 L ${w/2 - 15} 15 Q ${w/2} 15 ${w/2} 0 Q ${w/2} 15 ${w/2 + 15} 15 L ${w - 15} 15 Q ${w} 15 ${w} 30`} 
+          fill="none" 
+          stroke="var(--theme-carbon)" 
+          strokeWidth="1.5" 
+          strokeOpacity="0.4"
+        />
+      </svg>
+    </div>
+  );
+}
+
 const AXIOM_GROUPS = [
   { test: (id: string) => id.startsWith('axioma-incidencia'), color: '#b85c38', label: 'Incidencia' },
   { test: (id: string) => id.startsWith('axioma-orden'), color: '#4a6070', label: 'Orden' },
@@ -31,7 +49,7 @@ function getAxiomGroup(id: string): { color: string; label: string } | null {
   return null;
 }
 
-const nodeTypes = { mathNode: MathNode };
+const nodeTypes = { mathNode: MathNode, groupBrace: GroupBraceNode };
 
 function computeDependencyChain(
   nodeId: string,
@@ -121,6 +139,37 @@ function FlowContent() {
       ...n,
       data: { ...n.data, scale: 1, isHighlighted: false },
     }));
+
+    // Find min/max X of Hilbert Axioms
+    const hilbertAxioms = nodes.filter(n => {
+      const d = n.data as unknown as MathNodeData;
+      return d.nodeType === 'axioma' && (
+        n.id.startsWith('axioma-incidencia') ||
+        n.id.startsWith('axioma-orden') ||
+        n.id.startsWith('axioma-congruencia') ||
+        n.id.startsWith('axioma-arquimedes') ||
+        n.id.startsWith('axioma-completitud') ||
+        n.id.startsWith('axioma-paralelas') // Euclid
+      );
+    });
+
+    if (hilbertAxioms.length > 0) {
+      const minX = Math.min(...hilbertAxioms.map(n => n.position.x));
+      const maxX = Math.max(...hilbertAxioms.map(n => n.position.x)) + 150; // NODE_W
+      const width = maxX - minX;
+
+      nodes.push({
+        id: 'hilbert-brace',
+        type: 'groupBrace',
+        position: { x: minX, y: -60 }, // above the axioms
+        data: { label: 'Axiomática de Hilbert', width },
+        draggable: false,
+        selectable: false,
+        zIndex: -1,
+        style: {}
+      } as unknown as Node);
+    }
+
     setRfNodes(nodes);
     requestAnimationFrame(() => {
       setTimeout(() => fitView({ padding: 0.12, duration: 500 }), 30);

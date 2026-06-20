@@ -1,36 +1,33 @@
 export const metadata = {
+  "id": "recta",
   "type": "definicion",
   "title": "Recta",
-  "description": "Concepto primitivo de la geometría. Una recta es un conjunto de puntos con extensión unidimensional, infinita en ambas direcciones, que se define implícitamente mediante los axiomas de incidencia y orden.",
-  "tags": ["geometria", "primitivo", "unidimensional"],
-  "authors": ["hilbert"],
-  "links": ["punto", "axioma-incidencia-1", "axioma-incidencia-2"],
-  "seeAlso": ["plano", "segmento", "semirrecta"],
-  "hasSimulation": true,
+  "description": "Concepto primitivo de la geometría de naturaleza unidimensional. En el sistema de Hilbert, carece de definición explícita y su estructura emerge de las relaciones de incidencia y orden.",
+  "authors": ["hilbert", "euclides"],
+  "hasSimulation": true
 };
 
 import { Recta } from '../../diagrams/Definiciones/Recta';
 export const Simulation = Recta;
 import { InteractiveElement } from "../../components/ui/VisualBind";
 
-<Capitular letra="U" />
-na recta es un conjunto de puntos con una única dimensión. Es ilimitada en longitud pero sin grosor. Al igual que el punto, es un concepto primitivo definido implícitamente por los axiomas.
+<Capitular letra="U" />na recta es una línea continua de una sola <ConceptLink targetId="dimension" isDependency={false}>dimensión</ConceptLink> que se extiende infinitamente en ambas direcciones, sin curvarse y sin grosor. Al igual que el <ConceptLink targetId="punto" isDependency={false}>punto</ConceptLink>, en la geometría formal de <ConceptLink targetId="hilbert" isDependency={false}>Hilbert</ConceptLink> la recta es un **concepto primitivo**. Esto significa que carece de una definición explícita o constructiva; no podemos definir analíticamente "qué es" una recta, sino que deducimos su comportamiento exclusivamente por las relaciones que mantiene con los puntos a través de los axiomas.
 
 <Separador />
 
 ### Enunciado Informal
 
-Una recta es una línea recta que se extiende infinitamente en ambas direcciones. Se denota con letras minúsculas ($l$, $m$, $n$, etc.) o mediante dos de sus puntos ($\overleftrightarrow{AB}$). En el diagrama interactivo, la <InteractiveElement target="lineAB" color="carbon">recta</InteractiveElement> está determinada por los puntos <InteractiveElement target="pA" color="carbon">A</InteractiveElement> y <InteractiveElement target="pB" color="carbon">B</InteractiveElement>.
+Una recta está formada por infinitos puntos. Se suele nombrar con letras minúsculas ($l, m, n$) o indicando dos puntos distintos que pertenecen a ella ($\overleftrightarrow{AB}$). En el diagrama, la <InteractiveElement target="lineAB" color="carbon">recta $l$</InteractiveElement> pasa exactamente por los puntos <InteractiveElement target="pA" color="terracota">A</InteractiveElement> y <InteractiveElement target="pB" color="terracota">B</InteractiveElement>.
 
 <Separador />
 
 ### Definición Axiomática
 
-Las propiedades fundamentales de la recta en el sistema de Hilbert son:
+Las reglas que controlan a la recta se definen en los axiomas:
 
-- **Incidencia**: por dos puntos distintos pasa una única recta (<ConceptLink targetId="axioma-incidencia-1">I-1</ConceptLink>). Toda recta contiene al menos dos puntos (<ConceptLink targetId="axioma-incidencia-2">I-2</ConceptLink>).
-- **Orden**: los puntos sobre una recta están totalmente ordenados por la relación "estar entre" (<ConceptLink targetId="axioma-orden-1">II-1</ConceptLink> a <ConceptLink targetId="axioma-orden-3">II-3</ConceptLink>). Este orden es denso y continuo.
-- **Extensión**: la recta es infinita —dado cualquier punto sobre ella, existen puntos a ambos lados (<ConceptLink targetId="axioma-orden-2">II-2</ConceptLink>).
+- **Determinación**: Por dos <ConceptLink targetId="punto">puntos</ConceptLink> pasa siempre una y solo una recta (<ConceptLink targetId="axioma-incidencia-1" isDependency={false}>I-1</ConceptLink>). Toda recta contiene al menos dos puntos (<ConceptLink targetId="axioma-incidencia-2" isDependency={false}>I-2</ConceptLink>).
+- **Orden**: Tres puntos sobre una recta pueden ordenarse con la relación "estar entre".
+- **Extensión**: La recta no tiene fin. Cualquier <ConceptLink targetId="segmento">segmento</ConceptLink> puede alargarse indefinidamente (<ConceptLink targetId="axioma-orden-2" isDependency={false}>II-2</ConceptLink>).
 
 <Separador />
 
@@ -38,14 +35,14 @@ Las propiedades fundamentales de la recta en el sistema de Hilbert son:
 
 | Notación | Significado |
 |---|---|
-| $\overleftrightarrow{AB}$ | Recta que pasa por $A$ y $B$ |
-| $l$, $m$, $n$ | Rectas nombradas con letras minúsculas |
-| $A \in l$ | El punto $A$ pertenece a la recta $l$ |
-| $A \notin l$ | El punto $A$ no pertenece a la recta $l$ |
-| $l \parallel m$ | La recta $l$ es paralela a la recta $m$ |
+| $\overleftrightarrow{AB}$ | La recta que pasa por los puntos $A$ y $B$. |
+| $A \in l$ | <ConceptLink targetId="incidencia">Incidencia</ConceptLink>: El punto $A$ está sobre la recta $l$. |
+| $l \parallel m$ | Rectas <ConceptLink targetId="paralelas">paralelas</ConceptLink>: $l$ y $m$ están en el mismo <ConceptLink targetId="plano">plano</ConceptLink> y nunca se cruzan ($l \cap m = \emptyset$). |
 
 <Separador />
 
 ### Observaciones
 
-En geometría absoluta, la recta es un conjunto infinito de puntos. El axioma de completitud garantiza que es isomorfa a $\mathbb{R}$ como conjunto ordenado. En geometría euclídea, la recta es la línea de mínima distancia entre dos puntos (geodésica). En geometría hiperbólica, las rectas (geodésicas) son arcos de círculo ortogonales al borde del modelo.
+- En el <ConceptLink targetId="modelo-cartesiano">modelo cartesiano euclidiano</ConceptLink>, la recta representa la <ConceptLink targetId="geodesica">geodésica</ConceptLink> (el camino más corto) entre dos puntos.
+- Gracias al <ConceptLink targetId="axioma-completitud" isDependency={false}>axioma de completitud</ConceptLink>, se garantiza que la recta es matemáticamente idéntica al conjunto de los <ConceptLink targetId="numeros-reales">números reales</ConceptLink>.
+- En la <ConceptLink targetId="sistema-hiperbolico">geometría hiperbólica</ConceptLink> (como el modelo del <ConceptLink targetId="modelo-poincare">Disco de Poincaré</ConceptLink>), las "rectas" se dibujan visualmente como arcos de <ConceptLink targetId="circunferencia">circunferencia</ConceptLink>.

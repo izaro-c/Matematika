@@ -16,10 +16,10 @@ export interface GlossaryEntry {
  * GlossaryState - Estado global de Zustand para el Glosario y Fórmulas
  */
 export interface GlossaryState {
-  activeTerm: string | null;
+  activeTerms: string[] | null;
   activeFormulaTerms: string[] | null;
   displayMode: 'sidebar' | 'modal';
-  openTerm: (termId: string) => void;
+  openTerm: (termId: string | string[]) => void;
   openFormulaTerms: (termIds: string[]) => void;
   closeTerm: () => void;
   toggleDisplayMode: () => void;
@@ -502,11 +502,11 @@ export const texSymbolMap: Record<string, string> = {
  * Controla qué término o fórmulas están seleccionadas para mostrarse en la UI.
  */
 export const useGlossaryStore = create<GlossaryState>((set) => ({
-  activeTerm: null,
+  activeTerms: null,
   activeFormulaTerms: null,
   displayMode: 'sidebar',
-  openTerm: (termId) => set({ activeTerm: termId, activeFormulaTerms: null }),
-  openFormulaTerms: (termIds) => set({ activeFormulaTerms: termIds, activeTerm: null }),
-  closeTerm: () => set({ activeTerm: null, activeFormulaTerms: null }),
+  openTerm: (termId) => set({ activeTerms: Array.isArray(termId) ? termId : [termId], activeFormulaTerms: null }),
+  openFormulaTerms: (termIds) => set({ activeFormulaTerms: termIds, activeTerms: null }),
+  closeTerm: () => set({ activeTerms: null, activeFormulaTerms: null }),
   toggleDisplayMode: () => set((state) => ({ displayMode: state.displayMode === 'sidebar' ? 'modal' : 'sidebar' }))
 }));

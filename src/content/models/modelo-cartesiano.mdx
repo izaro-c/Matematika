@@ -24,8 +24,11 @@ export const metadata = {
   "tags": ["geometria", "modelo", "euclidiana", "analitica"]
 };
 
+import { ModeloCartesiano } from '../../diagrams/Models/ModeloCartesiano';
+export const Diagram = ModeloCartesiano;
+
 <Capitular letra="E" />
-l Plano Cartesiano $\mathbb{R}^2$ es el modelo canónico y fundamental para la <ConceptLink targetId="sistema-euclidiano">geometría euclídea</ConceptLink>. Al establecer una biyección entre puntos geométricos y pares ordenados de números reales, permitió la algebrización de la geometría, un logro monumental atribuido a René Descartes y Pierre de Fermat en el siglo XVII.
+l <ConceptLink targetId="modelo-cartesiano">Plano Cartesiano</ConceptLink> $\mathbb{R}^2$ constituye el modelo analítico canónico para la <ConceptLink targetId="sistema-euclidiano">geometría euclídea</ConceptLink>. Al establecer una biyección rigurosa entre las variedades geométricas y los pares ordenados formados por números reales, propulsó la completa algebrización de la geometría, un logro monumental cristalizado analíticamente durante el siglo XVII.
 
 <Separador />
 
@@ -43,12 +46,12 @@ En este modelo analítico, los elementos geométricos primitivos se defininen al
 
 ### Verificación de Axiomas Clave
 
-El plano cartesiano satisface todos los axiomas de la <ConceptLink targetId="sistema-euclidiano">geometría euclídea</ConceptLink>:
+El <ConceptLink targetId="modelo-cartesiano">plano cartesiano</ConceptLink> satisface todos los axiomas de la <ConceptLink targetId="sistema-euclidiano">geometría euclídea</ConceptLink>:
 
 1.  **Axiomas de Incidencia**: Dados dos puntos distintos $P_1(x_1, y_1)$ y $P_2(x_2, y_2)$, existe una y solo una ecuación de la forma $ax + by + c = 0$ (salvo multiplicación por un escalar no nulo) que ambos satisfacen. Esto verifica el <ConceptLink targetId="axioma-incidencia-1">axioma de incidencia de la recta</ConceptLink>.
 2.  **Axiomas de Congruencia**: Se verifican a través de la invariancia de la métrica euclídea ante isometrías afines (traslaciones, rotaciones y reflexiones).
-3.  **Axiomas de Continuidad**: Se heredan directamente de la completitud topológica del cuerpo de los números reales $\mathbb{R}$ (axioma del supremo de Dedekind), garantizando que los <ConceptLink targetId="axioma-arquimedes">axiomas de Arquímedes</ConceptLink> y Completitud se cumplan.
-4.  **Axioma de Paralelas**: Dada una recta $ax + by + c = 0$ y un punto $(x_0, y_0)$ que no pertenece a ella, la única recta paralela a la dada que pasa por el punto tiene la ecuación $ax + by - (ax_0 + by_0) = 0$. Esto demuestra formalmente el <ConceptLink targetId="axioma-paralelas-euclides">postulado de las paralelas de Euclides</ConceptLink>.
+3.  **Axiomas de Continuidad**: Se heredan directamente de la completitud topológica del cuerpo de los números reales $\mathbb{R}$ (axioma del supremo de Dedekind), garantizando que los <ConceptLink targetId="axioma-arquimedes">axiomas de <ConceptLink targetId="arquimedes">Arquímedes</ConceptLink></ConceptLink> y Completitud se cumplan.
+4.  **Axioma de <ConceptLink targetId="paralelas">Paralelas</ConceptLink>**: Dada una recta $ax + by + c = 0$ y un punto $(x_0, y_0)$ que no pertenece a ella, la única recta paralela a la dada que pasa por el punto tiene la ecuación $ax + by - (ax_0 + by_0) = 0$. Esto demuestra formalmente el <ConceptLink targetId="axioma-paralelas-euclides">postulado de las <ConceptLink targetId="paralelas">paralelas</ConceptLink> de <ConceptLink targetId="euclides">Euclides</ConceptLink></ConceptLink>.
 
 <Nota>
   La consistencia de la <ConceptLink targetId="sistema-euclidiano">geometría euclídea</ConceptLink> se reduce, gracias a este modelo, a la consistencia del análisis real y la teoría de conjuntos axiomática. Esto proporciona una prueba de consistencia relativa profunda e incuestionable en las matemáticas modernas.

@@ -4,40 +4,45 @@ export const metadata = {
   "title": "Axioma II-4 (Pasch)",
   "description": "Si una recta corta a un lado de un triángulo sin pasar por sus vértices, entonces corta también a otro de los lados.",
   "statement": "Dado un triángulo ABC y una recta l que no pasa por A, B ni C, si l intersecta el lado AB en un punto entre A y B, entonces l intersecta también AC o BC.",
-  "tags": ["geometria", "orden", "geometria-absoluta", "pasch"],
   "authors": ["hilbert", "pasch"],
-  "hasSimulation": true,
+  "hasSimulation": true
 };
 
 import { Pasch } from '../../diagrams/Axiomas/Pasch';
 export const Simulation = Pasch;
 import { InteractiveElement } from "../../components/ui/VisualBind";
 
-<Capitular letra="S" />
-i una <InteractiveElement target="lineL" color="pizarra">recta</InteractiveElement> corta a un lado de un <InteractiveElement target="triangle" color="terracota">triángulo</InteractiveElement> sin pasar por sus vértices, entonces corta también a otro de los lados. Conocido como axioma de Pasch, es fundamental para la estructura de orden en el plano.
+<Capitular letra="S" />i una <InteractiveElement target="lineL" color="carbon">recta</InteractiveElement> atraviesa un lado de un <InteractiveElement target="triangle" color="terracota">triángulo</InteractiveElement> por su interior, entonces irremediablemente debe salir cortando a otro de los lados. Esta norma fundamental, universalmente conocida como el axioma de <ConceptLink targetId="pasch">Pasch</ConceptLink>, es la columna vertebral de la topología bidimensional.
 
 <Separador />
 
 ### Enunciado Formal
 
 <Formula>
-  $$ \text{Sea } \triangle ABC \text{ y } l \text{ una recta que no pasa por } A, B, C. \text{ Si } l \cap \overline{AB} \neq \emptyset \text{ y } A * P * B \text{ para } P \in l, \text{ entonces } l \cap \overline{AC} \neq \emptyset \text{ o } l \cap \overline{BC} \neq \emptyset. $$
+  $$
+  l \cap \overline{AB} = P \ (A * P * B) \implies
+  \begin{cases}
+    l \cap \overline{AC} \neq \emptyset \\
+    \lor \\
+    l \cap \overline{BC} \neq \emptyset
+  \end{cases}
+  $$
 </Formula>
 
 <Nota>
-  En el diagrama, la <InteractiveElement target="lineL" color="pizarra">recta l</InteractiveElement> corta al lado $\overline{AB}$ en el <InteractiveElement target="pP" color="terracota">punto P</InteractiveElement> y al lado $\overline{BC}$ en <InteractiveElement target="pQ" color="terracota">Q</InteractiveElement>.
+  En el diagrama interactivo, puedes ver cómo la <InteractiveElement target="lineL" color="carbon">recta l</InteractiveElement> perfora al lado $\overline{AB}$ en el <InteractiveElement target="pP" color="ocre">punto P</InteractiveElement> y busca inexorablemente la salida rompiendo el lado $\overline{BC}$ en el <InteractiveElement target="pQ" color="ocre">punto Q</InteractiveElement>.
 </Nota>
 
 <Separador />
 
 ### Discusión
 
-El axioma de Pasch es probablemente el axioma de orden más profundo. Garantiza que una recta no puede "entrar" en un triángulo por un lado y "salir" sin cruzar otro lado —una propiedad esencial de la planaridad. Sin este axioma, existirían configuraciones patológicas en las que una recta cruza un segmento sin cruzar los otros dos, lo que contradiría la intuición geométrica.
+El <ConceptLink targetId="axioma-pasch">axioma de Pasch</ConceptLink> es probablemente el <ConceptLink targetId="postulado">postulado</ConceptLink> de orden más trascendental de la geometría. Garantiza la existencia de una frontera infranqueable: una <ConceptLink targetId="recta">recta</ConceptLink> infinita no puede penetrar furtivamente en un <ConceptLink targetId="triangulo">triángulo</ConceptLink> por una de sus vallas y luego evaporarse en el interior sin llegar a cruzar otra frontera para salir. De alguna manera, formaliza rigurosamente que el "interior" y el "exterior" están separados.
 
-La demostración de que una recta divide al plano en dos semiplanos separados (el teorema de separación de la recta) depende crucialmente de este axioma. También es necesario para demostrar que los ángulos pueden ordenarse por tamaño y que los triángulos tienen área bien definida.
+Su inmensa potencia matemática reside en que, gracias a él, podemos demostrar formalmente el <ConceptLink targetId="teorema-separacion" isDependency={false}>teorema de separación</ConceptLink> (toda recta corta el <ConceptLink targetId="plano" isDependency={false}>plano</ConceptLink> en dos <ConceptLink targetId="semiplano" isDependency={false}>semiplanos</ConceptLink> perfectamente aislados). También es la base subyacente para entender que los <ConceptLink targetId="angulo" isDependency={false}>ángulos</ConceptLink> tienen interiores, y que un triángulo encierra un <ConceptLink targetId="area" isDependency={false}>área</ConceptLink> bien definida.
 
 <Separador />
 
 ### Observaciones
 
-El axioma de Pasch fue formulado originalmente por el matemático alemán Moritz Pasch en 1882. Hilbert lo incorporó como axioma II-4 en sus *Fundamentos de la Geometría*, reconociendo que los Elementos de Euclides usaban implícitamente esta propiedad sin haberla enunciado. Es un axioma de la geometría absoluta.
+- Fue el matemático alemán Moritz Pasch quien descubrió en 1882 que <ConceptLink targetId="euclides">Euclides</ConceptLink> llevaba más de dos milenios usando esta propiedad geométrica de contrabando en sus demostraciones, sin haberla escrito jamás como un axioma base. <ConceptLink targetId="hilbert">Hilbert</ConceptLink> corrigió esta laguna histórica incorporándolo a su famosa lista de fundamentos, dentro de la <ConceptLink targetId="sistema-absoluto">geometría absoluta</ConceptLink>.

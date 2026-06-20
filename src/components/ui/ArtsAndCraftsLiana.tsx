@@ -5,9 +5,12 @@ interface ArtsAndCraftsLianaProps {
   totalHeight: number;
 }
 
-/**
- * Evaluadores matemáticos para curvas de Bézier Cúbicas.
- */
+// --- 1. Constantes Matemáticas Fundamentales ---
+
+const PHI = (1 + Math.sqrt(5)) / 2; // ~1.61803
+
+// --- 2. Funciones de Evaluación de Curvas de Bézier Cúbicas ---
+
 const getCubicBezierPoint = (t: number, p0: number, p1: number, p2: number, p3: number): number =>
   Math.pow(1 - t, 3) * p0 +
   3 * Math.pow(1 - t, 2) * t * p1 +
@@ -20,34 +23,45 @@ const getCubicBezierDerivative = (t: number, p0: number, p1: number, p2: number,
   3 * Math.pow(t, 2) * (p3 - p2);
 
 /**
- * Calcula la matriz de transformación para alinear perfectamente 
- * un nodo botánico con la tangente de la curva cúbica.
+ * Aproximación numérica de la integral de longitud de arco mediante 
+ * discretización de segmentos de recta (n=20 ofrece un error < 0.1% en estas curvas).
  */
-const getBranchTransform = (
-  t: number,
+const approximateBezierLength = (
   p0x: number, p1x: number, p2x: number, p3x: number,
   p0y: number, p1y: number, p2y: number, p3y: number,
-  angleOffset: number,
-  scale: number
-): string => {
-  const x = getCubicBezierPoint(t, p0x, p1x, p2x, p3x);
-  const y = getCubicBezierPoint(t, p0y, p1y, p2y, p3y);
-  const dx = getCubicBezierDerivative(t, p0x, p1x, p2x, p3x);
-  const dy = getCubicBezierDerivative(t, p0y, p1y, p2y, p3y);
+  steps: number = 20
+): number => {
+  let length = 0;
+  let prevX = p0x;
+  let prevY = p0y;
 
-  const tangentAngle = (Math.atan2(dy, dx) * 180) / Math.PI;
-  const finalAngle = tangentAngle + angleOffset;
-
-  return `translate(${x}, ${y}) rotate(${finalAngle}) scale(${scale})`;
+  for (let i = 1; i <= steps; i++) {
+    const t = i / steps;
+    const x = getCubicBezierPoint(t, p0x, p1x, p2x, p3x);
+    const y = getCubicBezierPoint(t, p0y, p1y, p2y, p3y);
+    const dx = x - prevX;
+    const dy = y - prevY;
+    length += Math.sqrt(dx * dx + dy * dy);
+    prevX = x;
+    prevY = y;
+  }
+  return length;
 };
 
-// --- Nodos Botánicos Sutiles ---
+// --- 3. Tipos y Modelos de Datos Topológicos ---
 
-const SlenderWillowLeaf = ({ transform }: { transform: string }) => (
-  <g transform={transform}>
-    {/* Tallo ultrafino */}
+interface NodeMetadata {
+  id: string;
+  globalY: number;      // Coordenada Y absoluta en el documento
+  baseTransform: string; // Traslación y rotación derivadas de la tangente
+  componentType: 'leaf' | 'tendril' | 'bud';
+}
+
+// --- 4. Subcomponentes Vectoriales Base (Sin transformación propia) ---
+
+const SlenderWillowLeaf = () => (
+  <g>
     <path d="M0,0 Q10,-2 15,0" className="stroke-salvia/40 fill-none" strokeWidth="0.5" />
-    {/* Hoja estilizada, esbelta y elegante */}
     <path
       d="M14,0 C20,-8 35,-10 45,-2 C35,4 25,6 14,0 Z"
       className="fill-salvia/10 stroke-salvia/30"
@@ -57,110 +71,120 @@ const SlenderWillowLeaf = ({ transform }: { transform: string }) => (
   </g>
 );
 
-const DelicateTendril = ({ transform }: { transform: string }) => (
-  <g transform={transform}>
-    {/* Espiral capilar, aporta complejidad sin peso visual */}
+const DelicateTendril = () => (
+  <g>
     <path
       d="M0,0 C10,-10 25,-5 20,8 C15,20 0,15 5,5 C8,-2 15,0 13,4"
-      className="stroke-salvia/30 fill-none"
+      className="stroke-salvia/40 fill-none"
       strokeWidth="0.5"
       strokeLinecap="round"
     />
   </g>
 );
 
-const ElegantBud = ({ transform }: { transform: string }) => (
-  <g transform={transform}>
-    {/* Pedicelo curvo */}
-    <path d="M0,0 Q8,2 12,-4" className="stroke-salvia/40 fill-none" strokeWidth="0.75" />
-    {/* Receptáculo botánico (cáliz cerrado) */}
-    <path d="M10,-3 L14,-8 L16,-3 Z" className="fill-salvia/20 stroke-salvia/40" strokeWidth="0.5" />
-    {/* Capullo cerrado (pétalos sutiles) */}
+const ElegantBud = () => (
+  <g>
+    <path d="M0,0 Q8,2 12,-4" className="stroke-salvia/50 fill-none" strokeWidth="0.75" />
+    <path d="M10,-3 L14,-8 L16,-3 Z" className="fill-salvia/20 stroke-salvia/50" strokeWidth="0.5" />
     <g transform="translate(14, -6) rotate(10)">
-      <path d="M0,0 C5,-12 15,-15 15,0 C10,-2 5,2 0,0 Z" className="fill-terracota/10 stroke-terracota/30" strokeWidth="0.5" />
-      <path d="M0,0 C8,-8 18,5 15,0 C10,5 5,5 0,0 Z" className="fill-terracota/20 stroke-terracota/40" strokeWidth="0.5" />
+      <path d="M0,0 C5,-12 15,-15 15,0 C10,-2 5,2 0,0 Z" className="fill-terracota/20 stroke-terracota/40" strokeWidth="0.5" />
+      <path d="M0,0 C8,-8 18,5 15,0 C10,5 5,5 0,0 Z" className="fill-terracota/30 stroke-terracota/50" strokeWidth="0.5" />
     </g>
   </g>
 );
+
+// --- 5. Motor de Renderizado Principal ---
 
 export const ArtsAndCraftsLiana: React.FC<ArtsAndCraftsLianaProps> = ({
   scrollProgress,
   totalHeight,
 }) => {
-  // Alargamos el segmento para que las curvas sean más perezosas y elegantes
   const SEGMENT_H = 400;
   const X_CENTER = 150;
-  const AMPLITUDE = 80;
+  // Aplicamos la proporción áurea a la amplitud para una dispersión más orgánica
+  const BASE_AMPLITUDE = 80;
+  const SECONDARY_AMPLITUDE = BASE_AMPLITUDE / PHI;
 
-  const { pathPrimary, pathSecondary, elements } = useMemo(() => {
+  // Calculamos la topología y geometría matemática una única vez
+  const { pathPrimary, pathSecondary, totalPrimaryLength, totalSecondaryLength, nodesMap } = useMemo(() => {
     const segments = Math.max(1, Math.ceil(totalHeight / SEGMENT_H));
 
     let mainPath = `M${X_CENTER},0 `;
     let secondaryPath = `M${X_CENTER},0 `;
-    const nodes: React.ReactNode[] = [];
+    let accPrimaryLength = 0;
+    let accSecondaryLength = 0;
+
+    const nodes: NodeMetadata[] = [];
+
+    const addNode = (
+      id: string, type: 'leaf' | 'tendril' | 'bud',
+      t: number, p0x: number, p1x: number, p2x: number, p3x: number,
+      p0y: number, p1y: number, p2y: number, p3y: number,
+      angleOffset: number
+    ) => {
+      const x = getCubicBezierPoint(t, p0x, p1x, p2x, p3x);
+      const y = getCubicBezierPoint(t, p0y, p1y, p2y, p3y);
+      const dx = getCubicBezierDerivative(t, p0x, p1x, p2x, p3x);
+      const dy = getCubicBezierDerivative(t, p0y, p1y, p2y, p3y);
+
+      const tangentAngle = (Math.atan2(dy, dx) * 180) / Math.PI;
+      nodes.push({
+        id,
+        globalY: y,
+        baseTransform: `translate(${x}, ${y}) rotate(${tangentAngle + angleOffset})`,
+        componentType: type
+      });
+    };
 
     for (let i = 0; i < segments; i++) {
       const yStart = i * SEGMENT_H;
       const yEnd = (i + 1) * SEGMENT_H;
+      const isLeft = i % 2 === 0;
 
-      // Controladores para la curva Cúbica en forma de "S"
       const cp1y = yStart + SEGMENT_H * 0.33;
       const cp2y = yStart + SEGMENT_H * 0.66;
 
-      // Desfase lateral alterno para crear el entrelazado continuo
-      const isLeft = i % 2 === 0;
-      const primaryAmp = isLeft ? AMPLITUDE : -AMPLITUDE;
+      const p1x_pri = X_CENTER + (isLeft ? BASE_AMPLITUDE : -BASE_AMPLITUDE);
+      const p2x_pri = X_CENTER - (isLeft ? BASE_AMPLITUDE : -BASE_AMPLITUDE);
 
-      // Tallo principal
-      const p0x = X_CENTER, p3x = X_CENTER;
-      const p1x_pri = X_CENTER + primaryAmp;
-      const p2x_pri = X_CENTER - primaryAmp;
+      const p1x_sec = X_CENTER - (isLeft ? SECONDARY_AMPLITUDE : -SECONDARY_AMPLITUDE);
+      const p2x_sec = X_CENTER + (isLeft ? SECONDARY_AMPLITUDE : -SECONDARY_AMPLITUDE);
 
-      // Tallo secundario (espejado geométricamente)
-      const p1x_sec = X_CENTER - primaryAmp;
-      const p2x_sec = X_CENTER + primaryAmp;
+      mainPath += `C ${p1x_pri} ${cp1y}, ${p2x_pri} ${cp2y}, ${X_CENTER} ${yEnd} `;
+      secondaryPath += `C ${p1x_sec} ${cp1y}, ${p2x_sec} ${cp2y}, ${X_CENTER} ${yEnd} `;
 
-      mainPath += `C ${p1x_pri} ${cp1y}, ${p2x_pri} ${cp2y}, ${p3x} ${yEnd} `;
-      secondaryPath += `C ${p1x_sec} ${cp1y}, ${p2x_sec} ${cp2y}, ${p3x} ${yEnd} `;
+      // Suma integral discreta
+      accPrimaryLength += approximateBezierLength(X_CENTER, p1x_pri, p2x_pri, X_CENTER, yStart, cp1y, cp2y, yEnd);
+      accSecondaryLength += approximateBezierLength(X_CENTER, p1x_sec, p2x_sec, X_CENTER, yStart, cp1y, cp2y, yEnd);
 
-      // --- Instanciación de filigrana botánica ---
-
-      // Rama primaria (Brotes y hojas largas)
-      nodes.push(
-        <SlenderWillowLeaf
-          key={`p-leaf-${i}`}
-          transform={getBranchTransform(0.25, p0x, p1x_pri, p2x_pri, p3x, yStart, cp1y, cp2y, yEnd, isLeft ? -45 : 45, isLeft ? -1 : 1)}
-        />
-      );
-
-      nodes.push(
-        <ElegantBud
-          key={`p-bud-${i}`}
-          transform={getBranchTransform(0.75, p0x, p1x_pri, p2x_pri, p3x, yStart, cp1y, cp2y, yEnd, isLeft ? 50 : -50, isLeft ? 1 : -1)}
-        />
-      );
-
-      // Rama secundaria (Zarcillos entrelazados y hojas de balance)
-      nodes.push(
-        <DelicateTendril
-          key={`s-tendril-${i}`}
-          transform={getBranchTransform(0.5, p0x, p1x_sec, p2x_sec, p3x, yStart, cp1y, cp2y, yEnd, isLeft ? 120 : -120, 1)}
-        />
-      );
-
-      nodes.push(
-        <SlenderWillowLeaf
-          key={`s-leaf-${i}`}
-          transform={getBranchTransform(0.85, p0x, p1x_sec, p2x_sec, p3x, yStart, cp1y, cp2y, yEnd, isLeft ? -60 : 60, isLeft ? 1 : -1)}
-        />
-      );
+      // Inyección de Nodos Paramétricos
+      addNode(`p-leaf-${i}`, 'leaf', 0.25, X_CENTER, p1x_pri, p2x_pri, X_CENTER, yStart, cp1y, cp2y, yEnd, isLeft ? -45 : 45);
+      addNode(`p-bud-${i}`, 'bud', 0.75, X_CENTER, p1x_pri, p2x_pri, X_CENTER, yStart, cp1y, cp2y, yEnd, isLeft ? 50 : -50);
+      addNode(`s-tendril-${i}`, 'tendril', 0.5, X_CENTER, p1x_sec, p2x_sec, X_CENTER, yStart, cp1y, cp2y, yEnd, isLeft ? 120 : -120);
+      addNode(`s-leaf-${i}`, 'leaf', 0.85, X_CENTER, p1x_sec, p2x_sec, X_CENTER, yStart, cp1y, cp2y, yEnd, isLeft ? -60 : 60);
     }
 
-    return { pathPrimary: mainPath, pathSecondary: secondaryPath, elements: nodes };
+    return {
+      pathPrimary: mainPath,
+      pathSecondary: secondaryPath,
+      totalPrimaryLength: accPrimaryLength,
+      totalSecondaryLength: accSecondaryLength,
+      nodesMap: nodes
+    };
   }, [totalHeight]);
 
-  const offset = typeof window !== 'undefined' ? window.innerHeight / 2 : 400;
-  const clipHeight = Math.max(0, scrollProgress * totalHeight + offset);
+  // --- 6. Cálculos de Cinemática Dinámica en Render ---
+
+  // Easing cúbico inverso (ease-out) para que el brote frene suavemente al alcanzar escala 1
+  const easeOutCubic = (t: number) => 1 - Math.pow(1 - t, 3);
+
+  // Offset previsor: La animación comienza un poco antes de que el scroll alcance exactamente el punto
+  const SIGHT_OFFSET = typeof window !== 'undefined' ? window.innerHeight * 0.6 : 500;
+  const currentYOffset = scrollProgress * totalHeight + SIGHT_OFFSET;
+
+  // Offset del DashArray: 1.0 (invisible) a 0.0 (totalmente dibujado)
+  // Permite que el tallo crezca fluidamente
+  const strokeProgress = Math.min(1, Math.max(0, currentYOffset / totalHeight));
 
   return (
     <div className="absolute inset-0 overflow-hidden pointer-events-none z-10 flex justify-center">
@@ -171,28 +195,53 @@ export const ArtsAndCraftsLiana: React.FC<ArtsAndCraftsLianaProps> = ({
         viewBox={`0 0 300 ${totalHeight}`}
         preserveAspectRatio="xMidYMin slice"
       >
-        <defs>
-          <clipPath id="elegant-scroll-clip">
-            <rect x="0" y="0" width="300" height={clipHeight} />
-          </clipPath>
-        </defs>
+        {/* Guías estructurales pasivas (espectrales) */}
+        <path d={pathPrimary} className="stroke-salvia/5 fill-none" strokeWidth="0.5" />
+        <path d={pathSecondary} className="stroke-salvia/5 fill-none" strokeWidth="0.5" />
 
-        {/* Marca de agua espectral estructural (Línea guía imperceptible) */}
-        <path d={pathPrimary} className="stroke-salvia/5 fill-none" strokeWidth="0.5" strokeLinecap="round" />
-        <path d={pathSecondary} className="stroke-salvia/5 fill-none" strokeWidth="0.5" strokeLinecap="round" />
+        {/* Tallos Dinámicos impulsados por cálculo de longitud de arco */}
+        <path
+          d={pathPrimary}
+          className="stroke-salvia/50 fill-none"
+          strokeWidth="1.5"
+          strokeLinecap="round"
+          strokeDasharray={totalPrimaryLength}
+          strokeDashoffset={totalPrimaryLength * (1 - strokeProgress)}
+        />
+        <path
+          d={pathSecondary}
+          className="stroke-salvia/30 fill-none"
+          strokeWidth="0.75"
+          strokeDasharray={`${totalSecondaryLength} ${totalSecondaryLength}`}
+          strokeDashoffset={totalSecondaryLength * (1 - strokeProgress)}
+          strokeLinecap="round"
+        />
 
-        {/* Crecimiento revelado dinámicamente */}
-        <g clipPath="url(#elegant-scroll-clip)">
+        {/* Instanciación y escalado de la botánica dinámica */}
+        {nodesMap.map((node) => {
+          // Ventana de crecimiento: cuántos píxeles de scroll toma ir de escala 0 a 1
+          const GROWTH_WINDOW = 200;
 
-          {/* Tallo Principal: Fino y elegante */}
-          <path d={pathPrimary} className="stroke-salvia/40 fill-none" strokeWidth="1.5" strokeLinecap="round" />
+          let rawProgress = (currentYOffset - node.globalY) / GROWTH_WINDOW;
+          rawProgress = Math.max(0, Math.min(1, rawProgress));
 
-          {/* Tallo Secundario: Aún más fino, entrelazándose con el principal */}
-          <path d={pathSecondary} className="stroke-salvia/20 fill-none" strokeWidth="0.75" strokeDasharray="4 2" strokeLinecap="round" />
+          const finalScale = easeOutCubic(rawProgress);
 
-          {/* Nodos ornamentales */}
-          {elements}
-        </g>
+          // Optimización en árbol de React: Si no ha empezado a crecer, no renderizamos el nodo
+          if (finalScale === 0) return null;
+
+          return (
+            <g
+              key={node.id}
+              // Combinamos la topología precalculada con la cinemática en tiempo real
+              transform={`${node.baseTransform} scale(${finalScale})`}
+            >
+              {node.componentType === 'leaf' && <SlenderWillowLeaf />}
+              {node.componentType === 'tendril' && <DelicateTendril />}
+              {node.componentType === 'bud' && <ElegantBud />}
+            </g>
+          );
+        })}
       </svg>
     </div>
   );

@@ -18,7 +18,17 @@ function parseMetadata(content: string, filePath: string) {
   return null;
 }
 
-// Extract ConceptLink targets from MDX body — for reference only, NOT graph edges
+function extractDependenciesFromConceptLinks(content: string): string[] {
+  // Extracción de dependencias ignorando las que tengan isDependency={false}
+  const regex = /<ConceptLink\s+(?![^>]*isDependency=\{false\})[^>]*targetId=["']([^"']+)["']/g;
+  const deps = new Set<string>();
+  let match;
+  while ((match = regex.exec(content)) !== null) {
+    deps.add(match[1]);
+  }
+  return Array.from(deps);
+}
+
 function extractConceptLinksFromContent(content: string): string[] {
   const regex = /<ConceptLink[^>]*targetId=["']([^"']+)["']/g;
   const deps = new Set<string>();
@@ -65,11 +75,11 @@ mdxFiles.forEach(file => {
     metadataMap.set(id, metadata);
     allNodes.add(id);
 
-    // Auto-extract ConceptLink targets for cross-reference validation (NOT graph edges)
     const conceptLinks = extractConceptLinksFromContent(content);
+    const automaticDeps = extractDependenciesFromConceptLinks(content);
 
-    // Graph edges come ONLY from explicit metadata fields (strict dependencies)
-    const contentDeps: string[] = [];
+    // Graph edges come from metadata and automatically from ConceptLinks
+    const contentDeps: string[] = [...automaticDeps];
     if (Array.isArray(metadata.links)) contentDeps.push(...metadata.links);
     if (Array.isArray(metadata.requires)) contentDeps.push(...metadata.requires);
     if (Array.isArray(metadata.dependencias)) contentDeps.push(...metadata.dependencias);
@@ -80,13 +90,20 @@ mdxFiles.forEach(file => {
     if (Array.isArray(metadata.corollaries)) contentDeps.push(...metadata.corollaries);
     if (Array.isArray(metadata.axioms_verified)) contentDeps.push(...metadata.axioms_verified);
     if (metadata.satisfies && typeof metadata.satisfies === 'string') contentDeps.push(metadata.satisfies);
-    // NOTE: seeAlso and ConceptLink targets are NOT included — they are informational only
+    // NOTE: seeAlso and ConceptLink targets with isDependency={false} are NOT included
 
     // Remove duplicates
     contentDepsMap.set(id, Array.from(new Set(contentDeps)));
     conceptLinksMap.set(id, conceptLinks);
   }
 });
+
+// Eliminar definiciones del grafo lógico, ya que son puramente léxicas y distorsionan la topología
+for (const id of Array.from(allNodes)) {
+  if (metadataMap.get(id)?.type === 'definicion') {
+    allNodes.delete(id);
+  }
+}
 
 // Pass 2: Build AND/OR logic graph
 interface GraphNode {
@@ -158,6 +175,7 @@ for (const id of allNodes) {
     }
   } else {
     const filteredDeps = deps.filter(depId => {
+      if (!allNodes.has(depId)) return false; // Filtrar definiciones y nodos eliminados
       const depMeta = metadataMap.get(depId);
       if (!depMeta) {
         console.warn(`[INFO] Enlace filtrado: El nodo '${id}' referencia a '${depId}', pero este último no se indexó en el grafo.`);

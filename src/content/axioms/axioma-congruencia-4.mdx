@@ -6,17 +6,22 @@ export const metadata = {
   "statement": "Dado un ángulo ∠(h,k) y una semirrecta h' sobre una recta l, existe una única semirrecta k' en un lado dado de l tal que ∠(h,k) ≅ ∠(h',k').",
   "tags": ["geometria", "congruencia", "geometria-absoluta"],
   "authors": ["hilbert"],
+  "hasSimulation": true
 };
 
+import { Congruence4 } from '../../diagrams/Axiomas/Congruence4';
+export const Simulation = Congruence4;
+import { InteractiveElement } from "../../components/ui/VisualBind";
+
 <Capitular letra="D" />
-ado un ángulo y una semirrecta, existe un único ángulo congruente sobre un lado dado. Este axioma extiende la noción de congruencia de segmentos a los ángulos.
+ado un <InteractiveElement target="angulo-original" color="terracota"><ConceptLink targetId="angulo">ángulo</ConceptLink></InteractiveElement> y una <InteractiveElement target="rayo-h_prime" color="salvia"><ConceptLink targetId="semirrecta">semirrecta</ConceptLink></InteractiveElement>, existe un único <InteractiveElement target="angulo-clonado" color="salvia"><ConceptLink targetId="angulo">ángulo</ConceptLink> <ConceptLink targetId="congruencia">congruente</ConceptLink></InteractiveElement> (determinado por una <InteractiveElement target="rayo-k_prime" color="salvia">semirrecta</InteractiveElement>) sobre un <ConceptLink targetId="semiplano">semiplano</ConceptLink> determinado respecto a dicha <ConceptLink targetId="semirrecta">semirrecta</ConceptLink>. Este axioma extiende formalmente la noción primitiva de <ConceptLink targetId="congruencia">congruencia</ConceptLink> desde los <ConceptLink targetId="segmento">segmentos</ConceptLink> hacia los <ConceptLink targetId="angulo">ángulos</ConceptLink>.
 
 <Separador />
 
 ### Enunciado Formal
 
 <Formula>
-  $$ \forall \angle(h,k) \; \forall \text{semirrecta } h' \; \exists! k' : \angle(h,k) \cong \angle(h',k'). $$
+  $$ \forall \angle(h,k) \; \forall h' \; \exists! k' : \angle(h,k) \cong \angle(h',k') $$
 </Formula>
 
 <Nota>
@@ -27,14 +32,14 @@ ado un ángulo y una semirrecta, existe un único ángulo congruente sobre un la
 
 ### Discusión
 
-Así como el axioma III-1 permite transportar segmentos sobre una semirrecta, el axioma III-4 permite transportar ángulos sobre una semirrecta. La unicidad y la elección del lado (semiplano) son esenciales para que la construcción esté bien definida.
+Así como el <ConceptLink targetId="axioma-congruencia-1">axioma III-1</ConceptLink> permite transportar <ConceptLink targetId="segmento">segmentos</ConceptLink> sobre una <ConceptLink targetId="semirrecta">semirrecta</ConceptLink>, el axioma III-4 permite transportar <ConceptLink targetId="angulo">ángulos</ConceptLink> sobre una <ConceptLink targetId="semirrecta">semirrecta</ConceptLink>. La unicidad y la elección del lado (<ConceptLink targetId="semiplano">semiplano</ConceptLink>) son esenciales para que la construcción esté bien definida.
 
-La congruencia de ángulos es una relación primitiva, no definida en términos de medida angular. Al igual que con los segmentos, se establece mediante axiomas y más tarde se demostrará que corresponde a la igualdad de medidas.
+La <ConceptLink targetId="congruencia">congruencia</ConceptLink> de <ConceptLink targetId="angulo">ángulos</ConceptLink> constituye una relación primitiva, irreductible en esta etapa a nociones numéricas de <ConceptLink targetId="medida-angular" isDependency={false}>medida angular</ConceptLink>. Al igual que con los <ConceptLink targetId="segmento">segmentos</ConceptLink>, sus propiedades operativas se imponen axiomáticamente, para <ConceptLink targetId="demostracion" isDependency={false}>demostrar</ConceptLink> posteriormente que son isomorfas a la igualdad de medidas reales.
 
-El "lado dado" elimina la ambigüedad de construir el ángulo hacia un lado o hacia el otro de la semirrecta h'. Sin esta elección, habría dos ángulos congruentes posibles (simétricos respecto a h').
+El "lado dado" elimina la ambigüedad de construir el <ConceptLink targetId="angulo">ángulo</ConceptLink> hacia un lado o hacia el otro de la <ConceptLink targetId="semirrecta">semirrecta</ConceptLink> $h'$. Sin esta elección, habría dos ángulos congruentes posibles (simétricos respecto a $h'$).
 
 <Separador />
 
 ### Observaciones
 
-Este axioma corresponde al postulado 4 de Euclides ("todos los ángulos rectos son iguales") y al postulado de transportar ángulos que Euclides usa implícitamente en sus construcciones. Es fundamental para la construcción de figuras congruentes y para la demostración de los criterios de congruencia de triángulos.
+Este <ConceptLink targetId="axioma">axioma</ConceptLink> corresponde al postulado 4 de <ConceptLink targetId="euclides">Euclides</ConceptLink> ("todos los <ConceptLink targetId="angulo-recto" isDependency={false}>ángulos rectos</ConceptLink> son iguales") y al postulado de transportar ángulos que <ConceptLink targetId="euclides">Euclides</ConceptLink> usa implícitamente en sus construcciones. Es fundamental para la construcción de <ConceptLink targetId="figura-geometrica" isDependency={false}>figuras congruentes</ConceptLink> y para la <ConceptLink targetId="demostracion" isDependency={false}>demostración</ConceptLink> de los criterios de congruencia de triángulos.

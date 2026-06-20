@@ -111,7 +111,8 @@ export const GraphPage: React.FC = () => {
     // Sistemas axiomáticos
     db.axiomaticSystems.forEach((sys, slug) => {
       nodes.push({ id: slug, name: sys.title, group: 'modelo', val: 10 });
-      const branchNode = resolveItemBranch(sys.tags);
+      // Determine primary branch using standard logic or default to 'geometria'
+      const branchNode = 'geometria';
       if (branchNode) links.push({ source: slug, target: branchNode });
       // Enlace a cada axioma del sistema
       if (sys.axiomas) {
@@ -136,8 +137,8 @@ export const GraphPage: React.FC = () => {
 
     // Enlaces desde sistemas que mencionan matemáticos
     db.axiomaticSystems.forEach(sys => {
-      if (sys.mathematicians) {
-        sys.mathematicians.forEach(mId => {
+      if (sys.authors) {
+        sys.authors.forEach((mId: string) => {
           links.push({ source: mId, target: sys.id });
         });
       }
@@ -242,11 +243,11 @@ export const GraphPage: React.FC = () => {
       'ejemplo': 'example',
       'ejercicio': 'exercise',
       'demostracion': 'demostracion',
-      'caso_de_uso': 'usecase',
+      'caso-de-uso': 'usecase',
       'matematico': 'mathematician',
       'leccion': 'lesson',
       'modelo': 'modelo',
-      'plan_de_estudio': 'plan_de_estudio',
+      'plan-de-estudio': 'plan-de-estudio',
       'axioma': 'axioma',
     };
     const key = groupMap[node.group] || node.group;

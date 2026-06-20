@@ -1,4 +1,5 @@
 
+import { Suspense } from 'react';
 import { Link } from 'wouter';
 
 import { db } from '../../store/content';
@@ -8,12 +9,11 @@ interface BiographyMetadata {
   id: string;
   name: string;
   fullName?: string;
-  era: string;
+  country?: string;
   description: string;
   image?: string;
-  year: number;
-  birth?: string;
-  death?: string;
+  birthYear?: number;
+  deathYear?: number;
 }
 
 interface BiographyLayoutProps {
@@ -32,14 +32,19 @@ export const BiographyLayout: React.FC<BiographyLayoutProps> = ({ Component, Sid
   const renderSidebarContent = () => {
     if (!metadata) return Sidebar ? <Sidebar /> : null;
 
-    const { id, name, fullName, birth, death, image } = metadata;
+    const { id, name, fullName, birthYear, deathYear, country, image } = metadata;
     const theorems = db.getTheoremsByAuthor(id);
     const displayName = fullName || name;
     
     // Extraer partes del nombre (ej: "Pitágoras" y "de Samos")
     const nameParts = displayName.split(' de ');
     const firstName = nameParts[0];
-    const lastName = nameParts.length > 1 ? `de ${nameParts[1]}` : '';
+    const lastName = nameParts.length > 1 ? `de ${nameParts[1]}` : (country ? `de ${country}` : '');
+
+    const formatYear = (year?: number) => {
+      if (year === undefined) return null;
+      return year < 0 ? `${Math.abs(year)} a.C.` : `${year} d.C.`;
+    };
 
     return (
       <div className="flex flex-col items-center text-center">
@@ -66,16 +71,16 @@ export const BiographyLayout: React.FC<BiographyLayoutProps> = ({ Component, Sid
         
         {/* FECHAS */}
         <ul className="space-y-4 text-white/70 text-sm font-sans tracking-widest uppercase mb-12 w-full">
-          {birth && (
+          {birthYear !== undefined && (
             <li>
               <span className="block text-terracota font-serif capitalize text-xs mb-1 opacity-80">Nacimiento</span>
-              <span dangerouslySetInnerHTML={{ __html: birth.replace('\n', '<br />') }} />
+              <span>{formatYear(birthYear)}</span>
             </li>
           )}
-          {death && (
+          {deathYear !== undefined && (
             <li>
               <span className="block text-terracota font-serif capitalize text-xs mb-1 opacity-80">Fallecimiento</span>
-              <span dangerouslySetInnerHTML={{ __html: death.replace('\n', '<br />') }} />
+              <span>{formatYear(deathYear)}</span>
             </li>
           )}
         </ul>
@@ -139,7 +144,9 @@ export const BiographyLayout: React.FC<BiographyLayoutProps> = ({ Component, Sid
       {/* PANEL DERECHO: LECTURA CON SCROLL */}
       <div className="lg:w-[60%] p-6 sm:p-8 lg:p-12 xl:p-20 lg:overflow-y-auto scroll-smooth relative bg-transparent text-carbon">
         <div className="prose prose-pizarra prose-lg max-w-none mx-auto biography-mdx text-carbon font-serif">
-          <Component />
+          <Suspense fallback={<div className="animate-pulse py-20 text-center text-carbon/40 italic">Desenrollando pergamino...</div>}>
+            <Component />
+          </Suspense>
         </div>
 
         {/* Ornamentación final */}

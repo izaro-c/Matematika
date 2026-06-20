@@ -45,22 +45,22 @@ export const HistoryTimeline = () => {
   // Épocas disponibles para filtro
   const eras = useMemo(() => {
     const set = new Set(nodes.map(n =>
-      n.year < -200 ? 'Antigüedad' :
-        n.year < 500 ? 'Mundo Clásico' :
-          n.year < 1400 ? 'Medievo' :
-            n.year < 1700 ? 'Renacimiento' :
-              n.year < 1900 ? 'Ilustración' : 'Época Moderna'
+      (n.birthYear || 0) < -200 ? 'Antigüedad' :
+        (n.birthYear || 0) < 500 ? 'Mundo Clásico' :
+          (n.birthYear || 0) < 1400 ? 'Medievo' :
+            (n.birthYear || 0) < 1700 ? 'Renacimiento' :
+              (n.birthYear || 0) < 1900 ? 'Ilustración' : 'Época Moderna'
     ));
     return ['Todos', ...Array.from(set)];
   }, [nodes]);
 
   const filtered = filter === 'Todos' ? nodes : nodes.filter(n => {
     const era =
-      n.year < -200 ? 'Antigüedad' :
-        n.year < 500 ? 'Mundo Clásico' :
-          n.year < 1400 ? 'Medievo' :
-            n.year < 1700 ? 'Renacimiento' :
-              n.year < 1900 ? 'Ilustración' : 'Época Moderna';
+      (n.birthYear || 0) < -200 ? 'Antigüedad' :
+        (n.birthYear || 0) < 500 ? 'Mundo Clásico' :
+          (n.birthYear || 0) < 1400 ? 'Medievo' :
+            (n.birthYear || 0) < 1700 ? 'Renacimiento' :
+              (n.birthYear || 0) < 1900 ? 'Ilustración' : 'Época Moderna';
     return era === filter;
   });
 
@@ -109,7 +109,7 @@ export const HistoryTimeline = () => {
               Índice Biográfico
             </h1>
             <p className="mt-3 text-sm italic text-carbon/50">
-              {nodes.length} matemáticos · {Math.abs(nodes[0]?.year ?? 0)} a.C. — presente
+              {nodes.length} matemáticos · {Math.abs(nodes[0]?.birthYear ?? 0)} a.C. — presente
             </p>
             <InteractiveTimePlot nodes={nodes} />
           </div>
@@ -188,7 +188,7 @@ export const HistoryTimeline = () => {
 
                           {/* Info */}
                           <div className="flex-1 min-w-0">
-                            <EraInsignia era={node.era} year={node.year} />
+                            <EraInsignia era={""} year={(node.birthYear || 0)} />
                             <h2
                               className="text-2xl font-bold text-carbon group-hover:text-terracota transition-colors leading-tight mt-1 mb-2"
                               style={{ fontVariant: 'small-caps' }}
@@ -220,7 +220,7 @@ export const HistoryTimeline = () => {
                           className="absolute top-3 right-3 text-5xl font-serif text-carbon/[0.04] select-none pointer-events-none leading-none"
                           aria-hidden
                         >
-                          {Math.abs(node.year)}
+                          {Math.abs((node.birthYear || 0))}
                         </div>
                       </a>
                     </Link>

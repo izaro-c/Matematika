@@ -6,35 +6,40 @@ export const metadata = {
   "statement": "Si AB es un segmento y r una semirrecta con origen C, entonces existe un único punto D ∈ r tal que AB ≅ CD.",
   "tags": ["geometria", "congruencia", "geometria-absoluta"],
   "authors": ["hilbert"],
+  "hasSimulation": true
 };
 
+import { Congruence1 } from '../../diagrams/Axiomas/Congruence1';
+export const Simulation = Congruence1;
+import { InteractiveElement } from "../../components/ui/VisualBind";
+
 <Capitular letra="D" />
-ado un segmento y una semirrecta, existe un único punto sobre esta que determina un segmento congruente al original. Este axioma permite transportar segmentos mediante regla y compás.
+ado un <InteractiveElement target="segmento-ab" color="terracota"><ConceptLink targetId="segmento">segmento</ConceptLink> $AB$</InteractiveElement> y una <InteractiveElement target="rayo-r" color="pizarra"><ConceptLink targetId="semirrecta">semirrecta</ConceptLink> $r$</InteractiveElement>, existe un único <InteractiveElement target="punto-d" color="salvia"><ConceptLink targetId="punto">punto</ConceptLink> $D$</InteractiveElement> sobre dicha <ConceptLink targetId="semirrecta">semirrecta</ConceptLink> que determina un <InteractiveElement target="segmento-cd" color="salvia"><ConceptLink targetId="segmento">segmento</ConceptLink> $CD$</InteractiveElement> <ConceptLink targetId="congruencia">congruente</ConceptLink> al original. Este <ConceptLink targetId="axioma">axioma</ConceptLink> formaliza el transporte <ConceptLink targetId="isometria" isDependency={false}>isométrico</ConceptLink> de distancias, operación clásica realizada en la antigüedad mediante el uso del <ConceptLink targetId="compas" isDependency={false}>compás</ConceptLink>.
 
 <Separador />
 
 ### Enunciado Formal
 
 <Formula>
-  $$ \forall \overline{AB} \; \forall \text{semirrecta } r \text{ con origen } C \; \exists! D \in r : \overline{AB} \cong \overline{CD}. $$
+  $$ \forall A, B, C \; \forall r_{C} \; \exists! D \in r_{C} : \overline{AB} \cong \overline{CD} $$
 </Formula>
 
 <Nota>
-  La notación $\overline{AB} \cong \overline{CD}$ significa que los segmentos AB y CD son congruentes (tienen la misma longitud).
+  $r_{C}$ denota una semirrecta con origen en $C$. La relación $\cong$ indica congruencia geométrica.
 </Nota>
 
 <Separador />
 
 ### Discusión
 
-Este axioma establece la noción primitiva de congruencia de segmentos. La congruencia no se define en términos de longitud numérica (que aún no existe en la teoría), sino como una relación primitiva que satisface estos axiomas.
+Este <ConceptLink targetId="axioma">axioma</ConceptLink> establece la noción primitiva de <ConceptLink targetId="congruencia">congruencia</ConceptLink> de <ConceptLink targetId="segmento">segmentos</ConceptLink>. La congruencia no se define en términos de <ConceptLink targetId="longitud" isDependency={false}>longitud</ConceptLink> numérica (que aún no existe en la teoría), sino como una relación primitiva que satisface estos <ConceptLink targetId="axioma">axiomas</ConceptLink>.
 
-La unicidad es esencial: asegura que la operación de transportar un segmento sobre una semirrecta está bien definida y produce un resultado único. Esto es análogo a la unicidad de la recta por dos puntos (axioma I-1).
+La <ConceptLink targetId="unicidad" isDependency={false}>unicidad</ConceptLink> es esencial: asegura que la operación de transportar un <ConceptLink targetId="segmento">segmento</ConceptLink> sobre una <ConceptLink targetId="semirrecta">semirrecta</ConceptLink> está bien definida y produce un resultado único. Esto es análogo a la unicidad de la <ConceptLink targetId="recta">recta</ConceptLink> por dos puntos (<ConceptLink targetId="axioma-incidencia-1">axioma I-1</ConceptLink>).
 
-Nótese que la semirrecta proporciona tanto el origen C como una dirección: el punto D debe estar sobre la semirrecta, no simplemente sobre la recta que la contiene. Esto elimina la ambigüedad de elegir entre dos posibles puntos (uno a cada lado de C).
+Nótese que la <ConceptLink targetId="semirrecta">semirrecta</ConceptLink> proporciona tanto el origen $C$ como una <ConceptLink targetId="direccion" isDependency={false}>dirección</ConceptLink>: el <ConceptLink targetId="punto">punto</ConceptLink> $D$ debe estar sobre la semirrecta, no simplemente sobre la <ConceptLink targetId="recta">recta</ConceptLink> que la contiene. Esto elimina la ambigüedad de elegir entre dos posibles puntos (uno a cada lado de $C$).
 
 <Separador />
 
 ### Observaciones
 
-Este axioma corresponde a la primera noción común de Euclides ("cosas iguales a una misma cosa son iguales entre sí") y al postulado 3 de Euclides (transportar un segmento). En la axiomática moderna, permite definir la comparación de segmentos: AB < CD si AB ≅ CE para algún punto E entre C y D.
+Este <ConceptLink targetId="axioma">axioma</ConceptLink> corresponde a la primera noción común de <ConceptLink targetId="euclides">Euclides</ConceptLink> ("cosas iguales a una misma cosa son iguales entre sí") y al postulado 3 de <ConceptLink targetId="euclides">Euclides</ConceptLink> (transportar un <ConceptLink targetId="segmento">segmento</ConceptLink>). En la <ConceptLink targetId="sistema-axiomatico">axiomática</ConceptLink> moderna, permite definir la comparación de segmentos: AB < CD si AB ≅ CE para algún punto E entre C y D.

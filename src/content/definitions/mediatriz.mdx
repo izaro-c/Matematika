@@ -1,0 +1,22 @@
+export const metadata = {
+  "id": "mediatriz",
+  "type": "definicion",
+  "title": "Mediatriz",
+  "description": "La mediatriz de un segmento es la recta perpendicular al mismo que pasa por su punto medio.",
+  "tags": ["geometria", "rectas"],
+  "authors": ["euclides"],
+  "links": ["recta", "segmento", "punto"],
+  "seeAlso": ["teorema-punto-medio-perpendicular"],
+  "hasSimulation": true,
+};
+
+import { InteractiveElement } from "../../components/ui/VisualBind";
+import { Mediatriz } from '../../diagrams/Definiciones/Mediatriz';
+
+export const Simulation = Mediatriz;
+
+<Capitular letra="L" />a <InteractiveElement target="mediatriz">mediatriz</InteractiveElement> es una <ConceptLink targetId="recta">recta</ConceptLink> que goza de la propiedad de ser el lugar geométrico de todos los puntos que <InteractiveElement target="equidistancia">equidistan</InteractiveElement> de los dos <InteractiveElement target="extremo">extremos</InteractiveElement> de un <InteractiveElement target="segmento">segmento</InteractiveElement>. Corta al <ConceptLink targetId="segmento">segmento</ConceptLink> por su <InteractiveElement target="punto-medio">punto medio</InteractiveElement> de manera ortogonal.
+
+<Separador />
+
+Todo punto libre <InteractiveElement target="punto-p">$P$</InteractiveElement> situado sobre la <ConceptLink targetId="mediatriz">mediatriz</ConceptLink> siempre mantiene la misma distancia hacia $A$ y hacia $B$.

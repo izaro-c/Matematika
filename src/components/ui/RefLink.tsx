@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'wouter';
 import { useGlossaryStore } from '../../store/GlossaryStore';
 import { db } from '../../store/content';
 import { useProgressStore } from '../../store/UserProgressStore';
@@ -25,18 +26,20 @@ export const RefLink: React.FC<RefLinkProps> = ({ targetId, children }) => {
     db.models.get(targetId) ||
     db.demos.get(targetId);
 
+  const isActive = activeTerm === targetId;
+
   if (!entity) {
     return (
-      <span
-        className="text-granada font-bold border-b-2 border-granada border-dashed cursor-help"
-        title={`Link roto: "${targetId}" no existe en el ContentStore`}
-      >
-        {children}
-      </span>
+      <Link href={`/construccion/${targetId}`}>
+        <a
+          className="font-bold text-pizarra/70 border-b border-dashed border-pizarra/40 hover:border-pizarra hover:text-pizarra transition-all duration-150 px-[2px] rounded-none cursor-pointer"
+          title={`"${targetId}" — página en construcción`}
+        >
+          {children}
+        </a>
+      </Link>
     );
   }
-
-  const isActive = activeTerm === targetId;
 
   return (
     <span

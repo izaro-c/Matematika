@@ -7,61 +7,61 @@ export const metadata = {
   "proofMethod": "directo",
   "authors": ["euclides"],
   "tags": ["geometria", "congruencia", "orden"],
-  "layout": "text",
+  "layout": "split",
   "links": ["lema-punto-medio", "axioma-congruencia-5", "axioma-congruencia-1", "teorema-congruencia-lll"],
 };
 
-import { InteractiveElement } from "../../components/ui/VisualBind";
+import { DemoPuntoMedioPerpendicular } from "../../diagrams/Demos/DemoPuntoMedioPerpendicular";
 
-<Capitular letra="L" />
+<DemonstrationSection diagram={<DemoPuntoMedioPerpendicular />}>
 
-a mediatriz de un segmento es el lugar geométrico de los puntos equidistantes de sus extremos. Se demuestra que coincide con la perpendicular al segmento en su punto medio, usando los criterios de congruencia LAL y LLL.
-
-<Separador />
-
-### Hipótesis
-
-Sea $\overline{AB}$ un segmento con punto medio $M$ ($\overline{AM} \cong \overline{MB}$). Sea $\ell$ la perpendicular a $\overline{AB}$ por $M$.
+<Capitular letra="L" />a <ConceptLink targetId="mediatriz">mediatriz</ConceptLink> correspondiente a un <ConceptLink targetId="segmento">segmento</ConceptLink> conforma el lugar geométrico estricto de aquellos puntos equidistantes a sus vértices extremos. Se demuestra rigurosamente su coincidencia topológica con la recta ortogonal trazada por el punto medio, aplicando conjugadamente los postulados de congruencia LAL y LLL.
 
 <Separador />
 
-### Tesis
+### Hipótesis y Tesis
 
-El conjunto $\{P : \overline{PA} \cong \overline{PB}\}$ es exactamente la recta $\ell$.
+**Hipótesis:** Sea <InteractiveElement target="segmentAB" color="terracota">$\overline{AB}$</InteractiveElement> un <ConceptLink targetId="segmento">segmento</ConceptLink> con punto medio <InteractiveElement target="pointM" color="terracota">$M$</InteractiveElement> ($\overline{AM} \cong \overline{MB}$). Sea <InteractiveElement target="lineCD" color="terracota">$\ell$</InteractiveElement> la <ConceptLink targetId="perpendicular">perpendicular</ConceptLink> a $\overline{AB}$ por $M$.  
+**Tesis:** El conjunto $\{P : \overline{PA} \cong \overline{PB}\}$ es exactamente la recta $\ell$.
 
 <Separador />
 
-### Demostración
+### Dirección 1: Todo punto de $\ell$ equidista
 
-Se demuestra en dos pasos: todo punto de $\ell$ equidista, y todo punto equidistante está en $\ell$.
-
-**Paso 1: Todo punto de $\ell$ equidista de $A$ y $B$.**
-
-Sea $P \in \ell$. Consideremos los triángulos $\triangle PAM$ y $\triangle PBM$:
-- $\overline{PM}$ es común a ambos triángulos,
-- $\overline{AM} \cong \overline{MB}$ por el <ConceptLink targetId="lema-punto-medio">lema del punto medio</ConceptLink>,
-- $\angle PMA \cong \angle PMB$, pues ambos son ángulos rectos (ya que $\ell \perp \overline{AB}$).
-
-Por el <ConceptLink targetId="axioma-congruencia-5">axioma LAL (III-5)</ConceptLink>:
-
-$$ \triangle PAM \cong \triangle PBM. $$
-
-En particular, $\overline{PA} \cong \overline{PB}$.
-
-**Paso 2: Todo punto equidistante está en $\ell$.**
-
-Sea $P$ tal que $\overline{PA} \cong \overline{PB}$. Sea $M$ el punto medio de $\overline{AB}$. Consideremos los triángulos $\triangle PAM$ y $\triangle PBM$:
-- $\overline{PA} \cong \overline{PB}$ (por hipótesis),
-- $\overline{AM} \cong \overline{MB}$ (punto medio),
+<MedievalStep number={1} title="Triángulos sobre la mediatriz" target="triangleACM">
+Sea $P \in \ell$. Consideremos los triángulos <InteractiveElement target="triangleACM" color="terracota">$\triangle PAM$</InteractiveElement> y <InteractiveElement target="triangleBCM" color="terracota">$\triangle PBM$</InteractiveElement>:
 - $\overline{PM}$ es común a ambos triángulos.
+- $\overline{AM} \cong \overline{MB}$ por el <ConceptLink targetId="lema-punto-medio">lema del punto medio</ConceptLink>.
+- $\angle PMA \cong \angle PMB$, pues ambos son ángulos rectos (ya que $\ell \perp \overline{AB}$).
+</MedievalStep>
 
+<MedievalStep number={2} title="Congruencia LAL" target="triangleBCM">
+Por el <ConceptLink targetId="axioma-congruencia-5">axioma LAL</ConceptLink>, los triángulos son congruentes:
+
+$$ \triangle PAM \cong \triangle PBM \implies \overline{PA} \cong \overline{PB} $$
+</MedievalStep>
+
+### Dirección 2: Todo punto equidistante está en $\ell$
+
+<MedievalStep number={3} title="Triángulos isósceles" target="intersections">
+Sea un punto <InteractiveElement target="pointC" color="terracota">$C$</InteractiveElement> tal que $\overline{CA} \cong \overline{CB}$ (es decir, $C$ equidista de los extremos, equivalente a construir <InteractiveElement target="circleA" color="terracota">dos circunferencias intersecantes</InteractiveElement>).
+Consideremos los triángulos <InteractiveElement target="triangleACD" color="terracota">$\triangle CAM$</InteractiveElement> y <InteractiveElement target="triangleBCD" color="terracota">$\triangle CBM$</InteractiveElement>:
+- $\overline{CA} \cong \overline{CB}$ (por hipótesis).
+- $\overline{AM} \cong \overline{MB}$ (punto medio).
+- $\overline{CM}$ es común a ambos triángulos.
+</MedievalStep>
+
+<MedievalStep number={4} title="Congruencia LLL" target="lineCD">
 Por el <ConceptLink targetId="teorema-congruencia-lll">teorema LLL</ConceptLink>:
 
-$$ \triangle PAM \cong \triangle PBM. $$
+$$ \triangle CAM \cong \triangle CBM $$
 
-En particular, $\angle PMA \cong \angle PMB$. Pero estos ángulos son adyacentes y suplementarios (pues $M$ está entre $A$ y $B$), por lo que ambos son rectos. Esto significa que $P$ está en la perpendicular a $\overline{AB}$ por $M$, es decir, $P \in \ell$.
+En particular, $\angle CMA \cong \angle CMB$. Pero estos ángulos son adyacentes y suplementarios (pues $M$ está entre $A$ y $B$), por lo que ambos son rectos. 
+</MedievalStep>
 
-Por tanto, $\{P : \overline{PA} \cong \overline{PB}\} = \ell$. $\blacksquare$
+<MedievalStep number={5} title="Conclusión" target="lineCD">
+Esto significa que $C$ está en la <ConceptLink targetId="perpendicular">perpendicular</ConceptLink> a $\overline{AB}$ por $M$, es decir, $C \in \ell$. Por tanto, el lugar geométrico coincide con la <ConceptLink targetId="mediatriz">mediatriz</ConceptLink> $\ell$. $\blacksquare$
+</MedievalStep>
 
 <Separador />
 
@@ -70,7 +70,9 @@ Por tanto, $\{P : \overline{PA} \cong \overline{PB}\} = \ell$. $\blacksquare$
 La demostración es bidireccional: inclusión en ambos sentidos. El Paso 1 usa LAL (un axioma), el Paso 2 usa LLL (un teorema). La diferencia es significativa: en el Paso 1 conocemos el ángulo (recto), en el Paso 2 lo deducimos.
 
 <Nota>
-  La mediatriz es el eje de simetría del segmento: la reflexión respecto a ella intercambia $A$ y $B$. Las tres mediatrices de un triángulo concurren en el **circuncentro**, centro de la circunferencia circunscrita.
+  La <ConceptLink targetId="mediatriz">mediatriz</ConceptLink> es el eje de simetría del <ConceptLink targetId="segmento">segmento</ConceptLink>: la reflexión respecto a ella intercambia $A$ y $B$. Las tres mediatrices de un <ConceptLink targetId="triangulo">triángulo</ConceptLink> concurren en el **circuncentro**, centro de la <ConceptLink targetId="circunferencia">circunferencia</ConceptLink> circunscrita.
 </Nota>
 
-Este teorema es válido en geometría absoluta. La existencia del circuncentro, sin embargo, puede fallar en geometría hiperbólica para triángulos muy grandes.
+Este teorema es válido en <ConceptLink targetId="sistema-absoluto">geometría absoluta</ConceptLink>. La existencia del circuncentro, sin embargo, puede fallar en <ConceptLink targetId="sistema-hiperbolico">geometría hiperbólica</ConceptLink> para triángulos muy grandes.
+
+</DemonstrationSection>

@@ -1,0 +1,56 @@
+export const metadata = {
+  "id": "teorema-pitagoras",
+  "type": "teorema",
+  "title": "Teorema de Pitágoras",
+  "description": "En un triángulo rectángulo, el cuadrado de la hipotenusa es igual a la suma de los cuadrados de los catetos.",
+  "statement": "Sea △ABC un triángulo rectángulo con ángulo recto en C. Si a = |BC|, b = |CA| y c = |AB| (hipotenusa), entonces a² + b² = c².",
+  "requires": ["triangulo", "perpendicular", "angulo", "segmento"],
+  "demos": ["demo-pitagoras-euclides"],
+  "tags": ["geometria", "triangulos", "areas"],
+  "authors": ["euclides", "pitagoras"],
+  "difficulty": "básico",
+  "links": ["triangulo", "perpendicular", "segmento", "angulo"],
+  "seeAlso": ["teorema-tales", "teorema-suma-angulos-triangulo"],
+  "hasSimulation": true
+};
+
+import { DemoPitagorasEuclides } from '../../diagrams/Teoremas/DemoPitagorasEuclides';
+export const Simulation = DemoPitagorasEuclides;
+import { InteractiveElement } from "../../components/ui/VisualBind";
+
+<Capitular letra="E" />l teorema de Pitágoras es la relación métrica más universal de la geometría euclidiana plana. Establece un vínculo inquebrantable entre los lados de un <ConceptLink targetId="triangulo">triángulo</ConceptLink> que posee un <ConceptLink targetId="angulo">ángulo</ConceptLink> recto.
+
+<Separador />
+
+### Enunciado Formal
+
+Sea $\triangle ABC$ un triángulo rectángulo con ángulo recto en $C$. Sean $a = |BC|$ y $b = |CA|$ los catetos, y $c = |AB|$ la hipotenusa (el lado opuesto al ángulo recto). Entonces:
+
+<Formula>
+  $$ a^2 + b^2 = c^2 $$
+</Formula>
+
+Equivalente en términos de áreas: el área del cuadrado construido sobre la <InteractiveElement target="cuadrado-c" color="terracota">hipotenusa</InteractiveElement> equivale a la suma de las áreas de los cuadrados construidos sobre los <InteractiveElement target="cuadrado-a" color="salvia">cateto $a$</InteractiveElement> y <InteractiveElement target="cuadrado-b" color="salvia">cateto $b$</InteractiveElement>.
+
+<Separador />
+
+### Demostración
+
+La demostración canónica se encuentra en la página dedicada: <ConceptLink targetId="demo-pitagoras-euclides">Demostración: Teorema de Pitágoras (El molino de viento)</ConceptLink>, basada en la equivalencia de áreas (Proposición I.47 de los *Elementos*).
+
+<Separador />
+
+### Discusión
+
+El teorema no solo versa sobre longitudes, sino sobre **áreas**. Originalmente, <ConceptLink targetId="euclides">Euclides</ConceptLink> lo demostró probando que el cuadrado sobre la hipotenusa contiene exactamente las áreas de los cuadrados sobre los catetos, mediante cizalladura de triángulos.
+
+El resultado es exclusivo de la <ConceptLink targetId="sistema-euclidiano">geometría euclidiana</ConceptLink>: depende del <ConceptLink targetId="axioma-paralelas-euclides">axioma de las paralelas</ConceptLink>. En geometría hiperbólica, la relación se reemplaza por una desigualdad estricta ($a^2 + b^2 < c^2$).
+
+<Separador />
+
+### Observaciones
+
+- El teorema admite múltiples demostraciones: algebraica, geométrica, por reductio, mediante semejanza de triángulos. La más célebre es la del "molino de viento" de Euclides.
+- La <ConceptLink targetId="recta">recíproca</ConceptLink> también es cierta: si $a^2 + b^2 = c^2$ en un triángulo, entonces el ángulo opuesto a $c$ es recto.
+- <RefLink targetId="teorema-tales">El teorema de Tales</RefLink> puede demostrarse usando Pitágoras, y ambos son equivalentes al axioma de las paralelas.
+- Atribuido tradicionalmente a <ConceptLink targetId="pitagoras">Pitágoras</ConceptLink> (siglo VI a.C.), aunque los babilonios y egipcios conocían casos particulares mil años antes.
