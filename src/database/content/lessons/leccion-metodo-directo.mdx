@@ -1,0 +1,27 @@
+export const metadata = {
+  "id": "leccion-metodo-directo",
+  "type": "lesson",
+  "title": "Método Directo",
+  "description": "Introducción a la forma más básica de demostración matemática: inferir Q a partir de P mediante pasos lógicos secuenciales.",
+  "tags": ["logica", "metodos", "demostracion"],
+  "authors": [],
+  "links": [],
+  "seeAlso": ["leccion-metodo-contradiccion"],
+  "satisfies": [],
+  "hasSimulation": false,
+};
+
+<Capitular letra="E" />l método directo es la estrategia de <ConceptLink targetId="demostracion" isDependency={false}>demostración</ConceptLink> más intuitiva y natural en las matemáticas. Su estructura lógica es sencilla: asumiendo que una proposición inicial $P$ (la hipótesis) es verdadera, se utiliza una secuencia de inferencias válidas, <ConceptLink targetId="axioma" isDependency={false}>axiomas</ConceptLink> y <ConceptLink targetId="teorema" isDependency={false}>teoremas</ConceptLink> previamente establecidos para concluir directamente que otra proposición $Q$ (la tesis) debe ser también verdadera.
+
+<Separador />
+
+### Estructura Lógica
+
+El argumento fluye en una sola dirección:
+$$ P \implies P_1 \implies P_2 \implies \dots \implies Q $$
+
+import { DirectoSimulation } from "@/boundary/components/diagrams/Demos/DirectoSimulation";
+
+La gran mayoría de demostraciones de <ConceptLink targetId="congruencia" isDependency={false}>congruencia</ConceptLink> en <ConceptLink targetId={["sistema-euclidiano", "geometria", "euclides"]}>geometría euclidiana</ConceptLink>, como el <ConceptLink targetId="teorema-congruencia-ala" isDependency={false}>Teorema ALA</ConceptLink>, son ejemplos clásicos de método directo. Toman los elementos dados (dos <ConceptLink targetId="angulo" isDependency={false}>ángulos</ConceptLink> y el lado comprendido) y, paso a paso, los superponen para concluir la congruencia total.
+
+<DirectoSimulation />

@@ -1,0 +1,48 @@
+export const metadata = {
+  "id": "axioma-orden-4",
+  "type": "axioma",
+  "title": "Axioma II-4 (Pasch)",
+  "description": "Si una recta corta a un lado de un triángulo sin pasar por sus vértices, entonces corta también a otro de los lados.",
+  "statement": "Dado un triángulo ABC y una recta l que no pasa por A, B ni C, si l intersecta el lado AB en un punto entre A y B, entonces l intersecta también AC o BC.",
+  "authors": ["hilbert", "pasch"],
+  "hasSimulation": true
+};
+
+import { Pasch } from '@/boundary/components/diagrams/Axiomas/Pasch';
+export const Simulation = Pasch;
+import { InteractiveElement } from "@/boundary/components/ui/VisualBind";
+
+<Capitular letra="S" />i una <InteractiveElement target="lineL" color="carbon"><ConceptLink targetId="recta" isDependency={false}>recta</ConceptLink></InteractiveElement> atraviesa un lado de un <InteractiveElement target="triangle" color="terracota"><ConceptLink targetId="triangulo" isDependency={false}>triángulo</ConceptLink></InteractiveElement> por su interior, entonces irremediablemente debe salir cortando a otro de los lados. Esta norma fundamental, universalmente conocida como el <ConceptLink targetId="axioma" isDependency={false}>axioma</ConceptLink> de <ConceptLink targetId="pasch" isDependency={false}>Pasch</ConceptLink>, es la columna vertebral de la topología bidimensional.
+
+<Separador />
+
+### Enunciado Formal
+
+<Formula>
+  $$
+  l \cap \overline{AB} = P \ (A * P * B) \implies
+  \begin{cases}
+    l \cap \overline{AC} \neq \emptyset \\
+    \lor \\
+    l \cap \overline{BC} \neq \emptyset
+  \end{cases}
+  $$
+</Formula>
+
+<Nota>
+  En el diagrama interactivo, puedes ver cómo la <InteractiveElement target="lineL" color="carbon">recta l</InteractiveElement> perfora al lado $\overline{AB}$ en el <InteractiveElement target="pP" color="ocre"><ConceptLink targetId="punto" isDependency={false}>punto</ConceptLink> P</InteractiveElement> y busca inexorablemente la salida rompiendo el lado $\overline{BC}$ en el <InteractiveElement target="pQ" color="ocre">punto Q</InteractiveElement>.
+</Nota>
+
+<Separador />
+
+### Discusión
+
+El <ConceptLink targetId="axioma-pasch" isDependency={false}>axioma de Pasch</ConceptLink> es probablemente el <ConceptLink targetId="postulado" isDependency={false}>postulado</ConceptLink> de orden más trascendental de la <ConceptLink targetId="geometria" isDependency={false}>geometría</ConceptLink>. Garantiza la existencia de una frontera infranqueable: una recta infinita no puede penetrar furtivamente en un triángulo por una de sus vallas y luego evaporarse en el interior sin llegar a cruzar otra frontera para salir. De alguna manera, formaliza rigurosamente que el "interior" y el "exterior" están separados.
+
+Su inmensa potencia matemática reside en que, gracias a él, podemos demostrar formalmente el <ConceptLink targetId="teorema-separacion" isDependency={false}>teorema de separación</ConceptLink> (toda recta corta el <ConceptLink targetId="plano" isDependency={false}>plano</ConceptLink> en dos <ConceptLink targetId="semiplano" isDependency={false}>semiplanos</ConceptLink> perfectamente aislados). También es la base subyacente para entender que los <ConceptLink targetId="angulo" isDependency={false}>ángulos</ConceptLink> tienen interiores, y que un triángulo encierra un <ConceptLink targetId="area" isDependency={false}>área</ConceptLink> bien definida.
+
+<Separador />
+
+### Observaciones
+
+- Fue el matemático alemán Moritz Pasch quien descubrió en 1882 que <ConceptLink targetId="euclides" isDependency={false}>Euclides</ConceptLink> llevaba más de dos milenios usando esta propiedad geométrica de contrabando en sus <ConceptLink targetId="demostracion" isDependency={false}>demostraciones</ConceptLink>, sin haberla escrito jamás como un axioma base. <ConceptLink targetId="hilbert" isDependency={false}>Hilbert</ConceptLink> corrigió esta laguna histórica incorporándolo a su famosa lista de fundamentos, dentro de la <ConceptLink targetId={["sistema-absoluto", "geometria"]}>geometría absoluta</ConceptLink>.

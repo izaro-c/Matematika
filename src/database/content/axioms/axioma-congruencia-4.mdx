@@ -1,0 +1,45 @@
+export const metadata = {
+  "id": "axioma-congruencia-4",
+  "type": "axioma",
+  "title": "Axioma III-4 (Congruencia)",
+  "description": "Dado un ángulo y una semirrecta, existe un único ángulo congruente sobre un lado dado de la semirrecta.",
+  "statement": "Dado un ángulo ∠(h,k) y una semirrecta h' sobre una recta l, existe una única semirrecta k' en un lado dado de l tal que ∠(h,k) ≅ ∠(h',k').",
+  "tags": ["geometria", "congruencia", "geometria-absoluta"],
+  "authors": ["hilbert"],
+  "hasSimulation": true
+};
+
+import { Congruence4 } from '@/boundary/components/diagrams/Axiomas/Congruence4';
+export const Simulation = Congruence4;
+import { InteractiveElement } from "@/boundary/components/ui/VisualBind";
+
+<Capitular letra="D" />
+ado un <InteractiveElement target="angulo-original" color="terracota"><ConceptLink targetId="angulo" isDependency={false}>ángulo</ConceptLink></InteractiveElement> y una <InteractiveElement target="rayo-h_prime" color="salvia"><ConceptLink targetId="semirrecta" isDependency={false}>semirrecta</ConceptLink></InteractiveElement>, existe un único <InteractiveElement target="angulo-clonado" color="salvia">ángulo <ConceptLink targetId="congruencia" isDependency={false}>congruente</ConceptLink></InteractiveElement> (determinado por una <InteractiveElement target="rayo-k_prime" color="salvia">semirrecta</InteractiveElement>) sobre un <ConceptLink targetId="semiplano" isDependency={false}>semiplano</ConceptLink> determinado respecto a dicha semirrecta. Este <ConceptLink targetId="axioma" isDependency={false}>axioma</ConceptLink> extiende formalmente la noción primitiva de congruencia desde los <ConceptLink targetId="segmento" isDependency={false}>segmentos</ConceptLink> hacia los ángulos.
+
+<Separador />
+
+### Enunciado Formal
+
+<Formula>
+  $$ \forall \angle(h,k) \; \forall h' \; \exists! k' : \angle(h,k) \cong \angle(h',k') $$
+</Formula>
+
+<Nota>
+  Un lado dado significa que la semirrecta k' debe estar en el semiplano elegido respecto de la <ConceptLink targetId="recta" isDependency={false}>recta</ConceptLink> que contiene a h'.
+</Nota>
+
+<Separador />
+
+### Discusión
+
+Así como el <ConceptLink targetId="axioma-congruencia-1" isDependency={false}>axioma III-1</ConceptLink> permite transportar segmentos sobre una semirrecta, el axioma III-4 permite transportar ángulos sobre una semirrecta. La unicidad y la elección del lado (semiplano) son esenciales para que la construcción esté bien definida.
+
+La congruencia de ángulos constituye una relación primitiva, irreductible en esta etapa a nociones numéricas de <ConceptLink targetId="medida-angular" isDependency={false}>medida angular</ConceptLink>. Al igual que con los segmentos, sus propiedades operativas se imponen axiomáticamente, para <ConceptLink targetId="demostracion" isDependency={false}>demostrar</ConceptLink> posteriormente que son isomorfas a la igualdad de medidas reales.
+
+El "lado dado" elimina la ambigüedad de construir el ángulo hacia un lado o hacia el otro de la semirrecta $h'$. Sin esta elección, habría dos ángulos congruentes posibles (simétricos respecto a $h'$).
+
+<Separador />
+
+### Observaciones
+
+Este axioma corresponde al <ConceptLink targetId="postulado" isDependency={false}>postulado</ConceptLink> 4 de <ConceptLink targetId="euclides" isDependency={false}>Euclides</ConceptLink> ("todos los <ConceptLink targetId="angulo-recto" isDependency={false}>ángulos rectos</ConceptLink> son iguales") y al postulado de transportar ángulos que Euclides usa implícitamente en sus construcciones. Es fundamental para la construcción de <ConceptLink targetId="figura-geometrica" isDependency={false}>figuras congruentes</ConceptLink> y para la demostración de los criterios de congruencia de <ConceptLink targetId="triangulo" isDependency={false}>triángulos</ConceptLink>.

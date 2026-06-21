@@ -230,7 +230,8 @@ Cada archivo MDX DEBE exportar un objeto `metadata`. Los schemas Zod (`src/store
 **Reglas:**
 - Toda demostración DEBE tener un `parentTheorem` apuntando a un teorema existente
 - El campo `layout` determina el renderizado: `"split"` para diagrama+lado a lado, `"text"` para ancho completo
-- Las demostraciones geométricas DEBEN usar `layout: "split"`
+- Las demostraciones geométricas DEBEN usar `layout: "split"` SIEMPRE, sin excepción, independientemente de su longitud, para mantener la consistencia en la enciclopedia.
+- Cada paso de la demostración DEBE tener un `<MedievalStep>` correspondiente en el cuerpo y un `<InteractiveElement>` conectando a un elemento del diagrama
 - Cada paso de la demostración DEBE tener un `<MedievalStep>` correspondiente en el cuerpo y un `<InteractiveElement>` conectando a un elemento del diagrama
 - **PATRÓN DE EXPORT:** Las demostraciones exportan `Component` (no body MDX plano). Ver §6.2.
 
@@ -261,7 +262,10 @@ Un ejemplo es un **problema resuelto y desarrollado** que ilustra un teorema o d
 "hasSimulation"?: boolean
 ```
 
-Los ejercicios DEBEN ser interactivos cuando sea posible (usando `<Hueco>`, `<Pregunta>`, y otros componentes de ejercicio en el cuerpo MDX).
+Los ejercicios DEBEN tener **interacción progresiva**:
+- Presentar una pregunta o hueco que el estudiante debe intentar resolver primero.
+- La solución NUNCA se muestra estáticamente desde el principio. Se revela paso a paso (vía `<Paso>`) o tras interactuar.
+- Usar `<Hueco>`, `<Pregunta>`, y otros componentes interactivos en el cuerpo MDX.
 
 ### 5.8 Modelo (`type: "modelo"`)
 
@@ -519,9 +523,17 @@ Casos límite, validez en otras geometrías, relaciones a otras páginas (usar <
 
 Las demostraciones son el corazón pedagógico de Matematika. Su diseño es el más exigente.
 
+**ESTRUCTURA DE LA DEMOSTRACIÓN — EXIGENCIA ABSOLUTA DE RIGOR MATEMÁTICO:**
+
+El principal mandato para la creación de demostraciones es el rigor matemático puro e inquebrantable. Para asegurar que el resultado sea perfecto a la primera:
+
+1. **Demostraciones sin fisuras y directas:** Quedan estrictamente prohibidas las secciones de "Introducción", "Hipótesis" o "Tesis". Ir directo a la demostración paso a paso. Solo se permite un `### Enunciado Formal` si es estrictamente necesario.
+2. **Prohibición de suposiciones visuales:** En NINGÚN momento el texto puede asumir una propiedad "porque se ve en el diagrama" o "porque parece obvia". Si dos líneas se cruzan en el diagrama, no se puede asumir que tienen un punto de intersección a menos que un axioma o teorema garantice explícitamente ese cruce.
+3. **Fundamentación estricta:** TODO salto lógico debe estar justificado única y exclusivamente por lógica matemática formal, axiomas previos, definiciones establecidas o resultados ya demostrados. Estas justificaciones DEBEN referenciarse explícitamente mediante `<ConceptLink>`.
+
 **DIAGRAMAS EN DEMOSTRACIONES — REGLA FUNDAMENTAL:**
 
-Cada paso de una demostración DEBE tener su propio diagrama que ilustre ese paso específico. La excepción es cuando **conviene unificar** los diagramas: si varios pasos comparten la misma construcción geométrica y solo cambia qué elemento se resalta, un solo diagrama con highlight reactivo es más claro que múltiples diagramas casi idénticos.
+Cada paso de una demostración DEBE visualizarse en el diagrama. Si es necesario, se pueden añadir múltiples diagramas en una demostración, asignándole uno a un paso o a un grupo de pasos específicos.
 
 | Patrón | Cuándo usar | Diagramas |
 |---|---|---|
@@ -529,11 +541,15 @@ Cada paso de una demostración DEBE tener su propio diagrama que ilustre ese pas
 | **Un diagrama unificado** | Cuando los pasos comparten la misma construcción y solo cambia el highlight | `diagrams={{ "default": SharedDiagram }}` o `diagram={<SharedDiagram />}` |
 | **Híbrido** | Algunos pasos comparten construcción, otros introducen elementos nuevos | `diagrams={{ "default": SharedDiagram, "step3": Step3Diagram }}` |
 
-Cuando hay varios diagramas, el `DemonstrationSection` los muestra con **transiciones sticky**: el panel izquierdo permanece fijo mientras el texto scrollea, y los diagramas cambian con una transición de fundido suave (opacity 700ms). El estudiante ve el diagrama correcto para cada paso sin perder el contexto visual.
+Cuando hay varios diagramas, el `DemonstrationSection` los muestra con **transiciones sticky**: el panel izquierdo permanece fijo mientras el texto scrollea, y los diagramas cambian con una transición de fundido suave (opacity 700ms). El estudiante ve el diagrama correcto para cada paso sin perder el contexto visual. **Split-Layout es OBLIGATORIO para TODAS las demostraciones geométricas**, por cortas que sean.
 
 **REFERENCIAS AL DIAGRAMA — REGLA CRÍTICA:**
 
-TODO en el texto que se refiera a un elemento del diagrama DEBE tener un `<InteractiveElement>` correspondiente. Esto incluye:
+TODO elemento del texto que se refiera a un elemento del diagrama DEBE estar conectado con `<InteractiveElement>`.
+Esta conexión no es opcional y tiene reglas estrictas:
+- **Resaltado:** El `target` debe coincidir con el ID del elemento en el diagrama para que este se resalte al interactuar.
+- **Color:** El elemento en el texto DEBE ser del mismo color que el elemento en el diagrama utilizando la prop `color`.
+Esto incluye:
 
 - Nombres de puntos, segmentos, ángulos, polígonos en el texto → `<InteractiveElement target="lado-ab">lado AB</InteractiveElement>`
 - Variables mencionadas en prosa que corresponden a elementos visuales → `<InteractiveElement target="altura-c">la altura $h$</InteractiveElement>`
@@ -581,26 +597,17 @@ import { MiDiagrama } from "../../diagrams/Teoremas/MiDiagrama";
 <DemonstrationSection diagram={<MiDiagrama />}>
 
 <Capitular letra="X" />
-Intro breve del método de demostración.
-
-<Separador />
-
-### Hipótesis y Tesis
-**Hipótesis:** ... **Tesis:** ...
+### Enunciado Formal
+<Formula>$$ A \implies B $$</Formula>
 
 <MedievalStep number={1} title="..." target="elemento">
-  Paso con <InteractiveElement target="elemento">elemento</InteractiveElement>.
+  Por el <ConceptLink targetId="axioma-x">axioma X</ConceptLink>, el <InteractiveElement target="elemento" color="terracota">elemento</InteractiveElement>...
 </MedievalStep>
 
 <MedievalStep number={2} title="...">
   ...
   $\blacksquare$
 </MedievalStep>
-
-<Separador />
-
-### Análisis
-Comentario sobre la técnica empleada.
 
 </DemonstrationSection>
 ```
@@ -649,16 +656,18 @@ export const Component = () => {
 ```
 
 **Reglas CRÍTICAS para demostraciones:**
-1. **Diagrama por paso por defecto** — cada paso tiene su propio diagrama a menos que convenga unificar
-2. **Transiciones sticky** — cuando hay varios diagramas, el panel izquierdo es sticky y los diagramas cambian con fundido
-3. **Importar `InteractiveElement` desde `../../components/ui/VisualBind`** (NUNCA desde MDXBlocks)
-4. **Importar `DemonstrationSection` y `MedievalStep` desde `../../components/content/`**
-5. `InteractiveElement` escribe en `MathStore.highlight` — el diagrama lee de ahí para iluminar elementos
-6. El `target` string DEBE coincidir exactamente con el nombre del elemento en el diagrama
-7. **TODO lo que se refiera al diagrama DEBE tener `<InteractiveElement>`**, incluyendo variables dentro de fórmulas (o explicación fuera de la fórmula si no se puede dentro)
-8. **Cada `MedievalStep` DEBE contener al menos un `<InteractiveElement>`** referenciando un elemento del diagrama
-9. **Todos los conceptos matemáticos mencionados DEBEN tener `<ConceptLink>`** — aunque la página destino no exista aún
-10. El último MedievalStep termina con $\blacksquare$
+1. **Sin texto introductorio innecesario:** Prohibido usar Introducción, Hipótesis o Tesis. Ir directo a la demostración rigurosa.
+2. **Rigor y referencias:** No asumir nada. Cada paso debe referenciar los axiomas o resultados usados mediante `<ConceptLink>`.
+3. **Visualización total:** Todo paso de la demostración DEBE visualizarse en un diagrama.
+4. **Colores coincidentes:** TODO elemento del diagrama referenciado en el texto DEBE usar `<InteractiveElement>` con el `color` exacto del elemento visual en el diagrama.
+5. **Transiciones sticky** — cuando hay varios diagramas, el panel izquierdo es sticky y los diagramas cambian con fundido
+6. **Importar `InteractiveElement` desde `../../components/ui/VisualBind`** (NUNCA desde MDXBlocks)
+7. **Importar `DemonstrationSection` y `MedievalStep` desde `../../components/content/`**
+8. `InteractiveElement` escribe en `MathStore.highlight` — el diagrama lee de ahí para iluminar elementos
+9. El `target` string DEBE coincidir exactamente con el nombre del elemento en el diagrama
+10. **Cada `MedievalStep` DEBE contener al menos un `<InteractiveElement>`** referenciando un elemento del diagrama
+11. **Todos los conceptos matemáticos mencionados DEBEN tener `<ConceptLink>`** — aunque la página destino no exista aún
+12. El último MedievalStep termina con $\blacksquare$
 
 #### 6.2.6 Sistema Axiomático
 
@@ -777,8 +786,10 @@ Qué se puede generalizar del ejemplo. Conexión al teorema relacionado.
 
 La estructura se adapta al ejercicio pedagógicamente. Elementos disponibles:
 
-- `<Pregunta>` con `<Hueco respuesta="...">` para preguntas interactivas
-- `<Solucion>` revelable con desarrollo paso a paso (usar `<Paso>` para pasos)
+La estructura debe seguir una **interacción progresiva**:
+- OBLIGATORIO: El ejercicio debe presentar una incógnita que el estudiante intente resolver antes de ver la solución.
+- `<Pregunta>` con `<Hueco respuesta="...">` para preguntas interactivas.
+- `<Solucion>` revelable con desarrollo paso a paso (usar `<Paso>` para pasos). La solución jamás está visible por defecto.
 - `<ErrorComun>` para advertir sobre errores típicos
 - `<Nota>` para pistas o comentarios
 
@@ -852,9 +863,9 @@ Estructura libre adaptada al contenido pedagógico. Las lecciones explican técn
 
 ### 7.1 Tono y Estilo
 
-- Escribir en **tercera persona impersonal**: "Se define...", "Se demuestra...", "Nótese que..."
-- Ser **preciso y conciso**. Cada frase debe transmitir información.
-- Sin preguntas retóricas, sin signos de exclamación, sin lenguaje casual.
+- **Formal y directo**: Escribir en **tercera persona impersonal** ("Se define...", "Se demuestra...").
+- **Precisión absoluta y concisión**: Sin adornos literarios, sin metáforas divulgativas, sin lenguaje casual. Cada frase debe transmitir información estricta.
+- Sin preguntas retóricas y sin signos de exclamación.
 - Usar **negrita** para términos clave que se introducen o enfatizan.
 - Usar *cursiva* para variables matemáticas en texto (p. ej. "sea *x* un número real").
 
@@ -1123,7 +1134,7 @@ Al diseñar diagramas con JSXGraph, asegúrate de cumplir con estas directrices 
 1. **Recorte en Layouts Responsivos (`aspect-video`):** Los diagramas usan un contenedor con proporción 16:9 (`md:aspect-video`). Si configuras un `boundingbox` de ancho 10 (`[-5, 5, 5, -5]`) con `keepaspectratio: true`, la altura visible será de `10 * 9/16 = 5.625` (aproximadamente desde `Y=-2.81` a `Y=2.81`). Cualquier punto fuera de estas Y **quedará invisible o recortado**. Centraliza las coordenadas de tus elementos para que caigan siempre en la "zona segura".
 2. **Tokens de Color CSS:** Solo puedes usar los tokens documentados en la **Paleta Arts & Crafts**. Si usas un token inexistente (ej. `--theme-ambar`), la variable evaluará a vacío y JSXGraph dibujará elementos transparentes e invisibles. Usa siempre validaciones de color válidas (ej. `--theme-ocre`, `--theme-salvia`).
 3. **Mapeo de InteractiveElement:** El atributo `target` de un `<InteractiveElement>` debe enrutar 1:1 a un string en la lógica `if (highlight === 'foo')` del diagrama. Presta atención especial a los estados de reset o default (`!highlight`) para restaurar correctamente la visibilidad y opacidades.
-4. **Libertad de Modificación:** Si un diagrama ilustra conceptos abstractos de congruencia, permite que los vértices del modelo "maestro" sean arrastrables (`fixed: false`). Esto demuestra dinámicamente cómo las construcciones derivadas (clones o dependientes) responden al cambio en tiempo real, aumentando el valor pedagógico.
+4. **Libertad de Modificación (Híbrido Guiado/Exploratorio):** El texto debe guiar al usuario resaltando elementos, pero los vértices base del modelo "maestro" DEBEN ser siempre arrastrables (`fixed: false`). Esto permite al estudiante probar distintas configuraciones geométricas libremente mientras lee la demostración guiada.
 5. **Restricción Geométrica Rigurosa (`gliders`):** Si un punto representa conceptualmente un valor estrictamente sobre una recta o segmento (ej. en cortaduras de Dedekind o axiomas de orden), NUNCA uses `point` libre (`fixed: false`). Usa `glider` atado al objeto base para garantizar matemáticamente que el estudiante no pueda arrastrarlo fuera del dominio válido de 1D.
 6. **Controles Reactivos (Sliders Dinámicos):** Cuando tengas controles HTML (`<input type="range">`) cuyo rango dependa de dimensiones variables del diagrama (ej. un multiplicador $n$ para superar un segmento), actualiza dinámicamente el límite `max` escuchando los eventos de arrastre (`point.on('drag', ...)`) para asegurar que el usuario siempre pueda alcanzar la condición demostrativa.
 
@@ -1146,24 +1157,21 @@ Al generar contenido matemático, usar estas fuentes para rigor:
 
 ## 16. Validación Automática (OBLIGATORIA)
 
-**Tras crear o editar contenido, el agente DEBE ejecutar estas validaciones:**
+**Tras crear o editar contenido, tú (el agente) TIENES LA OBLIGACIÓN de ejecutar validaciones ANTES de responder al usuario:**
 
-### 16.1 Validación de schemas y referencias
-```bash
-npm run generate-index
-npm run validate-graph
-npm run validate-references
-```
+### 16.1 Ciclo de Autocorrección del Agente
+No esperes a que el usuario te diga que hay un error de TypeScript, un link roto o un componente MDX mal cerrado. Ejecuta en tu terminal:
 
-### 15.2 Typecheck y lint
 ```bash
+npm run typecheck
+# o bien
 npx tsc --noEmit -p tsconfig.app.json
-npx eslint <archivos-modificados>
+```
+```bash
+npm run validate-graph
 ```
 
-### 15.3 Si alguna validación falla
-- Corregir los errores antes de dar el contenido por terminado
-- Re-ejecutar las validaciones hasta que pasen
+Si el compilador arroja errores (ej. "Cannot find module '../../components/ui/VisualBind'"), **corrígelos tú mismo en el código** y vuelve a compilar hasta que no haya errores, antes de avisar al usuario de que has terminado la tarea.
 
 ### 15.4 Script de validación del skill
 ```bash

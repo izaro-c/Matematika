@@ -1,0 +1,57 @@
+export const metadata = {
+  "id": "modelo-poincare",
+  "type": "modelo",
+  "title": "Disco de Poincaré",
+  "description": "El modelo conforme del plano hiperbólico que representa el espacio como el interior de un círculo unitario y las rectas como arcos ortogonales a la frontera.",
+  "satisfies": ["sistema-hiperbolico", "sistema-absoluto"],
+  "axioms_verified": [
+    "axioma-incidencia-1",
+    "axioma-incidencia-2",
+    "axioma-incidencia-3",
+    "axioma-orden-1",
+    "axioma-orden-2",
+    "axioma-orden-3",
+    "axioma-orden-4",
+    "axioma-congruencia-1",
+    "axioma-congruencia-2",
+    "axioma-congruencia-3",
+    "axioma-congruencia-4",
+    "axioma-congruencia-5",
+    "axioma-arquimedes",
+    "axioma-completitud",
+    "axioma-paralelas-hiperbolico"
+  ],
+  "tags": ["geometria", "modelo", "hiperbolica", "poincare", "conforme"],
+  "hasDiagram": true
+};
+
+import { ModeloPoincare } from '@/boundary/components/diagrams/Models/ModeloPoincare';
+export const Diagram = ModeloPoincare;
+
+<Capitular letra="E" />
+l <ConceptLink targetId={["modelo-poincare", "plano"]}>Disco de Poincaré</ConceptLink> representa un <ConceptLink targetId="modelo" isDependency={false}>modelo</ConceptLink> analítico para la <ConceptLink targetId={["sistema-hiperbolico", "geometria-hiperbolica"]}>geometría hiperbólica</ConceptLink>. Su propiedad métrica clave es el carácter *conforme*, que preserva la <ConceptLink targetId="congruencia" isDependency={false}>congruencia</ConceptLink> local de los <ConceptLink targetId="angulo" isDependency={false}>ángulos</ConceptLink> euclídeos. Fue introducido por <ConceptLink targetId="poincare" isDependency={false}>Henri Poincaré</ConceptLink> en 1882.
+
+<Separador />
+
+### Definición del Modelo
+
+El <ConceptLink targetId="modelo" isDependency={false}>modelo</ConceptLink> se construye sobre el <ConceptLink targetId="plano-complejo" isDependency={false}>plano complejo</ConceptLink> $\mathbb{C}$, redefiniendo la noción de «<ConceptLink targetId="recta" isDependency={false}>recta</ConceptLink>» y la <ConceptLink targetId="distancia" isDependency={false}>métrica</ConceptLink>:
+
+- **<ConceptLink targetId="punto" isDependency={false}>Puntos</ConceptLink>**: Interior del <ConceptLink targetId="disco" isDependency={false}>disco</ConceptLink> unitario abierto $\mathbb{D} = \{z \in \mathbb{C} : |z| < 1\}$. El borde $|z|=1$ es el «horizonte absoluto» y no pertenece al <ConceptLink targetId="espacio" isDependency={false}>espacio</ConceptLink> hiperbólico.
+- **<ConceptLink targetId="geodesica" isDependency={false}>Rectas hiperbólicas</ConceptLink>**: <ConceptLink targetId="arco" isDependency={false}>Arcos</ConceptLink> de <ConceptLink targetId="circunferencia" isDependency={false}>circunferencia</ConceptLink> euclídea que intersecan <ConceptLink targetId="ortogonalidad" isDependency={false}>ortogonalmente</ConceptLink> ($90^\circ$) el horizonte. Los <ConceptLink targetId="diametro" isDependency={false}>diámetros</ConceptLink> también son <ConceptLink targetId="recta" isDependency={false}>rectas</ConceptLink>.
+- **<ConceptLink targetId="distancia" isDependency={false}>Distancia hiperbólica</ConceptLink>**: $d_H(z,w)$ se define mediante la <ConceptLink targetId="metrica" isDependency={false}>métrica</ConceptLink> de Poincaré $ds = \frac{2|dz|}{1 - |z|^2}$. Tiende a infinito al acercarse al horizonte.
+- **<ConceptLink targetId="angulo" isDependency={false}>Ángulos</ConceptLink>**: Por ser conforme, el <ConceptLink targetId="angulo" isDependency={false}>ángulo</ConceptLink> entre dos <ConceptLink targetId="recta" isDependency={false}>rectas</ConceptLink> hiperbólicas coincide con el <ConceptLink targetId="angulo" isDependency={false}>ángulo</ConceptLink> euclídeo entre sus <ConceptLink targetId="tangente" isDependency={false}>tangentes</ConceptLink>.
+
+<Separador />
+
+### Verificación de Axiomas
+
+El <ConceptLink targetId={["modelo-poincare", "plano"]}>disco de Poincaré</ConceptLink> satisface los <ConceptLink targetId="axioma" isDependency={false}>axiomas</ConceptLink> de la <ConceptLink targetId={["sistema-absoluto", "geometria-absoluta"]}>geometría absoluta</ConceptLink> de <ConceptLink targetId="hilbert" isDependency={false}>Hilbert</ConceptLink> y reemplaza el <ConceptLink targetId="axioma-paralelas-euclides">axioma euclídeo</ConceptLink> por el <ConceptLink targetId="axioma-paralelas-hiperbolico">hiperbólico</ConceptLink>:
+
+1. **<ConceptLink targetId="axioma-incidencia-1">Incidencia I-1</ConceptLink>**: Por dos <ConceptLink targetId="punto" isDependency={false}>puntos</ConceptLink> pasa un único <ConceptLink targetId="arco" isDependency={false}>arco</ConceptLink> ortogonal a la frontera.
+2. **<ConceptLink targetId={["axioma-orden-1", "axioma-orden-2", "axioma-orden-3", "axioma-orden-4"]}>Orden y Congruencia</ConceptLink>**: La <ConceptLink targetId="metrica" isDependency={false}>métrica</ConceptLink> diverge en el borde, haciendo las <ConceptLink targetId="recta" isDependency={false}>rectas</ConceptLink> infinitamente largas.
+3. **<ConceptLink targetId="axioma-paralelas-hiperbolico">Axioma Hiperbólico</ConceptLink>**: Dada una <ConceptLink targetId="recta" isDependency={false}>recta</ConceptLink> $l$ y un <ConceptLink targetId="punto" isDependency={false}>punto</ConceptLink> $P \notin l$, existen **infinitas** <ConceptLink targetId="recta" isDependency={false}>rectas</ConceptLink> por $P$ que no intersecan $l$ dentro del <ConceptLink targetId="disco" isDependency={false}>disco</ConceptLink>.
+
+<Nota>
+  El <ConceptLink targetId={["modelo-poincare", "plano"]}>modelo de Poincaré</ConceptLink> demostró que la <ConceptLink targetId={["sistema-hiperbolico", "geometria-hiperbolica"]}>geometría hiperbólica</ConceptLink> es **equiconsistente** con la <ConceptLink targetId={["sistema-euclidiano", "geometria-euclidiana"]}>geometría euclídea</ConceptLink>, resolviendo el <ConceptLink targetId="problema" isDependency={false}>problema</ConceptLink> de 2000 años sobre la independencia del <ConceptLink targetId="axioma-paralelas-euclides">quinto postulado</ConceptLink>.
+</Nota>

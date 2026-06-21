@@ -1,0 +1,35 @@
+export const metadata = {
+  "id": "teorema-angulos-opuestos-verticales",
+  "type": "teorema",
+  "title": "Teorema de los ángulos opuestos por el vértice",
+  "description": "Cuando dos rectas se cortan, los ángulos opuestos por el vértice son congruentes entre sí.",
+  "statement": "Sean l y m dos rectas que se cortan en el punto O. Si α y β son ángulos opuestos por el vértice, entonces α ≅ β.",
+  "tags": ["geometria", "congruencia", "geometria-absoluta"],
+  "authors": ["euclides"],
+  "difficulty": "básico",
+  "hasSimulation": true,
+  "demos": ["demo-angulos-opuestos-verticales"]
+};
+
+import { AngulosOpuestos } from '@/boundary/components/diagrams/Theorems/AngulosOpuestos';
+export const Simulation = AngulosOpuestos;
+import { InteractiveElement } from "@/boundary/components/ui/VisualBind";
+
+<Capitular letra="C" />
+uando dos <ConceptLink targetId="recta" isDependency={false}>rectas</ConceptLink> se intersecan en un único <ConceptLink targetId="punto" isDependency={false}>punto</ConceptLink>, determinan cuatro regiones angulares. Aquellos <ConceptLink targetId="angulo" isDependency={false}>ángulos</ConceptLink> ubicados en semiplanos alternos —separados por el vértice de intersección— se denominan **opuestos por el vértice**. Este <ConceptLink targetId="teorema" isDependency={false}>teorema</ConceptLink>, consignado en los <ConceptLink targetId="euclides" isDependency={false}>Elementos de Euclides</ConceptLink>, demuestra que tales pares angulares conservan siempre una <ConceptLink targetId="congruencia" isDependency={false}>congruencia</ConceptLink> estricta: <InteractiveElement target="alpha">α ≅ α</InteractiveElement> y <InteractiveElement target="beta">β ≅ β</InteractiveElement>.
+
+<Separador />
+
+### Enunciado Formal
+
+Sean $l$ y $m$ dos <ConceptLink targetId="recta" isDependency={false}>rectas</ConceptLink> que se cortan en $O$. Entonces los <ConceptLink targetId="angulo" isDependency={false}>ángulos</ConceptLink> <InteractiveElement target="alpha">opuestos por el vértice</InteractiveElement> son <ConceptLink targetId="congruencia" isDependency={false}>congruentes</ConceptLink>:
+
+<Formula>
+  $$ \alpha \cong \alpha', \qquad \beta \cong \beta' $$
+</Formula>
+
+<Separador />
+
+### Discusión
+
+Este <ConceptLink targetId="teorema" isDependency={false}>teorema</ConceptLink> es uno de los primeros resultados no triviales de la <ConceptLink targetId="geometria-euclidiana" isDependency={false}>geometría</ConceptLink>. Su <ConceptLink targetId="demostracion" isDependency={false}>demostración</ConceptLink> no requiere el <ConceptLink targetId="axioma-paralelas-euclides">axioma de las paralelas</ConceptLink>, por lo que pertenece a la <ConceptLink targetId={["sistema-absoluto", "geometria-absoluta"]}>geometría absoluta</ConceptLink>. El argumento es simple: los <ConceptLink targetId="angulo" isDependency={false}>ángulos</ConceptLink> adyacentes suman $180^\circ$, y restando el <ConceptLink targetId="angulo" isDependency={false}>ángulo</ConceptLink> común se obtiene la <ConceptLink targetId="congruencia" isDependency={false}>congruencia</ConceptLink> de los opuestos.

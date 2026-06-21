@@ -1,0 +1,29 @@
+classDiagram
+    namespace Boundary {
+        class TheoremPage
+        class MathBoard
+    }
+    namespace Controller {
+        class useGraphSandboxStore
+        class graphUtils
+    }
+    namespace Entity {
+        class GraphStructure
+        class NodeEntity
+    }
+    namespace Database {
+        class graph_structure_json
+        class ContentDAO
+    }
+    namespace DTO {
+        class GraphEvaluationDTO
+    }
+    
+    TheoremPage --> useGraphSandboxStore : <<use>>
+    TheoremPage --> GraphEvaluationDTO : <<receives>>
+    useGraphSandboxStore --> GraphEvaluationDTO : <<creates>>
+    useGraphSandboxStore --> graphUtils : <<delegate>>
+    graphUtils --> GraphStructure : <<evaluates>>
+    GraphStructure *-- NodeEntity : <<contains>>
+    ContentDAO --> graph_structure_json : <<reads>>
+    useGraphSandboxStore --> ContentDAO : <<fetch>>

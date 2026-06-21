@@ -1,0 +1,85 @@
+sequenceDiagram
+    autonumber
+    actor Usuario
+    participant Wouter as Wouter (Router)
+    participant TheoremPage
+    participant ContentStore as ContentStore (Singleton)
+    participant MathProvider as MathProvider (React Context)
+    participant MDXComponent
+    participant MathBoard
+    participant JSXGraph as JSXGraph Engine
+    participant ConceptLink
+    participant GlossaryStore as GlossaryStore (Zustand)
+    participant Sidebar
+
+    %% Escenario 1: Carga de Página
+    rect rgba(100, 150, 255, 0.1)
+        Usuario->>Wouter: Ingresa a /teorema/pitagoras
+        activate Wouter
+        Wouter->>TheoremPage: Renderiza con parámetro id='pitagoras'
+        activate TheoremPage
+        
+        TheoremPage->>ContentStore: db.getTheorem('pitagoras')
+        activate ContentStore
+        
+        alt Nodo Encontrado
+            ContentStore-->>TheoremPage: Theorem Data & Component (MDX)
+            TheoremPage->>MathProvider: Envuelve en <MathProvider> (Estado Aislado)
+            activate MathProvider
+            MathProvider->>MDXComponent: Renderiza Component
+            activate MDXComponent
+            MDXComponent->>MathBoard: <MathBoard onInit={...} onUpdate={...}>
+            activate MathBoard
+            MathBoard->>JSXGraph: JXG.JSXGraph.initBoard(id, config)
+            activate JSXGraph
+            JSXGraph-->>MathBoard: board object
+            MathBoard-->>Usuario: Canvas JSXGraph renderizado
+        else Nodo No Encontrado
+            ContentStore-->>TheoremPage: undefined
+            TheoremPage-->>Usuario: Renderiza página 404 (No encontrado)
+        end
+        deactivate ContentStore
+    end
+
+    %% Escenario 2: Interacción con Simulación (Data-Binding)
+    rect rgba(100, 255, 100, 0.1)
+        Usuario->>JSXGraph: Drag en un punto (ej. A)
+        JSXGraph->>MDXComponent: Dispara evento o altera propiedad gráfica
+        MDXComponent->>MathProvider: useMathStore().setVariable(...)
+        MathProvider-->>MDXComponent: Notifica cambio a hooks suscritos
+        MDXComponent-->>MathBoard: onUpdate disparado si corresponde
+        MathBoard->>JSXGraph: board.update()
+        MDXComponent-->>Usuario: El texto o gráfica interactiva se actualiza
+    end
+
+    %% Escenario 3: Interacción Marginalia / Glosario
+    rect rgba(255, 200, 100, 0.1)
+        Usuario->>ConceptLink: Clic en <ConceptLink targetId='area'>
+        activate ConceptLink
+        ConceptLink->>GlossaryStore: openTerm(['area'])
+        deactivate ConceptLink
+        GlossaryStore->>Sidebar: Notifica activeTerms = ['area']
+        activate Sidebar
+        
+        Sidebar->>ContentStore: db.getTheorem('area') / dictionary['area']
+        ContentStore-->>Sidebar: Información del concepto/término
+        Sidebar-->>Usuario: Despliega panel lateral con explicación
+        deactivate Sidebar
+    end
+
+    %% Escenario 4: Limpieza de Memoria
+    rect rgba(255, 100, 100, 0.1)
+        Usuario->>Wouter: Navega a otra ruta
+        Wouter->>TheoremPage: Inicia desmontaje
+        TheoremPage->>MathProvider: Desmonta Contexto
+        MathProvider->>MDXComponent: Desmonta MDX
+        MDXComponent->>MathBoard: Desmonta <MathBoard>
+        MathBoard->>JSXGraph: JXG.JSXGraph.freeBoard(board)
+        deactivate JSXGraph
+        deactivate MathBoard
+        deactivate MDXComponent
+        deactivate MathProvider
+        deactivate TheoremPage
+        deactivate Wouter
+        Note over MathBoard,JSXGraph: El Garbage Collector de JS libera RAM WebGL/Canvas.
+    end

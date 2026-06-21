@@ -1,0 +1,23 @@
+flowchart LR
+    %% Actores
+    Student((Studente))
+
+    %% Casos de Uso
+    subgraph Sistema Matematika
+        direction TB
+        UC1([Visualizza Teorema])
+        UC2([Attiva Assioma])
+        UC3([Visualizza Definizione])
+        UC4([Consulta Marginalia])
+        UC5([Naviga Grafo])
+    end
+
+    %% Relaciones
+    Student --- UC1
+    Student --- UC2
+    Student --- UC3
+    Student --- UC4
+    Student --- UC5
+
+    UC2 -. "<<extend>>" .-> UC1
+    UC1 -. "<<include>>" .-> UC5

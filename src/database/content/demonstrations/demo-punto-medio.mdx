@@ -1,0 +1,76 @@
+export const metadata = {
+  "id": "demo-punto-medio",
+  "type": "demostracion",
+  "title": "Demostración: Existencia y unicidad del punto medio",
+  "description": "Prueba de existencia y unicidad usando rigurosamente los axiomas de congruencia y orden.",
+  "parentTheorem": "lema-punto-medio",
+  "proofMethod": "constructivo",
+  "authors": ["hilbert"],
+  "tags": ["geometria", "congruencia", "orden"],
+  "layout": "split"
+};
+
+import { DemoPuntoMedio } from "@/boundary/components/diagrams/Demos/DemoPuntoMedio";
+
+<DemonstrationSection diagram={<DemoPuntoMedio />}>
+
+<Capitular letra="T" />odo <ConceptLink targetId="segmento" isDependency={false}>segmento</ConceptLink> admite exactamente un <ConceptLink targetId="lema-punto-medio" isDependency={false}>punto medio</ConceptLink> topológico. Lejos de asumir su existencia como un hecho natural, en geometría absoluta debemos demostrar rigurosamente que podemos encontrar un punto que divida al segmento en dos partes exactamente iguales usando solo las propiedades de incidencia, orden y congruencia.
+
+<Separador />
+
+<MedievalStep number={1} title="Existencia: Construcción auxiliar" target="step1">
+Para demostrar la existencia del punto medio del segmento <InteractiveElement target="segmentAB" color="carbon">$\overline{AB}$</InteractiveElement>, necesitamos una construcción auxiliar. Sea <InteractiveElement target="ladoAC" color="pizarra">$C$</InteractiveElement> un punto cualquiera no colineal con la recta $AB$.
+
+Usando el <ConceptLink targetId="axioma-congruencia-4" isDependency={true}>Axioma de transporte de ángulos (III-4)</ConceptLink>, transportamos el <InteractiveElement target="anguloA" color="terracota">$\angle CAB$</InteractiveElement> sobre el vértice $B$ en el semiplano opuesto, creando un nuevo <InteractiveElement target="anguloB" color="salvia">$\angle DBA$</InteractiveElement>. A continuación, por el <ConceptLink targetId="axioma-congruencia-1" isDependency={true}>Axioma de transporte de segmentos (III-1)</ConceptLink>, transportamos el <InteractiveElement target="ladoAC" color="pizarra">segmento $AC$</InteractiveElement> sobre el rayo $BD$ para encontrar un punto <InteractiveElement target="ladoBD" color="pizarra">$D$</InteractiveElement> tal que <InteractiveElement target="ladoAC" color="pizarra">$AC$</InteractiveElement> $\cong$ <InteractiveElement target="ladoBD" color="pizarra">$BD$</InteractiveElement>.
+
+Dado que $C$ y $D$ están en semiplanos opuestos respecto a la recta $AB$, el segmento <InteractiveElement target="ladoCD" color="pizarra">$CD$</InteractiveElement> corta a la recta $AB$ en un punto <InteractiveElement target="pointM" color="carbon">$M$</InteractiveElement>.
+</MedievalStep>
+
+<MedievalStep number={2} title="Congruencia de los triángulos mayores" target="step2">
+Consideremos primero los <InteractiveElement target="triangulo-cab" color="salvia">triángulos $\triangle CAB$</InteractiveElement> y <InteractiveElement target="triangulo-dba" color="salvia">$\triangle DBA$</InteractiveElement>. Tienen $AC \cong BD$, $\angle CAB \cong \angle DBA$, y el lado $AB$ común. Por el <ConceptLink targetId="axioma-congruencia-5" isDependency={true}>criterio LAL</ConceptLink>, ambos triángulos son congruentes. Esto implica que $CB \cong DA$.
+
+Ahora observemos los <InteractiveElement target="triangulo-cad" color="terracota">triángulos $\triangle CAD$</InteractiveElement> y <InteractiveElement target="triangulo-dbc" color="terracota">$\triangle DBC$</InteractiveElement>. Tienen $AC \cong BD$, el lado $CD$ en común, y $AD \cong BC$ (que acabamos de demostrar). Por el <ConceptLink targetId="congruencia-lll" isDependency={true}>criterio LLL</ConceptLink>, son congruentes. Esto nos demuestra que $\angle ACD \cong \angle BDC$.
+</MedievalStep>
+
+<MedievalStep number={3} title="El criterio ALA y el punto medio" target="step3">
+Finalmente, enfoquémonos en los <InteractiveElement target="triangulo-cam" color="terracota">pequeños triángulos</InteractiveElement> centrales <InteractiveElement target="triangulo-cam" color="terracota">$\triangle CAM$</InteractiveElement> y <InteractiveElement target="triangulo-dbm" color="salvia">$\triangle DBM$</InteractiveElement>.
+
+Tenemos:
+1. <InteractiveElement target="ladoAC" color="pizarra">$AC$</InteractiveElement> $\cong$ <InteractiveElement target="ladoBD" color="pizarra">$BD$</InteractiveElement> (por nuestra construcción inicial).
+2. <InteractiveElement target="anguloA" color="terracota">$\angle CAM$</InteractiveElement> $\cong$ <InteractiveElement target="anguloB" color="salvia">$\angle DBM$</InteractiveElement> (son exactamente los mismos ángulos que $\angle CAB$ y $\angle DBA$).
+3. $\angle ACM \cong \angle BDM$ (que dedujimos en el paso anterior de $\angle ACD \cong \angle BDC$).
+
+Por el <ConceptLink targetId="congruencia-ala" isDependency={true}>criterio ALA</ConceptLink>, $\triangle CAM \cong \triangle DBM$. Al ser triángulos congruentes, sus lados correspondientes también lo son. En particular, <InteractiveElement target="segmentAM" color="terracota">$AM$</InteractiveElement> $\cong$ <InteractiveElement target="segmentMB" color="terracota">$BM$</InteractiveElement>.
+
+<Formula>
+  $$ \overline{AM} \cong \overline{MB} $$
+</Formula>
+
+¡El punto <InteractiveElement target="pointM" color="terracota">$M$</InteractiveElement> divide al <InteractiveElement target="segmentAB" color="carbon">segmento</InteractiveElement> exactamente por la mitad! Con esto hemos demostrado **rigurosamente** su existencia.
+</MedievalStep>
+
+<MedievalStep number={4} title="Unicidad por contradicción" target="step4">
+Supongamos, por contradicción, que existe un segundo punto medio <InteractiveElement target="pointMPrime" color="salvia">$M'$</InteractiveElement> distinto de <InteractiveElement target="pointM" color="terracota">$M$</InteractiveElement>, de forma que $AM' \cong M'B$.
+
+Por el <ConceptLink targetId="axioma-orden-3" isDependency={true}>Axioma de Orden II-3</ConceptLink>, si <InteractiveElement target="pointM" color="terracota">$M$</InteractiveElement> $\neq$ <InteractiveElement target="pointMPrime" color="salvia">$M'$</InteractiveElement>, uno de los dos debe estar estrictamente entre $A$ y el otro. Supongamos, sin pérdida de generalidad, que $M$ está entre $A$ y $M'$. Esto significaría que la longitud de $AM$ es estrictamente menor que la de $AM'$. 
+
+Pero sabemos que $AM \cong MB$ y $AM' \cong M'B$. Dado que el punto $M$ estaría más lejos de $B$ que $M'$, tendríamos que $MB > M'B$. Esto generaría un absurdo: $AM$ sería al mismo tiempo menor y mayor (en términos de congruencia de partes) que las mitades correspondientes. 
+</MedievalStep>
+
+<MedievalStep number={5} title="Conclusión" target="step5">
+En definitiva, sobre la semirrecta $\overrightarrow{AB}$, el <ConceptLink targetId="axioma-congruencia-1" isDependency={true}>Axioma de transporte (III-1)</ConceptLink> solo admite un punto a una distancia de la mitad, por lo que el <InteractiveElement target="pointMPrime" color="salvia">punto falso $M'$</InteractiveElement> se ve forzado a coincidir con <InteractiveElement target="pointM" color="terracota">$M$</InteractiveElement>.
+
+<Formula>
+  $$ M = M' $$
+</Formula>
+
+Por tanto, el <ConceptLink targetId="lema-punto-medio" isDependency={false}>punto medio</ConceptLink> es estrictamente único. $\blacksquare$
+</MedievalStep>
+
+<Separador />
+
+### Análisis
+
+La existencia del <ConceptLink targetId="lema-punto-medio" isDependency={false}>punto medio</ConceptLink> general en la geometría absoluta se puede probar constructivamente sin recurrir a nociones circulares, descansando únicamente sobre los criterios de congruencia (como hemos visto, LAL, LLL y ALA). Su **unicidad** queda firmemente establecida gracias a los axiomas de <ConceptLink targetId="axioma-orden-3" isDependency={true}>orden</ConceptLink> y el de <ConceptLink targetId="axioma-congruencia-1" isDependency={true}>transporte de segmentos</ConceptLink>, garantizando que cada segmento posee un y solo un centro geométrico perfecto.
+
+</DemonstrationSection>

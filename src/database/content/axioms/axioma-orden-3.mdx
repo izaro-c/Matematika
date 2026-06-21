@@ -1,0 +1,46 @@
+export const metadata = {
+  "id": "axioma-orden-3",
+  "type": "axioma",
+  "title": "Axioma II-3 (Orden)",
+  "description": "Dados tres puntos distintos sobre una recta, exactamente uno de ellos está entre los otros dos.",
+  "statement": "Si A, B, C son tres puntos distintos sobre una misma recta, entonces se cumple exactamente una de las relaciones: A * B * C, A * C * B, o B * A * C.",
+  "authors": ["hilbert"],
+  "hasSimulation": true
+};
+
+import { Order3 } from '@/boundary/components/diagrams/Axiomas/Order3';
+export const Simulation = Order3;
+import { InteractiveElement } from "@/boundary/components/ui/VisualBind";
+
+<Capitular letra="D" />ados tres <ConceptLink targetId="punto" isDependency={false}>puntos</ConceptLink> distintos que descansan sobre una misma <ConceptLink targetId="recta" isDependency={false}>recta</ConceptLink>, siempre habrá exactamente uno que yace atrapado entre los otros dos. Este <ConceptLink targetId="axioma" isDependency={false}>axioma</ConceptLink> consolida la linealidad perfecta y absoluta de la recta.
+
+<Separador />
+
+### Enunciado Formal
+
+<Formula>
+  $$
+  A, B, C \text{ colineales} \implies \text{solo una cierta: }
+  \begin{cases}
+    A * B * C \\
+    \lor \\
+    A * C * B \\
+    \lor \\
+    B * A * C
+  \end{cases}
+  $$
+</Formula>
+
+<Separador />
+
+### Discusión
+
+Imagina tres puntos <InteractiveElement target="p1" color="terracota">A</InteractiveElement>, <InteractiveElement target="p2" color="terracota">B</InteractiveElement> y <InteractiveElement target="p3" color="terracota">C</InteractiveElement> sueltos en una <InteractiveElement target="line" color="carbon">recta</InteractiveElement>. Este <ConceptLink targetId="postulado" isDependency={false}>postulado</ConceptLink> ordena el caos y establece una jerarquía estricta: no pueden cruzarse extrañamente ni formar un bucle temporal o espacial. Inevitablemente, uno de los tres será el punto central, y los otros dos quedarán posicionados como los extremos.
+
+Esta propiedad, que parece evidente en nuestro día a día, es la piedra angular matemática que nos permite construir objetos rigurosos como el <ConceptLink targetId="segmento" isDependency={false}>segmento</ConceptLink> (los puntos interiores a dos extremos) y la <ConceptLink targetId="semirrecta" isDependency={false}>semirrecta</ConceptLink> (los puntos proyectados hacia un solo lado).
+
+<Separador />
+
+### Observaciones
+
+- Para comprender verdaderamente la necesidad de escribir este axioma, piensa en una <ConceptLink targetId="circunferencia" isDependency={false}>circunferencia</ConceptLink>. Si tomas tres puntos en un anillo, no hay un único punto "central"; puedes ir de cualquiera a cualquiera en ambas direcciones rodeando el anillo. Este axioma asegura que nuestras rectas no son anillos cerrados, sino hilos abiertos y estrictamente rectilíneos.

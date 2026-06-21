@@ -98,7 +98,7 @@ body {
 
 .bg-arts-and-crafts {
   background-color: var(--theme-lienzo);
-  background-image: url('/arts_and_crafts_bg.png');
+  background-image: url('/images/bg-arts-crafts-1.png');
   background-repeat: repeat;
   background-size: 800px;
   background-attachment: fixed;

@@ -1,0 +1,132 @@
+[
+  {
+    "id": "TC-1.1",
+    "useCase": "UC-1: Buscar Nodo (Omnibar)",
+    "description": "Búsqueda con término normal que existe en el índice principal.",
+    "equivalenceClasses": "Query: Cadena alfanumérica válida. DB: Existe en ContentStore.",
+    "preconditions": "Componente SearchOmnibar renderizado y estado isSearchOpen = true.",
+    "input": "Query: 'pitagoras'",
+    "expectedOutput": "Muestra resultados tipificados como 'teorema' o similares en la lista.",
+    "expectedPostconditions": "Estado de búsqueda sigue activo, esperando interacción."
+  },
+  {
+    "id": "TC-1.3",
+    "useCase": "UC-1: Buscar Nodo (Omnibar)",
+    "description": "Búsqueda con término inválido que no existe.",
+    "equivalenceClasses": "Query: Cadena extraña. DB: Inexistente en todas partes.",
+    "preconditions": "Componente SearchOmnibar renderizado.",
+    "input": "Query: 'xxyyzz_inexistente'",
+    "expectedOutput": "Mensaje EmptyState: 'Sin resultados para...'",
+    "expectedPostconditions": "Se informa al usuario de la ausencia de resultados sin crashear."
+  },
+  {
+    "id": "TC-2.1",
+    "useCase": "UC-2: Renderizar Nodo (MDX + UI)",
+    "description": "Renderizar exitosamente la ruta de un teorema existente.",
+    "equivalenceClasses": "URL_ID: String de Teorema Válido.",
+    "preconditions": "ContentStore inicializado.",
+    "input": "Navegación a /teorema/tales",
+    "expectedOutput": "Se monta MathProvider y MDXComponent correctamente.",
+    "expectedPostconditions": "UI Muestra gráficas y contenido cargado."
+  },
+  {
+    "id": "TC-2.2",
+    "useCase": "UC-2: Renderizar Nodo (MDX + UI)",
+    "description": "Intento de renderizar ruta rota.",
+    "equivalenceClasses": "URL_ID: Inexistente.",
+    "preconditions": "ContentStore inicializado.",
+    "input": "Navegación a /teorema/falso",
+    "expectedOutput": "Pantalla genérica de construcción o error 404.",
+    "expectedPostconditions": "No corrompe el store local."
+  },
+  {
+    "id": "TC-3.1",
+    "useCase": "UC-3: Desplegar Glosario / Panel Lateral",
+    "description": "Abrir un término existente en el diccionario del glosario.",
+    "equivalenceClasses": "Term_ID: Existente en diccionario local.",
+    "preconditions": "GlossaryStore inicializado con diccionario cargado.",
+    "input": "Click en <ConceptLink to=\"axioma\">",
+    "expectedOutput": "Se abre Sidebar Lateral con definición 'Axioma'.",
+    "expectedPostconditions": "isGlossaryOpen = true en NavigationStore."
+  },
+  {
+    "id": "TC-3.2",
+    "useCase": "UC-3: Desplegar Glosario / Panel Lateral",
+    "description": "Abrir término inexistente.",
+    "equivalenceClasses": "Term_ID: No existe.",
+    "preconditions": "GlossaryStore inicializado.",
+    "input": "Click en <ConceptLink to=\"inexistente\">",
+    "expectedOutput": "Redirige a /construccion/ o muestra error de término faltante.",
+    "expectedPostconditions": "El sidebar no se bloquea permanentemente."
+  },
+  {
+    "id": "TC-4.1",
+    "useCase": "UC-4: Interactuar con Simulación",
+    "description": "Drag válido en componente geométrico que modifica contexto.",
+    "equivalenceClasses": "Event: Drag cruzando umbral de validación.",
+    "preconditions": "MathProvider activo e inicializado con variables.",
+    "input": "OnDrag sobre punto 'A' moviéndolo +5 unidades.",
+    "expectedOutput": "Se dispara setVariable y reactividad visual inmediata.",
+    "expectedPostconditions": "La variable del contexto cambia su estado a 'highlight'."
+  },
+  {
+    "id": "TC-5.1",
+    "useCase": "UC-5: Actualizar Progreso Local",
+    "description": "Marcar un nodo como leído por primera vez.",
+    "equivalenceClasses": "Target_ID: Nuevo ID, Acción: markAsRead.",
+    "preconditions": "ProgressStore inicializado.",
+    "input": "markAsRead('teorema_pitagoras')",
+    "expectedOutput": "Añadido a array in-memory.",
+    "expectedPostconditions": "Persistido asíncronamente en localStorage."
+  },
+  {
+    "id": "TC-6.1",
+    "useCase": "UC-6: Escribir Contenido MDX (Editor Workflow)",
+    "description": "Parsear frontmatter válido según schema de Zod.",
+    "equivalenceClasses": "Frontmatter: Válido.",
+    "preconditions": "El CLI está parseando ficheros.",
+    "input": "Frontmatter con 'title', 'id', 'type' correctos.",
+    "expectedOutput": "Zod parse exitoso sin errores.",
+    "expectedPostconditions": "Metadata disponible en índice general."
+  },
+  {
+    "id": "TC-7.1",
+    "useCase": "UC-7: Programar Demo JSXGraph",
+    "description": "Inicializar board JSXGraph sin configuraciones corruptas.",
+    "equivalenceClasses": "BoardConfig: BoundingBox por defecto.",
+    "preconditions": "Contenedor de react montado en DOM.",
+    "input": "Componente JSXGraph invocado con config vacía.",
+    "expectedOutput": "El board se inicializa renderizando ejes si es requerido.",
+    "expectedPostconditions": "Board instance devuelto a React ref exitosamente."
+  },
+  {
+    "id": "TC-8.1",
+    "useCase": "UC-8: Generar contentIndex.json",
+    "description": "Generar índice omitiendo archivos irrelevantes.",
+    "equivalenceClasses": "FS_Structure: Contiene .mdx válidos y .txt inválidos.",
+    "preconditions": "El script de generación es invocado.",
+    "input": "Directorio con ficheros mezclados.",
+    "expectedOutput": "El JSON de salida solo contiene metadata de .mdx.",
+    "expectedPostconditions": "El fichero resultante es parseable por JSON."
+  },
+  {
+    "id": "TC-9.1",
+    "useCase": "UC-9: Validar Grafo y Enlaces",
+    "description": "Comprobar el grafo de dependencias y concept links sanos.",
+    "equivalenceClasses": "Requires_List: Válidos. ConceptLink_Tags: Válidos.",
+    "preconditions": "contentIndex.json generado previamente.",
+    "input": "Ficheros MDX perfectamente referenciados.",
+    "expectedOutput": "El script de validación termina sin emitir errores en stdout.",
+    "expectedPostconditions": "Código de salida del script = 0."
+  },
+  {
+    "id": "TC-9.2",
+    "useCase": "UC-9: Validar Grafo y Enlaces",
+    "description": "Script detecta referencia rota y detiene el build.",
+    "equivalenceClasses": "Requires_List: Contiene dependencia huérfana.",
+    "preconditions": "contentIndex.json contiene un nodo con una dependencia que no figura en el índice.",
+    "input": "Fichero MDX requiriendo 'teorema_inexistente'.",
+    "expectedOutput": "Script arroja 'Missing dependency' o advertencia de orfandad.",
+    "expectedPostconditions": "Código de salida del script != 0."
+  }
+]

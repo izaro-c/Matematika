@@ -16,7 +16,6 @@ Valida los datos históricos y biográficos de las figuras matemáticas.
 | `country` | `string` | ❌ | - |
 | `description` | `string` | ✅ | - |
 | `image` | `string` | ❌ | - |
-| `links` | `array` | ✅ | - |
 
 ---
 
@@ -34,18 +33,14 @@ Estructura principal de la enciclopedia. Valida el enunciado formal, dependencia
 | `color` | `string` | ❌ | - |
 | `branch` | `string` | ❌ | - |
 | `branches` | `array` | ✅ | - |
-| `mathematicians` | `array` | ✅ | - |
+| `authors` | `array` | ✅ | - |
 | `lemmas` | `array` | ✅ | - |
 | `corollaries` | `array` | ✅ | - |
 | `demos` | `array` | ✅ | - |
-| `demostraciones` | `array` | ✅ | - |
-| `requires` | `array` | ✅ | IDs de definiciones que este teorema usa formalmente (grafo de dependencia) |
 | `examples` | `array` | ✅ | IDs de ejemplos resueltos asociados |
 | `exercises` | `array` | ✅ | IDs de ejercicios propuestos asociados |
 | `parentTheorem` | `string` | ❌ | - |
-| `tags` | `array` | ✅ | - |
 | `difficulty` | `enum([básico, intermedio, avanzado])` | ❌ | - |
-| `links` | `array` | ✅ | - |
 
 ---
 
@@ -59,9 +54,7 @@ Agrupa múltiples teoremas y definiciones bajo una misma categoría de aprendiza
 | `type` | `literal` | ✅ | - |
 | `title` | `string` | ✅ | - |
 | `description` | `string` | ❌ | - |
-| `tags` | `array` | ✅ | - |
 | `difficulty` | `enum([básico, intermedio, avanzado])` | ❌ | - |
-| `links` | `array` | ✅ | - |
 
 ---
 
@@ -79,8 +72,6 @@ Valida la estructura de una demostración formal de un teorema,  incluyendo el m
 | `lemmas` | `array` | ✅ | - |
 | `proofMethod` | `enum([directo, contradiccion, induccion, contraposicion, constructivo, geometrico, exhaustivo, reduccion])` | ❌ | - |
 | `authors` | `array` | ✅ | - |
-| `tags` | `array` | ✅ | - |
-| `links` | `array` | ✅ | - |
 | `layout` | `enum([split, text])` | ❌ | - |
 | `dependencias` | `array` | ✅ | - |
 
@@ -97,11 +88,8 @@ Valida axiomas y definiciones base. Incluye el enunciado matemático (`statement
 | `title` | `string` | ✅ | - |
 | `description` | `string` | ✅ | - |
 | `statement` | `string` | ❌ | - |
-| `tags` | `array` | ✅ | - |
 | `authors` | `array` | ✅ | - |
 | `color` | `string` | ❌ | - |
-| `usedBy` | `array` | ✅ | IDs de teoremas que usan esta definición |
-| `links` | `array` | ✅ | - |
 
 ---
 
@@ -116,10 +104,7 @@ Un ejemplo concreto que ilustra cómo aplicar un teorema o definición. Incluye 
 | `title` | `string` | ✅ | - |
 | `description` | `string` | ❌ | - |
 | `relatedTheorem` | `string` | ❌ | ID del teorema o definición principal que ilustra |
-| `requires` | `array` | ✅ | IDs de definiciones que usa |
-| `tags` | `array` | ✅ | - |
 | `difficulty` | `enum([básico, intermedio, avanzado])` | ❌ | - |
-| `links` | `array` | ✅ | - |
 
 ---
 
@@ -134,11 +119,8 @@ Un ejercicio con enunciado y solución oculta que el estudiante puede revelar.
 | `title` | `string` | ✅ | - |
 | `description` | `string` | ❌ | - |
 | `relatedTheorem` | `string` | ❌ | ID del teorema o definición que pone en práctica |
-| `requires` | `array` | ✅ | - |
-| `tags` | `array` | ✅ | - |
 | `difficulty` | `enum([básico, intermedio, avanzado])` | ❌ | - |
 | `hint` | `string` | ❌ | Pista visible antes de revelar la solución |
-| `links` | `array` | ✅ | - |
 
 ---
 
@@ -151,13 +133,30 @@ Un ejercicio con enunciado y solución oculta que el estudiante puede revelar.
 | `title` | `string` | ✅ | - |
 | `description` | `string` | ✅ | - |
 | `statement` | `string` | ❌ | - |
-| `tags` | `array` | ✅ | - |
 | `authors` | `array` | ✅ | - |
-| `links` | `array` | ✅ | - |
 
 ---
 
-## ModelSchema - Esquema para Modelos (Axiom Sets)
+## AxiomaticSystemSchema - Esquema para Sistemas Axiomáticos
+
+Define un conjunto de axiomas que constituyen una teoría formal. Los modelos son estructuras concretas que satisfacen estos axiomas.
+
+| Campo | Tipo | Requerido | Descripción |
+|-------|------|-----------|-------------|
+| `id` | `string` | ❌ | - |
+| `type` | `literal` | ✅ | - |
+| `title` | `string` | ✅ | - |
+| `description` | `string` | ✅ | - |
+| `axiomas` | `array` | ✅ | IDs de los axiomas que forman parte de este sistema |
+| `models` | `array` | ✅ | IDs de los modelos que satisfacen este sistema |
+| `authors` | `array` | ✅ | IDs de matemáticos asociados a este sistema |
+| `hasSimulation` | `boolean` | ❌ | - |
+
+---
+
+## ModelSchema - Esquema para Modelos (Estructuras Concretas)
+
+Un modelo es una estructura matemática concreta que satisface los axiomas de un sistema axiomático. Puede tener un diagrama asociado.
 
 | Campo | Tipo | Requerido | Descripción |
 |-------|------|-----------|-------------|
@@ -165,8 +164,10 @@ Un ejercicio con enunciado y solución oculta que el estudiante puede revelar.
 | `type` | `literal` | ✅ | - |
 | `title` | `string` | ✅ | - |
 | `description` | `string` | ❌ | - |
-| `axiomas` | `array` | ✅ | - |
-| `tags` | `array` | ✅ | - |
+| `satisfies` | `string` | ✅ | ID del sistema axiomático que este modelo satisface |
+| `axioms_verified` | `array` | ✅ | IDs de los axiomas verificados en este modelo |
+| `hasDiagram` | `boolean` | ❌ | Indica si este modelo tiene un diagrama interactivo asociado |
+| `hasSimulation` | `boolean` | ❌ | - |
 
 ---
 
@@ -182,9 +183,7 @@ Página propia que muestra cómo un concepto matemático aparece en una discipli
 | `description` | `string` | ❌ | - |
 | `concept` | `string` | ❌ | ID del teorema o concepto matemático que ilustra |
 | `domain` | `string` | ❌ | Ámbito real: 'ingeniería', 'medicina', 'economía', 'naturaleza', 'arte', etc. |
-| `tags` | `array` | ✅ | - |
 | `difficulty` | `enum([básico, intermedio, avanzado])` | ❌ | - |
-| `links` | `array` | ✅ | - |
 
 ---
 
@@ -200,7 +199,6 @@ Rutas de aprendizaje narrativas a través del grafo.
 | `subtitle` | `string` | ❌ | - |
 | `description` | `string` | ✅ | - |
 | `requiredNodes` | `array` | ✅ | - |
-| `links` | `array` | ✅ | - |
 
 ---
 

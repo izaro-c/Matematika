@@ -1,0 +1,23 @@
+classDiagram
+    class VistaTeorema {
+        <<Boundary>>
+        +String render()
+    }
+    class GestoreSistema {
+        <<Control>>
+        +fetchNodo()
+    }
+    class ArchitetturaGrafo {
+        <<Control>>
+        +valuta()
+    }
+    class NodoLogico {
+        <<Entity>>
+        +String id
+        +String body
+    }
+
+    VistaTeorema --> GestoreSistema
+    VistaTeorema --> ArchitetturaGrafo
+    GestoreSistema --> NodoLogico
+    ArchitetturaGrafo --> NodoLogico

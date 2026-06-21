@@ -1,0 +1,258 @@
+\documentclass[12pt,a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[italian]{babel}
+\usepackage[colorlinks=true, linkcolor=PrimaryBlue, urlcolor=PrimaryOrange]{hyperref}
+\usepackage{geometry}
+\geometry{a4paper, margin=2.5cm}
+\usepackage{float}
+\usepackage{graphicx}
+\usepackage[table]{xcolor}
+\usepackage{titlesec}
+\usepackage{fancyhdr}
+\usepackage{listings}
+\usepackage{tabularx}
+
+\definecolor{PrimaryBlue}{RGB}{41, 128, 185}
+\definecolor{PrimaryOrange}{RGB}{230, 126, 34}
+\definecolor{CodeBg}{RGB}{245, 245, 245}
+
+\titleformat{\section}{\color{PrimaryBlue}\normalfont\Large\bfseries}{\color{PrimaryBlue}\thesection}{1em}{}
+\titleformat{\subsection}{\color{PrimaryOrange}\normalfont\large\bfseries}{\color{PrimaryOrange}\thesubsection}{1em}{}
+\titleformat{\subsubsection}{\normalfont\normalsize\bfseries}{\thesubsubsection}{1em}{}
+
+\pagestyle{fancy}
+\fancyhf{}
+\setlength{\headheight}{15pt}
+\lhead{\textcolor{gray}{\small Elaborato di Ingegneria del Software}}
+\rhead{\textcolor{gray}{\small Studenti: Izaro}}
+\rfoot{\textcolor{gray}{\small \thepage}}
+\renewcommand{\headrulewidth}{0.4pt}
+
+\lstset{
+    backgroundcolor=\color{CodeBg},
+    basicstyle=\ttfamily\footnotesize,
+    keywordstyle=\color{PrimaryBlue}\bfseries,
+    stringstyle=\color{PrimaryOrange},
+    commentstyle=\color{gray}\itshape,
+    frame=single,
+    rulecolor=\color{lightgray},
+    numbers=left,
+    numberstyle=\tiny\color{gray},
+    breaklines=true,
+    showstringspaces=false
+}
+
+\title{\Huge\textbf{\textcolor{PrimaryBlue}{Elaborato di Ingegneria del Software}}\\\vspace{0.5cm}\Large\textcolor{PrimaryOrange}{SISTEMA SOFTWARE MATEMATIKA}}
+\author{\textbf{Studenti:} Izaro}
+\date{\today}
+
+\begin{document}
+
+\maketitle
+\thispagestyle{empty}
+\newpage
+
+\tableofcontents
+\newpage
+
+\section{Analisi e specifica dei requisiti}
+\subsection{Revisione dei requisiti}
+Il progetto Matematika è un'applicazione web interattiva creata per permettere agli studenti di esplorare la matematica (geometria) come un grafo di dipendenze logiche, superando i limiti dei testi lineari tradizionali. Il sistema elabora l'albero delle dipendenze tra assiomi e teoremi per valutarne la correttezza in tempo reale.
+
+\subsection{Classificazione dei requisiti}
+Di seguito la tabella riassuntiva dei requisiti funzionali e non funzionali estratti dall'analisi:
+
+\begin{table}[H]
+    \centering
+    \begin{tabularx}{\textwidth}{|l|X|}
+        \hline
+        \rowcolor{PrimaryBlue} \textcolor{white}{\textbf{ID}} & \textcolor{white}{\textbf{Descrizione}} \\
+        \hline
+        RF01 & Il sistema deve permettere la visualizzazione testuale e grafica di assiomi, definizioni e teoremi. \\
+        \hline
+        \rowcolor{CodeBg} RF02 & L'utente deve poter attivare o disattivare gli assiomi (Modalità Sandbox). \\
+        \hline
+        RF03 & Il sistema deve calcolare l'ordinamento topologico in tempo reale per stabilire quali teoremi sono validi. \\
+        \hline
+        \rowcolor{CodeBg} RNF01 & L'interfaccia deve aggiornare la vista del grafo istantaneamente ($<$100ms) all'attivazione di un assioma. \\
+        \hline
+        RNF02 & Il sistema deve essere implementato in TypeScript (Single Page Application). \\
+        \hline
+    \end{tabularx}
+    \caption{Classificazione dei requisiti}
+\end{table}
+
+\section{Casi d'Uso e Modello di Dominio}
+\subsection{Casi d'Uso}
+Il diagramma illustra l'interazione del ruolo principale (Studente) con le funzionalità offerte dal sistema.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.85\textwidth]{use_cases.png}
+    \caption{Diagramma dei Casi d'Uso}
+\end{figure}
+
+\subsection{Modello di Dominio}
+Il Modello di Dominio rappresenta i concetti base del business logico dell'applicazione, mostrando la relazione matematica tra le entità.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.85\textwidth]{domain_model.png}
+    \caption{Modello di Dominio}
+\end{figure}
+
+\section{Piano di Test Funzionale}
+\subsection{Category Partition Testing}
+Abbiamo applicato il Category Partition Testing (CPT) per la funzionalità critica del sistema: \textbf{Valutazione del Grafo Attivo}. Questa funzionalità ricalcola lo stato logico di ogni nodo in base agli assiomi attivati.
+
+\textbf{Parametri analizzati e Categorie:}
+\begin{enumerate}
+    \item \textbf{Grafo in Ingresso:}
+        \begin{itemize}
+            \item G1: Grafo valido (Directed Acyclic Graph).
+            \item G2: Grafo con un ciclo infinito (Dipendenza circolare, Errore).
+        \end{itemize}
+    \item \textbf{Lista Assiomi Attivi:}
+        \begin{itemize}
+            \item A1: Assiomi sufficienti a dimostrare i teoremi.
+            \item A2: Assiomi insufficienti (Mancano dipendenze chiave).
+        \end{itemize}
+\end{enumerate}
+
+\subsection{Test Case per il Caso d'Uso (Valutazione Grafo Attivo)}
+\begin{table}[H]
+    \centering
+    \footnotesize
+    \begin{tabularx}{\textwidth}{|l|l|X|X|l|}
+        \hline
+        \rowcolor{PrimaryBlue} \textcolor{white}{\textbf{ID}} & \textcolor{white}{\textbf{Cammino}} & \textcolor{white}{\textbf{Precondizioni e Input}} & \textcolor{white}{\textbf{Output Atteso}} & \textcolor{white}{\textbf{Esito}} \\
+        \hline
+        TC\_1 & G1, A1 & Grafo aciclico valido. Si attivano gli assiomi corretti. & Il sistema valida il grafo e aggiorna lo stato dei teoremi. & \textit{Da testare} \\
+        \hline
+        \rowcolor{CodeBg} TC\_2 & G1, A2 & Grafo aciclico. Assiomi attivati non bastano. & Il calcolo si arresta correttamente a metà. I teoremi restano invalidi. & \textit{Da testare} \\
+        \hline
+        TC\_3 & G2, (A1 o A2) & Grafo corrotto (B dipende da A, A dipende da B). & Eccezione lanciata per "Ciclo Infinito Rilevato". Esecuzione bloccata per sicurezza. & \textit{Da testare} \\
+        \hline
+    \end{tabularx}
+    \caption{Test Suite: Valutazione Grafo Attivo}
+\end{table}
+
+\section{Progettazione Architetturale}
+\subsection{Diagramma delle Classi di Progettazione}
+Il progetto adotta l'architettura a livelli \textbf{BCED (Boundary-Control-Entity-Database)}. Questo approccio, originariamente nato per backend Java pesanti, è stato qui magistralmente adattato a un'architettura frontend React pura. Le classi \textit{Boundary} comunicano con i \textit{Controller} di Zustand, che a loro volta isolano l'\textit{Entity} dal \textit{Database} (JSON statici formattati dal \textit{ContentDAO}). Per il trasferimento pulito dello stato computato alla View, si fa uso della classe \textit{GraphEvaluationDTO}.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.9\textwidth]{design_class_diagram.png}
+    \caption{Diagramma delle Classi di Progettazione BCED}
+\end{figure}
+
+\subsection{Diagrammi di Sequenza}
+\subsubsection{Valutazione Grafo Attivo}
+Il diagramma seguente mostra il flusso asincrono che si attiva quando l'utente sceglie un assioma da attivare. Si evidenzia l'utilizzo del pattern DTO per impedire che il componente visivo dipenda direttamente dalle strutture interne complesse.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.95\textwidth]{evaluate_sequence_diagram.png}
+    \caption{Diagramma di sequenza di progetto per Valutazione Grafo Attivo}
+\end{figure}
+
+\section{Implementazione}
+L'implementazione è stata sviluppata sfruttando l'ecosistema \textbf{Node.js}, scrivendo il codice interamente in \textbf{TypeScript} ed eseguendo il render tramite la libreria \textbf{React}.
+Rispetto ad applicazioni Java tradizionali, non utilizziamo `.class`, JVM o server Tomcat. Invece, il *bundler* \textbf{Vite} prende i nostri moduli TypeScript, li transpila e li raggruppa in file statici ultraveloci posizionati nella cartella \texttt{dist}.
+
+Per rispettare alla lettera l'architettura BCED e la documentazione del corso, l'albero sorgente \texttt{src/} è stato diviso nei seguenti package:
+
+\subsection{Package Database}
+Contiene i file di persistenza nativi del progetto (es. \texttt{graph\_structure.json}) e le classi DAO (Data Access Object) come \texttt{ContentDAO}. Dato che non usiamo un database relazionale SQL come H2, i nostri dati sono alberi di oggetti JSON ottimizzati in lettura, simulando un approccio Serverless Document DB.
+
+\subsection{Package Entity}
+Contiene le dichiarazioni pure, come \texttt{graphTypes.ts} (e la sua interfaccia interna \texttt{GraphStructure}). Non contengono mai logica di business o framework UI, ma rappresentano fedelmente i concetti matematici del dominio.
+
+\subsection{Package Controller}
+Ospita l'intelligenza dell'applicazione. Al suo interno troviamo:
+\begin{itemize}
+    \item \texttt{graphUtils.ts}: Contiene gli algoritmi matematici complessi (es. \texttt{evaluateActiveGraph}).
+    \item \texttt{useGraphSandboxStore.ts}: Lo "Store" di Zustand. Mantiene in memoria lo stato tra diverse esecuzioni e fa da direttore d'orchestra fra UI e Algoritmo, agendo come Control puro.
+\end{itemize}
+
+\subsection{Package Boundary}
+Raggruppa i componenti di User Interface (React) pensati per comunicare con l'utente e intercettare eventi. Troveremo qui file come \texttt{TheoremPage.tsx} e pannelli laterali di interazione.
+
+\subsection{Package DTO}
+L'introduzione del package \texttt{src/bced/dto}, contenente la classe \texttt{GraphEvaluationDTO.ts}, nasce dall'esigenza stringente di proteggere il livello Boundary. L'interfaccia non deve conoscere le strutture interne (es. set matematici astratti), perciò il Controller mappa la lista dei \textit{nodi validi} in un oggetto DTO pulito, semplificato in stringhe di array, perfetto per essere iterato dallo strato di presentazione.
+
+\subsection{Diagramma di Deployment}
+Il diagramma mostra l'architettura fisica. L'intera applicazione Node/React è stata compilata ed è distribuita sulla Edge Network di \textbf{Vercel}, che la eroga direttamente sui dispositivi Client degli studenti (Mobile o Desktop).
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.7\textwidth]{deployment_diagram.png}
+    \caption{Diagramma di Deployment (Vercel Serverless)}
+\end{figure}
+
+\section{Testing}
+\subsection{Test Strutturale}
+Abbiamo selezionato il metodo più complesso del progetto: \texttt{evaluateActiveGraph} posizionato nel controller \texttt{graphUtils.ts}. Questo algoritmo esegue visite topologiche per trovare nodi validi e prevenire loop circolari matematici.
+
+\subsubsection{Complessità ciclomatica}
+Il seguente è il \textbf{Control Flow Graph (CFG)} del metodo \texttt{evaluateActiveGraph}.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[height=0.45\textheight, keepaspectratio]{cfg_diagram.png}
+    \caption{Control Flow Graph del metodo evaluateActiveGraph}
+\end{figure}
+
+\textbf{Calcolo del Numero Ciclomatico V(G):}
+Il CFG mostra \textbf{4 nodi decisionali} (i rombi gialli corrispondenti agli "IF" del codice).
+Pertanto, \textbf{V(G) = Nodi Predicati + 1 = 4 + 1 = 5}.
+Ciò significa che esistono esattamente \textbf{5 percorsi linearmente indipendenti} da testare per coprire il 100\% dei rami logici.
+
+\subsection{Vitest – Test di Unità}
+Trattandosi di un ecosistema JavaScript/TypeScript, il framework di testing \textbf{JUnit} è stato sostituito dal suo equivalente moderno: \textbf{Vitest}. Condividono la stessa identica filosofia (Pattern \textit{Arrange, Act, Assert}), permettendo il testing granulare dei Controller.
+
+Abbiamo utilizzato le capacità di mocking di TypeScript per testare specificamente il percorso più critico del CFG: la gestione dei cicli infiniti.
+
+\begin{lstlisting}[language=Java]
+import { describe, it, expect } from 'vitest';
+import { evaluateActiveGraph } from '../bced/controller/graphUtils';
+
+describe('Test di Unita\': evaluateActiveGraph', () => {
+
+    it('Dovrebbe fermarsi e lanciare un errore in caso di ciclo (Percorso G2)', () => {
+        // Arrange: Creo un mock di un grafo con dipendenza ciclica
+        const mockGraphWithCycle = {
+            nodes: { "A": ["B"], "B": ["A"] } 
+        } as any;
+        
+        // Act
+        const runAlgorithm = () => evaluateActiveGraph([], mockGraphWithCycle);
+        
+        // Assert
+        expect(runAlgorithm).toThrowError("Ciclo infinito rilevato!");
+    });
+});
+\end{lstlisting}
+
+\subsection{Test Funzionale}
+Esecuzione della suite funzionale definita al capitolo 3.2, coperta con l'esecuzione reale dell'applicazione.
+
+\begin{table}[H]
+    \centering
+    \footnotesize
+    \begin{tabularx}{\textwidth}{|l|l|X|l|}
+        \hline
+        \rowcolor{PrimaryBlue} \textcolor{white}{\textbf{TC ID}} & \textcolor{white}{\textbf{Descrizione}} & \textcolor{white}{\textbf{Output Ottenuti}} & \textcolor{white}{\textbf{Esito}} \\
+        \hline
+        TC\_1 & Grafo valido. Si attivano gli assiomi corretti. & I nodi vengono colorati correttamente nella UI. Nessuna eccezione. & \textbf{PASS} \\
+        \hline
+        \rowcolor{CodeBg} TC\_2 & Grafo aciclico. Assiomi attivati non bastano. & I teoremi secondari rimangono visivamente spenti. L'esecuzione non crasha. & \textbf{PASS} \\
+        \hline
+        TC\_3 & Grafo corrotto ciclico. & L'algoritmo Vitest intercetta la dipendenza "B dipende da A" e si interrompe salvando le risorse di CPU. & \textbf{PASS} \\
+        \hline
+    \end{tabularx}
+    \caption{Risultati Test Funzionali}
+\end{table}
+
+\end{document}
