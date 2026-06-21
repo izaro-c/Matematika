@@ -1,0 +1,50 @@
+export const metadata = {
+  "id": "axioma-congruencia-5",
+  "type": "axioma",
+  "title": "Axioma III-5 (SAS / LAL)",
+  "description": "Si dos lados y el ángulo comprendido de un triángulo son congruentes a los de otro triángulo, entonces ambos triángulos son congruentes.",
+  "statement": "Dados los triángulos ABC y A'B'C', si AB ≅ A'B', AC ≅ A'C' y ∠BAC ≅ ∠B'A'C', entonces los triángulos son congruentes: todas las partes correspondientes son congruentes.",
+  "tags": ["geometria", "congruencia", "triangulos", "geometria-absoluta"],
+  "authors": ["hilbert"],
+  "hasSimulation": true,
+};
+
+import { SAS } from '@/boundary/components/diagrams/Axiomas/SAS';
+export const Simulation = SAS;
+import { InteractiveElement } from "@/boundary/components/ui/VisualBind";
+
+<Capitular letra="S" />
+i dos <InteractiveElement target="side1" color="terracota"><ConceptLink targetId="segmento" isDependency={false}>lados</ConceptLink></InteractiveElement> y el <InteractiveElement target="angle1" color="salvia"><ConceptLink targetId="angulo" isDependency={false}>ángulo</ConceptLink> comprendido</InteractiveElement> entre ellos de un <ConceptLink targetId="triangulo" isDependency={false}>triángulo</ConceptLink> son respectivamente <ConceptLink targetId="congruencia" isDependency={false}>congruentes</ConceptLink> a los de un segundo triángulo, entonces ambos triángulos son globalmente congruentes. Este poderoso <ConceptLink targetId="postulado" isDependency={false}>postulado</ConceptLink> constituye el célebre criterio LAL (Lado-Ángulo-Lado).
+
+<Separador />
+
+### Enunciado Formal
+
+<Formula>
+  $$
+  \begin{cases}
+    \overline{AB} \cong \overline{A'B'} \\
+    \land \\
+    \overline{AC} \cong \overline{A'C'} \\
+    \land \\
+    \angle BAC \cong \angle B'A'C'
+  \end{cases}
+  \implies \triangle ABC \cong \triangle A'B'C'
+  $$
+</Formula>
+
+<Separador />
+
+### Discusión
+
+El <ConceptLink targetId="axioma" isDependency={false}>axioma</ConceptLink> SAS (Side-Angle-Side) es el quinto y último axioma de congruencia, y posiblemente el más potente. Establece que, para determinar la congruencia de dos triángulos, no es necesario verificar todos los seis pares de partes correspondientes (tres lados y tres ángulos); basta con verificar dos lados y el ángulo entre ellos.
+
+La posición de este axioma en la teoría es peculiar: en la presentación de <ConceptLink targetId="euclides" isDependency={false}>Euclides</ConceptLink>, SAS era una <ConceptLink targetId="teorema" isDependency={false}>proposición</ConceptLink> (el <ConceptLink targetId="teorema-lal" isDependency={false}>teorema I-4</ConceptLink> de los *Elementos*), pero su "<ConceptLink targetId="demostracion" isDependency={false}>demostración</ConceptLink>" dependía de <ConceptLink targetId="superposicion" isDependency={false}>superponer</ConceptLink> figuras, un método no riguroso. <ConceptLink targetId="hilbert" isDependency={false}>Hilbert</ConceptLink>, al <ConceptLink targetId="sistema-axiomatico" isDependency={false}>axiomatizar</ConceptLink> la <ConceptLink targetId="geometria" isDependency={false}>geometría</ConceptLink>, reconoció que SAS no puede demostrarse a partir de los axiomas anteriores y debe postularse como axioma.
+
+Los otros criterios de congruencia (<ConceptLink targetId="teorema-congruencia-ala" isDependency={false}>ALA</ConceptLink>, <ConceptLink targetId="teorema-congruencia-lll" isDependency={false}>LLL</ConceptLink>, <ConceptLink targetId="teorema-congruencia-lla" isDependency={false}>LLA</ConceptLink>) se demuestran como teoremas a partir de SAS y los demás axiomas.
+
+<Separador />
+
+### Observaciones
+
+SAS es un axioma exclusivo de la <ConceptLink targetId={["sistema-absoluto", "geometria"]}>geometría absoluta</ConceptLink>. En geometrías no euclídeas, SAS sigue siendo válido porque no depende del <ConceptLink targetId={["axioma-paralelas-euclides", "postulado", "paralelas"]}>quinto postulado</ConceptLink>. Sin embargo, en <ConceptLink targetId="espacio-metrico" isDependency={false}>espacios métricos</ConceptLink> más generales, la noción de congruencia debe definirse de otra manera y SAS puede no cumplirse.

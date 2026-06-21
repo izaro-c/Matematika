@@ -1,0 +1,59 @@
+export const metadata = {
+  "id": "demo-desigualdad-triangular",
+  "type": "demostracion",
+  "title": "Demostración: Desigualdad triangular",
+  "description": "Demostración euclidiana clásica extendiendo uno de los lados para formar un triángulo isósceles.",
+  "tags": ["geometria", "triangulos", "desigualdades"],
+  "authors": ["euclides"],
+  "parentTheorem": "teorema-desigualdad-triangular",
+  "proofMethod": "directo",
+  "layout": "split"
+};
+
+import { DemoDesigualdadTriangular } from "@/boundary/components/diagrams/Teoremas/DemoDesigualdadTriangular";
+
+<DemonstrationSection diagram={<DemoDesigualdadTriangular />}>
+
+<Capitular letra="L" />a demostración euclidiana clásica de la <ConceptLink targetId="teorema-desigualdad-triangular" isDependency={false}>desigualdad triangular</ConceptLink> emplea un argumento constructivo riguroso: extiende un lado para formar un <ConceptLink targetId="teorema-triangulo-isosceles" isDependency={true}>triángulo isósceles</ConceptLink> auxiliar. Esto permite trasladar longitudes a ángulos correspondientes y, mediante la relación de orden entre ángulos y lados opuestos, concluir la desigualdad buscada.
+
+<Separador />
+
+<MedievalStep number={1} target="step1" title="El triángulo base">
+Consideremos un triángulo $\triangle ABC$ cualquiera de lados $a$, $b$ y $c$. Queremos demostrar que la longitud de un lado cualquiera (por ejemplo, $c$) es estrictamente menor que la suma de los otros dos lados: $b + a \gt c$.
+
+Dado que <InteractiveElement target="lado-ac" color="carbon">$AC$</InteractiveElement> es un segmento recto, por los <ConceptLink targetId="axioma-orden-3" isDependency={true}>Axiomas de Orden (II)</ConceptLink>, podemos prolongar el segmento $AC$ en línea recta más allá del vértice $C$ construyendo una semirrecta.
+</MedievalStep>
+
+<MedievalStep number={2} target="step2" title="Extensión del lado">
+Utilizando el <ConceptLink targetId="axioma-congruencia-1" isDependency={true}>Axioma de transporte de segmentos (III-1)</ConceptLink>, sobre esa semirrecta extendida construimos un segmento <InteractiveElement target="lado-cd" color="pizarra">$CD$</InteractiveElement> de tal forma que sea exactamente congruente con el segmento <InteractiveElement target="lado-bc" color="carbon">$BC$</InteractiveElement>. Por lo tanto, $CD \cong BC$, y al punto final lo llamaremos <InteractiveElement target="punto-d" color="carbon">$D$</InteractiveElement>. 
+
+De este modo, el segmento total $AD$ tiene una longitud combinada que, por suma de segmentos colineales, es igual a $AC + CD$, lo cual es equivalente a $b + a$.
+</MedievalStep>
+
+<MedievalStep number={3} target="step3" title="Triángulo isósceles auxiliar">
+Conectamos los vértices $B$ y $D$ mediante un <InteractiveElement target="lado-bd" color="salvia">nuevo segmento</InteractiveElement>, formando el triángulo auxiliar $\triangle BCD$. Por nuestra construcción inicial, sabemos que $CD \cong BC$, lo que significa que este es, por definición, un <InteractiveElement target="triangulo-isosceles" color="salvia">triángulo isósceles</InteractiveElement>.
+
+Según el <ConceptLink targetId="teorema-triangulo-isosceles" isDependency={true}>Teorema del triángulo isósceles (Pons Asinorum)</ConceptLink>, los ángulos base opuestos a los lados congruentes también lo son. En consecuencia, el <InteractiveElement target="angulo-cbd" color="terracota">$\angle CBD$</InteractiveElement> es congruente con el <InteractiveElement target="angulo-cdb" color="salvia">$\angle CDB$</InteractiveElement>.
+</MedievalStep>
+
+<MedievalStep number={4} target="step4" title="Desigualdad angular">
+Por el postulado de aditividad de ángulos contiguos, el <InteractiveElement target="angulo-abd" color="carbon">ángulo completo $\angle ABD$</InteractiveElement> está compuesto exactamente por la suma del ángulo interior original $\angle ABC$ y el nuevo ángulo auxiliar <InteractiveElement target="angulo-cbd" color="terracota">$\angle CBD$</InteractiveElement>. Como el todo es estrictamente mayor que una de sus partes interiores, concluimos rigurosamente que $\angle ABD \gt \angle CBD$.
+
+Y puesto que demostramos que $\angle CBD \cong \angle CDB$, aplicando el principio de sustitución de congruencias en la desigualdad obtenemos que $\angle ABD \gt \angle CDB$. Finalmente, observamos que el ángulo $\angle CDB$ es geométricamente idéntico al ángulo $\angle ADB$ (ya que $A$, $C$ y $D$ son colineales por el paso 1).
+</MedievalStep>
+
+<MedievalStep number={5} target="step5" title="Lado mayor se opone a ángulo mayor">
+Centrémonos ahora en el triángulo grande $\triangle ABD$. En el paso anterior demostramos deductivamente que su ángulo interior en el vértice $B$ ($\angle ABD$) es mayor que su ángulo interior en el vértice $D$ ($\angle ADB$).
+
+Por el <ConceptLink targetId="teorema-angulo-mayor-lado-mayor" isDependency={true}>Teorema de la desigualdad angular</ConceptLink> (que estipula que a mayor ángulo se opone mayor lado), el lado opuesto al vértice $B$ (que es el segmento completo $AD$) debe ser estrictamente mayor que el lado opuesto al vértice $D$ (que es el <InteractiveElement target="lado-ab" color="carbon">segmento original $AB$</InteractiveElement>, de longitud $c$).
+
+Sabiendo que $AD = b + a$, concluimos finalmente que:
+
+<Formula>
+  $$ b + a > c. \quad \blacksquare $$
+</Formula>
+
+Con lo cual, la desigualdad triangular queda firmemente demostrada para cualquier par de lados respecto al tercero.
+</MedievalStep>
+
+</DemonstrationSection>

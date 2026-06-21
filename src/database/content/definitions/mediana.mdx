@@ -1,0 +1,53 @@
+export const metadata = {
+  "id": "mediana",
+  "type": "definicion",
+  "title": "Mediana",
+  "description": "La mediana de un triángulo es el segmento que une un vértice con el punto medio del lado opuesto.",
+  "tags": ["geometria", "triangulos", "segmentos"],
+  "authors": ["euclides"],
+  "links": ["segmento", "punto", "triangulo"],
+  "seeAlso": ["teorema-punto-medio-perpendicular"],
+  "hasSimulation": true,
+};
+
+import { InteractiveElement } from "@/boundary/components/ui/VisualBind";
+import { Mediana } from '@/boundary/components/diagrams/Definiciones/Mediana';
+
+export const Simulation = Mediana;
+
+<Capitular letra="L" />a <InteractiveElement target="mediana"><ConceptLink targetId="mediana" isDependency={false}>mediana</ConceptLink></InteractiveElement> (o transversal de gravedad) de un <ConceptLink targetId="triangulo" isDependency={false}>triángulo</ConceptLink> es el <ConceptLink targetId="segmento" isDependency={false}>segmento</ConceptLink> de <ConceptLink targetId="recta" isDependency={false}>recta</ConceptLink> trazado desde un <InteractiveElement target="vertice"><ConceptLink targetId="vertice" isDependency={false}>vértice</ConceptLink></InteractiveElement> cualquiera hasta el <InteractiveElement target="punto-medio"><ConceptLink targetId={["lema-punto-medio", "punto"]}>punto medio</ConceptLink></InteractiveElement> del <ConceptLink targetId="lado" isDependency={false}>lado</ConceptLink> opuesto a dicho <ConceptLink targetId="vertice" isDependency={false}>vértice</ConceptLink>.
+
+<Separador />
+
+### Enunciado Formal
+
+Dado un <ConceptLink targetId="triangulo" isDependency={false}>triángulo</ConceptLink> $\triangle ABC$, la <ConceptLink targetId="mediana" isDependency={false}>mediana</ConceptLink> correspondiente al <InteractiveElement target="vertice"><ConceptLink targetId="vertice" isDependency={false}>vértice</ConceptLink></InteractiveElement> $A$ es el <ConceptLink targetId="segmento" isDependency={false}>segmento</ConceptLink> $\overline{AM_a}$ donde $M_a$ es el <InteractiveElement target="punto-medio"><ConceptLink targetId={["lema-punto-medio", "punto"]}>punto medio</ConceptLink></InteractiveElement> de $\overline{BC}$. Análogamente se definen las <ConceptLink targetId="mediana" isDependency={false}>medianas</ConceptLink> desde $B$ y $C$:
+
+<Formula>
+  $$ \overline{AM_a}, \quad \overline{BM_b}, \quad \overline{CM_c} $$
+</Formula>
+
+<Separador />
+
+### Baricentro
+
+Todo <ConceptLink targetId="triangulo" isDependency={false}>triángulo</ConceptLink> posee exactamente tres <ConceptLink targetId="mediana" isDependency={false}>medianas</ConceptLink>. Estas se <ConceptLink targetId="interseccion" isDependency={false}>intersecan</ConceptLink> invariablemente en un único <ConceptLink targetId="punto" isDependency={false}>punto</ConceptLink> interior del <ConceptLink targetId="triangulo" isDependency={false}>triángulo</ConceptLink> denominado <InteractiveElement target="baricentro"><ConceptLink targetId="baricentro" isDependency={false}>baricentro</ConceptLink></InteractiveElement> (o centroide), denotado habitualmente por $G$:
+
+<Formula>
+  $$ \overline{AM_a} \cap \overline{BM_b} \cap \overline{CM_c} = \{G\} $$
+</Formula>
+
+El <ConceptLink targetId="baricentro" isDependency={false}>baricentro</ConceptLink> posee la notable propiedad geométrica de dividir a cada <ConceptLink targetId="mediana" isDependency={false}>mediana</ConceptLink> en una <ConceptLink targetId="razon" isDependency={false}>proporción</ConceptLink> de $2:1$, ubicándose a dos tercios de la <ConceptLink targetId="distancia" isDependency={false}>distancia</ConceptLink> del <ConceptLink targetId="vertice" isDependency={false}>vértice</ConceptLink> al <ConceptLink targetId={["lema-punto-medio", "punto"]}>punto medio</ConceptLink> del <ConceptLink targetId="lado" isDependency={false}>lado</ConceptLink> opuesto:
+
+<Formula>
+  $$ AG : GM_a = BG : GM_b = CG : GM_c = 2 : 1 $$
+</Formula>
+
+<Separador />
+
+### Observaciones
+
+- Las tres <ConceptLink targetId="mediana" isDependency={false}>medianas</ConceptLink> dividen el <ConceptLink targetId="triangulo" isDependency={false}>triángulo</ConceptLink> en seis <ConceptLink targetId="triangulo" isDependency={false}>triángulos</ConceptLink> de igual <ConceptLink targetId="area" isDependency={false}>área</ConceptLink>.
+- El <ConceptLink targetId="baricentro" isDependency={false}>baricentro</ConceptLink> es también el centro de masa del <ConceptLink targetId="triangulo" isDependency={false}>triángulo</ConceptLink> si este se considera como una lámina homogénea.
+- Las <ConceptLink targetId="mediana" isDependency={false}>medianas</ConceptLink> son <ConceptLink targetId="ceviana" isDependency={false}>cevianas</ConceptLink>, al igual que las <ConceptLink targetId="altura" isDependency={false}>alturas</ConceptLink> y <ConceptLink targetId="bisectriz" isDependency={false}>bisectrices</ConceptLink>. A diferencia de estas, el <ConceptLink targetId="baricentro" isDependency={false}>baricentro</ConceptLink> siempre es interior al <ConceptLink targetId="triangulo" isDependency={false}>triángulo</ConceptLink>.
+- En el <ConceptLink targetId="triangulo-rectangulo" isDependency={false}>triángulo rectángulo</ConceptLink>, la <ConceptLink targetId="mediana" isDependency={false}>mediana</ConceptLink> correspondiente a la <ConceptLink targetId="hipotenusa" isDependency={false}>hipotenusa</ConceptLink> mide exactamente la mitad de esta.

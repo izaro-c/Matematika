@@ -1,0 +1,39 @@
+export const metadata = {
+  "id": "teorema-congruencia-ala",
+  "type": "teorema",
+  "title": "Teorema de Congruencia ALA",
+  "description": "Si dos triángulos tienen un lado y los dos ángulos adyacentes a ese lado congruentes, entonces los triángulos son congruentes.",
+  "statement": "Sean △ABC y △A'B'C' tales que AB ≅ A'B', ∠A ≅ ∠A' y ∠B ≅ ∠B'. Entonces △ABC ≅ △A'B'C'.",
+  "tags": ["geometria", "congruencia", "geometria-absoluta", "triangulos"],
+  "authors": ["euclides"],
+  "difficulty": "intermedio",
+  "hasSimulation": true,
+  "demos": ["demo-congruencia-ala"]
+};
+
+import { CongruenciaALA } from '@/boundary/components/diagrams/Theorems/CongruenciaALA';
+export const Simulation = CongruenciaALA;
+import { InteractiveElement } from "@/boundary/components/ui/VisualBind";
+
+<Capitular letra="E" />
+l criterio de <ConceptLink targetId="congruencia" isDependency={false}>congruencia</ConceptLink> **ALA** (<ConceptLink targetId="angulo" isDependency={false}>Ángulo</ConceptLink>-Lado-Ángulo) dictamina que dos <ConceptLink targetId="triangulo" isDependency={false}>triángulos</ConceptLink> resultan <InteractiveElement target="globalmente-congruentes">globalmente congruentes</InteractiveElement> si comparten un <InteractiveElement target="lado-ab"><ConceptLink targetId="lado" isDependency={false}>lado</ConceptLink> recíprocamente congruente</InteractiveElement> y sus correspondientes <InteractiveElement target="angulo-a"><ConceptLink targetId="angulo" isDependency={false}>ángulos</ConceptLink></InteractiveElement> <InteractiveElement target="angulo-b">∠A y ∠B</InteractiveElement> conservan estricta correspondencia isométrica. A diferencia del <ConceptLink targetId="axioma-congruencia-5">postulado LAL (III-5)</ConceptLink>, de naturaleza axiomática, el <ConceptLink targetId="teorema" isDependency={false}>teorema</ConceptLink> ALA se deduce rigurosamente a partir del <ConceptLink targetId="axioma-congruencia-1">axioma de transporte de segmentos (I-1)</ConceptLink> y del <ConceptLink targetId="axioma-congruencia-4">axioma de unicidad de transporte angular (I-4)</ConceptLink> estipulados por <ConceptLink targetId="hilbert" isDependency={false}>Hilbert</ConceptLink>.
+
+<Separador />
+
+### Enunciado
+
+<Formula>
+  $$ \text{Sean } \triangle ABC \text{ y } \triangle A'B'C' \text{ tales que } \overline{AB} \cong \overline{A'B'}, \; \angle A \cong \angle A', \; \angle B \cong \angle B'. \text{ Entonces } \triangle ABC \cong \triangle A'B'C'. $$
+</Formula>
+
+
+
+### Discusión
+
+El criterio ALA es uno de los tres criterios clásicos de congruencia de triángulos (junto con LAL, que es un axioma, y <ConceptLink targetId="teorema-congruencia-lll" isDependency={false}>LLL</ConceptLink>, que también se demuestra). Su demostración ilustra una técnica fundamental: **transportar** un elemento del primer triángulo al segundo y usar el axioma LAL para forzar la coincidencia.
+
+<Nota>
+  <ConceptLink targetId="euclides" isDependency={false}>Euclides</ConceptLink> demostró este resultado en la Proposición I.26 de los Elementos. Su demostración usaba el método de superposición, que en el sistema de Hilbert se sustituye por el axioma LAL (III-5) y los axiomas de transporte de <ConceptLink targetId="segmento" isDependency={false}>segmentos</ConceptLink> y ángulos.
+</Nota>
+
+El criterio ALA no requiere el postulado de las <ConceptLink targetId="paralelas" isDependency={false}>paralelas</ConceptLink>: es válido en <ConceptLink targetId={["sistema-absoluto", "geometria"]}>geometría absoluta</ConceptLink> (euclidiana e hiperbólica).

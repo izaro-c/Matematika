@@ -1,0 +1,65 @@
+export const metadata = {
+  "id": "demo-angulos-opuestos-verticales",
+  "type": "demostracion",
+  "title": "Demostración: Ángulos opuestos por el vértice",
+  "description": "Prueba directa usando axiomas de congruencia de ángulos y resta de congruentes.",
+  "parentTheorem": "teorema-angulos-opuestos-verticales",
+  "proofMethod": "directo",
+  "authors": ["euclides"],
+  "tags": ["geometria", "congruencia"],
+  "layout": "split"
+};
+
+import { DemoAngulosOpuestos } from '@/boundary/components/diagrams/Demos/DemoAngulosOpuestos';
+
+<DemonstrationSection diagram={<DemoAngulosOpuestos />}>
+
+<Capitular letra="E" />sta demostración clásica establece que los ángulos opuestos formados por dos rectas secantes son siempre iguales. Para ello, se basa en la definición de <ConceptLink targetId="angulos-suplementarios" isDependency={true}>ángulos suplementarios</ConceptLink> y en las propiedades algebraicas garantizadas por el <ConceptLink targetId="axioma-congruencia-4" isDependency={true}>axioma de transitividad</ConceptLink> y el <ConceptLink targetId="axioma-congruencia-3" isDependency={true}>axioma de resta de ángulos</ConceptLink> (e implícitamente, el <ConceptLink targetId="axioma-congruencia-2" isDependency={true}>axioma de transporte de ángulos</ConceptLink>).
+
+<Separador />
+
+<MedievalStep number={1} title="Ángulos adyacentes suman un llano" target="supp12">
+Los ángulos <InteractiveElement target="angle1" color="terracota">$\angle 1$</InteractiveElement> y <InteractiveElement target="angle2" color="salvia">$\angle 2$</InteractiveElement> son adyacentes (comparten un lado y forman la recta <InteractiveElement target="lineL" color="carbon">$l$</InteractiveElement>). Por la definición de ángulos suplementarios:
+
+$$ \angle 1 + \angle 2 \cong 180^\circ $$
+</MedievalStep>
+
+<MedievalStep number={2} title="Segundo par de adyacentes" target="supp23">
+Análogamente, los ángulos <InteractiveElement target="angle2" color="salvia">$\angle 2$</InteractiveElement> y <InteractiveElement target="angle3" color="terracota">$\angle 3$</InteractiveElement> forman la recta <InteractiveElement target="lineM" color="carbon">$m$</InteractiveElement>:
+
+$$ \angle 2 + \angle 3 \cong 180^\circ $$
+</MedievalStep>
+
+<MedievalStep number={3} title="Transitividad" target="angle2">
+Ambas expresiones son congruentes al ángulo llano. Por el <ConceptLink targetId="axioma-congruencia-4" isDependency={true}>axioma de transitividad de la congruencia angular</ConceptLink>:
+
+<Formula>
+  $$ \angle 1 + \angle 2 \cong \angle 2 + \angle 3 $$
+</Formula>
+</MedievalStep>
+
+<MedievalStep number={4} title="Resta de ángulo común" target="congruence13">
+Por el axioma de resta de ángulos congruentes, podemos cancelar el ángulo común <InteractiveElement target="angle2" color="salvia">$\angle 2$</InteractiveElement> de ambos lados de la congruencia:
+
+<Formula>
+  $$ \angle 1 \cong \angle 3 $$
+</Formula>
+</MedievalStep>
+
+<MedievalStep number={5} title="Conclusión para el otro par" target="angle4">
+Un argumento idéntico con los ángulos adyacentes <InteractiveElement target="angle3" color="terracota">$\angle 3$</InteractiveElement> y <InteractiveElement target="angle4" color="salvia">$\angle 4$</InteractiveElement> demuestra que <InteractiveElement target="angle2" color="salvia">$\angle 2$</InteractiveElement> $\cong$ <InteractiveElement target="angle4" color="salvia">$\angle 4$</InteractiveElement>. $\blacksquare$
+</MedievalStep>
+
+<Separador />
+
+### Análisis
+
+La demostración es una aplicación elegante del principio algebraico: si $a + b = c$ y $b + d = c$, entonces $a = d$. En <ConceptLink targetId="geometria" isDependency={false}>geometría</ConceptLink>, este principio se sustituye por los <ConceptLink targetId={["congruencia", "axioma"]}>axiomas de congruencia</ConceptLink>: la suma y resta de ángulos congruentes preserva la congruencia.
+
+<Nota>
+  <ConceptLink targetId="euclides" isDependency={false}>Euclides</ConceptLink> demostró este resultado en la Proposición I.15 de los Elementos usando el mismo argumento. Su formulación hablaba de "dos ángulos rectos" donde nosotros decimos "ángulo llano".
+</Nota>
+
+Este <ConceptLink targetId="teorema" isDependency={false}>teorema</ConceptLink> no requiere el <ConceptLink targetId="postulado" isDependency={false}>postulado</ConceptLink> de las <ConceptLink targetId="paralelas" isDependency={false}>paralelas</ConceptLink>: es válido en <ConceptLink targetId={["sistema-absoluto", "geometria"]}>geometría absoluta</ConceptLink> (euclidiana e hiperbólica).
+
+</DemonstrationSection>

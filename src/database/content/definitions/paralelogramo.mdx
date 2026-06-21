@@ -1,0 +1,63 @@
+export const metadata = {
+  "id": "paralelogramo",
+  "type": "definicion",
+  "title": "Paralelogramo",
+  "description": "Un paralelogramo es un cuadrilátero cuyos pares de lados opuestos son paralelos.",
+  "tags": ["geometria", "poligonos", "cuadrilateros"],
+  "authors": ["euclides"],
+  "links": ["cuadrilatero", "recta", "paralelas", "segmento", "angulo"],
+  "seeAlso": [],
+  "hasSimulation": true,
+};
+
+import { InteractiveElement } from "@/boundary/components/ui/VisualBind";
+import { Paralelogramo } from '@/boundary/components/diagrams/Definiciones/Paralelogramo';
+
+export const Simulation = Paralelogramo;
+
+<Capitular letra="U" />n <InteractiveElement target="paralelogramo"><ConceptLink targetId="paralelogramo" isDependency={false}>paralelogramo</ConceptLink></InteractiveElement> es un <ConceptLink targetId="cuadrilatero" isDependency={false}>cuadrilátero</ConceptLink> <ConceptLink targetId="convexidad" isDependency={false}>convexo</ConceptLink> caracterizado por tener sus dos pares de <InteractiveElement target="lados-opuestos"><ConceptLink targetId="lado" isDependency={false}>lados</ConceptLink> opuestos</InteractiveElement> <ConceptLink targetId="paralelas" isDependency={false}>paralelos</ConceptLink> entre sí. Es la clase más importante de <ConceptLink targetId="cuadrilatero" isDependency={false}>cuadriláteros</ConceptLink>, pues de ella se derivan el <ConceptLink targetId="rectangulo" isDependency={false}>rectángulo</ConceptLink>, el <ConceptLink targetId="rombo" isDependency={false}>rombo</ConceptLink> y el <ConceptLink targetId="cuadrado" isDependency={false}>cuadrado</ConceptLink>.
+
+<Separador />
+
+### Enunciado Formal
+
+Un <ConceptLink targetId="cuadrilatero" isDependency={false}>cuadrilátero</ConceptLink> $ABCD$ es un <ConceptLink targetId="paralelogramo" isDependency={false}>paralelogramo</ConceptLink> si y solo si:
+
+<Formula>
+  $$ \overleftrightarrow{AB} \parallel \overleftrightarrow{CD} \quad \land \quad \overleftrightarrow{BC} \parallel \overleftrightarrow{DA} $$
+</Formula>
+
+<Separador />
+
+### Propiedades
+
+A partir de la definición por <ConceptLink targetId="paralelas" isDependency={false}>paralelismo</ConceptLink> se demuestran formalmente las siguientes propiedades:
+
+- **Lados opuestos <ConceptLink targetId="congruencia" isDependency={false}>congruentes</ConceptLink>**: <InteractiveElement target="lados-opuestos">$\overline{AB} \cong \overline{CD}$</InteractiveElement> y $\overline{BC} \cong \overline{DA}$.
+- **Ángulos opuestos <ConceptLink targetId="congruencia" isDependency={false}>congruentes</ConceptLink>**: <InteractiveElement target="angulos-opuestos">$\angle A \cong \angle C$</InteractiveElement> y $\angle B \cong \angle D$.
+- **Ángulos consecutivos suplementarios**: $\angle A + \angle B = \angle B + \angle C = 180^\circ$.
+- **<ConceptLink targetId="diagonal" isDependency={false}>Diagonales</ConceptLink> que se bisecan**: las <InteractiveElement target="diagonales"><ConceptLink targetId="diagonal" isDependency={false}>diagonales</ConceptLink></InteractiveElement> $\overline{AC}$ y $\overline{BD}$ se cortan en sus respectivos <ConceptLink targetId={["lema-punto-medio", "punto"]}>puntos medios</ConceptLink>.
+
+<Separador />
+
+### Subclases
+
+La familia de los <ConceptLink targetId="paralelogramo" isDependency={false}>paralelogramos</ConceptLink> incluye como casos particulares:
+
+| Subclase | Condición adicional |
+|---|---|
+| **<ConceptLink targetId="rectangulo" isDependency={false}>Rectángulo</ConceptLink>** | Cuatro <ConceptLink targetId="angulo" isDependency={false}>ángulos</ConceptLink> <ConceptLink targetId="angulo-recto" isDependency={false}>rectos</ConceptLink> |
+| **<ConceptLink targetId="rombo" isDependency={false}>Rombo</ConceptLink>** | Cuatro <ConceptLink targetId="lado" isDependency={false}>lados</ConceptLink> <ConceptLink targetId="congruencia" isDependency={false}>congruentes</ConceptLink> |
+| **<ConceptLink targetId="cuadrado" isDependency={false}>Cuadrado</ConceptLink>** | Cuatro <ConceptLink targetId="angulo" isDependency={false}>ángulos</ConceptLink> <ConceptLink targetId="angulo-recto" isDependency={false}>rectos</ConceptLink> y cuatro <ConceptLink targetId="lado" isDependency={false}>lados</ConceptLink> <ConceptLink targetId="congruencia" isDependency={false}>congruentes</ConceptLink> |
+
+<Nota>
+La relación es **jerárquica**: todo <ConceptLink targetId="cuadrado" isDependency={false}>cuadrado</ConceptLink> es <ConceptLink targetId="rectangulo" isDependency={false}>rectángulo</ConceptLink> y <ConceptLink targetId="rombo" isDependency={false}>rombo</ConceptLink>, y todo <ConceptLink targetId="rectangulo" isDependency={false}>rectángulo</ConceptLink> y <ConceptLink targetId="rombo" isDependency={false}>rombo</ConceptLink> es un <ConceptLink targetId="paralelogramo" isDependency={false}>paralelogramo</ConceptLink>.
+</Nota>
+
+<Separador />
+
+### Observaciones
+
+- La condición de <ConceptLink targetId="paralelas" isDependency={false}>paralelismo</ConceptLink> de ambos pares de <ConceptLink targetId="lado" isDependency={false}>lados</ConceptLink> opuestos es la **definición primaria**. Las demás propiedades (<ConceptLink targetId="congruencia" isDependency={false}>congruencia</ConceptLink> de <ConceptLink targetId="lado" isDependency={false}>lados</ConceptLink>, <ConceptLink targetId="congruencia" isDependency={false}>congruencia</ConceptLink> de <ConceptLink targetId="angulo" isDependency={false}>ángulos</ConceptLink>, bisección de <ConceptLink targetId="diagonal" isDependency={false}>diagonales</ConceptLink>) son **<ConceptLink targetId="teorema" isDependency={false}>teoremas</ConceptLink>** que se deducen de ella.
+- Un <ConceptLink targetId="cuadrilatero" isDependency={false}>cuadrilátero</ConceptLink> es <ConceptLink targetId="paralelogramo" isDependency={false}>paralelogramo</ConceptLink> si y solo si sus <ConceptLink targetId="diagonal" isDependency={false}>diagonales</ConceptLink> se bisecan mutuamente. Esta es una caracterización alternativa frecuentemente usada en <ConceptLink targetId="demostracion" isDependency={false}>demostraciones</ConceptLink>.
+- En un <ConceptLink targetId="paralelogramo" isDependency={false}>paralelogramo</ConceptLink>, el <ConceptLink targetId="area" isDependency={false}>área</ConceptLink> se calcula como $S = b \cdot h$ donde $b$ es la <ConceptLink targetId="longitud" isDependency={false}>longitud</ConceptLink> de un <ConceptLink targetId="lado" isDependency={false}>lado</ConceptLink> y $h$ la <ConceptLink targetId="altura" isDependency={false}>altura</ConceptLink> correspondiente.

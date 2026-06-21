@@ -1,0 +1,39 @@
+export const metadata = {
+  "id": "demo-triangulo-isosceles",
+  "type": "demostracion",
+  "title": "Demostración: Pons Asinorum (Bisección)",
+  "description": "Demostración trazando la bisectriz del ángulo superior y usando el criterio LAL.",
+  "tags": ["geometria", "congruencia", "triangulos"],
+  "authors": ["euclides"],
+  "parentTheorem": "teorema-triangulo-isosceles",
+  "proofMethod": "directo",
+  "layout": "split"
+};
+
+import { DemoTrianguloIsosceles } from "@/boundary/components/diagrams/Demos/DemoTrianguloIsosceles";
+
+<DemonstrationSection diagram={<DemoTrianguloIsosceles />}>
+  <MedievalStep number={1} target={["triangulo-abc", "lado-ab", "lado-ac"]} title="El triángulo isósceles">
+    Consideremos un <InteractiveElement target="triangulo-abc"><ConceptLink targetId="triangulo">triángulo</ConceptLink> $\triangle ABC$</InteractiveElement> isósceles, en el cual por definición se cumple que el <InteractiveElement target="lado-ab"><ConceptLink targetId="segmento" isDependency={false}>segmento</ConceptLink> $AB$</InteractiveElement> tiene la misma <ConceptLink targetId="longitud" isDependency={false}>longitud</ConceptLink> que el <InteractiveElement target="lado-ac">segmento $AC$</InteractiveElement> (<InteractiveElement target="lado-ab">$AB$</InteractiveElement> $\cong$ <InteractiveElement target="lado-ac">$AC$</InteractiveElement>).
+  </MedievalStep>
+      
+  <MedievalStep number={2} target={["bisectriz", "punto-d", "angulo-bad", "angulo-cad"]} title="Construcción de la bisectriz">
+    Trazamos la <InteractiveElement target="bisectriz"><ConceptLink targetId="bisectriz" isDependency={true}>bisectriz</ConceptLink> del $\angle BAC$</InteractiveElement>, es decir, la línea que divide al <ConceptLink targetId="angulo" isDependency={false}>ángulo</ConceptLink> superior en dos ángulos idénticos. Sea <InteractiveElement target="punto-d">$D$</InteractiveElement> el <ConceptLink targetId="punto" isDependency={false}>punto</ConceptLink> donde esta bisectriz intersecta la base $BC$. Por construcción, sabemos que <InteractiveElement target="angulo-bad">$\angle BAD$</InteractiveElement> $\cong$ <InteractiveElement target="angulo-cad">$\angle CAD$</InteractiveElement>.
+  </MedievalStep>
+
+  <MedievalStep number={3} target={["lado-ad"]} title="El lado compartido">
+    El <InteractiveElement target="lado-ad">segmento $AD$</InteractiveElement> es un lado compartido por ambos triángulos formados, el <InteractiveElement target="triangulo-izq">$\triangle ABD$</InteractiveElement> y el <InteractiveElement target="triangulo-der">$\triangle ACD$</InteractiveElement>. Obviamente, <InteractiveElement target="lado-ad">$AD$</InteractiveElement> $\cong$ <InteractiveElement target="lado-ad">$AD$</InteractiveElement> por identidad.
+  </MedievalStep>
+
+  <MedievalStep number={4} target={["triangulo-izq", "triangulo-der"]} title="Congruencia LAL">
+    Ahora observemos los dos triángulos internos: <InteractiveElement target="triangulo-izq">$\triangle ABD$</InteractiveElement> y <InteractiveElement target="triangulo-der">$\triangle ACD$</InteractiveElement>. Tenemos:
+    1. <InteractiveElement target="lado-ab">$AB$</InteractiveElement> $\cong$ <InteractiveElement target="lado-ac">$AC$</InteractiveElement> (Dado inicialmente).
+    2. <InteractiveElement target="angulo-bad">$\angle BAD$</InteractiveElement> $\cong$ <InteractiveElement target="angulo-cad">$\angle CAD$</InteractiveElement> (Construcción de la bisectriz).
+    3. <InteractiveElement target="lado-ad">$AD$</InteractiveElement> $\cong$ <InteractiveElement target="lado-ad">$AD$</InteractiveElement> (Lado común).
+    Por el <ConceptLink targetId="axioma-congruencia-5" isDependency={true}>Axioma de Congruencia LAL</ConceptLink>, concluimos que los dos triángulos son exactamente <ConceptLink targetId="congruencia" isDependency={false}>congruentes</ConceptLink>.
+  </MedievalStep>
+
+  <MedievalStep number={5} target={["angulo-b", "angulo-c"]} title="Conclusión de ángulos">
+    Puesto que los triángulos <InteractiveElement target="triangulo-izq">$\triangle ABD$</InteractiveElement> y <InteractiveElement target="triangulo-der">$\triangle ACD$</InteractiveElement> son congruentes, todas sus partes correspondientes deben ser iguales. En consecuencia, el <InteractiveElement target="angulo-b">$\angle B$</InteractiveElement> debe ser igual al <InteractiveElement target="angulo-c">$\angle C$</InteractiveElement>. $\blacksquare$
+  </MedievalStep>
+</DemonstrationSection>

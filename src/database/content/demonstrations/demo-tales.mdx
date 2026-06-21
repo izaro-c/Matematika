@@ -1,0 +1,39 @@
+export const metadata = {
+  "id": "demo-tales",
+  "type": "demostracion",
+  "title": "Demostración: Teorema de Tales",
+  "description": "Demostración geométrica usando triángulos con la misma altura para demostrar proporcionalidad.",
+  "tags": ["geometria", "proporcionalidad"],
+  "authors": ["euclides"],
+  "parentTheorem": "teorema-tales",
+  "proofMethod": "directo",
+  "layout": "split"
+};
+
+import { DemoTales } from "@/boundary/components/diagrams/Teoremas/DemoTales";
+
+<DemonstrationSection diagram={<DemoTales />}>
+  <MedievalStep number={1} target={["triangulo-abc", "recta-de"]} title="El triángulo base y la paralela">
+    Consideremos un <InteractiveElement target="triangulo-abc"><ConceptLink targetId="triangulo" isDependency={false}>triángulo</ConceptLink> $\triangle ABC$</InteractiveElement>. Trazamos una <InteractiveElement target="recta-de"><ConceptLink targetId="recta" isDependency={false}>línea</ConceptLink> $DE$</InteractiveElement> que atraviesa el <ConceptLink targetId="triangulo" isDependency={false}>triángulo</ConceptLink> de tal forma que es perfectamente <ConceptLink targetId="paralelas" isDependency={false}>paralela</ConceptLink> a la <ConceptLink targetId="base" isDependency={false}>base</ConceptLink> $BC$. Queremos demostrar que esta <ConceptLink targetId="recta" isDependency={false}>línea</ConceptLink> divide a los otros dos <ConceptLink targetId="lado" isDependency={false}>lados</ConceptLink> <ConceptLink targetId="proporcionalidad" isDependency={false}>proporcionalmente</ConceptLink>, es decir: $AD / DB = AE / EC$.
+  </MedievalStep>
+
+  <MedievalStep number={2} target={["triangulo-ade", "triangulo-bde"]} title="Triángulos compartiendo base">
+    Tracemos las <ConceptLink targetId="recta" isDependency={false}>líneas</ConceptLink> cruzadas $BE$ y $CD$. Fijémonos primero en dos <ConceptLink targetId="triangulo" isDependency={false}>triángulos</ConceptLink> internos: el <InteractiveElement target="triangulo-ade">$\triangle ADE$</InteractiveElement> y el <InteractiveElement target="triangulo-bde">$\triangle BDE$</InteractiveElement>. Ambos <ConceptLink targetId="triangulo" isDependency={false}>triángulos</ConceptLink> pueden verse como teniendo <ConceptLink targetId="base" isDependency={false}>bases</ConceptLink> que residen en la misma <ConceptLink targetId="recta" isDependency={false}>línea</ConceptLink> ($AD$ y $DB$ respectivamente) y comparten el mismo <ConceptLink targetId="vertice" isDependency={false}>vértice</ConceptLink> opuesto $E$.
+  </MedievalStep>
+
+  <MedievalStep number={3} target={["altura-h1"]} title="Relación de áreas I">
+    Dado que comparten el mismo <ConceptLink targetId="vertice" isDependency={false}>vértice</ConceptLink> $E$ y sus <ConceptLink targetId="base" isDependency={false}>bases</ConceptLink> están alineadas, ambos <ConceptLink targetId="triangulo" isDependency={false}>triángulos</ConceptLink> comparten la misma <InteractiveElement target="altura-h1"><ConceptLink targetId="altura" isDependency={false}>altura</ConceptLink> $h_1$</InteractiveElement>. Por tanto, la <ConceptLink targetId="teoria-medida-area" isDependency={true}>proporción de sus áreas</ConceptLink> es exactamente la <ConceptLink targetId="proporcionalidad" isDependency={false}>proporción</ConceptLink> de sus <ConceptLink targetId="base" isDependency={false}>bases</ConceptLink>: $\text{Área}(\triangle ADE) / \text{Área}(\triangle BDE) = AD / DB$.
+  </MedievalStep>
+
+  <MedievalStep number={4} target={["triangulo-ade", "triangulo-cde", "altura-h2"]} title="Relación de áreas II">
+    De manera idéntica, miremos ahora a la derecha: el <InteractiveElement target="triangulo-ade">$\triangle ADE$</InteractiveElement> y el <InteractiveElement target="triangulo-cde">$\triangle CDE$</InteractiveElement> comparten el <ConceptLink targetId="vertice" isDependency={false}>vértice</ConceptLink> $D$ y <ConceptLink targetId="base" isDependency={false}>bases</ConceptLink> a lo largo de $AC$. Como comparten la misma <InteractiveElement target="altura-h2"><ConceptLink targetId="altura" isDependency={false}>altura</ConceptLink> $h_2$</InteractiveElement>, se cumple que: $\text{Área}(\triangle ADE) / \text{Área}(\triangle CDE) = AE / EC$.
+  </MedievalStep>
+
+  <MedievalStep number={5} target={["triangulo-bde", "triangulo-cde", "recta-de"]} title="Igualdad de las áreas inferiores">
+    El paso crucial: ¿qué relación hay entre $\text{Área}(\triangle BDE)$ y $\text{Área}(\triangle CDE)$? Ambos comparten la misma <InteractiveElement target="recta-de"><ConceptLink targetId="base" isDependency={false}>base</ConceptLink> $DE$</InteractiveElement> y ambos tienen su tercer <ConceptLink targetId="vertice" isDependency={false}>vértice</ConceptLink> ($B$ y $C$) situados en una <ConceptLink targetId="recta" isDependency={false}>recta</ConceptLink> que es <ConceptLink targetId="paralelas" isDependency={false}>paralela</ConceptLink> a $DE$. Las <ConceptLink targetId="paralelas" isDependency={false}>paralelas</ConceptLink> mantienen siempre la misma <ConceptLink targetId="distancia" isDependency={false}>distancia</ConceptLink> entre ellas, por lo que las <ConceptLink targetId="altura" isDependency={false}>alturas</ConceptLink> de estos dos <ConceptLink targetId="triangulo" isDependency={false}>triángulos</ConceptLink> son idénticas. Por consiguiente, por el <ConceptLink targetId="teorema-triangulos-misma-area" isDependency={true}>teorema de triángulos entre paralelas</ConceptLink>, $\text{Área}(\triangle BDE) = \text{Área}(\triangle CDE)$.
+  </MedievalStep>
+
+  <MedievalStep number={6} target={["proporcion"]} title="Conclusión de proporcionalidad">
+    Si las <ConceptLink targetId="area" isDependency={false}>áreas</ConceptLink> de los denominadores son iguales, entonces las fracciones completas son iguales. Así, deducimos que <InteractiveElement target="proporcion">$AD / DB = AE / EC$</InteractiveElement>. $\blacksquare$
+  </MedievalStep>
+</DemonstrationSection>

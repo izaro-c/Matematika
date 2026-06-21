@@ -1,0 +1,52 @@
+export const metadata = {
+  "id": "demo-pitagoras-areas",
+  "type": "demostracion",
+  "title": "Demostración: Teorema de Pitágoras (Equivalencia de Áreas)",
+  "description": "Una demostración formal basada en la teoría de la medida de área de Hilbert y la invariancia bajo el grupo de isometrías.",
+  "tags": ["geometria", "areas", "diseccion", "hilbert"],
+  "authors": ["euclides", "pitagoras"],
+  "parentTheorem": "teorema-pitagoras",
+  "proofMethod": "directo",
+  "layout": "split"
+};
+
+import { DemoPitagorasAreas } from "@/boundary/components/diagrams/Teoremas/DemoPitagorasAreas";
+
+<DemonstrationSection diagram={<DemoPitagorasAreas />}>
+  <MedievalStep number={1} target="paso1" title="Hipótesis y Construcción">
+    Partimos de la hipótesis de un <ConceptLink targetId="triangulo-rectangulo" isDependency={false}>triángulo rectángulo</ConceptLink> cuyos <InteractiveElement target="segmento-a" color="terracota">catetos miden $a$</InteractiveElement> y <InteractiveElement target="segmento-b" color="salvia">$b$</InteractiveElement>, y su <InteractiveElement target="segmento-c" color="pizarra">hipotenusa mide $c$</InteractiveElement>.
+    Por el <ConceptLink targetId="teorema-construccion-cuadrado" isDependency={true}>teorema de construcción de polígonos</ConceptLink>, construimos un <InteractiveElement target="cuadrado-exterior" color="carbon"><ConceptLink targetId="cuadrado" isDependency={false}>cuadrado</ConceptLink> exterior</InteractiveElement> cuyo lado es la suma de los catetos ($a + b$).
+    
+    Según la <ConceptLink targetId="teoria-medida-area" isDependency={true}>teoría de la medida de área de Hilbert</ConceptLink>, el área de este cuadrado contenedor es fija y estrictamente igual a $(a+b)^2$.
+  </MedievalStep>
+
+  <MedievalStep number={2} target="paso2" title="Primera Configuración">
+    En el interior del cuadrado, disponemos de cuatro copias del <InteractiveElement target="triangulos" color="salvia"><ConceptLink targetId="triangulo" isDependency={false}>triángulo</ConceptLink> original</InteractiveElement> ubicadas en los vértices del cuadrado exterior.
+    Por el <ConceptLink targetId="axioma-congruencia-5" isDependency={true}>Axioma III.5 (Congruencia LAL)</ConceptLink>, las cuatro copias son estrictamente <ConceptLink targetId="congruencia" isDependency={false}>congruentes</ConceptLink> a la hipótesis, por lo que conservan invariablemente su área $\frac{ab}{2}$ (en total $2ab$).
+    
+    La región central no recubierta es un cuadrilátero delimitado por las cuatro hipotenusas de longitud $c$. Como los ángulos agudos del triángulo original suman $90^\circ$, el ángulo de cada vértice central es de $180^\circ - 90^\circ = 90^\circ$. Luego, es un cuadrado perfecto.
+    Por la <ConceptLink targetId="propiedad-aditiva-area" isDependency={true}>propiedad aditiva del área</ConceptLink>, el área del cuadrado exterior equivale a:
+    <Formula>$$ \text{Área}_{exterior} = 2ab + \text{Área}(c^2) $$</Formula>
+    Esto identifica rigurosamente al espacio vacío como un <InteractiveElement target="area-c" color="pizarra"><ConceptLink targetId="area" isDependency={false}>área</ConceptLink> igual a $c^2$</InteractiveElement>.
+  </MedievalStep>
+
+  <MedievalStep number={3} target="paso3" title="Transformación Isométrica">
+    > **Usa el control deslizante** bajo el diagrama para reorganizar los triángulos.
+
+    Aplicamos una <ConceptLink targetId="isometria" isDependency={false}>isometría</ConceptLink> (traslación en el plano) a los <InteractiveElement target="triangulos" color="salvia">cuatro triángulos</InteractiveElement> para agruparlos en dos rectángulos de lados $a$ y $b$.
+    Según los <ConceptLink targetId="axiomas-isometria" isDependency={true}>axiomas del movimiento rígido</ConceptLink>, el desplazamiento euclidiano preserva tanto la <ConceptLink targetId="congruencia" isDependency={false}>congruencia</ConceptLink> global de las figuras como su área total, la cual se mantiene constante en $2ab$.
+  </MedievalStep>
+
+  <MedievalStep number={4} target="paso4" title="Segunda Configuración y Equivalencia">
+    En esta nueva disposición ortogonal, la porción no recubierta del cuadrado se ha particionado en dos componentes cuadradas independientes: un <InteractiveElement target="area-a" color="terracota">cuadrado de lado $a$</InteractiveElement> y un <InteractiveElement target="area-b" color="salvia">cuadrado de lado $b$</InteractiveElement>.
+    Aplicando nuevamente la <ConceptLink targetId="propiedad-aditiva-area" isDependency={true}>propiedad aditiva del área</ConceptLink> al mismo cuadrado exterior:
+    <Formula>$$ \text{Área}_{exterior} = 2ab + \text{Área}(a^2) + \text{Área}(b^2) $$</Formula>
+    
+    Dado que el área total del universo (el cuadrado $(a+b)^2$) y el área restada de los triángulos ($2ab$) es matemáticamente idéntica en ambas configuraciones, por el <ConceptLink targetId="propiedad-transitiva-igualdad" isDependency={true}>axioma transitivo de la igualdad</ConceptLink> igualamos ambas expresiones:
+    <Formula>$$ 2ab + c^2 = 2ab + a^2 + b^2 $$</Formula>
+    
+    Utilizando la <ConceptLink targetId="axioma-cancelacion-suma" isDependency={true}>propiedad de cancelación de la suma</ConceptLink> en el cuerpo de los números reales, restamos $2ab$ en ambos miembros, demostrando de forma rigurosa que:
+    <Formula>$$ c^2 = a^2 + b^2 $$</Formula>
+    $\blacksquare$
+  </MedievalStep>
+</DemonstrationSection>

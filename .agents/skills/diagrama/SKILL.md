@@ -45,7 +45,6 @@
 38. [Diagramas de Congruencia: Dos Triángulos Vinculados](#38-diagramas-de-congruencia-dos-triángulos-vinculados)
 39. [Visibilidad Condicional por Highlight Global](#39-visibilidad-condicional-por-highlight-global)
 40. [Demostraciones sin Diagrama (layout: text)](#40-demostraciones-sin-diagrama-layout-text)
-
 ---
 
 ## 1. Tecnologías de Renderizado
@@ -99,13 +98,14 @@ Diagrama (panel izquierdo)
 
 ### 2.1 Store — MathStore ÚNICO
 
-**Hay un solo store para highlight:** `MathStore`. No se usa `LessonStore` para highlights.
+**Hay un solo store para highlight y step:** `MathStore`. No se usa `LessonStore` para el progreso en demostraciones (se reserva para ejercicios interactivos).
 
-| Store | Cuándo usar | Escribe | Leído por |
-|---|---|---|---|
-| **MathStore** | Estado por página (highlight, valores calculados) | `setVariable('highlight', valor)` | Diagramas leen `useMathStore(s => s.variables['highlight'])` |
+| Store | Variable | Cuándo usar | Escribe | Leído por |
+|---|---|---|---|---|
+| **MathStore** | `step` | Progreso de la demostración (paso activo) | `MedievalStep` (IntersectionObserver) | `DemonstrationSection` (para elegir diagrama), Diagramas (para visibilidad) |
+| **MathStore** | `highlight` | Énfasis visual (hover sobre texto) | `InteractiveElement` (hover) | Diagramas (para engrosar/resaltar elementos temporales) |
 
-**`InteractiveElement`** (from `../../components/ui/VisualBind`) escribe en `MathStore.highlight`. Los diagramas leen `MathStore.highlight`. **Un solo store, una sola dirección.**
+**Regla de Oro:** El avance de los pasos (`step`) determina qué geometría existe o es visible. El `highlight` determina exclusivamente qué elementos ya visibles reciben énfasis. NUNCA sobreescribir `step` con un `highlight`.
 
 > **Nota sobre variables adicionales:** El `MathStore` es global a la página. Si vas a establecer variables dinámicas interactivas (ej. arrastrar un punto actualiza una variable `area`), asegúrate de **prefijar** la variable si hay riesgo de colisión con otros diagramas en la misma página (ej. `setVariable('demo1-area', valor)` en lugar de `area` a secas). Para el `highlight` no hace falta prefijar si los `target` son únicos.
 
@@ -220,219 +220,103 @@ El string `target` en `<InteractiveElement>` DEBE coincidir exactamente con el n
 
 ---
 
-## 6. Patrón Canonical JSXGraph
+## 6. Patrón Canónico JSXGraph (MathBoard + MathFactory)
 
-Este es el patrón **canónico** para diagramas JSXGraph. Usar `initBoard` directo con `useRef`/`useEffect`/`elementsRef`.
+Este es el patrón **canónico** y OBLIGATORIO para todos los diagramas JSXGraph. Se basa en el componente `<MathBoard>` (que previene memory leaks y gestiona el ciclo de vida) y en `MathFactory` (que garantiza la consistencia visual de Arts & Crafts). **Queda estrictamente prohibido usar `JXGBoard` o `initBoard` directamente.**
 
-```typescript
-import { useRef, useEffect } from 'react';
-import JXG from 'jsxgraph';
-import { useMathStore } from '../../store/MathStoreContext';
+### 6.1 Estructura Base de un Diagrama
 
-export const MyDiagram = () => {
-    const boardRef = useRef<HTMLDivElement>(null);
-    const elementsRef = useRef<Record<string, unknown>>({});
-    const setVariable = useMathStore(state => state.setVariable);
-    const highlight = useMathStore(state => state.variables['highlight']);
-    const isHighlight = (id: string) =>
-        Array.isArray(highlight)
-            ? (highlight as string[]).includes(id)
-            : highlight === id;
+```tsx
+import { MathBoard } from '../../components/graph/MathBoard';
+import { createPoint, createSegment, createPolygon } from '../../components/graph/MathFactory';
 
-    useEffect(() => {
-        if (!boardRef.current) return;
-        const board = JXG.JSXGraph.initBoard(boardRef.current, {
-            boundingbox: [-5, 5, 5, -5],
-            axis: true,
-            showCopyright: false,
-            showNavigation: false,
-            keepaspectratio: true,
-            pan: { enabled: false },
-            zoom: { wheel: false },
-        });
+export const MiDiagrama = () => {
+  return (
+    <MathBoard
+      boundingbox={[-5, 5, 5, -5]}
+      onInit={(board, els, theme) => {
+        // 1. CREACIÓN DE GEOMETRÍA (Solo se ejecuta una vez)
+        
+        // REGLA DE ORO: ¡NO USAR board.create() DIRECTAMENTE PARA ELEMENTOS COMUNES!
+        // Usar siempre las funciones de MathFactory para heredar el estilo.
+        els.A = createPoint(board, [-2, -2], { name: 'A' }, theme);
+        els.B = createPoint(board, [3, -1], { name: 'B' }, theme);
+        els.C = createPoint(board, [0, 3], { name: 'C' }, theme);
 
-        // Crear elementos — guardar en elementsRef con el MISMO nombre usado en InteractiveElement
-        const pA = board.create('point', [-2, -2], {
-            name: 'A', size: 4, fillColor: '#C86446', strokeColor: '#C86446',
-            label: { fontSize: 20, cssClass: 'font-serif font-bold italic' }
-        });
-        const pB = board.create('point', [3, -1], {
-            name: 'B', size: 4, fillColor: '#C86446', strokeColor: '#C86446',
-            label: { fontSize: 20, cssClass: 'font-serif font-bold italic' }
-        });
-        const pC = board.create('point', [0, 3], {
-            name: 'C', size: 4, fillColor: '#C86446', strokeColor: '#C86446',
-            label: { fontSize: 20, cssClass: 'font-serif font-bold italic' }
-        });
+        els.segAB = createSegment(board, [els.A, els.B], { name: 'c' }, theme);
+        els.poly = createPolygon(board, [els.A, els.B, els.C], { fillColor: theme.terracota }, theme);
+      }}
+      onUpdate={(_board, els, theme, isStep, isHL) => {
+        // 2. LÓGICA REACTIVA (Se ejecuta en cada cambio de paso o highlight)
+        
+        // Leer pasos activos
+        const s1 = isStep('step1');
+        const s2 = isStep('step2');
 
-        const poly = board.create('polygon', [pA, pB, pC], {
-            fillColor: '#C86446', fillOpacity: 0.15,
-            borders: { strokeColor: '#C86446', strokeWidth: 2 },
-            vertices: { visible: false }
-        });
+        // Leer hovers
+        const hlA = isHL('vertice-a');
+        const hlB = isHL('vertice-b');
+        const hlAB = isHL('lado-ab');
+        const hlTri = isHL('triangulo');
 
-        // Asignar IDs para highlight
-        pA.setAttribute({ id: 'vertice-a' });
-        pB.setAttribute({ id: 'vertice-b' });
-        pC.setAttribute({ id: 'vertice-c' });
-        poly.borders[0].setAttribute({ id: 'lado-ab' });
-        poly.borders[1].setAttribute({ id: 'lado-bc' });
-        poly.borders[2].setAttribute({ id: 'lado-ca' });
-        poly.setAttribute({ id: 'triangulo' });
+        // Determinar si hay ALGUN hover activo en el diagrama
+        const anyH = hlA || hlB || hlAB || hlTri;
 
-        elementsRef.current = { pA, pB, pC, poly, board };
-
-        // Escribir valores al store cuando el usuario interactúa
-        board.on('update', () => {
-            setVariable('area', board.area ? board.area() : 0);
-        });
-
-        board.update();
-        return () => {
-            JXG.JSXGraph.freeBoard(board);
-            elementsRef.current = {};
+        // FUNCIÓN getOp: Resuelve conflictos entre opacidad de Paso y Hover
+        const getOp = (hovered: boolean, activeInStep: boolean, base = 0.2, hlOp = 1) => {
+            if (hovered) return hlOp;      // Si se hace hover sobre ESTE elemento, máxima opacidad
+            if (anyH) return base;         // Si hay hover sobre OTRO elemento, bajar a opacidad base
+            return activeInStep ? 1 : base; // Si no hay hovers, depender del paso actual
         };
-    }, [setVariable]);
 
-    // Reactividad: store → diagrama (highlight)
-    useEffect(() => {
-        const { pA, pB, pC, poly, board } = elementsRef.current as Record<string, any>;
-        if (!board) return;
+        // FUNCIÓN getC: Cambiar el color temporalmente al hacer hover
+        const getC = (hovered: boolean, defaultColor: string, hoverColor = theme.terracota) => 
+            hovered ? hoverColor : defaultColor;
 
-        // RESET — cada atributo modificado por highlight DEBE restaurarse
-        const resetPoint = (p: any) => p.setAttribute({ size: 4, strokeOpacity: 1, fillOpacity: 1 });
-        const resetBorder = (b: any) => b.setAttribute({ strokeWidth: 2, strokeOpacity: 1 });
-        resetPoint(pA); resetPoint(pB); resetPoint(pC);
-        poly.borders.forEach(resetBorder);
-        poly.setAttribute({ fillOpacity: 0.15 });
+        // FUNCIÓN getW: Cambiar el grosor de línea al hacer hover
+        const getW = (hovered: boolean, defaultWidth = 2, hoverWidth = 4) => 
+            hovered ? hoverWidth : defaultWidth;
 
-        // APLICAR highlight
-        const highlightPoint = (p: any, id: string) => {
-            if (isHighlight(id) || isHighlight('triangulo')) {
-                p.setAttribute({ size: 8, strokeOpacity: 1, fillOpacity: 1 });
-            }
-        };
-        highlightPoint(pA, 'vertice-a');
-        highlightPoint(pB, 'vertice-b');
-        highlightPoint(pC, 'vertice-c');
+        // 3. APLICAR ATRIBUTOS VISUALES
+        const stepAB = s1 || s2;
+        els.segAB.setAttribute({ 
+            strokeOpacity: getOp(hlAB || hlTri, stepAB, 0), // Oculto si stepAB=false y base=0
+            strokeWidth: getW(hlAB || hlTri, 2, 4),
+            strokeColor: getC(hlAB || hlTri, theme.carbon)
+        });
 
-        const highlightBorder = (b: any, id: string) => {
-            if (isHighlight(id) || isHighlight('triangulo')) {
-                b.setAttribute({ strokeWidth: 5, strokeOpacity: 1 });
-            }
-        };
-        highlightBorder(poly.borders[0], 'lado-ab');
-        highlightBorder(poly.borders[1], 'lado-bc');
-        highlightBorder(poly.borders[2], 'lado-ca');
-
-        if (isHighlight('triangulo')) {
-            poly.setAttribute({ fillOpacity: 0.4 });
-        }
-
-        board.update();
-    }, [highlight]);
-
-    return (
-        <div
-            ref={boardRef}
-            className="w-full h-full min-h-[500px]"
-            role="img"
-            aria-label="Diagrama interactivo: triángulo con vértices A, B, C. Arrastre los puntos para explorar."
-            tabIndex={0}
-        />
-    );
+        const stepPoly = s2;
+        els.poly.setAttribute({
+            fillOpacity: getOp(hlTri, stepPoly, 0, 0.4),
+            fillColor: getC(hlTri, theme.salvia)
+        });
+        
+        // Los puntos siempre visibles, pero brillan si se hace hover
+        els.A.setAttribute({
+            fillColor: getC(hlA || hlTri, theme.carbon),
+            strokeColor: getC(hlA || hlTri, theme.carbon)
+        });
+      }}
+    />
+  );
 };
 ```
 
-### 6.1 Configuración del Board
+### 6.2 Regla de Cero Hardcoding (MathFactory)
 
-```typescript
-const board = JXG.JSXGraph.initBoard(boardRef.current, {
-    boundingbox: [-5, 8, 8, -5],    // [left, top, right, bottom] — dejar 15-20% de margen
-    axis: true,                      // Solo cuando se necesite
-    showCopyright: false,            // NUNCA mostrar watermark
-    showNavigation: false,           // Ocultar navegación de JSXGraph
-    keepaspectratio: true,           // CRUCIAL para geometría
-    grid: false,                     // Habilitar solo cuando sea necesario
-    pan: { enabled: false },         // Deshabilitar pan
-    zoom: { wheel: false },          // Deshabilitar zoom con rueda
-});
-```
+**Prohibición Estricta:** Si un diagrama necesita un elemento geométrico recurrente (una bisectriz, una mediatriz, una circunferencia inscrita, marcas de congruencia, etc.) que **NO** existe actualmente en `MathFactory.ts`, el desarrollador/agente **NO DEBE** crearlo usando la API cruda `board.create('bisector', ...)` dentro del archivo del diagrama.
 
-### 6.2 Creación de Elementos Comunes
+En su lugar, debe:
+1. Ir a `src/components/graph/MathFactory.ts`.
+2. Crear la función exportada correspondiente (ej. `createBisector`).
+3. Aplicarle el estilo por defecto de la paleta Arts & Crafts.
+4. Importarla y usarla en el diagrama.
 
-```typescript
-// Punto fijo (invisible, para construcción)
-board.create('point', [x, y], { fixed: true, withLabel: false, visible: false });
+Esto asegura que nuestra librería visual crezca orgánicamente y que todos los elementos compartan la misma identidad visual.
 
-// Punto arrastrable con snapping
-board.create('glider', [x, y, board.defaultAxes.x], {
-    withLabel: false, color: '#333333', size: 4,
-    snapToGrid: true, snapSizeX: 1
-});
+### 6.3 Separación de isStep y isHL
 
-// Segmento con color semántico
-board.create('segment', [p1, p2], {
-    strokeColor: '#C86446', strokeWidth: 3,
-    label: { fontSize: 20, cssClass: 'font-serif font-bold italic', strokeColor: '#C86446' }
-});
-
-// Polígono regular
-board.create('regularpolygon', [p1, p2, 4], {
-    fillColor: '#C86446', fillOpacity: 0.2,
-    borders: { strokeColor: '#C86446' },
-    vertices: { visible: false }
-});
-
-// Ángulo
-board.create('angle', [p1, vertex, p3], {
-    radius: 1, fillColor: '#A2C2A2', fillOpacity: 0.3
-});
-
-// Gráfica de función
-board.create('functiongraph', [x => Math.sin(x), -Math.PI, Math.PI], {
-    strokeColor: '#C86446', strokeWidth: 3
-});
-
-// Etiqueta de texto
-board.create('text', [x, y, 'formula'], { fontSize: 18, cssClass: 'font-serif' });
-
-// Slider
-board.create('slider', [[x, y], [x2, y2], [initial, min, max]], {
-    snapWidth: 0.1, name: 'value'
-});
-```
-
-### 6.3 Limpieza (OBLIGATORIA)
-
-```typescript
-return () => {
-    JXG.JSXGraph.freeBoard(board);
-    elementsRef.current = {};
-};
-```
-
-### 6.4 Wrapper JXGBoard (alternativa existente)
-
-El proyecto incluye un wrapper `src/components/core/JXGBoard.tsx` que simplifica la inicialización. Algunos diagramas existentes lo usan:
-
-```typescript
-import JXGBoard from '../../components/core/JXGBoard';
-
-export const MyDiagram = () => {
-    const highlight = useMathStore(state => state.variables['highlight']);
-    const isHighlight = (id: string) => Array.isArray(highlight)
-        ? (highlight as string[]).includes(id) : highlight === id;
-
-    const logic = (board: any) => {
-        // Crear elementos y registrar board.on('update', ...) aquí
-    };
-
-    return <JXGBoard logic={logic} bounds={[-5, 5, 5, -5]} className="w-full aspect-square" />;
-};
-```
-
-> **Preferencia:** El patrón canónico es `initBoard` directo (§6). El wrapper JXGBoard existe en diagramas legacy y puede usarse para casos simples, pero los nuevos diagramas DEBEN usar el patrón canónico para tener control total sobre highlight reactivos, cleanup y accesibilidad.
+Como se muestra en el código anterior, NUNCA sobreescribas la visibilidad pura basada en pasos con el highlight. Utiliza funciones generadoras como `getOp`, `getC` y `getW` para coordinar limpiamente la opacidad, color y grosor. Esto previene "paralelogramos fantasma", solapamientos visuales sucios y asegura que un elemento que pertenece a un paso siga brillando si se hace hover sobre su link en el texto.
 
 ---
 
@@ -784,10 +668,10 @@ Cuando hay varios diagramas (patrón por paso o híbrido), el `DemonstrationSect
 
 - El panel izquierdo (diagrama) es **`position: sticky`** — permanece fijo en pantalla mientras el texto scrollea
 - Los diagramas cambian con una **transición de fundido suave** (opacity 700ms ease-in-out)
-- El diagrama activo se determina por `MathStore.variables['highlight']`: si el `target` del `MedievalStep` visible coincide con una clave de `diagrams`, ese diagrama se muestra
+- El diagrama activo se determina por `MathStore.variables['step']`: si el `target` del `MedievalStep` visible coincide con una clave de `diagrams`, ese diagrama se muestra
 - Si ningún `target` coincide, se muestra el primer diagrama del mapa
 
-Esto asegura que el estudiante siempre vea el diagrama correcto para el paso que está leyendo, sin perder el contexto visual.
+Esto asegura que el estudiante siempre vea el diagrama correcto para el paso que está leyendo, sin importar si hace hover con el ratón por otras partes del texto (lo cual altera `highlight`, no `step`).
 
 ### 15.3 Referencias al Diagrama — Obligatorias
 
@@ -858,10 +742,24 @@ useEffect(() => {
 
 **CRÍTICO:** Todo atributo modificado por cualquier condición de highlight DEBE restaurarse explícitamente a su valor por defecto en el bloque de reset. Omitir un reset causa highlights "pegados".
 
-### 15.6 `DemonstrationSection` — cómo funciona
+### 15.6 Errores Comunes a Evitar (Checklist de Demostraciones)
 
-- Lee `MathStore.variables['highlight']` para decidir qué diagrama mostrar
-- Si se pasa `diagrams` (mapa), busca el diagrama cuya clave coincide con `highlight`; si no coincide, muestra el primero
+Al crear o refactorizar diagramas de demostración, **evita estos errores frecuentes**:
+
+1. **Recortes de Bounding Box**: Asegúrate de que el `boundingbox` sea lo suficientemente amplio para alojar polígonos auxiliares grandes (ej. el cuadrado sobre la hipotenusa). Deja siempre un margen holgado.
+2. **Targets Genéricos**: Usa `target` granulares en `<InteractiveElement>`. En lugar de `target="cuadrados"`, usa `target="cuadrado-a"`, `target="cuadrado-b"`, etc. Cada elemento geométrico debe tener su propio identificador único para el hover.
+3. **Menciones No Envueltas**: ABSOLUTAMENTE TODA mención en el texto a un triángulo, cuadrado, ángulo o vértice (ej. $\triangle ACD$, lado $a$) DEBE estar envuelta en su respectivo `<InteractiveElement>`. El texto debe ser un campo de minas interactivo.
+4. **Visibilidad de Puntos Auxiliares**: Los vértices y puntos que no forman parte de la figura inicial (ej. los vértices exteriores de los cuadrados) deben nacer INVISIBLES (`visible: false`). Solo deben mostrarse (a través del `step` o del `highlight`) en el momento en que se utilizan para definir un polígono o segmento auxiliar.
+5. **Rigor Matemático y Dependencias Estrictas**:
+    - Cada afirmación en una demostración DEBE estar matemáticamente justificada combinando pasos lógicos, axiomas, resultados previos y la hipótesis. (Usa la axiomática de Hilbert).
+    - **TODA** dependencia utilizada como justificación (ej. `teorema-construccion-cuadrado`, `propiedad-aditiva-area`, `axioma-congruencia-5`) DEBE estar explícitamente enlazada con `<ConceptLink targetId="..." isDependency={true}>`.
+    - Incluso si el concepto no está todavía implementado, **añádelo**. Esto generará un enlace a una página "En construcción" de forma temporal, pero es ABSOLUTAMENTE NECESARIO para que el sistema pueda generar el árbol riguroso de dependencias lógico-matemáticas en el backend.
+6. **Diagramas Adecuados y Múltiples**: Si una demostración contiene transformaciones muy distintas (ej. diferentes disposiciones de piezas) o se vuelve visualmente demasiado compleja para un único espacio de dibujo, no intentes forzarlo en un solo diagrama. **Crea y utiliza múltiples diagramas**. Puedes pasar un mapa al `<DemonstrationSection diagrams={{ paso1: <DiagramaA />, paso2: <DiagramaB /> }}>` para que el diagrama cambie dinámicamente conforme el usuario avanza por los pasos.
+
+### 15.7 `DemonstrationSection` — cómo funciona
+
+- Lee `MathStore.variables['step']` para decidir qué diagrama mostrar (transición sticky)
+- Si se pasa `diagrams` (mapa), busca el diagrama cuya clave coincide con `step`; si no coincide, muestra el primero
 - Si se pasa `diagram` (single), lo muestra siempre
 - Layout: panel izquierdo sticky (diagrama), panel derecho scrolleable (texto con MedievalSteps)
 - Transiciones entre diagramas: opacity 700ms ease-in-out (fundido suave)
@@ -1640,6 +1538,30 @@ angleC.setAttribute({ visible: hGlobal });
 ```
 
 **Principio:** `bright = showAll || target || hGlobal` asegura que cuando el highlight global está activo, **todos** los elementos se iluminan (no solo los del target específico). Esto resuelve el patrón donde varios InteractiveElements comparten elementos visuales.
+
+---
+
+## 40. Demostraciones sin Diagrama (layout: text)
+
+Para demostraciones que no requieren visualización geométrica, usar `layout: "text"` y **NO envolver el contenido en `<DemonstrationSection>`**, ya que este componente reserva espacio para un panel de diagrama aunque no exista:
+
+```mdx
+export const metadata = {
+  "layout": "text"
+};
+
+// ❌ INCORRECTO — DemonstrationSection reserva panel de diagrama
+<DemonstrationSection>
+  <MedievalStep ...>...</MedievalStep>
+</DemonstrationSection>
+
+// ✅ CORRECTO — MedievalSteps directamente en el cuerpo MDX
+<MedievalStep number={1} title="Suposición">
+  ...
+</MedievalStep>
+```
+
+Con `layout: "text"`, el contenido ocupa el ancho completo de la ficha, sin panel lateral reservado.
 
 ---
 

@@ -1,0 +1,41 @@
+export const metadata = {
+  "id": "axioma-paralelas-hiperbolico",
+  "type": "axioma",
+  "title": "Axioma de las Paralelas (Lobachevski)",
+  "description": "Por un punto exterior a una recta pasan al menos dos rectas paralelas a la dada.",
+  "statement": "Dada una recta l y un punto P no perteneciente a l, existen al menos dos rectas m y n distintas que pasan por P y son paralelas a l.",
+  "tags": ["geometria", "paralelas", "geometria-hiperbolica"],
+  "authors": ["lobachevski", "bolyai"],
+  "hasSimulation": true,
+};
+
+import { HyperbolicParallel } from '@/boundary/components/diagrams/Axiomas/HyperbolicParallel';
+export const Simulation = HyperbolicParallel;
+import { InteractiveElement } from "@/boundary/components/ui/VisualBind";
+
+<Capitular letra="P" />
+or un <InteractiveElement target="pP" color="terracota"><ConceptLink targetId="punto" isDependency={false}>punto</ConceptLink></InteractiveElement> exterior a una <ConceptLink targetId="recta" isDependency={false}>recta</ConceptLink> pasan al menos dos <InteractiveElement target="lineM" color="terracota">rectas</InteractiveElement> <InteractiveElement target="lineN" color="carbon"><ConceptLink targetId="paralelas" isDependency={false}>paralelas</ConceptLink></InteractiveElement> a la dada. Este <ConceptLink targetId="axioma" isDependency={false}>axioma</ConceptLink> niega el <ConceptLink targetId={["axioma-paralelas-euclides", "postulado", "paralelas"]}>quinto postulado</ConceptLink> de <ConceptLink targetId="euclides" isDependency={false}>Euclides</ConceptLink> y fundamenta la <ConceptLink targetId={["sistema-hiperbolico", "geometria"]}>geometría hiperbólica</ConceptLink>.
+
+<Separador />
+
+### Enunciado Formal
+
+<Formula>
+  $$ \forall l \; \forall P \notin l \; \exists m, n : P \in m \land P \in n \land m \neq n \land m \cap l = \emptyset \land n \cap l = \emptyset. $$
+</Formula>
+
+<Separador />
+
+### Discusión
+
+Este axioma es la negación del <ConceptLink targetId={["axioma-paralelas-euclides", "postulado", "paralelas"]}>quinto postulado</ConceptLink> de Euclides. Mientras que Euclides afirma que por un punto exterior pasa *exactamente una* paralela, Lobachevski postula que pasan *al menos dos*. De aquí se demuestra matemáticamente que pasan <ConceptLink targetId="infinito" isDependency={false}>infinitas</ConceptLink> rectas concurrentes asintóticas.
+
+A partir de este axioma se desarrolla la <ConceptLink targetId={["sistema-hiperbolico", "geometria"]}>**geometría hiperbólica**</ConceptLink>, descubierta independientemente por <ConceptLink targetId="lobachevski" isDependency={false}>Nikolái Lobachevski</ConceptLink> (1829) y <ConceptLink targetId="bolyai" isDependency={false}>János Bolyai</ConceptLink> (1832). En esta <ConceptLink targetId="geometria" isDependency={false}>geometría</ConceptLink>, la suma de los <ConceptLink targetId="angulo" isDependency={false}>ángulos</ConceptLink> de un <ConceptLink targetId="triangulo" isDependency={false}>triángulo</ConceptLink> es siempre estrictamente menor que $180^\circ$, el <ConceptLink targetId="area" isDependency={false}>área</ConceptLink> de un triángulo es proporcional a su <ConceptLink targetId="defecto-angular" isDependency={false}>defecto angular</ConceptLink>, y existen rectas paralelas que <ConceptLink targetId="divergencia" isDependency={false}>divergen</ConceptLink> exponencialmente.
+
+Existe un tercer caso —ninguna paralela— que corresponde a la <ConceptLink targetId="geometria-eliptica" isDependency={false}>geometría elíptica</ConceptLink> de <ConceptLink targetId="riemann" isDependency={false}>Riemann</ConceptLink>, donde no hay rectas paralelas porque todo par de rectas se interseca. En esta clasificación analítica, la <ConceptLink targetId={["sistema-euclidiano", "geometria", "euclides"]}>geometría euclídea</ConceptLink> corresponde a <ConceptLink targetId="curvatura" isDependency={false}>curvatura</ConceptLink> nula ($K=0$), la hiperbólica a curvatura negativa constante ($K<0$) y la elíptica a curvatura positiva constante ($K>0$).
+
+<Separador />
+
+### Observaciones
+
+La independencia del <ConceptLink targetId={["axioma-paralelas-euclides", "postulado", "paralelas"]}>quinto postulado</ConceptLink> fue uno de los descubrimientos matemáticos más profundos del siglo XIX. Demostró que la <ConceptLink targetId={["sistema-euclidiano", "geometria", "euclides"]}>geometría euclídea</ConceptLink> no es la única estructura espacial lógicamente consistente, sino una abstracción particular. Este paradigma abrió el camino a la <ConceptLink targetId="geometria-diferencial" isDependency={false}>geometría diferencial</ConceptLink> de curvas en <ConceptLink targetId="variedad-diferenciable" isDependency={false}>variedades</ConceptLink> y, en última instancia, proporcionó el andamiaje matemático para la teoría de la <ConceptLink targetId="relatividad-general" isDependency={false}>relatividad general</ConceptLink> de <ConceptLink targetId="einstein" isDependency={false}>Einstein</ConceptLink>.

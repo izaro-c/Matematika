@@ -13,7 +13,7 @@ Matematika es una plataforma enciclopédica interactiva y orgánica diseñada pa
 
 ## 🛠 Stack Tecnológico
 
-- **Framework**: React 18 + TypeScript
+- **Framework**: React 19 + TypeScript
 - **Bundler**: Vite + Rollup
 - **Routing**: Wouter (Routing ligero y declarativo)
 - **Contenido**: MDX (`@mdx-js/rollup`) + Remark/Rehype Math (Soporte KaTeX)
@@ -40,6 +40,12 @@ Matematika es una plataforma enciclopédica interactiva y orgánica diseñada pa
    ```bash
    npm run build
    ```
+
+4. **Ejecutar Pruebas y Generar Reporte (CPT)**:
+   ```bash
+   npm run test:report
+   ```
+   Esto ejecutará las pruebas automatizadas (Vitest) e inyectará los resultados dinámicamente en la documentación de pruebas (`Category_Partition_Tests.md`).
 
 ---
 
@@ -91,6 +97,11 @@ src/
 ├── diagrams/         # Visualizaciones y simulaciones (D3/React/Canvas)
 ├── pages/            # Vistas principales (GraphPage, ContentLayout, Home)
 ├── store/            # Lógica de Estado (ContentStore, UIStore, schemas)
-└── App.tsx           # Punto de entrada y Routing global
-docs/                 # Documentación técnica, directrices y reglas del proyecto
+├── App.tsx           # Punto de entrada y Routing global
+tests/                # Suite de pruebas automatizadas (Vitest)
+docs/                 # Documentación del proyecto
+  ├── Product_Backlog.md  # Hoja de ruta y User Stories priorizadas
+  ├── SRS.md              # Especificación de Requisitos de Software
+  ├── testing/            # Estrategia de Testing (CPT) y Reportes automáticos
+  └── uml/                # Diagramas de Arquitectura (Clases, Secuencia, Casos de Uso)
 ```

@@ -1,0 +1,18 @@
+sequenceDiagram
+    autonumber
+    actor U as Utente
+    participant V as Vista (TheoremPage)
+    participant C as Controller (useGraphSandboxStore)
+    participant UT as Utility (graphUtils)
+    participant DB as Database (ContentDAO)
+
+    U->>V: Clicca "Attiva Assioma"
+    V->>C: toggleAxiom(axiomId)
+    C->>DB: leggi(graph_structure.json)
+    DB-->>C: GraphStructure (Entity)
+    C->>UT: evaluateActiveGraph(activeAxioms, GraphStructure)
+    Note over UT: Algoritmo di<br/>Ordinamento Topologico
+    UT-->>C: Set~String~ validNodes
+    C->>C: Crea GraphEvaluationDTO
+    C-->>V: Invia GraphEvaluationDTO
+    V-->>U: Re-render UI (colora nodi)

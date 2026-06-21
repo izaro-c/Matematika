@@ -1,0 +1,47 @@
+export const metadata = {
+  "id": "axioma-arquimedes",
+  "type": "axioma",
+  "title": "Axioma de Arquímedes",
+  "description": "Dados dos segmentos AB y CD, existe un número natural n tal que n copias de AB sumadas superan a CD.",
+  "statement": "Para cualquier par de segmentos AB y CD, existe un entero positivo n tal que n · AB > CD.",
+  "tags": ["geometria", "continuidad", "geometria-absoluta", "medida"],
+  "authors": ["hilbert", "arquimedes"],
+  "hasSimulation": true,
+};
+
+import { AxiomaArquimedes } from '@/boundary/components/diagrams/Axiomas/AxiomaArquimedes';
+export const Simulation = AxiomaArquimedes;
+import { InteractiveElement } from "@/boundary/components/ui/VisualBind";
+
+<Capitular letra="D" />
+ados dos <ConceptLink targetId="segmento" isDependency={false}>segmentos</ConceptLink> cualesquiera, existe un número <ConceptLink targetId="numero-natural" isDependency={false}>natural</ConceptLink> de copias del menor que, al yuxtaponerse consecutivamente, superan en <ConceptLink targetId="longitud" isDependency={false}>longitud</ConceptLink> al mayor. El <ConceptLink targetId={["axioma-arquimedes", "axioma", "arquimedes"]}>axioma de Arquímedes</ConceptLink> garantiza que la <ConceptLink targetId="recta" isDependency={false}>recta</ConceptLink> euclídea carece de <ConceptLink targetId="segmento" isDependency={false}>segmentos</ConceptLink> <ConceptLink targetId="infinitesimal" isDependency={false}>infinitesimales</ConceptLink> o infinitamente grandes en relación mutua, estableciendo la base para la <ConceptLink targetId="medida" isDependency={false}>medida</ConceptLink> continua.
+
+<Separador />
+
+### Enunciado Formal
+
+<Formula title="Axioma de Arquímedes (Eudoxo)">
+  $$ \forall \overline{AB}, \overline{CD} \; \exists n \in \mathbb{N} : n \cdot \overline{AB} > \overline{CD} $$
+</Formula>
+
+<Nota>
+  La expresión $n \cdot \overline{AB}$ denota la suma de $n$ copias del <ConceptLink targetId="segmento" isDependency={false}>segmento</ConceptLink> $AB$ colocadas consecutivamente sobre una <ConceptLink targetId="recta" isDependency={false}>recta</ConceptLink>, un proceso formalmente definido mediante el <ConceptLink targetId="axioma-congruencia-1" isDependency={false}>axioma de transporte de segmentos</ConceptLink>.
+</Nota>
+
+<Separador />
+
+### Discusión
+
+El <ConceptLink targetId={["axioma-arquimedes", "axioma", "arquimedes"]}>axioma de Arquímedes</ConceptLink> establece que la <ConceptLink targetId="recta" isDependency={false}>recta</ConceptLink> no contiene <ConceptLink targetId="segmento" isDependency={false}>segmentos</ConceptLink> "infinitamente grandes" ni "<ConceptLink targetId="infinitesimal" isDependency={false}>infinitesimales</ConceptLink>" con respecto a otros. Dado cualquier segmento <InteractiveElement target="pA" color="salvia">por pequeño que sea</InteractiveElement>, podemos repetirlo un <ConceptLink targetId="numero-finito" isDependency={false}>número finito</ConceptLink> de veces para superar <InteractiveElement target="pC" color="carbon">cualquier otro segmento</InteractiveElement>, por masivo que sea.
+
+Este <ConceptLink targetId="axioma" isDependency={false}>axioma</ConceptLink> conecta intrínsecamente la <ConceptLink targetId="geometria" isDependency={false}>geometría</ConceptLink> con la <ConceptLink targetId="aritmetica" isDependency={false}>aritmética</ConceptLink>: permite definir la <ConceptLink targetId="razon" isDependency={false}>razón geométrica</ConceptLink> entre dos segmentos y, en última instancia, asignar <ConceptLink targetId="numeros-reales" isDependency={false}>números reales</ConceptLink> como <ConceptLink targetId="longitud" isDependency={false}>longitudes</ConceptLink>. Sin él, la recta podría contener elementos <ConceptLink targetId="no-arquimediano" isDependency={false}>no arquimedianos</ConceptLink>, como ocurre con los <ConceptLink targetId="numeros-hiperreales" isDependency={false}>números hiperreales</ConceptLink> del <ConceptLink targetId="analisis-no-estandar" isDependency={false}>análisis no estándar</ConceptLink> de Robinson.
+
+En la axiomática de <ConceptLink targetId="hilbert" isDependency={false}>Hilbert</ConceptLink>, este axioma (junto con el <ConceptLink targetId={["axioma-completitud", "axioma"]}>axioma de completitud</ConceptLink>) garantiza que el sistema analítico de segmentos sobre una recta es estrictamente <ConceptLink targetId="isomorfismo" isDependency={false}>isomorfo</ConceptLink> a los <ConceptLink targetId="numeros-reales" isDependency={false}>números reales</ConceptLink> positivos $\mathbb{R}^+$.
+
+<Separador />
+
+### Observaciones
+
+Históricamente, <ConceptLink targetId="arquimedes" isDependency={false}>Arquímedes</ConceptLink> atribuyó este principio fundamental de <ConceptLink targetId="continuidad" isDependency={false}>continuidad</ConceptLink> a <ConceptLink targetId="eudoxo" isDependency={false}>Eudoxo de Cnido</ConceptLink> (siglo IV a.C.). Es un postulado central de la <ConceptLink targetId={["sistema-absoluto", "geometria"]}>geometría absoluta</ConceptLink>: tanto la <ConceptLink targetId={["sistema-euclidiano", "geometria", "euclides"]}>geometría euclídea</ConceptLink> como la <ConceptLink targetId="geometria-hiperbolica" isDependency={false}>hiperbólica</ConceptLink> lo satisfacen. Las geometrías no arquimedianas existen en la teoría formal de <ConceptLink targetId="cuerpo" isDependency={false}>cuerpos</ConceptLink> ordenados, pero no modelan el <ConceptLink targetId="espacio-fisico" isDependency={false}>espacio físico</ConceptLink> intuitivo.
+
+

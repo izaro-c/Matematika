@@ -1,0 +1,17 @@
+graph TD
+    1(1. Se graph è vuoto?) -->|Si| 2(2. return Set vuoto)
+    1 -->|No| 3(3. Se axioms == null?)
+    2 --> 13(((13. Fine)))
+    3 -->|Si| 4(4. throw Error Assiomi)
+    4 --> 13
+    3 -->|No| 5(5. checkTopologicalOrder)
+    5 --> 6(6. Se non è DAG?)
+    6 -->|Si| 7(7. throw Error Ciclo)
+    7 --> 13
+    6 -->|No| 8(8. Set validNodes)
+    8 --> 9(9. graph.compute)
+    9 --> 10(10. Se success è false?)
+    10 -->|Si| 11(11. return null)
+    11 --> 13
+    10 -->|No| 12(12. return validNodes)
+    12 --> 13

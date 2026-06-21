@@ -1,0 +1,1957 @@
+{
+  "sistema-absoluto": {
+    "id": "sistema-absoluto",
+    "slug": "sistema-absoluto",
+    "filePath": "axiomatic-systems/sistema-absoluto.mdx",
+    "contentType": "sistema-axiomatico",
+    "metadata": {
+      "id": "sistema-absoluto",
+      "type": "sistema-axiomatico",
+      "title": "Geometría Absoluta",
+      "description": "Geometría que no depende del quinto postulado: incidencia, orden, congruencia y continuidad. También conocida como geometría neutral. Todo teorema demostrable en geometría absoluta lo es tanto en la euclídea como en la hiperbólica.",
+      "axiomas": [
+        "axioma-incidencia-1",
+        "axioma-incidencia-2",
+        "axioma-incidencia-3",
+        "axioma-incidencia-4",
+        "axioma-incidencia-5",
+        "axioma-incidencia-6",
+        "axioma-incidencia-7",
+        "axioma-incidencia-8",
+        "axioma-orden-1",
+        "axioma-orden-2",
+        "axioma-orden-3",
+        "axioma-orden-4",
+        "axioma-congruencia-1",
+        "axioma-congruencia-2",
+        "axioma-congruencia-3",
+        "axioma-congruencia-4",
+        "axioma-congruencia-5",
+        "axioma-arquimedes",
+        "axioma-completitud"
+      ],
+      "mathematicians": [
+        "hilbert"
+      ],
+      "tags": [
+        "geometria",
+        "absoluta",
+        "neutral",
+        "fundamentos"
+      ]
+    }
+  },
+  "sistema-euclidiano": {
+    "id": "sistema-euclidiano",
+    "slug": "sistema-euclidiano",
+    "filePath": "axiomatic-systems/sistema-euclidiano.mdx",
+    "contentType": "sistema-axiomatico",
+    "metadata": {
+      "id": "sistema-euclidiano",
+      "type": "sistema-axiomatico",
+      "title": "Geometría Euclídea",
+      "description": "Geometría clásica del plano y el espacio tridimensional, basada en los axiomas de incidencia, orden, congruencia, continuidad y el quinto postulado de Euclides.",
+      "axiomas": [
+        "axioma-incidencia-1",
+        "axioma-incidencia-2",
+        "axioma-incidencia-3",
+        "axioma-incidencia-4",
+        "axioma-incidencia-5",
+        "axioma-incidencia-6",
+        "axioma-incidencia-7",
+        "axioma-incidencia-8",
+        "axioma-orden-1",
+        "axioma-orden-2",
+        "axioma-orden-3",
+        "axioma-orden-4",
+        "axioma-congruencia-1",
+        "axioma-congruencia-2",
+        "axioma-congruencia-3",
+        "axioma-congruencia-4",
+        "axioma-congruencia-5",
+        "axioma-arquimedes",
+        "axioma-completitud",
+        "axioma-paralelas-euclides"
+      ],
+      "models": [],
+      "mathematicians": [
+        "euclides",
+        "hilbert"
+      ],
+      "tags": [
+        "geometria",
+        "euclidiana",
+        "clasica",
+        "fundamentos"
+      ]
+    }
+  },
+  "sistema-hiperbolico": {
+    "id": "sistema-hiperbolico",
+    "slug": "sistema-hiperbolico",
+    "filePath": "axiomatic-systems/sistema-hiperbolico.mdx",
+    "contentType": "sistema-axiomatico",
+    "metadata": {
+      "id": "sistema-hiperbolico",
+      "type": "sistema-axiomatico",
+      "title": "Geometría Hiperbólica",
+      "description": "Geometría no euclídea que satisface todos los axiomas de la geometría absoluta pero reemplaza el quinto postulado de Euclides por su negación: por un punto exterior a una recta pasan infinitas paralelas.",
+      "axiomas": [
+        "axioma-incidencia-1",
+        "axioma-incidencia-2",
+        "axioma-incidencia-3",
+        "axioma-incidencia-4",
+        "axioma-incidencia-5",
+        "axioma-incidencia-6",
+        "axioma-incidencia-7",
+        "axioma-incidencia-8",
+        "axioma-orden-1",
+        "axioma-orden-2",
+        "axioma-orden-3",
+        "axioma-orden-4",
+        "axioma-congruencia-1",
+        "axioma-congruencia-2",
+        "axioma-congruencia-3",
+        "axioma-congruencia-4",
+        "axioma-congruencia-5",
+        "axioma-arquimedes",
+        "axioma-completitud",
+        "axioma-paralelas-hiperbolico"
+      ],
+      "models": [],
+      "mathematicians": [
+        "lobachevski",
+        "bolyai",
+        "hilbert"
+      ],
+      "tags": [
+        "geometria",
+        "hiperbolica",
+        "no-euclidiana",
+        "fundamentos"
+      ]
+    }
+  },
+  "sistema-incidencia": {
+    "id": "sistema-incidencia",
+    "slug": "sistema-incidencia",
+    "filePath": "axiomatic-systems/sistema-incidencia.mdx",
+    "contentType": "sistema-axiomatico",
+    "metadata": {
+      "id": "sistema-incidencia",
+      "type": "sistema-axiomatico",
+      "title": "Sistema de Incidencia",
+      "description": "Sistema axiomático que define las relaciones básicas de pertenencia entre puntos, rectas y planos. Es la estructura más débil de la geometía —solo postula cómo se relacionan estos objetos primitivos sin nociones de orden, congruencia o medida.",
+      "axiomas": [
+        "axioma-incidencia-1",
+        "axioma-incidencia-2",
+        "axioma-incidencia-3",
+        "axioma-incidencia-4",
+        "axioma-incidencia-5",
+        "axioma-incidencia-6",
+        "axioma-incidencia-7",
+        "axioma-incidencia-8"
+      ],
+      "mathematicians": [
+        "hilbert"
+      ],
+      "models": [
+        "modelo-tres-puntos"
+      ],
+      "tags": [
+        "geometria",
+        "incidencia",
+        "fundamentos"
+      ]
+    }
+  },
+  "axioma-arquimedes": {
+    "id": "axioma-arquimedes",
+    "slug": "axioma-arquimedes",
+    "filePath": "axioms/axioma-arquimedes.mdx",
+    "contentType": "axioma",
+    "metadata": {
+      "id": "axioma-arquimedes",
+      "type": "axioma",
+      "title": "Axioma de Arquímedes",
+      "description": "Dados dos segmentos AB y CD, existe un número natural n tal que n copias de AB sumadas superan a CD.",
+      "statement": "Para cualquier par de segmentos AB y CD, existe un entero positivo n tal que n · AB > CD.",
+      "tags": [
+        "geometria",
+        "continuidad",
+        "geometria-absoluta",
+        "medida"
+      ],
+      "authors": [
+        "hilbert",
+        "arquimedes"
+      ],
+      "hasSimulation": true
+    }
+  },
+  "axioma-completitud": {
+    "id": "axioma-completitud",
+    "slug": "axioma-completitud",
+    "filePath": "axioms/axioma-completitud.mdx",
+    "contentType": "axioma",
+    "metadata": {
+      "id": "axioma-completitud",
+      "type": "axioma",
+      "title": "Axioma de Completitud (Dedekind)",
+      "description": "El conjunto de puntos de una recta no puede extenderse sin violar los axiomas de incidencia, orden, congruencia y continuidad.",
+      "statement": "El sistema de puntos sobre una recta, con las relaciones de incidencia, orden y congruencia establecidas, es maximal: no admite extensiones que preserven todos los axiomas.",
+      "tags": [
+        "geometria",
+        "continuidad",
+        "geometria-absoluta",
+        "fundamentos"
+      ],
+      "authors": [
+        "hilbert",
+        "dedekind"
+      ],
+      "hasSimulation": true
+    }
+  },
+  "axioma-congruencia-1": {
+    "id": "axioma-congruencia-1",
+    "slug": "axioma-congruencia-1",
+    "filePath": "axioms/axioma-congruencia-1.mdx",
+    "contentType": "axioma",
+    "metadata": {
+      "id": "axioma-congruencia-1",
+      "type": "axioma",
+      "title": "Axioma III-1 (Congruencia)",
+      "description": "Dado un segmento AB y una semirrecta con origen en C, existe un único punto D sobre la semirrecta tal que AB es congruente con CD.",
+      "statement": "Si AB es un segmento y r una semirrecta con origen C, entonces existe un único punto D ∈ r tal que AB ≅ CD.",
+      "tags": [
+        "geometria",
+        "congruencia",
+        "geometria-absoluta"
+      ],
+      "authors": [
+        "hilbert"
+      ],
+      "hasSimulation": true
+    }
+  },
+  "axioma-congruencia-2": {
+    "id": "axioma-congruencia-2",
+    "slug": "axioma-congruencia-2",
+    "filePath": "axioms/axioma-congruencia-2.mdx",
+    "contentType": "axioma",
+    "metadata": {
+      "id": "axioma-congruencia-2",
+      "type": "axioma",
+      "title": "Axioma III-2 (Congruencia)",
+      "description": "La congruencia de segmentos es transitiva: si AB ≅ CD y AB ≅ EF, entonces CD ≅ EF.",
+      "statement": "La relación de congruencia de segmentos es transitiva.",
+      "tags": [
+        "geometria",
+        "congruencia",
+        "geometria-absoluta"
+      ],
+      "authors": [
+        "hilbert"
+      ],
+      "hasSimulation": true
+    }
+  },
+  "axioma-congruencia-3": {
+    "id": "axioma-congruencia-3",
+    "slug": "axioma-congruencia-3",
+    "filePath": "axioms/axioma-congruencia-3.mdx",
+    "contentType": "axioma",
+    "metadata": {
+      "id": "axioma-congruencia-3",
+      "type": "axioma",
+      "title": "Axioma III-3 (Congruencia)",
+      "description": "Si B está entre A y C, B' está entre A' y C', y AB ≅ A'B' y BC ≅ B'C', entonces AC ≅ A'C'.",
+      "statement": "La congruencia de segmentos se preserva bajo suma: si A*B*C, A'*B'*C', AB ≅ A'B' y BC ≅ B'C', entonces AC ≅ A'C'.",
+      "tags": [
+        "geometria",
+        "congruencia",
+        "geometria-absoluta"
+      ],
+      "authors": [
+        "hilbert"
+      ],
+      "hasSimulation": true
+    }
+  },
+  "axioma-congruencia-4": {
+    "id": "axioma-congruencia-4",
+    "slug": "axioma-congruencia-4",
+    "filePath": "axioms/axioma-congruencia-4.mdx",
+    "contentType": "axioma",
+    "metadata": {
+      "id": "axioma-congruencia-4",
+      "type": "axioma",
+      "title": "Axioma III-4 (Congruencia)",
+      "description": "Dado un ángulo y una semirrecta, existe un único ángulo congruente sobre un lado dado de la semirrecta.",
+      "statement": "Dado un ángulo ∠(h,k) y una semirrecta h' sobre una recta l, existe una única semirrecta k' en un lado dado de l tal que ∠(h,k) ≅ ∠(h',k').",
+      "tags": [
+        "geometria",
+        "congruencia",
+        "geometria-absoluta"
+      ],
+      "authors": [
+        "hilbert"
+      ],
+      "hasSimulation": true
+    }
+  },
+  "axioma-congruencia-5": {
+    "id": "axioma-congruencia-5",
+    "slug": "axioma-congruencia-5",
+    "filePath": "axioms/axioma-congruencia-5.mdx",
+    "contentType": "axioma",
+    "metadata": {
+      "id": "axioma-congruencia-5",
+      "type": "axioma",
+      "title": "Axioma III-5 (SAS / LAL)",
+      "description": "Si dos lados y el ángulo comprendido de un triángulo son congruentes a los de otro triángulo, entonces ambos triángulos son congruentes.",
+      "statement": "Dados los triángulos ABC y A'B'C', si AB ≅ A'B', AC ≅ A'C' y ∠BAC ≅ ∠B'A'C', entonces los triángulos son congruentes: todas las partes correspondientes son congruentes.",
+      "tags": [
+        "geometria",
+        "congruencia",
+        "triangulos",
+        "geometria-absoluta"
+      ],
+      "authors": [
+        "hilbert"
+      ],
+      "hasSimulation": true
+    }
+  },
+  "axioma-incidencia-1": {
+    "id": "axioma-incidencia-1",
+    "slug": "axioma-incidencia-1",
+    "filePath": "axioms/axioma-incidencia-1.mdx",
+    "contentType": "axioma",
+    "metadata": {
+      "id": "axioma-incidencia-1",
+      "type": "axioma",
+      "title": "Axioma I-1 (Incidencia)",
+      "description": "Por dos puntos distintos del espacio pasa exactamente una recta.",
+      "statement": "Dados dos puntos distintos A y B, existe una única recta que los contiene.",
+      "authors": [
+        "hilbert"
+      ],
+      "hasSimulation": true
+    }
+  },
+  "axioma-incidencia-2": {
+    "id": "axioma-incidencia-2",
+    "slug": "axioma-incidencia-2",
+    "filePath": "axioms/axioma-incidencia-2.mdx",
+    "contentType": "axioma",
+    "metadata": {
+      "id": "axioma-incidencia-2",
+      "type": "axioma",
+      "title": "Axioma I-2 (Incidencia)",
+      "description": "Toda recta contiene al menos dos puntos distintos.",
+      "statement": "Para toda recta l, existen al menos dos puntos distintos A y B tales que A ∈ l y B ∈ l.",
+      "authors": [
+        "hilbert"
+      ],
+      "hasSimulation": true
+    }
+  },
+  "axioma-incidencia-3": {
+    "id": "axioma-incidencia-3",
+    "slug": "axioma-incidencia-3",
+    "filePath": "axioms/axioma-incidencia-3.mdx",
+    "contentType": "axioma",
+    "metadata": {
+      "id": "axioma-incidencia-3",
+      "type": "axioma",
+      "title": "Axioma I-3 (Incidencia)",
+      "description": "Existen al menos tres puntos no colineales, forzando la dimensionalidad del espacio.",
+      "statement": "Existen tres puntos A, B, C que no pertenecen a una misma recta.",
+      "authors": [
+        "hilbert"
+      ],
+      "hasSimulation": true
+    }
+  },
+  "axioma-incidencia-4": {
+    "id": "axioma-incidencia-4",
+    "slug": "axioma-incidencia-4",
+    "filePath": "axioms/axioma-incidencia-4.mdx",
+    "contentType": "axioma",
+    "metadata": {
+      "id": "axioma-incidencia-4",
+      "type": "axioma",
+      "title": "Axioma I-4 (Incidencia)",
+      "description": "Por tres puntos no colineales pasa exactamente un único plano.",
+      "statement": "Dados tres puntos A, B, C no colineales, existe un único plano π que los contiene.",
+      "authors": [
+        "hilbert"
+      ],
+      "hasSimulation": true
+    }
+  },
+  "axioma-incidencia-5": {
+    "id": "axioma-incidencia-5",
+    "slug": "axioma-incidencia-5",
+    "filePath": "axioms/axioma-incidencia-5.mdx",
+    "contentType": "axioma",
+    "metadata": {
+      "id": "axioma-incidencia-5",
+      "type": "axioma",
+      "title": "Axioma I-5 (Incidencia)",
+      "description": "Todo plano contiene al menos tres puntos no colineales.",
+      "statement": "Para todo plano π, existen tres puntos A, B, C ∈ π que no son colineales.",
+      "authors": [
+        "hilbert"
+      ],
+      "hasSimulation": true
+    }
+  },
+  "axioma-incidencia-6": {
+    "id": "axioma-incidencia-6",
+    "slug": "axioma-incidencia-6",
+    "filePath": "axioms/axioma-incidencia-6.mdx",
+    "contentType": "axioma",
+    "metadata": {
+      "id": "axioma-incidencia-6",
+      "type": "axioma",
+      "title": "Axioma I-6 (Incidencia)",
+      "description": "Si dos puntos de una recta pertenecen a un plano, entonces toda la recta está contenida en dicho plano.",
+      "statement": "Si A y B son puntos de una recta l, y A, B ∈ π, entonces l ⊂ π.",
+      "authors": [
+        "hilbert"
+      ],
+      "hasSimulation": true
+    }
+  },
+  "axioma-incidencia-7": {
+    "id": "axioma-incidencia-7",
+    "slug": "axioma-incidencia-7",
+    "filePath": "axioms/axioma-incidencia-7.mdx",
+    "contentType": "axioma",
+    "metadata": {
+      "id": "axioma-incidencia-7",
+      "type": "axioma",
+      "title": "Axioma I-7 (Incidencia)",
+      "description": "Si dos planos se intersecan, su intersección es una recta.",
+      "statement": "Dados dos planos distintos π y σ con π ∩ σ ≠ ∅, entonces π ∩ σ es una recta.",
+      "authors": [
+        "hilbert"
+      ],
+      "hasSimulation": true
+    }
+  },
+  "axioma-incidencia-8": {
+    "id": "axioma-incidencia-8",
+    "slug": "axioma-incidencia-8",
+    "filePath": "axioms/axioma-incidencia-8.mdx",
+    "contentType": "axioma",
+    "metadata": {
+      "id": "axioma-incidencia-8",
+      "type": "axioma",
+      "title": "Axioma I-8 (Incidencia)",
+      "description": "Existen al menos cuatro puntos que no están todos en un mismo plano.",
+      "statement": "Existen cuatro puntos A, B, C, D tales que no existe un plano π que los contenga a todos.",
+      "authors": [
+        "hilbert"
+      ],
+      "hasSimulation": true
+    }
+  },
+  "axioma-orden-1": {
+    "id": "axioma-orden-1",
+    "slug": "axioma-orden-1",
+    "filePath": "axioms/axioma-orden-1.mdx",
+    "contentType": "axioma",
+    "metadata": {
+      "id": "axioma-orden-1",
+      "type": "axioma",
+      "title": "Axioma II-1 (Orden)",
+      "description": "Si un punto B está entre A y C, entonces A, B, C son colineales y B está entre C y A.",
+      "statement": "Si A, B, C son puntos y B está entre A y C, entonces A, B, C son tres puntos distintos sobre una misma recta y B está entre C y A.",
+      "authors": [
+        "hilbert"
+      ],
+      "hasSimulation": true
+    }
+  },
+  "axioma-orden-2": {
+    "id": "axioma-orden-2",
+    "slug": "axioma-orden-2",
+    "filePath": "axioms/axioma-orden-2.mdx",
+    "contentType": "axioma",
+    "metadata": {
+      "id": "axioma-orden-2",
+      "type": "axioma",
+      "title": "Axioma II-2 (Orden)",
+      "description": "Dados dos puntos distintos A y C, existe al menos un punto B sobre la recta AC que está entre A y C.",
+      "statement": "Para cualquier par de puntos distintos A y C, existe al menos un punto B tal que A * B * C.",
+      "authors": [
+        "hilbert"
+      ],
+      "hasSimulation": true
+    }
+  },
+  "axioma-orden-3": {
+    "id": "axioma-orden-3",
+    "slug": "axioma-orden-3",
+    "filePath": "axioms/axioma-orden-3.mdx",
+    "contentType": "axioma",
+    "metadata": {
+      "id": "axioma-orden-3",
+      "type": "axioma",
+      "title": "Axioma II-3 (Orden)",
+      "description": "Dados tres puntos distintos sobre una recta, exactamente uno de ellos está entre los otros dos.",
+      "statement": "Si A, B, C son tres puntos distintos sobre una misma recta, entonces se cumple exactamente una de las relaciones: A * B * C, A * C * B, o B * A * C.",
+      "authors": [
+        "hilbert"
+      ],
+      "hasSimulation": true
+    }
+  },
+  "axioma-orden-4": {
+    "id": "axioma-orden-4",
+    "slug": "axioma-orden-4",
+    "filePath": "axioms/axioma-orden-4.mdx",
+    "contentType": "axioma",
+    "metadata": {
+      "id": "axioma-orden-4",
+      "type": "axioma",
+      "title": "Axioma II-4 (Pasch)",
+      "description": "Si una recta corta a un lado de un triángulo sin pasar por sus vértices, entonces corta también a otro de los lados.",
+      "statement": "Dado un triángulo ABC y una recta l que no pasa por A, B ni C, si l intersecta el lado AB en un punto entre A y B, entonces l intersecta también AC o BC.",
+      "authors": [
+        "hilbert",
+        "pasch"
+      ],
+      "hasSimulation": true
+    }
+  },
+  "axioma-paralelas-euclides": {
+    "id": "axioma-paralelas-euclides",
+    "slug": "axioma-paralelas-euclides",
+    "filePath": "axioms/axioma-paralelas-euclides.mdx",
+    "contentType": "axioma",
+    "metadata": {
+      "id": "axioma-paralelas-euclides",
+      "type": "axioma",
+      "title": "Axioma de las Paralelas (Euclides)",
+      "description": "Por un punto exterior a una recta pasa exactamente una recta paralela a la dada.",
+      "statement": "Dada una recta l y un punto P no perteneciente a l, existe una única recta m que pasa por P y es paralela a l.",
+      "tags": [
+        "geometria",
+        "paralelas",
+        "geometria-euclidiana"
+      ],
+      "authors": [
+        "euclides",
+        "hilbert"
+      ],
+      "hasSimulation": true
+    }
+  },
+  "axioma-paralelas-hiperbolico": {
+    "id": "axioma-paralelas-hiperbolico",
+    "slug": "axioma-paralelas-hiperbolico",
+    "filePath": "axioms/axioma-paralelas-hiperbolico.mdx",
+    "contentType": "axioma",
+    "metadata": {
+      "id": "axioma-paralelas-hiperbolico",
+      "type": "axioma",
+      "title": "Axioma de las Paralelas (Lobachevski)",
+      "description": "Por un punto exterior a una recta pasan al menos dos rectas paralelas a la dada.",
+      "statement": "Dada una recta l y un punto P no perteneciente a l, existen al menos dos rectas m y n distintas que pasan por P y son paralelas a l.",
+      "tags": [
+        "geometria",
+        "paralelas",
+        "geometria-hiperbolica"
+      ],
+      "authors": [
+        "lobachevski",
+        "bolyai"
+      ],
+      "hasSimulation": true
+    }
+  },
+  "altura": {
+    "id": "altura",
+    "slug": "altura",
+    "filePath": "definitions/altura.mdx",
+    "contentType": "definicion",
+    "metadata": {
+      "id": "altura",
+      "type": "definicion",
+      "title": "Altura",
+      "description": "La altura de un triángulo es el segmento perpendicular trazado desde un vértice al lado opuesto (o su prolongación).",
+      "tags": [
+        "geometria",
+        "triangulos",
+        "rectas"
+      ],
+      "authors": [
+        "euclides"
+      ],
+      "links": [
+        "segmento",
+        "triangulo",
+        "perpendicular",
+        "punto"
+      ],
+      "seeAlso": [],
+      "hasSimulation": true
+    }
+  },
+  "angulo": {
+    "id": "angulo",
+    "slug": "angulo",
+    "filePath": "definitions/angulo.mdx",
+    "contentType": "definicion",
+    "metadata": {
+      "type": "definicion",
+      "title": "Ángulo",
+      "description": "Dadas dos semirrectas con el mismo origen, el ángulo es la figura formada por ambas. La congruencia de ángulos es una relación primitiva definida por los axiomas de congruencia.",
+      "tags": [
+        "geometria",
+        "congruencia",
+        "medida"
+      ],
+      "authors": [
+        "hilbert"
+      ],
+      "links": [
+        "punto",
+        "semirrecta",
+        "axioma-congruencia-4",
+        "axioma-congruencia-5"
+      ],
+      "seeAlso": [
+        "segmento"
+      ],
+      "hasSimulation": true
+    }
+  },
+  "bisectriz": {
+    "id": "bisectriz",
+    "slug": "bisectriz",
+    "filePath": "definitions/bisectriz.mdx",
+    "contentType": "definicion",
+    "metadata": {
+      "id": "bisectriz",
+      "type": "definicion",
+      "title": "Bisectriz",
+      "description": "La bisectriz de un ángulo es la semirrecta con origen en el vértice que divide al ángulo en dos ángulos congruentes.",
+      "tags": [
+        "geometria",
+        "angulos"
+      ],
+      "authors": [
+        "euclides"
+      ],
+      "links": [
+        "angulo",
+        "semirrecta",
+        "punto"
+      ],
+      "seeAlso": [],
+      "hasSimulation": true
+    }
+  },
+  "circunferencia": {
+    "id": "circunferencia",
+    "slug": "circunferencia",
+    "filePath": "definitions/circunferencia.mdx",
+    "contentType": "definicion",
+    "metadata": {
+      "id": "circunferencia",
+      "type": "definicion",
+      "title": "Circunferencia",
+      "description": "Lugar geométrico de los puntos de un plano que equidistan de un punto fijo llamado centro.",
+      "statement": "La circunferencia C(O,r) es el conjunto de puntos P del plano tales que \\vert OP \\vert = r.",
+      "tags": [
+        "geometria",
+        "curvas"
+      ],
+      "authors": [
+        "euclides"
+      ],
+      "links": [
+        "punto",
+        "segmento",
+        "plano"
+      ],
+      "seeAlso": [
+        "angulo"
+      ],
+      "hasSimulation": true
+    }
+  },
+  "cuadrilatero": {
+    "id": "cuadrilatero",
+    "slug": "cuadrilatero",
+    "filePath": "definitions/cuadrilatero.mdx",
+    "contentType": "definicion",
+    "metadata": {
+      "id": "cuadrilatero",
+      "type": "definicion",
+      "title": "Cuadrilátero",
+      "description": "Un cuadrilátero es un polígono de cuatro lados y cuatro vértices sin tres puntos colineales y sin lados que se crucen.",
+      "tags": [
+        "geometria",
+        "poligonos"
+      ],
+      "authors": [
+        "euclides"
+      ],
+      "links": [
+        "punto",
+        "segmento",
+        "angulo"
+      ],
+      "seeAlso": [
+        "paralelogramo"
+      ],
+      "hasSimulation": true
+    }
+  },
+  "mediana": {
+    "id": "mediana",
+    "slug": "mediana",
+    "filePath": "definitions/mediana.mdx",
+    "contentType": "definicion",
+    "metadata": {
+      "id": "mediana",
+      "type": "definicion",
+      "title": "Mediana",
+      "description": "La mediana de un triángulo es el segmento que une un vértice con el punto medio del lado opuesto.",
+      "tags": [
+        "geometria",
+        "triangulos",
+        "segmentos"
+      ],
+      "authors": [
+        "euclides"
+      ],
+      "links": [
+        "segmento",
+        "punto",
+        "triangulo"
+      ],
+      "seeAlso": [
+        "teorema-punto-medio-perpendicular"
+      ],
+      "hasSimulation": true
+    }
+  },
+  "mediatriz": {
+    "id": "mediatriz",
+    "slug": "mediatriz",
+    "filePath": "definitions/mediatriz.mdx",
+    "contentType": "definicion",
+    "metadata": {
+      "id": "mediatriz",
+      "type": "definicion",
+      "title": "Mediatriz",
+      "description": "La mediatriz de un segmento es la recta perpendicular al mismo que pasa por su punto medio.",
+      "tags": [
+        "geometria",
+        "rectas"
+      ],
+      "authors": [
+        "euclides"
+      ],
+      "links": [
+        "recta",
+        "segmento",
+        "punto",
+        "perpendicular"
+      ],
+      "seeAlso": [],
+      "hasSimulation": true
+    }
+  },
+  "paralelas": {
+    "id": "paralelas",
+    "slug": "paralelas",
+    "filePath": "definitions/paralelas.mdx",
+    "contentType": "definicion",
+    "metadata": {
+      "id": "paralelas",
+      "type": "definicion",
+      "title": "Paralelas",
+      "description": "Dos rectas en un mismo plano son paralelas si no comparten ningún punto (no se intersecan).",
+      "tags": [
+        "geometria",
+        "rectas"
+      ],
+      "authors": [
+        "euclides"
+      ],
+      "links": [
+        "recta",
+        "plano",
+        "punto"
+      ],
+      "seeAlso": [
+        "axioma-paralelas-euclides",
+        "axioma-paralelas-hiperbolico"
+      ],
+      "hasSimulation": true
+    }
+  },
+  "paralelogramo": {
+    "id": "paralelogramo",
+    "slug": "paralelogramo",
+    "filePath": "definitions/paralelogramo.mdx",
+    "contentType": "definicion",
+    "metadata": {
+      "id": "paralelogramo",
+      "type": "definicion",
+      "title": "Paralelogramo",
+      "description": "Un paralelogramo es un cuadrilátero cuyos pares de lados opuestos son paralelos.",
+      "tags": [
+        "geometria",
+        "poligonos",
+        "cuadrilateros"
+      ],
+      "authors": [
+        "euclides"
+      ],
+      "links": [
+        "cuadrilatero",
+        "recta",
+        "paralelas",
+        "segmento",
+        "angulo"
+      ],
+      "seeAlso": [],
+      "hasSimulation": true
+    }
+  },
+  "perpendicular": {
+    "id": "perpendicular",
+    "slug": "perpendicular",
+    "filePath": "definitions/perpendicular.mdx",
+    "contentType": "definicion",
+    "metadata": {
+      "id": "perpendicular",
+      "type": "definicion",
+      "title": "Perpendicular",
+      "description": "Dos rectas son perpendiculares si al intersecarse forman cuatro ángulos congruentes (rectos).",
+      "tags": [
+        "geometria",
+        "rectas",
+        "angulos"
+      ],
+      "authors": [
+        "euclides"
+      ],
+      "links": [
+        "recta",
+        "angulo",
+        "punto"
+      ],
+      "seeAlso": [
+        "mediatriz",
+        "teorema-punto-medio-perpendicular"
+      ],
+      "hasSimulation": true
+    }
+  },
+  "plano": {
+    "id": "plano",
+    "slug": "plano",
+    "filePath": "definitions/plano.mdx",
+    "contentType": "definicion",
+    "metadata": {
+      "id": "plano",
+      "type": "definicion",
+      "title": "Plano",
+      "description": "Concepto primitivo que representa una superficie bidimensional plana de extensión infinita. En geometría formal, su naturaleza se deriva únicamente de los axiomas de incidencia.",
+      "authors": [
+        "hilbert",
+        "euclides"
+      ],
+      "hasSimulation": true
+    }
+  },
+  "punto": {
+    "id": "punto",
+    "slug": "punto",
+    "filePath": "definitions/punto.mdx",
+    "contentType": "definicion",
+    "metadata": {
+      "id": "punto",
+      "type": "definicion",
+      "title": "Punto",
+      "description": "Concepto primitivo de la geometría que carece de dimensión, área o volumen, representando una posición exacta en el espacio. Su naturaleza matemática emerge estrictamente de las relaciones axiomáticas de incidencia e intermediación.",
+      "authors": [
+        "hilbert",
+        "euclides"
+      ],
+      "hasSimulation": true
+    }
+  },
+  "recta": {
+    "id": "recta",
+    "slug": "recta",
+    "filePath": "definitions/recta.mdx",
+    "contentType": "definicion",
+    "metadata": {
+      "id": "recta",
+      "type": "definicion",
+      "title": "Recta",
+      "description": "Concepto primitivo de la geometría de naturaleza unidimensional. En el sistema de Hilbert, carece de definición explícita y su estructura emerge de las relaciones de incidencia y orden.",
+      "authors": [
+        "hilbert",
+        "euclides"
+      ],
+      "hasSimulation": true
+    }
+  },
+  "segmento": {
+    "id": "segmento",
+    "slug": "segmento",
+    "filePath": "definitions/segmento.mdx",
+    "contentType": "definicion",
+    "metadata": {
+      "id": "segmento",
+      "type": "definicion",
+      "title": "Segmento",
+      "description": "Dados dos puntos A y B, el segmento AB es el conjunto de puntos de la recta AB que están entre A y B, incluyendo los extremos. Es la noción fundamental para la congruencia y la medida.",
+      "tags": [
+        "geometria",
+        "orden",
+        "congruencia"
+      ],
+      "authors": [
+        "hilbert"
+      ],
+      "links": [
+        "punto",
+        "recta",
+        "axioma-orden-1",
+        "axioma-orden-2",
+        "axioma-congruencia-1"
+      ],
+      "seeAlso": [
+        "semirrecta",
+        "axioma-orden-3",
+        "axioma-orden-4",
+        "axioma-congruencia-2"
+      ],
+      "hasSimulation": true
+    }
+  },
+  "semirrecta": {
+    "id": "semirrecta",
+    "slug": "semirrecta",
+    "filePath": "definitions/semirrecta.mdx",
+    "contentType": "definicion",
+    "metadata": {
+      "id": "semirrecta",
+      "type": "definicion",
+      "title": "Semirrecta (Rayo)",
+      "description": "Dados un origen O y un punto A sobre una recta, la semirrecta de origen O que pasa por A es el conjunto de puntos de la recta que están del mismo lado que A respecto a O.",
+      "tags": [
+        "geometria",
+        "orden"
+      ],
+      "authors": [
+        "hilbert"
+      ],
+      "links": [
+        "punto",
+        "recta",
+        "axioma-orden-1",
+        "axioma-orden-2"
+      ],
+      "seeAlso": [
+        "segmento",
+        "angulo",
+        "axioma-orden-3"
+      ],
+      "hasSimulation": true
+    }
+  },
+  "triangulo": {
+    "id": "triangulo",
+    "slug": "triangulo",
+    "filePath": "definitions/triangulo.mdx",
+    "contentType": "definicion",
+    "metadata": {
+      "id": "triangulo",
+      "type": "definicion",
+      "title": "Triángulo",
+      "description": "Figura geométrica formada por tres segmentos (lados) que unen tres puntos no colineales (vértices).",
+      "statement": "Un triángulo △ABC es la unión de tres segmentos AB, BC y CA donde A, B y C son puntos no colineales.",
+      "tags": [
+        "geometria",
+        "poligono",
+        "basico"
+      ],
+      "authors": [
+        "euclides"
+      ],
+      "links": [
+        "punto",
+        "segmento",
+        "angulo"
+      ],
+      "seeAlso": [
+        "teorema-congruencia-ala",
+        "teorema-congruencia-lll",
+        "teorema-suma-angulos-triangulo"
+      ],
+      "hasSimulation": true
+    }
+  },
+  "demo-angulos-opuestos-verticales": {
+    "id": "demo-angulos-opuestos-verticales",
+    "slug": "demo-angulos-opuestos-verticales",
+    "filePath": "demonstrations/demo-angulos-opuestos-verticales.mdx",
+    "contentType": "demostracion",
+    "metadata": {
+      "id": "demo-angulos-opuestos-verticales",
+      "type": "demostracion",
+      "title": "Demostración: Ángulos opuestos por el vértice",
+      "description": "Prueba directa usando axiomas de congruencia de ángulos y resta de congruentes.",
+      "parentTheorem": "teorema-angulos-opuestos-verticales",
+      "proofMethod": "directo",
+      "authors": [
+        "euclides"
+      ],
+      "tags": [
+        "geometria",
+        "congruencia"
+      ],
+      "layout": "split"
+    }
+  },
+  "demo-congruencia-ala": {
+    "id": "demo-congruencia-ala",
+    "slug": "demo-congruencia-ala",
+    "filePath": "demonstrations/demo-congruencia-ala.mdx",
+    "contentType": "demostracion",
+    "metadata": {
+      "id": "demo-congruencia-ala",
+      "type": "demostracion",
+      "title": "Demostración: Criterio de congruencia ALA",
+      "description": "Prueba por transporte de segmentos y aplicación del axioma LAL con unicidad.",
+      "parentTheorem": "teorema-congruencia-ala",
+      "proofMethod": "constructivo",
+      "authors": [
+        "euclides"
+      ],
+      "tags": [
+        "geometria",
+        "congruencia",
+        "triangulos"
+      ],
+      "layout": "split"
+    }
+  },
+  "demo-congruencia-lll": {
+    "id": "demo-congruencia-lll",
+    "slug": "demo-congruencia-lll",
+    "filePath": "demonstrations/demo-congruencia-lll.mdx",
+    "contentType": "demostracion",
+    "metadata": {
+      "id": "demo-congruencia-lll",
+      "type": "demostracion",
+      "title": "Demostración: Criterio de congruencia LLL",
+      "description": "Prueba por transporte de un ángulo y aplicación de LAL, seguida de unicidad de intersección.",
+      "parentTheorem": "teorema-congruencia-lll",
+      "proofMethod": "constructivo",
+      "authors": [
+        "euclides"
+      ],
+      "tags": [
+        "geometria",
+        "congruencia",
+        "triangulos"
+      ],
+      "layout": "split"
+    }
+  },
+  "demo-desigualdad-triangular": {
+    "id": "demo-desigualdad-triangular",
+    "slug": "demo-desigualdad-triangular",
+    "filePath": "demonstrations/demo-desigualdad-triangular.mdx",
+    "contentType": "demostracion",
+    "metadata": {
+      "id": "demo-desigualdad-triangular",
+      "type": "demostracion",
+      "title": "Demostración: Desigualdad triangular",
+      "description": "Demostración euclidiana clásica extendiendo uno de los lados para formar un triángulo isósceles.",
+      "tags": [
+        "geometria",
+        "triangulos",
+        "desigualdades"
+      ],
+      "authors": [
+        "euclides"
+      ],
+      "parentTheorem": "teorema-desigualdad-triangular",
+      "proofMethod": "directo",
+      "layout": "split"
+    }
+  },
+  "demo-dos-rectas-un-punto": {
+    "id": "demo-dos-rectas-un-punto",
+    "slug": "demo-dos-rectas-un-punto",
+    "filePath": "demonstrations/demo-dos-rectas-un-punto.mdx",
+    "contentType": "demostracion",
+    "metadata": {
+      "id": "demo-dos-rectas-un-punto",
+      "type": "demostracion",
+      "title": "Demostración: Dos rectas se cortan en a lo sumo un punto",
+      "description": "Prueba por contradicción usando el axioma de unicidad I-1.",
+      "parentTheorem": "teorema-dos-rectas-un-punto",
+      "proofMethod": "contradiccion",
+      "authors": [
+        "hilbert"
+      ],
+      "tags": [
+        "geometria",
+        "incidencia"
+      ],
+      "layout": "split"
+    }
+  },
+  "demo-pitagoras-areas": {
+    "id": "demo-pitagoras-areas",
+    "slug": "demo-pitagoras-areas",
+    "filePath": "demonstrations/demo-pitagoras-areas.mdx",
+    "contentType": "demostracion",
+    "metadata": {
+      "id": "demo-pitagoras-areas",
+      "type": "demostracion",
+      "title": "Demostración: Teorema de Pitágoras (Equivalencia de Áreas)",
+      "description": "Una demostración formal basada en la teoría de la medida de área de Hilbert y la invariancia bajo el grupo de isometrías.",
+      "tags": [
+        "geometria",
+        "areas",
+        "diseccion",
+        "hilbert"
+      ],
+      "authors": [
+        "euclides",
+        "pitagoras"
+      ],
+      "parentTheorem": "teorema-pitagoras",
+      "proofMethod": "directo",
+      "layout": "split"
+    }
+  },
+  "demo-pitagoras-euclides": {
+    "id": "demo-pitagoras-euclides",
+    "slug": "demo-pitagoras-euclides",
+    "filePath": "demonstrations/demo-pitagoras-euclides.mdx",
+    "contentType": "demostracion",
+    "metadata": {
+      "id": "demo-pitagoras-euclides",
+      "type": "demostracion",
+      "title": "Demostración: Teorema de Pitágoras (El molino de viento)",
+      "description": "La clásica demostración del molino de viento, formalizada rigurosamente bajo el sistema axiomático de Hilbert.",
+      "tags": [
+        "geometria",
+        "triangulos",
+        "areas",
+        "hilbert"
+      ],
+      "authors": [
+        "euclides",
+        "hilbert"
+      ],
+      "parentTheorem": "teorema-pitagoras",
+      "proofMethod": "directo",
+      "layout": "split"
+    }
+  },
+  "demo-punto-medio-perpendicular": {
+    "id": "demo-punto-medio-perpendicular",
+    "slug": "demo-punto-medio-perpendicular",
+    "filePath": "demonstrations/demo-punto-medio-perpendicular.mdx",
+    "contentType": "demostracion",
+    "metadata": {
+      "id": "demo-punto-medio-perpendicular",
+      "type": "demostracion",
+      "title": "Demostración: La mediatriz es perpendicular al segmento",
+      "description": "Prueba bidireccional usando LAL y LLL.",
+      "parentTheorem": "teorema-punto-medio-perpendicular",
+      "proofMethod": "directo",
+      "authors": [
+        "euclides"
+      ],
+      "tags": [
+        "geometria",
+        "congruencia",
+        "orden"
+      ],
+      "layout": "split"
+    }
+  },
+  "demo-punto-medio": {
+    "id": "demo-punto-medio",
+    "slug": "demo-punto-medio",
+    "filePath": "demonstrations/demo-punto-medio.mdx",
+    "contentType": "demostracion",
+    "metadata": {
+      "id": "demo-punto-medio",
+      "type": "demostracion",
+      "title": "Demostración: Existencia y unicidad del punto medio",
+      "description": "Prueba de existencia y unicidad usando rigurosamente los axiomas de congruencia y orden.",
+      "parentTheorem": "lema-punto-medio",
+      "proofMethod": "constructivo",
+      "authors": [
+        "hilbert"
+      ],
+      "tags": [
+        "geometria",
+        "congruencia",
+        "orden"
+      ],
+      "layout": "split"
+    }
+  },
+  "demo-rectas-coincidentes": {
+    "id": "demo-rectas-coincidentes",
+    "slug": "demo-rectas-coincidentes",
+    "filePath": "demonstrations/demo-rectas-coincidentes.mdx",
+    "contentType": "demostracion",
+    "metadata": {
+      "id": "demo-rectas-coincidentes",
+      "type": "demostracion",
+      "title": "Demostración: Identidad de rectas con dos puntos en común",
+      "description": "Prueba por reducción al absurdo: si dos rectas comparten dos puntos distintos, son la misma recta.",
+      "parentTheorem": "corolario-rectas-coincidentes",
+      "proofMethod": "reduccion",
+      "layout": "split"
+    }
+  },
+  "demo-suma-angulos-triangulo": {
+    "id": "demo-suma-angulos-triangulo",
+    "slug": "demo-suma-angulos-triangulo",
+    "filePath": "demonstrations/demo-suma-angulos-triangulo.mdx",
+    "contentType": "demostracion",
+    "metadata": {
+      "id": "demo-suma-angulos-triangulo",
+      "type": "demostracion",
+      "title": "Demostración: Suma de los ángulos de un triángulo",
+      "description": "Demostración euclidiana clásica trazando una paralela por el vértice opuesto.",
+      "tags": [
+        "geometria",
+        "triangulos",
+        "angulos"
+      ],
+      "authors": [
+        "euclides"
+      ],
+      "parentTheorem": "teorema-suma-angulos-triangulo",
+      "proofMethod": "directo",
+      "layout": "split"
+    }
+  },
+  "demo-tales": {
+    "id": "demo-tales",
+    "slug": "demo-tales",
+    "filePath": "demonstrations/demo-tales.mdx",
+    "contentType": "demostracion",
+    "metadata": {
+      "id": "demo-tales",
+      "type": "demostracion",
+      "title": "Demostración: Teorema de Tales",
+      "description": "Demostración geométrica usando triángulos con la misma altura para demostrar proporcionalidad.",
+      "tags": [
+        "geometria",
+        "proporcionalidad"
+      ],
+      "authors": [
+        "euclides"
+      ],
+      "parentTheorem": "teorema-tales",
+      "proofMethod": "directo",
+      "layout": "split"
+    }
+  },
+  "demo-triangulo-isosceles": {
+    "id": "demo-triangulo-isosceles",
+    "slug": "demo-triangulo-isosceles",
+    "filePath": "demonstrations/demo-triangulo-isosceles.mdx",
+    "contentType": "demostracion",
+    "metadata": {
+      "id": "demo-triangulo-isosceles",
+      "type": "demostracion",
+      "title": "Demostración: Pons Asinorum (Bisección)",
+      "description": "Demostración trazando la bisectriz del ángulo superior y usando el criterio LAL.",
+      "tags": [
+        "geometria",
+        "congruencia",
+        "triangulos"
+      ],
+      "authors": [
+        "euclides"
+      ],
+      "parentTheorem": "teorema-triangulo-isosceles",
+      "proofMethod": "directo",
+      "layout": "split"
+    }
+  },
+  "leccion-metodo-contradiccion": {
+    "id": "leccion-metodo-contradiccion",
+    "slug": "leccion-metodo-contradiccion",
+    "filePath": "lessons/leccion-metodo-contradiccion.mdx",
+    "contentType": "leccion",
+    "metadata": {
+      "id": "leccion-metodo-contradiccion",
+      "type": "lesson",
+      "title": "Demostración por Contradicción",
+      "description": "También conocida como Reducción al absurdo, demuestra que una afirmación es verdadera al mostrar que si fuera falsa, llevaría a una imposibilidad lógica.",
+      "tags": [
+        "logica",
+        "metodos",
+        "demostracion",
+        "absurdo"
+      ],
+      "authors": [],
+      "links": [
+        "teorema-dos-rectas-un-punto"
+      ],
+      "seeAlso": [
+        "leccion-metodo-directo"
+      ],
+      "satisfies": [],
+      "hasSimulation": false
+    }
+  },
+  "leccion-metodo-directo": {
+    "id": "leccion-metodo-directo",
+    "slug": "leccion-metodo-directo",
+    "filePath": "lessons/leccion-metodo-directo.mdx",
+    "contentType": "leccion",
+    "metadata": {
+      "id": "leccion-metodo-directo",
+      "type": "lesson",
+      "title": "Método Directo",
+      "description": "Introducción a la forma más básica de demostración matemática: inferir Q a partir de P mediante pasos lógicos secuenciales.",
+      "tags": [
+        "logica",
+        "metodos",
+        "demostracion"
+      ],
+      "authors": [],
+      "links": [],
+      "seeAlso": [
+        "leccion-metodo-contradiccion"
+      ],
+      "satisfies": [],
+      "hasSimulation": false
+    }
+  },
+  "arquimedes": {
+    "id": "arquimedes",
+    "slug": "arquimedes",
+    "filePath": "mathematicians/arquimedes.mdx",
+    "contentType": "matematico",
+    "metadata": {
+      "id": "arquimedes",
+      "type": "matematico",
+      "name": "Arquímedes",
+      "birthYear": -287,
+      "deathYear": -212,
+      "country": "Grecia",
+      "description": "El más grande matemático y científico de la antigüedad. Pionero en el método exhaustivo para calcular áreas y volúmenes."
+    }
+  },
+  "bolyai": {
+    "id": "bolyai",
+    "slug": "bolyai",
+    "filePath": "mathematicians/bolyai.mdx",
+    "contentType": "matematico",
+    "metadata": {
+      "id": "bolyai",
+      "type": "matematico",
+      "name": "János Bolyai",
+      "birthYear": 1802,
+      "deathYear": 1860,
+      "country": "Hungría",
+      "description": "Matemático húngaro que descubrió de forma independiente la geometría hiperbólica, desafiando la creencia milenaria en la unicidad de la geometría euclídea."
+    }
+  },
+  "dedekind": {
+    "id": "dedekind",
+    "slug": "dedekind",
+    "filePath": "mathematicians/dedekind.mdx",
+    "contentType": "matematico",
+    "metadata": {
+      "id": "dedekind",
+      "type": "matematico",
+      "name": "Richard Dedekind",
+      "birthYear": 1831,
+      "deathYear": 1916,
+      "country": "Alemania",
+      "description": "Matemático alemán que formalizó los números reales mediante cortaduras y realizó contribuciones fundamentales a la teoría de números y álgebra."
+    }
+  },
+  "euclides": {
+    "id": "euclides",
+    "slug": "euclides",
+    "filePath": "mathematicians/euclides.mdx",
+    "contentType": "matematico",
+    "metadata": {
+      "id": "euclides",
+      "type": "matematico",
+      "name": "Euclides",
+      "birthYear": -325,
+      "deathYear": -265,
+      "country": "Grecia",
+      "description": "Matemático griego de la antigüedad, autor de los Elementos, la obra matemática más influyente de la historia.",
+      "links": [
+        "axioma-paralelas-euclides",
+        "teorema-pitagoras",
+        "teorema-tales",
+        "teorema-suma-angulos-triangulo",
+        "sistema-euclidiano"
+      ],
+      "seeAlso": [
+        "hilbert",
+        "pitagoras",
+        "tales"
+      ]
+    }
+  },
+  "hilbert": {
+    "id": "hilbert",
+    "slug": "hilbert",
+    "filePath": "mathematicians/hilbert.mdx",
+    "contentType": "matematico",
+    "metadata": {
+      "id": "hilbert",
+      "type": "matematico",
+      "name": "David Hilbert",
+      "birthYear": 1862,
+      "deathYear": 1943,
+      "country": "Alemania",
+      "description": "Uno de los matemáticos más influyentes del siglo XIX y XX. Reformuló la geometría euclídea sobre una base axiomática rigurosa en sus Fundamentos de la Geometría (1899)."
+    }
+  },
+  "lobachevski": {
+    "id": "lobachevski",
+    "slug": "lobachevski",
+    "filePath": "mathematicians/lobachevski.mdx",
+    "contentType": "matematico",
+    "metadata": {
+      "id": "lobachevski",
+      "type": "matematico",
+      "name": "Nikolái Lobachevski",
+      "birthYear": 1792,
+      "deathYear": 1856,
+      "country": "Rusia",
+      "description": "Matemático ruso que descubrió la geometría hiperbólica al negar el quinto postulado de Euclides."
+    }
+  },
+  "pasch": {
+    "id": "pasch",
+    "slug": "pasch",
+    "filePath": "mathematicians/pasch.mdx",
+    "contentType": "matematico",
+    "metadata": {
+      "id": "pasch",
+      "type": "matematico",
+      "name": "Moritz Pasch",
+      "birthYear": 1843,
+      "deathYear": 1930,
+      "country": "Alemania",
+      "description": "Matemático alemán pionero en la axiomática moderna de la geometría. Demostró que muchos resultados dados por intuitivos en los Elementos de Euclides requerían axiomas explícitos."
+    }
+  },
+  "pitagoras": {
+    "id": "pitagoras",
+    "slug": "pitagoras",
+    "filePath": "mathematicians/pitagoras.mdx",
+    "contentType": "matematico",
+    "metadata": {
+      "id": "pitagoras",
+      "type": "matematico",
+      "name": "Pitágoras de Samos",
+      "birthYear": -570,
+      "deathYear": -495,
+      "country": "Grecia",
+      "description": "Filósofo y matemático de la antigua Grecia, fundador de la hermandad pitagórica. Es célebre por la relación fundamental en los triángulos rectángulos que lleva su nombre.",
+      "image": "/images/pitagoras-real.jpg",
+      "links": [
+        "teorema-pitagoras"
+      ],
+      "seeAlso": [
+        "euclides",
+        "tales"
+      ]
+    }
+  },
+  "tales": {
+    "id": "tales",
+    "slug": "tales",
+    "filePath": "mathematicians/tales.mdx",
+    "contentType": "matematico",
+    "metadata": {
+      "id": "tales",
+      "type": "matematico",
+      "name": "Tales de Mileto",
+      "birthYear": -624,
+      "deathYear": -546,
+      "country": "Grecia",
+      "description": "Filósofo y matemático griego considerado el primer matemático verdadero y uno de los Siete Sabios de Grecia.",
+      "links": [
+        "teorema-tales"
+      ],
+      "seeAlso": [
+        "euclides",
+        "pitagoras"
+      ]
+    }
+  },
+  "modelo-cartesiano": {
+    "id": "modelo-cartesiano",
+    "slug": "modelo-cartesiano",
+    "filePath": "models/modelo-cartesiano.mdx",
+    "contentType": "modelo",
+    "metadata": {
+      "id": "modelo-cartesiano",
+      "type": "modelo",
+      "title": "Plano Cartesiano",
+      "description": "El modelo analítico estándar para la geometría euclídea bidimensional, utilizando pares ordenados de números reales.",
+      "satisfies": [
+        "sistema-euclidiano",
+        "sistema-absoluto"
+      ],
+      "axioms_verified": [
+        "axioma-incidencia-1",
+        "axioma-incidencia-2",
+        "axioma-incidencia-3",
+        "axioma-orden-1",
+        "axioma-orden-2",
+        "axioma-orden-3",
+        "axioma-orden-4",
+        "axioma-congruencia-1",
+        "axioma-congruencia-2",
+        "axioma-congruencia-3",
+        "axioma-congruencia-4",
+        "axioma-congruencia-5",
+        "axioma-arquimedes",
+        "axioma-completitud",
+        "axioma-paralelas-euclides"
+      ],
+      "tags": [
+        "geometria",
+        "modelo",
+        "euclidiana",
+        "analitica"
+      ],
+      "hasDiagram": true
+    }
+  },
+  "modelo-fano": {
+    "id": "modelo-fano",
+    "slug": "modelo-fano",
+    "filePath": "models/modelo-fano.mdx",
+    "contentType": "modelo",
+    "metadata": {
+      "id": "modelo-fano",
+      "type": "modelo",
+      "title": "Plano de Fano",
+      "description": "El plano proyectivo finito más pequeño posible, consistente de 7 puntos y 7 rectas. Un modelo clave en geometría de incidencia.",
+      "satisfies": [
+        "sistema-incidencia"
+      ],
+      "axioms_verified": [
+        "axioma-incidencia-1",
+        "axioma-incidencia-2",
+        "axioma-incidencia-3"
+      ],
+      "hasSimulation": true
+    }
+  },
+  "modelo-poincare": {
+    "id": "modelo-poincare",
+    "slug": "modelo-poincare",
+    "filePath": "models/modelo-poincare.mdx",
+    "contentType": "modelo",
+    "metadata": {
+      "id": "modelo-poincare",
+      "type": "modelo",
+      "title": "Disco de Poincaré",
+      "description": "El modelo conforme del plano hiperbólico que representa el espacio como el interior de un círculo unitario y las rectas como arcos ortogonales a la frontera.",
+      "satisfies": [
+        "sistema-hiperbolico",
+        "sistema-absoluto"
+      ],
+      "axioms_verified": [
+        "axioma-incidencia-1",
+        "axioma-incidencia-2",
+        "axioma-incidencia-3",
+        "axioma-orden-1",
+        "axioma-orden-2",
+        "axioma-orden-3",
+        "axioma-orden-4",
+        "axioma-congruencia-1",
+        "axioma-congruencia-2",
+        "axioma-congruencia-3",
+        "axioma-congruencia-4",
+        "axioma-congruencia-5",
+        "axioma-arquimedes",
+        "axioma-completitud",
+        "axioma-paralelas-hiperbolico"
+      ],
+      "tags": [
+        "geometria",
+        "modelo",
+        "hiperbolica",
+        "poincare",
+        "conforme"
+      ],
+      "hasDiagram": true
+    }
+  },
+  "modelo-tres-puntos": {
+    "id": "modelo-tres-puntos",
+    "slug": "modelo-tres-puntos",
+    "filePath": "models/modelo-tres-puntos.mdx",
+    "contentType": "modelo",
+    "metadata": {
+      "id": "modelo-tres-puntos",
+      "type": "modelo",
+      "title": "Modelo de Tres Puntos",
+      "description": "El modelo más simple de la geometría de incidencia: tres puntos no colineales con tres rectas que los conectan pairwise.",
+      "satisfies": "sistema-incidencia",
+      "axioms_verified": [
+        "axioma-incidencia-1",
+        "axioma-incidencia-2",
+        "axioma-incidencia-3"
+      ],
+      "hasSimulation": true
+    }
+  },
+  "corolario-rectas-coincidentes": {
+    "id": "corolario-rectas-coincidentes",
+    "slug": "corolario-rectas-coincidentes",
+    "filePath": "theorems/corolario-rectas-coincidentes.mdx",
+    "contentType": "teorema",
+    "metadata": {
+      "id": "corolario-rectas-coincidentes",
+      "type": "corolario",
+      "title": "Corolario: Identidad de rectas con dos puntos en común",
+      "description": "Si dos rectas tienen dos puntos en común, entonces son la misma recta.",
+      "statement": "Sean l y m dos rectas, y A, B dos puntos distintos. Si A ∈ l, B ∈ l y A ∈ m, B ∈ m, entonces l = m.",
+      "parentTheorem": "teorema-dos-rectas-un-punto",
+      "tags": [
+        "geometria",
+        "incidencia"
+      ],
+      "difficulty": "básico",
+      "demos": [
+        "demo-rectas-coincidentes"
+      ]
+    }
+  },
+  "lema-punto-medio": {
+    "id": "lema-punto-medio",
+    "slug": "lema-punto-medio",
+    "filePath": "theorems/lema-punto-medio.mdx",
+    "contentType": "teorema",
+    "metadata": {
+      "id": "lema-punto-medio",
+      "type": "lema",
+      "title": "Lema: Existencia y unicidad del punto medio",
+      "description": "Todo segmento tiene un único punto medio que lo divide en dos segmentos congruentes.",
+      "statement": "Sea AB un segmento. Existe un único punto M ∈ AB tal que AM ≅ MB.",
+      "parentTheorem": "teorema-punto-medio-perpendicular",
+      "tags": [
+        "geometria",
+        "congruencia",
+        "orden",
+        "geometria-absoluta"
+      ],
+      "authors": [
+        "hilbert"
+      ],
+      "difficulty": "intermedio",
+      "demos": [
+        "demo-punto-medio"
+      ],
+      "hasSimulation": true
+    }
+  },
+  "teorema-angulos-opuestos-verticales": {
+    "id": "teorema-angulos-opuestos-verticales",
+    "slug": "teorema-angulos-opuestos-verticales",
+    "filePath": "theorems/teorema-angulos-opuestos-verticales.mdx",
+    "contentType": "teorema",
+    "metadata": {
+      "id": "teorema-angulos-opuestos-verticales",
+      "type": "teorema",
+      "title": "Teorema de los ángulos opuestos por el vértice",
+      "description": "Cuando dos rectas se cortan, los ángulos opuestos por el vértice son congruentes entre sí.",
+      "statement": "Sean l y m dos rectas que se cortan en el punto O. Si α y β son ángulos opuestos por el vértice, entonces α ≅ β.",
+      "tags": [
+        "geometria",
+        "congruencia",
+        "geometria-absoluta"
+      ],
+      "authors": [
+        "euclides"
+      ],
+      "difficulty": "básico",
+      "hasSimulation": true,
+      "demos": [
+        "demo-angulos-opuestos-verticales"
+      ]
+    }
+  },
+  "teorema-congruencia-ala": {
+    "id": "teorema-congruencia-ala",
+    "slug": "teorema-congruencia-ala",
+    "filePath": "theorems/teorema-congruencia-ala.mdx",
+    "contentType": "teorema",
+    "metadata": {
+      "id": "teorema-congruencia-ala",
+      "type": "teorema",
+      "title": "Teorema de Congruencia ALA",
+      "description": "Si dos triángulos tienen un lado y los dos ángulos adyacentes a ese lado congruentes, entonces los triángulos son congruentes.",
+      "statement": "Sean △ABC y △A'B'C' tales que AB ≅ A'B', ∠A ≅ ∠A' y ∠B ≅ ∠B'. Entonces △ABC ≅ △A'B'C'.",
+      "tags": [
+        "geometria",
+        "congruencia",
+        "geometria-absoluta",
+        "triangulos"
+      ],
+      "authors": [
+        "euclides"
+      ],
+      "difficulty": "intermedio",
+      "hasSimulation": true,
+      "demos": [
+        "demo-congruencia-ala"
+      ]
+    }
+  },
+  "teorema-congruencia-lll": {
+    "id": "teorema-congruencia-lll",
+    "slug": "teorema-congruencia-lll",
+    "filePath": "theorems/teorema-congruencia-lll.mdx",
+    "contentType": "teorema",
+    "metadata": {
+      "id": "teorema-congruencia-lll",
+      "type": "teorema",
+      "title": "Teorema de Congruencia LLL",
+      "description": "Si los tres lados de un triángulo son congruentes con los tres lados de otro, entonces los triángulos son congruentes.",
+      "statement": "Sean △ABC y △A'B'C' tales que AB ≅ A'B', BC ≅ B'C' y CA ≅ C'A'. Entonces △ABC ≅ △A'B'C'.",
+      "tags": [
+        "geometria",
+        "congruencia",
+        "geometria-absoluta",
+        "triangulos"
+      ],
+      "authors": [
+        "euclides"
+      ],
+      "difficulty": "intermedio",
+      "hasSimulation": true,
+      "demos": [
+        "demo-congruencia-lll"
+      ]
+    }
+  },
+  "teorema-desigualdad-triangular": {
+    "id": "teorema-desigualdad-triangular",
+    "slug": "teorema-desigualdad-triangular",
+    "filePath": "theorems/teorema-desigualdad-triangular.mdx",
+    "contentType": "teorema",
+    "metadata": {
+      "id": "teorema-desigualdad-triangular",
+      "type": "teorema",
+      "title": "Desigualdad triangular",
+      "description": "En cualquier triángulo, la suma de las longitudes de dos de sus lados es estrictamente mayor que la longitud del tercer lado.",
+      "statement": "Sea △ABC un triángulo con lados a = BC, b = CA, c = AB. Entonces a + b > c, a + c > b y b + c > a.",
+      "tags": [
+        "geometria",
+        "triangulos",
+        "desigualdades"
+      ],
+      "authors": [
+        "euclides"
+      ],
+      "difficulty": "básico",
+      "demos": [
+        "demo-desigualdad-triangular"
+      ],
+      "hasSimulation": true
+    }
+  },
+  "teorema-dos-rectas-un-punto": {
+    "id": "teorema-dos-rectas-un-punto",
+    "slug": "teorema-dos-rectas-un-punto",
+    "filePath": "theorems/teorema-dos-rectas-un-punto.mdx",
+    "contentType": "teorema",
+    "metadata": {
+      "id": "teorema-dos-rectas-un-punto",
+      "type": "teorema",
+      "title": "Teorema: Dos rectas se cortan en a lo sumo un punto",
+      "description": "Dos rectas distintas del plano o del espacio se cortan en a lo sumo un punto.",
+      "statement": "Sean l y m dos rectas distintas. Entonces existe a lo sumo un punto P tal que P ∈ l y P ∈ m.",
+      "tags": [
+        "geometria",
+        "incidencia",
+        "geometria-absoluta"
+      ],
+      "authors": [
+        "hilbert"
+      ],
+      "difficulty": "básico",
+      "demos": [
+        "demo-dos-rectas-un-punto"
+      ],
+      "corollaries": [
+        "corolario-rectas-coincidentes"
+      ],
+      "hasSimulation": true
+    }
+  },
+  "teorema-pitagoras": {
+    "id": "teorema-pitagoras",
+    "slug": "teorema-pitagoras",
+    "filePath": "theorems/teorema-pitagoras.mdx",
+    "contentType": "teorema",
+    "metadata": {
+      "id": "teorema-pitagoras",
+      "type": "teorema",
+      "title": "Teorema de Pitágoras",
+      "description": "En un triángulo rectángulo, el cuadrado de la hipotenusa es igual a la suma de los cuadrados de los catetos.",
+      "statement": "Sea △ABC un triángulo rectángulo con ángulo recto en C. Si a = |BC|, b = |CA| y c = |AB| (hipotenusa), entonces a² + b² = c².",
+      "tags": [
+        "geometria",
+        "triangulos",
+        "areas"
+      ],
+      "authors": [
+        "euclides",
+        "pitagoras"
+      ],
+      "difficulty": "básico",
+      "demos": [
+        "demo-pitagoras-euclides",
+        "demo-pitagoras-areas"
+      ],
+      "hasSimulation": true
+    }
+  },
+  "teorema-punto-medio-perpendicular": {
+    "id": "teorema-punto-medio-perpendicular",
+    "slug": "teorema-punto-medio-perpendicular",
+    "filePath": "theorems/teorema-punto-medio-perpendicular.mdx",
+    "contentType": "teorema",
+    "metadata": {
+      "id": "teorema-punto-medio-perpendicular",
+      "type": "teorema",
+      "title": "Teorema: La mediatriz es perpendicular al segmento en su punto medio",
+      "description": "El lugar geométrico de los puntos equidistantes de los extremos de un segmento es la perpendicular al segmento en su punto medio.",
+      "statement": "Sea AB un segmento con punto medio M. El conjunto de puntos P tales que PA ≅ PB es la recta perpendicular a AB que pasa por M.",
+      "tags": [
+        "geometria",
+        "congruencia",
+        "orden",
+        "geometria-absoluta"
+      ],
+      "authors": [
+        "euclides"
+      ],
+      "difficulty": "intermedio",
+      "demos": [
+        "demo-punto-medio-perpendicular"
+      ],
+      "lemmas": [
+        "lema-punto-medio"
+      ],
+      "hasSimulation": true
+    }
+  },
+  "teorema-suma-angulos-triangulo": {
+    "id": "teorema-suma-angulos-triangulo",
+    "slug": "teorema-suma-angulos-triangulo",
+    "filePath": "theorems/teorema-suma-angulos-triangulo.mdx",
+    "contentType": "teorema",
+    "metadata": {
+      "id": "teorema-suma-angulos-triangulo",
+      "type": "teorema",
+      "title": "Teorema de la suma de los ángulos de un triángulo",
+      "description": "La suma de los ángulos interiores de un triángulo en el plano euclidiano es siempre igual a dos ángulos rectos (180 grados).",
+      "statement": "Sea △ABC un triángulo con ángulos interiores α = ∠A, β = ∠B, γ = ∠C. Entonces α + β + γ = 180° = π rad.",
+      "tags": [
+        "geometria",
+        "triangulos",
+        "angulos"
+      ],
+      "authors": [
+        "euclides"
+      ],
+      "difficulty": "básico",
+      "demos": [
+        "demo-suma-angulos-triangulo"
+      ],
+      "hasSimulation": true
+    }
+  },
+  "teorema-tales": {
+    "id": "teorema-tales",
+    "slug": "teorema-tales",
+    "filePath": "theorems/teorema-tales.mdx",
+    "contentType": "teorema",
+    "metadata": {
+      "id": "teorema-tales",
+      "type": "teorema",
+      "title": "Teorema de Tales",
+      "description": "Si una recta paralela a uno de los lados de un triángulo corta a los otros dos lados, entonces los segmentos que determina en ellos son proporcionales.",
+      "statement": "Sea △ABC un triángulo y D ∈ AB, E ∈ AC tales que DE ∥ BC. Entonces AD/DB = AE/EC.",
+      "tags": [
+        "geometria",
+        "proporcionalidad",
+        "paralelas"
+      ],
+      "authors": [
+        "tales"
+      ],
+      "difficulty": "intermedio",
+      "demos": [
+        "demo-tales"
+      ],
+      "hasSimulation": true
+    }
+  },
+  "teorema-triangulo-isosceles": {
+    "id": "teorema-triangulo-isosceles",
+    "slug": "teorema-triangulo-isosceles",
+    "filePath": "theorems/teorema-triangulo-isosceles.mdx",
+    "contentType": "teorema",
+    "metadata": {
+      "id": "teorema-triangulo-isosceles",
+      "type": "teorema",
+      "title": "Teorema del triángulo isósceles",
+      "description": "En un triángulo isósceles, los ángulos opuestos a los lados iguales son también iguales (Pons Asinorum).",
+      "statement": "Sea △ABC un triángulo con AC ≅ BC. Entonces ∠A ≅ ∠B.",
+      "tags": [
+        "geometria",
+        "triangulos",
+        "congruencia"
+      ],
+      "authors": [
+        "euclides"
+      ],
+      "difficulty": "básico",
+      "demos": [
+        "demo-triangulo-isosceles"
+      ],
+      "hasSimulation": true
+    }
+  }
+}

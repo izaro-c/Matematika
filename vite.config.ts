@@ -21,7 +21,7 @@ const drafts = new Map<string, string>();
 /**
  * Plugin personalizado de Vite (`editorAPI`) para Matematika.
  * Intercepta peticiones al servidor de desarrollo para proporcionar una API REST
- * ligera (lectura/escritura/listado) que permite al Editor Web modificar 
+ * ligera (lectura/escritura/listado) que permite al Editor Web modificar
  * archivos locales (.mdx, .tsx) y usar el HMR de Vite para Live Preview.
  */
 function editorAPI(): Plugin {
@@ -33,7 +33,7 @@ function editorAPI(): Plugin {
       viteServer = server;
       server.middlewares.use('/api/content', (req: IncomingMessage, res: ServerResponse) => {
         const url = new URL(req.url || '/', `http://${req.headers.host}`)
-        
+
         if (req.method === 'GET') {
           const rawPath = url.searchParams.get('path')
           if (!rawPath) {
@@ -77,7 +77,7 @@ function editorAPI(): Plugin {
           })
           return
         }
-        
+
         res.statusCode = 405
         res.end('Method not allowed')
       })
@@ -95,10 +95,10 @@ function editorAPI(): Plugin {
               }
               const absolutePath = path.resolve(__dirname, 'src', data.path)
               drafts.set(absolutePath, data.content)
-              
+
               // Emit file change to Vite watcher to force proper HMR pipeline!
               viteServer.watcher.emit('change', absolutePath)
-              
+
               res.setHeader('Content-Type', 'application/json')
               res.end(JSON.stringify({ success: true }))
             } catch (err: unknown) {
@@ -114,11 +114,11 @@ function editorAPI(): Plugin {
 
       server.middlewares.use('/api/list-content', (req: IncomingMessage, res: ServerResponse) => {
         if (req.method === 'GET') {
-          const contentDir = path.resolve(__dirname, 'src', 'content');
-          const diagramsDir = path.resolve(__dirname, 'src', 'diagrams');
-          const componentsDir = path.resolve(__dirname, 'src', 'components');
+          // ACT: Updated to look in database/content
+          const contentDir = path.resolve(__dirname, 'src', 'database', 'content');
+          const componentsDir = path.resolve(__dirname, 'src', 'boundary', 'components');
           const results: { path: string, name: string, type: string, fullPath?: string }[] = [];
-          
+
           function walk(dir: string, baseType: string, prefix: string) {
             if (!fs.existsSync(dir)) return;
             const files = fs.readdirSync(dir);
@@ -130,7 +130,7 @@ function editorAPI(): Plugin {
               } else if (file.endsWith('.mdx') || file.endsWith('.tsx')) {
                 const relativePath = path.relative(path.resolve(__dirname, 'src'), fullPath);
                 results.push({
-                  path: relativePath, // includes prefix like 'content/...'
+                  path: relativePath, 
                   name: file,
                   type: baseType || path.dirname(relativePath).split(path.sep)[1] || prefix,
                   fullPath
@@ -138,9 +138,8 @@ function editorAPI(): Plugin {
               }
             }
           }
-          
+
           walk(contentDir, '', 'content');
-          walk(diagramsDir, 'diagrams', 'diagrams');
           walk(componentsDir, 'components', 'components');
 
           res.setHeader('Content-Type', 'application/json');
@@ -181,5 +180,10 @@ export default defineConfig({
       brotliSize: true,
     }),
   ],
+  resolve: {
+    alias: {
+      '@': path.resolve(__dirname, './src')
+    }
+  },
   base: "/Matematika/"
 })

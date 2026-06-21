@@ -1,0 +1,35 @@
+export const metadata = {
+  "id": "corolario-rectas-coincidentes",
+  "type": "corolario",
+  "title": "Corolario: Identidad de rectas con dos puntos en común",
+  "description": "Si dos rectas tienen dos puntos en común, entonces son la misma recta.",
+  "statement": "Sean l y m dos rectas, y A, B dos puntos distintos. Si A ∈ l, B ∈ l y A ∈ m, B ∈ m, entonces l = m.",
+  "parentTheorem": "teorema-dos-rectas-un-punto",
+  "tags": ["geometria", "incidencia"],
+  "difficulty": "básico",
+  "demos": ["demo-rectas-coincidentes"]
+};
+
+<Capitular letra="C" />omo consecuencia directa del <ConceptLink targetId="teorema-dos-rectas-un-punto" isDependency={true}>teorema de intersección única</ConceptLink>, si dos <ConceptLink targetId="recta" isDependency={false}>rectas</ConceptLink> comparten dos o más <ConceptLink targetId="punto" isDependency={false}>puntos</ConceptLink> distintos, ambas deben ser exactamente la misma recta. Este <ConceptLink targetId="corolario" isDependency={false}>corolario</ConceptLink> establece la unicidad en las construcciones geométricas elementales: dos puntos determinan una recta de forma unívoca.
+
+<Separador />
+
+### Enunciado Formal
+
+Sean $l$ y $m$ dos <ConceptLink targetId="recta" isDependency={false}>rectas</ConceptLink> y $A, B$ dos <ConceptLink targetId="punto" isDependency={false}>puntos</ConceptLink> distintos. Si ambos puntos inciden en ambas rectas, entonces las rectas son idénticas:
+
+<Formula>
+  $$ A, B \in l \land A, B \in m \implies l = m $$
+</Formula>
+
+<Separador />
+
+### Discusión
+
+Este <ConceptLink targetId="corolario" isDependency={false}>corolario</ConceptLink> es fundamental en la fundamentación axiomática clásica y moderna. Prohíbe la existencia de "burbujas" o múltiples líneas conectando los mismos puntos en el espacio bidimensional llano. Actúa como la formulación recíproca del <ConceptLink targetId="axioma-incidencia-1">axioma de incidencia</ConceptLink> original.
+
+<Separador />
+
+### Observaciones
+
+En geometrías no euclídeas, como la <ConceptLink targetId="geometria-esferica">geometría esférica</ConceptLink>, este corolario falla si tomamos como "rectas" a los círculos máximos y como "puntos" a los polos antipodales (p.ej. hay infinitos meridianos que conectan el Polo Norte y el Polo Sur). Por eso, el <ConceptLink targetId="teorema-dos-rectas-un-punto">teorema padre</ConceptLink> y este corolario son cruciales para distinguir la <ConceptLink targetId="geometria-euclidiana">geometría euclidiana</ConceptLink>.

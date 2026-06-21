@@ -1,0 +1,50 @@
+export const metadata = {
+  "id": "altura",
+  "type": "definicion",
+  "title": "Altura",
+  "description": "La altura de un triángulo es el segmento perpendicular trazado desde un vértice al lado opuesto (o su prolongación).",
+  "tags": ["geometria", "triangulos", "rectas"],
+  "authors": ["euclides"],
+  "links": ["segmento", "triangulo", "perpendicular", "punto"],
+  "seeAlso": [],
+  "hasSimulation": true,
+};
+
+import { InteractiveElement } from "@/boundary/components/ui/VisualBind";
+import { Altura } from '@/boundary/components/diagrams/Definiciones/Altura';
+
+export const Simulation = Altura;
+
+<Capitular letra="L" />a <InteractiveElement target="altura">altura</InteractiveElement> de un <ConceptLink targetId="triangulo" isDependency={false}>triángulo</ConceptLink> es el <ConceptLink targetId="segmento" isDependency={false}>segmento</ConceptLink> de <ConceptLink targetId="recta" isDependency={false}>recta</ConceptLink> <InteractiveElement target="ortogonal"><ConceptLink targetId="perpendicular" isDependency={false}>perpendicular</ConceptLink></InteractiveElement> trazado desde un <InteractiveElement target="vertice-opuesto"><ConceptLink targetId="vertice" isDependency={false}>vértice</ConceptLink></InteractiveElement> hasta la <ConceptLink targetId="recta" isDependency={false}>recta</ConceptLink> que contiene al <InteractiveElement target="lado-opuesto"><ConceptLink targetId="lado" isDependency={false}>lado</ConceptLink> opuesto</InteractiveElement>. La <ConceptLink targetId="longitud" isDependency={false}>longitud</ConceptLink> de este segmento representa la <ConceptLink targetId="distancia" isDependency={false}>distancia</ConceptLink> más corta entre el <ConceptLink targetId="vertice" isDependency={false}>vértice</ConceptLink> y dicha <ConceptLink targetId="recta" isDependency={false}>recta</ConceptLink>.
+
+<Separador />
+
+### Pie de la altura
+
+El <ConceptLink targetId="punto" isDependency={false}>punto</ConceptLink> donde la altura intersecta la <ConceptLink targetId="recta" isDependency={false}>recta</ConceptLink> que contiene al <ConceptLink targetId="lado" isDependency={false}>lado</ConceptLink> opuesto se denomina **pie de la altura**. Si el <ConceptLink targetId="triangulo" isDependency={false}>triángulo</ConceptLink> es <ConceptLink targetId="angulo-obtuso" isDependency={false}>obtusángulo</ConceptLink>, el pie de la altura correspondiente al <ConceptLink targetId="angulo-obtuso" isDependency={false}>ángulo obtuso</ConceptLink> recae en la <ConceptLink targetId="semirrecta" isDependency={false}>prolongación</ConceptLink> del lado opuesto, fuera del <ConceptLink targetId="triangulo" isDependency={false}>triángulo</ConceptLink>. En un <ConceptLink targetId="triangulo-rectangulo" isDependency={false}>triángulo rectángulo</ConceptLink>, dos de las alturas coinciden con los <ConceptLink targetId="cateto" isDependency={false}>catetos</ConceptLink> y sus pies son los propios <ConceptLink targetId="vertice" isDependency={false}>vértices</ConceptLink>.
+
+<Separador />
+
+### Ortocentro
+
+Todo <ConceptLink targetId="triangulo" isDependency={false}>triángulo</ConceptLink> posee exactamente tres alturas, una por cada <ConceptLink targetId="vertice" isDependency={false}>vértice</ConceptLink>. Estas tres alturas (o sus <ConceptLink targetId="semirrecta" isDependency={false}>prolongaciones</ConceptLink>) se <ConceptLink targetId="interseccion" isDependency={false}>intersecan</ConceptLink> invariablemente en un único <ConceptLink targetId="punto" isDependency={false}>punto</ConceptLink> llamado <InteractiveElement target="ortocentro"><ConceptLink targetId="ortocentro" isDependency={false}>ortocentro</ConceptLink></InteractiveElement>. La posición del <ConceptLink targetId="ortocentro" isDependency={false}>ortocentro</ConceptLink> varía según el tipo de triángulo: es interior en los <ConceptLink targetId="angulo-agudo" isDependency={false}>acutángulos</ConceptLink>, coincide con el vértice del ángulo recto en los <ConceptLink targetId="triangulo-rectangulo" isDependency={false}>rectángulos</ConceptLink>, y queda fuera del triángulo en los <ConceptLink targetId="angulo-obtuso" isDependency={false}>obtusángulos</ConceptLink>.
+
+<Separador />
+
+### Relación con el área
+
+La altura es una <ConceptLink targetId="magnitud" isDependency={false}>magnitud</ConceptLink> fundamental para calcular el <ConceptLink targetId="area" isDependency={false}>área</ConceptLink> de cualquier <ConceptLink targetId="poligono" isDependency={false}>polígono</ConceptLink>. Para un <ConceptLink targetId="triangulo" isDependency={false}>triángulo</ConceptLink>:
+
+<Formula>
+  $$ S = \frac{b \cdot h}{2} $$
+</Formula>
+
+donde $b$ es la <ConceptLink targetId="longitud" isDependency={false}>longitud</ConceptLink> de una <ConceptLink targetId="base" isDependency={false}>base</ConceptLink> (cualquiera de los lados) y $h$ es la correspondiente altura. Esta fórmula es independiente de qué lado se tome como <ConceptLink targetId="base" isDependency={false}>base</ConceptLink>; para un mismo <ConceptLink targetId="triangulo" isDependency={false}>triángulo</ConceptLink>, el producto $b \cdot h$ es constante.
+
+<Separador />
+
+### Observaciones
+
+- El <ConceptLink targetId="teorema-de-la-altura" isDependency={false}>teorema de la altura</ConceptLink> relaciona la altura sobre la <ConceptLink targetId="hipotenusa" isDependency={false}>hipotenusa</ConceptLink> con los segmentos en que divide a esta, en un <ConceptLink targetId="triangulo-rectangulo" isDependency={false}>triángulo rectángulo</ConceptLink>.
+- Las alturas son un caso particular de las <ConceptLink targetId="ceviana" isDependency={false}>cevianas</ConceptLink>, al igual que las <ConceptLink targetId="mediana" isDependency={false}>medianas</ConceptLink> y las <ConceptLink targetId="bisectriz" isDependency={false}>bisectrices</ConceptLink>.
+- En <ConceptLink targetId="geometria-hiperbolica" isDependency={false}>geometría hiperbólica</ConceptLink>, las alturas de un triángulo no necesariamente concurren en un único punto.

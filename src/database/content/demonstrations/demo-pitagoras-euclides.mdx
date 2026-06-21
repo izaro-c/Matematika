@@ -1,0 +1,60 @@
+export const metadata = {
+  "id": "demo-pitagoras-euclides",
+  "type": "demostracion",
+  "title": "Demostración: Teorema de Pitágoras (El molino de viento)",
+  "description": "La clásica demostración del molino de viento, formalizada rigurosamente bajo el sistema axiomático de Hilbert.",
+  "tags": ["geometria", "triangulos", "areas", "hilbert"],
+  "authors": ["euclides", "hilbert"],
+  "parentTheorem": "teorema-pitagoras",
+  "proofMethod": "directo",
+  "layout": "split"
+};
+
+import { DemoPitagorasEuclides } from "@/boundary/components/diagrams/Teoremas/DemoPitagorasEuclides";
+
+<DemonstrationSection diagram={<DemoPitagorasEuclides />}>
+  <MedievalStep number={1} target="triangulo" title="El triángulo rectángulo">
+    Partimos de un <InteractiveElement target="triangulo-base" color="carbon"><ConceptLink targetId="triangulo" isDependency={false}>triángulo</ConceptLink> <ConceptLink targetId="triangulo-rectangulo" isDependency={false}>rectángulo</ConceptLink> $ABC$</InteractiveElement>, con su <ConceptLink targetId="angulo" isDependency={false}>ángulo</ConceptLink> <ConceptLink targetId="angulo" isDependency={false}>recto</ConceptLink> en el <ConceptLink targetId="vertice" isDependency={false}>vértice</ConceptLink> $C$. 
+    Los <ConceptLink targetId="lado" isDependency={false}>lados</ConceptLink> adyacentes al ángulo recto son los <ConceptLink targetId="cateto" isDependency={false}>catetos</ConceptLink> <InteractiveElement target="cateto-a" color="terracota">$a$</InteractiveElement> y <InteractiveElement target="cateto-b" color="salvia">$b$</InteractiveElement>, y el lado opuesto es la <InteractiveElement target="hipotenusa-c" color="pizarra"><ConceptLink targetId="hipotenusa" isDependency={false}>hipotenusa</ConceptLink> $c$</InteractiveElement>.
+  </MedievalStep>
+
+  <MedievalStep number={2} target="cuadrados" title="Construcción de los cuadrados">
+    Sobre cada uno de los <ConceptLink targetId="lado" isDependency={false}>lados</ConceptLink> del <ConceptLink targetId="triangulo" isDependency={false}>triángulo</ConceptLink>, construimos un <ConceptLink targetId="cuadrado" isDependency={false}>cuadrado</ConceptLink> perfecto hacia el exterior, apoyándonos en el <ConceptLink targetId="teorema-construccion-cuadrado" isDependency={true}>teorema de construcción de polígonos</ConceptLink> deducido de los axiomas de congruencia y continuidad de Hilbert. 
+    Obtenemos así el <InteractiveElement target="cuadrado-b" color="salvia"><ConceptLink targetId="cuadrado" isDependency={false}>cuadrado</ConceptLink> sobre el cateto $b$</InteractiveElement> (de <ConceptLink targetId="area" isDependency={false}>área</ConceptLink> <InteractiveElement target="cuadrado-b" color="salvia">$b^2$</InteractiveElement>), el <InteractiveElement target="cuadrado-a" color="terracota"><ConceptLink targetId="cuadrado" isDependency={false}>cuadrado</ConceptLink> sobre el cateto $a$</InteractiveElement> (de <ConceptLink targetId="area" isDependency={false}>área</ConceptLink> <InteractiveElement target="cuadrado-a" color="terracota">$a^2$</InteractiveElement>), y el inmenso <InteractiveElement target="cuadrado-c" color="pizarra"><ConceptLink targetId="cuadrado" isDependency={false}>cuadrado</ConceptLink> sobre la <ConceptLink targetId="hipotenusa" isDependency={false}>hipotenusa</ConceptLink></InteractiveElement> (de <ConceptLink targetId="area" isDependency={false}>área</ConceptLink> <InteractiveElement target="cuadrado-c" color="pizarra">$c^2$</InteractiveElement>). 
+    Queremos demostrar que la suma de las áreas de los dos primeros equivale exactamente al área del tercero.
+  </MedievalStep>
+
+  <MedievalStep number={3} target="altura" title="La perpendicular y los rectángulos">
+    Desde el vértice $C$, trazamos una <InteractiveElement target="recta-altura" color="carbon"><ConceptLink targetId="recta" isDependency={false}>línea</ConceptLink> <ConceptLink targetId="perpendicular" isDependency={false}>perpendicular</ConceptLink></InteractiveElement> a la <InteractiveElement target="hipotenusa-c" color="pizarra"><ConceptLink targetId="hipotenusa" isDependency={false}>hipotenusa</ConceptLink> $AB$</InteractiveElement> (justificado por el <ConceptLink targetId="teorema-existencia-perpendicular" isDependency={true}>teorema de existencia de perpendiculares</ConceptLink> del marco de Hilbert) y la prolongamos a través del <InteractiveElement target="cuadrado-c" color="pizarra"><ConceptLink targetId="cuadrado" isDependency={false}>cuadrado</ConceptLink> mayor</InteractiveElement>. 
+    Esta línea divide al cuadrado de la hipotenusa en <InteractiveElement target="rectangulos-hipotenusa" color="carbon">dos <ConceptLink targetId="rectangulo" isDependency={false}>rectángulos</ConceptLink></InteractiveElement> (el <InteractiveElement target="rectangulo-izq" color="salvia">rectángulo izquierdo</InteractiveElement> y el <InteractiveElement target="rectangulo-der" color="terracota">rectángulo derecho</InteractiveElement>). La genialidad de <ConceptLink targetId="euclides" isDependency={false}>Euclides</ConceptLink> consistió en demostrar que cada uno de estos rectángulos tiene exactamente la misma área que su cuadrado adyacente correspondiente.
+  </MedievalStep>
+
+  <MedievalStep number={4} target="triangulos-izq" title="Construcción de triángulos (Izquierda)">
+    Trazamos líneas auxiliares para formar dos <ConceptLink targetId="triangulo" isDependency={false}>triángulos</ConceptLink>: el <InteractiveElement target="triangulo-acd" color="salvia">triángulo $\triangle ACD$</InteractiveElement> y el <InteractiveElement target="triangulo-akb" color="salvia">triángulo $\triangle AKB$</InteractiveElement>.
+    Observemos sus lados y ángulos:
+    - En el <InteractiveElement target="triangulo-acd" color="salvia">$\triangle ACD$</InteractiveElement>, el lado $AD$ es igual al lado <InteractiveElement target="hipotenusa-c" color="pizarra">$c$</InteractiveElement> del cuadrado mayor, y $AC$ es igual al lado <InteractiveElement target="cateto-b" color="salvia">$b$</InteractiveElement> del cuadrado menor. El ángulo comprendido $\angle CAD$ es igual a $\angle CAB + 90^\circ$.
+    - En el <InteractiveElement target="triangulo-akb" color="salvia">$\triangle AKB$</InteractiveElement>, el lado $AB$ es igual a <InteractiveElement target="hipotenusa-c" color="pizarra">$c$</InteractiveElement>, y $AK$ es igual a <InteractiveElement target="cateto-b" color="salvia">$b$</InteractiveElement>. El ángulo comprendido $\angle KAB$ es $\angle CAB + 90^\circ$.
+    Por el <ConceptLink targetId="axioma-congruencia-5" isDependency={true}>Axioma de Congruencia LAL (Axioma III.5 de Hilbert)</ConceptLink>, ambos triángulos son estrictamente <ConceptLink targetId="congruencia" isDependency={false}>congruentes</ConceptLink> y tienen la misma área.
+  </MedievalStep>
+
+  <MedievalStep number={5} target="areas-izq" title="Equivalencia de áreas (Izquierda)">
+    El <InteractiveElement target="triangulo-acd" color="salvia"><ConceptLink targetId="triangulo" isDependency={false}>triángulo</ConceptLink> $\triangle ACD$</InteractiveElement> comparte base ($AD$) y está entre las mismas paralelas que el <InteractiveElement target="rectangulo-izq" color="salvia"><ConceptLink targetId="rectangulo" isDependency={false}>rectángulo</ConceptLink> izquierdo</InteractiveElement>; por tanto, según la teoría de la proporción y áreas, su área es exactamente la mitad que la del rectángulo (<ConceptLink targetId="teorema-area-triangulo" isDependency={true}>Teorema de equivalencia de áreas</ConceptLink>).
+    A su vez, el <InteractiveElement target="triangulo-akb" color="salvia">triángulo $\triangle AKB$</InteractiveElement> comparte base ($AK$) y está entre las mismas paralelas que el <InteractiveElement target="cuadrado-b" color="salvia"><ConceptLink targetId="cuadrado" isDependency={false}>cuadrado</ConceptLink> sobre el cateto $b$</InteractiveElement>, siendo su área también la mitad que la del cuadrado (<ConceptLink targetId="teorema-area-triangulo" isDependency={false}>teorema de equivalencia</ConceptLink>).
+    Como los triángulos tienen igual área, sus dobles también la tienen: el <InteractiveElement target="rectangulo-izq" color="salvia">rectángulo izquierdo</InteractiveElement> tiene la misma área que el <InteractiveElement target="cuadrado-b" color="salvia">cuadrado sobre $b$ ($b^2$)</InteractiveElement>.
+  </MedievalStep>
+
+  <MedievalStep number={6} target="areas-der" title="Equivalencia de áreas (Derecha)">
+    Repitiendo el mismo proceso en el lado derecho, formamos los triángulos <InteractiveElement target="triangulo-bce" color="terracota">$\triangle BCE$</InteractiveElement> y <InteractiveElement target="triangulo-abf" color="terracota">$\triangle ABF$</InteractiveElement>.
+    Razonando de forma análoga, demostramos que son congruentes (LAL). Dado que el área del <InteractiveElement target="triangulo-bce" color="terracota">$\triangle BCE$</InteractiveElement> es la mitad del <InteractiveElement target="rectangulo-der" color="terracota"><ConceptLink targetId="rectangulo" isDependency={false}>rectángulo</ConceptLink> derecho</InteractiveElement> y el área del <InteractiveElement target="triangulo-abf" color="terracota">$\triangle ABF$</InteractiveElement> es la mitad del <InteractiveElement target="cuadrado-a" color="terracota"><ConceptLink targetId="cuadrado" isDependency={false}>cuadrado</ConceptLink> sobre el cateto $a$</InteractiveElement>, deducimos que el <InteractiveElement target="rectangulo-der" color="terracota">rectángulo derecho</InteractiveElement> tiene área igual a <InteractiveElement target="cuadrado-a" color="terracota">$a^2$</InteractiveElement>.
+  </MedievalStep>
+
+  <MedievalStep number={7} target="cuadrados-final" title="Conclusión final">
+    Si unimos el <InteractiveElement target="rectangulo-izq" color="salvia"><ConceptLink targetId="rectangulo" isDependency={false}>rectángulo</ConceptLink> izquierdo ($b^2$)</InteractiveElement> y el <InteractiveElement target="rectangulo-der" color="terracota"><ConceptLink targetId="rectangulo" isDependency={false}>rectángulo</ConceptLink> derecho ($a^2$)</InteractiveElement>, conforman en su totalidad el inmenso <InteractiveElement target="cuadrado-c" color="pizarra"><ConceptLink targetId="cuadrado" isDependency={false}>cuadrado</ConceptLink> sobre la <ConceptLink targetId="hipotenusa" isDependency={false}>hipotenusa</ConceptLink> ($c^2$)</InteractiveElement> (aplicando la <ConceptLink targetId="propiedad-aditiva-area" isDependency={true}>propiedad aditiva del área</ConceptLink> de la teoría de la medida de Hilbert). 
+    
+    Queda así rigurosamente demostrado que:
+    <Formula>
+      $$ a^2 + b^2 = c^2 $$
+    </Formula>
+    $\blacksquare$
+  </MedievalStep>
+</DemonstrationSection>

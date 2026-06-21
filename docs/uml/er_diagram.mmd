@@ -1,0 +1,13 @@
+erDiagram
+    GRAPH ||--|{ NODE : contains
+    NODE ||--o{ DEPENDENCY : has
+    NODE {
+        string id PK
+        string type
+        string title
+        string mdx_file_reference
+    }
+    DEPENDENCY {
+        string target_node_id FK
+        boolean required_for_proof
+    }

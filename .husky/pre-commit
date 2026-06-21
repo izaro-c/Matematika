@@ -1,0 +1,8 @@
+#!/usr/bin/env sh
+. "$(dirname -- "$0")/_/husky.sh"
+
+echo "Validando Grafo MDX y Enlaces Cruzados..."
+npm run prebuild
+
+echo "Ejecutando linter y tests en archivos modificados..."
+npx lint-staged

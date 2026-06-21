@@ -1,0 +1,37 @@
+export const metadata = {
+  "id": "teorema-dos-rectas-un-punto",
+  "type": "teorema",
+  "title": "Teorema: Dos rectas se cortan en a lo sumo un punto",
+  "description": "Dos rectas distintas del plano o del espacio se cortan en a lo sumo un punto.",
+  "statement": "Sean l y m dos rectas distintas. Entonces existe a lo sumo un punto P tal que P ∈ l y P ∈ m.",
+  "tags": ["geometria", "incidencia", "geometria-absoluta"],
+  "authors": ["hilbert"],
+  "difficulty": "básico",
+  "demos": ["demo-dos-rectas-un-punto"],
+  "corollaries": ["corolario-rectas-coincidentes"],
+  "hasSimulation": true
+};
+
+import { InteractiveElement } from "@/boundary/components/ui/VisualBind";
+import { DosRectasUnPunto } from '@/boundary/components/diagrams/Teoremas/DosRectasUnPunto';
+
+export const Simulation = DosRectasUnPunto;
+
+<Capitular letra="D" />
+os <InteractiveElement target="rectas"><ConceptLink targetId="recta" isDependency={false}>rectas</ConceptLink></InteractiveElement> distintas no admiten intersección en más de un único <InteractiveElement target="punto"><ConceptLink targetId="punto" isDependency={false}>punto</ConceptLink></InteractiveElement>. Si exhibieran multiplicidad de <ConceptLink targetId="punto" isDependency={false}>puntos</ConceptLink> comunes, el <ConceptLink targetId="axioma-incidencia-1">axioma fundamental de incidencia (I-1)</ConceptLink> colapsaría su identidad, contradiciendo la hipótesis inicial de su distinción geométrica.
+
+<Separador />
+
+### Enunciado Formal
+
+<Formula>
+  $$ \text{Sean } l \neq m \text{ dos rectas. Existe a lo sumo un punto } P \text{ tal que } P \in l \cap m. $$
+</Formula>
+
+<Separador />
+
+### Discusión
+
+Este <ConceptLink targetId="teorema" isDependency={false}>teorema</ConceptLink> establece que la <ConceptLink targetId="interseccion" isDependency={false}>intersección</ConceptLink> de dos <ConceptLink targetId="recta" isDependency={false}>rectas</ConceptLink> distintas es vacía o un único <ConceptLink targetId="punto" isDependency={false}>punto</ConceptLink>. En la <ConceptLink targetId="geometria-euclidiana" isDependency={false}>geometría</ConceptLink> de incidencia, dos rectas que se cortan en un punto se llaman **secantes**; dos rectas que no se cortan se llaman **<ConceptLink targetId="paralelas" isDependency={false}>paralelas</ConceptLink>** (en el sentido amplio de la <ConceptLink targetId={["sistema-absoluto", "geometria-absoluta"]}>geometría absoluta</ConceptLink>).
+
+La importancia de este resultado radica en que justifica la definición de rectas secantes y paralelas como categorías disjuntas: dos rectas son secantes (un punto de corte) o paralelas (cero puntos de corte), sin término medio.

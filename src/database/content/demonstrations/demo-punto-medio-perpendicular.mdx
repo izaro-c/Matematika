@@ -1,0 +1,84 @@
+export const metadata = {
+  "id": "demo-punto-medio-perpendicular",
+  "type": "demostracion",
+  "title": "Demostración: La mediatriz es perpendicular al segmento",
+  "description": "Prueba bidireccional usando LAL y LLL.",
+  "parentTheorem": "teorema-punto-medio-perpendicular",
+  "proofMethod": "directo",
+  "authors": ["euclides"],
+  "tags": ["geometria", "congruencia", "orden"],
+  "layout": "split"
+};
+
+import { DemoPuntoMedioPerpendicular } from "@/boundary/components/diagrams/Demos/DemoPuntoMedioPerpendicular";
+
+<DemonstrationSection diagram={<DemoPuntoMedioPerpendicular />}>
+
+<Capitular letra="L" />a <ConceptLink targetId="mediatriz" isDependency={false}>mediatriz</ConceptLink> correspondiente a un <ConceptLink targetId="segmento" isDependency={false}>segmento</ConceptLink> conforma el lugar geométrico estricto de aquellos <ConceptLink targetId="punto" isDependency={false}>puntos</ConceptLink> equidistantes a sus vértices extremos. Se demuestra rigurosamente su coincidencia topológica con la <ConceptLink targetId="recta" isDependency={false}>recta</ConceptLink> ortogonal trazada por el <ConceptLink targetId="lema-punto-medio" isDependency={true}>punto medio</ConceptLink>, aplicando conjugadamente el <ConceptLink targetId="axioma-congruencia-5" isDependency={true}>axioma de congruencia LAL</ConceptLink> y el <ConceptLink targetId="teorema-congruencia-lll" isDependency={true}>teorema de congruencia LLL</ConceptLink>.
+
+<Separador />
+
+### Enunciado Formal
+
+<Formula>
+  $$ \{P : \overline{PA} \cong \overline{PB}\} = \ell $$
+</Formula>
+
+Sea <InteractiveElement target="segmentAB" color="terracota">$\overline{AB}$</InteractiveElement> un segmento con <ConceptLink targetId={["lema-punto-medio", "punto"]}>punto medio</ConceptLink> <InteractiveElement target="pointM" color="terracota">$M$</InteractiveElement> ($\overline{AM} \cong \overline{MB}$). Sea <InteractiveElement target="lineCD" color="terracota">$\ell$</InteractiveElement> la <ConceptLink targetId="perpendicular" isDependency={false}>perpendicular</ConceptLink> a $\overline{AB}$ por $M$. Se afirma que el conjunto de puntos que equidistan de <InteractiveElement target="pointA" color="carbon">$A$</InteractiveElement> y <InteractiveElement target="pointB" color="carbon">$B$</InteractiveElement> coincide con $\ell$.
+
+<Separador />
+
+### Dirección 1: Todo punto de $\ell$ equidista
+
+<MedievalStep number={1} title="Triángulos sobre la mediatriz" target="step1">
+Sea <InteractiveElement target="pointP" color="terracota">$P$</InteractiveElement> $\in \ell$. Consideremos los <ConceptLink targetId="triangulo" isDependency={false}>triángulos</ConceptLink> <InteractiveElement target="trianglePAM" color="salvia">$\triangle PAM$</InteractiveElement> y <InteractiveElement target="trianglePBM" color="terracota">$\triangle PBM$</InteractiveElement>:
+- $\overline{PM}$ es común a ambos triángulos.
+- $\overline{AM} \cong \overline{MB}$ por el <ConceptLink targetId="lema-punto-medio" isDependency={true}>lema del punto medio</ConceptLink>.
+- <InteractiveElement target="rightAngle" color="terracota">$\angle PMA \cong \angle PMB$</InteractiveElement>, pues ambos son ángulos rectos (ya que $\ell \perp \overline{AB}$).
+</MedievalStep>
+
+<MedievalStep number={2} title="Congruencia LAL" target="step2">
+Por el <ConceptLink targetId="axioma-congruencia-5" isDependency={true}>axioma LAL</ConceptLink>, los triángulos son congruentes:
+
+<Formula>
+  $$ \triangle PAM \cong \triangle PBM \implies \overline{PA} \cong \overline{PB} $$
+</Formula>
+</MedievalStep>
+
+### Dirección 2: Todo punto equidistante está en $\ell$
+
+<MedievalStep number={3} title="Triángulos isósceles" target="step3">
+Sea un punto <InteractiveElement target="pointC" color="terracota">$C$</InteractiveElement> tal que $\overline{CA} \cong \overline{CB}$ (es decir, $C$ equidista de los extremos, equivalente a construir dos circunferencias intersecantes).
+Consideremos los triángulos <InteractiveElement target="triangleCAM" color="salvia">$\triangle CAM$</InteractiveElement> y <InteractiveElement target="triangleCBM" color="terracota">$\triangle CBM$</InteractiveElement>:
+- $\overline{CA} \cong \overline{CB}$ (por hipótesis).
+- $\overline{AM} \cong \overline{MB}$ (punto medio).
+- $\overline{CM}$ es común a ambos triángulos.
+</MedievalStep>
+
+<MedievalStep number={4} title="Congruencia LLL" target="step4">
+Por el <ConceptLink targetId="teorema-congruencia-lll" isDependency={true}>teorema LLL</ConceptLink>:
+
+<Formula>
+  $$ \triangle CAM \cong \triangle CBM $$
+</Formula>
+
+En particular, $\angle CMA \cong \angle CMB$. Pero estos ángulos son adyacentes y suplementarios (pues $M$ está entre $A$ y $B$), por lo que ambos son rectos. 
+</MedievalStep>
+
+<MedievalStep number={5} title="Conclusión" target="step5">
+Esto significa que $C$ está en la <InteractiveElement target="lineCD" color="terracota">perpendicular</InteractiveElement> a $\overline{AB}$ por $M$, es decir, $C \in \ell$. Por tanto, el lugar geométrico coincide con la mediatriz $\ell$. $\blacksquare$
+</MedievalStep>
+
+<Separador />
+
+### Análisis
+
+La demostración es bidireccional: inclusión en ambos sentidos. El Paso 1 usa LAL (un axioma), el Paso 2 usa LLL (un teorema). La diferencia es significativa: en el Paso 1 conocemos el ángulo (recto), en el Paso 2 lo deducimos.
+
+<Nota>
+  La mediatriz es el eje de simetría del segmento: la reflexión respecto a ella intercambia $A$ y $B$. Las tres mediatrices de un triángulo concurren en el **circuncentro**, centro de la circunferencia circunscrita.
+</Nota>
+
+Este teorema es válido en geometría absoluta. La existencia del circuncentro, sin embargo, puede fallar en geometría hiperbólica para triángulos muy grandes.
+
+</DemonstrationSection>
