@@ -689,44 +689,6 @@ function FlowContent() {
         <Background color="rgba(51,51,51,0.07)" gap={24} size={1} />
         <Controls position="bottom-left" />
       </ReactFlow>
-
-      {/* ── Leyenda ───────────────────────────────────────────────────────── */}
-      <div className="absolute bottom-14 right-4 z-30 bg-lienzo/95 border border-carbon/20 shadow p-3">
-        <h3 className="font-sans text-[9px] uppercase tracking-widest text-carbon/50 mb-2">Leyenda</h3>
-        {([
-          { type: 'axioma', bg: '#1c1917', label: 'Axioma (fundamento)' },
-          { type: 'lema', bg: '#4a6070', label: 'Lema (auxiliar)' },
-          { type: 'teorema', bg: '#6b9e6b', label: 'Teorema' },
-          { type: 'corolario', bg: '#b85c38', label: 'Corolario' },
-          { type: 'definicion', bg: '#c49b4f', label: 'Definición' },
-          { type: 'modelo', bg: '#8b3a3a', label: 'Modelo' },
-        ] as const).map(({ type, bg, label }) => (
-          <div key={type} className="flex items-center gap-2 text-xs font-serif text-carbon mb-1 last:mb-0">
-            <div
-              className="w-3 h-3 rounded-sm shrink-0"
-              style={{ backgroundColor: bg, border: '1px solid rgba(0,0,0,0.2)' }}
-            />
-            {label}
-          </div>
-        ))}
-        <div className="mt-2 pt-1.5 border-t border-carbon/10 space-y-0.5">
-          <p className="text-[9px] font-sans text-carbon/50 flex items-center gap-2">
-            <span className="block w-6 h-[2px] bg-carbon/50" />
-            Sólida — dependencia directa
-          </p>
-          <p className="text-[9px] font-sans text-carbon/50 flex items-center gap-2">
-            <span className="block w-6 h-[2px] bg-carbon/50" style={{ background: 'repeating-linear-gradient(90deg, rgba(51,51,51,0.5) 0, rgba(51,51,51,0.5) 4px, transparent 4px, transparent 8px)' }} />
-            Discontinua — vía lema
-          </p>
-          <p className="text-[9px] font-sans text-carbon/50 flex items-center gap-2">
-            <span className="block w-6 h-[2px] bg-carbon/50" style={{ background: 'repeating-linear-gradient(90deg, rgba(51,51,51,0.5) 0, rgba(51,51,51,0.5) 2px, transparent 2px, transparent 5px)' }} />
-            Punteada — vía definición
-          </p>
-        </div>
-        <p className="mt-2 text-[8px] font-sans text-carbon/35 border-t border-carbon/10 pt-1.5">
-          ↑ Las flechas apuntan desde<br />la dependencia hacia el dependiente
-        </p>
-      </div>
     </div>
   );
 }

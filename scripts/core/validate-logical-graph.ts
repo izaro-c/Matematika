@@ -92,7 +92,8 @@ mdxFiles.forEach(file => {
     if (metadata.parentTheorem && typeof metadata.parentTheorem === 'string') contentDeps.push(metadata.parentTheorem);
     if (Array.isArray(metadata.corollaries)) contentDeps.push(...metadata.corollaries);
     if (Array.isArray(metadata.axioms_verified)) contentDeps.push(...metadata.axioms_verified);
-    if (metadata.satisfies && typeof metadata.satisfies === 'string') contentDeps.push(metadata.satisfies);
+    // NOTE: 'satisfies' (modelos → sistemas) no crea dependencia lógica:
+    // es una asociación semántica, no un prerrequisito deductivo.
     // NOTE: seeAlso and ConceptLink targets with isDependency={false} are NOT included
 
     // Remove duplicates

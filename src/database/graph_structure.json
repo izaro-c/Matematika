@@ -1121,9 +1121,8 @@
       "description": "El modelo conforme del plano hiperbólico que representa el espacio como el interior de un círculo unitario y las rectas como arcos ortogonales a la frontera.",
       "proofs": [],
       "directDependencies": [
-        "axioma-paralelas-euclides",
-        "axioma-paralelas-hiperbolico",
         "axioma-incidencia-1",
+        "axioma-paralelas-hiperbolico",
         "axioma-incidencia-2",
         "axioma-incidencia-3",
         "axioma-orden-1",
@@ -1148,8 +1147,7 @@
       "directDependencies": [
         "axioma-incidencia-1",
         "axioma-incidencia-2",
-        "axioma-incidencia-3",
-        "sistema-incidencia"
+        "axioma-incidencia-3"
       ]
     },
     "corolario-rectas-coincidentes": {

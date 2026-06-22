@@ -3,7 +3,6 @@ import { useState, useCallback, useRef } from 'react';
 const N = 48;
 const DOMINO_W = 10;
 const DOMINO_H = 76;
-const REACH = 81;        // alcance horizontal de la ficha caída a 85°
 const GAP_FAR = 114;     // centros separados: alcance < hueco → no toca
 const GAP_NEAR = 40;     // centros juntos: alcance > hueco → empuja
 

@@ -50,7 +50,7 @@ export const TheoremSchema = z.object({
  */
 export const LessonSchema = z.object({
   id: z.string().optional(),
-  type: z.literal('leccion'),
+  type: z.union([z.literal('leccion'), z.literal('lesson')]),
   title: z.string(),
   description: z.string().optional(),
   difficulty: z.enum(['básico', 'intermedio', 'avanzado']).optional(),
@@ -180,7 +180,7 @@ export const ModelSchema = z.object({
   title: z.string(),
   description: z.string().optional(),
   /** ID del sistema axiomático que este modelo satisface */
-  satisfies: z.string(),
+  satisfies: z.union([z.string(), z.array(z.string())]),
   /** IDs de los axiomas verificados en este modelo */
   axioms_verified: z.array(z.string()).optional(),
   /** Indica si este modelo tiene un diagrama interactivo asociado */

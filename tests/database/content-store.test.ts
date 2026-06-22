@@ -1,6 +1,6 @@
 import { describe, it, expect, beforeEach, vi } from 'vitest';
 
-vi.mock('@/controller/store/content/loaders', () => ({
+vi.mock('@/database/dao/content/loaders', () => ({
   contentLoaders: {
     mathMetas: {}, mathLoaders: {},
     thmMetas: {}, thmLoaders: {},
@@ -65,7 +65,7 @@ describe('ContentStore', () => {
 
     store.mathematicians.set('gauss', {
       id: 'gauss', slug: 'gauss', name: 'Gauss', fullName: 'Gauss',
-      description: 'Prince', year: 1777,
+      description: 'Prince', birthYear: 1777,
       Component: (() => null) as never,
     });
 
@@ -161,7 +161,7 @@ describe('ContentStore', () => {
     it('returns mathematicians sorted by year', () => {
       store.mathematicians.set('euler', {
         id: 'euler', slug: 'euler', name: 'Euler', fullName: 'Euler',
-        description: '', year: 1707,
+        description: '', birthYear: 1707,
         Component: (() => null) as never,
       });
       const all = store.getAllMathematicians();

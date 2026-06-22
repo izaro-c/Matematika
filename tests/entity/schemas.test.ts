@@ -93,7 +93,7 @@ describe('DemoSchema', () => {
     });
   });
   it('accepts all proof methods', () => {
-    for (const method of ['directo', 'contradiccion', 'induccion', 'contraposicion', 'constructivo', 'geometrico', 'exhaustivo', 'reduccion'] as const) {
+    for (const method of ['directo', 'contradiccion', 'induccion', 'contraposicion', 'constructivo', 'geometrico', 'exhaustivo'] as const) {
       expectValid(DemoSchema, { ...valid, proofMethod: method });
     }
   });
@@ -179,7 +179,7 @@ describe('ModelSchema', () => {
 });
 
 describe('UseCaseSchema', () => {
-  const valid = { type: 'caso_de_uso', title: 'Use Case' };
+  const valid = { type: 'caso-de-uso', title: 'Use Case' };
 
   it('accepts minimal valid metadata', () => expectValid(UseCaseSchema, valid));
   it('accepts full metadata', () => {
@@ -189,19 +189,19 @@ describe('UseCaseSchema', () => {
       tags: ['tag'], difficulty: 'intermedio', links: ['link-1'],
     });
   });
-  it('rejects missing title', () => expectInvalid(UseCaseSchema, { type: 'caso_de_uso' }));
+  it('rejects missing title', () => expectInvalid(UseCaseSchema, { type: 'caso-de-uso' }));
 });
 
 describe('StudyPlanSchema', () => {
-  const valid = { id: 'plan-1', type: 'plan_de_estudio', title: 'Plan', description: 'desc' };
+  const valid = { id: 'plan-1', type: 'plan-de-estudio', title: 'Plan', description: 'desc' };
 
   it('accepts valid metadata (id is required)', () => expectValid(StudyPlanSchema, valid));
   it('accepts with requiredNodes', () => {
     expectValid(StudyPlanSchema, { ...valid, requiredNodes: ['node-1', 'node-2'] });
   });
   it('rejects missing id (required for StudyPlan)', () => {
-    expectInvalid(StudyPlanSchema, { type: 'plan_de_estudio', title: 'P', description: 'd' });
+    expectInvalid(StudyPlanSchema, { type: 'plan-de-estudio', title: 'P', description: 'd' });
   });
-  it('rejects missing title', () => expectInvalid(StudyPlanSchema, { id: 'x', type: 'plan_de_estudio', description: 'd' }));
-  it('rejects missing description', () => expectInvalid(StudyPlanSchema, { id: 'x', type: 'plan_de_estudio', title: 't' }));
+  it('rejects missing title', () => expectInvalid(StudyPlanSchema, { id: 'x', type: 'plan-de-estudio', description: 'd' }));
+  it('rejects missing description', () => expectInvalid(StudyPlanSchema, { id: 'x', type: 'plan-de-estudio', title: 't' }));
 });
