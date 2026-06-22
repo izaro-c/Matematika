@@ -15,7 +15,11 @@ import { InteractiveElement } from "@/boundary/components/ui/VisualBind";
 
 <DemonstrationSection diagram={<DemoExistenciaBisectriz />}>
 
-<Capitular letra="L" />a construcción de la <ConceptLink targetId="bisectriz" isDependency={false}>bisectriz</ConceptLink> de un <ConceptLink targetId="angulo" isDependency={false}>ángulo</ConceptLink> es una de las operaciones fundamentales de la <ConceptLink targetId="geometria" isDependency={false}>geometría</ConceptLink>. La siguiente <ConceptLink targetId="demostracion" isDependency={false}>demostración</ConceptLink> constructiva prueba que existe y es única, usando exclusivamente el <ConceptLink targetId="lema-punto-medio" isDependency={true}>lema del punto medio</ConceptLink> y el <ConceptLink targetId="teorema-congruencia-lll" isDependency={true}>criterio LLL</ConceptLink>. No requiere <ConceptLink targetId="teorema-existencia-perpendicular" isDependency={false}>perpendiculares</ConceptLink> ni <ConceptLink targetId="circunferencia" isDependency={false}>circunferencias</ConceptLink>.
+<Capitular letra="S" />ea $\angle AOB$ un <ConceptLink targetId="angulo" isDependency={false}>ángulo</ConceptLink> con <ConceptLink targetId="vertice" isDependency={false}>vértice</ConceptLink> $O$. Existe una única <ConceptLink targetId="semirrecta" isDependency={false}>semirrecta</ConceptLink> $\overrightarrow{OC}$ interior a $\angle AOB$ tal que:
+
+<Formula>
+  $$ \angle AOC \cong \angle COB $$
+</Formula>
 
 <Separador />
 
@@ -75,7 +79,7 @@ La <InteractiveElement target="bisectriz-unica" color="carbon">bisectriz es úni
 
 ### Análisis
 
-La demostración es un ejemplo paradigmático de cómo los criterios de congruencia de triángulos permiten transferir igualdades entre segmentos a igualdades entre ángulos. La construcción es puramente lineal: no intervienen <ConceptLink targetId="circunferencia" isDependency={false}>circunferencias</ConceptLink> ni <ConceptLink targetId="teorema-existencia-perpendicular" isDependency={false}>perpendiculares</ConceptLink>, lo que la hace válida en <ConceptLink targetId="geometria-absoluta" isDependency={false}>geometría absoluta</ConceptLink>.
+La demostración es un ejemplo paradigmático de cómo los criterios de congruencia de triángulos permiten transferir igualdades entre segmentos a igualdades entre ángulos. La construcción es puramente lineal: no intervienen <ConceptLink targetId="circunferencia" isDependency={false}>circunferencias</ConceptLink> ni <ConceptLink targetId="teorema-existencia-perpendicular" isDependency={false}>perpendiculares</ConceptLink>, lo que la hace válida en <ConceptLink targetId="sistema-absoluto" isDependency={false}>geometría absoluta</ConceptLink>.
 
 La clave del argumento es el <ConceptLink targetId="lema-punto-medio" isDependency={true}>lema del punto medio</ConceptLink> (paso 2), que a su vez requiere los tres criterios de congruencia (<ConceptLink targetId="axioma-congruencia-5" isDependency={true}>LAL</ConceptLink>, <ConceptLink targetId="teorema-congruencia-ala" isDependency={true}>ALA</ConceptLink>, <ConceptLink targetId="teorema-congruencia-lll" isDependency={true}>LLL</ConceptLink>) y los <ConceptLink targetId="axioma-orden-3" isDependency={true}>axiomas de orden</ConceptLink>. La cadena de dependencias es profunda pero sólida.
 

@@ -1,0 +1,48 @@
+export const metadata = {
+  "id": "angulos-suplementarios",
+  "type": "definicion",
+  "subtype": "derivado",
+  "title": "Ángulos Suplementarios",
+  "description": "Dos ángulos son suplementarios si la suma de sus medidas es un ángulo llano (180° o π radianes).",
+  "tags": ["geometria", "angulos", "medida"],
+  "authors": ["hilbert"],
+  "links": ["angulo"],
+  "seeAlso": ["angulo", "perpendicular", "teorema-angulos-opuestos-verticales"],
+  "hasSimulation": false,
+};
+
+<Capitular letra="D" />os ángulos son **suplementarios** si la suma de sus medidas es igual a un ángulo llano ($180^\circ$ o $\pi$ radianes). Es una de las relaciones angulares fundamentales en <ConceptLink targetId="sistema-absoluto" isDependency={false}>geometría plana</ConceptLink>.
+
+<Separador />
+
+### Definición Formal
+
+Sea $\alpha$ y $\beta$ dos <ConceptLink targetId="angulo" isDependency={false}>ángulos</ConceptLink>. Se dice que son suplementarios si:
+
+<Formula>
+  $$ \alpha + \beta \cong 180^\circ $$
+</Formula>
+
+Equivalentemente, dos ángulos son suplementarios si juntos forman un ángulo llano ($180^\circ$).
+
+<Separador />
+
+### Suplementarios Adyacentes
+
+El caso más común es el de dos ángulos adyacentes cuyos lados no comunes son semirrectas opuestas. En esta configuración, los ángulos se apoyan sobre una misma recta y su suma es exactamente $180^\circ$.
+
+Dada una recta $l$ y un punto $O$ sobre ella, las dos semirrectas determinadas por $O$ forman un ángulo llano. Si se traza otra semirrecta desde $O$, ésta divide el ángulo llano en dos ángulos suplementarios.
+
+<Separador />
+
+### Relación con Ángulos Rectos
+
+Un caso particular importante: un ángulo recto es aquel que es congruente con su suplementario. Es decir, si $\alpha \cong \beta$ y $\alpha + \beta \cong 180^\circ$, entonces $\alpha \cong \beta \cong 90^\circ$.
+
+<Separador />
+
+### Propiedades
+
+- La relación «ser suplementario de» es simétrica: si $\alpha$ es suplementario de $\beta$, entonces $\beta$ es suplementario de $\alpha$.
+- Si dos ángulos son suplementarios de un mismo tercer ángulo, entonces son congruentes entre sí (por transitividad de la congruencia, <ConceptLink targetId="axioma-congruencia-4" isDependency={false}>axioma III-4</ConceptLink>).
+- Los <ConceptLink targetId="teorema-angulos-opuestos-verticales" isDependency={false}>ángulos opuestos por el vértice</ConceptLink> son congruentes precisamente porque comparten el mismo suplementario.

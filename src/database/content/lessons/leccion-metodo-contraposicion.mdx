@@ -1,0 +1,74 @@
+export const metadata = {
+  "id": "leccion-metodo-contraposicion",
+  "type": "lesson",
+  "title": "Demostración por Contraposición",
+  "description": "Probar una implicación demostrando su contrarrecíproco: en lugar de P implica Q, se demuestra que no Q implica no P.",
+  "tags": ["logica", "metodos", "demostracion", "contraposicion"],
+  "authors": [],
+  "links": [],
+  "seeAlso": ["leccion-metodo-directo", "leccion-metodo-contradiccion"],
+  "satisfies": [],
+  "hasSimulation": true,
+  "difficulty": "intermedio",
+};
+
+import { ContraposicionSimulation } from "@/boundary/components/diagrams/Demos/ContraposicionSimulation";
+export const Simulation = ContraposicionSimulation;
+
+<Capitular letra="L" />a **demostración por contraposición** — también llamada *prueba por contrarrecíproco* — es un método indirecto que explota una equivalencia lógica fundamental: una implicación y su contrarrecíproco son lógicamente equivalentes.
+
+$$ (P \implies Q) \quad\equiv\quad (\neg Q \implies \neg P) $$
+
+En lugar de probar «si $P$ entonces $Q$», se prueba «si no $Q$ entonces no $P$». A menudo, esta segunda dirección es mucho más fácil de demostrar que la primera.
+
+<Separador />
+
+### Estructura Lógica
+
+1. Se quiere demostrar $P \implies Q$.
+2. Se formula el contrarrecíproco: $\neg Q \implies \neg P$.
+3. Se asume $\neg Q$ (la negación de la conclusión original).
+4. Mediante un razonamiento directo, se deduce $\neg P$ (la negación de la hipótesis original).
+5. Por equivalencia lógica, queda probado $P \implies Q$.
+
+<Separador />
+
+### Diferencia con la Contradicción
+
+Aunque ambos son métodos indirectos, existe una diferencia sutil pero importante:
+
+- En la **contradicción**, se asume $P \land \neg Q$ (hipótesis verdadera y conclusión falsa) y se busca cualquier contradicción.
+- En la **contraposición**, se asume solo $\neg Q$ y se demuestra directamente $\neg P$, sin necesidad de llegar a un absurdo.
+
+En la práctica, la contraposición suele ser más elegante cuando $\neg Q$ ofrece una estructura clara para trabajar.
+
+<Separador />
+
+### Ejemplos
+
+- **«Si $n^2$ es par, entonces $n$ es par»**: El contrarrecíproco es «si $n$ es impar, entonces $n^2$ es impar». Sea $n = 2k+1$; entonces $n^2 = 4k^2 + 4k + 1 = 2(2k^2 + 2k) + 1$, que es impar. Demostración trivial.
+
+- **«Si $x$ es irracional, entonces $\sqrt{x}$ es irracional»**: El contrarrecíproco es «si $\sqrt{x}$ es racional, entonces $x$ es racional». Si $\sqrt{x} = a/b$, entonces $x = a^2/b^2$, que es racional.
+
+- **«Si dos ángulos de un triángulo son iguales, los lados opuestos son iguales»**: El contrarrecíproco es «si los lados opuestos no son iguales, los ángulos no son iguales», que se prueba con el teorema del ángulo externo.
+
+<Separador />
+
+### Cuándo Usarlo
+
+La contraposición es particularmente efectiva cuando:
+
+- La negación de $Q$ ($\neg Q$) tiene una estructura algebraica o lógica más manejable que $Q$.
+- $P$ y $Q$ involucran propiedades de tipo «es par/impar», «es racional/irracional», «es finito/infinito».
+- La hipótesis $P$ es compleja pero su negación $\neg P$ es simple de caracterizar.
+- Se quiere evitar el aparato de asumir dos cosas a la vez (como en la contradicción).
+
+<Separador />
+
+### Fortalezas y Debilidades
+
+<Nota>
+**Fortaleza**: Transforma un problema potencialmente difícil en uno más abordable al intercambiar hipótesis y conclusión negadas. Es un método limpio, sin el «artificio» de buscar una contradicción ad hoc.
+
+**Debilidad**: No siempre la negación de $Q$ es más fácil de manejar que $Q$. En algunos casos, la contraposición no ofrece ventaja sobre el método directo. Además, solo aplica a implicaciones; no sirve para probar afirmaciones existenciales o categóricas.
+</Nota>

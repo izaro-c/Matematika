@@ -1,0 +1,35 @@
+export const metadata = {
+  "id": "congruencia",
+  "type": "definicion",
+  "subtype": "primitivo",
+  "title": "Congruencia",
+  "description": "Relación primitiva de equivalencia métrica entre segmentos y entre ángulos. No se define; su comportamiento queda determinado por los axiomas de congruencia (Grupo III de Hilbert).",
+  "statement": "La congruencia es una relación de equivalencia primitiva entre segmentos (denotada AB ≅ CD) y entre ángulos (denotada ∠(h,k) ≅ ∠(h',k')).",
+  "tags": ["geometria", "congruencia", "fundamentos"],
+  "authors": ["hilbert"],
+  "hasSimulation": false
+};
+
+<Capitular letra="L" />a **congruencia** es la tercera relación primitiva del sistema de <ConceptLink targetId="hilbert" isDependency={false}>Hilbert</ConceptLink>. Permite comparar <ConceptLink targetId="segmento" isDependency={false}>segmentos</ConceptLink> y <ConceptLink targetId="angulo" isDependency={false}>ángulos</ConceptLink> sin necesidad de recurrir a una <ConceptLink targetId="longitud" isDependency={false}>medida numérica</ConceptLink>.
+
+<Separador />
+
+### Naturaleza Primitiva
+
+La congruencia no se define en términos de distancia o medida. Es una relación primitiva que satisface los <ConceptLink targetId={["axioma-congruencia-1","axioma-congruencia-2","axioma-congruencia-3","axioma-congruencia-4","axioma-congruencia-5"]} isDependency={false}>cinco axiomas de congruencia</ConceptLink> (Grupo III: III-1 a III-5). La notación $AB \cong CD$ se lee «el segmento $AB$ es congruente con el segmento $CD$».
+
+<Separador />
+
+### Axiomas que la Gobiernan
+
+- **III-1 (Transporte de segmentos)**: Dado un segmento $AB$ y una semirrecta desde $C$, existe un único $D$ sobre ella tal que $AB \cong CD$.
+- **III-2**: La congruencia de segmentos es transitiva.
+- **III-3 (Adición de segmentos)**: Si $A * B * C$, $A' * B' * C'$, $AB \cong A'B'$ y $BC \cong B'C'$, entonces $AC \cong A'C'$.
+- **III-4 (Transporte de ángulos)**: Dado un ángulo y una semirrecta, existe un único ángulo congruente a cada lado.
+- **III-5 (LAL)**: Criterio Lado-Ángulo-Lado para congruencia de <ConceptLink targetId="triangulo" isDependency={false}>triángulos</ConceptLink>.
+
+<Separador />
+
+### Observaciones
+
+La congruencia es una relación de equivalencia (reflexiva, simétrica y transitiva). En modelos numéricos como el <ConceptLink targetId="modelo-cartesiano" isDependency={false}>cartesiano</ConceptLink>, la congruencia de segmentos equivale a la igualdad de longitudes, y la de ángulos a la igualdad de medidas angulares. Pero esta interpretación es externa a la teoría axiomática: internamente, la congruencia solo significa lo que los axiomas III-1 a III-5 establecen.

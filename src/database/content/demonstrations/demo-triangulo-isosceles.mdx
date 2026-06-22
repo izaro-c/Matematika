@@ -15,12 +15,20 @@ import { InteractiveElement } from "@/boundary/components/ui/VisualBind";
 
 <DemonstrationSection diagram={<DemoTrianguloIsosceles />}>
 
-<Capitular letra="E" />l <ConceptLink targetId="teorema-triangulo-isosceles" isDependency={false}>Pons Asinorum</ConceptLink> (Proposición I.5 de los <ConceptLink targetId="elementos" isDependency={false}>Elementos</ConceptLink>) afirma que en un <ConceptLink targetId="triangulo-isosceles" isDependency={false}>triángulo isósceles</ConceptLink> los ángulos opuestos a los lados iguales son congruentes. La demostración que sigue es la elegante prueba de simetría atribuida a <ConceptLink targetId="pappus" isDependency={false}>Pappus de Alejandría</ConceptLink>: el triángulo es congruente consigo mismo considerado con los vértices de la base permutados, y el <ConceptLink targetId="axioma-congruencia-5" isDependency={true}>criterio LAL</ConceptLink> fuerza la igualdad de los <ConceptLink targetId="angulo" isDependency={false}>ángulos</ConceptLink>.
+<Formula>
+  $$ \overline{AB} \cong \overline{AC} \implies \angle B \cong \angle C $$
+</Formula>
+
+<Capitular letra="S" />ea $\triangle ABC$ un <ConceptLink targetId="triangulo" isDependency={false}>triángulo</ConceptLink> con <InteractiveElement target="lados-iguales">$\overline{AC} \cong \overline{BC}$</InteractiveElement>. Entonces:
+
+<Formula>
+  $$ \angle A \cong \angle B $$
+</Formula>
 
 <Separador />
 
 <MedievalStep number={1} title="El triángulo isósceles" target={["triangulo-abc", "lado-ab", "lado-ac"]}>
-Por hipótesis, <InteractiveElement target="triangulo-abc"><ConceptLink targetId="triangulo">$\triangle ABC$</ConceptLink></InteractiveElement> es isósceles con <InteractiveElement target="lado-ab" color="salvia">$\overline{AB} \cong \overline{AC}$</InteractiveElement>. Queremos demostrar que <InteractiveElement target="angulo-b" color="salvia">$\angle B$</InteractiveElement> $\cong$ <InteractiveElement target="angulo-c" color="pizarra">$\angle C$</InteractiveElement>.
+Por hipótesis, <InteractiveElement target="triangulo-abc"><ConceptLink targetId="triangulo" isDependency={false}>$\triangle ABC$</ConceptLink></InteractiveElement> es isósceles con <InteractiveElement target="lado-ab" color="salvia">$\overline{AB} \cong \overline{AC}$</InteractiveElement>. Queremos demostrar que <InteractiveElement target="angulo-b" color="salvia">$\angle B$</InteractiveElement> $\cong$ <InteractiveElement target="angulo-c" color="pizarra">$\angle C$</InteractiveElement>.
 </MedievalStep>
 
 <MedievalStep number={2} title="El triángulo permutado" target={["triangulo-permutado"]}>
@@ -33,7 +41,7 @@ En esta correspondencia:
 </MedievalStep>
 
 <MedievalStep number={3} title="Congruencia LAL" target={["lal"]}>
-Se satisfacen las condiciones del <ConceptLink targetId="axioma-congruencia-5" isDependency={true}>criterio LAL</ConceptLink>: dos lados y el ángulo comprendido de $\triangle ABC$ son congruentes con los correspondientes de $\triangle ACB$. Por tanto:
+Se satisfacen las condiciones del <ConceptLink targetId="axioma-congruencia-5" isDependency={true}>criterio LAL</ConceptLink>: dos lados y el ángulo comprendido de <InteractiveElement target="triangulo-abc" color="carbon">$\triangle ABC$</InteractiveElement> son congruentes con los correspondientes de $\triangle ACB$. Por tanto:
 
 <Formula>
   $$ \triangle ABC \cong \triangle ACB $$
@@ -54,10 +62,10 @@ Por la <ConceptLink targetId="congruencia" isDependency={false}>definición de c
 
 La demostración de <ConceptLink targetId="pappus" isDependency={false}>Pappus</ConceptLink> es extraordinariamente simple: reduce el Pons Asinorum a una aplicación directa de <ConceptLink targetId="axioma-congruencia-5" isDependency={true}>LAL</ConceptLink> sin construcciones auxiliares. La clave es reconocer que $\triangle ABC$ y $\triangle ACB$ son dos formas de considerar el mismo triángulo, y que la hipótesis $\overline{AB} \cong \overline{AC}$ hace que LAL sea aplicable entre ambas «copias».
 
-Esta demostración no requiere la <ConceptLink targetId="bisectriz" isDependency={false}>bisectriz</ConceptLink>, el <ConceptLink targetId="lema-punto-medio" isDependency={false}>punto medio</ConceptLink> ni prolongaciones de lados. Es la prueba más económica del Pons Asinorum y pertenece a la <ConceptLink targetId="geometria-absoluta" isDependency={false}>geometría absoluta</ConceptLink>.
+Esta demostración no requiere la <ConceptLink targetId="bisectriz" isDependency={false}>bisectriz</ConceptLink>, el <ConceptLink targetId="lema-punto-medio" isDependency={false}>punto medio</ConceptLink> ni prolongaciones de lados. Es la prueba más económica del Pons Asinorum y pertenece a la <ConceptLink targetId="sistema-absoluto" isDependency={false}>geometría absoluta</ConceptLink>.
 
 <Nota>
-  <ConceptLink targetId="euclides" isDependency={false}>Euclides</ConceptLink> dio una demostración más larga (I.5) usando prolongaciones y triángulos auxiliares. La prueba de <ConceptLink targetId="pappus" isDependency={false}>Pappus</ConceptLink> (siglo IV d.C.) es muy posterior pero mucho más elegante. Ambas son válidas en <ConceptLink targetId="geometria-absoluta" isDependency={false}>geometría absoluta</ConceptLink>.
+  <ConceptLink targetId="euclides" isDependency={false}>Euclides</ConceptLink> dio una demostración más larga (I.5) usando prolongaciones y triángulos auxiliares. La prueba de <ConceptLink targetId="pappus" isDependency={false}>Pappus</ConceptLink> (siglo IV d.C.) es muy posterior pero mucho más elegante. Ambas son válidas en <ConceptLink targetId="sistema-absoluto" isDependency={false}>geometría absoluta</ConceptLink>.
 </Nota>
 
 </DemonstrationSection>

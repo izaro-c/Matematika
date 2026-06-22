@@ -1,0 +1,36 @@
+export const metadata = {
+  "id": "teorema-area-invariancia",
+  "type": "teorema",
+  "title": "Invariancia del Contenido por Congruencia",
+  "description": "Si dos figuras poligonales son congruentes, tienen el mismo contenido (área). Consecuencia directa de la definición de equidescomponibilidad y los axiomas de congruencia de Hilbert.",
+  "statement": "Sean P y Q dos polígonos. Si P ≅ Q (congruentes), entonces P y Q tienen igual contenido.",
+  "tags": ["geometria", "areas", "congruencia"],
+  "authors": ["hilbert"],
+  "difficulty": "básico",
+  "demos": ["demo-area-invariancia"],
+  "hasSimulation": false
+};
+
+<Capitular letra="D" />os <ConceptLink targetId="poligono" isDependency={false}>polígonos</ConceptLink> congruentes tienen el mismo contenido. Esta propiedad, que parece evidente, es en realidad un teorema que se demuestra a partir de la definición de <ConceptLink targetId="teoria-medida-area" isDependency={false}>equidescomponibilidad</ConceptLink> y los <ConceptLink targetId="axioma-congruencia-1" isDependency={false}>axiomas de congruencia</ConceptLink> de <ConceptLink targetId="hilbert" isDependency={false}>Hilbert</ConceptLink>.
+
+<Separador />
+
+### Enunciado Formal
+
+<Formula>
+  $$ P \cong Q \implies \text{Cont}(P) = \text{Cont}(Q) $$
+</Formula>
+
+Donde $\text{Cont}(P)$ denota el contenido (área) del polígono $P$ en el sentido de la <ConceptLink targetId="teoria-medida-area" isDependency={false}>teoría de equidescomponibilidad</ConceptLink>.
+
+<Separador />
+
+### Demostración (esbozo)
+
+Por definición, dos polígonos tienen igual <ConceptLink targetId="contenido" isDependency={false}>contenido</ConceptLink> si pueden descomponerse en un número finito de triángulos congruentes por parejas. Si $P \cong Q$, existe una <ConceptLink targetId="isometria" isDependency={false}>isometría</ConceptLink> que aplica $P$ sobre $Q$. Por el <ConceptLink targetId="teorema-triangulacion-poligono" isDependency={true}>teorema de triangulación</ConceptLink>, $P$ admite una triangulación; basta aplicar la misma isometría a cada triángulo para obtener una triangulación de $Q$ con triángulos congruentes. Por tanto, tienen igual contenido.
+
+<Separador />
+
+### Observaciones
+
+En el sistema de Hilbert, el contenido NO es una noción primitiva: se define mediante la relación de <ConceptLink targetId="contenido" isDependency={false}>equidescomponibilidad</ConceptLink>. Este teorema establece que la congruencia (noción primitiva definida por los axiomas III-1 a III-5) implica la igualdad de contenido, conectando así la geometría de congruencia con la teoría de áreas.

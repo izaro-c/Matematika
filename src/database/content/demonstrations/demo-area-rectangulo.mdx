@@ -1,0 +1,41 @@
+export const metadata = {
+  "id": "demo-area-rectangulo",
+  "type": "demostracion",
+  "title": "Demostración: Área del Rectángulo",
+  "description": "Prueba por casos: si base y altura son conmensurables, el rectángulo se descompone en cuadrados unidad; si son inconmensurables, se usan aproximaciones vía el axioma de Arquímedes.",
+  "parentTheorem": "teorema-area-rectangulo",
+  "proofMethod": "exhaustivo",
+  "layout": "text",
+  "authors": ["hilbert"],
+  "tags": ["geometria", "areas", "rectangulo"]
+};
+
+<DemonstrationSection>
+
+<Formula>
+  $$ \text{Cont}(\text{Rect}(b, h)) = b \cdot h $$
+</Formula>
+
+Sea $R$ un rectángulo de base $b$ y altura $h$. Por la definición de <ConceptLink targetId="teoria-medida-area" isDependency={false}>equidescomponibilidad</ConceptLink>, el contenido se determina por triangulación. Procedemos por casos según la conmensurabilidad de $b$ y $h$.
+
+<Separador />
+
+<MedievalStep number={1} title="Caso conmensurable">
+Supongamos que existe una unidad $u$ tal que $b = m \cdot u$ y $h = n \cdot u$ con $m, n \in \mathbb{N}$. Entonces $R$ se descompone en $m \times n$ cuadrados de lado $u$. Por definición, el cuadrado unidad $u \times u$ tiene contenido $u^2$. Por la <ConceptLink targetId="teorema-area-aditividad" isDependency={true}>aditividad del contenido</ConceptLink>:
+
+$$ \text{Cont}(R) = m \cdot n \cdot u^2 = (m \cdot u) \cdot (n \cdot u) = b \cdot h $$
+</MedievalStep>
+
+<MedievalStep number={2} title="Caso inconmensurable">
+Si $b$ y $h$ no comparten medida común, por el <ConceptLink targetId="axioma-arquimedes" isDependency={true}>axioma de Arquímedes</ConceptLink> existen sucesiones de números racionales $b_k \to b$ y $h_k \to h$ por aproximación. Para cada $k$, constrúyanse rectángulos $R_k^-$ de lados $b_k - \varepsilon_k$ y $h_k - \varepsilon_k$ (interior) y $R_k^+$ de lados $b_k + \varepsilon_k$ y $h_k + \varepsilon_k$ (exterior). Por el caso conmensurable:
+
+$$ \text{Cont}(R_k^-) = b_k^- \cdot h_k^- < \text{Cont}(R) < b_k^+ \cdot h_k^+ = \text{Cont}(R_k^+) $$
+
+Por el <ConceptLink targetId="axioma-completitud" isDependency={true}>axioma de completitud</ConceptLink>, el único número real que satisface todas estas desigualdades es $b \cdot h$.
+</MedievalStep>
+
+<MedievalStep number={3} title="Conclusión">
+En ambos casos, $\text{Cont}(R) = b \cdot h$. $\blacksquare$
+</MedievalStep>
+
+</DemonstrationSection>

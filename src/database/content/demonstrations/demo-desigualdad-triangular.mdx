@@ -15,7 +15,11 @@ import { InteractiveElement } from "@/boundary/components/ui/VisualBind";
 
 <DemonstrationSection diagram={<DemoDesigualdadTriangular />}>
 
-<Capitular letra="L" />a demostración euclidiana clásica de la <ConceptLink targetId="teorema-desigualdad-triangular" isDependency={false}>desigualdad triangular</ConceptLink> emplea un argumento constructivo riguroso: extiende un lado para formar un <ConceptLink targetId="teorema-triangulo-isosceles" isDependency={true}>triángulo isósceles</ConceptLink> auxiliar, compara ángulos mediante el <ConceptLink targetId="teorema-angulo-externo" isDependency={true}>teorema del ángulo externo</ConceptLink>, y traduce la desigualdad angular en desigualdad de longitudes.
+<Capitular letra="S" />ea <InteractiveElement target="triangulo">$\triangle ABC$</InteractiveElement> un <ConceptLink targetId="triangulo" isDependency={false}>triángulo</ConceptLink> con <InteractiveElement target="lados"><ConceptLink targetId="lado" isDependency={false}>lados</ConceptLink></InteractiveElement> <InteractiveElement target="lado-a">$a = BC$</InteractiveElement>, <InteractiveElement target="lado-b">$b = CA$</InteractiveElement>, <InteractiveElement target="lado-c">$c = AB$</InteractiveElement>. Entonces se cumplen las tres <InteractiveElement target="desigualdad">desigualdades</InteractiveElement>:
+
+<Formula>
+  $$ a + b > c, \qquad a + c > b, \qquad b + c > a $$
+</Formula>
 
 <Separador />
 
@@ -32,7 +36,7 @@ Por el <ConceptLink targetId="axioma-orden-3" isDependency={true}>axioma de adit
 </MedievalStep>
 
 <MedievalStep number={3} target="step3" title="Triángulo isósceles auxiliar">
-Conectamos $B$ y $D$ mediante un <InteractiveElement target="lado-bd" color="salvia">segmento $BD$</InteractiveElement> (por el <ConceptLink targetId="axioma-incidencia-1" isDependency={true}>axioma I-1</ConceptLink>, existe una recta por $B$ y $D$). Se forma $\triangle BCD$. Por el paso 2, $CD \cong BC$. Por la definición de <ConceptLink targetId="definicion-triangulo-isosceles" isDependency={true}>triángulo isósceles</ConceptLink>, $\triangle BCD$ es isósceles.
+Conectamos $B$ y $D$ mediante un <InteractiveElement target="lado-bd" color="salvia">segmento $BD$</InteractiveElement> (por el <ConceptLink targetId="axioma-incidencia-1" isDependency={true}>axioma I-1</ConceptLink>, existe una recta por $B$ y $D$). Se forma $\triangle BCD$. Por el paso 2, $CD \cong BC$. Por la definición de <ConceptLink targetId="triangulo" isDependency={false}>triángulo isósceles</ConceptLink>, $\triangle BCD$ es isósceles.
 
 Por el <ConceptLink targetId="teorema-triangulo-isosceles" isDependency={true}>Teorema del triángulo isósceles (Pons Asinorum)</ConceptLink>, los ángulos base opuestos a los lados congruentes también lo son: <InteractiveElement target="angulo-cbd" color="terracota">$\angle CBD$</InteractiveElement> $\cong$ <InteractiveElement target="angulo-cdb" color="salvia">$\angle CDB$</InteractiveElement>.
 </MedievalStep>
@@ -75,6 +79,6 @@ La traducción de desigualdad angular a desigualdad de lados (paso 5) es una con
   <ConceptLink targetId="euclides" isDependency={false}>Euclides</ConceptLink> demostró la desigualdad triangular en la Proposición I.20 de los <ConceptLink targetId="elementos" isDependency={false}>Elementos</ConceptLink>. Su argumento depende de I.5 (<ConceptLink targetId="teorema-triangulo-isosceles" isDependency={true}>Pons Asinorum</ConceptLink>), I.16 (<ConceptLink targetId="teorema-angulo-externo" isDependency={true}>ángulo externo</ConceptLink>) e I.19 (desigualdad ángulo-lado). La presente formalización sigue la estructura euclidiana pero con el rigor axiomático de <ConceptLink targetId="hilbert" isDependency={false}>Hilbert</ConceptLink>.
 </Nota>
 
-La <ConceptLink targetId="teorema-desigualdad-triangular" isDependency={false}>desigualdad triangular</ConceptLink> es válida en <ConceptLink targetId="geometria-absoluta" isDependency={false}>geometría absoluta</ConceptLink>: no requiere el <ConceptLink targetId="axioma-paralelas-euclides" isDependency={false}>axioma de las paralelas</ConceptLink>.
+La <ConceptLink targetId="teorema-desigualdad-triangular" isDependency={false}>desigualdad triangular</ConceptLink> es válida en <ConceptLink targetId="sistema-absoluto" isDependency={false}>geometría absoluta</ConceptLink>: no requiere el <ConceptLink targetId="axioma-paralelas-euclides" isDependency={false}>axioma de las paralelas</ConceptLink>.
 
 </DemonstrationSection>

@@ -52,17 +52,21 @@ export const DemonstrationSection: React.FC<DemonstrationSectionProps> = ({ diag
     return diagram;
   }, [diagram, diagrams, step]);
 
+  const hasDiagram = diagram !== undefined || (diagrams !== undefined && Object.keys(diagrams).length > 0);
+
   return (
     <div className="w-full flex flex-col md:flex-row min-h-[85vh]">
-      {/* Columna Izquierda: Diagrama (Sticky) */}
-      <div className="w-full md:w-[50%] relative bg-lienzo">
-        <div className="sticky top-[10vh] h-[80vh] p-8 flex items-center justify-center">
-          {renderedDiagram}
+      {/* Columna Izquierda: Diagrama (Sticky) — solo si hay diagrama */}
+      {hasDiagram && (
+        <div className="w-full md:w-[50%] relative bg-lienzo">
+          <div className="sticky top-[10vh] h-[80vh] p-8 flex items-center justify-center">
+            {renderedDiagram}
+          </div>
         </div>
-      </div>
+      )}
       
       {/* Columna Derecha: Texto (Scrolly) */}
-      <div className="w-full md:w-[50%] p-8 md:p-16 flex flex-col justify-start relative">
+      <div className={`w-full ${hasDiagram ? 'md:w-[50%]' : 'md:w-full max-w-4xl mx-auto'} p-8 md:p-16 flex flex-col justify-start relative`}>
         <div className="prose prose-pizarra prose-lg max-w-prose mx-auto w-full">
           {children}
         </div>

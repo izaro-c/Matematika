@@ -15,7 +15,11 @@ import { InteractiveElement } from "@/boundary/components/ui/VisualBind";
 
 <DemonstrationSection diagram={<DemoSumaAngulos />}>
 
-<Capitular letra="L" />a suma de los <ConceptLink targetId="angulo" isDependency={false}>ángulos</ConceptLink> interiores de un <ConceptLink targetId="triangulo" isDependency={false}>triángulo</ConceptLink> es uno de los resultados fundamentales de la <ConceptLink targetId="geometria" isDependency={false}>geometría</ConceptLink> euclidiana. La demostración clásica, atribuida a <ConceptLink targetId="euclides" isDependency={false}>Euclides</ConceptLink> (Proposición I.32 de los <ConceptLink targetId="elementos" isDependency={false}>Elementos</ConceptLink>), traza una <ConceptLink targetId="paralelas" isDependency={false}>paralela</ConceptLink> por un vértice y aplica el <ConceptLink targetId="teorema-angulos-alternos-internos" isDependency={true}>teorema de ángulos alternos internos</ConceptLink>.
+<Capitular letra="D" />ado un <InteractiveElement target="triangulo"><ConceptLink targetId="triangulo" isDependency={false}>triángulo</ConceptLink> $\triangle ABC$</InteractiveElement> con <InteractiveElement target="angulos"><ConceptLink targetId="angulo" isDependency={false}>ángulos</ConceptLink></InteractiveElement> interiores $\alpha = \angle A$, $\beta = \angle B$, $\gamma = \angle C$:
+
+<Formula>
+  $$ \alpha + \beta + \gamma = 180^\circ = \pi \text{ rad} $$
+</Formula>
 
 <Separador />
 
@@ -36,8 +40,8 @@ import { InteractiveElement } from "@/boundary/components/ui/VisualBind";
   </MedievalStep>
 
   <MedievalStep number={5} target={["angulo-llano", "angulo-c", "alterno-a", "alterno-b"]} title="Conclusión">
-    En el <InteractiveElement target="vertice-c"><ConceptLink targetId="vertice" isDependency={false}>vértice</ConceptLink> $C$</InteractiveElement>, por el paso 2 la recta paralela pasa por $C$. Por <ConceptLink targetId="punto" isDependency={false}>construcción</ConceptLink>, $\alpha'$, $\gamma$ y $\beta'$ son tres <ConceptLink targetId="angulo" isDependency={false}>ángulos</ConceptLink> consecutivos a lo largo de dicha recta. Por la definición de <ConceptLink targetId="angulo-llano" isDependency={true}>ángulo llano</ConceptLink>, los ángulos consecutivos sobre una recta suman $180^\circ$: $\alpha' + \gamma + \beta' = 180^\circ$.
+    En el <InteractiveElement target="vertice-c"><ConceptLink targetId="vertice" isDependency={false}>vértice</ConceptLink> $C$</InteractiveElement>, por el paso 2 la recta paralela pasa por $C$. Por <ConceptLink targetId="punto" isDependency={false}>construcción</ConceptLink>, $\alpha'$, $\gamma$ y $\beta'$ son tres <ConceptLink targetId="angulo" isDependency={false}>ángulos</ConceptLink> consecutivos a lo largo de dicha recta. Por la definición de <ConceptLink targetId="angulo-llano" isDependency={false}>ángulo llano</ConceptLink>, los ángulos consecutivos sobre una recta suman $180^\circ$: $\alpha' + \gamma + \beta' = 180^\circ$.
 
-    Por el paso 3, $\alpha' \cong \alpha$. Por el paso 4, $\beta' \cong \beta$. Por la <ConceptLink targetId="propiedad-transitiva-igualdad" isDependency={true}>transitividad de la igualdad</ConceptLink>, sustituyendo: $\alpha + \beta + \gamma = 180^\circ$. $\blacksquare$
+    Por el paso 3, $\alpha' \cong \alpha$. Por el paso 4, $\beta' \cong \beta$. Por la <ConceptLink targetId="propiedad-transitiva-igualdad" isDependency={false}>transitividad de la igualdad</ConceptLink>, sustituyendo: $\alpha + \beta + \gamma = 180^\circ$. $\blacksquare$
   </MedievalStep>
 </DemonstrationSection>

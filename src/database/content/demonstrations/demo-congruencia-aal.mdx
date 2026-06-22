@@ -15,7 +15,15 @@ import { InteractiveElement } from "@/boundary/components/ui/VisualBind";
 
 <DemonstrationSection diagram={<DemoCongruenciaAAL />}>
 
-<Capitular letra="E" />l criterio AAL es el cuarto y último de los criterios clásicos de <ConceptLink targetId="congruencia" isDependency={false}>congruencia</ConceptLink> de <ConceptLink targetId="triangulo" isDependency={false}>triángulos</ConceptLink>. La siguiente <ConceptLink targetId="demostracion" isDependency={false}>demostración</ConceptLink> lo reduce al <ConceptLink targetId="axioma-congruencia-5" isDependency={true}>criterio LAL</ConceptLink> mediante un argumento de <ConceptLink targetId="contradiccion" isDependency={false}>reducción al absurdo</ConceptLink> que invoca el <ConceptLink targetId="teorema-angulo-externo" isDependency={true}>teorema del ángulo externo</ConceptLink>.
+<Capitular letra="S" />ean $\triangle ABC$ y $\triangle A'B'C'$ dos <ConceptLink targetId="triangulo" isDependency={false}>triángulos</ConceptLink>. Si:
+
+<Formula>
+  $$ \angle A \cong \angle A', \qquad \angle B \cong \angle B', \qquad \overline{BC} \cong \overline{B'C'} $$
+</Formula>
+
+entonces $\triangle ABC \cong \triangle A'B'C'$.
+
+Nótese que $\overline{BC}$ es adyacente a $\angle B$ pero **no** a $\angle A$ (es el lado opuesto a $A$). El criterio ALA cubre el caso en que el lado es adyacente a ambos ángulos.
 
 <Separador />
 

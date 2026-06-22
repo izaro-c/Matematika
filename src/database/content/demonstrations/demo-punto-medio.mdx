@@ -15,7 +15,9 @@ import { InteractiveElement } from "@/boundary/components/ui/VisualBind";
 
 <DemonstrationSection diagram={<DemoPuntoMedio />}>
 
-<Capitular letra="T" />odo <ConceptLink targetId="segmento" isDependency={false}>segmento</ConceptLink> admite exactamente un <ConceptLink targetId="lema-punto-medio" isDependency={false}>punto medio</ConceptLink>. En <ConceptLink targetId="geometria-absoluta" isDependency={false}>geometría absoluta</ConceptLink> debemos demostrar rigurosamente su existencia y unicidad usando exclusivamente los axiomas de incidencia, orden y congruencia.
+<Capitular letra="P" />ara todo segmento, <Formula>
+  $$ \forall \, \overline{AB}, \; \exists! \; M \in \overline{AB} : \overline{AM} \cong \overline{MB}. $$
+</Formula>
 
 <Separador />
 
@@ -24,13 +26,13 @@ Sea <InteractiveElement target="segmentAB" color="carbon">$\overline{AB}$</Inter
 
 Por el <ConceptLink targetId="axioma-congruencia-4" isDependency={true}>Axioma de transporte de ángulos (III-4)</ConceptLink>, transportamos <InteractiveElement target="anguloA" color="terracota">$\angle CAB$</InteractiveElement> sobre el vértice $B$ en el semiplano opuesto, creando <InteractiveElement target="anguloB" color="salvia">$\angle DBA \cong \angle CAB$</InteractiveElement>. Por el <ConceptLink targetId="axioma-congruencia-1" isDependency={true}>Axioma de transporte de segmentos (III-1)</ConceptLink>, transportamos <InteractiveElement target="ladoAC" color="pizarra">$AC$</InteractiveElement> sobre el rayo $BD$ para obtener <InteractiveElement target="ladoBD" color="pizarra">$D$</InteractiveElement> tal que $AC \cong BD$.
 
-Por el <ConceptLink targetId="axioma-separacion-plano" isDependency={true}>axioma de separación del plano (Pasch)</ConceptLink>, dado que $C$ y $D$ están en semiplanos opuestos respecto a $AB$, el segmento <InteractiveElement target="ladoCD" color="pizarra">$CD$</InteractiveElement> corta a la recta $AB$ en un punto <InteractiveElement target="pointM" color="carbon">$M$</InteractiveElement>.
+Por el <ConceptLink targetId="axioma-orden-4" isDependency={true}>axioma de separación del plano (Pasch, II-4)</ConceptLink>, dado que $C$ y $D$ están en semiplanos opuestos respecto a $AB$, el segmento <InteractiveElement target="ladoCD" color="pizarra">$CD$</InteractiveElement> corta a la recta $AB$ en un punto <InteractiveElement target="pointM" color="carbon">$M$</InteractiveElement>.
 </MedievalStep>
 
 <MedievalStep number={2} title="Congruencia de los triángulos mayores" target="step2">
 Consideremos <InteractiveElement target="triangulo-cab" color="salvia">$\triangle CAB$</InteractiveElement> y <InteractiveElement target="triangulo-dba" color="salvia">$\triangle DBA$</InteractiveElement>. Por el paso 1: $AC \cong BD$, $\angle CAB \cong \angle DBA$, y $AB$ es común. Por el <ConceptLink targetId="axioma-congruencia-5" isDependency={true}>criterio LAL</ConceptLink>, $\triangle CAB \cong \triangle DBA$. Por la <ConceptLink targetId="congruencia" isDependency={false}>definición de congruencia</ConceptLink>, $CB \cong DA$.
 
-Ahora, <InteractiveElement target="triangulo-cad" color="terracota">$\triangle CAD$</InteractiveElement> y <InteractiveElement target="triangulo-dbc" color="terracota">$\triangle DBC$</InteractiveElement>: por el paso 1 $AC \cong BD$, $CD$ es común, y por este paso $AD \cong BC$. Por el <ConceptLink targetId="congruencia-lll" isDependency={true}>criterio LLL</ConceptLink>, $\triangle CAD \cong \triangle DBC$. Por la definición de congruencia, $\angle ACD \cong \angle BDC$.
+Ahora, <InteractiveElement target="triangulo-cad" color="terracota">$\triangle CAD$</InteractiveElement> y <InteractiveElement target="triangulo-dbc" color="terracota">$\triangle DBC$</InteractiveElement>: por el paso 1 $AC \cong BD$, $CD$ es común, y por este paso $AD \cong BC$. Por el <ConceptLink targetId="teorema-congruencia-lll" isDependency={true}>criterio LLL</ConceptLink>, $\triangle CAD \cong \triangle DBC$. Por la definición de congruencia, $\angle ACD \cong \angle BDC$.
 </MedievalStep>
 
 <MedievalStep number={3} title="El criterio ALA y el punto medio" target="step3">
@@ -40,7 +42,7 @@ Enfoquémonos en <InteractiveElement target="triangulo-cam" color="terracota">$\
 2. <InteractiveElement target="anguloA" color="terracota">$\angle CAM \cong \angle DBM$</InteractiveElement>: por el paso 1, $M$ está en $AB$, luego $\angle CAM = \angle CAB$ y $\angle DBM = \angle DBA$, que son congruentes por el paso 1.
 3. $\angle ACM \cong \angle BDM$ (por el paso 2: $\angle ACD \cong \angle BDC$, y $M$ está en $CD$, luego estos son los mismos ángulos).
 
-Por el <ConceptLink targetId="congruencia-ala" isDependency={true}>criterio ALA</ConceptLink>, $\triangle CAM \cong \triangle DBM$. Por la definición de congruencia, <InteractiveElement target="segmentAM" color="terracota">$AM \cong BM$</InteractiveElement>.
+Por el <ConceptLink targetId="teorema-congruencia-ala" isDependency={true}>criterio ALA</ConceptLink>, $\triangle CAM \cong \triangle DBM$. Por la definición de congruencia, <InteractiveElement target="segmentAM" color="terracota">$AM \cong BM$</InteractiveElement>.
 
 <Formula>
   $$ \overline{AM} \cong \overline{MB} $$
@@ -69,6 +71,6 @@ El <ConceptLink targetId="lema-punto-medio" isDependency={false}>punto medio</Co
 
 ### Análisis
 
-La existencia del <ConceptLink targetId="lema-punto-medio" isDependency={false}>punto medio</ConceptLink> en <ConceptLink targetId="geometria-absoluta" isDependency={false}>geometría absoluta</ConceptLink> se prueba constructivamente descansando sobre los criterios de congruencia LAL, LLL y ALA. Su **unicidad** se establece mediante los axiomas de <ConceptLink targetId="axioma-orden-3" isDependency={true}>orden</ConceptLink> y de <ConceptLink targetId="axioma-congruencia-1" isDependency={true}>transporte de segmentos</ConceptLink>.
+La existencia del <ConceptLink targetId="lema-punto-medio" isDependency={false}>punto medio</ConceptLink> en <ConceptLink targetId="sistema-absoluto" isDependency={false}>geometría absoluta</ConceptLink> se prueba constructivamente descansando sobre los criterios de congruencia LAL, LLL y ALA. Su **unicidad** se establece mediante los axiomas de <ConceptLink targetId="axioma-orden-3" isDependency={true}>orden</ConceptLink> y de <ConceptLink targetId="axioma-congruencia-1" isDependency={true}>transporte de segmentos</ConceptLink>.
 
 </DemonstrationSection>

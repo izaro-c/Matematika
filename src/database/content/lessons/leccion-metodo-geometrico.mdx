@@ -1,0 +1,82 @@
+export const metadata = {
+  "id": "leccion-metodo-geometrico",
+  "type": "lesson",
+  "title": "Método Geométrico",
+  "description": "Demostrar teoremas mediante razonamiento visual y espacial: construcciones, transformaciones, congruencias y semejanzas de figuras.",
+  "tags": ["logica", "metodos", "demostracion", "geometria"],
+  "authors": [],
+  "links": ["teorema-pitagoras", "demo-pitagoras-areas", "demo-pitagoras-euclides", "teorema-tales", "demo-tales"],
+  "seeAlso": ["leccion-metodo-directo", "leccion-metodo-constructivo"],
+  "satisfies": [],
+  "hasSimulation": true,
+  "difficulty": "intermedio",
+};
+
+import { GeometricoSimulation } from "@/boundary/components/diagrams/Demos/GeometricoSimulation";
+export const Simulation = GeometricoSimulation;
+
+<Capitular letra="E" />l **método geométrico** abarca las demostraciones que se apoyan en el razonamiento visual y espacial, manipulando figuras, longitudes, áreas, ángulos y transformaciones del plano o del espacio. Es el lenguaje natural de la geometría euclidiana y una de las formas más antiguas de demostración matemática.
+
+<Separador />
+
+### Principales Estrategias Dentro del Método Geométrico
+
+#### 1. Congruencia y Semejanza
+
+Se demuestra que dos figuras son congruentes (misma forma y tamaño) o semejantes (misma forma, distinto tamaño) mediante criterios como:
+
+- **<ConceptLink targetId="teorema-congruencia-ala" isDependency={false}>ALA</ConceptLink>**, **<ConceptLink targetId="teorema-congruencia-ala" isDependency={false}>LAL</ConceptLink>**, **<ConceptLink targetId="teorema-congruencia-ala" isDependency={false}>LLL</ConceptLink>** para triángulos.
+- Criterios de semejanza (ángulos iguales, lados proporcionales).
+
+Una vez establecida la congruencia, elementos correspondientes (lados, ángulos, medianas) resultan iguales por definición.
+
+#### 2. Comparación de Áreas
+
+Se reinterpreta una igualdad algebraica como una igualdad de áreas de figuras geométricas. Es la estrategia de las demostraciones clásicas del **<ConceptLink targetId="teorema-pitagoras" isDependency={false}>Teorema de Pitágoras</ConceptLink>**:
+
+- **<ConceptLink targetId="demo-pitagoras-areas" isDependency={false}>Demostración por áreas</ConceptLink>**: Se construyen cuadrados sobre los lados del triángulo rectángulo y se descompone el cuadrado mayor en piezas que reordenadas forman los dos cuadrados menores.
+
+- **<ConceptLink targetId="demo-pitagoras-euclides" isDependency={false}>Demostración de Euclides</ConceptLink>**: Mediante triángulos auxiliares y comparación de áreas de paralelogramos.
+
+#### 3. Transformaciones Geométricas
+
+Se aplican movimientos del plano que preservan distancias (isometrías) o razones (homotecias):
+
+- **Traslaciones, rotaciones y reflexiones** para superponer figuras.
+- **Homotecias** para probar proporcionalidad (<ConceptLink targetId="teorema-tales" isDependency={false}>Teorema de Tales</ConceptLink>).
+- **Simetrías** para deducir propiedades de figuras regulares.
+
+#### 4. Geometría Analítica
+
+Se traduce el problema geométrico a coordenadas y se resuelve algebraicamente. Especialmente útil para demostrar propiedades de rectas, circunferencias y cónicas.
+
+<Separador />
+
+### Ejemplos Clásicos
+
+- **<ConceptLink targetId="demo-tales" isDependency={false}>Teorema de Tales</ConceptLink>**: Si una recta paralela a un lado de un triángulo corta a los otros dos, los segmentos resultantes son proporcionales. Se demuestra comparando áreas de triángulos con alturas comunes.
+
+- **<ConceptLink targetId="demo-angulo-externo" isDependency={false}>Teorema del ángulo externo</ConceptLink>**: Todo ángulo externo de un triángulo es mayor que cualquiera de los ángulos internos no adyacentes. Se demuestra construyendo el punto medio y usando congruencia de triángulos.
+
+- **<ConceptLink targetId="demo-angulos-alternos-internos" isDependency={false}>Ángulos alternos internos</ConceptLink>**: Cuando dos rectas paralelas son cortadas por una transversal, los ángulos alternos internos son iguales.
+
+<Separador />
+
+### Cuándo Usarlo
+
+El método geométrico es la opción obvia cuando:
+
+- El enunciado del teorema involucra figuras, distancias, ángulos o áreas.
+- Se trabaja en un sistema axiomático con axiomas geométricos (incidencia, orden, congruencia, paralelismo).
+- La igualdad buscada admite una interpretación visual o de áreas.
+- El problema pide probar que ciertos puntos son colineales, ciertas rectas concurrentes, o ciertas circunferencias tangentes.
+
+<Separador />
+
+### Fortalezas y Debilidades
+
+<Nota>
+**Fortaleza**: Ofrece una intuición visual inmediata. Una buena demostración geométrica no solo convence, sino que hace *ver* por qué el teorema es cierto. Es pedagógicamente insuperable.
+
+**Debilidad**: Depende de un sistema axiomático geométrico completo. La intuición visual puede ser engañosa (figuras mal dibujadas, casos degenerados no considerados). Algunos teoremas geométricos requieren demostraciones algebraicas o analíticas cuando la construcción geométrica se vuelve demasiado compleja.
+</Nota>

@@ -7,36 +7,35 @@ export const metadata = {
   "proofMethod": "geometrico",
   "layout": "split",
   "authors": ["euclides"],
-  "tags": ["geometria"],
-  "links": ["definicion-usada"]
+  "tags": ["geometria"]
 };
 
-import { DemonstrationSection } from "../../components/content/DemonstrationSection";
-import { MedievalStep } from "../../components/content/MedievalStep";
-import { InteractiveElement } from "../../components/ui/VisualBind";
 import { MiDiagramaDemo } from "../../diagrams/Teoremas/MiDiagramaDemo";
+import { InteractiveElement } from "../../components/ui/VisualBind";
 
-export const Component = () => {
-  const diagrams = {
-    "default": MiDiagramaDemo
-  };
+<DemonstrationSection diagram={<MiDiagramaDemo />}>
 
-  return (
-    <DemonstrationSection diagrams={diagrams}>
-      <MedievalStep number={1} target="elemento-paso-1" title="Construcción">
-        Partimos de un <ConceptLink targetId="definicion-usada">concepto</ConceptLink>.
-        Observamos el <InteractiveElement target="elemento-paso-1" color="terracota">elemento principal</InteractiveElement>.
-      </MedievalStep>
+<Capitular letra="S" />ean $l$ y $m$ dos <ConceptLink targetId="recta" isDependency={false}>rectas</ConceptLink>...
 
-      <MedievalStep number={2} target={["elemento-a", "elemento-b"]} title="Razonamiento">
-        Por la propiedad de <ConceptLink targetId="definicion-usada">definición</ConceptLink>,
-        el <InteractiveElement target="elemento-a" color="salvia">elemento A</InteractiveElement> y el
-        <InteractiveElement target="elemento-b" color="pizarra">elemento B</InteractiveElement> satisfacen la relación.
-      </MedievalStep>
+<Formula>
+  $$ enunciado formal $$
+</Formula>
 
-      <MedievalStep number={3} title="Conclusión">
-        Por lo tanto, se cumple el enunciado del teorema. $\blacksquare$
-      </MedievalStep>
-    </DemonstrationSection>
-  );
-};
+<Separador />
+
+<MedievalStep number={1} target="elemento-paso-1" title="Construcción">
+  Por hipótesis, <InteractiveElement target="elemento-paso-1" color="terracota">elemento principal</InteractiveElement>.
+  Por el <ConceptLink targetId="definicion-usada" isDependency={true}>definición</ConceptLink>...
+</MedievalStep>
+
+<MedievalStep number={2} target={["elemento-a", "elemento-b"]} title="Razonamiento">
+  Por el <ConceptLink targetId="teorema-auxiliar" isDependency={true}>teorema</ConceptLink>,
+  <InteractiveElement target="elemento-a" color="salvia">elemento A</InteractiveElement> y
+  <InteractiveElement target="elemento-b" color="pizarra">elemento B</InteractiveElement> satisfacen...
+</MedievalStep>
+
+<MedievalStep number={3} title="Conclusión">
+  Por el paso 2, se cumple el enunciado. $\blacksquare$
+</MedievalStep>
+
+</DemonstrationSection>

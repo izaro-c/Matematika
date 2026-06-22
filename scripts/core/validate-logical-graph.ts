@@ -76,7 +76,10 @@ mdxFiles.forEach(file => {
     allNodes.add(id);
 
     const conceptLinks = extractConceptLinksFromContent(content);
-    const automaticDeps = extractDependenciesFromConceptLinks(content);
+    // Para definiciones, solo se usan los 'links' explícitos en metadata;
+    // los ConceptLinks en el cuerpo son navegación, no dependencias lógicas.
+    const isDef = metadata.type === 'definicion';
+    const automaticDeps = isDef ? [] : extractDependenciesFromConceptLinks(content);
 
     // Graph edges come from metadata and automatically from ConceptLinks
     const contentDeps: string[] = [...automaticDeps];
@@ -98,17 +101,18 @@ mdxFiles.forEach(file => {
   }
 });
 
-// Eliminar definiciones del grafo lógico, ya que son puramente léxicas y distorsionan la topología
-for (const id of Array.from(allNodes)) {
-  if (metadataMap.get(id)?.type === 'definicion') {
-    allNodes.delete(id);
-  }
-}
+// Las definiciones participan en el grafo lógico.
+// Las definiciones primitivas (subtype: 'primitivo') no propagan dependencias:
+// son conceptos no definidos (punto, recta, plano) cuyos axiomas las gobiernan
+// pero no las definen. Las definiciones derivadas sí propagan sus dependencias
+// normales (links + ConceptLinks con isDependency=true).
+
 
 // Pass 2: Build AND/OR logic graph
 interface GraphNode {
   id: string;
   type: string;
+  subtype?: string;
   title: string;
   description: string;
   proofs: { id: string; dependencies: string[] }[];
@@ -122,6 +126,7 @@ for (const id of allNodes) {
   graphNodes[id] = {
     id,
     type: meta.type || 'unknown',
+    subtype: meta.subtype || undefined,
     title: meta.title || id,
     description: meta.description || '',
     proofs: [],
@@ -131,8 +136,8 @@ for (const id of allNodes) {
 
 const HIERARCHY_LEVEL: Record<string, number> = {
   'axioma': 0,
-  'definicion': 1,
   'lema': 2,
+  'definicion': 3,
   'teorema': 3,
   'corolario': 4,
   'demostracion': 5,
@@ -162,7 +167,9 @@ for (const id of allNodes) {
         if (depId === parentTheoremId) return false;
         const depMeta = metadataMap.get(depId);
         if (!depMeta) return false;
-        const depLevel = HIERARCHY_LEVEL[depMeta.type] ?? 100;
+        // Las definiciones primitivas son accesibles desde cualquier nivel (Grado 0 absoluto)
+        const isDepPrimitive = depMeta.type === 'definicion' && depMeta.subtype === 'primitivo';
+        const depLevel = isDepPrimitive ? -1 : (HIERARCHY_LEVEL[depMeta.type] ?? 100);
         return depLevel <= nodeLevel;
       });
       graphNodes[parentTheoremId].proofs.push({
@@ -174,17 +181,25 @@ for (const id of allNodes) {
       console.warn(`[WARNING] La demostración '${id}' no tiene un 'parentTheorem' válido o no se encontró su teorema asociado.`);
     }
   } else {
-    const filteredDeps = deps.filter(depId => {
-      if (!allNodes.has(depId)) return false; // Filtrar definiciones y nodos eliminados
-      const depMeta = metadataMap.get(depId);
-      if (!depMeta) {
-        console.warn(`[INFO] Enlace filtrado: El nodo '${id}' referencia a '${depId}', pero este último no se indexó en el grafo.`);
-        return false;
-      }
-      const depLevel = HIERARCHY_LEVEL[depMeta.type] ?? 100;
-      return depLevel <= nodeLevel;
-    });
-    graphNodes[id].directDependencies = filteredDeps;
+    // Las definiciones primitivas no propagan dependencias (cortafuegos topológico)
+    const isPrimitive = meta.type === 'definicion' && meta.subtype === 'primitivo';
+    if (isPrimitive) {
+      graphNodes[id].directDependencies = [];
+    } else {
+      const filteredDeps = deps.filter(depId => {
+        if (!allNodes.has(depId)) return false;
+        const depMeta = metadataMap.get(depId);
+        if (!depMeta) {
+          console.warn(`[INFO] Enlace filtrado: El nodo '${id}' referencia a '${depId}', pero este último no se indexó en el grafo.`);
+          return false;
+        }
+        // Las definiciones primitivas son accesibles desde cualquier nivel (Grado 0 absoluto)
+        const isDepPrimitive = depMeta.type === 'definicion' && depMeta.subtype === 'primitivo';
+        const depLevel = isDepPrimitive ? -1 : (HIERARCHY_LEVEL[depMeta.type] ?? 100);
+        return depLevel <= nodeLevel;
+      });
+      graphNodes[id].directDependencies = filteredDeps;
+    }
   }
 }
 

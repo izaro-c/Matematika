@@ -15,7 +15,19 @@ import { InteractiveElement } from "@/boundary/components/ui/VisualBind";
 
 <DemonstrationSection diagram={<DemoAngulosAlternosInternos />}>
 
-<Capitular letra="E" />l vínculo entre <ConceptLink targetId="paralelas" isDependency={false}>paralelismo</ConceptLink> y <ConceptLink targetId="congruencia" isDependency={false}>congruencia</ConceptLink> de <ConceptLink targetId="angulo" isDependency={false}>ángulos</ConceptLink> se demuestra en dos partes. La primera —ángulos congruentes implican paralelismo— pertenece a la <ConceptLink targetId="geometria-absoluta" isDependency={false}>geometría absoluta</ConceptLink>: una <ConceptLink targetId="contradiccion" isDependency={false}>reducción al absurdo</ConceptLink> que invoca el <ConceptLink targetId="teorema-angulo-externo" isDependency={true}>teorema del ángulo externo</ConceptLink>. La segunda —paralelismo implica ángulos congruentes— requiere el <ConceptLink targetId="axioma-paralelas-euclides" isDependency={true}>axioma euclidiano de las paralelas</ConceptLink>, que garantiza la unicidad de la paralela.
+<Capitular letra="S" />ean $l$ y $m$ dos <ConceptLink targetId="recta" isDependency={false}>rectas</ConceptLink> y $t$ una <ConceptLink targetId="recta" isDependency={false}>transversal</ConceptLink> que las corta en $A \in l$ y $B \in m$. Sean $\alpha$ y $\beta$ dos <ConceptLink targetId="angulo" isDependency={false}>ángulos</ConceptLink> alternos internos formados por $t$ con $l$ y $m$.
+
+**Parte 1** (<ConceptLink targetId="sistema-absoluto" isDependency={false}>geometría absoluta</ConceptLink>):
+
+<Formula>
+  $$ \alpha \cong \beta \implies l \parallel m $$
+</Formula>
+
+**Parte 2** (requiere el <ConceptLink targetId="axioma-paralelas-euclides" isDependency={true}>axioma euclidiano de las paralelas</ConceptLink>):
+
+<Formula>
+  $$ l \parallel m \implies \alpha \cong \beta $$
+</Formula>
 
 <Separador />
 
@@ -44,7 +56,7 @@ Pero por hipótesis $\angle 1 \cong \angle 2$, y por el <ConceptLink targetId="t
 </MedievalStep>
 
 <MedievalStep number={4} title="Conclusión de paralelismo" target={["recta-l", "recta-m"]}>
-La <ConceptLink targetId="contradiccion" isDependency={false}>contradicción</ConceptLink> proviene de haber supuesto que $l$ y $m$ se cortan. Por <ConceptLink targetId="reduccion" isDependency={false}>reducción al absurdo</ConceptLink>, $l$ y $m$ no pueden intersecarse. Por la <ConceptLink targetId="paralelas" isDependency={false}>definición de rectas paralelas</ConceptLink>:
+La <ConceptLink targetId="leccion-metodo-contradiccion" isDependency={false}>contradicción</ConceptLink> proviene de haber supuesto que $l$ y $m$ se cortan. Por <ConceptLink targetId="leccion-metodo-contradiccion" isDependency={false}>reducción al absurdo</ConceptLink>, $l$ y $m$ no pueden intersecarse. Por la <ConceptLink targetId="paralelas" isDependency={false}>definición de rectas paralelas</ConceptLink>:
 
 <Formula>
   $$ l \parallel m $$
@@ -60,7 +72,7 @@ Sean ahora $l \parallel m$ cortadas por <InteractiveElement target="transversal-
 </MedievalStep>
 
 <MedievalStep number={6} title="Unicidad de la paralela" target={["recta-l", "recta-n"]}>
-Por la Parte 1 (<ConceptLink targetId="geometria-absoluta" isDependency={false}>geometría absoluta</ConceptLink>), $n \parallel m$. Pero por el <ConceptLink targetId="axioma-paralelas-euclides" isDependency={true}>axioma euclidiano de las paralelas</ConceptLink>, por un punto exterior a una recta pasa una **única** paralela. Tanto <InteractiveElement target="recta-l" color="carbon">$l$</InteractiveElement> como <InteractiveElement target="recta-n" color="terracota">$n$</InteractiveElement> pasan por $A$ y son paralelas a $m$. Por tanto:
+Por la Parte 1 (<ConceptLink targetId="sistema-absoluto" isDependency={false}>geometría absoluta</ConceptLink>), $n \parallel m$. Pero por el <ConceptLink targetId="axioma-paralelas-euclides" isDependency={true}>axioma euclidiano de las paralelas</ConceptLink>, por un punto exterior a una recta pasa una **única** paralela. Tanto <InteractiveElement target="recta-l" color="carbon">$l$</InteractiveElement> como <InteractiveElement target="recta-n" color="terracota">$n$</InteractiveElement> pasan por $A$ y son paralelas a $m$. Por tanto:
 
 <Formula>
   $$ l = n $$
@@ -73,7 +85,7 @@ Por el paso 5, $n$ forma con $t$ ángulos alternos internos congruentes con los 
 
 ### Análisis
 
-La Parte 1 es una de las aplicaciones más elegantes del <ConceptLink targetId="teorema-angulo-externo" isDependency={true}>teorema del ángulo externo</ConceptLink>: la hipótesis de intersección fuerza una igualdad donde el teorema exige desigualdad. La Parte 2 revela que el <ConceptLink targetId="axioma-paralelas-euclides" isDependency={true}>axioma euclidiano de las paralelas</ConceptLink> es precisamente lo que distingue la <ConceptLink targetId="geometria-euclidiana" isDependency={false}>geometría euclidiana</ConceptLink>: sin él, de dos rectas paralelas no se sigue nada sobre sus ángulos con una transversal.
+La Parte 1 es una de las aplicaciones más elegantes del <ConceptLink targetId="teorema-angulo-externo" isDependency={true}>teorema del ángulo externo</ConceptLink>: la hipótesis de intersección fuerza una igualdad donde el teorema exige desigualdad. La Parte 2 revela que el <ConceptLink targetId="axioma-paralelas-euclides" isDependency={true}>axioma euclidiano de las paralelas</ConceptLink> es precisamente lo que distingue la <ConceptLink targetId="sistema-euclidiano" isDependency={false}>geometría euclidiana</ConceptLink>: sin él, de dos rectas paralelas no se sigue nada sobre sus ángulos con una transversal.
 
 <Nota>
   En los <ConceptLink targetId="elementos" isDependency={false}>Elementos</ConceptLink>, Euclides demuestra la Parte 1 en I.27 (sin usar el Postulado 5) y la Parte 2 en I.29 (usando el Postulado 5 por primera vez en la obra). La organización es deliberada: I.27 es el último teorema de geometría absoluta antes de que el Postulado de las Paralelas entre en acción.

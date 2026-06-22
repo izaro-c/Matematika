@@ -15,15 +15,21 @@ import { InteractiveElement } from "@/boundary/components/ui/VisualBind";
 
 <DemonstrationSection diagram={<DemoPitagorasAreas />}>
 
-<Capitular letra="E" />sta demostración del <ConceptLink targetId="teorema-pitagoras" isDependency={false}>teorema de Pitágoras</ConceptLink> evita las construcciones auxiliares de <ConceptLink targetId="euclides" isDependency={false}>Euclides</ConceptLink>. En su lugar, emplea el principio de disección: el mismo cuadrado contenedor se descompone de dos formas equivalentes. Al igualar las áreas, la igualdad $c^2 = a^2 + b^2$ emerge algebraicamente.
+<Capitular letra="S" />ea $\triangle ABC$ un <ConceptLink targetId="triangulo-rectangulo" isDependency={false}>triángulo rectángulo</ConceptLink> con <ConceptLink targetId="angulo" isDependency={false}>ángulo</ConceptLink> <ConceptLink targetId="angulo" isDependency={false}>recto</ConceptLink> en $C$. Sean $a = |BC|$ y $b = |CA|$ los <ConceptLink targetId="cateto" isDependency={false}>catetos</ConceptLink>, y $c = |AB|$ la <ConceptLink targetId="hipotenusa" isDependency={false}>hipotenusa</ConceptLink> (el <ConceptLink targetId="lado" isDependency={false}>lado</ConceptLink> opuesto al <ConceptLink targetId="angulo" isDependency={false}>ángulo</ConceptLink> <ConceptLink targetId="angulo" isDependency={false}>recto</ConceptLink>). Entonces:
+
+<Formula>
+  $$ a^2 + b^2 = c^2 $$
+</Formula>
+
+Equivalente en términos de <ConceptLink targetId="area" isDependency={false}>áreas</ConceptLink>: el <ConceptLink targetId="area" isDependency={false}>área</ConceptLink> del <ConceptLink targetId="cuadrado" isDependency={false}>cuadrado</ConceptLink> construido sobre la <InteractiveElement target="cuadrado-c" color="ocre">hipotenusa</InteractiveElement> equivale a la suma de las <ConceptLink targetId="area" isDependency={false}>áreas</ConceptLink> de los <ConceptLink targetId="cuadrado" isDependency={false}>cuadrados</ConceptLink> construidos sobre los <InteractiveElement target="cuadrado-a" color="salvia">cateto $a$</InteractiveElement> y <InteractiveElement target="cuadrado-b" color="terracota">cateto $b$</InteractiveElement>.
 
 <Separador />
 
   <MedievalStep number={1} target="paso1" title="Hipótesis y Construcción">
     Por hipótesis, tenemos un <ConceptLink targetId="triangulo-rectangulo" isDependency={false}>triángulo rectángulo</ConceptLink> cuyos <InteractiveElement target="segmento-a" color="terracota">catetos miden $a$</InteractiveElement> y <InteractiveElement target="segmento-b" color="salvia">$b$</InteractiveElement>, y su <InteractiveElement target="segmento-c" color="pizarra">hipotenusa mide $c$</InteractiveElement>.
-    Por el <ConceptLink targetId="teorema-construccion-cuadrado" isDependency={true}>teorema de construcción de polígonos</ConceptLink>, construimos un <InteractiveElement target="cuadrado-exterior" color="carbon"><ConceptLink targetId="cuadrado" isDependency={false}>cuadrado</ConceptLink> exterior</InteractiveElement> cuyo lado es la suma de los catetos ($a + b$).
+    Por el <ConceptLink targetId="teorema-construccion-cuadrado" isDependency={false}>teorema de construcción de polígonos</ConceptLink>, construimos un <InteractiveElement target="cuadrado-exterior" color="carbon"><ConceptLink targetId="cuadrado" isDependency={false}>cuadrado</ConceptLink> exterior</InteractiveElement> cuyo lado es la suma de los catetos ($a + b$).
 
-    Por la <ConceptLink targetId="teoria-medida-area" isDependency={true}>teoría de la medida de área de Hilbert</ConceptLink>, el área de este cuadrado contenedor es $(a+b)^2$.
+    Por la <ConceptLink targetId="teoria-medida-area" isDependency={false}>teoría de la medida de área de Hilbert</ConceptLink>, el área de este cuadrado contenedor es $(a+b)^2$.
   </MedievalStep>
 
   <MedievalStep number={2} target="paso2" title="Primera Configuración">
@@ -32,7 +38,7 @@ import { InteractiveElement } from "@/boundary/components/ui/VisualBind";
 
     La región central está delimitada por las cuatro hipotenusas de longitud $c$. Por el <ConceptLink targetId="teorema-suma-angulos-triangulo" isDependency={true}>teorema de la suma de ángulos del triángulo</ConceptLink>, los ángulos agudos del triángulo rectángulo suman $90^\circ$. Por tanto, cada ángulo del cuadrilátero central mide $180^\circ - 90^\circ = 90^\circ$. Por la definición de <ConceptLink targetId="cuadrado" isDependency={false}>cuadrado</ConceptLink>, el cuadrilátero —con sus cuatro ángulos rectos y sus cuatro lados iguales a $c$— es un cuadrado de área $c^2$.
 
-    Por la <ConceptLink targetId="propiedad-aditiva-area" isDependency={true}>propiedad aditiva del área</ConceptLink>:
+    Por la <ConceptLink targetId="teoria-medida-area" isDependency={false}>propiedad aditiva del área</ConceptLink>:
     <Formula>$$ \text{Área}_{exterior} = 2ab + c^2 $$</Formula>
   </MedievalStep>
 
@@ -40,18 +46,18 @@ import { InteractiveElement } from "@/boundary/components/ui/VisualBind";
     > **Usa el control deslizante** bajo el diagrama para reorganizar los triángulos.
 
     Aplicamos una <ConceptLink targetId="isometria" isDependency={false}>isometría</ConceptLink> (traslación en el plano) a los <InteractiveElement target="triangulos" color="salvia">cuatro triángulos</InteractiveElement> para agruparlos en dos rectángulos de lados $a$ y $b$.
-    Por los <ConceptLink targetId="axiomas-isometria" isDependency={true}>axiomas del movimiento rígido</ConceptLink>, el desplazamiento preserva la <ConceptLink targetId="congruencia" isDependency={false}>congruencia</ConceptLink> y el área total, que se mantiene en $2ab$.
+    Por los <ConceptLink targetId="axiomas-isometria" isDependency={false}>axiomas del movimiento rígido</ConceptLink>, el desplazamiento preserva la <ConceptLink targetId="congruencia" isDependency={false}>congruencia</ConceptLink> y el área total, que se mantiene en $2ab$.
   </MedievalStep>
 
   <MedievalStep number={4} target="paso4" title="Segunda Configuración y Equivalencia">
     En esta nueva disposición, la porción no recubierta se particiona en un <InteractiveElement target="area-a" color="terracota">cuadrado de lado $a$</InteractiveElement> y un <InteractiveElement target="area-b" color="salvia">cuadrado de lado $b$</InteractiveElement>.
-    Por la <ConceptLink targetId="propiedad-aditiva-area" isDependency={true}>propiedad aditiva del área</ConceptLink>:
+    Por la <ConceptLink targetId="teoria-medida-area" isDependency={false}>propiedad aditiva del área</ConceptLink>:
     <Formula>$$ \text{Área}_{exterior} = 2ab + a^2 + b^2 $$</Formula>
 
-    Por el paso 2 y el paso 4, ambas expresiones igualan $(a+b)^2$. Por el <ConceptLink targetId="propiedad-transitiva-igualdad" isDependency={true}>axioma transitivo de la igualdad</ConceptLink>:
+    Por el paso 2 y el paso 4, ambas expresiones igualan $(a+b)^2$. Por el <ConceptLink targetId="propiedad-transitiva-igualdad" isDependency={false}>axioma transitivo de la igualdad</ConceptLink>:
     <Formula>$$ 2ab + c^2 = 2ab + a^2 + b^2 $$</Formula>
 
-    Por la <ConceptLink targetId="axioma-cancelacion-suma" isDependency={true}>propiedad de cancelación de la suma</ConceptLink>, restamos $2ab$ en ambos miembros:
+    Por la <ConceptLink targetId="axioma-cancelacion-suma" isDependency={false}>propiedad de cancelación de la suma</ConceptLink>, restamos $2ab$ en ambos miembros:
     <Formula>$$ c^2 = a^2 + b^2 $$</Formula>
     $\blacksquare$
   </MedievalStep>

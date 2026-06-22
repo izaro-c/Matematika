@@ -1,0 +1,34 @@
+export const metadata = {
+  "id": "estar-entre",
+  "type": "definicion",
+  "subtype": "primitivo",
+  "title": "Estar Entre (Intermediación)",
+  "description": "Relación primitiva de orden entre tres puntos colineales. No se define; su comportamiento queda determinado por los axiomas de orden (Grupo II de Hilbert).",
+  "statement": "La relación A * B * C (léase «B está entre A y C») es una relación ternaria primitiva sobre puntos colineales.",
+  "tags": ["geometria", "orden", "fundamentos"],
+  "authors": ["hilbert"],
+  "hasSimulation": false
+};
+
+<Capitular letra="L" />a relación **«estar entre»** (o intermediación), denotada $A * B * C$, es la segunda relación primitiva del sistema de <ConceptLink targetId="hilbert" isDependency={false}>Hilbert</ConceptLink>. Establece un orden lineal sobre los <ConceptLink targetId="punto" isDependency={false}>puntos</ConceptLink> de cada <ConceptLink targetId="recta" isDependency={false}>recta</ConceptLink>.
+
+<Separador />
+
+### Naturaleza Primitiva
+
+«Estar entre» no se define. Su significado emerge exclusivamente de los <ConceptLink targetId={["axioma-orden-1","axioma-orden-2","axioma-orden-3","axioma-orden-4"]} isDependency={false}>cuatro axiomas de orden</ConceptLink> (Grupo II: II-1 a II-4). La notación $A * B * C$ afirma una propiedad topológica primitiva que permite distinguir un <ConceptLink targetId="segmento" isDependency={false}>segmento</ConceptLink> de una <ConceptLink targetId="semirrecta" isDependency={false}>semirrecta</ConceptLink>, definir el interior de un <ConceptLink targetId="angulo" isDependency={false}>ángulo</ConceptLink>, y formular el crucial <ConceptLink targetId="axioma-orden-4" isDependency={false}>axioma de Pasch</ConceptLink>.
+
+<Separador />
+
+### Axiomas que la Gobiernan
+
+- **II-1**: Si $A * B * C$, entonces $A$, $B$, $C$ son puntos distintos de una misma recta, y también $C * B * A$.
+- **II-2**: Dados $A$ y $C$, existe $B$ tal que $A * C * B$ (extensión).
+- **II-3**: De tres puntos colineales, exactamente uno está entre los otros dos.
+- **II-4 (Pasch)**: Si una recta entra en un triángulo por un lado, debe salir por otro.
+
+<Separador />
+
+### Observaciones
+
+En <ConceptLink targetId="sistema-absoluto" isDependency={false}>geometría absoluta</ConceptLink>, la intermediación es independiente del <ConceptLink targetId="axioma-paralelas-euclides" isDependency={false}>postulado de las paralelas</ConceptLink>. Es la base de la topología unidimensional sobre cada recta y, a través del axioma de Pasch, de la topología bidimensional del plano.

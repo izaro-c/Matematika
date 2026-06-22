@@ -1,17 +1,23 @@
 {
   "topologicalOrder": [
+    "punto",
+    "recta",
+    "incidencia",
     "axioma-incidencia-1",
     "axioma-incidencia-2",
+    "plano",
     "axioma-incidencia-3",
     "axioma-incidencia-4",
     "axioma-incidencia-5",
     "axioma-incidencia-6",
     "axioma-incidencia-7",
     "axioma-incidencia-8",
+    "estar-entre",
     "axioma-orden-1",
     "axioma-orden-2",
     "axioma-orden-3",
     "axioma-orden-4",
+    "congruencia",
     "axioma-congruencia-1",
     "axioma-congruencia-2",
     "axioma-congruencia-3",
@@ -25,6 +31,30 @@
     "axioma-paralelas-hiperbolico",
     "sistema-hiperbolico",
     "sistema-incidencia",
+    "segmento",
+    "triangulo",
+    "semirrecta",
+    "angulo",
+    "perpendicular",
+    "altura",
+    "angulos-suplementarios",
+    "bisectriz",
+    "circunferencia",
+    "demo-triangulacion-poligono",
+    "teorema-triangulacion-poligono",
+    "contenido",
+    "cuadrilatero",
+    "mediana",
+    "mediatriz",
+    "paralelas",
+    "paralelogramo",
+    "teoria-medida-area",
+    "demo-triangulo-isosceles",
+    "teorema-triangulo-isosceles",
+    "demo-congruencia-lll",
+    "teorema-congruencia-lll",
+    "demo-congruencia-ala",
+    "teorema-congruencia-ala",
     "demo-punto-medio",
     "lema-punto-medio",
     "demo-angulos-opuestos-verticales",
@@ -32,35 +62,43 @@
     "demo-angulo-externo",
     "teorema-angulo-externo",
     "demo-angulos-alternos-internos",
-    "demo-congruencia-ala",
-    "teorema-congruencia-ala",
-    "demo-triangulo-isosceles",
-    "teorema-triangulo-isosceles",
-    "demo-congruencia-lll",
-    "teorema-congruencia-lll",
+    "demo-area-aditividad",
+    "demo-area-invariancia",
+    "teorema-area-aditividad",
+    "demo-area-rectangulo",
+    "demo-existencia-perpendicular",
+    "teorema-existencia-perpendicular",
+    "teorema-area-invariancia",
+    "teorema-area-rectangulo",
+    "demo-area-triangulo",
     "demo-congruencia-aal",
     "demo-desigualdad-triangular",
     "demo-dos-rectas-un-punto",
     "demo-existencia-bisectriz",
-    "demo-existencia-perpendicular",
+    "teorema-dos-rectas-un-punto",
+    "demo-invariancia-triangulacion",
     "teorema-angulos-alternos-internos",
     "demo-suma-angulos-triangulo",
     "teorema-suma-angulos-triangulo",
     "demo-pitagoras-areas",
-    "teorema-existencia-perpendicular",
+    "teorema-area-triangulo",
     "demo-pitagoras-euclides",
     "demo-punto-medio-perpendicular",
     "demo-reciproco-triangulo-isosceles",
-    "teorema-dos-rectas-un-punto",
     "demo-rectas-coincidentes",
     "demo-tales",
+    "leccion-metodo-constructivo",
     "leccion-metodo-contradiccion",
+    "leccion-metodo-contraposicion",
+    "teorema-pitagoras",
     "leccion-metodo-directo",
+    "leccion-metodo-exhaustivo",
+    "teorema-tales",
+    "leccion-metodo-geometrico",
+    "leccion-metodo-induccion",
     "arquimedes",
     "bolyai",
     "dedekind",
-    "teorema-pitagoras",
-    "teorema-tales",
     "euclides",
     "hilbert",
     "lobachevski",
@@ -75,6 +113,7 @@
     "teorema-congruencia-aal",
     "teorema-desigualdad-triangular",
     "teorema-existencia-bisectriz",
+    "teorema-invariancia-triangulacion",
     "teorema-punto-medio-perpendicular",
     "teorema-reciproco-triangulo-isosceles"
   ],
@@ -188,7 +227,12 @@
       "title": "Axioma de Arquímedes",
       "description": "Dados dos segmentos AB y CD, existe un número natural n tal que n copias de AB sumadas superan a CD.",
       "proofs": [],
-      "directDependencies": []
+      "directDependencies": [
+        "punto",
+        "recta",
+        "congruencia",
+        "estar-entre"
+      ]
     },
     "axioma-completitud": {
       "id": "axioma-completitud",
@@ -196,7 +240,9 @@
       "title": "Axioma de Completitud (Dedekind)",
       "description": "El conjunto de puntos de una recta no puede extenderse sin violar los axiomas de incidencia, orden, congruencia y continuidad.",
       "proofs": [],
-      "directDependencies": []
+      "directDependencies": [
+        "punto"
+      ]
     },
     "axioma-congruencia-1": {
       "id": "axioma-congruencia-1",
@@ -204,7 +250,11 @@
       "title": "Axioma III-1 (Congruencia)",
       "description": "Dado un segmento AB y una semirrecta con origen en C, existe un único punto D sobre la semirrecta tal que AB es congruente con CD.",
       "proofs": [],
-      "directDependencies": []
+      "directDependencies": [
+        "punto",
+        "recta",
+        "congruencia"
+      ]
     },
     "axioma-congruencia-2": {
       "id": "axioma-congruencia-2",
@@ -212,7 +262,10 @@
       "title": "Axioma III-2 (Congruencia)",
       "description": "La congruencia de segmentos es transitiva: si AB ≅ CD y AB ≅ EF, entonces CD ≅ EF.",
       "proofs": [],
-      "directDependencies": []
+      "directDependencies": [
+        "punto",
+        "congruencia"
+      ]
     },
     "axioma-congruencia-3": {
       "id": "axioma-congruencia-3",
@@ -220,7 +273,12 @@
       "title": "Axioma III-3 (Congruencia)",
       "description": "Si B está entre A y C, B' está entre A' y C', y AB ≅ A'B' y BC ≅ B'C', entonces AC ≅ A'C'.",
       "proofs": [],
-      "directDependencies": []
+      "directDependencies": [
+        "punto",
+        "recta",
+        "estar-entre",
+        "congruencia"
+      ]
     },
     "axioma-congruencia-4": {
       "id": "axioma-congruencia-4",
@@ -228,7 +286,12 @@
       "title": "Axioma III-4 (Congruencia)",
       "description": "Dado un ángulo y una semirrecta, existe un único ángulo congruente sobre un lado dado de la semirrecta.",
       "proofs": [],
-      "directDependencies": []
+      "directDependencies": [
+        "punto",
+        "recta",
+        "estar-entre",
+        "congruencia"
+      ]
     },
     "axioma-congruencia-5": {
       "id": "axioma-congruencia-5",
@@ -236,7 +299,10 @@
       "title": "Axioma III-5 (SAS / LAL)",
       "description": "Si dos lados y el ángulo comprendido de un triángulo son congruentes a los de otro triángulo, entonces ambos triángulos son congruentes.",
       "proofs": [],
-      "directDependencies": []
+      "directDependencies": [
+        "punto",
+        "congruencia"
+      ]
     },
     "axioma-incidencia-1": {
       "id": "axioma-incidencia-1",
@@ -244,7 +310,11 @@
       "title": "Axioma I-1 (Incidencia)",
       "description": "Por dos puntos distintos del espacio pasa exactamente una recta.",
       "proofs": [],
-      "directDependencies": []
+      "directDependencies": [
+        "punto",
+        "recta",
+        "incidencia"
+      ]
     },
     "axioma-incidencia-2": {
       "id": "axioma-incidencia-2",
@@ -252,7 +322,11 @@
       "title": "Axioma I-2 (Incidencia)",
       "description": "Toda recta contiene al menos dos puntos distintos.",
       "proofs": [],
-      "directDependencies": []
+      "directDependencies": [
+        "punto",
+        "recta",
+        "incidencia"
+      ]
     },
     "axioma-incidencia-3": {
       "id": "axioma-incidencia-3",
@@ -260,7 +334,12 @@
       "title": "Axioma I-3 (Incidencia)",
       "description": "Existen al menos tres puntos no colineales, forzando la dimensionalidad del espacio.",
       "proofs": [],
-      "directDependencies": []
+      "directDependencies": [
+        "punto",
+        "recta",
+        "plano",
+        "incidencia"
+      ]
     },
     "axioma-incidencia-4": {
       "id": "axioma-incidencia-4",
@@ -268,7 +347,11 @@
       "title": "Axioma I-4 (Incidencia)",
       "description": "Por tres puntos no colineales pasa exactamente un único plano.",
       "proofs": [],
-      "directDependencies": []
+      "directDependencies": [
+        "punto",
+        "plano",
+        "incidencia"
+      ]
     },
     "axioma-incidencia-5": {
       "id": "axioma-incidencia-5",
@@ -276,7 +359,12 @@
       "title": "Axioma I-5 (Incidencia)",
       "description": "Todo plano contiene al menos tres puntos no colineales.",
       "proofs": [],
-      "directDependencies": []
+      "directDependencies": [
+        "punto",
+        "recta",
+        "plano",
+        "incidencia"
+      ]
     },
     "axioma-incidencia-6": {
       "id": "axioma-incidencia-6",
@@ -284,7 +372,12 @@
       "title": "Axioma I-6 (Incidencia)",
       "description": "Si dos puntos de una recta pertenecen a un plano, entonces toda la recta está contenida en dicho plano.",
       "proofs": [],
-      "directDependencies": []
+      "directDependencies": [
+        "punto",
+        "recta",
+        "plano",
+        "incidencia"
+      ]
     },
     "axioma-incidencia-7": {
       "id": "axioma-incidencia-7",
@@ -292,7 +385,12 @@
       "title": "Axioma I-7 (Incidencia)",
       "description": "Si dos planos se intersecan, su intersección es una recta.",
       "proofs": [],
-      "directDependencies": []
+      "directDependencies": [
+        "punto",
+        "recta",
+        "plano",
+        "incidencia"
+      ]
     },
     "axioma-incidencia-8": {
       "id": "axioma-incidencia-8",
@@ -300,7 +398,11 @@
       "title": "Axioma I-8 (Incidencia)",
       "description": "Existen al menos cuatro puntos que no están todos en un mismo plano.",
       "proofs": [],
-      "directDependencies": []
+      "directDependencies": [
+        "punto",
+        "plano",
+        "incidencia"
+      ]
     },
     "axioma-orden-1": {
       "id": "axioma-orden-1",
@@ -308,7 +410,11 @@
       "title": "Axioma II-1 (Orden)",
       "description": "Si un punto B está entre A y C, entonces A, B, C son colineales y B está entre C y A.",
       "proofs": [],
-      "directDependencies": []
+      "directDependencies": [
+        "punto",
+        "recta",
+        "estar-entre"
+      ]
     },
     "axioma-orden-2": {
       "id": "axioma-orden-2",
@@ -316,7 +422,10 @@
       "title": "Axioma II-2 (Orden)",
       "description": "Dados dos puntos distintos A y C, existe al menos un punto B sobre la recta AC que está entre A y C.",
       "proofs": [],
-      "directDependencies": []
+      "directDependencies": [
+        "punto",
+        "estar-entre"
+      ]
     },
     "axioma-orden-3": {
       "id": "axioma-orden-3",
@@ -324,7 +433,11 @@
       "title": "Axioma II-3 (Orden)",
       "description": "Dados tres puntos distintos sobre una recta, exactamente uno de ellos está entre los otros dos.",
       "proofs": [],
-      "directDependencies": []
+      "directDependencies": [
+        "punto",
+        "recta",
+        "estar-entre"
+      ]
     },
     "axioma-orden-4": {
       "id": "axioma-orden-4",
@@ -332,7 +445,11 @@
       "title": "Axioma II-4 (Pasch)",
       "description": "Si una recta corta a un lado de un triángulo sin pasar por sus vértices, entonces corta también a otro de los lados.",
       "proofs": [],
-      "directDependencies": []
+      "directDependencies": [
+        "punto",
+        "recta",
+        "estar-entre"
+      ]
     },
     "axioma-paralelas-euclides": {
       "id": "axioma-paralelas-euclides",
@@ -340,7 +457,11 @@
       "title": "Axioma de las Paralelas (Euclides)",
       "description": "Por un punto exterior a una recta pasa exactamente una recta paralela a la dada.",
       "proofs": [],
-      "directDependencies": []
+      "directDependencies": [
+        "punto",
+        "recta",
+        "incidencia"
+      ]
     },
     "axioma-paralelas-hiperbolico": {
       "id": "axioma-paralelas-hiperbolico",
@@ -348,7 +469,257 @@
       "title": "Axioma de las Paralelas (Lobachevski)",
       "description": "Por un punto exterior a una recta pasan al menos dos rectas paralelas a la dada.",
       "proofs": [],
+      "directDependencies": [
+        "punto",
+        "recta",
+        "incidencia"
+      ]
+    },
+    "altura": {
+      "id": "altura",
+      "type": "definicion",
+      "title": "Altura",
+      "description": "La altura de un triángulo es el segmento perpendicular trazado desde un vértice al lado opuesto (o su prolongación).",
+      "proofs": [],
+      "directDependencies": [
+        "segmento",
+        "triangulo",
+        "perpendicular",
+        "punto"
+      ]
+    },
+    "angulo": {
+      "id": "angulo",
+      "type": "definicion",
+      "subtype": "derivado",
+      "title": "Ángulo",
+      "description": "Dadas dos semirrectas con el mismo origen, el ángulo es la figura formada por ambas. La congruencia de ángulos es una relación primitiva definida por los axiomas de congruencia.",
+      "proofs": [],
+      "directDependencies": [
+        "punto",
+        "semirrecta"
+      ]
+    },
+    "angulos-suplementarios": {
+      "id": "angulos-suplementarios",
+      "type": "definicion",
+      "subtype": "derivado",
+      "title": "Ángulos Suplementarios",
+      "description": "Dos ángulos son suplementarios si la suma de sus medidas es un ángulo llano (180° o π radianes).",
+      "proofs": [],
+      "directDependencies": [
+        "angulo"
+      ]
+    },
+    "bisectriz": {
+      "id": "bisectriz",
+      "type": "definicion",
+      "title": "Bisectriz",
+      "description": "La bisectriz de un ángulo es la semirrecta con origen en el vértice que divide al ángulo en dos ángulos congruentes.",
+      "proofs": [],
+      "directDependencies": [
+        "angulo",
+        "semirrecta",
+        "punto"
+      ]
+    },
+    "circunferencia": {
+      "id": "circunferencia",
+      "type": "definicion",
+      "title": "Circunferencia",
+      "description": "Lugar geométrico de los puntos de un plano que equidistan de un punto fijo llamado centro.",
+      "proofs": [],
+      "directDependencies": [
+        "punto",
+        "segmento",
+        "plano"
+      ]
+    },
+    "congruencia": {
+      "id": "congruencia",
+      "type": "definicion",
+      "subtype": "primitivo",
+      "title": "Congruencia",
+      "description": "Relación primitiva de equivalencia métrica entre segmentos y entre ángulos. No se define; su comportamiento queda determinado por los axiomas de congruencia (Grupo III de Hilbert).",
+      "proofs": [],
       "directDependencies": []
+    },
+    "contenido": {
+      "id": "contenido",
+      "type": "definicion",
+      "subtype": "derivado",
+      "title": "Contenido (Equidescomposición)",
+      "description": "Definición de Hilbert del contenido de un polígono mediante equidescomposición en triángulos. El contenido de un triángulo es su clase de equidescomposición; el de un polígono, la suma formal de los contenidos de los triángulos de cualquiera de sus triangulaciones.",
+      "proofs": [],
+      "directDependencies": [
+        "teorema-triangulacion-poligono",
+        "triangulo"
+      ]
+    },
+    "cuadrilatero": {
+      "id": "cuadrilatero",
+      "type": "definicion",
+      "title": "Cuadrilátero",
+      "description": "Un cuadrilátero es un polígono de cuatro lados y cuatro vértices sin tres puntos colineales y sin lados que se crucen.",
+      "proofs": [],
+      "directDependencies": [
+        "punto",
+        "segmento",
+        "angulo"
+      ]
+    },
+    "estar-entre": {
+      "id": "estar-entre",
+      "type": "definicion",
+      "subtype": "primitivo",
+      "title": "Estar Entre (Intermediación)",
+      "description": "Relación primitiva de orden entre tres puntos colineales. No se define; su comportamiento queda determinado por los axiomas de orden (Grupo II de Hilbert).",
+      "proofs": [],
+      "directDependencies": []
+    },
+    "incidencia": {
+      "id": "incidencia",
+      "type": "definicion",
+      "subtype": "primitivo",
+      "title": "Incidencia",
+      "description": "Relación primitiva de pertenencia entre puntos, rectas y planos. No se define; su comportamiento queda determinado por los axiomas de incidencia (Grupo I de Hilbert).",
+      "proofs": [],
+      "directDependencies": []
+    },
+    "mediana": {
+      "id": "mediana",
+      "type": "definicion",
+      "title": "Mediana",
+      "description": "La mediana de un triángulo es el segmento que une un vértice con el punto medio del lado opuesto.",
+      "proofs": [],
+      "directDependencies": [
+        "segmento",
+        "punto",
+        "triangulo"
+      ]
+    },
+    "mediatriz": {
+      "id": "mediatriz",
+      "type": "definicion",
+      "title": "Mediatriz",
+      "description": "La mediatriz de un segmento es la recta perpendicular al mismo que pasa por su punto medio.",
+      "proofs": [],
+      "directDependencies": [
+        "recta",
+        "segmento",
+        "punto",
+        "perpendicular"
+      ]
+    },
+    "paralelas": {
+      "id": "paralelas",
+      "type": "definicion",
+      "title": "Paralelas",
+      "description": "Dos rectas en un mismo plano son paralelas si no comparten ningún punto (no se intersecan).",
+      "proofs": [],
+      "directDependencies": [
+        "recta",
+        "plano",
+        "punto"
+      ]
+    },
+    "paralelogramo": {
+      "id": "paralelogramo",
+      "type": "definicion",
+      "title": "Paralelogramo",
+      "description": "Un paralelogramo es un cuadrilátero cuyos pares de lados opuestos son paralelos.",
+      "proofs": [],
+      "directDependencies": [
+        "cuadrilatero",
+        "recta",
+        "paralelas",
+        "segmento",
+        "angulo"
+      ]
+    },
+    "perpendicular": {
+      "id": "perpendicular",
+      "type": "definicion",
+      "title": "Perpendicular",
+      "description": "Dos rectas son perpendiculares si al intersecarse forman cuatro ángulos congruentes (rectos).",
+      "proofs": [],
+      "directDependencies": [
+        "recta",
+        "angulo",
+        "punto"
+      ]
+    },
+    "plano": {
+      "id": "plano",
+      "type": "definicion",
+      "subtype": "primitivo",
+      "title": "Plano",
+      "description": "Concepto primitivo que representa una superficie bidimensional plana de extensión infinita. En geometría formal, su naturaleza se deriva únicamente de los axiomas de incidencia.",
+      "proofs": [],
+      "directDependencies": []
+    },
+    "punto": {
+      "id": "punto",
+      "type": "definicion",
+      "subtype": "primitivo",
+      "title": "Punto",
+      "description": "Concepto primitivo de la geometría que carece de dimensión, área o volumen, representando una posición exacta en el espacio. Su naturaleza matemática emerge estrictamente de las relaciones axiomáticas de incidencia e intermediación.",
+      "proofs": [],
+      "directDependencies": []
+    },
+    "recta": {
+      "id": "recta",
+      "type": "definicion",
+      "subtype": "primitivo",
+      "title": "Recta",
+      "description": "Concepto primitivo de la geometría de naturaleza unidimensional. En el sistema de Hilbert, carece de definición explícita y su estructura emerge de las relaciones de incidencia y orden.",
+      "proofs": [],
+      "directDependencies": []
+    },
+    "segmento": {
+      "id": "segmento",
+      "type": "definicion",
+      "title": "Segmento",
+      "description": "Dados dos puntos A y B, el segmento AB es el conjunto de puntos de la recta AB que están entre A y B, incluyendo los extremos. Es la noción fundamental para la congruencia y la medida.",
+      "proofs": [],
+      "directDependencies": [
+        "punto",
+        "estar-entre"
+      ]
+    },
+    "semirrecta": {
+      "id": "semirrecta",
+      "type": "definicion",
+      "title": "Semirrecta (Rayo)",
+      "description": "Dados un origen O y un punto A sobre una recta, la semirrecta de origen O que pasa por A es el conjunto de puntos de la recta que están del mismo lado que A respecto a O.",
+      "proofs": [],
+      "directDependencies": [
+        "punto",
+        "recta",
+        "estar-entre"
+      ]
+    },
+    "teoria-medida-area": {
+      "id": "teoria-medida-area",
+      "type": "definicion",
+      "subtype": "derivado",
+      "title": "Teoría de la Medida de Áreas",
+      "description": "Visión panorámica de la teoría del contenido de Hilbert: equidescomponibilidad, triangulación, y los teoremas fundamentales que permiten calcular áreas de figuras planas.",
+      "proofs": [],
+      "directDependencies": [
+        "contenido"
+      ]
+    },
+    "triangulo": {
+      "id": "triangulo",
+      "type": "definicion",
+      "title": "Triángulo",
+      "description": "Figura geométrica formada por tres segmentos (lados) que unen tres puntos no colineales (vértices).",
+      "proofs": [],
+      "directDependencies": [
+        "punto",
+        "segmento"
+      ]
     },
     "demo-angulo-externo": {
       "id": "demo-angulo-externo",
@@ -371,6 +742,38 @@
       "type": "demostracion",
       "title": "Demostración: Ángulos opuestos por el vértice",
       "description": "Prueba directa usando axiomas de congruencia de ángulos y resta de congruentes.",
+      "proofs": [],
+      "directDependencies": []
+    },
+    "demo-area-aditividad": {
+      "id": "demo-area-aditividad",
+      "type": "demostracion",
+      "title": "Demostración: Aditividad del Contenido",
+      "description": "Prueba directa: dadas triangulaciones de P₁ y P₂, su unión es una triangulación de P = P₁ ∪ P₂. Aplicando la definición de contenido a P con esta triangulación se obtiene Cont(P) = Cont(P₁) + Cont(P₂).",
+      "proofs": [],
+      "directDependencies": []
+    },
+    "demo-area-invariancia": {
+      "id": "demo-area-invariancia",
+      "type": "demostracion",
+      "title": "Demostración: Invariancia del Contenido por Congruencia",
+      "description": "Prueba directa: si dos polígonos son congruentes, por el teorema de triangulación ambos admiten triangulaciones, y la isometría transporta una triangulación a la otra triángulo a triángulo, preservando el contenido por definición.",
+      "proofs": [],
+      "directDependencies": []
+    },
+    "demo-area-rectangulo": {
+      "id": "demo-area-rectangulo",
+      "type": "demostracion",
+      "title": "Demostración: Área del Rectángulo",
+      "description": "Prueba por casos: si base y altura son conmensurables, el rectángulo se descompone en cuadrados unidad; si son inconmensurables, se usan aproximaciones vía el axioma de Arquímedes.",
+      "proofs": [],
+      "directDependencies": []
+    },
+    "demo-area-triangulo": {
+      "id": "demo-area-triangulo",
+      "type": "demostracion",
+      "title": "Demostración: Área del Triángulo",
+      "description": "Prueba directa por descomposición: el área de un triángulo es la mitad del producto de la base por la altura.",
       "proofs": [],
       "directDependencies": []
     },
@@ -427,6 +830,14 @@
       "type": "demostracion",
       "title": "Demostración: Existencia y unicidad de la perpendicular",
       "description": "Prueba constructiva para ambos casos: punto sobre la recta (transporte de ángulos) y punto exterior (triángulo auxiliar + LAL + ángulo externo para unicidad).",
+      "proofs": [],
+      "directDependencies": []
+    },
+    "demo-invariancia-triangulacion": {
+      "id": "demo-invariancia-triangulacion",
+      "type": "demostracion",
+      "title": "Demostración: Independencia de la Triangulación",
+      "description": "Prueba mediante refinamiento común: toda subdivisión de un triángulo preserva el contenido (por aditividad); dos triangulaciones comparten un refinamiento común; por tanto producen la misma suma.",
       "proofs": [],
       "directDependencies": []
     },
@@ -494,6 +905,14 @@
       "proofs": [],
       "directDependencies": []
     },
+    "demo-triangulacion-poligono": {
+      "id": "demo-triangulacion-poligono",
+      "type": "demostracion",
+      "title": "Demostración: Triangulación de Polígonos",
+      "description": "Prueba por inducción: todo polígono simple de n vértices posee al menos un vértice oreja; al extraerlo se reduce a n−1 vértices, y por inducción se completa la triangulación.",
+      "proofs": [],
+      "directDependencies": []
+    },
     "demo-triangulo-isosceles": {
       "id": "demo-triangulo-isosceles",
       "type": "demostracion",
@@ -502,21 +921,78 @@
       "proofs": [],
       "directDependencies": []
     },
+    "leccion-metodo-constructivo": {
+      "id": "leccion-metodo-constructivo",
+      "type": "lesson",
+      "title": "Método Constructivo",
+      "description": "Demostrar la existencia de un objeto matemático construyéndolo explícitamente, proporcionando un algoritmo o procedimiento para obtenerlo.",
+      "proofs": [],
+      "directDependencies": [
+        "demo-congruencia-ala",
+        "demo-congruencia-lll",
+        "demo-existencia-bisectriz",
+        "demo-punto-medio"
+      ]
+    },
     "leccion-metodo-contradiccion": {
       "id": "leccion-metodo-contradiccion",
       "type": "lesson",
       "title": "Demostración por Contradicción",
-      "description": "También conocida como Reducción al absurdo, demuestra que una afirmación es verdadera al mostrar que si fuera falsa, llevaría a una imposibilidad lógica.",
+      "description": "Probar que una afirmación es verdadera mostrando que su negación conduce a una imposibilidad lógica. También conocida como reductio ad absurdum o reducción al absurdo.",
       "proofs": [],
       "directDependencies": [
-        "teorema-dos-rectas-un-punto"
+        "teorema-dos-rectas-un-punto",
+        "demo-reciproco-triangulo-isosceles",
+        "demo-congruencia-aal"
       ]
+    },
+    "leccion-metodo-contraposicion": {
+      "id": "leccion-metodo-contraposicion",
+      "type": "lesson",
+      "title": "Demostración por Contraposición",
+      "description": "Probar una implicación demostrando su contrarrecíproco: en lugar de P implica Q, se demuestra que no Q implica no P.",
+      "proofs": [],
+      "directDependencies": []
     },
     "leccion-metodo-directo": {
       "id": "leccion-metodo-directo",
       "type": "lesson",
       "title": "Método Directo",
-      "description": "Introducción a la forma más básica de demostración matemática: inferir Q a partir de P mediante pasos lógicos secuenciales.",
+      "description": "La estrategia fundamental de demostración: encadenar implicaciones lógicas desde la hipótesis hasta la tesis mediante inferencias válidas.",
+      "proofs": [],
+      "directDependencies": [
+        "teorema-pitagoras",
+        "teorema-congruencia-ala",
+        "teorema-suma-angulos-triangulo"
+      ]
+    },
+    "leccion-metodo-exhaustivo": {
+      "id": "leccion-metodo-exhaustivo",
+      "type": "lesson",
+      "title": "Método Exhaustivo",
+      "description": "Demostrar una propiedad analizando todos los casos posibles, dividiendo el problema en un número finito de escenarios mutuamente excluyentes.",
+      "proofs": [],
+      "directDependencies": []
+    },
+    "leccion-metodo-geometrico": {
+      "id": "leccion-metodo-geometrico",
+      "type": "lesson",
+      "title": "Método Geométrico",
+      "description": "Demostrar teoremas mediante razonamiento visual y espacial: construcciones, transformaciones, congruencias y semejanzas de figuras.",
+      "proofs": [],
+      "directDependencies": [
+        "teorema-pitagoras",
+        "demo-pitagoras-areas",
+        "demo-pitagoras-euclides",
+        "teorema-tales",
+        "demo-tales"
+      ]
+    },
+    "leccion-metodo-induccion": {
+      "id": "leccion-metodo-induccion",
+      "type": "lesson",
+      "title": "Inducción Matemática",
+      "description": "El principio de inducción: probar que una propiedad vale para todos los números naturales demostrando el caso base y el paso inductivo.",
       "proofs": [],
       "directDependencies": []
     },
@@ -706,15 +1182,17 @@
             "axioma-incidencia-3",
             "axioma-congruencia-4",
             "axioma-congruencia-1",
+            "axioma-orden-4",
             "axioma-congruencia-5",
+            "teorema-congruencia-lll",
+            "teorema-congruencia-ala",
             "axioma-orden-3"
           ]
         }
       ],
       "directDependencies": [
-        "axioma-congruencia-1",
-        "axioma-congruencia-2",
-        "axioma-orden-1"
+        "punto",
+        "congruencia"
       ]
     },
     "teorema-angulo-externo": {
@@ -726,12 +1204,12 @@
         {
           "id": "demo-angulo-externo",
           "dependencies": [
-            "lema-punto-medio",
-            "teorema-angulos-opuestos-verticales",
-            "axioma-congruencia-5",
             "axioma-orden-3",
+            "lema-punto-medio",
             "axioma-incidencia-1",
             "axioma-congruencia-1",
+            "teorema-angulos-opuestos-verticales",
+            "axioma-congruencia-5",
             "axioma-orden-4",
             "axioma-congruencia-4"
           ]
@@ -751,8 +1229,8 @@
         {
           "id": "demo-angulos-alternos-internos",
           "dependencies": [
-            "teorema-angulo-externo",
             "axioma-paralelas-euclides",
+            "teorema-angulo-externo",
             "teorema-angulos-opuestos-verticales",
             "axioma-congruencia-4"
           ]
@@ -772,14 +1250,87 @@
         {
           "id": "demo-angulos-opuestos-verticales",
           "dependencies": [
+            "angulos-suplementarios",
             "axioma-congruencia-4",
             "axioma-congruencia-3"
           ]
         }
       ],
+      "directDependencies": []
+    },
+    "teorema-area-aditividad": {
+      "id": "teorema-area-aditividad",
+      "type": "teorema",
+      "title": "Aditividad del Contenido",
+      "description": "Si un polígono se descompone en polígonos con interiores disjuntos, su contenido es la suma de los contenidos de las partes. Teorema derivado de la definición de equidescomponibilidad de Hilbert.",
+      "proofs": [
+        {
+          "id": "demo-area-aditividad",
+          "dependencies": [
+            "teorema-triangulacion-poligono"
+          ]
+        }
+      ],
       "directDependencies": [
-        "axioma-paralelas-euclides"
+        "teorema-triangulacion-poligono"
       ]
+    },
+    "teorema-area-invariancia": {
+      "id": "teorema-area-invariancia",
+      "type": "teorema",
+      "title": "Invariancia del Contenido por Congruencia",
+      "description": "Si dos figuras poligonales son congruentes, tienen el mismo contenido (área). Consecuencia directa de la definición de equidescomponibilidad y los axiomas de congruencia de Hilbert.",
+      "proofs": [
+        {
+          "id": "demo-area-invariancia",
+          "dependencies": [
+            "teorema-triangulacion-poligono",
+            "axioma-congruencia-5",
+            "axioma-incidencia-1"
+          ]
+        }
+      ],
+      "directDependencies": [
+        "teorema-triangulacion-poligono"
+      ]
+    },
+    "teorema-area-rectangulo": {
+      "id": "teorema-area-rectangulo",
+      "type": "teorema",
+      "title": "Área del Rectángulo",
+      "description": "El contenido de un rectángulo es el producto de su base por su altura. Teorema fundamental de la teoría de áreas de Hilbert, que requiere el axioma de Arquímedes para su demostración.",
+      "proofs": [
+        {
+          "id": "demo-area-rectangulo",
+          "dependencies": [
+            "teorema-area-aditividad",
+            "axioma-arquimedes",
+            "axioma-completitud"
+          ]
+        }
+      ],
+      "directDependencies": [
+        "axioma-arquimedes"
+      ]
+    },
+    "teorema-area-triangulo": {
+      "id": "teorema-area-triangulo",
+      "type": "teorema",
+      "title": "Área del Triángulo",
+      "description": "El área de un triángulo es la mitad del producto de la longitud de un lado por la altura correspondiente. En el sistema de medida de áreas, dos triángulos con igual base e igual altura tienen áreas iguales.",
+      "proofs": [
+        {
+          "id": "demo-area-triangulo",
+          "dependencies": [
+            "teorema-existencia-perpendicular",
+            "teorema-area-aditividad",
+            "axioma-congruencia-5",
+            "teorema-area-invariancia",
+            "teorema-area-rectangulo"
+          ]
+        }
+      ],
+      "directDependencies": []
     },
     "teorema-congruencia-aal": {
       "id": "teorema-congruencia-aal",
@@ -790,9 +1341,9 @@
         {
           "id": "demo-congruencia-aal",
           "dependencies": [
+            "axioma-congruencia-1",
             "axioma-congruencia-5",
             "teorema-angulo-externo",
-            "axioma-congruencia-1",
             "teorema-congruencia-ala",
             "teorema-congruencia-lll"
           ]
@@ -812,16 +1363,17 @@
         {
           "id": "demo-congruencia-ala",
           "dependencies": [
+            "axioma-congruencia-1",
             "axioma-congruencia-5",
-            "axioma-congruencia-4",
-            "axioma-congruencia-1"
+            "axioma-congruencia-4"
           ]
         }
       ],
       "directDependencies": [
-        "axioma-congruencia-5",
-        "axioma-congruencia-1",
-        "axioma-congruencia-4"
+        "congruencia",
+        "angulo",
+        "triangulo",
+        "segmento"
       ]
     },
     "teorema-congruencia-lll": {
@@ -857,19 +1409,17 @@
         {
           "id": "demo-desigualdad-triangular",
           "dependencies": [
-            "teorema-triangulo-isosceles",
-            "teorema-angulo-externo",
             "axioma-orden-3",
             "axioma-congruencia-1",
             "axioma-incidencia-1",
+            "teorema-triangulo-isosceles",
+            "teorema-angulo-externo",
             "axioma-congruencia-4",
             "axioma-congruencia-3"
           ]
         }
       ],
-      "directDependencies": [
-        "axioma-paralelas-euclides"
-      ]
+      "directDependencies": []
     },
     "teorema-dos-rectas-un-punto": {
       "id": "teorema-dos-rectas-un-punto",
@@ -897,11 +1447,11 @@
         {
           "id": "demo-existencia-bisectriz",
           "dependencies": [
-            "lema-punto-medio",
-            "teorema-congruencia-lll",
             "axioma-incidencia-2",
             "axioma-congruencia-1",
             "axioma-incidencia-1",
+            "lema-punto-medio",
+            "teorema-congruencia-lll",
             "axioma-congruencia-4",
             "axioma-congruencia-5",
             "teorema-congruencia-ala",
@@ -925,13 +1475,13 @@
         {
           "id": "demo-existencia-perpendicular",
           "dependencies": [
-            "axioma-congruencia-4",
-            "axioma-congruencia-5",
-            "teorema-angulo-externo",
             "axioma-incidencia-2",
             "axioma-incidencia-3",
+            "axioma-congruencia-4",
             "axioma-orden-4",
             "axioma-congruencia-1",
+            "axioma-congruencia-5",
+            "teorema-angulo-externo",
             "axioma-incidencia-1"
           ]
         }
@@ -941,6 +1491,24 @@
         "axioma-congruencia-4",
         "axioma-congruencia-5",
         "teorema-angulo-externo"
+      ]
+    },
+    "teorema-invariancia-triangulacion": {
+      "id": "teorema-invariancia-triangulacion",
+      "type": "teorema",
+      "title": "Independencia de la Triangulación",
+      "description": "El contenido de un polígono definido mediante triangulación no depende de la triangulación elegida. Dos triangulaciones cualesquiera producen la misma suma de contenidos triangulares.",
+      "proofs": [
+        {
+          "id": "demo-invariancia-triangulacion",
+          "dependencies": [
+            "teorema-area-aditividad",
+            "teorema-dos-rectas-un-punto"
+          ]
+        }
+      ],
+      "directDependencies": [
+        "teorema-area-aditividad"
       ]
     },
     "teorema-pitagoras": {
@@ -961,7 +1529,8 @@
           "dependencies": [
             "teorema-existencia-perpendicular",
             "axioma-incidencia-1",
-            "axioma-congruencia-5"
+            "axioma-congruencia-5",
+            "teorema-area-triangulo"
           ]
         }
       ],
@@ -987,8 +1556,7 @@
       "directDependencies": [
         "lema-punto-medio",
         "axioma-congruencia-5",
-        "teorema-congruencia-lll",
-        "axioma-paralelas-euclides"
+        "teorema-congruencia-lll"
       ]
     },
     "teorema-reciproco-triangulo-isosceles": {
@@ -1000,10 +1568,10 @@
         {
           "id": "demo-reciproco-triangulo-isosceles",
           "dependencies": [
-            "teorema-triangulo-isosceles",
-            "teorema-angulo-externo",
             "axioma-congruencia-1",
-            "axioma-incidencia-1"
+            "axioma-incidencia-1",
+            "teorema-triangulo-isosceles",
+            "teorema-angulo-externo"
           ]
         }
       ],
@@ -1021,8 +1589,8 @@
         {
           "id": "demo-suma-angulos-triangulo",
           "dependencies": [
-            "teorema-angulos-alternos-internos",
-            "axioma-paralelas-euclides"
+            "axioma-paralelas-euclides",
+            "teorema-angulos-alternos-internos"
           ]
         }
       ],
@@ -1048,6 +1616,25 @@
         "axioma-paralelas-euclides"
       ]
     },
+    "teorema-triangulacion-poligono": {
+      "id": "teorema-triangulacion-poligono",
+      "type": "teorema",
+      "title": "Triangulación de Polígonos",
+      "description": "Todo polígono simple de n vértices admite una triangulación en n−2 triángulos mediante n−3 diagonales interiores que no se cruzan.",
+      "proofs": [
+        {
+          "id": "demo-triangulacion-poligono",
+          "dependencies": [
+            "triangulo",
+            "axioma-orden-3",
+            "axioma-orden-4"
+          ]
+        }
+      ],
+      "directDependencies": [
+        "axioma-orden-4"
+      ]
+    },
     "teorema-triangulo-isosceles": {
       "id": "teorema-triangulo-isosceles",
       "type": "teorema",
@@ -1057,13 +1644,15 @@
         {
           "id": "demo-triangulo-isosceles",
           "dependencies": [
-            "axioma-congruencia-5",
-            "triangulo"
+            "axioma-congruencia-5"
           ]
         }
       ],
       "directDependencies": [
-        "axioma-congruencia-5"
+        "triangulo",
+        "segmento",
+        "angulo",
+        "congruencia"
       ]
     }
   }

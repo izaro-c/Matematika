@@ -15,7 +15,13 @@ import { InteractiveElement } from "@/boundary/components/ui/VisualBind";
 
 <DemonstrationSection diagram={<DemoAnguloExterno />}>
 
-<Capitular letra="L" />a Proposición I.16 de los <ConceptLink targetId="elementos" isDependency={false}>Elementos</ConceptLink> de <ConceptLink targetId="euclides" isDependency={false}>Euclides</ConceptLink> afirma que en todo <ConceptLink targetId="triangulo" isDependency={false}>triángulo</ConceptLink>, al prolongar un <ConceptLink targetId="lado" isDependency={false}>lado</ConceptLink>, el <ConceptLink targetId="angulo" isDependency={false}>ángulo</ConceptLink> externo formado es mayor que cada uno de los dos ángulos interiores no adyacentes. La siguiente <ConceptLink targetId="demostracion" isDependency={false}>demostración</ConceptLink> rigurosa utiliza exclusivamente el <ConceptLink targetId="lema-punto-medio" isDependency={true}>lema del punto medio</ConceptLink>, el <ConceptLink targetId="teorema-angulos-opuestos-verticales" isDependency={true}>teorema de los ángulos opuestos por el vértice</ConceptLink>, el <ConceptLink targetId="axioma-congruencia-5" isDependency={true}>criterio LAL</ConceptLink>, y los <ConceptLink targetId="axioma-orden-3" isDependency={true}>axiomas de orden</ConceptLink> de <ConceptLink targetId="hilbert" isDependency={false}>Hilbert</ConceptLink>.
+<Capitular letra="S" />ea $\triangle ABC$ un triángulo. Por los <ConceptLink targetId="axioma-orden-3" isDependency={true}>axiomas de orden</ConceptLink>, prolongamos el lado $BC$ más allá de $C$ hasta un punto $D$, de modo que $B * C * D$. Entonces el ángulo externo $\angle ACD$ satisface:
+
+<Formula>
+  $$ \angle ACD > \angle A \quad \text{y} \quad \angle ACD > \angle B $$
+</Formula>
+
+Es decir, el <ConceptLink targetId="angulo" isDependency={false}>ángulo</ConceptLink> externo en $C$ es estrictamente mayor que cada uno de los dos <ConceptLink targetId="angulo" isDependency={false}>ángulos</ConceptLink> interiores $\angle BAC$ y $\angle ABC$ que no comparten el vértice $C$.
 
 <Separador />
 
@@ -85,7 +91,7 @@ Por el paso 5: $\angle A < \angle ACD$. Por el paso 6: $\angle B < \angle ACD$. 
 
 ### Análisis
 
-La demostración es profundamente constructiva y se sostiene enteramente en la <ConceptLink targetId="geometria-absoluta" isDependency={false}>geometría absoluta</ConceptLink>. Su núcleo lógico es un **transporte de ángulo**: se copia el ángulo interior $\angle A$ al interior del ángulo externo mediante una congruencia de triángulos (LAL), revelando que $\angle A$ es una parte propia de $\angle ACD$. La contenencia fuerza la desigualdad.
+La demostración es profundamente constructiva y se sostiene enteramente en la <ConceptLink targetId="sistema-absoluto" isDependency={false}>geometría absoluta</ConceptLink>. Su núcleo lógico es un **transporte de ángulo**: se copia el ángulo interior $\angle A$ al interior del ángulo externo mediante una congruencia de triángulos (LAL), revelando que $\angle A$ es una parte propia de $\angle ACD$. La contenencia fuerza la desigualdad.
 
 La dependencia más sutil es el paso 4: la afirmación de que $F$ está en el interior de $\angle ACD$ requiere el <ConceptLink targetId="axioma-orden-4" isDependency={true}>axioma de Pasch</ConceptLink> (o su equivalente, el <ConceptLink targetId="teorema-barra-transversal" isDependency={false}>teorema de la barra transversal</ConceptLink>), que garantiza que un segmento que une puntos en lados opuestos de un ángulo corta el interior del ángulo. Este hecho, visualmente evidente, es formalmente un axioma independiente en el sistema de <ConceptLink targetId="hilbert" isDependency={false}>Hilbert</ConceptLink>.
 

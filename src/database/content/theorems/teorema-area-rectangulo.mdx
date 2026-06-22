@@ -1,0 +1,45 @@
+export const metadata = {
+  "id": "teorema-area-rectangulo",
+  "type": "teorema",
+  "title": "Área del Rectángulo",
+  "description": "El contenido de un rectángulo es el producto de su base por su altura. Teorema fundamental de la teoría de áreas de Hilbert, que requiere el axioma de Arquímedes para su demostración.",
+  "statement": "Sea R un rectángulo de base b y altura h. Entonces Cont(R) = b · h.",
+  "tags": ["geometria", "areas", "rectangulo"],
+  "authors": ["hilbert", "euclides"],
+  "difficulty": "intermedio",
+  "demos": ["demo-area-rectangulo"],
+  "hasSimulation": false
+};
+
+<Capitular letra="E" />l <ConceptLink targetId="contenido" isDependency={false}>contenido</ConceptLink> de un <ConceptLink targetId="rectangulo" isDependency={false}>rectángulo</ConceptLink> es el producto de su base por su altura. A diferencia de la <ConceptLink targetId="teorema-area-invariancia" isDependency={false}>invariancia</ConceptLink> y la <ConceptLink targetId="teorema-area-aditividad" isDependency={false}>aditividad</ConceptLink>, que son consecuencias casi inmediatas de la definición de contenido, este teorema requiere el <ConceptLink targetId="axioma-arquimedes" isDependency={true}>axioma de Arquímedes</ConceptLink> y constituye el resultado central de la teoría de <ConceptLink targetId="contenido" isDependency={false}>equidescomponibilidad</ConceptLink> de <ConceptLink targetId="hilbert" isDependency={false}>Hilbert</ConceptLink>.
+
+<Separador />
+
+### Enunciado Formal
+
+<Formula>
+  $$ \text{Cont}(\text{Rect}(b, h)) = b \cdot h $$
+</Formula>
+
+<Separador />
+
+### Esquema de la Demostración
+
+1. **Caso de lados conmensurables**: Si $b$ y $h$ son múltiplos enteros de una unidad común $u$, el rectángulo se descompone en $n \times m$ cuadrados de lado $u$. Por aditividad, $\text{Cont} = (n \cdot u)(m \cdot u) = b \cdot h$.
+
+2. **Caso de lados inconmensurables**: Si $b$ y $h$ no tienen medida común, se usan aproximaciones por exceso y por defecto con rectángulos de lados racionales. El <ConceptLink targetId="axioma-arquimedes" isDependency={true}>axioma de Arquímedes</ConceptLink> garantiza que estas aproximaciones convergen al valor $b \cdot h$.
+
+<Separador />
+
+### Consecuencias
+
+Del área del rectángulo y la <ConceptLink targetId="teorema-area-aditividad" isDependency={false}>aditividad</ConceptLink> se deducen todas las demás fórmulas de áreas:
+- **Área del triángulo**: $\text{Cont}(\triangle) = \frac{b \cdot h}{2}$ (<ConceptLink targetId="teorema-area-triangulo" isDependency={false}>teorema del área del triángulo</ConceptLink>)
+- **Área del paralelogramo**: $b \cdot h$
+- **Teorema de Pitágoras**: las demostraciones de <ConceptLink targetId="demo-pitagoras-euclides" isDependency={false}>Euclides</ConceptLink> y por <ConceptLink targetId="demo-pitagoras-areas" isDependency={false}>áreas</ConceptLink> usan este teorema como base
+
+<Separador />
+
+### Observaciones
+
+Este teorema es el análogo en el sistema de Hilbert a la Proposición I.35 de los *Elementos* de <ConceptLink targetId="euclides" isDependency={false}>Euclides</ConceptLink> («los paralelogramos sobre la misma base y entre las mismas paralelas son iguales»). La diferencia fundamental es que Euclides usaba la noción común de «cosas que coinciden son iguales», mientras que Hilbert demuestra rigurosamente la fórmula $b \cdot h$ a partir de la equidescomponibilidad y el axioma de Arquímedes.

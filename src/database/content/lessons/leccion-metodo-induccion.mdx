@@ -1,0 +1,81 @@
+export const metadata = {
+  "id": "leccion-metodo-induccion",
+  "type": "lesson",
+  "title": "Inducción Matemática",
+  "description": "El principio de inducción: probar que una propiedad vale para todos los números naturales demostrando el caso base y el paso inductivo.",
+  "tags": ["logica", "metodos", "demostracion", "induccion", "numeros"],
+  "authors": [],
+  "links": [],
+  "seeAlso": ["leccion-metodo-directo", "leccion-metodo-contradiccion"],
+  "satisfies": [],
+  "hasSimulation": true,
+  "difficulty": "intermedio",
+};
+
+import { InduccionSimulation } from "@/boundary/components/diagrams/Demos/InduccionSimulation";
+export const Simulation = InduccionSimulation;
+
+<Capitular letra="L" />a **inducción matemática** es el método por excelencia para demostrar propiedades que involucran números naturales. A diferencia de la inducción empírica de las ciencias naturales, la inducción matemática es un método deductivo riguroso: si una propiedad se cumple para el primer número y cada número «hereda» la propiedad de su predecesor, entonces la propiedad es universal.
+
+<Separador />
+
+### El Principio de Inducción
+
+Sea $P(n)$ una afirmación sobre el número natural $n$. El principio de inducción establece:
+
+$$ \Big(P(1) \land \big(\forall k \in \mathbb{N},\ P(k) \implies P(k+1)\big)\Big) \implies \big(\forall n \in \mathbb{N},\ P(n)\big) $$
+
+En palabras: si $P$ vale para $1$ y siempre que vale para $k$ también vale para $k+1$, entonces vale para todos los naturales.
+
+<Separador />
+
+### Las Dos Partes de una Demostración Inductiva
+
+1. **Caso Base**: Se verifica que $P(1)$ (o $P(0)$, según el contexto) es verdadera. Este es el anclaje de la cadena.
+
+2. **Paso Inductivo**: Se asume $P(k)$ como verdadera para un $k$ arbitrario (la **hipótesis de inducción**) y se demuestra que $P(k+1)$ también es verdadera.
+
+Una vez establecidas ambas partes, el principio de inducción garantiza $P(n)$ para todo $n$.
+
+<Separador />
+
+### Variantes
+
+- **Inducción fuerte (o completa)**: En lugar de asumir solo $P(k)$, se asume que $P(1), P(2), \dots, P(k)$ son todas verdaderas para probar $P(k+1)$. Equivalente en potencia a la inducción simple, pero más cómoda para ciertos problemas.
+
+- **Inducción con múltiples casos base**: A veces se necesitan varios casos base (por ejemplo, para recurrencias de orden 2 como Fibonacci).
+
+- **Inducción hacia atrás**: Se prueba $P(n) \implies P(n-1)$ para reducir el problema a un caso base conocido.
+
+<Separador />
+
+### Ejemplos Canónicos
+
+- **Suma de los primeros $n$ naturales**: $1 + 2 + \dots + n = \frac{n(n+1)}{2}$.
+  - Caso base: $1 = \frac{1 \cdot 2}{2}$.
+  - Paso: asumiendo $\sum_{i=1}^k i = \frac{k(k+1)}{2}$, se suma $k+1$ y se obtiene $\frac{(k+1)(k+2)}{2}$.
+
+- **Desigualdad de Bernoulli**: $(1+x)^n \geq 1 + nx$ para $x \geq -1$ y $n \in \mathbb{N}$.
+
+- **Número de subconjuntos**: Un conjunto de $n$ elementos tiene $2^n$ subconjuntos.
+
+<Separador />
+
+### Cuándo Usarlo
+
+La inducción es la herramienta natural para:
+
+- Propiedades indexadas por números naturales ($\forall n \in \mathbb{N}, P(n)$).
+- Fórmulas de sumas, productos y recurrencias.
+- Desigualdades que dependen de un parámetro entero.
+- Demostraciones en teoría de grafos, combinatoria y algorítmica sobre estructuras de tamaño $n$.
+
+<Separador />
+
+### Fortalezas y Debilidades
+
+<Nota>
+**Fortaleza**: Domina todo un universo infinito (los naturales) con solo dos pasos. Especialmente útil cuando hay una estructura recursiva subyacente.
+
+**Debilidad**: No aplica a propiedades sobre números reales o conjuntos no numerables. Requiere identificar correctamente la hipótesis de inducción, que a veces no es evidente. Una mala elección de $P(n)$ puede hacer imposible completar el paso inductivo.
+</Nota>

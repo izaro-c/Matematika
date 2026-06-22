@@ -17,10 +17,11 @@ import type { MathNodeData } from '@/boundary/components/graph/CustomNode';
 
 const NODE_TYPE_COLORS: Record<string, string> = {
   axioma: '#1c1917',
-  lema: '#4a6070',
-  teorema: '#6b9e6b',
-  corolario: '#b85c38',
-  definicion: '#c49b4f',
+  concepto: '#5D7080',
+  definicion: '#3b5e6b',
+  lema: '#C86446',
+  teorema: '#4a5d23',
+  corolario: '#c49b4f',
   modelo: '#8b3a3a',
 };
 const DEPENDENCY_DOT_COLORS: Record<string, string> = {
@@ -31,6 +32,7 @@ const DEPENDENCY_DOT_COLORS: Record<string, string> = {
 const NODE_URL_PREFIX: Record<string, string> = {
   axioma: 'axioma',
   definicion: 'definicion',
+  concepto: 'definicion',
   modelo: 'modelo',
 };
 
@@ -139,7 +141,7 @@ function FlowContent() {
   const [searchOpen, setSearchOpen] = useState(false);
   const [selectedNodeId, setSelectedNodeId] = useState<string | null>(null);
   const [hoveredNodeId, setHoveredNodeId] = useState<string | null>(null);
-  const [visibleTypes, setVisibleTypes] = useState<Set<string>>(new Set(['axioma', 'lema', 'teorema', 'corolario', 'definicion', 'modelo']));
+  const [visibleTypes, setVisibleTypes] = useState<Set<string>>(new Set(['axioma', 'concepto', 'lema', 'teorema', 'corolario', 'definicion', 'modelo']));
 
   const toggleType = useCallback((type: string) => {
     setVisibleTypes(prev => {
@@ -152,7 +154,7 @@ function FlowContent() {
 
   const typeLabel: Record<string, string> = {
     axioma: 'Axiomas', lema: 'Lemas', teorema: 'Teoremas',
-    corolario: 'Corolarios', definicion: 'Definiciones', modelo: 'Modelos',
+    corolario: 'Corolarios', definicion: 'Definiciones', concepto: 'Conceptos', modelo: 'Modelos',
   };
 
   const searchResults = useMemo(() => {
@@ -521,7 +523,7 @@ function FlowContent() {
               Tipos de Nodo
             </h3>
             <div className="flex flex-col gap-1.5">
-              {(['axioma', 'lema', 'teorema', 'corolario', 'definicion', 'modelo'] as const).map((type) => {
+              {(['axioma', 'concepto', 'lema', 'teorema', 'corolario', 'definicion', 'modelo'] as const).map((type) => {
                 const isOn = visibleTypes.has(type);
                 return (
                   <button

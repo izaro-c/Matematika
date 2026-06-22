@@ -1,0 +1,54 @@
+export const metadata = {
+  "id": "teoria-medida-area",
+  "type": "definicion",
+  "subtype": "derivado",
+  "title": "Teoría de la Medida de Áreas",
+  "description": "Visión panorámica de la teoría del contenido de Hilbert: equidescomponibilidad, triangulación, y los teoremas fundamentales que permiten calcular áreas de figuras planas.",
+  "tags": ["geometria", "areas", "medida"],
+  "authors": ["hilbert"],
+  "links": ["contenido"],
+  "seeAlso": ["teorema-pitagoras", "paralelogramo"],
+  "hasSimulation": false,
+};
+
+<Capitular letra="E" />n los <ConceptLink targetId="elementos" isDependency={false}>Elementos</ConceptLink> de <ConceptLink targetId="euclides" isDependency={false}>Euclides</ConceptLink>, la noción de área se basaba en «nociones comunes» intuitivas. <ConceptLink targetId="hilbert" isDependency={false}>Hilbert</ConceptLink>, en sus *Grundlagen der Geometrie* (1899), reemplazó estas nociones por una construcción rigurosa en dos niveles:
+
+1. Una **definición** puramente geométrica: la <ConceptLink targetId="contenido" isDependency={false}>equidescomponibilidad</ConceptLink>.
+2. Una cadena de **teoremas** que permiten pasar de la definición a las fórmulas de área.
+
+<Separador />
+
+### Definición
+
+La noción central es el <ConceptLink targetId="contenido" isDependency={false}>**contenido**</ConceptLink> (*Flächeninhalt*): dos polígonos tienen igual contenido si pueden descomponerse en triángulos congruentes por parejas. Esta definición no requiere números reales; es puramente geométrica.
+
+Para que la definición sea válida, se necesitan dos resultados previos:
+
+- <ConceptLink targetId="teorema-triangulacion-poligono" isDependency={false}>**Existencia de triangulación**</ConceptLink>: todo polígono simple admite una triangulación (depende del <ConceptLink targetId="axioma-orden-4" isDependency={false}>axioma de Pasch</ConceptLink>).
+- <ConceptLink targetId="teorema-invariancia-triangulacion" isDependency={false}>**Independencia de la triangulación**</ConceptLink>: el contenido no depende de la triangulación elegida.
+
+<Separador />
+
+### Teoremas Fundamentales
+
+A partir de la definición de contenido y de los 19 <ConceptLink targetId={["axioma-incidencia-1", "axioma"]} isDependency={false}>axiomas de Hilbert</ConceptLink>, se demuestran tres propiedades:
+
+1. <ConceptLink targetId="teorema-area-invariancia" isDependency={false}>**Invariancia por congruencia**</ConceptLink> — Figuras congruentes tienen igual contenido.
+2. <ConceptLink targetId="teorema-area-aditividad" isDependency={false}>**Aditividad**</ConceptLink> — El contenido de una unión disjunta es la suma.
+3. <ConceptLink targetId="teorema-area-rectangulo" isDependency={false}>**Área del rectángulo**</ConceptLink> — $\text{Cont}(\text{rectángulo}) = b \cdot h$ (requiere <ConceptLink targetId="axioma-arquimedes" isDependency={false}>Arquímedes</ConceptLink>).
+
+<Separador />
+
+### Consecuencias
+
+Del área del rectángulo y la aditividad se deducen todas las demás fórmulas:
+
+- <ConceptLink targetId="teorema-area-triangulo" isDependency={false}>**Área del triángulo**</ConceptLink>: $\frac{b \cdot h}{2}$, por ser la mitad de un rectángulo.
+- **Área del paralelogramo**: $b \cdot h$, por descomposición en dos triángulos congruentes.
+- <ConceptLink targetId="teorema-pitagoras" isDependency={false}>**Teorema de Pitágoras**</ConceptLink>: las demostraciones de <ConceptLink targetId="demo-pitagoras-euclides" isDependency={false}>Euclides</ConceptLink> y por <ConceptLink targetId="demo-pitagoras-areas" isDependency={false}>áreas</ConceptLink> usan equidescomposición.
+
+<Separador />
+
+### Diferencia con la Teoría de la Medida Moderna
+
+La teoría de Hilbert es puramente geométrica y finitista: solo permite un número finito de piezas triangulares. La teoría de la medida de Lebesgue (análisis matemático) extiende esto a conjuntos mucho más generales, pero requiere herramientas del <ConceptLink targetId="calculo" isDependency={false}>cálculo</ConceptLink> que no están disponibles en la geometría sintética elemental.
