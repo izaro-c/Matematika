@@ -1,7 +1,7 @@
 import { MathBoard } from '@/boundary/components/graph/MathBoard';
 import {
   createPoint, createSegment, createPolygon, createGlider,
-  createPerpendicular, createRightAngle
+  createRightAngle
 } from '@/boundary/components/graph/MathFactory';
 
 export const AreaTrianguloDemo = () => {
@@ -142,8 +142,6 @@ export const AreaTrianguloDemo = () => {
         const step123 = s1 || s2 || s3;
         const step124 = s1 || s2 || s4;
         const step345 = s3 || s4 || s5;
-        const showAnyTriSub = s1 || s2;
-
         // Triángulo principal
         els.polyABC.setAttribute({
           fillOpacity: hlTri ? 0.45 : (anyHL ? 0.04 : 0.1),
@@ -164,7 +162,7 @@ export const AreaTrianguloDemo = () => {
         els.segCD.setAttribute({
           strokeOpacity: getOp(hlAltura, true),
           strokeWidth: getW(hlAltura, 3, 6),
-          strokeColor: getC(hlAltura, theme.pizarra, theme.granada)
+          strokeColor: getC(hlAltura, theme.pizarra, theme.terracota)
         });
         els.recto.setAttribute({
           fillOpacity: getOp(hlAltura, true, 0.4),

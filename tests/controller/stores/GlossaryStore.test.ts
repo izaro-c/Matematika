@@ -4,19 +4,19 @@ import { useGlossaryStore, dictionary } from '@/controller/store/GlossaryStore';
 describe('useGlossaryStore', () => {
   beforeEach(() => {
     useGlossaryStore.setState({
-      activeTerm: null,
+      activeTerms: null,
       activeFormulaTerms: null,
       displayMode: 'sidebar',
     });
   });
 
   it('starts with no active term', () => {
-    expect(useGlossaryStore.getState().activeTerm).toBeNull();
+    expect(useGlossaryStore.getState().activeTerms).toBeNull();
   });
 
   it('opens a term', () => {
     useGlossaryStore.getState().openTerm('axioma');
-    expect(useGlossaryStore.getState().activeTerm).toBe('axioma');
+    expect(useGlossaryStore.getState().activeTerms).toEqual(['axioma']);
   });
 
   it('opens formula terms', () => {
@@ -27,7 +27,7 @@ describe('useGlossaryStore', () => {
   it('closes term', () => {
     useGlossaryStore.getState().openTerm('axioma');
     useGlossaryStore.getState().closeTerm();
-    expect(useGlossaryStore.getState().activeTerm).toBeNull();
+    expect(useGlossaryStore.getState().activeTerms).toBeNull();
     expect(useGlossaryStore.getState().activeFormulaTerms).toBeNull();
   });
 

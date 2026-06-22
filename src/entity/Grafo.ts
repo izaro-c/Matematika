@@ -1,6 +1,8 @@
 import type { GraphStructure, ModelInfo } from './graphTypes';
 import { Nodo } from './Nodo';
 
+const VISIBLE = new Set(['axioma', 'lema', 'corolario', 'teorema', 'definicion', 'modelo']);
+
 export class Grafo {
   private readonly order: string[];
   private readonly nodi: ReadonlyMap<string, Nodo>;
@@ -9,7 +11,14 @@ export class Grafo {
     this.order = [...structure.topologicalOrder];
     const map = new Map<string, Nodo>();
     for (const [id, meta] of Object.entries(structure.nodes)) {
-      map.set(id, new Nodo(id, meta));
+      // Filtrar dependencias a nodos invisibles (ej. sistema-axiomatico)
+      // para que no bloqueen la evaluacion, igual que hace el worker
+      const filteredDeps = meta.directDependencies.filter(depId => {
+        const depNode = structure.nodes[depId];
+        if (!depNode) return true;  // dep externo (ej. definicion): conservar
+        return VISIBLE.has(depNode.type);  // conservar solo si es tipo visible
+      });
+      map.set(id, new Nodo(id, { ...meta, directDependencies: filteredDeps }));
     }
     this.nodi = map;
   }
@@ -50,6 +59,7 @@ export class Grafo {
       const nodo = this.nodi.get(nodeId);
       if (!nodo) continue;
       if (nodo.isAxiom) continue;
+      if (!VISIBLE.has(nodo.type)) continue;
 
       if (nodo.isSatisfiedBy(validNodes)) {
         validNodes.add(nodeId);

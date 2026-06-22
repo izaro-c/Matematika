@@ -707,12 +707,18 @@ export class Grafo {
       if (isActive) validNodes.add(axiomId);
     }
 
+    // Solo i tipi visibili nel grafo vengono valutati
+    const VISIBLE = new Set([
+      'axioma', 'lema', 'corolario', 'teorema', 'definicion', 'modelo'
+    ]);
+
     // 2. Valuta i nodi seguendo l'ordine topologico
     for (const nodeId of this.order) {
       if (validNodes.has(nodeId)) continue; // Nodo già valido
       const nodo = this.nodi.get(nodeId);
       if (!nodo) continue;                  // Nodo assente nell'indice
       if (nodo.isAxiom) continue;           // Già gestito nel passo 1
+      if (!VISIBLE.has(nodo.type)) continue; // Tipi nascosti ignorati
 
       // Il nodo è valido se tutte le sue dipendenze sono soddisfatte
       if (nodo.isSatisfiedBy(validNodes)) {
@@ -725,7 +731,7 @@ export class Grafo {
 }
 \end{lstlisting}
 
-Il metodo itera sui nodi seguendo l'ordine topologico pre-calcolato, garantendo che le dipendenze di ciascun nodo siano state valutate prima del nodo stesso. Per i teoremi, la validità è determinata dal metodo \texttt{isSatisfiedBy()} della classe \texttt{Nodo}, che verifica se almeno una delle dimostrazioni ha tutte le proprie dipendenze soddisfatte (logica OR).
+Il metodo itera sui nodi seguendo l'ordine topologico pre-calcolato, garantendo che le dipendenze di ciascun nodo siano state valutate prima del nodo stesso. L'insieme \texttt{VISIBLE} filtra i tipi di nodo rilevanti per la validazione (assiomi, lemmi, corollari, teoremi, definizioni e modelli), escludendo tipi ausiliari come sistemi assiomatici, matematici e lezioni. Per i teoremi, la validità è determinata dal metodo \texttt{isSatisfiedBy()} della classe \texttt{Nodo}, che verifica se almeno una delle dimostrazioni ha tutte le proprie dipendenze soddisfatte (logica OR).
 
 \subsection{Package Controller}
 Il package Controller (\texttt{src/controller/}) contiene gli store Zustand che orchestrano la logica applicativa e coordinano i casi d'uso. Lo store principale per il caso d'uso UC6 è \texttt{GraphSandboxStore} (\texttt{store/GraphSandboxStore.ts}), che gestisce lo stato della Modalità Sandbox. Altri store rilevanti includono \texttt{GraphStore} per il grafo globale e \texttt{GlossaryStore} per il glossario.
@@ -828,14 +834,15 @@ L'applicazione viene distribuita tramite \textbf{GitHub Pages}. A ogni push sul 
 \begin{figure}[H]
     \centering
     \includegraphics[height=0.45\textheight, keepaspectratio]{images/cfg_diagram.png}
-    \caption{Control Flow Graph (CFG) di Grafo.evaluate() con nodi decisionali N1--N7}
+    \caption{Control Flow Graph (CFG) di Grafo.evaluate() con 8 nodi decisionali N1--N8}
 \end{figure}
 
-Il codice sorgente del metodo, con i 7 nodi decisionali annotati, è il seguente:
+Il codice sorgente del metodo, con gli 8 nodi decisionali annotati, è il seguente:
 
 \begin{lstlisting}[language=Java]
 evaluate(activeAxioms: Record<string, boolean>): Set<string> {
   const validNodes = new Set<string>();
+  const VISIBLE = new Set(['axioma','lema','corolario','teorema','definicion','modelo']);
 
   for (const [axiomId, isActive] of Object.entries(activeAxioms)) { // N1
     if (isActive)                                                  // N2
@@ -847,8 +854,9 @@ evaluate(activeAxioms: Record<string, boolean>): Set<string> {
     const nodo = this.nodi.get(nodeId);
     if (!nodo) continue;                                          // N5
     if (nodo.isAxiom) continue;                                   // N6
+    if (!VISIBLE.has(nodo.type)) continue;                        // N7
 
-    if (nodo.isSatisfiedBy(validNodes))                           // N7
+    if (nodo.isSatisfiedBy(validNodes))                           // N8
       validNodes.add(nodeId);
   }
 
@@ -856,11 +864,11 @@ evaluate(activeAxioms: Record<string, boolean>): Set<string> {
 }
 \end{lstlisting}
 
-Il CFG presenta \textbf{7 nodi decisionali}: N1 e N3 sono le condizioni di iterazione dei due cicli \texttt{for}, mentre N2, N4, N5, N6 e N7 sono condizioni \texttt{if} interne. Applicando la formula di McCabe:
+Il CFG presenta \textbf{8 nodi decisionali}: N1 e N3 sono le condizioni di iterazione dei due cicli \texttt{for}, mentre N2, N4, N5, N6, N7 e N8 sono condizioni \texttt{if} interne. Applicando la formula di McCabe:
 
-\textbf{V(G) = Nodi Decisionali + 1 = 7 + 1 = 8}
+\textbf{V(G) = Nodi Decisionali + 1 = 8 + 1 = 9}
 
-Il numero ciclomatico indica che esistono \textbf{8 cammini linearmente indipendenti}. I cammini elementari del CFG sono in realtà 9, ma per la formula di McCabe solo 8 di essi sono linearmente indipendenti: il nono è esprimibile come combinazione lineare degli altri. I 9 cammini sono:
+Il numero ciclomatico indica che esistono \textbf{9 cammini linearmente indipendenti}. I cammini elementari del CFG sono 10, ma per la formula di McCabe solo 9 di essi sono linearmente indipendenti. I 10 cammini sono:
 
 \begin{enumerate}
     \item \textbf{N1(no) $\rightarrow$ N3(no) $\rightarrow$ fine}: nessun assioma, nessun nodo — termina.
@@ -870,8 +878,9 @@ Il numero ciclomatico indica che esistono \textbf{8 cammini linearmente indipend
     \item \textbf{N1 $\rightarrow$ \ldots $\rightarrow$ N3(sì) $\rightarrow$ N4(sì) $\rightarrow$ N3}: nodo già valido — saltato.
     \item \textbf{N1 $\rightarrow$ \ldots $\rightarrow$ N3(sì) $\rightarrow$ N4(no) $\rightarrow$ N5(no) $\rightarrow$ N3}: nodo assente — ignorato.
     \item \textbf{N1 $\rightarrow$ \ldots $\rightarrow$ N3(sì) $\rightarrow$ N4(no) $\rightarrow$ N5(sì) $\rightarrow$ N6(sì) $\rightarrow$ N3}: è un assioma — saltato.
-    \item \textbf{N1 $\rightarrow$ \ldots $\rightarrow$ N3(sì) $\rightarrow$ N4(no) $\rightarrow$ N5(sì) $\rightarrow$ N6(no) $\rightarrow$ N7(sì) $\rightarrow$ N3}: nodo soddisfatto — aggiunto.
-    \item \textbf{N1 $\rightarrow$ \ldots $\rightarrow$ N3(sì) $\rightarrow$ N4(no) $\rightarrow$ N5(sì) $\rightarrow$ N6(no) $\rightarrow$ N7(no) $\rightarrow$ N3}: nodo non soddisfatto — ignorato.
+    \item \textbf{N1 $\rightarrow$ \ldots $\rightarrow$ N3(sì) $\rightarrow$ N4(no) $\rightarrow$ N5(sì) $\rightarrow$ N6(no) $\rightarrow$ N7(sì) $\rightarrow$ N3}: tipo non visibile — saltato.
+    \item \textbf{N1 $\rightarrow$ \ldots $\rightarrow$ N3(sì) $\rightarrow$ N4(no) $\rightarrow$ N5(sì) $\rightarrow$ N6(no) $\rightarrow$ N7(no) $\rightarrow$ N8(sì) $\rightarrow$ N3}: nodo soddisfatto — aggiunto.
+    \item \textbf{N1 $\rightarrow$ \ldots $\rightarrow$ N3(sì) $\rightarrow$ N4(no) $\rightarrow$ N5(sì) $\rightarrow$ N6(no) $\rightarrow$ N7(no) $\rightarrow$ N8(no) $\rightarrow$ N3}: nodo non soddisfatto — ignorato.
 \end{enumerate}
 
 Poiché il metodo itera su \textit{molteplici} nodi all'interno di ciascun test case, un singolo test può esercitare più cammini contemporaneamente. Non è quindi necessario un test case per ogni cammino: è sufficiente che ogni cammino elementare venga percorso almeno una volta nell'insieme della suite. La tabella seguente mostra come i 5 test case coprono i cammini.
@@ -883,13 +892,13 @@ Poiché il metodo itera su \textit{molteplici} nodi all'interno di ciascun test 
         \hline
         \rowcolor{PrimaryBlue} \textcolor{white}{\textbf{TC ID}} & \textcolor{white}{\textbf{Cammino CFG}} & \textcolor{white}{\textbf{Descrizione}} & \textcolor{white}{\textbf{Condizioni Logiche}} & \textcolor{white}{\textbf{Output atteso}} \\
         \hline
-        TC\_01 & 2, 3, 5, 7, 8 & Catena completa: tutti i nodi soddisfatti & Assiomi attivi (2); altri assiomi non selezionati (3); nodi già validi saltati (5); assiomi nell'ordine topologico saltati (7); nodi soddisfatti aggiunti (8). & Tutti i nodi della catena in \texttt{validNodes}. \\
+        TC\_01 & 2, 3, 5, 7, 9 & Catena completa: tutti i nodi soddisfatti & Assiomi attivi (2); altri assiomi non selezionati (3); nodi già validi saltati (5); assiomi nell'ordine topologico saltati (7); nodi soddisfatti aggiunti (9). & Tutti i nodi della catena in \texttt{validNodes}. \\
         \hline
-        \rowcolor{CodeBg} TC\_02 & 1, 9 & Nessun assioma attivo & Nessun assioma da iterare (1); nodi non soddisfatti perché mancano le premesse (9). & \texttt{validNodes.size = 0}. \\
+        \rowcolor{CodeBg} TC\_02 & 1, 10 & Nessun assioma attivo & Nessun assioma da iterare (1); nodi non soddisfatti perché mancano le premesse (10). & \texttt{validNodes.size = 0}. \\
         \hline
-        TC\_03 & 2, 3, 9 & Dipendenza interrotta & Assioma attivo (2); altri assiomi non selezionati (3); nodo con dipendenza non soddisfatta (9). & Solo l'assioma attivo in \texttt{validNodes}. \\
+        TC\_03 & 2, 3, 10 & Dipendenza interrotta & Assioma attivo (2); altri assiomi non selezionati (3); nodo con dipendenza non soddisfatta (10). & Solo l'assioma attivo in \texttt{validNodes}. \\
         \hline
-        \rowcolor{CodeBg}         TC\_04 & 2, 3, 8 & Prova OR: basta una dimostrazione & Assioma attivo (2); altri assiomi non selezionati (3); teorema soddisfatto via \texttt{some} (8). & Teorema in \texttt{validNodes}. \\
+        \rowcolor{CodeBg} TC\_04 & 2, 3, 9 & Prova OR: basta una dimostrazione & Assioma attivo (2); altri assiomi non selezionati (3); teorema soddisfatto via \texttt{some} (9). & Teorema in \texttt{validNodes}. \\
         \hline
         TC\_05 & 2, 3, 6 & Nodo assente nell'indice & Assiomi attivi (2); altri assiomi non selezionati (3); nodo non trovato nella mappa (6). & Nessun errore, valutazione prosegue. \\
         \hline
@@ -897,7 +906,7 @@ Poiché il metodo itera su \textit{molteplici} nodi all'interno di ciascun test 
     \caption{Copertura dei Cammini del CFG}
 \end{table}
 
-Il cammino 4 non richiede un test dedicato perché l'ordine topologico non è mai vuoto nella pratica (il grafo contiene sempre almeno un nodo). La copertura dei rami (\textit{branch coverage}) è quindi completa per tutti i cammini raggiungibili.
+Il cammino 4 non richiede un test dedicato perché l'ordine topologico non è mai vuoto nella pratica (il grafo contiene sempre almeno un nodo). Il cammino 8 (tipo non visibile) è esercitato implicitamente dalla presenza di nodi ausiliari (\texttt{sistema-axiomatico}, \texttt{matematico}, \texttt{lesson}) nell'ordine topologico. La copertura dei rami (\textit{branch coverage}) è quindi completa per tutti i cammini raggiungibili.
 
 \subsection{Vitest - Test di Unità}
 Per il test di unità è stato utilizzato \textbf{Vitest}, il framework di testing nativo per progetti Vite/TypeScript. Si riporta di seguito uno dei test case della suite definita nel Capitolo 3, corrispondente a TC\_04 (logica OR tra prove multiple):
@@ -939,7 +948,7 @@ describe('Grafo.evaluate', () => {
 });
 \end{lstlisting}
 
-Il test verifica che, in presenza di un teorema con due dimostrazioni alternative, sia sufficiente che una sola di esse abbia tutte le dipendenze soddisfatte perché il teorema risulti valido (logica OR). La suite completa comprende 10 test case che coprono i cammini indipendenti identificati dal CFG.
+Il test verifica che, in presenza di un teorema con due dimostrazioni alternative, sia sufficiente che una sola di esse abbia tutte le dipendenze soddisfatte perché il teorema risulti valido (logica OR). La suite completa comprende 11 test case che coprono i cammini indipendenti identificati dal CFG.
 
 \subsection{Test funzionale}
 La test suite definita nel Capitolo 3 è stata eseguita tramite Vitest. I test sono implementati nel file \texttt{tests/entity/grafo.test.ts} e possono essere eseguiti con il comando:

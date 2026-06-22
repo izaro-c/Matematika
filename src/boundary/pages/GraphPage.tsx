@@ -131,7 +131,13 @@ export const GraphPage: React.FC = () => {
     db.models.forEach((model, slug) => {
       nodes.push({ id: slug, name: model.title, group: 'modelo', val: 7 });
       if (model.satisfies) {
-        links.push({ source: slug, target: model.satisfies });
+        if (Array.isArray(model.satisfies)) {
+          for (const sysId of model.satisfies) {
+            links.push({ source: slug, target: sysId });
+          }
+        } else {
+          links.push({ source: slug, target: model.satisfies });
+        }
       }
       addLinks(slug, model.links);
       addLinks(slug, model.axioms_verified);

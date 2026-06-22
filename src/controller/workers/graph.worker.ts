@@ -324,12 +324,6 @@ export async function computeGraph(graphData: any, disabledAxioms: string[]): Pr
   const filtered = filterNodes();
   const activeStates = evaluateActiveNodes(filtered, disabledSet);
   const edgeList = buildEdgeList(filtered);
-  
-  const rawAxiomEdges = edgeList.filter(e => filtered[e.target]?.type === 'axioma');
-  const rawConceptEdges = edgeList.filter(e => {
-    const src = filtered[e.source];
-    return src?.type === 'definicion' && src?.subtype === 'primitivo';
-  });
 
   const nodeIds = Object.keys(filtered);
   const axiomIds = new Set(nodeIds.filter(id => filtered[id].type === 'axioma'));
@@ -414,22 +408,6 @@ export async function computeGraph(graphData: any, disabledAxioms: string[]): Pr
       },
     };
   });
-
-  const conceptoEdges = flowEdges.filter(e => {
-    const src = filtered[e.source];
-    return src?.type === 'definicion' && src?.subtype === 'primitivo';
-  });
-  const toAxioms = conceptoEdges.filter(e => filtered[e.target]?.type === 'axioma');
-  const toDefs = conceptoEdges.filter(e => filtered[e.target]?.type === 'definicion');
-  
-  const ids = Object.keys(filtered);
-  
-  // Simulate what buildEdgeList does
-  const ax = filtered['axioma-incidencia-1'];
-  if (ax) {
-    for (const dep of ax.directDependencies) {
-    }
-  }
 
   return { nodes: flowNodes, edges: flowEdges, adjacency, activeStates, dependsOn };
 }

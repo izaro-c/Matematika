@@ -327,7 +327,9 @@ export class ContentStore {
    * @param systemId - Identificador del sistema axiomático.
    */
   getModelsForSystem(systemId: string): Model[] {
-    return Array.from(this.models.values()).filter(m => m.satisfies === systemId);
+    return Array.from(this.models.values()).filter(m =>
+      Array.isArray(m.satisfies) ? m.satisfies.includes(systemId) : m.satisfies === systemId
+    );
   }
 
   /**
