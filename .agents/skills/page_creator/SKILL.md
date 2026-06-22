@@ -35,7 +35,7 @@
 - **Universalidad absoluta:** El contenido matemático no tiene país, currículo ni sistema educativo. Es atemporal.
 - **Interactividad como norma:** Si un concepto puede visualizarse, se visualiza. Si un ejercicio puede hacerse interactivo, lo es.
 - **Elegante y limpio:** El diseño sirve a las matemáticas, no compite con ellas.
-- **Rigor sobre accesibilidad:** Todo enunciado está justificado. Toda definición es precisa. Toda demostración es completa.
+- **Rigor sobre accesibilidad:** Todo enunciado está justificado. Toda definición es precisa. Toda demostración es completa y obedece estrictamente a la axiomática de Greenberg/Hilbert (Regla Lógica de Justificaciones).
 - **Orden topológico:** El contenido se construye de abajo arriba, desde los axiomas. Un concepto no puede referenciar algo que depende lógicamente de él.
 
 ---
@@ -523,14 +523,21 @@ Casos límite, validez en otras geometrías, relaciones a otras páginas (usar <
 
 Las demostraciones son el corazón pedagógico de Matematika. Su diseño es el más exigente.
 
-**ESTRUCTURA DE LA DEMOSTRACIÓN — EXIGENCIA ABSOLUTA DE RIGOR MATEMÁTICO:**
+Las demostraciones son el corazón pedagógico de Matematika. Su diseño es el más exigente y obedece estrictamente a la axiomática moderna.
 
-El principal mandato para la creación de demostraciones es el rigor matemático puro e inquebrantable. Para asegurar que el resultado sea perfecto a la primera:
+**ESTRUCTURA DE LA DEMOSTRACIÓN — LA REGLA LÓGICA DE GREENBERG:**
 
-1. **Demostraciones sin fisuras y directas:** Quedan estrictamente prohibidas las secciones de "Introducción", "Hipótesis" o "Tesis". Ir directo a la demostración paso a paso. Solo se permite un `### Enunciado Formal` si es estrictamente necesario.
-2. **Prohibición de suposiciones visuales:** En NINGÚN momento el texto puede asumir una propiedad "porque se ve en el diagrama" o "porque parece obvia". Si dos líneas se cruzan en el diagrama, no se puede asumir que tienen un punto de intersección a menos que un axioma o teorema garantice explícitamente ese cruce.
-3. **Fundamentación estricta:** TODO salto lógico debe estar justificado única y exclusivamente por lógica matemática formal, axiomas previos, definiciones establecidas o resultados ya demostrados. Estas justificaciones DEBEN referenciarse explícitamente mediante `<ConceptLink>`.
+El principal mandato para la creación de demostraciones es el rigor matemático puro e inquebrantable, basado en la estructuración de Marvin Jay Greenberg. Quedan estrictamente prohibidas las secciones de "Introducción" o "Tesis" sueltas. Se debe ir directo a la demostración paso a paso.
 
+**REGLA LÓGICA 1 (CRÍTICA):** Cada afirmación matemática dentro de un paso DEBE estar justificada exclusivamente por uno (o una combinación explícita) de los siguientes seis tipos de justificación permitidos:
+1. **"Por hipótesis..."**
+2. **"Por axioma..."** (con `<ConceptLink>` obligatorio al axioma).
+3. **"Por teorema..."** (previamente demostrado, con `<ConceptLink>` obligatorio al teorema).
+4. **"Por definición..."** (con `<ConceptLink>` obligatorio a la definición).
+5. **"Por el paso N..."** (referenciando un paso numérico previo del propio argumento).
+6. **"Por regla de lógica..."** (ej. Modus Ponens, reducción al absurdo, transitividad de la igualdad).
+
+Los pasos pueden agruparse por fluidez narrativa dentro de un mismo `<MedievalStep>`, pero la correspondencia atómica entre Afirmación y Justificación debe ser matemáticamente rastreable en el texto. **Jamás se asume una propiedad visual topológica ("se ve en el diagrama que las rectas se cortan"); toda intersección debe justificarse con el Axioma de Pasch, Barra Cruzada o los Axiomas de Incidencia.**
 **DIAGRAMAS EN DEMOSTRACIONES — REGLA FUNDAMENTAL:**
 
 Cada paso de una demostración DEBE visualizarse en el diagrama. Si es necesario, se pueden añadir múltiples diagramas en una demostración, asignándole uno a un paso o a un grupo de pasos específicos.
@@ -622,33 +629,25 @@ import { MedievalStep } from "../../components/content/MedievalStep";
 import { InteractiveElement } from "../../components/ui/VisualBind";
 import { Step1Diagram } from "../../diagrams/Teoremas/Step1Diagram";
 import { Step2Diagram } from "../../diagrams/Teoremas/Step2Diagram";
-import { Step3Diagram } from "../../diagrams/Teoremas/Step3Diagram";
 
 export const Component = () => {
   const diagrams = {
     "step1": Step1Diagram,
-    "step2": Step2Diagram,
-    "step3": Step3Diagram
+    "step2": Step2Diagram
   };
 
   return (
     <DemonstrationSection diagrams={diagrams}>
-      <MedievalStep number={1} target="step1" title="Construcción">
-        Partimos de <InteractiveElement target="punto-a" color="terracota">$A$</InteractiveElement> y
-        <InteractiveElement target="punto-b" color="terracota">$B$</InteractiveElement>...
+      <MedievalStep number={1} target="step1" title="Existencia">
+        Por el <ConceptLink targetId="axioma-incidencia-1">Axioma de Incidencia 1</ConceptLink>, dados los puntos <InteractiveElement target="punto-a" color="terracota">$A$</InteractiveElement> y <InteractiveElement target="punto-b" color="terracota">$B$</InteractiveElement>, existe una única <InteractiveElement target="recta-ab" color="salvia">recta $AB$</InteractiveElement> que los contiene.
       </MedievalStep>
 
-      <MedievalStep number={2} target="step2" title="Razonamiento">
-        Por el <ConceptLink targetId="axioma-congruencia-1">axioma de transporte</ConceptLink>,
-        el <InteractiveElement target="segmento-cd" color="salvia">segmento $CD$</InteractiveElement>...
+      <MedievalStep number={2} target="step2" title="Construcción">
+        Por el <ConceptLink targetId="axioma-orden-2">Axioma de Extensión (Orden 2)</ConceptLink>, existe un punto <InteractiveElement target="punto-c" color="terracota">$C$</InteractiveElement> tal que $A * B * C$.
       </MedievalStep>
 
-      <MedievalStep number={3} target="step3" title="Conclusión">
-        Por lo tanto:
-        <Formula>
-          $$ \frac{<InteractiveElement target="seg-ad">AD</InteractiveElement>}{DB} = \frac{AE}{EC} $$
-        </Formula>
-        donde $AD$ es el segmento entre $A$ y $D$, y $DB$ entre $D$ y $B$. $\blacksquare$
+      <MedievalStep number={3} target="step2" title="Conclusión">
+        Por el Paso 2 y por la <ConceptLink targetId="definicion-segmento">definición de segmento</ConceptLink>, concluimos que el punto $B$ pertenece al segmento $AC$. $\blacksquare$
       </MedievalStep>
     </DemonstrationSection>
   );
@@ -910,9 +909,17 @@ donde $c$ es la longitud de la hipotenusa y $a, b$ las longitudes de los catetos
 ### 7.4 Cómo Estructurar una Demostración
 
 Una demostración DEBE:
-1. Progresar **paso a paso**, cada paso justificado por una definición, axioma, teorema previo o paso lógico
-2. Terminar con un **marcador de conclusión** claro (la UI añade $\blacksquare$ automáticamente)
-3. Usar **diagramas** para pruebas geométricas (cada paso debe iluminar la parte relevante)
+1. **Seguir la Regla Lógica 1 de Greenberg:** Progresar paso a paso, donde CADA afirmación esté estrictamente justificada por una de las 6 justificaciones categóricas:
+   - Hipótesis
+   - Axioma (con ConceptLink)
+   - Teorema previo (con ConceptLink)
+   - Definición (con ConceptLink)
+   - Paso lógico/numérico previo
+   - Regla de Lógica formal
+2. **Prohibición Topológica Visual:** En la geometría axiomática, nunca se puede argumentar que un punto está entre otros dos o que dos rectas intersecan "porque así se representa en la figura". Toda relación espacial abstracta debe ser reducida a un enunciado de Incidencia, Orden o Congruencia.
+3. Terminar con un **marcador de conclusión** claro (la UI añade $\blacksquare$ automáticamente).
+4. Usar **diagramas** para pruebas geométricas (cada paso debe iluminar la parte relevante).
+5. Si la demostración se basa en **Reducción al Absurdo (RAA)**, el Paso 1 debe establecerse formalmente dictando "Por regla lógica de Reducción al Absurdo, supongamos la negación de la conclusión...".
 
 ### 7.5 Errores Comunes
 
@@ -1230,14 +1237,14 @@ Antes de finalizar CUALQUIER contenido, verificar:
 
 ### Demostración
 - [ ] `parentTheorem` apunta a un teorema existente
-- [ ] Cada paso está justificado (por axioma, definición, o teorema previo)
+- [ ] **Rigor de Greenberg:** Cada afirmación en los pasos utiliza estrictamente una de las 6 justificaciones (Hipótesis, Axioma, Teorema, Definición, Paso Previo, Regla Lógica).
+- [ ] No existen deducciones topológicas basadas en asunciones visuales del diagrama (ej. asumir intersecciones sin invocar el Axioma de Pasch).
 - [ ] Cada `MedievalStep` tiene un `<InteractiveElement>` correspondiente en el cuerpo
 - [ ] `InteractiveElement` está importado desde VisualBind (no desde MDXBlocks)
 - [ ] El método de demostración (`proofMethod`) describe correctamente el enfoque
 - [ ] Para split-layout: cada paso tiene diagrama o usa uno compartido
-- [ ] La demostración es completa (sin huecos)
+- [ ] La demostración es completa (sin huecos) y finaliza con $\blacksquare$
 - [ ] Usa `export const Component` (no body MDX plano)
-
 ### Sistema Axiomático
 - [ ] Todos los `axiomas` existen y forman una teoría coherente
 - [ ] El orden de los axiomas sigue la práctica matemática convencional

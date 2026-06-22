@@ -7,4 +7,3 @@ export * from './MathStore';
 export * from './NavigationStore';
 export * from './ToastStore';
 export * from './UserProgressStore';
-export * from './graphUtils';

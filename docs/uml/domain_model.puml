@@ -1,0 +1,70 @@
+@startuml
+skinparam classAttributeIconSize 0
+skinparam classFontStyle normal
+hide circle
+hide methods
+
+class SistemaMatematika {
+}
+
+class Grafo {
+  + ordinamentoTopologico
+  + nodi
+}
+
+abstract class Nodo {
+  + identificativo
+  + tipo
+  + dipendenze
+}
+
+class Teorema {
+  + prove
+}
+
+class Assioma {
+}
+
+class Definizione {
+}
+
+class Prova {
+  + identificativo
+  + dipendenze
+}
+
+class Glossario {
+  + termini
+}
+
+class Modello {
+  + identificativo
+  + titolo
+  + assiomi
+}
+
+class SistemaAssiomatico {
+  + identificativo
+  + titolo
+  + assiomi
+}
+
+' Relazioni
+SistemaMatematika "1" -- "1" Grafo : gestisce
+SistemaMatematika "1" -- "1" Glossario : gestisce
+
+Grafo "1" -- "1..*" Nodo : contiene
+Nodo "1" -- "0..*" Nodo : dipende da
+
+Teorema --|> Nodo
+Assioma --|> Nodo
+Definizione --|> Nodo
+
+Teorema "1" -- "1..*" Prova : dimostrato da
+
+Glossario "1" -- "0..*" Nodo : definisce
+
+SistemaAssiomatico "1" -- "1..*" Assioma : composto da
+Modello "1" -- "1..*" Assioma : soddisfa
+Modello "0..*" -- "1" SistemaAssiomatico : istanzia
+@enduml

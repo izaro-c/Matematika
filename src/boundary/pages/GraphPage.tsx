@@ -346,7 +346,7 @@ export const GraphPage: React.FC = () => {
   }, []);
 
   return (
-    <div className="w-full h-screen bg-lienzo overflow-hidden font-serif relative" style={{ backgroundImage: 'url(/images/bg-arts-crafts-1.png)', backgroundSize: '600px', backgroundRepeat: 'repeat' }}>
+    <div className="w-full h-screen bg-lienzo overflow-hidden font-serif relative" style={{ backgroundImage: 'url(/Matematika/images/bg-arts-crafts-1.png)', backgroundSize: '600px', backgroundRepeat: 'repeat' }}>
 
       {/* Buscador */}
       <div className="absolute top-8 left-1/2 -translate-x-1/2 z-50">

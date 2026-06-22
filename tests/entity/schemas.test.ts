@@ -12,7 +12,7 @@ import {
   ModelSchema,
   UseCaseSchema,
   StudyPlanSchema,
-} from '@/enti@/entity/schemas';
+} from '@/database/schemas';
 
 function expectValid(schema: typeof MathematicianSchema, data: Record<string, unknown>) {
   const result = schema.safeParse(data);

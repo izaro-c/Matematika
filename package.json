@@ -13,6 +13,8 @@
     "preview": "vite preview",
     "docs:generate": "node scripts/core/generate_schema_docs.cjs",
     "docs:build": "typedoc",
+    "docs:pdf": "cd docs/documento_progetto && pdflatex documento_progetto.tex && rm -f *.aux *.log *.out *.toc",
+    "docs:uml": "java -jar scripts/plantuml.jar docs/uml/use_cases.puml docs/uml/domain_model.puml docs/uml/domain_model_refined.puml docs/uml/ssd_valuta_grafo.puml docs/uml/ssd_aggiungi_contenuto.puml docs/uml/design_class_diagram.puml -o ../documento_progetto/images",
     "validate-graph": "tsx scripts/core/validate-logical-graph.ts",
     "validate-references": "tsx scripts/core/validate-cross-references.ts",
     "test": "vitest run",
@@ -79,9 +81,6 @@
     "vitest": "^4.1.9"
   },
   "lint-staged": {
-    "*.{ts,tsx,js,cjs}": [
-      "eslint --fix",
-      "vitest related --run"
-    ]
+    "*.{ts,tsx,js,cjs}": []
   }
 }

@@ -12,7 +12,7 @@ import {
   AxiomSchema,
   AxiomaticSystemSchema,
   ModelSchema,
-} from '@/entity/schemas';
+} from '@/database/schemas';
 import { contentLoaders } from '@/database/dao/content/loaders';
 import contentIndex from '@/database/contentIndex.json';
 import { buildBranchTaxonomy, getItemsByBranch } from '@/database/dao/content/msc2020';

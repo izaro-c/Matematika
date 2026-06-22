@@ -9,7 +9,7 @@ import { persist } from 'zustand/middleware';
 import { computeGraph } from '@/controller/workers/graph.worker';
 import type { FlowNode, FlowEdge } from '@/controller/workers/graph.worker';
 import type { ModelInfo, SystemInfo } from '@/entity/graphTypes';
-import { computeDisabledAxiomsFromModels } from '@/controller/store/graphUtils';
+import { Grafo } from '@/entity/Grafo';
 import { db } from '@/database/dao/content';
 
 /**
@@ -147,7 +147,7 @@ export const useGraphStore = create<GraphState>()(
 
         // Calculamos qué axiomas debemos apagar basados en el modelo encendido
         const activeModels = state.models.filter(m => !newInactive.includes(m.id));
-        const newDisabled = computeDisabledAxiomsFromModels(
+        const newDisabled = Grafo.computeDisabledAxiomsFromModels(
           state.models.map(s => ({ id: s.id, title: s.title, axioms: s.axioms })), 
           activeModels.map(m => m.id), 
           state.axioms
@@ -176,7 +176,7 @@ export const useGraphStore = create<GraphState>()(
         set({ inactiveSystems: newInactive, inactiveModels: allModelsOff });
 
         const activeSystems = state.systems.filter(s => !newInactive.includes(s.id));
-        const newDisabled = computeDisabledAxiomsFromModels(
+        const newDisabled = Grafo.computeDisabledAxiomsFromModels(
           state.systems.map(s => ({ id: s.id, title: s.title, axioms: s.axioms })),
           activeSystems.map(s => s.id),
           state.axioms,
@@ -229,14 +229,14 @@ export const useGraphStore = create<GraphState>()(
         const activeSystems = current.systems.filter(s => !inactiveSystems.includes(s.id));
         
         if (activeSystems.length > 0) {
-          disabledAxioms = computeDisabledAxiomsFromModels(
+          disabledAxioms = Grafo.computeDisabledAxiomsFromModels(
             current.systems.map(s => ({ id: s.id, title: s.title, axioms: s.axioms })),
             activeSystems.map(s => s.id),
             current.axioms,
           );
         } else {
           const activeModels = current.models.filter(m => !inactiveModels.includes(m.id));
-          disabledAxioms = computeDisabledAxiomsFromModels(
+          disabledAxioms = Grafo.computeDisabledAxiomsFromModels(
             current.models.map(s => ({ id: s.id, title: s.title, axioms: s.axioms })), 
             activeModels.map(m => m.id), 
             current.axioms

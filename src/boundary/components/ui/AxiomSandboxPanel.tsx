@@ -7,7 +7,7 @@ import { db } from '@/database/dao/content';
  * Permite cargar modelos predefinidos o encender/apagar axiomas individualmente.
  */
 export const AxiomSandboxPanel: React.FC = () => {
-  const { activeAxioms, toggleAxiom, loadModel, clearSandbox, validNodes, toggleSandbox } = useGraphSandboxStore();
+  const { sandboxEnabled, activeAxioms, toggleAxiom, loadModel, clearSandbox, validNodes, toggleSandbox } = useGraphSandboxStore();
   const [isOpen, setIsOpen] = useState(true);
 
   const models = db.getAllModels();
@@ -17,7 +17,7 @@ export const AxiomSandboxPanel: React.FC = () => {
     return (
       <button 
         onClick={() => setIsOpen(true)}
-        className="absolute top-24 left-8 z-50 bg-lienzo border-2 border-carbon/80 p-3 shadow-lg hover:bg-carbon/5 transition-colors flex items-center gap-2"
+        className="absolute bottom-6 left-16 z-50 bg-lienzo border-2 border-carbon/80 p-3 shadow-lg hover:bg-carbon/5 transition-colors flex items-center gap-2"
         style={{ boxShadow: '4px 4px 0px rgba(0,0,0,0.1)' }}
       >
         <span className="text-terracota font-serif leading-none mt-1">☙</span>
@@ -28,7 +28,7 @@ export const AxiomSandboxPanel: React.FC = () => {
 
   return (
     <div 
-      className="absolute top-24 left-8 z-50 w-80 bg-lienzo border-2 border-carbon/80 shadow-2xl flex flex-col max-h-[calc(100vh-8rem)]"
+      className="absolute bottom-6 left-16 z-50 w-80 bg-lienzo border-2 border-carbon/80 shadow-2xl flex flex-col max-h-[calc(100vh-4rem)]"
       style={{ boxShadow: '8px 8px 0px rgba(0,0,0,0.1)' }}
     >
       {/* Header */}
@@ -52,9 +52,9 @@ export const AxiomSandboxPanel: React.FC = () => {
           <span className="font-serif italic text-carbon/90 text-sm">Activar Sandbox Lógico</span>
           <button 
             onClick={toggleSandbox}
-            className={`w-10 h-5 rounded-full relative transition-colors ${useGraphSandboxStore().sandboxEnabled ? 'bg-terracota' : 'bg-carbon/20'}`}
+            className={`w-10 h-5 rounded-full relative transition-colors ${sandboxEnabled ? 'bg-terracota' : 'bg-carbon/20'}`}
           >
-            <div className={`w-3 h-3 bg-lienzo rounded-full absolute top-1 transition-all ${useGraphSandboxStore().sandboxEnabled ? 'left-6' : 'left-1'}`} />
+            <div className={`w-3 h-3 bg-lienzo rounded-full absolute top-1 transition-all ${sandboxEnabled ? 'left-6' : 'left-1'}`} />
           </button>
         </div>
 

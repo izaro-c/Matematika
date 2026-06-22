@@ -12,7 +12,7 @@ import {
 import type { Node, Edge, NodeMouseHandler } from '@xyflow/react';
 import '@xyflow/react/dist/style.css';
 
-import { useGraphStore } from '@/controller/store';
+import { useGraphStore, useGraphSandboxStore } from '@/controller/store';
 import { MathNode } from '@/boundary/components/graph/CustomNode';
 import type { MathNodeData } from '@/boundary/components/graph/CustomNode';
 
@@ -26,11 +26,11 @@ function GroupBraceNode({ data }: { data: { width: number; label: string } }) {
     <div style={{ width: w, position: 'relative', textAlign: 'center' }} className="pointer-events-none">
       <div className="text-lg font-serif italic text-carbon/70 mb-1 tracking-wide">{data.label}</div>
       <svg width={w} height={30} viewBox={`0 0 ${w} 30`} preserveAspectRatio="none" className="overflow-visible">
-        <path 
-          d={`M 0 30 Q 0 15 15 15 L ${w/2 - 15} 15 Q ${w/2} 15 ${w/2} 0 Q ${w/2} 15 ${w/2 + 15} 15 L ${w - 15} 15 Q ${w} 15 ${w} 30`} 
-          fill="none" 
-          stroke="var(--theme-carbon)" 
-          strokeWidth="1.5" 
+        <path
+          d={`M 0 30 Q 0 15 15 15 L ${w / 2 - 15} 15 Q ${w / 2} 15 ${w / 2} 0 Q ${w / 2} 15 ${w / 2 + 15} 15 L ${w - 15} 15 Q ${w} 15 ${w} 30`}
+          fill="none"
+          stroke="var(--theme-carbon)"
+          strokeWidth="1.5"
           strokeOpacity="0.4"
         />
       </svg>
@@ -86,6 +86,7 @@ function FlowContent() {
     models, inactiveModels, toggleModel,
     systems, inactiveSystems, toggleSystem,
   } = useGraphStore();
+  const { sandboxEnabled, validNodes, toggleAxiom: toggleSandboxAxiom } = useGraphSandboxStore();
 
   const [rfNodes, setRfNodes, onNodesChange] = useNodesState<Node>([]);
   const [, , onEdgesChange] = useEdgesState<Edge>([]);
@@ -198,10 +199,14 @@ function FlowContent() {
       const isHovered = n.id === hoveredNodeId;
       const isDimmed = selectedNodeId && !isSelected && !inChain;
       const group = d.nodeType === 'axioma' ? getAxiomGroup(n.id) : null;
+      
+      const finalIsActive = sandboxEnabled ? validNodes.has(n.id) : d.isActive;
+
       return {
         ...n,
         data: {
           ...d,
+          isActive: finalIsActive,
           isHighlighted: isSelected || inChain || isHovered,
           scale: isSelected || inChain ? 1.2 : 1,
           isDimmed,
@@ -214,7 +219,7 @@ function FlowContent() {
         },
       };
     });
-  }, [rfNodes, selectedNodeId, selectedChain, hoveredNodeId]);
+  }, [rfNodes, selectedNodeId, selectedChain, hoveredNodeId, sandboxEnabled, validNodes]);
 
   const visibleNodes = useMemo(() => {
     return displayNodes.filter(n => visibleTypes.has(((n.data as unknown) as MathNodeData).nodeType));
@@ -242,10 +247,36 @@ function FlowContent() {
       .map((e) => {
         const isRelated = selectedNodeId ? relatedEdgesSet.has(e.id) : true;
         const baseStyle = e.style || {};
-        return { ...e, style: { ...baseStyle, opacity: isRelated ? 1 : 0.12 } } as Edge;
+        
+        let finalStroke = baseStyle.stroke;
+        let finalStrokeWidth = baseStyle.strokeWidth;
+        let finalMarkerColor = (e.markerEnd as any)?.color;
+        
+        if (sandboxEnabled) {
+           const srcActive = validNodes.has(e.source);
+           const tgtActive = validNodes.has(e.target);
+           const isLive = srcActive && tgtActive;
+           finalStroke = isLive ? '#333333AA' : '#33333322';
+           finalStrokeWidth = isLive ? 1.5 : 1;
+           finalMarkerColor = isLive ? '#333333AA' : '#33333322';
+        }
+
+        return { 
+          ...e, 
+          style: { 
+            ...baseStyle, 
+            opacity: isRelated ? 1 : 0.12,
+            stroke: finalStroke,
+            strokeWidth: finalStrokeWidth
+          },
+          markerEnd: e.markerEnd ? {
+             ...(e.markerEnd as any),
+             color: finalMarkerColor
+          } : undefined
+        } as Edge;
       })
       .filter(e => visibleNodeIds.has(e.source) && visibleNodeIds.has(e.target));
-  }, [baseEdges, selectedNodeId, relatedEdgesSet, visibleNodeIds]);
+  }, [baseEdges, selectedNodeId, relatedEdgesSet, visibleNodeIds, sandboxEnabled, validNodes]);
 
   const onNodeMouseEnter: NodeMouseHandler = useCallback(
     (_, node) => {
@@ -258,14 +289,20 @@ function FlowContent() {
     setHoveredNodeId(null);
   }, []);
 
-  const onNodeClick: NodeMouseHandler = useCallback(
-    (_, node) => {
-      setSelectedNodeId(prev => prev === node.id ? null : node.id);
-      if (((node.data as unknown) as MathNodeData).nodeType === 'axioma') {
-        toggleAxiom(node.id);
+  const onNodeClick = useCallback(
+    (_: React.MouseEvent, node: Node) => {
+      const d = node.data as unknown as MathNodeData;
+      if (d.nodeType === 'axioma') {
+        if (sandboxEnabled) {
+          toggleSandboxAxiom(node.id);
+        } else {
+          toggleAxiom(node.id);
+        }
+      } else {
+        setSelectedNodeId((prev) => (prev === node.id ? null : node.id));
       }
     },
-    [toggleAxiom]
+    [toggleAxiom, sandboxEnabled, toggleSandboxAxiom],
   );
 
   const handleSearchSelect = useCallback(
@@ -302,7 +339,7 @@ function FlowContent() {
     return (
       <div
         className="w-full h-full flex items-center justify-center bg-lienzo"
-        style={{ backgroundImage: 'url(/images/bg-arts-crafts-1.png)', backgroundSize: '600px', backgroundRepeat: 'repeat' }}
+        style={{ backgroundImage: 'url(/Matematika/images/bg-arts-crafts-1.png)', backgroundSize: '600px', backgroundRepeat: 'repeat' }}
       >
         <p className="font-serif italic text-carbon/50 text-xl animate-pulse">
           Calculando estructura axiomática…
@@ -312,7 +349,7 @@ function FlowContent() {
   }
 
   return (
-    <div className="w-full h-full relative bg-lienzo" style={{ backgroundImage: 'url(/images/bg-arts-crafts-1.png)', backgroundSize: '600px', backgroundRepeat: 'repeat' }}>
+    <div className="w-full h-full relative bg-lienzo" style={{ backgroundImage: 'url(/Matematika/images/bg-arts-crafts-1.png)', backgroundSize: '600px', backgroundRepeat: 'repeat' }}>
 
       {/* ── Buscador centrado ─────────────────────────────────────────────── */}
       <div className="absolute top-4 left-1/2 -translate-x-1/2 z-30" style={{ width: 340 }}>
@@ -641,13 +678,6 @@ function FlowContent() {
         elementsSelectable={false}
         nodesConnectable={false}
       >
-        <MiniMap
-          nodeStrokeColor="rgba(51,51,51,0.3)"
-          nodeColor="var(--theme-lienzo)"
-          nodeBorderRadius={2}
-          maskColor="rgba(0,0,0,0.08)"
-          style={{ border: '1px solid rgba(51,51,51,0.15)' }}
-        />
         <Background color="rgba(51,51,51,0.07)" gap={24} size={1} />
         <Controls position="bottom-left" />
       </ReactFlow>
