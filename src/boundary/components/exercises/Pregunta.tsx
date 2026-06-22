@@ -81,32 +81,43 @@ export const Pregunta: React.FC<PreguntaProps> = ({ id, texto, question, correct
           const showCorrect = isAnswered && isThisCorrect;
           const showWrong = isAnswered && isSelected && !isThisCorrect;
 
+          let btnClass: string;
+          if (showCorrect) {
+            btnClass = 'border-salvia bg-salvia/10 text-salvia shadow-[inset_0_2px_4px_rgba(0,0,0,0.05)]';
+          } else if (showWrong) {
+            btnClass = 'border-terracota bg-terracota/5 text-terracota';
+          } else if (isSelected) {
+            btnClass = 'border-carbon/50 bg-carbon/5';
+          } else if (isAnswered) {
+            btnClass = 'border-carbon/10 text-carbon/40 cursor-not-allowed opacity-60';
+          } else {
+            btnClass = 'border-carbon/30 hover:border-carbon/60 hover:bg-carbon/[0.02] cursor-pointer hover:-translate-y-0.5 hover:shadow-sm';
+          }
+
+          let badgeClass: string, badgeChar: string;
+          if (showCorrect) {
+            badgeClass = 'border-salvia bg-salvia text-lienzo';
+            badgeChar = '✓';
+          } else if (showWrong) {
+            badgeClass = 'border-terracota bg-terracota text-lienzo';
+            badgeChar = '✗';
+          } else {
+            badgeClass = 'border-carbon/40 text-carbon/60 bg-transparent';
+            badgeChar = letter;
+          }
+
           return (
             <button
               key={opt.value}
               onClick={() => handleSelect(opt.value)}
               disabled={isAnswered}
-              className={`text-left px-5 py-3 border rounded-none text-[15px] font-serif transition-all duration-300 flex items-center gap-4 ${
-                showCorrect
-                  ? 'border-salvia bg-salvia/10 text-salvia shadow-[inset_0_2px_4px_rgba(0,0,0,0.05)]'
-                  : showWrong
-                  ? 'border-terracota bg-terracota/5 text-terracota'
-                  : isSelected
-                  ? 'border-carbon/50 bg-carbon/5'
-                  : isAnswered
-                  ? 'border-carbon/10 text-carbon/40 cursor-not-allowed opacity-60'
-                  : 'border-carbon/30 hover:border-carbon/60 hover:bg-carbon/[0.02] cursor-pointer hover:-translate-y-0.5 hover:shadow-sm'
-              }`}
+              className={`text-left px-5 py-3 border rounded-none text-[15px] font-serif transition-all duration-300 flex items-center gap-4 ${btnClass}`}
             >
               {/* Sello de la opción */}
               <span
-                className={`inline-flex items-center justify-center w-7 h-7 rounded-none border font-serif text-xs shrink-0 transition-all duration-300 ${
-                  showCorrect ? 'border-salvia bg-salvia text-lienzo' :
-                  showWrong   ? 'border-terracota bg-terracota text-lienzo' :
-                  'border-carbon/40 text-carbon/60 bg-transparent'
-                }`}
+                className={`inline-flex items-center justify-center w-7 h-7 rounded-none border font-serif text-xs shrink-0 transition-all duration-300 ${badgeClass}`}
               >
-                {showCorrect ? '✓' : showWrong ? '✗' : letter}
+                {badgeChar}
               </span>
 
               <span className="flex-1"><KatexText text={opt.texto} /></span>

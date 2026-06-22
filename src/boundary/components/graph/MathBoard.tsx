@@ -1,4 +1,4 @@
-import React, { useRef, useEffect } from 'react';
+import React, { useId, useRef, useEffect } from 'react';
 import JXG from 'jsxgraph';
 import { useMathStore } from '@/boundary/contexts/MathStoreContext';
 
@@ -61,6 +61,7 @@ export const MathBoard: React.FC<MathBoardProps> = ({
   const boardRef = useRef<HTMLDivElement>(null);
   const boardObj = useRef<any>(null);
   const elementsRef = useRef<Record<string, any>>({});
+  const generatedId = useId().replace(/:/g, '');
   
   const highlight = useMathStore(s => s.variables?.['highlight']);
   const step = useMathStore(s => s.variables?.['step']);
@@ -71,9 +72,7 @@ export const MathBoard: React.FC<MathBoardProps> = ({
   // Init Phase
   useEffect(() => {
     if (!boardRef.current) return;
-    if (!boardRef.current.id) {
-      boardRef.current.id = id || "jxgbox_" + Math.random().toString(36).substring(2, 9);
-    }
+    boardRef.current.id ||= id || `jxgbox_${generatedId}`;
 
     const board = JXG.JSXGraph.initBoard(boardRef.current.id, {
       boundingbox,

@@ -44,7 +44,7 @@ function lintFile(filePath: string) {
 
 function findBodyStart(content: string): number {
   const lines = content.split('\n');
-  let inFrontmatter = false;
+  const inFrontmatter = false;
   let inExport = false;
 
   for (let i = 0; i < lines.length; i++) {

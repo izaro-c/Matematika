@@ -1,0 +1,40 @@
+export const metadata = {
+  "id": "teorema-existencia-bisectriz",
+  "type": "teorema",
+  "title": "Teorema de existencia y unicidad de la bisectriz",
+  "description": "Todo ángulo admite una única bisectriz: una semirrecta con origen en el vértice que lo divide en dos ángulos congruentes.",
+  "statement": "Dado un ángulo ∠AOB, existe una única semirrecta OC interior al ángulo tal que ∠AOC ≅ ∠COB.",
+  "tags": ["geometria", "angulos", "bisectriz", "geometria-absoluta"],
+  "authors": ["euclides"],
+  "difficulty": "básico",
+  "hasSimulation": false,
+  "demos": ["demo-existencia-bisectriz"]
+};
+
+<Capitular letra="T" />odo <ConceptLink targetId="angulo" isDependency={false}>ángulo</ConceptLink> posee una <ConceptLink targetId="bisectriz" isDependency={false}>bisectriz</ConceptLink> única: una <ConceptLink targetId="semirrecta" isDependency={false}>semirrecta</ConceptLink> interior que lo divide en dos ángulos <ConceptLink targetId="congruencia" isDependency={false}>congruentes</ConceptLink>. Este <ConceptLink targetId="teorema" isDependency={false}>teorema</ConceptLink> constructivo se demuestra con el <ConceptLink targetId="lema-punto-medio" isDependency={true}>lema del punto medio</ConceptLink> y el <ConceptLink targetId="teorema-congruencia-lll" isDependency={true}>criterio LLL</ConceptLink>. Es válido en <ConceptLink targetId="geometria-absoluta" isDependency={false}>geometría absoluta</ConceptLink>.
+
+<Separador />
+
+### Enunciado Formal
+
+Sea $\angle AOB$ un <ConceptLink targetId="angulo" isDependency={false}>ángulo</ConceptLink> con <ConceptLink targetId="vertice" isDependency={false}>vértice</ConceptLink> $O$. Existe una única <ConceptLink targetId="semirrecta" isDependency={false}>semirrecta</ConceptLink> $\overrightarrow{OC}$ interior a $\angle AOB$ tal que:
+
+<Formula>
+  $$ \angle AOC \cong \angle COB $$
+</Formula>
+
+<Separador />
+
+### Discusión
+
+La <ConceptLink targetId="bisectriz" isDependency={false}>bisectriz</ConceptLink> es una de las construcciones más ubicuas de la <ConceptLink targetId="geometria" isDependency={false}>geometría</ConceptLink>. Aparece en la demostración del <ConceptLink targetId="teorema-triangulo-isosceles" isDependency={false}>Pons Asinorum</ConceptLink>, en la definición del <ConceptLink targetId="incentro" isDependency={false}>incentro</ConceptLink> (punto de concurrencia de las tres bisectrices de un <ConceptLink targetId="triangulo" isDependency={false}>triángulo</ConceptLink>), y en numerosas construcciones de <ConceptLink targetId="lugar-geometrico" isDependency={false}>lugares geométricos</ConceptLink>.
+
+La demostración es elegante por su simplicidad: se toman puntos equidistantes del vértice sobre cada lado, se traza el segmento entre ellos, y se une el vértice con el <ConceptLink targetId="lema-punto-medio" isDependency={true}>punto medio</ConceptLink> de dicho segmento. El <ConceptLink targetId="teorema-congruencia-lll" isDependency={true}>criterio LLL</ConceptLink> garantiza la <ConceptLink targetId="congruencia" isDependency={false}>congruencia</ConceptLink> de los triángulos resultantes y, con ella, la igualdad de los ángulos.
+
+<Separador />
+
+### Observaciones
+
+- La unicidad se desprende directamente del <ConceptLink targetId="axioma-congruencia-4" isDependency={true}>axioma de unicidad del transporte de ángulos (III-4)</ConceptLink>: dos semirrectas interiores que formen el mismo ángulo con $\overrightarrow{OA}$ deben coincidir.
+- El teorema pertenece a la <ConceptLink targetId="geometria-absoluta" isDependency={false}>geometría absoluta</ConceptLink>: no requiere el <ConceptLink targetId="axioma-paralelas-euclides" isDependency={false}>axioma de las paralelas</ConceptLink>. La bisectriz existe tanto en <ConceptLink targetId="geometria-euclidiana" isDependency={false}>geometría euclidiana</ConceptLink> como en <ConceptLink targetId="geometria-hiperbolica" isDependency={false}>geometría hiperbólica</ConceptLink>.
+- La construcción de la bisectriz no requiere <ConceptLink targetId="teorema-existencia-perpendicular" isDependency={false}>perpendiculares</ConceptLink> ni <ConceptLink targetId="circunferencia" isDependency={false}>circunferencias</ConceptLink>: solo el <ConceptLink targetId="axioma-congruencia-1" isDependency={true}>transporte de segmentos</ConceptLink> y el <ConceptLink targetId="lema-punto-medio" isDependency={true}>punto medio</ConceptLink>. Esta independencia la hace particularmente fundamental.

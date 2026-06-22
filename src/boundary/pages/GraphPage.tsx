@@ -254,6 +254,57 @@ export const GraphPage: React.FC = () => {
     return GRAPH_NODE_COLORS[key] || '#cccccc';
   };
 
+  const drawNodeLabel = useCallback((
+    ctx: CanvasRenderingContext2D,
+    node: GraphNode,
+    globalScale: number,
+    isHighlighted: boolean,
+    hoverNode: GraphNode | null,
+    highlightNodes: Set<unknown>,
+    radius: number,
+  ) => {
+    const isMainBranch = node.id?.startsWith('rama-');
+    const isSubBranch = node.id?.startsWith('subrama-');
+    const isActivelyHovered = hoverNode ? highlightNodes.has(node) : false;
+
+    if (!isActivelyHovered && node.group !== 'central' &&
+        !(isMainBranch && globalScale >= 0.4) &&
+        !(isSubBranch && globalScale >= 0.8) &&
+        globalScale < 1.2) return;
+
+    const label = node.name;
+    const nodeX = node.x!;
+    const nodeY = node.y!;
+
+    let baseSize: number;
+    if (node.group === 'central') {
+      baseSize = 18;
+    } else if (isMainBranch || isSubBranch) {
+      baseSize = 14;
+    } else {
+      baseSize = 10;
+    }
+    const fontSize = baseSize / globalScale;
+    ctx.font = `${node.group === 'central' ? 'bold' : 'normal'} ${fontSize}px "Georgia", serif`;
+    ctx.textAlign = 'center';
+    ctx.textBaseline = 'middle';
+
+    const textY = nodeY + radius + (fontSize / 2) + (4 / globalScale);
+
+    // Shadow for readability
+    ctx.shadowColor = 'rgba(248, 246, 241, 0.9)';
+    ctx.shadowBlur = 4 / globalScale;
+    ctx.lineWidth = 3 / globalScale;
+    ctx.strokeStyle = 'rgba(248, 246, 241, 0.9)';
+    ctx.strokeText(label, nodeX, textY);
+
+    ctx.shadowBlur = 0;
+    ctx.fillStyle = node.group === 'central'
+      ? (isHighlighted ? '#C86446' : '#C8644680')
+      : (isHighlighted ? '#333333' : '#33333380');
+    ctx.fillText(label, nodeX, textY);
+  }, []);
+
   const drawNode = useCallback((node: GraphNode, ctx: CanvasRenderingContext2D, globalScale: number) => {
     if (node.x === undefined || node.y === undefined || !Number.isFinite(node.x) || !Number.isFinite(node.y)) return;
 
@@ -285,39 +336,7 @@ export const GraphPage: React.FC = () => {
     ctx.lineWidth = (isHighlighted ? 1.5 : 0.5) / globalScale;
     ctx.stroke();
 
-    const isMainBranch = node.id?.startsWith('rama-');
-    const isSubBranch = node.id?.startsWith('subrama-');
-
-    const isActivelyHovered = hoverNode ? highlightNodes.has(node) : false;
-
-    const shouldDrawText =
-      isActivelyHovered ||
-      node.group === 'central' ||
-      (isMainBranch && globalScale >= 0.4) ||
-      (isSubBranch && globalScale >= 0.8) ||
-      (globalScale >= 1.2);
-
-    // Dibujar Texto legíble tipo imprenta
-    if (shouldDrawText) {
-      const label = node.name;
-      const fontSize = node.group === 'central' ? 18 / globalScale : ((isMainBranch || isSubBranch) ? 14 / globalScale : 10 / globalScale);
-      // Tipografía clásica con serifa
-      ctx.font = `${node.group === 'central' ? 'bold' : 'normal'} ${fontSize}px "Georgia", serif`;
-      ctx.textAlign = 'center';
-      ctx.textBaseline = 'middle';
-
-      // Sombra para legibilidad sobre los enlaces (ajustada por la escala global para que no reviente al hacer zoom)
-      ctx.shadowColor = 'rgba(248, 246, 241, 0.9)';
-      ctx.shadowBlur = 4 / globalScale;
-      ctx.lineWidth = 3 / globalScale;
-      ctx.strokeStyle = 'rgba(248, 246, 241, 0.9)';
-      ctx.strokeText(label, node.x, node.y + radius + (fontSize / 2) + (4 / globalScale));
-
-      ctx.shadowBlur = 0;
-      ctx.fillStyle = isHighlighted ? '#333333' : '#33333380';
-      if (node.group === 'central') ctx.fillStyle = isHighlighted ? '#C86446' : '#C8644680';
-      ctx.fillText(label, node.x, node.y + radius + (fontSize / 2) + (4 / globalScale));
-    }
+    drawNodeLabel(ctx, node, globalScale, isHighlighted, hoverNode, highlightNodes, radius);
   }, [hoverNode, highlightNodes]);
 
   // Ajustar cámara inicial

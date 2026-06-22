@@ -1,0 +1,42 @@
+export const metadata = {
+  "id": "teorema-congruencia-aal",
+  "type": "teorema",
+  "title": "Criterio de congruencia AAL",
+  "description": "Si dos ángulos y un lado no incluido de un triángulo son congruentes con las partes correspondientes de otro, los triángulos son congruentes.",
+  "statement": "Sean △ABC y △A′B′C′. Si ∠A ≅ ∠A′, ∠B ≅ ∠B′ y BC ≅ B′C′, entonces △ABC ≅ △A′B′C′.",
+  "tags": ["geometria", "congruencia", "triangulos", "geometria-absoluta"],
+  "authors": ["euclides"],
+  "difficulty": "intermedio",
+  "hasSimulation": false,
+  "demos": ["demo-congruencia-aal"]
+};
+
+<Capitular letra="E" />l criterio AAL (Ángulo-Ángulo-Lado) completa la familia de criterios de <ConceptLink targetId="congruencia" isDependency={false}>congruencia</ConceptLink> de <ConceptLink targetId="triangulo" isDependency={false}>triángulos</ConceptLink> junto con <ConceptLink targetId="axioma-congruencia-5" isDependency={true}>LAL</ConceptLink> (axioma), <ConceptLink targetId="teorema-congruencia-ala" isDependency={false}>ALA</ConceptLink> y <ConceptLink targetId="teorema-congruencia-lll" isDependency={false}>LLL</ConceptLink>. A diferencia de ALA —donde el lado conocido está entre los dos <ConceptLink targetId="angulo" isDependency={false}>ángulos</ConceptLink>— en AAL el lado es adyacente a uno solo de ellos. La <ConceptLink targetId="demostracion" isDependency={false}>demostración</ConceptLink> por <ConceptLink targetId="contradiccion" isDependency={false}>reducción al absurdo</ConceptLink> invoca el <ConceptLink targetId="teorema-angulo-externo" isDependency={true}>teorema del ángulo externo</ConceptLink>. Es válido en <ConceptLink targetId="geometria-absoluta" isDependency={false}>geometría absoluta</ConceptLink>.
+
+<Separador />
+
+### Enunciado Formal
+
+Sean $\triangle ABC$ y $\triangle A'B'C'$ dos <ConceptLink targetId="triangulo" isDependency={false}>triángulos</ConceptLink>. Si:
+
+<Formula>
+  $$ \angle A \cong \angle A', \qquad \angle B \cong \angle B', \qquad \overline{BC} \cong \overline{B'C'} $$
+</Formula>
+
+entonces $\triangle ABC \cong \triangle A'B'C'$.
+
+Nótese que $\overline{BC}$ es adyacente a $\angle B$ pero **no** a $\angle A$ (es el lado opuesto a $A$). El criterio ALA cubre el caso en que el lado es adyacente a ambos ángulos.
+
+<Separador />
+
+### Discusión
+
+La demostración es un ejemplo paradigmático de cómo el <ConceptLink targetId="teorema-angulo-externo" isDependency={false}>teorema del ángulo externo</ConceptLink> fuerza la coincidencia de figuras geométricas. Se supone que los triángulos no son congruentes y se construye un triángulo auxiliar sobre el lado mayor. Por <ConceptLink targetId="axioma-congruencia-5" isDependency={false}>LAL</ConceptLink>, este triángulo auxiliar es congruente con el triángulo pequeño, pero entonces su ángulo en el nuevo vértice igualaría a $\angle A$, entrando en conflicto con el <ConceptLink targetId="teorema-angulo-externo" isDependency={false}>teorema del ángulo externo</ConceptLink> aplicado al triángulo residual.
+
+<Separador />
+
+### Observaciones
+
+- El criterio AAL es válido en <ConceptLink targetId="geometria-absoluta" isDependency={false}>geometría absoluta</ConceptLink>. No requiere el <ConceptLink targetId="axioma-paralelas-euclides" isDependency={false}>axioma de las paralelas</ConceptLink> ni el <ConceptLink targetId="teorema-suma-angulos-triangulo" isDependency={false}>teorema de la suma de ángulos</ConceptLink>.
+- Junto con <ConceptLink targetId="axioma-congruencia-5" isDependency={false}>LAL</ConceptLink>, <ConceptLink targetId="teorema-congruencia-ala" isDependency={false}>ALA</ConceptLink> y <ConceptLink targetId="teorema-congruencia-lll" isDependency={false}>LLL</ConceptLink>, el criterio AAL completa los cuatro criterios estándar de congruencia de triángulos. Cualquier combinación de tres elementos (con al menos un lado) que determine unívocamente un triángulo está cubierta por alguno de ellos.
+- <ConceptLink targetId="euclides" isDependency={false}>Euclides</ConceptLink> demuestra AAL en la Proposición I.26 de los <ConceptLink targetId="elementos" isDependency={false}>Elementos</ConceptLink> (junto con ALA, como dos casos de una misma proposición).

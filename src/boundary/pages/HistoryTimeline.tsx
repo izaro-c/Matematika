@@ -5,15 +5,24 @@ import { InteractiveTimePlot } from '@/boundary/components/ui/InteractiveTimePlo
 
 import { ArtsAndCraftsLiana } from '@/boundary/components/ui/ArtsAndCraftsLiana';
 
+// ── Utilidad: clasificación de año histórico a época ───────────────────────────
+const ERA_STEPS: readonly { cutoff: number; label: string; color: string }[] = [
+  { cutoff: -200, label: 'Antigüedad', color: '#c49b4f' },
+  { cutoff: 500, label: 'Mundo Clásico', color: '#A2C2A2' },
+  { cutoff: 1400, label: 'Medievo', color: '#5D7080' },
+  { cutoff: 1700, label: 'Renacimiento', color: '#C86446' },
+  { cutoff: 1900, label: 'Ilustración', color: '#333' },
+];
+const DEFAULT_ERA = { label: 'Época Moderna', color: '#333' };
+
+function getEra(year: number) {
+  const era = ERA_STEPS.find(e => year < e.cutoff);
+  return era ?? DEFAULT_ERA;
+}
+
 // ── Insignia de época ─────────────────────────────────────────────────────────
 const EraInsignia: React.FC<{ era: string; year: number }> = ({ era, year }) => {
-  const period =
-    year < -200 ? { label: 'Antigüedad', color: '#c49b4f' } :
-      year < 500 ? { label: 'Mundo Clásico', color: '#A2C2A2' } :
-        year < 1400 ? { label: 'Medievo', color: '#5D7080' } :
-          year < 1700 ? { label: 'Renacimiento', color: '#C86446' } :
-            year < 1900 ? { label: 'Ilustración', color: '#333' } :
-              { label: 'Época Moderna', color: '#333' };
+  const period = getEra(year);
 
   return (
     <div className="flex items-center gap-2">
@@ -44,24 +53,12 @@ export const HistoryTimeline = () => {
 
   // Épocas disponibles para filtro
   const eras = useMemo(() => {
-    const set = new Set(nodes.map(n =>
-      (n.birthYear || 0) < -200 ? 'Antigüedad' :
-        (n.birthYear || 0) < 500 ? 'Mundo Clásico' :
-          (n.birthYear || 0) < 1400 ? 'Medievo' :
-            (n.birthYear || 0) < 1700 ? 'Renacimiento' :
-              (n.birthYear || 0) < 1900 ? 'Ilustración' : 'Época Moderna'
-    ));
+    const set = new Set(nodes.map(n => getEra(n.birthYear || 0).label));
     return ['Todos', ...Array.from(set)];
   }, [nodes]);
 
   const filtered = filter === 'Todos' ? nodes : nodes.filter(n => {
-    const era =
-      (n.birthYear || 0) < -200 ? 'Antigüedad' :
-        (n.birthYear || 0) < 500 ? 'Mundo Clásico' :
-          (n.birthYear || 0) < 1400 ? 'Medievo' :
-            (n.birthYear || 0) < 1700 ? 'Renacimiento' :
-              (n.birthYear || 0) < 1900 ? 'Ilustración' : 'Época Moderna';
-    return era === filter;
+    return getEra(n.birthYear || 0).label === filter;
   });
 
   useEffect(() => {

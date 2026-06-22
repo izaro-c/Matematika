@@ -11,6 +11,7 @@ export const metadata = {
 };
 
 import { DemoPuntoMedioPerpendicular } from "@/boundary/components/diagrams/Demos/DemoPuntoMedioPerpendicular";
+import { InteractiveElement } from "@/boundary/components/ui/VisualBind";
 
 <DemonstrationSection diagram={<DemoPuntoMedioPerpendicular />}>
 
@@ -62,7 +63,7 @@ Por el <ConceptLink targetId="teorema-congruencia-lll" isDependency={true}>teore
   $$ \triangle CAM \cong \triangle CBM $$
 </Formula>
 
-En particular, $\angle CMA \cong \angle CMB$. Pero estos ángulos son adyacentes y suplementarios (pues $M$ está entre $A$ y $B$), por lo que ambos son rectos. 
+En particular, $\angle CMA \cong \angle CMB$. Por la <ConceptLink targetId="lema-punto-medio" isDependency={true}>definición de punto medio</ConceptLink>, $M$ está entre $A$ y $B$; por tanto $\angle CMA$ y $\angle CMB$ son <ConceptLink targetId="angulos-suplementarios" isDependency={true}>adyacentes y suplementarios</ConceptLink>. Si dos ángulos son congruentes y suplementarios, cada uno mide $90^\circ$. Por la <ConceptLink targetId="perpendicular" isDependency={false}>definición de perpendicularidad</ConceptLink>, $CM \perp AB$. 
 </MedievalStep>
 
 <MedievalStep number={5} title="Conclusión" target="step5">

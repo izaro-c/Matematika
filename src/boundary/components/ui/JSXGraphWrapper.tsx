@@ -1,4 +1,4 @@
-import { useRef, useEffect } from 'react';
+import { useId, useRef, useEffect } from 'react';
 import JXG from 'jsxgraph';
 
 /**
@@ -9,12 +9,13 @@ import JXG from 'jsxgraph';
 export const JSXGraphWrapper = () => {
     // 1. Creamos la "correa" para el DOM
     const boardRef = useRef<HTMLDivElement>(null);
+    const boardId = useId().replace(/:/g, '');
 
     // 2. Ejecutamos el efecto secundario después de montar el componente
     useEffect(() => {
         if (!boardRef.current) return;
 
-        if (!boardRef.current.id) boardRef.current.id = "jxgbox_" + Math.random().toString(36).substring(2, 9);
+        boardRef.current.id ||= "jxgbox_" + boardId;
         const board = JXG.JSXGraph.initBoard(boardRef.current.id, {
             boundingbox: [-5, 5, 5, -5], // Eje X de -5 a 5, Eje Y de -5 a 5
             axis: true,                  // Dibuja los ejes cartesianos

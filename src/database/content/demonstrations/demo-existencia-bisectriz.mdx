@@ -1,0 +1,86 @@
+export const metadata = {
+  "id": "demo-existencia-bisectriz",
+  "type": "demostracion",
+  "title": "Demostración: Existencia y unicidad de la bisectriz",
+  "description": "Prueba constructiva usando el lema del punto medio y el criterio LLL. Se toman puntos equidistantes del vértice sobre cada lado del ángulo y se traza la mediana al segmento que los une.",
+  "parentTheorem": "teorema-existencia-bisectriz",
+  "proofMethod": "constructivo",
+  "authors": ["euclides"],
+  "tags": ["geometria", "angulos", "bisectriz"],
+  "layout": "split"
+};
+
+import { DemoExistenciaBisectriz } from "@/boundary/components/diagrams/Teoremas/DemoExistenciaBisectriz";
+import { InteractiveElement } from "@/boundary/components/ui/VisualBind";
+
+<DemonstrationSection diagram={<DemoExistenciaBisectriz />}>
+
+<Capitular letra="L" />a construcción de la <ConceptLink targetId="bisectriz" isDependency={false}>bisectriz</ConceptLink> de un <ConceptLink targetId="angulo" isDependency={false}>ángulo</ConceptLink> es una de las operaciones fundamentales de la <ConceptLink targetId="geometria" isDependency={false}>geometría</ConceptLink>. La siguiente <ConceptLink targetId="demostracion" isDependency={false}>demostración</ConceptLink> constructiva prueba que existe y es única, usando exclusivamente el <ConceptLink targetId="lema-punto-medio" isDependency={true}>lema del punto medio</ConceptLink> y el <ConceptLink targetId="teorema-congruencia-lll" isDependency={true}>criterio LLL</ConceptLink>. No requiere <ConceptLink targetId="teorema-existencia-perpendicular" isDependency={false}>perpendiculares</ConceptLink> ni <ConceptLink targetId="circunferencia" isDependency={false}>circunferencias</ConceptLink>.
+
+<Separador />
+
+<MedievalStep number={1} title="Puntos equidistantes sobre los lados" target={["angulo-aob", "punto-c", "punto-d"]}>
+Por hipótesis, sea <InteractiveElement target="angulo-aob" color="carbon">$\angle AOB$</InteractiveElement> un ángulo con vértice <InteractiveElement target="vertice-o" color="carbon">$O$</InteractiveElement>. Por el <ConceptLink targetId="axioma-incidencia-2" isDependency={true}>axioma I-2</ConceptLink>, existe un punto sobre la semirrecta $\overrightarrow{OA}$ distinto de $O$. Por el <ConceptLink targetId="axioma-congruencia-1" isDependency={true}>axioma de transporte de segmentos (III-1)</ConceptLink>, fijamos un punto <InteractiveElement target="punto-c" color="terracota">$C \in \overrightarrow{OA}$</InteractiveElement> con $C \neq O$.
+
+Por el mismo axioma, transportamos la longitud $OC$ sobre $\overrightarrow{OB}$ para obtener un punto <InteractiveElement target="punto-d" color="salvia">$D \in \overrightarrow{OB}$</InteractiveElement> tal que:
+
+<Formula>
+  $$ OC \cong OD $$
+</Formula>
+</MedievalStep>
+
+<MedievalStep number={2} title="Segmento CD y su punto medio" target={["segmento-cd", "punto-m"]}>
+Por el <ConceptLink targetId="axioma-incidencia-1" isDependency={true}>axioma I-1</ConceptLink>, los puntos $C$ y $D$ determinan el segmento <InteractiveElement target="segmento-cd" color="pizarra">$\overline{CD}$</InteractiveElement>.
+
+Por el <ConceptLink targetId="lema-punto-medio" isDependency={true}>lema del punto medio</ConceptLink>, $\overline{CD}$ posee un único <ConceptLink targetId="punto-medio" isDependency={false}>punto medio</ConceptLink> <InteractiveElement target="punto-m" color="carbon">$M$</InteractiveElement>, que satisface $C * M * D$ y $CM \cong DM$.
+</MedievalStep>
+
+<MedievalStep number={3} title="Congruencia LLL" target={["triangulo-ocm", "triangulo-odm"]}>
+Por el <ConceptLink targetId="axioma-incidencia-1" isDependency={true}>axioma I-1</ConceptLink>, trazamos $\overline{OM}$. Consideremos los <InteractiveElement target="triangulo-ocm" color="terracota">triángulos $\triangle OCM$</InteractiveElement> y <InteractiveElement target="triangulo-odm" color="salvia">$\triangle ODM$</InteractiveElement>:
+
+1. $OC \cong OD$ (por el paso 1).
+2. $\overline{OM}$ es común a ambos triángulos.
+3. $CM \cong DM$ (por el paso 2: $M$ es el punto medio de $\overline{CD}$).
+
+Los tres <ConceptLink targetId="lado" isDependency={false}>lados</ConceptLink> correspondientes son <ConceptLink targetId="congruencia" isDependency={false}>congruentes</ConceptLink>. Por el <ConceptLink targetId="teorema-congruencia-lll" isDependency={true}>criterio LLL</ConceptLink>:
+
+<Formula>
+  $$ \triangle OCM \cong \triangle ODM $$
+</Formula>
+</MedievalStep>
+
+<MedievalStep number={4} title="Igualdad de los ángulos" target={["angulo-com", "angulo-dom"]}>
+Por la <ConceptLink targetId="congruencia" isDependency={false}>definición de congruencia</ConceptLink> de triángulos, todos los elementos correspondientes son congruentes. En particular, los <ConceptLink targetId="angulo" isDependency={false}>ángulos</ConceptLink> opuestos a los lados congruentes $CM$ y $DM$ son:
+
+<Formula>
+  $$ \angle COM \cong \angle DOM $$
+</Formula>
+
+Es decir, $\overrightarrow{OM}$ divide al ángulo $\angle AOB$ en dos ángulos congruentes: <InteractiveElement target="angulo-com" color="terracota">$\angle COM$</InteractiveElement> y <InteractiveElement target="angulo-dom" color="salvia">$\angle DOM$</InteractiveElement>. Por la <ConceptLink targetId="bisectriz" isDependency={false}>definición de bisectriz</ConceptLink>, $\overrightarrow{OM}$ es la bisectriz de $\angle AOB$. Queda demostrada la **existencia**.
+</MedievalStep>
+
+<MedievalStep number={5} title="Unicidad" target={["bisectriz-unica"]}>
+Supongamos que existiera otra semirrecta $\overrightarrow{OM'} \neq \overrightarrow{OM}$ interior a $\angle AOB$ que también lo biseca. Entonces se tendría:
+
+<Formula>
+  $$ \angle AOM' \cong \angle M'OB \quad \text{y} \quad \angle AOM \cong \angle MOB $$
+</Formula>
+
+Ambos son la mitad del ángulo total, por tanto $\angle AOM' \cong \angle AOM$. Pero por el <ConceptLink targetId="axioma-congruencia-4" isDependency={true}>axioma de unicidad del transporte de ángulos (III-4)</ConceptLink>, en un semiplano dado solo existe una semirrecta que forme un ángulo dado con $\overrightarrow{OA}$. Por tanto $\overrightarrow{OM'} = \overrightarrow{OM}$.
+
+La <InteractiveElement target="bisectriz-unica" color="carbon">bisectriz es única</InteractiveElement>. $\blacksquare$
+</MedievalStep>
+
+<Separador />
+
+### Análisis
+
+La demostración es un ejemplo paradigmático de cómo los criterios de congruencia de triángulos permiten transferir igualdades entre segmentos a igualdades entre ángulos. La construcción es puramente lineal: no intervienen <ConceptLink targetId="circunferencia" isDependency={false}>circunferencias</ConceptLink> ni <ConceptLink targetId="teorema-existencia-perpendicular" isDependency={false}>perpendiculares</ConceptLink>, lo que la hace válida en <ConceptLink targetId="geometria-absoluta" isDependency={false}>geometría absoluta</ConceptLink>.
+
+La clave del argumento es el <ConceptLink targetId="lema-punto-medio" isDependency={true}>lema del punto medio</ConceptLink> (paso 2), que a su vez requiere los tres criterios de congruencia (<ConceptLink targetId="axioma-congruencia-5" isDependency={true}>LAL</ConceptLink>, <ConceptLink targetId="teorema-congruencia-ala" isDependency={true}>ALA</ConceptLink>, <ConceptLink targetId="teorema-congruencia-lll" isDependency={true}>LLL</ConceptLink>) y los <ConceptLink targetId="axioma-orden-3" isDependency={true}>axiomas de orden</ConceptLink>. La cadena de dependencias es profunda pero sólida.
+
+<Nota>
+  La construcción euclidiana clásica (Proposición I.9 de los <ConceptLink targetId="elementos" isDependency={false}>Elementos</ConceptLink>) usa un triángulo equilátero auxiliar, lo que requiere la existencia del triángulo equilátero (Proposición I.1, que a su vez usa circunferencias). La presente demostración evita las circunferencias usando el <ConceptLink targetId="lema-punto-medio" isDependency={true}>lema del punto medio</ConceptLink>, siguiendo el enfoque moderno de <ConceptLink targetId="hilbert" isDependency={false}>Hilbert</ConceptLink>.
+</Nota>
+
+</DemonstrationSection>

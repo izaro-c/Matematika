@@ -99,10 +99,10 @@ export const AngulosOpuestos = () => {
 
     const sop = (active: boolean) => active || showAll ? 1 : 0.08;
 
-    angleA1.setAttribute({ fillOpacity: hAlpha ? 0.45 : 0.2, strokeOpacity: sop(hAlpha), strokeColor: hAlpha ? C_A : C_A, fillColor: hAlpha ? C_A : C_A, strokeWidth: hAlpha ? 3 : 1.5 });
-    angleA2.setAttribute({ fillOpacity: hAlpha ? 0.45 : 0.2, strokeOpacity: sop(hAlpha), strokeColor: hAlpha ? C_A : C_A, fillColor: hAlpha ? C_A : C_A, strokeWidth: hAlpha ? 3 : 1.5 });
-    angleB1.setAttribute({ fillOpacity: hBeta  ? 0.45 : 0.2, strokeOpacity: sop(hBeta),  strokeColor: hBeta  ? C_B : C_B, fillColor: hBeta  ? C_B : C_B, strokeWidth: hBeta  ? 3 : 1.5 });
-    angleB2.setAttribute({ fillOpacity: hBeta  ? 0.45 : 0.2, strokeOpacity: sop(hBeta),  strokeColor: hBeta  ? C_B : C_B, fillColor: hBeta  ? C_B : C_B, strokeWidth: hBeta  ? 3 : 1.5 });
+    angleA1.setAttribute({ fillOpacity: hAlpha ? 0.45 : 0.2, strokeOpacity: sop(hAlpha), strokeColor: C_A, fillColor: C_A, strokeWidth: hAlpha ? 3 : 1.5 });
+    angleA2.setAttribute({ fillOpacity: hAlpha ? 0.45 : 0.2, strokeOpacity: sop(hAlpha), strokeColor: C_A, fillColor: C_A, strokeWidth: hAlpha ? 3 : 1.5 });
+    angleB1.setAttribute({ fillOpacity: hBeta  ? 0.45 : 0.2, strokeOpacity: sop(hBeta),  strokeColor: C_B, fillColor: C_B, strokeWidth: hBeta  ? 3 : 1.5 });
+    angleB2.setAttribute({ fillOpacity: hBeta  ? 0.45 : 0.2, strokeOpacity: sop(hBeta),  strokeColor: C_B, fillColor: C_B, strokeWidth: hBeta  ? 3 : 1.5 });
 
     board.update();
   }, [highlight, isHighlight]);

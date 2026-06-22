@@ -89,7 +89,7 @@ for (const [useCase, defs] of Object.entries(groupedDefs)) {
 }
 
 console.log('Actualizando Category_Partition_Tests.md...');
-let mdContent = fs.readFileSync(markdownPath, 'utf8');
+const mdContent = fs.readFileSync(markdownPath, 'utf8');
 
 const startMarker = '<!-- TEST_TABLES_START -->';
 const endMarker = '<!-- TEST_TABLES_END -->';

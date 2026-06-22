@@ -77,8 +77,8 @@ export const LemaPuntoMedio = () => {
     const C_PRIM = getCSSVar('--theme-carbon');
 
     segmento.setAttribute({ strokeOpacity: op(hSeg), strokeColor: hSeg ? C_ACC : C_PRIM, strokeWidth: hSeg ? 4 : 2.5 });
-    M.setAttribute({ strokeOpacity: op(hMedio), fillOpacity: op(hMedio), size: hMedio ? 8 : 6, fillColor: hMedio ? C_ACC : C_ACC, strokeColor: hMedio ? C_ACC : C_ACC });
-    [congAM, congMB].forEach((t: any) => t.setAttribute({ visible: true, strokeOpacity: op(hCong), strokeColor: hCong ? C_ACC : C_ACC }));
+    M.setAttribute({ strokeOpacity: op(hMedio), fillOpacity: op(hMedio), size: hMedio ? 8 : 6, fillColor: C_ACC, strokeColor: C_ACC });
+    [congAM, congMB].forEach((t: any) => t.setAttribute({ visible: true, strokeOpacity: op(hCong), strokeColor: C_ACC }));
     [A, B].forEach((p: any) => p.setAttribute({ strokeOpacity: op(showAll), fillOpacity: op(showAll) }));
 
     board.update();

@@ -146,11 +146,13 @@ export const EditorPage: React.FC = () => {
             ▶
           </button>
         )}
-        {loading ? (
+        {loading && (
           <div className="flex-1 flex items-center justify-center italic text-carbon/50">Cargando archivo...</div>
-        ) : !currentFile ? (
+        )}
+        {!loading && !currentFile && (
           <div className="flex-1 flex items-center justify-center font-serif text-carbon/40 text-xl">Selecciona o crea un archivo</div>
-        ) : (
+        )}
+        {!loading && currentFile && (
           <div className="flex-1 flex w-full overflow-hidden relative">
             <div
               className="flex flex-col h-full p-8 overflow-y-auto"

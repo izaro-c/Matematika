@@ -1,0 +1,112 @@
+export const metadata = {
+  "id": "demo-congruencia-aal",
+  "type": "demostracion",
+  "title": "Demostración: Criterio de congruencia AAL",
+  "description": "Prueba por reducción al absurdo: se supone desigualdad de lados, se construye un triángulo auxiliar por LAL, y el teorema del ángulo externo fuerza la contradicción.",
+  "parentTheorem": "teorema-congruencia-aal",
+  "proofMethod": "contradiccion",
+  "authors": ["euclides"],
+  "tags": ["geometria", "congruencia", "triangulos"],
+  "layout": "split"
+};
+
+import { DemoCongruenciaAAL } from "@/boundary/components/diagrams/Teoremas/DemoCongruenciaAAL";
+import { InteractiveElement } from "@/boundary/components/ui/VisualBind";
+
+<DemonstrationSection diagram={<DemoCongruenciaAAL />}>
+
+<Capitular letra="E" />l criterio AAL es el cuarto y último de los criterios clásicos de <ConceptLink targetId="congruencia" isDependency={false}>congruencia</ConceptLink> de <ConceptLink targetId="triangulo" isDependency={false}>triángulos</ConceptLink>. La siguiente <ConceptLink targetId="demostracion" isDependency={false}>demostración</ConceptLink> lo reduce al <ConceptLink targetId="axioma-congruencia-5" isDependency={true}>criterio LAL</ConceptLink> mediante un argumento de <ConceptLink targetId="contradiccion" isDependency={false}>reducción al absurdo</ConceptLink> que invoca el <ConceptLink targetId="teorema-angulo-externo" isDependency={true}>teorema del ángulo externo</ConceptLink>.
+
+<Separador />
+
+<MedievalStep number={1} title="Hipótesis" target={["triangulo-abc", "triangulo-apbpcp"]}>
+Por hipótesis, sean <InteractiveElement target="triangulo-abc" color="carbon">$\triangle ABC$</InteractiveElement> y <InteractiveElement target="triangulo-apbpcp" color="carbon">$\triangle A'B'C'$</InteractiveElement> dos triángulos tales que:
+
+<Formula>
+  $$ \angle A \cong \angle A', \qquad \angle B \cong \angle B', \qquad \overline{BC} \cong \overline{B'C'} $$
+</Formula>
+
+Queremos demostrar que $\triangle ABC \cong \triangle A'B'C'$.
+</MedievalStep>
+
+<MedievalStep number={2} title="Suposición de desigualdad" target={["lado-ab", "lado-apbp"]}>
+Supongamos, por <ConceptLink targetId="contradiccion" isDependency={false}>reducción al absurdo</ConceptLink>, que $\overline{AB} \not\cong \overline{A'B'}$. Sin pérdida de generalidad, sea $\overline{AB} \gt \overline{A'B'}$.
+
+Por el <ConceptLink targetId="axioma-congruencia-1" isDependency={true}>axioma de transporte de segmentos (III-1)</ConceptLink>, sobre <InteractiveElement target="lado-ab" color="salvia">$\overline{AB}$</InteractiveElement> determinamos un punto <InteractiveElement target="punto-d" color="terracota">$D$</InteractiveElement> tal que:
+
+<Formula>
+  $$ \overline{BD} \cong \overline{B'A'} $$
+</Formula>
+
+Puesto que $\overline{BD} \cong \overline{B'A'} \lt \overline{AB}$, el punto $D$ está estrictamente entre $A$ y $B$: $A * D * B$.
+</MedievalStep>
+
+<MedievalStep number={3} title="Congruencia LAL del triángulo auxiliar" target={["triangulo-dbc"]}>
+Consideremos <InteractiveElement target="triangulo-dbc" color="terracota">$\triangle DBC$</InteractiveElement> y $\triangle A'B'C'$:
+
+1. $\overline{BD} \cong \overline{B'A'}$ (por el paso 2).
+2. $\angle DBC \cong \angle B'$: $D$ está en $\overline{AB}$, por tanto $\angle DBC = \angle ABC \cong \angle B'$ (por hipótesis).
+3. $\overline{BC} \cong \overline{B'C'}$ (por hipótesis).
+
+Se cumplen las condiciones del <ConceptLink targetId="axioma-congruencia-5" isDependency={true}>criterio LAL (III-5)</ConceptLink>: dos lados y el ángulo comprendido. Por tanto:
+
+<Formula>
+  $$ \triangle DBC \cong \triangle A'B'C' $$
+</Formula>
+
+Por la <ConceptLink targetId="congruencia" isDependency={false}>definición de congruencia</ConceptLink>, todos los elementos correspondientes son congruentes. En particular:
+
+<Formula>
+  $$ \angle BDC \cong \angle B'A'C' = \angle A' $$
+</Formula>
+
+Y por hipótesis $\angle A' \cong \angle A$, luego $\angle BDC \cong \angle A$.
+</MedievalStep>
+
+<MedievalStep number={4} title="Ángulo externo en el triángulo ADC" target={["triangulo-adc", "angulo-externo"]}>
+Por el paso 2, $A * D * B$, de modo que $B$ está en la prolongación de $\overline{AD}$ más allá de $D$. Consideremos <InteractiveElement target="triangulo-adc" color="salvia">$\triangle ADC$</InteractiveElement>. En el vértice $D$, el <InteractiveElement target="angulo-externo" color="terracota">$\angle CDB$ es el ángulo externo</InteractiveElement> formado al prolongar $\overline{AD}$ hasta $B$.
+
+Por el <ConceptLink targetId="teorema-angulo-externo" isDependency={true}>teorema del ángulo externo</ConceptLink>:
+
+<Formula>
+  $$ \angle CDB \gt \angle CAD = \angle A $$
+</Formula>
+</MedievalStep>
+
+<MedievalStep number={5} title="Contradicción" target={["angulo-bdc", "angulo-a"]}>
+El <InteractiveElement target="angulo-bdc" color="terracota">$\angle BDC$</InteractiveElement> y el $\angle CDB$ denotan el mismo ángulo. Por el paso 3: $\angle BDC \cong \angle A$. Por el paso 4: $\angle CDB \gt \angle A$. Es decir, el mismo ángulo es a la vez congruente y estrictamente mayor que $\angle A$. <ConceptLink targetId="contradiccion" isDependency={false}>Contradicción</ConceptLink>.
+</MedievalStep>
+
+<MedievalStep number={6} title="Igualdad de los lados" target={["lado-ab", "lado-apbp"]}>
+La <ConceptLink targetId="contradiccion" isDependency={false}>contradicción</ConceptLink> del paso 5 proviene de haber supuesto $\overline{AB} \gt \overline{A'B'}$ en el paso 2. Por <ConceptLink targetId="contradiccion" isDependency={false}>reducción al absurdo</ConceptLink>, $\overline{AB} \not\gt \overline{A'B'}$. Por el mismo argumento intercambiando los roles de los triángulos, $\overline{A'B'} \not\gt \overline{AB}$. Por tanto:
+
+<Formula>
+  $$ \overline{AB} \cong \overline{A'B'} $$
+</Formula>
+
+donde <InteractiveElement target="lado-ab" color="salvia">$\overline{AB}$</InteractiveElement> y <InteractiveElement target="lado-apbp" color="pizarra">$\overline{A'B'}$</InteractiveElement> son los lados correspondientes.
+</MedievalStep>
+
+<MedievalStep number={7} title="Conclusión por LAL" target={["triangulo-abc", "triangulo-apbpcp"]}>
+Ahora tenemos: <InteractiveElement target="lado-ab" color="salvia">$\overline{AB} \cong \overline{A'B'}$</InteractiveElement> (paso 6), $\angle B \cong \angle B'$ (hipótesis), y $\overline{BC} \cong \overline{B'C'}$ (hipótesis). Por el <ConceptLink targetId="axioma-congruencia-5" isDependency={true}>criterio LAL</ConceptLink>:
+
+<Formula>
+  $$ \triangle ABC \cong \triangle A'B'C' \quad \blacksquare $$
+</Formula>
+</MedievalStep>
+
+<Separador />
+
+### Análisis
+
+La demostración es una reducción limpia al absurdo: se supone que los lados $AB$ y $A'B'$ difieren, se construye un punto $D$ sobre el lado mayor que «recorta» la longitud del lado menor, y el <ConceptLink targetId="teorema-angulo-externo" isDependency={true}>teorema del ángulo externo</ConceptLink> fuerza la contradicción. Una vez establecida la igualdad de los lados $AB$ y $A'B'$, el <ConceptLink targetId="axioma-congruencia-5" isDependency={true}>criterio LAL</ConceptLink> cierra la congruencia.
+
+Este patrón —reducir AAL a LAL vía ángulo externo— es el mismo que se usó para demostrar <ConceptLink targetId="teorema-congruencia-ala" isDependency={true}>ALA</ConceptLink> y <ConceptLink targetId="teorema-congruencia-lll" isDependency={true}>LLL</ConceptLink>. Los tres criterios no axiomáticos (ALA, LLL, AAL) se apoyan en LAL como único criterio primitivo de congruencia.
+
+<Nota>
+  <ConceptLink targetId="euclides" isDependency={false}>Euclides</ConceptLink> demuestra ALA y AAL conjuntamente en la Proposición I.26 de los <ConceptLink targetId="elementos" isDependency={false}>Elementos</ConceptLink>. La presente separación en dos teoremas distintos sigue la organización moderna de <ConceptLink targetId="hilbert" isDependency={false}>Hilbert</ConceptLink>.
+</Nota>
+
+Con AAL, la familia de criterios de <ConceptLink targetId="congruencia" isDependency={false}>congruencia</ConceptLink> de triángulos queda completa: <ConceptLink targetId="axioma-congruencia-5" isDependency={true}>LAL</ConceptLink>, <ConceptLink targetId="teorema-congruencia-ala" isDependency={true}>ALA</ConceptLink>, <ConceptLink targetId="teorema-congruencia-lll" isDependency={true}>LLL</ConceptLink> y <ConceptLink targetId="teorema-congruencia-aal" isDependency={false}>AAL</ConceptLink>.
+
+</DemonstrationSection>

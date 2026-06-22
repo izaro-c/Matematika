@@ -146,9 +146,9 @@ export const CongruenciaLLL = () => {
     side(segBC1, lalBC); side(segBC2, lalBC);
     side(segCA1, lalCA); side(segCA2, lalCA);
 
-    ticksAB.forEach((t: any) => t.setAttribute({ visible: true, strokeColor: hLadoAB ? C_ACC : C_ACC }));
-    ticksBC.forEach((t: any) => t.setAttribute({ visible: true, strokeColor: hLadoBC ? C_ACC : C_ACC }));
-    ticksCA.forEach((t: any) => t.setAttribute({ visible: true, strokeColor: hLadoCA ? C_ACC : C_ACC }));
+    ticksAB.forEach((t: any) => t.setAttribute({ visible: true, strokeColor: C_ACC }));
+    ticksBC.forEach((t: any) => t.setAttribute({ visible: true, strokeColor: C_ACC }));
+    ticksCA.forEach((t: any) => t.setAttribute({ visible: true, strokeColor: C_ACC }));
 
     const showAngles = hGlobal;
     [angleA1, angleB1, angleC1, angleA2, angleB2, angleC2].forEach((a: any) => a.setAttribute({ visible: showAngles }));
