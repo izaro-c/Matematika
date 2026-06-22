@@ -1,0 +1,18 @@
+@startuml
+actor "Estudiante" as S
+participant "AxiomaticTree" as UI
+participant "GraphSandboxStore" as Store
+participant "graph.worker.ts" as Worker
+
+S -> UI : onClick(axioma)
+UI -> Store : toggleAxiom(axiomaId)
+activate Store
+Store -> Worker : ricalcolaGrafo(activeAxioms)
+activate Worker
+Worker -> Worker : ricalcolaOrdinamento()
+Worker -> Worker : aggiornaValidita()
+Worker --> Store : GraphEvaluationDTO
+deactivate Worker
+Store --> UI : aggiorna stato (validNodes)
+deactivate Store
+@enduml

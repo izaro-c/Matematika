@@ -1,0 +1,40 @@
+@startuml
+left to right direction
+skinparam packageStyle rectangle
+
+actor "Studente" as S
+actor "Autore" as A
+
+rectangle "Sistema Matematika" {
+  usecase "UC1: EsploraBranche" as UC1
+  usecase "UC2: NavigaConcetti" as UC2
+  usecase "UC3: ConsultaGlossario" as UC3
+  usecase "UC4: EsploraModelli" as UC4
+  usecase "UC5: VisualizzaDimostrazione" as UC5
+  usecase "UC6: ValutaGrafoAttivo\n(Modalità Sandbox)" as UC6
+  usecase "UC7: AggiungiContenuto" as UC7
+  usecase "UC8: ModificaContenuto" as UC8
+  usecase "UC9: RimuoviContenuto" as UC9
+
+  usecase "UC10: RicalcolaOrdinamento" as UC10
+  usecase "UC11: AggiornaValidita" as UC11
+  usecase "UC12: VerificaCicli" as UC12
+}
+
+' Attori primari
+A --> UC7
+A --> UC8
+A --> UC9
+
+S --> UC1
+S --> UC2
+S --> UC3
+S --> UC4
+S --> UC5
+S --> UC6
+
+' Inclusioni
+UC6 ..> UC10 : <<include>>
+UC6 ..> UC11 : <<include>>
+UC7 ..> UC12 : <<include>>
+@enduml

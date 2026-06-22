@@ -1,0 +1,27 @@
+@startuml
+node "Browser" as B <<Client>>
+
+cloud "GitHub Pages" {
+  artifact "Bundle Statico\n(HTML, CSS, JS)" as Bundle
+}
+
+node "GitHub Actions" as CI {
+  component "Checkout + npm ci" as Setup
+  component "npm run build" as BuildCmd
+  component "actions/deploy-pages" as Deploy
+}
+
+node "Build-time" as Build {
+  component "Vite" as V
+  component "generate-content-index.ts" as Gen
+  component "validate-logical-graph.ts" as Val
+}
+
+B --> Bundle : HTTPS
+Bundle <-- Deploy : pubblica artefatto
+Deploy <-- BuildCmd : dist/
+BuildCmd --> V : compila
+BuildCmd --> Gen : genera indice
+BuildCmd --> Val : valida grafo
+Setup --> BuildCmd : avvia
+@enduml

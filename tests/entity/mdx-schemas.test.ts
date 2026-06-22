@@ -15,7 +15,7 @@ import {
   ModelSchema,
   UseCaseSchema,
   StudyPlanSchema,
-} from '@/sto@/entity/schemas';
+} from '@/database/schemas';
 const SCHEMA_MAP: Record<string, import('zod').ZodTypeAny> = {
   axioma: AxiomSchema,
   definicion: DefinitionSchema,
