@@ -36,7 +36,7 @@ export const ConceptLink: React.FC<ConceptLinkProps> = ({ targetId, children }) 
     return (
       <Link href={`/construccion/${firstInvalid}`}>
         <a
-          // eslint-disable-next-line @typescript-eslint/no-unused-vars
+           
           onClick={() => { /* silenced unused var isDependency */ }} // just to silence unused var error if any
           className="font-bold text-terracota/70 underline decoration-dashed decoration-terracota/40 decoration-2 underline-offset-4 hover:decoration-terracota hover:text-terracota transition-all duration-150 rounded-none cursor-pointer"
           title={`"${firstInvalid}" — página en construcción`}

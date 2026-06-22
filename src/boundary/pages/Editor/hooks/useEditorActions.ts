@@ -2,6 +2,59 @@ import { useCallback } from 'react';
 import { parseMDX, stringifyMDX } from '@/controller/lib/mdxParser';
 import type { FileNode, WizardData } from '@/boundary/pages/Editor/hooks/useEditorState';
 
+// ─── Helpers: template + metadata ─────────────────────────────────────────
+
+function applyTemplateReplacements(template: string, w: WizardData): string {
+  return template
+    .replace(/\{\{ID\}\}/g, w.id)
+    .replace(/\{\{TITLE\}\}/g, w.title)
+    .replace(/\{\{FIRST_LETTER\}\}/g, w.title.charAt(0))
+    .replace(/\{\{DESCRIPTION\}\}/g, w.description)
+    .replace(/\{\{COLOR\}\}/g, w.color)
+    .replace(/\{\{ERA\}\}/g, w.era)
+    .replace(/\{\{BIRTH\}\}/g, w.birth)
+    .replace(/\{\{DEATH\}\}/g, w.death);
+}
+
+function parseCSV(str: string): string[] {
+  return str.split(',').map(s => s.trim()).filter(s => s);
+}
+
+const COMMON_FIELDS = ['authors', 'tags'] as const;
+
+function applyFieldIfPresent(meta: Record<string, unknown>, w: WizardData, field: string): void {
+  const value = (w as unknown as Record<string, unknown>)[field];
+  if (value) meta[field] = parseCSV(String(value));
+}
+
+function applyTypeSpecificMetadata(w: WizardData, meta: Record<string, unknown>): void {
+  const typeHandlers: Record<string, () => void> = {
+    theorems: () => {
+      for (const f of [...COMMON_FIELDS, 'corollaries', 'demos'] as const) {
+        applyFieldIfPresent(meta, w, f);
+      }
+    },
+    definitions: () => {
+      for (const f of COMMON_FIELDS) applyFieldIfPresent(meta, w, f);
+    },
+    demonstrations: () => {
+      if (w.parentTheorem) meta.parentTheorem = w.parentTheorem;
+      if (w.proofMethod) meta.proofMethod = w.proofMethod;
+      for (const f of COMMON_FIELDS) applyFieldIfPresent(meta, w, f);
+      if (w.lemmas) meta.lemmas = parseCSV(String(w.lemmas));
+    },
+    lessons: () => {
+      if (w.tags) meta.tags = parseCSV(String(w.tags));
+    },
+    models: () => {
+      if (w.satisfies) meta.satisfies = w.satisfies;
+      if (w.axioms_verified) meta.axioms_verified = parseCSV(String(w.axioms_verified));
+      if (w.hasDiagram) meta.hasDiagram = w.hasDiagram;
+    },
+  };
+  typeHandlers[w.type]?.();
+}
+
 interface EditorActionsProps {
   files: FileNode[];
   currentFile: string | null;
@@ -93,45 +146,15 @@ export const useEditorActions = ({
     }
     
     const path = `content/${wizardData.type}/${wizardData.id}.mdx`;
-    let templateName = wizardData.type.slice(0, -1);
-    if (wizardData.type === 'lessons') templateName = 'lesson';
+    const templateName = wizardData.type === 'lessons' ? 'lesson' : wizardData.type.slice(0, -1);
     
     try {
       const res = await fetch(`/api/content?path=${encodeURIComponent(`templates/${templateName}.template.mdx`)}`);
-      let templateText = await res.text();
-
-      templateText = templateText.replace(/\{\{ID\}\}/g, wizardData.id);
-      templateText = templateText.replace(/\{\{TITLE\}\}/g, wizardData.title);
-      templateText = templateText.replace(/\{\{FIRST_LETTER\}\}/g, wizardData.title.charAt(0));
-      templateText = templateText.replace(/\{\{DESCRIPTION\}\}/g, wizardData.description);
-      templateText = templateText.replace(/\{\{COLOR\}\}/g, wizardData.color);
-      templateText = templateText.replace(/\{\{ERA\}\}/g, wizardData.era);
-      templateText = templateText.replace(/\{\{BIRTH\}\}/g, wizardData.birth);
-      templateText = templateText.replace(/\{\{DEATH\}\}/g, wizardData.death);
-
+      const templateText = applyTemplateReplacements(await res.text(), wizardData);
       const parsed = parseMDX(templateText);
       const meta = parsed.metadata;
 
-      const parseArray = (str: string) => str.split(',').map(s => s.trim()).filter(s => s);
-
-      if (wizardData.type === 'theorems' || wizardData.type === 'definitions') {
-        if (wizardData.authors) meta.authors = parseArray(wizardData.authors);
-        if (wizardData.tags) meta.tags = parseArray(wizardData.tags);
-        if (wizardData.corollaries) meta.corollaries = parseArray(wizardData.corollaries);
-        if (wizardData.demos) meta.demos = parseArray(wizardData.demos);
-      } else if (wizardData.type === 'demonstrations') {
-        if (wizardData.parentTheorem) meta.parentTheorem = wizardData.parentTheorem;
-        if (wizardData.proofMethod) meta.proofMethod = wizardData.proofMethod;
-        if (wizardData.authors) meta.authors = parseArray(wizardData.authors);
-        if (wizardData.tags) meta.tags = parseArray(wizardData.tags);
-        if (wizardData.lemmas) meta.lemmas = parseArray(wizardData.lemmas);
-      } else if (wizardData.type === 'lessons') {
-        if (wizardData.tags) meta.tags = parseArray(wizardData.tags);
-      } else if (wizardData.type === 'models') {
-        if (wizardData.satisfies) meta.satisfies = wizardData.satisfies;
-        if (wizardData.axioms_verified) meta.axioms_verified = parseArray(wizardData.axioms_verified);
-        if (wizardData.hasDiagram) meta.hasDiagram = wizardData.hasDiagram;
-      }
+      applyTypeSpecificMetadata(wizardData, meta);
 
       setCurrentFile(path);
       setMetadata(meta);
@@ -263,56 +286,32 @@ export const useEditorActions = ({
   }, [editorRef, refSelection, setRefModalOpen]);
 
   const insertLatex = useCallback((type: string) => {
-    let latex = '';
-    switch(type) {
-      case 'frac': latex = '\\frac{numerador}{denominador}'; break;
-      case 'sqrt': latex = '\\sqrt{x}'; break;
-      case 'int': latex = '\\int_{a}^{b} x \\, dx'; break;
-      case 'sum': latex = '\\sum_{i=1}^{n} i'; break;
-      case 'lim': latex = '\\lim_{x \\to \\infty} f(x)'; break;
-      case 'alpha': latex = '\\alpha'; break;
-      case 'beta': latex = '\\beta'; break;
-      case 'gamma': latex = '\\gamma'; break;
-      case 'theta': latex = '\\theta'; break;
-      case 'pi': latex = '\\pi'; break;
-    }
+    const latexSnippets: Record<string, string> = {
+      frac: '\\frac{numerador}{denominador}',
+      sqrt: '\\sqrt{x}',
+      int: '\\int_{a}^{b} x \\, dx',
+      sum: '\\sum_{i=1}^{n} i',
+      lim: '\\lim_{x \\to \\infty} f(x)',
+      alpha: '\\alpha', beta: '\\beta', gamma: '\\gamma', theta: '\\theta', pi: '\\pi',
+    };
+    const latex = latexSnippets[type];
     if (latex) insertAtCursor(latex);
   }, [insertAtCursor]);
 
   const insertBlock = useCallback((type: string) => {
-    let block = '';
-    switch (type) {
-      case 'caja-formula':
-        block = `\n<Formula>\n  $$ x = \\frac{-b \\pm \\sqrt{b^2 - 4ac}}{2a} $$\n</Formula>\n`;
-        break;
-      case 'caja-nota':
-        block = `\n<Nota>\n  Añade aquí una aclaración histórica o curiosidad.\n</Nota>\n`;
-        break;
-      case 'caja-demostracion':
-        block = `\n<Demostracion>\n  Escribe aquí los pasos de la demostración lógica.\n</Demostracion>\n`;
-        break;
-      case 'medieval-step':
-        block = `\n<MedievalStep number={1} title="Título del Paso" />\n`;
-        break;
-      case 'caja-definicion':
-        block = `\n<Definicion title="Nueva Definición">\n  Explica el concepto formalmente aquí.\n</Definicion>\n`;
-        break;
-      case 'caja-corolario':
-        block = `\n<Corolario>\n  Consecuencia directa del teorema anterior.\n</Corolario>\n`;
-        break;
-      case 'cita':
-        block = `\n<Cita author="Pitágoras">\n  Todo es número.\n</Cita>\n`;
-        break;
-      case 'separador':
-        block = `\n<Separador />\n`;
-        break;
-      case 'capitular':
-        block = `\n<Capitular letra="E" />n un lugar de la Mancha...\n`;
-        break;
-      case 'lista':
-        block = `\n- Elemento 1\n- Elemento 2\n- Elemento 3\n`;
-        break;
-    }
+    const blockSnippets: Record<string, string> = {
+      'caja-formula': `\n<Formula>\n  $$ x = \\frac{-b \\pm \\sqrt{b^2 - 4ac}}{2a} $$\n</Formula>\n`,
+      'caja-nota': `\n<Nota>\n  Añade aquí una aclaración histórica o curiosidad.\n</Nota>\n`,
+      'caja-demostracion': `\n<Demostracion>\n  Escribe aquí los pasos de la demostración lógica.\n</Demostracion>\n`,
+      'medieval-step': `\n<MedievalStep number={1} title="Título del Paso" />\n`,
+      'caja-definicion': `\n<Definicion title="Nueva Definición">\n  Explica el concepto formalmente aquí.\n</Definicion>\n`,
+      'caja-corolario': `\n<Corolario>\n  Consecuencia directa del teorema anterior.\n</Corolario>\n`,
+      cita: `\n<Cita author="Pitágoras">\n  Todo es número.\n</Cita>\n`,
+      separador: `\n<Separador />\n`,
+      capitular: `\n<Capitular letra="E" />n un lugar de la Mancha...\n`,
+      lista: `\n- Elemento 1\n- Elemento 2\n- Elemento 3\n`,
+    };
+    const block = blockSnippets[type];
     if (block) insertAtCursor(block);
   }, [insertAtCursor]);
 

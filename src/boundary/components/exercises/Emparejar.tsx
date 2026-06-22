@@ -17,8 +17,10 @@ interface EmparejarProps {
 
 function shuffle<T>(array: T[]): T[] {
   const arr = [...array];
+  const buf = new Uint32Array(arr.length);
+  crypto.getRandomValues(buf);
   for (let i = arr.length - 1; i > 0; i--) {
-    const j = Math.floor(Math.random() * (i + 1));
+    const j = buf[i] % (i + 1);
     [arr[i], arr[j]] = [arr[j], arr[i]];
   }
   return arr;
@@ -169,7 +171,7 @@ export const Emparejar: React.FC<EmparejarProps> = ({ id, pairs }) => {
                   d={`M ${line.x1} ${line.y1} C ${cx1} ${cy1}, ${cx2} ${cy2}, ${line.x2} ${line.y2}`}
                   fill="none"
                   stroke={line.isMatched ? "var(--theme-salvia)" : "var(--theme-terracota)"}
-                  strokeWidth={line.isMatched ? "2" : "2"}
+                  strokeWidth="2"
                   strokeDasharray={line.isMatched ? "none" : "4 4"}
                   className="transition-all duration-300 drop-shadow-sm"
                 />
@@ -190,6 +192,15 @@ export const Emparejar: React.FC<EmparejarProps> = ({ id, pairs }) => {
               else if (isSelected) btnClass += "bg-carbon/10 border-carbon text-carbon transform scale-[1.02] shadow-md z-30";
               else btnClass += "bg-transparent border-carbon/20 hover:border-carbon/50 hover:bg-carbon/[0.02] cursor-pointer text-carbon hover:-translate-y-0.5 hover:shadow-sm";
 
+              let dotClass: string;
+              if (isMatched) {
+                dotClass = 'border-salvia bg-lienzo';
+              } else if (isSelected) {
+                dotClass = 'border-carbon bg-carbon';
+              } else {
+                dotClass = 'border-carbon/30 bg-lienzo';
+              }
+
               return (
                 <button
                   key={item}
@@ -200,7 +211,7 @@ export const Emparejar: React.FC<EmparejarProps> = ({ id, pairs }) => {
                 >
                   <KatexText text={item} />
                   {/* Conector */}
-                  <div className={`absolute right-0 top-1/2 -translate-y-1/2 translate-x-1/2 w-3 h-3 rounded-full border-2 ${isMatched ? 'border-salvia bg-lienzo' : isSelected ? 'border-carbon bg-carbon' : 'border-carbon/30 bg-lienzo'}`} />
+                  <div className={`absolute right-0 top-1/2 -translate-y-1/2 translate-x-1/2 w-3 h-3 rounded-full border-2 ${dotClass}`} />
                 </button>
               );
             })}
@@ -220,6 +231,15 @@ export const Emparejar: React.FC<EmparejarProps> = ({ id, pairs }) => {
               else if (isSelected) btnClass += "bg-carbon/10 border-carbon text-carbon transform scale-[1.02] shadow-md z-30";
               else btnClass += "bg-transparent border-carbon/20 hover:border-carbon/50 hover:bg-carbon/[0.02] cursor-pointer text-carbon hover:-translate-y-0.5 hover:shadow-sm";
 
+              let dotClass: string;
+              if (isMatched) {
+                dotClass = 'border-salvia bg-lienzo';
+              } else if (isSelected) {
+                dotClass = 'border-carbon bg-carbon';
+              } else {
+                dotClass = 'border-carbon/30 bg-lienzo';
+              }
+
               return (
                 <button
                   key={item}
@@ -229,7 +249,7 @@ export const Emparejar: React.FC<EmparejarProps> = ({ id, pairs }) => {
                   className={btnClass}
                 >
                   {/* Conector */}
-                  <div className={`absolute left-0 top-1/2 -translate-y-1/2 -translate-x-1/2 w-3 h-3 rounded-full border-2 ${isMatched ? 'border-salvia bg-lienzo' : isSelected ? 'border-carbon bg-carbon' : 'border-carbon/30 bg-lienzo'}`} />
+                  <div className={`absolute left-0 top-1/2 -translate-y-1/2 -translate-x-1/2 w-3 h-3 rounded-full border-2 ${dotClass}`} />
                   <KatexText text={item} />
                 </button>
               );

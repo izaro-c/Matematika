@@ -83,7 +83,7 @@ export const Congruence4: React.FC = () => {
         const dyK = pK.Y() - pO.Y();
         const aH = Math.atan2(dyH, dxH);
         const aK = Math.atan2(dyK, dxK);
-        let angulo = aK - aH;
+        const angulo = aK - aH;
         // Para asegurar que estamos en el rango [0, 2pi) o (-pi, pi] según el inner angle
         
         // Dirección de H'
@@ -101,7 +101,7 @@ export const Congruence4: React.FC = () => {
         const dyK = pK.Y() - pO.Y();
         const aH = Math.atan2(dyH, dxH);
         const aK = Math.atan2(dyK, dxK);
-        let angulo = aK - aH;
+        const angulo = aK - aH;
 
         const dxH_prime = pH_prime.X() - pO_prime.X();
         const dyH_prime = pH_prime.Y() - pO_prime.Y();

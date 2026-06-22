@@ -1007,6 +1007,52 @@
       "hasSimulation": true
     }
   },
+  "demo-angulo-externo": {
+    "id": "demo-angulo-externo",
+    "slug": "demo-angulo-externo",
+    "filePath": "demonstrations/demo-angulo-externo.mdx",
+    "contentType": "demostracion",
+    "metadata": {
+      "id": "demo-angulo-externo",
+      "type": "demostracion",
+      "title": "Demostración: Teorema del ángulo externo",
+      "description": "Prueba constructiva usando el lema del punto medio, el teorema de ángulos opuestos por el vértice y el criterio LAL. El punto construido cae en el interior del ángulo externo, forzando la desigualdad.",
+      "parentTheorem": "teorema-angulo-externo",
+      "proofMethod": "directo",
+      "authors": [
+        "euclides"
+      ],
+      "tags": [
+        "geometria",
+        "angulos",
+        "triangulos"
+      ],
+      "layout": "split"
+    }
+  },
+  "demo-angulos-alternos-internos": {
+    "id": "demo-angulos-alternos-internos",
+    "slug": "demo-angulos-alternos-internos",
+    "filePath": "demonstrations/demo-angulos-alternos-internos.mdx",
+    "contentType": "demostracion",
+    "metadata": {
+      "id": "demo-angulos-alternos-internos",
+      "type": "demostracion",
+      "title": "Demostración: Teorema de los ángulos alternos internos",
+      "description": "Prueba en dos partes: la ida (absoluta) por reducción al absurdo usando el teorema del ángulo externo; la vuelta (euclidiana) usando la unicidad de la paralela.",
+      "parentTheorem": "teorema-angulos-alternos-internos",
+      "proofMethod": "directo",
+      "authors": [
+        "euclides"
+      ],
+      "tags": [
+        "geometria",
+        "angulos",
+        "paralelas"
+      ],
+      "layout": "split"
+    }
+  },
   "demo-angulos-opuestos-verticales": {
     "id": "demo-angulos-opuestos-verticales",
     "slug": "demo-angulos-opuestos-verticales",
@@ -1025,6 +1071,29 @@
       "tags": [
         "geometria",
         "congruencia"
+      ],
+      "layout": "split"
+    }
+  },
+  "demo-congruencia-aal": {
+    "id": "demo-congruencia-aal",
+    "slug": "demo-congruencia-aal",
+    "filePath": "demonstrations/demo-congruencia-aal.mdx",
+    "contentType": "demostracion",
+    "metadata": {
+      "id": "demo-congruencia-aal",
+      "type": "demostracion",
+      "title": "Demostración: Criterio de congruencia AAL",
+      "description": "Prueba por reducción al absurdo: se supone desigualdad de lados, se construye un triángulo auxiliar por LAL, y el teorema del ángulo externo fuerza la contradicción.",
+      "parentTheorem": "teorema-congruencia-aal",
+      "proofMethod": "contradiccion",
+      "authors": [
+        "euclides"
+      ],
+      "tags": [
+        "geometria",
+        "congruencia",
+        "triangulos"
       ],
       "layout": "split"
     }
@@ -1084,7 +1153,7 @@
       "id": "demo-desigualdad-triangular",
       "type": "demostracion",
       "title": "Demostración: Desigualdad triangular",
-      "description": "Demostración euclidiana clásica extendiendo uno de los lados para formar un triángulo isósceles.",
+      "description": "Demostración euclidiana clásica extendiendo uno de los lados para formar un triángulo isósceles. La comparación ángulo-lado se fundamenta en el teorema del ángulo externo.",
       "tags": [
         "geometria",
         "triangulos",
@@ -1116,6 +1185,52 @@
       "tags": [
         "geometria",
         "incidencia"
+      ],
+      "layout": "split"
+    }
+  },
+  "demo-existencia-bisectriz": {
+    "id": "demo-existencia-bisectriz",
+    "slug": "demo-existencia-bisectriz",
+    "filePath": "demonstrations/demo-existencia-bisectriz.mdx",
+    "contentType": "demostracion",
+    "metadata": {
+      "id": "demo-existencia-bisectriz",
+      "type": "demostracion",
+      "title": "Demostración: Existencia y unicidad de la bisectriz",
+      "description": "Prueba constructiva usando el lema del punto medio y el criterio LLL. Se toman puntos equidistantes del vértice sobre cada lado del ángulo y se traza la mediana al segmento que los une.",
+      "parentTheorem": "teorema-existencia-bisectriz",
+      "proofMethod": "constructivo",
+      "authors": [
+        "euclides"
+      ],
+      "tags": [
+        "geometria",
+        "angulos",
+        "bisectriz"
+      ],
+      "layout": "split"
+    }
+  },
+  "demo-existencia-perpendicular": {
+    "id": "demo-existencia-perpendicular",
+    "slug": "demo-existencia-perpendicular",
+    "filePath": "demonstrations/demo-existencia-perpendicular.mdx",
+    "contentType": "demostracion",
+    "metadata": {
+      "id": "demo-existencia-perpendicular",
+      "type": "demostracion",
+      "title": "Demostración: Existencia y unicidad de la perpendicular",
+      "description": "Prueba constructiva para ambos casos: punto sobre la recta (transporte de ángulos) y punto exterior (triángulo auxiliar + LAL + ángulo externo para unicidad).",
+      "parentTheorem": "teorema-existencia-perpendicular",
+      "proofMethod": "constructivo",
+      "authors": [
+        "hilbert"
+      ],
+      "tags": [
+        "geometria",
+        "perpendicular",
+        "geometria-absoluta"
       ],
       "layout": "split"
     }
@@ -1216,6 +1331,29 @@
       "layout": "split"
     }
   },
+  "demo-reciproco-triangulo-isosceles": {
+    "id": "demo-reciproco-triangulo-isosceles",
+    "slug": "demo-reciproco-triangulo-isosceles",
+    "filePath": "demonstrations/demo-reciproco-triangulo-isosceles.mdx",
+    "contentType": "demostracion",
+    "metadata": {
+      "id": "demo-reciproco-triangulo-isosceles",
+      "type": "demostracion",
+      "title": "Demostración: Teorema recíproco del triángulo isósceles",
+      "description": "Prueba por reducción al absurdo: se supone AB > AC, se transporta AC sobre AB, y el Pons Asinorum junto con el teorema del ángulo externo fuerzan una contradicción.",
+      "parentTheorem": "teorema-reciproco-triangulo-isosceles",
+      "proofMethod": "contradiccion",
+      "authors": [
+        "euclides"
+      ],
+      "tags": [
+        "geometria",
+        "triangulos",
+        "congruencia"
+      ],
+      "layout": "split"
+    }
+  },
   "demo-rectas-coincidentes": {
     "id": "demo-rectas-coincidentes",
     "slug": "demo-rectas-coincidentes",
@@ -1228,6 +1366,9 @@
       "description": "Prueba por reducción al absurdo: si dos rectas comparten dos puntos distintos, son la misma recta.",
       "parentTheorem": "corolario-rectas-coincidentes",
       "proofMethod": "reduccion",
+      "authors": [
+        "hilbert"
+      ],
       "layout": "split"
     }
   },
@@ -1284,8 +1425,8 @@
     "metadata": {
       "id": "demo-triangulo-isosceles",
       "type": "demostracion",
-      "title": "Demostración: Pons Asinorum (Bisección)",
-      "description": "Demostración trazando la bisectriz del ángulo superior y usando el criterio LAL.",
+      "title": "Demostración: Pons Asinorum",
+      "description": "Prueba por simetría de Pappus: el triángulo es congruente consigo mismo con los vértices permutados, y LAL fuerza la igualdad de los ángulos de la base.",
       "tags": [
         "geometria",
         "congruencia",
@@ -1683,6 +1824,59 @@
       "hasSimulation": true
     }
   },
+  "teorema-angulo-externo": {
+    "id": "teorema-angulo-externo",
+    "slug": "teorema-angulo-externo",
+    "filePath": "theorems/teorema-angulo-externo.mdx",
+    "contentType": "teorema",
+    "metadata": {
+      "id": "teorema-angulo-externo",
+      "type": "teorema",
+      "title": "Teorema del ángulo externo",
+      "description": "En todo triángulo, un ángulo externo es estrictamente mayor que cualquiera de los ángulos interiores no adyacentes.",
+      "statement": "Sea △ABC un triángulo y D un punto tal que B ∗ C ∗ D. Entonces ∠ACD > ∠A y ∠ACD > ∠B.",
+      "tags": [
+        "geometria",
+        "angulos",
+        "triangulos",
+        "geometria-absoluta"
+      ],
+      "authors": [
+        "euclides"
+      ],
+      "difficulty": "básico",
+      "hasSimulation": false,
+      "demos": [
+        "demo-angulo-externo"
+      ]
+    }
+  },
+  "teorema-angulos-alternos-internos": {
+    "id": "teorema-angulos-alternos-internos",
+    "slug": "teorema-angulos-alternos-internos",
+    "filePath": "theorems/teorema-angulos-alternos-internos.mdx",
+    "contentType": "teorema",
+    "metadata": {
+      "id": "teorema-angulos-alternos-internos",
+      "type": "teorema",
+      "title": "Teorema de los ángulos alternos internos",
+      "description": "Dos rectas cortadas por una transversal son paralelas si y solo si los ángulos alternos internos son congruentes. La ida pertenece a la geometría absoluta; la vuelta requiere el axioma euclidiano de las paralelas.",
+      "statement": "Sean l y m dos rectas cortadas por una transversal t en los puntos A y B respectivamente. Los ángulos alternos internos son congruentes sii l ∥ m. La dirección ⇐ requiere el axioma euclidiano de las paralelas.",
+      "tags": [
+        "geometria",
+        "angulos",
+        "paralelas"
+      ],
+      "authors": [
+        "euclides"
+      ],
+      "difficulty": "básico",
+      "hasSimulation": false,
+      "demos": [
+        "demo-angulos-alternos-internos"
+      ]
+    }
+  },
   "teorema-angulos-opuestos-verticales": {
     "id": "teorema-angulos-opuestos-verticales",
     "slug": "teorema-angulos-opuestos-verticales",
@@ -1706,6 +1900,33 @@
       "hasSimulation": true,
       "demos": [
         "demo-angulos-opuestos-verticales"
+      ]
+    }
+  },
+  "teorema-congruencia-aal": {
+    "id": "teorema-congruencia-aal",
+    "slug": "teorema-congruencia-aal",
+    "filePath": "theorems/teorema-congruencia-aal.mdx",
+    "contentType": "teorema",
+    "metadata": {
+      "id": "teorema-congruencia-aal",
+      "type": "teorema",
+      "title": "Criterio de congruencia AAL",
+      "description": "Si dos ángulos y un lado no incluido de un triángulo son congruentes con las partes correspondientes de otro, los triángulos son congruentes.",
+      "statement": "Sean △ABC y △A′B′C′. Si ∠A ≅ ∠A′, ∠B ≅ ∠B′ y BC ≅ B′C′, entonces △ABC ≅ △A′B′C′.",
+      "tags": [
+        "geometria",
+        "congruencia",
+        "triangulos",
+        "geometria-absoluta"
+      ],
+      "authors": [
+        "euclides"
+      ],
+      "difficulty": "intermedio",
+      "hasSimulation": false,
+      "demos": [
+        "demo-congruencia-aal"
       ]
     }
   },
@@ -1818,6 +2039,59 @@
       "hasSimulation": true
     }
   },
+  "teorema-existencia-bisectriz": {
+    "id": "teorema-existencia-bisectriz",
+    "slug": "teorema-existencia-bisectriz",
+    "filePath": "theorems/teorema-existencia-bisectriz.mdx",
+    "contentType": "teorema",
+    "metadata": {
+      "id": "teorema-existencia-bisectriz",
+      "type": "teorema",
+      "title": "Teorema de existencia y unicidad de la bisectriz",
+      "description": "Todo ángulo admite una única bisectriz: una semirrecta con origen en el vértice que lo divide en dos ángulos congruentes.",
+      "statement": "Dado un ángulo ∠AOB, existe una única semirrecta OC interior al ángulo tal que ∠AOC ≅ ∠COB.",
+      "tags": [
+        "geometria",
+        "angulos",
+        "bisectriz",
+        "geometria-absoluta"
+      ],
+      "authors": [
+        "euclides"
+      ],
+      "difficulty": "básico",
+      "hasSimulation": false,
+      "demos": [
+        "demo-existencia-bisectriz"
+      ]
+    }
+  },
+  "teorema-existencia-perpendicular": {
+    "id": "teorema-existencia-perpendicular",
+    "slug": "teorema-existencia-perpendicular",
+    "filePath": "theorems/teorema-existencia-perpendicular.mdx",
+    "contentType": "teorema",
+    "metadata": {
+      "id": "teorema-existencia-perpendicular",
+      "type": "teorema",
+      "title": "Teorema de existencia y unicidad de la perpendicular",
+      "description": "Dada una recta y un punto, existe una única recta perpendicular a la recta dada que pasa por el punto. Cubre tanto el caso del punto sobre la recta como el punto exterior.",
+      "statement": "Sea l una recta y P un punto. Existe una única recta m tal que P ∈ m y m ⟂ l.",
+      "tags": [
+        "geometria",
+        "perpendicular",
+        "geometria-absoluta"
+      ],
+      "authors": [
+        "hilbert"
+      ],
+      "difficulty": "intermedio",
+      "hasSimulation": false,
+      "demos": [
+        "demo-existencia-perpendicular"
+      ]
+    }
+  },
   "teorema-pitagoras": {
     "id": "teorema-pitagoras",
     "slug": "teorema-pitagoras",
@@ -1874,6 +2148,33 @@
         "lema-punto-medio"
       ],
       "hasSimulation": true
+    }
+  },
+  "teorema-reciproco-triangulo-isosceles": {
+    "id": "teorema-reciproco-triangulo-isosceles",
+    "slug": "teorema-reciproco-triangulo-isosceles",
+    "filePath": "theorems/teorema-reciproco-triangulo-isosceles.mdx",
+    "contentType": "teorema",
+    "metadata": {
+      "id": "teorema-reciproco-triangulo-isosceles",
+      "type": "teorema",
+      "title": "Teorema recíproco del triángulo isósceles",
+      "description": "Si dos ángulos de un triángulo son congruentes, los lados opuestos a dichos ángulos también lo son. Es el recíproco del Pons Asinorum (Euclides I.6).",
+      "statement": "Sea △ABC un triángulo. Si ∠B ≅ ∠C, entonces AB ≅ AC.",
+      "tags": [
+        "geometria",
+        "triangulos",
+        "congruencia",
+        "geometria-absoluta"
+      ],
+      "authors": [
+        "euclides"
+      ],
+      "difficulty": "básico",
+      "hasSimulation": false,
+      "demos": [
+        "demo-reciproco-triangulo-isosceles"
+      ]
     }
   },
   "teorema-suma-angulos-triangulo": {

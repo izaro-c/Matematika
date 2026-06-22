@@ -11,27 +11,28 @@ export const metadata = {
 };
 
 import { DemoAngulosOpuestos } from '@/boundary/components/diagrams/Demos/DemoAngulosOpuestos';
+import { InteractiveElement } from "@/boundary/components/ui/VisualBind";
 
 <DemonstrationSection diagram={<DemoAngulosOpuestos />}>
 
-<Capitular letra="E" />sta demostración clásica establece que los ángulos opuestos formados por dos rectas secantes son siempre iguales. Para ello, se basa en la definición de <ConceptLink targetId="angulos-suplementarios" isDependency={true}>ángulos suplementarios</ConceptLink> y en las propiedades algebraicas garantizadas por el <ConceptLink targetId="axioma-congruencia-4" isDependency={true}>axioma de transitividad</ConceptLink> y el <ConceptLink targetId="axioma-congruencia-3" isDependency={true}>axioma de resta de ángulos</ConceptLink> (e implícitamente, el <ConceptLink targetId="axioma-congruencia-2" isDependency={true}>axioma de transporte de ángulos</ConceptLink>).
+<Capitular letra="D" />os rectas <InteractiveElement target="lineL" color="carbon">$l$</InteractiveElement> y <InteractiveElement target="lineM" color="carbon">$m$</InteractiveElement> se cortan en un punto, formando cuatro ángulos. La presente <ConceptLink targetId="demostracion" isDependency={false}>demostración</ConceptLink> establece que los <ConceptLink targetId="angulos-opuestos-verticales" isDependency={false}>ángulos opuestos por el vértice</ConceptLink> son siempre congruentes. Se apoya exclusivamente en la <ConceptLink targetId="angulo" isDependency={false}>definición de ángulos suplementarios</ConceptLink> y en los <ConceptLink targetId="axioma-congruencia-4" isDependency={true}>axiomas de congruencia</ConceptLink> de <ConceptLink targetId="hilbert" isDependency={false}>Hilbert</ConceptLink>.
 
 <Separador />
 
 <MedievalStep number={1} title="Ángulos adyacentes suman un llano" target="supp12">
-Los ángulos <InteractiveElement target="angle1" color="terracota">$\angle 1$</InteractiveElement> y <InteractiveElement target="angle2" color="salvia">$\angle 2$</InteractiveElement> son adyacentes (comparten un lado y forman la recta <InteractiveElement target="lineL" color="carbon">$l$</InteractiveElement>). Por la definición de ángulos suplementarios:
+Por hipótesis, <InteractiveElement target="lineL" color="carbon">$l$</InteractiveElement> y <InteractiveElement target="lineM" color="carbon">$m$</InteractiveElement> son rectas secantes. Los ángulos <InteractiveElement target="angle1" color="terracota">$\angle 1$</InteractiveElement> y <InteractiveElement target="angle2" color="salvia">$\angle 2$</InteractiveElement> comparten un lado y juntos forman la recta <InteractiveElement target="lineL" color="carbon">$l$</InteractiveElement>. Por la definición de <ConceptLink targetId="angulos-suplementarios" isDependency={true}>ángulos suplementarios</ConceptLink>:
 
 $$ \angle 1 + \angle 2 \cong 180^\circ $$
 </MedievalStep>
 
 <MedievalStep number={2} title="Segundo par de adyacentes" target="supp23">
-Análogamente, los ángulos <InteractiveElement target="angle2" color="salvia">$\angle 2$</InteractiveElement> y <InteractiveElement target="angle3" color="terracota">$\angle 3$</InteractiveElement> forman la recta <InteractiveElement target="lineM" color="carbon">$m$</InteractiveElement>:
+Por el mismo razonamiento del paso 1 aplicado a la recta <InteractiveElement target="lineM" color="carbon">$m$</InteractiveElement>, los ángulos <InteractiveElement target="angle2" color="salvia">$\angle 2$</InteractiveElement> y <InteractiveElement target="angle3" color="terracota">$\angle 3$</InteractiveElement> son <ConceptLink targetId="angulos-suplementarios" isDependency={true}>suplementarios</ConceptLink>:
 
 $$ \angle 2 + \angle 3 \cong 180^\circ $$
 </MedievalStep>
 
 <MedievalStep number={3} title="Transitividad" target="angle2">
-Ambas expresiones son congruentes al ángulo llano. Por el <ConceptLink targetId="axioma-congruencia-4" isDependency={true}>axioma de transitividad de la congruencia angular</ConceptLink>:
+Por el paso 1 y el paso 2, ambas sumas son congruentes a $180^\circ$. Por el <ConceptLink targetId="axioma-congruencia-4" isDependency={true}>axioma de transitividad de la congruencia angular</ConceptLink>:
 
 <Formula>
   $$ \angle 1 + \angle 2 \cong \angle 2 + \angle 3 $$
@@ -39,7 +40,7 @@ Ambas expresiones son congruentes al ángulo llano. Por el <ConceptLink targetId
 </MedievalStep>
 
 <MedievalStep number={4} title="Resta de ángulo común" target="congruence13">
-Por el axioma de resta de ángulos congruentes, podemos cancelar el ángulo común <InteractiveElement target="angle2" color="salvia">$\angle 2$</InteractiveElement> de ambos lados de la congruencia:
+Por el <ConceptLink targetId="axioma-congruencia-3" isDependency={true}>axioma de resta de ángulos congruentes</ConceptLink>, cancelamos el ángulo común <InteractiveElement target="angle2" color="salvia">$\angle 2$</InteractiveElement> de ambos lados de la congruencia:
 
 <Formula>
   $$ \angle 1 \cong \angle 3 $$
@@ -47,19 +48,19 @@ Por el axioma de resta de ángulos congruentes, podemos cancelar el ángulo com�
 </MedievalStep>
 
 <MedievalStep number={5} title="Conclusión para el otro par" target="angle4">
-Un argumento idéntico con los ángulos adyacentes <InteractiveElement target="angle3" color="terracota">$\angle 3$</InteractiveElement> y <InteractiveElement target="angle4" color="salvia">$\angle 4$</InteractiveElement> demuestra que <InteractiveElement target="angle2" color="salvia">$\angle 2$</InteractiveElement> $\cong$ <InteractiveElement target="angle4" color="salvia">$\angle 4$</InteractiveElement>. $\blacksquare$
+Por el mismo argumento de los pasos 1 a 4 aplicado a los ángulos adyacentes <InteractiveElement target="angle3" color="terracota">$\angle 3$</InteractiveElement> y <InteractiveElement target="angle4" color="salvia">$\angle 4$</InteractiveElement> sobre la recta <InteractiveElement target="lineL" color="carbon">$l$</InteractiveElement>, se demuestra que <InteractiveElement target="angle2" color="salvia">$\angle 2$</InteractiveElement> $\cong$ <InteractiveElement target="angle4" color="salvia">$\angle 4$</InteractiveElement>. $\blacksquare$
 </MedievalStep>
 
 <Separador />
 
 ### Análisis
 
-La demostración es una aplicación elegante del principio algebraico: si $a + b = c$ y $b + d = c$, entonces $a = d$. En <ConceptLink targetId="geometria" isDependency={false}>geometría</ConceptLink>, este principio se sustituye por los <ConceptLink targetId={["congruencia", "axioma"]}>axiomas de congruencia</ConceptLink>: la suma y resta de ángulos congruentes preserva la congruencia.
+La demostración es una aplicación del principio algebraico: si $a + b = c$ y $b + d = c$, entonces $a = d$. En <ConceptLink targetId="geometria" isDependency={false}>geometría</ConceptLink>, este principio se sustituye por los <ConceptLink targetId="axioma-congruencia-3" isDependency={true}>axiomas de congruencia</ConceptLink>: la suma y resta de ángulos congruentes preserva la congruencia.
 
 <Nota>
-  <ConceptLink targetId="euclides" isDependency={false}>Euclides</ConceptLink> demostró este resultado en la Proposición I.15 de los Elementos usando el mismo argumento. Su formulación hablaba de "dos ángulos rectos" donde nosotros decimos "ángulo llano".
+  <ConceptLink targetId="euclides" isDependency={false}>Euclides</ConceptLink> demostró este resultado en la Proposición I.15 de los <ConceptLink targetId="elementos" isDependency={false}>Elementos</ConceptLink> usando el mismo argumento. Su formulación hablaba de "dos ángulos rectos" donde nosotros decimos "ángulo llano".
 </Nota>
 
-Este <ConceptLink targetId="teorema" isDependency={false}>teorema</ConceptLink> no requiere el <ConceptLink targetId="postulado" isDependency={false}>postulado</ConceptLink> de las <ConceptLink targetId="paralelas" isDependency={false}>paralelas</ConceptLink>: es válido en <ConceptLink targetId={["sistema-absoluto", "geometria"]}>geometría absoluta</ConceptLink> (euclidiana e hiperbólica).
+Este <ConceptLink targetId="teorema" isDependency={false}>teorema</ConceptLink> no requiere el <ConceptLink targetId="postulado" isDependency={false}>postulado</ConceptLink> de las <ConceptLink targetId="paralelas" isDependency={false}>paralelas</ConceptLink>: es válido en <ConceptLink targetId="geometria-absoluta" isDependency={false}>geometría absoluta</ConceptLink> (euclidiana e hiperbólica).
 
 </DemonstrationSection>

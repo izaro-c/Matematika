@@ -68,33 +68,44 @@ function filterNodes(): Record<string, JsonNode> {
   return out;
 }
 
+function getDependencies(node: JsonNode): string[] {
+  if (node.type === 'teorema' || node.type === 'corolario') {
+    const deps: string[] = [];
+    for (const proof of node.proofs) {
+      for (const dep of proof.dependencies) {
+        deps.push(dep);
+      }
+    }
+    return deps;
+  }
+  if (node.type === 'lema' || node.type === 'definicion' || node.type === 'modelo') {
+    return [...node.directDependencies];
+  }
+  return [];
+}
+
+function addEdgeIfValid(
+  edges: Array<{ source: string; target: string }>,
+  seen: Set<string>,
+  dep: string,
+  id: string,
+  ids: Set<string>,
+): void {
+  if (!ids.has(dep)) return;
+  const key = `${dep}\u2192${id}`;
+  if (seen.has(key)) return;
+  seen.add(key);
+  edges.push({ source: dep, target: id });
+}
+
 function buildEdgeList(filtered: Record<string, JsonNode>): Array<{ source: string; target: string }> {
   const ids = new Set(Object.keys(filtered));
   const edges: Array<{ source: string; target: string }> = [];
   const seen = new Set<string>();
 
   for (const [id, node] of Object.entries(filtered)) {
-    let deps: string[] = [];
-
-    if (node.type === 'teorema' || node.type === 'corolario') {
-      for (const proof of node.proofs) {
-        for (const dep of proof.dependencies) {
-          deps.push(dep);
-        }
-      }
-    } else if (node.type === 'lema' || node.type === 'definicion') {
-      deps = [...node.directDependencies];
-    } else if (node.type === 'modelo') {
-      deps = [...node.directDependencies];
-    }
-
-    for (const dep of deps) {
-      if (!ids.has(dep)) continue;
-      const key = `${dep}\u2192${id}`;
-      if (!seen.has(key)) {
-        seen.add(key);
-        edges.push({ source: dep, target: id });
-      }
+    for (const dep of getDependencies(node)) {
+      addEdgeIfValid(edges, seen, dep, id, ids);
     }
   }
   return edges;
@@ -180,6 +191,60 @@ function computeLayers(
   return layers;
 }
 
+function positionLayer(
+  l: number,
+  layerNodes: string[],
+  layers: Record<string, number>,
+  preds: Record<string, string[]>,
+  succs: Record<string, string[]>,
+  xPos: Record<string, number>,
+  minDist: number,
+): void {
+  const connected: string[] = [];
+  const free: string[] = [];
+
+  for (const id of layerNodes) {
+    const hp = preds[id].some(p => layers[p] < l);
+    const hc = succs[id].some(c => layers[c] > l);
+    if (hp || hc) connected.push(id);
+    else free.push(id);
+  }
+
+  if (connected.length === 0) {
+    let cx = 0;
+    for (const id of layerNodes) { xPos[id] = cx; cx += minDist; }
+    return;
+  }
+
+  // Compute desired x from parents
+  const desired: Record<string, number> = {};
+  for (const id of connected) {
+    const parents = preds[id].filter(p => layers[p] < l);
+    if (parents.length > 0) {
+      desired[id] = parents.reduce((s, p) => s + (xPos[p] ?? 0), 0) / parents.length;
+    } else {
+      const children = succs[id].filter(c => layers[c] > l);
+      desired[id] = children.reduce((s, c) => s + (xPos[c] ?? 0), 0) / children.length;
+    }
+  }
+
+  // Resolve overlaps
+  const sorted = [...connected].sort((a, b) => (desired[a] ?? 0) - (desired[b] ?? 0));
+  let prev = desired[sorted[0]] ?? 0;
+  for (const id of sorted) {
+    const placed = Math.max(desired[id] ?? prev, prev);
+    xPos[id] = placed;
+    prev = placed + minDist;
+  }
+
+  // Free nodes to the right
+  let pos = prev;
+  for (const id of free) {
+    xPos[id] = pos;
+    pos += minDist;
+  }
+}
+
 function arrangeLayers(
   nodeIds: string[],
   layers: Record<string, number>,
@@ -208,10 +273,8 @@ function arrangeLayers(
 
   const xPos: Record<string, number> = {};
 
-  // Top-down positioning
   for (const l of layerKeys) {
     if (l === 0) {
-      // Axioms: evenly spaced, centered
       const totalW = byLayer[l].length * NODE_W + (byLayer[l].length - 1) * hgap;
       let cx = -totalW / 2 + NODE_W / 2;
       for (const id of byLayer[l]) {
@@ -219,52 +282,7 @@ function arrangeLayers(
         cx += NODE_W + hgap;
       }
     } else {
-      const connected: string[] = [];
-      const free: string[] = [];
-
-      for (const id of byLayer[l]) {
-        const hp = preds[id].some(p => layers[p] < l);
-        const hc = succs[id].some(c => layers[c] > l);
-        if (hp || hc) connected.push(id);
-        else free.push(id);
-      }
-
-      if (connected.length === 0) {
-        let cx = 0;
-        for (const id of byLayer[l]) { xPos[id] = cx; cx += minDist; }
-        continue;
-      }
-
-      // Compute desired x from parents (only; no bottom-up blending)
-      const desired: Record<string, number> = {};
-      for (const id of connected) {
-        const parents = preds[id].filter(p => layers[p] < l);
-        if (parents.length > 0) {
-          desired[id] = parents.reduce((s, p) => s + (xPos[p] ?? 0), 0) / parents.length;
-        } else {
-          // Already connected but no parents in previous layer → use children
-          const children = succs[id].filter(c => layers[c] > l);
-          desired[id] = children.reduce((s, c) => s + (xPos[c] ?? 0), 0) / children.length;
-        }
-      }
-
-      // Resolve overlaps (just enough to avoid collisions)
-      const sorted = [...connected].sort((a, b) => (desired[a] ?? 0) - (desired[b] ?? 0));
-      let prev = desired[sorted[0]] ?? 0;
-      for (const id of sorted) {
-        const d = desired[id] ?? prev;
-        const placed = Math.max(d, prev);
-        xPos[id] = placed;
-        prev = placed + minDist;
-      }
-
-      // Free nodes to the right
-      const rightEdge = prev;
-      let pos = rightEdge;
-      for (const id of free) {
-        xPos[id] = pos;
-        pos += minDist;
-      }
+      positionLayer(l, byLayer[l], layers, preds, succs, xPos, minDist);
     }
   }
 

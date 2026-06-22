@@ -1,0 +1,47 @@
+export const metadata = {
+  "id": "teorema-angulo-externo",
+  "type": "teorema",
+  "title": "Teorema del ángulo externo",
+  "description": "En todo triángulo, un ángulo externo es estrictamente mayor que cualquiera de los ángulos interiores no adyacentes.",
+  "statement": "Sea △ABC un triángulo y D un punto tal que B ∗ C ∗ D. Entonces ∠ACD > ∠A y ∠ACD > ∠B.",
+  "tags": ["geometria", "angulos", "triangulos", "geometria-absoluta"],
+  "authors": ["euclides"],
+  "difficulty": "básico",
+  "hasSimulation": false,
+  "demos": ["demo-angulo-externo"]
+};
+
+<Capitular letra="E" />n todo <ConceptLink targetId="triangulo" isDependency={false}>triángulo</ConceptLink>, al prolongar uno de sus <ConceptLink targetId="lado" isDependency={false}>lados</ConceptLink> se forma un <ConceptLink targetId="angulo" isDependency={false}>ángulo</ConceptLink> externo que es mayor que cada uno de los dos ángulos interiores no adyacentes a él. Este <ConceptLink targetId="teorema" isDependency={false}>teorema</ConceptLink>, registrado como Proposición I.16 de los <ConceptLink targetId="elementos" isDependency={false}>Elementos</ConceptLink> de <ConceptLink targetId="euclides" isDependency={false}>Euclides</ConceptLink>, es el primer resultado de la <ConceptLink targetId="geometria-euclidiana" isDependency={false}>geometría</ConceptLink> que involucra una <ConceptLink targetId="desigualdad" isDependency={false}>desigualdad</ConceptLink> geométrica. Es válido en <ConceptLink targetId="geometria-absoluta" isDependency={false}>geometría absoluta</ConceptLink>: no depende del <ConceptLink targetId="axioma-paralelas-euclides" isDependency={false}>axioma de las paralelas</ConceptLink>.
+
+<Separador />
+
+### Enunciado Formal
+
+Sea $\triangle ABC$ un triángulo. Por los <ConceptLink targetId="axioma-orden-3" isDependency={true}>axiomas de orden</ConceptLink>, prolongamos el lado $BC$ más allá de $C$ hasta un punto $D$, de modo que $B * C * D$. Entonces el ángulo externo $\angle ACD$ satisface:
+
+<Formula>
+  $$ \angle ACD > \angle A \quad \text{y} \quad \angle ACD > \angle B $$
+</Formula>
+
+Es decir, el <ConceptLink targetId="angulo" isDependency={false}>ángulo</ConceptLink> externo en $C$ es estrictamente mayor que cada uno de los dos <ConceptLink targetId="angulo" isDependency={false}>ángulos</ConceptLink> interiores $\angle BAC$ y $\angle ABC$ que no comparten el vértice $C$.
+
+<Separador />
+
+### Discusión
+
+El teorema del ángulo externo es estructuralmente fundamental en la <ConceptLink targetId="geometria" isDependency={false}>geometría</ConceptLink> absoluta por tres razones:
+
+1. **Primera desigualdad geométrica:** Hasta este punto, todos los teoremas eran igualdades (congruencias de ángulos opuestos, criterios de congruencia de triángulos). El ángulo externo introduce la noción de **orden entre ángulos**, abriendo la puerta a la <ConceptLink targetId="teorema-desigualdad-triangular" isDependency={false}>desigualdad triangular</ConceptLink>, al teorema de la <ConceptLink targetId="desigualdad-angulo-lado" isDependency={false}>desigualdad ángulo-lado</ConceptLink> y a toda la teoría de comparación de longitudes y ángulos.
+
+2. **Independencia del postulado de las paralelas:** Aunque <ConceptLink targetId="euclides" isDependency={false}>Euclides</ConceptLink> lo sitúa justo antes de introducir la teoría de las paralelas, su prueba no las requiere. Es válido tanto en <ConceptLink targetId="geometria-euclidiana" isDependency={false}>geometría euclidiana</ConceptLink> como en <ConceptLink targetId="geometria-hiperbolica" isDependency={false}>geometría hiperbólica</ConceptLink>.
+
+3. **Piedra angular de la geometría del triángulo:** Es el lema auxiliar estándar para demostrar el <ConceptLink targetId="teorema-suma-angulos-triangulo" isDependency={false}>teorema de la suma de ángulos</ConceptLink> (vía el enfoque de Legendre), el criterio de congruencia <ConceptLink targetId="congruencia-aal" isDependency={false}>AAL</ConceptLink>, y las propiedades de orden entre lados y ángulos.
+
+<Separador />
+
+### Observaciones
+
+- El teorema puede reenunciarse en el lenguaje de la geometría absoluta moderna: «En un triángulo, cada ángulo externo es mayor que cada uno de los ángulos internos no adyacentes».
+- La demostración clásica euclidiana usa el <ConceptLink targetId="axioma-orden-4" isDependency={true}>axioma de Pasch</ConceptLink> implícitamente al deducir que el punto $F$ construido está en el interior del ángulo externo.
+- Euclides no disponía de una teoría axiomática del orden, por lo que su demostración original apelaba visualmente a la posición de los puntos. <ConceptLink targetId="hilbert" isDependency={false}>Hilbert</ConceptLink> la formalizó completamente con sus <ConceptLink targetId="axioma-orden-3" isDependency={true}>axiomas de orden</ConceptLink>.
+- Es válido en <ConceptLink targetId="geometria-absoluta" isDependency={false}>geometría absoluta</ConceptLink>: su demostración rigurosa no requiere el <ConceptLink targetId="axioma-paralelas-euclides" isDependency={false}>axioma de las paralelas</ConceptLink>.

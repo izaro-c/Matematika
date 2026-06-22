@@ -202,7 +202,15 @@ export const TaxonomyGraph: React.FC<TaxonomyGraphProps> = ({ taxonomy }) => {
     // Dibujar Texto legíble tipo imprenta
     if (shouldDrawText) {
       const label = node.name;
-      const fontSize = isRoot ? 12 / globalScale : (isSubBranch ? 10 / globalScale : 9 / globalScale);
+      let baseSize: number;
+      if (isRoot) {
+        baseSize = 12;
+      } else if (isSubBranch) {
+        baseSize = 10;
+      } else {
+        baseSize = 9;
+      }
+      const fontSize = baseSize / globalScale;
       ctx.font = `${node.group === 'central' ? 'bold' : 'normal'} ${fontSize}px "Georgia", serif`;
       ctx.textAlign = 'center';
       ctx.textBaseline = 'middle';

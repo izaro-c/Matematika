@@ -376,7 +376,7 @@ Los planes de estudio PUEDEN referenciar currículos específicos (p. ej. "Selec
 **Principios de estructura:**
 - La página debe ser legible, comprensible, visual y atractiva; pero sobre todo, DEBE ser completa y rigurosa matemáticamente.
 - **Lenguaje simple y directo:** Evitar prosa recargada, rimbombante o poética. El estilo debe ser claro, elegante, directo y riguroso.
-- La página DEBE ser modular: una demostración o corolario NUNCA va en la página de un teorema, tienen su propio archivo.
+- La página DEBE ser modular: una demostración o corolario NUNCA va en la página de un teorema, tienen su propio archivo. **TERMINANTEMENTE PROHIBIDO** añadir una sección `### Demostración` en ninguna página de teorema, ni siquiera con un simple enlace a la demo. El vínculo teorema↔demo se establece exclusivamente mediante el campo `demos` en la metadata y los `<ConceptLink>` en el cuerpo del texto.
 - **Enunciados formales:** Deben usar **exclusivamente símbolos matemáticos puros** (`\forall, \exists, \implies, \in, \exists!`) sin palabras intercaladas en la fórmula. Poner siempre los `$$` en líneas independientes para que MDX los centre como bloque.
 - **InteractiveElement vs ConceptLink:** Usar `<InteractiveElement target="id">` para hacer brillar elementos de un diagrama interactivo de la página actual. Usar `<ConceptLink targetId="concepto">` para enlazar términos del glosario.
 - **Integración natural del InteractiveElement (CRÍTICO):** Evitar meta-texto como "En el diagrama vemos que el punto...". En su lugar, integrar el InteractiveElement directamente en el flujo natural de la prosa: `Dado un punto <InteractiveElement target="pA">A</InteractiveElement>...`.
@@ -496,12 +496,6 @@ Intro: qué establece el teorema y por qué importa.
 ### Enunciado Formal
 <Formula>$$ ... $$</Formula>
 Hipótesis y tesis claras con cuantificadores precisos.
-
-<Separador />
-
-### Demostración
-Link a la demostración dedicada: <ConceptLink targetId="demo-x">Demostración: ...</ConceptLink>
-(Sin prueba inline — la demo tiene su propia página)
 
 <Separador />
 

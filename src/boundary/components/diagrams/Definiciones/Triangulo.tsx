@@ -161,9 +161,9 @@ export const Triangulo = () => {
           if (vC > pi2) angleC.setAttribute({ visible: true, fillColor: '#ef4444', strokeColor: '#ef4444' });
         }
 
-        let maxAngDeg = Math.round(maxAng * 180 / Math.PI);
-        let piFrac = (maxAng / Math.PI).toFixed(2);
-        let piStr = classAngulos === "Rectángulo" ? "&pi;/2" : `${piFrac}&pi;`;
+        const maxAngDeg = Math.round(maxAng * 180 / Math.PI);
+        const piFrac = (maxAng / Math.PI).toFixed(2);
+        const piStr = classAngulos === "Rectángulo" ? "&pi;/2" : `${piFrac}&pi;`;
 
         return `<div style="font-family: var(--font-serif); color: ${getCSSVar('--theme-carbon')};">
           <strong style="font-size: 1.2rem;">Triángulo ${classLados}</strong><br/>

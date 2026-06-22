@@ -1,8 +1,8 @@
 export const metadata = {
   "id": "demo-triangulo-isosceles",
   "type": "demostracion",
-  "title": "Demostración: Pons Asinorum (Bisección)",
-  "description": "Demostración trazando la bisectriz del ángulo superior y usando el criterio LAL.",
+  "title": "Demostración: Pons Asinorum",
+  "description": "Prueba por simetría de Pappus: el triángulo es congruente consigo mismo con los vértices permutados, y LAL fuerza la igualdad de los ángulos de la base.",
   "tags": ["geometria", "congruencia", "triangulos"],
   "authors": ["euclides"],
   "parentTheorem": "teorema-triangulo-isosceles",
@@ -11,29 +11,53 @@ export const metadata = {
 };
 
 import { DemoTrianguloIsosceles } from "@/boundary/components/diagrams/Demos/DemoTrianguloIsosceles";
+import { InteractiveElement } from "@/boundary/components/ui/VisualBind";
 
 <DemonstrationSection diagram={<DemoTrianguloIsosceles />}>
-  <MedievalStep number={1} target={["triangulo-abc", "lado-ab", "lado-ac"]} title="El triángulo isósceles">
-    Consideremos un <InteractiveElement target="triangulo-abc"><ConceptLink targetId="triangulo">triángulo</ConceptLink> $\triangle ABC$</InteractiveElement> isósceles, en el cual por definición se cumple que el <InteractiveElement target="lado-ab"><ConceptLink targetId="segmento" isDependency={false}>segmento</ConceptLink> $AB$</InteractiveElement> tiene la misma <ConceptLink targetId="longitud" isDependency={false}>longitud</ConceptLink> que el <InteractiveElement target="lado-ac">segmento $AC$</InteractiveElement> (<InteractiveElement target="lado-ab">$AB$</InteractiveElement> $\cong$ <InteractiveElement target="lado-ac">$AC$</InteractiveElement>).
-  </MedievalStep>
-      
-  <MedievalStep number={2} target={["bisectriz", "punto-d", "angulo-bad", "angulo-cad"]} title="Construcción de la bisectriz">
-    Trazamos la <InteractiveElement target="bisectriz"><ConceptLink targetId="bisectriz" isDependency={true}>bisectriz</ConceptLink> del $\angle BAC$</InteractiveElement>, es decir, la línea que divide al <ConceptLink targetId="angulo" isDependency={false}>ángulo</ConceptLink> superior en dos ángulos idénticos. Sea <InteractiveElement target="punto-d">$D$</InteractiveElement> el <ConceptLink targetId="punto" isDependency={false}>punto</ConceptLink> donde esta bisectriz intersecta la base $BC$. Por construcción, sabemos que <InteractiveElement target="angulo-bad">$\angle BAD$</InteractiveElement> $\cong$ <InteractiveElement target="angulo-cad">$\angle CAD$</InteractiveElement>.
-  </MedievalStep>
 
-  <MedievalStep number={3} target={["lado-ad"]} title="El lado compartido">
-    El <InteractiveElement target="lado-ad">segmento $AD$</InteractiveElement> es un lado compartido por ambos triángulos formados, el <InteractiveElement target="triangulo-izq">$\triangle ABD$</InteractiveElement> y el <InteractiveElement target="triangulo-der">$\triangle ACD$</InteractiveElement>. Obviamente, <InteractiveElement target="lado-ad">$AD$</InteractiveElement> $\cong$ <InteractiveElement target="lado-ad">$AD$</InteractiveElement> por identidad.
-  </MedievalStep>
+<Capitular letra="E" />l <ConceptLink targetId="teorema-triangulo-isosceles" isDependency={false}>Pons Asinorum</ConceptLink> (Proposición I.5 de los <ConceptLink targetId="elementos" isDependency={false}>Elementos</ConceptLink>) afirma que en un <ConceptLink targetId="triangulo-isosceles" isDependency={false}>triángulo isósceles</ConceptLink> los ángulos opuestos a los lados iguales son congruentes. La demostración que sigue es la elegante prueba de simetría atribuida a <ConceptLink targetId="pappus" isDependency={false}>Pappus de Alejandría</ConceptLink>: el triángulo es congruente consigo mismo considerado con los vértices de la base permutados, y el <ConceptLink targetId="axioma-congruencia-5" isDependency={true}>criterio LAL</ConceptLink> fuerza la igualdad de los <ConceptLink targetId="angulo" isDependency={false}>ángulos</ConceptLink>.
 
-  <MedievalStep number={4} target={["triangulo-izq", "triangulo-der"]} title="Congruencia LAL">
-    Ahora observemos los dos triángulos internos: <InteractiveElement target="triangulo-izq">$\triangle ABD$</InteractiveElement> y <InteractiveElement target="triangulo-der">$\triangle ACD$</InteractiveElement>. Tenemos:
-    1. <InteractiveElement target="lado-ab">$AB$</InteractiveElement> $\cong$ <InteractiveElement target="lado-ac">$AC$</InteractiveElement> (Dado inicialmente).
-    2. <InteractiveElement target="angulo-bad">$\angle BAD$</InteractiveElement> $\cong$ <InteractiveElement target="angulo-cad">$\angle CAD$</InteractiveElement> (Construcción de la bisectriz).
-    3. <InteractiveElement target="lado-ad">$AD$</InteractiveElement> $\cong$ <InteractiveElement target="lado-ad">$AD$</InteractiveElement> (Lado común).
-    Por el <ConceptLink targetId="axioma-congruencia-5" isDependency={true}>Axioma de Congruencia LAL</ConceptLink>, concluimos que los dos triángulos son exactamente <ConceptLink targetId="congruencia" isDependency={false}>congruentes</ConceptLink>.
-  </MedievalStep>
+<Separador />
 
-  <MedievalStep number={5} target={["angulo-b", "angulo-c"]} title="Conclusión de ángulos">
-    Puesto que los triángulos <InteractiveElement target="triangulo-izq">$\triangle ABD$</InteractiveElement> y <InteractiveElement target="triangulo-der">$\triangle ACD$</InteractiveElement> son congruentes, todas sus partes correspondientes deben ser iguales. En consecuencia, el <InteractiveElement target="angulo-b">$\angle B$</InteractiveElement> debe ser igual al <InteractiveElement target="angulo-c">$\angle C$</InteractiveElement>. $\blacksquare$
-  </MedievalStep>
+<MedievalStep number={1} title="El triángulo isósceles" target={["triangulo-abc", "lado-ab", "lado-ac"]}>
+Por hipótesis, <InteractiveElement target="triangulo-abc"><ConceptLink targetId="triangulo">$\triangle ABC$</ConceptLink></InteractiveElement> es isósceles con <InteractiveElement target="lado-ab" color="salvia">$\overline{AB} \cong \overline{AC}$</InteractiveElement>. Queremos demostrar que <InteractiveElement target="angulo-b" color="salvia">$\angle B$</InteractiveElement> $\cong$ <InteractiveElement target="angulo-c" color="pizarra">$\angle C$</InteractiveElement>.
+</MedievalStep>
+
+<MedievalStep number={2} title="El triángulo permutado" target={["triangulo-permutado"]}>
+Consideremos el mismo <InteractiveElement target="triangulo-abc" color="carbon">$\triangle ABC$</InteractiveElement> pero leyendo sus <ConceptLink targetId="vertice" isDependency={false}>vértices</ConceptLink> en el orden $A$–$C$–$B$. Es decir, comparamos <InteractiveElement target="triangulo-permutado" color="carbon">$\triangle ABC$</InteractiveElement> con $\triangle ACB$.
+
+En esta correspondencia:
+1. $\overline{AB}$ en $\triangle ABC$ se corresponde con $\overline{AC}$ en $\triangle ACB$. Por hipótesis, $\overline{AB} \cong \overline{AC}$.
+2. $\overline{AC}$ en $\triangle ABC$ se corresponde con $\overline{AB}$ en $\triangle ACB$. Ambos son el mismo segmento considerado en orden inverso; por <ConceptLink targetId="congruencia" isDependency={false}>identidad</ConceptLink>, $\overline{AC} \cong \overline{AB}$.
+3. El ángulo comprendido en $\triangle ABC$ es $\angle A = \angle BAC$. En $\triangle ACB$ es $\angle A = \angle CAB$. Ambos denotan exactamente el mismo <ConceptLink targetId="angulo" isDependency={false}>ángulo</ConceptLink>; por <ConceptLink targetId="congruencia" isDependency={false}>identidad</ConceptLink>, $\angle BAC \cong \angle CAB$.
+</MedievalStep>
+
+<MedievalStep number={3} title="Congruencia LAL" target={["lal"]}>
+Se satisfacen las condiciones del <ConceptLink targetId="axioma-congruencia-5" isDependency={true}>criterio LAL</ConceptLink>: dos lados y el ángulo comprendido de $\triangle ABC$ son congruentes con los correspondientes de $\triangle ACB$. Por tanto:
+
+<Formula>
+  $$ \triangle ABC \cong \triangle ACB $$
+</Formula>
+</MedievalStep>
+
+<MedievalStep number={4} title="Igualdad de los ángulos de la base" target={["angulo-b", "angulo-c"]}>
+Por la <ConceptLink targetId="congruencia" isDependency={false}>definición de congruencia</ConceptLink> de triángulos, todos los elementos correspondientes son congruentes. El <InteractiveElement target="angulo-b" color="salvia">$\angle B$</InteractiveElement> en $\triangle ABC$ se corresponde con <InteractiveElement target="angulo-c" color="pizarra">$\angle C$</InteractiveElement> en $\triangle ACB$. Por tanto:
+
+<Formula>
+  $$ \angle B \cong \angle C \quad \blacksquare $$
+</Formula>
+</MedievalStep>
+
+<Separador />
+
+### Análisis
+
+La demostración de <ConceptLink targetId="pappus" isDependency={false}>Pappus</ConceptLink> es extraordinariamente simple: reduce el Pons Asinorum a una aplicación directa de <ConceptLink targetId="axioma-congruencia-5" isDependency={true}>LAL</ConceptLink> sin construcciones auxiliares. La clave es reconocer que $\triangle ABC$ y $\triangle ACB$ son dos formas de considerar el mismo triángulo, y que la hipótesis $\overline{AB} \cong \overline{AC}$ hace que LAL sea aplicable entre ambas «copias».
+
+Esta demostración no requiere la <ConceptLink targetId="bisectriz" isDependency={false}>bisectriz</ConceptLink>, el <ConceptLink targetId="lema-punto-medio" isDependency={false}>punto medio</ConceptLink> ni prolongaciones de lados. Es la prueba más económica del Pons Asinorum y pertenece a la <ConceptLink targetId="geometria-absoluta" isDependency={false}>geometría absoluta</ConceptLink>.
+
+<Nota>
+  <ConceptLink targetId="euclides" isDependency={false}>Euclides</ConceptLink> dio una demostración más larga (I.5) usando prolongaciones y triángulos auxiliares. La prueba de <ConceptLink targetId="pappus" isDependency={false}>Pappus</ConceptLink> (siglo IV d.C.) es muy posterior pero mucho más elegante. Ambas son válidas en <ConceptLink targetId="geometria-absoluta" isDependency={false}>geometría absoluta</ConceptLink>.
+</Nota>
+
 </DemonstrationSection>

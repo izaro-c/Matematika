@@ -1,8 +1,9 @@
 import type { ThemeColors } from '@/boundary/components/graph/MathBoard';
 
+type JXGCoord = number | (() => number);
 const FONT_CLASSES = 'font-serif font-bold italic';
 
-export function createPoint(board: any, coords: [number | Function, number | Function], options: any = {}, theme: ThemeColors) {
+export function createPoint(board: any, coords: [JXGCoord, JXGCoord], options: any = {}, theme: ThemeColors) {
   const defaultOpts = {
     size: 5,
     fillColor: theme.carbon,
@@ -37,7 +38,7 @@ export function createMidpoint(board: any, elements: [any, any], options: any = 
   return board.create('midpoint', elements, finalOpts);
 }
 
-export function createGlider(board: any, coords: [number | Function, number | Function, any], options: any = {}, theme: ThemeColors) {
+export function createGlider(board: any, coords: [JXGCoord, JXGCoord, any], options: any = {}, theme: ThemeColors) {
   const defaultOpts = {
     size: 5,
     fillColor: theme.terracota,

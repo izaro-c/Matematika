@@ -11,6 +11,7 @@ export const metadata = {
 };
 
 import { DemoCongruenciaALA } from '@/boundary/components/diagrams/Demos/DemoCongruenciaALA';
+import { InteractiveElement } from "@/boundary/components/ui/VisualBind";
 
 <DemonstrationSection diagram={<DemoCongruenciaALA />}>
 
@@ -37,7 +38,7 @@ Al tener dos lados y el ángulo comprendido idénticos, por el <ConceptLink targ
 </MedievalStep>
 
 <MedievalStep number={3} title="Conclusión por unicidad" target="step3">
-Por nuestra hipótesis original sabemos que <InteractiveElement target="angleB" color="terracota">$\angle B \cong \angle B'$</InteractiveElement>. Como el triángulo construido nos dio que <InteractiveElement target="angleB" color="terracota">$\angle B \cong \angle A'B'C^*$</InteractiveElement>, por transitividad llegamos a que:
+Por nuestra hipótesis original sabemos que <InteractiveElement target="angleB" color="terracota">$\angle B \cong \angle B'$</InteractiveElement>. Por el paso 2, el triángulo construido nos dio que <InteractiveElement target="angleB" color="terracota">$\angle B \cong \angle A'B'C^*$</InteractiveElement>. Por el <ConceptLink targetId="axioma-congruencia-4" isDependency={true}>axioma de transitividad de la congruencia angular</ConceptLink>:
 
 <Formula>
   $$ \angle A'B'C^* \cong \angle A'B'C' $$

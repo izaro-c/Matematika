@@ -22,8 +22,10 @@ interface ClasificadorProps {
 
 function shuffle<T>(array: T[]): T[] {
   const arr = [...array];
+  const buf = new Uint32Array(arr.length);
+  crypto.getRandomValues(buf);
   for (let i = arr.length - 1; i > 0; i--) {
-    const j = Math.floor(Math.random() * (i + 1));
+    const j = buf[i] % (i + 1);
     [arr[i], arr[j]] = [arr[j], arr[i]];
   }
   return arr;
@@ -175,17 +177,22 @@ export const Clasificador: React.FC<ClasificadorProps> = ({ id, pregunta, bucket
                 <div className={`flex-1 p-4 flex flex-col gap-2 relative items-center transition-colors ${dragItem ? 'bg-carbon/[0.02]' : 'bg-transparent'}`}>
                   {bucketItems.map(item => {
                     const isWrong = qState?.isCorrect === false && placedItems[item.id] && item.bucketId !== bucket.id;
+
+                    let itemClass: string;
+                    if (isCompleted) {
+                      itemClass = 'border-salvia/40 bg-salvia/[0.02] text-salvia cursor-default';
+                    } else if (isWrong) {
+                      itemClass = 'border-terracota bg-terracota/[0.02] text-terracota';
+                    } else {
+                      itemClass = 'border-carbon/40 cursor-grab active:cursor-grabbing hover:bg-carbon/[0.02]';
+                    }
                     
                     return (
                       <div
                         key={item.id}
                         draggable={!isCompleted}
                         onDragStart={(e) => handleDragStart(e, item.id)}
-                        className={`px-3 py-1 bg-lienzo border transition-colors ${
-                          isCompleted ? 'border-salvia/40 bg-salvia/[0.02] text-salvia cursor-default' : 
-                          isWrong ? 'border-terracota bg-terracota/[0.02] text-terracota' :
-                          'border-carbon/40 cursor-grab active:cursor-grabbing hover:bg-carbon/[0.02]'
-                        } ${dragItem === item.id ? 'opacity-40' : 'opacity-100'}`}
+                        className={`px-3 py-1 bg-lienzo border transition-colors ${itemClass} ${dragItem === item.id ? 'opacity-40' : 'opacity-100'}`}
                       >
                         <KatexText text={item.content} />
                       </div>

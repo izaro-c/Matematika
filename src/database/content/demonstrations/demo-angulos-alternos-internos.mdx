@@ -1,0 +1,84 @@
+export const metadata = {
+  "id": "demo-angulos-alternos-internos",
+  "type": "demostracion",
+  "title": "Demostración: Teorema de los ángulos alternos internos",
+  "description": "Prueba en dos partes: la ida (absoluta) por reducción al absurdo usando el teorema del ángulo externo; la vuelta (euclidiana) usando la unicidad de la paralela.",
+  "parentTheorem": "teorema-angulos-alternos-internos",
+  "proofMethod": "directo",
+  "authors": ["euclides"],
+  "tags": ["geometria", "angulos", "paralelas"],
+  "layout": "split"
+};
+
+import { DemoAngulosAlternosInternos } from "@/boundary/components/diagrams/Teoremas/DemoAngulosAlternosInternos";
+import { InteractiveElement } from "@/boundary/components/ui/VisualBind";
+
+<DemonstrationSection diagram={<DemoAngulosAlternosInternos />}>
+
+<Capitular letra="E" />l vínculo entre <ConceptLink targetId="paralelas" isDependency={false}>paralelismo</ConceptLink> y <ConceptLink targetId="congruencia" isDependency={false}>congruencia</ConceptLink> de <ConceptLink targetId="angulo" isDependency={false}>ángulos</ConceptLink> se demuestra en dos partes. La primera —ángulos congruentes implican paralelismo— pertenece a la <ConceptLink targetId="geometria-absoluta" isDependency={false}>geometría absoluta</ConceptLink>: una <ConceptLink targetId="contradiccion" isDependency={false}>reducción al absurdo</ConceptLink> que invoca el <ConceptLink targetId="teorema-angulo-externo" isDependency={true}>teorema del ángulo externo</ConceptLink>. La segunda —paralelismo implica ángulos congruentes— requiere el <ConceptLink targetId="axioma-paralelas-euclides" isDependency={true}>axioma euclidiano de las paralelas</ConceptLink>, que garantiza la unicidad de la paralela.
+
+<Separador />
+
+### Parte 1: Ángulos congruentes ⇒ rectas paralelas (geometría absoluta)
+
+<MedievalStep number={1} title="Disposición de la figura" target={["recta-l", "recta-m", "transversal-t"]}>
+Sean <InteractiveElement target="recta-l" color="carbon">$l$</InteractiveElement> y <InteractiveElement target="recta-m" color="carbon">$m$</InteractiveElement> dos rectas cortadas por la <InteractiveElement target="transversal-t" color="salvia">transversal $t$</InteractiveElement> en los puntos <InteractiveElement target="punto-a" color="pizarra">$A \in l$</InteractiveElement> y <InteractiveElement target="punto-b" color="pizarra">$B \in m$</InteractiveElement>. Por hipótesis, los <ConceptLink targetId="angulo" isDependency={false}>ángulos</ConceptLink> alternos internos son congruentes:
+
+<Formula>
+  $$ \angle 1 \cong \angle 2 $$
+</Formula>
+</MedievalStep>
+
+<MedievalStep number={2} title="Suposición de intersección" target={["punto-p", "triangulo-abp"]}>
+Supongamos, por <ConceptLink targetId="contradiccion" isDependency={false}>reducción al absurdo</ConceptLink>, que $l$ y $m$ no son paralelas. Entonces se cortan en algún punto <InteractiveElement target="punto-p" color="terracota">$P$</InteractiveElement>. Se forma el <InteractiveElement target="triangulo-abp" color="carbon">$\triangle ABP$</InteractiveElement>.
+</MedievalStep>
+
+<MedievalStep number={3} title="Contradicción con el ángulo externo" target={["angulo-externo", "angulo-remoto"]}>
+Consideremos el <ConceptLink targetId="angulo" isDependency={false}>ángulo</ConceptLink> externo de <InteractiveElement target="triangulo-abp" color="carbon">$\triangle ABP$</InteractiveElement> en el vértice $A$ (o en $B$, según el lado de $t$ donde esté $P$). Por el <ConceptLink targetId="teorema-angulo-externo" isDependency={true}>teorema del ángulo externo</ConceptLink>:
+
+<Formula>
+  $$ \angle\text{externo} \gt \angle\text{interior remoto} $$
+</Formula>
+
+Pero por hipótesis $\angle 1 \cong \angle 2$, y por el <ConceptLink targetId="teorema-angulos-opuestos-verticales" isDependency={true}>teorema de los ángulos opuestos por el vértice</ConceptLink>, $\angle 2$ es congruente con el ángulo interior remoto del triángulo (o bien $\angle 1$ lo es con el exterior, dependiendo de la configuración). En cualquier caso, el <InteractiveElement target="angulo-externo" color="terracota">ángulo externo</InteractiveElement> resultaría congruente al <InteractiveElement target="angulo-remoto" color="salvia">ángulo interior remoto</InteractiveElement>, en contradicción con el teorema del ángulo externo que exige desigualdad estricta.
+</MedievalStep>
+
+<MedievalStep number={4} title="Conclusión de paralelismo" target={["recta-l", "recta-m"]}>
+La <ConceptLink targetId="contradiccion" isDependency={false}>contradicción</ConceptLink> proviene de haber supuesto que $l$ y $m$ se cortan. Por <ConceptLink targetId="reduccion" isDependency={false}>reducción al absurdo</ConceptLink>, $l$ y $m$ no pueden intersecarse. Por la <ConceptLink targetId="paralelas" isDependency={false}>definición de rectas paralelas</ConceptLink>:
+
+<Formula>
+  $$ l \parallel m $$
+</Formula>
+</MedievalStep>
+
+<Separador />
+
+### Parte 2: Rectas paralelas ⇒ ángulos congruentes (geometría euclidiana)
+
+<MedievalStep number={5} title="Construcción de la paralela por el ángulo transportado" target={["recta-n"]}>
+Sean ahora $l \parallel m$ cortadas por <InteractiveElement target="transversal-t2" color="salvia">$t$</InteractiveElement>. Por el <ConceptLink targetId="axioma-congruencia-4" isDependency={true}>axioma de transporte de ángulos (III-4)</ConceptLink>, construimos por $A$ una recta <InteractiveElement target="recta-n" color="terracota">$n$</InteractiveElement> que forme con $t$ un ángulo congruente al que $t$ forma con $m$ en $B$, de modo que dichos ángulos queden en posición de <ConceptLink targetId="angulo" isDependency={false}>alternos internos</ConceptLink>.
+</MedievalStep>
+
+<MedievalStep number={6} title="Unicidad de la paralela" target={["recta-l", "recta-n"]}>
+Por la Parte 1 (<ConceptLink targetId="geometria-absoluta" isDependency={false}>geometría absoluta</ConceptLink>), $n \parallel m$. Pero por el <ConceptLink targetId="axioma-paralelas-euclides" isDependency={true}>axioma euclidiano de las paralelas</ConceptLink>, por un punto exterior a una recta pasa una **única** paralela. Tanto <InteractiveElement target="recta-l" color="carbon">$l$</InteractiveElement> como <InteractiveElement target="recta-n" color="terracota">$n$</InteractiveElement> pasan por $A$ y son paralelas a $m$. Por tanto:
+
+<Formula>
+  $$ l = n $$
+</Formula>
+
+Por el paso 5, $n$ forma con $t$ ángulos alternos internos congruentes con los de $m$. Como $l = n$, los <InteractiveElement target="angulos-alternos" color="salvia">ángulos alternos internos</InteractiveElement> entre $l$, $m$ y $t$ son congruentes. $\blacksquare$
+</MedievalStep>
+
+<Separador />
+
+### Análisis
+
+La Parte 1 es una de las aplicaciones más elegantes del <ConceptLink targetId="teorema-angulo-externo" isDependency={true}>teorema del ángulo externo</ConceptLink>: la hipótesis de intersección fuerza una igualdad donde el teorema exige desigualdad. La Parte 2 revela que el <ConceptLink targetId="axioma-paralelas-euclides" isDependency={true}>axioma euclidiano de las paralelas</ConceptLink> es precisamente lo que distingue la <ConceptLink targetId="geometria-euclidiana" isDependency={false}>geometría euclidiana</ConceptLink>: sin él, de dos rectas paralelas no se sigue nada sobre sus ángulos con una transversal.
+
+<Nota>
+  En los <ConceptLink targetId="elementos" isDependency={false}>Elementos</ConceptLink>, Euclides demuestra la Parte 1 en I.27 (sin usar el Postulado 5) y la Parte 2 en I.29 (usando el Postulado 5 por primera vez en la obra). La organización es deliberada: I.27 es el último teorema de geometría absoluta antes de que el Postulado de las Paralelas entre en acción.
+</Nota>
+
+La Parte 2 es el eslabón que permite demostrar el <ConceptLink targetId="teorema-suma-angulos-triangulo" isDependency={false}>teorema de la suma de ángulos del triángulo</ConceptLink>, el <ConceptLink targetId="teorema-tales" isDependency={false}>teorema de Tales</ConceptLink> y, en última instancia, el <ConceptLink targetId="teorema-pitagoras" isDependency={false}>teorema de Pitágoras</ConceptLink>.
+
+</DemonstrationSection>

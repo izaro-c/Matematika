@@ -25,22 +25,34 @@
     "axioma-paralelas-hiperbolico",
     "sistema-hiperbolico",
     "sistema-incidencia",
+    "demo-punto-medio",
+    "lema-punto-medio",
     "demo-angulos-opuestos-verticales",
+    "teorema-angulos-opuestos-verticales",
+    "demo-angulo-externo",
+    "teorema-angulo-externo",
+    "demo-angulos-alternos-internos",
     "demo-congruencia-ala",
+    "teorema-congruencia-ala",
     "demo-triangulo-isosceles",
     "teorema-triangulo-isosceles",
     "demo-congruencia-lll",
+    "teorema-congruencia-lll",
+    "demo-congruencia-aal",
     "demo-desigualdad-triangular",
     "demo-dos-rectas-un-punto",
+    "demo-existencia-bisectriz",
+    "demo-existencia-perpendicular",
+    "teorema-angulos-alternos-internos",
+    "demo-suma-angulos-triangulo",
+    "teorema-suma-angulos-triangulo",
     "demo-pitagoras-areas",
+    "teorema-existencia-perpendicular",
     "demo-pitagoras-euclides",
-    "demo-punto-medio",
-    "lema-punto-medio",
-    "teorema-congruencia-lll",
     "demo-punto-medio-perpendicular",
+    "demo-reciproco-triangulo-isosceles",
     "teorema-dos-rectas-un-punto",
     "demo-rectas-coincidentes",
-    "demo-suma-angulos-triangulo",
     "demo-tales",
     "leccion-metodo-contradiccion",
     "leccion-metodo-directo",
@@ -49,7 +61,6 @@
     "dedekind",
     "teorema-pitagoras",
     "teorema-tales",
-    "teorema-suma-angulos-triangulo",
     "euclides",
     "hilbert",
     "lobachevski",
@@ -61,10 +72,11 @@
     "modelo-poincare",
     "modelo-tres-puntos",
     "corolario-rectas-coincidentes",
-    "teorema-angulos-opuestos-verticales",
-    "teorema-congruencia-ala",
+    "teorema-congruencia-aal",
     "teorema-desigualdad-triangular",
-    "teorema-punto-medio-perpendicular"
+    "teorema-existencia-bisectriz",
+    "teorema-punto-medio-perpendicular",
+    "teorema-reciproco-triangulo-isosceles"
   ],
   "nodes": {
     "sistema-absoluto": {
@@ -338,11 +350,35 @@
       "proofs": [],
       "directDependencies": []
     },
+    "demo-angulo-externo": {
+      "id": "demo-angulo-externo",
+      "type": "demostracion",
+      "title": "Demostración: Teorema del ángulo externo",
+      "description": "Prueba constructiva usando el lema del punto medio, el teorema de ángulos opuestos por el vértice y el criterio LAL. El punto construido cae en el interior del ángulo externo, forzando la desigualdad.",
+      "proofs": [],
+      "directDependencies": []
+    },
+    "demo-angulos-alternos-internos": {
+      "id": "demo-angulos-alternos-internos",
+      "type": "demostracion",
+      "title": "Demostración: Teorema de los ángulos alternos internos",
+      "description": "Prueba en dos partes: la ida (absoluta) por reducción al absurdo usando el teorema del ángulo externo; la vuelta (euclidiana) usando la unicidad de la paralela.",
+      "proofs": [],
+      "directDependencies": []
+    },
     "demo-angulos-opuestos-verticales": {
       "id": "demo-angulos-opuestos-verticales",
       "type": "demostracion",
       "title": "Demostración: Ángulos opuestos por el vértice",
       "description": "Prueba directa usando axiomas de congruencia de ángulos y resta de congruentes.",
+      "proofs": [],
+      "directDependencies": []
+    },
+    "demo-congruencia-aal": {
+      "id": "demo-congruencia-aal",
+      "type": "demostracion",
+      "title": "Demostración: Criterio de congruencia AAL",
+      "description": "Prueba por reducción al absurdo: se supone desigualdad de lados, se construye un triángulo auxiliar por LAL, y el teorema del ángulo externo fuerza la contradicción.",
       "proofs": [],
       "directDependencies": []
     },
@@ -366,7 +402,7 @@
       "id": "demo-desigualdad-triangular",
       "type": "demostracion",
       "title": "Demostración: Desigualdad triangular",
-      "description": "Demostración euclidiana clásica extendiendo uno de los lados para formar un triángulo isósceles.",
+      "description": "Demostración euclidiana clásica extendiendo uno de los lados para formar un triángulo isósceles. La comparación ángulo-lado se fundamenta en el teorema del ángulo externo.",
       "proofs": [],
       "directDependencies": []
     },
@@ -375,6 +411,22 @@
       "type": "demostracion",
       "title": "Demostración: Dos rectas se cortan en a lo sumo un punto",
       "description": "Prueba por contradicción usando el axioma de unicidad I-1.",
+      "proofs": [],
+      "directDependencies": []
+    },
+    "demo-existencia-bisectriz": {
+      "id": "demo-existencia-bisectriz",
+      "type": "demostracion",
+      "title": "Demostración: Existencia y unicidad de la bisectriz",
+      "description": "Prueba constructiva usando el lema del punto medio y el criterio LLL. Se toman puntos equidistantes del vértice sobre cada lado del ángulo y se traza la mediana al segmento que los une.",
+      "proofs": [],
+      "directDependencies": []
+    },
+    "demo-existencia-perpendicular": {
+      "id": "demo-existencia-perpendicular",
+      "type": "demostracion",
+      "title": "Demostración: Existencia y unicidad de la perpendicular",
+      "description": "Prueba constructiva para ambos casos: punto sobre la recta (transporte de ángulos) y punto exterior (triángulo auxiliar + LAL + ángulo externo para unicidad).",
       "proofs": [],
       "directDependencies": []
     },
@@ -410,6 +462,14 @@
       "proofs": [],
       "directDependencies": []
     },
+    "demo-reciproco-triangulo-isosceles": {
+      "id": "demo-reciproco-triangulo-isosceles",
+      "type": "demostracion",
+      "title": "Demostración: Teorema recíproco del triángulo isósceles",
+      "description": "Prueba por reducción al absurdo: se supone AB > AC, se transporta AC sobre AB, y el Pons Asinorum junto con el teorema del ángulo externo fuerzan una contradicción.",
+      "proofs": [],
+      "directDependencies": []
+    },
     "demo-rectas-coincidentes": {
       "id": "demo-rectas-coincidentes",
       "type": "demostracion",
@@ -437,8 +497,8 @@
     "demo-triangulo-isosceles": {
       "id": "demo-triangulo-isosceles",
       "type": "demostracion",
-      "title": "Demostración: Pons Asinorum (Bisección)",
-      "description": "Demostración trazando la bisectriz del ángulo superior y usando el criterio LAL.",
+      "title": "Demostración: Pons Asinorum",
+      "description": "Prueba por simetría de Pappus: el triángulo es congruente consigo mismo con los vértices permutados, y LAL fuerza la igualdad de los ángulos de la base.",
       "proofs": [],
       "directDependencies": []
     },
@@ -643,6 +703,7 @@
         {
           "id": "demo-punto-medio",
           "dependencies": [
+            "axioma-incidencia-3",
             "axioma-congruencia-4",
             "axioma-congruencia-1",
             "axioma-congruencia-5",
@@ -656,6 +717,52 @@
         "axioma-orden-1"
       ]
     },
+    "teorema-angulo-externo": {
+      "id": "teorema-angulo-externo",
+      "type": "teorema",
+      "title": "Teorema del ángulo externo",
+      "description": "En todo triángulo, un ángulo externo es estrictamente mayor que cualquiera de los ángulos interiores no adyacentes.",
+      "proofs": [
+        {
+          "id": "demo-angulo-externo",
+          "dependencies": [
+            "lema-punto-medio",
+            "teorema-angulos-opuestos-verticales",
+            "axioma-congruencia-5",
+            "axioma-orden-3",
+            "axioma-incidencia-1",
+            "axioma-congruencia-1",
+            "axioma-orden-4",
+            "axioma-congruencia-4"
+          ]
+        }
+      ],
+      "directDependencies": [
+        "axioma-orden-3",
+        "axioma-orden-4"
+      ]
+    },
+    "teorema-angulos-alternos-internos": {
+      "id": "teorema-angulos-alternos-internos",
+      "type": "teorema",
+      "title": "Teorema de los ángulos alternos internos",
+      "description": "Dos rectas cortadas por una transversal son paralelas si y solo si los ángulos alternos internos son congruentes. La ida pertenece a la geometría absoluta; la vuelta requiere el axioma euclidiano de las paralelas.",
+      "proofs": [
+        {
+          "id": "demo-angulos-alternos-internos",
+          "dependencies": [
+            "teorema-angulo-externo",
+            "axioma-paralelas-euclides",
+            "teorema-angulos-opuestos-verticales",
+            "axioma-congruencia-4"
+          ]
+        }
+      ],
+      "directDependencies": [
+        "teorema-angulo-externo",
+        "axioma-paralelas-euclides"
+      ]
+    },
     "teorema-angulos-opuestos-verticales": {
       "id": "teorema-angulos-opuestos-verticales",
       "type": "teorema",
@@ -666,13 +773,34 @@
           "id": "demo-angulos-opuestos-verticales",
           "dependencies": [
             "axioma-congruencia-4",
-            "axioma-congruencia-3",
-            "axioma-congruencia-2"
+            "axioma-congruencia-3"
           ]
         }
       ],
       "directDependencies": [
         "axioma-paralelas-euclides"
+      ]
+    },
+    "teorema-congruencia-aal": {
+      "id": "teorema-congruencia-aal",
+      "type": "teorema",
+      "title": "Criterio de congruencia AAL",
+      "description": "Si dos ángulos y un lado no incluido de un triángulo son congruentes con las partes correspondientes de otro, los triángulos son congruentes.",
+      "proofs": [
+        {
+          "id": "demo-congruencia-aal",
+          "dependencies": [
+            "axioma-congruencia-5",
+            "teorema-angulo-externo",
+            "axioma-congruencia-1",
+            "teorema-congruencia-ala",
+            "teorema-congruencia-lll"
+          ]
+        }
+      ],
+      "directDependencies": [
+        "axioma-congruencia-5",
+        "teorema-angulo-externo"
       ]
     },
     "teorema-congruencia-ala": {
@@ -705,10 +833,11 @@
         {
           "id": "demo-congruencia-lll",
           "dependencies": [
-            "axioma-congruencia-4",
             "axioma-congruencia-1",
+            "axioma-congruencia-4",
             "axioma-congruencia-5",
-            "teorema-triangulo-isosceles"
+            "teorema-triangulo-isosceles",
+            "axioma-congruencia-3"
           ]
         }
       ],
@@ -729,8 +858,12 @@
           "id": "demo-desigualdad-triangular",
           "dependencies": [
             "teorema-triangulo-isosceles",
+            "teorema-angulo-externo",
             "axioma-orden-3",
-            "axioma-congruencia-1"
+            "axioma-congruencia-1",
+            "axioma-incidencia-1",
+            "axioma-congruencia-4",
+            "axioma-congruencia-3"
           ]
         }
       ],
@@ -755,6 +888,61 @@
         "axioma-incidencia-1"
       ]
     },
+    "teorema-existencia-bisectriz": {
+      "id": "teorema-existencia-bisectriz",
+      "type": "teorema",
+      "title": "Teorema de existencia y unicidad de la bisectriz",
+      "description": "Todo ángulo admite una única bisectriz: una semirrecta con origen en el vértice que lo divide en dos ángulos congruentes.",
+      "proofs": [
+        {
+          "id": "demo-existencia-bisectriz",
+          "dependencies": [
+            "lema-punto-medio",
+            "teorema-congruencia-lll",
+            "axioma-incidencia-2",
+            "axioma-congruencia-1",
+            "axioma-incidencia-1",
+            "axioma-congruencia-4",
+            "axioma-congruencia-5",
+            "teorema-congruencia-ala",
+            "axioma-orden-3"
+          ]
+        }
+      ],
+      "directDependencies": [
+        "lema-punto-medio",
+        "teorema-congruencia-lll",
+        "axioma-congruencia-4",
+        "axioma-congruencia-1"
+      ]
+    },
+    "teorema-existencia-perpendicular": {
+      "id": "teorema-existencia-perpendicular",
+      "type": "teorema",
+      "title": "Teorema de existencia y unicidad de la perpendicular",
+      "description": "Dada una recta y un punto, existe una única recta perpendicular a la recta dada que pasa por el punto. Cubre tanto el caso del punto sobre la recta como el punto exterior.",
+      "proofs": [
+        {
+          "id": "demo-existencia-perpendicular",
+          "dependencies": [
+            "axioma-congruencia-4",
+            "axioma-congruencia-5",
+            "teorema-angulo-externo",
+            "axioma-incidencia-2",
+            "axioma-incidencia-3",
+            "axioma-orden-4",
+            "axioma-congruencia-1",
+            "axioma-incidencia-1"
+          ]
+        }
+      ],
+      "directDependencies": [
+        "lema-punto-medio",
+        "axioma-congruencia-4",
+        "axioma-congruencia-5",
+        "teorema-angulo-externo"
+      ]
+    },
     "teorema-pitagoras": {
       "id": "teorema-pitagoras",
       "type": "teorema",
@@ -764,12 +952,15 @@
         {
           "id": "demo-pitagoras-areas",
           "dependencies": [
-            "axioma-congruencia-5"
+            "axioma-congruencia-5",
+            "teorema-suma-angulos-triangulo"
           ]
         },
         {
           "id": "demo-pitagoras-euclides",
           "dependencies": [
+            "teorema-existencia-perpendicular",
+            "axioma-incidencia-1",
             "axioma-congruencia-5"
           ]
         }
@@ -800,6 +991,27 @@
         "axioma-paralelas-euclides"
       ]
     },
+    "teorema-reciproco-triangulo-isosceles": {
+      "id": "teorema-reciproco-triangulo-isosceles",
+      "type": "teorema",
+      "title": "Teorema recíproco del triángulo isósceles",
+      "description": "Si dos ángulos de un triángulo son congruentes, los lados opuestos a dichos ángulos también lo son. Es el recíproco del Pons Asinorum (Euclides I.6).",
+      "proofs": [
+        {
+          "id": "demo-reciproco-triangulo-isosceles",
+          "dependencies": [
+            "teorema-triangulo-isosceles",
+            "teorema-angulo-externo",
+            "axioma-congruencia-1",
+            "axioma-incidencia-1"
+          ]
+        }
+      ],
+      "directDependencies": [
+        "teorema-triangulo-isosceles",
+        "teorema-angulo-externo"
+      ]
+    },
     "teorema-suma-angulos-triangulo": {
       "id": "teorema-suma-angulos-triangulo",
       "type": "teorema",
@@ -809,6 +1021,7 @@
         {
           "id": "demo-suma-angulos-triangulo",
           "dependencies": [
+            "teorema-angulos-alternos-internos",
             "axioma-paralelas-euclides"
           ]
         }
@@ -825,7 +1038,10 @@
       "proofs": [
         {
           "id": "demo-tales",
-          "dependencies": []
+          "dependencies": [
+            "axioma-paralelas-euclides",
+            "axioma-incidencia-1"
+          ]
         }
       ],
       "directDependencies": [
@@ -841,9 +1057,8 @@
         {
           "id": "demo-triangulo-isosceles",
           "dependencies": [
-            "triangulo",
-            "bisectriz",
-            "axioma-congruencia-5"
+            "axioma-congruencia-5",
+            "triangulo"
           ]
         }
       ],

@@ -1,0 +1,94 @@
+export const metadata = {
+  "id": "demo-reciproco-triangulo-isosceles",
+  "type": "demostracion",
+  "title": "Demostración: Teorema recíproco del triángulo isósceles",
+  "description": "Prueba por reducción al absurdo: se supone AB > AC, se transporta AC sobre AB, y el Pons Asinorum junto con el teorema del ángulo externo fuerzan una contradicción.",
+  "parentTheorem": "teorema-reciproco-triangulo-isosceles",
+  "proofMethod": "contradiccion",
+  "authors": ["euclides"],
+  "tags": ["geometria", "triangulos", "congruencia"],
+  "layout": "split"
+};
+
+import { DemoReciprocoTrianguloIsosceles } from "@/boundary/components/diagrams/Teoremas/DemoReciprocoTrianguloIsosceles";
+import { InteractiveElement } from "@/boundary/components/ui/VisualBind";
+
+<DemonstrationSection diagram={<DemoReciprocoTrianguloIsosceles />}>
+
+<Capitular letra="L" />a Proposición I.6 de los <ConceptLink targetId="elementos" isDependency={false}>Elementos</ConceptLink> es el recíproco del célebre <ConceptLink targetId="teorema-triangulo-isosceles" isDependency={true}>Pons Asinorum</ConceptLink>. La <ConceptLink targetId="demostracion" isDependency={false}>demostración</ConceptLink> que sigue usa <ConceptLink targetId="contradiccion" isDependency={false}>reducción al absurdo</ConceptLink>: si los <ConceptLink targetId="lado" isDependency={false}>lados</ConceptLink> no fueran congruentes, se podría construir un <ConceptLink targetId="triangulo-isosceles" isDependency={false}>triángulo isósceles</ConceptLink> auxiliar cuyas propiedades angulares, combinadas con el <ConceptLink targetId="teorema-angulo-externo" isDependency={true}>teorema del ángulo externo</ConceptLink>, producirían una <ConceptLink targetId="contradiccion" isDependency={false}>contradicción</ConceptLink> insalvable.
+
+<Separador />
+
+<MedievalStep number={1} title="Hipótesis y suposición de desigualdad" target={["triangulo-abc"]}>
+Por hipótesis, sea <InteractiveElement target="triangulo-abc" color="carbon">$\triangle ABC$</InteractiveElement> un triángulo con <InteractiveElement target="angulo-b" color="salvia">$\angle B$</InteractiveElement> $\cong$ <InteractiveElement target="angulo-c" color="pizarra">$\angle C$</InteractiveElement>. Queremos demostrar que $\overline{AB} \cong \overline{AC}$.
+
+Supongamos, por <ConceptLink targetId="contradiccion" isDependency={false}>reducción al absurdo</ConceptLink>, que $\overline{AB} \not\cong \overline{AC}$. Sin pérdida de generalidad, sea $\overline{AB} \gt \overline{AC}$.
+</MedievalStep>
+
+<MedievalStep number={2} title="Construcción del punto auxiliar D" target={["punto-d", "segmento-ad"]}>
+Por el <ConceptLink targetId="axioma-congruencia-1" isDependency={true}>axioma de transporte de segmentos (III-1)</ConceptLink>, sobre $\overline{AB}$ determinamos un punto <InteractiveElement target="punto-d" color="terracota">$D$</InteractiveElement> tal que:
+
+<Formula>
+  $$ \overline{AD} \cong \overline{AC} $$
+</Formula>
+
+Puesto que $\overline{AB} \gt \overline{AC}$, el punto $D$ está estrictamente entre $A$ y $B$: $A * D * B$.
+</MedievalStep>
+
+<MedievalStep number={3} title="Triángulo isósceles auxiliar" target={["triangulo-adc"]}>
+Por el <ConceptLink targetId="axioma-incidencia-1" isDependency={true}>axioma I-1</ConceptLink>, trazamos $\overline{CD}$. Se forma <InteractiveElement target="triangulo-adc" color="salvia">$\triangle ADC$</InteractiveElement>.
+
+Por el paso 2, $\overline{AD} \cong \overline{AC}$. Por la definición de <ConceptLink targetId="triangulo-isosceles" isDependency={true}>triángulo isósceles</ConceptLink>, $\triangle ADC$ es isósceles. Por el <ConceptLink targetId="teorema-triangulo-isosceles" isDependency={true}>Pons Asinorum</ConceptLink>:
+
+<Formula>
+  $$ \angle ADC \cong \angle ACD $$
+</Formula>
+</MedievalStep>
+
+<MedievalStep number={4} title="El ángulo externo en el triángulo BDC" target={["triangulo-bdc", "angulo-externo-d"]}>
+Consideremos $\triangle BDC$. Por el paso 2, $A * D * B$, de modo que $A$ está en la prolongación de $\overline{BD}$ más allá de $D$. Por tanto, en $\triangle BDC$, el <InteractiveElement target="angulo-externo-d" color="terracota">$\angle ADC$ es el ángulo externo</InteractiveElement> en el vértice $D$.
+
+Por el <ConceptLink targetId="teorema-angulo-externo" isDependency={true}>teorema del ángulo externo</ConceptLink>:
+
+<Formula>
+  $$ \angle ADC \gt \angle B $$
+</Formula>
+
+Por hipótesis $\angle B \cong \angle C$, luego $\angle ADC \gt \angle C$.
+</MedievalStep>
+
+<MedievalStep number={5} title="Contradicción" target={["angulo-c", "angulo-acd"]}>
+Por el paso 2, $D$ está en $\overline{AB}$. Por tanto, la semirrecta $\overrightarrow{CD}$ está en el interior de <InteractiveElement target="angulo-c" color="pizarra">$\angle C = \angle ACB$</InteractiveElement>. Por la definición de <ConceptLink targetId="angulo" isDependency={false}>interior de un ángulo</ConceptLink>, el ángulo parcial es estrictamente menor que el total:
+
+<Formula>
+  $$ \angle C \gt \angle ACD $$
+</Formula>
+
+Encadenando: $\angle ADC \gt \angle C \gt$ <InteractiveElement target="angulo-acd" color="salvia">$\angle ACD$</InteractiveElement>, de donde $\angle ADC \gt \angle ACD$.
+
+Pero por el paso 3, $\angle ADC \cong \angle ACD$. Un ángulo no puede ser a la vez congruente y estrictamente mayor que otro. <ConceptLink targetId="contradiccion" isDependency={false}>Contradicción</ConceptLink>.
+</MedievalStep>
+
+<MedievalStep number={6} title="Conclusión" target={["lado-ab", "lado-ac"]}>
+La <ConceptLink targetId="contradiccion" isDependency={false}>contradicción</ConceptLink> del paso 5 proviene de haber supuesto $\overline{AB} \gt \overline{AC}$ en el paso 1. Por <ConceptLink targetId="contradiccion" isDependency={false}>reducción al absurdo</ConceptLink>, $\overline{AB} \not\gt \overline{AC}$. Por el mismo argumento de los pasos 1 a 5 intercambiando los roles de $B$ y $C$, se descarta también $\overline{AC} \gt \overline{AB}$. Por tanto:
+
+<Formula>
+  $$ \overline{AB} \cong \overline{AC} $$
+</Formula>
+
+El <InteractiveElement target="lado-ab" color="salvia">$\overline{AB}$</InteractiveElement> y <InteractiveElement target="lado-ac" color="pizarra">$\overline{AC}$</InteractiveElement> son congruentes: el triángulo es isósceles. $\blacksquare$
+</MedievalStep>
+
+<Separador />
+
+### Análisis
+
+La demostración es un ejercicio de <ConceptLink targetId="logica" isDependency={false}>lógica</ConceptLink> geométrica que engrana tres resultados previos: el <ConceptLink targetId="axioma-congruencia-1" isDependency={true}>transporte de segmentos</ConceptLink> (para construir $D$), el <ConceptLink targetId="teorema-triangulo-isosceles" isDependency={true}>Pons Asinorum</ConceptLink> (para obtener $\angle ADC \cong \angle ACD$), y el <ConceptLink targetId="teorema-angulo-externo" isDependency={true}>teorema del ángulo externo</ConceptLink> (para obtener $\angle ADC \gt \angle B$). La tensión entre la igualdad del Pons Asinorum y la desigualdad del ángulo externo es lo que produce la contradicción.
+
+<Nota>
+  Euclides demuestra I.6 inmediatamente después de I.5, estableciendo la equivalencia completa: $AB \cong AC \iff \angle B \cong \angle C$. La pareja I.5–I.6 es uno de los primeros ejemplos históricos de un teorema y su recíproco demostrados en sucesión.
+</Nota>
+
+Junto con el <ConceptLink targetId="teorema-triangulo-isosceles" isDependency={true}>Pons Asinorum</ConceptLink>, este teorema proporciona la equivalencia completa que caracteriza a los <ConceptLink targetId="triangulo-isosceles" isDependency={false}>triángulos isósceles</ConceptLink>. Ambos pertenecen a la <ConceptLink targetId="geometria-absoluta" isDependency={false}>geometría absoluta</ConceptLink>.
+
+</DemonstrationSection>

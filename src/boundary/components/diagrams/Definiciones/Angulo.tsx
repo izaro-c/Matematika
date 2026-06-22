@@ -104,8 +104,8 @@ export const Angulo = () => {
     const infoText = board.create('text', [
       -3.8, 3.5,
       function() {
-        let val = arc.Value();
-        let deg = Math.round(val * 180 / Math.PI);
+        const val = arc.Value();
+        const deg = Math.round(val * 180 / Math.PI);
         let name = "Agudo (0 &lt; &theta; &lt; &pi;/2)";
         if (deg === 90) name = "Recto (&theta; = &pi;/2)";
         else if (deg === 180) name = "Llano (&theta; = &pi;)";
@@ -113,8 +113,8 @@ export const Angulo = () => {
         else if (deg > 180 && deg < 360) name = "Cóncavo (&pi; &lt; &theta; &lt; 2&pi;)";
         else if (deg === 0 || deg === 360) name = "Nulo / Completo (&theta; = 0 | 2&pi;)";
 
-        let piFrac = (val / Math.PI).toFixed(2);
-        let piStr = deg === 90 ? "&pi;/2" : 
+        const piFrac = (val / Math.PI).toFixed(2);
+        const piStr = deg === 90 ? "&pi;/2" : 
                     deg === 180 ? "&pi;" : 
                     deg === 270 ? "3&pi;/2" : 
                     `${piFrac}&pi;`;

@@ -16,6 +16,37 @@ import { useGraphStore, useGraphSandboxStore } from '@/controller/store';
 import { MathNode } from '@/boundary/components/graph/CustomNode';
 import type { MathNodeData } from '@/boundary/components/graph/CustomNode';
 
+const NODE_TYPE_COLORS: Record<string, string> = {
+  axioma: '#1c1917',
+  lema: '#4a6070',
+  teorema: '#6b9e6b',
+  corolario: '#b85c38',
+  definicion: '#c49b4f',
+  modelo: '#8b3a3a',
+};
+const DEPENDENCY_DOT_COLORS: Record<string, string> = {
+  axioma: '#1c1917',
+  lema: '#4a6070',
+  definicion: '#8b7355',
+};
+const NODE_URL_PREFIX: Record<string, string> = {
+  axioma: 'axioma',
+  definicion: 'definicion',
+  modelo: 'modelo',
+};
+
+function getNodeTypeColor(type: string) {
+  return NODE_TYPE_COLORS[type] ?? NODE_TYPE_COLORS.modelo;
+}
+
+function getDependencyDotColor(type: string) {
+  return DEPENDENCY_DOT_COLORS[type] ?? '#6b9e6b';
+}
+
+function getNodeUrlPrefix(type: string) {
+  return NODE_URL_PREFIX[type] ?? 'teorema';
+}
+
 /**
  * Componente interno de agrupación (React Flow) utilizado en el árbol axiomático.
  * Dibuja una llave "{}" superior e inyecta la etiqueta del grupo lógico.
@@ -389,15 +420,7 @@ function FlowContent() {
                 >
                   <span
                     className="text-[8px] uppercase tracking-widest shrink-0 px-1.5 py-0.5 rounded font-sans font-bold"
-                    style={{
-                      background:
-                        r.nodeType === 'axioma' ? '#1c1917' :
-                          r.nodeType === 'lema' ? '#4a6070' :
-                            r.nodeType === 'teorema' ? '#6b9e6b' :
-                              r.nodeType === 'corolario' ? '#b85c38' :
-                                r.nodeType === 'definicion' ? '#c49b4f' : '#8b3a3a',
-                      color: '#fff',
-                    }}
+                    style={{ background: getNodeTypeColor(r.nodeType), color: '#fff' }}
                   >
                     {r.nodeType}
                   </span>
@@ -501,10 +524,6 @@ function FlowContent() {
             <div className="flex flex-col gap-1.5">
               {(['axioma', 'lema', 'teorema', 'corolario', 'definicion', 'modelo'] as const).map((type) => {
                 const isOn = visibleTypes.has(type);
-                const colors: Record<string, string> = {
-                  axioma: '#1c1917', lema: '#4a6070', teorema: '#6b9e6b',
-                  corolario: '#b85c38', definicion: '#c49b4f', modelo: '#8b3a3a',
-                };
                 return (
                   <button
                     key={type}
@@ -514,8 +533,8 @@ function FlowContent() {
                     <span
                       className="w-2.5 h-2.5 rounded-sm shrink-0 border transition-colors"
                       style={{
-                        background: isOn ? colors[type] : 'transparent',
-                        borderColor: colors[type],
+                        background: isOn ? NODE_TYPE_COLORS[type] : 'transparent',
+                        borderColor: NODE_TYPE_COLORS[type],
                       }}
                     />
                     <span className="capitalize leading-tight">{typeLabel[type]}</span>
@@ -540,14 +559,7 @@ function FlowContent() {
             <div className="flex justify-between items-start mb-2">
               <span
                 className="text-[9px] uppercase tracking-widest px-1.5 py-0.5 rounded font-sans font-bold"
-                style={{
-                  background:
-                    selectedNodeData.nodeType === 'axioma' ? '#1c1917' :
-                      selectedNodeData.nodeType === 'lema' ? '#4a6070' :
-                        selectedNodeData.nodeType === 'corolario' ? '#b85c38' :
-                          selectedNodeData.nodeType === 'definicion' ? '#c49b4f' : '#8b3a3a',
-                  color: '#fff',
-                }}
+                style={{ background: getNodeTypeColor(selectedNodeData.nodeType), color: '#fff' }}
               >
                 {selectedNodeData.nodeType}
               </span>
@@ -622,12 +634,7 @@ function FlowContent() {
                     <li key={dep.id} className="flex items-center gap-1.5">
                       <span
                         className="w-2 h-2 rounded-sm shrink-0"
-                        style={{
-                          background:
-                            dep.nodeType === 'axioma' ? '#1c1917' :
-                              dep.nodeType === 'lema' ? '#4a6070' :
-                                dep.nodeType === 'definicion' ? '#8b7355' : '#6b9e6b',
-                        }}
+                        style={{ background: getDependencyDotColor(dep.nodeType) }}
                       />
                       <span
                         className="text-xs font-serif text-carbon/70 cursor-pointer hover:text-carbon capitalize"
@@ -646,7 +653,7 @@ function FlowContent() {
             )}
 
             <a
-              href={`/Matematika/${selectedNodeData.nodeType === 'axioma' ? 'axioma' : selectedNodeData.nodeType === 'definicion' ? 'definicion' : selectedNodeData.nodeType === 'modelo' ? 'modelo' : 'teorema'}/${selectedNodeId}`}
+              href={`/Matematika/${getNodeUrlPrefix(selectedNodeData.nodeType)}/${selectedNodeId}`}
               className="inline-flex items-center gap-1.5 mt-1 text-sm font-sans text-pizarra hover:text-carbon transition-colors"
             >
               <span>Ver página →</span>

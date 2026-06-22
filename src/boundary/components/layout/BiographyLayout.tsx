@@ -4,6 +4,11 @@ import { Link } from 'wouter';
 
 import { db } from '@/database/dao/content';
 
+const THEOREM_COLOR_CLASSES: Record<string, { text: string; hover: string }> = {
+  salvia: { text: 'text-salvia', hover: 'group-hover:text-salvia' },
+  terracota: { text: 'text-terracota', hover: 'group-hover:text-terracota-light' },
+};
+
 /**
  * Metadatos requeridos para renderizar el perfil de un matemático histórico.
  */
@@ -100,18 +105,12 @@ export const BiographyLayout: React.FC<BiographyLayoutProps> = ({ Component, Sid
             
             <div className="flex flex-col gap-4">
               {theorems.map((th, idx) => {
-                const colorClass = th.color === 'salvia' ? 'text-salvia' : 
-                                   th.color === 'terracota' ? 'text-terracota' : 
-                                   'text-white/80';
-                
-                const hoverColorClass = th.color === 'salvia' ? 'group-hover:text-salvia' : 
-                                        th.color === 'terracota' ? 'group-hover:text-terracota-light' : 
-                                        'group-hover:text-white';
+                const color = THEOREM_COLOR_CLASSES[th.color ?? ''] ?? { text: 'text-white/80', hover: 'group-hover:text-white' };
 
                 return (
                   <Link key={idx} href={`/teorema/${th.id}`}>
                     <a className="block bg-white/5 border border-white/10 p-4 rounded-md hover:bg-white/10 transition-colors group cursor-pointer">
-                      <h4 className={`${colorClass} font-serif text-lg mb-1 ${hoverColorClass}`}>{th.title}</h4>
+                       <h4 className={`${color.text} font-serif text-lg mb-1 ${color.hover}`}>{th.title}</h4>
                       <p className="text-xs text-white/60 line-clamp-2 mb-2">{th.description}</p>
                       
                       <span className="text-xs font-bold text-white/40 uppercase tracking-wider group-hover:text-white transition-colors">

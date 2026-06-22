@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useId, useRef } from 'react';
 import JXG from 'jsxgraph';
 
 interface JXGBoardProps {
@@ -18,17 +18,13 @@ const JXGBoard: React.FC<JXGBoardProps> = ({
 }) => {
   const boardRef = useRef<HTMLDivElement>(null);
   const boardInstance = useRef<any>(null);
+  const boardId = useId().replace(/:/g, '');
 
   useEffect(() => {
     if (!boardRef.current) return;
 
-    // Generate a unique ID if the element doesn't have one
-    if (!boardRef.current.id) {
-      boardRef.current.id = 'jxg-board-' + Math.random().toString(36).substring(2, 9);
-    }
+    boardRef.current.id ||= `jxg-board-${boardId}`;
 
-    // Initialize board
-    if (!boardRef.current.id) boardRef.current.id = "jxgbox_" + Math.random().toString(36).substring(2, 9);
     boardInstance.current = JXG.JSXGraph.initBoard(boardRef.current.id, {
       boundingbox: bounds,
       axis: axis,

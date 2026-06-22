@@ -5,12 +5,16 @@ export const metadata = {
   "description": "Prueba por reducción al absurdo: si dos rectas comparten dos puntos distintos, son la misma recta.",
   "parentTheorem": "corolario-rectas-coincidentes",
   "proofMethod": "reduccion",
+  "authors": ["hilbert"],
   "layout": "split"
 };
 
 import { DemoRectasCoincidentes } from "@/boundary/components/diagrams/Demos/DemoRectasCoincidentes";
+import { InteractiveElement } from "@/boundary/components/ui/VisualBind";
 
 <DemonstrationSection diagram={<DemoRectasCoincidentes />}>
+
+<Capitular letra="D" />el <ConceptLink targetId="teorema-dos-rectas-un-punto" isDependency={true}>teorema de intersección única</ConceptLink> se desprende directamente el siguiente <ConceptLink targetId="corolario" isDependency={false}>corolario</ConceptLink>: si dos <ConceptLink targetId="recta" isDependency={false}>rectas</ConceptLink> comparten dos puntos distintos, entonces son la misma recta. La prueba es una <ConceptLink targetId="reduccion" isDependency={false}>reducción al absurdo</ConceptLink> de aplicación inmediata.
 
 <Separador />
 

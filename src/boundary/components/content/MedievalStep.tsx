@@ -57,7 +57,7 @@ export const MedievalStep: React.FC<MedievalStepProps> = ({ number, title, targe
           <div
             className="absolute inset-0 opacity-70 mix-blend-multiply"
             style={{
-              backgroundImage: 'url(/images/bg-arts-crafts-2.png)',
+              backgroundImage: 'url(/Matematika/images/bg-arts-crafts-2.png)',
               backgroundSize: '200%',
               backgroundPosition: 'center',
             }}

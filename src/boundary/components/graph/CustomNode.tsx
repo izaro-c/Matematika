@@ -29,6 +29,27 @@ export function MathNode({ data }: NodeProps) {
   const contentOpacity = isActive ? 1 : 0.28;
   const groupColor = nodeType === 'axioma' ? axiomGroupColor : undefined;
 
+  let borderWidth: number, borderColor: string;
+  if (isHighlighted) {
+    borderWidth = 4;
+    borderColor = s.ringColor;
+  } else if (groupColor) {
+    borderWidth = 5;
+    borderColor = groupColor;
+  } else {
+    borderWidth = 2;
+    borderColor = s.border;
+  }
+
+  let boxShadow: string;
+  if (isHighlighted) {
+    boxShadow = `0 0 0 2px ${s.bg}, 0 0 18px ${s.ringColor}80`;
+  } else if (groupColor) {
+    boxShadow = `0 0 0 8px ${groupColor}45, 0 0 0 18px ${groupColor}15, 0 0 50px ${groupColor}40, 0 2px 8px rgba(0,0,0,0.18)`;
+  } else {
+    boxShadow = '0 2px 8px rgba(0,0,0,0.18)';
+  }
+
   return (
     /**
      * Contenedor EXTERNO: tamaño fijo = huella en React Flow.
@@ -69,9 +90,9 @@ export function MathNode({ data }: NodeProps) {
             width: '100%',
             height: '100%',
             backgroundColor: s.bg,
-            border: `${isHighlighted ? 4 : groupColor ? 5 : 2}px solid ${groupColor || (isHighlighted ? s.ringColor : s.border)}`,
+            border: `${borderWidth}px solid ${borderColor}`,
             borderRadius: '50%',
-            outline: isHighlighted ? `3px solid ${s.ringColor}` : groupColor ? 'none' : 'none',
+            outline: isHighlighted ? `3px solid ${s.ringColor}` : 'none',
             outlineOffset: isHighlighted ? 3 : 2,
             display: 'flex',
             flexDirection: 'column',
@@ -79,11 +100,7 @@ export function MathNode({ data }: NodeProps) {
             justifyContent: 'center',
             padding: '8px 12px',
             boxSizing: 'border-box',
-            boxShadow: isHighlighted
-              ? `0 0 0 2px ${s.bg}, 0 0 18px ${s.ringColor}80`
-              : groupColor
-                ? `0 0 0 8px ${groupColor}45, 0 0 0 18px ${groupColor}15, 0 0 50px ${groupColor}40, 0 2px 8px rgba(0,0,0,0.18)`
-                : '0 2px 8px rgba(0,0,0,0.18)',
+            boxShadow,
             gap: 3,
           }}
         >

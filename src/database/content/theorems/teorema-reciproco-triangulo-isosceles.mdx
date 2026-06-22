@@ -1,0 +1,46 @@
+export const metadata = {
+  "id": "teorema-reciproco-triangulo-isosceles",
+  "type": "teorema",
+  "title": "Teorema recíproco del triángulo isósceles",
+  "description": "Si dos ángulos de un triángulo son congruentes, los lados opuestos a dichos ángulos también lo son. Es el recíproco del Pons Asinorum (Euclides I.6).",
+  "statement": "Sea △ABC un triángulo. Si ∠B ≅ ∠C, entonces AB ≅ AC.",
+  "tags": ["geometria", "triangulos", "congruencia", "geometria-absoluta"],
+  "authors": ["euclides"],
+  "difficulty": "básico",
+  "hasSimulation": false,
+  "demos": ["demo-reciproco-triangulo-isosceles"]
+};
+
+<Capitular letra="E" />l <ConceptLink targetId="teorema-triangulo-isosceles" isDependency={true}>Pons Asinorum</ConceptLink> (Euclides I.5) establece que en un <ConceptLink targetId="triangulo-isosceles" isDependency={false}>triángulo isósceles</ConceptLink>, a lados iguales se oponen <ConceptLink targetId="angulo" isDependency={false}>ángulos</ConceptLink> iguales. Este <ConceptLink targetId="teorema" isDependency={false}>teorema</ConceptLink> —Proposición I.6 de los <ConceptLink targetId="elementos" isDependency={false}>Elementos</ConceptLink>— demuestra la implicación recíproca: si un <ConceptLink targetId="triangulo" isDependency={false}>triángulo</ConceptLink> tiene dos <ConceptLink targetId="angulo" isDependency={false}>ángulos</ConceptLink> congruentes, entonces es isósceles. La prueba es por <ConceptLink targetId="contradiccion" isDependency={false}>reducción al absurdo</ConceptLink> y se apoya en el <ConceptLink targetId="teorema-angulo-externo" isDependency={true}>teorema del ángulo externo</ConceptLink>. Pertenece a la <ConceptLink targetId="geometria-absoluta" isDependency={false}>geometría absoluta</ConceptLink>.
+
+<Separador />
+
+### Enunciado Formal
+
+Sea $\triangle ABC$ un <ConceptLink targetId="triangulo" isDependency={false}>triángulo</ConceptLink>. Si $\angle B \cong \angle C$, entonces $\overline{AB} \cong \overline{AC}$.
+
+<Formula>
+  $$ \angle B \cong \angle C \implies AB \cong AC $$
+</Formula>
+
+Junto con el <ConceptLink targetId="teorema-triangulo-isosceles" isDependency={false}>Pons Asinorum</ConceptLink> ($AB \cong AC \implies \angle B \cong \angle C$), se obtiene la equivalencia:
+
+<Formula>
+  $$ AB \cong AC \iff \angle B \cong \angle C $$
+</Formula>
+
+<Separador />
+
+### Discusión
+
+La demostración es un ejemplo magistral de <ConceptLink targetId="contradiccion" isDependency={false}>reducción al absurdo</ConceptLink> en <ConceptLink targetId="geometria" isDependency={false}>geometría</ConceptLink>: se supone que los lados no son iguales, se construye un segmento auxiliar sobre el lado mayor usando el <ConceptLink targetId="axioma-congruencia-1" isDependency={false}>transporte de segmentos</ConceptLink>, y el <ConceptLink targetId="teorema-triangulo-isosceles" isDependency={false}>Pons Asinorum</ConceptLink> junto con el <ConceptLink targetId="teorema-angulo-externo" isDependency={false}>teorema del ángulo externo</ConceptLink> fuerzan una contradicción.
+
+Este teorema cierra el círculo lógico de la caracterización de los <ConceptLink targetId="triangulo-isosceles" isDependency={false}>triángulos isósceles</ConceptLink>: un triángulo es isósceles exactamente cuando tiene dos ángulos iguales.
+
+<Separador />
+
+### Observaciones
+
+- El teorema pertenece a la <ConceptLink targetId="geometria-absoluta" isDependency={false}>geometría absoluta</ConceptLink> y no requiere el <ConceptLink targetId="axioma-paralelas-euclides" isDependency={false}>axioma de las paralelas</ConceptLink>.
+- La cadena completa de equivalencias para un triángulo es: $AB \cong AC \iff \angle B \cong \angle C$. Ambas direcciones son válidas en geometría absoluta.
+- <ConceptLink targetId="euclides" isDependency={false}>Euclides</ConceptLink> sitúa esta proposición inmediatamente después del <ConceptLink targetId="teorema-triangulo-isosceles" isDependency={false}>Pons Asinorum</ConceptLink> (I.5 → I.6), formando un par simétrico que establece la equivalencia entre igualdad de lados e igualdad de ángulos.

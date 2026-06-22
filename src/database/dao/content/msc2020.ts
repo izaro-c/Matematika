@@ -338,16 +338,7 @@ export interface BranchTaxonomy {
   breadcrumbs: { name: string; slug: string }[];
 }
 
-export function buildBranchTaxonomy(
-  branchId: string,
-  items: { type: string; item: BaseContent & { tags?: string[] } }[],
-): BranchTaxonomy {
-  const branchCode = resolveBranchCode(branchId);
-  const branchName = mscNames[branchCode] || branchId;
-  const childCodes = getChildCodes(branchCode);
-  const allDescendantCodes = getAllDescendantCodes(branchCode);
-  const directItems: BranchTaxonomy['directItems'] = [];
-
+function buildBreadcrumbs(branchCode: string): BranchTaxonomy['breadcrumbs'] {
   const breadcrumbs: BranchTaxonomy['breadcrumbs'] = [];
   const chain: string[] = [];
   const seen = new Set<string>();
@@ -358,35 +349,53 @@ export function buildBranchTaxonomy(
     cur = mscParent[cur];
   }
   for (let i = 0; i < chain.length - 1; i++) {
-    const code = chain[i];
-    breadcrumbs.push({ name: mscNames[code] || code, slug: code });
+    breadcrumbs.push({ name: mscNames[chain[i]] || chain[i], slug: chain[i] });
+  }
+  return breadcrumbs;
+}
+
+function classifyItem(
+  item: BaseContent & { tags?: string[] },
+  branchCode: string,
+  childCodes: string[],
+  allDescendantCodes: string[],
+): { type: string; item: BaseContent & { tags?: string[] }; subBranchSlug?: string } | null {
+  if (!item.tags || item.tags.length === 0) return null;
+  const tagCodes = item.tags.map(t => tagToMSC[t]).filter((c): c is string => !!c);
+  if (tagCodes.length === 0) return null;
+
+  const directMatch = tagCodes.includes(branchCode);
+  const inheritedChildCode = directMatch ? undefined
+    : allDescendantCodes.find(c => tagCodes.includes(c));
+
+  if (!directMatch && !inheritedChildCode) return null;
+
+  let subBranchSlug: string | undefined;
+  if (directMatch) {
+    subBranchSlug = childCodes.find(c => tagCodes.includes(c));
+  } else if (inheritedChildCode) {
+    subBranchSlug = inheritedChildCode;
   }
 
+  return { type: 'classified', item, subBranchSlug };
+}
+
+export function buildBranchTaxonomy(
+  branchId: string,
+  items: { type: string; item: BaseContent & { tags?: string[] } }[],
+): BranchTaxonomy {
+  const branchCode = resolveBranchCode(branchId);
+  const branchName = mscNames[branchCode] || branchId;
+  const childCodes = getChildCodes(branchCode);
+  const allDescendantCodes = getAllDescendantCodes(branchCode);
+
+  const directItems: BranchTaxonomy['directItems'] = [];
   for (const { type, item } of items) {
-    if (!item.tags || item.tags.length === 0) continue;
-    const tagCodes = item.tags
-      .map(t => tagToMSC[t])
-      .filter((c): c is string => !!c);
-    if (tagCodes.length === 0) continue;
-
-    const directMatch = tagCodes.includes(branchCode);
-    let inheritedChildCode: string | undefined;
-    if (!directMatch) {
-      inheritedChildCode = allDescendantCodes.find(c => tagCodes.includes(c));
-    }
-
-    if (!directMatch && !inheritedChildCode) continue;
-
-    let subBranchSlug: string | undefined;
-    if (directMatch) {
-      subBranchSlug = childCodes.find(c => tagCodes.includes(c));
-    } else if (inheritedChildCode) {
-      subBranchSlug = inheritedChildCode;
-    }
-
-    directItems.push({ type, item, subBranchSlug });
+    const classified = classifyItem(item, branchCode, childCodes, allDescendantCodes);
+    if (classified) directItems.push({ type, item: classified.item, subBranchSlug: classified.subBranchSlug });
   }
 
+  const breadcrumbs = buildBreadcrumbs(branchCode);
   const subBranches = childCodes
     .map(code => ({ name: mscNames[code] || code, slug: code }))
     .sort((a, b) => a.name.localeCompare(b.name));
@@ -414,9 +423,7 @@ export function getItemsByBranch(
     const tagCodes = item.tags
       .map(t => tagToMSC[t])
       .filter((c): c is string => !!c);
-    if (tagCodes.includes(branchCode)) {
-      results.push({ type, item });
-    } else if (allDescendantCodes.some(c => tagCodes.includes(c))) {
+    if (tagCodes.includes(branchCode) || allDescendantCodes.some(c => tagCodes.includes(c))) {
       results.push({ type, item });
     }
   }

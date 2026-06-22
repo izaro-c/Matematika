@@ -22,36 +22,41 @@ interface StudyTaskProps {
  * que se rellena con color cuando la tarea se marca como leída.
  * Soporta registro en `StudyPlanContext` para permitir scroll interactivo.
  */
+const TYPE_PATH_PREFIX: Record<string, string> = {
+  teorema: '/teorema/', ejercicio: '/ejercicio/', ejemplo: '/ejemplo/',
+  caso: '/caso/', definicion: '/definicion/',
+};
+
+function lookupExists(type: string, id: string): boolean {
+  if (type === 'teorema') return !!db.getTheorem(id);
+  if (type === 'ejercicio') return !!db.getExercise(id);
+  if (type === 'ejemplo') return !!db.getExample(id);
+  if (type === 'caso') return !!db.getUseCase(id);
+  if (type === 'definicion') return !!db.getDefinition(id);
+  return true; // lección y otros: asumimos que existen
+}
+
 export const StudyTask: React.FC<StudyTaskProps> = ({ id, type, title }) => {
   const { isRead } = useProgressStore();
   const completed = isRead(id);
   const context = React.useContext(StudyPlanContext);
   const registerTaskRef = context?.registerTaskRef;
   
-  let href: string;
-  switch (type) {
-    case 'teorema': href = `/teorema/${id}`; break;
-    case 'ejercicio': href = `/ejercicio/${id}`; break;
-    case 'ejemplo': href = `/ejemplo/${id}`; break;
-    case 'caso': href = `/caso/${id}`; break;
-    case 'definicion': href = `/definicion/${id}`; break;
-    case 'lección': href = `/${id}`; break;
-    default: href = `/${id}`;
-  }
+  const href = TYPE_PATH_PREFIX[type] ? `${TYPE_PATH_PREFIX[type]}${id}` : `/${id}`;
+  const exists = lookupExists(type, id);
 
   const isTheory = ['teorema', 'definicion', 'lección'].includes(type);
   const isPractice = ['ejercicio', 'ejemplo', 'caso'].includes(type);
-
   const containerStyle = isTheory ? 'border-solid bg-lienzo' : 'border-dashed border-2 bg-carbon/[0.02]';
 
-  // Verificar que el elemento existe, de lo contrario lo mostramos como próximamente
-  let exists = false;
-  if (type === 'teorema') exists = !!db.getTheorem(id);
-  else if (type === 'ejercicio') exists = !!db.getExercise(id);
-  else if (type === 'ejemplo') exists = !!db.getExample(id);
-  else if (type === 'caso') exists = !!db.getUseCase(id);
-  else if (type === 'definicion') exists = !!db.getDefinition(id);
-  // Asumimos que los que no podemos verificar tan fácil (lección general) existen o los renderizamos igual
+  let actionLabel: string;
+  if (completed) {
+    actionLabel = 'Asimilado';
+  } else if (isPractice) {
+    actionLabel = 'Practicar →';
+  } else {
+    actionLabel = 'Estudiar →';
+  }
 
   if (!exists && type !== 'lección') {
     return (
@@ -93,7 +98,7 @@ export const StudyTask: React.FC<StudyTaskProps> = ({ id, type, title }) => {
             </h3>
           </div>
           <div className={`text-[10px] font-sans uppercase tracking-widest font-bold transition-colors ${completed ? 'text-salvia' : 'text-carbon/40 group-hover:text-terracota'}`}>
-            {completed ? 'Asimilado' : (isPractice ? 'Practicar →' : 'Estudiar →')}
+            {actionLabel}
           </div>
         </a>
       </Link>
