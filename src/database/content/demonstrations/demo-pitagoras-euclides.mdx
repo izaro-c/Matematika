@@ -15,7 +15,13 @@ import { InteractiveElement } from "@/boundary/components/ui/VisualBind";
 
 <DemonstrationSection diagram={<DemoPitagorasEuclides />}>
 
-<Capitular letra="E" />l <ConceptLink targetId="teorema-pitagoras" isDependency={false}>Teorema de Pitágoras</ConceptLink> admite múltiples demostraciones. La presente es la clásica prueba del «molino de viento», atribuida a <ConceptLink targetId="euclides" isDependency={false}>Euclides</ConceptLink> (Proposición I.47 de los <ConceptLink targetId="elementos" isDependency={false}>Elementos</ConceptLink>) y formalizada rigurosamente bajo el sistema axiomático de <ConceptLink targetId="hilbert" isDependency={false}>Hilbert</ConceptLink>. Se traza la altura desde el ángulo recto y se comparan áreas de triángulos y rectángulos.
+<Capitular letra="S" />ea $\triangle ABC$ un <ConceptLink targetId="triangulo-rectangulo" isDependency={false}>triángulo rectángulo</ConceptLink> con <ConceptLink targetId="angulo" isDependency={false}>ángulo</ConceptLink> <ConceptLink targetId="angulo" isDependency={false}>recto</ConceptLink> en $C$. Sean $a = |BC|$ y $b = |CA|$ los <ConceptLink targetId="cateto" isDependency={false}>catetos</ConceptLink>, y $c = |AB|$ la <ConceptLink targetId="hipotenusa" isDependency={false}>hipotenusa</ConceptLink> (el <ConceptLink targetId="lado" isDependency={false}>lado</ConceptLink> opuesto al <ConceptLink targetId="angulo" isDependency={false}>ángulo</ConceptLink> <ConceptLink targetId="angulo" isDependency={false}>recto</ConceptLink>). Entonces:
+
+<Formula>
+  $$ a^2 + b^2 = c^2 $$
+</Formula>
+
+Equivalente en términos de <ConceptLink targetId="area" isDependency={false}>áreas</ConceptLink>: el <ConceptLink targetId="area" isDependency={false}>área</ConceptLink> del <ConceptLink targetId="cuadrado" isDependency={false}>cuadrado</ConceptLink> construido sobre la <InteractiveElement target="cuadrado-c" color="ocre">hipotenusa</InteractiveElement> equivale a la suma de las <ConceptLink targetId="area" isDependency={false}>áreas</ConceptLink> de los <ConceptLink targetId="cuadrado" isDependency={false}>cuadrados</ConceptLink> construidos sobre los <InteractiveElement target="cuadrado-a" color="salvia">cateto $a$</InteractiveElement> y <InteractiveElement target="cuadrado-b" color="terracota">cateto $b$</InteractiveElement>.
 
 <Separador />
 
@@ -25,7 +31,7 @@ import { InteractiveElement } from "@/boundary/components/ui/VisualBind";
   </MedievalStep>
 
   <MedievalStep number={2} target="cuadrados" title="Construcción de los cuadrados">
-    Por el <ConceptLink targetId="teorema-construccion-cuadrado" isDependency={true}>teorema de construcción de polígonos</ConceptLink>, sobre cada <ConceptLink targetId="lado" isDependency={false}>lado</ConceptLink> del <ConceptLink targetId="triangulo" isDependency={false}>triángulo</ConceptLink> construimos un <ConceptLink targetId="cuadrado" isDependency={false}>cuadrado</ConceptLink> hacia el exterior.
+    Por el <ConceptLink targetId="teorema-construccion-cuadrado" isDependency={false}>teorema de construcción de polígonos</ConceptLink>, sobre cada <ConceptLink targetId="lado" isDependency={false}>lado</ConceptLink> del <ConceptLink targetId="triangulo" isDependency={false}>triángulo</ConceptLink> construimos un <ConceptLink targetId="cuadrado" isDependency={false}>cuadrado</ConceptLink> hacia el exterior.
     Obtenemos: el <InteractiveElement target="cuadrado-b" color="salvia">cuadrado sobre $b$</InteractiveElement> de <ConceptLink targetId="area" isDependency={false}>área</ConceptLink> $b^2$, el <InteractiveElement target="cuadrado-a" color="terracota">cuadrado sobre $a$</InteractiveElement> de área $a^2$, y el <InteractiveElement target="cuadrado-c" color="pizarra">cuadrado sobre la <ConceptLink targetId="hipotenusa" isDependency={false}>hipotenusa</ConceptLink></InteractiveElement> de área $c^2$.
     Queremos demostrar que $a^2 + b^2 = c^2$.
   </MedievalStep>
@@ -45,11 +51,11 @@ import { InteractiveElement } from "@/boundary/components/ui/VisualBind";
 
   <MedievalStep number={5} target="areas-izq" title="Equivalencia de áreas (Izquierda)">
     El <InteractiveElement target="triangulo-acd" color="salvia">$\triangle ACD$</InteractiveElement> comparte la base $AD$ con el <InteractiveElement target="rectangulo-izq" color="salvia">rectángulo izquierdo</InteractiveElement> y $C$ está sobre la recta paralela a $AD$ que pasa por el lado opuesto del rectángulo (por el paso 3, $C$ está sobre la perpendicular a $AB$, y $AD \parallel$ lado opuesto del rectángulo por construcción del cuadrado).
-    Por el <ConceptLink targetId="teorema-area-triangulo" isDependency={true}>Teorema de equivalencia de áreas</ConceptLink>, el área del triángulo es la mitad de la del rectángulo.
+    Por el <ConceptLink targetId="teorema-area-triangulo" isDependency={false}>Teorema de equivalencia de áreas</ConceptLink>, el área del triángulo es la mitad de la del rectángulo.
 
-    El <InteractiveElement target="triangulo-akb" color="salvia">$\triangle AKB$</InteractiveElement> comparte la base $AK$ con el <InteractiveElement target="cuadrado-b" color="salvia">cuadrado sobre $b$</InteractiveElement> y $B$ está sobre la recta paralela a $AK$ por el lado opuesto del cuadrado. Por el <ConceptLink targetId="teorema-area-triangulo" isDependency={true}>mismo teorema</ConceptLink>, su área es la mitad de la del cuadrado.
+    El <InteractiveElement target="triangulo-akb" color="salvia">$\triangle AKB$</InteractiveElement> comparte la base $AK$ con el <InteractiveElement target="cuadrado-b" color="salvia">cuadrado sobre $b$</InteractiveElement> y $B$ está sobre la recta paralela a $AK$ por el lado opuesto del cuadrado. Por el <ConceptLink targetId="teorema-area-triangulo" isDependency={false}>mismo teorema</ConceptLink>, su área es la mitad de la del cuadrado.
 
-    Por el paso 4, $\triangle ACD \cong \triangle AKB$, luego sus áreas son iguales. Por la <ConceptLink targetId="propiedad-transitiva-igualdad" isDependency={true}>transitividad de la igualdad</ConceptLink>, el <InteractiveElement target="rectangulo-izq" color="salvia">rectángulo izquierdo</InteractiveElement> tiene la misma área que el <InteractiveElement target="cuadrado-b" color="salvia">cuadrado sobre $b$ ($b^2$)</InteractiveElement>.
+    Por el paso 4, $\triangle ACD \cong \triangle AKB$, luego sus áreas son iguales. Por la <ConceptLink targetId="propiedad-transitiva-igualdad" isDependency={false}>transitividad de la igualdad</ConceptLink>, el <InteractiveElement target="rectangulo-izq" color="salvia">rectángulo izquierdo</InteractiveElement> tiene la misma área que el <InteractiveElement target="cuadrado-b" color="salvia">cuadrado sobre $b$ ($b^2$)</InteractiveElement>.
   </MedievalStep>
 
   <MedievalStep number={6} target="areas-der" title="Equivalencia de áreas (Derecha)">
@@ -58,8 +64,8 @@ import { InteractiveElement } from "@/boundary/components/ui/VisualBind";
   </MedievalStep>
 
   <MedievalStep number={7} target="cuadrados-final" title="Conclusión final">
-    Por la <ConceptLink targetId="propiedad-aditiva-area" isDependency={true}>propiedad aditiva del área</ConceptLink>, el <InteractiveElement target="cuadrado-c" color="pizarra">cuadrado sobre la hipotenusa ($c^2$)</InteractiveElement> es la unión del <InteractiveElement target="rectangulo-izq" color="salvia">rectángulo izquierdo</InteractiveElement> y el <InteractiveElement target="rectangulo-der" color="terracota">rectángulo derecho</InteractiveElement>.
-    Por el paso 5, el rectángulo izquierdo tiene área $b^2$. Por el paso 6, el rectángulo derecho tiene área $a^2$. Por la <ConceptLink targetId="propiedad-aditiva-area" isDependency={true}>propiedad aditiva</ConceptLink>:
+    Por la <ConceptLink targetId="teoria-medida-area" isDependency={false}>propiedad aditiva del área</ConceptLink>, el <InteractiveElement target="cuadrado-c" color="pizarra">cuadrado sobre la hipotenusa ($c^2$)</InteractiveElement> es la unión del <InteractiveElement target="rectangulo-izq" color="salvia">rectángulo izquierdo</InteractiveElement> y el <InteractiveElement target="rectangulo-der" color="terracota">rectángulo derecho</InteractiveElement>.
+    Por el paso 5, el rectángulo izquierdo tiene área $b^2$. Por el paso 6, el rectángulo derecho tiene área $a^2$. Por la <ConceptLink targetId="teoria-medida-area" isDependency={false}>propiedad aditiva</ConceptLink>:
 
     <Formula>
       $$ a^2 + b^2 = c^2 $$

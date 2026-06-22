@@ -15,7 +15,14 @@ import { InteractiveElement } from "@/boundary/components/ui/VisualBind";
 
 <DemonstrationSection diagram={<DemoExistenciaPerpendicular />}>
 
-<Capitular letra="E" />sta <ConceptLink targetId="demostracion" isDependency={false}>demostración</ConceptLink> prueba que desde cualquier <ConceptLink targetId="punto" isDependency={false}>punto</ConceptLink> del <ConceptLink targetId="plano" isDependency={false}>plano</ConceptLink> puede trazarse una única <ConceptLink targetId="perpendicular" isDependency={false}>perpendicular</ConceptLink> a una <ConceptLink targetId="recta" isDependency={false}>recta</ConceptLink> dada. Se distinguen dos casos: el <ConceptLink targetId="punto" isDependency={false}>punto</ConceptLink> sobre la recta y el punto exterior. Ambos se resuelven constructivamente usando el <ConceptLink targetId="axioma-congruencia-4" isDependency={true}>axioma de transporte de ángulos (III-4)</ConceptLink>, el <ConceptLink targetId="axioma-congruencia-5" isDependency={true}>criterio LAL</ConceptLink>, y —para la unicidad del segundo caso— el <ConceptLink targetId="teorema-angulo-externo" isDependency={true}>teorema del ángulo externo</ConceptLink>.
+<Capitular letra="S" />ea $l$ una <ConceptLink targetId="recta" isDependency={false}>recta</ConceptLink> y $P$ un <ConceptLink targetId="punto" isDependency={false}>punto</ConceptLink> cualquiera del <ConceptLink targetId="plano" isDependency={false}>plano</ConceptLink>. Entonces:
+
+1. **Caso 1** ($P \in l$): existe una única recta $m$ tal que $P \in m$ y $m \perp l$.
+2. **Caso 2** ($P \notin l$): existe una única recta $m$ tal que $P \in m$ y $m \perp l$. Además, la intersección $m \cap l = \{F\}$ es un único punto, llamado **pie de la perpendicular**.
+
+<Formula>
+  $$ \forall l \ \forall P \ \exists!\, m : P \in m \land m \perp l $$
+</Formula>
 
 <Separador />
 
@@ -34,7 +41,7 @@ Sea <InteractiveElement target="recta-l" color="carbon">$l$</InteractiveElement>
 <MedievalStep number={2} title="La recta PC es perpendicular a l" target={["angulo-apc", "angulo-apb", "recta-pc"]}>
 Por el paso 1, <InteractiveElement target="angulo-apb" color="salvia">$\angle APB$</InteractiveElement> y <InteractiveElement target="angulo-apc" color="terracota">$\angle APC$</InteractiveElement> son <ConceptLink targetId="congruencia" isDependency={false}>congruentes</ConceptLink> y yacen en semiplanos opuestos respecto a $l$. Por el <ConceptLink targetId="axioma-orden-4" isDependency={true}>axioma de separación del plano</ConceptLink>, la recta $l = \overleftrightarrow{PA}$ divide el ángulo $\angle BPC$ en dos ángulos adyacentes: $\angle APB$ y $\angle APC$.
 
-Dado que $\angle APB \cong \angle APC$, la recta $l$ biseca $\angle BPC$ en dos partes congruentes. Por la definición de <ConceptLink targetId="angulo-recto" isDependency={true}>ángulo recto</ConceptLink> (un ángulo congruente con su adyacente), $\angle APB$ y $\angle APC$ son ángulos rectos. Por tanto, <InteractiveElement target="recta-pc" color="terracota">$\overleftrightarrow{PC} \perp l$</InteractiveElement>.
+Dado que $\angle APB \cong \angle APC$, la recta $l$ biseca $\angle BPC$ en dos partes congruentes. Por la definición de <ConceptLink targetId="angulo-recto" isDependency={false}>ángulo recto</ConceptLink> (un ángulo congruente con su adyacente), $\angle APB$ y $\angle APC$ son ángulos rectos. Por tanto, <InteractiveElement target="recta-pc" color="terracota">$\overleftrightarrow{PC} \perp l$</InteractiveElement>.
 </MedievalStep>
 
 <MedievalStep number={3} title="Unicidad" target={["recta-pc"]}>
@@ -70,13 +77,13 @@ Por el <ConceptLink targetId="axioma-congruencia-5" isDependency={true}>criterio
   $$ \triangle PAM \cong \triangle CAM $$
 </Formula>
 
-Por la <ConceptLink targetId="congruencia" isDependency={false}>definición de congruencia</ConceptLink>, $\angle AMP \cong \angle AMC$. Por el paso 5, $M$ está entre $P$ y $C$ en $\overline{PC}$. Por tanto $\angle AMP$ y $\angle AMC$ son <ConceptLink targetId="angulos-suplementarios" isDependency={true}>adyacentes y suplementarios</ConceptLink> (suman $180^\circ$). Si dos ángulos son congruentes y suplementarios, cada uno mide $90^\circ$. Por la <ConceptLink targetId="perpendicular" isDependency={false}>definición de perpendicularidad</ConceptLink>, $\overleftrightarrow{PM} \perp l$.
+Por la <ConceptLink targetId="congruencia" isDependency={false}>definición de congruencia</ConceptLink>, $\angle AMP \cong \angle AMC$. Por el paso 5, $M$ está entre $P$ y $C$ en $\overline{PC}$. Por tanto $\angle AMP$ y $\angle AMC$ son <ConceptLink targetId="angulos-suplementarios" isDependency={false}>adyacentes y suplementarios</ConceptLink> (suman $180^\circ$). Si dos ángulos son congruentes y suplementarios, cada uno mide $90^\circ$. Por la <ConceptLink targetId="perpendicular" isDependency={false}>definición de perpendicularidad</ConceptLink>, $\overleftrightarrow{PM} \perp l$.
 </MedievalStep>
 
 <MedievalStep number={7} title="Unicidad del pie" target={["punto-m"]}>
 Supongamos que existiera otro pie $M' \neq M$ sobre $l$ con $PM' \perp l$. Consideremos $\triangle PMM'$:
 
-En $M$, $\angle PMM'$ es un <ConceptLink targetId="angulo-recto" isDependency={true}>ángulo recto</ConceptLink> (por ser $PM \perp l$ y $M' \in l$). En $M'$, $\angle PM'M$ es también un ángulo recto (por ser $PM' \perp l$ y $M \in l$). Pero entonces $\triangle PMM'$ tendría dos ángulos rectos.
+En $M$, $\angle PMM'$ es un <ConceptLink targetId="angulo-recto" isDependency={false}>ángulo recto</ConceptLink> (por ser $PM \perp l$ y $M' \in l$). En $M'$, $\angle PM'M$ es también un ángulo recto (por ser $PM' \perp l$ y $M \in l$). Pero entonces $\triangle PMM'$ tendría dos ángulos rectos.
 
 Por el <ConceptLink targetId="teorema-angulo-externo" isDependency={true}>teorema del ángulo externo</ConceptLink>, en cualquier <ConceptLink targetId="triangulo" isDependency={false}>triángulo</ConceptLink> un ángulo externo es estrictamente mayor que cada ángulo interior no adyacente. Si $\triangle PMM'$ tuviera dos ángulos rectos, el ángulo externo en $M$ mediría $90^\circ$, igual que el ángulo interior en $M'$, contradiciendo el teorema. Por tanto $M = M'$ y el pie es único.
 </MedievalStep>
@@ -92,7 +99,7 @@ Una vez establecida la unicidad del pie <InteractiveElement target="punto-m" col
 La demostración es modular: el Caso 1 (punto sobre la recta) solo requiere el <ConceptLink targetId="axioma-congruencia-4" isDependency={true}>transporte de ángulos</ConceptLink>, mientras que el Caso 2 (punto exterior) añade el <ConceptLink targetId="axioma-congruencia-5" isDependency={true}>criterio LAL</ConceptLink> para la congruencia de triángulos y el <ConceptLink targetId="teorema-angulo-externo" isDependency={true}>teorema del ángulo externo</ConceptLink> para descartar la existencia de dos pies. Esta dependencia es inevitable: si el ángulo externo no fuera estrictamente mayor que los remotos, podrían existir triángulos con dos ángulos rectos (como ocurre en geometría esférica).
 
 <Nota>
-  La unicidad radical del pie de la perpendicular es lo que diferencia la <ConceptLink targetId="geometria-euclidiana" isDependency={false}>geometría plana</ConceptLink> de la <ConceptLink targetId="geometria-esferica" isDependency={false}>geometría esférica</ConceptLink>: en la esfera, desde un punto exterior a un «círculo máximo» pueden trazarse dos perpendiculares distintas. La prohibición de este fenómeno en el plano es una consecuencia directa del <ConceptLink targetId="teorema-angulo-externo" isDependency={true}>teorema del ángulo externo</ConceptLink>.
+  La unicidad radical del pie de la perpendicular es lo que diferencia la <ConceptLink targetId="sistema-euclidiano" isDependency={false}>geometría plana</ConceptLink> de la <ConceptLink targetId="geometria-esferica" isDependency={false}>geometría esférica</ConceptLink>: en la esfera, desde un punto exterior a un «círculo máximo» pueden trazarse dos perpendiculares distintas. La prohibición de este fenómeno en el plano es una consecuencia directa del <ConceptLink targetId="teorema-angulo-externo" isDependency={true}>teorema del ángulo externo</ConceptLink>.
 </Nota>
 
 El teorema de existencia de la <ConceptLink targetId="perpendicular" isDependency={false}>perpendicular</ConceptLink> es el prerrequisito indispensable para construir la <ConceptLink targetId="mediatriz" isDependency={false}>mediatriz</ConceptLink>, la <ConceptLink targetId="bisectriz" isDependency={false}>bisectriz</ConceptLink>, la <ConceptLink targetId="altura" isDependency={false}>altura</ConceptLink> y la <ConceptLink targetId="distancia" isDependency={false}>distancia</ConceptLink> de un punto a una recta.

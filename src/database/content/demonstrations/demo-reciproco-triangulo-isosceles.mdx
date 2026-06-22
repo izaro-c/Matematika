@@ -15,7 +15,21 @@ import { InteractiveElement } from "@/boundary/components/ui/VisualBind";
 
 <DemonstrationSection diagram={<DemoReciprocoTrianguloIsosceles />}>
 
-<Capitular letra="L" />a Proposición I.6 de los <ConceptLink targetId="elementos" isDependency={false}>Elementos</ConceptLink> es el recíproco del célebre <ConceptLink targetId="teorema-triangulo-isosceles" isDependency={true}>Pons Asinorum</ConceptLink>. La <ConceptLink targetId="demostracion" isDependency={false}>demostración</ConceptLink> que sigue usa <ConceptLink targetId="contradiccion" isDependency={false}>reducción al absurdo</ConceptLink>: si los <ConceptLink targetId="lado" isDependency={false}>lados</ConceptLink> no fueran congruentes, se podría construir un <ConceptLink targetId="triangulo-isosceles" isDependency={false}>triángulo isósceles</ConceptLink> auxiliar cuyas propiedades angulares, combinadas con el <ConceptLink targetId="teorema-angulo-externo" isDependency={true}>teorema del ángulo externo</ConceptLink>, producirían una <ConceptLink targetId="contradiccion" isDependency={false}>contradicción</ConceptLink> insalvable.
+<Formula>
+  $$ \angle B \cong \angle C \implies \overline{AB} \cong \overline{AC} $$
+</Formula>
+
+<Capitular letra="S" />ea $\triangle ABC$ un <ConceptLink targetId="triangulo" isDependency={false}>triángulo</ConceptLink>. Si $\angle B \cong \angle C$, entonces $\overline{AB} \cong \overline{AC}$.
+
+<Formula>
+  $$ \angle B \cong \angle C \implies AB \cong AC $$
+</Formula>
+
+Junto con el <ConceptLink targetId="teorema-triangulo-isosceles" isDependency={false}>Pons Asinorum</ConceptLink> ($AB \cong AC \implies \angle B \cong \angle C$), se obtiene la equivalencia:
+
+<Formula>
+  $$ AB \cong AC \iff \angle B \cong \angle C $$
+</Formula>
 
 <Separador />
 
@@ -38,7 +52,7 @@ Puesto que $\overline{AB} \gt \overline{AC}$, el punto $D$ está estrictamente e
 <MedievalStep number={3} title="Triángulo isósceles auxiliar" target={["triangulo-adc"]}>
 Por el <ConceptLink targetId="axioma-incidencia-1" isDependency={true}>axioma I-1</ConceptLink>, trazamos $\overline{CD}$. Se forma <InteractiveElement target="triangulo-adc" color="salvia">$\triangle ADC$</InteractiveElement>.
 
-Por el paso 2, $\overline{AD} \cong \overline{AC}$. Por la definición de <ConceptLink targetId="triangulo-isosceles" isDependency={true}>triángulo isósceles</ConceptLink>, $\triangle ADC$ es isósceles. Por el <ConceptLink targetId="teorema-triangulo-isosceles" isDependency={true}>Pons Asinorum</ConceptLink>:
+Por el paso 2, $\overline{AD} \cong \overline{AC}$. Por la definición de <ConceptLink targetId="triangulo" isDependency={false}>triángulo isósceles</ConceptLink>, $\triangle ADC$ es isósceles. Por el <ConceptLink targetId="teorema-triangulo-isosceles" isDependency={true}>Pons Asinorum</ConceptLink>:
 
 <Formula>
   $$ \angle ADC \cong \angle ACD $$
@@ -89,6 +103,6 @@ La demostración es un ejercicio de <ConceptLink targetId="logica" isDependency=
   Euclides demuestra I.6 inmediatamente después de I.5, estableciendo la equivalencia completa: $AB \cong AC \iff \angle B \cong \angle C$. La pareja I.5–I.6 es uno de los primeros ejemplos históricos de un teorema y su recíproco demostrados en sucesión.
 </Nota>
 
-Junto con el <ConceptLink targetId="teorema-triangulo-isosceles" isDependency={true}>Pons Asinorum</ConceptLink>, este teorema proporciona la equivalencia completa que caracteriza a los <ConceptLink targetId="triangulo-isosceles" isDependency={false}>triángulos isósceles</ConceptLink>. Ambos pertenecen a la <ConceptLink targetId="geometria-absoluta" isDependency={false}>geometría absoluta</ConceptLink>.
+Junto con el <ConceptLink targetId="teorema-triangulo-isosceles" isDependency={true}>Pons Asinorum</ConceptLink>, este teorema proporciona la equivalencia completa que caracteriza a los <ConceptLink targetId="triangulo" isDependency={false}>triángulos isósceles</ConceptLink>. Ambos pertenecen a la <ConceptLink targetId="sistema-absoluto" isDependency={false}>geometría absoluta</ConceptLink>.
 
 </DemonstrationSection>

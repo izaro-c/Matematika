@@ -15,7 +15,9 @@ import { InteractiveElement } from "@/boundary/components/ui/VisualBind";
 
 <DemonstrationSection diagram={<DemoCongruenciaLLL />}>
 
-<Capitular letra="E" />l riguroso criterio LLL (Lado-Lado-Lado) se demuestra mediante una reducción directa al <ConceptLink targetId="axioma-congruencia-5" isDependency={false}>postulado LAL</ConceptLink>: se transporta un <ConceptLink targetId="angulo" isDependency={false}>ángulo</ConceptLink> estructurador del primer <ConceptLink targetId="triangulo" isDependency={false}>triángulo</ConceptLink> sobre el segundo en un semiplano opuesto, induciendo un emparejamiento que, al interactuar con triángulos isósceles auxiliares, fuerza la plena <ConceptLink targetId="congruencia" isDependency={false}>congruencia</ConceptLink> geométrica de ambas figuras.
+<Capitular letra="S" />ean <Formula>
+  $$ \triangle ABC \text{ y } \triangle A'B'C' \text{ tales que } \overline{AB} \cong \overline{A'B'}, \; \overline{BC} \cong \overline{B'C'}, \; \overline{CA} \cong \overline{C'A'}. \text{ Entonces } \triangle ABC \cong \triangle A'B'C'. $$
+</Formula>
 
 <Separador />
 
@@ -39,8 +41,8 @@ Como consecuencia de esta congruencia, <InteractiveElement target="sideBCStar" c
 <MedievalStep number={3} title="Triángulos Isósceles Auxiliares" target="step3">
 Tracemos ahora un segmento uniendo <InteractiveElement target="lineCC" color="salvia">$C'$ con $C^*$</InteractiveElement>. Esto divide nuestra figura en dos nuevos triángulos que comparten la base $C'C^*$:
 
-- El triángulo izquierdo <InteractiveElement target="isoLeft" color="salvia">$\triangle A'C'C^*$</InteractiveElement>. Por hipótesis $A'C' \cong AC$ y por el paso 1 $A'C^* \cong AC$. Por el <ConceptLink targetId="axioma-congruencia-4" isDependency={true}>axioma de transitividad</ConceptLink>, $A'C' \cong A'C^*$. Por la definición de <ConceptLink targetId="triangulo-isosceles" isDependency={true}>triángulo isósceles</ConceptLink>, $\triangle A'C'C^*$ es isósceles.
-- El triángulo derecho <InteractiveElement target="isoRight" color="terracota">$\triangle B'C'C^*$</InteractiveElement>. Por el paso 2, $B'C' \cong B'C^*$. Por la definición de <ConceptLink targetId="triangulo-isosceles" isDependency={true}>triángulo isósceles</ConceptLink>, $\triangle B'C'C^*$ es isósceles.
+- El triángulo izquierdo <InteractiveElement target="isoLeft" color="salvia">$\triangle A'C'C^*$</InteractiveElement>. Por hipótesis $A'C' \cong AC$ y por el paso 1 $A'C^* \cong AC$. Por el <ConceptLink targetId="axioma-congruencia-4" isDependency={true}>axioma de transitividad</ConceptLink>, $A'C' \cong A'C^*$. Por la definición de <ConceptLink targetId="triangulo" isDependency={false}>triángulo isósceles</ConceptLink>, $\triangle A'C'C^*$ es isósceles.
+- El triángulo derecho <InteractiveElement target="isoRight" color="terracota">$\triangle B'C'C^*$</InteractiveElement>. Por el paso 2, $B'C' \cong B'C^*$. Por la definición de <ConceptLink targetId="triangulo" isDependency={false}>triángulo isósceles</ConceptLink>, $\triangle B'C'C^*$ es isósceles.
 </MedievalStep>
 
 <MedievalStep number={4} title="Igualdad de Ángulos y Conclusión Final" target="step4">

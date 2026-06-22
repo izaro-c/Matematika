@@ -1,0 +1,65 @@
+export const metadata = {
+  "id": "demo-invariancia-triangulacion",
+  "type": "demostracion",
+  "title": "Demostración: Independencia de la Triangulación",
+  "description": "Prueba mediante refinamiento común: toda subdivisión de un triángulo preserva el contenido (por aditividad); dos triangulaciones comparten un refinamiento común; por tanto producen la misma suma.",
+  "parentTheorem": "teorema-invariancia-triangulacion",
+  "proofMethod": "directo",
+  "layout": "text",
+  "authors": ["hilbert"],
+  "tags": ["geometria", "polígonos", "triangulos", "areas"]
+};
+
+<DemonstrationSection>
+
+<Formula>
+  $$ \forall \mathcal{T}, \mathcal{T}' \text{ triangulaciones de } P:\ \sum_{T \in \mathcal{T}} \text{Cont}(T) = \sum_{T' \in \mathcal{T}'} \text{Cont}(T') $$
+</Formula>
+
+Recordemos que el <ConceptLink targetId="contenido" isDependency={false}>contenido</ConceptLink> de un polígono se definió como la suma de los contenidos de los triángulos de cualquiera de sus triangulaciones. Para que esta definición sea legítima, debemos demostrar que el resultado no depende de la triangulación elegida. Este teorema cierra esa justificación.
+
+<Separador />
+
+<MedievalStep number={1} title="Lema de subdivisión de un triángulo">
+**Lema**: Sea $T$ un triángulo triangulado por $\{T_1, \dots, T_k\}$ (es decir, $T = \bigcup T_i$ con interiores disjuntos). Entonces:
+
+$$ \text{Cont}(T) = \sum_{i=1}^k \text{Cont}(T_i) $$
+
+**Demostración del lema**: Por inducción sobre $k$. Para $k = 1$, $T_1 = T$ y la igualdad es trivial. Para $k > 1$, la triangulación tiene al menos una arista interior. Tómese una arista interior que conecte dos vértices de la triangulación dentro de $T$. Esta arista divide $T$ en dos polígonos $T_a$ y $T_b$ con interiores disjuntos tales que $T = T_a \cup T_b$. Cada uno de $T_a$ y $T_b$ está triangulado con menos de $k$ triángulos.
+
+Por el <ConceptLink targetId="teorema-area-aditividad" isDependency={true}>teorema de aditividad del contenido</ConceptLink>:
+
+$$ \text{Cont}(T) = \text{Cont}(T_a) + \text{Cont}(T_b) $$
+
+Por hipótesis de inducción aplicada a $T_a$ y $T_b$ (cada uno con menos de $k$ triángulos en su triangulación), sus contenidos son la suma de los contenidos de sus respectivos triángulos. Sumando ambas igualdades se obtiene el resultado.
+</MedievalStep>
+
+<MedievalStep number={2} title="Refinamiento común de dos triangulaciones">
+Sean $\mathcal{T} = \{A_1, \dots, A_n\}$ y $\mathcal{T}' = \{B_1, \dots, B_m\}$ dos triangulaciones de $P$. Superponemos ambas: las aristas de $\mathcal{T}$ y $\mathcal{T}'$ se intersecan en un número finito de puntos. Añadiendo estos puntos de intersección como nuevos vértices y subdividiendo los triángulos afectados, obtenemos una tercera triangulación $\mathcal{T}^*$ que es un refinamiento de ambas: cada triángulo de $\mathcal{T}^*$ está contenido en exactamente un triángulo de $\mathcal{T}$ y en exactamente un triángulo de $\mathcal{T}'$.
+
+La finitud de las intersecciones se sigue del <ConceptLink targetId="teorema-dos-rectas-un-punto" isDependency={true}>teorema de intersección única</ConceptLink>: dos rectas distintas se cortan en a lo sumo un punto. Como las aristas son segmentos finitos, el número total de intersecciones es finito.
+</MedievalStep>
+
+<MedievalStep number={3} title="Aplicación del lema de subdivisión">
+$\mathcal{T}^*$ se obtiene a partir de $\mathcal{T}$ subdividiendo cada triángulo $A_i$ en triángulos más pequeños. Por el Lema del paso 1 aplicado a cada $A_i$:
+
+$$ \text{Cont}(A_i) = \sum_{T^* \subseteq A_i} \text{Cont}(T^*) $$
+
+Sumando sobre todos los $A_i \in \mathcal{T}$:
+
+$$ \sum_{A \in \mathcal{T}} \text{Cont}(A) = \sum_{T^* \in \mathcal{T}^*} \text{Cont}(T^*) $$
+
+Análogamente, $\mathcal{T}^*$ se obtiene a partir de $\mathcal{T}'$ subdividiendo cada $B_j$. Por el mismo lema:
+
+$$ \sum_{B \in \mathcal{T}'} \text{Cont}(B) = \sum_{T^* \in \mathcal{T}^*} \text{Cont}(T^*) $$
+</MedievalStep>
+
+<MedievalStep number={4} title="Conclusión">
+Por transitividad de la igualdad:
+
+$$ \sum_{A \in \mathcal{T}} \text{Cont}(A) = \sum_{T^* \in \mathcal{T}^*} \text{Cont}(T^*) = \sum_{B \in \mathcal{T}'} \text{Cont}(B) $$
+
+Ambas triangulaciones producen la misma suma de contenidos. La definición de <ConceptLink targetId="contenido" isDependency={false}>contenido</ConceptLink> es, por tanto, independiente de la triangulación elegida. $\blacksquare$
+</MedievalStep>
+
+</DemonstrationSection>

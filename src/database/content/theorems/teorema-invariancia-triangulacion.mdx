@@ -1,0 +1,42 @@
+export const metadata = {
+  "id": "teorema-invariancia-triangulacion",
+  "type": "teorema",
+  "title": "Independencia de la Triangulación",
+  "description": "El contenido de un polígono definido mediante triangulación no depende de la triangulación elegida. Dos triangulaciones cualesquiera producen la misma suma de contenidos triangulares.",
+  "statement": "Sea P un polígono simple y sean T = {T₁,…,Tₙ} y T' = {T'₁,…,T'ₘ} dos triangulaciones de P. Entonces Σ Cont(Tᵢ) = Σ Cont(T'ⱼ).",
+  "tags": ["geometria", "polígonos", "triangulos", "areas", "fundamentos"],
+  "authors": ["hilbert"],
+  "difficulty": "intermedio",
+  "demos": ["demo-invariancia-triangulacion"],
+  "hasSimulation": false
+};
+
+<Capitular letra="P" />ara que la definición de <ConceptLink targetId="contenido" isDependency={false}>contenido</ConceptLink> de <ConceptLink targetId="hilbert" isDependency={false}>Hilbert</ConceptLink> esté bien fundada, es necesario demostrar que el contenido de un <ConceptLink targetId="poligono" isDependency={false}>polígono</ConceptLink> no depende de la <ConceptLink targetId="triangulacion" isDependency={false}>triangulación</ConceptLink> elegida. Si dos triangulaciones distintas produjeran sumas diferentes, la definición sería inconsistente y la teoría del contenido se derrumbaría.
+
+<Separador />
+
+### Enunciado Formal
+
+<Formula>
+  $$ \forall P \text{ polígono simple},\ \forall\ \mathcal{T}, \mathcal{T}' \text{ triangulaciones de } P: \sum_{T \in \mathcal{T}} \text{Cont}(T) = \sum_{T' \in \mathcal{T}'} \text{Cont}(T') $$
+</Formula>
+
+<Separador />
+
+### Esquema de la Demostración
+
+La prueba se basa en dos lemas:
+
+1. **Lema del refinamiento común**: Dadas dos triangulaciones cualesquiera de $P$, existe una tercera triangulación que refina ambas (es decir, cada triángulo de la tercera está contenido en algún triángulo de la primera y en algún triángulo de la segunda).
+
+2. **Lema de subdivisión**: Si una triangulación $\mathcal{T}'$ se obtiene subdividiendo triángulos de $\mathcal{T}$ mediante segmentos interiores, el contenido total no cambia. Esto se prueba por inducción sobre el número de segmentos añadidos, usando la <ConceptLink targetId="teorema-area-aditividad" isDependency={true}>aditividad del contenido</ConceptLink>: cada subdivisión de un triángulo en dos triángulos más pequeños preserva la suma porque el contenido del triángulo original es, por definición, la suma de los contenidos de sus partes.
+
+Del Lema 2 aplicado dos veces (de $\mathcal{T}$ al refinamiento común, y del refinamiento común a $\mathcal{T}'$) se sigue que ambas triangulaciones producen la misma suma.
+
+<Separador />
+
+### Consecuencias
+
+- **Contenido bien definido**: La definición $\text{Cont}(P) = \sum \text{Cont}(T_i)$ para cualquier triangulación es consistente.
+- **Aditividad generalizada**: Si $P = P_1 \cup \dots \cup P_k$ con interiores disjuntos, $\text{Cont}(P) = \sum \text{Cont}(P_i)$.
+- **Equidescomponibilidad**: Dos polígonos son equidescomponibles si y solo si tienen el mismo contenido. El «solo si» es trivial; el «si» es el profundo Teorema de Wallace-Bolyai-Gerwien.

@@ -15,17 +15,11 @@ import { InteractiveElement } from "@/boundary/components/ui/VisualBind";
 
 <DemonstrationSection diagram={<DemoPuntoMedioPerpendicular />}>
 
-<Capitular letra="L" />a <ConceptLink targetId="mediatriz" isDependency={false}>mediatriz</ConceptLink> correspondiente a un <ConceptLink targetId="segmento" isDependency={false}>segmento</ConceptLink> conforma el lugar geométrico estricto de aquellos <ConceptLink targetId="punto" isDependency={false}>puntos</ConceptLink> equidistantes a sus vértices extremos. Se demuestra rigurosamente su coincidencia topológica con la <ConceptLink targetId="recta" isDependency={false}>recta</ConceptLink> ortogonal trazada por el <ConceptLink targetId="lema-punto-medio" isDependency={true}>punto medio</ConceptLink>, aplicando conjugadamente el <ConceptLink targetId="axioma-congruencia-5" isDependency={true}>axioma de congruencia LAL</ConceptLink> y el <ConceptLink targetId="teorema-congruencia-lll" isDependency={true}>teorema de congruencia LLL</ConceptLink>.
-
-<Separador />
-
-### Enunciado Formal
+<Capitular letra="S" />ea $\overline{AB}$ un <ConceptLink targetId="segmento" isDependency={false}>segmento</ConceptLink> con <InteractiveElement target="punto-medio"><ConceptLink targetId={["lema-punto-medio", "punto"]}>punto medio</ConceptLink></InteractiveElement> $M$. El conjunto de <ConceptLink targetId="punto" isDependency={false}>puntos</ConceptLink> <InteractiveElement target="punto-p">$P$</InteractiveElement> tales que $\overline{PA} \cong \overline{PB}$ es exactamente la <ConceptLink targetId="recta" isDependency={false}>recta</ConceptLink> <ConceptLink targetId="perpendicular" isDependency={false}>perpendicular</ConceptLink> a $\overline{AB}$ que pasa por $M$:
 
 <Formula>
-  $$ \{P : \overline{PA} \cong \overline{PB}\} = \ell $$
+  $$ \{\, P \in \Pi \mid \overline{PA} \cong \overline{PB} \,\} = \ell \quad \text{donde} \quad \ell \perp \overline{AB} \; \land \; M \in \ell $$
 </Formula>
-
-Sea <InteractiveElement target="segmentAB" color="terracota">$\overline{AB}$</InteractiveElement> un segmento con <ConceptLink targetId={["lema-punto-medio", "punto"]}>punto medio</ConceptLink> <InteractiveElement target="pointM" color="terracota">$M$</InteractiveElement> ($\overline{AM} \cong \overline{MB}$). Sea <InteractiveElement target="lineCD" color="terracota">$\ell$</InteractiveElement> la <ConceptLink targetId="perpendicular" isDependency={false}>perpendicular</ConceptLink> a $\overline{AB}$ por $M$. Se afirma que el conjunto de puntos que equidistan de <InteractiveElement target="pointA" color="carbon">$A$</InteractiveElement> y <InteractiveElement target="pointB" color="carbon">$B$</InteractiveElement> coincide con $\ell$.
 
 <Separador />
 
@@ -63,7 +57,7 @@ Por el <ConceptLink targetId="teorema-congruencia-lll" isDependency={true}>teore
   $$ \triangle CAM \cong \triangle CBM $$
 </Formula>
 
-En particular, $\angle CMA \cong \angle CMB$. Por la <ConceptLink targetId="lema-punto-medio" isDependency={true}>definición de punto medio</ConceptLink>, $M$ está entre $A$ y $B$; por tanto $\angle CMA$ y $\angle CMB$ son <ConceptLink targetId="angulos-suplementarios" isDependency={true}>adyacentes y suplementarios</ConceptLink>. Si dos ángulos son congruentes y suplementarios, cada uno mide $90^\circ$. Por la <ConceptLink targetId="perpendicular" isDependency={false}>definición de perpendicularidad</ConceptLink>, $CM \perp AB$. 
+En particular, $\angle CMA \cong \angle CMB$. Por la <ConceptLink targetId="lema-punto-medio" isDependency={true}>definición de punto medio</ConceptLink>, $M$ está entre $A$ y $B$; por tanto $\angle CMA$ y $\angle CMB$ son <ConceptLink targetId="angulos-suplementarios" isDependency={false}>adyacentes y suplementarios</ConceptLink>. Si dos ángulos son congruentes y suplementarios, cada uno mide $90^\circ$. Por la <ConceptLink targetId="perpendicular" isDependency={false}>definición de perpendicularidad</ConceptLink>, $CM \perp AB$. 
 </MedievalStep>
 
 <MedievalStep number={5} title="Conclusión" target="step5">

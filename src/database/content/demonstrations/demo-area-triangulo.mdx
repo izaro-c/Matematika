@@ -1,0 +1,62 @@
+export const metadata = {
+  "id": "demo-area-triangulo",
+  "type": "demostracion",
+  "title": "Demostración: Área del Triángulo",
+  "description": "Prueba directa por descomposición: el área de un triángulo es la mitad del producto de la base por la altura.",
+  "parentTheorem": "teorema-area-triangulo",
+  "proofMethod": "directo",
+  "layout": "split",
+  "authors": ["euclides"],
+  "tags": ["geometria", "triangulos", "areas"]
+};
+
+import { DemonstrationSection } from "@/boundary/components/content/DemonstrationSection";
+import { MedievalStep } from "@/boundary/components/content/MedievalStep";
+import { InteractiveElement } from "@/boundary/components/ui/VisualBind";
+import { AreaTrianguloDemo } from "@/boundary/components/diagrams/Demos/AreaTrianguloDemo";
+
+<DemonstrationSection diagram={<AreaTrianguloDemo />}>
+
+<Formula>
+  $$ \text{Área}(\triangle ABC) = \frac{|AB| \cdot h}{2} $$
+</Formula>
+
+Sea $\triangle ABC$ con base <InteractiveElement target="base-ab" color="terracota">$AB$</InteractiveElement> y <ConceptLink targetId="vertice" isDependency={false}>vértice</ConceptLink> opuesto <InteractiveElement target="punto-c" color="terracota">$C$</InteractiveElement>. La <ConceptLink targetId="altura" isDependency={false}>altura</ConceptLink> desde $C$ es el segmento <InteractiveElement target="altura-cd" color="pavo">$CD$</InteractiveElement> perpendicular a la base, con <InteractiveElement target="punto-d" color="pizarra">$D$</InteractiveElement> el pie de la perpendicular sobre $AB$.
+
+<Separador />
+
+<MedievalStep number={1} target="step1" title="Construcción de la altura">
+Por el <ConceptLink targetId="teorema-existencia-perpendicular" isDependency={true}>teorema de existencia de la perpendicular</ConceptLink>, existe un único punto <InteractiveElement target="punto-d" color="terracota">$D$</InteractiveElement> sobre la recta $AB$ tal que <InteractiveElement target="altura-cd" color="pavo">$CD \perp AB$</InteractiveElement>. Sea $h = |CD|$.
+</MedievalStep>
+
+<MedievalStep number={2} target="step2" title="Descomposición en dos triángulos rectángulos">
+El segmento <InteractiveElement target="altura-cd" color="pavo">$CD$</InteractiveElement> divide $\triangle ABC$ en dos triángulos rectángulos:
+- <InteractiveElement target="triangulo-izq" color="salvia">$\triangle ADC$</InteractiveElement>, con <ConceptLink targetId="angulo" isDependency={false}>ángulo</ConceptLink> recto en <InteractiveElement target="punto-d" color="terracota">$D$</InteractiveElement> y base $AD$.
+- <InteractiveElement target="triangulo-der" color="pizarra">$\triangle BDC$</InteractiveElement>, con ángulo recto en $D$ y base $DB$.
+
+Por la <ConceptLink targetId="teorema-area-aditividad" isDependency={true}>aditividad del contenido</ConceptLink>:
+
+$$ \text{Área}(\triangle ABC) = \text{Área}(\triangle ADC) + \text{Área}(\triangle BDC) $$
+</MedievalStep>
+
+<MedievalStep number={3} target="step3" title="Área del triángulo rectángulo izquierdo">
+El <InteractiveElement target="triangulo-izq" color="salvia">$\triangle ADC$</InteractiveElement> es la mitad del <InteractiveElement target="rectangulo-izq" color="salvia">rectángulo $ADCE$</InteractiveElement> construido sobre $AD$ con altura $h$. En efecto, por el <ConceptLink targetId="axioma-congruencia-5" isDependency={true}>criterio LAL</ConceptLink>, $\triangle ADC \cong \triangle CEA$ (comparten $AC$, los ángulos en $D$ y $E$ son rectos, y $|AD| = |CE|$, $|CD| = |AE|$). Por la <ConceptLink targetId="teorema-area-invariancia" isDependency={true}>invariancia del contenido</ConceptLink>, ambos triángulos tienen igual contenido. El rectángulo completo tiene contenido $|AD| \cdot h$ por el <ConceptLink targetId="teorema-area-rectangulo" isDependency={true}>teorema del área del rectángulo</ConceptLink>, luego:
+
+$$ \text{Área}(\triangle ADC) = \frac{|AD| \cdot h}{2} $$
+</MedievalStep>
+
+<MedievalStep number={4} target="step4" title="Área del triángulo rectángulo derecho">
+Análogamente, para el <InteractiveElement target="triangulo-der" color="pizarra">$\triangle BDC$</InteractiveElement> se construye el <InteractiveElement target="rectangulo-der" color="pizarra">rectángulo $BDCF$</InteractiveElement>. Por el mismo razonamiento con <ConceptLink targetId="axioma-congruencia-5" isDependency={true}>LAL</ConceptLink> e <ConceptLink targetId="teorema-area-invariancia" isDependency={false}>invariancia del contenido</ConceptLink>:
+
+$$ \text{Área}(\triangle BDC) = \frac{|DB| \cdot h}{2} $$
+</MedievalStep>
+
+<MedievalStep number={5} target="step5" title="Suma y conclusión">
+Sumando las áreas de los pasos 3 y 4, y usando que <InteractiveElement target="punto-d" color="terracota">$D$</InteractiveElement> está sobre el segmento $AB$:
+
+$$ \text{Área}(\triangle ABC) = \frac{|AD| \cdot h}{2} + \frac{|DB| \cdot h}{2} = \frac{(|AD| + |DB|) \cdot h}{2} = \frac{|AB| \cdot h}{2} $$
+
+Con $b = |AB|$, se obtiene $\text{Área} = \frac{b \cdot h}{2}$. $\blacksquare$
+</MedievalStep>
+
+</DemonstrationSection>

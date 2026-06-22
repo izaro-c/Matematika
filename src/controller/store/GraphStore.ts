@@ -11,6 +11,7 @@ import type { FlowNode, FlowEdge } from '@/controller/workers/graph.worker';
 import type { ModelInfo, SystemInfo } from '@/entity/graphTypes';
 import { Grafo } from '@/entity/Grafo';
 import { db } from '@/database/dao/content';
+import graphStructureData from '@/database/graph_structure.json';
 
 /**
  * Interfaz que define el estado global del Grafo.
@@ -124,7 +125,7 @@ export const useGraphStore = create<GraphState>()(
         set({ disabledAxioms: newDisabled, inactiveModels: allModelsOff, inactiveSystems: allSystemsOff, isLoading: true });
         
         // Recalculamos el layout topológico en el WebWorker
-        computeGraph(newDisabled).then((result) =>
+        computeGraph(graphStructureData, newDisabled).then((result) =>
           set({ baseNodes: result.nodes, edges: result.edges, adjacency: result.adjacency, dependsOn: result.dependsOn, activeStates: result.activeStates, isLoading: false }),
         );
       },
@@ -155,7 +156,7 @@ export const useGraphStore = create<GraphState>()(
         
         set({ disabledAxioms: newDisabled, isLoading: true });
         
-        computeGraph(newDisabled).then((result) =>
+        computeGraph(graphStructureData, newDisabled).then((result) =>
           set({ baseNodes: result.nodes, edges: result.edges, adjacency: result.adjacency, dependsOn: result.dependsOn, activeStates: result.activeStates, isLoading: false }),
         );
       },
@@ -184,7 +185,7 @@ export const useGraphStore = create<GraphState>()(
         
         set({ disabledAxioms: newDisabled, isLoading: true });
         
-        computeGraph(newDisabled).then((result) =>
+        computeGraph(graphStructureData, newDisabled).then((result) =>
           set({ baseNodes: result.nodes, edges: result.edges, adjacency: result.adjacency, dependsOn: result.dependsOn, activeStates: result.activeStates, isLoading: false }),
         );
       },
@@ -193,7 +194,7 @@ export const useGraphStore = create<GraphState>()(
         if (initialized) return;
         initialized = true;
         // La inicialización usa el estado actual persistido
-        computeGraph(get().disabledAxioms).then((result) =>
+        computeGraph(graphStructureData, get().disabledAxioms).then((result) =>
           set({ baseNodes: result.nodes, edges: result.edges, adjacency: result.adjacency, dependsOn: result.dependsOn, activeStates: result.activeStates, isLoading: false }),
         );
       },

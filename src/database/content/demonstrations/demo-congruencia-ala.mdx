@@ -15,7 +15,9 @@ import { InteractiveElement } from "@/boundary/components/ui/VisualBind";
 
 <DemonstrationSection diagram={<DemoCongruenciaALA />}>
 
-<Capitular letra="E" />l criterio ALA (<ConceptLink targetId="angulo" isDependency={false}>Ángulo</ConceptLink>-Lado-Ángulo) se deduce formalmente mediante el transporte isométrico de un lado desde un <ConceptLink targetId="triangulo" isDependency={false}>triángulo</ConceptLink> sobre otro, aplicando iterativamente el <ConceptLink targetId="axioma-congruencia-5" isDependency={true}>axioma LAL</ConceptLink> para forzar la coincidencia deductiva. El <ConceptLink targetId="axioma-congruencia-4" isDependency={true}>axioma de unicidad del transporte angular</ConceptLink> blinda la correspondencia exacta entre vértices.
+<Capitular letra="S" />ean <Formula>
+  $$ \triangle ABC \text{ y } \triangle A'B'C' \text{ tales que } \overline{AB} \cong \overline{A'B'}, \; \angle A \cong \angle A', \; \angle B \cong \angle B'. \text{ Entonces } \triangle ABC \cong \triangle A'B'C'. $$
+</Formula>
 
 <Separador />
 
@@ -59,6 +61,6 @@ La técnica empleada — **transportar y forzar la coincidencia** — es fundame
   <ConceptLink targetId="euclides" isDependency={false}>Euclides</ConceptLink> demostró ALA en la Proposición I.26 usando el método visual de superposición (moviendo el triángulo físicamente). Hilbert lo reemplazó por los axiomas estáticos de transporte (III-1 y III-4), garantizando rigurosidad lógica.
 </Nota>
 
-El criterio ALA es válido en <ConceptLink targetId={["sistema-absoluto", "geometria"]}>geometría absoluta</ConceptLink>: su prueba no requiere en ningún momento utilizar el axioma de las <ConceptLink targetId="paralelas" isDependency={false}>paralelas</ConceptLink>.
+El criterio ALA es válido en <ConceptLink targetId={["sistema-absoluto", "geometria"]} isDependency={false}>geometría absoluta</ConceptLink>: su prueba no requiere en ningún momento utilizar el axioma de las <ConceptLink targetId="paralelas" isDependency={false}>paralelas</ConceptLink>.
 
 </DemonstrationSection>

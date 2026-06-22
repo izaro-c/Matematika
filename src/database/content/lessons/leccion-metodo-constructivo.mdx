@@ -1,0 +1,69 @@
+export const metadata = {
+  "id": "leccion-metodo-constructivo",
+  "type": "lesson",
+  "title": "Método Constructivo",
+  "description": "Demostrar la existencia de un objeto matemático construyéndolo explícitamente, proporcionando un algoritmo o procedimiento para obtenerlo.",
+  "tags": ["logica", "metodos", "demostracion", "constructivo"],
+  "authors": [],
+  "links": ["demo-congruencia-ala", "demo-congruencia-lll", "demo-existencia-bisectriz", "demo-punto-medio"],
+  "seeAlso": ["leccion-metodo-directo", "leccion-metodo-exhaustivo"],
+  "satisfies": [],
+  "hasSimulation": true,
+  "difficulty": "intermedio",
+};
+
+import { ConstructivoSimulation } from "@/boundary/components/diagrams/Demos/ConstructivoSimulation";
+export const Simulation = ConstructivoSimulation;
+
+<Capitular letra="E" />l **método constructivo** es la estrategia de demostración que no se limita a probar *que* algo existe, sino que muestra *cómo* obtenerlo. En lugar de argumentar por contradicción que un objeto «debe existir», una demostración constructiva proporciona un procedimiento explícito — un algoritmo o una construcción geométrica — que lo produce.
+
+<Separador />
+
+### Filosofía Constructivista
+
+En la lógica clásica, es válido probar $\exists x\ P(x)$ mostrando que $\neg\exists x\ P(x)$ conduce a una contradicción. Sin embargo, esta prueba «no constructiva» no proporciona ningún ejemplo concreto del objeto que supuestamente existe. El constructivismo exige que toda prueba de existencia vaya acompañada de una construcción efectiva.
+
+Aunque las matemáticas clásicas admiten pruebas no constructivas, las demostraciones constructivas son generalmente más satisfactorias y a menudo más útiles en aplicaciones.
+
+<Separador />
+
+### Estructura Típica
+
+1. Se quiere probar que existe un objeto $X$ con la propiedad $P(X)$.
+2. Se describe un procedimiento paso a paso para fabricar $X$ a partir de los datos del problema.
+3. Se verifica que el objeto construido efectivamente satisface $P(X)$.
+
+En geometría clásica, el método constructivo se manifiesta como **construcciones con regla y compás**: dados ciertos elementos (puntos, segmentos, ángulos), se describe cómo obtener el objeto deseado mediante operaciones permitidas.
+
+<Separador />
+
+### Ejemplos Clásicos en esta Base
+
+- **<ConceptLink targetId="demo-punto-medio" isDependency={false}>Construcción del punto medio</ConceptLink>**: Dados dos puntos $A$ y $B$, se construye el punto medio $M$ trazando circunferencias de igual radio centradas en $A$ y $B$, y uniendo sus intersecciones. La demostración prueba que $M$ está exactamente a mitad de camino.
+
+- **<ConceptLink targetId="demo-existencia-bisectriz" isDependency={false}>Bisectriz de un ángulo</ConceptLink>**: Dado un ángulo $\angle ABC$, se construye su bisectriz trazando un arco desde $B$, obteniendo puntos $D$ y $E$ sobre los lados, y luego trazando arcos desde $D$ y $E$ cuya intersección determina la dirección de la bisectriz.
+
+- **<ConceptLink targetId="demo-congruencia-ala" isDependency={false}>Teorema ALA</ConceptLink>**: Dados dos ángulos y el lado comprendido, se construye el triángulo colocando el lado y trazando semirrectas con los ángulos dados; su intersección es el tercer vértice único.
+
+<Separador />
+
+### Cuándo Usarlo
+
+El método constructivo es ideal cuando:
+
+- Se quiere demostrar la **existencia** de un objeto matemático (un punto, una función, un número con cierta propiedad).
+- El problema tiene naturaleza geométrica y los axiomas permiten construcciones con regla y compás.
+- Se necesita un **algoritmo** explícito, por ejemplo en matemáticas computacionales.
+- Se desea una demostración que no dependa del principio del tercero excluido (válida tanto en lógica clásica como intuicionista).
+
+<Separador />
+
+### Fortalezas y Debilidades
+
+<Nota>
+**Fortaleza**: Proporciona un objeto concreto, un algoritmo o una construcción que puede implementarse. Es la forma de demostración más satisfactoria desde el punto de vista computacional y pedagógico.
+
+**Debilidad**: No todo teorema de existencia admite una prueba constructiva. Muchos resultados profundos del análisis matemático (como el Teorema de Bolzano-Weierstrass) requieren argumentos no constructivos. En geometría, las construcciones con regla y compás tienen limitaciones bien conocidas (cuadratura del círculo, trisección del ángulo).
+</Nota>
+
+

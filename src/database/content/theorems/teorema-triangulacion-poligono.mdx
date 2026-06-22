@@ -1,0 +1,43 @@
+export const metadata = {
+  "id": "teorema-triangulacion-poligono",
+  "type": "teorema",
+  "title": "Triangulación de Polígonos",
+  "description": "Todo polígono simple de n vértices admite una triangulación en n−2 triángulos mediante n−3 diagonales interiores que no se cruzan.",
+  "statement": "Sea P un polígono simple de n ≥ 3 vértices. Existen n−3 diagonales interiores de P que no se intersectan y que dividen P en n−2 triángulos cuyos vértices son vértices de P.",
+  "tags": ["geometria", "polígonos", "triangulos", "fundamentos"],
+  "authors": ["hilbert"],
+  "difficulty": "intermedio",
+  "demos": ["demo-triangulacion-poligono"],
+  "hasSimulation": false
+};
+
+<Capitular letra="T" />odo <ConceptLink targetId="poligono" isDependency={false}>polígono</ConceptLink> simple puede descomponerse en <ConceptLink targetId="triangulo" isDependency={false}>triángulos</ConceptLink> trazando diagonales interiores que no se cruzan. Este teorema es fundamental para la <ConceptLink targetId="contenido" isDependency={false}>teoría del contenido</ConceptLink> de <ConceptLink targetId="hilbert" isDependency={false}>Hilbert</ConceptLink>, ya que permite definir el área de cualquier polígono como la suma de las áreas de los triángulos de su triangulación.
+
+<Separador />
+
+### Enunciado Formal
+
+<Formula>
+  $$ \forall P \text{ polígono simple de } n \geq 3 \text{ vértices},\ \exists \text{ diagonales } d_1, \dots, d_{n-3} \text{ tales que:} $$
+  $$ \text{(i) Las diagonales están en el interior de } P \text{ y no se cruzan} $$
+  $$ \text{(ii) } P \text{ queda dividido en } n-2 \text{ triángulos} $$
+</Formula>
+
+<Separador />
+
+### Demostración (Esquema)
+
+La demostración procede por <ConceptLink targetId="leccion-metodo-induccion" isDependency={false}>inducción</ConceptLink> sobre el número $n$ de vértices:
+
+1. **Caso base** ($n = 3$): El polígono ya es un triángulo. No se necesitan diagonales.
+
+2. **Paso inductivo** ($n \geq 4$): Se demuestra que todo polígono de $n \geq 4$ vértices posee al menos un **vértice oreja**: un vértice $v_i$ tal que el segmento $\overline{v_{i-1}v_{i+1}}$ es una diagonal interior del polígono. La existencia de una oreja se prueba usando el <ConceptLink targetId="axioma-orden-4" isDependency={true}>axioma de Pasch (II-4)</ConceptLink> y los <ConceptLink targetId="axioma-orden-1" isDependency={false}>axiomas de orden</ConceptLink>: se toma el vértice de menor coordenada en una dirección dada y se analiza el triángulo formado por él y sus vecinos.
+
+3. Al eliminar el triángulo formado por la oreja, se obtiene un polígono de $n-1$ vértices. Por hipótesis de inducción, este polígono admite triangulación. Añadiendo la diagonal de la oreja, se obtiene una triangulación del polígono original.
+
+<Separador />
+
+### Consecuencias
+
+- **Independencia de la triangulación**: Aunque existen muchas triangulaciones posibles de un mismo polígono, el número de triángulos siempre es $n-2$ y el número de diagonales siempre es $n-3$.
+- **Contenido bien definido**: Gracias a este teorema, la definición de <ConceptLink targetId="contenido" isDependency={false}>contenido</ConceptLink> de Hilbert está bien fundada: todo polígono puede triangularse y su contenido no depende de la triangulación elegida.

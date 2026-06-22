@@ -7,7 +7,7 @@ import { TYPE_STYLES } from '@/database/config/constants';
  */
 export interface MathNodeData {
   label: string;
-  nodeType: 'axioma' | 'lema' | 'corolario' | 'teorema' | 'definicion' | 'modelo';
+  nodeType: 'axioma' | 'lema' | 'corolario' | 'teorema' | 'definicion' | 'concepto' | 'modelo';
   description: string;
   isActive: boolean;
   /** Escala visual pura (CSS transform); no afecta la posición dagre */
@@ -92,7 +92,7 @@ export function MathNode({ data }: NodeProps) {
             backgroundColor: s.bg,
             border: `${borderWidth}px solid ${borderColor}`,
             borderRadius: '50%',
-            outline: isHighlighted ? `3px solid ${s.ringColor}` : 'none',
+            outline: `2px solid ${s.border}`,
             outlineOffset: isHighlighted ? 3 : 2,
             display: 'flex',
             flexDirection: 'column',

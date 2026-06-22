@@ -2,6 +2,8 @@ import { describe, it, expect } from 'vitest';
 import { Grafo } from '@/entity/Grafo';
 import type { GraphStructure, ModelInfo } from '@/entity/graphTypes';
 
+// UC6 ValutaGrafoAttivo — recorre el DAG en orden topológico
+// y devuelve los nodos lógicamente válidos según los axiomas activos.
 describe('Grafo.evaluate', () => {
   const structure: GraphStructure = {
     topologicalOrder: ['ax-1', 'ax-2', 'def-1', 'lem-1', 'thm-1', 'cor-1'],
@@ -27,13 +29,13 @@ describe('Grafo.evaluate', () => {
     },
   };
 
-  it('starts empty with no active axioms', () => {
+  it('TC_02: starts empty with no active axioms', () => {
     const grafo = Grafo.from(structure);
     const result = grafo.evaluate({});
     expect(result.size).toBe(0);
   });
 
-  it('validates chain with one active axiom', () => {
+  it('TC_01: validates chain with one active axiom', () => {
     const grafo = Grafo.from(structure);
     const result = grafo.evaluate({ 'ax-1': true });
     expect(result.has('ax-1')).toBe(true);
@@ -43,7 +45,7 @@ describe('Grafo.evaluate', () => {
     expect(result.has('cor-1')).toBe(true);
   });
 
-  it('prevents nodes when dependency chain is broken', () => {
+  it('TC_03: prevents nodes when dependency chain is broken', () => {
     const grafo = Grafo.from(structure);
     const result = grafo.evaluate({ 'ax-2': true });
     expect(result.has('ax-2')).toBe(true);
@@ -51,7 +53,7 @@ describe('Grafo.evaluate', () => {
     expect(result.has('thm-1')).toBe(false);
   });
 
-  it('handles theorem with multiple proofs (OR logic)', () => {
+  it('TC_04: handles theorem with multiple proofs (OR logic)', () => {
     const multiProof: GraphStructure = {
       topologicalOrder: ['ax-1', 'ax-2', 'def-1', 'def-2', 'thm-1'],
       nodes: {
@@ -78,7 +80,7 @@ describe('Grafo.evaluate', () => {
     expect(resultWithout.has('thm-1')).toBe(false);
   });
 
-  it('treats theorem with no proofs as valid when no deps', () => {
+  it('TC_02: treats theorem with no proofs as valid when no deps', () => {
     const noProof: GraphStructure = {
       topologicalOrder: ['thm-1'],
       nodes: {
@@ -89,8 +91,25 @@ describe('Grafo.evaluate', () => {
     const result = grafo.evaluate({});
     expect(result.has('thm-1')).toBe(true);
   });
+
+  it('TC_05: skips node missing from index and continues evaluation', () => {
+    const withMissing: GraphStructure = {
+      topologicalOrder: ['ax-1', 'missing-node', 'def-1'],
+      nodes: {
+        'ax-1': { type: 'axioma', proofs: [], directDependencies: [] },
+        'def-1': { type: 'definicion', proofs: [], directDependencies: ['ax-1'] },
+      },
+    };
+    const grafo = Grafo.from(withMissing);
+    expect(() => grafo.evaluate({ 'ax-1': true })).not.toThrow();
+    const result = grafo.evaluate({ 'ax-1': true });
+    expect(result.has('ax-1')).toBe(true);
+    expect(result.has('def-1')).toBe(true);
+  });
 });
 
+// UC4 EsploraModelli / RF11 — dados los modelos activos,
+// devuelve los axiomas que no pertenecen a ninguno de ellos.
 describe('Grafo.computeDisabledAxiomsFromModels', () => {
   const models: ModelInfo[] = [
     { id: 'm1', title: 'Model 1', axioms: ['ax-1', 'ax-2'] },
@@ -119,6 +138,8 @@ describe('Grafo.computeDisabledAxiomsFromModels', () => {
   });
 });
 
+// UC12 VerificaCicli / RF07 — comprueba que todos los IDs del orden
+// topológico existan en el índice de nodos.
 describe('Grafo.isDagValid', () => {
   it('returns true for valid DAG', () => {
     const structure: GraphStructure = {

@@ -1,0 +1,34 @@
+export const metadata = {
+  "id": "teorema-area-triangulo",
+  "type": "teorema",
+  "title": "Área del Triángulo",
+  "description": "El área de un triángulo es la mitad del producto de la longitud de un lado por la altura correspondiente. En el sistema de medida de áreas, dos triángulos con igual base e igual altura tienen áreas iguales.",
+  "statement": "Sea △ABC un triángulo y sea h la altura correspondiente al lado AB (base). El área de △ABC es (|AB| · h) / 2.",
+  "tags": ["geometria", "triangulos", "areas"],
+  "authors": ["euclides"],
+  "difficulty": "básico",
+  "demos": ["demo-area-triangulo"],
+  "hasSimulation": false
+};
+
+<Capitular letra="E" />l <ConceptLink targetId="contenido" isDependency={false}>contenido</ConceptLink> de un <ConceptLink targetId="triangulo" isDependency={false}>triángulo</ConceptLink> es la mitad del producto de su base por su altura. Es el primer resultado que conecta la definición de <ConceptLink targetId="contenido" isDependency={false}>equidescomponibilidad</ConceptLink> de <ConceptLink targetId="hilbert" isDependency={false}>Hilbert</ConceptLink> con una fórmula explícita, y constituye la base de toda la geometría métrica plana.
+
+<Separador />
+
+### Enunciado Formal
+
+Dado un triángulo $\triangle ABC$, sea $h$ la <ConceptLink targetId="altura" isDependency={false}>altura</ConceptLink> correspondiente al lado $AB$ (la <ConceptLink targetId="perpendicular" isDependency={false}>perpendicular</ConceptLink> desde $C$ a la recta $AB$). El área de $\triangle ABC$ es:
+
+<Formula>
+  $$ \text{Área}(\triangle ABC) = \frac{|AB| \cdot h}{2} $$
+</Formula>
+
+Equivalentemente, dos triángulos con igual base e igual altura tienen la misma área, independientemente de su forma.
+
+<Separador />
+
+### Consecuencias
+
+- **Área del paralelogramo**: Todo <ConceptLink targetId="paralelogramo" isDependency={false}>paralelogramo</ConceptLink> se descompone en dos triángulos congruentes mediante una diagonal. Por tanto, su área es base × altura.
+- **Área del trapecio**: Se descompone en dos triángulos de igual altura, dando la fórmula $(B + b) \cdot h / 2$.
+- **Teorema de Pitágoras por áreas**: La demostración de <ConceptLink targetId="demo-pitagoras-euclides" isDependency={false}>Euclides</ConceptLink> usa este teorema repetidamente para igualar áreas de rectángulos y cuadrados.

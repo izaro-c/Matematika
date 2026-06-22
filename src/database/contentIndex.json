@@ -186,7 +186,13 @@
         "hilbert",
         "arquimedes"
       ],
-      "hasSimulation": true
+      "hasSimulation": true,
+      "links": [
+        "punto",
+        "recta",
+        "congruencia",
+        "estar-entre"
+      ]
     }
   },
   "axioma-completitud": {
@@ -210,7 +216,10 @@
         "hilbert",
         "dedekind"
       ],
-      "hasSimulation": true
+      "hasSimulation": true,
+      "links": [
+        "punto"
+      ]
     }
   },
   "axioma-congruencia-1": {
@@ -232,7 +241,12 @@
       "authors": [
         "hilbert"
       ],
-      "hasSimulation": true
+      "hasSimulation": true,
+      "links": [
+        "punto",
+        "recta",
+        "congruencia"
+      ]
     }
   },
   "axioma-congruencia-2": {
@@ -254,7 +268,11 @@
       "authors": [
         "hilbert"
       ],
-      "hasSimulation": true
+      "hasSimulation": true,
+      "links": [
+        "punto",
+        "congruencia"
+      ]
     }
   },
   "axioma-congruencia-3": {
@@ -276,7 +294,13 @@
       "authors": [
         "hilbert"
       ],
-      "hasSimulation": true
+      "hasSimulation": true,
+      "links": [
+        "punto",
+        "recta",
+        "estar-entre",
+        "congruencia"
+      ]
     }
   },
   "axioma-congruencia-4": {
@@ -298,7 +322,13 @@
       "authors": [
         "hilbert"
       ],
-      "hasSimulation": true
+      "hasSimulation": true,
+      "links": [
+        "punto",
+        "recta",
+        "estar-entre",
+        "congruencia"
+      ]
     }
   },
   "axioma-congruencia-5": {
@@ -321,7 +351,11 @@
       "authors": [
         "hilbert"
       ],
-      "hasSimulation": true
+      "hasSimulation": true,
+      "links": [
+        "punto",
+        "congruencia"
+      ]
     }
   },
   "axioma-incidencia-1": {
@@ -338,7 +372,12 @@
       "authors": [
         "hilbert"
       ],
-      "hasSimulation": true
+      "hasSimulation": true,
+      "links": [
+        "punto",
+        "recta",
+        "incidencia"
+      ]
     }
   },
   "axioma-incidencia-2": {
@@ -355,7 +394,12 @@
       "authors": [
         "hilbert"
       ],
-      "hasSimulation": true
+      "hasSimulation": true,
+      "links": [
+        "punto",
+        "recta",
+        "incidencia"
+      ]
     }
   },
   "axioma-incidencia-3": {
@@ -372,7 +416,13 @@
       "authors": [
         "hilbert"
       ],
-      "hasSimulation": true
+      "hasSimulation": true,
+      "links": [
+        "punto",
+        "recta",
+        "plano",
+        "incidencia"
+      ]
     }
   },
   "axioma-incidencia-4": {
@@ -389,7 +439,12 @@
       "authors": [
         "hilbert"
       ],
-      "hasSimulation": true
+      "hasSimulation": true,
+      "links": [
+        "punto",
+        "plano",
+        "incidencia"
+      ]
     }
   },
   "axioma-incidencia-5": {
@@ -406,7 +461,13 @@
       "authors": [
         "hilbert"
       ],
-      "hasSimulation": true
+      "hasSimulation": true,
+      "links": [
+        "punto",
+        "recta",
+        "plano",
+        "incidencia"
+      ]
     }
   },
   "axioma-incidencia-6": {
@@ -423,7 +484,13 @@
       "authors": [
         "hilbert"
       ],
-      "hasSimulation": true
+      "hasSimulation": true,
+      "links": [
+        "punto",
+        "recta",
+        "plano",
+        "incidencia"
+      ]
     }
   },
   "axioma-incidencia-7": {
@@ -440,7 +507,13 @@
       "authors": [
         "hilbert"
       ],
-      "hasSimulation": true
+      "hasSimulation": true,
+      "links": [
+        "punto",
+        "recta",
+        "plano",
+        "incidencia"
+      ]
     }
   },
   "axioma-incidencia-8": {
@@ -457,7 +530,12 @@
       "authors": [
         "hilbert"
       ],
-      "hasSimulation": true
+      "hasSimulation": true,
+      "links": [
+        "punto",
+        "plano",
+        "incidencia"
+      ]
     }
   },
   "axioma-orden-1": {
@@ -474,7 +552,12 @@
       "authors": [
         "hilbert"
       ],
-      "hasSimulation": true
+      "hasSimulation": true,
+      "links": [
+        "punto",
+        "recta",
+        "estar-entre"
+      ]
     }
   },
   "axioma-orden-2": {
@@ -491,7 +574,11 @@
       "authors": [
         "hilbert"
       ],
-      "hasSimulation": true
+      "hasSimulation": true,
+      "links": [
+        "punto",
+        "estar-entre"
+      ]
     }
   },
   "axioma-orden-3": {
@@ -508,7 +595,12 @@
       "authors": [
         "hilbert"
       ],
-      "hasSimulation": true
+      "hasSimulation": true,
+      "links": [
+        "punto",
+        "recta",
+        "estar-entre"
+      ]
     }
   },
   "axioma-orden-4": {
@@ -526,7 +618,12 @@
         "hilbert",
         "pasch"
       ],
-      "hasSimulation": true
+      "hasSimulation": true,
+      "links": [
+        "punto",
+        "recta",
+        "estar-entre"
+      ]
     }
   },
   "axioma-paralelas-euclides": {
@@ -549,7 +646,12 @@
         "euclides",
         "hilbert"
       ],
-      "hasSimulation": true
+      "hasSimulation": true,
+      "links": [
+        "punto",
+        "recta",
+        "incidencia"
+      ]
     }
   },
   "axioma-paralelas-hiperbolico": {
@@ -572,7 +674,12 @@
         "lobachevski",
         "bolyai"
       ],
-      "hasSimulation": true
+      "hasSimulation": true,
+      "links": [
+        "punto",
+        "recta",
+        "incidencia"
+      ]
     }
   },
   "altura": {
@@ -609,7 +716,9 @@
     "filePath": "definitions/angulo.mdx",
     "contentType": "definicion",
     "metadata": {
+      "id": "angulo",
       "type": "definicion",
+      "subtype": "derivado",
       "title": "Ángulo",
       "description": "Dadas dos semirrectas con el mismo origen, el ángulo es la figura formada por ambas. La congruencia de ángulos es una relación primitiva definida por los axiomas de congruencia.",
       "tags": [
@@ -622,14 +731,42 @@
       ],
       "links": [
         "punto",
-        "semirrecta",
-        "axioma-congruencia-4",
-        "axioma-congruencia-5"
+        "semirrecta"
       ],
       "seeAlso": [
         "segmento"
       ],
       "hasSimulation": true
+    }
+  },
+  "angulos-suplementarios": {
+    "id": "angulos-suplementarios",
+    "slug": "angulos-suplementarios",
+    "filePath": "definitions/angulos-suplementarios.mdx",
+    "contentType": "definicion",
+    "metadata": {
+      "id": "angulos-suplementarios",
+      "type": "definicion",
+      "subtype": "derivado",
+      "title": "Ángulos Suplementarios",
+      "description": "Dos ángulos son suplementarios si la suma de sus medidas es un ángulo llano (180° o π radianes).",
+      "tags": [
+        "geometria",
+        "angulos",
+        "medida"
+      ],
+      "authors": [
+        "hilbert"
+      ],
+      "links": [
+        "angulo"
+      ],
+      "seeAlso": [
+        "angulo",
+        "perpendicular",
+        "teorema-angulos-opuestos-verticales"
+      ],
+      "hasSimulation": false
     }
   },
   "bisectriz": {
@@ -687,6 +824,62 @@
       "hasSimulation": true
     }
   },
+  "congruencia": {
+    "id": "congruencia",
+    "slug": "congruencia",
+    "filePath": "definitions/congruencia.mdx",
+    "contentType": "definicion",
+    "metadata": {
+      "id": "congruencia",
+      "type": "definicion",
+      "subtype": "primitivo",
+      "title": "Congruencia",
+      "description": "Relación primitiva de equivalencia métrica entre segmentos y entre ángulos. No se define; su comportamiento queda determinado por los axiomas de congruencia (Grupo III de Hilbert).",
+      "statement": "La congruencia es una relación de equivalencia primitiva entre segmentos (denotada AB ≅ CD) y entre ángulos (denotada ∠(h,k) ≅ ∠(h',k')).",
+      "tags": [
+        "geometria",
+        "congruencia",
+        "fundamentos"
+      ],
+      "authors": [
+        "hilbert"
+      ],
+      "hasSimulation": false
+    }
+  },
+  "contenido": {
+    "id": "contenido",
+    "slug": "contenido",
+    "filePath": "definitions/contenido.mdx",
+    "contentType": "definicion",
+    "metadata": {
+      "id": "contenido",
+      "type": "definicion",
+      "subtype": "derivado",
+      "title": "Contenido (Equidescomposición)",
+      "description": "Definición de Hilbert del contenido de un polígono mediante equidescomposición en triángulos. El contenido de un triángulo es su clase de equidescomposición; el de un polígono, la suma formal de los contenidos de los triángulos de cualquiera de sus triangulaciones.",
+      "statement": "Dos polígonos P y Q tienen igual contenido (son equidescomponibles) si existen triangulaciones T₁,…,Tₙ de P y T'₁,…,T'ₙ de Q con Tᵢ ≅ T'ᵢ para cada i. Para un triángulo T, Cont(T) es su clase de equivalencia bajo esta relación. Para un polígono P, Cont(P) = Σ Cont(Tᵢ) donde {Tᵢ} es cualquier triangulación de P.",
+      "tags": [
+        "geometria",
+        "areas",
+        "congruencia",
+        "fundamentos"
+      ],
+      "authors": [
+        "hilbert"
+      ],
+      "links": [
+        "teorema-triangulacion-poligono",
+        "triangulo"
+      ],
+      "seeAlso": [
+        "teorema-area-aditividad",
+        "teorema-area-invariancia",
+        "teorema-area-rectangulo"
+      ],
+      "hasSimulation": false
+    }
+  },
   "cuadrilatero": {
     "id": "cuadrilatero",
     "slug": "cuadrilatero",
@@ -713,6 +906,52 @@
         "paralelogramo"
       ],
       "hasSimulation": true
+    }
+  },
+  "estar-entre": {
+    "id": "estar-entre",
+    "slug": "estar-entre",
+    "filePath": "definitions/estar-entre.mdx",
+    "contentType": "definicion",
+    "metadata": {
+      "id": "estar-entre",
+      "type": "definicion",
+      "subtype": "primitivo",
+      "title": "Estar Entre (Intermediación)",
+      "description": "Relación primitiva de orden entre tres puntos colineales. No se define; su comportamiento queda determinado por los axiomas de orden (Grupo II de Hilbert).",
+      "statement": "La relación A * B * C (léase «B está entre A y C») es una relación ternaria primitiva sobre puntos colineales.",
+      "tags": [
+        "geometria",
+        "orden",
+        "fundamentos"
+      ],
+      "authors": [
+        "hilbert"
+      ],
+      "hasSimulation": false
+    }
+  },
+  "incidencia": {
+    "id": "incidencia",
+    "slug": "incidencia",
+    "filePath": "definitions/incidencia.mdx",
+    "contentType": "definicion",
+    "metadata": {
+      "id": "incidencia",
+      "type": "definicion",
+      "subtype": "primitivo",
+      "title": "Incidencia",
+      "description": "Relación primitiva de pertenencia entre puntos, rectas y planos. No se define; su comportamiento queda determinado por los axiomas de incidencia (Grupo I de Hilbert).",
+      "statement": "La relación de incidencia establece qué puntos pertenecen a qué rectas y qué puntos y rectas pertenecen a qué planos.",
+      "tags": [
+        "geometria",
+        "incidencia",
+        "fundamentos"
+      ],
+      "authors": [
+        "hilbert"
+      ],
+      "hasSimulation": false
     }
   },
   "mediana": {
@@ -867,6 +1106,7 @@
     "metadata": {
       "id": "plano",
       "type": "definicion",
+      "subtype": "primitivo",
       "title": "Plano",
       "description": "Concepto primitivo que representa una superficie bidimensional plana de extensión infinita. En geometría formal, su naturaleza se deriva únicamente de los axiomas de incidencia.",
       "authors": [
@@ -884,6 +1124,7 @@
     "metadata": {
       "id": "punto",
       "type": "definicion",
+      "subtype": "primitivo",
       "title": "Punto",
       "description": "Concepto primitivo de la geometría que carece de dimensión, área o volumen, representando una posición exacta en el espacio. Su naturaleza matemática emerge estrictamente de las relaciones axiomáticas de incidencia e intermediación.",
       "authors": [
@@ -901,6 +1142,7 @@
     "metadata": {
       "id": "recta",
       "type": "definicion",
+      "subtype": "primitivo",
       "title": "Recta",
       "description": "Concepto primitivo de la geometría de naturaleza unidimensional. En el sistema de Hilbert, carece de definición explícita y su estructura emerge de las relaciones de incidencia y orden.",
       "authors": [
@@ -930,10 +1172,7 @@
       ],
       "links": [
         "punto",
-        "recta",
-        "axioma-orden-1",
-        "axioma-orden-2",
-        "axioma-congruencia-1"
+        "estar-entre"
       ],
       "seeAlso": [
         "semirrecta",
@@ -964,8 +1203,7 @@
       "links": [
         "punto",
         "recta",
-        "axioma-orden-1",
-        "axioma-orden-2"
+        "estar-entre"
       ],
       "seeAlso": [
         "segmento",
@@ -973,6 +1211,35 @@
         "axioma-orden-3"
       ],
       "hasSimulation": true
+    }
+  },
+  "teoria-medida-area": {
+    "id": "teoria-medida-area",
+    "slug": "teoria-medida-area",
+    "filePath": "definitions/teoria-medida-area.mdx",
+    "contentType": "definicion",
+    "metadata": {
+      "id": "teoria-medida-area",
+      "type": "definicion",
+      "subtype": "derivado",
+      "title": "Teoría de la Medida de Áreas",
+      "description": "Visión panorámica de la teoría del contenido de Hilbert: equidescomponibilidad, triangulación, y los teoremas fundamentales que permiten calcular áreas de figuras planas.",
+      "tags": [
+        "geometria",
+        "areas",
+        "medida"
+      ],
+      "authors": [
+        "hilbert"
+      ],
+      "links": [
+        "contenido"
+      ],
+      "seeAlso": [
+        "teorema-pitagoras",
+        "paralelogramo"
+      ],
+      "hasSimulation": false
     }
   },
   "triangulo": {
@@ -996,8 +1263,7 @@
       ],
       "links": [
         "punto",
-        "segmento",
-        "angulo"
+        "segmento"
       ],
       "seeAlso": [
         "teorema-congruencia-ala",
@@ -1073,6 +1339,97 @@
         "congruencia"
       ],
       "layout": "split"
+    }
+  },
+  "demo-area-aditividad": {
+    "id": "demo-area-aditividad",
+    "slug": "demo-area-aditividad",
+    "filePath": "demonstrations/demo-area-aditividad.mdx",
+    "contentType": "demostracion",
+    "metadata": {
+      "id": "demo-area-aditividad",
+      "type": "demostracion",
+      "title": "Demostración: Aditividad del Contenido",
+      "description": "Prueba directa: dadas triangulaciones de P₁ y P₂, su unión es una triangulación de P = P₁ ∪ P₂. Aplicando la definición de contenido a P con esta triangulación se obtiene Cont(P) = Cont(P₁) + Cont(P₂).",
+      "parentTheorem": "teorema-area-aditividad",
+      "proofMethod": "directo",
+      "layout": "text",
+      "authors": [
+        "hilbert"
+      ],
+      "tags": [
+        "geometria",
+        "areas"
+      ]
+    }
+  },
+  "demo-area-invariancia": {
+    "id": "demo-area-invariancia",
+    "slug": "demo-area-invariancia",
+    "filePath": "demonstrations/demo-area-invariancia.mdx",
+    "contentType": "demostracion",
+    "metadata": {
+      "id": "demo-area-invariancia",
+      "type": "demostracion",
+      "title": "Demostración: Invariancia del Contenido por Congruencia",
+      "description": "Prueba directa: si dos polígonos son congruentes, por el teorema de triangulación ambos admiten triangulaciones, y la isometría transporta una triangulación a la otra triángulo a triángulo, preservando el contenido por definición.",
+      "parentTheorem": "teorema-area-invariancia",
+      "proofMethod": "directo",
+      "layout": "text",
+      "authors": [
+        "hilbert"
+      ],
+      "tags": [
+        "geometria",
+        "areas",
+        "congruencia"
+      ]
+    }
+  },
+  "demo-area-rectangulo": {
+    "id": "demo-area-rectangulo",
+    "slug": "demo-area-rectangulo",
+    "filePath": "demonstrations/demo-area-rectangulo.mdx",
+    "contentType": "demostracion",
+    "metadata": {
+      "id": "demo-area-rectangulo",
+      "type": "demostracion",
+      "title": "Demostración: Área del Rectángulo",
+      "description": "Prueba por casos: si base y altura son conmensurables, el rectángulo se descompone en cuadrados unidad; si son inconmensurables, se usan aproximaciones vía el axioma de Arquímedes.",
+      "parentTheorem": "teorema-area-rectangulo",
+      "proofMethod": "exhaustivo",
+      "layout": "text",
+      "authors": [
+        "hilbert"
+      ],
+      "tags": [
+        "geometria",
+        "areas",
+        "rectangulo"
+      ]
+    }
+  },
+  "demo-area-triangulo": {
+    "id": "demo-area-triangulo",
+    "slug": "demo-area-triangulo",
+    "filePath": "demonstrations/demo-area-triangulo.mdx",
+    "contentType": "demostracion",
+    "metadata": {
+      "id": "demo-area-triangulo",
+      "type": "demostracion",
+      "title": "Demostración: Área del Triángulo",
+      "description": "Prueba directa por descomposición: el área de un triángulo es la mitad del producto de la base por la altura.",
+      "parentTheorem": "teorema-area-triangulo",
+      "proofMethod": "directo",
+      "layout": "split",
+      "authors": [
+        "euclides"
+      ],
+      "tags": [
+        "geometria",
+        "triangulos",
+        "areas"
+      ]
     }
   },
   "demo-congruencia-aal": {
@@ -1235,6 +1592,30 @@
       "layout": "split"
     }
   },
+  "demo-invariancia-triangulacion": {
+    "id": "demo-invariancia-triangulacion",
+    "slug": "demo-invariancia-triangulacion",
+    "filePath": "demonstrations/demo-invariancia-triangulacion.mdx",
+    "contentType": "demostracion",
+    "metadata": {
+      "id": "demo-invariancia-triangulacion",
+      "type": "demostracion",
+      "title": "Demostración: Independencia de la Triangulación",
+      "description": "Prueba mediante refinamiento común: toda subdivisión de un triángulo preserva el contenido (por aditividad); dos triangulaciones comparten un refinamiento común; por tanto producen la misma suma.",
+      "parentTheorem": "teorema-invariancia-triangulacion",
+      "proofMethod": "directo",
+      "layout": "text",
+      "authors": [
+        "hilbert"
+      ],
+      "tags": [
+        "geometria",
+        "polígonos",
+        "triangulos",
+        "areas"
+      ]
+    }
+  },
   "demo-pitagoras-areas": {
     "id": "demo-pitagoras-areas",
     "slug": "demo-pitagoras-areas",
@@ -1365,7 +1746,7 @@
       "title": "Demostración: Identidad de rectas con dos puntos en común",
       "description": "Prueba por reducción al absurdo: si dos rectas comparten dos puntos distintos, son la misma recta.",
       "parentTheorem": "corolario-rectas-coincidentes",
-      "proofMethod": "reduccion",
+      "proofMethod": "contradiccion",
       "authors": [
         "hilbert"
       ],
@@ -1417,6 +1798,29 @@
       "layout": "split"
     }
   },
+  "demo-triangulacion-poligono": {
+    "id": "demo-triangulacion-poligono",
+    "slug": "demo-triangulacion-poligono",
+    "filePath": "demonstrations/demo-triangulacion-poligono.mdx",
+    "contentType": "demostracion",
+    "metadata": {
+      "id": "demo-triangulacion-poligono",
+      "type": "demostracion",
+      "title": "Demostración: Triangulación de Polígonos",
+      "description": "Prueba por inducción: todo polígono simple de n vértices posee al menos un vértice oreja; al extraerlo se reduce a n−1 vértices, y por inducción se completa la triangulación.",
+      "parentTheorem": "teorema-triangulacion-poligono",
+      "proofMethod": "induccion",
+      "layout": "text",
+      "authors": [
+        "hilbert"
+      ],
+      "tags": [
+        "geometria",
+        "polígonos",
+        "triangulos"
+      ]
+    }
+  },
   "demo-triangulo-isosceles": {
     "id": "demo-triangulo-isosceles",
     "slug": "demo-triangulo-isosceles",
@@ -1440,6 +1844,38 @@
       "layout": "split"
     }
   },
+  "leccion-metodo-constructivo": {
+    "id": "leccion-metodo-constructivo",
+    "slug": "leccion-metodo-constructivo",
+    "filePath": "lessons/leccion-metodo-constructivo.mdx",
+    "contentType": "leccion",
+    "metadata": {
+      "id": "leccion-metodo-constructivo",
+      "type": "lesson",
+      "title": "Método Constructivo",
+      "description": "Demostrar la existencia de un objeto matemático construyéndolo explícitamente, proporcionando un algoritmo o procedimiento para obtenerlo.",
+      "tags": [
+        "logica",
+        "metodos",
+        "demostracion",
+        "constructivo"
+      ],
+      "authors": [],
+      "links": [
+        "demo-congruencia-ala",
+        "demo-congruencia-lll",
+        "demo-existencia-bisectriz",
+        "demo-punto-medio"
+      ],
+      "seeAlso": [
+        "leccion-metodo-directo",
+        "leccion-metodo-exhaustivo"
+      ],
+      "satisfies": [],
+      "hasSimulation": true,
+      "difficulty": "intermedio"
+    }
+  },
   "leccion-metodo-contradiccion": {
     "id": "leccion-metodo-contradiccion",
     "slug": "leccion-metodo-contradiccion",
@@ -1449,7 +1885,7 @@
       "id": "leccion-metodo-contradiccion",
       "type": "lesson",
       "title": "Demostración por Contradicción",
-      "description": "También conocida como Reducción al absurdo, demuestra que una afirmación es verdadera al mostrar que si fuera falsa, llevaría a una imposibilidad lógica.",
+      "description": "Probar que una afirmación es verdadera mostrando que su negación conduce a una imposibilidad lógica. También conocida como reductio ad absurdum o reducción al absurdo.",
       "tags": [
         "logica",
         "metodos",
@@ -1458,13 +1894,44 @@
       ],
       "authors": [],
       "links": [
-        "teorema-dos-rectas-un-punto"
+        "teorema-dos-rectas-un-punto",
+        "demo-reciproco-triangulo-isosceles",
+        "demo-congruencia-aal"
       ],
       "seeAlso": [
-        "leccion-metodo-directo"
+        "leccion-metodo-directo",
+        "leccion-metodo-contraposicion"
       ],
       "satisfies": [],
-      "hasSimulation": false
+      "hasSimulation": true,
+      "difficulty": "intermedio"
+    }
+  },
+  "leccion-metodo-contraposicion": {
+    "id": "leccion-metodo-contraposicion",
+    "slug": "leccion-metodo-contraposicion",
+    "filePath": "lessons/leccion-metodo-contraposicion.mdx",
+    "contentType": "leccion",
+    "metadata": {
+      "id": "leccion-metodo-contraposicion",
+      "type": "lesson",
+      "title": "Demostración por Contraposición",
+      "description": "Probar una implicación demostrando su contrarrecíproco: en lugar de P implica Q, se demuestra que no Q implica no P.",
+      "tags": [
+        "logica",
+        "metodos",
+        "demostracion",
+        "contraposicion"
+      ],
+      "authors": [],
+      "links": [],
+      "seeAlso": [
+        "leccion-metodo-directo",
+        "leccion-metodo-contradiccion"
+      ],
+      "satisfies": [],
+      "hasSimulation": true,
+      "difficulty": "intermedio"
     }
   },
   "leccion-metodo-directo": {
@@ -1476,19 +1943,113 @@
       "id": "leccion-metodo-directo",
       "type": "lesson",
       "title": "Método Directo",
-      "description": "Introducción a la forma más básica de demostración matemática: inferir Q a partir de P mediante pasos lógicos secuenciales.",
+      "description": "La estrategia fundamental de demostración: encadenar implicaciones lógicas desde la hipótesis hasta la tesis mediante inferencias válidas.",
       "tags": [
         "logica",
         "metodos",
         "demostracion"
       ],
       "authors": [],
+      "links": [
+        "teorema-pitagoras",
+        "teorema-congruencia-ala",
+        "teorema-suma-angulos-triangulo"
+      ],
+      "seeAlso": [
+        "leccion-metodo-contradiccion",
+        "leccion-metodo-contraposicion"
+      ],
+      "satisfies": [],
+      "hasSimulation": true,
+      "difficulty": "intermedio"
+    }
+  },
+  "leccion-metodo-exhaustivo": {
+    "id": "leccion-metodo-exhaustivo",
+    "slug": "leccion-metodo-exhaustivo",
+    "filePath": "lessons/leccion-metodo-exhaustivo.mdx",
+    "contentType": "leccion",
+    "metadata": {
+      "id": "leccion-metodo-exhaustivo",
+      "type": "lesson",
+      "title": "Método Exhaustivo",
+      "description": "Demostrar una propiedad analizando todos los casos posibles, dividiendo el problema en un número finito de escenarios mutuamente excluyentes.",
+      "tags": [
+        "logica",
+        "metodos",
+        "demostracion",
+        "exhaustivo"
+      ],
+      "authors": [],
       "links": [],
       "seeAlso": [
+        "leccion-metodo-directo",
+        "leccion-metodo-induccion"
+      ],
+      "satisfies": [],
+      "hasSimulation": true,
+      "difficulty": "intermedio"
+    }
+  },
+  "leccion-metodo-geometrico": {
+    "id": "leccion-metodo-geometrico",
+    "slug": "leccion-metodo-geometrico",
+    "filePath": "lessons/leccion-metodo-geometrico.mdx",
+    "contentType": "leccion",
+    "metadata": {
+      "id": "leccion-metodo-geometrico",
+      "type": "lesson",
+      "title": "Método Geométrico",
+      "description": "Demostrar teoremas mediante razonamiento visual y espacial: construcciones, transformaciones, congruencias y semejanzas de figuras.",
+      "tags": [
+        "logica",
+        "metodos",
+        "demostracion",
+        "geometria"
+      ],
+      "authors": [],
+      "links": [
+        "teorema-pitagoras",
+        "demo-pitagoras-areas",
+        "demo-pitagoras-euclides",
+        "teorema-tales",
+        "demo-tales"
+      ],
+      "seeAlso": [
+        "leccion-metodo-directo",
+        "leccion-metodo-constructivo"
+      ],
+      "satisfies": [],
+      "hasSimulation": true,
+      "difficulty": "intermedio"
+    }
+  },
+  "leccion-metodo-induccion": {
+    "id": "leccion-metodo-induccion",
+    "slug": "leccion-metodo-induccion",
+    "filePath": "lessons/leccion-metodo-induccion.mdx",
+    "contentType": "leccion",
+    "metadata": {
+      "id": "leccion-metodo-induccion",
+      "type": "lesson",
+      "title": "Inducción Matemática",
+      "description": "El principio de inducción: probar que una propiedad vale para todos los números naturales demostrando el caso base y el paso inductivo.",
+      "tags": [
+        "logica",
+        "metodos",
+        "demostracion",
+        "induccion",
+        "numeros"
+      ],
+      "authors": [],
+      "links": [],
+      "seeAlso": [
+        "leccion-metodo-directo",
         "leccion-metodo-contradiccion"
       ],
       "satisfies": [],
-      "hasSimulation": false
+      "hasSimulation": true,
+      "difficulty": "intermedio"
     }
   },
   "arquimedes": {
@@ -1903,6 +2464,110 @@
       ]
     }
   },
+  "teorema-area-aditividad": {
+    "id": "teorema-area-aditividad",
+    "slug": "teorema-area-aditividad",
+    "filePath": "theorems/teorema-area-aditividad.mdx",
+    "contentType": "teorema",
+    "metadata": {
+      "id": "teorema-area-aditividad",
+      "type": "teorema",
+      "title": "Aditividad del Contenido",
+      "description": "Si un polígono se descompone en polígonos con interiores disjuntos, su contenido es la suma de los contenidos de las partes. Teorema derivado de la definición de equidescomponibilidad de Hilbert.",
+      "statement": "Sea P un polígono y P₁, P₂ una descomposición de P con interiores disjuntos. Entonces Cont(P) = Cont(P₁) + Cont(P₂).",
+      "tags": [
+        "geometria",
+        "areas"
+      ],
+      "authors": [
+        "hilbert"
+      ],
+      "difficulty": "básico",
+      "demos": [
+        "demo-area-aditividad"
+      ],
+      "hasSimulation": false
+    }
+  },
+  "teorema-area-invariancia": {
+    "id": "teorema-area-invariancia",
+    "slug": "teorema-area-invariancia",
+    "filePath": "theorems/teorema-area-invariancia.mdx",
+    "contentType": "teorema",
+    "metadata": {
+      "id": "teorema-area-invariancia",
+      "type": "teorema",
+      "title": "Invariancia del Contenido por Congruencia",
+      "description": "Si dos figuras poligonales son congruentes, tienen el mismo contenido (área). Consecuencia directa de la definición de equidescomponibilidad y los axiomas de congruencia de Hilbert.",
+      "statement": "Sean P y Q dos polígonos. Si P ≅ Q (congruentes), entonces P y Q tienen igual contenido.",
+      "tags": [
+        "geometria",
+        "areas",
+        "congruencia"
+      ],
+      "authors": [
+        "hilbert"
+      ],
+      "difficulty": "básico",
+      "demos": [
+        "demo-area-invariancia"
+      ],
+      "hasSimulation": false
+    }
+  },
+  "teorema-area-rectangulo": {
+    "id": "teorema-area-rectangulo",
+    "slug": "teorema-area-rectangulo",
+    "filePath": "theorems/teorema-area-rectangulo.mdx",
+    "contentType": "teorema",
+    "metadata": {
+      "id": "teorema-area-rectangulo",
+      "type": "teorema",
+      "title": "Área del Rectángulo",
+      "description": "El contenido de un rectángulo es el producto de su base por su altura. Teorema fundamental de la teoría de áreas de Hilbert, que requiere el axioma de Arquímedes para su demostración.",
+      "statement": "Sea R un rectángulo de base b y altura h. Entonces Cont(R) = b · h.",
+      "tags": [
+        "geometria",
+        "areas",
+        "rectangulo"
+      ],
+      "authors": [
+        "hilbert",
+        "euclides"
+      ],
+      "difficulty": "intermedio",
+      "demos": [
+        "demo-area-rectangulo"
+      ],
+      "hasSimulation": false
+    }
+  },
+  "teorema-area-triangulo": {
+    "id": "teorema-area-triangulo",
+    "slug": "teorema-area-triangulo",
+    "filePath": "theorems/teorema-area-triangulo.mdx",
+    "contentType": "teorema",
+    "metadata": {
+      "id": "teorema-area-triangulo",
+      "type": "teorema",
+      "title": "Área del Triángulo",
+      "description": "El área de un triángulo es la mitad del producto de la longitud de un lado por la altura correspondiente. En el sistema de medida de áreas, dos triángulos con igual base e igual altura tienen áreas iguales.",
+      "statement": "Sea △ABC un triángulo y sea h la altura correspondiente al lado AB (base). El área de △ABC es (|AB| · h) / 2.",
+      "tags": [
+        "geometria",
+        "triangulos",
+        "areas"
+      ],
+      "authors": [
+        "euclides"
+      ],
+      "difficulty": "básico",
+      "demos": [
+        "demo-area-triangulo"
+      ],
+      "hasSimulation": false
+    }
+  },
   "teorema-congruencia-aal": {
     "id": "teorema-congruencia-aal",
     "slug": "teorema-congruencia-aal",
@@ -2092,6 +2757,34 @@
       ]
     }
   },
+  "teorema-invariancia-triangulacion": {
+    "id": "teorema-invariancia-triangulacion",
+    "slug": "teorema-invariancia-triangulacion",
+    "filePath": "theorems/teorema-invariancia-triangulacion.mdx",
+    "contentType": "teorema",
+    "metadata": {
+      "id": "teorema-invariancia-triangulacion",
+      "type": "teorema",
+      "title": "Independencia de la Triangulación",
+      "description": "El contenido de un polígono definido mediante triangulación no depende de la triangulación elegida. Dos triangulaciones cualesquiera producen la misma suma de contenidos triangulares.",
+      "statement": "Sea P un polígono simple y sean T = {T₁,…,Tₙ} y T' = {T'₁,…,T'ₘ} dos triangulaciones de P. Entonces Σ Cont(Tᵢ) = Σ Cont(T'ⱼ).",
+      "tags": [
+        "geometria",
+        "polígonos",
+        "triangulos",
+        "areas",
+        "fundamentos"
+      ],
+      "authors": [
+        "hilbert"
+      ],
+      "difficulty": "intermedio",
+      "demos": [
+        "demo-invariancia-triangulacion"
+      ],
+      "hasSimulation": false
+    }
+  },
   "teorema-pitagoras": {
     "id": "teorema-pitagoras",
     "slug": "teorema-pitagoras",
@@ -2227,6 +2920,33 @@
         "demo-tales"
       ],
       "hasSimulation": true
+    }
+  },
+  "teorema-triangulacion-poligono": {
+    "id": "teorema-triangulacion-poligono",
+    "slug": "teorema-triangulacion-poligono",
+    "filePath": "theorems/teorema-triangulacion-poligono.mdx",
+    "contentType": "teorema",
+    "metadata": {
+      "id": "teorema-triangulacion-poligono",
+      "type": "teorema",
+      "title": "Triangulación de Polígonos",
+      "description": "Todo polígono simple de n vértices admite una triangulación en n−2 triángulos mediante n−3 diagonales interiores que no se cruzan.",
+      "statement": "Sea P un polígono simple de n ≥ 3 vértices. Existen n−3 diagonales interiores de P que no se intersectan y que dividen P en n−2 triángulos cuyos vértices son vértices de P.",
+      "tags": [
+        "geometria",
+        "polígonos",
+        "triangulos",
+        "fundamentos"
+      ],
+      "authors": [
+        "hilbert"
+      ],
+      "difficulty": "intermedio",
+      "demos": [
+        "demo-triangulacion-poligono"
+      ],
+      "hasSimulation": false
     }
   },
   "teorema-triangulo-isosceles": {

@@ -1,0 +1,34 @@
+export const metadata = {
+  "id": "teorema-area-aditividad",
+  "type": "teorema",
+  "title": "Aditividad del Contenido",
+  "description": "Si un polígono se descompone en polígonos con interiores disjuntos, su contenido es la suma de los contenidos de las partes. Teorema derivado de la definición de equidescomponibilidad de Hilbert.",
+  "statement": "Sea P un polígono y P₁, P₂ una descomposición de P con interiores disjuntos. Entonces Cont(P) = Cont(P₁) + Cont(P₂).",
+  "tags": ["geometria", "areas"],
+  "authors": ["hilbert"],
+  "difficulty": "básico",
+  "demos": ["demo-area-aditividad"],
+  "hasSimulation": false
+};
+
+<Capitular letra="L" />a definición de <ConceptLink targetId="contenido" isDependency={false}>contenido</ConceptLink> de <ConceptLink targetId="hilbert" isDependency={false}>Hilbert</ConceptLink> asigna a cada polígono la suma de los contenidos de los triángulos de cualquiera de sus triangulaciones. Este teorema demuestra que dicha definición es **compatible con la operación geométrica de unión**: si un polígono se descompone en partes con interiores disjuntos, el contenido del todo es la suma de los contenidos de las partes.
+
+<Separador />
+
+### Enunciado Formal
+
+<Formula>
+  $$ P = P_1 \cup P_2,\quad P_1^\circ \cap P_2^\circ = \emptyset \implies \text{Cont}(P) = \text{Cont}(P_1) + \text{Cont}(P_2) $$
+</Formula>
+
+<Separador />
+
+### Demostración (esbozo)
+
+Por definición, el <ConceptLink targetId="contenido" isDependency={false}>contenido</ConceptLink> de un polígono triangulado es la suma de los contenidos de sus triángulos. Si $P$ se descompone en $P_1$ y $P_2$, por el <ConceptLink targetId="teorema-triangulacion-poligono" isDependency={true}>teorema de triangulación</ConceptLink> podemos triangular $P_1$ y $P_2$. La unión de ambas triangulaciones produce una triangulación de $P$ (los interiores disjuntos garantizan que los triángulos no se solapan). Por el <ConceptLink targetId="teorema-invariancia-triangulacion" isDependency={false}>teorema de independencia de la triangulación</ConceptLink>, el contenido de $P$ no depende de la triangulación elegida, y la igualdad $\text{Cont}(P) = \text{Cont}(P_1) + \text{Cont}(P_2)$ es válida para cualquier triangulación.
+
+<Separador />
+
+### Observaciones
+
+La aditividad se extiende por <ConceptLink targetId="leccion-metodo-induccion" isDependency={false}>inducción</ConceptLink> a cualquier número finito de partes. Es la propiedad que permite sumar las áreas de los cuadrados sobre los catetos en la demostración del <ConceptLink targetId="teorema-pitagoras" isDependency={false}>Teorema de Pitágoras</ConceptLink> por equidescomposición.

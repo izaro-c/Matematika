@@ -1,0 +1,47 @@
+export const metadata = {
+  "id": "demo-area-invariancia",
+  "type": "demostracion",
+  "title": "Demostración: Invariancia del Contenido por Congruencia",
+  "description": "Prueba directa: si dos polígonos son congruentes, por el teorema de triangulación ambos admiten triangulaciones, y la isometría transporta una triangulación a la otra triángulo a triángulo, preservando el contenido por definición.",
+  "parentTheorem": "teorema-area-invariancia",
+  "proofMethod": "directo",
+  "layout": "text",
+  "authors": ["hilbert"],
+  "tags": ["geometria", "areas", "congruencia"]
+};
+
+<DemonstrationSection>
+
+<Formula>
+  $$ P \cong Q \implies \text{Cont}(P) = \text{Cont}(Q) $$
+</Formula>
+
+Recordemos la definición de <ConceptLink targetId="contenido" isDependency={false}>contenido</ConceptLink>: $\text{Cont}(P) = \sum \text{Cont}(T_i)$ donde $\{T_i\}$ es cualquier triangulación de $P$, y $\text{Cont}(T_i)$ es la clase de equidescomposición de cada triángulo. Lo que este teorema demuestra es que la congruencia de polígonos implica la igualdad de sus contenidos.
+
+<Separador />
+
+<MedievalStep number={1} title="Triangulación de P">
+Por el <ConceptLink targetId="teorema-triangulacion-poligono" isDependency={true}>teorema de triangulación de polígonos</ConceptLink>, $P$ admite una triangulación. Fijemos $\{T_1, \dots, T_n\}$ una triangulación de $P$. Por **definición** de contenido:
+
+$$ \text{Cont}(P) = \sum_{i=1}^n \text{Cont}(T_i) $$
+</MedievalStep>
+
+<MedievalStep number={2} title="Transporte de la triangulación vía la isometría">
+Por hipótesis $P \cong Q$, existe una isometría $\varphi$ del plano que aplica $P$ sobre $Q$. Definimos $T'_i = \varphi(T_i)$ para cada $i = 1, \dots, n$. Por el <ConceptLink targetId="axioma-congruencia-5" isDependency={true}>criterio LAL (III-5)</ConceptLink>, las isometrías preservan longitudes y ángulos, por lo que $T_i \cong T'_i$ para cada $i$.
+
+La isometría $\varphi$ preserva la incidencia (<ConceptLink targetId="axioma-incidencia-1" isDependency={true}>axioma I-1</ConceptLink>): la imagen de un segmento es un segmento, y la imagen de un triángulo es un triángulo. En consecuencia, $\{T'_1, \dots, T'_n\}$ es una triangulación de $Q$.
+</MedievalStep>
+
+<MedievalStep number={3} title="Igualdad de contenido triángulo a triángulo">
+Por la definición de <ConceptLink targetId="contenido" isDependency={false}>contenido</ConceptLink>, dos triángulos congruentes tienen el mismo contenido: $T_i \cong T'_i \implies \text{Cont}(T_i) = \text{Cont}(T'_i)$. Esto es inmediato de la definición de equidescomposición: si $T_i \cong T'_i$, basta tomar $n=1$ y la descomposición trivial (cada triángulo es su propia triangulación).
+</MedievalStep>
+
+<MedievalStep number={4} title="Conclusión">
+Aplicando la **definición** de contenido a $Q$ con la triangulación $\{T'_i\}$:
+
+$$ \text{Cont}(Q) = \sum_{i=1}^n \text{Cont}(T'_i) = \sum_{i=1}^n \text{Cont}(T_i) = \text{Cont}(P) $$
+
+Todas las igualdades son por definición, salvo $\text{Cont}(T_i) = \text{Cont}(T'_i)$ que se sigue de $T_i \cong T'_i$ (paso 2) y la definición de equidescomposición. $\blacksquare$
+</MedievalStep>
+
+</DemonstrationSection>

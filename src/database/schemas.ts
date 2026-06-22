@@ -69,7 +69,7 @@ export const DemoSchema = z.object({
   description: z.string().optional(),
   parentTheorem: z.string().optional(),
   lemmas: z.array(z.string()).optional(),
-  proofMethod: z.enum(['directo', 'contradiccion', 'induccion', 'contraposicion', 'constructivo', 'geometrico', 'exhaustivo', 'reduccion']).optional(),
+  proofMethod: z.enum(['directo', 'contradiccion', 'induccion', 'contraposicion', 'constructivo', 'geometrico', 'exhaustivo']).optional(),
   authors: z.array(z.string()).optional(),
   layout: z.enum(['split', 'text']).optional(),
   dependencias: z.array(z.string()).optional(),
@@ -88,6 +88,7 @@ export const DefinitionSchema = z.object({
   statement: z.string().optional(),
   authors: z.array(z.string()).optional(),
   color: z.string().optional(),
+  subtype: z.enum(['primitivo', 'derivado']).optional(),
 });
 
 /**

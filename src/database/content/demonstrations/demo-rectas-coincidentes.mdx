@@ -4,7 +4,7 @@ export const metadata = {
   "title": "Demostración: Identidad de rectas con dos puntos en común",
   "description": "Prueba por reducción al absurdo: si dos rectas comparten dos puntos distintos, son la misma recta.",
   "parentTheorem": "corolario-rectas-coincidentes",
-  "proofMethod": "reduccion",
+  "proofMethod": "contradiccion",
   "authors": ["hilbert"],
   "layout": "split"
 };
@@ -14,7 +14,11 @@ import { InteractiveElement } from "@/boundary/components/ui/VisualBind";
 
 <DemonstrationSection diagram={<DemoRectasCoincidentes />}>
 
-<Capitular letra="D" />el <ConceptLink targetId="teorema-dos-rectas-un-punto" isDependency={true}>teorema de intersección única</ConceptLink> se desprende directamente el siguiente <ConceptLink targetId="corolario" isDependency={false}>corolario</ConceptLink>: si dos <ConceptLink targetId="recta" isDependency={false}>rectas</ConceptLink> comparten dos puntos distintos, entonces son la misma recta. La prueba es una <ConceptLink targetId="reduccion" isDependency={false}>reducción al absurdo</ConceptLink> de aplicación inmediata.
+<Capitular letra="S" />ean $l$ y $m$ dos <ConceptLink targetId="recta" isDependency={false}>rectas</ConceptLink> y $A, B$ dos <ConceptLink targetId="punto" isDependency={false}>puntos</ConceptLink> distintos. Si ambos puntos inciden en ambas rectas, entonces las rectas son idénticas:
+
+<Formula>
+  $$ A, B \in l \land A, B \in m \implies l = m $$
+</Formula>
 
 <Separador />
 
@@ -33,7 +37,7 @@ import { InteractiveElement } from "@/boundary/components/ui/VisualBind";
 </MedievalStep>
 
 <MedievalStep number={4} title="Contradicción" target="step4">
-  Las conclusiones de los pasos $2$ y $3$ son contradictorias: no puede ocurrir simultáneamente que la intersección sea $\leq 1$ y $\geq 2$.
+  Las conclusiones de los pasos $2$ y $3$ son contradictorias: no puede ocurrir simultáneamente que la <InteractiveElement target="interseccion" color="terracota">intersección</InteractiveElement> sea $\leq 1$ y $\geq 2$.
 </MedievalStep>
 
 <MedievalStep number={5} title="Conclusión" target="step5">

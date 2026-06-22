@@ -1,0 +1,79 @@
+export const metadata = {
+  "id": "leccion-metodo-exhaustivo",
+  "type": "lesson",
+  "title": "Método Exhaustivo",
+  "description": "Demostrar una propiedad analizando todos los casos posibles, dividiendo el problema en un número finito de escenarios mutuamente excluyentes.",
+  "tags": ["logica", "metodos", "demostracion", "exhaustivo"],
+  "authors": [],
+  "links": [],
+  "seeAlso": ["leccion-metodo-directo", "leccion-metodo-induccion"],
+  "satisfies": [],
+  "hasSimulation": true,
+  "difficulty": "intermedio",
+};
+
+import { ExhaustivoSimulation } from "@/boundary/components/diagrams/Demos/ExhaustivoSimulation";
+export const Simulation = ExhaustivoSimulation;
+
+<Capitular letra="E" />l **método exhaustivo** — también llamado *demostración por casos* o *análisis de casos* — consiste en dividir el universo de posibilidades en un número finito de escenarios mutuamente excluyentes, demostrar que la propiedad se cumple en cada uno de ellos, y concluir que se cumple universalmente.
+
+<Separador />
+
+### Estructura Lógica
+
+Si se quiere probar que una proposición $Q$ es verdadera para todos los elementos de un conjunto $U$, y $U$ se puede particionar en casos $C_1, C_2, \dots, C_k$ exhaustivos y mutuamente excluyentes:
+
+$$ U = C_1 \cup C_2 \cup \dots \cup C_k, \qquad C_i \cap C_j = \emptyset \ \text{para}\ i \neq j $$
+
+Entonces basta probar:
+
+$$ C_1 \implies Q,\quad C_2 \implies Q,\quad \dots,\quad C_k \implies Q $$
+
+<Separador />
+
+### Tipos de Partición
+
+- **Casos algebraicos**: Según el signo, la paridad, o la relación de orden. Por ejemplo, $|x| = x$ si $x \geq 0$, y $|x| = -x$ si $x < 0$.
+- **Casos geométricos**: Según la posición relativa de figuras (un punto puede estar dentro, sobre o fuera de una circunferencia; dos rectas pueden ser secantes, paralelas o coincidentes).
+- **Casos lógicos**: Según valores de verdad de proposiciones atómicas. Por ejemplo, en una tabla de verdad con $n$ variables hay $2^n$ casos.
+
+<Separador />
+
+### Ejemplos
+
+- **Desigualdad del triángulo**: $|a + b| \leq |a| + |b|$. Se demuestra analizando los casos según el signo de $a$ y $b$.
+
+- **Teorema del valor absoluto**: Para probar $|x \cdot y| = |x| \cdot |y|$, se consideran los cuatro casos según que $x$ e $y$ sean positivos o negativos.
+
+- **Cuadriláteros**: Para demostrar que la suma de los ángulos de cualquier cuadrilátero es $360^\circ$, se considera si es convexo o cóncavo (dos casos).
+
+<Separador />
+
+### Relación con Otros Métodos
+
+- **Con el método directo**: Cada caso individual se demuestra normalmente con un argumento directo. El método exhaustivo es un *marco organizador* que reduce un problema complejo a varios subproblemas más simples.
+
+- **Con la inducción**: La inducción puede verse como un método exhaustivo sobre infinitos casos reducido a dos (caso base y paso). El método exhaustivo maneja un número finito de casos.
+
+<Separador />
+
+### Cuándo Usarlo
+
+El método exhaustivo es apropiado cuando:
+
+- El dominio del problema se particiona naturalmente en pocos casos (2, 3, a lo sumo 10-12).
+- Cada caso individual es significativamente más fácil que el problema general.
+- Hay simetría o propiedades que hacen que varios casos se traten de forma análoga («sin pérdida de generalidad»).
+- El problema involucra valores absolutos, signos, paridades o posiciones relativas.
+
+<Separador />
+
+### Fortalezas y Debilidades
+
+<Nota>
+**Fortaleza**: Reduce la complejidad al descomponer el problema. Es sistemático y no requiere ideas brillantes, solo paciencia para verificar cada caso. Ideal para demostraciones en teoría de números elemental y combinatoria.
+
+**Debilidad**: Si el número de casos es grande, la demostración se vuelve tediosa e inmanejable. En la era moderna se usa software (demostraciones asistidas por ordenador, como la del Teorema de los Cuatro Colores), pero esto genera debates filosóficos sobre si una demostración verificada por máquina es realmente una demostración matemática.
+</Nota>
+
+

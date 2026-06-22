@@ -1,24 +1,31 @@
-import graphData from '@/database/graph_structure.json';
+export interface WorkerInput {
+  graphData: any;
+  disabledAxioms: string[];
+}
 
 const VISIBLE_TYPES = new Set(['axioma', 'lema', 'corolario', 'teorema', 'definicion', 'modelo']);
 
 interface JsonNode {
   id: string;
   type: string;
+  subtype?: string;
   title: string;
   description: string;
   proofs: { id: string; dependencies: string[] }[];
   directDependencies: string[];
 }
 
-const structure = graphData as {
+// Se inicializa en computeGraph()
+let structure: {
   topologicalOrder: string[];
   nodes: Record<string, JsonNode>;
-};
+} = null as any;
+
 
 export interface FlowNodeData {
   label: string;
   nodeType: string;
+  subtype?: string;
   description: string;
   isActive: boolean;
   scale: number;
@@ -69,7 +76,8 @@ function filterNodes(): Record<string, JsonNode> {
 }
 
 function getDependencies(node: JsonNode): string[] {
-  if (node.type === 'teorema' || node.type === 'corolario') {
+  // Si el nodo tiene demostraciones, las dependencias se calculan SOLO a partir de ellas (OR).
+  if (node.proofs.length > 0) {
     const deps: string[] = [];
     for (const proof of node.proofs) {
       for (const dep of proof.dependencies) {
@@ -78,10 +86,9 @@ function getDependencies(node: JsonNode): string[] {
     }
     return deps;
   }
-  if (node.type === 'lema' || node.type === 'definicion' || node.type === 'modelo') {
-    return [...node.directDependencies];
-  }
-  return [];
+  // Sin demostraciones, usar dependencias directas (metadatos y ConceptLinks)
+  // Incluye axiomas (que ahora dependen de conceptos primitivos) y definiciones
+  return [...node.directDependencies];
 }
 
 function addEdgeIfValid(
@@ -126,13 +133,17 @@ function evaluateActiveNodes(
       continue;
     }
 
-    if (node.type === 'teorema' || node.type === 'corolario') {
+    // lema, teorema, corolario → OR sobre demostraciones
+    // (misma lógica que el sandbox: Nodo.isSatisfiedBy → isTheorem)
+    if (node.type === 'teorema' || node.type === 'corolario' || node.type === 'lema') {
       if (node.proofs.length === 0) {
-        active[id] = true;
+        // Sin demostraciones: activo si no tiene dependencias directas
+        active[id] = node.directDependencies.length === 0;
       } else {
+        // OR: al menos una demostración con todas sus dependencias activas
         active[id] = node.proofs.some((proof) =>
           proof.dependencies.every((dep) => {
-            if (!filtered[dep]) return true;
+            if (!filtered[dep]) return false;
             return active[dep] !== false;
           }),
         );
@@ -140,19 +151,15 @@ function evaluateActiveNodes(
       continue;
     }
 
-    if (node.type === 'lema' || node.type === 'definicion') {
-      if (node.directDependencies.length === 0) {
-        active[id] = true;
-      } else {
-        active[id] = node.directDependencies.every((dep) => {
-          if (!filtered[dep]) return true;
-          return active[dep] !== false;
-        });
-      }
-      continue;
+    // definicion, modelo → AND sobre dependencias directas
+    if (node.directDependencies.length === 0) {
+      active[id] = true;
+    } else {
+      active[id] = node.directDependencies.every((dep) => {
+        if (!filtered[dep]) return true;
+        return active[dep] !== false;
+      });
     }
-
-    active[id] = true;
   }
 
   return active;
@@ -163,6 +170,7 @@ function computeLayers(
   topologicalOrder: string[],
   edgeList: Array<{ source: string; target: string }>,
   axiomIds: Set<string>,
+  primitiveIds: Set<string>,
 ): Record<string, number> {
   const preds: Record<string, string[]> = {};
   for (const id of topologicalOrder) preds[id] = [];
@@ -173,10 +181,15 @@ function computeLayers(
   const layers: Record<string, number> = {};
 
   for (const id of topologicalOrder) {
-    if (axiomIds.has(id)) {
+    // Primitivos: capa 0 (Grado absoluto)
+    if (primitiveIds.has(id)) {
       layers[id] = 0;
-    } else if (preds[id].length === 0) {
+    } else if (axiomIds.has(id)) {
+      // Axiomas: capa 1 (dependen de los primitivos)
       layers[id] = 1;
+    } else if (preds[id].length === 0) {
+      // Nodos sin dependencias que no son primitivos ni axiomas: capa 2 mínimo
+      layers[id] = 2;
     } else {
       let l = 0;
       for (const p of preds[id]) {
@@ -184,7 +197,8 @@ function computeLayers(
           l = Math.max(l, layers[p] + 1);
         }
       }
-      layers[id] = Math.max(1, l);
+      // Las definiciones derivadas y el resto empiezan en capa 2 como mínimo
+      layers[id] = Math.max(2, l);
     }
   }
 
@@ -303,18 +317,26 @@ function arrangeLayers(
   return positions;
 }
 
-export async function computeGraph(disabledAxioms: string[]): Promise<WorkerOutput> {
+export async function computeGraph(graphData: any, disabledAxioms: string[]): Promise<WorkerOutput> {
+  structure = graphData;
   const disabledSet = new Set(disabledAxioms);
 
   const filtered = filterNodes();
   const activeStates = evaluateActiveNodes(filtered, disabledSet);
   const edgeList = buildEdgeList(filtered);
+  
+  const rawAxiomEdges = edgeList.filter(e => filtered[e.target]?.type === 'axioma');
+  const rawConceptEdges = edgeList.filter(e => {
+    const src = filtered[e.source];
+    return src?.type === 'definicion' && src?.subtype === 'primitivo';
+  });
 
   const nodeIds = Object.keys(filtered);
   const axiomIds = new Set(nodeIds.filter(id => filtered[id].type === 'axioma'));
+  const primitiveIds = new Set(nodeIds.filter(id => filtered[id].type === 'definicion' && filtered[id].subtype === 'primitivo'));
 
   const sortedIds = structure.topologicalOrder.filter(id => nodeIds.includes(id));
-  const layers = computeLayers(sortedIds, edgeList, axiomIds);
+  const layers = computeLayers(sortedIds, edgeList, axiomIds, primitiveIds);
 
   const positions = arrangeLayers(nodeIds, layers, edgeList);
 
@@ -333,7 +355,9 @@ export async function computeGraph(disabledAxioms: string[]): Promise<WorkerOutp
   const flowNodes: FlowNode[] = nodeIds.map((id) => {
     const node = filtered[id];
     const pos = positions[id] ?? { x: 0, y: 0 };
+    const isPrimitive = node.type === 'definicion' && node.subtype === 'primitivo';
     const label = node.title || id.replace(/[-_]/g, ' ');
+    const nodeTypeLabel = isPrimitive ? 'concepto' : node.type;
     return {
       id,
       type: 'mathNode',
@@ -342,7 +366,8 @@ export async function computeGraph(disabledAxioms: string[]): Promise<WorkerOutp
       height: NODE_H,
       data: {
         label,
-        nodeType: node.type,
+        nodeType: nodeTypeLabel,
+        subtype: node.subtype,
         description: node.description || '',
         isActive: activeStates[id] ?? true,
         scale: 1,
@@ -361,9 +386,15 @@ export async function computeGraph(disabledAxioms: string[]): Promise<WorkerOutp
     let strokeDasharray: string | undefined;
     if (srcNode?.type === 'lema') {
       strokeDasharray = '6,4';
-    } else if (srcNode?.type === 'definicion') {
+    } else if (srcNode?.type === 'definicion' && srcNode?.subtype !== 'primitivo') {
       strokeDasharray = '2,3';
     }
+    // Primitivos (conceptos): aristas sólidas, más gruesas — base ontológica
+    const isFromPrimitive = srcNode?.type === 'definicion' && srcNode?.subtype === 'primitivo';
+    const edgeColor = isFromPrimitive
+      ? (isLive ? '#818cf8AA' : '#818cf822')
+      : (isLive ? '#333333AA' : '#33333322');
+    const edgeWidth = isFromPrimitive ? (isLive ? 2.5 : 1) : (isLive ? 1.5 : 1);
 
     return {
       id: `e-${source}-${target}`,
@@ -371,18 +402,34 @@ export async function computeGraph(disabledAxioms: string[]): Promise<WorkerOutp
       target,
       type: 'default',
       style: {
-        stroke: isLive ? '#333333AA' : '#33333322',
-        strokeWidth: isLive ? 1.5 : 1,
+        stroke: edgeColor,
+        strokeWidth: edgeWidth,
         ...(strokeDasharray ? { strokeDasharray } : {}),
       },
       markerEnd: {
         type: 'arrowclosed',
-        color: isLive ? '#333333AA' : '#33333322',
+        color: edgeColor,
         width: 10,
         height: 10,
       },
     };
   });
+
+  const conceptoEdges = flowEdges.filter(e => {
+    const src = filtered[e.source];
+    return src?.type === 'definicion' && src?.subtype === 'primitivo';
+  });
+  const toAxioms = conceptoEdges.filter(e => filtered[e.target]?.type === 'axioma');
+  const toDefs = conceptoEdges.filter(e => filtered[e.target]?.type === 'definicion');
+  
+  const ids = Object.keys(filtered);
+  
+  // Simulate what buildEdgeList does
+  const ax = filtered['axioma-incidencia-1'];
+  if (ax) {
+    for (const dep of ax.directDependencies) {
+    }
+  }
 
   return { nodes: flowNodes, edges: flowEdges, adjacency, activeStates, dependsOn };
 }

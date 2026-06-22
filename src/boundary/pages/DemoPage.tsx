@@ -48,11 +48,25 @@ export const DemoPage: React.FC = () => {
               href: `/teorema/${parentTheorem.id}`,
               label: `← ${parentTheorem.title}`,
             } : undefined}
-            badgesSlot={demo.proofMethod ? (
-              <span className="text-[10px] font-sans uppercase tracking-widest text-carbon/50 border border-carbon/15 px-2 py-1 rounded-sm">
-                Método: {demo.proofMethod}
-              </span>
-            ) : undefined}
+            badgesSlot={demo.proofMethod ? (() => {
+              const methodLabels: Record<string, string> = {
+                directo: 'Método Directo',
+                contradiccion: 'Contradicción',
+                induccion: 'Inducción',
+                contraposicion: 'Contraposición',
+                constructivo: 'Constructivo',
+                geometrico: 'Geométrico',
+                exhaustivo: 'Exhaustivo',
+              };
+              const methodId = `leccion-metodo-${demo.proofMethod}`;
+              return (
+                <Link href={`/${methodId}`}>
+                  <a className="text-[10px] font-sans uppercase tracking-widest text-terracota border border-terracota/30 px-2 py-1 rounded-sm hover:bg-terracota/10 hover:border-terracota transition-colors">
+                    {methodLabels[demo.proofMethod] || demo.proofMethod}
+                  </a>
+                </Link>
+              );
+            })() : undefined}
           />
         </div>
 

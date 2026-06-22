@@ -81,11 +81,18 @@ export const GraphPage: React.FC = () => {
       return null;
     };
 
+    // Helper to add links from any array field
+    const addLinks = (source: string, targetIds: string[] | undefined) => {
+      if (targetIds) targetIds.forEach(tid => links.push({ source, target: tid }));
+    };
+
     // Axiomas
     db.axioms.forEach((ax, slug) => {
       nodes.push({ id: slug, name: ax.title, group: 'axioma', val: 10 });
       const branchNode = resolveItemBranch(ax.tags);
       if (branchNode) links.push({ source: slug, target: branchNode });
+      addLinks(slug, ax.links);
+      addLinks(slug, ax.seeAlso);
     });
 
     // Definiciones
@@ -93,6 +100,8 @@ export const GraphPage: React.FC = () => {
       nodes.push({ id: slug, name: def.title, group: 'definition', val: 8 });
       const branchNode = resolveItemBranch(def.tags);
       if (branchNode) links.push({ source: slug, target: branchNode });
+      addLinks(slug, def.links);
+      addLinks(slug, def.seeAlso);
     });
 
     // Teoremas
@@ -100,26 +109,22 @@ export const GraphPage: React.FC = () => {
       nodes.push({ id: slug, name: thm.title, group: thm.type || 'theorem', val: 10 });
       const branchNode = resolveItemBranch(thm.tags);
       if (branchNode) links.push({ source: slug, target: branchNode });
-      // Enlaces lógicos (requires)
-      if (thm.requires) {
-        thm.requires.forEach((req: string) => {
-          links.push({ source: slug, target: req });
-        });
-      }
+      addLinks(slug, thm.requires);
+      addLinks(slug, thm.links);
+      addLinks(slug, thm.lemmas);
+      addLinks(slug, thm.demos);
+      addLinks(slug, thm.corollaries);
+      addLinks(slug, thm.seeAlso);
+      if (thm.parentTheorem) links.push({ source: slug, target: thm.parentTheorem });
     });
 
     // Sistemas axiomáticos
     db.axiomaticSystems.forEach((sys, slug) => {
       nodes.push({ id: slug, name: sys.title, group: 'modelo', val: 10 });
-      // Determine primary branch using standard logic or default to 'geometria'
       const branchNode = 'geometria';
       if (branchNode) links.push({ source: slug, target: branchNode });
-      // Enlace a cada axioma del sistema
-      if (sys.axiomas) {
-        sys.axiomas.forEach((axId: string) => {
-          links.push({ source: slug, target: axId });
-        });
-      }
+      addLinks(slug, sys.axiomas);
+      addLinks(slug, sys.models);
     });
 
     // Modelos
@@ -128,6 +133,19 @@ export const GraphPage: React.FC = () => {
       if (model.satisfies) {
         links.push({ source: slug, target: model.satisfies });
       }
+      addLinks(slug, model.links);
+      addLinks(slug, model.axioms_verified);
+      addLinks(slug, model.seeAlso);
+    });
+
+    // Conexiones desde demostraciones hacia su parentTheorem (sin nodos demo)
+    db.getAllDemos().forEach(demo => {
+      if (!demo.parentTheorem) return;
+      // Cada dependencia/lema/link/seeAlso de la demo apunta hacia el teorema padre
+      if (demo.dependencias) demo.dependencias.forEach(dep => links.push({ source: dep, target: demo.parentTheorem! }));
+      if (demo.lemmas) demo.lemmas.forEach(lem => links.push({ source: lem, target: demo.parentTheorem! }));
+      if (demo.links) demo.links.forEach(l => links.push({ source: l, target: demo.parentTheorem! }));
+      if (demo.seeAlso) demo.seeAlso.forEach(s => links.push({ source: s, target: demo.parentTheorem! }));
     });
 
     // Matemáticos
@@ -157,7 +175,13 @@ export const GraphPage: React.FC = () => {
         });
       }
     });
-
+    db.definitions.forEach(def => {
+      if (def.authors) {
+        def.authors.forEach(aId => {
+          links.push({ source: aId, target: def.id });
+        });
+      }
+    });
     // Filtrar enlaces rotos (react-force-graph explota si un target no existe en nodes)
     const nodeIds = new Set(nodes.map(n => n.id));
     const validLinks = links.filter(l => nodeIds.has(l.source as string) && nodeIds.has(l.target as string));

@@ -1,0 +1,36 @@
+export const metadata = {
+  "id": "incidencia",
+  "type": "definicion",
+  "subtype": "primitivo",
+  "title": "Incidencia",
+  "description": "Relación primitiva de pertenencia entre puntos, rectas y planos. No se define; su comportamiento queda determinado por los axiomas de incidencia (Grupo I de Hilbert).",
+  "statement": "La relación de incidencia establece qué puntos pertenecen a qué rectas y qué puntos y rectas pertenecen a qué planos.",
+  "tags": ["geometria", "incidencia", "fundamentos"],
+  "authors": ["hilbert"],
+  "hasSimulation": false
+};
+
+<Capitular letra="L" />a **incidencia** (o pertenencia) es una de las relaciones primitivas del sistema axiomático de <ConceptLink targetId="hilbert" isDependency={false}>Hilbert</ConceptLink>. Junto con <ConceptLink targetId="punto" isDependency={false}>punto</ConceptLink>, <ConceptLink targetId="recta" isDependency={false}>recta</ConceptLink> y <ConceptLink targetId="plano" isDependency={false}>plano</ConceptLink>, constituye el vocabulario básico no definido de la geometría.
+
+<Separador />
+
+### Naturaleza Primitiva
+
+La incidencia no se define explícitamente. En su lugar, su comportamiento queda completamente determinado por los <ConceptLink targetId="axioma-incidencia-1" isDependency={false}>ocho axiomas de incidencia</ConceptLink> (Grupo I: I-1 a I-8). Decir «el punto $P$ incide en la recta $l$» (o «$P$ está sobre $l$», o «$l$ pasa por $P$») es una afirmación atómica cuyo significado solo se entiende a través de las propiedades que los axiomas le atribuyen.
+
+<Separador />
+
+### Axiomas que la Gobiernan
+
+Los <ConceptLink targetId={["axioma-incidencia-1","axioma-incidencia-2","axioma-incidencia-3","axioma-incidencia-4","axioma-incidencia-5","axioma-incidencia-6","axioma-incidencia-7","axioma-incidencia-8"]} isDependency={false}>axiomas I-1 a I-8</ConceptLink> establecen:
+- Dos puntos determinan una única recta en la que inciden (I-1, I-2)
+- Tres puntos no colineales determinan un único plano (I-3, I-4, I-5)
+- Si dos puntos de una recta inciden en un plano, toda la recta incide en él (I-6)
+- Si dos planos comparten un punto, comparten una recta (I-7)
+- Existen al menos cuatro puntos no coplanares (I-8)
+
+<Separador />
+
+### Observaciones
+
+En el modelo estándar de la <ConceptLink targetId="sistema-euclidiano" isDependency={false}>geometría euclídea</ConceptLink>, «$P$ incide en $l$» se interpreta como la pertenencia conjuntista $P \in l$. Sin embargo, esta interpretación no es necesaria: la incidencia es una relación abstracta que puede modelarse de formas muy diversas (ver <ConceptLink targetId="modelo-fano" isDependency={false}>plano de Fano</ConceptLink>, <ConceptLink targetId="modelo-tres-puntos" isDependency={false}>modelo de 3 puntos</ConceptLink>).
