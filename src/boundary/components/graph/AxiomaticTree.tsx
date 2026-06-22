@@ -3,7 +3,6 @@ import {
   ReactFlow,
   Controls,
   Background,
-  MiniMap,
   useNodesState,
   useEdgesState,
   useReactFlow,
@@ -230,7 +229,7 @@ function FlowContent() {
       const isHovered = n.id === hoveredNodeId;
       const isDimmed = selectedNodeId && !isSelected && !inChain;
       const group = d.nodeType === 'axioma' ? getAxiomGroup(n.id) : null;
-      
+
       const finalIsActive = sandboxEnabled ? validNodes.has(n.id) : d.isActive;
 
       return {
@@ -278,31 +277,31 @@ function FlowContent() {
       .map((e) => {
         const isRelated = selectedNodeId ? relatedEdgesSet.has(e.id) : true;
         const baseStyle = e.style || {};
-        
+
         let finalStroke = baseStyle.stroke;
         let finalStrokeWidth = baseStyle.strokeWidth;
         let finalMarkerColor = (e.markerEnd as any)?.color;
-        
+
         if (sandboxEnabled) {
-           const srcActive = validNodes.has(e.source);
-           const tgtActive = validNodes.has(e.target);
-           const isLive = srcActive && tgtActive;
-           finalStroke = isLive ? '#333333AA' : '#33333322';
-           finalStrokeWidth = isLive ? 1.5 : 1;
-           finalMarkerColor = isLive ? '#333333AA' : '#33333322';
+          const srcActive = validNodes.has(e.source);
+          const tgtActive = validNodes.has(e.target);
+          const isLive = srcActive && tgtActive;
+          finalStroke = isLive ? '#333333AA' : '#33333322';
+          finalStrokeWidth = isLive ? 1.5 : 1;
+          finalMarkerColor = isLive ? '#333333AA' : '#33333322';
         }
 
-        return { 
-          ...e, 
-          style: { 
-            ...baseStyle, 
+        return {
+          ...e,
+          style: {
+            ...baseStyle,
             opacity: isRelated ? 1 : 0.12,
             stroke: finalStroke,
             strokeWidth: finalStrokeWidth
           },
           markerEnd: e.markerEnd ? {
-             ...(e.markerEnd as any),
-             color: finalMarkerColor
+            ...(e.markerEnd as any),
+            color: finalMarkerColor
           } : undefined
         } as Edge;
       })
