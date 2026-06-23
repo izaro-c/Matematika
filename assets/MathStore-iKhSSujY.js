@@ -1,1 +1,0 @@
-import{r as e}from"./react-B1QXkFFl.js";var t=()=>e()(e=>({variables:{},setVariable:(t,n)=>e(e=>({variables:{...e.variables,[t]:n}}))}));export{t};
