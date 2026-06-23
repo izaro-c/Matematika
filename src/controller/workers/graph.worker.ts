@@ -165,7 +165,8 @@ function evaluateActiveNodes(
   return active;
 }
 
-// ── Layout basado en conexiones parentales ────────────────────────────────
+// ── Layout Sugiyama con Network Simplex ────────────────────────────────────
+
 function computeLayers(
   topologicalOrder: string[],
   edgeList: Array<{ source: string; target: string }>,
@@ -181,14 +182,11 @@ function computeLayers(
   const layers: Record<string, number> = {};
 
   for (const id of topologicalOrder) {
-    // Primitivos: capa 0 (Grado absoluto)
     if (primitiveIds.has(id)) {
       layers[id] = 0;
     } else if (axiomIds.has(id)) {
-      // Axiomas: capa 1 (dependen de los primitivos)
       layers[id] = 1;
     } else if (preds[id].length === 0) {
-      // Nodos sin dependencias que no son primitivos ni axiomas: capa 2 mínimo
       layers[id] = 2;
     } else {
       let l = 0;
@@ -197,7 +195,6 @@ function computeLayers(
           l = Math.max(l, layers[p] + 1);
         }
       }
-      // Las definiciones derivadas y el resto empiezan en capa 2 como mínimo
       layers[id] = Math.max(2, l);
     }
   }
@@ -205,58 +202,148 @@ function computeLayers(
   return layers;
 }
 
-function positionLayer(
-  l: number,
-  layerNodes: string[],
+// ── Cruce mínimo: baricentro en 2 pasadas ──────────────────────────────────
+function minimizeCrossings(
   layers: Record<string, number>,
-  preds: Record<string, string[]>,
-  succs: Record<string, string[]>,
-  xPos: Record<string, number>,
-  minDist: number,
+  edgeList: Array<{ source: string; target: string }>,
+  layerKeys: number[],
+  byLayer: Record<number, string[]>,
 ): void {
-  const connected: string[] = [];
-  const free: string[] = [];
-
-  for (const id of layerNodes) {
-    const hp = preds[id].some(p => layers[p] < l);
-    const hc = succs[id].some(c => layers[c] > l);
-    if (hp || hc) connected.push(id);
-    else free.push(id);
+  const succs: Record<string, string[]> = {};
+  const preds: Record<string, string[]> = {};
+  for (const id of Object.keys(layers)) { succs[id] = []; preds[id] = []; }
+  for (const { source, target } of edgeList) {
+    succs[source].push(target);
+    preds[target].push(source);
   }
 
-  if (connected.length === 0) {
-    let cx = 0;
-    for (const id of layerNodes) { xPos[id] = cx; cx += minDist; }
-    return;
-  }
-
-  // Compute desired x from parents
-  const desired: Record<string, number> = {};
-  for (const id of connected) {
-    const parents = preds[id].filter(p => layers[p] < l);
-    if (parents.length > 0) {
-      desired[id] = parents.reduce((s, p) => s + (xPos[p] ?? 0), 0) / parents.length;
-    } else {
-      const children = succs[id].filter(c => layers[c] > l);
-      desired[id] = children.reduce((s, c) => s + (xPos[c] ?? 0), 0) / children.length;
+  // 4 iteraciones: 2 pasadas completas (top-down + bottom-up)
+  for (let iter = 0; iter < 4; iter++) {
+    // Top-down: ordenar capa i+1 según baricentro de padres en capa i
+    for (let i = 1; i < layerKeys.length; i++) {
+      const l = layerKeys[i];
+      const prevL = layerKeys[i - 1];
+      byLayer[l].sort((a, b) => {
+        const pa = preds[a].filter(p => layers[p] === prevL);
+        const pb = preds[b].filter(p => layers[p] === prevL);
+        const ba = pa.length > 0 ? pa.reduce((s, p) => s + byLayer[prevL].indexOf(p), 0) / pa.length : Infinity;
+        const bb = pb.length > 0 ? pb.reduce((s, p) => s + byLayer[prevL].indexOf(p), 0) / pb.length : Infinity;
+        return ba - bb;
+      });
+    }
+    // Bottom-up: ordenar capa i según baricentro de hijos en capa i+1
+    for (let i = layerKeys.length - 2; i >= 0; i--) {
+      const l = layerKeys[i];
+      const nextL = layerKeys[i + 1];
+      byLayer[l].sort((a, b) => {
+        const ca = succs[a].filter(c => layers[c] === nextL);
+        const cb = succs[b].filter(c => layers[c] === nextL);
+        const ba = ca.length > 0 ? ca.reduce((s, c) => s + byLayer[nextL].indexOf(c), 0) / ca.length : Infinity;
+        const bb = cb.length > 0 ? cb.reduce((s, c) => s + byLayer[nextL].indexOf(c), 0) / cb.length : Infinity;
+        return ba - bb;
+      });
     }
   }
+}
 
-  // Resolve overlaps
-  const sorted = [...connected].sort((a, b) => (desired[a] ?? 0) - (desired[b] ?? 0));
-  let prev = desired[sorted[0]] ?? 0;
-  for (const id of sorted) {
-    const placed = Math.max(desired[id] ?? prev, prev);
-    xPos[id] = placed;
-    prev = placed + minDist;
+// ── Posicionamiento horizontal: Network Simplex relajado ────────────────────
+function horizontalPlacement(
+  layers: Record<string, number>,
+  layerKeys: number[],
+  byLayer: Record<number, string[]>,
+  edgeList: Array<{ source: string; target: string }>,
+  nodeIds: string[],
+  minDist: number,
+): Record<string, number> {
+  const xPos: Record<string, number> = {};
+
+  // Inicializar desde el baricentro de la fase de cruce mínimo
+  // (en lugar de espaciado uniforme)
+  const succs: Record<string, string[]> = {};
+  const preds: Record<string, string[]> = {};
+  for (const id of nodeIds) { succs[id] = []; preds[id] = []; }
+  for (const { source, target } of edgeList) {
+    succs[source].push(target);
+    preds[target].push(source);
   }
 
-  // Free nodes to the right
-  let pos = prev;
-  for (const id of free) {
-    xPos[id] = pos;
-    pos += minDist;
+  // Inicialización top-down: propagar posiciones desde capas superiores
+  const topDown: Record<string, number> = {};
+  for (const l of layerKeys) {
+    const nodes = byLayer[l];
+    if (l === 0) {
+      const totalW = (nodes.length - 1) * minDist;
+      let cx = -totalW / 2;
+      for (const id of nodes) { topDown[id] = cx; cx += minDist; }
+    } else {
+      for (const id of nodes) {
+        const parents = preds[id].filter(p => layers[p] === l - 1);
+        topDown[id] = parents.length > 0
+          ? parents.reduce((s, p) => s + (topDown[p] ?? 0), 0) / parents.length
+          : 0;
+      }
+      const sorted = [...nodes].sort((a, b) => (topDown[a] ?? 0) - (topDown[b] ?? 0));
+      let cursor = -Infinity;
+      for (const id of sorted) {
+        const placed = Math.max(topDown[id] ?? 0, cursor);
+        xPos[id] = placed;
+        cursor = placed + minDist;
+      }
+    }
   }
+  // Copiar capa 0 también
+  for (const id of byLayer[0] ?? []) xPos[id] = topDown[id];
+
+  // ── Relajación con damping adaptativo y criterio de parada ──────────────
+  const MAX_ITER = 200;
+  const DAMPING_START = 0.45;
+  const DAMPING_END = 0.05;
+  const CONVERGENCE_THRESHOLD = 1.0; // px
+
+  for (let iter = 0; iter < MAX_ITER; iter++) {
+    // Damping decae linealmente
+    const progress = iter / MAX_ITER;
+    const damping = DAMPING_START + (DAMPING_END - DAMPING_START) * progress;
+
+    const newX: Record<string, number> = {};
+    let maxChange = 0;
+
+    for (const l of layerKeys) {
+      const nodes = byLayer[l];
+
+      for (const id of nodes) {
+        const neighbors = [
+          ...preds[id].filter(p => layers[p] !== undefined),
+          ...succs[id].filter(c => layers[c] !== undefined),
+        ];
+        if (neighbors.length > 0) {
+          const avg = neighbors.reduce((s, n) => s + (xPos[n] ?? 0), 0) / neighbors.length;
+          const desired = xPos[id] + (avg - xPos[id]) * damping;
+          newX[id] = desired;
+          maxChange = Math.max(maxChange, Math.abs(desired - xPos[id]));
+        } else {
+          newX[id] = xPos[id];
+        }
+      }
+
+      // Reaplicar orden y separación mínima
+      const sorted = [...nodes].sort((a, b) => (newX[a] ?? 0) - (newX[b] ?? 0));
+      let cursor = -Infinity;
+      for (const id of sorted) {
+        const placed = Math.max(newX[id] ?? 0, cursor);
+        newX[id] = placed;
+        cursor = placed + minDist;
+      }
+    }
+
+    for (const id of nodeIds) {
+      if (newX[id] !== undefined) xPos[id] = newX[id];
+    }
+
+    if (maxChange < CONVERGENCE_THRESHOLD) break;
+  }
+
+  return xPos;
 }
 
 function arrangeLayers(
@@ -277,37 +364,11 @@ function arrangeLayers(
 
   const layerKeys = Object.keys(byLayer).map(Number).sort((a, b) => a - b);
 
-  const preds: Record<string, string[]> = {};
-  const succs: Record<string, string[]> = {};
-  for (const id of nodeIds) { preds[id] = []; succs[id] = []; }
-  for (const { source, target } of edgeList) {
-    preds[target].push(source);
-    succs[source].push(target);
-  }
+  // Paso 1: minimizar cruces de aristas
+  minimizeCrossings(layers, edgeList, layerKeys, byLayer);
 
-  const xPos: Record<string, number> = {};
-
-  for (const l of layerKeys) {
-    if (l === 0) {
-      const totalW = byLayer[l].length * NODE_W + (byLayer[l].length - 1) * hgap;
-      let cx = -totalW / 2 + NODE_W / 2;
-      for (const id of byLayer[l]) {
-        xPos[id] = cx;
-        cx += NODE_W + hgap;
-      }
-    } else {
-      positionLayer(l, byLayer[l], layers, preds, succs, xPos, minDist);
-    }
-  }
-
-  // Center entire graph horizontally
-  const allX = Object.values(xPos);
-  const minX = Math.min(...allX);
-  const maxX = Math.max(...allX);
-  const shift = -minX - (maxX - minX) / 2;
-  for (const id of nodeIds) {
-    xPos[id] = (xPos[id] ?? 0) + shift;
-  }
+  // Paso 2: posicionamiento horizontal con Network Simplex
+  const xPos = horizontalPlacement(layers, layerKeys, byLayer, edgeList, nodeIds, minDist);
 
   const positions: Record<string, { x: number; y: number }> = {};
   for (const id of nodeIds) {
