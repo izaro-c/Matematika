@@ -1,6 +1,6 @@
 import { describe, it, expect } from 'vitest';
-import { Grafo } from '@/entity/Grafo';
-import type { GraphStructure, ModelInfo } from '@/entity/graphTypes';
+import { Grafo } from '@/entities/graph/Grafo';
+import type { GraphStructure, ModelInfo } from '@/entities/graph/graphTypes';
 
 // UC6 ValutaGrafoAttivo — recorre el DAG en orden topológico
 // y devuelve los nodos lógicamente válidos según los axiomas activos.

@@ -1,18 +1,18 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest';
 import { render, screen, fireEvent } from '@testing-library/react';
-import { SearchOmnibar } from '@/boundary/components/navigation/SearchOmnibar';
-import { useNavigationStore } from '@/controller/store/NavigationStore';
+import { SearchOmnibar } from '@/widgets/navigation/SearchOmnibar';
+import { useNavigationStore } from '@/features/search/NavigationStore';
 
 // Mocks para wouter y stores para evitar errores de renderizado
 vi.mock('wouter', () => ({
   useLocation: () => ['/', vi.fn()]
 }));
 
-vi.mock('@/controller/store/NavigationStore', () => ({
+vi.mock('@/features/search/NavigationStore', () => ({
   useNavigationStore: vi.fn()
 }));
 
-vi.mock('@/controller/store/GlossaryStore', () => ({
+vi.mock('@/features/glossary/GlossaryStore', () => ({
   useGlossaryStore: () => ({
     openTerm: vi.fn()
   }),

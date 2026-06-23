@@ -3,7 +3,7 @@ import { render } from '@testing-library/react';
 import { Router } from 'wouter';
 import { memoryLocation } from 'wouter/memory-location';
 import { MDXProvider } from '@mdx-js/react';
-import { AppRouter } from '@/boundary/routes/AppRouter';
+import { AppRouter } from '@/app/routes/AppRouter';
 
 beforeAll(() => {
   // Polyfill ResizeObserver for @xyflow/react in jsdom
@@ -51,7 +51,7 @@ beforeAll(() => {
 });
 
 // Mock content store to avoid MDX import failures in test environment
-vi.mock('@/controller/store/content', () => ({
+vi.mock('@/entities/content', () => ({
   db: {
     getAllLessons: () => [],
     getAllMathematicians: () => [],

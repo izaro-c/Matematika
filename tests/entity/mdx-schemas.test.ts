@@ -1,7 +1,7 @@
 import { describe, it, expect } from 'vitest';
 import fs from 'fs';
 import path from 'path';
-import { parseMDX } from '@/controller/lib/mdxParser';
+import { parseMDX } from '@/shared/lib/mdxParser';
 import {
   MathematicianSchema,
   TheoremSchema,
@@ -15,7 +15,7 @@ import {
   ModelSchema,
   UseCaseSchema,
   StudyPlanSchema,
-} from '@/database/schemas';
+} from '@/entities/content/schemas';
 const SCHEMA_MAP: Record<string, import('zod').ZodTypeAny> = {
   axioma: AxiomSchema,
   definicion: DefinitionSchema,

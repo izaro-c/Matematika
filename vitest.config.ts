@@ -20,7 +20,7 @@ export default defineConfig({
     include: ['tests/**/*.test.ts', 'tests/**/*.test.tsx'],
     coverage: {
       provider: 'v8',
-      include: ['src/controller/**', 'src/database/**'],
+      include: ['src/features/**', 'src/entities/**', 'src/shared/lib/**'],
     },
   },
 });
