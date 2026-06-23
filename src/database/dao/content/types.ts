@@ -41,6 +41,7 @@ export interface Theorem {
   demostraciones?: string[];
   lemmas?: string[];
   requires?: string[];
+  links?: string[];
   examples?: string[];
   exercises?: string[];
   parentTheorem?: string;
@@ -72,6 +73,7 @@ export interface Demo {
   description: string;
   parentTheorem?: string;
   lemmas?: string[];
+  links?: string[];
   proofMethod?: string;
   authors?: string[];
   tags?: string[];
@@ -89,6 +91,7 @@ export interface Definition {
   statement?: string;
   tags?: string[];
   authors?: string[];
+  links?: string[];
   color?: string;
   Component: MDXComponent;
   Simulation?: MDXComponent;
@@ -147,6 +150,7 @@ export interface Axiom {
   statement?: string;
   tags?: string[];
   authors?: string[];
+  links?: string[];
   Component: MDXComponent;
   Simulation?: MDXComponent;
   seeAlso?: string[];

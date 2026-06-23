@@ -13,6 +13,8 @@ export interface MathNodeData {
   /** Escala visual pura (CSS transform); no afecta la posición dagre */
   scale: number;
   isHighlighted: boolean;
+  isDimmed?: boolean;
+  inChain?: boolean;
   axiomGroupColor?: string;
   axiomGroupLabel?: string;
 }
@@ -23,10 +25,18 @@ export interface MathNodeData {
  * Muestra el estado activo/inactivo (validación lógica) manejando su opacidad.
  */
 export function MathNode({ data }: NodeProps) {
-  const { label, nodeType, isActive, scale, isHighlighted, axiomGroupColor } = (data as unknown) as MathNodeData;
+  const { label, nodeType, isActive, scale, isHighlighted, isDimmed, inChain, axiomGroupColor } = (data as unknown) as MathNodeData;
   const s = TYPE_STYLES[nodeType] || TYPE_STYLES.teorema;
 
-  const contentOpacity = isActive ? 1 : 0.28;
+  // Lógica de opacidad:
+  // - nodo atenuado (fuera de cadena) → 0.18
+  // - nodo activo → 1
+  // - nodo en cadena o destacado (aunque inactivo) → 0.55
+  // - resto (inactivo sin selección) → 0.28
+  const effectiveOpacity = isDimmed ? 0.18
+    : isActive ? 1
+    : (isHighlighted || inChain) ? 0.7
+    : 0.28;
   const groupColor = nodeType === 'axioma' ? axiomGroupColor : undefined;
 
   let borderWidth: number, borderColor: string;
@@ -67,7 +77,7 @@ export function MathNode({ data }: NodeProps) {
           inset: 0,
           transform: `scale(${scale})`,
           transformOrigin: 'center center',
-          opacity: contentOpacity,
+          opacity: effectiveOpacity,
           transition: 'transform 0.22s ease, opacity 0.22s ease',
         }}
       >
