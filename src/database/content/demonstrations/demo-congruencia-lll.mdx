@@ -30,7 +30,7 @@ Por el <ConceptLink targetId="axioma-congruencia-1" isDependency={true}>Axioma d
 </MedievalStep>
 
 <MedievalStep number={2} title="Aplicación del Axioma LAL" target="step2">
-Observemos el triángulo original $\triangle ABC$ y nuestro nuevo triángulo transportado <InteractiveElement target="triangleCStar" color="carbon">$\triangle A'B'C^*$</InteractiveElement>. Por construcción:
+Se comparan el triángulo original $\triangle ABC$ y el nuevo triángulo transportado <InteractiveElement target="triangleCStar" color="carbon">$\triangle A'B'C^*$</InteractiveElement>. Por construcción:
 1. $A'B' \cong AB$ (por hipótesis).
 2. $\angle B'A'C^* \cong \angle BAC$ (por el paso 1).
 3. $A'C^* \cong AC$ (por el paso 1).
@@ -50,7 +50,7 @@ Tracemos ahora un segmento uniendo <InteractiveElement target="lineCC" color="sa
 <MedievalStep number={4} title="Igualdad de Ángulos y Conclusión Final" target="step4">
 Por el <ConceptLink targetId="teorema-triangulo-isosceles" isDependency={true}>Teorema del Triángulo Isósceles</ConceptLink>, en el triángulo izquierdo: $\angle A'C'C^* \cong \angle A'C^*C'$. Por el mismo teorema aplicado al triángulo derecho: $\angle B'C'C^* \cong \angle B'C^*C'$.
 
-Por el <ConceptLink targetId="axioma-congruencia-3" isDependency={true}>axioma de aditividad de ángulos congruentes</ConceptLink>, sumando las dos congruencias obtenemos que el <InteractiveElement target="angleC" color="terracota">ángulo completo $\angle A'C'B'$</InteractiveElement> es congruente con el ángulo completo $\angle A'C^*B'$.
+Por el <ConceptLink targetId="axioma-congruencia-3" isDependency={true}>axioma de aditividad de ángulos congruentes</ConceptLink>, la suma de las dos congruencias da que el <InteractiveElement target="angleC" color="terracota">ángulo completo $\angle A'C'B'$</InteractiveElement> es congruente con el ángulo completo $\angle A'C^*B'$.
 
 Ahora, volviendo a los triángulos completos <InteractiveElement target="triangleCPrime" color="carbon">$\triangle A'B'C'$</InteractiveElement> y <InteractiveElement target="triangleCStar" color="carbon">$\triangle A'B'C^*$</InteractiveElement>:
 1. $A'C' \cong A'C^*$ (por el paso 3).
@@ -71,7 +71,7 @@ Por el <ConceptLink targetId="axioma-congruencia-5" isDependency={true}>Axioma d
 La <ConceptLink targetId="demostracion" isDependency={false}>demostración</ConceptLink> de LLL es más sutil que la de ALA. En ALA, la unicidad provenía directamente del <ConceptLink targetId="axioma-congruencia-4" isDependency={true}>Axioma III-4</ConceptLink> (transporte único de ángulos). En LLL, necesitamos crear esta construcción del «triángulo en el espejo» y conectar los vértices para reducir el problema de lados a un problema de ángulos usando el <ConceptLink targetId="teorema-triangulo-isosceles" isDependency={true}>Pons Asinorum</ConceptLink>.
 
 <Nota>
-  <ConceptLink targetId="euclides" isDependency={false}>Euclides</ConceptLink> demostró LLL en la Proposición I.8 usando el principio de superposición. La demostración de <ConceptLink targetId="hilbert" isDependency={false}>Hilbert</ConceptLink> moderniza este concepto: en lugar de mover físicamente los triángulos, usamos los axiomas de transporte para generar una copia perfecta adosada y demostramos deductivamente su congruencia.
+  <ConceptLink targetId="euclides" isDependency={false}>Euclides</ConceptLink> demostró LLL en la Proposición I.8 usando el principio de superposición. La demostración de <ConceptLink targetId="hilbert" isDependency={false}>Hilbert</ConceptLink> moderniza este concepto: en lugar de mover físicamente los triángulos, se usan los axiomas de transporte para generar una copia perfecta adosada y se demuestra deductivamente su congruencia.
 </Nota>
 
 El criterio LLL implica la **rigidez triangular**: un triángulo queda completamente determinado por las longitudes de sus tres lados. Este principio es la base matemática de las estructuras trianguladas inamovibles en arquitectura e ingeniería.

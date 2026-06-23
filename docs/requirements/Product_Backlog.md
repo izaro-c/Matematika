@@ -156,3 +156,76 @@ Este documento contiene las Historias de Usuario (User Stories) pendientes para 
     - El botón de "Entregar" permanecerá inactivo hasta que el evaluador computacional retorne `true`.
   - **No Funcionales:**
     - **Precisión Numérica:** El evaluador debe incorporar una tolerancia aritmética (*epsilon*) para absorber fluctuaciones de coma flotante inherentes a los motores gráficos WebGL/JSXGraph.
+
+---
+
+## Épica 4: Calidad Técnica — Accesibilidad, Compatibilidad e Infraestructura
+
+> Historias derivadas del análisis ISO/IEC 25010 realizado en junio 2026. Mejoran usabilidad, fiabilidad y portabilidad del proyecto sin añadir funcionalidad de negocio.
+
+### US-12: Tests de Accesibilidad Automatizados (WCAG 2.1 AA)
+
+- **Descripción:** Como desarrollador, quiero disponer de una suite de tests de accesibilidad automatizados para garantizar que los componentes principales de la aplicación cumplen el estándar WCAG 2.1 nivel AA, permitiendo el uso a personas con capacidades diferentes.
+- **Prioridad:** Media
+- **Estado:** To Do
+- **Criterios de Aceptación:**
+  - **Funcionales:**
+    - Integrar `axe-core` (via `jest-axe` o `@axe-core/react`) en la suite de tests de Vitest.
+    - Añadir tests de accesibilidad para los tres layouts principales: página de teorema, página de demostración y el grafo navegable.
+    - Los diagramas interactivos JSXGraph deben tener un elemento contenedor con `role="img"` y `aria-label` descriptivo.
+    - Añadir un enlace *skip-to-content* (`<a href="#main-content">`) visible al foco de teclado en `index.html`.
+  - **No Funcionales:**
+    - **Accesibilidad:** La suite de tests no debe reportar ninguna violación de reglas WCAG 2.1 AA en los layouts principales.
+    - **Mantenibilidad:** Los tests deben integrarse en el script `npm run test` existente sin pasos adicionales.
+  - **De Modelo:**
+    - No se requieren cambios en el modelo de datos.
+
+### US-13: Meta Tags Dinámicos Open Graph y SEO por Página
+
+- **Descripción:** Como usuario que comparte contenido, quiero que al compartir el enlace de un teorema o definición en redes sociales o mensajería, se muestre una vista previa enriquecida con el título y descripción matemática del concepto, no el título genérico de la aplicación.
+- **Prioridad:** Media
+- **Estado:** To Do
+- **Criterios de Aceptación:**
+  - **Funcionales:**
+    - Crear un hook `usePageMeta(title: string, description: string)` en `src/shared/hooks/` que actualice `document.title` y las meta tags `description`, `og:title`, `og:description` y `og:url` de forma dinámica en cada cambio de ruta.
+    - Aplicar el hook en las páginas de teorema, definición, demostración, axioma, modelo y caso de uso, usando `metadata.title` y `metadata.description` del MDX.
+    - Añadir las meta tags Open Graph base (`og:type`, `og:site_name`, `og:image`) en `index.html`.
+  - **No Funcionales:**
+    - **Compatibilidad:** Verificar con la herramienta *Open Graph Debugger* de Meta que el título y descripción se muestran correctamente al compartir un enlace.
+    - **SEO:** El `<title>` de cada página debe seguir el formato `{título del concepto} | Matematika`.
+  - **De Modelo:**
+    - No se requieren cambios en el modelo de datos. Los datos provienen de los metadatos MDX ya existentes.
+
+### US-14: Soporte Offline mediante Progressive Web App (PWA)
+
+- **Descripción:** Como estudiante que trabaja en un entorno con conectividad inestable (biblioteca, transporte público), quiero poder acceder a los contenidos matemáticos que ya he visitado sin conexión a internet, para no interrumpir mi estudio.
+- **Prioridad:** Media
+- **Estado:** To Do
+- **Criterios de Aceptación:**
+  - **Funcionales:**
+    - Instalar y configurar `vite-plugin-pwa` con estrategia `GenerateSW`.
+    - Los assets estáticos (JS, CSS, fuentes) deben cachearse con estrategia `CacheFirst`.
+    - Las peticiones de navegación (rutas SPA) deben usar estrategia `NetworkFirst` con fallback a caché.
+    - El manifiesto de la PWA debe incluir nombre (`Matematika`), descripción, iconos en múltiples resoluciones y `theme_color: #F8F6F1` (token `lienzo`).
+    - Al perder la conexión, la aplicación debe mostrar los contenidos ya visitados sin pantalla en blanco.
+  - **No Funcionales:**
+    - **Fiabilidad:** Verificar en Chrome DevTools (Application → Service Workers) que el SW se registra correctamente con scope `/Matematika/`.
+    - **Portabilidad:** El Service Worker debe funcionar correctamente con el `base: "/Matematika/"` configurado en `vite.config.ts`.
+  - **De Modelo:**
+    - No se requieren cambios en el modelo de datos.
+
+### US-15: Entorno de Desarrollo Reproducible y Eliminación de Binarios del Repositorio
+
+- **Descripción:** Como nuevo contribuidor, quiero poder levantar el entorno de desarrollo con un único comando sin necesidad de instalar dependencias del sistema manualmente, y sin que el repositorio contenga binarios pesados que ralenticen la clonación.
+- **Prioridad:** Baja
+- **Estado:** To Do
+- **Criterios de Aceptación:**
+  - **Funcionales:**
+    - Crear `.devcontainer/devcontainer.json` con imagen base `node:lts`, extensiones recomendadas de VS Code (ESLint, Prettier, TypeScript) y el comando `npm install` como `postCreateCommand`.
+    - Eliminar `scripts/plantuml.jar` del tracking de Git (`git rm --cached`) y añadirlo a `.gitignore`.
+    - Actualizar el script `docs:uml` en `package.json` para usar la imagen Docker oficial `plantuml/plantuml` o reemplazar los diagramas UML con Mermaid (dependencia ya presente).
+  - **No Funcionales:**
+    - **Portabilidad:** Abrir el repositorio en GitHub Codespaces debe resultar en un entorno listo para `npm run dev` sin pasos manuales adicionales.
+    - **Portabilidad:** `git clone` del repositorio no debe descargar el binario JAR de PlantUML (~11.9 MB).
+  - **De Modelo:**
+    - No se requieren cambios en el modelo de datos.

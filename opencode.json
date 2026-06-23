@@ -1,0 +1,83 @@
+{
+  "$schema": "https://opencode.ai/config.json",
+  "model": "opencode-go/glm-5.2",
+  "skills": {
+    "paths": [".agents/skills"]
+  },
+  "instructions": [
+    "AGENTS.md",
+    ".agents/skills/project-philosophy/SKILL.md"
+  ],
+  "references": {
+    "schemas": {
+      "path": "src/entities/content/schemas.ts",
+      "description": "Zod validation schemas — fuente única de verdad para metadata de los 12 tipos de contenido"
+    },
+    "graph-types": {
+      "path": "src/entities/graph/graphTypes.ts",
+      "description": "Definiciones de tipos del grafo (GraphNodeMeta, GraphStructure, GraphEdge, etc.)"
+    },
+    "content-store": {
+      "path": "src/entities/content/ContentStore.ts",
+      "description": "ContentStore — API de consulta del grafo de contenido, singleton db exportado desde index.ts"
+    },
+    "glossary": {
+      "path": "src/shared/lib/glossaryDictionary.ts",
+      "description": "Diccionario de glosario matemático — definiciones, ecuaciones, categorías y mapa de símbolos LaTeX"
+    },
+    "constants": {
+      "path": "src/shared/lib/constants.ts",
+      "description": "Constantes de diseño — colores, iconos, configuración de tipos de contenido, paleta Arts & Crafts"
+    },
+    "mdx-templates": {
+      "path": "src/shared/templates",
+      "description": "Plantillas MDX para cada tipo de contenido — punto de partida para nuevas páginas"
+    }
+  },
+  "agent": {
+    "content-writer": {
+      "mode": "subagent",
+      "description": "Genera páginas MDX de contenido matemático. Usa la skill page-creator. Valida metadatos con Zod schemas, verifica IDs kebab-case, escribe MDX con estructura correcta (Capitular, Separador, ConceptLink). Rigor matemático Greenberg/Hilbert.",
+      "model": "opencode-go/glm-5.2"
+    },
+    "diagram-creator": {
+      "mode": "subagent",
+      "description": "Genera diagramas matemáticos interactivos. Usa la skill diagrama. Selecciona tecnología (JSXGraph/SVG/Canvas), usa paleta Arts & Crafts exclusivamente, conecta bidireccionalmente con MathStore/LessonStore.",
+      "model": "opencode-go/glm-5.2"
+    },
+    "validator": {
+      "mode": "subagent",
+      "description": "Ejecuta validación del grafo lógico y referencias cruzadas. Ejecuta npm run validate-graph && npm run validate-references. Si encuentra errores, los analiza y propone correcciones.",
+      "permission": {
+        "bash": "allow",
+        "edit": "allow"
+      }
+    },
+    "reviewer": {
+      "mode": "subagent",
+      "description": "Revisa código y contenido MDX. Solo lectura. Verifica arquitectura FSD, estilo matemático (Greenberg, 3ª persona), integridad referencial, kebab-case IDs, paleta Arts & Crafts. NO modifica archivos.",
+      "permission": {
+        "edit": "deny",
+        "bash": "deny"
+      }
+    }
+  },
+  "command": {
+    "validate": {
+      "template": "Ejecuta en orden: npm run validate-graph && npm run validate-references. Si hay errores, analiza cada uno y propone correcciones concretas. Si el usuario aprueba, aplica las correcciones.",
+      "description": "Validar integridad del grafo y referencias cruzadas"
+    },
+    "new-concept": {
+      "template": "Crea una nueva página de contenido matemático en MDX. PRIMERO carga la skill page-creator. PREGUNTA al usuario: 1) tipo de contenido (teorema/definicion/axioma/etc), 2) título, 3) dependencias lógicas. USA la plantilla MDX correspondiente de src/shared/templates/. VALIDA los metadatos contra el Zod schema. VERIFICA que el ID está en kebab-case y es único. CREA el archivo en src/database/content/{tipo}s/.",
+      "description": "Crear nueva página de concepto matemático (MDX)"
+    },
+    "new-diagram": {
+      "template": "Crea un nuevo diagrama matemático interactivo. PRIMERO carga la skill diagrama. PREGUNTA: 1) concepto a visualizar, 2) tecnología (JSXGraph recomendado para geometría), 3) nivel de interactividad. USA exclusivamente la paleta Arts & Crafts. CONECTA con MathStore si es interactivo. CREA el archivo en src/shared/diagrams/{categoria}/.",
+      "description": "Crear nuevo diagrama interactivo"
+    },
+    "full-check": {
+      "template": "Ejecuta en orden: npm run lint, npx tsc -b, npm run test, npm run depcruise, npm run validate-graph, npm run validate-references. Reporta un resumen claro: qué pasó y qué falló. Si hay fallos en alguna etapa, NO continúes a la siguiente hasta que el usuario decida cómo proceder. Sugiere correcciones para cada fallo.",
+      "description": "CI completa: lint + tsc + test + depcruise + validación"
+    }
+  }
+}

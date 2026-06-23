@@ -40,19 +40,19 @@ describe('MathematicianSchema', () => {
   it('rejects missing description', () => expectInvalid(MathematicianSchema, { id: 'x', type: 'matematico', name: 'X' }));
   it('rejects wrong type', () => expectInvalid(MathematicianSchema, { ...valid, type: 'teorema' }));
   it('rejects birthYear as string', () => expectInvalid(MathematicianSchema, { ...valid, birthYear: '1777' }));
-  it('accepts optional id omitted', () => {
+  it('rejects missing id (now required)', () => {
     const { id, ...noId } = valid;
-    expectValid(MathematicianSchema, noId);
+    expectInvalid(MathematicianSchema, noId);
   });
 });
 
 describe('TheoremSchema', () => {
-  const valid = { type: 'teorema', title: 'Test', description: 'A theorem' };
+  const valid = { id: 'test-theorem', type: 'teorema', title: 'Test', description: 'A theorem' };
 
   it('accepts minimal valid metadata', () => expectValid(TheoremSchema, valid));
   it('accepts full metadata', () => {
     expectValid(TheoremSchema, {
-      ...valid, id: 'test-theorem', statement: '∀x P(x)',
+      ...valid, statement: '∀x P(x)',
       color: 'terracota', branch: 'geometría',
       branches: ['geometría', 'álgebra'],
       lemmas: ['lema-1'], corollaries: ['cor-1'], demos: ['demo-1'],
@@ -64,28 +64,30 @@ describe('TheoremSchema', () => {
   it('accepts type lema', () => expectValid(TheoremSchema, { ...valid, type: 'lema' }));
   it('accepts type corolario', () => expectValid(TheoremSchema, { ...valid, type: 'corolario' }));
   it('rejects invalid type', () => expectInvalid(TheoremSchema, { ...valid, type: 'definicion' }));
-  it('rejects missing title', () => expectInvalid(TheoremSchema, { type: 'teorema', description: 'd' }));
-  it('rejects missing description', () => expectInvalid(TheoremSchema, { type: 'teorema', title: 't' }));
+  it('rejects missing title', () => expectInvalid(TheoremSchema, { id: 'x', type: 'teorema', description: 'd' }));
+  it('rejects missing description', () => expectInvalid(TheoremSchema, { id: 'x', type: 'teorema', title: 't' }));
   it('rejects invalid difficulty', () => expectInvalid(TheoremSchema, { ...valid, difficulty: 'super' }));
   it('rejects non-array corollaries', () => expectInvalid(TheoremSchema, { ...valid, corollaries: 'not-array' }));
+  it('rejects missing id', () => expectInvalid(TheoremSchema, { type: 'teorema', title: 'Test', description: 'A theorem' }));
 });
 
 describe('LessonSchema', () => {
-  const valid = { type: 'leccion', title: 'Lesson' };
+  const valid = { id: 'test-lesson', type: 'leccion', title: 'Lesson' };
 
   it('accepts minimal valid metadata', () => expectValid(LessonSchema, valid));
   it('accepts with description', () => expectValid(LessonSchema, { ...valid, description: 'desc' }));
-  it('rejects missing title', () => expectInvalid(LessonSchema, { type: 'leccion' }));
-  it('rejects wrong type', () => expectInvalid(LessonSchema, { type: 'teorema', title: 'x' }));
+  it('rejects missing title', () => expectInvalid(LessonSchema, { id: 'x', type: 'leccion' }));
+  it('rejects wrong type', () => expectInvalid(LessonSchema, { id: 'x', type: 'teorema', title: 'x' }));
+  it('rejects missing id', () => expectInvalid(LessonSchema, { type: 'leccion', title: 'Lesson' }));
 });
 
 describe('DemoSchema', () => {
-  const valid = { type: 'demostracion', title: 'Demo' };
+  const valid = { id: 'demo-test', type: 'demostracion', title: 'Demo' };
 
   it('accepts minimal valid metadata', () => expectValid(DemoSchema, valid));
   it('accepts full metadata', () => {
     expectValid(DemoSchema, {
-      ...valid, id: 'demo-1', description: 'desc',
+      ...valid, description: 'desc',
       parentTheorem: 'thm-1', lemmas: ['lema-1'],
       proofMethod: 'directo', authors: ['gauss'],
       tags: ['geo'], links: ['link-1'], layout: 'split',
@@ -99,97 +101,105 @@ describe('DemoSchema', () => {
   });
   it('rejects invalid proof method', () => expectInvalid(DemoSchema, { ...valid, proofMethod: 'magico' }));
   it('rejects invalid layout', () => expectInvalid(DemoSchema, { ...valid, layout: 'three-columns' }));
-  it('rejects missing title', () => expectInvalid(DemoSchema, { type: 'demostracion' }));
+  it('rejects missing title', () => expectInvalid(DemoSchema, { id: 'x', type: 'demostracion' }));
+  it('rejects missing id', () => expectInvalid(DemoSchema, { type: 'demostracion', title: 'Demo' }));
 });
 
 describe('DefinitionSchema', () => {
-  const valid = { type: 'definicion', title: 'Def', description: 'desc' };
+  const valid = { id: 'def-test', type: 'definicion', title: 'Def', description: 'desc' };
 
   it('accepts minimal valid metadata', () => expectValid(DefinitionSchema, valid));
   it('accepts full metadata', () => {
     expectValid(DefinitionSchema, {
-      ...valid, id: 'def-1', statement: 'stmt',
+      ...valid, statement: 'stmt',
       tags: ['tag'], authors: ['gauss'], color: 'blue',
       usedBy: ['thm-1'], links: ['link-1'],
     });
   });
-  it('rejects missing title', () => expectInvalid(DefinitionSchema, { type: 'definicion', description: 'd' }));
-  it('rejects missing description', () => expectInvalid(DefinitionSchema, { type: 'definicion', title: 't' }));
+  it('rejects missing title', () => expectInvalid(DefinitionSchema, { id: 'x', type: 'definicion', description: 'd' }));
+  it('rejects missing description', () => expectInvalid(DefinitionSchema, { id: 'x', type: 'definicion', title: 't' }));
+  it('rejects missing id', () => expectInvalid(DefinitionSchema, { type: 'definicion', title: 'Def', description: 'desc' }));
 });
 
 describe('ExampleSchema', () => {
-  const valid = { type: 'ejemplo', title: 'Example' };
+  const valid = { id: 'ex-test', type: 'ejemplo', title: 'Example' };
 
   it('accepts minimal valid metadata', () => expectValid(ExampleSchema, valid));
   it('accepts full metadata', () => {
     expectValid(ExampleSchema, {
-      ...valid, id: 'ex-1', description: 'desc',
+      ...valid, description: 'desc',
       relatedTheorem: 'thm-1', requires: ['def-1'],
       tags: ['tag'], difficulty: 'básico', links: ['link-1'],
     });
   });
-  it('rejects missing title', () => expectInvalid(ExampleSchema, { type: 'ejemplo' }));
+  it('rejects missing title', () => expectInvalid(ExampleSchema, { id: 'x', type: 'ejemplo' }));
+  it('rejects missing id', () => expectInvalid(ExampleSchema, { type: 'ejemplo', title: 'Example' }));
 });
 
 describe('ExerciseSchema', () => {
-  const valid = { type: 'ejercicio', title: 'Exercise' };
+  const valid = { id: 'exer-test', type: 'ejercicio', title: 'Exercise' };
 
   it('accepts minimal valid metadata', () => expectValid(ExerciseSchema, valid));
   it('accepts with hint', () => expectValid(ExerciseSchema, { ...valid, hint: 'Try X' }));
-  it('rejects missing title', () => expectInvalid(ExerciseSchema, { type: 'ejercicio' }));
+  it('rejects missing title', () => expectInvalid(ExerciseSchema, { id: 'x', type: 'ejercicio' }));
+  it('rejects missing id', () => expectInvalid(ExerciseSchema, { type: 'ejercicio', title: 'Exercise' }));
 });
 
 describe('AxiomSchema', () => {
-  const valid = { type: 'axioma', title: 'Axiom', description: 'desc' };
+  const valid = { id: 'axiom-test', type: 'axioma', title: 'Axiom', description: 'desc' };
 
   it('accepts minimal valid metadata', () => expectValid(AxiomSchema, valid));
   it('accepts full metadata', () => {
     expectValid(AxiomSchema, {
-      ...valid, id: 'axiom-1', statement: 'stmt',
+      ...valid, statement: 'stmt',
       tags: ['tag'], authors: ['euclides'], links: ['link-1'],
     });
   });
-  it('rejects missing title', () => expectInvalid(AxiomSchema, { type: 'axioma', description: 'd' }));
+  it('rejects missing title', () => expectInvalid(AxiomSchema, { id: 'x', type: 'axioma', description: 'd' }));
+  it('rejects missing id', () => expectInvalid(AxiomSchema, { type: 'axioma', title: 'Axiom', description: 'desc' }));
 });
 
 describe('AxiomaticSystemSchema', () => {
-  const valid = { type: 'sistema-axiomatico', title: 'System', description: 'desc', axiomas: ['ax-1', 'ax-2'] };
+  const valid = { id: 'sys-test', type: 'sistema-axiomatico', title: 'System', description: 'desc', axiomas: ['ax-1', 'ax-2'] };
 
   it('accepts minimal valid metadata', () => expectValid(AxiomaticSystemSchema, valid));
   it('accepts full metadata', () => {
     expectValid(AxiomaticSystemSchema, {
-      ...valid, id: 'sys-1',
+      ...valid,
       models: ['model-1'], mathematicians: ['hilbert'],
       tags: ['geo'], links: ['link-1'],
     });
   });
-  it('rejects missing title', () => expectInvalid(AxiomaticSystemSchema, { type: 'sistema-axiomatico', description: 'd', axiomas: [] }));
-  it('rejects missing axiomas', () => expectInvalid(AxiomaticSystemSchema, { type: 'sistema-axiomatico', title: 'S', description: 'd' }));
+  it('rejects missing title', () => expectInvalid(AxiomaticSystemSchema, { id: 'x', type: 'sistema-axiomatico', description: 'd', axiomas: [] }));
+  it('rejects missing axiomas', () => expectInvalid(AxiomaticSystemSchema, { id: 'x', type: 'sistema-axiomatico', title: 'S', description: 'd' }));
   it('rejects wrong type', () => expectInvalid(AxiomaticSystemSchema, { ...valid, type: 'modelo' }));
+  it('rejects missing id', () => expectInvalid(AxiomaticSystemSchema, { type: 'sistema-axiomatico', title: 'System', description: 'desc', axiomas: ['ax-1'] }));
 });
 
 describe('ModelSchema', () => {
-  const valid = { type: 'modelo', title: 'Model', satisfies: 'sistema-absoluto' };
+  const valid = { id: 'model-test', type: 'modelo', title: 'Model', satisfies: 'sistema-absoluto' };
 
   it('accepts minimal valid metadata', () => expectValid(ModelSchema, valid));
   it('accepts with axioms_verified', () => expectValid(ModelSchema, { ...valid, axioms_verified: ['ax-1', 'ax-2'] }));
   it('accepts with hasDiagram', () => expectValid(ModelSchema, { ...valid, hasDiagram: true }));
-  it('rejects missing title', () => expectInvalid(ModelSchema, { type: 'modelo', satisfies: 'sys' }));
-  it('rejects missing satisfies', () => expectInvalid(ModelSchema, { type: 'modelo', title: 'M' }));
+  it('rejects missing title', () => expectInvalid(ModelSchema, { id: 'x', type: 'modelo', satisfies: 'sys' }));
+  it('rejects missing satisfies', () => expectInvalid(ModelSchema, { id: 'x', type: 'modelo', title: 'M' }));
+  it('rejects missing id', () => expectInvalid(ModelSchema, { type: 'modelo', title: 'Model', satisfies: 'sistema-absoluto' }));
 });
 
 describe('UseCaseSchema', () => {
-  const valid = { type: 'caso-de-uso', title: 'Use Case' };
+  const valid = { id: 'uc-test', type: 'caso-de-uso', title: 'Use Case' };
 
   it('accepts minimal valid metadata', () => expectValid(UseCaseSchema, valid));
   it('accepts full metadata', () => {
     expectValid(UseCaseSchema, {
-      ...valid, id: 'uc-1', description: 'desc',
+      ...valid, description: 'desc',
       concept: 'thm-1', domain: 'ingeniería',
       tags: ['tag'], difficulty: 'intermedio', links: ['link-1'],
     });
   });
-  it('rejects missing title', () => expectInvalid(UseCaseSchema, { type: 'caso-de-uso' }));
+  it('rejects missing title', () => expectInvalid(UseCaseSchema, { id: 'x', type: 'caso-de-uso' }));
+  it('rejects missing id', () => expectInvalid(UseCaseSchema, { type: 'caso-de-uso', title: 'Use Case' }));
 });
 
 describe('StudyPlanSchema', () => {

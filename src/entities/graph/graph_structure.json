@@ -478,6 +478,7 @@
     "altura": {
       "id": "altura",
       "type": "definicion",
+      "subtype": "nominal",
       "title": "Altura",
       "description": "La altura de un triángulo es el segmento perpendicular trazado desde un vértice al lado opuesto (o su prolongación).",
       "proofs": [],
@@ -491,7 +492,7 @@
     "angulo": {
       "id": "angulo",
       "type": "definicion",
-      "subtype": "derivado",
+      "subtype": "nominal",
       "title": "Ángulo",
       "description": "Dadas dos semirrectas con el mismo origen, el ángulo es la figura formada por ambas. La congruencia de ángulos es una relación primitiva definida por los axiomas de congruencia.",
       "proofs": [],
@@ -503,7 +504,7 @@
     "angulos-suplementarios": {
       "id": "angulos-suplementarios",
       "type": "definicion",
-      "subtype": "derivado",
+      "subtype": "nominal",
       "title": "Ángulos Suplementarios",
       "description": "Dos ángulos son suplementarios si la suma de sus medidas es un ángulo llano (180° o π radianes).",
       "proofs": [],
@@ -514,6 +515,7 @@
     "bisectriz": {
       "id": "bisectriz",
       "type": "definicion",
+      "subtype": "fundamentada",
       "title": "Bisectriz",
       "description": "La bisectriz de un ángulo es la semirrecta con origen en el vértice que divide al ángulo en dos ángulos congruentes.",
       "proofs": [],
@@ -526,6 +528,7 @@
     "circunferencia": {
       "id": "circunferencia",
       "type": "definicion",
+      "subtype": "fundamentada",
       "title": "Circunferencia",
       "description": "Lugar geométrico de los puntos de un plano que equidistan de un punto fijo llamado centro.",
       "proofs": [],
@@ -547,7 +550,7 @@
     "contenido": {
       "id": "contenido",
       "type": "definicion",
-      "subtype": "derivado",
+      "subtype": "fundamentada",
       "title": "Contenido (Equidescomposición)",
       "description": "Definición de Hilbert del contenido de un polígono mediante equidescomposición en triángulos. El contenido de un triángulo es su clase de equidescomposición; el de un polígono, la suma formal de los contenidos de los triángulos de cualquiera de sus triangulaciones.",
       "proofs": [],
@@ -559,6 +562,7 @@
     "cuadrilatero": {
       "id": "cuadrilatero",
       "type": "definicion",
+      "subtype": "nominal",
       "title": "Cuadrilátero",
       "description": "Un cuadrilátero es un polígono de cuatro lados y cuatro vértices sin tres puntos colineales y sin lados que se crucen.",
       "proofs": [],
@@ -589,6 +593,7 @@
     "mediana": {
       "id": "mediana",
       "type": "definicion",
+      "subtype": "nominal",
       "title": "Mediana",
       "description": "La mediana de un triángulo es el segmento que une un vértice con el punto medio del lado opuesto.",
       "proofs": [],
@@ -601,6 +606,7 @@
     "mediatriz": {
       "id": "mediatriz",
       "type": "definicion",
+      "subtype": "fundamentada",
       "title": "Mediatriz",
       "description": "La mediatriz de un segmento es la recta perpendicular al mismo que pasa por su punto medio.",
       "proofs": [],
@@ -614,6 +620,7 @@
     "paralelas": {
       "id": "paralelas",
       "type": "definicion",
+      "subtype": "nominal",
       "title": "Paralelas",
       "description": "Dos rectas en un mismo plano son paralelas si no comparten ningún punto (no se intersecan).",
       "proofs": [],
@@ -626,6 +633,7 @@
     "paralelogramo": {
       "id": "paralelogramo",
       "type": "definicion",
+      "subtype": "fundamentada",
       "title": "Paralelogramo",
       "description": "Un paralelogramo es un cuadrilátero cuyos pares de lados opuestos son paralelos.",
       "proofs": [],
@@ -640,6 +648,7 @@
     "perpendicular": {
       "id": "perpendicular",
       "type": "definicion",
+      "subtype": "nominal",
       "title": "Perpendicular",
       "description": "Dos rectas son perpendiculares si al intersecarse forman cuatro ángulos congruentes (rectos).",
       "proofs": [],
@@ -679,6 +688,7 @@
     "segmento": {
       "id": "segmento",
       "type": "definicion",
+      "subtype": "nominal",
       "title": "Segmento",
       "description": "Dados dos puntos A y B, el segmento AB es el conjunto de puntos de la recta AB que están entre A y B, incluyendo los extremos. Es la noción fundamental para la congruencia y la medida.",
       "proofs": [],
@@ -690,6 +700,7 @@
     "semirrecta": {
       "id": "semirrecta",
       "type": "definicion",
+      "subtype": "nominal",
       "title": "Semirrecta (Rayo)",
       "description": "Dados un origen O y un punto A sobre una recta, la semirrecta de origen O que pasa por A es el conjunto de puntos de la recta que están del mismo lado que A respecto a O.",
       "proofs": [],
@@ -702,7 +713,7 @@
     "teoria-medida-area": {
       "id": "teoria-medida-area",
       "type": "definicion",
-      "subtype": "derivado",
+      "subtype": "fundamentada",
       "title": "Teoría de la Medida de Áreas",
       "description": "Visión panorámica de la teoría del contenido de Hilbert: equidescomponibilidad, triangulación, y los teoremas fundamentales que permiten calcular áreas de figuras planas.",
       "proofs": [],
@@ -713,6 +724,7 @@
     "triangulo": {
       "id": "triangulo",
       "type": "definicion",
+      "subtype": "nominal",
       "title": "Triángulo",
       "description": "Figura geométrica formada por tres segmentos (lados) que unen tres puntos no colineales (vértices).",
       "proofs": [],

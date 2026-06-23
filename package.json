@@ -42,7 +42,6 @@
     "ghpages": "^0.0.10",
     "jsxgraph": "^1.12.2",
     "katex": "^0.17.0",
-    "puppeteer": "^24.43.1",
     "react": "^19.2.6",
     "react-dom": "^19.2.6",
     "react-force-graph-2d": "^1.29.1",
@@ -83,9 +82,10 @@
     "typescript": "~6.0.2",
     "typescript-eslint": "^8.59.2",
     "vite": "^8.0.12",
+    "puppeteer": "^24.43.1",
     "vitest": "^4.1.9"
   },
   "lint-staged": {
-    "*.{ts,tsx,js,cjs}": []
+    "*.{ts,tsx}": ["eslint --fix"]
   }
 }

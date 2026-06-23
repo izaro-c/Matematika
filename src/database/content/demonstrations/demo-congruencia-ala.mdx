@@ -33,7 +33,7 @@ Por el <ConceptLink targetId="axioma-congruencia-1" isDependency={true}>axioma d
 </MedievalStep>
 
 <MedievalStep number={2} title="Aplicación del Axioma LAL" target="step2">
-Si analizamos el triángulo original <InteractiveElement target="triangle1" color="carbon">$\triangle ABC$</InteractiveElement> y el triángulo de construcción <InteractiveElement target="triangle2" color="carbon">$\triangle A'B'C^*$</InteractiveElement> (que coincide parcialmente con el segundo), vemos que cumplen:
+Se comparan el triángulo original <InteractiveElement target="triangle1" color="carbon">$\triangle ABC$</InteractiveElement> y el triángulo de construcción <InteractiveElement target="triangle2" color="carbon">$\triangle A'B'C^*$</InteractiveElement> (que coincide parcialmente con el segundo): se verifica que cumplen:
 1. <InteractiveElement target="sideAB" color="terracota">$\overline{AB} \cong \overline{A'B'}$</InteractiveElement> (hipótesis)
 2. <InteractiveElement target="angleA" color="terracota">$\angle A \cong \angle A' = \angle C^*A'B'$</InteractiveElement> (hipótesis y por estar en la misma semirrecta)
 3. $\overline{AC} \cong \overline{A'C^*}$ (por la construcción previa)
@@ -42,7 +42,7 @@ Al tener dos lados y el ángulo comprendido idénticos, por el <ConceptLink targ
 </MedievalStep>
 
 <MedievalStep number={3} title="Conclusión por unicidad" target="step3">
-Por nuestra hipótesis original sabemos que <InteractiveElement target="angleB" color="terracota">$\angle B \cong \angle B'$</InteractiveElement>. Por el paso 2, el triángulo construido nos dio que <InteractiveElement target="angleB" color="terracota">$\angle B \cong \angle A'B'C^*$</InteractiveElement>. Por el <ConceptLink targetId="axioma-congruencia-4" isDependency={true}>axioma de transitividad de la congruencia angular</ConceptLink>:
+Por hipótesis, <InteractiveElement target="angleB" color="terracota">$\angle B \cong \angle B'$</InteractiveElement>. Por el paso 2, el triángulo construido satisface <InteractiveElement target="angleB" color="terracota">$\angle B \cong \angle A'B'C^*$</InteractiveElement>. Por el <ConceptLink targetId="axioma-congruencia-4" isDependency={true}>axioma de transitividad de la congruencia angular</ConceptLink>:
 
 <Formula>
   $$ \angle A'B'C^* \cong \angle A'B'C' $$

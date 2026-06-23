@@ -6,7 +6,7 @@ import { z } from 'zod';
  * Valida los datos históricos y biográficos de las figuras matemáticas.
  */
 export const MathematicianSchema = z.object({
-  id: z.string().optional(),
+  id: z.string(),
   type: z.literal('matematico'),
   name: z.string(),
   birthYear: z.number().optional(),
@@ -23,7 +23,7 @@ export const MathematicianSchema = z.object({
  * dependencias (requires), demostraciones (demos) y corolarios.
  */
 export const TheoremSchema = z.object({
-  id: z.string().optional(),
+  id: z.string(),
   type: z.enum(['teorema', 'lema', 'corolario']),
   title: z.string(),
   description: z.string(),
@@ -49,7 +49,7 @@ export const TheoremSchema = z.object({
  * Agrupa múltiples teoremas y definiciones bajo una misma categoría de aprendizaje.
  */
 export const LessonSchema = z.object({
-  id: z.string().optional(),
+  id: z.string(),
   type: z.union([z.literal('leccion'), z.literal('lesson')]),
   title: z.string(),
   description: z.string().optional(),
@@ -63,7 +63,7 @@ export const LessonSchema = z.object({
  * incluyendo el método de demostración utilizado.
  */
 export const DemoSchema = z.object({
-  id: z.string().optional(),
+  id: z.string(),
   type: z.literal('demostracion'),
   title: z.string(),
   description: z.string().optional(),
@@ -81,14 +81,14 @@ export const DemoSchema = z.object({
  * Valida axiomas y definiciones base. Incluye el enunciado matemático (`statement`).
  */
 export const DefinitionSchema = z.object({
-  id: z.string().optional(),
+  id: z.string(),
   type: z.literal('definicion'),
   title: z.string(),
   description: z.string(),
   statement: z.string().optional(),
   authors: z.array(z.string()).optional(),
   color: z.string().optional(),
-  subtype: z.enum(['primitivo', 'derivado']).optional(),
+  subtype: z.enum(['primitivo', 'nominal', 'fundamentada']).optional(),
 });
 
 /**
@@ -98,7 +98,7 @@ export const DefinitionSchema = z.object({
  * Incluye el enunciado y la solución desarrollada paso a paso.
  */
 export const ExampleSchema = z.object({
-  id: z.string().optional(),
+  id: z.string(),
   type: z.literal('ejemplo'),
   title: z.string(),
   description: z.string().optional(),
@@ -113,7 +113,7 @@ export const ExampleSchema = z.object({
  * Un ejercicio con enunciado y solución oculta que el estudiante puede revelar.
  */
 export const ExerciseSchema = z.object({
-  id: z.string().optional(),
+  id: z.string(),
   type: z.literal('ejercicio'),
   title: z.string(),
   description: z.string().optional(),
@@ -140,7 +140,7 @@ export type AxiomaticSystemMeta = z.infer<typeof AxiomaticSystemSchema>;
  * AxiomSchema - Esquema para Axiomas (Nodos Raíz lógicos)
  */
 export const AxiomSchema = z.object({
-  id: z.string().optional(),
+  id: z.string(),
   type: z.literal('axioma'),
   title: z.string(),
   description: z.string(),
@@ -155,7 +155,7 @@ export const AxiomSchema = z.object({
  * Los modelos son estructuras concretas que satisfacen estos axiomas.
  */
 export const AxiomaticSystemSchema = z.object({
-  id: z.string().optional(),
+  id: z.string(),
   type: z.literal('sistema-axiomatico'),
   title: z.string(),
   description: z.string(),
@@ -175,7 +175,7 @@ export const AxiomaticSystemSchema = z.object({
  * los axiomas de un sistema axiomático. Puede tener un diagrama asociado.
  */
 export const ModelSchema = z.object({
-  id: z.string().optional(),
+  id: z.string(),
   type: z.literal('modelo'),
   title: z.string(),
   description: z.string().optional(),
@@ -196,7 +196,7 @@ export const ModelSchema = z.object({
  * Ruta: /caso/:id
  */
 export const UseCaseSchema = z.object({
-  id: z.string().optional(),
+  id: z.string(),
   type: z.literal('caso-de-uso'),
   title: z.string(),
   description: z.string().optional(),
