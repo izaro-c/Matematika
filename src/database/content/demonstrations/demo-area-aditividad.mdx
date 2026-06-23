@@ -5,12 +5,14 @@ export const metadata = {
   "description": "Prueba directa: dadas triangulaciones de P₁ y P₂, su unión es una triangulación de P = P₁ ∪ P₂. Aplicando la definición de contenido a P con esta triangulación se obtiene Cont(P) = Cont(P₁) + Cont(P₂).",
   "parentTheorem": "teorema-area-aditividad",
   "proofMethod": "directo",
-  "layout": "text",
+  "layout": "split",
   "authors": ["hilbert"],
   "tags": ["geometria", "areas"]
 };
 
-<DemonstrationSection>
+import { DemoAreaAditividad } from '@/shared/diagrams/Demos/DemoAreaAditividad';
+
+<DemonstrationSection diagram={<DemoAreaAditividad />}>
 
 <Formula>
   $$ P = P_1 \cup P_2,\; P_1^\circ \cap P_2^\circ = \emptyset \implies \text{Cont}(P) = \text{Cont}(P_1) + \text{Cont}(P_2) $$
@@ -20,8 +22,8 @@ Recordemos la definición de <ConceptLink targetId="contenido" isDependency={fal
 
 <Separador />
 
-<MedievalStep number={1} title="Triangulaciones de P₁ y P₂">
-Por el <ConceptLink targetId="teorema-triangulacion-poligono" isDependency={true}>teorema de triangulación de polígonos</ConceptLink>, $P_1$ y $P_2$ admiten triangulaciones. Fijemos una triangulación $\{A_1, \dots, A_m\}$ de $P_1$ y una triangulación $\{B_1, \dots, B_n\}$ de $P_2$.
+<MedievalStep number={1} title="Triangulaciones de P₁ y P₂" target="poligono-p">
+Por el <ConceptLink targetId="teorema-triangulacion-poligono" isDependency={true}>teorema de triangulación de polígonos</ConceptLink>, <InteractiveElement target="poligono-p1" color="terracota">$P_1$</InteractiveElement> y <InteractiveElement target="poligono-p2" color="salvia">$P_2$</InteractiveElement> admiten triangulaciones. Fijemos una <InteractiveElement target="triangulacion-p1" color="terracota">triangulación $\{A_1, \dots, A_m\}$ de $P_1$</InteractiveElement> y una <InteractiveElement target="triangulacion-p2" color="salvia">triangulación $\{B_1, \dots, B_n\}$ de $P_2$</InteractiveElement>.
 
 Por la **definición** de <ConceptLink targetId="contenido" isDependency={false}>contenido</ConceptLink> aplicada a $P_1$ con la triangulación $\{A_i\}$, y a $P_2$ con la triangulación $\{B_j\}$:
 
@@ -30,13 +32,13 @@ $$ \text{Cont}(P_1) = \sum_{i=1}^m \text{Cont}(A_i), \qquad \text{Cont}(P_2) = \
 Estas igualdades no son un teorema: son la propia definición de $\text{Cont}(P_1)$ y $\text{Cont}(P_2)$.
 </MedievalStep>
 
-<MedievalStep number={2} title="La unión de las triangulaciones es una triangulación de P">
-Por hipótesis, $P = P_1 \cup P_2$ y $P_1^\circ \cap P_2^\circ = \emptyset$. Como cada $A_i \subseteq P_1$ y cada $B_j \subseteq P_2$, los interiores de los $A_i$ y los $B_j$ son disjuntos dos a dos. La unión de todos ellos cubre exactamente $P$.
+<MedievalStep number={2} title="La unión de las triangulaciones es una triangulación de P" target="poligono-p">
+Por hipótesis, <InteractiveElement target="poligono-p" color="carbon">$P = P_1 \cup P_2$</InteractiveElement> y $P_1^\circ \cap P_2^\circ = \emptyset$. Como cada $A_i \subseteq P_1$ y cada $B_j \subseteq P_2$, los interiores de los $A_i$ y los $B_j$ son disjuntos dos a dos. La unión de todos ellos cubre exactamente $P$.
 
 Además, los triángulos $A_i$ y $B_j$ solo pueden intersecarse a lo largo de aristas completas (por construcción de las triangulaciones y por ser $P_1$ y $P_2$ polígonos que comparten a lo sumo parte de su frontera). En consecuencia, $\{A_1, \dots, A_m, B_1, \dots, B_n\}$ es una triangulación válida de $P$.
 </MedievalStep>
 
-<MedievalStep number={3} title="Conclusión por definición de contenido">
+<MedievalStep number={3} title="Conclusión por definición de contenido" target="poligono-p">
 Aplicando la **definición** de <ConceptLink targetId="contenido" isDependency={false}>contenido</ConceptLink> a $P$ con la triangulación obtenida en el paso 2:
 
 $$ \text{Cont}(P) = \sum_{i=1}^m \text{Cont}(A_i) + \sum_{j=1}^n \text{Cont}(B_j) $$

@@ -9,9 +9,8 @@ export const metadata = {
   "links": ["punto", "recta", "plano", "incidencia"],
 };
 
-import { Incidence5 } from '@/boundary/components/diagrams/Axiomas/Incidence5';
+import { Incidence5 } from '@/shared/diagrams/Axiomas/Incidence5';
 export const Simulation = Incidence5;
-import { InteractiveElement } from "@/boundary/components/ui/VisualBind";
 
 <Capitular letra="T" />odo <ConceptLink targetId="plano" isDependency={false}>plano</ConceptLink> contiene al menos tres <ConceptLink targetId="punto" isDependency={false}>puntos</ConceptLink> no <ConceptLink targetId="colineal" isDependency={false}>colineales</ConceptLink>. Este <ConceptLink targetId="axioma" isDependency={false}>axioma</ConceptLink> asegura que los planos no son entidades unidimensionales disfrazadas, sino que poseen una verdadera extensión bidimensional.
 

@@ -10,9 +10,8 @@ export const metadata = {
   "links": ["punto", "recta", "incidencia"],
 };
 
-import { EuclidParallel } from '@/boundary/components/diagrams/Axiomas/EuclidParallel';
+import { EuclidParallel } from '@/shared/diagrams/Axiomas/EuclidParallel';
 export const Simulation = EuclidParallel;
-import { InteractiveElement } from "@/boundary/components/ui/VisualBind";
 
 <Capitular letra="P" />
 or un <InteractiveElement target="pP" color="terracota"><ConceptLink targetId="punto" isDependency={false}>punto</ConceptLink></InteractiveElement> exterior a una <InteractiveElement target="lineL" color="carbon"><ConceptLink targetId="recta" isDependency={false}>recta</ConceptLink></InteractiveElement> pasa exactamente una <InteractiveElement target="lineM" color="terracota">recta <ConceptLink targetId="paralelas" isDependency={false}>paralela</ConceptLink></InteractiveElement>. Este es el célebre <ConceptLink targetId={["axioma-paralelas-euclides", "postulado", "paralelas"]}>quinto postulado</ConceptLink> de <ConceptLink targetId="euclides" isDependency={false}>Euclides</ConceptLink>, el <ConceptLink targetId="axioma" isDependency={false}>axioma</ConceptLink> que distingue la <ConceptLink targetId={["sistema-euclidiano", "geometria", "euclides"]}>geometría euclídea</ConceptLink> de las no euclídeas.

@@ -5,12 +5,14 @@ export const metadata = {
   "description": "Prueba mediante refinamiento común: toda subdivisión de un triángulo preserva el contenido (por aditividad); dos triangulaciones comparten un refinamiento común; por tanto producen la misma suma.",
   "parentTheorem": "teorema-invariancia-triangulacion",
   "proofMethod": "directo",
-  "layout": "text",
+  "layout": "split",
   "authors": ["hilbert"],
   "tags": ["geometria", "polígonos", "triangulos", "areas"]
 };
 
-<DemonstrationSection>
+import { DemoInvarianciaTriangulacion } from '../../../shared/diagrams/Demos/DemoInvarianciaTriangulacion';
+
+<DemonstrationSection diagrams={{ "default": DemoInvarianciaTriangulacion }}>
 
 <Formula>
   $$ \forall \mathcal{T}, \mathcal{T}' \text{ triangulaciones de } P:\ \sum_{T \in \mathcal{T}} \text{Cont}(T) = \sum_{T' \in \mathcal{T}'} \text{Cont}(T') $$
@@ -34,14 +36,14 @@ $$ \text{Cont}(T) = \text{Cont}(T_a) + \text{Cont}(T_b) $$
 Por hipótesis de inducción aplicada a $T_a$ y $T_b$ (cada uno con menos de $k$ triángulos en su triangulación), sus contenidos son la suma de los contenidos de sus respectivos triángulos. Sumando ambas igualdades se obtiene el resultado.
 </MedievalStep>
 
-<MedievalStep number={2} title="Refinamiento común de dos triangulaciones">
-Sean $\mathcal{T} = \{A_1, \dots, A_n\}$ y $\mathcal{T}' = \{B_1, \dots, B_m\}$ dos triangulaciones de $P$. Superponemos ambas: las aristas de $\mathcal{T}$ y $\mathcal{T}'$ se intersecan en un número finito de puntos. Añadiendo estos puntos de intersección como nuevos vértices y subdividiendo los triángulos afectados, obtenemos una tercera triangulación $\mathcal{T}^*$ que es un refinamiento de ambas: cada triángulo de $\mathcal{T}^*$ está contenido en exactamente un triángulo de $\mathcal{T}$ y en exactamente un triángulo de $\mathcal{T}'$.
+<MedievalStep number={2} title="Refinamiento común de dos triangulaciones" target="step3">
+Sean <InteractiveElement target="triangulacion-t1" color="terracota">$\mathcal{T} = \{A_1, \dots, A_n\}$</InteractiveElement> y <InteractiveElement target="triangulacion-t2" color="salvia">$\mathcal{T}' = \{B_1, \dots, B_m\}$</InteractiveElement> dos triangulaciones de $P$. Superponemos ambas: las aristas de $\mathcal{T}$ y $\mathcal{T}'$ se intersecan en un número finito de <InteractiveElement target="intersecciones" color="pizarra">puntos de intersección</InteractiveElement>. Añadiendo estos puntos como nuevos vértices y subdividiendo los triángulos afectados, obtenemos una tercera <InteractiveElement target="refinamiento-t-star" color="carbon">triangulación $\mathcal{T}^*$ que es un refinamiento de ambas</InteractiveElement>: cada triángulo de $\mathcal{T}^*$ está contenido en exactamente un triángulo de $\mathcal{T}$ y en exactamente un triángulo de $\mathcal{T}'$.
 
 La finitud de las intersecciones se sigue del <ConceptLink targetId="teorema-dos-rectas-un-punto" isDependency={true}>teorema de intersección única</ConceptLink>: dos rectas distintas se cortan en a lo sumo un punto. Como las aristas son segmentos finitos, el número total de intersecciones es finito.
 </MedievalStep>
 
-<MedievalStep number={3} title="Aplicación del lema de subdivisión">
-$\mathcal{T}^*$ se obtiene a partir de $\mathcal{T}$ subdividiendo cada triángulo $A_i$ en triángulos más pequeños. Por el Lema del paso 1 aplicado a cada $A_i$:
+<MedievalStep number={3} title="Aplicación del lema de subdivisión" target="step1">
+$\mathcal{T}^*$ se obtiene a partir de <InteractiveElement target="triangulacion-t1" color="terracota">$\mathcal{T}$</InteractiveElement> subdividiendo cada triángulo $A_i$ en triángulos más pequeños. Por el Lema del paso 1 aplicado a cada $A_i$:
 
 $$ \text{Cont}(A_i) = \sum_{T^* \subseteq A_i} \text{Cont}(T^*) $$
 
@@ -49,7 +51,7 @@ Sumando sobre todos los $A_i \in \mathcal{T}$:
 
 $$ \sum_{A \in \mathcal{T}} \text{Cont}(A) = \sum_{T^* \in \mathcal{T}^*} \text{Cont}(T^*) $$
 
-Análogamente, $\mathcal{T}^*$ se obtiene a partir de $\mathcal{T}'$ subdividiendo cada $B_j$. Por el mismo lema:
+Análogamente, $\mathcal{T}^*$ se obtiene a partir de <InteractiveElement target="triangulacion-t2" color="salvia">$\mathcal{T}'$</InteractiveElement> subdividiendo cada $B_j$. Por el mismo lema:
 
 $$ \sum_{B \in \mathcal{T}'} \text{Cont}(B) = \sum_{T^* \in \mathcal{T}^*} \text{Cont}(T^*) $$
 </MedievalStep>

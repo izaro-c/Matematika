@@ -8,7 +8,7 @@ export const DemoAngulosOpuestos = () => {
   return (
     <MathBoard
       boundingbox={[-5, 4, 5, -4]}
-      onInit={(board, els, theme) => {
+      onInit={(board: any, els: any, theme: any) => {
         // Origen
         els.O = createPoint(board, [0, 0], { name: 'O', size: 4, fixed: true }, theme);
 
@@ -39,7 +39,7 @@ export const DemoAngulosOpuestos = () => {
         els.ang3 = createAngle(board, [els.pB, els.O, els.pD], { name: '3', radius: 1, fillColor: theme.terracota, fillOpacity: 0.1, strokeColor: theme.terracota, strokeWidth: 2, label: { fontSize: 16, strokeColor: theme.terracota } }, theme);
         els.ang4 = createAngle(board, [els.pD, els.O, els.pA], { name: '4', radius: 1, fillColor: theme.salvia, fillOpacity: 0.1, strokeColor: theme.salvia, strokeWidth: 2, label: { fontSize: 16, strokeColor: theme.salvia } }, theme);
       }}
-      onUpdate={(_board, els, theme, isStep, isHL) => {
+      onUpdate={(_board: any, els: any, theme: any, isStep: any, isHL: any) => {
         const anyH = ['lineL', 'lineM', 'angle1', 'angle2', 'angle3', 'angle4', 'supp12', 'supp23', 'congruence13'].some(isHL);
         const styler = new StyleManager(isStep, isHL, anyH, theme);
 

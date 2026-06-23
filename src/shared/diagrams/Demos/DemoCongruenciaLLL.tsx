@@ -8,7 +8,7 @@ export const DemoCongruenciaLLL = () => {
   return (
     <MathBoard
       boundingbox={[-1, 4, 5, -4]}
-      onInit={(board, els, theme) => {
+      onInit={(board: any, els: any, theme: any) => {
         // Points
         els.A = createPoint(board, [0, 0], { name: "A'", fixed: true }, theme);
         els.B = createPoint(board, [4, 0], { name: "B'", fixed: true }, theme);
@@ -47,7 +47,7 @@ export const DemoCongruenciaLLL = () => {
         els.angC2 = createAngle(board, [els.CStar, els.C, els.B], { radius: 0.7, fillColor: theme.terracota, strokeColor: theme.terracota, fillOpacity: 0, visible: false }, theme);
         els.angCStar2 = createAngle(board, [els.B, els.CStar, els.C], { radius: 0.7, fillColor: theme.terracota, strokeColor: theme.terracota, fillOpacity: 0, visible: false }, theme);
       }}
-      onUpdate={(_board, els, theme, isStep, isHL) => {
+      onUpdate={(_board: any, els: any, theme: any, isStep: any, isHL: any) => {
         const anyH = ['sideAB', 'sideAC', 'sideBC', 'sideACStar', 'sideBCStar', 'triangleCPrime', 'triangleCStar', 'lineCC', 'isoLeft', 'isoRight', 'angleC'].some(isHL);
         const styler = new StyleManager(isStep, isHL, anyH, theme);
 

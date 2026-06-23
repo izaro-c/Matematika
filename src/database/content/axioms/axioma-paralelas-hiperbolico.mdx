@@ -10,9 +10,8 @@ export const metadata = {
   "links": ["punto", "recta", "incidencia"],
 };
 
-import { HyperbolicParallel } from '@/boundary/components/diagrams/Axiomas/HyperbolicParallel';
+import { HyperbolicParallel } from '@/shared/diagrams/Axiomas/HyperbolicParallel';
 export const Simulation = HyperbolicParallel;
-import { InteractiveElement } from "@/boundary/components/ui/VisualBind";
 
 <Capitular letra="P" />
 or un <InteractiveElement target="pP" color="terracota"><ConceptLink targetId="punto" isDependency={false}>punto</ConceptLink></InteractiveElement> exterior a una <ConceptLink targetId="recta" isDependency={false}>recta</ConceptLink> pasan al menos dos <InteractiveElement target="lineM" color="terracota">rectas</InteractiveElement> <InteractiveElement target="lineN" color="carbon"><ConceptLink targetId="paralelas" isDependency={false}>paralelas</ConceptLink></InteractiveElement> a la dada. Este <ConceptLink targetId="axioma" isDependency={false}>axioma</ConceptLink> niega el <ConceptLink targetId={["axioma-paralelas-euclides", "postulado", "paralelas"]}>quinto postulado</ConceptLink> de <ConceptLink targetId="euclides" isDependency={false}>Euclides</ConceptLink> y fundamenta la <ConceptLink targetId={["sistema-hiperbolico", "geometria"]}>geometría hiperbólica</ConceptLink>.

@@ -7,7 +7,7 @@ export const DemoRectasCoincidentes = () => {
   return (
     <MathBoard
       boundingbox={[-5, 5, 5, -5]}
-      onInit={(board, els, theme) => {
+      onInit={(board: any, els: any, theme: any) => {
         // Punto auxiliar para controlar la rotación sin romper el moveTo
         els.angleVar = createPoint(board, [0, 0.4], { visible: false }, theme);
 
@@ -25,7 +25,7 @@ export const DemoRectasCoincidentes = () => {
           name: 'm', strokeColor: theme.terracota, strokeWidth: 2, withLabel: true, label: { position: 'rt', offset: [10, -10], strokeColor: theme.terracota }
         }, theme);
       }}
-      onUpdate={(_board, els, theme, isStep, isHL) => {
+      onUpdate={(_board: any, els: any, theme: any, isStep: any, isHL: any) => {
         const s4 = isStep('step4');
         const s5 = isStep('step5');
 

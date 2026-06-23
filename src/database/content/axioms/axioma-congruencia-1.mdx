@@ -10,9 +10,8 @@ export const metadata = {
   "links": ["punto", "recta", "congruencia"],
 };
 
-import { Congruence1 } from '@/boundary/components/diagrams/Axiomas/Congruence1';
+import { Congruence1 } from '@/shared/diagrams/Axiomas/Congruence1';
 export const Simulation = Congruence1;
-import { InteractiveElement } from "@/boundary/components/ui/VisualBind";
 
 <Capitular letra="D" />
 ado un <InteractiveElement target="segmento-ab" color="terracota"><ConceptLink targetId="segmento" isDependency={false}>segmento</ConceptLink> $AB$</InteractiveElement> y una <InteractiveElement target="rayo-r" color="pizarra"><ConceptLink targetId="semirrecta" isDependency={false}>semirrecta</ConceptLink> $r$</InteractiveElement>, existe un único <InteractiveElement target="punto-d" color="salvia"><ConceptLink targetId="punto" isDependency={false}>punto</ConceptLink> $D$</InteractiveElement> sobre dicha semirrecta que determina un <InteractiveElement target="segmento-cd" color="salvia">segmento $CD$</InteractiveElement> <ConceptLink targetId="congruencia" isDependency={false}>congruente</ConceptLink> al original. Este <ConceptLink targetId="axioma" isDependency={false}>axioma</ConceptLink> formaliza el transporte <ConceptLink targetId="isometria" isDependency={false}>isométrico</ConceptLink> de distancias, operación clásica realizada en la antigüedad mediante el uso del <ConceptLink targetId="compas" isDependency={false}>compás</ConceptLink>.

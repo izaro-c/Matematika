@@ -5,12 +5,15 @@ export const metadata = {
   "description": "Prueba por casos: si base y altura son conmensurables, el rectángulo se descompone en cuadrados unidad; si son inconmensurables, se usan aproximaciones vía el axioma de Arquímedes.",
   "parentTheorem": "teorema-area-rectangulo",
   "proofMethod": "exhaustivo",
-  "layout": "text",
+  "layout": "split",
   "authors": ["hilbert"],
   "tags": ["geometria", "areas", "rectangulo"]
 };
 
-<DemonstrationSection>
+import { DemoAreaRectangulo_Conmensurable } from '@/shared/diagrams/Demos/DemoAreaRectangulo_Conmensurable';
+import { DemoAreaRectangulo_Inconmensurable } from '@/shared/diagrams/Demos/DemoAreaRectangulo_Inconmensurable';
+
+<DemonstrationSection diagram={<DemoAreaRectangulo_Conmensurable />}>
 
 <Formula>
   $$ \text{Cont}(\text{Rect}(b, h)) = b \cdot h $$
@@ -20,14 +23,17 @@ Sea $R$ un rectángulo de base $b$ y altura $h$. Por la definición de <ConceptL
 
 <Separador />
 
-<MedievalStep number={1} title="Caso conmensurable">
-Supongamos que existe una unidad $u$ tal que $b = m \cdot u$ y $h = n \cdot u$ con $m, n \in \mathbb{N}$. Entonces $R$ se descompone en $m \times n$ cuadrados de lado $u$. Por definición, el cuadrado unidad $u \times u$ tiene contenido $u^2$. Por la <ConceptLink targetId="teorema-area-aditividad" isDependency={true}>aditividad del contenido</ConceptLink>:
+<MedievalStep number={1} title="Caso conmensurable" target="step1">
+Supongamos que existe una <InteractiveElement target="cuadrado-unidad" color="terracota">unidad $u$</InteractiveElement> tal que $b = m \cdot u$ y $h = n \cdot u$ con $m, n \in \mathbb{N}$. Entonces <InteractiveElement target="rectangulo-r" color="salvia">$R$</InteractiveElement> se descompone en $m \times n$ cuadrados de lado $u$. Por definición, el cuadrado unidad $u \times u$ tiene contenido $u^2$. Por la <ConceptLink targetId="teorema-area-aditividad" isDependency={true}>aditividad del contenido</ConceptLink>:
 
 $$ \text{Cont}(R) = m \cdot n \cdot u^2 = (m \cdot u) \cdot (n \cdot u) = b \cdot h $$
 </MedievalStep>
+</DemonstrationSection>
 
-<MedievalStep number={2} title="Caso inconmensurable">
-Si $b$ y $h$ no comparten medida común, por el <ConceptLink targetId="axioma-arquimedes" isDependency={true}>axioma de Arquímedes</ConceptLink> existen sucesiones de números racionales $b_k \to b$ y $h_k \to h$ por aproximación. Para cada $k$, constrúyanse rectángulos $R_k^-$ de lados $b_k - \varepsilon_k$ y $h_k - \varepsilon_k$ (interior) y $R_k^+$ de lados $b_k + \varepsilon_k$ y $h_k + \varepsilon_k$ (exterior). Por el caso conmensurable:
+<DemonstrationSection diagram={<DemoAreaRectangulo_Inconmensurable />}>
+
+<MedievalStep number={2} title="Caso inconmensurable" target="step2">
+Si $b$ y $h$ no comparten medida común, por el <ConceptLink targetId="axioma-arquimedes" isDependency={true}>axioma de Arquímedes</ConceptLink> existen sucesiones de números racionales $b_k \to b$ y $h_k \to h$ por aproximación. Para cada $k$, constrúyanse <InteractiveElement target="rectangulo-k-min" color="musgo">rectángulos $R_k^-$ de lados $b_k - \varepsilon_k$ y $h_k - \varepsilon_k$ (interior)</InteractiveElement> y <InteractiveElement target="rectangulo-k-max" color="terracota">rectángulos $R_k^+$ de lados $b_k + \varepsilon_k$ y $h_k + \varepsilon_k$ (exterior)</InteractiveElement> al <InteractiveElement target="rectangulo-r" color="carbon">rectángulo $R$</InteractiveElement>. Por el caso conmensurable:
 
 $$ \text{Cont}(R_k^-) = b_k^- \cdot h_k^- < \text{Cont}(R) < b_k^+ \cdot h_k^+ = \text{Cont}(R_k^+) $$
 

@@ -10,9 +10,8 @@ export const metadata = {
   "links": ["punto", "recta", "estar-entre", "congruencia"],
 };
 
-import { Congruence4 } from '@/boundary/components/diagrams/Axiomas/Congruence4';
+import { Congruence4 } from '@/shared/diagrams/Axiomas/Congruence4';
 export const Simulation = Congruence4;
-import { InteractiveElement } from "@/boundary/components/ui/VisualBind";
 
 <Capitular letra="D" />
 ado un <InteractiveElement target="angulo-original" color="terracota"><ConceptLink targetId="angulo" isDependency={false}>ángulo</ConceptLink></InteractiveElement> y una <InteractiveElement target="rayo-h_prime" color="salvia"><ConceptLink targetId="semirrecta" isDependency={false}>semirrecta</ConceptLink></InteractiveElement>, existe un único <InteractiveElement target="angulo-clonado" color="salvia">ángulo <ConceptLink targetId="congruencia" isDependency={false}>congruente</ConceptLink></InteractiveElement> (determinado por una <InteractiveElement target="rayo-k_prime" color="salvia">semirrecta</InteractiveElement>) sobre un <ConceptLink targetId="semiplano" isDependency={false}>semiplano</ConceptLink> determinado respecto a dicha semirrecta. Este <ConceptLink targetId="axioma" isDependency={false}>axioma</ConceptLink> extiende formalmente la noción primitiva de congruencia desde los <ConceptLink targetId="segmento" isDependency={false}>segmentos</ConceptLink> hacia los ángulos.

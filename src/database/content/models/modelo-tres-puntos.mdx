@@ -12,8 +12,7 @@ export const metadata = {
   "hasSimulation": true
 };
 
-import { ModeloTresPuntos } from '@/boundary/components/diagrams/Models/ModeloTresPuntos';
-import { InteractiveElement } from "@/boundary/components/ui/VisualBind";
+import { ModeloTresPuntos } from '@/shared/diagrams/Models/ModeloTresPuntos';
 export const Simulation = ModeloTresPuntos;
 
 <Capitular letra="E" />l **modelo de tres <ConceptLink targetId="punto" isDependency={false}>puntos</ConceptLink>** es la estructura minimal que satisface los <ConceptLink targetId={["sistema-incidencia", "axioma", "incidencia"]}>axiomas de incidencia</ConceptLink> de <ConceptLink targetId="hilbert" isDependency={false}>Hilbert</ConceptLink>. Con apenas tres puntos no <ConceptLink targetId="colineal" isDependency={false}>colineales</ConceptLink> y tres <ConceptLink targetId="recta" isDependency={false}>rectas</ConceptLink>, demuestra la consistencia relativa del <ConceptLink targetId="sistema-incidencia" isDependency={false}>sistema axiomático de incidencia</ConceptLink>.

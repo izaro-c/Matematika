@@ -10,9 +10,8 @@ export const metadata = {
   "links": ["punto", "congruencia"],
 };
 
-import { Congruence2 } from '@/boundary/components/diagrams/Axiomas/Congruence2';
+import { Congruence2 } from '@/shared/diagrams/Axiomas/Congruence2';
 export const Simulation = Congruence2;
-import { InteractiveElement } from "@/boundary/components/ui/VisualBind";
 
 <Capitular letra="L" />
 a <ConceptLink targetId="congruencia" isDependency={false}>congruencia</ConceptLink> de <ConceptLink targetId="segmento" isDependency={false}>segmentos</ConceptLink> es <ConceptLink targetId="propiedad-transitiva" isDependency={false}>transitiva</ConceptLink>. Este <ConceptLink targetId="postulado" isDependency={false}>postulado</ConceptLink> fundamenta la relación axiomática de congruencia dotándola de las propiedades de una <ConceptLink targetId="relacion-equivalencia" isDependency={false}>relación de equivalencia</ConceptLink> estricta. Si el <InteractiveElement target="ab-cd" color="salvia">segmento $AB$ es congruente con $CD$</InteractiveElement>, y a su vez el <InteractiveElement target="ab-ef" color="ocre">segmento $AB$ es congruente con $EF$</InteractiveElement>, entonces <InteractiveElement target="cd-ef" color="terracota">$CD$ debe ser congruente con $EF$</InteractiveElement>.
