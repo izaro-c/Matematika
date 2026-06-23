@@ -9,9 +9,8 @@ export const metadata = {
   "links": ["punto", "recta", "estar-entre"],
 };
 
-import { Order1 } from '@/boundary/components/diagrams/Axiomas/Order1';
+import { Order1 } from '@/shared/diagrams/Axiomas/Order1';
 export const Simulation = Order1;
-import { InteractiveElement } from "@/boundary/components/ui/VisualBind";
 
 <Capitular letra="S" />i un <ConceptLink targetId="punto" isDependency={false}>punto</ConceptLink> B descansa entre A y C, entonces obligatoriamente A, B y C son puntos distintos ubicados sobre una misma <ConceptLink targetId="recta" isDependency={false}>recta</ConceptLink>, y esta relación geométrica funciona en ambos sentidos: B también está entre C y A.
 

@@ -9,9 +9,8 @@ export const metadata = {
   "links": ["punto", "plano", "incidencia"],
 };
 
-import { Incidence8 } from '@/boundary/components/diagrams/Axiomas/Incidence8';
+import { Incidence8 } from '@/shared/diagrams/Axiomas/Incidence8';
 export const Simulation = Incidence8;
-import { InteractiveElement } from "@/boundary/components/ui/VisualBind";
 
 <Capitular letra="E" />xisten al menos cuatro <ConceptLink targetId="punto" isDependency={false}>puntos</ConceptLink> espaciales que no son <ConceptLink targetId="coplanares" isDependency={false}>coplanares</ConceptLink> (es decir, que no encajan todos juntos dentro de un único <ConceptLink targetId="plano" isDependency={false}>plano</ConceptLink>). Este <ConceptLink targetId="postulado" isDependency={false}>postulado</ConceptLink> existencial asegura matemáticamente que la <ConceptLink targetId="geometria" isDependency={false}>geometría</ConceptLink> goza de <ConceptLink targetId="volumen" isDependency={false}>volumen</ConceptLink>, impidiendo que nuestro universo quede aplastado y reducido a una sola hoja bidimensional.
 

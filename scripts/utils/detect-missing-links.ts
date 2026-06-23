@@ -2,7 +2,7 @@ import fs from 'fs';
 import path from 'path';
 
 const INDEX_PATH = path.resolve('./src/store/contentIndex.json');
-const CONTENT_DIR = path.resolve('./src/content');
+const CONTENT_DIR = path.resolve('./src/database/content');
 
 if (!fs.existsSync(INDEX_PATH)) {
   console.error("No se encuentra contentIndex.json. Ejecuta 'npm run generate-index' primero.");
@@ -14,7 +14,7 @@ const terms = new Map<string, string>(); // name/title -> id
 
 // Palabras muy comunes que ignoramos para evitar falsos positivos
 const IGNORE_TERMS = new Set([
-  'punto', 'puntos', 'recta', 'rectas', 'plano', 'planos', 
+  'punto', 'puntos', 'recta', 'rectas', 'plano', 'planos',
   'espacio', 'incidencia', 'orden', 'congruencia', 'modelo',
   'sistema', 'matemática', 'demostración', 'axioma', 'lema',
   'teorema', 'corolario', 'definición', 'geometría', 'teoría',
@@ -61,15 +61,13 @@ for (const file of allFiles) {
   const content = fs.readFileSync(file, 'utf-8');
   // Removemos el bloque de metadata para no buscar ahí
   const body = content.replace(/export\s+const\s+metadata\s*=\s*\{[\s\S]*?\n\};?/, '');
-  
+
   const missingInFile = new Set<string>();
   const bodyLower = body.toLowerCase();
-  
+
   for (const [term, id] of terms.entries()) {
     // Si el término aparece en el texto
     if (bodyLower.includes(term)) {
-      // Pero no aparece un ConceptLink hacia ese ID en todo el documento
-      // Formato: <ConceptLink targetId="ID">
       if (!body.includes(`targetId="${id}"`)) {
         // Para evitar casos donde una palabra grande incluye a una chica
         const regex = new RegExp(`\\b${term}\\b`, 'i');

@@ -10,9 +10,8 @@ export const metadata = {
   "links": ["punto", "recta", "estar-entre", "congruencia"],
 };
 
-import { Congruence3 } from '@/boundary/components/diagrams/Axiomas/Congruence3';
+import { Congruence3 } from '@/shared/diagrams/Axiomas/Congruence3';
 export const Simulation = Congruence3;
-import { InteractiveElement } from "@/boundary/components/ui/VisualBind";
 
 <Capitular letra="L" />
 os <ConceptLink targetId="segmento" isDependency={false}>segmentos</ConceptLink> pueden sumarse axiomáticamente. Si el <ConceptLink targetId="punto" isDependency={false}>punto</ConceptLink> $B$ está entre $A$ y $C$, el segmento $AC$ se compone de los <InteractiveElement target="ab" color="terracota">segmentos $AB$</InteractiveElement> y <InteractiveElement target="bc" color="ocre">$BC$</InteractiveElement>. Este <ConceptLink targetId="axioma" isDependency={false}>axioma</ConceptLink> asegura que si sumamos segmentos <ConceptLink targetId="congruencia" isDependency={false}>congruentes</ConceptLink>, el <InteractiveElement target="ac" color="salvia">segmento resultante será congruente</InteractiveElement>.

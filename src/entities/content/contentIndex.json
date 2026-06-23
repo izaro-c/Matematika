@@ -1365,7 +1365,7 @@
       "description": "Prueba directa: dadas triangulaciones de P₁ y P₂, su unión es una triangulación de P = P₁ ∪ P₂. Aplicando la definición de contenido a P con esta triangulación se obtiene Cont(P) = Cont(P₁) + Cont(P₂).",
       "parentTheorem": "teorema-area-aditividad",
       "proofMethod": "directo",
-      "layout": "text",
+      "layout": "split",
       "authors": [
         "hilbert"
       ],
@@ -1387,7 +1387,7 @@
       "description": "Prueba directa: si dos polígonos son congruentes, por el teorema de triangulación ambos admiten triangulaciones, y la isometría transporta una triangulación a la otra triángulo a triángulo, preservando el contenido por definición.",
       "parentTheorem": "teorema-area-invariancia",
       "proofMethod": "directo",
-      "layout": "text",
+      "layout": "split",
       "authors": [
         "hilbert"
       ],
@@ -1410,7 +1410,7 @@
       "description": "Prueba por casos: si base y altura son conmensurables, el rectángulo se descompone en cuadrados unidad; si son inconmensurables, se usan aproximaciones vía el axioma de Arquímedes.",
       "parentTheorem": "teorema-area-rectangulo",
       "proofMethod": "exhaustivo",
-      "layout": "text",
+      "layout": "split",
       "authors": [
         "hilbert"
       ],
@@ -1616,7 +1616,7 @@
       "description": "Prueba mediante refinamiento común: toda subdivisión de un triángulo preserva el contenido (por aditividad); dos triangulaciones comparten un refinamiento común; por tanto producen la misma suma.",
       "parentTheorem": "teorema-invariancia-triangulacion",
       "proofMethod": "directo",
-      "layout": "text",
+      "layout": "split",
       "authors": [
         "hilbert"
       ],
@@ -1822,7 +1822,7 @@
       "description": "Prueba por inducción: todo polígono simple de n vértices posee al menos un vértice oreja; al extraerlo se reduce a n−1 vértices, y por inducción se completa la triangulación.",
       "parentTheorem": "teorema-triangulacion-poligono",
       "proofMethod": "induccion",
-      "layout": "text",
+      "layout": "split",
       "authors": [
         "hilbert"
       ],

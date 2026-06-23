@@ -7,7 +7,7 @@ export const DemoDosRectasUnPunto = () => {
   return (
     <MathBoard
       boundingbox={[-5, 5, 5, -5]}
-      onInit={(board, els, theme) => {
+      onInit={(board: any, els: any, theme: any) => {
         // Punto central de intersección
         els.P = createPoint(board, [0, 0], { name: 'P', size: 5, showInfobox: false }, theme);
 

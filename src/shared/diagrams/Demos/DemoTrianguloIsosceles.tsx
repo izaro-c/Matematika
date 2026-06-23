@@ -8,7 +8,7 @@ export const DemoTrianguloIsosceles = () => {
   return (
     <MathBoard
       boundingbox={[-4, 4, 4, -2]}
-      onInit={(board, els, theme) => {
+      onInit={(board: any, els: any, theme: any) => {
         // Eje vertical para restringir el movimiento de A y mantener isósceles
         els.yAxis = createLine(board, [[0, 0], [0, 1]], { visible: false }, theme);
 
@@ -66,7 +66,7 @@ export const DemoTrianguloIsosceles = () => {
         els.tickAB = createTicks(board, [els.segAB, 1], { strokeWidth: 2 }, theme);
         els.tickAC = createTicks(board, [els.segAC, 1], { strokeWidth: 2 }, theme);
       }}
-      onUpdate={(_board, els, theme, isStep, isHL) => {
+      onUpdate={(_board: any, els: any, theme: any, isStep: any, isHL: any) => {
         const anyH = ['triangulo-abc', 'triangulo-izq', 'triangulo-der', 'bisectriz', 'punto-d', 'angulo-bad', 'angulo-cad', 'angulo-b', 'angulo-c', 'lado-ab', 'lado-ac', 'lado-ad'].some(isHL);
         const styler = new StyleManager(isStep, isHL, anyH, theme);
 

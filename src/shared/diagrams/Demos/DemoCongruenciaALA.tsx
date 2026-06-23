@@ -7,7 +7,7 @@ export const DemoCongruenciaALA = () => {
   return (
     <MathBoard
       boundingbox={[-4, 3, 5, -2]}
-      onInit={(board, els, theme) => {
+      onInit={(board: any, els: any, theme: any) => {
         // Triángulo 1 (Interactivo)
         els.B = createPoint(board, [-3, -1], { name: 'B', fixed: true }, theme);
         els.A = createPoint(board, [-2, 2], { name: 'A', label: { offset: [-5, 15] } }, theme);
@@ -39,7 +39,7 @@ export const DemoCongruenciaALA = () => {
           name: "C*", size: 6, fillColor: theme.salvia, strokeColor: theme.salvia, fixed: true, visible: false, label: { offset: [15, 10], strokeColor: theme.salvia }
         }, theme);
       }}
-      onUpdate={(_board, els, theme, isStep, isHL) => {
+      onUpdate={(_board: any, els: any, theme: any, isStep: any, isHL: any) => {
         // --- 0. RESET ---
         els.poly1.setAttribute({ fillOpacity: 0.05 });
         els.poly1.borders.forEach((b: any) => b.setAttribute({ strokeColor: theme.carbon, strokeWidth: 2, strokeOpacity: 1 }));

@@ -5,12 +5,14 @@ export const metadata = {
   "description": "Prueba por inducción: todo polígono simple de n vértices posee al menos un vértice oreja; al extraerlo se reduce a n−1 vértices, y por inducción se completa la triangulación.",
   "parentTheorem": "teorema-triangulacion-poligono",
   "proofMethod": "induccion",
-  "layout": "text",
+  "layout": "split",
   "authors": ["hilbert"],
   "tags": ["geometria", "polígonos", "triangulos"]
 };
 
-<DemonstrationSection>
+import { DemoTriangulacionPoligono } from '../../../shared/diagrams/Demos/DemoTriangulacionPoligono';
+
+<DemonstrationSection diagrams={{ "default": DemoTriangulacionPoligono }}>
 
 <Formula>
   $$ \forall P \text{ polígono simple de } n \geq 3 \text{ vértices},\ P \text{ admite triangulación en } n-2 \text{ triángulos} $$
@@ -24,16 +26,16 @@ Sea $P$ un polígono simple de $n \geq 3$ vértices $v_1, v_2, \dots, v_n$ en or
 Si $n = 3$, $P$ es un <ConceptLink targetId="triangulo" isDependency={true}>triángulo</ConceptLink> por definición. Ya está triangulado: $1$ triángulo, $0$ diagonales. Se cumple $n-2 = 1$ y $n-3 = 0$.
 </MedievalStep>
 
-<MedievalStep number={2} title="Existencia de un vértice oreja (n ≥ 4)">
-Sea $n \geq 4$. Por el <ConceptLink targetId="axioma-orden-3" isDependency={true}>axioma II-3 de orden</ConceptLink>, existe una dirección en el plano tal que los vértices de $P$ tienen coordenadas distintas. Sea $v_k$ el vértice de $P$ con coordenada mínima en esa dirección (un vértice «extremo» del polígono).
+<MedievalStep number={2} title="Existencia de un vértice oreja (n ≥ 4)" target="step1">
+Sea $n \geq 4$. Por el <ConceptLink targetId="axioma-orden-3" isDependency={true}>axioma II-3 de orden</ConceptLink>, existe una dirección en el plano tal que los vértices de <InteractiveElement target="poligono-p" color="carbon">$P$</InteractiveElement> tienen coordenadas distintas. Sea $v_k$ el vértice de $P$ con coordenada mínima en esa dirección (un vértice «extremo» del polígono).
 
-Afirmación: $v_k$ es un **vértice oreja**. Esto significa que el segmento $\overline{v_{k-1}v_{k+1}}$ (donde los índices son módulo $n$) es una diagonal interior de $P$, es decir, está completamente contenido en el interior de $P$ salvo sus extremos.
+Afirmación: $v_k$ es un **vértice oreja**. Esto significa que la <InteractiveElement target="diagonal" color="terracota">diagonal interior</InteractiveElement> $\overline{v_{k-1}v_{k+1}}$ (donde los índices son módulo $n$) está completamente contenida en el interior de $P$ salvo sus extremos, formando la <InteractiveElement target="oreja" color="salvia">oreja $\triangle v_{k-1}v_kv_{k+1}$</InteractiveElement>.
 
 Por el <ConceptLink targetId="axioma-orden-4" isDependency={true}>axioma de Pasch (II-4)</ConceptLink>, cualquier recta que atraviese el triángulo $\triangle v_{k-1}v_kv_{k+1}$ debe cortar uno de sus lados. Como $v_k$ es extremo en la dirección elegida, ningún otro vértice de $P$ puede estar en el interior de $\triangle v_{k-1}v_kv_{k+1}$. Por tanto, el segmento $\overline{v_{k-1}v_{k+1}}$ no cruza ninguna arista de $P$ y es una diagonal interior válida.
 </MedievalStep>
 
-<MedievalStep number={3} title="Reducción y paso inductivo">
-Sea $d = \overline{v_{k-1}v_{k+1}}$ la diagonal interior del paso 2. Esta diagonal divide $P$ en dos partes: el triángulo $\triangle v_{k-1}v_kv_{k+1}$ y el polígono $P'$ formado por los $n-1$ vértices restantes (se elimina $v_k$ de la lista cíclica de vértices y se añade la arista $d$).
+<MedievalStep number={3} title="Reducción y paso inductivo" target="step2">
+Sea $d = \overline{v_{k-1}v_{k+1}}$ la diagonal interior del paso 2. Esta diagonal divide $P$ en dos partes: el triángulo $\triangle v_{k-1}v_kv_{k+1}$ y el <InteractiveElement target="subpoligono" color="pizarra">polígono $P'$ formado por los $n-1$ vértices restantes</InteractiveElement> (se elimina $v_k$ de la lista cíclica de vértices y se añade la arista $d$).
 
 $P'$ es un polígono simple de $n-1$ vértices. Por hipótesis de inducción, $P'$ admite una triangulación en $(n-1)-2 = n-3$ triángulos mediante $(n-1)-3 = n-4$ diagonales.
 </MedievalStep>

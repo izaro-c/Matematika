@@ -1,7 +1,7 @@
 import fs from 'fs';
 import path from 'path';
 
-const CONTENT_DIR = path.resolve('./src/content');
+const CONTENT_DIR = path.resolve('./src/database/content');
 const ISSUES: string[] = [];
 let fileCount = 0;
 let issueCount = 0;
