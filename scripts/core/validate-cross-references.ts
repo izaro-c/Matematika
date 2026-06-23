@@ -2,7 +2,7 @@ import fs from 'fs';
 import path from 'path';
 
 const CONTENT_DIR = path.resolve('./src/database/content');
-const INDEX_PATH = path.resolve('./src/database/contentIndex.json');
+const INDEX_PATH = path.resolve('./src/entities/content/contentIndex.json');
 let errors = 0;
 
 interface ContentIndex {
@@ -18,6 +18,7 @@ function parseMetadata(content: string, filePath: string) {
   const match = content.match(metadataRegex);
   if (!match) return null;
   try {
+    // eslint-disable-next-line sonarjs/code-eval -- internal script, trusted MDX content
     const fn = new Function(`return ${match[1]}`);
     return fn();
   } catch {
@@ -120,8 +121,6 @@ for (const file of allFiles) {
   const meta = parseMetadata(content, file);
   if (!meta) continue;
 
-  const id = meta.id || path.basename(file, '.mdx');
-  const type = meta.type || 'unknown';
   const relPath = path.relative(CONTENT_DIR, file);
 
   const checkId = (field: string, refId: string) => {
@@ -220,10 +219,7 @@ for (const file of allFiles) {
     }
   }
 
-  // 16. <InteractiveElement target=""> → existing content (allow diagram element names too)
-  const interactiveTargets = extractTargetIds(content, 'InteractiveElement', 'target');
-
-  // 17. <GlossaryLink> — uses inline descriptions, no content page needed
+  // 16. <InteractiveElement target=""> — allow diagram element names, validated elsewhere
 }
 
 if (errors === 0) {

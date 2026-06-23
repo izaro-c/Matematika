@@ -28,6 +28,7 @@ function lintFile(filePath: string) {
     }
   }
 
+  // eslint-disable-next-line sonarjs/super-linear-regex -- bounded input
   const mdLinkRegex = /\[([^\]]+)\]\((\/[^)]+)\)/g;
   let match;
   while ((match = mdLinkRegex.exec(content)) !== null) {
@@ -35,6 +36,7 @@ function lintFile(filePath: string) {
     issueCount++;
   }
 
+  // eslint-disable-next-line sonarjs/super-linear-regex -- bounded input
   const mdLinkFullRegex = /\[([^\]]+)\]\((https?:\/\/[^)]+)\)/g;
   while ((match = mdLinkFullRegex.exec(content)) !== null) {
     ISSUES.push(`${relativePath}: Enlace Markdown absoluto [${match[1]}](${match[2]}) — verificar si aplica <ConceptLink>`);
@@ -44,7 +46,6 @@ function lintFile(filePath: string) {
 
 function findBodyStart(content: string): number {
   const lines = content.split('\n');
-  const inFrontmatter = false;
   let inExport = false;
 
   for (let i = 0; i < lines.length; i++) {

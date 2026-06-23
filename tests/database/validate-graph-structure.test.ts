@@ -1,6 +1,6 @@
 import { describe, it, expect } from 'vitest';
-import graphStructureData from '@/database/graph_structure.json';
-import type { GraphStructure } from '@/controller/store/graphUtils';
+import graphStructureData from '@/entities/graph/graph_structure.json';
+import type { GraphStructure } from '@/entities/graph/graphTypes';
 
 const graph = graphStructureData as unknown as GraphStructure;
 

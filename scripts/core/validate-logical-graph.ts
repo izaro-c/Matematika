@@ -7,6 +7,7 @@ function parseMetadata(content: string, filePath: string) {
   const match = content.match(metadataRegex);
   if (match) {
     try {
+      // eslint-disable-next-line sonarjs/code-eval -- internal script, trusted MDX content
       const fn = new Function(`return ${match[1]}`);
       return fn();
     } catch (e) {
@@ -280,10 +281,10 @@ const graphStructure = {
   nodes: graphNodes
 };
 
-const storeDir = path.resolve(process.cwd(), 'src/database');
+const storeDir = path.resolve(process.cwd(), 'src/entities/graph');
 if (!fs.existsSync(storeDir)) {
-  fs.mkdirSync(storeDir);
+  fs.mkdirSync(storeDir, { recursive: true });
 }
 const structurePath = path.join(storeDir, 'graph_structure.json');
 fs.writeFileSync(structurePath, JSON.stringify(graphStructure, null, 2));
-console.log(`✅ Estructura estática exportada correctamente a src/database/graph_structure.json`);
+console.log(`✅ Estructura estática exportada correctamente a src/entities/graph/graph_structure.json`);

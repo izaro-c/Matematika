@@ -1,5 +1,5 @@
 import { describe, it, expect, beforeEach } from 'vitest';
-import { useGlossaryStore, dictionary } from '@/controller/store/GlossaryStore';
+import { useGlossaryStore, dictionary } from '@/features/glossary/GlossaryStore';
 
 describe('useGlossaryStore', () => {
   beforeEach(() => {

@@ -1,14 +1,14 @@
 import { useEffect } from 'react';
 import { MDXProvider } from '@mdx-js/react';
-import { MDXComponents } from '@/boundary/components/ui/MDXBlocks';
-import { MarginaliaPanel } from "@/boundary/components/content/MarginaliaPanel";
-import { PageTransition } from "@/boundary/components/layout/PageTransition";
-import { ErrorBoundary } from "@/boundary/components/layout/ErrorBoundary";
-import { SymbolDictionaryManager } from "@/boundary/components/content/SymbolDictionaryManager";
-import { SearchOmnibar } from "@/boundary/components/navigation/SearchOmnibar";
-import { TopBar } from "@/boundary/components/navigation/TopBar";
-import { useKeyboardShortcuts } from "@/boundary/hooks/useKeyboardShortcuts";
-import { AppRouter } from "@/boundary/routes/AppRouter";
+import { MDXComponents } from '@/shared/ui/MDXBlocks';
+import { MarginaliaPanel } from "@/widgets/content/MarginaliaPanel";
+import { PageTransition } from "@/widgets/layouts/PageTransition";
+import { ErrorBoundary } from "@/widgets/layouts/ErrorBoundary";
+import { SymbolDictionaryManager } from "@/widgets/content/SymbolDictionaryManager";
+import { SearchOmnibar } from "@/widgets/navigation/SearchOmnibar";
+import { TopBar } from "@/widgets/navigation/TopBar";
+import { useKeyboardShortcuts } from "@/shared/hooks/useKeyboardShortcuts";
+import { AppRouter } from "@/app/routes/AppRouter";
 
 /**
  * App

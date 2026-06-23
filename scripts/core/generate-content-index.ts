@@ -2,7 +2,7 @@ import fs from 'fs';
 import path from 'path';
 
 const CONTENT_DIR = path.resolve('./src/database/content');
-const OUTPUT_PATH = path.resolve('./src/database/contentIndex.json');
+const OUTPUT_PATH = path.resolve('./src/entities/content/contentIndex.json');
 
 interface ContentEntry {
   id: string;
@@ -20,6 +20,7 @@ function parseMetadata(content: string, filePath: string): Record<string, unknow
     return null;
   }
   try {
+      // eslint-disable-next-line sonarjs/code-eval -- internal script, trusted MDX content
     const fn = new Function(`return ${match[1]}`);
     return fn();
   } catch {

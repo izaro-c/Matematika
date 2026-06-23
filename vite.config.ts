@@ -116,7 +116,7 @@ function editorAPI(): Plugin {
         if (req.method === 'GET') {
           // ACT: Updated to look in database/content
           const contentDir = path.resolve(__dirname, 'src', 'database', 'content');
-          const componentsDir = path.resolve(__dirname, 'src', 'boundary', 'components');
+          const componentsDir = path.resolve(__dirname, 'src', 'shared', 'diagrams');
           const results: { path: string, name: string, type: string, fullPath?: string }[] = [];
 
           function walk(dir: string, baseType: string, prefix: string) {

@@ -30,7 +30,7 @@ export default defineConfig([
     /* Diagramas interactivos JSXGraph: Math.random() usado exclusivamente para
        generar IDs únicos de tableros interactivos no criptográficos.
        Revisado y aceptado como falso positivo. */
-    files: ['src/boundary/components/diagrams/**/*.tsx'],
+    files: ['src/boundary/components/diagrams/**/*.tsx', 'src/shared/diagrams/**/*.tsx'],
     rules: {
       'sonarjs/pseudo-random': 'off'
     }
