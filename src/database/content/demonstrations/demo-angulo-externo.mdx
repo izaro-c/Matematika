@@ -78,9 +78,9 @@ Queda demostrada la primera desigualdad: el <InteractiveElement target="angulo-a
 </MedievalStep>
 
 <MedievalStep number={6} title="Desigualdad para el ángulo B" target={["angulo-b", "angulo-externo"]}>
-Para demostrar que $\angle B < \angle ACD$, aplicamos el mismo razonamiento de los pasos 2 a 5, pero tomando el punto medio del lado $BC$ (en lugar de $AC$) y duplicando la mediana desde $A$. Por la <ConceptLink targetId="congruencia" isDependency={false}>simetría del argumento</ConceptLink>, se obtiene $\angle B < \angle ACD$.
+Para establecer que $\angle B < \angle ACD$, se aplica el mismo razonamiento de los pasos 2 a 5 al lado $BC$: se toma el punto medio de $BC$ y se duplica la mediana desde $A$ a través de ese punto medio. El argumento es estructuralmente idéntico al anterior (por el paso 5 aplicado al triángulo con el lado $BC$), y se concluye $\angle B < \angle ACD$.
 
-Alternativamente, basta observar que <InteractiveElement target="angulo-externo" color="terracota">$\angle ACD \cong \angle BCE$</InteractiveElement> por ser <ConceptLink targetId="angulos-opuestos-verticales" isDependency={false}>ángulos opuestos por el vértice</ConceptLink> (prolongando $AC$ más allá de $C$). Aplicando el mismo procedimiento de los pasos 2 a 5 al triángulo $\triangle ABC$ con el ángulo externo $\angle BCE$, obtenemos $\angle B < \angle BCE \cong \angle ACD$.
+Alternativamente, basta verificar que <InteractiveElement target="angulo-externo" color="terracota">$\angle ACD \cong \angle BCE$</InteractiveElement> por ser <ConceptLink targetId="angulos-opuestos-verticales" isDependency={false}>ángulos opuestos por el vértice</ConceptLink> (prolongando $AC$ más allá de $C$). Al aplicar el mismo procedimiento de los pasos 2 a 5 al triángulo $\triangle ABC$ con el ángulo externo $\angle BCE$, se obtiene $\angle B < \angle BCE \cong \angle ACD$.
 </MedievalStep>
 
 <MedievalStep number={7} title="Conclusión" target={["angulo-a", "angulo-b", "angulo-externo"]}>

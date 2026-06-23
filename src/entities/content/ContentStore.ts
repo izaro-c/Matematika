@@ -63,6 +63,9 @@ export class ContentStore {
   public axiomaticSystems: Map<string, AxiomaticSystem> = new Map();
   public models: Map<string, Model> = new Map();
 
+  /** Índice slug→id para lookups O(1) por slug en todos los get*() */
+  private slugIndex: Map<string, string> = new Map();
+
   constructor() {
     this.init();
   }
@@ -121,6 +124,8 @@ export class ContentStore {
         if (!schema.safeParse(meta).success) {
           console.warn(`[ContentStore] ${dirName}: inválido ${path}`);
         }
+        // Registrar slug→id en el índice global
+        if (slug !== finalId) this.slugIndex.set(slug, finalId);
         target.set(finalId, buildEntry(meta, finalId, slug, loaders[path]));
       }
     };
@@ -216,7 +221,7 @@ export class ContentStore {
    * @returns El objeto `Mathematician` o `undefined` si no se encuentra.
    */
   getMathematicianById(id: string): Mathematician | undefined {
-    return this.mathematicians.get(id) || Array.from(this.mathematicians.values()).find(m => m.slug === id);
+    return this.mathematicians.get(id) ?? this.mathematicians.get(this.slugIndex.get(id) ?? '');
   }
 
   /**
@@ -225,7 +230,7 @@ export class ContentStore {
    * @returns El teorema correspondiente o `undefined`.
    */
   getTheorem(id: string): Theorem | undefined {
-    return this.theorems.get(id) || Array.from(this.theorems.values()).find(t => t.slug === id);
+    return this.theorems.get(id) ?? this.theorems.get(this.slugIndex.get(id) ?? '');
   }
 
   /**
@@ -242,9 +247,9 @@ export class ContentStore {
    * @param id - Identificador o slug de la definición.
    */
   getDefinition(id: string): Definition | undefined {
-    return this.definitions.get(id) || Array.from(this.definitions.values()).find(d => d.slug === id);
+    return this.definitions.get(id) ?? this.definitions.get(this.slugIndex.get(id) ?? '');
   }
-  
+
   /** @returns Todas las definiciones formales disponibles. */
   getAllDefinitions(): Definition[] {
     return Array.from(this.definitions.values());
@@ -255,14 +260,14 @@ export class ContentStore {
    * @param id - Identificador del ejemplo.
    */
   getExample(id: string): Example | undefined {
-    return this.examples.get(id) || Array.from(this.examples.values()).find(e => e.slug === id);
+    return this.examples.get(id) ?? this.examples.get(this.slugIndex.get(id) ?? '');
   }
-  
+
   /** @returns Todos los ejemplos resueltos. */
   getAllExamples(): Example[] {
     return Array.from(this.examples.values());
   }
-  
+
   /**
    * Obtiene ejemplos ilustrativos vinculados a un teorema específico.
    * @param theoremId - ID del teorema.
@@ -276,14 +281,14 @@ export class ContentStore {
    * @param id - Identificador del ejercicio.
    */
   getExercise(id: string): Exercise | undefined {
-    return this.exercises.get(id) || Array.from(this.exercises.values()).find(e => e.slug === id);
+    return this.exercises.get(id) ?? this.exercises.get(this.slugIndex.get(id) ?? '');
   }
-  
+
   /** @returns Todos los ejercicios propuestos. */
   getAllExercises(): Exercise[] {
     return Array.from(this.exercises.values());
   }
-  
+
   /**
    * Obtiene los ejercicios que evalúan un teorema particular.
    * @param theoremId - Identificador del teorema.
@@ -297,7 +302,7 @@ export class ContentStore {
    * @param id - Identificador del plan.
    */
   getStudyPlan(id: string): StudyPlan | undefined {
-    return this.studyPlans.get(id) || Array.from(this.studyPlans.values()).find(p => p.slug === id);
+    return this.studyPlans.get(id) ?? this.studyPlans.get(this.slugIndex.get(id) ?? '');
   }
 
   /**
@@ -305,9 +310,9 @@ export class ContentStore {
    * @param id - Identificador del axioma.
    */
   getAxiom(id: string): Axiom | undefined {
-    return this.axioms.get(id) || Array.from(this.axioms.values()).find(a => a.slug === id);
+    return this.axioms.get(id) ?? this.axioms.get(this.slugIndex.get(id) ?? '');
   }
-  
+
   /** @returns Todos los axiomas lógicos del sistema. */
   getAllAxioms(): Axiom[] { return Array.from(this.axioms.values()); }
 
@@ -316,12 +321,12 @@ export class ContentStore {
    * @param id - Identificador del sistema.
    */
   getAxiomaticSystem(id: string): AxiomaticSystem | undefined {
-    return this.axiomaticSystems.get(id) || Array.from(this.axiomaticSystems.values()).find(s => s.slug === id);
+    return this.axiomaticSystems.get(id) ?? this.axiomaticSystems.get(this.slugIndex.get(id) ?? '');
   }
-  
+
   /** @returns Todos los sistemas axiomáticos. */
   getAllAxiomaticSystems(): AxiomaticSystem[] { return Array.from(this.axiomaticSystems.values()); }
-  
+
   /**
    * Devuelve todos los modelos concretos que satisfacen (cumplen) un sistema axiomático específico.
    * @param systemId - Identificador del sistema axiomático.
@@ -337,9 +342,9 @@ export class ContentStore {
    * @param id - Identificador del modelo.
    */
   getModel(id: string): Model | undefined {
-    return this.models.get(id) || Array.from(this.models.values()).find(m => m.slug === id);
+    return this.models.get(id) ?? this.models.get(this.slugIndex.get(id) ?? '');
   }
-  
+
   /** @returns Todos los modelos concretos instanciados. */
   getAllModels(): Model[] { return Array.from(this.models.values()); }
 
@@ -348,12 +353,12 @@ export class ContentStore {
    * @param id - Identificador de la lección.
    */
   getLesson(id: string): Lesson | undefined {
-    return this.lessons.get(id) || Array.from(this.lessons.values()).find(l => l.slug === id);
+    return this.lessons.get(id) ?? this.lessons.get(this.slugIndex.get(id) ?? '');
   }
-  
+
   /** @returns Todas las lecciones guiadas disponibles. */
   getAllLessons(): Lesson[] { return Array.from(this.lessons.values()); }
-  
+
   /** @returns Todas las demostraciones paso a paso separadas de los teoremas. */
   getAllDemos(): Demo[] { return Array.from(this.demos.values()); }
 
@@ -362,7 +367,7 @@ export class ContentStore {
    * @param id - Identificador de la demostración.
    */
   getDemo(id: string): Demo | undefined {
-    return this.demos.get(id) || Array.from(this.demos.values()).find(d => d.slug === id);
+    return this.demos.get(id) ?? this.demos.get(this.slugIndex.get(id) ?? '');
   }
 
   /**
@@ -370,12 +375,12 @@ export class ContentStore {
    * @param id - Identificador del caso de uso.
    */
   getUseCase(id: string): UseCase | undefined {
-    return this.usecases.get(id) || Array.from(this.usecases.values()).find(u => u.slug === id);
+    return this.usecases.get(id) ?? this.usecases.get(this.slugIndex.get(id) ?? '');
   }
-  
+
   /** @returns Todos los casos de uso prácticos. */
   getAllUseCases(): UseCase[] { return Array.from(this.usecases.values()); }
-  
+
   /**
    * Busca aplicaciones prácticas para un concepto teórico.
    * @param conceptId - ID del concepto abstracto.
@@ -394,15 +399,30 @@ export class ContentStore {
    */
   static slugify(text: string): string {
     return text.toString().toLowerCase()
-      .normalize('NFD').replace(/[\u0300-\u036f]/g, '')
-      .replace(/\s+/g, '-')
-      .replace(/[^\w-]+/g, '')
-      .replace(/--+/g, '-')
-      .replace(/^-+/, '')
-      .replace(/-+$/, '');
+      .normalize('NFD')
+      .replace(/[\u0300-\u036f]/g, '') // 1. Elimina diacríticos (O(N) seguro)
+      .replace(/[^a-z0-9]+/g, '-')     // 2. Colapsa cualquier bloque no alfanumérico en UN solo guion
+      .replace(/^-/, '')               // 3. Elimina el guion inicial si existe (O(1), sin cuantificadores)
+      .replace(/-$/, '');              // 4. Elimina el guion final si existe (O(1), sin cuantificadores)
   }
 
   // ── Taxonomía MSC2020 ────────────────────────────────────────────────────
+
+  /**
+   * Construye un array con todos los nodos de contenido indexables en la taxonomía MSC.
+   * Método privado compartido entre getBranchTaxonomy() y getItemsByBranch().
+   */
+  private buildAllItems(): { type: string; item: BaseContent & { tags?: string[] } }[] {
+    const items: { type: string; item: BaseContent & { tags?: string[] } }[] = [];
+    for (const thm of this.theorems.values()) items.push({ type: 'theorem', item: thm });
+    for (const lesson of this.lessons.values()) items.push({ type: 'lesson', item: lesson });
+    for (const def of this.definitions.values()) items.push({ type: 'definition', item: def });
+    for (const ex of this.examples.values()) items.push({ type: 'example', item: ex });
+    for (const ez of this.exercises.values()) items.push({ type: 'exercise', item: ez });
+    for (const axm of this.axioms.values()) items.push({ type: 'axiom', item: axm });
+    for (const model of this.models.values()) items.push({ type: 'model', item: model });
+    return items;
+  }
 
   /**
    * Genera el árbol taxonómico MSC2020 para una rama principal particular,
@@ -412,15 +432,7 @@ export class ContentStore {
    * @returns Un nodo raíz `TaxonomyNode` conteniendo el subárbol jerárquico MSC.
    */
   getBranchTaxonomy(branchId: string) {
-    const items: { type: string; item: BaseContent & { tags?: string[] } }[] = [];
-    for (const thm of this.theorems.values()) items.push({ type: 'theorem', item: thm });
-    for (const lesson of this.lessons.values()) items.push({ type: 'lesson', item: lesson });
-    for (const def of this.definitions.values()) items.push({ type: 'definition', item: def });
-    for (const ex of this.examples.values()) items.push({ type: 'example', item: ex });
-    for (const ez of this.exercises.values()) items.push({ type: 'exercise', item: ez });
-    for (const axm of this.axioms.values()) items.push({ type: 'axiom', item: axm });
-    for (const model of this.models.values()) items.push({ type: 'model', item: model });
-    return buildBranchTaxonomy(branchId, items);
+    return buildBranchTaxonomy(branchId, this.buildAllItems());
   }
 
   /**
@@ -431,14 +443,6 @@ export class ContentStore {
    * @returns Lista de objetos contentientes de tipo y nodo matemático.
    */
   getItemsByBranch(branch: string): { type: string; item: BaseContent & { tags?: string[] } }[] {
-    const items: { type: string; item: BaseContent & { tags?: string[] } }[] = [];
-    for (const thm of this.theorems.values()) items.push({ type: 'theorem', item: thm });
-    for (const lesson of this.lessons.values()) items.push({ type: 'lesson', item: lesson });
-    for (const def of this.definitions.values()) items.push({ type: 'definition', item: def });
-    for (const ex of this.examples.values()) items.push({ type: 'example', item: ex });
-    for (const ez of this.exercises.values()) items.push({ type: 'exercise', item: ez });
-    for (const axm of this.axioms.values()) items.push({ type: 'axiom', item: axm });
-    for (const model of this.models.values()) items.push({ type: 'model', item: model });
-    return getItemsByBranch(branch, items);
+    return getItemsByBranch(branch, this.buildAllItems());
   }
 }

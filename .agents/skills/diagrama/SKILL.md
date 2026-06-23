@@ -1,7 +1,16 @@
+---
+name: diagrama
+description: Genera diagramas matemáticos interactivos con JSXGraph, SVG, Canvas 2D o HTML/CSS en src/shared/diagrams/. Usa exclusivamente la paleta Arts & Crafts via getCSSVar(). Conecta bidireccionalmente con MathStore y LessonStore para diagramas reactivos.
+---
+
 # Skill: diagrama — Diagramas Matemáticos Interactivos para Matematika
 
 > Motor de generación de visualizaciones matemáticas interactivas, bidireccionales
 > y coherentes con el sistema de diseño Arts & Crafts.
+
+**Skills hermanas:**
+- `project-philosophy` — principios no negociables (cárgala si dudas sobre la filosofía del proyecto)
+- `page-creator` — para crear la página MDX que alojará este diagrama (cárgala si necesitas crear el contenido también)
 
 ## Índice
 
@@ -307,7 +316,7 @@ export const MiDiagrama = () => {
 **Prohibición Estricta:** Si un diagrama necesita un elemento geométrico recurrente (una bisectriz, una mediatriz, una circunferencia inscrita, marcas de congruencia, etc.) que **NO** existe actualmente en `MathFactory.ts`, el desarrollador/agente **NO DEBE** crearlo usando la API cruda `board.create('bisector', ...)` dentro del archivo del diagrama.
 
 En su lugar, debe:
-1. Ir a `src/components/graph/MathFactory.ts`.
+1. Ir a `src/shared/graph/MathFactory.ts`.
 2. Crear la función exportada correspondiente (ej. `createBisector`).
 3. Aplicarle el estilo por defecto de la paleta Arts & Crafts.
 4. Importarla y usarla en el diagrama.
@@ -843,11 +852,25 @@ SVG usando `var(--theme-*)` se adapta automáticamente al modo oscuro porque las
 
 ## 19. Organización de Archivos
 
+### 19.1 Ubicación FSD
+
 ```
-src/diagrams/
+src/shared/diagrams/
   <Categoria>/
     <Nombre>.tsx           (componente del diagrama — PascalCase)
 ```
+
+Los diagramas viven en `src/shared/diagrams/` (arquitectura FSD: capa `shared/`).
+
+### 19.2 Archivos relacionados
+
+| Qué | Dónde |
+|---|---|
+| Utilidades de diagrama | `src/shared/diagrams/utils/{cssVar,highlight}.ts` |
+| Componentes JSXGraph base | `src/features/graph/ui/{MathBoard,MathFactory,MathUtils}.ts` |
+| Stores para interactividad | `src/features/lessons/LessonStore.ts`, `src/features/graph/GraphStore.ts` |
+| Paleta de colores | `src/shared/lib/constants.ts` (leer via `getCSSVar('--theme-*')`) |
+| Contenido MDX asociado | `src/database/content/{theorems,definitions,axioms,demonstrations}/` |
 
 **Categorías existentes con contenido:**
 

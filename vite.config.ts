@@ -31,6 +31,8 @@ function editorAPI(): Plugin {
     enforce: 'pre' as const,
     configureServer(server: ViteDevServer) {
       viteServer = server;
+      const srcRoot = path.resolve(__dirname, 'src');
+
       server.middlewares.use('/api/content', (req: IncomingMessage, res: ServerResponse) => {
         const url = new URL(req.url || '/', `http://${req.headers.host}`)
 
@@ -41,6 +43,10 @@ function editorAPI(): Plugin {
             return res.end('Missing path')
           }
           const absolutePath = path.resolve(__dirname, 'src', rawPath)
+          if (!absolutePath.startsWith(srcRoot + path.sep) && absolutePath !== srcRoot) {
+            res.statusCode = 403
+            return res.end('Forbidden: path outside src/')
+          }
           if (!fs.existsSync(absolutePath)) {
             res.statusCode = 404
             return res.end('File not found')
@@ -62,6 +68,10 @@ function editorAPI(): Plugin {
                 return res.end('Missing path or content')
               }
               const absolutePath = path.resolve(__dirname, 'src', data.path)
+              if (!absolutePath.startsWith(srcRoot + path.sep) && absolutePath !== srcRoot) {
+                res.statusCode = 403
+                return res.end('Forbidden: path outside src/')
+              }
               const dir = path.dirname(absolutePath)
               if (!fs.existsSync(dir)) {
                 fs.mkdirSync(dir, { recursive: true })

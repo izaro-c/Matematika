@@ -1,7 +1,16 @@
+---
+name: page-creator
+description: Genera páginas MDX de contenido matemático con metadatos Zod validados, enlazado semántico con ConceptLink/RefLink, paleta Arts & Crafts exclusiva, y rigor matemático Greenberg/Hilbert. Usa esta skill para crear o modificar cualquier archivo MDX en src/database/content/.
+---
+
 # Skill: page_creator — Generador de Contenido Matemático para Matematika
 
-> **Fuente de verdad única.** Este documento absorbe y reemplaza `STYLEGUIDE.md`.
+> **Fuente de verdad única.** Este documento absorbe y reemplaza `AGENTS.md`.
 > Toda decisión arquitectónica, estética y de contenido de Matematika vive aquí.
+
+**Skills hermanas:**
+- `project-philosophy` — principios no negociables (cárgala si dudas sobre la filosofía del proyecto)
+- `diagrama` — para crear diagramas interactivos asociados a este contenido (cárgala cuando el contenido necesite visualización)
 
 ## Índice
 
@@ -123,7 +132,7 @@ Todas las dependencias lógicas y referenciales **se extraen automáticamente de
 
 ## 5. Tipos de Contenido y Schemas Completos
 
-Cada archivo MDX DEBE exportar un objeto `metadata`. Los schemas Zod (`src/store/schemas.ts`) son la fuente de verdad para los campos. A continuación, los **schemas completos** para cada tipo.
+Cada archivo MDX DEBE exportar un objeto `metadata`. Los schemas Zod (`src/entities/content/schemas.ts`) son la fuente de verdad para los campos. A continuación, los **schemas completos** para cada tipo.
 
 ### 5.1 Axioma (`type: "axioma"`)
 
@@ -177,8 +186,8 @@ Cada archivo MDX DEBE exportar un objeto `metadata`. Los schemas Zod (`src/store
 **Reglas:**
 - Un sistema axiomático es un **conjunto de axiomas** que define una teoría matemática. NO es un modelo.
 - El array `axiomas` DEBE listar los IDs en el orden lógico convencional
-- Todos los IDs en `axiomas` DEBEN existir en `src/content/axioms/`
-- Todos los IDs en `models` DEBEN existir en `src/content/models/`
+- Todos los IDs en `axiomas` DEBEN existir en `src/database/content/axioms/`
+- Todos los IDs en `models` DEBEN existir en `src/database/content/models/`
 
 ### 5.4 Teorema / Lema / Corolario (`type: "teorema" | "lema" | "corolario"`)
 
@@ -537,9 +546,39 @@ El grafo DEBE ser un DAG topológico estricto. A partir de ahora, la distinción
 
 ---
 
-## 12. Estructura de Archivos
+## 12. Estructura de Archivos (FSD)
 
-Los directorios de contenido y diagramas se mantienen idénticos a la versión anterior.
+### 12.1 Ubicación de archivos MDX
+
+Todo contenido MDX vive en `src/database/content/`, organizado por tipo:
+
+```
+src/database/content/
+  axioms/             → axioma-*.mdx
+  axiomatic-systems/  → sistema-*.mdx
+  definitions/        → definicion-*.mdx
+  theorems/           → teorema-*.mdx, lema-*.mdx, corolario-*.mdx
+  demonstrations/     → demo-*.mdx
+  examples/           → ejemplo-*.mdx
+  exercises/          → ejercicio-*.mdx
+  lessons/            → leccion-*.mdx
+  mathematicians/     → matematico-*.mdx
+  models/             → modelo-*.mdx
+  plans/              → plan-de-estudio-*.mdx
+  usecases/           → caso-de-uso-*.mdx
+```
+
+### 12.2 Archivos de soporte
+
+| Qué | Dónde |
+|---|---|
+| Diagramas interactivos | `src/shared/diagrams/{Axiomas,Definiciones,Teoremas,Demos,Models}/` |
+| Plantillas MDX | `src/shared/templates/{tipo}.template.mdx` |
+| Schemas Zod | `src/entities/content/schemas.ts` |
+| Índice de contenido | `src/entities/content/contentIndex.json` |
+| Constantes y paleta | `src/shared/lib/constants.ts` |
+| Componentes UI | `src/shared/ui/` |
+| Componentes de ejercicio | `src/features/exercises/ui/` |
 
 ---
 

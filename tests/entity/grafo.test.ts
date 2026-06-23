@@ -80,7 +80,7 @@ describe('Grafo.evaluate', () => {
     expect(resultWithout.has('thm-1')).toBe(false);
   });
 
-  it('TC_02: treats theorem with no proofs as valid when no deps', () => {
+  it('TC_06: treats theorem with no proofs as valid when no deps', () => {
     const noProof: GraphStructure = {
       topologicalOrder: ['thm-1'],
       nodes: {
