@@ -150,7 +150,7 @@ export const GraphPage: React.FC = () => {
       // Cada dependencia/lema/link/seeAlso de la demo apunta hacia el teorema padre
       if (demo.dependencias) demo.dependencias.forEach(dep => links.push({ source: dep, target: demo.parentTheorem! }));
       if (demo.lemmas) demo.lemmas.forEach(lem => links.push({ source: lem, target: demo.parentTheorem! }));
-      if (demo.links) demo.links.forEach(l => links.push({ source: l, target: demo.parentTheorem! }));
+      if (demo.links) demo.links.forEach((l: string) => links.push({ source: l, target: demo.parentTheorem! }));
       if (demo.seeAlso) demo.seeAlso.forEach(s => links.push({ source: s, target: demo.parentTheorem! }));
     });
 
