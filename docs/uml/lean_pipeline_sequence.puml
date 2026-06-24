@@ -1,0 +1,25 @@
+@startuml
+title Lean Verification Build Pipeline
+
+actor Author
+participant "MDX content" as MDX
+participant "Lean files" as Lean
+participant "lake build" as Lake
+participant "lean-query.lean" as Query
+participant "generate-lean-graph.ts" as Graph
+participant "validate-lean-diff.ts" as Diff
+participant "generate-content-index.ts" as Index
+
+Author -> MDX: writes pedagogy + leanId
+Author -> Lean: writes formal theorem/proof
+Lean -> Lake: compile
+Lake --> Lean: verified environment
+Lean -> Query: export declarations/deps/proof blocks
+Query -> Graph: raw JSON
+Graph -> Diff: lean_graph.json
+MDX -> Diff: metadata + stepTacticMap
+Diff --> Author: divergence report
+Graph -> Index: lean verification data
+MDX -> Index: content metadata
+Index --> Author: contentIndex.json with leanVerified
+@enduml

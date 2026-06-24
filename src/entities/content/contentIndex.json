@@ -1487,7 +1487,21 @@
         "congruencia",
         "triangulos"
       ],
-      "layout": "split"
+      "layout": "split",
+      "leanId": "Matematika.Geometry.congruence_ala",
+      "leanCommitSha": "local-bridge",
+      "stepTacticMap": {
+        "1": [
+          "ala-step1-transport"
+        ],
+        "2": [
+          "ala-step2-apply-lal"
+        ],
+        "3": [
+          "ala-step3-uniqueness"
+        ]
+      },
+      "leanVerified": true
     }
   },
   "demo-congruencia-lll": {
@@ -2629,9 +2643,12 @@
       ],
       "difficulty": "intermedio",
       "hasSimulation": true,
+      "leanId": "Matematika.Geometry.congruence_ala",
+      "leanCommitSha": "local-bridge",
       "demos": [
         "demo-congruencia-ala"
-      ]
+      ],
+      "leanVerified": true
     }
   },
   "teorema-congruencia-lll": {

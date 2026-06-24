@@ -26,7 +26,7 @@ Nótese que $\overline{BC}$ es adyacente a $\angle B$ pero **no** a $\angle A$ (
 
 <Separador />
 
-<MedievalStep number={1} title="Hipótesis" target={["triangulo-abc", "triangulo-apbpcp"]}>
+<ProofStep number={1} title="Hipótesis" target={["triangulo-abc", "triangulo-apbpcp"]}>
 Por hipótesis, sean <InteractiveElement target="triangulo-abc" color="carbon">$\triangle ABC$</InteractiveElement> y <InteractiveElement target="triangulo-apbpcp" color="carbon">$\triangle A'B'C'$</InteractiveElement> dos triángulos tales que:
 
 <Formula>
@@ -34,9 +34,9 @@ Por hipótesis, sean <InteractiveElement target="triangulo-abc" color="carbon">$
 </Formula>
 
 Queremos demostrar que $\triangle ABC \cong \triangle A'B'C'$.
-</MedievalStep>
+</ProofStep>
 
-<MedievalStep number={2} title="Suposición de desigualdad" target={["lado-ab", "lado-apbp"]}>
+<ProofStep number={2} title="Suposición de desigualdad" target={["lado-ab", "lado-apbp"]}>
 Supongamos, por <ConceptLink targetId="contradiccion" isDependency={false}>reducción al absurdo</ConceptLink>, que $\overline{AB} \not\cong \overline{A'B'}$. Sin pérdida de generalidad, sea $\overline{AB} \gt \overline{A'B'}$.
 
 Por el <ConceptLink targetId="axioma-congruencia-1" isDependency={true}>axioma de transporte de segmentos (III-1)</ConceptLink>, sobre <InteractiveElement target="lado-ab" color="salvia">$\overline{AB}$</InteractiveElement> determinamos un punto <InteractiveElement target="punto-d" color="terracota">$D$</InteractiveElement> tal que:
@@ -46,9 +46,9 @@ Por el <ConceptLink targetId="axioma-congruencia-1" isDependency={true}>axioma d
 </Formula>
 
 Puesto que $\overline{BD} \cong \overline{B'A'} \lt \overline{AB}$, el punto $D$ está estrictamente entre $A$ y $B$: $A * D * B$.
-</MedievalStep>
+</ProofStep>
 
-<MedievalStep number={3} title="Congruencia LAL del triángulo auxiliar" target={["triangulo-dbc"]}>
+<ProofStep number={3} title="Congruencia LAL del triángulo auxiliar" target={["triangulo-dbc"]}>
 Consideremos <InteractiveElement target="triangulo-dbc" color="terracota">$\triangle DBC$</InteractiveElement> y $\triangle A'B'C'$:
 
 1. $\overline{BD} \cong \overline{B'A'}$ (por el paso 2).
@@ -68,9 +68,9 @@ Por la <ConceptLink targetId="congruencia" isDependency={false}>definición de c
 </Formula>
 
 Y por hipótesis $\angle A' \cong \angle A$, luego $\angle BDC \cong \angle A$.
-</MedievalStep>
+</ProofStep>
 
-<MedievalStep number={4} title="Ángulo externo en el triángulo ADC" target={["triangulo-adc", "angulo-externo"]}>
+<ProofStep number={4} title="Ángulo externo en el triángulo ADC" target={["triangulo-adc", "angulo-externo"]}>
 Por el paso 2, $A * D * B$, de modo que $B$ está en la prolongación de $\overline{AD}$ más allá de $D$. Consideremos <InteractiveElement target="triangulo-adc" color="salvia">$\triangle ADC$</InteractiveElement>. En el vértice $D$, el <InteractiveElement target="angulo-externo" color="terracota">$\angle CDB$ es el ángulo externo</InteractiveElement> formado al prolongar $\overline{AD}$ hasta $B$.
 
 Por el <ConceptLink targetId="teorema-angulo-externo" isDependency={true}>teorema del ángulo externo</ConceptLink>:
@@ -78,13 +78,13 @@ Por el <ConceptLink targetId="teorema-angulo-externo" isDependency={true}>teorem
 <Formula>
   $$ \angle CDB \gt \angle CAD = \angle A $$
 </Formula>
-</MedievalStep>
+</ProofStep>
 
-<MedievalStep number={5} title="Contradicción" target={["angulo-bdc", "angulo-a"]}>
+<ProofStep number={5} title="Contradicción" target={["angulo-bdc", "angulo-a"]}>
 El <InteractiveElement target="angulo-bdc" color="terracota">$\angle BDC$</InteractiveElement> y el $\angle CDB$ denotan el mismo ángulo. Por el paso 3: $\angle BDC \cong \angle A$. Por el paso 4: $\angle CDB \gt \angle A$. Es decir, el mismo ángulo es a la vez congruente y estrictamente mayor que $\angle A$. <ConceptLink targetId="contradiccion" isDependency={false}>Contradicción</ConceptLink>.
-</MedievalStep>
+</ProofStep>
 
-<MedievalStep number={6} title="Igualdad de los lados" target={["lado-ab", "lado-apbp"]}>
+<ProofStep number={6} title="Igualdad de los lados" target={["lado-ab", "lado-apbp"]}>
 La <ConceptLink targetId="contradiccion" isDependency={false}>contradicción</ConceptLink> del paso 5 proviene de haber supuesto $\overline{AB} \gt \overline{A'B'}$ en el paso 2. Por <ConceptLink targetId="contradiccion" isDependency={false}>reducción al absurdo</ConceptLink>, $\overline{AB} \not\gt \overline{A'B'}$. Por el mismo argumento intercambiando los roles de los triángulos, $\overline{A'B'} \not\gt \overline{AB}$. Por tanto:
 
 <Formula>
@@ -92,15 +92,15 @@ La <ConceptLink targetId="contradiccion" isDependency={false}>contradicción</Co
 </Formula>
 
 donde <InteractiveElement target="lado-ab" color="salvia">$\overline{AB}$</InteractiveElement> y <InteractiveElement target="lado-apbp" color="pizarra">$\overline{A'B'}$</InteractiveElement> son los lados correspondientes.
-</MedievalStep>
+</ProofStep>
 
-<MedievalStep number={7} title="Conclusión por LAL" target={["triangulo-abc", "triangulo-apbpcp"]}>
+<ProofStep number={7} title="Conclusión por LAL" target={["triangulo-abc", "triangulo-apbpcp"]}>
 Ahora tenemos: <InteractiveElement target="lado-ab" color="salvia">$\overline{AB} \cong \overline{A'B'}$</InteractiveElement> (paso 6), $\angle B \cong \angle B'$ (hipótesis), y $\overline{BC} \cong \overline{B'C'}$ (hipótesis). Por el <ConceptLink targetId="axioma-congruencia-5" isDependency={true}>criterio LAL</ConceptLink>:
 
 <Formula>
   $$ \triangle ABC \cong \triangle A'B'C' \quad \blacksquare $$
 </Formula>
-</MedievalStep>
+</ProofStep>
 
 <Separador />
 

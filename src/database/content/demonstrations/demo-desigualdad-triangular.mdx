@@ -22,25 +22,25 @@ import { DemoDesigualdadTriangular } from "@/shared/diagrams/Teoremas/DemoDesigu
 
 <Separador />
 
-<MedievalStep number={1} target="step1" title="El triángulo base">
+<ProofStep number={1} target="step1" title="El triángulo base">
 Por hipótesis, $\triangle ABC$ es un triángulo de lados $a$, $b$ y $c$. Queremos demostrar que $b + a \gt c$.
 
 Por la <ConceptLink targetId="triangulo" isDependency={false}>definición de triángulo</ConceptLink>, <InteractiveElement target="lado-ac" color="carbon">$AC$</InteractiveElement> es un segmento. Por los <ConceptLink targetId="axioma-orden-3" isDependency={true}>Axiomas de Orden (II)</ConceptLink>, prolongamos $AC$ más allá del vértice $C$ construyendo una semirrecta.
-</MedievalStep>
+</ProofStep>
 
-<MedievalStep number={2} target="step2" title="Extensión del lado">
+<ProofStep number={2} target="step2" title="Extensión del lado">
 Por el <ConceptLink targetId="axioma-congruencia-1" isDependency={true}>Axioma de transporte de segmentos (III-1)</ConceptLink>, sobre la semirrecta extendida construimos un segmento <InteractiveElement target="lado-cd" color="pizarra">$CD$</InteractiveElement> tal que $CD \cong$ <InteractiveElement target="lado-bc" color="carbon">$BC$</InteractiveElement>. Al punto final lo llamamos <InteractiveElement target="punto-d" color="carbon">$D$</InteractiveElement>.
 
 Por el <ConceptLink targetId="axioma-orden-3" isDependency={true}>axioma de aditividad de segmentos colineales</ConceptLink>, el segmento total $AD$ tiene longitud $AC + CD$. Por hipótesis $AC = b$ y $CD \cong BC = a$; por tanto $AD = b + a$.
-</MedievalStep>
+</ProofStep>
 
-<MedievalStep number={3} target="step3" title="Triángulo isósceles auxiliar">
+<ProofStep number={3} target="step3" title="Triángulo isósceles auxiliar">
 Conectamos $B$ y $D$ mediante un <InteractiveElement target="lado-bd" color="salvia">segmento $BD$</InteractiveElement> (por el <ConceptLink targetId="axioma-incidencia-1" isDependency={true}>axioma I-1</ConceptLink>, existe una recta por $B$ y $D$). Se forma $\triangle BCD$. Por el paso 2, $CD \cong BC$. Por la definición de <ConceptLink targetId="triangulo" isDependency={false}>triángulo isósceles</ConceptLink>, $\triangle BCD$ es isósceles.
 
 Por el <ConceptLink targetId="teorema-triangulo-isosceles" isDependency={true}>Teorema del triángulo isósceles (Pons Asinorum)</ConceptLink>, los ángulos base opuestos a los lados congruentes también lo son: <InteractiveElement target="angulo-cbd" color="terracota">$\angle CBD$</InteractiveElement> $\cong$ <InteractiveElement target="angulo-cdb" color="salvia">$\angle CDB$</InteractiveElement>.
-</MedievalStep>
+</ProofStep>
 
-<MedievalStep number={4} target="step4" title="Desigualdad angular vía el ángulo externo">
+<ProofStep number={4} target="step4" title="Desigualdad angular vía el ángulo externo">
 Consideremos $\triangle BCD$. Por el paso 1, $A$, $C$ y $D$ son colineales con $A * C * D$. Por tanto, $A$ está en la prolongación de $DC$ más allá de $C$. En $\triangle BCD$, el ángulo $\angle BCA$ es el <ConceptLink targetId="teorema-angulo-externo" isDependency={true}>ángulo externo</ConceptLink> en el vértice $C$. Por el <ConceptLink targetId="teorema-angulo-externo" isDependency={true}>teorema del ángulo externo</ConceptLink>:
 
 <Formula>
@@ -54,9 +54,9 @@ Pero $\angle BCA$ es exactamente $\angle C$ del triángulo original. Y $\angle A
 <Formula>
   $$ \angle ABD \gt \angle ADB $$
 </Formula>
-</MedievalStep>
+</ProofStep>
 
-<MedievalStep number={5} target="step5" title="De ángulo mayor a lado mayor">
+<ProofStep number={5} target="step5" title="De ángulo mayor a lado mayor">
 En $\triangle ABD$, por el paso 4: $\angle ABD \gt \angle ADB$. Por el <ConceptLink targetId="teorema-angulo-externo" isDependency={true}>teorema del ángulo externo</ConceptLink>, que fundamenta el <ConceptLink targetId="desigualdad-angulo-lado" isDependency={false}>principio de que a mayor ángulo se opone mayor lado</ConceptLink>: el lado opuesto al ángulo mayor debe ser estrictamente mayor que el lado opuesto al ángulo menor. El lado opuesto a $\angle ABD$ es $AD$, y el opuesto a $\angle ADB$ es <InteractiveElement target="lado-ab" color="carbon">$AB$</InteractiveElement>. Por tanto $AD \gt AB$.
 
 Por el paso 2, $AD = b + a$ y por hipótesis $AB = c$. Concluimos:
@@ -64,7 +64,7 @@ Por el paso 2, $AD = b + a$ y por hipótesis $AB = c$. Concluimos:
 <Formula>
   $$ b + a > c. \quad \blacksquare $$
 </Formula>
-</MedievalStep>
+</ProofStep>
 
 <Separador />
 

@@ -22,13 +22,13 @@ import { DemoCongruenciaLLL } from '@/shared/diagrams/Demos/DemoCongruenciaLLL';
 
 <Separador />
 
-<MedievalStep number={1} title="Transporte del Ángulo y Lado" target="step1">
+<ProofStep number={1} title="Transporte del Ángulo y Lado" target="step1">
 Por hipótesis, $\triangle ABC$ y $\triangle A'B'C'$ satisfacen $AB \cong A'B'$, $BC \cong B'C'$, y $CA \cong C'A'$.
 
 Por el <ConceptLink targetId="axioma-congruencia-1" isDependency={true}>Axioma de transporte de segmentos (III-1)</ConceptLink>, hacemos coincidir <InteractiveElement target="sideAB" color="carbon">$AB$ con $A'B'$</InteractiveElement>. Aplicando el <ConceptLink targetId="axioma-congruencia-4" isDependency={true}>Axioma de transporte de ángulos (III-4)</ConceptLink>, transportamos $\angle BAC$ al vértice $A'$ en el semiplano opuesto al vértice $C'$, creando un rayo. A continuación, por el <ConceptLink targetId="axioma-congruencia-1" isDependency={true}>Axioma de transporte de segmentos (III-1)</ConceptLink>, copiamos la longitud $AC$ sobre este rayo para obtener un nuevo vértice <InteractiveElement target="triangleCStar" color="carbon">$C^*$</InteractiveElement>, tal que <InteractiveElement target="sideACStar" color="carbon">$A'C^* \cong AC$</InteractiveElement> y $\angle B'A'C^* \cong \angle BAC$.
-</MedievalStep>
+</ProofStep>
 
-<MedievalStep number={2} title="Aplicación del Axioma LAL" target="step2">
+<ProofStep number={2} title="Aplicación del Axioma LAL" target="step2">
 Se comparan el triángulo original $\triangle ABC$ y el nuevo triángulo transportado <InteractiveElement target="triangleCStar" color="carbon">$\triangle A'B'C^*$</InteractiveElement>. Por construcción:
 1. $A'B' \cong AB$ (por hipótesis).
 2. $\angle B'A'C^* \cong \angle BAC$ (por el paso 1).
@@ -37,16 +37,16 @@ Se comparan el triángulo original $\triangle ABC$ y el nuevo triángulo transpo
 Por el <ConceptLink targetId="axioma-congruencia-5" isDependency={true}>Axioma de congruencia LAL (III-5)</ConceptLink>, los triángulos son congruentes: $\triangle ABC \cong \triangle A'B'C^*$.
 
 Como consecuencia de esta congruencia, <InteractiveElement target="sideBCStar" color="carbon">$B'C^*$</InteractiveElement> $\cong BC$. Por hipótesis $BC \cong B'C'$, luego por el <ConceptLink targetId="axioma-congruencia-4" isDependency={true}>axioma de transitividad de la congruencia</ConceptLink>: <InteractiveElement target="sideBCStar" color="carbon">$B'C^*$</InteractiveElement> $\cong B'C'$.
-</MedievalStep>
+</ProofStep>
 
-<MedievalStep number={3} title="Triángulos Isósceles Auxiliares" target="step3">
+<ProofStep number={3} title="Triángulos Isósceles Auxiliares" target="step3">
 Tracemos ahora un segmento uniendo <InteractiveElement target="lineCC" color="salvia">$C'$ con $C^*$</InteractiveElement>. Esto divide nuestra figura en dos nuevos triángulos que comparten la base $C'C^*$:
 
 - El triángulo izquierdo <InteractiveElement target="isoLeft" color="salvia">$\triangle A'C'C^*$</InteractiveElement>. Por hipótesis $A'C' \cong AC$ y por el paso 1 $A'C^* \cong AC$. Por el <ConceptLink targetId="axioma-congruencia-4" isDependency={true}>axioma de transitividad</ConceptLink>, $A'C' \cong A'C^*$. Por la definición de <ConceptLink targetId="triangulo" isDependency={false}>triángulo isósceles</ConceptLink>, $\triangle A'C'C^*$ es isósceles.
 - El triángulo derecho <InteractiveElement target="isoRight" color="terracota">$\triangle B'C'C^*$</InteractiveElement>. Por el paso 2, $B'C' \cong B'C^*$. Por la definición de <ConceptLink targetId="triangulo" isDependency={false}>triángulo isósceles</ConceptLink>, $\triangle B'C'C^*$ es isósceles.
-</MedievalStep>
+</ProofStep>
 
-<MedievalStep number={4} title="Igualdad de Ángulos y Conclusión Final" target="step4">
+<ProofStep number={4} title="Igualdad de Ángulos y Conclusión Final" target="step4">
 Por el <ConceptLink targetId="teorema-triangulo-isosceles" isDependency={true}>Teorema del Triángulo Isósceles</ConceptLink>, en el triángulo izquierdo: $\angle A'C'C^* \cong \angle A'C^*C'$. Por el mismo teorema aplicado al triángulo derecho: $\angle B'C'C^* \cong \angle B'C^*C'$.
 
 Por el <ConceptLink targetId="axioma-congruencia-3" isDependency={true}>axioma de aditividad de ángulos congruentes</ConceptLink>, la suma de las dos congruencias da que el <InteractiveElement target="angleC" color="terracota">ángulo completo $\angle A'C'B'$</InteractiveElement> es congruente con el ángulo completo $\angle A'C^*B'$.
@@ -61,7 +61,7 @@ Por el <ConceptLink targetId="axioma-congruencia-5" isDependency={true}>Axioma d
 <Formula>
   $$ \triangle ABC \cong \triangle A'B'C'. \quad \blacksquare $$
 </Formula>
-</MedievalStep>
+</ProofStep>
 
 <Separador />
 

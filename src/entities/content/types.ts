@@ -2,12 +2,16 @@ import type { StudyPlanMeta, AxiomaticSystemMeta } from './schemas';
 import type { ComponentType, LazyExoticComponent } from 'react';
 
 export type MDXComponent = LazyExoticComponent<ComponentType<Record<string, unknown>>> | ComponentType<Record<string, unknown>>;
+export type Difficulty = 'básico' | 'intermedio' | 'avanzado';
 
 export interface BaseContent {
   id: string;
   slug: string;
   links?: string[];
   seeAlso?: string[];
+  leanId?: string;
+  leanCommitSha?: string;
+  leanVerified?: boolean;
 }
 
 export interface Mathematician extends BaseContent {
@@ -46,10 +50,13 @@ export interface Theorem {
   exercises?: string[];
   parentTheorem?: string;
   tags?: string[];
-  difficulty?: 'básico' | 'intermedio' | 'avanzado';
+  difficulty?: Difficulty;
   Component: MDXComponent;
   Simulation?: MDXComponent;
   seeAlso?: string[];
+  leanId?: string;
+  leanCommitSha?: string;
+  leanVerified?: boolean;
 }
 
 export interface Lesson {
@@ -58,7 +65,7 @@ export interface Lesson {
   title?: string;
   description?: string;
   tags?: string[];
-  difficulty?: 'básico' | 'intermedio' | 'avanzado';
+  difficulty?: Difficulty;
   Component: MDXComponent;
   Simulation?: MDXComponent;
   Visualizer?: MDXComponent;
@@ -79,6 +86,10 @@ export interface Demo {
   tags?: string[];
   layout?: 'split' | 'text';
   dependencias?: string[];
+  leanId?: string;
+  leanCommitSha?: string;
+  leanVerified?: boolean;
+  stepTacticMap?: Record<string, string[]>;
   Component: MDXComponent;
   seeAlso?: string[];
 }
@@ -96,6 +107,9 @@ export interface Definition {
   Component: MDXComponent;
   Simulation?: MDXComponent;
   seeAlso?: string[];
+  leanId?: string;
+  leanCommitSha?: string;
+  leanVerified?: boolean;
 }
 
 export interface Example {
@@ -106,7 +120,7 @@ export interface Example {
   relatedTheorem?: string;
   requires?: string[];
   tags?: string[];
-  difficulty?: 'básico' | 'intermedio' | 'avanzado';
+  difficulty?: Difficulty;
   Component: MDXComponent;
   Simulation?: MDXComponent;
   seeAlso?: string[];
@@ -120,7 +134,7 @@ export interface Exercise {
   relatedTheorem?: string;
   requires?: string[];
   tags?: string[];
-  difficulty?: 'básico' | 'intermedio' | 'avanzado';
+  difficulty?: Difficulty;
   hint?: string;
   Component: MDXComponent;
   Simulation?: MDXComponent;
@@ -135,7 +149,7 @@ export interface UseCase {
   concept?: string;
   domain?: string;
   tags?: string[];
-  difficulty?: 'básico' | 'intermedio' | 'avanzado';
+  difficulty?: Difficulty;
   Component: MDXComponent;
   Simulation?: MDXComponent;
   seeAlso?: string[];
@@ -150,10 +164,14 @@ export interface Axiom {
   statement?: string;
   tags?: string[];
   authors?: string[];
+  axiomSystem?: string;
   links?: string[];
   Component: MDXComponent;
   Simulation?: MDXComponent;
   seeAlso?: string[];
+  leanId?: string;
+  leanCommitSha?: string;
+  leanVerified?: boolean;
 }
 
 export interface AxiomaticSystem extends AxiomaticSystemMeta {
@@ -179,4 +197,3 @@ export interface Model {
   Diagram?: MDXComponent;
   Simulation?: MDXComponent;
 }
-

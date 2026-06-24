@@ -1,0 +1,4 @@
+interface:
+  display_name: "Lean Formalizer"
+  short_description: "Formaliza Matematika con Lean 4"
+  default_prompt: "Use $lean-formalizer to formalize this Matematika content in Lean 4 and update MDX traceability."

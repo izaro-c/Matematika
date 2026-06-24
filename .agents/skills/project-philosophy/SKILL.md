@@ -26,7 +26,7 @@ Cada concepto es un nodo navegable en una red de conocimiento. La lectura puede 
 **Implicaciones prácticas:**
 - Toda página debe poder leerse de forma autónoma (sin asumir que el usuario viene de otra página)
 - Los enlaces entre conceptos usan `<ConceptLink>` y abren Marginalia, no navegación completa
-- El grafo de conocimiento (`GraphPage`) refleja fielmente las dependencias lógicas
+- El grafo de conocimiento (`GraphPage`) refleja fielmente las dependencias lógicas. Cuando una página tiene `leanId`, Lean es la verdad mecánica verificable; MDX sigue siendo la capa pedagógica y semántica.
 
 **Ejemplos de violación:**
 - ❌ "Como vimos en el capítulo anterior..." (asume lectura secuencial)
@@ -110,6 +110,7 @@ Todo enunciado está justificado. Toda definición es precisa. Toda demostració
 
 **Implicaciones prácticas:**
 - Cada paso de una demostración (`<MedievalStep>`) debe incluir su justificación explícita
+- Si la demostración tiene `leanId`, la verificación Lean complementa pero no sustituye el rigor Greenberg: cada paso pedagógico sigue necesitando justificación textual.
 - Las definiciones deben cubrir casos límite explícitamente (ej: ¿un segmento de longitud cero es un segmento?)
 - Nunca usar "es obvio", "claramente", "evidentemente" sin justificación
 
@@ -137,7 +138,7 @@ El contenido se construye de abajo arriba, desde los axiomas. Un concepto no pue
 - ❌ Un ciclo: A → B → C → A
 - ❌ `corolario-rectas-coincidentes` listado como `requires` de `teorema-dos-rectas-un-punto`
 
-**Cómo detectar:** Ejecutar `npm run validate-graph`. Verificar `graph_structure.json` para el orden topológico. El orden de `topologicalOrder` es la secuencia correcta de dependencias.
+**Cómo detectar:** Ejecutar `npm run validate-graph` y, para páginas con `leanId`, `npm run validate-lean`. Verificar `graph_structure.json` para el orden topológico MDX y `lean_graph.json` para la verdad mecánica enlazada.
 
 ---
 
@@ -217,6 +218,7 @@ Cuando se carga esta skill, el agente DEBE verificar:
 ### 3.4 Consistencia del grafo
 10. ¿El DAG es válido? → ejecutar `npm run validate-graph`
 11. ¿Las referencias cruzadas son íntegras? → ejecutar `npm run validate-references`
+12. ¿Las páginas con `leanId` coinciden con Lean? → ejecutar `npm run validate-lean`
 
 Si alguna verificación falla, el agente DEBE informar al usuario con el problema específico y sugerir corrección.
 
@@ -244,7 +246,7 @@ Para usar durante una revisión de código/contenido (ej: con el agente `@review
 - [ ] ¿Cada `<MedievalStep>` tiene `justificacion`?
 - [ ] ¿Las definiciones cubren casos límite?
 - [ ] ¿Cada concepto nuevo tiene motivación?
-- [ ] ¿`npm run validate-graph && npm run validate-references` pasan?
+- [ ] ¿`npm run validate-graph && npm run validate-references && npm run validate-lean` pasan?
 
 ---
 
@@ -284,6 +286,8 @@ Cada principio se refleja en la arquitectura de carpetas:
 | `opencode.json` | Configuración de agentes, comandos, referencias |
 | `src/entities/content/schemas.ts` | Zod schemas — fuente única de verdad para metadata |
 | `src/entities/graph/graphTypes.ts` | Tipos del grafo |
+| `src/entities/graph/lean_graph.json` | Grafo Lean generado para páginas con `leanId` |
+| `src/entities/graph/proof_blocks.json` | Bloques de táctica Lean para `ProofStepExpander` |
 | `src/entities/content/ContentStore.ts` | API de consulta de contenido |
 | `src/shared/lib/constants.ts` | Paleta Arts & Crafts, configuración de tipos |
 | `src/shared/templates/` | Plantillas MDX por tipo de contenido |

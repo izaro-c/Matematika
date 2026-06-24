@@ -26,34 +26,34 @@ import { DemoTrianguloIsosceles } from "@/shared/diagrams/Demos/DemoTrianguloIso
 
 <Separador />
 
-<MedievalStep number={1} title="El triángulo isósceles" target={["triangulo-abc", "lado-ab", "lado-ac"]}>
+<ProofStep number={1} title="El triángulo isósceles" target={["triangulo-abc", "lado-ab", "lado-ac"]}>
 Por hipótesis, <InteractiveElement target="triangulo-abc"><ConceptLink targetId="triangulo" isDependency={false}>$\triangle ABC$</ConceptLink></InteractiveElement> es isósceles con <InteractiveElement target="lado-ab" color="salvia">$\overline{AB} \cong \overline{AC}$</InteractiveElement>. Queremos demostrar que <InteractiveElement target="angulo-b" color="salvia">$\angle B$</InteractiveElement> $\cong$ <InteractiveElement target="angulo-c" color="pizarra">$\angle C$</InteractiveElement>.
-</MedievalStep>
+</ProofStep>
 
-<MedievalStep number={2} title="El triángulo permutado" target={["triangulo-permutado"]}>
+<ProofStep number={2} title="El triángulo permutado" target={["triangulo-permutado"]}>
 Consideremos el mismo <InteractiveElement target="triangulo-abc" color="carbon">$\triangle ABC$</InteractiveElement> pero leyendo sus <ConceptLink targetId="vertice" isDependency={false}>vértices</ConceptLink> en el orden $A$–$C$–$B$. Es decir, comparamos <InteractiveElement target="triangulo-permutado" color="carbon">$\triangle ABC$</InteractiveElement> con $\triangle ACB$.
 
 En esta correspondencia:
 1. $\overline{AB}$ en $\triangle ABC$ se corresponde con $\overline{AC}$ en $\triangle ACB$. Por hipótesis, $\overline{AB} \cong \overline{AC}$.
 2. $\overline{AC}$ en $\triangle ABC$ se corresponde con $\overline{AB}$ en $\triangle ACB$. Ambos son el mismo segmento considerado en orden inverso; por <ConceptLink targetId="congruencia" isDependency={false}>identidad</ConceptLink>, $\overline{AC} \cong \overline{AB}$.
 3. El ángulo comprendido en $\triangle ABC$ es $\angle A = \angle BAC$. En $\triangle ACB$ es $\angle A = \angle CAB$. Ambos denotan exactamente el mismo <ConceptLink targetId="angulo" isDependency={false}>ángulo</ConceptLink>; por <ConceptLink targetId="congruencia" isDependency={false}>identidad</ConceptLink>, $\angle BAC \cong \angle CAB$.
-</MedievalStep>
+</ProofStep>
 
-<MedievalStep number={3} title="Congruencia LAL" target={["lal"]}>
+<ProofStep number={3} title="Congruencia LAL" target={["lal"]}>
 Se satisfacen las condiciones del <ConceptLink targetId="axioma-congruencia-5" isDependency={true}>criterio LAL</ConceptLink>: dos lados y el ángulo comprendido de <InteractiveElement target="triangulo-abc" color="carbon">$\triangle ABC$</InteractiveElement> son congruentes con los correspondientes de $\triangle ACB$. Por tanto:
 
 <Formula>
   $$ \triangle ABC \cong \triangle ACB $$
 </Formula>
-</MedievalStep>
+</ProofStep>
 
-<MedievalStep number={4} title="Igualdad de los ángulos de la base" target={["angulo-b", "angulo-c"]}>
+<ProofStep number={4} title="Igualdad de los ángulos de la base" target={["angulo-b", "angulo-c"]}>
 Por la <ConceptLink targetId="congruencia" isDependency={false}>definición de congruencia</ConceptLink> de triángulos, todos los elementos correspondientes son congruentes. El <InteractiveElement target="angulo-b" color="salvia">$\angle B$</InteractiveElement> en $\triangle ABC$ se corresponde con <InteractiveElement target="angulo-c" color="pizarra">$\angle C$</InteractiveElement> en $\triangle ACB$. Por tanto:
 
 <Formula>
   $$ \angle B \cong \angle C \quad \blacksquare $$
 </Formula>
-</MedievalStep>
+</ProofStep>
 
 <Separador />
 

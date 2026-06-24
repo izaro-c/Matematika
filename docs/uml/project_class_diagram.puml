@@ -1,0 +1,212 @@
+@startuml
+title Matematika: Project Class Diagram
+left to right direction
+skinparam packageStyle rectangle
+skinparam classAttributeIconSize 0
+hide empty members
+
+package "Application" {
+  class App <<React component>>
+  class AppRouter <<router>>
+  class MathStoreProvider <<provider>>
+  class StudyPlanProvider <<provider>>
+}
+
+package "Pages" {
+  class ContentPages <<page family>>
+  class GraphPage <<page>>
+  class StudyPlanPage <<page>>
+  class EditorPage <<page>>
+}
+
+package "Widgets" {
+  class SimulationLayout <<layout>>
+  class InteractiveLessonLayout <<layout>>
+  class DemonstrationSection <<widget>>
+  class ProofStep <<widget>> {
+    number: number
+    title: string
+    target: string
+    leanBlocks: string[]
+  }
+  class ProofStepExpander <<widget>> {
+    blockIds: string[]
+  }
+  class MarginaliaPanel <<widget>>
+  class TopBar <<widget>>
+  class SearchOmnibar <<widget>>
+}
+
+package "Content Entities" {
+  class ContentStore <<singleton>> {
+    getById(id)
+    getAllByType(type)
+  }
+  interface BaseContent {
+    id: string
+    slug: string
+    leanId: string
+    leanVerified: boolean
+  }
+  interface Theorem
+  interface Demo {
+    stepTacticMap: Record
+  }
+  interface Definition
+  interface Axiom {
+    axiomSystem: string
+  }
+  interface Model
+  interface Lesson
+  interface Exercise
+  interface Example
+  interface UseCase
+  interface StudyPlan
+  interface Mathematician
+  class ContentSchemas <<Zod schemas>>
+  class ContentLoaders <<Vite glob>>
+  class ContentIndex <<generated JSON>>
+}
+
+package "Graph Entities" {
+  class Grafo {
+    from(structure)
+    evaluate(activeAxioms)
+    isDagValid()
+  }
+  class Nodo {
+    id: string
+    type: string
+    directDependencies: string[]
+    isSatisfiedBy(validNodes)
+  }
+  interface GraphStructure
+  interface GraphNodeMeta
+  interface GraphNodeProof
+  class GraphStructureJson <<generated JSON>>
+}
+
+package "Features" {
+  class GraphStore <<Zustand>>
+  class GraphSandboxStore <<Zustand>>
+  class GlossaryStore <<Zustand>>
+  class LessonStore <<Zustand>>
+  class ProgressStore <<Zustand persisted>>
+  class NavigationStore <<Zustand>>
+  class DynamicVarStore <<Zustand>>
+  class ToastStore <<Zustand>>
+  class GraphWorker <<Web Worker>>
+  class AxiomaticTree <<component>>
+  class ConceptLink <<component>>
+  class RefLink <<component>>
+  class ExerciseBlocks <<component family>>
+  class EditorModules <<component family>>
+}
+
+package "Shared" {
+  class MathStore <<Zustand vanilla>> {
+    variables: Record
+    setVariable(name, value)
+  }
+  class MDXComponents <<registry>>
+  class VisualBind <<component>>
+  class InteractiveElement <<component>>
+  class DiagramFamily <<JSXGraph/SVG/Canvas>>
+  class MathBoard <<component>>
+  class MathFactory <<factory>>
+  class ContentUi <<component family>>
+}
+
+package "Content and Formal Sources" {
+  class MDXContent <<MDX modules>>
+  class LeanSources <<Lean 4 + Mathlib>>
+  class LeanGraph <<generated JSON>>
+  class ProofBlockRegistry <<generated JSON>>
+}
+
+package "Build Validation" {
+  class GenerateContentIndex <<build script>>
+  class GenerateLeanGraph <<build script>>
+  class ValidateLogicalGraph <<build script>>
+  class ValidateLeanDiff <<build script>>
+}
+
+App --> AppRouter
+App --> MathStoreProvider
+App --> StudyPlanProvider
+AppRouter --> ContentPages
+AppRouter --> GraphPage
+AppRouter --> StudyPlanPage
+AppRouter --> EditorPage
+
+ContentPages --> ContentStore
+ContentPages --> SimulationLayout
+ContentPages --> InteractiveLessonLayout
+SimulationLayout --> DiagramFamily
+InteractiveLessonLayout --> LessonStore
+GraphPage --> GraphStore
+GraphPage --> AxiomaticTree
+StudyPlanPage --> ProgressStore
+EditorPage --> EditorModules
+TopBar --> NavigationStore
+SearchOmnibar --> NavigationStore
+
+ContentStore --> ContentIndex
+ContentStore --> ContentLoaders
+ContentStore --> ContentSchemas
+ContentStore o-- BaseContent
+BaseContent <|-- Theorem
+BaseContent <|-- Demo
+BaseContent <|-- Definition
+BaseContent <|-- Axiom
+BaseContent <|-- Model
+BaseContent <|-- Lesson
+BaseContent <|-- Exercise
+BaseContent <|-- Example
+BaseContent <|-- UseCase
+BaseContent <|-- StudyPlan
+BaseContent <|-- Mathematician
+MDXContent --> ContentLoaders
+GenerateContentIndex --> MDXContent
+GenerateContentIndex --> LeanGraph
+GenerateContentIndex --> ContentIndex
+
+GraphStore --> GraphWorker
+GraphStore --> GraphStructureJson
+GraphSandboxStore --> Grafo
+Grafo *-- Nodo
+Grafo --> GraphStructure
+Nodo --> GraphNodeMeta
+GraphNodeMeta *-- GraphNodeProof
+GraphStructureJson --> GraphStructure
+ValidateLogicalGraph --> GraphStructureJson
+
+MDXComponents --> DemonstrationSection
+MDXComponents --> ProofStep
+MDXComponents --> ProofStepExpander
+MDXComponents --> ConceptLink
+MDXComponents --> RefLink
+MDXComponents --> ExerciseBlocks
+DemonstrationSection --> MathStore : reads step
+ProofStep --> MathStore : writes step/highlight
+ProofStep --> ProofStepExpander
+ProofStepExpander --> ProofBlockRegistry
+MarginaliaPanel --> GlossaryStore
+ConceptLink --> GlossaryStore
+RefLink --> GlossaryStore
+InteractiveElement --> MathStore : writes highlight
+VisualBind --> MathStore
+DiagramFamily --> MathBoard
+MathBoard --> MathFactory
+DiagramFamily --> MathStore : reads highlight
+ExerciseBlocks --> DynamicVarStore
+
+LeanSources --> GenerateLeanGraph
+GenerateLeanGraph --> LeanGraph
+GenerateLeanGraph --> ProofBlockRegistry
+ValidateLeanDiff --> LeanGraph
+ValidateLeanDiff --> MDXContent
+Demo --> ProofBlockRegistry : stepTacticMap
+Theorem --> LeanGraph : leanId
+Demo --> LeanGraph : leanId
+@enduml

@@ -1,0 +1,23 @@
+{
+  "generatedAt": "2026-06-24T17:52:09.855Z",
+  "nodes": [
+    {
+      "matematikaId": "teorema-congruencia-ala",
+      "leanId": "Matematika.Geometry.congruence_ala",
+      "kind": "theorem",
+      "declaredDeps": [
+        "axioma-congruencia-1",
+        "axioma-congruencia-4",
+        "axioma-congruencia-5",
+        "congruencia",
+        "triangulo"
+      ],
+      "proofIds": [
+        "ala-step1-transport",
+        "ala-step2-apply-lal",
+        "ala-step3-uniqueness"
+      ],
+      "sourceFile": "lean/Matematika/Geometry/Basic.lean"
+    }
+  ]
+}

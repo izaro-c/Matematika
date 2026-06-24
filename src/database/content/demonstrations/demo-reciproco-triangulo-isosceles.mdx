@@ -32,13 +32,13 @@ Junto con el <ConceptLink targetId="teorema-triangulo-isosceles" isDependency={f
 
 <Separador />
 
-<MedievalStep number={1} title="Hipótesis y suposición de desigualdad" target={["triangulo-abc"]}>
+<ProofStep number={1} title="Hipótesis y suposición de desigualdad" target={["triangulo-abc"]}>
 Por hipótesis, sea <InteractiveElement target="triangulo-abc" color="carbon">$\triangle ABC$</InteractiveElement> un triángulo con <InteractiveElement target="angulo-b" color="salvia">$\angle B$</InteractiveElement> $\cong$ <InteractiveElement target="angulo-c" color="pizarra">$\angle C$</InteractiveElement>. Queremos demostrar que $\overline{AB} \cong \overline{AC}$.
 
 Supongamos, por <ConceptLink targetId="contradiccion" isDependency={false}>reducción al absurdo</ConceptLink>, que $\overline{AB} \not\cong \overline{AC}$. Sin pérdida de generalidad, sea $\overline{AB} \gt \overline{AC}$.
-</MedievalStep>
+</ProofStep>
 
-<MedievalStep number={2} title="Construcción del punto auxiliar D" target={["punto-d", "segmento-ad"]}>
+<ProofStep number={2} title="Construcción del punto auxiliar D" target={["punto-d", "segmento-ad"]}>
 Por el <ConceptLink targetId="axioma-congruencia-1" isDependency={true}>axioma de transporte de segmentos (III-1)</ConceptLink>, sobre $\overline{AB}$ determinamos un punto <InteractiveElement target="punto-d" color="terracota">$D$</InteractiveElement> tal que:
 
 <Formula>
@@ -46,9 +46,9 @@ Por el <ConceptLink targetId="axioma-congruencia-1" isDependency={true}>axioma d
 </Formula>
 
 Puesto que $\overline{AB} \gt \overline{AC}$, el punto $D$ está estrictamente entre $A$ y $B$: $A * D * B$.
-</MedievalStep>
+</ProofStep>
 
-<MedievalStep number={3} title="Triángulo isósceles auxiliar" target={["triangulo-adc"]}>
+<ProofStep number={3} title="Triángulo isósceles auxiliar" target={["triangulo-adc"]}>
 Por el <ConceptLink targetId="axioma-incidencia-1" isDependency={true}>axioma I-1</ConceptLink>, trazamos $\overline{CD}$. Se forma <InteractiveElement target="triangulo-adc" color="salvia">$\triangle ADC$</InteractiveElement>.
 
 Por el paso 2, $\overline{AD} \cong \overline{AC}$. Por la definición de <ConceptLink targetId="triangulo" isDependency={false}>triángulo isósceles</ConceptLink>, $\triangle ADC$ es isósceles. Por el <ConceptLink targetId="teorema-triangulo-isosceles" isDependency={true}>Pons Asinorum</ConceptLink>:
@@ -56,9 +56,9 @@ Por el paso 2, $\overline{AD} \cong \overline{AC}$. Por la definición de <Conce
 <Formula>
   $$ \angle ADC \cong \angle ACD $$
 </Formula>
-</MedievalStep>
+</ProofStep>
 
-<MedievalStep number={4} title="El ángulo externo en el triángulo BDC" target={["triangulo-bdc", "angulo-externo-d"]}>
+<ProofStep number={4} title="El ángulo externo en el triángulo BDC" target={["triangulo-bdc", "angulo-externo-d"]}>
 Consideremos $\triangle BDC$. Por el paso 2, $A * D * B$, de modo que $A$ está en la prolongación de $\overline{BD}$ más allá de $D$. Por tanto, en $\triangle BDC$, el <InteractiveElement target="angulo-externo-d" color="terracota">$\angle ADC$ es el ángulo externo</InteractiveElement> en el vértice $D$.
 
 Por el <ConceptLink targetId="teorema-angulo-externo" isDependency={true}>teorema del ángulo externo</ConceptLink>:
@@ -68,9 +68,9 @@ Por el <ConceptLink targetId="teorema-angulo-externo" isDependency={true}>teorem
 </Formula>
 
 Por hipótesis $\angle B \cong \angle C$, luego $\angle ADC \gt \angle C$.
-</MedievalStep>
+</ProofStep>
 
-<MedievalStep number={5} title="Contradicción" target={["angulo-c", "angulo-acd"]}>
+<ProofStep number={5} title="Contradicción" target={["angulo-c", "angulo-acd"]}>
 Por el paso 2, $D$ está en $\overline{AB}$. Por tanto, la semirrecta $\overrightarrow{CD}$ está en el interior de <InteractiveElement target="angulo-c" color="pizarra">$\angle C = \angle ACB$</InteractiveElement>. Por la definición de <ConceptLink targetId="angulo" isDependency={false}>interior de un ángulo</ConceptLink>, el ángulo parcial es estrictamente menor que el total:
 
 <Formula>
@@ -80,9 +80,9 @@ Por el paso 2, $D$ está en $\overline{AB}$. Por tanto, la semirrecta $\overrigh
 Encadenando: $\angle ADC \gt \angle C \gt$ <InteractiveElement target="angulo-acd" color="salvia">$\angle ACD$</InteractiveElement>, de donde $\angle ADC \gt \angle ACD$.
 
 Pero por el paso 3, $\angle ADC \cong \angle ACD$. Un ángulo no puede ser a la vez congruente y estrictamente mayor que otro. <ConceptLink targetId="contradiccion" isDependency={false}>Contradicción</ConceptLink>.
-</MedievalStep>
+</ProofStep>
 
-<MedievalStep number={6} title="Conclusión" target={["lado-ab", "lado-ac"]}>
+<ProofStep number={6} title="Conclusión" target={["lado-ab", "lado-ac"]}>
 La <ConceptLink targetId="contradiccion" isDependency={false}>contradicción</ConceptLink> del paso 5 proviene de haber supuesto $\overline{AB} \gt \overline{AC}$ en el paso 1. Por <ConceptLink targetId="contradiccion" isDependency={false}>reducción al absurdo</ConceptLink>, $\overline{AB} \not\gt \overline{AC}$. Por el mismo argumento de los pasos 1 a 5 intercambiando los roles de $B$ y $C$, se descarta también $\overline{AC} \gt \overline{AB}$. Por tanto:
 
 <Formula>
@@ -90,7 +90,7 @@ La <ConceptLink targetId="contradiccion" isDependency={false}>contradicción</Co
 </Formula>
 
 El <InteractiveElement target="lado-ab" color="salvia">$\overline{AB}$</InteractiveElement> y <InteractiveElement target="lado-ac" color="pizarra">$\overline{AC}$</InteractiveElement> son congruentes: el triángulo es isósceles. $\blacksquare$
-</MedievalStep>
+</ProofStep>
 
 <Separador />
 

@@ -1,6 +1,7 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { MedievalStep } from "@/widgets/content/MedievalStep";
+import { ProofStep } from "@/widgets/content/ProofStep";
 import { DemonstrationSection } from "@/widgets/content/DemonstrationSection";
+import { ProofStepExpander } from "@/widgets/content/ProofStepExpander";
 import { Concept } from "@/features/glossary/ui/Concept";
 import { Paso } from '@/features/exercises/ui/Paso';
 import { Solucion } from '@/features/exercises/ui/Solucion';
@@ -235,7 +236,8 @@ export const MDXComponents = {
   Separador,
   Capitular,
   DemonstrationSection,
-  MedievalStep,
+  ProofStep,
+  ProofStepExpander,
   Concept,
   Paso,
   Solucion,
