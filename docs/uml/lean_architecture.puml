@@ -1,0 +1,45 @@
+@startuml
+title Matematika + Lean 4 Architecture
+
+package "Lean Layer" {
+  [Mathlib]
+  [Matematika .lean]
+  [lean-query.lean]
+}
+
+package "Build Scripts" {
+  [generate-lean-graph.ts]
+  [validate-lean-diff.ts]
+  [generate-content-index.ts]
+}
+
+package "Generated Artifacts" {
+  [lean_graph.json]
+  [graph_structure.json]
+  [contentIndex.json]
+  [proof_blocks.json]
+}
+
+package "React/MDX App" {
+  [ContentStore]
+  [GraphStore]
+  [MDX Pages]
+  [ProofStep]
+  [ProofStepExpander]
+}
+
+[Mathlib] --> [Matematika .lean]
+[Matematika .lean] --> [lean-query.lean]
+[lean-query.lean] --> [generate-lean-graph.ts]
+[generate-lean-graph.ts] --> [lean_graph.json]
+[generate-lean-graph.ts] --> [proof_blocks.json]
+[lean_graph.json] --> [validate-lean-diff.ts]
+[MDX Pages] --> [validate-lean-diff.ts]
+[MDX Pages] --> [generate-content-index.ts]
+[lean_graph.json] --> [generate-content-index.ts]
+[generate-content-index.ts] --> [contentIndex.json]
+[graph_structure.json] --> [GraphStore]
+[contentIndex.json] --> [ContentStore]
+[proof_blocks.json] --> [ProofStepExpander]
+[ProofStep] --> [ProofStepExpander]
+@enduml

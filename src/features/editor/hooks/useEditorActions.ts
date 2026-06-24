@@ -147,9 +147,10 @@ export const useEditorActions = ({
     
     const path = `content/${wizardData.type}/${wizardData.id}.mdx`;
     const templateName = wizardData.type === 'lessons' ? 'lesson' : wizardData.type.slice(0, -1);
+    const templatePath = `templates/${templateName}.template.mdx`;
     
     try {
-      const res = await fetch(`/api/content?path=${encodeURIComponent(`templates/${templateName}.template.mdx`)}`);
+      const res = await fetch(`/api/content?path=${encodeURIComponent(templatePath)}`);
       const templateText = applyTemplateReplacements(await res.text(), wizardData);
       const parsed = parseMDX(templateText);
       const meta = parsed.metadata;
@@ -303,7 +304,7 @@ export const useEditorActions = ({
       'caja-formula': `\n<Formula>\n  $$ x = \\frac{-b \\pm \\sqrt{b^2 - 4ac}}{2a} $$\n</Formula>\n`,
       'caja-nota': `\n<Nota>\n  Añade aquí una aclaración histórica o curiosidad.\n</Nota>\n`,
       'caja-demostracion': `\n<Demostracion>\n  Escribe aquí los pasos de la demostración lógica.\n</Demostracion>\n`,
-      'medieval-step': `\n<MedievalStep number={1} title="Título del Paso" />\n`,
+      'medieval-step': `\n<ProofStep number={1} title="Título del Paso" />\n`,
       'caja-definicion': `\n<Definicion title="Nueva Definición">\n  Explica el concepto formalmente aquí.\n</Definicion>\n`,
       'caja-corolario': `\n<Corolario>\n  Consecuencia directa del teorema anterior.\n</Corolario>\n`,
       cita: `\n<Cita author="Pitágoras">\n  Todo es número.\n</Cita>\n`,

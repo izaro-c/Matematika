@@ -5,8 +5,7 @@ description: Genera páginas MDX de contenido matemático con metadatos Zod vali
 
 # Skill: page_creator — Generador de Contenido Matemático para Matematika
 
-> **Fuente de verdad única.** Este documento absorbe y reemplaza `AGENTS.md`.
-> Toda decisión arquitectónica, estética y de contenido de Matematika vive aquí.
+> **Fuente pedagógica.** Este documento gobierna MDX, navegación y escritura. Para páginas con `leanId`, Lean es la verdad mecánica verificable y MDX es la capa pedagógica.
 
 **Skills hermanas:**
 - `project-philosophy` — principios no negociables (cárgala si dudas sobre la filosofía del proyecto)
@@ -115,9 +114,9 @@ export const metadata = {
 
 ## 4. El Campo `links` y el Grafo de Dependencias
 
-**REGLA CRÍTICA:** Ya no se utilizan campos manuales como `requires`, `links`, o `seeAlso` en la metadata para declarar las relaciones.
+**REGLA CRÍTICA:** Para páginas sin `leanId`, el grafo puente actual se deriva de `<ConceptLink>` y metadata legacy. Para páginas con `leanId`, Lean es la autoridad mecánica de dependencias y el validador `validate-lean` compara `lean_graph.json` contra MDX.
 
-Todas las dependencias lógicas y referenciales **se extraen automáticamente de los `<ConceptLink>`** que utilices en el cuerpo del texto MDX. 
+Los `<ConceptLink>` siguen siendo obligatorios para navegación, pedagogía, Marginalia y legibilidad del jardín, incluso cuando Lean ya verifica la prueba.
 
 - Si un teorema requiere una definición, simplemente enlaza a esa definición en el texto con `<ConceptLink targetId="mi-definicion">`.
 - El sistema analizará el AST del documento y construirá el grafo axiomático basándose en esos enlaces.
@@ -127,6 +126,28 @@ Todas las dependencias lógicas y referenciales **se extraen automáticamente de
   <ConceptLink targetId="teorema-separacion" isDependency={false}>teorema de separación</ConceptLink>
   ```
 - Para referencias cruzadas generales en el texto, usar `<RefLink targetId="...">` — son enlaces semánticos de cuerpo que abren el MarginaliaPanel, pero NO crean una conexión formal en metadata.
+- Nunca inventes `leanId`: usa una declaración existente de `lean/Matematika/...` o Mathlib, o deja el campo ausente.
+
+### 4.1 Campos Lean opcionales
+
+Estos campos pueden aparecer en axiomas, definiciones, teoremas, lemas, corolarios y demostraciones:
+
+```
+"leanId"?: string — identificador Lean completo
+"leanCommitSha"?: string — SHA o "local-bridge" durante desarrollo local
+"leanVerified"?: boolean — generado por contentIndex, no escribir manualmente
+"axiomSystem"?: string — para axiomas propios sin equivalente Mathlib
+"stepTacticMap"?: Record<string, string[]> — solo demostraciones
+```
+
+En demostraciones, `stepTacticMap` mapea el número 1-based de cada `<MedievalStep>` a IDs de bloques anotados en Lean:
+
+```json
+"stepTacticMap": {
+  "1": ["ala-step1-transport"],
+  "2": ["ala-step2-apply-lal"]
+}
+```
 
 ---
 
@@ -144,6 +165,10 @@ Cada archivo MDX DEBE exportar un objeto `metadata`. Los schemas Zod (`src/entit
 "statement"?: string — enunciado formal (opcional, puede usar LaTeX)
 "authors"?: string[] — IDs de matemáticos
 "hasSimulation"?: boolean — si tiene diagrama interactivo
+"leanId"?: string
+"leanCommitSha"?: string
+"leanVerified"?: boolean — generado, no manual
+"axiomSystem"?: string
 ```
 
 **Reglas:**
@@ -163,6 +188,9 @@ Cada archivo MDX DEBE exportar un objeto `metadata`. Los schemas Zod (`src/entit
 "authors"?: string[]
 "color"?: string — uno de los tokens Arts & Crafts
 "hasSimulation"?: boolean — si tiene diagrama interactivo
+"leanId"?: string
+"leanCommitSha"?: string
+"leanVerified"?: boolean — generado, no manual
 ```
 
 **Reglas Topológicas de Definiciones:**
@@ -181,6 +209,9 @@ Cada archivo MDX DEBE exportar un objeto `metadata`. Los schemas Zod (`src/entit
 "models"?: string[] — IDs de modelos que satisfacen este sistema
 "authors"?: string[]
 "hasSimulation"?: boolean
+"leanId"?: string
+"leanCommitSha"?: string
+"leanVerified"?: boolean — generado, no manual
 ```
 
 **Reglas:**
@@ -229,6 +260,10 @@ Cada archivo MDX DEBE exportar un objeto `metadata`. Los schemas Zod (`src/entit
 "authors"?: string[]
 "layout"?: "split" | "text" — split (por defecto para pruebas geométricas): diagrama izquierda, texto derecha; text: ancho completo
 "dependencias"?: string[] — IDs de contenido del que depende esta demostración
+"leanId"?: string
+"leanCommitSha"?: string
+"leanVerified"?: boolean — generado, no manual
+"stepTacticMap"?: Record<string, string[]> — MedievalStep.number → bloques Lean
 ```
 
 **Reglas:**
@@ -612,6 +647,7 @@ Tras crear o editar contenido, ejecutar:
 ```
 npm run typecheck
 npm run validate-graph
+npm run validate-lean
 ```
 
 ---

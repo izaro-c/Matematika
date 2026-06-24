@@ -97,7 +97,7 @@ def enforce_rigor(filepath):
             
         return new_tag
 
-    # To process safely without touching JSX inside MedievalStep properties (e.g. title="..."), 
+    # To process safely without touching JSX inside ProofStep properties (e.g. title="..."), 
     # we first extract the title and target properties to protect them.
     protected = []
     def protect_repl(m):

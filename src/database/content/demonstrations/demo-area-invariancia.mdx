@@ -20,28 +20,28 @@ Recordemos la definición de <ConceptLink targetId="contenido" isDependency={fal
 
 <Separador />
 
-<MedievalStep number={1} title="Triangulación de P">
+<ProofStep number={1} title="Triangulación de P">
 Por el <ConceptLink targetId="teorema-triangulacion-poligono" isDependency={true}>teorema de triangulación de polígonos</ConceptLink>, <InteractiveElement target="poligono-p" color="carbon">$P$</InteractiveElement> admite una triangulación. Fijemos <InteractiveElement target="triangulacion-p" color="terracota">$\{T_1, \dots, T_n\}$ una triangulación de $P$</InteractiveElement>. Por **definición** de contenido:
 
 $$ \text{Cont}(P) = \sum_{i=1}^n \text{Cont}(T_i) $$
-</MedievalStep>
+</ProofStep>
 
-<MedievalStep number={2} title="Transporte de la triangulación vía la isometría" target="step2">
+<ProofStep number={2} title="Transporte de la triangulación vía la isometría" target="step2">
 Por hipótesis <InteractiveElement target="isometria" color="carbon">$P \cong Q$</InteractiveElement>, existe una isometría $\varphi$ del plano que aplica $P$ sobre <InteractiveElement target="poligono-q" color="carbon">$Q$</InteractiveElement>. Definimos $T'_i = \varphi(T_i)$ para cada $i = 1, \dots, n$. Por el <ConceptLink targetId="axioma-congruencia-5" isDependency={true}>criterio LAL (III-5)</ConceptLink>, las isometrías preservan longitudes y ángulos, por lo que $T_i \cong T'_i$ para cada $i$.
 
 La isometría $\varphi$ preserva la incidencia (<ConceptLink targetId="axioma-incidencia-1" isDependency={true}>axioma I-1</ConceptLink>): la imagen de un segmento es un segmento, y la imagen de un triángulo es un triángulo. En consecuencia, <InteractiveElement target="triangulacion-q" color="salvia">$\{T'_1, \dots, T'_n\}$ es una triangulación de $Q$</InteractiveElement>.
-</MedievalStep>
+</ProofStep>
 
-<MedievalStep number={3} title="Igualdad de contenido triángulo a triángulo" target="step2">
+<ProofStep number={3} title="Igualdad de contenido triángulo a triángulo" target="step2">
 Por la definición de <ConceptLink targetId="contenido" isDependency={false}>contenido</ConceptLink>, dos triángulos congruentes tienen el mismo contenido: $T_i \cong T'_i \implies \text{Cont}(T_i) = \text{Cont}(T'_i)$. Esto es inmediato de la definición de equidescomposición: si $T_i \cong T'_i$, basta tomar $n=1$ y la descomposición trivial (cada triángulo es su propia triangulación).
-</MedievalStep>
+</ProofStep>
 
-<MedievalStep number={4} title="Conclusión">
+<ProofStep number={4} title="Conclusión">
 Aplicando la **definición** de contenido a $Q$ con la triangulación $\{T'_i\}$:
 
 $$ \text{Cont}(Q) = \sum_{i=1}^n \text{Cont}(T'_i) = \sum_{i=1}^n \text{Cont}(T_i) = \text{Cont}(P) $$
 
 Todas las igualdades son por definición, salvo $\text{Cont}(T_i) = \text{Cont}(T'_i)$ que se sigue de $T_i \cong T'_i$ (paso 2) y la definición de equidescomposición. $\blacksquare$
-</MedievalStep>
+</ProofStep>
 
 </DemonstrationSection>

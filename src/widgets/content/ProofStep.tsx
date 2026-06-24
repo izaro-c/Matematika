@@ -1,23 +1,26 @@
 import React, { useEffect, useRef } from 'react';
 import { useMathStore } from '@/app/providers/MathStoreContext';
+import { ProofStepExpander } from './ProofStepExpander';
 
-interface MedievalStepProps {
+interface ProofStepProps {
   number: number;
   title: string;
   /** Si se provee, activa el estado global "highlight" con este valor cuando el bloque es visible en pantalla */
   target?: string;
+  /** IDs de bloques de táctica Lean asociados a este paso. Se muestran colapsados por defecto. */
+  leanBlocks?: string[];
   children?: React.ReactNode;
 }
 
 /**
- * MedievalStep
+ * ProofStep
  *
  * Bloque de paso numerado con estética Arts & Crafts. Cuando `target` es
  * definido, usa IntersectionObserver para actualizar el estado global de
  * "highlight" de forma automática según la visibilidad del bloque en pantalla
  * (sin necesidad de hover).
  */
-export const MedievalStep: React.FC<MedievalStepProps> = ({ number, title, target, children }) => {
+export const ProofStep: React.FC<ProofStepProps> = ({ number, title, target, leanBlocks = [], children }) => {
   const setVariable = useMathStore((state) => state.setVariable);
   const containerRef = useRef<HTMLDivElement>(null);
 
@@ -86,6 +89,7 @@ export const MedievalStep: React.FC<MedievalStepProps> = ({ number, title, targe
       {children && (
         <div className="pl-20">
           {children}
+          <ProofStepExpander blockIds={leanBlocks} />
         </div>
       )}
     </div>

@@ -1,5 +1,14 @@
 import { z } from 'zod';
 
+const LeanMetadataSchema = {
+  /** Identificador de la declaración formal en Lean 4 / Mathlib. */
+  leanId: z.string().optional(),
+  /** SHA de Mathlib o del entorno Lean usado para verificar esta página. */
+  leanCommitSha: z.string().optional(),
+  /** Campo generado por el índice: true si leanId aparece en lean_graph.json. */
+  leanVerified: z.boolean().optional(),
+};
+
 /**
  * MathematicianSchema - Esquema de metadatos para Biografías de Matemáticos
  * 
@@ -35,12 +44,14 @@ export const TheoremSchema = z.object({
   lemmas: z.array(z.string()).optional(),
   corollaries: z.array(z.string()).optional(),
   demos: z.array(z.string()).optional(),
+  requires: z.array(z.string()).optional(),
   /** IDs de ejemplos resueltos asociados */
   examples: z.array(z.string()).optional(),
   /** IDs de ejercicios propuestos asociados */
   exercises: z.array(z.string()).optional(),
   parentTheorem: z.string().optional(),
   difficulty: z.enum(['básico', 'intermedio', 'avanzado']).optional(),
+  ...LeanMetadataSchema,
 });
 
 /**
@@ -73,6 +84,8 @@ export const DemoSchema = z.object({
   authors: z.array(z.string()).optional(),
   layout: z.enum(['split', 'text']).optional(),
   dependencias: z.array(z.string()).optional(),
+  stepTacticMap: z.record(z.string(), z.array(z.string())).optional(),
+  ...LeanMetadataSchema,
 });
 
 /**
@@ -89,6 +102,7 @@ export const DefinitionSchema = z.object({
   authors: z.array(z.string()).optional(),
   color: z.string().optional(),
   subtype: z.enum(['primitivo', 'nominal', 'fundamentada']).optional(),
+  ...LeanMetadataSchema,
 });
 
 /**
@@ -146,6 +160,8 @@ export const AxiomSchema = z.object({
   description: z.string(),
   statement: z.string().optional(),
   authors: z.array(z.string()).optional(),
+  axiomSystem: z.string().optional(),
+  ...LeanMetadataSchema,
 });
 
 /**

@@ -73,7 +73,7 @@ export const BlocksGallery: React.FC<BlocksGalleryProps> = ({ isOpen, onClose, o
             </button>
 
             <button onClick={() => { onInsertBlock('medieval-step'); onClose(); }} className="text-left group">
-              <div className="mb-2 text-sm font-mono text-terracota group-hover:underline">&lt;MedievalStep&gt;</div>
+              <div className="mb-2 text-sm font-mono text-terracota group-hover:underline">&lt;ProofStep&gt;</div>
               <div className="pointer-events-none flex items-center gap-4 my-4 scale-75 origin-left">
                 <div className="relative w-20 h-20 flex items-center justify-center border border-carbon rounded-sm bg-[#FDFBF7] overflow-hidden">
                   <span className="font-serif italic font-bold text-4xl text-terracota z-10">1</span>

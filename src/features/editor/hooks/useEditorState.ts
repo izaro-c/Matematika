@@ -45,7 +45,7 @@ export const useEditorState = () => {
   const timerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   const [leftWidth, setLeftWidth] = useState(50); // percentage 10-90
-  const isDragging = useRef(false);
+  const isDraggingRef = useRef(false);
   
   // Layout State
   const [isSidebarOpen, setIsSidebarOpen] = useState(true);
@@ -190,7 +190,7 @@ export const useEditorState = () => {
     files, setFiles, loading, setLoading, currentFile, setCurrentFile,
     metadata, setMetadata, imports, setImports, body, setBody,
     saving, setSaving, message, setMessage, timerRef,
-    leftWidth, setLeftWidth, isDragging, isSidebarOpen, setIsSidebarOpen,
+    leftWidth, setLeftWidth, isDraggingRef, isSidebarOpen, setIsSidebarOpen,
     activeTab, setActiveTab, searchQuery, setSearchQuery, editorRef,
     linkModalOpen, setLinkModalOpen, linkSelection, setLinkSelection,
     linkModalText, setLinkModalText, linkTarget, setLinkTarget,

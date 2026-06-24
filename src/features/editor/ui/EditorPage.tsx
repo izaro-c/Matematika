@@ -38,7 +38,7 @@ export const EditorPage: React.FC = () => {
     files, loading, currentFile,
     metadata, imports, body,
     saving, message,
-    leftWidth, setLeftWidth, isDragging, isSidebarOpen, setIsSidebarOpen,
+    leftWidth, setLeftWidth, isDraggingRef, isSidebarOpen, setIsSidebarOpen,
     activeTab, setActiveTab, searchQuery, setSearchQuery,
     linkModalOpen, setLinkModalOpen, linkModalText, setLinkModalText, linkTarget, setLinkTarget,
     refModalOpen, setRefModalOpen, refText, setRefText, refTarget, setRefTarget, refColor, setRefColor,
@@ -61,7 +61,7 @@ export const EditorPage: React.FC = () => {
     loadFileList();
 
     const handleMouseMove = (e: MouseEvent) => {
-      if (!isDragging.current) return;
+      if (!isDraggingRef.current) return;
       const newWidth = (e.clientX / window.innerWidth) * 100;
       if (newWidth > 10 && newWidth < 90) {
         setLeftWidth(newWidth);
@@ -69,7 +69,7 @@ export const EditorPage: React.FC = () => {
     };
 
     const handleMouseUp = () => {
-      isDragging.current = false;
+      isDraggingRef.current = false;
       document.body.style.cursor = 'default';
       const iframe = document.getElementById('preview-iframe') as HTMLIFrameElement;
       if (iframe) iframe.style.pointerEvents = 'auto';
@@ -82,7 +82,7 @@ export const EditorPage: React.FC = () => {
       window.removeEventListener('mousemove', handleMouseMove);
       window.removeEventListener('mouseup', handleMouseUp);
     };
-  }, [loadFileList, isDragging, setLeftWidth]);
+  }, [loadFileList, isDraggingRef, setLeftWidth]);
 
   const handleNewFile = () => {
     setWizardData({
@@ -324,7 +324,7 @@ export const EditorPage: React.FC = () => {
             <div
               className="w-1.5 bg-carbon/10 hover:bg-salvia cursor-col-resize z-20 transition-colors flex flex-col justify-center items-center"
               onMouseDown={() => {
-                isDragging.current = true;
+                isDraggingRef.current = true;
                 document.body.style.cursor = 'col-resize';
                 const iframe = document.getElementById('preview-iframe') as HTMLIFrameElement;
                 if (iframe) iframe.style.pointerEvents = 'none';
@@ -537,7 +537,7 @@ export const EditorPage: React.FC = () => {
                   </blockquote>
                 </button>
                 <button onClick={() => { insertBlock('medieval-step'); setBlocksModalOpen(false); }} className="text-left group">
-                  <div className="mb-2 text-sm font-mono text-terracota group-hover:underline">&lt;MedievalStep&gt;</div>
+                  <div className="mb-2 text-sm font-mono text-terracota group-hover:underline">&lt;ProofStep&gt;</div>
                   <div className="pointer-events-none flex items-center gap-4 my-4 scale-75 origin-left">
                     <div className="relative w-20 h-20 flex items-center justify-center border border-carbon rounded-sm bg-[#FDFBF7] overflow-hidden">
                       <span className="font-serif italic font-bold text-4xl text-terracota z-10">1</span>

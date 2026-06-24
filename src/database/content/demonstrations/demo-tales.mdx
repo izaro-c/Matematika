@@ -28,36 +28,36 @@ Equivalentemente, el <ConceptLink targetId="triangulo" isDependency={false}>tri�
 
 <Separador />
 
-  <MedievalStep number={1} target={["triangulo-abc", "recta-de"]} title="El triángulo base y la paralela">
+  <ProofStep number={1} target={["triangulo-abc", "recta-de"]} title="El triángulo base y la paralela">
     Por hipótesis, sea <InteractiveElement target="triangulo-abc"><ConceptLink targetId="triangulo" isDependency={false}>$\triangle ABC$</ConceptLink></InteractiveElement>. Por el <ConceptLink targetId="axioma-paralelas-euclides" isDependency={true}>axioma de las paralelas</ConceptLink>, existe una <InteractiveElement target="recta-de"><ConceptLink targetId="recta" isDependency={false}>recta</ConceptLink> $DE$</InteractiveElement> <ConceptLink targetId="paralelas" isDependency={false}>paralela</ConceptLink> a la <ConceptLink targetId="base" isDependency={false}>base</ConceptLink> $BC$ que corta a $AB$ en $D$ y a $AC$ en $E$. Queremos demostrar: $AD / DB = AE / EC$.
-  </MedievalStep>
+  </ProofStep>
 
-  <MedievalStep number={2} target={["triangulo-ade", "triangulo-bde"]} title="Triángulos compartiendo base">
+  <ProofStep number={2} target={["triangulo-ade", "triangulo-bde"]} title="Triángulos compartiendo base">
     Por el <ConceptLink targetId="axioma-incidencia-1" isDependency={true}>axioma I-1</ConceptLink>, trazamos los segmentos $BE$ y $CD$. Consideremos <InteractiveElement target="triangulo-ade">$\triangle ADE$</InteractiveElement> y <InteractiveElement target="triangulo-bde">$\triangle BDE$</InteractiveElement>. Por el paso 1, $D$ está en $AB$; por tanto las bases $AD$ y $DB$ son colineales y ambos triángulos comparten el <ConceptLink targetId="vertice" isDependency={false}>vértice</ConceptLink> opuesto $E$.
-  </MedievalStep>
+  </ProofStep>
 
-  <MedievalStep number={3} target={["altura-h1"]} title="Relación de áreas I">
+  <ProofStep number={3} target={["altura-h1"]} title="Relación de áreas I">
     Por el paso 2, $\triangle ADE$ y $\triangle BDE$ tienen sus bases sobre la misma recta y comparten el vértice $E$. Por la <ConceptLink targetId="teoria-medida-area" isDependency={false}>teoría de la medida de área</ConceptLink>, triángulos con bases colineales y mismo vértice opuesto comparten <InteractiveElement target="altura-h1"><ConceptLink targetId="altura" isDependency={false}>altura</ConceptLink> $h_1$</InteractiveElement>. Por tanto, la proporción de sus <ConceptLink targetId="area" isDependency={false}>áreas</ConceptLink> es la proporción de sus <ConceptLink targetId="base" isDependency={false}>bases</ConceptLink>:
 
     $$ \frac{\text{Área}(\triangle ADE)}{\text{Área}(\triangle BDE)} = \frac{AD}{DB} $$
-  </MedievalStep>
+  </ProofStep>
 
-  <MedievalStep number={4} target={["triangulo-ade", "triangulo-cde", "altura-h2"]} title="Relación de áreas II">
+  <ProofStep number={4} target={["triangulo-ade", "triangulo-cde", "altura-h2"]} title="Relación de áreas II">
     Por el mismo razonamiento del paso 3 aplicado a <InteractiveElement target="triangulo-ade">$\triangle ADE$</InteractiveElement> y <InteractiveElement target="triangulo-cde">$\triangle CDE$</InteractiveElement>: por el paso 1, $E$ está en $AC$, luego $AE$ y $EC$ son colineales. Ambos comparten el vértice $D$ y la <InteractiveElement target="altura-h2"><ConceptLink targetId="altura" isDependency={false}>altura</ConceptLink> $h_2$</InteractiveElement>. Por la <ConceptLink targetId="teoria-medida-area" isDependency={false}>misma teoría</ConceptLink>:
 
     $$ \frac{\text{Área}(\triangle ADE)}{\text{Área}(\triangle CDE)} = \frac{AE}{EC} $$
-  </MedievalStep>
+  </ProofStep>
 
-  <MedievalStep number={5} target={["triangulo-bde", "triangulo-cde", "recta-de"]} title="Igualdad de las áreas inferiores">
+  <ProofStep number={5} target={["triangulo-bde", "triangulo-cde", "recta-de"]} title="Igualdad de las áreas inferiores">
     <InteractiveElement target="triangulo-bde">$\triangle BDE$</InteractiveElement> y <InteractiveElement target="triangulo-cde">$\triangle CDE$</InteractiveElement> comparten la base <InteractiveElement target="recta-de">$DE$</InteractiveElement>. Por el paso 1, $DE \parallel BC$; por tanto $B$ y $C$ están sobre una recta paralela a $DE$. Por la <ConceptLink targetId="distancia" isDependency={false}>definición de rectas paralelas</ConceptLink>, la distancia entre dos paralelas es constante, luego las <ConceptLink targetId="altura" isDependency={false}>alturas</ConceptLink> desde $B$ y $C$ hasta $DE$ son iguales. Por el <ConceptLink targetId="teorema-triangulos-misma-area" isDependency={false}>teorema de triángulos entre paralelas</ConceptLink>:
 
     $$ \text{Área}(\triangle BDE) = \text{Área}(\triangle CDE) $$
-  </MedievalStep>
+  </ProofStep>
 
-  <MedievalStep number={6} target={["proporcion"]} title="Conclusión de proporcionalidad">
+  <ProofStep number={6} target={["proporcion"]} title="Conclusión de proporcionalidad">
     Por el paso 5, $\text{Área}(\triangle BDE) = \text{Área}(\triangle CDE)$. Por el paso 3 y el paso 4, ambas razones comparten el numerador $\text{Área}(\triangle ADE)$ y tienen denominadores iguales. Por la <ConceptLink targetId="propiedad-transitiva-igualdad" isDependency={false}>transitividad de la igualdad</ConceptLink>:
 
     <InteractiveElement target="proporcion">$$ \frac{AD}{DB} = \frac{AE}{EC} $$</InteractiveElement>
     $\blacksquare$
-  </MedievalStep>
+  </ProofStep>
 </DemonstrationSection>

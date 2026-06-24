@@ -1,0 +1,39 @@
+@startuml
+title Factor de Bruijn: ProofStep to Lean Blocks
+
+class DemoMetadata {
+  id
+  leanId
+  stepTacticMap
+}
+
+class ProofStep {
+  number
+  title
+  target
+  leanBlocks
+}
+
+class ProofStepExpander {
+  blockIds
+  collapsedByDefault
+}
+
+class ProofBlockRegistry {
+  proof_blocks.json
+  getBlock(id)
+}
+
+class LeanTacticBlock {
+  id
+  leanId
+  sourceRange
+  code
+}
+
+DemoMetadata "1" --> "*" ProofStep
+DemoMetadata --> ProofBlockRegistry : maps steps to block ids
+ProofStep --> ProofStepExpander : passes leanBlocks
+ProofStepExpander --> ProofBlockRegistry : resolves ids
+ProofBlockRegistry --> LeanTacticBlock
+@enduml

@@ -41,8 +41,7 @@ describe('MathematicianSchema', () => {
   it('rejects wrong type', () => expectInvalid(MathematicianSchema, { ...valid, type: 'teorema' }));
   it('rejects birthYear as string', () => expectInvalid(MathematicianSchema, { ...valid, birthYear: '1777' }));
   it('rejects missing id (now required)', () => {
-    const { id, ...noId } = valid;
-    expectInvalid(MathematicianSchema, noId);
+    expectInvalid(MathematicianSchema, { type: 'matematico', name: 'Gauss', description: 'Príncipe' });
   });
 });
 
@@ -69,6 +68,14 @@ describe('TheoremSchema', () => {
   it('rejects invalid difficulty', () => expectInvalid(TheoremSchema, { ...valid, difficulty: 'super' }));
   it('rejects non-array corollaries', () => expectInvalid(TheoremSchema, { ...valid, corollaries: 'not-array' }));
   it('rejects missing id', () => expectInvalid(TheoremSchema, { type: 'teorema', title: 'Test', description: 'A theorem' }));
+  it('accepts optional Lean metadata', () => {
+    expectValid(TheoremSchema, {
+      ...valid,
+      leanId: 'Matematika.Geometry.congruence_ala',
+      leanCommitSha: 'local-bridge',
+      leanVerified: true,
+    });
+  });
 });
 
 describe('LessonSchema', () => {
@@ -101,6 +108,24 @@ describe('DemoSchema', () => {
   });
   it('rejects invalid proof method', () => expectInvalid(DemoSchema, { ...valid, proofMethod: 'magico' }));
   it('rejects invalid layout', () => expectInvalid(DemoSchema, { ...valid, layout: 'three-columns' }));
+  it('accepts Lean step tactic map', () => {
+    expectValid(DemoSchema, {
+      ...valid,
+      leanId: 'Matematika.Geometry.congruence_ala',
+      stepTacticMap: {
+        '1': ['ala-step1-transport'],
+        '2': ['ala-step2-apply-lal'],
+      },
+    });
+  });
+  it('rejects invalid Lean step tactic map shape', () => {
+    expectInvalid(DemoSchema, {
+      ...valid,
+      stepTacticMap: {
+        '1': 'ala-step1-transport',
+      },
+    });
+  });
   it('rejects missing title', () => expectInvalid(DemoSchema, { id: 'x', type: 'demostracion' }));
   it('rejects missing id', () => expectInvalid(DemoSchema, { type: 'demostracion', title: 'Demo' }));
 });
@@ -157,6 +182,13 @@ describe('AxiomSchema', () => {
   });
   it('rejects missing title', () => expectInvalid(AxiomSchema, { id: 'x', type: 'axioma', description: 'd' }));
   it('rejects missing id', () => expectInvalid(AxiomSchema, { type: 'axioma', title: 'Axiom', description: 'desc' }));
+  it('accepts axiomSystem for Lean bridge axioms', () => {
+    expectValid(AxiomSchema, {
+      ...valid,
+      axiomSystem: 'sistema-absoluto',
+      leanCommitSha: 'local-bridge',
+    });
+  });
 });
 
 describe('AxiomaticSystemSchema', () => {

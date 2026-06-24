@@ -1,0 +1,29 @@
+{
+  "generatedAt": "2026-06-24T17:52:09.855Z",
+  "blocks": [
+    {
+      "id": "ala-step1-transport",
+      "leanId": "Matematika.Geometry.congruence_ala",
+      "sourceFile": "lean/Matematika/Geometry/Basic.lean",
+      "startLine": 26,
+      "endLine": 28,
+      "code": "  -- @tactic-block-start \"ala-step1-transport\"\n  have h_transport : ALAHypothesis t₁ t₂ := h\n  -- @tactic-block-end \"ala-step1-transport\""
+    },
+    {
+      "id": "ala-step2-apply-lal",
+      "leanId": "Matematika.Geometry.congruence_ala",
+      "sourceFile": "lean/Matematika/Geometry/Basic.lean",
+      "startLine": 29,
+      "endLine": 31,
+      "code": "  -- @tactic-block-start \"ala-step2-apply-lal\"\n  have h_lal : CongruentTriangle t₁ t₂ := axiom_congruence_ala h_transport\n  -- @tactic-block-end \"ala-step2-apply-lal\""
+    },
+    {
+      "id": "ala-step3-uniqueness",
+      "leanId": "Matematika.Geometry.congruence_ala",
+      "sourceFile": "lean/Matematika/Geometry/Basic.lean",
+      "startLine": 32,
+      "endLine": 34,
+      "code": "  -- @tactic-block-start \"ala-step3-uniqueness\"\n  exact h_lal\n  -- @tactic-block-end \"ala-step3-uniqueness\""
+    }
+  ]
+}

@@ -24,14 +24,14 @@ Equivalente en términos de <ConceptLink targetId="area" isDependency={false}>á
 
 <Separador />
 
-  <MedievalStep number={1} target="paso1" title="Hipótesis y Construcción">
+  <ProofStep number={1} target="paso1" title="Hipótesis y Construcción">
     Por hipótesis, se da un <ConceptLink targetId="triangulo-rectangulo" isDependency={false}>triángulo rectángulo</ConceptLink> cuyos <InteractiveElement target="segmento-a" color="terracota">catetos miden $a$</InteractiveElement> y <InteractiveElement target="segmento-b" color="salvia">$b$</InteractiveElement>, y cuya <InteractiveElement target="segmento-c" color="pizarra">hipotenusa mide $c$</InteractiveElement>.
     Por el <ConceptLink targetId="teorema-construccion-cuadrado" isDependency={false}>teorema de construcción de polígonos</ConceptLink>, construimos un <InteractiveElement target="cuadrado-exterior" color="carbon"><ConceptLink targetId="cuadrado" isDependency={false}>cuadrado</ConceptLink> exterior</InteractiveElement> cuyo lado es la suma de los catetos ($a + b$).
 
     Por la <ConceptLink targetId="teoria-medida-area" isDependency={false}>teoría de la medida de área de Hilbert</ConceptLink>, el área de este cuadrado contenedor es $(a+b)^2$.
-  </MedievalStep>
+  </ProofStep>
 
-  <MedievalStep number={2} target="paso2" title="Primera Configuración">
+  <ProofStep number={2} target="paso2" title="Primera Configuración">
     Disponemos cuatro copias del <InteractiveElement target="triangulos" color="salvia"><ConceptLink targetId="triangulo" isDependency={false}>triángulo</ConceptLink> original</InteractiveElement> en los vértices del cuadrado exterior.
     Por el <ConceptLink targetId="axioma-congruencia-5" isDependency={true}>Axioma III.5 (Congruencia LAL)</ConceptLink>, las cuatro copias son <ConceptLink targetId="congruencia" isDependency={false}>congruentes</ConceptLink> a la hipótesis; su área total es $4 \cdot \frac{ab}{2} = 2ab$.
 
@@ -39,16 +39,16 @@ Equivalente en términos de <ConceptLink targetId="area" isDependency={false}>á
 
     Por la <ConceptLink targetId="teoria-medida-area" isDependency={false}>propiedad aditiva del área</ConceptLink>:
     <Formula>$$ \text{Área}_{exterior} = 2ab + c^2 $$</Formula>
-  </MedievalStep>
+  </ProofStep>
 
-  <MedievalStep number={3} target="paso3" title="Transformación Isométrica">
+  <ProofStep number={3} target="paso3" title="Transformación Isométrica">
     > **Usa el control deslizante** bajo el diagrama para reorganizar los triángulos.
 
     Aplicamos una <ConceptLink targetId="isometria" isDependency={false}>isometría</ConceptLink> (traslación en el plano) a los <InteractiveElement target="triangulos" color="salvia">cuatro triángulos</InteractiveElement> para agruparlos en dos rectángulos de lados $a$ y $b$.
     Por los <ConceptLink targetId="axiomas-isometria" isDependency={false}>axiomas del movimiento rígido</ConceptLink>, el desplazamiento preserva la <ConceptLink targetId="congruencia" isDependency={false}>congruencia</ConceptLink> y el área total, que se mantiene en $2ab$.
-  </MedievalStep>
+  </ProofStep>
 
-  <MedievalStep number={4} target="paso4" title="Segunda Configuración y Equivalencia">
+  <ProofStep number={4} target="paso4" title="Segunda Configuración y Equivalencia">
     En esta nueva disposición, la porción no recubierta se particiona en un <InteractiveElement target="area-a" color="terracota">cuadrado de lado $a$</InteractiveElement> y un <InteractiveElement target="area-b" color="salvia">cuadrado de lado $b$</InteractiveElement>.
     Por la <ConceptLink targetId="teoria-medida-area" isDependency={false}>propiedad aditiva del área</ConceptLink>:
     <Formula>$$ \text{Área}_{exterior} = 2ab + a^2 + b^2 $$</Formula>
@@ -59,5 +59,5 @@ Equivalente en términos de <ConceptLink targetId="area" isDependency={false}>á
     Por la <ConceptLink targetId="axioma-cancelacion-suma" isDependency={false}>propiedad de cancelación de la suma</ConceptLink>, restamos $2ab$ en ambos miembros:
     <Formula>$$ c^2 = a^2 + b^2 $$</Formula>
     $\blacksquare$
-  </MedievalStep>
+  </ProofStep>
 </DemonstrationSection>

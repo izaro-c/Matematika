@@ -27,3 +27,6 @@ eslint-report.json
 *.sln
 *.sw?
 .aider*
+
+# Lean/Lake build artifacts
+lean/.lake/

@@ -22,32 +22,32 @@ export const metadata = {
 
 ### Dirección 1: Todo punto de $\ell$ equidista
 
-<MedievalStep number={1} title="Triángulos sobre la mediatriz" target="step1">
+<ProofStep number={1} title="Triángulos sobre la mediatriz" target="step1">
 Sea <InteractiveElement target="pointP" color="terracota">$P$</InteractiveElement> $\in \ell$. Consideremos los <ConceptLink targetId="triangulo" isDependency={false}>triángulos</ConceptLink> <InteractiveElement target="trianglePAM" color="salvia">$\triangle PAM$</InteractiveElement> y <InteractiveElement target="trianglePBM" color="terracota">$\triangle PBM$</InteractiveElement>:
 - $\overline{PM}$ es común a ambos triángulos.
 - $\overline{AM} \cong \overline{MB}$ por el <ConceptLink targetId="lema-punto-medio" isDependency={true}>lema del punto medio</ConceptLink>.
 - <InteractiveElement target="rightAngle" color="terracota">$\angle PMA \cong \angle PMB$</InteractiveElement>, pues ambos son ángulos rectos (ya que $\ell \perp \overline{AB}$).
-</MedievalStep>
+</ProofStep>
 
-<MedievalStep number={2} title="Congruencia LAL" target="step2">
+<ProofStep number={2} title="Congruencia LAL" target="step2">
 Por el <ConceptLink targetId="axioma-congruencia-5" isDependency={true}>axioma LAL</ConceptLink>, los triángulos son congruentes:
 
 <Formula>
   $$ \triangle PAM \cong \triangle PBM \implies \overline{PA} \cong \overline{PB} $$
 </Formula>
-</MedievalStep>
+</ProofStep>
 
 ### Dirección 2: Todo punto equidistante está en $\ell$
 
-<MedievalStep number={3} title="Triángulos isósceles" target="step3">
+<ProofStep number={3} title="Triángulos isósceles" target="step3">
 Sea un punto <InteractiveElement target="pointC" color="terracota">$C$</InteractiveElement> tal que $\overline{CA} \cong \overline{CB}$ (es decir, $C$ equidista de los extremos, equivalente a construir dos circunferencias intersecantes).
 Consideremos los triángulos <InteractiveElement target="triangleCAM" color="salvia">$\triangle CAM$</InteractiveElement> y <InteractiveElement target="triangleCBM" color="terracota">$\triangle CBM$</InteractiveElement>:
 - $\overline{CA} \cong \overline{CB}$ (por hipótesis).
 - $\overline{AM} \cong \overline{MB}$ (punto medio).
 - $\overline{CM}$ es común a ambos triángulos.
-</MedievalStep>
+</ProofStep>
 
-<MedievalStep number={4} title="Congruencia LLL" target="step4">
+<ProofStep number={4} title="Congruencia LLL" target="step4">
 Por el <ConceptLink targetId="teorema-congruencia-lll" isDependency={true}>teorema LLL</ConceptLink>:
 
 <Formula>
@@ -55,11 +55,11 @@ Por el <ConceptLink targetId="teorema-congruencia-lll" isDependency={true}>teore
 </Formula>
 
 En particular, $\angle CMA \cong \angle CMB$. Por la <ConceptLink targetId="lema-punto-medio" isDependency={true}>definición de punto medio</ConceptLink>, $M$ está entre $A$ y $B$; por tanto $\angle CMA$ y $\angle CMB$ son <ConceptLink targetId="angulos-suplementarios" isDependency={false}>adyacentes y suplementarios</ConceptLink>. Si dos ángulos son congruentes y suplementarios, cada uno mide $90^\circ$. Por la <ConceptLink targetId="perpendicular" isDependency={false}>definición de perpendicularidad</ConceptLink>, $CM \perp AB$. 
-</MedievalStep>
+</ProofStep>
 
-<MedievalStep number={5} title="Conclusión" target="step5">
+<ProofStep number={5} title="Conclusión" target="step5">
 Esto significa que $C$ está en la <InteractiveElement target="lineCD" color="terracota">perpendicular</InteractiveElement> a $\overline{AB}$ por $M$, es decir, $C \in \ell$. Por tanto, el lugar geométrico coincide con la mediatriz $\ell$. $\blacksquare$
-</MedievalStep>
+</ProofStep>
 
 <Separador />
 

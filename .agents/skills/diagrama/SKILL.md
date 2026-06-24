@@ -54,6 +54,7 @@ description: Genera diagramas matemáticos interactivos con JSXGraph, SVG, Canva
 38. [Diagramas de Congruencia: Dos Triángulos Vinculados](#38-diagramas-de-congruencia-dos-triángulos-vinculados)
 39. [Visibilidad Condicional por Highlight Global](#39-visibilidad-condicional-por-highlight-global)
 40. [Demostraciones sin Diagrama (layout: text)](#40-demostraciones-sin-diagrama-layout-text)
+41. [Traza Lean y Diagramas](#41-traza-lean-y-diagramas)
 ---
 
 ## 1. Tecnologías de Renderizado
@@ -1585,6 +1586,17 @@ export const metadata = {
 ```
 
 Con `layout: "text"`, el contenido ocupa el ancho completo de la ficha, sin panel lateral reservado.
+
+---
+
+## 41. Traza Lean y Diagramas
+
+La integración Lean es textual y metadata-driven. Los campos `leanId` y `stepTacticMap` alimentan `ProofStepExpander`, no los diagramas.
+
+Reglas:
+- No modificar `MathStore.step`, `MathStore.highlight`, `InteractiveElement` ni `DemonstrationSection` para mostrar código Lean.
+- No crear estados visuales especiales para bloques Lean; el diagrama sigue respondiendo solo a pasos pedagógicos y highlights.
+- Si un `MedievalStep` tiene `leanBlocks`, el desplegable "Ver en Lean" debe permanecer colapsado por defecto y no afectar layout ni visibilidad geométrica.
 
 ---
 

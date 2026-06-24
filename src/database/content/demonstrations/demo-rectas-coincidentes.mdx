@@ -21,27 +21,27 @@ import { DemoRectasCoincidentes } from "@/shared/diagrams/Demos/DemoRectasCoinci
 
 <Separador />
 
-<MedievalStep number={1} title="Suposición para reducción al absurdo" target="step1">
+<ProofStep number={1} title="Suposición para reducción al absurdo" target="step1">
   Supongamos que <InteractiveElement target="rectaL" color="carbon">$l$</InteractiveElement> y <InteractiveElement target="rectaM" color="terracota">$m$</InteractiveElement> son dos <ConceptLink targetId="recta" isDependency={false}>rectas</ConceptLink> **distintas** (<InteractiveElement target="rectaL" color="carbon">$l$</InteractiveElement> $\neq$ <InteractiveElement target="rectaM" color="terracota">$m$</InteractiveElement>) que comparten los <ConceptLink targetId="punto" isDependency={false}>puntos</ConceptLink> <InteractiveElement target="puntoA" color="carbon">$A$</InteractiveElement> y <InteractiveElement target="puntoB" color="carbon">$B$</InteractiveElement>, con <InteractiveElement target="puntoA" color="carbon">$A$</InteractiveElement> $\neq$ <InteractiveElement target="puntoB" color="carbon">$B$</InteractiveElement>.
-</MedievalStep>
+</ProofStep>
 
-<MedievalStep number={2} title="Aplicación del teorema de intersección única" target="step2">
+<ProofStep number={2} title="Aplicación del teorema de intersección única" target="step2">
   Por el <ConceptLink targetId="teorema-dos-rectas-un-punto" isDependency={true}>teorema de intersección única</ConceptLink>, dos <ConceptLink targetId="recta" isDependency={false}>rectas</ConceptLink> distintas tienen **a lo sumo un** <ConceptLink targetId="punto" isDependency={false}>punto</ConceptLink> en común. Como hemos supuesto <InteractiveElement target="rectaL" color="carbon">$l$</InteractiveElement> $\neq$ <InteractiveElement target="rectaM" color="terracota">$m$</InteractiveElement>, se sigue que:
   <Formula>$$ |l \cap m| \leq 1 $$</Formula>
-</MedievalStep>
+</ProofStep>
 
-<MedievalStep number={3} title="Conteo de puntos comunes" target="step3">
+<ProofStep number={3} title="Conteo de puntos comunes" target="step3">
   Sin embargo, por la hipótesis del corolario, <InteractiveElement target="puntoA" color="carbon">$A$</InteractiveElement> y <InteractiveElement target="puntoB" color="carbon">$B$</InteractiveElement> pertenecen a la intersección <InteractiveElement target="rectaL" color="carbon">$l$</InteractiveElement> $\cap$ <InteractiveElement target="rectaM" color="terracota">$m$</InteractiveElement>, con <InteractiveElement target="puntoA" color="carbon">$A$</InteractiveElement> $\neq$ <InteractiveElement target="puntoB" color="carbon">$B$</InteractiveElement>. Por tanto, <InteractiveElement target="rectaL" color="carbon">$l$</InteractiveElement> y <InteractiveElement target="rectaM" color="terracota">$m$</InteractiveElement> comparten **al menos dos** <ConceptLink targetId="punto" isDependency={false}>puntos</ConceptLink>:
   <Formula>$$ |l \cap m| \geq 2 $$</Formula>
-</MedievalStep>
+</ProofStep>
 
-<MedievalStep number={4} title="Contradicción" target="step4">
+<ProofStep number={4} title="Contradicción" target="step4">
   Las conclusiones de los pasos $2$ y $3$ son contradictorias: no puede ocurrir simultáneamente que la <InteractiveElement target="interseccion" color="terracota">intersección</InteractiveElement> sea $\leq 1$ y $\geq 2$.
-</MedievalStep>
+</ProofStep>
 
-<MedievalStep number={5} title="Conclusión" target="step5">
+<ProofStep number={5} title="Conclusión" target="step5">
   La <ConceptLink targetId="contradiccion" isDependency={false}>contradicción</ConceptLink> proviene de haber supuesto <InteractiveElement target="rectaL" color="carbon">$l$</InteractiveElement> $\neq$ <InteractiveElement target="rectaM" color="terracota">$m$</InteractiveElement> en el paso $1$. Por tanto, nuestra suposición inicial es falsa y concluimos que <InteractiveElement target="rectaL" color="carbon">$l$</InteractiveElement> $=$ <InteractiveElement target="rectaM" color="terracota">$m$</InteractiveElement>. $\blacksquare$
-</MedievalStep>
+</ProofStep>
 
 <Separador />
 

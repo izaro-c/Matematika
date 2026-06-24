@@ -20,21 +20,21 @@ export const metadata = {
 
 <Separador />
 
-<MedievalStep number={1} title="Existencia: Construcción auxiliar" target="step1">
+<ProofStep number={1} title="Existencia: Construcción auxiliar" target="step1">
 Sea <InteractiveElement target="segmentAB" color="carbon">$\overline{AB}$</InteractiveElement> un segmento. Por el <ConceptLink targetId="axioma-incidencia-3" isDependency={true}>axioma I-3</ConceptLink>, existen tres puntos no colineales; elegimos <InteractiveElement target="ladoAC" color="pizarra">$C$</InteractiveElement> fuera de la recta $AB$.
 
 Por el <ConceptLink targetId="axioma-congruencia-4" isDependency={true}>Axioma de transporte de ángulos (III-4)</ConceptLink>, transportamos <InteractiveElement target="anguloA" color="terracota">$\angle CAB$</InteractiveElement> sobre el vértice $B$ en el semiplano opuesto, creando <InteractiveElement target="anguloB" color="salvia">$\angle DBA \cong \angle CAB$</InteractiveElement>. Por el <ConceptLink targetId="axioma-congruencia-1" isDependency={true}>Axioma de transporte de segmentos (III-1)</ConceptLink>, transportamos <InteractiveElement target="ladoAC" color="pizarra">$AC$</InteractiveElement> sobre el rayo $BD$ para obtener <InteractiveElement target="ladoBD" color="pizarra">$D$</InteractiveElement> tal que $AC \cong BD$.
 
 Por el <ConceptLink targetId="axioma-orden-4" isDependency={true}>axioma de separación del plano (Pasch, II-4)</ConceptLink>, dado que $C$ y $D$ están en semiplanos opuestos respecto a $AB$, el segmento <InteractiveElement target="ladoCD" color="pizarra">$CD$</InteractiveElement> corta a la recta $AB$ en un punto <InteractiveElement target="pointM" color="carbon">$M$</InteractiveElement>.
-</MedievalStep>
+</ProofStep>
 
-<MedievalStep number={2} title="Congruencia de los triángulos mayores" target="step2">
+<ProofStep number={2} title="Congruencia de los triángulos mayores" target="step2">
 Consideremos <InteractiveElement target="triangulo-cab" color="salvia">$\triangle CAB$</InteractiveElement> y <InteractiveElement target="triangulo-dba" color="salvia">$\triangle DBA$</InteractiveElement>. Por el paso 1: $AC \cong BD$, $\angle CAB \cong \angle DBA$, y $AB$ es común. Por el <ConceptLink targetId="axioma-congruencia-5" isDependency={true}>criterio LAL</ConceptLink>, $\triangle CAB \cong \triangle DBA$. Por la <ConceptLink targetId="congruencia" isDependency={false}>definición de congruencia</ConceptLink>, $CB \cong DA$.
 
 Ahora, <InteractiveElement target="triangulo-cad" color="terracota">$\triangle CAD$</InteractiveElement> y <InteractiveElement target="triangulo-dbc" color="terracota">$\triangle DBC$</InteractiveElement>: por el paso 1 $AC \cong BD$, $CD$ es común, y por este paso $AD \cong BC$. Por el <ConceptLink targetId="teorema-congruencia-lll" isDependency={true}>criterio LLL</ConceptLink>, $\triangle CAD \cong \triangle DBC$. Por la definición de congruencia, $\angle ACD \cong \angle BDC$.
-</MedievalStep>
+</ProofStep>
 
-<MedievalStep number={3} title="El criterio ALA y el punto medio" target="step3">
+<ProofStep number={3} title="El criterio ALA y el punto medio" target="step3">
 Enfoquémonos en <InteractiveElement target="triangulo-cam" color="terracota">$\triangle CAM$</InteractiveElement> y <InteractiveElement target="triangulo-dbm" color="salvia">$\triangle DBM$</InteractiveElement>:
 
 1. <InteractiveElement target="ladoAC" color="pizarra">$AC \cong BD$</InteractiveElement> (por el paso 1).
@@ -48,15 +48,15 @@ Por el <ConceptLink targetId="teorema-congruencia-ala" isDependency={true}>crite
 </Formula>
 
 El punto <InteractiveElement target="pointM" color="terracota">$M$</InteractiveElement> divide a <InteractiveElement target="segmentAB" color="carbon">$\overline{AB}$</InteractiveElement> en dos partes congruentes. Queda demostrada la existencia.
-</MedievalStep>
+</ProofStep>
 
-<MedievalStep number={4} title="Unicidad por contradicción" target="step4">
+<ProofStep number={4} title="Unicidad por contradicción" target="step4">
 Supongamos, por contradicción, que existe otro punto <InteractiveElement target="pointMPrime" color="salvia">$M' \neq M$</InteractiveElement> con $AM' \cong M'B$.
 
 Por el <ConceptLink targetId="axioma-orden-3" isDependency={true}>Axioma de Orden II-3</ConceptLink>, uno de los puntos está entre $A$ y el otro. Sin pérdida de generalidad, $A * M * M'$. Entonces $AM < AM'$. Por el paso 3, $AM \cong MB$; por hipótesis $AM' \cong M'B$. Pero si $M$ está entre $A$ y $M'$, entonces $M'$ está entre $M$ y $B$ y por tanto $M'B < MB$. Esto implica $AM' \cong M'B < MB \cong AM < AM'$, una contradicción.
-</MedievalStep>
+</ProofStep>
 
-<MedievalStep number={5} title="Conclusión" target="step5">
+<ProofStep number={5} title="Conclusión" target="step5">
 La contradicción del paso 4 proviene de suponer $M' \neq M$. Por el <ConceptLink targetId="axioma-congruencia-1" isDependency={true}>Axioma de transporte (III-1)</ConceptLink>, sobre $\overrightarrow{AB}$ solo existe un punto a cada distancia. Por tanto, $M = M'$.
 
 <Formula>
@@ -64,7 +64,7 @@ La contradicción del paso 4 proviene de suponer $M' \neq M$. Por el <ConceptLin
 </Formula>
 
 El <ConceptLink targetId="lema-punto-medio" isDependency={false}>punto medio</ConceptLink> es único. $\blacksquare$
-</MedievalStep>
+</ProofStep>
 
 <Separador />
 

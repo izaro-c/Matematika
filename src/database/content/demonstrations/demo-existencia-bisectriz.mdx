@@ -22,7 +22,7 @@ import { DemoExistenciaBisectriz } from "@/shared/diagrams/Teoremas/DemoExistenc
 
 <Separador />
 
-<MedievalStep number={1} title="Puntos equidistantes sobre los lados" target={["angulo-aob", "punto-c", "punto-d"]}>
+<ProofStep number={1} title="Puntos equidistantes sobre los lados" target={["angulo-aob", "punto-c", "punto-d"]}>
 Por hipótesis, sea <InteractiveElement target="angulo-aob" color="carbon">$\angle AOB$</InteractiveElement> un ángulo con vértice <InteractiveElement target="vertice-o" color="carbon">$O$</InteractiveElement>. Por el <ConceptLink targetId="axioma-incidencia-2" isDependency={true}>axioma I-2</ConceptLink>, existe un punto sobre la semirrecta $\overrightarrow{OA}$ distinto de $O$. Por el <ConceptLink targetId="axioma-congruencia-1" isDependency={true}>axioma de transporte de segmentos (III-1)</ConceptLink>, fijamos un punto <InteractiveElement target="punto-c" color="terracota">$C \in \overrightarrow{OA}$</InteractiveElement> con $C \neq O$.
 
 Por el mismo axioma, transportamos la longitud $OC$ sobre $\overrightarrow{OB}$ para obtener un punto <InteractiveElement target="punto-d" color="salvia">$D \in \overrightarrow{OB}$</InteractiveElement> tal que:
@@ -30,15 +30,15 @@ Por el mismo axioma, transportamos la longitud $OC$ sobre $\overrightarrow{OB}$ 
 <Formula>
   $$ OC \cong OD $$
 </Formula>
-</MedievalStep>
+</ProofStep>
 
-<MedievalStep number={2} title="Segmento CD y su punto medio" target={["segmento-cd", "punto-m"]}>
+<ProofStep number={2} title="Segmento CD y su punto medio" target={["segmento-cd", "punto-m"]}>
 Por el <ConceptLink targetId="axioma-incidencia-1" isDependency={true}>axioma I-1</ConceptLink>, los puntos $C$ y $D$ determinan el segmento <InteractiveElement target="segmento-cd" color="pizarra">$\overline{CD}$</InteractiveElement>.
 
 Por el <ConceptLink targetId="lema-punto-medio" isDependency={true}>lema del punto medio</ConceptLink>, $\overline{CD}$ posee un único <ConceptLink targetId="punto-medio" isDependency={false}>punto medio</ConceptLink> <InteractiveElement target="punto-m" color="carbon">$M$</InteractiveElement>, que satisface $C * M * D$ y $CM \cong DM$.
-</MedievalStep>
+</ProofStep>
 
-<MedievalStep number={3} title="Congruencia LLL" target={["triangulo-ocm", "triangulo-odm"]}>
+<ProofStep number={3} title="Congruencia LLL" target={["triangulo-ocm", "triangulo-odm"]}>
 Por el <ConceptLink targetId="axioma-incidencia-1" isDependency={true}>axioma I-1</ConceptLink>, trazamos $\overline{OM}$. Consideremos los <InteractiveElement target="triangulo-ocm" color="terracota">triángulos $\triangle OCM$</InteractiveElement> y <InteractiveElement target="triangulo-odm" color="salvia">$\triangle ODM$</InteractiveElement>:
 
 1. $OC \cong OD$ (por el paso 1).
@@ -50,9 +50,9 @@ Los tres <ConceptLink targetId="lado" isDependency={false}>lados</ConceptLink> c
 <Formula>
   $$ \triangle OCM \cong \triangle ODM $$
 </Formula>
-</MedievalStep>
+</ProofStep>
 
-<MedievalStep number={4} title="Igualdad de los ángulos" target={["angulo-com", "angulo-dom"]}>
+<ProofStep number={4} title="Igualdad de los ángulos" target={["angulo-com", "angulo-dom"]}>
 Por la <ConceptLink targetId="congruencia" isDependency={false}>definición de congruencia</ConceptLink> de triángulos, todos los elementos correspondientes son congruentes. En particular, los <ConceptLink targetId="angulo" isDependency={false}>ángulos</ConceptLink> opuestos a los lados congruentes $CM$ y $DM$ son:
 
 <Formula>
@@ -60,9 +60,9 @@ Por la <ConceptLink targetId="congruencia" isDependency={false}>definición de c
 </Formula>
 
 Es decir, $\overrightarrow{OM}$ divide al ángulo $\angle AOB$ en dos ángulos congruentes: <InteractiveElement target="angulo-com" color="terracota">$\angle COM$</InteractiveElement> y <InteractiveElement target="angulo-dom" color="salvia">$\angle DOM$</InteractiveElement>. Por la <ConceptLink targetId="bisectriz" isDependency={false}>definición de bisectriz</ConceptLink>, $\overrightarrow{OM}$ es la bisectriz de $\angle AOB$. Queda demostrada la **existencia**.
-</MedievalStep>
+</ProofStep>
 
-<MedievalStep number={5} title="Unicidad" target={["bisectriz-unica"]}>
+<ProofStep number={5} title="Unicidad" target={["bisectriz-unica"]}>
 Supongamos que existiera otra semirrecta $\overrightarrow{OM'} \neq \overrightarrow{OM}$ interior a $\angle AOB$ que también lo biseca. Entonces se tendría:
 
 <Formula>
@@ -72,7 +72,7 @@ Supongamos que existiera otra semirrecta $\overrightarrow{OM'} \neq \overrightar
 Ambos son la mitad del ángulo total, por tanto $\angle AOM' \cong \angle AOM$. Pero por el <ConceptLink targetId="axioma-congruencia-4" isDependency={true}>axioma de unicidad del transporte de ángulos (III-4)</ConceptLink>, en un semiplano dado solo existe una semirrecta que forme un ángulo dado con $\overrightarrow{OA}$. Por tanto $\overrightarrow{OM'} = \overrightarrow{OM}$.
 
 La <InteractiveElement target="bisectriz-unica" color="carbon">bisectriz es única</InteractiveElement>. $\blacksquare$
-</MedievalStep>
+</ProofStep>
 
 <Separador />
 
