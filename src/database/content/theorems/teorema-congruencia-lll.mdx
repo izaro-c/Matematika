@@ -8,6 +8,11 @@ export const metadata = {
   "authors": ["euclides"],
   "difficulty": "intermedio",
   "hasSimulation": true,
+  "leanId": "Matematika.Geometry.congruence_lll",
+  "leanCommitSha": "local-hilbert-core",
+  "sources": [
+    { "title": "Euclidean and Non-Euclidean Geometries", "author": "Marvin Jay Greenberg", "role": "secondary" }
+  ],
   "demos": ["demo-congruencia-lll"]
 };
 
@@ -21,8 +26,16 @@ l criterio de <ConceptLink targetId="congruencia" isDependency={false}>congruenc
 
 ### Enunciado
 
+Sean los <ConceptLink targetId="triangulo" isDependency={false}>triángulos</ConceptLink> $\triangle ABC$ y $\triangle A'B'C'$. Se supone que sus <ConceptLink targetId="segmento" isDependency={false}>lados</ConceptLink> correspondientes satisfacen:
+
+- <InteractiveElement target="lado-ab">$\overline{AB} \cong \overline{A'B'}$</InteractiveElement>.
+- <InteractiveElement target="lado-bc">$\overline{BC} \cong \overline{B'C'}$</InteractiveElement>.
+- <InteractiveElement target="lado-ca">$\overline{CA} \cong \overline{C'A'}$</InteractiveElement>.
+
+Entonces:
+
 <Formula>
-  $$ \text{Sean } \triangle ABC \text{ y } \triangle A'B'C' \text{ tales que } \overline{AB} \cong \overline{A'B'}, \; \overline{BC} \cong \overline{B'C'}, \; \overline{CA} \cong \overline{C'A'}. \text{ Entonces } \triangle ABC \cong \triangle A'B'C'. $$
+  $$ \triangle ABC \cong \triangle A'B'C'. $$
 </Formula>
 
 

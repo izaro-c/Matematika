@@ -1,5 +1,20 @@
 import { z } from 'zod';
 
+export const FormalizationStatusSchema = z.enum([
+  'traceable',
+  'axiomatic',
+  'bridge',
+  'proved',
+  'mathlib',
+]);
+
+const MathematicalSourceSchema = z.object({
+  title: z.string(),
+  author: z.string().optional(),
+  locator: z.string().optional(),
+  role: z.enum(['primary', 'secondary', 'formalization']).optional(),
+});
+
 const LeanMetadataSchema = {
   /** Identificador de la declaración formal en Lean 4 / Mathlib. */
   leanId: z.string().optional(),
@@ -7,6 +22,10 @@ const LeanMetadataSchema = {
   leanCommitSha: z.string().optional(),
   /** Campo generado por el índice: true si leanId aparece en lean_graph.json. */
   leanVerified: z.boolean().optional(),
+  /** Campo generado por el índice: grado de formalización de la declaración Lean. */
+  formalizationStatus: FormalizationStatusSchema.optional(),
+  /** Referencias que fijan la definición, el enunciado o la formalización. */
+  sources: z.array(MathematicalSourceSchema).optional(),
 };
 
 /**

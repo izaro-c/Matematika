@@ -125,15 +125,15 @@ Vincula texto inline a una variable del diagrama. Escribe en `MathStore.highligh
 ### `<DemonstrationSection diagram={...} diagrams={...}>`
 Layout split para demostraciones interactivas. Diagrama izquierda (sticky), texto derecha (scrolleable).
 - **Props:** `diagram?: ReactNode` (diagrama único), `diagrams?: Record<string, ReactNode>` (mapa por paso)
-- **Children:** `<MedievalStep>` elementos
+- **Children:** `<ProofStep>` elementos
 - **Importar desde:** `../../components/content/DemonstrationSection`
 - **Lee:** `MathStore.variables['highlight']` para decidir qué diagrama mostrar
 
-### `<MedievalStep number={N} title="..." target="...">`
+### `<ProofStep number={N} title="..." target="...">`
 Paso numerado con estética Arts & Crafts. Auto-highlight al hacer scroll.
 - **Props:** `number: number`, `title: string`, `target?: string | string[]`
 - **target:** nombre del elemento a resaltar (string o array). Usa IntersectionObserver.
-- **Importar desde:** `../../components/content/MedievalStep`
+- **Importar desde:** `../../components/content/ProofStep`
 - **Escribe:** `MathStore.variables['highlight']` cuando el paso es visible
 
 ## Componentes de Ejercicio

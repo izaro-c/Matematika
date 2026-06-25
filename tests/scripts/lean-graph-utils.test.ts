@@ -2,8 +2,10 @@ import { describe, it, expect } from 'vitest';
 import {
   compareLeanGraphToContent,
   extractLeanArtifacts,
+  validateLeanDeclarationNames,
   type ContentMetadataEntry,
   type LeanGraph,
+  type LogicalGraphStructure,
   type ProofBlockRegistry,
 } from '../../scripts/core/lean-graph-utils.ts';
 import { generateContentIndex } from '../../scripts/core/generate-content-index.ts';
@@ -23,6 +25,7 @@ describe('Lean graph bridge utilities', () => {
         matematikaId: 'teorema-congruencia-ala',
         leanId: 'Matematika.Geometry.congruence_ala',
         kind: 'theorem',
+        status: 'bridge',
         declaredDeps: ['axioma-congruencia-1'],
         proofIds: ['ala-step1-transport'],
       },
@@ -84,6 +87,86 @@ describe('Lean graph bridge utilities', () => {
     expect(issues.map(issue => issue.code)).toContain('dependency-divergence');
   });
 
+  it('requires theorem declarations to cover dependencies from the logical graph', () => {
+    const logicalGraph: LogicalGraphStructure = {
+      nodes: {
+        'teorema-congruencia-ala': {
+          directDependencies: ['angulo'],
+          proofs: [{ id: 'demo-congruencia-ala', dependencies: ['axioma-congruencia-5'] }],
+        },
+      },
+    };
+    const content = new Map([
+      ['teorema-congruencia-ala', entry('teorema-congruencia-ala', {
+        leanId: 'Matematika.Geometry.congruence_ala',
+      })],
+    ]);
+
+    const issues = compareLeanGraphToContent(graph, content, proofBlocks, logicalGraph);
+    expect(issues.map(issue => issue.code)).toContain('dependency-divergence');
+  });
+
+  it('requires sources and an axiom system for Lean-linked axioms', () => {
+    const axiomGraph: LeanGraph = {
+      generatedAt: null,
+      nodes: [{
+        matematikaId: 'axioma-test',
+        leanId: 'Matematika.Geometry.Hilbert.test',
+        kind: 'axiom',
+        status: 'axiomatic',
+        declaredDeps: [],
+        proofIds: [],
+      }],
+    };
+    const content = new Map([
+      ['axioma-test', entry('axioma-test', {
+        type: 'axioma',
+        leanId: 'Matematika.Geometry.Hilbert.test',
+      })],
+    ]);
+
+    const issues = compareLeanGraphToContent(axiomGraph, content);
+    expect(issues.map(issue => issue.code)).toContain('missing-source');
+    expect(issues.map(issue => issue.code)).toContain('missing-axiom-system');
+  });
+
+  it('rejects hypothesis prose embedded in an initial Formula block', () => {
+    const content = new Map([
+      ['teorema-congruencia-ala', {
+        ...entry('teorema-congruencia-ala', {
+          type: 'teorema',
+          leanId: 'Matematika.Geometry.congruence_ala',
+          sources: [{ title: 'Greenberg' }],
+        }),
+        content: '<Formula>\n$$ \\text{Sean } A \\text{ Entonces } B $$\n</Formula>',
+      }],
+    ]);
+
+    const issues = compareLeanGraphToContent(graph, content);
+    expect(issues.map(issue => issue.code)).toContain('mixed-statement-formula');
+  });
+
+  it('requires mapped proof steps to pass their Lean blocks to ProofStep', () => {
+    const content = new Map([
+      ['teorema-congruencia-ala', entry('teorema-congruencia-ala', {
+        leanId: 'Matematika.Geometry.congruence_ala',
+        sources: [{ title: 'Greenberg' }],
+      })],
+      ['demo-congruencia-ala', {
+        ...entry('demo-congruencia-ala', {
+          type: 'demostracion',
+          leanId: 'Matematika.Geometry.congruence_ala',
+          sources: [{ title: 'Greenberg' }],
+          stepTacticMap: { '1': ['ala-step1-transport'] },
+        }),
+        content: '<ProofStep number={1} title="Transporte">Contenido</ProofStep>',
+      }],
+    ]);
+
+    const issues = compareLeanGraphToContent(graph, content, proofBlocks);
+    expect(issues.map(issue => issue.code)).toContain('missing-step-tactic-binding');
+  });
+
   it('extracts Lean annotations and proof blocks', () => {
     const root = fs.mkdtempSync(path.join(os.tmpdir(), 'matematika-lean-'));
     const leanDir = path.join(root, 'lean', 'Matematika');
@@ -91,7 +174,7 @@ describe('Lean graph bridge utilities', () => {
     fs.writeFileSync(
       path.join(leanDir, 'Pilot.lean'),
       [
-        '-- @matematika-id "teorema-test" @lean-id "Matematika.Pilot.test" @kind "theorem" @deps ["axioma-test"]',
+        '-- @matematika-id "teorema-test" @lean-id "Matematika.Pilot.test" @kind "theorem" @status "proved" @deps ["axioma-test"]',
         'theorem test : True := by',
         '  -- @tactic-block-start "test-step"',
         '  trivial',
@@ -102,8 +185,21 @@ describe('Lean graph bridge utilities', () => {
 
     const artifacts = extractLeanArtifacts(path.join(root, 'lean'), root);
     expect(artifacts.graph.nodes[0].leanId).toBe('Matematika.Pilot.test');
+    expect(artifacts.graph.nodes[0].status).toBe('proved');
     expect(artifacts.graph.nodes[0].proofIds).toEqual(['test-step']);
     expect(artifacts.proofBlocks.blocks[0].code).toContain('trivial');
+  });
+
+  it('reports annotated declarations missing from Lean\'s compiled environment', () => {
+    expect(
+      validateLeanDeclarationNames(graph.nodes, new Set()),
+    ).toEqual(['Matematika.Geometry.congruence_ala']);
+    expect(
+      validateLeanDeclarationNames(
+        graph.nodes,
+        new Set(['Matematika.Geometry.congruence_ala']),
+      ),
+    ).toEqual([]);
   });
 });
 
@@ -129,7 +225,7 @@ describe('generateContentIndex Lean verification', () => {
     const leanGraphPath = path.join(root, 'lean_graph.json');
     fs.writeFileSync(
       leanGraphPath,
-      JSON.stringify({ nodes: [{ leanId: 'Matematika.Pilot.test', matematikaId: 'teorema-test' }] }),
+      JSON.stringify({ nodes: [{ leanId: 'Matematika.Pilot.test', matematikaId: 'teorema-test', status: 'bridge' }] }),
       'utf-8',
     );
 
@@ -140,5 +236,6 @@ describe('generateContentIndex Lean verification', () => {
     });
 
     expect(index['teorema-test'].metadata.leanVerified).toBe(true);
+    expect(index['teorema-test'].metadata.formalizationStatus).toBe('bridge');
   });
 });

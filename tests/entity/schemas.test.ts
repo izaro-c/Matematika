@@ -74,7 +74,15 @@ describe('TheoremSchema', () => {
       leanId: 'Matematika.Geometry.congruence_ala',
       leanCommitSha: 'local-bridge',
       leanVerified: true,
+      formalizationStatus: 'bridge',
+      sources: [{ title: 'Foundations of Geometry', author: 'David Hilbert', role: 'primary' }],
     });
+  });
+  it('rejects an invalid formalization status', () => {
+    expectInvalid(TheoremSchema, { ...valid, formalizationStatus: 'machine-verified' });
+  });
+  it('rejects a source without a title', () => {
+    expectInvalid(TheoremSchema, { ...valid, sources: [{ author: 'David Hilbert' }] });
   });
 });
 

@@ -15,7 +15,7 @@ interface ContentEntry {
 }
 
 interface LeanGraph {
-  nodes?: { leanId: string; matematikaId: string }[];
+  nodes?: { leanId: string; matematikaId: string; status?: string }[];
 }
 
 function parseMetadata(content: string, filePath: string): Record<string, unknown> | null {
@@ -49,14 +49,14 @@ function getMdxFiles(dir: string): string[] {
   return files;
 }
 
-export function getVerifiedLeanIds(leanGraphPath = LEAN_GRAPH_PATH): Set<string> {
-  if (!fs.existsSync(leanGraphPath)) return new Set();
+export function getLeanNodeStatus(leanGraphPath = LEAN_GRAPH_PATH): Map<string, string> {
+  if (!fs.existsSync(leanGraphPath)) return new Map();
   try {
     const graph = JSON.parse(fs.readFileSync(leanGraphPath, 'utf-8')) as LeanGraph;
-    return new Set((graph.nodes ?? []).map(node => node.leanId));
+    return new Map((graph.nodes ?? []).map(node => [node.leanId, node.status ?? 'traceable']));
   } catch {
     console.warn(`  [WARN] Invalid Lean graph JSON: ${leanGraphPath}`);
-    return new Set();
+    return new Map();
   }
 }
 
@@ -86,7 +86,7 @@ export function generateContentIndex(options: GenerateContentIndexOptions = {}):
   const leanGraphPath = options.leanGraphPath ?? LEAN_GRAPH_PATH;
   const allFiles = getMdxFiles(contentDir);
   const index: Record<string, ContentEntry> = {};
-  const verifiedLeanIds = getVerifiedLeanIds(leanGraphPath);
+  const leanNodeStatus = getLeanNodeStatus(leanGraphPath);
 
   for (const file of allFiles) {
     const content = fs.readFileSync(file, 'utf-8');
@@ -99,7 +99,9 @@ export function generateContentIndex(options: GenerateContentIndexOptions = {}):
     const slug = path.basename(file, '.mdx').toLowerCase();
     const id = (meta.id as string) || slug;
     if (typeof meta.leanId === 'string') {
-      meta.leanVerified = verifiedLeanIds.has(meta.leanId);
+      const status = leanNodeStatus.get(meta.leanId);
+      meta.leanVerified = status !== undefined;
+      meta.formalizationStatus = status ?? 'traceable';
     }
 
     const entry: ContentEntry = {

@@ -9,7 +9,10 @@ export const metadata = {
   "tags": ["geometria", "congruencia", "triangulos"],
   "layout": "split",
   "leanId": "Matematika.Geometry.congruence_ala",
-  "leanCommitSha": "local-bridge",
+  "leanCommitSha": "local-hilbert-core",
+  "sources": [
+    { "title": "Euclidean and Non-Euclidean Geometries", "author": "Marvin Jay Greenberg", "role": "secondary" }
+  ],
   "stepTacticMap": {
     "1": ["ala-step1-transport"],
     "2": ["ala-step2-apply-lal"],
@@ -21,10 +24,16 @@ import { DemoCongruenciaALA } from '@/shared/diagrams/Demos/DemoCongruenciaALA';
 
 <DemonstrationSection diagram={<DemoCongruenciaALA />}>
 
-<Capitular letra="S" />ean
+<Capitular letra="S" />ean los <ConceptLink targetId="triangulo" isDependency={false}>triángulos</ConceptLink> <InteractiveElement target="triangle1" color="carbon">$\triangle ABC$</InteractiveElement> y <InteractiveElement target="triangle2" color="carbon">$\triangle A'B'C'$</InteractiveElement>. Se supone que un lado y los ángulos adyacentes son congruentes:
+
+- <InteractiveElement target="sideAB" color="terracota">$\overline{AB} \cong \overline{A'B'}$</InteractiveElement>.
+- <InteractiveElement target="angleA" color="terracota">$\angle A \cong \angle A'$</InteractiveElement>.
+- <InteractiveElement target="angleB" color="terracota">$\angle B \cong \angle B'$</InteractiveElement>.
+
+Entonces:
 
 <Formula>
-  $$ \triangle ABC \text{ y } \triangle A'B'C' \text{ tales que } \overline{AB} \cong \overline{A'B'}, \; \angle A \cong \angle A', \; \angle B \cong \angle B'. \text{ Entonces } \triangle ABC \cong \triangle A'B'C'. $$
+  $$ \triangle ABC \cong \triangle A'B'C'. $$
 </Formula>
 
 <Separador />

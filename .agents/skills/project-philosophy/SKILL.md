@@ -26,7 +26,7 @@ Cada concepto es un nodo navegable en una red de conocimiento. La lectura puede 
 **Implicaciones prácticas:**
 - Toda página debe poder leerse de forma autónoma (sin asumir que el usuario viene de otra página)
 - Los enlaces entre conceptos usan `<ConceptLink>` y abren Marginalia, no navegación completa
-- El grafo de conocimiento (`GraphPage`) refleja fielmente las dependencias lógicas. Cuando una página tiene `leanId`, Lean es la verdad mecánica verificable; MDX sigue siendo la capa pedagógica y semántica.
+- El grafo de conocimiento (`GraphPage`) refleja fielmente las dependencias lógicas. Cuando una página tiene `leanId`, Lean aporta la traza mecánica; `formalizationStatus` distingue un axioma, un puente y una prueba completa. MDX sigue siendo la capa pedagógica y semántica.
 
 **Ejemplos de violación:**
 - ❌ "Como vimos en el capítulo anterior..." (asume lectura secuencial)
@@ -109,18 +109,20 @@ Todo enunciado está justificado. Toda definición es precisa. Toda demostració
 6. Por construcción geométrica válida (con regla y compás, o coordenadas)
 
 **Implicaciones prácticas:**
-- Cada paso de una demostración (`<MedievalStep>`) debe incluir su justificación explícita
-- Si la demostración tiene `leanId`, la verificación Lean complementa pero no sustituye el rigor Greenberg: cada paso pedagógico sigue necesitando justificación textual.
+- Cada paso de una demostración (`<ProofStep>`) debe incluir su justificación explícita
+- Si la demostración tiene `leanId`, la verificación Lean complementa pero no sustituye el rigor Greenberg: cada paso pedagógico sigue necesitando justificación textual. `leanVerified` solo confirma que compila; una prueba completa exige `formalizationStatus: "proved"`.
+- Todo contenido formal debe conservar procedencia: fuente primaria o secundaria, sistema axiomático cuando corresponda y declaración Lean exacta si existe.
+- En demostraciones geométricas con diagrama, las hipótesis se expresan fuera de `<Formula>` en prosa enlazable e interactiva; la fórmula de enunciado contiene solo la conclusión. No esconder `Sean`, `tales que` ni `Entonces` dentro de LaTeX.
 - Las definiciones deben cubrir casos límite explícitamente (ej: ¿un segmento de longitud cero es un segmento?)
 - Nunca usar "es obvio", "claramente", "evidentemente" sin justificación
 
 **Ejemplos de violación:**
-- ❌ Un `<MedievalStep>` sin el atributo `justificacion`
+- ❌ Un `<ProofStep>` sin el atributo `justificacion`
 - ❌ "Es obvio que el triángulo es rectángulo" sin citar el teorema que lo demuestra
 - ❌ Definir "triángulo" sin especificar si 3 puntos colineales forman un triángulo degenerado
 - ❌ "Como se ve en la figura, los ángulos son iguales" (argumento visual, no lógico)
 
-**Cómo detectar:** Leer cada demostración. Verificar que cada `<MedievalStep>` tiene `justificacion`. Verificar que las definiciones mencionan casos límite. Buscar "es obvio", "claramente", "evidentemente", "como se ve".
+**Cómo detectar:** Leer cada demostración. Verificar que cada `<ProofStep>` tiene `justificacion`. Verificar que las definiciones mencionan casos límite. Buscar "es obvio", "claramente", "evidentemente", "como se ve".
 
 ---
 
@@ -243,7 +245,7 @@ Para usar durante una revisión de código/contenido (ej: con el agente `@review
 - [ ] ¿Cada teorema tiene su demostración en página separada?
 - [ ] ¿Las dependencias (`requires`) respetan el orden topológico?
 - [ ] ¿Los diagramas usan `getCSSVar('--theme-*')`?
-- [ ] ¿Cada `<MedievalStep>` tiene `justificacion`?
+- [ ] ¿Cada `<ProofStep>` tiene `justificacion`?
 - [ ] ¿Las definiciones cubren casos límite?
 - [ ] ¿Cada concepto nuevo tiene motivación?
 - [ ] ¿`npm run validate-graph && npm run validate-references && npm run validate-lean` pasan?

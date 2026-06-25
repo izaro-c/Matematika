@@ -18,9 +18,9 @@ Skills hermanas:
 
 1. Identifica la pagina MDX objetivo y su `metadata.id`.
 2. Crea o edita la declaracion Lean en `lean/Matematika/...`.
-3. Anota la declaracion con:
+3. Anota la declaración con su estado formal con:
    ```lean
-   -- @matematika-id "teorema-congruencia-ala" @lean-id "Matematika.Geometry.congruence_ala" @kind "theorem" @deps ["axioma-congruencia-1"]
+   -- @matematika-id "teorema-congruencia-ala" @lean-id "Matematika.Geometry.congruence_ala" @kind "theorem" @status "proved" @deps ["axioma-congruencia-1"]
    ```
 4. Agrupa tacticas con bloques nombrados:
    ```lean
@@ -31,7 +31,8 @@ Skills hermanas:
 5. Actualiza el MDX:
    - `leanId`: declaracion Lean exacta.
    - `leanCommitSha`: SHA o `local-bridge` para trabajo local.
-   - `stepTacticMap`: solo en demostraciones, mapeando numero de `MedievalStep` a IDs de bloques.
+   - `sources`: referencias que fijan el enunciado y el sistema axiomático.
+   - `stepTacticMap`: solo en demostraciones, mapeando numero de `ProofStep` a IDs de bloques.
 6. Ejecuta `npm run lean:graph` para regenerar `src/entities/graph/lean_graph.json` y `proof_blocks.json`.
 7. Ejecuta `npm run validate-lean`. Si `lake` no esta instalado, instala el toolchain antes de considerar valida la prueba formal.
 
@@ -40,6 +41,9 @@ Skills hermanas:
 - Nombres Lean: namespace `Matematika.<Area>`, snake_case Lean idiomatico para teoremas, `leanId` completo en MDX.
 - IDs Matematika: siempre kebab-case y nunca derivados automaticamente si ya existe una pagina.
 - Dependencias `@deps`: usa IDs Matematika, no nombres Lean, para comparar con el jardin MDX.
+- `@status` es obligatorio: `axiomatic` para un axioma declarado, `bridge` para una traza que depende de un supuesto auxiliar, `proved` para una derivación sin puentes y `mathlib` para un resultado importado de Mathlib. Nunca etiquetar como `proved` una declaración que use un puente.
+- Importa Mathlib de forma estrecha (`Mathlib.<módulo>`) cuando sus hipótesis y su enunciado coincidan exactamente con la capa formal actual. Un resultado reutilizado se anota `mathlib`; solo una derivación desde los axiomas de Matematika se anota `proved`.
+- Una prueba analítica sobre `EuclideanSpace` no es, por sí sola, una prueba desde Hilbert. Antes de reutilizarla como consecuencia sintética, formaliza un modelo o adaptador y mantén el resultado como modelodependiente hasta demostrar la traducción correspondiente.
 - No inventes `leanId`: si la declaracion no existe, dejalo ausente o crea primero el `.lean`.
 - No pongas codigo Lean en el flujo principal de lectura MDX; usa `stepTacticMap` y `ProofStepExpander`.
 - No cambies `MathStore.step`, `highlight` ni diagramas para mostrar prueba formal; la traza Lean es textual y colapsada.
@@ -59,3 +63,4 @@ Una divergencia Lean-MDX se corrige cambiando la fuente equivocada:
 - Si Lean prueba otra cosa, corrige Lean.
 - Si MDX declara otro `leanId` o `stepTacticMap`, corrige metadata.
 - Si la pedagogia omite enlaces, conserva `<ConceptLink>` aunque Lean ya verifique la dependencia.
+- `leanVerified` solo indica que existe una declaración compilada; usar `formalizationStatus` del índice para comunicar su alcance real.

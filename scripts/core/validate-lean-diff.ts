@@ -5,18 +5,21 @@ import {
   loadContentMetadata,
   readJsonFile,
   type LeanGraph,
+  type LogicalGraphStructure,
   type ProofBlockRegistry,
 } from './lean-graph-utils.ts';
 
 const CONTENT_DIR = path.resolve(process.cwd(), 'src/database/content');
 const LEAN_GRAPH_PATH = path.resolve(process.cwd(), 'src/entities/graph/lean_graph.json');
 const PROOF_BLOCKS_PATH = path.resolve(process.cwd(), 'src/entities/graph/proof_blocks.json');
+const LOGICAL_GRAPH_PATH = path.resolve(process.cwd(), 'src/entities/graph/graph_structure.json');
 
 export function validateLeanDiff() {
   const leanGraph = readJsonFile<LeanGraph>(LEAN_GRAPH_PATH, { generatedAt: null, nodes: [] });
   const proofBlocks = readJsonFile<ProofBlockRegistry>(PROOF_BLOCKS_PATH, { generatedAt: null, blocks: [] });
+  const logicalGraph = readJsonFile<LogicalGraphStructure>(LOGICAL_GRAPH_PATH, { nodes: {} });
   const content = loadContentMetadata(CONTENT_DIR);
-  return compareLeanGraphToContent(leanGraph, content, proofBlocks);
+  return compareLeanGraphToContent(leanGraph, content, proofBlocks, logicalGraph);
 }
 
 if (process.argv[1] && import.meta.url === pathToFileURL(process.argv[1]).href) {
