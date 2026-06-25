@@ -186,13 +186,30 @@
         "hilbert",
         "arquimedes"
       ],
+      "axiomSystem": "sistema-absoluto",
+      "leanId": "Matematika.Geometry.Hilbert.archimedean",
+      "leanCommitSha": "local-hilbert-core",
+      "sources": [
+        {
+          "title": "Grundlagen der Geometrie",
+          "author": "David Hilbert",
+          "role": "primary"
+        },
+        {
+          "title": "Euclidean and Non-Euclidean Geometries",
+          "author": "Marvin Jay Greenberg",
+          "role": "secondary"
+        }
+      ],
       "hasSimulation": true,
       "links": [
         "punto",
         "recta",
         "congruencia",
         "estar-entre"
-      ]
+      ],
+      "leanVerified": true,
+      "formalizationStatus": "axiomatic"
     }
   },
   "axioma-completitud": {
@@ -216,10 +233,27 @@
         "hilbert",
         "dedekind"
       ],
+      "axiomSystem": "sistema-absoluto",
+      "leanId": "Matematika.Geometry.Hilbert.no_proper_axiomatic_extension",
+      "leanCommitSha": "local-hilbert-core",
+      "sources": [
+        {
+          "title": "Grundlagen der Geometrie",
+          "author": "David Hilbert",
+          "role": "primary"
+        },
+        {
+          "title": "Euclidean and Non-Euclidean Geometries",
+          "author": "Marvin Jay Greenberg",
+          "role": "secondary"
+        }
+      ],
       "hasSimulation": true,
       "links": [
         "punto"
-      ]
+      ],
+      "leanVerified": true,
+      "formalizationStatus": "axiomatic"
     }
   },
   "axioma-congruencia-1": {
@@ -241,12 +275,29 @@
       "authors": [
         "hilbert"
       ],
+      "axiomSystem": "sistema-absoluto",
+      "leanId": "Matematika.Geometry.Hilbert.segment_transport",
+      "leanCommitSha": "local-hilbert-core",
+      "sources": [
+        {
+          "title": "Grundlagen der Geometrie",
+          "author": "David Hilbert",
+          "role": "primary"
+        },
+        {
+          "title": "Euclidean and Non-Euclidean Geometries",
+          "author": "Marvin Jay Greenberg",
+          "role": "secondary"
+        }
+      ],
       "hasSimulation": true,
       "links": [
         "punto",
         "recta",
         "congruencia"
-      ]
+      ],
+      "leanVerified": true,
+      "formalizationStatus": "axiomatic"
     }
   },
   "axioma-congruencia-2": {
@@ -268,11 +319,28 @@
       "authors": [
         "hilbert"
       ],
+      "axiomSystem": "sistema-absoluto",
+      "leanId": "Matematika.Geometry.Hilbert.segment_congruence_transitive",
+      "leanCommitSha": "local-hilbert-core",
+      "sources": [
+        {
+          "title": "Grundlagen der Geometrie",
+          "author": "David Hilbert",
+          "role": "primary"
+        },
+        {
+          "title": "Euclidean and Non-Euclidean Geometries",
+          "author": "Marvin Jay Greenberg",
+          "role": "secondary"
+        }
+      ],
       "hasSimulation": true,
       "links": [
         "punto",
         "congruencia"
-      ]
+      ],
+      "leanVerified": true,
+      "formalizationStatus": "axiomatic"
     }
   },
   "axioma-congruencia-3": {
@@ -294,13 +362,30 @@
       "authors": [
         "hilbert"
       ],
+      "axiomSystem": "sistema-absoluto",
+      "leanId": "Matematika.Geometry.Hilbert.segment_addition",
+      "leanCommitSha": "local-hilbert-core",
+      "sources": [
+        {
+          "title": "Grundlagen der Geometrie",
+          "author": "David Hilbert",
+          "role": "primary"
+        },
+        {
+          "title": "Euclidean and Non-Euclidean Geometries",
+          "author": "Marvin Jay Greenberg",
+          "role": "secondary"
+        }
+      ],
       "hasSimulation": true,
       "links": [
         "punto",
         "recta",
         "estar-entre",
         "congruencia"
-      ]
+      ],
+      "leanVerified": true,
+      "formalizationStatus": "axiomatic"
     }
   },
   "axioma-congruencia-4": {
@@ -322,13 +407,30 @@
       "authors": [
         "hilbert"
       ],
+      "axiomSystem": "sistema-absoluto",
+      "leanId": "Matematika.Geometry.Hilbert.angle_transport",
+      "leanCommitSha": "local-hilbert-core",
+      "sources": [
+        {
+          "title": "Grundlagen der Geometrie",
+          "author": "David Hilbert",
+          "role": "primary"
+        },
+        {
+          "title": "Euclidean and Non-Euclidean Geometries",
+          "author": "Marvin Jay Greenberg",
+          "role": "secondary"
+        }
+      ],
       "hasSimulation": true,
       "links": [
         "punto",
         "recta",
         "estar-entre",
         "congruencia"
-      ]
+      ],
+      "leanVerified": true,
+      "formalizationStatus": "axiomatic"
     }
   },
   "axioma-congruencia-5": {
@@ -351,11 +453,28 @@
       "authors": [
         "hilbert"
       ],
+      "axiomSystem": "sistema-absoluto",
+      "leanId": "Matematika.Geometry.Hilbert.sas_congruence",
+      "leanCommitSha": "local-hilbert-core",
+      "sources": [
+        {
+          "title": "Grundlagen der Geometrie",
+          "author": "David Hilbert",
+          "role": "primary"
+        },
+        {
+          "title": "Euclidean and Non-Euclidean Geometries",
+          "author": "Marvin Jay Greenberg",
+          "role": "secondary"
+        }
+      ],
       "hasSimulation": true,
       "links": [
         "punto",
         "congruencia"
-      ]
+      ],
+      "leanVerified": true,
+      "formalizationStatus": "axiomatic"
     }
   },
   "axioma-incidencia-1": {
@@ -372,12 +491,29 @@
       "authors": [
         "hilbert"
       ],
+      "axiomSystem": "sistema-absoluto",
+      "leanId": "Matematika.Geometry.Hilbert.line_through_two_points",
+      "leanCommitSha": "local-hilbert-core",
+      "sources": [
+        {
+          "title": "Grundlagen der Geometrie",
+          "author": "David Hilbert",
+          "role": "primary"
+        },
+        {
+          "title": "Euclidean and Non-Euclidean Geometries",
+          "author": "Marvin Jay Greenberg",
+          "role": "secondary"
+        }
+      ],
       "hasSimulation": true,
       "links": [
         "punto",
         "recta",
         "incidencia"
-      ]
+      ],
+      "leanVerified": true,
+      "formalizationStatus": "axiomatic"
     }
   },
   "axioma-incidencia-2": {
@@ -394,12 +530,29 @@
       "authors": [
         "hilbert"
       ],
+      "axiomSystem": "sistema-absoluto",
+      "leanId": "Matematika.Geometry.Hilbert.line_has_two_points",
+      "leanCommitSha": "local-hilbert-core",
+      "sources": [
+        {
+          "title": "Grundlagen der Geometrie",
+          "author": "David Hilbert",
+          "role": "primary"
+        },
+        {
+          "title": "Euclidean and Non-Euclidean Geometries",
+          "author": "Marvin Jay Greenberg",
+          "role": "secondary"
+        }
+      ],
       "hasSimulation": true,
       "links": [
         "punto",
         "recta",
         "incidencia"
-      ]
+      ],
+      "leanVerified": true,
+      "formalizationStatus": "axiomatic"
     }
   },
   "axioma-incidencia-3": {
@@ -416,13 +569,30 @@
       "authors": [
         "hilbert"
       ],
+      "axiomSystem": "sistema-absoluto",
+      "leanId": "Matematika.Geometry.Hilbert.exists_noncollinear_points",
+      "leanCommitSha": "local-hilbert-core",
+      "sources": [
+        {
+          "title": "Grundlagen der Geometrie",
+          "author": "David Hilbert",
+          "role": "primary"
+        },
+        {
+          "title": "Euclidean and Non-Euclidean Geometries",
+          "author": "Marvin Jay Greenberg",
+          "role": "secondary"
+        }
+      ],
       "hasSimulation": true,
       "links": [
         "punto",
         "recta",
         "plano",
         "incidencia"
-      ]
+      ],
+      "leanVerified": true,
+      "formalizationStatus": "axiomatic"
     }
   },
   "axioma-incidencia-4": {
@@ -439,12 +609,29 @@
       "authors": [
         "hilbert"
       ],
+      "axiomSystem": "sistema-absoluto",
+      "leanId": "Matematika.Geometry.Hilbert.plane_through_three_noncollinear_points",
+      "leanCommitSha": "local-hilbert-core",
+      "sources": [
+        {
+          "title": "Grundlagen der Geometrie",
+          "author": "David Hilbert",
+          "role": "primary"
+        },
+        {
+          "title": "Euclidean and Non-Euclidean Geometries",
+          "author": "Marvin Jay Greenberg",
+          "role": "secondary"
+        }
+      ],
       "hasSimulation": true,
       "links": [
         "punto",
         "plano",
         "incidencia"
-      ]
+      ],
+      "leanVerified": true,
+      "formalizationStatus": "axiomatic"
     }
   },
   "axioma-incidencia-5": {
@@ -461,13 +648,30 @@
       "authors": [
         "hilbert"
       ],
+      "axiomSystem": "sistema-absoluto",
+      "leanId": "Matematika.Geometry.Hilbert.plane_has_three_noncollinear_points",
+      "leanCommitSha": "local-hilbert-core",
+      "sources": [
+        {
+          "title": "Grundlagen der Geometrie",
+          "author": "David Hilbert",
+          "role": "primary"
+        },
+        {
+          "title": "Euclidean and Non-Euclidean Geometries",
+          "author": "Marvin Jay Greenberg",
+          "role": "secondary"
+        }
+      ],
       "hasSimulation": true,
       "links": [
         "punto",
         "recta",
         "plano",
         "incidencia"
-      ]
+      ],
+      "leanVerified": true,
+      "formalizationStatus": "axiomatic"
     }
   },
   "axioma-incidencia-6": {
@@ -484,13 +688,30 @@
       "authors": [
         "hilbert"
       ],
+      "axiomSystem": "sistema-absoluto",
+      "leanId": "Matematika.Geometry.Hilbert.line_contained_in_plane",
+      "leanCommitSha": "local-hilbert-core",
+      "sources": [
+        {
+          "title": "Grundlagen der Geometrie",
+          "author": "David Hilbert",
+          "role": "primary"
+        },
+        {
+          "title": "Euclidean and Non-Euclidean Geometries",
+          "author": "Marvin Jay Greenberg",
+          "role": "secondary"
+        }
+      ],
       "hasSimulation": true,
       "links": [
         "punto",
         "recta",
         "plano",
         "incidencia"
-      ]
+      ],
+      "leanVerified": true,
+      "formalizationStatus": "axiomatic"
     }
   },
   "axioma-incidencia-7": {
@@ -507,13 +728,30 @@
       "authors": [
         "hilbert"
       ],
+      "axiomSystem": "sistema-absoluto",
+      "leanId": "Matematika.Geometry.Hilbert.intersecting_planes_share_a_line",
+      "leanCommitSha": "local-hilbert-core",
+      "sources": [
+        {
+          "title": "Grundlagen der Geometrie",
+          "author": "David Hilbert",
+          "role": "primary"
+        },
+        {
+          "title": "Euclidean and Non-Euclidean Geometries",
+          "author": "Marvin Jay Greenberg",
+          "role": "secondary"
+        }
+      ],
       "hasSimulation": true,
       "links": [
         "punto",
         "recta",
         "plano",
         "incidencia"
-      ]
+      ],
+      "leanVerified": true,
+      "formalizationStatus": "axiomatic"
     }
   },
   "axioma-incidencia-8": {
@@ -530,12 +768,29 @@
       "authors": [
         "hilbert"
       ],
+      "axiomSystem": "sistema-absoluto",
+      "leanId": "Matematika.Geometry.Hilbert.exists_noncoplanar_points",
+      "leanCommitSha": "local-hilbert-core",
+      "sources": [
+        {
+          "title": "Grundlagen der Geometrie",
+          "author": "David Hilbert",
+          "role": "primary"
+        },
+        {
+          "title": "Euclidean and Non-Euclidean Geometries",
+          "author": "Marvin Jay Greenberg",
+          "role": "secondary"
+        }
+      ],
       "hasSimulation": true,
       "links": [
         "punto",
         "plano",
         "incidencia"
-      ]
+      ],
+      "leanVerified": true,
+      "formalizationStatus": "axiomatic"
     }
   },
   "axioma-orden-1": {
@@ -552,12 +807,29 @@
       "authors": [
         "hilbert"
       ],
+      "axiomSystem": "sistema-absoluto",
+      "leanId": "Matematika.Geometry.Hilbert.between_distinct_symmetric",
+      "leanCommitSha": "local-hilbert-core",
+      "sources": [
+        {
+          "title": "Grundlagen der Geometrie",
+          "author": "David Hilbert",
+          "role": "primary"
+        },
+        {
+          "title": "Euclidean and Non-Euclidean Geometries",
+          "author": "Marvin Jay Greenberg",
+          "role": "secondary"
+        }
+      ],
       "hasSimulation": true,
       "links": [
         "punto",
         "recta",
         "estar-entre"
-      ]
+      ],
+      "leanVerified": true,
+      "formalizationStatus": "axiomatic"
     }
   },
   "axioma-orden-2": {
@@ -574,11 +846,28 @@
       "authors": [
         "hilbert"
       ],
+      "axiomSystem": "sistema-absoluto",
+      "leanId": "Matematika.Geometry.Hilbert.exists_between_distinct_points",
+      "leanCommitSha": "local-hilbert-core",
+      "sources": [
+        {
+          "title": "Grundlagen der Geometrie",
+          "author": "David Hilbert",
+          "role": "primary"
+        },
+        {
+          "title": "Euclidean and Non-Euclidean Geometries",
+          "author": "Marvin Jay Greenberg",
+          "role": "secondary"
+        }
+      ],
       "hasSimulation": true,
       "links": [
         "punto",
         "estar-entre"
-      ]
+      ],
+      "leanVerified": true,
+      "formalizationStatus": "axiomatic"
     }
   },
   "axioma-orden-3": {
@@ -595,12 +884,29 @@
       "authors": [
         "hilbert"
       ],
+      "axiomSystem": "sistema-absoluto",
+      "leanId": "Matematika.Geometry.Hilbert.order_trichotomy",
+      "leanCommitSha": "local-hilbert-core",
+      "sources": [
+        {
+          "title": "Grundlagen der Geometrie",
+          "author": "David Hilbert",
+          "role": "primary"
+        },
+        {
+          "title": "Euclidean and Non-Euclidean Geometries",
+          "author": "Marvin Jay Greenberg",
+          "role": "secondary"
+        }
+      ],
       "hasSimulation": true,
       "links": [
         "punto",
         "recta",
         "estar-entre"
-      ]
+      ],
+      "leanVerified": true,
+      "formalizationStatus": "axiomatic"
     }
   },
   "axioma-orden-4": {
@@ -618,12 +924,29 @@
         "hilbert",
         "pasch"
       ],
+      "axiomSystem": "sistema-absoluto",
+      "leanId": "Matematika.Geometry.Hilbert.pasch",
+      "leanCommitSha": "local-hilbert-core",
+      "sources": [
+        {
+          "title": "Grundlagen der Geometrie",
+          "author": "David Hilbert",
+          "role": "primary"
+        },
+        {
+          "title": "Euclidean and Non-Euclidean Geometries",
+          "author": "Marvin Jay Greenberg",
+          "role": "secondary"
+        }
+      ],
       "hasSimulation": true,
       "links": [
         "punto",
         "recta",
         "estar-entre"
-      ]
+      ],
+      "leanVerified": true,
+      "formalizationStatus": "axiomatic"
     }
   },
   "axioma-paralelas-euclides": {
@@ -1489,7 +1812,14 @@
       ],
       "layout": "split",
       "leanId": "Matematika.Geometry.congruence_ala",
-      "leanCommitSha": "local-bridge",
+      "leanCommitSha": "local-hilbert-core",
+      "sources": [
+        {
+          "title": "Euclidean and Non-Euclidean Geometries",
+          "author": "Marvin Jay Greenberg",
+          "role": "secondary"
+        }
+      ],
       "stepTacticMap": {
         "1": [
           "ala-step1-transport"
@@ -1501,7 +1831,8 @@
           "ala-step3-uniqueness"
         ]
       },
-      "leanVerified": true
+      "leanVerified": true,
+      "formalizationStatus": "bridge"
     }
   },
   "demo-congruencia-lll": {
@@ -1524,7 +1855,32 @@
         "congruencia",
         "triangulos"
       ],
-      "layout": "split"
+      "layout": "split",
+      "leanId": "Matematika.Geometry.congruence_lll",
+      "leanCommitSha": "local-hilbert-core",
+      "sources": [
+        {
+          "title": "Euclidean and Non-Euclidean Geometries",
+          "author": "Marvin Jay Greenberg",
+          "role": "secondary"
+        }
+      ],
+      "stepTacticMap": {
+        "1": [
+          "lll-step1-transport"
+        ],
+        "2": [
+          "lll-step2-apply-lal"
+        ],
+        "3": [
+          "lll-step3-auxiliary-isosceles"
+        ],
+        "4": [
+          "lll-step4-conclusion"
+        ]
+      },
+      "leanVerified": true,
+      "formalizationStatus": "bridge"
     }
   },
   "demo-desigualdad-triangular": {
@@ -2644,11 +3000,19 @@
       "difficulty": "intermedio",
       "hasSimulation": true,
       "leanId": "Matematika.Geometry.congruence_ala",
-      "leanCommitSha": "local-bridge",
+      "leanCommitSha": "local-hilbert-core",
+      "sources": [
+        {
+          "title": "Euclidean and Non-Euclidean Geometries",
+          "author": "Marvin Jay Greenberg",
+          "role": "secondary"
+        }
+      ],
       "demos": [
         "demo-congruencia-ala"
       ],
-      "leanVerified": true
+      "leanVerified": true,
+      "formalizationStatus": "bridge"
     }
   },
   "teorema-congruencia-lll": {
@@ -2673,9 +3037,20 @@
       ],
       "difficulty": "intermedio",
       "hasSimulation": true,
+      "leanId": "Matematika.Geometry.congruence_lll",
+      "leanCommitSha": "local-hilbert-core",
+      "sources": [
+        {
+          "title": "Euclidean and Non-Euclidean Geometries",
+          "author": "Marvin Jay Greenberg",
+          "role": "secondary"
+        }
+      ],
       "demos": [
         "demo-congruencia-lll"
-      ]
+      ],
+      "leanVerified": true,
+      "formalizationStatus": "bridge"
     }
   },
   "teorema-desigualdad-triangular": {

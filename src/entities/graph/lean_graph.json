@@ -1,16 +1,19 @@
 {
-  "generatedAt": "2026-06-24T17:52:09.855Z",
+  "generatedAt": "2026-06-24T23:20:50.505Z",
   "nodes": [
     {
       "matematikaId": "teorema-congruencia-ala",
       "leanId": "Matematika.Geometry.congruence_ala",
       "kind": "theorem",
+      "status": "bridge",
       "declaredDeps": [
         "axioma-congruencia-1",
         "axioma-congruencia-4",
         "axioma-congruencia-5",
         "congruencia",
-        "triangulo"
+        "angulo",
+        "triangulo",
+        "segmento"
       ],
       "proofIds": [
         "ala-step1-transport",
@@ -18,6 +21,199 @@
         "ala-step3-uniqueness"
       ],
       "sourceFile": "lean/Matematika/Geometry/Basic.lean"
+    },
+    {
+      "matematikaId": "teorema-congruencia-lll",
+      "leanId": "Matematika.Geometry.congruence_lll",
+      "kind": "theorem",
+      "status": "bridge",
+      "declaredDeps": [
+        "axioma-congruencia-1",
+        "axioma-congruencia-3",
+        "axioma-congruencia-4",
+        "axioma-congruencia-5",
+        "teorema-triangulo-isosceles",
+        "congruencia",
+        "triangulo"
+      ],
+      "proofIds": [
+        "lll-step1-transport",
+        "lll-step2-apply-lal",
+        "lll-step3-auxiliary-isosceles",
+        "lll-step4-conclusion"
+      ],
+      "sourceFile": "lean/Matematika/Geometry/Basic.lean"
+    },
+    {
+      "matematikaId": "axioma-congruencia-1",
+      "leanId": "Matematika.Geometry.Hilbert.segment_transport",
+      "kind": "axiom",
+      "status": "axiomatic",
+      "declaredDeps": [],
+      "proofIds": [],
+      "sourceFile": "lean/Matematika/Geometry/Hilbert/Congruence.lean"
+    },
+    {
+      "matematikaId": "axioma-congruencia-2",
+      "leanId": "Matematika.Geometry.Hilbert.segment_congruence_transitive",
+      "kind": "axiom",
+      "status": "axiomatic",
+      "declaredDeps": [],
+      "proofIds": [],
+      "sourceFile": "lean/Matematika/Geometry/Hilbert/Congruence.lean"
+    },
+    {
+      "matematikaId": "axioma-congruencia-3",
+      "leanId": "Matematika.Geometry.Hilbert.segment_addition",
+      "kind": "axiom",
+      "status": "axiomatic",
+      "declaredDeps": [],
+      "proofIds": [],
+      "sourceFile": "lean/Matematika/Geometry/Hilbert/Congruence.lean"
+    },
+    {
+      "matematikaId": "axioma-congruencia-4",
+      "leanId": "Matematika.Geometry.Hilbert.angle_transport",
+      "kind": "axiom",
+      "status": "axiomatic",
+      "declaredDeps": [],
+      "proofIds": [],
+      "sourceFile": "lean/Matematika/Geometry/Hilbert/Congruence.lean"
+    },
+    {
+      "matematikaId": "axioma-congruencia-5",
+      "leanId": "Matematika.Geometry.Hilbert.sas_congruence",
+      "kind": "axiom",
+      "status": "axiomatic",
+      "declaredDeps": [],
+      "proofIds": [],
+      "sourceFile": "lean/Matematika/Geometry/Hilbert/Congruence.lean"
+    },
+    {
+      "matematikaId": "axioma-arquimedes",
+      "leanId": "Matematika.Geometry.Hilbert.archimedean",
+      "kind": "axiom",
+      "status": "axiomatic",
+      "declaredDeps": [],
+      "proofIds": [],
+      "sourceFile": "lean/Matematika/Geometry/Hilbert/Continuity.lean"
+    },
+    {
+      "matematikaId": "axioma-completitud",
+      "leanId": "Matematika.Geometry.Hilbert.no_proper_axiomatic_extension",
+      "kind": "axiom",
+      "status": "axiomatic",
+      "declaredDeps": [],
+      "proofIds": [],
+      "sourceFile": "lean/Matematika/Geometry/Hilbert/Continuity.lean"
+    },
+    {
+      "matematikaId": "axioma-incidencia-1",
+      "leanId": "Matematika.Geometry.Hilbert.line_through_two_points",
+      "kind": "axiom",
+      "status": "axiomatic",
+      "declaredDeps": [],
+      "proofIds": [],
+      "sourceFile": "lean/Matematika/Geometry/Hilbert/Incidence.lean"
+    },
+    {
+      "matematikaId": "axioma-incidencia-2",
+      "leanId": "Matematika.Geometry.Hilbert.line_has_two_points",
+      "kind": "axiom",
+      "status": "axiomatic",
+      "declaredDeps": [],
+      "proofIds": [],
+      "sourceFile": "lean/Matematika/Geometry/Hilbert/Incidence.lean"
+    },
+    {
+      "matematikaId": "axioma-incidencia-3",
+      "leanId": "Matematika.Geometry.Hilbert.exists_noncollinear_points",
+      "kind": "axiom",
+      "status": "axiomatic",
+      "declaredDeps": [],
+      "proofIds": [],
+      "sourceFile": "lean/Matematika/Geometry/Hilbert/Incidence.lean"
+    },
+    {
+      "matematikaId": "axioma-incidencia-4",
+      "leanId": "Matematika.Geometry.Hilbert.plane_through_three_noncollinear_points",
+      "kind": "axiom",
+      "status": "axiomatic",
+      "declaredDeps": [],
+      "proofIds": [],
+      "sourceFile": "lean/Matematika/Geometry/Hilbert/Incidence.lean"
+    },
+    {
+      "matematikaId": "axioma-incidencia-5",
+      "leanId": "Matematika.Geometry.Hilbert.plane_has_three_noncollinear_points",
+      "kind": "axiom",
+      "status": "axiomatic",
+      "declaredDeps": [],
+      "proofIds": [],
+      "sourceFile": "lean/Matematika/Geometry/Hilbert/Incidence.lean"
+    },
+    {
+      "matematikaId": "axioma-incidencia-6",
+      "leanId": "Matematika.Geometry.Hilbert.line_contained_in_plane",
+      "kind": "axiom",
+      "status": "axiomatic",
+      "declaredDeps": [],
+      "proofIds": [],
+      "sourceFile": "lean/Matematika/Geometry/Hilbert/Incidence.lean"
+    },
+    {
+      "matematikaId": "axioma-incidencia-7",
+      "leanId": "Matematika.Geometry.Hilbert.intersecting_planes_share_a_line",
+      "kind": "axiom",
+      "status": "axiomatic",
+      "declaredDeps": [],
+      "proofIds": [],
+      "sourceFile": "lean/Matematika/Geometry/Hilbert/Incidence.lean"
+    },
+    {
+      "matematikaId": "axioma-incidencia-8",
+      "leanId": "Matematika.Geometry.Hilbert.exists_noncoplanar_points",
+      "kind": "axiom",
+      "status": "axiomatic",
+      "declaredDeps": [],
+      "proofIds": [],
+      "sourceFile": "lean/Matematika/Geometry/Hilbert/Incidence.lean"
+    },
+    {
+      "matematikaId": "axioma-orden-1",
+      "leanId": "Matematika.Geometry.Hilbert.between_distinct_symmetric",
+      "kind": "axiom",
+      "status": "axiomatic",
+      "declaredDeps": [],
+      "proofIds": [],
+      "sourceFile": "lean/Matematika/Geometry/Hilbert/Order.lean"
+    },
+    {
+      "matematikaId": "axioma-orden-2",
+      "leanId": "Matematika.Geometry.Hilbert.exists_between_distinct_points",
+      "kind": "axiom",
+      "status": "axiomatic",
+      "declaredDeps": [],
+      "proofIds": [],
+      "sourceFile": "lean/Matematika/Geometry/Hilbert/Order.lean"
+    },
+    {
+      "matematikaId": "axioma-orden-3",
+      "leanId": "Matematika.Geometry.Hilbert.order_trichotomy",
+      "kind": "axiom",
+      "status": "axiomatic",
+      "declaredDeps": [],
+      "proofIds": [],
+      "sourceFile": "lean/Matematika/Geometry/Hilbert/Order.lean"
+    },
+    {
+      "matematikaId": "axioma-orden-4",
+      "leanId": "Matematika.Geometry.Hilbert.pasch",
+      "kind": "axiom",
+      "status": "axiomatic",
+      "declaredDeps": [],
+      "proofIds": [],
+      "sourceFile": "lean/Matematika/Geometry/Hilbert/Order.lean"
     }
   ]
 }

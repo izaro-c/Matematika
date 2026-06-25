@@ -17,25 +17,29 @@ import { InteractiveElement } from "../../components/ui/VisualBind";
 
 <Capitular letra="S" />ean $l$ y $m$ dos <ConceptLink targetId="recta" isDependency={false}>rectas</ConceptLink>...
 
+Se supone que <InteractiveElement target="elemento-paso-1" color="terracota">la condición geométrica relevante</InteractiveElement> se cumple.
+
+Entonces:
+
 <Formula>
-  $$ enunciado formal $$
+  $$ \text{conclusión simbólica} $$
 </Formula>
 
 <Separador />
 
-<MedievalStep number={1} target="elemento-paso-1" title="Construcción">
+<ProofStep number={1} target="elemento-paso-1" title="Construcción">
   Por hipótesis, <InteractiveElement target="elemento-paso-1" color="terracota">elemento principal</InteractiveElement>.
   Por el <ConceptLink targetId="definicion-usada" isDependency={true}>definición</ConceptLink>...
-</MedievalStep>
+</ProofStep>
 
-<MedievalStep number={2} target={["elemento-a", "elemento-b"]} title="Razonamiento">
+<ProofStep number={2} target={["elemento-a", "elemento-b"]} title="Razonamiento">
   Por el <ConceptLink targetId="teorema-auxiliar" isDependency={true}>teorema</ConceptLink>,
   <InteractiveElement target="elemento-a" color="salvia">elemento A</InteractiveElement> y
   <InteractiveElement target="elemento-b" color="pizarra">elemento B</InteractiveElement> satisfacen...
-</MedievalStep>
+</ProofStep>
 
-<MedievalStep number={3} title="Conclusión">
+<ProofStep number={3} title="Conclusión">
   Por el paso 2, se cumple el enunciado. $\blacksquare$
-</MedievalStep>
+</ProofStep>
 
 </DemonstrationSection>

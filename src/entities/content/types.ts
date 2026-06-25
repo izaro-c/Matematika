@@ -3,6 +3,14 @@ import type { ComponentType, LazyExoticComponent } from 'react';
 
 export type MDXComponent = LazyExoticComponent<ComponentType<Record<string, unknown>>> | ComponentType<Record<string, unknown>>;
 export type Difficulty = 'básico' | 'intermedio' | 'avanzado';
+export type FormalizationStatus = 'traceable' | 'axiomatic' | 'bridge' | 'proved' | 'mathlib';
+
+export interface MathematicalSource {
+  title: string;
+  author?: string;
+  locator?: string;
+  role?: 'primary' | 'secondary' | 'formalization';
+}
 
 export interface BaseContent {
   id: string;
@@ -12,6 +20,8 @@ export interface BaseContent {
   leanId?: string;
   leanCommitSha?: string;
   leanVerified?: boolean;
+  formalizationStatus?: FormalizationStatus;
+  sources?: MathematicalSource[];
 }
 
 export interface Mathematician extends BaseContent {
@@ -57,6 +67,8 @@ export interface Theorem {
   leanId?: string;
   leanCommitSha?: string;
   leanVerified?: boolean;
+  formalizationStatus?: FormalizationStatus;
+  sources?: MathematicalSource[];
 }
 
 export interface Lesson {
@@ -89,6 +101,8 @@ export interface Demo {
   leanId?: string;
   leanCommitSha?: string;
   leanVerified?: boolean;
+  formalizationStatus?: FormalizationStatus;
+  sources?: MathematicalSource[];
   stepTacticMap?: Record<string, string[]>;
   Component: MDXComponent;
   seeAlso?: string[];
@@ -110,6 +124,8 @@ export interface Definition {
   leanId?: string;
   leanCommitSha?: string;
   leanVerified?: boolean;
+  formalizationStatus?: FormalizationStatus;
+  sources?: MathematicalSource[];
 }
 
 export interface Example {
@@ -172,6 +188,8 @@ export interface Axiom {
   leanId?: string;
   leanCommitSha?: string;
   leanVerified?: boolean;
+  formalizationStatus?: FormalizationStatus;
+  sources?: MathematicalSource[];
 }
 
 export interface AxiomaticSystem extends AxiomaticSystemMeta {

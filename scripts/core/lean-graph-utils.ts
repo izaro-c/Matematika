@@ -1,13 +1,25 @@
 import fs from 'fs';
 import path from 'path';
 
+export type FormalizationStatus = 'axiomatic' | 'bridge' | 'proved' | 'mathlib';
+
 export interface LeanGraphNode {
   leanId: string;
   matematikaId: string;
   kind: string;
+  status: FormalizationStatus;
   declaredDeps: string[];
   proofIds: string[];
   sourceFile?: string;
+}
+
+export function validateLeanDeclarationNames(
+  nodes: LeanGraphNode[],
+  declarationNames: ReadonlySet<string>,
+): string[] {
+  return nodes
+    .filter(node => !declarationNames.has(node.leanId))
+    .map(node => node.leanId);
 }
 
 export interface LeanProofBlock {
@@ -24,6 +36,15 @@ export interface LeanGraph {
   nodes: LeanGraphNode[];
 }
 
+export interface LogicalGraphNode {
+  directDependencies: string[];
+  proofs: { id: string; dependencies: string[] }[];
+}
+
+export interface LogicalGraphStructure {
+  nodes: Record<string, LogicalGraphNode>;
+}
+
 export interface ProofBlockRegistry {
   generatedAt: string | null;
   blocks: LeanProofBlock[];
@@ -33,19 +54,29 @@ export interface ContentMetadataEntry {
   id: string;
   filePath: string;
   metadata: Record<string, unknown>;
+  content?: string;
 }
 
 export interface LeanDiffIssue {
-  code: 'missing-mdx' | 'lean-id-mismatch' | 'missing-proof-block' | 'dependency-divergence';
+  code:
+    | 'missing-mdx'
+    | 'lean-id-mismatch'
+    | 'missing-proof-block'
+    | 'dependency-divergence'
+    | 'missing-source'
+    | 'missing-axiom-system'
+    | 'mixed-statement-formula'
+    | 'missing-step-tactic-binding';
   matematikaId: string;
   leanId?: string;
   message: string;
 }
 
 const LEAN_DECL_RE =
-  /--\s*@matematika-id\s+"([^"]+)"\s+@lean-id\s+"([^"]+)"\s+@kind\s+"([^"]+)"\s+@deps\s+(\[[^\]]*\])/;
+  /--\s*@matematika-id\s+"([^"]+)"\s+@lean-id\s+"([^"]+)"\s+@kind\s+"([^"]+)"\s+@status\s+"([^"]+)"\s+@deps\s+(\[[^\]]*\])/;
 const BLOCK_START_RE = /--\s*@tactic-block-start\s+"([^"]+)"/;
 const BLOCK_END_RE = /--\s*@tactic-block-end\s+"([^"]+)"/;
+const FORMALIZATION_STATUSES = new Set<FormalizationStatus>(['axiomatic', 'bridge', 'proved', 'mathlib']);
 
 export function getMdxFiles(dir: string, fileList: string[] = []): string[] {
   if (!fs.existsSync(dir)) return fileList;
@@ -95,7 +126,7 @@ export function loadContentMetadata(contentDir: string): Map<string, ContentMeta
     const metadata = parseMetadata(content, filePath);
     if (!metadata) continue;
     const id = typeof metadata.id === 'string' ? metadata.id : path.basename(filePath, '.mdx');
-    entries.set(id, { id, filePath, metadata });
+    entries.set(id, { id, filePath, metadata, content });
   }
   return entries;
 }
@@ -111,12 +142,13 @@ function parseStringArray(value: string): string[] {
 
 function parseLeanDeclaration(line: string, sourceFile: string): LeanGraphNode | null {
   const declaration = line.match(LEAN_DECL_RE);
-  if (!declaration) return null;
+  if (!declaration || !FORMALIZATION_STATUSES.has(declaration[4] as FormalizationStatus)) return null;
   return {
     matematikaId: declaration[1],
     leanId: declaration[2],
     kind: declaration[3],
-    declaredDeps: parseStringArray(declaration[4]),
+    status: declaration[4] as FormalizationStatus,
+    declaredDeps: parseStringArray(declaration[5]),
     proofIds: [],
     sourceFile,
   };
@@ -257,20 +289,121 @@ function validateStepTacticMap(
   return issues;
 }
 
+function validateLogicalDependencies(
+  node: LeanGraphNode,
+  logicalGraph: LogicalGraphStructure | undefined,
+): LeanDiffIssue[] {
+  if (node.kind === 'axiom' || !logicalGraph) return [];
+
+  const logicalNode = logicalGraph.nodes[node.matematikaId];
+  if (!logicalNode) return [];
+
+  const requiredDependencies = new Set([
+    ...logicalNode.directDependencies,
+    ...logicalNode.proofs.flatMap(proof => proof.dependencies),
+  ]);
+  const declaredDependencies = new Set(node.declaredDeps);
+  const missingDependencies = [...requiredDependencies].filter(dep => !declaredDependencies.has(dep));
+  if (missingDependencies.length === 0) return [];
+
+  return [{
+    code: 'dependency-divergence',
+    matematikaId: node.matematikaId,
+    leanId: node.leanId,
+    message: `Lean declaration ${node.leanId} omits MDX logical dependencies: ${missingDependencies.join(', ')}.`,
+  }];
+}
+
+function hasSources(metadata: Record<string, unknown>): boolean {
+  const sources = metadata.sources;
+  return Array.isArray(sources) && sources.some(source =>
+    typeof source === 'object' && source !== null && typeof (source as Record<string, unknown>).title === 'string',
+  );
+}
+
+function hasMixedInitialStatementFormula(entry: ContentMetadataEntry): boolean {
+  if (!entry.content || !['teorema', 'lema', 'corolario', 'demostracion'].includes(String(entry.metadata.type))) {
+    return false;
+  }
+
+  const initialFormula = entry.content.match(/<Formula(?:\s[^>]*)?>\s*\$\$([\s\S]*?)\$\$/);
+  return initialFormula !== null && /\\text\{(?:Sean|tales que|Entonces)/.test(initialFormula[1]);
+}
+
+function contentIssue(
+  entry: ContentMetadataEntry,
+  leanId: string,
+  code: LeanDiffIssue['code'],
+  message: string,
+): LeanDiffIssue {
+  return { code, matematikaId: entry.id, leanId, message };
+}
+
+function validateProofStepBindings(entry: ContentMetadataEntry, leanId: string): LeanDiffIssue[] {
+  const stepTacticMap = entry.metadata.stepTacticMap;
+  if (entry.metadata.type !== 'demostracion' || !stepTacticMap || typeof stepTacticMap !== 'object' || Array.isArray(stepTacticMap)) {
+    return [];
+  }
+
+  const taggedSteps = new Map(
+    [...(entry.content ?? '').matchAll(/<ProofStep\b([^>]*)>/g)]
+      .map(tag => [tag[1].match(/\bnumber=\{(\d+)\}/)?.[1], tag[0]] as const)
+      .filter((step): step is readonly [string, string] => step[0] !== undefined),
+  );
+
+  return Object.keys(stepTacticMap as Record<string, unknown>).flatMap(step => {
+    const expectedBinding = `leanBlocks={metadata.stepTacticMap["${step}"]}`;
+    if (taggedSteps.get(step)?.includes(expectedBinding)) return [];
+    return [contentIssue(
+      entry,
+      leanId,
+      'missing-step-tactic-binding',
+      `MDX ${entry.id} maps step ${step} to Lean blocks but does not pass them to ProofStep.`,
+    )];
+  });
+}
+
+function validateLeanContentEntry(entry: ContentMetadataEntry): LeanDiffIssue[] {
+  const leanId = typeof entry.metadata.leanId === 'string' ? entry.metadata.leanId : undefined;
+  if (!leanId) return [];
+
+  const issues: LeanDiffIssue[] = [];
+  if (!hasSources(entry.metadata)) {
+    issues.push(contentIssue(entry, leanId, 'missing-source', `MDX ${entry.id} links Lean but does not declare a mathematical source.`));
+  }
+  if (entry.metadata.type === 'axioma' && typeof entry.metadata.axiomSystem !== 'string') {
+    issues.push(contentIssue(entry, leanId, 'missing-axiom-system', `Lean-linked axiom ${entry.id} must declare axiomSystem.`));
+  }
+  if (hasMixedInitialStatementFormula(entry)) {
+    issues.push(contentIssue(entry, leanId, 'mixed-statement-formula', `MDX ${entry.id} must keep hypotheses outside its initial Formula block.`));
+  }
+  return [...issues, ...validateProofStepBindings(entry, leanId)];
+}
+
+function validateLeanContentQuality(content: Map<string, ContentMetadataEntry>): LeanDiffIssue[] {
+  return [...content.values()].flatMap(validateLeanContentEntry);
+}
+
 export function compareLeanGraphToContent(
   leanGraph: LeanGraph,
   content: Map<string, ContentMetadataEntry>,
   proofBlocks: ProofBlockRegistry = { generatedAt: null, blocks: [] },
+  logicalGraph?: LogicalGraphStructure,
 ): LeanDiffIssue[] {
   const leanIds = new Set(leanGraph.nodes.map(node => node.leanId));
   const proofBlockMap = new Map(proofBlocks.blocks.map(block => [block.id, block]));
-  const issues = leanGraph.nodes.flatMap(node => compareLeanNodeToContent(node, content));
+  const issues = leanGraph.nodes.flatMap(node => [
+    ...compareLeanNodeToContent(node, content),
+    ...validateLogicalDependencies(node, logicalGraph),
+  ]);
 
   for (const entry of content.values()) {
     const leanIdIssue = validateContentLeanId(entry, leanIds);
     if (leanIdIssue) issues.push(leanIdIssue);
     issues.push(...validateStepTacticMap(entry, proofBlockMap));
   }
+
+  issues.push(...validateLeanContentQuality(content));
 
   return issues;
 }

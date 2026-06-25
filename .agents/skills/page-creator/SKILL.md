@@ -136,11 +136,13 @@ Estos campos pueden aparecer en axiomas, definiciones, teoremas, lemas, corolari
 "leanId"?: string — identificador Lean completo
 "leanCommitSha"?: string — SHA o "local-bridge" durante desarrollo local
 "leanVerified"?: boolean — generado por contentIndex, no escribir manualmente
+"formalizationStatus"?: "traceable" | "axiomatic" | "bridge" | "proved" | "mathlib" — generado por contentIndex, no escribir manualmente
+"sources"?: Array<{ title, author?, locator?, role?: "primary" | "secondary" | "formalization" }> — procedencia del contenido
 "axiomSystem"?: string — para axiomas propios sin equivalente Mathlib
 "stepTacticMap"?: Record<string, string[]> — solo demostraciones
 ```
 
-En demostraciones, `stepTacticMap` mapea el número 1-based de cada `<MedievalStep>` a IDs de bloques anotados en Lean:
+En demostraciones, `stepTacticMap` mapea el número 1-based de cada `<ProofStep>` a IDs de bloques anotados en Lean:
 
 ```json
 "stepTacticMap": {
@@ -168,11 +170,14 @@ Cada archivo MDX DEBE exportar un objeto `metadata`. Los schemas Zod (`src/entit
 "leanId"?: string
 "leanCommitSha"?: string
 "leanVerified"?: boolean — generado, no manual
+"formalizationStatus"?: string — generado, no manual
+"sources"?: Array<{ title, author?, locator?, role? }>
 "axiomSystem"?: string
 ```
 
 **Reglas:**
 - El axioma debe ser independiente (no demostrable desde otros axiomas de su sistema)
+- Todo axioma Lean enlazado declara `axiomSystem`, una fuente primaria o secundaria y un `leanId` anotado con estado `axiomatic`.
 - Usa solo términos primitivos o previamente definidos
 - La descripción informal debe reflejar fielmente el enunciado formal
 
@@ -263,7 +268,7 @@ Cada archivo MDX DEBE exportar un objeto `metadata`. Los schemas Zod (`src/entit
 "leanId"?: string
 "leanCommitSha"?: string
 "leanVerified"?: boolean — generado, no manual
-"stepTacticMap"?: Record<string, string[]> — MedievalStep.number → bloques Lean
+"stepTacticMap"?: Record<string, string[]> — ProofStep.number → bloques Lean
 ```
 
 **Reglas:**
@@ -392,6 +397,7 @@ Los ejercicios DEBEN tener **interacción progresiva**:
 **Principios de estructura:**
 - La página debe ser legible, comprensible, visual y atractiva; pero sobre todo, DEBE ser completa y rigurosa matemáticamente.
 - **Enunciados formales:** Deben usar **exclusivamente símbolos matemáticos puros** (`\forall, \exists, \implies, \in, \exists!`) sin palabras intercaladas en la fórmula. Poner siempre los `$$` en líneas independientes para que MDX los centre como bloque.
+- **Hipótesis y conclusión en geometría visual:** El contexto y las hipótesis se escriben fuera de `<Formula>`, en prosa precisa con matemáticas inline y `<InteractiveElement>` para cada objeto dibujado. `<Formula>` contiene únicamente la conclusión simbólica. No incluir `\text{Sean}`, `\text{tales que}` ni `\text{Entonces}` dentro de la fórmula: esas condiciones deben poder leerse y resaltarse de forma independiente.
 - **Evitar LaTeX dentro de ConceptLinks:** NUNCA envolver código LaTeX (`$A$`) directamente dentro de un `ConceptLink`. Usar texto puro: `<ConceptLink targetId="punto">A</ConceptLink>`.
 
 > [!IMPORTANT]
@@ -415,7 +421,7 @@ Las demostraciones son el corazón pedagógico de Matematika. Su diseño es el m
 
 El principal mandato para la creación de demostraciones es el rigor matemático puro e inquebrantable, basado en la estructuración de Marvin Jay Greenberg. Quedan estrictamente prohibidas las secciones de «Introducción» o «Tesis» sueltas. Se debe ir directo a la demostración paso a paso.
 
-La demostración comienza directamente con el `<Capitular />` seguido del contenido íntegro de la sección `### Enunciado Formal` del teorema padre: la primera letra del enunciado es la `<Capitular />`, y el resto del texto del enunciado continúa a continuación, sin título, sin introducción, sin frases como «Se demuestra...». Después del enunciado, un `<Separador />` y los pasos en `<MedievalStep>`.
+La demostración comienza directamente con el `<Capitular />` seguido del contenido íntegro de la sección `### Enunciado Formal` del teorema padre: la primera letra del enunciado es la `<Capitular />`, y el resto del texto del enunciado continúa a continuación, sin título, sin introducción, sin frases como «Se demuestra...». En demostraciones geométricas visuales, ese enunciado presenta primero el contexto y las hipótesis en prosa enlazable e interactiva, después «Entonces:», y deja en `<Formula>` solo la conclusión. Después del enunciado, un `<Separador />` y los pasos en `<ProofStep>`.
 
 > [!CAUTION]
 > **PROHIBIDO** anteponer frases introductorias («Se demuestra que...», «La siguiente prueba...», etc.). La demostración arranca directamente con el enunciado. **PROHIBIDO** añadir un encabezado `### Enunciado Formal`. **PROHIBIDO** describir el método de prueba.
@@ -428,7 +434,7 @@ La demostración comienza directamente con el `<Capitular />` seguido del conten
 5. **"Por el paso N..."** (referenciando un paso numérico previo del propio argumento).
 6. **"Por regla de lógica..."** (ej. Modus Ponens, reducción al absurdo, transitividad de la igualdad).
 
-Los pasos pueden agruparse por fluidez narrativa dentro de un mismo `<MedievalStep>`, pero la correspondencia atómica entre Afirmación y Justificación debe ser matemáticamente rastreable en el texto. **Jamás se asume una propiedad visual topológica ("se ve en el diagrama que las rectas se cortan"); toda intersección debe justificarse con el Axioma de Pasch, Barra Cruzada o los Axiomas de Incidencia.**
+Los pasos pueden agruparse por fluidez narrativa dentro de un mismo `<ProofStep>`, pero la correspondencia atómica entre Afirmación y Justificación debe ser matemáticamente rastreable en el texto. **Jamás se asume una propiedad visual topológica ("se ve en el diagrama que las rectas se cortan"); toda intersección debe justificarse con el Axioma de Pasch, Barra Cruzada o los Axiomas de Incidencia.**
 
 **DIAGRAMAS EN DEMOSTRACIONES — REGLA FUNDAMENTAL:**
 
@@ -449,7 +455,7 @@ Esta conexión no es opcional y tiene reglas estrictas:
 - **Resaltado:** El `target` debe coincidir con el ID del elemento en el diagrama para que este se resalte al interactuar.
 - **Color:** El elemento en el texto DEBE ser del mismo color que el elemento en el diagrama utilizando la prop `color`.
 
-Cada `<MedievalStep>` DEBE contener al menos un `<InteractiveElement>` referenciando un elemento del diagrama. No hay excepciones: si un paso no tiene nada que resaltar en el diagrama, el paso no necesita diagrama (y probablemente pertenece a la sección de análisis, no a un paso de la demostración).
+Cada `<ProofStep>` DEBE contener al menos un `<InteractiveElement>` referenciando un elemento del diagrama. No hay excepciones: si un paso no tiene nada que resaltar en el diagrama, el paso no necesita diagrama (y probablemente pertenece a la sección de análisis, no a un paso de la demostración).
 
 **Patrón — Component + JSX (demostraciones con justificación de Greenberg):**
 
@@ -457,7 +463,7 @@ Cada `<MedievalStep>` DEBE contener al menos un `<InteractiveElement>` referenci
 export const metadata = { ... "layout": "split" ... };
 
 import { DemonstrationSection } from "../../components/content/DemonstrationSection";
-import { MedievalStep } from "../../components/content/MedievalStep";
+import { ProofStep } from "../../components/content/ProofStep";
 import { InteractiveElement } from "../../components/ui/VisualBind";
 import { Step1Diagram } from "../../diagrams/Teoremas/Step1Diagram";
 import { Step2Diagram } from "../../diagrams/Teoremas/Step2Diagram";
@@ -470,17 +476,17 @@ export const Component = () => {
 
   return (
     <DemonstrationSection diagrams={diagrams}>
-      <MedievalStep number={1} target="step1" title="Existencia">
+      <ProofStep number={1} target="step1" title="Existencia">
         Por el <ConceptLink targetId="axioma-incidencia-1">Axioma de Incidencia 1</ConceptLink>, dados los puntos <InteractiveElement target="punto-a" color="terracota">$A$</InteractiveElement> y <InteractiveElement target="punto-b" color="terracota">$B$</InteractiveElement>, existe una única <InteractiveElement target="recta-ab" color="salvia">recta $AB$</InteractiveElement> que los contiene.
-      </MedievalStep>
+      </ProofStep>
 
-      <MedievalStep number={2} target="step2" title="Construcción">
+      <ProofStep number={2} target="step2" title="Construcción">
         Por el <ConceptLink targetId="axioma-orden-2">Axioma de Extensión (Orden 2)</ConceptLink>, existe un punto <InteractiveElement target="punto-c" color="terracota">$C$</InteractiveElement> tal que $A * B * C$.
-      </MedievalStep>
+      </ProofStep>
 
-      <MedievalStep number={3} target="step2" title="Conclusión">
+      <ProofStep number={3} target="step2" title="Conclusión">
         Por el Paso 2 y por la <ConceptLink targetId="definicion-segmento">definición de segmento</ConceptLink>, concluimos que el punto $B$ pertenece al segmento $AC$. $\blacksquare$
-      </MedievalStep>
+      </ProofStep>
     </DemonstrationSection>
   );
 };
@@ -667,7 +673,7 @@ npm run validate-lean
 - [ ] `parentTheorem` apunta a un teorema existente
 - [ ] Rigor de Greenberg: Cada afirmación en los pasos utiliza estrictamente una de las 6 justificaciones (Hipótesis, Axioma, Teorema, Definición, Paso Previo, Regla Lógica).
 - [ ] No existen deducciones topológicas basadas en asunciones visuales del diagrama (ej. asumir intersecciones sin invocar el Axioma de Pasch).
-- [ ] Cada `MedievalStep` tiene un `<InteractiveElement>` correspondiente en el cuerpo
+- [ ] Cada `ProofStep` tiene un `<InteractiveElement>` correspondiente en el cuerpo
 - [ ] `InteractiveElement` está importado desde `VisualBind` (no desde MDXBlocks)
 - [ ] El método de demostración (`proofMethod`) describe correctamente el enfoque
 - [ ] Para split-layout: cada paso tiene diagrama o usa uno compartido

@@ -6,6 +6,13 @@ export const metadata = {
   "statement": "El sistema de puntos sobre una recta, con las relaciones de incidencia, orden y congruencia establecidas, es maximal: no admite extensiones que preserven todos los axiomas.",
   "tags": ["geometria", "continuidad", "geometria-absoluta", "fundamentos"],
   "authors": ["hilbert", "dedekind"],
+  "axiomSystem": "sistema-absoluto",
+  "leanId": "Matematika.Geometry.Hilbert.no_proper_axiomatic_extension",
+  "leanCommitSha": "local-hilbert-core",
+  "sources": [
+    { "title": "Grundlagen der Geometrie", "author": "David Hilbert", "role": "primary" },
+    { "title": "Euclidean and Non-Euclidean Geometries", "author": "Marvin Jay Greenberg", "role": "secondary" }
+  ],
   "hasSimulation": true,
   "links": ["punto"],
 };
@@ -42,5 +49,4 @@ En el lenguaje matemático analítico, garantiza que todo <ConceptLink targetId=
 ### Observaciones
 
 El <ConceptLink targetId={["axioma-completitud", "axioma"]}>axioma de completitud</ConceptLink> no es estrictamente necesario para la mayor parte de la <ConceptLink targetId="geometria-elemental" isDependency={false}>geometría elemental</ConceptLink>. Muchos <ConceptLink targetId="teorema" isDependency={false}>teoremas</ConceptLink> clásicos pueden demostrarse usando exclusivamente el <ConceptLink targetId={["axioma-arquimedes", "axioma", "arquimedes"]}>axioma de Arquímedes</ConceptLink>. Sin embargo, para demostrar que una <ConceptLink targetId="recta" isDependency={false}>recta geométrica</ConceptLink> y la <ConceptLink targetId="recta-real" isDependency={false}>recta real</ConceptLink> son <ConceptLink targetId="isomorfismo" isDependency={false}>isomorfas</ConceptLink>, o para garantizar la existencia de <ConceptLink targetId="punto" isDependency={false}>puntos</ConceptLink> definidos por <ConceptLink targetId="limite" isDependency={false}>límites</ConceptLink> e <ConceptLink targetId="interseccion" isDependency={false}>intersecciones</ConceptLink> de curvas trascendentes, este <ConceptLink targetId="axioma" isDependency={false}>axioma</ConceptLink> es absolutamente imprescindible. Curiosamente, en <ConceptLink targetId="geometria-no-euclidea" isDependency={false}>geometrías no euclídeas</ConceptLink> también se asume la <ConceptLink targetId="completitud" isDependency={false}>completitud</ConceptLink> para que sus modelos estándar mantengan las propiedades del continuo topológico.
-
 

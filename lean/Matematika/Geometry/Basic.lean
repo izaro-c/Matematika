@@ -1,36 +1,50 @@
-import Mathlib
+import Matematika.Geometry.Hilbert.Constructions
 
 /-!
-# Matematika Geometry Pilot
+# Puentes provisionales de geometría
 
-This module is the first staged bridge between Matematika's pedagogical MDX
-content and Lean 4. It intentionally starts with a tiny formal surface: enough
-to validate the extraction, diffing, and proof-block traceability pipeline.
+Los teoremas de este módulo compilan en la teoría sintética declarada, pero
+todavía dependen de puentes explícitos. Su estado `bridge` evita presentarlos
+como derivaciones completas desde los axiomas de Hilbert.
 -/
 
 namespace Matematika.Geometry
 
-universe u
+open Hilbert
 
-opaque Triangle : Type u
+axiom ala_reduces_to_lal :
+  {t u : Triangle} -> ALAHypothesis t u -> LALHypothesis t u
 
-constant ALAHypothesis : Triangle -> Triangle -> Prop
-constant CongruentTriangle : Triangle -> Triangle -> Prop
+axiom lll_reduces_to_lal :
+  {t u : Triangle} -> LLLHypothesis t u -> LALHypothesis t u
 
-axiom axiom_congruence_ala :
-  {t₁ t₂ : Triangle} -> ALAHypothesis t₁ t₂ -> CongruentTriangle t₁ t₂
-
--- @matematika-id "teorema-congruencia-ala" @lean-id "Matematika.Geometry.congruence_ala" @kind "theorem" @deps ["axioma-congruencia-1","axioma-congruencia-4","axioma-congruencia-5","congruencia","triangulo"]
-theorem congruence_ala {t₁ t₂ : Triangle} (h : ALAHypothesis t₁ t₂) :
-    CongruentTriangle t₁ t₂ := by
+-- @matematika-id "teorema-congruencia-ala" @lean-id "Matematika.Geometry.congruence_ala" @kind "theorem" @status "bridge" @deps ["axioma-congruencia-1","axioma-congruencia-4","axioma-congruencia-5","congruencia","angulo","triangulo","segmento"]
+theorem congruence_ala {t u : Triangle} (h : ALAHypothesis t u) :
+    TriangleCongruent t u := by
   -- @tactic-block-start "ala-step1-transport"
-  have h_transport : ALAHypothesis t₁ t₂ := h
+  have h_transport : ALAHypothesis t u := h
   -- @tactic-block-end "ala-step1-transport"
   -- @tactic-block-start "ala-step2-apply-lal"
-  have h_lal : CongruentTriangle t₁ t₂ := axiom_congruence_ala h_transport
+  have h_lal : LALHypothesis t u := ala_reduces_to_lal h_transport
   -- @tactic-block-end "ala-step2-apply-lal"
   -- @tactic-block-start "ala-step3-uniqueness"
-  exact h_lal
+  exact congruent_of_lal h_lal
   -- @tactic-block-end "ala-step3-uniqueness"
+
+-- @matematika-id "teorema-congruencia-lll" @lean-id "Matematika.Geometry.congruence_lll" @kind "theorem" @status "bridge" @deps ["axioma-congruencia-1","axioma-congruencia-3","axioma-congruencia-4","axioma-congruencia-5","teorema-triangulo-isosceles","congruencia","triangulo"]
+theorem congruence_lll {t u : Triangle} (h : LLLHypothesis t u) :
+    TriangleCongruent t u := by
+  -- @tactic-block-start "lll-step1-transport"
+  have h_transport : LLLHypothesis t u := h
+  -- @tactic-block-end "lll-step1-transport"
+  -- @tactic-block-start "lll-step2-apply-lal"
+  have h_lal : LALHypothesis t u := lll_reduces_to_lal h_transport
+  -- @tactic-block-end "lll-step2-apply-lal"
+  -- @tactic-block-start "lll-step3-auxiliary-isosceles"
+  have h_auxiliary : LALHypothesis t u := h_lal
+  -- @tactic-block-end "lll-step3-auxiliary-isosceles"
+  -- @tactic-block-start "lll-step4-conclusion"
+  exact congruent_of_lal h_auxiliary
+  -- @tactic-block-end "lll-step4-conclusion"
 
 end Matematika.Geometry

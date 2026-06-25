@@ -112,7 +112,7 @@ Diagrama (panel izquierdo)
 
 | Store | Variable | Cuándo usar | Escribe | Leído por |
 |---|---|---|---|---|
-| **MathStore** | `step` | Progreso de la demostración (paso activo) | `MedievalStep` (IntersectionObserver) | `DemonstrationSection` (para elegir diagrama), Diagramas (para visibilidad) |
+| **MathStore** | `step` | Progreso de la demostración (paso activo) | `ProofStep` (IntersectionObserver) | `DemonstrationSection` (para elegir diagrama), Diagramas (para visibilidad) |
 | **MathStore** | `highlight` | Énfasis visual (hover sobre texto) | `InteractiveElement` (hover) | Diagramas (para engrosar/resaltar elementos temporales) |
 
 **Regla de Oro:** El avance de los pasos (`step`) determina qué geometría existe o es visible. El `highlight` determina exclusivamente qué elementos ya visibles reciben énfasis. NUNCA sobreescribir `step` con un `highlight`.
@@ -627,9 +627,9 @@ import { MyDiagram } from '../../diagrams/Teoremas/MyDiagram';
 
 export const Component = () => (
     <DemonstrationSection diagrams={{ "default": MyDiagram }}>
-        <MedievalStep number={1} target="miElemento" title="...">
+        <ProofStep number={1} target="miElemento" title="...">
             <InteractiveElement target="miElemento" color="terracota">texto</InteractiveElement>
-        </MedievalStep>
+        </ProofStep>
     </DemonstrationSection>
 );
 ```
@@ -678,7 +678,7 @@ Cuando hay varios diagramas (patrón por paso o híbrido), el `DemonstrationSect
 
 - El panel izquierdo (diagrama) es **`position: sticky`** — permanece fijo en pantalla mientras el texto scrollea
 - Los diagramas cambian con una **transición de fundido suave** (opacity 700ms ease-in-out)
-- El diagrama activo se determina por `MathStore.variables['step']`: si el `target` del `MedievalStep` visible coincide con una clave de `diagrams`, ese diagrama se muestra
+- El diagrama activo se determina por `MathStore.variables['step']`: si el `target` del `ProofStep` visible coincide con una clave de `diagrams`, ese diagrama se muestra
 - Si ningún `target` coincide, se muestra el primer diagrama del mapa
 
 Esto asegura que el estudiante siempre vea el diagrama correcto para el paso que está leyendo, sin importar si hace hover con el ratón por otras partes del texto (lo cual altera `highlight`, no `step`).
@@ -690,6 +690,7 @@ Esto asegura que el estudiante siempre vea el diagrama correcto para el paso que
 Esto incluye:
 - Puntos, segmentos, ángulos, polígonos mencionados en prosa
 - Variables que corresponden a elementos visuales ($a$, $b$, $c$ si son lados visibles)
+- **Hipótesis iniciales:** en demostraciones visuales, presentar las condiciones fuera de `<Formula>` como prosa con matemáticas inline y `<InteractiveElement>`. Reservar `<Formula>` para la conclusión; así cada condición puede resaltar el objeto al que se refiere.
 - **Referencias dentro de fórmulas**: envolver cada variable en `<InteractiveElement>`:
   ```mdx
   <InteractiveElement target="cateto-a" color="terracota">$a$</InteractiveElement>^2 +
@@ -705,7 +706,7 @@ Esto incluye:
   <InteractiveElement target="seg-db">$DB$</InteractiveElement> entre $D$ y $B$, etc.
   ```
 
-Cada `<MedievalStep>` DEBE contener al menos un `<InteractiveElement>`. Si un paso no tiene nada que resaltar en el diagrama, no necesita diagrama (y probablemente pertenece a la sección de análisis, no a un paso de demostración).
+Cada `<ProofStep>` DEBE contener al menos un `<InteractiveElement>`. Si un paso no tiene nada que resaltar en el diagrama, no necesita diagrama (y probablemente pertenece a la sección de análisis, no a un paso de demostración).
 
 ### 15.4 Approach A — Un Diagrama por Paso (POR DEFECTO)
 
@@ -717,16 +718,16 @@ Cada paso tiene su propio componente de diagrama:
     "step2": Step2Diagram,
     "step3": Step3Diagram
 }}>
-  <MedievalStep number={1} target="step1" title="Construcción">
+  <ProofStep number={1} target="step1" title="Construcción">
     Partimos de <InteractiveElement target="punto-a" color="terracota">$A$</InteractiveElement>...
-  </MedievalStep>
-  <MedievalStep number={2} target="step2" title="Razonamiento">
+  </ProofStep>
+  <ProofStep number={2} target="step2" title="Razonamiento">
     Por la propiedad de <ConceptLink targetId="axioma-congruencia-1">transporte</ConceptLink>,
     el <InteractiveElement target="segmento-cd" color="salvia">segmento $CD$</InteractiveElement>...
-  </MedievalStep>
-  <MedievalStep number={3} target="step3" title="Conclusión">
+  </ProofStep>
+  <ProofStep number={3} target="step3" title="Conclusión">
     ... $\blacksquare$
-  </MedievalStep>
+  </ProofStep>
 </DemonstrationSection>
 ```
 
@@ -771,7 +772,7 @@ Al crear o refactorizar diagramas de demostración, **evita estos errores frecue
 - Lee `MathStore.variables['step']` para decidir qué diagrama mostrar (transición sticky)
 - Si se pasa `diagrams` (mapa), busca el diagrama cuya clave coincide con `step`; si no coincide, muestra el primero
 - Si se pasa `diagram` (single), lo muestra siempre
-- Layout: panel izquierdo sticky (diagrama), panel derecho scrolleable (texto con MedievalSteps)
+- Layout: panel izquierdo sticky (diagrama), panel derecho scrolleable (texto con ProofSteps)
 - Transiciones entre diagramas: opacity 700ms ease-in-out (fundido suave)
 
 ---
@@ -1576,13 +1577,13 @@ export const metadata = {
 
 // ❌ INCORRECTO — DemonstrationSection reserva panel de diagrama
 <DemonstrationSection>
-  <MedievalStep ...>...</MedievalStep>
+  <ProofStep ...>...</ProofStep>
 </DemonstrationSection>
 
-// ✅ CORRECTO — MedievalSteps directamente en el cuerpo MDX
-<MedievalStep number={1} title="Suposición">
+// ✅ CORRECTO — ProofSteps directamente en el cuerpo MDX
+<ProofStep number={1} title="Suposición">
   ...
-</MedievalStep>
+</ProofStep>
 ```
 
 Con `layout: "text"`, el contenido ocupa el ancho completo de la ficha, sin panel lateral reservado.
@@ -1596,7 +1597,7 @@ La integración Lean es textual y metadata-driven. Los campos `leanId` y `stepTa
 Reglas:
 - No modificar `MathStore.step`, `MathStore.highlight`, `InteractiveElement` ni `DemonstrationSection` para mostrar código Lean.
 - No crear estados visuales especiales para bloques Lean; el diagrama sigue respondiendo solo a pasos pedagógicos y highlights.
-- Si un `MedievalStep` tiene `leanBlocks`, el desplegable "Ver en Lean" debe permanecer colapsado por defecto y no afectar layout ni visibilidad geométrica.
+- Si un `ProofStep` tiene `leanBlocks`, el desplegable "Ver en Lean" debe permanecer colapsado por defecto y no afectar layout ni visibilidad geométrica.
 
 ---
 

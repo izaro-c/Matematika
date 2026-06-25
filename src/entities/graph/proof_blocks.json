@@ -1,29 +1,61 @@
 {
-  "generatedAt": "2026-06-24T17:52:09.855Z",
+  "generatedAt": "2026-06-24T23:20:50.505Z",
   "blocks": [
     {
       "id": "ala-step1-transport",
       "leanId": "Matematika.Geometry.congruence_ala",
       "sourceFile": "lean/Matematika/Geometry/Basic.lean",
-      "startLine": 26,
-      "endLine": 28,
-      "code": "  -- @tactic-block-start \"ala-step1-transport\"\n  have h_transport : ALAHypothesis t₁ t₂ := h\n  -- @tactic-block-end \"ala-step1-transport\""
+      "startLine": 24,
+      "endLine": 26,
+      "code": "  -- @tactic-block-start \"ala-step1-transport\"\n  have h_transport : ALAHypothesis t u := h\n  -- @tactic-block-end \"ala-step1-transport\""
     },
     {
       "id": "ala-step2-apply-lal",
       "leanId": "Matematika.Geometry.congruence_ala",
       "sourceFile": "lean/Matematika/Geometry/Basic.lean",
-      "startLine": 29,
-      "endLine": 31,
-      "code": "  -- @tactic-block-start \"ala-step2-apply-lal\"\n  have h_lal : CongruentTriangle t₁ t₂ := axiom_congruence_ala h_transport\n  -- @tactic-block-end \"ala-step2-apply-lal\""
+      "startLine": 27,
+      "endLine": 29,
+      "code": "  -- @tactic-block-start \"ala-step2-apply-lal\"\n  have h_lal : LALHypothesis t u := ala_reduces_to_lal h_transport\n  -- @tactic-block-end \"ala-step2-apply-lal\""
     },
     {
       "id": "ala-step3-uniqueness",
       "leanId": "Matematika.Geometry.congruence_ala",
       "sourceFile": "lean/Matematika/Geometry/Basic.lean",
-      "startLine": 32,
-      "endLine": 34,
-      "code": "  -- @tactic-block-start \"ala-step3-uniqueness\"\n  exact h_lal\n  -- @tactic-block-end \"ala-step3-uniqueness\""
+      "startLine": 30,
+      "endLine": 32,
+      "code": "  -- @tactic-block-start \"ala-step3-uniqueness\"\n  exact congruent_of_lal h_lal\n  -- @tactic-block-end \"ala-step3-uniqueness\""
+    },
+    {
+      "id": "lll-step1-transport",
+      "leanId": "Matematika.Geometry.congruence_lll",
+      "sourceFile": "lean/Matematika/Geometry/Basic.lean",
+      "startLine": 37,
+      "endLine": 39,
+      "code": "  -- @tactic-block-start \"lll-step1-transport\"\n  have h_transport : LLLHypothesis t u := h\n  -- @tactic-block-end \"lll-step1-transport\""
+    },
+    {
+      "id": "lll-step2-apply-lal",
+      "leanId": "Matematika.Geometry.congruence_lll",
+      "sourceFile": "lean/Matematika/Geometry/Basic.lean",
+      "startLine": 40,
+      "endLine": 42,
+      "code": "  -- @tactic-block-start \"lll-step2-apply-lal\"\n  have h_lal : LALHypothesis t u := lll_reduces_to_lal h_transport\n  -- @tactic-block-end \"lll-step2-apply-lal\""
+    },
+    {
+      "id": "lll-step3-auxiliary-isosceles",
+      "leanId": "Matematika.Geometry.congruence_lll",
+      "sourceFile": "lean/Matematika/Geometry/Basic.lean",
+      "startLine": 43,
+      "endLine": 45,
+      "code": "  -- @tactic-block-start \"lll-step3-auxiliary-isosceles\"\n  have h_auxiliary : LALHypothesis t u := h_lal\n  -- @tactic-block-end \"lll-step3-auxiliary-isosceles\""
+    },
+    {
+      "id": "lll-step4-conclusion",
+      "leanId": "Matematika.Geometry.congruence_lll",
+      "sourceFile": "lean/Matematika/Geometry/Basic.lean",
+      "startLine": 46,
+      "endLine": 48,
+      "code": "  -- @tactic-block-start \"lll-step4-conclusion\"\n  exact congruent_of_lal h_auxiliary\n  -- @tactic-block-end \"lll-step4-conclusion\""
     }
   ]
 }

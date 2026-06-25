@@ -9,7 +9,10 @@ export const metadata = {
   "difficulty": "intermedio",
   "hasSimulation": true,
   "leanId": "Matematika.Geometry.congruence_ala",
-  "leanCommitSha": "local-bridge",
+  "leanCommitSha": "local-hilbert-core",
+  "sources": [
+    { "title": "Euclidean and Non-Euclidean Geometries", "author": "Marvin Jay Greenberg", "role": "secondary" }
+  ],
   "demos": ["demo-congruencia-ala"]
 };
 
@@ -23,8 +26,16 @@ l criterio de <ConceptLink targetId="congruencia" isDependency={true}>congruenci
 
 ### Enunciado
 
+Sean los <ConceptLink targetId="triangulo" isDependency={false}>triángulos</ConceptLink> <InteractiveElement target="globalmente-congruentes">$\triangle ABC$ y $\triangle A'B'C'$</InteractiveElement>. Se supone que satisfacen:
+
+- <InteractiveElement target="lado-ab">$\overline{AB} \cong \overline{A'B'}$</InteractiveElement>.
+- <InteractiveElement target="angulo-a">$\angle A \cong \angle A'$</InteractiveElement>.
+- <InteractiveElement target="angulo-b">$\angle B \cong \angle B'$</InteractiveElement>.
+
+Entonces:
+
 <Formula>
-  $$ \text{Sean } \triangle ABC \text{ y } \triangle A'B'C' \text{ tales que } \overline{AB} \cong \overline{A'B'}, \; \angle A \cong \angle A', \; \angle B \cong \angle B'. \text{ Entonces } \triangle ABC \cong \triangle A'B'C'. $$
+  $$ \triangle ABC \cong \triangle A'B'C'. $$
 </Formula>
 
 
