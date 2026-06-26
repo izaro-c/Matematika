@@ -19,16 +19,7 @@ function parseMetadata(content: string, filePath: string) {
   return null;
 }
 
-function extractDependenciesFromConceptLinks(content: string): string[] {
-  // Extracción de dependencias ignorando las que tengan isDependency={false}
-  const regex = /<ConceptLink\s+(?![^>]*isDependency=\{false\})[^>]*targetId=["']([^"']+)["']/g;
-  const deps = new Set<string>();
-  let match;
-  while ((match = regex.exec(content)) !== null) {
-    deps.add(match[1]);
-  }
-  return Array.from(deps);
-}
+
 
 function extractConceptLinksFromContent(content: string): string[] {
   const regex = /<ConceptLink[^>]*targetId=["']([^"']+)["']/g;
@@ -60,30 +51,42 @@ const contentDir = path.resolve(process.cwd(), 'src/database/content');
 const mdxFiles = getMdxFiles(contentDir);
 
 const allNodes = new Set<string>();
-const metadataMap = new Map<string, any>();
+const metadataMap = new Map<string, Record<string, unknown>>();
 const contentDepsMap = new Map<string, string[]>();
-const conceptLinksMap = new Map<string, string[]>();
+
+const leanGraphPath = path.resolve(process.cwd(), 'src/entities/graph/lean_graph.json');
+const leanDepsMap: Record<string, string[]> = {};
+if (fs.existsSync(leanGraphPath)) {
+  try {
+    const leanData = JSON.parse(fs.readFileSync(leanGraphPath, 'utf-8'));
+    for (const node of leanData.nodes) {
+      if (node.leanId && Array.isArray(node.declaredDeps)) {
+        leanDepsMap[node.leanId] = node.declaredDeps;
+      }
+    }
+  } catch (e) {
+    console.error("[WARNING] No se pudo leer lean_graph.json", e);
+  }
+}
 
 // Pass 1: Extract all metadata and auto-infer dependencies from text
-mdxFiles.forEach(file => {
+function processMdxFile(file: string) {
   const content = fs.readFileSync(file, 'utf-8');
   const metadata = parseMetadata(content, file);
 
   if (metadata) {
     const slug = path.basename(file, '.mdx');
-    const id = metadata.id || slug;
+    const id = (metadata.id as string) || slug;
     metadata._filePath = file;
-    metadataMap.set(id, metadata);
+    metadataMap.set(id, metadata as Record<string, unknown>);
     allNodes.add(id);
 
-    const conceptLinks = extractConceptLinksFromContent(content);
-    // Para definiciones, solo se usan los 'links' explícitos en metadata;
-    // los ConceptLinks en el cuerpo son navegación, no dependencias lógicas.
-    const isDef = metadata.type === 'definicion';
-    const automaticDeps = isDef ? [] : extractDependenciesFromConceptLinks(content);
-
-    // Graph edges come from metadata and automatically from ConceptLinks
-    const contentDeps: string[] = [...automaticDeps];
+    // Graph edges come strictly from explicit metadata arrays and Lean declared dependencies
+    const contentDeps: string[] = [];
+    if (metadata.leanId && leanDepsMap[metadata.leanId as string]) {
+      contentDeps.push(...leanDepsMap[metadata.leanId as string]);
+    }
+    
     if (Array.isArray(metadata.links)) contentDeps.push(...metadata.links);
     if (Array.isArray(metadata.requires)) contentDeps.push(...metadata.requires);
     if (Array.isArray(metadata.dependencias)) contentDeps.push(...metadata.dependencias);
@@ -99,9 +102,10 @@ mdxFiles.forEach(file => {
 
     // Remove duplicates
     contentDepsMap.set(id, Array.from(new Set(contentDeps)));
-    conceptLinksMap.set(id, conceptLinks);
   }
-});
+}
+
+mdxFiles.forEach(processMdxFile);
 
 // Las definiciones participan en el grafo lógico.
 // Las definiciones primitivas (subtype: 'primitivo') no propagan dependencias:
@@ -227,38 +231,40 @@ for (const node of allNodes) {
 }
 const topologicalOrder: string[] = [];
 
+function breakCycle(node: string, dep: string) {
+  console.warn(`[INFO] Ciclo roto forzosamente: "${node}" -> "${dep}". Se ignorará esta arista.`);
+  const gNode = graphNodes[node];
+  if (!gNode) return;
+  
+  if (gNode.directDependencies.includes(dep)) {
+    gNode.directDependencies = gNode.directDependencies.filter(d => d !== dep);
+  } else if (gNode.proofs) {
+    for (const proof of gNode.proofs) {
+      if (proof.dependencies.includes(dep)) {
+        proof.dependencies = proof.dependencies.filter(d => d !== dep);
+      }
+    }
+  }
+}
+
 function dfs(node: string) {
-  if (color.get(node) === 'black') return;
-  if (color.get(node) === 'gray') {
+  const c = color.get(node);
+  if (c === 'black') return;
+  if (c === 'gray') {
     console.error(`\n[ERROR FATAL] Ciclo lógico detectado en el nodo: ${node}`);
     process.exit(1);
   }
 
   color.set(node, 'gray');
 
-  const safeDeps = [];
   const deps = adjacencyList[node] || [];
 
   for (const dep of deps) {
     if (!allNodes.has(dep)) continue;
-
     if (color.get(dep) === 'gray') {
-      console.warn(`[INFO] Ciclo roto forzosamente: "${node}" -> "${dep}". Se ignorará esta arista.`);
-      if (graphNodes[node]?.directDependencies.includes(dep)) {
-        graphNodes[node].directDependencies = graphNodes[node].directDependencies.filter(d => d !== dep);
-      } else {
-        for (const proof of graphNodes[node]?.proofs || []) {
-          if (proof.dependencies.includes(dep)) {
-            proof.dependencies = proof.dependencies.filter(d => d !== dep);
-          }
-        }
-      }
+      breakCycle(node, dep);
       continue;
     }
-    safeDeps.push(dep);
-  }
-
-  for (const dep of safeDeps) {
     dfs(dep);
   }
 

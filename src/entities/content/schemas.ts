@@ -1,11 +1,16 @@
 import { z } from 'zod';
 
-export const FormalizationStatusSchema = z.enum([
-  'traceable',
-  'axiomatic',
+export const VerificationStatusSchema = z.enum([
+  'none',
+  'human-proof',
+  'lean-checked',
+  'lean-audited',
+]);
+
+export const FoundationSchema = z.enum([
+  'matematika-axioms',
   'bridge',
-  'proved',
-  'mathlib',
+  'pending',
 ]);
 
 const MathematicalSourceSchema = z.object({
@@ -16,14 +21,16 @@ const MathematicalSourceSchema = z.object({
 });
 
 const LeanMetadataSchema = {
-  /** Identificador de la declaración formal en Lean 4 / Mathlib. */
+  /** Identificador de la declaración formal en el core de Lean de Matematika. */
   leanId: z.string().optional(),
-  /** SHA de Mathlib o del entorno Lean usado para verificar esta página. */
+  /** SHA del entorno Lean usado para verificar esta página, o 'local-bridge'. */
   leanCommitSha: z.string().optional(),
   /** Campo generado por el índice: true si leanId aparece en lean_graph.json. */
   leanVerified: z.boolean().optional(),
-  /** Campo generado por el índice: grado de formalización de la declaración Lean. */
-  formalizationStatus: FormalizationStatusSchema.optional(),
+  /** Campo generado por el índice: nivel de verificación de la prueba. */
+  verificationStatus: VerificationStatusSchema.optional(),
+  /** Campo generado por el índice: fundamento lógico de la prueba. */
+  foundation: FoundationSchema.optional(),
   /** Referencias que fijan la definición, el enunciado o la formalización. */
   sources: z.array(MathematicalSourceSchema).optional(),
 };

@@ -126,7 +126,7 @@ Los `<ConceptLink>` siguen siendo obligatorios para navegación, pedagogía, Mar
   <ConceptLink targetId="teorema-separacion" isDependency={false}>teorema de separación</ConceptLink>
   ```
 - Para referencias cruzadas generales en el texto, usar `<RefLink targetId="...">` — son enlaces semánticos de cuerpo que abren el MarginaliaPanel, pero NO crean una conexión formal en metadata.
-- Nunca inventes `leanId`: usa una declaración existente de `lean/Matematika/...` o Mathlib, o deja el campo ausente.
+- Nunca inventes `leanId`: usa una declaración existente de `lean/Matematika/...`, o deja el campo ausente.
 
 ### 4.1 Campos Lean opcionales
 
@@ -136,9 +136,10 @@ Estos campos pueden aparecer en axiomas, definiciones, teoremas, lemas, corolari
 "leanId"?: string — identificador Lean completo
 "leanCommitSha"?: string — SHA o "local-bridge" durante desarrollo local
 "leanVerified"?: boolean — generado por contentIndex, no escribir manualmente
-"formalizationStatus"?: "traceable" | "axiomatic" | "bridge" | "proved" | "mathlib" — generado por contentIndex, no escribir manualmente
+"verificationStatus"?: "none" | "human-proof" | "lean-checked" | "lean-audited" — generado por contentIndex, no escribir manualmente
+"foundation"?: "matematika-axioms" | "bridge" | "pending" — generado por contentIndex, no escribir manualmente
 "sources"?: Array<{ title, author?, locator?, role?: "primary" | "secondary" | "formalization" }> — procedencia del contenido
-"axiomSystem"?: string — para axiomas propios sin equivalente Mathlib
+"axiomSystem"?: string — identificador del sistema axiomático
 "stepTacticMap"?: Record<string, string[]> — solo demostraciones
 ```
 
@@ -150,6 +151,10 @@ En demostraciones, `stepTacticMap` mapea el número 1-based de cada `<ProofStep>
   "2": ["ala-step2-apply-lal"]
 }
 ```
+
+El estado agregado de contenido se consulta en `src/entities/content/contentCoverage.json`, generado con `npm run content:coverage`. No se edita a mano: sirve para saber que paginas tienen diagrama declarado/exportado, que paginas estan enlazadas a Lean y que demostraciones tienen trazabilidad por paso.
+
+Las declaraciones Lean con `formalizationStatus: "bridge"` deben aparecer en `docs/lean/bridge-debt.json`. Tras enlazar contenido a Lean, `npm run bridge:audit` debe pasar; `npm run bridge:closed` solo pasa cuando la fase puente está realmente cerrada y no quedan declaraciones `bridge`.
 
 ---
 
@@ -654,6 +659,7 @@ Tras crear o editar contenido, ejecutar:
 npm run typecheck
 npm run validate-graph
 npm run validate-lean
+npm run bridge:audit
 ```
 
 ---

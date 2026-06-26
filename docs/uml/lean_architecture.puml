@@ -2,7 +2,7 @@
 title Matematika + Lean 4 Architecture
 
 package "Lean Layer" {
-  [Mathlib]
+  [Primitives.lean (Matematika Core)]
   [Matematika .lean]
   [lean-query.lean]
 }
@@ -28,7 +28,7 @@ package "React/MDX App" {
   [ProofStepExpander]
 }
 
-[Mathlib] --> [Matematika .lean]
+[Primitives.lean (Matematika Core)] --> [Matematika .lean]
 [Matematika .lean] --> [lean-query.lean]
 [lean-query.lean] --> [generate-lean-graph.ts]
 [generate-lean-graph.ts] --> [lean_graph.json]

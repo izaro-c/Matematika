@@ -6,12 +6,12 @@ import { MathProvider } from '@/app/providers/MathStoreContext';
 
 describe('ProofStepExpander', () => {
   it('is collapsed by default and resolves valid Lean blocks', () => {
-    render(<ProofStepExpander blockIds={['ala-step1-transport']} />);
+    render(<ProofStepExpander blockIds={['two-lines-one-point-step1-contradiction']} />);
 
     const details = screen.getByText('Ver en Lean').closest('details');
     expect(details?.hasAttribute('open')).toBe(false);
-    expect(screen.getByText(/Matematika.Geometry.congruence_ala/)).toBeDefined();
-    expect(screen.getByText(/h_transport/)).toBeDefined();
+    expect(screen.getByText(/Matematika.Geometry.Hilbert.two_lines_meet_at_most_one_point/)).toBeDefined();
+    expect(screen.getByText(/apply Classical.byContradiction/)).toBeDefined();
   });
 
   it('shows a quiet missing-block message', () => {
@@ -37,7 +37,7 @@ describe('ProofStep Lean trace', () => {
   it('renders the Lean expander when leanBlocks are provided', () => {
     render(
       <MathProvider>
-        <ProofStep number={1} title="Paso con Lean" leanBlocks={['ala-step1-transport']}>
+        <ProofStep number={1} title="Paso con Lean" leanBlocks={['two-lines-one-point-step1-contradiction']}>
           Contenido
         </ProofStep>
       </MathProvider>,

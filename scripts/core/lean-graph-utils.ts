@@ -1,13 +1,15 @@
 import fs from 'fs';
 import path from 'path';
 
-export type FormalizationStatus = 'axiomatic' | 'bridge' | 'proved' | 'mathlib';
+export type VerificationStatus = 'none' | 'human-proof' | 'lean-checked' | 'lean-audited';
+export type Foundation = 'matematika-axioms' | 'bridge' | 'pending';
 
 export interface LeanGraphNode {
   leanId: string;
   matematikaId: string;
   kind: string;
-  status: FormalizationStatus;
+  verificationStatus: VerificationStatus;
+  foundation: Foundation;
   declaredDeps: string[];
   proofIds: string[];
   sourceFile?: string;
@@ -72,11 +74,11 @@ export interface LeanDiffIssue {
   message: string;
 }
 
-const LEAN_DECL_RE =
-  /--\s*@matematika-id\s+"([^"]+)"\s+@lean-id\s+"([^"]+)"\s+@kind\s+"([^"]+)"\s+@status\s+"([^"]+)"\s+@deps\s+(\[[^\]]*\])/;
+
 const BLOCK_START_RE = /--\s*@tactic-block-start\s+"([^"]+)"/;
 const BLOCK_END_RE = /--\s*@tactic-block-end\s+"([^"]+)"/;
-const FORMALIZATION_STATUSES = new Set<FormalizationStatus>(['axiomatic', 'bridge', 'proved', 'mathlib']);
+const VERIFICATION_STATUSES = new Set<VerificationStatus>(['none', 'human-proof', 'lean-checked', 'lean-audited']);
+const FOUNDATIONS = new Set<Foundation>(['matematika-axioms', 'bridge', 'pending']);
 
 export function getMdxFiles(dir: string, fileList: string[] = []): string[] {
   if (!fs.existsSync(dir)) return fileList;
@@ -141,14 +143,25 @@ function parseStringArray(value: string): string[] {
 }
 
 function parseLeanDeclaration(line: string, sourceFile: string): LeanGraphNode | null {
-  const declaration = line.match(LEAN_DECL_RE);
-  if (!declaration || !FORMALIZATION_STATUSES.has(declaration[4] as FormalizationStatus)) return null;
+  if (!line.startsWith('--') || !line.includes('@matematika-id')) return null;
+
+  const matId = line.match(/@matematika-id\s+"([^"]+)"/)?.[1];
+  const leanId = line.match(/@lean-id\s+"([^"]+)"/)?.[1];
+  const kind = line.match(/@kind\s+"([^"]+)"/)?.[1];
+  const verStat = line.match(/@verificationStatus\s+"([^"]+)"/)?.[1] as VerificationStatus | undefined;
+  const found = line.match(/@foundation\s+"([^"]+)"/)?.[1] as Foundation | undefined;
+  const depsStr = line.match(/@deps\s+(\[[^\]]*\])/)?.[1];
+
+  if (!matId || !leanId || !kind || !verStat || !found || !depsStr) return null;
+  if (!VERIFICATION_STATUSES.has(verStat) || !FOUNDATIONS.has(found)) return null;
+
   return {
-    matematikaId: declaration[1],
-    leanId: declaration[2],
-    kind: declaration[3],
-    status: declaration[4] as FormalizationStatus,
-    declaredDeps: parseStringArray(declaration[5]),
+    matematikaId: matId,
+    leanId: leanId,
+    kind: kind,
+    verificationStatus: verStat,
+    foundation: found,
+    declaredDeps: parseStringArray(depsStr),
     proofIds: [],
     sourceFile,
   };

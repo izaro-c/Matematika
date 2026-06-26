@@ -1,6 +1,5 @@
 import Matematika.Geometry.Hilbert.Congruence
 import Matematika.Geometry.Hilbert.Order
-
 /-!
 # Construcciones autorizadas por los axiomas de congruencia
 
@@ -62,5 +61,9 @@ theorem transportedAngleRay_unique
 theorem congruent_of_lal {t u : Triangle} (h : LALHypothesis t u) :
     TriangleCongruent t u :=
   sas_congruence h
+
+/- TODO: Los teoremas de construcciones (punto medio, bisectriz, perpendicular, mediatriz)
+   que dependían de Mathlib han sido eliminados de este archivo.
+-/
 
 end Matematika.Geometry.Hilbert

@@ -1,61 +1,77 @@
 {
-  "generatedAt": "2026-06-24T23:20:50.505Z",
+  "generatedAt": "2026-06-26T20:43:36.639Z",
   "blocks": [
     {
-      "id": "ala-step1-transport",
-      "leanId": "Matematika.Geometry.congruence_ala",
-      "sourceFile": "lean/Matematika/Geometry/Basic.lean",
-      "startLine": 24,
-      "endLine": 26,
-      "code": "  -- @tactic-block-start \"ala-step1-transport\"\n  have h_transport : ALAHypothesis t u := h\n  -- @tactic-block-end \"ala-step1-transport\""
+      "id": "two-lines-one-point-step1-contradiction",
+      "leanId": "Matematika.Geometry.Hilbert.two_lines_meet_at_most_one_point",
+      "sourceFile": "lean/Matematika/Geometry/Hilbert/Incidence.lean",
+      "startLine": 60,
+      "endLine": 63,
+      "code": "  -- @tactic-block-start \"two-lines-one-point-step1-contradiction\"\n  apply Classical.byContradiction\n  intro hpq\n  -- @tactic-block-end \"two-lines-one-point-step1-contradiction\""
     },
     {
-      "id": "ala-step2-apply-lal",
-      "leanId": "Matematika.Geometry.congruence_ala",
-      "sourceFile": "lean/Matematika/Geometry/Basic.lean",
-      "startLine": 27,
-      "endLine": 29,
-      "code": "  -- @tactic-block-start \"ala-step2-apply-lal\"\n  have h_lal : LALHypothesis t u := ala_reduces_to_lal h_transport\n  -- @tactic-block-end \"ala-step2-apply-lal\""
+      "id": "two-lines-one-point-step2-unique-line",
+      "leanId": "Matematika.Geometry.Hilbert.two_lines_meet_at_most_one_point",
+      "sourceFile": "lean/Matematika/Geometry/Hilbert/Incidence.lean",
+      "startLine": 64,
+      "endLine": 66,
+      "code": "  -- @tactic-block-start \"two-lines-one-point-step2-unique-line\"\n  obtain ⟨r, _hr, h_unique⟩ := line_through_two_points hpq\n  -- @tactic-block-end \"two-lines-one-point-step2-unique-line\""
     },
     {
-      "id": "ala-step3-uniqueness",
-      "leanId": "Matematika.Geometry.congruence_ala",
-      "sourceFile": "lean/Matematika/Geometry/Basic.lean",
-      "startLine": 30,
-      "endLine": 32,
-      "code": "  -- @tactic-block-start \"ala-step3-uniqueness\"\n  exact congruent_of_lal h_lal\n  -- @tactic-block-end \"ala-step3-uniqueness\""
+      "id": "two-lines-one-point-step3-identify-lines",
+      "leanId": "Matematika.Geometry.Hilbert.two_lines_meet_at_most_one_point",
+      "sourceFile": "lean/Matematika/Geometry/Hilbert/Incidence.lean",
+      "startLine": 67,
+      "endLine": 70,
+      "code": "  -- @tactic-block-start \"two-lines-one-point-step3-identify-lines\"\n  have hl_eq_r : l = r := h_unique l ⟨hpl, hql⟩\n  have hm_eq_r : m = r := h_unique m ⟨hpm, hqm⟩\n  -- @tactic-block-end \"two-lines-one-point-step3-identify-lines\""
     },
     {
-      "id": "lll-step1-transport",
-      "leanId": "Matematika.Geometry.congruence_lll",
-      "sourceFile": "lean/Matematika/Geometry/Basic.lean",
-      "startLine": 37,
-      "endLine": 39,
-      "code": "  -- @tactic-block-start \"lll-step1-transport\"\n  have h_transport : LLLHypothesis t u := h\n  -- @tactic-block-end \"lll-step1-transport\""
+      "id": "two-lines-one-point-step4-contradiction",
+      "leanId": "Matematika.Geometry.Hilbert.two_lines_meet_at_most_one_point",
+      "sourceFile": "lean/Matematika/Geometry/Hilbert/Incidence.lean",
+      "startLine": 71,
+      "endLine": 73,
+      "code": "  -- @tactic-block-start \"two-lines-one-point-step4-contradiction\"\n  exact h_distinct (hl_eq_r.trans hm_eq_r.symm)\n  -- @tactic-block-end \"two-lines-one-point-step4-contradiction\""
     },
     {
-      "id": "lll-step2-apply-lal",
-      "leanId": "Matematika.Geometry.congruence_lll",
-      "sourceFile": "lean/Matematika/Geometry/Basic.lean",
-      "startLine": 40,
-      "endLine": 42,
-      "code": "  -- @tactic-block-start \"lll-step2-apply-lal\"\n  have h_lal : LALHypothesis t u := lll_reduces_to_lal h_transport\n  -- @tactic-block-end \"lll-step2-apply-lal\""
+      "id": "coincident-lines-step1-assume-distinct",
+      "leanId": "Matematika.Geometry.Hilbert.lines_coincide_of_two_common_points",
+      "sourceFile": "lean/Matematika/Geometry/Hilbert/Incidence.lean",
+      "startLine": 81,
+      "endLine": 84,
+      "code": "  -- @tactic-block-start \"coincident-lines-step1-assume-distinct\"\n  apply Classical.byContradiction\n  intro h_distinct\n  -- @tactic-block-end \"coincident-lines-step1-assume-distinct\""
     },
     {
-      "id": "lll-step3-auxiliary-isosceles",
-      "leanId": "Matematika.Geometry.congruence_lll",
-      "sourceFile": "lean/Matematika/Geometry/Basic.lean",
-      "startLine": 43,
-      "endLine": 45,
-      "code": "  -- @tactic-block-start \"lll-step3-auxiliary-isosceles\"\n  have h_auxiliary : LALHypothesis t u := h_lal\n  -- @tactic-block-end \"lll-step3-auxiliary-isosceles\""
+      "id": "coincident-lines-step2-apply-one-point-theorem",
+      "leanId": "Matematika.Geometry.Hilbert.lines_coincide_of_two_common_points",
+      "sourceFile": "lean/Matematika/Geometry/Hilbert/Incidence.lean",
+      "startLine": 85,
+      "endLine": 88,
+      "code": "  -- @tactic-block-start \"coincident-lines-step2-apply-one-point-theorem\"\n  have h_same_point : a = b :=\n    two_lines_meet_at_most_one_point h_distinct hal ham hbl hbm\n  -- @tactic-block-end \"coincident-lines-step2-apply-one-point-theorem\""
     },
     {
-      "id": "lll-step4-conclusion",
-      "leanId": "Matematika.Geometry.congruence_lll",
-      "sourceFile": "lean/Matematika/Geometry/Basic.lean",
-      "startLine": 46,
-      "endLine": 48,
-      "code": "  -- @tactic-block-start \"lll-step4-conclusion\"\n  exact congruent_of_lal h_auxiliary\n  -- @tactic-block-end \"lll-step4-conclusion\""
+      "id": "coincident-lines-step3-two-common-points",
+      "leanId": "Matematika.Geometry.Hilbert.lines_coincide_of_two_common_points",
+      "sourceFile": "lean/Matematika/Geometry/Hilbert/Incidence.lean",
+      "startLine": 89,
+      "endLine": 91,
+      "code": "  -- @tactic-block-start \"coincident-lines-step3-two-common-points\"\n  have h_not_same : a ≠ b := hab\n  -- @tactic-block-end \"coincident-lines-step3-two-common-points\""
+    },
+    {
+      "id": "coincident-lines-step4-contradiction",
+      "leanId": "Matematika.Geometry.Hilbert.lines_coincide_of_two_common_points",
+      "sourceFile": "lean/Matematika/Geometry/Hilbert/Incidence.lean",
+      "startLine": 92,
+      "endLine": 94,
+      "code": "  -- @tactic-block-start \"coincident-lines-step4-contradiction\"\n  have h_false : False := h_not_same h_same_point\n  -- @tactic-block-end \"coincident-lines-step4-contradiction\""
+    },
+    {
+      "id": "coincident-lines-step5-conclusion",
+      "leanId": "Matematika.Geometry.Hilbert.lines_coincide_of_two_common_points",
+      "sourceFile": "lean/Matematika/Geometry/Hilbert/Incidence.lean",
+      "startLine": 95,
+      "endLine": 97,
+      "code": "  -- @tactic-block-start \"coincident-lines-step5-conclusion\"\n  exact h_false\n  -- @tactic-block-end \"coincident-lines-step5-conclusion\""
     }
   ]
 }

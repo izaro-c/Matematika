@@ -7,7 +7,10 @@ export const metadata = {
   "proofMethod": "directo",
   "authors": ["euclides"],
   "tags": ["geometria", "angulos", "paralelas"],
-  "layout": "split"
+  "layout": "split",
+  "leanId": "Matematika.Geometry.Hilbert.demo_angulos_alternos_internos",
+  "stepTacticMap": { "1": [], "2": [], "3": [], "4": [], "5": [], "6": [] },
+  "sources": [{ "title": "Pending Formalization", "author": "Matematika", "role": "primary" }]
 };
 
 import { DemoAngulosAlternosInternos } from "@/shared/diagrams/Teoremas/DemoAngulosAlternosInternos";
@@ -32,7 +35,7 @@ import { DemoAngulosAlternosInternos } from "@/shared/diagrams/Teoremas/DemoAngu
 
 ### Parte 1: Ángulos congruentes ⇒ rectas paralelas (geometría absoluta)
 
-<ProofStep number={1} title="Disposición de la figura" target={["recta-l", "recta-m", "transversal-t"]}>
+<ProofStep number={1} title="Disposición de la figura" target={["recta-l", "recta-m", "transversal-t"]} leanBlocks={metadata.stepTacticMap["1"]}>
 Sean <InteractiveElement target="recta-l" color="carbon">$l$</InteractiveElement> y <InteractiveElement target="recta-m" color="carbon">$m$</InteractiveElement> dos rectas cortadas por la <InteractiveElement target="transversal-t" color="salvia">transversal $t$</InteractiveElement> en los puntos <InteractiveElement target="punto-a" color="pizarra">$A \in l$</InteractiveElement> y <InteractiveElement target="punto-b" color="pizarra">$B \in m$</InteractiveElement>. Por hipótesis, los <ConceptLink targetId="angulo" isDependency={false}>ángulos</ConceptLink> alternos internos son congruentes:
 
 <Formula>
@@ -40,11 +43,11 @@ Sean <InteractiveElement target="recta-l" color="carbon">$l$</InteractiveElement
 </Formula>
 </ProofStep>
 
-<ProofStep number={2} title="Suposición de intersección" target={["punto-p", "triangulo-abp"]}>
+<ProofStep number={2} title="Suposición de intersección" target={["punto-p", "triangulo-abp"]} leanBlocks={metadata.stepTacticMap["2"]}>
 Supongamos, por <ConceptLink targetId="contradiccion" isDependency={false}>reducción al absurdo</ConceptLink>, que $l$ y $m$ no son paralelas. Entonces se cortan en algún punto <InteractiveElement target="punto-p" color="terracota">$P$</InteractiveElement>. Se forma el <InteractiveElement target="triangulo-abp" color="carbon">$\triangle ABP$</InteractiveElement>.
 </ProofStep>
 
-<ProofStep number={3} title="Contradicción con el ángulo externo" target={["angulo-externo", "angulo-remoto"]}>
+<ProofStep number={3} title="Contradicción con el ángulo externo" target={["angulo-externo", "angulo-remoto"]} leanBlocks={metadata.stepTacticMap["3"]}>
 Consideremos el <ConceptLink targetId="angulo" isDependency={false}>ángulo</ConceptLink> externo de <InteractiveElement target="triangulo-abp" color="carbon">$\triangle ABP$</InteractiveElement> en el vértice $A$ (o en $B$, según el lado de $t$ donde esté $P$). Por el <ConceptLink targetId="teorema-angulo-externo" isDependency={true}>teorema del ángulo externo</ConceptLink>:
 
 <Formula>
@@ -54,7 +57,7 @@ Consideremos el <ConceptLink targetId="angulo" isDependency={false}>ángulo</Con
 Pero por hipótesis $\angle 1 \cong \angle 2$, y por el <ConceptLink targetId="teorema-angulos-opuestos-verticales" isDependency={true}>teorema de los ángulos opuestos por el vértice</ConceptLink>, $\angle 2$ es congruente con el ángulo interior remoto del triángulo (o bien $\angle 1$ lo es con el exterior, dependiendo de la configuración). En cualquier caso, el <InteractiveElement target="angulo-externo" color="terracota">ángulo externo</InteractiveElement> resultaría congruente al <InteractiveElement target="angulo-remoto" color="salvia">ángulo interior remoto</InteractiveElement>, en contradicción con el teorema del ángulo externo que exige desigualdad estricta.
 </ProofStep>
 
-<ProofStep number={4} title="Conclusión de paralelismo" target={["recta-l", "recta-m"]}>
+<ProofStep number={4} title="Conclusión de paralelismo" target={["recta-l", "recta-m"]} leanBlocks={metadata.stepTacticMap["4"]}>
 La <ConceptLink targetId="leccion-metodo-contradiccion" isDependency={false}>contradicción</ConceptLink> proviene de haber supuesto que $l$ y $m$ se cortan. Por <ConceptLink targetId="leccion-metodo-contradiccion" isDependency={false}>reducción al absurdo</ConceptLink>, $l$ y $m$ no pueden intersecarse. Por la <ConceptLink targetId="paralelas" isDependency={false}>definición de rectas paralelas</ConceptLink>:
 
 <Formula>
@@ -66,11 +69,11 @@ La <ConceptLink targetId="leccion-metodo-contradiccion" isDependency={false}>con
 
 ### Parte 2: Rectas paralelas ⇒ ángulos congruentes (geometría euclidiana)
 
-<ProofStep number={5} title="Construcción de la paralela por el ángulo transportado" target={["recta-n"]}>
+<ProofStep number={5} title="Construcción de la paralela por el ángulo transportado" target={["recta-n"]} leanBlocks={metadata.stepTacticMap["5"]}>
 Sean ahora $l \parallel m$ cortadas por <InteractiveElement target="transversal-t2" color="salvia">$t$</InteractiveElement>. Por el <ConceptLink targetId="axioma-congruencia-4" isDependency={true}>axioma de transporte de ángulos (III-4)</ConceptLink>, construimos por $A$ una recta <InteractiveElement target="recta-n" color="terracota">$n$</InteractiveElement> que forme con $t$ un ángulo congruente al que $t$ forma con $m$ en $B$, de modo que dichos ángulos queden en posición de <ConceptLink targetId="angulo" isDependency={false}>alternos internos</ConceptLink>.
 </ProofStep>
 
-<ProofStep number={6} title="Unicidad de la paralela" target={["recta-l", "recta-n"]}>
+<ProofStep number={6} title="Unicidad de la paralela" target={["recta-l", "recta-n"]} leanBlocks={metadata.stepTacticMap["6"]}>
 Por la Parte 1 (<ConceptLink targetId="sistema-absoluto" isDependency={false}>geometría absoluta</ConceptLink>), $n \parallel m$. Pero por el <ConceptLink targetId="axioma-paralelas-euclides" isDependency={true}>axioma euclidiano de las paralelas</ConceptLink>, por un punto exterior a una recta pasa una **única** paralela. Tanto <InteractiveElement target="recta-l" color="carbon">$l$</InteractiveElement> como <InteractiveElement target="recta-n" color="terracota">$n$</InteractiveElement> pasan por $A$ y son paralelas a $m$. Por tanto:
 
 <Formula>

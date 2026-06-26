@@ -7,7 +7,13 @@ export const metadata = {
   "proofMethod": "directo",
   "authors": ["euclides"],
   "tags": ["geometria", "angulos", "triangulos"],
-  "layout": "split"
+  "layout": "split",
+    "sources": [
+    { "title": "Elements", "author": "Euclid", "locator": "Book I, Proposition 16", "role": "primary" },
+    { "title": "Euclidean and Non-Euclidean Geometries", "author": "Marvin Jay Greenberg", "role": "secondary" }
+  ],
+  "leanId": "Matematika.Geometry.Hilbert.demo_angulo_externo",
+  "stepTacticMap": { "1": [], "2": [], "3": [], "4": [], "5": [], "6": [], "7": [] }
 };
 
 import { DemoAnguloExterno } from "@/shared/diagrams/Teoremas/DemoAnguloExterno";
@@ -24,22 +30,22 @@ Es decir, el <ConceptLink targetId="angulo" isDependency={false}>ángulo</Concep
 
 <Separador />
 
-<ProofStep number={1} title="Construcción inicial" target={["triangulo-abc", "lado-bc", "punto-d"]}>
+<ProofStep number={1} title="Construcción inicial" target={["triangulo-abc", "lado-bc", "punto-d"]} leanBlocks={metadata.stepTacticMap["1"]}>
 Por hipótesis, sea <InteractiveElement target="triangulo-abc" color="carbon">$\triangle ABC$</InteractiveElement> un triángulo. Por los <ConceptLink targetId="axioma-orden-3" isDependency={true}>axiomas de orden (II)</ConceptLink>, prolongamos el lado <InteractiveElement target="lado-bc" color="carbon">$BC$</InteractiveElement> más allá de $C$ hasta un punto <InteractiveElement target="punto-d" color="carbon">$D$</InteractiveElement>, de modo que $B * C * D$. El <InteractiveElement target="angulo-externo" color="terracota">$\angle ACD$</InteractiveElement> es el ángulo externo en $C$.
 
 Por el <ConceptLink targetId="lema-punto-medio" isDependency={true}>lema del punto medio</ConceptLink>, existe un único <InteractiveElement target="punto-medio-e" color="salvia">punto $E$</InteractiveElement> que biseca el segmento <InteractiveElement target="lado-ac" color="carbon">$AC$</InteractiveElement>: $\overline{AE} \cong \overline{EC}$.
 </ProofStep>
 
-<ProofStep number={2} title="Duplicación de la mediana" target={["punto-medio-e", "segmento-be", "punto-f"]}>
+<ProofStep number={2} title="Duplicación de la mediana" target={["punto-medio-e", "segmento-be", "punto-f"]} leanBlocks={metadata.stepTacticMap["2"]}>
 Trazamos el segmento <InteractiveElement target="segmento-be" color="salvia">$BE$</InteractiveElement> (por el <ConceptLink targetId="axioma-incidencia-1" isDependency={true}>axioma I-1</ConceptLink>). Por el <ConceptLink targetId="axioma-congruencia-1" isDependency={true}>Axioma de transporte de segmentos (III-1)</ConceptLink>, sobre la <ConceptLink targetId="semirrecta" isDependency={false}>semirrecta</ConceptLink> opuesta a $\overrightarrow{EB}$ construimos un punto <InteractiveElement target="punto-f" color="terracota">$F$</InteractiveElement> tal que $\overline{BE} \cong \overline{EF}$.
 
 Por el <ConceptLink targetId="axioma-incidencia-1" isDependency={true}>axioma I-1</ConceptLink>, unimos $F$ con $C$ mediante el segmento <InteractiveElement target="segmento-cf" color="pizarra">$\overline{CF}$</InteractiveElement>.
 </ProofStep>
 
-<ProofStep number={3} title="Congruencia LAL" target={["triangulo-abe", "triangulo-cfe", "angulo-opuesto"]}>
+<ProofStep number={3} title="Congruencia LAL" target={["triangulo-abe", "triangulo-cfe", "angulo-opuesto"]} leanBlocks={metadata.stepTacticMap["3"]}>
 Consideremos <InteractiveElement target="triangulo-abe" color="salvia">$\triangle ABE$</InteractiveElement> y <InteractiveElement target="triangulo-cfe" color="salvia">$\triangle CFE$</InteractiveElement>.
 
-Por el paso 1: $\overline{AE} \cong \overline{EC}$. Por el paso 2: $\overline{BE} \cong \overline{EF}$. Los ángulos <InteractiveElement target="angulo-opuesto" color="terracota">$\angle AEB$</InteractiveElement> y $\angle CEF$ son <ConceptLink targetId="angulos-opuestos-verticales" isDependency={false}>opuestos por el vértice</ConceptLink> (pues $E$ está entre $A$ y $C$, y $B$, $E$, $F$ son colineales por construcción). Por el <ConceptLink targetId="teorema-angulos-opuestos-verticales" isDependency={true}>teorema de los ángulos opuestos por el vértice</ConceptLink>: $\angle AEB \cong \angle CEF$.
+Por el paso 1: $\overline{AE} \cong \overline{EC}$. Por el paso 2: $\overline{BE} \cong \overline{EF}$. Los ángulos <InteractiveElement target="angulo-opuesto" color="terracota">$\angle AEB$</InteractiveElement> y $\angle CEF$ son <ConceptLink targetId="teorema-angulos-opuestos-verticales" isDependency={false}>opuestos por el vértice</ConceptLink> (pues $E$ está entre $A$ y $C$, y $B$, $E$, $F$ son colineales por construcción). Por el <ConceptLink targetId="teorema-angulos-opuestos-verticales" isDependency={true}>teorema de los ángulos opuestos por el vértice</ConceptLink>: $\angle AEB \cong \angle CEF$.
 
 Por el <ConceptLink targetId="axioma-congruencia-5" isDependency={true}>criterio LAL (III-5)</ConceptLink>:
 
@@ -56,7 +62,7 @@ Por la <ConceptLink targetId="congruencia" isDependency={false}>definición de c
 Es decir, el <InteractiveElement target="angulo-a" color="salvia">ángulo interior $\angle A = \angle BAE$</InteractiveElement> es congruente con <InteractiveElement target="angulo-ecf" color="pizarra">$\angle ECF$</InteractiveElement>.
 </ProofStep>
 
-<ProofStep number={4} title="Contenencia angular" target={["angulo-externo", "angulo-ecf", "interior"]}>
+<ProofStep number={4} title="Contenencia angular" target={["angulo-externo", "angulo-ecf", "interior"]} leanBlocks={metadata.stepTacticMap["4"]}>
 Por el <ConceptLink targetId="axioma-orden-4" isDependency={true}>axioma de Pasch (II-4)</ConceptLink> (o equivalentemente, el <ConceptLink targetId="teorema-barra-transversal" isDependency={false}>teorema de la barra transversal</ConceptLink>), el punto $F$ —construido sobre la semirrecta opuesta a $\overrightarrow{EB}$— yace en el <ConceptLink targetId="semiplano" isDependency={false}>semiplano</ConceptLink> determinado por la recta $AC$ que no contiene a $B$. Por tanto, la semirrecta <InteractiveElement target="semirrecta-cf" color="pizarra">$\overrightarrow{CF}$</InteractiveElement> está en el interior del ángulo externo <InteractiveElement target="angulo-externo" color="terracota">$\angle ACD$</InteractiveElement>.
 
 Por la <ConceptLink targetId="angulo" isDependency={false}>definición de interior de un ángulo</ConceptLink>, todo ángulo formado por una semirrecta interior es estrictamente menor que el ángulo total:
@@ -66,7 +72,7 @@ Por la <ConceptLink targetId="angulo" isDependency={false}>definición de interi
 </Formula>
 </ProofStep>
 
-<ProofStep number={5} title="Conclusión para el ángulo A" target={["angulo-a", "angulo-externo"]}>
+<ProofStep number={5} title="Conclusión para el ángulo A" target={["angulo-a", "angulo-externo"]} leanBlocks={metadata.stepTacticMap["5"]}>
 Por el paso 3: $\angle A \cong \angle ECF$. Por el paso 4: $\angle ECF < \angle ACD$. Por el <ConceptLink targetId="axioma-congruencia-4" isDependency={true}>axioma de transitividad</ConceptLink> aplicado a la relación de orden entre ángulos congruentes:
 
 <Formula>
@@ -76,13 +82,13 @@ Por el paso 3: $\angle A \cong \angle ECF$. Por el paso 4: $\angle ECF < \angle 
 Queda demostrada la primera desigualdad: el <InteractiveElement target="angulo-a" color="salvia">ángulo interior $\angle A$</InteractiveElement> es estrictamente menor que el <InteractiveElement target="angulo-externo" color="terracota">ángulo externo $\angle ACD$</InteractiveElement>.
 </ProofStep>
 
-<ProofStep number={6} title="Desigualdad para el ángulo B" target={["angulo-b", "angulo-externo"]}>
+<ProofStep number={6} title="Desigualdad para el ángulo B" target={["angulo-b", "angulo-externo"]} leanBlocks={metadata.stepTacticMap["6"]}>
 Para establecer que $\angle B < \angle ACD$, se aplica el mismo razonamiento de los pasos 2 a 5 al lado $BC$: se toma el punto medio de $BC$ y se duplica la mediana desde $A$ a través de ese punto medio. El argumento es estructuralmente idéntico al anterior (por el paso 5 aplicado al triángulo con el lado $BC$), y se concluye $\angle B < \angle ACD$.
 
-Alternativamente, basta verificar que <InteractiveElement target="angulo-externo" color="terracota">$\angle ACD \cong \angle BCE$</InteractiveElement> por ser <ConceptLink targetId="angulos-opuestos-verticales" isDependency={false}>ángulos opuestos por el vértice</ConceptLink> (prolongando $AC$ más allá de $C$). Al aplicar el mismo procedimiento de los pasos 2 a 5 al triángulo $\triangle ABC$ con el ángulo externo $\angle BCE$, se obtiene $\angle B < \angle BCE \cong \angle ACD$.
+Alternativamente, basta verificar que <InteractiveElement target="angulo-externo" color="terracota">$\angle ACD \cong \angle BCE$</InteractiveElement> por ser <ConceptLink targetId="teorema-angulos-opuestos-verticales" isDependency={false}>ángulos opuestos por el vértice</ConceptLink> (prolongando $AC$ más allá de $C$). Al aplicar el mismo procedimiento de los pasos 2 a 5 al triángulo $\triangle ABC$ con el ángulo externo $\angle BCE$, se obtiene $\angle B < \angle BCE \cong \angle ACD$.
 </ProofStep>
 
-<ProofStep number={7} title="Conclusión" target={["angulo-a", "angulo-b", "angulo-externo"]}>
+<ProofStep number={7} title="Conclusión" target={["angulo-a", "angulo-b", "angulo-externo"]} leanBlocks={metadata.stepTacticMap["7"]}>
 Por el paso 5: $\angle A < \angle ACD$. Por el paso 6: $\angle B < \angle ACD$. Por tanto, el <InteractiveElement target="angulo-externo" color="terracota">ángulo externo $\angle ACD$</InteractiveElement> es estrictamente mayor que cada uno de los dos ángulos interiores no adyacentes: <InteractiveElement target="angulo-a" color="salvia">$\angle A$</InteractiveElement> y <InteractiveElement target="angulo-b" color="pizarra">$\angle B$</InteractiveElement>. $\blacksquare$
 </ProofStep>
 
@@ -98,6 +104,6 @@ La dependencia más sutil es el paso 4: la afirmación de que $F$ está en el in
   <ConceptLink targetId="euclides" isDependency={false}>Euclides</ConceptLink> no disponía de axiomas de orden. Su Proposición I.16 apelaba a la noción intuitiva de «caer dentro» del ángulo, lo cual fue criticado durante siglos. La formalización de <ConceptLink targetId="hilbert" isDependency={false}>Hilbert</ConceptLink> con los axiomas de orden (Grupo II) resolvió definitivamente esta laguna lógica.
 </Nota>
 
-El teorema del ángulo externo es la llave que abre la <ConceptLink targetId="teorema-desigualdad-triangular" isDependency={false}>desigualdad triangular</ConceptLink>, el <ConceptLink targetId="desigualdad-angulo-lado" isDependency={false}>teorema ángulo-lado</ConceptLink>, y el criterio de congruencia <ConceptLink targetId="congruencia-aal" isDependency={false}>AAL</ConceptLink>.
+El teorema del ángulo externo es la llave que abre la <ConceptLink targetId="teorema-desigualdad-triangular" isDependency={false}>desigualdad triangular</ConceptLink>, el <ConceptLink targetId="desigualdad-angulo-lado" isDependency={false}>teorema ángulo-lado</ConceptLink>, y el criterio de congruencia <ConceptLink targetId="teorema-congruencia-aal" isDependency={false}>AAL</ConceptLink>.
 
 </DemonstrationSection>

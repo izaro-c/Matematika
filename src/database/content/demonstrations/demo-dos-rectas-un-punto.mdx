@@ -7,41 +7,61 @@ export const metadata = {
   "proofMethod": "contradiccion",
   "authors": ["hilbert"],
   "tags": ["geometria", "incidencia"],
-  "layout": "split"
+  "layout": "split",
+  "leanId": "Matematika.Geometry.Hilbert.two_lines_meet_at_most_one_point",
+  "leanCommitSha": "local-hilbert-core",
+  "sources": [
+    {
+      "title": "Grundlagen der Geometrie",
+      "author": "David Hilbert",
+      "locator": "Axioms of Incidence, I.1",
+      "role": "primary"
+    },
+    {
+      "title": "Euclidean and Non-Euclidean Geometries",
+      "author": "Marvin Jay Greenberg",
+      "locator": "Hilbert incidence axioms",
+      "role": "secondary"
+    }
+  ],
+  "stepTacticMap": {
+    "1": ["two-lines-one-point-step1-contradiction"],
+    "2": ["two-lines-one-point-step2-unique-line"],
+    "3": ["two-lines-one-point-step3-identify-lines"],
+    "4": ["two-lines-one-point-step4-contradiction"]
+  }
 };
 
 import { DemoDosRectasUnPunto } from "@/shared/diagrams/Demos/DemoDosRectasUnPunto";
 
 <DemonstrationSection diagram={<DemoDosRectasUnPunto />}>
 
-<Capitular letra="S" />ean
+<Capitular letra="S" />ean <InteractiveElement target="rectaL" color="carbon">$l$</InteractiveElement> y <InteractiveElement target="rectaM" color="terracota">$m$</InteractiveElement> dos <ConceptLink targetId="recta" isDependency={false}>rectas</ConceptLink> distintas. Entonces, si dos <ConceptLink targetId="punto" isDependency={false}>puntos</ConceptLink> pertenecen simultáneamente a ambas rectas, necesariamente coinciden:
 
 <Formula>
-  $$ l \neq m \text{ dos rectas. Existe a lo sumo un punto } P \text{ tal que } P \in l \cap m. $$
+  $$ P \in l \cap m \land Q \in l \cap m \implies P = Q $$
 </Formula>
 
 <Separador />
 
-<ProofStep number={1} title="Suposición por contradicción" target="step1">
+<ProofStep number={1} title="Suposición por contradicción" target="step1" leanBlocks={metadata.stepTacticMap["1"]}>
 Supongamos, por contradicción, que existen dos puntos distintos <InteractiveElement target="puntoP" color="carbon">$P$</InteractiveElement> y <InteractiveElement target="puntoQ" color="terracota">$Q$</InteractiveElement> que pertenecen simultáneamente a <InteractiveElement target="rectaL" color="carbon">$l$</InteractiveElement> y a <InteractiveElement target="rectaM" color="terracota">$m$</InteractiveElement>:
 
 $$ P \in l \cap m, \quad Q \in l \cap m, \quad P \neq Q. $$
 </ProofStep>
 
-<ProofStep number={2} title="Aplicación del Axioma de Unicidad" target="step2">
-Por el <ConceptLink targetId="axioma-incidencia-1" isDependency={true}>axioma I-1 de incidencia</ConceptLink>, dados dos puntos distintos <InteractiveElement target="puntoP" color="carbon">$P$</InteractiveElement> y <InteractiveElement target="puntoQ" color="terracota">$Q$</InteractiveElement>, existe **una única** recta que los contiene. Denotemos esta <InteractiveElement target="rectas" color="carbon">recta única como $r$</InteractiveElement>.
+<ProofStep number={2} title="Aplicación del Axioma de Unicidad" target="step2" leanBlocks={metadata.stepTacticMap["2"]}>
+Por el <ConceptLink targetId="axioma-incidencia-1" >axioma I-1 de incidencia</ConceptLink>, dados dos puntos distintos <InteractiveElement target="puntoP" color="carbon">$P$</InteractiveElement> y <InteractiveElement target="puntoQ" color="terracota">$Q$</InteractiveElement>, existe **una única** recta que los contiene. Denotemos esta <InteractiveElement target="rectas" color="carbon">recta única como $r$</InteractiveElement>.
 </ProofStep>
 
-<ProofStep number={3} title="La Contradicción" target="step3">
-Tanto <InteractiveElement target="rectaL" color="carbon">$l$</InteractiveElement> como <InteractiveElement target="rectaM" color="terracota">$m$</InteractiveElement> contienen a los puntos <InteractiveElement target="puntoP" color="carbon">$P$</InteractiveElement> y <InteractiveElement target="puntoQ" color="terracota">$Q$</InteractiveElement>. Por la unicidad garantizada por el <ConceptLink targetId="axioma-incidencia-1" isDependency={true}>axioma I-1</ConceptLink>, esto significa que ambas deben coincidir con la recta única <InteractiveElement target="rectas" color="carbon">$r$</InteractiveElement>:
+<ProofStep number={3} title="Identificación de las rectas" target="step3" leanBlocks={metadata.stepTacticMap["3"]}>
+Tanto <InteractiveElement target="rectaL" color="carbon">$l$</InteractiveElement> como <InteractiveElement target="rectaM" color="terracota">$m$</InteractiveElement> contienen a los puntos <InteractiveElement target="puntoP" color="carbon">$P$</InteractiveElement> y <InteractiveElement target="puntoQ" color="terracota">$Q$</InteractiveElement>. Por la unicidad garantizada por el <ConceptLink targetId="axioma-incidencia-1" >axioma I-1</ConceptLink>, esto significa que ambas deben coincidir con la recta única <InteractiveElement target="rectas" color="carbon">$r$</InteractiveElement>:
 
 $$ l = r \quad \text{y} \quad m = r \implies l = m $$
-
-Lo cual contradice la hipótesis inicial de que <InteractiveElement target="rectaL" color="carbon">$l$</InteractiveElement> $\neq$ <InteractiveElement target="rectaM" color="terracota">$m$</InteractiveElement>.
 </ProofStep>
 
-<ProofStep number={4} title="Conclusión" target="step4">
-  Esta contradicción proviene de suponer que existen dos puntos distintos en la intersección <InteractiveElement target="rectaL" color="carbon">$l$</InteractiveElement> $\cap$ <InteractiveElement target="rectaM" color="terracota">$m$</InteractiveElement>. Luego, la intersección contiene a lo sumo un punto. $\blacksquare$
+<ProofStep number={4} title="Contradicción y conclusión" target="step4" leanBlocks={metadata.stepTacticMap["4"]}>
+La igualdad <InteractiveElement target="rectaL" color="carbon">$l$</InteractiveElement> $=$ <InteractiveElement target="rectaM" color="terracota">$m$</InteractiveElement> contradice la hipótesis inicial de que las rectas eran distintas. Esta contradicción proviene de suponer que existen dos puntos distintos en la intersección <InteractiveElement target="rectaL" color="carbon">$l$</InteractiveElement> $\cap$ <InteractiveElement target="rectaM" color="terracota">$m$</InteractiveElement>. Luego, la intersección contiene a lo sumo un punto. $\blacksquare$
 </ProofStep>
 
 <Separador />

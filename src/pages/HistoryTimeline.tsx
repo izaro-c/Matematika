@@ -91,10 +91,8 @@ export const HistoryTimeline = () => {
 
       {/* ── Cabecera ──────────────────────────────────────────────── */}
       <div className="relative z-20 max-w-4xl mx-auto px-6 md:px-0 mb-16">
-        <Link href="/">
-          <a className="inline-flex items-center gap-2 text-xs font-sans tracking-widest uppercase text-carbon/40 hover:text-carbon transition-colors mb-10">
-            ← Biblioteca
-          </a>
+        <Link href="/" className="inline-flex items-center gap-2 text-xs font-sans tracking-widest uppercase text-carbon/40 hover:text-carbon transition-colors mb-10">
+          ← Biblioteca
         </Link>
 
         <div className="border-b border-carbon/10 pb-8 flex flex-col md:flex-row md:items-end justify-between gap-6">
@@ -158,8 +156,7 @@ export const HistoryTimeline = () => {
                     className={`w-full md:w-[46%] flex ${isEven ? 'md:ml-auto md:pr-[7%]' : 'md:mr-auto md:pl-[7%]'
                       }`}
                   >
-                    <Link href={`/bio/${node.slug}`}>
-                      <a className="w-full group relative bg-lienzo border border-carbon/15 hover:border-carbon/40 transition-all duration-300 hover:shadow-lg hover:-translate-y-0.5 flex flex-col">
+                    <Link href={`/bio/${node.slug}`} className="w-full group relative bg-lienzo border border-carbon/15 hover:border-carbon/40 transition-all duration-300 hover:shadow-lg hover:-translate-y-0.5 flex flex-col">
                         {/* Esquinas ornamentales */}
                         <div className="absolute top-1.5 left-1.5 w-3 h-3 border-t border-l border-carbon/25" />
                         <div className="absolute top-1.5 right-1.5 w-3 h-3 border-t border-r border-carbon/25" />
@@ -219,7 +216,6 @@ export const HistoryTimeline = () => {
                         >
                           {Math.abs((node.birthYear || 0))}
                         </div>
-                      </a>
                     </Link>
                   </div>
                 </div>

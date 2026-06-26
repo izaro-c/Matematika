@@ -8,7 +8,22 @@ export const metadata = {
   "authors": ["euclides"],
   "difficulty": "básico",
   "demos": ["demo-area-triangulo"],
-  "hasSimulation": false
+  "hasSimulation": false,
+    "sources": [
+    {
+      "title": "The Thirteen Books of Euclid's Elements",
+      "author": "Euclid / Thomas L. Heath",
+      "locator": "Book I, Propositions 35, 41",
+      "role": "primary"
+    },
+    {
+      "title": "Foundations of Geometry",
+      "author": "David Hilbert",
+      "locator": "Chapter IV, theory of area",
+      "role": "secondary"
+    }
+  ],
+  "leanId": "Matematika.Geometry.Hilbert.teorema_area_triangulo"
 };
 
 <Capitular letra="E" />l <ConceptLink targetId="contenido" isDependency={false}>contenido</ConceptLink> de un <ConceptLink targetId="triangulo" isDependency={false}>triángulo</ConceptLink> es la mitad del producto de su base por su altura. Es el primer resultado que conecta la definición de <ConceptLink targetId="contenido" isDependency={false}>equidescomponibilidad</ConceptLink> de <ConceptLink targetId="hilbert" isDependency={false}>Hilbert</ConceptLink> con una fórmula explícita, y constituye la base de toda la geometría métrica plana.
@@ -20,7 +35,7 @@ export const metadata = {
 Dado un triángulo $\triangle ABC$, sea $h$ la <ConceptLink targetId="altura" isDependency={false}>altura</ConceptLink> correspondiente al lado $AB$ (la <ConceptLink targetId="perpendicular" isDependency={false}>perpendicular</ConceptLink> desde $C$ a la recta $AB$). El área de $\triangle ABC$ es:
 
 <Formula>
-  $$ \text{Área}(\triangle ABC) = \frac{|AB| \cdot h}{2} $$
+  $$ C(\triangle ABC) = \frac{|AB| \cdot h}{2} $$
 </Formula>
 
 Equivalentemente, dos triángulos con igual base e igual altura tienen la misma área, independientemente de su forma.

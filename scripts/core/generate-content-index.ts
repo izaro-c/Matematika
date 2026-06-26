@@ -26,7 +26,7 @@ function parseMetadata(content: string, filePath: string): Record<string, unknow
     return null;
   }
   try {
-      // eslint-disable-next-line sonarjs/code-eval -- internal script, trusted MDX content
+    // eslint-disable-next-line sonarjs/code-eval -- internal script, trusted MDX content
     const fn = new Function(`return ${match[1]}`);
     return fn();
   } catch {
@@ -53,7 +53,7 @@ export function getLeanNodeStatus(leanGraphPath = LEAN_GRAPH_PATH): Map<string, 
   if (!fs.existsSync(leanGraphPath)) return new Map();
   try {
     const graph = JSON.parse(fs.readFileSync(leanGraphPath, 'utf-8')) as LeanGraph;
-    return new Map((graph.nodes ?? []).map(node => [node.leanId, node.status ?? 'traceable']));
+    return new Map((graph.nodes ?? []).map(node => [node.leanId, node.verificationStatus ?? 'human-proof']));
   } catch {
     console.warn(`  [WARN] Invalid Lean graph JSON: ${leanGraphPath}`);
     return new Map();
@@ -68,8 +68,8 @@ const contentTypes: Record<string, string> = {
   definitions: 'definicion',
   examples: 'ejemplo',
   exercises: 'ejercicio',
-  usecases: 'caso_de_uso',
-  plans: 'plan_de_estudio',
+  usecases: 'caso-de-uso',
+  plans: 'plan-de-estudio',
   axioms: 'axioma',
   models: 'modelo',
 };
@@ -101,7 +101,7 @@ export function generateContentIndex(options: GenerateContentIndexOptions = {}):
     if (typeof meta.leanId === 'string') {
       const status = leanNodeStatus.get(meta.leanId);
       meta.leanVerified = status !== undefined;
-      meta.formalizationStatus = status ?? 'traceable';
+      meta.verificationStatus = status ?? 'human-proof';
     }
 
     const entry: ContentEntry = {

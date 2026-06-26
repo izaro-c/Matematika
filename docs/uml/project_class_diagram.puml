@@ -119,7 +119,7 @@ package "Shared" {
 
 package "Content and Formal Sources" {
   class MDXContent <<MDX modules>>
-  class LeanSources <<Lean 4 + Mathlib>>
+  class LeanSources <<Lean 4 Core>>
   class LeanGraph <<generated JSON>>
   class ProofBlockRegistry <<generated JSON>>
 }

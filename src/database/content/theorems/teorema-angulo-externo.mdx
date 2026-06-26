@@ -8,7 +8,12 @@ export const metadata = {
   "authors": ["euclides"],
   "difficulty": "básico",
   "hasSimulation": false,
-  "demos": ["demo-angulo-externo"]
+    "sources": [
+    { "title": "Elements", "author": "Euclid", "locator": "Book I, Proposition 16", "role": "primary" },
+    { "title": "Euclidean and Non-Euclidean Geometries", "author": "Marvin Jay Greenberg", "role": "secondary" }
+  ],
+  "demos": ["demo-angulo-externo"],
+  "leanId": "Matematika.Geometry.Hilbert.teorema_angulo_externo"
 };
 
 <Capitular letra="E" />n todo <ConceptLink targetId="triangulo" isDependency={false}>triángulo</ConceptLink>, al prolongar uno de sus <ConceptLink targetId="lado" isDependency={false}>lados</ConceptLink> se forma un <ConceptLink targetId="angulo" isDependency={false}>ángulo</ConceptLink> externo que es mayor que cada uno de los dos ángulos interiores no adyacentes a él. Este <ConceptLink targetId="teorema" isDependency={false}>teorema</ConceptLink>, registrado como Proposición I.16 de los <ConceptLink targetId="elementos" isDependency={false}>Elementos</ConceptLink> de <ConceptLink targetId="euclides" isDependency={false}>Euclides</ConceptLink>, es el primer resultado de la <ConceptLink targetId="geometria-euclidiana" isDependency={false}>geometría</ConceptLink> que involucra una <ConceptLink targetId="desigualdad" isDependency={false}>desigualdad</ConceptLink> geométrica. Es válido en <ConceptLink targetId="geometria-absoluta" isDependency={false}>geometría absoluta</ConceptLink>: no depende del <ConceptLink targetId="axioma-paralelas-euclides" isDependency={false}>axioma de las paralelas</ConceptLink>.
@@ -35,7 +40,7 @@ El teorema del ángulo externo es estructuralmente fundamental en la <ConceptLin
 
 2. **Independencia del postulado de las paralelas:** Aunque <ConceptLink targetId="euclides" isDependency={false}>Euclides</ConceptLink> lo sitúa justo antes de introducir la teoría de las paralelas, su prueba no las requiere. Es válido tanto en <ConceptLink targetId="geometria-euclidiana" isDependency={false}>geometría euclidiana</ConceptLink> como en <ConceptLink targetId="geometria-hiperbolica" isDependency={false}>geometría hiperbólica</ConceptLink>.
 
-3. **Piedra angular de la geometría del triángulo:** Es el lema auxiliar estándar para demostrar el <ConceptLink targetId="teorema-suma-angulos-triangulo" isDependency={false}>teorema de la suma de ángulos</ConceptLink> (vía el enfoque de Legendre), el criterio de congruencia <ConceptLink targetId="congruencia-aal" isDependency={false}>AAL</ConceptLink>, y las propiedades de orden entre lados y ángulos.
+3. **Piedra angular de la geometría del triángulo:** Es el lema auxiliar estándar para demostrar el <ConceptLink targetId="teorema-suma-angulos-triangulo" isDependency={false}>teorema de la suma de ángulos</ConceptLink> (vía el enfoque de Legendre), el criterio de congruencia <ConceptLink targetId="teorema-congruencia-aal" isDependency={false}>AAL</ConceptLink>, y las propiedades de orden entre lados y ángulos.
 
 <Separador />
 

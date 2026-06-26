@@ -3,12 +3,17 @@ export const metadata = {
   "type": "teorema",
   "title": "Teorema del triángulo isósceles",
   "description": "En un triángulo isósceles, los ángulos opuestos a los lados iguales son también iguales (Pons Asinorum).",
-  "statement": "Sea △ABC un triángulo con AC ≅ BC. Entonces ∠A ≅ ∠B.",
+  "statement": "Sea △ABC un triángulo con AB ≅ AC. Entonces ∠B ≅ ∠C.",
   "tags": ["geometria", "triangulos", "congruencia"],
   "authors": ["euclides"],
   "difficulty": "básico",
   "demos": ["demo-triangulo-isosceles"],
-  "hasSimulation": true
+  "hasSimulation": true,
+    "sources": [
+    { "title": "Elements", "author": "Euclid", "locator": "Book I, Proposition 5", "role": "primary" },
+    { "title": "Euclidean and Non-Euclidean Geometries", "author": "Marvin Jay Greenberg", "role": "secondary" }
+  ],
+  "leanId": "Matematika.Geometry.Hilbert.teorema_triangulo_isosceles"
 };
 
 import { TrianguloIsosceles } from '@/shared/diagrams/Teoremas/TrianguloIsosceles';
@@ -21,10 +26,10 @@ export const Simulation = TrianguloIsosceles;
 
 ### Enunciado Formal
 
-Sea $\triangle ABC$ un <ConceptLink targetId="triangulo" isDependency={false}>triángulo</ConceptLink> con <InteractiveElement target="lados-iguales">$\overline{AC} \cong \overline{BC}$</InteractiveElement>. Entonces:
+Sea $\triangle ABC$ un <ConceptLink targetId="triangulo" isDependency={false}>triángulo</ConceptLink> con <InteractiveElement target="lados-iguales">$\overline{AB} \cong \overline{AC}$</InteractiveElement>. Entonces:
 
 <Formula>
-  $$ \angle A \cong \angle B $$
+  $$ \angle B \cong \angle C $$
 </Formula>
 
 <Separador />

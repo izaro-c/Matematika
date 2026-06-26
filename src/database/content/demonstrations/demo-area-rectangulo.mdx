@@ -7,7 +7,10 @@ export const metadata = {
   "proofMethod": "exhaustivo",
   "layout": "split",
   "authors": ["hilbert"],
-  "tags": ["geometria", "areas", "rectangulo"]
+  "tags": ["geometria", "areas", "rectangulo"],
+  "leanId": "Matematika.Geometry.Hilbert.demo_area_rectangulo",
+  "stepTacticMap": { "1": [], "2": [], "3": [] },
+  "sources": [{ "title": "Pending Formalization", "author": "Matematika", "role": "primary" }]
 };
 
 import { DemoAreaRectangulo_Conmensurable } from '@/shared/diagrams/Demos/DemoAreaRectangulo_Conmensurable';
@@ -23,7 +26,7 @@ Sea $R$ un rectángulo de base $b$ y altura $h$. Por la definición de <ConceptL
 
 <Separador />
 
-<ProofStep number={1} title="Caso conmensurable" target="step1">
+<ProofStep number={1} title="Caso conmensurable" target="step1" leanBlocks={metadata.stepTacticMap["1"]}>
 Supongamos que existe una <InteractiveElement target="cuadrado-unidad" color="terracota">unidad $u$</InteractiveElement> tal que $b = m \cdot u$ y $h = n \cdot u$ con $m, n \in \mathbb{N}$. Entonces <InteractiveElement target="rectangulo-r" color="salvia">$R$</InteractiveElement> se descompone en $m \times n$ cuadrados de lado $u$. Por definición, el cuadrado unidad $u \times u$ tiene contenido $u^2$. Por la <ConceptLink targetId="teorema-area-aditividad" isDependency={true}>aditividad del contenido</ConceptLink>:
 
 $$ \text{Cont}(R) = m \cdot n \cdot u^2 = (m \cdot u) \cdot (n \cdot u) = b \cdot h $$
@@ -32,7 +35,7 @@ $$ \text{Cont}(R) = m \cdot n \cdot u^2 = (m \cdot u) \cdot (n \cdot u) = b \cdo
 
 <DemonstrationSection diagram={<DemoAreaRectangulo_Inconmensurable />}>
 
-<ProofStep number={2} title="Caso inconmensurable" target="step2">
+<ProofStep number={2} title="Caso inconmensurable" target="step2" leanBlocks={metadata.stepTacticMap["2"]}>
 Si $b$ y $h$ no comparten medida común, por el <ConceptLink targetId="axioma-arquimedes" isDependency={true}>axioma de Arquímedes</ConceptLink> existen sucesiones de números racionales $b_k \to b$ y $h_k \to h$ por aproximación. Para cada $k$, constrúyanse <InteractiveElement target="rectangulo-k-min" color="musgo">rectángulos $R_k^-$ de lados $b_k - \varepsilon_k$ y $h_k - \varepsilon_k$ (interior)</InteractiveElement> y <InteractiveElement target="rectangulo-k-max" color="terracota">rectángulos $R_k^+$ de lados $b_k + \varepsilon_k$ y $h_k + \varepsilon_k$ (exterior)</InteractiveElement> al <InteractiveElement target="rectangulo-r" color="carbon">rectángulo $R$</InteractiveElement>. Por el caso conmensurable:
 
 $$ \text{Cont}(R_k^-) = b_k^- \cdot h_k^- < \text{Cont}(R) < b_k^+ \cdot h_k^+ = \text{Cont}(R_k^+) $$
@@ -40,7 +43,7 @@ $$ \text{Cont}(R_k^-) = b_k^- \cdot h_k^- < \text{Cont}(R) < b_k^+ \cdot h_k^+ =
 Por el <ConceptLink targetId="axioma-completitud" isDependency={true}>axioma de completitud</ConceptLink>, el único número real que satisface todas estas desigualdades es $b \cdot h$.
 </ProofStep>
 
-<ProofStep number={3} title="Conclusión">
+<ProofStep number={3} title="Conclusión" leanBlocks={metadata.stepTacticMap["3"]}>
 En ambos casos, $\text{Cont}(R) = b \cdot h$. $\blacksquare$
 </ProofStep>
 

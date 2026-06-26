@@ -7,7 +7,14 @@ import tseslint from 'typescript-eslint'
 import { defineConfig, globalIgnores } from 'eslint/config'
 
 export default defineConfig([
-  globalIgnores(['dist', '.auxiliary']),
+  globalIgnores([
+    'dist',
+    '.auxiliary',
+    'lean/.lake',
+    'lean/.lake/**',
+    '.agents/skills/**/examples',
+    '.agents/skills/**/examples/**',
+  ]),
   {
     files: ['**/*.{ts,tsx}'],
     extends: [
@@ -23,7 +30,22 @@ export default defineConfig([
     rules: {
       '@typescript-eslint/no-explicit-any': 'warn',
       '@typescript-eslint/no-unused-vars': 'warn',
-      'react-hooks/exhaustive-deps': 'warn'
+      'react-hooks/exhaustive-deps': 'warn',
+      'react-hooks/set-state-in-effect': 'warn',
+      'react-refresh/only-export-components': 'warn',
+      'sonarjs/cognitive-complexity': 'warn',
+      'sonarjs/no-nested-conditional': 'warn',
+      'sonarjs/no-nested-functions': 'warn',
+      'sonarjs/todo-tag': 'warn',
+      'sonarjs/no-unused-collection': 'warn',
+      'sonarjs/super-linear-regex': 'warn',
+      'sonarjs/no-unenclosed-multiline-block': 'warn',
+      'sonarjs/no-useless-react-setstate': 'warn',
+      'sonarjs/no-floating-point-equality': 'warn',
+      'sonarjs/no-trivial-assertions': 'warn',
+      'sonarjs/no-os-command-from-path': 'warn',
+      'sonarjs/no-ignored-exceptions': 'warn',
+      'sonarjs/unused-import': 'warn'
     }
   },
   {

@@ -20,11 +20,11 @@ structure Segment where
 axiom SegmentMultipleExceeds : Nat -> Segment -> Segment -> Prop
 axiom HasNoProperAxiomaticExtension : Prop
 
--- @matematika-id "axioma-arquimedes" @lean-id "Matematika.Geometry.Hilbert.archimedean" @kind "axiom" @status "axiomatic" @deps []
+-- @matematika-id "axioma-arquimedes" @lean-id "Matematika.Geometry.Hilbert.archimedean" @kind "axiom" @verificationStatus "none" @foundation "matematika-axioms" @deps []
 axiom archimedean (s t : Segment) :
   ∃ n : Nat, SegmentMultipleExceeds n s t
 
--- @matematika-id "axioma-completitud" @lean-id "Matematika.Geometry.Hilbert.no_proper_axiomatic_extension" @kind "axiom" @status "axiomatic" @deps []
+-- @matematika-id "axioma-completitud" @lean-id "Matematika.Geometry.Hilbert.no_proper_axiomatic_extension" @kind "axiom" @verificationStatus "none" @foundation "matematika-axioms" @deps []
 axiom no_proper_axiomatic_extension :
   HasNoProperAxiomaticExtension
 

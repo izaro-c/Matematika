@@ -25,7 +25,8 @@ describe('Lean graph bridge utilities', () => {
         matematikaId: 'teorema-congruencia-ala',
         leanId: 'Matematika.Geometry.congruence_ala',
         kind: 'theorem',
-        status: 'bridge',
+        verificationStatus: 'bridge',
+        foundation: 'pending',
         declaredDeps: ['axioma-congruencia-1'],
         proofIds: ['ala-step1-transport'],
       },
@@ -174,7 +175,7 @@ describe('Lean graph bridge utilities', () => {
     fs.writeFileSync(
       path.join(leanDir, 'Pilot.lean'),
       [
-        '-- @matematika-id "teorema-test" @lean-id "Matematika.Pilot.test" @kind "theorem" @status "proved" @deps ["axioma-test"]',
+        '-- @matematika-id "teorema-test" @lean-id "Matematika.Pilot.test" @kind "theorem" @verificationStatus "lean-checked" @foundation "matematika-axioms" @deps ["axioma-test"]',
         'theorem test : True := by',
         '  -- @tactic-block-start "test-step"',
         '  trivial',
@@ -185,7 +186,7 @@ describe('Lean graph bridge utilities', () => {
 
     const artifacts = extractLeanArtifacts(path.join(root, 'lean'), root);
     expect(artifacts.graph.nodes[0].leanId).toBe('Matematika.Pilot.test');
-    expect(artifacts.graph.nodes[0].status).toBe('proved');
+    expect(artifacts.graph.nodes[0].verificationStatus).toBe('lean-checked');
     expect(artifacts.graph.nodes[0].proofIds).toEqual(['test-step']);
     expect(artifacts.proofBlocks.blocks[0].code).toContain('trivial');
   });
@@ -225,7 +226,7 @@ describe('generateContentIndex Lean verification', () => {
     const leanGraphPath = path.join(root, 'lean_graph.json');
     fs.writeFileSync(
       leanGraphPath,
-      JSON.stringify({ nodes: [{ leanId: 'Matematika.Pilot.test', matematikaId: 'teorema-test', status: 'bridge' }] }),
+      JSON.stringify({ nodes: [{ leanId: 'Matematika.Pilot.test', matematikaId: 'teorema-test', verificationStatus: 'bridge', foundation: 'pending' }] }),
       'utf-8',
     );
 
@@ -236,6 +237,6 @@ describe('generateContentIndex Lean verification', () => {
     });
 
     expect(index['teorema-test'].metadata.leanVerified).toBe(true);
-    expect(index['teorema-test'].metadata.formalizationStatus).toBe('bridge');
+    expect(index['teorema-test'].metadata.verificationStatus).toBe('bridge');
   });
 });

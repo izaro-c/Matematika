@@ -12,14 +12,14 @@ export const TagList: React.FC<TagListProps> = ({ tags, className = '' }) => {
   return (
     <div className={`flex flex-wrap gap-2 ${className}`}>
       {tags.map(tag => (
-        <Link key={tag} href={`/rama/${tag.toLowerCase().replace(/\s+/g, '-')}`}>
-          <a
-            className="ac-pill ac-pill-accent"
-            style={{ ['--pill-accent' as string]: 'var(--theme-pizarra)', textDecoration: 'none' }}
-          >
-            <span className="ac-pill-ornament" aria-hidden>◇</span>
-            {tag}
-          </a>
+        <Link 
+          key={tag} 
+          href={`/rama/${tag.toLowerCase().replace(/\s+/g, '-')}`}
+          className="ac-pill ac-pill-accent"
+          style={{ ['--pill-accent' as string]: 'var(--theme-pizarra)', textDecoration: 'none' }}
+        >
+          <span className="ac-pill-ornament" aria-hidden>◇</span>
+          {tag}
         </Link>
       ))}
     </div>

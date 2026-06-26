@@ -7,21 +7,23 @@ export const metadata = {
   "proofMethod": "contradiccion",
   "authors": ["euclides"],
   "tags": ["geometria", "triangulos", "congruencia"],
-  "layout": "split"
+  "layout": "split",
+    "sources": [
+    { "title": "Elements", "author": "Euclid", "locator": "Book I, Proposition 6", "role": "primary" },
+    { "title": "Euclidean and Non-Euclidean Geometries", "author": "Marvin Jay Greenberg", "role": "secondary" }
+  ],
+  "leanId": "Matematika.Geometry.Hilbert.demo_reciproco_triangulo_isosceles",
+  "stepTacticMap": { "1": [], "2": [], "3": [], "4": [], "5": [], "6": [] }
 };
 
 import { DemoReciprocoTrianguloIsosceles } from "@/shared/diagrams/Teoremas/DemoReciprocoTrianguloIsosceles";
 
 <DemonstrationSection diagram={<DemoReciprocoTrianguloIsosceles />}>
 
-<Formula>
-  $$ \angle B \cong \angle C \implies \overline{AB} \cong \overline{AC} $$
-</Formula>
-
-<Capitular letra="S" />ea $\triangle ABC$ un <ConceptLink targetId="triangulo" isDependency={false}>triángulo</ConceptLink>. Si $\angle B \cong \angle C$, entonces $\overline{AB} \cong \overline{AC}$.
+<Capitular letra="S" />ea $\triangle ABC$ un <ConceptLink targetId="triangulo" isDependency={false}>triángulo</ConceptLink>. Se supone que sus ángulos de la base satisfacen $\angle B \cong \angle C$. Entonces:
 
 <Formula>
-  $$ \angle B \cong \angle C \implies AB \cong AC $$
+  $$ \overline{AB} \cong \overline{AC} $$
 </Formula>
 
 Junto con el <ConceptLink targetId="teorema-triangulo-isosceles" isDependency={false}>Pons Asinorum</ConceptLink> ($AB \cong AC \implies \angle B \cong \angle C$), se obtiene la equivalencia:
@@ -32,13 +34,13 @@ Junto con el <ConceptLink targetId="teorema-triangulo-isosceles" isDependency={f
 
 <Separador />
 
-<ProofStep number={1} title="Hipótesis y suposición de desigualdad" target={["triangulo-abc"]}>
+<ProofStep number={1} title="Hipótesis y suposición de desigualdad" target={["triangulo-abc"]} leanBlocks={metadata.stepTacticMap["1"]}>
 Por hipótesis, sea <InteractiveElement target="triangulo-abc" color="carbon">$\triangle ABC$</InteractiveElement> un triángulo con <InteractiveElement target="angulo-b" color="salvia">$\angle B$</InteractiveElement> $\cong$ <InteractiveElement target="angulo-c" color="pizarra">$\angle C$</InteractiveElement>. Queremos demostrar que $\overline{AB} \cong \overline{AC}$.
 
 Supongamos, por <ConceptLink targetId="contradiccion" isDependency={false}>reducción al absurdo</ConceptLink>, que $\overline{AB} \not\cong \overline{AC}$. Sin pérdida de generalidad, sea $\overline{AB} \gt \overline{AC}$.
 </ProofStep>
 
-<ProofStep number={2} title="Construcción del punto auxiliar D" target={["punto-d", "segmento-ad"]}>
+<ProofStep number={2} title="Construcción del punto auxiliar D" target={["punto-d", "segmento-ad"]} leanBlocks={metadata.stepTacticMap["2"]}>
 Por el <ConceptLink targetId="axioma-congruencia-1" isDependency={true}>axioma de transporte de segmentos (III-1)</ConceptLink>, sobre $\overline{AB}$ determinamos un punto <InteractiveElement target="punto-d" color="terracota">$D$</InteractiveElement> tal que:
 
 <Formula>
@@ -48,7 +50,7 @@ Por el <ConceptLink targetId="axioma-congruencia-1" isDependency={true}>axioma d
 Puesto que $\overline{AB} \gt \overline{AC}$, el punto $D$ está estrictamente entre $A$ y $B$: $A * D * B$.
 </ProofStep>
 
-<ProofStep number={3} title="Triángulo isósceles auxiliar" target={["triangulo-adc"]}>
+<ProofStep number={3} title="Triángulo isósceles auxiliar" target={["triangulo-adc"]} leanBlocks={metadata.stepTacticMap["3"]}>
 Por el <ConceptLink targetId="axioma-incidencia-1" isDependency={true}>axioma I-1</ConceptLink>, trazamos $\overline{CD}$. Se forma <InteractiveElement target="triangulo-adc" color="salvia">$\triangle ADC$</InteractiveElement>.
 
 Por el paso 2, $\overline{AD} \cong \overline{AC}$. Por la definición de <ConceptLink targetId="triangulo" isDependency={false}>triángulo isósceles</ConceptLink>, $\triangle ADC$ es isósceles. Por el <ConceptLink targetId="teorema-triangulo-isosceles" isDependency={true}>Pons Asinorum</ConceptLink>:
@@ -58,7 +60,7 @@ Por el paso 2, $\overline{AD} \cong \overline{AC}$. Por la definición de <Conce
 </Formula>
 </ProofStep>
 
-<ProofStep number={4} title="El ángulo externo en el triángulo BDC" target={["triangulo-bdc", "angulo-externo-d"]}>
+<ProofStep number={4} title="El ángulo externo en el triángulo BDC" target={["triangulo-bdc", "angulo-externo-d"]} leanBlocks={metadata.stepTacticMap["4"]}>
 Consideremos $\triangle BDC$. Por el paso 2, $A * D * B$, de modo que $A$ está en la prolongación de $\overline{BD}$ más allá de $D$. Por tanto, en $\triangle BDC$, el <InteractiveElement target="angulo-externo-d" color="terracota">$\angle ADC$ es el ángulo externo</InteractiveElement> en el vértice $D$.
 
 Por el <ConceptLink targetId="teorema-angulo-externo" isDependency={true}>teorema del ángulo externo</ConceptLink>:
@@ -70,7 +72,7 @@ Por el <ConceptLink targetId="teorema-angulo-externo" isDependency={true}>teorem
 Por hipótesis $\angle B \cong \angle C$, luego $\angle ADC \gt \angle C$.
 </ProofStep>
 
-<ProofStep number={5} title="Contradicción" target={["angulo-c", "angulo-acd"]}>
+<ProofStep number={5} title="Contradicción" target={["angulo-c", "angulo-acd"]} leanBlocks={metadata.stepTacticMap["5"]}>
 Por el paso 2, $D$ está en $\overline{AB}$. Por tanto, la semirrecta $\overrightarrow{CD}$ está en el interior de <InteractiveElement target="angulo-c" color="pizarra">$\angle C = \angle ACB$</InteractiveElement>. Por la definición de <ConceptLink targetId="angulo" isDependency={false}>interior de un ángulo</ConceptLink>, el ángulo parcial es estrictamente menor que el total:
 
 <Formula>
@@ -82,7 +84,7 @@ Encadenando: $\angle ADC \gt \angle C \gt$ <InteractiveElement target="angulo-ac
 Pero por el paso 3, $\angle ADC \cong \angle ACD$. Un ángulo no puede ser a la vez congruente y estrictamente mayor que otro. <ConceptLink targetId="contradiccion" isDependency={false}>Contradicción</ConceptLink>.
 </ProofStep>
 
-<ProofStep number={6} title="Conclusión" target={["lado-ab", "lado-ac"]}>
+<ProofStep number={6} title="Conclusión" target={["lado-ab", "lado-ac"]} leanBlocks={metadata.stepTacticMap["6"]}>
 La <ConceptLink targetId="contradiccion" isDependency={false}>contradicción</ConceptLink> del paso 5 proviene de haber supuesto $\overline{AB} \gt \overline{AC}$ en el paso 1. Por <ConceptLink targetId="contradiccion" isDependency={false}>reducción al absurdo</ConceptLink>, $\overline{AB} \not\gt \overline{AC}$. Por el mismo argumento de los pasos 1 a 5 intercambiando los roles de $B$ y $C$, se descarta también $\overline{AC} \gt \overline{AB}$. Por tanto:
 
 <Formula>

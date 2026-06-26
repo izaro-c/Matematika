@@ -7,7 +7,10 @@ export const metadata = {
   "authors": ["euclides", "hilbert"],
   "parentTheorem": "teorema-pitagoras",
   "proofMethod": "directo",
-  "layout": "split"
+  "layout": "split",
+  "leanId": "Matematika.Geometry.Hilbert.demo_pitagoras_euclides",
+  "stepTacticMap": { "1": [], "2": [], "3": [], "4": [], "5": [], "6": [], "7": [] },
+  "sources": [{ "title": "Pending Formalization", "author": "Matematika", "role": "primary" }]
 };
 
 import { DemoPitagorasEuclides } from "@/shared/diagrams/Teoremas/DemoPitagorasEuclides";
@@ -24,23 +27,23 @@ Equivalente en términos de <ConceptLink targetId="area" isDependency={false}>á
 
 <Separador />
 
-  <ProofStep number={1} target="triangulo" title="El triángulo rectángulo">
+  <ProofStep number={1} target="triangulo" title="El triángulo rectángulo" leanBlocks={metadata.stepTacticMap["1"]}>
     Por hipótesis, tenemos un <InteractiveElement target="triangulo-base" color="carbon"><ConceptLink targetId="triangulo" isDependency={false}>triángulo</ConceptLink> <ConceptLink targetId="triangulo-rectangulo" isDependency={false}>rectángulo</ConceptLink> $ABC$</InteractiveElement>, con <ConceptLink targetId="angulo" isDependency={false}>ángulo</ConceptLink> <ConceptLink targetId="angulo-recto" isDependency={false}>recto</ConceptLink> en el <ConceptLink targetId="vertice" isDependency={false}>vértice</ConceptLink> $C$.
     Por la <ConceptLink targetId="triangulo-rectangulo" isDependency={false}>definición de triángulo rectángulo</ConceptLink>, los <ConceptLink targetId="lado" isDependency={false}>lados</ConceptLink> adyacentes al ángulo recto son los <ConceptLink targetId="cateto" isDependency={false}>catetos</ConceptLink> <InteractiveElement target="cateto-a" color="terracota">$a$</InteractiveElement> y <InteractiveElement target="cateto-b" color="salvia">$b$</InteractiveElement>, y el lado opuesto es la <InteractiveElement target="hipotenusa-c" color="pizarra"><ConceptLink targetId="hipotenusa" isDependency={false}>hipotenusa</ConceptLink> $c$</InteractiveElement>.
   </ProofStep>
 
-  <ProofStep number={2} target="cuadrados" title="Construcción de los cuadrados">
+  <ProofStep number={2} target="cuadrados" title="Construcción de los cuadrados" leanBlocks={metadata.stepTacticMap["2"]}>
     Por el <ConceptLink targetId="teorema-construccion-cuadrado" isDependency={false}>teorema de construcción de polígonos</ConceptLink>, sobre cada <ConceptLink targetId="lado" isDependency={false}>lado</ConceptLink> del <ConceptLink targetId="triangulo" isDependency={false}>triángulo</ConceptLink> construimos un <ConceptLink targetId="cuadrado" isDependency={false}>cuadrado</ConceptLink> hacia el exterior.
     Obtenemos: el <InteractiveElement target="cuadrado-b" color="salvia">cuadrado sobre $b$</InteractiveElement> de <ConceptLink targetId="area" isDependency={false}>área</ConceptLink> $b^2$, el <InteractiveElement target="cuadrado-a" color="terracota">cuadrado sobre $a$</InteractiveElement> de área $a^2$, y el <InteractiveElement target="cuadrado-c" color="pizarra">cuadrado sobre la <ConceptLink targetId="hipotenusa" isDependency={false}>hipotenusa</ConceptLink></InteractiveElement> de área $c^2$.
     Queremos demostrar que $a^2 + b^2 = c^2$.
   </ProofStep>
 
-  <ProofStep number={3} target="altura" title="La perpendicular y los rectángulos">
+  <ProofStep number={3} target="altura" title="La perpendicular y los rectángulos" leanBlocks={metadata.stepTacticMap["3"]}>
     Por el <ConceptLink targetId="teorema-existencia-perpendicular" isDependency={true}>teorema de existencia de perpendiculares</ConceptLink>, desde $C$ trazamos una <InteractiveElement target="recta-altura" color="carbon"><ConceptLink targetId="recta" isDependency={false}>recta</ConceptLink> <ConceptLink targetId="perpendicular" isDependency={false}>perpendicular</ConceptLink></InteractiveElement> a la <InteractiveElement target="hipotenusa-c" color="pizarra">hipotenusa $AB$</InteractiveElement> y la prolongamos a través del <InteractiveElement target="cuadrado-c" color="pizarra">cuadrado mayor</InteractiveElement>.
     Esta recta divide al cuadrado de la hipotenusa en <InteractiveElement target="rectangulos-hipotenusa" color="carbon">dos <ConceptLink targetId="rectangulo" isDependency={false}>rectángulos</ConceptLink></InteractiveElement>: el <InteractiveElement target="rectangulo-izq" color="salvia">rectángulo izquierdo</InteractiveElement> y el <InteractiveElement target="rectangulo-der" color="terracota">rectángulo derecho</InteractiveElement>.
   </ProofStep>
 
-  <ProofStep number={4} target="triangulos-izq" title="Construcción de triángulos (Izquierda)">
+  <ProofStep number={4} target="triangulos-izq" title="Construcción de triángulos (Izquierda)" leanBlocks={metadata.stepTacticMap["4"]}>
     Trazamos los segmentos $CD$ y $AK$ (por el <ConceptLink targetId="axioma-incidencia-1" isDependency={true}>axioma I-1</ConceptLink>, existen rectas por esos pares de puntos). Se forman dos <ConceptLink targetId="triangulo" isDependency={false}>triángulos</ConceptLink>: <InteractiveElement target="triangulo-acd" color="salvia">$\triangle ACD$</InteractiveElement> y <InteractiveElement target="triangulo-akb" color="salvia">$\triangle AKB$</InteractiveElement>.
 
     Por el paso 2, $AD$ es lado del cuadrado sobre la hipotenusa, luego $AD = c$. Por hipótesis $AB = c$. Por el paso 2, $AC = b$ y $AK = b$. Por construcción de los cuadrados, $\angle CAD = \angle CAB + 90^\circ$ y $\angle KAB = \angle CAB + 90^\circ$ (el ángulo de un cuadrado es recto por la <ConceptLink targetId="cuadrado" isDependency={false}>definición de cuadrado</ConceptLink>).
@@ -48,7 +51,7 @@ Equivalente en términos de <ConceptLink targetId="area" isDependency={false}>á
     Por tanto: $AD \cong AB$, $AC \cong AK$, y $\angle CAD \cong \angle KAB$. Por el <ConceptLink targetId="axioma-congruencia-5" isDependency={true}>Axioma LAL</ConceptLink>, $\triangle ACD \cong \triangle AKB$.
   </ProofStep>
 
-  <ProofStep number={5} target="areas-izq" title="Equivalencia de áreas (Izquierda)">
+  <ProofStep number={5} target="areas-izq" title="Equivalencia de áreas (Izquierda)" leanBlocks={metadata.stepTacticMap["5"]}>
     El <InteractiveElement target="triangulo-acd" color="salvia">$\triangle ACD$</InteractiveElement> comparte la base $AD$ con el <InteractiveElement target="rectangulo-izq" color="salvia">rectángulo izquierdo</InteractiveElement> y $C$ está sobre la recta paralela a $AD$ que pasa por el lado opuesto del rectángulo (por el paso 3, $C$ está sobre la perpendicular a $AB$, y $AD \parallel$ lado opuesto del rectángulo por construcción del cuadrado).
     Por el <ConceptLink targetId="teorema-area-triangulo" isDependency={false}>Teorema de equivalencia de áreas</ConceptLink>, el área del triángulo es la mitad de la del rectángulo.
 
@@ -57,12 +60,12 @@ Equivalente en términos de <ConceptLink targetId="area" isDependency={false}>á
     Por el paso 4, $\triangle ACD \cong \triangle AKB$, luego sus áreas son iguales. Por la <ConceptLink targetId="propiedad-transitiva-igualdad" isDependency={false}>transitividad de la igualdad</ConceptLink>, el <InteractiveElement target="rectangulo-izq" color="salvia">rectángulo izquierdo</InteractiveElement> tiene la misma área que el <InteractiveElement target="cuadrado-b" color="salvia">cuadrado sobre $b$ ($b^2$)</InteractiveElement>.
   </ProofStep>
 
-  <ProofStep number={6} target="areas-der" title="Equivalencia de áreas (Derecha)">
+  <ProofStep number={6} target="areas-der" title="Equivalencia de áreas (Derecha)" leanBlocks={metadata.stepTacticMap["6"]}>
     Por el mismo razonamiento de los pasos 4 y 5 aplicado al lado derecho, formamos <InteractiveElement target="triangulo-bce" color="terracota">$\triangle BCE$</InteractiveElement> y <InteractiveElement target="triangulo-abf" color="terracota">$\triangle ABF$</InteractiveElement>.
     Por el <ConceptLink targetId="axioma-congruencia-5" isDependency={true}>Axioma LAL</ConceptLink>, $\triangle BCE \cong \triangle ABF$. Por el <ConceptLink targetId="teorema-area-triangulo" isDependency={true}>teorema de equivalencia de áreas</ConceptLink>, el <InteractiveElement target="rectangulo-der" color="terracota">rectángulo derecho</InteractiveElement> tiene área igual al <InteractiveElement target="cuadrado-a" color="terracota">cuadrado sobre $a$ ($a^2$)</InteractiveElement>.
   </ProofStep>
 
-  <ProofStep number={7} target="cuadrados-final" title="Conclusión final">
+  <ProofStep number={7} target="cuadrados-final" title="Conclusión final" leanBlocks={metadata.stepTacticMap["7"]}>
     Por la <ConceptLink targetId="teoria-medida-area" isDependency={false}>propiedad aditiva del área</ConceptLink>, el <InteractiveElement target="cuadrado-c" color="pizarra">cuadrado sobre la hipotenusa ($c^2$)</InteractiveElement> es la unión del <InteractiveElement target="rectangulo-izq" color="salvia">rectángulo izquierdo</InteractiveElement> y el <InteractiveElement target="rectangulo-der" color="terracota">rectángulo derecho</InteractiveElement>.
     Por el paso 5, el rectángulo izquierdo tiene área $b^2$. Por el paso 6, el rectángulo derecho tiene área $a^2$. Por la <ConceptLink targetId="teoria-medida-area" isDependency={false}>propiedad aditiva</ConceptLink>:
 

@@ -111,6 +111,7 @@ Todo enunciado está justificado. Toda definición es precisa. Toda demostració
 **Implicaciones prácticas:**
 - Cada paso de una demostración (`<ProofStep>`) debe incluir su justificación explícita
 - Si la demostración tiene `leanId`, la verificación Lean complementa pero no sustituye el rigor Greenberg: cada paso pedagógico sigue necesitando justificación textual. `leanVerified` solo confirma que compila; una prueba completa exige `formalizationStatus: "proved"`.
+- Toda declaración Lean con `formalizationStatus: "bridge"` debe tener deuda explícita en `docs/lean/bridge-debt.json`. La fase puente solo se considera cerrada cuando `npm run bridge:closed` pasa sin declarar puentes restantes.
 - Todo contenido formal debe conservar procedencia: fuente primaria o secundaria, sistema axiomático cuando corresponda y declaración Lean exacta si existe.
 - En demostraciones geométricas con diagrama, las hipótesis se expresan fuera de `<Formula>` en prosa enlazable e interactiva; la fórmula de enunciado contiene solo la conclusión. No esconder `Sean`, `tales que` ni `Entonces` dentro de LaTeX.
 - Las definiciones deben cubrir casos límite explícitamente (ej: ¿un segmento de longitud cero es un segmento?)
@@ -221,6 +222,8 @@ Cuando se carga esta skill, el agente DEBE verificar:
 10. ¿El DAG es válido? → ejecutar `npm run validate-graph`
 11. ¿Las referencias cruzadas son íntegras? → ejecutar `npm run validate-references`
 12. ¿Las páginas con `leanId` coinciden con Lean? → ejecutar `npm run validate-lean`
+13. ¿El inventario de cobertura de contenido esta actualizado? → ejecutar `npm run content:coverage`
+14. ¿La deuda bridge esta explicitada? → ejecutar `npm run bridge:audit`
 
 Si alguna verificación falla, el agente DEBE informar al usuario con el problema específico y sugerir corrección.
 
@@ -248,7 +251,8 @@ Para usar durante una revisión de código/contenido (ej: con el agente `@review
 - [ ] ¿Cada `<ProofStep>` tiene `justificacion`?
 - [ ] ¿Las definiciones cubren casos límite?
 - [ ] ¿Cada concepto nuevo tiene motivación?
-- [ ] ¿`npm run validate-graph && npm run validate-references && npm run validate-lean` pasan?
+- [ ] ¿`npm run validate-graph && npm run validate-references && npm run validate-lean && npm run content:coverage && npm run bridge:audit` pasan?
+- [ ] Para cerrar la fase puente: ¿`npm run bridge:closed` pasa?
 
 ---
 

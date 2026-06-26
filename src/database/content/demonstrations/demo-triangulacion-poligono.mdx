@@ -7,7 +7,10 @@ export const metadata = {
   "proofMethod": "induccion",
   "layout": "split",
   "authors": ["hilbert"],
-  "tags": ["geometria", "polígonos", "triangulos"]
+  "tags": ["geometria", "polígonos", "triangulos"],
+  "leanId": "Matematika.Geometry.Hilbert.demo_triangulacion_poligono",
+  "stepTacticMap": { "1": [], "2": [], "3": [], "4": [] },
+  "sources": [{ "title": "Pending Formalization", "author": "Matematika", "role": "primary" }]
 };
 
 import { DemoTriangulacionPoligono } from '../../../shared/diagrams/Demos/DemoTriangulacionPoligono';
@@ -22,11 +25,11 @@ Sea $P$ un polígono simple de $n \geq 3$ vértices $v_1, v_2, \dots, v_n$ en or
 
 <Separador />
 
-<ProofStep number={1} title="Caso base: n = 3">
+<ProofStep number={1} title="Caso base: n = 3" leanBlocks={metadata.stepTacticMap["1"]}>
 Si $n = 3$, $P$ es un <ConceptLink targetId="triangulo" isDependency={true}>triángulo</ConceptLink> por definición. Ya está triangulado: $1$ triángulo, $0$ diagonales. Se cumple $n-2 = 1$ y $n-3 = 0$.
 </ProofStep>
 
-<ProofStep number={2} title="Existencia de un vértice oreja (n ≥ 4)" target="step1">
+<ProofStep number={2} title="Existencia de un vértice oreja (n ≥ 4)" target="step1" leanBlocks={metadata.stepTacticMap["2"]}>
 Sea $n \geq 4$. Por el <ConceptLink targetId="axioma-orden-3" isDependency={true}>axioma II-3 de orden</ConceptLink>, existe una dirección en el plano tal que los vértices de <InteractiveElement target="poligono-p" color="carbon">$P$</InteractiveElement> tienen coordenadas distintas. Sea $v_k$ el vértice de $P$ con coordenada mínima en esa dirección (un vértice «extremo» del polígono).
 
 Afirmación: $v_k$ es un **vértice oreja**. Esto significa que la <InteractiveElement target="diagonal" color="terracota">diagonal interior</InteractiveElement> $\overline{v_{k-1}v_{k+1}}$ (donde los índices son módulo $n$) está completamente contenida en el interior de $P$ salvo sus extremos, formando la <InteractiveElement target="oreja" color="salvia">oreja $\triangle v_{k-1}v_kv_{k+1}$</InteractiveElement>.
@@ -34,13 +37,13 @@ Afirmación: $v_k$ es un **vértice oreja**. Esto significa que la <InteractiveE
 Por el <ConceptLink targetId="axioma-orden-4" isDependency={true}>axioma de Pasch (II-4)</ConceptLink>, cualquier recta que atraviese el triángulo $\triangle v_{k-1}v_kv_{k+1}$ debe cortar uno de sus lados. Como $v_k$ es extremo en la dirección elegida, ningún otro vértice de $P$ puede estar en el interior de $\triangle v_{k-1}v_kv_{k+1}$. Por tanto, el segmento $\overline{v_{k-1}v_{k+1}}$ no cruza ninguna arista de $P$ y es una diagonal interior válida.
 </ProofStep>
 
-<ProofStep number={3} title="Reducción y paso inductivo" target="step2">
+<ProofStep number={3} title="Reducción y paso inductivo" target="step2" leanBlocks={metadata.stepTacticMap["3"]}>
 Sea $d = \overline{v_{k-1}v_{k+1}}$ la diagonal interior del paso 2. Esta diagonal divide $P$ en dos partes: el triángulo $\triangle v_{k-1}v_kv_{k+1}$ y el <InteractiveElement target="subpoligono" color="pizarra">polígono $P'$ formado por los $n-1$ vértices restantes</InteractiveElement> (se elimina $v_k$ de la lista cíclica de vértices y se añade la arista $d$).
 
 $P'$ es un polígono simple de $n-1$ vértices. Por hipótesis de inducción, $P'$ admite una triangulación en $(n-1)-2 = n-3$ triángulos mediante $(n-1)-3 = n-4$ diagonales.
 </ProofStep>
 
-<ProofStep number={4} title="Conclusión">
+<ProofStep number={4} title="Conclusión" leanBlocks={metadata.stepTacticMap["4"]}>
 La triangulación de $P$ se obtiene uniendo el triángulo $\triangle v_{k-1}v_kv_{k+1}$ con la triangulación de $P'$. La diagonal $d = \overline{v_{k-1}v_{k+1}}$ es compartida por ambos. En total:
 
 - Triángulos: $1 + (n-3) = n-2$
