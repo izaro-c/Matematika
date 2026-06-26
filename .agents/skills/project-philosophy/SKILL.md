@@ -26,12 +26,13 @@ Cada concepto es un nodo navegable en una red de conocimiento. La lectura puede 
 **Implicaciones prácticas:**
 - Toda página debe poder leerse de forma autónoma (sin asumir que el usuario viene de otra página)
 - Los enlaces entre conceptos usan `<ConceptLink>` y abren Marginalia, no navegación completa
-- El grafo de conocimiento (`GraphPage`) refleja fielmente las dependencias lógicas. Cuando una página tiene `leanId`, Lean aporta la traza mecánica; `formalizationStatus` distingue un axioma, un puente y una prueba completa. MDX sigue siendo la capa pedagógica y semántica.
+- El grafo de conocimiento (`GraphPage`) refleja fielmente las dependencias lógicas. Cuando una página tiene `leanId`, Lean aporta la traza mecánica; `formalizationStatus` distingue un axioma, un puente y una prueba completa. MDX sigue siendo la capa pedagógica y semántica. **MDX siempre mantendrá ConceptLink, incluso cuando Lean ya haya verificado la dependencia.**
 
 **Ejemplos de violación:**
 - ❌ "Como vimos en el capítulo anterior..." (asume lectura secuencial)
 - ❌ Usar `<a href="/teorema/pitagoras">` en lugar de `<ConceptLink targetId="teorema-pitagoras" />`
 - ❌ Agrupar varios conceptos no relacionados en una sola página "tutorial"
+- ❌ Eliminar un `<ConceptLink>` asumiendo que "Lean ya valida la dependencia".
 
 **Cómo detectar:** Buscar `<a href=` en archivos MDX. Buscar frases que asuman orden de lectura. Verificar que todo `targetId` en `<ConceptLink>` abre el MarginaliaPanel.
 
@@ -110,8 +111,10 @@ Todo enunciado está justificado. Toda definición es precisa. Toda demostració
 
 **Implicaciones prácticas:**
 - Cada paso de una demostración (`<ProofStep>`) debe incluir su justificación explícita
-- Si la demostración tiene `leanId`, la verificación Lean complementa pero no sustituye el rigor Greenberg: cada paso pedagógico sigue necesitando justificación textual. `leanVerified` solo confirma que compila; una prueba completa exige `formalizationStatus: "proved"`.
-- Toda declaración Lean con `formalizationStatus: "bridge"` debe tener deuda explícita en `docs/lean/bridge-debt.json`. La fase puente solo se considera cerrada cuando `npm run bridge:closed` pasa sin declarar puentes restantes.
+- Si la demostración tiene `leanId`, la verificación Lean complementa pero no sustituye el rigor Greenberg: cada paso pedagógico sigue necesitando justificación textual con `<ConceptLink>`.
+- **Independencia Estricta:** Matematika Core es independiente de Mathlib. Toda formalización debe partir de axiomas propios.
+- `leanVerified` solo confirma que compila; una prueba completa exige `formalizationStatus: "proved"`. **Ningún teorema que contenga `sorry` o `admit` puede considerarse `"proved"` ni generar certificado "lean-checked".**
+- Toda declaración Lean incompleta debe tener `formalizationStatus: "bridge"` y registrar su deuda en `docs/lean/bridge-debt.json`.
 - Todo contenido formal debe conservar procedencia: fuente primaria o secundaria, sistema axiomático cuando corresponda y declaración Lean exacta si existe.
 - En demostraciones geométricas con diagrama, las hipótesis se expresan fuera de `<Formula>` en prosa enlazable e interactiva; la fórmula de enunciado contiene solo la conclusión. No esconder `Sean`, `tales que` ni `Entonces` dentro de LaTeX.
 - Las definiciones deben cubrir casos límite explícitamente (ej: ¿un segmento de longitud cero es un segmento?)

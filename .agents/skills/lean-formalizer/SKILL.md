@@ -42,7 +42,7 @@ Skills hermanas:
 - Nombres Lean: namespace `Matematika.<Area>`, snake_case Lean idiomatico para teoremas, `leanId` completo en MDX.
 - IDs Matematika: siempre kebab-case y nunca derivados automaticamente si ya existe una pagina.
 - Dependencias `@deps`: usa IDs Matematika, no nombres Lean, para comparar con el jardin MDX.
-- `@status` (legacy) u otros campos de estado interno solo deben reflejar pruebas basadas en axiomas. Nunca etiquetes como `proved` una declaración que use un puente lógico injustificado o dependencias circulares.
+- `@status` (legacy) u otros campos de estado interno solo deben reflejar pruebas basadas en axiomas. Nunca etiquetes como `proved` una declaración que use un puente lógico injustificado (`sorry`, `admit` o `statement : True`), ya que esto generaría certificados falsos ("lean-checked").
 - Matematika Core es estrictamente independiente de Mathlib. **No importes Mathlib.** Toda formalización debe basarse en axiomas, definiciones primitivas y teoremas sintéticos construidos dentro del propio proyecto.
 - Una prueba analítica o proveniente de bibliotecas externas no sustituye a una prueba sintética desde los axiomas de Hilbert (o el sistema axiomático correspondiente). Todo resultado formal debe tener una ruta limpia hacia los axiomas fundamentales de Matematika.
 - Toda declaración `bridge` debe aparecer en `docs/lean/bridge-debt.json` con `targetStatus`, prioridad, estrategia y bloqueos. `npm run bridge:audit` falla si existe un puente sin deuda explícita. `npm run bridge:closed` solo debe pasar cuando ya no quede ninguna declaración `bridge`.

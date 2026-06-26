@@ -1203,7 +1203,13 @@
       ],
       "directDependencies": [
         "punto",
-        "congruencia"
+        "congruencia",
+        "axioma-incidencia-3",
+        "axioma-congruencia-4",
+        "axioma-congruencia-1",
+        "axioma-orden-4",
+        "axioma-congruencia-5",
+        "axioma-orden-3"
       ]
     },
     "teorema-angulo-externo": {
@@ -1228,7 +1234,13 @@
       ],
       "directDependencies": [
         "axioma-orden-3",
-        "axioma-orden-4"
+        "axioma-orden-4",
+        "lema-punto-medio",
+        "axioma-incidencia-1",
+        "axioma-congruencia-1",
+        "teorema-angulos-opuestos-verticales",
+        "axioma-congruencia-5",
+        "axioma-congruencia-4"
       ]
     },
     "teorema-angulos-alternos-internos": {
@@ -1249,7 +1261,9 @@
       ],
       "directDependencies": [
         "teorema-angulo-externo",
-        "axioma-paralelas-euclides"
+        "axioma-paralelas-euclides",
+        "teorema-angulos-opuestos-verticales",
+        "axioma-congruencia-4"
       ]
     },
     "teorema-angulos-opuestos-verticales": {
@@ -1267,7 +1281,11 @@
           ]
         }
       ],
-      "directDependencies": []
+      "directDependencies": [
+        "angulos-suplementarios",
+        "axioma-congruencia-4",
+        "axioma-congruencia-3"
+      ]
     },
     "teorema-area-aditividad": {
       "id": "teorema-area-aditividad",
@@ -1302,7 +1320,9 @@
         }
       ],
       "directDependencies": [
-        "teorema-triangulacion-poligono"
+        "teorema-triangulacion-poligono",
+        "axioma-congruencia-5",
+        "axioma-incidencia-1"
       ]
     },
     "teorema-area-rectangulo": {
@@ -1321,7 +1341,9 @@
         }
       ],
       "directDependencies": [
-        "axioma-arquimedes"
+        "axioma-arquimedes",
+        "teorema-area-aditividad",
+        "axioma-completitud"
       ]
     },
     "teorema-area-triangulo": {
@@ -1341,7 +1363,13 @@
           ]
         }
       ],
-      "directDependencies": []
+      "directDependencies": [
+        "teorema-existencia-perpendicular",
+        "teorema-area-aditividad",
+        "axioma-congruencia-5",
+        "teorema-area-invariancia",
+        "teorema-area-rectangulo"
+      ]
     },
     "teorema-congruencia-aal": {
       "id": "teorema-congruencia-aal",
@@ -1362,7 +1390,10 @@
       ],
       "directDependencies": [
         "axioma-congruencia-5",
-        "teorema-angulo-externo"
+        "teorema-angulo-externo",
+        "axioma-congruencia-1",
+        "teorema-congruencia-ala",
+        "teorema-congruencia-lll"
       ]
     },
     "teorema-congruencia-ala": {
@@ -1384,7 +1415,10 @@
         "congruencia",
         "angulo",
         "triangulo",
-        "segmento"
+        "segmento",
+        "axioma-congruencia-1",
+        "axioma-congruencia-5",
+        "axioma-congruencia-4"
       ]
     },
     "teorema-congruencia-lll": {
@@ -1408,7 +1442,8 @@
         "axioma-congruencia-5",
         "axioma-congruencia-1",
         "axioma-congruencia-4",
-        "teorema-triangulo-isosceles"
+        "teorema-triangulo-isosceles",
+        "axioma-congruencia-3"
       ]
     },
     "teorema-desigualdad-triangular": {
@@ -1430,7 +1465,15 @@
           ]
         }
       ],
-      "directDependencies": []
+      "directDependencies": [
+        "axioma-orden-3",
+        "axioma-congruencia-1",
+        "axioma-incidencia-1",
+        "teorema-triangulo-isosceles",
+        "teorema-angulo-externo",
+        "axioma-congruencia-4",
+        "axioma-congruencia-3"
+      ]
     },
     "teorema-dos-rectas-un-punto": {
       "id": "teorema-dos-rectas-un-punto",
@@ -1474,7 +1517,12 @@
         "lema-punto-medio",
         "teorema-congruencia-lll",
         "axioma-congruencia-4",
-        "axioma-congruencia-1"
+        "axioma-congruencia-1",
+        "axioma-incidencia-2",
+        "axioma-incidencia-1",
+        "axioma-congruencia-5",
+        "teorema-congruencia-ala",
+        "axioma-orden-3"
       ]
     },
     "teorema-existencia-perpendicular": {
@@ -1501,7 +1549,12 @@
         "lema-punto-medio",
         "axioma-congruencia-4",
         "axioma-congruencia-5",
-        "teorema-angulo-externo"
+        "teorema-angulo-externo",
+        "axioma-incidencia-2",
+        "axioma-incidencia-3",
+        "axioma-orden-4",
+        "axioma-congruencia-1",
+        "axioma-incidencia-1"
       ]
     },
     "teorema-invariancia-triangulacion": {
@@ -1519,7 +1572,8 @@
         }
       ],
       "directDependencies": [
-        "teorema-area-aditividad"
+        "teorema-area-aditividad",
+        "teorema-dos-rectas-un-punto"
       ]
     },
     "teorema-pitagoras": {
@@ -1546,7 +1600,12 @@
         }
       ],
       "directDependencies": [
-        "axioma-paralelas-euclides"
+        "axioma-paralelas-euclides",
+        "axioma-congruencia-5",
+        "teorema-suma-angulos-triangulo",
+        "teorema-existencia-perpendicular",
+        "axioma-incidencia-1",
+        "teorema-area-triangulo"
       ]
     },
     "teorema-punto-medio-perpendicular": {
@@ -1588,7 +1647,9 @@
       ],
       "directDependencies": [
         "teorema-triangulo-isosceles",
-        "teorema-angulo-externo"
+        "teorema-angulo-externo",
+        "axioma-congruencia-1",
+        "axioma-incidencia-1"
       ]
     },
     "teorema-suma-angulos-triangulo": {
@@ -1606,7 +1667,8 @@
         }
       ],
       "directDependencies": [
-        "axioma-paralelas-euclides"
+        "axioma-paralelas-euclides",
+        "teorema-angulos-alternos-internos"
       ]
     },
     "teorema-tales": {
@@ -1624,7 +1686,8 @@
         }
       ],
       "directDependencies": [
-        "axioma-paralelas-euclides"
+        "axioma-paralelas-euclides",
+        "axioma-incidencia-1"
       ]
     },
     "teorema-triangulacion-poligono": {
@@ -1643,7 +1706,9 @@
         }
       ],
       "directDependencies": [
-        "axioma-orden-4"
+        "axioma-orden-4",
+        "triangulo",
+        "axioma-orden-3"
       ]
     },
     "teorema-triangulo-isosceles": {
@@ -1663,7 +1728,8 @@
         "triangulo",
         "segmento",
         "angulo",
-        "congruencia"
+        "congruencia",
+        "axioma-congruencia-5"
       ]
     }
   }

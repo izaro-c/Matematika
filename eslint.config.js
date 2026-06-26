@@ -14,6 +14,8 @@ export default defineConfig([
     'lean/.lake/**',
     '.agents/skills/**/examples',
     '.agents/skills/**/examples/**',
+    'Matematika/.agents/skills/**/examples',
+    'Matematika/.agents/skills/**/examples/**',
   ]),
   {
     files: ['**/*.{ts,tsx}'],
@@ -52,7 +54,11 @@ export default defineConfig([
     /* Diagramas interactivos JSXGraph: Math.random() usado exclusivamente para
        generar IDs únicos de tableros interactivos no criptográficos.
        Revisado y aceptado como falso positivo. */
-    files: ['src/boundary/components/diagrams/**/*.tsx', 'src/shared/diagrams/**/*.tsx'],
+    files: [
+      'src/boundary/components/diagrams/**/*.tsx',
+      'src/shared/diagrams/**/*.tsx',
+      'Matematika/src/shared/diagrams/**/*.tsx'
+    ],
     rules: {
       'sonarjs/pseudo-random': 'off'
     }

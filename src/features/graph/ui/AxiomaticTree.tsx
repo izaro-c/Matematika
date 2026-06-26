@@ -166,10 +166,10 @@ function FlowContent() {
   // ── Sync baseNodes → rfNodes ────────────────────────────────────────────────
   useEffect(() => {
     if (baseNodes.length === 0) return;
-    const nodes = baseNodes.map((n) => ({
+    const nodes: Node[] = baseNodes.map((n) => ({
       ...n,
       data: { ...n.data, scale: 1, isHighlighted: false },
-    }));
+    } as Node));
 
     const hilbertAxioms = nodes.filter(n => {
       const d = n.data as unknown as MathNodeData;

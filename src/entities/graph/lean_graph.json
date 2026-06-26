@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-06-26T20:43:36.639Z",
+  "generatedAt": "2026-06-26T23:40:38.549Z",
   "nodes": [
     {
       "matematikaId": "axioma-congruencia-1",
@@ -585,7 +585,15 @@
         "segmento",
         "punto",
         "congruencia",
-        "teorema-punto-medio-perpendicular"
+        "teorema-punto-medio-perpendicular",
+        "axioma-incidencia-3",
+        "axioma-congruencia-4",
+        "axioma-congruencia-1",
+        "axioma-orden-4",
+        "axioma-congruencia-5",
+        "teorema-congruencia-lll",
+        "teorema-congruencia-ala",
+        "axioma-orden-3"
       ],
       "proofIds": [],
       "sourceFile": "lean/Matematika/Geometry/Hilbert/PendingTheorems.lean"
@@ -598,7 +606,13 @@
       "foundation": "pending",
       "declaredDeps": [
         "axioma-orden-3",
-        "axioma-orden-4"
+        "axioma-orden-4",
+        "lema-punto-medio",
+        "axioma-incidencia-1",
+        "axioma-congruencia-1",
+        "teorema-angulos-opuestos-verticales",
+        "axioma-congruencia-5",
+        "axioma-congruencia-4"
       ],
       "proofIds": [],
       "sourceFile": "lean/Matematika/Geometry/Hilbert/PendingTheorems.lean"
@@ -611,7 +625,9 @@
       "foundation": "pending",
       "declaredDeps": [
         "teorema-angulo-externo",
-        "axioma-paralelas-euclides"
+        "axioma-paralelas-euclides",
+        "teorema-angulos-opuestos-verticales",
+        "axioma-congruencia-4"
       ],
       "proofIds": [],
       "sourceFile": "lean/Matematika/Geometry/Hilbert/PendingTheorems.lean"
@@ -622,7 +638,11 @@
       "kind": "theorem",
       "verificationStatus": "human-proof",
       "foundation": "pending",
-      "declaredDeps": [],
+      "declaredDeps": [
+        "angulos-suplementarios",
+        "axioma-congruencia-4",
+        "axioma-congruencia-3"
+      ],
       "proofIds": [],
       "sourceFile": "lean/Matematika/Geometry/Hilbert/PendingTheorems.lean"
     },
@@ -645,7 +665,9 @@
       "verificationStatus": "human-proof",
       "foundation": "pending",
       "declaredDeps": [
-        "teorema-triangulacion-poligono"
+        "teorema-triangulacion-poligono",
+        "axioma-congruencia-5",
+        "axioma-incidencia-1"
       ],
       "proofIds": [],
       "sourceFile": "lean/Matematika/Geometry/Hilbert/PendingTheorems.lean"
@@ -657,7 +679,9 @@
       "verificationStatus": "human-proof",
       "foundation": "pending",
       "declaredDeps": [
-        "axioma-arquimedes"
+        "axioma-arquimedes",
+        "teorema-area-aditividad",
+        "axioma-completitud"
       ],
       "proofIds": [],
       "sourceFile": "lean/Matematika/Geometry/Hilbert/PendingTheorems.lean"
@@ -668,7 +692,13 @@
       "kind": "theorem",
       "verificationStatus": "human-proof",
       "foundation": "pending",
-      "declaredDeps": [],
+      "declaredDeps": [
+        "teorema-existencia-perpendicular",
+        "teorema-area-aditividad",
+        "axioma-congruencia-5",
+        "teorema-area-invariancia",
+        "teorema-area-rectangulo"
+      ],
       "proofIds": [],
       "sourceFile": "lean/Matematika/Geometry/Hilbert/PendingTheorems.lean"
     },
@@ -680,7 +710,10 @@
       "foundation": "pending",
       "declaredDeps": [
         "axioma-congruencia-5",
-        "teorema-angulo-externo"
+        "teorema-angulo-externo",
+        "axioma-congruencia-1",
+        "teorema-congruencia-ala",
+        "teorema-congruencia-lll"
       ],
       "proofIds": [],
       "sourceFile": "lean/Matematika/Geometry/Hilbert/PendingTheorems.lean"
@@ -695,7 +728,10 @@
         "congruencia",
         "angulo",
         "triangulo",
-        "segmento"
+        "segmento",
+        "axioma-congruencia-1",
+        "axioma-congruencia-5",
+        "axioma-congruencia-4"
       ],
       "proofIds": [],
       "sourceFile": "lean/Matematika/Geometry/Hilbert/PendingTheorems.lean"
@@ -710,7 +746,8 @@
         "axioma-congruencia-5",
         "axioma-congruencia-1",
         "axioma-congruencia-4",
-        "teorema-triangulo-isosceles"
+        "teorema-triangulo-isosceles",
+        "axioma-congruencia-3"
       ],
       "proofIds": [],
       "sourceFile": "lean/Matematika/Geometry/Hilbert/PendingTheorems.lean"
@@ -721,7 +758,15 @@
       "kind": "theorem",
       "verificationStatus": "human-proof",
       "foundation": "pending",
-      "declaredDeps": [],
+      "declaredDeps": [
+        "axioma-orden-3",
+        "axioma-congruencia-1",
+        "axioma-incidencia-1",
+        "teorema-triangulo-isosceles",
+        "teorema-angulo-externo",
+        "axioma-congruencia-4",
+        "axioma-congruencia-3"
+      ],
       "proofIds": [],
       "sourceFile": "lean/Matematika/Geometry/Hilbert/PendingTheorems.lean"
     },
@@ -735,7 +780,12 @@
         "lema-punto-medio",
         "teorema-congruencia-lll",
         "axioma-congruencia-4",
-        "axioma-congruencia-1"
+        "axioma-congruencia-1",
+        "axioma-incidencia-2",
+        "axioma-incidencia-1",
+        "axioma-congruencia-5",
+        "teorema-congruencia-ala",
+        "axioma-orden-3"
       ],
       "proofIds": [],
       "sourceFile": "lean/Matematika/Geometry/Hilbert/PendingTheorems.lean"
@@ -750,7 +800,12 @@
         "lema-punto-medio",
         "axioma-congruencia-4",
         "axioma-congruencia-5",
-        "teorema-angulo-externo"
+        "teorema-angulo-externo",
+        "axioma-incidencia-2",
+        "axioma-incidencia-3",
+        "axioma-orden-4",
+        "axioma-congruencia-1",
+        "axioma-incidencia-1"
       ],
       "proofIds": [],
       "sourceFile": "lean/Matematika/Geometry/Hilbert/PendingTheorems.lean"
@@ -762,7 +817,8 @@
       "verificationStatus": "human-proof",
       "foundation": "pending",
       "declaredDeps": [
-        "teorema-area-aditividad"
+        "teorema-area-aditividad",
+        "teorema-dos-rectas-un-punto"
       ],
       "proofIds": [],
       "sourceFile": "lean/Matematika/Geometry/Hilbert/PendingTheorems.lean"
@@ -774,7 +830,12 @@
       "verificationStatus": "human-proof",
       "foundation": "pending",
       "declaredDeps": [
-        "axioma-paralelas-euclides"
+        "axioma-paralelas-euclides",
+        "axioma-congruencia-5",
+        "teorema-suma-angulos-triangulo",
+        "teorema-existencia-perpendicular",
+        "axioma-incidencia-1",
+        "teorema-area-triangulo"
       ],
       "proofIds": [],
       "sourceFile": "lean/Matematika/Geometry/Hilbert/PendingTheorems.lean"
@@ -801,7 +862,9 @@
       "foundation": "pending",
       "declaredDeps": [
         "teorema-triangulo-isosceles",
-        "teorema-angulo-externo"
+        "teorema-angulo-externo",
+        "axioma-congruencia-1",
+        "axioma-incidencia-1"
       ],
       "proofIds": [],
       "sourceFile": "lean/Matematika/Geometry/Hilbert/PendingTheorems.lean"
@@ -813,7 +876,8 @@
       "verificationStatus": "human-proof",
       "foundation": "pending",
       "declaredDeps": [
-        "axioma-paralelas-euclides"
+        "axioma-paralelas-euclides",
+        "teorema-angulos-alternos-internos"
       ],
       "proofIds": [],
       "sourceFile": "lean/Matematika/Geometry/Hilbert/PendingTheorems.lean"
@@ -825,7 +889,8 @@
       "verificationStatus": "human-proof",
       "foundation": "pending",
       "declaredDeps": [
-        "axioma-paralelas-euclides"
+        "axioma-paralelas-euclides",
+        "axioma-incidencia-1"
       ],
       "proofIds": [],
       "sourceFile": "lean/Matematika/Geometry/Hilbert/PendingTheorems.lean"
@@ -837,7 +902,9 @@
       "verificationStatus": "human-proof",
       "foundation": "pending",
       "declaredDeps": [
-        "axioma-orden-4"
+        "axioma-orden-4",
+        "triangulo",
+        "axioma-orden-3"
       ],
       "proofIds": [],
       "sourceFile": "lean/Matematika/Geometry/Hilbert/PendingTheorems.lean"
@@ -852,7 +919,8 @@
         "triangulo",
         "segmento",
         "angulo",
-        "congruencia"
+        "congruencia",
+        "axioma-congruencia-5"
       ],
       "proofIds": [],
       "sourceFile": "lean/Matematika/Geometry/Hilbert/PendingTheorems.lean"
