@@ -1,0 +1,6 @@
+{
+  "version": 1,
+  "policy": "Every Lean declaration with @status \"bridge\" must have an explicit target status and removal strategy. The bridge phase is closed only when this list is empty and npm run bridge:closed passes.",
+  "entries": [
+  ]
+}

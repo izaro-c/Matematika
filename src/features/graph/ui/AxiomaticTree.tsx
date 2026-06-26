@@ -61,7 +61,7 @@ function GroupBraceNode({ data }: { data: { width: number; label: string } }) {
   );
 }
 
-const nodeTypes = { mathNode: MathNode, groupBrace: GroupBraceNode };
+
 
 const AXIOM_GROUPS = [
   { test: (id: string) => id.startsWith('axioma-incidencia'), color: '#b85c38', label: 'Incidencia' },
@@ -107,6 +107,8 @@ function FlowContent() {
   const [rfNodes, setRfNodes, onNodesChange] = useNodesState<Node>([]);
   const [, , onEdgesChange] = useEdgesState<Edge>([]);
   const { fitView } = useReactFlow();
+  
+  const nodeTypes = useMemo(() => ({ mathNode: MathNode, groupBrace: GroupBraceNode }), []);
 
   const [isMobile, setIsMobile] = useState(
     () => typeof window !== 'undefined' && window.matchMedia('(max-width: 768px)').matches,
@@ -159,7 +161,7 @@ function FlowContent() {
   // ── Init worker ──────────────────────────────────────────────────────────────
   useEffect(() => {
     initWorker();
-  }, []);
+  }, [initWorker]);
 
   // ── Sync baseNodes → rfNodes ────────────────────────────────────────────────
   useEffect(() => {
@@ -190,14 +192,14 @@ function FlowContent() {
         position: { x: minX, y: -60 },
         data: { label: 'Axiomática de Hilbert', width: maxX - minX },
         draggable: false, selectable: false, zIndex: -1, style: {},
-      } as any);
+      } as unknown as Node);
     }
 
     setRfNodes(nodes);
     requestAnimationFrame(() => {
       setTimeout(() => fitView({ padding: 0.12, duration: 500 }), 30);
     });
-  }, [baseNodes, baseEdges]);
+  }, [baseNodes, baseEdges, fitView, setRfNodes]);
 
   // ── Selected chain ──────────────────────────────────────────────────────────
   const selectedChain = useMemo(() => {
@@ -244,13 +246,16 @@ function FlowContent() {
       const isDimmed = !isAxiomSelected && selectedNodeId && !isSelected && !inChain;
       const group = d.nodeType === 'axioma' ? getAxiomGroup(n.id) : null;
       const active = sandboxEnabled ? validNodes.has(n.id) : (activeStates[n.id] ?? true);
+      let scale = 1;
+      if (isHovered) scale = 1.08;
+      else if (isDimmed) scale = 0.82;
       return {
         ...n,
         data: {
           ...d,
           isActive: active,
           isHighlighted: isSelected || isHovered,
-          scale: isHovered ? 1.08 : isDimmed ? 0.82 : 1,
+          scale,
           axiomGroupColor: group?.color || undefined,
           axiomGroupLabel: group?.label || undefined,
           isDimmed,
@@ -302,7 +307,7 @@ function FlowContent() {
         const baseStyle = e.style || {};
         let finalStroke = baseStyle.stroke;
         let finalStrokeWidth = baseStyle.strokeWidth;
-        let finalMarkerColor = (e.markerEnd as any)?.color;
+        let finalMarkerColor = (e.markerEnd as Record<string, string>)?.color;
         if (sandboxEnabled) {
           const srcActive = validNodes.has(e.source);
           const tgtActive = validNodes.has(e.target);
@@ -314,7 +319,7 @@ function FlowContent() {
         return {
           ...e,
           style: { ...baseStyle, opacity: isRelated ? 1 : 0.12, stroke: finalStroke, strokeWidth: finalStrokeWidth },
-          markerEnd: e.markerEnd ? { ...(e.markerEnd as any), color: finalMarkerColor } : undefined,
+          markerEnd: e.markerEnd ? { ...(e.markerEnd as Record<string, string>), color: finalMarkerColor } : undefined,
         } as Edge;
       })
       .filter(e => visibleNodeIds.has(e.source) && visibleNodeIds.has(e.target));

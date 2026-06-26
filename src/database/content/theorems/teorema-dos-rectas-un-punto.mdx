@@ -9,7 +9,23 @@ export const metadata = {
   "difficulty": "básico",
   "demos": ["demo-dos-rectas-un-punto"],
   "corollaries": ["corolario-rectas-coincidentes"],
-  "hasSimulation": true
+  "hasSimulation": true,
+  "leanId": "Matematika.Geometry.Hilbert.two_lines_meet_at_most_one_point",
+  "leanCommitSha": "local-hilbert-core",
+  "sources": [
+    {
+      "title": "Grundlagen der Geometrie",
+      "author": "David Hilbert",
+      "locator": "Axioms of Incidence, I.1",
+      "role": "primary"
+    },
+    {
+      "title": "Euclidean and Non-Euclidean Geometries",
+      "author": "Marvin Jay Greenberg",
+      "locator": "Hilbert incidence axioms",
+      "role": "secondary"
+    }
+  ]
 };
 
 import { DosRectasUnPunto } from '@/shared/diagrams/Teoremas/DosRectasUnPunto';
@@ -23,8 +39,10 @@ os <InteractiveElement target="rectas"><ConceptLink targetId="recta" isDependenc
 
 ### Enunciado Formal
 
+Sean $l$ y $m$ dos <ConceptLink targetId="recta" isDependency={false}>rectas</ConceptLink> distintas. Entonces, si dos <ConceptLink targetId="punto" isDependency={false}>puntos</ConceptLink> pertenecen simultáneamente a ambas rectas, necesariamente coinciden:
+
 <Formula>
-  $$ \text{Sean } l \neq m \text{ dos rectas. Existe a lo sumo un punto } P \text{ tal que } P \in l \cap m. $$
+  $$ P \in l \cap m \land Q \in l \cap m \implies P = Q $$
 </Formula>
 
 <Separador />

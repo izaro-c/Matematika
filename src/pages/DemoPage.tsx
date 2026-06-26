@@ -20,7 +20,7 @@ export const DemoPage: React.FC = () => {
       <div className="min-h-screen bg-lienzo font-serif flex items-center justify-center text-carbon">
         <div className="text-center">
           <h1 className="text-4xl font-bold mb-4">Demostración no encontrada</h1>
-          <Link href="/"><a className="text-terracota hover:underline">Volver al inicio</a></Link>
+          <Link href="/" className="text-terracota hover:underline">Volver al inicio</Link>
         </div>
       </div>
     );

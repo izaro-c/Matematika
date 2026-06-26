@@ -7,7 +7,23 @@ export const metadata = {
   "parentTheorem": "teorema-dos-rectas-un-punto",
   "tags": ["geometria", "incidencia"],
   "difficulty": "básico",
-  "demos": ["demo-rectas-coincidentes"]
+  "demos": ["demo-rectas-coincidentes"],
+  "leanId": "Matematika.Geometry.Hilbert.lines_coincide_of_two_common_points",
+  "leanCommitSha": "local-hilbert-core",
+  "sources": [
+    {
+      "title": "Grundlagen der Geometrie",
+      "author": "David Hilbert",
+      "locator": "Axioms of Incidence, I.1",
+      "role": "primary"
+    },
+    {
+      "title": "Euclidean and Non-Euclidean Geometries",
+      "author": "Marvin Jay Greenberg",
+      "locator": "Hilbert incidence axioms",
+      "role": "secondary"
+    }
+  ]
 };
 
 <Capitular letra="C" />omo consecuencia directa del <ConceptLink targetId="teorema-dos-rectas-un-punto" isDependency={true}>teorema de intersección única</ConceptLink>, si dos <ConceptLink targetId="recta" isDependency={false}>rectas</ConceptLink> comparten dos o más <ConceptLink targetId="punto" isDependency={false}>puntos</ConceptLink> distintos, ambas deben ser exactamente la misma recta. Este <ConceptLink targetId="corolario" isDependency={false}>corolario</ConceptLink> establece la unicidad en las construcciones geométricas elementales: dos puntos determinan una recta de forma unívoca.
@@ -16,10 +32,10 @@ export const metadata = {
 
 ### Enunciado Formal
 
-Sean $l$ y $m$ dos <ConceptLink targetId="recta" isDependency={false}>rectas</ConceptLink> y $A, B$ dos <ConceptLink targetId="punto" isDependency={false}>puntos</ConceptLink> distintos. Si ambos puntos inciden en ambas rectas, entonces las rectas son idénticas:
+Sean $l$ y $m$ dos <ConceptLink targetId="recta" isDependency={false}>rectas</ConceptLink> y $A, B$ dos <ConceptLink targetId="punto" isDependency={false}>puntos</ConceptLink> distintos. Se supone que ambos puntos inciden en ambas rectas. Entonces:
 
 <Formula>
-  $$ A, B \in l \land A, B \in m \implies l = m $$
+  $$ l = m $$
 </Formula>
 
 <Separador />

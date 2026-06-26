@@ -1,7 +1,7 @@
 import fs from 'fs';
 import path from 'path';
 import { pathToFileURL } from 'url';
-import { execFileSync } from 'child_process';
+import { spawnSync } from 'child_process';
 import { extractLeanArtifacts, validateLeanDeclarationNames } from './lean-graph-utils.ts';
 
 const LEAN_ROOT = path.resolve(process.cwd(), 'lean');
@@ -16,10 +16,15 @@ interface LeanQueryResult {
 
 function queryLeanEnvironment(): LeanQueryResult {
   // eslint-disable-next-line sonarjs/no-os-command-from-path -- Lake is the Lean project's configured toolchain command.
-  const output = execFileSync('lake', ['env', 'lean', LEAN_QUERY], {
+  const result = spawnSync('lake', ['env', 'lean', LEAN_QUERY], {
     cwd: LEAN_ROOT,
     encoding: 'utf-8',
   });
+  const output = result.stdout ?? '';
+  if (result.status !== 0 && output.trim().length === 0) {
+    const message = result.stderr || result.error?.message || 'lake env lean failed without output';
+    throw new Error(message);
+  }
   const jsonLine = output
     .trim()
     .split('\n')

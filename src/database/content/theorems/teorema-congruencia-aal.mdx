@@ -8,7 +8,12 @@ export const metadata = {
   "authors": ["euclides"],
   "difficulty": "intermedio",
   "hasSimulation": false,
-  "demos": ["demo-congruencia-aal"]
+    "sources": [
+    { "title": "Euclidean and Non-Euclidean Geometries", "author": "Marvin Jay Greenberg", "role": "secondary" },
+    { "title": "Elements", "author": "Euclid", "locator": "Book I, Proposition 26", "role": "primary" }
+  ],
+  "demos": ["demo-congruencia-aal"],
+  "leanId": "Matematika.Geometry.Hilbert.teorema_congruencia_aal"
 };
 
 <Capitular letra="E" />l criterio AAL (Ángulo-Ángulo-Lado) completa la familia de criterios de <ConceptLink targetId="congruencia" isDependency={false}>congruencia</ConceptLink> de <ConceptLink targetId="triangulo" isDependency={false}>triángulos</ConceptLink> junto con <ConceptLink targetId="axioma-congruencia-5" isDependency={true}>LAL</ConceptLink> (axioma), <ConceptLink targetId="teorema-congruencia-ala" isDependency={false}>ALA</ConceptLink> y <ConceptLink targetId="teorema-congruencia-lll" isDependency={false}>LLL</ConceptLink>. A diferencia de ALA —donde el lado conocido está entre los dos <ConceptLink targetId="angulo" isDependency={false}>ángulos</ConceptLink>— en AAL el lado es adyacente a uno solo de ellos. La <ConceptLink targetId="demostracion" isDependency={false}>demostración</ConceptLink> por <ConceptLink targetId="contradiccion" isDependency={false}>reducción al absurdo</ConceptLink> invoca el <ConceptLink targetId="teorema-angulo-externo" isDependency={true}>teorema del ángulo externo</ConceptLink>. Es válido en <ConceptLink targetId="geometria-absoluta" isDependency={false}>geometría absoluta</ConceptLink>.
@@ -17,13 +22,17 @@ export const metadata = {
 
 ### Enunciado Formal
 
-Sean $\triangle ABC$ y $\triangle A'B'C'$ dos <ConceptLink targetId="triangulo" isDependency={false}>triángulos</ConceptLink>. Si:
+Sean $\triangle ABC$ y $\triangle A'B'C'$ dos <ConceptLink targetId="triangulo" isDependency={false}>triángulos</ConceptLink>. Se supone que satisfacen:
+
+- <InteractiveElement target="angulo-a">$\angle A \cong \angle A'$</InteractiveElement>.
+- <InteractiveElement target="angulo-b">$\angle B \cong \angle B'$</InteractiveElement>.
+- <InteractiveElement target="lado-bc">$\overline{BC} \cong \overline{B'C'}$</InteractiveElement>.
+
+Entonces:
 
 <Formula>
-  $$ \angle A \cong \angle A', \qquad \angle B \cong \angle B', \qquad \overline{BC} \cong \overline{B'C'} $$
+  $$ \triangle ABC \cong \triangle A'B'C'. $$
 </Formula>
-
-entonces $\triangle ABC \cong \triangle A'B'C'$.
 
 Nótese que $\overline{BC}$ es adyacente a $\angle B$ pero **no** a $\angle A$ (es el lado opuesto a $A$). El criterio ALA cubre el caso en que el lado es adyacente a ambos ángulos.
 

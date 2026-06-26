@@ -1171,13 +1171,14 @@
         {
           "id": "demo-rectas-coincidentes",
           "dependencies": [
+            "axioma-incidencia-1",
             "teorema-dos-rectas-un-punto"
           ]
         }
       ],
       "directDependencies": [
-        "teorema-dos-rectas-un-punto",
-        "axioma-incidencia-1"
+        "axioma-incidencia-1",
+        "teorema-dos-rectas-un-punto"
       ]
     },
     "lema-punto-medio": {

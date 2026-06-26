@@ -3,7 +3,8 @@ import type { ComponentType, LazyExoticComponent } from 'react';
 
 export type MDXComponent = LazyExoticComponent<ComponentType<Record<string, unknown>>> | ComponentType<Record<string, unknown>>;
 export type Difficulty = 'básico' | 'intermedio' | 'avanzado';
-export type FormalizationStatus = 'traceable' | 'axiomatic' | 'bridge' | 'proved' | 'mathlib';
+export type VerificationStatus = 'none' | 'human-proof' | 'lean-checked' | 'lean-audited';
+export type Foundation = 'matematika-axioms' | 'bridge' | 'pending';
 
 export interface MathematicalSource {
   title: string;
@@ -20,7 +21,8 @@ export interface BaseContent {
   leanId?: string;
   leanCommitSha?: string;
   leanVerified?: boolean;
-  formalizationStatus?: FormalizationStatus;
+  verificationStatus?: VerificationStatus;
+  foundation?: Foundation;
   sources?: MathematicalSource[];
 }
 
@@ -67,7 +69,8 @@ export interface Theorem {
   leanId?: string;
   leanCommitSha?: string;
   leanVerified?: boolean;
-  formalizationStatus?: FormalizationStatus;
+  verificationStatus?: VerificationStatus;
+  foundation?: Foundation;
   sources?: MathematicalSource[];
 }
 
@@ -101,7 +104,8 @@ export interface Demo {
   leanId?: string;
   leanCommitSha?: string;
   leanVerified?: boolean;
-  formalizationStatus?: FormalizationStatus;
+  verificationStatus?: VerificationStatus;
+  foundation?: Foundation;
   sources?: MathematicalSource[];
   stepTacticMap?: Record<string, string[]>;
   Component: MDXComponent;
@@ -124,7 +128,8 @@ export interface Definition {
   leanId?: string;
   leanCommitSha?: string;
   leanVerified?: boolean;
-  formalizationStatus?: FormalizationStatus;
+  verificationStatus?: VerificationStatus;
+  foundation?: Foundation;
   sources?: MathematicalSource[];
 }
 
@@ -188,7 +193,8 @@ export interface Axiom {
   leanId?: string;
   leanCommitSha?: string;
   leanVerified?: boolean;
-  formalizationStatus?: FormalizationStatus;
+  verificationStatus?: VerificationStatus;
+  foundation?: Foundation;
   sources?: MathematicalSource[];
 }
 

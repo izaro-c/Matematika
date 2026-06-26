@@ -11,10 +11,8 @@ export function TopBar() {
     <header className="fixed top-0 left-0 right-0 z-[60] pointer-events-none flex items-center justify-between px-6 py-6">
       {location !== '/' && (
         <div className="pointer-events-auto">
-          <Link href="/Matematika">
-            <a className="flex items-center justify-center w-12 h-12 elegant-panel" title="Volver a la Biblioteca">
-              <Logo className="w-8 h-8" />
-            </a>
+          <Link href="/Matematika" className="flex items-center justify-center w-12 h-12 elegant-panel" title="Volver a la Biblioteca">
+            <Logo className="w-8 h-8" />
           </Link>
         </div>
       )}

@@ -209,7 +209,7 @@
         "estar-entre"
       ],
       "leanVerified": true,
-      "formalizationStatus": "axiomatic"
+      "verificationStatus": "none"
     }
   },
   "axioma-completitud": {
@@ -253,7 +253,7 @@
         "punto"
       ],
       "leanVerified": true,
-      "formalizationStatus": "axiomatic"
+      "verificationStatus": "none"
     }
   },
   "axioma-congruencia-1": {
@@ -297,7 +297,7 @@
         "congruencia"
       ],
       "leanVerified": true,
-      "formalizationStatus": "axiomatic"
+      "verificationStatus": "none"
     }
   },
   "axioma-congruencia-2": {
@@ -340,7 +340,7 @@
         "congruencia"
       ],
       "leanVerified": true,
-      "formalizationStatus": "axiomatic"
+      "verificationStatus": "none"
     }
   },
   "axioma-congruencia-3": {
@@ -385,7 +385,7 @@
         "congruencia"
       ],
       "leanVerified": true,
-      "formalizationStatus": "axiomatic"
+      "verificationStatus": "none"
     }
   },
   "axioma-congruencia-4": {
@@ -430,7 +430,7 @@
         "congruencia"
       ],
       "leanVerified": true,
-      "formalizationStatus": "axiomatic"
+      "verificationStatus": "none"
     }
   },
   "axioma-congruencia-5": {
@@ -474,7 +474,7 @@
         "congruencia"
       ],
       "leanVerified": true,
-      "formalizationStatus": "axiomatic"
+      "verificationStatus": "none"
     }
   },
   "axioma-incidencia-1": {
@@ -513,7 +513,7 @@
         "incidencia"
       ],
       "leanVerified": true,
-      "formalizationStatus": "axiomatic"
+      "verificationStatus": "none"
     }
   },
   "axioma-incidencia-2": {
@@ -552,7 +552,7 @@
         "incidencia"
       ],
       "leanVerified": true,
-      "formalizationStatus": "axiomatic"
+      "verificationStatus": "none"
     }
   },
   "axioma-incidencia-3": {
@@ -592,7 +592,7 @@
         "incidencia"
       ],
       "leanVerified": true,
-      "formalizationStatus": "axiomatic"
+      "verificationStatus": "none"
     }
   },
   "axioma-incidencia-4": {
@@ -631,7 +631,7 @@
         "incidencia"
       ],
       "leanVerified": true,
-      "formalizationStatus": "axiomatic"
+      "verificationStatus": "none"
     }
   },
   "axioma-incidencia-5": {
@@ -671,7 +671,7 @@
         "incidencia"
       ],
       "leanVerified": true,
-      "formalizationStatus": "axiomatic"
+      "verificationStatus": "none"
     }
   },
   "axioma-incidencia-6": {
@@ -711,7 +711,7 @@
         "incidencia"
       ],
       "leanVerified": true,
-      "formalizationStatus": "axiomatic"
+      "verificationStatus": "none"
     }
   },
   "axioma-incidencia-7": {
@@ -751,7 +751,7 @@
         "incidencia"
       ],
       "leanVerified": true,
-      "formalizationStatus": "axiomatic"
+      "verificationStatus": "none"
     }
   },
   "axioma-incidencia-8": {
@@ -790,7 +790,7 @@
         "incidencia"
       ],
       "leanVerified": true,
-      "formalizationStatus": "axiomatic"
+      "verificationStatus": "none"
     }
   },
   "axioma-orden-1": {
@@ -829,7 +829,7 @@
         "estar-entre"
       ],
       "leanVerified": true,
-      "formalizationStatus": "axiomatic"
+      "verificationStatus": "none"
     }
   },
   "axioma-orden-2": {
@@ -867,7 +867,7 @@
         "estar-entre"
       ],
       "leanVerified": true,
-      "formalizationStatus": "axiomatic"
+      "verificationStatus": "none"
     }
   },
   "axioma-orden-3": {
@@ -906,7 +906,7 @@
         "estar-entre"
       ],
       "leanVerified": true,
-      "formalizationStatus": "axiomatic"
+      "verificationStatus": "none"
     }
   },
   "axioma-orden-4": {
@@ -946,7 +946,7 @@
         "estar-entre"
       ],
       "leanVerified": true,
-      "formalizationStatus": "axiomatic"
+      "verificationStatus": "none"
     }
   },
   "axioma-paralelas-euclides": {
@@ -1628,7 +1628,32 @@
         "angulos",
         "triangulos"
       ],
-      "layout": "split"
+      "layout": "split",
+      "sources": [
+        {
+          "title": "Elements",
+          "author": "Euclid",
+          "locator": "Book I, Proposition 16",
+          "role": "primary"
+        },
+        {
+          "title": "Euclidean and Non-Euclidean Geometries",
+          "author": "Marvin Jay Greenberg",
+          "role": "secondary"
+        }
+      ],
+      "leanId": "Matematika.Geometry.Hilbert.demo_angulo_externo",
+      "stepTacticMap": {
+        "1": [],
+        "2": [],
+        "3": [],
+        "4": [],
+        "5": [],
+        "6": [],
+        "7": []
+      },
+      "leanVerified": true,
+      "verificationStatus": "human-proof"
     }
   },
   "demo-angulos-alternos-internos": {
@@ -1651,7 +1676,25 @@
         "angulos",
         "paralelas"
       ],
-      "layout": "split"
+      "layout": "split",
+      "leanId": "Matematika.Geometry.Hilbert.demo_angulos_alternos_internos",
+      "stepTacticMap": {
+        "1": [],
+        "2": [],
+        "3": [],
+        "4": [],
+        "5": [],
+        "6": []
+      },
+      "sources": [
+        {
+          "title": "Pending Formalization",
+          "author": "Matematika",
+          "role": "primary"
+        }
+      ],
+      "leanVerified": true,
+      "verificationStatus": "human-proof"
     }
   },
   "demo-angulos-opuestos-verticales": {
@@ -1673,7 +1716,30 @@
         "geometria",
         "congruencia"
       ],
-      "layout": "split"
+      "layout": "split",
+      "sources": [
+        {
+          "title": "Elements",
+          "author": "Euclid",
+          "locator": "Book I, Proposition 15",
+          "role": "primary"
+        },
+        {
+          "title": "Euclidean and Non-Euclidean Geometries",
+          "author": "Marvin Jay Greenberg",
+          "role": "secondary"
+        }
+      ],
+      "leanId": "Matematika.Geometry.Hilbert.demo_angulos_opuestos_verticales",
+      "stepTacticMap": {
+        "1": [],
+        "2": [],
+        "3": [],
+        "4": [],
+        "5": []
+      },
+      "leanVerified": true,
+      "verificationStatus": "human-proof"
     }
   },
   "demo-area-aditividad": {
@@ -1695,7 +1761,22 @@
       "tags": [
         "geometria",
         "areas"
-      ]
+      ],
+      "leanId": "Matematika.Geometry.Hilbert.demo_area_aditividad",
+      "stepTacticMap": {
+        "1": [],
+        "2": [],
+        "3": []
+      },
+      "sources": [
+        {
+          "title": "Pending Formalization",
+          "author": "Matematika",
+          "role": "primary"
+        }
+      ],
+      "leanVerified": true,
+      "verificationStatus": "human-proof"
     }
   },
   "demo-area-invariancia": {
@@ -1718,7 +1799,23 @@
         "geometria",
         "areas",
         "congruencia"
-      ]
+      ],
+      "leanId": "Matematika.Geometry.Hilbert.demo_area_invariancia",
+      "stepTacticMap": {
+        "1": [],
+        "2": [],
+        "3": [],
+        "4": []
+      },
+      "sources": [
+        {
+          "title": "Pending Formalization",
+          "author": "Matematika",
+          "role": "primary"
+        }
+      ],
+      "leanVerified": true,
+      "verificationStatus": "human-proof"
     }
   },
   "demo-area-rectangulo": {
@@ -1741,7 +1838,22 @@
         "geometria",
         "areas",
         "rectangulo"
-      ]
+      ],
+      "leanId": "Matematika.Geometry.Hilbert.demo_area_rectangulo",
+      "stepTacticMap": {
+        "1": [],
+        "2": [],
+        "3": []
+      },
+      "sources": [
+        {
+          "title": "Pending Formalization",
+          "author": "Matematika",
+          "role": "primary"
+        }
+      ],
+      "leanVerified": true,
+      "verificationStatus": "human-proof"
     }
   },
   "demo-area-triangulo": {
@@ -1764,7 +1876,24 @@
         "geometria",
         "triangulos",
         "areas"
-      ]
+      ],
+      "leanId": "Matematika.Geometry.Hilbert.demo_area_triangulo",
+      "stepTacticMap": {
+        "1": [],
+        "2": [],
+        "3": [],
+        "4": [],
+        "5": []
+      },
+      "sources": [
+        {
+          "title": "Pending Formalization",
+          "author": "Matematika",
+          "role": "primary"
+        }
+      ],
+      "leanVerified": true,
+      "verificationStatus": "human-proof"
     }
   },
   "demo-congruencia-aal": {
@@ -1787,7 +1916,32 @@
         "congruencia",
         "triangulos"
       ],
-      "layout": "split"
+      "layout": "split",
+      "sources": [
+        {
+          "title": "Euclidean and Non-Euclidean Geometries",
+          "author": "Marvin Jay Greenberg",
+          "role": "secondary"
+        },
+        {
+          "title": "Elements",
+          "author": "Euclid",
+          "locator": "Book I, Proposition 26",
+          "role": "primary"
+        }
+      ],
+      "leanId": "Matematika.Geometry.Hilbert.demo_congruencia_aal",
+      "stepTacticMap": {
+        "1": [],
+        "2": [],
+        "3": [],
+        "4": [],
+        "5": [],
+        "6": [],
+        "7": []
+      },
+      "leanVerified": true,
+      "verificationStatus": "human-proof"
     }
   },
   "demo-congruencia-ala": {
@@ -1811,8 +1965,6 @@
         "triangulos"
       ],
       "layout": "split",
-      "leanId": "Matematika.Geometry.congruence_ala",
-      "leanCommitSha": "local-hilbert-core",
       "sources": [
         {
           "title": "Euclidean and Non-Euclidean Geometries",
@@ -1820,19 +1972,14 @@
           "role": "secondary"
         }
       ],
+      "leanId": "Matematika.Geometry.Hilbert.demo_congruencia_ala",
       "stepTacticMap": {
-        "1": [
-          "ala-step1-transport"
-        ],
-        "2": [
-          "ala-step2-apply-lal"
-        ],
-        "3": [
-          "ala-step3-uniqueness"
-        ]
+        "1": [],
+        "2": [],
+        "3": []
       },
       "leanVerified": true,
-      "formalizationStatus": "bridge"
+      "verificationStatus": "human-proof"
     }
   },
   "demo-congruencia-lll": {
@@ -1856,8 +2003,6 @@
         "triangulos"
       ],
       "layout": "split",
-      "leanId": "Matematika.Geometry.congruence_lll",
-      "leanCommitSha": "local-hilbert-core",
       "sources": [
         {
           "title": "Euclidean and Non-Euclidean Geometries",
@@ -1865,22 +2010,15 @@
           "role": "secondary"
         }
       ],
+      "leanId": "Matematika.Geometry.Hilbert.demo_congruencia_lll",
       "stepTacticMap": {
-        "1": [
-          "lll-step1-transport"
-        ],
-        "2": [
-          "lll-step2-apply-lal"
-        ],
-        "3": [
-          "lll-step3-auxiliary-isosceles"
-        ],
-        "4": [
-          "lll-step4-conclusion"
-        ]
+        "1": [],
+        "2": [],
+        "3": [],
+        "4": []
       },
       "leanVerified": true,
-      "formalizationStatus": "bridge"
+      "verificationStatus": "human-proof"
     }
   },
   "demo-desigualdad-triangular": {
@@ -1903,7 +2041,24 @@
       ],
       "parentTheorem": "teorema-desigualdad-triangular",
       "proofMethod": "directo",
-      "layout": "split"
+      "layout": "split",
+      "leanId": "Matematika.Geometry.Hilbert.demo_desigualdad_triangular",
+      "stepTacticMap": {
+        "1": [],
+        "2": [],
+        "3": [],
+        "4": [],
+        "5": []
+      },
+      "sources": [
+        {
+          "title": "Pending Formalization",
+          "author": "Matematika",
+          "role": "primary"
+        }
+      ],
+      "leanVerified": true,
+      "verificationStatus": "human-proof"
     }
   },
   "demo-dos-rectas-un-punto": {
@@ -1925,7 +2080,39 @@
         "geometria",
         "incidencia"
       ],
-      "layout": "split"
+      "layout": "split",
+      "leanId": "Matematika.Geometry.Hilbert.two_lines_meet_at_most_one_point",
+      "leanCommitSha": "local-hilbert-core",
+      "sources": [
+        {
+          "title": "Grundlagen der Geometrie",
+          "author": "David Hilbert",
+          "locator": "Axioms of Incidence, I.1",
+          "role": "primary"
+        },
+        {
+          "title": "Euclidean and Non-Euclidean Geometries",
+          "author": "Marvin Jay Greenberg",
+          "locator": "Hilbert incidence axioms",
+          "role": "secondary"
+        }
+      ],
+      "stepTacticMap": {
+        "1": [
+          "two-lines-one-point-step1-contradiction"
+        ],
+        "2": [
+          "two-lines-one-point-step2-unique-line"
+        ],
+        "3": [
+          "two-lines-one-point-step3-identify-lines"
+        ],
+        "4": [
+          "two-lines-one-point-step4-contradiction"
+        ]
+      },
+      "leanVerified": true,
+      "verificationStatus": "lean-checked"
     }
   },
   "demo-existencia-bisectriz": {
@@ -1948,7 +2135,24 @@
         "angulos",
         "bisectriz"
       ],
-      "layout": "split"
+      "layout": "split",
+      "leanId": "Matematika.Geometry.Hilbert.demo_existencia_bisectriz",
+      "stepTacticMap": {
+        "1": [],
+        "2": [],
+        "3": [],
+        "4": [],
+        "5": []
+      },
+      "sources": [
+        {
+          "title": "Pending Formalization",
+          "author": "Matematika",
+          "role": "primary"
+        }
+      ],
+      "leanVerified": true,
+      "verificationStatus": "human-proof"
     }
   },
   "demo-existencia-perpendicular": {
@@ -1971,7 +2175,27 @@
         "perpendicular",
         "geometria-absoluta"
       ],
-      "layout": "split"
+      "layout": "split",
+      "leanId": "Matematika.Geometry.Hilbert.demo_existencia_perpendicular",
+      "stepTacticMap": {
+        "1": [],
+        "2": [],
+        "3": [],
+        "4": [],
+        "5": [],
+        "6": [],
+        "7": [],
+        "8": []
+      },
+      "sources": [
+        {
+          "title": "Pending Formalization",
+          "author": "Matematika",
+          "role": "primary"
+        }
+      ],
+      "leanVerified": true,
+      "verificationStatus": "human-proof"
     }
   },
   "demo-invariancia-triangulacion": {
@@ -1995,7 +2219,23 @@
         "polígonos",
         "triangulos",
         "areas"
-      ]
+      ],
+      "leanId": "Matematika.Geometry.Hilbert.demo_invariancia_triangulacion",
+      "stepTacticMap": {
+        "1": [],
+        "2": [],
+        "3": [],
+        "4": []
+      },
+      "sources": [
+        {
+          "title": "Pending Formalization",
+          "author": "Matematika",
+          "role": "primary"
+        }
+      ],
+      "leanVerified": true,
+      "verificationStatus": "human-proof"
     }
   },
   "demo-pitagoras-areas": {
@@ -2020,7 +2260,23 @@
       ],
       "parentTheorem": "teorema-pitagoras",
       "proofMethod": "directo",
-      "layout": "split"
+      "layout": "split",
+      "leanId": "Matematika.Geometry.Hilbert.demo_pitagoras_areas",
+      "stepTacticMap": {
+        "1": [],
+        "2": [],
+        "3": [],
+        "4": []
+      },
+      "sources": [
+        {
+          "title": "Pending Formalization",
+          "author": "Matematika",
+          "role": "primary"
+        }
+      ],
+      "leanVerified": true,
+      "verificationStatus": "human-proof"
     }
   },
   "demo-pitagoras-euclides": {
@@ -2045,7 +2301,26 @@
       ],
       "parentTheorem": "teorema-pitagoras",
       "proofMethod": "directo",
-      "layout": "split"
+      "layout": "split",
+      "leanId": "Matematika.Geometry.Hilbert.demo_pitagoras_euclides",
+      "stepTacticMap": {
+        "1": [],
+        "2": [],
+        "3": [],
+        "4": [],
+        "5": [],
+        "6": [],
+        "7": []
+      },
+      "sources": [
+        {
+          "title": "Pending Formalization",
+          "author": "Matematika",
+          "role": "primary"
+        }
+      ],
+      "leanVerified": true,
+      "verificationStatus": "human-proof"
     }
   },
   "demo-punto-medio-perpendicular": {
@@ -2068,7 +2343,24 @@
         "congruencia",
         "orden"
       ],
-      "layout": "split"
+      "layout": "split",
+      "leanId": "Matematika.Geometry.Hilbert.demo_punto_medio_perpendicular",
+      "stepTacticMap": {
+        "1": [],
+        "2": [],
+        "3": [],
+        "4": [],
+        "5": []
+      },
+      "sources": [
+        {
+          "title": "Pending Formalization",
+          "author": "Matematika",
+          "role": "primary"
+        }
+      ],
+      "leanVerified": true,
+      "verificationStatus": "human-proof"
     }
   },
   "demo-punto-medio": {
@@ -2091,7 +2383,24 @@
         "congruencia",
         "orden"
       ],
-      "layout": "split"
+      "layout": "split",
+      "leanId": "Matematika.Geometry.Hilbert.demo_punto_medio",
+      "stepTacticMap": {
+        "1": [],
+        "2": [],
+        "3": [],
+        "4": [],
+        "5": []
+      },
+      "sources": [
+        {
+          "title": "Pending Formalization",
+          "author": "Matematika",
+          "role": "primary"
+        }
+      ],
+      "leanVerified": true,
+      "verificationStatus": "human-proof"
     }
   },
   "demo-reciproco-triangulo-isosceles": {
@@ -2114,7 +2423,31 @@
         "triangulos",
         "congruencia"
       ],
-      "layout": "split"
+      "layout": "split",
+      "sources": [
+        {
+          "title": "Elements",
+          "author": "Euclid",
+          "locator": "Book I, Proposition 6",
+          "role": "primary"
+        },
+        {
+          "title": "Euclidean and Non-Euclidean Geometries",
+          "author": "Marvin Jay Greenberg",
+          "role": "secondary"
+        }
+      ],
+      "leanId": "Matematika.Geometry.Hilbert.demo_reciproco_triangulo_isosceles",
+      "stepTacticMap": {
+        "1": [],
+        "2": [],
+        "3": [],
+        "4": [],
+        "5": [],
+        "6": []
+      },
+      "leanVerified": true,
+      "verificationStatus": "human-proof"
     }
   },
   "demo-rectas-coincidentes": {
@@ -2132,7 +2465,42 @@
       "authors": [
         "hilbert"
       ],
-      "layout": "split"
+      "layout": "split",
+      "leanId": "Matematika.Geometry.Hilbert.lines_coincide_of_two_common_points",
+      "leanCommitSha": "local-hilbert-core",
+      "sources": [
+        {
+          "title": "Grundlagen der Geometrie",
+          "author": "David Hilbert",
+          "locator": "Axioms of Incidence, I.1",
+          "role": "primary"
+        },
+        {
+          "title": "Euclidean and Non-Euclidean Geometries",
+          "author": "Marvin Jay Greenberg",
+          "locator": "Hilbert incidence axioms",
+          "role": "secondary"
+        }
+      ],
+      "stepTacticMap": {
+        "1": [
+          "coincident-lines-step1-assume-distinct"
+        ],
+        "2": [
+          "coincident-lines-step2-apply-one-point-theorem"
+        ],
+        "3": [
+          "coincident-lines-step3-two-common-points"
+        ],
+        "4": [
+          "coincident-lines-step4-contradiction"
+        ],
+        "5": [
+          "coincident-lines-step5-conclusion"
+        ]
+      },
+      "leanVerified": true,
+      "verificationStatus": "lean-checked"
     }
   },
   "demo-suma-angulos-triangulo": {
@@ -2155,7 +2523,24 @@
       ],
       "parentTheorem": "teorema-suma-angulos-triangulo",
       "proofMethod": "directo",
-      "layout": "split"
+      "layout": "split",
+      "leanId": "Matematika.Geometry.Hilbert.demo_suma_angulos_triangulo",
+      "stepTacticMap": {
+        "1": [],
+        "2": [],
+        "3": [],
+        "4": [],
+        "5": []
+      },
+      "sources": [
+        {
+          "title": "Pending Formalization",
+          "author": "Matematika",
+          "role": "primary"
+        }
+      ],
+      "leanVerified": true,
+      "verificationStatus": "human-proof"
     }
   },
   "demo-tales": {
@@ -2177,7 +2562,25 @@
       ],
       "parentTheorem": "teorema-tales",
       "proofMethod": "directo",
-      "layout": "split"
+      "layout": "split",
+      "leanId": "Matematika.Geometry.Hilbert.demo_tales",
+      "stepTacticMap": {
+        "1": [],
+        "2": [],
+        "3": [],
+        "4": [],
+        "5": [],
+        "6": []
+      },
+      "sources": [
+        {
+          "title": "Pending Formalization",
+          "author": "Matematika",
+          "role": "primary"
+        }
+      ],
+      "leanVerified": true,
+      "verificationStatus": "human-proof"
     }
   },
   "demo-triangulacion-poligono": {
@@ -2200,7 +2603,23 @@
         "geometria",
         "polígonos",
         "triangulos"
-      ]
+      ],
+      "leanId": "Matematika.Geometry.Hilbert.demo_triangulacion_poligono",
+      "stepTacticMap": {
+        "1": [],
+        "2": [],
+        "3": [],
+        "4": []
+      },
+      "sources": [
+        {
+          "title": "Pending Formalization",
+          "author": "Matematika",
+          "role": "primary"
+        }
+      ],
+      "leanVerified": true,
+      "verificationStatus": "human-proof"
     }
   },
   "demo-triangulo-isosceles": {
@@ -2223,7 +2642,29 @@
       ],
       "parentTheorem": "teorema-triangulo-isosceles",
       "proofMethod": "directo",
-      "layout": "split"
+      "layout": "split",
+      "sources": [
+        {
+          "title": "Elements",
+          "author": "Euclid",
+          "locator": "Book I, Proposition 5",
+          "role": "primary"
+        },
+        {
+          "title": "Euclidean and Non-Euclidean Geometries",
+          "author": "Marvin Jay Greenberg",
+          "role": "secondary"
+        }
+      ],
+      "leanId": "Matematika.Geometry.Hilbert.demo_triangulo_isosceles",
+      "stepTacticMap": {
+        "1": [],
+        "2": [],
+        "3": [],
+        "4": []
+      },
+      "leanVerified": true,
+      "verificationStatus": "human-proof"
     }
   },
   "leccion-metodo-constructivo": {
@@ -2633,7 +3074,10 @@
         "euclidiana",
         "analitica"
       ],
-      "hasDiagram": true
+      "hasDiagram": true,
+      "dependencias": [
+        "axioma-paralelas-euclides"
+      ]
     }
   },
   "modelo-fano": {
@@ -2695,7 +3139,11 @@
         "poincare",
         "conforme"
       ],
-      "hasDiagram": true
+      "hasDiagram": true,
+      "dependencias": [
+        "axioma-incidencia-1",
+        "axioma-paralelas-hiperbolico"
+      ]
     }
   },
   "modelo-tres-puntos": {
@@ -2736,7 +3184,25 @@
       "difficulty": "básico",
       "demos": [
         "demo-rectas-coincidentes"
-      ]
+      ],
+      "leanId": "Matematika.Geometry.Hilbert.lines_coincide_of_two_common_points",
+      "leanCommitSha": "local-hilbert-core",
+      "sources": [
+        {
+          "title": "Grundlagen der Geometrie",
+          "author": "David Hilbert",
+          "locator": "Axioms of Incidence, I.1",
+          "role": "primary"
+        },
+        {
+          "title": "Euclidean and Non-Euclidean Geometries",
+          "author": "Marvin Jay Greenberg",
+          "locator": "Hilbert incidence axioms",
+          "role": "secondary"
+        }
+      ],
+      "leanVerified": true,
+      "verificationStatus": "lean-checked"
     }
   },
   "lema-punto-medio": {
@@ -2764,7 +3230,17 @@
       "demos": [
         "demo-punto-medio"
       ],
-      "hasSimulation": true
+      "hasSimulation": true,
+      "leanId": "Matematika.Geometry.Hilbert.lema_punto_medio",
+      "sources": [
+        {
+          "title": "Pending Formalization",
+          "author": "Matematika",
+          "role": "primary"
+        }
+      ],
+      "leanVerified": true,
+      "verificationStatus": "human-proof"
     }
   },
   "teorema-angulo-externo": {
@@ -2789,9 +3265,25 @@
       ],
       "difficulty": "básico",
       "hasSimulation": false,
+      "sources": [
+        {
+          "title": "Elements",
+          "author": "Euclid",
+          "locator": "Book I, Proposition 16",
+          "role": "primary"
+        },
+        {
+          "title": "Euclidean and Non-Euclidean Geometries",
+          "author": "Marvin Jay Greenberg",
+          "role": "secondary"
+        }
+      ],
       "demos": [
         "demo-angulo-externo"
-      ]
+      ],
+      "leanId": "Matematika.Geometry.Hilbert.teorema_angulo_externo",
+      "leanVerified": true,
+      "verificationStatus": "human-proof"
     }
   },
   "teorema-angulos-alternos-internos": {
@@ -2817,7 +3309,17 @@
       "hasSimulation": false,
       "demos": [
         "demo-angulos-alternos-internos"
-      ]
+      ],
+      "leanId": "Matematika.Geometry.Hilbert.teorema_angulos_alternos_internos",
+      "sources": [
+        {
+          "title": "Pending Formalization",
+          "author": "Matematika",
+          "role": "primary"
+        }
+      ],
+      "leanVerified": true,
+      "verificationStatus": "human-proof"
     }
   },
   "teorema-angulos-opuestos-verticales": {
@@ -2841,9 +3343,25 @@
       ],
       "difficulty": "básico",
       "hasSimulation": true,
+      "sources": [
+        {
+          "title": "Elements",
+          "author": "Euclid",
+          "locator": "Book I, Proposition 15",
+          "role": "primary"
+        },
+        {
+          "title": "Euclidean and Non-Euclidean Geometries",
+          "author": "Marvin Jay Greenberg",
+          "role": "secondary"
+        }
+      ],
       "demos": [
         "demo-angulos-opuestos-verticales"
-      ]
+      ],
+      "leanId": "Matematika.Geometry.Hilbert.teorema_angulos_opuestos_verticales",
+      "leanVerified": true,
+      "verificationStatus": "human-proof"
     }
   },
   "teorema-area-aditividad": {
@@ -2868,7 +3386,17 @@
       "demos": [
         "demo-area-aditividad"
       ],
-      "hasSimulation": false
+      "hasSimulation": false,
+      "leanId": "Matematika.Geometry.Hilbert.teorema_area_aditividad",
+      "sources": [
+        {
+          "title": "Pending Formalization",
+          "author": "Matematika",
+          "role": "primary"
+        }
+      ],
+      "leanVerified": true,
+      "verificationStatus": "human-proof"
     }
   },
   "teorema-area-invariancia": {
@@ -2894,7 +3422,17 @@
       "demos": [
         "demo-area-invariancia"
       ],
-      "hasSimulation": false
+      "hasSimulation": false,
+      "leanId": "Matematika.Geometry.Hilbert.teorema_area_invariancia",
+      "sources": [
+        {
+          "title": "Pending Formalization",
+          "author": "Matematika",
+          "role": "primary"
+        }
+      ],
+      "leanVerified": true,
+      "verificationStatus": "human-proof"
     }
   },
   "teorema-area-rectangulo": {
@@ -2921,7 +3459,17 @@
       "demos": [
         "demo-area-rectangulo"
       ],
-      "hasSimulation": false
+      "hasSimulation": false,
+      "leanId": "Matematika.Geometry.Hilbert.teorema_area_rectangulo",
+      "sources": [
+        {
+          "title": "Pending Formalization",
+          "author": "Matematika",
+          "role": "primary"
+        }
+      ],
+      "leanVerified": true,
+      "verificationStatus": "human-proof"
     }
   },
   "teorema-area-triangulo": {
@@ -2947,7 +3495,24 @@
       "demos": [
         "demo-area-triangulo"
       ],
-      "hasSimulation": false
+      "hasSimulation": false,
+      "sources": [
+        {
+          "title": "The Thirteen Books of Euclid's Elements",
+          "author": "Euclid / Thomas L. Heath",
+          "locator": "Book I, Propositions 35, 41",
+          "role": "primary"
+        },
+        {
+          "title": "Foundations of Geometry",
+          "author": "David Hilbert",
+          "locator": "Chapter IV, theory of area",
+          "role": "secondary"
+        }
+      ],
+      "leanId": "Matematika.Geometry.Hilbert.teorema_area_triangulo",
+      "leanVerified": true,
+      "verificationStatus": "human-proof"
     }
   },
   "teorema-congruencia-aal": {
@@ -2972,9 +3537,25 @@
       ],
       "difficulty": "intermedio",
       "hasSimulation": false,
+      "sources": [
+        {
+          "title": "Euclidean and Non-Euclidean Geometries",
+          "author": "Marvin Jay Greenberg",
+          "role": "secondary"
+        },
+        {
+          "title": "Elements",
+          "author": "Euclid",
+          "locator": "Book I, Proposition 26",
+          "role": "primary"
+        }
+      ],
       "demos": [
         "demo-congruencia-aal"
-      ]
+      ],
+      "leanId": "Matematika.Geometry.Hilbert.teorema_congruencia_aal",
+      "leanVerified": true,
+      "verificationStatus": "human-proof"
     }
   },
   "teorema-congruencia-ala": {
@@ -2999,8 +3580,6 @@
       ],
       "difficulty": "intermedio",
       "hasSimulation": true,
-      "leanId": "Matematika.Geometry.congruence_ala",
-      "leanCommitSha": "local-hilbert-core",
       "sources": [
         {
           "title": "Euclidean and Non-Euclidean Geometries",
@@ -3011,8 +3590,9 @@
       "demos": [
         "demo-congruencia-ala"
       ],
+      "leanId": "Matematika.Geometry.Hilbert.teorema_congruencia_ala",
       "leanVerified": true,
-      "formalizationStatus": "bridge"
+      "verificationStatus": "human-proof"
     }
   },
   "teorema-congruencia-lll": {
@@ -3037,8 +3617,6 @@
       ],
       "difficulty": "intermedio",
       "hasSimulation": true,
-      "leanId": "Matematika.Geometry.congruence_lll",
-      "leanCommitSha": "local-hilbert-core",
       "sources": [
         {
           "title": "Euclidean and Non-Euclidean Geometries",
@@ -3049,8 +3627,9 @@
       "demos": [
         "demo-congruencia-lll"
       ],
+      "leanId": "Matematika.Geometry.Hilbert.teorema_congruencia_lll",
       "leanVerified": true,
-      "formalizationStatus": "bridge"
+      "verificationStatus": "human-proof"
     }
   },
   "teorema-desigualdad-triangular": {
@@ -3076,7 +3655,24 @@
       "demos": [
         "demo-desigualdad-triangular"
       ],
-      "hasSimulation": true
+      "hasSimulation": true,
+      "sources": [
+        {
+          "title": "The Thirteen Books of the Elements",
+          "author": "Euclid / Thomas L. Heath",
+          "locator": "Book I, Proposition 20",
+          "role": "primary"
+        },
+        {
+          "title": "Euclidean and Non-Euclidean Geometries",
+          "author": "Marvin Jay Greenberg",
+          "locator": "Triangle inequality in absolute geometry",
+          "role": "secondary"
+        }
+      ],
+      "leanId": "Matematika.Geometry.Hilbert.teorema_desigualdad_triangular",
+      "leanVerified": true,
+      "verificationStatus": "human-proof"
     }
   },
   "teorema-dos-rectas-un-punto": {
@@ -3105,7 +3701,25 @@
       "corollaries": [
         "corolario-rectas-coincidentes"
       ],
-      "hasSimulation": true
+      "hasSimulation": true,
+      "leanId": "Matematika.Geometry.Hilbert.two_lines_meet_at_most_one_point",
+      "leanCommitSha": "local-hilbert-core",
+      "sources": [
+        {
+          "title": "Grundlagen der Geometrie",
+          "author": "David Hilbert",
+          "locator": "Axioms of Incidence, I.1",
+          "role": "primary"
+        },
+        {
+          "title": "Euclidean and Non-Euclidean Geometries",
+          "author": "Marvin Jay Greenberg",
+          "locator": "Hilbert incidence axioms",
+          "role": "secondary"
+        }
+      ],
+      "leanVerified": true,
+      "verificationStatus": "lean-checked"
     }
   },
   "teorema-existencia-bisectriz": {
@@ -3132,7 +3746,17 @@
       "hasSimulation": false,
       "demos": [
         "demo-existencia-bisectriz"
-      ]
+      ],
+      "leanId": "Matematika.Geometry.Hilbert.teorema_existencia_bisectriz",
+      "sources": [
+        {
+          "title": "Pending Formalization",
+          "author": "Matematika",
+          "role": "primary"
+        }
+      ],
+      "leanVerified": true,
+      "verificationStatus": "human-proof"
     }
   },
   "teorema-existencia-perpendicular": {
@@ -3158,7 +3782,17 @@
       "hasSimulation": false,
       "demos": [
         "demo-existencia-perpendicular"
-      ]
+      ],
+      "leanId": "Matematika.Geometry.Hilbert.teorema_existencia_perpendicular",
+      "sources": [
+        {
+          "title": "Pending Formalization",
+          "author": "Matematika",
+          "role": "primary"
+        }
+      ],
+      "leanVerified": true,
+      "verificationStatus": "human-proof"
     }
   },
   "teorema-invariancia-triangulacion": {
@@ -3186,7 +3820,17 @@
       "demos": [
         "demo-invariancia-triangulacion"
       ],
-      "hasSimulation": false
+      "hasSimulation": false,
+      "leanId": "Matematika.Geometry.Hilbert.teorema_invariancia_triangulacion",
+      "sources": [
+        {
+          "title": "Pending Formalization",
+          "author": "Matematika",
+          "role": "primary"
+        }
+      ],
+      "leanVerified": true,
+      "verificationStatus": "human-proof"
     }
   },
   "teorema-pitagoras": {
@@ -3214,7 +3858,17 @@
         "demo-pitagoras-euclides",
         "demo-pitagoras-areas"
       ],
-      "hasSimulation": true
+      "hasSimulation": true,
+      "leanId": "Matematika.Geometry.Hilbert.teorema_pitagoras",
+      "sources": [
+        {
+          "title": "Pending Formalization",
+          "author": "Matematika",
+          "role": "primary"
+        }
+      ],
+      "leanVerified": true,
+      "verificationStatus": "human-proof"
     }
   },
   "teorema-punto-medio-perpendicular": {
@@ -3244,7 +3898,17 @@
       "lemmas": [
         "lema-punto-medio"
       ],
-      "hasSimulation": true
+      "hasSimulation": true,
+      "leanId": "Matematika.Geometry.Hilbert.teorema_punto_medio_perpendicular",
+      "sources": [
+        {
+          "title": "Pending Formalization",
+          "author": "Matematika",
+          "role": "primary"
+        }
+      ],
+      "leanVerified": true,
+      "verificationStatus": "human-proof"
     }
   },
   "teorema-reciproco-triangulo-isosceles": {
@@ -3269,9 +3933,25 @@
       ],
       "difficulty": "básico",
       "hasSimulation": false,
+      "sources": [
+        {
+          "title": "Elements",
+          "author": "Euclid",
+          "locator": "Book I, Proposition 6",
+          "role": "primary"
+        },
+        {
+          "title": "Euclidean and Non-Euclidean Geometries",
+          "author": "Marvin Jay Greenberg",
+          "role": "secondary"
+        }
+      ],
       "demos": [
         "demo-reciproco-triangulo-isosceles"
-      ]
+      ],
+      "leanId": "Matematika.Geometry.Hilbert.teorema_reciproco_triangulo_isosceles",
+      "leanVerified": true,
+      "verificationStatus": "human-proof"
     }
   },
   "teorema-suma-angulos-triangulo": {
@@ -3297,7 +3977,17 @@
       "demos": [
         "demo-suma-angulos-triangulo"
       ],
-      "hasSimulation": true
+      "hasSimulation": true,
+      "leanId": "Matematika.Geometry.Hilbert.teorema_suma_angulos_triangulo",
+      "sources": [
+        {
+          "title": "Pending Formalization",
+          "author": "Matematika",
+          "role": "primary"
+        }
+      ],
+      "leanVerified": true,
+      "verificationStatus": "human-proof"
     }
   },
   "teorema-tales": {
@@ -3323,7 +4013,17 @@
       "demos": [
         "demo-tales"
       ],
-      "hasSimulation": true
+      "hasSimulation": true,
+      "leanId": "Matematika.Geometry.Hilbert.teorema_tales",
+      "sources": [
+        {
+          "title": "Pending Formalization",
+          "author": "Matematika",
+          "role": "primary"
+        }
+      ],
+      "leanVerified": true,
+      "verificationStatus": "human-proof"
     }
   },
   "teorema-triangulacion-poligono": {
@@ -3350,7 +4050,17 @@
       "demos": [
         "demo-triangulacion-poligono"
       ],
-      "hasSimulation": false
+      "hasSimulation": false,
+      "leanId": "Matematika.Geometry.Hilbert.teorema_triangulacion_poligono",
+      "sources": [
+        {
+          "title": "Pending Formalization",
+          "author": "Matematika",
+          "role": "primary"
+        }
+      ],
+      "leanVerified": true,
+      "verificationStatus": "human-proof"
     }
   },
   "teorema-triangulo-isosceles": {
@@ -3363,7 +4073,7 @@
       "type": "teorema",
       "title": "Teorema del triángulo isósceles",
       "description": "En un triángulo isósceles, los ángulos opuestos a los lados iguales son también iguales (Pons Asinorum).",
-      "statement": "Sea △ABC un triángulo con AC ≅ BC. Entonces ∠A ≅ ∠B.",
+      "statement": "Sea △ABC un triángulo con AB ≅ AC. Entonces ∠B ≅ ∠C.",
       "tags": [
         "geometria",
         "triangulos",
@@ -3376,7 +4086,23 @@
       "demos": [
         "demo-triangulo-isosceles"
       ],
-      "hasSimulation": true
+      "hasSimulation": true,
+      "sources": [
+        {
+          "title": "Elements",
+          "author": "Euclid",
+          "locator": "Book I, Proposition 5",
+          "role": "primary"
+        },
+        {
+          "title": "Euclidean and Non-Euclidean Geometries",
+          "author": "Marvin Jay Greenberg",
+          "role": "secondary"
+        }
+      ],
+      "leanId": "Matematika.Geometry.Hilbert.teorema_triangulo_isosceles",
+      "leanVerified": true,
+      "verificationStatus": "human-proof"
     }
   }
 }

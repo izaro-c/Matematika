@@ -6,47 +6,70 @@ export const metadata = {
   "parentTheorem": "corolario-rectas-coincidentes",
   "proofMethod": "contradiccion",
   "authors": ["hilbert"],
-  "layout": "split"
+  "layout": "split",
+  "leanId": "Matematika.Geometry.Hilbert.lines_coincide_of_two_common_points",
+  "leanCommitSha": "local-hilbert-core",
+  "sources": [
+    {
+      "title": "Grundlagen der Geometrie",
+      "author": "David Hilbert",
+      "locator": "Axioms of Incidence, I.1",
+      "role": "primary"
+    },
+    {
+      "title": "Euclidean and Non-Euclidean Geometries",
+      "author": "Marvin Jay Greenberg",
+      "locator": "Hilbert incidence axioms",
+      "role": "secondary"
+    }
+  ],
+  "stepTacticMap": {
+    "1": ["coincident-lines-step1-assume-distinct"],
+    "2": ["coincident-lines-step2-apply-one-point-theorem"],
+    "3": ["coincident-lines-step3-two-common-points"],
+    "4": ["coincident-lines-step4-contradiction"],
+    "5": ["coincident-lines-step5-conclusion"]
+  }
 };
 
 import { DemoRectasCoincidentes } from "@/shared/diagrams/Demos/DemoRectasCoincidentes";
 
 <DemonstrationSection diagram={<DemoRectasCoincidentes />}>
 
-<Capitular letra="S" />ean $l$ y $m$ dos <ConceptLink targetId="recta" isDependency={false}>rectas</ConceptLink> y $A, B$ dos <ConceptLink targetId="punto" isDependency={false}>puntos</ConceptLink> distintos. Si ambos puntos inciden en ambas rectas, entonces las rectas son idénticas:
+<Capitular letra="S" />ean $l$ y $m$ dos <ConceptLink targetId="recta" isDependency={false}>rectas</ConceptLink> y $A, B$ dos <ConceptLink targetId="punto" isDependency={false}>puntos</ConceptLink> distintos. Se supone que ambos puntos inciden en ambas rectas. Entonces:
 
 <Formula>
-  $$ A, B \in l \land A, B \in m \implies l = m $$
+  $$ l = m $$
 </Formula>
 
 <Separador />
 
-<ProofStep number={1} title="Suposición para reducción al absurdo" target="step1">
+<ProofStep number={1} title="Suposición para reducción al absurdo" target="step1" leanBlocks={metadata.stepTacticMap["1"]}>
   Supongamos que <InteractiveElement target="rectaL" color="carbon">$l$</InteractiveElement> y <InteractiveElement target="rectaM" color="terracota">$m$</InteractiveElement> son dos <ConceptLink targetId="recta" isDependency={false}>rectas</ConceptLink> **distintas** (<InteractiveElement target="rectaL" color="carbon">$l$</InteractiveElement> $\neq$ <InteractiveElement target="rectaM" color="terracota">$m$</InteractiveElement>) que comparten los <ConceptLink targetId="punto" isDependency={false}>puntos</ConceptLink> <InteractiveElement target="puntoA" color="carbon">$A$</InteractiveElement> y <InteractiveElement target="puntoB" color="carbon">$B$</InteractiveElement>, con <InteractiveElement target="puntoA" color="carbon">$A$</InteractiveElement> $\neq$ <InteractiveElement target="puntoB" color="carbon">$B$</InteractiveElement>.
 </ProofStep>
 
-<ProofStep number={2} title="Aplicación del teorema de intersección única" target="step2">
-  Por el <ConceptLink targetId="teorema-dos-rectas-un-punto" isDependency={true}>teorema de intersección única</ConceptLink>, dos <ConceptLink targetId="recta" isDependency={false}>rectas</ConceptLink> distintas tienen **a lo sumo un** <ConceptLink targetId="punto" isDependency={false}>punto</ConceptLink> en común. Como hemos supuesto <InteractiveElement target="rectaL" color="carbon">$l$</InteractiveElement> $\neq$ <InteractiveElement target="rectaM" color="terracota">$m$</InteractiveElement>, se sigue que:
+<ProofStep number={2} title="Aplicación del teorema de intersección única" target="step2" leanBlocks={metadata.stepTacticMap["2"]}>
+  Por el <ConceptLink targetId="teorema-dos-rectas-un-punto" >teorema de intersección única</ConceptLink>, dos <ConceptLink targetId="recta" isDependency={false}>rectas</ConceptLink> distintas tienen **a lo sumo un** <ConceptLink targetId="punto" isDependency={false}>punto</ConceptLink> en común. Como se ha supuesto <InteractiveElement target="rectaL" color="carbon">$l$</InteractiveElement> $\neq$ <InteractiveElement target="rectaM" color="terracota">$m$</InteractiveElement>, se sigue que:
   <Formula>$$ |l \cap m| \leq 1 $$</Formula>
 </ProofStep>
 
-<ProofStep number={3} title="Conteo de puntos comunes" target="step3">
+<ProofStep number={3} title="Conteo de puntos comunes" target="step3" leanBlocks={metadata.stepTacticMap["3"]}>
   Sin embargo, por la hipótesis del corolario, <InteractiveElement target="puntoA" color="carbon">$A$</InteractiveElement> y <InteractiveElement target="puntoB" color="carbon">$B$</InteractiveElement> pertenecen a la intersección <InteractiveElement target="rectaL" color="carbon">$l$</InteractiveElement> $\cap$ <InteractiveElement target="rectaM" color="terracota">$m$</InteractiveElement>, con <InteractiveElement target="puntoA" color="carbon">$A$</InteractiveElement> $\neq$ <InteractiveElement target="puntoB" color="carbon">$B$</InteractiveElement>. Por tanto, <InteractiveElement target="rectaL" color="carbon">$l$</InteractiveElement> y <InteractiveElement target="rectaM" color="terracota">$m$</InteractiveElement> comparten **al menos dos** <ConceptLink targetId="punto" isDependency={false}>puntos</ConceptLink>:
   <Formula>$$ |l \cap m| \geq 2 $$</Formula>
 </ProofStep>
 
-<ProofStep number={4} title="Contradicción" target="step4">
+<ProofStep number={4} title="Contradicción" target="step4" leanBlocks={metadata.stepTacticMap["4"]}>
   Las conclusiones de los pasos $2$ y $3$ son contradictorias: no puede ocurrir simultáneamente que la <InteractiveElement target="interseccion" color="terracota">intersección</InteractiveElement> sea $\leq 1$ y $\geq 2$.
 </ProofStep>
 
-<ProofStep number={5} title="Conclusión" target="step5">
-  La <ConceptLink targetId="contradiccion" isDependency={false}>contradicción</ConceptLink> proviene de haber supuesto <InteractiveElement target="rectaL" color="carbon">$l$</InteractiveElement> $\neq$ <InteractiveElement target="rectaM" color="terracota">$m$</InteractiveElement> en el paso $1$. Por tanto, nuestra suposición inicial es falsa y concluimos que <InteractiveElement target="rectaL" color="carbon">$l$</InteractiveElement> $=$ <InteractiveElement target="rectaM" color="terracota">$m$</InteractiveElement>. $\blacksquare$
+<ProofStep number={5} title="Conclusión" target="step5" leanBlocks={metadata.stepTacticMap["5"]}>
+  La <ConceptLink targetId="contradiccion" isDependency={false}>contradicción</ConceptLink> proviene de haber supuesto <InteractiveElement target="rectaL" color="carbon">$l$</InteractiveElement> $\neq$ <InteractiveElement target="rectaM" color="terracota">$m$</InteractiveElement> en el paso $1$. Por tanto, la suposición inicial es falsa y se concluye que <InteractiveElement target="rectaL" color="carbon">$l$</InteractiveElement> $=$ <InteractiveElement target="rectaM" color="terracota">$m$</InteractiveElement>. $\blacksquare$
 </ProofStep>
 
 <Separador />
 
 ### Análisis
 
-El <ConceptLink targetId="corolario" isDependency={false}>corolario</ConceptLink> se desprende directamente del <ConceptLink targetId="teorema-dos-rectas-un-punto" isDependency={true}>teorema de intersección única</ConceptLink> mediante un argumento de conteo: si dos <ConceptLink targetId="recta" isDependency={false}>rectas</ConceptLink> comparten dos <ConceptLink targetId="punto" isDependency={false}>puntos</ConceptLink>, no pueden ser distintas (porque el teorema limita la intersección a un punto), luego son la misma.
+El <ConceptLink targetId="corolario" isDependency={false}>corolario</ConceptLink> se desprende directamente del <ConceptLink targetId="teorema-dos-rectas-un-punto" >teorema de intersección única</ConceptLink> mediante un argumento de conteo: si dos <ConceptLink targetId="recta" isDependency={false}>rectas</ConceptLink> comparten dos <ConceptLink targetId="punto" isDependency={false}>puntos</ConceptLink>, no pueden ser distintas (porque el teorema limita la intersección a un punto), luego son la misma.
 
 </DemonstrationSection>

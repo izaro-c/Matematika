@@ -69,6 +69,9 @@ npm run depcruise        # Verifica arquitectura FSD
 npm run validate-graph   # Valida DAG lógico
 npm run validate-references  # Valida referencias cruzadas
 npm run generate-index   # Genera contentIndex.json
+npm run validate-lean     # Compila Lean, regenera grafo Lean y valida diff Lean-MDX
+npm run bridge:audit      # Verifica cobertura Lean y deuda explícita de declaraciones bridge
+npm run bridge:closed     # Puerta final: falla mientras quede cualquier declaración bridge
 ```
 
 **Orden de verificación al hacer cambios:**
@@ -76,6 +79,8 @@ npm run generate-index   # Genera contentIndex.json
 2. `npx tsc -b` — tipos
 3. `npm run test` — tests
 4. `npm run depcruise` — arquitectura
+5. `npm run validate-lean` — puente Lean-MDX
+6. `npm run content:coverage && npm run bridge:audit` — cobertura y deuda bridge
 
 ---
 
@@ -146,4 +151,4 @@ Viven en `.agents/skills/`, compatible con **OpenCode** y **Antigravity (Google)
 2. **Crear diagrama nuevo:** Usar `@diagram-creator`. Carga la skill `diagrama`, selecciona tecnología (JSXGraph/SVG/Canvas), usa paleta Arts & Crafts, conecta con MathStore/LessonStore.
 3. **Validar cambios:** Usar `/validate` o `@validator`. Ejecuta validate-graph + validate-references, corrige errores.
 4. **Revisar código:** Usar `@reviewer`. Solo lectura. Verifica BCED/FSD, estilo matemático, integridad referencial.
-5. **Check completo:** Usar `/full-check`. Ejecuta lint + test + depcruise + validate-graph + validate-references.
+5. **Check completo:** Usar `/full-check`. Ejecuta lint + test + depcruise + validate-graph + validate-references + validate-lean + content:coverage + bridge:audit.

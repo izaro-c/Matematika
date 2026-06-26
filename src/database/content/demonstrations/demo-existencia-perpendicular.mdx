@@ -7,7 +7,10 @@ export const metadata = {
   "proofMethod": "constructivo",
   "authors": ["hilbert"],
   "tags": ["geometria", "perpendicular", "geometria-absoluta"],
-  "layout": "split"
+  "layout": "split",
+  "leanId": "Matematika.Geometry.Hilbert.demo_existencia_perpendicular",
+  "stepTacticMap": { "1": [], "2": [], "3": [], "4": [], "5": [], "6": [], "7": [], "8": [] },
+  "sources": [{ "title": "Pending Formalization", "author": "Matematika", "role": "primary" }]
 };
 
 import { DemoExistenciaPerpendicular } from "@/shared/diagrams/Teoremas/DemoExistenciaPerpendicular";
@@ -27,7 +30,7 @@ import { DemoExistenciaPerpendicular } from "@/shared/diagrams/Teoremas/DemoExis
 
 ### Caso 1: Punto sobre la recta
 
-<ProofStep number={1} title="Construcción del ángulo transportado" target={["recta-l", "punto-p", "punto-a", "punto-b"]}>
+<ProofStep number={1} title="Construcción del ángulo transportado" target={["recta-l", "punto-p", "punto-a", "punto-b"]} leanBlocks={metadata.stepTacticMap["1"]}>
 Sea <InteractiveElement target="recta-l" color="carbon">$l$</InteractiveElement> una recta y <InteractiveElement target="punto-p" color="carbon">$P \in l$</InteractiveElement>. Por el <ConceptLink targetId="axioma-incidencia-2" isDependency={true}>axioma I-2</ConceptLink>, existe <InteractiveElement target="punto-a" color="pizarra">$A \in l$</InteractiveElement> con $A \neq P$. Por el <ConceptLink targetId="axioma-incidencia-3" isDependency={true}>axioma I-3</ConceptLink>, existe <InteractiveElement target="punto-b" color="salvia">$B \notin l$</InteractiveElement>.
 
 <InteractiveElement target="punto-b" color="salvia">$B$</InteractiveElement> yace en uno de los dos <ConceptLink targetId="semiplano" isDependency={false}>semiplanos</ConceptLink> determinados por $l$. Por el <ConceptLink targetId="axioma-congruencia-4" isDependency={true}>axioma de transporte de ángulos (III-4)</ConceptLink>, en el semiplano opuesto construimos la semirrecta $\overrightarrow{PC}$ tal que:
@@ -37,13 +40,13 @@ Sea <InteractiveElement target="recta-l" color="carbon">$l$</InteractiveElement>
 </Formula>
 </ProofStep>
 
-<ProofStep number={2} title="La recta PC es perpendicular a l" target={["angulo-apc", "angulo-apb", "recta-pc"]}>
+<ProofStep number={2} title="La recta PC es perpendicular a l" target={["angulo-apc", "angulo-apb", "recta-pc"]} leanBlocks={metadata.stepTacticMap["2"]}>
 Por el paso 1, <InteractiveElement target="angulo-apb" color="salvia">$\angle APB$</InteractiveElement> y <InteractiveElement target="angulo-apc" color="terracota">$\angle APC$</InteractiveElement> son <ConceptLink targetId="congruencia" isDependency={false}>congruentes</ConceptLink> y yacen en semiplanos opuestos respecto a $l$. Por el <ConceptLink targetId="axioma-orden-4" isDependency={true}>axioma de separación del plano</ConceptLink>, la recta $l = \overleftrightarrow{PA}$ divide el ángulo $\angle BPC$ en dos ángulos adyacentes: $\angle APB$ y $\angle APC$.
 
 Dado que $\angle APB \cong \angle APC$, la recta $l$ biseca $\angle BPC$ en dos partes congruentes. Por la definición de <ConceptLink targetId="angulo-recto" isDependency={false}>ángulo recto</ConceptLink> (un ángulo congruente con su adyacente), $\angle APB$ y $\angle APC$ son ángulos rectos. Por tanto, <InteractiveElement target="recta-pc" color="terracota">$\overleftrightarrow{PC} \perp l$</InteractiveElement>.
 </ProofStep>
 
-<ProofStep number={3} title="Unicidad" target={["recta-pc"]}>
+<ProofStep number={3} title="Unicidad" target={["recta-pc"]} leanBlocks={metadata.stepTacticMap["3"]}>
 Supongamos que existiera otra recta por $P$ perpendicular a $l$. Su semirrecta en el semiplano opuesto a $B$ formaría con $\overrightarrow{PA}$ un ángulo recto $\angle APD$. Por el <ConceptLink targetId="teorema-angulos-rectos" isDependency={false}>teorema de que todos los ángulos rectos son congruentes</ConceptLink>, $\angle APD \cong \angle APB \cong \angle APC$.
 
 Por la cláusula de unicidad del <ConceptLink targetId="axioma-congruencia-4" isDependency={true}>axioma de transporte de ángulos (III-4)</ConceptLink>, en un semiplano dado solo existe una semirrecta que forme un ángulo dado con $\overrightarrow{PA}$. Por tanto $\overrightarrow{PD} = \overrightarrow{PC}$, y la <InteractiveElement target="recta-pc" color="terracota">perpendicular es única</InteractiveElement>.
@@ -53,17 +56,17 @@ Por la cláusula de unicidad del <ConceptLink targetId="axioma-congruencia-4" is
 
 ### Caso 2: Punto exterior
 
-<ProofStep number={4} title="Construcción del triángulo reflejado" target={["punto-p-ext", "punto-a2", "punto-b2"]}>
+<ProofStep number={4} title="Construcción del triángulo reflejado" target={["punto-p-ext", "punto-a2", "punto-b2"]} leanBlocks={metadata.stepTacticMap["4"]}>
 Sea $l$ una recta y <InteractiveElement target="punto-p-ext" color="carbon">$P \notin l$</InteractiveElement>. Por el <ConceptLink targetId="axioma-incidencia-2" isDependency={true}>axioma I-2</ConceptLink>, tomemos <InteractiveElement target="punto-a2" color="pizarra">$A, B \in l$</InteractiveElement> con $A \neq B$.
 
 $P$ está en uno de los semiplanos determinados por $l$. Por el <ConceptLink targetId="axioma-congruencia-4" isDependency={true}>axioma de transporte de ángulos (III-4)</ConceptLink>, en el semiplano opuesto construimos la semirrecta $\overrightarrow{AQ}$ tal que $\angle BAQ \cong \angle BAP$. Por el <ConceptLink targetId="axioma-congruencia-1" isDependency={true}>axioma de transporte de segmentos (III-1)</ConceptLink>, sobre $\overrightarrow{AQ}$ determinamos el punto $C$ tal que $AC \cong AP$.
 </ProofStep>
 
-<ProofStep number={5} title="Intersección con la recta" target={["punto-m", "segmento-pc"]}>
+<ProofStep number={5} title="Intersección con la recta" target={["punto-m", "segmento-pc"]} leanBlocks={metadata.stepTacticMap["5"]}>
 $P$ y $C$ están en semiplanos opuestos respecto a $l$ (por construcción). Por el <ConceptLink targetId="axioma-orden-4" isDependency={true}>axioma de separación del plano (Pasch)</ConceptLink>, el segmento $\overline{PC}$ interseca a la recta $l$ en un único punto. Llamémoslo <InteractiveElement target="punto-m" color="salvia">$M$</InteractiveElement>.
 </ProofStep>
 
-<ProofStep number={6} title="Congruencia LAL y ángulo recto" target={["triangulo-pam", "triangulo-cam"]}>
+<ProofStep number={6} title="Congruencia LAL y ángulo recto" target={["triangulo-pam", "triangulo-cam"]} leanBlocks={metadata.stepTacticMap["6"]}>
 Consideremos <InteractiveElement target="triangulo-pam" color="salvia">$\triangle PAM$</InteractiveElement> y <InteractiveElement target="triangulo-cam" color="salvia">$\triangle CAM$</InteractiveElement>:
 
 1. $AP \cong AC$ (por el paso 4).
@@ -79,7 +82,7 @@ Por el <ConceptLink targetId="axioma-congruencia-5" isDependency={true}>criterio
 Por la <ConceptLink targetId="congruencia" isDependency={false}>definición de congruencia</ConceptLink>, $\angle AMP \cong \angle AMC$. Por el paso 5, $M$ está entre $P$ y $C$ en $\overline{PC}$. Por tanto $\angle AMP$ y $\angle AMC$ son <ConceptLink targetId="angulos-suplementarios" isDependency={false}>adyacentes y suplementarios</ConceptLink> (suman $180^\circ$). Si dos ángulos son congruentes y suplementarios, cada uno mide $90^\circ$. Por la <ConceptLink targetId="perpendicular" isDependency={false}>definición de perpendicularidad</ConceptLink>, $\overleftrightarrow{PM} \perp l$.
 </ProofStep>
 
-<ProofStep number={7} title="Unicidad del pie" target={["punto-m"]}>
+<ProofStep number={7} title="Unicidad del pie" target={["punto-m"]} leanBlocks={metadata.stepTacticMap["7"]}>
 Supongamos que existiera otro pie $M' \neq M$ sobre $l$ con $PM' \perp l$. Consideremos $\triangle PMM'$:
 
 En $M$, $\angle PMM'$ es un <ConceptLink targetId="angulo-recto" isDependency={false}>ángulo recto</ConceptLink> (por ser $PM \perp l$ y $M' \in l$). En $M'$, $\angle PM'M$ es también un ángulo recto (por ser $PM' \perp l$ y $M \in l$). Pero entonces $\triangle PMM'$ tendría dos ángulos rectos.
@@ -87,7 +90,7 @@ En $M$, $\angle PMM'$ es un <ConceptLink targetId="angulo-recto" isDependency={f
 Por el <ConceptLink targetId="teorema-angulo-externo" isDependency={true}>teorema del ángulo externo</ConceptLink>, en cualquier <ConceptLink targetId="triangulo" isDependency={false}>triángulo</ConceptLink> un ángulo externo es estrictamente mayor que cada ángulo interior no adyacente. Si $\triangle PMM'$ tuviera dos ángulos rectos, el ángulo externo en $M$ mediría $90^\circ$, igual que el ángulo interior en $M'$, contradiciendo el teorema. Por tanto $M = M'$ y el pie es único.
 </ProofStep>
 
-<ProofStep number={8} title="Unicidad de la recta perpendicular" target={["recta-pm"]}>
+<ProofStep number={8} title="Unicidad de la recta perpendicular" target={["recta-pm"]} leanBlocks={metadata.stepTacticMap["8"]}>
 Una vez establecida la unicidad del pie <InteractiveElement target="punto-m" color="salvia">$M$</InteractiveElement>, la recta perpendicular es <InteractiveElement target="recta-pm" color="terracota">$\overleftrightarrow{PM}$</InteractiveElement>, que está unívocamente determinada por los puntos $P$ y $M$. Por el <ConceptLink targetId="axioma-incidencia-1" isDependency={true}>axioma I-1</ConceptLink>, dos puntos determinan una única recta. $\blacksquare$
 </ProofStep>
 

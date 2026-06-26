@@ -8,14 +8,19 @@ export const metadata = {
   "authors": ["euclides"],
   "difficulty": "básico",
   "hasSimulation": true,
-  "demos": ["demo-angulos-opuestos-verticales"]
+    "sources": [
+    { "title": "Elements", "author": "Euclid", "locator": "Book I, Proposition 15", "role": "primary" },
+    { "title": "Euclidean and Non-Euclidean Geometries", "author": "Marvin Jay Greenberg", "role": "secondary" }
+  ],
+  "demos": ["demo-angulos-opuestos-verticales"],
+  "leanId": "Matematika.Geometry.Hilbert.teorema_angulos_opuestos_verticales"
 };
 
 import { AngulosOpuestos } from '@/shared/diagrams/Theorems/AngulosOpuestos';
 export const Simulation = AngulosOpuestos;
 
 <Capitular letra="C" />
-uando dos <ConceptLink targetId="recta" isDependency={false}>rectas</ConceptLink> se intersecan en un único <ConceptLink targetId="punto" isDependency={false}>punto</ConceptLink>, determinan cuatro regiones angulares. Aquellos <ConceptLink targetId="angulo" isDependency={false}>ángulos</ConceptLink> ubicados en semiplanos alternos —separados por el vértice de intersección— se denominan **opuestos por el vértice**. Este <ConceptLink targetId="teorema" isDependency={false}>teorema</ConceptLink>, consignado en los <ConceptLink targetId="euclides" isDependency={false}>Elementos de Euclides</ConceptLink>, demuestra que tales pares angulares conservan siempre una <ConceptLink targetId="congruencia" isDependency={false}>congruencia</ConceptLink> estricta: <InteractiveElement target="alpha">α ≅ α</InteractiveElement> y <InteractiveElement target="beta">β ≅ β</InteractiveElement>.
+uando dos <ConceptLink targetId="recta" isDependency={false}>rectas</ConceptLink> se intersecan en un único <ConceptLink targetId="punto" isDependency={false}>punto</ConceptLink>, determinan cuatro regiones angulares. Aquellos <ConceptLink targetId="angulo" isDependency={false}>ángulos</ConceptLink> ubicados en semiplanos alternos —separados por el vértice de intersección— se denominan **opuestos por el vértice**. Este <ConceptLink targetId="teorema" isDependency={false}>teorema</ConceptLink>, consignado en los <ConceptLink targetId="euclides" isDependency={false}>Elementos de Euclides</ConceptLink>, demuestra que tales pares angulares conservan siempre una <ConceptLink targetId="congruencia" isDependency={false}>congruencia</ConceptLink> estricta: <InteractiveElement target="alpha">$\alpha \cong \alpha'$</InteractiveElement> y <InteractiveElement target="beta">$\beta \cong \beta'$</InteractiveElement>.
 
 <Separador />
 
