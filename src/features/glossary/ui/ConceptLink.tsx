@@ -59,7 +59,7 @@ export const ConceptLink: React.FC<ConceptLinkProps> = ({ targetId, children }) 
       ].join(' ')}
     >
       {children}
-      {isRead && <span className="ml-[2px] text-[#2a6a2a] opacity-80" style={{ fontSize: '0.85em' }}>✓</span>}
+      {isRead && <span className="ml-[2px] text-salvia opacity-80" style={{ fontSize: '0.85em' }}>✓</span>}
     </span>
   );
 };

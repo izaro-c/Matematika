@@ -126,7 +126,7 @@ export const Ordenacion: React.FC<OrdenacionProps> = ({ id, pasos }) => {
                 )}
                 
                 {/* Número fijo (para mostrar el slot) */}
-                <div className="w-6 h-6 shrink-0 border border-carbon/20 rounded-full flex items-center justify-center text-xs font-mono text-carbon/60 bg-[#F8F6F1]">
+                <div className="w-6 h-6 shrink-0 border border-carbon/20 rounded-full flex items-center justify-center text-xs font-mono text-carbon/60 bg-lienzo">
                   {index + 1}
                 </div>
 

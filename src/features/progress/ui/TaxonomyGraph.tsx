@@ -1,5 +1,6 @@
 import React, { useMemo, useState, useCallback, useRef, useEffect } from 'react';
 import { navigate } from 'wouter/use-browser-location';
+import { appPath } from '@/shared/lib/routeHelper';
 import ForceGraph2D from 'react-force-graph-2d';
 import { useProgressStore } from '@/features/progress/UserProgressStore';
 
@@ -10,6 +11,7 @@ interface TaxonomyGraphProps {
   taxonomy: {
     id: string;
     slug: string;
+    name?: string;
     subBranches: { name: string; slug: string }[];
     directItems: { type: string; item: { id: string; slug?: string; title?: string; requires?: string[] }; subBranchSlug?: string }[];
   };
@@ -46,8 +48,8 @@ export const TaxonomyGraph: React.FC<TaxonomyGraphProps> = ({ taxonomy }) => {
     const links: GraphLink[] = [];
 
     // Root (The branch itself) - Ahora se ve como una RAMA (Terracota), no como el nodo central de Matemáticas
-    const branchName = (taxonomy as any).name || taxonomy.id || taxonomy.slug;
-    const branchCode = (taxonomy as any).id;
+    const branchName = taxonomy.name || taxonomy.id || taxonomy.slug;
+    const branchCode = taxonomy.id;
     const showCode = branchCode && /^\d{2}[A-Z]?$/.test(branchCode) && branchCode !== branchName;
     nodes.push({ id: taxonomy.slug, name: showCode ? `${branchCode} ${branchName}` : branchName, group: 'branch', val: 20 });
 
@@ -64,15 +66,15 @@ export const TaxonomyGraph: React.FC<TaxonomyGraphProps> = ({ taxonomy }) => {
       const item = itemObj.item;
       const type = itemObj.type;
 
-      let url = '/';
-      if (type === 'lesson') url = `/Matematika/${item.slug}`;
-      else if (type === 'theorem') url = `/Matematika/teorema/${item.id}`;
-      else if (type === 'definition') url = `/Matematika/definicion/${item.id}`;
-      else if (type === 'example') url = `/Matematika/ejemplo/${item.id}`;
-      else if (type === 'exercise') url = `/Matematika/ejercicio/${item.id}`;
-      else if (type === 'usecase') url = `/Matematika/caso/${item.id}`;
-      else if (type === 'model') url = `/Matematika/modelo/${item.id}`;
-      else if (type === 'axiom') url = `/Matematika/axioma/${item.id}`;
+      let url = appPath('/');
+      if (type === 'lesson') url = appPath(`/${item.slug}`);
+      else if (type === 'theorem') url = appPath(`/teorema/${item.id}`);
+      else if (type === 'definition') url = appPath(`/definicion/${item.id}`);
+      else if (type === 'example') url = appPath(`/ejemplo/${item.id}`);
+      else if (type === 'exercise') url = appPath(`/ejercicio/${item.id}`);
+      else if (type === 'usecase') url = appPath(`/caso/${item.id}`);
+      else if (type === 'model') url = appPath(`/modelo/${item.id}`);
+      else if (type === 'axiom') url = appPath(`/axioma/${item.id}`);
 
       nodes.push({
         id: item.id, // ID exacto para isRead
@@ -122,11 +124,14 @@ export const TaxonomyGraph: React.FC<TaxonomyGraphProps> = ({ taxonomy }) => {
     if (node) {
       highlightNodes.add(node);
       graphData.links.forEach((link: GraphLink) => {
-        if (link.source === node || (link.source as any).id === node.id) {
+        const sourceId = typeof link.source === 'object' ? link.source.id : link.source;
+        const targetId = typeof link.target === 'object' ? link.target.id : link.target;
+        
+        if (sourceId === node.id) {
           highlightLinks.add(link);
           highlightNodes.add(typeof link.target === 'object' ? link.target : graphData.nodes.find(n => n.id === link.target));
         }
-        if (link.target === node || (link.target as any).id === node.id) {
+        if (targetId === node.id) {
           highlightLinks.add(link);
           highlightNodes.add(typeof link.source === 'object' ? link.source : graphData.nodes.find(n => n.id === link.source));
         }
@@ -255,7 +260,7 @@ export const TaxonomyGraph: React.FC<TaxonomyGraphProps> = ({ taxonomy }) => {
   return (
     <div ref={containerRef} className="w-full h-[400px] border-y border-carbon/20 overflow-hidden relative shadow-inner cursor-move" style={{ backgroundImage: 'url(/Matematika/images/bg-arts-crafts-1.png)', backgroundSize: '600px', backgroundRepeat: 'repeat' }}>
       <div className="absolute z-10 top-4 left-4 text-[10px] font-sans uppercase tracking-widest text-carbon/60 select-none pointer-events-none bg-lienzo/90 px-3 py-1.5 border border-carbon/10 shadow-sm backdrop-blur-sm rounded-none">
-        Grafo de dependencias: {(taxonomy as any).name || taxonomy.id}
+        Grafo de dependencias: {taxonomy.name || taxonomy.id}
       </div>
       <ForceGraph2D
         width={dimensions.width}

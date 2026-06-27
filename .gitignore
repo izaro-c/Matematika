@@ -30,3 +30,9 @@ eslint-report.json
 
 # Lean/Lake build artifacts
 lean/.lake/
+
+# Project specific ignores
+.opencode/node_modules/
+docs/api/
+*.tsbuildinfo
+*.zip

@@ -1,8 +1,14 @@
 import { useGlossaryStore, dictionary } from '@/features/glossary/GlossaryStore';
 import { db } from '@/entities/content';
+import type { 
+  Theorem, Definition, Mathematician, Lesson, 
+  Example, Exercise, UseCase, Axiom, 
+  AxiomaticSystem, Model, Demo 
+} from '@/entities/content';
 import katex from 'katex';
 import { Link } from 'wouter';
 import { ContentTypeBadge } from '@/shared/ui/ContentTypeBadge';
+import { appPath } from '@/shared/lib/routeHelper';
 
 interface TermData {
   title: string;
@@ -27,26 +33,41 @@ function getTheoremType(t: string): string {
   return 'teorema';
 }
 
-function resolveEntityMeta(entity: any): TermMeta | null {
+interface EntityWrapper {
+  theorem?: Theorem | null;
+  definition?: Definition | null;
+  bio?: Mathematician | null;
+  lesson?: Lesson | null;
+  example?: Example | null;
+  exercise?: Exercise | null;
+  useCase?: UseCase | null;
+  axiom?: Axiom | null;
+  system?: AxiomaticSystem | null;
+  model?: Model | null;
+  demo?: Demo | null;
+  slug?: string;
+}
+
+function resolveEntityMeta(entity: EntityWrapper): TermMeta | null {
   if (entity.theorem) {
-    const t = (entity.theorem as any).type as string;
+    const t = entity.theorem.type || 'teorema';
     const type = getTheoremType(t);
     return {
       type,
       typeLabel: type.charAt(0).toUpperCase() + type.slice(1),
-      href: `/Matematika/teorema/${(entity.theorem as any).slug}`,
+      href: appPath(`/teorema/${entity.theorem.slug}`),
     };
   }
-  if (entity.definition) return { type: 'definicion', typeLabel: 'Definición', href: `/Matematika/definicion/${(entity.definition as any).slug}` };
-  if (entity.bio) return { type: 'matematico', typeLabel: 'Matemático', href: `/Matematika/bio/${(entity.bio as any).slug}` };
-  if (entity.lesson) return { type: 'leccion', typeLabel: 'Lección', href: `/Matematika/${(entity.lesson as any).slug}` };
-  if (entity.example) return { type: 'ejemplo', typeLabel: 'Ejemplo', href: `/Matematika/ejemplo/${(entity.example as any).slug}` };
-  if (entity.exercise) return { type: 'ejercicio', typeLabel: 'Ejercicio', href: `/Matematika/ejercicio/${(entity.exercise as any).slug}` };
-  if (entity.useCase) return { type: 'caso-de-uso', typeLabel: 'Caso de Uso', href: `/Matematika/caso/${(entity.useCase as any).slug}` };
-  if (entity.axiom) return { type: 'axioma', typeLabel: 'Axioma', href: `/Matematika/axioma/${(entity.axiom as any).slug}` };
-  if (entity.system) return { type: 'sistema-axiomatico', typeLabel: 'Sistema Axiomático', href: `/Matematika/sistema/${(entity.system as any).slug}` };
-  if (entity.model) return { type: 'modelo', typeLabel: 'Modelo', href: `/Matematika/modelo/${(entity.model as any).slug}` };
-  if (entity.demo) return { type: 'demostracion', typeLabel: 'Demostración', href: `/Matematika/demo/${(entity.demo as any).slug}` };
+  if (entity.definition) return { type: 'definicion', typeLabel: 'Definición', href: appPath(`/definicion/${entity.definition.slug}`) };
+  if (entity.bio) return { type: 'matematico', typeLabel: 'Matemático', href: appPath(`/bio/${entity.bio.slug}`) };
+  if (entity.lesson) return { type: 'leccion', typeLabel: 'Lección', href: appPath(`/${entity.lesson.slug}`) };
+  if (entity.example) return { type: 'ejemplo', typeLabel: 'Ejemplo', href: appPath(`/ejemplo/${entity.example.slug}`) };
+  if (entity.exercise) return { type: 'ejercicio', typeLabel: 'Ejercicio', href: appPath(`/ejercicio/${entity.exercise.slug}`) };
+  if (entity.useCase) return { type: 'caso-de-uso', typeLabel: 'Caso de Uso', href: appPath(`/caso/${entity.useCase.slug}`) };
+  if (entity.axiom) return { type: 'axioma', typeLabel: 'Axioma', href: appPath(`/axioma/${entity.axiom.slug}`) };
+  if (entity.system) return { type: 'sistema-axiomatico', typeLabel: 'Sistema Axiomático', href: appPath(`/sistema/${entity.system.slug}`) };
+  if (entity.model) return { type: 'modelo', typeLabel: 'Modelo', href: appPath(`/modelo/${entity.model.slug}`) };
+  if (entity.demo) return { type: 'demostracion', typeLabel: 'Demostración', href: appPath(`/demo/${entity.demo.slug}`) };
   return null;
 }
 
@@ -67,24 +88,31 @@ function resolveTermFromDb(activeTerm: string): TermData | null {
   if (!entity) return null;
 
   const meta = resolveEntityMeta({
-    theorem: theorem || null,
-    definition: definition || null,
-    bio: bio || null,
-    lesson: lesson || null,
-    example: example || null,
-    exercise: exercise || null,
-    useCase: useCase || null,
-    axiom: axiom || null,
-    system: system || null,
-    model: model || null,
-    demo: demo || null,
+    theorem,
+    definition,
+    bio,
+    lesson,
+    example,
+    exercise,
+    useCase,
+    axiom,
+    system,
+    model,
+    demo,
   });
 
-  const e = entity as any;
+  type UnifiedEntity = {
+    title?: string;
+    name?: string;
+    description?: string;
+    statement?: string;
+  };
+
+  const e = entity as unknown as UnifiedEntity;
   return {
-    title: (e.title as string) || (e.name as string),
-    definition: e.description as string,
-    statement: e.statement as string | undefined,
+    title: (e.title || e.name) ?? '',
+    definition: e.description ?? '',
+    statement: e.statement,
     id: entity.slug,
     type: meta?.type,
     typeLabel: meta?.typeLabel,

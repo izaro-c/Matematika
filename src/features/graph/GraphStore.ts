@@ -6,12 +6,49 @@
 
 import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
-import { computeGraph } from './graph.worker';
-import type { FlowNode, FlowEdge } from './graph.worker';
+import type { FlowNode, FlowEdge, WorkerOutput } from './graph.worker';
 import type { ModelInfo, SystemInfo } from '@/entities/graph/graphTypes';
 import { Grafo } from '@/entities/graph/Grafo';
 import { db } from '@/entities/content';
 import graphStructureData from '@/entities/graph/graph_structure.json';
+
+// --- Worker Integration ---
+let workerInstance: Worker | null = null;
+let msgCounter = 0;
+const pendingRequests = new Map<number, { resolve: (val: WorkerOutput) => void, reject: (err: unknown) => void }>();
+
+function getWorker() {
+  if (typeof window === 'undefined') return null;
+  if (!workerInstance) {
+    workerInstance = new Worker(new URL('./graph.worker.ts', import.meta.url), { type: 'module' });
+    workerInstance.onmessage = (e) => {
+      const { msgId, result, error } = e.data;
+      const deferred = pendingRequests.get(msgId);
+      if (deferred) {
+        pendingRequests.delete(msgId);
+        if (error) deferred.reject(new Error(error));
+        else deferred.resolve(result);
+      }
+    };
+  }
+  return workerInstance;
+}
+
+async function computeGraphAsync(graphData: unknown, disabledAxioms: string[]): Promise<WorkerOutput> {
+  const worker = getWorker();
+  if (!worker) {
+    // Fallback for SSR / Node
+    const { computeGraph } = await import('./graph.worker');
+    return computeGraph(graphData, disabledAxioms);
+  }
+  return new Promise((resolve, reject) => {
+    const msgId = ++msgCounter;
+    pendingRequests.set(msgId, { resolve, reject });
+    worker.postMessage({ graphData, disabledAxioms, msgId });
+  });
+}
+// --------------------------
+
 
 /**
  * Interfaz que define el estado global del Grafo.
@@ -125,7 +162,7 @@ export const useGraphStore = create<GraphState>()(
         set({ disabledAxioms: newDisabled, inactiveModels: allModelsOff, inactiveSystems: allSystemsOff, isLoading: true });
         
         // Recalculamos el layout topológico en el WebWorker
-        computeGraph(graphStructureData, newDisabled).then((result) =>
+        computeGraphAsync(graphStructureData, newDisabled).then((result) =>
           set({ baseNodes: result.nodes, edges: result.edges, adjacency: result.adjacency, dependsOn: result.dependsOn, activeStates: result.activeStates, isLoading: false }),
         );
       },
@@ -156,7 +193,7 @@ export const useGraphStore = create<GraphState>()(
         
         set({ disabledAxioms: newDisabled, isLoading: true });
         
-        computeGraph(graphStructureData, newDisabled).then((result) =>
+        computeGraphAsync(graphStructureData, newDisabled).then((result) =>
           set({ baseNodes: result.nodes, edges: result.edges, adjacency: result.adjacency, dependsOn: result.dependsOn, activeStates: result.activeStates, isLoading: false }),
         );
       },
@@ -185,7 +222,7 @@ export const useGraphStore = create<GraphState>()(
         
         set({ disabledAxioms: newDisabled, isLoading: true });
         
-        computeGraph(graphStructureData, newDisabled).then((result) =>
+        computeGraphAsync(graphStructureData, newDisabled).then((result) =>
           set({ baseNodes: result.nodes, edges: result.edges, adjacency: result.adjacency, dependsOn: result.dependsOn, activeStates: result.activeStates, isLoading: false }),
         );
       },
@@ -194,7 +231,7 @@ export const useGraphStore = create<GraphState>()(
         if (initialized) return;
         initialized = true;
         // La inicialización usa el estado actual persistido
-        computeGraph(graphStructureData, get().disabledAxioms).then((result) =>
+        computeGraphAsync(graphStructureData, get().disabledAxioms).then((result) =>
           set({ baseNodes: result.nodes, edges: result.edges, adjacency: result.adjacency, dependsOn: result.dependsOn, activeStates: result.activeStates, isLoading: false }),
         );
       },

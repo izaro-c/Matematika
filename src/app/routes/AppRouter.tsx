@@ -1,27 +1,28 @@
 import { Router, Route, Switch } from "wouter";
 import { MathProvider } from "@/app/providers/MathStoreContext";
 import { Suspense, lazy } from 'react';
-import { HomePage } from "@/pages/Home/HomePage";
-import { DictionaryPage } from "@/pages/DictionaryPage";
-import { HistoryTimeline } from "@/pages/HistoryTimeline";
-import { BranchPage } from "@/pages/BranchPage";
-import { TheoremPage } from "@/pages/TheoremPage";
-import { DefinitionPage } from "@/pages/DefinitionPage";
-import { ExamplePage } from "@/pages/ExamplePage";
-import { ExercisePage } from "@/pages/ExercisePage";
-import { StudyPlanPage } from "@/pages/StudyPlanPage";
-import { MethodsPage } from "@/pages/MethodsPage";
-import { UseCasePage } from "@/pages/UseCasePage";
-import { AxiomPage } from "@/pages/AxiomPage";
-import { ModelPage } from "@/pages/ModelPage";
-import { AxiomaticSystemPage } from "@/pages/AxiomaticSystemPage";
-import { DemoPage } from "@/pages/DemoPage";
-import { NotFoundPage } from "@/pages/NotFoundPage";
-import { ConstructionPage } from "@/pages/ConstructionPage";
 import { InteractiveLessonLayout } from "@/widgets/layouts/InteractiveLessonLayout";
 import { BiographyLayout } from "@/widgets/layouts/BiographyLayout";
 import { Logo } from "@/shared/ui/Logo";
 import { db } from '@/entities/content';
+
+const HomePage = lazy(() => import("@/pages/Home/HomePage").then(m => ({ default: m.HomePage })));
+const DictionaryPage = lazy(() => import("@/pages/DictionaryPage").then(m => ({ default: m.DictionaryPage })));
+const HistoryTimeline = lazy(() => import("@/pages/HistoryTimeline").then(m => ({ default: m.HistoryTimeline })));
+const BranchPage = lazy(() => import("@/pages/BranchPage").then(m => ({ default: m.BranchPage })));
+const TheoremPage = lazy(() => import("@/pages/TheoremPage").then(m => ({ default: m.TheoremPage })));
+const DefinitionPage = lazy(() => import("@/pages/DefinitionPage").then(m => ({ default: m.DefinitionPage })));
+const ExamplePage = lazy(() => import("@/pages/ExamplePage").then(m => ({ default: m.ExamplePage })));
+const ExercisePage = lazy(() => import("@/pages/ExercisePage").then(m => ({ default: m.ExercisePage })));
+const StudyPlanPage = lazy(() => import("@/pages/StudyPlanPage").then(m => ({ default: m.StudyPlanPage })));
+const MethodsPage = lazy(() => import("@/pages/MethodsPage").then(m => ({ default: m.MethodsPage })));
+const UseCasePage = lazy(() => import("@/pages/UseCasePage").then(m => ({ default: m.UseCasePage })));
+const AxiomPage = lazy(() => import("@/pages/AxiomPage").then(m => ({ default: m.AxiomPage })));
+const ModelPage = lazy(() => import("@/pages/ModelPage").then(m => ({ default: m.ModelPage })));
+const AxiomaticSystemPage = lazy(() => import("@/pages/AxiomaticSystemPage").then(m => ({ default: m.AxiomaticSystemPage })));
+const DemoPage = lazy(() => import("@/pages/DemoPage").then(m => ({ default: m.DemoPage })));
+const NotFoundPage = lazy(() => import("@/pages/NotFoundPage").then(m => ({ default: m.NotFoundPage })));
+const ConstructionPage = lazy(() => import("@/pages/ConstructionPage").then(m => ({ default: m.ConstructionPage })));
 
 const EditorPage = lazy(() => import("@/features/editor/ui/EditorPage").then(m => ({ default: m.EditorPage })));
 const GraphPage = lazy(() => import("@/pages/GraphPage").then(m => ({ default: m.GraphPage })));
@@ -128,8 +129,7 @@ export const AppRouter = () => {
           {biographies.map((mat) => (
             <Route key={`bio-${mat.slug}`} path={`/bio/${mat.slug}`}>
               <MathProvider>
-                {/* eslint-disable-next-line @typescript-eslint/no-explicit-any */}
-                <BiographyLayout Component={mat.Component} metadata={mat as any} />
+                <BiographyLayout Component={mat.Component} metadata={mat} />
               </MathProvider>
             </Route>
           ))}
