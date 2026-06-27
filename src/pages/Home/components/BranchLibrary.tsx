@@ -137,7 +137,7 @@ export const BranchLibrary = () => {
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6 w-full">
         {SECTIONS.map((section) => {
           const allItems = section.codes.flatMap(code => db.getItemsByBranch(code));
-          const seen = new Map<string, { type: string; item: any }>();
+          const seen = new Map<string, { type: string; item: { id: string; title?: string } }>();
           for (const entry of allItems) {
             if (!seen.has(entry.item.id)) {
               seen.set(entry.item.id, entry);
@@ -164,13 +164,12 @@ export const BranchLibrary = () => {
                     >
                       Sección {section.roman}
                     </div>
-                    <Link href={`/rama/${section.slug}`}>
-                      <a
-                        className="block text-2xl text-carbon leading-none transition-colors hover:underline decoration-1 underline-offset-4"
-                        style={{ fontVariant: 'small-caps' }}
-                      >
-                        {section.title}
-                      </a>
+                    <Link
+                      href={`/rama/${section.slug}`}
+                      className="block text-2xl text-carbon leading-none transition-colors hover:underline decoration-1 underline-offset-4"
+                      style={{ fontVariant: 'small-caps' }}
+                    >
+                      {section.title}
                     </Link>
                   </div>
                   <span
@@ -190,33 +189,33 @@ export const BranchLibrary = () => {
 
                 <div className="flex flex-wrap gap-1.5 mb-4">
                   {section.groups.map(group => {
-                    const name = (db as any).constructor.mscNames?.[group.id] || group.id;
+                    const name = (db.constructor as { mscNames?: Record<string, string> }).mscNames?.[group.id] || group.id;
                     return (
-                      <Link key={group.id} href={`/rama/${group.id}`}>
-                        <a
-                          className="text-[10px] font-sans font-bold tracking-wider px-2 py-0.5 rounded border border-dashed transition-colors hover:bg-carbon/5 flex items-center gap-1"
-                          style={{
-                            color: section.accent,
-                            borderColor: `color-mix(in srgb, ${section.accent}, transparent 81%)`,
-                          }}
-                        >
-                          <span className="opacity-60">{group.codes.join('/')}</span>
-                          <span>{name}</span>
-                        </a>
+                      <Link
+                        key={group.id}
+                        href={`/rama/${group.id}`}
+                        className="text-[10px] font-sans font-bold tracking-wider px-2 py-0.5 rounded border border-dashed transition-colors hover:bg-carbon/5 flex items-center gap-1"
+                        style={{
+                          color: section.accent,
+                          borderColor: `color-mix(in srgb, ${section.accent}, transparent 81%)`,
+                        }}
+                      >
+                        <span className="opacity-60">{group.codes.join('/')}</span>
+                        <span>{name}</span>
                       </Link>
                     );
                   })}
                   {section.codes.map(code => (
-                      <Link key={code} href={`/rama/${code}`}>
-                        <a
-                          className="text-[10px] font-sans font-bold uppercase tracking-wider px-2 py-0.5 rounded border transition-colors hover:bg-carbon/5"
-                          style={{
-                            color: section.accent,
-                            borderColor: `color-mix(in srgb, ${section.accent}, transparent 75%)`,
-                          }}
-                        >
-                          {code}
-                        </a>
+                      <Link
+                        key={code}
+                        href={`/rama/${code}`}
+                        className="text-[10px] font-sans font-bold uppercase tracking-wider px-2 py-0.5 rounded border transition-colors hover:bg-carbon/5"
+                        style={{
+                          color: section.accent,
+                          borderColor: `color-mix(in srgb, ${section.accent}, transparent 75%)`,
+                        }}
+                      >
+                        {code}
                       </Link>
                   ))}
                 </div>
@@ -224,19 +223,21 @@ export const BranchLibrary = () => {
                 <div className="mt-auto border-t border-carbon/10 pt-3 flex flex-col gap-0">
                   {displayItems.length > 0 ? (
                     displayItems.map((entry, idx) => (
-                      <Link key={idx} href={itemHref(entry)}>
-                        <a className="flex items-center justify-between py-1.5 group/row hover:bg-carbon/[0.02] -mx-2 px-2 rounded transition-colors">
-                          <span className="text-sm text-carbon/80 group-hover/row:text-carbon font-medium flex items-center gap-2">
-                            <span className="text-carbon/30 text-xs">§</span>
-                            {(entry.item as any).title || entry.item.id}
-                          </span>
-                          <span
-                            className="text-[9px] uppercase tracking-wider font-sans px-1.5 py-0.5 rounded"
-                            style={{ color: section.accent, backgroundColor: `color-mix(in srgb, ${section.accent}, transparent 92%)` }}
-                          >
-                            {TYPE_LABELS[entry.type] || entry.type}
-                          </span>
-                        </a>
+                      <Link
+                        key={idx}
+                        href={itemHref(entry)}
+                        className="flex items-center justify-between py-1.5 group/row hover:bg-carbon/[0.02] -mx-2 px-2 rounded transition-colors"
+                      >
+                        <span className="text-sm text-carbon/80 group-hover/row:text-carbon font-medium flex items-center gap-2">
+                          <span className="text-carbon/30 text-xs">§</span>
+                          {entry.item.title || entry.item.id}
+                        </span>
+                        <span
+                          className="text-[9px] uppercase tracking-wider font-sans px-1.5 py-0.5 rounded"
+                          style={{ color: section.accent, backgroundColor: `color-mix(in srgb, ${section.accent}, transparent 92%)` }}
+                        >
+                          {TYPE_LABELS[entry.type] || entry.type}
+                        </span>
                       </Link>
                     ))
                   ) : (
@@ -246,13 +247,12 @@ export const BranchLibrary = () => {
                   )}
 
                   {hasMore && (
-                    <Link href={`/rama/${section.slug}`}>
-                      <a
-                        className="mt-2 py-1.5 text-center text-xs font-sans tracking-widest uppercase transition-colors hover:underline"
-                        style={{ color: section.accent }}
-                      >
-                        Ver {uniqueItems.length - 5} entradas más →
-                      </a>
+                    <Link
+                      href={`/rama/${section.slug}`}
+                      className="mt-2 py-1.5 text-center text-xs font-sans tracking-widest uppercase transition-colors hover:underline"
+                      style={{ color: section.accent }}
+                    >
+                      Ver {uniqueItems.length - 5} entradas más →
                     </Link>
                   )}
                 </div>

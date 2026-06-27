@@ -75,7 +75,7 @@ export const BlocksGallery: React.FC<BlocksGalleryProps> = ({ isOpen, onClose, o
             <button onClick={() => { onInsertBlock('medieval-step'); onClose(); }} className="text-left group">
               <div className="mb-2 text-sm font-mono text-terracota group-hover:underline">&lt;ProofStep&gt;</div>
               <div className="pointer-events-none flex items-center gap-4 my-4 scale-75 origin-left">
-                <div className="relative w-20 h-20 flex items-center justify-center border border-carbon rounded-sm bg-[#FDFBF7] overflow-hidden">
+                <div className="relative w-20 h-20 flex items-center justify-center border border-carbon rounded-sm bg-lienzo overflow-hidden">
                   <span className="font-serif italic font-bold text-4xl text-terracota z-10">1</span>
                 </div>
                 <h3 className="text-2xl font-serif text-carbon m-0 border-b-2 border-carbon/20 pb-1 italic">Título del Paso</h3>

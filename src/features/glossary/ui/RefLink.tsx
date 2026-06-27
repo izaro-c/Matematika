@@ -44,7 +44,7 @@ export const RefLink: React.FC<RefLinkProps> = ({ targetId, children }) => {
   return (
     <span
       onClick={() => openTerm(targetId)}
-      title={`Ver: ${(entity as any).title || (entity as any).name}`}
+      title={`Ver: ${(entity as { title?: string, name?: string }).title || (entity as { title?: string, name?: string }).name}`}
       className={[
         'font-bold border-b-2 cursor-pointer transition-all duration-150 px-[2px] rounded-none',
         isActive
@@ -53,7 +53,7 @@ export const RefLink: React.FC<RefLinkProps> = ({ targetId, children }) => {
       ].join(' ')}
     >
       {children}
-      {isRead && <span className="ml-[2px] text-[#2a6a2a] opacity-80" style={{ fontSize: '0.85em' }}>✓</span>}
+      {isRead && <span className="ml-[2px] text-salvia opacity-80" style={{ fontSize: '0.85em' }}>✓</span>}
     </span>
   );
 };

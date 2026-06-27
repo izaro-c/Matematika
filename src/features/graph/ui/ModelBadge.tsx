@@ -1,5 +1,7 @@
 import React from 'react';
+
 import { db } from '@/entities/content';
+import { appPath } from '@/shared/lib/routeHelper';
 import modelRegistry from '@/entities/content/model_badges_registry.json';
 
 interface ModelBadgeProps {
@@ -13,7 +15,7 @@ export const ModelBadge: React.FC<ModelBadgeProps> = ({ modelId }) => {
 
   return (
     <a
-      href={`/Matematika/modelo/${model.id}`}
+      href={appPath(`/modelo/${model.id}`)}
       className="ac-pill"
       title={model.description || `Modelo: ${model.title}`}
       style={{ ['--pill-accent' as string]: 'var(--theme-pavo)', textDecoration: 'none' }}

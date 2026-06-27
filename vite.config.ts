@@ -29,6 +29,7 @@ function editorAPI(): Plugin {
   return {
     name: 'editor-api',
     enforce: 'pre' as const,
+    apply: 'serve',
     configureServer(server: ViteDevServer) {
       viteServer = server;
       const srcRoot = path.resolve(__dirname, 'src');

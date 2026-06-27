@@ -2,7 +2,7 @@ import { useToastStore } from '@/features/toast/ToastStore';
 import type { ToastType } from '@/features/toast/ToastStore';
 
 const typeStyles: Record<ToastType, string> = {
-  success: 'bg-[#2a6a2a] text-white',
+  success: 'bg-salvia text-white',
   error: 'bg-granada text-white',
   info: 'bg-carbon text-white',
 };

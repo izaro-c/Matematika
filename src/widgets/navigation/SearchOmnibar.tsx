@@ -7,6 +7,7 @@ import { dictionary } from '@/features/glossary/GlossaryStore';
 import { useGlossaryStore } from '@/features/glossary/GlossaryStore';
 import { mscNames } from '@/entities/content/msc2020';
 import { EmptyState } from '@/shared/ui/EmptyState';
+import { appPath } from '@/shared/lib/routeHelper';
 
 type SearchResult = {
   id: string;
@@ -40,7 +41,7 @@ const buildIndex = (): SearchResult[] => {
       type: 'teorema',
       title: thm.title,
       subtitle: thm.description,
-      href: `/Matematika/teorema/${thm.slug}`,
+      href: appPath(`/teorema/${thm.slug}`),
     });
   }
 
@@ -49,7 +50,7 @@ const buildIndex = (): SearchResult[] => {
       id: `lesson-${lesson.id}`,
       type: 'lección',
       title: lesson.title || lesson.id,
-      href: `/Matematika/${lesson.slug}`,
+      href: appPath(`/${lesson.slug}`),
     });
   }
 
@@ -59,7 +60,7 @@ const buildIndex = (): SearchResult[] => {
       type: 'definición',
       title: def.title,
       subtitle: def.description,
-      href: `/Matematika/definicion/${def.slug}`,
+      href: appPath(`/definicion/${def.slug}`),
     });
   }
 
@@ -69,7 +70,7 @@ const buildIndex = (): SearchResult[] => {
       type: 'ejemplo',
       title: ex.title,
       subtitle: ex.description,
-      href: `/Matematika/ejemplo/${ex.slug}`,
+      href: appPath(`/ejemplo/${ex.slug}`),
     });
   }
 
@@ -79,7 +80,7 @@ const buildIndex = (): SearchResult[] => {
       type: 'ejercicio',
       title: ez.title,
       subtitle: ez.description,
-      href: `/Matematika/ejercicio/${ez.slug}`,
+      href: appPath(`/ejercicio/${ez.slug}`),
     });
   }
 
@@ -89,7 +90,7 @@ const buildIndex = (): SearchResult[] => {
       type: 'demo',
       title: demo.title,
       subtitle: demo.description,
-      href: `/Matematika/demo/${demo.slug}`,
+      href: appPath(`/demo/${demo.slug}`),
     });
   }
 
@@ -99,7 +100,7 @@ const buildIndex = (): SearchResult[] => {
       type: 'matemático',
       title: bio.name,
       subtitle: bio.description,
-      href: `/Matematika/bio/${bio.slug}`,
+      href: appPath(`/bio/${bio.slug}`),
     });
   }
 
@@ -109,7 +110,7 @@ const buildIndex = (): SearchResult[] => {
       type: 'caso_uso',
       title: uc.title,
       subtitle: uc.description,
-      href: `/Matematika/caso/${uc.slug}`,
+      href: appPath(`/caso/${uc.slug}`),
     });
   }
 
@@ -119,7 +120,7 @@ const buildIndex = (): SearchResult[] => {
       type: 'axioma',
       title: axm.title,
       subtitle: axm.description,
-      href: `/Matematika/axioma/${axm.slug}`,
+      href: appPath(`/axioma/${axm.slug}`),
     });
   }
 
@@ -129,7 +130,7 @@ const buildIndex = (): SearchResult[] => {
       type: 'modelo',
       title: model.title,
       subtitle: model.description,
-      href: `/Matematika/modelo/${model.slug}`,
+      href: appPath(`/modelo/${model.slug}`),
     });
   }
 
@@ -164,10 +165,10 @@ const ALL_TYPES: SearchResult['type'][] = [
 ];
 
 const TYPE_COLORS: Record<string, string> = {
-  teorema: '#6b9e6b', lección: '#4a6070', definición: '#8b7355',
-  axioma: '#1c1917', modelo: '#9FAABF', ejemplo: '#6b9e6b', ejercicio: '#b85c38',
-  demo: '#4a6070', matemático: '#c9a87c', caso_uso: '#6b9e6b',
-  glosario: '#8b7355', msc2020: '#4a6070',
+  teorema: 'var(--theme-salvia)', lección: 'var(--theme-pavo)', definición: 'var(--theme-ocre)',
+  axioma: 'var(--theme-carbon)', modelo: 'var(--theme-pavo)', ejemplo: 'var(--theme-salvia)', ejercicio: 'var(--theme-terracota)',
+  demo: 'var(--theme-pavo)', matemático: 'var(--theme-ocre)', caso_uso: 'var(--theme-salvia)',
+  glosario: 'var(--theme-ocre)', msc2020: 'var(--theme-pavo)',
 };
 
 export const SearchOmnibar = () => {
@@ -192,12 +193,18 @@ export const SearchOmnibar = () => {
     return () => window.removeEventListener('keydown', handleKeyDown);
   }, [closeSearch]);
 
+  const [prevIsOpen, setPrevIsOpen] = useState(isSearchOpen);
+  if (isSearchOpen !== prevIsOpen) {
+    setPrevIsOpen(isSearchOpen);
+    if (!isSearchOpen) {
+      setQuery('');
+      setSelectedIndex(0);
+    }
+  }
+
   useEffect(() => {
     if (isSearchOpen) {
       setTimeout(() => inputRef.current?.focus(), 50);
-    } else {
-      setQuery('');
-      setSelectedIndex(0);
     }
   }, [isSearchOpen]);
 
@@ -221,7 +228,11 @@ export const SearchOmnibar = () => {
     return fuse.search(query).slice(0, 12);
   }, [query, fuse]);
 
-  useEffect(() => setSelectedIndex(0), [results]);
+  const [prevResults, setPrevResults] = useState(results);
+  if (results !== prevResults) {
+    setPrevResults(results);
+    setSelectedIndex(0);
+  }
 
   const handleKeyDown = (e: React.KeyboardEvent) => {
     if (e.key === 'ArrowDown') {
@@ -312,8 +323,8 @@ export const SearchOmnibar = () => {
                 <span
                   className="w-2 h-2 rounded-sm shrink-0 border"
                   style={{
-                    background: activeTypes.has(type) ? TYPE_COLORS[type] || '#999' : 'transparent',
-                    borderColor: TYPE_COLORS[type] || '#999',
+                    background: activeTypes.has(type) ? TYPE_COLORS[type] || 'var(--theme-pizarra)' : 'transparent',
+                    borderColor: TYPE_COLORS[type] || 'var(--theme-pizarra)',
                   }}
                 />
                 <span className="capitalize">{type.replace('_', ' ')}</span>

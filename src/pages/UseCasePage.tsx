@@ -74,8 +74,9 @@ export const UseCasePage: React.FC = () => {
     ? db.getUseCasesByConcept(usecase.concept).filter(u => u.id !== usecase.id)
     : [];
 
-  const breadcrumbs = concept
-    ? [{ name: (concept as any).title as string, href: `/teorema/${(concept as any).slug || usecase.concept}` }]
+  const c = concept as { title?: string; slug: string } | null;
+  const breadcrumbs = c
+    ? [{ name: c.title || c.slug, href: `/teorema/${c.slug || usecase.concept}` }]
     : [];
 
   const renderContent = () => (
@@ -95,9 +96,9 @@ export const UseCasePage: React.FC = () => {
                 {usecase.difficulty && <DifficultyBadge difficulty={usecase.difficulty} />}
               </>
             }
-            backLink={concept ? {
-              href: `/teorema/${(concept as any).slug || usecase.concept}`,
-              label: `← ${(concept as any).title as string}`,
+            backLink={c ? {
+              href: `/teorema/${c.slug || usecase.concept}`,
+              label: `← ${c.title || c.slug}`,
             } : undefined}
           />
 

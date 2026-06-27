@@ -54,7 +54,7 @@ export const ProofStep: React.FC<ProofStepProps> = ({ number, title, target, lea
       <div className="flex items-center gap-4 mb-4">
         {/* Caja del número — reducida de w-28 a w-16 */}
         <div
-          className="relative w-16 h-16 min-w-[4rem] flex items-center justify-center border border-carbon overflow-hidden rounded-sm bg-[#FDFBF7] shrink-0"
+          className="relative w-16 h-16 min-w-[4rem] flex items-center justify-center border border-carbon overflow-hidden rounded-sm bg-lienzo shrink-0"
         >
           {/* Fondo Arts & Crafts */}
           <div

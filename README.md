@@ -4,9 +4,9 @@ Matematika es una plataforma enciclopédica interactiva y orgánica diseñada pa
 
 ## Características Principales
 
-1. **Grafo de Conocimiento (Knowledge Graph)**: Un lienzo interactivo bidimensional (basado en `react-force-graph-2d`) que mapea dinámicamente las relaciones semánticas entre conceptos. Si un teorema menciona una definición o una demostración, una conexión orgánica se renderiza automáticamente.
+1. **Grafo de Conocimiento (Knowledge Graph)**: Un lienzo interactivo bidimensional que mapea dinámicamente las relaciones semánticas entre conceptos. Si un teorema menciona una definición o una demostración, una conexión orgánica se renderiza automáticamente.
 2. **Validación Estricta de Contenido**: Todo el contenido está escrito en MDX (Markdown + React). Los metadatos de cada artículo (*frontmatter*) se validan estrictamente mediante **Zod** para garantizar la integridad referencial y de esquemas.
-3. **Lectura Marginal (Marginalia)**: Inspirado en los textos clásicos, los enlaces a otros conceptos no expulsan al usuario de su contexto de lectura. En su lugar, abren elegantes paneles laterales (`MarginaliaPanel`) con resúmenes rápidos, axiomas matemáticos (en LaTeX) y simulaciones interactivas incrustadas.
+3. **Lectura Marginal (Marginalia)**: Inspirado en los textos clásicos, los enlaces a otros conceptos no expulsan al usuario de su contexto de lectura. En su lugar, abren elegantes paneles laterales (`MarginaliaPanel`) con resúmenes rápidos, axiomas matemáticos y simulaciones interactivas incrustadas.
 4. **Simulaciones Reactivas**: Los diagramas interactivos se inyectan en tiempo real dentro del contenido y en el panel lateral, proporcionando intuición geométrica o conceptual in situ.
 
 ---
@@ -14,16 +14,25 @@ Matematika es una plataforma enciclopédica interactiva y orgánica diseñada pa
 ## 🛠 Stack Tecnológico
 
 - **Framework**: React 19 + TypeScript
+- **Arquitectura**: Feature-Sliced Design (FSD)
 - **Bundler**: Vite + Rollup
 - **Routing**: Wouter (Routing ligero y declarativo)
 - **Contenido**: MDX (`@mdx-js/rollup`) + Remark/Rehype Math (Soporte KaTeX)
 - **Validación**: Zod
 - **Visualización**: `react-force-graph-2d` (Físicas d3-force)
-- **Estilos**: Tailwind CSS (con un sistema de diseño "Arts and Crafts" personalizado).
+- **Formalización**: Lean 4
+- **Estilos**: Tailwind CSS (con un sistema de diseño "Arts and Crafts" personalizado: lienzo, carbon, salvia, terracota, etc).
 
 ---
 
-## 🚀 Instalación y Uso
+## 🚀 Requisitos Previos
+
+- **Node.js** (recomendado v20+) y **npm**
+- **Lean 4** y **Elan/Lake** (requeridos para las validaciones lógicas profundas y el puente interactivo de pruebas)
+
+---
+
+## ⚙️ Instalación y Uso
 
 1. **Clonar e instalar dependencias**:
    ```bash
@@ -41,67 +50,74 @@ Matematika es una plataforma enciclopédica interactiva y orgánica diseñada pa
    npm run build
    ```
 
-4. **Ejecutar Pruebas y Generar Reporte (CPT)**:
-   ```bash
-   npm run test:report
-   ```
-   Esto ejecutará las pruebas automatizadas (Vitest) e inyectará los resultados dinámicamente en la documentación de pruebas (`Category_Partition_Tests.md`).
+---
+
+## 🧪 Validaciones y Comandos
+
+Matematika aplica un estricto flujo de validación. Las siguientes validaciones se aseguran de que no se rompan las dependencias arquitectónicas, lógicas o referenciales.
+
+- **`npm run lint`**: Validación de estilo y código.
+- **`npm run typecheck`**: Verificación estricta de tipos TypeScript.
+- **`npm run test`**: Ejecutar pruebas funcionales y de componentes con Vitest.
+- **`npm run test:coverage`**: Generar reporte de cobertura de código.
+- **`npm run depcruise`**: Asegura que se cumple estrictamente la arquitectura Feature-Sliced Design (FSD).
+- **`npm run validate-references`**: Valida que los enlaces (ConceptLink) sean íntegros.
+- **`npm run validate-graph`**: Verifica que el DAG lógico (grafo acíclico dirigido) no tenga ciclos lógicos.
+- **`npm run validate-lean`**: Requiere Lean instalado. Compila Lean, regenera el grafo lógico y valida la coherencia entre el texto en MDX y las pruebas certificadas en Lean.
+- **`npm run bridge:audit`**: Verifica la cobertura Lean y la deuda explícita (temporal) de las declaraciones que todavía no están formalmente certificadas.
+
+> **Política Editorial**: La carga del sistema y de las páginas en sí no falla ni se bloquea completamente si un autor enlaza hacia un artículo que "aún no existe" (ideal para flujo de redacción). El `ContentStore` (`src/entities/content/ContentStore.ts`) registrará warnings o mostrará estados 404 controlados para que la plataforma principal siga siendo navegable mientras se construye nuevo contenido.
 
 ---
 
 ## ✍️ Cómo Añadir Contenido
 
-Matematika utiliza el sistema de archivos como base de datos (`src/store/ContentStore.ts`). Añadir contenido es tan sencillo como crear un archivo `.mdx` en la carpeta correspondiente.
+Matematika utiliza el sistema de archivos como base de datos de contenido estático (MDX).
+Los metadatos se validan en el inicio a través de `ContentStore` (`src/entities/content/ContentStore.ts`).
 
-### 1. Ubicaciones
-- `src/content/theorems`: Teoremas principales.
-- `src/content/definitions`: Conceptos, axiomas y definiciones formales.
-- `src/content/examples`: Ejemplos prácticos y numéricos.
-- `src/content/exercises`: Ejercicios propuestos con pistas y soluciones.
-- `src/content/usecases`: Aplicaciones del mundo real.
-- `src/content/demonstrations`: Demostraciones formales paso a paso.
-- `src/content/mathematicians`: Biografías históricas.
+### 1. Ubicaciones (MDX)
+El contenido real escrito en Markdown reside en `src/database/content/`:
+- `theorems/`: Teoremas principales, lemas y corolarios.
+- `definitions/`: Conceptos, axiomas y definiciones formales.
+- `examples/`: Ejemplos prácticos y numéricos resueltos.
+- `exercises/`: Ejercicios propuestos con pistas y soluciones ocultas.
+- `usecases/`: Aplicaciones del mundo real de conceptos matemáticos abstractos.
+- `demonstrations/`: Demostraciones formales y paso a paso.
+- `mathematicians/`: Biografías históricas.
+- `axioms/`, `axiomatic-systems/`, `models/`, `lessons/`.
 
 ### 2. Formato MDX y Zod (Frontmatter)
-Todo archivo `.mdx` debe exportar obligatoriamente una constante `metadata` que cumpla con su esquema en `schemas.ts`.
+Todo archivo `.mdx` debe exportar obligatoriamente una constante `metadata` que cumpla con su esquema correspondiente especificado en `src/entities/content/schemas.ts`. Se exige el formato `kebab-case` para todos los identificadores (`id`).
 
 Ejemplo de un `teorema.mdx`:
 ```mdx
 export const metadata = {
   id: "teorema-ejemplo",
+  type: "teorema",
   title: "Teorema de Ejemplo",
   description: "Descripción breve que aparecerá en el panel lateral.",
   statement: "El enunciado formal con matemáticas en LaTeX: $a^2 = b^2 + c^2$.",
-  links: ["definicion-asociada", "matematico-autor"],
   requires: ["definicion-previa"], // Grafo de dependencias lógicas
-  tags: ["Geometría"],
 };
 
-Aquí va el cuerpo del artículo. Si quieres hacer referencia a otro concepto para que abra el panel lateral sin recargar, utiliza un ConceptLink:
-
-Como vimos en el <ConceptLink targetId="definicion-asociada">Concepto Asociado</ConceptLink>...
+<Capitular letra="C" />omo vimos en el <ConceptLink targetId="definicion-asociada">Concepto Asociado</ConceptLink>...
 ```
 
 ### 3. El componente `<ConceptLink>`
 Es el corazón de la navegación interna. **Nunca uses `<a>` o `<Link>` estándar para navegar entre conceptos**. 
-Usa `<ConceptLink targetId="slug-del-archivo">Texto a mostrar</ConceptLink>`. Esto alimenta automáticamente el Grafo de Conocimiento y habilita el panel interactivo.
+Usa `<ConceptLink targetId="slug-del-archivo">Texto a mostrar</ConceptLink>`. Esto alimenta automáticamente el Grafo de Conocimiento y habilita el panel lateral.
 
 ---
 
-## 📂 Arquitectura de Directorios
+## 📂 Arquitectura Feature-Sliced Design (FSD)
 
 ```
 src/
-├── components/       # Componentes de UI (MarginaliaPanel, ConceptLink, Navbar)
-├── content/          # Artículos MDX y metadatos JSON
-├── diagrams/         # Visualizaciones y simulaciones (D3/React/Canvas)
-├── pages/            # Vistas principales (GraphPage, ContentLayout, Home)
-├── store/            # Lógica de Estado (ContentStore, UIStore, schemas)
-├── App.tsx           # Punto de entrada y Routing global
-tests/                # Suite de pruebas automatizadas (Vitest)
-docs/                 # Documentación del proyecto
-  ├── Product_Backlog.md  # Hoja de ruta y User Stories priorizadas
-  ├── SRS.md              # Especificación de Requisitos de Software
-  ├── testing/            # Estrategia de Testing (CPT) y Reportes automáticos
-  └── uml/                # Diagramas de Arquitectura (Clases, Secuencia, Casos de Uso)
+├── app/            # Entry point (AppRouter, Providers, CSS global)
+├── pages/          # Páginas principales con enrutamiento de Wouter
+├── widgets/        # Bloques de UI compuestos y Lados (Marginalia, TopBar, Layouts)
+├── features/       # Módulos de dominio y stores (Graph, Editor, Glossary, Search...)
+├── entities/       # Lógica central de datos y tipados (ContentStore, Schemas, Graph Types)
+├── shared/         # Componentes atómicos (UI base, Layouts, Libs, Theme, JSXGraph Diagrams)
+└── database/       # Colecciones Markdown reactivas (Contenido MDX real)
 ```

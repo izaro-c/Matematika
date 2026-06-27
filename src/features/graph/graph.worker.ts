@@ -1,5 +1,5 @@
 export interface WorkerInput {
-  graphData: any;
+  graphData: unknown;
   disabledAxioms: string[];
 }
 
@@ -19,7 +19,7 @@ interface JsonNode {
 let structure: {
   topologicalOrder: string[];
   nodes: Record<string, JsonNode>;
-} = null as any;
+} = null as unknown as { topologicalOrder: string[]; nodes: Record<string, JsonNode> };
 
 
 export interface FlowNodeData {
@@ -248,6 +248,7 @@ function minimizeCrossings(
 
 // ── Posicionamiento horizontal: Network Simplex relajado ────────────────────
 
+// eslint-disable-next-line sonarjs/cognitive-complexity
 function initTopDownPositions(
   layerKeys: number[],
   byLayer: Record<number, string[]>,
@@ -398,8 +399,9 @@ function arrangeLayers(
   return positions;
 }
 
-export async function computeGraph(graphData: any, disabledAxioms: string[]): Promise<WorkerOutput> {
-  structure = graphData;
+ 
+export async function computeGraph(graphData: unknown, disabledAxioms: string[]): Promise<WorkerOutput> {
+  structure = graphData as { topologicalOrder: string[]; nodes: Record<string, JsonNode> };
   const disabledSet = new Set(disabledAxioms);
 
   const filtered = filterNodes();
@@ -452,6 +454,7 @@ export async function computeGraph(graphData: any, disabledAxioms: string[]): Pr
     };
   });
 
+  // eslint-disable-next-line sonarjs/cognitive-complexity
   const flowEdges: FlowEdge[] = edgeList.map(({ source, target }) => {
     const srcNode = filtered[source];
     const srcActive = activeStates[source] ?? true;
@@ -496,4 +499,18 @@ export async function computeGraph(graphData: any, disabledAxioms: string[]): Pr
   });
 
   return { nodes: flowNodes, edges: flowEdges, adjacency, activeStates, dependsOn };
+}
+
+// ── Web Worker Interface ──────────────────────────────────────────────────────
+
+if (typeof self !== 'undefined' && typeof window === 'undefined') {
+  self.onmessage = async (e: MessageEvent<unknown>) => {
+    const { graphData, disabledAxioms, msgId } = e.data as { msgId: number; graphData: unknown; disabledAxioms: string[] };
+    try {
+      const result = await computeGraph(graphData, disabledAxioms);
+      self.postMessage({ msgId, result, error: null });
+    } catch (err: unknown) {
+      self.postMessage({ msgId, result: null, error: (err as Error).message });
+    }
+  };
 }
