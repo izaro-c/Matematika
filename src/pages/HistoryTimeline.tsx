@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState, useMemo } from 'react';
 import { Link } from 'wouter';
+import { publicAsset } from '@/shared/lib/routeHelper';
 import { db } from '@/entities/content';
 import { InteractiveTimePlot } from '@/shared/ui/InteractiveTimePlot';
 
@@ -81,7 +82,7 @@ export const HistoryTimeline = () => {
   return (
     <div
       className="bg-lienzo bg-arts-and-crafts text-carbon font-serif pt-20 pb-32 relative min-h-screen"
-      style={{ backgroundImage: 'url(/images/bg-botanical.png)', backgroundSize: '500px' }}
+      style={{ backgroundImage: `url(${publicAsset('/images/bg-botanical.png')})`, backgroundSize: '500px' }}
       ref={containerRef}
     >
       {/* Fondo sutil */}

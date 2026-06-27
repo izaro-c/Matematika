@@ -36,3 +36,6 @@ lean/.lake/
 docs/api/
 *.tsbuildinfo
 *.zip
+
+.opencode/
+.auxiliary/

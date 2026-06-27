@@ -128,14 +128,14 @@ export const useEditorState = () => {
 
   const getPreviewUrl = () => {
     if (!currentFile || (!metadata.id && currentFile.endsWith('.mdx'))) return '';
-    if (currentFile.startsWith('content/theorems')) return `/teorema/${metadata.id}`;
-    if (currentFile.startsWith('content/definitions')) return `/definicion/${metadata.id}`;
-    if (currentFile.startsWith('content/lessons')) {
+    if (currentFile.startsWith('database/content/theorems')) return `/teorema/${metadata.id}`;
+    if (currentFile.startsWith('database/content/definitions')) return `/definicion/${metadata.id}`;
+    if (currentFile.startsWith('database/content/lessons')) {
       const slug = currentFile.split('/').pop()?.replace('.mdx', '').replace(/Demo$/, '').toLowerCase();
       return `/${slug}`;
     }
-    if (currentFile.startsWith('content/demonstrations')) return `/demo/${metadata.id}`;
-    if (currentFile.startsWith('content/mathematicians')) {
+    if (currentFile.startsWith('database/content/demonstrations')) return `/demo/${metadata.id}`;
+    if (currentFile.startsWith('database/content/mathematicians')) {
       const slug = currentFile.split('/').pop()?.replace('.mdx', '').toLowerCase();
       return `/bio/${slug}`;
     }

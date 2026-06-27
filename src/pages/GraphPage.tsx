@@ -1,5 +1,6 @@
 import React, { useMemo, useState, useCallback, useRef, useEffect } from 'react';
 import { useLocation } from 'wouter';
+import { publicAsset } from '@/shared/lib/routeHelper';
 import ForceGraph2D from 'react-force-graph-2d';
 import { GRAPH_NODE_COLORS } from '@/shared/lib/constants';
 import { useGlossaryStore } from '@/features/glossary/GlossaryStore';
@@ -163,9 +164,12 @@ export const GraphPage: React.FC = () => {
     ctx.strokeText(label, nodeX, textY);
 
     ctx.shadowBlur = 0;
-    const textColor = node.group === 'central'
-      ? (isHighlighted ? '#C86446' : '#C8644680')
-      : (isHighlighted ? '#333333' : '#33333380');
+    let textColor: string;
+    if (node.group === 'central') {
+      textColor = isHighlighted ? '#C86446' : '#C8644680';
+    } else {
+      textColor = isHighlighted ? '#333333' : '#33333380';
+    }
     ctx.fillStyle = textColor;
     ctx.fillText(label, nodeX, textY);
   }, []);
@@ -236,7 +240,7 @@ export const GraphPage: React.FC = () => {
   }, []);
 
   return (
-    <div className="w-full h-screen bg-lienzo overflow-hidden font-serif relative" style={{ backgroundImage: 'url(/Matematika/images/bg-arts-crafts-1.png)', backgroundSize: '600px', backgroundRepeat: 'repeat' }}>
+    <div className="w-full h-screen bg-lienzo overflow-hidden font-serif relative" style={{ backgroundImage: `url(${publicAsset('/images/bg-arts-crafts-1.png')})`, backgroundSize: '600px', backgroundRepeat: 'repeat' }}>
 
       <GraphSearch
         searchQuery={searchQuery}

@@ -6,6 +6,7 @@ import { useProgressStore } from '@/features/progress/UserProgressStore';
 import { Capitular, BlockTitle, OrnamentalDivider } from '@/shared/ui/MDXBlocks';
 import { StudyPlanContext } from '@/app/providers/StudyPlanContext';
 import { GlossaryLink } from '@/shared/ui/GlossaryLink';
+import { publicAsset } from '@/shared/lib/routeHelper';
 
 // Componentes interactivos permitidos en los planes
 import { StudyTask } from '@/features/progress/ui/StudyTask';
@@ -113,7 +114,7 @@ export const StudyPlanPage = () => {
       <div className="bg-lienzo text-carbon font-serif pt-24 pb-32 min-h-screen relative">
         <div
           className="absolute inset-0 z-0 pointer-events-none opacity-[0.02] mix-blend-multiply fixed"
-          style={{ backgroundImage: 'url(/images/bg-botanical.png)', backgroundSize: '400px' }}
+          style={{ backgroundImage: `url(${publicAsset('/images/bg-botanical.png')})`, backgroundSize: '400px' }}
         />
 
         <div className="relative z-20 max-w-4xl mx-auto px-6 md:px-0">

@@ -1,4 +1,5 @@
 import React, { useEffect, useRef } from 'react';
+import { publicAsset } from '@/shared/lib/routeHelper';
 import { useMathStore } from '@/app/providers/MathStoreContext';
 import { ProofStepExpander } from './ProofStepExpander';
 
@@ -60,7 +61,7 @@ export const ProofStep: React.FC<ProofStepProps> = ({ number, title, target, lea
           <div
             className="absolute inset-0 opacity-70 mix-blend-multiply"
             style={{
-              backgroundImage: 'url(/Matematika/images/bg-arts-crafts-2.png)',
+              backgroundImage: `url(${publicAsset('/images/bg-arts-crafts-2.png')})`,
               backgroundSize: '200%',
               backgroundPosition: 'center',
             }}

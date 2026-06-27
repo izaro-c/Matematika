@@ -1,4 +1,5 @@
 import { useEffect, useCallback, useState, useMemo } from 'react';
+import { publicAsset } from '@/shared/lib/routeHelper';
 import {
   ReactFlow,
   Controls,
@@ -278,7 +279,7 @@ function FlowContent() {
   if (isLoading && rfNodes.length === 0) {
     return (
       <div className="w-full h-full flex items-center justify-center bg-lienzo"
-        style={{ backgroundImage: 'url(/Matematika/images/bg-arts-crafts-1.png)', backgroundSize: '600px', backgroundRepeat: 'repeat' }}>
+        style={{ backgroundImage: `url(${publicAsset('/images/bg-arts-crafts-1.png')})`, backgroundSize: '600px', backgroundRepeat: 'repeat' }}>
         <p className="font-serif italic text-carbon/50 text-xl animate-pulse">Calculando estructura axiomática…</p>
       </div>
     );
@@ -287,7 +288,7 @@ function FlowContent() {
   // ── Render ──────────────────────────────────────────────────────────────────
   return (
     <div className="w-full h-full flex bg-lienzo"
-      style={{ backgroundImage: 'url(/Matematika/images/bg-arts-crafts-1.png)', backgroundSize: '600px', backgroundRepeat: 'repeat' }}>
+      style={{ backgroundImage: `url(${publicAsset('/images/bg-arts-crafts-1.png')})`, backgroundSize: '600px', backgroundRepeat: 'repeat' }}>
 
       {/* ── Sidebar ──────────────────────────────────────────────────────── */}
       <AxiomaticSidebar
