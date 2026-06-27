@@ -24,6 +24,10 @@ const drafts = new Map<string, string>();
  * ligera (lectura/escritura/listado) que permite al Editor Web modificar
  * archivos locales (.mdx, .tsx) y usar el HMR de Vite para Live Preview.
  */
+function isPathAllowed(absolutePath: string, allowedDirs: string[]): boolean {
+  return allowedDirs.some(dir => absolutePath.startsWith(dir + path.sep) || absolutePath === dir);
+}
+
 function editorAPI(): Plugin {
   let viteServer: ViteDevServer;
   return {
@@ -43,10 +47,20 @@ function editorAPI(): Plugin {
             res.statusCode = 400
             return res.end('Missing path')
           }
+          if (rawPath.includes('..')) {
+            res.statusCode = 400;
+            return res.end('Invalid path');
+          }
           const absolutePath = path.resolve(__dirname, 'src', rawPath)
-          if (!absolutePath.startsWith(srcRoot + path.sep) && absolutePath !== srcRoot) {
+          const allowedDirs = [
+            path.resolve(srcRoot, 'database/content'),
+            path.resolve(srcRoot, 'shared/diagrams'),
+            path.resolve(srcRoot, 'shared/templates')
+          ];
+          const isAllowed = isPathAllowed(absolutePath, allowedDirs);
+          if (!isAllowed) {
             res.statusCode = 403
-            return res.end('Forbidden: path outside src/')
+            return res.end('Forbidden: path not in allowed editor directories')
           }
           if (!fs.existsSync(absolutePath)) {
             res.statusCode = 404
@@ -68,10 +82,19 @@ function editorAPI(): Plugin {
                 res.statusCode = 400
                 return res.end('Missing path or content')
               }
+              if (data.path.includes('..')) {
+                res.statusCode = 400;
+                return res.end('Invalid path');
+              }
               const absolutePath = path.resolve(__dirname, 'src', data.path)
-              if (!absolutePath.startsWith(srcRoot + path.sep) && absolutePath !== srcRoot) {
+              const allowedDirs = [
+                path.resolve(srcRoot, 'database/content'),
+                path.resolve(srcRoot, 'shared/diagrams')
+              ];
+              const isAllowed = isPathAllowed(absolutePath, allowedDirs);
+              if (!isAllowed) {
                 res.statusCode = 403
-                return res.end('Forbidden: path outside src/')
+                return res.end('Forbidden: path not in allowed editor directories or read-only')
               }
               const dir = path.dirname(absolutePath)
               if (!fs.existsSync(dir)) {
@@ -104,7 +127,20 @@ function editorAPI(): Plugin {
                 res.statusCode = 400
                 return res.end('Missing path or content')
               }
+              if (data.path.includes('..')) {
+                res.statusCode = 400;
+                return res.end('Invalid path');
+              }
               const absolutePath = path.resolve(__dirname, 'src', data.path)
+              const allowedDirs = [
+                path.resolve(srcRoot, 'database/content'),
+                path.resolve(srcRoot, 'shared/diagrams')
+              ];
+              const isAllowed = isPathAllowed(absolutePath, allowedDirs);
+              if (!isAllowed) {
+                res.statusCode = 403;
+                return res.end('Forbidden: path not in allowed editor directories');
+              }
               drafts.set(absolutePath, data.content)
 
               // Emit file change to Vite watcher to force proper HMR pipeline!

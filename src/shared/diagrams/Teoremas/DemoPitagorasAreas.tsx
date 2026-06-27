@@ -1,19 +1,21 @@
 import { useRef, useEffect } from 'react';
 import JXG from 'jsxgraph';
 import { useMathStore } from '@/app/providers/MathStoreContext';
+import { getCSSVar } from '@/shared/diagrams/utils/cssVar';
 
 export const DemoPitagorasAreas = () => {
     const boardRef = useRef<HTMLDivElement>(null);
     const elementsRef = useRef<Record<string, unknown>>({});
     
     const highlight = useMathStore(state => state.variables['highlight']);
-    const isHighlight = (id: string) =>
-        Array.isArray(highlight)
-            ? (highlight as string[]).includes(id)
-            : highlight === id;
+    const highlight = useMathStore(state => state.variables['highlight']);
 
     useEffect(() => {
         if (!boardRef.current) return;
+        
+        const terracota = getCSSVar('--theme-terracota') || '#C86446';
+        const salvia = getCSSVar('--theme-salvia') || '#648C7D';
+        const carbon = getCSSVar('--theme-carbon') || '#333333';
         
         const board = JXG.JSXGraph.initBoard(boardRef.current, {
             boundingbox: [-1, 9, 8, -1.5],
@@ -37,16 +39,16 @@ export const DemoPitagorasAreas = () => {
 
         const outerSquare = board.create('polygon', [pE1, pE2, pE3, pE4], {
             fillOpacity: 0,
-            borders: { strokeColor: '#333333', strokeWidth: 2 }
+            borders: { strokeColor: carbon, strokeWidth: 2 }
         });
 
         // Slider para la animación
         const slider = board.create('slider', [[1, -1], [6, -1], [0, 0, 1]], {
             name: 't',
             snapWidth: 0.01,
-            strokeColor: '#C86446',
-            fillColor: '#C86446',
-            label: { strokeColor: '#333333', fontSize: 16 }
+            strokeColor: terracota,
+            fillColor: terracota,
+            label: { strokeColor: carbon, fontSize: 16 }
         });
         
         // Función auxiliar para crear polígonos dependientes de t
@@ -65,7 +67,7 @@ export const DemoPitagorasAreas = () => {
 
         // Triángulos
         // T1: (0,0), (a,0), (0,b)
-        const t1 = createMovingTriangle('triangulo-1', 'var(--theme-salvia)',
+        const t1 = createMovingTriangle('triangulo-1', salvia,
             () => [0, 0],
             () => [a, 0],
             () => [0, b]
@@ -138,7 +140,12 @@ export const DemoPitagorasAreas = () => {
 
     // Highlight reactivo
     useEffect(() => {
-        const els = elementsRef.current as any;
+        const isHighlight = (id: string) =>
+            Array.isArray(highlight)
+                ? (highlight as string[]).includes(id)
+                : highlight === id;
+
+        const els = elementsRef.current as Record<string, any>;
         if (!els.board) return;
 
         const { t1, t2, t3, t4, outerSquare, emptyC, emptyA, emptyB } = els;
@@ -146,9 +153,9 @@ export const DemoPitagorasAreas = () => {
         // Reset
         [t1, t2, t3, t4].forEach(t => {
             t.setAttribute({ fillOpacity: 0.3 });
-            t.borders.forEach((b: any) => b.setAttribute({ strokeWidth: 2 }));
+            t.borders.forEach((b: { setAttribute: (attrs: unknown) => void }) => b.setAttribute({ strokeWidth: 2 }));
         });
-        outerSquare.borders.forEach((b: any) => b.setAttribute({ strokeWidth: 2 }));
+        outerSquare.borders.forEach((b: { setAttribute: (attrs: unknown) => void }) => b.setAttribute({ strokeWidth: 2 }));
 
         emptyC.setAttribute({ fillOpacity: () => 0.5 * (1 - els.slider.Value()) });
         emptyA.setAttribute({ fillOpacity: () => 0.5 * els.slider.Value() });
@@ -158,12 +165,12 @@ export const DemoPitagorasAreas = () => {
         if (isHighlight('triangulos')) {
             [t1, t2, t3, t4].forEach(t => {
                 t.setAttribute({ fillOpacity: 0.6 });
-                t.borders.forEach((b: any) => b.setAttribute({ strokeWidth: 4 }));
+                t.borders.forEach((b: { setAttribute: (attrs: unknown) => void }) => b.setAttribute({ strokeWidth: 4 }));
             });
         }
         
         if (isHighlight('cuadrado-exterior')) {
-            outerSquare.borders.forEach((b: any) => b.setAttribute({ strokeWidth: 5 }));
+            outerSquare.borders.forEach((b: { setAttribute: (attrs: unknown) => void }) => b.setAttribute({ strokeWidth: 5 }));
         }
 
         if (isHighlight('area-c')) {

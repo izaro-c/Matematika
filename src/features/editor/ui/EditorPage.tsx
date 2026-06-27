@@ -89,6 +89,17 @@ export const EditorPage: React.FC = () => {
     };
   }, [loadFileList, isDraggingRef, setLeftWidth]);
 
+  if (import.meta.env.PROD) {
+    return (
+      <div className="min-h-screen flex items-center justify-center bg-lienzo p-8">
+        <div className="bg-white p-8 rounded shadow text-center max-w-md">
+          <h2 className="text-2xl font-serif font-bold text-carbon mb-4">Editor Desactivado</h2>
+          <p className="text-carbon/70 font-sans text-sm">El editor de contenido solo está disponible en el entorno de desarrollo local.</p>
+        </div>
+      </div>
+    );
+  }
+
   const handleNewFile = () => {
     setWizardData({
       type: 'theorems', id: '', title: '', description: '',

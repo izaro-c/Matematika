@@ -1,58 +1,18 @@
 import { useCallback } from 'react';
 import { parseMDX, stringifyMDX } from '@/shared/lib/mdxParser';
 import type { FileNode, WizardData } from '@/features/editor/hooks/useEditorState';
+import { applyTemplateReplacements, applyTypeSpecificMetadata } from '@/features/editor/lib/editorUtils';
 
-// ─── Helpers: template + metadata ─────────────────────────────────────────
-
-function applyTemplateReplacements(template: string, w: WizardData): string {
-  return template
-    .replace(/\{\{ID\}\}/g, w.id)
-    .replace(/\{\{TITLE\}\}/g, w.title)
-    .replace(/\{\{FIRST_LETTER\}\}/g, w.title.charAt(0))
-    .replace(/\{\{DESCRIPTION\}\}/g, w.description)
-    .replace(/\{\{COLOR\}\}/g, w.color)
-    .replace(/\{\{ERA\}\}/g, w.era)
-    .replace(/\{\{BIRTH\}\}/g, w.birth)
-    .replace(/\{\{DEATH\}\}/g, w.death);
-}
-
-function parseCSV(str: string): string[] {
-  return str.split(',').map(s => s.trim()).filter(s => s);
-}
-
-const COMMON_FIELDS = ['authors', 'tags'] as const;
-
-function applyFieldIfPresent(meta: Record<string, unknown>, w: WizardData, field: string): void {
-  const value = (w as unknown as Record<string, unknown>)[field];
-  if (value) meta[field] = parseCSV(String(value));
-}
-
-function applyTypeSpecificMetadata(w: WizardData, meta: Record<string, unknown>): void {
-  const typeHandlers: Record<string, () => void> = {
-    theorems: () => {
-      for (const f of [...COMMON_FIELDS, 'corollaries', 'demos'] as const) {
-        applyFieldIfPresent(meta, w, f);
-      }
-    },
-    definitions: () => {
-      for (const f of COMMON_FIELDS) applyFieldIfPresent(meta, w, f);
-    },
-    demonstrations: () => {
-      if (w.parentTheorem) meta.parentTheorem = w.parentTheorem;
-      if (w.proofMethod) meta.proofMethod = w.proofMethod;
-      for (const f of COMMON_FIELDS) applyFieldIfPresent(meta, w, f);
-      if (w.lemmas) meta.lemmas = parseCSV(String(w.lemmas));
-    },
-    lessons: () => {
-      if (w.tags) meta.tags = parseCSV(String(w.tags));
-    },
-    models: () => {
-      if (w.satisfies) meta.satisfies = w.satisfies;
-      if (w.axioms_verified) meta.axioms_verified = parseCSV(String(w.axioms_verified));
-      if (w.hasDiagram) meta.hasDiagram = w.hasDiagram;
-    },
-  };
-  typeHandlers[w.type]?.();
+// ─── Types ──────────────────────────────────────────────────────────────────
+interface MonacoEditorLike {
+  getSelection: () => unknown;
+  getModel: () => { getValueInRange: (range: unknown) => string };
+  executeEdits: (source: string, edits: {range: unknown, text: string, forceMoveMarkers: boolean}[]) => void;
+  focus: () => void;
+  onDidScrollChange: (callback: () => void) => void;
+  getScrollHeight: () => number;
+  getScrollTop: () => number;
+  getLayoutInfo: () => { height: number };
 }
 
 interface EditorActionsProps {
@@ -107,7 +67,7 @@ export const useEditorActions = ({
           setSaving(false);
           return;
         }
-        finalPath = `content/${typeFolder}/${fileName}`;
+        finalPath = `database/content/${typeFolder}/${fileName}`;
       }
 
       const content = finalPath.endsWith('.mdx') ? stringifyMDX(metadata, imports, body) : body;
@@ -145,9 +105,9 @@ export const useEditorActions = ({
         return;
     }
     
-    const path = `content/${wizardData.type}/${wizardData.id}.mdx`;
+    const path = `database/content/${wizardData.type}/${wizardData.id}.mdx`;
     const templateName = wizardData.type === 'lessons' ? 'lesson' : wizardData.type.slice(0, -1);
-    const templatePath = `templates/${templateName}.template.mdx`;
+    const templatePath = `shared/templates/${templateName}.template.mdx`;
     
     try {
       const res = await fetch(`/api/content?path=${encodeURIComponent(templatePath)}`);
@@ -203,7 +163,7 @@ export const useEditorActions = ({
   }, [currentFile, body, imports, files, updateImports, setMessage]);
 
   const insertAtCursor = useCallback((text: string) => {
-    const editor = editorRef.current as any;
+    const editor = editorRef.current as MonacoEditorLike;
     if (!editor) return;
     const selection = editor.getSelection();
     editor.executeEdits('', [{
@@ -215,7 +175,7 @@ export const useEditorActions = ({
   }, [editorRef]);
 
   const wrapSelectedText = useCallback((prefix: string, suffix: string) => {
-    const editor = editorRef.current as any;
+    const editor = editorRef.current as MonacoEditorLike;
     if (!editor) return;
     const selection = editor.getSelection();
     const model = editor.getModel();
@@ -230,7 +190,7 @@ export const useEditorActions = ({
   }, [editorRef]);
 
   const openLinkModal = useCallback(() => {
-    const editor = editorRef.current as any;
+    const editor = editorRef.current as MonacoEditorLike;
     if (!editor) return;
     const selection = editor.getSelection();
     const model = editor.getModel();
@@ -244,12 +204,12 @@ export const useEditorActions = ({
 
   const applyLink = useCallback((targetLink: string, linkText: string) => {
     if (!targetLink || !editorRef.current) return;
-    const editor = editorRef.current as any;
+    const editor = editorRef.current as MonacoEditorLike;
     const text = linkText || 'enlace';
     const insertion = `[${text}](${targetLink})`;
     
     editor.executeEdits('', [{
-      range: linkSelection as any,
+      range: linkSelection,
       text: insertion,
       forceMoveMarkers: true
     }]);
@@ -259,7 +219,7 @@ export const useEditorActions = ({
   }, [editorRef, linkSelection, setLinkModalOpen]);
 
   const openRefModal = useCallback(() => {
-    const editor = editorRef.current as any;
+    const editor = editorRef.current as MonacoEditorLike;
     if (!editor) return;
     const selection = editor.getSelection();
     const model = editor.getModel();
@@ -273,11 +233,11 @@ export const useEditorActions = ({
 
   const applyRef = useCallback((target: string, color: string, refTextValue: string) => {
     if (!target || !editorRef.current) return;
-    const editor = editorRef.current as any;
+    const editor = editorRef.current as MonacoEditorLike;
     const insertion = `<InteractiveElement target="${target}" color="${color}">${refTextValue}</InteractiveElement>`;
     
     editor.executeEdits('', [{
-      range: refSelection as any,
+      range: refSelection,
       text: insertion,
       forceMoveMarkers: true
     }]);
@@ -322,7 +282,7 @@ export const useEditorActions = ({
 
   const getLinkOptions = useCallback(() => {
     return files
-      .filter(f => ['content'].includes(f.path.split('/')[0]) && ['theorems', 'lessons', 'demonstrations', 'mathematicians'].includes(f.type))
+      .filter(f => f.path.startsWith('database/content/') && ['theorems', 'lessons', 'demonstrations', 'mathematicians'].includes(f.type))
       .map(f => {
         const id = f.name.replace('.mdx', '');
         let url = '';
@@ -348,7 +308,7 @@ export const useEditorActions = ({
     return null;
   }, []);
 
-  const handleEditorDidMount = useCallback((editor: any) => {
+  const handleEditorDidMount = useCallback((editor: MonacoEditorLike) => {
     editorRef.current = editor;
     
     editor.onDidScrollChange(() => {
