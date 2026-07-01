@@ -2,12 +2,13 @@ import { useCallback } from 'react';
 import { parseMDX, stringifyMDX } from '@/shared/lib/mdxParser';
 import type { FileNode, WizardData } from '@/features/editor/hooks/useEditorState';
 import { applyTemplateReplacements, applyTypeSpecificMetadata } from '@/features/editor/lib/editorUtils';
+import { buildContentPath, buildTemplatePath, getTemplateName, getInternalLinkUrl } from '@/features/editor/lib/editorPaths';
 
 // ─── Types ──────────────────────────────────────────────────────────────────
 interface MonacoEditorLike {
-  getSelection: () => unknown;
-  getModel: () => { getValueInRange: (range: unknown) => string };
-  executeEdits: (source: string, edits: {range: unknown, text: string, forceMoveMarkers: boolean}[]) => void;
+  getSelection: () => any;
+  getModel: () => { getValueInRange: (range: any) => string } | null;
+  executeEdits: (source: string, edits: {range: any, text: string, forceMoveMarkers: boolean}[]) => void;
   focus: () => void;
   onDidScrollChange: (callback: () => void) => void;
   getScrollHeight: () => number;
@@ -22,8 +23,8 @@ interface EditorActionsProps {
   imports: string;
   body: string;
   editorRef: React.MutableRefObject<unknown>;
-  linkSelection: { startLineNumber: number; startColumn: number; endLineNumber: number; endColumn: number };
-  refSelection: { startLineNumber: number; startColumn: number; endLineNumber: number; endColumn: number };
+  linkSelection: any;
+  refSelection: any;
   setCurrentFile: (path: string | null) => void;
   setMetadata: (meta: Record<string, unknown>) => void;
   setImports: (imp: string) => void;
@@ -33,11 +34,11 @@ interface EditorActionsProps {
   setLinkModalOpen: (o: boolean) => void;
   setLinkModalText: (t: string) => void;
   setLinkTarget: (t: string) => void;
-  setLinkSelection: (s: { startLineNumber: number; startColumn: number; endLineNumber: number; endColumn: number }) => void;
+  setLinkSelection: (s: any) => void;
   setRefModalOpen: (o: boolean) => void;
   setRefText: (t: string) => void;
   setRefTarget: (t: string) => void;
-  setRefSelection: (s: { startLineNumber: number; startColumn: number; endLineNumber: number; endColumn: number }) => void;
+  setRefSelection: (s: any) => void;
   setWizardModalOpen: (o: boolean) => void;
   loadFileList: () => Promise<void>;
   updateImports: (imp: string) => void;
@@ -67,7 +68,7 @@ export const useEditorActions = ({
           setSaving(false);
           return;
         }
-        finalPath = `database/content/${typeFolder}/${fileName}`;
+        finalPath = buildContentPath(typeFolder, fileName);
       }
 
       const content = finalPath.endsWith('.mdx') ? stringifyMDX(metadata, imports, body) : body;
@@ -105,9 +106,9 @@ export const useEditorActions = ({
         return;
     }
     
-    const path = `database/content/${wizardData.type}/${wizardData.id}.mdx`;
-    const templateName = wizardData.type === 'lessons' ? 'lesson' : wizardData.type.slice(0, -1);
-    const templatePath = `shared/templates/${templateName}.template.mdx`;
+    const path = buildContentPath(wizardData.type, `${wizardData.id}.mdx`);
+    const templateName = getTemplateName(wizardData.type);
+    const templatePath = buildTemplatePath(templateName);
     
     try {
       const res = await fetch(`/api/content?path=${encodeURIComponent(templatePath)}`);
@@ -179,6 +180,7 @@ export const useEditorActions = ({
     if (!editor) return;
     const selection = editor.getSelection();
     const model = editor.getModel();
+    if (!model) return;
     const text = model.getValueInRange(selection);
     
     editor.executeEdits('', [{
@@ -194,6 +196,7 @@ export const useEditorActions = ({
     if (!editor) return;
     const selection = editor.getSelection();
     const model = editor.getModel();
+    if (!model) return;
     const text = model.getValueInRange(selection);
     
     setLinkSelection(selection);
@@ -223,6 +226,7 @@ export const useEditorActions = ({
     if (!editor) return;
     const selection = editor.getSelection();
     const model = editor.getModel();
+    if (!model) return;
     const text = model.getValueInRange(selection);
     
     setRefSelection(selection);
@@ -285,12 +289,7 @@ export const useEditorActions = ({
       .filter(f => f.path.startsWith('database/content/') && ['theorems', 'lessons', 'demonstrations', 'mathematicians'].includes(f.type))
       .map(f => {
         const id = f.name.replace('.mdx', '');
-        let url = '';
-        if (f.type === 'theorems') url = `/teorema/${id}`;
-        else if (f.type === 'lessons') url = `/${id}`;
-        else if (f.type === 'demonstrations') url = `/demo/${id}`;
-        else if (f.type === 'mathematicians') url = `/bio/${id.toLowerCase()}`;
-        return { label: `${f.type} - ${id}`, url };
+        return { label: `${f.type} - ${id}`, url: getInternalLinkUrl(f) };
       });
   }, [files]);
 

@@ -7,7 +7,7 @@ import { dictionary } from '@/features/glossary/GlossaryStore';
 import { useGlossaryStore } from '@/features/glossary/GlossaryStore';
 import { mscNames } from '@/entities/content/msc2020';
 import { EmptyState } from '@/shared/ui/EmptyState';
-import { appPath } from '@/shared/lib/routeHelper';
+import { routePath } from '@/shared/lib/routeHelper';
 
 type SearchResult = {
   id: string;
@@ -41,7 +41,7 @@ const buildIndex = (): SearchResult[] => {
       type: 'teorema',
       title: thm.title,
       subtitle: thm.description,
-      href: appPath(`/teorema/${thm.slug}`),
+      href: routePath(`/teorema/${thm.slug}`),
     });
   }
 
@@ -50,7 +50,7 @@ const buildIndex = (): SearchResult[] => {
       id: `lesson-${lesson.id}`,
       type: 'lección',
       title: lesson.title || lesson.id,
-      href: appPath(`/${lesson.slug}`),
+      href: routePath(`/${lesson.slug}`),
     });
   }
 
@@ -60,7 +60,7 @@ const buildIndex = (): SearchResult[] => {
       type: 'definición',
       title: def.title,
       subtitle: def.description,
-      href: appPath(`/definicion/${def.slug}`),
+      href: routePath(`/definicion/${def.slug}`),
     });
   }
 
@@ -70,7 +70,7 @@ const buildIndex = (): SearchResult[] => {
       type: 'ejemplo',
       title: ex.title,
       subtitle: ex.description,
-      href: appPath(`/ejemplo/${ex.slug}`),
+      href: routePath(`/ejemplo/${ex.slug}`),
     });
   }
 
@@ -80,7 +80,7 @@ const buildIndex = (): SearchResult[] => {
       type: 'ejercicio',
       title: ez.title,
       subtitle: ez.description,
-      href: appPath(`/ejercicio/${ez.slug}`),
+      href: routePath(`/ejercicio/${ez.slug}`),
     });
   }
 
@@ -90,7 +90,7 @@ const buildIndex = (): SearchResult[] => {
       type: 'demo',
       title: demo.title,
       subtitle: demo.description,
-      href: appPath(`/demo/${demo.slug}`),
+      href: routePath(`/demo/${demo.slug}`),
     });
   }
 
@@ -100,7 +100,7 @@ const buildIndex = (): SearchResult[] => {
       type: 'matemático',
       title: bio.name,
       subtitle: bio.description,
-      href: appPath(`/bio/${bio.slug}`),
+      href: routePath(`/bio/${bio.slug}`),
     });
   }
 
@@ -110,7 +110,7 @@ const buildIndex = (): SearchResult[] => {
       type: 'caso_uso',
       title: uc.title,
       subtitle: uc.description,
-      href: appPath(`/caso/${uc.slug}`),
+      href: routePath(`/caso/${uc.slug}`),
     });
   }
 
@@ -120,7 +120,7 @@ const buildIndex = (): SearchResult[] => {
       type: 'axioma',
       title: axm.title,
       subtitle: axm.description,
-      href: appPath(`/axioma/${axm.slug}`),
+      href: routePath(`/axioma/${axm.slug}`),
     });
   }
 
@@ -130,7 +130,7 @@ const buildIndex = (): SearchResult[] => {
       type: 'modelo',
       title: model.title,
       subtitle: model.description,
-      href: appPath(`/modelo/${model.slug}`),
+      href: routePath(`/modelo/${model.slug}`),
     });
   }
 

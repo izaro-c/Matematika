@@ -8,7 +8,6 @@ export const DemoPitagorasAreas = () => {
     const elementsRef = useRef<Record<string, unknown>>({});
     
     const highlight = useMathStore(state => state.variables['highlight']);
-    const highlight = useMathStore(state => state.variables['highlight']);
 
     useEffect(() => {
         if (!boardRef.current) return;

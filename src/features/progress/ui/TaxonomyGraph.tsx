@@ -1,6 +1,6 @@
 import React, { useMemo, useState, useCallback, useRef, useEffect } from 'react';
 import { navigate } from 'wouter/use-browser-location';
-import { appPath, publicAsset } from '@/shared/lib/routeHelper';
+import { routePath, publicAsset } from '@/shared/lib/routeHelper';
 import ForceGraph2D from 'react-force-graph-2d';
 import { useProgressStore } from '@/features/progress/UserProgressStore';
 
@@ -66,15 +66,15 @@ export const TaxonomyGraph: React.FC<TaxonomyGraphProps> = ({ taxonomy }) => {
       const item = itemObj.item;
       const type = itemObj.type;
 
-      let url = appPath('/');
-      if (type === 'lesson') url = appPath(`/${item.slug}`);
-      else if (type === 'theorem') url = appPath(`/teorema/${item.id}`);
-      else if (type === 'definition') url = appPath(`/definicion/${item.id}`);
-      else if (type === 'example') url = appPath(`/ejemplo/${item.id}`);
-      else if (type === 'exercise') url = appPath(`/ejercicio/${item.id}`);
-      else if (type === 'usecase') url = appPath(`/caso/${item.id}`);
-      else if (type === 'model') url = appPath(`/modelo/${item.id}`);
-      else if (type === 'axiom') url = appPath(`/axioma/${item.id}`);
+      let url = routePath('/');
+      if (type === 'lesson') url = routePath(`/${item.slug}`);
+      else if (type === 'theorem') url = routePath(`/teorema/${item.id}`);
+      else if (type === 'definition') url = routePath(`/definicion/${item.id}`);
+      else if (type === 'example') url = routePath(`/ejemplo/${item.id}`);
+      else if (type === 'exercise') url = routePath(`/ejercicio/${item.id}`);
+      else if (type === 'usecase') url = routePath(`/caso/${item.id}`);
+      else if (type === 'model') url = routePath(`/modelo/${item.id}`);
+      else if (type === 'axiom') url = routePath(`/axioma/${item.id}`);
 
       nodes.push({
         id: item.id, // ID exacto para isRead

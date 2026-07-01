@@ -1,6 +1,7 @@
 
 import { Suspense } from 'react';
 import { Link } from 'wouter';
+import { resolvePublicOrExternalAsset } from '@/shared/lib/routeHelper';
 
 import { db } from '@/entities/content';
 
@@ -66,7 +67,7 @@ export const BiographyLayout: React.FC<BiographyLayoutProps> = ({ Component, Sid
         <div className="w-56 h-56 rounded-full overflow-hidden border-4 border-white/10 shadow-2xl relative mb-8 bg-carbon flex items-center justify-center">
           {image ? (
             <img 
-              src={image} 
+              src={resolvePublicOrExternalAsset(image)} 
               alt={`Retrato de ${name}`} 
               className="w-full h-full object-cover grayscale-[0.2] contrast-125 hover:grayscale-0 transition-all duration-700"
             />

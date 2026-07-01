@@ -8,7 +8,7 @@ import type {
 import katex from 'katex';
 import { Link } from 'wouter';
 import { ContentTypeBadge } from '@/shared/ui/ContentTypeBadge';
-import { appPath } from '@/shared/lib/routeHelper';
+import { routePath } from '@/shared/lib/routeHelper';
 
 interface TermData {
   title: string;
@@ -55,19 +55,19 @@ function resolveEntityMeta(entity: EntityWrapper): TermMeta | null {
     return {
       type,
       typeLabel: type.charAt(0).toUpperCase() + type.slice(1),
-      href: appPath(`/teorema/${entity.theorem.slug}`),
+      href: routePath(`/teorema/${entity.theorem.slug}`),
     };
   }
-  if (entity.definition) return { type: 'definicion', typeLabel: 'Definición', href: appPath(`/definicion/${entity.definition.slug}`) };
-  if (entity.bio) return { type: 'matematico', typeLabel: 'Matemático', href: appPath(`/bio/${entity.bio.slug}`) };
-  if (entity.lesson) return { type: 'leccion', typeLabel: 'Lección', href: appPath(`/${entity.lesson.slug}`) };
-  if (entity.example) return { type: 'ejemplo', typeLabel: 'Ejemplo', href: appPath(`/ejemplo/${entity.example.slug}`) };
-  if (entity.exercise) return { type: 'ejercicio', typeLabel: 'Ejercicio', href: appPath(`/ejercicio/${entity.exercise.slug}`) };
-  if (entity.useCase) return { type: 'caso-de-uso', typeLabel: 'Caso de Uso', href: appPath(`/caso/${entity.useCase.slug}`) };
-  if (entity.axiom) return { type: 'axioma', typeLabel: 'Axioma', href: appPath(`/axioma/${entity.axiom.slug}`) };
-  if (entity.system) return { type: 'sistema-axiomatico', typeLabel: 'Sistema Axiomático', href: appPath(`/sistema/${entity.system.slug}`) };
-  if (entity.model) return { type: 'modelo', typeLabel: 'Modelo', href: appPath(`/modelo/${entity.model.slug}`) };
-  if (entity.demo) return { type: 'demostracion', typeLabel: 'Demostración', href: appPath(`/demo/${entity.demo.slug}`) };
+  if (entity.definition) return { type: 'definicion', typeLabel: 'Definición', href: routePath(`/definicion/${entity.definition.slug}`) };
+  if (entity.bio) return { type: 'matematico', typeLabel: 'Matemático', href: routePath(`/bio/${entity.bio.slug}`) };
+  if (entity.lesson) return { type: 'leccion', typeLabel: 'Lección', href: routePath(`/${entity.lesson.slug}`) };
+  if (entity.example) return { type: 'ejemplo', typeLabel: 'Ejemplo', href: routePath(`/ejemplo/${entity.example.slug}`) };
+  if (entity.exercise) return { type: 'ejercicio', typeLabel: 'Ejercicio', href: routePath(`/ejercicio/${entity.exercise.slug}`) };
+  if (entity.useCase) return { type: 'caso-de-uso', typeLabel: 'Caso de Uso', href: routePath(`/caso/${entity.useCase.slug}`) };
+  if (entity.axiom) return { type: 'axioma', typeLabel: 'Axioma', href: routePath(`/axioma/${entity.axiom.slug}`) };
+  if (entity.system) return { type: 'sistema-axiomatico', typeLabel: 'Sistema Axiomático', href: routePath(`/sistema/${entity.system.slug}`) };
+  if (entity.model) return { type: 'modelo', typeLabel: 'Modelo', href: routePath(`/modelo/${entity.model.slug}`) };
+  if (entity.demo) return { type: 'demostracion', typeLabel: 'Demostración', href: routePath(`/demo/${entity.demo.slug}`) };
   return null;
 }
 
