@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState, useMemo } from 'react';
 import { Link } from 'wouter';
-import { publicAsset } from '@/shared/lib/routeHelper';
+import { publicAsset, resolvePublicOrExternalAsset } from '@/shared/lib/routeHelper';
 import { db } from '@/entities/content';
 import { InteractiveTimePlot } from '@/shared/ui/InteractiveTimePlot';
 
@@ -169,7 +169,7 @@ export const HistoryTimeline = () => {
                           <div className="w-20 h-24 border border-carbon/10 bg-carbon/5 shrink-0 overflow-hidden relative">
                             {node.image ? (
                               <img
-                                src={node.image}
+                                src={resolvePublicOrExternalAsset(node.image)}
                                 alt={node.name}
                                 className="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-700"
                               />

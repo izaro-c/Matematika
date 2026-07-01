@@ -246,4 +246,75 @@ describe('ContentStore', () => {
       expect(thms[0].id).toBe('thm-3');
     });
   });
+
+  describe('Additional coverage', () => {
+    it('getAllUseCases', () => {
+      expect(store.getAllUseCases()).toHaveLength(1);
+    });
+
+    it('getAllExamples', () => {
+      expect(store.getAllExamples()).toHaveLength(1);
+    });
+
+    it('getAllExercises', () => {
+      expect(store.getAllExercises()).toHaveLength(1);
+    });
+
+    it('getAllDemos', () => {
+      expect(store.getAllDemos()).toHaveLength(1);
+    });
+
+    it('getAllLessons', () => {
+      expect(store.getAllLessons()).toHaveLength(1);
+    });
+
+    it('getAllAxioms', () => {
+      expect(store.getAllAxioms()).toHaveLength(1);
+    });
+
+    it('getAllModels', () => {
+      expect(store.getAllModels()).toHaveLength(1);
+    });
+
+    it('getAxiomaticSystem and getAllAxiomaticSystems', () => {
+      store.axiomaticSystems.set('sys-1', {
+        id: 'sys-1', slug: 'sys-1', title: 'Sys 1',
+        description: '', axiomas: ['ax-1'],
+        Component: (() => null) as never,
+      });
+      expect(store.getAllAxiomaticSystems()).toHaveLength(1);
+      expect(store.getAxiomaticSystem('sys-1')?.title).toBe('Sys 1');
+    });
+
+    it('getModelsForSystem', () => {
+      store.models.set('m2', {
+        id: 'm2', slug: 'm2', title: 'M2',
+        axiomas: [], satisfies: 'sys-1',
+        Component: (() => null) as never,
+      });
+      store.models.set('m3', {
+        id: 'm3', slug: 'm3', title: 'M3',
+        axiomas: [], satisfies: ['sys-1', 'sys-2'],
+        Component: (() => null) as never,
+      });
+
+      const models = store.getModelsForSystem('sys-1');
+      expect(models).toHaveLength(2);
+      expect(models.map(m => m.id)).toContain('m2');
+      expect(models.map(m => m.id)).toContain('m3');
+    });
+
+    it('slugify', () => {
+      expect(ContentStore.slugify('Teorema de Pitágoras!')).toBe('teorema-de-pitagoras');
+      expect(ContentStore.slugify('-Algo Nuevo-')).toBe('algo-nuevo');
+    });
+
+    it('getBranchTaxonomy and getItemsByBranch', () => {
+      const items = store.getItemsByBranch('51'); // Geometria
+      expect(Array.isArray(items)).toBe(true);
+
+      const tree = store.getBranchTaxonomy('51');
+      expect(tree).toBeDefined();
+    });
+  });
 });
