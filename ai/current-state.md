@@ -15,10 +15,11 @@
 - `.auxiliary/` permanece intacta y no se usa como autoridad.
 - `npm run ai:index` regenera inventarios compactos de contexto en `ai/indexes/`.
 - `npm run ai:review` clasifica el working tree y recomienda validaciones mínimas sin ejecutarlas.
+- `npm run ai:debt` regenera un informe accionable de deuda sin modificar código de producto.
 
 ## Próximo paso
 
-Usar `ai:review` antes del relevo, mantener `ai/indexes/` sincronizado al cambiar la estructura y definir la primera fase operativa en `ai/phases/` cuando exista un objetivo aprobado.
+Usar `ai:review` antes del relevo, consultar `ai:debt` para priorizar refactors, mantener `ai/indexes/` sincronizado al cambiar la estructura y definir la primera fase operativa en `ai/phases/` cuando exista un objetivo aprobado.
 
 ## Deuda visible
 
