@@ -291,8 +291,11 @@ Cada principio se refleja en la arquitectura de carpetas:
 
 | Archivo | Propósito |
 |---|---|
-| `AGENTS.md` | Instrucciones base para todo agente |
-| `opencode.json` | Configuración de agentes, comandos, referencias |
+| `AGENTS.md` | Instrucciones globales y orden de carga para toda IA |
+| `docs/ai/` | Gobierno multi-IA y protocolo formal |
+| `ai/` | Estado, objetivos y operación diaria con IA |
+| `.agents/skills/` | Procedimientos reutilizables cargados bajo demanda |
+| `.opencode/` y `opencode.json` | Adaptador y configuración oficial de OpenCode |
 | `src/entities/content/schemas.ts` | Zod schemas — fuente única de verdad para metadata |
 | `src/entities/graph/graphTypes.ts` | Tipos del grafo |
 | `src/entities/graph/lean_graph.json` | Grafo Lean generado para páginas con `leanId` |

@@ -2,6 +2,5 @@
 description: Validar integridad del grafo y referencias cruzadas
 agent: validator
 ---
-Ejecuta en orden: npm run validate-graph && npm run validate-references.
-Si hay errores, analiza cada uno y propone correcciones concretas.
-Si el usuario aprueba, aplica las correcciones.
+Inspecciona el diff y ejecuta `npm run validate-graph` y `npm run validate-references`.
+Diagnostica cada fallo y propone correcciones concretas. Solo las aplica si la petición autoriza cambios.

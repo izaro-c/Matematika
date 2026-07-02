@@ -73,24 +73,7 @@ export const MatematikaGuard: Plugin = async ({ client }) => {
 
     "experimental.session.compacting": async (_input, output) => {
       output.context.push(`## Matematika Project Context
-### FSD Architecture
-- app/ — Entry point, providers, router
-- pages/ — Route-level pages
-- widgets/ — Composite blocks (TopBar, MarginaliaPanel, layouts)
-- features/ — Feature modules with Zustand stores + UI
-- entities/ — Domain models (schemas, ContentStore, graph)
-- shared/ — Reusable (ui, lib, hooks, templates, diagrams)
-- database/content/ — MDX content files
-
-### Critical Conventions
-- IDs: kebab-case STRICT, never snake_case, never translated
-- MDX: <Capitular> at start, <Separador>, <ConceptLink> for nav
-- Colors: Arts & Crafts ONLY (lienzo, carbon, salvia, terracota, pizarra, ocre, pavo, granada, musgo)
-- Math: 3rd person impersonal, Greenberg's 6 Justifications
-- Metadata: Zod schemas in src/entities/content/schemas.ts
-- Demos: ALWAYS separate page, never inline
-
-### Verification: lint → tsc → test → depcruise → validate-graph → validate-references`);
+Relee AGENTS.md y ai/current-state.md. Carga un único objetivo de ai/goals/ y las skills aplicables bajo demanda. .auxiliary/ nunca es fuente de verdad. Conserva alcance, decisiones, validaciones y deuda de esta sesión.`);
     },
   };
 };

@@ -7,9 +7,11 @@ yarn-error.log*
 pnpm-debug.log*
 lerna-debug.log*
 
-node_modules
-dist
-dist-ssr
+node_modules/
+dist/
+dist-ssr/
+build/
+out/
 *.local
 
 # Coverage & reports
@@ -33,10 +35,14 @@ lean/.lake/
 
 # Project specific ignores
 .opencode/node_modules/
+.opencode/.cache/
+.opencode/cache/
+.opencode/tmp/
+.opencode/*.log
+.opencode/*.tmp
 docs/api/
 *.tsbuildinfo
 *.zip
 
-.opencode/
 .auxiliary/
 .vite/
