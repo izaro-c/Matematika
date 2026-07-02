@@ -1,175 +1,18 @@
 import { useEffect, useState, useMemo, useRef } from 'react';
 import Fuse from 'fuse.js';
 import { useLocation } from 'wouter';
-import { useNavigationStore } from '@/features/search/NavigationStore';
-import { db } from '@/entities/content';
-import { dictionary } from '@/features/glossary/GlossaryStore';
+import {
+  ALL_TYPES,
+  SEARCH_FUSE_OPTIONS,
+  SEARCH_INDEX,
+  TYPE_COLORS,
+  TYPE_ICONS,
+  useNavigationStore,
+  type SearchResult,
+  type SearchResultType,
+} from '@/features/search/lib/searchApi';
 import { useGlossaryStore } from '@/features/glossary/GlossaryStore';
-import { mscNames } from '@/entities/content/msc2020';
 import { EmptyState } from '@/shared/ui/EmptyState';
-import { routePath } from '@/shared/lib/routeHelper';
-
-type SearchResult = {
-  id: string;
-  type: 'teorema' | 'lección' | 'definición' | 'ejemplo' | 'ejercicio' | 'demo' | 'glosario' | 'matemático' | 'caso_uso' | 'axioma' | 'msc2020' | 'modelo';
-  title: string;
-  subtitle?: string;
-  href: string;
-};
-
-const TYPE_ICONS: Record<SearchResult['type'], string> = {
-  teorema: 'T',
-  lección: '§',
-  definición: 'D',
-  ejemplo: 'E',
-  ejercicio: 'P',
-  demo: '∴',
-  glosario: 'Σ',
-  matemático: '✦',
-  caso_uso: '◈',
-  axioma: ' A',
-  msc2020: '⊞',
-  modelo: 'M',
-};
-
-const buildIndex = (): SearchResult[] => {
-  const index: SearchResult[] = [];
-
-  for (const thm of db.theorems.values()) {
-    index.push({
-      id: `thm-${thm.id}`,
-      type: 'teorema',
-      title: thm.title,
-      subtitle: thm.description,
-      href: routePath(`/teorema/${thm.slug}`),
-    });
-  }
-
-  for (const lesson of db.lessons.values()) {
-    index.push({
-      id: `lesson-${lesson.id}`,
-      type: 'lección',
-      title: lesson.title || lesson.id,
-      href: routePath(`/${lesson.slug}`),
-    });
-  }
-
-  for (const def of db.definitions.values()) {
-    index.push({
-      id: `def-${def.id}`,
-      type: 'definición',
-      title: def.title,
-      subtitle: def.description,
-      href: routePath(`/definicion/${def.slug}`),
-    });
-  }
-
-  for (const ex of db.examples.values()) {
-    index.push({
-      id: `ex-${ex.id}`,
-      type: 'ejemplo',
-      title: ex.title,
-      subtitle: ex.description,
-      href: routePath(`/ejemplo/${ex.slug}`),
-    });
-  }
-
-  for (const ez of db.exercises.values()) {
-    index.push({
-      id: `ez-${ez.id}`,
-      type: 'ejercicio',
-      title: ez.title,
-      subtitle: ez.description,
-      href: routePath(`/ejercicio/${ez.slug}`),
-    });
-  }
-
-  for (const demo of db.demos.values()) {
-    index.push({
-      id: `demo-${demo.id}`,
-      type: 'demo',
-      title: demo.title,
-      subtitle: demo.description,
-      href: routePath(`/demo/${demo.slug}`),
-    });
-  }
-
-  for (const bio of db.mathematicians.values()) {
-    index.push({
-      id: `bio-${bio.id}`,
-      type: 'matemático',
-      title: bio.name,
-      subtitle: bio.description,
-      href: routePath(`/bio/${bio.slug}`),
-    });
-  }
-
-  for (const uc of db.usecases.values()) {
-    index.push({
-      id: `uc-${uc.id}`,
-      type: 'caso_uso',
-      title: uc.title,
-      subtitle: uc.description,
-      href: routePath(`/caso/${uc.slug}`),
-    });
-  }
-
-  for (const axm of db.axioms.values()) {
-    index.push({
-      id: `axm-${axm.id}`,
-      type: 'axioma',
-      title: axm.title,
-      subtitle: axm.description,
-      href: routePath(`/axioma/${axm.slug}`),
-    });
-  }
-
-  for (const model of db.models.values()) {
-    index.push({
-      id: `model-${model.id}`,
-      type: 'modelo',
-      title: model.title,
-      subtitle: model.description,
-      href: routePath(`/modelo/${model.slug}`),
-    });
-  }
-
-  for (const [key, term] of Object.entries(dictionary)) {
-    index.push({
-      id: `glossary-${key}`,
-      type: 'glosario',
-      title: term.title,
-      subtitle: term.definition.slice(0, 120),
-      href: key,
-    });
-  }
-
-  for (const [code, name] of Object.entries(mscNames)) {
-    index.push({
-      id: `msc-${code}`,
-      type: 'msc2020',
-      title: `${code} — ${name}`,
-      subtitle: `Clasificación MSC2020`,
-      href: '',
-    });
-  }
-
-  return index;
-};
-
-const searchIndex = buildIndex();
-
-const ALL_TYPES: SearchResult['type'][] = [
-  'teorema', 'lección', 'definición', 'axioma', 'modelo',
-  'ejemplo', 'ejercicio', 'demo', 'matemático', 'caso_uso', 'glosario', 'msc2020',
-];
-
-const TYPE_COLORS: Record<string, string> = {
-  teorema: 'var(--theme-salvia)', lección: 'var(--theme-pavo)', definición: 'var(--theme-ocre)',
-  axioma: 'var(--theme-carbon)', modelo: 'var(--theme-pavo)', ejemplo: 'var(--theme-salvia)', ejercicio: 'var(--theme-terracota)',
-  demo: 'var(--theme-pavo)', matemático: 'var(--theme-ocre)', caso_uso: 'var(--theme-salvia)',
-  glosario: 'var(--theme-ocre)', msc2020: 'var(--theme-pavo)',
-};
 
 export const SearchOmnibar = () => {
   const { isSearchOpen, closeSearch } = useNavigationStore();
@@ -177,7 +20,7 @@ export const SearchOmnibar = () => {
   const { openTerm } = useGlossaryStore();
   const [query, setQuery] = useState('');
   const [selectedIndex, setSelectedIndex] = useState(0);
-  const [activeTypes, setActiveTypes] = useState<Set<string>>(new Set(ALL_TYPES));
+  const [activeTypes, setActiveTypes] = useState<Set<SearchResultType>>(new Set(ALL_TYPES));
   const inputRef = useRef<HTMLInputElement>(null);
   const listRef = useRef<HTMLDivElement>(null);
 
@@ -210,17 +53,9 @@ export const SearchOmnibar = () => {
 
   const fuse = useMemo(() => {
     const filtered = activeTypes.size < ALL_TYPES.length
-      ? searchIndex.filter(item => activeTypes.has(item.type))
-      : searchIndex;
-    return new Fuse(filtered, {
-      keys: [
-        { name: 'title', weight: 2 },
-        { name: 'subtitle', weight: 1 },
-      ],
-      threshold: 0.35,
-      includeMatches: true,
-      minMatchCharLength: 2,
-    });
+      ? SEARCH_INDEX.filter(item => activeTypes.has(item.type))
+      : SEARCH_INDEX;
+    return new Fuse(filtered, SEARCH_FUSE_OPTIONS);
   }, [activeTypes]);
 
   const results = useMemo(() => {
@@ -257,7 +92,7 @@ export const SearchOmnibar = () => {
     }
   };
 
-  const toggleType = (type: string) => {
+  const toggleType = (type: SearchResultType) => {
     setActiveTypes(prev => {
       const next = new Set(prev);
       if (next.has(type)) next.delete(type);
