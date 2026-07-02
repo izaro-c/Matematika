@@ -1,20 +1,45 @@
 import { useRef, useEffect } from 'react';
 import JXG from 'jsxgraph';
 import { useMathStore } from '@/app/providers/MathStoreContext';
-import { getCSSVar } from '@/shared/diagrams/utils/cssVar';
+import {
+    getDiagramColor,
+    isDiagramTargetActive,
+    type DiagramElementRegistry,
+} from '@/shared/diagrams';
+
+type PolygonWithBorders = JXG.Polygon & {
+    borders: JXG.Line[];
+};
+
+interface PitagorasElements extends DiagramElementRegistry {
+    board: JXG.Board;
+    slider: JXG.Slider;
+    t1: PolygonWithBorders;
+    t2: PolygonWithBorders;
+    t3: PolygonWithBorders;
+    t4: PolygonWithBorders;
+    outerSquare: PolygonWithBorders;
+    emptyC: PolygonWithBorders;
+    emptyA: PolygonWithBorders;
+    emptyB: PolygonWithBorders;
+}
+
+interface EmptyPitagorasElements extends DiagramElementRegistry {
+    board?: undefined;
+}
 
 export const DemoPitagorasAreas = () => {
     const boardRef = useRef<HTMLDivElement>(null);
-    const elementsRef = useRef<Record<string, unknown>>({});
+    const elementsRef = useRef<PitagorasElements | EmptyPitagorasElements>({});
     
     const highlight = useMathStore(state => state.variables['highlight']);
 
     useEffect(() => {
         if (!boardRef.current) return;
         
-        const terracota = getCSSVar('--theme-terracota') || '#C86446';
-        const salvia = getCSSVar('--theme-salvia') || '#648C7D';
-        const carbon = getCSSVar('--theme-carbon') || '#333333';
+        const terracota = getDiagramColor('terracota') || '#C86446';
+        const salvia = getDiagramColor('salvia') || '#648C7D';
+        const carbon = getDiagramColor('carbon') || '#333333';
         
         const board = JXG.JSXGraph.initBoard(boardRef.current, {
             boundingbox: [-1, 9, 8, -1.5],
@@ -36,7 +61,7 @@ export const DemoPitagorasAreas = () => {
         const pE3 = board.create('point', [L, L], { visible: false });
         const pE4 = board.create('point', [0, L], { visible: false });
 
-        const outerSquare = board.create('polygon', [pE1, pE2, pE3, pE4], {
+        const outerSquare = board.create<PolygonWithBorders>('polygon', [pE1, pE2, pE3, pE4], {
             fillOpacity: 0,
             borders: { strokeColor: carbon, strokeWidth: 2 }
         });
@@ -56,7 +81,7 @@ export const DemoPitagorasAreas = () => {
             const p2 = board.create('point', [() => p2Fn()[0], () => p2Fn()[1]], { visible: false });
             const p3 = board.create('point', [() => p3Fn()[0], () => p3Fn()[1]], { visible: false });
             
-            const poly = board.create('polygon', [p1, p2, p3], {
+            const poly = board.create<PolygonWithBorders>('polygon', [p1, p2, p3], {
                 fillColor: color,
                 fillOpacity: 0.3,
                 borders: { strokeColor: color, strokeWidth: 2 }
@@ -97,7 +122,7 @@ export const DemoPitagorasAreas = () => {
         // Area c^2 (centro)
         // Definida por los vértices libres cuando t=0:
         // (a,0), (a+b,a), (b,a+b), (0,b)
-        const emptyC = board.create('polygon', [
+        const emptyC = board.create<PolygonWithBorders>('polygon', [
             [a, 0], [L, a], [b, L], [0, b]
         ], {
             fillColor: 'var(--theme-pizarra)',
@@ -106,7 +131,7 @@ export const DemoPitagorasAreas = () => {
             vertices: { visible: false }
         });
         // Area a^2 (top left)
-        const emptyA = board.create('polygon', [
+        const emptyA = board.create<PolygonWithBorders>('polygon', [
             [0, b], [a, b], [a, L], [0, L]
         ], {
             fillColor: 'var(--theme-terracota)',
@@ -116,7 +141,7 @@ export const DemoPitagorasAreas = () => {
         });
 
         // Area b^2 (bottom right)
-        const emptyB = board.create('polygon', [
+        const emptyB = board.create<PolygonWithBorders>('polygon', [
             [a, 0], [L, 0], [L, b], [a, b]
         ], {
             fillColor: 'var(--theme-terracota)',
@@ -140,11 +165,9 @@ export const DemoPitagorasAreas = () => {
     // Highlight reactivo
     useEffect(() => {
         const isHighlight = (id: string) =>
-            Array.isArray(highlight)
-                ? (highlight as string[]).includes(id)
-                : highlight === id;
+            isDiagramTargetActive(highlight, id);
 
-        const els = elementsRef.current as Record<string, any>;
+        const els = elementsRef.current;
         if (!els.board) return;
 
         const { t1, t2, t3, t4, outerSquare, emptyC, emptyA, emptyB } = els;
@@ -152,9 +175,9 @@ export const DemoPitagorasAreas = () => {
         // Reset
         [t1, t2, t3, t4].forEach(t => {
             t.setAttribute({ fillOpacity: 0.3 });
-            t.borders.forEach((b: { setAttribute: (attrs: unknown) => void }) => b.setAttribute({ strokeWidth: 2 }));
+            t.borders.forEach(b => b.setAttribute({ strokeWidth: 2 }));
         });
-        outerSquare.borders.forEach((b: { setAttribute: (attrs: unknown) => void }) => b.setAttribute({ strokeWidth: 2 }));
+        outerSquare.borders.forEach(b => b.setAttribute({ strokeWidth: 2 }));
 
         emptyC.setAttribute({ fillOpacity: () => 0.5 * (1 - els.slider.Value()) });
         emptyA.setAttribute({ fillOpacity: () => 0.5 * els.slider.Value() });
@@ -164,12 +187,12 @@ export const DemoPitagorasAreas = () => {
         if (isHighlight('triangulos')) {
             [t1, t2, t3, t4].forEach(t => {
                 t.setAttribute({ fillOpacity: 0.6 });
-                t.borders.forEach((b: { setAttribute: (attrs: unknown) => void }) => b.setAttribute({ strokeWidth: 4 }));
+                t.borders.forEach(b => b.setAttribute({ strokeWidth: 4 }));
             });
         }
         
         if (isHighlight('cuadrado-exterior')) {
-            outerSquare.borders.forEach((b: { setAttribute: (attrs: unknown) => void }) => b.setAttribute({ strokeWidth: 5 }));
+            outerSquare.borders.forEach(b => b.setAttribute({ strokeWidth: 5 }));
         }
 
         if (isHighlight('area-c')) {
