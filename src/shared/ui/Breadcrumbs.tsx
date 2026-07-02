@@ -45,7 +45,7 @@ export const Breadcrumbs: React.FC<BreadcrumbsProps> = ({
   );
 
   return (
-    <nav aria-label="Breadcrumb" className={`flex items-center text-sm font-sans tracking-widest uppercase text-carbon/40 ${className}`}>
+    <nav aria-label="Breadcrumb" className={`flex items-center text-xs font-sans tracking-widest uppercase text-carbon/40 ${className}`}>
       {showHome && (
         <Link href={homeHref}>
           <a className="hover:text-carbon transition-colors shrink-0">{homeLabel}</a>
