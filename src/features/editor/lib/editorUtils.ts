@@ -1,4 +1,4 @@
-import type { WizardData } from '@/features/editor/hooks/useEditorState';
+import type { WizardData } from '@/features/editor/lib/editorContracts';
 
 export function applyTemplateReplacements(template: string, w: WizardData): string {
   return template
@@ -23,30 +23,45 @@ function applyFieldIfPresent(meta: Record<string, unknown>, w: WizardData, field
   if (value) meta[field] = parseCSV(String(value));
 }
 
-export function applyTypeSpecificMetadata(w: WizardData, meta: Record<string, unknown>): void {
+export function applyTypeSpecificMetadata(
+  w: WizardData,
+  meta: Record<string, unknown>,
+): Record<string, unknown> {
+  const result: Record<string, unknown> = { ...meta, id: w.id };
   const typeHandlers: Record<string, () => void> = {
     theorems: () => {
+      result.type = 'teorema';
+      result.color = w.color;
       for (const f of [...COMMON_FIELDS, 'corollaries', 'demos'] as const) {
-        applyFieldIfPresent(meta, w, f);
+        applyFieldIfPresent(result, w, f);
       }
     },
     definitions: () => {
-      for (const f of COMMON_FIELDS) applyFieldIfPresent(meta, w, f);
+      result.type = 'definicion';
+      result.color = w.color;
+      for (const f of COMMON_FIELDS) applyFieldIfPresent(result, w, f);
     },
     demonstrations: () => {
-      if (w.parentTheorem) meta.parentTheorem = w.parentTheorem;
-      if (w.proofMethod) meta.proofMethod = w.proofMethod;
-      for (const f of COMMON_FIELDS) applyFieldIfPresent(meta, w, f);
-      if (w.lemmas) meta.lemmas = parseCSV(String(w.lemmas));
+      result.type = 'demostracion';
+      if (w.parentTheorem) result.parentTheorem = w.parentTheorem;
+      if (w.proofMethod) result.proofMethod = w.proofMethod;
+      for (const f of COMMON_FIELDS) applyFieldIfPresent(result, w, f);
+      if (w.lemmas) result.lemmas = parseCSV(String(w.lemmas));
     },
     lessons: () => {
-      if (w.tags) meta.tags = parseCSV(String(w.tags));
+      result.type = 'leccion';
+      if (w.tags) result.tags = parseCSV(String(w.tags));
+    },
+    mathematicians: () => {
+      result.type = 'matematico';
     },
     models: () => {
-      if (w.satisfies) meta.satisfies = w.satisfies;
-      if (w.axioms_verified) meta.axioms_verified = parseCSV(String(w.axioms_verified));
-      if (w.hasDiagram) meta.hasDiagram = w.hasDiagram;
+      result.type = 'modelo';
+      if (w.satisfies) result.satisfies = w.satisfies;
+      if (w.axioms_verified) result.axioms_verified = parseCSV(String(w.axioms_verified));
+      if (w.hasDiagram) result.hasDiagram = w.hasDiagram;
     },
   };
   typeHandlers[w.type]?.();
+  return result;
 }

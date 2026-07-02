@@ -2,7 +2,22 @@ import { useCallback } from 'react';
 import { parseMDX, stringifyMDX } from '@/shared/lib/mdxParser';
 import type { FileNode, WizardData } from '@/features/editor/hooks/useEditorState';
 import { applyTemplateReplacements, applyTypeSpecificMetadata } from '@/features/editor/lib/editorUtils';
-import { buildContentPath, buildTemplatePath, getTemplateName, getInternalLinkUrl } from '@/features/editor/lib/editorPaths';
+import {
+  buildContentPath,
+  buildTemplatePath,
+  getContentId,
+  getInternalLinkUrl,
+  getTemplateName,
+} from '@/features/editor/lib/editorPaths';
+import {
+  buildConceptLink,
+  buildInteractiveReference,
+  ensureProofStepJustifications,
+  getBlockSnippet,
+  getLatexSnippet,
+  normalizeWizardData,
+} from '@/features/editor/lib/editorContracts';
+import { generateMissingComponentImports } from '@/features/editor/lib/editorImports';
 
 // ─── Types ──────────────────────────────────────────────────────────────────
 interface MonacoEditorLike {
@@ -63,7 +78,7 @@ export const useEditorActions = ({
       let finalPath = currentFile;
       if (currentFile === 'nuevo_archivo.mdx') {
         const typeFolder = prompt('¿En qué carpeta? (theorems, lessons, mathematicians, demonstrations)', 'theorems');
-        const fileName = prompt('Nombre del archivo (ej: mi_teorema.mdx)', (metadata.id as string) + '.mdx');
+        const fileName = prompt('Nombre del archivo (ej: mi-teorema.mdx)', (metadata.id as string) + '.mdx');
         if (!typeFolder || !fileName) {
           setSaving(false);
           return;
@@ -101,27 +116,26 @@ export const useEditorActions = ({
   }, [currentFile, metadata, imports, body]);
 
   const confirmNewFile = useCallback(async (wizardData: WizardData) => {
-    if (!wizardData.id || !wizardData.title) {
+    const normalizedWizardData = normalizeWizardData(wizardData);
+    if (!normalizedWizardData.id || !normalizedWizardData.title) {
         alert("ID y Título son obligatorios");
         return;
     }
     
-    const path = buildContentPath(wizardData.type, `${wizardData.id}.mdx`);
-    const templateName = getTemplateName(wizardData.type);
+    const path = buildContentPath(normalizedWizardData.type, `${normalizedWizardData.id}.mdx`);
+    const templateName = getTemplateName(normalizedWizardData.type);
     const templatePath = buildTemplatePath(templateName);
     
     try {
       const res = await fetch(`/api/content?path=${encodeURIComponent(templatePath)}`);
-      const templateText = applyTemplateReplacements(await res.text(), wizardData);
+      const templateText = applyTemplateReplacements(await res.text(), normalizedWizardData);
       const parsed = parseMDX(templateText);
-      const meta = parsed.metadata;
-
-      applyTypeSpecificMetadata(wizardData, meta);
+      const meta = applyTypeSpecificMetadata(normalizedWizardData, parsed.metadata);
 
       setCurrentFile(path);
       setMetadata(meta);
       setImports(parsed.imports);
-      setBody(parsed.body);
+      setBody(ensureProofStepJustifications(parsed.body));
       setMessage('¡Plantilla cargada!');
       setWizardModalOpen(false);
     } catch (e) {
@@ -132,34 +146,16 @@ export const useEditorActions = ({
 
   const autoGenerateImports = useCallback(() => {
     if (!currentFile || !currentFile.endsWith('.mdx')) return;
-    const regex = /<([A-Z][a-zA-Z0-9]*)/g;
-    const matches = Array.from(body.matchAll(regex)).map(m => m[1]);
-    const uniqueTags = [...new Set(matches)];
-    
-    let currentImportsStr = imports;
-    let added = 0;
+    const result = generateMissingComponentImports({
+      body,
+      currentImports: imports,
+      currentFile,
+      files,
+    });
 
-    const parts = currentFile.split('/');
-    const depth = parts.length - 1;
-    const backPath = Array(depth).fill('..').join('/');
-
-    for (const tag of uniqueTags) {
-      if (currentImportsStr.includes(tag)) continue;
-      
-      const componentFile = files.find(f => f.name === `${tag}.tsx`);
-      if (componentFile) {
-        const importPath = componentFile.path.replace('.tsx', '');
-        const statement = `import { ${tag} } from '${backPath}/${importPath}';`;
-        if (!currentImportsStr.includes(statement)) {
-          currentImportsStr += (currentImportsStr ? '\n' : '') + statement;
-          added++;
-        }
-      }
-    }
-
-    if (added > 0) {
-      updateImports(currentImportsStr);
-      setMessage(`Se auto-importaron ${added} componentes.`);
+    if (result.added > 0) {
+      updateImports(result.imports);
+      setMessage(`Se auto-importaron ${result.added} componentes.`);
     }
   }, [currentFile, body, imports, files, updateImports, setMessage]);
 
@@ -205,11 +201,11 @@ export const useEditorActions = ({
     setLinkTarget('');
   }, [editorRef, setLinkSelection, setLinkModalText, setLinkModalOpen, setLinkTarget]);
 
-  const applyLink = useCallback((targetLink: string, linkText: string) => {
-    if (!targetLink || !editorRef.current) return;
+  const applyLink = useCallback((targetId: string, linkText: string) => {
+    if (!targetId || !editorRef.current) return;
     const editor = editorRef.current as MonacoEditorLike;
     const text = linkText || 'enlace';
-    const insertion = `[${text}](${targetLink})`;
+    const insertion = buildConceptLink(targetId, text);
     
     editor.executeEdits('', [{
       range: linkSelection,
@@ -238,7 +234,7 @@ export const useEditorActions = ({
   const applyRef = useCallback((target: string, color: string, refTextValue: string) => {
     if (!target || !editorRef.current) return;
     const editor = editorRef.current as MonacoEditorLike;
-    const insertion = `<InteractiveElement target="${target}" color="${color}">${refTextValue}</InteractiveElement>`;
+    const insertion = buildInteractiveReference(target, color, refTextValue);
     
     editor.executeEdits('', [{
       range: refSelection,
@@ -251,32 +247,12 @@ export const useEditorActions = ({
   }, [editorRef, refSelection, setRefModalOpen]);
 
   const insertLatex = useCallback((type: string) => {
-    const latexSnippets: Record<string, string> = {
-      frac: '\\frac{numerador}{denominador}',
-      sqrt: '\\sqrt{x}',
-      int: '\\int_{a}^{b} x \\, dx',
-      sum: '\\sum_{i=1}^{n} i',
-      lim: '\\lim_{x \\to \\infty} f(x)',
-      alpha: '\\alpha', beta: '\\beta', gamma: '\\gamma', theta: '\\theta', pi: '\\pi',
-    };
-    const latex = latexSnippets[type];
+    const latex = getLatexSnippet(type);
     if (latex) insertAtCursor(latex);
   }, [insertAtCursor]);
 
   const insertBlock = useCallback((type: string) => {
-    const blockSnippets: Record<string, string> = {
-      'caja-formula': `\n<Formula>\n  $$ x = \\frac{-b \\pm \\sqrt{b^2 - 4ac}}{2a} $$\n</Formula>\n`,
-      'caja-nota': `\n<Nota>\n  Añade aquí una aclaración histórica o curiosidad.\n</Nota>\n`,
-      'caja-demostracion': `\n<Demostracion>\n  Escribe aquí los pasos de la demostración lógica.\n</Demostracion>\n`,
-      'medieval-step': `\n<ProofStep number={1} title="Título del Paso" />\n`,
-      'caja-definicion': `\n<Definicion title="Nueva Definición">\n  Explica el concepto formalmente aquí.\n</Definicion>\n`,
-      'caja-corolario': `\n<Corolario>\n  Consecuencia directa del teorema anterior.\n</Corolario>\n`,
-      cita: `\n<Cita author="Pitágoras">\n  Todo es número.\n</Cita>\n`,
-      separador: `\n<Separador />\n`,
-      capitular: `\n<Capitular letra="E" />n un lugar de la Mancha...\n`,
-      lista: `\n- Elemento 1\n- Elemento 2\n- Elemento 3\n`,
-    };
-    const block = blockSnippets[type];
+    const block = getBlockSnippet(type);
     if (block) insertAtCursor(block);
   }, [insertAtCursor]);
 
@@ -288,8 +264,12 @@ export const useEditorActions = ({
     return files
       .filter(f => f.path.startsWith('database/content/') && ['theorems', 'lessons', 'demonstrations', 'mathematicians'].includes(f.type))
       .map(f => {
-        const id = f.name.replace('.mdx', '');
-        return { label: `${f.type} - ${id}`, url: getInternalLinkUrl(f) };
+        const targetId = getContentId(f);
+        return {
+          label: `${f.type} - ${targetId}`,
+          targetId,
+          url: getInternalLinkUrl(f),
+        };
       });
   }, [files]);
 

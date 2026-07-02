@@ -1,11 +1,21 @@
-import type { FileNode } from '@/features/editor/hooks/useEditorState';
+import {
+  normalizeContentId,
+  type FileNode,
+} from '@/features/editor/lib/editorContracts';
 
 export function buildContentPath(folder: string, fileName: string): string {
-  return `database/content/${folder}/${fileName}`;
+  const normalizedFolder = folder
+    .split('/')
+    .map(segment => normalizeContentId(segment))
+    .filter(Boolean)
+    .join('/');
+  const extension = fileName.match(/\.(mdx|tsx)$/i)?.[0].toLowerCase() ?? '';
+  const stem = extension ? fileName.slice(0, -extension.length) : fileName;
+  return `database/content/${normalizedFolder}/${normalizeContentId(stem)}${extension}`;
 }
 
 export function buildTemplatePath(templateName: string): string {
-  return `shared/templates/${templateName}.template.mdx`;
+  return `shared/templates/${normalizeContentId(templateName)}.template.mdx`;
 }
 
 export function getTemplateName(wizardType: string): string {
@@ -13,7 +23,7 @@ export function getTemplateName(wizardType: string): string {
 }
 
 export function getInternalLinkUrl(fileNode: FileNode): string {
-  const id = fileNode.name.replace('.mdx', '');
+  const id = getContentId(fileNode);
   switch (fileNode.type) {
     case 'theorems': return `/teorema/${id}`;
     case 'lessons': return `/${id}`;
@@ -21,4 +31,8 @@ export function getInternalLinkUrl(fileNode: FileNode): string {
     case 'mathematicians': return `/bio/${id.toLowerCase()}`;
     default: return '';
   }
+}
+
+export function getContentId(fileNode: FileNode): string {
+  return normalizeContentId(fileNode.name.replace(/\.(mdx|tsx)$/i, ''));
 }

@@ -7,7 +7,7 @@ interface LinkModalProps {
   setLinkText: (val: string) => void;
   linkTarget: string;
   setLinkTarget: (val: string) => void;
-  options: { url: string; label: string }[];
+  options: { url: string; targetId: string; label: string }[];
   onApply: () => void;
 }
 
@@ -43,7 +43,7 @@ export const LinkModal: React.FC<LinkModalProps> = ({
         >
           <option value="">-- Selecciona una página --</option>
           {options.map((opt) => (
-            <option key={opt.url} value={opt.url}>{opt.label}</option>
+            <option key={opt.url} value={opt.targetId}>{opt.label}</option>
           ))}
         </select>
         <div className="flex justify-end gap-2 mt-6">

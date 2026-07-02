@@ -1,32 +1,8 @@
 import { useState, useRef, useCallback } from 'react';
 import { parseMDX, stringifyMDX } from '@/shared/lib/mdxParser';
+import type { FileNode, WizardData } from '@/features/editor/lib/editorContracts';
 
-export interface WizardData {
-  type: string;
-  id: string;
-  title: string;
-  description: string;
-  era: string;
-  birth: string;
-  death: string;
-  color: string;
-  authors: string;
-  tags: string;
-  corollaries: string;
-  demos: string;
-  parentTheorem: string;
-  proofMethod: string;
-  lemmas: string;
-  satisfies: string;
-  axioms_verified: string;
-  hasDiagram: boolean;
-}
-
-export interface FileNode {
-  path: string;
-  name: string;
-  type: string;
-}
+export type { FileNode, WizardData } from '@/features/editor/lib/editorContracts';
 
 export const useEditorState = () => {
   const [files, setFiles] = useState<FileNode[]>([]);

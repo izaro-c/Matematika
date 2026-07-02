@@ -8,6 +8,7 @@ import { ReferenceModal } from '@/features/editor/ui/modals/ReferenceModal';
 import { ComponentGalleryModal } from '@/features/editor/ui/modals/ComponentGalleryModal';
 import { BlocksGalleryModal } from '@/features/editor/ui/modals/BlocksGalleryModal';
 import { NewFileWizardModal } from '@/features/editor/ui/modals/NewFileWizardModal';
+import { EDITOR_REFERENCE_COLORS } from '@/features/editor/lib/editorContracts';
 
 export const EditorPage: React.FC = () => {
   const state = useEditorState();
@@ -59,8 +60,6 @@ export const EditorPage: React.FC = () => {
     insertLatex, insertBlock, insertComponent, getLinkOptions,
     addNewField, removeField, handleEditorDidMount,
   } = actions;
-
-  const availableColors = ['carbon', 'salvia', 'terracota', 'dorado', 'pizarra'];
 
   useEffect(() => {
     loadFileList();
@@ -393,7 +392,7 @@ export const EditorPage: React.FC = () => {
         setRefTarget={setRefTarget}
         refColor={refColor}
         setRefColor={setRefColor}
-        availableColors={availableColors}
+        availableColors={[...EDITOR_REFERENCE_COLORS]}
         onApply={handleApplyRef}
       />
 
