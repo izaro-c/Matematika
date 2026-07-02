@@ -22,6 +22,10 @@ Las cuatro últimas carpetas se crean solo cuando tengan contenido útil.
 
 `indexes/` contiene mapas JSON compactos para localizar arquitectura, contenido, grafo, componentes, diseño, Lean, comandos y deuda sin cargar árboles completos. Se regeneran con `npm run ai:index`; son inventarios deterministas y no sustituyen las fuentes de verdad ni sus validadores.
 
+## Revisión del working tree
+
+`npm run ai:review` inspecciona cambios unstaged, staged y untracked, los clasifica por ruta y recomienda las validaciones mínimas disponibles en `package.json`. El comando es determinista y de solo lectura: no ejecuta validadores ni modifica archivos. Sus warnings señalan, entre otros, MDX, Lean, gobierno multi-IA y artefactos generados que requieren revisión humana.
+
 ## Inicio de sesión
 
 1. Leer `AGENTS.md`.
