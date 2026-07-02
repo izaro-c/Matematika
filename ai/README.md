@@ -18,6 +18,10 @@
 
 Las cuatro últimas carpetas se crean solo cuando tengan contenido útil.
 
+## Índices generados
+
+`indexes/` contiene mapas JSON compactos para localizar arquitectura, contenido, grafo, componentes, diseño, Lean, comandos y deuda sin cargar árboles completos. Se regeneran con `npm run ai:index`; son inventarios deterministas y no sustituyen las fuentes de verdad ni sus validadores.
+
 ## Inicio de sesión
 
 1. Leer `AGENTS.md`.

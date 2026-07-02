@@ -13,10 +13,11 @@
 - `.opencode/` es el único adaptador oficial de OpenCode.
 - Las skills se descubren y cargan bajo demanda.
 - `.auxiliary/` permanece intacta y no se usa como autoridad.
+- `npm run ai:index` regenera inventarios compactos de contexto en `ai/indexes/`.
 
 ## Próximo paso
 
-Definir la primera fase operativa en `ai/phases/` cuando exista un objetivo aprobado, con alcance, archivos permitidos, validación y criterio de cierre.
+Mantener `ai/indexes/` sincronizado al cambiar la estructura y definir la primera fase operativa en `ai/phases/` cuando exista un objetivo aprobado.
 
 ## Deuda visible
 
