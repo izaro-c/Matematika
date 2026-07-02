@@ -10,19 +10,17 @@
 
 ## Resumen ejecutivo
 
-**Hallazgos objetivos.** Se inspeccionaron 506 archivos de texto, 278 archivos TS/TSX, 20 archivos de test y 116 archivos MDX.
+**Hallazgos objetivos.** Se inspeccionaron 537 archivos de texto, 276 archivos TS/TSX, 24 archivos de test y 116 archivos MDX.
 
-**Heurísticas aproximadas.** Se localizaron 629 apariciones léxicas de `any`, 380 colores hex, 28 marcas TODO/FIXME, 17 archivos TS/TSX grandes y 92 rutas de importación potencialmente incompatibles con FSD.
+**Heurísticas aproximadas.** Se localizaron 624 apariciones léxicas de `any`, 381 colores hex, 28 marcas TODO/FIXME, 19 archivos TS/TSX grandes y 91 rutas de importación potencialmente incompatibles con FSD.
 
 **Recomendación.** Empezar por las rutas FSD y supresiones TypeScript, continuar con hex fuera de tokens, descomponer puntos de alta responsabilidad y cerrar después cobertura, contenido, Lean y duplicación IA.
 
 ## Deuda TypeScript
 
-**Hallazgo objetivo.** Hay 278 archivos TS/TSX en el alcance; 1 archivo(s) contienen 9 supresiones `@ts-*`.
+**Hallazgo objetivo.** Hay 276 archivos TS/TSX en el alcance; 0 archivo(s) contienen 0 supresiones `@ts-*`.
 
-| Archivo | Supresiones `@ts-*` |
-| --- | --- |
-| `src/pages/GraphPage.tsx` | 9 |
+_Ninguno detectado._
 
 **Heurística aproximada.** `any` se cuenta léxicamente, también dentro de comentarios, cadenas, documentación y nombres de reglas.
 
@@ -63,7 +61,6 @@
 | `src/shared/diagrams/Demos/DemoRectasCoincidentes.tsx` | 8 |
 | `src/shared/diagrams/Demos/DemoTriangulacionPoligono.tsx` | 8 |
 | `src/shared/diagrams/Demos/DemoTrianguloIsosceles.tsx` | 8 |
-| `src/features/editor/hooks/useEditorActions.ts` | 7 |
 | `src/shared/diagrams/Definiciones/Triangulo.tsx` | 7 |
 | `src/shared/diagrams/Theorems/AngulosOpuestos.tsx` | 7 |
 | `src/shared/diagrams/Axiomas/Pasch.tsx` | 6 |
@@ -71,6 +68,7 @@
 | `src/shared/diagrams/Teoremas/DemoTales.tsx` | 6 |
 | `src/shared/diagrams/Teoremas/PuntoMedioPerpendicular.tsx` | 6 |
 | `src/shared/diagrams/Teoremas/Tales.tsx` | 6 |
+| `tests/features/graph/GraphStore.test.ts` | 6 |
 | `tests/scripts/generate-test-report.ts` | 6 |
 | `.agents/skills/diagrama/examples/JSXGraphCanon.tsx` | 5 |
 | `.auxiliary/.opencode/skills/diagrama/examples/JSXGraphCanon.tsx` | 5 |
@@ -94,7 +92,6 @@
 | `src/shared/diagrams/Definiciones/Semirrecta.tsx` | 4 |
 | `src/shared/diagrams/Axiomas/AxiomaDedekind.tsx` | 3 |
 | `src/shared/diagrams/Demos/DemoDosRectasUnPunto.tsx` | 3 |
-| `src/shared/diagrams/types/jxg.ts` | 3 |
 | `scripts/core/validate-cross-references.ts` | 2 |
 | `src/pages/BranchPage.tsx` | 2 |
 | `src/shared/diagrams/Axiomas/Congruence1.tsx` | 2 |
@@ -114,7 +111,6 @@
 | `src/shared/diagrams/Axiomas/Incidence5.tsx` | 1 |
 | `src/shared/diagrams/Axiomas/Incidence7.tsx` | 1 |
 | `src/shared/diagrams/Definiciones/Plano.tsx` | 1 |
-| `src/shared/diagrams/Teoremas/DemoPitagorasAreas.tsx` | 1 |
 | `src/shared/diagrams/Teoremas/DemoTrianguloIsosceles.tsx` | 1 |
 
 **Recomendación.** Priorizar los archivos con más coincidencias y confirmar cada una con TypeScript/ESLint.
@@ -153,6 +149,7 @@
 | `src/shared/diagrams/Teoremas/DemoPitagorasAreas.tsx` | 3 |
 | `.agents/skills/project-philosophy/SKILL.md` | 2 |
 | `.auxiliary/TODO.md` | 2 |
+| `ai/audits/code-quality-audit.md` | 2 |
 | `src/features/graph/ui/MathBoard.tsx` | 2 |
 | `.opencode/plugins/matematika-guard.ts` | 1 |
 | `docs/requirements/Product_Backlog.md` | 1 |
@@ -206,7 +203,6 @@
 | `src/shared/diagrams/Theorems/AngulosOpuestos.tsx` | 1 |
 | `src/shared/diagrams/Theorems/CongruenciaALA.tsx` | 1 |
 | `src/shared/diagrams/Theorems/CongruenciaLLL.tsx` | 1 |
-| `src/shared/diagrams/utils/cssVar.ts` | 1 |
 
 **Recomendación.** Conservar únicamente definiciones canónicas de la paleta Arts & Crafts y sustituir usos visuales arbitrarios por `--theme-*` o tokens del proyecto.
 
@@ -238,20 +234,22 @@
 | --- | --- | --- |
 | `scripts/ai/generate-debt-report.ts` | 848 | 35233 |
 | `scripts/ai/generate-ai-indexes.ts` | 770 | 29276 |
-| `src/features/graph/graph.worker.ts` | 516 | 16275 |
+| `src/features/graph/graph.worker.ts` | 508 | 15886 |
 | `src/shared/diagrams/Definiciones/Cuadrilatero.tsx` | 496 | 22664 |
 | `src/shared/lib/glossaryDictionary.ts` | 483 | 18549 |
 | `src/entities/content/ContentStore.ts` | 448 | 17825 |
 | `src/entities/content/msc2020.ts` | 431 | 17110 |
 | `scripts/core/lean-graph-utils.ts` | 427 | 14649 |
-| `src/features/editor/ui/EditorPage.tsx` | 425 | 20277 |
+| `src/features/editor/ui/EditorPage.tsx` | 424 | 20288 |
+| `src/features/graph/GraphStore.ts` | 414 | 14785 |
 | `src/widgets/navigation/SearchOmnibar.tsx` | 408 | 14240 |
 | `src/features/graph/ui/AxiomaticTree.tsx` | 366 | 16130 |
-| `scripts/ai/review-working-tree.ts` | 357 | 12027 |
-| `src/features/editor/hooks/useEditorActions.ts` | 345 | 12621 |
+| `scripts/ai/review-working-tree.ts` | 360 | 12260 |
 | `src/widgets/content/MarginaliaPanel.tsx` | 344 | 13364 |
 | `src/shared/diagrams/Teoremas/DemoPitagorasEuclides.tsx` | 327 | 16986 |
 | `tests/database/content-store.test.ts` | 320 | 9637 |
+| `src/features/editor/hooks/useEditorActions.ts` | 318 | 10788 |
+| `src/features/graph/lib/graphWorkerContract.ts` | 303 | 7868 |
 | `src/features/progress/ui/TaxonomyGraph.tsx` | 301 | 11135 |
 
 **Recomendación.** Revisar cohesión antes de dividir: tamaño alto es una señal, no una prueba de mal diseño.
@@ -263,42 +261,36 @@
 | Componente | Líneas | Imports | Hooks | Handlers |
 | --- | --- | --- | --- | --- |
 | `src/shared/diagrams/Definiciones/Cuadrilatero.tsx` | 496 | 3 | 3 | 2 |
-| `src/features/editor/ui/EditorPage.tsx` | 425 | 10 | 3 | 61 |
+| `src/features/editor/ui/EditorPage.tsx` | 424 | 11 | 3 | 61 |
 | `src/widgets/navigation/SearchOmnibar.tsx` | 408 | 10 | 11 | 14 |
 | `src/features/graph/ui/AxiomaticTree.tsx` | 366 | 15 | 27 | 22 |
 | `src/widgets/content/MarginaliaPanel.tsx` | 344 | 7 | 1 | 4 |
 | `src/shared/diagrams/Teoremas/DemoPitagorasEuclides.tsx` | 327 | 3 | 6 | 0 |
 | `src/features/progress/ui/TaxonomyGraph.tsx` | 301 | 5 | 11 | 9 |
-| `src/pages/GraphPage.tsx` | 284 | 10 | 13 | 15 |
+| `src/pages/GraphPage.tsx` | 287 | 11 | 13 | 17 |
 | `src/shared/ui/MDXBlocks.tsx` | 275 | 22 | 3 | 1 |
 | `src/pages/Home/components/BranchLibrary.tsx` | 271 | 3 | 1 | 0 |
 | `src/features/exercises/ui/Emparejar.tsx` | 262 | 3 | 8 | 2 |
 | `src/features/exercises/ui/Clasificador.tsx` | 220 | 3 | 4 | 16 |
 | `src/features/exercises/ui/Hueco.tsx` | 195 | 2 | 5 | 16 |
-| `src/features/editor/ui/NewFileWizard.tsx` | 191 | 2 | 0 | 50 |
-| `src/features/editor/ui/modals/NewFileWizardModal.tsx` | 158 | 2 | 0 | 25 |
-| `src/features/editor/ui/BlocksGallery.tsx` | 106 | 1 | 0 | 33 |
+| `src/features/editor/ui/modals/NewFileWizardModal.tsx` | 160 | 3 | 0 | 25 |
 | `src/features/editor/ui/modals/BlocksGalleryModal.tsx` | 99 | 1 | 0 | 33 |
 | `src/features/editor/ui/EditorSidebar.tsx` | 79 | 2 | 0 | 16 |
-| `src/features/editor/ui/RefModal.tsx` | 77 | 1 | 0 | 20 |
-| `src/features/editor/ui/EditorToolbar.tsx` | 74 | 1 | 0 | 32 |
-| `src/features/editor/ui/LinkModal.tsx` | 69 | 1 | 0 | 16 |
-| `src/features/editor/ui/MetadataPanel.tsx` | 59 | 1 | 0 | 14 |
 
 **Recomendación.** Separar coordinación, estado y presentación solo cuando la revisión confirme más de una razón de cambio.
 
 ## Deuda de tests por zona
 
-**Hallazgo objetivo.** Se detectaron 20 archivos de test. La tabla cuenta archivos fuente y tests que importan directamente cada zona.
+**Hallazgo objetivo.** Se detectaron 24 archivos de test. La tabla cuenta archivos fuente y tests que importan directamente cada zona.
 
 | Zona | TS/TSX fuente | Tests con import directo |
 | --- | --- | --- |
 | app | 5 | 2 |
 | pages | 22 | 0 |
 | widgets | 15 | 2 |
-| features | 66 | 5 |
-| entities | 9 | 5 |
-| shared | 119 | 5 |
+| features | 59 | 8 |
+| entities | 9 | 6 |
+| shared | 120 | 7 |
 | database | 0 | 0 |
 
 **Heurística aproximada.** Cero imports directos no significa cero cobertura: una prueba puede cubrir una zona de forma transitiva. La tabla no usa instrumentación.
@@ -307,13 +299,12 @@
 
 ## Deuda de arquitectura/FSD
 
-**Hallazgo objetivo.** `.dependency-cruiser.js` declara 4 reglas con severidad error y 9 con severidad warning.
+**Hallazgo objetivo.** `.dependency-cruiser.js` declara 4 reglas con severidad error y 10 con severidad warning.
 
 **Heurística aproximada.** Las rutas siguientes se deducen de imports estáticos y las invariantes globales; no aplican todas las excepciones de Dependency Cruiser.
 
 | Origen | Import | Señal |
 | --- | --- | --- |
-| `src/features/editor/ui/ImportsPanel.tsx` | `@/pages/...` | features → pages/app |
 | `src/features/graph/ui/MathBoard.tsx` | `@/app/providers/MathStoreContext` | features → pages/app |
 | `src/features/progress/ui/StudyTask.tsx` | `@/app/providers/StudyPlanContext` | features → pages/app |
 | `src/pages/Home/HomePage.tsx` | `@/pages/Home/components/BranchLibrary` | pages → pages |
@@ -531,6 +522,7 @@ _Ninguno detectado._
 | `node_modules` | dependencias instaladas | sí |
 | `.opencode/node_modules` | dependencias locales del adaptador | sí |
 | `dist` | salida de build | sí |
+| `coverage` | cobertura generada | sí |
 | `.vite` | caché de Vite | sí |
 | `lean/.lake` | caché y build de Lean | sí |
 | `docs/api` | documentación API generada | sí |
@@ -550,13 +542,13 @@ _Ninguno detectado._
 
 | Capa | Archivos |
 | --- | --- |
-| `ai/` | 13 |
+| `ai/` | 45 |
 | `docs/ai/` | 2 |
 | `.agents/` | 19 |
 | `.opencode/` | 11 |
 | `.auxiliary/` | 21 |
 
-**Heurísticas aproximadas.** 18 basenames repetidos entre capas y 12 grupos de contenido byte-a-byte idéntico. Un basename repetido no implica duplicación semántica.
+**Heurísticas aproximadas.** 19 basenames repetidos entre capas y 12 grupos de contenido byte-a-byte idéntico. Un basename repetido no implica duplicación semántica.
 
 | Nombre repetido | Rutas |
 | --- | --- |
@@ -570,9 +562,10 @@ _Ninguno detectado._
 | JSXGraphCanon.tsx | `.agents/skills/diagrama/examples/JSXGraphCanon.tsx`<br>`.auxiliary/.opencode/skills/diagrama/examples/JSXGraphCanon.tsx` |
 | matematico.mdx | `.agents/skills/page-creator/templates/matematico.mdx`<br>`.auxiliary/.opencode/skills/antigravity/templates/matematico.mdx` |
 | modelo.mdx | `.agents/skills/page-creator/templates/modelo.mdx`<br>`.auxiliary/.opencode/skills/antigravity/templates/modelo.mdx` |
+| new-diagram.md | `.opencode/commands/new-diagram.md`<br>`ai/prompts/opencode/new-diagram.md` |
 | package-lock.json | `.auxiliary/.opencode/package-lock.json`<br>`.opencode/package-lock.json` |
 | package.json | `.auxiliary/.opencode/package.json`<br>`.opencode/package.json` |
-| README.md | `ai/README.md`<br>`docs/ai/README.md` |
+| README.md | `ai/prompts/README.md`<br>`ai/README.md`<br>`docs/ai/README.md` |
 | sistema-axiomatico.mdx | `.agents/skills/page-creator/templates/sistema-axiomatico.mdx`<br>`.auxiliary/.opencode/skills/antigravity/templates/sistema-axiomatico.mdx` |
 | SKILL.md | `.agents/skills/diagrama/SKILL.md`<br>`.agents/skills/lean-formalizer/SKILL.md`<br>`.agents/skills/page-creator/SKILL.md`<br>`.agents/skills/project-philosophy/SKILL.md`<br>`.auxiliary/.opencode/skills/antigravity/SKILL.md`<br>`.auxiliary/.opencode/skills/diagrama/SKILL.md` |
 | SVGCanon.tsx | `.agents/skills/diagrama/examples/SVGCanon.tsx`<br>`.auxiliary/.opencode/skills/diagrama/examples/SVGCanon.tsx` |
