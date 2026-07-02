@@ -102,8 +102,7 @@ export const useEditorActions = ({
       setSaving(false);
       setTimeout(() => setMessage(''), 3000);
     }
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [currentFile, metadata, imports, body]);
+  }, [currentFile, metadata, imports, body, loadFileList, setCurrentFile, setMessage, setSaving]);
 
   const confirmNewFile = useCallback(async (wizardData: WizardData) => {
     const normalizedWizardData = normalizeWizardData(wizardData);
