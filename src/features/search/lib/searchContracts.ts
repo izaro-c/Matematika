@@ -1,22 +1,14 @@
 import type { IFuseOptions } from 'fuse.js';
 import { db } from '@/entities/content';
 import { mscNames } from '@/entities/content/msc2020';
+import {
+  PAGE_ACCENTS,
+  type PageAccentType,
+} from '@/shared/design';
 import { dictionary } from '@/shared/lib/glossaryDictionary';
 import { routePath } from '@/shared/lib/routeHelper';
 
-export type SearchResultType =
-  | 'teorema'
-  | 'lección'
-  | 'definición'
-  | 'ejemplo'
-  | 'ejercicio'
-  | 'demo'
-  | 'glosario'
-  | 'matemático'
-  | 'caso_uso'
-  | 'axioma'
-  | 'msc2020'
-  | 'modelo';
+export type SearchResultType = PageAccentType;
 
 export type SearchResult = {
   id: string;
@@ -46,12 +38,7 @@ export const TYPE_ICONS: Record<SearchResultType, string> = {
   modelo: 'M',
 };
 
-export const TYPE_COLORS: Record<SearchResultType, string> = {
-  teorema: 'var(--theme-salvia)', lección: 'var(--theme-pavo)', definición: 'var(--theme-ocre)',
-  axioma: 'var(--theme-carbon)', modelo: 'var(--theme-pavo)', ejemplo: 'var(--theme-salvia)', ejercicio: 'var(--theme-terracota)',
-  demo: 'var(--theme-pavo)', matemático: 'var(--theme-ocre)', caso_uso: 'var(--theme-salvia)',
-  glosario: 'var(--theme-ocre)', msc2020: 'var(--theme-pavo)',
-};
+export const TYPE_COLORS: Record<SearchResultType, string> = PAGE_ACCENTS;
 
 export const SEARCH_FUSE_OPTIONS: IFuseOptions<SearchResult> = {
   keys: [
