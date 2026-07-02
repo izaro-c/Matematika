@@ -9,6 +9,7 @@
     "prebuild": "npm run lean:graph && npm run generate-index && npm run content:coverage && npm run validate-graph && npm run validate-references",
     "generate-index": "tsx scripts/core/generate-content-index.ts",
     "content:coverage": "tsx scripts/core/generate-content-coverage.ts",
+    "ai:index": "tsx scripts/ai/generate-ai-indexes.ts",
     "build": "tsc -b && vite build && cp dist/index.html dist/404.html",
     "typecheck": "tsc -b",
     "lint": "eslint .",
