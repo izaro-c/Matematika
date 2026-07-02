@@ -127,7 +127,7 @@ export const SearchOmnibar = () => {
       <div className="absolute inset-0 bg-carbon/40 backdrop-blur-sm" onClick={closeSearch} />
 
       <div className="relative w-full max-w-3xl bg-lienzo shadow-2xl overflow-hidden flex flex-col font-sans"
-        style={{ border: '1px solid rgba(51,51,51,0.12)', borderRadius: '2px' }}>
+        style={{ border: '1px solid var(--theme-carbon)', borderRadius: '2px', outline: '1px solid color-mix(in srgb, var(--theme-carbon) 15%, transparent)', outlineOffset: '-4px' }}>
 
         {/* Input */}
         <div className="flex items-center px-5 py-4 border-b border-carbon/10">
@@ -142,7 +142,7 @@ export const SearchOmnibar = () => {
             value={query}
             onChange={e => setQuery(e.target.value)}
           />
-          <kbd className="ml-3 px-2 py-1 text-xs font-sans text-carbon/40 border border-carbon/15 rounded shrink-0">ESC</kbd>
+          <kbd className="ml-3 px-2 py-1 text-[10px] font-sans font-bold tracking-widest uppercase text-carbon/40 border border-carbon/15 rounded-sm shrink-0 shadow-sm">ESC</kbd>
         </div>
 
         <div className="flex" style={{ minHeight: 200 }}>
@@ -152,7 +152,7 @@ export const SearchOmnibar = () => {
               <button
                 key={type}
                 onClick={() => toggleType(type)}
-                className={`w-full text-left text-xs px-2 py-1 rounded transition-colors flex items-center gap-2 ${activeTypes.has(type) ? 'text-carbon' : 'text-carbon/30'
+                className={`w-full text-left text-xs px-2 py-1.5 rounded-sm transition-colors flex items-center gap-2 ${activeTypes.has(type) ? 'text-carbon bg-carbon/5' : 'text-carbon/40 hover:bg-carbon/5'
                   }`}
               >
                 <span
@@ -162,7 +162,7 @@ export const SearchOmnibar = () => {
                     borderColor: TYPE_COLORS[type] || 'var(--theme-pizarra)',
                   }}
                 />
-                <span className="capitalize">{type.replace('_', ' ')}</span>
+                <span className="capitalize font-medium">{type.replace('_', ' ')}</span>
               </button>
             ))}
           </div>
@@ -177,13 +177,13 @@ export const SearchOmnibar = () => {
                     onClick={() => handleSelect(item)}
                     className={`w-full text-left px-5 py-3 flex items-center gap-4 transition-colors group border-b border-carbon/5 last:border-0
                       ${idx === selectedIndex
-                        ? 'bg-carbon text-lienzo'
-                        : 'hover:bg-carbon/5 text-carbon'
+                        ? 'bg-carbon/5 border-l-[3px] border-l-terracota'
+                        : 'border-l-[3px] border-l-transparent hover:bg-carbon/5 text-carbon'
                       }`}
                   >
                     {/* Icono estructural */}
-                    <span className={`w-8 h-8 shrink-0 flex items-center justify-center text-sm font-bold font-serif rounded-sm border ${idx === selectedIndex
-                      ? 'border-lienzo/30 text-lienzo/70'
+                    <span className={`w-8 h-8 shrink-0 flex items-center justify-center text-sm font-bold font-serif rounded-sm border transition-colors ${idx === selectedIndex
+                      ? 'border-terracota/30 text-terracota bg-terracota/5'
                       : 'border-carbon/15 text-carbon/40'
                       }`}>
                       {TYPE_ICONS[item.type]}
@@ -191,14 +191,14 @@ export const SearchOmnibar = () => {
 
                     {/* Contenedor central - Se ha añadido explícitamente overflow-hidden para garantizar que el truncamiento actúe como un sumidero espacial absoluto */}
                     <div className="flex-1 min-w-0 overflow-hidden">
-                      <div className={`font-serif font-bold text-base leading-tight truncate ${idx === selectedIndex ? 'text-lienzo' : 'text-carbon'
+                      <div className={`font-serif font-bold text-base leading-tight truncate transition-colors ${idx === selectedIndex ? 'text-terracota' : 'text-carbon'
                         }`}>
                         {query.trim() && matches
                           ? highlightText(item.title, matches.filter(m => m.key === 'title'))
                           : item.title}
                       </div>
                       {item.subtitle && (
-                        <div className={`text-xs mt-0.5 leading-snug line-clamp-1 ${idx === selectedIndex ? 'text-lienzo/60' : 'text-carbon/45'
+                        <div className={`text-xs mt-0.5 leading-snug line-clamp-1 transition-colors ${idx === selectedIndex ? 'text-carbon/70' : 'text-carbon/45'
                           }`}>
                           {query.trim() && matches
                             ? highlightText(item.subtitle, matches.filter(m => m.key === 'subtitle'))
@@ -208,7 +208,7 @@ export const SearchOmnibar = () => {
                     </div>
 
                     {/* Elemento terminal - Inmune a la compresión (w-max shrink-0) */}
-                    <span className={`text-xs flex uppercase tracking-widest font-bold w-max shrink-0 whitespace-nowrap ${idx === selectedIndex ? 'text-lienzo/50' : 'text-carbon/30'
+                    <span className={`text-[10px] flex uppercase tracking-widest font-bold w-max shrink-0 whitespace-nowrap transition-colors ${idx === selectedIndex ? 'text-terracota/70' : 'text-carbon/30'
                       }`}>
                       {item.type}
                     </span>
@@ -227,9 +227,10 @@ export const SearchOmnibar = () => {
                   <button
                     key={type}
                     onClick={() => setQuery(type === 'lección' ? '' : type)}
-                    className="px-3 py-1.5 text-xs font-sans border border-carbon/15 text-carbon/50 hover:border-carbon/40 hover:text-carbon transition-colors rounded-sm capitalize"
+                    className="ac-pill cursor-pointer hover:bg-carbon/5"
                   >
-                    {TYPE_ICONS[type]} {type}s
+                    <span className="ac-pill-ornament">{TYPE_ICONS[type]}</span>
+                    <span>{type}s</span>
                   </button>
                 ))}
                 <span className="ml-auto text-xs text-carbon/30 self-center">↑↓ navegar · ↵ abrir</span>
