@@ -1,5 +1,9 @@
 import React from 'react';
 import type { WizardData } from '@/features/editor/hooks/useEditorState';
+import {
+  EDITOR_THEME_COLOR_OPTIONS,
+  normalizeContentId,
+} from '@/features/editor/lib/editorContracts';
 
 interface NewFileWizardModalProps {
   isOpen: boolean;
@@ -44,7 +48,7 @@ export const NewFileWizardModal: React.FC<NewFileWizardModalProps> = ({
             <label className="block text-xs font-bold text-carbon/70 mb-1 uppercase tracking-wider">ID (slug del archivo) *</label>
             <input type="text" placeholder="ej: mi-nuevo-teorema" className="w-full bg-white p-2 border border-carbon/20 rounded focus:outline-none focus:border-salvia"
               value={wizardData.id}
-              onChange={(e) => setWizardData({ ...wizardData, id: e.target.value.toLowerCase().replace(/\s+/g, '-') })}
+              onChange={(e) => setWizardData({ ...wizardData, id: normalizeContentId(e.target.value) })}
             />
           </div>
           <div>
@@ -84,11 +88,9 @@ export const NewFileWizardModal: React.FC<NewFileWizardModalProps> = ({
                 <div>
                   <label className="block text-xs font-bold text-carbon/70 mb-1 uppercase tracking-wider">Color Temático</label>
                   <select className="w-full bg-white p-2 border border-carbon/20 rounded" value={wizardData.color} onChange={(e) => setWizardData({ ...wizardData, color: e.target.value })}>
-                    <option value="terracota">Terracota (Teoremas, Default)</option>
-                    <option value="salvia">Salvia (Lógica, Análisis)</option>
-                    <option value="dorado">Dorado (Corolarios, Especial)</option>
-                    <option value="carbon">Carbón (Definiciones)</option>
-                    <option value="pizarra">Pizarra (Auxiliar)</option>
+                    {EDITOR_THEME_COLOR_OPTIONS.map(option => (
+                      <option key={option.value} value={option.value}>{option.label}</option>
+                    ))}
                   </select>
                 </div>
                 <div>
