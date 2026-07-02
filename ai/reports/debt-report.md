@@ -10,15 +10,15 @@
 
 ## Resumen ejecutivo
 
-**Hallazgos objetivos.** Se inspeccionaron 537 archivos de texto, 276 archivos TS/TSX, 24 archivos de test y 116 archivos MDX.
+**Hallazgos objetivos.** Se inspeccionaron 540 archivos de texto, 279 archivos TS/TSX, 25 archivos de test y 116 archivos MDX.
 
-**Heurísticas aproximadas.** Se localizaron 624 apariciones léxicas de `any`, 381 colores hex, 28 marcas TODO/FIXME, 19 archivos TS/TSX grandes y 91 rutas de importación potencialmente incompatibles con FSD.
+**Heurísticas aproximadas.** Se localizaron 624 apariciones léxicas de `any`, 381 colores hex, 28 marcas TODO/FIXME, 18 archivos TS/TSX grandes y 90 rutas de importación potencialmente incompatibles con FSD.
 
 **Recomendación.** Empezar por las rutas FSD y supresiones TypeScript, continuar con hex fuera de tokens, descomponer puntos de alta responsabilidad y cerrar después cobertura, contenido, Lean y duplicación IA.
 
 ## Deuda TypeScript
 
-**Hallazgo objetivo.** Hay 276 archivos TS/TSX en el alcance; 0 archivo(s) contienen 0 supresiones `@ts-*`.
+**Hallazgo objetivo.** Hay 279 archivos TS/TSX en el alcance; 0 archivo(s) contienen 0 supresiones `@ts-*`.
 
 _Ninguno detectado._
 
@@ -242,7 +242,6 @@ _Ninguno detectado._
 | `scripts/core/lean-graph-utils.ts` | 427 | 14649 |
 | `src/features/editor/ui/EditorPage.tsx` | 424 | 20288 |
 | `src/features/graph/GraphStore.ts` | 414 | 14785 |
-| `src/widgets/navigation/SearchOmnibar.tsx` | 408 | 14240 |
 | `src/features/graph/ui/AxiomaticTree.tsx` | 366 | 16130 |
 | `scripts/ai/review-working-tree.ts` | 360 | 12260 |
 | `src/widgets/content/MarginaliaPanel.tsx` | 344 | 13364 |
@@ -262,7 +261,6 @@ _Ninguno detectado._
 | --- | --- | --- | --- | --- |
 | `src/shared/diagrams/Definiciones/Cuadrilatero.tsx` | 496 | 3 | 3 | 2 |
 | `src/features/editor/ui/EditorPage.tsx` | 424 | 11 | 3 | 61 |
-| `src/widgets/navigation/SearchOmnibar.tsx` | 408 | 10 | 11 | 14 |
 | `src/features/graph/ui/AxiomaticTree.tsx` | 366 | 15 | 27 | 22 |
 | `src/widgets/content/MarginaliaPanel.tsx` | 344 | 7 | 1 | 4 |
 | `src/shared/diagrams/Teoremas/DemoPitagorasEuclides.tsx` | 327 | 3 | 6 | 0 |
@@ -271,6 +269,7 @@ _Ninguno detectado._
 | `src/shared/ui/MDXBlocks.tsx` | 275 | 22 | 3 | 1 |
 | `src/pages/Home/components/BranchLibrary.tsx` | 271 | 3 | 1 | 0 |
 | `src/features/exercises/ui/Emparejar.tsx` | 262 | 3 | 8 | 2 |
+| `src/widgets/navigation/SearchOmnibar.tsx` | 243 | 6 | 11 | 14 |
 | `src/features/exercises/ui/Clasificador.tsx` | 220 | 3 | 4 | 16 |
 | `src/features/exercises/ui/Hueco.tsx` | 195 | 2 | 5 | 16 |
 | `src/features/editor/ui/modals/NewFileWizardModal.tsx` | 160 | 3 | 0 | 25 |
@@ -281,16 +280,16 @@ _Ninguno detectado._
 
 ## Deuda de tests por zona
 
-**Hallazgo objetivo.** Se detectaron 24 archivos de test. La tabla cuenta archivos fuente y tests que importan directamente cada zona.
+**Hallazgo objetivo.** Se detectaron 25 archivos de test. La tabla cuenta archivos fuente y tests que importan directamente cada zona.
 
 | Zona | TS/TSX fuente | Tests con import directo |
 | --- | --- | --- |
 | app | 5 | 2 |
 | pages | 22 | 0 |
 | widgets | 15 | 2 |
-| features | 59 | 8 |
-| entities | 9 | 6 |
-| shared | 120 | 7 |
+| features | 61 | 9 |
+| entities | 9 | 7 |
+| shared | 120 | 8 |
 | database | 0 | 0 |
 
 **Heurística aproximada.** Cero imports directos no significa cero cobertura: una prueba puede cubrir una zona de forma transitiva. La tabla no usa instrumentación.
@@ -393,8 +392,7 @@ _Ninguno detectado._
 | `src/widgets/layouts/InteractiveLessonLayout.tsx` | `@/features/lessons/LessonStore` | widgets → pages/features |
 | `src/widgets/layouts/SimulationLayout.tsx` | `@/features/lessons/LessonStore` | widgets → pages/features |
 | `src/widgets/navigation/SearchOmnibar.tsx` | `@/features/glossary/GlossaryStore` | widgets → pages/features |
-| `src/widgets/navigation/SearchOmnibar.tsx` | `@/features/glossary/GlossaryStore` | widgets → pages/features |
-| `src/widgets/navigation/SearchOmnibar.tsx` | `@/features/search/NavigationStore` | widgets → pages/features |
+| `src/widgets/navigation/SearchOmnibar.tsx` | `@/features/search/lib/searchApi` | widgets → pages/features |
 | `src/widgets/navigation/TopBar.tsx` | `@/features/search/NavigationStore` | widgets → pages/features |
 
 **Recomendación.** Confirmar cada ruta con `npm run depcruise`; la configuración ejecutable es la autoridad técnica.
