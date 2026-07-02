@@ -2,12 +2,34 @@ import React, { useMemo, useState, useCallback, useRef, useEffect } from 'react'
 import { useLocation } from 'wouter';
 import { publicAsset } from '@/shared/lib/routeHelper';
 import ForceGraph2D from 'react-force-graph-2d';
+import type {
+  ForceGraphMethods,
+  ForceGraphProps,
+  GraphData,
+  LinkObject,
+  NodeObject,
+} from 'react-force-graph-2d';
 import { GRAPH_NODE_COLORS } from '@/shared/lib/constants';
 import { useGlossaryStore } from '@/features/glossary/GlossaryStore';
 import { useProgressStore } from '@/features/progress/UserProgressStore';
 import { buildKnowledgeGraphData, GraphNode, GraphLink } from '@/features/graph/lib/knowledgeGraphBuilder';
 import { GraphLegend } from '@/features/graph/ui/components/GraphLegend';
 import { GraphSearch } from '@/features/graph/ui/components/GraphSearch';
+
+type KnowledgeGraphNode = NodeObject<GraphNode>;
+type KnowledgeGraphLink = LinkObject<GraphNode, GraphLink>;
+type KnowledgeGraphProps = ForceGraphProps<GraphNode, GraphLink>;
+type KnowledgeGraphRef = ForceGraphMethods<KnowledgeGraphNode, KnowledgeGraphLink>;
+type ResolvedGraphLink = KnowledgeGraphLink & {
+  source: KnowledgeGraphNode;
+  target: KnowledgeGraphNode;
+};
+type ChargeForce = {
+  strength: (strength: number) => unknown;
+};
+type LinkForce = {
+  distance: (distance: (link: ResolvedGraphLink) => number) => unknown;
+};
 
 /**
  * Página Explorador (Knowledge Graph).
@@ -17,14 +39,14 @@ import { GraphSearch } from '@/features/graph/ui/components/GraphSearch';
 export const GraphPage: React.FC = () => {
   const [, setLocation] = useLocation();
   const { openTerm } = useGlossaryStore();
-  const graphRef = useRef<React.ElementRef<typeof ForceGraph2D> | null>(null);
+  const graphRef = useRef<KnowledgeGraphRef | undefined>(undefined);
 
   // Extraer datos del ContentStore usando jerarquía MSC2020 definida
-  const graphData = useMemo(() => buildKnowledgeGraphData(), []);
+  const graphData: GraphData<GraphNode, GraphLink> = useMemo(() => buildKnowledgeGraphData(), []);
 
-  const [hoverNode, setHoverNode] = useState<GraphNode | null>(null);
-  const [highlightNodes, setHighlightNodes] = useState(new Set<unknown>());
-  const [highlightLinks, setHighlightLinks] = useState(new Set<unknown>());
+  const [hoverNode, setHoverNode] = useState<KnowledgeGraphNode | null>(null);
+  const [highlightNodes, setHighlightNodes] = useState(new Set<KnowledgeGraphNode>());
+  const [highlightLinks, setHighlightLinks] = useState(new Set<KnowledgeGraphLink>());
   const [searchQuery, setSearchQuery] = useState('');
   const [searchResults, setSearchResults] = useState<GraphNode[]>([]);
 
@@ -44,24 +66,19 @@ export const GraphPage: React.FC = () => {
     setSearchQuery('');
     setSearchResults([]);
     if (graphRef.current && node.x !== undefined && node.y !== undefined) {
-      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-      // @ts-ignore
       graphRef.current.centerAt(node.x, node.y, 1000);
-      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-      // @ts-ignore
       graphRef.current.zoom(3, 1000);
     }
-    handleNodeHover(node);
+    handleNodeHover(node, hoverNode);
   };
 
-  // eslint-disable-next-line react-hooks/preserve-manual-memoization
-  const handleNodeHover = useCallback((node: GraphNode | null) => {
-    const newHighlightNodes = new Set<GraphNode>();
-    const newHighlightLinks = new Set<GraphLink>();
+  const handleNodeHover: NonNullable<KnowledgeGraphProps['onNodeHover']> = useCallback((node) => {
+    const newHighlightNodes = new Set<KnowledgeGraphNode>();
+    const newHighlightLinks = new Set<KnowledgeGraphLink>();
     
     if (node) {
       newHighlightNodes.add(node);
-      graphData.links.forEach((link: GraphLink) => {
+      graphData.links.forEach((link) => {
         const sourceId = typeof link.source === 'object' ? link.source.id : link.source;
         const targetId = typeof link.target === 'object' ? link.target.id : link.target;
         
@@ -84,7 +101,7 @@ export const GraphPage: React.FC = () => {
   }, [graphData]);
 
    
-  const handleNodeClick = useCallback((node: GraphNode) => {
+  const handleNodeClick: NonNullable<KnowledgeGraphProps['onNodeClick']> = useCallback((node) => {
     if (node.group === 'branch' || node.group === 'central') {
       if (node.group === 'branch') {
         // Soporte tanto para ramas principales como sub-ramas
@@ -121,11 +138,11 @@ export const GraphPage: React.FC = () => {
 
   const drawNodeLabel = useCallback((
     ctx: CanvasRenderingContext2D,
-    node: GraphNode,
+    node: KnowledgeGraphNode,
     globalScale: number,
     isHighlighted: boolean,
-    hoverNode: GraphNode | null,
-    highlightNodes: Set<unknown>,
+    hoverNode: KnowledgeGraphNode | null,
+    highlightNodes: Set<KnowledgeGraphNode>,
     radius: number,
   ) => {
     const isMainBranch = node.id?.startsWith('rama-');
@@ -174,7 +191,7 @@ export const GraphPage: React.FC = () => {
     ctx.fillText(label, nodeX, textY);
   }, []);
 
-  const drawNode = useCallback((node: GraphNode, ctx: CanvasRenderingContext2D, globalScale: number) => {
+  const drawNode: NonNullable<KnowledgeGraphProps['nodeCanvasObject']> = useCallback((node, ctx, globalScale) => {
     if (node.x === undefined || node.y === undefined || !Number.isFinite(node.x) || !Number.isFinite(node.y)) return;
 
     const isHighlighted = hoverNode ? highlightNodes.has(node) : true;
@@ -212,17 +229,11 @@ export const GraphPage: React.FC = () => {
   useEffect(() => {
     if (graphRef.current) {
       setTimeout(() => {
-        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-        // @ts-ignore
         graphRef.current?.zoomToFit(400, 50);
 
         // Ajustes de física (expandir la red de forma controlada)
-        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-        // @ts-ignore
-        graphRef.current?.d3Force('charge')?.strength(-120); // Repulsión más suave para mantener los nodos juntos
-        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-        // @ts-ignore
-        graphRef.current?.d3Force('link')?.distance((link: { source: { group: string }, target: { group: string } }) => {
+        (graphRef.current?.d3Force('charge') as ChargeForce | undefined)?.strength(-120); // Repulsión más suave para mantener los nodos juntos
+        (graphRef.current?.d3Force('link') as LinkForce | undefined)?.distance((link) => {
           if (link.source.group === 'central' || link.target.group === 'central') return 100;
           if (link.source.group === 'branch' || link.target.group === 'branch') return 60;
           return 30;
@@ -253,28 +264,20 @@ export const GraphPage: React.FC = () => {
       <GraphLegend />
 
       <div className="absolute inset-0 cursor-move">
-        <ForceGraph2D
-          // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-          // @ts-ignore
+        <ForceGraph2D<GraphNode, GraphLink>
           ref={graphRef}
           width={dimensions.width}
           height={dimensions.height}
           graphData={graphData}
           nodeLabel={() => ''} // El label nativo lo desactivamos
-          // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-          // @ts-ignore
           nodeCanvasObject={drawNode}
           nodeCanvasObjectMode={() => 'replace'}
-          // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-          // @ts-ignore
           onNodeHover={handleNodeHover}
-          linkColor={(link) => highlightLinks.has(link) ? '#C86446' : '#00000015'}
-          linkWidth={(link) => highlightLinks.has(link) ? 2 : 1}
-          linkDirectionalParticles={(link) => highlightLinks.has(link) ? 4 : 1}
-          linkDirectionalParticleWidth={(link) => highlightLinks.has(link) ? 6 : 2}
+          linkColor={(link: KnowledgeGraphLink) => highlightLinks.has(link) ? '#C86446' : '#00000015'}
+          linkWidth={(link: KnowledgeGraphLink) => highlightLinks.has(link) ? 2 : 1}
+          linkDirectionalParticles={(link: KnowledgeGraphLink) => highlightLinks.has(link) ? 4 : 1}
+          linkDirectionalParticleWidth={(link: KnowledgeGraphLink) => highlightLinks.has(link) ? 6 : 2}
           linkDirectionalParticleSpeed={0.005}
-          // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-          // @ts-ignore
           onNodeClick={handleNodeClick}
           backgroundColor="rgba(0,0,0,0)" // Transparente para ver el fondo
         />
