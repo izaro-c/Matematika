@@ -82,8 +82,8 @@ export const ContentCard: React.FC<ContentCardProps> = ({
     return (
       <Link href={href}>
         <a
-          className="group flex justify-between items-center gap-4 p-5 border bg-carbon/[0.02] hover:bg-carbon/[0.04] transition-all"
-          style={{ borderColor: 'color-mix(in srgb, var(--theme-carbon) 12%, transparent)' }}
+          className="group flex justify-between items-center gap-4 p-5 elegant-panel"
+          style={{ ['--hover-accent' as string]: token }}
         >
           <div className="min-w-0 flex-1">
             <div className="flex items-center gap-3 mb-1.5">
@@ -116,8 +116,8 @@ export const ContentCard: React.FC<ContentCardProps> = ({
   return (
     <Link href={href}>
       <a
-        className="group flex flex-col p-6 border bg-carbon/[0.02] hover:bg-carbon/[0.04] transition-all"
-        style={{ borderColor: 'color-mix(in srgb, var(--theme-carbon) 12%, transparent)' }}
+        className="group flex flex-col p-6 elegant-panel"
+        style={{ ['--hover-accent' as string]: token }}
       >
         <div className="flex items-center gap-2 mb-3">
           {type && <ContentTypeBadge type={type} label={badgeLabel ?? typeLabel} />}
