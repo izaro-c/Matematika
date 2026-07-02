@@ -10,13 +10,19 @@
 | [`credit-policy.md`](credit-policy.md) | Presupuesto de contexto y escalado entre herramientas |
 | [`goals/`](goals/) | Criterios de éxito estables por área |
 | [`tools/`](tools/) | Papel y forma de uso de cada herramienta |
+| [`context-packs/`](context-packs/) | Contexto mínimo, permisos, validación y prompt corto por tipo de tarea |
+| [`prompts/`](prompts/) | Plantillas compactas por herramienta |
+| [`agent-workflows.md`](agent-workflows.md) | Flujos y relevos entre planificación, ejecución y revisión |
 | `phases/` | Planes acotados de fases; se crea cuando exista una fase |
-| `prompts/` | Prompts reutilizables, sin reglas duplicadas |
 | `indexes/` | Inventarios ligeros generados o mantenidos para localizar contexto |
 | `reports/` | Relevos y auditorías con fecha; no logs completos |
 | `automation/` | Especificaciones de automatización antes de llevarlas a scripts |
 
-Las cuatro últimas carpetas se crean solo cuando tengan contenido útil.
+Las carpetas opcionales se crean solo cuando tengan contenido útil.
+
+## Workflows, packs y prompts
+
+Se elige primero un flujo en [`agent-workflows.md`](agent-workflows.md), después un único pack y, si ayuda, una plantilla específica en [`prompts/README.md`](prompts/README.md). El pack localiza el contexto y fija límites; la skill aplicable conserva el procedimiento especializado. No se adjuntan familias completas.
 
 ## Índices generados
 
@@ -35,7 +41,7 @@ Las cuatro últimas carpetas se crean solo cuando tengan contenido útil.
 1. Leer `AGENTS.md`.
 2. Leer `current-state.md`.
 3. Elegir un solo archivo de `goals/`.
-4. Consultar `tools/` para asignar la herramienta.
-5. Cargar skills y archivos de producto únicamente cuando la tarea los requiera.
+4. Elegir workflow, pack y herramienta.
+5. Cargar un prompt, skills y archivos de producto únicamente cuando la tarea los requiera.
 
 Al cerrar una fase se actualiza `current-state.md` y se deja un informe breve si otra sesión necesita continuar. Los detalles formales no se duplican desde `docs/ai/`.
