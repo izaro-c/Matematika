@@ -153,17 +153,12 @@ body {
 }
 
 .demo-container h1 {
-  font-size: 2.5rem;
-  color: var(--color-terracota);
+  font-family: ui-serif, Georgia, Cambria, "Times New Roman", Times, serif;
+  font-size: 3.75rem; /* text-6xl equivalente para los demos que son a pantalla completa */
+  color: var(--theme-terracota);
   margin-bottom: 1.5rem;
   line-height: 1.2;
   font-variant: small-caps;
-}
-
-.demo-container h1 {
-  font-family: ui-serif, Georgia, Cambria, "Times New Roman", Times, serif;
-  font-size: 3.75rem;
-  /* text-6xl equivalente para los demos que son a pantalla completa */
   text-align: left;
 }
 
@@ -261,6 +256,12 @@ body {
 /* Suavizado en enlaces globales pero menos elástico */
 a, button {
   transition: all 0.15s ease-out;
+}
+
+/* Mejora de accesibilidad base para focus */
+a:focus-visible, button:focus-visible {
+  outline: 2px solid color-mix(in srgb, var(--theme-terracota) 60%, transparent);
+  outline-offset: 2px;
 }
 
 /* === ESCALA TIPOGRÁFICA CANÓNICA DE MATEMATIKA ===
@@ -395,6 +396,7 @@ a, button {
 
 /* === PAPPER/PERGAMINO TEXTURE para MarginaliaPanel === */
 .parchment-panel {
+  position: relative;
   background-color: var(--theme-lienzo);
   background-image:
     radial-gradient(circle at 20% 30%, color-mix(in srgb, var(--theme-ocre) 5%, transparent) 0%, transparent 40%),
