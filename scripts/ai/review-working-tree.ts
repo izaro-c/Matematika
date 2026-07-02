@@ -156,10 +156,19 @@ function isGraphData(file: string): boolean {
   return /^src\/entities\/graph\/[^/]+\.json$/.test(file);
 }
 
-function isLean(file: string): boolean {
+function isLeanRelated(file: string): boolean {
+  // Lean validation is selected only from repository paths, never from file contents.
+  const coreScriptName = file.startsWith('scripts/core/')
+    ? path.posix.basename(file)
+    : '';
+
   return file.startsWith('lean/')
     || file.startsWith('scripts/lean/')
-    || file.endsWith('.lean');
+    || file.endsWith('.lean')
+    || /(?:lean|bridge|proof)/i.test(coreScriptName)
+    || file === 'src/entities/graph/lean_graph.json'
+    || file === 'src/entities/graph/proof_blocks.json'
+    || (file.startsWith('src/database/content/') && file.endsWith('.mdx'));
 }
 
 function isTest(file: string): boolean {
@@ -189,7 +198,7 @@ const FILE_CATEGORY_RULES: Array<[Category, (file: string) => boolean]> = [
   ['content schemas/types', isContentSchemaOrType],
   ['MDX content', file => file.endsWith('.mdx')],
   ['graph data', isGraphData],
-  ['Lean', isLean],
+  ['Lean', isLeanRelated],
   ['tests', isTest],
   ['core scripts', isCoreScript],
   ['generated artifacts', isGenerated],
@@ -228,7 +237,6 @@ const CATEGORY_COMMANDS: Partial<Record<Category, RecommendedCommand[]>> = {
     'generate-index',
     'validate-references',
     'validate-graph',
-    'validate-lean',
     'content:coverage',
   ],
   'graph data': ['validate-graph'],
@@ -247,17 +255,12 @@ const FILE_COMMAND_RULES: Array<[(file: string) => boolean, RecommendedCommand[]
   [file => file === 'src/entities/content/contentIndex.json', ['generate-index']],
   [file => file === 'src/entities/content/contentCoverage.json', ['content:coverage']],
   [file => file === 'src/entities/graph/graph_structure.json', ['validate-graph']],
-  [
-    file => file === 'src/entities/graph/lean_graph.json'
-      || file === 'src/entities/graph/proof_blocks.json',
-    ['validate-lean'],
-  ],
   [file => file.startsWith('ai/indexes/'), ['ai:index']],
   [file => file.includes('reference'), ['validate-references']],
   [file => file.includes('logical-graph'), ['validate-graph']],
   [file => file.includes('content-index'), ['generate-index']],
   [file => file.includes('content-coverage'), ['content:coverage']],
-  [file => file.includes('lean') || file.includes('bridge'), ['validate-lean']],
+  [isLeanRelated, ['validate-lean']],
 ];
 
 function recommendCommands(
@@ -298,7 +301,7 @@ function buildWarnings(files: string[]): string[] {
   if (files.some(file => file.endsWith('.mdx'))) {
     warnings.push('Hay MDX modificado: requiere revisión humana de rigor, metadatos y dependencias semánticas.');
   }
-  if (files.some(isLean)) {
+  if (files.some(isLeanRelated)) {
     warnings.push('Hay cambios Lean: revisar la prueba y la correspondencia Lean–MDX además de compilar.');
   }
   return warnings;
