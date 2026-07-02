@@ -1,14 +1,5 @@
 ---
-description: CI completa: lint + tsc + test + depcruise + validación
+description: Ejecutar la puerta de calidad completa del proyecto
 ---
-Ejecuta en orden:
-1. npm run lint
-2. npx tsc -b
-3. npm run test
-4. npm run depcruise
-5. npm run validate-graph
-6. npm run validate-references
 
-Reporta un resumen claro: qué pasó y qué falló.
-Si hay fallos en alguna etapa, NO continúes a la siguiente hasta que el usuario decida cómo proceder.
-Sugiere correcciones para cada fallo.
+Ejecuta `npm run full-check`. Detente en el primer fallo, diagnostica su causa y reporta el resto de etapas como no ejecutadas. No corrijas nada salvo que la petición autorice cambios.

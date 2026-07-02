@@ -2,6 +2,12 @@
 
 Matematika es una plataforma enciclopédica interactiva y orgánica diseñada para explorar el conocimiento matemático. En lugar de presentar páginas aisladas, los conceptos, teoremas, y matemáticos están fuertemente entrelazados en una "Red Semántica" navegable, permitiendo a los estudiantes explorar las matemáticas como lo que realmente son: un ecosistema profundamente interconectado.
 
+## Trabajo con IA
+
+El proyecto usa una infraestructura común, no ligada a un proveedor. Toda herramienta comienza en [`AGENTS.md`](AGENTS.md); el gobierno formal vive en [`docs/ai/`](docs/ai/README.md), el estado y los paquetes de trabajo diarios en [`ai/`](ai/README.md), y los procedimientos reutilizables en [`.agents/skills/`](.agents/skills/). OpenCode dispone de su adaptador oficial en [`.opencode/`](.opencode/).
+
+Para iniciar una sesión con el mínimo contexto, se leen `AGENTS.md`, `ai/current-state.md`, un único objetivo de `ai/goals/` y, cuando corresponda, una skill.
+
 ## Características Principales
 
 1. **Grafo de Conocimiento (Knowledge Graph)**: Un lienzo interactivo bidimensional que mapea dinámicamente las relaciones semánticas entre conceptos. Si un teorema menciona una definición o una demostración, una conexión orgánica se renderiza automáticamente.
@@ -100,11 +106,11 @@ export const metadata = {
   requires: ["definicion-previa"], // Grafo de dependencias lógicas
 };
 
-<Capitular letra="C" />omo vimos en el <ConceptLink targetId="definicion-asociada">Concepto Asociado</ConceptLink>...
+<Capitular letra="C" />onsidérese el <ConceptLink targetId="definicion-asociada">concepto asociado</ConceptLink>...
 ```
 
 ### 3. El componente `<ConceptLink>`
-Es el corazón de la navegación interna. **Nunca uses `<a>` o `<Link>` estándar para navegar entre conceptos**. 
+Es el corazón de la navegación interna. **Nunca uses `<a>` o `<Link>` estándar para navegar entre conceptos**.
 Usa `<ConceptLink targetId="slug-del-archivo">Texto a mostrar</ConceptLink>`. Esto alimenta automáticamente el Grafo de Conocimiento y habilita el panel lateral.
 
 ---

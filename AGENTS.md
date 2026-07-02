@@ -1,154 +1,66 @@
-# Matematika — Agent Instructions
+# Matematika — instrucciones globales para agentes
 
-> **Matematika** es un Jardín Digital enciclopédico interactivo para explorar conocimiento matemático.
-> Cada concepto es un nodo en una red semántica navegable. El diseño sirve a las matemáticas, no compite con ellas.
+Matematika es un jardín digital enciclopédico para explorar matemáticas como una red semántica navegable. Estas reglas son comunes a ChatGPT, Gemini, Codex, OpenCode, Antigravity y cualquier asistente integrado en el repositorio.
 
----
+## Carga mínima de contexto
 
-## Filosofía del Proyecto
+1. Leer siempre este archivo.
+2. Para ejecutar trabajo, leer `ai/current-state.md` y solo el objetivo de `ai/goals/` relacionado con la tarea.
+3. Cargar la skill de `.agents/skills/` que corresponda antes de actuar.
+4. Consultar `docs/ai/` únicamente para gobierno, conflictos o cambios de protocolo.
+5. No cargar directorios completos ni copiar reglas entre capas.
 
-Toda contribución debe respetar estos principios. Si hay duda, consulta la skill `project-philosophy`.
+## Jerarquía
 
-1. **Jardín Digital, no PDF interactivo.** Cada concepto es navegable. La lectura puede ser lineal o exploratoria.
-2. **Universalidad absoluta.** El contenido matemático no tiene país, currículo ni sistema educativo. Es atemporal.
-3. **Interactividad como norma.** Si un concepto puede visualizarse, se visualiza. Si un ejercicio puede ser interactivo, lo es.
-4. **Elegante y limpio.** El diseño sirve a las matemáticas, no compite con ellas.
-5. **Rigor sobre accesibilidad.** Todo enunciado está justificado. Toda definición es precisa. Toda demostración es completa y obedece estrictamente a la axiomática de Greenberg/Hilbert (Regla de las 6 Justificaciones Lógicas).
-6. **Orden topológico.** El contenido se construye de abajo arriba, desde los axiomas. Un concepto no puede referenciar algo que depende lógicamente de él.
-7. **Educativo, fácil de comprender, matemáticamente riguroso.** Claridad expositiva sin sacrificar precisión. Tercera persona impersonal. Nunca argumentos topológicos basados en apariencia visual.
+| Ruta | Autoridad |
+|---|---|
+| `AGENTS.md` | Reglas globales y orden de lectura |
+| `docs/ai/` | Gobierno multi-IA y protocolo formal |
+| `ai/` | Estado, objetivos, fases, prompts, índices, informes y automatización operativa |
+| `.agents/skills/` | Procedimientos reutilizables cargados bajo demanda |
+| `.opencode/` | Adaptador oficial de OpenCode; no define política común |
+| `.auxiliary/` | Material histórico o duplicado; nunca fuente de verdad |
 
----
+Ante un conflicto, prevalecen en este orden: petición explícita del usuario, este archivo, gobierno en `docs/ai/`, skill aplicable y capa operativa `ai/`. Un adaptador de herramienta no puede redefinir las reglas comunes.
 
-## Arquitectura — Feature-Sliced Design (FSD)
+## Principios no negociables
 
-```
-src/
-  app/          Entry point, providers, router
-  pages/        Route-level pages (TheoremPage, DemoPage, etc.)
-  widgets/      Composite blocks (TopBar, MarginaliaPanel, layouts...)
-  features/     Feature modules with Zustand stores + UI
-    graph/        GraphStore, GraphSandboxStore, worker, AxiomaticTree
-    search/       NavigationStore
-    glossary/     GlossaryStore, ConceptLink, RefLink, Concept, Term
-    progress/     UserProgressStore, ReadingButton, StudyTask
-    lessons/      LessonStore, HighlightLink
-    exercises/    ExerciseContext, all exercise types
-    toast/        ToastStore, ToastContainer
-    editor/       EditorPage + components + hooks
-    dynamic-vars/ DynamicVarStore
-  entities/
-    content/      Zod schemas, ContentStore, types, msc2020, loaders
-    graph/        Grafo, Nodo, graphTypes, graph_structure.json
-  shared/
-    ui/           ContentCard, Logo, Badge, MDXBlocks, JXGBoard...
-    lib/          logger, mdxParser, MathStore, constants, glossaryDictionary
-    hooks/        useContent, useKeyboardShortcuts
-    templates/    MDX templates
-    diagrams/     All interactive diagrams (Axiomas, Definiciones, Teoremas, Demos, Models)
-  database/
-    content/      MDX content files (~130 concepts)
-```
+- Jardín digital, no PDF interactivo: cada concepto es autónomo y navegable.
+- Universalidad: sin currículos, países ni secuencias educativas como marco.
+- Interactividad cuando aporte comprensión matemática.
+- Diseño elegante y limpio al servicio de las matemáticas.
+- Rigor Greenberg/Hilbert: toda afirmación se justifica; nunca por apariencia visual.
+- Orden topológico: ninguna dependencia puede apoyarse en un resultado posterior.
+- Exposición comprensible, precisa y en tercera persona impersonal.
 
-**Reglas de dependencia** (enforced by `depcruise`):
-- `shared/` no importa de capas superiores (warn)
-- `entities/` no importa de features/widgets/pages
-- `features/` no importa de pages/app (warn)
-- `widgets/` no importa de features (warn)
+Para interpretar estos principios, cargar `project-philosophy`.
 
----
+## Invariantes técnicas
 
-## Comandos Esenciales
+- Los IDs de contenido son kebab-case, inmutables y no se traducen.
+- `src/entities/content/schemas.ts` es la autoridad de metadatos.
+- El contenido MDX vive en `src/database/content/`; para modificarlo se carga `page-creator`.
+- Las demostraciones viven en páginas separadas y mantienen sus justificaciones pedagógicas aunque exista prueba Lean.
+- Matematika Core no usa Mathlib. Para Lean o el puente Lean-MDX se carga `lean-formalizer`.
+- Los diagramas viven en `src/shared/diagrams/`; para modificarlos se carga `diagrama`.
+- Solo se usa la paleta Arts & Crafts: `lienzo`, `carbon`, `salvia`, `terracota`, `pizarra`, `ocre`, `pavo`, `granada` y `musgo`. En diagramas se leen variables `--theme-*`.
+- Se respetan las dependencias FSD: `shared` no depende de capas superiores; `entities` no depende de `features`, `widgets` ni `pages`; `features` no depende de `pages` ni `app`; `widgets` no depende de `features`.
+- No se editan archivos generados. Se conserva cualquier cambio del usuario ajeno a la tarea.
+
+## Flujo de trabajo
+
+1. Confirmar alcance y estado del árbol de trabajo.
+2. Leer solo el contexto necesario y declarar supuestos relevantes.
+3. Realizar el cambio mínimo coherente.
+4. Validar en proporción al alcance.
+5. Entregar cambios, decisiones, validaciones, deuda y siguiente paso.
+
+Para cambios solo documentales o de configuración IA, ejecutar al menos:
 
 ```bash
-npm run dev              # Genera índices + valida + inicia Vite
-npm run build            # tsc + vite build + copia 404.html
-npm run lint             # ESLint
-npm run test             # Vitest (265 tests)
-npm run test:coverage    # Vitest con coverage
-npm run depcruise        # Verifica arquitectura FSD
-npm run validate-graph   # Valida DAG lógico
-npm run validate-references  # Valida referencias cruzadas
-npm run generate-index   # Genera contentIndex.json
-npm run validate-lean     # Compila Lean, regenera grafo Lean y valida diff Lean-MDX
-npm run bridge:audit      # Verifica cobertura Lean y deuda explícita de declaraciones bridge
-npm run bridge:closed     # Puerta final: falla mientras quede cualquier declaración bridge
+git diff --check
 ```
 
-**Orden de verificación al hacer cambios:**
-1. `npm run lint` — estilo
-2. `npx tsc -b` — tipos
-3. `npm run test` — tests
-4. `npm run depcruise` — arquitectura
-5. `npm run validate-lean` — puente Lean-MDX
-6. `npm run content:coverage && npm run bridge:audit` — cobertura y deuda bridge
+Para cambios de producto, usar el orden definido por `npm run full-check`: lint, tipos, tests, arquitectura, referencias, grafo, Lean, cobertura de contenido y auditoría bridge.
 
----
-
-## Convenciones Críticas
-
-### IDs — kebab-case ESTRICTO
-
-**NUNCA snake_case. NUNCA CamelCase. Solo kebab-case.**
-
-```
-✅ teorema-pitagoras, axioma-incidencia-1, demo-pons-asinorum
-❌ teorema_pitagoras, teoremaPitagoras, Teorema-Pitagoras
-```
-
-Los IDs son invariantes: nunca se traducen, nunca se modifican. Aplica a:
-- `metadata.id` en cada archivo MDX
-- `targetId` en `<ConceptLink>` y `<RefLink>`
-- `requires`, `demos`, `lemmas`, `corollaries`, `parentTheorem`, `authors`
-- Nombres de archivo
-
-### Metadatos — Zod Schemas
-
-Fuente de verdad: `src/entities/content/schemas.ts`. Todo metadata DEBE validarse contra su schema correspondiente. Tipos de contenido: `teorema`, `lema`, `corolario`, `definicion`, `axioma`, `demostracion`, `ejemplo`, `ejercicio`, `modelo`, `sistema-axiomatico`, `matematico`, `leccion`, `caso-de-uso`, `plan-de-estudio`.
-
-### Estructura MDX
-
-Todo archivo MDX debe tener:
-1. `<Capitular letra="X">` al inicio
-2. `<Separador>` entre secciones
-3. `<ConceptLink targetId="..." />` para navegación (nunca `<a href>`)
-4. `<Formula>`, `<Definicion>`, `<Demostracion>`, `<Nota>`, `<Cita>`, `<Corolario>` para bloques semánticos
-
-Las demostraciones SIEMPRE en página separada (tipo `demostracion`), nunca inline en el teorema.
-
-### Paleta Arts & Crafts
-
-Usar exclusivamente tokens Tailwind: `lienzo`, `carbon`, `salvia`, `terracota`, `pizarra`, `ocre`, `pavo`, `granada`, `musgo`.
-**Cero hex arbitrarios.** En diagramas JSXGraph, usar `getCSSVar('--theme-*')`.
-
-### Escritura Matemática
-
-- Tercera persona impersonal
-- Greenberg's Rule of 6 Logical Justifications
-- Zero argumentos topológicos desde apariencia visual
-- Definiciones precisas con casos límite explícitos
-- Notación LaTeX con KaTeX (`$...$` para inline, `$$...$$` para display)
-
----
-
-## Skills del Proyecto
-
-Las skills son la fuente de verdad para la generación de contenido. Deben mantenerse actualizadas.
-Viven en `.agents/skills/`, compatible con **OpenCode** y **Antigravity (Google)**.
-
-| Skill | Ubicación | Propósito |
-|---|---|---|
-| `project-philosophy` | `.agents/skills/project-philosophy/SKILL.md` | Filosofía, principios, y reglas no negociables |
-| `page-creator` | `.agents/skills/page-creator/SKILL.md` | Generación de páginas MDX con metadatos Zod |
-| `diagrama` | `.agents/skills/diagrama/SKILL.md` | Generación de diagramas interactivos (JSXGraph, SVG) |
-
-**Regla de actualización de skills:** Cuando la estructura del proyecto cambie (nuevos tipos de contenido, cambios en schemas, nuevas convenciones), el agente DEBE proponer actualizar la skill correspondiente. Si el usuario aprueba, se actualiza la skill y se verifica que el contenido existente siga cumpliéndola.
-
----
-
-## Flujo de Trabajo con Agentes
-
-1. **Crear contenido nuevo:** Usar `@content-writer`. Carga la skill `page-creator`, valida metadatos con Zod schemas, verifica IDs kebab-case, escribe MDX con estructura correcta.
-2. **Crear diagrama nuevo:** Usar `@diagram-creator`. Carga la skill `diagrama`, selecciona tecnología (JSXGraph/SVG/Canvas), usa paleta Arts & Crafts, conecta con MathStore/LessonStore.
-3. **Validar cambios:** Usar `/validate` o `@validator`. Ejecuta validate-graph + validate-references, corrige errores.
-4. **Revisar código:** Usar `@reviewer`. Solo lectura. Verifica BCED/FSD, estilo matemático, integridad referencial.
-5. **Check completo:** Usar `/full-check`. Ejecuta lint + test + depcruise + validate-graph + validate-references + validate-lean + content:coverage + bridge:audit.
+No se ejecutan migraciones, despliegues, escrituras externas ni cambios fuera del alcance sin autorización explícita.

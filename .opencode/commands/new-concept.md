@@ -3,9 +3,6 @@ description: Crear nueva página de concepto matemático (MDX)
 agent: content-writer
 ---
 Crea una nueva página de contenido matemático en MDX.
-PRIMERO carga la skill page-creator.
-PREGUNTA al usuario: 1) tipo de contenido (teorema/definicion/axioma/etc), 2) título, 3) dependencias lógicas.
-USA la plantilla MDX correspondiente de src/shared/templates/.
-VALIDA los metadatos contra el Zod schema de src/entities/content/schemas.ts.
-VERIFICA que el ID está en kebab-case y es único.
-CREA el archivo en src/database/content/{tipo}s/.
+Lee el contexto mínimo indicado en `AGENTS.md` y carga la skill `page-creator`.
+Obtén de la petición o solicita únicamente los datos imprescindibles.
+Sigue la skill para ubicación, estructura, rigor y validación; no inventes ni cambies IDs.
