@@ -1,4 +1,5 @@
 import { useState, useRef, useCallback } from 'react';
+import type { editor, IRange } from 'monaco-editor';
 import { parseMDX, stringifyMDX } from '@/shared/lib/mdxParser';
 import type { FileNode, WizardData } from '@/features/editor/lib/editorContracts';
 
@@ -29,17 +30,17 @@ export const useEditorState = () => {
   const [searchQuery, setSearchQuery] = useState('');
 
   // Monaco Editor Ref
-  const editorRef = useRef<unknown>(null);
+  const editorRef = useRef<editor.IStandaloneCodeEditor | null>(null);
 
   // Link Modal State
   const [linkModalOpen, setLinkModalOpen] = useState(false);
-  const [linkSelection, setLinkSelection] = useState({ startLineNumber: 1, startColumn: 1, endLineNumber: 1, endColumn: 1 });
+  const [linkSelection, setLinkSelection] = useState<IRange>({ startLineNumber: 1, startColumn: 1, endLineNumber: 1, endColumn: 1 });
   const [linkModalText, setLinkModalText] = useState('');
   const [linkTarget, setLinkTarget] = useState('');
 
   // Ref Modal State
   const [refModalOpen, setRefModalOpen] = useState(false);
-  const [refSelection, setRefSelection] = useState({ startLineNumber: 1, startColumn: 1, endLineNumber: 1, endColumn: 1 });
+  const [refSelection, setRefSelection] = useState<IRange>({ startLineNumber: 1, startColumn: 1, endLineNumber: 1, endColumn: 1 });
   const [refText, setRefText] = useState('');
   const [refTarget, setRefTarget] = useState('');
   const [refColor, setRefColor] = useState('salvia');

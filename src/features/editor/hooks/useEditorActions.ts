@@ -1,4 +1,5 @@
 import { useCallback } from 'react';
+import type { editor, IRange } from 'monaco-editor';
 import { parseMDX, stringifyMDX } from '@/shared/lib/mdxParser';
 import type { FileNode, WizardData } from '@/features/editor/hooks/useEditorState';
 import { applyTemplateReplacements, applyTypeSpecificMetadata } from '@/features/editor/lib/editorUtils';
@@ -20,26 +21,15 @@ import {
 import { generateMissingComponentImports } from '@/features/editor/lib/editorImports';
 
 // ─── Types ──────────────────────────────────────────────────────────────────
-interface MonacoEditorLike {
-  getSelection: () => any;
-  getModel: () => { getValueInRange: (range: any) => string } | null;
-  executeEdits: (source: string, edits: {range: any, text: string, forceMoveMarkers: boolean}[]) => void;
-  focus: () => void;
-  onDidScrollChange: (callback: () => void) => void;
-  getScrollHeight: () => number;
-  getScrollTop: () => number;
-  getLayoutInfo: () => { height: number };
-}
-
 interface EditorActionsProps {
   files: FileNode[];
   currentFile: string | null;
   metadata: Record<string, unknown>;
   imports: string;
   body: string;
-  editorRef: React.MutableRefObject<unknown>;
-  linkSelection: any;
-  refSelection: any;
+  editorRef: React.MutableRefObject<editor.IStandaloneCodeEditor | null>;
+  linkSelection: IRange;
+  refSelection: IRange;
   setCurrentFile: (path: string | null) => void;
   setMetadata: (meta: Record<string, unknown>) => void;
   setImports: (imp: string) => void;
@@ -49,11 +39,11 @@ interface EditorActionsProps {
   setLinkModalOpen: (o: boolean) => void;
   setLinkModalText: (t: string) => void;
   setLinkTarget: (t: string) => void;
-  setLinkSelection: (s: any) => void;
+  setLinkSelection: (s: IRange) => void;
   setRefModalOpen: (o: boolean) => void;
   setRefText: (t: string) => void;
   setRefTarget: (t: string) => void;
-  setRefSelection: (s: any) => void;
+  setRefSelection: (s: IRange) => void;
   setWizardModalOpen: (o: boolean) => void;
   loadFileList: () => Promise<void>;
   updateImports: (imp: string) => void;
@@ -160,9 +150,10 @@ export const useEditorActions = ({
   }, [currentFile, body, imports, files, updateImports, setMessage]);
 
   const insertAtCursor = useCallback((text: string) => {
-    const editor = editorRef.current as MonacoEditorLike;
+    const editor = editorRef.current;
     if (!editor) return;
     const selection = editor.getSelection();
+    if (!selection) return;
     editor.executeEdits('', [{
       range: selection,
       text: text,
@@ -172,9 +163,10 @@ export const useEditorActions = ({
   }, [editorRef]);
 
   const wrapSelectedText = useCallback((prefix: string, suffix: string) => {
-    const editor = editorRef.current as MonacoEditorLike;
+    const editor = editorRef.current;
     if (!editor) return;
     const selection = editor.getSelection();
+    if (!selection) return;
     const model = editor.getModel();
     if (!model) return;
     const text = model.getValueInRange(selection);
@@ -188,9 +180,10 @@ export const useEditorActions = ({
   }, [editorRef]);
 
   const openLinkModal = useCallback(() => {
-    const editor = editorRef.current as MonacoEditorLike;
+    const editor = editorRef.current;
     if (!editor) return;
     const selection = editor.getSelection();
+    if (!selection) return;
     const model = editor.getModel();
     if (!model) return;
     const text = model.getValueInRange(selection);
@@ -203,7 +196,7 @@ export const useEditorActions = ({
 
   const applyLink = useCallback((targetId: string, linkText: string) => {
     if (!targetId || !editorRef.current) return;
-    const editor = editorRef.current as MonacoEditorLike;
+    const editor = editorRef.current;
     const text = linkText || 'enlace';
     const insertion = buildConceptLink(targetId, text);
     
@@ -218,9 +211,10 @@ export const useEditorActions = ({
   }, [editorRef, linkSelection, setLinkModalOpen]);
 
   const openRefModal = useCallback(() => {
-    const editor = editorRef.current as MonacoEditorLike;
+    const editor = editorRef.current;
     if (!editor) return;
     const selection = editor.getSelection();
+    if (!selection) return;
     const model = editor.getModel();
     if (!model) return;
     const text = model.getValueInRange(selection);
@@ -233,7 +227,7 @@ export const useEditorActions = ({
 
   const applyRef = useCallback((target: string, color: string, refTextValue: string) => {
     if (!target || !editorRef.current) return;
-    const editor = editorRef.current as MonacoEditorLike;
+    const editor = editorRef.current;
     const insertion = buildInteractiveReference(target, color, refTextValue);
     
     editor.executeEdits('', [{
@@ -287,7 +281,7 @@ export const useEditorActions = ({
     return null;
   }, []);
 
-  const handleEditorDidMount = useCallback((editor: MonacoEditorLike) => {
+  const handleEditorDidMount = useCallback((editor: editor.IStandaloneCodeEditor) => {
     editorRef.current = editor;
     
     editor.onDidScrollChange(() => {
