@@ -1,68 +1,34 @@
-export interface WorkerInput {
-  graphData: unknown;
-  disabledAxioms: string[];
-}
+import {
+  normalizeGraphWorkerError,
+  parseGraphWorkerRequest,
+} from './lib/graphWorkerContract';
+import type {
+  FlowEdge,
+  FlowNode,
+  GraphWorkerOutput,
+  GraphWorkerResponse,
+  GraphWorkerStructure,
+  GraphWorkerNode,
+} from './lib/graphWorkerContract';
+
+export type {
+  FlowEdge,
+  FlowNode,
+  FlowNodeData,
+  GraphWorkerError,
+  GraphWorkerErrorResponse,
+  GraphWorkerOutput as WorkerOutput,
+  GraphWorkerRequest as WorkerInput,
+  GraphWorkerResponse,
+  GraphWorkerSuccessResponse,
+} from './lib/graphWorkerContract';
 
 const VISIBLE_TYPES = new Set(['axioma', 'lema', 'corolario', 'teorema', 'definicion', 'modelo']);
 
-interface JsonNode {
-  id: string;
-  type: string;
-  subtype?: string;
-  title: string;
-  description: string;
-  proofs: { id: string; dependencies: string[] }[];
-  directDependencies: string[];
-}
+type JsonNode = GraphWorkerNode;
 
 // Se inicializa en computeGraph()
-let structure: {
-  topologicalOrder: string[];
-  nodes: Record<string, JsonNode>;
-} = null as unknown as { topologicalOrder: string[]; nodes: Record<string, JsonNode> };
-
-
-export interface FlowNodeData {
-  label: string;
-  nodeType: string;
-  subtype?: string;
-  description: string;
-  isActive: boolean;
-  scale: number;
-  isHighlighted: boolean;
-}
-
-export interface FlowNode {
-  id: string;
-  type: string;
-  position: { x: number; y: number };
-  data: FlowNodeData;
-  width: number;
-  height: number;
-  style: Record<string, unknown>;
-}
-
-export interface FlowEdge {
-  id: string;
-  source: string;
-  target: string;
-  type?: string;
-  style?: Record<string, unknown>;
-  markerEnd?: Record<string, unknown>;
-  data?: { points: Array<{ x: number; y: number }> };
-}
-
-export interface WorkerInput {
-  disabledAxioms: string[];
-}
-
-export interface WorkerOutput {
-  nodes: FlowNode[];
-  edges: FlowEdge[];
-  adjacency: Record<string, string[]>;
-  activeStates: Record<string, boolean>;
-  dependsOn: Record<string, string[]>;
-}
+let structure: GraphWorkerStructure;
 
 const NODE_W = 150;
 const NODE_H = 150;
@@ -400,8 +366,11 @@ function arrangeLayers(
 }
 
  
-export async function computeGraph(graphData: unknown, disabledAxioms: string[]): Promise<WorkerOutput> {
-  structure = graphData as { topologicalOrder: string[]; nodes: Record<string, JsonNode> };
+export async function computeGraph(
+  graphData: GraphWorkerStructure,
+  disabledAxioms: string[],
+): Promise<GraphWorkerOutput> {
+  structure = graphData;
   const disabledSet = new Set(disabledAxioms);
 
   const filtered = filterNodes();
@@ -503,14 +472,37 @@ export async function computeGraph(graphData: unknown, disabledAxioms: string[])
 
 // ── Web Worker Interface ──────────────────────────────────────────────────────
 
+export async function processGraphWorkerMessage(data: unknown): Promise<GraphWorkerResponse> {
+  const parsed = parseGraphWorkerRequest(data);
+  if (!parsed.ok) {
+    return {
+      type: 'error',
+      requestId: parsed.requestId,
+      error: parsed.error,
+    };
+  }
+
+  try {
+    const result = await computeGraph(
+      parsed.value.payload.graphData,
+      parsed.value.payload.disabledAxioms,
+    );
+    return {
+      type: 'success',
+      requestId: parsed.value.requestId,
+      result,
+    };
+  } catch (error: unknown) {
+    return {
+      type: 'error',
+      requestId: parsed.value.requestId,
+      error: normalizeGraphWorkerError(error),
+    };
+  }
+}
+
 if (typeof self !== 'undefined' && typeof window === 'undefined') {
   self.onmessage = async (e: MessageEvent<unknown>) => {
-    const { graphData, disabledAxioms, msgId } = e.data as { msgId: number; graphData: unknown; disabledAxioms: string[] };
-    try {
-      const result = await computeGraph(graphData, disabledAxioms);
-      self.postMessage({ msgId, result, error: null });
-    } catch (err: unknown) {
-      self.postMessage({ msgId, result: null, error: (err as Error).message });
-    }
+    self.postMessage(await processGraphWorkerMessage(e.data));
   };
 }
