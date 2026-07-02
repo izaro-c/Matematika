@@ -26,6 +26,10 @@ Las cuatro últimas carpetas se crean solo cuando tengan contenido útil.
 
 `npm run ai:review` inspecciona cambios unstaged, staged y untracked, los clasifica por ruta y recomienda las validaciones mínimas disponibles en `package.json`. El comando es determinista y de solo lectura: no ejecuta validadores ni modifica archivos. Sus warnings señalan, entre otros, MDX, Lean, gobierno multi-IA y artefactos generados que requieren revisión humana.
 
+## Informe de deuda
+
+`npm run ai:debt` regenera `reports/debt-report.md` con hallazgos objetivos, heurísticas léxicas y recomendaciones sobre TypeScript, diseño, estructura, tests, FSD, MDX, Lean e infraestructura IA. El comando es determinista, tolera carpetas opcionales ausentes y no falla por warnings de deuda; el informe no sustituye a los validadores especializados.
+
 ## Inicio de sesión
 
 1. Leer `AGENTS.md`.
