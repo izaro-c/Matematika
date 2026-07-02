@@ -14,10 +14,11 @@
 - Las skills se descubren y cargan bajo demanda.
 - `.auxiliary/` permanece intacta y no se usa como autoridad.
 - `npm run ai:index` regenera inventarios compactos de contexto en `ai/indexes/`.
+- `npm run ai:review` clasifica el working tree y recomienda validaciones mínimas sin ejecutarlas.
 
 ## Próximo paso
 
-Mantener `ai/indexes/` sincronizado al cambiar la estructura y definir la primera fase operativa en `ai/phases/` cuando exista un objetivo aprobado.
+Usar `ai:review` antes del relevo, mantener `ai/indexes/` sincronizado al cambiar la estructura y definir la primera fase operativa en `ai/phases/` cuando exista un objetivo aprobado.
 
 ## Deuda visible
 

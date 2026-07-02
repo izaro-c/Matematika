@@ -10,6 +10,7 @@
     "generate-index": "tsx scripts/core/generate-content-index.ts",
     "content:coverage": "tsx scripts/core/generate-content-coverage.ts",
     "ai:index": "tsx scripts/ai/generate-ai-indexes.ts",
+    "ai:review": "tsx scripts/ai/review-working-tree.ts",
     "build": "tsc -b && vite build && cp dist/index.html dist/404.html",
     "typecheck": "tsc -b",
     "lint": "eslint .",
