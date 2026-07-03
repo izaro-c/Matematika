@@ -1,5 +1,6 @@
 import React from 'react';
 import { SectionTitle } from '@/shared/ui/SectionTitle';
+import { SubtleSeparator } from '@/shared/ui/SubtleSeparator';
 import { ContentCard } from '@/shared/ui/ContentCard';
 import type { Example, Exercise } from '@/entities/content/types';
 
@@ -13,7 +14,8 @@ export const MaterialPracticoSection: React.FC<MaterialPracticoSectionProps> = (
   if (!hasContent) return null;
 
   return (
-    <div className="mb-24 mt-24">
+    <section className="my-24">
+      <SubtleSeparator />
       <SectionTitle>Material Práctico</SectionTitle>
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         {examples.map(ex => (
@@ -38,6 +40,6 @@ export const MaterialPracticoSection: React.FC<MaterialPracticoSectionProps> = (
           />
         ))}
       </div>
-    </div>
+    </section>
   );
 };
