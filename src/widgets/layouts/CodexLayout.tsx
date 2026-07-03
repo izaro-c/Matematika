@@ -202,7 +202,7 @@ export const CodexLayout: React.FC<CodexLayoutProps> = ({
   return (
     <div className={`codex-layout is-focus-mode ${!hasDiagram ? 'has-no-diagram' : ''} ${className}`}>
       {/* Cabecera en móviles: antes del grid para que no quede aplastada por el diagrama sticky */}
-      <div className="max-w-[80ch] mx-auto px-6">
+      <div className="max-w-[80ch] mx-auto px-6 mobile-header-container">
         {renderHeader(true)}
       </div>
 

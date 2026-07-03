@@ -1138,6 +1138,17 @@ a:focus-visible, button:focus-visible {
   justify-content: center;
 }
 
+.codex-diagram-surface [class*="min-h-"] {
+  min-height: 0 !important;
+  height: 100% !important;
+}
+
+.codex-diagram-surface .jxgbox {
+  width: 100% !important;
+  height: 100% !important;
+  min-height: 0 !important;
+}
+
 .codex-diagram-surface div[class*="bg-lienzo"] {
   background: transparent !important;
   border: none !important;
@@ -1146,6 +1157,16 @@ a:focus-visible, button:focus-visible {
 
 .codex-diagram-surface div[class*="border"] {
   border: none !important;
+}
+
+.mobile-header-container {
+  padding-top: var(--codex-top);
+}
+
+@media (min-width: 1024px) {
+  .mobile-header-container {
+    padding-top: 0;
+  }
 }
 
 .codex-justifications {
