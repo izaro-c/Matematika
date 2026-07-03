@@ -55,14 +55,18 @@ export const DefinitionPage = () => {
           nodeId={definition.id}
         />
 
-        <ContentBody>
-          <definition.Component />
-        </ContentBody>
+        <section className="mt-8 mb-24">
+          <ContentBody>
+            <definition.Component />
+          </ContentBody>
+        </section>
 
         <MaterialPracticoSection examples={examples} exercises={exercises} />
         <AplicacionesSection useCases={useCases} />
 
-        <ReadingButton id={slug} />
+        <div className="flex justify-center my-16">
+          <ReadingButton id={slug} />
+        </div>
       </FadeIn>
     </div>
   );
