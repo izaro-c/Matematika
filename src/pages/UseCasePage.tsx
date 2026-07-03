@@ -5,7 +5,7 @@ import { SimulationLayout } from "@/widgets/layouts/SimulationLayout";
 import { useProgressStore } from '@/features/progress/UserProgressStore';
 import { ReadingButton } from '@/features/progress/ui/ReadingButton';
 import { FadeIn } from '@/shared/ui/FadeIn';
-import { ContentHeader } from '@/shared/ui/ContentHeader';
+import { ContentHeader } from '@/widgets/content/ContentHeader';
 import { ContentBody } from '@/shared/ui/ContentBody';
 import { ContentCard } from '@/shared/ui/ContentCard';
 import { DifficultyBadge } from '@/shared/ui/DifficultyBadge';
@@ -82,7 +82,7 @@ export const UseCasePage: React.FC = () => {
   const renderContent = () => (
     <div className="min-h-screen bg-transparent text-carbon font-serif">
       <FadeIn>
-        <div className="max-w-4xl mx-auto px-6 md:px-10 pt-16 md:pt-24 pb-12">
+        <div className="w-full px-6 md:px-10 pt-4 pb-16">
           <ContentHeader
             type="caso-de-uso"
             typeLabel="Caso de Uso Real"
@@ -110,7 +110,7 @@ export const UseCasePage: React.FC = () => {
         </div>
 
         {related.length > 0 && (
-          <div className="max-w-4xl mx-auto px-6 md:px-10 pb-16">
+          <div className="w-full px-6 md:px-10 pb-16">
             <SubtleSeparator />
             <h3 className="text-xs font-sans font-bold uppercase tracking-widest text-carbon/40 mb-6">
               Más aplicaciones de este concepto
@@ -132,7 +132,7 @@ export const UseCasePage: React.FC = () => {
           </div>
         )}
 
-        <div className="max-w-4xl mx-auto px-6 md:px-10 pb-16">
+        <div className="w-full px-6 md:px-10 pb-16">
           <ReadingButton id={slug} />
         </div>
       </FadeIn>

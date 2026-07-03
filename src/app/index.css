@@ -202,6 +202,10 @@ body {
   animation: simple-fade 0.2s ease-in forwards;
 }
 
+.page-transition {
+  animation: simple-fade 0.2s ease-in;
+}
+
 /* Tablas con estilo clásico de libro de matemáticas */
 .prose table {
   width: 100%;
@@ -495,4 +499,454 @@ a:focus-visible, button:focus-visible {
   letter-spacing: 0.08em;
   font-variant: small-caps;
   text-transform: none;
+}
+
+/* === TRÍPTICO EDITORIAL =================================================== */
+.triptych-layout {
+  --triptych-top: 5.5rem;
+  width: 100%;
+  min-height: 100vh;
+  padding-top: var(--triptych-top);
+}
+
+.triptych-layout--embedded {
+  min-height: 0;
+  padding-top: 0;
+}
+
+.triptych-content {
+  width: min(100%, 112rem);
+  min-width: 0;
+  margin-inline: auto;
+}
+
+.triptych-primary {
+  display: grid;
+  grid-template-areas: "reading";
+  grid-template-columns: minmax(0, 1fr);
+  gap: 2rem;
+  width: 100%;
+  min-width: 0;
+  padding-inline: clamp(1rem, 3vw, 3rem);
+  align-items: start;
+}
+
+.triptych-layout[data-has-diagram="true"] .triptych-primary {
+  grid-template-areas:
+    "diagram"
+    "reading";
+}
+
+.triptych-reading {
+  grid-area: reading;
+  width: min(100%, 85ch);
+  min-width: 0;
+  margin-inline: auto;
+}
+
+.triptych-diagram {
+  grid-area: diagram;
+  position: sticky;
+  top: var(--triptych-top);
+  z-index: 50;
+  isolation: isolate;
+  width: 100%;
+  height: clamp(16rem, 42svh, 28rem);
+  min-height: 0;
+  background: var(--theme-lienzo);
+  border-block: 3px double color-mix(in srgb, var(--theme-carbon) 22%, transparent);
+  box-shadow: 0 0.75rem 1.5rem color-mix(in srgb, var(--theme-carbon) 7%, transparent);
+}
+
+.triptych-diagram::before {
+  content: "";
+  position: fixed;
+  inset: 0 0 auto;
+  z-index: 0;
+  height: var(--triptych-top);
+  background: var(--theme-lienzo);
+  pointer-events: none;
+}
+
+.triptych-diagram::after {
+  content: "";
+  position: absolute;
+  inset: auto 0 -0.75rem;
+  z-index: 2;
+  height: 0.75rem;
+  background: var(--theme-lienzo);
+  pointer-events: none;
+}
+
+.triptych-diagram-sticky,
+.triptych-diagram-surface,
+.simulation-panel {
+  width: 100%;
+  height: 100%;
+  min-width: 0;
+  min-height: 0;
+}
+
+.triptych-diagram-sticky {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  padding: clamp(0.5rem, 1.5vw, 1rem);
+  background: var(--theme-lienzo);
+}
+
+.triptych-diagram-surface {
+  display: flex;
+  align-items: stretch;
+  justify-content: stretch;
+  overflow: hidden;
+}
+
+.triptych-diagram-surface > * {
+  width: 100%;
+  max-width: 100%;
+  max-height: 100%;
+  min-width: 0;
+  min-height: 0;
+}
+
+.triptych-diagram-surface > [class*="border"] {
+  border-color: transparent;
+  border-radius: 0;
+}
+
+.triptych-diagram-surface [class*="min-h-"] {
+  min-height: 0;
+}
+
+.triptych-diagram-surface .jxgbox {
+  width: 100% !important;
+  height: 100% !important;
+  min-height: 0;
+}
+
+.triptych-diagram-surface > svg,
+.triptych-diagram-surface [role="img"] {
+  max-height: 100%;
+}
+
+.diagram-loading {
+  color: color-mix(in srgb, var(--theme-carbon) 55%, transparent);
+  font-style: italic;
+}
+
+.triptych-secondary {
+  width: 100%;
+  scroll-margin-top: var(--triptych-top);
+  margin-top: clamp(2rem, 4vw, 4rem);
+  padding-block: clamp(2.5rem, 4vw, 4rem) clamp(4rem, 7vw, 7rem);
+  padding-inline: clamp(1rem, 3vw, 3rem);
+  background: transparent;
+  border-top: 3px double color-mix(in srgb, var(--theme-carbon) 20%, transparent);
+}
+
+.triptych-secondary-inner {
+  width: 100%;
+  margin-inline: auto;
+}
+
+/* Metadatos: un único nodo sirve como drawer y como columna de escritorio. */
+.triptych-metadata {
+  position: fixed;
+  inset: 0 auto 0 0;
+  z-index: 80;
+  width: min(22rem, 88vw);
+  overflow-y: auto;
+  padding: 1.5rem;
+  color: var(--theme-carbon);
+  background: var(--theme-lienzo);
+  border: 4px double color-mix(in srgb, var(--theme-carbon) 28%, transparent);
+  box-shadow: 1rem 0 2.5rem color-mix(in srgb, var(--theme-carbon) 18%, transparent);
+  transform: translateX(-105%);
+  transition: transform 220ms ease;
+}
+
+.triptych-metadata.is-open {
+  transform: translateX(0);
+}
+
+.triptych-metadata-trigger {
+  position: fixed;
+  left: 1.25rem;
+  bottom: 1.25rem;
+  z-index: 55;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.55rem;
+  padding: 0.7rem 1rem;
+  color: var(--theme-lienzo);
+  background: var(--theme-terracota);
+  border: 3px double color-mix(in srgb, var(--theme-lienzo) 70%, transparent);
+  border-radius: 999px;
+  box-shadow: 0 0.5rem 1.5rem color-mix(in srgb, var(--theme-carbon) 20%, transparent);
+  font-variant: small-caps;
+  letter-spacing: 0.08em;
+}
+
+.triptych-metadata-trigger:hover {
+  background: color-mix(in srgb, var(--theme-terracota) 86%, var(--theme-carbon));
+}
+
+@media (max-width: 479px) {
+  .triptych-metadata-trigger {
+    left: 0;
+    width: 3rem;
+    justify-content: center;
+    padding-inline: 0.65rem;
+    border-left: 0;
+    border-radius: 0 999px 999px 0;
+  }
+
+  .triptych-metadata-trigger-label {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip-path: inset(50%);
+    white-space: nowrap;
+  }
+}
+
+.triptych-metadata-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 70;
+  visibility: hidden;
+  opacity: 0;
+  background: color-mix(in srgb, var(--theme-carbon) 28%, transparent);
+  border: 0;
+  backdrop-filter: blur(2px);
+  transition: opacity 220ms ease, visibility 220ms ease;
+}
+
+.triptych-metadata-backdrop.is-open {
+  visibility: visible;
+  opacity: 1;
+}
+
+.triptych-metadata-close {
+  display: grid;
+  width: 2.5rem;
+  height: 2.5rem;
+  margin: 0 0 1rem auto;
+  place-items: center;
+  color: var(--theme-carbon);
+  border: 1px solid color-mix(in srgb, var(--theme-carbon) 25%, transparent);
+  font-size: 1.75rem;
+  line-height: 1;
+}
+
+.metadata-sidebar {
+  color: color-mix(in srgb, var(--theme-carbon) 82%, transparent);
+  font-size: 0.875rem;
+}
+
+.metadata-sidebar__header {
+  margin-bottom: 1.75rem;
+  padding-bottom: 1.5rem;
+  border-bottom: 4px double color-mix(in srgb, var(--theme-carbon) 22%, transparent);
+}
+
+.metadata-sidebar__eyebrow,
+.metadata-sidebar__section > h3 {
+  font-size: 0.7rem;
+  font-weight: 700;
+  font-variant: small-caps;
+  letter-spacing: 0.16em;
+}
+
+.metadata-sidebar__eyebrow {
+  margin-bottom: 0.35rem;
+  color: var(--theme-terracota);
+}
+
+.metadata-sidebar__title {
+  color: var(--theme-carbon);
+  font-size: 1.15rem;
+  font-weight: 700;
+  line-height: 1.2;
+}
+
+.metadata-sidebar__description {
+  margin-top: 0.75rem;
+  color: color-mix(in srgb, var(--theme-carbon) 68%, transparent);
+  font-style: italic;
+  line-height: 1.55;
+}
+
+.metadata-sidebar__sections {
+  display: grid;
+  gap: 1.5rem;
+}
+
+.metadata-sidebar__section {
+  padding-top: 1rem;
+  border-top: 1px solid color-mix(in srgb, var(--theme-carbon) 13%, transparent);
+}
+
+.metadata-sidebar__section > h3 {
+  display: flex;
+  gap: 0.4rem;
+  margin-bottom: 0.75rem;
+  color: color-mix(in srgb, var(--theme-carbon) 58%, transparent);
+}
+
+.metadata-sidebar__section > h3 span {
+  color: var(--theme-terracota);
+}
+
+.metadata-sidebar__tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.45rem;
+}
+
+.metadata-sidebar__tags li {
+  padding: 0.25rem 0.5rem;
+  background: color-mix(in srgb, var(--theme-carbon) 6%, transparent);
+  border: 1px solid color-mix(in srgb, var(--theme-carbon) 10%, transparent);
+}
+
+.metadata-sidebar__links {
+  display: grid;
+  gap: 0.55rem;
+}
+
+.metadata-sidebar__links a {
+  color: color-mix(in srgb, var(--theme-carbon) 78%, transparent);
+  line-height: 1.35;
+  transition: color 160ms ease;
+}
+
+.metadata-sidebar__links a:hover {
+  color: var(--theme-terracota);
+}
+
+@media (min-width: 1024px) {
+  .triptych-primary,
+  .triptych-layout[data-has-diagram="true"] .triptych-primary {
+    grid-template-areas: "reading diagram";
+    grid-template-columns: minmax(0, 85ch) minmax(22rem, 1fr);
+    gap: clamp(1.5rem, 3vw, 3rem);
+  }
+
+  .triptych-layout[data-has-diagram="false"] .triptych-primary {
+    grid-template-areas: "reading";
+    grid-template-columns: minmax(0, 85ch);
+    justify-content: center;
+  }
+
+  .triptych-diagram {
+    position: relative;
+    top: auto;
+    z-index: auto;
+    align-self: stretch;
+    height: auto;
+    min-height: 0;
+    border-block: 0;
+    box-shadow: none;
+  }
+
+  .triptych-diagram::before {
+    display: none;
+  }
+
+  .triptych-diagram::after {
+    display: none;
+  }
+
+  .triptych-diagram-sticky {
+    position: sticky;
+    top: var(--triptych-top);
+    height: calc(100svh - var(--triptych-top) - 1.5rem);
+    min-height: 24rem;
+    padding: 0 0 0 clamp(0.75rem, 1.25vw, 1.25rem);
+    overflow: visible;
+    background: transparent;
+    border-left: 3px double color-mix(in srgb, var(--theme-carbon) 18%, transparent);
+  }
+
+  .triptych-diagram-surface {
+    overflow: hidden;
+    background: transparent;
+  }
+}
+
+@media (min-width: 1280px) {
+  .triptych-layout[data-has-metadata="true"] {
+    display: grid;
+    grid-template-columns: minmax(13rem, 17rem) minmax(0, 1fr);
+    gap: clamp(1.5rem, 3vw, 3rem);
+    width: min(100%, 112rem);
+    margin-inline: auto;
+    padding-inline: clamp(1rem, 3vw, 3rem);
+  }
+
+  .triptych-layout[data-has-metadata="true"] .triptych-content {
+    width: 100%;
+    margin-inline: 0;
+  }
+
+  .triptych-layout[data-has-metadata="true"] .triptych-primary,
+  .triptych-layout[data-has-metadata="true"] .triptych-secondary {
+    padding-inline: 0;
+  }
+
+  .triptych-metadata {
+    grid-column: 1;
+    grid-row: 1;
+    position: sticky;
+    inset: auto;
+    top: var(--triptych-top);
+    z-index: auto;
+    width: 100%;
+    max-height: calc(100svh - var(--triptych-top) - 1.5rem);
+    padding: clamp(1rem, 1.5vw, 1.5rem);
+    border: 4px double color-mix(in srgb, var(--theme-carbon) 22%, transparent);
+    background: color-mix(in srgb, var(--theme-lienzo) 97%, var(--theme-pizarra));
+    box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--theme-carbon) 8%, transparent);
+    transform: none;
+    transition: none;
+  }
+
+  .triptych-metadata-trigger,
+  .triptych-metadata-backdrop,
+  .triptych-metadata-close {
+    display: none;
+  }
+}
+
+@media (min-width: 1440px) {
+  .triptych-primary,
+  .triptych-layout[data-has-diagram="true"] .triptych-primary {
+    grid-template-columns: minmax(0, 85ch) minmax(24rem, 1fr);
+  }
+}
+
+.demonstration-triptych .triptych-primary {
+  padding-top: clamp(1.5rem, 3vw, 2.75rem);
+  padding-bottom: clamp(1rem, 2vw, 2rem);
+}
+
+@media (max-width: 1023px) {
+  .demonstration-triptych .triptych-diagram {
+    border-top: 0;
+    border-bottom: 1px solid color-mix(in srgb, var(--theme-carbon) 18%, transparent);
+    box-shadow: 0 0.75rem 1.25rem color-mix(in srgb, var(--theme-carbon) 6%, transparent);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .triptych-metadata,
+  .triptych-metadata-backdrop {
+    transition: none;
+  }
 }

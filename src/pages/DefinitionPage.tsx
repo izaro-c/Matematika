@@ -1,11 +1,14 @@
+import { Suspense, useEffect } from "react";
 import { useParams } from "wouter";
 import { db } from "@/entities/content";
-import { SimulationLayout } from "@/widgets/layouts/SimulationLayout";
+import { TriptychLayout } from "@/widgets/layouts/TriptychLayout";
 import { ReadingButton } from '@/features/progress/ui/ReadingButton';
+import { useMetadataStore } from '@/features/metadata/MetadataStore';
+import { MetadataSidebar } from '@/features/metadata/ui/MetadataSidebar';
 import { FadeIn } from '@/shared/ui/FadeIn';
-import { ContentHeader } from '@/shared/ui/ContentHeader';
+import { ContentHeader } from '@/widgets/content/ContentHeader';
 import { ContentBody } from '@/shared/ui/ContentBody';
-import { MaterialPracticoSection } from '@/shared/ui/MaterialPracticoSection';
+import { MaterialPracticoSection } from '@/widgets/content/MaterialPracticoSection';
 import { AplicacionesSection } from '@/shared/ui/AplicacionesSection';
 
 /**
@@ -17,8 +20,22 @@ import { AplicacionesSection } from '@/shared/ui/AplicacionesSection';
 export const DefinitionPage = () => {
   const { id } = useParams();
   const slug = id || '';
+  const setMetadata = useMetadataStore((state) => state.setMetadata);
 
   const definition = db.getDefinition(slug);
+
+  useEffect(() => {
+    if (definition) {
+      setMetadata({
+        title: definition.title,
+        type: 'Definición',
+        tags: definition.tags || [],
+        description: definition.description,
+      });
+    }
+    return () => setMetadata(null);
+  }, [definition, setMetadata]);
+
   if (!definition) {
     return (
       <div className="min-h-screen bg-lienzo flex items-center justify-center font-serif text-carbon">
@@ -30,6 +47,7 @@ export const DefinitionPage = () => {
   const examples = db.getExamplesByTheorem(definition.id);
   const exercises = db.getExercisesByTheorem(definition.id);
   const useCases = db.getUseCasesByConcept(definition.id);
+  const Simulation = definition.Simulation;
 
   const breadcrumbs: { name: string; href?: string }[] = [];
   if (definition.tags && definition.tags.length > 0) {
@@ -41,9 +59,9 @@ export const DefinitionPage = () => {
     );
   }
 
-  const renderContent = () => (
-    <div className="min-h-screen bg-transparent text-carbon font-serif pb-32">
-      <FadeIn className="max-w-4xl mx-auto px-6 md:px-12 pt-16 md:pt-24">
+  const renderMainContent = () => (
+    <div className="bg-transparent text-carbon font-serif pb-16">
+      <FadeIn className="w-full px-6 md:px-12 pt-4">
         <ContentHeader
           type="definicion"
           title={definition.title}
@@ -55,25 +73,38 @@ export const DefinitionPage = () => {
           nodeId={definition.id}
         />
 
-        <section className="mt-8 mb-24">
+        <section className="mt-8 mb-8">
           <ContentBody>
             <definition.Component />
           </ContentBody>
         </section>
-
-        <MaterialPracticoSection examples={examples} exercises={exercises} />
-        <AplicacionesSection useCases={useCases} />
-
-        <div className="flex justify-center my-16">
-          <ReadingButton id={slug} />
-        </div>
       </FadeIn>
     </div>
   );
 
+  const renderSecondaryContent = () => (
+    <FadeIn>
+      <MaterialPracticoSection examples={examples} exercises={exercises} />
+      <AplicacionesSection useCases={useCases} />
+
+      <div className="flex justify-center mt-24">
+        <ReadingButton id={slug} />
+      </div>
+    </FadeIn>
+  );
+
   return (
-    <SimulationLayout simulationComponent={definition.Simulation}>
-      {renderContent()}
-    </SimulationLayout>
+    <TriptychLayout
+      metadata={<MetadataSidebar />}
+      diagram={Simulation ? (
+        <Suspense fallback={<div className="diagram-loading">Preparando visualización…</div>}>
+          <Simulation />
+        </Suspense>
+      ) : undefined}
+      diagramLabel={`Visualización de ${definition.title}`}
+      secondary={renderSecondaryContent()}
+    >
+      {renderMainContent()}
+    </TriptychLayout>
   );
 };

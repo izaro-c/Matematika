@@ -4,7 +4,7 @@ import { db } from '@/entities/content';
 import { ExerciseProvider, useExercise } from '@/features/exercises/ui/ExerciseContext';
 import { SimulationLayout } from "@/widgets/layouts/SimulationLayout";
 import { useProgressStore } from '@/features/progress/UserProgressStore';
-import { ContentHeader } from '@/shared/ui/ContentHeader';
+import { ContentHeader } from '@/widgets/content/ContentHeader';
 import { ContentBody } from '@/shared/ui/ContentBody';
 import { DifficultyBadge } from '@/shared/ui/DifficultyBadge';
 
@@ -21,7 +21,7 @@ const ProgressBar: React.FC = () => {
 
   return (
     <div className="sticky top-0 z-30 bg-lienzo/95 backdrop-blur-sm border-b border-carbon/10 px-6 py-3">
-      <div className="max-w-4xl mx-auto flex items-center gap-4">
+      <div className="w-full flex items-center gap-4">
         <div className="flex-1 h-1.5 bg-carbon/10 rounded-full overflow-hidden">
           <div
             className="h-full rounded-full transition-all duration-500"
@@ -77,7 +77,7 @@ const ExerciseContent: React.FC<{ id: string }> = ({ id }) => {
     <SimulationLayout simulationComponent={exercise.Simulation}>
       <div className="min-h-screen bg-transparent text-carbon font-serif pb-32">
         <ProgressBar />
-        <div className="max-w-4xl mx-auto px-6 md:px-10 pt-16 md:pt-24">
+        <div className="w-full px-6 md:px-10 pt-4 pb-16">
           <ContentHeader
             type="ejercicio"
             title={exercise.title}

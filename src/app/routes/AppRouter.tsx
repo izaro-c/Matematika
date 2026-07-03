@@ -1,4 +1,4 @@
-import { Router, Route, Switch } from "wouter";
+import { Route, Switch } from "wouter";
 import { MathProvider } from "@/app/providers/MathStoreContext";
 import { Suspense, lazy } from 'react';
 import { InteractiveLessonLayout } from "@/widgets/layouts/InteractiveLessonLayout";
@@ -39,11 +39,6 @@ export const AppRouter = () => {
   const lessons = db.getAllLessons();
   const biographies = db.getAllMathematicians();
 
-  // Tratamiento riguroso de la variable de entorno para compatibilidad Vite-Wouter.
-  // Vite exporta "/repo/" pero Wouter exige "/repo" para calcular el offset correctamente.
-  const rawBase = import.meta.env.BASE_URL;
-  const wouterBase = rawBase === '/' ? '' : rawBase.replace(/\/$/, '');
-
   return (
     <Suspense fallback={
       <div className="min-h-screen flex items-center justify-center bg-lienzo text-carbon font-serif">
@@ -53,11 +48,9 @@ export const AppRouter = () => {
         </div>
       </div>
     }>
-      {/* El Router inyecta el prefijo base a todas las definiciones de Route subyacentes */}
-      <Router base={wouterBase}>
-        <Switch>
-          <Route path="/" component={HomePage} />
-          <Route path="/editor" component={EditorPage} />
+      <Switch>
+        <Route path="/" component={HomePage} />
+        <Route path="/editor" component={EditorPage} />
           <Route path="/diccionario" component={DictionaryPage} />
           <Route path="/historia" component={HistoryTimeline} />
           <Route path="/metodos" component={MethodsPage} />
@@ -146,8 +139,7 @@ export const AppRouter = () => {
           </Route>
 
           <Route path="/:rest*" component={NotFoundPage} />
-        </Switch>
-      </Router>
+      </Switch>
     </Suspense>
   );
 };

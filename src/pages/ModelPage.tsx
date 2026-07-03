@@ -3,7 +3,7 @@ import { useRoute } from 'wouter';
 import { db } from '@/entities/content';
 import { SimulationLayout } from '@/widgets/layouts/SimulationLayout';
 import { FadeIn } from '@/shared/ui/FadeIn';
-import { ContentHeader } from '@/shared/ui/ContentHeader';
+import { ContentHeader } from '@/widgets/content/ContentHeader';
 import { ContentBody } from '@/shared/ui/ContentBody';
 import { ContentCard } from '@/shared/ui/ContentCard';
 import { SubtleSeparator } from '@/shared/ui/SubtleSeparator';
@@ -34,7 +34,7 @@ export function ModelPage() {
 
   const renderContent = () => (
     <div className="min-h-screen bg-transparent text-carbon font-serif pb-32">
-      <FadeIn className="max-w-4xl mx-auto px-6 md:px-12 pt-16 md:pt-24">
+      <FadeIn className="w-full px-6 md:px-12 pt-4 pb-16">
         <ContentHeader
           type="modelo"
           title={model.title}
@@ -79,7 +79,7 @@ export function ModelPage() {
             <h2 className="text-2xl font-bold mb-6 border-b border-carbon/10 pb-4" style={{ fontVariant: 'small-caps' }}>
               Axiomas verificados ({verifiedAxioms.length})
             </h2>
-            <div className="flex flex-col gap-3">
+            <div className="flex flex-col gap-3 max-w-2xl">
               {verifiedAxioms.map(ax => ax && (
                 <ContentCard
                   key={ax.id}

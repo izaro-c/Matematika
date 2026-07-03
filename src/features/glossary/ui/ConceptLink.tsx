@@ -34,15 +34,12 @@ export const ConceptLink: React.FC<ConceptLinkProps> = ({ targetId, children }) 
     )) || targetIds[0];
 
     return (
-      <Link href={`/construccion/${firstInvalid}`}>
-        <a
-           
-          onClick={() => { /* silenced unused var isDependency */ }} // just to silence unused var error if any
-          className="font-bold text-terracota/70 underline decoration-dashed decoration-terracota/40 decoration-2 underline-offset-4 hover:decoration-terracota hover:text-terracota transition-all duration-150 rounded-none cursor-pointer"
-          title={`"${firstInvalid}" — página en construcción`}
-        >
-          {children}
-        </a>
+      <Link
+        href={`/construccion/${firstInvalid}`}
+        className="font-bold text-terracota/70 underline decoration-dashed decoration-terracota/40 decoration-2 underline-offset-4 hover:decoration-terracota hover:text-terracota transition-all duration-150 rounded-none cursor-pointer"
+        title={`"${firstInvalid}" — página en construcción`}
+      >
+        {children}
       </Link>
     );
   }

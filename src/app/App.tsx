@@ -1,14 +1,12 @@
 import { useEffect } from 'react';
 import { MDXProvider } from '@mdx-js/react';
-import { MDXComponents } from '@/shared/ui/MDXBlocks';
-import { MarginaliaPanel } from "@/widgets/content/MarginaliaPanel";
+import { MDXComponents } from '@/widgets/mdx/MDXBlocks';
 import { PageTransition } from "@/widgets/layouts/PageTransition";
 import { ErrorBoundary } from "@/widgets/layouts/ErrorBoundary";
-import { SymbolDictionaryManager } from "@/widgets/content/SymbolDictionaryManager";
-import { SearchOmnibar } from "@/widgets/navigation/SearchOmnibar";
-import { TopBar } from "@/widgets/navigation/TopBar";
-import { useKeyboardShortcuts } from "@/shared/hooks/useKeyboardShortcuts";
+import { AppShell } from "@/widgets/layouts/AppShell";
+import { useKeyboardShortcuts } from "@/app/hooks/useKeyboardShortcuts";
 import { AppRouter } from "@/app/routes/AppRouter";
+import { Router } from "wouter";
 
 /**
  * App
@@ -36,19 +34,22 @@ function App() {
     return () => window.removeEventListener('message', handleMessage);
   }, []);
 
-  return (
-    <MDXProvider components={MDXComponents}>
-      <SymbolDictionaryManager />
-      <TopBar />
-      <SearchOmnibar />
-      <MarginaliaPanel />
+  // Tratamiento riguroso de la variable de entorno para compatibilidad Vite-Wouter.
+  const rawBase = import.meta.env.BASE_URL;
+  const wouterBase = rawBase === '/' ? '' : rawBase.replace(/\/$/, '');
 
-      <PageTransition>
-        <ErrorBoundary>
-          <AppRouter />
-        </ErrorBoundary>
-      </PageTransition>
-    </MDXProvider>
+  return (
+    <Router base={wouterBase}>
+      <MDXProvider components={MDXComponents}>
+        <AppShell>
+          <PageTransition>
+            <ErrorBoundary>
+              <AppRouter />
+            </ErrorBoundary>
+          </PageTransition>
+        </AppShell>
+      </MDXProvider>
+    </Router>
   );
 }
 
