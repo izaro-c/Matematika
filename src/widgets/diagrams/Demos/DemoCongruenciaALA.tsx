@@ -6,7 +6,7 @@ import {
 export const DemoCongruenciaALA = () => {
   return (
     <MathBoard
-      boundingbox={[-4, 3, 5, -2]}
+      boundingbox={[-3.5, 2.5, 3.5, -1.5]}
       onInit={(board: any, els: any, theme: any) => {
         // Triángulo 1 (Interactivo)
         els.B = createPoint(board, [-3, -1], { name: 'B', fixed: true }, theme);

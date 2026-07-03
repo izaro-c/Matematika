@@ -126,7 +126,7 @@ export const SearchOmnibar = () => {
     <div className="fixed inset-0 z-[100] flex items-start justify-center pt-[8vh]" onKeyDown={handleKeyDown}>
       <div className="absolute inset-0 bg-carbon/40 backdrop-blur-sm" onClick={closeSearch} />
 
-      <div className="relative w-full max-w-3xl bg-lienzo shadow-2xl overflow-hidden flex flex-col font-sans"
+      <div className="relative w-[calc(100%-2rem)] sm:w-full max-w-3xl bg-lienzo shadow-2xl overflow-hidden flex flex-col font-sans"
         style={{ border: '1px solid var(--theme-carbon)', borderRadius: '2px', outline: '1px solid color-mix(in srgb, var(--theme-carbon) 15%, transparent)', outlineOffset: '-4px' }}>
 
         {/* Input */}
@@ -145,15 +145,15 @@ export const SearchOmnibar = () => {
           <kbd className="ml-3 px-2 py-1 text-[10px] font-sans font-bold tracking-widest uppercase text-carbon/40 border border-carbon/15 rounded-sm shrink-0 shadow-sm">ESC</kbd>
         </div>
 
-        <div className="flex" style={{ minHeight: 200 }}>
-          {/* Type filters sidebar */}
-          <div className="w-30 shrink-0 border-r border-carbon/8 p-3 space-y-1">
+        <div className="flex flex-col sm:flex-row" style={{ minHeight: 200 }}>
+          {/* Type filters - Scroll horizontal en móvil, sidebar en escritorio */}
+          <div className="w-full sm:w-32 shrink-0 border-b sm:border-b-0 sm:border-r border-carbon/8 p-3 flex sm:flex-col gap-2 overflow-x-auto sm:overflow-x-visible">
             {ALL_TYPES.map(type => (
               <button
                 key={type}
                 onClick={() => toggleType(type)}
-                className={`w-full text-left text-xs px-2 py-1.5 rounded-sm transition-colors flex items-center gap-2 ${activeTypes.has(type) ? 'text-carbon bg-carbon/5' : 'text-carbon/40 hover:bg-carbon/5'
-                  }`}
+                className={`text-left text-xs px-2.5 py-1.5 rounded-sm transition-colors flex items-center gap-2 shrink-0 sm:w-full
+                  ${activeTypes.has(type) ? 'text-carbon bg-carbon/5' : 'text-carbon/40 hover:bg-carbon/5'}`}
               >
                 <span
                   className="w-2 h-2 rounded-sm shrink-0 border"
@@ -162,7 +162,7 @@ export const SearchOmnibar = () => {
                     borderColor: TYPE_COLORS[type] || 'var(--theme-pizarra)',
                   }}
                 />
-                <span className="capitalize font-medium">{type.replace('_', ' ')}</span>
+                <span className="capitalize font-medium whitespace-nowrap">{type.replace('_', ' ')}</span>
               </button>
             ))}
           </div>

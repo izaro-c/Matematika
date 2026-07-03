@@ -183,7 +183,7 @@ export const HistoryTimeline = () => {
 
                           {/* Info */}
                           <div className="flex-1 min-w-0">
-                            <EraInsignia era={""} year={(node.birthYear || 0)} />
+                            <EraInsignia era={getEra(node.birthYear || 0).label} year={(node.birthYear || 0)} />
                             <h2
                               className="text-2xl font-bold text-carbon group-hover:text-terracota transition-colors leading-tight mt-1 mb-2"
                               style={{ fontVariant: 'small-caps' }}

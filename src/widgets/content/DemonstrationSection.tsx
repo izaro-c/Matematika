@@ -1,6 +1,6 @@
-import React, { useMemo } from 'react';
+import React, { useMemo, Suspense } from 'react';
 import { useMathStore } from '@/app/providers/MathStoreContext';
-import { TriptychLayout } from '@/widgets/layouts/TriptychLayout';
+import { CodexLayout } from '@/widgets/layouts/CodexLayout';
 
 /**
  * Propiedades para el componente DemonstrationSection.
@@ -16,54 +16,67 @@ interface DemonstrationSectionProps {
 
 /**
  * Componente layout para demostraciones interactivas.
- * 
- * Implementa scrollytelling con una única instancia del diagrama. El layout
- * reposiciona esa instancia con CSS sin portales ni ramas por breakpoint.
- * 
- * Admite múltiples diagramas (`diagrams`) que transicionan según el estado `highlight` actual.
+ *
+ * Implementa scrollytelling con una única instancia del diagrama activo.
+ * - Evita colisión de múltiples tableros JSXGraph paralelos en el DOM, garantizando la estabilidad de tamaño.
+ * - Implementa un extractor numérico tolerante a diferencias tipográficas en los pasos.
  */
 export const DemonstrationSection: React.FC<DemonstrationSectionProps> = ({ diagram, diagrams, children }) => {
   const step = useMathStore(state => state.variables?.['step']);
-  
-  const renderedDiagram = useMemo(() => {
-    const stepStr = typeof step === 'string' ? step : null;
 
-    if (diagrams) {
-      // Find the currently active diagram, fallback to the first one if step doesn't match
-      const keys = Object.keys(diagrams);
-      const activeKey = stepStr && diagrams[stepStr] ? stepStr : keys[0];
-      
-      return (
-        <div className="relative w-full h-full">
-          {keys.map((key) => {
-            const isActive = key === activeKey;
-            return (
-              <div 
-                key={key}
-                className={`absolute inset-0 transition-opacity duration-700 ease-in-out ${isActive ? 'opacity-100 z-10 pointer-events-auto' : 'opacity-0 z-0 pointer-events-none'}`}
-              >
-                {diagrams[key]}
-              </div>
-            );
-          })}
-        </div>
-      );
+  const { activeDiagram, activeKey } = useMemo(() => {
+    if (!diagrams) return { activeDiagram: diagram, activeKey: 'default' };
+
+    const keys = Object.keys(diagrams);
+    if (keys.length === 0) return { activeDiagram: null, activeKey: 'default' };
+
+    const stepStr = typeof step === 'string' ? step.trim() : '';
+
+    // 1. Coincidencia exacta (ej. "step1")
+    if (stepStr && diagrams[stepStr]) {
+      return { activeDiagram: diagrams[stepStr], activeKey: stepStr };
     }
-    return diagram;
+
+    // 2. Extracción numérica inteligente para robustez didáctica (ej: "step-2" o "step2" -> "2")
+    const digitsMatch = stepStr.match(/\d+/);
+    const stepNum = digitsMatch ? digitsMatch[0] : '';
+
+    if (stepNum) {
+      // Coincidencia con número simple (ej: "2")
+      if (diagrams[stepNum]) return { activeDiagram: diagrams[stepNum], activeKey: stepNum };
+
+      // Coincidencia parcial con variante (ej: "step2", "step-2")
+      const foundKey = keys.find(k => {
+        const kDigits = k.match(/\d+/);
+        return kDigits ? kDigits[0] === stepNum : false;
+      });
+      if (foundKey) return { activeDiagram: diagrams[foundKey], activeKey: foundKey };
+    }
+
+    // 3. Fallback al primer diagrama
+    return { activeDiagram: diagrams[keys[0]], activeKey: keys[0] };
   }, [diagram, diagrams, step]);
 
   const hasDiagram = diagram !== undefined || (diagrams !== undefined && Object.keys(diagrams).length > 0);
 
   return (
-    <TriptychLayout
-      embedded
-      diagram={hasDiagram ? renderedDiagram : undefined}
+    <CodexLayout
+      diagram={hasDiagram && activeDiagram ? (
+        <div
+          key={activeKey}
+          className="relative w-full h-full scale-animation overflow-hidden !p-0 !m-0 flex items-center justify-center"
+        >
+          <Suspense fallback={<div className="animate-pulse text-carbon/40 font-serif">Cargando visualización...</div>}>
+            {activeDiagram}
+          </Suspense>
+        </div>
+      ) : undefined}
       diagramLabel="Diagrama de la demostración"
-      className="demonstration-triptych"
     >
       <div className="prose prose-pizarra prose-lg max-w-none w-full">
         {children}
       </div>
-    </TriptychLayout>
+    </CodexLayout>
   );
 };
+export default DemonstrationSection;

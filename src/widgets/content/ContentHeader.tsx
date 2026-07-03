@@ -1,9 +1,10 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import { Link } from 'wouter';
 import { Breadcrumbs } from '@/shared/ui/Breadcrumbs';
 import type { Crumb } from '@/shared/ui/Breadcrumbs';
 import { ContentTypeBadge } from '@/shared/ui/ContentTypeBadge';
 import { ModelBadgeList } from '@/features/graph/ui/ModelBadge';
+import { db } from '@/entities/content';
 
 /**
  * Propiedades de cabecera estandarizada para contenido matemático.
@@ -43,6 +44,7 @@ export const ContentHeader: React.FC<ContentHeaderProps> = ({
   title,
   description,
   breadcrumbs = [],
+  authors = [],
   color,
   nodeId,
   rightSlot,
@@ -52,8 +54,36 @@ export const ContentHeader: React.FC<ContentHeaderProps> = ({
 }) => {
   const accentToken = color ?? 'var(--theme-carbon)';
 
+  const renderedAuthors = useMemo(() => {
+    if (!authors || authors.length === 0) return null;
+
+    const authList = authors
+      .map((authId) => {
+        const mathematician = db.getMathematicianById(authId);
+        if (!mathematician) return null;
+        return (
+          <Link
+            key={authId}
+            href={`/bio/${authId}`}
+            className="hover:text-terracota border-b border-dashed border-carbon/20 hover:border-terracota/40 transition-colors"
+          >
+            {mathematician.name}
+          </Link>
+        );
+      })
+      .filter(Boolean);
+
+    if (authList.length === 0) return null;
+
+    return authList.reduce((prev, curr, idx) => {
+      if (idx === 0) return [curr];
+      if (idx === authList.length - 1) return [...prev, ' y ', curr];
+      return [...prev, ', ', curr];
+    }, [] as React.ReactNode[]);
+  }, [authors]);
+
   return (
-    <div className="mb-16 border-b border-carbon/10 pb-12">
+    <div className="mb-8 border-b border-carbon/10 pb-6">
       {backLink && (
         <div className="mb-8">
           <Link
@@ -82,11 +112,17 @@ export const ContentHeader: React.FC<ContentHeaderProps> = ({
       </div>
 
       <h1
-        className="text-4xl md:text-5xl lg:text-6xl font-bold tracking-tight mb-6"
+        className="text-4xl md:text-5xl lg:text-6xl font-bold tracking-tight mb-2"
         style={{ fontVariant: 'small-caps', color: accentToken }}
       >
         {title}
       </h1>
+
+      {renderedAuthors && (
+        <p className="text-sm font-serif italic text-carbon/60 mb-6">
+          Por {renderedAuthors}
+        </p>
+      )}
 
       {description && (
         <p className="text-lg md:text-xl text-carbon/70 italic border-l-4 border-carbon/20 pl-6 leading-relaxed">

@@ -49,7 +49,7 @@ export interface MathBoardProps {
 
 export const MathBoard: React.FC<MathBoardProps> = ({
   id,
-  className = "w-full h-full min-h-[350px] relative bg-lienzo/40 border border-pizarra/10 rounded-sm overflow-hidden",
+  className = "w-full h-full min-h-[350px] relative overflow-hidden !p-0 !m-0",
   boundingbox = [-5, 5, 5, -5],
   keepaspectratio = true,
   axis = false,
@@ -93,6 +93,7 @@ export const MathBoard: React.FC<MathBoardProps> = ({
       (board.renderer as any).container.style.backgroundColor = theme.lienzo;
     }
 
+    // Theme Mutation Observer
     const obs = new MutationObserver(() => {
       if (boardObj.current && boardObj.current.renderer) {
         const currentTheme = getTheme();
@@ -102,8 +103,25 @@ export const MathBoard: React.FC<MathBoardProps> = ({
     });
     obs.observe(document.documentElement, { attributes: true, attributeFilter: ['class'] });
 
+    // ResizeObserver for dynamic responsiveness of the JSXGraph canvas
+    const resizeObserver = new ResizeObserver(() => {
+      if (boardObj.current && boardRef.current) {
+        const width = boardRef.current.clientWidth;
+        const height = boardRef.current.clientHeight;
+        boardObj.current.resizeContainer(width, height);
+        // CRITICAL FIX: Reset the bounding box to keep it centered and scaled properly!
+        boardObj.current.setBoundingBox(boundingbox, keepaspectratio);
+        boardObj.current.update();
+      }
+    });
+
+    if (boardRef.current) {
+      resizeObserver.observe(boardRef.current);
+    }
+
     return () => {
       obs.disconnect();
+      resizeObserver.disconnect();
       if (boardObj.current) {
         JXG.JSXGraph.freeBoard(boardObj.current);
         boardObj.current = null;
@@ -129,3 +147,4 @@ export const MathBoard: React.FC<MathBoardProps> = ({
     </div>
   );
 };
+export default MathBoard;

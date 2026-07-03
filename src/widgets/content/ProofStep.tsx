@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useMemo } from 'react';
 import { publicAsset } from '@/shared/lib/routeHelper';
 import { useMathStore } from '@/app/providers/MathStoreContext';
 import { ProofStepExpander } from './ProofStepExpander';
@@ -7,53 +7,74 @@ interface ProofStepProps {
   number: number;
   title: string;
   /** Si se provee, activa el estado global "highlight" con este valor cuando el bloque es visible en pantalla */
-  target?: string;
+  target?: string | string[];
   /** IDs de bloques de táctica Lean asociados a este paso. Se muestran colapsados por defecto. */
   leanBlocks?: string[];
+  /** IDs de justificaciones (axiomas, teoremas) de este paso. Si no se provee, se extraen automáticamente de los ConceptLinks. */
+  justifications?: string[];
   children?: React.ReactNode;
 }
+
+// Función recursiva para extraer automáticamente los targetId de ConceptLink o RefLink en los children de React
+const extractConceptIds = (nodes: React.ReactNode): string[] => {
+  const ids: string[] = [];
+  React.Children.forEach(nodes, (child) => {
+    if (React.isValidElement(child)) {
+      const props = child.props as Record<string, unknown>;
+      const targetId = props?.targetId;
+      if (targetId) {
+        if (Array.isArray(targetId)) {
+          ids.push(targetId[0] as string);
+        } else if (typeof targetId === 'string') {
+          ids.push(targetId);
+        }
+      }
+      const innerChildren = props?.children as React.ReactNode;
+      if (innerChildren) {
+        ids.push(...extractConceptIds(innerChildren));
+      }
+    }
+  });
+  return Array.from(new Set(ids));
+};
 
 /**
  * ProofStep
  *
- * Bloque de paso numerado con estética Arts & Crafts. Cuando `target` es
- * definido, usa IntersectionObserver para actualizar el estado global de
- * "highlight" de forma automática según la visibilidad del bloque en pantalla
- * (sin necesidad de hover).
+ * Bloque de paso numerado con estética Arts & Crafts.
+ * Su visibilidad y sincronización se controlan de forma centralizada por el CodexLayout
+ * mediante atributos de datos (data-target, data-justifications), eliminando observers redundantes.
  */
-export const ProofStep: React.FC<ProofStepProps> = ({ number, title, target, leanBlocks = [], children }) => {
-  const setVariable = useMathStore((state) => state.setVariable);
-  const containerRef = useRef<HTMLDivElement>(null);
+export const ProofStep: React.FC<ProofStepProps> = ({
+  number,
+  title,
+  target,
+  leanBlocks = [],
+  justifications,
+  children,
+}) => {
+  const finalTarget = target || `step-${number}`;
+  const currentStep = useMathStore((state) => state.variables?.['step']);
+  
+  const isActive = Array.isArray(finalTarget) 
+    ? JSON.stringify(currentStep) === JSON.stringify(finalTarget)
+    : currentStep === finalTarget;
 
-  // IntersectionObserver: activa el highlight cuando el bloque entra en la zona
-  // central de la pantalla (rootMargin recorta el viewport un 30% arriba y abajo,
-  // dejando solo la banda central del 40%). Esto funciona en ambas direcciones.
-  useEffect(() => {
-    if (!target || !containerRef.current) return;
-
-    const el = containerRef.current;
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) {
-          setVariable('step', target);
-          setVariable('highlight', null);
-        }
-      },
-      {
-        rootMargin: '-30% 0px -30% 0px', // Banda central del 40%
-        threshold: 0,
-      }
-    );
-
-    observer.observe(el);
-    return () => observer.unobserve(el);
-  }, [target, setVariable]);
+  // Extraer las justificaciones lógicas automáticamente si no se especifican a mano
+  const activeJustifications = useMemo(() => {
+    if (justifications && justifications.length > 0) return justifications;
+    return extractConceptIds(children);
+  }, [children, justifications]);
 
   return (
-    <div ref={containerRef} className="mt-10 mb-6 w-full">
+    <div
+      className={`mt-10 mb-6 w-full proof-step ${isActive ? 'is-active' : ''}`}
+      data-target={typeof finalTarget === 'string' ? finalTarget : JSON.stringify(finalTarget)}
+      data-justifications={JSON.stringify(activeJustifications)}
+    >
       {/* Cabecera: número + título */}
       <div className="flex items-center gap-4 mb-4">
-        {/* Caja del número — reducida de w-28 a w-16 */}
+        {/* Caja del número */}
         <div
           className="relative w-16 h-16 min-w-[4rem] flex items-center justify-center border border-carbon overflow-hidden rounded-sm bg-lienzo shrink-0"
         >
@@ -68,7 +89,7 @@ export const ProofStep: React.FC<ProofStepProps> = ({ number, title, target, lea
           />
           {/* Marco interior */}
           <div className="absolute inset-1 border border-carbon/20 pointer-events-none" />
-          {/* Número — reducido de text-6xl a text-4xl */}
+          {/* Número */}
           <span
             className="font-serif italic font-bold text-4xl z-10 text-terracota"
             style={{
@@ -80,7 +101,7 @@ export const ProofStep: React.FC<ProofStepProps> = ({ number, title, target, lea
           </span>
         </div>
 
-        {/* Título — reducido de text-4xl a text-2xl */}
+        {/* Título */}
         <h3 className="text-2xl font-serif m-0 border-b pb-1 flex-1 italic text-carbon border-carbon/20">
           {title}
         </h3>

@@ -1,6 +1,6 @@
 import { MathBoard } from '@/features/graph/ui/MathBoard';
 import { 
-  createPoint, createLine, createSegment, createAngle, createPolygon, createTicks, createGlider 
+  createPoint, createSegment, createAngle, createPolygon, createTicks, createGlider 
 } from '@/features/graph/ui/MathFactory';
 import { StyleManager } from '@/features/graph/ui/MathUtils';
 
@@ -10,7 +10,7 @@ export const DemoTrianguloIsosceles = () => {
       boundingbox={[-4, 4, 4, -2]}
       onInit={(board: any, els: any, theme: any) => {
         // Eje vertical para restringir el movimiento de A y mantener isósceles
-        els.yAxis = createLine(board, [[0, 0], [0, 1]], { visible: false }, theme);
+        els.yAxis = createSegment(board, [[0, 0], [0, 3.5]], { visible: false }, theme);
 
         els.A = createGlider(board, [0, 2, els.yAxis], { 
           name: 'A', label: { offset: [-5, 15] }
