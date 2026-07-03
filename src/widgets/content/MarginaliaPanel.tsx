@@ -325,7 +325,7 @@ export const MarginaliaPanel = () => {
             </button>
           </div>
 
-          <div className="flex-1 overflow-y-auto custom-scrollbar h-full relative">
+          <div className="flex-1 overflow-y-auto h-full relative">
             <div className="p-10 md:p-12 min-h-full flex flex-col relative">
               <div className="absolute top-3 left-3 w-5 h-5 border-t-2 border-l-2 border-terracota/40 pointer-events-none" aria-hidden />
               <div className="absolute top-3 right-3 w-5 h-5 border-t-2 border-r-2 border-terracota/40 pointer-events-none" aria-hidden />
