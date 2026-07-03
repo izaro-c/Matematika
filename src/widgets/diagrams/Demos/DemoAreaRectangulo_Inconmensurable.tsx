@@ -1,6 +1,6 @@
 import React from 'react';
-import { MathBoard } from '../../../features/graph/ui/MathBoard';
-import { createPoint, createPolygon } from '../../../features/graph/ui/MathFactory';
+import { MathBoard } from '@/features/graph/ui/MathBoard';
+import { createPoint, createPolygon } from '@/features/graph/ui/MathFactory';
 
 export const DemoAreaRectangulo_Inconmensurable: React.FC = () => {
   return (

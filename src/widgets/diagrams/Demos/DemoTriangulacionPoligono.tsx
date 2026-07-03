@@ -1,6 +1,6 @@
 import React from 'react';
-import { MathBoard } from '../../../features/graph/ui/MathBoard';
-import { createPoint, createPolygon, createSegment } from '../../../features/graph/ui/MathFactory';
+import { MathBoard } from '@/features/graph/ui/MathBoard';
+import { createPoint, createPolygon, createSegment } from '@/features/graph/ui/MathFactory';
 
 export const DemoTriangulacionPoligono: React.FC = () => {
   return (
