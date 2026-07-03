@@ -73,10 +73,10 @@ export const ProofStep: React.FC<ProofStepProps> = ({
       data-justifications={JSON.stringify(activeJustifications)}
     >
       {/* Cabecera: número + título */}
-      <div className="flex items-center gap-4 mb-4">
+      <div className="flex items-center gap-3 lg:gap-4 mb-4">
         {/* Caja del número */}
         <div
-          className="relative w-16 h-16 min-w-[4rem] flex items-center justify-center border border-carbon overflow-hidden rounded-sm bg-lienzo shrink-0"
+          className="relative w-12 h-12 min-w-[3rem] lg:w-16 lg:h-16 lg:min-w-[4rem] flex items-center justify-center border border-carbon overflow-hidden rounded-sm bg-lienzo shrink-0"
         >
           {/* Fondo Arts & Crafts */}
           <div
@@ -91,7 +91,7 @@ export const ProofStep: React.FC<ProofStepProps> = ({
           <div className="absolute inset-1 border border-carbon/20 pointer-events-none" />
           {/* Número */}
           <span
-            className="font-serif italic font-bold text-4xl z-10 text-terracota"
+            className="font-serif italic font-bold text-2xl lg:text-4xl z-10 text-terracota"
             style={{
               fontFamily: 'Georgia, "Playfair Display", serif',
               textShadow: '1px 1px 0px #FDFBF7, -1px -1px 0px #FDFBF7, 1px -1px 0px #FDFBF7, -1px 1px 0px #FDFBF7'
@@ -102,14 +102,14 @@ export const ProofStep: React.FC<ProofStepProps> = ({
         </div>
 
         {/* Título */}
-        <h3 className="text-2xl font-serif m-0 border-b pb-1 flex-1 italic text-carbon border-carbon/20">
+        <h3 className="text-xl lg:text-2xl font-serif m-0 border-b pb-1 flex-1 italic text-carbon border-carbon/20">
           {title}
         </h3>
       </div>
 
       {/* Contenido del paso */}
       {children && (
-        <div className="pl-20">
+        <div className="proof-step-content">
           {children}
           <ProofStepExpander blockIds={leanBlocks} />
         </div>
