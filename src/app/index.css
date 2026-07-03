@@ -1098,7 +1098,7 @@ a:focus-visible, button:focus-visible {
     grid-column: 2;
     grid-row: 1;
     border-left: 1px solid color-mix(in srgb, var(--theme-carbon) 10%, transparent);
-    background: color-mix(in srgb, var(--theme-lienzo) 95%, var(--theme-carbon) 5%);
+    background: transparent;
   }
   .codex-reading {
     grid-column: 1;
@@ -1113,7 +1113,7 @@ a:focus-visible, button:focus-visible {
   flex-direction: column;
   background: transparent;
   position: relative;
-  /* Removed border, box-shadow and overflow hidden to let it breathe naturally */
+  /* El panel de justificaciones medirá exactamente 8rem, restándolo al diagrama */
 }
 
 .codex-diagram-surface {
@@ -1136,7 +1136,8 @@ a:focus-visible, button:focus-visible {
 }
 
 .codex-justifications {
-  max-height: 8rem;
+  height: 8rem; /* Altura fija para evitar saltos en el layout */
+  flex-shrink: 0;
   background: transparent;
   padding: 1rem 0 0.5rem 0;
   margin: 0 1rem;

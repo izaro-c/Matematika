@@ -83,18 +83,17 @@ export const ContentHeader: React.FC<ContentHeaderProps> = ({
   }, [authors]);
 
   return (
-    <header className="mb-12 md:mb-16 relative flex flex-col items-center text-center">
+    <header className="mb-8 md:mb-10 relative flex flex-col items-center text-center">
       
       {/* Elementos de navegación a la izquierda */}
-      <div className="w-full flex flex-col items-start gap-4 mb-8">
+      <div className="w-full flex flex-col items-start gap-2 mb-6">
         {backLink && (
           <Link
             href={backLink.href}
-            className="ac-pill"
+            className="text-carbon/60 hover:text-terracota font-serif italic text-sm transition-colors border-b border-transparent hover:border-terracota/30"
             style={{ textDecoration: 'none' }}
           >
-            <span className="ac-pill-ornament" aria-hidden>←</span>
-            <span className="ac-pill-serif">{backLink.label}</span>
+            {backLink.label}
           </Link>
         )}
         
@@ -104,7 +103,7 @@ export const ContentHeader: React.FC<ContentHeaderProps> = ({
       </div>
 
       {/* Tipo e Insignias */}
-      <div className="flex flex-wrap justify-center items-center gap-4 mb-6">
+      <div className="flex flex-wrap justify-center items-center gap-3 mb-4">
         <ContentTypeBadge type={type} label={typeLabel} />
         {badgesSlot}
         {nodeId && <ModelBadgeList nodeId={nodeId} />}
@@ -112,7 +111,7 @@ export const ContentHeader: React.FC<ContentHeaderProps> = ({
 
       {/* Título Principal (Arts & Crafts Serif) */}
       <h1
-        className="font-serif text-5xl md:text-6xl lg:text-7xl mb-6 text-carbon/90"
+        className="font-serif text-4xl md:text-5xl lg:text-6xl mb-4 text-carbon/90"
         style={{ color: accentToken, letterSpacing: '-0.02em', lineHeight: '1.1' }}
       >
         {title}
