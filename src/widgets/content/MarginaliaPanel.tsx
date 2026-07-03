@@ -306,13 +306,8 @@ export const MarginaliaPanel = () => {
       />
 
       <div className={panelClassName}>
-        <div className="absolute top-3 left-3 w-5 h-5 border-t-2 border-l-2 border-terracota/40 pointer-events-none" aria-hidden />
-        <div className="absolute top-3 right-3 w-5 h-5 border-t-2 border-r-2 border-terracota/40 pointer-events-none" aria-hidden />
-        <div className="absolute bottom-3 left-3 w-5 h-5 border-b-2 border-l-2 border-terracota/40 pointer-events-none" aria-hidden />
-        <div className="absolute bottom-3 right-3 w-5 h-5 border-b-2 border-r-2 border-terracota/40 pointer-events-none" aria-hidden />
-
-        <div className="p-10 md:p-12 h-full flex flex-col relative overflow-hidden">
-          <div className="absolute top-5 right-5 flex gap-3 text-carbon/40 font-sans z-10">
+        <div className="h-full flex flex-col relative overflow-hidden">
+          <div className="absolute top-5 right-5 flex gap-3 text-carbon/40 font-sans z-20">
             <button
               onClick={toggleDisplayMode}
               className="hover:text-terracota transition-colors text-sm p-2 rounded-sm hover:bg-carbon/5"
@@ -330,13 +325,22 @@ export const MarginaliaPanel = () => {
             </button>
           </div>
 
-          <div className="mt-6 flex-1 overflow-y-auto pr-4 -mr-4 pb-4">
-            {panelContent}
-          </div>
+          <div className="flex-1 overflow-y-auto custom-scrollbar h-full relative">
+            <div className="p-10 md:p-12 min-h-full flex flex-col relative">
+              <div className="absolute top-3 left-3 w-5 h-5 border-t-2 border-l-2 border-terracota/40 pointer-events-none" aria-hidden />
+              <div className="absolute top-3 right-3 w-5 h-5 border-t-2 border-r-2 border-terracota/40 pointer-events-none" aria-hidden />
+              <div className="absolute bottom-3 left-3 w-5 h-5 border-b-2 border-l-2 border-terracota/40 pointer-events-none" aria-hidden />
+              <div className="absolute bottom-3 right-3 w-5 h-5 border-b-2 border-r-2 border-terracota/40 pointer-events-none" aria-hidden />
 
-          {isSidebar && (
-            <div className="mt-4 pt-4 flex-none flex justify-center opacity-30 text-terracota text-sm">❦</div>
-          )}
+              <div className="mt-2 flex-1">
+                {panelContent}
+              </div>
+
+              {isSidebar && (
+                <div className="mt-auto pt-8 flex-none flex justify-center opacity-30 text-terracota text-sm">❦</div>
+              )}
+            </div>
+          </div>
         </div>
       </div>
     </>
