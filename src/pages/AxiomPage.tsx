@@ -42,9 +42,11 @@ export function AxiomPage() {
           nodeId={axiom.id}
         />
 
-        <ContentBody>
-          <axiom.Component />
-        </ContentBody>
+        <section className="mt-8 mb-24">
+          <ContentBody>
+            <axiom.Component />
+          </ContentBody>
+        </section>
       </FadeIn>
     </div>
   );
