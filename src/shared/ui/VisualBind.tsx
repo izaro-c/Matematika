@@ -27,7 +27,7 @@ export const VisualBind: React.FC<VisualBindProps> = ({ element, color = 'salvia
       onClick={() => setVariable('highlight', element)}
       onMouseEnter={() => setVariable('highlight', element)}
       onMouseLeave={() => setVariable('highlight', null)}
-      className="cursor-pointer border-b-2 transition-colors rounded-none px-[4px] py-[2px] font-bold text-carbon shadow-sm inline-block mx-1"
+      className="cursor-pointer border-b-2 transition-colors rounded-none px-[2px] py-[1px] font-bold text-carbon shadow-sm box-decoration-clone"
       style={{
         borderColor: cssColor,
         backgroundColor: `color-mix(in srgb, ${cssColor} 20%, transparent)`,

@@ -906,6 +906,14 @@ a:focus-visible, button:focus-visible {
   padding-left: 0.25rem;
 }
 
+@media (min-width: 768px) {
+  .editorial-reading :is(p, li):not(blockquote p) {
+    text-align: justify;
+    text-justify: inter-word;
+    hyphens: auto;
+  }
+}
+
 @media (min-width: 1024px) {
   .triptych-primary {
     grid-template-areas: "reading diagram";
@@ -919,6 +927,10 @@ a:focus-visible, button:focus-visible {
     grid-template-columns: minmax(0, 1.2fr) minmax(20rem, 1fr);
     gap: 0;
     padding-inline: 0;
+  }
+
+  .theorem-triptych[data-has-diagram="true"] .triptych-primary {
+    grid-template-columns: minmax(0, 1.1fr) minmax(21rem, 1fr);
   }
 
   .triptych-layout[data-has-diagram="false"] .triptych-primary {
@@ -1029,6 +1041,10 @@ a:focus-visible, button:focus-visible {
   .triptych-primary,
   .triptych-layout[data-has-diagram="true"] .triptych-primary {
     grid-template-columns: minmax(0, 85ch) minmax(24rem, 1fr);
+  }
+
+  .theorem-triptych[data-has-diagram="true"] .triptych-primary {
+    grid-template-columns: minmax(0, 80ch) minmax(26rem, 1fr);
   }
 }
 

@@ -11,7 +11,7 @@ export const ContentBody: React.FC<ContentBodyProps> = ({
   variant = 'default',
   className = '',
 }) => {
-  const base = 'prose prose-pizarra max-w-none prose-editorial';
+  const base = 'prose prose-pizarra max-w-none prose-editorial editorial-reading';
   const variants: Record<string, string> = {
     default: 'prose-lg',
     compact: 'prose-base',

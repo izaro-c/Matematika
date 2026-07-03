@@ -1,6 +1,6 @@
 # Fachada de diagramas
 
-`@/shared/diagrams` es la API pública mínima para contratos compartidos por los
+`@/widgets/diagrams` es la API pública mínima para contratos compartidos por los
 diagramas. Su propósito actual es estabilizar tres fronteras sin cambiar el
 runtime de JSXGraph:
 
@@ -16,7 +16,7 @@ import {
   isDiagramTargetActive,
   type DiagramBoard,
   type DiagramElementRegistry,
-} from '@/shared/diagrams';
+} from '@/widgets/diagrams';
 
 const terracota = getDiagramColor('terracota');
 const isActive = isDiagramTargetActive(highlight, 'segmento-ab');

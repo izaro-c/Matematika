@@ -73,7 +73,7 @@ export const DemonstrationSection: React.FC<DemonstrationSectionProps> = ({ diag
       ) : undefined}
       diagramLabel="Diagrama de la demostración"
     >
-      <div className="prose prose-pizarra prose-lg max-w-none w-full">
+      <div className="prose prose-pizarra prose-lg max-w-none w-full editorial-reading">
         {children}
       </div>
     </CodexLayout>

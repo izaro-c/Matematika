@@ -57,6 +57,7 @@ export default defineConfig([
     files: [
       'src/boundary/components/diagrams/**/*.tsx',
       'src/shared/diagrams/**/*.tsx',
+      'src/widgets/diagrams/**/*.tsx',
       'Matematika/src/shared/diagrams/**/*.tsx'
     ],
     rules: {
