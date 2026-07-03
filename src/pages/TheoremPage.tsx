@@ -42,6 +42,7 @@ export const TheoremPage = () => {
   useEffect(() => {
     if (theorem) {
       setMetadata({
+        id: theorem.id,
         title: theorem.title,
         type: TYPE_LABELS[theorem.type || 'teorema'] || 'Teorema',
         tags: theorem.tags || [],

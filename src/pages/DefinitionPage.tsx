@@ -1,10 +1,9 @@
 import { Suspense, useEffect } from "react";
 import { useParams } from "wouter";
 import { db } from "@/entities/content";
-import { TriptychLayout } from "@/widgets/layouts/TriptychLayout";
+import { NotebookLayout } from "@/widgets/layouts/NotebookLayout";
 import { ReadingButton } from '@/features/progress/ui/ReadingButton';
 import { useMetadataStore } from '@/features/metadata/MetadataStore';
-import { MetadataSidebar } from '@/features/metadata/ui/MetadataSidebar';
 import { FadeIn } from '@/shared/ui/FadeIn';
 import { ContentHeader } from '@/widgets/content/ContentHeader';
 import { ContentBody } from '@/shared/ui/ContentBody';
@@ -27,6 +26,7 @@ export const DefinitionPage = () => {
   useEffect(() => {
     if (definition) {
       setMetadata({
+        id: definition.id,
         title: definition.title,
         type: 'Definición',
         tags: definition.tags || [],
@@ -94,8 +94,7 @@ export const DefinitionPage = () => {
   );
 
   return (
-    <TriptychLayout
-      metadata={<MetadataSidebar />}
+    <NotebookLayout
       diagram={Simulation ? (
         <Suspense fallback={<div className="diagram-loading">Preparando visualización…</div>}>
           <Simulation />
@@ -105,6 +104,6 @@ export const DefinitionPage = () => {
       secondary={renderSecondaryContent()}
     >
       {renderMainContent()}
-    </TriptychLayout>
+    </NotebookLayout>
   );
 };

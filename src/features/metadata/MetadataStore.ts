@@ -1,6 +1,7 @@
 import { create } from 'zustand';
 
 export interface PageMetadata {
+  id?: string;
   title?: string;
   type?: string;
   domain?: string;

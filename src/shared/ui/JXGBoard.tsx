@@ -40,8 +40,23 @@ const JXGBoard: React.FC<JXGBoardProps> = ({
       logic(boardInstance.current);
     }
 
+    // Setup ResizeObserver to make JSXGraph dynamically responsive
+    const resizeObserver = new ResizeObserver(() => {
+      if (boardInstance.current && boardRef.current) {
+        const width = boardRef.current.clientWidth;
+        const height = boardRef.current.clientHeight;
+        boardInstance.current.resizeContainer(width, height);
+        boardInstance.current.update();
+      }
+    });
+
+    if (boardRef.current) {
+      resizeObserver.observe(boardRef.current);
+    }
+
     // Cleanup
     return () => {
+      resizeObserver.disconnect();
       if (boardInstance.current) {
         JXG.JSXGraph.freeBoard(boardInstance.current);
         boardInstance.current = null;
