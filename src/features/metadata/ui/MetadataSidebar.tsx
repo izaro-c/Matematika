@@ -1,5 +1,6 @@
 import { Link } from 'wouter';
 import { useMetadataStore } from '@/features/metadata/MetadataStore';
+import { LocalDependencyGraph } from '@/widgets/graph/LocalDependencyGraph';
 
 export function MetadataSidebar() {
   const metadata = useMetadataStore((state) => state.metadata);
@@ -11,28 +12,32 @@ export function MetadataSidebar() {
       {metadata.type && (
         <header className="metadata-sidebar__header">
           <p className="metadata-sidebar__eyebrow">{metadata.type}</p>
-          {metadata.title && <h2 className="metadata-sidebar__title">{metadata.title}</h2>}
-          {metadata.description && <p className="metadata-sidebar__description">{metadata.description}</p>}
+          {metadata.title && <h2 className="metadata-sidebar__title font-serif italic text-lg">{metadata.title}</h2>}
         </header>
+      )}
+
+      {/* Grafo de dependencias lógicas interactivo en el panel lateral */}
+      {metadata.id && (
+        <LocalDependencyGraph nodeId={metadata.id} />
       )}
 
       <div className="metadata-sidebar__sections">
         {metadata.domain && (
           <MetadataSection title="Dominio">
-            <p className="capitalize">{metadata.domain}</p>
+            <p className="capitalize font-serif italic text-sm">{metadata.domain}</p>
           </MetadataSection>
         )}
 
         {(metadata.author || metadata.date) && (
           <MetadataSection title="Atribución">
-            {metadata.author && <p>{metadata.author}</p>}
+            {metadata.author && <p className="font-serif italic text-sm">{metadata.author}</p>}
             {metadata.date && <p className="text-xs text-carbon/60">{metadata.date}</p>}
           </MetadataSection>
         )}
 
         {metadata.difficulty && (
           <MetadataSection title="Nivel">
-            <p className="capitalize">{metadata.difficulty}</p>
+            <p className="capitalize font-serif italic text-sm">{metadata.difficulty}</p>
           </MetadataSection>
         )}
 
@@ -67,7 +72,7 @@ export function MetadataSidebar() {
             <ul className="metadata-sidebar__links">
               {metadata.tableOfContents.map((item) => (
                 <li key={item.id} style={{ paddingLeft: `${Math.max(0, item.level - 1) * 0.5}rem` }}>
-                  <a href={`#${item.id}`}>{item.title}</a>
+                  <a href={`#${item.id}`} className="hover:text-terracota transition-colors">{item.title}</a>
                 </li>
               ))}
             </ul>
