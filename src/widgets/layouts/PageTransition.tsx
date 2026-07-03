@@ -10,7 +10,7 @@ export const PageTransition: React.FC<{ children: React.ReactNode }> = ({ childr
   const [location] = useLocation();
 
   return (
-    <div key={location} className="animate-fade-in w-full h-full">
+    <div key={location} className="page-transition w-full h-full">
       {children}
     </div>
   );

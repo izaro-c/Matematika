@@ -105,7 +105,7 @@ export const DictionaryPage = () => {
       <div className="absolute inset-4 border-2 border-carbon/10 pointer-events-none" />
       <div className="absolute inset-6 border border-carbon/5 pointer-events-none" />
 
-      <div className="max-w-4xl w-full px-8 relative z-10">
+      <div className="max-w-4xl mx-auto w-full px-8 relative z-10">
         
         <div className="text-center mb-16">
           <div className="flex justify-center mb-6">

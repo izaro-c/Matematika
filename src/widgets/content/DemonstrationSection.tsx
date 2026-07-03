@@ -1,5 +1,6 @@
 import React, { useMemo } from 'react';
 import { useMathStore } from '@/app/providers/MathStoreContext';
+import { TriptychLayout } from '@/widgets/layouts/TriptychLayout';
 
 /**
  * Propiedades para el componente DemonstrationSection.
@@ -16,9 +17,8 @@ interface DemonstrationSectionProps {
 /**
  * Componente layout para demostraciones interactivas.
  * 
- * Implementa un diseño de pantalla dividida ("Split Screen").
- * La columna izquierda mantiene un diagrama interactivo fijado (sticky),
- * mientras que la columna derecha permite hacer scroll por el texto de la demostración.
+ * Implementa scrollytelling con una única instancia del diagrama. El layout
+ * reposiciona esa instancia con CSS sin portales ni ramas por breakpoint.
  * 
  * Admite múltiples diagramas (`diagrams`) que transicionan según el estado `highlight` actual.
  */
@@ -55,22 +55,15 @@ export const DemonstrationSection: React.FC<DemonstrationSectionProps> = ({ diag
   const hasDiagram = diagram !== undefined || (diagrams !== undefined && Object.keys(diagrams).length > 0);
 
   return (
-    <div className="w-full flex flex-col md:flex-row min-h-[85vh]">
-      {/* Columna Izquierda: Diagrama (Sticky) — solo si hay diagrama */}
-      {hasDiagram && (
-        <div className="w-full md:w-[50%] relative bg-lienzo">
-          <div className="sticky top-[10vh] h-[80vh] p-8 flex items-center justify-center">
-            {renderedDiagram}
-          </div>
-        </div>
-      )}
-      
-      {/* Columna Derecha: Texto (Scrolly) */}
-      <div className={`w-full ${hasDiagram ? 'md:w-[50%]' : 'md:w-full max-w-4xl mx-auto'} p-8 md:p-16 flex flex-col justify-start relative`}>
-        <div className="prose prose-pizarra prose-lg max-w-prose mx-auto w-full">
-          {children}
-        </div>
+    <TriptychLayout
+      embedded
+      diagram={hasDiagram ? renderedDiagram : undefined}
+      diagramLabel="Diagrama de la demostración"
+      className="demonstration-triptych"
+    >
+      <div className="prose prose-pizarra prose-lg max-w-none w-full">
+        {children}
       </div>
-    </div>
+    </TriptychLayout>
   );
 };

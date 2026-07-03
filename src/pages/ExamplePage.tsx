@@ -4,7 +4,7 @@ import { SimulationLayout } from "@/widgets/layouts/SimulationLayout";
 import { ReadingButton } from '@/features/progress/ui/ReadingButton';
 import { ContentCard } from '@/shared/ui/ContentCard';
 import { FadeIn } from '@/shared/ui/FadeIn';
-import { ContentHeader } from '@/shared/ui/ContentHeader';
+import { ContentHeader } from '@/widgets/content/ContentHeader';
 import { ContentBody } from '@/shared/ui/ContentBody';
 import { DifficultyBadge } from '@/shared/ui/DifficultyBadge';
 import { SubtleSeparator } from '@/shared/ui/SubtleSeparator';
@@ -37,7 +37,7 @@ export const ExamplePage: React.FC = () => {
   return (
     <SimulationLayout simulationComponent={example.Simulation}>
       <div className="min-h-screen bg-transparent text-carbon font-serif pb-32">
-        <FadeIn className="max-w-4xl mx-auto px-6 md:px-10 pt-16 md:pt-24">
+        <FadeIn className="w-full px-6 md:px-10 pt-4 pb-16">
           <ContentHeader
             type="ejemplo"
             typeLabel="Ejemplo Resuelto"
@@ -61,7 +61,7 @@ export const ExamplePage: React.FC = () => {
               <h3 className="text-xs font-sans font-bold uppercase tracking-widest text-carbon/40 mb-4">
                 Practica con ejercicios relacionados
               </h3>
-              <div className="flex flex-col gap-3">
+              <div className="flex flex-col gap-3 max-w-2xl">
                 {relatedExercises.map(ex => (
                   <ContentCard
                     key={ex.id}

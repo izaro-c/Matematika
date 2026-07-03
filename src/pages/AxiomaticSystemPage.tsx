@@ -3,7 +3,7 @@ import { useRoute } from 'wouter';
 import { db } from '@/entities/content';
 import { SimulationLayout } from '@/widgets/layouts/SimulationLayout';
 import { FadeIn } from '@/shared/ui/FadeIn';
-import { ContentHeader } from '@/shared/ui/ContentHeader';
+import { ContentHeader } from '@/widgets/content/ContentHeader';
 import { ContentBody } from '@/shared/ui/ContentBody';
 import { ContentCard } from '@/shared/ui/ContentCard';
 import { SubtleSeparator } from '@/shared/ui/SubtleSeparator';
@@ -31,9 +31,9 @@ export function AxiomaticSystemPage() {
   const axioms = (system.axiomas || []).map(axId => db.getAxiom(axId)).filter(Boolean);
   const models = db.getModelsForSystem(system.id);
 
-  const renderContent = () => (
-    <div className="min-h-screen bg-transparent text-carbon font-serif pb-32">
-      <FadeIn className="max-w-4xl mx-auto px-6 md:px-12 pt-16 md:pt-24">
+  const renderMainContent = () => (
+    <div className="bg-transparent text-carbon font-serif pb-16">
+      <FadeIn className="w-full px-6 md:px-12 pt-4">
         <ContentHeader
           type="sistema-axiomatico"
           typeLabel="Sistema Axiomático"
@@ -49,14 +49,20 @@ export function AxiomaticSystemPage() {
             <system.Component />
           </Suspense>
         </ContentBody>
+      </FadeIn>
+    </div>
+  );
 
+  const renderSecondaryContent = () => (
+    <div className="w-full px-6 md:px-12 pb-32">
+      <FadeIn>
         {axioms.length > 0 && (
-          <section className="mt-24">
+          <section className="mt-16">
             <SubtleSeparator />
             <h2 className="text-2xl font-bold mb-8 border-b border-carbon/10 pb-4" style={{ fontVariant: 'small-caps' }}>
               Axiomas del sistema ({axioms.length})
             </h2>
-            <div className="flex flex-col gap-3">
+            <div className="flex flex-col gap-3 max-w-4xl">
               {axioms.map(ax => ax && (
                 <ContentCard
                   key={ax.id}
@@ -72,12 +78,12 @@ export function AxiomaticSystemPage() {
         )}
 
         {models.length > 0 && (
-          <section className="mt-24">
+          <section className="mt-16">
             <SubtleSeparator />
             <h2 className="text-2xl font-bold mb-8 border-b border-carbon/10 pb-4" style={{ fontVariant: 'small-caps' }}>
               Modelos que satisfacen este sistema ({models.length})
             </h2>
-            <div className="flex flex-col gap-3">
+            <div className="flex flex-col gap-3 max-w-4xl">
               {models.map(m => (
                 <ContentCard
                   key={m.id}
@@ -96,8 +102,11 @@ export function AxiomaticSystemPage() {
   );
 
   return (
-    <SimulationLayout simulationComponent={system.Simulation}>
-      {renderContent()}
-    </SimulationLayout>
+    <div className="min-h-screen flex flex-col w-full">
+      <SimulationLayout simulationComponent={system.Simulation}>
+        {renderMainContent()}
+      </SimulationLayout>
+      {renderSecondaryContent()}
+    </div>
   );
 }

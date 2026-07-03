@@ -15,7 +15,7 @@ export const MethodsPage = () => {
 
   return (
     <div className="min-h-screen bg-lienzo bg-arts-and-crafts text-carbon p-12 lg:p-24 flex justify-center">
-      <div className="max-w-4xl w-full">
+      <div className="max-w-4xl mx-auto w-full">
         
         <header className="mb-16 text-center">
           <h1 className="text-5xl lg:text-7xl font-serif text-carbon tracking-tight mb-6">

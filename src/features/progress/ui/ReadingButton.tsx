@@ -22,7 +22,7 @@ export const ReadingButton: React.FC<ReadingButtonProps> = ({ id }) => {
     <div className="w-full flex justify-center my-16">
       <button
         onClick={() => toggleRead(id)}
-        className={`group relative flex items-center justify-center gap-6 px-16 py-6 overflow-hidden transition-all duration-700 ease-out border-y ${
+        className={`group relative flex items-center justify-center gap-4 sm:gap-6 px-6 sm:px-16 py-5 sm:py-6 overflow-hidden transition-all duration-700 ease-out border-y ${
           alreadyRead 
             ? 'border-salvia/30 bg-salvia/5' 
             : 'border-carbon/10 bg-transparent hover:border-terracota/30 hover:bg-carbon/[0.02]'
@@ -38,7 +38,7 @@ export const ReadingButton: React.FC<ReadingButtonProps> = ({ id }) => {
           )}
         </div>
         
-        <span className={`text-sm font-sans uppercase tracking-[0.3em] font-bold transition-colors duration-500 ${
+        <span className={`whitespace-nowrap text-xs sm:text-sm font-sans uppercase tracking-[0.2em] sm:tracking-[0.3em] font-bold transition-colors duration-500 ${
           alreadyRead ? 'text-salvia' : 'text-carbon/60 group-hover:text-terracota'
         }`}>
           {alreadyRead ? 'Completado' : 'Marcar como Leído'}

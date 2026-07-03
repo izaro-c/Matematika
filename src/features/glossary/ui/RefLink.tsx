@@ -30,13 +30,12 @@ export const RefLink: React.FC<RefLinkProps> = ({ targetId, children }) => {
 
   if (!entity) {
     return (
-      <Link href={`/construccion/${targetId}`}>
-        <a
-          className="font-bold text-pizarra/70 border-b border-dashed border-pizarra/40 hover:border-pizarra hover:text-pizarra transition-all duration-150 px-[2px] rounded-none cursor-pointer"
-          title={`"${targetId}" — página en construcción`}
-        >
-          {children}
-        </a>
+      <Link
+        href={`/construccion/${targetId}`}
+        className="font-bold text-pizarra/70 border-b border-dashed border-pizarra/40 hover:border-pizarra hover:text-pizarra transition-all duration-150 px-[2px] rounded-none cursor-pointer"
+        title={`"${targetId}" — página en construcción`}
+      >
+        {children}
       </Link>
     );
   }

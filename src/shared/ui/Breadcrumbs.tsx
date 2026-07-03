@@ -31,10 +31,12 @@ export const Breadcrumbs: React.FC<BreadcrumbsProps> = ({
     >
       <span className="shrink-0">/</span>
       {crumb.href ? (
-        <Link href={crumb.href}>
-          <a className={`hover:text-carbon transition-colors truncate ${isLast ? '' : 'max-w-[120px] lg:max-w-[200px]'}`} title={crumb.name}>
-            {crumb.name}
-          </a>
+        <Link
+          href={crumb.href}
+          className={`hover:text-carbon transition-colors truncate ${isLast ? 'max-w-[160px] lg:max-w-[240px]' : 'max-w-[120px] lg:max-w-[200px]'}`}
+          title={crumb.name}
+        >
+          {crumb.name}
         </Link>
       ) : (
         <span className={`text-carbon/80 font-bold truncate ${isLast ? '' : 'max-w-[120px] lg:max-w-[200px]'}`} title={crumb.name}>
@@ -45,10 +47,10 @@ export const Breadcrumbs: React.FC<BreadcrumbsProps> = ({
   );
 
   return (
-    <nav aria-label="Breadcrumb" className={`flex items-center text-xs font-sans tracking-widest uppercase text-carbon/40 ${className}`}>
+    <nav aria-label="Breadcrumb" className={`flex flex-wrap items-center gap-y-2 text-xs font-sans tracking-widest uppercase text-carbon/40 ${className}`}>
       {showHome && (
-        <Link href={homeHref}>
-          <a className="hover:text-carbon transition-colors shrink-0">{homeLabel}</a>
+        <Link href={homeHref} className="hover:text-carbon transition-colors shrink-0">
+          {homeLabel}
         </Link>
       )}
 
