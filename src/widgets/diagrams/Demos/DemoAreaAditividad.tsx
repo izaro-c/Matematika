@@ -1,6 +1,6 @@
 import React from 'react';
-import { MathBoard } from '../../../features/graph/ui/MathBoard';
-import { createPoint, createSegment, createPolygon } from '../../../features/graph/ui/MathFactory';
+import { MathBoard } from '@/features/graph/ui/MathBoard';
+import { createPoint, createSegment, createPolygon } from '@/features/graph/ui/MathFactory';
 
 export const DemoAreaAditividad: React.FC = () => {
   return (
