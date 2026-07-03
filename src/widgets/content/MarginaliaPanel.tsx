@@ -144,7 +144,7 @@ function buildActiveTermDataList(activeTerms: string[] | null): (TermData & { is
 }
 
 function computePanelClassName(isSidebar: boolean, isActive: boolean): string {
-  let base = 'parchment-panel fixed z-50 shadow-2xl overflow-y-auto flex flex-col font-serif transition-all duration-500 ease-[cubic-bezier(0.22,1,0.36,1)]';
+  let base = 'parchment-panel fixed z-50 shadow-2xl flex flex-col font-serif transition-all duration-500 ease-[cubic-bezier(0.22,1,0.36,1)]';
   if (isSidebar) {
     base += ' top-0 right-0 h-full w-full max-w-md';
     base += isActive ? ' translate-x-0' : ' translate-x-full';
@@ -311,7 +311,7 @@ export const MarginaliaPanel = () => {
         <div className="absolute bottom-3 left-3 w-5 h-5 border-b-2 border-l-2 border-terracota/40 pointer-events-none" aria-hidden />
         <div className="absolute bottom-3 right-3 w-5 h-5 border-b-2 border-r-2 border-terracota/40 pointer-events-none" aria-hidden />
 
-        <div className="p-10 md:p-12 h-full flex flex-col relative">
+        <div className="p-10 md:p-12 h-full flex flex-col relative overflow-hidden">
           <div className="absolute top-5 right-5 flex gap-3 text-carbon/40 font-sans z-10">
             <button
               onClick={toggleDisplayMode}
@@ -330,12 +330,12 @@ export const MarginaliaPanel = () => {
             </button>
           </div>
 
-          <div className="mt-6">
+          <div className="mt-6 flex-1 overflow-y-auto pr-4 -mr-4 pb-4">
             {panelContent}
           </div>
 
           {isSidebar && (
-            <div className="mt-auto pt-8 pb-2 flex justify-center opacity-30 text-terracota text-sm">❦</div>
+            <div className="mt-4 pt-4 flex-none flex justify-center opacity-30 text-terracota text-sm">❦</div>
           )}
         </div>
       </div>
