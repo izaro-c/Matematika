@@ -46,6 +46,10 @@
   --theme-musgo: #7C964D;
 }
 
+html, body {
+  overscroll-behavior: none;
+}
+
 body {
   background-color: var(--theme-lienzo);
   color: var(--theme-carbon);
@@ -439,46 +443,46 @@ a:focus-visible, button:focus-visible {
 }
 
 /* === ARTS & CRAFTS PILL — Estilo unificado para badges, tags y píldoras ===
- * Basado en el ModelBadge canon: esquinas vivas, borde + outline doble,
- * sombra dura letterpress, tipografía serif small-caps.
+ * Rediseño minimalista de inspiración editorial clásica.
+ * Esquinas vivas, tipografía serif itálica elegante y colores atenuados.
  */
 .ac-pill {
   display: inline-flex;
   align-items: center;
-  gap: 0.4rem;
-  font-family: ui-sans-serif, system-ui, -apple-system, sans-serif;
-  font-size: 10px;
-  font-weight: 700;
-  text-transform: uppercase;
-  letter-spacing: 0.1em;
-  padding: 0.25rem 0.6rem;
+  gap: 0.35rem;
+  font-family: ui-serif, Georgia, Cambria, "Times New Roman", Times, serif;
+  font-size: 11px;
+  font-style: italic;
+  font-weight: 500;
+  text-transform: none; /* Sin mayúsculas rígidas */
+  letter-spacing: 0.02em;
+  padding: 0.2rem 0.6rem;
   border-radius: 0;
-  border: 1px solid color-mix(in srgb, var(--theme-carbon) 20%, transparent);
-  outline: 1px solid color-mix(in srgb, var(--theme-carbon) 10%, transparent);
-  outline-offset: -3px;
-  background-color: var(--theme-lienzo);
-  box-shadow: 1px 1px 0px color-mix(in srgb, var(--theme-carbon) 8%, transparent);
+  border: 1px solid color-mix(in srgb, var(--theme-carbon) 15%, transparent);
+  background-color: color-mix(in srgb, var(--theme-carbon) 3%, var(--theme-lienzo));
+  color: var(--theme-carbon);
   transition: all 0.2s ease;
-  line-height: 1.4;
+  line-height: 1.3;
   white-space: nowrap;
 }
 
 .ac-pill:hover {
-  border-color: color-mix(in srgb, var(--theme-carbon) 40%, transparent);
-  box-shadow: 2px 2px 0px color-mix(in srgb, var(--theme-carbon) 12%, transparent);
+  border-color: color-mix(in srgb, var(--theme-carbon) 30%, transparent);
+  background-color: color-mix(in srgb, var(--theme-carbon) 6%, var(--theme-lienzo));
+  text-decoration: none;
 }
 
 /* Variante con color semántico (token Arts & Crafts) */
 .ac-pill-accent {
-  border-color: color-mix(in srgb, var(--pill-accent, var(--theme-carbon)) 35%, transparent);
-  outline-color: color-mix(in srgb, var(--pill-accent, var(--theme-carbon)) 18%, transparent);
+  border-color: color-mix(in srgb, var(--pill-accent, var(--theme-carbon)) 20%, transparent);
   color: var(--pill-accent, var(--theme-carbon));
-  background-color: color-mix(in srgb, var(--pill-accent, var(--theme-carbon)) 6%, var(--theme-lienzo));
+  background-color: color-mix(in srgb, var(--pill-accent, var(--theme-carbon)) 4%, var(--theme-lienzo));
 }
 
 .ac-pill-accent:hover {
-  border-color: color-mix(in srgb, var(--pill-accent, var(--theme-carbon)) 55%, transparent);
-  background-color: color-mix(in srgb, var(--pill-accent, var(--theme-carbon)) 12%, var(--theme-lienzo));
+  border-color: color-mix(in srgb, var(--pill-accent, var(--theme-carbon)) 40%, transparent);
+  background-color: color-mix(in srgb, var(--pill-accent, var(--theme-carbon)) 8%, var(--theme-lienzo));
+  text-decoration: none;
 }
 
 /* Ornamento opcional antes del texto */
@@ -486,9 +490,9 @@ a:focus-visible, button:focus-visible {
   font-family: ui-serif, Georgia, serif;
   font-style: normal;
   font-weight: 400;
-  font-size: 11px;
+  font-size: 12px;
   line-height: 1;
-  opacity: 0.7;
+  opacity: 0.8;
 }
 
 /* Variante serif con small-caps (para badges de contenido con nombre) */
@@ -498,6 +502,7 @@ a:focus-visible, button:focus-visible {
   font-size: 11px;
   letter-spacing: 0.08em;
   font-variant: small-caps;
+  font-style: normal;
   text-transform: none;
 }
 
