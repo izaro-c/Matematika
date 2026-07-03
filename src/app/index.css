@@ -844,17 +844,30 @@ a:focus-visible, button:focus-visible {
 }
 
 @media (min-width: 1024px) {
-  .triptych-primary,
+  .triptych-primary {
+    grid-template-areas: "reading diagram";
+    grid-template-columns: minmax(0, 1.2fr) minmax(20rem, 1fr);
+    gap: 0;
+    padding-inline: 0;
+  }
+
   .triptych-layout[data-has-diagram="true"] .triptych-primary {
     grid-template-areas: "reading diagram";
-    grid-template-columns: minmax(0, 85ch) minmax(22rem, 1fr);
-    gap: clamp(1.5rem, 3vw, 3rem);
+    grid-template-columns: minmax(0, 1.2fr) minmax(20rem, 1fr);
+    gap: 0;
+    padding-inline: 0;
   }
 
   .triptych-layout[data-has-diagram="false"] .triptych-primary {
     grid-template-areas: "reading";
     grid-template-columns: minmax(0, 85ch);
     justify-content: center;
+  }
+
+  .triptych-reading {
+    padding-inline: clamp(2rem, 5vw, 6rem);
+    width: 100%;
+    max-width: 85ch;
   }
 
   .triptych-diagram {
@@ -878,13 +891,13 @@ a:focus-visible, button:focus-visible {
 
   .triptych-diagram-sticky {
     position: sticky;
-    top: var(--triptych-top);
-    height: calc(100svh - var(--triptych-top) - 1.5rem);
+    top: 0;
+    height: 100svh;
     min-height: 24rem;
-    padding: 0 0 0 clamp(0.75rem, 1.25vw, 1.25rem);
+    padding: 0;
     overflow: visible;
     background: transparent;
-    border-left: 3px double color-mix(in srgb, var(--theme-carbon) 18%, transparent);
+    border-left: 1px solid color-mix(in srgb, var(--theme-carbon) 10%, transparent);
   }
 
   .triptych-diagram-surface {
@@ -896,14 +909,16 @@ a:focus-visible, button:focus-visible {
 @media (min-width: 1280px) {
   .triptych-layout[data-has-metadata="true"] {
     display: grid;
-    grid-template-columns: minmax(13rem, 17rem) minmax(0, 1fr);
-    gap: clamp(1.5rem, 3vw, 3rem);
-    width: min(100%, 112rem);
-    margin-inline: auto;
-    padding-inline: clamp(1rem, 3vw, 3rem);
+    grid-template-columns: minmax(15rem, 19rem) minmax(0, 1fr);
+    gap: 0;
+    width: 100%;
+    max-width: 100%;
+    margin-inline: 0;
+    padding-inline: 0;
   }
 
   .triptych-layout[data-has-metadata="true"] .triptych-content {
+    grid-column: 2;
     width: 100%;
     margin-inline: 0;
   }
@@ -918,14 +933,16 @@ a:focus-visible, button:focus-visible {
     grid-row: 1;
     position: sticky;
     inset: auto;
-    top: var(--triptych-top);
+    top: 0;
+    height: 100svh;
+    max-height: 100svh;
     z-index: auto;
     width: 100%;
-    max-height: calc(100svh - var(--triptych-top) - 1.5rem);
-    padding: clamp(1rem, 1.5vw, 1.5rem);
-    border: 4px double color-mix(in srgb, var(--theme-carbon) 22%, transparent);
-    background: color-mix(in srgb, var(--theme-lienzo) 97%, var(--theme-pizarra));
-    box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--theme-carbon) 8%, transparent);
+    padding: 2.5rem 1.5rem 1.5rem 2rem;
+    border: none;
+    border-right: 1px solid color-mix(in srgb, var(--theme-carbon) 10%, transparent);
+    background: transparent;
+    box-shadow: none;
     transform: none;
     transition: none;
   }
@@ -1322,4 +1339,22 @@ a:focus-visible, button:focus-visible {
   .codex-diagram-sticky .local-dependency-graph-container {
     display: none;
   }
+}
+
+.metadata-sidebar .local-dependency-graph-container {
+  position: static;
+  max-height: none;
+  overflow-y: visible;
+  padding: 0;
+  border: none;
+  background: transparent;
+  box-shadow: none;
+  margin-top: 1rem;
+  margin-bottom: 2rem;
+}
+
+.metadata-sidebar .local-dependency-graph-container h3 {
+  font-size: 0.7rem;
+  color: var(--theme-terracota);
+  border-bottom-color: color-mix(in srgb, var(--theme-carbon) 10%, transparent);
 }
