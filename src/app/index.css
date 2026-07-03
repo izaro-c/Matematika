@@ -1025,12 +1025,12 @@ a:focus-visible, button:focus-visible {
   --codex-top: 5.5rem;
   width: 100%;
   min-height: 100vh;
-  padding-top: var(--codex-top);
+  /* Eliminado padding-top global para permitir full-bleed del diagrama */
   background: var(--theme-lienzo);
 }
 
 .codex-content {
-  width: min(100%, 112rem);
+  width: 100%;
   margin-inline: auto;
   padding-inline: clamp(1rem, 3vw, 3rem);
   display: grid;
@@ -1043,6 +1043,10 @@ a:focus-visible, button:focus-visible {
     grid-template-columns: minmax(0, 65ch) minmax(32rem, 1.5fr);
     gap: clamp(2rem, 4vw, 4rem);
     align-items: start;
+    width: 100%;
+    max-width: 100%;
+    padding-left: clamp(2rem, 8vw, 12rem); /* Margen izquierdo dinámico */
+    padding-right: 0; /* Full bleed a la derecha */
   }
   .codex-content.is-single-column {
     display: block;
@@ -1055,12 +1059,10 @@ a:focus-visible, button:focus-visible {
 .codex-reading {
   width: 100%;
   min-width: 0;
+  padding-top: var(--codex-top);
 }
 
 @media (max-width: 1023px) {
-  .codex-layout {
-    padding-top: 0;
-  }
   .codex-layout.has-no-diagram {
     padding-top: var(--codex-top);
   }
@@ -1091,11 +1093,12 @@ a:focus-visible, button:focus-visible {
 @media (min-width: 1024px) {
   .codex-diagram {
     position: sticky;
-    top: var(--codex-top);
-    height: calc(100svh - var(--codex-top) - 2rem);
-    min-height: 30rem;
+    top: 0;
+    height: 100svh;
     grid-column: 2;
     grid-row: 1;
+    border-left: 1px solid color-mix(in srgb, var(--theme-carbon) 10%, transparent);
+    background: color-mix(in srgb, var(--theme-lienzo) 95%, var(--theme-carbon) 5%);
   }
   .codex-reading {
     grid-column: 1;
