@@ -187,9 +187,11 @@ export const CodexLayout: React.FC<CodexLayoutProps> = ({
           badgesSlot={demo.proofMethod ? (
             <Link
               href={`/leccion-metodo-${demo.proofMethod}`}
-              className="text-[10px] font-sans uppercase tracking-widest text-terracota border border-terracota/30 px-2 py-1 rounded-sm hover:bg-terracota/10 hover:border-terracota transition-colors"
+              className="ac-pill ac-pill-accent"
+              style={{ ['--pill-accent' as string]: 'var(--theme-terracota)' }}
             >
-              {demo.proofMethod}
+              <span className="ac-pill-ornament" aria-hidden>❧</span>
+              Método: {demo.proofMethod}
             </Link>
           ) : undefined}
         />
