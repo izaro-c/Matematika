@@ -1,5 +1,6 @@
 import React from 'react';
 import { SectionTitle } from '@/shared/ui/SectionTitle';
+import { SubtleSeparator } from '@/shared/ui/SubtleSeparator';
 import { ContentCard } from '@/shared/ui/ContentCard';
 import { DOMAIN_ICONS } from '@/shared/lib/constants';
 import type { UseCase } from '@/entities/content/types';
@@ -12,7 +13,8 @@ export const AplicacionesSection: React.FC<AplicacionesSectionProps> = ({ useCas
   if (useCases.length === 0) return null;
 
   return (
-    <div className="mb-24 mt-24">
+    <section className="my-24">
+      <SubtleSeparator />
       <SectionTitle>Aplicaciones en el Mundo Real</SectionTitle>
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         {useCases.map(uc => (
@@ -28,6 +30,6 @@ export const AplicacionesSection: React.FC<AplicacionesSectionProps> = ({ useCas
           />
         ))}
       </div>
-    </div>
+    </section>
   );
 };

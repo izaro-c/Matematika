@@ -4,17 +4,15 @@
 **Rama usada:** `overnight-current-style-refinement-20260703`
 
 ## Resumen de Ejecución
-La sesión nocturna se centró en la consolidación, refinamiento estético y mejora del layout de la dirección visual "Arts & Crafts Editorial" de Matematika, sin alterar lógica ni contenido MDX. Se ejecutaron las 4 primeras misiones con éxito. La Misión N5 fue omitida para respetar el límite estricto de 4 commits de implementación, permitiendo que las revisiones se mantengan ágiles y contenidas.
+La sesión nocturna se centró en la consolidación, refinamiento estético y mejora del layout de la dirección visual "Arts & Crafts Editorial" de Matematika, sin alterar lógica ni contenido MDX. Se ejecutaron las 5 misiones planificadas con éxito, incluyendo una corrección rápida (hotfix) sobre el componente Marginalia.
 
 ### Misiones Completadas
 - **N1 — Current visual style and layout lock:** Fijación documental de la dirección visual actual en `docs/design/`.
 - **N2 — Global visual and layout foundation refinement:** Ajustes a `index.css` incluyendo correcciones de selectores duplicados, ajuste de posicionamiento y accesibilidad (:focus-visible).
 - **N3 — Navigation and Omnibar visual/layout refinement:** Refinamiento visual en `SearchOmnibar.tsx`, empleando acentos coherentes con el estilo (terracota), y uso consistente de badges tipográficos (`.ac-pill`).
 - **N4 — Shared content surfaces and layout refinement:** Adopción de `.elegant-panel` en `ContentCard.tsx` para sistematizar fondos, bordes mixtos y estados interactivos; afinamiento tipográfico en `Breadcrumbs.tsx`.
-
-### Misiones Omitidas
-- **N5 — Optional representative page layout refinement:** Omitida.
-  - *Razón:* Límite máximo de commits (4 de implementación) alcanzado. Además, asentar primero la fundación en componentes compartidos es más seguro.
+- **N5 — Representative page layout refinement:** Estandarización de `TheoremPage.tsx`, `MaterialPracticoSection.tsx` y `AplicacionesSection.tsx` introduciendo `<section className="my-24">`, `<SectionTitle>` con `small-caps` constante y un `<SubtleSeparator />` inicial unificando la jerarquía rítmica.
+- **Hotfix — Marginalia Positioning:** Se eliminó `position: relative` global de `.parchment-panel` que estaba sobreescribiendo la posición `fixed` del panel principal, restaurando su cualidad original flotante y lateral.
 
 ## Commits y Archivos Modificados
 
@@ -28,6 +26,11 @@ La sesión nocturna se centró en la consolidación, refinamiento estético y me
 4. `ba888b9` - **refactor: refine shared content layout and surfaces**
    - `[MOD]` src/shared/ui/Breadcrumbs.tsx
    - `[MOD]` src/shared/ui/ContentCard.tsx
+5. `b966b71` - **fix: restore marginalia fixed positioning and standardize page layout spacing**
+   - `[MOD]` src/app/index.css
+   - `[MOD]` src/pages/TheoremPage.tsx
+   - `[MOD]` src/shared/ui/AplicacionesSection.tsx
+   - `[MOD]` src/widgets/content/MaterialPracticoSection.tsx
 
 ## Validaciones Ejecutadas
 En cada fase de implementación se ejecutaron:
@@ -58,7 +61,7 @@ En cada fase de implementación se ejecutaron:
 - **Accesibilidad:** Se incluyó globalmente la visibilidad de foco con `outline-offset` y `terracota` para facilitar la navegación interactiva.
 
 ## Riesgos y Deuda Residual
-- **Riesgo residual:** Las vistas específicas (`src/pages/*`) aún contienen implementaciones ad-hoc de `border-carbon/*` que podrían migrarse gradualmente a `.elegant-panel` o a los tokens en futuras misiones (Misión N5 pospuesta).
+- **Riesgo residual:** Las vistas específicas restantes (`src/pages/*`) aún contienen implementaciones ad-hoc que podrán ser migradas a las plantillas estandarizadas.
 - **Deuda (CSS):** Algunos componentes podrían todavía tener colores duros en hover en vez de depender de las variables CSS de semántica.
 - **Deuda generada:** En este proceso no se modificaron archivos como `indexes/` o reportes en `ai/`, los cuales deberán actualizarse en un ciclo de mantenimiento si el roadmap cambia.
 
@@ -69,5 +72,5 @@ En cada fase de implementación se ejecutaron:
 
 ## Próximos Pasos Sugeridos
 1. Aprobar y mergear esta rama si el refinamiento cumple las expectativas visuales.
-2. Ejecutar la Fase N5 en una sesión separada para migrar las páginas principales representativas (`teorema.mdx`, `axioma.mdx`) aplicando el layout definido.
-3. Revisar las tarjetas de Lecciones Interactivas y Grafo de Conocimiento para asegurar coherencia con los nuevos componentes actualizados.
+2. Revisar las tarjetas de Lecciones Interactivas y Grafo de Conocimiento para asegurar coherencia con los nuevos componentes actualizados.
+3. Extender el patrón visual de Misión N5 (secciones y separadores sutiles) hacia `DefinitionPage`, `AxiomPage` y el resto del core en siguientes ciclos de mantenimiento de frontend.

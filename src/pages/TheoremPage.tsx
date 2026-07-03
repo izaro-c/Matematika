@@ -10,6 +10,7 @@ import { ContentBody } from '@/shared/ui/ContentBody';
 import { MaterialPracticoSection } from '@/shared/ui/MaterialPracticoSection';
 import { AplicacionesSection } from '@/shared/ui/AplicacionesSection';
 import { SubtleSeparator } from '@/shared/ui/SubtleSeparator';
+import { SectionTitle } from '@/shared/ui/SectionTitle';
 
 const TYPE_LABELS: Record<string, string> = {
   teorema: 'Teorema',
@@ -85,11 +86,9 @@ export const TheoremPage = () => {
         </ContentBody>
 
         {demos.length > 0 && (
-          <section className="mb-24 mt-24">
+          <section className="my-24">
             <SubtleSeparator />
-            <h2 className="text-2xl font-bold mb-8 border-b border-carbon/10 pb-4" style={{ fontVariant: 'small-caps' }}>
-              Demostraciones Disponibles
-            </h2>
+            <SectionTitle>Demostraciones Disponibles</SectionTitle>
             <div className="flex flex-col gap-4">
               {demos.map(demo => (
                 <ContentCard
@@ -110,11 +109,9 @@ export const TheoremPage = () => {
         <AplicacionesSection useCases={useCases} />
 
         {lemmas.length > 0 && (
-          <section className="mt-24">
+          <section className="my-24">
             <SubtleSeparator />
-            <h2 className="text-3xl font-bold mb-12 text-center" style={{ fontVariant: 'small-caps' }}>
-              Lemas Previos
-            </h2>
+            <SectionTitle>Lemas Previos</SectionTitle>
             <div className="flex flex-col gap-4 max-w-2xl mx-auto">
               {lemmas.map(lem => (
                 <ContentCard
@@ -131,11 +128,9 @@ export const TheoremPage = () => {
         )}
 
         {corollaries.length > 0 && (
-          <section className="mt-24">
+          <section className="my-24">
             <SubtleSeparator />
-            <h2 className="text-3xl font-bold mb-12 text-center" style={{ fontVariant: 'small-caps' }}>
-              Corolarios Derivados
-            </h2>
+            <SectionTitle>Corolarios Derivados</SectionTitle>
             <div className="flex flex-col gap-4 max-w-2xl mx-auto">
               {corollaries.map(cor => (
                 <ContentCard

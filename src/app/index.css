@@ -396,7 +396,6 @@ a:focus-visible, button:focus-visible {
 
 /* === PAPPER/PERGAMINO TEXTURE para MarginaliaPanel === */
 .parchment-panel {
-  position: relative;
   background-color: var(--theme-lienzo);
   background-image:
     radial-gradient(circle at 20% 30%, color-mix(in srgb, var(--theme-ocre) 5%, transparent) 0%, transparent 40%),
