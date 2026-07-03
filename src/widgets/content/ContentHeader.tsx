@@ -83,9 +83,11 @@ export const ContentHeader: React.FC<ContentHeaderProps> = ({
   }, [authors]);
 
   return (
-    <div className="mb-8 border-b border-carbon/10 pb-6">
-      {backLink && (
-        <div className="mb-8">
+    <header className="mb-12 md:mb-16 relative flex flex-col items-center text-center">
+      
+      {/* Elementos de navegación a la izquierda */}
+      <div className="w-full flex flex-col items-start gap-4 mb-8">
+        {backLink && (
           <Link
             href={backLink.href}
             className="ac-pill"
@@ -94,47 +96,51 @@ export const ContentHeader: React.FC<ContentHeaderProps> = ({
             <span className="ac-pill-ornament" aria-hidden>←</span>
             <span className="ac-pill-serif">{backLink.label}</span>
           </Link>
-        </div>
-      )}
-
-      {breadcrumbs.length > 0 && (
-        <div className="mb-10">
+        )}
+        
+        {breadcrumbs.length > 0 && (
           <Breadcrumbs crumbs={breadcrumbs} />
-        </div>
-      )}
-
-      <div className="flex flex-col md:flex-row md:items-baseline justify-between gap-4 mb-4">
-        <ContentTypeBadge type={type} label={typeLabel} />
-        <div className="flex flex-wrap items-center gap-3">
-          {badgesSlot}
-          {nodeId && <ModelBadgeList nodeId={nodeId} />}
-        </div>
+        )}
       </div>
 
+      {/* Tipo e Insignias */}
+      <div className="flex flex-wrap justify-center items-center gap-4 mb-6">
+        <ContentTypeBadge type={type} label={typeLabel} />
+        {badgesSlot}
+        {nodeId && <ModelBadgeList nodeId={nodeId} />}
+      </div>
+
+      {/* Título Principal (Arts & Crafts Serif) */}
       <h1
-        className="text-4xl md:text-5xl lg:text-6xl font-bold tracking-tight mb-2"
-        style={{ fontVariant: 'small-caps', color: accentToken }}
+        className="font-serif text-5xl md:text-6xl lg:text-7xl mb-6 text-carbon/90"
+        style={{ color: accentToken, letterSpacing: '-0.02em', lineHeight: '1.1' }}
       >
         {title}
       </h1>
 
+      {/* Byline de Autores */}
       {renderedAuthors && (
-        <p className="text-sm font-serif italic text-carbon/60 mb-6">
+        <div className="font-serif italic text-lg text-carbon/60 mb-8 flex items-center gap-4 before:content-[''] before:h-px before:w-12 before:bg-carbon/20 after:content-[''] after:h-px after:w-12 after:bg-carbon/20">
           Por {renderedAuthors}
-        </p>
+        </div>
       )}
 
+      {/* Descripción / Resumen */}
       {description && (
-        <p className="text-lg md:text-xl text-carbon/70 italic border-l-4 border-carbon/20 pl-6 leading-relaxed">
+        <p className="font-serif text-xl md:text-2xl text-carbon/75 italic leading-relaxed max-w-[45ch]">
           {description}
         </p>
       )}
 
       {rightSlot && (
-        <div className="mt-6">{rightSlot}</div>
+        <div className="mt-8">{rightSlot}</div>
       )}
 
       {children}
-    </div>
+
+      {/* Divisor Ornamental Final */}
+      <div className="w-32 h-px bg-carbon/20 mt-12 mb-4 mx-auto" />
+      <div className="w-16 h-px bg-carbon/20 mx-auto" />
+    </header>
   );
 };
