@@ -93,7 +93,7 @@ export const InteractiveLessonLayout: React.FC<InteractiveLessonLayoutProps> = (
             )}
           </div>
         )}
-        <div className="prose prose-pizarra prose-lg max-w-none">
+        <div className="prose prose-pizarra prose-lg max-w-none editorial-reading">
           <Suspense fallback={<div className="animate-pulse h-64 bg-carbon/5 rounded"></div>}>
             <Component />
           </Suspense>

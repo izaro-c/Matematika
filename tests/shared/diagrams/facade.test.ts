@@ -3,7 +3,7 @@ import {
   DIAGRAM_THEME_TOKENS,
   getDiagramColor,
   isDiagramTargetActive,
-} from '@/shared/diagrams';
+} from '@/widgets/diagrams';
 
 describe('diagram facade', () => {
   afterEach(() => {

@@ -247,6 +247,7 @@ export const TheoremPage = () => {
 
   return (
     <TriptychLayout
+      className="theorem-triptych"
       metadata={<MetadataSidebar />}
       diagram={Simulation ? (
         <Suspense fallback={<div className="diagram-loading">Preparando visualización…</div>}>
