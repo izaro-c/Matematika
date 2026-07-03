@@ -1,0 +1,1 @@
+import{t as e}from"./react-B1QXkFFl.js";var t=e(e=>({metadata:null,setMetadata:t=>e({metadata:t})}));export{t};

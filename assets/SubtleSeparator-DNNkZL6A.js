@@ -1,0 +1,1 @@
+import{n as e,t}from"./jsx-runtime-n5LQ9ujS.js";e();var n=t(),r=({ornament:e=`✦`})=>(0,n.jsx)(`div`,{className:`subtle-separator`,"aria-hidden":!0,children:(0,n.jsx)(`span`,{className:`subtle-separator-ornament`,children:e})});export{r as t};

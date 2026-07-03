@@ -1,0 +1,1 @@
+import{n as e,t}from"./jsx-runtime-n5LQ9ujS.js";import{b as n}from"./index-CTPPvVYL.js";e();var r=t(),i=({difficulty:e})=>{let t=n[e]??`var(--theme-carbon)`;return(0,r.jsxs)(`span`,{className:`ac-pill ac-pill-accent`,style:{"--pill-accent":t},children:[(0,r.jsx)(`span`,{className:`ac-pill-ornament`,"aria-hidden":!0,children:`◆`}),e]})};export{i as t};
