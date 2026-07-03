@@ -1,6 +1,6 @@
 import { Link } from 'wouter';
 import { useMetadataStore } from '@/features/metadata/MetadataStore';
-import { LocalDependencyGraph } from '@/widgets/graph/LocalDependencyGraph';
+import { PageDependencyGraph } from './PageDependencyGraph';
 
 export function MetadataSidebar() {
   const metadata = useMetadataStore((state) => state.metadata);
@@ -16,22 +16,51 @@ export function MetadataSidebar() {
         </header>
       )}
 
-      {/* Grafo de dependencias lógicas interactivo en el panel lateral */}
-      {metadata.id && (
-        <LocalDependencyGraph nodeId={metadata.id} />
-      )}
-
       <div className="metadata-sidebar__sections">
-        {metadata.domain && (
-          <MetadataSection title="Dominio">
-            <p className="capitalize font-serif italic text-sm">{metadata.domain}</p>
+        <MetadataSection title="Red de Conexiones">
+          <PageDependencyGraph
+            currentId={metadata.id || ''}
+            currentTitle={metadata.title || ''}
+            currentType={metadata.type || ''}
+            lemmas={metadata.lemmas}
+            corollaries={metadata.corollaries}
+            demos={metadata.demos}
+          />
+        </MetadataSection>
+
+        {metadata.tableOfContents && metadata.tableOfContents.length > 0 && (
+          <MetadataSection title="Índice">
+            <ul className="metadata-sidebar__links metadata-sidebar__links--index">
+              {metadata.tableOfContents.map((item) => (
+                <li key={item.id} style={{ paddingLeft: `${0.85 + Math.max(0, item.level - 1) * 0.5}rem` }}>
+                  <a href={`#${item.id}`} className="hover:text-terracota transition-colors">{item.title}</a>
+                </li>
+              ))}
+            </ul>
           </MetadataSection>
         )}
 
-        {(metadata.author || metadata.date) && (
-          <MetadataSection title="Atribución">
-            {metadata.author && <p className="font-serif italic text-sm">{metadata.author}</p>}
-            {metadata.date && <p className="text-xs text-carbon/60">{metadata.date}</p>}
+        {metadata.lemmas && metadata.lemmas.length > 0 && (
+          <MetadataSection title="Prerrequisitos" ornament="◂">
+            <MetadataLinks items={metadata.lemmas} path="/teorema" type="lema" />
+          </MetadataSection>
+        )}
+
+        {metadata.demos && metadata.demos.length > 0 && (
+          <MetadataSection title="Demostraciones" ornament="❖">
+            <MetadataLinks items={metadata.demos} path="/demo" type="demo" />
+          </MetadataSection>
+        )}
+
+        {metadata.corollaries && metadata.corollaries.length > 0 && (
+          <MetadataSection title="Consecuencias" ornament="▸">
+            <MetadataLinks items={metadata.corollaries} path="/teorema" type="corolario" />
+          </MetadataSection>
+        )}
+
+        {metadata.domain && (
+          <MetadataSection title="Dominio">
+            <p className="capitalize font-serif italic text-sm">{metadata.domain}</p>
           </MetadataSection>
         )}
 
@@ -41,41 +70,10 @@ export function MetadataSidebar() {
           </MetadataSection>
         )}
 
-        {metadata.tags && metadata.tags.length > 0 && (
-          <MetadataSection title="Etiquetas">
-            <ul className="metadata-sidebar__tags">
-              {metadata.tags.map((tag) => <li key={tag}>{tag}</li>)}
-            </ul>
-          </MetadataSection>
-        )}
-
-        {metadata.lemmas && metadata.lemmas.length > 0 && (
-          <MetadataSection title="Prerrequisitos" ornament="◂">
-            <MetadataLinks items={metadata.lemmas} path="/teorema" />
-          </MetadataSection>
-        )}
-
-        {metadata.demos && metadata.demos.length > 0 && (
-          <MetadataSection title="Demostraciones" ornament="❖">
-            <MetadataLinks items={metadata.demos} path="/demo" />
-          </MetadataSection>
-        )}
-
-        {metadata.corollaries && metadata.corollaries.length > 0 && (
-          <MetadataSection title="Consecuencias" ornament="▸">
-            <MetadataLinks items={metadata.corollaries} path="/teorema" />
-          </MetadataSection>
-        )}
-
-        {metadata.tableOfContents && metadata.tableOfContents.length > 0 && (
-          <MetadataSection title="Índice">
-            <ul className="metadata-sidebar__links">
-              {metadata.tableOfContents.map((item) => (
-                <li key={item.id} style={{ paddingLeft: `${Math.max(0, item.level - 1) * 0.5}rem` }}>
-                  <a href={`#${item.id}`} className="hover:text-terracota transition-colors">{item.title}</a>
-                </li>
-              ))}
-            </ul>
+        {(metadata.author || metadata.date) && (
+          <MetadataSection title="Atribución">
+            {metadata.author && <p className="font-serif italic text-sm">{metadata.author}</p>}
+            {metadata.date && <p className="text-xs text-carbon/60">{metadata.date}</p>}
           </MetadataSection>
         )}
       </div>
@@ -106,12 +104,14 @@ function MetadataSection({
 function MetadataLinks({
   items,
   path,
+  type,
 }: {
   items: { id: string; title: string }[];
   path: string;
+  type: 'lema' | 'demo' | 'corolario';
 }) {
   return (
-    <ul className="metadata-sidebar__links">
+    <ul className={`metadata-sidebar__links metadata-sidebar__links--${type}`}>
       {items.map((item) => (
         <li key={item.id}>
           <Link href={`${path}/${item.id}`}>{item.title}</Link>

@@ -64,6 +64,10 @@ body {
   scrollbar-color: var(--theme-pizarra) transparent;
 }
 
+[id] {
+  scroll-margin-top: 7rem;
+}
+
 ::-webkit-scrollbar {
   width: 10px;
   height: 10px;
@@ -522,6 +526,12 @@ a:focus-visible, button:focus-visible {
   padding-top: var(--triptych-top);
 }
 
+@media (min-width: 1024px) {
+  .triptych-layout {
+    padding-top: 0;
+  }
+}
+
 .triptych-layout--embedded {
   min-height: 0;
   padding-top: 0;
@@ -673,10 +683,14 @@ a:focus-visible, button:focus-visible {
   z-index: 80;
   width: min(22rem, 88vw);
   overflow-y: auto;
-  padding: 1.5rem;
+  padding: 5.5rem 1.5rem 2rem 2rem;
   color: var(--theme-carbon);
-  background: var(--theme-lienzo);
-  border: 4px double color-mix(in srgb, var(--theme-carbon) 28%, transparent);
+  background-color: color-mix(in srgb, var(--theme-lienzo) 95%, var(--theme-ocre) 5%);
+  background-image: var(--bg-arts-and-crafts-url);
+  background-size: 320px;
+  background-repeat: repeat;
+  border: none;
+  border-right: 4px double color-mix(in srgb, var(--theme-carbon) 22%, transparent);
   box-shadow: 1rem 0 2.5rem color-mix(in srgb, var(--theme-carbon) 18%, transparent);
   transform: translateX(-105%);
   transition: transform 220ms ease;
@@ -765,18 +779,14 @@ a:focus-visible, button:focus-visible {
 .metadata-sidebar__header {
   margin-bottom: 1.75rem;
   padding-bottom: 1.5rem;
-  border-bottom: 4px double color-mix(in srgb, var(--theme-carbon) 22%, transparent);
+  border-bottom: 2px dashed color-mix(in srgb, var(--theme-carbon) 15%, transparent);
 }
 
-.metadata-sidebar__eyebrow,
-.metadata-sidebar__section > h3 {
+.metadata-sidebar__eyebrow {
   font-size: 0.7rem;
   font-weight: 700;
   font-variant: small-caps;
   letter-spacing: 0.16em;
-}
-
-.metadata-sidebar__eyebrow {
   margin-bottom: 0.35rem;
   color: var(--theme-terracota);
 }
@@ -788,59 +798,112 @@ a:focus-visible, button:focus-visible {
   line-height: 1.2;
 }
 
-.metadata-sidebar__description {
-  margin-top: 0.75rem;
-  color: color-mix(in srgb, var(--theme-carbon) 68%, transparent);
-  font-style: italic;
-  line-height: 1.55;
-}
-
 .metadata-sidebar__sections {
   display: grid;
-  gap: 1.5rem;
+  gap: 2rem;
 }
 
 .metadata-sidebar__section {
-  padding-top: 1rem;
-  border-top: 1px solid color-mix(in srgb, var(--theme-carbon) 13%, transparent);
+  padding-top: 1.5rem;
+  position: relative;
+}
+
+.metadata-sidebar__section::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: linear-gradient(to right, transparent, color-mix(in srgb, var(--theme-carbon) 15%, transparent) 20%, color-mix(in srgb, var(--theme-carbon) 15%, transparent) 80%, transparent);
+}
+
+.metadata-sidebar__section:first-child::before {
+  display: none;
 }
 
 .metadata-sidebar__section > h3 {
   display: flex;
-  gap: 0.4rem;
-  margin-bottom: 0.75rem;
-  color: color-mix(in srgb, var(--theme-carbon) 58%, transparent);
+  align-items: center;
+  gap: 0.35rem;
+  margin-bottom: 0.9rem;
+  color: var(--theme-terracota);
+  font-family: ui-serif, Georgia, serif;
+  font-variant: small-caps;
+  letter-spacing: 0.12em;
+  font-weight: 600;
+  font-size: 0.85rem;
+}
+
+.metadata-sidebar__section > h3::before {
+  content: "❧";
+  color: var(--theme-ocre);
+  font-size: 0.95rem;
+  margin-right: 0.25rem;
+  line-height: 1;
 }
 
 .metadata-sidebar__section > h3 span {
   color: var(--theme-terracota);
 }
 
-.metadata-sidebar__tags {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.45rem;
-}
-
-.metadata-sidebar__tags li {
-  padding: 0.25rem 0.5rem;
-  background: color-mix(in srgb, var(--theme-carbon) 6%, transparent);
-  border: 1px solid color-mix(in srgb, var(--theme-carbon) 10%, transparent);
-}
-
 .metadata-sidebar__links {
+  list-style: none;
+  padding: 0;
+  margin: 0;
   display: grid;
-  gap: 0.55rem;
+  gap: 0.5rem;
+}
+
+.metadata-sidebar__links li {
+  position: relative;
+  padding-left: 0.85rem;
+  line-height: 1.35;
+}
+
+.metadata-sidebar__links li::before {
+  content: "•";
+  position: absolute;
+  left: 0;
+  top: 0;
+  font-size: 0.85rem;
+  line-height: 1.2;
+}
+
+.metadata-sidebar__links--index li::before {
+  content: "§";
+  color: var(--theme-ocre);
+  font-size: 0.75rem;
+  font-family: ui-serif, Georgia, serif;
+}
+
+.metadata-sidebar__links--lema li::before {
+  color: var(--theme-salvia);
+}
+
+.metadata-sidebar__links--demo li::before {
+  color: var(--theme-terracota);
+}
+
+.metadata-sidebar__links--corolario li::before {
+  color: var(--theme-pavo);
 }
 
 .metadata-sidebar__links a {
   color: color-mix(in srgb, var(--theme-carbon) 78%, transparent);
-  line-height: 1.35;
-  transition: color 160ms ease;
+  font-family: ui-serif, Georgia, serif;
+  font-size: 0.875rem;
+  line-height: 1.4;
+  text-decoration: none;
+  transition: all 180ms ease;
 }
 
 .metadata-sidebar__links a:hover {
   color: var(--theme-terracota);
+}
+
+.metadata-sidebar__links--index a:hover {
+  padding-left: 0.25rem;
 }
 
 @media (min-width: 1024px) {
@@ -865,7 +928,8 @@ a:focus-visible, button:focus-visible {
   }
 
   .triptych-reading {
-    padding-inline: clamp(2rem, 5vw, 6rem);
+    padding-top: 6rem;
+    padding-inline: clamp(1rem, 2.5vw, 2.5rem);
     width: 100%;
     max-width: 85ch;
   }
@@ -923,9 +987,12 @@ a:focus-visible, button:focus-visible {
     margin-inline: 0;
   }
 
-  .triptych-layout[data-has-metadata="true"] .triptych-primary,
-  .triptych-layout[data-has-metadata="true"] .triptych-secondary {
+  .triptych-layout[data-has-metadata="true"] .triptych-primary {
     padding-inline: 0;
+  }
+
+  .triptych-layout[data-has-metadata="true"] .triptych-secondary {
+    padding-inline: clamp(2rem, 5vw, 6rem);
   }
 
   .triptych-metadata {
@@ -936,12 +1003,16 @@ a:focus-visible, button:focus-visible {
     top: 0;
     height: 100svh;
     max-height: 100svh;
+    overflow-y: auto;
     z-index: auto;
     width: 100%;
-    padding: 2.5rem 1.5rem 1.5rem 2rem;
+    padding: 6rem 1.5rem 2rem 2.5rem;
     border: none;
-    border-right: 1px solid color-mix(in srgb, var(--theme-carbon) 10%, transparent);
-    background: transparent;
+    border-right: 4px double color-mix(in srgb, var(--theme-carbon) 22%, transparent);
+    background-color: color-mix(in srgb, var(--theme-lienzo) 95%, var(--theme-ocre) 5%);
+    background-image: var(--bg-arts-and-crafts-url);
+    background-size: 320px;
+    background-repeat: repeat;
     box-shadow: none;
     transform: none;
     transition: none;

@@ -43,6 +43,7 @@ export const RefLink: React.FC<RefLinkProps> = ({ targetId, children }) => {
   return (
     <span
       onClick={() => openTerm(targetId)}
+      data-target-id={targetId}
       title={`Ver: ${(entity as { title?: string, name?: string }).title || (entity as { title?: string, name?: string }).name}`}
       className={[
         'font-bold border-b-2 cursor-pointer transition-all duration-150 px-[2px] rounded-none',
