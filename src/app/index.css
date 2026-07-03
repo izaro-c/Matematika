@@ -1216,6 +1216,16 @@ a:focus-visible, button:focus-visible {
   filter: none;
 }
 
+.proof-step-content {
+  padding-left: 0.5rem; /* Ajustado en móvil para no desaprovechar espacio lateral */
+}
+
+@media (min-width: 1024px) {
+  .proof-step-content {
+    padding-left: 5rem; /* Alineado de 80px (pl-20) clásico para escritorio */
+  }
+}
+
 
 /* === TEOREMA ULTRA-ANCHO (Árbol Axiomático) ================================ */
 @media (min-width: 1600px) {
