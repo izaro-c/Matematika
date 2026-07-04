@@ -2,6 +2,7 @@ import React, { useEffect, Suspense } from 'react';
 import { Link } from 'wouter';
 import { useLessonStore } from '@/features/lessons/LessonStore';
 import { db } from '@/entities/content';
+import { getContentPageAccent } from '@/shared/design';
 
 /**
  * Propiedades de InteractiveLessonLayout.
@@ -53,7 +54,11 @@ export const InteractiveLessonLayout: React.FC<InteractiveLessonLayoutProps> = (
   const ActiveSimComponent = currentSim;
 
   return (
-    <div className={`min-h-screen lg:h-screen lg:overflow-hidden bg-transparent flex flex-col lg:flex-row ${!hasSimulation ? 'justify-center' : ''}`}>
+    <div
+      className={`min-h-screen lg:h-screen lg:overflow-hidden bg-transparent flex flex-col lg:flex-row page-accent-scope ${!hasSimulation ? 'justify-center' : ''}`}
+      data-page-type="leccion"
+      style={{ '--page-accent': getContentPageAccent('leccion') } as React.CSSProperties}
+    >
       {/* Panel de Simulación / Geometría interactiva */}
       {hasSimulation && ActiveSimComponent && (
         <div
@@ -109,10 +114,10 @@ export const InteractiveLessonLayout: React.FC<InteractiveLessonLayoutProps> = (
               {examples.map(ex => (
                 <Link key={ex.slug} href={`/ejemplo/${ex.id}`}>
                   <a className="flex flex-col p-6 elegant-panel group" style={{ textDecoration: 'none' }}>
-                    <span className="text-[10px] uppercase font-sans tracking-widest text-carbon/50 group-hover:text-terracota mb-2 font-bold transition-colors">Ejemplo Resuelto</span>
-                    <h3 className="font-bold text-lg text-carbon group-hover:text-terracota transition-colors">{ex.title}</h3>
+                    <span className="page-accent-group-hover text-[10px] uppercase font-sans tracking-widest text-carbon/50 mb-2 font-bold transition-colors">Ejemplo Resuelto</span>
+                    <h3 className="page-accent-group-hover font-bold text-lg text-carbon transition-colors">{ex.title}</h3>
                     {ex.description && <p className="text-sm opacity-80 mt-2 font-sans">{ex.description}</p>}
-                    <span className="text-xs font-sans tracking-widest uppercase text-carbon/40 group-hover:text-terracota mt-4 transition-colors flex items-center gap-1 font-bold">
+                    <span className="page-accent-group-hover text-xs font-sans tracking-widest uppercase text-carbon/40 mt-4 transition-colors flex items-center gap-1 font-bold">
                       Ver Ejemplo <span className="group-hover:translate-x-1 transition-transform">&rarr;</span>
                     </span>
                   </a>
@@ -120,11 +125,11 @@ export const InteractiveLessonLayout: React.FC<InteractiveLessonLayoutProps> = (
               ))}
               {exercises.map(ex => (
                 <Link key={ex.slug} href={`/ejercicio/${ex.id}`}>
-                  <a className="flex flex-col p-6 elegant-panel group" style={{ '--hover-accent': 'var(--theme-salvia)', textDecoration: 'none' } as React.CSSProperties}>
-                    <span className="text-[10px] uppercase font-sans tracking-widest text-carbon/50 group-hover:text-salvia mb-2 font-bold transition-colors">Ejercicio Propuesto</span>
-                    <h3 className="font-bold text-lg text-carbon group-hover:text-salvia transition-colors">{ex.title}</h3>
+                  <a className="flex flex-col p-6 elegant-panel group" style={{ '--hover-accent': 'var(--page-accent)', textDecoration: 'none' } as React.CSSProperties}>
+                    <span className="page-accent-group-hover text-[10px] uppercase font-sans tracking-widest text-carbon/50 mb-2 font-bold transition-colors">Ejercicio Propuesto</span>
+                    <h3 className="page-accent-group-hover font-bold text-lg text-carbon transition-colors">{ex.title}</h3>
                     {ex.description && <p className="text-sm opacity-80 mt-2 font-sans">{ex.description}</p>}
-                    <span className="text-xs font-sans tracking-widest uppercase text-carbon/40 group-hover:text-salvia mt-4 transition-colors flex items-center gap-1 font-bold">
+                    <span className="page-accent-group-hover text-xs font-sans tracking-widest uppercase text-carbon/40 mt-4 transition-colors flex items-center gap-1 font-bold">
                       Practicar <span className="group-hover:translate-x-1 transition-transform">&rarr;</span>
                     </span>
                   </a>

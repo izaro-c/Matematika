@@ -1,4 +1,5 @@
 import { useEffect, useId, useState } from 'react';
+import { getContentPageAccent } from '@/shared/design';
 
 interface TriptychLayoutProps {
   /** Índice, atribución y relaciones del contenido. */
@@ -13,6 +14,8 @@ interface TriptychLayoutProps {
   diagramLabel?: string;
   /** Elimina el espaciado de página cuando el tríptico vive dentro de otra vista. */
   embedded?: boolean;
+  /** Tipo semántico que determina el acento editorial de la página. */
+  pageType?: string;
   className?: string;
 }
 
@@ -30,6 +33,7 @@ export function TriptychLayout({
   secondary,
   diagramLabel = 'Visualización interactiva',
   embedded = false,
+  pageType,
   className = '',
 }: TriptychLayoutProps) {
   const [isMetadataOpen, setIsMetadataOpen] = useState(false);
@@ -62,9 +66,11 @@ export function TriptychLayout({
 
   return (
     <div
-      className={`triptych-layout ${embedded ? 'triptych-layout--embedded' : ''} ${className}`}
+      className={`triptych-layout ${pageType ? 'page-accent-scope' : ''} ${embedded ? 'triptych-layout--embedded' : ''} ${className}`}
       data-has-diagram={hasDiagram}
       data-has-metadata={hasMetadata}
+      data-page-type={pageType}
+      style={pageType ? ({ '--page-accent': getContentPageAccent(pageType) } as React.CSSProperties) : undefined}
     >
       {hasMetadata && (
         <>

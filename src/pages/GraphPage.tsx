@@ -15,6 +15,9 @@ import { useProgressStore } from '@/features/progress/UserProgressStore';
 import { buildKnowledgeGraphData, GraphNode, GraphLink } from '@/features/graph/lib/knowledgeGraphBuilder';
 import { GraphLegend } from '@/features/graph/ui/components/GraphLegend';
 import { GraphSearch } from '@/features/graph/ui/components/GraphSearch';
+import { useThemeColors } from '@/shared/hooks/useThemeColors';
+import { CONTENT_TYPE_COLORS } from '@/shared/design/contentTypeColors';
+
 
 type KnowledgeGraphNode = NodeObject<GraphNode>;
 type KnowledgeGraphLink = LinkObject<GraphNode, GraphLink>;
@@ -39,6 +42,7 @@ type LinkForce = {
 export const GraphPage: React.FC = () => {
   const [, setLocation] = useLocation();
   const { openTerm } = useGlossaryStore();
+  const theme = useThemeColors();
   const graphRef = useRef<KnowledgeGraphRef | undefined>(undefined);
 
   // Extraer datos del ContentStore usando jerarquía MSC2020 definida
@@ -133,7 +137,8 @@ export const GraphPage: React.FC = () => {
       'axioma': 'axioma',
     };
     const key = groupMap[node.group] || node.group;
-    return GRAPH_NODE_COLORS[key] || '#cccccc';
+    return GRAPH_NODE_COLORS[key] ?? theme.carbon;
+
   };
 
   const drawNodeLabel = useCallback((
@@ -183,10 +188,11 @@ export const GraphPage: React.FC = () => {
     ctx.shadowBlur = 0;
     let textColor: string;
     if (node.group === 'central') {
-      textColor = isHighlighted ? '#C86446' : '#C8644680';
+      textColor = isHighlighted ? theme.getHex('teorema') : theme.getHex('teorema') + '80';
     } else {
-      textColor = isHighlighted ? '#333333' : '#33333380';
+      textColor = isHighlighted ? theme.carbon : theme.carbon + '80';
     }
+
     ctx.fillStyle = textColor;
     ctx.fillText(label, nodeX, textY);
   }, []);
@@ -203,13 +209,15 @@ export const GraphPage: React.FC = () => {
 
     // Si está completado, dibujar un anillo concéntrico de estilo astrolabio/diagrama clásico
     if (isCompleted && node.group !== 'central' && node.group !== 'branch') {
-      color = '#7C9082'; // Salvia
+      const completedColor = CONTENT_TYPE_COLORS.corolario.hex;
+      color = completedColor;
       ctx.beginPath();
       ctx.arc(node.x, node.y, radius + (3 / globalScale), 0, 2 * Math.PI, false);
-      ctx.strokeStyle = '#7C9082';
+      ctx.strokeStyle = completedColor;
       ctx.lineWidth = 1 / globalScale;
       ctx.stroke();
     }
+
 
     // Dibujar Círculo
     ctx.beginPath();
@@ -218,7 +226,8 @@ export const GraphPage: React.FC = () => {
     ctx.fill();
 
     // Borde de tinta clásico
-    ctx.strokeStyle = '#333333';
+    ctx.strokeStyle = theme.carbon;
+
     ctx.lineWidth = (isHighlighted ? 1.5 : 0.5) / globalScale;
     ctx.stroke();
 
@@ -273,7 +282,8 @@ export const GraphPage: React.FC = () => {
           nodeCanvasObject={drawNode}
           nodeCanvasObjectMode={() => 'replace'}
           onNodeHover={handleNodeHover}
-          linkColor={(link: KnowledgeGraphLink) => highlightLinks.has(link) ? '#C86446' : '#00000015'}
+          linkColor={(link: KnowledgeGraphLink) => highlightLinks.has(link) ? theme.getHex('teorema') : theme.carbon + '15'}
+
           linkWidth={(link: KnowledgeGraphLink) => highlightLinks.has(link) ? 2 : 1}
           linkDirectionalParticles={(link: KnowledgeGraphLink) => highlightLinks.has(link) ? 4 : 1}
           linkDirectionalParticleWidth={(link: KnowledgeGraphLink) => highlightLinks.has(link) ? 6 : 2}

@@ -46,9 +46,9 @@ export const SimSection: React.FC<SimSectionProps> = ({ sim, children }) => {
   }, [sim, setActiveSimulation]);
 
   return (
-    <div ref={ref} className="relative w-full">
+    <div ref={ref} className="group relative w-full">
       {/* Un sutil marcador visual en la izquierda ayuda a entender que es un bloque activo */}
-      <div className="absolute left-[-2rem] top-0 bottom-0 w-[2px] bg-carbon/5 transition-colors group-hover:bg-salvia/30 rounded-full" />
+      <div className="page-accent-bg absolute left-[-2rem] top-0 bottom-0 w-[2px] opacity-5 transition-opacity group-hover:opacity-30 rounded-full" />
       {children}
     </div>
   );

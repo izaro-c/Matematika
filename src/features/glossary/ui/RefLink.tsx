@@ -32,7 +32,7 @@ export const RefLink: React.FC<RefLinkProps> = ({ targetId, children }) => {
     return (
       <Link
         href={`/construccion/${targetId}`}
-        className="font-bold text-pizarra/70 border-b border-dashed border-pizarra/40 hover:border-pizarra hover:text-pizarra transition-all duration-150 px-[2px] rounded-none cursor-pointer"
+        className="page-accent-link font-bold border-b border-dashed transition-all duration-150 px-[2px] rounded-none cursor-pointer"
         title={`"${targetId}" — página en construcción`}
       >
         {children}
@@ -46,10 +46,10 @@ export const RefLink: React.FC<RefLinkProps> = ({ targetId, children }) => {
       data-target-id={targetId}
       title={`Ver: ${(entity as { title?: string, name?: string }).title || (entity as { title?: string, name?: string }).name}`}
       className={[
-        'font-bold border-b-2 cursor-pointer transition-all duration-150 px-[2px] rounded-none',
+        'page-accent-link font-bold border-b-2 cursor-pointer transition-all duration-150 px-[2px] rounded-none',
         isActive
-          ? 'bg-pizarra text-lienzo border-pizarra'
-          : 'text-pizarra border-pizarra/40 hover:border-pizarra hover:bg-pizarra/10',
+          ? 'is-active'
+          : '',
       ].join(' ')}
     >
       {children}

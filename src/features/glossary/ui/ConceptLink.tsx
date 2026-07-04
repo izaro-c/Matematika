@@ -37,7 +37,7 @@ export const ConceptLink: React.FC<ConceptLinkProps> = ({ targetId, children }) 
       <Link
         href={`/construccion/${firstInvalid}`}
         data-target-id={dataAttr}
-        className="font-bold text-terracota/70 underline decoration-dashed decoration-terracota/40 decoration-2 underline-offset-4 hover:decoration-terracota hover:text-terracota transition-all duration-150 rounded-none cursor-pointer"
+        className="page-accent-link font-bold underline decoration-dashed decoration-2 underline-offset-4 transition-all duration-150 rounded-none cursor-pointer"
         title={`"${firstInvalid}" — página en construcción`}
       >
         {children}
@@ -51,10 +51,10 @@ export const ConceptLink: React.FC<ConceptLinkProps> = ({ targetId, children }) 
       data-target-id={targetIds.join(',')}
       title={`Ver contenido relacionado`}
       className={[
-        'font-bold cursor-pointer transition-all duration-150 rounded-none',
+        'page-accent-link font-bold cursor-pointer transition-all duration-150 rounded-none',
         isActive
-          ? 'bg-terracota text-lienzo underline decoration-terracota decoration-2 underline-offset-4'
-          : 'text-terracota underline decoration-terracota/40 decoration-2 underline-offset-4 hover:decoration-terracota hover:bg-terracota/10',
+          ? 'is-active underline decoration-2 underline-offset-4'
+          : 'underline decoration-2 underline-offset-4',
       ].join(' ')}
     >
       {children}

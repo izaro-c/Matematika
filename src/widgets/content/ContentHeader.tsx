@@ -24,8 +24,6 @@ interface ContentHeaderProps {
   authors?: string[];
   /** Etiquetas MSC2020 u otras etiquetas clasificatorias */
   tags?: string[];
-  /** Sobrescribe el color temático automático */
-  color?: string;
   /** Identificador único para integraciones de gamificación o trazabilidad */
   nodeId?: string;
   /** Slot reservado a la derecha para herramientas (ej: botón de visualización 3D) */
@@ -45,15 +43,12 @@ export const ContentHeader: React.FC<ContentHeaderProps> = ({
   description,
   breadcrumbs = [],
   authors = [],
-  color,
   nodeId,
   rightSlot,
   badgesSlot,
   backLink,
   children,
 }) => {
-  const accentToken = color ?? 'var(--theme-carbon)';
-
   const renderedAuthors = useMemo(() => {
     if (!authors || authors.length === 0) return null;
 
@@ -65,7 +60,7 @@ export const ContentHeader: React.FC<ContentHeaderProps> = ({
           <Link
             key={authId}
             href={`/bio/${authId}`}
-            className="hover:text-terracota border-b border-dashed border-carbon/20 hover:border-terracota/40 transition-colors"
+            className="content-header__link border-b border-dashed border-carbon/20 transition-colors"
           >
             {mathematician.name}
           </Link>
@@ -83,14 +78,14 @@ export const ContentHeader: React.FC<ContentHeaderProps> = ({
   }, [authors]);
 
   return (
-    <header className="mb-8 md:mb-10 relative flex flex-col items-center text-center">
+    <header className="content-header mb-8 md:mb-10 relative flex flex-col items-center text-center">
       
       {/* Elementos de navegación a la izquierda */}
       <div className="w-full flex flex-col items-start gap-2 mb-6">
         {backLink && (
           <Link
             href={backLink.href}
-            className="text-carbon/60 hover:text-terracota font-serif italic text-sm transition-colors border-b border-transparent hover:border-terracota/30"
+            className="content-header__link text-carbon/60 font-serif italic text-sm transition-colors border-b border-transparent"
             style={{ textDecoration: 'none' }}
           >
             {backLink.label}
@@ -112,7 +107,7 @@ export const ContentHeader: React.FC<ContentHeaderProps> = ({
       {/* Título Principal (Arts & Crafts Serif) */}
       <h1
         className="font-serif text-4xl md:text-5xl lg:text-6xl mb-4 text-carbon/90"
-        style={{ color: accentToken, letterSpacing: '-0.02em', lineHeight: '1.1' }}
+        style={{ color: 'var(--page-accent, var(--theme-carbon))', letterSpacing: '-0.02em', lineHeight: '1.1' }}
       >
         {title}
       </h1>
@@ -138,8 +133,8 @@ export const ContentHeader: React.FC<ContentHeaderProps> = ({
       {children}
 
       {/* Divisor Ornamental Final */}
-      <div className="w-32 h-px bg-carbon/20 mt-12 mb-4 mx-auto" />
-      <div className="w-16 h-px bg-carbon/20 mx-auto" />
+      <div className="content-header__accent-rule w-32 h-px mt-12 mb-4 mx-auto" />
+      <div className="content-header__accent-rule w-16 h-px mx-auto" />
     </header>
   );
 };

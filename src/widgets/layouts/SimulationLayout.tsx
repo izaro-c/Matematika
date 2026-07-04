@@ -13,6 +13,8 @@ interface SimulationLayoutProps {
   simulationComponent?: React.ComponentType<Record<string, unknown>> | null;
   /** Si es true, divide la pantalla a la mitad aunque no haya simulación montada inicialmente */
   forceSplit?: boolean;
+  /** Tipo semántico que determina el acento editorial. */
+  pageType?: string;
 }
 
 /**
@@ -23,7 +25,8 @@ interface SimulationLayoutProps {
 export const SimulationLayout: React.FC<SimulationLayoutProps> = ({
   children,
   simulationComponent,
-  forceSplit = false
+  forceSplit = false,
+  pageType,
 }) => {
   const { activeSimulation, defaultSimulation, setDefaultSimulation, setActiveSimulation } = useLessonStore();
   useEffect(() => {
@@ -45,6 +48,7 @@ export const SimulationLayout: React.FC<SimulationLayoutProps> = ({
 
   return (
     <TriptychLayout
+      pageType={pageType}
       diagram={hasSimulation ? (
         <div className="simulation-panel">
           {ActiveSimComponent ? (

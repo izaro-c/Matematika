@@ -126,13 +126,13 @@ export const AxiomaArquimedes = () => {
         <div ref={boardRef} className="jxgbox w-full h-full touch-none" style={{ width: '100%', height: '400px' }} />
       </div>
       <div className="flex items-center gap-4 mt-6 mb-2">
-        <span className="font-serif text-carbon uppercase tracking-widest text-sm">Multiplicador <KatexText text="$n$" />: <strong className="text-terracota text-lg">{multiplier}</strong></span>
+        <span className="font-serif text-carbon uppercase tracking-widest text-sm">Multiplicador <KatexText text="$n$" />: <strong className="page-accent-text text-lg">{multiplier}</strong></span>
         <input 
           type="range" 
           min="1" max={maxSlider} 
           value={multiplier} 
           onChange={(e) => setMultiplier(parseInt(e.target.value))}
-          className="w-64 accent-terracota cursor-grab active:cursor-grabbing"
+          className="page-accent-range w-64 h-px bg-carbon/40 appearance-none cursor-grab active:cursor-grabbing [&::-webkit-slider-thumb]:appearance-none [&::-webkit-slider-thumb]:w-[6px] [&::-webkit-slider-thumb]:h-[16px] [&::-webkit-slider-thumb]:transition-colors"
         />
       </div>
       <div className="text-sm font-serif text-carbon/80 italic text-center max-w-lg mt-4 leading-relaxed">

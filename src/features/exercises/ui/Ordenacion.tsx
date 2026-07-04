@@ -84,7 +84,7 @@ export const Ordenacion: React.FC<OrdenacionProps> = ({ id, pasos }) => {
     <div className="my-8 font-serif">
       <div 
         className={`p-8 elegant-panel relative group ${isCompleted ? 'bg-salvia/5 border-salvia/30' : ''}`}
-        style={{ '--hover-accent': isCompleted ? 'var(--theme-salvia)' : 'var(--theme-carbon)' } as React.CSSProperties}
+        style={{ '--hover-accent': isCompleted ? 'var(--theme-salvia)' : 'var(--page-accent)' } as React.CSSProperties}
       >
          <style>
           {`
@@ -113,7 +113,7 @@ export const Ordenacion: React.FC<OrdenacionProps> = ({ id, pasos }) => {
                   onDragEnd={handleDragEnd}
                   onDragOver={(e) => e.preventDefault()}
                   className={`flex items-center gap-4 bg-lienzo border border-carbon/20 p-4 rounded-none transition-all duration-300 ${
-                    isCompleted ? 'border-salvia/40 bg-salvia/10 cursor-default' : 'hover:border-carbon/50 hover:shadow-md hover:-translate-y-0.5 cursor-grab active:cursor-grabbing shadow-sm'
+                    isCompleted ? 'border-salvia/40 bg-salvia/10 cursor-default' : 'page-accent-button hover:shadow-md hover:-translate-y-0.5 cursor-grab active:cursor-grabbing shadow-sm'
                   } ${isDragging ? 'opacity-40 scale-[0.98] border-dashed border-carbon/40' : 'opacity-100'}`}
                 >
                 {/* Agarre Drag */}
@@ -143,7 +143,7 @@ export const Ordenacion: React.FC<OrdenacionProps> = ({ id, pasos }) => {
           <div className="mt-6 flex justify-end border-t border-carbon/10 pt-5">
             <button
               onClick={checkOrder}
-              className="px-6 py-3 text-xs font-sans uppercase tracking-widest border border-carbon/30 text-carbon hover:border-carbon hover:bg-carbon/[0.02] transition-all shadow-sm hover:shadow-md hover:-translate-y-0.5"
+              className="page-accent-button px-6 py-3 text-xs font-sans uppercase tracking-widest border border-carbon/30 text-carbon transition-all shadow-sm hover:shadow-md hover:-translate-y-0.5"
             >
               Comprobar Orden
             </button>

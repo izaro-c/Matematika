@@ -3,33 +3,10 @@ import ForceGraph2D from 'react-force-graph-2d';
 import { useLocation } from 'wouter';
 import { db } from '@/entities/content';
 import { dictionary } from '@/features/glossary/GlossaryStore';
+import { useThemeColors } from '@/shared/hooks/useThemeColors';
 
-// ── Paleta Arts & Crafts ──────────────────────────────────────────────────────
-const COLORS = {
-  terracota: '#C86446',
-  salvia:    '#7C9082',
-  pizarra:   '#5D7080',
-  granada:   '#BC6060',
-  ocre:      '#C89D46',
-  musgo:     '#5C6E57',
-  carbon:    '#333333',
-  lienzo:    '#F8F6F1',
-};
 
-function nodeColor(group: string, isCenter: boolean): string {
-  if (isCenter) return COLORS.terracota;
-  switch (group) {
-    case 'theorem':
-    case 'corolario':  return COLORS.terracota;
-    case 'lema':
-    case 'axiom':      return COLORS.salvia;
-    case 'demo':       return COLORS.granada;
-    case 'definition': return COLORS.pizarra;
-    case 'model':      return COLORS.ocre;
-    case 'glossary':   return COLORS.musgo;
-    default:           return COLORS.carbon;
-  }
-}
+
 
 interface GraphNode {
   id: string;
@@ -57,13 +34,14 @@ interface PageDependencyGraphProps {
 }
 
 function resolveGroup(id: string): string {
-  if (db.getTheorem(id))      return 'theorem';
-  if (db.getDefinition(id))   return 'definition';
-  if (db.axioms.get(id))      return 'axiom';
-  if (db.models.get(id))      return 'model';
-  if (db.demos.get(id))       return 'demo';
-  if (dictionary[id])         return 'glossary';
-  return 'definition';
+  const thm = db.getTheorem(id);
+  if (thm)                    return thm.type || 'teorema';
+  if (db.getDefinition(id))   return 'definicion';
+  if (db.axioms.get(id))      return 'axioma';
+  if (db.models.get(id))      return 'modelo';
+  if (db.demos.get(id))       return 'demostracion';
+  if (dictionary[id])         return 'glosario';
+  return 'definicion';
 }
 
 function resolveTitle(id: string): string {
@@ -82,12 +60,13 @@ function resolveTitle(id: string): string {
 /** Wouter-relative routes (base is prepended automatically by the Router). */
 function resolveRoute(id: string, group: string): string {
   switch (group) {
-    case 'demo':       return `/demo/${id}`;
-    case 'definition': return `/definicion/${id}`;
-    case 'model':      return `/modelo/${id}`;
-    case 'axiom':      return `/axioma/${id}`;
-    case 'glossary':   return `/definicion/${id}`;
-    default:           return `/teorema/${id}`;
+    case 'demostracion': return `/demo/${id}`;
+    case 'definicion':   return `/definicion/${id}`;
+    case 'concepto':     return `/definicion/${id}`;
+    case 'modelo':       return `/modelo/${id}`;
+    case 'axioma':       return `/axioma/${id}`;
+    case 'glosario':     return `/definicion/${id}`;
+    default:             return `/teorema/${id}`;
   }
 }
 
@@ -101,8 +80,10 @@ export const PageDependencyGraph: React.FC<PageDependencyGraphProps> = ({
 }) => {
   const [, setLocation] = useLocation();
   const containerRef = useRef<HTMLDivElement>(null);
+  const theme = useThemeColors();
   const [dimensions, setDimensions] = useState({ width: 0, height: 200 });
   const [domIds, setDomIds] = useState<string[]>([]);
+
 
   // Measure container — same pattern as TaxonomyGraph
   useEffect(() => {
@@ -213,7 +194,10 @@ export const PageDependencyGraph: React.FC<PageDependencyGraphProps> = ({
     };
 
     // Centre
-    addNode(currentId, currentTitle, currentType, 10, true);
+    const centerGroup = currentType
+      ? currentType.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '')
+      : 'teorema';
+    addNode(currentId, currentTitle, centerGroup, 10, true);
 
     // Lemmas → centre
     lemmas.forEach(({ id, title }) => {
@@ -229,7 +213,7 @@ export const PageDependencyGraph: React.FC<PageDependencyGraphProps> = ({
 
     // Centre → demos
     demos.forEach(({ id, title }) => {
-      addNode(id, title, 'demo', 6, false);
+      addNode(id, title, 'demostracion', 6, false);
       addLink(currentId, id);
     });
 
@@ -264,7 +248,7 @@ export const PageDependencyGraph: React.FC<PageDependencyGraphProps> = ({
     if (node.x == null || node.y == null || !Number.isFinite(node.x) || !Number.isFinite(node.y)) return;
 
     const r = node.val / 2;
-    const color = nodeColor(node.group, node.isCenter);
+    const color = theme.getHex(node.group);
 
     // Filled circle
     ctx.beginPath();
@@ -273,7 +257,7 @@ export const PageDependencyGraph: React.FC<PageDependencyGraphProps> = ({
     ctx.fill();
 
     // Ink border
-    ctx.strokeStyle = COLORS.carbon;
+    ctx.strokeStyle = theme.carbon;
     ctx.lineWidth = 0.8 / globalScale;
     ctx.stroke();
 
@@ -294,13 +278,14 @@ export const PageDependencyGraph: React.FC<PageDependencyGraphProps> = ({
     const ty = node.y + r + 2 / globalScale;
 
     // Halo
-    ctx.strokeStyle = 'rgba(248,246,241,0.95)';
+    ctx.strokeStyle = theme.lienzo;
     ctx.lineWidth = 2.5 / globalScale;
     ctx.strokeText(node.name, node.x, ty);
 
-    ctx.fillStyle = node.isCenter ? color : COLORS.carbon;
+    ctx.fillStyle = node.isCenter ? color : theme.carbon;
     ctx.fillText(node.name, node.x, ty);
-  }, []);
+  }, [theme]);
+
 
   const handleNodeClick = useCallback((node: GraphNode) => {
     if (node.id === currentId) return;
@@ -313,8 +298,8 @@ export const PageDependencyGraph: React.FC<PageDependencyGraphProps> = ({
       className="w-full overflow-hidden"
       style={{
         height: 200,
-        background: COLORS.lienzo,
-        border: '1px solid rgba(51,51,51,0.08)',
+        background: theme.lienzo,
+        border: `1px solid ${theme.carbon}14`,
       }}
     >
       {dimensions.width > 0 && (
@@ -325,7 +310,7 @@ export const PageDependencyGraph: React.FC<PageDependencyGraphProps> = ({
           nodeLabel={() => ''}
           nodeCanvasObject={drawNode}
           onNodeClick={handleNodeClick}
-          linkColor={() => 'rgba(51,51,51,0.15)'}
+          linkColor={() => theme.carbon + '26'}
           linkWidth={1}
           linkDirectionalArrowLength={4}
           linkDirectionalArrowRelPos={1}

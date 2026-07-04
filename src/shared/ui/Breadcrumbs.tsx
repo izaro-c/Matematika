@@ -33,7 +33,7 @@ export const Breadcrumbs: React.FC<BreadcrumbsProps> = ({
       {crumb.href ? (
         <Link
           href={crumb.href}
-          className={`hover:text-carbon transition-colors truncate ${isLast ? 'max-w-[160px] lg:max-w-[240px]' : 'max-w-[120px] lg:max-w-[200px]'}`}
+          className={`page-accent-text-hover transition-colors truncate ${isLast ? 'max-w-[160px] lg:max-w-[240px]' : 'max-w-[120px] lg:max-w-[200px]'}`}
           title={crumb.name}
         >
           {crumb.name}
@@ -49,7 +49,7 @@ export const Breadcrumbs: React.FC<BreadcrumbsProps> = ({
   return (
     <nav aria-label="Breadcrumb" className={`flex flex-wrap items-center gap-y-2 text-xs font-sans tracking-widest uppercase text-carbon/40 ${className}`}>
       {showHome && (
-        <Link href={homeHref} className="hover:text-carbon transition-colors shrink-0">
+        <Link href={homeHref} className="page-accent-text-hover transition-colors shrink-0">
           {homeLabel}
         </Link>
       )}

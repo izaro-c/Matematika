@@ -24,12 +24,12 @@ export const ProofStepExpander: React.FC<ProofStepExpanderProps> = ({ blockIds }
 
   return (
     <details className="mt-5 border border-carbon/15 bg-lienzo px-4 py-3 text-sm">
-      <summary className="cursor-pointer select-none font-sans text-xs uppercase tracking-widest text-pizarra">
+      <summary className="page-accent-text cursor-pointer select-none font-sans text-xs uppercase tracking-widest">
         Ver en Lean
       </summary>
       <div className="mt-4 space-y-4">
         {resolved.map(({ id, block }) => (
-          <div key={id} className="border-l-2 border-pizarra/30 pl-3">
+          <div key={id} className="page-accent-border border-l-2 pl-3">
             <div className="mb-2 font-mono text-xs text-carbon/60">
               {block ? `${block.leanId} · ${block.sourceFile}:${block.startLine}` : id}
             </div>

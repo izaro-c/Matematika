@@ -78,26 +78,26 @@ export const StudyTask: React.FC<StudyTaskProps> = ({ id, type, title }) => {
       <Link href={href}>
         <a 
           className={`group elegant-panel flex flex-col md:flex-row md:items-center gap-4 p-5 my-6 ${completed ? 'bg-salvia/5 border-salvia/30' : ''}`}
-          style={{ '--hover-accent': completed ? 'var(--theme-salvia)' : 'var(--theme-terracota)' } as React.CSSProperties}
+          style={{ '--hover-accent': completed ? 'var(--theme-salvia)' : 'var(--page-accent)' } as React.CSSProperties}
         >
           <div className={`w-5 h-5 border flex items-center justify-center shrink-0 transition-all duration-300 ${
             completed 
               ? 'border-salvia bg-transparent rotate-45' 
-              : 'border-carbon/30 rotate-0 group-hover:rotate-45 group-hover:border-terracota'
+              : 'page-accent-group-border border-carbon/30 rotate-0 group-hover:rotate-45'
           }`}>
             {completed && (
               <div className="w-2.5 h-2.5 bg-salvia scale-animation"></div>
             )}
           </div>
           <div className="flex-1">
-            <div className={`text-[9px] font-sans uppercase tracking-[0.2em] mb-1 font-bold transition-colors ${completed ? 'text-salvia/80' : 'text-carbon/50 group-hover:text-terracota'}`}>
+            <div className={`text-[9px] font-sans uppercase tracking-[0.2em] mb-1 font-bold transition-colors ${completed ? 'text-salvia/80' : 'page-accent-group-hover text-carbon/50'}`}>
               {type}
             </div>
-            <h3 className={`text-xl font-serif font-bold transition-colors ${completed ? 'text-salvia' : 'text-carbon group-hover:text-terracota'}`} style={{ fontVariant: 'small-caps' }}>
+            <h3 className={`text-xl font-serif font-bold transition-colors ${completed ? 'text-salvia' : 'page-accent-group-hover text-carbon'}`} style={{ fontVariant: 'small-caps' }}>
               {title}
             </h3>
           </div>
-          <div className={`text-[10px] font-sans uppercase tracking-widest font-bold transition-colors ${completed ? 'text-salvia' : 'text-carbon/40 group-hover:text-terracota'}`}>
+          <div className={`text-[10px] font-sans uppercase tracking-widest font-bold transition-colors ${completed ? 'text-salvia' : 'page-accent-group-hover text-carbon/40'}`}>
             {actionLabel}
           </div>
         </a>

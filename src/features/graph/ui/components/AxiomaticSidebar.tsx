@@ -1,6 +1,7 @@
 import { useGraphStore } from '@/features/graph/GraphStore';
 import { useGraphSandboxStore } from '@/features/graph/GraphSandboxStore';
 import { db } from '@/entities/content';
+import { CONTENT_TYPE_COLORS } from '@/shared/design/contentTypeColors';
 
 interface AxiomaticSidebarProps {
   isMobile: boolean;
@@ -68,10 +69,10 @@ export function AxiomaticSidebar({
         <div className="border border-carbon/15 p-3 bg-white/40">
           <div className="flex items-center justify-between mb-3">
             <h3 className="font-serif text-sm text-carbon" style={{ fontVariant: 'small-caps' }}>
-              <span className="text-terracota mr-1.5">☙</span>Sandbox Lógico
+              <span className="page-accent-text mr-1.5">☙</span>Sandbox Lógico
             </h3>
             <button onClick={toggleSandbox}
-              className={`w-9 h-5 rounded-full relative transition-all duration-300 ${sandboxEnabled ? 'bg-terracota' : 'bg-carbon/20'}`}>
+              className={`w-9 h-5 rounded-full relative transition-all duration-300 ${sandboxEnabled ? 'page-accent-bg' : 'bg-carbon/20'}`}>
               <div className={`w-3.5 h-3.5 bg-lienzo rounded-full absolute top-0.5 transition-all duration-300 shadow-sm ${sandboxEnabled ? 'left-[18px]' : 'left-0.5'}`} />
             </button>
           </div>
@@ -87,9 +88,9 @@ export function AxiomaticSidebar({
               <div className="flex flex-col gap-1 mb-3">
                 {sandboxModels.map(model => (
                   <button key={model.id} onClick={() => loadModel(model.id, model.axioms_verified || [])}
-                    className="text-left px-3 py-1.5 border border-carbon/10 hover:border-terracota/50 hover:bg-terracota/[0.04] text-xs font-serif text-carbon/80 hover:text-carbon transition-all flex justify-between items-center group">
+                    className="text-left px-3 py-1.5 border border-carbon/10 hover:border-[var(--page-accent,var(--theme-terracota))]/50 hover:bg-[color-mix(in_srgb,var(--page-accent,var(--theme-terracota))_4%,transparent)] text-xs font-serif text-carbon/80 hover:text-[var(--page-accent,var(--theme-terracota))] transition-all flex justify-between items-center group">
                     <span style={{ fontVariant: 'small-caps' }}>{model.title}</span>
-                    <span className="text-[9px] text-carbon/20 group-hover:text-terracota/50 font-sans">Cargar</span>
+                    <span className="text-[9px] text-carbon/20 group-hover:text-[var(--page-accent,var(--theme-terracota))]/50 font-sans">Cargar</span>
                   </button>
                 ))}
                 <button onClick={clearSandbox}
@@ -103,11 +104,17 @@ export function AxiomaticSidebar({
                 {sandboxAxioms.map(axiom => {
                   const isActive = !!activeAxioms[axiom.id];
                   return (
-                    <label key={axiom.id}
-                      className={`flex items-start gap-2.5 px-2 py-1.5 cursor-pointer text-xs transition-all ${isActive ? 'bg-terracota/[0.06] border-l-2 border-terracota' : 'hover:bg-carbon/[0.02] border-l-2 border-transparent'}`}>
+                    <label
+                      key={axiom.id}
+                      style={isActive ? {
+                        backgroundColor: 'color-mix(in srgb, var(--page-accent, var(--theme-terracota)) 6%, transparent)',
+                        borderLeftColor: 'var(--page-accent, var(--theme-terracota))',
+                      } : undefined}
+                      className={`flex items-start gap-2.5 px-2 py-1.5 cursor-pointer text-xs transition-all border-l-2 ${isActive ? '' : 'hover:bg-carbon/[0.02] border-l-transparent'}`}
+                    >
                       <input type="checkbox" checked={isActive} onChange={() => toggleSandboxAxiom(axiom.id)}
-                        className="accent-terracota w-3 h-3 mt-0.5 shrink-0 cursor-pointer" />
-                      <span className={`font-serif leading-tight ${isActive ? 'text-terracota font-bold' : 'text-carbon/70'}`} style={{ fontVariant: 'small-caps' }}>
+                        className="w-3 h-3 mt-0.5 shrink-0 cursor-pointer" />
+                      <span className={`font-serif leading-tight ${isActive ? 'page-accent-text font-bold' : 'text-carbon/70'}`} style={{ fontVariant: 'small-caps' }}>
                         {axiom.title}
                       </span>
                     </label>
@@ -137,7 +144,8 @@ export function AxiomaticSidebar({
                 <button key={s.id} onClick={() => toggleSystem(s.id)}
                   className={`flex items-center gap-2.5 text-left text-xs font-serif px-2 py-1 rounded transition-all ${isOn ? 'text-carbon bg-carbon/[0.03]' : 'text-carbon/35 hover:text-carbon/60'}`}>
                   <span className="w-2.5 h-2.5 rounded-sm shrink-0 border transition-colors"
-                    style={{ background: isOn ? '#C86446' : 'transparent', borderColor: '#C86446' }} />
+                    style={{ background: isOn ? CONTENT_TYPE_COLORS.teorema.hex : 'transparent', borderColor: CONTENT_TYPE_COLORS.teorema.hex }} />
+
                   <span>{s.title}</span>
                 </button>
               );
@@ -155,7 +163,8 @@ export function AxiomaticSidebar({
                 <button key={m.id} onClick={() => toggleModel(m.id)}
                   className={`flex items-center gap-2.5 text-left text-xs font-serif px-2 py-1 rounded transition-all ${isOn ? 'text-carbon bg-carbon/[0.03]' : 'text-carbon/35 hover:text-carbon/60'}`}>
                   <span className="w-2.5 h-2.5 rounded-sm shrink-0 border transition-colors"
-                    style={{ background: isOn ? '#4a6070' : 'transparent', borderColor: '#4a6070' }} />
+                    style={{ background: isOn ? CONTENT_TYPE_COLORS.modelo.hex : 'transparent', borderColor: CONTENT_TYPE_COLORS.modelo.hex }} />
+
                   <span>{m.title}</span>
                 </button>
               );
@@ -172,9 +181,10 @@ export function AxiomaticSidebar({
         <div>
           <h3 className="font-sans text-[9px] uppercase tracking-[0.15em] text-carbon/50 mb-2">Tipos de Nodo</h3>
           <div className="flex flex-col gap-0.5">
-            {(['concepto', 'axioma', 'definicion', 'lema', 'teorema', 'corolario', 'modelo'] as const).map((type) => {
+            {(['teorema', 'axioma', 'concepto', 'definicion', 'corolario', 'modelo', 'lema'] as const).map((type) => {
               const isOn = visibleTypes.has(type);
-              const color = typeColors[type] || '#888';
+              const color = typeColors[type] ?? CONTENT_TYPE_COLORS.matematico.hex;
+
               return (
                 <button key={type} onClick={() => toggleType(type)}
                   className={`flex items-center gap-2.5 text-left text-xs font-sans px-2 py-1 rounded transition-all ${isOn ? 'text-carbon' : 'text-carbon/35 hover:text-carbon/60'}`}>

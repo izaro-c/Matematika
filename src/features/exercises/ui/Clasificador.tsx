@@ -113,7 +113,7 @@ export const Clasificador: React.FC<ClasificadorProps> = ({ id, pregunta, bucket
   const unplacedItems = shuffledItems.filter(item => !placedItems[item.id]);
 
   return (
-    <div className={`my-8 p-8 elegant-panel relative font-serif group ${isCompleted ? 'bg-salvia/5 border-salvia/30' : ''}`} style={{ '--hover-accent': isCompleted ? 'var(--theme-salvia)' : 'var(--theme-carbon)' } as React.CSSProperties}>
+    <div className={`my-8 p-8 elegant-panel relative font-serif group ${isCompleted ? 'bg-salvia/5 border-salvia/30' : ''}`} style={{ '--hover-accent': isCompleted ? 'var(--theme-salvia)' : 'var(--page-accent)' } as React.CSSProperties}>
        <style>
         {`
           @keyframes shake {
@@ -208,7 +208,7 @@ export const Clasificador: React.FC<ClasificadorProps> = ({ id, pregunta, bucket
           <div className="mt-8 flex justify-end border-t border-carbon/10 pt-5">
             <button
               onClick={check}
-              className="px-6 py-3 text-xs font-sans uppercase tracking-widest border border-carbon/30 text-carbon hover:border-carbon hover:bg-carbon/[0.02] transition-colors"
+              className="page-accent-button px-6 py-3 text-xs font-sans uppercase tracking-widest border border-carbon/30 text-carbon transition-colors"
             >
               Comprobar Clasificación
             </button>

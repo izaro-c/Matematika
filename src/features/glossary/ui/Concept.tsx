@@ -21,7 +21,7 @@ export const Concept: React.FC<ConceptProps> = ({ link, children }) => {
   return (
     <span 
       onClick={() => openTerm(link)}
-      className="cursor-pointer border-b border-dashed border-terracota/60 hover:bg-terracota/10 hover:border-terracota transition-colors px-[2px] rounded-sm text-carbon font-semibold"
+      className="page-accent-link cursor-pointer border-b border-dashed transition-colors px-[2px] rounded-sm font-semibold"
       title="Ver definición en el glosario"
     >
       {children}

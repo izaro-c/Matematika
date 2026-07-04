@@ -23,7 +23,7 @@ export const HighlightLink: React.FC<HighlightLinkProps> = ({ target, children }
       onClick={() => setActiveStep(target)}
       onMouseEnter={() => setActiveStep(target)}
       onMouseLeave={() => setActiveStep(null)}
-      className="cursor-pointer border-b-2 border-salvia bg-salvia/20 hover:bg-salvia/40 transition-colors rounded-none px-[4px] py-[2px] font-bold text-carbon shadow-sm"
+      className="page-accent-highlight cursor-pointer border-b-2 transition-colors rounded-none px-[4px] py-[2px] font-bold text-carbon shadow-sm"
       title="Resaltar en el simulador"
     >
       {children}

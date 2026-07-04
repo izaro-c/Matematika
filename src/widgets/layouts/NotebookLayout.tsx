@@ -1,4 +1,5 @@
 import React from 'react';
+import { getContentPageAccent } from '@/shared/design';
 
 interface NotebookLayoutProps {
   /** Texto explicativo y definición formal. */
@@ -9,6 +10,8 @@ interface NotebookLayoutProps {
   secondary?: React.ReactNode;
   /** Etiqueta descriptiva para accesibilidad. */
   diagramLabel?: string;
+  /** Tipo semántico que determina el acento editorial. */
+  pageType?: string;
   className?: string;
 }
 
@@ -25,12 +28,17 @@ export const NotebookLayout: React.FC<NotebookLayoutProps> = ({
   diagram,
   secondary,
   diagramLabel = 'Simulación interactiva',
+  pageType,
   className = '',
 }) => {
   const hasDiagram = diagram !== undefined && diagram !== null;
 
   return (
-    <div className={`notebook-layout ${className}`}>
+    <div
+      className={`notebook-layout ${pageType ? 'page-accent-scope' : ''} ${className}`}
+      data-page-type={pageType}
+      style={pageType ? ({ '--page-accent': getContentPageAccent(pageType) } as React.CSSProperties) : undefined}
+    >
       <div className={`notebook-content ${!hasDiagram ? 'is-single-column' : ''}`}>
         {/* Columna Teoría (Motivación + Definición) */}
         <main className="notebook-primary">

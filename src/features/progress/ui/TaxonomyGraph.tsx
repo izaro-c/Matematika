@@ -3,6 +3,9 @@ import { navigate } from 'wouter/use-browser-location';
 import { routePath, publicAsset } from '@/shared/lib/routeHelper';
 import ForceGraph2D from 'react-force-graph-2d';
 import { useProgressStore } from '@/features/progress/UserProgressStore';
+import { useThemeColors } from '@/shared/hooks/useThemeColors';
+import { CONTENT_TYPE_COLORS } from '@/shared/design/contentTypeColors';
+
 
 /**
  * Propiedades del Grafo Taxonómico
@@ -39,7 +42,9 @@ interface GraphLink {
 
 export const TaxonomyGraph: React.FC<TaxonomyGraphProps> = ({ taxonomy }) => {
   const { isRead } = useProgressStore();
+  const theme = useThemeColors();
   const [hoverNode, setHoverNode] = useState<GraphNode | null>(null);
+
   const [highlightNodes, setHighlightNodes] = useState(new Set());
   const [highlightLinks, setHighlightLinks] = useState(new Set());
 
@@ -147,22 +152,12 @@ export const TaxonomyGraph: React.FC<TaxonomyGraphProps> = ({ taxonomy }) => {
     }
   }, []);
 
-  const getNodeColor = (node: GraphNode) => {
-    switch (node.group) {
-      case 'central': return '#333333'; // Carbon
-      case 'branch': return '#C86446'; // Terracota
-      case 'theorem': return '#A2C2A2'; // Salvia
-      case 'lemma': return '#A2C2A2';
-      case 'corollary': return '#A2C2A2';
-      case 'definition': return '#5D7080'; // Pizarra
-      case 'usecase': return '#C86446'; // Terracota
-      case 'example': return '#5D7080'; // Pizarra
-      case 'exercise': return '#A2C2A2'; // Salvia
-      case 'lesson': return '#A2C2A2';
-      case 'model': return '#8b3a3a'; //granate
-      default: return '#cccccc';
-    }
+  const getNodeColor = (node: GraphNode): string => {
+    if (node.group === 'central') return theme.carbon;
+    if (node.group === 'branch')  return theme.getHex('teorema');
+    return theme.getHex(node.group);
   };
+
 
   const drawNodeLabel = useCallback((
     node: GraphNode,
@@ -195,16 +190,18 @@ export const TaxonomyGraph: React.FC<TaxonomyGraphProps> = ({ taxonomy }) => {
       ctx.textAlign = 'center';
       ctx.textBaseline = 'middle';
 
-      ctx.shadowColor = 'rgba(248, 246, 241, 0.9)';
+      ctx.shadowColor = theme.lienzo;
       ctx.shadowBlur = 4 / globalScale;
       ctx.lineWidth = 3 / globalScale;
-      ctx.strokeStyle = 'rgba(248, 246, 241, 0.9)';
+      ctx.strokeStyle = theme.lienzo;
+
       const textY = node.y! + radius + (fontSize / 2) + (4 / globalScale);
       ctx.strokeText(label, node.x!, textY);
 
       ctx.shadowBlur = 0;
-      ctx.fillStyle = isHighlighted ? '#333333' : '#33333380';
-      if (node.group === 'central') ctx.fillStyle = isHighlighted ? '#C86446' : '#C8644680';
+      ctx.fillStyle = isHighlighted ? theme.carbon : theme.carbon + '80';
+      if (node.group === 'central') ctx.fillStyle = isHighlighted ? theme.getHex('teorema') : theme.getHex('teorema') + '80';
+
       ctx.fillText(label, node.x!, textY);
     }
   }, []);
@@ -219,13 +216,15 @@ export const TaxonomyGraph: React.FC<TaxonomyGraphProps> = ({ taxonomy }) => {
     let color = getNodeColor(node);
 
     if (isCompleted && node.group !== 'central' && node.group !== 'branch') {
-      color = '#7C9082'; // Salvia
+      const completedColor = CONTENT_TYPE_COLORS.corolario.hex;
+      color = completedColor;
       ctx.beginPath();
       ctx.arc(node.x, node.y, radius + (3 / globalScale), 0, 2 * Math.PI, false);
-      ctx.strokeStyle = '#7C9082';
+      ctx.strokeStyle = completedColor;
       ctx.lineWidth = 1 / globalScale;
       ctx.stroke();
     }
+
 
     // Dibujar Círculo principal
     ctx.beginPath();
@@ -234,7 +233,8 @@ export const TaxonomyGraph: React.FC<TaxonomyGraphProps> = ({ taxonomy }) => {
     ctx.fill();
 
     // Borde de tinta clásico
-    ctx.strokeStyle = '#333333';
+      ctx.strokeStyle = theme.carbon;
+
     ctx.lineWidth = (isHighlighted ? 1.5 : 0.5) / globalScale;
     ctx.stroke();
 
@@ -290,7 +290,8 @@ export const TaxonomyGraph: React.FC<TaxonomyGraphProps> = ({ taxonomy }) => {
         nodeCanvasObject={drawNode}
         onNodeHover={handleNodeHover}
         onNodeClick={handleNodeClick}
-        linkColor={(link: object) => highlightLinks.has(link) ? '#C86446' : 'rgba(51, 51, 51, 0.15)'}
+        linkColor={(link: object) => highlightLinks.has(link) ? theme.getHex('teorema') : theme.carbon + '26'}
+
         linkWidth={(link: object) => highlightLinks.has(link) ? 2 : 1}
         enableNodeDrag={true}
         enableZoomInteraction={true}

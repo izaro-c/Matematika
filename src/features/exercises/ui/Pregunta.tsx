@@ -91,7 +91,7 @@ export const Pregunta: React.FC<PreguntaProps> = ({ id, texto, question, correct
           } else if (isAnswered) {
             btnClass = 'border-carbon/10 text-carbon/40 cursor-not-allowed opacity-60';
           } else {
-            btnClass = 'border-carbon/30 hover:border-carbon/60 hover:bg-carbon/[0.02] cursor-pointer hover:-translate-y-0.5 hover:shadow-sm';
+            btnClass = 'page-accent-button border-carbon/30 cursor-pointer hover:-translate-y-0.5 hover:shadow-sm';
           }
 
           let badgeClass: string, badgeChar: string;

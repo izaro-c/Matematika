@@ -1,5 +1,20 @@
 import { useState } from 'react';
 import { Link } from 'wouter';
+import { CONTENT_TYPE_CONFIG } from '@/shared/lib/constants';
+
+const LEGEND_TYPES = [
+  'demostracion',
+  'teorema',
+  'matematico',
+  'axioma',
+  'definicion',
+  'corolario',
+  'modelo',
+  'leccion',
+  'lema',
+  'ejercicio',
+  'ejemplo',
+] as const;
 
 /**
  * Componente de la Leyenda del Grafo de Conocimiento.
@@ -41,34 +56,23 @@ export function GraphLegend() {
             className="font-bold text-[10px] uppercase tracking-widest mb-4 text-carbon/50 text-center mt-1"
             style={{ fontVariant: 'small-caps' }}
           >
-            Filiación Lógica
+            Leyenda
           </h4>
 
           <div className="flex flex-col gap-2.5 text-xs italic text-carbon/80 font-serif">
-            <div className="flex items-center gap-3">
-              <span className="w-3.5 h-3.5 rounded-sm border border-carbon/30 bg-carbon block" />
-              <span>Matemáticas</span>
-            </div>
-            <div className="flex items-center gap-3">
-              <span className="w-3.5 h-3.5 rounded-sm border border-carbon/30 bg-terracota block" />
-              <span>Ramas</span>
-            </div>
-            <div className="flex items-center gap-3">
-              <span className="w-3.5 h-3.5 rounded-sm border border-carbon/30 bg-ocre block" />
-              <span>Axiomas</span>
-            </div>
-            <div className="flex items-center gap-3">
-              <span className="w-3.5 h-3.5 rounded-sm border border-carbon/30 bg-salvia block" />
-              <span>Teoremas / Lemas</span>
-            </div>
-            <div className="flex items-center gap-3">
-              <span className="w-3.5 h-3.5 rounded-sm border border-carbon/30 bg-pizarra block" />
-              <span>Definiciones</span>
-            </div>
-            <div className="flex items-center gap-3">
-              <span className="w-3.5 h-3.5 rounded-sm border border-carbon/30 bg-pavo block" />
-              <span>Sistemas / Modelos</span>
-            </div>
+            {LEGEND_TYPES.map((type) => {
+              const config = CONTENT_TYPE_CONFIG[type];
+              if (!config) return null;
+              return (
+                <div key={type} className="flex items-center gap-3">
+                  <span
+                    className="w-3.5 h-3.5 rounded-sm border border-carbon/30 block"
+                    style={{ backgroundColor: config.graphColor }}
+                  />
+                  <span>{config.labelPlural}</span>
+                </div>
+              );
+            })}
           </div>
 
           <div className="mt-4 pt-3 border-t border-carbon/10">

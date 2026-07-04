@@ -175,24 +175,35 @@ export const SearchOmnibar = () => {
                   <button
                     key={item.id}
                     onClick={() => handleSelect(item)}
-                    className={`w-full text-left px-5 py-3 flex items-center gap-4 transition-colors group border-b border-carbon/5 last:border-0
+                    style={idx === selectedIndex ? { borderLeftColor: TYPE_COLORS[item.type] } : undefined}
+                    className={`w-full text-left px-5 py-3 flex items-center gap-4 transition-colors group border-b border-carbon/5 last:border-0 border-l-[3px]
                       ${idx === selectedIndex
-                        ? 'bg-carbon/5 border-l-[3px] border-l-terracota'
-                        : 'border-l-[3px] border-l-transparent hover:bg-carbon/5 text-carbon'
+                        ? 'bg-carbon/5'
+                        : 'border-l-transparent hover:bg-carbon/5 text-carbon'
                       }`}
                   >
                     {/* Icono estructural */}
-                    <span className={`w-8 h-8 shrink-0 flex items-center justify-center text-sm font-bold font-serif rounded-sm border transition-colors ${idx === selectedIndex
-                      ? 'border-terracota/30 text-terracota bg-terracota/5'
-                      : 'border-carbon/15 text-carbon/40'
-                      }`}>
+                    <span
+                      style={idx === selectedIndex ? {
+                        borderColor: `color-mix(in srgb, ${TYPE_COLORS[item.type]} 30%, transparent)`,
+                        color: TYPE_COLORS[item.type],
+                        backgroundColor: `color-mix(in srgb, ${TYPE_COLORS[item.type]} 5%, transparent)`,
+                      } : undefined}
+                      className={`w-8 h-8 shrink-0 flex items-center justify-center text-sm font-bold font-serif rounded-sm border transition-colors ${idx === selectedIndex
+                        ? ''
+                        : 'border-carbon/15 text-carbon/40'
+                      }`}
+                    >
                       {TYPE_ICONS[item.type]}
                     </span>
 
                     {/* Contenedor central - Se ha añadido explícitamente overflow-hidden para garantizar que el truncamiento actúe como un sumidero espacial absoluto */}
                     <div className="flex-1 min-w-0 overflow-hidden">
-                      <div className={`font-serif font-bold text-base leading-tight truncate transition-colors ${idx === selectedIndex ? 'text-terracota' : 'text-carbon'
-                        }`}>
+                      <div
+                        style={idx === selectedIndex ? { color: TYPE_COLORS[item.type] } : undefined}
+                        className={`font-serif font-bold text-base leading-tight truncate transition-colors ${idx === selectedIndex ? '' : 'text-carbon'
+                        }`}
+                      >
                         {query.trim() && matches
                           ? highlightText(item.title, matches.filter(m => m.key === 'title'))
                           : item.title}
@@ -208,8 +219,11 @@ export const SearchOmnibar = () => {
                     </div>
 
                     {/* Elemento terminal - Inmune a la compresión (w-max shrink-0) */}
-                    <span className={`text-[10px] flex uppercase tracking-widest font-bold w-max shrink-0 whitespace-nowrap transition-colors ${idx === selectedIndex ? 'text-terracota/70' : 'text-carbon/30'
-                      }`}>
+                    <span
+                      style={idx === selectedIndex ? { color: TYPE_COLORS[item.type] } : undefined}
+                      className={`text-[10px] flex uppercase tracking-widest font-bold w-max shrink-0 whitespace-nowrap transition-colors ${idx === selectedIndex ? 'opacity-70' : 'text-carbon/30'
+                      }`}
+                    >
                       {item.type}
                     </span>
                   </button>
