@@ -56,7 +56,7 @@ export const InteractiveTimePlot: React.FC<InteractiveTimePlotProps> = ({ nodes 
             >
               {count > 0 && (
                 <div
-                  className="bg-carbon/20 hover:bg-terracota transition-colors w-full mx-[1px] rounded-none"
+                  className="page-accent-bg-hover bg-carbon/20 transition-colors w-full mx-[1px] rounded-none"
                   style={{ height: `${Math.max(2, h)}px` }}
                 />
               )}

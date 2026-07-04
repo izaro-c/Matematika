@@ -1,6 +1,7 @@
 import React from 'react';
 import { Link } from 'wouter';
 import { ContentTypeBadge } from '@/shared/ui/ContentTypeBadge';
+import { getContentPageAccent } from '@/shared/design';
 
 /**
  * Paleta de colores temáticos para acentuar tarjetas.
@@ -46,20 +47,7 @@ const ACCENT_TOKEN: Record<CardAccent, string> = {
   carbon: 'var(--theme-carbon)',
 };
 
-const TYPE_TO_ACCENT: Record<string, CardAccent> = {
-  axioma: 'carbon',
-  definicion: 'pizarra',
-  lema: 'pizarra',
-  teorema: 'salvia',
-  corolario: 'terracota',
-  demostracion: 'terracota',
-  ejemplo: 'pizarra',
-  ejercicio: 'musgo',
-  'caso-de-uso': 'terracota',
-  matematico: 'ocre',
-  leccion: 'pizarra',
-  modelo: 'pavo',
-};
+
 
 export const ContentCard: React.FC<ContentCardProps> = ({
   href,
@@ -74,8 +62,7 @@ export const ContentCard: React.FC<ContentCardProps> = ({
   domain,
   domainIcon,
 }) => {
-  const resolvedAccent = accent || (type ? TYPE_TO_ACCENT[type] : 'terracota');
-  const token = ACCENT_TOKEN[resolvedAccent];
+  const token = accent ? ACCENT_TOKEN[accent] : getContentPageAccent(type);
   const action = actionLabel ?? (type ? `Ver ${type}` : undefined);
 
   if (layout === 'row') {

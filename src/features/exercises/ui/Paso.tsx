@@ -46,12 +46,12 @@ export const Paso: React.FC<PasoProps> = ({ id, numero, titulo, children, visibl
         }}
       >
         {displayNum !== undefined && (
-          <div className="flex items-center justify-center w-7 h-7 bg-lienzo border border-carbon/30 rounded-none text-xs font-serif font-bold text-carbon/70 shrink-0 shadow-[inset_0_1px_2px_rgba(0,0,0,0.02)] group-hover:border-carbon/60 transition-all">
+          <div className="page-accent-group-border flex items-center justify-center w-7 h-7 bg-lienzo border border-carbon/30 rounded-none text-xs font-serif font-bold text-carbon/70 shrink-0 shadow-[inset_0_1px_2px_rgba(0,0,0,0.02)] transition-all">
             {displayNum}
           </div>
         )}
         {titulo && (
-          <h4 className="text-sm font-bold text-carbon font-sans uppercase tracking-wider group-hover:text-terracota transition-colors">
+          <h4 className="page-accent-group-hover text-sm font-bold text-carbon font-sans uppercase tracking-wider transition-colors">
             {titulo}
           </h4>
         )}
@@ -69,7 +69,7 @@ export const Paso: React.FC<PasoProps> = ({ id, numero, titulo, children, visibl
               setRevealed(true);
               if (id) setActiveStep(id);
             }}
-            className="text-xs font-sans text-carbon/50 hover:text-carbon border border-carbon/20 bg-lienzo hover:border-carbon/40 hover:bg-carbon/[0.02] px-4 py-2 rounded-none transition-all shadow-sm hover:shadow-md hover:-translate-y-0.5 flex items-center gap-2 group"
+            className="page-accent-button text-xs font-sans text-carbon/50 border border-carbon/20 bg-lienzo px-4 py-2 rounded-none transition-all shadow-sm hover:shadow-md hover:-translate-y-0.5 flex items-center gap-2 group"
           >
             <span className="group-hover:scale-110 transition-transform">▷</span>
             Revelar paso

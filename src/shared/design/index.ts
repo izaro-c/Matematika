@@ -8,7 +8,11 @@ export {
   type SemanticColorRole,
 } from './semanticTokens';
 export {
+  CONTENT_PAGE_ACCENTS,
+  CONTENT_PAGE_ACCENT_ROLES,
+  getContentPageAccent,
   PAGE_ACCENTS,
   PAGE_ACCENT_ROLES,
+  type ContentPageAccentType,
   type PageAccentType,
 } from './pageAccents';

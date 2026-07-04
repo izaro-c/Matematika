@@ -37,7 +37,7 @@ export const CanvasInteractivo: React.FC<CanvasInteractivoProps> = ({ id, title,
   });
 
   return (
-    <div className={`my-8 font-serif elegant-panel p-8 ${isCompleted ? 'bg-salvia/5 border-salvia/30' : ''}`} style={{ '--hover-accent': isCompleted ? 'var(--theme-salvia)' : 'var(--theme-carbon)' } as React.CSSProperties}>
+    <div className={`my-8 font-serif elegant-panel p-8 ${isCompleted ? 'bg-salvia/5 border-salvia/30' : ''}`} style={{ '--hover-accent': isCompleted ? 'var(--theme-salvia)' : 'var(--page-accent)' } as React.CSSProperties}>
       <h4 className="font-bold text-carbon mb-6 flex items-center justify-between z-30 relative text-lg">
         <span>{title || 'Lienzo Interactivo'}</span>
         {isCompleted && <span className="text-salvia font-serif text-base">❦ Objetivo cumplido</span>}

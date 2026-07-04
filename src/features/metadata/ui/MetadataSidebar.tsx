@@ -1,14 +1,20 @@
 import { Link } from 'wouter';
 import { useMetadataStore } from '@/features/metadata/MetadataStore';
 import { PageDependencyGraph } from './PageDependencyGraph';
+import { getContentPageAccent } from '@/shared/design/pageAccents';
 
 export function MetadataSidebar() {
   const metadata = useMetadataStore((state) => state.metadata);
 
   if (!metadata) return null;
 
+  const normalizedType = metadata.type
+    ? metadata.type.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '')
+    : 'teorema';
+  const accent = getContentPageAccent(normalizedType);
+
   return (
-    <div className="metadata-sidebar">
+    <div className="metadata-sidebar" style={{ '--page-accent': accent } as React.CSSProperties}>
       {metadata.type && (
         <header className="metadata-sidebar__header">
           <p className="metadata-sidebar__eyebrow">{metadata.type}</p>
@@ -33,7 +39,7 @@ export function MetadataSidebar() {
             <ul className="metadata-sidebar__links metadata-sidebar__links--index">
               {metadata.tableOfContents.map((item) => (
                 <li key={item.id} style={{ paddingLeft: `${0.85 + Math.max(0, item.level - 1) * 0.5}rem` }}>
-                  <a href={`#${item.id}`} className="hover:text-terracota transition-colors">{item.title}</a>
+                  <a href={`#${item.id}`} className="transition-colors">{item.title}</a>
                 </li>
               ))}
             </ul>

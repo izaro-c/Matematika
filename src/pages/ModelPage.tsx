@@ -98,7 +98,7 @@ export function ModelPage() {
   );
 
   return (
-    <SimulationLayout simulationComponent={model.Simulation || model.Diagram}>
+    <SimulationLayout pageType="modelo" simulationComponent={model.Simulation || model.Diagram}>
       {renderContent()}
     </SimulationLayout>
   );

@@ -25,13 +25,13 @@ export const GlossaryLink: React.FC<GlossaryLinkProps> = ({ term, description, c
       onMouseEnter={() => setShowTooltip(true)}
       onMouseLeave={() => setShowTooltip(false)}
     >
-      <span className="font-bold text-carbon border-b border-carbon/40 border-dotted cursor-help px-[2px] transition-colors hover:bg-terracota/10 hover:text-terracota hover:border-terracota/40 rounded-none">
+      <span className="page-accent-hover font-bold text-carbon border-b border-carbon/40 border-dotted cursor-help px-[2px] transition-colors rounded-none">
         {children}
       </span>
 
       {showTooltip && (
         <div className="absolute z-50 bottom-full left-1/2 -translate-x-1/2 mb-4 w-72 bg-lienzo border border-carbon/20 text-carbon rounded-none shadow-[0_10px_40px_-10px_rgba(0,0,0,0.15)] p-5 pointer-events-none transition-all animate-in fade-in slide-in-from-bottom-2 duration-300">
-          <div className="font-serif text-lg font-bold mb-3 border-b border-carbon/10 pb-2 text-terracota" style={{ fontVariant: 'small-caps' }}>{term}</div>
+          <div className="page-accent-text font-serif text-lg font-bold mb-3 border-b border-carbon/10 pb-2" style={{ fontVariant: 'small-caps' }}>{term}</div>
           <div className="leading-relaxed opacity-80 text-sm font-serif">
             {description || "Término fundamental."}
           </div>

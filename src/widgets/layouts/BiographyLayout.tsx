@@ -2,6 +2,7 @@
 import { Suspense } from 'react';
 import { Link } from 'wouter';
 import { resolvePublicOrExternalAsset } from '@/shared/lib/routeHelper';
+import { getContentPageAccent } from '@/shared/design';
 
 import { db } from '@/entities/content';
 
@@ -81,19 +82,19 @@ export const BiographyLayout: React.FC<BiographyLayoutProps> = ({ Component, Sid
         {lastName && <h2 className="text-2xl font-serif text-white/50 mb-8">{lastName}</h2>}
         {!lastName && <div className="mb-8" />}
         
-        <div className="w-16 h-px bg-terracota/80 mb-8"></div>
+        <div className="page-accent-bg w-16 h-px opacity-80 mb-8"></div>
         
         {/* FECHAS */}
         <ul className="space-y-4 text-white/70 text-sm font-sans tracking-widest uppercase mb-12 w-full">
           {birthYear !== undefined && (
             <li>
-              <span className="block text-terracota font-serif capitalize text-xs mb-1 opacity-80">Nacimiento</span>
+              <span className="page-accent-text block font-serif capitalize text-xs mb-1 opacity-80">Nacimiento</span>
               <span>{formatYear(birthYear)}</span>
             </li>
           )}
           {deathYear !== undefined && (
             <li>
-              <span className="block text-terracota font-serif capitalize text-xs mb-1 opacity-80">Fallecimiento</span>
+              <span className="page-accent-text block font-serif capitalize text-xs mb-1 opacity-80">Fallecimiento</span>
               <span>{formatYear(deathYear)}</span>
             </li>
           )}
@@ -129,7 +130,11 @@ export const BiographyLayout: React.FC<BiographyLayoutProps> = ({ Component, Sid
   };
 
   return (
-    <div className="min-h-screen w-full lg:h-screen lg:overflow-hidden flex flex-col lg:flex-row bg-lienzo">
+    <div
+      className="min-h-screen w-full lg:h-screen lg:overflow-hidden flex flex-col lg:flex-row bg-lienzo page-accent-scope"
+      data-page-type="matematico"
+      style={{ '--page-accent': getContentPageAccent('matematico') } as React.CSSProperties}
+    >
 
       {/* PANEL IZQUIERDO: FIJO Y OSCURO (MUSEO) — colapsa en móvil */}
       <div className="lg:w-[40%] bg-zinc-900 lg:border-r border-carbon/20 text-white lg:overflow-y-auto custom-scrollbar relative">

@@ -152,7 +152,6 @@ export const TheoremPage = () => {
             breadcrumbs={breadcrumbs}
             authors={theorem.authors || []}
             tags={theorem.tags || []}
-            color={theorem.color}
             nodeId={theorem.id}
             backLink={parentTheorem ? {
               href: `/teorema/${parentTheorem.id}`,
@@ -248,6 +247,7 @@ export const TheoremPage = () => {
   return (
     <TriptychLayout
       className="theorem-triptych"
+      pageType={theorem.type || 'teorema'}
       metadata={<MetadataSidebar />}
       diagram={Simulation ? (
         <Suspense fallback={<div className="diagram-loading">Preparando visualización…</div>}>

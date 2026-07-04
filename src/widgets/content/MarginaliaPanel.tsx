@@ -9,6 +9,8 @@ import katex from 'katex';
 import { Link } from 'wouter';
 import { ContentTypeBadge } from '@/shared/ui/ContentTypeBadge';
 import { routePath } from '@/shared/lib/routeHelper';
+import { getContentPageAccent } from '@/shared/design/pageAccents';
+
 
 interface TermData {
   title: string;
@@ -196,99 +198,117 @@ export const MarginaliaPanel = () => {
   const isSidebar = displayMode === 'sidebar';
   const panelClassName = computePanelClassName(isSidebar, isActive);
 
+  // Resolver el color del panel a partir del primer término visible (fallback glosario -> piedra)
+  const firstType = activeTermDataList[0]?.type || formulaData?.[0]?.type || 'glosario';
+  const panelAccent = getContentPageAccent(firstType);
+
   let panelContent: React.ReactNode;
   if (activeTermDataList.length > 0) {
     panelContent = (
       <div className="flex flex-col">
-        {activeTermDataList.map((term, idx) => (
-          <article key={idx} className="mb-12 last:mb-0">
-            {term.type && (
-              <div className="mb-4">
-                <ContentTypeBadge type={term.type} label={term.typeLabel} />
-              </div>
-            )}
-            <h2
-              className="text-4xl md:text-5xl text-carbon mb-4 font-bold leading-tight"
-              style={{ fontVariant: 'small-caps' }}
+        {activeTermDataList.map((term, idx) => {
+          const accent = getContentPageAccent(term.type);
+          return (
+            <article
+              key={idx}
+              className="mb-12 last:mb-0"
+              style={{ '--page-accent': accent } as React.CSSProperties}
             >
-              <span className="float-left text-5xl md:text-6xl font-serif text-terracota font-bold pr-3 pl-1 leading-[0.7] mt-2 select-none">
-                {term.title.charAt(0)}
-              </span>
-              {term.title.slice(1)}
-            </h2>
-            <div className="flex items-center gap-3 my-6 opacity-50">
-              <div className="w-12 h-px bg-terracota/60" />
-              <span className="text-terracota/60 text-xs">✦</span>
-              <div className="flex-1 h-px bg-carbon/15" />
-            </div>
-            <p className="text-lg text-carbon/85 leading-relaxed italic border-l-2 border-terracota/30 pl-5 mb-6">
-              {term.definition}
-            </p>
-            {term.statement && (
-              <div className="mt-6 p-5 bg-terracota/[0.04] border-l-4 border-terracota/60">
-                <h5 className="text-terracota font-sans font-bold text-[10px] uppercase tracking-widest mb-3">
-                  Enunciado
-                </h5>
-                <p className="italic text-carbon/90 m-0 leading-relaxed text-base">
-                  {renderTextWithMath(term.statement)}
-                </p>
+              {term.type && (
+                <div className="mb-4">
+                  <ContentTypeBadge type={term.type} label={term.typeLabel} />
+                </div>
+              )}
+              <h2
+                className="text-4xl md:text-5xl text-carbon mb-4 font-bold leading-tight"
+                style={{ fontVariant: 'small-caps' }}
+              >
+                <span className="page-accent-text float-left text-5xl md:text-6xl font-serif font-bold pr-3 pl-1 leading-[0.7] mt-2 select-none">
+                  {term.title.charAt(0)}
+                </span>
+                {term.title.slice(1)}
+              </h2>
+              <div className="flex items-center gap-3 my-6 opacity-50">
+                <div className="page-accent-bg w-12 h-px opacity-60" />
+                <span className="page-accent-text opacity-60 text-xs">✦</span>
+                <div className="flex-1 h-px bg-carbon/15" />
               </div>
-            )}
-            {term.equation && (
-              <div
-                className="mt-6 p-5 bg-carbon/[0.03] border border-carbon/10 text-center font-mono text-xl text-carbon overflow-x-auto"
-                dangerouslySetInnerHTML={renderMathString(term.equation)}
-              />
-            )}
-            {term.isDefinition && term.href && (
-              <div className="mt-10 text-center">
-                <Link href={term.href}>
-                  <a
-                    onClick={closeTerm}
-                    className="inline-block px-8 py-3 border border-carbon/20 hover:border-terracota hover:text-terracota transition-all text-xs font-sans tracking-widest uppercase font-bold"
-                  >
-                    Leer Artículo Completo →
-                  </a>
-                </Link>
-              </div>
-            )}
-            {idx < activeTermDataList.length - 1 && (
-              <div className="mt-10 flex justify-center opacity-30 text-terracota text-xl">❦</div>
-            )}
-          </article>
-        ))}
+              <p className="page-accent-border text-lg text-carbon/85 leading-relaxed italic border-l-2 pl-5 mb-6">
+                {term.definition}
+              </p>
+              {term.statement && (
+                <div className="page-accent-border mt-6 p-5 border-l-4" style={{ backgroundColor: 'color-mix(in srgb, var(--page-accent) 4%, transparent)' }}>
+                  <h5 className="page-accent-text font-sans font-bold text-[10px] uppercase tracking-widest mb-3">
+                    Enunciado
+                  </h5>
+                  <p className="italic text-carbon/90 m-0 leading-relaxed text-base">
+                    {renderTextWithMath(term.statement)}
+                  </p>
+                </div>
+              )}
+              {term.equation && (
+                <div
+                  className="mt-6 p-5 bg-carbon/[0.03] border border-carbon/10 text-center font-mono text-xl text-carbon overflow-x-auto"
+                  dangerouslySetInnerHTML={renderMathString(term.equation)}
+                />
+              )}
+              {term.isDefinition && term.href && (
+                <div className="mt-10 text-center">
+                  <Link href={term.href}>
+                    <a
+                      onClick={closeTerm}
+                      className="page-accent-hover inline-block px-8 py-3 border border-carbon/20 transition-all text-xs font-sans tracking-widest uppercase font-bold"
+                    >
+                      Leer Artículo Completo →
+                    </a>
+                  </Link>
+                </div>
+              )}
+              {idx < activeTermDataList.length - 1 && (
+                <div className="page-accent-text mt-10 flex justify-center opacity-30 text-xl">❦</div>
+              )}
+            </article>
+          );
+        })}
       </div>
     );
   } else if (formulaData && formulaData.length > 0) {
     panelContent = (
       <div className="flex flex-col">
-        {formulaData.map((data, idx) => (
-          <article key={idx} className="mb-12 last:mb-0">
-            <h2 className="text-4xl text-carbon mb-4 font-bold" style={{ fontVariant: 'small-caps' }}>
-              <span className="float-left text-5xl font-serif text-terracota font-bold pr-3 pl-1 leading-[0.7] mt-2 select-none">
-                {data.title.charAt(0)}
-              </span>
-              {data.title.slice(1)}
-            </h2>
-            <div className="flex items-center gap-3 my-6 opacity-50">
-              <div className="w-12 h-px bg-terracota/60" />
-              <span className="text-terracota/60 text-xs">✦</span>
-              <div className="flex-1 h-px bg-carbon/15" />
-            </div>
-            <p className="text-lg text-carbon/85 leading-relaxed italic border-l-2 border-terracota/30 pl-5">
-              {data.definition}
-            </p>
-            {data.equation && (
-              <div
-                className="mt-6 p-5 bg-carbon/[0.03] border border-carbon/10 text-center font-mono text-xl text-carbon overflow-x-auto"
-                dangerouslySetInnerHTML={renderMathString(data.equation)}
-              />
-            )}
-            {idx < formulaData.length - 1 && (
-              <div className="mt-10 flex justify-center opacity-30 text-terracota text-xl">❦</div>
-            )}
-          </article>
-        ))}
+        {formulaData.map((data, idx) => {
+          const accent = getContentPageAccent(data.type ?? 'glosario');
+          return (
+            <article
+              key={idx}
+              className="mb-12 last:mb-0"
+              style={{ '--page-accent': accent } as React.CSSProperties}
+            >
+              <h2 className="text-4xl text-carbon mb-4 font-bold" style={{ fontVariant: 'small-caps' }}>
+                <span className="page-accent-text float-left text-5xl font-serif font-bold pr-3 pl-1 leading-[0.7] mt-2 select-none">
+                  {data.title.charAt(0)}
+                </span>
+                {data.title.slice(1)}
+              </h2>
+              <div className="flex items-center gap-3 my-6 opacity-50">
+                <div className="page-accent-bg w-12 h-px opacity-60" />
+                <span className="page-accent-text opacity-60 text-xs">✦</span>
+                <div className="flex-1 h-px bg-carbon/15" />
+              </div>
+              <p className="page-accent-border text-lg text-carbon/85 leading-relaxed italic border-l-2 pl-5">
+                {data.definition}
+              </p>
+              {data.equation && (
+                <div
+                  className="mt-6 p-5 bg-carbon/[0.03] border border-carbon/10 text-center font-mono text-xl text-carbon overflow-x-auto"
+                  dangerouslySetInnerHTML={renderMathString(data.equation)}
+                />
+              )}
+              {idx < formulaData.length - 1 && (
+                <div className="page-accent-text mt-10 flex justify-center opacity-30 text-xl">❦</div>
+              )}
+            </article>
+          );
+        })}
       </div>
     );
   } else {
@@ -305,12 +325,12 @@ export const MarginaliaPanel = () => {
         onClick={closeTerm}
       />
 
-      <div className={panelClassName}>
+      <div className={panelClassName} style={{ '--page-accent': panelAccent } as React.CSSProperties}>
         <div className="h-full flex flex-col relative overflow-hidden">
           <div className="absolute top-5 right-5 flex gap-3 text-carbon/40 font-sans z-20">
             <button
               onClick={toggleDisplayMode}
-              className="hover:text-terracota transition-colors text-sm p-2 rounded-sm hover:bg-carbon/5"
+              className="page-accent-hover transition-colors text-sm p-2 rounded-sm"
               title={isSidebar ? 'Cambiar a ventana flotante' : 'Cambiar a panel lateral'}
               aria-label="Cambiar modo de visualización"
             >
@@ -318,7 +338,7 @@ export const MarginaliaPanel = () => {
             </button>
             <button
               onClick={closeTerm}
-              className="hover:text-terracota transition-colors text-2xl leading-none p-2 rounded-sm hover:bg-carbon/5"
+              className="page-accent-hover transition-colors text-2xl leading-none p-2 rounded-sm"
               aria-label="Cerrar panel"
             >
               ×
@@ -327,17 +347,17 @@ export const MarginaliaPanel = () => {
 
           <div className="flex-1 overflow-y-auto h-full relative">
             <div className="p-10 md:p-12 min-h-full flex flex-col relative">
-              <div className="absolute top-3 left-3 w-5 h-5 border-t-2 border-l-2 border-terracota/40 pointer-events-none" aria-hidden />
-              <div className="absolute top-3 right-3 w-5 h-5 border-t-2 border-r-2 border-terracota/40 pointer-events-none" aria-hidden />
-              <div className="absolute bottom-3 left-3 w-5 h-5 border-b-2 border-l-2 border-terracota/40 pointer-events-none" aria-hidden />
-              <div className="absolute bottom-3 right-3 w-5 h-5 border-b-2 border-r-2 border-terracota/40 pointer-events-none" aria-hidden />
+              <div className="page-accent-border absolute top-3 left-3 w-5 h-5 border-t-2 border-l-2 opacity-40 pointer-events-none" aria-hidden />
+              <div className="page-accent-border absolute top-3 right-3 w-5 h-5 border-t-2 border-r-2 opacity-40 pointer-events-none" aria-hidden />
+              <div className="page-accent-border absolute bottom-3 left-3 w-5 h-5 border-b-2 border-l-2 opacity-40 pointer-events-none" aria-hidden />
+              <div className="page-accent-border absolute bottom-3 right-3 w-5 h-5 border-b-2 border-r-2 opacity-40 pointer-events-none" aria-hidden />
 
               <div className="mt-2 flex-1">
                 {panelContent}
               </div>
 
               {isSidebar && (
-                <div className="mt-auto pt-8 flex-none flex justify-center opacity-30 text-terracota text-sm">❦</div>
+                <div className="page-accent-text mt-auto pt-8 flex-none flex justify-center opacity-30 text-sm">❦</div>
               )}
             </div>
           </div>

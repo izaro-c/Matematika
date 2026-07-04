@@ -114,7 +114,11 @@ export const StudyPlanPage = () => {
       <div className="bg-lienzo text-carbon font-serif pt-24 pb-32 min-h-screen relative">
         <div
           className="absolute inset-0 z-0 pointer-events-none opacity-[0.02] mix-blend-multiply fixed"
-          style={{ backgroundImage: `url(${publicAsset('/images/bg-botanical.png')})`, backgroundSize: '400px' }}
+          style={{
+            backgroundImage: `linear-gradient(var(--page-accent), var(--page-accent)), url(${publicAsset('/images/bg-botanical.png')})`,
+            backgroundBlendMode: 'color',
+            backgroundSize: '400px',
+          }}
         />
 
         <div className="relative z-20 max-w-4xl mx-auto px-6 md:px-0">
@@ -125,7 +129,7 @@ export const StudyPlanPage = () => {
                 ← Retornar al Archivo
               </a>
             </Link>
-            <p className="text-xs tracking-[0.3em] uppercase font-sans mb-4 text-terracota font-bold">
+            <p className="page-accent-text text-xs tracking-[0.3em] uppercase font-sans mb-4 font-bold">
               {plan.subtitle}
             </p>
             <h1 className="text-5xl md:text-6xl font-bold tracking-tight text-carbon leading-none mb-6" style={{ fontVariant: 'small-caps' }}>
@@ -144,12 +148,16 @@ export const StudyPlanPage = () => {
             {/* BARRA DE PROGRESO VERTICAL DE LONGITUD TOTAL */}
             <div className="hidden md:block absolute left-[-4rem] top-0 bottom-0 w-px bg-carbon/10">
                <div 
-                  className="absolute top-0 left-[-1px] w-[3px] bg-terracota transition-all duration-1000 ease-[cubic-bezier(0.23,1,0.32,1)]"
+                  className="page-accent-bg absolute top-0 left-[-1px] w-[3px] transition-all duration-1000 ease-[cubic-bezier(0.23,1,0.32,1)]"
                   style={{ height: `${fillHeight}px` }}
                />
                <div 
-                  className="absolute left-[-4px] w-[9px] h-[9px] border-2 border-terracota bg-lienzo rotate-45 transition-all duration-1000 ease-[cubic-bezier(0.23,1,0.32,1)] shadow-[1px_1px_0px_var(--theme-terracota)]"
-                  style={{ top: `calc(${fillHeight}px - 4px)`, opacity: fillHeight > 0 ? 1 : 0 }}
+                  className="page-accent-border absolute left-[-4px] w-[9px] h-[9px] border-2 bg-lienzo rotate-45 transition-all duration-1000 ease-[cubic-bezier(0.23,1,0.32,1)]"
+                  style={{
+                    top: `calc(${fillHeight}px - 4px)`,
+                    opacity: fillHeight > 0 ? 1 : 0,
+                    boxShadow: '1px 1px 0 var(--page-accent)',
+                  }}
                />
             </div>
 

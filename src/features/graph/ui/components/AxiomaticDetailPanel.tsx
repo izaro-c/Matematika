@@ -32,10 +32,21 @@ export function AxiomaticDetailPanel({
         : 'absolute top-3 right-3 z-30 bg-lienzo/95 border border-carbon/20 shadow p-4 w-[280px] max-h-[calc(100vh-2rem)] overflow-y-auto'
     }>
       <div className="flex justify-between items-start mb-2">
-        <span className="text-[9px] uppercase tracking-widest px-1.5 py-0.5 rounded font-sans font-bold"
-          style={{ background: getNodeTypeColor(selectedNodeData.nodeType), color: '#fff' }}>
-          {selectedNodeData.nodeType}
-        </span>
+        {(() => {
+          const color = getNodeTypeColor(selectedNodeData.nodeType);
+          return (
+            <span
+              className="text-[9px] uppercase tracking-widest px-2.5 py-0.5 rounded-sm border font-sans font-bold"
+              style={{
+                backgroundColor: `color-mix(in srgb, ${color} 8%, transparent)`,
+                borderColor: `color-mix(in srgb, ${color} 30%, transparent)`,
+                color: color,
+              }}
+            >
+              {selectedNodeData.nodeType}
+            </span>
+          );
+        })()}
         <button onClick={() => setSelectedNodeId(null)} className="text-carbon/40 hover:text-carbon text-sm">✕</button>
       </div>
       <h2 className="font-serif text-base text-carbon font-bold leading-tight mb-2 capitalize">{selectedNodeData.label}</h2>
@@ -45,7 +56,22 @@ export function AxiomaticDetailPanel({
         <div className="mb-2">
           <h4 className="font-sans text-[9px] uppercase tracking-widest text-carbon/50 mb-1">Sistemas</h4>
           <div className="flex flex-wrap gap-1">
-            {nodeSystems.map(s => <span key={s.id} className="text-[10px] font-serif px-2 py-0.5 rounded bg-terracota/10 text-terracota">{s.title}</span>)}
+            {nodeSystems.map(s => {
+              const color = getNodeTypeColor(selectedNodeData.nodeType);
+              return (
+                <span
+                  key={s.id}
+                  className="text-[10px] font-serif px-2 py-0.5 rounded-sm border"
+                  style={{
+                    backgroundColor: `color-mix(in srgb, ${color} 6%, transparent)`,
+                    borderColor: `color-mix(in srgb, ${color} 20%, transparent)`,
+                    color: color,
+                  }}
+                >
+                  {s.title}
+                </span>
+              );
+            })}
           </div>
         </div>
       )}
@@ -67,10 +93,18 @@ export function AxiomaticDetailPanel({
         </div>
       )}
 
-      <a href={appPath(`/${getNodeUrlPrefix(selectedNodeData.nodeType)}/${selectedNodeId}`)}
-        className="inline-flex items-center gap-1.5 mt-2 text-xs font-sans text-pizarra hover:text-carbon transition-colors">
-        <span>Ver página →</span>
-      </a>
+      {(() => {
+        const color = getNodeTypeColor(selectedNodeData.nodeType);
+        return (
+          <a
+            href={appPath(`/${getNodeUrlPrefix(selectedNodeData.nodeType)}/${selectedNodeId}`)}
+            className="inline-flex items-center gap-1.5 mt-3 text-xs font-sans font-bold transition-all hover:translate-x-0.5"
+            style={{ color: color }}
+          >
+            <span>Ver página &rarr;</span>
+          </a>
+        );
+      })()}
     </div>
   );
 }

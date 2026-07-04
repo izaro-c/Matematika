@@ -441,7 +441,8 @@ export async function computeGraph(
     let edgeColor: string;
     let edgeWidth: number;
     if (isFromPrimitive) {
-      edgeColor = isLive ? '#818cf8AA' : '#818cf822';
+      edgeColor = isLive ? '#576070AA' : '#57607022';
+
       edgeWidth = isLive ? 2.5 : 1;
     } else {
       edgeColor = isLive ? '#333333AA' : '#33333322';

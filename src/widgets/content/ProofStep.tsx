@@ -91,7 +91,7 @@ export const ProofStep: React.FC<ProofStepProps> = ({
           <div className="absolute inset-1 border border-carbon/20 pointer-events-none" />
           {/* Número */}
           <span
-            className="font-serif italic font-bold text-2xl lg:text-4xl z-10 text-terracota"
+            className="page-accent-text font-serif italic font-bold text-2xl lg:text-4xl z-10"
             style={{
               fontFamily: 'Georgia, "Playfair Display", serif',
               textShadow: '1px 1px 0px #FDFBF7, -1px -1px 0px #FDFBF7, 1px -1px 0px #FDFBF7, -1px 1px 0px #FDFBF7'

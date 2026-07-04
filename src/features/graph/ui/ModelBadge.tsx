@@ -20,7 +20,7 @@ export const ModelBadge: React.FC<ModelBadgeProps> = ({ modelId }) => {
       title={model.description || `Modelo: ${model.title}`}
       style={{ ['--pill-accent' as string]: 'var(--theme-pavo)', textDecoration: 'none' }}
     >
-      <span className="ac-pill-ornament" aria-hidden style={{ color: 'var(--theme-terracota)' }}>☙</span>
+      <span className="ac-pill-ornament" aria-hidden style={{ color: 'var(--pill-accent)' }}>☙</span>
       <span className="ac-pill-serif">Modelo: <strong>{model.title}</strong></span>
     </a>
   );

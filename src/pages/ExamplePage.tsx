@@ -35,7 +35,7 @@ export const ExamplePage: React.FC = () => {
     : [];
 
   return (
-    <SimulationLayout simulationComponent={example.Simulation}>
+    <SimulationLayout pageType="ejemplo" simulationComponent={example.Simulation}>
       <div className="min-h-screen bg-transparent text-carbon font-serif pb-32">
         <FadeIn className="w-full px-6 md:px-10 pt-4 pb-16">
           <ContentHeader

@@ -66,7 +66,7 @@ export function AxiomPage() {
   );
 
   return (
-    <SimulationLayout simulationComponent={axiom.Simulation}>
+    <SimulationLayout pageType="axioma" simulationComponent={axiom.Simulation}>
       {content}
     </SimulationLayout>
   );

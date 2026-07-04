@@ -27,7 +27,7 @@ const ProgressBar: React.FC = () => {
             className="h-full rounded-full transition-all duration-500"
             style={{
               width: `${pct}%`,
-              backgroundColor: pct === 100 ? 'var(--theme-musgo)' : 'var(--theme-terracota)',
+              backgroundColor: pct === 100 ? 'var(--theme-musgo)' : 'var(--page-accent, var(--theme-terracota))',
             }}
           />
         </div>
@@ -38,7 +38,7 @@ const ProgressBar: React.FC = () => {
         {score.answered > 0 && (
           <button
             onClick={reset}
-            className="text-[10px] font-sans uppercase tracking-widest text-terracota/60 hover:text-terracota transition-colors underline underline-offset-2 shrink-0"
+            className="page-accent-text text-[10px] font-sans uppercase tracking-widest opacity-60 hover:opacity-100 transition-opacity underline underline-offset-2 shrink-0"
           >
             Reiniciar
           </button>
@@ -74,7 +74,7 @@ const ExerciseContent: React.FC<{ id: string }> = ({ id }) => {
     : [];
 
   return (
-    <SimulationLayout simulationComponent={exercise.Simulation}>
+    <SimulationLayout pageType="ejercicio" simulationComponent={exercise.Simulation}>
       <div className="min-h-screen bg-transparent text-carbon font-serif pb-32">
         <ProgressBar />
         <div className="w-full px-6 md:px-10 pt-4 pb-16">

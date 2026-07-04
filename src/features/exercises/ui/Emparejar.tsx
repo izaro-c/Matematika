@@ -149,7 +149,7 @@ export const Emparejar: React.FC<EmparejarProps> = ({ id, pairs }) => {
     <div className="my-8 font-serif">
       <div 
         className={`p-8 elegant-panel relative group ${isCompleted ? 'bg-salvia/5 border-salvia/30' : ''}`}
-        style={{ '--hover-accent': isCompleted ? 'var(--theme-salvia)' : 'var(--theme-carbon)' } as React.CSSProperties}
+        style={{ '--hover-accent': isCompleted ? 'var(--theme-salvia)' : 'var(--page-accent)' } as React.CSSProperties}
       >
         <h4 className="font-bold text-carbon mb-8 mt-2 flex items-center gap-3 text-lg z-30 relative">
           {isCompleted ? <span className="text-salvia">❦ Completado</span> : <span>Une los conceptos correspondientes</span>}
@@ -190,7 +190,7 @@ export const Emparejar: React.FC<EmparejarProps> = ({ id, pairs }) => {
               if (isMatched) btnClass += "bg-salvia/10 border-salvia/40 text-salvia cursor-default shadow-[inset_0_2px_4px_rgba(0,0,0,0.05)]";
               else if (isError) btnClass += "bg-terracota/5 border-terracota/60 text-terracota animate-shake";
               else if (isSelected) btnClass += "bg-carbon/10 border-carbon text-carbon transform scale-[1.02] shadow-md z-30";
-              else btnClass += "bg-transparent border-carbon/20 hover:border-carbon/50 hover:bg-carbon/[0.02] cursor-pointer text-carbon hover:-translate-y-0.5 hover:shadow-sm";
+              else btnClass += "page-accent-button bg-transparent border-carbon/20 cursor-pointer text-carbon hover:-translate-y-0.5 hover:shadow-sm";
 
               let dotClass: string;
               if (isMatched) {
@@ -229,7 +229,7 @@ export const Emparejar: React.FC<EmparejarProps> = ({ id, pairs }) => {
               if (isMatched) btnClass += "bg-salvia/10 border-salvia/40 text-salvia cursor-default shadow-[inset_0_2px_4px_rgba(0,0,0,0.05)]";
               else if (isError) btnClass += "bg-terracota/5 border-terracota/60 text-terracota animate-shake";
               else if (isSelected) btnClass += "bg-carbon/10 border-carbon text-carbon transform scale-[1.02] shadow-md z-30";
-              else btnClass += "bg-transparent border-carbon/20 hover:border-carbon/50 hover:bg-carbon/[0.02] cursor-pointer text-carbon hover:-translate-y-0.5 hover:shadow-sm";
+              else btnClass += "page-accent-button bg-transparent border-carbon/20 cursor-pointer text-carbon hover:-translate-y-0.5 hover:shadow-sm";
 
               let dotClass: string;
               if (isMatched) {

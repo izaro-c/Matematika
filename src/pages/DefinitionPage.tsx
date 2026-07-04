@@ -69,7 +69,6 @@ export const DefinitionPage = () => {
           breadcrumbs={breadcrumbs}
           authors={definition.authors || []}
           tags={definition.tags || []}
-          color={definition.color}
           nodeId={definition.id}
         />
 
@@ -95,6 +94,7 @@ export const DefinitionPage = () => {
 
   return (
     <NotebookLayout
+      pageType="definicion"
       diagram={Simulation ? (
         <Suspense fallback={<div className="diagram-loading">Preparando visualización…</div>}>
           <Simulation />

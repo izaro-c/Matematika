@@ -29,9 +29,9 @@ export const Solucion: React.FC<SolucionProps> = ({ children, label = 'Ver Soluc
             setActiveStep('Solucion');
           }}
           className="w-full flex items-center justify-center gap-3 py-4 elegant-panel text-carbon/60 hover:text-carbon text-[11px] font-sans uppercase tracking-widest group"
-          style={{ '--hover-accent': 'var(--theme-terracota)' } as React.CSSProperties}
+          style={{ '--hover-accent': 'var(--page-accent)' } as React.CSSProperties}
         >
-          <span className="text-terracota/80 group-hover:text-terracota transition-colors">{label}</span>
+          <span className="page-accent-text opacity-80 group-hover:opacity-100 transition-all">{label}</span>
         </button>
       ) : (
         <div 
@@ -44,7 +44,7 @@ export const Solucion: React.FC<SolucionProps> = ({ children, label = 'Ver Soluc
               setRevealed(false);
               setActiveStep(null);
             }}
-            className="absolute top-4 right-4 text-[10px] font-sans uppercase tracking-widest text-carbon/30 hover:text-carbon transition-colors"
+            className="page-accent-text-hover absolute top-4 right-4 text-[10px] font-sans uppercase tracking-widest text-carbon/30 transition-colors"
           >
             ✕ Cerrar
           </button>

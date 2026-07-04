@@ -8,13 +8,14 @@ import { ArtsAndCraftsLiana } from '@/shared/ui/ArtsAndCraftsLiana';
 
 // ── Utilidad: clasificación de año histórico a época ───────────────────────────
 const ERA_STEPS: readonly { cutoff: number; label: string; color: string }[] = [
-  { cutoff: -200, label: 'Antigüedad', color: '#c49b4f' },
-  { cutoff: 500, label: 'Mundo Clásico', color: '#A2C2A2' },
-  { cutoff: 1400, label: 'Medievo', color: '#5D7080' },
-  { cutoff: 1700, label: 'Renacimiento', color: '#C86446' },
-  { cutoff: 1900, label: 'Ilustración', color: '#333' },
+  { cutoff: -200, label: 'Antigüedad',   color: '#B8893A' }, // ocre
+  { cutoff: 500,  label: 'Mundo Clásico',color: '#3E7268' }, // salvia
+  { cutoff: 1400, label: 'Medievo',      color: '#576070' }, // pizarra
+  { cutoff: 1700, label: 'Renacimiento', color: '#C86446' }, // terracota
+  { cutoff: 1900, label: 'Ilustración',  color: '#6E5F82' }, // lila
 ];
-const DEFAULT_ERA = { label: 'Época Moderna', color: '#333' };
+const DEFAULT_ERA = { label: 'Época Moderna', color: '#333333' };
+
 
 function getEra(year: number) {
   const era = ERA_STEPS.find(e => year < e.cutoff);

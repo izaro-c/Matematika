@@ -3,6 +3,7 @@ import { useMathStore } from '@/app/providers/MathStoreContext';
 import { db } from '@/entities/content';
 import { Link, useLocation } from 'wouter';
 import { TYPE_STYLES } from '@/shared/lib/constants';
+import { getContentPageAccent } from '@/shared/design';
 import { ContentHeader } from '@/widgets/content/ContentHeader';
 
 interface CodexLayoutProps {
@@ -150,7 +151,7 @@ export const CodexLayout: React.FC<CodexLayoutProps> = ({
             <Link
               key={id}
               href={`/${prefix}/${id}`}
-              className="inline-flex items-center gap-2 px-2.5 py-1 text-xs border border-carbon/15 rounded bg-lienzo hover:border-terracota/30 hover:bg-terracota/5 transition-all text-carbon"
+              className="page-accent-hover inline-flex items-center gap-2 px-2.5 py-1 text-xs border border-carbon/15 rounded bg-lienzo transition-all text-carbon"
               style={{ textDecoration: 'none' }}
             >
               <span
@@ -178,7 +179,6 @@ export const CodexLayout: React.FC<CodexLayoutProps> = ({
           description={demo.description}
           breadcrumbs={breadcrumbs}
           authors={demo.authors || []}
-          color="var(--theme-pizarra)"
           nodeId={demo.id}
           backLink={parentTheorem ? {
             href: `/teorema/${parentTheorem.id}`,
@@ -188,7 +188,7 @@ export const CodexLayout: React.FC<CodexLayoutProps> = ({
             <Link
               href={`/leccion-metodo-${demo.proofMethod}`}
               className="ac-pill ac-pill-accent"
-              style={{ ['--pill-accent' as string]: 'var(--theme-terracota)' }}
+              style={{ ['--pill-accent' as string]: 'var(--page-accent)' }}
             >
               <span className="ac-pill-ornament" aria-hidden>❧</span>
               Método: {demo.proofMethod}
@@ -200,7 +200,11 @@ export const CodexLayout: React.FC<CodexLayoutProps> = ({
   };
 
   return (
-    <div className={`codex-layout is-focus-mode ${!hasDiagram ? 'has-no-diagram' : ''} ${className}`}>
+    <div
+      className={`codex-layout page-accent-scope is-focus-mode ${!hasDiagram ? 'has-no-diagram' : ''} ${className}`}
+      data-page-type="demostracion"
+      style={{ '--page-accent': getContentPageAccent('demostracion') } as React.CSSProperties}
+    >
       {/* Cabecera en móviles: antes del grid para que no quede aplastada por el diagrama sticky */}
       <div className="max-w-[80ch] mx-auto px-6 mobile-header-container">
         {renderHeader(true)}

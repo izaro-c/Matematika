@@ -103,7 +103,7 @@ export function AxiomaticSystemPage() {
 
   return (
     <div className="min-h-screen flex flex-col w-full">
-      <SimulationLayout simulationComponent={system.Simulation}>
+      <SimulationLayout pageType="sistema-axiomatico" simulationComponent={system.Simulation}>
         {renderMainContent()}
       </SimulationLayout>
       {renderSecondaryContent()}

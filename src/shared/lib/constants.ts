@@ -57,6 +57,11 @@ export interface ContentTypeConfig {
   hierarchyLevel: number;
 }
 
+import { CONTENT_TYPE_COLORS } from '@/shared/design/contentTypeColors';
+
+// Shorthand helpers
+const c = (type: keyof typeof CONTENT_TYPE_COLORS) => CONTENT_TYPE_COLORS[type];
+
 export const CONTENT_TYPE_CONFIG: Record<string, ContentTypeConfig> = {
   axioma: {
     id: 'axioma',
@@ -64,8 +69,8 @@ export const CONTENT_TYPE_CONFIG: Record<string, ContentTypeConfig> = {
     labelPlural: 'Axiomas',
     routePrefix: 'axioma',
     graphGroup: 'axioma',
-    graphColor: '#f5c542',
-    nodeStyle: { bg: '#1c1917', border: '#1c1917', text: '#f8f6f1', badge: 'AXIOMA', ringColor: '#f5c542' },
+    graphColor: c('axioma').cssVar,
+    nodeStyle: { bg: c('axioma').hex, border: c('axioma').hex, text: '#ffffff', badge: 'AXIOMA', ringColor: c('axioma').ringHex },
     hierarchyLevel: 0,
   },
   concepto: {
@@ -74,8 +79,8 @@ export const CONTENT_TYPE_CONFIG: Record<string, ContentTypeConfig> = {
     labelPlural: 'Conceptos',
     routePrefix: 'definicion',
     graphGroup: 'definition',
-    graphColor: '#5D7080',
-    nodeStyle: { bg: '#5D7080', border: '#5D7080', text: '#ffffff', badge: 'CONCEPTO', ringColor: '#8a9aaa' },
+    graphColor: c('concepto').cssVar,
+    nodeStyle: { bg: c('concepto').hex, border: c('concepto').hex, text: '#ffffff', badge: 'CONCEPTO', ringColor: c('concepto').ringHex },
     hierarchyLevel: 0,
   },
   definicion: {
@@ -84,8 +89,8 @@ export const CONTENT_TYPE_CONFIG: Record<string, ContentTypeConfig> = {
     labelPlural: 'Definiciones',
     routePrefix: 'definicion',
     graphGroup: 'definition',
-    graphColor: '#3b5e6b',
-    nodeStyle: { bg: '#3b5e6b', border: '#3b5e6b', text: '#ffffff', badge: 'DEFINICION', ringColor: '#5a8a9a' },
+    graphColor: c('definicion').cssVar,
+    nodeStyle: { bg: c('definicion').hex, border: c('definicion').hex, text: '#ffffff', badge: 'DEFINICION', ringColor: c('definicion').ringHex },
     hierarchyLevel: 1,
   },
   lema: {
@@ -94,8 +99,8 @@ export const CONTENT_TYPE_CONFIG: Record<string, ContentTypeConfig> = {
     labelPlural: 'Lemas',
     routePrefix: 'teorema',
     graphGroup: 'lemma',
-    graphColor: '#C86446',
-    nodeStyle: { bg: '#C86446', border: '#C86446', text: '#ffffff', badge: 'LEMA', ringColor: '#e89878' },
+    graphColor: c('lema').cssVar,
+    nodeStyle: { bg: c('lema').hex, border: c('lema').hex, text: '#ffffff', badge: 'LEMA', ringColor: c('lema').ringHex },
     hierarchyLevel: 2,
   },
   teorema: {
@@ -104,8 +109,8 @@ export const CONTENT_TYPE_CONFIG: Record<string, ContentTypeConfig> = {
     labelPlural: 'Teoremas',
     routePrefix: 'teorema',
     graphGroup: 'theorem',
-    graphColor: '#4a5d23',
-    nodeStyle: { bg: '#4a5d23', border: '#4a5d23', text: '#ffffff', badge: 'TEOREMA', ringColor: '#6b8e3a' },
+    graphColor: c('teorema').cssVar,
+    nodeStyle: { bg: c('teorema').hex, border: c('teorema').hex, text: '#ffffff', badge: 'TEOREMA', ringColor: c('teorema').ringHex },
     hierarchyLevel: 3,
   },
   corolario: {
@@ -114,8 +119,8 @@ export const CONTENT_TYPE_CONFIG: Record<string, ContentTypeConfig> = {
     labelPlural: 'Corolarios',
     routePrefix: 'teorema',
     graphGroup: 'corollary',
-    graphColor: '#c49b4f',
-    nodeStyle: { bg: '#c49b4f', border: '#c49b4f', text: '#ffffff', badge: 'COROLARIO', ringColor: '#e8d08a' },
+    graphColor: c('corolario').cssVar,
+    nodeStyle: { bg: c('corolario').hex, border: c('corolario').hex, text: '#ffffff', badge: 'COROLARIO', ringColor: c('corolario').ringHex },
     hierarchyLevel: 4,
   },
   demostracion: {
@@ -124,8 +129,8 @@ export const CONTENT_TYPE_CONFIG: Record<string, ContentTypeConfig> = {
     labelPlural: 'Demostraciones',
     routePrefix: 'demo',
     graphGroup: 'demostracion',
-    graphColor: '#C86446',
-    nodeStyle: { bg: '#5a3a2a', border: '#5a3a2a', text: '#ffffff', badge: 'DEMO', ringColor: '#e8946a' },
+    graphColor: c('demostracion').cssVar,
+    nodeStyle: { bg: c('demostracion').hex, border: c('demostracion').hex, text: '#ffffff', badge: 'DEMO', ringColor: c('demostracion').ringHex },
     hierarchyLevel: 5,
   },
   ejemplo: {
@@ -134,8 +139,8 @@ export const CONTENT_TYPE_CONFIG: Record<string, ContentTypeConfig> = {
     labelPlural: 'Ejemplos',
     routePrefix: 'ejemplo',
     graphGroup: 'example',
-    graphColor: '#5D7080',
-    nodeStyle: { bg: '#5D7080', border: '#5D7080', text: '#ffffff', badge: 'EJEMPLO', ringColor: '#9FAABF' },
+    graphColor: c('ejemplo').cssVar,
+    nodeStyle: { bg: c('ejemplo').hex, border: c('ejemplo').hex, text: '#ffffff', badge: 'EJEMPLO', ringColor: c('ejemplo').ringHex },
     hierarchyLevel: 10,
   },
   ejercicio: {
@@ -144,8 +149,8 @@ export const CONTENT_TYPE_CONFIG: Record<string, ContentTypeConfig> = {
     labelPlural: 'Ejercicios',
     routePrefix: 'ejercicio',
     graphGroup: 'exercise',
-    graphColor: '#A2C2A2',
-    nodeStyle: { bg: '#4a6a4a', border: '#4a6a4a', text: '#ffffff', badge: 'EJERCICIO', ringColor: '#8aba8a' },
+    graphColor: c('ejercicio').cssVar,
+    nodeStyle: { bg: c('ejercicio').hex, border: c('ejercicio').hex, text: '#ffffff', badge: 'EJERCICIO', ringColor: c('ejercicio').ringHex },
     hierarchyLevel: 10,
   },
   'caso-de-uso': {
@@ -154,8 +159,8 @@ export const CONTENT_TYPE_CONFIG: Record<string, ContentTypeConfig> = {
     labelPlural: 'Casos de Uso',
     routePrefix: 'caso',
     graphGroup: 'usecase',
-    graphColor: '#C86446',
-    nodeStyle: { bg: '#C86446', border: '#C86446', text: '#ffffff', badge: 'USO', ringColor: '#f0a082' },
+    graphColor: c('caso-de-uso').cssVar,
+    nodeStyle: { bg: c('caso-de-uso').hex, border: c('caso-de-uso').hex, text: '#ffffff', badge: 'USO', ringColor: c('caso-de-uso').ringHex },
     hierarchyLevel: 10,
   },
   matematico: {
@@ -164,8 +169,8 @@ export const CONTENT_TYPE_CONFIG: Record<string, ContentTypeConfig> = {
     labelPlural: 'Matemáticos',
     routePrefix: 'bio',
     graphGroup: 'mathematician',
-    graphColor: '#c49b4f',
-    nodeStyle: { bg: '#8a7a4a', border: '#8a7a4a', text: '#ffffff', badge: 'BIO', ringColor: '#d4c07a' },
+    graphColor: c('matematico').cssVar,
+    nodeStyle: { bg: c('matematico').hex, border: c('matematico').hex, text: '#ffffff', badge: 'BIO', ringColor: c('matematico').ringHex },
     hierarchyLevel: 10,
   },
   leccion: {
@@ -174,8 +179,8 @@ export const CONTENT_TYPE_CONFIG: Record<string, ContentTypeConfig> = {
     labelPlural: 'Lecciones',
     routePrefix: 'leccion',
     graphGroup: 'lesson',
-    graphColor: '#7A9CAE',
-    nodeStyle: { bg: '#3b5e6b', border: '#3b5e6b', text: '#ffffff', badge: 'LECCIÓN', ringColor: '#7A9CAE' },
+    graphColor: c('leccion').cssVar,
+    nodeStyle: { bg: c('leccion').hex, border: c('leccion').hex, text: '#ffffff', badge: 'LECCIÓN', ringColor: c('leccion').ringHex },
     hierarchyLevel: 10,
   },
   modelo: {
@@ -184,8 +189,8 @@ export const CONTENT_TYPE_CONFIG: Record<string, ContentTypeConfig> = {
     labelPlural: 'Modelos',
     routePrefix: 'modelo',
     graphGroup: 'modelo',
-    graphColor: '#8b3a3a',
-    nodeStyle: { bg: '#8b3a3a', border: '#8b3a3a', text: '#ffffff', badge: 'MODELO', ringColor: '#c06060' },
+    graphColor: c('modelo').cssVar,
+    nodeStyle: { bg: c('modelo').hex, border: c('modelo').hex, text: '#ffffff', badge: 'MODELO', ringColor: c('modelo').ringHex },
     hierarchyLevel: 10,
   },
   'plan-de-estudio': {
@@ -194,19 +199,21 @@ export const CONTENT_TYPE_CONFIG: Record<string, ContentTypeConfig> = {
     labelPlural: 'Planes de Estudio',
     routePrefix: 'plan',
     graphGroup: 'plan-de-estudio',
-    graphColor: '#8B9DC4',
-    nodeStyle: { bg: '#3a4a6a', border: '#3a4a6a', text: '#ffffff', badge: 'PLAN', ringColor: '#8B9DC4' },
+    graphColor: c('plan-de-estudio').cssVar,
+    nodeStyle: { bg: c('plan-de-estudio').hex, border: c('plan-de-estudio').hex, text: '#ffffff', badge: 'PLAN', ringColor: c('plan-de-estudio').ringHex },
     hierarchyLevel: 10,
   },
 };
 
 export const GRAPH_NODE_COLORS: Record<string, string> = {
-  central: '#333333',
-  branch: '#C86446',
+  central: CONTENT_TYPE_COLORS.matematico.hex,
+  branch:  CONTENT_TYPE_COLORS.teorema.hex,
   ...Object.fromEntries(
-    Object.values(CONTENT_TYPE_CONFIG).map(cfg => [cfg.graphGroup, cfg.graphColor]),
+    Object.values(CONTENT_TYPE_CONFIG).map(cfg => [cfg.graphGroup, cfg.nodeStyle.bg]),
   ),
 };
+
+
 
 export const TYPE_STYLES: Record<string, ContentTypeStyle> = Object.fromEntries(
   Object.entries(CONTENT_TYPE_CONFIG).map(([id, cfg]) => [id, cfg.nodeStyle]),

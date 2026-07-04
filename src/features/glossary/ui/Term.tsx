@@ -21,7 +21,7 @@ export const Term: React.FC<TermProps> = ({ id, children }) => {
   return (
     <span 
       onClick={() => openTerm(id)}
-      className="cursor-pointer border-b border-terracota/30 text-terracota hover:bg-terracota/10 hover:border-terracota transition-all font-medium relative group"
+      className="page-accent-link cursor-pointer border-b transition-all font-medium relative group"
       title="Ver definición"
     >
       {children}

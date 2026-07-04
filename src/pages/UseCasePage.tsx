@@ -140,7 +140,7 @@ export const UseCasePage: React.FC = () => {
   );
 
   return (
-    <SimulationLayout simulationComponent={usecase.Simulation}>
+    <SimulationLayout pageType="caso-de-uso" simulationComponent={usecase.Simulation}>
       {renderContent()}
     </SimulationLayout>
   );

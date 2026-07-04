@@ -25,13 +25,13 @@ export const ReadingButton: React.FC<ReadingButtonProps> = ({ id }) => {
         className={`group relative flex items-center justify-center gap-4 sm:gap-6 px-6 sm:px-16 py-5 sm:py-6 overflow-hidden transition-all duration-700 ease-out border-y ${
           alreadyRead 
             ? 'border-salvia/30 bg-salvia/5' 
-            : 'border-carbon/10 bg-transparent hover:border-terracota/30 hover:bg-carbon/[0.02]'
+            : 'page-accent-border-hover border-carbon/10 bg-transparent hover:bg-carbon/[0.02]'
         }`}
       >
         <div className={`flex items-center justify-center w-5 h-5 border transition-all duration-500 ${
           alreadyRead 
             ? 'border-salvia bg-transparent rotate-45' 
-            : 'border-carbon/40 rotate-0 group-hover:rotate-45 group-hover:border-terracota'
+            : 'page-accent-group-border border-carbon/40 rotate-0 group-hover:rotate-45'
         }`}>
           {alreadyRead && (
             <div className="w-3 h-3 bg-salvia scale-animation"></div>
@@ -39,7 +39,7 @@ export const ReadingButton: React.FC<ReadingButtonProps> = ({ id }) => {
         </div>
         
         <span className={`whitespace-nowrap text-xs sm:text-sm font-sans uppercase tracking-[0.2em] sm:tracking-[0.3em] font-bold transition-colors duration-500 ${
-          alreadyRead ? 'text-salvia' : 'text-carbon/60 group-hover:text-terracota'
+          alreadyRead ? 'text-salvia' : 'page-accent-group-hover text-carbon/60'
         }`}>
           {alreadyRead ? 'Completado' : 'Marcar como Leído'}
         </span>

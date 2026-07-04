@@ -46,7 +46,7 @@ export const SymbolDictionaryManager = () => {
 
         const button = document.createElement('div');
         // Botón minúsculo, sin texto, transparente por defecto, sin fondo intrusivo
-        button.className = 'absolute bottom-1 right-1 opacity-0 group-hover:opacity-100 transition-all duration-300 cursor-pointer text-carbon/40 hover:text-carbon hover:scale-110 p-1 z-20';
+        button.className = 'page-accent-text-hover absolute bottom-1 right-1 opacity-0 group-hover:opacity-100 transition-all duration-300 cursor-pointer text-carbon/40 hover:scale-110 p-1 z-20';
         button.title = 'Analizar símbolos de esta fórmula';
         button.innerHTML = `
           <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>

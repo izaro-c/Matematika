@@ -73,7 +73,7 @@ export const MatrizInteractiva: React.FC<MatrizInteractivaProps> = ({ id, pregun
   };
 
   return (
-    <div className={`my-8 p-8 font-serif elegant-panel relative transition-all duration-500 ${isCompleted ? 'bg-salvia/5 border-salvia/30' : ''}`} style={{ '--hover-accent': isCompleted ? 'var(--theme-salvia)' : 'var(--theme-carbon)' } as React.CSSProperties}>
+    <div className={`my-8 p-8 font-serif elegant-panel relative transition-all duration-500 ${isCompleted ? 'bg-salvia/5 border-salvia/30' : ''}`} style={{ '--hover-accent': isCompleted ? 'var(--theme-salvia)' : 'var(--page-accent)' } as React.CSSProperties}>
       <style>
         {`
           @keyframes shake {
@@ -111,7 +111,7 @@ export const MatrizInteractiva: React.FC<MatrizInteractivaProps> = ({ id, pregun
                     className={`w-14 h-12 text-center text-lg font-serif outline-none transition-all ${
                       isCompleted 
                         ? 'bg-transparent text-salvia font-bold border-none' 
-                        : 'bg-lienzo border-b-2 border-dashed border-carbon/40 focus:border-terracota focus:bg-terracota/5 text-carbon'
+                        : 'page-accent-focus bg-lienzo border-b-2 border-dashed border-carbon/40 text-carbon'
                     }`}
                   />
                 );
@@ -126,7 +126,7 @@ export const MatrizInteractiva: React.FC<MatrizInteractivaProps> = ({ id, pregun
         {!isCompleted && (
           <button
             onClick={check}
-            className="mt-4 px-6 py-3 text-xs font-sans uppercase tracking-widest border border-carbon/30 text-carbon hover:border-carbon hover:bg-carbon/[0.02] transition-all shadow-sm hover:shadow-md hover:-translate-y-0.5"
+            className="page-accent-button mt-4 px-6 py-3 text-xs font-sans uppercase tracking-widest border border-carbon/30 text-carbon transition-all shadow-sm hover:shadow-md hover:-translate-y-0.5"
           >
             Comprobar Matriz
           </button>

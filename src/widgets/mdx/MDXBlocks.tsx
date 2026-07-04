@@ -34,7 +34,7 @@ interface BlockTitleProps {
 export const BlockTitle: React.FC<BlockTitleProps> = ({ subtitle, children }) => {
   return (
     <div className="my-16 text-center">
-      {subtitle && <div className="text-[10px] uppercase tracking-[0.3em] font-sans text-terracota mb-3 font-bold">{subtitle}</div>}
+      {subtitle && <div className="page-accent-text text-[10px] uppercase tracking-[0.3em] font-sans mb-3 font-bold">{subtitle}</div>}
       <h2 className="text-4xl md:text-5xl font-serif text-carbon border-b border-carbon/10 pb-6 inline-block px-12" style={{ fontVariant: 'small-caps' }}>
         {children}
       </h2>
@@ -87,14 +87,14 @@ export const Formula: React.FC<FormulaProps> = ({ title, children }) => {
     <div className="relative my-10 w-full group">
       {/* Indicador Arts & Crafts izquierdo */}
       <div className={`absolute left-0 top-0 bottom-0 w-16 bg-gradient-to-r from-lienzo via-lienzo/80 to-transparent z-10 pointer-events-none transition-opacity duration-500 flex items-center justify-start pl-3 ${canScrollLeft ? 'opacity-100' : 'opacity-0'}`}>
-        <div className="text-terracota/80 text-2xl font-serif animate-pulse select-none drop-shadow-sm">
+        <div className="page-accent-text opacity-80 text-2xl font-serif animate-pulse select-none drop-shadow-sm">
           ❧
         </div>
       </div>
       
       {/* Indicador Arts & Crafts derecho */}
       <div className={`absolute right-0 top-0 bottom-0 w-16 bg-gradient-to-l from-lienzo via-lienzo/80 to-transparent z-10 pointer-events-none transition-opacity duration-500 flex items-center justify-end pr-3 ${canScrollRight ? 'opacity-100' : 'opacity-0'}`}>
-        <div className="text-terracota/80 text-2xl font-serif animate-pulse select-none drop-shadow-sm">
+        <div className="page-accent-text opacity-80 text-2xl font-serif animate-pulse select-none drop-shadow-sm">
           ☙
         </div>
       </div>
@@ -118,11 +118,11 @@ export const Formula: React.FC<FormulaProps> = ({ title, children }) => {
           background: transparent;
         }
         .formula-scrollbar::-webkit-scrollbar-thumb {
-          background-color: rgba(181, 90, 48, 0.2);
+          background-color: color-mix(in srgb, var(--page-accent, var(--theme-terracota)) 20%, transparent);
           border-radius: 10px;
         }
         .formula-scrollbar:hover::-webkit-scrollbar-thumb {
-          background-color: rgba(181, 90, 48, 0.6);
+          background-color: color-mix(in srgb, var(--page-accent, var(--theme-terracota)) 60%, transparent);
         }
       `}</style>
     </div>
@@ -145,8 +145,8 @@ interface DefinicionProps {
   title?: string, children: React.ReactNode;
 }
 export const Definicion: React.FC<DefinicionProps> = ({ title = "Definición", children }) => (
-  <div className="my-12 py-6 border-t-4 border-b border-carbon/90 font-serif">
-    <div className="font-bold text-carbon tracking-widest uppercase text-sm mb-4">
+  <div className="page-accent-border my-12 py-6 border-t-4 border-b font-serif">
+    <div className="page-accent-text font-bold tracking-widest uppercase text-sm mb-4">
       {title}
     </div>
     <div className="italic leading-relaxed text-carbon/90 text-justify">
@@ -159,8 +159,8 @@ interface DemostracionProps {
   children: React.ReactNode;
 }
 export const Demostracion: React.FC<DemostracionProps> = ({ children }) => (
-  <div className="my-10 pl-8 font-serif text-justify text-carbon/90 border-l-2 border-carbon/15 relative">
-    <span className="italic font-bold mr-2 text-carbon">Demostración.</span>
+  <div className="page-accent-border my-10 pl-8 font-serif text-justify text-carbon/90 border-l-2 relative">
+    <span className="page-accent-text italic font-bold mr-2">Demostración.</span>
     <div className="inline">
       {children}
     </div>
@@ -174,8 +174,8 @@ interface NotaProps {
   children: React.ReactNode;
 }
 export const Nota: React.FC<NotaProps> = ({ children }) => (
-  <div className="my-8 pl-6 border-l-[1px] border-carbon/30 font-serif text-sm text-carbon/70 text-justify">
-    <span className="font-bold uppercase tracking-wider mr-2 text-xs">Nota.</span>
+  <div className="page-accent-border my-8 pl-6 border-l-[1px] font-serif text-sm text-carbon/70 text-justify">
+    <span className="page-accent-text font-bold uppercase tracking-wider mr-2 text-xs">Nota.</span>
     {children}
   </div>
 );
@@ -194,8 +194,8 @@ interface CorolarioProps {
   children: React.ReactNode;
 }
 export const Corolario: React.FC<CorolarioProps> = ({ children }) => (
-  <div className="my-12 py-6 border-t-2 border-b border-carbon/70 font-serif">
-    <div className="font-bold text-carbon/80 tracking-widest uppercase text-sm mb-4">
+  <div className="page-accent-border my-12 py-6 border-t-2 border-b font-serif">
+    <div className="page-accent-text font-bold tracking-widest uppercase text-sm mb-4">
       Corolario
     </div>
     <div className="leading-relaxed text-carbon/90 text-justify">
@@ -207,7 +207,7 @@ export const Corolario: React.FC<CorolarioProps> = ({ children }) => (
 export const Separador: React.FC = () => (
   <div className="flex justify-center items-center my-16 opacity-30 hover:opacity-60 transition-opacity duration-500 select-none">
     <div className="w-24 border-t border-carbon"></div>
-    <div className="mx-6 text-carbon text-xs scale-animation">✦</div>
+    <div className="page-accent-text mx-6 text-xs scale-animation">✦</div>
     <div className="w-24 border-t border-carbon"></div>
   </div>
 );
@@ -216,7 +216,7 @@ interface CapitularProps {
   letra: string;
 }
 export const Capitular: React.FC<CapitularProps> = ({ letra }) => (
-  <span className="float-left text-7xl font-serif text-terracota font-bold pr-3 pl-1 leading-[0.7] mt-2 mb-[-8px] select-none pointer-events-none drop-shadow-sm">
+  <span className="page-accent-text float-left text-7xl font-serif font-bold pr-3 pl-1 leading-[0.7] mt-2 mb-[-8px] select-none pointer-events-none drop-shadow-sm">
     {letra}
   </span>
 );
@@ -262,14 +262,14 @@ export const MDXComponents = {
     if (props.href?.startsWith('/')) {
       return (
         <Link href={props.href}>
-          <a className="font-bold text-terracota border-b-2 border-terracota/40 hover:border-terracota hover:bg-terracota/10 transition-all cursor-pointer px-[2px] rounded-none">
+          <a className="page-accent-link font-bold border-b-2 transition-all cursor-pointer px-[2px] rounded-none">
             {props.children}
           </a>
         </Link>
       );
     }
-    return <a className="font-bold text-terracota border-b-2 border-terracota/40 hover:border-terracota hover:bg-terracota/10 transition-all cursor-pointer px-[2px] rounded-none" target="_blank" rel="noopener noreferrer" {...props} />;
+    return <a className="page-accent-link font-bold border-b-2 transition-all cursor-pointer px-[2px] rounded-none" target="_blank" rel="noopener noreferrer" {...props} />;
   },
-  h3: (props: React.ComponentProps<'h3'>) => <h3 className="text-3xl font-serif text-terracota mt-12 mb-6 pb-2 border-b border-carbon/10 italic" {...props} />,
+  h3: (props: React.ComponentProps<'h3'>) => <h3 className="page-accent-text text-3xl font-serif mt-12 mb-6 pb-2 border-b border-carbon/10 italic" {...props} />,
   h4: (props: React.ComponentProps<'h4'>) => <h4 className="text-xl font-serif text-carbon mt-8 mb-4 font-bold" {...props} />,
 };

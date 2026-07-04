@@ -76,11 +76,11 @@ const InlineHueco: React.FC<{
           onChange={e => onInputChange(e.target.value)}
           onKeyDown={e => e.key === 'Enter' && onCheck()}
           className={`w-24 text-center bg-transparent border-b-2 border-dashed font-serif text-carbon outline-none transition-all ${
-            isShaking ? 'border-terracota animate-shake text-terracota' : 'border-carbon/40 focus:border-terracota focus:bg-terracota/5'
+            isShaking ? 'border-terracota animate-shake text-terracota' : 'page-accent-focus border-carbon/40'
           }`}
         />
         {input.trim() && (
-          <button onClick={onCheck} className="text-[10px] text-terracota opacity-0 group-hover:opacity-100 transition-opacity uppercase tracking-widest font-sans">
+          <button onClick={onCheck} className="page-accent-text text-[10px] opacity-0 group-hover:opacity-100 transition-opacity uppercase tracking-widest font-sans">
             ↵
           </button>
         )}
@@ -143,7 +143,7 @@ export const Hueco: React.FC<HuecoProps> = ({
     : '';
 
   return (
-    <div className={`my-8 p-8 elegant-panel font-serif transition-all duration-500 relative group ${feedbackClass}`} style={{ '--hover-accent': isCorrect === true ? 'var(--theme-salvia)' : 'var(--theme-carbon)' } as React.CSSProperties}>
+    <div className={`my-8 p-8 elegant-panel font-serif transition-all duration-500 relative group ${feedbackClass}`} style={{ '--hover-accent': isCorrect === true ? 'var(--theme-salvia)' : 'var(--page-accent)' } as React.CSSProperties}>
        <style>{SHAKE_STYLE}</style>
       <p className="text-base text-carbon mb-6 mt-2 leading-relaxed">{pregunta}</p>
 
@@ -160,13 +160,13 @@ export const Hueco: React.FC<HuecoProps> = ({
             onKeyDown={e => e.key === 'Enter' && check()}
             placeholder="Respuesta..."
             className={`min-w-[120px] text-lg bg-transparent border-b-2 border-dashed font-serif text-carbon outline-none transition-all ${
-              isShaking ? 'border-terracota animate-shake text-terracota' : 'border-carbon/40 focus:border-terracota'
+              isShaking ? 'border-terracota animate-shake text-terracota' : 'page-accent-focus border-carbon/40'
             }`}
           />
           <button
             onClick={check}
             disabled={!input.trim()}
-            className="px-6 py-2 text-xs font-sans uppercase tracking-widest border border-carbon/40 text-carbon/80 hover:border-carbon hover:text-carbon hover:bg-carbon/5 transition-all shadow-sm disabled:opacity-30 disabled:cursor-not-allowed hover:-translate-y-0.5 hover:shadow-md"
+            className="page-accent-button px-6 py-2 text-xs font-sans uppercase tracking-widest border border-carbon/40 text-carbon/80 transition-all shadow-sm disabled:opacity-30 disabled:cursor-not-allowed hover:-translate-y-0.5 hover:shadow-md"
           >
             Comprobar
           </button>
@@ -176,7 +176,7 @@ export const Hueco: React.FC<HuecoProps> = ({
       {/* Pista estilo marginalia inferior */}
       {showHint && !isDone && (
         <div className="mt-4 pt-3 border-t border-carbon/10 text-sm text-carbon/60 italic font-serif flex gap-2">
-          <span className="text-terracota">❦</span>
+          <span className="page-accent-text">❦</span>
           <span>{pista}</span>
         </div>
       )}
@@ -185,7 +185,7 @@ export const Hueco: React.FC<HuecoProps> = ({
       {canReveal && !isDone && (
         <button
           onClick={() => reveal(id)}
-          className="mt-4 text-[10px] text-terracota uppercase font-sans tracking-widest underline underline-offset-4 opacity-70 hover:opacity-100 transition-opacity"
+          className="page-accent-text mt-4 text-[10px] uppercase font-sans tracking-widest underline underline-offset-4 opacity-70 hover:opacity-100 transition-opacity"
         >
           Revelar Solución
         </button>

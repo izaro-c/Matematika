@@ -19,31 +19,68 @@
   --color-pavo: var(--theme-pavo);
   --color-granada: var(--theme-granada);
   --color-musgo: var(--theme-musgo);
+  --color-lila: var(--theme-lila);
+  --color-cardenal: var(--theme-cardenal);
+  --color-nogal: var(--theme-nogal);
+  --color-piedra: var(--theme-piedra);
+  --color-cromo: var(--theme-cromo);
+
+  /* Nombres semánticos obsoletos conservados para compatibilidad de estilos */
+  --color-modelo: var(--theme-modelo);
+  --color-leccion: var(--theme-leccion);
+  --color-ejemplo: var(--theme-ejemplo);
+  --color-ejercicio: var(--theme-ejercicio);
+  --color-matematico: var(--theme-matematico);
 }
 
 :root {
-  --theme-lienzo: #F8F6F1;
-  --theme-carbon: #333333;
-  --theme-salvia: #5A805A;
-  --theme-terracota: #C86446;
-  --theme-pizarra: #5D7080;
-  --theme-ocre: #c49b4f;
-  --theme-pavo: #3b5e6b;
-  --theme-granada: #8b3a3a;
-  --theme-musgo: #4a5d23;
+  /* ── Paleta Arts & Crafts – Modo Pergamino ────────────────────────────── */
+  --theme-lienzo:    #F8F6F1;  /* Papel de pergamino */
+  --theme-carbon:    #333333;  /* Tinta de imprenta */
+  --theme-terracota: #C05C3E;  /* Terracota cálido — Teoremas */
+  --theme-ocre:      #C28A2E;  /* Ocre antiguo — Axiomas */
+  --theme-cromo:     #BFA15C;  /* Cromo oro viejo — Matemáticos */
+  --theme-granada:   #9E3B33;  /* Granada mate — Demostraciones */
+  --theme-musgo:     #526E4A;  /* Musgo medio — Corolarios */
+  --theme-salvia:    #5E8066;  /* Salvia natural — Definiciones */
+  --theme-pavo:      #3A5A7A;  /* Azul pavo apagado — Modelos */
+  --theme-pizarra:   #5C728A;  /* Pizarra grisáceo — Ejemplos */
+  --theme-lila:      #83697B;  /* Lila brezo — Lemas */
+  --theme-cardenal:  #7A536E;  /* Cardenal suave — Ejercicios */
+  --theme-nogal:     #705545;  /* Nogal cuero — Lecciones */
+  --theme-piedra:    #808277;  /* Piedra neutro — Conceptos */
+
+  /* Colores derivados (sincronizados con el nuevo diseño) */
+  --theme-matematico: var(--theme-cromo);
+  --theme-modelo:     var(--theme-pavo);
+  --theme-leccion:    var(--theme-nogal);
+  --theme-ejemplo:    var(--theme-pizarra);
+  --theme-ejercicio:  var(--theme-cardenal);
 }
 
 .dark {
-  /* El Códice Nocturno */
-  --theme-lienzo: #121315; /* Un poco más oscuro para más profundidad */
-  --theme-carbon: #EFECE6; /* Un poco más claro y cálido */
-  --theme-salvia: #7A9B89;
-  --theme-terracota: #E58D76;
-  --theme-pizarra: #9FAABF;
-  --theme-ocre: #DDAA77;
-  --theme-pavo: #7A9CAE;
-  --theme-granada: #BC6060;
-  --theme-musgo: #7C964D;
+  /* ── El Códice Nocturno ───────────────────────────────────────────────── */
+  --theme-lienzo:    #121315;
+  --theme-carbon:    #EFECE6;
+  --theme-terracota: #D67A60;
+  --theme-ocre:      #CBA05D;
+  --theme-cromo:     #CCA86B;
+  --theme-granada:   #B85C5C;
+  --theme-musgo:     #708E68;
+  --theme-salvia:    #7BA887;
+  --theme-pavo:      #5E7FA3;
+  --theme-pizarra:   #7FA1C2;
+  --theme-lila:      #A890A3;
+  --theme-cardenal:  #9C7790;
+  --theme-nogal:     #8F796B;
+  --theme-piedra:    #9AA096;
+
+  /* Colores derivados (sincronizados con el nuevo diseño) */
+  --theme-matematico: var(--theme-cromo);
+  --theme-modelo:     var(--theme-pavo);
+  --theme-leccion:    var(--theme-nogal);
+  --theme-ejemplo:    var(--theme-pizarra);
+  --theme-ejercicio:  var(--theme-cardenal);
 }
 
 html, body {
@@ -159,7 +196,7 @@ body {
   content: "❖";
   position: absolute;
   left: -1.5rem;
-  color: var(--color-terracota);
+  color: var(--page-accent, var(--color-terracota));
   font-size: 0.9em;
   top: 0.2em;
   opacity: 1;
@@ -788,7 +825,7 @@ a:focus-visible, button:focus-visible {
   font-variant: small-caps;
   letter-spacing: 0.16em;
   margin-bottom: 0.35rem;
-  color: var(--theme-terracota);
+  color: var(--page-accent, var(--theme-terracota));
 }
 
 .metadata-sidebar__title {
@@ -827,7 +864,7 @@ a:focus-visible, button:focus-visible {
   align-items: center;
   gap: 0.35rem;
   margin-bottom: 0.9rem;
-  color: var(--theme-terracota);
+  color: var(--page-accent, var(--theme-terracota));
   font-family: ui-serif, Georgia, serif;
   font-variant: small-caps;
   letter-spacing: 0.12em;
@@ -837,7 +874,7 @@ a:focus-visible, button:focus-visible {
 
 .metadata-sidebar__section > h3::before {
   content: "❧";
-  color: var(--theme-ocre);
+  color: var(--page-accent, var(--theme-ocre));
   font-size: 0.95rem;
   margin-right: 0.25rem;
   line-height: 1;
@@ -872,21 +909,33 @@ a:focus-visible, button:focus-visible {
 
 .metadata-sidebar__links--index li::before {
   content: "§";
-  color: var(--theme-ocre);
+  color: var(--page-accent, var(--theme-ocre));
   font-size: 0.75rem;
   font-family: ui-serif, Georgia, serif;
 }
 
 .metadata-sidebar__links--lema li::before {
-  color: var(--theme-salvia);
+  color: var(--theme-lila);
 }
 
 .metadata-sidebar__links--demo li::before {
-  color: var(--theme-terracota);
+  color: var(--theme-granada);
 }
 
 .metadata-sidebar__links--corolario li::before {
-  color: var(--theme-pavo);
+  color: var(--theme-musgo);
+}
+
+.metadata-sidebar__links--lema a:hover {
+  color: var(--theme-lila);
+}
+
+.metadata-sidebar__links--demo a:hover {
+  color: var(--theme-granada);
+}
+
+.metadata-sidebar__links--corolario a:hover {
+  color: var(--theme-musgo);
 }
 
 .metadata-sidebar__links a {
@@ -899,7 +948,7 @@ a:focus-visible, button:focus-visible {
 }
 
 .metadata-sidebar__links a:hover {
-  color: var(--theme-terracota);
+  color: var(--page-accent, var(--theme-terracota));
 }
 
 .metadata-sidebar__links--index a:hover {
@@ -912,6 +961,206 @@ a:focus-visible, button:focus-visible {
     text-justify: inter-word;
     hyphens: auto;
   }
+}
+
+.page-accent-scope .content-header__link:hover,
+.page-accent-scope .editorial-reading a {
+  color: var(--page-accent);
+  border-color: color-mix(in srgb, var(--page-accent) 55%, transparent);
+  text-decoration-color: color-mix(in srgb, var(--page-accent) 55%, transparent);
+}
+
+.page-accent-scope .editorial-reading a:hover {
+  color: var(--page-accent);
+  text-decoration-color: var(--page-accent);
+}
+
+.page-accent-scope .editorial-reading h3 {
+  color: var(--page-accent);
+}
+
+.page-accent-scope {
+  scrollbar-color: var(--page-accent) transparent;
+  accent-color: var(--page-accent);
+}
+
+.page-accent-scope ::-webkit-scrollbar-thumb {
+  background-color: var(--page-accent);
+}
+
+.page-accent-scope ::-webkit-scrollbar-thumb:hover {
+  background-color: var(--page-accent);
+}
+
+.page-accent-scope :is(
+  .demo-container h1,
+  .prose h3,
+  .prose th,
+  .prose ul > li::before
+) {
+  color: var(--page-accent);
+}
+
+.page-accent-scope .prose thead {
+  border-bottom-color: color-mix(in srgb, var(--page-accent) 40%, transparent);
+}
+
+.page-accent-scope .prose th {
+  background-color: color-mix(in srgb, var(--page-accent) 6%, transparent);
+}
+
+.page-accent-scope .prose blockquote {
+  border-left-color: color-mix(in srgb, var(--page-accent) 40%, transparent);
+}
+
+.page-accent-scope .subtle-separator-ornament {
+  color: color-mix(in srgb, var(--page-accent) 60%, transparent);
+}
+
+.page-accent-scope ::selection {
+  background-color: color-mix(in srgb, var(--page-accent) 24%, transparent);
+}
+
+.page-accent-text {
+  color: var(--page-accent, var(--theme-terracota));
+}
+
+.page-accent-bg {
+  background-color: var(--page-accent, var(--theme-terracota));
+}
+
+.page-accent-border {
+  border-color: var(--page-accent, var(--theme-terracota));
+}
+
+.page-accent-hover:hover {
+  color: var(--page-accent, var(--theme-terracota));
+  border-color: color-mix(in srgb, var(--page-accent, var(--theme-terracota)) 55%, transparent);
+  background-color: color-mix(in srgb, var(--page-accent, var(--theme-terracota)) 10%, transparent);
+}
+
+.page-accent-bg-hover:hover {
+  background-color: var(--page-accent, var(--theme-terracota));
+}
+
+.page-accent-text-hover:hover {
+  color: var(--page-accent, var(--theme-terracota));
+}
+
+.page-accent-button:not(:disabled):hover {
+  color: var(--page-accent, var(--theme-terracota));
+  border-color: var(--page-accent, var(--theme-terracota));
+  background-color: color-mix(in srgb, var(--page-accent, var(--theme-terracota)) 5%, transparent);
+}
+
+.page-accent-focus:focus {
+  border-color: var(--page-accent, var(--theme-terracota));
+  background-color: color-mix(in srgb, var(--page-accent, var(--theme-terracota)) 5%, transparent);
+}
+
+.page-accent-range::-webkit-slider-thumb {
+  background-color: var(--page-accent, var(--theme-terracota));
+  transition: background-color 150ms ease;
+}
+
+.page-accent-range::-webkit-slider-thumb:hover {
+  background-color: var(--page-accent, var(--theme-terracota));
+  filter: brightness(0.9);
+}
+
+.page-accent-range::-moz-range-thumb {
+  background-color: var(--page-accent, var(--theme-terracota));
+  border: none;
+  transition: background-color 150ms ease;
+}
+
+.page-accent-range::-moz-range-thumb:hover {
+  background-color: var(--page-accent, var(--theme-terracota));
+  filter: brightness(0.9);
+}
+
+.page-accent-border-hover:hover {
+  border-color: color-mix(in srgb, var(--page-accent, var(--theme-terracota)) 45%, transparent);
+}
+
+.page-accent-highlight {
+  border-color: var(--page-accent, var(--theme-terracota));
+  background-color: color-mix(in srgb, var(--page-accent, var(--theme-terracota)) 20%, transparent);
+}
+
+.page-accent-highlight:hover {
+  background-color: color-mix(in srgb, var(--page-accent, var(--theme-terracota)) 40%, transparent);
+}
+
+.group:hover .page-accent-group-hover {
+  color: var(--page-accent, var(--theme-terracota));
+}
+
+.group:hover .page-accent-group-border {
+  border-color: var(--page-accent, var(--theme-terracota));
+}
+
+.content-header__accent-rule {
+  background-color: color-mix(in srgb, var(--page-accent, var(--theme-carbon)) 45%, transparent);
+}
+
+.page-accent-link {
+  color: var(--page-accent, var(--theme-terracota));
+  border-color: color-mix(in srgb, var(--page-accent, var(--theme-terracota)) 45%, transparent);
+  text-decoration-color: color-mix(in srgb, var(--page-accent, var(--theme-terracota)) 45%, transparent);
+}
+
+.page-accent-link:hover {
+  color: var(--page-accent, var(--theme-terracota));
+  border-color: var(--page-accent, var(--theme-terracota));
+  text-decoration-color: var(--page-accent, var(--theme-terracota));
+  background-color: color-mix(in srgb, var(--page-accent, var(--theme-terracota)) 10%, transparent);
+}
+
+.page-accent-link.is-active {
+  color: var(--theme-lienzo);
+  border-color: var(--page-accent, var(--theme-terracota));
+  text-decoration-color: var(--page-accent, var(--theme-terracota));
+  background-color: var(--page-accent, var(--theme-terracota));
+}
+
+.page-accent-scope .triptych-metadata {
+  background-color: color-mix(in srgb, var(--theme-lienzo) 95%, var(--page-accent) 5%);
+}
+
+.page-accent-scope .triptych-metadata-trigger {
+  background: var(--page-accent);
+}
+
+.page-accent-scope .triptych-metadata-trigger:hover {
+  background: color-mix(in srgb, var(--page-accent) 86%, var(--theme-carbon));
+}
+
+.page-accent-scope .triptych-metadata-close:hover {
+  color: var(--page-accent);
+  border-color: var(--page-accent);
+}
+
+.page-accent-scope :is(
+  .metadata-sidebar__eyebrow,
+  .metadata-sidebar__section > h3,
+  .metadata-sidebar__section > h3::before,
+  .metadata-sidebar__section > h3 span,
+  .metadata-sidebar__links li::before,
+  .metadata-sidebar__links a:hover,
+  .metadata-sidebar .local-dependency-graph-container h3,
+  .codex-justifications h4
+) {
+  color: var(--page-accent);
+}
+
+.page-accent-scope .elegant-panel {
+  --hover-accent: var(--page-accent);
+}
+
+.page-accent-scope .teoria-mdx a,
+.page-accent-scope .teoria-mdx a:hover {
+  color: var(--page-accent);
 }
 
 @media (min-width: 1024px) {
@@ -1444,4 +1693,27 @@ a:focus-visible, button:focus-visible {
   font-size: 0.7rem;
   color: var(--theme-terracota);
   border-bottom-color: color-mix(in srgb, var(--theme-carbon) 10%, transparent);
+}
+
+/* === PATRONES CROMÁTICOS POR TIPO DE PÁGINA ============================== */
+.page-accent-scope .bg-arts-and-crafts {
+  background-image:
+    linear-gradient(var(--page-accent), var(--page-accent)),
+    var(--bg-arts-and-crafts-url);
+  background-blend-mode: color;
+}
+
+.page-accent-scope .parchment-panel {
+  background-color: var(--theme-lienzo);
+  background-image:
+    radial-gradient(circle at 20% 30%, color-mix(in srgb, var(--page-accent) 8%, transparent) 0%, transparent 40%),
+    radial-gradient(circle at 80% 70%, color-mix(in srgb, var(--page-accent) 5%, transparent) 0%, transparent 40%);
+}
+
+.page-accent-scope .local-dependency-graph-container {
+  background-color: color-mix(in srgb, var(--theme-lienzo) 96%, var(--page-accent));
+}
+
+.page-accent-scope .metadata-sidebar .local-dependency-graph-container {
+  background: transparent;
 }

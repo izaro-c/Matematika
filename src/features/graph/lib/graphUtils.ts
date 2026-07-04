@@ -1,18 +1,4 @@
-export const NODE_TYPE_COLORS: Record<string, string> = {
-  axioma: '#1c1917',
-  concepto: '#5D7080',
-  definicion: '#3b5e6b',
-  lema: '#C86446',
-  teorema: '#4a5d23',
-  corolario: '#c49b4f',
-  modelo: '#8b3a3a',
-};
-
-export const DEPENDENCY_DOT_COLORS: Record<string, string> = {
-  axioma: '#1c1917',
-  lema: '#4a6070',
-  definicion: '#8b7355',
-};
+import { CONTENT_TYPE_CONFIG } from '@/shared/lib/constants';
 
 export const NODE_URL_PREFIX: Record<string, string> = {
   axioma: 'axioma',
@@ -21,15 +7,16 @@ export const NODE_URL_PREFIX: Record<string, string> = {
   modelo: 'modelo',
 };
 
-export function getNodeTypeColor(type: string) {
-  return NODE_TYPE_COLORS[type] ?? NODE_TYPE_COLORS.modelo;
+export function getNodeTypeColor(type: string): string {
+  const config = CONTENT_TYPE_CONFIG[type];
+  return config?.graphColor ?? '#888';
 }
 
-export function getDependencyDotColor(type: string) {
-  return DEPENDENCY_DOT_COLORS[type] ?? '#6b9e6b';
+export function getDependencyDotColor(type: string): string {
+  return getNodeTypeColor(type);
 }
 
-export function getNodeUrlPrefix(type: string) {
+export function getNodeUrlPrefix(type: string): string {
   return NODE_URL_PREFIX[type] ?? 'teorema';
 }
 
