@@ -2682,6 +2682,22 @@
       "difficulty": "básico"
     }
   },
+  "ejercicio-pitagoras-cateto": {
+    "id": "ejercicio-pitagoras-cateto",
+    "slug": "ejercicio-pitagoras-cateto",
+    "filePath": "exercises/ejercicio-pitagoras-cateto.mdx",
+    "contentType": "ejercicio",
+    "metadata": {
+      "id": "ejercicio-pitagoras-cateto",
+      "type": "ejercicio",
+      "title": "Cálculo de un cateto en un triángulo rectángulo",
+      "description": "Cálculo de la longitud de un cateto conocido el otro cateto y la hipotenusa, empleando el teorema de Pitágoras con una terna de escala (6, 8, 10).",
+      "relatedTheorem": "teorema-pitagoras",
+      "hasSimulation": true,
+      "difficulty": "básico",
+      "hint": "El teorema de Pitágoras relaciona los cuadrados de los tres lados: a² + b² = c². Para despejar un cateto, debes restar el cuadrado del cateto conocido al cuadrado de la hipotenusa: a² = c² - b²."
+    }
+  },
   "leccion-metodo-constructivo": {
     "id": "leccion-metodo-constructivo",
     "slug": "leccion-metodo-constructivo",
@@ -3875,6 +3891,9 @@
       ],
       "examples": [
         "ejemplo-pitagoras-calculo"
+      ],
+      "exercises": [
+        "ejercicio-pitagoras-cateto"
       ],
       "hasSimulation": true,
       "leanId": "Matematika.Geometry.Hilbert.teorema_pitagoras",
