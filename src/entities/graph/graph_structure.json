@@ -947,7 +947,7 @@
       "id": "ejercicio-pitagoras-cateto",
       "type": "ejercicio",
       "title": "Cálculo de un cateto en un triángulo rectángulo",
-      "description": "Cálculo de la longitud de un cateto conocido el otro cateto y la hipotenusa, empleando el teorema de Pitágoras con una terna de escala (6, 8, 10).",
+      "description": "Aplicación del teorema de Pitágoras para determinar la longitud de un cateto desconocido a partir de la hipotenusa y el otro cateto.",
       "proofs": [],
       "directDependencies": []
     },
