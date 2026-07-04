@@ -1,13 +1,14 @@
 {
-  "generatedAt": "2026-07-04T23:16:50.638Z",
+  "generatedAt": "2026-07-04T23:28:38.655Z",
   "summary": {
-    "total": 117,
+    "total": 118,
     "byType": {
       "sistema-axiomatico": 4,
       "axioma": 21,
       "definicion": 22,
       "demostracion": 25,
       "ejemplo": 1,
+      "ejercicio": 1,
       "lesson": 7,
       "matematico": 9,
       "modelo": 4,
@@ -17,10 +18,10 @@
     },
     "diagrams": {
       "none": 57,
-      "exported": 60
+      "exported": 61
     },
     "lean": {
-      "none": 68,
+      "none": 69,
       "human-proof": 45,
       "lean-checked": 4
     },
@@ -1562,6 +1563,26 @@
       "type": "ejemplo",
       "title": "Cálculo de la hipotenusa en un triángulo rectángulo",
       "filePath": "examples/ejemplo-pitagoras-calculo.mdx",
+      "hasDeclaredDiagram": true,
+      "diagramExports": [
+        "Simulation"
+      ],
+      "diagramStatus": "exported",
+      "leanId": null,
+      "leanVerified": false,
+      "verificationStatus": "none",
+      "foundation": "pending",
+      "sourcesCount": 0,
+      "proofSteps": 0,
+      "mappedProofSteps": [],
+      "parentTheorem": null,
+      "demos": []
+    },
+    {
+      "id": "ejercicio-pitagoras-cateto",
+      "type": "ejercicio",
+      "title": "Cálculo de un cateto en un triángulo rectángulo",
+      "filePath": "exercises/ejercicio-pitagoras-cateto.mdx",
       "hasDeclaredDiagram": true,
       "diagramExports": [
         "Simulation"

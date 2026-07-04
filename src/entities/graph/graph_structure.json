@@ -88,6 +88,7 @@
     "demo-rectas-coincidentes",
     "demo-tales",
     "ejemplo-pitagoras-calculo",
+    "ejercicio-pitagoras-cateto",
     "leccion-metodo-constructivo",
     "leccion-metodo-contradiccion",
     "leccion-metodo-contraposicion",
@@ -939,6 +940,14 @@
       "type": "ejemplo",
       "title": "Cálculo de la hipotenusa en un triángulo rectángulo",
       "description": "Aplicación del teorema de Pitágoras para calcular la longitud de la hipotenusa a partir de los catetos, analizando la terna pitagórica resultante.",
+      "proofs": [],
+      "directDependencies": []
+    },
+    "ejercicio-pitagoras-cateto": {
+      "id": "ejercicio-pitagoras-cateto",
+      "type": "ejercicio",
+      "title": "Cálculo de un cateto en un triángulo rectángulo",
+      "description": "Cálculo de la longitud de un cateto conocido el otro cateto y la hipotenusa, empleando el teorema de Pitágoras con una terna de escala (6, 8, 10).",
       "proofs": [],
       "directDependencies": []
     },

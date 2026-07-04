@@ -4,6 +4,7 @@ import { DemonstrationSection } from "@/widgets/content/DemonstrationSection";
 import { ProofStepExpander } from "@/widgets/content/ProofStepExpander";
 import { Concept } from "@/features/glossary/ui/Concept";
 import { Paso } from '@/features/exercises/ui/Paso';
+import { PasoEjercicio } from '@/features/exercises/ui/PasoEjercicio';
 import { Solucion } from '@/features/exercises/ui/Solucion';
 import { Pregunta } from '@/features/exercises/ui/Pregunta';
 import { Hueco } from '@/features/exercises/ui/Hueco';
@@ -240,6 +241,7 @@ export const MDXComponents = {
   ProofStepExpander,
   Concept,
   Paso,
+  PasoEjercicio,
   Solucion,
   Pregunta,
   Hueco,

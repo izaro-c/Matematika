@@ -1,0 +1,91 @@
+export const metadata = {
+  "id": "ejercicio-pitagoras-cateto",
+  "type": "ejercicio",
+  "title": "Cálculo de un cateto en un triángulo rectángulo",
+  "description": "Cálculo de la longitud de un cateto conocido el otro cateto y la hipotenusa, empleando el teorema de Pitágoras con una terna de escala (6, 8, 10).",
+  "relatedTheorem": "teorema-pitagoras",
+  "hasSimulation": true,
+  "difficulty": "básico",
+  "hint": "El teorema de Pitágoras relaciona los cuadrados de los tres lados: a² + b² = c². Para despejar un cateto, debes restar el cuadrado del cateto conocido al cuadrado de la hipotenusa: a² = c² - b²."
+};
+
+import { EjercicioPitagorasCateto } from '@/widgets/diagrams/Ejercicios/EjercicioPitagorasCateto';
+
+export const Simulation = EjercicioPitagorasCateto;
+
+<Capitular letra="D" />ado un <ConceptLink targetId="triangulo-rectangulo" isDependency={false} highlightTarget="poly" highlightColor="pizarra">triángulo rectángulo</ConceptLink> $\triangle ABC$ con <ConceptLink targetId="angulo-recto" isDependency={false} highlightTarget="rightAng" highlightColor="pavo">ángulo recto</ConceptLink> en el <InteractiveElement target="C" color="carbon">vértice $C$</InteractiveElement>, se conoce que la <ConceptLink targetId="hipotenusa" isDependency={false} highlightTarget="segAB" highlightColor="ocre">hipotenusa</ConceptLink> mide $c = |AB| = 10$ unidades y el <ConceptLink targetId="cateto" isDependency={false} highlightTarget="segBC" highlightColor="terracota">cateto horizontal $b$</ConceptLink> mide $b = |BC| = 8$ unidades. Se solicita calcular la longitud exacta del <ConceptLink targetId="cateto" isDependency={false} highlightTarget="segCA" highlightColor="salvia">cateto vertical $a$</ConceptLink> ($a = |CA|$).
+
+<Separador />
+
+<PasoEjercicio
+  id="p1"
+  numero={1}
+  titulo="Interacción y Configuración Geométrica"
+  questionIds={["p1_drag"]}
+  resolucion={
+    <p>
+      El triángulo encaja con la condición de hipotenusa $c = 10$ cuando el cateto vertical mide exactamente $a = 6$ unidades. En esta configuración, las áreas de los cuadrados asociados son $a^2 = 36$ (salvia) y $b^2 = 64$ (terracota), sumando un total de $a^2 + b^2 = 36 + 64 = 100$, que equivale exactamente al área del cuadrado de la hipotenusa $c^2$ (ocre).
+    </p>
+  }
+>
+  Arrastra el <InteractiveElement target="A" color="ocre">vértice ocre $A$</InteractiveElement> verticalmente a lo largo del eje Y en el diagrama hasta que la <ConceptLink targetId="hipotenusa" isDependency={false} highlightTarget="segAB" highlightColor="ocre">hipotenusa $c$</ConceptLink> mida exactamente $10$ unidades (de modo que el área de su <InteractiveElement target="sqAB" color="ocre">cuadrado asociado</InteractiveElement> sea $100$ y el del <InteractiveElement target="sqCA" color="salvia">cateto vertical</InteractiveElement> sea $36$).
+  
+  <ErrorComun titulo="Sumar los cuadrados de los lados conocidos en lugar de restarlos">
+    Un error recurrente al calcular un cateto consiste en aplicar la fórmula directa de la suma: $a^2 = c^2 + b^2$. Esto resultaría en $a^2 = 10^2 + 8^2 = 100 + 64 = 164 \implies a \approx 12.8$. 
+    
+    Este resultado es geométricamente imposible: en todo triángulo rectángulo, la hipotenusa representa el lado opuesto al ángulo de mayor amplitud (el ángulo recto) y, por consiguiente, debe ser estrictamente el lado de mayor longitud ($c > a$ y $c > b$). Un cateto nunca puede medir más que la hipotenusa.
+  </ErrorComun>
+</PasoEjercicio>
+
+<PasoEjercicio
+  id="p2"
+  numero={2}
+  titulo="Planteamiento Algebraico y Despeje"
+  questionIds={["p2_b2", "p2_c2", "p2_a"]}
+  dependeDeQuestions={["p1_drag"]}
+  resolucion={
+    <div>
+      <p>
+        Por el <ConceptLink targetId="teorema-pitagoras" isDependency={true}>teorema de Pitágoras</ConceptLink>, la relación métrica de los lados es:
+      </p>
+      <Formula>
+        $$ a^2 + b^2 = c^2 $$
+      </Formula>
+      <p>
+        Sustituyendo los datos conocidos de la hipotenusa $c = 10$ y el cateto $b = 8$:
+      </p>
+      <Formula>
+        $$ a^2 + 8^2 = 10^2 \implies a^2 + 64 = 100 $$
+      </Formula>
+      <p>
+        Despejando el cuadrado del cateto vertical (restando el área del cateto conocido al área de la hipotenusa):
+      </p>
+      <Formula>
+        $$ a^2 = 100 - 64 = 36 $$
+      </Formula>
+      <p>
+        Extrayendo la raíz cuadrada en ambos miembros (se omite la solución negativa por tratarse de una magnitud de longitud física real):
+      </p>
+      <Formula>
+        $$ a = \sqrt{36} = 6 $$
+      </Formula>
+      <p>
+        La longitud exacta del cateto vertical $a$ es de $6$ unidades.
+      </p>
+    </div>
+  }
+>
+  Completa los huecos numéricos de la ecuación del teorema de Pitágoras y calcula la dimensión del cateto:
+  
+  <div className="my-6 p-4 border border-carbon/10 bg-carbon/[0.01]">
+    Planteamiento de áreas:
+    <Formula>
+      $$ a^2 + \text{ } $$ <Hueco id="p2_b2" correct="64" pista="Área del cuadrado del cateto conocido (8²)." /> $$ = \text{ } $$ <Hueco id="p2_c2" correct="100" pista="Área del cuadrado de la hipotenusa (10²)." />
+    </Formula>
+    
+    Longitud del cateto vertical:
+    <Formula>
+      $$ a = \text{ } $$ <Hueco id="p2_a" correct="6" pista="Raíz cuadrada del área obtenida (√36)." />
+    </Formula>
+  </div>
+</PasoEjercicio>
