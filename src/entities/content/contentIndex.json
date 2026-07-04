@@ -2667,6 +2667,21 @@
       "verificationStatus": "human-proof"
     }
   },
+  "ejemplo-pitagoras-calculo": {
+    "id": "ejemplo-pitagoras-calculo",
+    "slug": "ejemplo-pitagoras-calculo",
+    "filePath": "examples/ejemplo-pitagoras-calculo.mdx",
+    "contentType": "ejemplo",
+    "metadata": {
+      "id": "ejemplo-pitagoras-calculo",
+      "type": "ejemplo",
+      "title": "Cálculo de la hipotenusa en un triángulo rectángulo",
+      "description": "Aplicación del teorema de Pitágoras para calcular la longitud de la hipotenusa a partir de los catetos, analizando la terna pitagórica resultante.",
+      "relatedTheorem": "teorema-pitagoras",
+      "hasSimulation": true,
+      "difficulty": "básico"
+    }
+  },
   "leccion-metodo-constructivo": {
     "id": "leccion-metodo-constructivo",
     "slug": "leccion-metodo-constructivo",
@@ -3857,6 +3872,9 @@
       "demos": [
         "demo-pitagoras-euclides",
         "demo-pitagoras-areas"
+      ],
+      "examples": [
+        "ejemplo-pitagoras-calculo"
       ],
       "hasSimulation": true,
       "leanId": "Matematika.Geometry.Hilbert.teorema_pitagoras",

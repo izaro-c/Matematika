@@ -1,12 +1,13 @@
 {
-  "generatedAt": "2026-07-03T22:16:05.726Z",
+  "generatedAt": "2026-07-04T23:16:50.638Z",
   "summary": {
-    "total": 116,
+    "total": 117,
     "byType": {
       "sistema-axiomatico": 4,
       "axioma": 21,
       "definicion": 22,
       "demostracion": 25,
+      "ejemplo": 1,
       "lesson": 7,
       "matematico": 9,
       "modelo": 4,
@@ -16,10 +17,10 @@
     },
     "diagrams": {
       "none": 57,
-      "exported": 59
+      "exported": 60
     },
     "lean": {
-      "none": 67,
+      "none": 68,
       "human-proof": 45,
       "lean-checked": 4
     },
@@ -1554,6 +1555,26 @@
         "4"
       ],
       "parentTheorem": "teorema-triangulo-isosceles",
+      "demos": []
+    },
+    {
+      "id": "ejemplo-pitagoras-calculo",
+      "type": "ejemplo",
+      "title": "Cálculo de la hipotenusa en un triángulo rectángulo",
+      "filePath": "examples/ejemplo-pitagoras-calculo.mdx",
+      "hasDeclaredDiagram": true,
+      "diagramExports": [
+        "Simulation"
+      ],
+      "diagramStatus": "exported",
+      "leanId": null,
+      "leanVerified": false,
+      "verificationStatus": "none",
+      "foundation": "pending",
+      "sourcesCount": 0,
+      "proofSteps": 0,
+      "mappedProofSteps": [],
+      "parentTheorem": null,
       "demos": []
     },
     {
