@@ -40,6 +40,7 @@ function resolveGroup(id: string): string {
   if (db.axioms.get(id))      return 'axioma';
   if (db.models.get(id))      return 'modelo';
   if (db.demos.get(id))       return 'demostracion';
+  if (db.getMathematicianById(id)) return 'matematico';
   if (dictionary[id])         return 'glosario';
   return 'definicion';
 }
@@ -66,6 +67,7 @@ function resolveRoute(id: string, group: string): string {
     case 'modelo':       return `/modelo/${id}`;
     case 'axioma':       return `/axioma/${id}`;
     case 'glosario':     return `/definicion/${id}`;
+    case 'matematico':   return `/bio/${id}`;
     default:             return `/teorema/${id}`;
   }
 }
