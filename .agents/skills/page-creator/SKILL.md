@@ -553,11 +553,21 @@ La navegación interna NUNCA usa enlaces Markdown estándar `[texto](url)`. Usar
 
 | Componente | Propósito | Import path |
 |---|---|---|
-| `<ConceptLink targetId="slug">texto</ConceptLink>` | Abre el MarginaliaPanel. Crea relación semántica y dependencia formal (si `isDependency` no es `false`). | Global (MDXComponents) |
+| `<ConceptLink targetId="slug" highlightTarget="id?" highlightColor="token?">texto</ConceptLink>` | Abre el MarginaliaPanel. Crea relación semántica. Si tiene `highlightTarget`, enlaza interactivamente con el diagrama lateral (¡RECOMENDADO para evitar anidar links y span!). | Global (MDXComponents) |
 | `<RefLink targetId="slug">texto</RefLink>` | Igual que `ConceptLink` pero sin crear dependencia formal. | Global (MDXComponents) |
 | `<GlossaryLink term="term">texto</GlossaryLink>` | Tooltip rápido para términos auxiliares/glosario. | Global (MDXComponents) |
 | `<VisualBind color="token" element="id">texto</VisualBind>` | Vincula texto a elemento del diagrama adyacente. | Global (MDXComponents) |
-| `<InteractiveElement target="var" color="token">text</InteractiveElement>` | Vincula texto inline a una variable del diagrama; escribe en `MathStore.highlight`. | `../../components/ui/VisualBind` |
+| `<InteractiveElement target="var" color="token">text</InteractiveElement>` | Vincula texto inline a una variable del diagrama sin asociar un enlace conceptual. Escribe en `MathStore.highlight`. | `../../components/ui/VisualBind` |
+
+### 8.1 Regla contra Anidación de ConceptLink e InteractiveElement
+**NUNCA** se debe anidar `<ConceptLink>` dentro de `<InteractiveElement>` (o viceversa) para lograr un enlace que a la vez haga hover sobre el gráfico. Esto corrompe la propagación de eventos en el DOM. En su lugar, utiliza directamente las propiedades integradas de `<ConceptLink>`:
+```jsx
+// CORRECTO (Sintaxis integrada limpia)
+<ConceptLink targetId="cateto" isDependency={false} highlightTarget="segCA" highlightColor="salvia">cateto</ConceptLink>
+
+// INCORRECTO (Genera conflictos de propagación)
+<InteractiveElement target="segCA" color="salvia"><ConceptLink targetId="cateto">cateto</ConceptLink></InteractiveElement>
+```
 
 ---
 
@@ -632,11 +642,19 @@ src/database/content/
 
 Se mantiene inalterado. Exportar `Component`, `Simulation` o `Diagram` según tipo de nodo.
 
----
-
 ## 14. Diseño de Diagramas e Interactividad (JSXGraph)
 
-Se mantiene inalterado. Reglas de `boundingbox`, tokens de color, hibridación exploratoria y gliders estrictos.
+Se mantiene inalterado en sus reglas de `boundingbox` y gliders. Sin embargo, para mantener el rigor didáctico de Matematika, se añaden estas **reglas de interacción obligatorias**:
+
+### 14.1 Regla cromática de Hovers (Highlight)
+Al interactuar con hovers del texto (mediante `isHighlight(...)` conectado a `useMathStore`), los elementos en el gráfico **NUNCA deben cambiar de color**. El color del elemento en el diagrama debe estar reservado estrictamente para representar la progresión didáctica del paso activo en el que se encuentra el estudiante.
+Para resaltar un objeto en hover:
+* **Segmentos/Líneas:** Aumentar su grosor (`strokeWidth` de `2` o `2.5` a `4.5`), manteniendo su color actual.
+* **Polígonos:** Aumentar la opacidad del relleno (de `0.08` a `0.28`) y el grosor de sus bordes sin cambiar de color.
+* **Puntos/Vértices:** Aumentar el radio o tamaño del punto (de `4.5` a `8.5`) sin alterar su color.
+
+### 14.2 Cuadrículas Unitarias en Áreas
+En cualquier diagrama interactivo que ilustre cálculo de superficies o relaciones de áreas (como el Teorema de Pitágoras o semejanzas), se debe implementar una **cuadrícula unitaria interna** (líneas divisorias muy finas con opacidad reducida `0.2` a `0.25`). Esto conecta conceptualmente el exponente aritmético de la fórmula (ej. $N^2$) con el conteo físico visual de unidades de área en la figura.
 
 ---
 

@@ -87,6 +87,7 @@
     "demo-reciproco-triangulo-isosceles",
     "demo-rectas-coincidentes",
     "demo-tales",
+    "ejemplo-pitagoras-calculo",
     "leccion-metodo-constructivo",
     "leccion-metodo-contradiccion",
     "leccion-metodo-contraposicion",
@@ -930,6 +931,14 @@
       "type": "demostracion",
       "title": "Demostración: Pons Asinorum",
       "description": "Prueba por simetría de Pappus: el triángulo es congruente consigo mismo con los vértices permutados, y LAL fuerza la igualdad de los ángulos de la base.",
+      "proofs": [],
+      "directDependencies": []
+    },
+    "ejemplo-pitagoras-calculo": {
+      "id": "ejemplo-pitagoras-calculo",
+      "type": "ejemplo",
+      "title": "Cálculo de la hipotenusa en un triángulo rectángulo",
+      "description": "Aplicación del teorema de Pitágoras para calcular la longitud de la hipotenusa a partir de los catetos, analizando la terna pitagórica resultante.",
       "proofs": [],
       "directDependencies": []
     },

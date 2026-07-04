@@ -35,11 +35,17 @@ export const Paso: React.FC<PasoProps> = ({ id, numero, titulo, children, visibl
 
   return (
     <div className="my-5 font-serif">
-      {/* Cabecera del paso — siempre visible */}
+      {/* Cabecera del paso — siempre visible e interactiva */}
       <div 
-        className="flex items-center gap-3 mb-2 cursor-pointer group"
+        className="flex items-center gap-3 mb-2 cursor-pointer group select-none"
         onClick={() => {
-          if (revealed && id) setActiveStep(id);
+          if (revealed) {
+            setRevealed(false);
+            setActiveStep(null);
+          } else {
+            setRevealed(true);
+            if (id) setActiveStep(id);
+          }
         }}
         onMouseEnter={() => {
           if (revealed && id) setActiveStep(id);
@@ -51,8 +57,11 @@ export const Paso: React.FC<PasoProps> = ({ id, numero, titulo, children, visibl
           </div>
         )}
         {titulo && (
-          <h4 className="page-accent-group-hover text-sm font-bold text-carbon font-sans uppercase tracking-wider transition-colors">
+          <h4 className="page-accent-group-hover text-sm font-bold text-carbon font-sans uppercase tracking-wider transition-colors flex items-center gap-2">
             {titulo}
+            <span className="text-[9px] text-carbon/30 group-hover:text-carbon/60 transition-colors">
+              {revealed ? '▲' : '▼'}
+            </span>
           </h4>
         )}
       </div>

@@ -1,0 +1,90 @@
+export const metadata = {
+  "id": "ejemplo-pitagoras-calculo",
+  "type": "ejemplo",
+  "title": "Cálculo de la hipotenusa en un triángulo rectángulo",
+  "description": "Aplicación del teorema de Pitágoras para calcular la longitud de la hipotenusa a partir de los catetos, analizando la terna pitagórica resultante.",
+  "relatedTheorem": "teorema-pitagoras",
+  "hasSimulation": true,
+  "difficulty": "básico"
+};
+
+import { EjemploPitagorasCalculo } from '@/widgets/diagrams/Ejercicios/EjemploPitagorasCalculo';
+
+export const Simulation = EjemploPitagorasCalculo;
+
+<Capitular letra="S" />ea un <ConceptLink targetId="triangulo-rectangulo" isDependency={false}>triángulo rectángulo</ConceptLink> <InteractiveElement target="poly" color="pizarra">$\triangle ABC$</InteractiveElement> con <ConceptLink targetId="angulo-recto" isDependency={false} highlightTarget="rightAng" highlightColor="pavo">ángulo recto</ConceptLink> en el <InteractiveElement target="C" color="carbon">vértice $C$</InteractiveElement>. Las longitudes de los <ConceptLink targetId="cateto" isDependency={false} highlightTarget="segCA" highlightColor="salvia">cateto $a$</ConceptLink> y <ConceptLink targetId="cateto" isDependency={false} highlightTarget="segBC" highlightColor="terracota">cateto $b$</ConceptLink> son $a = |CA| = 5$ y $b = |BC| = 12$ unidades respectivamente. Se determina la medida exacta de la <ConceptLink targetId="hipotenusa" isDependency={false} highlightTarget="segAB" highlightColor="ocre">hipotenusa</ConceptLink> $c = |AB|$ y se analiza la aritmética de la <ConceptLink targetId="terna-pitagorica" isDependency={false}>terna pitagórica</ConceptLink> resultante.
+
+<Separador />
+
+### Planteamiento del Problema
+
+Determinar el valor de la longitud del tercer lado del triángulo a partir de los datos iniciales y comprobar las propiedades de la terna numérica obtenida.
+
+<Nota>
+  **Fundamento geométrico y aritmético:** Una terna pitagórica es un conjunto de tres números enteros positivos $(x, y, z)$ tales que satisfacen la ecuación diofántica $x^2 + y^2 = z^2$. Cuando el máximo común divisor de los tres elementos es igual a uno, se define como una terna primitiva.
+</Nota>
+
+<Separador />
+
+<Solucion label="Resolución">
+  <Paso numero={1} id="datos" titulo="Datos e Hipótesis">
+    Las longitudes de los catetos del triángulo están definidas por las hipótesis geométricas del enunciado:
+    
+    * <ConceptLink targetId="cateto" isDependency={false} highlightTarget="segCA" highlightColor="salvia">Cateto $a$</ConceptLink> (vertical): $a = 5$
+    * <ConceptLink targetId="cateto" isDependency={false} highlightTarget="segBC" highlightColor="terracota">Cateto $b$</ConceptLink> (horizontal): $b = 12$
+    
+    La longitud de la <ConceptLink targetId="hipotenusa" isDependency={false} highlightTarget="segAB" highlightColor="ocre">hipotenusa $c$</ConceptLink> representa la incógnita del problema, siendo el lado opuesto al <ConceptLink targetId="angulo-recto" isDependency={false} highlightTarget="rightAng" highlightColor="pavo">ángulo recto</ConceptLink> situado en el <InteractiveElement target="C" color="carbon">vértice $C$</InteractiveElement>.
+  </Paso>
+
+  <Paso numero={2} id="calculo" titulo="Teorema de Pitágoras y Relación de Áreas">
+    Por el <ConceptLink targetId="teorema-pitagoras" isDependency={true}>teorema de Pitágoras</ConceptLink>, la relación geométrica entre los lados del triángulo es:
+    
+    <Formula>
+      $$ a^2 + b^2 = c^2 $$
+    </Formula>
+    
+    Sustituyendo los datos conocidos correspondientes a los catetos:
+    
+    <Formula>
+      $$ 5^2 + 12^2 = c^2 $$
+    </Formula>
+    
+    Geométricamente, esta relación establece que la suma de las áreas de los cuadrados construidos sobre los catetos (el <InteractiveElement target="sqCA" color="salvia">cuadrado de lado $a$</InteractiveElement> con área $5^2 = 25$ y el <InteractiveElement target="sqBC" color="terracota">cuadrado de lado $b$</InteractiveElement> con área $12^2 = 144$) equivale al área del <InteractiveElement target="sqAB" color="ocre">cuadrado de la hipotenusa $c$</InteractiveElement> con área $c^2$.
+    
+    <Formula>
+      $$ 25 + 144 = c^2 $$
+    </Formula>
+  </Paso>
+
+  <Paso numero={3} id="resolucion" titulo="Resolución Algebraica de la Incógnita">
+    Efectuando la adición de los términos numéricos de área:
+    
+    <Formula>
+      $$ 169 = c^2 $$
+    </Formula>
+    
+    Para despejar la longitud $c$, extraemos la raíz cuaternaria/cuadrada en ambos miembros de la ecuación. Se descarta el valor negativo por tratarse de una dimensión geométrica real:
+    
+    <Formula>
+      $$ c = \sqrt{169} = 13 $$
+    </Formula>
+    
+    Por consiguiente, la longitud de la <ConceptLink targetId="hipotenusa" isDependency={false} highlightTarget="segAB" highlightColor="musgo">hipotenusa $c$</ConceptLink> es exactamente $13$ unidades, y el área del <InteractiveElement target="sqAB" color="musgo">cuadrado asociado</InteractiveElement> es $13^2 = 169$.
+  </Paso>
+
+  <Paso numero={4} id="terna" titulo="Verificación de la Terna Pitagórica">
+    Las tres longitudes obtenidas en el <ConceptLink targetId="triangulo" isDependency={false} highlightTarget="poly" highlightColor="pizarra">triángulo</ConceptLink> son números enteros positivos:
+    
+    * $a = 5 \in \mathbb{Z}^+$
+    * $b = 12 \in \mathbb{Z}^+$
+    * $c = 13 \in \mathbb{Z}^+$
+    
+    Dado que satisfacen la ecuación diofántica $x^2 + y^2 = z^2$:
+    
+    <Formula>
+      $$ 5^2 + 12^2 = 13^2 \implies 25 + 144 = 169 $$
+    </Formula>
+    
+    El conjunto $\{5, 12, 13\}$ constituye una terna pitagórica. Adicionalmente, puesto que su máximo común divisor es la unidad ($\operatorname{mcd}(5, 12, 13) = 1$), se concluye que es una terna pitagórica primitiva.
+  </Paso>
+</Solucion>
