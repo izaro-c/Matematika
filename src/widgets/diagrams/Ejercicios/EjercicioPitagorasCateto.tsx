@@ -3,7 +3,6 @@ import { getCSSVar } from '@/features/graph/ui/MathUtils';
 import JXG from 'jsxgraph';
 import { useMathStore } from '@/app/providers/MathStoreContext';
 import { useLessonStore } from '@/features/lessons/LessonStore';
-import { useExercise } from '@/features/exercises/ui/ExerciseContext';
 
 export const EjercicioPitagorasCateto = () => {
   const boardRef = useRef<HTMLDivElement>(null);
@@ -13,25 +12,17 @@ export const EjercicioPitagorasCateto = () => {
   const mathHighlight = useMathStore((state) => state.variables['highlight']);
   // Suscripción al paso activo
   const activeStep = useLessonStore((state) => state.activeStep);
-  // Suscripción al context de ejercicios
-  const { register, answer, state } = useExercise();
 
   const highlight = mathHighlight || activeStep;
   const isHighlight = (id: string) => 
     Array.isArray(highlight) ? (highlight as unknown as string[]).includes(id) : highlight === id;
 
-  // Comprobar si el primer paso de arrastre ha sido completado
-  const isDragCompleted = state.questions['p1_drag']?.isCorrect === true;
-
-  // Si el arrastre está completado, los cuadrados son visibles y las etiquetas van al interior
+  // Determinar la dirección y escala del desplazamiento del texto del lado (exterior/interior del triángulo)
+  // para evitar solapamientos con los cuadrados de áreas externos.
   const getSideFactor = () => {
-    return isDragCompleted ? -1.5 : 1.5;
+    const showSquares = activeStep === 'p2' || activeStep === 'p3';
+    return showSquares ? -1.5 : 1.5; // -1.5 (interior cómodo) o 1.5 (exterior bien separado a la izquierda)
   };
-
-  useEffect(() => {
-    // Registrar el ejercicio interactivo en el context
-    register('p1_drag', 'canvas');
-  }, [register]);
 
   useEffect(() => {
     if (!boardRef.current) return;
@@ -54,17 +45,15 @@ export const EjercicioPitagorasCateto = () => {
     const C_TERRACOTA = getCSSVar('--theme-terracota');
     const C_OCRE = getCSSVar('--theme-ocre');
 
-    // 1. Vértices del triángulo
+    // 1. Vértices del triángulo (fijos en su terna 6, 8, 10)
     const C = board.create('point', [0, 0], { 
       name: 'C', size: 4.5, fillColor: C_PRIM, strokeColor: C_PRIM, showInfobox: false, fixed: true 
     });
     const B = board.create('point', [8, 0], { 
       name: 'B', size: 4.5, fillColor: C_PRIM, strokeColor: C_PRIM, showInfobox: false, fixed: true 
     });
-    
-    // Vértice A: glider vertical sobre el eje Y (x=0) con posición inicial y=3
-    const A = board.create('point', [0, 3], { 
-      name: 'A', size: 6, fillColor: C_OCRE, strokeColor: C_OCRE, showInfobox: false, fixed: false 
+    const A = board.create('point', [0, 6], {
+      name: 'A', size: 4.5, fillColor: C_PRIM, strokeColor: C_PRIM, showInfobox: false, fixed: true
     });
 
     // Segmentos del triángulo
@@ -80,26 +69,6 @@ export const EjercicioPitagorasCateto = () => {
     const rightAng = board.create('angle', [B, C, A], {
       radius: 0.6, type: 'sector', orthotype: 'square',
       fillColor: C_RIGHT, strokeColor: C_RIGHT, fillOpacity: 0.25
-    });
-
-    // Restricción de arrastre vertical de A en el evento de drag
-    const checkSolution = () => {
-      const currentY = A.Y();
-      // Si está cerca de la posición correcta (y=6), encajar magnéticamente y validar
-      if (Math.abs(currentY - 6) < 0.18) {
-        A.setPosition(JXG.COORDS_BY_USER, [0, 6]);
-        A.setAttribute({ fixed: true, fillColor: C_PRIM, strokeColor: C_PRIM });
-        board.update();
-        answer('p1_drag', true);
-      }
-    };
-
-    A.on('drag', () => {
-      let y = A.Y();
-      if (y < 0.6) y = 0.6; // Evitar colapso
-      if (y > 11.5) y = 11.5; // Evitar desborde del lienzo
-      A.setPosition(JXG.COORDS_BY_USER, [0, y]);
-      checkSolution();
     });
 
     // 2. Proyección de cuadrados
@@ -179,10 +148,7 @@ export const EjercicioPitagorasCateto = () => {
       return segments;
     };
 
-    // Crear cuadrículas dinámicas basadas en los lados finales:
-    // - Lado vertical a: 6
-    // - Lado horizontal b: 8
-    // - Hipotenusa c: 10
+    // Crear cuadrículas fijas de la terna (6, 8, 10)
     const gridCA = drawGrid(ptsCA, 6);
     const gridBC = drawGrid(ptsBC, 8);
     const gridAB = drawGrid(ptsAB, 10);
@@ -210,11 +176,7 @@ export const EjercicioPitagorasCateto = () => {
     const labC = createLabel(A, B, 'c', 0.25);
 
     // 5. Textos de las áreas flotando dinámicamente en sus centros geométricos
-    const textAreaA = board.create('text', [
-      () => -A.Y() / 2, 
-      () => A.Y() / 2, 
-      () => 'a² = ' + Math.round(A.Y() * A.Y())
-    ], {
+    const textAreaA = board.create('text', [-3.0, 3.0, 'a² = ?'], {
       fixed: true, fontSize: 13, cssClass: 'font-serif italic font-bold', 
       anchorX: 'middle', anchorY: 'middle', color: C_SALVIA, visible: false
     });
@@ -235,7 +197,7 @@ export const EjercicioPitagorasCateto = () => {
     const textAreaC = board.create('text', [
       () => getHypotenuseCenter(1), 
       () => getHypotenuseCenter(2), 
-      () => 'c² = ' + Math.round(A.Y() * A.Y() + 64)
+      'c² = 10² = 100'
     ], {
       fixed: true, fontSize: 13, cssClass: 'font-serif italic font-bold', 
       anchorX: 'middle', anchorY: 'middle', color: C_OCRE, visible: false
@@ -280,26 +242,19 @@ export const EjercicioPitagorasCateto = () => {
     const C_TERRACOTA = getCSSVar('--theme-terracota');
     const C_OCRE = getCSSVar('--theme-ocre');
 
-    // Si el arrastre de A = 6 ya se completó, fijamos el punto definitivamente
-    if (isDragCompleted) {
-      A.setPosition(JXG.COORDS_BY_USER, [0, 6]);
-      A.setAttribute({ fixed: true, fillColor: C_PRIM, strokeColor: C_PRIM });
-    }
+    // 1. Mostrar los cuadrados y áreas a partir del Paso 2
+    const showSquares = activeStep === 'p2' || activeStep === 'p3';
 
-    // 1. Mostrar los cuadrados y áreas a partir del Paso 1 para guiar la interacción física,
-    // o cuando el arrastre de p1_drag está completo.
-    const showSquares = activeStep === 'p1' || activeStep === 'p2' || isDragCompleted;
-
-    // 2. Actualizar dinámicamente los textos de los lados según el estado
-    if (isDragCompleted) {
+    // 2. Actualizar dinámicamente los textos de los lados según el paso activo
+    if (activeStep === 'p3') {
       labA.setText('a = 6');
       labB.setText('b = 8');
       labC.setText('c = 10');
     } else {
-      // Mientras arrastra
-      labA.setText(() => 'a = ' + Math.round(A.Y()));
+      // Pasos p1, p2 o estado inicial: la longitud vertical es incógnita
+      labA.setText('a = ?');
       labB.setText('b = 8');
-      labC.setText(() => 'c = ' + Math.round(Math.hypot(8, A.Y())));
+      labC.setText('c = 10');
     }
 
     // Colores y visibilidades permanentes de etiquetas
@@ -350,20 +305,19 @@ export const EjercicioPitagorasCateto = () => {
     textAreaB.setAttribute({ visible: showSquares, color: C_TERRACOTA });
     textAreaC.setAttribute({ visible: showSquares, color: C_OCRE });
 
-    // Dinamismo de textos de área del cateto vertical e hipotenusa:
-    if (isDragCompleted) {
-      textAreaA.setText(activeStep === 'p2' ? 'a² = c² - b² = 36' : 'a² = 6² = 36');
-      textAreaC.setText('c² = 10² = 100');
+    // Dinamismo de textos de área del cateto vertical:
+    // En p2 (área incógnita): a² = ?
+    // En p3 (resuelta): a² = 6² = 36
+    if (activeStep === 'p3') {
+      textAreaA.setText('a² = 6² = 36');
+    } else {
+      textAreaA.setText('a² = ?');
     }
 
-    // 6. Vértices del triángulo (resaltados en hover)
+    // 6. Vértices del triángulo (resaltados en hover, pero de color carbon uniforme)
     C.setAttribute({ size: isHighlight('C') ? 8.5 : 4.5, fillColor: C_PRIM, strokeColor: C_PRIM });
     B.setAttribute({ size: isHighlight('B') ? 8.5 : 4.5, fillColor: C_PRIM, strokeColor: C_PRIM });
-    A.setAttribute({ 
-      size: isHighlight('A') ? 9.5 : 6, 
-      fillColor: isDragCompleted ? C_PRIM : C_OCRE, 
-      strokeColor: isDragCompleted ? C_PRIM : C_OCRE 
-    });
+    A.setAttribute({ size: isHighlight('A') ? 8.5 : 4.5, fillColor: C_PRIM, strokeColor: C_PRIM });
 
     // 7. Líneas del triángulo
     const isHighlightSegCA = isHighlight('segCA');
@@ -398,7 +352,7 @@ export const EjercicioPitagorasCateto = () => {
     });
 
     board.update();
-  }, [highlight, activeStep, isDragCompleted]);
+  }, [highlight, activeStep]);
 
   return (
     <div className="w-full h-full min-h-[400px] relative bg-lienzo/40 border border-pizarra/10 rounded-sm overflow-hidden">

@@ -2,7 +2,7 @@ export const metadata = {
   "id": "ejercicio-pitagoras-cateto",
   "type": "ejercicio",
   "title": "Cálculo de un cateto en un triángulo rectángulo",
-  "description": "Cálculo de la longitud de un cateto conocido el otro cateto y la hipotenusa, empleando el teorema de Pitágoras con una terna de escala (6, 8, 10).",
+  "description": "Aplicación del teorema de Pitágoras para determinar la longitud de un cateto desconocido a partir de la hipotenusa y el otro cateto.",
   "relatedTheorem": "teorema-pitagoras",
   "hasSimulation": true,
   "difficulty": "básico",
@@ -20,72 +20,77 @@ export const Simulation = EjercicioPitagorasCateto;
 <PasoEjercicio
   id="p1"
   numero={1}
-  titulo="Interacción y Configuración Geométrica"
-  questionIds={["p1_drag"]}
+  titulo="Planteamiento de la Ecuación"
+  questionIds={["p1_q1"]}
   resolucion={
     <p>
-      El triángulo encaja con la condición de hipotenusa $c = 10$ cuando el cateto vertical mide exactamente $a = 6$ unidades. En esta configuración, las áreas de los cuadrados asociados son $a^2 = 36$ (salvia) y $b^2 = 64$ (terracota), sumando un total de $a^2 + b^2 = 36 + 64 = 100$, que equivale exactamente al área del cuadrado de la hipotenusa $c^2$ (ocre).
+      La ecuación fundamental que rige en este triángulo por el teorema de Pitágoras es $a^2 + b^2 = c^2$. Sustituyendo los datos conocidos $b = 8$ y $c = 10$, obtenemos la relación particular:
+      $$ a^2 + 8^2 = 10^2 $$
     </p>
   }
 >
-  Arrastra el <InteractiveElement target="A" color="ocre">vértice ocre $A$</InteractiveElement> verticalmente a lo largo del eje Y en el diagrama hasta que la <ConceptLink targetId="hipotenusa" isDependency={false} highlightTarget="segAB" highlightColor="ocre">hipotenusa $c$</ConceptLink> mida exactamente $10$ unidades (de modo que el área de su <InteractiveElement target="sqAB" color="ocre">cuadrado asociado</InteractiveElement> sea $100$ y el del <InteractiveElement target="sqCA" color="salvia">cateto vertical</InteractiveElement> sea $36$).
+  Identifica la formulación algebraica adecuada para plantear el teorema de Pitágoras en base a los datos conocidos:
   
+  <Pregunta
+    id="p1_q1"
+    pregunta="¿Cuál de las siguientes relaciones describe correctamente la proporción de áreas para este triángulo?"
+    opciones={[
+      { id: 'opt_correcta', texto: "a² + 8² = 10²", esCorrecta: true },
+      { id: 'opt_suma_catetos', texto: "a² = 10² + 8²", esCorrecta: false },
+      { id: 'opt_hipotenusa_err', texto: "10² + a² = 8²", esCorrecta: false }
+    ]}
+  />
+
   <ErrorComun titulo="Sumar los cuadrados de los lados conocidos en lugar de restarlos">
-    Un error recurrente al calcular un cateto consiste en aplicar la fórmula directa de la suma: $a^2 = c^2 + b^2$. Esto resultaría en $a^2 = 10^2 + 8^2 = 100 + 64 = 164 \implies a \approx 12.8$. 
+    Un error recurrente al despejar un cateto es confundir la fórmula directa y sumar las superficies conocidas: $a^2 = c^2 + b^2$. Esto daría $a^2 = 10^2 + 8^2 = 100 + 64 = 164 \implies a \approx 12.8$.
     
-    Este resultado es geométricamente imposible: en todo triángulo rectángulo, la hipotenusa representa el lado opuesto al ángulo de mayor amplitud (el ángulo recto) y, por consiguiente, debe ser estrictamente el lado de mayor longitud ($c > a$ y $c > b$). Un cateto nunca puede medir más que la hipotenusa.
+    Esta longitud es geométricamente imposible. En todo triángulo rectángulo, la hipotenusa es el lado opuesto al ángulo de mayor apertura (el ángulo recto) y, por lo tanto, debe ser estrictamente el de mayor longitud ($c > a$ y $c > b$). Un cateto jamás puede medir más que la hipotenusa.
   </ErrorComun>
 </PasoEjercicio>
 
 <PasoEjercicio
   id="p2"
   numero={2}
-  titulo="Planteamiento Algebraico y Despeje"
-  questionIds={["p2_b2", "p2_c2", "p2_a"]}
-  dependeDeQuestions={["p1_drag"]}
+  titulo="Cálculo de la Superficie Restante"
+  questionIds={["p2_q1"]}
+  dependeDeQuestions={["p1_q1"]}
   resolucion={
-    <div>
-      <p>
-        Por el <ConceptLink targetId="teorema-pitagoras" isDependency={true}>teorema de Pitágoras</ConceptLink>, la relación métrica de los lados es:
-      </p>
-      <Formula>
-        $$ a^2 + b^2 = c^2 $$
-      </Formula>
-      <p>
-        Sustituyendo los datos conocidos de la hipotenusa $c = 10$ y el cateto $b = 8$:
-      </p>
-      <Formula>
-        $$ a^2 + 8^2 = 10^2 \implies a^2 + 64 = 100 $$
-      </Formula>
-      <p>
-        Despejando el cuadrado del cateto vertical (restando el área del cateto conocido al área de la hipotenusa):
-      </p>
-      <Formula>
-        $$ a^2 = 100 - 64 = 36 $$
-      </Formula>
-      <p>
-        Extrayendo la raíz cuadrada en ambos miembros (se omite la solución negativa por tratarse de una magnitud de longitud física real):
-      </p>
-      <Formula>
-        $$ a = \sqrt{36} = 6 $$
-      </Formula>
-      <p>
-        La longitud exacta del cateto vertical $a$ es de $6$ unidades.
-      </p>
-    </div>
+    <p>
+      Despejando el término de área del cateto desconocido $a^2$ en la ecuación:
+      $$ a^2 = 10^2 - 8^2 = 100 - 64 = 36 $$
+      El área de la superficie construida sobre el cateto vertical es exactamente $36$ unidades cuadradas (representada por el cuadrado salvia de cuadrícula $6 \times 6$).
+    </p>
   }
 >
-  Completa los huecos numéricos de la ecuación del teorema de Pitágoras y calcula la dimensión del cateto:
-  
+  Despeja la superficie del cuadrado vertical y calcula su valor numérico de área:
+
   <div className="my-6 p-4 border border-carbon/10 bg-carbon/[0.01]">
-    Planteamiento de áreas:
     <Formula>
-      $$ a^2 + \text{ } $$ <Hueco id="p2_b2" correct="64" pista="Área del cuadrado del cateto conocido (8²)." /> $$ = \text{ } $$ <Hueco id="p2_c2" correct="100" pista="Área del cuadrado de la hipotenusa (10²)." />
-    </Formula>
-    
-    Longitud del cateto vertical:
-    <Formula>
-      $$ a = \text{ } $$ <Hueco id="p2_a" correct="6" pista="Raíz cuadrada del área obtenida (√36)." />
+      $$ a^2 = 10^2 - 8^2 \implies a^2 = \text{ } $$
+      <Hueco id="p2_q1" correct="36" pista="Resta el área del cateto horizontal (64) al área total de la hipotenusa (100)." />
     </Formula>
   </div>
+</PasoEjercicio>
+
+<PasoEjercicio
+  id="p3"
+  numero={3}
+  titulo="Longitud Final del Cateto"
+  questionIds={["p3_q1"]}
+  dependeDeQuestions={["p2_q1"]}
+  resolucion={
+    <p>
+      Extrayendo la raíz cuadrada al área obtenida ($a^2 = 36$), obtenemos:
+      $$ a = \sqrt{36} = 6 $$
+      Omitimos la solución negativa ($a = -6$) dado que la magnitud física de una longitud geométrica real siempre es estrictamente positiva.
+    </p>
+  }
+    Halla la longitud del cateto vertical $a$ extrayendo la raíz cuadrada de la superficie calculada:
+
+    <div className="my-6 p-4 border border-carbon/10 bg-carbon/[0.01]">
+      <Formula>
+        $$ a = \sqrt{36} \implies a = \text{ } $$
+        <Hueco id="p3_q1" correct="6" pista="¿Qué número multiplicado por sí mismo da 36?" />
+      </Formula>
+    </div>
 </PasoEjercicio>
