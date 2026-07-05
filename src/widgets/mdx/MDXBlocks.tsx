@@ -6,9 +6,11 @@ import { Concept } from "@/features/glossary/ui/Concept";
 import { Paso } from '@/features/exercises/ui/Paso';
 import { PasoEjercicio } from '@/features/exercises/ui/PasoEjercicio';
 import { Solucion } from '@/features/exercises/ui/Solucion';
+import { Resolucion } from '@/features/exercises/ui/Resolucion';
 import { Pregunta } from '@/features/exercises/ui/Pregunta';
 import { Hueco } from '@/features/exercises/ui/Hueco';
 import { ErrorComun } from '@/features/exercises/ui/ErrorComun';
+import { Apoyo } from '@/features/exercises/ui/Apoyo';
 import { Emparejar } from '@/features/exercises/ui/Emparejar';
 import { CanvasInteractivo } from '@/features/exercises/ui/CanvasInteractivo';
 import { Clasificador } from '@/features/exercises/ui/Clasificador';
@@ -243,9 +245,11 @@ export const MDXComponents = {
   Paso,
   PasoEjercicio,
   Solucion,
+  Resolucion,
   Pregunta,
   Hueco,
   ErrorComun,
+  Apoyo,
   Emparejar,
   CanvasInteractivo,
   Clasificador,

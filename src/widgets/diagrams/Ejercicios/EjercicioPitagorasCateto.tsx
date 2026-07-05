@@ -357,7 +357,7 @@ export const EjercicioPitagorasCateto = () => {
   return (
     <div className="w-full h-full min-h-[400px] relative bg-lienzo/40 border border-pizarra/10 rounded-sm overflow-hidden">
       <div className="absolute top-3 left-3 z-10 text-[10px] font-sans text-pizarra/50 uppercase tracking-wider">
-        Triángulo y Cuadrados de Áreas (6, 8, 10)
+        Relación geométrica de áreas
       </div>
       <div ref={boardRef} className="w-full h-full touch-none" />
     </div>
