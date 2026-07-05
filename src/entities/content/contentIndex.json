@@ -4141,5 +4141,21 @@
       "leanVerified": true,
       "verificationStatus": "human-proof"
     }
+  },
+  "caso-gps-trilateracion": {
+    "id": "caso-gps-trilateracion",
+    "slug": "caso-gps-trilateracion",
+    "filePath": "usecases/caso-gps-trilateracion.mdx",
+    "contentType": "caso-de-uso",
+    "metadata": {
+      "id": "caso-gps-trilateracion",
+      "type": "caso-de-uso",
+      "title": "Localización por satélite (GPS) y trilateración",
+      "description": "Aplicación del teorema de Pitágoras y el cálculo de distancias euclídeas para determinar la posición exacta de un receptor a partir de tres puntos de referencia.",
+      "concept": "teorema-pitagoras",
+      "domain": "ingeniería",
+      "difficulty": "básico",
+      "hasSimulation": true
+    }
   }
 }

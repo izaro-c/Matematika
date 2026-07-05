@@ -1,7 +1,7 @@
 {
-  "generatedAt": "2026-07-05T09:36:26.974Z",
+  "generatedAt": "2026-07-05T17:00:52.635Z",
   "summary": {
-    "total": 118,
+    "total": 119,
     "byType": {
       "sistema-axiomatico": 4,
       "axioma": 21,
@@ -14,14 +14,15 @@
       "modelo": 4,
       "corolario": 1,
       "lema": 1,
-      "teorema": 22
+      "teorema": 22,
+      "caso-de-uso": 1
     },
     "diagrams": {
       "none": 57,
-      "exported": 61
+      "exported": 62
     },
     "lean": {
-      "none": 69,
+      "none": 70,
       "human-proof": 45,
       "lean-checked": 4
     },
@@ -2482,6 +2483,26 @@
       "demos": [
         "demo-triangulo-isosceles"
       ]
+    },
+    {
+      "id": "caso-gps-trilateracion",
+      "type": "caso-de-uso",
+      "title": "Localización por satélite (GPS) y trilateración",
+      "filePath": "usecases/caso-gps-trilateracion.mdx",
+      "hasDeclaredDiagram": true,
+      "diagramExports": [
+        "Simulation"
+      ],
+      "diagramStatus": "exported",
+      "leanId": null,
+      "leanVerified": false,
+      "verificationStatus": "none",
+      "foundation": "pending",
+      "sourcesCount": 0,
+      "proofSteps": 0,
+      "mappedProofSteps": [],
+      "parentTheorem": null,
+      "demos": []
     }
   ]
 }

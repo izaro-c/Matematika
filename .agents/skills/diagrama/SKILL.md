@@ -55,6 +55,7 @@ description: Genera diagramas matemáticos interactivos con JSXGraph, SVG, Canva
 39. [Visibilidad Condicional por Highlight Global](#39-visibilidad-condicional-por-highlight-global)
 40. [Demostraciones sin Diagrama (layout: text)](#40-demostraciones-sin-diagrama-layout-text)
 41. [Traza Lean y Diagramas](#41-traza-lean-y-diagramas)
+42. [Interfaz y Overlays Estandarizados](#42-interfaz-y-overlays-estandarizados)
 ---
 
 ## 1. Tecnologías de Renderizado
@@ -98,7 +99,7 @@ Texto MDX (panel derecho)
   │     onMouseLeave → MathStore.setVariable('highlight', null)
   │     ▼
   └── El diagrama recibe highlight → ilumina el elemento 'ladoA'
-  
+
 Diagrama (panel izquierdo)
   │
   ├── Arrastrar un punto → board.on('update') → setVariable('distancia', valor)
@@ -246,7 +247,7 @@ export const MiDiagrama = () => {
       boundingbox={[-5, 5, 5, -5]}
       onInit={(board, els, theme) => {
         // 1. CREACIÓN DE GEOMETRÍA (Solo se ejecuta una vez)
-        
+
         // REGLA DE ORO: ¡NO USAR board.create() DIRECTAMENTE PARA ELEMENTOS COMUNES!
         // Usar siempre las funciones de MathFactory para heredar el estilo.
         els.A = createPoint(board, [-2, -2], { name: 'A' }, theme);
@@ -258,7 +259,7 @@ export const MiDiagrama = () => {
       }}
       onUpdate={(_board, els, theme, isStep, isHL) => {
         // 2. LÓGICA REACTIVA (Se ejecuta en cada cambio de paso o highlight)
-        
+
         // Leer pasos activos
         const s1 = isStep('step1');
         const s2 = isStep('step2');
@@ -280,16 +281,16 @@ export const MiDiagrama = () => {
         };
 
         // FUNCIÓN getC: Cambiar el color temporalmente al hacer hover
-        const getC = (hovered: boolean, defaultColor: string, hoverColor = theme.terracota) => 
+        const getC = (hovered: boolean, defaultColor: string, hoverColor = theme.terracota) =>
             hovered ? hoverColor : defaultColor;
 
         // FUNCIÓN getW: Cambiar el grosor de línea al hacer hover
-        const getW = (hovered: boolean, defaultWidth = 2, hoverWidth = 4) => 
+        const getW = (hovered: boolean, defaultWidth = 2, hoverWidth = 4) =>
             hovered ? hoverWidth : defaultWidth;
 
         // 3. APLICAR ATRIBUTOS VISUALES
         const stepAB = s1 || s2;
-        els.segAB.setAttribute({ 
+        els.segAB.setAttribute({
             strokeOpacity: getOp(hlAB || hlTri, stepAB, 0), // Oculto si stepAB=false y base=0
             strokeWidth: getW(hlAB || hlTri, 2, 4),
             strokeColor: getC(hlAB || hlTri, theme.carbon)
@@ -300,7 +301,7 @@ export const MiDiagrama = () => {
             fillOpacity: getOp(hlTri, stepPoly, 0, 0.4),
             fillColor: getC(hlTri, theme.salvia)
         });
-        
+
         // Los puntos siempre visibles, pero brillan si se hace hover
         els.A.setAttribute({
             fillColor: getC(hlA || hlTri, theme.carbon),
@@ -948,7 +949,9 @@ Los diagramas viven en `src/shared/diagrams/` (arquitectura FSD: capa `shared/`)
 
 ## 21. Ángulos Rectos Robustos
 
-El `angle` de JSXGraph con `orthotype: 'square'` puede fallar cuando la orientación de los puntos produce un ángulo CCW de 270° en lugar de 90°. Para diagramas donde los puntos se reordenan libremente (ej. triángulos deformables), **NO usar `angle` con `orthotype`**. En su lugar, construir un **polígono cuadrado manual** con cuatro puntos dinámicos:
+El `angle` de JSXGraph con `orthotype: 'square'` puede fallar cuando la orientación de los puntos produce un ángulo CCW de 270° en lugar de 90°. Para diagramas donde los puntos se reordenan libremente (ej. triángulos deformables), **NO usar `angle` con `orthotype`**. En su lugar, utiliza la utilidad centralizada en `src/features/graph/ui/MathUtils.ts`:
+`createRobustRightAngle(board, vertex, pBase, pAlt, size, options, theme)`.
+Esta función construye internamente un polígono dinámico cuadrado manual inmune a inversiones de orientación:
 
 ```typescript
 // Robust right-angle square marker at foot H
@@ -1471,7 +1474,7 @@ useEffect(() => {
 }, [highlight]);
 ```
 
-**Principio:** 
+**Principio:**
 - `infoText` → visibilidad basada en geometría (qué se muestra según la forma)
 - `useEffect(highlight)` → estilo basado en hover (cómo se ve lo ya mostrado)
 
@@ -1606,3 +1609,36 @@ Reglas:
 Diagramas canónicos bien hechos están en `examples/`:
 - `examples/JSXGraphCanon.tsx` — Patrón JSXGraph completo con highlight, store y cleanup
 - `examples/SVGCanon.tsx` — Patrón SVG con CSS variables y dark mode
+
+---
+
+## 42. Interfaz y Overlays Estandarizados
+
+Queda estrictamente prohibido codificar divs e inline estilos de Tailwind para títulos y paneles flotantes dentro de los componentes de diagramas. Utiliza siempre los componentes unificados en `src/shared/ui/DiagramOverlay.tsx`:
+
+1. **DiagramTitle**: Para la etiqueta superior izquierda discreta en mayúsculas pequeñas.
+   ```tsx
+   import { DiagramTitle } from '@/shared/ui/DiagramOverlay';
+   // ...
+   return (
+     <MathBoard ...>
+       <DiagramTitle>Título del Diagrama</DiagramTitle>
+     </MathBoard>
+   );
+   ```
+
+2. **DiagramInfoPanel**: Para paneles flotantes con fórmulas y ecuaciones reactivas en tiempo real. Soporta posicionamiento (`position?: 'top-left' | 'top-right' | 'bottom-left' | 'bottom-right'`) y adapta automáticamente su contraste al tema oscuro/claro.
+   ```tsx
+   import { DiagramInfoPanel } from '@/shared/ui/DiagramOverlay';
+   // ...
+   return (
+     <MathBoard ...>
+       <DiagramInfoPanel title="Ecuaciones de Pitágoras" position="bottom-right">
+         <div>...</div>
+       </DiagramInfoPanel>
+     </MathBoard>
+   );
+   ```
+
+3. **Helpers de MathUtils**:
+   Para proyecciones de cuadrados y cuadrículas de conteo unitarias, importa siempre `projectSquareVertices` y `createSquareGrid` de `@/features/graph/ui/MathUtils` para evitar la duplicación de álgebra y trigonometría de trazado.
