@@ -3,10 +3,14 @@ import { getCSSVar } from '@/features/graph/ui/MathUtils';
 import JXG from 'jsxgraph';
 import { useMathStore } from '@/app/providers/MathStoreContext';
 import { useLessonStore } from '@/features/lessons/LessonStore';
+import { useExercise } from '@/features/exercises/ui/ExerciseContext';
 
 export const EjercicioPitagorasCateto = () => {
   const boardRef = useRef<HTMLDivElement>(null);
   const elementsRef = useRef<Record<string, any>>({});
+
+  // Obtener estado interactivo del ejercicio
+  const { state: exerciseState } = useExercise();
 
   // Suscripción a hovers del MDX
   const mathHighlight = useMathStore((state) => state.variables['highlight']);
@@ -245,24 +249,25 @@ export const EjercicioPitagorasCateto = () => {
     // 1. Mostrar los cuadrados y áreas a partir del Paso 2
     const showSquares = activeStep === 'p2' || activeStep === 'p3';
 
-    // 2. Actualizar dinámicamente los textos de los lados según el paso activo
-    if (activeStep === 'p3') {
+    // 2. Determinar si las preguntas específicas del ejercicio ya están resueltas correctamente
+    const isAreaSolved = exerciseState.questions['p2_q1']?.isCorrect === true;
+    const isCatetoSolved = exerciseState.questions['p3_q1']?.isCorrect === true;
+
+    // 3. Actualizar dinámicamente los textos de longitud de los lados
+    if (isCatetoSolved) {
       labA.setText('a = 6');
-      labB.setText('b = 8');
-      labC.setText('c = 10');
     } else {
-      // Pasos p1, p2 o estado inicial: la longitud vertical es incógnita
       labA.setText('a = ?');
-      labB.setText('b = 8');
-      labC.setText('c = 10');
     }
+    labB.setText('b = 8');
+    labC.setText('c = 10');
 
     // Colores y visibilidades permanentes de etiquetas
     labA.setAttribute({ visible: true, color: C_SALVIA });
     labB.setAttribute({ visible: true, color: C_TERRACOTA });
     labC.setAttribute({ visible: true, color: C_OCRE });
 
-    // 3. Aplicar visibilidad y colores a los cuadrados de áreas
+    // 4. Aplicar visibilidad y colores a los cuadrados de áreas
     sqCA.setAttribute({ 
       visible: showSquares,
       fillColor: C_SALVIA,
@@ -295,31 +300,29 @@ export const EjercicioPitagorasCateto = () => {
     setBorderAttrs(sqBC, showSquares, C_TERRACOTA, isHighlight('sqBC'));
     setBorderAttrs(sqAB, showSquares, C_OCRE, isHighlight('sqAB'));
 
-    // 4. Visibilidad de cuadrículas
+    // 5. Visibilidad de cuadrículas
     gridCA.forEach((seg: any) => seg.setAttribute({ visible: showSquares, strokeColor: C_SALVIA, strokeOpacity: isHighlight('sqCA') ? 0.4 : 0.2 }));
     gridBC.forEach((seg: any) => seg.setAttribute({ visible: showSquares, strokeColor: C_TERRACOTA, strokeOpacity: isHighlight('sqBC') ? 0.4 : 0.2 }));
     gridAB.forEach((seg: any) => seg.setAttribute({ visible: showSquares, strokeColor: C_OCRE, strokeOpacity: isHighlight('sqAB') ? 0.4 : 0.2 }));
 
-    // 5. Visibilidad y textos de áreas
+    // 6. Visibilidad y textos de áreas
     textAreaA.setAttribute({ visible: showSquares, color: C_SALVIA });
     textAreaB.setAttribute({ visible: showSquares, color: C_TERRACOTA });
     textAreaC.setAttribute({ visible: showSquares, color: C_OCRE });
 
-    // Dinamismo de textos de área del cateto vertical:
-    // En p2 (área incógnita): a² = ?
-    // En p3 (resuelta): a² = 6² = 36
-    if (activeStep === 'p3') {
-      textAreaA.setText('a² = 6² = 36');
+    // Dinamismo del texto de área del cateto vertical (revelar solo cuando el alumno lo resuelve correctamente)
+    if (isAreaSolved) {
+      textAreaA.setText('a² = 36');
     } else {
       textAreaA.setText('a² = ?');
     }
 
-    // 6. Vértices del triángulo (resaltados en hover, pero de color carbon uniforme)
+    // 7. Vértices del triángulo (resaltados en hover, pero de color carbon uniforme)
     C.setAttribute({ size: isHighlight('C') ? 8.5 : 4.5, fillColor: C_PRIM, strokeColor: C_PRIM });
     B.setAttribute({ size: isHighlight('B') ? 8.5 : 4.5, fillColor: C_PRIM, strokeColor: C_PRIM });
     A.setAttribute({ size: isHighlight('A') ? 8.5 : 4.5, fillColor: C_PRIM, strokeColor: C_PRIM });
 
-    // 7. Líneas del triángulo
+    // 8. Líneas del triángulo
     const isHighlightSegCA = isHighlight('segCA');
     const isHighlightSegBC = isHighlight('segBC');
     const isHighlightSegAB = isHighlight('segAB');
@@ -352,7 +355,7 @@ export const EjercicioPitagorasCateto = () => {
     });
 
     board.update();
-  }, [highlight, activeStep]);
+  }, [highlight, activeStep, exerciseState]);
 
   return (
     <div className="w-full h-full min-h-[400px] relative bg-lienzo/40 border border-pizarra/10 rounded-sm overflow-hidden">
