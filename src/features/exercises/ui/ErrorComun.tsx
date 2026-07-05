@@ -12,10 +12,13 @@
  * </ErrorComun>
  */
 import React, { useState } from 'react';
+import { useExercise } from '@/features/exercises/ui/ExerciseContext';
 
 interface ErrorComunProps {
   titulo: string;
   children: React.ReactNode;
+  /** ID opcional de la pregunta a la cual se asocia este bloque para mostrarse solo tras cometer un error */
+  questionId?: string;
 }
 
 /**
@@ -23,8 +26,16 @@ interface ErrorComunProps {
  * al abordar este tipo de problema. Se activa/despliega con un clic.
  * Aparece coloreado en terracota para indicar "atención / advertencia".
  */
-export const ErrorComun: React.FC<ErrorComunProps> = ({ titulo, children }) => {
+export const ErrorComun: React.FC<ErrorComunProps> = ({ titulo, children, questionId }) => {
   const [open, setOpen] = useState(false);
+  const { state } = useExercise();
+
+  // Si se provee un questionId, sólo renderizamos el bloque si el alumno ha fallado la pregunta
+  if (questionId) {
+    const qState = state.questions[questionId];
+    const hasFailed = qState && qState.tries > 0 && qState.isCorrect === false;
+    if (!hasFailed) return null;
+  }
 
   return (
     <div

@@ -22,30 +22,34 @@ export const Simulation = EjercicioPitagorasCateto;
   numero={1}
   titulo="Planteamiento de la Ecuación"
   questionIds={["p1_q1"]}
-  resolucion={
-    <p>
-      La ecuación fundamental que rige en este triángulo por el teorema de Pitágoras es $a^2 + b^2 = c^2$. Sustituyendo los datos conocidos $b = 8$ y $c = 10$, obtenemos la relación particular:
-      $$ a^2 + 8^2 = 10^2 $$
-    </p>
-  }
 >
   Identifica la formulación algebraica adecuada para plantear el teorema de Pitágoras en base a los datos conocidos:
-  
+
   <Pregunta
     id="p1_q1"
-    pregunta="¿Cuál de las siguientes relaciones describe correctamente la proporción de áreas para este triángulo?"
+    correct="opt_correcta"
+    texto="¿Cuál de las siguientes relaciones describe correctamente la proporción de áreas para este triángulo?"
     opciones={[
-      { id: 'opt_correcta', texto: "a² + 8² = 10²", esCorrecta: true },
-      { id: 'opt_suma_catetos', texto: "a² = 10² + 8²", esCorrecta: false },
-      { id: 'opt_hipotenusa_err', texto: "10² + a² = 8²", esCorrecta: false }
+      { value: 'opt_correcta', texto: "$a^2 + 8^2 = 10^2$" },
+      { value: 'opt_suma_catetos', texto: "$a^2 = 10^2 + 8^2$", feedback: "Has planteado el cálculo como si buscaras la hipotenusa sumando las áreas. Recuerda que la hipotenusa ya es conocida ($c=10$). Para hallar un cateto, debes restar el cuadrado del cateto conocido al de la hipotenusa: $a^2 = c^2 - b^2$." },
+      { value: 'opt_hipotenusa_err', texto: "$10^2 + a^2 = 8^2$", feedback: "Has sumado la hipotenusa ($10^2$) con el cateto ($a^2$), colocando el cateto conocido ($8^2$) en el miembro solitario. Recuerda que la hipotenusa al cuadrado ($10^2$) debe quedar sola en uno de los miembros: $a^2 + b^2 = c^2$." }
     ]}
   />
 
-  <ErrorComun titulo="Sumar los cuadrados de los lados conocidos en lugar de restarlos">
+  <ErrorComun questionId="p1_q1" titulo="Sumar los cuadrados de los lados conocidos en lugar de restarlos">
     Un error recurrente al despejar un cateto es confundir la fórmula directa y sumar las superficies conocidas: $a^2 = c^2 + b^2$. Esto daría $a^2 = 10^2 + 8^2 = 100 + 64 = 164 \implies a \approx 12.8$.
-    
+
     Esta longitud es geométricamente imposible. En todo triángulo rectángulo, la hipotenusa es el lado opuesto al ángulo de mayor apertura (el ángulo recto) y, por lo tanto, debe ser estrictamente el de mayor longitud ($c > a$ y $c > b$). Un cateto jamás puede medir más que la hipotenusa.
   </ErrorComun>
+
+  <Apoyo titulo="¿Quieres repasar las partes de un triángulo rectángulo o su ecuación?">
+    Consulta el concepto de <RefLink targetId="triangulo-rectangulo">triángulo rectángulo</RefLink> para ver su definición, o repasa la diferencia geométrica entre los <RefLink targetId="cateto">catetos</RefLink> y la <RefLink targetId="hipotenusa">hipotenusa</RefLink>.
+  </Apoyo>
+
+  <Resolucion>
+    La ecuación fundamental que rige en este triángulo por el teorema de Pitágoras es $a^2 + b^2 = c^2$. Sustituyendo los datos conocidos $b = 8$ y $c = 10$, obtenemos la relación particular:
+    $$ a^2 + 8^2 = 10^2 $$
+  </Resolucion>
 </PasoEjercicio>
 
 <PasoEjercicio
@@ -54,22 +58,19 @@ export const Simulation = EjercicioPitagorasCateto;
   titulo="Cálculo de la Superficie Restante"
   questionIds={["p2_q1"]}
   dependeDeQuestions={["p1_q1"]}
-  resolucion={
-    <p>
-      Despejando el término de área del cateto desconocido $a^2$ en la ecuación:
-      $$ a^2 = 10^2 - 8^2 = 100 - 64 = 36 $$
-      El área de la superficie construida sobre el cateto vertical es exactamente $36$ unidades cuadradas (representada por el cuadrado salvia de cuadrícula $6 \times 6$).
-    </p>
-  }
 >
   Despeja la superficie del cuadrado vertical y calcula su valor numérico de área:
 
-  <div className="my-6 p-4 border border-carbon/10 bg-carbon/[0.01]">
-    <Formula>
-      $$ a^2 = 10^2 - 8^2 \implies a^2 = \text{ } $$
-      <Hueco id="p2_q1" correct="36" pista="Resta el área del cateto horizontal (64) al área total de la hipotenusa (100)." />
-    </Formula>
-  </div>
+  <Formula>
+    $$ a^2 = 10^2 - 8^2 \implies a^2 = \text{ } $$
+    <Hueco id="p2_q1" correct="36" pista="Resta el área del cateto horizontal (64) al área total de la hipotenusa (100)." />
+  </Formula>
+
+  <Resolucion>
+    Despejando el término de área del cateto desconocido $a^2$ en la ecuación:
+    $$ a^2 = 10^2 - 8^2 = 100 - 64 = 36 $$
+    El área de la superficie construida sobre el cateto vertical es exactamente $36$ unidades cuadradas (representada por el cuadrado salvia de cuadrícula $6 \times 6$).
+  </Resolucion>
 </PasoEjercicio>
 
 <PasoEjercicio
@@ -78,19 +79,21 @@ export const Simulation = EjercicioPitagorasCateto;
   titulo="Longitud Final del Cateto"
   questionIds={["p3_q1"]}
   dependeDeQuestions={["p2_q1"]}
-  resolucion={
-    <p>
-      Extrayendo la raíz cuadrada al área obtenida ($a^2 = 36$), obtenemos:
-      $$ a = \sqrt{36} = 6 $$
-      Omitimos la solución negativa ($a = -6$) dado que la magnitud física de una longitud geométrica real siempre es estrictamente positiva.
-    </p>
-  }
-    Halla la longitud del cateto vertical $a$ extrayendo la raíz cuadrada de la superficie calculada:
+>
+  Halla la longitud del cateto vertical $a$ extrayendo la raíz cuadrada de la superficie calculada:
 
-    <div className="my-6 p-4 border border-carbon/10 bg-carbon/[0.01]">
-      <Formula>
-        $$ a = \sqrt{36} \implies a = \text{ } $$
-        <Hueco id="p3_q1" correct="6" pista="¿Qué número multiplicado por sí mismo da 36?" />
-      </Formula>
-    </div>
+  <Formula>
+    $$ a = \sqrt{36} \implies a = \text{ } $$
+    <Hueco id="p3_q1" correct="6" pista="¿Qué número multiplicado por sí mismo da 36?" />
+  </Formula>
+
+  <Apoyo titulo="¿Tienes dudas sobre cómo extraer la raíz cuadrada de 36?">
+    La raíz cuadrada de $36$ consiste en buscar un número real positivo que multiplicado por sí mismo dé exactamente $36$. Puedes repasar el concepto de <RefLink targetId="raiz-cuadrada">raíz cuadrada</RefLink> o consultar la tabla de <RefLink targetId="cuadrado">cuadrados perfectos</RefLink> para revisar los cuadrados del 1 al 10.
+  </Apoyo>
+
+  <Resolucion>
+    Extrayendo la raíz cuadrada al área obtenida ($a^2 = 36$), obtenemos:
+    $$ a = \sqrt{36} = 6 $$
+    Omitimos la solución negativa ($a = -6$) dado que la magnitud física de una longitud geométrica real siempre es estrictamente positiva.
+  </Resolucion>
 </PasoEjercicio>

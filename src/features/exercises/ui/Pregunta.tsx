@@ -25,6 +25,7 @@ import { KatexText } from '@/shared/ui/KatexText';
 interface Opcion {
   value: string;
   texto: string;
+  feedback?: string;
 }
 
 interface PreguntaProps {
@@ -62,6 +63,8 @@ export const Pregunta: React.FC<PreguntaProps> = ({ id, texto, question, correct
     answer(id, value === correctAnswer);
   };
 
+  const selectedOpcion = displayOpciones.find(o => o.value === selected);
+
   return (
     <div 
       className="my-8 p-8 elegant-panel relative font-serif"
@@ -78,7 +81,7 @@ export const Pregunta: React.FC<PreguntaProps> = ({ id, texto, question, correct
           const letter = String.fromCharCode(65 + index);
           const isSelected = selected === opt.value;
           const isThisCorrect = opt.value === correctAnswer;
-          const showCorrect = isAnswered && isThisCorrect;
+          const showCorrect = isAnswered && isThisCorrect && isCorrect;
           const showWrong = isAnswered && isSelected && !isThisCorrect;
 
           let btnClass: string;
@@ -126,16 +129,25 @@ export const Pregunta: React.FC<PreguntaProps> = ({ id, texto, question, correct
         })}
       </div>
 
-      {/* Feedback textual clásico */}
+      {/* Feedback de error específico */}
       {isAnswered && !isCorrect && (
-        <div className="mt-5 pt-4 border-t border-carbon/15 text-sm text-carbon/60 italic font-serif flex gap-3 items-start animate-fade-in">
-          <span className="text-terracota text-lg leading-none">❦</span>
-          <div>
-            La respuesta correcta era:{' '}
-            <strong className="text-salvia not-italic block mt-1">
-              <KatexText text={displayOpciones.find(o => o.value === correctAnswer)?.texto || correctAnswer} />
-            </strong>
+        <div className="mt-5 pt-4 border-t border-carbon/15 text-sm text-carbon/60 italic font-serif flex flex-col gap-3 animate-fade-in">
+          <div className="flex gap-3 items-start">
+            <span className="text-terracota text-lg leading-none">❦</span>
+            <div>
+              {selectedOpcion?.feedback ? (
+                <KatexText text={selectedOpcion.feedback} />
+              ) : (
+                <span>Respuesta incorrecta. Analiza el error e inténtalo de nuevo.</span>
+              )}
+            </div>
           </div>
+          <button
+            onClick={() => setSelected(null)}
+            className="page-accent-button self-start mt-2 px-4 py-2 text-[10px] font-sans font-bold uppercase tracking-wider text-carbon/60 border border-carbon/20 hover:bg-carbon/5 transition-all cursor-pointer flex items-center gap-2"
+          >
+            <span>❧</span> Intentar de nuevo
+          </button>
         </div>
       )}
     </div>
