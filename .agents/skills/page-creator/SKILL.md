@@ -407,7 +407,7 @@ Los ejercicios DEBEN tener **interacción progresiva**:
 
 > [!IMPORTANT]
 > **CONCEPTLINK UNIVERSAL — REGLA DE ORO, CRÍTICA Y ESENCIAL:**
-> 
+>
 > En TODAS las páginas, **ABSOLUTAMENTE TODO término matemático LLEVA UN CONCEPTLINK**. No hay excepciones. Si dudas sobre si crear dependencia lógica, añade `isDependency={false}`.
 
 ### 6.2 Estructura Canónica por Tipo de Contenido
@@ -569,7 +569,20 @@ La navegación interna NUNCA usa enlaces Markdown estándar `[texto](url)`. Usar
 <InteractiveElement target="segCA" color="salvia"><ConceptLink targetId="cateto">cateto</ConceptLink></InteractiveElement>
 ```
 
+### 8.2 Rigor Pedagógico y Enlazado Didáctico Completo
+
+Para maximizar el valor educativo y la coherencia del jardín digital de Matematika, toda página (ejercicio, caso de uso, ejemplo o definición) debe seguir dos reglas de enlazado estrictas:
+
+1. **InteractiveLinks Totales y Precisos:**
+   Toda frase en prosa que haga referencia a una entidad del diagrama (ej. *"los catetos del triángulo"*, *"la circunferencia de señal del satélite 1"*, *"la intersección de los tres círculos"*) debe estar envuelta en un `<InteractiveElement>` o un `<ConceptLink>` con `highlightTarget` que apunte exactamente al elemento del diagrama. Esto guiará visualmente al estudiante, permitiéndole correlacionar de inmediato el texto con la geometría.
+
+2. **Enlace de Conceptos de Soporte / Instrumentales:**
+   No asumas que el estudiante domina los términos matemáticos instrumentales utilizados en las explicaciones. Debes enlazar **absolutamente todos** los conceptos de soporte necesarios para la comprensión (ej. *plano cartesiano*, *ecuación cuadrática*, *sistema de ecuaciones*, *intersección*, *magnitud*, etc.) utilizando un `<ConceptLink>` dirigido a su ID correspondiente:
+   - Si el término es de soporte conceptual y no es una hipótesis de construcción lógica de la página, añade siempre `isDependency={false}`. Esto evita la alteración del grafo de dependencias deductivas estrictas.
+   - Si el concepto aún no está implementado en la enciclopedia, utiliza igualmente el `<ConceptLink>`. Esto generará automáticamente la página "En construcción" en el jardín de Matematika, lo cual es el comportamiento deseado para fomentar el crecimiento orgánico del contenido.
+
 ---
+
 
 ## 9. Paleta Arts & Crafts
 

@@ -117,7 +117,8 @@
     "teorema-existencia-bisectriz",
     "teorema-invariancia-triangulacion",
     "teorema-punto-medio-perpendicular",
-    "teorema-reciproco-triangulo-isosceles"
+    "teorema-reciproco-triangulo-isosceles",
+    "caso-gps-trilateracion"
   ],
   "nodes": {
     "sistema-absoluto": {
@@ -1749,6 +1750,14 @@
         "congruencia",
         "axioma-congruencia-5"
       ]
+    },
+    "caso-gps-trilateracion": {
+      "id": "caso-gps-trilateracion",
+      "type": "caso-de-uso",
+      "title": "Localización por satélite (GPS) y trilateración",
+      "description": "Aplicación del teorema de Pitágoras y el cálculo de distancias euclídeas para determinar la posición exacta de un receptor a partir de tres puntos de referencia.",
+      "proofs": [],
+      "directDependencies": []
     }
   }
 }
