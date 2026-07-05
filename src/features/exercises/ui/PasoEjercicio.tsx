@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useExercise } from '@/features/exercises/ui/ExerciseContext';
 import { useLessonStore } from '@/features/lessons/LessonStore';
 import { PasoContext } from '@/features/exercises/ui/PasoContext';
@@ -26,8 +26,15 @@ export const PasoEjercicio: React.FC<PasoEjercicioProps> = ({
   dependeDeQuestions = [],
   children
 }) => {
-  const { state } = useExercise();
+  const { state, register } = useExercise();
   const { setActiveStep } = useLessonStore();
+
+  // Registrar todas las preguntas de este paso inmediatamente al montarse el componente
+  useEffect(() => {
+    questionIds.forEach(qId => {
+      register(qId, 'pregunta');
+    });
+  }, [questionIds, register]);
 
   // Comprobar si el paso está desbloqueado (todas las dependencias están resueltas)
   const isUnlocked = dependeDeQuestions.every(
