@@ -1,0 +1,16 @@
+export const metadata = {
+  "id": "proof-steps",
+  "type": "teorema",
+  "title": "Proof Steps Test",
+  "description": "Fixture checking proof steps and attributes in demonstration blocks",
+  "authors": []
+};
+
+<Demostracion>
+  <ProofStep number={1} title="Hipótesis inicial" justificacion="Dado por enunciado" justificationType="hipotesis">
+    Asumimos que $A$ y $B$ son verdaderos.
+  </ProofStep>
+  <ProofStep number={2} title="Conclusión intermedia" justificacion="Por modus ponens" justificationType="regla-logica" dependencyId="step-1">
+    Entonces $C$ es verdadero.
+  </ProofStep>
+</Demostracion>
