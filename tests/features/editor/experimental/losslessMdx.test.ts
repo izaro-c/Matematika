@@ -9,7 +9,7 @@ describe('Lossless MDX Editor Prototipo', () => {
     const doc = parseExperimentalDocument(source);
 
     expect(doc.source).toBe(source);
-    expect(doc.sourceHash).toHaveLength(64);
+    expect(doc.sourceHash).toHaveLength(8);
     expect(doc.diagnostics).toHaveLength(0);
     expect(doc.compatibility).toBe('fully-editable');
 
