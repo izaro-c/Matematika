@@ -229,8 +229,12 @@ export const EditorPage: React.FC = () => {
     setMetadata,
     setImports,
     setExports,
-    setBlocks
+    setBlocks,
+    compatibility,
+    compatibilityReasons
   } = useEditorCore();
+
+  const isReadOnly = compatibility === 'read-only';
 
   const [isSidebarOpen, setIsSidebarOpen] = useState(true);
   const [isInspectorOpen, setIsInspectorOpen] = useState(true);
@@ -878,6 +882,7 @@ export const EditorPage: React.FC = () => {
             </span>
             <textarea
               value={String(metadata.title || '')}
+              disabled={isReadOnly}
               onChange={(e) => handleMetadataChange('title', e.target.value)}
               className="w-full bg-transparent border-none outline-none font-serif font-bold text-3xl text-carbon p-0 mt-1 resize-none focus:ring-0 placeholder-carbon/20"
               placeholder="Título del Concepto"
@@ -891,6 +896,7 @@ export const EditorPage: React.FC = () => {
             />
             <textarea
               value={String(metadata.description || '')}
+              disabled={isReadOnly}
               onChange={(e) => handleMetadataChange('description', e.target.value)}
               className="w-full bg-transparent border-none outline-none font-serif italic text-base text-carbon/70 p-0 mt-2 resize-none focus:ring-0 placeholder-carbon/30"
               placeholder="Añada una breve descripción motivacional..."
@@ -968,31 +974,33 @@ export const EditorPage: React.FC = () => {
           return (
             <div key={block.id} className="relative group/block bg-transparent border border-transparent hover:bg-carbon/5 hover:border-carbon/15 rounded p-3 transition-all">
               {/* Controles de orden y eliminación del bloque */}
-              <div className="absolute -left-12 top-2 flex flex-col items-center gap-1 opacity-0 group-hover/block:opacity-100 transition-opacity">
-                <button
-                  disabled={index === 0}
-                  onClick={() => moveBlock(index, index - 1)}
-                  className="w-6 h-6 flex items-center justify-center bg-lienzo border border-carbon/20 rounded hover:bg-carbon/5 text-[10px] text-carbon disabled:opacity-30"
-                  title="Subir Bloque"
-                >
-                  ↑
-                </button>
-                <button
-                  disabled={index === blocks.length - 1}
-                  onClick={() => moveBlock(index, index + 1)}
-                  className="w-6 h-6 flex items-center justify-center bg-lienzo border border-carbon/20 rounded hover:bg-carbon/5 text-[10px] text-carbon disabled:opacity-30"
-                  title="Bajar Bloque"
-                >
-                  ↓
-                </button>
-                <button
-                  onClick={() => removeBlock(block.id)}
-                  className="w-6 h-6 flex items-center justify-center bg-terracota text-lienzo rounded hover:bg-terracota/80 text-[10px] mt-2"
-                  title="Eliminar Bloque"
-                >
-                  ✕
-                </button>
-              </div>
+              {!isReadOnly && (
+                <div className="absolute -left-12 top-2 flex flex-col items-center gap-1 opacity-0 group-hover/block:opacity-100 transition-opacity">
+                  <button
+                    disabled={index === 0}
+                    onClick={() => moveBlock(index, index - 1)}
+                    className="w-6 h-6 flex items-center justify-center bg-lienzo border border-carbon/20 rounded hover:bg-carbon/5 text-[10px] text-carbon disabled:opacity-30"
+                    title="Subir Bloque"
+                  >
+                    ↑
+                  </button>
+                  <button
+                    disabled={index === blocks.length - 1}
+                    onClick={() => moveBlock(index, index + 1)}
+                    className="w-6 h-6 flex items-center justify-center bg-lienzo border border-carbon/20 rounded hover:bg-carbon/5 text-[10px] text-carbon disabled:opacity-30"
+                    title="Bajar Bloque"
+                  >
+                    ↓
+                  </button>
+                  <button
+                    onClick={() => removeBlock(block.id)}
+                    className="w-6 h-6 flex items-center justify-center bg-terracota text-lienzo rounded hover:bg-terracota/80 text-[10px] mt-2"
+                    title="Eliminar Bloque"
+                  >
+                    ✕
+                  </button>
+                </div>
+              )}
 
               {/* Renderizado condicional según el tipo de bloque */}
               {block.type === 'paragraph' && (
@@ -1024,7 +1032,7 @@ export const EditorPage: React.FC = () => {
                     </div>
                   ) : (
                     <div
-                      onClick={() => setEditingBlockId(block.id)}
+                      onClick={() => !isReadOnly && setEditingBlockId(block.id)}
                       className="w-full text-base leading-relaxed text-carbon font-serif cursor-text py-1 select-text"
                     >
                       {isFirstParagraph ? (
@@ -1063,7 +1071,7 @@ export const EditorPage: React.FC = () => {
                     />
                   ) : (
                     <h3
-                      onClick={() => setEditingBlockId(block.id)}
+                      onClick={() => !isReadOnly && setEditingBlockId(block.id)}
                       className={`font-serif font-bold text-carbon mt-1 cursor-text ${
                         block.metadata?.level === 2 ? 'text-2xl border-b border-carbon/15 pb-2' : 'text-xl'
                       }`}
@@ -1708,11 +1716,37 @@ export const EditorPage: React.FC = () => {
             <>
               {/* PANEL CENTRAL: Editor Híbrido */}
               <div className="flex-1 overflow-y-auto p-8">
-                {!isDiagramFile && editorMode === 'visual' && (
+                {!isDiagramFile && (
+                  <div className="mx-auto mb-4 max-w-3xl space-y-2">
+                    {editorMode === 'visual' && (
+                      <div className="rounded border border-ocre/30 bg-ocre/5 p-3 text-xs text-carbon shadow-sm">
+                        <span className="font-bold text-ocre">⚠️ Modo Visual Experimental:</span> El guardado visual y el autoguardado de borrador están desactivados temporalmente por seguridad. Puedes previsualizar y editar bloques visualmente, pero para aplicar y guardar tus cambios de forma segura en el archivo real, debes cambiar a **Código Fuente** y pulsar **Guardar**.
+                      </div>
+                    )}
+                    {compatibility === 'read-only' && editorMode === 'visual' && (
+                      <div className="rounded border border-pavo/30 bg-pavo/5 p-3 text-xs text-carbon shadow-sm">
+                        <span className="font-bold text-pavo">ℹ️ Documento de Solo Lectura Visual:</span> Este documento contiene importaciones o exportaciones ESM. Puedes ver los bloques pero no editarlos visualmente.
+                      </div>
+                    )}
+                    {compatibility === 'partially-editable' && editorMode === 'visual' && (
+                      <div className="rounded border border-salvia/30 bg-salvia/5 p-3 text-xs text-carbon shadow-sm">
+                        <span className="font-bold text-salvia">🛡️ Compatibilidad Parcial:</span> Este documento contiene bloques opacos (JSX, listas, fórmulas) que se preservan intactos. Solo los párrafos y títulos son editables visualmente.
+                      </div>
+                    )}
+                    {compatibility === 'unsupported' && (
+                      <div className="rounded border border-terracota/30 bg-terracota/5 p-3 text-xs text-carbon shadow-sm">
+                        <span className="font-bold text-terracota">❌ Modo Visual no Disponible:</span> Este archivo contiene sintaxis compleja o expresiones matemáticas con llaves <code>{`{}`}</code> que impiden el parseo seguro en modo visual.
+                        {compatibilityReasons.length > 0 && (
+                          <div className="mt-1 font-mono text-[10px] text-carbon/70">
+                            {compatibilityReasons.join(' ')}
+                          </div>
+                        )}
+                      </div>
+                    )}
+                  </div>
+                )}
+                {!isDiagramFile && editorMode === 'visual' && !isReadOnly && (
                   <>
-                    <div className="mx-auto mb-4 max-w-3xl rounded border border-ocre/30 bg-ocre/5 p-3 text-xs text-carbon shadow-sm">
-                      <span className="font-bold text-ocre">⚠️ Modo Visual Experimental:</span> El guardado visual y el autoguardado de borrador están desactivados temporalmente por seguridad. Puedes previsualizar y editar bloques visualmente, pero para aplicar y guardar tus cambios de forma segura en el archivo real, debes cambiar a **Código Fuente** y pulsar **Guardar**.
-                    </div>
                     <div className="sticky top-0 z-20 mx-auto mb-4 max-w-3xl rounded border border-carbon/15 bg-lienzo/95 p-2 shadow-sm backdrop-blur">
                     <div className="flex flex-wrap items-center justify-center gap-1">
                       {GENERAL_BLOCK_PRESETS.map(preset => (
