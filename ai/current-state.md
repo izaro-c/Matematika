@@ -2,9 +2,9 @@
 
 **Actualizado:** 2026-07-10
 
-**Fase:** estabilización del editor (Fase 1 completada - Oráculo de round-trip y regresiones)
+**Fase:** estabilización del editor (Fase 2 completada - ADR y prototipo MDX sin pérdida)
 
-**Estado:** Fase 0 y Fase 1 completadas; persistencia visual desactivada por seguridad; oráculo de round-trip implementado y baseline generado con 120 archivos del corpus analizados de forma determinista y 9 fixtures sintéticos de regresión.
+**Estado:** Fases 0, 1 y 2 completadas; persistencia visual desactivada por seguridad; oráculo de round-trip e informe de evaluación del prototipo con parches sobre rangos locales y bloques opacos completado. ADR-001 aprobada.
 
 ## Decisiones vigentes
 
@@ -22,7 +22,7 @@
 
 ## Próximo paso
 
-El próximo paso es la Fase 2 — Diseño del nuevo parser (ADR) y prototipado lossless para resolver los riesgos semánticos y no-idempotencias del round-trip MDX.
+El próximo paso es la Fase 3 — Implementación en producción del motor MDX lossless de producción, retirada del parser anterior y habilitación controlada del guardado visual.
 
 ## Deuda visible
 
