@@ -14,6 +14,7 @@ import {
   type WizardData,
 } from '@/features/editor/lib/editorContracts';
 import {
+  buildDiagramPath,
   buildContentPath,
   getInternalLinkUrl,
 } from '@/features/editor/lib/editorPaths';
@@ -50,6 +51,9 @@ describe('editor identity and path contracts', () => {
     expect(normalizeContentId('  Teorema del Ángulo_Recto  ')).toBe('teorema-del-angulo-recto');
     expect(buildContentPath('Theorems', 'Ángulo Recto_II.mdx')).toBe(
       'database/content/theorems/angulo-recto-ii.mdx',
+    );
+    expect(buildDiagramPath('Definiciones', 'Triángulo.tsx')).toBe(
+      'shared/diagrams/definiciones/triangulo.tsx',
     );
     expect(getInternalLinkUrl({
       path: 'database/content/theorems/Ángulo Recto.mdx',

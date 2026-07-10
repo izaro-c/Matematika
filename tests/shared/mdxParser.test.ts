@@ -58,4 +58,42 @@ Body.`;
     expect(result).not.toContain("import ");
     expect(result).toContain("Body only.");
   });
+
+  it('stringifyMDX separates ESM exports from the MDX body for Acorn', () => {
+    const result = stringifyMDX(
+      { id: 'altura', type: 'definicion', title: 'Altura', description: 'Altura' },
+      "import { Altura } from '@/widgets/diagrams/Definiciones/Altura';",
+      '<Capitular letra="L" />a altura.',
+      'export const Simulation = Altura;',
+    );
+
+    expect(result).toContain('export const Simulation = Altura;\n\n<Capitular letra="L" />');
+  });
+
+  it('parseMDX keeps multiline Component exports out of the visual body', () => {
+    const raw = `export const metadata = {
+  "id": "demo",
+  "type": "demostracion",
+  "title": "Demo",
+  "parentTheorem": "teorema"
+};
+
+import { DemonstrationSection } from '@/widgets/content/DemonstrationSection';
+
+export const Component = () => {
+  return (
+    <DemonstrationSection>
+      <p>Prueba</p>
+    </DemonstrationSection>
+  );
+};
+
+<Capitular letra="P" />rueba textual.`;
+
+    const result = parseMDX(raw);
+
+    expect(result.exports).toContain('export const Component');
+    expect(result.exports).toContain('<DemonstrationSection>');
+    expect(result.body).toBe('<Capitular letra="P" />rueba textual.');
+  });
 });

@@ -71,11 +71,6 @@ describe('Production Edits, Patches and Diff checks', () => {
   });
 
   it('throws an error if an untouched block is corrupted', () => {
-    const source = '## Título\n\nEste es el cuerpo.\n\n<OpaqueComponent />';
-    const doc = parseEditorDocument(source);
-
-    const editableBodyBlock = doc.blocks[1];
-    
     // We target the body block but our replacement spans into other blocks, or we pass an invalid edit
     // Wait, let's pass a bad edit that mutates the document but deletes the heading block implicitly or something.
     // If we pass an edit that overlaps with heading, the overlap check rejects it.
