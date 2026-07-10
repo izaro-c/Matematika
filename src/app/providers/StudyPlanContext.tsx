@@ -6,6 +6,8 @@ import { createContext } from 'react';
 export interface StudyPlanContextType {
   /** Registra un nodo/tarea (por id) junto con su referencia HTML para permitir scroll hacia él */
   registerTaskRef: (id: string, el: HTMLElement | null) => void;
+  /** Verifica si una tarea está bloqueada por prerrequisitos incompletos */
+  isLocked?: (id: string) => boolean;
 }
 
 /**
@@ -15,4 +17,5 @@ export interface StudyPlanContextType {
  */
 export const StudyPlanContext = createContext<StudyPlanContextType>({
   registerTaskRef: () => {},
+  isLocked: () => false,
 });
