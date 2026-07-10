@@ -38,8 +38,6 @@
     "editor:roundtrip:check": "tsx scripts/editor/audit-mdx-roundtrip.ts --check",
     "editor:roundtrip:strict": "tsx scripts/editor/audit-mdx-roundtrip.ts --strict",
     "test:editor": "vitest run tests/features/editor",
-    "test:editor:lossless": "vitest run tests/features/editor/experimental",
-    "editor:lossless:prototype": "tsx scripts/editor/evaluate-lossless-prototype.ts",
     "editor:lossless:audit": "tsx scripts/editor/audit-lossless-compatibility.ts --audit",
     "editor:lossless:check": "tsx scripts/editor/audit-lossless-compatibility.ts --check",
     "predeploy": "npm run build",
