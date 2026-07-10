@@ -1,7 +1,7 @@
 {
-  "generatedAt": "2026-07-05T17:00:52.635Z",
+  "generatedAt": "2026-07-10T22:49:45.864Z",
   "summary": {
-    "total": 119,
+    "total": 120,
     "byType": {
       "sistema-axiomatico": 4,
       "axioma": 21,
@@ -12,17 +12,18 @@
       "lesson": 7,
       "matematico": 9,
       "modelo": 4,
+      "plan-de-estudio": 1,
       "corolario": 1,
       "lema": 1,
       "teorema": 22,
       "caso-de-uso": 1
     },
     "diagrams": {
-      "none": 57,
+      "none": 58,
       "exported": 62
     },
     "lean": {
-      "none": 70,
+      "none": 71,
       "human-proof": 45,
       "lean-checked": 4
     },
@@ -1971,6 +1972,24 @@
         "Simulation"
       ],
       "diagramStatus": "exported",
+      "leanId": null,
+      "leanVerified": false,
+      "verificationStatus": "none",
+      "foundation": "pending",
+      "sourcesCount": 0,
+      "proofSteps": 0,
+      "mappedProofSteps": [],
+      "parentTheorem": null,
+      "demos": []
+    },
+    {
+      "id": "camino-teorema-pitagoras",
+      "type": "plan-de-estudio",
+      "title": "El Camino hacia el Teorema de Pitágoras",
+      "filePath": "plans/plan-de-estudio-camino-teorema-pitagoras.mdx",
+      "hasDeclaredDiagram": false,
+      "diagramExports": [],
+      "diagramStatus": "none",
       "leanId": null,
       "leanVerified": false,
       "verificationStatus": "none",
