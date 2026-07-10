@@ -2,9 +2,9 @@
 
 **Actualizado:** 2026-07-10
 
-**Fase:** estabilización del editor (Fase 2 completada - ADR y prototipo MDX sin pérdida)
+**Fase:** estabilización del editor (Fase 3 completada - Motor MDX lossless y compatibilidad visual)
 
-**Estado:** Fases 0, 1 y 2 completadas; persistencia visual desactivada por seguridad; oráculo de round-trip e informe de evaluación del prototipo con parches sobre rangos locales y bloques opacos completado. ADR-001 aprobada.
+**Estado:** Fases 0, 1, 2 y 3 completadas; motor MDX AST (lossless) en producción e integrado con useEditorCore y EditorPage; auditor de compatibilidad lossless del corpus añadido con puerta de no-regresión en CI; persistencia visual remota sigue desactivada por contención de seguridad.
 
 ## Decisiones vigentes
 
@@ -22,7 +22,7 @@
 
 ## Próximo paso
 
-El próximo paso es la Fase 3 — Implementación en producción del motor MDX lossless de producción, retirada del parser anterior y habilitación controlada del guardado visual.
+El próximo paso es la Fase 4 — Estabilización del workbench de diagramas y adaptabilidad de la UI en el editor.
 
 ## Deuda visible
 
