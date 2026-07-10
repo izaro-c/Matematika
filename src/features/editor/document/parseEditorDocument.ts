@@ -2,6 +2,7 @@ import { unified } from 'unified';
 import remarkParse from 'remark-parse';
 import remarkMdx from 'remark-mdx';
 import { EditorDocument, EditorDiagnostic, VisualCompatibility, SourceLocation, ProjectedBlock } from './documentTypes';
+import { projectBlocks, classifyVisualCompatibility } from './projectBlocks';
 
 export function computeHash(content: string): string {
   let hash = 5381;
@@ -28,12 +29,16 @@ export function parseEditorDocument(source: string): EditorDocument {
   const hash = computeHash(source);
   const diagnostics: EditorDiagnostic[] = [];
   let ast: any = null;
-  const blocks: ProjectedBlock[] = [];
+  let blocks: ProjectedBlock[] = [];
   let compatibility: VisualCompatibility = 'fully-editable';
 
   try {
     const processor = unified().use(remarkParse).use(remarkMdx);
     ast = processor.parse(source);
+    
+    const proj = projectBlocks(source, ast);
+    blocks = proj.blocks;
+    compatibility = proj.compatibility;
   } catch (e: any) {
     compatibility = 'unsupported';
     diagnostics.push({
@@ -43,7 +48,7 @@ export function parseEditorDocument(source: string): EditorDocument {
     });
   }
 
-  return {
+  const doc: EditorDocument = {
     source,
     sourceHash: hash,
     ast,
@@ -51,4 +56,9 @@ export function parseEditorDocument(source: string): EditorDocument {
     diagnostics,
     compatibility
   };
+
+  const classif = classifyVisualCompatibility(doc);
+  doc.compatibility = classif.compatibility;
+
+  return doc;
 }
