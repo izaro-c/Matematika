@@ -1,9 +1,47 @@
 import { useState, useCallback, useMemo, useRef, useEffect, type SetStateAction } from 'react';
 import { parseMDX, stringifyMDX } from '@/shared/lib/mdxParser';
-import { createBlockId, parseBodyToBlocks, stringifyBlocksToBody, Block, BlockType } from './parser';
+import { createBlockId, stringifyBlocksToBody, Block, BlockType } from './parser';
 import type { FileNode } from '../lib/editorContracts';
 import { validateEditorDocument } from './validation';
 import type { DirtyState, EditorMode } from './editorTypes';
+import {
+  parseEditorDocument,
+  reparseEditedDocument,
+  classifyVisualCompatibility,
+  getVisualCapabilities,
+  EditorDocument,
+  ProjectedBlock,
+  SourceEdit
+} from '../document';
+
+function mapProjectedBlocksToBlocks(projected: ProjectedBlock[]): Block[] {
+  return projected.map(b => {
+    if (b.kind === 'editable') {
+      return {
+        id: b.id,
+        type: b.blockType as BlockType,
+        content: b.data && typeof b.data === 'object' && 'text' in b.data ? String((b.data as any).text) : b.originalSource,
+        metadata: {
+          location: b.location,
+          originalSource: b.originalSource,
+          editable: true
+        }
+      };
+    } else {
+      return {
+        id: b.id,
+        type: 'advancedMdx',
+        content: b.source,
+        metadata: {
+          location: b.location,
+          opaque: true,
+          reason: b.reason,
+          nodeType: b.nodeType
+        }
+      };
+    }
+  });
+}
 
 export type VisualSavePolicy = 'disabled' | 'manual-reviewed' | 'enabled';
 export const VISUAL_SAVE_POLICY: VisualSavePolicy = 'disabled';
@@ -22,6 +60,15 @@ export const useEditorCore = () => {
   const [exports, setExports] = useState('');
   const [blocks, setBlocks] = useState<Block[]>([]); // Para el modo visual
   const [rawBody, setRawBody] = useState(''); // Para el modo código (Monaco)
+
+  const [doc, setDoc] = useState<EditorDocument | null>(null);
+
+  const compatibility = useMemo(() => doc ? doc.compatibility : 'fully-editable', [doc]);
+  const compatibilityReasons = useMemo(() => {
+    if (!doc) return [];
+    return classifyVisualCompatibility(doc).reasons;
+  }, [doc]);
+  const capabilities = useMemo(() => getVisualCapabilities(compatibility), [compatibility]);
 
   // Estados de carga/guardado
   const [saving, setSaving] = useState(false);
@@ -111,17 +158,20 @@ export const useEditorCore = () => {
       const text = await res.text();
 
       if (path.endsWith('.mdx')) {
+        const parsedDoc = parseEditorDocument(text);
+        setDoc(parsedDoc);
+
         const parsed = parseMDX(text);
         setMetadata(parsed.metadata);
         setImports(parsed.imports);
         setExports(parsed.exports);
         setRawBody(parsed.body);
-        
-        // Parsear el body MDX en bloques JSON
-        const parsedBlocks = parseBodyToBlocks(parsed.body);
-        setBlocks(parsedBlocks);
+
+        const mappedBlocks = mapProjectedBlocksToBlocks(parsedDoc.blocks);
+        setBlocks(mappedBlocks);
       } else {
         // Archivos sin MDX (ej: diagramas .tsx)
+        setDoc(null);
         setMetadata({});
         setImports('');
         setExports('');
@@ -216,11 +266,20 @@ export const useEditorCore = () => {
       setEditorMode('code');
     } else {
       // Sincronizar código Monaco -> bloques visuales
-      const newBlocks = parseBodyToBlocks(rawBody);
-      setBlocks(newBlocks);
+      const fullText = stringifyMDX(metadata, imports, rawBody, exports);
+      const nextDoc = parseEditorDocument(fullText);
+      if (nextDoc.compatibility === 'unsupported') {
+        const classif = classifyVisualCompatibility(nextDoc);
+        setMessage(`Error de sintaxis: no se puede cambiar a modo visual. ${classif.reasons.join(' ')}`);
+        return;
+      }
+      
+      setDoc(nextDoc);
+      const mappedBlocks = mapProjectedBlocksToBlocks(nextDoc.blocks);
+      setBlocks(mappedBlocks);
       setEditorMode('visual');
     }
-  }, [editorMode, blocks, rawBody]);
+  }, [editorMode, blocks, rawBody, metadata, imports, exports]);
 
   const updateMetadataState = useCallback((next: SetStateAction<Record<string, unknown>>) => {
     setMetadata(prev => {
@@ -278,14 +337,32 @@ export const useEditorCore = () => {
     setBlocks(prev => {
       const updated = prev.map(b => b.id === id ? { ...b, content, metadata: blockMetadata || b.metadata } : b);
       setDirtyState('dirty');
-      // Actualizar en background
-      if (currentFile) {
-        const newBody = stringifyBlocksToBody(updated);
-        scheduleSave(metadata, imports, exports, newBody, currentFile);
+
+      if (currentFile && doc) {
+        const projBlock = doc.blocks.find(b => b.id === id);
+        if (projBlock && projBlock.kind === 'editable') {
+          const edit: SourceEdit = {
+            range: projBlock.location.range,
+            expectedSource: projBlock.originalSource,
+            replacement: content,
+            operationId: `edit-${id}`
+          };
+          try {
+            const nextDoc = reparseEditedDocument(doc.source, [edit]);
+            setDoc(nextDoc);
+            
+            const newBody = stringifyBlocksToBody(mapProjectedBlocksToBlocks(nextDoc.blocks));
+            setRawBody(newBody);
+          } catch (e: any) {
+            console.error('Error aplicando parche localizado:', e);
+            setMessage(`Error al aplicar cambios visuales: ${e.message}`);
+          }
+        }
       }
+
       return updated;
     });
-  }, [metadata, imports, exports, currentFile, scheduleSave]);
+  }, [currentFile, doc]);
 
   // Eliminar un bloque (Modo Visual)
   const removeBlock = useCallback((id: string) => {
@@ -372,6 +449,9 @@ export const useEditorCore = () => {
     setMetadata: updateMetadataState,
     setImports: updateImports,
     setExports: updateExports,
-    setBlocks: replaceBlocks
+    setBlocks: replaceBlocks,
+    compatibility,
+    compatibilityReasons,
+    capabilities
   };
 };
