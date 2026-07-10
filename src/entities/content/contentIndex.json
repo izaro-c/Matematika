@@ -3196,6 +3196,62 @@
       "hasSimulation": true
     }
   },
+  "camino-teorema-pitagoras": {
+    "id": "camino-teorema-pitagoras",
+    "slug": "plan-de-estudio-camino-teorema-pitagoras",
+    "filePath": "plans/plan-de-estudio-camino-teorema-pitagoras.mdx",
+    "contentType": "plan-de-estudio",
+    "metadata": {
+      "id": "camino-teorema-pitagoras",
+      "type": "plan-de-estudio",
+      "title": "El Camino hacia el Teorema de Pitágoras",
+      "subtitle": "Ruta Axiomática y Geométrica",
+      "description": "Explora el rigor lógico y la belleza visual detrás de la relación métrica más célebre de la geometría euclídea, desde las definiciones elementales hasta la geolocalización por satélites.",
+      "requiredNodes": [
+        "punto",
+        "estar-entre",
+        "triangulo",
+        "axioma-congruencia-5",
+        "teorema-triangulo-isosceles",
+        "checkpoint-pitagoras-congruencia",
+        "axioma-paralelas-euclides",
+        "teorema-suma-angulos-triangulo",
+        "checkpoint-pitagoras-paralelas",
+        "teorema-tales",
+        "teorema-pitagoras",
+        "ejercicio-pitagoras-cateto",
+        "caso-gps-trilateracion"
+      ]
+    }
+  },
+  "plan-de-estudio-camino-teorema-pitagoras": {
+    "id": "camino-teorema-pitagoras",
+    "slug": "plan-de-estudio-camino-teorema-pitagoras",
+    "filePath": "plans/plan-de-estudio-camino-teorema-pitagoras.mdx",
+    "contentType": "plan-de-estudio",
+    "metadata": {
+      "id": "camino-teorema-pitagoras",
+      "type": "plan-de-estudio",
+      "title": "El Camino hacia el Teorema de Pitágoras",
+      "subtitle": "Ruta Axiomática y Geométrica",
+      "description": "Explora el rigor lógico y la belleza visual detrás de la relación métrica más célebre de la geometría euclídea, desde las definiciones elementales hasta la geolocalización por satélites.",
+      "requiredNodes": [
+        "punto",
+        "estar-entre",
+        "triangulo",
+        "axioma-congruencia-5",
+        "teorema-triangulo-isosceles",
+        "checkpoint-pitagoras-congruencia",
+        "axioma-paralelas-euclides",
+        "teorema-suma-angulos-triangulo",
+        "checkpoint-pitagoras-paralelas",
+        "teorema-tales",
+        "teorema-pitagoras",
+        "ejercicio-pitagoras-cateto",
+        "caso-gps-trilateracion"
+      ]
+    }
+  },
   "corolario-rectas-coincidentes": {
     "id": "corolario-rectas-coincidentes",
     "slug": "corolario-rectas-coincidentes",

@@ -111,6 +111,7 @@
     "modelo-fano",
     "modelo-poincare",
     "modelo-tres-puntos",
+    "camino-teorema-pitagoras",
     "corolario-rectas-coincidentes",
     "teorema-congruencia-aal",
     "teorema-desigualdad-triangular",
@@ -1180,6 +1181,14 @@
         "axioma-incidencia-2",
         "axioma-incidencia-3"
       ]
+    },
+    "camino-teorema-pitagoras": {
+      "id": "camino-teorema-pitagoras",
+      "type": "plan-de-estudio",
+      "title": "El Camino hacia el Teorema de Pitágoras",
+      "description": "Explora el rigor lógico y la belleza visual detrás de la relación métrica más célebre de la geometría euclídea, desde las definiciones elementales hasta la geolocalización por satélites.",
+      "proofs": [],
+      "directDependencies": []
     },
     "corolario-rectas-coincidentes": {
       "id": "corolario-rectas-coincidentes",
