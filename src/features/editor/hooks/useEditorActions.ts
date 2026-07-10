@@ -1,7 +1,7 @@
 import { useCallback } from 'react';
 import type { editor, IRange } from 'monaco-editor';
 import { parseMDX, stringifyMDX } from '@/shared/lib/mdxParser';
-import type { FileNode, WizardData } from '@/features/editor/hooks/useEditorState';
+import type { FileNode, WizardData, DiagramWizardData } from '@/features/editor/hooks/useEditorState';
 import { applyTemplateReplacements, applyTypeSpecificMetadata } from '@/features/editor/lib/editorUtils';
 import {
   buildContentPath,
@@ -9,6 +9,8 @@ import {
   getContentId,
   getInternalLinkUrl,
   getTemplateName,
+  buildDiagramPath,
+  buildDiagramTemplatePath,
 } from '@/features/editor/lib/editorPaths';
 import {
   buildConceptLink,
@@ -17,6 +19,7 @@ import {
   getBlockSnippet,
   getLatexSnippet,
   normalizeWizardData,
+  normalizeDiagramWizardData,
 } from '@/features/editor/lib/editorContracts';
 import { generateMissingComponentImports } from '@/features/editor/lib/editorImports';
 
@@ -45,6 +48,7 @@ interface EditorActionsProps {
   setRefTarget: (t: string) => void;
   setRefSelection: (s: IRange) => void;
   setWizardModalOpen: (o: boolean) => void;
+  setDiagramWizardModalOpen: (o: boolean) => void;
   loadFileList: () => Promise<void>;
   updateImports: (imp: string) => void;
 }
@@ -56,7 +60,7 @@ export const useEditorActions = ({
   setMessage, setSaving,
   setLinkModalOpen, setLinkModalText, setLinkTarget, setLinkSelection,
   setRefModalOpen, setRefText, setRefTarget, setRefSelection,
-  setWizardModalOpen, loadFileList,
+  setWizardModalOpen, setDiagramWizardModalOpen, loadFileList,
   updateImports
 }: EditorActionsProps) => {
 
@@ -249,6 +253,76 @@ export const useEditorActions = ({
     if (block) insertAtCursor(block);
   }, [insertAtCursor]);
 
+  const confirmNewDiagram = useCallback(async (data: DiagramWizardData) => {
+    if (!currentFile) {
+      alert('Debes tener un archivo MDX abierto para añadir un diagrama');
+      return;
+    }
+    const normalized = normalizeDiagramWizardData(data);
+    if (!normalized.id) {
+      alert('El ID del diagrama es obligatorio');
+      return;
+    }
+
+    // Convertir ID a PascalCase para el nombre del componente
+    const pascalName = normalized.id
+      .replace(/(?:^\w|[A-Z]|\b\w)/g, word => word.toUpperCase())
+      .replace(/[\s-_]+/g, '');
+
+    const targetPath = buildDiagramPath(normalized.category, pascalName);
+    const templatePath = buildDiagramTemplatePath(normalized.templateType);
+
+    try {
+      // 1. Cargar la plantilla de diagrama
+      const resTemp = await fetch(`/api/content?path=${encodeURIComponent(templatePath)}`);
+      if (!resTemp.ok) {
+        throw new Error(`No se pudo cargar la plantilla de diagrama: ${resTemp.statusText}`);
+      }
+      let templateText = await resTemp.text();
+
+      // 2. Reemplazar marcadores en la plantilla
+      templateText = templateText
+        .replace(/TemplateComponent/g, pascalName)
+        .replace(/__COLOR__/g, normalized.color)
+        .replace(/__VARIABLE__/g, normalized.variable)
+        .replace(/__LABEL_A__/g, normalized.labelA)
+        .replace(/__LABEL_B__/g, normalized.labelB)
+        .replace(/__LABEL_C__/g, normalized.labelC);
+
+      // 3. Guardar el archivo TSX del diagrama
+      const resSave = await fetch('/api/content', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ path: targetPath, content: templateText })
+      });
+
+      if (!resSave.ok) {
+        throw new Error(`Error al guardar el diagrama: ${await resSave.text()}`);
+      }
+
+      // 4. Calcular import relativo
+      const depth = currentFile.split('/').length - 1;
+      const backPath = Array(depth).fill('..').join('/');
+      const importPath = `shared/diagrams/${normalized.category}/${pascalName}`;
+      const statement = `import { ${pascalName} } from '${backPath}/${importPath}';`;
+
+      // 5. Insertar import en el estado
+      if (!imports.includes(pascalName)) {
+        updateImports(imports + (imports ? '\n' : '') + statement);
+      }
+
+      // 6. Insertar tag del componente en el cursor del Monaco Editor
+      insertAtCursor(`\n<${pascalName} />\n`);
+
+      setMessage('¡Diagrama creado y enlazado!');
+      setDiagramWizardModalOpen(false);
+      loadFileList();
+    } catch (e: any) {
+      console.error(e);
+      alert(`Error en la creación del diagrama: ${e.message}`);
+    }
+  }, [currentFile, imports, insertAtCursor, updateImports, setDiagramWizardModalOpen, loadFileList, setMessage]);
+
   const insertComponent = useCallback((componentName: string) => {
     insertAtCursor(`\n<${componentName} />\n`);
   }, [insertAtCursor]);
@@ -280,14 +354,40 @@ export const useEditorActions = ({
     return null;
   }, []);
 
-  const handleEditorDidMount = useCallback((editor: editor.IStandaloneCodeEditor) => {
+  const handleEditorDidMount = useCallback((editor: editor.IStandaloneCodeEditor, monaco: any) => {
     editorRef.current = editor;
+
+    if (monaco) {
+      monaco.editor.defineTheme('arts-and-crafts', {
+        base: 'vs',
+        inherit: true,
+        rules: [
+          { token: 'comment', foreground: 'A2C2A2', fontStyle: 'italic' },
+          { token: 'string', foreground: 'C49B4F' },
+          { token: 'keyword', foreground: 'C86446', fontStyle: 'bold' },
+          { token: 'number', foreground: '5D7080' },
+          { token: 'type', foreground: '3B5E6B' },
+          { token: 'tag', foreground: '3B5E6B' },
+          { token: 'attribute.name', foreground: 'C86446' }
+        ],
+        colors: {
+          'editor.background': '#F8F6F1',
+          'editor.foreground': '#333333',
+          'editorLineNumber.foreground': '#33333330',
+          'editorLineNumber.activeForeground': '#C86446',
+          'editor.lineHighlightBackground': '#33333308',
+          'editor.selectionBackground': '#C8644625',
+          'editor.inactiveSelectionBackground': '#C8644610'
+        }
+      });
+      monaco.editor.setTheme('arts-and-crafts');
+    }
     
     editor.onDidScrollChange(() => {
       const scrollHeight = editor.getScrollHeight();
       const scrollTop = editor.getScrollTop();
       const height = editor.getLayoutInfo().height;
-      const percentage = scrollTop / (scrollHeight - height);
+      const percentage = scrollTop / (scrollHeight - height || 1);
       
       const iframe = document.getElementById('preview-iframe') as HTMLIFrameElement;
       if (iframe && iframe.contentWindow) {
@@ -314,5 +414,6 @@ export const useEditorActions = ({
     addNewField,
     removeField,
     handleEditorDidMount,
+    confirmNewDiagram,
   };
 };

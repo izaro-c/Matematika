@@ -161,3 +161,27 @@ export function normalizeWizardData(data: WizardData): WizardData {
     axioms_verified: normalizeCsvIds(data.axioms_verified),
   };
 }
+
+export interface DiagramWizardData {
+  templateType: 'triangulo-deformable' | 'eje-coordenadas' | 'circulo-unitario';
+  id: string;
+  category: string;
+  color: ArtsAndCraftsColor;
+  variable: string;
+  labelA: string;
+  labelB: string;
+  labelC: string;
+}
+
+export function normalizeDiagramWizardData(data: DiagramWizardData): DiagramWizardData {
+  return {
+    ...data,
+    id: normalizeContentId(data.id),
+    category: data.category ? data.category.trim() : 'Geometria',
+    color: normalizeEditorColor(data.color, 'terracota'),
+    variable: data.variable ? normalizeContentId(data.variable) : '',
+    labelA: data.labelA || 'A',
+    labelB: data.labelB || 'B',
+    labelC: data.labelC || 'C',
+  };
+}

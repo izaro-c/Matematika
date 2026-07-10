@@ -1,9 +1,9 @@
 import { useState, useRef, useCallback } from 'react';
 import type { editor, IRange } from 'monaco-editor';
 import { parseMDX, stringifyMDX } from '@/shared/lib/mdxParser';
-import type { FileNode, WizardData } from '@/features/editor/lib/editorContracts';
+import type { FileNode, WizardData, DiagramWizardData } from '@/features/editor/lib/editorContracts';
 
-export type { FileNode, WizardData } from '@/features/editor/lib/editorContracts';
+export type { FileNode, WizardData, DiagramWizardData } from '@/features/editor/lib/editorContracts';
 
 export const useEditorState = () => {
   const [files, setFiles] = useState<FileNode[]>([]);
@@ -72,6 +72,19 @@ export const useEditorState = () => {
     hasDiagram: false
   });
 
+  // New Diagram Wizard State
+  const [diagramWizardModalOpen, setDiagramWizardModalOpen] = useState(false);
+  const [diagramWizardData, setDiagramWizardData] = useState<DiagramWizardData>({
+    templateType: 'triangulo-deformable',
+    id: '',
+    category: 'Geometria',
+    color: 'terracota',
+    variable: '',
+    labelA: 'A',
+    labelB: 'B',
+    labelC: 'C',
+  });
+
   const loadFileList = async () => {
     try {
       const res = await fetch('/api/list-content');
@@ -105,16 +118,20 @@ export const useEditorState = () => {
 
   const getPreviewUrl = () => {
     if (!currentFile || (!metadata.id && currentFile.endsWith('.mdx'))) return '';
-    if (currentFile.startsWith('database/content/theorems')) return `/teorema/${metadata.id}`;
-    if (currentFile.startsWith('database/content/definitions')) return `/definicion/${metadata.id}`;
+
+    // Obtener la base URL de Vite (ej. /Matematika/ o /) y limpiar la barra final
+    const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+
+    if (currentFile.startsWith('database/content/theorems')) return `${base}/teorema/${metadata.id}`;
+    if (currentFile.startsWith('database/content/definitions')) return `${base}/definicion/${metadata.id}`;
     if (currentFile.startsWith('database/content/lessons')) {
       const slug = currentFile.split('/').pop()?.replace('.mdx', '').replace(/Demo$/, '').toLowerCase();
-      return `/${slug}`;
+      return `${base}/${slug}`;
     }
-    if (currentFile.startsWith('database/content/demonstrations')) return `/demo/${metadata.id}`;
+    if (currentFile.startsWith('database/content/demonstrations')) return `${base}/demo/${metadata.id}`;
     if (currentFile.startsWith('database/content/mathematicians')) {
       const slug = currentFile.split('/').pop()?.replace('.mdx', '').toLowerCase();
-      return `/bio/${slug}`;
+      return `${base}/bio/${slug}`;
     }
     return '';
   };
@@ -175,6 +192,7 @@ export const useEditorState = () => {
     refText, setRefText, refTarget, setRefTarget, refColor, setRefColor,
     galleryModalOpen, setGalleryModalOpen, blocksModalOpen, setBlocksModalOpen,
     wizardModalOpen, setWizardModalOpen, wizardData, setWizardData,
+    diagramWizardModalOpen, setDiagramWizardModalOpen, diagramWizardData, setDiagramWizardData,
     loadFileList, saveDraft, scheduleDraft, getPreviewUrl, openFile,
     updateMetadata, updateBody, updateImports
   };
