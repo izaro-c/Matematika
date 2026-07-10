@@ -2,9 +2,9 @@
 
 **Actualizado:** 2026-07-10
 
-**Fase:** estabilización del editor (Fase 0 activa - Contención, baseline y gobierno)
+**Fase:** estabilización del editor (Fase 1 completada - Oráculo de round-trip y regresiones)
 
-**Estado:** contención temporal implementada; guardado visual y autoguardado de borrador desactivados; baseline técnico documentado.
+**Estado:** Fase 0 y Fase 1 completadas; persistencia visual desactivada por seguridad; oráculo de round-trip implementado y baseline generado con 120 archivos del corpus analizados de forma determinista y 9 fixtures sintéticos de regresión.
 
 ## Decisiones vigentes
 
@@ -22,7 +22,7 @@
 
 ## Próximo paso
 
-Usar un único workflow, pack y prompt por tarea; ejecutar `ai:review` antes del relevo, consultar `ai:debt` para priorizar refactors y mantener `ai/indexes/` sincronizado al cambiar la estructura. La primera fase operativa se definirá en `ai/phases/` cuando exista un objetivo aprobado.
+El próximo paso es la Fase 2 — Diseño del nuevo parser (ADR) y prototipado lossless para resolver los riesgos semánticos y no-idempotencias del round-trip MDX.
 
 ## Deuda visible
 
