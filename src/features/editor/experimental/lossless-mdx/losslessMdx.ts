@@ -1,7 +1,6 @@
 import { unified } from 'unified';
 import remarkParse from 'remark-parse';
 import remarkMdx from 'remark-mdx';
-import crypto from 'crypto';
 import {
   ExperimentalEditorDocument,
   ProjectedBlock,
@@ -13,7 +12,11 @@ import {
 } from './documentTypes';
 
 function computeHash(content: string): string {
-  return crypto.createHash('sha256').update(content, 'utf8').digest('hex');
+  let hash = 5381;
+  for (let i = 0; i < content.length; i++) {
+    hash = (hash * 33) ^ content.charCodeAt(i);
+  }
+  return (hash >>> 0).toString(16).padStart(8, '0');
 }
 
 // Convert Unified position to our SourceLocation contract
