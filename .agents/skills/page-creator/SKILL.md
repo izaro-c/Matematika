@@ -371,8 +371,12 @@ Los ejercicios DEBEN tener **interacción progresiva**:
 "title": string
 "subtitle"?: string
 "description": string
-"requiredNodes"?: string[]
+"requiredNodes"?: string[] — IDs ordenados de conceptos reales y checkpoints lógicos ("checkpoint-*")
 ```
+
+**Reglas:**
+- El array `requiredNodes` debe listar de forma ordenada tanto los IDs de las páginas de contenido que componen el plan como los IDs de los checkpoints intercalados en la ruta.
+- Los checkpoints deben usar el prefijo `checkpoint-` (ej. `checkpoint-pitagoras-congruencia`) para ser identificados y omitidos por el validador físico de referencias.
 
 ---
 
@@ -734,3 +738,31 @@ Toda definición geométrica DEBE mencionar qué sucede cuando las condiciones i
 ## 21. Clasificaciones Jerárquicas
 
 Se mantiene inalterado. Ordenar tablas taxonómicas de menor a mayor especificidad.
+
+---
+
+## 22. Guía para Planes de Estudio
+
+Los planes de estudio en Matematika son itinerarios pedagógicos guiados. Deben cumplir con las siguientes directrices didácticas y visuales:
+
+### 22.1 Progresión por Fases no Lineal
+* El plan se subdivide en fases (o bloques de nivel) utilizando los elementos `checkpoint-*` dentro de `requiredNodes` como delimitadores.
+* **Estudio libre:** Dentro de una misma fase, el estudiante puede leer las páginas de concepto en **cualquier orden**.
+* **Bloqueo inter-fase:** El paso a la fase $N$ está bloqueado hasta que todos los conceptos y el checkpoint de la fase $N-1$ previa estén completados.
+
+### 22.2 Checkpoints Interactivos (`<StudyPlanCheckpoint>`)
+* Se intercalan en el cuerpo del MDX en el límite de cada fase.
+* **Parámetros:**
+  * `id`: ID lógico coincidente con el listado en `requiredNodes` (prefijo `checkpoint-`).
+  * `question`: Pregunta de opción múltiple rigurosa.
+  * `options`: Array de strings con las opciones.
+  * `correctAnswer`: Índice 0-based de la respuesta correcta.
+  * `explanation`: Explicación didáctica y detallada de la justificación matemática que se revela al responder correctamente.
+* **Bloqueo del checkpoint:** El checkpoint permanece bloqueado (no interactuable) hasta que el estudiante haya completado todos los conceptos de su misma fase.
+
+### 22.3 Directrices Estéticas y de Interfaz
+* **Color de Acento:** Los planes de estudio emplean `secondaryAccent` (azul pavo real, `#3b5e6b`) para una visualización premium y vibrante.
+* **Prohibición de Candados:** Queda estrictamente prohibido el uso de emojis de candados (`🔒`) para indicar bloqueo. En su lugar, se deben usar:
+  * El rombo atenuado `◈` (con opacidad reducida) en las tarjetas de tareas.
+  * Un signo de interrogación `?` en los checkpoints y minimapa.
+* **Minimapa Horizontal:** Se inyecta la etiqueta `<StudyPlanMinimap requiredNodes={requiredNodes} />` para mostrar la barra de progreso de hitos curvada de manera compacta con tooltips informativos interactivos para evitar solapamiento de textos.

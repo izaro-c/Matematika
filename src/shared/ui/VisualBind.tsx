@@ -1,5 +1,5 @@
 import React from 'react';
-import { useMathStore } from '@/app/providers/MathStoreContext';
+import { useMathStore } from '@/shared/lib/MathStoreContext';
 
 interface VisualBindProps {
   element: string;
