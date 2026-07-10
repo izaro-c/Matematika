@@ -30,7 +30,7 @@ export function parseEditorDocument(source: string): EditorDocument {
   const diagnostics: EditorDiagnostic[] = [];
   let ast: any = null;
   let blocks: ProjectedBlock[] = [];
-  let compatibility: VisualCompatibility = 'fully-editable';
+  let compatibility: VisualCompatibility;
 
   try {
     const processor = unified().use(remarkParse).use(remarkMdx);

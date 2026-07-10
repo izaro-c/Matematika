@@ -55,6 +55,7 @@ function editorAPI(): Plugin {
           const allowedDirs = [
             path.resolve(srcRoot, 'database/content'),
             path.resolve(srcRoot, 'shared/diagrams'),
+            path.resolve(srcRoot, 'widgets/diagrams'),
             path.resolve(srcRoot, 'shared/templates')
           ];
           const isAllowed = isPathAllowed(absolutePath, allowedDirs);
@@ -89,7 +90,8 @@ function editorAPI(): Plugin {
               const absolutePath = path.resolve(__dirname, 'src', data.path)
               const allowedDirs = [
                 path.resolve(srcRoot, 'database/content'),
-                path.resolve(srcRoot, 'shared/diagrams')
+                path.resolve(srcRoot, 'shared/diagrams'),
+                path.resolve(srcRoot, 'widgets/diagrams')
               ];
               const isAllowed = isPathAllowed(absolutePath, allowedDirs);
               if (!isAllowed) {
@@ -134,7 +136,8 @@ function editorAPI(): Plugin {
               const absolutePath = path.resolve(__dirname, 'src', data.path)
               const allowedDirs = [
                 path.resolve(srcRoot, 'database/content'),
-                path.resolve(srcRoot, 'shared/diagrams')
+                path.resolve(srcRoot, 'shared/diagrams'),
+                path.resolve(srcRoot, 'widgets/diagrams')
               ];
               const isAllowed = isPathAllowed(absolutePath, allowedDirs);
               if (!isAllowed) {
@@ -161,9 +164,9 @@ function editorAPI(): Plugin {
 
       server.middlewares.use('/api/list-content', (req: IncomingMessage, res: ServerResponse) => {
         if (req.method === 'GET') {
-          // ACT: Updated to look in database/content
           const contentDir = path.resolve(__dirname, 'src', 'database', 'content');
-          const componentsDir = path.resolve(__dirname, 'src', 'shared', 'diagrams');
+          const componentsDir = path.resolve(__dirname, 'src', 'widgets', 'diagrams');
+          const sharedComponentsDir = path.resolve(__dirname, 'src', 'shared', 'diagrams');
           const results: { path: string, name: string, type: string, fullPath?: string }[] = [];
 
           function walk(dir: string, baseType: string, prefix: string) {
@@ -188,6 +191,7 @@ function editorAPI(): Plugin {
 
           walk(contentDir, '', 'content');
           walk(componentsDir, 'components', 'components');
+          walk(sharedComponentsDir, 'components', 'components');
 
           res.setHeader('Content-Type', 'application/json');
           res.end(JSON.stringify(results));

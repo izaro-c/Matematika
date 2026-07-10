@@ -36,3 +36,16 @@ export function getInternalLinkUrl(fileNode: FileNode): string {
 export function getContentId(fileNode: FileNode): string {
   return normalizeContentId(fileNode.name.replace(/\.(mdx|tsx)$/i, ''));
 }
+
+export function buildDiagramPath(category: string, fileName: string): string {
+  const normalizedCategory = category
+    .split('/')
+    .map(segment => normalizeContentId(segment))
+    .filter(Boolean)
+    .join('/');
+  return `shared/diagrams/${normalizedCategory}/${normalizeContentId(fileName.replace(/\.(tsx|mdx)$/i, ''))}.tsx`;
+}
+
+export function buildDiagramTemplatePath(templateType: string): string {
+  return `shared/templates/diagrams/${normalizeContentId(templateType)}.template.tsx`;
+}
