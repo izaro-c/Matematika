@@ -10,9 +10,13 @@ import { publicAsset } from '@/shared/lib/routeHelper';
 
 // Componentes interactivos permitidos en los planes
 import { StudyTask } from '@/features/progress/ui/StudyTask';
+import { StudyPlanMinimap } from '@/features/progress/ui/StudyPlanMinimap';
+import { StudyPlanCheckpoint } from '@/features/progress/ui/StudyPlanCheckpoint';
 
 const mdxComponents = {
   StudyTask,
+  StudyPlanMinimap,
+  StudyPlanCheckpoint,
   Capitular,
   BlockTitle,
   OrnamentalDivider,
@@ -47,6 +51,58 @@ export const StudyPlanPage = () => {
   const registerTaskRef = useCallback((nodeId: string, el: HTMLElement | null) => {
     taskRefs.current[nodeId] = el;
   }, []);
+
+  const isLocked = useCallback((nodeId: string) => {
+    if (!plan) return false;
+    const nodes = plan.requiredNodes || [];
+
+    // 1. Dividir los nodos en fases/bloques delimitados por checkpoints
+    const blocks: string[][] = [];
+    let currentBlock: string[] = [];
+    for (const node of nodes) {
+      currentBlock.push(node);
+      if (node.startsWith('checkpoint-')) {
+        blocks.push(currentBlock);
+        currentBlock = [];
+      }
+    }
+    if (currentBlock.length > 0) {
+      blocks.push(currentBlock);
+    }
+
+    // 2. Localizar el bloque al que pertenece el nodo objetivo
+    let targetBlockIdx = -1;
+    for (let i = 0; i < blocks.length; i++) {
+      if (blocks[i].includes(nodeId)) {
+        targetBlockIdx = i;
+        break;
+      }
+    }
+
+    if (targetBlockIdx === -1) return false;
+
+    // 3. Bloqueado si la fase/bloque anterior tiene elementos incompletos
+    if (targetBlockIdx > 0) {
+      const prevBlock = blocks[targetBlockIdx - 1];
+      for (const prevNode of prevBlock) {
+        if (!isRead(prevNode)) {
+          return true;
+        }
+      }
+    }
+
+    // 4. Si es un checkpoint, está bloqueado hasta asimilar todos los conceptos de su fase actual
+    if (nodeId.startsWith('checkpoint-')) {
+      const currentBlock = blocks[targetBlockIdx];
+      for (const node of currentBlock) {
+        if (node !== nodeId && !isRead(node)) {
+          return true;
+        }
+      }
+    }
+
+    return false;
+  }, [plan, isRead]);
 
   useEffect(() => {
     if (!plan || !containerRef.current) return;
@@ -110,7 +166,7 @@ export const StudyPlanPage = () => {
   const MDXContent = plan.Component;
 
   return (
-    <StudyPlanContext.Provider value={{ registerTaskRef }}>
+    <StudyPlanContext.Provider value={{ registerTaskRef, isLocked }}>
       <div className="bg-lienzo text-carbon font-serif pt-24 pb-32 min-h-screen relative">
         <div
           className="absolute inset-0 z-0 pointer-events-none opacity-[0.02] mix-blend-multiply fixed"
@@ -141,7 +197,10 @@ export const StudyPlanPage = () => {
             <div className="text-xs italic text-carbon/50 mt-6 font-sans tracking-widest uppercase">
               Progreso: {completedCount} de {totalItems} asimilados
             </div>
-            <div className="w-16 h-px bg-carbon/20 mt-12" />
+            <div className="w-16 h-px bg-carbon/20 mt-12 mb-8" />
+
+            {/* Renderizar el Minimapa del Plan de Estudios */}
+            {mounted && <StudyPlanMinimap requiredNodes={requiredNodes} />}
           </div>
 
           <div className="relative flex">

@@ -51,12 +51,20 @@ export const SearchOmnibar = () => {
     }
   }, [isSearchOpen]);
 
+  const [location] = useLocation();
+  const isEditor = location === '/editor';
+
   const fuse = useMemo(() => {
-    const filtered = activeTypes.size < ALL_TYPES.length
-      ? SEARCH_INDEX.filter(item => activeTypes.has(item.type))
+    // Si estamos en el editor, excluir glosario y msc2020 ya que no son páginas editables
+    const baseIndex = isEditor
+      ? SEARCH_INDEX.filter(item => item.type !== 'glosario' && item.type !== 'msc2020')
       : SEARCH_INDEX;
+
+    const filtered = activeTypes.size < ALL_TYPES.length
+      ? baseIndex.filter(item => activeTypes.has(item.type))
+      : baseIndex;
     return new Fuse(filtered, SEARCH_FUSE_OPTIONS);
-  }, [activeTypes]);
+  }, [activeTypes, isEditor]);
 
   const results = useMemo(() => {
     if (!query.trim()) return [];
@@ -88,7 +96,12 @@ export const SearchOmnibar = () => {
     } else if (item.type === 'msc2020') {
       return;
     } else {
-      setLocation(item.href);
+      if (isEditor) {
+        // Disparar evento personalizado inmediato para que el editor lo capture de forma reactiva sin recargar la ruta
+        window.dispatchEvent(new CustomEvent('editor-open-concept', { detail: { href: item.href } }));
+      } else {
+        setLocation(item.href);
+      }
     }
   };
 
@@ -138,7 +151,7 @@ export const SearchOmnibar = () => {
             ref={inputRef}
             type="text"
             className="w-full bg-transparent text-lg text-carbon outline-none placeholder-carbon/30 font-serif"
-            placeholder="Buscar teoremas, definiciones, matemáticos…"
+            placeholder={isEditor ? "Buscar páginas para editar…" : "Buscar teoremas, definiciones, matemáticos…"}
             value={query}
             onChange={e => setQuery(e.target.value)}
           />
@@ -148,7 +161,7 @@ export const SearchOmnibar = () => {
         <div className="flex flex-col sm:flex-row" style={{ minHeight: 200 }}>
           {/* Type filters - Scroll horizontal en móvil, sidebar en escritorio */}
           <div className="w-full sm:w-32 shrink-0 border-b sm:border-b-0 sm:border-r border-carbon/8 p-3 flex sm:flex-col gap-2 overflow-x-auto sm:overflow-x-visible">
-            {ALL_TYPES.map(type => (
+            {ALL_TYPES.filter(type => !isEditor || (type !== 'glosario' && type !== 'msc2020')).map(type => (
               <button
                 key={type}
                 onClick={() => toggleType(type)}

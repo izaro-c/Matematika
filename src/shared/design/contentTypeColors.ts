@@ -40,7 +40,7 @@ const CONTENT_TYPE_ROLE_MAP = {
   ejemplo:             'exampleAccent',
   ejercicio:           'exerciseAccent',
   'caso-de-uso':       'lemmaAccent',
-  'plan-de-estudio':   'conceptAccent',
+  'plan-de-estudio':   'secondaryAccent',
   // Biográfico / clasificatorio
   matematico:          'biographyAccent',
   glosario:            'conceptAccent',

@@ -4,6 +4,7 @@ import { db } from '@/entities/content';
 import { SimulationLayout } from "@/widgets/layouts/SimulationLayout";
 import { FadeIn } from '@/shared/ui/FadeIn';
 import { ContentHeader } from '@/widgets/content/ContentHeader';
+import { ReadingButton } from '@/features/progress/ui/ReadingButton';
 import { ContentBody } from '@/shared/ui/ContentBody';
 import { useMetadataStore } from '@/features/metadata/MetadataStore';
 
@@ -61,6 +62,10 @@ export function AxiomPage() {
             <axiom.Component />
           </ContentBody>
         </section>
+
+        <div className="mt-24">
+          <ReadingButton id={id || ''} />
+        </div>
       </FadeIn>
     </div>
   );

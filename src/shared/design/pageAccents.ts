@@ -90,7 +90,7 @@ export const CONTENT_PAGE_ACCENT_ROLES = {
   leccion: PAGE_ACCENT_ROLES.lección,
   modelo: PAGE_ACCENT_ROLES.modelo,
   'sistema-axiomatico': 'neutralStrong',
-  'plan-de-estudio': 'conceptAccent',
+  'plan-de-estudio': 'secondaryAccent',
 } as const satisfies Record<ContentPageAccentType, SemanticColorRole>;
 
 export const CONTENT_PAGE_ACCENTS = Object.fromEntries(

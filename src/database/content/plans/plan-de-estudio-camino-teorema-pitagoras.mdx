@@ -1,0 +1,170 @@
+export const metadata = {
+  "id": "camino-teorema-pitagoras",
+  "type": "plan-de-estudio",
+  "title": "El Camino hacia el Teorema de Pitágoras",
+  "subtitle": "Ruta Axiomática y Geométrica",
+  "description": "Explora el rigor lógico y la belleza visual detrás de la relación métrica más célebre de la geometría euclídea, desde las definiciones elementales hasta la geolocalización por satélites.",
+  "requiredNodes": [
+    "punto",
+    "estar-entre",
+    "triangulo",
+    "axioma-congruencia-5",
+    "teorema-triangulo-isosceles",
+    "checkpoint-pitagoras-congruencia",
+    "axioma-paralelas-euclides",
+    "teorema-suma-angulos-triangulo",
+    "checkpoint-pitagoras-paralelas",
+    "teorema-tales",
+    "teorema-pitagoras",
+    "ejercicio-pitagoras-cateto",
+    "caso-gps-trilateracion"
+  ]
+};
+
+<Capitular letra="C" />onstruir una verdad matemática de forma rigurosa exige trazar un camino
+impecable de justificaciones. El teorema de Pitágoras no es una coincidencia
+mágica; es la consecuencia directa de una red de nociones primitivas, axiomas y
+teoremas interconectados.
+
+Este plan de estudio te guiará paso a paso por las cinco etapas lógicas
+indispensables para reconstruir, comprender y aplicar esta verdad eterna.
+
+<Separador />
+
+## Fase 1: Los Bloques Fundacionales
+
+Antes de poder demostrar nada sobre figuras o áreas, debemos definir las entidades
+primitivas que habitan nuestro espacio y las relaciones de orden que las gobiernan.
+En la geometría moderna de Hilbert, el concepto más básico es el **punto** y la relación
+espacial fundamental es el orden o **estar entre**.
+
+<StudyTask
+  id="punto"
+  type="definicion"
+  title="El Punto"
+/>
+
+<StudyTask
+  id="estar-entre"
+  type="definicion"
+  title="La Relación de Orden (Estar Entre)"
+/>
+
+<Separador />
+
+## Fase 2: Construcción de Figuras y Congruencia
+
+Al conectar tres puntos no colineales mediante segmentos obtenemos la figura
+geométrica más simple del plano: el **triángulo**. Para comparar triángulos entre
+sí sin recurrir a la noción informal de "mover figuras con las manos", requerimos los
+axiomas de **congruencia**. El axioma de congruencia **SAS** (Lado-Ángulo-Lado) es el pilar
+que nos permite justificar que dos triángulos son copias idénticas. Su primera gran
+aplicación rigurosa es demostrar que en un triángulo isósceles, los ángulos de la base son iguales.
+
+<StudyTask
+  id="triangulo"
+  type="definicion"
+  title="El Triángulo"
+/>
+
+<StudyTask
+  id="axioma-congruencia-5"
+  type="axioma"
+  title="Axioma de Congruencia III-5 (SAS / LAL)"
+/>
+
+<StudyTask
+  id="teorema-triangulo-isosceles"
+  type="teorema"
+  title="Teorema del Triángulo Isósceles (Pons Asinorum)"
+/>
+
+<StudyPlanCheckpoint
+  id="checkpoint-pitagoras-congruencia"
+  question="¿Qué criterio de congruencia nos permite demostrar formalmente que los ángulos basales de un triángulo isósceles son iguales?"
+  options={[
+    "Ángulo-Lado-Ángulo (ALA)",
+    "Lado-Ángulo-Lado (LAL / SAS)",
+    "Lado-Lado-Lado (LLL)",
+    "Ángulo-Ángulo-Lado (AAL)"
+  ]}
+  correctAnswer={1}
+  explanation="El teorema del triángulo isósceles se demuestra duplicando mentalmente el triángulo e igualando sus lados y el ángulo comprendido (SAS). Esto genera una congruencia que fuerza a los ángulos correspondientes de la base a ser iguales."
+/>
+
+<Separador />
+
+## Fase 3: Paralelismo y la Suma de Ángulos
+
+El teorema de Pitágoras es exclusivo de la **geometría euclídea plana**; no es válido en
+superficies curvas. Esto se debe a que depende críticamente del **Quinto Postulado de Euclides**
+(Axioma de las paralelas). Sin este axioma, es imposible demostrar que la suma de los ángulos
+internos de cualquier triángulo en el plano es exactamente 180° (dos ángulos rectos).
+
+<StudyTask
+  id="axioma-paralelas-euclides"
+  type="axioma"
+  title="El Quinto Postulado (Axioma de Paralelas)"
+/>
+
+<StudyTask
+  id="teorema-suma-angulos-triangulo"
+  type="teorema"
+  title="Teorema de la Suma de Ángulos de un Triángulo"
+/>
+
+<StudyPlanCheckpoint
+  id="checkpoint-pitagoras-paralelas"
+  question="¿Por qué la suma de los ángulos de un triángulo es exactamente 180° en la geometría plana?"
+  options={[
+    "Es una verdad evidente que no requiere demostración",
+    "Porque depende críticamente del Quinto Postulado de las paralelas de Euclides",
+    "Es válido también en geometría hiperbólica y esférica",
+    "Porque se define así por convención matemática"
+  ]}
+  correctAnswer={1}
+  explanation="Para demostrar que la suma de ángulos es 180°, trazamos una recta paralela a la base por el vértice opuesto. Esto requiere el Quinto Postulado para asegurar que los ángulos alternos internos sumen un ángulo llano."
+/>
+
+<Separador />
+
+## Fase 4: Proporcionalidad y Semejanza
+
+Con una suma de ángulos fija en 180°, surge la noción de **semejanza**: figuras con la misma
+forma pero diferente escala. El **Teorema de Tales** establece la proporcionalidad de los lados
+de triángulos semejantes, lo cual es la herramienta matemática que permite calcular longitudes
+mediante razones y proporciones algebraicas.
+
+<StudyTask
+  id="teorema-tales"
+  type="teorema"
+  title="El Teorema de Tales sobre Semejanza"
+/>
+
+<Separador />
+
+## Fase 5: El Teorema de Pitágoras y su Aplicación
+
+Finalmente, reuniendo la congruencia, el paralelismo euclidiano y la semejanza, demostramos
+la relación fundamental $a^2 + b^2 = c^2$. Consolidaremos esta verdad teórica aplicándola
+a un cálculo concreto y comprendiendo cómo se utiliza en el algoritmo de **trilateración GPS**
+para geolocalizar tu dispositivo en el plano terrestre.
+
+<StudyTask
+  id="teorema-pitagoras"
+  type="teorema"
+  title="El Teorema de Pitágoras"
+/>
+
+<StudyTask
+  id="ejercicio-pitagoras-cateto"
+  type="ejercicio"
+  title="Ejercicio: Cálculo del Cateto Faltante"
+/>
+
+<StudyTask
+  id="caso-gps-trilateracion"
+  type="caso"
+  title="Caso de Uso: Trilateración y GPS"
+/>
+

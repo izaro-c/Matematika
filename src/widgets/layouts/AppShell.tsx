@@ -55,16 +55,18 @@ export const AppShell: React.FC<{ children: React.ReactNode }> = ({ children }) 
       }
   }
 
+  const isEditor = location === '/editor';
+
   return (
     <div
       className={`min-h-screen bg-lienzo text-carbon font-serif ${pageType ? 'page-accent-scope' : ''}`}
       data-page-type={pageType}
       style={pageType ? ({ '--page-accent': getContentPageAccent(pageType) } as React.CSSProperties) : undefined}
     >
-      <SymbolDictionaryManager />
-      <TopBar />
+      {!isEditor && <SymbolDictionaryManager />}
+      {!isEditor && <TopBar />}
       <SearchOmnibar />
-      <MarginaliaPanel />
+      {!isEditor && <MarginaliaPanel />}
 
       <div className="w-full">{children}</div>
     </div>

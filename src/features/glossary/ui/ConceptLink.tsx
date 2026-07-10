@@ -3,7 +3,7 @@ import { Link } from 'wouter';
 import { useGlossaryStore, dictionary } from '@/features/glossary/GlossaryStore';
 import { db } from '@/entities/content';
 import { useProgressStore } from '@/features/progress/UserProgressStore';
-import { useMathStore } from '@/app/providers/MathStoreContext';
+import { useMathStore } from '@/shared/lib/MathStoreContext';
 
 interface ConceptLinkProps {
   targetId: string | string[];
@@ -39,7 +39,7 @@ export const ConceptLink: React.FC<ConceptLinkProps> = ({
   highlightTarget,
   highlightColor
 }) => {
-  const { openTerm, activeTerms } = useGlossaryStore();
+  const { openTerm } = useGlossaryStore();
   const setVariable = useMathStore((state) => state.setVariable);
 
   const targetIds = Array.isArray(targetId) ? targetId : [targetId];
@@ -47,8 +47,6 @@ export const ConceptLink: React.FC<ConceptLinkProps> = ({
   
   const validIds = targetIds.filter(isIdValid);
   const allValid = validIds.length === targetIds.length;
-  const isActive = activeTerms ? targetIds.some(id => activeTerms.includes(id)) : false;
-
   const dataAttr = validIds.length > 0 ? validIds.join(',') : undefined;
 
   // Manejadores para la interactividad del gráfico
@@ -104,9 +102,7 @@ export const ConceptLink: React.FC<ConceptLinkProps> = ({
       style={highlightStyles}
       className={[
         'page-accent-link font-bold cursor-pointer transition-all duration-150 rounded-none',
-        isActive
-          ? 'underline decoration-2 underline-offset-4'
-          : 'underline decoration-2 underline-offset-4',
+        'underline decoration-2 underline-offset-4',
         highlightTarget ? "border-b-2 box-decoration-clone px-[2px] py-[1px]" : ""
       ].join(' ')}
     >
