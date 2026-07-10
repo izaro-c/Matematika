@@ -1,0 +1,1332 @@
+{
+  "schemaVersion": 1,
+  "totalFiles": 120,
+  "counts": {
+    "fully-editable": 0,
+    "partially-editable": 0,
+    "read-only": 85,
+    "unsupported": 35
+  },
+  "files": [
+    {
+      "path": "src/database/content/axiomatic-systems/sistema-absoluto.mdx",
+      "compatibility": "read-only",
+      "sourceHash": "68e51cfe",
+      "totalBlocks": 24,
+      "editableBlocks": 6,
+      "opaqueBlocks": 18,
+      "reasons": [
+        "Document has ESM imports or exports (read-only visual mode)."
+      ]
+    },
+    {
+      "path": "src/database/content/axiomatic-systems/sistema-euclidiano.mdx",
+      "compatibility": "read-only",
+      "sourceHash": "29b4e9e6",
+      "totalBlocks": 15,
+      "editableBlocks": 2,
+      "opaqueBlocks": 13,
+      "reasons": [
+        "Document has ESM imports or exports (read-only visual mode)."
+      ]
+    },
+    {
+      "path": "src/database/content/axiomatic-systems/sistema-hiperbolico.mdx",
+      "compatibility": "read-only",
+      "sourceHash": "f73b6853",
+      "totalBlocks": 17,
+      "editableBlocks": 3,
+      "opaqueBlocks": 14,
+      "reasons": [
+        "Document has ESM imports or exports (read-only visual mode)."
+      ]
+    },
+    {
+      "path": "src/database/content/axiomatic-systems/sistema-incidencia.mdx",
+      "compatibility": "read-only",
+      "sourceHash": "0202af50",
+      "totalBlocks": 16,
+      "editableBlocks": 3,
+      "opaqueBlocks": 13,
+      "reasons": [
+        "Document has ESM imports or exports (read-only visual mode)."
+      ]
+    },
+    {
+      "path": "src/database/content/axioms/axioma-arquimedes.mdx",
+      "compatibility": "read-only",
+      "sourceHash": "93ef0e63",
+      "totalBlocks": 16,
+      "editableBlocks": 3,
+      "opaqueBlocks": 13,
+      "reasons": [
+        "Document has ESM imports or exports (read-only visual mode)."
+      ]
+    },
+    {
+      "path": "src/database/content/axioms/axioma-completitud.mdx",
+      "compatibility": "unsupported",
+      "sourceHash": "e03f9356",
+      "totalBlocks": 0,
+      "editableBlocks": 0,
+      "opaqueBlocks": 0,
+      "reasons": [
+        "Document contains critical parse exceptions."
+      ]
+    },
+    {
+      "path": "src/database/content/axioms/axioma-congruencia-1.mdx",
+      "compatibility": "read-only",
+      "sourceHash": "23c822ff",
+      "totalBlocks": 16,
+      "editableBlocks": 3,
+      "opaqueBlocks": 13,
+      "reasons": [
+        "Document has ESM imports or exports (read-only visual mode)."
+      ]
+    },
+    {
+      "path": "src/database/content/axioms/axioma-congruencia-2.mdx",
+      "compatibility": "read-only",
+      "sourceHash": "994bd490",
+      "totalBlocks": 14,
+      "editableBlocks": 3,
+      "opaqueBlocks": 11,
+      "reasons": [
+        "Document has ESM imports or exports (read-only visual mode)."
+      ]
+    },
+    {
+      "path": "src/database/content/axioms/axioma-congruencia-3.mdx",
+      "compatibility": "unsupported",
+      "sourceHash": "46e27a89",
+      "totalBlocks": 0,
+      "editableBlocks": 0,
+      "opaqueBlocks": 0,
+      "reasons": [
+        "Document contains critical parse exceptions."
+      ]
+    },
+    {
+      "path": "src/database/content/axioms/axioma-congruencia-4.mdx",
+      "compatibility": "read-only",
+      "sourceHash": "9c8a3f7a",
+      "totalBlocks": 16,
+      "editableBlocks": 4,
+      "opaqueBlocks": 12,
+      "reasons": [
+        "Document has ESM imports or exports (read-only visual mode)."
+      ]
+    },
+    {
+      "path": "src/database/content/axioms/axioma-congruencia-5.mdx",
+      "compatibility": "unsupported",
+      "sourceHash": "0e745619",
+      "totalBlocks": 0,
+      "editableBlocks": 0,
+      "opaqueBlocks": 0,
+      "reasons": [
+        "Document contains critical parse exceptions."
+      ]
+    },
+    {
+      "path": "src/database/content/axioms/axioma-incidencia-1.mdx",
+      "compatibility": "read-only",
+      "sourceHash": "d26d3140",
+      "totalBlocks": 15,
+      "editableBlocks": 3,
+      "opaqueBlocks": 12,
+      "reasons": [
+        "Document has ESM imports or exports (read-only visual mode)."
+      ]
+    },
+    {
+      "path": "src/database/content/axioms/axioma-incidencia-2.mdx",
+      "compatibility": "read-only",
+      "sourceHash": "0ca1bf8d",
+      "totalBlocks": 13,
+      "editableBlocks": 3,
+      "opaqueBlocks": 10,
+      "reasons": [
+        "Document has ESM imports or exports (read-only visual mode)."
+      ]
+    },
+    {
+      "path": "src/database/content/axioms/axioma-incidencia-3.mdx",
+      "compatibility": "read-only",
+      "sourceHash": "c18b97bb",
+      "totalBlocks": 14,
+      "editableBlocks": 3,
+      "opaqueBlocks": 11,
+      "reasons": [
+        "Document has ESM imports or exports (read-only visual mode)."
+      ]
+    },
+    {
+      "path": "src/database/content/axioms/axioma-incidencia-4.mdx",
+      "compatibility": "unsupported",
+      "sourceHash": "1fc7b051",
+      "totalBlocks": 0,
+      "editableBlocks": 0,
+      "opaqueBlocks": 0,
+      "reasons": [
+        "Document contains critical parse exceptions."
+      ]
+    },
+    {
+      "path": "src/database/content/axioms/axioma-incidencia-5.mdx",
+      "compatibility": "unsupported",
+      "sourceHash": "e98f460d",
+      "totalBlocks": 0,
+      "editableBlocks": 0,
+      "opaqueBlocks": 0,
+      "reasons": [
+        "Document contains critical parse exceptions."
+      ]
+    },
+    {
+      "path": "src/database/content/axioms/axioma-incidencia-6.mdx",
+      "compatibility": "read-only",
+      "sourceHash": "fa1252ee",
+      "totalBlocks": 13,
+      "editableBlocks": 3,
+      "opaqueBlocks": 10,
+      "reasons": [
+        "Document has ESM imports or exports (read-only visual mode)."
+      ]
+    },
+    {
+      "path": "src/database/content/axioms/axioma-incidencia-7.mdx",
+      "compatibility": "unsupported",
+      "sourceHash": "275e1040",
+      "totalBlocks": 0,
+      "editableBlocks": 0,
+      "opaqueBlocks": 0,
+      "reasons": [
+        "Document contains critical parse exceptions."
+      ]
+    },
+    {
+      "path": "src/database/content/axioms/axioma-incidencia-8.mdx",
+      "compatibility": "read-only",
+      "sourceHash": "b8f3bfe7",
+      "totalBlocks": 13,
+      "editableBlocks": 3,
+      "opaqueBlocks": 10,
+      "reasons": [
+        "Document has ESM imports or exports (read-only visual mode)."
+      ]
+    },
+    {
+      "path": "src/database/content/axioms/axioma-orden-1.mdx",
+      "compatibility": "unsupported",
+      "sourceHash": "f8995dbd",
+      "totalBlocks": 0,
+      "editableBlocks": 0,
+      "opaqueBlocks": 0,
+      "reasons": [
+        "Document contains critical parse exceptions."
+      ]
+    },
+    {
+      "path": "src/database/content/axioms/axioma-orden-2.mdx",
+      "compatibility": "read-only",
+      "sourceHash": "7f271bd2",
+      "totalBlocks": 13,
+      "editableBlocks": 4,
+      "opaqueBlocks": 9,
+      "reasons": [
+        "Document has ESM imports or exports (read-only visual mode)."
+      ]
+    },
+    {
+      "path": "src/database/content/axioms/axioma-orden-3.mdx",
+      "compatibility": "unsupported",
+      "sourceHash": "b3f50a2b",
+      "totalBlocks": 0,
+      "editableBlocks": 0,
+      "opaqueBlocks": 0,
+      "reasons": [
+        "Document contains critical parse exceptions."
+      ]
+    },
+    {
+      "path": "src/database/content/axioms/axioma-orden-4.mdx",
+      "compatibility": "read-only",
+      "sourceHash": "7eb0436c",
+      "totalBlocks": 14,
+      "editableBlocks": 3,
+      "opaqueBlocks": 11,
+      "reasons": [
+        "Document has ESM imports or exports (read-only visual mode)."
+      ]
+    },
+    {
+      "path": "src/database/content/axioms/axioma-paralelas-euclides.mdx",
+      "compatibility": "read-only",
+      "sourceHash": "d9809268",
+      "totalBlocks": 16,
+      "editableBlocks": 3,
+      "opaqueBlocks": 13,
+      "reasons": [
+        "Document has ESM imports or exports (read-only visual mode)."
+      ]
+    },
+    {
+      "path": "src/database/content/axioms/axioma-paralelas-hiperbolico.mdx",
+      "compatibility": "unsupported",
+      "sourceHash": "0777be02",
+      "totalBlocks": 0,
+      "editableBlocks": 0,
+      "opaqueBlocks": 0,
+      "reasons": [
+        "Document contains critical parse exceptions."
+      ]
+    },
+    {
+      "path": "src/database/content/definitions/altura.mdx",
+      "compatibility": "unsupported",
+      "sourceHash": "c5230652",
+      "totalBlocks": 0,
+      "editableBlocks": 0,
+      "opaqueBlocks": 0,
+      "reasons": [
+        "Document contains critical parse exceptions."
+      ]
+    },
+    {
+      "path": "src/database/content/definitions/angulo.mdx",
+      "compatibility": "unsupported",
+      "sourceHash": "0979700d",
+      "totalBlocks": 0,
+      "editableBlocks": 0,
+      "opaqueBlocks": 0,
+      "reasons": [
+        "Document contains critical parse exceptions."
+      ]
+    },
+    {
+      "path": "src/database/content/definitions/angulos-suplementarios.mdx",
+      "compatibility": "read-only",
+      "sourceHash": "f49d47b1",
+      "totalBlocks": 17,
+      "editableBlocks": 8,
+      "opaqueBlocks": 9,
+      "reasons": [
+        "Document has ESM imports or exports (read-only visual mode)."
+      ]
+    },
+    {
+      "path": "src/database/content/definitions/bisectriz.mdx",
+      "compatibility": "read-only",
+      "sourceHash": "c3d39e2b",
+      "totalBlocks": 20,
+      "editableBlocks": 4,
+      "opaqueBlocks": 16,
+      "reasons": [
+        "Document has ESM imports or exports (read-only visual mode)."
+      ]
+    },
+    {
+      "path": "src/database/content/definitions/circunferencia.mdx",
+      "compatibility": "read-only",
+      "sourceHash": "1385f451",
+      "totalBlocks": 14,
+      "editableBlocks": 3,
+      "opaqueBlocks": 11,
+      "reasons": [
+        "Document has ESM imports or exports (read-only visual mode)."
+      ]
+    },
+    {
+      "path": "src/database/content/definitions/congruencia.mdx",
+      "compatibility": "read-only",
+      "sourceHash": "9931203e",
+      "totalBlocks": 11,
+      "editableBlocks": 3,
+      "opaqueBlocks": 8,
+      "reasons": [
+        "Document has ESM imports or exports (read-only visual mode)."
+      ]
+    },
+    {
+      "path": "src/database/content/definitions/contenido.mdx",
+      "compatibility": "unsupported",
+      "sourceHash": "5d32b3a7",
+      "totalBlocks": 0,
+      "editableBlocks": 0,
+      "opaqueBlocks": 0,
+      "reasons": [
+        "Document contains critical parse exceptions."
+      ]
+    },
+    {
+      "path": "src/database/content/definitions/cuadrilatero.mdx",
+      "compatibility": "read-only",
+      "sourceHash": "4c98a8a9",
+      "totalBlocks": 20,
+      "editableBlocks": 5,
+      "opaqueBlocks": 15,
+      "reasons": [
+        "Document has ESM imports or exports (read-only visual mode)."
+      ]
+    },
+    {
+      "path": "src/database/content/definitions/estar-entre.mdx",
+      "compatibility": "read-only",
+      "sourceHash": "e982dc8e",
+      "totalBlocks": 11,
+      "editableBlocks": 3,
+      "opaqueBlocks": 8,
+      "reasons": [
+        "Document has ESM imports or exports (read-only visual mode)."
+      ]
+    },
+    {
+      "path": "src/database/content/definitions/incidencia.mdx",
+      "compatibility": "read-only",
+      "sourceHash": "0c528632",
+      "totalBlocks": 12,
+      "editableBlocks": 3,
+      "opaqueBlocks": 9,
+      "reasons": [
+        "Document has ESM imports or exports (read-only visual mode)."
+      ]
+    },
+    {
+      "path": "src/database/content/definitions/mediana.mdx",
+      "compatibility": "read-only",
+      "sourceHash": "da15a1e4",
+      "totalBlocks": 17,
+      "editableBlocks": 3,
+      "opaqueBlocks": 14,
+      "reasons": [
+        "Document has ESM imports or exports (read-only visual mode)."
+      ]
+    },
+    {
+      "path": "src/database/content/definitions/mediatriz.mdx",
+      "compatibility": "read-only",
+      "sourceHash": "1e75fe88",
+      "totalBlocks": 18,
+      "editableBlocks": 4,
+      "opaqueBlocks": 14,
+      "reasons": [
+        "Document has ESM imports or exports (read-only visual mode)."
+      ]
+    },
+    {
+      "path": "src/database/content/definitions/paralelas.mdx",
+      "compatibility": "read-only",
+      "sourceHash": "d2399d92",
+      "totalBlocks": 13,
+      "editableBlocks": 3,
+      "opaqueBlocks": 10,
+      "reasons": [
+        "Document has ESM imports or exports (read-only visual mode)."
+      ]
+    },
+    {
+      "path": "src/database/content/definitions/paralelogramo.mdx",
+      "compatibility": "read-only",
+      "sourceHash": "1baccaa7",
+      "totalBlocks": 20,
+      "editableBlocks": 4,
+      "opaqueBlocks": 16,
+      "reasons": [
+        "Document has ESM imports or exports (read-only visual mode)."
+      ]
+    },
+    {
+      "path": "src/database/content/definitions/perpendicular.mdx",
+      "compatibility": "unsupported",
+      "sourceHash": "48bd37e9",
+      "totalBlocks": 0,
+      "editableBlocks": 0,
+      "opaqueBlocks": 0,
+      "reasons": [
+        "Document contains critical parse exceptions."
+      ]
+    },
+    {
+      "path": "src/database/content/definitions/plano.mdx",
+      "compatibility": "read-only",
+      "sourceHash": "429bbcde",
+      "totalBlocks": 14,
+      "editableBlocks": 4,
+      "opaqueBlocks": 10,
+      "reasons": [
+        "Document has ESM imports or exports (read-only visual mode)."
+      ]
+    },
+    {
+      "path": "src/database/content/definitions/punto.mdx",
+      "compatibility": "read-only",
+      "sourceHash": "f3d03aac",
+      "totalBlocks": 14,
+      "editableBlocks": 4,
+      "opaqueBlocks": 10,
+      "reasons": [
+        "Document has ESM imports or exports (read-only visual mode)."
+      ]
+    },
+    {
+      "path": "src/database/content/definitions/recta.mdx",
+      "compatibility": "read-only",
+      "sourceHash": "3daae1a8",
+      "totalBlocks": 16,
+      "editableBlocks": 5,
+      "opaqueBlocks": 11,
+      "reasons": [
+        "Document has ESM imports or exports (read-only visual mode)."
+      ]
+    },
+    {
+      "path": "src/database/content/definitions/segmento.mdx",
+      "compatibility": "read-only",
+      "sourceHash": "bfa8e971",
+      "totalBlocks": 18,
+      "editableBlocks": 5,
+      "opaqueBlocks": 13,
+      "reasons": [
+        "Document has ESM imports or exports (read-only visual mode)."
+      ]
+    },
+    {
+      "path": "src/database/content/definitions/semirrecta.mdx",
+      "compatibility": "unsupported",
+      "sourceHash": "602ac8a5",
+      "totalBlocks": 0,
+      "editableBlocks": 0,
+      "opaqueBlocks": 0,
+      "reasons": [
+        "Document contains critical parse exceptions."
+      ]
+    },
+    {
+      "path": "src/database/content/definitions/teoria-medida-area.mdx",
+      "compatibility": "unsupported",
+      "sourceHash": "62b829b8",
+      "totalBlocks": 0,
+      "editableBlocks": 0,
+      "opaqueBlocks": 0,
+      "reasons": [
+        "Document contains critical parse exceptions."
+      ]
+    },
+    {
+      "path": "src/database/content/definitions/triangulo.mdx",
+      "compatibility": "read-only",
+      "sourceHash": "6c9b67ed",
+      "totalBlocks": 15,
+      "editableBlocks": 4,
+      "opaqueBlocks": 11,
+      "reasons": [
+        "Document has ESM imports or exports (read-only visual mode)."
+      ]
+    },
+    {
+      "path": "src/database/content/demonstrations/demo-angulo-externo.mdx",
+      "compatibility": "read-only",
+      "sourceHash": "f7bc79af",
+      "totalBlocks": 3,
+      "editableBlocks": 0,
+      "opaqueBlocks": 3,
+      "reasons": [
+        "Document has ESM imports or exports (read-only visual mode)."
+      ]
+    },
+    {
+      "path": "src/database/content/demonstrations/demo-angulos-alternos-internos.mdx",
+      "compatibility": "unsupported",
+      "sourceHash": "f670c192",
+      "totalBlocks": 0,
+      "editableBlocks": 0,
+      "opaqueBlocks": 0,
+      "reasons": [
+        "Document contains critical parse exceptions."
+      ]
+    },
+    {
+      "path": "src/database/content/demonstrations/demo-angulos-opuestos-verticales.mdx",
+      "compatibility": "read-only",
+      "sourceHash": "4d155277",
+      "totalBlocks": 3,
+      "editableBlocks": 0,
+      "opaqueBlocks": 3,
+      "reasons": [
+        "Document has ESM imports or exports (read-only visual mode)."
+      ]
+    },
+    {
+      "path": "src/database/content/demonstrations/demo-area-aditividad.mdx",
+      "compatibility": "read-only",
+      "sourceHash": "8e3c60c9",
+      "totalBlocks": 3,
+      "editableBlocks": 0,
+      "opaqueBlocks": 3,
+      "reasons": [
+        "Document has ESM imports or exports (read-only visual mode)."
+      ]
+    },
+    {
+      "path": "src/database/content/demonstrations/demo-area-invariancia.mdx",
+      "compatibility": "read-only",
+      "sourceHash": "5984151f",
+      "totalBlocks": 2,
+      "editableBlocks": 0,
+      "opaqueBlocks": 2,
+      "reasons": [
+        "Document has ESM imports or exports (read-only visual mode)."
+      ]
+    },
+    {
+      "path": "src/database/content/demonstrations/demo-area-rectangulo.mdx",
+      "compatibility": "read-only",
+      "sourceHash": "7f2bc881",
+      "totalBlocks": 4,
+      "editableBlocks": 0,
+      "opaqueBlocks": 4,
+      "reasons": [
+        "Document has ESM imports or exports (read-only visual mode)."
+      ]
+    },
+    {
+      "path": "src/database/content/demonstrations/demo-area-triangulo.mdx",
+      "compatibility": "unsupported",
+      "sourceHash": "2049c57f",
+      "totalBlocks": 0,
+      "editableBlocks": 0,
+      "opaqueBlocks": 0,
+      "reasons": [
+        "Document contains critical parse exceptions."
+      ]
+    },
+    {
+      "path": "src/database/content/demonstrations/demo-congruencia-aal.mdx",
+      "compatibility": "unsupported",
+      "sourceHash": "d647c75b",
+      "totalBlocks": 0,
+      "editableBlocks": 0,
+      "opaqueBlocks": 0,
+      "reasons": [
+        "Document contains critical parse exceptions."
+      ]
+    },
+    {
+      "path": "src/database/content/demonstrations/demo-congruencia-ala.mdx",
+      "compatibility": "unsupported",
+      "sourceHash": "669fb7cc",
+      "totalBlocks": 0,
+      "editableBlocks": 0,
+      "opaqueBlocks": 0,
+      "reasons": [
+        "Document contains critical parse exceptions."
+      ]
+    },
+    {
+      "path": "src/database/content/demonstrations/demo-congruencia-lll.mdx",
+      "compatibility": "unsupported",
+      "sourceHash": "67ff0f4d",
+      "totalBlocks": 0,
+      "editableBlocks": 0,
+      "opaqueBlocks": 0,
+      "reasons": [
+        "Document contains critical parse exceptions."
+      ]
+    },
+    {
+      "path": "src/database/content/demonstrations/demo-desigualdad-triangular.mdx",
+      "compatibility": "read-only",
+      "sourceHash": "d5a8b24b",
+      "totalBlocks": 3,
+      "editableBlocks": 0,
+      "opaqueBlocks": 3,
+      "reasons": [
+        "Document has ESM imports or exports (read-only visual mode)."
+      ]
+    },
+    {
+      "path": "src/database/content/demonstrations/demo-dos-rectas-un-punto.mdx",
+      "compatibility": "read-only",
+      "sourceHash": "a0edb41a",
+      "totalBlocks": 3,
+      "editableBlocks": 0,
+      "opaqueBlocks": 3,
+      "reasons": [
+        "Document has ESM imports or exports (read-only visual mode)."
+      ]
+    },
+    {
+      "path": "src/database/content/demonstrations/demo-existencia-bisectriz.mdx",
+      "compatibility": "unsupported",
+      "sourceHash": "bb845cc1",
+      "totalBlocks": 0,
+      "editableBlocks": 0,
+      "opaqueBlocks": 0,
+      "reasons": [
+        "Document contains critical parse exceptions."
+      ]
+    },
+    {
+      "path": "src/database/content/demonstrations/demo-existencia-perpendicular.mdx",
+      "compatibility": "read-only",
+      "sourceHash": "b713c126",
+      "totalBlocks": 3,
+      "editableBlocks": 0,
+      "opaqueBlocks": 3,
+      "reasons": [
+        "Document has ESM imports or exports (read-only visual mode)."
+      ]
+    },
+    {
+      "path": "src/database/content/demonstrations/demo-invariancia-triangulacion.mdx",
+      "compatibility": "unsupported",
+      "sourceHash": "53c1444c",
+      "totalBlocks": 0,
+      "editableBlocks": 0,
+      "opaqueBlocks": 0,
+      "reasons": [
+        "Document contains critical parse exceptions."
+      ]
+    },
+    {
+      "path": "src/database/content/demonstrations/demo-pitagoras-areas.mdx",
+      "compatibility": "read-only",
+      "sourceHash": "76351a47",
+      "totalBlocks": 3,
+      "editableBlocks": 0,
+      "opaqueBlocks": 3,
+      "reasons": [
+        "Document has ESM imports or exports (read-only visual mode)."
+      ]
+    },
+    {
+      "path": "src/database/content/demonstrations/demo-pitagoras-euclides.mdx",
+      "compatibility": "read-only",
+      "sourceHash": "6d8ddff1",
+      "totalBlocks": 3,
+      "editableBlocks": 0,
+      "opaqueBlocks": 3,
+      "reasons": [
+        "Document has ESM imports or exports (read-only visual mode)."
+      ]
+    },
+    {
+      "path": "src/database/content/demonstrations/demo-punto-medio-perpendicular.mdx",
+      "compatibility": "read-only",
+      "sourceHash": "b91b9588",
+      "totalBlocks": 2,
+      "editableBlocks": 0,
+      "opaqueBlocks": 2,
+      "reasons": [
+        "Document has ESM imports or exports (read-only visual mode)."
+      ]
+    },
+    {
+      "path": "src/database/content/demonstrations/demo-punto-medio.mdx",
+      "compatibility": "read-only",
+      "sourceHash": "1deb4707",
+      "totalBlocks": 2,
+      "editableBlocks": 0,
+      "opaqueBlocks": 2,
+      "reasons": [
+        "Document has ESM imports or exports (read-only visual mode)."
+      ]
+    },
+    {
+      "path": "src/database/content/demonstrations/demo-reciproco-triangulo-isosceles.mdx",
+      "compatibility": "read-only",
+      "sourceHash": "4dd25a23",
+      "totalBlocks": 3,
+      "editableBlocks": 0,
+      "opaqueBlocks": 3,
+      "reasons": [
+        "Document has ESM imports or exports (read-only visual mode)."
+      ]
+    },
+    {
+      "path": "src/database/content/demonstrations/demo-rectas-coincidentes.mdx",
+      "compatibility": "read-only",
+      "sourceHash": "db02cb16",
+      "totalBlocks": 3,
+      "editableBlocks": 0,
+      "opaqueBlocks": 3,
+      "reasons": [
+        "Document has ESM imports or exports (read-only visual mode)."
+      ]
+    },
+    {
+      "path": "src/database/content/demonstrations/demo-suma-angulos-triangulo.mdx",
+      "compatibility": "read-only",
+      "sourceHash": "9e7b71e5",
+      "totalBlocks": 3,
+      "editableBlocks": 0,
+      "opaqueBlocks": 3,
+      "reasons": [
+        "Document has ESM imports or exports (read-only visual mode)."
+      ]
+    },
+    {
+      "path": "src/database/content/demonstrations/demo-tales.mdx",
+      "compatibility": "unsupported",
+      "sourceHash": "900729a1",
+      "totalBlocks": 0,
+      "editableBlocks": 0,
+      "opaqueBlocks": 0,
+      "reasons": [
+        "Document contains critical parse exceptions."
+      ]
+    },
+    {
+      "path": "src/database/content/demonstrations/demo-triangulacion-poligono.mdx",
+      "compatibility": "unsupported",
+      "sourceHash": "ec40f9f2",
+      "totalBlocks": 0,
+      "editableBlocks": 0,
+      "opaqueBlocks": 0,
+      "reasons": [
+        "Document contains critical parse exceptions."
+      ]
+    },
+    {
+      "path": "src/database/content/demonstrations/demo-triangulo-isosceles.mdx",
+      "compatibility": "read-only",
+      "sourceHash": "a1729693",
+      "totalBlocks": 3,
+      "editableBlocks": 0,
+      "opaqueBlocks": 3,
+      "reasons": [
+        "Document has ESM imports or exports (read-only visual mode)."
+      ]
+    },
+    {
+      "path": "src/database/content/examples/ejemplo-pitagoras-calculo.mdx",
+      "compatibility": "read-only",
+      "sourceHash": "1edab738",
+      "totalBlocks": 10,
+      "editableBlocks": 2,
+      "opaqueBlocks": 8,
+      "reasons": [
+        "Document has ESM imports or exports (read-only visual mode)."
+      ]
+    },
+    {
+      "path": "src/database/content/exercises/ejercicio-pitagoras-cateto.mdx",
+      "compatibility": "read-only",
+      "sourceHash": "2add2406",
+      "totalBlocks": 8,
+      "editableBlocks": 0,
+      "opaqueBlocks": 8,
+      "reasons": [
+        "Document has ESM imports or exports (read-only visual mode)."
+      ]
+    },
+    {
+      "path": "src/database/content/lessons/leccion-metodo-constructivo.mdx",
+      "compatibility": "read-only",
+      "sourceHash": "7e7d6f94",
+      "totalBlocks": 21,
+      "editableBlocks": 9,
+      "opaqueBlocks": 12,
+      "reasons": [
+        "Document has ESM imports or exports (read-only visual mode)."
+      ]
+    },
+    {
+      "path": "src/database/content/lessons/leccion-metodo-contradiccion.mdx",
+      "compatibility": "unsupported",
+      "sourceHash": "bf48551f",
+      "totalBlocks": 0,
+      "editableBlocks": 0,
+      "opaqueBlocks": 0,
+      "reasons": [
+        "Document contains critical parse exceptions."
+      ]
+    },
+    {
+      "path": "src/database/content/lessons/leccion-metodo-contraposicion.mdx",
+      "compatibility": "read-only",
+      "sourceHash": "51c5aa2d",
+      "totalBlocks": 23,
+      "editableBlocks": 10,
+      "opaqueBlocks": 13,
+      "reasons": [
+        "Document has ESM imports or exports (read-only visual mode)."
+      ]
+    },
+    {
+      "path": "src/database/content/lessons/leccion-metodo-directo.mdx",
+      "compatibility": "read-only",
+      "sourceHash": "7bf3bab1",
+      "totalBlocks": 26,
+      "editableBlocks": 12,
+      "opaqueBlocks": 14,
+      "reasons": [
+        "Document has ESM imports or exports (read-only visual mode)."
+      ]
+    },
+    {
+      "path": "src/database/content/lessons/leccion-metodo-exhaustivo.mdx",
+      "compatibility": "read-only",
+      "sourceHash": "d354d770",
+      "totalBlocks": 25,
+      "editableBlocks": 10,
+      "opaqueBlocks": 15,
+      "reasons": [
+        "Document has ESM imports or exports (read-only visual mode)."
+      ]
+    },
+    {
+      "path": "src/database/content/lessons/leccion-metodo-geometrico.mdx",
+      "compatibility": "read-only",
+      "sourceHash": "81cc065b",
+      "totalBlocks": 27,
+      "editableBlocks": 14,
+      "opaqueBlocks": 13,
+      "reasons": [
+        "Document has ESM imports or exports (read-only visual mode)."
+      ]
+    },
+    {
+      "path": "src/database/content/lessons/leccion-metodo-induccion.mdx",
+      "compatibility": "unsupported",
+      "sourceHash": "3579f5b1",
+      "totalBlocks": 0,
+      "editableBlocks": 0,
+      "opaqueBlocks": 0,
+      "reasons": [
+        "Document contains critical parse exceptions."
+      ]
+    },
+    {
+      "path": "src/database/content/mathematicians/arquimedes.mdx",
+      "compatibility": "read-only",
+      "sourceHash": "038e6ced",
+      "totalBlocks": 7,
+      "editableBlocks": 2,
+      "opaqueBlocks": 5,
+      "reasons": [
+        "Document has ESM imports or exports (read-only visual mode)."
+      ]
+    },
+    {
+      "path": "src/database/content/mathematicians/bolyai.mdx",
+      "compatibility": "read-only",
+      "sourceHash": "a2f3ce1e",
+      "totalBlocks": 7,
+      "editableBlocks": 1,
+      "opaqueBlocks": 6,
+      "reasons": [
+        "Document has ESM imports or exports (read-only visual mode)."
+      ]
+    },
+    {
+      "path": "src/database/content/mathematicians/dedekind.mdx",
+      "compatibility": "read-only",
+      "sourceHash": "3d60f74e",
+      "totalBlocks": 7,
+      "editableBlocks": 3,
+      "opaqueBlocks": 4,
+      "reasons": [
+        "Document has ESM imports or exports (read-only visual mode)."
+      ]
+    },
+    {
+      "path": "src/database/content/mathematicians/euclides.mdx",
+      "compatibility": "read-only",
+      "sourceHash": "1fc99de0",
+      "totalBlocks": 14,
+      "editableBlocks": 3,
+      "opaqueBlocks": 11,
+      "reasons": [
+        "Document has ESM imports or exports (read-only visual mode)."
+      ]
+    },
+    {
+      "path": "src/database/content/mathematicians/hilbert.mdx",
+      "compatibility": "read-only",
+      "sourceHash": "b42c2bf8",
+      "totalBlocks": 10,
+      "editableBlocks": 3,
+      "opaqueBlocks": 7,
+      "reasons": [
+        "Document has ESM imports or exports (read-only visual mode)."
+      ]
+    },
+    {
+      "path": "src/database/content/mathematicians/lobachevski.mdx",
+      "compatibility": "read-only",
+      "sourceHash": "fbec78ee",
+      "totalBlocks": 7,
+      "editableBlocks": 1,
+      "opaqueBlocks": 6,
+      "reasons": [
+        "Document has ESM imports or exports (read-only visual mode)."
+      ]
+    },
+    {
+      "path": "src/database/content/mathematicians/pasch.mdx",
+      "compatibility": "read-only",
+      "sourceHash": "d722377a",
+      "totalBlocks": 7,
+      "editableBlocks": 1,
+      "opaqueBlocks": 6,
+      "reasons": [
+        "Document has ESM imports or exports (read-only visual mode)."
+      ]
+    },
+    {
+      "path": "src/database/content/mathematicians/pitagoras.mdx",
+      "compatibility": "read-only",
+      "sourceHash": "c09f0f90",
+      "totalBlocks": 12,
+      "editableBlocks": 5,
+      "opaqueBlocks": 7,
+      "reasons": [
+        "Document has ESM imports or exports (read-only visual mode)."
+      ]
+    },
+    {
+      "path": "src/database/content/mathematicians/tales.mdx",
+      "compatibility": "read-only",
+      "sourceHash": "75d2d153",
+      "totalBlocks": 13,
+      "editableBlocks": 5,
+      "opaqueBlocks": 8,
+      "reasons": [
+        "Document has ESM imports or exports (read-only visual mode)."
+      ]
+    },
+    {
+      "path": "src/database/content/models/modelo-cartesiano.mdx",
+      "compatibility": "read-only",
+      "sourceHash": "927e5874",
+      "totalBlocks": 13,
+      "editableBlocks": 2,
+      "opaqueBlocks": 11,
+      "reasons": [
+        "Document has ESM imports or exports (read-only visual mode)."
+      ]
+    },
+    {
+      "path": "src/database/content/models/modelo-fano.mdx",
+      "compatibility": "read-only",
+      "sourceHash": "aa9743ba",
+      "totalBlocks": 14,
+      "editableBlocks": 1,
+      "opaqueBlocks": 13,
+      "reasons": [
+        "Document has ESM imports or exports (read-only visual mode)."
+      ]
+    },
+    {
+      "path": "src/database/content/models/modelo-poincare.mdx",
+      "compatibility": "unsupported",
+      "sourceHash": "558d7058",
+      "totalBlocks": 0,
+      "editableBlocks": 0,
+      "opaqueBlocks": 0,
+      "reasons": [
+        "Document contains critical parse exceptions."
+      ]
+    },
+    {
+      "path": "src/database/content/models/modelo-tres-puntos.mdx",
+      "compatibility": "read-only",
+      "sourceHash": "ee3fc92b",
+      "totalBlocks": 24,
+      "editableBlocks": 5,
+      "opaqueBlocks": 19,
+      "reasons": [
+        "Document has ESM imports or exports (read-only visual mode)."
+      ]
+    },
+    {
+      "path": "src/database/content/plans/plan-de-estudio-camino-teorema-pitagoras.mdx",
+      "compatibility": "read-only",
+      "sourceHash": "680d28f4",
+      "totalBlocks": 31,
+      "editableBlocks": 11,
+      "opaqueBlocks": 20,
+      "reasons": [
+        "Document has ESM imports or exports (read-only visual mode)."
+      ]
+    },
+    {
+      "path": "src/database/content/theorems/corolario-rectas-coincidentes.mdx",
+      "compatibility": "read-only",
+      "sourceHash": "5cf86c9c",
+      "totalBlocks": 12,
+      "editableBlocks": 3,
+      "opaqueBlocks": 9,
+      "reasons": [
+        "Document has ESM imports or exports (read-only visual mode)."
+      ]
+    },
+    {
+      "path": "src/database/content/theorems/lema-punto-medio.mdx",
+      "compatibility": "read-only",
+      "sourceHash": "d2d9b367",
+      "totalBlocks": 13,
+      "editableBlocks": 2,
+      "opaqueBlocks": 11,
+      "reasons": [
+        "Document has ESM imports or exports (read-only visual mode)."
+      ]
+    },
+    {
+      "path": "src/database/content/theorems/teorema-angulo-externo.mdx",
+      "compatibility": "read-only",
+      "sourceHash": "64c11de0",
+      "totalBlocks": 14,
+      "editableBlocks": 3,
+      "opaqueBlocks": 11,
+      "reasons": [
+        "Document has ESM imports or exports (read-only visual mode)."
+      ]
+    },
+    {
+      "path": "src/database/content/theorems/teorema-angulos-alternos-internos.mdx",
+      "compatibility": "read-only",
+      "sourceHash": "0e4e16a8",
+      "totalBlocks": 17,
+      "editableBlocks": 3,
+      "opaqueBlocks": 14,
+      "reasons": [
+        "Document has ESM imports or exports (read-only visual mode)."
+      ]
+    },
+    {
+      "path": "src/database/content/theorems/teorema-angulos-opuestos-verticales.mdx",
+      "compatibility": "read-only",
+      "sourceHash": "e2ab347e",
+      "totalBlocks": 11,
+      "editableBlocks": 2,
+      "opaqueBlocks": 9,
+      "reasons": [
+        "Document has ESM imports or exports (read-only visual mode)."
+      ]
+    },
+    {
+      "path": "src/database/content/theorems/teorema-area-aditividad.mdx",
+      "compatibility": "read-only",
+      "sourceHash": "cb11ac76",
+      "totalBlocks": 11,
+      "editableBlocks": 3,
+      "opaqueBlocks": 8,
+      "reasons": [
+        "Document has ESM imports or exports (read-only visual mode)."
+      ]
+    },
+    {
+      "path": "src/database/content/theorems/teorema-area-invariancia.mdx",
+      "compatibility": "read-only",
+      "sourceHash": "afe8e20b",
+      "totalBlocks": 12,
+      "editableBlocks": 3,
+      "opaqueBlocks": 9,
+      "reasons": [
+        "Document has ESM imports or exports (read-only visual mode)."
+      ]
+    },
+    {
+      "path": "src/database/content/theorems/teorema-area-rectangulo.mdx",
+      "compatibility": "unsupported",
+      "sourceHash": "7cdf8d15",
+      "totalBlocks": 0,
+      "editableBlocks": 0,
+      "opaqueBlocks": 0,
+      "reasons": [
+        "Document contains critical parse exceptions."
+      ]
+    },
+    {
+      "path": "src/database/content/theorems/teorema-area-triangulo.mdx",
+      "compatibility": "unsupported",
+      "sourceHash": "b7c4a890",
+      "totalBlocks": 0,
+      "editableBlocks": 0,
+      "opaqueBlocks": 0,
+      "reasons": [
+        "Document contains critical parse exceptions."
+      ]
+    },
+    {
+      "path": "src/database/content/theorems/teorema-congruencia-aal.mdx",
+      "compatibility": "unsupported",
+      "sourceHash": "866cb309",
+      "totalBlocks": 0,
+      "editableBlocks": 0,
+      "opaqueBlocks": 0,
+      "reasons": [
+        "Document contains critical parse exceptions."
+      ]
+    },
+    {
+      "path": "src/database/content/theorems/teorema-congruencia-ala.mdx",
+      "compatibility": "unsupported",
+      "sourceHash": "492729de",
+      "totalBlocks": 0,
+      "editableBlocks": 0,
+      "opaqueBlocks": 0,
+      "reasons": [
+        "Document contains critical parse exceptions."
+      ]
+    },
+    {
+      "path": "src/database/content/theorems/teorema-congruencia-lll.mdx",
+      "compatibility": "unsupported",
+      "sourceHash": "86c3db94",
+      "totalBlocks": 0,
+      "editableBlocks": 0,
+      "opaqueBlocks": 0,
+      "reasons": [
+        "Document contains critical parse exceptions."
+      ]
+    },
+    {
+      "path": "src/database/content/theorems/teorema-desigualdad-triangular.mdx",
+      "compatibility": "read-only",
+      "sourceHash": "461a9c36",
+      "totalBlocks": 14,
+      "editableBlocks": 3,
+      "opaqueBlocks": 11,
+      "reasons": [
+        "Document has ESM imports or exports (read-only visual mode)."
+      ]
+    },
+    {
+      "path": "src/database/content/theorems/teorema-dos-rectas-un-punto.mdx",
+      "compatibility": "read-only",
+      "sourceHash": "905aa939",
+      "totalBlocks": 13,
+      "editableBlocks": 3,
+      "opaqueBlocks": 10,
+      "reasons": [
+        "Document has ESM imports or exports (read-only visual mode)."
+      ]
+    },
+    {
+      "path": "src/database/content/theorems/teorema-existencia-bisectriz.mdx",
+      "compatibility": "read-only",
+      "sourceHash": "6d06d877",
+      "totalBlocks": 13,
+      "editableBlocks": 3,
+      "opaqueBlocks": 10,
+      "reasons": [
+        "Document has ESM imports or exports (read-only visual mode)."
+      ]
+    },
+    {
+      "path": "src/database/content/theorems/teorema-existencia-perpendicular.mdx",
+      "compatibility": "read-only",
+      "sourceHash": "6dd36ce8",
+      "totalBlocks": 14,
+      "editableBlocks": 3,
+      "opaqueBlocks": 11,
+      "reasons": [
+        "Document has ESM imports or exports (read-only visual mode)."
+      ]
+    },
+    {
+      "path": "src/database/content/theorems/teorema-invariancia-triangulacion.mdx",
+      "compatibility": "unsupported",
+      "sourceHash": "0dadb435",
+      "totalBlocks": 0,
+      "editableBlocks": 0,
+      "opaqueBlocks": 0,
+      "reasons": [
+        "Document contains critical parse exceptions."
+      ]
+    },
+    {
+      "path": "src/database/content/theorems/teorema-pitagoras.mdx",
+      "compatibility": "read-only",
+      "sourceHash": "d20068ab",
+      "totalBlocks": 16,
+      "editableBlocks": 3,
+      "opaqueBlocks": 13,
+      "reasons": [
+        "Document has ESM imports or exports (read-only visual mode)."
+      ]
+    },
+    {
+      "path": "src/database/content/theorems/teorema-punto-medio-perpendicular.mdx",
+      "compatibility": "read-only",
+      "sourceHash": "cb445390",
+      "totalBlocks": 15,
+      "editableBlocks": 3,
+      "opaqueBlocks": 12,
+      "reasons": [
+        "Document has ESM imports or exports (read-only visual mode)."
+      ]
+    },
+    {
+      "path": "src/database/content/theorems/teorema-reciproco-triangulo-isosceles.mdx",
+      "compatibility": "read-only",
+      "sourceHash": "465b2ea1",
+      "totalBlocks": 15,
+      "editableBlocks": 3,
+      "opaqueBlocks": 12,
+      "reasons": [
+        "Document has ESM imports or exports (read-only visual mode)."
+      ]
+    },
+    {
+      "path": "src/database/content/theorems/teorema-suma-angulos-triangulo.mdx",
+      "compatibility": "read-only",
+      "sourceHash": "4bda8024",
+      "totalBlocks": 14,
+      "editableBlocks": 3,
+      "opaqueBlocks": 11,
+      "reasons": [
+        "Document has ESM imports or exports (read-only visual mode)."
+      ]
+    },
+    {
+      "path": "src/database/content/theorems/teorema-tales.mdx",
+      "compatibility": "unsupported",
+      "sourceHash": "9a6e28ab",
+      "totalBlocks": 0,
+      "editableBlocks": 0,
+      "opaqueBlocks": 0,
+      "reasons": [
+        "Document contains critical parse exceptions."
+      ]
+    },
+    {
+      "path": "src/database/content/theorems/teorema-triangulacion-poligono.mdx",
+      "compatibility": "unsupported",
+      "sourceHash": "c45ef8bc",
+      "totalBlocks": 0,
+      "editableBlocks": 0,
+      "opaqueBlocks": 0,
+      "reasons": [
+        "Document contains critical parse exceptions."
+      ]
+    },
+    {
+      "path": "src/database/content/theorems/teorema-triangulo-isosceles.mdx",
+      "compatibility": "read-only",
+      "sourceHash": "681877fa",
+      "totalBlocks": 15,
+      "editableBlocks": 3,
+      "opaqueBlocks": 12,
+      "reasons": [
+        "Document has ESM imports or exports (read-only visual mode)."
+      ]
+    },
+    {
+      "path": "src/database/content/usecases/caso-gps-trilateracion.mdx",
+      "compatibility": "read-only",
+      "sourceHash": "23510e9a",
+      "totalBlocks": 18,
+      "editableBlocks": 4,
+      "opaqueBlocks": 14,
+      "reasons": [
+        "Document has ESM imports or exports (read-only visual mode)."
+      ]
+    }
+  ]
+}
