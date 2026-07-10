@@ -1,10 +1,10 @@
 # Estado actual de la infraestructura IA
 
-**Actualizado:** 2026-07-02
+**Actualizado:** 2026-07-10
 
-**Fase:** consolidación documental multi-IA
+**Fase:** estabilización del editor (Fase 0 activa - Contención, baseline y gobierno)
 
-**Estado:** capa común establecida; sin cambios de producto en esta fase.
+**Estado:** contención temporal implementada; guardado visual y autoguardado de borrador desactivados; baseline técnico documentado.
 
 ## Decisiones vigentes
 
