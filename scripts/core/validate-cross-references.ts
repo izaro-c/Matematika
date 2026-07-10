@@ -124,6 +124,9 @@ for (const file of allFiles) {
   const relPath = path.relative(CONTENT_DIR, file);
 
   const checkId = (field: string, refId: string) => {
+    if (field === 'requiredNodes' && refId.startsWith('checkpoint-')) {
+      return; // Checkpoints lógicos autogestionados
+    }
     if (!allContent.has(refId)) {
       error(`${relPath}: '${field}' apunta a '${refId}' que no existe`);
     }

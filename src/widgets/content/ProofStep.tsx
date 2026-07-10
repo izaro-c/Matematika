@@ -1,6 +1,6 @@
 import React, { useMemo } from 'react';
 import { publicAsset } from '@/shared/lib/routeHelper';
-import { useMathStore } from '@/app/providers/MathStoreContext';
+import { useMathStore } from '@/shared/lib/MathStoreContext';
 import { ProofStepExpander } from './ProofStepExpander';
 
 interface ProofStepProps {

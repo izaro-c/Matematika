@@ -1,5 +1,5 @@
 import React, { useMemo, Suspense } from 'react';
-import { useMathStore } from '@/app/providers/MathStoreContext';
+import { useMathStore } from '@/shared/lib/MathStoreContext';
 import { CodexLayout } from '@/widgets/layouts/CodexLayout';
 
 /**

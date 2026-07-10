@@ -1,14 +1,19 @@
 export const metadata = {
-  id: '{{ID}}',
-  title: '{{TITLE}}',
-  description: '{{DESCRIPTION}}',
-  color: '{{COLOR}}',
-  authors: [],
-  type: 'theorem',
-  tags: []
+  "id": "{{ID}}",
+  "type": "teorema",
+  "title": "{{TITLE}}",
+  "description": "{{DESCRIPTION}}",
+  "statement": "",
+  "color": "{{COLOR}}",
+  "authors": [],
+  "requires": [],
+  "lemmas": [],
+  "corollaries": [],
+  "demos": [],
+  "tags": []
 };
 
-<Capitular letra="{{FIRST_LETTER}}" />l teorema establece que...
+<Capitular letra="{{FIRST_LETTER}}" />l teorema sitúa con precisión la relación que se quiere estudiar.
 
 <Formula>
 $$ x = y $$
@@ -18,4 +23,4 @@ $$ x = y $$
 
 ### Explicación Formal
 
-Explicación del teorema.
+Explicación del teorema con referencias mediante ConceptLink cuando aparezcan dependencias.

@@ -1,29 +1,24 @@
 export const metadata = {
-  id: '{{ID}}',
-  title: '{{TITLE}}',
-  description: '{{DESCRIPTION}}',
-  parentTheorem: '',
-  proofMethod: '',
-  authors: [],
-  tags: []
+  "id": "{{ID}}",
+  "type": "demostracion",
+  "title": "{{TITLE}}",
+  "description": "{{DESCRIPTION}}",
+  "parentTheorem": "",
+  "proofMethod": "directo",
+  "authors": [],
+  "layout": "split",
+  "dependencias": [],
+  "tags": []
 };
 
-<div className="pt-8 pb-8 mb-8 max-w-prose mx-auto text-center border-t border-carbon/10">
-  <p className="font-serif text-pizarra italic text-2xl font-bold" style={{ fontVariant: 'small-caps' }}>
-    Demostración de {{TITLE}}
-  </p>
-  <Separador />
-</div>
+<Separador />
 
 <Demostracion>
+  <ProofStep number={1} title="Paso inicial" justificacion="Especificar justificación lógica" justificationType="hipotesis">
+    Descripción del primer paso con ConceptLink e InteractiveElement cuando haya diagrama.
+  </ProofStep>
 
-<ProofStep number={1} title="Paso Inicial" />
-
-Descripción del primer paso.
-
-<ProofStep number={2} title="Desarrollo Lógico" />
-
-Siguientes implicaciones formales.
-
-<div className="text-right mt-8 text-2xl font-bold text-carbon">$\blacksquare$</div>
+  <ProofStep number={2} title="Desarrollo lógico" justificacion="Especificar justificación lógica" justificationType="paso-previo">
+    Siguientes implicaciones formales.
+  </ProofStep>
 </Demostracion>
