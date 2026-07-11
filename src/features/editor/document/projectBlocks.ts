@@ -1,4 +1,4 @@
-import { ProjectedBlock, VisualCompatibility, EditorDocument } from './documentTypes';
+import type { ProjectedBlock, VisualCompatibility, EditorDocument } from './documentTypes';
 
 function mapLocation(position: any) {
   return {

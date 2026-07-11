@@ -1,0 +1,222 @@
+import fs from 'node:fs';
+import path from 'node:path';
+import crypto from 'node:crypto';
+import type {
+  ApplyContentRequest, ApplyContentResponse, ReadContentResponse, ReadDraftResponse,
+  RestoreBackupRequest, RestoreBackupResponse, SaveDraftRequest, SaveDraftResponse
+} from '../../src/features/editor/persistence/persistenceContracts';
+
+export class BackendError extends Error {
+  readonly status: number;
+  readonly payload: Record<string, unknown>;
+  constructor(status: number, payload: Record<string, unknown>) {
+    super(String(payload.message ?? `HTTP ${status}`));
+    this.status = status;
+    this.payload = payload;
+  }
+}
+
+export interface PersistenceBackendOptions {
+  srcRoot: string;
+  storageRoot: string;
+  allowedRoots: string[];
+  readRoots?: string[];
+  validateSource(path: string, source: string): void | Promise<void>;
+  beforeBackup?: () => void | Promise<void>;
+  beforeTempWrite?: () => void | Promise<void>;
+}
+
+interface BackupRecord { id: string; path: string; source: string; sourceHash: string; version: string }
+interface DraftRecord extends SaveDraftResponse { source: string }
+
+function sourceHash(source: string): string {
+  return crypto.createHash('sha256').update(source, 'utf8').digest('hex');
+}
+function versionOf(source: string): string { return `sha256:${sourceHash(source)}`; }
+function inside(candidate: string, root: string): boolean { return candidate === root || candidate.startsWith(`${root}${path.sep}`); }
+function jsonName(prefix: string, value: string): string {
+  return `${prefix}-${crypto.createHash('sha256').update(value).digest('hex')}.json`;
+}
+
+export class EditorPersistenceBackend {
+  private readonly backupRoot: string;
+  private readonly draftRoot: string;
+
+  private readonly options: PersistenceBackendOptions;
+  constructor(options: PersistenceBackendOptions) {
+    this.options = options;
+    this.backupRoot = path.join(options.storageRoot, 'backups');
+    this.draftRoot = path.join(options.storageRoot, 'drafts');
+  }
+
+  async readContent(relativePath: string): Promise<ReadContentResponse> {
+    const file = await this.resolveFile(relativePath, false, this.options.readRoots ?? this.options.allowedRoots);
+    let source: string;
+    try { source = await fs.promises.readFile(file, 'utf8'); }
+    catch (error) {
+      if ((error as NodeJS.ErrnoException).code === 'ENOENT') throw new BackendError(404, { message: 'File not found' });
+      throw error;
+    }
+    return { path: relativePath, source, sourceHash: sourceHash(source), version: versionOf(source) };
+  }
+
+  async saveDraft(request: SaveDraftRequest): Promise<SaveDraftResponse> {
+    await this.resolveFile(request.path, false);
+    this.assertHash(request.source, request.sourceHash);
+    await this.options.validateSource(request.path, request.source);
+    await fs.promises.mkdir(this.draftRoot, { recursive: true });
+    const draftId = jsonName('draft', request.path).replace(/\.json$/, '');
+    const savedAt = new Date().toISOString();
+    const record: DraftRecord = { ...request, draftId, savedAt };
+    await this.writeJsonAtomic(path.join(this.draftRoot, `${draftId}.json`), record);
+    return { path: request.path, draftId, sourceHash: request.sourceHash, baseVersion: request.baseVersion,
+      localRevision: request.localRevision, savedAt };
+  }
+
+  async readDraft(relativePath: string): Promise<ReadDraftResponse> {
+    await this.resolveFile(relativePath, false);
+    const draftId = jsonName('draft', relativePath).replace(/\.json$/, '');
+    try { return JSON.parse(await fs.promises.readFile(path.join(this.draftRoot, `${draftId}.json`), 'utf8')) as ReadDraftResponse; }
+    catch (error) {
+      if ((error as NodeJS.ErrnoException).code === 'ENOENT') throw new BackendError(404, { message: 'Draft not found' });
+      throw error;
+    }
+  }
+
+  async applyContent(request: ApplyContentRequest): Promise<ApplyContentResponse> {
+    const file = await this.resolveFile(request.path, false);
+    this.assertHash(request.source, request.sourceHash);
+    await this.options.validateSource(request.path, request.source);
+    const current = await fs.promises.readFile(file, 'utf8');
+    const currentVersion = versionOf(current);
+    if (currentVersion !== request.expectedVersion) this.conflict(request.path, request.expectedVersion, currentVersion, request.localRevision);
+    const backupId = await this.createBackup(request.path, current);
+    await this.replaceAtomically(file, request.path, request.source);
+    await this.removeDraft(request.path);
+    return { path: request.path, sourceHash: request.sourceHash, previousVersion: currentVersion,
+      version: versionOf(request.source), localRevision: request.localRevision, backupId };
+  }
+
+  async createContent(request: Omit<ApplyContentRequest, 'expectedVersion'>): Promise<ApplyContentResponse> {
+    const file = await this.resolveFile(request.path, true);
+    this.assertHash(request.source, request.sourceHash);
+    await this.options.validateSource(request.path, request.source);
+    try {
+      await fs.promises.access(file);
+      this.conflict(request.path, 'missing', versionOf(await fs.promises.readFile(file, 'utf8')), request.localRevision);
+    } catch (error) {
+      if (error instanceof BackendError) throw error;
+      if ((error as NodeJS.ErrnoException).code !== 'ENOENT') throw error;
+    }
+    const temporary = path.join(path.dirname(file), `.${path.basename(file)}.${crypto.randomUUID()}.tmp`);
+    try {
+      await fs.promises.writeFile(temporary, request.source, { encoding: 'utf8', flag: 'wx' });
+      await this.options.validateSource(request.path, await fs.promises.readFile(temporary, 'utf8'));
+      await fs.promises.link(temporary, file);
+    } catch (error) {
+      if ((error as NodeJS.ErrnoException).code === 'EEXIST') this.conflict(request.path, 'missing', 'file-created-concurrently', request.localRevision);
+      throw error;
+    } finally {
+      await fs.promises.rm(temporary, { force: true }).catch(() => undefined);
+    }
+    return { path: request.path, sourceHash: request.sourceHash, previousVersion: 'missing', version: versionOf(request.source),
+      localRevision: request.localRevision, backupId: `created-${crypto.randomUUID()}` };
+  }
+
+  async restoreBackup(request: RestoreBackupRequest): Promise<RestoreBackupResponse> {
+    const file = await this.resolveFile(request.path, false);
+    const current = await fs.promises.readFile(file, 'utf8');
+    const currentVersion = versionOf(current);
+    if (currentVersion !== request.expectedVersion) this.conflict(request.path, request.expectedVersion, currentVersion, 0);
+    const restored = await this.readBackup(request.backupId);
+    if (restored.path !== request.path) throw new BackendError(400, { message: 'Backup does not belong to requested file' });
+    await this.options.validateSource(request.path, restored.source);
+    const backupId = await this.createBackup(request.path, current);
+    await this.replaceAtomically(file, request.path, restored.source);
+    return { path: request.path, sourceHash: restored.sourceHash, previousVersion: currentVersion,
+      version: versionOf(restored.source), backupId, restoredBackupId: request.backupId };
+  }
+
+  private async resolveFile(relativePath: string, allowMissing: boolean, roots = this.options.allowedRoots): Promise<string> {
+    if (!relativePath || path.isAbsolute(relativePath) || relativePath.includes('\0') || relativePath.split(/[\\/]+/).includes('..')) {
+      throw new BackendError(400, { message: 'Invalid path' });
+    }
+    if (!['.mdx', '.tsx'].includes(path.extname(relativePath))) throw new BackendError(400, { message: 'Extension not allowed' });
+    const absolute = path.resolve(this.options.srcRoot, relativePath);
+    const allowed = roots.some(root => inside(absolute, path.resolve(root)));
+    if (!allowed) throw new BackendError(403, { message: 'Path outside allowed roots' });
+    const parentReal = await fs.promises.realpath(path.dirname(absolute));
+    if (!roots.some(root => inside(parentReal, path.resolve(root)))) throw new BackendError(403, { message: 'Symlink escapes allowed roots' });
+    if (!allowMissing) {
+      try {
+        const real = await fs.promises.realpath(absolute);
+        if (!roots.some(root => inside(real, path.resolve(root)))) throw new BackendError(403, { message: 'Symlink escapes allowed roots' });
+      } catch (error) {
+        if ((error as NodeJS.ErrnoException).code === 'ENOENT') throw new BackendError(404, { message: 'File not found' });
+        throw error;
+      }
+    }
+    return absolute;
+  }
+
+  private assertHash(source: string, expected: string): void {
+    const actual = sourceHash(source);
+    if (actual !== expected) throw new BackendError(400, { message: 'Source hash mismatch', expected, actual });
+  }
+
+  private conflict(filePath: string, expectedVersion: string, actualVersion: string, localRevision: number): never {
+    throw new BackendError(409, { kind: 'content-conflict', path: filePath, expectedVersion, actualVersion, localRevision });
+  }
+
+  private async createBackup(relativePath: string, source: string): Promise<string> {
+    await this.options.beforeBackup?.();
+    await fs.promises.mkdir(this.backupRoot, { recursive: true });
+    const id = crypto.randomUUID();
+    const record: BackupRecord = { id, path: relativePath, source, sourceHash: sourceHash(source), version: versionOf(source) };
+    await fs.promises.writeFile(path.join(this.backupRoot, `${id}.json`), JSON.stringify(record), { encoding: 'utf8', flag: 'wx' });
+    return id;
+  }
+
+  private async readBackup(id: string): Promise<BackupRecord> {
+    if (!/^[0-9a-f-]{36}$/i.test(id)) throw new BackendError(400, { message: 'Invalid backup id' });
+    try { return JSON.parse(await fs.promises.readFile(path.join(this.backupRoot, `${id}.json`), 'utf8')) as BackupRecord; }
+    catch (error) {
+      if ((error as NodeJS.ErrnoException).code === 'ENOENT') throw new BackendError(404, { message: 'Backup not found' });
+      throw error;
+    }
+  }
+
+  private async replaceAtomically(file: string, relativePath: string, source: string): Promise<void> {
+    const temporary = path.join(path.dirname(file), `.${path.basename(file)}.${crypto.randomUUID()}.tmp`);
+    try {
+      await this.options.beforeTempWrite?.();
+      await fs.promises.writeFile(temporary, source, { encoding: 'utf8', flag: 'wx' });
+      const temporarySource = await fs.promises.readFile(temporary, 'utf8');
+      await this.options.validateSource(relativePath, temporarySource);
+      if (temporarySource !== source) throw new BackendError(500, { message: 'Temporary verification mismatch' });
+      await fs.promises.rename(temporary, file);
+    } catch (error) {
+      await fs.promises.rm(temporary, { force: true }).catch(() => undefined);
+      throw error;
+    }
+  }
+
+  private async writeJsonAtomic(file: string, value: unknown): Promise<void> {
+    const temporary = `${file}.${crypto.randomUUID()}.tmp`;
+    try {
+      await fs.promises.writeFile(temporary, JSON.stringify(value), { encoding: 'utf8', flag: 'wx' });
+      await fs.promises.rename(temporary, file);
+    } catch (error) {
+      await fs.promises.rm(temporary, { force: true }).catch(() => undefined);
+      throw error;
+    }
+  }
+
+  private async removeDraft(relativePath: string): Promise<void> {
+    const draftId = jsonName('draft', relativePath).replace(/\.json$/, '');
+    await fs.promises.rm(path.join(this.draftRoot, `${draftId}.json`), { force: true });
+  }
+}
+
+export const contentHash = sourceHash;
+export const contentVersion = versionOf;

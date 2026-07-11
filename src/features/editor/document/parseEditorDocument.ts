@@ -3,7 +3,7 @@ import remarkParse from 'remark-parse';
 import remarkMdx from 'remark-mdx';
 import remarkGfm from 'remark-gfm';
 import remarkMath from 'remark-math';
-import { EditorDocument, EditorDiagnostic, VisualCompatibility, SourceLocation, ProjectedBlock } from './documentTypes';
+import type { EditorDocument, EditorDiagnostic, VisualCompatibility, SourceLocation, ProjectedBlock } from './documentTypes';
 import { projectBlocks, classifyVisualCompatibility } from './projectBlocks';
 
 export function computeHash(content: string): string {

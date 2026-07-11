@@ -4,6 +4,7 @@ import tailwindcss from '@tailwindcss/vite'
 import mdx from '@mdx-js/rollup'
 import fs from 'fs'
 import path from 'path'
+import crypto from 'node:crypto'
 import { fileURLToPath } from 'url'
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url))
@@ -15,8 +16,11 @@ import rehypeKatex from 'rehype-katex'
 import type { Plugin, ViteDevServer } from 'vite';
 import type { IncomingMessage, ServerResponse } from 'http';
 import { visualizer } from 'rollup-plugin-visualizer';
-
-const drafts = new Map<string, string>();
+import { parseEditorDocument } from './src/features/editor/document/parseEditorDocument';
+import {
+  applyContentRequestSchema, restoreBackupRequestSchema, saveDraftRequestSchema
+} from './src/features/editor/persistence/persistenceContracts';
+import { BackendError, EditorPersistenceBackend } from './scripts/editor/editorPersistenceBackend';
 
 /**
  * Plugin personalizado de Vite (`editorAPI`) para Matematika.
@@ -24,142 +28,121 @@ const drafts = new Map<string, string>();
  * ligera (lectura/escritura/listado) que permite al Editor Web modificar
  * archivos locales (.mdx, .tsx) y usar el HMR de Vite para Live Preview.
  */
-function isPathAllowed(absolutePath: string, allowedDirs: string[]): boolean {
-  return allowedDirs.some(dir => absolutePath.startsWith(dir + path.sep) || absolutePath === dir);
+const MAX_REQUEST_BYTES = 5 * 1024 * 1024;
+
+function sendJson(res: ServerResponse, status: number, payload: unknown) {
+  res.statusCode = status;
+  res.setHeader('Content-Type', 'application/json');
+  res.end(JSON.stringify(payload));
+}
+
+function readJsonBody(req: IncomingMessage): Promise<unknown> {
+  return new Promise((resolve, reject) => {
+    let body = '';
+    req.on('data', (chunk: Buffer) => {
+      body += chunk.toString();
+      if (Buffer.byteLength(body) > MAX_REQUEST_BYTES) reject(new BackendError(413, { message: 'Request body too large' }));
+    });
+    req.on('end', () => {
+      try { resolve(JSON.parse(body)); }
+      catch { reject(new BackendError(400, { message: 'Invalid JSON body' })); }
+    });
+    req.on('error', reject);
+  });
+}
+
+function handleBackendError(res: ServerResponse, error: unknown) {
+  if (error instanceof BackendError) sendJson(res, error.status, error.payload);
+  else sendJson(res, 500, { message: error instanceof Error ? error.message : 'Unknown server error' });
 }
 
 function editorAPI(): Plugin {
-  let viteServer: ViteDevServer;
   return {
     name: 'editor-api',
     enforce: 'pre' as const,
     apply: 'serve',
     configureServer(server: ViteDevServer) {
-      viteServer = server;
       const srcRoot = path.resolve(__dirname, 'src');
+      const writeRoots = [
+        path.resolve(srcRoot, 'database/content'),
+        path.resolve(srcRoot, 'shared/diagrams'),
+        path.resolve(srcRoot, 'widgets/diagrams')
+      ];
+      const backend = new EditorPersistenceBackend({
+        srcRoot,
+        storageRoot: path.resolve(__dirname, '.matematika/editor'),
+        allowedRoots: writeRoots,
+        readRoots: [...writeRoots, path.resolve(srcRoot, 'shared/templates')],
+        validateSource(filePath, source) {
+          if (filePath.endsWith('.mdx') && parseEditorDocument(source).compatibility === 'unsupported') {
+            throw new BackendError(400, { message: 'Invalid MDX source' });
+          }
+          if (filePath.endsWith('.tsx') && source.trim().length === 0) throw new BackendError(400, { message: 'Empty TSX source' });
+        }
+      });
 
-      server.middlewares.use('/api/content', (req: IncomingMessage, res: ServerResponse) => {
+      server.middlewares.use('/api/content/restore', async (req: IncomingMessage, res: ServerResponse) => {
+        if (req.method !== 'POST') return sendJson(res, 405, { message: 'Method not allowed' });
+        try {
+          const parsed = restoreBackupRequestSchema.safeParse(await readJsonBody(req));
+          if (!parsed.success) return sendJson(res, 400, { message: 'Invalid restore request', details: parsed.error.issues });
+          sendJson(res, 200, await backend.restoreBackup(parsed.data));
+        } catch (error) { handleBackendError(res, error); }
+      });
+
+      server.middlewares.use('/api/content', async (req: IncomingMessage, res: ServerResponse) => {
         const url = new URL(req.url || '/', `http://${req.headers.host}`)
-
         if (req.method === 'GET') {
-          const rawPath = url.searchParams.get('path')
-          if (!rawPath) {
-            res.statusCode = 400
-            return res.end('Missing path')
-          }
-          if (rawPath.includes('..')) {
-            res.statusCode = 400;
-            return res.end('Invalid path');
-          }
-          const absolutePath = path.resolve(__dirname, 'src', rawPath)
-          const allowedDirs = [
-            path.resolve(srcRoot, 'database/content'),
-            path.resolve(srcRoot, 'shared/diagrams'),
-            path.resolve(srcRoot, 'widgets/diagrams'),
-            path.resolve(srcRoot, 'shared/templates')
-          ];
-          const isAllowed = isPathAllowed(absolutePath, allowedDirs);
-          if (!isAllowed) {
-            res.statusCode = 403
-            return res.end('Forbidden: path not in allowed editor directories')
-          }
-          if (!fs.existsSync(absolutePath)) {
-            res.statusCode = 404
-            return res.end('File not found')
-          }
-          const content = fs.readFileSync(absolutePath, 'utf-8')
-          res.setHeader('Content-Type', 'text/plain')
-          res.end(content)
+          const rawPath = url.searchParams.get('path');
+          if (!rawPath) return sendJson(res, 400, { message: 'Missing path' });
+          try { sendJson(res, 200, await backend.readContent(rawPath)); }
+          catch (error) { handleBackendError(res, error); }
           return
         }
-
         if (req.method === 'POST') {
-          let body = ''
-          req.on('data', (chunk: Buffer) => { body += chunk.toString() })
-          req.on('end', () => {
-            try {
-              const data = JSON.parse(body)
-              if (!data.path || !data.content) {
-                res.statusCode = 400
-                return res.end('Missing path or content')
+          try {
+            const payload = await readJsonBody(req);
+            if (payload && typeof payload === 'object' && 'path' in payload && 'content' in payload &&
+                typeof payload.path === 'string' && payload.path.endsWith('.tsx') && typeof payload.content === 'string') {
+              const sourceHash = crypto.createHash('sha256').update(payload.content, 'utf8').digest('hex');
+              try {
+                const current = await backend.readContent(payload.path);
+                return sendJson(res, 200, await backend.applyContent({ path: payload.path, source: payload.content, sourceHash,
+                  expectedVersion: current.version, localRevision: 0 }));
+              } catch (error) {
+                if (error instanceof BackendError && error.status === 404) {
+                  return sendJson(res, 200, await backend.createContent({ path: payload.path, source: payload.content, sourceHash, localRevision: 0 }));
+                }
+                throw error;
               }
-              if (data.path.includes('..')) {
-                res.statusCode = 400;
-                return res.end('Invalid path');
-              }
-              const absolutePath = path.resolve(__dirname, 'src', data.path)
-              const allowedDirs = [
-                path.resolve(srcRoot, 'database/content'),
-                path.resolve(srcRoot, 'shared/diagrams'),
-                path.resolve(srcRoot, 'widgets/diagrams')
-              ];
-              const isAllowed = isPathAllowed(absolutePath, allowedDirs);
-              if (!isAllowed) {
-                res.statusCode = 403
-                return res.end('Forbidden: path not in allowed editor directories or read-only')
-              }
-              const dir = path.dirname(absolutePath)
-              if (!fs.existsSync(dir)) {
-                fs.mkdirSync(dir, { recursive: true })
-              }
-              fs.writeFileSync(absolutePath, data.content, 'utf-8')
-              drafts.delete(absolutePath) // Remove draft on save
-              res.setHeader('Content-Type', 'application/json')
-              res.end(JSON.stringify({ success: true }))
-            } catch (err: unknown) {
-              res.statusCode = 500
-              res.end(err instanceof Error ? err.message : String(err))
             }
-          })
+            const parsed = applyContentRequestSchema.safeParse(payload);
+            if (!parsed.success) return sendJson(res, 400, { message: 'Invalid apply request', details: parsed.error.issues });
+            sendJson(res, 200, await backend.applyContent(parsed.data));
+          } catch (error) { handleBackendError(res, error); }
           return
         }
-
-        res.statusCode = 405
-        res.end('Method not allowed')
+        sendJson(res, 405, { message: 'Method not allowed' });
       })
 
-      server.middlewares.use('/api/draft', (req: IncomingMessage, res: ServerResponse) => {
+      server.middlewares.use('/api/draft', async (req: IncomingMessage, res: ServerResponse) => {
+        const url = new URL(req.url || '/', `http://${req.headers.host}`);
+        if (req.method === 'GET') {
+          const rawPath = url.searchParams.get('path');
+          if (!rawPath) return sendJson(res, 400, { message: 'Missing path' });
+          try { sendJson(res, 200, await backend.readDraft(rawPath)); }
+          catch (error) { handleBackendError(res, error); }
+          return;
+        }
         if (req.method === 'POST') {
-          let body = ''
-          req.on('data', (chunk: Buffer) => { body += chunk.toString() })
-          req.on('end', () => {
-            try {
-              const data = JSON.parse(body)
-              if (!data.path || !data.content) {
-                res.statusCode = 400
-                return res.end('Missing path or content')
-              }
-              if (data.path.includes('..')) {
-                res.statusCode = 400;
-                return res.end('Invalid path');
-              }
-              const absolutePath = path.resolve(__dirname, 'src', data.path)
-              const allowedDirs = [
-                path.resolve(srcRoot, 'database/content'),
-                path.resolve(srcRoot, 'shared/diagrams'),
-                path.resolve(srcRoot, 'widgets/diagrams')
-              ];
-              const isAllowed = isPathAllowed(absolutePath, allowedDirs);
-              if (!isAllowed) {
-                res.statusCode = 403;
-                return res.end('Forbidden: path not in allowed editor directories');
-              }
-              drafts.set(absolutePath, data.content)
-
-              // Emit file change to Vite watcher to force proper HMR pipeline!
-              viteServer.watcher.emit('change', absolutePath)
-
-              res.setHeader('Content-Type', 'application/json')
-              res.end(JSON.stringify({ success: true }))
-            } catch (err: unknown) {
-              res.statusCode = 500
-              res.end(err instanceof Error ? err.message : String(err))
-            }
-          })
+          try {
+            const parsed = saveDraftRequestSchema.safeParse(await readJsonBody(req));
+            if (!parsed.success) return sendJson(res, 400, { message: 'Invalid draft request', details: parsed.error.issues });
+            sendJson(res, 200, await backend.saveDraft(parsed.data));
+          } catch (error) { handleBackendError(res, error); }
           return
         }
-        res.statusCode = 405
-        res.end('Method not allowed')
+        sendJson(res, 405, { message: 'Method not allowed' });
       })
 
       server.middlewares.use('/api/list-content', (req: IncomingMessage, res: ServerResponse) => {
@@ -201,12 +184,6 @@ function editorAPI(): Plugin {
         res.end('Method not allowed')
       })
     },
-    load(id: string) {
-      const cleanId = id.split('?')[0]
-      if (drafts.has(cleanId)) {
-        return drafts.get(cleanId)
-      }
-    }
   }
 }
 
