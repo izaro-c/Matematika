@@ -1,34 +1,31 @@
 import { ProjectedBlock, VisualCompatibility, EditorDocument } from './documentTypes';
-import { mapLocation } from './parseEditorDocument';
 
-function isComplexParagraph(node: any): boolean {
-  if (!node.children) return false;
-  for (const child of node.children) {
-    if (
-      child.type === 'mdxJsxTextElement' ||
-      child.type === 'mdxTextExpression' ||
-      child.type === 'html' ||
-      child.type === 'inlineMath'
-    ) {
-      return true;
-    }
-  }
-  return false;
+function mapLocation(position: any) {
+  return {
+    range: { start: position?.start?.offset ?? 0, end: position?.end?.offset ?? 0 },
+    startLine: position?.start?.line,
+    startColumn: position?.start?.column,
+    endLine: position?.end?.line,
+    endColumn: position?.end?.column
+  };
 }
 
-export function projectBlocks(source: string, ast: any): { blocks: ProjectedBlock[]; compatibility: VisualCompatibility } {
+function isComplexParagraph(node: any): boolean {
+  return !Array.isArray(node.children) || node.children.length !== 1 || node.children[0].type !== 'text';
+}
+
+export function projectBlocks(source: string, bodyNodes: any[]): { blocks: ProjectedBlock[]; compatibility: VisualCompatibility } {
   const blocks: ProjectedBlock[] = [];
   let compatibility: VisualCompatibility = 'fully-editable';
 
-  if (!ast || !ast.children) {
+  if (!Array.isArray(bodyNodes)) {
     return { blocks, compatibility: 'unsupported' };
   }
 
   let index = 0;
   let hasOpaque = false;
-  let hasExports = false;
 
-  for (const node of ast.children) {
+  for (const node of bodyNodes) {
     const location = mapLocation(node.position);
     const nodeSource = source.slice(location.range.start, location.range.end);
     const id = `block-${index}`;
@@ -46,14 +43,17 @@ export function projectBlocks(source: string, ast: any): { blocks: ProjectedBloc
           nodeType: node.type
         });
       } else {
+        const child = node.children?.[0];
+        const editRange = child?.position ? mapLocation(child.position).range : location.range;
         blocks.push({
           kind: 'editable',
           id,
           blockType: 'paragraph',
           location,
-          originalSource: nodeSource,
+          editRange,
+          originalSource: source.slice(editRange.start, editRange.end),
           data: {
-            text: nodeSource
+            text: source.slice(editRange.start, editRange.end)
           }
         });
       }
@@ -69,15 +69,18 @@ export function projectBlocks(source: string, ast: any): { blocks: ProjectedBloc
           nodeType: node.type
         });
       } else {
+        const child = node.children?.[0];
+        const editRange = child?.position ? mapLocation(child.position).range : location.range;
         blocks.push({
           kind: 'editable',
           id,
           blockType: 'heading',
           location,
-          originalSource: nodeSource,
+          editRange,
+          originalSource: source.slice(editRange.start, editRange.end),
           data: {
             depth: node.depth,
-            text: nodeSource
+            text: source.slice(editRange.start, editRange.end)
           }
         });
       }
@@ -85,10 +88,7 @@ export function projectBlocks(source: string, ast: any): { blocks: ProjectedBloc
       hasOpaque = true;
       let reason = `Unsupported AST node type: ${node.type}`;
       
-      if (node.type === 'mdxjsEsm') {
-        hasExports = true;
-        reason = 'ESM import or export statement';
-      } else if (node.type === 'mdxJsxFlowElement') {
+      if (node.type === 'mdxJsxFlowElement') {
         reason = `JSX block component: <${node.name}>`;
       } else if (node.type === 'mdxFlowExpression') {
         reason = 'JSX multiline expression block';
@@ -111,7 +111,7 @@ export function projectBlocks(source: string, ast: any): { blocks: ProjectedBloc
     }
   }
 
-  if (hasExports) {
+  if (blocks.length > 0 && blocks.every(block => block.kind === 'opaque')) {
     compatibility = 'read-only';
   } else if (hasOpaque) {
     compatibility = 'partially-editable';
@@ -128,15 +128,15 @@ export function classifyVisualCompatibility(doc: EditorDocument): { compatibilit
     return { compatibility: 'unsupported', reasons };
   }
 
-  const opacities = doc.blocks.filter(b => b.kind === 'opaque');
+  const opacities = doc.bodyBlocks.filter(b => b.kind === 'opaque');
   
-  if (doc.blocks.length === 0) {
-    return { compatibility: 'fully-editable', reasons };
+  if (doc.bodyBlocks.length === 0) {
+    reasons.push('Document body has no editable visual blocks.');
+    return { compatibility: 'read-only', reasons };
   }
 
-  const hasExports = opacities.some(b => b.nodeType === 'mdxjsEsm');
-  if (hasExports) {
-    reasons.push('Document has ESM imports or exports (read-only visual mode).');
+  if (opacities.length === doc.bodyBlocks.length) {
+    reasons.push('Document body contains only opaque blocks.');
     return { compatibility: 'read-only', reasons };
   }
 

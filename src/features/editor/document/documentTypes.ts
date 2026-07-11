@@ -27,6 +27,7 @@ export interface EditorDiagnostic {
 }
 
 export interface SourceEdit {
+  blockId: string;
   range: SourceRange;
   expectedSource: string;
   replacement: string;
@@ -49,6 +50,7 @@ export interface EditableBlock {
   blockType: string;
   originalSource: string;
   location: SourceLocation;
+  editRange: SourceRange;
   data: unknown;
 }
 
@@ -58,10 +60,20 @@ export interface EditorDocument {
   source: string;
   sourceHash: string;
   ast: unknown;
-  blocks: ProjectedBlock[];
+  envelope: {
+    metadataRange?: SourceRange;
+    importRanges: SourceRange[];
+    exportRanges: SourceRange[];
+  };
+  bodyRange: SourceRange;
+  bodyBlocks: ProjectedBlock[];
   diagnostics: EditorDiagnostic[];
   compatibility: VisualCompatibility;
+  compatibilityReasons: string[];
 }
+
+/** Temporary alias for consumers being migrated from the phase-2 prototype. */
+export type EditorDocumentWithLegacyBlocks = EditorDocument & { blocks?: never };
 
 export interface SourceEditResult {
   success: boolean;

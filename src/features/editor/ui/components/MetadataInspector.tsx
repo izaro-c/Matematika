@@ -6,6 +6,7 @@ interface MetadataInspectorProps {
   onChange: (key: string, value: any) => void;
   onRemove: (key: string) => void;
   onAddCustom: () => void;
+  disabled?: boolean;
 }
 
 function readFieldValue(field: MetadataFieldConfig, value: any) {
@@ -20,6 +21,7 @@ export const MetadataInspector: React.FC<MetadataInspectorProps> = ({
   onChange,
   onRemove,
   onAddCustom,
+  disabled = false,
 }) => {
   const type = String(metadata.type || '');
   const fields = getMetadataFields(type);
@@ -89,7 +91,7 @@ export const MetadataInspector: React.FC<MetadataInspectorProps> = ({
   };
 
   return (
-    <div className="flex-1 space-y-4 overflow-y-auto bg-lienzo p-4">
+    <fieldset disabled={disabled} className="flex-1 space-y-4 overflow-y-auto bg-lienzo p-4 disabled:opacity-60">
       <div className="flex items-center justify-between border-b border-carbon/15 pb-2">
         <div>
           <h3 className="font-serif text-sm font-bold text-carbon">Metadatos</h3>
@@ -138,6 +140,6 @@ export const MetadataInspector: React.FC<MetadataInspectorProps> = ({
           </div>
         </div>
       )}
-    </div>
+    </fieldset>
   );
 };
