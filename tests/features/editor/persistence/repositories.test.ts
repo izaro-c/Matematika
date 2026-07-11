@@ -17,7 +17,7 @@ async function snapshot(): Promise<EditorSaveSnapshot> {
 
 async function expectProtocolFailure(operation: Promise<unknown>) {
   await expect(operation).rejects.toSatisfy((error: unknown) =>
-    error instanceof PersistenceFailure && error.detail.kind === 'invalid-response');
+    error instanceof PersistenceFailure && error.detail.kind === 'protocol-error');
 }
 
 describe('persistence repositories semantic contracts', () => {
@@ -25,7 +25,7 @@ describe('persistence repositories semantic contracts', () => {
     ['previous version', { previousVersion: 'sha256:wrong' }],
     ['canonical version', { version: 'sha256:wrong' }],
     ['path', { path: 'database/content/other.mdx' }],
-    ['revision', { localRevision: 8 }],
+    ['revision', { confirmedRevision: 8 }],
     ['source hash', { sourceHash: 'wrong' }]
   ])('rejects an incoherent apply response: %s', async (_name, override) => {
     const value = await snapshot();
@@ -35,7 +35,7 @@ describe('persistence repositories semantic contracts', () => {
         sourceHash: value.sourceHash,
         previousVersion: value.baseVersion,
         version: `sha256:${value.sourceHash}`,
-        localRevision: value.localRevision,
+        confirmedRevision: value.localRevision,
         backupId: 'backup',
         ...override
       })
@@ -53,6 +53,6 @@ describe('persistence repositories semantic contracts', () => {
     const client = { saveDraft: async () => ({ path, draftId: 'draft', sourceHash: value.sourceHash,
       baseVersion: value.baseVersion, localRevision: value.localRevision, editorSessionId: 'wrong-session',
       disposition: 'accepted', savedAt: new Date().toISOString() }) } as EditorApiClient;
-    await expectProtocolFailure(new DraftRepository(client).save({ ...value, editorSessionId: 'session-a' } as never));
+    await expectProtocolFailure(new DraftRepository(client).save({ ...value, editorSessionId: 'session-a' }));
   });
 });

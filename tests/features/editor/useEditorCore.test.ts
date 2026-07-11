@@ -1,4 +1,5 @@
 import { act, renderHook, waitFor } from '@testing-library/react';
+import { createHash } from 'node:crypto';
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 import { useEditorCore, VISUAL_SAVE_POLICY } from '@/features/editor/core/useEditorCore';
 
@@ -18,7 +19,8 @@ function response(payload: unknown, status = 200): Response {
   return new Response(JSON.stringify(payload), { status, headers: { 'Content-Type': 'application/json' } });
 }
 function readResponse(value: string, path = 'content/test.mdx') {
-  return response({ path, source: value, sourceHash: 'remote-hash', version: 'v1' });
+  const sourceHash = createHash('sha256').update(value, 'utf8').digest('hex');
+  return response({ path, source: value, sourceHash, version: `sha256:${sourceHash}` });
 }
 function deferred<T>() {
   let resolve!: (value: T) => void;
@@ -30,7 +32,7 @@ function digest(byte: number): ArrayBuffer {
 
 describe('useEditorCore lossless integration', () => {
   beforeEach(() => vi.stubGlobal('fetch', vi.fn()));
-  afterEach(() => vi.unstubAllGlobals());
+  afterEach(() => { vi.restoreAllMocks(); vi.unstubAllGlobals(); });
 
   it('keeps visual persistence disabled and opens MDX in code mode with full source', async () => {
     const fetchMock = vi.mocked(fetch).mockResolvedValueOnce(readResponse(source));
@@ -99,8 +101,8 @@ describe('useEditorCore lossless integration', () => {
       .mockResolvedValueOnce(readResponse(source))
       .mockImplementationOnce(async (_url, init) => {
         const request = JSON.parse(String(init?.body));
-        return response({ path: request.path, sourceHash: request.sourceHash, previousVersion: 'v1',
-          version: 'v2', localRevision: request.localRevision, backupId: 'backup-1' });
+        return response({ path: request.path, sourceHash: request.sourceHash, previousVersion: request.expectedVersion,
+          version: `sha256:${request.sourceHash}`, confirmedRevision: request.localRevision, backupId: 'backup-1' });
       });
     const { result } = renderHook(() => useEditorCore());
     await act(() => result.current.openFile('content/test.mdx'));
@@ -112,7 +114,7 @@ describe('useEditorCore lossless integration', () => {
     expect(saved).toBe(true);
     const payload = JSON.parse(String((fetchMock.mock.calls[1][1] as RequestInit).body));
     expect(payload.source).toBe(changed);
-    expect(payload.expectedVersion).toBe('v1');
+    expect(payload.expectedVersion).toMatch(/^sha256:/);
 
     fetchMock.mockResolvedValueOnce(response({ message: 'server error' }, 500));
     act(() => result.current.updateRawBody(`${changed}\n`));
@@ -125,7 +127,9 @@ describe('useEditorCore lossless integration', () => {
   it('binds source and revision before the asynchronous save hash resolves', async () => {
     const saveHash = deferred<ArrayBuffer>();
     const newerHash = deferred<ArrayBuffer>();
+    const nativeDigest = globalThis.crypto.subtle.digest.bind(globalThis.crypto.subtle);
     const digestSpy = vi.spyOn(globalThis.crypto.subtle, 'digest')
+      .mockImplementationOnce(nativeDigest)
       .mockReturnValueOnce(Promise.resolve(digest(1)))
       .mockReturnValueOnce(saveHash.promise)
       .mockReturnValueOnce(newerHash.promise);
@@ -137,9 +141,9 @@ describe('useEditorCore lossless integration', () => {
         return response({
           path: sentRequest.path,
           sourceHash: sentRequest.sourceHash,
-          previousVersion: 'v1',
+          previousVersion: sentRequest.expectedVersion,
           version: `sha256:${sentRequest.sourceHash}`,
-          localRevision: sentRequest.localRevision,
+          confirmedRevision: sentRequest.localRevision,
           backupId: 'backup-r1'
         });
       });
