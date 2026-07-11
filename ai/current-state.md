@@ -2,26 +2,29 @@
 
 **Actualizado:** 2026-07-11
 
-**Fase:** estabilización del editor — fases 0–3 corregidas y contenidas
+**Fase:** estabilización del editor — fases 0–4 implementadas y validadas
 
-**Estado:** el source MDX completo es la autoridad del editor; envelope y body son rangos literales. El corpus de 120 documentos pasa el gate de apertura, proyección, cambios de modo y tres ciclos sin cambios de bytes. La persistencia visual continúa deshabilitada.
+**Estado:** el source completo continúa siendo la autoridad documental. La persistencia MDX usa cliente y repositorios tipados, reducer revisionado, coordinación cancelable, concurrencia optimista y backend con backups y escritura atómica. El guardado visual y el autosave productivo permanecen deshabilitados.
 
 ## Decisiones vigentes
 
-- `AGENTS.md` es la entrada común; `docs/ai/` gobierna, `ai/` opera y `.agents/skills/` especializa.
-- `EditorDocument.source` es la única autoridad del MDX abierto.
-- El parser del editor usa el subconjunto sintáctico del build: MDX, GFM y matemáticas, sin ejecutar metadata.
-- Metadata, imports y exports no son bloques del body y se preservan como slices del source.
-- Solo párrafos y headings simples admiten parches localizados; los demás nodos son opacos.
-- El guardado visual, la edición visual de metadata y las operaciones estructurales permanecen bloqueados.
-- El guardado manual en código envía exactamente el source actual y comprueba la respuesta HTTP.
+- `EditorDocument.source` es la única autoridad del MDX.
+- Lecturas y respuestas de persistencia incluyen SHA-256 y versión opaca.
+- Solo una confirmación HTTP válida, coherente con archivo, revisión y hash puede producir `saved`.
+- Los borradores están separados del archivo real y no limpian el estado dirty.
+- Una versión externa distinta produce conflicto `409`, nunca sobrescritura silenciosa.
+- Los cambios locales sin confirmar bloquean el cambio de archivo.
+- La aplicación crea backup y sustituye mediante temporal validado y rename.
+- `VISUAL_SAVE_POLICY` y `DRAFT_AUTOSAVE_ENABLED` siguen deshabilitados.
 
 ## Próximo paso
 
-Fase 4 — persistencia transaccional del source candidato con control de revisión y conflicto. No corresponde iniciar todavía la modularización de `EditorPage` ni el workbench de diagramas.
+Fase 5 — modularización de `EditorPage` y retirada de arquitectura heredada. Debe comenzar desde el commit final limpio de esta fase y no modificar persistencia ni el motor lossless.
 
 ## Deuda visible
 
-- Retirar físicamente el parser legacy y los hooks `useEditorState`/`useEditorActions`, actualmente sin consumidores productivos, en una tarea con alcance sobre `src/features/editor/hooks/` y sus flujos de creación de archivos.
-- Mantener bloqueadas las operaciones de insertar, mover, eliminar y editar metadata hasta que dispongan de parches localizados y contratos de persistencia transaccional.
-- Resolver las 170 advertencias preexistentes de Dependency Cruiser fuera de esta corrección; el ciclo dentro de `editor/document` ya se eliminó.
+- Definir retención y limpieza operativa de `.matematika/editor/backups/`.
+- Diseñar UX de inspección y resolución de conflictos sin sobrescritura automática.
+- Retirar hooks legacy sin consumidores y reducir `EditorPage` en la Fase 5.
+- Migrar `DiagramWorkbench` al cliente tipado únicamente en su fase específica; no fue modificado aquí.
+- Resolver 170 warnings globales preexistentes de Dependency Cruiser fuera de esta fase.
