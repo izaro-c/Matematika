@@ -90,6 +90,12 @@ export const useEditorCore = () => {
   const loadControllerRef = useRef<AbortController | undefined>(undefined);
   const saveIdentity = useMemo(() => new LiveSaveIdentity(), []);
   const editorSessionId = useMemo(() => crypto.randomUUID(), []);
+  const isMountedRef = useRef(true);
+
+  useEffect(() => {
+    isMountedRef.current = true;
+    return () => { isMountedRef.current = false; };
+  }, []);
 
   useEffect(() => { persistenceRef.current = persistence; }, [persistence]);
 
@@ -148,7 +154,7 @@ export const useEditorCore = () => {
   const openFile = useCallback(async (filePath: string) => {
     const file = { path: filePath };
     const active = persistenceRef.current;
-    if (active.file && active.file.path !== filePath && active.localRevision > active.confirmedRevision) {
+    if (active.file && active.file.path !== filePath && (active.localRevision > active.confirmedRevision || revisionRef.current > active.confirmedRevision)) {
       setMessage('Cambio de archivo bloqueado: existen cambios locales sin aplicar.');
       return;
     }
@@ -178,7 +184,7 @@ export const useEditorCore = () => {
     }
   }, [coordinator, saveIdentity, syncProjection]);
 
-  const commitSourceChange = useCallback(async (source: string, nextDoc?: EditorDocument) => {
+  const commitSourceChange = useCallback((source: string, nextDoc?: EditorDocument) => {
     const file = persistenceRef.current.file;
     if (!file) return;
     sourceRef.current = source;
@@ -186,14 +192,24 @@ export const useEditorCore = () => {
     revisionRef.current += 1;
     const revision = revisionRef.current;
     saveIdentity.set(file.path, source, revision);
-    const sourceHash = await hashSource(source);
-    if (revision !== revisionRef.current || file.path !== persistenceRef.current.file?.path) return;
-    dispatch({ type: 'SOURCE_CHANGED', file, source, sourceHash, localRevision: revision });
+    dispatch({ type: 'SOURCE_CHANGED', file, source, localRevision: revision });
     if (nextDoc) syncProjection(nextDoc);
-    if (DRAFT_AUTOSAVE_ENABLED && persistenceRef.current.version) {
-      coordinator.scheduleDraft({ file, source, sourceHash, localRevision: revision,
-        baseVersion: persistenceRef.current.version, editorSessionId });
-    }
+    hashSource(source).then((sourceHash) => {
+      if (!isMountedRef.current) return;
+      const active = persistenceRef.current;
+      if (
+        active.file?.path !== file.path ||
+        revisionRef.current !== revision ||
+        sourceRef.current !== source
+      ) {
+        return;
+      }
+      dispatch({ type: 'SOURCE_HASH_RESOLVED', file, source, sourceHash, localRevision: revision });
+      if (DRAFT_AUTOSAVE_ENABLED && active.version) {
+        coordinator.scheduleDraft({ file, source, sourceHash, localRevision: revision,
+          baseVersion: active.version, editorSessionId });
+      }
+    });
   }, [coordinator, editorSessionId, saveIdentity, syncProjection]);
 
   const toggleEditorMode = useCallback(() => {
@@ -207,7 +223,7 @@ export const useEditorCore = () => {
 
   const updateRawBody = useCallback((source: string) => {
     const nextDoc = currentFile?.endsWith('.mdx') ? parseEditorDocument(source) : undefined;
-    void commitSourceChange(source, nextDoc);
+    commitSourceChange(source, nextDoc);
   }, [commitSourceChange, currentFile]);
 
   const updateBlock = useCallback((id: string, content: string, _metadata?: Record<string, unknown>) => {
@@ -218,7 +234,7 @@ export const useEditorCore = () => {
       expectedSource: block.originalSource, replacement: content };
     try {
       const nextDoc = applyVisualOperation(enterVisualMode({ document: doc, mode: 'code', appliedOperationIds: [] }), edit).document;
-      void commitSourceChange(nextDoc.source, nextDoc);
+      commitSourceChange(nextDoc.source, nextDoc);
       setMessage('Cambio visual aplicado localmente; el guardado visual permanece deshabilitado.');
     } catch (error) { setMessage(`Cambio rechazado: ${error instanceof Error ? error.message : String(error)}`); }
   }, [capabilities.canEditSafeBlocks, commitSourceChange, doc]);

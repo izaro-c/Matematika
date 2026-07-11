@@ -12,7 +12,7 @@
 
 **Hallazgos objetivos.** Se inspeccionaron 631 archivos de texto, 348 archivos TS/TSX, 51 archivos de test y 120 archivos MDX.
 
-**Heurísticas aproximadas.** Se localizaron 789 apariciones léxicas de `any`, 302 colores hex, 27 marcas TODO/FIXME, 26 archivos TS/TSX grandes y 156 rutas de importación potencialmente incompatibles con FSD.
+**Heurísticas aproximadas.** Se localizaron 789 apariciones léxicas de `any`, 302 colores hex, 27 marcas TODO/FIXME, 27 archivos TS/TSX grandes y 156 rutas de importación potencialmente incompatibles con FSD.
 
 **Recomendación.** Empezar por las rutas FSD y supresiones TypeScript, continuar con hex fuera de tokens, descomponer puntos de alta responsabilidad y cerrar después cobertura, contenido, Lean y duplicación IA.
 
@@ -215,16 +215,17 @@ _Ninguno detectado._
 | `scripts/core/lean-graph-utils.ts` | 427 | 14649 |
 | `src/features/editor/hooks/useEditorActions.ts` | 419 | 14766 |
 | `src/features/graph/GraphStore.ts` | 414 | 14785 |
-| `tests/features/editor/persistence/editorPersistenceBackend.test.ts` | 380 | 20855 |
+| `tests/features/editor/persistence/editorPersistenceBackend.test.ts` | 400 | 21891 |
 | `src/widgets/content/MarginaliaPanel.tsx` | 368 | 14638 |
 | `src/features/graph/ui/AxiomaticTree.tsx` | 366 | 16130 |
 | `scripts/ai/review-working-tree.ts` | 360 | 12260 |
 | `src/features/editor/ui/components/SemanticLinker.tsx` | 356 | 14648 |
+| `tests/features/editor/useEditorCore.test.ts` | 344 | 15696 |
 | `src/widgets/diagrams/Teoremas/DemoPitagorasEuclides.tsx` | 327 | 16986 |
 | `src/features/metadata/ui/PageDependencyGraph.tsx` | 327 | 9793 |
 | `tests/database/content-store.test.ts` | 320 | 9637 |
 | `src/features/editor/core/validation.ts` | 314 | 14376 |
-| `scripts/editor/editorPersistenceBackend.ts` | 304 | 15340 |
+| `scripts/editor/editorPersistenceBackend.ts` | 311 | 15527 |
 | `src/widgets/graph/LocalDependencyGraph.tsx` | 303 | 9161 |
 | `src/features/graph/lib/graphWorkerContract.ts` | 303 | 7868 |
 | `src/features/progress/ui/TaxonomyGraph.tsx` | 302 | 10981 |

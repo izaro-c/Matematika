@@ -41,7 +41,8 @@ async function request<T>(url: string, schema: ZodType<T>, init?: RequestInit): 
           expectedVersion: parsed.data.expectedVersion,
           actualVersion: parsed.data.actualVersion,
           localRevision: parsed.data.localRevision,
-          editorSessionId: parsed.data.editorSessionId
+          editorSessionId: parsed.data.editorSessionId,
+          reason: parsed.data.reason
         });
       }
     }

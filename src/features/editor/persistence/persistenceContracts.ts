@@ -76,7 +76,8 @@ export const draftConflictSchema = z.object({
   expectedVersion: z.string(),
   actualVersion: z.string(),
   localRevision: z.number().int().nonnegative(),
-  editorSessionId: z.string().min(1)
+  editorSessionId: z.string().min(1),
+  reason: z.enum(['base-version-mismatch', 'revision-source-mismatch', 'stale-revision']).optional()
 }).strict();
 export type DraftConflict = z.infer<typeof draftConflictSchema>;
 

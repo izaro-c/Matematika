@@ -54,6 +54,13 @@ describe('EditorApiClient', () => {
       expectedVersion: 'v1', localRevision: 3 }))).toBe('invalid-response');
   });
 
+  it('maps an invalid draft conflict payload to invalid-response', async () => {
+    vi.stubGlobal('fetch', vi.fn().mockResolvedValue(response({ kind: 'draft-conflict', path: validRead.path,
+      expectedVersion: 'v1' }, 409))); // missing actualVersion, localRevision, editorSessionId
+    expect(await errorKind(new EditorApiClient().saveDraft({ path: validRead.path, source: 'x', sourceHash: 'h',
+      baseVersion: 'v1', localRevision: 3, editorSessionId: 'session-1' }))).toBe('invalid-response');
+  });
+
   it('maps network and abort failures', async () => {
     vi.stubGlobal('fetch', vi.fn().mockRejectedValueOnce(new TypeError('offline'))
       .mockRejectedValueOnce(new DOMException('Aborted', 'AbortError')));

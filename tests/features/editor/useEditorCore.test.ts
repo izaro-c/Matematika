@@ -217,4 +217,130 @@ describe('useEditorCore lossless integration', () => {
     expect(result.current.message).toContain('bloqueado');
     expect(fetchMock).toHaveBeenCalledTimes(1);
   });
+
+  it('blocks file switching immediately even when hash is pending', async () => {
+    const fetchMock = vi.mocked(fetch).mockResolvedValueOnce(readResponse(source, 'content/a.mdx'));
+    const pendingHash = deferred<ArrayBuffer>();
+    const nativeDigest = globalThis.crypto.subtle.digest.bind(globalThis.crypto.subtle);
+    const digestSpy = vi.spyOn(globalThis.crypto.subtle, 'digest')
+      .mockImplementationOnce(nativeDigest)
+      .mockReturnValueOnce(pendingHash.promise);
+
+    const { result } = renderHook(() => useEditorCore());
+    await act(() => result.current.openFile('content/a.mdx'));
+
+    act(() => result.current.updateRawBody(`${source}\n`));
+    expect(result.current.rawBody).toBe(`${source}\n`);
+
+    await act(() => result.current.openFile('content/b.mdx'));
+
+    expect(result.current.currentFile).toBe('content/a.mdx');
+    expect(result.current.message).toContain('bloqueado');
+    expect(fetchMock).toHaveBeenCalledTimes(1);
+
+    await act(async () => { pendingHash.resolve(digest(4)); });
+    digestSpy.mockRestore();
+  });
+
+  it('allows mode change and preserves source even when hash is pending', async () => {
+    vi.mocked(fetch).mockResolvedValueOnce(readResponse(source, 'content/a.mdx'));
+    const pendingHash = deferred<ArrayBuffer>();
+    const nativeDigest = globalThis.crypto.subtle.digest.bind(globalThis.crypto.subtle);
+    const digestSpy = vi.spyOn(globalThis.crypto.subtle, 'digest')
+      .mockImplementationOnce(nativeDigest)
+      .mockReturnValueOnce(pendingHash.promise);
+
+    const { result } = renderHook(() => useEditorCore());
+    await act(() => result.current.openFile('content/a.mdx'));
+
+    const updated = `${source}\n`;
+    act(() => result.current.updateRawBody(updated));
+
+    act(() => result.current.toggleEditorMode());
+    expect(result.current.editorMode).toBe('visual');
+    expect(result.current.rawBody).toBe(updated);
+
+    await act(async () => { pendingHash.resolve(digest(5)); });
+    digestSpy.mockRestore();
+  });
+
+  it('safely handles hash resolution after unmounting', async () => {
+    vi.mocked(fetch).mockResolvedValueOnce(readResponse(source, 'content/a.mdx'));
+    const pendingHash = deferred<ArrayBuffer>();
+    const nativeDigest = globalThis.crypto.subtle.digest.bind(globalThis.crypto.subtle);
+    const digestSpy = vi.spyOn(globalThis.crypto.subtle, 'digest')
+      .mockImplementationOnce(nativeDigest)
+      .mockReturnValueOnce(pendingHash.promise);
+
+    const { result, unmount } = renderHook(() => useEditorCore());
+    await act(() => result.current.openFile('content/a.mdx'));
+
+    act(() => result.current.updateRawBody(`${source}\n`));
+
+    unmount();
+
+    await act(async () => { pendingHash.resolve(digest(6)); });
+    expect(digestSpy).toHaveBeenCalled();
+    digestSpy.mockRestore();
+  });
+
+  it('coordinates editing and saving with pending hash correctly', async () => {
+    const editHash = deferred<ArrayBuffer>();
+    const saveHash = deferred<ArrayBuffer>();
+    const nativeDigest = globalThis.crypto.subtle.digest.bind(globalThis.crypto.subtle);
+    const digestSpy = vi.spyOn(globalThis.crypto.subtle, 'digest')
+      .mockImplementationOnce(nativeDigest)
+      .mockReturnValueOnce(editHash.promise)
+      .mockReturnValueOnce(saveHash.promise);
+
+    let sentRequest: Record<string, unknown> | undefined;
+    const fetchMock = vi.mocked(fetch)
+      .mockResolvedValueOnce(readResponse(source, 'content/a.mdx'))
+      .mockImplementationOnce(async (_url, init) => {
+        sentRequest = JSON.parse(String(init?.body));
+        return response({
+          path: sentRequest.path,
+          sourceHash: sentRequest.sourceHash,
+          previousVersion: sentRequest.expectedVersion,
+          version: `sha256:${sentRequest.sourceHash}`,
+          confirmedRevision: sentRequest.localRevision,
+          backupId: 'backup-sync-save'
+        });
+      });
+
+    const { result } = renderHook(() => useEditorCore());
+    await act(() => result.current.openFile('content/a.mdx'));
+
+    const updated = source.replace('Un cuerpo', 'Cuerpo modificado');
+    act(() => result.current.updateRawBody(updated));
+
+    let savePromise!: Promise<boolean>;
+    act(() => { savePromise = result.current.saveCurrentFile(); });
+
+    const resolvedHash = createHash('sha256').update(updated, 'utf8').digest();
+    await act(async () => {
+      saveHash.resolve(resolvedHash.buffer);
+      await Promise.resolve();
+    });
+
+    let saved = false;
+    await act(async () => { saved = await savePromise; });
+
+    expect(saved).toBe(true);
+    expect(sentRequest).toMatchObject({
+      source: updated,
+      localRevision: 1
+    });
+    expect(result.current.dirtyState).toBe('clean');
+    expect(result.current.persistenceStatus.kind).toBe('saved');
+
+    await act(async () => {
+      editHash.resolve(resolvedHash.buffer);
+    });
+    expect(result.current.dirtyState).toBe('clean');
+    expect(result.current.persistenceStatus.kind).toBe('saved');
+    expect(fetchMock).toHaveBeenCalledTimes(2);
+
+    digestSpy.mockRestore();
+  });
 });

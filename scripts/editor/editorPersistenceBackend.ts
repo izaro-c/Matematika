@@ -83,9 +83,16 @@ export class EditorPersistenceBackend {
       }
       if (existing && request.localRevision === existing.localRevision) {
         if (request.sourceHash !== existing.sourceHash) {
-          throw new BackendError(409, { kind: 'draft-conflict', path: request.path,
-            message: 'Same draft revision has different source', localRevision: request.localRevision,
-            editorSessionId: request.editorSessionId });
+          throw new BackendError(409, {
+            kind: 'draft-conflict',
+            path: request.path,
+            expectedVersion: request.baseVersion,
+            actualVersion: currentVersion,
+            localRevision: request.localRevision,
+            editorSessionId: request.editorSessionId,
+            message: 'Same draft revision has different source',
+            reason: 'revision-source-mismatch'
+          });
         }
         return this.draftResponse(existing);
       }

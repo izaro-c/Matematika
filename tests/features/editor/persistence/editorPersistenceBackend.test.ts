@@ -223,6 +223,26 @@ describe('EditorPersistenceBackend', () => {
         editorSessionId: 'session-b', localRevision: 1 });
   });
 
+  it('draft-conflict payload on revision source mismatch includes all schema properties', async () => {
+    const service = backend();
+    const baseVersion = contentVersion('original');
+    const request = { path: relativePath, source: 'session-a-r2', sourceHash: contentHash('session-a-r2'),
+      baseVersion, localRevision: 2, editorSessionId: 'session-a' };
+    await service.saveDraft(request);
+
+    const promise = service.saveDraft({ ...request, source: 'different', sourceHash: contentHash('different') });
+    await expect(promise).rejects.toSatisfy((error: unknown) => {
+      if (!(error instanceof BackendError) || error.status !== 409) return false;
+      const payload = error.payload;
+      return payload.kind === 'draft-conflict' &&
+             payload.expectedVersion === baseVersion &&
+             payload.actualVersion === baseVersion &&
+             payload.localRevision === 2 &&
+             payload.editorSessionId === 'session-a' &&
+             payload.reason === 'revision-source-mismatch';
+    });
+  });
+
   it('reports a draft as stale when the file version changed externally', async () => {
     const service = backend();
     await service.saveDraft({ path: relativePath, source: 'draft', sourceHash: contentHash('draft'),
