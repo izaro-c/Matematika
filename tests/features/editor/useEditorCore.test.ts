@@ -1,4 +1,4 @@
-import { act, renderHook } from '@testing-library/react';
+import { act, renderHook, waitFor } from '@testing-library/react';
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 import { useEditorCore, VISUAL_SAVE_POLICY } from '@/features/editor/core/useEditorCore';
 
@@ -14,8 +14,11 @@ Un cuerpo que debe conservarse.
 
 export const value = { nested: true };`;
 
-function response(text: string, ok = true) {
-  return { ok, text: async () => text, json: async () => [] };
+function response(payload: unknown, status = 200): Response {
+  return new Response(JSON.stringify(payload), { status, headers: { 'Content-Type': 'application/json' } });
+}
+function readResponse(value: string, path = 'content/test.mdx') {
+  return response({ path, source: value, sourceHash: 'remote-hash', version: 'v1' });
 }
 
 describe('useEditorCore lossless integration', () => {
@@ -23,7 +26,7 @@ describe('useEditorCore lossless integration', () => {
   afterEach(() => vi.unstubAllGlobals());
 
   it('keeps visual persistence disabled and opens MDX in code mode with full source', async () => {
-    const fetchMock = vi.mocked(fetch).mockResolvedValueOnce(response(source) as Response);
+    const fetchMock = vi.mocked(fetch).mockResolvedValueOnce(readResponse(source));
     const { result } = renderHook(() => useEditorCore());
     await act(() => result.current.openFile('content/test.mdx'));
     expect(VISUAL_SAVE_POLICY).toBe('disabled');
@@ -34,7 +37,7 @@ describe('useEditorCore lossless integration', () => {
   });
 
   it('changes code to visual to code without changing one byte', async () => {
-    vi.mocked(fetch).mockResolvedValueOnce(response(source) as Response);
+    vi.mocked(fetch).mockResolvedValueOnce(readResponse(source));
     const { result } = renderHook(() => useEditorCore());
     await act(() => result.current.openFile('content/test.mdx'));
     act(() => result.current.toggleEditorMode());
@@ -46,7 +49,7 @@ describe('useEditorCore lossless integration', () => {
 
   it('never enters visual mode for unsupported MDX and preserves its body', async () => {
     const unsupported = `export const metadata = {};\n\nCuerpo { no es JS }`;
-    vi.mocked(fetch).mockResolvedValueOnce(response(unsupported) as Response);
+    vi.mocked(fetch).mockResolvedValueOnce(readResponse(unsupported, 'content/broken.mdx'));
     const { result } = renderHook(() => useEditorCore());
     await act(() => result.current.openFile('content/broken.mdx'));
     act(() => result.current.toggleEditorMode());
@@ -56,12 +59,13 @@ describe('useEditorCore lossless integration', () => {
   });
 
   it('applies a localized heading edit and preserves its depth and envelope', async () => {
-    vi.mocked(fetch).mockResolvedValueOnce(response(source) as Response);
+    vi.mocked(fetch).mockResolvedValueOnce(readResponse(source));
     const { result } = renderHook(() => useEditorCore());
     await act(() => result.current.openFile('content/test.mdx'));
     act(() => result.current.toggleEditorMode());
     const heading = result.current.blocks[0];
     act(() => result.current.updateBlock(heading.id, 'Nuevo título'));
+    await waitFor(() => expect(result.current.rawBody).toContain('## Nuevo título'));
     act(() => result.current.toggleEditorMode());
     expect(result.current.rawBody).toBe(source.replace('## Título', '## Nuevo título'));
     expect(result.current.rawBody).toContain(`import X from './x';`);
@@ -69,7 +73,7 @@ describe('useEditorCore lossless integration', () => {
   });
 
   it('blocks destructive visual operations and visual save', async () => {
-    vi.mocked(fetch).mockResolvedValueOnce(response(source) as Response);
+    vi.mocked(fetch).mockResolvedValueOnce(readResponse(source));
     const { result } = renderHook(() => useEditorCore());
     await act(() => result.current.openFile('content/test.mdx'));
     act(() => result.current.toggleEditorMode());
@@ -85,22 +89,76 @@ describe('useEditorCore lossless integration', () => {
 
   it('manual code save sends the exact current source and checks HTTP status', async () => {
     const fetchMock = vi.mocked(fetch)
-      .mockResolvedValueOnce(response(source) as Response)
-      .mockResolvedValueOnce(response('ok') as Response);
+      .mockResolvedValueOnce(readResponse(source))
+      .mockImplementationOnce(async (_url, init) => {
+        const request = JSON.parse(String(init?.body));
+        return response({ path: request.path, sourceHash: request.sourceHash, previousVersion: 'v1',
+          version: 'v2', localRevision: request.localRevision, backupId: 'backup-1' });
+      });
     const { result } = renderHook(() => useEditorCore());
     await act(() => result.current.openFile('content/test.mdx'));
     const changed = source.replace('Un cuerpo', 'El cuerpo');
     act(() => result.current.updateRawBody(changed));
+    await waitFor(() => expect(result.current.rawBody).toBe(changed));
     let saved = false;
     await act(async () => { saved = await result.current.saveCurrentFile(); });
     expect(saved).toBe(true);
     const payload = JSON.parse(String((fetchMock.mock.calls[1][1] as RequestInit).body));
-    expect(payload.content).toBe(changed);
+    expect(payload.source).toBe(changed);
+    expect(payload.expectedVersion).toBe('v1');
 
-    fetchMock.mockResolvedValueOnce(response('server error', false) as Response);
+    fetchMock.mockResolvedValueOnce(response({ message: 'server error' }, 500));
     act(() => result.current.updateRawBody(`${changed}\n`));
+    await waitFor(() => expect(result.current.rawBody).toBe(`${changed}\n`));
     await act(async () => { saved = await result.current.saveCurrentFile(); });
     expect(saved).toBe(false);
     expect(result.current.dirtyState).toBe('dirty');
+  });
+
+  it('ignores a late response from the previously opened file', async () => {
+    let resolveA!: (response: Response) => void;
+    let resolveB!: (response: Response) => void;
+    vi.mocked(fetch).mockImplementation((url) => new Promise<Response>(resolve => {
+      if (String(url).includes('a.mdx')) resolveA = resolve;
+      else resolveB = resolve;
+    }));
+    const { result } = renderHook(() => useEditorCore());
+    let first!: Promise<void>;
+    act(() => { first = result.current.openFile('content/a.mdx'); });
+    let second!: Promise<void>;
+    act(() => { second = result.current.openFile('content/b.mdx'); });
+    resolveB(readResponse('B', 'content/b.mdx'));
+    await act(async () => second);
+    resolveA(readResponse('A', 'content/a.mdx'));
+    await act(async () => first);
+    expect(result.current.currentFile).toBe('content/b.mdx');
+    expect(result.current.rawBody).toBe('B');
+  });
+
+  it('shows conflict and never reports saved for a 409', async () => {
+    const fetchMock = vi.mocked(fetch).mockResolvedValueOnce(readResponse(source));
+    const { result } = renderHook(() => useEditorCore());
+    await act(() => result.current.openFile('content/test.mdx'));
+    act(() => result.current.updateRawBody(`${source}\n`));
+    await waitFor(() => expect(result.current.rawBody).toBe(`${source}\n`));
+    fetchMock.mockResolvedValueOnce(response({ kind: 'content-conflict', path: 'content/test.mdx', expectedVersion: 'v1',
+      actualVersion: 'v2', localRevision: 1 }, 409));
+    let saved = true;
+    await act(async () => { saved = await result.current.saveCurrentFile(); });
+    expect(saved).toBe(false);
+    expect(result.current.persistenceStatus.kind).toBe('conflict');
+    expect(result.current.persistenceLabel).toBe('Conflicto');
+  });
+
+  it('blocks file switching while local changes remain unconfirmed', async () => {
+    const fetchMock = vi.mocked(fetch).mockResolvedValueOnce(readResponse(source, 'content/a.mdx'));
+    const { result } = renderHook(() => useEditorCore());
+    await act(() => result.current.openFile('content/a.mdx'));
+    act(() => result.current.updateRawBody(`${source}\n`));
+    await waitFor(() => expect(result.current.dirtyState).toBe('dirty'));
+    await act(() => result.current.openFile('content/b.mdx'));
+    expect(result.current.currentFile).toBe('content/a.mdx');
+    expect(result.current.message).toContain('bloqueado');
+    expect(fetchMock).toHaveBeenCalledTimes(1);
   });
 });
