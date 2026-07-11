@@ -1,15 +1,23 @@
 import { describe, expect, it } from 'vitest';
-import fs from 'fs';
-import path from 'path';
+import { auditSource, discoverMdxFiles, runCorpusAudit } from '../../../../scripts/editor/corpusAuditCore';
+import path from 'node:path';
 
-describe('Lossless Compatibility Auditor', () => {
-  it('verifies that the generated reports are deterministic and stable', () => {
-    const jsonPath = path.resolve(process.cwd(), 'ai/reports/editor-lossless-compatibility.json');
-    expect(fs.existsSync(jsonPath)).toBe(true);
-
-    const report1 = JSON.parse(fs.readFileSync(jsonPath, 'utf8'));
-    expect(report1.totalFiles).toBe(120);
-    expect(report1.counts['read-only']).toBe(85);
-    expect(report1.counts['unsupported']).toBe(35);
+describe('lossless corpus oracle', () => {
+  it('executes three real cycles without changing unsupported source', () => {
+    const source = `export const metadata = { title: 'T' };\n\nTexto { no es JS }`;
+    const entry = auditSource(source, 'unsupported.mdx');
+    expect(entry.compatibility).toBe('unsupported');
+    expect(entry.exact).toBe(true);
+    expect(entry.bodyPreserved).toBe(true);
+    expect(entry.idempotent).toBe(true);
   });
+
+  it('discovers the corpus recursively and audits every discovered MDX', () => {
+    const root = path.resolve('src/database/content');
+    const discovered = discoverMdxFiles(root);
+    const report = runCorpusAudit();
+    expect(discovered).toHaveLength(120);
+    expect(report.totalFiles).toBe(discovered.length);
+    expect(report.files.every(file => file.exact && file.idempotent && file.envelopePreserved && file.bodyPreserved)).toBe(true);
+  }, 20_000);
 });
