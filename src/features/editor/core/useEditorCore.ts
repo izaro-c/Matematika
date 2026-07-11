@@ -54,6 +54,24 @@ function persistenceMessage(error: PersistenceError): string {
 
 const blockedMessage = 'Acción visual bloqueada: todavía no existe un parche localizado demostrablemente lossless.';
 
+class LiveSaveIdentity {
+  private path: string | null = null;
+  private source = '';
+  private revision = 0;
+
+  set(filePath: string, source: string, revision: number): void {
+    this.path = filePath;
+    this.source = source;
+    this.revision = revision;
+  }
+
+  clear(): void { this.path = null; }
+
+  matches(snapshot: EditorSaveSnapshot): boolean {
+    return this.path === snapshot.file.path && this.source === snapshot.source && this.revision === snapshot.localRevision;
+  }
+}
+
 export const useEditorCore = () => {
   const [files, setFiles] = useState<FileNode[]>([]);
   const [editorMode, setEditorMode] = useState<EditorMode>('code');
@@ -68,6 +86,7 @@ export const useEditorCore = () => {
   const sourceRef = useRef('');
   const revisionRef = useRef(0);
   const loadControllerRef = useRef<AbortController | undefined>(undefined);
+  const saveIdentity = useMemo(() => new LiveSaveIdentity(), []);
 
   useEffect(() => { persistenceRef.current = persistence; }, [persistence]);
 
@@ -77,14 +96,18 @@ export const useEditorCore = () => {
     else if (event.type === 'draft-succeeded') dispatch({ type: 'DRAFT_SAVE_SUCCEEDED', file, localRevision, draftId: event.draftId });
     else if (event.type === 'apply-started') dispatch({ type: 'FILE_SAVE_STARTED', file, localRevision });
     else if (event.type === 'apply-succeeded') {
-      dispatch({ type: 'FILE_SAVE_SUCCEEDED', file, localRevision, version: event.version, backupId: event.backupId });
+      const isCurrentSnapshot = saveIdentity.matches(event.snapshot);
+      dispatch({ type: isCurrentSnapshot ? 'FILE_SAVE_SUCCEEDED' : 'STALE_FILE_SAVE_SUCCEEDED',
+        file, localRevision, version: event.version, backupId: event.backupId });
     } else if (event.error.kind === 'conflict') {
+      if (!saveIdentity.matches(event.snapshot)) return;
       dispatch({ type: 'CONFLICT_DETECTED', file, localRevision,
         expectedVersion: event.error.expectedVersion, actualVersion: event.error.actualVersion });
     } else {
+      if (!saveIdentity.matches(event.snapshot)) return;
       dispatch({ type: event.type === 'draft-failed' ? 'DRAFT_SAVE_FAILED' : 'FILE_SAVE_FAILED', file, localRevision, error: event.error });
     }
-  }, []);
+  }, [saveIdentity]);
 
   const coordinator = useMemo(() => new SaveCoordinator(contentRepository, draftRepository, onCoordinatorEvent), [onCoordinatorEvent]);
   useEffect(() => () => { loadControllerRef.current?.abort(); coordinator.dispose(); }, [coordinator]);
@@ -128,6 +151,7 @@ export const useEditorCore = () => {
     }
     loadControllerRef.current?.abort();
     coordinator.cancelAll();
+    saveIdentity.clear();
     const controller = new AbortController();
     loadControllerRef.current = controller;
     dispatch({ type: 'FILE_LOAD_STARTED', file });
@@ -137,6 +161,7 @@ export const useEditorCore = () => {
       if (controller.signal.aborted) return;
       sourceRef.current = response.source;
       revisionRef.current = 0;
+      saveIdentity.set(file.path, response.source, 0);
       dispatch({ type: 'FILE_LOAD_SUCCEEDED', file, source: response.source, sourceHash: response.sourceHash, version: response.version });
       if (filePath.endsWith('.mdx')) syncProjection(parseEditorDocument(response.source));
       else { setDoc(null); setBlocksView([]); setImportsView(''); setExportsView(''); }
@@ -148,7 +173,7 @@ export const useEditorCore = () => {
       dispatch({ type: 'FILE_LOAD_FAILED', file, error: detail });
       setMessage(persistenceMessage(detail));
     }
-  }, [coordinator, syncProjection]);
+  }, [coordinator, saveIdentity, syncProjection]);
 
   const commitSourceChange = useCallback(async (source: string, nextDoc?: EditorDocument) => {
     const file = persistenceRef.current.file;
@@ -157,6 +182,7 @@ export const useEditorCore = () => {
     setMessage('');
     revisionRef.current += 1;
     const revision = revisionRef.current;
+    saveIdentity.set(file.path, source, revision);
     const sourceHash = await hashSource(source);
     if (revision !== revisionRef.current || file.path !== persistenceRef.current.file?.path) return;
     dispatch({ type: 'SOURCE_CHANGED', file, source, sourceHash, localRevision: revision });
@@ -164,7 +190,7 @@ export const useEditorCore = () => {
     if (DRAFT_AUTOSAVE_ENABLED && persistenceRef.current.version) {
       coordinator.scheduleDraft({ file, source, sourceHash, localRevision: revision, baseVersion: persistenceRef.current.version });
     }
-  }, [coordinator, syncProjection]);
+  }, [coordinator, saveIdentity, syncProjection]);
 
   const toggleEditorMode = useCallback(() => {
     if (editorMode === 'visual') { setEditorMode('code'); return; }
@@ -203,17 +229,27 @@ export const useEditorCore = () => {
     const state = persistenceRef.current;
     if (!state.file || !state.version) return false;
     if (editorMode === 'visual' && !isDiagramSource) { setMessage('El guardado visual está desactivado por contención de seguridad.'); return false; }
-    const source = sourceRef.current;
-    if (state.file.path.endsWith('.mdx') && parseEditorDocument(source).compatibility === 'unsupported') {
-      dispatch({ type: 'VALIDATION_FAILED', file: state.file, localRevision: state.localRevision, reason: 'Invalid MDX source' });
+    const captured = {
+      file: state.file,
+      source: sourceRef.current,
+      localRevision: revisionRef.current,
+      baseVersion: state.version
+    };
+    if (captured.file.path.endsWith('.mdx') && parseEditorDocument(captured.source).compatibility === 'unsupported') {
+      dispatch({ type: 'VALIDATION_FAILED', file: captured.file, localRevision: captured.localRevision, reason: 'Invalid MDX source' });
       setMessage('No se puede aplicar: el source MDX actual no se puede analizar.');
       return false;
     }
-    const sourceHash = await hashSource(source);
-    const localRevision = revisionRef.current;
-    const snapshot: EditorSaveSnapshot = { file: state.file, source, sourceHash, localRevision, baseVersion: state.version };
+    const sourceHash = await hashSource(captured.source);
+    if (persistenceRef.current.file?.path !== captured.file.path
+      || revisionRef.current !== captured.localRevision
+      || sourceRef.current !== captured.source) return false;
+    const snapshot: EditorSaveSnapshot = { ...captured, sourceHash };
     const confirmed = await coordinator.applyNow(snapshot);
-    return confirmed && revisionRef.current === localRevision && persistenceRef.current.file?.path === snapshot.file.path;
+    return confirmed
+      && revisionRef.current === snapshot.localRevision
+      && sourceRef.current === snapshot.source
+      && persistenceRef.current.file?.path === snapshot.file.path;
   }, [coordinator, editorMode, isDiagramSource]);
 
   return {

@@ -44,6 +44,7 @@ export type PersistenceAction =
   | { type: 'DRAFT_SAVE_FAILED'; file: EditorFileIdentity; localRevision: LocalRevision; error: PersistenceError }
   | { type: 'FILE_SAVE_STARTED'; file: EditorFileIdentity; localRevision: LocalRevision }
   | { type: 'FILE_SAVE_SUCCEEDED'; file: EditorFileIdentity; localRevision: LocalRevision; version: ContentVersion; backupId: string }
+  | { type: 'STALE_FILE_SAVE_SUCCEEDED'; file: EditorFileIdentity; localRevision: LocalRevision; version: ContentVersion; backupId: string }
   | { type: 'FILE_SAVE_FAILED'; file: EditorFileIdentity; localRevision: LocalRevision; error: PersistenceError }
   | { type: 'CONFLICT_DETECTED'; file: EditorFileIdentity; localRevision: LocalRevision; expectedVersion: string; actualVersion: string }
   | { type: 'REQUEST_ABORTED'; file: EditorFileIdentity; localRevision: LocalRevision }
@@ -88,6 +89,10 @@ export function editorPersistenceReducer(state: EditorPersistenceState, action: 
       }
       return { ...state, version: action.version, confirmedRevision: action.localRevision,
         status: { kind: 'saved', file: action.file, localRevision: action.localRevision, version: action.version, backupId: action.backupId } };
+    case 'STALE_FILE_SAVE_SUCCEEDED':
+      if (!matches(state, action.file) || action.localRevision > state.localRevision) return state;
+      return { ...state, version: action.version, confirmedRevision: Math.max(state.confirmedRevision, action.localRevision),
+        status: { kind: 'ready-dirty', file: action.file, version: action.version, localRevision: state.localRevision } };
     case 'CONFLICT_DETECTED':
       return matches(state, action.file, action.localRevision) ? { ...state, status: { kind: 'conflict', file: action.file, localRevision: action.localRevision,
         expectedVersion: action.expectedVersion, actualVersion: action.actualVersion } } : state;
