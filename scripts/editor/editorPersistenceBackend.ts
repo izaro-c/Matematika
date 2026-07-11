@@ -41,6 +41,7 @@ function jsonName(prefix: string, value: string): string {
 export class EditorPersistenceBackend {
   private readonly backupRoot: string;
   private readonly draftRoot: string;
+  private readonly pathLocks = new Map<string, Promise<void>>();
 
   private readonly options: PersistenceBackendOptions;
   constructor(options: PersistenceBackendOptions) {
@@ -84,57 +85,80 @@ export class EditorPersistenceBackend {
   }
 
   async applyContent(request: ApplyContentRequest): Promise<ApplyContentResponse> {
-    const file = await this.resolveFile(request.path, false);
-    this.assertHash(request.source, request.sourceHash);
-    await this.options.validateSource(request.path, request.source);
-    const current = await fs.promises.readFile(file, 'utf8');
-    const currentVersion = versionOf(current);
-    if (currentVersion !== request.expectedVersion) this.conflict(request.path, request.expectedVersion, currentVersion, request.localRevision);
-    const backupId = await this.createBackup(request.path, current);
-    await this.replaceAtomically(file, request.path, request.source);
-    await this.removeDraft(request.path);
-    return { path: request.path, sourceHash: request.sourceHash, previousVersion: currentVersion,
-      version: versionOf(request.source), localRevision: request.localRevision, backupId };
+    return this.withPathLock(request.path, async () => {
+      const file = await this.resolveFile(request.path, false);
+      this.assertHash(request.source, request.sourceHash);
+      await this.options.validateSource(request.path, request.source);
+      const current = await fs.promises.readFile(file, 'utf8');
+      const currentVersion = versionOf(current);
+      if (currentVersion !== request.expectedVersion) this.conflict(request.path, request.expectedVersion, currentVersion, request.localRevision);
+      const backupId = await this.createBackup(request.path, current);
+      await this.replaceAtomically(file, request.path, request.source);
+      await this.removeDraft(request.path);
+      return { path: request.path, sourceHash: request.sourceHash, previousVersion: currentVersion,
+        version: versionOf(request.source), localRevision: request.localRevision, backupId };
+    });
   }
 
   async createContent(request: Omit<ApplyContentRequest, 'expectedVersion'>): Promise<ApplyContentResponse> {
-    const file = await this.resolveFile(request.path, true);
-    this.assertHash(request.source, request.sourceHash);
-    await this.options.validateSource(request.path, request.source);
-    try {
-      await fs.promises.access(file);
-      this.conflict(request.path, 'missing', versionOf(await fs.promises.readFile(file, 'utf8')), request.localRevision);
-    } catch (error) {
-      if (error instanceof BackendError) throw error;
-      if ((error as NodeJS.ErrnoException).code !== 'ENOENT') throw error;
-    }
-    const temporary = path.join(path.dirname(file), `.${path.basename(file)}.${crypto.randomUUID()}.tmp`);
-    try {
-      await fs.promises.writeFile(temporary, request.source, { encoding: 'utf8', flag: 'wx' });
-      await this.options.validateSource(request.path, await fs.promises.readFile(temporary, 'utf8'));
-      await fs.promises.link(temporary, file);
-    } catch (error) {
-      if ((error as NodeJS.ErrnoException).code === 'EEXIST') this.conflict(request.path, 'missing', 'file-created-concurrently', request.localRevision);
-      throw error;
-    } finally {
-      await fs.promises.rm(temporary, { force: true }).catch(() => undefined);
-    }
-    return { path: request.path, sourceHash: request.sourceHash, previousVersion: 'missing', version: versionOf(request.source),
-      localRevision: request.localRevision, backupId: `created-${crypto.randomUUID()}` };
+    return this.withPathLock(request.path, async () => {
+      const file = await this.resolveFile(request.path, true);
+      this.assertHash(request.source, request.sourceHash);
+      await this.options.validateSource(request.path, request.source);
+      try {
+        await fs.promises.access(file);
+        this.conflict(request.path, 'missing', versionOf(await fs.promises.readFile(file, 'utf8')), request.localRevision);
+      } catch (error) {
+        if (error instanceof BackendError) throw error;
+        if ((error as NodeJS.ErrnoException).code !== 'ENOENT') throw error;
+      }
+      const temporary = path.join(path.dirname(file), `.${path.basename(file)}.${crypto.randomUUID()}.tmp`);
+      try {
+        await fs.promises.writeFile(temporary, request.source, { encoding: 'utf8', flag: 'wx' });
+        await this.options.validateSource(request.path, await fs.promises.readFile(temporary, 'utf8'));
+        await fs.promises.link(temporary, file);
+      } catch (error) {
+        if ((error as NodeJS.ErrnoException).code === 'EEXIST') this.conflict(request.path, 'missing', 'file-created-concurrently', request.localRevision);
+        throw error;
+      } finally {
+        await fs.promises.rm(temporary, { force: true }).catch(() => undefined);
+      }
+      return { path: request.path, sourceHash: request.sourceHash, previousVersion: 'missing', version: versionOf(request.source),
+        localRevision: request.localRevision, backupId: `created-${crypto.randomUUID()}` };
+    });
   }
 
   async restoreBackup(request: RestoreBackupRequest): Promise<RestoreBackupResponse> {
-    const file = await this.resolveFile(request.path, false);
-    const current = await fs.promises.readFile(file, 'utf8');
-    const currentVersion = versionOf(current);
-    if (currentVersion !== request.expectedVersion) this.conflict(request.path, request.expectedVersion, currentVersion, 0);
-    const restored = await this.readBackup(request.backupId);
-    if (restored.path !== request.path) throw new BackendError(400, { message: 'Backup does not belong to requested file' });
-    await this.options.validateSource(request.path, restored.source);
-    const backupId = await this.createBackup(request.path, current);
-    await this.replaceAtomically(file, request.path, restored.source);
-    return { path: request.path, sourceHash: restored.sourceHash, previousVersion: currentVersion,
-      version: versionOf(restored.source), backupId, restoredBackupId: request.backupId };
+    return this.withPathLock(request.path, async () => {
+      const file = await this.resolveFile(request.path, false);
+      const current = await fs.promises.readFile(file, 'utf8');
+      const currentVersion = versionOf(current);
+      if (currentVersion !== request.expectedVersion) this.conflict(request.path, request.expectedVersion, currentVersion, 0);
+      const restored = await this.readBackup(request.backupId);
+      if (restored.path !== request.path) throw new BackendError(400, { message: 'Backup does not belong to requested file' });
+      await this.options.validateSource(request.path, restored.source);
+      const backupId = await this.createBackup(request.path, current);
+      await this.replaceAtomically(file, request.path, restored.source);
+      await this.removeDraft(request.path);
+      return { path: request.path, sourceHash: restored.sourceHash, previousVersion: currentVersion,
+        version: versionOf(restored.source), backupId, restoredBackupId: request.backupId };
+    });
+  }
+
+  private async withPathLock<T>(relativePath: string, operation: () => Promise<T>): Promise<T> {
+    const key = relativePath.replaceAll('\\', '/');
+    const previous = this.pathLocks.get(key) ?? Promise.resolve();
+    let release!: () => void;
+    const active = new Promise<void>(resolve => { release = resolve; });
+    const tail = previous.then(() => active);
+    this.pathLocks.set(key, tail);
+    await previous;
+    try {
+      return await operation();
+    } finally {
+      release();
+      if (this.pathLocks.get(key) === tail) this.pathLocks.delete(key);
+    }
   }
 
   private async resolveFile(relativePath: string, allowMissing: boolean, roots = this.options.allowedRoots): Promise<string> {
