@@ -2,7 +2,7 @@ export type PersistenceError =
   | { kind: 'network-error'; cause?: unknown }
   | { kind: 'validation-error'; message: string; details?: unknown }
   | { kind: 'content-conflict'; expectedVersion: string; actualVersion: string }
-  | { kind: 'draft-conflict'; expectedVersion: string; actualVersion: string; localRevision: number; editorSessionId: string }
+  | { kind: 'draft-conflict'; expectedVersion: string; actualVersion: string; localRevision: number; editorSessionId: string; reason?: 'base-version-mismatch' | 'revision-source-mismatch' | 'stale-revision' }
   | { kind: 'unauthorized'; message: string }
   | { kind: 'not-found'; message: string }
   | { kind: 'server-error'; status: number; message: string }

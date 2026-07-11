@@ -8,16 +8,18 @@ function loaded() {
   return editorPersistenceReducer(loading, { type: 'FILE_LOAD_SUCCEEDED', file, source: 'A', sourceHash: 'h1', version: 'v1' });
 }
 function changed() {
-  return editorPersistenceReducer(loaded(), { type: 'SOURCE_CHANGED', file, source: 'B', sourceHash: 'h2', localRevision: 1 });
+  const state = editorPersistenceReducer(loaded(), { type: 'SOURCE_CHANGED', file, source: 'B', localRevision: 1 });
+  return editorPersistenceReducer(state, { type: 'SOURCE_HASH_RESOLVED', file, source: 'B', sourceHash: 'h2', localRevision: 1 });
 }
 
 describe('editorPersistenceReducer', () => {
   it('loads into a coherent clean state', () => expect(loaded().status.kind).toBe('ready-clean'));
   it('increments through explicit unique source revisions', () => {
     const first = changed();
-    const second = editorPersistenceReducer(first, { type: 'SOURCE_CHANGED', file, source: 'C', sourceHash: 'h3', localRevision: 2 });
-    expect(second).toMatchObject({ source: 'C', localRevision: 2, confirmedRevision: 0 });
-    expect(second.status.kind).toBe('ready-dirty');
+    const second = editorPersistenceReducer(first, { type: 'SOURCE_CHANGED', file, source: 'C', localRevision: 2 });
+    const resolved = editorPersistenceReducer(second, { type: 'SOURCE_HASH_RESOLVED', file, source: 'C', sourceHash: 'h3', localRevision: 2 });
+    expect(resolved).toMatchObject({ source: 'C', localRevision: 2, confirmedRevision: 0, sourceHash: 'h3' });
+    expect(resolved.status.kind).toBe('ready-dirty');
   });
   it('draft confirmation does not clean the file', () => {
     const result = editorPersistenceReducer(changed(), { type: 'DRAFT_SAVE_SUCCEEDED', file, localRevision: 1, draftId: 'd1' });
@@ -43,13 +45,30 @@ describe('editorPersistenceReducer', () => {
     expect(editorPersistenceReducer(dirty, { type: 'FILE_SAVE_SUCCEEDED', file, localRevision: 9, version: 'x', backupId: 'b' })).toBe(dirty);
   });
   it('an old success updates base version but cannot clear a newer edit', () => {
-    const newer = editorPersistenceReducer(changed(), { type: 'SOURCE_CHANGED', file, source: 'C', sourceHash: 'h3', localRevision: 2 });
+    const newer = editorPersistenceReducer(changed(), { type: 'SOURCE_CHANGED', file, source: 'C', localRevision: 2 });
     const result = editorPersistenceReducer(newer, { type: 'FILE_SAVE_SUCCEEDED', file, localRevision: 1, version: 'v2', backupId: 'b' });
     expect(result).toMatchObject({ source: 'C', localRevision: 2, confirmedRevision: 1, version: 'v2' });
     expect(result.status.kind).toBe('ready-dirty');
   });
   it('a new edit invalidates a saved state', () => {
     const saved = editorPersistenceReducer(changed(), { type: 'FILE_SAVE_SUCCEEDED', file, localRevision: 1, version: 'v2', backupId: 'b' });
-    expect(editorPersistenceReducer(saved, { type: 'SOURCE_CHANGED', file, source: 'C', sourceHash: 'h3', localRevision: 2 }).status.kind).toBe('ready-dirty');
+    expect(editorPersistenceReducer(saved, { type: 'SOURCE_CHANGED', file, source: 'C', localRevision: 2 }).status.kind).toBe('ready-dirty');
+  });
+  it('SOURCE_HASH_RESOLVED validates files, revisions, and sources', () => {
+    const state = editorPersistenceReducer(loaded(), { type: 'SOURCE_CHANGED', file, source: 'B', localRevision: 1 });
+    expect(state.sourceHash).toBe('');
+
+    // Wrong source
+    const wrongSource = editorPersistenceReducer(state, { type: 'SOURCE_HASH_RESOLVED', file, source: 'wrong', sourceHash: 'h2', localRevision: 1 });
+    expect(wrongSource.sourceHash).toBe('');
+
+    // Wrong revision
+    const newer = editorPersistenceReducer(state, { type: 'SOURCE_CHANGED', file, source: 'C', localRevision: 2 });
+    const staleHash = editorPersistenceReducer(newer, { type: 'SOURCE_HASH_RESOLVED', file, source: 'B', sourceHash: 'h2', localRevision: 1 });
+    expect(staleHash.sourceHash).toBe('');
+
+    // Correct resolution
+    const correct = editorPersistenceReducer(state, { type: 'SOURCE_HASH_RESOLVED', file, source: 'B', sourceHash: 'h2', localRevision: 1 });
+    expect(correct.sourceHash).toBe('h2');
   });
 });

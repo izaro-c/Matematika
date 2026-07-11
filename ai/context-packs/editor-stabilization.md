@@ -23,6 +23,8 @@
 10. Cambios de archivo y desmontaje cancelan efectos pendientes.
 11. Guardado visual y autosave permanecen deshabilitados.
 12. El corpus MDX se valida mediante baseline en `schemaVersion: 3`.
+13. El registro documental es síncrono (`SOURCE_CHANGED`) antes del hash, desacoplando el dirty de la criptografía asíncrona (`SOURCE_HASH_RESOLVED`).
+14. El contrato de `draft-conflict` incluye `expectedVersion` y `actualVersion` para ser coherente con el esquema de conflictos del cliente.
 
 ## Validación
 

@@ -2,18 +2,20 @@
 
 **Actualizado:** 2026-07-11
 
-**Fase:** Fases 0–4 de estabilización del editor finalizadas y validadas.
+**Fase:** Fases 0–4 de estabilización del editor finalizadas, validadas y cerradas definitivamente.
 
-**Estado:** El source completo es la autoridad de contenido. La persistencia transaccional utiliza locks por path canónico (`realpath`) resolviendo alias y symlinks, CAS mediante `expectedVersion`, y contratos específicos para conflictos de contenido y de borrador (`content-conflict`, `draft-conflict`). Los borradores están aislados por sesión y revisión, almacenados de forma independiente. Las advertencias de React y act() se han resuelto. El gate del corpus y el audit reversible de 94/120 archivos pasan.
+**Estado:** El source completo es la autoridad de contenido. La persistencia transaccional utiliza locks por path canónico (`realpath`) resolviendo alias y symlinks, CAS mediante `expectedVersion`, y contratos específicos para conflictos de contenido y de borrador (`content-conflict`, `draft-conflict`). Los cambios se registran de forma síncrona mediante `SOURCE_CHANGED` desacoplados de la resolución asíncrona de hash (`SOURCE_HASH_RESOLVED`). Los borradores están aislados por sesión y revisión. Las advertencias de React, `act()` y lint se han resuelto. El gate del corpus y el audit reversible de 94/120 archivos pasan.
 
 ## Decisiones vigentes
 
 - `EditorDocument.source` es la única autoridad del MDX.
 - Lecturas y respuestas de persistencia incluyen SHA-256 y versión opaca.
 - Solo una confirmación HTTP válida, coherente con archivo, revisión y hash puede producir `saved`.
+- El cambio documental (`SOURCE_CHANGED`) se registra de forma síncrona en el estado de React y ref, quedando `dirty` de inmediato.
+- El cálculo de hash (`SOURCE_HASH_RESOLVED`) ocurre en segundo plano y se descarta si pertenece a una revisión o archivo anterior.
 - Los borradores están separados del archivo real y no limpian el estado dirty.
-- Una versión externa distinta produce conflicto `409` (`content-conflict` o `draft-conflict`), nunca sobrescritura silenciosa.
-- Los cambios locales sin confirmar bloquean el cambio de archivo.
+- Una versión externa distinta produce conflicto `409` (`content-conflict` o `draft-conflict` enriquecido con `expectedVersion` y `actualVersion`), nunca sobrescritura silenciosa.
+- Los cambios locales sin confirmar (incluso con hash pendiente) bloquean el cambio de archivo.
 - La aplicación crea backup y sustituye mediante temporal verificado y rename.
 - El lock del backend se realiza utilizando la identidad canónica del archivo (`realpath`).
 - Los borradores se guardan inmutables por sesión y revisión, gestionando un puntero global `latest.json`.

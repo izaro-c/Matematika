@@ -36,7 +36,8 @@ export type PersistenceAction =
   | { type: 'FILE_LOAD_STARTED'; file: EditorFileIdentity }
   | { type: 'FILE_LOAD_SUCCEEDED'; file: EditorFileIdentity; source: string; sourceHash: string; version: ContentVersion }
   | { type: 'FILE_LOAD_FAILED'; file: EditorFileIdentity; error: PersistenceError }
-  | { type: 'SOURCE_CHANGED'; file: EditorFileIdentity; source: string; sourceHash: string; localRevision: LocalRevision }
+  | { type: 'SOURCE_CHANGED'; file: EditorFileIdentity; source: string; sourceHash?: string; localRevision: LocalRevision }
+  | { type: 'SOURCE_HASH_RESOLVED'; file: EditorFileIdentity; source: string; sourceHash: string; localRevision: LocalRevision }
   | { type: 'VALIDATION_STARTED'; file: EditorFileIdentity; localRevision: LocalRevision }
   | { type: 'VALIDATION_FAILED'; file: EditorFileIdentity; localRevision: LocalRevision; reason: string }
   | { type: 'DRAFT_SAVE_STARTED'; file: EditorFileIdentity; localRevision: LocalRevision }
@@ -68,8 +69,12 @@ export function editorPersistenceReducer(state: EditorPersistenceState, action: 
       if (!matches(state, action.file) || !state.version) return state;
       if (action.localRevision <= state.localRevision) return state;
       const revision = action.localRevision;
-      return { ...state, source: action.source, sourceHash: action.sourceHash, localRevision: revision,
+      return { ...state, source: action.source, sourceHash: action.sourceHash ?? '', localRevision: revision,
         status: { kind: 'ready-dirty', file: action.file, version: state.version, localRevision: revision } };
+    }
+    case 'SOURCE_HASH_RESOLVED': {
+      if (!matches(state, action.file, action.localRevision) || state.source !== action.source) return state;
+      return { ...state, sourceHash: action.sourceHash };
     }
     case 'VALIDATION_STARTED':
       return matches(state, action.file, action.localRevision) ? { ...state, status: { kind: 'validating', file: action.file, localRevision: action.localRevision } } : state;

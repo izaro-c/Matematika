@@ -29,5 +29,5 @@
 | MDX del corpus | 120 |
 | Cambios accidentales | 0 |
 | Ciclos no idempotentes | 0 |
-| Pruebas del editor | 131 aprobadas |
+| Pruebas del editor | 138 aprobadas |
 | Warnings Dependency Cruiser preexistentes | 170 |

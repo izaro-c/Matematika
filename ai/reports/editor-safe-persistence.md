@@ -63,13 +63,18 @@ Se ha generado y validado con éxito el corpus de 120 documentos MDX bajo el `sc
 
 ## Pruebas
 
-La suite de pruebas del editor se ha ampliado y consolidado con 131 casos de prueba, cubriendo:
+La suite de pruebas del editor se ha ampliado y consolidado con 138 casos de prueba, cubriendo:
 - Concurrencia de múltiples alias (como `database/content/test.mdx` y `./test.mdx`) en `applyContent`.
-- Carreras entre `restoreBackup` y `applyContent` con alias equivalentes.
+- Carreras entre `restoreBackup` and `applyContent` con alias equivalentes.
 - Verificación de no-sobrescritura concurrente usando alias symlink.
 - Pruebas del modelo multi-sesión de borradores (`latest.json` y aislamiento de sesiones).
 - Pruebas de hash incoherente en `DraftRepository`.
-- Limpieza total de advertencias React y act() en la suite de pruebas del editor.
+- Bloqueo inmediato en cambio de archivo bajo hash de edición pendiente.
+- Toggles de modo seguros durante el cálculo asíncrono de hash.
+- Desmontaje tolerante a resoluciones de hash pendientes sin pérdidas de memoria ni warnings.
+- Coordinación exacta de guardado y edición concurrente con hashes pendientes.
+- Validación del payload extendido de `draft-conflict` en cliente y backend.
+- Limpieza total de advertencias React, `act()` y lint en la suite de pruebas del editor.
 
 ## Riesgos residuales
 
