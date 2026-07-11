@@ -46,7 +46,7 @@ export type ApplyContentRequest = z.infer<typeof applyContentRequestSchema>;
 
 export const applyContentResponseSchema = z.object({
   path: z.string().min(1), sourceHash: z.string().min(1), previousVersion: z.string().min(1),
-  version: z.string().min(1), localRevision: z.number().int().nonnegative(), backupId: z.string().min(1)
+  version: z.string().min(1), confirmedRevision: z.number().int().nonnegative(), backupId: z.string().min(1)
 }).strict();
 export type ApplyContentResponse = z.infer<typeof applyContentResponseSchema>;
 

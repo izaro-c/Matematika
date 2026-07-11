@@ -50,7 +50,7 @@ describe('EditorApiClient', () => {
 
   it('sends expectedVersion and supports AbortSignal', async () => {
     const fetchMock = vi.fn().mockResolvedValue(response({ path: validRead.path, sourceHash: 'h', previousVersion: 'v1',
-      version: 'v2', localRevision: 2, backupId: 'b' }));
+      version: 'v2', confirmedRevision: 2, backupId: 'b' }));
     vi.stubGlobal('fetch', fetchMock);
     const controller = new AbortController();
     await new EditorApiClient().applyContent({ path: validRead.path, source: 'x', sourceHash: 'h', expectedVersion: 'v1', localRevision: 2 }, controller.signal);

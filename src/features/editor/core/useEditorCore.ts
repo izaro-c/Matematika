@@ -46,7 +46,7 @@ function sliceRanges(source: string, ranges: Array<{ start: number; end: number 
 
 function persistenceMessage(error: PersistenceError): string {
   if (error.kind === 'conflict') return 'Conflicto: el archivo cambió externamente. Recárguelo antes de aplicar.';
-  if (error.kind === 'invalid-response') return 'El servidor devolvió una respuesta inválida; no se confirmó el guardado.';
+  if (error.kind === 'invalid-response' || error.kind === 'protocol-error') return 'El servidor devolvió una respuesta inválida; no se confirmó el guardado.';
   if (error.kind === 'aborted') return 'Operación cancelada.';
   if (error.kind === 'network-error') return 'Error de red; los cambios locales se conservan.';
   return 'Error de persistencia; los cambios locales se conservan.';

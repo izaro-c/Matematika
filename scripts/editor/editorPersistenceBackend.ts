@@ -117,7 +117,7 @@ export class EditorPersistenceBackend {
       await this.replaceAtomically(file, request.path, request.source);
       await this.removeDraft(request.path);
       return { path: request.path, sourceHash: request.sourceHash, previousVersion: currentVersion,
-        version: versionOf(request.source), localRevision: request.localRevision, backupId };
+        version: versionOf(request.source), confirmedRevision: request.localRevision, backupId };
     });
   }
 
@@ -145,7 +145,7 @@ export class EditorPersistenceBackend {
         await fs.promises.rm(temporary, { force: true }).catch(() => undefined);
       }
       return { path: request.path, sourceHash: request.sourceHash, previousVersion: 'missing', version: versionOf(request.source),
-        localRevision: request.localRevision, backupId: `created-${crypto.randomUUID()}` };
+        confirmedRevision: request.localRevision, backupId: `created-${crypto.randomUUID()}` };
     });
   }
 
