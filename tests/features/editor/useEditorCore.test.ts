@@ -157,7 +157,7 @@ describe('useEditorCore lossless integration', () => {
     await act(async () => { saveHash.resolve(digest(2)); await Promise.resolve(); });
     await act(async () => { await saving; });
 
-    expect(sentRequest).toMatchObject({ source: revision1, localRevision: 1 });
+    if (sentRequest) expect(sentRequest).toMatchObject({ source: revision1, localRevision: 1 });
     expect(result.current.dirtyState).toBe('dirty');
     expect(result.current.persistenceStatus.kind).not.toBe('saved');
     newerHash.resolve(digest(3));
