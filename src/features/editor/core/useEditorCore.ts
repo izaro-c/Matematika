@@ -1,25 +1,29 @@
-import { useCallback, useMemo, useState, type SetStateAction } from 'react';
+import { useCallback, useEffect, useMemo, useReducer, useRef, useState, type SetStateAction } from 'react';
 import type { FileNode } from '../lib/editorContracts';
-import type { DirtyState, EditorMode } from './editorTypes';
-import type { EditorValidationResult } from './editorTypes';
+import type { EditorMode, EditorValidationResult } from './editorTypes';
 import type { Block, BlockType } from './parser';
 import {
-  parseEditorDocument,
-  reparseEditedDocument,
-  getVisualCapabilities,
-  type EditorDocument,
-  type ProjectedBlock,
-  type SourceEdit
+  parseEditorDocument, reparseEditedDocument, getVisualCapabilities,
+  type EditorDocument, type ProjectedBlock, type SourceEdit
 } from '../document';
+import {
+  ContentRepository, DraftRepository, SaveCoordinator, editorApiClient, hashSource,
+  type EditorSaveSnapshot, type PersistenceError, type SaveCoordinatorEvent
+} from '../persistence';
+import {
+  editorPersistenceReducer, initialEditorPersistenceState, persistenceStatusLabel
+} from '../state';
 
 export type VisualSavePolicy = 'disabled' | 'manual-reviewed' | 'enabled';
 export const VISUAL_SAVE_POLICY: VisualSavePolicy = 'disabled';
+export const DRAFT_AUTOSAVE_ENABLED = false;
+
+const contentRepository = new ContentRepository(editorApiClient);
+const draftRepository = new DraftRepository(editorApiClient);
 
 function blockText(block: ProjectedBlock): string {
   if (block.kind === 'opaque') return block.source;
-  if (block.data && typeof block.data === 'object' && 'text' in block.data) {
-    return String((block.data as { text: unknown }).text);
-  }
+  if (block.data && typeof block.data === 'object' && 'text' in block.data) return String((block.data as { text: unknown }).text);
   return block.originalSource;
 }
 
@@ -29,15 +33,9 @@ function mapProjectedBlocks(projected: ProjectedBlock[]): Block[] {
     type: block.kind === 'editable' ? block.blockType as BlockType : 'advancedMdx',
     content: blockText(block),
     metadata: block.kind === 'editable'
-      ? {
-          location: block.location,
-          editRange: block.editRange,
-          originalSource: block.originalSource,
-          editable: true,
+      ? { location: block.location, editRange: block.editRange, originalSource: block.originalSource, editable: true,
           ...(block.blockType === 'heading' && block.data && typeof block.data === 'object'
-            ? { level: (block.data as { depth?: number }).depth }
-            : {})
-        }
+            ? { level: (block.data as { depth?: number }).depth } : {}) }
       : { location: block.location, opaque: true, reason: block.reason, nodeType: block.nodeType }
   }));
 }
@@ -46,24 +44,58 @@ function sliceRanges(source: string, ranges: Array<{ start: number; end: number 
   return ranges.map(range => source.slice(range.start, range.end)).join('\n');
 }
 
+function persistenceMessage(error: PersistenceError): string {
+  if (error.kind === 'conflict') return 'Conflicto: el archivo cambió externamente. Recárguelo antes de aplicar.';
+  if (error.kind === 'invalid-response') return 'El servidor devolvió una respuesta inválida; no se confirmó el guardado.';
+  if (error.kind === 'aborted') return 'Operación cancelada.';
+  if (error.kind === 'network-error') return 'Error de red; los cambios locales se conservan.';
+  return 'Error de persistencia; los cambios locales se conservan.';
+}
+
 const blockedMessage = 'Acción visual bloqueada: todavía no existe un parche localizado demostrablemente lossless.';
 
 export const useEditorCore = () => {
   const [files, setFiles] = useState<FileNode[]>([]);
-  const [loading, setLoading] = useState(false);
-  const [currentFile, setCurrentFile] = useState<string | null>(null);
   const [editorMode, setEditorMode] = useState<EditorMode>('code');
   const [metadata] = useState<Record<string, unknown>>({});
   const [imports, setImportsView] = useState('');
   const [exports, setExportsView] = useState('');
   const [blocks, setBlocksView] = useState<Block[]>([]);
-  // For MDX this is intentionally the complete source, despite the historical name.
-  const [rawBody, setRawSource] = useState('');
   const [doc, setDoc] = useState<EditorDocument | null>(null);
-  const [saving, setSaving] = useState(false);
-  const [dirtyState, setDirtyState] = useState<DirtyState>('clean');
   const [message, setMessage] = useState('');
+  const [persistence, dispatch] = useReducer(editorPersistenceReducer, initialEditorPersistenceState);
+  const persistenceRef = useRef(persistence);
+  const sourceRef = useRef('');
+  const revisionRef = useRef(0);
+  const loadControllerRef = useRef<AbortController | undefined>(undefined);
 
+  useEffect(() => { persistenceRef.current = persistence; }, [persistence]);
+
+  const onCoordinatorEvent = useCallback((event: SaveCoordinatorEvent) => {
+    const { file, localRevision } = event.snapshot;
+    if (event.type === 'draft-started') dispatch({ type: 'DRAFT_SAVE_STARTED', file, localRevision });
+    else if (event.type === 'draft-succeeded') dispatch({ type: 'DRAFT_SAVE_SUCCEEDED', file, localRevision, draftId: event.draftId });
+    else if (event.type === 'apply-started') dispatch({ type: 'FILE_SAVE_STARTED', file, localRevision });
+    else if (event.type === 'apply-succeeded') {
+      dispatch({ type: 'FILE_SAVE_SUCCEEDED', file, localRevision, version: event.version, backupId: event.backupId });
+    } else if (event.error.kind === 'conflict') {
+      dispatch({ type: 'CONFLICT_DETECTED', file, localRevision,
+        expectedVersion: event.error.expectedVersion, actualVersion: event.error.actualVersion });
+    } else {
+      dispatch({ type: event.type === 'draft-failed' ? 'DRAFT_SAVE_FAILED' : 'FILE_SAVE_FAILED', file, localRevision, error: event.error });
+    }
+  }, []);
+
+  const coordinator = useMemo(() => new SaveCoordinator(contentRepository, draftRepository, onCoordinatorEvent), [onCoordinatorEvent]);
+  useEffect(() => () => { loadControllerRef.current?.abort(); coordinator.dispose(); }, [coordinator]);
+
+  const currentFile = persistence.file?.path ?? null;
+  const rawBody = persistence.source;
+  const loading = persistence.status.kind === 'loading';
+  const saving = persistence.status.kind === 'saving-file' || persistence.status.kind === 'saving-draft';
+  const dirtyState = persistence.status.kind === 'ready-clean' || persistence.status.kind === 'saved' ? 'clean'
+    : persistence.status.kind === 'blocked' ? 'blocked'
+      : saving ? 'saving' : persistence.localRevision > persistence.confirmedRevision ? 'dirty' : 'clean';
   const compatibility = doc?.compatibility ?? 'unsupported';
   const compatibilityReasons = doc?.compatibilityReasons ?? [];
   const capabilities = useMemo(() => getVisualCapabilities(compatibility), [compatibility]);
@@ -71,106 +103,95 @@ export const useEditorCore = () => {
   const validation = useMemo<EditorValidationResult>(() => {
     if (isDiagramSource) return { issues: [], canSave: true, errorCount: 0, warningCount: 0 };
     const critical = doc?.diagnostics.filter(item => item.severity === 'critical') ?? [];
-    return {
-      issues: critical.map(item => ({ id: item.code, area: 'body' as const, severity: 'error' as const, message: item.message })),
-      canSave: critical.length === 0,
-      errorCount: critical.length,
-      warningCount: 0
-    };
+    return { issues: critical.map(item => ({ id: item.code, area: 'body' as const, severity: 'error' as const, message: item.message })),
+      canSave: critical.length === 0, errorCount: critical.length, warningCount: 0 };
   }, [doc, isDiagramSource]);
 
   const loadFileList = useCallback(async () => {
-    try {
-      const response = await fetch('/api/list-content');
-      if (!response.ok) throw new Error(await response.text());
-      setFiles(await response.json());
-    } catch (error) {
-      console.error('Error cargando lista de archivos:', error);
-    }
+    try { setFiles(await editorApiClient.listContent() as FileNode[]); }
+    catch (error) { console.error('Error cargando lista de archivos:', error); }
   }, []);
 
-  const syncDocument = useCallback((nextDoc: EditorDocument) => {
+  const syncProjection = useCallback((nextDoc: EditorDocument) => {
     setDoc(nextDoc);
-    setRawSource(nextDoc.source);
     setBlocksView(mapProjectedBlocks(nextDoc.bodyBlocks));
     setImportsView(sliceRanges(nextDoc.source, nextDoc.envelope.importRanges));
     setExportsView(sliceRanges(nextDoc.source, nextDoc.envelope.exportRanges));
   }, []);
 
-  const openFile = useCallback(async (path: string) => {
-    setLoading(true);
+  const openFile = useCallback(async (filePath: string) => {
+    const file = { path: filePath };
+    const active = persistenceRef.current;
+    if (active.file && active.file.path !== filePath && active.localRevision > active.confirmedRevision) {
+      setMessage('Cambio de archivo bloqueado: existen cambios locales sin aplicar.');
+      return;
+    }
+    loadControllerRef.current?.abort();
+    coordinator.cancelAll();
+    const controller = new AbortController();
+    loadControllerRef.current = controller;
+    dispatch({ type: 'FILE_LOAD_STARTED', file });
     setMessage('');
     try {
-      const response = await fetch(`/api/content?path=${encodeURIComponent(path)}`);
-      if (!response.ok) throw new Error(await response.text());
-      const source = await response.text();
-      if (path.endsWith('.mdx')) syncDocument(parseEditorDocument(source));
-      else {
-        setDoc(null);
-        setRawSource(source);
-        setBlocksView([]);
-        setImportsView('');
-        setExportsView('');
-      }
-      setCurrentFile(path);
+      const response = await contentRepository.read(file, controller.signal);
+      if (controller.signal.aborted) return;
+      sourceRef.current = response.source;
+      revisionRef.current = 0;
+      dispatch({ type: 'FILE_LOAD_SUCCEEDED', file, source: response.source, sourceHash: response.sourceHash, version: response.version });
+      if (filePath.endsWith('.mdx')) syncProjection(parseEditorDocument(response.source));
+      else { setDoc(null); setBlocksView([]); setImportsView(''); setExportsView(''); }
       setEditorMode('code');
-      setDirtyState('clean');
     } catch (error) {
-      console.error(error);
-      setMessage('Error cargando el archivo');
-    } finally {
-      setLoading(false);
+      if (controller.signal.aborted) return;
+      const detail: PersistenceError = error && typeof error === 'object' && 'detail' in error
+        ? (error as { detail: PersistenceError }).detail : { kind: 'network-error', cause: error };
+      dispatch({ type: 'FILE_LOAD_FAILED', file, error: detail });
+      setMessage(persistenceMessage(detail));
     }
-  }, [syncDocument]);
+  }, [coordinator, syncProjection]);
+
+  const commitSourceChange = useCallback(async (source: string, nextDoc?: EditorDocument) => {
+    const file = persistenceRef.current.file;
+    if (!file) return;
+    sourceRef.current = source;
+    setMessage('');
+    revisionRef.current += 1;
+    const revision = revisionRef.current;
+    const sourceHash = await hashSource(source);
+    if (revision !== revisionRef.current || file.path !== persistenceRef.current.file?.path) return;
+    dispatch({ type: 'SOURCE_CHANGED', file, source, sourceHash, localRevision: revision });
+    if (nextDoc) syncProjection(nextDoc);
+    if (DRAFT_AUTOSAVE_ENABLED && persistenceRef.current.version) {
+      coordinator.scheduleDraft({ file, source, sourceHash, localRevision: revision, baseVersion: persistenceRef.current.version });
+    }
+  }, [coordinator, syncProjection]);
 
   const toggleEditorMode = useCallback(() => {
-    if (editorMode === 'visual') {
-      if (doc) setRawSource(doc.source);
-      setEditorMode('code');
-      return;
-    }
+    if (editorMode === 'visual') { setEditorMode('code'); return; }
     if (!currentFile?.endsWith('.mdx')) return;
-    const nextDoc = parseEditorDocument(rawBody);
-    if (nextDoc.compatibility === 'unsupported') {
-      setMessage(`Modo visual bloqueado: ${nextDoc.compatibilityReasons.join(' ')}`);
-      return;
-    }
-    syncDocument(nextDoc);
+    const nextDoc = parseEditorDocument(sourceRef.current);
+    if (nextDoc.compatibility === 'unsupported') { setMessage(`Modo visual bloqueado: ${nextDoc.compatibilityReasons.join(' ')}`); return; }
+    syncProjection(nextDoc);
     setEditorMode('visual');
-  }, [currentFile, doc, editorMode, rawBody, syncDocument]);
+  }, [currentFile, editorMode, syncProjection]);
 
   const updateRawBody = useCallback((source: string) => {
-    setRawSource(source);
-    if (currentFile?.endsWith('.mdx')) setDoc(parseEditorDocument(source));
-    setDirtyState('dirty');
-  }, [currentFile]);
+    const nextDoc = currentFile?.endsWith('.mdx') ? parseEditorDocument(source) : undefined;
+    void commitSourceChange(source, nextDoc);
+  }, [commitSourceChange, currentFile]);
 
   const updateBlock = useCallback((id: string, content: string, _metadata?: Record<string, unknown>) => {
-    if (!doc || !capabilities.canEditSafeBlocks) {
-      setMessage(blockedMessage);
-      return;
-    }
+    if (!doc || !capabilities.canEditSafeBlocks) { setMessage(blockedMessage); return; }
     const block = doc.bodyBlocks.find(candidate => candidate.id === id);
-    if (!block || block.kind !== 'editable') {
-      setMessage('Acción visual bloqueada: los bloques opacos son inmutables.');
-      return;
-    }
-    const edit: SourceEdit = {
-      operationId: `edit-${id}-${doc.sourceHash}`,
-      blockId: id,
-      range: block.editRange,
-      expectedSource: block.originalSource,
-      replacement: content
-    };
+    if (!block || block.kind !== 'editable') { setMessage('Acción visual bloqueada: los bloques opacos son inmutables.'); return; }
+    const edit: SourceEdit = { operationId: `edit-${id}-${doc.sourceHash}`, blockId: id, range: block.editRange,
+      expectedSource: block.originalSource, replacement: content };
     try {
       const nextDoc = reparseEditedDocument(doc, doc.sourceHash, [edit]);
-      syncDocument(nextDoc);
-      setDirtyState('dirty');
+      void commitSourceChange(nextDoc.source, nextDoc);
       setMessage('Cambio visual aplicado localmente; el guardado visual permanece deshabilitado.');
-    } catch (error) {
-      setMessage(`Cambio rechazado: ${error instanceof Error ? error.message : String(error)}`);
-    }
-  }, [capabilities.canEditSafeBlocks, doc, syncDocument]);
+    } catch (error) { setMessage(`Cambio rechazado: ${error instanceof Error ? error.message : String(error)}`); }
+  }, [capabilities.canEditSafeBlocks, commitSourceChange, doc]);
 
   const blockUnsafeAction = useCallback((_id?: string) => setMessage(blockedMessage), []);
   const setMetadata = useCallback((_next: SetStateAction<Record<string, unknown>>) => blockUnsafeAction(), [blockUnsafeAction]);
@@ -179,52 +200,30 @@ export const useEditorCore = () => {
   const setBlocks = useCallback((_next: SetStateAction<Block[]>) => blockUnsafeAction(), [blockUnsafeAction]);
 
   const saveCurrentFile = useCallback(async (): Promise<boolean> => {
-    if (!currentFile) return false;
-    if (editorMode === 'visual' && !isDiagramSource) {
-      setDirtyState('dirty');
-      setMessage('El guardado visual está desactivado por contención de seguridad.');
+    const state = persistenceRef.current;
+    if (!state.file || !state.version) return false;
+    if (editorMode === 'visual' && !isDiagramSource) { setMessage('El guardado visual está desactivado por contención de seguridad.'); return false; }
+    const source = sourceRef.current;
+    if (state.file.path.endsWith('.mdx') && parseEditorDocument(source).compatibility === 'unsupported') {
+      dispatch({ type: 'VALIDATION_FAILED', file: state.file, localRevision: state.localRevision, reason: 'Invalid MDX source' });
+      setMessage('No se puede aplicar: el source MDX actual no se puede analizar.');
       return false;
     }
-    const candidate = rawBody;
-    if (currentFile.endsWith('.mdx') && parseEditorDocument(candidate).compatibility === 'unsupported') {
-      setDirtyState('blocked');
-      setMessage('No se puede guardar: el source MDX actual no se puede analizar.');
-      return false;
-    }
-    setSaving(true);
-    setDirtyState('saving');
-    try {
-      const response = await fetch('/api/content', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ path: currentFile, content: candidate })
-      });
-      if (!response.ok) throw new Error(await response.text());
-      setDirtyState('clean');
-      setMessage(isDiagramSource ? 'Diagrama actualizado' : 'Cambios aplicados al archivo real');
-      return true;
-    } catch (error) {
-      console.error('Error aplicando cambios:', error);
-      setDirtyState('dirty');
-      setMessage(isDiagramSource ? 'Error al guardar diagrama' : 'Error al aplicar cambios');
-      return false;
-    } finally {
-      setSaving(false);
-    }
-  }, [currentFile, editorMode, isDiagramSource, rawBody]);
+    const sourceHash = await hashSource(source);
+    const localRevision = revisionRef.current;
+    const snapshot: EditorSaveSnapshot = { file: state.file, source, sourceHash, localRevision, baseVersion: state.version };
+    const confirmed = await coordinator.applyNow(snapshot);
+    return confirmed && revisionRef.current === localRevision && persistenceRef.current.file?.path === snapshot.file.path;
+  }, [coordinator, editorMode, isDiagramSource]);
 
   return {
     files, loading, currentFile, editorMode, metadata, imports, exports, blocks, rawBody,
-    saving, dirtyState, validation, message, loadFileList, openFile, toggleEditorMode,
-    updateRawBody, updateBlock, saveCurrentFile, compatibility, compatibilityReasons, capabilities,
-    removeBlock: (id: string) => blockUnsafeAction(id),
-    addBlock: (_index: number, _type: BlockType) => blockUnsafeAction(),
-    moveBlock: (_from: number, _to: number) => blockUnsafeAction(),
-    setMetadata,
-    setImports,
-    setExports,
-    setBlocks,
-    canMutateVisualStructure: false,
-    canEditVisualMetadata: false
+    saving, dirtyState, validation, message, persistenceStatus: persistence.status,
+    persistenceLabel: persistenceStatusLabel(persistence.status),
+    loadFileList, openFile, toggleEditorMode, updateRawBody, updateBlock, saveCurrentFile,
+    compatibility, compatibilityReasons, capabilities,
+    removeBlock: (id: string) => blockUnsafeAction(id), addBlock: (_index: number, _type: BlockType) => blockUnsafeAction(),
+    moveBlock: (_from: number, _to: number) => blockUnsafeAction(), setMetadata, setImports, setExports, setBlocks,
+    canMutateVisualStructure: false, canEditVisualMetadata: false
   };
 };

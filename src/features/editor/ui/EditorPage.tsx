@@ -16,6 +16,7 @@ import { DiagramWorkbench } from './diagrams/DiagramWorkbench';
 import { Block, BlockType, createBlockId, parseAttributes, parseInlineNodes } from '../core/parser';
 import type { DiagramSpec, DiagramTargetRegistry } from '../core/editorTypes';
 import type { FileNode } from '../lib/editorContracts';
+import { editorApiClient } from '../persistence';
 
 const LATEX_SYMBOLS = [
   { label: '∀', code: '\\forall ' },
@@ -214,7 +215,6 @@ export const EditorPage: React.FC = () => {
     blocks,
     rawBody,
     saving,
-    dirtyState,
     validation,
     message,
     loadFileList,
@@ -233,7 +233,8 @@ export const EditorPage: React.FC = () => {
     compatibility,
     compatibilityReasons,
     canMutateVisualStructure,
-    canEditVisualMetadata
+    canEditVisualMetadata,
+    persistenceLabel
   } = useEditorCore();
 
   const isReadOnly = compatibility === 'read-only';
@@ -355,9 +356,7 @@ export const EditorPage: React.FC = () => {
 
       await Promise.all(mdxFiles.map(async file => {
         try {
-          const response = await fetch(`/api/content?path=${encodeURIComponent(file.path)}`);
-          if (!response.ok) return;
-          const source = await response.text();
+          const { source } = await editorApiClient.readContent({ path: file.path });
           if (source.includes(currentDiagramName) || source.includes(diagramImportStem)) {
             matches.push(file);
           }
@@ -1604,7 +1603,7 @@ export const EditorPage: React.FC = () => {
                 {currentFile ? currentFile.split('/').pop() : 'Seleccionar Archivo'}
               </h1>
               <p className="text-[10px] text-carbon/40 font-serif italic">
-                {saving ? 'Guardando...' : message || (dirtyState === 'clean' ? 'Archivo sin cambios pendientes' : 'Borrador local actualizado')}
+                {message || persistenceLabel}
               </p>
             </div>
           </div>
