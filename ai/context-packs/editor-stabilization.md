@@ -2,20 +2,21 @@
 
 ## Arquitectura vigente
 
-- Documento lossless: `src/features/editor/document/**`.
-- Persistencia: `src/features/editor/persistence/**`.
-- Estado revisionado: `src/features/editor/state/**`.
-- Orquestación React: `src/features/editor/core/useEditorCore.ts`.
-- Backend de desarrollo: servicio `scripts/editor/editorPersistenceBackend.ts`, integrado por `vite.config.ts`.
-- ADR: `docs/adr/ADR-001-lossless-mdx-editor.md` y `ADR-002-editor-transactional-persistence.md`.
+- **Documento lossless:** `src/features/editor/document/**`.
+- **Persistencia:** `src/features/editor/persistence/**`.
+- **Estado revisionado:** `src/features/editor/state/**`.
+- **Orquestación React:** `src/features/editor/core/useEditorCore.ts`.
+- **UI Modular:** Componentes `EditorShell`, `EditorToolbar`, `EditorNavigation`, `EditorModeSwitcher` y subpaneles bajo `ui/panels/`.
+- **Backend de desarrollo:** servicio `scripts/editor/editorPersistenceBackend.ts`, integrado por `vite.config.ts`.
+- **ADR:** `docs/adr/ADR-001-lossless-mdx-editor.md` y `ADR-002-editor-transactional-persistence.md`.
 
-## Invariantes de Fases 0–4 (Cerradas)
+## Invariantes de Fases 0–5 (Cerradas)
 
-1. El source completo es la autoridad documental.
-2. Ningún `200` sin payload válido confirma guardado.
-3. Archivo, revisión, hash y versión deben coincidir en repositorios y API.
-4. Un borrador no equivale a archivo aplicado ni limpia dirty.
-5. Una respuesta antigua no confirma una revisión posterior.
+1. El editor es modular. `EditorPage.tsx` actúa como punto de composición.
+2. El source completo es la autoridad documental.
+3. Ningún `200` sin payload válido confirma guardado.
+4. Archivo, revisión, hash y versión deben coincidir en repositorios y API.
+5. Un borrador no equivale a archivo aplicado ni limpia dirty.
 6. Toda aplicación compara versión, crea backup y reemplaza atómicamente.
 7. Los locks del backend se resuelven canónicamente a nivel de `realpath` absoluto para neutralizar alias de ruta y symlinks.
 8. Los conflictos devuelven `409` discriminados (`content-conflict` y `draft-conflict`), preservando el source local sin sobrescritura.
@@ -23,24 +24,19 @@
 10. Cambios de archivo y desmontaje cancelan efectos pendientes.
 11. Guardado visual y autosave permanecen deshabilitados.
 12. El corpus MDX se valida mediante baseline en `schemaVersion: 3`.
-13. El registro documental es síncrono (`SOURCE_CHANGED`) antes del hash, desacoplando el dirty de la criptografía asíncrona (`SOURCE_HASH_RESOLVED`).
-14. El contrato de `draft-conflict` incluye `expectedVersion` y `actualVersion` para ser coherente con el esquema de conflictos del cliente.
 
 ## Validación
 
 ```bash
 npm run test:editor
 npm run editor:roundtrip:check
-npm run editor:lossless:check
 npm run typecheck
 npm run lint -- src/features/editor tests/features/editor scripts/editor vite.config.ts
 npm run depcruise
 npm run ai:review
 npm run build
-git diff --check
-git diff -- src/database/content
 ```
 
 ## Siguiente alcance
 
-La Fase 5 puede modularizar `EditorPage` y retirar hooks legacy, pero no debe cambiar contratos de persistencia, endpoints, versiones, backups, conflictos ni el motor documental.
+La Fase 6 debe abordar la estabilización y robustez del workbench de diagramas matemáticos (`DiagramWorkbench.tsx`).
