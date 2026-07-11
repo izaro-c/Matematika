@@ -34,10 +34,6 @@ function sourceHash(source: string): string {
 }
 function versionOf(source: string): string { return `sha256:${sourceHash(source)}`; }
 function inside(candidate: string, root: string): boolean { return candidate === root || candidate.startsWith(`${root}${path.sep}`); }
-function jsonName(prefix: string, value: string): string {
-  return `${prefix}-${crypto.createHash('sha256').update(value).digest('hex')}.json`;
-}
-
 export class EditorPersistenceBackend {
   private readonly backupRoot: string;
   private readonly draftRoot: string;
@@ -62,26 +58,51 @@ export class EditorPersistenceBackend {
   }
 
   async saveDraft(request: SaveDraftRequest): Promise<SaveDraftResponse> {
-    await this.resolveFile(request.path, false);
-    this.assertHash(request.source, request.sourceHash);
-    await this.options.validateSource(request.path, request.source);
-    await fs.promises.mkdir(this.draftRoot, { recursive: true });
-    const draftId = jsonName('draft', request.path).replace(/\.json$/, '');
-    const savedAt = new Date().toISOString();
-    const record: DraftRecord = { ...request, draftId, savedAt };
-    await this.writeJsonAtomic(path.join(this.draftRoot, `${draftId}.json`), record);
-    return { path: request.path, draftId, sourceHash: request.sourceHash, baseVersion: request.baseVersion,
-      localRevision: request.localRevision, savedAt };
+    return this.withPathLock(request.path, async () => {
+      const file = await this.resolveFile(request.path, false);
+      this.assertHash(request.source, request.sourceHash);
+      await this.options.validateSource(request.path, request.source);
+      const currentVersion = versionOf(await fs.promises.readFile(file, 'utf8'));
+      if (currentVersion !== request.baseVersion) {
+        throw new BackendError(409, { kind: 'draft-conflict', path: request.path,
+          expectedVersion: request.baseVersion, actualVersion: currentVersion,
+          localRevision: request.localRevision, editorSessionId: request.editorSessionId });
+      }
+
+      const directory = this.draftDirectory(request.path);
+      const sessionPointer = path.join(directory, `${this.safeId(request.editorSessionId)}.latest.json`);
+      const existing = await this.readJsonIfPresent<DraftRecord>(sessionPointer);
+      if (existing && request.localRevision < existing.localRevision) {
+        return { ...this.draftResponse(existing), disposition: 'ignored-stale' };
+      }
+      if (existing && request.localRevision === existing.localRevision) {
+        if (request.sourceHash !== existing.sourceHash) {
+          throw new BackendError(409, { kind: 'draft-conflict', path: request.path,
+            message: 'Same draft revision has different source', localRevision: request.localRevision,
+            editorSessionId: request.editorSessionId });
+        }
+        return this.draftResponse(existing);
+      }
+
+      await fs.promises.mkdir(path.join(directory, 'revisions'), { recursive: true });
+      const draftKey = [request.editorSessionId, request.localRevision, request.sourceHash].join(':');
+      const draftId = `draft-${this.safeId(draftKey)}`;
+      const record: DraftRecord = { ...request, draftId, disposition: 'accepted', savedAt: new Date().toISOString() };
+      await this.writeJsonAtomic(path.join(directory, 'revisions', `${draftId}.json`), record);
+      await this.writeJsonAtomic(sessionPointer, record);
+      await this.writeJsonAtomic(path.join(directory, 'latest.json'), record);
+      return this.draftResponse(record);
+    });
   }
 
   async readDraft(relativePath: string): Promise<ReadDraftResponse> {
-    await this.resolveFile(relativePath, false);
-    const draftId = jsonName('draft', relativePath).replace(/\.json$/, '');
-    try { return JSON.parse(await fs.promises.readFile(path.join(this.draftRoot, `${draftId}.json`), 'utf8')) as ReadDraftResponse; }
-    catch (error) {
-      if ((error as NodeJS.ErrnoException).code === 'ENOENT') throw new BackendError(404, { message: 'Draft not found' });
-      throw error;
-    }
+    return this.withPathLock(relativePath, async () => {
+      const file = await this.resolveFile(relativePath, false);
+      const currentVersion = versionOf(await fs.promises.readFile(file, 'utf8'));
+      const record = await this.readJsonIfPresent<DraftRecord>(path.join(this.draftDirectory(relativePath), 'latest.json'));
+      if (!record) throw new BackendError(404, { message: 'Draft not found' });
+      return { ...record, status: record.baseVersion === currentVersion ? 'current' : 'stale', currentVersion };
+    });
   }
 
   async applyContent(request: ApplyContentRequest): Promise<ApplyContentResponse> {
@@ -236,9 +257,31 @@ export class EditorPersistenceBackend {
     }
   }
 
+  private async readJsonIfPresent<T>(file: string): Promise<T | undefined> {
+    try { return JSON.parse(await fs.promises.readFile(file, 'utf8')) as T; }
+    catch (error) {
+      if ((error as NodeJS.ErrnoException).code === 'ENOENT') return undefined;
+      throw error;
+    }
+  }
+
+  private safeId(value: string): string {
+    return crypto.createHash('sha256').update(value).digest('hex');
+  }
+
+  private draftDirectory(relativePath: string): string {
+    return path.join(this.draftRoot, this.safeId(relativePath));
+  }
+
+  private draftResponse(record: DraftRecord): SaveDraftResponse {
+    const { path: draftPath, draftId, sourceHash: hash, baseVersion, localRevision,
+      editorSessionId, disposition, savedAt } = record;
+    return { path: draftPath, draftId, sourceHash: hash, baseVersion, localRevision,
+      editorSessionId, disposition, savedAt };
+  }
+
   private async removeDraft(relativePath: string): Promise<void> {
-    const draftId = jsonName('draft', relativePath).replace(/\.json$/, '');
-    await fs.promises.rm(path.join(this.draftRoot, `${draftId}.json`), { force: true });
+    await fs.promises.rm(this.draftDirectory(relativePath), { recursive: true, force: true });
   }
 }
 

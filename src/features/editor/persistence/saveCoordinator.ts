@@ -1,7 +1,7 @@
 import type { ContentRepository } from './contentRepository';
 import type { DraftRepository } from './draftRepository';
 import { asPersistenceError } from './persistenceErrors';
-import type { EditorFileIdentity, EditorSaveSnapshot } from './persistenceContracts';
+import type { EditorDraftSnapshot, EditorFileIdentity, EditorSaveSnapshot } from './persistenceContracts';
 
 export type SaveCoordinatorEvent =
   | { type: 'draft-started'; snapshot: EditorSaveSnapshot }
@@ -36,7 +36,7 @@ export class SaveCoordinator {
     private readonly timers: TimerApi = browserTimers
   ) {}
 
-  scheduleDraft(snapshot: EditorSaveSnapshot): void {
+  scheduleDraft(snapshot: EditorDraftSnapshot): void {
     if (this.disposed) return;
     if (this.timer !== undefined) this.timers.clear(this.timer);
     this.timer = this.timers.set(() => {
@@ -45,7 +45,7 @@ export class SaveCoordinator {
     }, this.debounceMs);
   }
 
-  async saveDraftNow(snapshot: EditorSaveSnapshot): Promise<void> {
+  async saveDraftNow(snapshot: EditorDraftSnapshot): Promise<void> {
     if (this.disposed) return;
     this.draftController?.abort();
     const controller = new AbortController();

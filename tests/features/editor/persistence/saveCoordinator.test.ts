@@ -1,8 +1,8 @@
 import { describe, expect, it, vi } from 'vitest';
-import { SaveCoordinator, type ContentRepository, type DraftRepository, type EditorSaveSnapshot, type SaveCoordinatorEvent } from '@/features/editor/persistence';
+import { SaveCoordinator, type ContentRepository, type DraftRepository, type EditorDraftSnapshot, type SaveCoordinatorEvent } from '@/features/editor/persistence';
 
-const snapshot = (revision: number): EditorSaveSnapshot => ({ file: { path: 'database/content/a.mdx' }, source: `s${revision}`,
-  sourceHash: `h${revision}`, baseVersion: 'v1', localRevision: revision });
+const snapshot = (revision: number): EditorDraftSnapshot => ({ file: { path: 'database/content/a.mdx' }, source: `s${revision}`,
+  sourceHash: `h${revision}`, baseVersion: 'v1', localRevision: revision, editorSessionId: 'session-a' });
 function deferred<T>() { let resolve!: (value: T) => void; let reject!: (error: unknown) => void;
   return { promise: new Promise<T>((yes, no) => { resolve = yes; reject = no; }), resolve, reject }; }
 

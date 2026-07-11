@@ -13,6 +13,7 @@ export interface RevisionSnapshot {
 }
 
 export interface EditorSaveSnapshot extends RevisionSnapshot { source: string }
+export interface EditorDraftSnapshot extends EditorSaveSnapshot { editorSessionId: string }
 
 export const readContentResponseSchema = z.object({
   path: z.string().min(1), source: z.string(), sourceHash: z.string().min(1), version: z.string().min(1)
@@ -21,17 +22,20 @@ export type ReadContentResponse = z.infer<typeof readContentResponseSchema>;
 
 export const saveDraftRequestSchema = z.object({
   path: z.string().min(1), source: z.string(), sourceHash: z.string().min(1),
-  baseVersion: z.string().min(1), localRevision: z.number().int().nonnegative()
+  baseVersion: z.string().min(1), localRevision: z.number().int().nonnegative(), editorSessionId: z.string().min(1)
 }).strict();
 export type SaveDraftRequest = z.infer<typeof saveDraftRequestSchema>;
 
 export const saveDraftResponseSchema = z.object({
   path: z.string().min(1), draftId: z.string().min(1), sourceHash: z.string().min(1),
-  baseVersion: z.string().min(1), localRevision: z.number().int().nonnegative(), savedAt: z.string().min(1)
+  baseVersion: z.string().min(1), localRevision: z.number().int().nonnegative(), editorSessionId: z.string().min(1),
+  disposition: z.enum(['accepted', 'ignored-stale']), savedAt: z.string().min(1)
 }).strict();
 export type SaveDraftResponse = z.infer<typeof saveDraftResponseSchema>;
 
-export const readDraftResponseSchema = saveDraftResponseSchema.extend({ source: z.string() }).strict();
+export const readDraftResponseSchema = saveDraftResponseSchema.extend({
+  source: z.string(), status: z.enum(['current', 'stale']), currentVersion: z.string().min(1)
+}).strict();
 export type ReadDraftResponse = z.infer<typeof readDraftResponseSchema>;
 
 export const applyContentRequestSchema = z.object({
