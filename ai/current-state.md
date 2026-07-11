@@ -1,32 +1,27 @@
 # Estado actual de la infraestructura IA
 
-**Actualizado:** 2026-07-10
+**Actualizado:** 2026-07-11
 
-**Fase:** estabilización del editor (Fase 3 completada - Motor MDX lossless y compatibilidad visual)
+**Fase:** estabilización del editor — fases 0–3 corregidas y contenidas
 
-**Estado:** Fases 0, 1, 2 y 3 completadas; motor MDX AST (lossless) en producción e integrado con useEditorCore y EditorPage; auditor de compatibilidad lossless del corpus añadido con puerta de no-regresión en CI; persistencia visual remota sigue desactivada por contención de seguridad.
+**Estado:** el source MDX completo es la autoridad del editor; envelope y body son rangos literales. El corpus de 120 documentos pasa el gate de apertura, proyección, cambios de modo y tres ciclos sin cambios de bytes. La persistencia visual continúa deshabilitada.
 
 ## Decisiones vigentes
 
-- `AGENTS.md` es la entrada común y breve.
-- `docs/ai/` gobierna; `ai/` opera; `.agents/skills/` especializa.
-- `.opencode/` es el único adaptador oficial de OpenCode.
-- Las skills se descubren y cargan bajo demanda.
-- `.auxiliary/` permanece intacta y no se usa como autoridad.
-- `npm run ai:index` regenera inventarios compactos de contexto en `ai/indexes/`.
-- `npm run ai:review` clasifica el working tree y recomienda validaciones mínimas sin ejecutarlas.
-- `npm run ai:debt` regenera un informe accionable de deuda sin modificar código de producto.
-- `ai/agent-workflows.md` conecta tipos de trabajo con herramienta, pack y revisión proporcional.
-- `ai/context-packs/` fija lecturas, permisos, validaciones y aceptación por tarea.
-- `ai/prompts/` ofrece plantillas breves por herramienta con contrato de alcance obligatorio.
+- `AGENTS.md` es la entrada común; `docs/ai/` gobierna, `ai/` opera y `.agents/skills/` especializa.
+- `EditorDocument.source` es la única autoridad del MDX abierto.
+- El parser del editor usa el subconjunto sintáctico del build: MDX, GFM y matemáticas, sin ejecutar metadata.
+- Metadata, imports y exports no son bloques del body y se preservan como slices del source.
+- Solo párrafos y headings simples admiten parches localizados; los demás nodos son opacos.
+- El guardado visual, la edición visual de metadata y las operaciones estructurales permanecen bloqueados.
+- El guardado manual en código envía exactamente el source actual y comprueba la respuesta HTTP.
 
 ## Próximo paso
 
-El próximo paso es la Fase 4 — Estabilización del workbench de diagramas y adaptabilidad de la UI en el editor.
+Fase 4 — persistencia transaccional del source candidato con control de revisión y conflicto. No corresponde iniciar todavía la modularización de `EditorPage` ni el workbench de diagramas.
 
 ## Deuda visible
 
-- Regenerar `ai/indexes/` con `npm run ai:index` en una tarea que autorice modificar generados; esta fase añadió workflows, packs y prompts sin editarlos.
-- Auditar `.auxiliary/TODO.md`, `.auxiliary/TODO_content.md` y `.auxiliary/opencode.json`; migrar solo información aún vigente y después decidir su retirada.
-- Revisar las skills extensas para separar patrones canónicos de notas históricas y resolver contradicciones internas sin perder conocimiento útil.
-- Crear adaptadores adicionales únicamente si una herramienta necesita configuración local real; los documentos de `ai/tools/` no sustituyen esos adaptadores.
+- Retirar físicamente el parser legacy y los hooks `useEditorState`/`useEditorActions`, actualmente sin consumidores productivos, en una tarea con alcance sobre `src/features/editor/hooks/` y sus flujos de creación de archivos.
+- Mantener bloqueadas las operaciones de insertar, mover, eliminar y editar metadata hasta que dispongan de parches localizados y contratos de persistencia transaccional.
+- Resolver las 170 advertencias preexistentes de Dependency Cruiser fuera de esta corrección; el ciclo dentro de `editor/document` ya se eliminó.

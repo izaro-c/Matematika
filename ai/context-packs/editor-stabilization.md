@@ -1,48 +1,42 @@
-# Context Pack: Estabilización del Editor
+# Context pack: estabilización del editor
 
-Este pack de contexto define las fronteras, los archivos críticos, los archivos prohibidos y las validaciones obligatorias para cualquier IA que trabaje en la estabilización del editor de Matematika.
+## Alcance activo
 
-## Archivos Críticos (Permitidos)
+- Motor: `src/features/editor/document/**`.
+- Integración: `src/features/editor/core/useEditorCore.ts` y contención mínima en `src/features/editor/ui/EditorPage.tsx`.
+- Oráculo: `scripts/editor/corpusAuditCore.ts` y scripts `audit-*`.
+- Pruebas: `tests/features/editor/**` y fixtures del editor.
+- Arquitectura: `docs/adr/ADR-001-lossless-mdx-editor.md`.
 
-- `src/features/editor/core/useEditorCore.ts` (Orquestación del estado y persistencia)
-- `src/features/editor/ui/EditorPage.tsx` (Componente de UI principal del editor)
-- `tests/features/editor/useEditorCore.test.ts` (Pruebas unitarias de contención)
-- `scripts/editor/audit-mdx-roundtrip.ts` (Oráculo y auditor determinista de round-trip)
-- `tests/features/editor/roundtrip.test.ts` (Pruebas unitarias del oráculo y fixtures)
-- `tests/fixtures/editor/` (Fixtures de regresión sintéticos)
-- `docs/adr/ADR-001-lossless-mdx-editor.md` (ADR de la arquitectura sin pérdidas)
-- `src/features/editor/experimental/lossless-mdx/documentTypes.ts` (Contratos de la nueva arquitectura)
-- `src/features/editor/experimental/lossless-mdx/losslessMdx.ts` (Prototipo del parser lossless y parches)
-- `tests/features/editor/experimental/losslessMdx.test.ts` (Pruebas unitarias del prototipo)
-- `scripts/editor/evaluate-lossless-prototype.ts` (Evaluador del prototipo sobre el corpus real)
-- `ai/reports/editor-lossless-mdx-prototype.md` (Reporte de evaluación del prototipo y matriz de alternativas)
-- `ai/phases/editor-stabilization.md` (Estado y métricas de la épica)
-- `ai/context-packs/editor-stabilization.md` (Este documento)
-- `ai/reports/editor-safety-baseline.md` (Reporte de baseline de Fase 0)
-- `ai/reports/editor-roundtrip-baseline.json` (Reporte estructurado del round-trip)
-- `ai/reports/editor-roundtrip-baseline.md` (Informe de diagnóstico del round-trip)
+## Invariantes
 
-## Archivos Prohibidos (Fuera de Alcance)
+1. `EditorDocument.source` contiene siempre el MDX completo.
+2. Envelope y body son rangos; nunca se reserializan globalmente.
+3. El parser usa `remark-parse`, `remark-mdx`, `remark-gfm` y `remark-math` sin plugins transformadores.
+4. Los nodos no soportados son opacos e inmutables.
+5. Cada edición visual exige hash base, bloque editable, rango exacto y `expectedSource`.
+6. Se reparsa después de cada parche y no se reutilizan offsets.
+7. El guardado visual y las operaciones estructurales están deshabilitados.
+8. El corpus `src/database/content/**/*.mdx` es de solo lectura.
 
-- `src/database/content/**/*.mdx` (El corpus matemático es de solo lectura en esta épica)
-- `src/features/editor/core/parser.ts` (El parser legacy de producción no se modifica hasta la Fase 3)
-- `src/features/editor/ui/` (No se integra ni altera la interfaz de usuario en esta fase)
-- `lean/` (No se modifica código Lean en esta épica)
-- Grafo y JSON generados a mano
-- Diagramas de producto (los diagramas existentes no se deben refactorizar)
+## Validación
 
-## Reglas Operativas e Invariantes
+```bash
+npm run editor:roundtrip:audit
+npm run editor:roundtrip:check
+npm run test:editor
+npm run typecheck
+npm run lint -- src/features/editor tests/features/editor scripts/editor
+npm run depcruise
+npm run ai:review
+git diff --check
+git diff -- src/database/content
+```
 
-1. **Contención Activa**: `VisualSavePolicy` debe ser `'disabled'` hasta la Fase 3.
-2. **Ejecución del Oráculo**: Para verificar que no se introducen regresiones, ejecutar `npm run editor:roundtrip:check`.
-3. **Validación del Prototipo**: Ejecutar `npm run test:editor:lossless` y `npm run editor:lossless:prototype`.
-4. **No Regresión**: Ejecutar la suite `npm run test:editor` tras cualquier cambio.
+## Aceptación
 
-## Lista de Verificación (Checklist)
-
-- [ ] ¿El archivo modificado está en la lista de permitidos?
-- [ ] ¿Se mantiene la contención de persistencia visual en useEditorCore?
-- [ ] ¿Pasan todas las pruebas de `npm run test:editor:lossless`?
-- [ ] ¿`npm run typecheck` da cero errores?
-- [ ] ¿`npm run editor:roundtrip:check` se ejecuta y devuelve éxito?
-- [ ] ¿`git diff --check` no reporta problemas de formato?
+- Los 120 MDX se descubren y clasifican.
+- Todos son exactos e idempotentes tras tres ciclos.
+- Ningún envelope o body cambia.
+- No hay legacy en las rutas críticas de `useEditorCore` ni en el auditor.
+- La siguiente fase es persistencia transaccional, no modularización ni workbench.
