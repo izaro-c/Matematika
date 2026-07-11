@@ -79,6 +79,39 @@ describe('EditorPersistenceBackend', () => {
     expect(backup).toMatchObject({ path: relativePath, source: 'original' });
   });
 
+  it('allows exactly one of two concurrent applies against the same base version', async () => {
+    let release!: () => void;
+    const barrier = new Promise<void>(resolve => { release = resolve; });
+    let firstArrived!: () => void;
+    const firstArrival = new Promise<void>(resolve => { firstArrived = resolve; });
+    let blocked = false;
+    const service = backend({
+      beforeBackup: async () => {
+        if (!blocked) {
+          blocked = true;
+          firstArrived();
+          await barrier;
+        }
+      }
+    });
+
+    const first = service.applyContent(applyRequest('client-a'));
+    await firstArrival;
+    const second = service.applyContent(applyRequest('client-b'));
+    await Promise.resolve();
+    release();
+    const results = await Promise.allSettled([first, second]);
+    const fulfilled = results.filter(result => result.status === 'fulfilled');
+    const conflicts = results.filter(result => result.status === 'rejected' && result.reason instanceof BackendError && result.reason.status === 409);
+    expect(fulfilled).toHaveLength(1);
+    expect(conflicts).toHaveLength(1);
+    const winner = (fulfilled[0] as PromiseFulfilledResult<Awaited<ReturnType<typeof service.applyContent>>>).value;
+    await expect(fs.promises.readFile(file, 'utf8')).resolves.toBe(winner.sourceHash === contentHash('client-a') ? 'client-a' : 'client-b');
+    const backup = JSON.parse(await fs.promises.readFile(path.join(root, 'storage/backups', `${winner.backupId}.json`), 'utf8'));
+    expect(backup.source).toBe('original');
+    expect((await fs.promises.readdir(contentRoot)).filter(name => name.endsWith('.tmp'))).toHaveLength(0);
+  });
+
   it('creates a new TSX atomically and refuses a concurrent overwrite', async () => {
     const target = 'database/content/new.tsx';
     const source = 'export const A = 1;';
@@ -98,6 +131,43 @@ describe('EditorPersistenceBackend', () => {
     expect(saved).toMatchObject({ path: relativePath, sourceHash: contentHash(source), baseVersion: contentVersion('original'), localRevision: 4 });
     await expect(service.readDraft(relativePath)).resolves.toMatchObject({ source: 'draft', localRevision: 4 });
     await expect(fs.promises.readFile(file, 'utf8')).resolves.toBe('original');
+  });
+
+  it('does not let an older draft completion replace a newer revision', async () => {
+    let releaseOld!: () => void;
+    const oldBlocked = new Promise<void>(resolve => { releaseOld = resolve; });
+    let oldArrived!: () => void;
+    const oldArrival = new Promise<void>(resolve => { oldArrived = resolve; });
+    const service = backend({ validateSource: async (_path, candidate) => {
+      if (candidate === 'draft-old') { oldArrived(); await oldBlocked; }
+    } });
+    const baseVersion = contentVersion('original');
+    const oldSave = service.saveDraft({ path: relativePath, source: 'draft-old', sourceHash: contentHash('draft-old'),
+      baseVersion, localRevision: 1, editorSessionId: 'session-a' } as never);
+    await oldArrival;
+    await service.saveDraft({ path: relativePath, source: 'draft-new', sourceHash: contentHash('draft-new'),
+      baseVersion, localRevision: 2, editorSessionId: 'session-a' } as never);
+    releaseOld();
+    await oldSave;
+    await expect(service.readDraft(relativePath)).resolves.toMatchObject({ source: 'draft-new', localRevision: 2 });
+  });
+
+  it('does not resurrect an in-flight obsolete draft after applying the file', async () => {
+    let releaseDraft!: () => void;
+    const draftBlocked = new Promise<void>(resolve => { releaseDraft = resolve; });
+    let draftArrived!: () => void;
+    const draftArrival = new Promise<void>(resolve => { draftArrived = resolve; });
+    const service = backend({ validateSource: async (_path, candidate) => {
+      if (candidate === 'draft-old') { draftArrived(); await draftBlocked; }
+    } });
+    const baseVersion = contentVersion('original');
+    const oldSave = service.saveDraft({ path: relativePath, source: 'draft-old', sourceHash: contentHash('draft-old'),
+      baseVersion, localRevision: 1, editorSessionId: 'session-a' } as never);
+    await draftArrival;
+    await service.applyContent(applyRequest('applied'));
+    releaseDraft();
+    await oldSave;
+    await expect(service.readDraft(relativePath)).rejects.toMatchObject({ status: 404 });
   });
 
   it('restores a backup atomically and backs up the replaced state', async () => {
