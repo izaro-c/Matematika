@@ -1,227 +1,106 @@
-import { describe, expect, it, vi, beforeEach, afterEach } from 'vitest';
-import { renderHook, act } from '@testing-library/react';
+import { act, renderHook } from '@testing-library/react';
+import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 import { useEditorCore, VISUAL_SAVE_POLICY } from '@/features/editor/core/useEditorCore';
 
-const validDefinitionMdx = `export const metadata = {
-  "id": "segmento",
-  "type": "definicion",
-  "title": "Segmento",
-  "description": "Parte de una recta limitada por dos puntos.",
-  "subtype": "nominal",
-  "authors": []
+const source = `import X from './x';
+
+export const metadata = {
+  title: 'Segmento'
 };
 
-Un segmento se define mediante dos extremos.`;
+## Título
 
-describe('useEditorCore - VisualSavePolicy', () => {
-  beforeEach(() => {
-    vi.stubGlobal('fetch', vi.fn());
-  });
+Un cuerpo que debe conservarse.
 
-  afterEach(() => {
-    vi.unstubAllGlobals();
-  });
+export const value = { nested: true };`;
 
-  it('declares the containment policy as disabled', () => {
+function response(text: string, ok = true) {
+  return { ok, text: async () => text, json: async () => [] };
+}
+
+describe('useEditorCore lossless integration', () => {
+  beforeEach(() => vi.stubGlobal('fetch', vi.fn()));
+  afterEach(() => vi.unstubAllGlobals());
+
+  it('keeps visual persistence disabled and opens MDX in code mode with full source', async () => {
+    const fetchMock = vi.mocked(fetch).mockResolvedValueOnce(response(source) as Response);
+    const { result } = renderHook(() => useEditorCore());
+    await act(() => result.current.openFile('content/test.mdx'));
     expect(VISUAL_SAVE_POLICY).toBe('disabled');
-  });
-
-  it('keeps local status as dirty but blocks saveDraft from fetching when disabled', async () => {
-    const fetchMock = vi.fn().mockResolvedValue({
-      ok: true,
-      json: async () => ({})
-    });
-    vi.stubGlobal('fetch', fetchMock);
-
-    const { result } = renderHook(() => useEditorCore());
-
-    // Open file
-    await act(async () => {
-      fetchMock.mockResolvedValueOnce({
-        ok: true,
-        text: async () => validDefinitionMdx
-      });
-      await result.current.openFile('database/content/definitions/segmento.mdx');
-    });
-
-    expect(result.current.currentFile).toBe('database/content/definitions/segmento.mdx');
-    expect(result.current.dirtyState).toBe('clean');
-
-    // Trigger metadata change
-    act(() => {
-      result.current.setMetadata({
-        id: 'segmento',
-        type: 'definicion',
-        title: 'Segmento Modificado',
-        description: 'Parte de una recta limitada por dos puntos.',
-        subtype: 'nominal',
-        authors: [],
-      });
-    });
-
-    // Check that dirtyState is updated to dirty
-    expect(result.current.dirtyState).toBe('dirty');
-    
-    // Autosave should NOT fire /api/draft because VISUAL_SAVE_POLICY is disabled
-    expect(fetchMock).not.toHaveBeenCalledWith('/api/draft', expect.anything());
-  });
-
-  it('blocks saveCurrentFile in visual mode but allows it in code mode', async () => {
-    const fetchMock = vi.fn();
-    vi.stubGlobal('fetch', fetchMock);
-
-    const { result } = renderHook(() => useEditorCore());
-
-    // Open file
-    await act(async () => {
-      fetchMock.mockResolvedValueOnce({
-        ok: true,
-        text: async () => validDefinitionMdx
-      });
-      await result.current.openFile('database/content/definitions/segmento.mdx');
-    });
-
-    // We are in visual mode by default for MDX files
-    expect(result.current.editorMode).toBe('visual');
-
-    // Try to save visual file
-    let saveResult = false;
-    await act(async () => {
-      saveResult = await result.current.saveCurrentFile();
-    });
-
-    expect(saveResult).toBe(false);
-    expect(result.current.dirtyState).toBe('dirty');
-    expect(result.current.message).toContain('El guardado visual está desactivado');
-    expect(fetchMock).not.toHaveBeenCalledWith('/api/content', expect.anything());
-
-    // Switch to code mode
-    act(() => {
-      result.current.toggleEditorMode();
-    });
     expect(result.current.editorMode).toBe('code');
-
-    // Save in code mode
-    fetchMock.mockResolvedValueOnce({
-      ok: true,
-      text: async () => 'Success'
-    });
-    await act(async () => {
-      saveResult = await result.current.saveCurrentFile();
-    });
-
-    expect(saveResult).toBe(true);
-    expect(result.current.dirtyState).toBe('clean');
-    expect(result.current.message).toContain('Cambios aplicados');
-    expect(fetchMock).toHaveBeenCalledWith('/api/content', expect.objectContaining({
-      method: 'POST'
-    }));
+    expect(result.current.rawBody).toBe(source);
+    expect(result.current.blocks).toHaveLength(2);
+    expect(fetchMock).toHaveBeenCalledTimes(1);
   });
 
-  it('handles HTTP error in manual code save flow correctly without marking as saved', async () => {
-    const fetchMock = vi.fn();
-    vi.stubGlobal('fetch', fetchMock);
-
+  it('changes code to visual to code without changing one byte', async () => {
+    vi.mocked(fetch).mockResolvedValueOnce(response(source) as Response);
     const { result } = renderHook(() => useEditorCore());
-
-    // Open file
-    await act(async () => {
-      fetchMock.mockResolvedValueOnce({
-        ok: true,
-        text: async () => validDefinitionMdx
-      });
-      await result.current.openFile('database/content/definitions/segmento.mdx');
-    });
-
-    // Switch to code mode
-    act(() => {
-      result.current.toggleEditorMode();
-    });
-
-    // Mock HTTP error (500)
-    fetchMock.mockResolvedValueOnce({
-      ok: false,
-      status: 500,
-      text: async () => 'Internal Server Error'
-    });
-
-    let saveResult = true;
-    await act(async () => {
-      saveResult = await result.current.saveCurrentFile();
-    });
-
-    expect(saveResult).toBe(false);
-    expect(result.current.dirtyState).toBe('dirty');
-    expect(result.current.message).toContain('Error al aplicar cambios');
+    await act(() => result.current.openFile('content/test.mdx'));
+    act(() => result.current.toggleEditorMode());
+    expect(result.current.editorMode).toBe('visual');
+    act(() => result.current.toggleEditorMode());
+    expect(result.current.editorMode).toBe('code');
+    expect(result.current.rawBody).toBe(source);
   });
 
-  it('clears pending timers on openFile, toggleEditorMode, and unmount', async () => {
-    vi.useFakeTimers();
-    const fetchMock = vi.fn();
-    vi.stubGlobal('fetch', fetchMock);
+  it('never enters visual mode for unsupported MDX and preserves its body', async () => {
+    const unsupported = `export const metadata = {};\n\nCuerpo { no es JS }`;
+    vi.mocked(fetch).mockResolvedValueOnce(response(unsupported) as Response);
+    const { result } = renderHook(() => useEditorCore());
+    await act(() => result.current.openFile('content/broken.mdx'));
+    act(() => result.current.toggleEditorMode());
+    expect(result.current.editorMode).toBe('code');
+    expect(result.current.rawBody).toBe(unsupported);
+    expect(result.current.message).toContain('bloqueado');
+  });
 
-    const { result, unmount } = renderHook(() => useEditorCore());
+  it('applies a localized heading edit and preserves its depth and envelope', async () => {
+    vi.mocked(fetch).mockResolvedValueOnce(response(source) as Response);
+    const { result } = renderHook(() => useEditorCore());
+    await act(() => result.current.openFile('content/test.mdx'));
+    act(() => result.current.toggleEditorMode());
+    const heading = result.current.blocks[0];
+    act(() => result.current.updateBlock(heading.id, 'Nuevo título'));
+    act(() => result.current.toggleEditorMode());
+    expect(result.current.rawBody).toBe(source.replace('## Título', '## Nuevo título'));
+    expect(result.current.rawBody).toContain(`import X from './x';`);
+    expect(result.current.rawBody).toContain('export const value = { nested: true };');
+  });
 
-    // Open file
-    await act(async () => {
-      fetchMock.mockResolvedValueOnce({
-        ok: true,
-        text: async () => validDefinitionMdx
-      });
-      await result.current.openFile('database/content/definitions/segmento.mdx');
-    });
+  it('blocks destructive visual operations and visual save', async () => {
+    vi.mocked(fetch).mockResolvedValueOnce(response(source) as Response);
+    const { result } = renderHook(() => useEditorCore());
+    await act(() => result.current.openFile('content/test.mdx'));
+    act(() => result.current.toggleEditorMode());
+    const before = result.current.rawBody;
+    act(() => result.current.removeBlock(result.current.blocks[0].id));
+    expect(result.current.rawBody).toBe(before);
+    expect(result.current.message).toContain('bloqueada');
+    let saved = true;
+    await act(async () => { saved = await result.current.saveCurrentFile(); });
+    expect(saved).toBe(false);
+    expect(vi.mocked(fetch)).toHaveBeenCalledTimes(1);
+  });
 
-    // Set dirty, which calls scheduleSave
-    act(() => {
-      result.current.updateRawBody('Some new body');
-    });
+  it('manual code save sends the exact current source and checks HTTP status', async () => {
+    const fetchMock = vi.mocked(fetch)
+      .mockResolvedValueOnce(response(source) as Response)
+      .mockResolvedValueOnce(response('ok') as Response);
+    const { result } = renderHook(() => useEditorCore());
+    await act(() => result.current.openFile('content/test.mdx'));
+    const changed = source.replace('Un cuerpo', 'El cuerpo');
+    act(() => result.current.updateRawBody(changed));
+    let saved = false;
+    await act(async () => { saved = await result.current.saveCurrentFile(); });
+    expect(saved).toBe(true);
+    const payload = JSON.parse(String((fetchMock.mock.calls[1][1] as RequestInit).body));
+    expect(payload.content).toBe(changed);
 
-    // Now a timer is pending (500ms).
-    // Let's call openFile. It should clear the timer.
-    await act(async () => {
-      fetchMock.mockResolvedValueOnce({
-        ok: true,
-        text: async () => validDefinitionMdx
-      });
-      await result.current.openFile('database/content/definitions/segmento.mdx');
-    });
-
-    // Fast-forward timers. No saveDraft should have run because it was cleared!
-    act(() => {
-      vi.runAllTimers();
-    });
-    expect(fetchMock).not.toHaveBeenCalledWith('/api/draft', expect.anything());
-
-    // Set dirty again
-    act(() => {
-      result.current.updateRawBody('Another new body');
-    });
-
-    // Toggle editor mode. It should clear the timer.
-    act(() => {
-      result.current.toggleEditorMode();
-    });
-
-    // Fast-forward timers.
-    act(() => {
-      vi.runAllTimers();
-    });
-    expect(fetchMock).not.toHaveBeenCalledWith('/api/draft', expect.anything());
-
-    // Set dirty again
-    act(() => {
-      result.current.updateRawBody('Final new body');
-    });
-
-    // Unmount hook. It should clear the timer.
-    unmount();
-
-    // Fast-forward timers.
-    act(() => {
-      vi.runAllTimers();
-    });
-    expect(fetchMock).not.toHaveBeenCalledWith('/api/draft', expect.anything());
-
-    vi.useRealTimers();
+    fetchMock.mockResolvedValueOnce(response('server error', false) as Response);
+    act(() => result.current.updateRawBody(`${changed}\n`));
+    await act(async () => { saved = await result.current.saveCurrentFile(); });
+    expect(saved).toBe(false);
+    expect(result.current.dirtyState).toBe('dirty');
   });
 });

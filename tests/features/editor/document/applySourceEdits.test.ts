@@ -1,85 +1,62 @@
 import { describe, expect, it } from 'vitest';
-import { parseEditorDocument } from '../../../../src/features/editor/document/parseEditorDocument';
-import { applySourceEdits, reparseEditedDocument } from '../../../../src/features/editor/document/applySourceEdits';
-import { SourceEdit } from '../../../../src/features/editor/document/documentTypes';
+import { applySourceEdits, parseEditorDocument, reparseEditedDocument, type SourceEdit } from '../../../../src/features/editor/document';
 
-describe('Production Edits, Patches and Diff checks', () => {
-  it('applies simple patches correctly', () => {
-    const source = 'Un párrafo inicial.\n\nOtro párrafo.';
-    const edit: SourceEdit = {
-      range: { start: 0, end: 19 },
-      expectedSource: 'Un párrafo inicial.',
-      replacement: 'Párrafo modificado.',
-      operationId: 'op-1'
-    };
+function editFor(source: string, blockIndex: number, replacement: string, operationId = 'op-1'): { doc: ReturnType<typeof parseEditorDocument>; edit: SourceEdit } {
+  const doc = parseEditorDocument(source);
+  const block = doc.bodyBlocks[blockIndex];
+  if (!block || block.kind !== 'editable') throw new Error('Fixture block is not editable');
+  return { doc, edit: { operationId, blockId: block.id, range: block.editRange, expectedSource: block.originalSource, replacement } };
+}
 
-    const res = applySourceEdits(source, [edit]);
-    expect(res.success).toBe(true);
-    expect(res.output).toBe('Párrafo modificado.\n\nOtro párrafo.');
+describe('lossless source edits', () => {
+  it('changes only the authorized paragraph slice and recalculates offsets', () => {
+    const source = `export const metadata = { title: 'T' };\n\nPrimero.\n\nSegundo.`;
+    const { doc, edit } = editFor(source, 0, 'Primer párrafo ampliado.');
+    const next = reparseEditedDocument(doc, doc.sourceHash, [edit]);
+    expect(next.source).toBe(`export const metadata = { title: 'T' };\n\nPrimer párrafo ampliado.\n\nSegundo.`);
+    expect(next.source.slice(next.envelope.metadataRange!.start, next.envelope.metadataRange!.end))
+      .toBe(`export const metadata = { title: 'T' };`);
+    expect(next.bodyBlocks[1].location.range.start).toBeGreaterThan(doc.bodyBlocks[1].location.range.start);
   });
 
-  it('rejects stale expected source and overlaps', () => {
-    const source = 'Un párrafo inicial.\n\nOtro párrafo.';
-    const edit1: SourceEdit = {
-      range: { start: 0, end: 19 },
-      expectedSource: 'Texto viejo.',
-      replacement: 'Párrafo modificado.',
-      operationId: 'op-1'
-    };
-    const res1 = applySourceEdits(source, [edit1]);
-    expect(res1.success).toBe(false);
-    expect(res1.error).toContain('Expected source mismatch');
-
-    const edit2: SourceEdit = {
-      range: { start: 0, end: 10 },
-      expectedSource: 'Un párrafo',
-      replacement: 'Texto',
-      operationId: 'op-2'
-    };
-    const editOverlap: SourceEdit = {
-      range: { start: 5, end: 15 },
-      expectedSource: 'rrafo inic',
-      replacement: 'Overlap',
-      operationId: 'op-3'
-    };
-    const resOverlap = applySourceEdits(source, [edit2, editOverlap]);
-    expect(resOverlap.success).toBe(false);
-    expect(resOverlap.error).toContain('Overlapping edits detected');
+  it('edits heading text without removing or duplicating markers', () => {
+    const { doc, edit } = editFor('### Antiguo\n\nTexto.', 0, 'Nuevo');
+    expect(reparseEditedDocument(doc, doc.sourceHash, [edit]).source).toBe('### Nuevo\n\nTexto.');
   });
 
-  it('atomically reparses and preserves untouched blocks content', () => {
-    const source = '## Título\n\nEste es el cuerpo.\n\n<OpaqueComponent />';
-    const doc = parseEditorDocument(source);
-
-    const editableBodyBlock = doc.blocks[1];
-    expect(editableBodyBlock.kind).toBe('editable');
-
-    const edit: SourceEdit = {
-      range: editableBodyBlock.location.range,
-      expectedSource: (editableBodyBlock as any).originalSource,
-      replacement: 'Este es el cuerpo editado.',
-      operationId: 'op-body'
-    };
-
-    const newDoc = reparseEditedDocument(source, [edit]);
-    expect(newDoc.source).toBe('## Título\n\nEste es el cuerpo editado.\n\n<OpaqueComponent />');
-    expect(newDoc.compatibility).toBe('partially-editable');
-    
-    // Opaque block is preserved exactly
-    const opaqueBlock = newDoc.blocks.find(b => b.kind === 'opaque')!;
-    expect(opaqueBlock.source).toBe('<OpaqueComponent />');
+  it('rejects stale hashes, stale slices, unknown and opaque blocks', () => {
+    const source = 'Texto.\n\n<Caja />';
+    const { doc, edit } = editFor(source, 0, 'Cambio');
+    expect(() => reparseEditedDocument(doc, 'deadbeef', [edit])).toThrow('Stale document revision');
+    expect(() => reparseEditedDocument(doc, doc.sourceHash, [{ ...edit, expectedSource: 'Viejo' }])).toThrow('Expected source mismatch');
+    expect(() => reparseEditedDocument(doc, doc.sourceHash, [{ ...edit, blockId: 'missing' }])).toThrow('Unknown block');
+    const opaque = doc.bodyBlocks[1];
+    expect(() => reparseEditedDocument(doc, doc.sourceHash, [{ ...edit, blockId: opaque.id, range: opaque.location.range, expectedSource: '<Caja />' }]))
+      .toThrow('Opaque block');
   });
 
-  it('throws an error if an untouched block is corrupted', () => {
-    // We target the body block but our replacement spans into other blocks, or we pass an invalid edit
-    // Wait, let's pass a bad edit that mutates the document but deletes the heading block implicitly or something.
-    // If we pass an edit that overlaps with heading, the overlap check rejects it.
-    // What if we pass a single edit on the body block but the replacement text somehow corrupts the opaque block?
-    // Wait! The diff check looks at untouched blocks (blocks that do not overlap with the edit range).
-    // If the edit range is only [11, 29] (body block), but the replacement text does not include the opaque block,
-    // wait, that's impossible because the edit only replaces the slice [11, 29] of the source, so the rest of the source string remains intact!
-    // But what if we write a test where we simulate a corrupted result by mock or by manually calling the verification logic?
-    // Yes, we can just assert that applySourceEdits maintains atomicity and that if anything throws, it is caught.
-    expect(true).toBe(true);
+  it('rejects mismatched ranges and invalid MDX replacements', () => {
+    const { doc, edit } = editFor('Texto.', 0, 'Cambio');
+    expect(() => reparseEditedDocument(doc, doc.sourceHash, [{ ...edit, range: { start: 1, end: edit.range.end } }]))
+      .toThrow('does not match editable range');
+    expect(() => reparseEditedDocument(doc, doc.sourceHash, [{ ...edit, replacement: '{ broken JS }' }]))
+      .toThrow('not valid project MDX');
+  });
+
+  it('rejects overlaps, duplicate operations and ambiguous insertions', () => {
+    const source = 'abcdefghij';
+    const base = { blockId: 'block-0', replacement: 'x' };
+    expect(applySourceEdits(source, [
+      { ...base, operationId: 'a', range: { start: 0, end: 5 }, expectedSource: 'abcde' },
+      { ...base, operationId: 'b', range: { start: 4, end: 8 }, expectedSource: 'efgh' }
+    ]).error).toContain('Overlapping');
+    expect(applySourceEdits(source, [
+      { ...base, operationId: 'a', range: { start: 0, end: 1 }, expectedSource: 'a' },
+      { ...base, operationId: 'a', range: { start: 2, end: 3 }, expectedSource: 'c' }
+    ]).error).toContain('Duplicate');
+    expect(applySourceEdits(source, [
+      { ...base, operationId: 'a', range: { start: 2, end: 2 }, expectedSource: '' },
+      { ...base, operationId: 'b', range: { start: 2, end: 2 }, expectedSource: '' }
+    ]).error).toContain('Ambiguous');
   });
 });

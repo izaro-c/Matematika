@@ -231,7 +231,9 @@ export const EditorPage: React.FC = () => {
     setExports,
     setBlocks,
     compatibility,
-    compatibilityReasons
+    compatibilityReasons,
+    canMutateVisualStructure,
+    canEditVisualMetadata
   } = useEditorCore();
 
   const isReadOnly = compatibility === 'read-only';
@@ -882,7 +884,7 @@ export const EditorPage: React.FC = () => {
             </span>
             <textarea
               value={String(metadata.title || '')}
-              disabled={isReadOnly}
+              disabled={isReadOnly || !canEditVisualMetadata}
               onChange={(e) => handleMetadataChange('title', e.target.value)}
               className="w-full bg-transparent border-none outline-none font-serif font-bold text-3xl text-carbon p-0 mt-1 resize-none focus:ring-0 placeholder-carbon/20"
               placeholder="Título del Concepto"
@@ -896,7 +898,7 @@ export const EditorPage: React.FC = () => {
             />
             <textarea
               value={String(metadata.description || '')}
-              disabled={isReadOnly}
+              disabled={isReadOnly || !canEditVisualMetadata}
               onChange={(e) => handleMetadataChange('description', e.target.value)}
               className="w-full bg-transparent border-none outline-none font-serif italic text-base text-carbon/70 p-0 mt-2 resize-none focus:ring-0 placeholder-carbon/30"
               placeholder="Añada una breve descripción motivacional..."
@@ -930,6 +932,7 @@ export const EditorPage: React.FC = () => {
               </div>
               <textarea
                 id="statement-editor"
+                disabled={!canEditVisualMetadata}
                 value={String(metadata.statement || '')}
                 onChange={(e) => handleMetadataChange('statement', e.target.value)}
                 className="w-full bg-transparent border-none outline-none font-serif text-sm text-carbon leading-relaxed p-0 resize-none focus:ring-0 placeholder-carbon/30"
@@ -955,6 +958,7 @@ export const EditorPage: React.FC = () => {
           <div className="flex flex-col items-center justify-center h-64 border border-dashed border-carbon/25 rounded p-8 text-center bg-carbon/5">
             <p className="text-sm font-serif italic text-carbon/60">El documento está vacío. Añada contenido.</p>
             <button
+              disabled={!canMutateVisualStructure}
               onClick={() => addBlock(0, 'paragraph')}
               className="mt-4 px-4 py-1.5 bg-salvia text-lienzo rounded text-xs font-serif font-bold hover:bg-salvia/80 transition-all shadow-sm"
             >
@@ -974,7 +978,7 @@ export const EditorPage: React.FC = () => {
           return (
             <div key={block.id} className="relative group/block bg-transparent border border-transparent hover:bg-carbon/5 hover:border-carbon/15 rounded p-3 transition-all">
               {/* Controles de orden y eliminación del bloque */}
-              {!isReadOnly && (
+              {!isReadOnly && canMutateVisualStructure && (
                 <div className="absolute -left-12 top-2 flex flex-col items-center gap-1 opacity-0 group-hover/block:opacity-100 transition-opacity">
                   <button
                     disabled={index === 0}
@@ -1443,7 +1447,7 @@ export const EditorPage: React.FC = () => {
               )}
 
               {/* Botón flotante para insertar bloque debajo */}
-              <div className="absolute -bottom-4 left-1/2 -translate-x-1/2 opacity-0 group-hover/block:opacity-100 transition-opacity z-10 flex gap-1 bg-lienzo border border-carbon/25 rounded-full p-1 shadow-sm shrink-0 whitespace-nowrap">
+              {canMutateVisualStructure && <div className="absolute -bottom-4 left-1/2 -translate-x-1/2 opacity-0 group-hover/block:opacity-100 transition-opacity z-10 flex gap-1 bg-lienzo border border-carbon/25 rounded-full p-1 shadow-sm shrink-0 whitespace-nowrap">
                 <button
                   onClick={() => addBlock(index + 1, 'paragraph')}
                   className="px-2 py-0.5 text-[8px] font-bold text-salvia hover:bg-salvia/10 rounded-full font-serif"
@@ -1514,7 +1518,7 @@ export const EditorPage: React.FC = () => {
                 >
                   + Diagrama
                 </button>
-              </div>
+              </div>}
             </div>
           );
         })}
@@ -1644,7 +1648,7 @@ export const EditorPage: React.FC = () => {
                 <button
                   type="button"
                   onClick={() => saveCurrentFile()}
-                  disabled={saving || !validation.canSave}
+                  disabled={saving || !validation.canSave || (!isDiagramFile && editorMode === 'visual')}
                   className="rounded bg-salvia px-3 py-1 text-xs font-serif font-bold text-lienzo shadow-sm transition-colors hover:bg-salvia/80 disabled:cursor-not-allowed disabled:opacity-40"
                   title={isDiagramFile ? 'Guardar el archivo TSX del diagrama' : validation.canSave ? 'Guardar en el archivo real' : 'Corrige los errores críticos para poder aplicar'}
                 >
@@ -1720,12 +1724,12 @@ export const EditorPage: React.FC = () => {
                   <div className="mx-auto mb-4 max-w-3xl space-y-2">
                     {editorMode === 'visual' && (
                       <div className="rounded border border-ocre/30 bg-ocre/5 p-3 text-xs text-carbon shadow-sm">
-                        <span className="font-bold text-ocre">⚠️ Modo Visual Experimental:</span> El guardado visual y el autoguardado de borrador están desactivados temporalmente por seguridad. Puedes previsualizar y editar bloques visualmente, pero para aplicar y guardar tus cambios de forma segura en el archivo real, debes cambiar a **Código Fuente** y pulsar **Guardar**.
+                        <span className="font-bold text-ocre">⚠️ Modo Visual Experimental:</span> El guardado visual, la metadata y las operaciones de añadir, mover o eliminar bloques están bloqueadas. Solo se admiten cambios localizados en bloques explícitamente editables.
                       </div>
                     )}
                     {compatibility === 'read-only' && editorMode === 'visual' && (
                       <div className="rounded border border-pavo/30 bg-pavo/5 p-3 text-xs text-carbon shadow-sm">
-                        <span className="font-bold text-pavo">ℹ️ Documento de Solo Lectura Visual:</span> Este documento contiene importaciones o exportaciones ESM. Puedes ver los bloques pero no editarlos visualmente.
+                        <span className="font-bold text-pavo">ℹ️ Documento de Solo Lectura Visual:</span> El body no contiene ningún bloque que pueda editarse mediante un parche localizado seguro.
                       </div>
                     )}
                     {compatibility === 'partially-editable' && editorMode === 'visual' && (
@@ -1745,7 +1749,7 @@ export const EditorPage: React.FC = () => {
                     )}
                   </div>
                 )}
-                {!isDiagramFile && editorMode === 'visual' && !isReadOnly && (
+                {!isDiagramFile && editorMode === 'visual' && !isReadOnly && canMutateVisualStructure && (
                   <>
                     <div className="sticky top-0 z-20 mx-auto mb-4 max-w-3xl rounded border border-carbon/15 bg-lienzo/95 p-2 shadow-sm backdrop-blur">
                     <div className="flex flex-wrap items-center justify-center gap-1">
@@ -1822,6 +1826,7 @@ export const EditorPage: React.FC = () => {
                   </div>
                   <MetadataInspector
                     metadata={metadata}
+                    disabled={!canEditVisualMetadata}
                     onChange={handleMetadataChange}
                     onRemove={handleRemoveMetadataField}
                     onAddCustom={handleAddCustomMetadataField}
