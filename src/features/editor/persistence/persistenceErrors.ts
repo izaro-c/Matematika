@@ -1,7 +1,8 @@
 export type PersistenceError =
   | { kind: 'network-error'; cause?: unknown }
   | { kind: 'validation-error'; message: string; details?: unknown }
-  | { kind: 'conflict'; expectedVersion: string; actualVersion: string }
+  | { kind: 'content-conflict'; expectedVersion: string; actualVersion: string }
+  | { kind: 'draft-conflict'; expectedVersion: string; actualVersion: string; localRevision: number; editorSessionId: string }
   | { kind: 'unauthorized'; message: string }
   | { kind: 'not-found'; message: string }
   | { kind: 'server-error'; status: number; message: string }

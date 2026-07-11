@@ -33,11 +33,25 @@ describe('EditorApiClient', () => {
     expect(await errorKind(new EditorApiClient().readContent({ path: validRead.path }))).toBe(kind);
   });
 
-  it('maps a valid 409 payload to conflict', async () => {
+  it('maps a valid 409 payload to content-conflict', async () => {
     vi.stubGlobal('fetch', vi.fn().mockResolvedValue(response({ kind: 'content-conflict', path: validRead.path,
       expectedVersion: 'v1', actualVersion: 'v2', localRevision: 3 }, 409)));
     expect(await errorKind(new EditorApiClient().applyContent({ path: validRead.path, source: 'x', sourceHash: 'h',
-      expectedVersion: 'v1', localRevision: 3 }))).toBe('conflict');
+      expectedVersion: 'v1', localRevision: 3 }))).toBe('content-conflict');
+  });
+
+  it('maps a valid 409 payload to draft-conflict', async () => {
+    vi.stubGlobal('fetch', vi.fn().mockResolvedValue(response({ kind: 'draft-conflict', path: validRead.path,
+      expectedVersion: 'v1', actualVersion: 'v2', localRevision: 3, editorSessionId: 'session-1' }, 409)));
+    expect(await errorKind(new EditorApiClient().saveDraft({ path: validRead.path, source: 'x', sourceHash: 'h',
+      baseVersion: 'v1', localRevision: 3, editorSessionId: 'session-1' }))).toBe('draft-conflict');
+  });
+
+  it('maps an invalid conflict payload to invalid-response', async () => {
+    vi.stubGlobal('fetch', vi.fn().mockResolvedValue(response({ kind: 'content-conflict', path: validRead.path,
+      expectedVersion: 'v1' }, 409))); // missing actualVersion, localRevision
+    expect(await errorKind(new EditorApiClient().applyContent({ path: validRead.path, source: 'x', sourceHash: 'h',
+      expectedVersion: 'v1', localRevision: 3 }))).toBe('invalid-response');
   });
 
   it('maps network and abort failures', async () => {

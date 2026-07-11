@@ -164,7 +164,10 @@ describe('useEditorCore lossless integration', () => {
     if (sentRequest) expect(sentRequest).toMatchObject({ source: revision1, localRevision: 1 });
     expect(result.current.dirtyState).toBe('dirty');
     expect(result.current.persistenceStatus.kind).not.toBe('saved');
-    newerHash.resolve(digest(3));
+    await act(async () => {
+      newerHash.resolve(digest(3));
+    });
+    await waitFor(() => expect(result.current.rawBody).toBe(revision2));
     digestSpy.mockRestore();
   });
 

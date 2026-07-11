@@ -29,7 +29,21 @@ async function request<T>(url: string, schema: ZodType<T>, init?: RequestInit): 
     if (response.status === 409) {
       const parsed = conflictSchema.safeParse(payload);
       if (!parsed.success) throw new PersistenceFailure({ kind: 'invalid-response', message: 'Invalid conflict payload', payload });
-      throw new PersistenceFailure({ kind: 'conflict', expectedVersion: parsed.data.expectedVersion, actualVersion: parsed.data.actualVersion });
+      if (parsed.data.kind === 'content-conflict') {
+        throw new PersistenceFailure({
+          kind: 'content-conflict',
+          expectedVersion: parsed.data.expectedVersion,
+          actualVersion: parsed.data.actualVersion
+        });
+      } else {
+        throw new PersistenceFailure({
+          kind: 'draft-conflict',
+          expectedVersion: parsed.data.expectedVersion,
+          actualVersion: parsed.data.actualVersion,
+          localRevision: parsed.data.localRevision,
+          editorSessionId: parsed.data.editorSessionId
+        });
+      }
     }
     const message = typeof payload === 'object' && payload && 'message' in payload ? String(payload.message) : `HTTP ${response.status}`;
     if (response.status === 401 || response.status === 403) throw new PersistenceFailure({ kind: 'unauthorized', message });

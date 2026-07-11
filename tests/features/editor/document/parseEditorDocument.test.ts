@@ -7,7 +7,7 @@ describe('Production Lossless MDX Parser', () => {
     const doc = parseEditorDocument(source);
 
     expect(doc.source).toBe(source);
-    expect(doc.sourceHash).toHaveLength(8);
+    expect(doc.sourceFingerprint).toHaveLength(8);
     expect(doc.diagnostics).toHaveLength(0);
     expect(doc.compatibility).toBe('fully-editable'); // No ast nodes are projected yet
     expect(doc.ast).toBeDefined();
@@ -30,6 +30,6 @@ describe('Production Lossless MDX Parser', () => {
     const doc = parseEditorDocument(source);
 
     expect(doc.diagnostics).toHaveLength(0);
-    expect(doc.sourceHash).toBeDefined();
+    expect(doc.sourceFingerprint).toBeDefined();
   });
 });

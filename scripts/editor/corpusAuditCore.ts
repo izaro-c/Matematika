@@ -90,8 +90,7 @@ function classifyRoundTrip(opening: EditorDocument, finalDocument: EditorDocumen
   if (!idempotent) return 'non-idempotent';
   if (opening.diagnostics.some(item => item.code === 'PARSE_EXCEPTION')) return 'parse-error';
   if (exact) return 'exact';
-  if (opening.source === finalDocument.source) return 'format-only';
-  return 'semantic-risk';
+  return 'unknown';
 }
 
 export function auditSource(source: string, relativePath: string): CorpusAuditEntry {

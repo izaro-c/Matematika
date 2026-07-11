@@ -19,6 +19,15 @@ export class DraftRepository {
     return response;
   }
   async save(snapshot: EditorDraftSnapshot, signal?: AbortSignal) {
+    const actualHash = await hashSource(snapshot.source);
+    if (snapshot.sourceHash !== actualHash) {
+      throw new PersistenceFailure({
+        kind: 'protocol-error',
+        message: 'Draft snapshot hash does not match its source',
+        details: snapshot
+      });
+    }
+
     const response = await this.client.saveDraft({
       path: snapshot.file.path, source: snapshot.source, sourceHash: snapshot.sourceHash,
       baseVersion: snapshot.baseVersion, localRevision: snapshot.localRevision, editorSessionId: snapshot.editorSessionId
@@ -29,7 +38,7 @@ export class DraftRepository {
     }
     if (response.path !== snapshot.file.path || response.localRevision !== snapshot.localRevision ||
         response.sourceHash !== snapshot.sourceHash || response.baseVersion !== snapshot.baseVersion ||
-        response.editorSessionId !== snapshot.editorSessionId) {
+        response.editorSessionId !== snapshot.editorSessionId || response.disposition !== 'accepted') {
       protocol('Draft response does not match requested snapshot', response);
     }
     return response;

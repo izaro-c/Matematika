@@ -12,7 +12,7 @@ describe('lossless source edits', () => {
   it('changes only the authorized paragraph slice and recalculates offsets', () => {
     const source = `export const metadata = { title: 'T' };\n\nPrimero.\n\nSegundo.`;
     const { doc, edit } = editFor(source, 0, 'Primer párrafo ampliado.');
-    const next = reparseEditedDocument(doc, doc.sourceHash, [edit]);
+    const next = reparseEditedDocument(doc, doc.sourceFingerprint, [edit]);
     expect(next.source).toBe(`export const metadata = { title: 'T' };\n\nPrimer párrafo ampliado.\n\nSegundo.`);
     expect(next.source.slice(next.envelope.metadataRange!.start, next.envelope.metadataRange!.end))
       .toBe(`export const metadata = { title: 'T' };`);
@@ -21,25 +21,25 @@ describe('lossless source edits', () => {
 
   it('edits heading text without removing or duplicating markers', () => {
     const { doc, edit } = editFor('### Antiguo\n\nTexto.', 0, 'Nuevo');
-    expect(reparseEditedDocument(doc, doc.sourceHash, [edit]).source).toBe('### Nuevo\n\nTexto.');
+    expect(reparseEditedDocument(doc, doc.sourceFingerprint, [edit]).source).toBe('### Nuevo\n\nTexto.');
   });
 
   it('rejects stale hashes, stale slices, unknown and opaque blocks', () => {
     const source = 'Texto.\n\n<Caja />';
     const { doc, edit } = editFor(source, 0, 'Cambio');
     expect(() => reparseEditedDocument(doc, 'deadbeef', [edit])).toThrow('Stale document revision');
-    expect(() => reparseEditedDocument(doc, doc.sourceHash, [{ ...edit, expectedSource: 'Viejo' }])).toThrow('Expected source mismatch');
-    expect(() => reparseEditedDocument(doc, doc.sourceHash, [{ ...edit, blockId: 'missing' }])).toThrow('Unknown block');
+    expect(() => reparseEditedDocument(doc, doc.sourceFingerprint, [{ ...edit, expectedSource: 'Viejo' }])).toThrow('Expected source mismatch');
+    expect(() => reparseEditedDocument(doc, doc.sourceFingerprint, [{ ...edit, blockId: 'missing' }])).toThrow('Unknown block');
     const opaque = doc.bodyBlocks[1];
-    expect(() => reparseEditedDocument(doc, doc.sourceHash, [{ ...edit, blockId: opaque.id, range: opaque.location.range, expectedSource: '<Caja />' }]))
+    expect(() => reparseEditedDocument(doc, doc.sourceFingerprint, [{ ...edit, blockId: opaque.id, range: opaque.location.range, expectedSource: '<Caja />' }]))
       .toThrow('Opaque block');
   });
 
   it('rejects mismatched ranges and invalid MDX replacements', () => {
     const { doc, edit } = editFor('Texto.', 0, 'Cambio');
-    expect(() => reparseEditedDocument(doc, doc.sourceHash, [{ ...edit, range: { start: 1, end: edit.range.end } }]))
+    expect(() => reparseEditedDocument(doc, doc.sourceFingerprint, [{ ...edit, range: { start: 1, end: edit.range.end } }]))
       .toThrow('does not match editable range');
-    expect(() => reparseEditedDocument(doc, doc.sourceHash, [{ ...edit, replacement: '{ broken JS }' }]))
+    expect(() => reparseEditedDocument(doc, doc.sourceFingerprint, [{ ...edit, replacement: '{ broken JS }' }]))
       .toThrow('not valid project MDX');
   });
 

@@ -1,5 +1,5 @@
 import { SourceEdit, SourceEditResult, EditorDocument } from './documentTypes';
-import { computeHash, parseEditorDocument } from './parseEditorDocument';
+import { computeFingerprint, parseEditorDocument } from './parseEditorDocument';
 
 /**
  * Applies a list of localized edits to the original source.
@@ -57,7 +57,7 @@ export function applySourceEdits(source: string, edits: SourceEdit[]): SourceEdi
  * Reparses the edited source content and validates range invariants.
  */
 export function reparseEditedDocument(document: EditorDocument, baseHash: string, edits: SourceEdit[]): EditorDocument {
-  if (document.sourceHash !== baseHash || computeHash(document.source) !== baseHash) {
+  if (document.sourceFingerprint !== baseHash || computeFingerprint(document.source) !== baseHash) {
     throw new Error('Stale document revision');
   }
 

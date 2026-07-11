@@ -19,7 +19,7 @@ export function enterVisualMode(session: EditorDocumentSession): EditorDocumentS
 
 export function applyVisualOperation(session: EditorDocumentSession, operation: SourceEdit): EditorDocumentSession {
   if (session.mode !== 'visual') throw new Error('Visual operation requires visual mode');
-  const document = reparseEditedDocument(session.document, session.document.sourceHash, [operation]);
+  const document = reparseEditedDocument(session.document, session.document.sourceFingerprint, [operation]);
   return { ...session, document, appliedOperationIds: [...session.appliedOperationIds, operation.operationId] };
 }
 

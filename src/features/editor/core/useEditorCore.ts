@@ -46,7 +46,8 @@ function sliceRanges(source: string, ranges: Array<{ start: number; end: number 
 }
 
 function persistenceMessage(error: PersistenceError): string {
-  if (error.kind === 'conflict') return 'Conflicto: el archivo cambió externamente. Recárguelo antes de aplicar.';
+  if (error.kind === 'content-conflict') return 'Conflicto: el archivo cambió externamente. Recárguelo antes de aplicar.';
+  if (error.kind === 'draft-conflict') return 'Conflicto: ya existe un borrador más reciente de otra sesión.';
   if (error.kind === 'invalid-response' || error.kind === 'protocol-error') return 'El servidor devolvió una respuesta inválida; no se confirmó el guardado.';
   if (error.kind === 'aborted') return 'Operación cancelada.';
   if (error.kind === 'network-error') return 'Error de red; los cambios locales se conservan.';
@@ -101,7 +102,7 @@ export const useEditorCore = () => {
       const isCurrentSnapshot = saveIdentity.matches(event.snapshot);
       dispatch({ type: isCurrentSnapshot ? 'FILE_SAVE_SUCCEEDED' : 'STALE_FILE_SAVE_SUCCEEDED',
         file, localRevision, version: event.version, backupId: event.backupId });
-    } else if (event.error.kind === 'conflict') {
+    } else if (event.error.kind === 'content-conflict') {
       if (!saveIdentity.matches(event.snapshot)) return;
       dispatch({ type: 'CONFLICT_DETECTED', file, localRevision,
         expectedVersion: event.error.expectedVersion, actualVersion: event.error.actualVersion });
@@ -213,7 +214,7 @@ export const useEditorCore = () => {
     if (!doc || !capabilities.canEditSafeBlocks) { setMessage(blockedMessage); return; }
     const block = doc.bodyBlocks.find(candidate => candidate.id === id);
     if (!block || block.kind !== 'editable') { setMessage('Acción visual bloqueada: los bloques opacos son inmutables.'); return; }
-    const edit: SourceEdit = { operationId: `edit-${id}-${doc.sourceHash}`, blockId: id, range: block.editRange,
+    const edit: SourceEdit = { operationId: `edit-${id}-${doc.sourceFingerprint}`, blockId: id, range: block.editRange,
       expectedSource: block.originalSource, replacement: content };
     try {
       const nextDoc = applyVisualOperation(enterVisualMode({ document: doc, mode: 'code', appliedOperationIds: [] }), edit).document;
