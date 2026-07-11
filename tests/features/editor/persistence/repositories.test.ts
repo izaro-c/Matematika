@@ -55,4 +55,22 @@ describe('persistence repositories semantic contracts', () => {
       disposition: 'accepted', savedAt: new Date().toISOString() }) } as EditorApiClient;
     await expectProtocolFailure(new DraftRepository(client).save({ ...value, editorSessionId: 'session-a' }));
   });
+
+  it('DraftRepository rejects save operation and does not call client if source and sourceHash do not match', async () => {
+    const value = await snapshot();
+    // Use an incoherent hash
+    const incoherentValue = { ...value, sourceHash: 'wrong-hash', editorSessionId: 'session-a' };
+    let clientCalled = false;
+    const client = {
+      saveDraft: async () => {
+        clientCalled = true;
+        return { path, draftId: 'draft', sourceHash: 'wrong-hash',
+          baseVersion: value.baseVersion, localRevision: value.localRevision, editorSessionId: 'session-a',
+          disposition: 'accepted', savedAt: new Date().toISOString() };
+      }
+    } as unknown as EditorApiClient;
+
+    await expectProtocolFailure(new DraftRepository(client).save(incoherentValue));
+    expect(clientCalled).toBe(false);
+  });
 });

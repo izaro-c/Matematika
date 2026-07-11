@@ -6,7 +6,7 @@ import remarkMath from 'remark-math';
 import type { EditorDocument, EditorDiagnostic, VisualCompatibility, SourceLocation, ProjectedBlock } from './documentTypes';
 import { projectBlocks, classifyVisualCompatibility } from './projectBlocks';
 
-export function computeHash(content: string): string {
+export function computeFingerprint(content: string): string {
   let hash = 5381;
   for (let i = 0; i < content.length; i++) {
     hash = (hash * 33) ^ content.charCodeAt(i);
@@ -28,7 +28,7 @@ export function mapLocation(position: any): SourceLocation {
 }
 
 export function parseEditorDocument(source: string): EditorDocument {
-  const hash = computeHash(source);
+  const fingerprint = computeFingerprint(source);
   const diagnostics: EditorDiagnostic[] = [];
   let ast: any = null;
   let blocks: ProjectedBlock[] = [];
@@ -81,7 +81,7 @@ export function parseEditorDocument(source: string): EditorDocument {
 
   const doc: EditorDocument = {
     source,
-    sourceHash: hash,
+    sourceFingerprint: fingerprint,
     ast,
     envelope,
     bodyRange,

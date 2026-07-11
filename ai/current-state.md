@@ -2,9 +2,9 @@
 
 **Actualizado:** 2026-07-11
 
-**Fase:** estabilización del editor — fases 0–4 implementadas y validadas
+**Fase:** Fases 0–4 de estabilización del editor finalizadas y validadas.
 
-**Estado:** el source completo continúa siendo la autoridad documental. La persistencia MDX usa cliente y repositorios tipados, reducer revisionado, coordinación cancelable, concurrencia optimista y backend con backups y escritura atómica. El guardado visual y el autosave productivo permanecen deshabilitados.
+**Estado:** El source completo es la autoridad de contenido. La persistencia transaccional utiliza locks por path canónico (`realpath`) resolviendo alias y symlinks, CAS mediante `expectedVersion`, y contratos específicos para conflictos de contenido y de borrador (`content-conflict`, `draft-conflict`). Los borradores están aislados por sesión y revisión, almacenados de forma independiente. Las advertencias de React y act() se han resuelto. El gate del corpus y el audit reversible de 94/120 archivos pasan.
 
 ## Decisiones vigentes
 
@@ -12,9 +12,11 @@
 - Lecturas y respuestas de persistencia incluyen SHA-256 y versión opaca.
 - Solo una confirmación HTTP válida, coherente con archivo, revisión y hash puede producir `saved`.
 - Los borradores están separados del archivo real y no limpian el estado dirty.
-- Una versión externa distinta produce conflicto `409`, nunca sobrescritura silenciosa.
+- Una versión externa distinta produce conflicto `409` (`content-conflict` o `draft-conflict`), nunca sobrescritura silenciosa.
 - Los cambios locales sin confirmar bloquean el cambio de archivo.
-- La aplicación crea backup y sustituye mediante temporal validado y rename.
+- La aplicación crea backup y sustituye mediante temporal verificado y rename.
+- El lock del backend se realiza utilizando la identidad canónica del archivo (`realpath`).
+- Los borradores se guardan inmutables por sesión y revisión, gestionando un puntero global `latest.json`.
 - `VISUAL_SAVE_POLICY` y `DRAFT_AUTOSAVE_ENABLED` siguen deshabilitados.
 
 ## Próximo paso

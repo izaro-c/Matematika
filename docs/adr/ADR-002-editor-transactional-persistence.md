@@ -27,6 +27,24 @@ Aceptada para la Fase 4. El guardado visual productivo continúa deshabilitado.
 - Dos clientes: solo el primero cuya versión coincida puede aplicar; el segundo recibe `409`.
 - Source idéntico: se trata como aplicación explícita y genera backup; no se infiere éxito localmente.
 
+## Política de borradores multi-sesión
+
+Para evitar interferencias entre múltiples pestañas o clientes concurrentes:
+1. Las revisiones de borrador se aíslan por sesión utilizando el `editorSessionId`.
+2. Las revisiones numéricas (`localRevision`) son inmutables y solo comparables dentro de la misma sesión; diferentes sesiones no se pueden ordenar mediante `localRevision`.
+3. El servidor almacena un puntero global `latest.json` para el archivo, el cual apunta al último borrador aceptado por el servidor.
+4. Las revisiones anteriores del borrador de cada sesión se conservan en la carpeta `revisions/` para permitir la recuperación histórica.
+5. Se rechaza cualquier borrador basado en una versión base obsoleta (que no coincida con el archivo real).
+6. Al aplicar (`applyContent`) o restaurar (`restoreBackup`) el archivo, todos los borradores vinculados a la versión antigua quedan invalidados y eliminados físicamente del servidor.
+
+## Identidad canónica y Locks de rutas
+
+Para evitar conflictos de concurrencia cuando se utilizan diferentes alias de una misma ruta (por ejemplo, `./file.mdx`, `file.mdx`, etc.) o enlaces simbólicos (symlinks):
+1. El backend resuelve el path del archivo a su `realpath` absoluto de forma canónica.
+2. Tanto el archivo efectivo como la `lockKey` utilizan esta ruta resuelta canónicamente.
+3. Para archivos que todavía no existen, se obtiene el `realpath` de su directorio padre y se combina con su `basename` normalizado.
+4. Todas las operaciones críticas de persistencia (`saveDraft`, `readDraft`, `applyContent`, `createContent`, `restoreBackup`, invalidación/eliminación de borradores) se sincronizan bajo el mismo lock canónico, impidiendo carreras concurrentes de escritura silenciosa.
+
 ## Límites
 
 - `VISUAL_SAVE_POLICY` y el autosave de borrador permanecen deshabilitados.

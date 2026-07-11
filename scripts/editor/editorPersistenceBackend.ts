@@ -34,6 +34,12 @@ function sourceHash(source: string): string {
 }
 function versionOf(source: string): string { return `sha256:${sourceHash(source)}`; }
 function inside(candidate: string, root: string): boolean { return candidate === root || candidate.startsWith(`${root}${path.sep}`); }
+
+export interface ResolvedPersistenceTarget {
+  file: string;
+  lockKey: string;
+}
+
 export class EditorPersistenceBackend {
   private readonly backupRoot: string;
   private readonly draftRoot: string;
@@ -47,9 +53,9 @@ export class EditorPersistenceBackend {
   }
 
   async readContent(relativePath: string): Promise<ReadContentResponse> {
-    const file = await this.resolveFile(relativePath, false, this.options.readRoots ?? this.options.allowedRoots);
+    const target = await this.resolvePersistenceTarget(relativePath, false, this.options.readRoots ?? this.options.allowedRoots);
     let source: string;
-    try { source = await fs.promises.readFile(file, 'utf8'); }
+    try { source = await fs.promises.readFile(target.file, 'utf8'); }
     catch (error) {
       if ((error as NodeJS.ErrnoException).code === 'ENOENT') throw new BackendError(404, { message: 'File not found' });
       throw error;
@@ -58,18 +64,18 @@ export class EditorPersistenceBackend {
   }
 
   async saveDraft(request: SaveDraftRequest): Promise<SaveDraftResponse> {
-    return this.withPathLock(request.path, async () => {
-      const file = await this.resolveFile(request.path, false);
+    const target = await this.resolvePersistenceTarget(request.path, false);
+    return this.withPathLock(target.lockKey, async () => {
       this.assertHash(request.source, request.sourceHash);
       await this.options.validateSource(request.path, request.source);
-      const currentVersion = versionOf(await fs.promises.readFile(file, 'utf8'));
+      const currentVersion = versionOf(await fs.promises.readFile(target.file, 'utf8'));
       if (currentVersion !== request.baseVersion) {
         throw new BackendError(409, { kind: 'draft-conflict', path: request.path,
           expectedVersion: request.baseVersion, actualVersion: currentVersion,
           localRevision: request.localRevision, editorSessionId: request.editorSessionId });
       }
 
-      const directory = this.draftDirectory(request.path);
+      const directory = this.draftDirectory(target.lockKey);
       const sessionPointer = path.join(directory, `${this.safeId(request.editorSessionId)}.latest.json`);
       const existing = await this.readJsonIfPresent<DraftRecord>(sessionPointer);
       if (existing && request.localRevision < existing.localRevision) {
@@ -96,48 +102,48 @@ export class EditorPersistenceBackend {
   }
 
   async readDraft(relativePath: string): Promise<ReadDraftResponse> {
-    return this.withPathLock(relativePath, async () => {
-      const file = await this.resolveFile(relativePath, false);
-      const currentVersion = versionOf(await fs.promises.readFile(file, 'utf8'));
-      const record = await this.readJsonIfPresent<DraftRecord>(path.join(this.draftDirectory(relativePath), 'latest.json'));
+    const target = await this.resolvePersistenceTarget(relativePath, false);
+    return this.withPathLock(target.lockKey, async () => {
+      const currentVersion = versionOf(await fs.promises.readFile(target.file, 'utf8'));
+      const record = await this.readJsonIfPresent<DraftRecord>(path.join(this.draftDirectory(target.lockKey), 'latest.json'));
       if (!record) throw new BackendError(404, { message: 'Draft not found' });
       return { ...record, status: record.baseVersion === currentVersion ? 'current' : 'stale', currentVersion };
     });
   }
 
   async applyContent(request: ApplyContentRequest): Promise<ApplyContentResponse> {
-    return this.withPathLock(request.path, async () => {
-      const file = await this.resolveFile(request.path, false);
+    const target = await this.resolvePersistenceTarget(request.path, false);
+    return this.withPathLock(target.lockKey, async () => {
       this.assertHash(request.source, request.sourceHash);
       await this.options.validateSource(request.path, request.source);
-      const current = await fs.promises.readFile(file, 'utf8');
+      const current = await fs.promises.readFile(target.file, 'utf8');
       const currentVersion = versionOf(current);
       if (currentVersion !== request.expectedVersion) this.conflict(request.path, request.expectedVersion, currentVersion, request.localRevision);
       const backupId = await this.createBackup(request.path, current);
-      await this.replaceAtomically(file, request.path, request.source);
-      await this.removeDraft(request.path);
+      await this.replaceAtomically(target.file, request.path, request.source);
+      await this.removeDraft(target.lockKey);
       return { path: request.path, sourceHash: request.sourceHash, previousVersion: currentVersion,
         version: versionOf(request.source), confirmedRevision: request.localRevision, backupId };
     });
   }
 
   async createContent(request: Omit<ApplyContentRequest, 'expectedVersion'>): Promise<ApplyContentResponse> {
-    return this.withPathLock(request.path, async () => {
-      const file = await this.resolveFile(request.path, true);
+    const target = await this.resolvePersistenceTarget(request.path, true);
+    return this.withPathLock(target.lockKey, async () => {
       this.assertHash(request.source, request.sourceHash);
       await this.options.validateSource(request.path, request.source);
       try {
-        await fs.promises.access(file);
-        this.conflict(request.path, 'missing', versionOf(await fs.promises.readFile(file, 'utf8')), request.localRevision);
+        await fs.promises.access(target.file);
+        this.conflict(request.path, 'missing', versionOf(await fs.promises.readFile(target.file, 'utf8')), request.localRevision);
       } catch (error) {
         if (error instanceof BackendError) throw error;
         if ((error as NodeJS.ErrnoException).code !== 'ENOENT') throw error;
       }
-      const temporary = path.join(path.dirname(file), `.${path.basename(file)}.${crypto.randomUUID()}.tmp`);
+      const temporary = path.join(path.dirname(target.file), `.${path.basename(target.file)}.${crypto.randomUUID()}.tmp`);
       try {
         await fs.promises.writeFile(temporary, request.source, { encoding: 'utf8', flag: 'wx' });
         await this.options.validateSource(request.path, await fs.promises.readFile(temporary, 'utf8'));
-        await fs.promises.link(temporary, file);
+        await fs.promises.link(temporary, target.file);
       } catch (error) {
         if ((error as NodeJS.ErrnoException).code === 'EEXIST') this.conflict(request.path, 'missing', 'file-created-concurrently', request.localRevision);
         throw error;
@@ -150,24 +156,25 @@ export class EditorPersistenceBackend {
   }
 
   async restoreBackup(request: RestoreBackupRequest): Promise<RestoreBackupResponse> {
-    return this.withPathLock(request.path, async () => {
-      const file = await this.resolveFile(request.path, false);
-      const current = await fs.promises.readFile(file, 'utf8');
+    const target = await this.resolvePersistenceTarget(request.path, false);
+    return this.withPathLock(target.lockKey, async () => {
+      const current = await fs.promises.readFile(target.file, 'utf8');
       const currentVersion = versionOf(current);
       if (currentVersion !== request.expectedVersion) this.conflict(request.path, request.expectedVersion, currentVersion, 0);
       const restored = await this.readBackup(request.backupId);
-      if (restored.path !== request.path) throw new BackendError(400, { message: 'Backup does not belong to requested file' });
+      const restoredTarget = await this.resolvePersistenceTarget(restored.path, false);
+      if (restoredTarget.file !== target.file) throw new BackendError(400, { message: 'Backup does not belong to requested file' });
       await this.options.validateSource(request.path, restored.source);
       const backupId = await this.createBackup(request.path, current);
-      await this.replaceAtomically(file, request.path, restored.source);
-      await this.removeDraft(request.path);
+      await this.replaceAtomically(target.file, request.path, restored.source);
+      await this.removeDraft(target.lockKey);
       return { path: request.path, sourceHash: restored.sourceHash, previousVersion: currentVersion,
         version: versionOf(restored.source), backupId, restoredBackupId: request.backupId };
     });
   }
 
-  private async withPathLock<T>(relativePath: string, operation: () => Promise<T>): Promise<T> {
-    const key = relativePath.replaceAll('\\', '/');
+  private async withPathLock<T>(lockKey: string, operation: () => Promise<T>): Promise<T> {
+    const key = lockKey.replaceAll('\\', '/');
     const previous = this.pathLocks.get(key) ?? Promise.resolve();
     let release!: () => void;
     const active = new Promise<void>(resolve => { release = resolve; });
@@ -182,26 +189,34 @@ export class EditorPersistenceBackend {
     }
   }
 
-  private async resolveFile(relativePath: string, allowMissing: boolean, roots = this.options.allowedRoots): Promise<string> {
+  private async resolvePersistenceTarget(relativePath: string, allowMissing: boolean, roots = this.options.allowedRoots): Promise<ResolvedPersistenceTarget> {
     if (!relativePath || path.isAbsolute(relativePath) || relativePath.includes('\0') || relativePath.split(/[\\/]+/).includes('..')) {
       throw new BackendError(400, { message: 'Invalid path' });
     }
     if (!['.mdx', '.tsx'].includes(path.extname(relativePath))) throw new BackendError(400, { message: 'Extension not allowed' });
     const absolute = path.resolve(this.options.srcRoot, relativePath);
-    const allowed = roots.some(root => inside(absolute, path.resolve(root)));
-    if (!allowed) throw new BackendError(403, { message: 'Path outside allowed roots' });
-    const parentReal = await fs.promises.realpath(path.dirname(absolute));
-    if (!roots.some(root => inside(parentReal, path.resolve(root)))) throw new BackendError(403, { message: 'Symlink escapes allowed roots' });
-    if (!allowMissing) {
-      try {
-        const real = await fs.promises.realpath(absolute);
-        if (!roots.some(root => inside(real, path.resolve(root)))) throw new BackendError(403, { message: 'Symlink escapes allowed roots' });
-      } catch (error) {
-        if ((error as NodeJS.ErrnoException).code === 'ENOENT') throw new BackendError(404, { message: 'File not found' });
-        throw error;
-      }
+    const parentDir = path.dirname(absolute);
+    let parentReal: string;
+    try {
+      parentReal = await fs.promises.realpath(parentDir);
+    } catch (error) {
+      if ((error as NodeJS.ErrnoException).code === 'ENOENT') throw new BackendError(404, { message: 'Parent directory not found' });
+      throw error;
     }
-    return absolute;
+    if (!roots.some(root => inside(parentReal, path.resolve(root)))) throw new BackendError(403, { message: 'Symlink escapes allowed roots' });
+
+    try {
+      const real = await fs.promises.realpath(absolute);
+      if (!roots.some(root => inside(real, path.resolve(root)))) throw new BackendError(403, { message: 'Symlink escapes allowed roots' });
+      return { file: real, lockKey: real };
+    } catch (error) {
+      if ((error as NodeJS.ErrnoException).code === 'ENOENT') {
+        if (!allowMissing) throw new BackendError(404, { message: 'File not found' });
+        const normalized = path.join(parentReal, path.basename(absolute));
+        return { file: normalized, lockKey: normalized };
+      }
+      throw error;
+    }
   }
 
   private assertHash(source: string, expected: string): void {
@@ -269,8 +284,8 @@ export class EditorPersistenceBackend {
     return crypto.createHash('sha256').update(value).digest('hex');
   }
 
-  private draftDirectory(relativePath: string): string {
-    return path.join(this.draftRoot, this.safeId(relativePath));
+  private draftDirectory(lockKey: string): string {
+    return path.join(this.draftRoot, this.safeId(lockKey));
   }
 
   private draftResponse(record: DraftRecord): SaveDraftResponse {
@@ -280,8 +295,8 @@ export class EditorPersistenceBackend {
       editorSessionId, disposition, savedAt };
   }
 
-  private async removeDraft(relativePath: string): Promise<void> {
-    await fs.promises.rm(this.draftDirectory(relativePath), { recursive: true, force: true });
+  private async removeDraft(lockKey: string): Promise<void> {
+    await fs.promises.rm(this.draftDirectory(lockKey), { recursive: true, force: true });
   }
 }
 

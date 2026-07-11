@@ -58,7 +58,7 @@ export type ProjectedBlock = EditableBlock | OpaqueBlock;
 
 export interface EditorDocument {
   source: string;
-  sourceHash: string;
+  sourceFingerprint: string;
   ast: unknown;
   envelope: {
     metadataRange?: SourceRange;

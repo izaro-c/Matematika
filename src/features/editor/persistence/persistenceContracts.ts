@@ -61,8 +61,26 @@ export const restoreBackupResponseSchema = z.object({
 }).strict();
 export type RestoreBackupResponse = z.infer<typeof restoreBackupResponseSchema>;
 
-export const conflictSchema = z.object({
-  kind: z.literal('content-conflict'), path: z.string(), expectedVersion: z.string(),
-  actualVersion: z.string(), localRevision: z.number().int().nonnegative()
+export const contentConflictSchema = z.object({
+  kind: z.literal('content-conflict'),
+  path: z.string(),
+  expectedVersion: z.string(),
+  actualVersion: z.string(),
+  localRevision: z.number().int().nonnegative()
 }).strict();
-export type ContentConflict = z.infer<typeof conflictSchema>;
+export type ContentConflict = z.infer<typeof contentConflictSchema>;
+
+export const draftConflictSchema = z.object({
+  kind: z.literal('draft-conflict'),
+  path: z.string(),
+  expectedVersion: z.string(),
+  actualVersion: z.string(),
+  localRevision: z.number().int().nonnegative(),
+  editorSessionId: z.string().min(1)
+}).strict();
+export type DraftConflict = z.infer<typeof draftConflictSchema>;
+
+export const conflictSchema = z.discriminatedUnion('kind', [
+  contentConflictSchema,
+  draftConflictSchema
+]);
