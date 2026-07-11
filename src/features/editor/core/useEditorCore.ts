@@ -3,7 +3,8 @@ import type { FileNode } from '../lib/editorContracts';
 import type { EditorMode, EditorValidationResult } from './editorTypes';
 import type { Block, BlockType } from './parser';
 import {
-  parseEditorDocument, reparseEditedDocument, getVisualCapabilities,
+  openEditorDocument, enterVisualMode, applyVisualOperation,
+  parseEditorDocument, getVisualCapabilities,
   type EditorDocument, type ProjectedBlock, type SourceEdit
 } from '../document';
 import {
@@ -197,7 +198,7 @@ export const useEditorCore = () => {
   const toggleEditorMode = useCallback(() => {
     if (editorMode === 'visual') { setEditorMode('code'); return; }
     if (!currentFile?.endsWith('.mdx')) return;
-    const nextDoc = parseEditorDocument(sourceRef.current);
+    const nextDoc = enterVisualMode(openEditorDocument(sourceRef.current)).document;
     if (nextDoc.compatibility === 'unsupported') { setMessage(`Modo visual bloqueado: ${nextDoc.compatibilityReasons.join(' ')}`); return; }
     syncProjection(nextDoc);
     setEditorMode('visual');
@@ -215,7 +216,7 @@ export const useEditorCore = () => {
     const edit: SourceEdit = { operationId: `edit-${id}-${doc.sourceHash}`, blockId: id, range: block.editRange,
       expectedSource: block.originalSource, replacement: content };
     try {
-      const nextDoc = reparseEditedDocument(doc, doc.sourceHash, [edit]);
+      const nextDoc = applyVisualOperation(enterVisualMode({ document: doc, mode: 'code', appliedOperationIds: [] }), edit).document;
       void commitSourceChange(nextDoc.source, nextDoc);
       setMessage('Cambio visual aplicado localmente; el guardado visual permanece deshabilitado.');
     } catch (error) { setMessage(`Cambio rechazado: ${error instanceof Error ? error.message : String(error)}`); }

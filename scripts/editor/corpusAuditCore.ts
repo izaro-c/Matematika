@@ -2,11 +2,17 @@ import fs from 'node:fs';
 import path from 'node:path';
 import crypto from 'node:crypto';
 import {
-  parseEditorDocument,
+  applyVisualOperation,
+  enterVisualMode,
+  leaveVisualMode,
+  openEditorDocument,
+  serializeCurrentSource,
   type EditorDiagnostic,
   type EditorDocument,
   type VisualCompatibility
 } from '../../src/features/editor/document/index';
+
+export type RoundTripClassification = 'exact' | 'format-only' | 'semantic-risk' | 'non-idempotent' | 'parse-error' | 'unknown';
 
 export interface CorpusAuditEntry {
   path: string;
@@ -18,10 +24,16 @@ export interface CorpusAuditEntry {
   idempotent: boolean;
   envelopePreserved: boolean;
   bodyPreserved: boolean;
+  classification: RoundTripClassification;
+  compatibilityStable: boolean;
+  diagnosticsStable: boolean;
+  cycles: number;
+  authorizedOperations: string[];
+  reversibleOperationExact: boolean | null;
 }
 
 export interface CorpusAuditReport {
-  schemaVersion: 2;
+  schemaVersion: 3;
   corpusRoot: string;
   totalFiles: number;
   counts: Record<VisualCompatibility, number>;
@@ -53,26 +65,66 @@ function envelopeSlices(document: EditorDocument): string[] {
   return ranges.map(range => document.source.slice(range.start, range.end));
 }
 
+function cycle(source: string) {
+  const opened = openEditorDocument(source);
+  const visual = enterVisualMode(opened);
+  return leaveVisualMode(visual);
+}
+
+function reversibleEdit(source: string): { exact: boolean | null; operationIds: string[] } {
+  let session = enterVisualMode(openEditorDocument(source));
+  const block = session.document.bodyBlocks.find(candidate => candidate.kind === 'editable');
+  if (session.mode !== 'visual' || !block || block.kind !== 'editable') return { exact: null, operationIds: [] };
+  const changedText = `${block.originalSource}\u2060`;
+  session = applyVisualOperation(session, { operationId: 'audit-edit', blockId: block.id, range: block.editRange,
+    expectedSource: block.originalSource, replacement: changedText });
+  const changedBlock = session.document.bodyBlocks.find(candidate => candidate.id === block.id);
+  if (!changedBlock || changedBlock.kind !== 'editable') return { exact: false, operationIds: session.appliedOperationIds };
+  session = applyVisualOperation(session, { operationId: 'audit-revert', blockId: changedBlock.id, range: changedBlock.editRange,
+    expectedSource: changedBlock.originalSource, replacement: block.originalSource });
+  return { exact: serializeCurrentSource(leaveVisualMode(session)) === source, operationIds: session.appliedOperationIds };
+}
+
+function classifyRoundTrip(opening: EditorDocument, finalDocument: EditorDocument, exact: boolean,
+  idempotent: boolean): RoundTripClassification {
+  if (!idempotent) return 'non-idempotent';
+  if (opening.diagnostics.some(item => item.code === 'PARSE_EXCEPTION')) return 'parse-error';
+  if (exact) return 'exact';
+  if (opening.source === finalDocument.source) return 'format-only';
+  return 'semantic-risk';
+}
+
 export function auditSource(source: string, relativePath: string): CorpusAuditEntry {
-  const opening = parseEditorDocument(source);
+  const openingSession = openEditorDocument(source);
+  const opening = openingSession.document;
   // Projection is deliberately consumed: an unsupported document may have no
   // blocks, but its source remains authoritative.
   for (const block of opening.bodyBlocks) {
     if (!block.id) throw new Error(`Projected block without id in ${relativePath}`);
   }
 
-  const visualToCode = opening.source;
-  const codeToVisual = parseEditorDocument(visualToCode);
-  const sourceCandidate = codeToVisual.source;
-  const firstCycle = parseEditorDocument(sourceCandidate).source;
-  const secondCycle = parseEditorDocument(firstCycle).source;
-  const thirdCycle = parseEditorDocument(secondCycle).source;
-  const finalDocument = parseEditorDocument(thirdCycle);
+  const firstSession = cycle(source);
+  const firstCycle = serializeCurrentSource(firstSession);
+  const secondSession = cycle(firstCycle);
+  const secondCycle = serializeCurrentSource(secondSession);
+  const thirdSession = cycle(secondCycle);
+  const thirdCycle = serializeCurrentSource(thirdSession);
+  const finalDocument = thirdSession.document;
+  const compatibilityStable = [firstSession, secondSession, thirdSession]
+    .every(session => session.document.compatibility === opening.compatibility);
+  const openingDiagnostics = JSON.stringify(opening.diagnostics);
+  const diagnosticsStable = [firstSession, secondSession, thirdSession]
+    .every(session => JSON.stringify(session.document.diagnostics) === openingDiagnostics);
+  const reversible = reversibleEdit(source);
 
   const originalEnvelope = envelopeSlices(opening);
   const finalEnvelope = envelopeSlices(finalDocument);
   const originalBody = opening.source.slice(opening.bodyRange.start, opening.bodyRange.end);
   const finalBody = finalDocument.source.slice(finalDocument.bodyRange.start, finalDocument.bodyRange.end);
+
+  const exact = source === thirdCycle;
+  const idempotent = firstCycle === secondCycle && secondCycle === thirdCycle;
+  const classification = classifyRoundTrip(opening, finalDocument, exact, idempotent);
 
   return {
     path: relativePath,
@@ -80,10 +132,16 @@ export function auditSource(source: string, relativePath: string): CorpusAuditEn
     finalHash: hashSource(thirdCycle),
     compatibility: opening.compatibility,
     diagnostics: opening.diagnostics,
-    exact: source === thirdCycle,
-    idempotent: firstCycle === secondCycle && secondCycle === thirdCycle,
+    exact,
+    idempotent,
     envelopePreserved: JSON.stringify(originalEnvelope) === JSON.stringify(finalEnvelope),
-    bodyPreserved: originalBody === finalBody
+    bodyPreserved: originalBody === finalBody,
+    classification,
+    compatibilityStable,
+    diagnosticsStable,
+    cycles: 3,
+    authorizedOperations: reversible.operationIds,
+    reversibleOperationExact: reversible.exact
   };
 }
 
@@ -105,7 +163,7 @@ export function runCorpusAudit(
     return result;
   });
   return {
-    schemaVersion: 2,
+    schemaVersion: 3,
     corpusRoot: path.relative(repositoryRoot, corpusRoot).split(path.sep).join('/'),
     totalFiles: entries.length,
     counts,
@@ -116,6 +174,7 @@ export function runCorpusAudit(
 export function assertSafeReport(report: CorpusAuditReport): void {
   const unsafe = report.files.filter(entry =>
     !entry.exact || !entry.idempotent || !entry.envelopePreserved || !entry.bodyPreserved
+      || !entry.compatibilityStable || !entry.diagnosticsStable || entry.reversibleOperationExact === false
   );
   if (unsafe.length > 0) {
     throw new Error(`Corpus preservation failed for: ${unsafe.map(entry => entry.path).join(', ')}`);
