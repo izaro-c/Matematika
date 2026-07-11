@@ -1,1776 +1,1333 @@
 {
-  "schemaVersion": 1,
-  "toolVersion": 1,
+  "schemaVersion": 2,
   "corpusRoot": "src/database/content",
   "totalFiles": 120,
   "counts": {
-    "exact": 6,
-    "format-only": 0,
-    "semantic-risk": 0,
-    "non-idempotent": 27,
-    "parse-error": 0,
-    "unknown": 87
+    "fully-editable": 0,
+    "partially-editable": 94,
+    "read-only": 26,
+    "unsupported": 0
   },
   "files": [
     {
       "path": "src/database/content/axiomatic-systems/sistema-absoluto.mdx",
-      "classification": "unknown",
       "originalHash": "74e777886f16602bb19c46f88e5593fcd76cf1d3e09824ee3ec8f348ca9d6c09",
-      "cycle1Hash": "91277b0f64b721de9d60e36e6a93d90d9648a8a77f954505ed1e26a63a238860",
-      "cycle2Hash": "91277b0f64b721de9d60e36e6a93d90d9648a8a77f954505ed1e26a63a238860",
-      "cycle3Hash": "91277b0f64b721de9d60e36e6a93d90d9648a8a77f954505ed1e26a63a238860",
-      "changedOnFirstCycle": true,
-      "idempotentAfterFirstCycle": true,
-      "changedRegions": [
-        "unknown"
-      ],
-      "signals": []
+      "finalHash": "74e777886f16602bb19c46f88e5593fcd76cf1d3e09824ee3ec8f348ca9d6c09",
+      "compatibility": "partially-editable",
+      "diagnostics": [],
+      "exact": true,
+      "idempotent": true,
+      "envelopePreserved": true,
+      "bodyPreserved": true
     },
     {
       "path": "src/database/content/axiomatic-systems/sistema-euclidiano.mdx",
-      "classification": "unknown",
       "originalHash": "32182a0436fb437e467e93642e4e60d7bdf33e85a8285fcd869388d4a1247f2f",
-      "cycle1Hash": "25cae7943dab27aee3b78dfaa8ed4bb34ee310ccfa1ff9e3d6fc11cc2244883c",
-      "cycle2Hash": "25cae7943dab27aee3b78dfaa8ed4bb34ee310ccfa1ff9e3d6fc11cc2244883c",
-      "cycle3Hash": "25cae7943dab27aee3b78dfaa8ed4bb34ee310ccfa1ff9e3d6fc11cc2244883c",
-      "changedOnFirstCycle": true,
-      "idempotentAfterFirstCycle": true,
-      "changedRegions": [
-        "unknown"
-      ],
-      "signals": []
+      "finalHash": "32182a0436fb437e467e93642e4e60d7bdf33e85a8285fcd869388d4a1247f2f",
+      "compatibility": "partially-editable",
+      "diagnostics": [],
+      "exact": true,
+      "idempotent": true,
+      "envelopePreserved": true,
+      "bodyPreserved": true
     },
     {
       "path": "src/database/content/axiomatic-systems/sistema-hiperbolico.mdx",
-      "classification": "unknown",
       "originalHash": "0237212699b81ebadd628d48586df414b9e22ffef0f52f470a6c1f5f45084510",
-      "cycle1Hash": "2b2d13a96297ae9a71e2fd7bf2e961a8dd0b3aa6aff00185a67937142b86293e",
-      "cycle2Hash": "2b2d13a96297ae9a71e2fd7bf2e961a8dd0b3aa6aff00185a67937142b86293e",
-      "cycle3Hash": "2b2d13a96297ae9a71e2fd7bf2e961a8dd0b3aa6aff00185a67937142b86293e",
-      "changedOnFirstCycle": true,
-      "idempotentAfterFirstCycle": true,
-      "changedRegions": [
-        "unknown"
-      ],
-      "signals": []
+      "finalHash": "0237212699b81ebadd628d48586df414b9e22ffef0f52f470a6c1f5f45084510",
+      "compatibility": "partially-editable",
+      "diagnostics": [],
+      "exact": true,
+      "idempotent": true,
+      "envelopePreserved": true,
+      "bodyPreserved": true
     },
     {
       "path": "src/database/content/axiomatic-systems/sistema-incidencia.mdx",
-      "classification": "unknown",
       "originalHash": "306c8d1c7c658a54c927b06aeb7fbe58ae63f898d026aa069dfa6783fe8f0c5e",
-      "cycle1Hash": "b923b8dc087eac0a3f9ed453f356a0f63a1abf7ebfb9a7300c10a0727d75e601",
-      "cycle2Hash": "b923b8dc087eac0a3f9ed453f356a0f63a1abf7ebfb9a7300c10a0727d75e601",
-      "cycle3Hash": "b923b8dc087eac0a3f9ed453f356a0f63a1abf7ebfb9a7300c10a0727d75e601",
-      "changedOnFirstCycle": true,
-      "idempotentAfterFirstCycle": true,
-      "changedRegions": [
-        "unknown"
-      ],
-      "signals": []
+      "finalHash": "306c8d1c7c658a54c927b06aeb7fbe58ae63f898d026aa069dfa6783fe8f0c5e",
+      "compatibility": "partially-editable",
+      "diagnostics": [],
+      "exact": true,
+      "idempotent": true,
+      "envelopePreserved": true,
+      "bodyPreserved": true
     },
     {
       "path": "src/database/content/axioms/axioma-arquimedes.mdx",
-      "classification": "unknown",
       "originalHash": "96f1a27cd697e3895157700759426ab497b53c605aa5c8f12156345f19f191a7",
-      "cycle1Hash": "0ca3747472e9c7d046608b0ab9fcb54bb859bbfc2fdb5f68e9626789d8023b1d",
-      "cycle2Hash": "0ca3747472e9c7d046608b0ab9fcb54bb859bbfc2fdb5f68e9626789d8023b1d",
-      "cycle3Hash": "0ca3747472e9c7d046608b0ab9fcb54bb859bbfc2fdb5f68e9626789d8023b1d",
-      "changedOnFirstCycle": true,
-      "idempotentAfterFirstCycle": true,
-      "changedRegions": [
-        "unknown"
-      ],
-      "signals": []
+      "finalHash": "96f1a27cd697e3895157700759426ab497b53c605aa5c8f12156345f19f191a7",
+      "compatibility": "partially-editable",
+      "diagnostics": [],
+      "exact": true,
+      "idempotent": true,
+      "envelopePreserved": true,
+      "bodyPreserved": true
     },
     {
       "path": "src/database/content/axioms/axioma-completitud.mdx",
-      "classification": "unknown",
       "originalHash": "98597a19bc02e2a7dc20409f44fd6288d70f432dc78e0df967e796342be4144a",
-      "cycle1Hash": "08c26db713dcf8a5c088b23c78bd06c6b961f03b50cbe6e4410f25d32a86d846",
-      "cycle2Hash": "08c26db713dcf8a5c088b23c78bd06c6b961f03b50cbe6e4410f25d32a86d846",
-      "cycle3Hash": "08c26db713dcf8a5c088b23c78bd06c6b961f03b50cbe6e4410f25d32a86d846",
-      "changedOnFirstCycle": true,
-      "idempotentAfterFirstCycle": true,
-      "changedRegions": [
-        "unknown"
-      ],
-      "signals": []
+      "finalHash": "98597a19bc02e2a7dc20409f44fd6288d70f432dc78e0df967e796342be4144a",
+      "compatibility": "partially-editable",
+      "diagnostics": [],
+      "exact": true,
+      "idempotent": true,
+      "envelopePreserved": true,
+      "bodyPreserved": true
     },
     {
       "path": "src/database/content/axioms/axioma-congruencia-1.mdx",
-      "classification": "unknown",
       "originalHash": "0545f6a5378a4426c36fda3f35b02255194a42614680866129d9739c9d032915",
-      "cycle1Hash": "bfd5990f7a3c46f94a9693599b76cac45234c50d984ccc8bdb89443a2baef888",
-      "cycle2Hash": "bfd5990f7a3c46f94a9693599b76cac45234c50d984ccc8bdb89443a2baef888",
-      "cycle3Hash": "bfd5990f7a3c46f94a9693599b76cac45234c50d984ccc8bdb89443a2baef888",
-      "changedOnFirstCycle": true,
-      "idempotentAfterFirstCycle": true,
-      "changedRegions": [
-        "unknown"
-      ],
-      "signals": []
+      "finalHash": "0545f6a5378a4426c36fda3f35b02255194a42614680866129d9739c9d032915",
+      "compatibility": "partially-editable",
+      "diagnostics": [],
+      "exact": true,
+      "idempotent": true,
+      "envelopePreserved": true,
+      "bodyPreserved": true
     },
     {
       "path": "src/database/content/axioms/axioma-congruencia-2.mdx",
-      "classification": "unknown",
       "originalHash": "03777fc9374207cc6c94ee0077919c7ac91f017c9f22c68d5cf0dc81e533a623",
-      "cycle1Hash": "ad4ebd93275ceeeda4211535528978d957e1bcaf319b17bc4c2e9a59093252ff",
-      "cycle2Hash": "ad4ebd93275ceeeda4211535528978d957e1bcaf319b17bc4c2e9a59093252ff",
-      "cycle3Hash": "ad4ebd93275ceeeda4211535528978d957e1bcaf319b17bc4c2e9a59093252ff",
-      "changedOnFirstCycle": true,
-      "idempotentAfterFirstCycle": true,
-      "changedRegions": [
-        "unknown"
-      ],
-      "signals": []
+      "finalHash": "03777fc9374207cc6c94ee0077919c7ac91f017c9f22c68d5cf0dc81e533a623",
+      "compatibility": "partially-editable",
+      "diagnostics": [],
+      "exact": true,
+      "idempotent": true,
+      "envelopePreserved": true,
+      "bodyPreserved": true
     },
     {
       "path": "src/database/content/axioms/axioma-congruencia-3.mdx",
-      "classification": "unknown",
       "originalHash": "0aa20dc35a8f75d66796fe72149a48c821b9974e05f77e425566ce6b6d8ed1fa",
-      "cycle1Hash": "5f88e9b2263954bcb76c54a15b084e9df773800ee6adb11d5aaff4bd49ab293d",
-      "cycle2Hash": "5f88e9b2263954bcb76c54a15b084e9df773800ee6adb11d5aaff4bd49ab293d",
-      "cycle3Hash": "5f88e9b2263954bcb76c54a15b084e9df773800ee6adb11d5aaff4bd49ab293d",
-      "changedOnFirstCycle": true,
-      "idempotentAfterFirstCycle": true,
-      "changedRegions": [
-        "unknown"
-      ],
-      "signals": []
+      "finalHash": "0aa20dc35a8f75d66796fe72149a48c821b9974e05f77e425566ce6b6d8ed1fa",
+      "compatibility": "partially-editable",
+      "diagnostics": [],
+      "exact": true,
+      "idempotent": true,
+      "envelopePreserved": true,
+      "bodyPreserved": true
     },
     {
       "path": "src/database/content/axioms/axioma-congruencia-4.mdx",
-      "classification": "unknown",
       "originalHash": "5d5d13ac370502668f34093cdffa58ff9eb8181b6a26827cf29744d8047e6a69",
-      "cycle1Hash": "7ad53245b48dc8cd67c3872da16ec237bec57319a831c5d3f23a71b7e1cbc0ab",
-      "cycle2Hash": "7ad53245b48dc8cd67c3872da16ec237bec57319a831c5d3f23a71b7e1cbc0ab",
-      "cycle3Hash": "7ad53245b48dc8cd67c3872da16ec237bec57319a831c5d3f23a71b7e1cbc0ab",
-      "changedOnFirstCycle": true,
-      "idempotentAfterFirstCycle": true,
-      "changedRegions": [
-        "unknown"
-      ],
-      "signals": []
+      "finalHash": "5d5d13ac370502668f34093cdffa58ff9eb8181b6a26827cf29744d8047e6a69",
+      "compatibility": "partially-editable",
+      "diagnostics": [],
+      "exact": true,
+      "idempotent": true,
+      "envelopePreserved": true,
+      "bodyPreserved": true
     },
     {
       "path": "src/database/content/axioms/axioma-congruencia-5.mdx",
-      "classification": "unknown",
       "originalHash": "31c85751ff294bb710bf764ebc1f562a64bcde5ed3ad7336e65ade0afed2cb12",
-      "cycle1Hash": "48a6a9b614114d6fc9bfa7a1af8d6fea76ac31791e2cda19f2c8544380ccbec5",
-      "cycle2Hash": "48a6a9b614114d6fc9bfa7a1af8d6fea76ac31791e2cda19f2c8544380ccbec5",
-      "cycle3Hash": "48a6a9b614114d6fc9bfa7a1af8d6fea76ac31791e2cda19f2c8544380ccbec5",
-      "changedOnFirstCycle": true,
-      "idempotentAfterFirstCycle": true,
-      "changedRegions": [
-        "unknown"
-      ],
-      "signals": []
+      "finalHash": "31c85751ff294bb710bf764ebc1f562a64bcde5ed3ad7336e65ade0afed2cb12",
+      "compatibility": "partially-editable",
+      "diagnostics": [],
+      "exact": true,
+      "idempotent": true,
+      "envelopePreserved": true,
+      "bodyPreserved": true
     },
     {
       "path": "src/database/content/axioms/axioma-incidencia-1.mdx",
-      "classification": "unknown",
       "originalHash": "c7d52e8ff9c4fec6d403d489850774a1ecad48e886c29fdc8bb53f22028479a4",
-      "cycle1Hash": "5b5101e1c85dec4530ab79d5018c4749c422175628cca0f20e8f6ebfc2d6fb78",
-      "cycle2Hash": "5b5101e1c85dec4530ab79d5018c4749c422175628cca0f20e8f6ebfc2d6fb78",
-      "cycle3Hash": "5b5101e1c85dec4530ab79d5018c4749c422175628cca0f20e8f6ebfc2d6fb78",
-      "changedOnFirstCycle": true,
-      "idempotentAfterFirstCycle": true,
-      "changedRegions": [
-        "unknown"
-      ],
-      "signals": []
+      "finalHash": "c7d52e8ff9c4fec6d403d489850774a1ecad48e886c29fdc8bb53f22028479a4",
+      "compatibility": "partially-editable",
+      "diagnostics": [],
+      "exact": true,
+      "idempotent": true,
+      "envelopePreserved": true,
+      "bodyPreserved": true
     },
     {
       "path": "src/database/content/axioms/axioma-incidencia-2.mdx",
-      "classification": "unknown",
       "originalHash": "6ca2136581fff3afcbc89026ca1560a0d1da1877602cdb80ad4b0e1466db4e09",
-      "cycle1Hash": "375fdb20cec53d44a388d892150f7775a943dbafde1aa97a6195d9709001e7dc",
-      "cycle2Hash": "375fdb20cec53d44a388d892150f7775a943dbafde1aa97a6195d9709001e7dc",
-      "cycle3Hash": "375fdb20cec53d44a388d892150f7775a943dbafde1aa97a6195d9709001e7dc",
-      "changedOnFirstCycle": true,
-      "idempotentAfterFirstCycle": true,
-      "changedRegions": [
-        "body"
-      ],
-      "signals": [
-        "body-changed"
-      ]
+      "finalHash": "6ca2136581fff3afcbc89026ca1560a0d1da1877602cdb80ad4b0e1466db4e09",
+      "compatibility": "partially-editable",
+      "diagnostics": [],
+      "exact": true,
+      "idempotent": true,
+      "envelopePreserved": true,
+      "bodyPreserved": true
     },
     {
       "path": "src/database/content/axioms/axioma-incidencia-3.mdx",
-      "classification": "unknown",
       "originalHash": "9bbcd71e53081c1b7582ca923a251aff30ac0d7c82d4bad0b899313a174b6538",
-      "cycle1Hash": "98e1fa6545a510fc8b7087a4989271c50f72233c65379003527f66d8f599c71d",
-      "cycle2Hash": "98e1fa6545a510fc8b7087a4989271c50f72233c65379003527f66d8f599c71d",
-      "cycle3Hash": "98e1fa6545a510fc8b7087a4989271c50f72233c65379003527f66d8f599c71d",
-      "changedOnFirstCycle": true,
-      "idempotentAfterFirstCycle": true,
-      "changedRegions": [
-        "unknown"
-      ],
-      "signals": []
+      "finalHash": "9bbcd71e53081c1b7582ca923a251aff30ac0d7c82d4bad0b899313a174b6538",
+      "compatibility": "partially-editable",
+      "diagnostics": [],
+      "exact": true,
+      "idempotent": true,
+      "envelopePreserved": true,
+      "bodyPreserved": true
     },
     {
       "path": "src/database/content/axioms/axioma-incidencia-4.mdx",
-      "classification": "unknown",
       "originalHash": "cb83523638636a3edcda7027c3c001cb11cd2cadc12c9d8b531b80aa30e28b84",
-      "cycle1Hash": "606a7cd0f760ef5c39f3c8905a890cc56e81a052da7b1dc3f617c171e85af556",
-      "cycle2Hash": "606a7cd0f760ef5c39f3c8905a890cc56e81a052da7b1dc3f617c171e85af556",
-      "cycle3Hash": "606a7cd0f760ef5c39f3c8905a890cc56e81a052da7b1dc3f617c171e85af556",
-      "changedOnFirstCycle": true,
-      "idempotentAfterFirstCycle": true,
-      "changedRegions": [
-        "unknown"
-      ],
-      "signals": []
+      "finalHash": "cb83523638636a3edcda7027c3c001cb11cd2cadc12c9d8b531b80aa30e28b84",
+      "compatibility": "partially-editable",
+      "diagnostics": [],
+      "exact": true,
+      "idempotent": true,
+      "envelopePreserved": true,
+      "bodyPreserved": true
     },
     {
       "path": "src/database/content/axioms/axioma-incidencia-5.mdx",
-      "classification": "unknown",
       "originalHash": "2c1e45dbbcd727788cc134790faeab96a386a009beea1aa3524708ce268cf71d",
-      "cycle1Hash": "2deb71759079427fa23dad21725b582084eaeac2c37bbdb3595136eeaa2ad831",
-      "cycle2Hash": "2deb71759079427fa23dad21725b582084eaeac2c37bbdb3595136eeaa2ad831",
-      "cycle3Hash": "2deb71759079427fa23dad21725b582084eaeac2c37bbdb3595136eeaa2ad831",
-      "changedOnFirstCycle": true,
-      "idempotentAfterFirstCycle": true,
-      "changedRegions": [
-        "unknown"
-      ],
-      "signals": []
+      "finalHash": "2c1e45dbbcd727788cc134790faeab96a386a009beea1aa3524708ce268cf71d",
+      "compatibility": "partially-editable",
+      "diagnostics": [],
+      "exact": true,
+      "idempotent": true,
+      "envelopePreserved": true,
+      "bodyPreserved": true
     },
     {
       "path": "src/database/content/axioms/axioma-incidencia-6.mdx",
-      "classification": "unknown",
       "originalHash": "77e9c5f304e358591a373838dfb80296a484d45bb2dfea4c4ac21ad5d5bb86d6",
-      "cycle1Hash": "381ba937d20d7f2fff1490e46533fd5095279a6ca8cdce3119e3b7d7dc744e89",
-      "cycle2Hash": "381ba937d20d7f2fff1490e46533fd5095279a6ca8cdce3119e3b7d7dc744e89",
-      "cycle3Hash": "381ba937d20d7f2fff1490e46533fd5095279a6ca8cdce3119e3b7d7dc744e89",
-      "changedOnFirstCycle": true,
-      "idempotentAfterFirstCycle": true,
-      "changedRegions": [
-        "unknown"
-      ],
-      "signals": []
+      "finalHash": "77e9c5f304e358591a373838dfb80296a484d45bb2dfea4c4ac21ad5d5bb86d6",
+      "compatibility": "partially-editable",
+      "diagnostics": [],
+      "exact": true,
+      "idempotent": true,
+      "envelopePreserved": true,
+      "bodyPreserved": true
     },
     {
       "path": "src/database/content/axioms/axioma-incidencia-7.mdx",
-      "classification": "unknown",
       "originalHash": "8f3993f864f313bd4e693827e693fc726881a6e31446b82d58c0cae452933d38",
-      "cycle1Hash": "fc1ff01f9b1addfc982fc3b02ff41169b30a652d37bb5e701e2444d937c07089",
-      "cycle2Hash": "fc1ff01f9b1addfc982fc3b02ff41169b30a652d37bb5e701e2444d937c07089",
-      "cycle3Hash": "fc1ff01f9b1addfc982fc3b02ff41169b30a652d37bb5e701e2444d937c07089",
-      "changedOnFirstCycle": true,
-      "idempotentAfterFirstCycle": true,
-      "changedRegions": [
-        "unknown"
-      ],
-      "signals": []
+      "finalHash": "8f3993f864f313bd4e693827e693fc726881a6e31446b82d58c0cae452933d38",
+      "compatibility": "partially-editable",
+      "diagnostics": [],
+      "exact": true,
+      "idempotent": true,
+      "envelopePreserved": true,
+      "bodyPreserved": true
     },
     {
       "path": "src/database/content/axioms/axioma-incidencia-8.mdx",
-      "classification": "unknown",
       "originalHash": "e257546231eebb795bc65abb76357107c188ad06fb2e9f05358658643f454304",
-      "cycle1Hash": "b68b19c668fdfca572fbd75fba2e74d170d06f220379ad706f850d29643aa80c",
-      "cycle2Hash": "b68b19c668fdfca572fbd75fba2e74d170d06f220379ad706f850d29643aa80c",
-      "cycle3Hash": "b68b19c668fdfca572fbd75fba2e74d170d06f220379ad706f850d29643aa80c",
-      "changedOnFirstCycle": true,
-      "idempotentAfterFirstCycle": true,
-      "changedRegions": [
-        "unknown"
-      ],
-      "signals": []
+      "finalHash": "e257546231eebb795bc65abb76357107c188ad06fb2e9f05358658643f454304",
+      "compatibility": "partially-editable",
+      "diagnostics": [],
+      "exact": true,
+      "idempotent": true,
+      "envelopePreserved": true,
+      "bodyPreserved": true
     },
     {
       "path": "src/database/content/axioms/axioma-orden-1.mdx",
-      "classification": "unknown",
       "originalHash": "5dfc89a1cfeaa3ff27aee0e4bd6a1dcd101e2d0c6100ac8a4cb2e90cba995a7e",
-      "cycle1Hash": "82855534293192ee73866fe87ad70f2ba4a799c053511bdcbc5e8a805bd2d4a7",
-      "cycle2Hash": "82855534293192ee73866fe87ad70f2ba4a799c053511bdcbc5e8a805bd2d4a7",
-      "cycle3Hash": "82855534293192ee73866fe87ad70f2ba4a799c053511bdcbc5e8a805bd2d4a7",
-      "changedOnFirstCycle": true,
-      "idempotentAfterFirstCycle": true,
-      "changedRegions": [
-        "unknown"
-      ],
-      "signals": []
+      "finalHash": "5dfc89a1cfeaa3ff27aee0e4bd6a1dcd101e2d0c6100ac8a4cb2e90cba995a7e",
+      "compatibility": "partially-editable",
+      "diagnostics": [],
+      "exact": true,
+      "idempotent": true,
+      "envelopePreserved": true,
+      "bodyPreserved": true
     },
     {
       "path": "src/database/content/axioms/axioma-orden-2.mdx",
-      "classification": "unknown",
       "originalHash": "e18b47d5c3c86ae601547ed537f2648f2f8cb4ee41ef624c6275b55431190322",
-      "cycle1Hash": "924fc6a23505c6789ac39c9c3fb76de011ab1a3e56569d326339cd82ce778906",
-      "cycle2Hash": "924fc6a23505c6789ac39c9c3fb76de011ab1a3e56569d326339cd82ce778906",
-      "cycle3Hash": "924fc6a23505c6789ac39c9c3fb76de011ab1a3e56569d326339cd82ce778906",
-      "changedOnFirstCycle": true,
-      "idempotentAfterFirstCycle": true,
-      "changedRegions": [
-        "unknown"
-      ],
-      "signals": []
+      "finalHash": "e18b47d5c3c86ae601547ed537f2648f2f8cb4ee41ef624c6275b55431190322",
+      "compatibility": "partially-editable",
+      "diagnostics": [],
+      "exact": true,
+      "idempotent": true,
+      "envelopePreserved": true,
+      "bodyPreserved": true
     },
     {
       "path": "src/database/content/axioms/axioma-orden-3.mdx",
-      "classification": "unknown",
       "originalHash": "ac844d15373f670f087e9ba0b26744211b17eb4e56dda9dfa9237ca3d4d8ae6e",
-      "cycle1Hash": "042dbbdb1f00356468bd62c872eabe35535ece2e15f7c0d6ba37bee93cba5f02",
-      "cycle2Hash": "042dbbdb1f00356468bd62c872eabe35535ece2e15f7c0d6ba37bee93cba5f02",
-      "cycle3Hash": "042dbbdb1f00356468bd62c872eabe35535ece2e15f7c0d6ba37bee93cba5f02",
-      "changedOnFirstCycle": true,
-      "idempotentAfterFirstCycle": true,
-      "changedRegions": [
-        "unknown"
-      ],
-      "signals": []
+      "finalHash": "ac844d15373f670f087e9ba0b26744211b17eb4e56dda9dfa9237ca3d4d8ae6e",
+      "compatibility": "partially-editable",
+      "diagnostics": [],
+      "exact": true,
+      "idempotent": true,
+      "envelopePreserved": true,
+      "bodyPreserved": true
     },
     {
       "path": "src/database/content/axioms/axioma-orden-4.mdx",
-      "classification": "unknown",
       "originalHash": "eb8c45d4dd51a4b8073e55cd712c800afe7bf5e3b18d62042960918a1056bb63",
-      "cycle1Hash": "c753c35c2d3692f3ea04156a27e98443b12c94852eabe2a1a8eabd8981f08219",
-      "cycle2Hash": "c753c35c2d3692f3ea04156a27e98443b12c94852eabe2a1a8eabd8981f08219",
-      "cycle3Hash": "c753c35c2d3692f3ea04156a27e98443b12c94852eabe2a1a8eabd8981f08219",
-      "changedOnFirstCycle": true,
-      "idempotentAfterFirstCycle": true,
-      "changedRegions": [
-        "unknown"
-      ],
-      "signals": []
+      "finalHash": "eb8c45d4dd51a4b8073e55cd712c800afe7bf5e3b18d62042960918a1056bb63",
+      "compatibility": "partially-editable",
+      "diagnostics": [],
+      "exact": true,
+      "idempotent": true,
+      "envelopePreserved": true,
+      "bodyPreserved": true
     },
     {
       "path": "src/database/content/axioms/axioma-paralelas-euclides.mdx",
-      "classification": "unknown",
       "originalHash": "cfd02abcb75d25e166a3c54b939a8cdeeeadbbeeda36da9f5b8de4a3d2b4775b",
-      "cycle1Hash": "a396b4de9e897ce139e1443dd67583052e755aab0974b3f6bf4e70fdce233c5c",
-      "cycle2Hash": "a396b4de9e897ce139e1443dd67583052e755aab0974b3f6bf4e70fdce233c5c",
-      "cycle3Hash": "a396b4de9e897ce139e1443dd67583052e755aab0974b3f6bf4e70fdce233c5c",
-      "changedOnFirstCycle": true,
-      "idempotentAfterFirstCycle": true,
-      "changedRegions": [
-        "unknown"
-      ],
-      "signals": []
+      "finalHash": "cfd02abcb75d25e166a3c54b939a8cdeeeadbbeeda36da9f5b8de4a3d2b4775b",
+      "compatibility": "partially-editable",
+      "diagnostics": [],
+      "exact": true,
+      "idempotent": true,
+      "envelopePreserved": true,
+      "bodyPreserved": true
     },
     {
       "path": "src/database/content/axioms/axioma-paralelas-hiperbolico.mdx",
-      "classification": "unknown",
       "originalHash": "260880ed3b225e06a438a0a8c0a34545de84f625826b2faa8a97749d8764a32f",
-      "cycle1Hash": "a9e0983d978e431bc5198454f9a0e02b781e511b4308df824fb6aa7f3d1e8bf5",
-      "cycle2Hash": "a9e0983d978e431bc5198454f9a0e02b781e511b4308df824fb6aa7f3d1e8bf5",
-      "cycle3Hash": "a9e0983d978e431bc5198454f9a0e02b781e511b4308df824fb6aa7f3d1e8bf5",
-      "changedOnFirstCycle": true,
-      "idempotentAfterFirstCycle": true,
-      "changedRegions": [
-        "unknown"
-      ],
-      "signals": []
+      "finalHash": "260880ed3b225e06a438a0a8c0a34545de84f625826b2faa8a97749d8764a32f",
+      "compatibility": "partially-editable",
+      "diagnostics": [],
+      "exact": true,
+      "idempotent": true,
+      "envelopePreserved": true,
+      "bodyPreserved": true
     },
     {
       "path": "src/database/content/definitions/altura.mdx",
-      "classification": "unknown",
       "originalHash": "9abcc85c9455047aa8d06c45ef2edf1e563a3388980aedeea3fdccacdfdb37cc",
-      "cycle1Hash": "921add28cd268e5a840980418f82c3c9536bc5f7ae61ab552385affa9fc0e6c1",
-      "cycle2Hash": "921add28cd268e5a840980418f82c3c9536bc5f7ae61ab552385affa9fc0e6c1",
-      "cycle3Hash": "921add28cd268e5a840980418f82c3c9536bc5f7ae61ab552385affa9fc0e6c1",
-      "changedOnFirstCycle": true,
-      "idempotentAfterFirstCycle": true,
-      "changedRegions": [
-        "unknown"
-      ],
-      "signals": []
+      "finalHash": "9abcc85c9455047aa8d06c45ef2edf1e563a3388980aedeea3fdccacdfdb37cc",
+      "compatibility": "partially-editable",
+      "diagnostics": [],
+      "exact": true,
+      "idempotent": true,
+      "envelopePreserved": true,
+      "bodyPreserved": true
     },
     {
       "path": "src/database/content/definitions/angulo.mdx",
-      "classification": "unknown",
       "originalHash": "e0f2e60c58473408b323f480f727779da3cbd1280439873833601c70843563f7",
-      "cycle1Hash": "992e2d27a57fad9d7f9651ecffa5b05c451c5432fab11f06a5fe09b9ab0b83d6",
-      "cycle2Hash": "992e2d27a57fad9d7f9651ecffa5b05c451c5432fab11f06a5fe09b9ab0b83d6",
-      "cycle3Hash": "992e2d27a57fad9d7f9651ecffa5b05c451c5432fab11f06a5fe09b9ab0b83d6",
-      "changedOnFirstCycle": true,
-      "idempotentAfterFirstCycle": true,
-      "changedRegions": [
-        "unknown"
-      ],
-      "signals": []
+      "finalHash": "e0f2e60c58473408b323f480f727779da3cbd1280439873833601c70843563f7",
+      "compatibility": "partially-editable",
+      "diagnostics": [],
+      "exact": true,
+      "idempotent": true,
+      "envelopePreserved": true,
+      "bodyPreserved": true
     },
     {
       "path": "src/database/content/definitions/angulos-suplementarios.mdx",
-      "classification": "unknown",
       "originalHash": "676dc51e809244598f8da60f7a56b67c0203352cd80c8418b9b400c03d966fcc",
-      "cycle1Hash": "15a5cbdeaaf4570f9a1650086a6906423d9f8dcd2b7377c20bb44d1e3c4d2d00",
-      "cycle2Hash": "15a5cbdeaaf4570f9a1650086a6906423d9f8dcd2b7377c20bb44d1e3c4d2d00",
-      "cycle3Hash": "15a5cbdeaaf4570f9a1650086a6906423d9f8dcd2b7377c20bb44d1e3c4d2d00",
-      "changedOnFirstCycle": true,
-      "idempotentAfterFirstCycle": true,
-      "changedRegions": [
-        "unknown"
-      ],
-      "signals": []
+      "finalHash": "676dc51e809244598f8da60f7a56b67c0203352cd80c8418b9b400c03d966fcc",
+      "compatibility": "partially-editable",
+      "diagnostics": [],
+      "exact": true,
+      "idempotent": true,
+      "envelopePreserved": true,
+      "bodyPreserved": true
     },
     {
       "path": "src/database/content/definitions/bisectriz.mdx",
-      "classification": "unknown",
       "originalHash": "452b310b93859d34d86c496471552d0cc80673524a9c8afcfd9d74ea4401262c",
-      "cycle1Hash": "ee105062390df59482b4ef3cd363eb5d7b622563ec09913aa270b47d1d912c38",
-      "cycle2Hash": "ee105062390df59482b4ef3cd363eb5d7b622563ec09913aa270b47d1d912c38",
-      "cycle3Hash": "ee105062390df59482b4ef3cd363eb5d7b622563ec09913aa270b47d1d912c38",
-      "changedOnFirstCycle": true,
-      "idempotentAfterFirstCycle": true,
-      "changedRegions": [
-        "unknown"
-      ],
-      "signals": []
+      "finalHash": "452b310b93859d34d86c496471552d0cc80673524a9c8afcfd9d74ea4401262c",
+      "compatibility": "partially-editable",
+      "diagnostics": [],
+      "exact": true,
+      "idempotent": true,
+      "envelopePreserved": true,
+      "bodyPreserved": true
     },
     {
       "path": "src/database/content/definitions/circunferencia.mdx",
-      "classification": "unknown",
       "originalHash": "4e24e8de643edeee089f4147d7f3b2732c879d73b186231d32f9da7c2be2e4b0",
-      "cycle1Hash": "bd7970d70389ade8aa762ca3d555203e116ed6699af35b1e06c69b81891df658",
-      "cycle2Hash": "bd7970d70389ade8aa762ca3d555203e116ed6699af35b1e06c69b81891df658",
-      "cycle3Hash": "bd7970d70389ade8aa762ca3d555203e116ed6699af35b1e06c69b81891df658",
-      "changedOnFirstCycle": true,
-      "idempotentAfterFirstCycle": true,
-      "changedRegions": [
-        "unknown"
-      ],
-      "signals": []
+      "finalHash": "4e24e8de643edeee089f4147d7f3b2732c879d73b186231d32f9da7c2be2e4b0",
+      "compatibility": "partially-editable",
+      "diagnostics": [],
+      "exact": true,
+      "idempotent": true,
+      "envelopePreserved": true,
+      "bodyPreserved": true
     },
     {
       "path": "src/database/content/definitions/congruencia.mdx",
-      "classification": "unknown",
       "originalHash": "f06ce0deff80fe57319e4e85767328becffa5f8535b28f30c21c193ad6b3f3a8",
-      "cycle1Hash": "b8a83969f648bd8e23205f2a407b6b493516e93bfa899aa539c096a3e1721b05",
-      "cycle2Hash": "b8a83969f648bd8e23205f2a407b6b493516e93bfa899aa539c096a3e1721b05",
-      "cycle3Hash": "b8a83969f648bd8e23205f2a407b6b493516e93bfa899aa539c096a3e1721b05",
-      "changedOnFirstCycle": true,
-      "idempotentAfterFirstCycle": true,
-      "changedRegions": [
-        "unknown"
-      ],
-      "signals": []
+      "finalHash": "f06ce0deff80fe57319e4e85767328becffa5f8535b28f30c21c193ad6b3f3a8",
+      "compatibility": "partially-editable",
+      "diagnostics": [],
+      "exact": true,
+      "idempotent": true,
+      "envelopePreserved": true,
+      "bodyPreserved": true
     },
     {
       "path": "src/database/content/definitions/contenido.mdx",
-      "classification": "unknown",
       "originalHash": "fb1dfdc6e45868b3d3ebfeafe684b59519800de63c35703e007689ec937a9ec2",
-      "cycle1Hash": "1ac8ec9322f701c8006697a87258061b42172406af3ec16f90363a96d2ea1412",
-      "cycle2Hash": "1ac8ec9322f701c8006697a87258061b42172406af3ec16f90363a96d2ea1412",
-      "cycle3Hash": "1ac8ec9322f701c8006697a87258061b42172406af3ec16f90363a96d2ea1412",
-      "changedOnFirstCycle": true,
-      "idempotentAfterFirstCycle": true,
-      "changedRegions": [
-        "unknown"
-      ],
-      "signals": []
+      "finalHash": "fb1dfdc6e45868b3d3ebfeafe684b59519800de63c35703e007689ec937a9ec2",
+      "compatibility": "partially-editable",
+      "diagnostics": [],
+      "exact": true,
+      "idempotent": true,
+      "envelopePreserved": true,
+      "bodyPreserved": true
     },
     {
       "path": "src/database/content/definitions/cuadrilatero.mdx",
-      "classification": "unknown",
       "originalHash": "990e4a9204d1a7f7a3aa10b6fbb035564c5ee0ef47f34fa5fc11fbb8431a5c17",
-      "cycle1Hash": "15372e8d83d543a6c0a249ffeb5c713aaa4b8bd4dcab039086555f4d805dd8a5",
-      "cycle2Hash": "15372e8d83d543a6c0a249ffeb5c713aaa4b8bd4dcab039086555f4d805dd8a5",
-      "cycle3Hash": "15372e8d83d543a6c0a249ffeb5c713aaa4b8bd4dcab039086555f4d805dd8a5",
-      "changedOnFirstCycle": true,
-      "idempotentAfterFirstCycle": true,
-      "changedRegions": [
-        "body"
-      ],
-      "signals": [
-        "body-changed"
-      ]
+      "finalHash": "990e4a9204d1a7f7a3aa10b6fbb035564c5ee0ef47f34fa5fc11fbb8431a5c17",
+      "compatibility": "partially-editable",
+      "diagnostics": [],
+      "exact": true,
+      "idempotent": true,
+      "envelopePreserved": true,
+      "bodyPreserved": true
     },
     {
       "path": "src/database/content/definitions/estar-entre.mdx",
-      "classification": "unknown",
       "originalHash": "045a8c04d2d5c6e2e606f40f05d6f2a060b46785dc5495bfd67545517454aa83",
-      "cycle1Hash": "14f091699818bdbb568899003ab9d8455dfae566ea0031920936d2bbafe4ea2c",
-      "cycle2Hash": "14f091699818bdbb568899003ab9d8455dfae566ea0031920936d2bbafe4ea2c",
-      "cycle3Hash": "14f091699818bdbb568899003ab9d8455dfae566ea0031920936d2bbafe4ea2c",
-      "changedOnFirstCycle": true,
-      "idempotentAfterFirstCycle": true,
-      "changedRegions": [
-        "unknown"
-      ],
-      "signals": []
+      "finalHash": "045a8c04d2d5c6e2e606f40f05d6f2a060b46785dc5495bfd67545517454aa83",
+      "compatibility": "partially-editable",
+      "diagnostics": [],
+      "exact": true,
+      "idempotent": true,
+      "envelopePreserved": true,
+      "bodyPreserved": true
     },
     {
       "path": "src/database/content/definitions/incidencia.mdx",
-      "classification": "unknown",
       "originalHash": "a269b0582d75bfe4fc24e4f69c2b70eaae70aa8607ff9ba3e164ba3bd8b9ad46",
-      "cycle1Hash": "b2c79b879aa1fc3ce6e06fec3fb98d1132d12e0a3dad0f281ac90dcdfc7c77b8",
-      "cycle2Hash": "b2c79b879aa1fc3ce6e06fec3fb98d1132d12e0a3dad0f281ac90dcdfc7c77b8",
-      "cycle3Hash": "b2c79b879aa1fc3ce6e06fec3fb98d1132d12e0a3dad0f281ac90dcdfc7c77b8",
-      "changedOnFirstCycle": true,
-      "idempotentAfterFirstCycle": true,
-      "changedRegions": [
-        "unknown"
-      ],
-      "signals": []
+      "finalHash": "a269b0582d75bfe4fc24e4f69c2b70eaae70aa8607ff9ba3e164ba3bd8b9ad46",
+      "compatibility": "partially-editable",
+      "diagnostics": [],
+      "exact": true,
+      "idempotent": true,
+      "envelopePreserved": true,
+      "bodyPreserved": true
     },
     {
       "path": "src/database/content/definitions/mediana.mdx",
-      "classification": "unknown",
       "originalHash": "f1d7888b944a8488e092038531bd6c8c9807d54470787dc2bb8e205624641aca",
-      "cycle1Hash": "64a3295e3eaaf98a16283a6a9647cc1c9ffa69df1945487b42fdc1bd8f368355",
-      "cycle2Hash": "64a3295e3eaaf98a16283a6a9647cc1c9ffa69df1945487b42fdc1bd8f368355",
-      "cycle3Hash": "64a3295e3eaaf98a16283a6a9647cc1c9ffa69df1945487b42fdc1bd8f368355",
-      "changedOnFirstCycle": true,
-      "idempotentAfterFirstCycle": true,
-      "changedRegions": [
-        "unknown"
-      ],
-      "signals": []
+      "finalHash": "f1d7888b944a8488e092038531bd6c8c9807d54470787dc2bb8e205624641aca",
+      "compatibility": "partially-editable",
+      "diagnostics": [],
+      "exact": true,
+      "idempotent": true,
+      "envelopePreserved": true,
+      "bodyPreserved": true
     },
     {
       "path": "src/database/content/definitions/mediatriz.mdx",
-      "classification": "unknown",
       "originalHash": "64be79aaae6e62e5756b67add1af42891cb85671ef46cf97e2855dc0f3b5e550",
-      "cycle1Hash": "cc637c80fc2b013e1b13cecdd3cc2bce2fcf6938192f593eba2a02e307630397",
-      "cycle2Hash": "cc637c80fc2b013e1b13cecdd3cc2bce2fcf6938192f593eba2a02e307630397",
-      "cycle3Hash": "cc637c80fc2b013e1b13cecdd3cc2bce2fcf6938192f593eba2a02e307630397",
-      "changedOnFirstCycle": true,
-      "idempotentAfterFirstCycle": true,
-      "changedRegions": [
-        "unknown"
-      ],
-      "signals": []
+      "finalHash": "64be79aaae6e62e5756b67add1af42891cb85671ef46cf97e2855dc0f3b5e550",
+      "compatibility": "partially-editable",
+      "diagnostics": [],
+      "exact": true,
+      "idempotent": true,
+      "envelopePreserved": true,
+      "bodyPreserved": true
     },
     {
       "path": "src/database/content/definitions/paralelas.mdx",
-      "classification": "unknown",
       "originalHash": "d63cdc2b763fa61d6f212ae5ac1e8feeee2cceac8741b392a86871cb21134c6f",
-      "cycle1Hash": "1630bd2d4a3fc3eca0c19acaf36b11a6309edadae4b405ff957b37124442e8aa",
-      "cycle2Hash": "1630bd2d4a3fc3eca0c19acaf36b11a6309edadae4b405ff957b37124442e8aa",
-      "cycle3Hash": "1630bd2d4a3fc3eca0c19acaf36b11a6309edadae4b405ff957b37124442e8aa",
-      "changedOnFirstCycle": true,
-      "idempotentAfterFirstCycle": true,
-      "changedRegions": [
-        "unknown"
-      ],
-      "signals": []
+      "finalHash": "d63cdc2b763fa61d6f212ae5ac1e8feeee2cceac8741b392a86871cb21134c6f",
+      "compatibility": "partially-editable",
+      "diagnostics": [],
+      "exact": true,
+      "idempotent": true,
+      "envelopePreserved": true,
+      "bodyPreserved": true
     },
     {
       "path": "src/database/content/definitions/paralelogramo.mdx",
-      "classification": "unknown",
       "originalHash": "6a5b3ee488c42dfdbf6c6703315d9a5567eb0275e885ca6c1e01daeb6440ca3d",
-      "cycle1Hash": "cec5935440e147e0019a590090bedef92efbacd94faa78abc090f8d94c3167e6",
-      "cycle2Hash": "cec5935440e147e0019a590090bedef92efbacd94faa78abc090f8d94c3167e6",
-      "cycle3Hash": "cec5935440e147e0019a590090bedef92efbacd94faa78abc090f8d94c3167e6",
-      "changedOnFirstCycle": true,
-      "idempotentAfterFirstCycle": true,
-      "changedRegions": [
-        "body"
-      ],
-      "signals": [
-        "body-changed"
-      ]
+      "finalHash": "6a5b3ee488c42dfdbf6c6703315d9a5567eb0275e885ca6c1e01daeb6440ca3d",
+      "compatibility": "partially-editable",
+      "diagnostics": [],
+      "exact": true,
+      "idempotent": true,
+      "envelopePreserved": true,
+      "bodyPreserved": true
     },
     {
       "path": "src/database/content/definitions/perpendicular.mdx",
-      "classification": "unknown",
       "originalHash": "1bc999e3c29ef164490f0b5c93df47e4d3e993b03b366ac6f478b4f2c704bdf4",
-      "cycle1Hash": "ff95c824fd416ff026d44a945a3394c7258234a6195eb88f1c38f582bc8b38b3",
-      "cycle2Hash": "ff95c824fd416ff026d44a945a3394c7258234a6195eb88f1c38f582bc8b38b3",
-      "cycle3Hash": "ff95c824fd416ff026d44a945a3394c7258234a6195eb88f1c38f582bc8b38b3",
-      "changedOnFirstCycle": true,
-      "idempotentAfterFirstCycle": true,
-      "changedRegions": [
-        "unknown"
-      ],
-      "signals": []
+      "finalHash": "1bc999e3c29ef164490f0b5c93df47e4d3e993b03b366ac6f478b4f2c704bdf4",
+      "compatibility": "partially-editable",
+      "diagnostics": [],
+      "exact": true,
+      "idempotent": true,
+      "envelopePreserved": true,
+      "bodyPreserved": true
     },
     {
       "path": "src/database/content/definitions/plano.mdx",
-      "classification": "unknown",
       "originalHash": "d2987288a7a672f95c7b027ed60431c82215fcf4b508d507072e81bf6d29e744",
-      "cycle1Hash": "a96375b0e8af1e1ec47b0b45c78b4b57b34b61c0bd1b05a2a84d3e4ecf624f47",
-      "cycle2Hash": "a96375b0e8af1e1ec47b0b45c78b4b57b34b61c0bd1b05a2a84d3e4ecf624f47",
-      "cycle3Hash": "a96375b0e8af1e1ec47b0b45c78b4b57b34b61c0bd1b05a2a84d3e4ecf624f47",
-      "changedOnFirstCycle": true,
-      "idempotentAfterFirstCycle": true,
-      "changedRegions": [
-        "unknown"
-      ],
-      "signals": []
+      "finalHash": "d2987288a7a672f95c7b027ed60431c82215fcf4b508d507072e81bf6d29e744",
+      "compatibility": "partially-editable",
+      "diagnostics": [],
+      "exact": true,
+      "idempotent": true,
+      "envelopePreserved": true,
+      "bodyPreserved": true
     },
     {
       "path": "src/database/content/definitions/punto.mdx",
-      "classification": "unknown",
       "originalHash": "26328e6a5784bd7b869e5be6ba7a663a5172103e0c6be3ff0fc20183123e4b66",
-      "cycle1Hash": "c7893077bb85d7b3257375dcf9a342668db174224a6ad7e21d14027632e8d5d0",
-      "cycle2Hash": "c7893077bb85d7b3257375dcf9a342668db174224a6ad7e21d14027632e8d5d0",
-      "cycle3Hash": "c7893077bb85d7b3257375dcf9a342668db174224a6ad7e21d14027632e8d5d0",
-      "changedOnFirstCycle": true,
-      "idempotentAfterFirstCycle": true,
-      "changedRegions": [
-        "unknown"
-      ],
-      "signals": []
+      "finalHash": "26328e6a5784bd7b869e5be6ba7a663a5172103e0c6be3ff0fc20183123e4b66",
+      "compatibility": "partially-editable",
+      "diagnostics": [],
+      "exact": true,
+      "idempotent": true,
+      "envelopePreserved": true,
+      "bodyPreserved": true
     },
     {
       "path": "src/database/content/definitions/recta.mdx",
-      "classification": "unknown",
       "originalHash": "9dc543b8616bdf740d9ca55aa9e2a1e8447c50863a6c12f48c1307965658a397",
-      "cycle1Hash": "5536dc1ee8e1ea76884861a1cebebcc0784a58687f25b1003a2abb6882bdb889",
-      "cycle2Hash": "5536dc1ee8e1ea76884861a1cebebcc0784a58687f25b1003a2abb6882bdb889",
-      "cycle3Hash": "5536dc1ee8e1ea76884861a1cebebcc0784a58687f25b1003a2abb6882bdb889",
-      "changedOnFirstCycle": true,
-      "idempotentAfterFirstCycle": true,
-      "changedRegions": [
-        "unknown"
-      ],
-      "signals": []
+      "finalHash": "9dc543b8616bdf740d9ca55aa9e2a1e8447c50863a6c12f48c1307965658a397",
+      "compatibility": "partially-editable",
+      "diagnostics": [],
+      "exact": true,
+      "idempotent": true,
+      "envelopePreserved": true,
+      "bodyPreserved": true
     },
     {
       "path": "src/database/content/definitions/segmento.mdx",
-      "classification": "unknown",
       "originalHash": "91ee9a979fe60fd45c1e19766a6ba16c599cf80435ff7db79de83ac778657e2e",
-      "cycle1Hash": "645a6997de5918112a5cc1e529076ade6622ce7b87ceda3159391537a092f6a9",
-      "cycle2Hash": "645a6997de5918112a5cc1e529076ade6622ce7b87ceda3159391537a092f6a9",
-      "cycle3Hash": "645a6997de5918112a5cc1e529076ade6622ce7b87ceda3159391537a092f6a9",
-      "changedOnFirstCycle": true,
-      "idempotentAfterFirstCycle": true,
-      "changedRegions": [
-        "unknown"
-      ],
-      "signals": []
+      "finalHash": "91ee9a979fe60fd45c1e19766a6ba16c599cf80435ff7db79de83ac778657e2e",
+      "compatibility": "partially-editable",
+      "diagnostics": [],
+      "exact": true,
+      "idempotent": true,
+      "envelopePreserved": true,
+      "bodyPreserved": true
     },
     {
       "path": "src/database/content/definitions/semirrecta.mdx",
-      "classification": "unknown",
       "originalHash": "2eb85fb253cc0ef63f8bd58cd3cfc4dc307f82544509a388afff8d9c948c4cc0",
-      "cycle1Hash": "dde896d898b28f5a09b5b341e9f3b88b5b9f26b2415a57c2ef6caf50b2e0fcfc",
-      "cycle2Hash": "dde896d898b28f5a09b5b341e9f3b88b5b9f26b2415a57c2ef6caf50b2e0fcfc",
-      "cycle3Hash": "dde896d898b28f5a09b5b341e9f3b88b5b9f26b2415a57c2ef6caf50b2e0fcfc",
-      "changedOnFirstCycle": true,
-      "idempotentAfterFirstCycle": true,
-      "changedRegions": [
-        "unknown"
-      ],
-      "signals": []
+      "finalHash": "2eb85fb253cc0ef63f8bd58cd3cfc4dc307f82544509a388afff8d9c948c4cc0",
+      "compatibility": "partially-editable",
+      "diagnostics": [],
+      "exact": true,
+      "idempotent": true,
+      "envelopePreserved": true,
+      "bodyPreserved": true
     },
     {
       "path": "src/database/content/definitions/teoria-medida-area.mdx",
-      "classification": "unknown",
       "originalHash": "c6e42f2b83caeda3373e59d82e3db72f7c1cdf90505eae6080070abe5eee610c",
-      "cycle1Hash": "34f4716710984dce9b6f982d7454411f63048f863ed052fade7c2331a44f1d4e",
-      "cycle2Hash": "34f4716710984dce9b6f982d7454411f63048f863ed052fade7c2331a44f1d4e",
-      "cycle3Hash": "34f4716710984dce9b6f982d7454411f63048f863ed052fade7c2331a44f1d4e",
-      "changedOnFirstCycle": true,
-      "idempotentAfterFirstCycle": true,
-      "changedRegions": [
-        "unknown"
-      ],
-      "signals": []
+      "finalHash": "c6e42f2b83caeda3373e59d82e3db72f7c1cdf90505eae6080070abe5eee610c",
+      "compatibility": "partially-editable",
+      "diagnostics": [],
+      "exact": true,
+      "idempotent": true,
+      "envelopePreserved": true,
+      "bodyPreserved": true
     },
     {
       "path": "src/database/content/definitions/triangulo.mdx",
-      "classification": "unknown",
       "originalHash": "e8f7b9edcb06b142bb31a7e197b9cd115076496ea94cae792640f6c851987ef1",
-      "cycle1Hash": "dcefc301281ac6576d288f3a858b4084b53fa5c9587cd4399af4b378b01fe4bc",
-      "cycle2Hash": "dcefc301281ac6576d288f3a858b4084b53fa5c9587cd4399af4b378b01fe4bc",
-      "cycle3Hash": "dcefc301281ac6576d288f3a858b4084b53fa5c9587cd4399af4b378b01fe4bc",
-      "changedOnFirstCycle": true,
-      "idempotentAfterFirstCycle": true,
-      "changedRegions": [
-        "unknown"
-      ],
-      "signals": []
+      "finalHash": "e8f7b9edcb06b142bb31a7e197b9cd115076496ea94cae792640f6c851987ef1",
+      "compatibility": "partially-editable",
+      "diagnostics": [],
+      "exact": true,
+      "idempotent": true,
+      "envelopePreserved": true,
+      "bodyPreserved": true
     },
     {
       "path": "src/database/content/demonstrations/demo-angulo-externo.mdx",
-      "classification": "non-idempotent",
       "originalHash": "6ac60e785cfd4ede87757914d9ac15f1470cfcafb87baacdd4f7d3a2725762a5",
-      "cycle1Hash": "2b56de5d792851950bbdf9c0928571d5ff025ea4d68f5b17a29451cbd323144a",
-      "cycle2Hash": "5d3884764969b763ba85bf2be95fb39dbf2e973b59993b5776ddfc82f421bd03",
-      "cycle3Hash": "b464dfde9d1ba2689e590278e784b2ffd1c854df42dc72099f17130237f3276b",
-      "changedOnFirstCycle": true,
-      "idempotentAfterFirstCycle": false,
-      "changedRegions": [
-        "unknown"
-      ],
-      "signals": [
-        "non-idempotent-derivation"
-      ]
+      "finalHash": "6ac60e785cfd4ede87757914d9ac15f1470cfcafb87baacdd4f7d3a2725762a5",
+      "compatibility": "read-only",
+      "diagnostics": [],
+      "exact": true,
+      "idempotent": true,
+      "envelopePreserved": true,
+      "bodyPreserved": true
     },
     {
       "path": "src/database/content/demonstrations/demo-angulos-alternos-internos.mdx",
-      "classification": "non-idempotent",
       "originalHash": "3c49c87df168298575e7943516ac79846e55d8913030bed9b89a593b3b3ad53f",
-      "cycle1Hash": "bb37a070b87d6a711534f673b0619731e95ccd764082f89d7be16f9e709eeb58",
-      "cycle2Hash": "496e7785b00f55d56e546737bf3e24ac228a4a33935bb83f41f03ba9e78f4530",
-      "cycle3Hash": "7871bb315f41ec19a3c5304e0e751e6fe1c8a27d2d6c835e6be8c54ebac9c05a",
-      "changedOnFirstCycle": true,
-      "idempotentAfterFirstCycle": false,
-      "changedRegions": [
-        "unknown"
-      ],
-      "signals": [
-        "non-idempotent-derivation"
-      ]
+      "finalHash": "3c49c87df168298575e7943516ac79846e55d8913030bed9b89a593b3b3ad53f",
+      "compatibility": "read-only",
+      "diagnostics": [],
+      "exact": true,
+      "idempotent": true,
+      "envelopePreserved": true,
+      "bodyPreserved": true
     },
     {
       "path": "src/database/content/demonstrations/demo-angulos-opuestos-verticales.mdx",
-      "classification": "non-idempotent",
       "originalHash": "efcdd3081312302028e9557c6d55f7394150336166c777a128e6771484f87fb1",
-      "cycle1Hash": "828cb445f7182db8bd6412681593ad650096f3e415ba1c2cb67ab0dee009832b",
-      "cycle2Hash": "184ae188728d697900c0925416a2bc19c0de77118f20cc4dd3fc5a46c7466723",
-      "cycle3Hash": "da4b1e438a0f0b8e6b14c135de3b2c4df0d0a2bc552385d512e3d70ea3cb19f3",
-      "changedOnFirstCycle": true,
-      "idempotentAfterFirstCycle": false,
-      "changedRegions": [
-        "unknown"
-      ],
-      "signals": [
-        "non-idempotent-derivation"
-      ]
+      "finalHash": "efcdd3081312302028e9557c6d55f7394150336166c777a128e6771484f87fb1",
+      "compatibility": "read-only",
+      "diagnostics": [],
+      "exact": true,
+      "idempotent": true,
+      "envelopePreserved": true,
+      "bodyPreserved": true
     },
     {
       "path": "src/database/content/demonstrations/demo-area-aditividad.mdx",
-      "classification": "non-idempotent",
       "originalHash": "766b2e0b32173107c648825fb4be222027c636a60b6a314bdf839df429ca3d5d",
-      "cycle1Hash": "7086873a4782cdf45c3846ac6827b58cad69c930a8fdaa7cf14e71bff0f07b27",
-      "cycle2Hash": "2ba6f8904344e7417babf5736e3a98cd92686bcbf6984b30e697de0ad6cc4bce",
-      "cycle3Hash": "595baf65f02995ad4faae97ddec4696c5384606b522bebc37ec15842128d0756",
-      "changedOnFirstCycle": true,
-      "idempotentAfterFirstCycle": false,
-      "changedRegions": [
-        "unknown"
-      ],
-      "signals": [
-        "non-idempotent-derivation"
-      ]
+      "finalHash": "766b2e0b32173107c648825fb4be222027c636a60b6a314bdf839df429ca3d5d",
+      "compatibility": "read-only",
+      "diagnostics": [],
+      "exact": true,
+      "idempotent": true,
+      "envelopePreserved": true,
+      "bodyPreserved": true
     },
     {
       "path": "src/database/content/demonstrations/demo-area-invariancia.mdx",
-      "classification": "non-idempotent",
       "originalHash": "2fb4175c7607412f52f8a028f60fc68910cf197affb92df6a79b3681d05750a1",
-      "cycle1Hash": "49287dea4e763ff77f96f1e9912c363b1ff0fb7be6db7426db055f601c54805f",
-      "cycle2Hash": "3a83ea3337645cf613d2aa350b49728e22bb4809bfcff04253094817c9c03519",
-      "cycle3Hash": "58bd3be3d2575124b6f05865ec0530a8d52e687ad2add5daa8d655b0a4af3797",
-      "changedOnFirstCycle": true,
-      "idempotentAfterFirstCycle": false,
-      "changedRegions": [
-        "unknown"
-      ],
-      "signals": [
-        "non-idempotent-derivation"
-      ]
+      "finalHash": "2fb4175c7607412f52f8a028f60fc68910cf197affb92df6a79b3681d05750a1",
+      "compatibility": "read-only",
+      "diagnostics": [],
+      "exact": true,
+      "idempotent": true,
+      "envelopePreserved": true,
+      "bodyPreserved": true
     },
     {
       "path": "src/database/content/demonstrations/demo-area-rectangulo.mdx",
-      "classification": "non-idempotent",
       "originalHash": "1db4983c067941fed6b45e1d3f14a885d23b79a55a62ceaade4da71d96ee0324",
-      "cycle1Hash": "d98cb18939e117d757b09bd67ad202fb81e3c907a6b80ea0e260fe727c7a94c2",
-      "cycle2Hash": "13ec237bc8e3eea579ff05960ba29995c9dbb92ef918314ef1ad641e0079c3bf",
-      "cycle3Hash": "9a469e164b5f832f315c75bd2ca03a5d4d0fe2e49daeab99567bb5508d4ff064",
-      "changedOnFirstCycle": true,
-      "idempotentAfterFirstCycle": false,
-      "changedRegions": [
-        "unknown"
-      ],
-      "signals": [
-        "non-idempotent-derivation"
-      ]
+      "finalHash": "1db4983c067941fed6b45e1d3f14a885d23b79a55a62ceaade4da71d96ee0324",
+      "compatibility": "read-only",
+      "diagnostics": [],
+      "exact": true,
+      "idempotent": true,
+      "envelopePreserved": true,
+      "bodyPreserved": true
     },
     {
       "path": "src/database/content/demonstrations/demo-area-triangulo.mdx",
-      "classification": "non-idempotent",
       "originalHash": "f09937ac37a30ffc9b7017cc8316a602a5faac3170ec831d2e31464ed8a0fed6",
-      "cycle1Hash": "20b733b2567cebe0f30cc4f7f548e8d09b6e7cfe5f5380928a8f01df9a63bc11",
-      "cycle2Hash": "de4ba58c93d38ba151af68c0c58736429e176df972f59645bb941b027d902a68",
-      "cycle3Hash": "e706cb791d91641bd95111636ef6b40f201632a428a04ce534a0d687109b0078",
-      "changedOnFirstCycle": true,
-      "idempotentAfterFirstCycle": false,
-      "changedRegions": [
-        "unknown"
-      ],
-      "signals": [
-        "non-idempotent-derivation"
-      ]
+      "finalHash": "f09937ac37a30ffc9b7017cc8316a602a5faac3170ec831d2e31464ed8a0fed6",
+      "compatibility": "read-only",
+      "diagnostics": [],
+      "exact": true,
+      "idempotent": true,
+      "envelopePreserved": true,
+      "bodyPreserved": true
     },
     {
       "path": "src/database/content/demonstrations/demo-congruencia-aal.mdx",
-      "classification": "non-idempotent",
       "originalHash": "04481a990405712d2d27d4922b3cc9ff3cc2107e8e7234eb99eefa911a1daea8",
-      "cycle1Hash": "29b87a4aa2d390afbad1d8a2c8c0fef2646e34433a6b99054a6348da6ee2cb7f",
-      "cycle2Hash": "cd7231546f9dc6f376c218046533b2c12634c80678b6a80aa35f3af603a642d5",
-      "cycle3Hash": "a93e6c5b133c87f9beae10411eb55c65bd6046fc29e3d809fa9f45be5e01431c",
-      "changedOnFirstCycle": true,
-      "idempotentAfterFirstCycle": false,
-      "changedRegions": [
-        "unknown"
-      ],
-      "signals": [
-        "non-idempotent-derivation"
-      ]
+      "finalHash": "04481a990405712d2d27d4922b3cc9ff3cc2107e8e7234eb99eefa911a1daea8",
+      "compatibility": "read-only",
+      "diagnostics": [],
+      "exact": true,
+      "idempotent": true,
+      "envelopePreserved": true,
+      "bodyPreserved": true
     },
     {
       "path": "src/database/content/demonstrations/demo-congruencia-ala.mdx",
-      "classification": "non-idempotent",
       "originalHash": "5042ee5ca347546b5687d7b552a4b7dce353e638253754dc87365205db7f79dc",
-      "cycle1Hash": "0889e4451efb1a038ea28699d89200bc87623c3fea6a9b87e3ba58d735385334",
-      "cycle2Hash": "fa224fbb96d1bb8d27c6e32784bb75e6fe0006c04d0869efda1f527f11eec7a7",
-      "cycle3Hash": "8a978910b0a180225dcf9c0b15a40d8c441f2ab00e9a896595b7935d375b9694",
-      "changedOnFirstCycle": true,
-      "idempotentAfterFirstCycle": false,
-      "changedRegions": [
-        "unknown"
-      ],
-      "signals": [
-        "non-idempotent-derivation"
-      ]
+      "finalHash": "5042ee5ca347546b5687d7b552a4b7dce353e638253754dc87365205db7f79dc",
+      "compatibility": "read-only",
+      "diagnostics": [],
+      "exact": true,
+      "idempotent": true,
+      "envelopePreserved": true,
+      "bodyPreserved": true
     },
     {
       "path": "src/database/content/demonstrations/demo-congruencia-lll.mdx",
-      "classification": "non-idempotent",
       "originalHash": "575709a9103586c1972a4277d7bc85aedb035555bb226eb3fa340165988bde33",
-      "cycle1Hash": "5fe9c8347864fb44b1368e86dd7029954afd0b7dd7e0f02161d8d9fc68fe67d1",
-      "cycle2Hash": "909ffecdc051e5026bfcd7e00d66bf5275acb1338b5c4e7324f9cca172e86f6d",
-      "cycle3Hash": "bd366c45ed028d70d38f40bdbf63fd1fcb5b360488e434e253d18fa52f3cec90",
-      "changedOnFirstCycle": true,
-      "idempotentAfterFirstCycle": false,
-      "changedRegions": [
-        "unknown"
-      ],
-      "signals": [
-        "non-idempotent-derivation"
-      ]
+      "finalHash": "575709a9103586c1972a4277d7bc85aedb035555bb226eb3fa340165988bde33",
+      "compatibility": "read-only",
+      "diagnostics": [],
+      "exact": true,
+      "idempotent": true,
+      "envelopePreserved": true,
+      "bodyPreserved": true
     },
     {
       "path": "src/database/content/demonstrations/demo-desigualdad-triangular.mdx",
-      "classification": "non-idempotent",
       "originalHash": "3f53d478c449fe356e940c267924bffe49169645ce3e9c316740d3f3cf6b9d74",
-      "cycle1Hash": "92c3b53ec05b70b851e69614abb8aeac5bbc32987b3b7f9c704afb4063f8e498",
-      "cycle2Hash": "8c06e5cc8669d702d3977447ce828ffa5a99b15df86593c90b679004c2af50f3",
-      "cycle3Hash": "18e0bbabf1a9f1d9b428700567de56d6e6ae3035dd22bddc525dcabeff22846d",
-      "changedOnFirstCycle": true,
-      "idempotentAfterFirstCycle": false,
-      "changedRegions": [
-        "unknown"
-      ],
-      "signals": [
-        "non-idempotent-derivation"
-      ]
+      "finalHash": "3f53d478c449fe356e940c267924bffe49169645ce3e9c316740d3f3cf6b9d74",
+      "compatibility": "read-only",
+      "diagnostics": [],
+      "exact": true,
+      "idempotent": true,
+      "envelopePreserved": true,
+      "bodyPreserved": true
     },
     {
       "path": "src/database/content/demonstrations/demo-dos-rectas-un-punto.mdx",
-      "classification": "non-idempotent",
       "originalHash": "5832bf96567aeb7ce430919ad4cfa2b0004a1e0c2d5f76e620a349c287e18f6b",
-      "cycle1Hash": "35c326584b53425bc4a0697afefa322cc776272c06a47b69921a7e969764e252",
-      "cycle2Hash": "377d1874f2a0c7154ec76c4b5ba6a50b824e469447f3ba70b4f32a939be95604",
-      "cycle3Hash": "ee069011e5aa8e65d19413dc7f73db0bc4bd5cbdbe249b86dddeb4a96161509a",
-      "changedOnFirstCycle": true,
-      "idempotentAfterFirstCycle": false,
-      "changedRegions": [
-        "unknown"
-      ],
-      "signals": [
-        "non-idempotent-derivation"
-      ]
+      "finalHash": "5832bf96567aeb7ce430919ad4cfa2b0004a1e0c2d5f76e620a349c287e18f6b",
+      "compatibility": "read-only",
+      "diagnostics": [],
+      "exact": true,
+      "idempotent": true,
+      "envelopePreserved": true,
+      "bodyPreserved": true
     },
     {
       "path": "src/database/content/demonstrations/demo-existencia-bisectriz.mdx",
-      "classification": "non-idempotent",
       "originalHash": "5b0626f97a821b36154002c11155fcb95a3ba58e035e84c0644e510438c35480",
-      "cycle1Hash": "283c44ac569e4106089fd6477f273887ffe6e759100deaf7f06f504125fff9f2",
-      "cycle2Hash": "d7d2561f182c6a32e7b3bd271397bdda39fd9bb744a2ffe94e8e2b593ce75eb4",
-      "cycle3Hash": "c397f891e1197138f84a592bd2b53d7da1b419553b7c0c50fac800245b091de8",
-      "changedOnFirstCycle": true,
-      "idempotentAfterFirstCycle": false,
-      "changedRegions": [
-        "unknown"
-      ],
-      "signals": [
-        "non-idempotent-derivation"
-      ]
+      "finalHash": "5b0626f97a821b36154002c11155fcb95a3ba58e035e84c0644e510438c35480",
+      "compatibility": "read-only",
+      "diagnostics": [],
+      "exact": true,
+      "idempotent": true,
+      "envelopePreserved": true,
+      "bodyPreserved": true
     },
     {
       "path": "src/database/content/demonstrations/demo-existencia-perpendicular.mdx",
-      "classification": "non-idempotent",
       "originalHash": "2ce4dfcacec58493829f27147918943caba92d374ab52a3fd141e3c0c8dffec0",
-      "cycle1Hash": "0d5573bc23a3a9ef6c5ecd5c0c4000aac190d238567540b71822d52dde22176b",
-      "cycle2Hash": "df1c20141a4609dac798cefac9668bee4cf427c663a0479b2b75a82edb197d05",
-      "cycle3Hash": "988edadd2282a28b046e739f35be8b7b0a64f63dbc6d0d15e66ae506c1b66696",
-      "changedOnFirstCycle": true,
-      "idempotentAfterFirstCycle": false,
-      "changedRegions": [
-        "unknown"
-      ],
-      "signals": [
-        "non-idempotent-derivation"
-      ]
+      "finalHash": "2ce4dfcacec58493829f27147918943caba92d374ab52a3fd141e3c0c8dffec0",
+      "compatibility": "read-only",
+      "diagnostics": [],
+      "exact": true,
+      "idempotent": true,
+      "envelopePreserved": true,
+      "bodyPreserved": true
     },
     {
       "path": "src/database/content/demonstrations/demo-invariancia-triangulacion.mdx",
-      "classification": "non-idempotent",
       "originalHash": "c48200d47a728000cb701163958d51975e34919c1716eb96623b7873132e3e9c",
-      "cycle1Hash": "98886e5212c3de124b657c6ef5432b28adbf273e67946583cdd351260845ae26",
-      "cycle2Hash": "99c19593e3a4d4be74b58f6e017824e060435b5f54d3a8ad6b73e2360dbd0603",
-      "cycle3Hash": "f5792cb8952c97a141163fbf63ca98227b4c6f79a1c093204fa577f101ac6b96",
-      "changedOnFirstCycle": true,
-      "idempotentAfterFirstCycle": false,
-      "changedRegions": [
-        "unknown"
-      ],
-      "signals": [
-        "non-idempotent-derivation"
-      ]
+      "finalHash": "c48200d47a728000cb701163958d51975e34919c1716eb96623b7873132e3e9c",
+      "compatibility": "read-only",
+      "diagnostics": [],
+      "exact": true,
+      "idempotent": true,
+      "envelopePreserved": true,
+      "bodyPreserved": true
     },
     {
       "path": "src/database/content/demonstrations/demo-pitagoras-areas.mdx",
-      "classification": "non-idempotent",
       "originalHash": "ec62c1a7d8cafdd40f6e626d24712455126039fed5080146ffb48a1121ac2294",
-      "cycle1Hash": "6389b91d5d118914c1864407df82054b6fb113644b03278c429210929ea3e362",
-      "cycle2Hash": "c154b181fa4446afd1caccbe7049be92a81a0540d5aeb1a61aa1f5fb7b83d7ff",
-      "cycle3Hash": "c967928405cbcaac346b3e9f1b62c188663e5482765e3b8710ee569dffcf4fec",
-      "changedOnFirstCycle": true,
-      "idempotentAfterFirstCycle": false,
-      "changedRegions": [
-        "unknown"
-      ],
-      "signals": [
-        "non-idempotent-derivation"
-      ]
+      "finalHash": "ec62c1a7d8cafdd40f6e626d24712455126039fed5080146ffb48a1121ac2294",
+      "compatibility": "read-only",
+      "diagnostics": [],
+      "exact": true,
+      "idempotent": true,
+      "envelopePreserved": true,
+      "bodyPreserved": true
     },
     {
       "path": "src/database/content/demonstrations/demo-pitagoras-euclides.mdx",
-      "classification": "non-idempotent",
       "originalHash": "e3a8c8056008dcecbcee859798b07b689b4bf241c1d83f027023cc4769d44945",
-      "cycle1Hash": "acdace046a1fb42dce26a11b4a7b62b0ef503724e928ab09ab6744a1d46a6db1",
-      "cycle2Hash": "6f164a84d5da6163d17c11f1d5fdb823ccc083ebf62464bfdf74454d99b20d6d",
-      "cycle3Hash": "4bd7c7e4dc2a7803fe2abb4b8275c8c7b89f191994d727bd05b5eeb8dbd3ad1c",
-      "changedOnFirstCycle": true,
-      "idempotentAfterFirstCycle": false,
-      "changedRegions": [
-        "unknown"
-      ],
-      "signals": [
-        "non-idempotent-derivation"
-      ]
+      "finalHash": "e3a8c8056008dcecbcee859798b07b689b4bf241c1d83f027023cc4769d44945",
+      "compatibility": "read-only",
+      "diagnostics": [],
+      "exact": true,
+      "idempotent": true,
+      "envelopePreserved": true,
+      "bodyPreserved": true
     },
     {
       "path": "src/database/content/demonstrations/demo-punto-medio-perpendicular.mdx",
-      "classification": "non-idempotent",
       "originalHash": "5224e99ade965972c61a4424c6d291199e91664711b4e4a0b059d11534ca8415",
-      "cycle1Hash": "947ab9d1136205a6e7450bdcc17265c49cc00601b0ab3a697694d04e9618e99f",
-      "cycle2Hash": "23edb175aa606b313e83be836697e05ef21db54969a82fff190e04ef13e2cd1d",
-      "cycle3Hash": "9d37ae1f8f38fd2db85dd9f7581b1a27adb545a16c8ef604cd49400d9e6dc6e6",
-      "changedOnFirstCycle": true,
-      "idempotentAfterFirstCycle": false,
-      "changedRegions": [
-        "unknown"
-      ],
-      "signals": [
-        "non-idempotent-derivation"
-      ]
+      "finalHash": "5224e99ade965972c61a4424c6d291199e91664711b4e4a0b059d11534ca8415",
+      "compatibility": "read-only",
+      "diagnostics": [],
+      "exact": true,
+      "idempotent": true,
+      "envelopePreserved": true,
+      "bodyPreserved": true
     },
     {
       "path": "src/database/content/demonstrations/demo-punto-medio.mdx",
-      "classification": "non-idempotent",
       "originalHash": "65278d877733fe10f510baa3a9e6a5189e4b9b7d3ba34a04610c3a9bb186479e",
-      "cycle1Hash": "09f2c8fc9432ceedc96d879513dc8b45c033eede3f5a94939b2c902e8b012807",
-      "cycle2Hash": "9cc97c6414f876fcc8ccedc3d96ba89c06311f78d7c09167ec4b9a530ef123b1",
-      "cycle3Hash": "e6172c8e2c99cbdb601f4e7aabcc870bc81ee013b5e90650e0a9082964078111",
-      "changedOnFirstCycle": true,
-      "idempotentAfterFirstCycle": false,
-      "changedRegions": [
-        "unknown"
-      ],
-      "signals": [
-        "non-idempotent-derivation"
-      ]
+      "finalHash": "65278d877733fe10f510baa3a9e6a5189e4b9b7d3ba34a04610c3a9bb186479e",
+      "compatibility": "read-only",
+      "diagnostics": [],
+      "exact": true,
+      "idempotent": true,
+      "envelopePreserved": true,
+      "bodyPreserved": true
     },
     {
       "path": "src/database/content/demonstrations/demo-reciproco-triangulo-isosceles.mdx",
-      "classification": "non-idempotent",
       "originalHash": "3b4b693804f5321723ae2697956382eabd653c3e463d3018a76445b956ccaf11",
-      "cycle1Hash": "cc2f1e30902686460c4bdc25a7d16e56815189440f482dc9499611b36247be20",
-      "cycle2Hash": "f8d576bf21ffd709274644458bdca216e0c8442e1593bc5d7bebcc9072b09771",
-      "cycle3Hash": "5e1c7bea69537c2b9a5e9e150be7166ce10945185fe9c357a7361af647cc6ebe",
-      "changedOnFirstCycle": true,
-      "idempotentAfterFirstCycle": false,
-      "changedRegions": [
-        "unknown"
-      ],
-      "signals": [
-        "non-idempotent-derivation"
-      ]
+      "finalHash": "3b4b693804f5321723ae2697956382eabd653c3e463d3018a76445b956ccaf11",
+      "compatibility": "read-only",
+      "diagnostics": [],
+      "exact": true,
+      "idempotent": true,
+      "envelopePreserved": true,
+      "bodyPreserved": true
     },
     {
       "path": "src/database/content/demonstrations/demo-rectas-coincidentes.mdx",
-      "classification": "non-idempotent",
       "originalHash": "a8bbd316b2a6ab606c997fd3dde677520a6708c6cfc629a8110ef59f5eb579d6",
-      "cycle1Hash": "70ddf9b41e403dfc69d02179f7f1c5deeffd52eda3ebc64d7147c4d4a29e6cb8",
-      "cycle2Hash": "20acc9b60e2c131da42b8f51abd222ec090b78df5a06c8aab6d855334676f9bc",
-      "cycle3Hash": "493096625b46ed0a30ff27063084ac16491a33e0c6a49e48f8717691dd4b7009",
-      "changedOnFirstCycle": true,
-      "idempotentAfterFirstCycle": false,
-      "changedRegions": [
-        "unknown"
-      ],
-      "signals": [
-        "non-idempotent-derivation"
-      ]
+      "finalHash": "a8bbd316b2a6ab606c997fd3dde677520a6708c6cfc629a8110ef59f5eb579d6",
+      "compatibility": "read-only",
+      "diagnostics": [],
+      "exact": true,
+      "idempotent": true,
+      "envelopePreserved": true,
+      "bodyPreserved": true
     },
     {
       "path": "src/database/content/demonstrations/demo-suma-angulos-triangulo.mdx",
-      "classification": "non-idempotent",
       "originalHash": "9dd86347e30017643aceb9753213875ada56cc51a4aec0c41a5b8f1fe174e38f",
-      "cycle1Hash": "ecb112f12e5db1da7a54563a45ec28b566afc57f005852b206e4959999245090",
-      "cycle2Hash": "d7e8023d1261d34dd7f742095eb4a7162bf9db22969dbf8b0ed64083a502a063",
-      "cycle3Hash": "3f0ffef77361c5d3b38ff0e2fd005764c1c33d20d8c5a2f5facc814675b939f1",
-      "changedOnFirstCycle": true,
-      "idempotentAfterFirstCycle": false,
-      "changedRegions": [
-        "unknown"
-      ],
-      "signals": [
-        "non-idempotent-derivation"
-      ]
+      "finalHash": "9dd86347e30017643aceb9753213875ada56cc51a4aec0c41a5b8f1fe174e38f",
+      "compatibility": "read-only",
+      "diagnostics": [],
+      "exact": true,
+      "idempotent": true,
+      "envelopePreserved": true,
+      "bodyPreserved": true
     },
     {
       "path": "src/database/content/demonstrations/demo-tales.mdx",
-      "classification": "non-idempotent",
       "originalHash": "ac82c6848737fd8d5ab06976c4ff769eff67061effb36a75d3cbdaff2e357989",
-      "cycle1Hash": "606c5a2308765138b641aafea94b17dd6aba2e20c1ea2c08ac3e3a427937194b",
-      "cycle2Hash": "4d7b3dcbe086f610da914307c33fc1e1838d18c655dca5fc593a164334d15fe3",
-      "cycle3Hash": "a7a45e2895d44edf91081c30fd9b224a177811cb58321914a67e15b81410a65b",
-      "changedOnFirstCycle": true,
-      "idempotentAfterFirstCycle": false,
-      "changedRegions": [
-        "unknown"
-      ],
-      "signals": [
-        "non-idempotent-derivation"
-      ]
+      "finalHash": "ac82c6848737fd8d5ab06976c4ff769eff67061effb36a75d3cbdaff2e357989",
+      "compatibility": "read-only",
+      "diagnostics": [],
+      "exact": true,
+      "idempotent": true,
+      "envelopePreserved": true,
+      "bodyPreserved": true
     },
     {
       "path": "src/database/content/demonstrations/demo-triangulacion-poligono.mdx",
-      "classification": "non-idempotent",
       "originalHash": "9f2fa9ed549d99dbcfd7d2b5b534647e9e47194f23d58684b4ba0331bce5b265",
-      "cycle1Hash": "c4af8731aeed8d57e6517058e5a0c76bccd98822d94824f3e60a4328b0fe3884",
-      "cycle2Hash": "b8b709b59544395652e723b4ee082956335cf39971f85afb3af467faab72a476",
-      "cycle3Hash": "f359bed171fe8fbfc53d68f8f5ef3482db48d1cbb268e98d56716392169ddb8c",
-      "changedOnFirstCycle": true,
-      "idempotentAfterFirstCycle": false,
-      "changedRegions": [
-        "unknown"
-      ],
-      "signals": [
-        "non-idempotent-derivation"
-      ]
+      "finalHash": "9f2fa9ed549d99dbcfd7d2b5b534647e9e47194f23d58684b4ba0331bce5b265",
+      "compatibility": "read-only",
+      "diagnostics": [],
+      "exact": true,
+      "idempotent": true,
+      "envelopePreserved": true,
+      "bodyPreserved": true
     },
     {
       "path": "src/database/content/demonstrations/demo-triangulo-isosceles.mdx",
-      "classification": "non-idempotent",
       "originalHash": "1696e3a3389246b5fcc1b8fc440cda48745ece1077f041c37b89a2087c5a23ea",
-      "cycle1Hash": "a69dd4452c6ea5bdfa044a40e791138329036cf4e57676d9aa4292c12f32f2ab",
-      "cycle2Hash": "662e086e4bfda27eb8476981c133cd57887775c70c794d96dafed2b732ef0ef6",
-      "cycle3Hash": "d9488c882d934b8c4f935115f67c5385af2f9b73c8f04acfd3ce400b9b33ae0f",
-      "changedOnFirstCycle": true,
-      "idempotentAfterFirstCycle": false,
-      "changedRegions": [
-        "unknown"
-      ],
-      "signals": [
-        "non-idempotent-derivation"
-      ]
+      "finalHash": "1696e3a3389246b5fcc1b8fc440cda48745ece1077f041c37b89a2087c5a23ea",
+      "compatibility": "read-only",
+      "diagnostics": [],
+      "exact": true,
+      "idempotent": true,
+      "envelopePreserved": true,
+      "bodyPreserved": true
     },
     {
       "path": "src/database/content/examples/ejemplo-pitagoras-calculo.mdx",
-      "classification": "non-idempotent",
       "originalHash": "1a014b735688875ec6e053f8f8da652ea8bd6e004f120ddf7c9cc63208574be7",
-      "cycle1Hash": "7315c4d49d4ad125a4fb1d754ca18f59628007f7d7e0b4143701956fbccab33d",
-      "cycle2Hash": "fdb620e49eeef55026e1ab936054750da8e52a53a5cae213c645da57a05e5494",
-      "cycle3Hash": "1bfa9989e7cd9202d3fe65992d97c21384ad012432682a967946294d6e960478",
-      "changedOnFirstCycle": true,
-      "idempotentAfterFirstCycle": false,
-      "changedRegions": [
-        "unknown"
-      ],
-      "signals": [
-        "non-idempotent-derivation"
-      ]
+      "finalHash": "1a014b735688875ec6e053f8f8da652ea8bd6e004f120ddf7c9cc63208574be7",
+      "compatibility": "partially-editable",
+      "diagnostics": [],
+      "exact": true,
+      "idempotent": true,
+      "envelopePreserved": true,
+      "bodyPreserved": true
     },
     {
       "path": "src/database/content/exercises/ejercicio-pitagoras-cateto.mdx",
-      "classification": "non-idempotent",
       "originalHash": "31886f9dbc62de2f0359c8c19b034ac718ddbd44a5864a6385b3586a4c56a545",
-      "cycle1Hash": "e2d6bdf9f3074bf60c3952192a3918dfcb4b0b1274bcf572dc8a9b9078e6bdcd",
-      "cycle2Hash": "a898e5f1bc00badcfed149e967d9a1353efb454763f0d1c8b2da19155e06c89e",
-      "cycle3Hash": "92885daa259f47d5065f9e788d53790a19d632bd9fa0dc61eb3a4125cb85e80c",
-      "changedOnFirstCycle": true,
-      "idempotentAfterFirstCycle": false,
-      "changedRegions": [
-        "unknown"
-      ],
-      "signals": [
-        "non-idempotent-derivation"
-      ]
+      "finalHash": "31886f9dbc62de2f0359c8c19b034ac718ddbd44a5864a6385b3586a4c56a545",
+      "compatibility": "read-only",
+      "diagnostics": [],
+      "exact": true,
+      "idempotent": true,
+      "envelopePreserved": true,
+      "bodyPreserved": true
     },
     {
       "path": "src/database/content/lessons/leccion-metodo-constructivo.mdx",
-      "classification": "unknown",
       "originalHash": "6f1fa2b0279d360e2816990e603485db1c8c1e5171f750f1432dfc8bb79a0b1f",
-      "cycle1Hash": "eddd440bc10db43c09dd76be5033cd0f665fe81e78c89163812ec48acc1d5a2d",
-      "cycle2Hash": "eddd440bc10db43c09dd76be5033cd0f665fe81e78c89163812ec48acc1d5a2d",
-      "cycle3Hash": "eddd440bc10db43c09dd76be5033cd0f665fe81e78c89163812ec48acc1d5a2d",
-      "changedOnFirstCycle": true,
-      "idempotentAfterFirstCycle": true,
-      "changedRegions": [
-        "body"
-      ],
-      "signals": [
-        "body-changed"
-      ]
+      "finalHash": "6f1fa2b0279d360e2816990e603485db1c8c1e5171f750f1432dfc8bb79a0b1f",
+      "compatibility": "partially-editable",
+      "diagnostics": [],
+      "exact": true,
+      "idempotent": true,
+      "envelopePreserved": true,
+      "bodyPreserved": true
     },
     {
       "path": "src/database/content/lessons/leccion-metodo-contradiccion.mdx",
-      "classification": "unknown",
       "originalHash": "0981aa1150705f7f565048854dd68c3b31cef148be2c51067bba13fb89bc7b66",
-      "cycle1Hash": "b1a8eeeb292f7a0f8d9148f969c40f134b4b9210a41e71b0761c1a90a1f66711",
-      "cycle2Hash": "b1a8eeeb292f7a0f8d9148f969c40f134b4b9210a41e71b0761c1a90a1f66711",
-      "cycle3Hash": "b1a8eeeb292f7a0f8d9148f969c40f134b4b9210a41e71b0761c1a90a1f66711",
-      "changedOnFirstCycle": true,
-      "idempotentAfterFirstCycle": true,
-      "changedRegions": [
-        "body"
-      ],
-      "signals": [
-        "body-changed"
-      ]
+      "finalHash": "0981aa1150705f7f565048854dd68c3b31cef148be2c51067bba13fb89bc7b66",
+      "compatibility": "partially-editable",
+      "diagnostics": [],
+      "exact": true,
+      "idempotent": true,
+      "envelopePreserved": true,
+      "bodyPreserved": true
     },
     {
       "path": "src/database/content/lessons/leccion-metodo-contraposicion.mdx",
-      "classification": "unknown",
       "originalHash": "75c20999289729b204ddc522a92da3ffc20b43691ff0625fecb5158457ec3e49",
-      "cycle1Hash": "b0156989878c0579330266ad0de508accbfde4df9d768ca5f9c6abf00189e989",
-      "cycle2Hash": "b0156989878c0579330266ad0de508accbfde4df9d768ca5f9c6abf00189e989",
-      "cycle3Hash": "b0156989878c0579330266ad0de508accbfde4df9d768ca5f9c6abf00189e989",
-      "changedOnFirstCycle": true,
-      "idempotentAfterFirstCycle": true,
-      "changedRegions": [
-        "body"
-      ],
-      "signals": [
-        "body-changed"
-      ]
+      "finalHash": "75c20999289729b204ddc522a92da3ffc20b43691ff0625fecb5158457ec3e49",
+      "compatibility": "partially-editable",
+      "diagnostics": [],
+      "exact": true,
+      "idempotent": true,
+      "envelopePreserved": true,
+      "bodyPreserved": true
     },
     {
       "path": "src/database/content/lessons/leccion-metodo-directo.mdx",
-      "classification": "unknown",
       "originalHash": "c00569218a6ed500b248ab2cf2f98082443ce25de7e88b8be568ef89ba8c89fb",
-      "cycle1Hash": "b5e44cfc8ebade687c05812923a5dd2d145316e1f6def171cfd942770db76e18",
-      "cycle2Hash": "b5e44cfc8ebade687c05812923a5dd2d145316e1f6def171cfd942770db76e18",
-      "cycle3Hash": "b5e44cfc8ebade687c05812923a5dd2d145316e1f6def171cfd942770db76e18",
-      "changedOnFirstCycle": true,
-      "idempotentAfterFirstCycle": true,
-      "changedRegions": [
-        "body"
-      ],
-      "signals": [
-        "body-changed"
-      ]
+      "finalHash": "c00569218a6ed500b248ab2cf2f98082443ce25de7e88b8be568ef89ba8c89fb",
+      "compatibility": "partially-editable",
+      "diagnostics": [],
+      "exact": true,
+      "idempotent": true,
+      "envelopePreserved": true,
+      "bodyPreserved": true
     },
     {
       "path": "src/database/content/lessons/leccion-metodo-exhaustivo.mdx",
-      "classification": "unknown",
       "originalHash": "c4ae013637dc783fe5b1c44d30676b6931a5e5cdffb0ed1a46e9157ad0f64312",
-      "cycle1Hash": "9095e2e8413c7b340f435f432f89002e383347b034b204b9d3bf0f72e10b92ec",
-      "cycle2Hash": "9095e2e8413c7b340f435f432f89002e383347b034b204b9d3bf0f72e10b92ec",
-      "cycle3Hash": "9095e2e8413c7b340f435f432f89002e383347b034b204b9d3bf0f72e10b92ec",
-      "changedOnFirstCycle": true,
-      "idempotentAfterFirstCycle": true,
-      "changedRegions": [
-        "body"
-      ],
-      "signals": [
-        "body-changed"
-      ]
+      "finalHash": "c4ae013637dc783fe5b1c44d30676b6931a5e5cdffb0ed1a46e9157ad0f64312",
+      "compatibility": "partially-editable",
+      "diagnostics": [],
+      "exact": true,
+      "idempotent": true,
+      "envelopePreserved": true,
+      "bodyPreserved": true
     },
     {
       "path": "src/database/content/lessons/leccion-metodo-geometrico.mdx",
-      "classification": "unknown",
       "originalHash": "06e8c9c0b7b26f92de5b35caa4370799cbb1fc1fb34ed976f779b341fab29c4b",
-      "cycle1Hash": "9a0eaab919d52017d1e02fe23d1f17e364ab6229ebf3902a417be480276d89dc",
-      "cycle2Hash": "9a0eaab919d52017d1e02fe23d1f17e364ab6229ebf3902a417be480276d89dc",
-      "cycle3Hash": "9a0eaab919d52017d1e02fe23d1f17e364ab6229ebf3902a417be480276d89dc",
-      "changedOnFirstCycle": true,
-      "idempotentAfterFirstCycle": true,
-      "changedRegions": [
-        "body"
-      ],
-      "signals": [
-        "body-changed"
-      ]
+      "finalHash": "06e8c9c0b7b26f92de5b35caa4370799cbb1fc1fb34ed976f779b341fab29c4b",
+      "compatibility": "partially-editable",
+      "diagnostics": [],
+      "exact": true,
+      "idempotent": true,
+      "envelopePreserved": true,
+      "bodyPreserved": true
     },
     {
       "path": "src/database/content/lessons/leccion-metodo-induccion.mdx",
-      "classification": "unknown",
       "originalHash": "a37ad9171b6bb4bdcd59da16da9f122f8ffef1fba5a861c5f8f16ac5e4c2821b",
-      "cycle1Hash": "390e46201a2c9b8cc58d09e055a330d7f3789d3081fdaaeb234b8ee3bff7879a",
-      "cycle2Hash": "390e46201a2c9b8cc58d09e055a330d7f3789d3081fdaaeb234b8ee3bff7879a",
-      "cycle3Hash": "390e46201a2c9b8cc58d09e055a330d7f3789d3081fdaaeb234b8ee3bff7879a",
-      "changedOnFirstCycle": true,
-      "idempotentAfterFirstCycle": true,
-      "changedRegions": [
-        "body"
-      ],
-      "signals": [
-        "body-changed"
-      ]
+      "finalHash": "a37ad9171b6bb4bdcd59da16da9f122f8ffef1fba5a861c5f8f16ac5e4c2821b",
+      "compatibility": "partially-editable",
+      "diagnostics": [],
+      "exact": true,
+      "idempotent": true,
+      "envelopePreserved": true,
+      "bodyPreserved": true
     },
     {
       "path": "src/database/content/mathematicians/arquimedes.mdx",
-      "classification": "exact",
       "originalHash": "69c1a986c3870e77f2c5f99f46d88ac80e09eca24eb50c9892121de073819295",
-      "cycle1Hash": "69c1a986c3870e77f2c5f99f46d88ac80e09eca24eb50c9892121de073819295",
-      "cycle2Hash": "69c1a986c3870e77f2c5f99f46d88ac80e09eca24eb50c9892121de073819295",
-      "cycle3Hash": "69c1a986c3870e77f2c5f99f46d88ac80e09eca24eb50c9892121de073819295",
-      "changedOnFirstCycle": false,
-      "idempotentAfterFirstCycle": true,
-      "changedRegions": [],
-      "signals": []
+      "finalHash": "69c1a986c3870e77f2c5f99f46d88ac80e09eca24eb50c9892121de073819295",
+      "compatibility": "partially-editable",
+      "diagnostics": [],
+      "exact": true,
+      "idempotent": true,
+      "envelopePreserved": true,
+      "bodyPreserved": true
     },
     {
       "path": "src/database/content/mathematicians/bolyai.mdx",
-      "classification": "exact",
       "originalHash": "3c5291f687a79f4ac7998ae123884a4a78a2e742745fded662b49117d35897dc",
-      "cycle1Hash": "3c5291f687a79f4ac7998ae123884a4a78a2e742745fded662b49117d35897dc",
-      "cycle2Hash": "3c5291f687a79f4ac7998ae123884a4a78a2e742745fded662b49117d35897dc",
-      "cycle3Hash": "3c5291f687a79f4ac7998ae123884a4a78a2e742745fded662b49117d35897dc",
-      "changedOnFirstCycle": false,
-      "idempotentAfterFirstCycle": true,
-      "changedRegions": [],
-      "signals": []
+      "finalHash": "3c5291f687a79f4ac7998ae123884a4a78a2e742745fded662b49117d35897dc",
+      "compatibility": "partially-editable",
+      "diagnostics": [],
+      "exact": true,
+      "idempotent": true,
+      "envelopePreserved": true,
+      "bodyPreserved": true
     },
     {
       "path": "src/database/content/mathematicians/dedekind.mdx",
-      "classification": "exact",
       "originalHash": "7b5523d207206aa434ee5807256bd1fed12b81f4751a5ce43ff0645626f78a7a",
-      "cycle1Hash": "7b5523d207206aa434ee5807256bd1fed12b81f4751a5ce43ff0645626f78a7a",
-      "cycle2Hash": "7b5523d207206aa434ee5807256bd1fed12b81f4751a5ce43ff0645626f78a7a",
-      "cycle3Hash": "7b5523d207206aa434ee5807256bd1fed12b81f4751a5ce43ff0645626f78a7a",
-      "changedOnFirstCycle": false,
-      "idempotentAfterFirstCycle": true,
-      "changedRegions": [],
-      "signals": []
+      "finalHash": "7b5523d207206aa434ee5807256bd1fed12b81f4751a5ce43ff0645626f78a7a",
+      "compatibility": "partially-editable",
+      "diagnostics": [],
+      "exact": true,
+      "idempotent": true,
+      "envelopePreserved": true,
+      "bodyPreserved": true
     },
     {
       "path": "src/database/content/mathematicians/euclides.mdx",
-      "classification": "unknown",
       "originalHash": "ae856d69ad11d99e7ef056b2c49b9e5cc6a76bf96e6b952cb375a0cd9e56f4d1",
-      "cycle1Hash": "65b57850fde032173ace5230dd5bf55d3d3bd602cd4af45a5b5842fc83a2b397",
-      "cycle2Hash": "65b57850fde032173ace5230dd5bf55d3d3bd602cd4af45a5b5842fc83a2b397",
-      "cycle3Hash": "65b57850fde032173ace5230dd5bf55d3d3bd602cd4af45a5b5842fc83a2b397",
-      "changedOnFirstCycle": true,
-      "idempotentAfterFirstCycle": true,
-      "changedRegions": [
-        "unknown"
-      ],
-      "signals": []
+      "finalHash": "ae856d69ad11d99e7ef056b2c49b9e5cc6a76bf96e6b952cb375a0cd9e56f4d1",
+      "compatibility": "partially-editable",
+      "diagnostics": [],
+      "exact": true,
+      "idempotent": true,
+      "envelopePreserved": true,
+      "bodyPreserved": true
     },
     {
       "path": "src/database/content/mathematicians/hilbert.mdx",
-      "classification": "exact",
       "originalHash": "7dbe5cdc8365b26fda8de9f56752474b8941d458eac3f9c1d43ec7ac931e87c3",
-      "cycle1Hash": "7dbe5cdc8365b26fda8de9f56752474b8941d458eac3f9c1d43ec7ac931e87c3",
-      "cycle2Hash": "7dbe5cdc8365b26fda8de9f56752474b8941d458eac3f9c1d43ec7ac931e87c3",
-      "cycle3Hash": "7dbe5cdc8365b26fda8de9f56752474b8941d458eac3f9c1d43ec7ac931e87c3",
-      "changedOnFirstCycle": false,
-      "idempotentAfterFirstCycle": true,
-      "changedRegions": [],
-      "signals": []
+      "finalHash": "7dbe5cdc8365b26fda8de9f56752474b8941d458eac3f9c1d43ec7ac931e87c3",
+      "compatibility": "partially-editable",
+      "diagnostics": [],
+      "exact": true,
+      "idempotent": true,
+      "envelopePreserved": true,
+      "bodyPreserved": true
     },
     {
       "path": "src/database/content/mathematicians/lobachevski.mdx",
-      "classification": "exact",
       "originalHash": "ae37be31a978ea007225ab0a89f8281dd1ed40a966e04261d592c83c9f5d2240",
-      "cycle1Hash": "ae37be31a978ea007225ab0a89f8281dd1ed40a966e04261d592c83c9f5d2240",
-      "cycle2Hash": "ae37be31a978ea007225ab0a89f8281dd1ed40a966e04261d592c83c9f5d2240",
-      "cycle3Hash": "ae37be31a978ea007225ab0a89f8281dd1ed40a966e04261d592c83c9f5d2240",
-      "changedOnFirstCycle": false,
-      "idempotentAfterFirstCycle": true,
-      "changedRegions": [],
-      "signals": []
+      "finalHash": "ae37be31a978ea007225ab0a89f8281dd1ed40a966e04261d592c83c9f5d2240",
+      "compatibility": "partially-editable",
+      "diagnostics": [],
+      "exact": true,
+      "idempotent": true,
+      "envelopePreserved": true,
+      "bodyPreserved": true
     },
     {
       "path": "src/database/content/mathematicians/pasch.mdx",
-      "classification": "exact",
       "originalHash": "6c8cc56d7c8f88b7b93748fe6e58ac2b1db645422470761f1ddc38cfe286d846",
-      "cycle1Hash": "6c8cc56d7c8f88b7b93748fe6e58ac2b1db645422470761f1ddc38cfe286d846",
-      "cycle2Hash": "6c8cc56d7c8f88b7b93748fe6e58ac2b1db645422470761f1ddc38cfe286d846",
-      "cycle3Hash": "6c8cc56d7c8f88b7b93748fe6e58ac2b1db645422470761f1ddc38cfe286d846",
-      "changedOnFirstCycle": false,
-      "idempotentAfterFirstCycle": true,
-      "changedRegions": [],
-      "signals": []
+      "finalHash": "6c8cc56d7c8f88b7b93748fe6e58ac2b1db645422470761f1ddc38cfe286d846",
+      "compatibility": "partially-editable",
+      "diagnostics": [],
+      "exact": true,
+      "idempotent": true,
+      "envelopePreserved": true,
+      "bodyPreserved": true
     },
     {
       "path": "src/database/content/mathematicians/pitagoras.mdx",
-      "classification": "unknown",
       "originalHash": "7a28cdc2a61f0c0acfbaf9f9dab6ea7c14c5237826c3837a988bdc7b383580f1",
-      "cycle1Hash": "1b1ddcfa2648d6d1459b4f48199be43bd7d485e86dc65509f1caaa81f06515f9",
-      "cycle2Hash": "1b1ddcfa2648d6d1459b4f48199be43bd7d485e86dc65509f1caaa81f06515f9",
-      "cycle3Hash": "1b1ddcfa2648d6d1459b4f48199be43bd7d485e86dc65509f1caaa81f06515f9",
-      "changedOnFirstCycle": true,
-      "idempotentAfterFirstCycle": true,
-      "changedRegions": [
-        "unknown"
-      ],
-      "signals": []
+      "finalHash": "7a28cdc2a61f0c0acfbaf9f9dab6ea7c14c5237826c3837a988bdc7b383580f1",
+      "compatibility": "partially-editable",
+      "diagnostics": [],
+      "exact": true,
+      "idempotent": true,
+      "envelopePreserved": true,
+      "bodyPreserved": true
     },
     {
       "path": "src/database/content/mathematicians/tales.mdx",
-      "classification": "unknown",
       "originalHash": "e97ae4f86aba29ee31d58e20899e6eeeda224ce8ce40c64c8931f7e1f9767df0",
-      "cycle1Hash": "baca1e13be17e2d6d6c06d7275203dba075b477163ae0bac823ed1e0932dba87",
-      "cycle2Hash": "baca1e13be17e2d6d6c06d7275203dba075b477163ae0bac823ed1e0932dba87",
-      "cycle3Hash": "baca1e13be17e2d6d6c06d7275203dba075b477163ae0bac823ed1e0932dba87",
-      "changedOnFirstCycle": true,
-      "idempotentAfterFirstCycle": true,
-      "changedRegions": [
-        "unknown"
-      ],
-      "signals": []
+      "finalHash": "e97ae4f86aba29ee31d58e20899e6eeeda224ce8ce40c64c8931f7e1f9767df0",
+      "compatibility": "partially-editable",
+      "diagnostics": [],
+      "exact": true,
+      "idempotent": true,
+      "envelopePreserved": true,
+      "bodyPreserved": true
     },
     {
       "path": "src/database/content/models/modelo-cartesiano.mdx",
-      "classification": "unknown",
       "originalHash": "47941d14635dbabd537f496548a0d9070e0a84852b77b2b3eef993914000c3d7",
-      "cycle1Hash": "57ed1327d62adb2288325914182d09fe65c9e4aca0f527c4ed3d672471b807ea",
-      "cycle2Hash": "57ed1327d62adb2288325914182d09fe65c9e4aca0f527c4ed3d672471b807ea",
-      "cycle3Hash": "57ed1327d62adb2288325914182d09fe65c9e4aca0f527c4ed3d672471b807ea",
-      "changedOnFirstCycle": true,
-      "idempotentAfterFirstCycle": true,
-      "changedRegions": [
-        "unknown"
-      ],
-      "signals": []
+      "finalHash": "47941d14635dbabd537f496548a0d9070e0a84852b77b2b3eef993914000c3d7",
+      "compatibility": "partially-editable",
+      "diagnostics": [],
+      "exact": true,
+      "idempotent": true,
+      "envelopePreserved": true,
+      "bodyPreserved": true
     },
     {
       "path": "src/database/content/models/modelo-fano.mdx",
-      "classification": "unknown",
       "originalHash": "4fa5daa4b2e222f92233f2f19ab22a3d326f377cae03c7ab72feef52ecf74fd3",
-      "cycle1Hash": "7af7690d63128736df4d02d6b19c7314bfaedd92e63f17c857cfd97e3261b69b",
-      "cycle2Hash": "7af7690d63128736df4d02d6b19c7314bfaedd92e63f17c857cfd97e3261b69b",
-      "cycle3Hash": "7af7690d63128736df4d02d6b19c7314bfaedd92e63f17c857cfd97e3261b69b",
-      "changedOnFirstCycle": true,
-      "idempotentAfterFirstCycle": true,
-      "changedRegions": [
-        "body"
-      ],
-      "signals": [
-        "body-changed"
-      ]
+      "finalHash": "4fa5daa4b2e222f92233f2f19ab22a3d326f377cae03c7ab72feef52ecf74fd3",
+      "compatibility": "partially-editable",
+      "diagnostics": [],
+      "exact": true,
+      "idempotent": true,
+      "envelopePreserved": true,
+      "bodyPreserved": true
     },
     {
       "path": "src/database/content/models/modelo-poincare.mdx",
-      "classification": "unknown",
       "originalHash": "34d418c77e6878d66eea13532b6846847a4333e5da8c2d0c3e9a17d285570e2a",
-      "cycle1Hash": "5c66099304c28fc7bedeb1a96fc4a0b59c38266944eaba05dae5e053e62a9ba3",
-      "cycle2Hash": "5c66099304c28fc7bedeb1a96fc4a0b59c38266944eaba05dae5e053e62a9ba3",
-      "cycle3Hash": "5c66099304c28fc7bedeb1a96fc4a0b59c38266944eaba05dae5e053e62a9ba3",
-      "changedOnFirstCycle": true,
-      "idempotentAfterFirstCycle": true,
-      "changedRegions": [
-        "unknown"
-      ],
-      "signals": []
+      "finalHash": "34d418c77e6878d66eea13532b6846847a4333e5da8c2d0c3e9a17d285570e2a",
+      "compatibility": "partially-editable",
+      "diagnostics": [],
+      "exact": true,
+      "idempotent": true,
+      "envelopePreserved": true,
+      "bodyPreserved": true
     },
     {
       "path": "src/database/content/models/modelo-tres-puntos.mdx",
-      "classification": "unknown",
       "originalHash": "c549748be24c46773fd83e0f3c43c43a7606593ecb1dc52caea3f98bbeee0f42",
-      "cycle1Hash": "7a10e3f9ed1fcb81d1d7d644eaf16bdc9347909c4eef294598d0cf966ba0d06c",
-      "cycle2Hash": "7a10e3f9ed1fcb81d1d7d644eaf16bdc9347909c4eef294598d0cf966ba0d06c",
-      "cycle3Hash": "7a10e3f9ed1fcb81d1d7d644eaf16bdc9347909c4eef294598d0cf966ba0d06c",
-      "changedOnFirstCycle": true,
-      "idempotentAfterFirstCycle": true,
-      "changedRegions": [
-        "unknown"
-      ],
-      "signals": []
+      "finalHash": "c549748be24c46773fd83e0f3c43c43a7606593ecb1dc52caea3f98bbeee0f42",
+      "compatibility": "partially-editable",
+      "diagnostics": [],
+      "exact": true,
+      "idempotent": true,
+      "envelopePreserved": true,
+      "bodyPreserved": true
     },
     {
       "path": "src/database/content/plans/plan-de-estudio-camino-teorema-pitagoras.mdx",
-      "classification": "unknown",
       "originalHash": "eafc4af90f7381bb67e0fb02bba4a2e4829fce87eb4ac372637229192adb5e64",
-      "cycle1Hash": "04be3e8dbc9196e94454a8b860997e54b46e17e232136e512395c1bddd2d51c3",
-      "cycle2Hash": "04be3e8dbc9196e94454a8b860997e54b46e17e232136e512395c1bddd2d51c3",
-      "cycle3Hash": "04be3e8dbc9196e94454a8b860997e54b46e17e232136e512395c1bddd2d51c3",
-      "changedOnFirstCycle": true,
-      "idempotentAfterFirstCycle": true,
-      "changedRegions": [
-        "body"
-      ],
-      "signals": [
-        "body-changed"
-      ]
+      "finalHash": "eafc4af90f7381bb67e0fb02bba4a2e4829fce87eb4ac372637229192adb5e64",
+      "compatibility": "partially-editable",
+      "diagnostics": [],
+      "exact": true,
+      "idempotent": true,
+      "envelopePreserved": true,
+      "bodyPreserved": true
     },
     {
       "path": "src/database/content/theorems/corolario-rectas-coincidentes.mdx",
-      "classification": "unknown",
       "originalHash": "b718b0b9c5c97c337865e31e1a6f62698333513d90d6e91edf48d417dc04dffb",
-      "cycle1Hash": "b85ac97c2a0fb30f67492e627d0ec2c468b6113d4cdebb8605eea5f0f0f78985",
-      "cycle2Hash": "b85ac97c2a0fb30f67492e627d0ec2c468b6113d4cdebb8605eea5f0f0f78985",
-      "cycle3Hash": "b85ac97c2a0fb30f67492e627d0ec2c468b6113d4cdebb8605eea5f0f0f78985",
-      "changedOnFirstCycle": true,
-      "idempotentAfterFirstCycle": true,
-      "changedRegions": [
-        "unknown"
-      ],
-      "signals": []
+      "finalHash": "b718b0b9c5c97c337865e31e1a6f62698333513d90d6e91edf48d417dc04dffb",
+      "compatibility": "partially-editable",
+      "diagnostics": [],
+      "exact": true,
+      "idempotent": true,
+      "envelopePreserved": true,
+      "bodyPreserved": true
     },
     {
       "path": "src/database/content/theorems/lema-punto-medio.mdx",
-      "classification": "unknown",
       "originalHash": "ee3ccf9caaf2e1f2f5140280bab62687080d1299010ec6d0e627632ece1668ce",
-      "cycle1Hash": "f8a70e30c7c8871156bdd52d030c0c707e1fbb47cfd15274845f4920fdb2e926",
-      "cycle2Hash": "f8a70e30c7c8871156bdd52d030c0c707e1fbb47cfd15274845f4920fdb2e926",
-      "cycle3Hash": "f8a70e30c7c8871156bdd52d030c0c707e1fbb47cfd15274845f4920fdb2e926",
-      "changedOnFirstCycle": true,
-      "idempotentAfterFirstCycle": true,
-      "changedRegions": [
-        "unknown"
-      ],
-      "signals": []
+      "finalHash": "ee3ccf9caaf2e1f2f5140280bab62687080d1299010ec6d0e627632ece1668ce",
+      "compatibility": "partially-editable",
+      "diagnostics": [],
+      "exact": true,
+      "idempotent": true,
+      "envelopePreserved": true,
+      "bodyPreserved": true
     },
     {
       "path": "src/database/content/theorems/teorema-angulo-externo.mdx",
-      "classification": "unknown",
       "originalHash": "5927bf11d471e8294a52e98f8c716c37d03203e25709e91ce404178464040268",
-      "cycle1Hash": "1f86cebc420c9bf5035d00f769a08eba780f5e7c718585b6211e31f571669947",
-      "cycle2Hash": "1f86cebc420c9bf5035d00f769a08eba780f5e7c718585b6211e31f571669947",
-      "cycle3Hash": "1f86cebc420c9bf5035d00f769a08eba780f5e7c718585b6211e31f571669947",
-      "changedOnFirstCycle": true,
-      "idempotentAfterFirstCycle": true,
-      "changedRegions": [
-        "body"
-      ],
-      "signals": [
-        "body-changed"
-      ]
+      "finalHash": "5927bf11d471e8294a52e98f8c716c37d03203e25709e91ce404178464040268",
+      "compatibility": "partially-editable",
+      "diagnostics": [],
+      "exact": true,
+      "idempotent": true,
+      "envelopePreserved": true,
+      "bodyPreserved": true
     },
     {
       "path": "src/database/content/theorems/teorema-angulos-alternos-internos.mdx",
-      "classification": "unknown",
       "originalHash": "1fb121cf1809da989eea97152d12d745c3077a872b783cc55ffc7b4da0183fa8",
-      "cycle1Hash": "731f5c76ddf0fd7a15f3f75ac0579818fb19e624765292f6de28dc57f4f84aa5",
-      "cycle2Hash": "731f5c76ddf0fd7a15f3f75ac0579818fb19e624765292f6de28dc57f4f84aa5",
-      "cycle3Hash": "731f5c76ddf0fd7a15f3f75ac0579818fb19e624765292f6de28dc57f4f84aa5",
-      "changedOnFirstCycle": true,
-      "idempotentAfterFirstCycle": true,
-      "changedRegions": [
-        "unknown"
-      ],
-      "signals": []
+      "finalHash": "1fb121cf1809da989eea97152d12d745c3077a872b783cc55ffc7b4da0183fa8",
+      "compatibility": "partially-editable",
+      "diagnostics": [],
+      "exact": true,
+      "idempotent": true,
+      "envelopePreserved": true,
+      "bodyPreserved": true
     },
     {
       "path": "src/database/content/theorems/teorema-angulos-opuestos-verticales.mdx",
-      "classification": "unknown",
       "originalHash": "ce295d974a5864af6a49ce59af48d55a30c3d4823389acfebc4cf4c34337f8e5",
-      "cycle1Hash": "a098ae145a12f46426638e8120873c9d393965188c43e8eda90a29d2cff64c9e",
-      "cycle2Hash": "a098ae145a12f46426638e8120873c9d393965188c43e8eda90a29d2cff64c9e",
-      "cycle3Hash": "a098ae145a12f46426638e8120873c9d393965188c43e8eda90a29d2cff64c9e",
-      "changedOnFirstCycle": true,
-      "idempotentAfterFirstCycle": true,
-      "changedRegions": [
-        "unknown"
-      ],
-      "signals": []
+      "finalHash": "ce295d974a5864af6a49ce59af48d55a30c3d4823389acfebc4cf4c34337f8e5",
+      "compatibility": "partially-editable",
+      "diagnostics": [],
+      "exact": true,
+      "idempotent": true,
+      "envelopePreserved": true,
+      "bodyPreserved": true
     },
     {
       "path": "src/database/content/theorems/teorema-area-aditividad.mdx",
-      "classification": "unknown",
       "originalHash": "90ae0fb33295c4418a187f537b0d15664e3aeeed1e661da2258af4a7089b1b9a",
-      "cycle1Hash": "0f53b2a584bdd999057a23156e5d62bdc601c1627f3c98b2fb4b99b97d57ed33",
-      "cycle2Hash": "0f53b2a584bdd999057a23156e5d62bdc601c1627f3c98b2fb4b99b97d57ed33",
-      "cycle3Hash": "0f53b2a584bdd999057a23156e5d62bdc601c1627f3c98b2fb4b99b97d57ed33",
-      "changedOnFirstCycle": true,
-      "idempotentAfterFirstCycle": true,
-      "changedRegions": [
-        "unknown"
-      ],
-      "signals": []
+      "finalHash": "90ae0fb33295c4418a187f537b0d15664e3aeeed1e661da2258af4a7089b1b9a",
+      "compatibility": "partially-editable",
+      "diagnostics": [],
+      "exact": true,
+      "idempotent": true,
+      "envelopePreserved": true,
+      "bodyPreserved": true
     },
     {
       "path": "src/database/content/theorems/teorema-area-invariancia.mdx",
-      "classification": "unknown",
       "originalHash": "28a6d95f8dab25c36a2f2aee779f54896c283838b8ee34bdfff1bc305c84edb0",
-      "cycle1Hash": "15fd060b78eadbe5e43ff6a2bdd1a06c23c09610599353b6df9d748b43cbec2c",
-      "cycle2Hash": "15fd060b78eadbe5e43ff6a2bdd1a06c23c09610599353b6df9d748b43cbec2c",
-      "cycle3Hash": "15fd060b78eadbe5e43ff6a2bdd1a06c23c09610599353b6df9d748b43cbec2c",
-      "changedOnFirstCycle": true,
-      "idempotentAfterFirstCycle": true,
-      "changedRegions": [
-        "unknown"
-      ],
-      "signals": []
+      "finalHash": "28a6d95f8dab25c36a2f2aee779f54896c283838b8ee34bdfff1bc305c84edb0",
+      "compatibility": "partially-editable",
+      "diagnostics": [],
+      "exact": true,
+      "idempotent": true,
+      "envelopePreserved": true,
+      "bodyPreserved": true
     },
     {
       "path": "src/database/content/theorems/teorema-area-rectangulo.mdx",
-      "classification": "unknown",
       "originalHash": "e8afcd07b0e6389dadac8fa1ab0c4ed9871c0bd02c887fa9d37ff3c1a32785b5",
-      "cycle1Hash": "86301f355cbbbfe5bca19fd6444602df9d5f296399db3471b54f60047a8750ce",
-      "cycle2Hash": "86301f355cbbbfe5bca19fd6444602df9d5f296399db3471b54f60047a8750ce",
-      "cycle3Hash": "86301f355cbbbfe5bca19fd6444602df9d5f296399db3471b54f60047a8750ce",
-      "changedOnFirstCycle": true,
-      "idempotentAfterFirstCycle": true,
-      "changedRegions": [
-        "body"
-      ],
-      "signals": [
-        "body-changed"
-      ]
+      "finalHash": "e8afcd07b0e6389dadac8fa1ab0c4ed9871c0bd02c887fa9d37ff3c1a32785b5",
+      "compatibility": "partially-editable",
+      "diagnostics": [],
+      "exact": true,
+      "idempotent": true,
+      "envelopePreserved": true,
+      "bodyPreserved": true
     },
     {
       "path": "src/database/content/theorems/teorema-area-triangulo.mdx",
-      "classification": "unknown",
       "originalHash": "33e9b840485903dc4e399a0e294fbb95b3122c9c4eb4316c949fca27a9ec1ebf",
-      "cycle1Hash": "10c2a85120f5d9a9a9f901cc05fb828133bae26b222ceae177d462ce6caefa33",
-      "cycle2Hash": "10c2a85120f5d9a9a9f901cc05fb828133bae26b222ceae177d462ce6caefa33",
-      "cycle3Hash": "10c2a85120f5d9a9a9f901cc05fb828133bae26b222ceae177d462ce6caefa33",
-      "changedOnFirstCycle": true,
-      "idempotentAfterFirstCycle": true,
-      "changedRegions": [
-        "unknown"
-      ],
-      "signals": []
+      "finalHash": "33e9b840485903dc4e399a0e294fbb95b3122c9c4eb4316c949fca27a9ec1ebf",
+      "compatibility": "partially-editable",
+      "diagnostics": [],
+      "exact": true,
+      "idempotent": true,
+      "envelopePreserved": true,
+      "bodyPreserved": true
     },
     {
       "path": "src/database/content/theorems/teorema-congruencia-aal.mdx",
-      "classification": "unknown",
       "originalHash": "65a21b5c55e2b25e687e03f669b402d9afaabac3608be61e821f6ff51bd89453",
-      "cycle1Hash": "4c5fc7e316d30bfa59b8b3c65c2a96467aba94946c87476b12150b5ab1aa43df",
-      "cycle2Hash": "4c5fc7e316d30bfa59b8b3c65c2a96467aba94946c87476b12150b5ab1aa43df",
-      "cycle3Hash": "4c5fc7e316d30bfa59b8b3c65c2a96467aba94946c87476b12150b5ab1aa43df",
-      "changedOnFirstCycle": true,
-      "idempotentAfterFirstCycle": true,
-      "changedRegions": [
-        "unknown"
-      ],
-      "signals": []
+      "finalHash": "65a21b5c55e2b25e687e03f669b402d9afaabac3608be61e821f6ff51bd89453",
+      "compatibility": "partially-editable",
+      "diagnostics": [],
+      "exact": true,
+      "idempotent": true,
+      "envelopePreserved": true,
+      "bodyPreserved": true
     },
     {
       "path": "src/database/content/theorems/teorema-congruencia-ala.mdx",
-      "classification": "unknown",
       "originalHash": "f63b88959d2987139424c23799c58b1e7a85a63ed31754cf5b39df5f2856547c",
-      "cycle1Hash": "0ecd6ba9645634d27fb1878e35225810e4ac0dd158cc9503566ce55b2ede76dd",
-      "cycle2Hash": "0ecd6ba9645634d27fb1878e35225810e4ac0dd158cc9503566ce55b2ede76dd",
-      "cycle3Hash": "0ecd6ba9645634d27fb1878e35225810e4ac0dd158cc9503566ce55b2ede76dd",
-      "changedOnFirstCycle": true,
-      "idempotentAfterFirstCycle": true,
-      "changedRegions": [
-        "body"
-      ],
-      "signals": [
-        "body-changed"
-      ]
+      "finalHash": "f63b88959d2987139424c23799c58b1e7a85a63ed31754cf5b39df5f2856547c",
+      "compatibility": "partially-editable",
+      "diagnostics": [],
+      "exact": true,
+      "idempotent": true,
+      "envelopePreserved": true,
+      "bodyPreserved": true
     },
     {
       "path": "src/database/content/theorems/teorema-congruencia-lll.mdx",
-      "classification": "unknown",
       "originalHash": "eeb5ba2bc3bc2f1c26317b0db23f1046f03564c193f56567282da6601a0a6c0f",
-      "cycle1Hash": "9fcc860033c2f5c95145d439684634e2fefa69d6ecab5c971c326bddd3797ef2",
-      "cycle2Hash": "9fcc860033c2f5c95145d439684634e2fefa69d6ecab5c971c326bddd3797ef2",
-      "cycle3Hash": "9fcc860033c2f5c95145d439684634e2fefa69d6ecab5c971c326bddd3797ef2",
-      "changedOnFirstCycle": true,
-      "idempotentAfterFirstCycle": true,
-      "changedRegions": [
-        "body"
-      ],
-      "signals": [
-        "body-changed"
-      ]
+      "finalHash": "eeb5ba2bc3bc2f1c26317b0db23f1046f03564c193f56567282da6601a0a6c0f",
+      "compatibility": "partially-editable",
+      "diagnostics": [],
+      "exact": true,
+      "idempotent": true,
+      "envelopePreserved": true,
+      "bodyPreserved": true
     },
     {
       "path": "src/database/content/theorems/teorema-desigualdad-triangular.mdx",
-      "classification": "unknown",
       "originalHash": "e54ca3f84a69dacae7af5c3730a87d82b91be56106bd45f98efa456f8313a530",
-      "cycle1Hash": "67a037febad7948f138429a4f29b827ff908987f3d80900be596b33e4aaaaff6",
-      "cycle2Hash": "67a037febad7948f138429a4f29b827ff908987f3d80900be596b33e4aaaaff6",
-      "cycle3Hash": "67a037febad7948f138429a4f29b827ff908987f3d80900be596b33e4aaaaff6",
-      "changedOnFirstCycle": true,
-      "idempotentAfterFirstCycle": true,
-      "changedRegions": [
-        "unknown"
-      ],
-      "signals": []
+      "finalHash": "e54ca3f84a69dacae7af5c3730a87d82b91be56106bd45f98efa456f8313a530",
+      "compatibility": "partially-editable",
+      "diagnostics": [],
+      "exact": true,
+      "idempotent": true,
+      "envelopePreserved": true,
+      "bodyPreserved": true
     },
     {
       "path": "src/database/content/theorems/teorema-dos-rectas-un-punto.mdx",
-      "classification": "unknown",
       "originalHash": "34935b01c7548c65b5ee860e0326c696aea75e3e8ace685d9346877483f8a80d",
-      "cycle1Hash": "899246464a838d3b8bac57116246869e87f92c22403cbbf14d43532bce9ae4c8",
-      "cycle2Hash": "899246464a838d3b8bac57116246869e87f92c22403cbbf14d43532bce9ae4c8",
-      "cycle3Hash": "899246464a838d3b8bac57116246869e87f92c22403cbbf14d43532bce9ae4c8",
-      "changedOnFirstCycle": true,
-      "idempotentAfterFirstCycle": true,
-      "changedRegions": [
-        "unknown"
-      ],
-      "signals": []
+      "finalHash": "34935b01c7548c65b5ee860e0326c696aea75e3e8ace685d9346877483f8a80d",
+      "compatibility": "partially-editable",
+      "diagnostics": [],
+      "exact": true,
+      "idempotent": true,
+      "envelopePreserved": true,
+      "bodyPreserved": true
     },
     {
       "path": "src/database/content/theorems/teorema-existencia-bisectriz.mdx",
-      "classification": "unknown",
       "originalHash": "e14cd669e05267931bbf115909c03fabcf805e85b1c9bf5eb0e50df3f89d208a",
-      "cycle1Hash": "03f046f165e1fcd8b01baeb734adc0a27820b80078a5b9807877bd27be1e2013",
-      "cycle2Hash": "03f046f165e1fcd8b01baeb734adc0a27820b80078a5b9807877bd27be1e2013",
-      "cycle3Hash": "03f046f165e1fcd8b01baeb734adc0a27820b80078a5b9807877bd27be1e2013",
-      "changedOnFirstCycle": true,
-      "idempotentAfterFirstCycle": true,
-      "changedRegions": [
-        "unknown"
-      ],
-      "signals": []
+      "finalHash": "e14cd669e05267931bbf115909c03fabcf805e85b1c9bf5eb0e50df3f89d208a",
+      "compatibility": "partially-editable",
+      "diagnostics": [],
+      "exact": true,
+      "idempotent": true,
+      "envelopePreserved": true,
+      "bodyPreserved": true
     },
     {
       "path": "src/database/content/theorems/teorema-existencia-perpendicular.mdx",
-      "classification": "unknown",
       "originalHash": "e72dc7de2f2dc4b801d3ca14a626bc679157e69e375972c5d5a307f302bcb2f1",
-      "cycle1Hash": "13c8deca686478f686a4c30bd98249b352d8e1bb6442b894e7e9f4b908de7db3",
-      "cycle2Hash": "13c8deca686478f686a4c30bd98249b352d8e1bb6442b894e7e9f4b908de7db3",
-      "cycle3Hash": "13c8deca686478f686a4c30bd98249b352d8e1bb6442b894e7e9f4b908de7db3",
-      "changedOnFirstCycle": true,
-      "idempotentAfterFirstCycle": true,
-      "changedRegions": [
-        "unknown"
-      ],
-      "signals": []
+      "finalHash": "e72dc7de2f2dc4b801d3ca14a626bc679157e69e375972c5d5a307f302bcb2f1",
+      "compatibility": "partially-editable",
+      "diagnostics": [],
+      "exact": true,
+      "idempotent": true,
+      "envelopePreserved": true,
+      "bodyPreserved": true
     },
     {
       "path": "src/database/content/theorems/teorema-invariancia-triangulacion.mdx",
-      "classification": "unknown",
       "originalHash": "4100862e8820a2d82ae2edd866ff92bc42f3b0b626c0e86798d60402de6410cb",
-      "cycle1Hash": "0a59e377bd65c631f90de48823053b464268e97948ebf7dc9e876758942f2933",
-      "cycle2Hash": "0a59e377bd65c631f90de48823053b464268e97948ebf7dc9e876758942f2933",
-      "cycle3Hash": "0a59e377bd65c631f90de48823053b464268e97948ebf7dc9e876758942f2933",
-      "changedOnFirstCycle": true,
-      "idempotentAfterFirstCycle": true,
-      "changedRegions": [
-        "body"
-      ],
-      "signals": [
-        "body-changed"
-      ]
+      "finalHash": "4100862e8820a2d82ae2edd866ff92bc42f3b0b626c0e86798d60402de6410cb",
+      "compatibility": "partially-editable",
+      "diagnostics": [],
+      "exact": true,
+      "idempotent": true,
+      "envelopePreserved": true,
+      "bodyPreserved": true
     },
     {
       "path": "src/database/content/theorems/teorema-pitagoras.mdx",
-      "classification": "unknown",
       "originalHash": "3e1fc8a8cfd690b0339d28b7cf33b08833c9543b211c8780c5284f3a19868e65",
-      "cycle1Hash": "2d9cd37f4dfe6766848e6ea1a1e520ef41c80acaf32de5137540820e63c3eba7",
-      "cycle2Hash": "2d9cd37f4dfe6766848e6ea1a1e520ef41c80acaf32de5137540820e63c3eba7",
-      "cycle3Hash": "2d9cd37f4dfe6766848e6ea1a1e520ef41c80acaf32de5137540820e63c3eba7",
-      "changedOnFirstCycle": true,
-      "idempotentAfterFirstCycle": true,
-      "changedRegions": [
-        "unknown"
-      ],
-      "signals": []
+      "finalHash": "3e1fc8a8cfd690b0339d28b7cf33b08833c9543b211c8780c5284f3a19868e65",
+      "compatibility": "partially-editable",
+      "diagnostics": [],
+      "exact": true,
+      "idempotent": true,
+      "envelopePreserved": true,
+      "bodyPreserved": true
     },
     {
       "path": "src/database/content/theorems/teorema-punto-medio-perpendicular.mdx",
-      "classification": "unknown",
       "originalHash": "c71f6789b0cf01d517d657aae0dd143fe12cf5b7a7df7e52b5dddd1b7bb15b1d",
-      "cycle1Hash": "bd2ae75bc61128a8091255274830f880bde142bcae9829a79928b77e32548c32",
-      "cycle2Hash": "bd2ae75bc61128a8091255274830f880bde142bcae9829a79928b77e32548c32",
-      "cycle3Hash": "bd2ae75bc61128a8091255274830f880bde142bcae9829a79928b77e32548c32",
-      "changedOnFirstCycle": true,
-      "idempotentAfterFirstCycle": true,
-      "changedRegions": [
-        "unknown"
-      ],
-      "signals": []
+      "finalHash": "c71f6789b0cf01d517d657aae0dd143fe12cf5b7a7df7e52b5dddd1b7bb15b1d",
+      "compatibility": "partially-editable",
+      "diagnostics": [],
+      "exact": true,
+      "idempotent": true,
+      "envelopePreserved": true,
+      "bodyPreserved": true
     },
     {
       "path": "src/database/content/theorems/teorema-reciproco-triangulo-isosceles.mdx",
-      "classification": "unknown",
       "originalHash": "cd6d5f71de48279d5c0ca5b3cc1467eb95829b99ab4a19256e8bb30e254c60db",
-      "cycle1Hash": "abd71bb057864c5460f04101470655051506e5c4333eb58efda6d391679128e2",
-      "cycle2Hash": "abd71bb057864c5460f04101470655051506e5c4333eb58efda6d391679128e2",
-      "cycle3Hash": "abd71bb057864c5460f04101470655051506e5c4333eb58efda6d391679128e2",
-      "changedOnFirstCycle": true,
-      "idempotentAfterFirstCycle": true,
-      "changedRegions": [
-        "unknown"
-      ],
-      "signals": []
+      "finalHash": "cd6d5f71de48279d5c0ca5b3cc1467eb95829b99ab4a19256e8bb30e254c60db",
+      "compatibility": "partially-editable",
+      "diagnostics": [],
+      "exact": true,
+      "idempotent": true,
+      "envelopePreserved": true,
+      "bodyPreserved": true
     },
     {
       "path": "src/database/content/theorems/teorema-suma-angulos-triangulo.mdx",
-      "classification": "unknown",
       "originalHash": "3dc53907242ef7cba6fe5f562f10dc643b2e0503252dee1237d517a8f688d733",
-      "cycle1Hash": "bf08eefd4d2de66ea810a3b71041448ab7c36f3e4461ee3a3d8cdacd473d5699",
-      "cycle2Hash": "bf08eefd4d2de66ea810a3b71041448ab7c36f3e4461ee3a3d8cdacd473d5699",
-      "cycle3Hash": "bf08eefd4d2de66ea810a3b71041448ab7c36f3e4461ee3a3d8cdacd473d5699",
-      "changedOnFirstCycle": true,
-      "idempotentAfterFirstCycle": true,
-      "changedRegions": [
-        "unknown"
-      ],
-      "signals": []
+      "finalHash": "3dc53907242ef7cba6fe5f562f10dc643b2e0503252dee1237d517a8f688d733",
+      "compatibility": "partially-editable",
+      "diagnostics": [],
+      "exact": true,
+      "idempotent": true,
+      "envelopePreserved": true,
+      "bodyPreserved": true
     },
     {
       "path": "src/database/content/theorems/teorema-tales.mdx",
-      "classification": "unknown",
       "originalHash": "b57c03a337d63ca1a66f5c26743191ff4d5cd5f54b24372465787b9ea30b5e89",
-      "cycle1Hash": "64b03803d008a3564d7b456a7d6ec32d1656c49c0631e45b541804cc9c52bbc0",
-      "cycle2Hash": "64b03803d008a3564d7b456a7d6ec32d1656c49c0631e45b541804cc9c52bbc0",
-      "cycle3Hash": "64b03803d008a3564d7b456a7d6ec32d1656c49c0631e45b541804cc9c52bbc0",
-      "changedOnFirstCycle": true,
-      "idempotentAfterFirstCycle": true,
-      "changedRegions": [
-        "unknown"
-      ],
-      "signals": []
+      "finalHash": "b57c03a337d63ca1a66f5c26743191ff4d5cd5f54b24372465787b9ea30b5e89",
+      "compatibility": "partially-editable",
+      "diagnostics": [],
+      "exact": true,
+      "idempotent": true,
+      "envelopePreserved": true,
+      "bodyPreserved": true
     },
     {
       "path": "src/database/content/theorems/teorema-triangulacion-poligono.mdx",
-      "classification": "unknown",
       "originalHash": "59f4766c6d79b4890c42dfca2c1375dd7794b4022408421f6c18a3606b746c30",
-      "cycle1Hash": "2b124fd3b1bb8eb4daea9d88c879ab8387ff4d7ef0ffb02fb1a98133c70caac1",
-      "cycle2Hash": "2b124fd3b1bb8eb4daea9d88c879ab8387ff4d7ef0ffb02fb1a98133c70caac1",
-      "cycle3Hash": "2b124fd3b1bb8eb4daea9d88c879ab8387ff4d7ef0ffb02fb1a98133c70caac1",
-      "changedOnFirstCycle": true,
-      "idempotentAfterFirstCycle": true,
-      "changedRegions": [
-        "body"
-      ],
-      "signals": [
-        "body-changed"
-      ]
+      "finalHash": "59f4766c6d79b4890c42dfca2c1375dd7794b4022408421f6c18a3606b746c30",
+      "compatibility": "partially-editable",
+      "diagnostics": [],
+      "exact": true,
+      "idempotent": true,
+      "envelopePreserved": true,
+      "bodyPreserved": true
     },
     {
       "path": "src/database/content/theorems/teorema-triangulo-isosceles.mdx",
-      "classification": "unknown",
       "originalHash": "2e9d72b6db243172d9a9298aa2a1e6fbbe1ef2deb4b7de195a672044c5626739",
-      "cycle1Hash": "26c6e12acb1ff2b8d691151cc4fcb6d6fcaa00f3b809dfc08badcb51281510d8",
-      "cycle2Hash": "26c6e12acb1ff2b8d691151cc4fcb6d6fcaa00f3b809dfc08badcb51281510d8",
-      "cycle3Hash": "26c6e12acb1ff2b8d691151cc4fcb6d6fcaa00f3b809dfc08badcb51281510d8",
-      "changedOnFirstCycle": true,
-      "idempotentAfterFirstCycle": true,
-      "changedRegions": [
-        "unknown"
-      ],
-      "signals": []
+      "finalHash": "2e9d72b6db243172d9a9298aa2a1e6fbbe1ef2deb4b7de195a672044c5626739",
+      "compatibility": "partially-editable",
+      "diagnostics": [],
+      "exact": true,
+      "idempotent": true,
+      "envelopePreserved": true,
+      "bodyPreserved": true
     },
     {
       "path": "src/database/content/usecases/caso-gps-trilateracion.mdx",
-      "classification": "unknown",
       "originalHash": "9b0f887df7809838e3b525c7b7bac4a664ce52ccd77e942d42ccc0a18251ef90",
-      "cycle1Hash": "91024b62d5fe43e48b4d061265980244434aab85ad7c2a7dce8e04c4c93d620c",
-      "cycle2Hash": "91024b62d5fe43e48b4d061265980244434aab85ad7c2a7dce8e04c4c93d620c",
-      "cycle3Hash": "91024b62d5fe43e48b4d061265980244434aab85ad7c2a7dce8e04c4c93d620c",
-      "changedOnFirstCycle": true,
-      "idempotentAfterFirstCycle": true,
-      "changedRegions": [
-        "body"
-      ],
-      "signals": [
-        "body-changed"
-      ]
+      "finalHash": "9b0f887df7809838e3b525c7b7bac4a664ce52ccd77e942d42ccc0a18251ef90",
+      "compatibility": "partially-editable",
+      "diagnostics": [],
+      "exact": true,
+      "idempotent": true,
+      "envelopePreserved": true,
+      "bodyPreserved": true
     }
   ]
 }
