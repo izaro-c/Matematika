@@ -20,6 +20,13 @@ function response(payload: unknown, status = 200): Response {
 function readResponse(value: string, path = 'content/test.mdx') {
   return response({ path, source: value, sourceHash: 'remote-hash', version: 'v1' });
 }
+function deferred<T>() {
+  let resolve!: (value: T) => void;
+  return { promise: new Promise<T>(yes => { resolve = yes; }), resolve };
+}
+function digest(byte: number): ArrayBuffer {
+  return Uint8Array.from({ length: 32 }, () => byte).buffer;
+}
 
 describe('useEditorCore lossless integration', () => {
   beforeEach(() => vi.stubGlobal('fetch', vi.fn()));
@@ -113,6 +120,48 @@ describe('useEditorCore lossless integration', () => {
     await act(async () => { saved = await result.current.saveCurrentFile(); });
     expect(saved).toBe(false);
     expect(result.current.dirtyState).toBe('dirty');
+  });
+
+  it('binds source and revision before the asynchronous save hash resolves', async () => {
+    const saveHash = deferred<ArrayBuffer>();
+    const newerHash = deferred<ArrayBuffer>();
+    const digestSpy = vi.spyOn(globalThis.crypto.subtle, 'digest')
+      .mockReturnValueOnce(Promise.resolve(digest(1)))
+      .mockReturnValueOnce(saveHash.promise)
+      .mockReturnValueOnce(newerHash.promise);
+    let sentRequest: Record<string, unknown> | undefined;
+    vi.mocked(fetch)
+      .mockResolvedValueOnce(readResponse(source))
+      .mockImplementationOnce(async (_url, init) => {
+        sentRequest = JSON.parse(String(init?.body));
+        return response({
+          path: sentRequest.path,
+          sourceHash: sentRequest.sourceHash,
+          previousVersion: 'v1',
+          version: `sha256:${sentRequest.sourceHash}`,
+          localRevision: sentRequest.localRevision,
+          backupId: 'backup-r1'
+        });
+      });
+    const { result } = renderHook(() => useEditorCore());
+    await act(() => result.current.openFile('content/test.mdx'));
+
+    const revision1 = source.replace('Un cuerpo', 'Revisión uno');
+    act(() => result.current.updateRawBody(revision1));
+    await waitFor(() => expect(result.current.rawBody).toBe(revision1));
+
+    let saving!: Promise<boolean>;
+    act(() => { saving = result.current.saveCurrentFile(); });
+    const revision2 = revision1.replace('Revisión uno', 'Revisión dos');
+    act(() => result.current.updateRawBody(revision2));
+    await act(async () => { saveHash.resolve(digest(2)); await Promise.resolve(); });
+    await act(async () => { await saving; });
+
+    expect(sentRequest).toMatchObject({ source: revision1, localRevision: 1 });
+    expect(result.current.dirtyState).toBe('dirty');
+    expect(result.current.persistenceStatus.kind).not.toBe('saved');
+    newerHash.resolve(digest(3));
+    digestSpy.mockRestore();
   });
 
   it('ignores a late response from the previously opened file', async () => {
