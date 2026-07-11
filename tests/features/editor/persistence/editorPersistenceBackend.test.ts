@@ -127,7 +127,7 @@ describe('EditorPersistenceBackend', () => {
     const service = backend();
     const source = 'draft';
     const saved = await service.saveDraft({ path: relativePath, source, sourceHash: contentHash(source),
-      baseVersion: contentVersion('original'), localRevision: 4 });
+      baseVersion: contentVersion('original'), localRevision: 4, editorSessionId: 'session-a' });
     expect(saved).toMatchObject({ path: relativePath, sourceHash: contentHash(source), baseVersion: contentVersion('original'), localRevision: 4 });
     await expect(service.readDraft(relativePath)).resolves.toMatchObject({ source: 'draft', localRevision: 4 });
     await expect(fs.promises.readFile(file, 'utf8')).resolves.toBe('original');
@@ -143,12 +143,13 @@ describe('EditorPersistenceBackend', () => {
     } });
     const baseVersion = contentVersion('original');
     const oldSave = service.saveDraft({ path: relativePath, source: 'draft-old', sourceHash: contentHash('draft-old'),
-      baseVersion, localRevision: 1, editorSessionId: 'session-a' } as never);
+      baseVersion, localRevision: 1, editorSessionId: 'session-a' });
     await oldArrival;
-    await service.saveDraft({ path: relativePath, source: 'draft-new', sourceHash: contentHash('draft-new'),
-      baseVersion, localRevision: 2, editorSessionId: 'session-a' } as never);
+    const newSave = service.saveDraft({ path: relativePath, source: 'draft-new', sourceHash: contentHash('draft-new'),
+      baseVersion, localRevision: 2, editorSessionId: 'session-a' });
+    await Promise.resolve();
     releaseOld();
-    await oldSave;
+    await Promise.all([oldSave, newSave]);
     await expect(service.readDraft(relativePath)).resolves.toMatchObject({ source: 'draft-new', localRevision: 2 });
   });
 
@@ -162,11 +163,12 @@ describe('EditorPersistenceBackend', () => {
     } });
     const baseVersion = contentVersion('original');
     const oldSave = service.saveDraft({ path: relativePath, source: 'draft-old', sourceHash: contentHash('draft-old'),
-      baseVersion, localRevision: 1, editorSessionId: 'session-a' } as never);
+      baseVersion, localRevision: 1, editorSessionId: 'session-a' });
     await draftArrival;
-    await service.applyContent(applyRequest('applied'));
+    const apply = service.applyContent(applyRequest('applied'));
+    await Promise.resolve();
     releaseDraft();
-    await oldSave;
+    await Promise.all([oldSave, apply]);
     await expect(service.readDraft(relativePath)).rejects.toMatchObject({ status: 404 });
   });
 

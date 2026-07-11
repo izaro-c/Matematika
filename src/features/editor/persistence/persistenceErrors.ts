@@ -6,6 +6,7 @@ export type PersistenceError =
   | { kind: 'not-found'; message: string }
   | { kind: 'server-error'; status: number; message: string }
   | { kind: 'invalid-response'; message: string; payload?: unknown }
+  | { kind: 'stale-draft'; latestRevision: number; editorSessionId: string }
   | { kind: 'aborted' };
 
 export class PersistenceFailure extends Error {

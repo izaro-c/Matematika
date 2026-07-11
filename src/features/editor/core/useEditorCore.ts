@@ -87,6 +87,7 @@ export const useEditorCore = () => {
   const revisionRef = useRef(0);
   const loadControllerRef = useRef<AbortController | undefined>(undefined);
   const saveIdentity = useMemo(() => new LiveSaveIdentity(), []);
+  const editorSessionId = useMemo(() => crypto.randomUUID(), []);
 
   useEffect(() => { persistenceRef.current = persistence; }, [persistence]);
 
@@ -188,9 +189,10 @@ export const useEditorCore = () => {
     dispatch({ type: 'SOURCE_CHANGED', file, source, sourceHash, localRevision: revision });
     if (nextDoc) syncProjection(nextDoc);
     if (DRAFT_AUTOSAVE_ENABLED && persistenceRef.current.version) {
-      coordinator.scheduleDraft({ file, source, sourceHash, localRevision: revision, baseVersion: persistenceRef.current.version });
+      coordinator.scheduleDraft({ file, source, sourceHash, localRevision: revision,
+        baseVersion: persistenceRef.current.version, editorSessionId });
     }
-  }, [coordinator, saveIdentity, syncProjection]);
+  }, [coordinator, editorSessionId, saveIdentity, syncProjection]);
 
   const toggleEditorMode = useCallback(() => {
     if (editorMode === 'visual') { setEditorMode('code'); return; }
