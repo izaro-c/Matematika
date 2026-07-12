@@ -8,6 +8,8 @@ import { Block, createBlockId, parseAttributes } from '../core/parser';
 import type { DiagramSpec, DiagramTargetRegistry } from '../core/editorTypes';
 import type { FileNode } from '../lib/editorContracts';
 import { editorApiClient } from '../persistence';
+import { buildDiffReview, isDiffReviewStale, type DiffReview } from '../ux/diffReview';
+import { buildEditorSafetyPresentation } from '../ux/safetyPresentation';
 
 // Componentes estructurales y paneles
 import { EditorShell } from './EditorShell';
@@ -17,6 +19,9 @@ import { VisualEditorPanel } from './panels/VisualEditorPanel';
 import { CodeEditorPanel } from './panels/CodeEditorPanel';
 import { MetadataPanel } from './panels/MetadataPanel';
 import { DiagramSourcePanel } from './panels/DiagramSourcePanel';
+import { SafetySummary } from './safety/SafetySummary';
+import { DiffReviewPanel } from './diff/DiffReviewPanel';
+import { UnsavedChangesDialog } from './safety/UnsavedChangesDialog';
 
 interface PageDiagramLink {
   componentName: string;
@@ -59,9 +64,14 @@ export const EditorPage: React.FC = () => {
     exports,
     blocks,
     rawBody,
+    baseSource,
+    localRevision,
+    baseVersion,
     saving,
+    dirtyState,
     validation,
     message,
+    persistenceStatus,
     loadFileList,
     openFile,
     toggleEditorMode,
@@ -71,6 +81,7 @@ export const EditorPage: React.FC = () => {
     addBlock,
     moveBlock,
     saveCurrentFile,
+    saveDraftCurrentFile,
     setMetadata,
     setImports,
     setExports,
@@ -87,6 +98,8 @@ export const EditorPage: React.FC = () => {
   const [isSidebarOpen, setIsSidebarOpen] = useState(true);
   const [isInspectorOpen, setIsInspectorOpen] = useState(true);
   const [editingBlockId, setEditingBlockId] = useState<string | null>(null);
+  const [diffReview, setDiffReview] = useState<DiffReview | null>(null);
+  const [pendingFileNavigation, setPendingFileNavigation] = useState<string | null>(null);
 
   // Estado para el enlazador semántico
   const [linkerState, setLinkerState] = useState<{
@@ -199,10 +212,63 @@ export const EditorPage: React.FC = () => {
   };
 
   const handleAddCustomMetadataField = () => {
-    const key = prompt('Introduce el nombre del nuevo campo:');
-    if (key) {
-      setMetadata(prev => ({ ...prev, [key]: '' }));
+    // La metadata visual sigue bloqueada por política lossless; se mantiene sin API nativa genérica.
+  };
+
+  const hasLocalChanges = dirtyState !== 'clean' || rawBody !== baseSource;
+  const canReviewDiff = Boolean(currentFile?.endsWith('.mdx') && rawBody !== baseSource);
+  const canSaveDraft = Boolean(currentFile && hasLocalChanges && baseVersion);
+  const safetyPresentation = useMemo(() => buildEditorSafetyPresentation({
+    currentFile,
+    compatibility,
+    compatibilityReasons,
+    persistenceStatus,
+    validation,
+    editorMode,
+    isDiagramFile,
+  }), [compatibility, compatibilityReasons, currentFile, editorMode, isDiagramFile, persistenceStatus, validation]);
+
+  useEffect(() => {
+    const onBeforeUnload = (event: BeforeUnloadEvent) => {
+      if (!hasLocalChanges) return;
+      event.preventDefault();
+      event.returnValue = '';
+    };
+    window.addEventListener('beforeunload', onBeforeUnload);
+    return () => window.removeEventListener('beforeunload', onBeforeUnload);
+  }, [hasLocalChanges]);
+
+  const openFileSafely = (path: string) => {
+    if (currentFile && currentFile !== path && hasLocalChanges) {
+      setPendingFileNavigation(path);
+      return;
     }
+    openFile(path);
+  };
+
+  const reviewCurrentDiff = () => {
+    if (!currentFile?.endsWith('.mdx')) {
+      void saveCurrentFile();
+      return;
+    }
+    setDiffReview(buildDiffReview({
+      baseSource,
+      candidateSource: rawBody,
+      localRevision,
+      baseVersion,
+    }));
+  };
+
+  const applyReviewedDiff = async () => {
+    if (!diffReview || isDiffReviewStale(diffReview, localRevision, baseVersion) || diffReview.status !== 'reviewable') return;
+    const saved = await saveCurrentFile();
+    if (saved) setDiffReview(null);
+  };
+
+  const continuePendingNavigation = () => {
+    const target = pendingFileNavigation;
+    setPendingFileNavigation(null);
+    if (target) openFile(target, { discardLocalChanges: true });
   };
 
   const diagramTargets: DiagramTargetRegistry = useMemo(() => {
@@ -524,7 +590,7 @@ export const EditorPage: React.FC = () => {
             handleAddCustomMetadataField={handleAddCustomMetadataField}
             validation={validation}
             blocks={blocks}
-            openFile={openFile}
+            openFile={openFileSafely}
             pageDiagramLinks={pageDiagramLinks}
             pageConnectionSummary={pageConnectionSummary}
             setActiveDiagramIndex={setActiveDiagramIndex}
@@ -537,7 +603,7 @@ export const EditorPage: React.FC = () => {
           <DiagramSourcePanel
             currentFile={currentFile}
             diagramLinkedPages={diagramLinkedPages}
-            openFile={openFile}
+            openFile={openFileSafely}
             setActiveDiagramBlockId={setActiveDiagramBlockId}
             setActiveDiagramIndex={setActiveDiagramIndex}
             setDiagramBuilderOpen={setDiagramBuilderOpen}
@@ -560,7 +626,7 @@ export const EditorPage: React.FC = () => {
           editorMode={editorMode}
           toggleEditorMode={toggleEditorMode}
           validation={validation}
-          saveCurrentFile={saveCurrentFile}
+          saveCurrentFile={isDiagramFile ? saveCurrentFile : reviewCurrentDiff}
           saving={saving}
           previewPath={getPreviewPath()}
           setLocation={setLocation}
@@ -574,10 +640,20 @@ export const EditorPage: React.FC = () => {
           <EditorNavigation
             files={files}
             currentFile={currentFile}
-            openFile={openFile}
+            openFile={openFileSafely}
             setIsSidebarOpen={setIsSidebarOpen}
           />
         ) : null
+      }
+      safetySummary={
+        <SafetySummary
+          currentFile={currentFile}
+          presentation={safetyPresentation}
+          onReviewDiff={reviewCurrentDiff}
+          onSaveDraft={() => { void saveDraftCurrentFile(); }}
+          canReviewDiff={canReviewDiff}
+          canSaveDraft={canSaveDraft}
+        />
       }
     >
       {renderContent()}
@@ -609,6 +685,24 @@ export const EditorPage: React.FC = () => {
           setActiveDiagramIndex(null);
         }}
         onConfirm={handleConfirmDiagram}
+      />
+      <DiffReviewPanel
+        review={diffReview}
+        isStale={diffReview ? isDiffReviewStale(diffReview, localRevision, baseVersion) : false}
+        isApplying={saving}
+        onClose={() => setDiffReview(null)}
+        onApply={applyReviewedDiff}
+      />
+      <UnsavedChangesDialog
+        isOpen={pendingFileNavigation !== null}
+        targetLabel={pendingFileNavigation ?? 'otro archivo'}
+        presentation={safetyPresentation}
+        onCancel={() => setPendingFileNavigation(null)}
+        onReviewDiff={reviewCurrentDiff}
+        onSaveDraft={() => { void saveDraftCurrentFile(); }}
+        onDiscardAndContinue={continuePendingNavigation}
+        canReviewDiff={canReviewDiff}
+        canSaveDraft={canSaveDraft}
       />
     </EditorShell>
   );
