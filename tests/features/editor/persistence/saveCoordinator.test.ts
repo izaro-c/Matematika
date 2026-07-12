@@ -1,4 +1,4 @@
-import { describe, expect, it, vi } from 'vitest';
+import { afterEach, describe, expect, it, vi } from 'vitest';
 import { SaveCoordinator, type ContentRepository, type DraftRepository, type EditorDraftSnapshot, type SaveCoordinatorEvent } from '@/features/editor/persistence';
 
 const snapshot = (revision: number): EditorDraftSnapshot => ({ file: { path: 'database/content/a.mdx' }, source: `s${revision}`,
@@ -7,6 +7,10 @@ function deferred<T>() { let resolve!: (value: T) => void; let reject!: (error: 
   return { promise: new Promise<T>((yes, no) => { resolve = yes; reject = no; }), resolve, reject }; }
 
 describe('SaveCoordinator', () => {
+  afterEach(() => {
+    vi.useRealTimers();
+  });
+
   it('debounces and replaces an older scheduled draft', async () => {
     vi.useFakeTimers();
     const save = vi.fn().mockResolvedValue({ draftId: 'd2' });

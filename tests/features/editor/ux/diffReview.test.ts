@@ -15,6 +15,8 @@ const base = [
   '# Título',
   '',
   'Texto inicial.',
+  '',
+  '<Formula>x</Formula>',
 ].join('\n');
 
 describe('safe diff review', () => {
@@ -22,7 +24,7 @@ describe('safe diff review', () => {
     const review = buildDiffReview({
       documentId: 'content/test.mdx',
       baseSource: base,
-      candidateSource: base.replace('Texto inicial.', 'Texto editado.'),
+      candidateSource: base.replace('<Formula>x</Formula>', '<Formula>y</Formula>'),
       localRevision: 1,
       baseVersion: 'sha256:base',
     });
@@ -36,12 +38,12 @@ describe('safe diff review', () => {
     const review = buildDiffReview({
       documentId: 'content/test.mdx',
       baseSource: base,
-      candidateSource: base.replace('id: test', 'id: otro'),
+      candidateSource: base.replace('<Formula>x</Formula>', '<Formula>y</Formula>'),
       localRevision: 2,
       baseVersion: 'sha256:base',
       expectedRanges: [{
         start: base.indexOf('Texto inicial.'),
-        end: base.length,
+        end: base.indexOf('Texto inicial.') + 'Texto inicial.'.length,
         reason: 'Bloque de párrafo editado.',
         operationId: 'op-1',
       }],
@@ -70,14 +72,14 @@ describe('safe diff review', () => {
   });
 
   it('rejects adjacent formatting not covered by the operation range', () => {
-    const start = base.indexOf('inicial');
+    const start = base.indexOf('<Formula>x</Formula>') + '<Formula>'.length;
     const review = buildDiffReview({
       documentId: 'content/test.mdx',
       baseSource: base,
-      candidateSource: base.replace('Texto inicial.', 'Texto editado. '),
+      candidateSource: base.replace('<Formula>x</Formula>', '<Formula>y</Formula> '),
       localRevision: 2,
       baseVersion: 'sha256:base',
-      expectedRanges: [{ start, end: start + 'inicial'.length, reason: 'Texto editado.', operationId: 'op-1' }],
+      expectedRanges: [{ start, end: start + 1, reason: 'Texto editado.', operationId: 'op-1' }],
     });
 
     expect(review.status).toBe('blocked');
