@@ -91,7 +91,7 @@ La compilación de producción con `npm run build` es exitosa. Se ha verificado 
 
 ## I. Estabilidad Declarada
 
-La tabla oficial de estabilidad por subsistema se ha consolidado en [stability.md](file:///home/izaro/Proiektuak/Matematika_Drafts/docs/editor/stability.md). Todos los subsistemas críticos (MDX, persistencia, diff, diagramas, UX segura, E2E y CI) han alcanzado la madurez de `stable`.
+La tabla oficial de estabilidad por subsistema se ha consolidado en `docs/editor/stability.md`. Todos los subsistemas críticos (MDX, persistencia, diff, diagramas, UX segura, E2E y CI) han alcanzado la madurez de `stable` con deuda explícita de cobertura de ramas.
 
 ## J. Auditoría Independiente
 

@@ -10,6 +10,7 @@ export interface EditorValidationIssue {
   area: 'metadata' | 'body' | 'block' | 'diagram' | 'proof' | 'source';
   message: string;
   blockId?: string;
+  sourceRange?: { start: number; end: number };
 }
 
 export interface EditorValidationResult {

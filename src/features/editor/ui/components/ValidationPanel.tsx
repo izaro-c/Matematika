@@ -75,7 +75,7 @@ export const ValidationPanel: React.FC<ValidationPanelProps> = ({ validation, on
                   </span>
                 </div>
                 <p className="mt-1 text-xs leading-snug text-carbon/75">{item.message}</p>
-                {onSelectIssue && (item.blockId || (item as any).sourceRange) && (
+                {onSelectIssue && (item.blockId || item.sourceRange) && (
                   <span className="mt-1 block text-[8px] font-mono text-carbon/40 italic">Haga clic para navegar al origen</span>
                 )}
               </Card>

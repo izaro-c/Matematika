@@ -1,6 +1,7 @@
 import { describe, it, expect } from 'vitest';
 import { generateDiagramSource } from '../../../../src/features/editor/diagrams/source/generator';
-import { createTemplateModel, point, element } from '../../../../src/features/editor/diagrams/model/commands';
+import { createTemplateModel, point, element, slider, step } from '../../../../src/features/editor/diagrams/model/commands';
+import type { VisualDiagramModel } from '../../../../src/features/editor/diagrams/model/types';
 
 describe('Diagram TSX Generator', () => {
   it('should generate source for a template model', () => {
@@ -62,5 +63,68 @@ describe('Diagram TSX Generator', () => {
     if (!result.ok) {
       expect(result.diagnostics.some(d => d.code === 'invalid-reference')).toBe(true);
     }
+  });
+
+  it('generates all supported construction helpers, sliders, gliders and step visibility', () => {
+    const model: VisualDiagramModel = {
+      title: 'Completo',
+      componentId: 'completo',
+      category: 'geogebra',
+      mode: 'simulation',
+      axis: true,
+      grid: true,
+      boundingBox: [-5, 5, 5, -5],
+      points: [
+        point('pA', 'A', -1, 0, false, 'pavo'),
+        point('pB', 'B', 1, 0),
+        point('pC', 'C', 0, 2),
+        point('pD', 'D', 2, 2, false, 'salvia', 'horizontal'),
+        point('pE', 'E', -2, 2, false, 'terracota', 'vertical'),
+        point('pG', 'G', 0, 0, false, 'ocre', 'glider', 'segAB'),
+      ],
+      elements: [
+        element('segAB', 'AB', 'segment', ['pA', 'pB'], 'carbon', true, { dashed: true }),
+        element('lineAB', 'recta AB', 'line', ['pA', 'pB'], 'pavo', false),
+        element('rayAC', 'rayo AC', 'ray', ['pA', 'pC'], 'salvia'),
+        element('polyABC', 'ABC', 'polygon', ['pA', 'pB', 'pC'], 'musgo', false, true),
+        element('circAB', 'cAB', 'circle', ['pA', 'pB'], 'granada'),
+        element('midAB', 'M', 'midpoint', ['pA', 'pB'], 'ocre'),
+        element('footCAB', 'F', 'perpendicularFoot', ['pC', 'pA', 'pB'], 'terracota'),
+        element('extCAB', 'ext', 'baseExtension', ['pC', 'pA', 'pB'], 'pizarra'),
+        element('perpCAB', 'perp', 'perpendicular', ['pC', 'pA', 'pB'], 'pavo', true),
+        element('parCAB', 'par', 'parallel', ['pC', 'pA', 'pB'], 'salvia'),
+        element('bisABC', 'bis', 'angleBisector', ['pA', 'pB', 'pC'], 'musgo'),
+        element('angABC', 'ang', 'angle', ['pA', 'pB', 'pC'], 'granada'),
+        element('rightABC', 'right', 'rightAngle', ['pA', 'pB', 'pC'], 'ocre'),
+        { ...element('txtA', 'texto', 'text', ['pA'], 'carbon'), text: 'Texto' },
+        { ...element('measureG', 'medida', 'measurement', ['pG'], 'pavo'), text: 'm' },
+      ],
+      sliders: [{ ...slider('s1', 'Control', -4, -4, 2, 'granada'), min: 0, max: 4, step: 0.5 }],
+      steps: [step('step1', 'Paso 1', 'Mostrar AB', ['pA', 'pB', 'segAB'])],
+      note: 'Nota',
+    };
+
+    const result = generateDiagramSource(model, 'Completo');
+
+    expect(result.ok).toBe(true);
+    if (!result.ok) return;
+    for (const helper of [
+      'createBaseExtensionToFoot',
+      'createGlider',
+      'createParallelLine',
+      'createPerpendicularFoot',
+      'createPerpendicularLine',
+      'createSlider',
+      'createText',
+      'createRightAngleMarker',
+    ]) {
+      expect(result.source).toContain(helper);
+    }
+    expect(result.source).toContain('axis');
+    expect(result.source).toContain('grid');
+    expect(result.source).toContain('"step1"');
+    expect(result.source).toContain('outsideBaseExtension');
+    expect(result.source).toContain('els["pD"].on');
+    expect(result.source).toContain('els["pE"].on');
   });
 });

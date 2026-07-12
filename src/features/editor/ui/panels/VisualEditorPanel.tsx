@@ -22,7 +22,7 @@ type BlockPreset = {
   label: string;
   type: BlockType;
   content: string;
-  metadata?: Record<string, any>;
+  metadata?: Record<string, unknown>;
   group?: 'general' | 'profile';
 };
 
@@ -107,7 +107,7 @@ function parseMarkdownTable(content: string): string[][] {
 function renderFormattedText(
   text: string,
   blockId: string,
-  onEditLink?: (blockId: string, rawMarkup: string, text: string, attrs: any, tag: string, e: React.MouseEvent) => void
+  onEditLink?: (blockId: string, rawMarkup: string, text: string, attrs: Record<string, unknown>, tag: string, e: React.MouseEvent) => void
 ): React.ReactNode[] | string {
   const parts = parseInlineNodes(text).map((node, index) => {
     const key = `${blockId}-${index}`;
@@ -161,20 +161,20 @@ function renderFormattedText(
 
 interface VisualEditorPanelProps {
   currentFile: string | null;
-  metadata: Record<string, any>;
+  metadata: Record<string, unknown>;
   isReadOnly: boolean;
   canEditVisualMetadata: boolean;
   canMutateVisualStructure: boolean;
   blocks: Block[];
   editingBlockId: string | null;
   setEditingBlockId: (id: string | null) => void;
-  handleMetadataChange: (key: string, value: any) => void;
+  handleMetadataChange: (key: string, value: unknown) => void;
   addBlock: (index: number, type: BlockType) => void;
   moveBlock: (from: number, to: number) => void;
   removeBlock: (id: string) => void;
-  updateBlock: (id: string, content: string, metadata?: Record<string, any>) => void;
+  updateBlock: (id: string, content: string, metadata?: Record<string, unknown>) => void;
   handleTextareaSelect: (e: React.SyntheticEvent<HTMLTextAreaElement>, blockId: string) => void;
-  handleEditLink: (blockId: string, rawMarkup: string, text: string, attrs: any, tag: string, e: React.MouseEvent) => void;
+  handleEditLink: (blockId: string, rawMarkup: string, text: string, attrs: Record<string, unknown>, tag: string, e: React.MouseEvent) => void;
   setActiveDiagramIndex: (index: number | null) => void;
   setActiveDiagramBlockId: (id: string | null) => void;
   setDiagramBuilderOpen: (open: boolean) => void;

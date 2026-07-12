@@ -1,6 +1,6 @@
 import React from 'react';
 import type { Block } from '../../core/parser';
-import type { DiagramTargetRegistry, EditorValidationResult } from '../../core/editorTypes';
+import type { DiagramTargetRegistry, EditorValidationIssue, EditorValidationResult } from '../../core/editorTypes';
 import { MetadataInspector } from '../components/MetadataInspector';
 import { ValidationPanel } from '../components/ValidationPanel';
 
@@ -13,9 +13,9 @@ interface PageDiagramLink {
 }
 
 interface MetadataPanelProps {
-  metadata: Record<string, any>;
+  metadata: Record<string, unknown>;
   canEditVisualMetadata: boolean;
-  handleMetadataChange: (key: string, value: any) => void;
+  handleMetadataChange: (key: string, value: unknown) => void;
   handleRemoveMetadataField: (key: string) => void;
   handleAddCustomMetadataField: (key: string) => void;
   validation: EditorValidationResult;
@@ -30,7 +30,7 @@ interface MetadataPanelProps {
   setActiveDiagramBlockId: (id: string | null) => void;
   setDiagramBuilderOpen: (open: boolean) => void;
   insertInteractiveTargetParagraph: (target: { id: string; label?: string; color?: string }) => void;
-  onSelectIssue?: (issue: any) => void;
+  onSelectIssue?: (issue: EditorValidationIssue) => void;
 }
 
 export const MetadataPanel: React.FC<MetadataPanelProps> = ({

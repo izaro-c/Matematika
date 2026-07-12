@@ -20,6 +20,55 @@ const base = [
 ].join('\n');
 
 describe('safe diff review', () => {
+  it('returns clean review and no approval when sources are identical', () => {
+    const review = buildDiffReview({
+      documentId: 'content/test.mdx',
+      baseSource: base,
+      candidateSource: base,
+      localRevision: 1,
+      baseVersion: 'sha256:base',
+    });
+
+    expect(review.status).toBe('clean');
+    expect(review.hunks).toEqual([]);
+    expect(approveDiffReview(review)).toBeNull();
+  });
+
+  it('allows fully editable documents without operation ranges', () => {
+    const fullyEditable = [
+      '# Título',
+      '',
+      'Texto inicial.',
+    ].join('\n');
+    const review = buildDiffReview({
+      documentId: 'content/test.mdx',
+      baseSource: fullyEditable,
+      candidateSource: fullyEditable.replace('inicial', 'editado'),
+      localRevision: 1,
+      baseVersion: 'sha256:base',
+    });
+
+    expect(review.status).toBe('reviewable');
+    expect(review.hunks[0]).toMatchObject({
+      classification: 'expected',
+      expected: true,
+    });
+  });
+
+  it('blocks invalid candidate source before classifying hunks', () => {
+    const review = buildDiffReview({
+      documentId: 'content/test.mdx',
+      baseSource: base,
+      candidateSource: 'Texto { un syntax error here } y cierre.',
+      localRevision: 1,
+      baseVersion: 'sha256:base',
+    });
+
+    expect(review.status).toBe('blocked');
+    expect(review.changes[0]).toMatchObject({ id: 'blocking-parse', classification: 'blocking' });
+    expect(review.hunks[0]?.candidateText).toContain('syntax error');
+  });
+
   it('blocks an editable-block change when no operation range exists', () => {
     const review = buildDiffReview({
       documentId: 'content/test.mdx',
@@ -231,5 +280,6 @@ describe('safe diff review', () => {
 
     expect(isDiffReviewStale(review, 2, 'sha256:base')).toBe(true);
     expect(isDiffReviewStale(review, 1, 'sha256:base')).toBe(false);
+    expect(isDiffReviewStale(review, 1, 'sha256:other')).toBe(true);
   });
 });

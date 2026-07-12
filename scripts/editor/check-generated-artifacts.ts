@@ -20,35 +20,41 @@ const commands: GateCommand[] = [
   { label: 'content index', command: 'npm', args: ['run', 'generate-index'] },
   { label: 'content coverage', command: 'npm', args: ['run', 'content:coverage'] },
   { label: 'diagram usage index', command: 'npm', args: ['run', 'diagram-usages:index'] },
+  { label: 'Lean graph and proof blocks', command: 'npm', args: ['run', 'lean:graph'] },
   { label: 'AI indexes', command: 'npm', args: ['run', 'ai:index'] },
   { label: 'AI debt report', command: 'npm', args: ['run', 'ai:debt'] },
 ];
+
+let failures = 0;
 
 function run(command: GateCommand): void {
   console.log(`[generated] ${command.label}: ${command.command} ${command.args.join(' ')}`);
   const result = spawnSync(command.command, command.args, { stdio: 'inherit' });
   if (result.status !== 0) {
-    process.exit(result.status ?? 1);
+    failures += 1;
+    process.exitCode = result.status ?? 1;
   }
 }
 
-for (const command of commands) run(command);
+for (const command of commands) {
+  run(command);
+  if (failures > 0) break;
+}
 
+// eslint-disable-next-line sonarjs/no-os-command-from-path -- fixed Git executable and static arguments for the generated-artifact gate.
 const diff = spawnSync('git', ['diff', '--name-only', '--', ...generatedPaths], {
   encoding: 'utf8',
 });
 
 if (diff.status !== 0) {
   process.stderr.write(diff.stderr);
-  process.exit(diff.status ?? 1);
-}
-
-const changed = diff.stdout.trim().split('\n').filter(Boolean);
-if (changed.length > 0) {
+  process.exitCode = diff.status ?? 1;
+} else if (failures === 0 && diff.stdout.trim().length > 0) {
+  const changed = diff.stdout.trim().split('\n').filter(Boolean);
   console.error('[generated] Generated artifacts are out of date:');
   for (const file of changed) console.error(`- ${file}`);
   console.error('[generated] Regenerate with the official commands, review the diff, and commit the artifacts.');
-  process.exit(1);
+  process.exitCode = 1;
+} else if (failures === 0) {
+  console.log('[generated] All checked generated artifacts are up to date.');
 }
-
-console.log('[generated] All checked generated artifacts are up to date.');

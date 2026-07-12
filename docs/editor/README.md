@@ -4,7 +4,7 @@ Este documento es la referencia operativa para mantener el editor MDX y el workb
 
 ## Estado operativo
 
-La estabilización de la épica del editor está completada y validada en su totalidad (Fases 0-8). El editor cuenta con soporte transaccional completo, control de compatibilidad, diff interactivo, y suite de pruebas unitarias, de integración y E2E que previenen regresiones críticas en CI de forma permanente.
+La estabilización del editor cuenta con soporte transaccional, control de compatibilidad, diff interactivo y una suite unitaria, de integración y E2E real. La rama final refuerza gates y documentación; la cobertura de ramas en generador/diff queda como deuda conocida aunque los umbrales activos por archivo son bloqueantes.
 
 ## Arquitectura
 
@@ -34,6 +34,7 @@ El guardado visual está habilitado dinámicamente según el nivel de compatibil
 - El `source` completo es la autoridad.
 - El guardado manual envía el source exacto con `expectedVersion`, hash y revisión local.
 - Un borrador vive fuera del corpus en `.matematika/editor/drafts/` y no limpia `dirty`.
+- `DRAFT_AUTOSAVE_ENABLED` está en `false`: no hay autosave automático. El botón de borrador guarda un draft explícito, no el archivo real.
 - Aplicar contenido crea backup, escribe temporal y renombra atómicamente.
 - Los conflictos `409` preservan el source local y se notifican al usuario para resolución.
 - Cambiar de archivo con cambios pendientes queda bloqueado mostrando un diálogo de confirmación.
@@ -50,8 +51,8 @@ El workbench usa autoridad explícita de modelo o fuente. Un cambio visual desde
 | `npm run editor:roundtrip:check` | Compara el corpus MDX contra la baseline lossless. | No. |
 | `npm run editor:test:unit` | Tests unitarios de documento, estado, diagramas y validación. | No. |
 | `npm run editor:test:integration` | Persistencia, hook principal y round-trip integrado. | Solo temporales bajo `/tmp`. |
-| `npm run editor:test:coverage` | Cobertura del editor y validación de umbrales por riesgo. | `coverage/`. |
-| `npm run editor:test:e2e` | Ejecuta la suite completa de 14 flujos Puppeteer en CI/local. | No. |
+| `npm run editor:test:coverage` | Cobertura del editor y umbrales por archivo crítico (`reducer`, hook, repo, parser, generador, diff y guardas). | `coverage/`. |
+| `npm run editor:test:e2e` | Ejecuta 14 flujos Puppeteer contra Vite real y falla si el precheck no detecta flujos reales. | No. |
 | `npm run editor:lint` | ESLint acotado al editor con límite estricto de warnings. | No. |
 | `npm run editor:architecture` | Dependency Cruiser más chequeo de seguridad de patrones. | No. |
 | `npm run editor:full-check` | Ejecución local rápida de todos los gates (sin E2E). | Sí (si generados cambian). |

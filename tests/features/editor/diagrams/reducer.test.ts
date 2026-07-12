@@ -91,6 +91,97 @@ describe('Diagram Reducer', () => {
     expect(resolved.currentSource).toBe('resolved_code');
   });
 
+  it('covers source edits, parser results, save lifecycle and UI selections', () => {
+    const model = createTemplateModel('circunferencia', 'Lifecycle', 'definicion');
+    const loadedState = diagramReducer(initialDiagramState, {
+      type: 'LOAD_DIAGRAM',
+      filePath: 'src/shared/diagrams/Lifecycle.tsx',
+      componentName: 'Lifecycle',
+      source: 'source',
+      model,
+      expectedVersion: 'v1',
+    });
+
+    expect(diagramReducer(loadedState, { type: 'SOURCE_EDIT', source: 'source changed' }).status)
+      .toBe('source-authoritative');
+    expect(diagramReducer({ ...loadedState, status: 'visual-authoritative' }, { type: 'SOURCE_EDIT', source: 'source changed' }).status)
+      .toBe('diverged');
+    expect(diagramReducer({ ...loadedState, status: 'invalid-source' }, { type: 'SOURCE_EDIT', source: 'source changed' }).status)
+      .toBe('source-authoritative');
+
+    const selected = diagramReducer(loadedState, { type: 'SELECT_ELEMENT', id: 'pB' });
+    expect(selected.selectedId).toBe('pB');
+    expect(diagramReducer(selected, { type: 'SET_CANVAS_TOOL', tool: 'segment' }).canvasTool).toBe('segment');
+    expect(diagramReducer(selected, { type: 'SET_ACTIVE_STEP', stepId: 'step-1' }).activeStepId).toBe('step-1');
+    expect(diagramReducer(selected, { type: 'SET_STATUS', status: 'saving' }).status).toBe('saving');
+    expect(diagramReducer(selected, { type: 'SET_DIAGNOSTICS', diagnostics: [{ code: 'i', severity: 'info', message: 'info' }] }).diagnostics)
+      .toHaveLength(1);
+
+    const parsed = diagramReducer({ ...loadedState, currentSource: 'source changed' }, {
+      type: 'APPLY_PARSED_MODEL',
+      model: { ...model, title: 'Parsed' },
+      diagnostics: [{ code: 'w', severity: 'warning', message: 'warning' }],
+    });
+    expect(parsed.status).toBe('source-authoritative');
+    expect(parsed.currentModel?.title).toBe('Parsed');
+
+    const parsedSynced = diagramReducer(loadedState, {
+      type: 'APPLY_PARSED_MODEL',
+      model,
+      diagnostics: [],
+    });
+    expect(parsedSynced.status).toBe('synced');
+
+    expect(diagramReducer(loadedState, {
+      type: 'PARSE_UNSUPPORTED',
+      diagnostics: [{ code: 'u', severity: 'warning', message: 'unsupported' }],
+    }).status).toBe('source-authoritative');
+    expect(diagramReducer(loadedState, {
+      type: 'PARSE_FAILED',
+      diagnostics: [{ code: 'e', severity: 'error', message: 'invalid' }],
+    }).status).toBe('invalid-source');
+
+    const sourceResolved = diagramReducer({ ...loadedState, diagnostics: [{ code: 's', severity: 'error', message: 'sync', source: 'synchronization' }] }, {
+      type: 'RESOLVE_TO_SOURCE',
+      model,
+    });
+    expect(sourceResolved.status).toBe('source-authoritative');
+    expect(sourceResolved.diagnostics).toEqual([]);
+
+    const visualResolved = diagramReducer({
+      ...loadedState,
+      diagnostics: [
+        { code: 's', severity: 'error', message: 'sync', source: 'synchronization' },
+        { code: 'm', severity: 'warning', message: 'model', source: 'model' },
+      ],
+    }, {
+      type: 'RESOLVE_TO_VISUAL',
+      source: 'visual source',
+    });
+    expect(visualResolved.diagnostics).toEqual([{ code: 'm', severity: 'warning', message: 'model', source: 'model' }]);
+
+    expect(diagramReducer(loadedState, { type: 'SAVE_START' }).status).toBe('saving');
+    const saved = diagramReducer(loadedState, {
+      type: 'SAVE_SUCCESS',
+      source: 'saved',
+      model,
+      expectedVersion: 'v2',
+    });
+    expect(saved.status).toBe('synced');
+    expect(saved.expectedVersion).toBe('v2');
+    expect(diagramReducer({ ...loadedState, parseStatus: 'unsupported' }, {
+      type: 'SAVE_SUCCESS',
+      source: 'manual saved',
+      model: null,
+      expectedVersion: 'v3',
+    }).parseStatus).toBe('unsupported');
+    expect(diagramReducer(loadedState, { type: 'SAVE_FAILURE', error: 'network' }).status)
+      .toBe('visual-authoritative');
+    expect(diagramReducer(loadedState, { type: 'SAVE_FAILURE', error: 'conflict', isConflict: true }).status)
+      .toBe('conflict');
+    expect(diagramReducer(loadedState, { type: 'UNKNOWN' } as never)).toBe(loadedState);
+  });
+
   it('does not treat an invalid TSX source as synced with a default model', () => {
     const originalManualSource = 'export const Broken = () => <MathBoard';
     const state = diagramReducer(initialDiagramState, {

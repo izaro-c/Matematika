@@ -1,10 +1,16 @@
 import { describe, it, expect } from 'vitest';
-import { parseDiagramSourceLocally } from '../../../../src/features/editor/diagrams/source/parser';
+import { afterEach, vi } from 'vitest';
+import { parseDiagramSourceLocally, parseDiagramSourceOnServer } from '../../../../src/features/editor/diagrams/source/parser';
 import { parseDiagramSourceAST } from '../../../../scripts/editor/parseDiagramSourceAST';
 import { generateDiagramSource } from '../../../../src/features/editor/diagrams/source/generator';
 import { createTemplateModel } from '../../../../src/features/editor/diagrams/model/commands';
 
 describe('Diagram TSX Parser (Local & AST)', () => {
+  afterEach(() => {
+    vi.restoreAllMocks();
+    vi.unstubAllGlobals();
+  });
+
   it('should parse local JSON comment block successfully', () => {
     const model = createTemplateModel('circunferencia', 'Test', 'definicion');
     const gen = generateDiagramSource(model, 'Test');
@@ -50,5 +56,40 @@ describe('Diagram TSX Parser (Local & AST)', () => {
     const parsed = parseDiagramSourceAST(brokenSource, 'definicion');
     expect(parsed.status).toBe('invalid');
     expect(parsed.diagnostics.length).toBeGreaterThan(0);
+  });
+
+  it('returns null for missing, incomplete or invalid local model blocks', () => {
+    expect(parseDiagramSourceLocally()).toBeNull();
+    expect(parseDiagramSourceLocally('export const Manual = () => null;')).toBeNull();
+    expect(parseDiagramSourceLocally('/* @matematika-diagram-model\n{"bad":')).toBeNull();
+    expect(parseDiagramSourceLocally('/* @matematika-diagram-model\nnot json\n*/')).toBeNull();
+  });
+
+  it('normalizes server parser failures and aborts', async () => {
+    vi.stubGlobal('fetch', vi.fn()
+      .mockResolvedValueOnce(new Response('nope', { status: 500 }))
+      .mockRejectedValueOnce(new DOMException('cancelled', 'AbortError'))
+      .mockRejectedValueOnce(new Error('offline'))
+      .mockResolvedValueOnce(new Response(JSON.stringify({ status: 'unsupported', diagnostics: [] }), {
+        status: 200,
+        headers: { 'Content-Type': 'application/json' },
+      })));
+
+    await expect(parseDiagramSourceOnServer('bad')).resolves.toMatchObject({
+      status: 'invalid',
+      diagnostics: [{ code: 'server-error' }],
+    });
+    await expect(parseDiagramSourceOnServer('abort')).resolves.toMatchObject({
+      status: 'invalid',
+      diagnostics: [{ code: 'aborted', severity: 'info' }],
+    });
+    await expect(parseDiagramSourceOnServer('network')).resolves.toMatchObject({
+      status: 'invalid',
+      diagnostics: [{ code: 'network-error' }],
+    });
+    await expect(parseDiagramSourceOnServer('manual')).resolves.toMatchObject({
+      status: 'unsupported',
+      diagnostics: [],
+    });
   });
 });

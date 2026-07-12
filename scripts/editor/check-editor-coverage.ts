@@ -21,6 +21,12 @@ interface Area {
   thresholds: Record<MetricName, number>;
 }
 
+interface FileTarget {
+  name: string;
+  pathSuffix: string;
+  thresholds: Partial<Record<MetricName, number>>;
+}
+
 const summaryPath = path.join(process.cwd(), 'coverage/coverage-summary.json');
 
 const areas: Area[] = [
@@ -53,6 +59,49 @@ const areas: Area[] = [
     name: 'Transformaciones de diagramas e índice inverso',
     patterns: [/src\/features\/editor\/diagrams\/model\//, /src\/features\/editor\/diagrams\/source\//, /src\/features\/editor\/diagrams\/references\//],
     thresholds: { lines: 47, branches: 33, functions: 43 },
+  },
+];
+
+const criticalFiles: FileTarget[] = [
+  {
+    name: 'Reducer de diagramas',
+    pathSuffix: 'src/features/editor/diagrams/state/reducer.ts',
+    thresholds: { lines: 95, branches: 90, functions: 90 },
+  },
+  {
+    name: 'Hook/coordinador de diagramas',
+    pathSuffix: 'src/features/editor/diagrams/hooks/useDiagramState.ts',
+    thresholds: { lines: 90, branches: 64, functions: 80 },
+  },
+  {
+    name: 'Repositorio de diagramas',
+    pathSuffix: 'src/features/editor/diagrams/persistence/repository.ts',
+    thresholds: { lines: 90, branches: 90, functions: 90 },
+  },
+  {
+    name: 'Parser de diagramas',
+    pathSuffix: 'src/features/editor/diagrams/source/parser.ts',
+    thresholds: { lines: 90, branches: 90, functions: 90 },
+  },
+  {
+    name: 'Generador de diagramas',
+    pathSuffix: 'src/features/editor/diagrams/source/generator.ts',
+    thresholds: { lines: 90, branches: 80, functions: 90 },
+  },
+  {
+    name: 'Clasificación del diff',
+    pathSuffix: 'src/features/editor/ux/diffReview.ts',
+    thresholds: { lines: 95, branches: 80, functions: 95 },
+  },
+  {
+    name: 'Guardas de guardado del editor',
+    pathSuffix: 'src/features/editor/core/useEditorCore.ts',
+    thresholds: { lines: 89, branches: 75, functions: 80 },
+  },
+  {
+    name: 'Coordinación de guardado',
+    pathSuffix: 'src/features/editor/persistence/saveCoordinator.ts',
+    thresholds: { lines: 95, branches: 80, functions: 90 },
   },
 ];
 
@@ -109,9 +158,28 @@ for (const area of areas) {
   }
 }
 
-if (failures > 0) {
-  console.error(`[coverage] ${failures} risk-based coverage threshold(s) failed.`);
-  process.exit(1);
+for (const target of criticalFiles) {
+  const entry = entries.find(([filePath]) => filePath.endsWith(target.pathSuffix));
+  if (!entry) {
+    console.error(`[coverage] ${target.name}: missing covered file ${target.pathSuffix}.`);
+    failures += 1;
+    continue;
+  }
+
+  const [, coverage] = entry;
+  for (const metric of ['lines', 'branches', 'functions'] as const) {
+    const expected = target.thresholds[metric];
+    if (expected === undefined) continue;
+    const actual = coverage[metric].pct;
+    const status = actual >= expected ? 'PASS' : 'FAIL';
+    console.log(`[coverage] ${status} ${target.name} ${metric}: ${actual}% >= ${expected}%`);
+    if (actual < expected) failures += 1;
+  }
 }
 
-console.log('[coverage] Risk-based editor coverage thresholds passed.');
+if (failures > 0) {
+  console.error(`[coverage] ${failures} risk-based coverage threshold(s) failed.`);
+  process.exitCode = 1;
+} else {
+  console.log('[coverage] Risk-based editor coverage thresholds passed.');
+}

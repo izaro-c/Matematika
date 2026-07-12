@@ -222,4 +222,97 @@ describe('useDiagramState safety policy', () => {
     expect(result.current.state.currentModel?.title).toBe('B');
     expect(result.current.state.status).toBe('synced');
   });
+
+  it('records repository load errors without leaking a previous diagram', async () => {
+    readDiagram.mockRejectedValueOnce(new Error('disk unavailable'));
+    const { result } = renderHook(() => useDiagramState());
+
+    await act(async () => result.current.loadDiagram('src/shared/diagrams/Missing.tsx', 'Missing'));
+
+    expect(result.current.state.status).toBe('visual-authoritative');
+    expect(result.current.state.currentModel).toBeNull();
+    expect(result.current.state.diagnostics.at(-1)).toMatchObject({
+      code: 'save-error',
+      severity: 'error',
+    });
+  });
+
+  it('applies fresh supported parser responses after source edits', async () => {
+    const model = createTemplateModel('circunferencia', 'Parsed', 'definicion');
+    readDiagram.mockResolvedValueOnce({ source: 'original', model, version: 'v1' });
+    vi.mocked(fetch)
+      .mockResolvedValueOnce(parseResponse({
+        status: 'supported',
+        model: { ...model, title: 'Parsed from source' },
+        diagnostics: [{ code: 'supported', severity: 'info', message: 'ok' }],
+      }));
+    const { result } = renderHook(() => useDiagramState());
+
+    await act(async () => result.current.loadDiagram('src/shared/diagrams/Parsed.tsx', 'Parsed'));
+    act(() => result.current.handleSourceEdit('source parsed'));
+    await act(async () => {
+      vi.advanceTimersByTime(600);
+      await Promise.resolve();
+      await Promise.resolve();
+    });
+
+    expect(result.current.state.currentModel?.title).toBe('Parsed from source');
+    expect(result.current.state.status).toBe('source-authoritative');
+
+    expect(fetch).toHaveBeenCalledTimes(1);
+  });
+
+  it('resolves divergence to visual authority and saves successful file revisions', async () => {
+    const model = createTemplateModel('circunferencia', 'Save', 'definicion');
+    readDiagram.mockResolvedValueOnce({ source: 'original', model, version: 'v1' });
+    saveDiagram.mockResolvedValueOnce({ version: 'v2', backupId: 'backup-1' });
+    const { result } = renderHook(() => useDiagramState());
+
+    await act(async () => result.current.loadDiagram('src/shared/diagrams/Save.tsx', 'Save'));
+    act(() => result.current.handleVisualEdit({ ...model, title: 'Changed' }));
+    act(() => result.current.resolveDivergence('visual'));
+
+    let saved = false;
+    await act(async () => {
+      saved = await result.current.saveDiagram();
+    });
+
+    expect(saved).toBe(true);
+    expect(saveDiagram).toHaveBeenCalledWith(
+      'src/shared/diagrams/Save.tsx',
+      expect.stringContaining('Changed'),
+      'v1',
+    );
+    expect(result.current.state.status).toBe('synced');
+    expect(result.current.state.expectedVersion).toBe('v2');
+  });
+
+  it('resolves source authority through parsing and links diagrams to MDX pages', async () => {
+    const model = createTemplateModel('circunferencia', 'Source', 'definicion');
+    readDiagram.mockResolvedValueOnce({ source: 'original', model, version: 'v1' });
+    vi.mocked(fetch).mockResolvedValueOnce(parseResponse({
+      status: 'supported',
+      model: { ...model, title: 'Source parsed' },
+      diagnostics: [],
+    }));
+    updateMdxImports.mockResolvedValueOnce({ success: true, modified: true });
+    const { result } = renderHook(() => useDiagramState());
+
+    await act(async () => result.current.loadDiagram('src/shared/diagrams/Source.tsx', 'Source'));
+    act(() => result.current.handleSourceEdit('source authority'));
+    act(() => result.current.resolveDivergence('source'));
+    await act(async () => {
+      await Promise.resolve();
+      await Promise.resolve();
+    });
+    await act(async () => result.current.linkToMdxPage('database/content/definitions/a.mdx', 'diagram'));
+
+    expect(result.current.state.currentModel?.title).toBe('Source parsed');
+    expect(updateMdxImports).toHaveBeenCalledWith(
+      'database/content/definitions/a.mdx',
+      'Source',
+      'src/shared/diagrams/Source.tsx',
+      'diagram',
+    );
+  });
 });

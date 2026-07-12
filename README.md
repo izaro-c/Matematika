@@ -78,10 +78,10 @@ Matematika aplica un estricto flujo de validación. Las siguientes validaciones 
 - **`npm run editor:roundtrip:check`**: Ejecuta la barrera lossless del corpus MDX.
 - **`npm run editor:test:unit`**: Ejecuta tests unitarios del editor, documento, estado y diagramas.
 - **`npm run editor:test:integration`**: Ejecuta tests de persistencia, hook principal y round-trip integrado.
-- **`npm run editor:test:coverage`**: Ejecuta cobertura del editor con umbrales por riesgo.
-- **`npm run editor:test:e2e`**: Gate bloqueante para la suite E2E crítica de Fase 7; falla mientras no exista `tests/e2e/`.
+- **`npm run editor:test:coverage`**: Ejecuta cobertura del editor con umbrales por riesgo y por archivo crítico.
+- **`npm run editor:test:e2e`**: Ejecuta 14 flujos E2E críticos contra Vite/Puppeteer reales.
 - **`npm run editor:architecture`**: Verifica fronteras arquitectónicas y patrones inseguros del editor.
-- **`npm run editor:release-check`**: Gate completo de cierre del editor. Actualmente no cierra la épica porque la Fase 7/E2E no está presente.
+- **`npm run editor:release-check`**: Gate completo de cierre del editor con tests, cobertura, E2E, grafo y Lean.
 
 > **Política Editorial**: La carga del sistema y de las páginas en sí no falla ni se bloquea completamente si un autor enlaza hacia un artículo que "aún no existe" (ideal para flujo de redacción). El `ContentStore` (`src/entities/content/ContentStore.ts`) registrará warnings o mostrará estados 404 controlados para que la plataforma principal siga siendo navegable mientras se construye nuevo contenido.
 
