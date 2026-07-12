@@ -1,4 +1,20 @@
 import type { DiagramState, DiagramAction, DiagramSyncStatus } from './types';
+import type { VisualDiagramModel } from '../model/types';
+
+const defaultModel: VisualDiagramModel = {
+  title: 'Diagrama',
+  componentId: 'diagrama-interactivo',
+  category: 'Teoremas',
+  mode: 'simulation',
+  axis: false,
+  grid: false,
+  boundingBox: [-5, 5, 5, -5],
+  points: [],
+  elements: [],
+  sliders: [],
+  steps: [],
+  note: '',
+};
 
 export const initialDiagramState: DiagramState = {
   filePath: null,
@@ -16,21 +32,23 @@ export const initialDiagramState: DiagramState = {
 
 export function diagramReducer(state: DiagramState, action: DiagramAction): DiagramState {
   switch (action.type) {
-    case 'LOAD_DIAGRAM':
+    case 'LOAD_DIAGRAM': {
+      const model = action.model || defaultModel;
       return {
         ...state,
         filePath: action.filePath,
         componentName: action.componentName,
         originalSource: action.source,
         currentSource: action.source,
-        originalModel: action.model,
-        currentModel: action.model,
+        originalModel: model,
+        currentModel: model,
         status: 'synced',
         diagnostics: [],
-        selectedId: action.model?.points[0]?.id || '',
+        selectedId: model.points[0]?.id || '',
         activeStepId: '',
         canvasTool: 'select',
       };
+    }
 
     case 'VISUAL_EDIT': {
       let nextStatus: DiagramSyncStatus = state.status;
