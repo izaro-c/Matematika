@@ -1,5 +1,6 @@
 import React from 'react';
 import type { DiagramSyncStatus } from '../state/types';
+import { buildDiagramAuthorityPresentation } from '../../ux/safetyPresentation';
 
 interface DiagramStatusBarProps {
   status: DiagramSyncStatus;
@@ -12,6 +13,7 @@ export const DiagramStatusBar: React.FC<DiagramStatusBarProps> = ({
   isDirty,
   onSave,
 }) => {
+  const presentation = buildDiagramAuthorityPresentation(status, isDirty);
   const getStatusConfig = (s: DiagramSyncStatus) => {
     switch (s) {
       case 'synced':
@@ -34,12 +36,21 @@ export const DiagramStatusBar: React.FC<DiagramStatusBarProps> = ({
   };
 
   const config = getStatusConfig(status);
+  const isSaveBlocked = status === 'saving' || status === 'invalid-source' || status === 'diverged';
 
   return (
-    <div className="flex items-center justify-between border-t border-carbon/15 bg-carbon/5 px-4 py-2 text-xs">
-      <div className="flex items-center gap-2">
+    <div
+      className="flex flex-wrap items-center justify-between gap-3 border-t border-carbon/15 bg-carbon/5 px-4 py-2 text-xs"
+      role={presentation.level === 'error' ? 'alert' : 'status'}
+      aria-live={presentation.level === 'error' ? 'assertive' : 'polite'}
+    >
+      <div className="min-w-0 flex-1">
+        <div className="flex items-center gap-2">
         <span className={`inline-block h-2 w-2 rounded-full ${config.color.split(' ')[0]}`} />
         <span className={`font-bold uppercase tracking-wider text-[10px] ${config.textClass}`}>{config.label}</span>
+          <span className="text-[10px] font-bold uppercase tracking-wider text-carbon/45">{presentation.title}</span>
+        </div>
+        <p className="mt-1 truncate text-[10px] text-carbon/55">{presentation.description}</p>
       </div>
 
       <div className="flex items-center gap-3">
@@ -47,13 +58,15 @@ export const DiagramStatusBar: React.FC<DiagramStatusBarProps> = ({
           <span className="font-mono text-[10px] text-carbon/40 italic">Cambios locales sin guardar</span>
         )}
         <button
+          type="button"
           onClick={onSave}
-          disabled={status === 'saving' || status === 'invalid-source' || status === 'diverged'}
+          disabled={isSaveBlocked}
           className={`rounded px-4 py-1 text-xs font-bold transition-all ${
-            status === 'saving' || status === 'invalid-source' || status === 'diverged'
+            isSaveBlocked
               ? 'bg-carbon/10 text-carbon/35 cursor-not-allowed'
               : 'bg-carbon text-lienzo hover:bg-carbon/80 cursor-pointer'
           }`}
+          title={isSaveBlocked ? presentation.description : 'Guardar el TSX del diagrama'}
         >
           Guardar Diagrama
         </button>
