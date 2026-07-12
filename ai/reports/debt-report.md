@@ -10,15 +10,15 @@
 
 ## Resumen ejecutivo
 
-**Hallazgos objetivos.** Se inspeccionaron 662 archivos de texto, 378 archivos TS/TSX, 56 archivos de test y 120 archivos MDX.
+**Hallazgos objetivos.** Se inspeccionaron 645 archivos de texto, 384 archivos TS/TSX, 59 archivos de test y 120 archivos MDX.
 
-**Heurísticas aproximadas.** Se localizaron 801 apariciones léxicas de `any`, 295 colores hex, 27 marcas TODO/FIXME, 31 archivos TS/TSX grandes y 156 rutas de importación potencialmente incompatibles con FSD.
+**Heurísticas aproximadas.** Se localizaron 796 apariciones léxicas de `any`, 232 colores hex, 23 marcas TODO/FIXME, 34 archivos TS/TSX grandes y 156 rutas de importación potencialmente incompatibles con FSD.
 
 **Recomendación.** Empezar por las rutas FSD y supresiones TypeScript, continuar con hex fuera de tokens, descomponer puntos de alta responsabilidad y cerrar después cobertura, contenido, Lean y duplicación IA.
 
 ## Deuda TypeScript
 
-**Hallazgo objetivo.** Hay 378 archivos TS/TSX en el alcance; 0 archivo(s) contienen 0 supresiones `@ts-*`.
+**Hallazgo objetivo.** Hay 384 archivos TS/TSX en el alcance; 0 archivo(s) contienen 0 supresiones `@ts-*`.
 
 _Ninguno detectado._
 
@@ -81,7 +81,6 @@ _Ninguno detectado._
 | `tests/features/graph/GraphStore.test.ts` | 6 |
 | `tests/scripts/generate-test-report.ts` | 6 |
 | `.agents/skills/diagrama/examples/JSXGraphCanon.tsx` | 5 |
-| `.auxiliary/.opencode/skills/diagrama/examples/JSXGraphCanon.tsx` | 5 |
 | `src/widgets/diagrams/Definiciones/Altura.tsx` | 5 |
 | `src/widgets/diagrams/Models/ModeloPoincare.tsx` | 5 |
 | `src/widgets/diagrams/Teoremas/DosRectasUnPunto.tsx` | 5 |
@@ -139,13 +138,11 @@ _Ninguno detectado._
 
 | Archivo | Apariciones |
 | --- | --- |
-| `.auxiliary/.opencode/skills/diagrama/SKILL.md` | 47 |
 | `src/shared/design/primitives.ts` | 38 |
 | `.agents/skills/diagrama/SKILL.md` | 32 |
 | `src/app/index.css` | 28 |
 | `src/shared/lib/constants.ts` | 14 |
 | `.agents/skills/page-creator/SKILL.md` | 10 |
-| `.auxiliary/.opencode/skills/antigravity/SKILL.md` | 10 |
 | `src/shared/lib/theme.ts` | 10 |
 | `src/shared/diagrams/InteractiveGeometryCanvas.tsx` | 9 |
 | `src/widgets/graph/LocalDependencyGraph.tsx` | 7 |
@@ -155,7 +152,6 @@ _Ninguno detectado._
 | `src/features/graph/lib/graphUtils.ts` | 5 |
 | `src/widgets/diagrams/Teoremas/DemoPitagorasEuclides.tsx` | 5 |
 | `.agents/skills/diagrama/examples/JSXGraphCanon.tsx` | 4 |
-| `.auxiliary/.opencode/skills/diagrama/examples/JSXGraphCanon.tsx` | 4 |
 | `src/features/graph/graph.worker.ts` | 4 |
 | `src/features/graph/ui/AxiomaticTree.tsx` | 4 |
 | `src/shared/hooks/useThemeColors.ts` | 4 |
@@ -167,7 +163,6 @@ _Ninguno detectado._
 | `src/widgets/diagrams/Definiciones/Plano.tsx` | 4 |
 | `src/widgets/diagrams/Teoremas/DemoPitagorasAreas.tsx` | 3 |
 | `.agents/skills/project-philosophy/SKILL.md` | 2 |
-| `.auxiliary/TODO.md` | 2 |
 | `ai/audits/code-quality-audit.md` | 2 |
 | `src/features/graph/ui/MathBoard.tsx` | 2 |
 | `src/features/graph/ui/MathUtils.ts` | 2 |
@@ -188,11 +183,8 @@ _Ninguno detectado._
 | `scripts/ai/generate-debt-report.ts` | 12 |
 | `scripts/ai/generate-ai-indexes.ts` | 4 |
 | `.agents/skills/page-creator/SKILL.md` | 3 |
-| `.auxiliary/.opencode/skills/antigravity/SKILL.md` | 2 |
 | `.agents/skills/diagrama/examples/JSXGraphCanon.tsx` | 1 |
 | `.agents/skills/diagrama/SKILL.md` | 1 |
-| `.auxiliary/.opencode/skills/diagrama/examples/JSXGraphCanon.tsx` | 1 |
-| `.auxiliary/.opencode/skills/diagrama/SKILL.md` | 1 |
 | `lean/Matematika/Geometry/Basic.lean` | 1 |
 | `lean/Matematika/Geometry/Hilbert/Constructions.lean` | 1 |
 
@@ -208,8 +200,8 @@ _Ninguno detectado._
 | `scripts/ai/generate-debt-report.ts` | 848 | 35233 |
 | `scripts/ai/generate-ai-indexes.ts` | 770 | 29276 |
 | `src/features/editor/diagrams/model/commands.ts` | 746 | 32157 |
+| `src/features/editor/ui/EditorPage.tsx` | 711 | 25519 |
 | `src/features/editor/core/parser.ts` | 625 | 21040 |
-| `src/features/editor/ui/EditorPage.tsx` | 617 | 21969 |
 | `src/features/editor/diagrams/ui/DiagramCanvas.tsx` | 517 | 18497 |
 | `src/features/graph/graph.worker.ts` | 509 | 15887 |
 | `src/widgets/diagrams/Definiciones/Cuadrilatero.tsx` | 490 | 22526 |
@@ -217,9 +209,11 @@ _Ninguno detectado._
 | `src/entities/content/ContentStore.ts` | 448 | 17825 |
 | `src/features/editor/ui/diagrams/DiagramWorkbench.tsx` | 446 | 19111 |
 | `src/entities/content/msc2020.ts` | 431 | 17110 |
+| `src/features/editor/ux/safetyPresentation.ts` | 429 | 15847 |
 | `scripts/core/lean-graph-utils.ts` | 427 | 14649 |
 | `scripts/editor/parseDiagramSourceAST.ts` | 420 | 17553 |
 | `src/features/graph/GraphStore.ts` | 414 | 14785 |
+| `tests/e2e/editor/editor-safe-ux.e2e.ts` | 404 | 19316 |
 | `tests/features/editor/persistence/editorPersistenceBackend.test.ts` | 400 | 21891 |
 | `src/widgets/content/MarginaliaPanel.tsx` | 368 | 14638 |
 | `src/features/graph/ui/AxiomaticTree.tsx` | 366 | 16130 |
@@ -230,6 +224,7 @@ _Ninguno detectado._
 | `src/widgets/diagrams/Teoremas/DemoPitagorasEuclides.tsx` | 327 | 16986 |
 | `src/features/metadata/ui/PageDependencyGraph.tsx` | 327 | 9793 |
 | `tests/database/content-store.test.ts` | 320 | 9637 |
+| `src/features/editor/core/useEditorCore.ts` | 319 | 16790 |
 | `src/features/editor/core/validation.ts` | 314 | 14376 |
 | `scripts/editor/editorPersistenceBackend.ts` | 311 | 15527 |
 | `src/widgets/graph/LocalDependencyGraph.tsx` | 303 | 9161 |
@@ -245,7 +240,7 @@ _Ninguno detectado._
 | Componente | Líneas | Imports | Hooks | Handlers |
 | --- | --- | --- | --- | --- |
 | `src/features/editor/ui/panels/VisualEditorPanel.tsx` | 988 | 6 | 0 | 113 |
-| `src/features/editor/ui/EditorPage.tsx` | 617 | 17 | 15 | 28 |
+| `src/features/editor/ui/EditorPage.tsx` | 711 | 22 | 17 | 39 |
 | `src/features/editor/diagrams/ui/DiagramCanvas.tsx` | 517 | 3 | 0 | 40 |
 | `src/widgets/diagrams/Definiciones/Cuadrilatero.tsx` | 490 | 4 | 3 | 2 |
 | `src/features/editor/ui/diagrams/DiagramWorkbench.tsx` | 446 | 14 | 5 | 76 |
@@ -269,21 +264,23 @@ _Ninguno detectado._
 | `src/features/editor/ui/panels/MetadataPanel.tsx` | 194 | 5 | 0 | 18 |
 | `src/shared/diagrams/core/MathBoard.tsx` | 161 | 3 | 10 | 17 |
 | `src/features/editor/ui/components/MetadataInspector.tsx` | 145 | 2 | 0 | 22 |
+| `src/features/editor/ui/diff/DiffReviewPanel.tsx` | 132 | 2 | 1 | 13 |
 | `src/features/editor/diagrams/ui/DiagramToolbar.tsx` | 129 | 2 | 0 | 34 |
 | `src/features/glossary/ui/ConceptLink.tsx` | 113 | 6 | 3 | 15 |
+| `src/features/editor/ui/safety/UnsavedChangesDialog.tsx` | 107 | 2 | 1 | 21 |
 
 **Recomendación.** Separar coordinación, estado y presentación solo cuando la revisión confirme más de una razón de cambio.
 
 ## Deuda de tests por zona
 
-**Hallazgo objetivo.** Se detectaron 56 archivos de test. La tabla cuenta archivos fuente y tests que importan directamente cada zona.
+**Hallazgo objetivo.** Se detectaron 59 archivos de test. La tabla cuenta archivos fuente y tests que importan directamente cada zona.
 
 | Zona | TS/TSX fuente | Tests con import directo |
 | --- | --- | --- |
 | app | 6 | 2 |
 | pages | 22 | 0 |
 | widgets | 108 | 4 |
-| features | 115 | 25 |
+| features | 120 | 27 |
 | entities | 9 | 7 |
 | shared | 43 | 12 |
 | database | 0 | 0 |
@@ -590,10 +587,7 @@ _Ninguno detectado._
 | Ruta | Motivo | Ignorada por `.gitignore` |
 | --- | --- | --- |
 | `node_modules` | dependencias instaladas | sí |
-| `.opencode/node_modules` | dependencias locales del adaptador | sí |
 | `dist` | salida de build | sí |
-| `coverage` | cobertura generada | sí |
-| `.vite` | caché de Vite | sí |
 | `lean/.lake` | caché y build de Lean | sí |
 | `docs/api` | documentación API generada | sí |
 | `scripts/plantuml.jar` | binario de tooling | no/no inferido |
@@ -615,46 +609,17 @@ _Ninguno detectado._
 | `ai/` | 47 |
 | `docs/ai/` | 2 |
 | `.agents/` | 19 |
-| `.opencode/` | 11 |
-| `.auxiliary/` | 22 |
+| `.opencode/` | 9 |
+| `.auxiliary/` | 0 |
 
-**Heurísticas aproximadas.** 19 basenames repetidos entre capas y 11 grupos de contenido byte-a-byte idéntico. Un basename repetido no implica duplicación semántica.
+**Heurísticas aproximadas.** 2 basenames repetidos entre capas y 0 grupos de contenido byte-a-byte idéntico. Un basename repetido no implica duplicación semántica.
 
 | Nombre repetido | Rutas |
 | --- | --- |
-| axioma.mdx | `.agents/skills/page-creator/templates/axioma.mdx`<br>`.auxiliary/.opencode/skills/antigravity/templates/axioma.mdx` |
-| caso-de-uso.mdx | `.agents/skills/page-creator/templates/caso-de-uso.mdx`<br>`.auxiliary/.opencode/skills/antigravity/templates/caso-de-uso.mdx` |
-| components.md | `.agents/skills/page-creator/reference/components.md`<br>`.auxiliary/.opencode/skills/antigravity/reference/components.md` |
-| definicion.mdx | `.agents/skills/page-creator/templates/definicion.mdx`<br>`.auxiliary/.opencode/skills/antigravity/templates/definicion.mdx` |
-| demostracion.mdx | `.agents/skills/page-creator/templates/demostracion.mdx`<br>`.auxiliary/.opencode/skills/antigravity/templates/demostracion.mdx` |
-| ejemplo.mdx | `.agents/skills/page-creator/templates/ejemplo.mdx`<br>`.auxiliary/.opencode/skills/antigravity/templates/ejemplo.mdx` |
-| ejercicio.mdx | `.agents/skills/page-creator/templates/ejercicio.mdx`<br>`.auxiliary/.opencode/skills/antigravity/templates/ejercicio.mdx` |
-| JSXGraphCanon.tsx | `.agents/skills/diagrama/examples/JSXGraphCanon.tsx`<br>`.auxiliary/.opencode/skills/diagrama/examples/JSXGraphCanon.tsx` |
-| matematico.mdx | `.agents/skills/page-creator/templates/matematico.mdx`<br>`.auxiliary/.opencode/skills/antigravity/templates/matematico.mdx` |
-| modelo.mdx | `.agents/skills/page-creator/templates/modelo.mdx`<br>`.auxiliary/.opencode/skills/antigravity/templates/modelo.mdx` |
 | new-diagram.md | `.opencode/commands/new-diagram.md`<br>`ai/prompts/opencode/new-diagram.md` |
-| package-lock.json | `.auxiliary/.opencode/package-lock.json`<br>`.opencode/package-lock.json` |
-| package.json | `.auxiliary/.opencode/package.json`<br>`.opencode/package.json` |
 | README.md | `ai/prompts/README.md`<br>`ai/README.md`<br>`docs/ai/README.md` |
-| sistema-axiomatico.mdx | `.agents/skills/page-creator/templates/sistema-axiomatico.mdx`<br>`.auxiliary/.opencode/skills/antigravity/templates/sistema-axiomatico.mdx` |
-| SKILL.md | `.agents/skills/diagrama/SKILL.md`<br>`.agents/skills/lean-formalizer/SKILL.md`<br>`.agents/skills/page-creator/SKILL.md`<br>`.agents/skills/project-philosophy/SKILL.md`<br>`.auxiliary/.opencode/skills/antigravity/SKILL.md`<br>`.auxiliary/.opencode/skills/diagrama/SKILL.md` |
-| SVGCanon.tsx | `.agents/skills/diagrama/examples/SVGCanon.tsx`<br>`.auxiliary/.opencode/skills/diagrama/examples/SVGCanon.tsx` |
-| teorema.mdx | `.agents/skills/page-creator/templates/teorema.mdx`<br>`.auxiliary/.opencode/skills/antigravity/templates/teorema.mdx` |
-| validate.mjs | `.agents/skills/page-creator/scripts/validate.mjs`<br>`.auxiliary/.opencode/skills/antigravity/scripts/validate.mjs` |
 
-| Grupo idéntico | Rutas |
-| --- | --- |
-| 1 | `.agents/skills/diagrama/examples/JSXGraphCanon.tsx`<br>`.auxiliary/.opencode/skills/diagrama/examples/JSXGraphCanon.tsx` |
-| 2 | `.agents/skills/diagrama/examples/SVGCanon.tsx`<br>`.auxiliary/.opencode/skills/diagrama/examples/SVGCanon.tsx` |
-| 3 | `.agents/skills/page-creator/templates/axioma.mdx`<br>`.auxiliary/.opencode/skills/antigravity/templates/axioma.mdx` |
-| 4 | `.agents/skills/page-creator/templates/caso-de-uso.mdx`<br>`.auxiliary/.opencode/skills/antigravity/templates/caso-de-uso.mdx` |
-| 5 | `.agents/skills/page-creator/templates/definicion.mdx`<br>`.auxiliary/.opencode/skills/antigravity/templates/definicion.mdx` |
-| 6 | `.agents/skills/page-creator/templates/ejemplo.mdx`<br>`.auxiliary/.opencode/skills/antigravity/templates/ejemplo.mdx` |
-| 7 | `.agents/skills/page-creator/templates/ejercicio.mdx`<br>`.auxiliary/.opencode/skills/antigravity/templates/ejercicio.mdx` |
-| 8 | `.agents/skills/page-creator/templates/matematico.mdx`<br>`.auxiliary/.opencode/skills/antigravity/templates/matematico.mdx` |
-| 9 | `.agents/skills/page-creator/templates/modelo.mdx`<br>`.auxiliary/.opencode/skills/antigravity/templates/modelo.mdx` |
-| 10 | `.agents/skills/page-creator/templates/sistema-axiomatico.mdx`<br>`.auxiliary/.opencode/skills/antigravity/templates/sistema-axiomatico.mdx` |
-| 11 | `.auxiliary/.opencode/package.json`<br>`.opencode/package.json` |
+_Ninguno detectado._
 
 **Recomendación.** Auditar primero `.auxiliary/`; conservar duplicaciones solo cuando sean adaptadores deliberados y documentados.
 
