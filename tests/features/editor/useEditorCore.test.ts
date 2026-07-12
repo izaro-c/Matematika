@@ -38,7 +38,7 @@ describe('useEditorCore lossless integration', () => {
     const fetchMock = vi.mocked(fetch).mockResolvedValueOnce(readResponse(source));
     const { result } = renderHook(() => useEditorCore());
     await act(() => result.current.openFile('content/test.mdx'));
-    expect(VISUAL_SAVE_POLICY).toBe('disabled');
+    expect(VISUAL_SAVE_POLICY).toBe('enabled');
     expect(result.current.editorMode).toBe('code');
     expect(result.current.rawBody).toBe(source);
     expect(result.current.blocks).toHaveLength(2);
@@ -90,10 +90,16 @@ describe('useEditorCore lossless integration', () => {
     act(() => result.current.removeBlock(result.current.blocks[0].id));
     expect(result.current.rawBody).toBe(before);
     expect(result.current.message).toContain('bloqueada');
+
+    // Blocks visual save for read-only document
+    const readOnlySource = `export const metadata = {};\n\n<Formula>{String.raw\`a^2+b^2=c^2\`}</Formula>`;
+    vi.mocked(fetch).mockResolvedValueOnce(readResponse(readOnlySource, 'content/readonly.mdx'));
+    await act(() => result.current.openFile('content/readonly.mdx'));
+    act(() => result.current.toggleEditorMode());
     let saved = true;
     await act(async () => { saved = await result.current.saveCurrentFile(); });
     expect(saved).toBe(false);
-    expect(vi.mocked(fetch)).toHaveBeenCalledTimes(1);
+    expect(result.current.message).toContain('desactivado para documentos de solo lectura');
   });
 
   it('manual code save sends the exact current source and checks HTTP status', async () => {

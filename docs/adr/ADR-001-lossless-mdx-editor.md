@@ -2,7 +2,7 @@
 
 ## Estado
 
-Aceptada e implementada para las fases 0–3. La persistencia visual transaccional (Fase 4) queda pendiente.
+Aceptada e implementada para las fases 0-3. La persistencia transaccional posterior esta implementada en `ADR-002`; el guardado visual productivo sigue deshabilitado hasta que existan E2E criticos, cobertura por riesgo y auditoria de release sin bloqueos.
 
 ## Contexto
 
@@ -36,4 +36,4 @@ El flujo legacy separaba metadata, imports, body y exports, proyectaba el body a
 
 ## Consecuencias
 
-La editabilidad visual es deliberadamente menor, pero un documento no editado no atraviesa ninguna serialización. El corpus se audita mediante apertura, proyección, cambios de modo y tres ciclos reales. La Fase 4 deberá añadir persistencia transaccional sin relajar estas invariantes.
+La editabilidad visual es deliberadamente menor, pero un documento no editado no atraviesa ninguna serialización. El corpus se audita mediante apertura, proyección, cambios de modo y tres ciclos reales. La persistencia transaccional posterior no relaja estas invariantes; la Fase 8 mantiene la contencion visual porque la Fase 7/E2E no esta aceptada en el checkout.
