@@ -7,9 +7,9 @@ import { DiagramWorkbench } from './diagrams/DiagramWorkbench';
 import { Block, createBlockId, parseAttributes } from '../core/parser';
 import type { DiagramSpec, DiagramTargetRegistry } from '../core/editorTypes';
 import type { FileNode } from '../lib/editorContracts';
-import { editorApiClient } from '../persistence';
-import { buildDiffReview, isDiffReviewStale, type DiffReview } from '../ux/diffReview';
+import { approveDiffReview, buildDiffReview, isDiffReviewStale, type DiffReview } from '../ux/diffReview';
 import { buildEditorSafetyPresentation } from '../ux/safetyPresentation';
+import { useDiagramUsages } from '../diagrams/hooks/useDiagramUsages';
 
 // Componentes estructurales y paneles
 import { EditorShell } from './EditorShell';
@@ -86,6 +86,7 @@ export const EditorPage: React.FC = () => {
     setImports,
     setExports,
     setBlocks,
+    getExpectedDiffRanges,
     compatibility,
     compatibilityReasons,
     canMutateVisualStructure,
@@ -124,7 +125,6 @@ export const EditorPage: React.FC = () => {
   const [diagramBuilderOpen, setDiagramBuilderOpen] = useState(false);
   const [activeDiagramBlockId, setActiveDiagramBlockId] = useState<string | null>(null);
   const [activeDiagramIndex, setActiveDiagramIndex] = useState<number | null>(null);
-  const [diagramLinkedPages, setDiagramLinkedPages] = useState<FileNode[]>([]);
 
   const [, setLocation] = useLocation();
   const { toggleSearch } = useNavigationStore();
@@ -164,40 +164,7 @@ export const EditorPage: React.FC = () => {
   }, [loadFileList]);
 
   const isDiagramFile = currentFile?.endsWith('.tsx') ?? false;
-  const currentDiagramName = currentFile?.split('/').pop()?.replace(/\.tsx$/, '') || '';
-
-  useEffect(() => {
-    let cancelled = false;
-
-    const loadLinkedPages = async () => {
-      if (!isDiagramFile || !currentFile || !currentDiagramName || files.length === 0) {
-        setDiagramLinkedPages([]);
-        return;
-      }
-
-      const diagramImportStem = currentFile.replace(/\.tsx$/, '');
-      const mdxFiles = files.filter(file => file.path.endsWith('.mdx'));
-      const matches: FileNode[] = [];
-
-      await Promise.all(mdxFiles.map(async file => {
-        try {
-          const { source } = await editorApiClient.readContent({ path: file.path });
-          if (source.includes(currentDiagramName) || source.includes(diagramImportStem)) {
-            matches.push(file);
-          }
-        } catch {
-          // La relación es una ayuda visual; si una lectura falla, no bloquea el editor.
-        }
-      }));
-
-      if (!cancelled) setDiagramLinkedPages(matches);
-    };
-
-    loadLinkedPages();
-    return () => {
-      cancelled = true;
-    };
-  }, [currentFile, currentDiagramName, files, isDiagramFile]);
+  const diagramUsageLookup = useDiagramUsages(isDiagramFile ? currentFile : null, files);
 
   const handleMetadataChange = (key: string, value: any) => {
     setMetadata(prev => ({ ...prev, [key]: value }));
@@ -252,16 +219,20 @@ export const EditorPage: React.FC = () => {
       return;
     }
     setDiffReview(buildDiffReview({
+      documentId: currentFile,
       baseSource,
       candidateSource: rawBody,
       localRevision,
       baseVersion,
+      expectedRanges: getExpectedDiffRanges(),
     }));
   };
 
   const applyReviewedDiff = async () => {
     if (!diffReview || isDiffReviewStale(diffReview, localRevision, baseVersion) || diffReview.status !== 'reviewable') return;
-    const saved = await saveCurrentFile();
+    const approval = approveDiffReview(diffReview);
+    if (!approval) return;
+    const saved = await saveCurrentFile(approval);
     if (saved) setDiffReview(null);
   };
 
@@ -602,7 +573,8 @@ export const EditorPage: React.FC = () => {
         {isDiagramFile && (
           <DiagramSourcePanel
             currentFile={currentFile}
-            diagramLinkedPages={diagramLinkedPages}
+            diagramLinkedPages={diagramUsageLookup.linkedPages}
+            diagramUsageError={diagramUsageLookup.error}
             openFile={openFileSafely}
             setActiveDiagramBlockId={setActiveDiagramBlockId}
             setActiveDiagramIndex={setActiveDiagramIndex}

@@ -1,4 +1,5 @@
 import fs from 'node:fs';
+import crypto from 'node:crypto';
 import path from 'node:path';
 import { pathToFileURL } from 'node:url';
 
@@ -8,16 +9,20 @@ const WIDGETS_DIAGRAMS_DIR = path.join(ROOT, 'src/widgets/diagrams');
 const SHARED_DIAGRAMS_DIR = path.join(ROOT, 'src/shared/diagrams');
 const OUTPUT_PATH = path.join(ROOT, 'src/entities/content/diagramUsageIndex.json');
 
-interface Usage {
-  contentId?: string;
+export interface Usage {
+  contentId: string;
   contentPath: string;
   referenceKind: string;
+  sourceRange?: { start: number; end: number };
+  blockId?: string;
 }
 
-interface DiagramUsageEntry {
-  diagramId: string;
-  diagramPath: string;
-  usages: Usage[];
+export interface DiagramUsageIndex {
+  schemaVersion: number;
+  generatedBy: string;
+  corpusHash: string;
+  usages: Record<string, Usage[]>;
+  paths: Record<string, string>;
 }
 
 function getMdxFiles(dir: string): string[] {
@@ -38,7 +43,11 @@ function relativePath(absolutePath: string): string {
   return path.relative(ROOT, absolutePath).split(path.sep).join('/');
 }
 
-function parseMetadata(content: string): Record<string, any> | null {
+function stableHash(input: string): string {
+  return crypto.createHash('sha256').update(input, 'utf8').digest('hex');
+}
+
+function parseMetadata(content: string): Record<string, unknown> | null {
   const metadataRegex = /export\s+const\s+metadata\s*=\s*(\{[\s\S]*?\n\});?/;
   const match = content.match(metadataRegex);
   if (!match) return null;
@@ -51,9 +60,30 @@ function parseMetadata(content: string): Record<string, any> | null {
   }
 }
 
-export function generateDiagramUsageIndex(): DiagramUsageEntry[] {
+function computeCorpusHash(files: string[]): string {
+  const chunks = files.map(file => {
+    const relative = relativePath(file);
+    const content = fs.readFileSync(file, 'utf-8');
+    return `${relative}\0${stableHash(content)}`;
+  });
+  return stableHash(chunks.join('\n'));
+}
+
+function sourceRangeForImport(content: string, componentName: string): { start: number; end: number } | undefined {
+  const jsx = new RegExp(`<${componentName}(\\s|>|/)`);
+  const simulation = new RegExp(`export\\s+const\\s+Simulation\\s*=\\s*${componentName}\\b`);
+  const diagram = new RegExp(`export\\s+const\\s+Diagram\\s*=\\s*${componentName}\\b`);
+  const candidates = [jsx.exec(content), simulation.exec(content), diagram.exec(content)]
+    .filter((match): match is RegExpExecArray => match !== null)
+    .sort((a, b) => a.index - b.index);
+  const first = candidates[0];
+  if (!first) return undefined;
+  return { start: first.index, end: first.index + first[0].length };
+}
+
+export function generateDiagramUsageIndex(): DiagramUsageIndex {
   const mdxFiles = getMdxFiles(CONTENT_DIR);
-  const diagramUsages = new Map<string, { path: string; usages: Usage[] }>();
+  const diagramUsages = new Map<string, { diagramId: string; path: string; usages: Usage[] }>();
 
   // Helper to resolve diagram absolute path from import path inside an MDX
   const resolveDiagramPath = (mdxFile: string, importPath: string): string | null => {
@@ -77,7 +107,7 @@ export function generateDiagramUsageIndex(): DiagramUsageEntry[] {
     return resolved && fs.existsSync(resolved) ? resolved : null;
   };
 
-  for (const mdxFile of mdxFiles) {
+  for (const mdxFile of mdxFiles.sort((a, b) => relativePath(a).localeCompare(relativePath(b)))) {
     const content = fs.readFileSync(mdxFile, 'utf-8');
     const metadata = parseMetadata(content);
     const contentId = metadata?.id || path.basename(mdxFile, '.mdx');
@@ -119,6 +149,7 @@ export function generateDiagramUsageIndex(): DiagramUsageEntry[] {
       const key = info.diagramFile;
       if (!diagramUsages.has(key)) {
         diagramUsages.set(key, {
+          diagramId: path.basename(key, '.tsx'),
           path: info.diagramFile,
           usages: [],
         });
@@ -128,25 +159,33 @@ export function generateDiagramUsageIndex(): DiagramUsageEntry[] {
         contentId,
         contentPath: relMdxPath,
         referenceKind,
+        sourceRange: sourceRangeForImport(content, componentName),
+        blockId: metadata?.id ? `${metadata.id}:diagram:${componentName}` : undefined,
       });
     }
   }
 
-  // Sort and build final array
-  const entries: DiagramUsageEntry[] = [];
-  for (const [diagPath, data] of diagramUsages.entries()) {
-    const diagramId = path.basename(diagPath, '.tsx');
-    // Sort usages stably by contentPath
-    const sortedUsages = data.usages.sort((a, b) => a.contentPath.localeCompare(b.contentPath));
-    entries.push({
-      diagramId,
-      diagramPath: diagPath,
-      usages: sortedUsages,
-    });
+  const usages: Record<string, Usage[]> = {};
+  const paths: Record<string, string> = {};
+
+  for (const data of [...diagramUsages.values()].sort((a, b) => a.path.localeCompare(b.path))) {
+    paths[data.diagramId] = data.path;
+    usages[data.diagramId] = data.usages
+      .sort((a, b) => a.contentPath.localeCompare(b.contentPath)
+        || a.referenceKind.localeCompare(b.referenceKind)
+        || a.contentId.localeCompare(b.contentId))
+      .map(usage => Object.fromEntries(
+        Object.entries(usage).filter(([, value]) => value !== undefined)
+      ) as Usage);
   }
 
-  // Sort entries stably by diagramPath
-  return entries.sort((a, b) => a.diagramPath.localeCompare(b.diagramPath));
+  return {
+    schemaVersion: 1,
+    generatedBy: 'scripts/editor/generate-diagram-usages.ts',
+    corpusHash: computeCorpusHash(mdxFiles),
+    paths,
+    usages,
+  };
 }
 
 function run() {
@@ -169,7 +208,7 @@ function run() {
   } else {
     fs.mkdirSync(path.dirname(OUTPUT_PATH), { recursive: true });
     fs.writeFileSync(OUTPUT_PATH, JSON.stringify(indexData, null, 2), 'utf-8');
-    console.log(`✅ Índice de usos de diagramas generado con éxito: ${indexData.length} diagramas indexados.`);
+    console.log(`✅ Índice de usos de diagramas generado con éxito: ${Object.keys(indexData.usages).length} diagramas indexados.`);
   }
 }
 

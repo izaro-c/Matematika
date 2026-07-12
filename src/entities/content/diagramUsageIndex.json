@@ -1,926 +1,1093 @@
-[
-  {
-    "diagramId": "AxiomaArquimedes",
-    "diagramPath": "src/widgets/diagrams/Axiomas/AxiomaArquimedes.tsx",
-    "usages": [
+{
+  "schemaVersion": 1,
+  "generatedBy": "scripts/editor/generate-diagram-usages.ts",
+  "corpusHash": "dc00d008510f96cebea93bb291d997c2e3f70bfad26cd60f406b2982f4feeda1",
+  "paths": {
+    "AxiomaArquimedes": "src/widgets/diagrams/Axiomas/AxiomaArquimedes.tsx",
+    "AxiomaDedekind": "src/widgets/diagrams/Axiomas/AxiomaDedekind.tsx",
+    "Congruence1": "src/widgets/diagrams/Axiomas/Congruence1.tsx",
+    "Congruence2": "src/widgets/diagrams/Axiomas/Congruence2.tsx",
+    "Congruence3": "src/widgets/diagrams/Axiomas/Congruence3.tsx",
+    "Congruence4": "src/widgets/diagrams/Axiomas/Congruence4.tsx",
+    "EuclidParallel": "src/widgets/diagrams/Axiomas/EuclidParallel.tsx",
+    "HyperbolicParallel": "src/widgets/diagrams/Axiomas/HyperbolicParallel.tsx",
+    "Incidence1": "src/widgets/diagrams/Axiomas/Incidence1.tsx",
+    "Incidence2": "src/widgets/diagrams/Axiomas/Incidence2.tsx",
+    "Incidence3": "src/widgets/diagrams/Axiomas/Incidence3.tsx",
+    "Incidence4": "src/widgets/diagrams/Axiomas/Incidence4.tsx",
+    "Incidence5": "src/widgets/diagrams/Axiomas/Incidence5.tsx",
+    "Incidence6": "src/widgets/diagrams/Axiomas/Incidence6.tsx",
+    "Incidence7": "src/widgets/diagrams/Axiomas/Incidence7.tsx",
+    "Incidence8": "src/widgets/diagrams/Axiomas/Incidence8.tsx",
+    "Order1": "src/widgets/diagrams/Axiomas/Order1.tsx",
+    "Order2": "src/widgets/diagrams/Axiomas/Order2.tsx",
+    "Order3": "src/widgets/diagrams/Axiomas/Order3.tsx",
+    "Pasch": "src/widgets/diagrams/Axiomas/Pasch.tsx",
+    "SAS": "src/widgets/diagrams/Axiomas/SAS.tsx",
+    "GpsTrilateracion": "src/widgets/diagrams/CasosUso/GpsTrilateracion.tsx",
+    "Altura": "src/widgets/diagrams/Definiciones/Altura.tsx",
+    "Angulo": "src/widgets/diagrams/Definiciones/Angulo.tsx",
+    "Bisectriz": "src/widgets/diagrams/Definiciones/Bisectriz.tsx",
+    "Circunferencia": "src/widgets/diagrams/Definiciones/Circunferencia.tsx",
+    "Cuadrilatero": "src/widgets/diagrams/Definiciones/Cuadrilatero.tsx",
+    "Mediana": "src/widgets/diagrams/Definiciones/Mediana.tsx",
+    "Mediatriz": "src/widgets/diagrams/Definiciones/Mediatriz.tsx",
+    "Paralelas": "src/widgets/diagrams/Definiciones/Paralelas.tsx",
+    "Paralelogramo": "src/widgets/diagrams/Definiciones/Paralelogramo.tsx",
+    "Perpendicular": "src/widgets/diagrams/Definiciones/Perpendicular.tsx",
+    "Plano": "src/widgets/diagrams/Definiciones/Plano.tsx",
+    "Punto": "src/widgets/diagrams/Definiciones/Punto.tsx",
+    "Recta": "src/widgets/diagrams/Definiciones/Recta.tsx",
+    "Segmento": "src/widgets/diagrams/Definiciones/Segmento.tsx",
+    "Semirrecta": "src/widgets/diagrams/Definiciones/Semirrecta.tsx",
+    "Triangulo": "src/widgets/diagrams/Definiciones/Triangulo.tsx",
+    "ConstructivoSimulation": "src/widgets/diagrams/Demos/ConstructivoSimulation.tsx",
+    "ContradictionSimulation": "src/widgets/diagrams/Demos/ContradictionSimulation.tsx",
+    "ContraposicionSimulation": "src/widgets/diagrams/Demos/ContraposicionSimulation.tsx",
+    "DemoAngulosOpuestos": "src/widgets/diagrams/Demos/DemoAngulosOpuestos.tsx",
+    "DemoAreaAditividad": "src/widgets/diagrams/Demos/DemoAreaAditividad.tsx",
+    "DemoAreaRectangulo_Conmensurable": "src/widgets/diagrams/Demos/DemoAreaRectangulo_Conmensurable.tsx",
+    "DemoAreaRectangulo_Inconmensurable": "src/widgets/diagrams/Demos/DemoAreaRectangulo_Inconmensurable.tsx",
+    "DemoCongruenciaALA": "src/widgets/diagrams/Demos/DemoCongruenciaALA.tsx",
+    "DemoCongruenciaLLL": "src/widgets/diagrams/Demos/DemoCongruenciaLLL.tsx",
+    "DemoDosRectasUnPunto": "src/widgets/diagrams/Demos/DemoDosRectasUnPunto.tsx",
+    "DemoInvarianciaTriangulacion": "src/widgets/diagrams/Demos/DemoInvarianciaTriangulacion.tsx",
+    "DemoRectasCoincidentes": "src/widgets/diagrams/Demos/DemoRectasCoincidentes.tsx",
+    "DemoTriangulacionPoligono": "src/widgets/diagrams/Demos/DemoTriangulacionPoligono.tsx",
+    "DemoTrianguloIsosceles": "src/widgets/diagrams/Demos/DemoTrianguloIsosceles.tsx",
+    "DirectoSimulation": "src/widgets/diagrams/Demos/DirectoSimulation.tsx",
+    "ExhaustivoSimulation": "src/widgets/diagrams/Demos/ExhaustivoSimulation.tsx",
+    "GeometricoSimulation": "src/widgets/diagrams/Demos/GeometricoSimulation.tsx",
+    "InduccionSimulation": "src/widgets/diagrams/Demos/InduccionSimulation.tsx",
+    "EjemploPitagorasCalculo": "src/widgets/diagrams/Ejercicios/EjemploPitagorasCalculo.tsx",
+    "EjercicioPitagorasCateto": "src/widgets/diagrams/Ejercicios/EjercicioPitagorasCateto.tsx",
+    "ModeloCartesiano": "src/widgets/diagrams/Models/ModeloCartesiano.tsx",
+    "ModeloFano": "src/widgets/diagrams/Models/ModeloFano.tsx",
+    "ModeloPoincare": "src/widgets/diagrams/Models/ModeloPoincare.tsx",
+    "ModeloTresPuntos": "src/widgets/diagrams/Models/ModeloTresPuntos.tsx",
+    "AngulosOpuestos": "src/widgets/diagrams/Teoremas/AngulosOpuestos.tsx",
+    "CongruenciaALA": "src/widgets/diagrams/Teoremas/CongruenciaALA.tsx",
+    "CongruenciaLLL": "src/widgets/diagrams/Teoremas/CongruenciaLLL.tsx",
+    "DemoAnguloExterno": "src/widgets/diagrams/Teoremas/DemoAnguloExterno.tsx",
+    "DemoAngulosAlternosInternos": "src/widgets/diagrams/Teoremas/DemoAngulosAlternosInternos.tsx",
+    "DemoCongruenciaAAL": "src/widgets/diagrams/Teoremas/DemoCongruenciaAAL.tsx",
+    "DemoDesigualdadTriangular": "src/widgets/diagrams/Teoremas/DemoDesigualdadTriangular.tsx",
+    "DemoExistenciaBisectriz": "src/widgets/diagrams/Teoremas/DemoExistenciaBisectriz.tsx",
+    "DemoExistenciaPerpendicular": "src/widgets/diagrams/Teoremas/DemoExistenciaPerpendicular.tsx",
+    "DemoPitagorasAreas": "src/widgets/diagrams/Teoremas/DemoPitagorasAreas.tsx",
+    "DemoPitagorasEuclides": "src/widgets/diagrams/Teoremas/DemoPitagorasEuclides.tsx",
+    "DemoReciprocoTrianguloIsosceles": "src/widgets/diagrams/Teoremas/DemoReciprocoTrianguloIsosceles.tsx",
+    "DemoSumaAngulos": "src/widgets/diagrams/Teoremas/DemoSumaAngulos.tsx",
+    "DemoTales": "src/widgets/diagrams/Teoremas/DemoTales.tsx",
+    "DesigualdadTriangular": "src/widgets/diagrams/Teoremas/DesigualdadTriangular.tsx",
+    "DosRectasUnPunto": "src/widgets/diagrams/Teoremas/DosRectasUnPunto.tsx",
+    "LemaPuntoMedio": "src/widgets/diagrams/Teoremas/LemaPuntoMedio.tsx",
+    "Pitagoras": "src/widgets/diagrams/Teoremas/Pitagoras.tsx",
+    "PuntoMedioPerpendicular": "src/widgets/diagrams/Teoremas/PuntoMedioPerpendicular.tsx",
+    "SumaAngulos": "src/widgets/diagrams/Teoremas/SumaAngulos.tsx",
+    "Tales": "src/widgets/diagrams/Teoremas/Tales.tsx",
+    "TrianguloIsosceles": "src/widgets/diagrams/Teoremas/TrianguloIsosceles.tsx"
+  },
+  "usages": {
+    "AxiomaArquimedes": [
       {
         "contentId": "axioma-arquimedes",
         "contentPath": "src/database/content/axioms/axioma-arquimedes.mdx",
-        "referenceKind": "Simulation"
+        "referenceKind": "Simulation",
+        "sourceRange": {
+          "start": 977,
+          "end": 1019
+        },
+        "blockId": "axioma-arquimedes:diagram:AxiomaArquimedes"
       }
-    ]
-  },
-  {
-    "diagramId": "AxiomaDedekind",
-    "diagramPath": "src/widgets/diagrams/Axiomas/AxiomaDedekind.tsx",
-    "usages": [
+    ],
+    "AxiomaDedekind": [
       {
         "contentId": "axioma-completitud",
         "contentPath": "src/database/content/axioms/axioma-completitud.mdx",
-        "referenceKind": "Simulation"
+        "referenceKind": "Simulation",
+        "sourceRange": {
+          "start": 1077,
+          "end": 1117
+        },
+        "blockId": "axioma-completitud:diagram:AxiomaDedekind"
       }
-    ]
-  },
-  {
-    "diagramId": "Congruence1",
-    "diagramPath": "src/widgets/diagrams/Axiomas/Congruence1.tsx",
-    "usages": [
+    ],
+    "Congruence1": [
       {
         "contentId": "axioma-congruencia-1",
         "contentPath": "src/database/content/axioms/axioma-congruencia-1.mdx",
-        "referenceKind": "Simulation"
+        "referenceKind": "Simulation",
+        "sourceRange": {
+          "start": 991,
+          "end": 1028
+        },
+        "blockId": "axioma-congruencia-1:diagram:Congruence1"
       }
-    ]
-  },
-  {
-    "diagramId": "Congruence2",
-    "diagramPath": "src/widgets/diagrams/Axiomas/Congruence2.tsx",
-    "usages": [
+    ],
+    "Congruence2": [
       {
         "contentId": "axioma-congruencia-2",
         "contentPath": "src/database/content/axioms/axioma-congruencia-2.mdx",
-        "referenceKind": "Simulation"
+        "referenceKind": "Simulation",
+        "sourceRange": {
+          "start": 893,
+          "end": 930
+        },
+        "blockId": "axioma-congruencia-2:diagram:Congruence2"
       }
-    ]
-  },
-  {
-    "diagramId": "Congruence3",
-    "diagramPath": "src/widgets/diagrams/Axiomas/Congruence3.tsx",
-    "usages": [
+    ],
+    "Congruence3": [
       {
         "contentId": "axioma-congruencia-3",
         "contentPath": "src/database/content/axioms/axioma-congruencia-3.mdx",
-        "referenceKind": "Simulation"
+        "referenceKind": "Simulation",
+        "sourceRange": {
+          "start": 971,
+          "end": 1008
+        },
+        "blockId": "axioma-congruencia-3:diagram:Congruence3"
       }
-    ]
-  },
-  {
-    "diagramId": "Congruence4",
-    "diagramPath": "src/widgets/diagrams/Axiomas/Congruence4.tsx",
-    "usages": [
+    ],
+    "Congruence4": [
       {
         "contentId": "axioma-congruencia-4",
         "contentPath": "src/database/content/axioms/axioma-congruencia-4.mdx",
-        "referenceKind": "Simulation"
+        "referenceKind": "Simulation",
+        "sourceRange": {
+          "start": 1009,
+          "end": 1046
+        },
+        "blockId": "axioma-congruencia-4:diagram:Congruence4"
       }
-    ]
-  },
-  {
-    "diagramId": "EuclidParallel",
-    "diagramPath": "src/widgets/diagrams/Axiomas/EuclidParallel.tsx",
-    "usages": [
+    ],
+    "EuclidParallel": [
       {
         "contentId": "axioma-paralelas-euclides",
         "contentPath": "src/database/content/axioms/axioma-paralelas-euclides.mdx",
-        "referenceKind": "Simulation"
+        "referenceKind": "Simulation",
+        "sourceRange": {
+          "start": 611,
+          "end": 651
+        },
+        "blockId": "axioma-paralelas-euclides:diagram:EuclidParallel"
       }
-    ]
-  },
-  {
-    "diagramId": "HyperbolicParallel",
-    "diagramPath": "src/widgets/diagrams/Axiomas/HyperbolicParallel.tsx",
-    "usages": [
+    ],
+    "HyperbolicParallel": [
       {
         "contentId": "axioma-paralelas-hiperbolico",
         "contentPath": "src/database/content/axioms/axioma-paralelas-hiperbolico.mdx",
-        "referenceKind": "Simulation"
+        "referenceKind": "Simulation",
+        "sourceRange": {
+          "start": 650,
+          "end": 694
+        },
+        "blockId": "axioma-paralelas-hiperbolico:diagram:HyperbolicParallel"
       }
-    ]
-  },
-  {
-    "diagramId": "Incidence1",
-    "diagramPath": "src/widgets/diagrams/Axiomas/Incidence1.tsx",
-    "usages": [
+    ],
+    "Incidence1": [
       {
         "contentId": "axioma-incidencia-1",
         "contentPath": "src/database/content/axioms/axioma-incidencia-1.mdx",
-        "referenceKind": "Simulation"
+        "referenceKind": "Simulation",
+        "sourceRange": {
+          "start": 829,
+          "end": 865
+        },
+        "blockId": "axioma-incidencia-1:diagram:Incidence1"
       }
-    ]
-  },
-  {
-    "diagramId": "Incidence2",
-    "diagramPath": "src/widgets/diagrams/Axiomas/Incidence2.tsx",
-    "usages": [
+    ],
+    "Incidence2": [
       {
         "contentId": "axioma-incidencia-2",
         "contentPath": "src/database/content/axioms/axioma-incidencia-2.mdx",
-        "referenceKind": "Simulation"
+        "referenceKind": "Simulation",
+        "sourceRange": {
+          "start": 824,
+          "end": 860
+        },
+        "blockId": "axioma-incidencia-2:diagram:Incidence2"
       }
-    ]
-  },
-  {
-    "diagramId": "Incidence3",
-    "diagramPath": "src/widgets/diagrams/Axiomas/Incidence3.tsx",
-    "usages": [
+    ],
+    "Incidence3": [
       {
         "contentId": "axioma-incidencia-3",
         "contentPath": "src/database/content/axioms/axioma-incidencia-3.mdx",
-        "referenceKind": "Simulation"
+        "referenceKind": "Simulation",
+        "sourceRange": {
+          "start": 851,
+          "end": 887
+        },
+        "blockId": "axioma-incidencia-3:diagram:Incidence3"
       }
-    ]
-  },
-  {
-    "diagramId": "Incidence4",
-    "diagramPath": "src/widgets/diagrams/Axiomas/Incidence4.tsx",
-    "usages": [
+    ],
+    "Incidence4": [
       {
         "contentId": "axioma-incidencia-4",
         "contentPath": "src/database/content/axioms/axioma-incidencia-4.mdx",
-        "referenceKind": "Simulation"
+        "referenceKind": "Simulation",
+        "sourceRange": {
+          "start": 851,
+          "end": 887
+        },
+        "blockId": "axioma-incidencia-4:diagram:Incidence4"
       }
-    ]
-  },
-  {
-    "diagramId": "Incidence5",
-    "diagramPath": "src/widgets/diagrams/Axiomas/Incidence5.tsx",
-    "usages": [
+    ],
+    "Incidence5": [
       {
         "contentId": "axioma-incidencia-5",
         "contentPath": "src/database/content/axioms/axioma-incidencia-5.mdx",
-        "referenceKind": "Simulation"
+        "referenceKind": "Simulation",
+        "sourceRange": {
+          "start": 840,
+          "end": 876
+        },
+        "blockId": "axioma-incidencia-5:diagram:Incidence5"
       }
-    ]
-  },
-  {
-    "diagramId": "Incidence6",
-    "diagramPath": "src/widgets/diagrams/Axiomas/Incidence6.tsx",
-    "usages": [
+    ],
+    "Incidence6": [
       {
         "contentId": "axioma-incidencia-6",
         "contentPath": "src/database/content/axioms/axioma-incidencia-6.mdx",
-        "referenceKind": "Simulation"
+        "referenceKind": "Simulation",
+        "sourceRange": {
+          "start": 866,
+          "end": 902
+        },
+        "blockId": "axioma-incidencia-6:diagram:Incidence6"
       }
-    ]
-  },
-  {
-    "diagramId": "Incidence7",
-    "diagramPath": "src/widgets/diagrams/Axiomas/Incidence7.tsx",
-    "usages": [
+    ],
+    "Incidence7": [
       {
         "contentId": "axioma-incidencia-7",
         "contentPath": "src/database/content/axioms/axioma-incidencia-7.mdx",
-        "referenceKind": "Simulation"
+        "referenceKind": "Simulation",
+        "sourceRange": {
+          "start": 843,
+          "end": 879
+        },
+        "blockId": "axioma-incidencia-7:diagram:Incidence7"
       }
-    ]
-  },
-  {
-    "diagramId": "Incidence8",
-    "diagramPath": "src/widgets/diagrams/Axiomas/Incidence8.tsx",
-    "usages": [
+    ],
+    "Incidence8": [
       {
         "contentId": "axioma-incidencia-8",
         "contentPath": "src/database/content/axioms/axioma-incidencia-8.mdx",
-        "referenceKind": "Simulation"
+        "referenceKind": "Simulation",
+        "sourceRange": {
+          "start": 850,
+          "end": 886
+        },
+        "blockId": "axioma-incidencia-8:diagram:Incidence8"
       }
-    ]
-  },
-  {
-    "diagramId": "Order1",
-    "diagramPath": "src/widgets/diagrams/Axiomas/Order1.tsx",
-    "usages": [
+    ],
+    "Order1": [
       {
         "contentId": "axioma-orden-1",
         "contentPath": "src/database/content/axioms/axioma-orden-1.mdx",
-        "referenceKind": "Simulation"
+        "referenceKind": "Simulation",
+        "sourceRange": {
+          "start": 893,
+          "end": 925
+        },
+        "blockId": "axioma-orden-1:diagram:Order1"
       }
-    ]
-  },
-  {
-    "diagramId": "Order2",
-    "diagramPath": "src/widgets/diagrams/Axiomas/Order2.tsx",
-    "usages": [
+    ],
+    "Order2": [
       {
         "contentId": "axioma-orden-2",
         "contentPath": "src/database/content/axioms/axioma-orden-2.mdx",
-        "referenceKind": "Simulation"
+        "referenceKind": "Simulation",
+        "sourceRange": {
+          "start": 864,
+          "end": 896
+        },
+        "blockId": "axioma-orden-2:diagram:Order2"
       }
-    ]
-  },
-  {
-    "diagramId": "Order3",
-    "diagramPath": "src/widgets/diagrams/Axiomas/Order3.tsx",
-    "usages": [
+    ],
+    "Order3": [
       {
         "contentId": "axioma-orden-3",
         "contentPath": "src/database/content/axioms/axioma-orden-3.mdx",
-        "referenceKind": "Simulation"
+        "referenceKind": "Simulation",
+        "sourceRange": {
+          "start": 911,
+          "end": 943
+        },
+        "blockId": "axioma-orden-3:diagram:Order3"
       }
-    ]
-  },
-  {
-    "diagramId": "Pasch",
-    "diagramPath": "src/widgets/diagrams/Axiomas/Pasch.tsx",
-    "usages": [
+    ],
+    "Pasch": [
       {
         "contentId": "axioma-orden-4",
         "contentPath": "src/database/content/axioms/axioma-orden-4.mdx",
-        "referenceKind": "Simulation"
+        "referenceKind": "Simulation",
+        "sourceRange": {
+          "start": 933,
+          "end": 964
+        },
+        "blockId": "axioma-orden-4:diagram:Pasch"
       }
-    ]
-  },
-  {
-    "diagramId": "SAS",
-    "diagramPath": "src/widgets/diagrams/Axiomas/SAS.tsx",
-    "usages": [
+    ],
+    "SAS": [
       {
         "contentId": "axioma-congruencia-5",
         "contentPath": "src/database/content/axioms/axioma-congruencia-5.mdx",
-        "referenceKind": "Simulation"
+        "referenceKind": "Simulation",
+        "sourceRange": {
+          "start": 1042,
+          "end": 1071
+        },
+        "blockId": "axioma-congruencia-5:diagram:SAS"
       }
-    ]
-  },
-  {
-    "diagramId": "GpsTrilateracion",
-    "diagramPath": "src/widgets/diagrams/CasosUso/GpsTrilateracion.tsx",
-    "usages": [
+    ],
+    "GpsTrilateracion": [
       {
         "contentId": "caso-gps-trilateracion",
         "contentPath": "src/database/content/usecases/caso-gps-trilateracion.mdx",
-        "referenceKind": "Simulation"
+        "referenceKind": "Simulation",
+        "sourceRange": {
+          "start": 525,
+          "end": 567
+        },
+        "blockId": "caso-gps-trilateracion:diagram:GpsTrilateracion"
       }
-    ]
-  },
-  {
-    "diagramId": "Altura",
-    "diagramPath": "src/widgets/diagrams/Definiciones/Altura.tsx",
-    "usages": [
+    ],
+    "Altura": [
       {
         "contentId": "altura",
         "contentPath": "src/database/content/definitions/altura.mdx",
-        "referenceKind": "Simulation"
+        "referenceKind": "Simulation",
+        "sourceRange": {
+          "start": 501,
+          "end": 533
+        },
+        "blockId": "altura:diagram:Altura"
       }
-    ]
-  },
-  {
-    "diagramId": "Angulo",
-    "diagramPath": "src/widgets/diagrams/Definiciones/Angulo.tsx",
-    "usages": [
+    ],
+    "Angulo": [
       {
         "contentId": "angulo",
         "contentPath": "src/database/content/definitions/angulo.mdx",
-        "referenceKind": "Simulation"
+        "referenceKind": "Simulation",
+        "sourceRange": {
+          "start": 543,
+          "end": 575
+        },
+        "blockId": "angulo:diagram:Angulo"
       }
-    ]
-  },
-  {
-    "diagramId": "Bisectriz",
-    "diagramPath": "src/widgets/diagrams/Definiciones/Bisectriz.tsx",
-    "usages": [
+    ],
+    "Bisectriz": [
       {
         "contentId": "bisectriz",
         "contentPath": "src/database/content/definitions/bisectriz.mdx",
-        "referenceKind": "Simulation"
+        "referenceKind": "Simulation",
+        "sourceRange": {
+          "start": 487,
+          "end": 522
+        },
+        "blockId": "bisectriz:diagram:Bisectriz"
       }
-    ]
-  },
-  {
-    "diagramId": "Circunferencia",
-    "diagramPath": "src/widgets/diagrams/Definiciones/Circunferencia.tsx",
-    "usages": [
+    ],
+    "Circunferencia": [
       {
         "contentId": "circunferencia",
         "contentPath": "src/database/content/definitions/circunferencia.mdx",
-        "referenceKind": "Simulation"
+        "referenceKind": "Simulation",
+        "sourceRange": {
+          "start": 596,
+          "end": 636
+        },
+        "blockId": "circunferencia:diagram:Circunferencia"
       }
-    ]
-  },
-  {
-    "diagramId": "Cuadrilatero",
-    "diagramPath": "src/widgets/diagrams/Definiciones/Cuadrilatero.tsx",
-    "usages": [
+    ],
+    "Cuadrilatero": [
       {
         "contentId": "cuadrilatero",
         "contentPath": "src/database/content/definitions/cuadrilatero.mdx",
-        "referenceKind": "Simulation"
+        "referenceKind": "Simulation",
+        "sourceRange": {
+          "start": 511,
+          "end": 549
+        },
+        "blockId": "cuadrilatero:diagram:Cuadrilatero"
       }
-    ]
-  },
-  {
-    "diagramId": "Mediana",
-    "diagramPath": "src/widgets/diagrams/Definiciones/Mediana.tsx",
-    "usages": [
+    ],
+    "Mediana": [
       {
         "contentId": "mediana",
         "contentPath": "src/database/content/definitions/mediana.mdx",
-        "referenceKind": "Simulation"
+        "referenceKind": "Simulation",
+        "sourceRange": {
+          "start": 507,
+          "end": 540
+        },
+        "blockId": "mediana:diagram:Mediana"
       }
-    ]
-  },
-  {
-    "diagramId": "Mediatriz",
-    "diagramPath": "src/widgets/diagrams/Definiciones/Mediatriz.tsx",
-    "usages": [
+    ],
+    "Mediatriz": [
       {
         "contentId": "mediatriz",
         "contentPath": "src/database/content/definitions/mediatriz.mdx",
-        "referenceKind": "Simulation"
+        "referenceKind": "Simulation",
+        "sourceRange": {
+          "start": 475,
+          "end": 510
+        },
+        "blockId": "mediatriz:diagram:Mediatriz"
       }
-    ]
-  },
-  {
-    "diagramId": "Paralelas",
-    "diagramPath": "src/widgets/diagrams/Definiciones/Paralelas.tsx",
-    "usages": [
+    ],
+    "Paralelas": [
       {
         "contentId": "paralelas",
         "contentPath": "src/database/content/definitions/paralelas.mdx",
-        "referenceKind": "Simulation"
+        "referenceKind": "Simulation",
+        "sourceRange": {
+          "start": 509,
+          "end": 544
+        },
+        "blockId": "paralelas:diagram:Paralelas"
       }
-    ]
-  },
-  {
-    "diagramId": "Paralelogramo",
-    "diagramPath": "src/widgets/diagrams/Definiciones/Paralelogramo.tsx",
-    "usages": [
+    ],
+    "Paralelogramo": [
       {
         "contentId": "paralelogramo",
         "contentPath": "src/database/content/definitions/paralelogramo.mdx",
-        "referenceKind": "Simulation"
+        "referenceKind": "Simulation",
+        "sourceRange": {
+          "start": 513,
+          "end": 552
+        },
+        "blockId": "paralelogramo:diagram:Paralelogramo"
       }
-    ]
-  },
-  {
-    "diagramId": "Perpendicular",
-    "diagramPath": "src/widgets/diagrams/Definiciones/Perpendicular.tsx",
-    "usages": [
+    ],
+    "Perpendicular": [
       {
         "contentId": "perpendicular",
         "contentPath": "src/database/content/definitions/perpendicular.mdx",
-        "referenceKind": "Simulation"
+        "referenceKind": "Simulation",
+        "sourceRange": {
+          "start": 528,
+          "end": 567
+        },
+        "blockId": "perpendicular:diagram:Perpendicular"
       }
-    ]
-  },
-  {
-    "diagramId": "Plano",
-    "diagramPath": "src/widgets/diagrams/Definiciones/Plano.tsx",
-    "usages": [
+    ],
+    "Plano": [
       {
         "contentId": "plano",
         "contentPath": "src/database/content/definitions/plano.mdx",
-        "referenceKind": "Simulation"
+        "referenceKind": "Simulation",
+        "sourceRange": {
+          "start": 440,
+          "end": 471
+        },
+        "blockId": "plano:diagram:Plano"
       }
-    ]
-  },
-  {
-    "diagramId": "Punto",
-    "diagramPath": "src/widgets/diagrams/Definiciones/Punto.tsx",
-    "usages": [
+    ],
+    "Punto": [
       {
         "contentId": "punto",
         "contentPath": "src/database/content/definitions/punto.mdx",
-        "referenceKind": "Simulation"
+        "referenceKind": "Simulation",
+        "sourceRange": {
+          "start": 495,
+          "end": 526
+        },
+        "blockId": "punto:diagram:Punto"
       }
-    ]
-  },
-  {
-    "diagramId": "Recta",
-    "diagramPath": "src/widgets/diagrams/Definiciones/Recta.tsx",
-    "usages": [
+    ],
+    "Recta": [
       {
         "contentId": "recta",
         "contentPath": "src/database/content/definitions/recta.mdx",
-        "referenceKind": "Simulation"
+        "referenceKind": "Simulation",
+        "sourceRange": {
+          "start": 448,
+          "end": 479
+        },
+        "blockId": "recta:diagram:Recta"
       }
-    ]
-  },
-  {
-    "diagramId": "Segmento",
-    "diagramPath": "src/widgets/diagrams/Definiciones/Segmento.tsx",
-    "usages": [
+    ],
+    "Segmento": [
       {
         "contentId": "segmento",
         "contentPath": "src/database/content/definitions/segmento.mdx",
-        "referenceKind": "Simulation"
+        "referenceKind": "Simulation",
+        "sourceRange": {
+          "start": 620,
+          "end": 654
+        },
+        "blockId": "segmento:diagram:Segmento"
       }
-    ]
-  },
-  {
-    "diagramId": "Semirrecta",
-    "diagramPath": "src/widgets/diagrams/Definiciones/Semirrecta.tsx",
-    "usages": [
+    ],
+    "Semirrecta": [
       {
         "contentId": "semirrecta",
         "contentPath": "src/database/content/definitions/semirrecta.mdx",
-        "referenceKind": "Simulation"
+        "referenceKind": "Simulation",
+        "sourceRange": {
+          "start": 581,
+          "end": 617
+        },
+        "blockId": "semirrecta:diagram:Semirrecta"
       }
-    ]
-  },
-  {
-    "diagramId": "Triangulo",
-    "diagramPath": "src/widgets/diagrams/Definiciones/Triangulo.tsx",
-    "usages": [
+    ],
+    "Triangulo": [
       {
         "contentId": "triangulo",
         "contentPath": "src/database/content/definitions/triangulo.mdx",
-        "referenceKind": "Simulation"
+        "referenceKind": "Simulation",
+        "sourceRange": {
+          "start": 668,
+          "end": 703
+        },
+        "blockId": "triangulo:diagram:Triangulo"
       }
-    ]
-  },
-  {
-    "diagramId": "ConstructivoSimulation",
-    "diagramPath": "src/widgets/diagrams/Demos/ConstructivoSimulation.tsx",
-    "usages": [
+    ],
+    "ConstructivoSimulation": [
       {
         "contentId": "leccion-metodo-constructivo",
         "contentPath": "src/database/content/lessons/leccion-metodo-constructivo.mdx",
-        "referenceKind": "Simulation"
+        "referenceKind": "Simulation",
+        "sourceRange": {
+          "start": 707,
+          "end": 755
+        },
+        "blockId": "leccion-metodo-constructivo:diagram:ConstructivoSimulation"
       }
-    ]
-  },
-  {
-    "diagramId": "ContradictionSimulation",
-    "diagramPath": "src/widgets/diagrams/Demos/ContradictionSimulation.tsx",
-    "usages": [
+    ],
+    "ContradictionSimulation": [
       {
         "contentId": "leccion-metodo-contradiccion",
         "contentPath": "src/database/content/lessons/leccion-metodo-contradiccion.mdx",
-        "referenceKind": "Simulation"
+        "referenceKind": "Simulation",
+        "sourceRange": {
+          "start": 745,
+          "end": 794
+        },
+        "blockId": "leccion-metodo-contradiccion:diagram:ContradictionSimulation"
       }
-    ]
-  },
-  {
-    "diagramId": "ContraposicionSimulation",
-    "diagramPath": "src/widgets/diagrams/Demos/ContraposicionSimulation.tsx",
-    "usages": [
+    ],
+    "ContraposicionSimulation": [
       {
         "contentId": "leccion-metodo-contraposicion",
         "contentPath": "src/database/content/lessons/leccion-metodo-contraposicion.mdx",
-        "referenceKind": "Simulation"
+        "referenceKind": "Simulation",
+        "sourceRange": {
+          "start": 613,
+          "end": 663
+        },
+        "blockId": "leccion-metodo-contraposicion:diagram:ContraposicionSimulation"
       }
-    ]
-  },
-  {
-    "diagramId": "DemoAngulosOpuestos",
-    "diagramPath": "src/widgets/diagrams/Demos/DemoAngulosOpuestos.tsx",
-    "usages": [
+    ],
+    "DemoAngulosOpuestos": [
       {
         "contentId": "demo-angulos-opuestos-verticales",
         "contentPath": "src/database/content/demonstrations/demo-angulos-opuestos-verticales.mdx",
-        "referenceKind": "Component"
+        "referenceKind": "Component",
+        "sourceRange": {
+          "start": 933,
+          "end": 954
+        },
+        "blockId": "demo-angulos-opuestos-verticales:diagram:DemoAngulosOpuestos"
       }
-    ]
-  },
-  {
-    "diagramId": "DemoAreaAditividad",
-    "diagramPath": "src/widgets/diagrams/Demos/DemoAreaAditividad.tsx",
-    "usages": [
+    ],
+    "DemoAreaAditividad": [
       {
         "contentId": "demo-area-aditividad",
         "contentPath": "src/database/content/demonstrations/demo-area-aditividad.mdx",
-        "referenceKind": "Component"
+        "referenceKind": "Component",
+        "sourceRange": {
+          "start": 841,
+          "end": 861
+        },
+        "blockId": "demo-area-aditividad:diagram:DemoAreaAditividad"
       }
-    ]
-  },
-  {
-    "diagramId": "DemoAreaRectangulo_Conmensurable",
-    "diagramPath": "src/widgets/diagrams/Demos/DemoAreaRectangulo_Conmensurable.tsx",
-    "usages": [
+    ],
+    "DemoAreaRectangulo_Conmensurable": [
       {
         "contentId": "demo-area-rectangulo",
         "contentPath": "src/database/content/demonstrations/demo-area-rectangulo.mdx",
-        "referenceKind": "Component"
+        "referenceKind": "Component",
+        "sourceRange": {
+          "start": 974,
+          "end": 1008
+        },
+        "blockId": "demo-area-rectangulo:diagram:DemoAreaRectangulo_Conmensurable"
       }
-    ]
-  },
-  {
-    "diagramId": "DemoAreaRectangulo_Inconmensurable",
-    "diagramPath": "src/widgets/diagrams/Demos/DemoAreaRectangulo_Inconmensurable.tsx",
-    "usages": [
+    ],
+    "DemoAreaRectangulo_Inconmensurable": [
       {
         "contentId": "demo-area-rectangulo",
         "contentPath": "src/database/content/demonstrations/demo-area-rectangulo.mdx",
-        "referenceKind": "Component"
+        "referenceKind": "Component",
+        "sourceRange": {
+          "start": 2163,
+          "end": 2199
+        },
+        "blockId": "demo-area-rectangulo:diagram:DemoAreaRectangulo_Inconmensurable"
       }
-    ]
-  },
-  {
-    "diagramId": "DemoCongruenciaALA",
-    "diagramPath": "src/widgets/diagrams/Demos/DemoCongruenciaALA.tsx",
-    "usages": [
+    ],
+    "DemoCongruenciaALA": [
       {
         "contentId": "demo-congruencia-ala",
         "contentPath": "src/database/content/demonstrations/demo-congruencia-ala.mdx",
-        "referenceKind": "Component"
+        "referenceKind": "Component",
+        "sourceRange": {
+          "start": 784,
+          "end": 804
+        },
+        "blockId": "demo-congruencia-ala:diagram:DemoCongruenciaALA"
       }
-    ]
-  },
-  {
-    "diagramId": "DemoCongruenciaLLL",
-    "diagramPath": "src/widgets/diagrams/Demos/DemoCongruenciaLLL.tsx",
-    "usages": [
+    ],
+    "DemoCongruenciaLLL": [
       {
         "contentId": "demo-congruencia-lll",
         "contentPath": "src/database/content/demonstrations/demo-congruencia-lll.mdx",
-        "referenceKind": "Component"
+        "referenceKind": "Component",
+        "sourceRange": {
+          "start": 809,
+          "end": 829
+        },
+        "blockId": "demo-congruencia-lll:diagram:DemoCongruenciaLLL"
       }
-    ]
-  },
-  {
-    "diagramId": "DemoDosRectasUnPunto",
-    "diagramPath": "src/widgets/diagrams/Demos/DemoDosRectasUnPunto.tsx",
-    "usages": [
+    ],
+    "DemoDosRectasUnPunto": [
       {
         "contentId": "demo-dos-rectas-un-punto",
         "contentPath": "src/database/content/demonstrations/demo-dos-rectas-un-punto.mdx",
-        "referenceKind": "Component"
+        "referenceKind": "Component",
+        "sourceRange": {
+          "start": 1244,
+          "end": 1266
+        },
+        "blockId": "demo-dos-rectas-un-punto:diagram:DemoDosRectasUnPunto"
       }
-    ]
-  },
-  {
-    "diagramId": "DemoInvarianciaTriangulacion",
-    "diagramPath": "src/widgets/diagrams/Demos/DemoInvarianciaTriangulacion.tsx",
-    "usages": [
+    ],
+    "DemoInvarianciaTriangulacion": [
       {
         "contentId": "demo-invariancia-triangulacion",
         "contentPath": "src/database/content/demonstrations/demo-invariancia-triangulacion.mdx",
-        "referenceKind": "Component"
+        "referenceKind": "Component",
+        "blockId": "demo-invariancia-triangulacion:diagram:DemoInvarianciaTriangulacion"
       }
-    ]
-  },
-  {
-    "diagramId": "DemoRectasCoincidentes",
-    "diagramPath": "src/widgets/diagrams/Demos/DemoRectasCoincidentes.tsx",
-    "usages": [
+    ],
+    "DemoRectasCoincidentes": [
       {
         "contentId": "demo-rectas-coincidentes",
         "contentPath": "src/database/content/demonstrations/demo-rectas-coincidentes.mdx",
-        "referenceKind": "Component"
+        "referenceKind": "Component",
+        "sourceRange": {
+          "start": 1308,
+          "end": 1332
+        },
+        "blockId": "demo-rectas-coincidentes:diagram:DemoRectasCoincidentes"
       }
-    ]
-  },
-  {
-    "diagramId": "DemoTriangulacionPoligono",
-    "diagramPath": "src/widgets/diagrams/Demos/DemoTriangulacionPoligono.tsx",
-    "usages": [
+    ],
+    "DemoTriangulacionPoligono": [
       {
         "contentId": "demo-triangulacion-poligono",
         "contentPath": "src/database/content/demonstrations/demo-triangulacion-poligono.mdx",
-        "referenceKind": "Component"
+        "referenceKind": "Component",
+        "blockId": "demo-triangulacion-poligono:diagram:DemoTriangulacionPoligono"
       }
-    ]
-  },
-  {
-    "diagramId": "DemoTrianguloIsosceles",
-    "diagramPath": "src/widgets/diagrams/Demos/DemoTrianguloIsosceles.tsx",
-    "usages": [
+    ],
+    "DemoTrianguloIsosceles": [
       {
         "contentId": "demo-triangulo-isosceles",
         "contentPath": "src/database/content/demonstrations/demo-triangulo-isosceles.mdx",
-        "referenceKind": "Component"
+        "referenceKind": "Component",
+        "sourceRange": {
+          "start": 974,
+          "end": 998
+        },
+        "blockId": "demo-triangulo-isosceles:diagram:DemoTrianguloIsosceles"
       }
-    ]
-  },
-  {
-    "diagramId": "DirectoSimulation",
-    "diagramPath": "src/widgets/diagrams/Demos/DirectoSimulation.tsx",
-    "usages": [
+    ],
+    "DirectoSimulation": [
       {
         "contentId": "leccion-metodo-directo",
         "contentPath": "src/database/content/lessons/leccion-metodo-directo.mdx",
-        "referenceKind": "Simulation"
+        "referenceKind": "Simulation",
+        "sourceRange": {
+          "start": 666,
+          "end": 709
+        },
+        "blockId": "leccion-metodo-directo:diagram:DirectoSimulation"
       }
-    ]
-  },
-  {
-    "diagramId": "ExhaustivoSimulation",
-    "diagramPath": "src/widgets/diagrams/Demos/ExhaustivoSimulation.tsx",
-    "usages": [
+    ],
+    "ExhaustivoSimulation": [
       {
         "contentId": "leccion-metodo-exhaustivo",
         "contentPath": "src/database/content/lessons/leccion-metodo-exhaustivo.mdx",
-        "referenceKind": "Simulation"
+        "referenceKind": "Simulation",
+        "sourceRange": {
+          "start": 604,
+          "end": 650
+        },
+        "blockId": "leccion-metodo-exhaustivo:diagram:ExhaustivoSimulation"
       }
-    ]
-  },
-  {
-    "diagramId": "GeometricoSimulation",
-    "diagramPath": "src/widgets/diagrams/Demos/GeometricoSimulation.tsx",
-    "usages": [
+    ],
+    "GeometricoSimulation": [
       {
         "contentId": "leccion-metodo-geometrico",
         "contentPath": "src/database/content/lessons/leccion-metodo-geometrico.mdx",
-        "referenceKind": "Simulation"
+        "referenceKind": "Simulation",
+        "sourceRange": {
+          "start": 697,
+          "end": 743
+        },
+        "blockId": "leccion-metodo-geometrico:diagram:GeometricoSimulation"
       }
-    ]
-  },
-  {
-    "diagramId": "InduccionSimulation",
-    "diagramPath": "src/widgets/diagrams/Demos/InduccionSimulation.tsx",
-    "usages": [
+    ],
+    "InduccionSimulation": [
       {
         "contentId": "leccion-metodo-induccion",
         "contentPath": "src/database/content/lessons/leccion-metodo-induccion.mdx",
-        "referenceKind": "Simulation"
+        "referenceKind": "Simulation",
+        "sourceRange": {
+          "start": 612,
+          "end": 657
+        },
+        "blockId": "leccion-metodo-induccion:diagram:InduccionSimulation"
       }
-    ]
-  },
-  {
-    "diagramId": "EjemploPitagorasCalculo",
-    "diagramPath": "src/widgets/diagrams/Ejercicios/EjemploPitagorasCalculo.tsx",
-    "usages": [
+    ],
+    "EjemploPitagorasCalculo": [
       {
         "contentId": "ejemplo-pitagoras-calculo",
         "contentPath": "src/database/content/examples/ejemplo-pitagoras-calculo.mdx",
-        "referenceKind": "Simulation"
+        "referenceKind": "Simulation",
+        "sourceRange": {
+          "start": 510,
+          "end": 559
+        },
+        "blockId": "ejemplo-pitagoras-calculo:diagram:EjemploPitagorasCalculo"
       }
-    ]
-  },
-  {
-    "diagramId": "EjercicioPitagorasCateto",
-    "diagramPath": "src/widgets/diagrams/Ejercicios/EjercicioPitagorasCateto.tsx",
-    "usages": [
+    ],
+    "EjercicioPitagorasCateto": [
       {
         "contentId": "ejercicio-pitagoras-cateto",
         "contentPath": "src/database/content/exercises/ejercicio-pitagoras-cateto.mdx",
-        "referenceKind": "Simulation"
+        "referenceKind": "Simulation",
+        "sourceRange": {
+          "start": 705,
+          "end": 755
+        },
+        "blockId": "ejercicio-pitagoras-cateto:diagram:EjercicioPitagorasCateto"
       }
-    ]
-  },
-  {
-    "diagramId": "ModeloCartesiano",
-    "diagramPath": "src/widgets/diagrams/Models/ModeloCartesiano.tsx",
-    "usages": [
+    ],
+    "ModeloCartesiano": [
       {
         "contentId": "modelo-cartesiano",
         "contentPath": "src/database/content/models/modelo-cartesiano.mdx",
-        "referenceKind": "Diagram"
+        "referenceKind": "Diagram",
+        "sourceRange": {
+          "start": 937,
+          "end": 976
+        },
+        "blockId": "modelo-cartesiano:diagram:ModeloCartesiano"
       }
-    ]
-  },
-  {
-    "diagramId": "ModeloFano",
-    "diagramPath": "src/widgets/diagrams/Models/ModeloFano.tsx",
-    "usages": [
+    ],
+    "ModeloFano": [
       {
         "contentId": "modelo-fano",
         "contentPath": "src/database/content/models/modelo-fano.mdx",
-        "referenceKind": "Simulation"
+        "referenceKind": "Simulation",
+        "sourceRange": {
+          "start": 487,
+          "end": 523
+        },
+        "blockId": "modelo-fano:diagram:ModeloFano"
       }
-    ]
-  },
-  {
-    "diagramId": "ModeloPoincare",
-    "diagramPath": "src/widgets/diagrams/Models/ModeloPoincare.tsx",
-    "usages": [
+    ],
+    "ModeloPoincare": [
       {
         "contentId": "modelo-poincare",
         "contentPath": "src/database/content/models/modelo-poincare.mdx",
-        "referenceKind": "Diagram"
+        "referenceKind": "Diagram",
+        "sourceRange": {
+          "start": 1014,
+          "end": 1051
+        },
+        "blockId": "modelo-poincare:diagram:ModeloPoincare"
       }
-    ]
-  },
-  {
-    "diagramId": "ModeloTresPuntos",
-    "diagramPath": "src/widgets/diagrams/Models/ModeloTresPuntos.tsx",
-    "usages": [
+    ],
+    "ModeloTresPuntos": [
       {
         "contentId": "modelo-tres-puntos",
         "contentPath": "src/database/content/models/modelo-tres-puntos.mdx",
-        "referenceKind": "Simulation"
+        "referenceKind": "Simulation",
+        "sourceRange": {
+          "start": 505,
+          "end": 547
+        },
+        "blockId": "modelo-tres-puntos:diagram:ModeloTresPuntos"
       }
-    ]
-  },
-  {
-    "diagramId": "AngulosOpuestos",
-    "diagramPath": "src/widgets/diagrams/Teoremas/AngulosOpuestos.tsx",
-    "usages": [
+    ],
+    "AngulosOpuestos": [
       {
         "contentId": "teorema-angulos-opuestos-verticales",
         "contentPath": "src/database/content/theorems/teorema-angulos-opuestos-verticales.mdx",
-        "referenceKind": "Simulation"
+        "referenceKind": "Simulation",
+        "sourceRange": {
+          "start": 987,
+          "end": 1028
+        },
+        "blockId": "teorema-angulos-opuestos-verticales:diagram:AngulosOpuestos"
       }
-    ]
-  },
-  {
-    "diagramId": "CongruenciaALA",
-    "diagramPath": "src/widgets/diagrams/Teoremas/CongruenciaALA.tsx",
-    "usages": [
+    ],
+    "CongruenciaALA": [
       {
         "contentId": "teorema-congruencia-ala",
         "contentPath": "src/database/content/theorems/teorema-congruencia-ala.mdx",
-        "referenceKind": "Simulation"
+        "referenceKind": "Simulation",
+        "sourceRange": {
+          "start": 852,
+          "end": 892
+        },
+        "blockId": "teorema-congruencia-ala:diagram:CongruenciaALA"
       }
-    ]
-  },
-  {
-    "diagramId": "CongruenciaLLL",
-    "diagramPath": "src/widgets/diagrams/Teoremas/CongruenciaLLL.tsx",
-    "usages": [
+    ],
+    "CongruenciaLLL": [
       {
         "contentId": "teorema-congruencia-lll",
         "contentPath": "src/database/content/theorems/teorema-congruencia-lll.mdx",
-        "referenceKind": "Simulation"
+        "referenceKind": "Simulation",
+        "sourceRange": {
+          "start": 846,
+          "end": 886
+        },
+        "blockId": "teorema-congruencia-lll:diagram:CongruenciaLLL"
       }
-    ]
-  },
-  {
-    "diagramId": "DemoAnguloExterno",
-    "diagramPath": "src/widgets/diagrams/Teoremas/DemoAnguloExterno.tsx",
-    "usages": [
+    ],
+    "DemoAnguloExterno": [
       {
         "contentId": "demo-angulo-externo",
         "contentPath": "src/database/content/demonstrations/demo-angulo-externo.mdx",
-        "referenceKind": "Component"
+        "referenceKind": "Component",
+        "sourceRange": {
+          "start": 1037,
+          "end": 1056
+        },
+        "blockId": "demo-angulo-externo:diagram:DemoAnguloExterno"
       }
-    ]
-  },
-  {
-    "diagramId": "DemoAngulosAlternosInternos",
-    "diagramPath": "src/widgets/diagrams/Teoremas/DemoAngulosAlternosInternos.tsx",
-    "usages": [
+    ],
+    "DemoAngulosAlternosInternos": [
       {
         "contentId": "demo-angulos-alternos-internos",
         "contentPath": "src/database/content/demonstrations/demo-angulos-alternos-internos.mdx",
-        "referenceKind": "Component"
+        "referenceKind": "Component",
+        "sourceRange": {
+          "start": 910,
+          "end": 939
+        },
+        "blockId": "demo-angulos-alternos-internos:diagram:DemoAngulosAlternosInternos"
       }
-    ]
-  },
-  {
-    "diagramId": "DemoCongruenciaAAL",
-    "diagramPath": "src/widgets/diagrams/Teoremas/DemoCongruenciaAAL.tsx",
-    "usages": [
+    ],
+    "DemoCongruenciaAAL": [
       {
         "contentId": "demo-congruencia-aal",
         "contentPath": "src/database/content/demonstrations/demo-congruencia-aal.mdx",
-        "referenceKind": "Component"
+        "referenceKind": "Component",
+        "sourceRange": {
+          "start": 1018,
+          "end": 1038
+        },
+        "blockId": "demo-congruencia-aal:diagram:DemoCongruenciaAAL"
       }
-    ]
-  },
-  {
-    "diagramId": "DemoDesigualdadTriangular",
-    "diagramPath": "src/widgets/diagrams/Teoremas/DemoDesigualdadTriangular.tsx",
-    "usages": [
+    ],
+    "DemoDesigualdadTriangular": [
       {
         "contentId": "demo-desigualdad-triangular",
         "contentPath": "src/database/content/demonstrations/demo-desigualdad-triangular.mdx",
-        "referenceKind": "Component"
+        "referenceKind": "Component",
+        "sourceRange": {
+          "start": 888,
+          "end": 915
+        },
+        "blockId": "demo-desigualdad-triangular:diagram:DemoDesigualdadTriangular"
       }
-    ]
-  },
-  {
-    "diagramId": "DemoExistenciaBisectriz",
-    "diagramPath": "src/widgets/diagrams/Teoremas/DemoExistenciaBisectriz.tsx",
-    "usages": [
+    ],
+    "DemoExistenciaBisectriz": [
       {
         "contentId": "demo-existencia-bisectriz",
         "contentPath": "src/database/content/demonstrations/demo-existencia-bisectriz.mdx",
-        "referenceKind": "Component"
+        "referenceKind": "Component",
+        "sourceRange": {
+          "start": 905,
+          "end": 930
+        },
+        "blockId": "demo-existencia-bisectriz:diagram:DemoExistenciaBisectriz"
       }
-    ]
-  },
-  {
-    "diagramId": "DemoExistenciaPerpendicular",
-    "diagramPath": "src/widgets/diagrams/Teoremas/DemoExistenciaPerpendicular.tsx",
-    "usages": [
+    ],
+    "DemoExistenciaPerpendicular": [
       {
         "contentId": "demo-existencia-perpendicular",
         "contentPath": "src/database/content/demonstrations/demo-existencia-perpendicular.mdx",
-        "referenceKind": "Component"
+        "referenceKind": "Component",
+        "sourceRange": {
+          "start": 943,
+          "end": 972
+        },
+        "blockId": "demo-existencia-perpendicular:diagram:DemoExistenciaPerpendicular"
       }
-    ]
-  },
-  {
-    "diagramId": "DemoPitagorasAreas",
-    "diagramPath": "src/widgets/diagrams/Teoremas/DemoPitagorasAreas.tsx",
-    "usages": [
+    ],
+    "DemoPitagorasAreas": [
       {
         "contentId": "demo-pitagoras-areas",
         "contentPath": "src/database/content/demonstrations/demo-pitagoras-areas.mdx",
-        "referenceKind": "Component"
+        "referenceKind": "Component",
+        "sourceRange": {
+          "start": 825,
+          "end": 845
+        },
+        "blockId": "demo-pitagoras-areas:diagram:DemoPitagorasAreas"
       }
-    ]
-  },
-  {
-    "diagramId": "DemoPitagorasEuclides",
-    "diagramPath": "src/widgets/diagrams/Teoremas/DemoPitagorasEuclides.tsx",
-    "usages": [
+    ],
+    "DemoPitagorasEuclides": [
       {
         "contentId": "demo-pitagoras-euclides",
         "contentPath": "src/database/content/demonstrations/demo-pitagoras-euclides.mdx",
-        "referenceKind": "Component"
+        "referenceKind": "Component",
+        "sourceRange": {
+          "start": 850,
+          "end": 873
+        },
+        "blockId": "demo-pitagoras-euclides:diagram:DemoPitagorasEuclides"
       }
-    ]
-  },
-  {
-    "diagramId": "DemoReciprocoTrianguloIsosceles",
-    "diagramPath": "src/widgets/diagrams/Teoremas/DemoReciprocoTrianguloIsosceles.tsx",
-    "usages": [
+    ],
+    "DemoReciprocoTrianguloIsosceles": [
       {
         "contentId": "demo-reciproco-triangulo-isosceles",
         "contentPath": "src/database/content/demonstrations/demo-reciproco-triangulo-isosceles.mdx",
-        "referenceKind": "Component"
+        "referenceKind": "Component",
+        "sourceRange": {
+          "start": 1089,
+          "end": 1122
+        },
+        "blockId": "demo-reciproco-triangulo-isosceles:diagram:DemoReciprocoTrianguloIsosceles"
       }
-    ]
-  },
-  {
-    "diagramId": "DemoSumaAngulos",
-    "diagramPath": "src/widgets/diagrams/Teoremas/DemoSumaAngulos.tsx",
-    "usages": [
+    ],
+    "DemoSumaAngulos": [
       {
         "contentId": "demo-suma-angulos-triangulo",
         "contentPath": "src/database/content/demonstrations/demo-suma-angulos-triangulo.mdx",
-        "referenceKind": "Component"
+        "referenceKind": "Component",
+        "sourceRange": {
+          "start": 781,
+          "end": 798
+        },
+        "blockId": "demo-suma-angulos-triangulo:diagram:DemoSumaAngulos"
       }
-    ]
-  },
-  {
-    "diagramId": "DemoTales",
-    "diagramPath": "src/widgets/diagrams/Teoremas/DemoTales.tsx",
-    "usages": [
+    ],
+    "DemoTales": [
       {
         "contentId": "demo-tales",
         "contentPath": "src/database/content/demonstrations/demo-tales.mdx",
-        "referenceKind": "Component"
+        "referenceKind": "Component",
+        "sourceRange": {
+          "start": 720,
+          "end": 731
+        },
+        "blockId": "demo-tales:diagram:DemoTales"
       }
-    ]
-  },
-  {
-    "diagramId": "DesigualdadTriangular",
-    "diagramPath": "src/widgets/diagrams/Teoremas/DesigualdadTriangular.tsx",
-    "usages": [
+    ],
+    "DesigualdadTriangular": [
       {
         "contentId": "teorema-desigualdad-triangular",
         "contentPath": "src/database/content/theorems/teorema-desigualdad-triangular.mdx",
-        "referenceKind": "Simulation"
+        "referenceKind": "Simulation",
+        "sourceRange": {
+          "start": 1131,
+          "end": 1178
+        },
+        "blockId": "teorema-desigualdad-triangular:diagram:DesigualdadTriangular"
       }
-    ]
-  },
-  {
-    "diagramId": "DosRectasUnPunto",
-    "diagramPath": "src/widgets/diagrams/Teoremas/DosRectasUnPunto.tsx",
-    "usages": [
+    ],
+    "DosRectasUnPunto": [
       {
         "contentId": "teorema-dos-rectas-un-punto",
         "contentPath": "src/database/content/theorems/teorema-dos-rectas-un-punto.mdx",
-        "referenceKind": "Simulation"
+        "referenceKind": "Simulation",
+        "sourceRange": {
+          "start": 1152,
+          "end": 1194
+        },
+        "blockId": "teorema-dos-rectas-un-punto:diagram:DosRectasUnPunto"
       }
-    ]
-  },
-  {
-    "diagramId": "LemaPuntoMedio",
-    "diagramPath": "src/widgets/diagrams/Teoremas/LemaPuntoMedio.tsx",
-    "usages": [
+    ],
+    "LemaPuntoMedio": [
       {
         "contentId": "lema-punto-medio",
         "contentPath": "src/database/content/theorems/lema-punto-medio.mdx",
-        "referenceKind": "Simulation"
+        "referenceKind": "Simulation",
+        "sourceRange": {
+          "start": 797,
+          "end": 837
+        },
+        "blockId": "lema-punto-medio:diagram:LemaPuntoMedio"
       }
-    ]
-  },
-  {
-    "diagramId": "Pitagoras",
-    "diagramPath": "src/widgets/diagrams/Teoremas/Pitagoras.tsx",
-    "usages": [
+    ],
+    "Pitagoras": [
       {
         "contentId": "teorema-pitagoras",
         "contentPath": "src/database/content/theorems/teorema-pitagoras.mdx",
-        "referenceKind": "Simulation"
+        "referenceKind": "Simulation",
+        "sourceRange": {
+          "start": 907,
+          "end": 942
+        },
+        "blockId": "teorema-pitagoras:diagram:Pitagoras"
       }
-    ]
-  },
-  {
-    "diagramId": "PuntoMedioPerpendicular",
-    "diagramPath": "src/widgets/diagrams/Teoremas/PuntoMedioPerpendicular.tsx",
-    "usages": [
+    ],
+    "PuntoMedioPerpendicular": [
       {
         "contentId": "teorema-punto-medio-perpendicular",
         "contentPath": "src/database/content/theorems/teorema-punto-medio-perpendicular.mdx",
-        "referenceKind": "Simulation"
+        "referenceKind": "Simulation",
+        "sourceRange": {
+          "start": 976,
+          "end": 1025
+        },
+        "blockId": "teorema-punto-medio-perpendicular:diagram:PuntoMedioPerpendicular"
       }
-    ]
-  },
-  {
-    "diagramId": "SumaAngulos",
-    "diagramPath": "src/widgets/diagrams/Teoremas/SumaAngulos.tsx",
-    "usages": [
+    ],
+    "SumaAngulos": [
       {
         "contentId": "teorema-suma-angulos-triangulo",
         "contentPath": "src/database/content/theorems/teorema-suma-angulos-triangulo.mdx",
-        "referenceKind": "Simulation"
+        "referenceKind": "Simulation",
+        "sourceRange": {
+          "start": 837,
+          "end": 874
+        },
+        "blockId": "teorema-suma-angulos-triangulo:diagram:SumaAngulos"
       }
-    ]
-  },
-  {
-    "diagramId": "Tales",
-    "diagramPath": "src/widgets/diagrams/Teoremas/Tales.tsx",
-    "usages": [
+    ],
+    "Tales": [
       {
         "contentId": "teorema-tales",
         "contentPath": "src/database/content/theorems/teorema-tales.mdx",
-        "referenceKind": "Simulation"
+        "referenceKind": "Simulation",
+        "sourceRange": {
+          "start": 755,
+          "end": 786
+        },
+        "blockId": "teorema-tales:diagram:Tales"
       }
-    ]
-  },
-  {
-    "diagramId": "TrianguloIsosceles",
-    "diagramPath": "src/widgets/diagrams/Teoremas/TrianguloIsosceles.tsx",
-    "usages": [
+    ],
+    "TrianguloIsosceles": [
       {
         "contentId": "teorema-triangulo-isosceles",
         "contentPath": "src/database/content/theorems/teorema-triangulo-isosceles.mdx",
-        "referenceKind": "Simulation"
+        "referenceKind": "Simulation",
+        "sourceRange": {
+          "start": 900,
+          "end": 944
+        },
+        "blockId": "teorema-triangulo-isosceles:diagram:TrianguloIsosceles"
       }
     ]
   }
-]
+}
