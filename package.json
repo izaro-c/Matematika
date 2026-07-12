@@ -8,6 +8,8 @@
     "dev": "npm run lean:graph && npm run generate-index && npm run content:coverage && npm run validate-graph && npm run validate-references && vite",
     "prebuild": "npm run lean:graph && npm run generate-index && npm run content:coverage && npm run validate-graph && npm run validate-references",
     "generate-index": "tsx scripts/core/generate-content-index.ts",
+    "diagram-usages:index": "tsx scripts/editor/generate-diagram-usages.ts",
+    "diagram-usages:check": "tsx scripts/editor/generate-diagram-usages.ts --check",
     "content:coverage": "tsx scripts/core/generate-content-coverage.ts",
     "ai:index": "tsx scripts/ai/generate-ai-indexes.ts",
     "ai:review": "tsx scripts/ai/review-working-tree.ts",
