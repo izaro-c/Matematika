@@ -17,7 +17,7 @@ interface MetadataPanelProps {
   canEditVisualMetadata: boolean;
   handleMetadataChange: (key: string, value: any) => void;
   handleRemoveMetadataField: (key: string) => void;
-  handleAddCustomMetadataField: () => void;
+  handleAddCustomMetadataField: (key: string) => void;
   validation: EditorValidationResult;
   blocks: Block[];
   openFile: (path: string) => void;

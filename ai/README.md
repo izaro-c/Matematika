@@ -36,6 +36,10 @@ Se elige primero un flujo en [`agent-workflows.md`](agent-workflows.md), despué
 
 `npm run ai:debt` regenera `reports/debt-report.md` con hallazgos objetivos, heurísticas léxicas y recomendaciones sobre TypeScript, diseño, estructura, tests, FSD, MDX, Lean e infraestructura IA. El comando es determinista, tolera carpetas opcionales ausentes y no falla por warnings de deuda; el informe no sustituye a los validadores especializados.
 
+## Estabilizacion del editor
+
+La Fase 8 de estabilizacion del editor esta registrada como parcial en [`phases/editor-stabilization.md`](phases/editor-stabilization.md). Los gates oficiales viven en `package.json` bajo el prefijo `editor:*`; la declaracion operativa esta en [`../docs/editor/stability.md`](../docs/editor/stability.md) y el informe de cierre parcial en [`reports/editor-stabilization-final.md`](reports/editor-stabilization-final.md).
+
 ## Inicio de sesión
 
 1. Leer `AGENTS.md`.

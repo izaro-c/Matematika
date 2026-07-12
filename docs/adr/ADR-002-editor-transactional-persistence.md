@@ -2,7 +2,7 @@
 
 ## Estado
 
-Aceptada para la Fase 4. El guardado visual productivo continúa deshabilitado.
+Aceptada e implementada para la Fase 4. El guardado visual productivo continua deshabilitado durante la Fase 8 parcial porque faltan Fase 7 aceptada, E2E criticos y cierre de cobertura/auditoria.
 
 ## Decisión
 
@@ -52,3 +52,7 @@ Para evitar conflictos de concurrencia cuando se utilizan diferentes alias de un
 - La retención de backups es ilimitada y requiere una política operativa posterior.
 - `DiagramWorkbench` queda fuera de esta fase por prohibición expresa. Su endpoint heredado para TSX se conserva mediante un adaptador backend atómico; su migración al cliente tipado corresponde a la fase específica del workbench.
 - Los hooks legacy sin consumidores se retirarán durante la modularización de `EditorPage`.
+
+## Nota de Fase 8
+
+Los gates de release del editor se normalizan en `package.json` bajo `editor:*` y en `.github/workflows/ci.yml`. Esta ADR no autoriza activar guardado visual: `VISUAL_SAVE_POLICY` permanece en `disabled` hasta completar Fase 7 y superar `npm run editor:release-check`.

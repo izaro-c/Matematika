@@ -72,6 +72,17 @@ Matematika aplica un estricto flujo de validación. Las siguientes validaciones 
 - **`npm run validate-lean`**: Requiere Lean instalado. Compila Lean, regenera el grafo lógico y valida la coherencia entre el texto en MDX y las pruebas certificadas en Lean.
 - **`npm run bridge:audit`**: Verifica la cobertura Lean y la deuda explícita (temporal) de las declaraciones que todavía no están formalmente certificadas.
 
+### Gates del editor
+
+- **`npm run editor:generated:check`**: Regenera artefactos versionados del editor/IA y falla si aparece diff.
+- **`npm run editor:roundtrip:check`**: Ejecuta la barrera lossless del corpus MDX.
+- **`npm run editor:test:unit`**: Ejecuta tests unitarios del editor, documento, estado y diagramas.
+- **`npm run editor:test:integration`**: Ejecuta tests de persistencia, hook principal y round-trip integrado.
+- **`npm run editor:test:coverage`**: Ejecuta cobertura del editor con umbrales por riesgo.
+- **`npm run editor:test:e2e`**: Gate bloqueante para la suite E2E crítica de Fase 7; falla mientras no exista `tests/e2e/`.
+- **`npm run editor:architecture`**: Verifica fronteras arquitectónicas y patrones inseguros del editor.
+- **`npm run editor:release-check`**: Gate completo de cierre del editor. Actualmente no cierra la épica porque la Fase 7/E2E no está presente.
+
 > **Política Editorial**: La carga del sistema y de las páginas en sí no falla ni se bloquea completamente si un autor enlaza hacia un artículo que "aún no existe" (ideal para flujo de redacción). El `ContentStore` (`src/entities/content/ContentStore.ts`) registrará warnings o mostrará estados 404 controlados para que la plataforma principal siga siendo navegable mientras se construye nuevo contenido.
 
 ---

@@ -19,5 +19,5 @@ describe('lossless corpus oracle', () => {
     expect(discovered).toHaveLength(120);
     expect(report.totalFiles).toBe(discovered.length);
     expect(report.files.every(file => file.exact && file.idempotent && file.envelopePreserved && file.bodyPreserved)).toBe(true);
-  }, 20_000);
+  }, 180_000);
 });

@@ -175,8 +175,20 @@ export function generateContentCoverage(options: GenerateContentCoverageOptions 
     .map(entry => toCoverageEntry(entry, contentDir, leanStatusById))
     .sort((a, b) => a.filePath.localeCompare(b.filePath));
 
+  let generatedAt = new Date().toISOString();
+  try {
+    if (fs.existsSync(outputPath)) {
+      const existing = JSON.parse(fs.readFileSync(outputPath, 'utf-8'));
+      if (existing && existing.generatedAt) {
+        generatedAt = existing.generatedAt;
+      }
+    }
+  } catch (err) {
+    // Ignore read errors
+  }
+
   const coverage: ContentCoverage = {
-    generatedAt: new Date().toISOString(),
+    generatedAt,
     summary: summarize(items),
     items,
   };

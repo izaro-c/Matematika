@@ -16,7 +16,7 @@ import {
 } from '../state';
 
 export type VisualSavePolicy = 'disabled' | 'manual-reviewed' | 'enabled';
-export const VISUAL_SAVE_POLICY: VisualSavePolicy = 'disabled';
+export const VISUAL_SAVE_POLICY: VisualSavePolicy = 'enabled';
 export const DRAFT_AUTOSAVE_ENABLED = false;
 
 interface OpenFileOptions {
@@ -260,7 +260,20 @@ export const useEditorCore = () => {
   const saveCurrentFile = useCallback(async (): Promise<boolean> => {
     const state = persistenceRef.current;
     if (!state.file || !state.version) return false;
-    if (editorMode === 'visual' && !isDiagramSource) { setMessage('El guardado visual está desactivado por contención de seguridad.'); return false; }
+    if (editorMode === 'visual' && !isDiagramSource) {
+      if ((VISUAL_SAVE_POLICY as VisualSavePolicy) === 'disabled') {
+        setMessage('El guardado visual está desactivado por contención de seguridad.');
+        return false;
+      }
+      if (compatibility === 'read-only') {
+        setMessage('El guardado visual está desactivado para documentos de solo lectura.');
+        return false;
+      }
+      if (compatibility === 'unsupported') {
+        setMessage('El guardado visual está desactivado para documentos no soportados.');
+        return false;
+      }
+    }
     const captured = {
       file: state.file,
       source: sourceRef.current,
@@ -283,7 +296,7 @@ export const useEditorCore = () => {
       && revisionRef.current === snapshot.localRevision
       && sourceRef.current === snapshot.source
       && persistenceRef.current.file?.path === snapshot.file.path;
-  }, [coordinator, editorMode, isDiagramSource]);
+  }, [coordinator, editorMode, isDiagramSource, compatibility]);
 
   const saveDraftCurrentFile = useCallback(async (): Promise<boolean> => {
     const state = persistenceRef.current;

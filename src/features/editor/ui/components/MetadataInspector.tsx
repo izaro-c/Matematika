@@ -1,11 +1,11 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { getMetadataFields, type MetadataFieldConfig } from '@/features/editor/lib/metadataFields';
 
 interface MetadataInspectorProps {
   metadata: Record<string, any>;
   onChange: (key: string, value: any) => void;
   onRemove: (key: string) => void;
-  onAddCustom: () => void;
+  onAddCustom: (key: string) => void;
   disabled?: boolean;
 }
 
@@ -23,10 +23,17 @@ export const MetadataInspector: React.FC<MetadataInspectorProps> = ({
   onAddCustom,
   disabled = false,
 }) => {
+  const [customFieldKey, setCustomFieldKey] = useState('');
   const type = String(metadata.type || '');
   const fields = getMetadataFields(type);
   const configuredKeys = new Set(fields.map(field => field.key));
   const customKeys = Object.keys(metadata).filter(key => !configuredKeys.has(key));
+  const addCustomField = () => {
+    const key = customFieldKey.trim();
+    if (key.length === 0 || Object.prototype.hasOwnProperty.call(metadata, key)) return;
+    onAddCustom(key);
+    setCustomFieldKey('');
+  };
 
   const renderField = (field: MetadataFieldConfig) => {
     const value = readFieldValue(field, metadata[field.key]);
@@ -97,13 +104,27 @@ export const MetadataInspector: React.FC<MetadataInspectorProps> = ({
           <h3 className="font-serif text-sm font-bold text-carbon">Metadatos</h3>
           <p className="mt-0.5 text-[10px] italic text-carbon/45">Campos guiados por el schema del contenido.</p>
         </div>
-        <button
-          type="button"
-          onClick={onAddCustom}
-          className="rounded border border-carbon/15 bg-carbon/5 px-2 py-1 text-[10px] font-bold text-carbon transition-colors hover:bg-carbon/10"
-        >
-          + Campo libre
-        </button>
+        <div className="flex items-center gap-1">
+          <input
+            className="w-28 rounded border border-carbon/15 bg-lienzo px-2 py-1 text-[10px] text-carbon focus:border-terracota focus:outline-none"
+            value={customFieldKey}
+            placeholder="campo"
+            onChange={(event) => setCustomFieldKey(event.target.value)}
+            onKeyDown={(event) => {
+              if (event.key === 'Enter') {
+                event.preventDefault();
+                addCustomField();
+              }
+            }}
+          />
+          <button
+            type="button"
+            onClick={addCustomField}
+            className="rounded border border-carbon/15 bg-carbon/5 px-2 py-1 text-[10px] font-bold text-carbon transition-colors hover:bg-carbon/10"
+          >
+            +
+          </button>
+        </div>
       </div>
 
       <div className="grid grid-cols-2 gap-3">

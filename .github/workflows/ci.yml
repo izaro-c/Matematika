@@ -1,4 +1,4 @@
-name: CI Pipeline (Quality & Tests)
+name: CI Pipeline (Quality Gates)
 
 on:
   push:
@@ -6,62 +6,264 @@ on:
   pull_request:
     branches: ['main']
 
-jobs:
-  validate:
-    name: Lint, Test and Validate
-    runs-on: ubuntu-latest
+permissions:
+  contents: read
 
+env:
+  NODE_VERSION: '20'
+
+jobs:
+  generated-artifacts-check:
+    name: Generated Artifacts Check
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
         with:
           fetch-depth: 0
-
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: lts/*
+          node-version: ${{ env.NODE_VERSION }}
           cache: 'npm'
-
       - name: Install dependencies
         run: npm ci
+      - name: Verify generated artifacts
+        run: npm run editor:generated:check
 
-      - name: Run Linter (ESLint + SonarJS)
-        run: npm run lint
+  typecheck:
+    name: TypeScript
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: 'npm'
+      - name: Install dependencies
+        run: npm ci
+      - name: Run typecheck
+        run: npm run typecheck
 
-      - name: Validate BCED Architecture (dependency-cruiser)
-        run: npm run depcruise
+  editor-lint:
+    name: Editor Lint
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: 'npm'
+      - name: Install dependencies
+        run: npm ci
+      - name: Run editor lint
+        run: npm run editor:lint
 
-      - name: Run Unit Tests
-        run: npm run test
+  editor-unit-tests:
+    name: Editor Unit Tests
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: 'npm'
+      - name: Install dependencies
+        run: npm ci
+      - name: Run editor unit tests
+        run: npm run editor:test:unit
 
-      - name: Validate MDX Content & References
-        # The prebuild script generates the index and validates cross-references and graph logic
-        run: npm run prebuild
+  editor-integration-tests:
+    name: Editor Integration Tests
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: 'npm'
+      - name: Install dependencies
+        run: npm ci
+      - name: Run editor integration tests
+        run: npm run editor:test:integration
+
+  editor-roundtrip:
+    name: Editor Round-Trip
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: 'npm'
+      - name: Install dependencies
+        run: npm ci
+      - name: Run lossless round-trip gate
+        run: npm run editor:roundtrip:check
+
+  editor-e2e:
+    name: Editor E2E Gate
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: 'npm'
+      - name: Install dependencies
+        run: npm ci
+      - name: Require Phase 7 critical E2E suite
+        run: npm run editor:test:e2e
+
+  architecture-check:
+    name: Architecture Check
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: 'npm'
+      - name: Install dependencies
+        run: npm ci
+      - name: Run editor architecture gates
+        run: npm run editor:architecture
+
+  content-graph-lean-validation:
+    name: Content, Graph and Lean Validation
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: 'npm'
+      - name: Install dependencies
+        run: npm ci
+      - name: Validate references
+        run: npm run validate-references
+      - name: Validate graph
+        run: npm run validate-graph
+      - name: Validate Lean bridge
+        run: npm run validate-lean
+      - name: Audit bridge debt
+        run: npm run bridge:audit
+
+  build:
+    name: Production Build
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: 'npm'
+      - name: Install dependencies
+        run: npm ci
+      - name: Build
+        run: npm run build
+      - name: Upload bundle report
+        uses: actions/upload-artifact@v4
+        with:
+          name: bundle-report
+          path: dist/stats.html
+          if-no-files-found: error
+
+  coverage-and-reports:
+    name: Coverage and Reports
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: 'npm'
+      - name: Install dependencies
+        run: npm ci
+      - name: Run editor coverage
+        run: npm run editor:test:coverage
+      - name: Upload coverage report
+        uses: actions/upload-artifact@v4
+        with:
+          name: editor-coverage
+          path: coverage
+          if-no-files-found: error
+
+  final-gate:
+    name: Final Gate
+    runs-on: ubuntu-latest
+    needs:
+      - generated-artifacts-check
+      - typecheck
+      - editor-lint
+      - editor-unit-tests
+      - editor-integration-tests
+      - editor-roundtrip
+      - editor-e2e
+      - architecture-check
+      - content-graph-lean-validation
+      - build
+      - coverage-and-reports
+    steps:
+      - name: Report success
+        run: echo "All required quality gates passed."
 
   sonarcloud:
     name: SonarCloud Analysis
     runs-on: ubuntu-latest
-
+    needs:
+      - coverage-and-reports
+    env:
+      SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
         with:
           fetch-depth: 0
-
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: lts/*
+          node-version: ${{ env.NODE_VERSION }}
           cache: 'npm'
-
       - name: Install dependencies
         run: npm ci
-
       - name: Run Tests with Coverage
         run: npm run test:coverage
-
       - name: SonarCloud Scan
+        if: ${{ env.SONAR_TOKEN != '' }}
         uses: SonarSource/sonarcloud-github-action@master
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

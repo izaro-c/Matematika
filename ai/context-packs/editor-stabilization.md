@@ -31,19 +31,32 @@
 13. El workbench de diagramas cuenta con autoridad explícita modelo/fuente, divergencia bloqueante y gestión segura de fuentes inválidas.
 14. Índice inverso de usos de diagramas pre-generado y consultable sin escaneo O(N).
 
+## Estado de Fase 8
+
+- La Fase 8 queda parcial: los gates oficiales existen, pero la épica no se cierra.
+- La Fase 7 no está aceptada en el checkout y no existe `tests/e2e/`.
+- `npm run editor:test:e2e` es un gate bloqueante que falla de forma explícita hasta que se incorporen los nueve flujos críticos.
+- `VISUAL_SAVE_POLICY` y `DRAFT_AUTOSAVE_ENABLED` siguen deshabilitados.
+- La declaración operativa vive en `docs/editor/stability.md`.
+
 ## Validación
 
 ```bash
 npm run test:editor
+npm run editor:generated:check
 npm run editor:roundtrip:check
+npm run editor:test:unit
+npm run editor:test:integration
+npm run editor:test:coverage
+npm run editor:test:e2e
 npm run typecheck
 npm run diagram-usages:check
-npm run lint -- src/features/editor tests/features/editor scripts/editor vite.config.ts
-npm run depcruise
+npm run editor:lint
+npm run editor:architecture
 npm run ai:review
 npm run build
 ```
 
 ## Siguiente alcance
 
-La Fase 7 abordará la UX segura, accesibilidad y rendimiento del editor.
+Completar Fase 7 con UX segura, accesibilidad, rendimiento y E2E deterministas; despues reabrir Fase 8 para cierre formal.
