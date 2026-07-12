@@ -22,6 +22,9 @@ export interface EditorDiagnostic {
   severity: 'info' | 'warning' | 'error' | 'critical';
   message: string;
   location?: SourceLocation;
+  sourceRange?: SourceRange;
+  blockId?: string;
+  panel?: 'visual' | 'code' | 'metadata' | 'diagram' | 'diff';
   nodeType?: string;
   operationId?: string;
 }
