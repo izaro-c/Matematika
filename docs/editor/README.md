@@ -51,7 +51,7 @@ El workbench usa autoridad explícita de modelo o fuente. Un cambio visual desde
 | `npm run editor:test:unit` | Tests unitarios de documento, estado, diagramas y validación. | No. |
 | `npm run editor:test:integration` | Persistencia, hook principal y round-trip integrado. | Solo temporales bajo `/tmp`. |
 | `npm run editor:test:coverage` | Cobertura del editor y validación de umbrales por riesgo. | `coverage/`. |
-| `npm run editor:test:e2e` | Ejecuta la suite completa de 9 flujos Puppeteer en CI/local. | No. |
+| `npm run editor:test:e2e` | Ejecuta la suite completa de 14 flujos Puppeteer en CI/local. | No. |
 | `npm run editor:lint` | ESLint acotado al editor con límite estricto de warnings. | No. |
 | `npm run editor:architecture` | Dependency Cruiser más chequeo de seguridad de patrones. | No. |
 | `npm run editor:full-check` | Ejecución local rápida de todos los gates (sin E2E). | Sí (si generados cambian). |

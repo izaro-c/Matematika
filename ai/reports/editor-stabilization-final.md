@@ -8,7 +8,7 @@
 | Campo | Valor |
 | --- | --- |
 | Rama | `chore/editor-release-gates` (derivada de `feat/editor-safe-ux`) |
-| Fases confirmadas | Fases 0-7 implementadas, validadas y aceptadas (9/9 flujos Puppeteer E2E en verde). |
+| Fases confirmadas | Fases 0-7 implementadas, validadas y aceptadas (14/14 flujos Puppeteer E2E en verde). |
 | Fase actual | Fase 8 completada, validada y cerrada definitivamente. |
 | Pipeline de CI | Rediseñado a 13 jobs automáticos bloqueantes en GitHub Actions (`.github/workflows/ci.yml`). |
 | Working tree | Limpio. Todos los índices y reportes de deuda regenerados y al día. |
@@ -23,7 +23,7 @@ Todos los gates del editor han sido unificados en `package.json` para ejecución
 | `editor:roundtrip:check` | Compara el corpus MDX contra la baseline lossless de 120 documentos. | No. |
 | `editor:test:unit` | Ejecuta la suite de pruebas unitarias lógicas y de estado. | No. |
 | `editor:test:integration` | Ejecuta pruebas de persistencia, hook principal y round-trip integrado. | Solo temporales en `/tmp`. |
-| `editor:test:e2e` | Ejecuta las pruebas Puppeteer E2E críticas (9/9 flujos). | No. |
+| `editor:test:e2e` | Ejecuta las pruebas Puppeteer E2E críticas (14/14 flujos). | No. |
 | `editor:test:coverage` | Valida cobertura contra los umbrales específicos calibrados por riesgo. | `coverage/`. |
 | `editor:lint` | Ejecuta ESLint acotado al editor con un presupuesto máximo estricto de warnings (`--max-warnings=119`). | No. |
 | `editor:architecture` | Ejecuta Depcruise y chequea patrones de imports/arquitectura seguros. | No. |
@@ -40,7 +40,7 @@ El flujo de GitHub Actions configurado en `.github/workflows/ci.yml` cuenta con 
 5. **editor-unit-tests**: Corre tests unitarios de lógica del editor.
 6. **editor-integration-tests**: Corre tests de persistencia y hooks React.
 7. **editor-roundtrip**: Asegura que el round-trip de los 120 documentos MDX sea lossless.
-8. **editor-e2e**: Levanta la app local y ejecuta Puppeteer con los 9 flujos de UX/Accesibilidad/Seguridad.
+8. **editor-e2e**: Levanta la app local y ejecuta Puppeteer con los 14 flujos de UX/Accesibilidad/Seguridad.
 9. **architecture-check**: Chequea la arquitectura de imports y FSD con Dependency Cruiser.
 10. **content-graph-lean-validation**: Valida el grafo lógico y Lean proofs.
 11. **build**: Compila la aplicación para producción.
@@ -108,7 +108,7 @@ Se ejecutaron de forma independiente todos los validadores locales y de integrac
 | `npm run editor:test:unit` | `PASS` | Tests unitarios de estado, diagramas y documento correctos. |
 | `npm run editor:test:integration` | `PASS` | Tests de persistencia, concurrencia y hooks React en verde. |
 | `npm run editor:test:coverage` | `PASS` | Cobertura por riesgo superior a los umbrales calibrados. |
-| `npm run editor:test:e2e` | `PASS` | 9/9 flujos Puppeteer de UX, accesibilidad y seguridad correctos. |
+| `npm run editor:test:e2e` | `PASS` | 14/14 flujos Puppeteer de UX, accesibilidad y seguridad correctos. |
 | `npm run editor:architecture` | `PASS` | Dependency Cruiser y patrones de seguridad verificados. |
 | `npm run build` | `PASS` | Bundle de producción generado correctamente. |
 | `npm run editor:release-check` | `PASS` | Check completo de release en verde. |
