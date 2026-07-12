@@ -25,7 +25,7 @@
 
 ## Comportamiento Protegido (Pruebas y Resultados)
 - **Suite de Pruebas Unitarias/Integración:** 165/165 tests unitarios aprobados (`PASS`).
-- **Suite de Pruebas E2E del Editor:** 9/9 flujos Puppeteer aprobados en CI/local (`PASS`).
+- **Suite de Pruebas E2E del Editor:** 14/14 flujos Puppeteer aprobados en CI/local (`PASS`).
 - **Pruebas de Roundtrip del Corpus:** 120/120 documentos MDX lossless (`PASS`).
 - **TypeScript:** Compila sin errores (`PASS`).
 - **ESLint:** Pasa con 119 warnings residuales controlados (`PASS`).
