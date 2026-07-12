@@ -76,6 +76,21 @@ export function useDiagramState() {
     });
   }, []);
 
+  const loadNewDiagram = useCallback((componentName: string, model: VisualDiagramModel) => {
+    parseRequestIdRef.current += 1;
+    if (parseDebounceTimerRef.current) clearTimeout(parseDebounceTimerRef.current);
+    parseControllerRef.current?.abort();
+    versionRef.current = '';
+    const generated = generateDiagramSource(model, componentName);
+    dispatch({
+      type: 'LOAD_NEW_DIAGRAM',
+      componentName,
+      source: generated.ok ? generated.source : '',
+      model,
+      diagnostics: generated.ok ? [] : generated.diagnostics,
+    });
+  }, []);
+
   const handleVisualEdit = useCallback((nextModel: VisualDiagramModel) => {
     dispatch({ type: 'VISUAL_EDIT', model: nextModel });
     
@@ -223,18 +238,6 @@ export function useDiagramState() {
     }
   }, []);
 
-  useEffect(() => {
-    if (import.meta.env.DEV) {
-      (window as any).__MATEMATIKA_DIAGRAM_STATE__ = {
-        state,
-        dispatch,
-        handleSourceEdit,
-        handleVisualEdit,
-        saveDiagram,
-      };
-    }
-  }, [state, handleSourceEdit, handleVisualEdit, saveDiagram]);
-
   const isDirty = state.currentSource !== state.originalSource || JSON.stringify(state.currentModel) !== JSON.stringify(state.originalModel);
 
   return {
@@ -242,6 +245,7 @@ export function useDiagramState() {
     isDirty,
     loadDiagram,
     loadInlineDiagram,
+    loadNewDiagram,
     handleVisualEdit,
     handleSourceEdit,
     selectElement,

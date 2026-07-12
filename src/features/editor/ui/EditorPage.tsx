@@ -3,7 +3,7 @@ import { useLocation } from 'wouter';
 import { useNavigationStore } from '@/features/search/NavigationStore';
 import { useEditorCore } from '../core/useEditorCore';
 import { SemanticLinker } from './components/SemanticLinker';
-import { DiagramWorkbench } from './diagrams/DiagramWorkbench';
+import { DiagramWorkbench, type DiagramWorkbenchMode } from './diagrams/DiagramWorkbench';
 import { Block, createBlockId, parseAttributes } from '../core/parser';
 import type { DiagramSpec, DiagramTargetRegistry } from '../core/editorTypes';
 import type { FileNode } from '../lib/editorContracts';
@@ -355,6 +355,23 @@ export const EditorPage: React.FC = () => {
       ? blocks.find(block => block.id === activeDiagramBlockId)
       : null;
   }, [activeDiagramBlockId, blocks]);
+
+  const diagramWorkbenchMode = useMemo<DiagramWorkbenchMode>(() => {
+    if (currentFile?.endsWith('.tsx')) {
+      return { kind: 'file', path: currentFile };
+    }
+
+    if (activeDiagramBlock) {
+      return {
+        kind: 'inline',
+        source: typeof activeDiagramBlock.metadata?.source === 'string' ? activeDiagramBlock.metadata.source : '',
+        componentName: activeDiagramBlock.content || 'DiagramaInteractivo',
+        model: activeDiagramBlock.metadata?.visualModel as Record<string, unknown> | undefined,
+      };
+    }
+
+    return { kind: 'new', componentName: 'DiagramaInteractivo' };
+  }, [activeDiagramBlock, currentFile]);
 
   const pageDiagramLinks = useMemo<PageDiagramLink[]>(() => {
     if (!currentFile?.endsWith('.mdx')) return [];
@@ -753,10 +770,8 @@ export const EditorPage: React.FC = () => {
       {/* Constructor Visual de Diagramas */}
       <DiagramWorkbench
         isOpen={diagramBuilderOpen}
-        currentFile={currentFile}
+        mode={diagramWorkbenchMode}
         metadataType={String(metadata.type || '')}
-        initialModel={activeDiagramBlock?.metadata?.visualModel as Record<string, unknown> | undefined}
-        initialSource={isDiagramFile ? rawBody : undefined}
         onClose={() => {
           setDiagramBuilderOpen(false);
           setActiveDiagramBlockId(null);
