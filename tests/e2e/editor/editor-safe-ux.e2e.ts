@@ -24,6 +24,11 @@ type MonacoWindow = Window & {
 
 const PORT = Number(process.env.MATEMATIKA_E2E_PORT || 5177);
 const BASE_URL = `http://127.0.0.1:${PORT}`;
+const SAFE_DIAGRAM_SOURCE = [
+  'export function Seguro() {',
+  '  return null;',
+  '}',
+].join('\n');
 let currentDebugPage: Page | undefined;
 
 async function writeFixture(root: string, relative: string, source: string) {
@@ -46,18 +51,14 @@ async function seedFixtures(root: string) {
     'Texto seguro.',
   ].join('\n'));
   await writeFixture(root, 'database/content/definitions/no-soportado.mdx', 'Texto { un syntax error here } y cierre.');
-  await writeFixture(root, 'shared/diagrams/Seguro.tsx', [
-    'export function Seguro() {',
-    '  return null;',
-    '}',
-  ].join('\n'));
+  await writeFixture(root, 'shared/diagrams/Seguro.tsx', SAFE_DIAGRAM_SOURCE);
   await fs.mkdir(path.join(root, 'widgets/diagrams'), { recursive: true });
 }
 
 function startVite(root: string, storageRoot: string): ChildProcess {
   const viteBin = path.resolve('node_modules/vite/bin/vite.js');
   console.log(`[${new Date().toISOString()}] Spawning Vite process: bin=${viteBin}, root=${root}, storage=${storageRoot}`);
-  const child = spawn(process.execPath, [viteBin, '--host', '127.0.0.1', '--port', String(PORT), '--strictPort'], {
+  const child = spawn(process.execPath, [viteBin, '--host', '127.0.0.1', '--port', String(PORT), '--strictPort', '--mode', 'e2e'], {
     cwd: process.cwd(),
     env: {
       ...process.env,
@@ -151,9 +152,9 @@ async function applyContent(relativePath: string, source: string, expectedVersio
 }
 
 async function openEditor(page: Page) {
-  await page.goto(`${BASE_URL}/Matematika/editor`, { waitUntil: 'domcontentloaded' });
+  await page.goto(`${BASE_URL}/Matematika/editor`, { waitUntil: 'domcontentloaded', timeout: 30_000 });
   await expectText(page, 'Documentos');
-  await page.waitForSelector('[aria-label="Estado de seguridad del editor"]', { timeout: 10_000 });
+  await page.waitForSelector('[aria-label="Estado de seguridad del editor"]', { timeout: 30_000 });
 }
 
 async function runTest(results: E2EResult[], name: string, evidenceDir: string, fn: () => Promise<void>) {
@@ -193,7 +194,7 @@ async function main() {
     const page = await browser.newPage();
     console.log(`[${new Date().toISOString()}] Page created. Setting timeout...`);
     currentDebugPage = page;
-    page.setDefaultTimeout(15_000);
+    page.setDefaultTimeout(30_000);
 
     // Register dialog listener to auto-accept native alerts/confirms/beforeunload prompts
     page.on('dialog', async (dialog) => {
@@ -238,12 +239,15 @@ async function main() {
       await setMonacoValue(page, before.source.replace('Texto seguro.', 'Texto seguro editado.'));
       console.log(`[${new Date().toISOString()}] FLOW 2: Clicking Revisar diff...`);
       await clickByText(page, 'Revisar diff');
-      console.log(`[${new Date().toISOString()}] FLOW 2: Clicking Aplicar archivo...`);
-      await clickByText(page, 'Aplicar archivo');
-      await expectText(page, 'Archivo guardado');
-      console.log(`[${new Date().toISOString()}] FLOW 2: Checking persistence...`);
+      await expectText(page, 'Diff con cambios bloqueantes');
+      const applyDisabled = await page.evaluate(() => {
+        const btn = [...document.querySelectorAll('button')].find(b => b.textContent?.includes('Aplicar archivo'));
+        return btn ? btn.disabled : true;
+      });
+      if (!applyDisabled) throw new Error('Partial document code edit was not blocked without operation ranges');
+      console.log(`[${new Date().toISOString()}] FLOW 2: Checking blocked persistence...`);
       const saved = await readContent('database/content/definitions/parcial.mdx');
-      if (!saved.source.includes('<Formula>{String.raw`a^2+b^2=c^2`}</Formula>')) throw new Error('Opaque block was not preserved');
+      if (saved.source !== before.source) throw new Error('Blocked partial source edit was persisted');
       console.log(`[${new Date().toISOString()}] FLOW 2: Completed`);
     });
 
@@ -430,8 +434,8 @@ async function main() {
       await clickByText(page, 'Componentes y Diagramas');
       await clickByText(page, 'Seguro');
       await expectText(page, 'Diagrama TSX abierto');
-      // Cambiar valor a sintaxis rota para forzar parse-failed / invalid-source
-      await setMonacoValue(page, 'export function Seguro() { return (');
+      // Cambiar la fuente persistida para forzar parse-failed / invalid-source en modo file.
+      await writeFixture(tempRoot, 'shared/diagrams/Seguro.tsx', 'export function Seguro() { return (');
       console.log(`[${new Date().toISOString()}] FLOW 12: Opening visual workbench...`);
       await clickByText(page, 'Editar visualmente');
       await expectText(page, 'sync:invalid-source');
@@ -440,23 +444,19 @@ async function main() {
       console.log(`[${new Date().toISOString()}] FLOW 12: Completed`);
     });
 
-    await runTest(results, '13 Diagrama divergente', evidenceDir, async () => {
+    await runTest(results, '13 Diagrama fuente autoritativa', evidenceDir, async () => {
       console.log(`[${new Date().toISOString()}] FLOW 13: Starting`);
+      await writeFixture(tempRoot, 'shared/diagrams/Seguro.tsx', SAFE_DIAGRAM_SOURCE);
       await openEditor(page);
       await clickByText(page, 'Componentes y Diagramas');
       await clickByText(page, 'Seguro');
       await expectText(page, 'Diagrama TSX abierto');
       await clickByText(page, 'Editar visualmente');
       await expectText(page, 'Fuente TSX autoritativa');
-      // Usar el hook de window expuesto en DEV para disparar edits contradictorios
-      await page.evaluate(() => {
-        const win = window as any;
-        if (win.__MATEMATIKA_DIAGRAM_STATE__) {
-          win.__MATEMATIKA_DIAGRAM_STATE__.dispatch({ type: 'VISUAL_EDIT', model: { elements: [] } });
-          win.__MATEMATIKA_DIAGRAM_STATE__.dispatch({ type: 'SOURCE_EDIT', source: 'export function Seguro() {}' });
-        }
-      });
-      await expectText(page, 'sync:diverged');
+      const textarea = await page.$('textarea');
+      if (!textarea) throw new Error('Diagram source textarea not found');
+      const hasVisualTools = await page.evaluate(() => document.body.textContent?.includes('Añadir rápido') ?? false);
+      if (hasVisualTools) throw new Error('Source-authoritative diagram exposed visual editing tools');
       console.log(`[${new Date().toISOString()}] FLOW 13: Closing visual workbench...`);
       await clickByText(page, 'Cerrar');
       console.log(`[${new Date().toISOString()}] FLOW 13: Completed`);

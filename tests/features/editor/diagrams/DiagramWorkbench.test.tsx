@@ -42,10 +42,12 @@ describe('DiagramWorkbench authority adapters', () => {
     render(
       <DiagramWorkbench
         isOpen
-        currentFile="src/database/content/page.mdx"
+        mode={{
+          kind: 'inline',
+          source: initialSource,
+          model: initialModel,
+        }}
         metadataType="definicion"
-        initialModel={initialModel}
-        initialSource={initialSource}
         onClose={vi.fn()}
         onConfirm={vi.fn()}
       />
@@ -60,5 +62,74 @@ describe('DiagramWorkbench authority adapters', () => {
 
     const sourceEditor = screen.getByRole('textbox') as HTMLTextAreaElement;
     expect(sourceEditor.value).toBe(initialSource);
+  });
+
+  it('does not create a template for an existing inline source without a verifiable model', async () => {
+    const originalSource = 'export const ManualInline = () => <svg data-manual="source" />;\n';
+
+    render(
+      <DiagramWorkbench
+        isOpen
+        mode={{
+          kind: 'inline',
+          source: originalSource,
+        }}
+        metadataType="definicion"
+        onClose={vi.fn()}
+        onConfirm={vi.fn()}
+      />
+    );
+
+    await waitFor(() => expect(screen.getByText(/sync:source-authoritative/)).toBeTruthy());
+    expect(screen.queryByText('Añadir rápido')).toBeNull();
+
+    const sourceEditor = screen.getByRole('textbox') as HTMLTextAreaElement;
+    expect(sourceEditor.value).toBe(originalSource);
+  });
+
+  it('loads file diagram source only from the repository', async () => {
+    const persistedSource = 'export const Persisted = () => <svg data-source="persisted" />;\n';
+    readDiagram.mockResolvedValueOnce({
+      source: persistedSource,
+      model: null,
+      parseStatus: 'unsupported',
+      diagnostics: [],
+      version: 'repo-version',
+    });
+
+    render(
+      <DiagramWorkbench
+        isOpen
+        mode={{
+          kind: 'file',
+          path: 'src/shared/diagrams/Persisted.tsx',
+        }}
+        metadataType="definicion"
+        onClose={vi.fn()}
+        onConfirm={vi.fn()}
+      />
+    );
+
+    await waitFor(() => expect(readDiagram).toHaveBeenCalledWith('src/shared/diagrams/Persisted.tsx'));
+    await waitFor(() => expect(screen.getByText(/sync:source-authoritative/)).toBeTruthy());
+
+    const sourceEditor = screen.getByRole('textbox') as HTMLTextAreaElement;
+    expect(sourceEditor.value).toBe(persistedSource);
+  });
+
+  it('creates a template only in explicit new mode', async () => {
+    render(
+      <DiagramWorkbench
+        isOpen
+        mode={{ kind: 'new', componentName: 'NuevoDiagrama' }}
+        metadataType="definicion"
+        onClose={vi.fn()}
+        onConfirm={vi.fn()}
+      />
+    );
+
+    await waitFor(() => expect(screen.getByText(/Diagrama interactivo/)).toBeTruthy());
+    expect(screen.getByText(/sync:visual-authoritative/)).toBeTruthy();
+    expect(screen.getByText('Añadir rápido')).toBeTruthy();
   });
 });

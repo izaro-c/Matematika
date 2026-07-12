@@ -62,6 +62,20 @@ describe('useDiagramState safety policy', () => {
     expect(saveDiagram).not.toHaveBeenCalled();
   });
 
+  it('creates template source only through explicit new-diagram loading', () => {
+    const model = createTemplateModel('circunferencia', 'Nuevo', 'definicion');
+    const { result } = renderHook(() => useDiagramState());
+
+    act(() => result.current.loadNewDiagram('NuevoDiagrama', model));
+
+    expect(result.current.state.filePath).toBeNull();
+    expect(result.current.state.originalSource).toBe('');
+    expect(result.current.state.currentSource).toContain('NuevoDiagrama');
+    expect(result.current.state.currentModel).toEqual(model);
+    expect(result.current.state.status).toBe('visual-authoritative');
+    expect(readDiagram).not.toHaveBeenCalled();
+  });
+
   it('blocks conflict state after the first rejected save', async () => {
     const model = createTemplateModel('circunferencia', 'Conflict', 'definicion');
     readDiagram.mockResolvedValueOnce({ source: 'original', model, version: 'v1' });
