@@ -5,7 +5,8 @@ import type { Block, BlockType } from './parser';
 import {
   openEditorDocument, enterVisualMode, applyVisualOperation,
   parseEditorDocument, getVisualCapabilities,
-  type EditorDocument, type ProjectedBlock, type SourceEdit
+  computeFingerprint,
+  type EditorDocument, type ProjectedBlock, type SourceEdit, type SourceRange
 } from '../document';
 import {
   ContentRepository, DraftRepository, SaveCoordinator, editorApiClient, hashSource,
@@ -14,6 +15,7 @@ import {
 import {
   editorPersistenceReducer, initialEditorPersistenceState, persistenceStatusLabel
 } from '../state';
+import type { ApprovedDiff, ExpectedDiffRange } from '../ux/diffReview';
 
 export type VisualSavePolicy = 'disabled' | 'manual-reviewed' | 'enabled';
 export const VISUAL_SAVE_POLICY: VisualSavePolicy = 'enabled';
@@ -78,6 +80,13 @@ class LiveSaveIdentity {
   }
 }
 
+interface TrackedVisualOperation {
+  operationId: string;
+  blockId: string;
+  range: SourceRange;
+  reason: string;
+}
+
 export const useEditorCore = () => {
   const [files, setFiles] = useState<FileNode[]>([]);
   const [editorMode, setEditorMode] = useState<EditorMode>('code');
@@ -92,6 +101,7 @@ export const useEditorCore = () => {
   const persistenceRef = useRef(persistence);
   const sourceRef = useRef('');
   const revisionRef = useRef(0);
+  const visualOperationsRef = useRef<TrackedVisualOperation[]>([]);
   const loadControllerRef = useRef<AbortController | undefined>(undefined);
   const saveIdentity = useMemo(() => new LiveSaveIdentity(), []);
   const editorSessionId = useMemo(() => crypto.randomUUID(), []);
@@ -180,6 +190,7 @@ export const useEditorCore = () => {
       const response = await contentRepository.read(file, controller.signal);
       if (controller.signal.aborted) return;
       sourceRef.current = response.source;
+      visualOperationsRef.current = [];
       setBaseSource(response.source);
       revisionRef.current = 0;
       saveIdentity.set(file.path, response.source, 0);
@@ -196,10 +207,11 @@ export const useEditorCore = () => {
     }
   }, [coordinator, saveIdentity, syncProjection]);
 
-  const commitSourceChange = useCallback((source: string, nextDoc?: EditorDocument) => {
+  const commitSourceChange = useCallback((source: string, nextDoc?: EditorDocument, visualOperation?: TrackedVisualOperation) => {
     const file = persistenceRef.current.file;
     if (!file) return;
     sourceRef.current = source;
+    visualOperationsRef.current = visualOperation ? [...visualOperationsRef.current, visualOperation] : [];
     setMessage('');
     revisionRef.current += 1;
     const revision = revisionRef.current;
@@ -246,7 +258,12 @@ export const useEditorCore = () => {
       expectedSource: block.originalSource, replacement: content };
     try {
       const nextDoc = applyVisualOperation(enterVisualMode({ document: doc, mode: 'code', appliedOperationIds: [] }), edit).document;
-      commitSourceChange(nextDoc.source, nextDoc);
+      commitSourceChange(nextDoc.source, nextDoc, {
+        operationId: edit.operationId,
+        blockId: id,
+        range: block.editRange,
+        reason: `Bloque visual ${id} editado.`,
+      });
       setMessage('Cambio visual aplicado localmente; el guardado visual permanece deshabilitado.');
     } catch (error) { setMessage(`Cambio rechazado: ${error instanceof Error ? error.message : String(error)}`); }
   }, [capabilities.canEditSafeBlocks, commitSourceChange, doc]);
@@ -257,7 +274,41 @@ export const useEditorCore = () => {
   const setExports = useCallback((_next: SetStateAction<string>) => blockUnsafeAction(), [blockUnsafeAction]);
   const setBlocks = useCallback((_next: SetStateAction<Block[]>) => blockUnsafeAction(), [blockUnsafeAction]);
 
-  const saveCurrentFile = useCallback(async (): Promise<boolean> => {
+  const getExpectedDiffRanges = useCallback((): ExpectedDiffRange[] => {
+    return visualOperationsRef.current.map(operation => ({
+      start: operation.range.start,
+      end: operation.range.end,
+      reason: operation.reason,
+      operationId: operation.operationId,
+      blockId: operation.blockId,
+    }));
+  }, []);
+
+  const hasValidPartialApproval = useCallback((
+    approval: ApprovedDiff | undefined,
+    captured: { file: { path: string }; source: string; localRevision: number; baseVersion: string },
+  ): boolean => {
+    if (!approval) return false;
+    const operationIds = getExpectedDiffRanges().map(range => range.operationId).sort();
+    return approval.documentId === captured.file.path
+      && approval.baseVersion === captured.baseVersion
+      && approval.baseSourceHash === computeFingerprint(baseSource)
+      && approval.candidateSourceHash === computeFingerprint(captured.source)
+      && approval.revision === captured.localRevision
+      && approval.operationIds.join('\0') === operationIds.join('\0')
+      && approval.expectedRanges.length === visualOperationsRef.current.length
+      && approval.expectedRanges.every(range => (
+        operationIds.includes(range.operationId)
+        && visualOperationsRef.current.some(operation => (
+          operation.operationId === range.operationId
+          && operation.blockId === range.blockId
+          && operation.range.start === range.start
+          && operation.range.end === range.end
+        ))
+      ));
+  }, [baseSource, getExpectedDiffRanges]);
+
+  const saveCurrentFile = useCallback(async (approval?: ApprovedDiff): Promise<boolean> => {
     const state = persistenceRef.current;
     if (!state.file || !state.version) return false;
     if (editorMode === 'visual' && !isDiagramSource) {
@@ -285,6 +336,14 @@ export const useEditorCore = () => {
       setMessage('No se puede aplicar: el source MDX actual no se puede analizar.');
       return false;
     }
+    if (captured.file.path.endsWith('.mdx')) {
+      const candidateDoc = parseEditorDocument(captured.source);
+      if (candidateDoc.compatibility === 'partially-editable' && !hasValidPartialApproval(approval, captured)) {
+        dispatch({ type: 'VALIDATION_FAILED', file: captured.file, localRevision: captured.localRevision, reason: 'Diff approval required' });
+        setMessage('No se puede aplicar: los documentos parcialmente editables requieren una aprobación de diff vigente.');
+        return false;
+      }
+    }
     const sourceHash = await hashSource(captured.source);
     if (persistenceRef.current.file?.path !== captured.file.path
       || revisionRef.current !== captured.localRevision
@@ -296,7 +355,7 @@ export const useEditorCore = () => {
       && revisionRef.current === snapshot.localRevision
       && sourceRef.current === snapshot.source
       && persistenceRef.current.file?.path === snapshot.file.path;
-  }, [coordinator, editorMode, isDiagramSource, compatibility]);
+  }, [coordinator, editorMode, isDiagramSource, compatibility, hasValidPartialApproval]);
 
   const saveDraftCurrentFile = useCallback(async (): Promise<boolean> => {
     const state = persistenceRef.current;
@@ -327,6 +386,7 @@ export const useEditorCore = () => {
     compatibility, compatibilityReasons, capabilities,
     removeBlock: (id: string) => blockUnsafeAction(id), addBlock: (_index: number, _type: BlockType) => blockUnsafeAction(),
     moveBlock: (_from: number, _to: number) => blockUnsafeAction(), setMetadata, setImports, setExports, setBlocks,
-    canMutateVisualStructure: false, canEditVisualMetadata: false
+    canMutateVisualStructure: false, canEditVisualMetadata: false,
+    getExpectedDiffRanges
   };
 };
