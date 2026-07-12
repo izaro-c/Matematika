@@ -30,6 +30,7 @@ interface MetadataPanelProps {
   setActiveDiagramBlockId: (id: string | null) => void;
   setDiagramBuilderOpen: (open: boolean) => void;
   insertInteractiveTargetParagraph: (target: { id: string; label?: string; color?: string }) => void;
+  onSelectIssue?: (issue: any) => void;
 }
 
 export const MetadataPanel: React.FC<MetadataPanelProps> = ({
@@ -47,6 +48,7 @@ export const MetadataPanel: React.FC<MetadataPanelProps> = ({
   setActiveDiagramBlockId,
   setDiagramBuilderOpen,
   insertInteractiveTargetParagraph,
+  onSelectIssue,
 }) => {
   const renderPageDiagramPanel = () => {
     if (pageDiagramLinks.length === 0) {
@@ -187,7 +189,7 @@ export const MetadataPanel: React.FC<MetadataPanelProps> = ({
         onAddCustom={handleAddCustomMetadataField}
       />
       {renderPageDiagramPanel()}
-      <ValidationPanel validation={validation} />
+      <ValidationPanel validation={validation} onSelectIssue={onSelectIssue} />
     </div>
   );
 };

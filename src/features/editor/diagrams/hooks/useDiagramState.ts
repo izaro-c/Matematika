@@ -223,6 +223,18 @@ export function useDiagramState() {
     }
   }, []);
 
+  useEffect(() => {
+    if (import.meta.env.DEV) {
+      (window as any).__MATEMATIKA_DIAGRAM_STATE__ = {
+        state,
+        dispatch,
+        handleSourceEdit,
+        handleVisualEdit,
+        saveDiagram,
+      };
+    }
+  }, [state, handleSourceEdit, handleVisualEdit, saveDiagram]);
+
   const isDirty = state.currentSource !== state.originalSource || JSON.stringify(state.currentModel) !== JSON.stringify(state.originalModel);
 
   return {

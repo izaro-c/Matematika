@@ -52,6 +52,9 @@ export const DiagramStatusBar: React.FC<DiagramStatusBarProps> = ({
         <span className={`inline-block h-2 w-2 rounded-full ${config.color.split(' ')[0]}`} />
         <span className={`font-bold uppercase tracking-wider text-[10px] ${config.textClass}`}>{config.label}</span>
           <span className="text-[10px] font-bold uppercase tracking-wider text-carbon/45">{presentation.title}</span>
+          <span className="rounded bg-carbon/10 px-1.5 py-0.5 font-mono text-[9px] font-semibold text-carbon lowercase" title="Estado técnico de sincronización">
+            sync:{status}
+          </span>
         </div>
         <p className="mt-1 truncate text-[10px] text-carbon/55">{presentation.description}</p>
       </div>

@@ -483,20 +483,23 @@ export function constructionOption(kind: ConstructionKind) {
 }
 
 export function defaultConstructionRefs(points: VisualPoint[]): Record<ConstructionRefKey, string> {
+  const pts = points || [];
   return {
-    a: points[0]?.id || '',
-    b: points[1]?.id || points[0]?.id || '',
-    c: points[2]?.id || points[0]?.id || '',
+    a: pts[0]?.id || '',
+    b: pts[1]?.id || pts[0]?.id || '',
+    c: pts[2]?.id || pts[0]?.id || '',
   };
 }
 
 export function normalizeConstructionRefs(points: VisualPoint[], refs: Record<ConstructionRefKey, string>): Record<ConstructionRefKey, string> {
-  const pointIds = new Set(points.map(item => item.id));
-  const defaults = defaultConstructionRefs(points);
+  const pts = points || [];
+  const pointIds = new Set(pts.map(item => item.id));
+  const defaults = defaultConstructionRefs(pts);
+  const safeRefs = refs || {};
   return {
-    a: pointIds.has(refs.a) ? refs.a : defaults.a,
-    b: pointIds.has(refs.b) ? refs.b : defaults.b,
-    c: pointIds.has(refs.c) ? refs.c : defaults.c,
+    a: pointIds.has(safeRefs.a) ? safeRefs.a : defaults.a,
+    b: pointIds.has(safeRefs.b) ? safeRefs.b : defaults.b,
+    c: pointIds.has(safeRefs.c) ? safeRefs.c : defaults.c,
   };
 }
 

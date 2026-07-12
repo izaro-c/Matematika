@@ -7,6 +7,7 @@ interface DiffReviewPanelProps {
   isApplying: boolean;
   onClose: () => void;
   onApply: () => void;
+  onSelectChange?: (change: any) => void;
 }
 
 const CLASS_LABEL: Record<string, string> = {
@@ -31,6 +32,7 @@ export const DiffReviewPanel: React.FC<DiffReviewPanelProps> = ({
   isApplying,
   onClose,
   onApply,
+  onSelectChange,
 }) => {
   const closeButtonRef = useRef<HTMLButtonElement>(null);
 
@@ -68,6 +70,11 @@ export const DiffReviewPanel: React.FC<DiffReviewPanelProps> = ({
               <p id="editor-diff-description" className="mt-1 text-xs leading-snug text-carbon/60">
                 {isStale ? 'Este diff quedó obsoleto porque cambió la revisión activa.' : review.summary}
               </p>
+              {isStale && (
+                <div className="mt-2 rounded border border-granada/30 bg-granada/5 p-2 text-xs font-semibold text-granada select-none">
+                  ⚠️ Este diff ha quedado obsoleto debido a nuevas ediciones. Requiere una nueva revisión.
+                </div>
+              )}
             </div>
             <button
               ref={closeButtonRef}
@@ -88,13 +95,36 @@ export const DiffReviewPanel: React.FC<DiffReviewPanelProps> = ({
             <ol className="space-y-3">
               {review.changes.map(change => (
                 <li key={change.id} className="rounded border border-carbon/15 bg-lienzo">
-                  <div className="flex flex-wrap items-center justify-between gap-2 border-b border-carbon/10 px-3 py-2">
-                    <span className="font-mono text-[10px] text-carbon/50">
-                      {change.beforeLine ? `L${change.beforeLine}` : 'Nueva línea'} {'->'} {change.afterLine ? `L${change.afterLine}` : 'Eliminada'}
-                    </span>
-                    <span className={`rounded border px-2 py-0.5 text-[10px] font-bold uppercase ${CLASS_STYLE[change.classification]}`}>
-                      {CLASS_LABEL[change.classification]}
-                    </span>
+                  <div className="flex flex-wrap items-center justify-between gap-2 border-b border-carbon/10 px-3 py-2 bg-carbon/5">
+                    <div className="flex items-center gap-3">
+                      <span className="font-mono text-[10px] text-carbon/50">
+                        {change.beforeLine ? `L${change.beforeLine}` : 'Nueva línea'} {'->'} {change.afterLine ? `L${change.afterLine}` : 'Eliminada'}
+                      </span>
+                      <span className="font-mono text-[9px] text-carbon/40">
+                        [{change.originalRange.start}-{change.originalRange.end}] {'->'} [{change.candidateRange.start}-{change.candidateRange.end}]
+                      </span>
+                      {onSelectChange && (
+                        <button
+                          type="button"
+                          onClick={() => {
+                            onSelectChange(change);
+                            onClose();
+                          }}
+                          className="rounded border border-salvia/30 bg-salvia/10 px-2 py-0.5 font-serif text-[9px] font-bold text-salvia hover:bg-salvia/20 cursor-pointer"
+                          title="Navegar al rango en el editor de código"
+                        >
+                          Ver en código
+                        </button>
+                      )}
+                    </div>
+                    <div className="flex items-center gap-2">
+                      <span className="font-mono text-[9px] text-carbon/50">
+                        {change.blockId ? `bloque:${change.blockId}` : change.operationId ? `operación:${change.operationId}` : 'Cambio global / código'}
+                      </span>
+                      <span className={`rounded border px-2 py-0.5 text-[9px] font-bold uppercase ${CLASS_STYLE[change.classification]}`}>
+                        {['outside-edited-range', 'unknown', 'blocking'].includes(change.classification) ? 'Hunk inesperado (bloqueante)' : CLASS_LABEL[change.classification]}
+                      </span>
+                    </div>
                   </div>
                   <div className="grid gap-0 border-b border-carbon/10 text-xs md:grid-cols-2">
                     <pre className="overflow-x-auto border-carbon/10 bg-granada/5 p-3 text-carbon/70 md:border-r">
@@ -104,7 +134,9 @@ export const DiffReviewPanel: React.FC<DiffReviewPanelProps> = ({
                       <code>{change.afterText || ' '}</code>
                     </pre>
                   </div>
-                  <p className="px-3 py-2 text-xs text-carbon/60">{change.reason}</p>
+                  <p className="px-3 py-2 text-xs text-carbon/60">
+                    <span className="font-bold">Motivo: </span>{change.reason}
+                  </p>
                 </li>
               ))}
             </ol>
