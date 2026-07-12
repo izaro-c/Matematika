@@ -1,47 +1,44 @@
 # Estado actual de la infraestructura IA
 
-**Actualizado:** 2026-07-11
+**Actualizado:** 2026-07-12
 
-**Fase:** Fase 5 — Modularización de `EditorPage` y retirada de legado completada, validada y cerrada definitivamente.
+**Fase:** Fase 6 — Estabilización y modularización del workbench de diagramas completada, validada y cerrada definitivamente.
 
-**Estado:** El editor es modular y `EditorPage.tsx` actúa como mero orquestador de componentes y paneles limpios. La lógica de persistencia transaccional y el motor documental lossless permanecen intactos y completamente protegidos. La arquitectura legacy sin consumidores ha sido retirada.
+**Estado:** El editor y el workbench de diagramas son completamente modulares. `DiagramWorkbench.tsx` actúa como mero orquestador de componentes y paneles limpios. La lógica de persistencia transaccional, el motor documental lossless, el indexado inverso de usos y las transformaciones AST deterministas permanecen intactos y completamente protegidos.
 
-## Rama y Commits de la Fase 5
-- **Rama:** `refactor/editor-modularization`
+## Rama y Commits de la Fase 6
+- **Rama:** `refactor/diagram-workbench-stability`
 - **Commits:**
-  - `b3c7540` - refactor(editor): remove obsolete editor architecture
-  - `35594dd` - refactor(editor): extract editor shell and mode controls
-  - `9ad808e` - refactor(editor): extract toolbar and navigation components
-  - `adc2e16` - refactor(editor): extract editor panels
-  - `4c10c0e` - refactor(editor): compose EditorPage from extracted components
-  - `42c933f` - chore(editor): generate ai indexes and debt report
+  - `refactor(diagrams): finalize workbench modularization`
+  - `fix(diagrams): resolve remaining synchronization defects`
+  - `feat(diagrams): finalize deterministic usage index`
+  - `test(diagrams): complete workbench regression coverage`
+  - `chore(diagrams): validate generated artifacts`
+  - `docs(ai): close diagram workbench stabilization phase`
 
-## Arquitectura Resultante de la Modularización
-- **EditorPage.tsx:** Punto de composición y enrutado de eventos principales.
-- **EditorShell.tsx:** Contenedor de la estructura del editor.
-- **EditorToolbar.tsx:** Barra de herramientas superior, modo y botones de guardar.
-- **EditorNavigation.tsx:** Barra lateral con selector jerárquico de archivos.
-- **EditorModeSwitcher.tsx:** Control deslizante de selección de modo Visual/Código.
-- **Paneles Dedicados:**
-  - `panels/CodeEditorPanel.tsx` (Monaco Editor para código y TSX).
-  - `panels/VisualEditorPanel.tsx` (Editor de bloques y presets).
-  - `panels/MetadataPanel.tsx` (Inspector, conexiones de diagramas y diagnósticos).
-  - `panels/DiagramSourcePanel.tsx` (Diagramas TSX y páginas conectadas).
+## Arquitectura Resultante de la Modularización del Workbench
+- **DiagramWorkbench.tsx:** Punto de composición y enrutado de eventos de diagramación.
+- **DiagramCanvas.tsx:** Componente reactivo que renderiza y gestiona interacciones en el lienzo JSXGraph / SVG.
+- **DiagramToolbar.tsx:** Panel de herramientas con selector de lienzo y modo de creación.
+- **DiagramInspector.tsx:** Formulario dinámico para inspeccionar y editar propiedades geométricas de los elementos seleccionados.
+- **DiagramReferencesPanel.tsx:** Mapea el índice inverso de usos del diagrama en las páginas MDX del corpus sin necesidad de escaneo O(N).
+- **DiagramCodePanel.tsx:** Panel de visualización de código TSX autogenerado y control de sincronización/regeneración.
+- **DiagramValidationPanel.tsx:** Panel que muestra diagnósticos de modelo y código en tiempo real.
+- **DiagramStatusBar.tsx:** Barra inferior que expone el estado de sincronización.
+- **Lógica xeométrica pilla:**
+  - `model/commands.ts` y `model/selectors.ts` exponen operaciones geométricas puras y constructores de modelo.
+  - `source/generator.ts` y `source/parser.ts` para transformaciones sin pérdidas y análisis AST TypeScript.
+  - `hooks/useDiagramState.ts` y `state/reducer.ts` gestionan el estado persistido y el control de revisiones/conflictos.
 
 ## Legado Eliminado
-- `src/features/editor/hooks/useEditorState.ts` (Eliminado por obsolescencia).
-- `src/features/editor/hooks/useEditorActions.ts` (Eliminado por obsolescencia).
-- `src/features/editor/ui/modals/NewFileWizardModal.tsx` (Eliminado por obsolescencia).
-
-## Legado Residual
-- Ninguno detectado. La arquitectura legacy activa del editor ha sido totalmente retirada.
+- Lógica de plantillas y mutaciones ad-hoc embebida directamente dentro de `DiagramWorkbench.tsx`.
 
 ## Comportamiento Protegido (Pruebas y Resultados)
-- **Suite de Pruebas del Editor:** 138/138 tests aprobados (`PASS`).
+- **Suite de Pruebas del Editor:** 158/158 tests aprobados (`PASS`).
 - **Pruebas de Roundtrip del Corpus:** 120/120 documentos MDX verificados lossless (`PASS`).
 - **TypeScript compilado:** Pasa sin errores (`PASS`).
 - **Dependency Cruiser:** 0 errores, 171 warnings preexistentes del proyecto (`PASS`).
 - **Bundling de Producción (Build):** Compilación y empaquetamiento correctos (`PASS`).
 
 ## Siguiente Paso Recomendado
-- Fase 6 — Estabilización y robustez del workbench de diagramas matemáticos (`DiagramWorkbench.tsx`).
+- Fase 7 — UX segura, accesibilidad y rendimiento del editor.

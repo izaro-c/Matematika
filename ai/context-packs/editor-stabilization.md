@@ -7,10 +7,14 @@
 - **Estado revisionado:** `src/features/editor/state/**`.
 - **Orquestación React:** `src/features/editor/core/useEditorCore.ts`.
 - **UI Modular:** Componentes `EditorShell`, `EditorToolbar`, `EditorNavigation`, `EditorModeSwitcher` y subpaneles bajo `ui/panels/`.
+- **Diagramas y Workbench:**
+  - Lógica pilla: `src/features/editor/diagrams/model/**` y `src/features/editor/diagrams/source/**`.
+  - UI del workbench: `src/features/editor/diagrams/ui/**` (canvas, inspector, toolbar, references, code panels).
+  - Persistencia: `src/features/editor/diagrams/hooks/useDiagramState.ts` y `src/features/editor/diagrams/state/**`.
 - **Backend de desarrollo:** servicio `scripts/editor/editorPersistenceBackend.ts`, integrado por `vite.config.ts`.
 - **ADR:** `docs/adr/ADR-001-lossless-mdx-editor.md` y `ADR-002-editor-transactional-persistence.md`.
 
-## Invariantes de Fases 0–5 (Cerradas)
+## Invariantes de Fases 0–6 (Cerradas)
 
 1. El editor es modular. `EditorPage.tsx` actúa como punto de composición.
 2. El source completo es la autoridad documental.
@@ -24,6 +28,8 @@
 10. Cambios de archivo y desmontaje cancelan efectos pendientes.
 11. Guardado visual y autosave permanecen deshabilitados.
 12. El corpus MDX se valida mediante baseline en `schemaVersion: 3`.
+13. El workbench de diagramas cuenta con autoridad explícita modelo/fuente, divergencia bloqueante y gestión segura de fuentes inválidas.
+14. Índice inverso de usos de diagramas pre-generado y consultable sin escaneo O(N).
 
 ## Validación
 
@@ -31,6 +37,7 @@
 npm run test:editor
 npm run editor:roundtrip:check
 npm run typecheck
+npm run diagram-usages:check
 npm run lint -- src/features/editor tests/features/editor scripts/editor vite.config.ts
 npm run depcruise
 npm run ai:review
@@ -39,4 +46,4 @@ npm run build
 
 ## Siguiente alcance
 
-La Fase 6 debe abordar la estabilización y robustez del workbench de diagramas matemáticos (`DiagramWorkbench.tsx`).
+La Fase 7 abordará la UX segura, accesibilidad y rendimiento del editor.
