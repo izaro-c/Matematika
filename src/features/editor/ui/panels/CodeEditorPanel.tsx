@@ -25,7 +25,7 @@ export const CodeEditorPanel: React.FC<CodeEditorPanelProps> = ({
   const editorRef = React.useRef<any>(null);
 
   useEffect(() => {
-    if (!import.meta.env.DEV) return undefined;
+    if (import.meta.env.MODE !== 'e2e') return undefined;
     window.__MATEMATIKA_EDITOR_SET_SOURCE__ = updateRawBody;
     return () => {
       if (window.__MATEMATIKA_EDITOR_SET_SOURCE__ === updateRawBody) {
