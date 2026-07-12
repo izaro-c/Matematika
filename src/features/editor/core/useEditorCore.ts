@@ -19,6 +19,10 @@ export type VisualSavePolicy = 'disabled' | 'manual-reviewed' | 'enabled';
 export const VISUAL_SAVE_POLICY: VisualSavePolicy = 'disabled';
 export const DRAFT_AUTOSAVE_ENABLED = false;
 
+interface OpenFileOptions {
+  discardLocalChanges?: boolean;
+}
+
 const contentRepository = new ContentRepository(editorApiClient);
 const draftRepository = new DraftRepository(editorApiClient);
 
@@ -83,6 +87,7 @@ export const useEditorCore = () => {
   const [blocks, setBlocksView] = useState<Block[]>([]);
   const [doc, setDoc] = useState<EditorDocument | null>(null);
   const [message, setMessage] = useState('');
+  const [baseSource, setBaseSource] = useState('');
   const [persistence, dispatch] = useReducer(editorPersistenceReducer, initialEditorPersistenceState);
   const persistenceRef = useRef(persistence);
   const sourceRef = useRef('');
@@ -91,6 +96,7 @@ export const useEditorCore = () => {
   const saveIdentity = useMemo(() => new LiveSaveIdentity(), []);
   const editorSessionId = useMemo(() => crypto.randomUUID(), []);
   const isMountedRef = useRef(true);
+  const [coordinator, setCoordinator] = useState<SaveCoordinator | null>(null);
 
   useEffect(() => {
     isMountedRef.current = true;
@@ -100,26 +106,31 @@ export const useEditorCore = () => {
   useEffect(() => { persistenceRef.current = persistence; }, [persistence]);
 
   const onCoordinatorEvent = useCallback((event: SaveCoordinatorEvent) => {
-    const { file, localRevision } = event.snapshot;
-    if (event.type === 'draft-started') dispatch({ type: 'DRAFT_SAVE_STARTED', file, localRevision });
-    else if (event.type === 'draft-succeeded') dispatch({ type: 'DRAFT_SAVE_SUCCEEDED', file, localRevision, draftId: event.draftId });
-    else if (event.type === 'apply-started') dispatch({ type: 'FILE_SAVE_STARTED', file, localRevision });
-    else if (event.type === 'apply-succeeded') {
-      const isCurrentSnapshot = saveIdentity.matches(event.snapshot);
-      dispatch({ type: isCurrentSnapshot ? 'FILE_SAVE_SUCCEEDED' : 'STALE_FILE_SAVE_SUCCEEDED',
-        file, localRevision, version: event.version, backupId: event.backupId });
-    } else if (event.error.kind === 'content-conflict') {
-      if (!saveIdentity.matches(event.snapshot)) return;
-      dispatch({ type: 'CONFLICT_DETECTED', file, localRevision,
-        expectedVersion: event.error.expectedVersion, actualVersion: event.error.actualVersion });
-    } else {
-      if (!saveIdentity.matches(event.snapshot)) return;
-      dispatch({ type: event.type === 'draft-failed' ? 'DRAFT_SAVE_FAILED' : 'FILE_SAVE_FAILED', file, localRevision, error: event.error });
-    }
+      const { file, localRevision } = event.snapshot;
+      if (event.type === 'draft-started') dispatch({ type: 'DRAFT_SAVE_STARTED', file, localRevision });
+      else if (event.type === 'draft-succeeded') dispatch({ type: 'DRAFT_SAVE_SUCCEEDED', file, localRevision, draftId: event.draftId });
+      else if (event.type === 'apply-started') dispatch({ type: 'FILE_SAVE_STARTED', file, localRevision });
+      else if (event.type === 'apply-succeeded') {
+        const isCurrentSnapshot = saveIdentity.matches(event.snapshot);
+        if (isCurrentSnapshot) setBaseSource(event.snapshot.source);
+        dispatch({ type: isCurrentSnapshot ? 'FILE_SAVE_SUCCEEDED' : 'STALE_FILE_SAVE_SUCCEEDED',
+          file, localRevision, version: event.version, backupId: event.backupId });
+      } else if (event.error.kind === 'content-conflict') {
+        if (!saveIdentity.matches(event.snapshot)) return;
+        dispatch({ type: 'CONFLICT_DETECTED', file, localRevision,
+          expectedVersion: event.error.expectedVersion, actualVersion: event.error.actualVersion });
+      } else {
+        if (!saveIdentity.matches(event.snapshot)) return;
+        dispatch({ type: event.type === 'draft-failed' ? 'DRAFT_SAVE_FAILED' : 'FILE_SAVE_FAILED', file, localRevision, error: event.error });
+      }
   }, [saveIdentity]);
 
-  const coordinator = useMemo(() => new SaveCoordinator(contentRepository, draftRepository, onCoordinatorEvent), [onCoordinatorEvent]);
-  useEffect(() => () => { loadControllerRef.current?.abort(); coordinator.dispose(); }, [coordinator]);
+  useEffect(() => {
+    const nextCoordinator = new SaveCoordinator(contentRepository, draftRepository, onCoordinatorEvent);
+    setCoordinator(nextCoordinator);
+    return () => nextCoordinator.dispose();
+  }, [onCoordinatorEvent]);
+  useEffect(() => () => { loadControllerRef.current?.abort(); }, []);
 
   const currentFile = persistence.file?.path ?? null;
   const rawBody = persistence.source;
@@ -151,15 +162,15 @@ export const useEditorCore = () => {
     setExportsView(sliceRanges(nextDoc.source, nextDoc.envelope.exportRanges));
   }, []);
 
-  const openFile = useCallback(async (filePath: string) => {
+  const openFile = useCallback(async (filePath: string, options: OpenFileOptions = {}) => {
     const file = { path: filePath };
     const active = persistenceRef.current;
-    if (active.file && active.file.path !== filePath && (active.localRevision > active.confirmedRevision || revisionRef.current > active.confirmedRevision)) {
+    if (!options.discardLocalChanges && active.file && active.file.path !== filePath && (active.localRevision > active.confirmedRevision || revisionRef.current > active.confirmedRevision)) {
       setMessage('Cambio de archivo bloqueado: existen cambios locales sin aplicar.');
       return;
     }
     loadControllerRef.current?.abort();
-    coordinator.cancelAll();
+    coordinator?.cancelAll();
     saveIdentity.clear();
     const controller = new AbortController();
     loadControllerRef.current = controller;
@@ -169,6 +180,7 @@ export const useEditorCore = () => {
       const response = await contentRepository.read(file, controller.signal);
       if (controller.signal.aborted) return;
       sourceRef.current = response.source;
+      setBaseSource(response.source);
       revisionRef.current = 0;
       saveIdentity.set(file.path, response.source, 0);
       dispatch({ type: 'FILE_LOAD_SUCCEEDED', file, source: response.source, sourceHash: response.sourceHash, version: response.version });
@@ -206,7 +218,7 @@ export const useEditorCore = () => {
       }
       dispatch({ type: 'SOURCE_HASH_RESOLVED', file, source, sourceHash, localRevision: revision });
       if (DRAFT_AUTOSAVE_ENABLED && active.version) {
-        coordinator.scheduleDraft({ file, source, sourceHash, localRevision: revision,
+        coordinator?.scheduleDraft({ file, source, sourceHash, localRevision: revision,
           baseVersion: active.version, editorSessionId });
       }
     });
@@ -265,6 +277,7 @@ export const useEditorCore = () => {
       || revisionRef.current !== captured.localRevision
       || sourceRef.current !== captured.source) return false;
     const snapshot: EditorSaveSnapshot = { ...captured, sourceHash };
+    if (!coordinator) return false;
     const confirmed = await coordinator.applyNow(snapshot);
     return confirmed
       && revisionRef.current === snapshot.localRevision
@@ -272,11 +285,32 @@ export const useEditorCore = () => {
       && persistenceRef.current.file?.path === snapshot.file.path;
   }, [coordinator, editorMode, isDiagramSource]);
 
+  const saveDraftCurrentFile = useCallback(async (): Promise<boolean> => {
+    const state = persistenceRef.current;
+    if (!coordinator || !state.file || !state.version || state.localRevision <= state.confirmedRevision) return false;
+    const source = sourceRef.current;
+    const localRevision = revisionRef.current;
+    const sourceHash = await hashSource(source);
+    if (persistenceRef.current.file?.path !== state.file.path || revisionRef.current !== localRevision || sourceRef.current !== source) {
+      return false;
+    }
+    await coordinator.saveDraftNow({
+      file: state.file,
+      source,
+      sourceHash,
+      localRevision,
+      baseVersion: state.version,
+      editorSessionId,
+    });
+    return true;
+  }, [coordinator, editorSessionId]);
+
   return {
     files, loading, currentFile, editorMode, metadata, imports, exports, blocks, rawBody,
+    baseSource, localRevision: persistence.localRevision, baseVersion: persistence.version,
     saving, dirtyState, validation, message, persistenceStatus: persistence.status,
     persistenceLabel: persistenceStatusLabel(persistence.status),
-    loadFileList, openFile, toggleEditorMode, updateRawBody, updateBlock, saveCurrentFile,
+    loadFileList, openFile, toggleEditorMode, updateRawBody, updateBlock, saveCurrentFile, saveDraftCurrentFile,
     compatibility, compatibilityReasons, capabilities,
     removeBlock: (id: string) => blockUnsafeAction(id), addBlock: (_index: number, _type: BlockType) => blockUnsafeAction(),
     moveBlock: (_from: number, _to: number) => blockUnsafeAction(), setMetadata, setImports, setExports, setBlocks,
