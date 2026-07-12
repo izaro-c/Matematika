@@ -2,9 +2,9 @@
 
 **Actualizado:** 2026-07-12
 
-**Fase:** Fase 8 — Quality gates, documentación y declaración de estabilidad completada, validada y cerrada definitivamente.
+**Fase:** Fase 8 — Quality gates, documentación y declaración de estabilidad reforzada con deuda explícita.
 
-**Estado:** El editor y el workbench de diagramas están completamente estabilizados y listos para producción (Fases 0-8). Se han incorporado 13 jobs automáticos bloqueantes en CI, verificado y calibrado la cobertura por riesgo, configurado ESLint con límite estricto de warnings (`--max-warnings=119`), y habilitado la política visual por compatibilidad de documento (`fully-editable` y `partially-editable` con diff review obligatorio).
+**Estado:** El editor y el workbench de diagramas tienen gates reales de CI, E2E y cobertura crítica. La política visual está habilitada por compatibilidad de documento (`fully-editable` y `partially-editable` con diff review obligatorio), mientras `DRAFT_AUTOSAVE_ENABLED` permanece deshabilitado. Queda deuda de cobertura de ramas en módulos concretos, registrada en `docs/editor/stability.md`.
 
 ## Rama y Commits de la Fase 8
 - **Rama:** `chore/editor-release-gates`
@@ -34,4 +34,4 @@
 - **Logical Graph / Lean Validation:** Pasa correctamente (`PASS`).
 
 ## Veredicto Final
-`FASE 8 COMPLETADA CON DEUDA NO BLOQUEANTE — ÉPICA CERRADA`
+`FASE 8 ACEPTABLE CON DEUDA EXPLÍCITA — GATES REALES REFORZADOS`

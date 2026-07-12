@@ -2,14 +2,14 @@ import React, { useState } from 'react';
 import { getMetadataFields, type MetadataFieldConfig } from '@/features/editor/lib/metadataFields';
 
 interface MetadataInspectorProps {
-  metadata: Record<string, any>;
-  onChange: (key: string, value: any) => void;
+  metadata: Record<string, unknown>;
+  onChange: (key: string, value: unknown) => void;
   onRemove: (key: string) => void;
   onAddCustom: (key: string) => void;
   disabled?: boolean;
 }
 
-function readFieldValue(field: MetadataFieldConfig, value: any) {
+function readFieldValue(field: MetadataFieldConfig, value: unknown) {
   if (value !== undefined) return value;
   if (field.type === 'array') return [];
   if (field.type === 'boolean') return false;

@@ -26,17 +26,18 @@
 8. Los conflictos devuelven `409` discriminados (`content-conflict` y `draft-conflict`), preservando el source local sin sobrescritura.
 9. Los borradores se guardan inmutables por sesión y revisión, gestionando un puntero global `latest.json` y carpetas `revisions/`.
 10. Cambios de archivo y desmontaje cancelan efectos pendientes.
-11. Guardado visual y autosave permanecen deshabilitados.
+11. Guardado visual habilitado por compatibilidad; autosave automático deshabilitado.
 12. El corpus MDX se valida mediante baseline en `schemaVersion: 3`.
 13. El workbench de diagramas cuenta con autoridad explícita modelo/fuente, divergencia bloqueante y gestión segura de fuentes inválidas.
 14. Índice inverso de usos de diagramas pre-generado y consultable sin escaneo O(N).
 
 ## Estado de Fase 8
 
-- La Fase 8 queda parcial: los gates oficiales existen, pero la épica no se cierra.
-- La Fase 7 no está aceptada en el checkout y no existe `tests/e2e/`.
-- `npm run editor:test:e2e` es un gate bloqueante que falla de forma explícita hasta que se incorporen los nueve flujos críticos.
-- `VISUAL_SAVE_POLICY` y `DRAFT_AUTOSAVE_ENABLED` siguen deshabilitados.
+- La Fase 8 tiene gates reales de editor, E2E y cobertura por archivo crítico.
+- `tests/e2e/editor/editor-safe-ux.e2e.ts` ejecuta 14 flujos contra Vite/Puppeteer reales.
+- `VISUAL_SAVE_POLICY` está `enabled`.
+- `DRAFT_AUTOSAVE_ENABLED` está `false`; el guardado de borrador es manual y no aplica contenido real.
+- Queda deuda de cobertura de ramas por debajo de 90% en generador, diff y hook, aunque los umbrales activos son bloqueantes y reflejan la cobertura verificada.
 - La declaración operativa vive en `docs/editor/stability.md`.
 
 ## Validación

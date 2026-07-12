@@ -155,6 +155,55 @@ describe('useEditorCore lossless integration', () => {
     expect(result.current.message).toContain('requieren una aprobación de diff vigente');
   });
 
+  it('blocks applying invalid MDX source before persistence', async () => {
+    const fetchMock = vi.mocked(fetch).mockResolvedValueOnce(readResponse(source, 'content/broken-save.mdx'));
+    const { result } = renderHook(() => useEditorCore());
+    await act(() => result.current.openFile('content/broken-save.mdx'));
+    act(() => result.current.updateRawBody('Texto { un syntax error here } y cierre.'));
+    await waitFor(() => expect(result.current.rawBody).toContain('syntax error'));
+
+    let saved = true;
+    await act(async () => { saved = await result.current.saveCurrentFile(); });
+
+    expect(saved).toBe(false);
+    expect(result.current.message).toContain('source MDX actual no se puede analizar');
+    expect(fetchMock).toHaveBeenCalledTimes(1);
+  });
+
+  it('saves a draft manually when the current revision is dirty', async () => {
+    let draftRequest: Record<string, unknown> | undefined;
+    const fetchMock = vi.mocked(fetch)
+      .mockResolvedValueOnce(readResponse(source, 'content/draft.mdx'))
+      .mockImplementationOnce(async (_url, init) => {
+        draftRequest = JSON.parse(String(init?.body));
+        return response({
+          path: draftRequest.path,
+          sourceHash: draftRequest.sourceHash,
+          baseVersion: draftRequest.baseVersion,
+          localRevision: draftRequest.localRevision,
+          editorSessionId: draftRequest.editorSessionId,
+          disposition: 'accepted',
+          draftId: 'draft-1',
+        });
+      });
+    const { result } = renderHook(() => useEditorCore());
+    await act(() => result.current.openFile('content/draft.mdx'));
+    const changed = source.replace('Un cuerpo', 'Borrador');
+    act(() => result.current.updateRawBody(changed));
+    await waitFor(() => expect(result.current.rawBody).toBe(changed));
+
+    let saved = false;
+    await act(async () => { saved = await result.current.saveDraftCurrentFile(); });
+
+    expect(saved).toBe(true);
+    expect(draftRequest).toMatchObject({
+      path: 'content/draft.mdx',
+      source: changed,
+      localRevision: 1,
+    });
+    expect(fetchMock).toHaveBeenCalledTimes(2);
+  });
+
   it('allows a partially editable save only with a matching operation-bound approval', async () => {
     const fetchMock = vi.mocked(fetch)
       .mockResolvedValueOnce(readResponse(partialSource, 'content/partial.mdx'))

@@ -7,7 +7,7 @@ interface DiffReviewPanelProps {
   isApplying: boolean;
   onClose: () => void;
   onApply: () => void;
-  onSelectChange?: (change: any) => void;
+  onSelectChange?: (change: DiffReview['changes'][number]) => void;
 }
 
 const CLASS_LABEL: Record<string, string> = {

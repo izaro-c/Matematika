@@ -6,9 +6,9 @@
 - Fase 5: modularización de `EditorPage` y retirada de legado estructural completada y validadas con éxito.
 - Fase 6: estabilización y modularización del workbench de diagramas completada, validada y cerrada definitivamente.
 - Fase 7: UX segura, accesibilidad, rendimiento y E2E del editor completada, validada y cerrada con 9 flujos de prueba.
-- Fase 8: Quality gates, documentación y declaración de estabilidad completada, validada y cerrada definitivamente.
+- Fase 8: Quality gates, documentación y declaración de estabilidad reforzada; cierre aceptable con deuda explícita de cobertura de ramas.
 - Persistencia transaccional completamente implementada con locking canónico de rutas, política de borradores multi-sesión y guardado visual habilitado por compatibilidad de documento.
-- Veredicto final de la épica: FASE 8 COMPLETADA CON DEUDA NO BLOQUEANTE — ÉPICA CERRADA.
+- Veredicto final de la épica: FASE 8 ACEPTABLE CON DEUDA EXPLÍCITA — GATES REALES REFORZADOS.
 
 ## Garantías de Fases 0–6
 
@@ -29,5 +29,5 @@
 | MDX del corpus | 120 |
 | Cambios accidentales | 0 |
 | Ciclos no idempotentes | 0 |
-| Pruebas del editor | 165 aprobadas (unit/integration) + 9 (E2E) |
+| Pruebas del editor | 223 aprobadas (unit/integration) + 14 flujos E2E |
 | Warnings Dependency Cruiser preexistentes | 171 |

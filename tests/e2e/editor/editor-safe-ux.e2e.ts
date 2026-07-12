@@ -10,18 +10,6 @@ interface E2EResult {
   detail: string;
 }
 
-type MonacoWindow = Window & {
-  __MATEMATIKA_EDITOR_SET_SOURCE__?: (source: string) => void;
-  monaco?: {
-    editor?: {
-      getModels?: () => Array<{
-        setValue(value: string): void;
-        getValue(): string;
-      }>;
-    };
-  };
-};
-
 const PORT = Number(process.env.MATEMATIKA_E2E_PORT || 5177);
 const BASE_URL = `http://127.0.0.1:${PORT}`;
 const SAFE_DIAGRAM_SOURCE = [
@@ -128,10 +116,16 @@ async function expectText(page: Page, text: string) {
 }
 
 async function setMonacoValue(page: Page, source: string) {
-  await page.waitForFunction(() => typeof (window as MonacoWindow).__MATEMATIKA_EDITOR_SET_SOURCE__ === 'function', { timeout: 15_000 });
-  await page.evaluate((nextSource) => {
-    (window as MonacoWindow).__MATEMATIKA_EDITOR_SET_SOURCE__?.(nextSource);
-  }, source);
+  await page.waitForSelector('.monaco-editor textarea', { timeout: 15_000 });
+  await page.click('.monaco-editor textarea');
+  const modifier = process.platform === 'darwin' ? 'Meta' : 'Control';
+  await page.keyboard.down(modifier);
+  await page.keyboard.press('A');
+  await page.keyboard.up(modifier);
+  await page.keyboard.press('Backspace');
+  const client = await page.target().createCDPSession();
+  await client.send('Input.insertText', { text: source });
+  await client.detach();
 }
 
 async function readContent(relativePath: string) {

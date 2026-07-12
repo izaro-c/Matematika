@@ -1,7 +1,7 @@
 # Declaración de estabilidad del editor
 
 **Fecha:** 2026-07-12  
-**Veredicto:** FASE 8 COMPLETADA CON DEUDA NO BLOQUEANTE — ÉPICA CERRADA
+**Veredicto:** FASE 8 reforzada con gates reales; cierre aceptable con deuda explícita de cobertura de ramas en generador/diff y validaciones finales pendientes de ejecución completa.
 
 La estabilidad del editor de Matematika ha sido endurecida y validada de forma definitiva mediante gates automatizados.
 
@@ -18,8 +18,21 @@ La estabilidad del editor de Matematika ha sido endurecida y validada de forma d
 | **DiagramWorkbench** | `stable` | Authority model, parser AST de diagramas TSX e índice inverso de usos para abrir sin escaneo O(N). | Modificaciones de diagramas complejos requieren edición de código. | `npm run editor:test:unit` y `diagram-usages:check` |
 | **Accesibilidad** | `stable` | Marcadores de seguridad de contraste y navegación completa por teclado con Enter/Tab. | Requiere lectores de pantalla compatibles con ARIA estándar. | `npm run editor:test:e2e` (Flujo 9) |
 | **Responsive** | `stable` | Layout modular con panel lateral flexible y adaptabilidad a viewports. | Editor avanzado optimizado para pantallas de escritorio. | Manual y E2E. |
-| **E2E** | `stable` | Suite de 9 flujos críticos en Puppeteer integrada en el pipeline. | Ninguna. | `npm run editor:test:e2e` |
+| **E2E** | `stable` | Suite de 14 flujos críticos en Puppeteer contra Vite real, sin globals internos `__MATEMATIKA_`. | Depende de Chromium/Puppeteer disponibles en el entorno. | `npm run editor:test:e2e` |
 | **CI** | `stable` | Pipeline con 13 jobs independientes y bloqueantes configurados en GitHub Actions. | Ninguna. | `.github/workflows/ci.yml` |
+
+## Resultado de cobertura crítica verificado
+
+| Módulo | Líneas | Ramas |
+| --- | ---: | ---: |
+| `diagrams/state/reducer.ts` | 100% | 91.37% |
+| `diagrams/hooks/useDiagramState.ts` | 91.42% | 68.11% |
+| `diagrams/persistence/repository.ts` | 100% | 100% |
+| `diagrams/source/parser.ts` | 100% | 93.33% |
+| `diagrams/source/generator.ts` | 100% | 83.03% |
+| `ux/diffReview.ts` | 98.66% | 83.83% |
+| `core/useEditorCore.ts` | 89.2% | 76.68% |
+| `persistence/saveCoordinator.ts` | 100% | 81.25% |
 
 ---
 
