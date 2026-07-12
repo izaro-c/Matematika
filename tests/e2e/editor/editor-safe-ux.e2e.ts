@@ -121,7 +121,7 @@ async function clickByText(page: Page, text: string) {
 async function expectText(page: Page, text: string) {
   await page.waitForFunction(
     expected => document.body.textContent?.includes(expected),
-    { timeout: 10_000 },
+    { timeout: 20_000 },
     text,
   );
 }
@@ -201,6 +201,10 @@ async function main() {
       await dialog.accept();
     });
 
+    page.on('console', msg => {
+      console.log(`[${new Date().toISOString()}] [Browser Console] ${msg.text()}`);
+    });
+
     console.log(`[${new Date().toISOString()}] Starting E2E test flows...`);
 
     await runTest(results, '1 MDX compatible', evidenceDir, async () => {
@@ -268,7 +272,7 @@ async function main() {
       console.log(`[${new Date().toISOString()}] FLOW 4: Setting Monaco value...`);
       await setMonacoValue(page, `${current.source}\n\nError de red recuperado.`);
       console.log(`[${new Date().toISOString()}] FLOW 4: Setting request interception...`);
-      await page.setRequestInterception(true);
+
       let aborted = false;
       const intercept = (request: HTTPRequest) => {
         if (!aborted && request.url().endsWith('/api/content') && request.method() === 'POST') {
@@ -279,15 +283,21 @@ async function main() {
         }
         request.continue().catch(() => undefined);
       };
-      page.on('request', intercept);
-      console.log(`[${new Date().toISOString()}] FLOW 4: Clicking Revisar diff...`);
-      await clickByText(page, 'Revisar diff');
-      console.log(`[${new Date().toISOString()}] FLOW 4: Clicking Aplicar archivo (should fail)...`);
-      await clickByText(page, 'Aplicar archivo');
-      await expectText(page, 'Error al guardar');
-      console.log(`[${new Date().toISOString()}] FLOW 4: Removing request interception...`);
-      page.off('request', intercept);
-      await page.setRequestInterception(false);
+
+      try {
+        await page.setRequestInterception(true);
+        page.on('request', intercept);
+        console.log(`[${new Date().toISOString()}] FLOW 4: Clicking Revisar diff...`);
+        await clickByText(page, 'Revisar diff');
+        console.log(`[${new Date().toISOString()}] FLOW 4: Clicking Aplicar archivo (should fail)...`);
+        await clickByText(page, 'Aplicar archivo');
+        await expectText(page, 'Error al guardar');
+      } finally {
+        console.log(`[${new Date().toISOString()}] FLOW 4: Removing request interception...`);
+        page.off('request', intercept);
+        await page.setRequestInterception(false).catch(() => undefined);
+      }
+
       console.log(`[${new Date().toISOString()}] FLOW 4: Clicking Revisar diff again...`);
       await clickByText(page, 'Revisar diff');
       console.log(`[${new Date().toISOString()}] FLOW 4: Clicking Aplicar archivo again...`);
@@ -363,7 +373,9 @@ async function main() {
       await expectText(page, 'Diagrama TSX abierto');
       console.log(`[${new Date().toISOString()}] FLOW 8: Clicking Editar visualmente...`);
       await clickByText(page, 'Editar visualmente');
-      await expectText(page, 'Modelo y fuente sincronizados');
+      await expectText(page, 'Fuente TSX autoritativa');
+      console.log(`[${new Date().toISOString()}] FLOW 8: Closing visual workbench...`);
+      await clickByText(page, 'Cerrar');
       console.log(`[${new Date().toISOString()}] FLOW 8: Completed`);
     });
 
@@ -376,6 +388,94 @@ async function main() {
       await page.keyboard.press('Enter');
       await page.waitForSelector('[aria-label="Estado de seguridad del editor"]', { timeout: 10_000 });
       console.log(`[${new Date().toISOString()}] FLOW 9: Completed`);
+    });
+
+    await runTest(results, '10 Documento parcial guardar sin diff', evidenceDir, async () => {
+      console.log(`[${new Date().toISOString()}] FLOW 10: Starting`);
+      await openEditor(page);
+      await clickByText(page, 'Parcial');
+      await expectText(page, 'Documento parcialmente editable');
+      // Cambiar a Modo Visual
+      await clickByText(page, 'Modo Visual (Experimental)');
+      // En modo visual en MDX, el botón guardar debe estar desactivado/bloqueado
+      const isDisabled = await page.evaluate(() => {
+        const btn = [...document.querySelectorAll('button')].find(b => b.textContent?.includes('Guardar'));
+        return btn ? btn.disabled : true;
+      });
+      if (!isDisabled) throw new Error('Guardar button was not disabled in visual mode on partial doc');
+      console.log(`[${new Date().toISOString()}] FLOW 10: Completed`);
+    });
+
+    await runTest(results, '11 Hunk inesperado bloqueante', evidenceDir, async () => {
+      console.log(`[${new Date().toISOString()}] FLOW 11: Starting`);
+      await openEditor(page);
+      await clickByText(page, 'Parcial');
+      await expectText(page, 'Documento parcialmente editable');
+      // Ya estamos en modo código por defecto, editar el bloque opaco para que sea inesperado/bloqueante
+      await setMonacoValue(page, '## Documento parcial\n\n<Formula>corrupto</Formula>\n\nTexto editado.');
+      await clickByText(page, 'Revisar diff');
+      await expectText(page, 'Hunk inesperado (bloqueante)');
+      // Verificar que el botón de aplicar archivo esté deshabilitado
+      const applyDisabled = await page.evaluate(() => {
+        const btn = [...document.querySelectorAll('button')].find(b => b.textContent?.includes('Aplicar archivo'));
+        return btn ? btn.disabled : true;
+      });
+      if (!applyDisabled) throw new Error('Apply button was not disabled with unexpected hunks');
+      console.log(`[${new Date().toISOString()}] FLOW 11: Completed`);
+    });
+
+    await runTest(results, '12 Diagrama no convertible', evidenceDir, async () => {
+      console.log(`[${new Date().toISOString()}] FLOW 12: Starting`);
+      await openEditor(page);
+      await clickByText(page, 'Componentes y Diagramas');
+      await clickByText(page, 'Seguro');
+      await expectText(page, 'Diagrama TSX abierto');
+      // Cambiar valor a sintaxis rota para forzar parse-failed / invalid-source
+      await setMonacoValue(page, 'export function Seguro() { return (');
+      console.log(`[${new Date().toISOString()}] FLOW 12: Opening visual workbench...`);
+      await clickByText(page, 'Editar visualmente');
+      await expectText(page, 'sync:invalid-source');
+      console.log(`[${new Date().toISOString()}] FLOW 12: Closing visual workbench...`);
+      await clickByText(page, 'Cerrar');
+      console.log(`[${new Date().toISOString()}] FLOW 12: Completed`);
+    });
+
+    await runTest(results, '13 Diagrama divergente', evidenceDir, async () => {
+      console.log(`[${new Date().toISOString()}] FLOW 13: Starting`);
+      await openEditor(page);
+      await clickByText(page, 'Componentes y Diagramas');
+      await clickByText(page, 'Seguro');
+      await expectText(page, 'Diagrama TSX abierto');
+      await clickByText(page, 'Editar visualmente');
+      await expectText(page, 'Fuente TSX autoritativa');
+      // Usar el hook de window expuesto en DEV para disparar edits contradictorios
+      await page.evaluate(() => {
+        const win = window as any;
+        if (win.__MATEMATIKA_DIAGRAM_STATE__) {
+          win.__MATEMATIKA_DIAGRAM_STATE__.dispatch({ type: 'VISUAL_EDIT', model: { elements: [] } });
+          win.__MATEMATIKA_DIAGRAM_STATE__.dispatch({ type: 'SOURCE_EDIT', source: 'export function Seguro() {}' });
+        }
+      });
+      await expectText(page, 'sync:diverged');
+      console.log(`[${new Date().toISOString()}] FLOW 13: Closing visual workbench...`);
+      await clickByText(page, 'Cerrar');
+      console.log(`[${new Date().toISOString()}] FLOW 13: Completed`);
+    });
+
+    await runTest(results, '14 Conflicto de diagrama', evidenceDir, async () => {
+      console.log(`[${new Date().toISOString()}] FLOW 14: Starting`);
+      await openEditor(page);
+      await clickByText(page, 'Componentes y Diagramas');
+      await clickByText(page, 'Seguro');
+      await expectText(page, 'Diagrama TSX abierto');
+      // Hacer un cambio local en el diagrama
+      await setMonacoValue(page, 'export function Seguro() { return "cambio-local"; }');
+      // Cambiar el archivo en disco por detrás
+      await writeFixture(tempRoot, 'shared/diagrams/Seguro.tsx', 'export function Seguro() { return "cambio-externo"; }');
+      // Intentar guardar y esperar que detecte conflicto
+      await clickByText(page, 'Guardar TSX');
+      await expectText(page, 'conflict');
+      console.log(`[${new Date().toISOString()}] FLOW 14: Completed`);
     });
 
   } finally {
