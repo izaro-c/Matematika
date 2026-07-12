@@ -218,7 +218,19 @@ export function extractLeanArtifacts(leanRoot: string, cwd = process.cwd()): { g
     }
   }
 
-  const generatedAt = new Date().toISOString();
+  let generatedAt = new Date().toISOString();
+  try {
+    const outputPath = path.resolve(process.cwd(), 'src/entities/graph/lean_graph.json');
+    if (fs.existsSync(outputPath)) {
+      const existing = JSON.parse(fs.readFileSync(outputPath, 'utf-8'));
+      if (existing && existing.generatedAt) {
+        generatedAt = existing.generatedAt;
+      }
+    }
+  } catch (err) {
+    // Ignore read errors
+  }
+
   return {
     graph: { generatedAt, nodes },
     proofBlocks: { generatedAt, blocks },
