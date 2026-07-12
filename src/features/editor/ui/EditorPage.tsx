@@ -75,6 +75,7 @@ export const EditorPage: React.FC = () => {
     loadFileList,
     openFile,
     toggleEditorMode,
+    setEditorMode,
     updateRawBody,
     updateBlock,
     removeBlock,
@@ -101,6 +102,7 @@ export const EditorPage: React.FC = () => {
   const [editingBlockId, setEditingBlockId] = useState<string | null>(null);
   const [diffReview, setDiffReview] = useState<DiffReview | null>(null);
   const [pendingFileNavigation, setPendingFileNavigation] = useState<string | null>(null);
+  const [focusRange, setFocusRange] = useState<{ start: number; end: number } | undefined>(undefined);
 
   // Estado para el enlazador semántico
   const [linkerState, setLinkerState] = useState<{
@@ -205,6 +207,71 @@ export const EditorPage: React.FC = () => {
     return () => window.removeEventListener('beforeunload', onBeforeUnload);
   }, [hasLocalChanges]);
 
+  // Interceptar clicks globales para proteger la navegación interna (wouter)
+  useEffect(() => {
+    const handleGlobalClick = (event: MouseEvent) => {
+      if (!hasLocalChanges) return;
+      const target = event.target as HTMLElement;
+      const anchor = target.closest('a');
+      if (anchor) {
+        const href = anchor.getAttribute('href');
+        if (href) {
+          // Si es una ruta interna o relativa:
+          if (href.startsWith('/') || href.startsWith('#') || href.includes(window.location.host)) {
+            event.preventDefault();
+            event.stopPropagation();
+            setPendingFileNavigation(href);
+          }
+        }
+      }
+    };
+    window.addEventListener('click', handleGlobalClick, true);
+    return () => window.removeEventListener('click', handleGlobalClick, true);
+  }, [hasLocalChanges]);
+
+  // Accesos rápidos de teclado (shortcuts) y tecla Escape
+  useEffect(() => {
+    const handleKeyDown = (event: KeyboardEvent) => {
+      if (event.key === 'Escape') {
+        if (pendingFileNavigation) {
+          event.preventDefault();
+          setPendingFileNavigation(null);
+        }
+        if (diffReview && !saving) {
+          event.preventDefault();
+          setDiffReview(null);
+        }
+      }
+
+      const isModifier = event.ctrlKey || event.metaKey;
+      if (isModifier) {
+        if (event.key.toLowerCase() === 's') {
+          event.preventDefault();
+          if (currentFile) {
+            if (isDiagramFile) {
+              void saveCurrentFile();
+            } else if (editorMode === 'code') {
+              void saveCurrentFile();
+            } else if (editorMode === 'visual') {
+              reviewCurrentDiff();
+            }
+          }
+        } else if (event.key.toLowerCase() === 'd') {
+          event.preventDefault();
+          if (canReviewDiff) {
+            reviewCurrentDiff();
+          }
+        } else if (event.key.toLowerCase() === 'm') {
+          event.preventDefault();
+          toggleEditorMode();
+        }
+      }
+    };
+
+    window.addEventListener('keydown', handleKeyDown, true);
+    return () => window.removeEventListener('keydown', handleKeyDown, true);
+  }, [currentFile, isDiagramFile, editorMode, canReviewDiff, pendingFileNavigation, diffReview, saving, toggleEditorMode]);
+
   const openFileSafely = (path: string) => {
     if (currentFile && currentFile !== path && hasLocalChanges) {
       setPendingFileNavigation(path);
@@ -213,7 +280,7 @@ export const EditorPage: React.FC = () => {
     openFile(path);
   };
 
-  const reviewCurrentDiff = () => {
+  function reviewCurrentDiff() {
     if (!currentFile?.endsWith('.mdx')) {
       void saveCurrentFile();
       return;
@@ -239,7 +306,41 @@ export const EditorPage: React.FC = () => {
   const continuePendingNavigation = () => {
     const target = pendingFileNavigation;
     setPendingFileNavigation(null);
-    if (target) openFile(target, { discardLocalChanges: true });
+    if (target) {
+      if (target.startsWith('/') && !target.includes('database/content/')) {
+        setLocation(target);
+      } else {
+        openFile(target, { discardLocalChanges: true });
+      }
+    }
+  };
+
+  const handleSelectIssue = (issue: any) => {
+    if (issue.blockId) {
+      setEditorMode('visual');
+      setEditingBlockId(issue.blockId);
+      setTimeout(() => {
+        const el = document.getElementById(`block-${issue.blockId}`);
+        el?.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      }, 50);
+    } else if (issue.sourceRange) {
+      setEditorMode('code');
+      setFocusRange(issue.sourceRange);
+    }
+  };
+
+  const handleSelectDiffChange = (change: any) => {
+    if (change.blockId) {
+      setEditorMode('visual');
+      setEditingBlockId(change.blockId);
+      setTimeout(() => {
+        const el = document.getElementById(`block-${change.blockId}`);
+        el?.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      }, 50);
+    } else if (change.originalRange) {
+      setEditorMode('code');
+      setFocusRange(change.originalRange);
+    }
   };
 
   const diagramTargets: DiagramTargetRegistry = useMemo(() => {
@@ -547,6 +648,7 @@ export const EditorPage: React.FC = () => {
               updateRawBody={updateRawBody}
               isDiagramFile={isDiagramFile}
               isDark={isDark}
+              focusRange={focusRange}
             />
           </div>
         )}
@@ -568,6 +670,7 @@ export const EditorPage: React.FC = () => {
             setActiveDiagramBlockId={setActiveDiagramBlockId}
             setDiagramBuilderOpen={setDiagramBuilderOpen}
             insertInteractiveTargetParagraph={insertInteractiveTargetParagraph}
+            onSelectIssue={handleSelectIssue}
           />
         )}
         {isDiagramFile && (
@@ -625,6 +728,9 @@ export const EditorPage: React.FC = () => {
           onSaveDraft={() => { void saveDraftCurrentFile(); }}
           canReviewDiff={canReviewDiff}
           canSaveDraft={canSaveDraft}
+          compatibility={compatibility}
+          persistenceStatus={persistenceStatus.kind}
+          isDiagramFile={isDiagramFile}
         />
       }
     >
@@ -664,6 +770,7 @@ export const EditorPage: React.FC = () => {
         isApplying={saving}
         onClose={() => setDiffReview(null)}
         onApply={applyReviewedDiff}
+        onSelectChange={handleSelectDiffChange}
       />
       <UnsavedChangesDialog
         isOpen={pendingFileNavigation !== null}

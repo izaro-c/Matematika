@@ -119,18 +119,32 @@ export const DiagramWorkbench: React.FC<DiagramWorkbenchProps> = ({
   useEffect(() => {
     if (isOpen) {
       if (isFileMode && currentFile) {
-        loadDiagram(currentFile, componentNameFromPath(currentFile));
+        loadDiagram(currentFile, componentNameFromPath(currentFile)).then(() => {
+          if (initialSource) {
+            handleSourceEdit(initialSource);
+          }
+        });
       } else if (inlineModel) {
         const fallbackName = componentNameFromPath(null);
         const componentName = componentNameFromSource(initialSource, fallbackName);
         loadInlineDiagram(initialSource ?? sourceFromModel(inlineModel, componentName), componentName, inlineModel);
       }
     }
-  }, [isOpen, currentFile, initialSource, inlineModel, isFileMode, loadDiagram, loadInlineDiagram]);
+  }, [isOpen, currentFile, initialSource, inlineModel, isFileMode, loadDiagram, loadInlineDiagram, handleSourceEdit]);
 
   if (!isOpen) return null;
 
-  const model = state.currentModel;
+  const rawModel = state.currentModel;
+  const model: VisualDiagramModel | null = rawModel ? {
+    title: rawModel.title || 'Diagrama',
+    points: rawModel.points || [],
+    elements: rawModel.elements || [],
+    sliders: rawModel.sliders || [],
+    steps: rawModel.steps || [],
+    category: rawModel.category || 'geogebra',
+    mode: rawModel.mode || 'standard',
+    boundingBox: rawModel.boundingBox || [-4, 4, 4, -4],
+  } as VisualDiagramModel : null;
   const componentName = state.componentName || 'DiagramaInteractivo';
   const saveCapability = getDiagramSaveCapability(state);
 

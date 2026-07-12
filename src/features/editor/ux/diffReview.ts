@@ -1,4 +1,4 @@
-import { computeFingerprint, parseEditorDocument, type SourceRange } from '../document';
+import { computeFingerprint, parseEditorDocument, type SourceRange, type ProjectedBlock } from '../document';
 
 export type DiffClassification =
   | 'expected'
@@ -99,20 +99,41 @@ function contains(outer: SourceRange, inner: SourceRange): boolean {
 function classifyChange(
   range: SourceRange,
   expectedRanges: BuildDiffReviewInput['expectedRanges'],
+  compatibility?: string,
+  bodyBlocks?: ProjectedBlock[],
 ): { classification: DiffClassification; reason: string; operationId?: string; blockId?: string } {
+  if (compatibility === 'fully-editable') {
+    return {
+      classification: 'expected',
+      reason: 'El documento es completamente editable; todos los cambios de bloque son seguros.',
+    };
+  }
+  if (expectedRanges && expectedRanges.length > 0) {
+    const match = expectedRanges.find(expected => expected.operationId && contains(expected, range));
+    if (match) {
+      return {
+        classification: 'expected',
+        reason: match.reason,
+        operationId: match.operationId,
+        blockId: match.blockId,
+      };
+    }
+  }
+  if (compatibility === 'partially-editable' && bodyBlocks) {
+    const containingBlock = bodyBlocks.find(
+      block => block.kind === 'editable' && contains(block.editRange, range)
+    );
+    if (containingBlock) {
+      return {
+        classification: 'expected',
+        reason: `Edición segura dentro del bloque editable '${containingBlock.id}'.`,
+      };
+    }
+  }
   if (!expectedRanges || expectedRanges.length === 0) {
     return {
       classification: 'unknown',
       reason: 'La revisión no declara rangos esperados ni operaciones de usuario verificables.',
-    };
-  }
-  const match = expectedRanges.find(expected => expected.operationId && contains(expected, range));
-  if (match) {
-    return {
-      classification: 'expected',
-      reason: match.reason,
-      operationId: match.operationId,
-      blockId: match.blockId,
     };
   }
   return {
@@ -264,7 +285,7 @@ export function buildDiffReview(input: BuildDiffReviewInput): DiffReview {
   const lineHunks = buildLineHunks(input.baseSource, input.candidateSource);
   const hunks: DiffHunk[] = lineHunks
     .map((hunk, index) => {
-      const classification = classifyChange(hunk.originalRange, input.expectedRanges);
+      const classification = classifyChange(hunk.originalRange, input.expectedRanges, baseParse.compatibility, baseParse.bodyBlocks);
       return {
         id: `hunk-${index + 1}`,
         originalRange: hunk.originalRange,
@@ -320,7 +341,7 @@ export function isDiffReviewStale(review: DiffReview, localRevision: number, bas
 }
 
 export function approveDiffReview(review: DiffReview): ApprovedDiff | null {
-  if (review.status !== 'reviewable' || review.blockingChangeCount > 0 || review.operationIds.length === 0) return null;
+  if (review.status !== 'reviewable' || review.blockingChangeCount > 0) return null;
   return {
     documentId: review.documentId,
     baseVersion: review.baseVersion,

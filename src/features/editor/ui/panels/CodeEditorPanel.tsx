@@ -12,6 +12,7 @@ interface CodeEditorPanelProps {
   updateRawBody: (source: string) => void;
   isDiagramFile: boolean;
   isDark: boolean;
+  focusRange?: { start: number; end: number };
 }
 
 export const CodeEditorPanel: React.FC<CodeEditorPanelProps> = ({
@@ -19,7 +20,10 @@ export const CodeEditorPanel: React.FC<CodeEditorPanelProps> = ({
   updateRawBody,
   isDiagramFile,
   isDark,
+  focusRange,
 }) => {
+  const editorRef = React.useRef<any>(null);
+
   useEffect(() => {
     if (!import.meta.env.DEV) return undefined;
     window.__MATEMATIKA_EDITOR_SET_SOURCE__ = updateRawBody;
@@ -30,6 +34,32 @@ export const CodeEditorPanel: React.FC<CodeEditorPanelProps> = ({
     };
   }, [updateRawBody]);
 
+  useEffect(() => {
+    if (editorRef.current && focusRange) {
+      const model = editorRef.current.getModel();
+      if (model) {
+        const startPos = model.getPositionAt(focusRange.start);
+        const endPos = model.getPositionAt(focusRange.end);
+        editorRef.current.setSelection({
+          startLineNumber: startPos.lineNumber,
+          startColumn: startPos.column,
+          endLineNumber: endPos.lineNumber,
+          endColumn: endPos.column,
+        });
+        editorRef.current.revealRange(
+          {
+            startLineNumber: startPos.lineNumber,
+            startColumn: startPos.column,
+            endLineNumber: endPos.lineNumber,
+            endColumn: endPos.column,
+          },
+          1 // Center
+        );
+        editorRef.current.focus();
+      }
+    }
+  }, [focusRange]);
+
   return (
     <div className="h-full border border-carbon/15 rounded overflow-hidden bg-lienzo shadow-inner">
       <Editor
@@ -38,6 +68,9 @@ export const CodeEditorPanel: React.FC<CodeEditorPanelProps> = ({
         theme={isDark ? 'vs-dark' : 'vs-light'}
         value={rawBody}
         onChange={(val) => updateRawBody(val || '')}
+        onMount={(editor) => {
+          editorRef.current = editor;
+        }}
         options={{
           minimap: { enabled: false },
           fontSize: 13,

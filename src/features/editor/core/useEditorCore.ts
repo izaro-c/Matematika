@@ -156,7 +156,14 @@ export const useEditorCore = () => {
   const validation = useMemo<EditorValidationResult>(() => {
     if (isDiagramSource) return { issues: [], canSave: true, errorCount: 0, warningCount: 0 };
     const critical = doc?.diagnostics.filter(item => item.severity === 'critical') ?? [];
-    return { issues: critical.map(item => ({ id: item.code, area: 'body' as const, severity: 'error' as const, message: item.message })),
+    return { issues: critical.map(item => ({
+      id: item.code,
+      area: 'body' as const,
+      severity: 'error' as const,
+      message: item.message,
+      blockId: item.blockId,
+      sourceRange: item.sourceRange ?? item.location?.range
+    })),
       canSave: critical.length === 0, errorCount: critical.length, warningCount: 0 };
   }, [doc, isDiagramSource]);
 
@@ -382,7 +389,7 @@ export const useEditorCore = () => {
     baseSource, localRevision: persistence.localRevision, baseVersion: persistence.version,
     saving, dirtyState, validation, message, persistenceStatus: persistence.status,
     persistenceLabel: persistenceStatusLabel(persistence.status),
-    loadFileList, openFile, toggleEditorMode, updateRawBody, updateBlock, saveCurrentFile, saveDraftCurrentFile,
+    loadFileList, openFile, toggleEditorMode, setEditorMode, updateRawBody, updateBlock, saveCurrentFile, saveDraftCurrentFile,
     compatibility, compatibilityReasons, capabilities,
     removeBlock: (id: string) => blockUnsafeAction(id), addBlock: (_index: number, _type: BlockType) => blockUnsafeAction(),
     moveBlock: (_from: number, _to: number) => blockUnsafeAction(), setMetadata, setImports, setExports, setBlocks,
