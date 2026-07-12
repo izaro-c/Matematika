@@ -1,5 +1,11 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import Editor from '@monaco-editor/react';
+
+declare global {
+  interface Window {
+    __MATEMATIKA_EDITOR_SET_SOURCE__?: (source: string) => void;
+  }
+}
 
 interface CodeEditorPanelProps {
   rawBody: string;
@@ -14,6 +20,16 @@ export const CodeEditorPanel: React.FC<CodeEditorPanelProps> = ({
   isDiagramFile,
   isDark,
 }) => {
+  useEffect(() => {
+    if (!import.meta.env.DEV) return undefined;
+    window.__MATEMATIKA_EDITOR_SET_SOURCE__ = updateRawBody;
+    return () => {
+      if (window.__MATEMATIKA_EDITOR_SET_SOURCE__ === updateRawBody) {
+        delete window.__MATEMATIKA_EDITOR_SET_SOURCE__;
+      }
+    };
+  }, [updateRawBody]);
+
   return (
     <div className="h-full border border-carbon/15 rounded overflow-hidden bg-lienzo shadow-inner">
       <Editor

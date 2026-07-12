@@ -31,6 +31,12 @@ import { updateMdxImportsExports } from './scripts/editor/updateDiagramImportsEx
  * archivos locales (.mdx, .tsx) y usar el HMR de Vite para Live Preview.
  */
 const MAX_REQUEST_BYTES = 5 * 1024 * 1024;
+const editorSrcRoot = process.env.MATEMATIKA_EDITOR_SRC_ROOT
+  ? path.resolve(process.env.MATEMATIKA_EDITOR_SRC_ROOT)
+  : path.resolve(__dirname, 'src');
+const editorStorageRoot = process.env.MATEMATIKA_EDITOR_STORAGE_ROOT
+  ? path.resolve(process.env.MATEMATIKA_EDITOR_STORAGE_ROOT)
+  : path.resolve(__dirname, '.matematika/editor');
 
 function sendJson(res: ServerResponse, status: number, payload: unknown) {
   res.statusCode = status;
@@ -64,7 +70,7 @@ function editorAPI(): Plugin {
     enforce: 'pre' as const,
     apply: 'serve',
     configureServer(server: ViteDevServer) {
-      const srcRoot = path.resolve(__dirname, 'src');
+      const srcRoot = editorSrcRoot;
       const writeRoots = [
         path.resolve(srcRoot, 'database/content'),
         path.resolve(srcRoot, 'shared/diagrams'),
@@ -72,7 +78,7 @@ function editorAPI(): Plugin {
       ];
       const backend = new EditorPersistenceBackend({
         srcRoot,
-        storageRoot: path.resolve(__dirname, '.matematika/editor'),
+        storageRoot: editorStorageRoot,
         allowedRoots: writeRoots,
         readRoots: [...writeRoots, path.resolve(srcRoot, 'shared/templates')],
         validateSource(filePath, source) {
@@ -178,9 +184,9 @@ function editorAPI(): Plugin {
 
       server.middlewares.use('/api/list-content', (req: IncomingMessage, res: ServerResponse) => {
         if (req.method === 'GET') {
-          const contentDir = path.resolve(__dirname, 'src', 'database', 'content');
-          const componentsDir = path.resolve(__dirname, 'src', 'widgets', 'diagrams');
-          const sharedComponentsDir = path.resolve(__dirname, 'src', 'shared', 'diagrams');
+          const contentDir = path.resolve(srcRoot, 'database', 'content');
+          const componentsDir = path.resolve(srcRoot, 'widgets', 'diagrams');
+          const sharedComponentsDir = path.resolve(srcRoot, 'shared', 'diagrams');
           const results: { path: string, name: string, type: string, fullPath?: string }[] = [];
 
           function walk(dir: string, baseType: string, prefix: string) {
@@ -192,7 +198,7 @@ function editorAPI(): Plugin {
               if (stat.isDirectory()) {
                 walk(fullPath, baseType || file, prefix);
               } else if (file.endsWith('.mdx') || file.endsWith('.tsx')) {
-                const relativePath = path.relative(path.resolve(__dirname, 'src'), fullPath);
+                const relativePath = path.relative(srcRoot, fullPath);
                 results.push({
                   path: relativePath, 
                   name: file,

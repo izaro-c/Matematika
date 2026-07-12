@@ -2,12 +2,14 @@ import React from 'react';
 
 interface EditorShellProps {
   toolbar: React.ReactNode;
+  safetySummary?: React.ReactNode;
   navigation: React.ReactNode;
   children: React.ReactNode;
 }
 
 export const EditorShell: React.FC<EditorShellProps> = ({
   toolbar,
+  safetySummary,
   navigation,
   children,
 }) => {
@@ -16,6 +18,7 @@ export const EditorShell: React.FC<EditorShellProps> = ({
       {navigation}
       <div className="flex-1 flex flex-col h-full bg-lienzo relative overflow-hidden">
         {toolbar}
+        {safetySummary}
         <div className="flex-1 flex overflow-hidden">
           {children}
         </div>
