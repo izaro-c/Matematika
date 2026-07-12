@@ -1,5 +1,10 @@
 import { describe, expect, it } from 'vitest';
-import { buildDiffReview, isDiffReviewStale } from '../../../../src/features/editor/ux/diffReview';
+import {
+  approveDiffReview,
+  buildDiffReview,
+  isApprovedDiffValid,
+  isDiffReviewStale,
+} from '../../../../src/features/editor/ux/diffReview';
 
 const base = [
   '---',
@@ -13,34 +18,76 @@ const base = [
 ].join('\n');
 
 describe('safe diff review', () => {
-  it('classifies manual source edits as reviewable expected changes', () => {
+  it('blocks source edits when expected ranges are absent', () => {
     const review = buildDiffReview({
+      documentId: 'content/test.mdx',
       baseSource: base,
       candidateSource: base.replace('Texto inicial.', 'Texto editado.'),
       localRevision: 1,
       baseVersion: 'sha256:base',
     });
 
-    expect(review.status).toBe('reviewable');
-    expect(review.blockingChangeCount).toBe(0);
-    expect(review.changes[0]?.classification).toBe('expected');
+    expect(review.status).toBe('blocked');
+    expect(review.blockingChangeCount).toBe(1);
+    expect(review.changes[0]?.classification).toBe('unknown');
   });
 
   it('blocks edits outside authorized visual ranges', () => {
     const review = buildDiffReview({
+      documentId: 'content/test.mdx',
       baseSource: base,
       candidateSource: base.replace('id: test', 'id: otro'),
       localRevision: 2,
       baseVersion: 'sha256:base',
-      expectedRanges: [{ start: base.indexOf('Texto inicial.'), end: base.length, reason: 'Bloque de párrafo editado.' }],
+      expectedRanges: [{
+        start: base.indexOf('Texto inicial.'),
+        end: base.length,
+        reason: 'Bloque de párrafo editado.',
+        operationId: 'op-1',
+      }],
     });
 
     expect(review.status).toBe('blocked');
     expect(review.changes[0]?.classification).toBe('outside-edited-range');
   });
 
+  it('allows a hunk only when it is contained in a range tied to an operation', () => {
+    const start = base.indexOf('inicial');
+    const review = buildDiffReview({
+      documentId: 'content/test.mdx',
+      baseSource: base,
+      candidateSource: base.replace('inicial', 'editado'),
+      localRevision: 2,
+      baseVersion: 'sha256:base',
+      expectedRanges: [{ start, end: start + 'inicial'.length, reason: 'Texto editado.', operationId: 'op-1', blockId: 'block-1' }],
+    });
+
+    expect(review.status).toBe('reviewable');
+    expect(review.hunks[0]).toMatchObject({ expected: true, operationId: 'op-1', blockId: 'block-1' });
+    const approval = approveDiffReview(review);
+    expect(approval).not.toBeNull();
+    expect(isApprovedDiffValid(approval, review)).toBe(true);
+  });
+
+  it('rejects adjacent formatting not covered by the operation range', () => {
+    const start = base.indexOf('inicial');
+    const review = buildDiffReview({
+      documentId: 'content/test.mdx',
+      baseSource: base,
+      candidateSource: base.replace('Texto inicial.', 'Texto editado. '),
+      localRevision: 2,
+      baseVersion: 'sha256:base',
+      expectedRanges: [{ start, end: start + 'inicial'.length, reason: 'Texto editado.', operationId: 'op-1' }],
+    });
+
+    expect(review.status).toBe('blocked');
+    expect(review.hunks[0]?.classification).toBe('outside-edited-range');
+    expect(approveDiffReview(review)).toBeNull();
+  });
+
   it('invalidates a review when the local revision changes', () => {
     const review = buildDiffReview({
+      documentId: 'content/test.mdx',
       baseSource: base,
       candidateSource: base.replace('Texto inicial.', 'Texto editado.'),
       localRevision: 1,
