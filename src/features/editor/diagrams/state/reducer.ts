@@ -47,6 +47,26 @@ export function diagramReducer(state: DiagramState, action: DiagramAction): Diag
       };
     }
 
+    case 'LOAD_NEW_DIAGRAM': {
+      const diagnostics = action.diagnostics ?? [];
+      return {
+        ...state,
+        filePath: null,
+        componentName: action.componentName,
+        originalSource: '',
+        currentSource: action.source,
+        originalModel: null,
+        currentModel: action.model,
+        status: 'visual-authoritative',
+        parseStatus: 'parsed',
+        expectedVersion: null,
+        diagnostics,
+        selectedId: action.model.points[0]?.id || '',
+        activeStepId: '',
+        canvasTool: 'select',
+      };
+    }
+
     case 'VISUAL_EDIT': {
       let nextStatus: DiagramSyncStatus = state.status;
       if (state.status === 'synced' || state.status === 'visual-authoritative') {

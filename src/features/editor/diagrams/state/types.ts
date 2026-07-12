@@ -39,6 +39,13 @@ export type DiagramAction =
       diagnostics?: DiagramDiagnostic[];
       expectedVersion?: string | null;
     }
+  | {
+      type: 'LOAD_NEW_DIAGRAM';
+      componentName: string;
+      source: string;
+      model: VisualDiagramModel;
+      diagnostics?: DiagramDiagnostic[];
+    }
   | { type: 'VISUAL_EDIT'; model: VisualDiagramModel }
   | { type: 'SOURCE_EDIT'; source: string }
   | { type: 'SELECT_ELEMENT'; id: string }

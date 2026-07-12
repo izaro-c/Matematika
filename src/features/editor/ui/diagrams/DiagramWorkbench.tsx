@@ -20,15 +20,20 @@ import {
   normalizeVisualModel, createTemplateModel
 } from '../../diagrams/model/commands';
 
-interface DiagramWorkbenchProps {
+export type DiagramWorkbenchMode =
+  | { kind: 'file'; path: string }
+  | { kind: 'inline'; source: string; componentName?: string; model?: Record<string, unknown> | null }
+  | { kind: 'new'; componentName: string };
+
+interface DiagramWorkbenchCoreProps {
   isOpen: boolean;
-  currentFile: string | null;
+  mode: DiagramWorkbenchMode;
   metadataType: string;
-  initialModel?: Record<string, unknown> | null;
-  initialSource?: string;
   onClose: () => void;
   onConfirm: (spec: DiagramSpec) => void;
 }
+
+type DiagramWorkbenchAdapterProps = Omit<DiagramWorkbenchCoreProps, 'mode'>;
 
 function componentNameFromPath(path: string | null): string {
   const base = (path?.split('/').pop() || 'DiagramaInteractivo').replace(/\.tsx$/, '');
@@ -41,11 +46,6 @@ function componentNameFromSource(source: string | undefined, fallback: string): 
   return match?.[1] || fallback;
 }
 
-function sourceFromModel(model: VisualDiagramModel, componentName: string): string {
-  const generated = generateDiagramSource(model, componentName);
-  return generated.ok ? generated.source : '';
-}
-
 function refsForElementKind(kind: ElementKind, refs: string[]): string[] {
   if (kind === 'segment' || kind === 'line' || kind === 'ray' || kind === 'circle' || kind === 'midpoint') {
     return refs.slice(0, 2);
@@ -56,12 +56,10 @@ function refsForElementKind(kind: ElementKind, refs: string[]): string[] {
   return refs.slice(0, 1);
 }
 
-export const DiagramWorkbench: React.FC<DiagramWorkbenchProps> = ({
+export const DiagramWorkbenchCore: React.FC<DiagramWorkbenchCoreProps> = ({
   isOpen,
-  currentFile,
+  mode,
   metadataType,
-  initialModel,
-  initialSource,
   onClose,
   onConfirm,
 }) => {
@@ -70,6 +68,7 @@ export const DiagramWorkbench: React.FC<DiagramWorkbenchProps> = ({
     isDirty,
     loadDiagram,
     loadInlineDiagram,
+    loadNewDiagram,
     handleVisualEdit,
     handleSourceEdit,
     selectElement,
@@ -91,13 +90,17 @@ export const DiagramWorkbench: React.FC<DiagramWorkbenchProps> = ({
 
   // Tool references selection
   const [pendingRefs, setPendingRefs] = useState<string[]>([]);
-  const isFileMode = Boolean(currentFile?.endsWith('.tsx'));
-  const inlineModel = useMemo(() => {
-    const normalized = normalizeVisualModel(initialModel, metadataType);
-    if (normalized) return normalized;
-    if (!isFileMode && isOpen) return createTemplateModel('circunferencia', 'Diagrama interactivo', metadataType);
-    return null;
-  }, [initialModel, isFileMode, isOpen, metadataType]);
+  const isFileMode = mode.kind === 'file';
+  const inlineModel = useMemo(() => (
+    mode.kind === 'inline'
+      ? normalizeVisualModel(mode.model, metadataType)
+      : null
+  ), [mode, metadataType]);
+  const newModel = useMemo(() => (
+    mode.kind === 'new' && isOpen
+      ? createTemplateModel('circunferencia', 'Diagrama interactivo', metadataType)
+      : null
+  ), [mode.kind, isOpen, metadataType]);
 
   const choosePointForTool = (pointId: string) => {
     const canvasTool = state.canvasTool;
@@ -117,20 +120,24 @@ export const DiagramWorkbench: React.FC<DiagramWorkbenchProps> = ({
 
   // Load or initialize diagram when it opens
   useEffect(() => {
-    if (isOpen) {
-      if (isFileMode && currentFile) {
-        loadDiagram(currentFile, componentNameFromPath(currentFile)).then(() => {
-          if (initialSource) {
-            handleSourceEdit(initialSource);
-          }
-        });
-      } else if (inlineModel) {
-        const fallbackName = componentNameFromPath(null);
-        const componentName = componentNameFromSource(initialSource, fallbackName);
-        loadInlineDiagram(initialSource ?? sourceFromModel(inlineModel, componentName), componentName, inlineModel);
-      }
+    if (!isOpen) return;
+
+    if (mode.kind === 'file') {
+      void loadDiagram(mode.path, componentNameFromPath(mode.path));
+      return;
     }
-  }, [isOpen, currentFile, initialSource, inlineModel, isFileMode, loadDiagram, loadInlineDiagram, handleSourceEdit]);
+
+    if (mode.kind === 'inline') {
+      const fallbackName = mode.componentName || componentNameFromPath(null);
+      const componentName = mode.componentName || componentNameFromSource(mode.source, fallbackName);
+      loadInlineDiagram(mode.source, componentName, inlineModel);
+      return;
+    }
+
+    if (newModel) {
+      loadNewDiagram(mode.componentName, newModel);
+    }
+  }, [isOpen, mode, inlineModel, newModel, loadDiagram, loadInlineDiagram, loadNewDiagram]);
 
   if (!isOpen) return null;
 
@@ -204,8 +211,8 @@ export const DiagramWorkbench: React.FC<DiagramWorkbenchProps> = ({
     onConfirm({
       componentName,
       category: model.category,
-      path: isFileMode ? currentFile || '' : '',
-      importPath: isFileMode ? currentFile || '' : '',
+      path: isFileMode && mode.kind === 'file' ? mode.path : '',
+      importPath: isFileMode && mode.kind === 'file' ? mode.path : '',
       source: state.currentSource,
       targets: buildTargets(model),
       mode: model.mode,
@@ -535,4 +542,42 @@ export const DiagramWorkbench: React.FC<DiagramWorkbenchProps> = ({
     </div>
   );
 };
+
+export const FileDiagramWorkbench: React.FC<DiagramWorkbenchAdapterProps & { path: string }> = ({
+  path,
+  ...props
+}) => (
+  <DiagramWorkbenchCore
+    {...props}
+    mode={{ kind: 'file', path }}
+  />
+);
+
+export const InlineDiagramWorkbench: React.FC<DiagramWorkbenchAdapterProps & {
+  source: string;
+  componentName?: string;
+  model?: Record<string, unknown> | null;
+}> = ({
+  source,
+  componentName,
+  model,
+  ...props
+}) => (
+  <DiagramWorkbenchCore
+    {...props}
+    mode={{ kind: 'inline', source, componentName, model }}
+  />
+);
+
+export const NewDiagramWorkbench: React.FC<DiagramWorkbenchAdapterProps & { componentName: string }> = ({
+  componentName,
+  ...props
+}) => (
+  <DiagramWorkbenchCore
+    {...props}
+    mode={{ kind: 'new', componentName }}
+  />
+);
+
+export const DiagramWorkbench = DiagramWorkbenchCore;
 export default DiagramWorkbench;
