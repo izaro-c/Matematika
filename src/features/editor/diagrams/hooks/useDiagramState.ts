@@ -3,6 +3,7 @@ import { diagramReducer, initialDiagramState } from '../state/reducer';
 import { diagramRepository } from '../persistence/repository';
 import { generateDiagramSource } from '../source/generator';
 import { parseDiagramSourceOnServer } from '../source/parser';
+import { getDiagramSaveCapability } from '../model/selectors';
 import type { VisualDiagramModel, CanvasTool } from '../model/types';
 import { asPersistenceError } from '../../persistence/persistenceErrors';
 
@@ -12,6 +13,7 @@ export function useDiagramState() {
   const versionRef = useRef<string>('');
   const parseDebounceTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   const parseControllerRef = useRef<AbortController | null>(null);
+  const parseRequestIdRef = useRef(0);
 
   useEffect(() => {
     stateRef.current = state;
@@ -27,6 +29,9 @@ export function useDiagramState() {
 
   const loadDiagram = useCallback(async (filePath: string, componentName: string) => {
     try {
+      parseRequestIdRef.current += 1;
+      if (parseDebounceTimerRef.current) clearTimeout(parseDebounceTimerRef.current);
+      parseControllerRef.current?.abort();
       dispatch({ type: 'SET_STATUS', status: 'saving' }); // Loading state
       const result = await diagramRepository.readDiagram(filePath);
       versionRef.current = result.version;
@@ -36,6 +41,9 @@ export function useDiagramState() {
         componentName,
         source: result.source,
         model: result.model,
+        parseStatus: result.parseStatus,
+        diagnostics: result.diagnostics,
+        expectedVersion: result.version,
       });
     } catch (error) {
       console.error('Error loading diagram:', error);
@@ -44,6 +52,28 @@ export function useDiagramState() {
         error: error instanceof Error ? error.message : 'Error al cargar el archivo de diagrama.',
       });
     }
+  }, []);
+
+  const loadInlineDiagram = useCallback((source: string, componentName: string, model: VisualDiagramModel | null) => {
+    parseRequestIdRef.current += 1;
+    if (parseDebounceTimerRef.current) clearTimeout(parseDebounceTimerRef.current);
+    parseControllerRef.current?.abort();
+    versionRef.current = '';
+    dispatch({
+      type: 'LOAD_DIAGRAM',
+      filePath: null,
+      componentName,
+      source,
+      model,
+      parseStatus: model ? 'parsed' : 'unsupported',
+      diagnostics: model ? [] : [{
+        code: 'inline-model-missing',
+        severity: 'warning',
+        message: 'La fuente inline no tiene un modelo visual verificable.',
+        source: 'source',
+      }],
+      expectedVersion: null,
+    });
   }, []);
 
   const handleVisualEdit = useCallback((nextModel: VisualDiagramModel) => {
@@ -65,21 +95,21 @@ export function useDiagramState() {
     parseControllerRef.current?.abort();
     const controller = new AbortController();
     parseControllerRef.current = controller;
+    const requestId = ++parseRequestIdRef.current;
 
     try {
       const parsed = await parseDiagramSourceOnServer(sourceText, controller.signal);
-      if (controller.signal.aborted) return;
+      if (controller.signal.aborted || requestId !== parseRequestIdRef.current || stateRef.current.currentSource !== sourceText) return;
 
-      if (parsed.status === 'supported' && parsed.model) {
+      if ((parsed.status === 'supported' || parsed.status === 'partially-supported') && parsed.model) {
         dispatch({
           type: 'APPLY_PARSED_MODEL',
           model: parsed.model,
           diagnostics: parsed.diagnostics,
         });
-      } else if (parsed.status === 'partially-supported') {
+      } else if (parsed.status === 'unsupported' || parsed.status === 'partially-supported') {
         dispatch({
-          type: 'APPLY_PARSED_MODEL',
-          model: parsed.model || stateRef.current.currentModel || {} as VisualDiagramModel,
+          type: 'PARSE_UNSUPPORTED',
           diagnostics: parsed.diagnostics,
         });
       } else {
@@ -89,7 +119,7 @@ export function useDiagramState() {
         });
       }
     } catch (err) {
-      if (controller.signal.aborted) return;
+      if (controller.signal.aborted || requestId !== parseRequestIdRef.current || stateRef.current.currentSource !== sourceText) return;
       dispatch({
         type: 'PARSE_FAILED',
         diagnostics: [{
@@ -144,13 +174,11 @@ export function useDiagramState() {
 
   const saveDiagram = useCallback(async (): Promise<boolean> => {
     const current = stateRef.current;
-    if (!current.filePath || !current.currentSource) return false;
-
-    // Check if there are critical errors
-    const hasCriticalError = current.diagnostics.some(d => d.severity === 'error');
-    if (hasCriticalError || current.status === 'invalid-source') {
+    const capability = getDiagramSaveCapability(current);
+    if (!capability.allowed) {
       return false;
     }
+    if (!current.filePath) return false;
 
     dispatch({ type: 'SAVE_START' });
 
@@ -158,13 +186,14 @@ export function useDiagramState() {
       const response = await diagramRepository.saveDiagram(
         current.filePath,
         current.currentSource,
-        versionRef.current
+        current.expectedVersion ?? versionRef.current
       );
       versionRef.current = response.version;
       dispatch({
         type: 'SAVE_SUCCESS',
         source: current.currentSource,
         model: current.currentModel,
+        expectedVersion: response.version,
       });
       return true;
     } catch (error) {
@@ -200,6 +229,7 @@ export function useDiagramState() {
     state,
     isDirty,
     loadDiagram,
+    loadInlineDiagram,
     handleVisualEdit,
     handleSourceEdit,
     selectElement,

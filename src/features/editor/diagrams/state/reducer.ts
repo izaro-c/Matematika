@@ -1,20 +1,4 @@
-import type { DiagramState, DiagramAction, DiagramSyncStatus } from './types';
-import type { VisualDiagramModel } from '../model/types';
-
-const defaultModel: VisualDiagramModel = {
-  title: 'Diagrama',
-  componentId: 'diagrama-interactivo',
-  category: 'Teoremas',
-  mode: 'simulation',
-  axis: false,
-  grid: false,
-  boundingBox: [-5, 5, 5, -5],
-  points: [],
-  elements: [],
-  sliders: [],
-  steps: [],
-  note: '',
-};
+import type { DiagramState, DiagramAction, DiagramSyncStatus, DiagramParseStatus } from './types';
 
 export const initialDiagramState: DiagramState = {
   filePath: null,
@@ -24,16 +8,27 @@ export const initialDiagramState: DiagramState = {
   originalModel: null,
   currentModel: null,
   status: 'synced',
+  parseStatus: 'parsed',
+  expectedVersion: null,
   diagnostics: [],
   selectedId: '',
   activeStepId: '',
   canvasTool: 'select',
 };
 
+function statusForParseStatus(parseStatus: DiagramParseStatus): DiagramSyncStatus {
+  if (parseStatus === 'parsed') return 'synced';
+  if (parseStatus === 'unsupported') return 'source-authoritative';
+  return 'invalid-source';
+}
+
 export function diagramReducer(state: DiagramState, action: DiagramAction): DiagramState {
   switch (action.type) {
     case 'LOAD_DIAGRAM': {
-      const model = action.model || defaultModel;
+      const parseStatus = action.parseStatus ?? (action.model ? 'parsed' : 'invalid');
+      const diagnostics = action.diagnostics ?? [];
+      const model = parseStatus === 'parsed' ? action.model : null;
+      const status = statusForParseStatus(parseStatus);
       return {
         ...state,
         filePath: action.filePath,
@@ -42,9 +37,11 @@ export function diagramReducer(state: DiagramState, action: DiagramAction): Diag
         currentSource: action.source,
         originalModel: model,
         currentModel: model,
-        status: 'synced',
-        diagnostics: [],
-        selectedId: model.points[0]?.id || '',
+        status,
+        parseStatus,
+        expectedVersion: action.expectedVersion ?? null,
+        diagnostics,
+        selectedId: model?.points[0]?.id || '',
         activeStepId: '',
         canvasTool: 'select',
       };
@@ -60,6 +57,7 @@ export function diagramReducer(state: DiagramState, action: DiagramAction): Diag
       return {
         ...state,
         currentModel: action.model,
+        parseStatus: 'parsed',
         status: nextStatus,
       };
     }
@@ -76,6 +74,7 @@ export function diagramReducer(state: DiagramState, action: DiagramAction): Diag
       return {
         ...state,
         currentSource: action.source,
+        parseStatus: state.parseStatus,
         status: nextStatus,
       };
     }
@@ -115,13 +114,25 @@ export function diagramReducer(state: DiagramState, action: DiagramAction): Diag
         ...state,
         currentModel: action.model,
         diagnostics: action.diagnostics,
+        parseStatus: 'parsed',
         status: state.currentSource === state.originalSource ? 'synced' : 'source-authoritative',
+      };
+
+    case 'PARSE_UNSUPPORTED':
+      return {
+        ...state,
+        currentModel: null,
+        diagnostics: action.diagnostics,
+        parseStatus: 'unsupported',
+        status: 'source-authoritative',
       };
 
     case 'PARSE_FAILED':
       return {
         ...state,
+        currentModel: null,
         diagnostics: action.diagnostics,
+        parseStatus: 'invalid',
         status: 'invalid-source',
       };
 
@@ -130,6 +141,7 @@ export function diagramReducer(state: DiagramState, action: DiagramAction): Diag
         ...state,
         currentSource: action.source,
         status: 'visual-authoritative',
+        parseStatus: 'parsed',
         diagnostics: state.diagnostics.filter(d => d.source !== 'synchronization'),
       };
 
@@ -138,6 +150,7 @@ export function diagramReducer(state: DiagramState, action: DiagramAction): Diag
         ...state,
         currentModel: action.model,
         status: 'source-authoritative',
+        parseStatus: 'parsed',
         diagnostics: state.diagnostics.filter(d => d.source !== 'synchronization'),
       };
 
@@ -155,6 +168,8 @@ export function diagramReducer(state: DiagramState, action: DiagramAction): Diag
         originalModel: action.model,
         currentModel: action.model,
         status: 'synced',
+        parseStatus: action.model ? 'parsed' : state.parseStatus,
+        expectedVersion: action.expectedVersion,
         diagnostics: [],
       };
 

@@ -1,16 +1,19 @@
 import React from 'react';
 import type { DiagramSyncStatus } from '../state/types';
 import { buildDiagramAuthorityPresentation } from '../../ux/safetyPresentation';
+import type { DiagramSaveCapability } from '../model/selectors';
 
 interface DiagramStatusBarProps {
   status: DiagramSyncStatus;
   isDirty: boolean;
+  saveCapability?: DiagramSaveCapability;
   onSave: () => void;
 }
 
 export const DiagramStatusBar: React.FC<DiagramStatusBarProps> = ({
   status,
   isDirty,
+  saveCapability,
   onSave,
 }) => {
   const presentation = buildDiagramAuthorityPresentation(status, isDirty);
@@ -36,7 +39,7 @@ export const DiagramStatusBar: React.FC<DiagramStatusBarProps> = ({
   };
 
   const config = getStatusConfig(status);
-  const isSaveBlocked = status === 'saving' || status === 'invalid-source' || status === 'diverged';
+  const isSaveBlocked = saveCapability ? !saveCapability.allowed : status === 'saving' || status === 'invalid-source' || status === 'diverged';
 
   return (
     <div
@@ -66,7 +69,7 @@ export const DiagramStatusBar: React.FC<DiagramStatusBarProps> = ({
               ? 'bg-carbon/10 text-carbon/35 cursor-not-allowed'
               : 'bg-carbon text-lienzo hover:bg-carbon/80 cursor-pointer'
           }`}
-          title={isSaveBlocked ? presentation.description : 'Guardar el TSX del diagrama'}
+          title={isSaveBlocked ? saveCapability?.reason ?? presentation.description : 'Guardar el TSX del diagrama'}
         >
           Guardar Diagrama
         </button>

@@ -1,5 +1,6 @@
 import type { DiagramTarget, DiagramTargetRegistry } from '../../core/editorTypes';
 import type { VisualDiagramModel, ElementKind, ColorToken } from './types';
+import type { DiagramState } from '../state/types';
 
 export function targetKind(kind: ElementKind): DiagramTarget['kind'] {
   if (kind === 'segment' || kind === 'baseExtension') return 'segment';
@@ -52,4 +53,36 @@ export function conceptHighlightSnippet(target: DiagramTarget): string {
 // Model selectors
 export function canSaveDiagram(model: VisualDiagramModel): boolean {
   return Boolean(model.title.trim() && model.componentId.trim() && model.points.length > 0);
+}
+
+export type DiagramSaveBlockReason =
+  | 'invalid-source'
+  | 'unsupported'
+  | 'diverged'
+  | 'conflict'
+  | 'validation-error'
+  | 'stale-revision'
+  | 'missing-authority';
+
+export interface DiagramSaveCapability {
+  allowed: boolean;
+  reason?: DiagramSaveBlockReason;
+}
+
+export function getDiagramSaveCapability(state: DiagramState): DiagramSaveCapability {
+  if (!state.filePath || !state.currentSource) return { allowed: false, reason: 'missing-authority' };
+  if (state.status === 'invalid-source' || state.parseStatus === 'invalid') return { allowed: false, reason: 'invalid-source' };
+  if (state.parseStatus === 'unsupported') return { allowed: false, reason: 'unsupported' };
+  if (state.status === 'diverged') return { allowed: false, reason: 'diverged' };
+  if (state.status === 'conflict') return { allowed: false, reason: 'conflict' };
+  if (state.diagnostics.some(diagnostic => diagnostic.severity === 'error')) {
+    return { allowed: false, reason: 'validation-error' };
+  }
+  if (state.expectedVersion !== null && state.expectedVersion.trim() === '') {
+    return { allowed: false, reason: 'stale-revision' };
+  }
+  if (!state.currentModel && state.status !== 'source-authoritative') {
+    return { allowed: false, reason: 'missing-authority' };
+  }
+  return { allowed: true };
 }

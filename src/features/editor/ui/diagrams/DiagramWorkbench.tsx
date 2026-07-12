@@ -1,8 +1,8 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import type { DiagramSpec } from '../../core/editorTypes';
-import type { ConstructionKind, ElementKind } from '../../diagrams/model/types';
+import type { ConstructionKind, ElementKind, VisualDiagramModel } from '../../diagrams/model/types';
 import { useDiagramState } from '../../diagrams/hooks/useDiagramState';
-import { buildTargets } from '../../diagrams/model/selectors';
+import { buildTargets, getDiagramSaveCapability } from '../../diagrams/model/selectors';
 import { DiagramCanvas } from '../../diagrams/ui/DiagramCanvas';
 import { DiagramToolbar } from '../../diagrams/ui/DiagramToolbar';
 import { DiagramInspector } from '../../diagrams/ui/DiagramInspector';
@@ -16,7 +16,8 @@ import {
   point, element, slider, step, projectPointToSupport,
   generatedElementId, elementColorForKind,
   supportElements, applyGuidedConstruction,
-  normalizeConstructionRefs, validConstructionRefs
+  normalizeConstructionRefs, validConstructionRefs,
+  normalizeVisualModel, createTemplateModel
 } from '../../diagrams/model/commands';
 
 interface DiagramWorkbenchProps {
@@ -29,10 +30,38 @@ interface DiagramWorkbenchProps {
   onConfirm: (spec: DiagramSpec) => void;
 }
 
+function componentNameFromPath(path: string | null): string {
+  const base = (path?.split('/').pop() || 'DiagramaInteractivo').replace(/\.tsx$/, '');
+  const cleaned = base.replace(/\W/g, '');
+  return cleaned || 'DiagramaInteractivo';
+}
+
+function componentNameFromSource(source: string | undefined, fallback: string): string {
+  const match = source?.match(/export\s+const\s+([A-Z]\w*)\b/);
+  return match?.[1] || fallback;
+}
+
+function sourceFromModel(model: VisualDiagramModel, componentName: string): string {
+  const generated = generateDiagramSource(model, componentName);
+  return generated.ok ? generated.source : '';
+}
+
+function refsForElementKind(kind: ElementKind, refs: string[]): string[] {
+  if (kind === 'segment' || kind === 'line' || kind === 'ray' || kind === 'circle' || kind === 'midpoint') {
+    return refs.slice(0, 2);
+  }
+  if (kind === 'perpendicularFoot' || kind === 'baseExtension' || kind === 'perpendicular' || kind === 'parallel' || kind === 'angleBisector' || kind === 'angle' || kind === 'rightAngle') {
+    return refs.slice(0, 3);
+  }
+  return refs.slice(0, 1);
+}
+
 export const DiagramWorkbench: React.FC<DiagramWorkbenchProps> = ({
   isOpen,
   currentFile,
   metadataType,
+  initialModel,
+  initialSource,
   onClose,
   onConfirm,
 }) => {
@@ -40,6 +69,7 @@ export const DiagramWorkbench: React.FC<DiagramWorkbenchProps> = ({
     state,
     isDirty,
     loadDiagram,
+    loadInlineDiagram,
     handleVisualEdit,
     handleSourceEdit,
     selectElement,
@@ -61,6 +91,13 @@ export const DiagramWorkbench: React.FC<DiagramWorkbenchProps> = ({
 
   // Tool references selection
   const [pendingRefs, setPendingRefs] = useState<string[]>([]);
+  const isFileMode = Boolean(currentFile?.endsWith('.tsx'));
+  const inlineModel = useMemo(() => {
+    const normalized = normalizeVisualModel(initialModel, metadataType);
+    if (normalized) return normalized;
+    if (!isFileMode && isOpen) return createTemplateModel('circunferencia', 'Diagrama interactivo', metadataType);
+    return null;
+  }, [initialModel, isFileMode, isOpen, metadataType]);
 
   const choosePointForTool = (pointId: string) => {
     const canvasTool = state.canvasTool;
@@ -81,16 +118,59 @@ export const DiagramWorkbench: React.FC<DiagramWorkbenchProps> = ({
   // Load or initialize diagram when it opens
   useEffect(() => {
     if (isOpen) {
-      if (currentFile) {
-        loadDiagram(currentFile, metadataType);
+      if (isFileMode && currentFile) {
+        loadDiagram(currentFile, componentNameFromPath(currentFile));
+      } else if (inlineModel) {
+        const fallbackName = componentNameFromPath(null);
+        const componentName = componentNameFromSource(initialSource, fallbackName);
+        loadInlineDiagram(initialSource ?? sourceFromModel(inlineModel, componentName), componentName, inlineModel);
       }
     }
-  }, [isOpen, currentFile, metadataType, loadDiagram]);
+  }, [isOpen, currentFile, initialSource, inlineModel, isFileMode, loadDiagram, loadInlineDiagram]);
 
   if (!isOpen) return null;
 
   const model = state.currentModel;
+  const componentName = state.componentName || 'DiagramaInteractivo';
+  const saveCapability = getDiagramSaveCapability(state);
+
   if (!model) {
+    if (state.currentSource || state.diagnostics.length > 0) {
+      return (
+        <div className="fixed inset-0 z-50 flex flex-col bg-lienzo text-carbon font-sans">
+          <header className="flex items-center justify-between border-b border-carbon/15 px-4 py-3 bg-carbon/5">
+            <div>
+              <h2 className="text-sm font-bold text-carbon">Workbench de Diagramas: fuente TSX</h2>
+              <p className="text-[11px] text-carbon/55 font-mono">{state.filePath}</p>
+            </div>
+            <button
+              onClick={onClose}
+              className="rounded border border-carbon/20 px-3 py-1 text-xs font-bold text-carbon/75 hover:bg-carbon/5 transition-all"
+            >
+              Cerrar
+            </button>
+          </header>
+          <DiagramCodePanel
+            source={state.currentSource}
+            sourceTouched
+            onSourceChange={handleSourceEdit}
+            onRegenerate={() => {}}
+          />
+          <DiagramValidationPanel
+            diagnostics={state.diagnostics}
+            targets={[]}
+            selectedTargetId=""
+            onSelectTarget={() => {}}
+          />
+          <DiagramStatusBar
+            status={state.status}
+            isDirty={isDirty}
+            saveCapability={isFileMode ? saveCapability : undefined}
+            onSave={() => {}}
+          />
+        </div>
+      );
+    }
     return (
       <div className="fixed inset-0 z-50 flex items-center justify-center bg-carbon/40 backdrop-blur-sm">
         <div className="rounded bg-lienzo p-6 shadow-xl max-w-sm w-full text-center">
@@ -100,23 +180,24 @@ export const DiagramWorkbench: React.FC<DiagramWorkbenchProps> = ({
     );
   }
 
-  // Component Name extraction
-  const componentName = state.componentName || 'DiagramaInteractivo';
-
   const handleSaveAndConfirm = async () => {
-    const ok = await saveDiagram();
-    if (ok) {
-      onConfirm({
-        componentName,
-        category: model.category,
-        path: currentFile || '',
-        importPath: currentFile || '',
-        source: state.currentSource,
-        targets: buildTargets(model),
-        mode: model.mode,
-      });
-      onClose();
+    if (isFileMode) {
+      const ok = await saveDiagram();
+      if (!ok) return;
+    } else if (state.status === 'invalid-source' || state.status === 'diverged' || state.status === 'conflict' || state.diagnostics.some(d => d.severity === 'error')) {
+      return;
     }
+    onConfirm({
+      componentName,
+      category: model.category,
+      path: isFileMode ? currentFile || '' : '',
+      importPath: isFileMode ? currentFile || '' : '',
+      source: state.currentSource,
+      targets: buildTargets(model),
+      mode: model.mode,
+      visualModel: model as unknown as Record<string, unknown>,
+    });
+    onClose();
   };
 
   // Quick action handlers
@@ -158,11 +239,7 @@ export const DiagramWorkbench: React.FC<DiagramWorkbenchProps> = ({
 
   const handleAddElement = (kind: ElementKind, explicitRefs?: string[]) => {
     const refs = explicitRefs || model.points.map(item => item.id);
-    const elementRefs = kind === 'segment' || kind === 'line' || kind === 'ray' || kind === 'circle' || kind === 'midpoint'
-      ? refs.slice(0, 2)
-      : kind === 'perpendicularFoot' || kind === 'baseExtension' || kind === 'perpendicular' || kind === 'parallel' || kind === 'angleBisector' || kind === 'angle' || kind === 'rightAngle'
-        ? refs.slice(0, 3)
-        : refs.slice(0, 1);
+    const elementRefs = refsForElementKind(kind, refs);
 
     const id = generatedElementId(kind, elementRefs, model.elements);
     const newElement = element(id, KIND_LABELS[kind], kind, elementRefs, elementColorForKind(kind));
@@ -438,6 +515,7 @@ export const DiagramWorkbench: React.FC<DiagramWorkbenchProps> = ({
       <DiagramStatusBar
         status={state.status}
         isDirty={isDirty}
+        saveCapability={isFileMode ? saveCapability : undefined}
         onSave={handleSaveAndConfirm}
       />
     </div>

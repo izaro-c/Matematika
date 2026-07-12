@@ -10,6 +10,8 @@ export type DiagramSyncStatus =
   | 'saving'
   | 'conflict';
 
+export type DiagramParseStatus = 'parsed' | 'unsupported' | 'invalid';
+
 export interface DiagramState {
   filePath: string | null;
   componentName: string;
@@ -18,6 +20,8 @@ export interface DiagramState {
   originalModel: VisualDiagramModel | null;
   currentModel: VisualDiagramModel | null;
   status: DiagramSyncStatus;
+  parseStatus: DiagramParseStatus;
+  expectedVersion: string | null;
   diagnostics: DiagramDiagnostic[];
   selectedId: string;
   activeStepId: string;
@@ -25,7 +29,16 @@ export interface DiagramState {
 }
 
 export type DiagramAction =
-  | { type: 'LOAD_DIAGRAM'; filePath: string; componentName: string; source: string; model: VisualDiagramModel | null }
+  | {
+      type: 'LOAD_DIAGRAM';
+      filePath: string | null;
+      componentName: string;
+      source: string;
+      model: VisualDiagramModel | null;
+      parseStatus?: DiagramParseStatus;
+      diagnostics?: DiagramDiagnostic[];
+      expectedVersion?: string | null;
+    }
   | { type: 'VISUAL_EDIT'; model: VisualDiagramModel }
   | { type: 'SOURCE_EDIT'; source: string }
   | { type: 'SELECT_ELEMENT'; id: string }
@@ -34,9 +47,10 @@ export type DiagramAction =
   | { type: 'SET_STATUS'; status: DiagramSyncStatus }
   | { type: 'SET_DIAGNOSTICS'; diagnostics: DiagramDiagnostic[] }
   | { type: 'APPLY_PARSED_MODEL'; model: VisualDiagramModel; diagnostics: DiagramDiagnostic[] }
+  | { type: 'PARSE_UNSUPPORTED'; diagnostics: DiagramDiagnostic[] }
   | { type: 'PARSE_FAILED'; diagnostics: DiagramDiagnostic[] }
   | { type: 'RESOLVE_TO_VISUAL'; source: string }
   | { type: 'RESOLVE_TO_SOURCE'; model: VisualDiagramModel }
   | { type: 'SAVE_START' }
-  | { type: 'SAVE_SUCCESS'; source: string; model: VisualDiagramModel | null }
+  | { type: 'SAVE_SUCCESS'; source: string; model: VisualDiagramModel | null; expectedVersion: string }
   | { type: 'SAVE_FAILURE'; error: string; isConflict?: boolean };

@@ -2,9 +2,19 @@ import { editorApiClient } from '../../persistence/editorApiClient';
 import { hashSource } from '../../persistence/revision';
 import type { VisualDiagramModel } from '../model/types';
 import { parseDiagramSourceLocally, parseDiagramSourceOnServer } from '../source/parser';
+import type { DiagramDiagnostic } from '../source/generator';
+import type { DiagramParseStatus } from '../state/types';
+
+export interface ReadDiagramResult {
+  source: string;
+  model: VisualDiagramModel | null;
+  version: string;
+  parseStatus: DiagramParseStatus;
+  diagnostics: DiagramDiagnostic[];
+}
 
 export class DiagramRepository {
-  async readDiagram(filePath: string, signal?: AbortSignal): Promise<{ source: string; model: VisualDiagramModel | null; version: string }> {
+  async readDiagram(filePath: string, signal?: AbortSignal): Promise<ReadDiagramResult> {
     const response = await editorApiClient.readContent({ path: filePath }, signal);
     const localModel = parseDiagramSourceLocally(response.source);
     
@@ -13,15 +23,29 @@ export class DiagramRepository {
         source: response.source,
         model: localModel,
         version: response.version,
+        parseStatus: 'parsed',
+        diagnostics: [],
       };
     }
 
     // Fallback to server AST parsing
     const serverResult = await parseDiagramSourceOnServer(response.source, signal);
+    if ((serverResult.status === 'supported' || serverResult.status === 'partially-supported') && serverResult.model) {
+      return {
+        source: response.source,
+        model: serverResult.model,
+        version: response.version,
+        parseStatus: 'parsed',
+        diagnostics: serverResult.diagnostics,
+      };
+    }
+
     return {
       source: response.source,
-      model: serverResult.status === 'supported' || serverResult.status === 'partially-supported' ? serverResult.model || null : null,
       version: response.version,
+      model: null,
+      parseStatus: serverResult.status === 'invalid' ? 'invalid' : 'unsupported',
+      diagnostics: serverResult.diagnostics,
     };
   }
 
