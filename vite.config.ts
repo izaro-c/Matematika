@@ -21,6 +21,8 @@ import {
   applyContentRequestSchema, restoreBackupRequestSchema, saveDraftRequestSchema
 } from './src/features/editor/persistence/persistenceContracts';
 import { BackendError, EditorPersistenceBackend } from './scripts/editor/editorPersistenceBackend';
+import { parseDiagramSourceAST } from './scripts/editor/parseDiagramSourceAST';
+import { updateMdxImportsExports } from './scripts/editor/updateDiagramImportsExports';
 
 /**
  * Plugin personalizado de Vite (`editorAPI`) para Matematika.
@@ -79,6 +81,35 @@ function editorAPI(): Plugin {
           }
           if (filePath.endsWith('.tsx') && source.trim().length === 0) throw new BackendError(400, { message: 'Empty TSX source' });
         }
+      });
+
+      server.middlewares.use('/api/content/parse-diagram', async (req: IncomingMessage, res: ServerResponse) => {
+        if (req.method !== 'POST') return sendJson(res, 405, { message: 'Method not allowed' });
+        try {
+          const body = await readJsonBody(req) as { source: string };
+          const result = parseDiagramSourceAST(body.source);
+          sendJson(res, 200, result);
+        } catch (error) { handleBackendError(res, error); }
+      });
+
+      server.middlewares.use('/api/content/update-imports-exports', async (req: IncomingMessage, res: ServerResponse) => {
+        if (req.method !== 'POST') return sendJson(res, 405, { message: 'Method not allowed' });
+        try {
+          const body = await readJsonBody(req) as { path: string; componentName: string; importPath: string; mode: 'simulation' | 'diagram' | 'inline' };
+          const current = await backend.readContent(body.path);
+          const result = updateMdxImportsExports(current.source, body.componentName, body.importPath, body.mode);
+          if (result.modified) {
+            const sourceHash = crypto.createHash('sha256').update(result.source, 'utf8').digest('hex');
+            await backend.applyContent({
+              path: body.path,
+              source: result.source,
+              sourceHash,
+              expectedVersion: current.version,
+              localRevision: 0
+            });
+          }
+          sendJson(res, 200, { success: true, modified: result.modified, source: result.source });
+        } catch (error) { handleBackendError(res, error); }
       });
 
       server.middlewares.use('/api/content/restore', async (req: IncomingMessage, res: ServerResponse) => {
