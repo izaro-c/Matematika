@@ -108,6 +108,12 @@ function classifyChange(
       reason: 'El documento es completamente editable; todos los cambios de bloque son seguros.',
     };
   }
+  if (compatibility === 'partially-editable' && (!expectedRanges || expectedRanges.length === 0)) {
+    return {
+      classification: 'unknown',
+      reason: 'La revisión no declara rangos esperados ni operaciones de usuario verificables.',
+    };
+  }
   if (expectedRanges && expectedRanges.length > 0) {
     const match = expectedRanges.find(expected => expected.operationId && contains(expected, range));
     if (match) {
@@ -125,8 +131,8 @@ function classifyChange(
     );
     if (containingBlock) {
       return {
-        classification: 'expected',
-        reason: `Edición segura dentro del bloque editable '${containingBlock.id}'.`,
+        classification: 'outside-edited-range',
+        reason: `El cambio cae dentro del bloque editable '${containingBlock.id}', pero no coincide con una operación visual autorizada.`,
       };
     }
   }
@@ -361,5 +367,14 @@ export function isApprovedDiffValid(approval: ApprovedDiff | null | undefined, r
     && approval.candidateSourceHash === review.candidateSourceHash
     && approval.revision === review.baseRevision
     && approval.operationIds.join('\0') === review.operationIds.join('\0')
-    && approval.expectedRanges.length === review.expectedRanges.length;
+    && approval.expectedRanges.length === review.expectedRanges.length
+    && approval.expectedRanges.every((range, index) => {
+      const expected = review.expectedRanges[index];
+      return expected
+        && range.start === expected.start
+        && range.end === expected.end
+        && range.operationId === expected.operationId
+        && range.blockId === expected.blockId
+        && range.reason === expected.reason;
+    });
 }
