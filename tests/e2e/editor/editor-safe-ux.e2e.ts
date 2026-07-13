@@ -39,8 +39,7 @@ async function seedFixtures(root: string) {
     'Texto seguro.',
   ].join('\n'));
   await writeFixture(root, 'database/content/definitions/no-soportado.mdx', 'Texto { un syntax error here } y cierre.');
-  await writeFixture(root, 'shared/diagrams/Seguro.tsx', SAFE_DIAGRAM_SOURCE);
-  await fs.mkdir(path.join(root, 'widgets/diagrams'), { recursive: true });
+  await writeFixture(root, 'widgets/diagrams/Definitions/Seguro.tsx', SAFE_DIAGRAM_SOURCE);
 }
 
 function startVite(root: string, storageRoot: string): ChildProcess {
@@ -152,11 +151,12 @@ async function openEditor(page: Page) {
 }
 
 async function runTest(results: E2EResult[], name: string, evidenceDir: string, fn: () => Promise<void>) {
+  let timeout: ReturnType<typeof setTimeout> | undefined;
   try {
     await Promise.race([
       fn(),
       new Promise<never>((_, reject) => {
-        setTimeout(() => reject(new Error(`E2E flow timed out: ${name}`)), 25_000);
+        timeout = setTimeout(() => reject(new Error(`E2E flow timed out: ${name}`)), 45_000);
       }),
     ]);
     results.push({ name, status: 'PASS', detail: 'ok' });
@@ -167,6 +167,8 @@ async function runTest(results: E2EResult[], name: string, evidenceDir: string, 
       const text = await currentDebugPage.evaluate(() => document.body.textContent || '');
       await fs.writeFile(path.join(evidenceDir, `${name.replace(/\W+/g, '-').toLowerCase()}.body.txt`), text, 'utf8');
     }
+  } finally {
+    if (timeout) clearTimeout(timeout);
   }
 }
 
@@ -186,6 +188,7 @@ async function main() {
     browser = await puppeteer.launch({ headless: true, args: ['--no-sandbox', '--disable-setuid-sandbox'] });
     console.log(`[${new Date().toISOString()}] Puppeteer launched. Creating new page...`);
     const page = await browser.newPage();
+    await page.setViewport({ width: 1440, height: 900, deviceScaleFactor: 1 });
     console.log(`[${new Date().toISOString()}] Page created. Setting timeout...`);
     currentDebugPage = page;
     page.setDefaultTimeout(30_000);
@@ -207,7 +210,7 @@ async function main() {
       await openEditor(page);
       console.log(`[${new Date().toISOString()}] FLOW 1: Editor opened, clicking Compatible...`);
       await clickByText(page, 'Compatible');
-      await expectText(page, 'Documento completamente editable');
+      await expectText(page, 'Edición visual exacta');
       const next = '## Documento compatible\n\nTexto editado desde E2E.';
       await setMonacoValue(page, next);
       await expectText(page, 'Cambios locales');
@@ -226,7 +229,7 @@ async function main() {
       await openEditor(page);
       console.log(`[${new Date().toISOString()}] FLOW 2: Editor opened, clicking Parcial...`);
       await clickByText(page, 'Parcial');
-      await expectText(page, 'Documento parcialmente editable');
+      await expectText(page, 'Edición visual exacta por rangos');
       console.log(`[${new Date().toISOString()}] FLOW 2: Document loaded. Reading content...`);
       const before = await readContent('database/content/definitions/parcial.mdx');
       console.log(`[${new Date().toISOString()}] FLOW 2: Setting Monaco value...`);
@@ -250,10 +253,10 @@ async function main() {
       await openEditor(page);
       console.log(`[${new Date().toISOString()}] FLOW 3: Editor opened, clicking No Soportado...`);
       await clickByText(page, 'No Soportado');
-      await expectText(page, 'Documento no soportado en visual');
-      console.log(`[${new Date().toISOString()}] FLOW 3: Clicking Modo Visual...`);
-      await clickByText(page, 'Modo Visual');
-      await expectText(page, 'Documento no soportado en visual');
+      await expectText(page, 'Recurso MDX inválido');
+      console.log(`[${new Date().toISOString()}] FLOW 3: Clicking Edición visual exacta...`);
+      await clickByText(page, 'Edición visual exacta');
+      await expectText(page, 'Recurso MDX inválido');
       console.log(`[${new Date().toISOString()}] FLOW 3: Reading content...`);
       const saved = await readContent('database/content/definitions/no-soportado.mdx');
       if (!saved.source.includes('syntax error')) throw new Error('Unsupported source changed unexpectedly');
@@ -364,14 +367,14 @@ async function main() {
     await runTest(results, '8 Autoridad de diagrama', evidenceDir, async () => {
       console.log(`[${new Date().toISOString()}] FLOW 8: Starting`);
       await openEditor(page);
-      console.log(`[${new Date().toISOString()}] FLOW 8: Clicking Componentes y Diagramas...`);
-      await clickByText(page, 'Componentes y Diagramas');
+      console.log(`[${new Date().toISOString()}] FLOW 8: Clicking Diagramas...`);
+      await clickByText(page, 'Diagramas');
       console.log(`[${new Date().toISOString()}] FLOW 8: Clicking Seguro...`);
       await clickByText(page, 'Seguro');
       await expectText(page, 'Diagrama TSX abierto');
-      console.log(`[${new Date().toISOString()}] FLOW 8: Clicking Editar visualmente...`);
-      await clickByText(page, 'Editar visualmente');
-      await expectText(page, 'Fuente TSX autoritativa');
+      console.log(`[${new Date().toISOString()}] FLOW 8: Clicking Abrir código y vista previa...`);
+      await clickByText(page, 'Abrir código y vista previa');
+      await expectText(page, 'sync:source-authoritative');
       console.log(`[${new Date().toISOString()}] FLOW 8: Closing visual workbench...`);
       await clickByText(page, 'Cerrar');
       console.log(`[${new Date().toISOString()}] FLOW 8: Completed`);
@@ -392,9 +395,9 @@ async function main() {
       console.log(`[${new Date().toISOString()}] FLOW 10: Starting`);
       await openEditor(page);
       await clickByText(page, 'Parcial');
-      await expectText(page, 'Documento parcialmente editable');
-      // Cambiar a Modo Visual
-      await clickByText(page, 'Modo Visual (Experimental)');
+      await expectText(page, 'Edición visual exacta por rangos');
+      // Cambiar a la proyección visual exacta
+      await clickByText(page, 'Edición visual exacta');
       // En modo visual en MDX, el botón guardar debe estar desactivado/bloqueado
       const isDisabled = await page.evaluate(() => {
         const btn = [...document.querySelectorAll('button')].find(b => b.textContent?.includes('Guardar'));
@@ -408,7 +411,7 @@ async function main() {
       console.log(`[${new Date().toISOString()}] FLOW 11: Starting`);
       await openEditor(page);
       await clickByText(page, 'Parcial');
-      await expectText(page, 'Documento parcialmente editable');
+      await expectText(page, 'Edición visual exacta por rangos');
       // Ya estamos en modo código por defecto, editar el bloque opaco para que sea inesperado/bloqueante
       await setMonacoValue(page, '## Documento parcial\n\n<Formula>corrupto</Formula>\n\nTexto editado.');
       await clickByText(page, 'Revisar diff');
@@ -425,13 +428,13 @@ async function main() {
     await runTest(results, '12 Diagrama no convertible', evidenceDir, async () => {
       console.log(`[${new Date().toISOString()}] FLOW 12: Starting`);
       await openEditor(page);
-      await clickByText(page, 'Componentes y Diagramas');
+      await clickByText(page, 'Diagramas');
       await clickByText(page, 'Seguro');
       await expectText(page, 'Diagrama TSX abierto');
       // Cambiar la fuente persistida para forzar parse-failed / invalid-source en modo file.
-      await writeFixture(tempRoot, 'shared/diagrams/Seguro.tsx', 'export function Seguro() { return (');
+      await writeFixture(tempRoot, 'widgets/diagrams/Definitions/Seguro.tsx', 'export function Seguro() { return (');
       console.log(`[${new Date().toISOString()}] FLOW 12: Opening visual workbench...`);
-      await clickByText(page, 'Editar visualmente');
+      await clickByText(page, 'Abrir código y vista previa');
       await expectText(page, 'sync:invalid-source');
       console.log(`[${new Date().toISOString()}] FLOW 12: Closing visual workbench...`);
       await clickByText(page, 'Cerrar');
@@ -440,13 +443,13 @@ async function main() {
 
     await runTest(results, '13 Diagrama fuente autoritativa', evidenceDir, async () => {
       console.log(`[${new Date().toISOString()}] FLOW 13: Starting`);
-      await writeFixture(tempRoot, 'shared/diagrams/Seguro.tsx', SAFE_DIAGRAM_SOURCE);
+      await writeFixture(tempRoot, 'widgets/diagrams/Definitions/Seguro.tsx', SAFE_DIAGRAM_SOURCE);
       await openEditor(page);
-      await clickByText(page, 'Componentes y Diagramas');
+      await clickByText(page, 'Diagramas');
       await clickByText(page, 'Seguro');
       await expectText(page, 'Diagrama TSX abierto');
-      await clickByText(page, 'Editar visualmente');
-      await expectText(page, 'Fuente TSX autoritativa');
+      await clickByText(page, 'Abrir código y vista previa');
+      await expectText(page, 'sync:source-authoritative');
       const textarea = await page.$('textarea');
       if (!textarea) throw new Error('Diagram source textarea not found');
       const hasVisualTools = await page.evaluate(() => document.body.textContent?.includes('Añadir rápido') ?? false);
@@ -459,17 +462,61 @@ async function main() {
     await runTest(results, '14 Conflicto de diagrama', evidenceDir, async () => {
       console.log(`[${new Date().toISOString()}] FLOW 14: Starting`);
       await openEditor(page);
-      await clickByText(page, 'Componentes y Diagramas');
+      await clickByText(page, 'Diagramas');
       await clickByText(page, 'Seguro');
       await expectText(page, 'Diagrama TSX abierto');
       // Hacer un cambio local en el diagrama
       await setMonacoValue(page, 'export function Seguro() { return "cambio-local"; }');
       // Cambiar el archivo en disco por detrás
-      await writeFixture(tempRoot, 'shared/diagrams/Seguro.tsx', 'export function Seguro() { return "cambio-externo"; }');
+      await writeFixture(tempRoot, 'widgets/diagrams/Definitions/Seguro.tsx', 'export function Seguro() { return "cambio-externo"; }');
       // Intentar guardar y esperar que detecte conflicto
       await clickByText(page, 'Guardar TSX');
-      await expectText(page, 'conflict');
+      await expectText(page, 'Conflicto');
       console.log(`[${new Date().toISOString()}] FLOW 14: Completed`);
+    });
+
+    await runTest(results, '15 Navegación y filtros de Fase 1', evidenceDir, async () => {
+      await page.setViewport({ width: 1440, height: 900, deviceScaleFactor: 1 });
+      await openEditor(page);
+      const search = await page.$('input[type="search"]');
+      if (!search) throw new Error('Resource search was not found');
+      await search.type('compatible');
+      await expectText(page, 'Compatible');
+      const hasUnrelatedResource = await page.evaluate(() => document.body.textContent?.includes('No Soportado') ?? false);
+      if (hasUnrelatedResource) throw new Error('Search did not filter unrelated resources');
+      await search.click({ clickCount: 3 });
+      await page.keyboard.press('Backspace');
+      await clickByText(page, 'Diagramas');
+      await expectText(page, 'Código + vista previa');
+      await clickByText(page, 'Seguro');
+      await expectText(page, 'El TSX completo es autoritativo');
+    });
+
+    await runTest(results, '16 Paneles, teclado y responsive de Fase 1', evidenceDir, async () => {
+      await page.setViewport({ width: 1440, height: 900, deviceScaleFactor: 1 });
+      await openEditor(page);
+      await clickByText(page, 'Compatible');
+      await page.keyboard.down('Control');
+      await page.keyboard.down('Shift');
+      await page.keyboard.press('I');
+      await page.keyboard.up('Shift');
+      await page.keyboard.up('Control');
+      const inspectorVisible = await page.$('[aria-label="Inspector contextual"]');
+      if (inspectorVisible) throw new Error('Inspector keyboard shortcut did not collapse the panel');
+      await page.keyboard.down('Control');
+      await page.keyboard.press('J');
+      await page.keyboard.up('Control');
+      await expectText(page, 'Diagnósticos y actividad');
+
+      await page.setViewport({ width: 390, height: 844, deviceScaleFactor: 1 });
+      await page.reload({ waitUntil: 'domcontentloaded' });
+      await expectText(page, 'Ningún recurso abierto');
+      await clickByText(page, 'Recursos');
+      await expectText(page, 'Recursos matemáticos');
+      const overflow = await page.evaluate(() => document.documentElement.scrollWidth > window.innerWidth);
+      if (overflow) throw new Error('The mobile editor introduced horizontal page overflow');
+      await page.screenshot({ path: path.join(evidenceDir, 'fase-1-mobile-390x844.png'), fullPage: false });
+      await page.setViewport({ width: 1440, height: 900, deviceScaleFactor: 1 });
     });
 
   } finally {

@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useMemo, useReducer, useRef, useState, type SetStateAction } from 'react';
 import type { FileNode } from '../lib/editorContracts';
-import type { EditorMode, EditorValidationResult } from './editorTypes';
+import type { DirtyState, EditorMode, EditorValidationResult } from './editorTypes';
 import type { Block, BlockType } from './parser';
 import {
   openEditorDocument, enterVisualMode, applyVisualOperation,
@@ -90,6 +90,7 @@ interface TrackedVisualOperation {
 export const useEditorCore = () => {
   const [files, setFiles] = useState<FileNode[]>([]);
   const [filesLoading, setFilesLoading] = useState(true);
+  const [filesError, setFilesError] = useState<string | null>(null);
   const [editorMode, setEditorMode] = useState<EditorMode>('code');
   const [metadata] = useState<Record<string, unknown>>({});
   const [imports, setImportsView] = useState('');
@@ -147,7 +148,7 @@ export const useEditorCore = () => {
   const rawBody = persistence.source;
   const loading = persistence.status.kind === 'loading';
   const saving = persistence.status.kind === 'saving-file' || persistence.status.kind === 'saving-draft';
-  const dirtyState = persistence.status.kind === 'ready-clean' || persistence.status.kind === 'saved' ? 'clean'
+  const dirtyState: DirtyState = persistence.status.kind === 'ready-clean' || persistence.status.kind === 'saved' ? 'clean'
     : persistence.status.kind === 'blocked' ? 'blocked'
       : saving ? 'saving' : persistence.localRevision > persistence.confirmedRevision ? 'dirty' : 'clean';
   const compatibility = doc?.compatibility ?? 'unsupported';
@@ -170,8 +171,12 @@ export const useEditorCore = () => {
 
   const loadFileList = useCallback(async () => {
     setFilesLoading(true);
+    setFilesError(null);
     try { setFiles(await editorApiClient.listContent() as FileNode[]); }
-    catch (error) { console.error('Error cargando lista de archivos:', error); }
+    catch (error) {
+      console.error('Error cargando lista de archivos:', error);
+      setFilesError('El servidor del editor no devolvió el catálogo seguro.');
+    }
     finally { setFilesLoading(false); }
   }, []);
 
@@ -388,7 +393,7 @@ export const useEditorCore = () => {
   }, [coordinator, editorSessionId]);
 
   return {
-    files, filesLoading, loading, currentFile, editorMode, metadata, imports, exports, blocks, rawBody,
+    files, filesLoading, filesError, loading, currentFile, editorMode, metadata, imports, exports, blocks, rawBody,
     baseSource, localRevision: persistence.localRevision, baseVersion: persistence.version,
     saving, dirtyState, validation, message, persistenceStatus: persistence.status,
     persistenceLabel: persistenceStatusLabel(persistence.status),

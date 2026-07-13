@@ -169,7 +169,7 @@ export const MetadataPanel: React.FC<MetadataPanelProps> = ({
   };
 
   return (
-    <div className="w-80 bg-lienzo border-l border-carbon/15 flex flex-col shrink-0 overflow-hidden">
+    <div className="h-full w-full bg-lienzo flex flex-col overflow-hidden">
       <div className="p-4 border-b border-carbon/15 bg-carbon/5 select-none">
         <h3 className="text-xs uppercase tracking-widest font-bold text-carbon/60">Configuración</h3>
       </div>

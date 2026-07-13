@@ -72,7 +72,7 @@ export const DiagramSourcePanel: React.FC<DiagramSourcePanelProps> = ({
   };
 
   return (
-    <div className="w-80 shrink-0 overflow-hidden border-l border-carbon/15 bg-lienzo flex flex-col h-full">
+    <div className="h-full w-full overflow-hidden bg-lienzo flex flex-col">
       <div className="border-b border-carbon/15 bg-carbon/5 p-4 select-none">
         <h3 className="text-xs font-bold uppercase tracking-widest text-carbon/60">Diagrama TSX</h3>
         <p className="mt-1 font-mono text-[10px] text-carbon/45 truncate">{currentFile}</p>

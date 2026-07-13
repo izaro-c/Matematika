@@ -10,6 +10,13 @@ import type { FileNode } from '../lib/editorContracts';
 import { approveDiffReview, buildDiffReview, isDiffReviewStale, type DiffReview } from '../ux/diffReview';
 import { buildEditorSafetyPresentation } from '../ux/safetyPresentation';
 import { useDiagramUsages } from '../diagrams/hooks/useDiagramUsages';
+import {
+  readEditorWorkspacePreferences,
+  recordRecentPath,
+  toggleFavoritePath,
+  writeEditorWorkspacePreferences,
+  type EditorWorkspacePreferences,
+} from '../navigation/editorNavigationModel';
 
 // Componentes estructurales y paneles
 import { EditorShell } from './EditorShell';
@@ -22,6 +29,7 @@ import { DiagramSourcePanel } from './panels/DiagramSourcePanel';
 import { SafetySummary } from './safety/SafetySummary';
 import { DiffReviewPanel } from './diff/DiffReviewPanel';
 import { UnsavedChangesDialog } from './safety/UnsavedChangesDialog';
+import { EditorDiagnosticsPanel } from './panels/EditorDiagnosticsPanel';
 
 interface PageDiagramLink {
   componentName: string;
@@ -57,6 +65,7 @@ export const EditorPage: React.FC = () => {
   const {
     files,
     filesLoading,
+    filesError,
     loading,
     currentFile,
     editorMode,
@@ -98,8 +107,10 @@ export const EditorPage: React.FC = () => {
 
   const isReadOnly = compatibility === 'read-only';
 
-  const [isSidebarOpen, setIsSidebarOpen] = useState(true);
-  const [isInspectorOpen, setIsInspectorOpen] = useState(true);
+  const [workspace, setWorkspace] = useState<EditorWorkspacePreferences>(() => readEditorWorkspacePreferences(window.localStorage));
+  const [isSidebarOpen, setIsSidebarOpen] = useState(() => window.innerWidth >= 768);
+  const [isInspectorOpen, setIsInspectorOpen] = useState(() => window.innerWidth >= 1100);
+  const [isDiagnosticsOpen, setIsDiagnosticsOpen] = useState(false);
   const [editingBlockId, setEditingBlockId] = useState<string | null>(null);
   const [diffReview, setDiffReview] = useState<DiffReview | null>(null);
   const [pendingFileNavigation, setPendingFileNavigation] = useState<string | null>(null);
@@ -165,6 +176,10 @@ export const EditorPage: React.FC = () => {
   useEffect(() => {
     loadFileList();
   }, [loadFileList]);
+
+  useEffect(() => {
+    writeEditorWorkspacePreferences(workspace, window.localStorage);
+  }, [workspace]);
 
   const isDiagramFile = currentFile?.endsWith('.tsx') ?? false;
   const currentResource = files.find(file => file.path === currentFile);
@@ -266,6 +281,15 @@ export const EditorPage: React.FC = () => {
         } else if (event.key.toLowerCase() === 'm') {
           event.preventDefault();
           toggleEditorMode();
+        } else if (event.shiftKey && event.key.toLowerCase() === 'e') {
+          event.preventDefault();
+          setIsSidebarOpen(value => !value);
+        } else if (event.shiftKey && event.key.toLowerCase() === 'i') {
+          event.preventDefault();
+          if (currentFile) setIsInspectorOpen(value => !value);
+        } else if (event.key.toLowerCase() === 'j') {
+          event.preventDefault();
+          if (currentFile) setIsDiagnosticsOpen(value => !value);
         }
       }
     };
@@ -279,7 +303,12 @@ export const EditorPage: React.FC = () => {
       setPendingFileNavigation(path);
       return;
     }
+    setWorkspace(previous => ({ ...previous, recentPaths: recordRecentPath(previous.recentPaths, path) }));
     openFile(path);
+  };
+
+  const toggleFavorite = (path: string) => {
+    setWorkspace(previous => ({ ...previous, favoritePaths: toggleFavoritePath(previous.favoritePaths, path) }));
   };
 
   function reviewCurrentDiff() {
@@ -608,19 +637,32 @@ export const EditorPage: React.FC = () => {
   const renderContent = () => {
     if (loading) {
       return (
-        <div className="flex-1 flex flex-col items-center justify-center italic text-carbon/50 font-serif">
-          <span>Cargando contenido...</span>
+        <div className="flex-1 flex flex-col items-center justify-center text-carbon/50 font-serif" role="status">
+          <span className="h-8 w-8 animate-spin rounded-full border-2 border-carbon/15 border-t-salvia" aria-hidden="true" />
+          <span className="mt-3 italic">Cargando contenido…</span>
+        </div>
+      );
+    }
+
+    if (currentFile && persistenceStatus.kind === 'save-error' && rawBody === '') {
+      return (
+        <div className="flex-1 flex flex-col items-center justify-center p-8 text-center" role="alert">
+          <h3 className="font-serif text-lg font-bold text-granada">No se pudo abrir el recurso</h3>
+          <p className="mt-2 max-w-md text-sm text-carbon/60">{message || 'La lectura falló. El archivo real no se ha modificado.'}</p>
+          <button type="button" onClick={() => openFile(currentFile, { discardLocalChanges: true })} className="mt-4 rounded bg-granada px-4 py-2 text-xs font-bold text-lienzo">Reintentar</button>
         </div>
       );
     }
 
     if (!currentFile) {
       return (
-        <div className="flex-1 flex flex-col items-center justify-center text-center p-8 bg-carbon/5">
-          <h3 className="text-lg font-serif font-bold text-carbon">Editor del Archivo</h3>
-          <p className="text-xs text-carbon/50 max-w-sm mt-2 font-serif italic">
-            Seleccione un documento en el panel izquierdo para comenzar a editar.
+        <div className="flex-1 flex flex-col items-center justify-center text-center p-8 bg-carbon/[0.025]">
+          <p className="text-[10px] font-bold uppercase tracking-widest text-salvia">Área de trabajo</p>
+          <h3 className="mt-2 text-xl font-serif font-bold text-carbon">Abra un recurso para comenzar</h3>
+          <p className="text-sm text-carbon/55 max-w-md mt-2 font-serif">
+            Documentos MDX y diagramas están separados en el explorador. Cada entrada explica si admite edición exacta o solo código con vista previa.
           </p>
+          {!isSidebarOpen && <button type="button" onClick={() => setIsSidebarOpen(true)} className="mt-5 rounded bg-carbon px-4 py-2 text-xs font-bold text-lienzo">Explorar recursos</button>}
         </div>
       );
     }
@@ -672,8 +714,16 @@ export const EditorPage: React.FC = () => {
           </div>
         )}
 
-        {/* PANEL DERECHO: Metadatos o Diagrama */}
-        {isInspectorOpen && currentFile.endsWith('.mdx') && (
+      </>
+    );
+  };
+
+  const renderInspector = () => {
+    if (!currentFile) return null;
+    return (
+      <div className="relative h-full">
+        <button type="button" onClick={() => setIsInspectorOpen(false)} className="absolute right-3 top-3 z-10 rounded border border-carbon/15 bg-lienzo px-2 py-1 text-[10px] font-bold text-carbon/55 lg:hidden">Cerrar</button>
+        {currentFile.endsWith('.mdx') ? (
           <MetadataPanel
             metadata={metadata}
             canEditVisualMetadata={canEditVisualMetadata}
@@ -692,8 +742,7 @@ export const EditorPage: React.FC = () => {
             insertInteractiveTargetParagraph={insertInteractiveTargetParagraph}
             onSelectIssue={handleSelectIssue}
           />
-        )}
-        {isDiagramFile && (
+        ) : (
           <DiagramSourcePanel
             currentFile={currentFile}
             diagramLinkedPages={diagramUsageLookup.linkedPages}
@@ -705,7 +754,7 @@ export const EditorPage: React.FC = () => {
             capability={currentResource?.capability}
           />
         )}
-      </>
+      </div>
     );
   };
 
@@ -718,6 +767,7 @@ export const EditorPage: React.FC = () => {
           currentFile={currentFile}
           message={message}
           persistenceLabel={persistenceLabel}
+          dirtyState={dirtyState}
           isDiagramFile={isDiagramFile}
           editorMode={editorMode}
           toggleEditorMode={toggleEditorMode}
@@ -728,6 +778,10 @@ export const EditorPage: React.FC = () => {
           setLocation={setLocation}
           isInspectorOpen={isInspectorOpen}
           setIsInspectorOpen={setIsInspectorOpen}
+          isDiagnosticsOpen={isDiagnosticsOpen}
+          setIsDiagnosticsOpen={setIsDiagnosticsOpen}
+          level={workspace.level}
+          setLevel={level => setWorkspace(previous => ({ ...previous, level }))}
           toggleSearch={toggleSearch}
         />
       }
@@ -736,12 +790,42 @@ export const EditorPage: React.FC = () => {
           <EditorNavigation
             files={files}
             isLoading={filesLoading}
+            error={filesError}
             currentFile={currentFile}
             openFile={openFileSafely}
-            setIsSidebarOpen={setIsSidebarOpen}
+            retry={() => { void loadFileList(); }}
+            close={() => setIsSidebarOpen(false)}
+            level={workspace.level}
+            favoritePaths={workspace.favoritePaths}
+            recentPaths={workspace.recentPaths}
+            toggleFavorite={toggleFavorite}
+            width={workspace.navigationWidth}
           />
         ) : null
       }
+      navigationOpen={isSidebarOpen}
+      navigationWidth={workspace.navigationWidth}
+      setNavigationWidth={navigationWidth => setWorkspace(previous => ({ ...previous, navigationWidth }))}
+      inspector={renderInspector()}
+      inspectorOpen={isInspectorOpen && Boolean(currentFile)}
+      inspectorWidth={workspace.inspectorWidth}
+      setInspectorWidth={inspectorWidth => setWorkspace(previous => ({ ...previous, inspectorWidth }))}
+      diagnostics={
+        <EditorDiagnosticsPanel
+          currentFile={currentFile}
+          resource={currentResource}
+          validation={validation}
+          persistenceStatus={persistenceStatus}
+          persistenceLabel={persistenceLabel}
+          level={workspace.level}
+          onSelectIssue={handleSelectIssue}
+          close={() => setIsDiagnosticsOpen(false)}
+        />
+      }
+      diagnosticsOpen={isDiagnosticsOpen && Boolean(currentFile)}
+      diagnosticsHeight={workspace.diagnosticsHeight}
+      setDiagnosticsHeight={diagnosticsHeight => setWorkspace(previous => ({ ...previous, diagnosticsHeight }))}
+      persistPanelSizes={() => writeEditorWorkspacePreferences(workspace, window.localStorage)}
       safetySummary={
         <SafetySummary
           currentFile={currentFile}
@@ -753,6 +837,7 @@ export const EditorPage: React.FC = () => {
           compatibility={compatibility}
           persistenceStatus={persistenceStatus.kind}
           isDiagramFile={isDiagramFile}
+          showTechnicalDetails={workspace.level === 'advanced'}
         />
       }
     >
