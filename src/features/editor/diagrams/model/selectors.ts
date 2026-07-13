@@ -57,7 +57,6 @@ export function canSaveDiagram(model: VisualDiagramModel): boolean {
 
 export type DiagramSaveBlockReason =
   | 'invalid-source'
-  | 'unsupported'
   | 'diverged'
   | 'conflict'
   | 'validation-error'
@@ -72,7 +71,6 @@ export interface DiagramSaveCapability {
 export function getDiagramSaveCapability(state: DiagramState): DiagramSaveCapability {
   if (!state.filePath || !state.currentSource) return { allowed: false, reason: 'missing-authority' };
   if (state.status === 'invalid-source' || state.parseStatus === 'invalid') return { allowed: false, reason: 'invalid-source' };
-  if (state.parseStatus === 'unsupported') return { allowed: false, reason: 'unsupported' };
   if (state.status === 'diverged') return { allowed: false, reason: 'diverged' };
   if (state.status === 'conflict') return { allowed: false, reason: 'conflict' };
   if (state.diagnostics.some(diagnostic => diagnostic.severity === 'error')) {
@@ -81,7 +79,7 @@ export function getDiagramSaveCapability(state: DiagramState): DiagramSaveCapabi
   if (state.expectedVersion !== null && state.expectedVersion.trim() === '') {
     return { allowed: false, reason: 'stale-revision' };
   }
-  if (!state.currentModel && state.status !== 'source-authoritative') {
+  if (!state.currentModel && state.parseStatus !== 'code-preview') {
     return { allowed: false, reason: 'missing-authority' };
   }
   return { allowed: true };

@@ -798,7 +798,7 @@ export const VisualEditorPanel: React.FC<VisualEditorPanelProps> = ({
                     <label className="block text-[8px] font-bold text-carbon/40 uppercase tracking-widest font-sans">
                       Diagrama canónico ({block.content})
                     </label>
-                    <button
+                    {canMutateVisualStructure && <button
                       type="button"
                       onClick={() => {
                         setActiveDiagramBlockId(block.id);
@@ -808,7 +808,7 @@ export const VisualEditorPanel: React.FC<VisualEditorPanelProps> = ({
                       className="text-[9px] bg-salvia/10 text-salvia hover:bg-salvia/20 px-2 py-0.5 rounded font-serif font-bold transition-all cursor-pointer"
                     >
                       Reemplazar
-                    </button>
+                    </button>}
                   </div>
                   <div className="rounded border border-carbon/15 bg-carbon/5 p-4">
                     <div className="flex items-start justify-between gap-4">
@@ -816,7 +816,7 @@ export const VisualEditorPanel: React.FC<VisualEditorPanelProps> = ({
                         <p className="font-serif text-sm font-bold text-carbon">{block.content}</p>
                         <p className="mt-1 font-mono text-[10px] text-carbon/50">{block.metadata?.path || 'Diagrama heredado sin archivo asociado'}</p>
                       </div>
-                      <span className="rounded bg-salvia/10 px-2 py-1 text-[10px] font-bold text-salvia select-none">shared/diagrams</span>
+                      <span className="rounded bg-salvia/10 px-2 py-1 text-[10px] font-bold text-salvia select-none">Catálogo de diagramas finales</span>
                     </div>
                     {Array.isArray(block.metadata?.targets) && block.metadata.targets.length > 0 && (
                       <div className="mt-3 flex flex-wrap gap-1">
@@ -927,11 +927,11 @@ export const VisualEditorPanel: React.FC<VisualEditorPanelProps> = ({
     <div className="flex-1 overflow-y-auto p-8">
       <div className="mx-auto mb-4 max-w-3xl space-y-2">
         <div className="rounded border border-ocre/30 bg-ocre/5 p-3 text-xs text-carbon shadow-sm">
-          <span className="font-bold text-ocre">⚠️ Modo Visual Experimental:</span> El guardado visual, la metadata y las operaciones de añadir, mover o eliminar bloques están bloqueadas. Solo se admiten cambios localizados en bloques explícitamente editables.
+          <span className="font-bold text-ocre">Edición visual exacta por rangos:</span> La metadata y las operaciones estructurales se ocultan porque aún no disponen de parches localizados exactos. Solo se admiten cambios en bloques explícitamente editables.
         </div>
         {isReadOnly && (
           <div className="rounded border border-pavo/30 bg-pavo/5 p-3 text-xs text-carbon shadow-sm">
-            <span className="font-bold text-pavo">ℹ️ Documento de Solo Lectura Visual:</span> El body no contiene ningún bloque que pueda editarse mediante un parche localizado seguro.
+            <span className="font-bold text-pavo">Edición de código con vista previa:</span> El cuerpo no contiene ningún bloque visual que pueda editarse mediante un parche localizado exacto.
           </div>
         )}
       </div>

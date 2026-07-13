@@ -2,7 +2,11 @@ import ts from 'typescript';
 import type {
   VisualDiagramModel, VisualPoint, VisualElement, VisualSlider, VisualStep, ElementKind, ColorToken
 } from '../../src/features/editor/diagrams/model/types';
-import { type ParseDiagramSourceResult, parseDiagramSourceLocally } from '../../src/features/editor/diagrams/source/parser';
+import {
+  type ParseDiagramSourceResult,
+  classifyEmbeddedDiagramSource,
+  parseDiagramSourceLocally,
+} from '../../src/features/editor/diagrams/source/parser';
 import { KIND_LABELS } from '../../src/features/editor/diagrams/model/commands';
 
 function parseCoords(node?: ts.Expression): { x: number; y: number } | null {
@@ -69,6 +73,8 @@ function extractElId(node: ts.Expression): string | null {
 }
 
 export function parseDiagramSourceAST(source: string, metadataType = ''): ParseDiagramSourceResult {
+  const embeddedClassification = classifyEmbeddedDiagramSource(source, metadataType);
+  if (embeddedClassification?.status === 'visual-exact') return embeddedClassification;
   const diagnostics: any[] = [];
   let sourceFile: ts.SourceFile;
   try {
@@ -501,10 +507,33 @@ export function parseDiagramSourceAST(source: string, metadataType = ''): ParseD
     note,
   };
 
-  const status = points.length > 0 ? 'supported' : 'unsupported';
+  const hasExportedComponent = /export\s+(?:const|function)\s+[A-Z]\w*\b/.test(source);
+  if (!hasExportedComponent) {
+    return {
+      status: 'invalid',
+      diagnostics: [{
+        code: 'missing-exported-diagram',
+        severity: 'error',
+        message: 'No se encontró un componente de diagrama exportado.',
+        source: 'source',
+      }],
+    };
+  }
+
+  diagnostics.push(...(embeddedClassification?.diagnostics ?? []));
+  if (points.length > 0 || elements.length > 0 || sliders.length > 0) {
+    diagnostics.push({
+      code: 'partial-ast-model-not-authoritative',
+      severity: 'info',
+      message: 'El parser reconoce una parte de la geometría, pero no la usa como modelo editable porque no representa el TSX completo.',
+      source: 'synchronization',
+    });
+  }
   return {
-    status,
-    model: resultModel,
+    status: 'code-preview',
+    previewModel: embeddedClassification?.status === 'code-preview'
+      ? embeddedClassification.previewModel ?? resultModel
+      : resultModel,
     diagnostics,
   };
 }

@@ -20,11 +20,11 @@ export const DiagramStatusBar: React.FC<DiagramStatusBarProps> = ({
   const getStatusConfig = (s: DiagramSyncStatus) => {
     switch (s) {
       case 'synced':
-        return { label: 'Sincronizado', color: 'bg-salvia text-salvia', textClass: 'text-salvia/90' };
+        return { label: 'Edición visual exacta', color: 'bg-salvia text-salvia', textClass: 'text-salvia/90' };
       case 'visual-authoritative':
         return { label: 'Modificado visualmente (sin guardar)', color: 'bg-ocre text-ocre', textClass: 'text-ocre/90' };
       case 'source-authoritative':
-        return { label: 'Modificado en código (sin guardar)', color: 'bg-pavo text-pavo', textClass: 'text-pavo/90' };
+        return { label: isDirty ? 'Código modificado (sin guardar)' : 'Código con vista previa', color: 'bg-pavo text-pavo', textClass: 'text-pavo/90' };
       case 'diverged':
         return { label: 'Divergencia detectada', color: 'bg-granada text-granada', textClass: 'text-granada/90' };
       case 'invalid-source':
@@ -74,7 +74,7 @@ export const DiagramStatusBar: React.FC<DiagramStatusBarProps> = ({
           }`}
           title={isSaveBlocked ? saveCapability?.reason ?? presentation.description : 'Guardar el TSX del diagrama'}
         >
-          Guardar Diagrama
+          Guardar diagrama
         </button>
       </div>
     </div>

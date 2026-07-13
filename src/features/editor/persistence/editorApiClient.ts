@@ -8,7 +8,15 @@ import {
 } from './persistenceContracts';
 import { PersistenceFailure } from './persistenceErrors';
 
-const fileListSchema = z.array(z.object({ path: z.string(), name: z.string(), type: z.string() }).passthrough());
+const fileListSchema = z.array(z.object({
+  path: z.string(),
+  name: z.string(),
+  type: z.string(),
+  kind: z.enum(['mdx-document', 'diagram']),
+  capability: z.enum(['visual-exact', 'code-preview', 'invalid']),
+  capabilityLabel: z.string(),
+  reason: z.string(),
+}));
 
 async function readPayload(response: Response): Promise<unknown> {
   const text = await response.text();

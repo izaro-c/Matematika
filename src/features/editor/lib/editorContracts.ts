@@ -53,6 +53,10 @@ export interface FileNode {
   path: string;
   name: string;
   type: string;
+  kind: 'mdx-document' | 'diagram';
+  capability: 'visual-exact' | 'code-preview' | 'invalid';
+  capabilityLabel: string;
+  reason: string;
 }
 
 const BLOCK_SNIPPETS: Readonly<Record<string, string>> = {

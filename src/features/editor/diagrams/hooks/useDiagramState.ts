@@ -59,18 +59,22 @@ export function useDiagramState() {
     if (parseDebounceTimerRef.current) clearTimeout(parseDebounceTimerRef.current);
     parseControllerRef.current?.abort();
     versionRef.current = '';
+    const generated = model ? generateDiagramSource(model, componentName) : null;
+    const isExact = Boolean(model && generated?.ok && generated.source === source);
     dispatch({
       type: 'LOAD_DIAGRAM',
       filePath: null,
       componentName,
       source,
-      model,
-      parseStatus: model ? 'parsed' : 'unsupported',
-      diagnostics: model ? [] : [{
+      model: isExact ? model : null,
+      parseStatus: isExact ? 'visual-exact' : 'code-preview',
+      diagnostics: isExact ? [] : [{
         code: 'inline-model-missing',
         severity: 'warning',
-        message: 'La fuente inline no tiene un modelo visual verificable.',
-        source: 'source',
+        message: model
+          ? 'El modelo inline no regenera toda la fuente de forma idéntica; se conserva la autoridad del código.'
+          : 'La fuente inline no tiene un modelo visual verificable.',
+        source: 'synchronization',
       }],
       expectedVersion: null,
     });
@@ -116,15 +120,15 @@ export function useDiagramState() {
       const parsed = await parseDiagramSourceOnServer(sourceText, controller.signal);
       if (controller.signal.aborted || requestId !== parseRequestIdRef.current || stateRef.current.currentSource !== sourceText) return;
 
-      if ((parsed.status === 'supported' || parsed.status === 'partially-supported') && parsed.model) {
+      if (parsed.status === 'visual-exact') {
         dispatch({
           type: 'APPLY_PARSED_MODEL',
           model: parsed.model,
           diagnostics: parsed.diagnostics,
         });
-      } else if (parsed.status === 'unsupported' || parsed.status === 'partially-supported') {
+      } else if (parsed.status === 'code-preview') {
         dispatch({
-          type: 'PARSE_UNSUPPORTED',
+          type: 'PARSE_CODE_PREVIEW',
           diagnostics: parsed.diagnostics,
         });
       } else {

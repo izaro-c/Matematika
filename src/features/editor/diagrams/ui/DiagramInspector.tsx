@@ -112,7 +112,7 @@ export const DiagramInspector: React.FC<DiagramInspectorProps> = ({
               <option value="fixed">Fijo</option>
               <option value="horizontal">Horizontal</option>
               <option value="vertical">Vertical</option>
-              <option value="glider">Glider (sobre elemento)</option>
+              <option value="glider">Punto sobre elemento</option>
             </select>
           </div>
 
@@ -152,7 +152,7 @@ export const DiagramInspector: React.FC<DiagramInspectorProps> = ({
               onChange={(e) => handlePointChange({ target: e.target.checked })}
               className="rounded border-carbon/15 bg-lienzo"
             />
-            ¿Es Target MDX?
+            ¿Se puede enlazar desde MDX?
           </label>
         </div>
       )}
@@ -226,7 +226,7 @@ export const DiagramInspector: React.FC<DiagramInspectorProps> = ({
               onChange={(e) => handleElementChange({ target: e.target.checked })}
               className="rounded border-carbon/15 bg-lienzo"
             />
-            ¿Es Target MDX?
+            ¿Se puede enlazar desde MDX?
           </label>
         </div>
       )}

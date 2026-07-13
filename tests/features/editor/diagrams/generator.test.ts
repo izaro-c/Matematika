@@ -1,9 +1,33 @@
 import { describe, it, expect } from 'vitest';
 import { generateDiagramSource } from '../../../../src/features/editor/diagrams/source/generator';
+import { parseDiagramSourceAST } from '../../../../scripts/editor/parseDiagramSourceAST';
 import { createTemplateModel, point, element, slider, step } from '../../../../src/features/editor/diagrams/model/commands';
 import type { VisualDiagramModel } from '../../../../src/features/editor/diagrams/model/types';
 
 describe('Diagram TSX Generator', () => {
+  it('preserves every model field through an exact generate-parse-generate roundtrip', () => {
+    const model: VisualDiagramModel = {
+      ...createTemplateModel('circunferencia', 'Roundtrip completo', 'definicion'),
+      componentId: 'roundtrip-completo',
+      category: 'Teoremas',
+      mode: 'diagram',
+      axis: true,
+      grid: true,
+      boundingBox: [-9, 8, 11, -7],
+      note: 'Overlay con expresión f(x) y pasos.',
+      steps: [step('paso-expresion', 'Paso expresión', 'Evalúa f(x).', ['pO', 'circunferencia'])],
+    };
+    const first = generateDiagramSource(model, 'RoundtripCompleto');
+    expect(first.ok).toBe(true);
+    if (!first.ok) return;
+    const parsed = parseDiagramSourceAST(first.source);
+    expect(parsed.status).toBe('visual-exact');
+    if (parsed.status !== 'visual-exact') return;
+    expect(parsed.model).toEqual(model);
+    const second = generateDiagramSource(parsed.model, 'RoundtripCompleto');
+    expect(second.ok && second.source).toBe(first.source);
+  });
+
   it('should generate source for a template model', () => {
     const model = createTemplateModel('circunferencia', 'Círculo de prueba', 'definicion');
     const result = generateDiagramSource(model, 'CirculoDePrueba');

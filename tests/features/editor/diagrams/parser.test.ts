@@ -23,18 +23,20 @@ describe('Diagram TSX Parser (Local & AST)', () => {
     }
   });
 
-  it('should parse source using AST and reconstruct the model', () => {
+  it('classifies generated source as exact only when the complete model roundtrips byte for byte', () => {
     const model = createTemplateModel('circunferencia', 'Test', 'definicion');
     const gen = generateDiagramSource(model, 'Test');
     expect(gen.ok).toBe(true);
     if (gen.ok) {
       const parsed = parseDiagramSourceAST(gen.source, 'definicion');
-      expect(parsed.status).toBe('supported');
-      expect(parsed.model).toBeDefined();
-      expect(parsed.model?.title).toBe('Test');
-      expect(parsed.model?.boundingBox).toEqual([-5, 5, 5, -5]);
-      expect(parsed.model?.points).toHaveLength(2);
-      expect(parsed.model?.elements).toHaveLength(3);
+      expect(parsed.status).toBe('visual-exact');
+      if (parsed.status !== 'visual-exact') return;
+      expect(parsed.model.title).toBe('Test');
+      expect(parsed.model.boundingBox).toEqual([-5, 5, 5, -5]);
+      expect(parsed.model.points).toHaveLength(2);
+      expect(parsed.model.elements).toHaveLength(3);
+      const regenerated = generateDiagramSource(parsed.model, 'Test');
+      expect(regenerated.ok && regenerated.source).toBe(gen.source);
     }
   });
 
@@ -70,7 +72,7 @@ describe('Diagram TSX Parser (Local & AST)', () => {
       .mockResolvedValueOnce(new Response('nope', { status: 500 }))
       .mockRejectedValueOnce(new DOMException('cancelled', 'AbortError'))
       .mockRejectedValueOnce(new Error('offline'))
-      .mockResolvedValueOnce(new Response(JSON.stringify({ status: 'unsupported', diagnostics: [] }), {
+      .mockResolvedValueOnce(new Response(JSON.stringify({ status: 'code-preview', diagnostics: [] }), {
         status: 200,
         headers: { 'Content-Type': 'application/json' },
       })));
@@ -88,8 +90,44 @@ describe('Diagram TSX Parser (Local & AST)', () => {
       diagnostics: [{ code: 'network-error' }],
     });
     await expect(parseDiagramSourceOnServer('manual')).resolves.toMatchObject({
-      status: 'unsupported',
+      status: 'code-preview',
       diagnostics: [],
     });
+  });
+
+  it('never grants visual editing because a partial AST contains a point', () => {
+    const manual = `
+      import { MathBoard } from '@/shared/diagrams/core/MathBoard';
+      import { createPoint } from '@/shared/diagrams/core/MathFactory';
+      import { DiagramInfoPanel } from '@/shared/ui/DiagramOverlay';
+      const curveExpression = (x: number) => Math.sin(x);
+      const STEPS = [{ id: 'step-1', expression: curveExpression }];
+      export const ManualCurve = () => (
+        <MathBoard
+          onInit={(board, els, theme) => {
+            els.pA = createPoint(board, [0, 0], { name: 'A', fillColor: theme.terracota }, theme);
+            els.curve = board.create('functiongraph', [curveExpression]);
+          }}
+        >
+          <DiagramInfoPanel title="Curva" position="bottom-right">{STEPS.length}</DiagramInfoPanel>
+        </MathBoard>
+      );
+    `;
+    const parsed = parseDiagramSourceAST(manual);
+    expect(parsed.status).toBe('code-preview');
+    expect('model' in parsed).toBe(false);
+    expect(parsed.status === 'code-preview' && parsed.previewModel?.points).toHaveLength(1);
+  });
+
+  it('blocks visual regeneration when exact generated code gains an unrepresented overlay', () => {
+    const model = createTemplateModel('circunferencia', 'Protegido', 'definicion');
+    const generated = generateDiagramSource(model, 'Protegido');
+    expect(generated.ok).toBe(true);
+    if (!generated.ok) return;
+    const source = `${generated.source}\nexport const MANUAL_OVERLAY = { expression: () => Math.PI, steps: ['uno'] };\n`;
+    const parsed = parseDiagramSourceAST(source);
+    expect(parsed.status).toBe('code-preview');
+    expect('model' in parsed).toBe(false);
+    expect(parsed.diagnostics.some(item => item.code === 'embedded-model-not-lossless')).toBe(true);
   });
 });

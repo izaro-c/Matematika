@@ -30,37 +30,37 @@ export const DiagramToolbar: React.FC<DiagramToolbarProps> = ({
           className={`rounded px-2.5 py-1 text-xs font-bold transition-all ${canvasTool === 'select' ? 'bg-carbon text-lienzo' : 'bg-transparent text-carbon/75 hover:bg-carbon/10'}`}
           onClick={() => onSetCanvasTool('select')}
         >
-          Select
+          Seleccionar
         </button>
         <button
           className={`rounded px-2.5 py-1 text-xs font-bold transition-all ${canvasTool === 'point' ? 'bg-carbon text-lienzo' : 'bg-transparent text-carbon/75 hover:bg-carbon/10'}`}
           onClick={() => onSetCanvasTool('point')}
         >
-          Point
+          Punto
         </button>
         <button
           className={`rounded px-2.5 py-1 text-xs font-bold transition-all ${canvasTool === 'segment' ? 'bg-carbon text-lienzo' : 'bg-transparent text-carbon/75 hover:bg-carbon/10'}`}
           onClick={() => onSetCanvasTool('segment')}
         >
-          Segment
+          Segmento
         </button>
         <button
           className={`rounded px-2.5 py-1 text-xs font-bold transition-all ${canvasTool === 'line' ? 'bg-carbon text-lienzo' : 'bg-transparent text-carbon/75 hover:bg-carbon/10'}`}
           onClick={() => onSetCanvasTool('line')}
         >
-          Line
+          Recta
         </button>
         <button
           className={`rounded px-2.5 py-1 text-xs font-bold transition-all ${canvasTool === 'circle' ? 'bg-carbon text-lienzo' : 'bg-transparent text-carbon/75 hover:bg-carbon/10'}`}
           onClick={() => onSetCanvasTool('circle')}
         >
-          Circle
+          Circunferencia
         </button>
         <button
           className={`rounded px-2.5 py-1 text-xs font-bold transition-all ${canvasTool === 'polygon' ? 'bg-carbon text-lienzo' : 'bg-transparent text-carbon/75 hover:bg-carbon/10'}`}
           onClick={() => onSetCanvasTool('polygon')}
         >
-          Polygon
+          Polígono
         </button>
       </div>
 
@@ -75,7 +75,7 @@ export const DiagramToolbar: React.FC<DiagramToolbarProps> = ({
             onChange={(e) => onModelEdit({ ...model, grid: e.target.checked })}
             className="rounded border-carbon/15 bg-lienzo"
           />
-          Grid
+          Cuadrícula
         </label>
         <label className="flex items-center gap-1.5 text-xs text-carbon">
           <input
@@ -84,7 +84,7 @@ export const DiagramToolbar: React.FC<DiagramToolbarProps> = ({
             onChange={(e) => onModelEdit({ ...model, axis: e.target.checked })}
             className="rounded border-carbon/15 bg-lienzo"
           />
-          Axis
+          Ejes
         </label>
       </div>
 
@@ -96,13 +96,13 @@ export const DiagramToolbar: React.FC<DiagramToolbarProps> = ({
           onClick={onAddSlider}
           className="rounded border border-carbon/15 bg-lienzo px-2.5 py-1 text-[11px] font-bold text-carbon hover:bg-carbon/5"
         >
-          + Slider
+          + Control
         </button>
         <button
           onClick={onAddStep}
           className="rounded border border-carbon/15 bg-lienzo px-2.5 py-1 text-[11px] font-bold text-carbon hover:bg-carbon/5"
         >
-          + Step
+          + Paso
         </button>
       </div>
 
@@ -113,13 +113,13 @@ export const DiagramToolbar: React.FC<DiagramToolbarProps> = ({
             onClick={() => onResolveDivergence('visual')}
             className="rounded bg-salvia text-lienzo px-2 py-0.5 text-[10px] font-bold hover:bg-salvia/80"
           >
-            Usar Visual
+            Usar modelo visual exacto
           </button>
           <button
             onClick={() => onResolveDivergence('source')}
             className="rounded bg-pavo text-lienzo px-2 py-0.5 text-[10px] font-bold hover:bg-pavo/80"
           >
-            Usar Fuente
+            Usar código
           </button>
         </div>
       )}

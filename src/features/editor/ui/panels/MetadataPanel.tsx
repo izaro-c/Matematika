@@ -15,6 +15,7 @@ interface PageDiagramLink {
 interface MetadataPanelProps {
   metadata: Record<string, unknown>;
   canEditVisualMetadata: boolean;
+  canMutateVisualStructure: boolean;
   handleMetadataChange: (key: string, value: unknown) => void;
   handleRemoveMetadataField: (key: string) => void;
   handleAddCustomMetadataField: (key: string) => void;
@@ -36,6 +37,7 @@ interface MetadataPanelProps {
 export const MetadataPanel: React.FC<MetadataPanelProps> = ({
   metadata,
   canEditVisualMetadata,
+  canMutateVisualStructure,
   handleMetadataChange,
   handleRemoveMetadataField,
   handleAddCustomMetadataField,
@@ -57,17 +59,7 @@ export const MetadataPanel: React.FC<MetadataPanelProps> = ({
           <h3 className="text-[10px] font-bold uppercase tracking-widest text-carbon/55">Diagramas</h3>
           <div className="mt-3 rounded border border-dashed border-carbon/20 bg-carbon/5 p-3">
             <p className="text-xs italic text-carbon/55">Esta página aún no tiene diagramas enlazados.</p>
-            <button
-              type="button"
-              onClick={() => {
-                setActiveDiagramIndex(blocks.length);
-                setActiveDiagramBlockId(null);
-                setDiagramBuilderOpen(true);
-              }}
-              className="mt-3 rounded bg-pavo/10 px-3 py-1 text-[10px] font-bold text-pavo hover:bg-pavo/20 cursor-pointer"
-            >
-              Crear diagrama
-            </button>
+            <p className="mt-2 text-[10px] text-carbon/45">La creación y el enlace visual permanecerán ocultos hasta disponer de una operación localizada exacta.</p>
           </div>
         </section>
       );
@@ -77,7 +69,7 @@ export const MetadataPanel: React.FC<MetadataPanelProps> = ({
       <section className="border-t border-carbon/15 p-4">
         <div className="flex items-center justify-between">
           <h3 className="text-[10px] font-bold uppercase tracking-widest text-carbon/55">Diagramas de esta página</h3>
-          <button
+          {canMutateVisualStructure && <button
             type="button"
             onClick={() => {
               setActiveDiagramIndex(blocks.length);
@@ -87,7 +79,7 @@ export const MetadataPanel: React.FC<MetadataPanelProps> = ({
             className="rounded bg-pavo/10 px-2 py-1 text-[9px] font-bold text-pavo hover:bg-pavo/20 cursor-pointer"
           >
             Añadir
-          </button>
+          </button>}
         </div>
         <div className="mt-3 space-y-2">
           {pageDiagramLinks.map((link, index) => (
@@ -99,7 +91,7 @@ export const MetadataPanel: React.FC<MetadataPanelProps> = ({
                 </div>
                 <span className="rounded bg-salvia/10 px-1.5 py-0.5 text-[9px] font-bold text-salvia">{link.role}</span>
               </div>
-              {link.targets && link.targets.length > 0 && (
+              {canMutateVisualStructure && link.targets && link.targets.length > 0 && (
                 <div className="mt-2 flex flex-wrap gap-1">
                   {link.targets.slice(0, 6).map(target => (
                     <button
@@ -123,7 +115,7 @@ export const MetadataPanel: React.FC<MetadataPanelProps> = ({
                 >
                   Abrir TSX
                 </button>
-                <button
+                {canMutateVisualStructure && <button
                   type="button"
                   onClick={() => {
                     const block = blocks.find(item => item.type === 'diagram' && item.content === link.componentName);
@@ -134,7 +126,7 @@ export const MetadataPanel: React.FC<MetadataPanelProps> = ({
                   className="rounded bg-salvia/10 px-2 py-1 text-[10px] font-bold text-salvia hover:bg-salvia/20 cursor-pointer"
                 >
                   Reemplazar
-                </button>
+                </button>}
               </div>
             </div>
           ))}
@@ -152,7 +144,7 @@ export const MetadataPanel: React.FC<MetadataPanelProps> = ({
                 ))}
               </div>
             )}
-            {pageConnectionSummary.missingTargets.length > 0 && (
+            {canMutateVisualStructure && pageConnectionSummary.missingTargets.length > 0 && (
               <div className="mt-3">
                 <p className="text-[10px] italic text-carbon/50 select-none">Targets del diagrama aún sin mención conectada:</p>
                 <div className="mt-2 flex flex-wrap gap-1">

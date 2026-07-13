@@ -8,7 +8,7 @@ export const initialDiagramState: DiagramState = {
   originalModel: null,
   currentModel: null,
   status: 'synced',
-  parseStatus: 'parsed',
+  parseStatus: 'visual-exact',
   expectedVersion: null,
   diagnostics: [],
   selectedId: '',
@@ -17,17 +17,17 @@ export const initialDiagramState: DiagramState = {
 };
 
 function statusForParseStatus(parseStatus: DiagramParseStatus): DiagramSyncStatus {
-  if (parseStatus === 'parsed') return 'synced';
-  if (parseStatus === 'unsupported') return 'source-authoritative';
+  if (parseStatus === 'visual-exact') return 'synced';
+  if (parseStatus === 'code-preview') return 'source-authoritative';
   return 'invalid-source';
 }
 
 export function diagramReducer(state: DiagramState, action: DiagramAction): DiagramState {
   switch (action.type) {
     case 'LOAD_DIAGRAM': {
-      const parseStatus = action.parseStatus ?? (action.model ? 'parsed' : 'invalid');
+      const parseStatus = action.parseStatus ?? (action.model ? 'visual-exact' : 'invalid');
       const diagnostics = action.diagnostics ?? [];
-      const model = parseStatus === 'parsed' ? action.model : null;
+      const model = parseStatus === 'visual-exact' ? action.model : null;
       const status = statusForParseStatus(parseStatus);
       return {
         ...state,
@@ -58,7 +58,7 @@ export function diagramReducer(state: DiagramState, action: DiagramAction): Diag
         originalModel: null,
         currentModel: action.model,
         status: 'visual-authoritative',
-        parseStatus: 'parsed',
+        parseStatus: 'visual-exact',
         expectedVersion: null,
         diagnostics,
         selectedId: action.model.points[0]?.id || '',
@@ -77,7 +77,7 @@ export function diagramReducer(state: DiagramState, action: DiagramAction): Diag
       return {
         ...state,
         currentModel: action.model,
-        parseStatus: 'parsed',
+        parseStatus: 'visual-exact',
         status: nextStatus,
       };
     }
@@ -94,7 +94,8 @@ export function diagramReducer(state: DiagramState, action: DiagramAction): Diag
       return {
         ...state,
         currentSource: action.source,
-        parseStatus: state.parseStatus,
+        currentModel: null,
+        parseStatus: 'code-preview',
         status: nextStatus,
       };
     }
@@ -134,16 +135,16 @@ export function diagramReducer(state: DiagramState, action: DiagramAction): Diag
         ...state,
         currentModel: action.model,
         diagnostics: action.diagnostics,
-        parseStatus: 'parsed',
+        parseStatus: 'visual-exact',
         status: state.currentSource === state.originalSource ? 'synced' : 'source-authoritative',
       };
 
-    case 'PARSE_UNSUPPORTED':
+    case 'PARSE_CODE_PREVIEW':
       return {
         ...state,
         currentModel: null,
         diagnostics: action.diagnostics,
-        parseStatus: 'unsupported',
+        parseStatus: 'code-preview',
         status: 'source-authoritative',
       };
 
@@ -161,7 +162,7 @@ export function diagramReducer(state: DiagramState, action: DiagramAction): Diag
         ...state,
         currentSource: action.source,
         status: 'visual-authoritative',
-        parseStatus: 'parsed',
+        parseStatus: 'visual-exact',
         diagnostics: state.diagnostics.filter(d => d.source !== 'synchronization'),
       };
 
@@ -170,7 +171,7 @@ export function diagramReducer(state: DiagramState, action: DiagramAction): Diag
         ...state,
         currentModel: action.model,
         status: 'source-authoritative',
-        parseStatus: 'parsed',
+        parseStatus: 'visual-exact',
         diagnostics: state.diagnostics.filter(d => d.source !== 'synchronization'),
       };
 
@@ -187,8 +188,8 @@ export function diagramReducer(state: DiagramState, action: DiagramAction): Diag
         currentSource: action.source,
         originalModel: action.model,
         currentModel: action.model,
-        status: 'synced',
-        parseStatus: action.model ? 'parsed' : state.parseStatus,
+        status: action.model ? 'synced' : 'source-authoritative',
+        parseStatus: action.model ? 'visual-exact' : state.parseStatus,
         expectedVersion: action.expectedVersion,
         diagnostics: [],
       };
@@ -196,7 +197,13 @@ export function diagramReducer(state: DiagramState, action: DiagramAction): Diag
     case 'SAVE_FAILURE':
       return {
         ...state,
-        status: action.isConflict ? 'conflict' : 'visual-authoritative',
+        status: action.isConflict
+          ? 'conflict'
+          : !state.currentSource
+            ? 'invalid-source'
+            : state.currentModel
+              ? 'visual-authoritative'
+              : 'source-authoritative',
         diagnostics: [
           ...state.diagnostics,
           {

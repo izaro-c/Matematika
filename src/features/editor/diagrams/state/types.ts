@@ -10,7 +10,7 @@ export type DiagramSyncStatus =
   | 'saving'
   | 'conflict';
 
-export type DiagramParseStatus = 'parsed' | 'unsupported' | 'invalid';
+export type DiagramParseStatus = 'visual-exact' | 'code-preview' | 'invalid';
 
 export interface DiagramState {
   filePath: string | null;
@@ -54,7 +54,7 @@ export type DiagramAction =
   | { type: 'SET_STATUS'; status: DiagramSyncStatus }
   | { type: 'SET_DIAGNOSTICS'; diagnostics: DiagramDiagnostic[] }
   | { type: 'APPLY_PARSED_MODEL'; model: VisualDiagramModel; diagnostics: DiagramDiagnostic[] }
-  | { type: 'PARSE_UNSUPPORTED'; diagnostics: DiagramDiagnostic[] }
+  | { type: 'PARSE_CODE_PREVIEW'; diagnostics: DiagramDiagnostic[] }
   | { type: 'PARSE_FAILED'; diagnostics: DiagramDiagnostic[] }
   | { type: 'RESOLVE_TO_VISUAL'; source: string }
   | { type: 'RESOLVE_TO_SOURCE'; model: VisualDiagramModel }
