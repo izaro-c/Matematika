@@ -1,88 +1,81 @@
-import { useRef, useEffect } from 'react';
-import { getCSSVar } from '@/features/graph/ui/MathUtils';
-import JXG from 'jsxgraph';
-import { useMathStore } from '@/app/providers/MathStoreContext';
-import { useLessonStore } from '@/features/lessons/LessonStore';
+import { MathBoard } from '@/shared/diagrams/core/MathBoard';
+import {
+  createPoint, createLine, createCircle, createPolygon, createAngle
+} from '@/shared/diagrams/core/MathFactory';
+
+
+
+
+
 
 export const Triangulo = () => {
-  const boardRef = useRef<HTMLDivElement>(null);
-  const jxgBoard = useRef<any>(null);
-  const elementsRef = useRef<Record<string, unknown>>({});
 
-  const mathHighlight = useMathStore(state => state.variables?.['highlight']);
-  const lessonHighlight = useLessonStore(state => state.activeStep);
-  const highlight = mathHighlight || lessonHighlight;
-  
-  const isHighlight = (id: string) => Array.isArray(highlight) ? (highlight as unknown as string[]).includes(id) : highlight === id;
 
-  useEffect(() => {
-    if (!boardRef.current) return;
 
-    if (!boardRef.current.id) boardRef.current.id = "jxgbox_" + Math.random().toString(36).substring(2, 9);
-    const board = JXG.JSXGraph.initBoard(boardRef.current.id, {
-      boundingbox: [-4, 4, 4, -4],
-      axis: false,
-      showCopyright: false,
-      keepaspectratio: true,
-      grid: false,
-    });
-    jxgBoard.current = board;
 
-    const pA = board.create('point', [-2, -2], {
+
+
+
+
+
+
+  const onInit = (board: any, els: any, theme: any) => {
+      void board; void els; void theme;
+      const pA = createPoint(board, [-2, -2], {
       name: 'A',
       size: 5,
-      fillColor: getCSSVar('--theme-terracota'),
-      strokeColor: getCSSVar('--theme-terracota'),
+      fillColor: theme.terracota,
+      strokeColor: theme.terracota,
       showInfobox: false,
       fixed: false,
-    });
+    }, theme);
 
-    const pB = board.create('point', [3, -1], {
+    const pB = createPoint(board, [3, -1], {
       name: 'B',
       size: 5,
-      fillColor: getCSSVar('--theme-terracota'),
-      strokeColor: getCSSVar('--theme-terracota'),
+      fillColor: theme.terracota,
+      strokeColor: theme.terracota,
       showInfobox: false,
       fixed: false,
-    });
+    }, theme);
 
     // Attractors for C
     const midAB = board.create('midpoint', [pA, pB], { visible: false });
-    const bisectorAB = board.create('perpendicular', [board.create('line', [pA, pB], {visible:false}), midAB], { visible: false });
-    const thalesAB = board.create('circle', [midAB, pA], { visible: false });
-    const circleA = board.create('circle', [pA, pB], { visible: false });
-    const circleB = board.create('circle', [pB, pA], { visible: false });
+    const bisectorAB = board.create('perpendicular', [createLine(board, [pA, pB], {visible:false}, theme), midAB], { visible: false });
+    const thalesAB = createCircle(board, [midAB, pA], { visible: false }, theme);
+    const circleA = createCircle(board, [pA, pB], { visible: false }, theme);
+    const circleB = createCircle(board, [pB, pA], { visible: false }, theme);
 
-    const pC = board.create('point', [0, 3], {
+    const pC = createPoint(board, [0, 3], {
       name: 'C',
       size: 5,
-      fillColor: getCSSVar('--theme-terracota'),
-      strokeColor: getCSSVar('--theme-terracota'),
+      fillColor: theme.terracota,
+      strokeColor: theme.terracota,
       showInfobox: false,
       fixed: false,
       attractors: [bisectorAB, thalesAB, circleA, circleB],
       attractorDistance: 0.2,
       snatchDistance: 0.4,
-    });
+    }, theme);
 
-    const poly = board.create('polygon', [pA, pB, pC], {
-      fillColor: getCSSVar('--theme-salvia'),
+    const poly = createPolygon(board, [pA, pB, pC], {
+      fillColor: theme.salvia,
       fillOpacity: 0.15,
-      borders: { strokeColor: getCSSVar('--theme-salvia'), strokeWidth: 2 },
-      vertices: { visible: false } 
-    });
+      borders: { strokeColor: theme.salvia, strokeWidth: 2 },
+      vertices: { visible: false }
+    }, theme);
 
     const ladoAB = (poly as any).borders[0];
     const ladoBC = (poly as any).borders[1];
     const ladoCA = (poly as any).borders[2];
 
-    const hatchAB = board.create('hatch', [ladoAB, 2], { visible: false, strokeWidth: 2, strokeColor: getCSSVar('--theme-carbon') });
-    const hatchBC = board.create('hatch', [ladoBC, 2], { visible: false, strokeWidth: 2, strokeColor: getCSSVar('--theme-carbon') });
-    const hatchCA = board.create('hatch', [ladoCA, 2], { visible: false, strokeWidth: 2, strokeColor: getCSSVar('--theme-carbon') });
+    const hatchAB = board.create('hatch', [ladoAB, 2], { visible: false, strokeWidth: 2, strokeColor: theme.carbon });
+    const hatchBC = board.create('hatch', [ladoBC, 2], { visible: false, strokeWidth: 2, strokeColor: theme.carbon });
+    const hatchCA = board.create('hatch', [ladoCA, 2], { visible: false, strokeWidth: 2, strokeColor: theme.carbon });
 
-    const angleA = board.create('angle', [pB, pA, pC], { visible: false, radius: 0.8 });
-    const angleB = board.create('angle', [pC, pB, pA], { visible: false, radius: 0.8 });
-    const angleC = board.create('angle', [pA, pC, pB], { visible: false, radius: 0.8 });
+    const angleA = createAngle(board, [pB, pA, pC], { visible: false, radius: 0.8 }, theme);
+    const angleB = createAngle(board, [pC, pB, pA], { visible: false, radius: 0.8 }, theme);
+    const angleC = createAngle(board, [pA, pC, pB], { visible: false, radius: 0.8 }, theme);
 
     // Dynamic text that updates and also marks angles/sides
     const infoText = board.create('text', [
@@ -91,10 +84,10 @@ export const Triangulo = () => {
         const dAB = pA.Dist(pB);
         const dBC = pB.Dist(pC);
         const dCA = pC.Dist(pA);
-        
+
         const tol = 0.15;
         let classLados = "Escaleno";
-        
+
         // Reset thick markers
         ladoAB.setAttribute({ strokeWidth: 2, dash: 0 });
         ladoBC.setAttribute({ strokeWidth: 2, dash: 0 });
@@ -135,19 +128,19 @@ export const Triangulo = () => {
         const vB = angleB.Value();
         const vC = angleC.Value();
         const maxAng = Math.max(vA, vB, vC);
-        
+
         let classAngulos = "Acutángulo";
         const pi2 = Math.PI / 2;
-        
+
         angleA.setAttribute({ visible: false });
         angleB.setAttribute({ visible: false });
         angleC.setAttribute({ visible: false });
 
         if (Math.abs(maxAng - pi2) < 0.05) {
           classAngulos = "Rectángulo";
-          if (Math.abs(vA - pi2) < 0.05) angleA.setAttribute({ visible: true, type: 'sectordot', fillColor: getCSSVar('--theme-ocre'), strokeColor: getCSSVar('--theme-ocre') });
-          if (Math.abs(vB - pi2) < 0.05) angleB.setAttribute({ visible: true, type: 'sectordot', fillColor: getCSSVar('--theme-ocre'), strokeColor: getCSSVar('--theme-ocre') });
-          if (Math.abs(vC - pi2) < 0.05) angleC.setAttribute({ visible: true, type: 'sectordot', fillColor: getCSSVar('--theme-ocre'), strokeColor: getCSSVar('--theme-ocre') });
+          if (Math.abs(vA - pi2) < 0.05) angleA.setAttribute({ visible: true, type: 'sectordot', fillColor: theme.ocre, strokeColor: theme.ocre });
+          if (Math.abs(vB - pi2) < 0.05) angleB.setAttribute({ visible: true, type: 'sectordot', fillColor: theme.ocre, strokeColor: theme.ocre });
+          if (Math.abs(vC - pi2) < 0.05) angleC.setAttribute({ visible: true, type: 'sectordot', fillColor: theme.ocre, strokeColor: theme.ocre });
         } else if (maxAng > pi2) {
           classAngulos = "Obtusángulo";
           if (vA > pi2) angleA.setAttribute({ visible: true, fillColor: '#ef4444', strokeColor: '#ef4444' }); // Red
@@ -159,7 +152,7 @@ export const Triangulo = () => {
         const piFrac = (maxAng / Math.PI).toFixed(2);
         const piStr = classAngulos === "Rectángulo" ? "&pi;/2" : `${piFrac}&pi;`;
 
-        return `<div style="font-family: var(--font-serif); color: ${getCSSVar('--theme-carbon')};">
+        return `<div style="font-family: var(--font-serif); color: ${theme.carbon};">
           <strong style="font-size: 1.2rem;">Triángulo ${classLados}</strong><br/>
           <i>${classAngulos}</i><br/>
           Ángulo mayor: ${maxAngDeg}&deg; (${piStr} rad)
@@ -167,68 +160,67 @@ export const Triangulo = () => {
       }
     ], { fixed: true, anchorX: 'left', anchorY: 'top' });
 
-    elementsRef.current = { pA, pB, pC, poly, ladoAB, ladoBC, ladoCA, angleA, angleB, angleC, hatchAB, hatchBC, hatchCA, infoText, board };
+      // Registrar elementos para interactividad y auditoría
+      els.pA = pA;
+        els.pB = pB;
+        els.pC = pC;
+        els.poly = poly;
+        els.ladoAB = ladoAB;
+        els.ladoBC = ladoBC;
+        els.ladoCA = ladoCA;
+        els.angleA = angleA;
+        els.angleB = angleB;
+        els.angleC = angleC;
+        els.hatchAB = hatchAB;
+        els.hatchBC = hatchBC;
+        els.hatchCA = hatchCA;
+        els.infoText = infoText;
+    };;
 
-    board.update();
-    (board.renderer as any).container.style.backgroundColor = getCSSVar('--theme-lienzo');
+  const onUpdate = (board: any, els: any, theme: any, isStep: any, isHL: any) => {
+      const isHighlight = isHL;
+      void board; void els; void theme; void isStep; void isHL; void isHighlight;
+      const { pA, pB, pC, poly, ladoAB, ladoBC, ladoCA } = els;
+      pA.setAttribute({ size: 5, fillColor: theme.terracota, strokeColor: theme.terracota });
+    pB.setAttribute({ size: 5, fillColor: theme.terracota, strokeColor: theme.terracota });
+    pC.setAttribute({ size: 5, fillColor: theme.terracota, strokeColor: theme.terracota });
 
-    const observer = new MutationObserver(() => {
-      if (board) {
-        (board.renderer as any).container.style.backgroundColor = getCSSVar('--theme-lienzo');
-        board.update();
-      }
-    });
-    observer.observe(document.documentElement, { attributes: true, attributeFilter: ['class'] });
-
-    return () => {
-      observer.disconnect();
-      JXG.JSXGraph.freeBoard(board);
-      jxgBoard.current = null;
-      elementsRef.current = {};
-    };
-  }, []);
-
-  useEffect(() => {
-    const { pA, pB, pC, poly, ladoAB, ladoBC, ladoCA, board } = elementsRef.current as Record<string, any>;
-    if (!board) return;
-
-    pA.setAttribute({ size: 5, fillColor: getCSSVar('--theme-terracota'), strokeColor: getCSSVar('--theme-terracota') });
-    pB.setAttribute({ size: 5, fillColor: getCSSVar('--theme-terracota'), strokeColor: getCSSVar('--theme-terracota') });
-    pC.setAttribute({ size: 5, fillColor: getCSSVar('--theme-terracota'), strokeColor: getCSSVar('--theme-terracota') });
-    
     poly.setAttribute({ fillOpacity: 0.15 });
 
     if (isHighlight('vertice-a')) {
-      pA.setAttribute({ size: 8, fillColor: getCSSVar('--theme-ocre'), strokeColor: getCSSVar('--theme-ocre') });
+      pA.setAttribute({ size: 8, fillColor: theme.ocre, strokeColor: theme.ocre });
     }
     if (isHighlight('vertice-b')) {
-      pB.setAttribute({ size: 8, fillColor: getCSSVar('--theme-ocre'), strokeColor: getCSSVar('--theme-ocre') });
+      pB.setAttribute({ size: 8, fillColor: theme.ocre, strokeColor: theme.ocre });
     }
     if (isHighlight('vertice-c')) {
-      pC.setAttribute({ size: 8, fillColor: getCSSVar('--theme-ocre'), strokeColor: getCSSVar('--theme-ocre') });
+      pC.setAttribute({ size: 8, fillColor: theme.ocre, strokeColor: theme.ocre });
     }
     if (isHighlight('lado-ab')) {
-      ladoAB.setAttribute({ strokeWidth: 5, strokeColor: getCSSVar('--theme-ocre') });
+      ladoAB.setAttribute({ strokeWidth: 5, strokeColor: theme.ocre });
     }
     if (isHighlight('lado-bc')) {
-      ladoBC.setAttribute({ strokeWidth: 5, strokeColor: getCSSVar('--theme-ocre') });
+      ladoBC.setAttribute({ strokeWidth: 5, strokeColor: theme.ocre });
     }
     if (isHighlight('lado-ca')) {
-      ladoCA.setAttribute({ strokeWidth: 5, strokeColor: getCSSVar('--theme-ocre') });
+      ladoCA.setAttribute({ strokeWidth: 5, strokeColor: theme.ocre });
     }
     if (isHighlight('triangulo')) {
       poly.setAttribute({ fillOpacity: 0.4 });
     }
-
-    board.update();
-  }, [highlight]);
+    };;
 
   return (
-    <div className="w-full h-full min-h-[300px] relative bg-lienzo/40 border border-pizarra/10 rounded-sm overflow-hidden">
+    <MathBoard
+      boundingbox={[-4, 4, 4, -4]}
+      axis={false}
+      grid={false}
+      onInit={onInit}
+      onUpdate={onUpdate}
+    >
       <div className="absolute top-2 left-3 z-10 text-xs font-serif italic text-pizarra/50">
         Arrastra el vértice <span className="font-bold not-italic text-terracota">C</span> para encajar en triángulos notables
       </div>
-      <div ref={boardRef} className="w-full h-full touch-none" />
-    </div>
+    </MathBoard>
   );
 };

@@ -1,6 +1,6 @@
 import React from 'react';
-import { MathBoard } from '@/features/graph/ui/MathBoard';
-import { createPoint, createSegment, createPolygon } from '@/features/graph/ui/MathFactory';
+import { MathBoard } from '@/shared/diagrams/core/MathBoard';
+import { createPoint, createSegment, createPolygon } from '@/shared/diagrams/core/MathFactory';
 
 export const DemoAreaAditividad: React.FC = () => {
   return (
@@ -17,23 +17,23 @@ export const DemoAreaAditividad: React.FC = () => {
         els.G = createPoint(board, [1, 5], { name: 'G', visible: false }, theme);
 
         // Frontera P1 y P2
-        els.borderP1 = createPolygon(board, [els.A, els.B, els.C, els.F, els.G], { 
-          fillColor: theme.terracota, 
+        els.borderP1 = createPolygon(board, [els.A, els.B, els.C, els.F, els.G], {
+          fillColor: theme.terracota,
           fillOpacity: 0.1,
           borders: { strokeColor: theme.carbon, strokeWidth: 2 }
         }, theme);
 
-        els.borderP2 = createPolygon(board, [els.C, els.D, els.E, els.F], { 
-          fillColor: theme.salvia, 
+        els.borderP2 = createPolygon(board, [els.C, els.D, els.E, els.F], {
+          fillColor: theme.salvia,
           fillOpacity: 0.1,
           borders: { strokeColor: theme.carbon, strokeWidth: 2 }
         }, theme);
 
         // Frontera común CF
-        els.commonEdge = createSegment(board, [els.C, els.F], { 
-          strokeColor: theme.carbon, 
-          strokeWidth: 3, 
-          dash: 2 
+        els.commonEdge = createSegment(board, [els.C, els.F], {
+          strokeColor: theme.carbon,
+          strokeWidth: 3,
+          dash: 2
         }, theme);
 
         // Triangulación de P1 (A-C, A-F, B-F - wait, A-C-F, A-B-C, A-F-G)

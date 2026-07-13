@@ -1,17 +1,17 @@
 import { useMathStore } from '@/app/providers/MathStoreContext';
 import { useLessonStore } from '@/features/lessons/LessonStore';
-import { MathBoard } from '@/features/graph/ui/MathBoard';
+import { MathBoard } from '@/shared/diagrams/core/MathBoard';
 import { DiagramTitle } from '@/shared/ui/DiagramOverlay';
 import {
   projectSquareVertices,
   createSquareGrid
-} from '@/features/graph/ui/MathUtils';
+} from '@/shared/diagrams/core/MathUtils';
 import {
   createPoint,
   createSegment,
   createPolygon,
   createRightAngle
-} from '@/features/graph/ui/MathFactory';
+} from '@/shared/diagrams/core/MathFactory';
 
 /**
  * EjemploPitagorasCalculo — Diagrama interactivo del ejemplo de cálculo de hipotenusa.

@@ -1,7 +1,7 @@
-import { MathBoard } from '@/features/graph/ui/MathBoard';
-import { 
-  createPoint, createPolygon, createAngle, createLine 
-} from '@/features/graph/ui/MathFactory';
+import { MathBoard } from '@/shared/diagrams/core/MathBoard';
+import {
+  createPoint, createPolygon, createAngle, createLine
+} from '@/shared/diagrams/core/MathFactory';
 
 export const DemoCongruenciaALA = () => {
   return (
@@ -30,12 +30,12 @@ export const DemoCongruenciaALA = () => {
         els.angB2 = createAngle(board, [els.C_prim, els.B_prim, els.A_prim], { name: '', fillOpacity: 0, strokeWidth: 0 }, theme);
 
         // Semirrecta A'C'
-        els.rayAC_prim = createLine(board, [els.A_prim, els.C_prim], { 
-          straightFirst: false, straightLast: true, strokeColor: theme.salvia, strokeWidth: 3, dash: 2, visible: false 
+        els.rayAC_prim = createLine(board, [els.A_prim, els.C_prim], {
+          straightFirst: false, straightLast: true, strokeColor: theme.salvia, strokeWidth: 3, dash: 2, visible: false
         }, theme);
 
         // Punto C* (se superpone a C')
-        els.C_star = createPoint(board, [() => els.C.X() + 4, () => els.C.Y()], { 
+        els.C_star = createPoint(board, [() => els.C.X() + 4, () => els.C.Y()], {
           name: "C*", size: 6, fillColor: theme.salvia, strokeColor: theme.salvia, fixed: true, visible: false, label: { offset: [15, 10], strokeColor: theme.salvia }
         }, theme);
       }}
@@ -43,7 +43,7 @@ export const DemoCongruenciaALA = () => {
         // --- 0. RESET ---
         els.poly1.setAttribute({ fillOpacity: 0.05 });
         els.poly1.borders.forEach((b: any) => b.setAttribute({ strokeColor: theme.carbon, strokeWidth: 2, strokeOpacity: 1 }));
-        
+
         els.poly2.setAttribute({ fillOpacity: 0.05 });
         els.poly2.borders.forEach((b: any) => b.setAttribute({ strokeColor: theme.carbon, strokeWidth: 2, strokeOpacity: 1 }));
 
@@ -64,26 +64,26 @@ export const DemoCongruenciaALA = () => {
         if (isStep('step2')) {
             els.poly1.setAttribute({ fillOpacity: 0.1 });
             els.poly2.setAttribute({ fillOpacity: 0.1 });
-            
+
             els.poly1.borders[0].setAttribute({ strokeWidth: 4, strokeColor: theme.terracota });
             els.poly2.borders[0].setAttribute({ strokeWidth: 4, strokeColor: theme.terracota });
-            
+
             els.poly1.borders[2].setAttribute({ strokeWidth: 4, strokeColor: theme.terracota });
             els.poly2.borders[2].setAttribute({ strokeWidth: 4, strokeColor: theme.terracota });
 
             els.angA1.setAttribute({ strokeWidth: 2, fillOpacity: 0.2 });
             els.angA2.setAttribute({ strokeWidth: 2, fillOpacity: 0.2 });
-            
+
             els.C_star.setAttribute({ visible: true });
         }
 
         if (isStep('step3')) {
             els.poly1.setAttribute({ fillOpacity: 0.2 });
             els.poly2.setAttribute({ fillOpacity: 0.2 });
-            
+
             els.angB1.setAttribute({ strokeWidth: 2, fillOpacity: 0.2 });
             els.angB2.setAttribute({ strokeWidth: 2, fillOpacity: 0.2 });
-            
+
             els.C_star.setAttribute({ visible: true });
         }
 

@@ -44,6 +44,10 @@ function parseObjectProperties(node?: ts.Expression): Record<string, any> {
     } else if (ts.isPropertyAccessExpression(valNode)) {
       // e.g. theme.salvia or theme.ocre
       result[name] = valNode.name.text;
+    } else if (ts.isArrayLiteralExpression(valNode)) {
+      result[name] = valNode.elements
+        .map(item => ts.isStringLiteral(item) ? item.text : undefined)
+        .filter((item): item is string => item !== undefined);
     } else if (ts.isObjectLiteralExpression(valNode)) {
       result[name] = parseObjectProperties(valNode);
     }
@@ -62,17 +66,6 @@ function extractElId(node: ts.Expression): string | null {
     }
   }
   return null;
-}
-
-function extractRefIds(node: ts.Expression): string[] {
-  const refs: string[] = [];
-  if (ts.isArrayLiteralExpression(node)) {
-    for (const elem of node.elements) {
-      const id = extractElId(elem);
-      if (id) refs.push(id);
-    }
-  }
-  return refs;
 }
 
 export function parseDiagramSourceAST(source: string, metadataType = ''): ParseDiagramSourceResult {
@@ -120,6 +113,7 @@ export function parseDiagramSourceAST(source: string, metadataType = ''): ParseD
   const elements: VisualElement[] = [];
   const sliders: VisualSlider[] = [];
   let steps: VisualStep[] = [];
+  const namedBlocks = new Map<string, ts.Block>();
 
   const visit = (node: ts.Node) => {
     // 1. Component Name and ID
@@ -127,6 +121,13 @@ export function parseDiagramSourceAST(source: string, metadataType = ''): ParseD
       const name = node.name.text;
       componentId = name.replace(/([A-Z])/g, '-$1').toLowerCase().replace(/^-/, '');
       title = name.replace(/([A-Z])/g, ' $1').trim();
+      if (ts.isBlock(node.initializer.body)) {
+        namedBlocks.set(name, node.initializer.body);
+      }
+    }
+
+    if (ts.isFunctionDeclaration(node) && node.name && node.body) {
+      namedBlocks.set(node.name.text, node.body);
     }
 
     // 2. JSX Elements (MathBoard, DiagramTitle, DiagramInfoPanel)
@@ -151,11 +152,259 @@ export function parseDiagramSourceAST(source: string, metadataType = ''): ParseD
               if (box.length === 4) boundingBox = box as [number, number, number, number];
             }
           }
-          if (attrName === 'axis') axis = true;
-          if (attrName === 'grid') grid = true;
+          if (attrName === 'axis') {
+            axis = !(initializer && ts.isJsxExpression(initializer) && initializer.expression?.kind === ts.SyntaxKind.FalseKeyword);
+          }
+          if (attrName === 'grid') {
+            grid = !(initializer && ts.isJsxExpression(initializer) && initializer.expression?.kind === ts.SyntaxKind.FalseKeyword);
+          }
         }
       }
     }
+
+    const extractRefIdsForModel = (node: ts.Expression, localToEls: Map<string, string>): string[] => {
+      const refs: string[] = [];
+      if (!ts.isArrayLiteralExpression(node)) return refs;
+      for (const elem of node.elements) {
+        if (ts.isIdentifier(elem) && localToEls.has(elem.text)) {
+          refs.push(localToEls.get(elem.text)!);
+          continue;
+        }
+        const id = extractElId(elem);
+        if (id) refs.push(id);
+      }
+      return refs;
+    };
+
+    const appendCreatedElement = (id: string, call: ts.CallExpression, localToEls: Map<string, string>) => {
+      const helper = call.expression.getText();
+      const args = call.arguments;
+      if (helper === 'createPoint' && args.length >= 2) {
+        const coords = parseCoords(args[1]);
+        const opts = parseObjectProperties(args[2]);
+        if (coords) {
+          points.push({
+            id,
+            label: opts.name || id.replace(/^p/, ''),
+            x: coords.x,
+            y: coords.y,
+            fixed: opts.fixed === true,
+            color: (opts.fillColor || opts.strokeColor || 'terracota') as ColorToken,
+            target: opts.target !== false,
+            constraint: opts.fixed === true ? 'fixed' : 'free',
+          });
+        }
+        return;
+      }
+
+      if (helper === 'createGlider' && args.length >= 2) {
+        const coords = parseCoords(args[1]);
+        const supportArr = args[1];
+        let gliderTarget = '';
+        if (ts.isArrayLiteralExpression(supportArr) && supportArr.elements.length >= 3) {
+          const targetExpr = supportArr.elements[2];
+          if (ts.isIdentifier(targetExpr) && localToEls.has(targetExpr.text)) {
+            gliderTarget = localToEls.get(targetExpr.text)!;
+          } else {
+            const supportId = extractElId(targetExpr);
+            if (supportId) gliderTarget = supportId;
+          }
+        }
+        const opts = parseObjectProperties(args[2]);
+        if (coords) {
+          points.push({
+            id,
+            label: opts.name || id.replace(/^p/, ''),
+            x: coords.x,
+            y: coords.y,
+            fixed: false,
+            color: (opts.fillColor || 'ocre') as ColorToken,
+            target: opts.target !== false,
+            constraint: 'glider',
+            gliderTarget,
+          });
+        }
+        return;
+      }
+
+      if (helper === 'createSlider' && args.length >= 3) {
+        const rangeArr = args[2];
+        let min = 0;
+        let val = 1;
+        let max = 10;
+        if (ts.isArrayLiteralExpression(rangeArr) && rangeArr.elements.length >= 3) {
+          const parseNum = (n: ts.Expression) => {
+            if (ts.isPrefixUnaryExpression(n) && n.operator === ts.SyntaxKind.MinusToken && ts.isNumericLiteral(n.operand)) return -parseFloat(n.operand.text);
+            if (ts.isNumericLiteral(n)) return parseFloat(n.text);
+            return 0;
+          };
+          min = parseNum(rangeArr.elements[0]);
+          val = parseNum(rangeArr.elements[1]);
+          max = parseNum(rangeArr.elements[2]);
+        }
+        const coordsArr = args[1];
+        let sx = -4;
+        let sy = -4;
+        if (ts.isArrayLiteralExpression(coordsArr) && coordsArr.elements.length > 0) {
+          const startCoords = parseCoords(coordsArr.elements[0]);
+          if (startCoords) {
+            sx = startCoords.x;
+            sy = startCoords.y;
+          }
+        }
+        const opts = parseObjectProperties(args[3]);
+        sliders.push({
+          id,
+          label: opts.name || id,
+          x: sx,
+          y: sy,
+          min,
+          max,
+          value: val,
+          step: opts.snapWidth || 0.1,
+          color: (opts.fillColor || 'pavo') as ColorToken,
+          target: opts.target !== false,
+        });
+        return;
+      }
+
+      let kind: ElementKind;
+      let refs: string[] = [];
+      if (helper === 'createSegment') {
+        kind = 'segment';
+        refs = extractRefIdsForModel(args[1], localToEls);
+      } else if (helper === 'createLine') {
+        kind = 'line';
+        refs = extractRefIdsForModel(args[1], localToEls);
+      } else if (helper === 'createRay') {
+        kind = 'ray';
+        refs = extractRefIdsForModel(args[1], localToEls);
+      } else if (helper === 'createPolygon') {
+        kind = 'polygon';
+        refs = extractRefIdsForModel(args[1], localToEls);
+      } else if (helper === 'createCircle') {
+        kind = 'circle';
+        refs = extractRefIdsForModel(args[1], localToEls);
+      } else if (helper === 'createMidpoint') {
+        kind = 'midpoint';
+        refs = extractRefIdsForModel(args[1], localToEls);
+      } else if (helper === 'createPerpendicularFoot') {
+        kind = 'perpendicularFoot';
+        refs = extractRefIdsForModel(args[1], localToEls);
+      } else if (helper === 'createBaseExtensionToFoot') {
+        kind = 'baseExtension';
+        refs = extractRefIdsForModel(args[1], localToEls);
+      } else if (helper === 'createPerpendicularLine') {
+        kind = 'perpendicular';
+        refs = extractRefIdsForModel(args[1], localToEls);
+      } else if (helper === 'createParallelLine') {
+        kind = 'parallel';
+        refs = extractRefIdsForModel(args[1], localToEls);
+      } else if (helper === 'createAngleBisectorRay') {
+        kind = 'angleBisector';
+        refs = extractRefIdsForModel(args[1], localToEls);
+      } else if (helper === 'createAngle') {
+        kind = 'angle';
+        refs = extractRefIdsForModel(args[1], localToEls);
+      } else if (helper === 'createRightAngleMarker') {
+        kind = 'rightAngle';
+        refs = extractRefIdsForModel(args[1], localToEls);
+      } else if (helper === 'createText') {
+        kind = 'text';
+        const anchorArr = args[1];
+        if (ts.isArrayLiteralExpression(anchorArr) && anchorArr.elements.length > 0) {
+          let anchorId = '';
+          const visitAnchor = (n: ts.Node) => {
+            if (ts.isIdentifier(n) && localToEls.has(n.text)) anchorId = localToEls.get(n.text)!;
+            else {
+              const found = extractElId(n as ts.Expression);
+              if (found) anchorId = found;
+              else n.forEachChild(visitAnchor);
+            }
+          };
+          anchorArr.elements[0].forEachChild(visitAnchor);
+          if (anchorId) refs = [anchorId];
+        }
+      } else {
+        return;
+      }
+      const opts = parseObjectProperties(args[2]);
+      elements.push({
+        id,
+        label: opts.name || KIND_LABELS[kind],
+        kind,
+        refs,
+        color: (opts.strokeColor || opts.fillColor || opts.color || 'carbon') as ColorToken,
+        target: opts.target !== false,
+        dashed: opts.dash !== undefined || opts.dashed === true,
+        text: opts.text || (helper === 'createText' && ts.isStringLiteral(args[1]) ? args[1].text : undefined),
+      });
+    };
+
+    const extractOnInitModel = (body: ts.Block) => {
+      const localCreates = new Map<string, ts.CallExpression>();
+      const localToEls = new Map<string, string>();
+      const directCalls: Array<[string, ts.CallExpression]> = [];
+      const mappedCalls: Array<[string, ts.CallExpression]> = [];
+      const mappedLocals = new Set<string>();
+
+      for (const stmt of body.statements) {
+        if (ts.isVariableStatement(stmt)) {
+          for (const decl of stmt.declarationList.declarations) {
+            if (ts.isIdentifier(decl.name) && decl.initializer && ts.isCallExpression(decl.initializer)) {
+              localCreates.set(decl.name.text, decl.initializer);
+            }
+          }
+        }
+
+        if (!ts.isExpressionStatement(stmt) || !ts.isBinaryExpression(stmt.expression) || stmt.expression.operatorToken.kind !== ts.SyntaxKind.EqualsToken) {
+          continue;
+        }
+
+        const left = stmt.expression.left;
+        const right = stmt.expression.right;
+        const id = extractElId(left);
+        if (!id) continue;
+        if (ts.isIdentifier(right)) {
+          localToEls.set(right.text, id);
+        }
+      }
+
+      for (const [localName, call] of localCreates) {
+        const helper = call.expression.getText();
+        if (!localToEls.has(localName) && (helper === 'createPoint' || helper === 'createGlider' || helper === 'createSlider')) {
+          localToEls.set(localName, localName);
+        }
+      }
+
+      for (const stmt of body.statements) {
+        if (!ts.isExpressionStatement(stmt) || !ts.isBinaryExpression(stmt.expression) || stmt.expression.operatorToken.kind !== ts.SyntaxKind.EqualsToken) {
+          continue;
+        }
+
+        const id = extractElId(stmt.expression.left);
+        if (!id) continue;
+        const right = stmt.expression.right;
+        if (ts.isCallExpression(right)) {
+          directCalls.push([id, right]);
+        } else if (ts.isIdentifier(right)) {
+          const call = localCreates.get(right.text);
+          if (call) {
+            mappedCalls.push([id, call]);
+            mappedLocals.add(right.text);
+          }
+        }
+      }
+
+      for (const [localName, call] of localCreates) {
+        const helper = call.expression.getText();
+        if ((helper === 'createPoint' || helper === 'createGlider' || helper === 'createSlider') && !mappedLocals.has(localName)) {
+          mappedCalls.push([localToEls.get(localName) || localName, call]);
+        }
+      }
+
+      [...directCalls, ...mappedCalls].forEach(([id, call]) => appendCreatedElement(id, call, localToEls));
+    };
 
     if (ts.isJsxElement(node)) {
       const opening = node.openingElement;
@@ -182,172 +431,13 @@ export function parseDiagramSourceAST(source: string, metadataType = ''): ParseD
     }
 
     // 3. onInit geometry block
-    if (ts.isJsxAttribute(node) && node.name.getText() === 'onInit' && node.initializer && ts.isJsxExpression(node.initializer) && node.initializer.expression && (ts.isArrowFunction(node.initializer.expression) || ts.isFunctionExpression(node.initializer.expression))) {
+    if (ts.isJsxAttribute(node) && node.name.getText() === 'onInit' && node.initializer && ts.isJsxExpression(node.initializer) && node.initializer.expression) {
       const initializer = node.initializer.expression;
-      const body = initializer.body;
-      if (ts.isBlock(body)) {
-        for (const stmt of body.statements) {
-          // Look for assignments like: els["pA"] = createPoint(...)
-          if (ts.isExpressionStatement(stmt) && ts.isBinaryExpression(stmt.expression) && stmt.expression.operatorToken.kind === ts.SyntaxKind.EqualsToken) {
-            const left = stmt.expression.left;
-            const right = stmt.expression.right;
-            const id = extractElId(left);
-            if (id && ts.isCallExpression(right)) {
-              const helper = right.expression.getText();
-              const args = right.arguments;
-              if (helper === 'createPoint' && args.length >= 2) {
-                const coords = parseCoords(args[1]);
-                const opts = parseObjectProperties(args[2]);
-                if (coords) {
-                  points.push({
-                    id,
-                    label: opts.name || id.replace(/^p/, ''),
-                    x: coords.x,
-                    y: coords.y,
-                    fixed: opts.fixed === true,
-                    color: (opts.fillColor || opts.strokeColor || 'terracota') as ColorToken,
-                    target: opts.target !== false,
-                    constraint: opts.fixed === true ? 'fixed' : 'free',
-                  });
-                }
-              } else if (helper === 'createGlider' && args.length >= 2) {
-                const coords = parseCoords(args[1]);
-                const supportArr = args[1];
-                let gliderTarget = '';
-                if (ts.isArrayLiteralExpression(supportArr) && supportArr.elements.length >= 3) {
-                  const targetExpr = supportArr.elements[2];
-                  const supportId = extractElId(targetExpr);
-                  if (supportId) gliderTarget = supportId;
-                }
-                const opts = parseObjectProperties(args[2]);
-                if (coords) {
-                  points.push({
-                    id,
-                    label: opts.name || id.replace(/^p/, ''),
-                    x: coords.x,
-                    y: coords.y,
-                    fixed: false,
-                    color: (opts.fillColor || 'ocre') as ColorToken,
-                    target: opts.target !== false,
-                    constraint: 'glider',
-                    gliderTarget,
-                  });
-                }
-              } else if (helper === 'createSlider' && args.length >= 3) {
-                // createSlider(board, [[x, y], [x2, y2]], [min, val, max], opts)
-                const rangeArr = args[2];
-                let min = 0;
-                let val = 1;
-                let max = 10;
-                if (ts.isArrayLiteralExpression(rangeArr) && rangeArr.elements.length >= 3) {
-                  const parseNum = (n: ts.Expression) => {
-                    if (ts.isPrefixUnaryExpression(n) && n.operator === ts.SyntaxKind.MinusToken && ts.isNumericLiteral(n.operand)) return -parseFloat(n.operand.text);
-                    if (ts.isNumericLiteral(n)) return parseFloat(n.text);
-                    return 0;
-                  };
-                  min = parseNum(rangeArr.elements[0]);
-                  val = parseNum(rangeArr.elements[1]);
-                  max = parseNum(rangeArr.elements[2]);
-                }
-                const coordsArr = args[1];
-                let sx = -4;
-                let sy = -4;
-                if (ts.isArrayLiteralExpression(coordsArr) && coordsArr.elements.length > 0) {
-                  const startCoords = parseCoords(coordsArr.elements[0]);
-                  if (startCoords) {
-                    sx = startCoords.x;
-                    sy = startCoords.y;
-                  }
-                }
-                const opts = parseObjectProperties(args[3]);
-                sliders.push({
-                  id,
-                  label: opts.name || id,
-                  x: sx,
-                  y: sy,
-                  min,
-                  max,
-                  value: val,
-                  step: opts.snapWidth || 0.1,
-                  color: (opts.fillColor || 'pavo') as ColorToken,
-                  target: opts.target !== false,
-                });
-              } else {
-                // A normal geometric element
-                let kind: ElementKind;
-                let refs: string[] = [];
-                if (helper === 'createSegment') {
-                  kind = 'segment';
-                  refs = extractRefIds(args[1]);
-                } else if (helper === 'createLine') {
-                  kind = 'line';
-                  refs = extractRefIds(args[1]);
-                } else if (helper === 'createRay') {
-                  kind = 'ray';
-                  refs = extractRefIds(args[1]);
-                } else if (helper === 'createPolygon') {
-                  kind = 'polygon';
-                  refs = extractRefIds(args[1]);
-                } else if (helper === 'createCircle') {
-                  kind = 'circle';
-                  refs = extractRefIds(args[1]);
-                } else if (helper === 'createMidpoint') {
-                  kind = 'midpoint';
-                  refs = extractRefIds(args[1]);
-                } else if (helper === 'createPerpendicularFoot') {
-                  kind = 'perpendicularFoot';
-                  refs = extractRefIds(args[1]);
-                } else if (helper === 'createBaseExtensionToFoot') {
-                  kind = 'baseExtension';
-                  refs = extractRefIds(args[1]);
-                } else if (helper === 'createPerpendicularLine') {
-                  kind = 'perpendicular';
-                  refs = extractRefIds(args[1]);
-                } else if (helper === 'createParallelLine') {
-                  kind = 'parallel';
-                  refs = extractRefIds(args[1]);
-                } else if (helper === 'createAngleBisectorRay') {
-                  kind = 'angleBisector';
-                  refs = extractRefIds(args[1]);
-                } else if (helper === 'createAngle') {
-                  kind = 'angle';
-                  refs = extractRefIds(args[1]);
-                } else if (helper === 'createRightAngleMarker') {
-                  kind = 'rightAngle';
-                  refs = extractRefIds(args[1]);
-                } else if (helper === 'createText') {
-                  kind = 'text';
-                  const anchorArr = args[1];
-                  // Text coordinates array might contain els["pA"].X() function calls or values
-                  if (ts.isArrayLiteralExpression(anchorArr) && anchorArr.elements.length > 0) {
-                    // Try to find helper els["pA"] orels.pA reference inside the text coordinates callback functions
-                    let anchorId = '';
-                    const visitAnchor = (n: ts.Node) => {
-                      const found = extractElId(n as ts.Expression);
-                      if (found) anchorId = found;
-                      else n.forEachChild(visitAnchor);
-                    };
-                    anchorArr.elements[0].forEachChild(visitAnchor);
-                    if (anchorId) refs = [anchorId];
-                  }
-                } else {
-                  continue;
-                }
-                const opts = parseObjectProperties(args[2]);
-                elements.push({
-                  id,
-                  label: opts.name || KIND_LABELS[kind],
-                  kind,
-                  refs,
-                  color: (opts.strokeColor || opts.fillColor || opts.color || 'carbon') as ColorToken,
-                  target: opts.target !== false,
-                  dashed: opts.dash !== undefined || opts.dashed === true,
-                  text: opts.text || (helper === 'createText' && ts.isStringLiteral(args[1]) ? args[1].text : undefined),
-                });
-              }
-            }
-          }
-        }
+      if ((ts.isArrowFunction(initializer) || ts.isFunctionExpression(initializer)) && ts.isBlock(initializer.body)) {
+        extractOnInitModel(initializer.body);
+      } else if (ts.isIdentifier(initializer)) {
+        const body = namedBlocks.get(initializer.text);
+        if (body) extractOnInitModel(body);
       }
     }
 

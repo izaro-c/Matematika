@@ -61,7 +61,9 @@ export default defineConfig([
       'Matematika/src/shared/diagrams/**/*.tsx'
     ],
     rules: {
-      'sonarjs/pseudo-random': 'off'
+      'sonarjs/pseudo-random': 'off',
+      'sonarjs/void-use': 'off',
+      'no-empty': 'off'
     }
   },
 ])

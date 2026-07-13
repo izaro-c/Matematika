@@ -1,7 +1,7 @@
-import { MathBoard } from '@/features/graph/ui/MathBoard';
-import { 
-  createPoint, createLine 
-} from '@/features/graph/ui/MathFactory';
+import { MathBoard } from '@/shared/diagrams/core/MathBoard';
+import {
+  createPoint, createLine
+} from '@/shared/diagrams/core/MathFactory';
 
 export const DemoRectasCoincidentes = () => {
   return (
@@ -20,7 +20,7 @@ export const DemoRectasCoincidentes = () => {
 
         els.tRot = board.create('transform', [() => els.angleVar.Y(), els.A], { type: 'rotate' });
         els.bpRot = board.create('point', [els.B, els.tRot], { visible: false });
-        
+
         els.rectaM = createLine(board, [els.A, els.bpRot], {
           name: 'm', strokeColor: theme.terracota, strokeWidth: 2, withLabel: true, label: { position: 'rt', offset: [10, -10], strokeColor: theme.terracota }
         }, theme);

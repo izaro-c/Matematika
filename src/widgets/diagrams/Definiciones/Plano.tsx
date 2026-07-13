@@ -1,5 +1,5 @@
 import { useRef, useEffect } from 'react';
-import { getCSSVar } from '@/features/graph/ui/MathUtils';
+import { getCSSVar } from '@/shared/diagrams/core/MathUtils';
 import { Canvas, useThree } from '@react-three/fiber';
 import * as THREE from 'three';
 import { OrbitControls, Html } from '@react-three/drei';
@@ -9,8 +9,8 @@ import { useLessonStore } from '@/features/lessons/LessonStore';
 function SceneContent() {
   const { camera } = useThree();
 
-  const mathHighlight = useMathStore(state => state.variables?.['highlight']);
-  const lessonHighlight = useLessonStore(state => state.activeStep);
+  const mathHighlight = useMathStore((state: any) => state.variables?.['highlight']);
+  const lessonHighlight = useLessonStore((state: any) => state.activeStep);
   const highlight = mathHighlight || lessonHighlight;
 
   const controlsRef = useRef<any>(null);
@@ -41,7 +41,7 @@ function SceneContent() {
     <>
       <OrbitControls ref={controlsRef} enablePan={true} enableZoom={true} autoRotate={true} autoRotateSpeed={1.0} />
       <gridHelper args={[8, 8, carbon, carbon]} material-opacity={0.08} material-transparent />
-      
+
       <mesh ref={meshRef} rotation={[-Math.PI / 2, 0, 0]}>
         <planeGeometry args={[5, 5]} />
         <meshBasicMaterial
@@ -52,7 +52,7 @@ function SceneContent() {
           depthWrite={false}
         />
       </mesh>
-      
+
       <mesh position={[0, 0, 0]}>
         <sphereGeometry args={[pointSize('pA'), 32, 32]} />
         <meshBasicMaterial color={pointColorA} />
@@ -60,7 +60,7 @@ function SceneContent() {
           A
         </Html>
       </mesh>
-      
+
       <mesh position={[2, 0, 0]}>
         <sphereGeometry args={[pointSize('pB'), 32, 32]} />
         <meshBasicMaterial color={pointColorB} />
@@ -68,7 +68,7 @@ function SceneContent() {
           B
         </Html>
       </mesh>
-      
+
       <mesh position={[0.5, 0, 1.8]}>
         <sphereGeometry args={[pointSize('pC'), 32, 32]} />
         <meshBasicMaterial color={pointColorC} />
@@ -76,7 +76,7 @@ function SceneContent() {
           C
         </Html>
       </mesh>
-      
+
       <Html position={[-2, 0.1, 2]} center className={`font-serif italic text-2xl select-none pointer-events-none transition-colors duration-300 ${highlight === 'planeMesh' ? 'text-ocre font-bold drop-shadow-md' : 'text-carbon/60'}`}>
         π
       </Html>

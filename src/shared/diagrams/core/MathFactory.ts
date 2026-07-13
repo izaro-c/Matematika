@@ -272,3 +272,21 @@ export function createSlider(
     ...options,
   });
 }
+
+export function createTicks(board: any, elements: [any, number], options: any = {}, theme: ThemeColors) {
+  return board.create('ticks', elements, {
+    strokeColor: theme.carbon,
+    strokeWidth: 2,
+    ...options,
+  });
+}
+
+export function createRightAngle(board: any, points: [any, any, any], options: any = {}, theme: ThemeColors) {
+  return board.create('angle', points, {
+    type: 'sectordot',
+    size: 20,
+    fillColor: theme.carbon,
+    strokeColor: theme.carbon,
+    ...options,
+  });
+}

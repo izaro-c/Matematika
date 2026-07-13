@@ -1,6 +1,6 @@
 ---
 name: diagrama
-description: Genera diagramas matemáticos interactivos con JSXGraph, SVG, Canvas 2D o HTML/CSS en src/shared/diagrams/. Usa exclusivamente la paleta Arts & Crafts via getCSSVar(). Conecta bidireccionalmente con MathStore y LessonStore para diagramas reactivos.
+description: Genera diagramas matemáticos interactivos con JSXGraph, SVG, Canvas 2D o HTML/CSS en src/widgets/diagrams/. Usa exclusivamente la paleta Arts & Crafts via getCSSVar(). Conecta bidireccionalmente con MathStore y LessonStore para diagramas reactivos.
 ---
 
 # Skill: diagrama — Diagramas Matemáticos Interactivos para Matematika
@@ -858,19 +858,19 @@ SVG usando `var(--theme-*)` se adapta automáticamente al modo oscuro porque las
 ### 19.1 Ubicación FSD
 
 ```
-src/shared/diagrams/
+src/widgets/diagrams/
   <Categoria>/
     <Nombre>.tsx           (componente del diagrama — PascalCase)
 ```
 
-Los diagramas viven en `src/shared/diagrams/` (arquitectura FSD: capa `shared/`).
+Los diagramas viven en `src/widgets/diagrams/` (arquitectura FSD: capa `widgets/`).
 
 ### 19.2 Archivos relacionados
 
 | Qué | Dónde |
 |---|---|
-| Utilidades de diagrama | `src/shared/diagrams/utils/{cssVar,highlight}.ts` |
-| Componentes JSXGraph base | `src/features/graph/ui/{MathBoard,MathFactory,MathUtils}.ts` |
+| Fachada y utilidades | `src/widgets/diagrams/index.ts` |
+| Componentes JSXGraph base | `src/shared/diagrams/core/{MathBoard.tsx,MathFactory.ts,MathUtils.ts}` |
 | Stores para interactividad | `src/features/lessons/LessonStore.ts`, `src/features/graph/GraphStore.ts` |
 | Paleta de colores | `src/shared/lib/constants.ts` (leer via `getCSSVar('--theme-*')`) |
 | Contenido MDX asociado | `src/database/content/{theorems,definitions,axioms,demonstrations}/` |

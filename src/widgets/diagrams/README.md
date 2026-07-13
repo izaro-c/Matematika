@@ -1,8 +1,8 @@
 # Fachada de diagramas
 
 `@/widgets/diagrams` es la API pública mínima para contratos compartidos por los
-diagramas. Su propósito actual es estabilizar tres fronteras sin cambiar el
-runtime de JSXGraph:
+diagramas. Su propósito actual es estabilizar tres fronteras y convivir con el
+runtime modular basado en `MathBoard`:
 
 - tokens de la paleta Arts & Crafts y lectura de su variable CSS;
 - resolución tipada de targets de `highlight` o `step`;
@@ -26,14 +26,34 @@ Los consumidores nuevos deben importar estos contratos desde la fachada, no
 desde `lib/` ni `types/`. Los componentes de diagrama siguen importándose por
 su ruta concreta para conservar los imports MDX actuales.
 
+## Edición visual
+
+El editor visual reconoce diagramas escritos con:
+
+- `MathBoard` desde `@/shared/diagrams/core/MathBoard`;
+- primitivas de `MathFactory` desde `@/shared/diagrams/core/MathFactory`;
+- creación registrada como `els.id = createPoint(...)` o como variable local
+  posteriormente asignada a `els.id`;
+- pasos opcionales descritos por `stepTargets` o por el bloque
+  `@matematika-diagram-model`.
+
+La auditoría se ejecuta con:
+
+```bash
+npm run editor:diagrams:check
+```
+
+Los diagramas JSXGraph legacy con `JXG.JSXGraph.initBoard` se reportan aparte
+porque todavía requieren reescritura a `MathBoard`. Las escenas Three.js,
+simulaciones HTML y placeholders quedan fuera del editor geométrico visual.
+
 ## Límites
 
 La fachada no reexporta `MathBoard`, `MathFactory`, `MathUtils`,
-`MathStoreContext` ni `LessonStore`. Esos módulos viven en capas superiores y
-reexportarlos desde `shared` escondería la inversión FSD en vez de resolverla.
-Tampoco incluye helpers geométricos específicos, estado React ni un wrapper de
-lifecycle: solo se añadirá una responsabilidad cuando tenga un contrato estable
-y pilotos que la justifiquen.
+`MathStoreContext` ni `LessonStore`. Esos módulos tienen rutas explícitas para
+mantener clara la frontera FSD. Tampoco incluye helpers geométricos específicos,
+estado React ni adapters de compatibilidad: solo se añadirá una responsabilidad
+cuando tenga un contrato estable y pilotos que la justifiquen.
 
 No se deben añadir:
 
@@ -45,12 +65,8 @@ No se deben añadir:
 
 ## Deuda residual visible
 
-La migración general queda fuera de esta fase. Tras el piloto siguen existiendo
-55 diagramas con imports a `MathStoreContext`, 27 a `LessonStore`, 11 a
-`MathBoard`/`MathFactory`, 526 apariciones de `any`, 55 helpers locales de tema,
-51 inicializaciones directas de JSXGraph y tres wrappers parciales
-(`JXGBoard`, `JSXGraphWrapper` y `MathBoard`).
-
-El siguiente lote deberá decidir el puerto de interacción y el owner del
-lifecycle antes de mover wrappers. Hasta entonces, cada piloto debe ser pequeño,
-conservar geometría e interacción y no ampliar las aristas FSD.
+La migración principal ya usa el core compartido en
+`src/shared/diagrams/core/`. La deuda residual vive en los diagramas reportados
+como `Legacy JSXGraph` por la auditoría, más escenas 3D/HTML que no pertenecen
+al editor geométrico visual. Cada migración restante debe conservar geometría e
+interacción y registrar explícitamente puntos y elementos editables.

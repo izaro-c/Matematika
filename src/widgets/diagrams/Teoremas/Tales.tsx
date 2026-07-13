@@ -1,52 +1,47 @@
-import { useRef, useEffect } from 'react';
-import { getCSSVar } from '@/features/graph/ui/MathUtils';
-import JXG from 'jsxgraph';
-import { useMathStore } from '@/app/providers/MathStoreContext';
+import { useRef } from 'react';
+import { MathBoard } from '@/shared/diagrams/core/MathBoard';
+import {
+  createPoint, createLine, createSegment, createGlider, createPolygon
+} from '@/shared/diagrams/core/MathFactory';
+
+
+
+
 
 export const Tales = () => {
-  const boardRef = useRef<HTMLDivElement>(null);
-  const elementsRef = useRef<Record<string, unknown>>({});
+
+
   const updatingRef = useRef(false);
 
-  const highlight = useMathStore((state) => state.variables['highlight']);
-  const isHighlight = (id: string) => Array.isArray(highlight) ? (highlight as unknown as string[]).includes(id) : highlight === id;
 
-  useEffect(() => {
-    if (!boardRef.current) return;
 
-    if (!boardRef.current.id) boardRef.current.id = "jxgbox_" + Math.random().toString(36).substring(2, 9);
-    const board = JXG.JSXGraph.initBoard(boardRef.current.id, {
-      boundingbox: [-6, 6, 6, -5],
-      axis: false,
-      showCopyright: false,
-      keepaspectratio: true,
-      grid: false,
-    });
 
-    const C_PRIM = getCSSVar('--theme-carbon');
-    const C_ACC  = getCSSVar('--theme-terracota');
-    const C_PAR  = getCSSVar('--theme-salvia');
-    const C_POL  = getCSSVar('--theme-pavo');
+  const onInit = (board: any, els: any, theme: any) => {
+      void board; void els; void theme;
+      const C_PRIM = theme.carbon;
+    const C_ACC  = theme.terracota;
+    const C_PAR  = theme.salvia;
+    const C_POL  = theme.pavo;
 
     const SNAP = 0.5;
-    const A = board.create('point', [-3, -2], { name: 'A', size: 5, fillColor: C_PRIM, strokeColor: C_PRIM, showInfobox: false, snapToGrid: true, snapSizeX: SNAP, snapSizeY: SNAP });
-    const B = board.create('point', [3, -2],  { name: 'B', size: 5, fillColor: C_PRIM, strokeColor: C_PRIM, showInfobox: false, snapToGrid: true, snapSizeX: SNAP, snapSizeY: SNAP });
-    const C = board.create('point', [4, 3],   { name: 'C', size: 5, fillColor: C_PRIM, strokeColor: C_PRIM, showInfobox: false, snapToGrid: true, snapSizeX: SNAP, snapSizeY: SNAP });
+    const A = createPoint(board, [-3, -2], { name: 'A', size: 5, fillColor: C_PRIM, strokeColor: C_PRIM, showInfobox: false, snapToGrid: true, snapSizeX: SNAP, snapSizeY: SNAP }, theme);
+    const B = createPoint(board, [3, -2], { name: 'B', size: 5, fillColor: C_PRIM, strokeColor: C_PRIM, showInfobox: false, snapToGrid: true, snapSizeX: SNAP, snapSizeY: SNAP }, theme);
+    const C = createPoint(board, [4, 3], { name: 'C', size: 5, fillColor: C_PRIM, strokeColor: C_PRIM, showInfobox: false, snapToGrid: true, snapSizeX: SNAP, snapSizeY: SNAP }, theme);
 
-    const segAB = board.create('segment', [A, B], { strokeColor: C_PRIM, strokeWidth: 2 });
-    const segBC = board.create('segment', [B, C], { strokeColor: C_PAR, strokeWidth: 2.5 });
-    const segCA = board.create('segment', [C, A], { strokeColor: C_PRIM, strokeWidth: 2 });
+    const segAB = createSegment(board, [A, B], { strokeColor: C_PRIM, strokeWidth: 2 }, theme);
+    const segBC = createSegment(board, [B, C], { strokeColor: C_PAR, strokeWidth: 2.5 }, theme);
+    const segCA = createSegment(board, [C, A], { strokeColor: C_PRIM, strokeWidth: 2 }, theme);
 
-    const poly = board.create('polygon', [A, B, C], {
+    const poly = createPolygon(board, [A, B, C], {
       fillColor: C_POL, fillOpacity: 0.06,
       borders: { visible: false }, vertices: { visible: false }
-    });
+    }, theme);
 
-    const lineBC = board.create('line', [B, C], { visible: false });
-    const lineAB = board.create('line', [A, B], { visible: false });
-    const lineCA = board.create('line', [C, A], { visible: false });
+    const lineBC = createLine(board, [B, C], { visible: false }, theme);
+    const lineAB = createLine(board, [A, B], { visible: false }, theme);
+    const lineCA = createLine(board, [C, A], { visible: false }, theme);
 
-    const D = board.create('glider', [-1, -2, segAB], { name: 'D', size: 4, fillColor: C_ACC, strokeColor: C_ACC, showInfobox: false });
+    const D = createGlider(board, [-1, -2, segAB], { name: 'D', size: 4, fillColor: C_ACC, strokeColor: C_ACC, showInfobox: false }, theme);
     const parDE = board.create('parallel', [lineBC, D], { visible: false });
     const E = board.create('intersection', [parDE, lineCA, 0], { name: 'E', size: 4, fillColor: C_ACC, strokeColor: C_ACC, showInfobox: false });
 
@@ -68,9 +63,9 @@ export const Tales = () => {
       updatingRef.current = false;
     });
 
-    const segDE = board.create('segment', [D, E], { strokeColor: C_PAR, strokeWidth: 2.5, dash: 2 });
-    const segAD = board.create('segment', [A, D], { strokeColor: C_ACC, strokeWidth: 2, dash: 1 });
-    const segAE = board.create('segment', [A, E], { strokeColor: C_ACC, strokeWidth: 2, dash: 1 });
+    const segDE = createSegment(board, [D, E], { strokeColor: C_PAR, strokeWidth: 2.5, dash: 2 }, theme);
+    const segAD = createSegment(board, [A, D], { strokeColor: C_ACC, strokeWidth: 2, dash: 1 }, theme);
+    const segAE = createSegment(board, [A, E], { strokeColor: C_ACC, strokeWidth: 2, dash: 1 }, theme);
 
     const infoText = board.create('text', [
       -5.5, 5.5,
@@ -80,12 +75,12 @@ export const Tales = () => {
         const ratio1 = dAD / Math.max(dDB, 0.001);
         const ratio2 = dAE / Math.max(dEC, 0.001);
         const ok = Math.abs(ratio1 - ratio2) < 0.01;
-        return `<div style="font-family: var(--font-serif); color: ${getCSSVar('--theme-carbon')}; line-height:1.5;">
+        return `<div style="font-family: var(--font-serif); color: ${theme.carbon}; line-height:1.5;">
           <strong style="font-size: 1.1rem;">Teorema de Tales</strong><br/>
           <small>DE \u2225 BC</small><br/>
           <span>AD/DB = ${ratio1.toFixed(2)}</span><br/>
           <span>AE/EC = ${ratio2.toFixed(2)}</span><br/>
-          <strong style="color:${ok ? getCSSVar('--theme-musgo') : getCSSVar('--theme-granada')};">
+          <strong style="color:${ok ? theme.musgo : theme.granada};">
             ${ok ? 'AD/DB \u2261 AE/EC' : 'AD/DB \u2260 AE/EC'}
           </strong>
         </div>`;
@@ -108,31 +103,27 @@ export const Tales = () => {
       });
     });
 
-    elementsRef.current = { A, B, C, D, E, poly, segAB, segBC, segCA, segDE, segAD, segAE, infoText, board };
+      // Registrar elementos para interactividad y auditoría
+      els.A = A;
+        els.B = B;
+        els.C = C;
+        els.D = D;
+        els.E = E;
+        els.poly = poly;
+        els.segAB = segAB;
+        els.segBC = segBC;
+        els.segCA = segCA;
+        els.segDE = segDE;
+        els.segAD = segAD;
+        els.segAE = segAE;
+        els.infoText = infoText;
+    };;
 
-    board.update();
-    (board.renderer as any).container.style.backgroundColor = getCSSVar('--theme-lienzo');
-
-    const observer = new MutationObserver(() => {
-      if (board) {
-        (board.renderer as any).container.style.backgroundColor = getCSSVar('--theme-lienzo');
-        board.update();
-      }
-    });
-    observer.observe(document.documentElement, { attributes: true, attributeFilter: ['class'] });
-
-    return () => {
-      observer.disconnect();
-      JXG.JSXGraph.freeBoard(board);
-      elementsRef.current = {};
-    };
-  }, []);
-
-  useEffect(() => {
-    const { A, B, C, D, E, poly, segAB, segBC, segCA, segDE, segAD, segAE, board } = elementsRef.current as Record<string, any>;
-    if (!board) return;
-
-    const hRecta = isHighlight('recta-de');
+  const onUpdate = (board: any, els: any, theme: any, isStep: any, isHL: any) => {
+      const isHighlight = isHL;
+      void board; void els; void theme; void isStep; void isHL; void isHighlight;
+      const { A, B, C, D, E, poly, segAB, segBC, segCA, segDE, segAD, segAE } = els;
+      const hRecta = isHighlight('recta-de');
     const hTri = isHighlight('triangulo-abc');
     const hSegD = isHighlight('segmento-ad');
     const hSegE = isHighlight('segmento-ae');
@@ -154,19 +145,22 @@ export const Tales = () => {
       strokeOpacity: dim(hRecta || hSegD || hSegE || hProp || showAll),
       fillOpacity: dim(hRecta || hSegD || hSegE || hProp || showAll),
       size: (hSegD || hSegE) ? 6 : 4,
-      fillColor: hTri ? getCSSVar('--theme-terracota') : getCSSVar('--theme-carbon')
+      fillColor: hTri ? theme.terracota : theme.carbon
     }));
     poly.setAttribute({ fillOpacity: hTri ? 0.18 : 0.06 });
-
-    board.update();
-  }, [highlight, isHighlight]);
+    };;
 
   return (
-    <div className="w-full h-full min-h-[300px] relative bg-lienzo/40 border border-pizarra/10 rounded-sm overflow-hidden">
+    <MathBoard
+      boundingbox={[-6, 6, 6, -5]}
+      axis={false}
+      grid={false}
+      onInit={onInit}
+      onUpdate={onUpdate}
+    >
       <div className="absolute top-2 left-3 z-10 text-xs font-serif italic text-pizarra/50">
         Arrastra <span className="font-bold not-italic text-terracota">D</span> o <span className="font-bold not-italic text-terracota">E</span>
       </div>
-      <div ref={boardRef} className="w-full h-full touch-none" />
-    </div>
+    </MathBoard>
   );
 };

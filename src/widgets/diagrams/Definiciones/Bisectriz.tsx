@@ -1,41 +1,34 @@
-import { useRef, useEffect } from 'react';
-import { getCSSVar } from '@/features/graph/ui/MathUtils';
-import JXG from 'jsxgraph';
-import { useMathStore } from '@/app/providers/MathStoreContext';
+import { MathBoard } from '@/shared/diagrams/core/MathBoard';
+import {
+  createPoint, createLine, createSegment, createAngle
+} from '@/shared/diagrams/core/MathFactory';
+
+
+
+
 
 export const Bisectriz = () => {
-  const boardRef = useRef<HTMLDivElement>(null);
-  const jxgBoard = useRef<any>(null);
-  const elementsRef = useRef<Record<string, unknown>>({});
 
-  const highlight = useMathStore((state) => state.variables['highlight']);
-  const isHighlight = (id: string) => Array.isArray(highlight) ? (highlight as unknown as string[]).includes(id) : highlight === id;
 
-  useEffect(() => {
-    if (!boardRef.current) return;
 
-    if (!boardRef.current.id) boardRef.current.id = "jxgbox_" + Math.random().toString(36).substring(2, 9);
-    const board = JXG.JSXGraph.initBoard(boardRef.current.id, {
-      boundingbox: [-4, 5, 5, -4],
-      axis: false,
-      showCopyright: false,
-      keepaspectratio: true,
-      grid: false,
-    });
-    jxgBoard.current = board;
 
-    const C_ANG = getCSSVar('--theme-ocre');
-    const C_BIS = getCSSVar('--theme-salvia');
-    const C_VERT = getCSSVar('--theme-terracota');
+
+
+
+  const onInit = (board: any, els: any, theme: any) => {
+      void board; void els; void theme;
+      const C_ANG = theme.ocre;
+    const C_BIS = theme.salvia;
+    const C_VERT = theme.terracota;
 
     const pointCfg = { size: 4, fillColor: C_VERT, strokeColor: C_VERT, showInfobox: false };
 
-    const B = board.create('point', [0, 0], { name: 'V', ...pointCfg });
-    const A = board.create('point', [3.5, -1.5], { name: 'A', ...pointCfg });
-    const C = board.create('point', [1.5, 3], { name: 'C', ...pointCfg });
+    const B = createPoint(board, [0, 0], { name: 'V', ...pointCfg }, theme);
+    const A = createPoint(board, [3.5, -1.5], { name: 'A', ...pointCfg }, theme);
+    const C = createPoint(board, [1.5, 3], { name: 'C', ...pointCfg }, theme);
 
-    const lado1 = board.create('segment', [B, A], { strokeColor: C_ANG, strokeWidth: 2 });
-    const lado2 = board.create('segment', [B, C], { strokeColor: C_ANG, strokeWidth: 2 });
+    const lado1 = createSegment(board, [B, A], { strokeColor: C_ANG, strokeWidth: 2 }, theme);
+    const lado2 = createSegment(board, [B, C], { strokeColor: C_ANG, strokeWidth: 2 }, theme);
 
     const bisecDir = board.create('point', [
       () => {
@@ -56,10 +49,10 @@ export const Bisectriz = () => {
       }
     ], { visible: false });
 
-    const bisectriz = board.create('line', [B, bisecDir], {
+    const bisectriz = createLine(board, [B, bisecDir], {
       strokeColor: C_BIS, strokeWidth: 2.5, dash: 2,
       straightFirst: false, straightLast: true
-    });
+    }, theme);
 
     const P = board.create('point', [
       () => {
@@ -83,10 +76,10 @@ export const Bisectriz = () => {
     const aCfg = { name: '&alpha;', type: 'sector' as const, fillColor: C_BIS, strokeColor: C_BIS, fillOpacity: 0.2, radius: 1.2, label: { fontSize: 16, cssClass: 'font-serif font-bold italic' } };
     const a1ccw = board.create('angle', [A, B, P], aCfg);
     const a2ccw = board.create('angle', [P, B, C], aCfg);
-    const a1cw = board.create('angle', [P, B, A], { ...aCfg, visible: false });
-    const a2cw = board.create('angle', [C, B, P], { ...aCfg, visible: false });
+    const a1cw = createAngle(board, [P, B, A], { ...aCfg, visible: false }, theme);
+    const a2cw = createAngle(board, [C, B, P], { ...aCfg, visible: false }, theme);
 
-    const totalAng = board.create('angle', [A, B, C], { visible: false, name: '', radius: 0.001 });
+    const totalAng = createAngle(board, [A, B, C], { visible: false, name: '', radius: 0.001 }, theme);
     const infoText = board.create('text', [
       -3.8, 4.5,
       () => {
@@ -106,39 +99,33 @@ export const Bisectriz = () => {
         (a1cw as any).setAttribute({ visible: !useCCW });
         (a2cw as any).setAttribute({ visible: !useCCW });
 
-        return `<div style="font-family: var(--font-serif); color: ${getCSSVar('--theme-carbon')};">
+        return `<div style="font-family: var(--font-serif); color: ${theme.carbon};">
           <strong style="font-size: 1.1rem;">&alpha; = ${halfDeg}&deg;</strong><br/>
           <i>&Aacute;ngulo: ${totalDeg}&deg;</i>
         </div>`;
       }
     ], { fixed: true, anchorX: 'left', anchorY: 'top' });
 
-    elementsRef.current = { A, B, C, lado1, lado2, bisectriz, P, a1ccw, a2ccw, a1cw, a2cw, infoText, board };
+      // Registrar elementos para interactividad y auditoría
+      els.A = A;
+        els.B = B;
+        els.C = C;
+        els.lado1 = lado1;
+        els.lado2 = lado2;
+        els.bisectriz = bisectriz;
+        els.P = P;
+        els.a1ccw = a1ccw;
+        els.a2ccw = a2ccw;
+        els.a1cw = a1cw;
+        els.a2cw = a2cw;
+        els.infoText = infoText;
+    };;
 
-    board.update();
-    (board.renderer as any).container.style.backgroundColor = getCSSVar('--theme-lienzo');
-
-    const observer = new MutationObserver(() => {
-      if (board) {
-        (board.renderer as any).container.style.backgroundColor = getCSSVar('--theme-lienzo');
-        board.update();
-      }
-    });
-    observer.observe(document.documentElement, { attributes: true, attributeFilter: ['class'] });
-
-    return () => {
-      observer.disconnect();
-      JXG.JSXGraph.freeBoard(board);
-      jxgBoard.current = null;
-      elementsRef.current = {};
-    };
-  }, []);
-
-  useEffect(() => {
-    const { B, lado1, lado2, bisectriz, a1ccw, a2ccw, a1cw, a2cw, board } = elementsRef.current as Record<string, any>;
-    if (!board) return;
-
-    const hAngulo = isHighlight('angulo');
+  const onUpdate = (board: any, els: any, theme: any, isStep: any, isHL: any) => {
+      const isHighlight = isHL;
+      void board; void els; void theme; void isStep; void isHL; void isHighlight;
+      const { B, lado1, lado2, bisectriz, a1ccw, a2ccw, a1cw, a2cw } = els;
+      const hAngulo = isHighlight('angulo');
     const hBis = isHighlight('bisectriz');
     const hCong = isHighlight('angulos-congruentes');
     const hVert = isHighlight('vertice');
@@ -152,16 +139,19 @@ export const Bisectriz = () => {
     [a1ccw, a2ccw, a1cw, a2cw].forEach((a: any) => a.setAttribute({
       fillOpacity: hCong ? 0.45 : 0.2, strokeOpacity: hCong || showAll ? 1 : 0.3, radius: hCong ? 1.5 : 1.2
     }));
-
-    board.update();
-  }, [highlight, isHighlight]);
+    };;
 
   return (
-    <div className="w-full h-full min-h-[300px] relative bg-lienzo/40 border border-pizarra/10 rounded-sm overflow-hidden">
+    <MathBoard
+      boundingbox={[-4, 5, 5, -4]}
+      axis={false}
+      grid={false}
+      onInit={onInit}
+      onUpdate={onUpdate}
+    >
       <div className="absolute top-2 left-3 z-10 text-xs font-serif italic text-pizarra/50">
         Arrastra los puntos para ampliar o reducir el &aacute;ngulo
       </div>
-      <div ref={boardRef} className="w-full h-full touch-none" />
-    </div>
+    </MathBoard>
   );
 };

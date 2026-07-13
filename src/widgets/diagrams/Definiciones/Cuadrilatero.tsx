@@ -1,7 +1,12 @@
-import { useRef, useEffect } from 'react';
-import { getCSSVar } from '@/features/graph/ui/MathUtils';
-import JXG from 'jsxgraph';
-import { useMathStore } from '@/app/providers/MathStoreContext';
+import { getCSSVar } from '@/shared/diagrams/core/MathUtils';
+import { MathBoard } from '@/shared/diagrams/core/MathBoard';
+import {
+  createPoint, createLine, createSegment, createPolygon, createAngle
+} from '@/shared/diagrams/core/MathFactory';
+
+
+
+
 
 function collinearXY(x1: number, y1: number, x2: number, y2: number, x3: number, y3: number, tol = 0.01): boolean {
   const area = (x2 - x1) * (y3 - y1) - (x3 - x1) * (y2 - y1);
@@ -248,57 +253,47 @@ function buildOthersList(vertices: any[], excludeIdx: number): any[] {
 }
 
 export const Cuadrilatero = () => {
-  const boardRef = useRef<HTMLDivElement>(null);
-  const elementsRef = useRef<Record<string, unknown>>({});
 
-  const highlight = useMathStore((state) => state.variables['highlight']);
-  const isHighlight = (id: string) => Array.isArray(highlight) ? (highlight as unknown as string[]).includes(id) : highlight === id;
 
-  useEffect(() => {
-    if (!boardRef.current) return;
 
-    if (!boardRef.current.id) boardRef.current.id = "jxgbox_" + Math.random().toString(36).substring(2, 9);
-    const board = JXG.JSXGraph.initBoard(boardRef.current.id, {
-      boundingbox: [-6, 6, 6, -5],
-      axis: false,
-      showCopyright: false,
-      keepaspectratio: true,
-      grid: false,
-    });
 
-    const C_PRIM  = getCSSVar('--theme-carbon');
-    const C_ACC   = getCSSVar('--theme-terracota');
-    const C_ACC2  = getCSSVar('--theme-pavo');
-    const C_ANG   = getCSSVar('--theme-salvia');
-    const C_POL   = getCSSVar('--theme-pavo');
-    const C_RIGHT = getCSSVar('--theme-ocre');
-    const C_DIAG  = getCSSVar('--theme-pizarra');
 
-    const A = board.create('point', [-2.5, -2], { name: 'A', size: 5, fillColor: C_PRIM, strokeColor: C_PRIM, showInfobox: false, snapToGrid: true, snapSizeX: SNAP, snapSizeY: SNAP });
-    const B = board.create('point', [2.5, -2],  { name: 'B', size: 5, fillColor: C_PRIM, strokeColor: C_PRIM, showInfobox: false, snapToGrid: true, snapSizeX: SNAP, snapSizeY: SNAP });
-    const C = board.create('point', [2, 3],     { name: 'C', size: 5, fillColor: C_PRIM, strokeColor: C_PRIM, showInfobox: false, snapToGrid: true, snapSizeX: SNAP, snapSizeY: SNAP });
-    const D = board.create('point', [-2, 2.5],  { name: 'D', size: 5, fillColor: C_PRIM, strokeColor: C_PRIM, showInfobox: false, snapToGrid: true, snapSizeX: SNAP, snapSizeY: SNAP });
 
-    const poly = board.create('polygon', [A, B, C, D], {
+  const onInit = (board: any, els: any, theme: any) => {
+      void board; void els; void theme;
+      const C_PRIM  = theme.carbon;
+    const C_ACC   = theme.terracota;
+    const C_ACC2  = theme.pavo;
+    const C_ANG   = theme.salvia;
+    const C_POL   = theme.pavo;
+    const C_RIGHT = theme.ocre;
+    const C_DIAG  = theme.pizarra;
+
+    const A = createPoint(board, [-2.5, -2], { name: 'A', size: 5, fillColor: C_PRIM, strokeColor: C_PRIM, showInfobox: false, snapToGrid: true, snapSizeX: SNAP, snapSizeY: SNAP }, theme);
+    const B = createPoint(board, [2.5, -2], { name: 'B', size: 5, fillColor: C_PRIM, strokeColor: C_PRIM, showInfobox: false, snapToGrid: true, snapSizeX: SNAP, snapSizeY: SNAP }, theme);
+    const C = createPoint(board, [2, 3], { name: 'C', size: 5, fillColor: C_PRIM, strokeColor: C_PRIM, showInfobox: false, snapToGrid: true, snapSizeX: SNAP, snapSizeY: SNAP }, theme);
+    const D = createPoint(board, [-2, 2.5], { name: 'D', size: 5, fillColor: C_PRIM, strokeColor: C_PRIM, showInfobox: false, snapToGrid: true, snapSizeX: SNAP, snapSizeY: SNAP }, theme);
+
+    const poly = createPolygon(board, [A, B, C, D], {
       fillColor: C_POL, fillOpacity: 0.08,
       borders: { strokeWidth: 2.5, strokeColor: C_PRIM },
       vertices: { visible: false }
-    });
+    }, theme);
 
-    const diagAC = board.create('segment', [A, C], { strokeColor: C_DIAG, strokeWidth: 1.2, dash: 3, fixed: true });
-    const diagBD = board.create('segment', [B, D], { strokeColor: C_DIAG, strokeWidth: 1.2, dash: 3, fixed: true });
+    const diagAC = createSegment(board, [A, C], { strokeColor: C_DIAG, strokeWidth: 1.2, dash: 3, fixed: true }, theme);
+    const diagBD = createSegment(board, [B, D], { strokeColor: C_DIAG, strokeWidth: 1.2, dash: 3, fixed: true }, theme);
 
-    const angleA = board.create('angle', [B, A, D], { name: '&alpha;', radius: 0.85, fillColor: C_ANG, strokeColor: C_ANG, fillOpacity: 0.22, type: 'sector', visible: false }) as any;
-    const angleB = board.create('angle', [C, B, A], { name: '&beta;',  radius: 0.85, fillColor: C_ANG, strokeColor: C_ANG, fillOpacity: 0.22, type: 'sector', visible: false }) as any;
-    const angleC = board.create('angle', [D, C, B], { name: '&gamma;', radius: 0.85, fillColor: C_ANG, strokeColor: C_ANG, fillOpacity: 0.22, type: 'sector', visible: false }) as any;
-    const angleD = board.create('angle', [A, D, C], { name: '&delta;', radius: 0.85, fillColor: C_ANG, strokeColor: C_ANG, fillOpacity: 0.22, type: 'sector', visible: false }) as any;
+    const angleA = createAngle(board, [B, A, D], { name: '&alpha;', radius: 0.85, fillColor: C_ANG, strokeColor: C_ANG, fillOpacity: 0.22, type: 'sector', visible: false }, theme) as any;
+    const angleB = createAngle(board, [C, B, A], { name: '&beta;',  radius: 0.85, fillColor: C_ANG, strokeColor: C_ANG, fillOpacity: 0.22, type: 'sector', visible: false }, theme) as any;
+    const angleC = createAngle(board, [D, C, B], { name: '&gamma;', radius: 0.85, fillColor: C_ANG, strokeColor: C_ANG, fillOpacity: 0.22, type: 'sector', visible: false }, theme) as any;
+    const angleD = createAngle(board, [A, D, C], { name: '&delta;', radius: 0.85, fillColor: C_ANG, strokeColor: C_ANG, fillOpacity: 0.22, type: 'sector', visible: false }, theme) as any;
 
-    const rightA = board.create('angle', [B, A, D], { radius: 0.55, type: 'sector', orthotype: 'square', fillColor: C_RIGHT, strokeColor: C_RIGHT, fillOpacity: 0.4, visible: false }) as any;
-    const rightB = board.create('angle', [C, B, A], { radius: 0.55, type: 'sector', orthotype: 'square', fillColor: C_RIGHT, strokeColor: C_RIGHT, fillOpacity: 0.4, visible: false }) as any;
-    const rightC = board.create('angle', [D, C, B], { radius: 0.55, type: 'sector', orthotype: 'square', fillColor: C_RIGHT, strokeColor: C_RIGHT, fillOpacity: 0.4, visible: false }) as any;
-    const rightD = board.create('angle', [A, D, C], { radius: 0.55, type: 'sector', orthotype: 'square', fillColor: C_RIGHT, strokeColor: C_RIGHT, fillOpacity: 0.4, visible: false }) as any;
+    const rightA = createAngle(board, [B, A, D], { radius: 0.55, type: 'sector', orthotype: 'square', fillColor: C_RIGHT, strokeColor: C_RIGHT, fillOpacity: 0.4, visible: false }, theme) as any;
+    const rightB = createAngle(board, [C, B, A], { radius: 0.55, type: 'sector', orthotype: 'square', fillColor: C_RIGHT, strokeColor: C_RIGHT, fillOpacity: 0.4, visible: false }, theme) as any;
+    const rightC = createAngle(board, [D, C, B], { radius: 0.55, type: 'sector', orthotype: 'square', fillColor: C_RIGHT, strokeColor: C_RIGHT, fillOpacity: 0.4, visible: false }, theme) as any;
+    const rightD = createAngle(board, [A, D, C], { radius: 0.55, type: 'sector', orthotype: 'square', fillColor: C_RIGHT, strokeColor: C_RIGHT, fillOpacity: 0.4, visible: false }, theme) as any;
 
-    board.update();
+
 
     const sides: Record<string, any> = {
       AB: (poly as any).borders[0],
@@ -308,7 +303,7 @@ export const Cuadrilatero = () => {
     };
 
     const mkTick = (p: any, q: any, centerOffset = 0) => {
-      const mA = board.create('point', [() => (p.X() + q.X()) / 2, () => (p.Y() + q.Y()) / 2], { visible: false });
+      const mA = createPoint(board, [() => (p.X() + q.X()) / 2, () => (p.Y() + q.Y()) / 2], { visible: false }, theme);
       const dNorm = () => { const dx = q.X()-p.X(), dy = q.Y()-p.Y(); const len = Math.hypot(dx, dy) || 1; return { dx: dx/len, dy: dy/len }; };
       const cx = () => { const dn = dNorm(); return mA.X() + dn.dx * centerOffset; };
       const cy = () => { const dn = dNorm(); return mA.Y() + dn.dy * centerOffset; };
@@ -320,7 +315,7 @@ export const Cuadrilatero = () => {
         () => { const dn = dNorm(); return cx() - dn.dy * 0.3; },
         () => { const dn = dNorm(); return cy() + dn.dx * 0.3; }
       ], { visible: false });
-      return board.create('segment', [t0, t1], { strokeColor: C_PRIM, strokeWidth: 2.4, visible: false }) as any;
+      return createSegment(board, [t0, t1], { strokeColor: C_PRIM, strokeWidth: 2.4, visible: false }, theme) as any;
     };
 
     const cong1s: Record<string, any> = {};
@@ -358,8 +353,8 @@ export const Cuadrilatero = () => {
     });
 
     const diagIntersect = board.create('intersection', [
-      board.create('line', [A, C], { visible: false }),
-      board.create('line', [B, D], { visible: false }), 0
+      createLine(board, [A, C], { visible: false }, theme),
+      createLine(board, [B, D], { visible: false }, theme), 0
     ], { visible: false, size: 2 });
 
     const infoText = board.create('text', [
@@ -415,33 +410,35 @@ export const Cuadrilatero = () => {
       }
     ], { fixed: true, anchorX: 'left', anchorY: 'top' });
 
-    elementsRef.current = { A, B, C, D, poly, angleA, angleB, angleC, angleD, rightA, rightB, rightC, rightD, sides, cong1s, cong2s, diagAC, diagBD, infoText, board };
+      // Registrar elementos para interactividad y auditoría
+      els.A = A;
+        els.B = B;
+        els.C = C;
+        els.D = D;
+        els.poly = poly;
+        els.angleA = angleA;
+        els.angleB = angleB;
+        els.angleC = angleC;
+        els.angleD = angleD;
+        els.rightA = rightA;
+        els.rightB = rightB;
+        els.rightC = rightC;
+        els.rightD = rightD;
+        els.sides = sides;
+        els.cong1s = cong1s;
+        els.cong2s = cong2s;
+        els.diagAC = diagAC;
+        els.diagBD = diagBD;
+        els.infoText = infoText;
+    };;
 
-    board.update();
-    (board.renderer as any).container.style.backgroundColor = getCSSVar('--theme-lienzo');
-
-    const observer = new MutationObserver(() => {
-      if (board) {
-        (board.renderer as any).container.style.backgroundColor = getCSSVar('--theme-lienzo');
-        board.update();
-      }
-    });
-    observer.observe(document.documentElement, { attributes: true, attributeFilter: ['class'] });
-
-    return () => {
-      observer.disconnect();
-      JXG.JSXGraph.freeBoard(board);
-      elementsRef.current = {};
-    };
-  }, []);
-
-  useEffect(() => {
-    const { A, B, C, D, poly, angleA, angleB, angleC, angleD, board } = elementsRef.current as Record<string, any>;
-    if (!board) return;
-
-    const C_PRIM = getCSSVar('--theme-carbon');
-    const C_ACC = getCSSVar('--theme-terracota');
-    const C_ANG = getCSSVar('--theme-salvia');
+  const onUpdate = (board: any, els: any, theme: any, isStep: any, isHL: any) => {
+      const isHighlight = isHL;
+      void board; void els; void theme; void isStep; void isHL; void isHighlight;
+      const { A, B, C, D, poly, angleA, angleB, angleC, angleD } = els;
+      const C_PRIM = theme.carbon;
+    const C_ACC = theme.terracota;
+    const C_ANG = theme.salvia;
 
     const isVertice = isHighlight('vertices') || isHighlight('vertice');
     const isLados = isHighlight('lados');
@@ -475,16 +472,19 @@ export const Cuadrilatero = () => {
     }
 
     poly.setAttribute({ fillOpacity: isPoli ? 0.22 : 0.08 });
-
-    board.update();
-  }, [highlight, isHighlight]);
+    };;
 
   return (
-    <div className="w-full h-full min-h-[350px] relative bg-lienzo/40 border border-pizarra/10 rounded-sm overflow-hidden">
+    <MathBoard
+      boundingbox={[-6, 6, 6, -5]}
+      axis={false}
+      grid={false}
+      onInit={onInit}
+      onUpdate={onUpdate}
+    >
       <div className="absolute top-2 right-3 z-10 text-xs font-serif italic text-pizarra/50">
         Arrastra los v&eacute;rtices para descubrir distintas clases
       </div>
-      <div ref={boardRef} className="w-full h-full touch-none" />
-    </div>
+    </MathBoard>
   );
 };

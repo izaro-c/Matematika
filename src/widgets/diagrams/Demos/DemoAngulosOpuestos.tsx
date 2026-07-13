@@ -1,8 +1,8 @@
-import { MathBoard } from '@/features/graph/ui/MathBoard';
-import { 
-  createPoint, createLine, createAngle, createGlider 
-} from '@/features/graph/ui/MathFactory';
-import { StyleManager } from '@/features/graph/ui/MathUtils';
+import { MathBoard } from '@/shared/diagrams/core/MathBoard';
+import {
+  createPoint, createLine, createAngle, createGlider
+} from '@/shared/diagrams/core/MathFactory';
+import { StyleManager } from '@/shared/diagrams/core/MathUtils';
 
 export const DemoAngulosOpuestos = () => {
   return (
@@ -15,7 +15,7 @@ export const DemoAngulosOpuestos = () => {
         // Puntos para la recta l (horizontal fija)
         els.pA = createPoint(board, [3, 0], { name: '', size: 0, visible: false, fixed: true }, theme);
         els.pB = createPoint(board, [-3, 0], { name: '', size: 0, visible: false, fixed: true }, theme);
-        els.rectaL = createLine(board, [els.pA, els.pB], { 
+        els.rectaL = createLine(board, [els.pA, els.pB], {
           name: 'l', withLabel: true, label: { position: 'rt', offset: [10, 10] }, strokeWidth: 2.5
         }, theme);
 
@@ -23,13 +23,13 @@ export const DemoAngulosOpuestos = () => {
         els.pRight = createPoint(board, [2.5, 0], { visible: false }, theme);
         els.pLeft = createPoint(board, [-2.5, 0], { visible: false }, theme);
         els.arc = board.create('arc', [els.O, els.pRight, els.pLeft], { visible: false });
-        
+
         // Punto arrastrable para la recta m
         els.pC = createGlider(board, [2, 2, els.arc], { name: '', withLabel: false }, theme);
 
         // Punto opuesto en m
         els.pD = createPoint(board, [() => -els.pC.X(), () => -els.pC.Y()], { name: '', size: 0, visible: false }, theme);
-        els.rectaM = createLine(board, [els.pC, els.pD], { 
+        els.rectaM = createLine(board, [els.pC, els.pD], {
           name: 'm', strokeColor: theme.terracota, strokeWidth: 2.5, withLabel: true, label: { position: 'rt', offset: [10, 15], strokeColor: theme.terracota }
         }, theme);
 
@@ -62,31 +62,31 @@ export const DemoAngulosOpuestos = () => {
         // ang1
         const hA1 = styler.isHL(['angle1', 'supp12', 'congruence13']);
         const sA1 = styler.isStep(['angle1', 'supp12', 'congruence13']);
-        els.ang1.setAttribute({ 
-          fillOpacity: styler.getOpAng(hA1, sA1), 
+        els.ang1.setAttribute({
+          fillOpacity: styler.getOpAng(hA1, sA1),
           strokeOpacity: styler.getOp(hA1, sA1, 0.1),
           fillColor: styler.getC(styler.isHL('supp12'), theme.salvia, theme.terracota),
           strokeColor: styler.getC(styler.isHL('supp12'), theme.salvia, theme.terracota),
           strokeWidth: styler.getW(hA1, 2, 3)
         });
         if (els.ang1.label) els.ang1.label.setAttribute({ strokeColor: styler.getC(styler.isHL('supp12'), theme.salvia, theme.terracota) });
-        
+
         // ang2
         const hA2 = styler.isHL(['angle2', 'supp12', 'supp23']);
         const sA2 = styler.isStep(['angle2', 'supp12', 'supp23']);
-        els.ang2.setAttribute({ 
-          fillOpacity: styler.getOpAng(hA2, sA2), 
+        els.ang2.setAttribute({
+          fillOpacity: styler.getOpAng(hA2, sA2),
           strokeOpacity: styler.getOp(hA2, sA2, 0.1),
           fillColor: theme.salvia,
           strokeColor: theme.salvia,
           strokeWidth: styler.getW(hA2, 2, 3)
         });
-        
+
         // ang3
         const hA3 = styler.isHL(['angle3', 'supp23', 'congruence13']);
         const sA3 = styler.isStep(['angle3', 'supp23', 'congruence13']);
-        els.ang3.setAttribute({ 
-          fillOpacity: styler.getOpAng(hA3, sA3), 
+        els.ang3.setAttribute({
+          fillOpacity: styler.getOpAng(hA3, sA3),
           strokeOpacity: styler.getOp(hA3, sA3, 0.1),
           fillColor: styler.getC(styler.isHL('supp23'), theme.salvia, theme.terracota),
           strokeColor: styler.getC(styler.isHL('supp23'), theme.salvia, theme.terracota),
@@ -97,8 +97,8 @@ export const DemoAngulosOpuestos = () => {
         // ang4
         const hA4 = styler.isHL('angle4');
         const sA4 = styler.isStep('angle4');
-        els.ang4.setAttribute({ 
-          fillOpacity: styler.getOpAng(hA4, sA4), 
+        els.ang4.setAttribute({
+          fillOpacity: styler.getOpAng(hA4, sA4),
           strokeOpacity: styler.getOp(hA4, sA4, 0.1),
           strokeWidth: styler.getW(hA4, 2, 3)
         });

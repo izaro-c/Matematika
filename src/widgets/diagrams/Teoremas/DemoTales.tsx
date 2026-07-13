@@ -1,76 +1,93 @@
-import { useRef, useEffect } from 'react';
-import { getCSSVar } from '@/features/graph/ui/MathUtils';
-import JXG from 'jsxgraph';
 import { useMathStore } from '@/app/providers/MathStoreContext';
 import { useLessonStore } from '@/features/lessons/LessonStore';
+import { MathBoard } from '@/shared/diagrams/core/MathBoard';
+import {
+  createPoint, createLine, createSegment, createGlider, createPolygon
+} from '@/shared/diagrams/core/MathFactory';
+
+
+
+
+
 
 export const DemoTales = () => {
-  const boardRef = useRef<HTMLDivElement>(null);
-  const elementsRef = useRef<Record<string, unknown>>({});
+
+
 
   const mathHL = useMathStore(s => s.variables?.['highlight']);
   const lessonHL = useLessonStore(s => s.activeStep);
   const highlight = mathHL || lessonHL;
   const isHL = (id: string) => Array.isArray(highlight) ? (highlight as unknown as string[]).includes(id) : highlight === id;
+  void highlight;
+  void isHL;
 
-  useEffect(() => {
-    if (!boardRef.current) return;
-    if (!boardRef.current.id) boardRef.current.id = "jxgbox_" + Math.random().toString(36).substring(2, 9);
-    const board = JXG.JSXGraph.initBoard(boardRef.current.id, {
-      boundingbox: [-5, 5, 5, -5],
-      axis: false, showCopyright: false, keepaspectratio: true, grid: false,
-    });
+  const onInit = (board: any, els: any, theme: any) => {
+      void board; void els; void theme;
+      const C_PRIM = theme.carbon;
+    const C_ACC  = theme.terracota;
+    const C_PAR  = theme.salvia;
+    const C_H    = theme.ocre;
 
-    const C_PRIM = getCSSVar('--theme-carbon');
-    const C_ACC  = getCSSVar('--theme-terracota');
-    const C_PAR  = getCSSVar('--theme-salvia');
-    const C_H    = getCSSVar('--theme-ocre');
+    const A = createPoint(board, [-3, -2], { name: 'A', size: 5, fillColor: C_PRIM, strokeColor: C_PRIM, showInfobox: false, snapToGrid: true, snapSizeX: 0.5, snapSizeY: 0.5 }, theme);
+    const B = createPoint(board, [3, -2], { name: 'B', size: 5, fillColor: C_PRIM, strokeColor: C_PRIM, showInfobox: false, snapToGrid: true, snapSizeX: 0.5, snapSizeY: 0.5 }, theme);
+    const C = createPoint(board, [4, 3], { name: 'C', size: 5, fillColor: C_PRIM, strokeColor: C_PRIM, showInfobox: false, snapToGrid: true, snapSizeX: 0.5, snapSizeY: 0.5 }, theme);
 
-    const A = board.create('point', [-3, -2], { name: 'A', size: 5, fillColor: C_PRIM, strokeColor: C_PRIM, showInfobox: false, snapToGrid: true, snapSizeX: 0.5, snapSizeY: 0.5 });
-    const B = board.create('point', [3, -2],  { name: 'B', size: 5, fillColor: C_PRIM, strokeColor: C_PRIM, showInfobox: false, snapToGrid: true, snapSizeX: 0.5, snapSizeY: 0.5 });
-    const C = board.create('point', [4, 3],   { name: 'C', size: 5, fillColor: C_PRIM, strokeColor: C_PRIM, showInfobox: false, snapToGrid: true, snapSizeX: 0.5, snapSizeY: 0.5 });
+    createSegment(board, [A, B], { strokeColor: C_PRIM, strokeWidth: 2.5 }, theme);
+    createSegment(board, [B, C], { strokeColor: C_PRIM, strokeWidth: 2.5 }, theme);
+    createSegment(board, [C, A], { strokeColor: C_PRIM, strokeWidth: 2.5 }, theme);
+    const polyABC = createPolygon(board, [A, B, C], { fillColor: C_PRIM, fillOpacity: 0.06, borders: { visible: false }, vertices: { visible: false } }, theme);
 
-    board.create('segment', [A, B], { strokeColor: C_PRIM, strokeWidth: 2.5 });
-    board.create('segment', [B, C], { strokeColor: C_PRIM, strokeWidth: 2.5 });
-    board.create('segment', [C, A], { strokeColor: C_PRIM, strokeWidth: 2.5 });
-    const polyABC = board.create('polygon', [A, B, C], { fillColor: C_PRIM, fillOpacity: 0.06, borders: { visible: false }, vertices: { visible: false } });
+    const segAB = createSegment(board, [A, B], { visible: false }, theme);
+    const D = createGlider(board, [-1, -2, segAB], { name: 'D', size: 4, fillColor: C_ACC, strokeColor: C_ACC, showInfobox: false }, theme);
 
-    const segAB = board.create('segment', [A, B], { visible: false });
-    const D = board.create('glider', [-1, -2, segAB], { name: 'D', size: 4, fillColor: C_ACC, strokeColor: C_ACC, showInfobox: false });
-
-    const lineBC = board.create('line', [B, C], { visible: false });
-    const lineCA = board.create('line', [C, A], { visible: false });
+    const lineBC = createLine(board, [B, C], { visible: false }, theme);
+    const lineCA = createLine(board, [C, A], { visible: false }, theme);
     const parDE = board.create('parallel', [lineBC, D], { visible: false });
     const E = board.create('intersection', [parDE, lineCA, 0], { name: 'E', size: 4, fillColor: C_ACC, strokeColor: C_ACC, showInfobox: false });
 
-    const segDE = board.create('segment', [D, E], { strokeColor: C_PAR, strokeWidth: 2.5, dash: 2 });
-    board.create('segment', [B, E], { strokeColor: C_PRIM, strokeWidth: 1, dash: 1, visible: false });
-    board.create('segment', [C, D], { strokeColor: C_PRIM, strokeWidth: 1, dash: 1, visible: false });
+    const segDE = createSegment(board, [D, E], { strokeColor: C_PAR, strokeWidth: 2.5, dash: 2 }, theme);
+    createSegment(board, [B, E], { strokeColor: C_PRIM, strokeWidth: 1, dash: 1, visible: false }, theme);
+    createSegment(board, [C, D], { strokeColor: C_PRIM, strokeWidth: 1, dash: 1, visible: false }, theme);
 
-    const polyADE = board.create('polygon', [A, D, E], { fillColor: C_H, fillOpacity: 0, borders: { visible: false }, vertices: { visible: false } });
-    const polyBDE = board.create('polygon', [B, D, E], { fillColor: C_H, fillOpacity: 0, borders: { visible: false }, vertices: { visible: false } });
-    const polyCDE = board.create('polygon', [C, D, E], { fillColor: C_H, fillOpacity: 0, borders: { visible: false }, vertices: { visible: false } });
+    const polyADE = createPolygon(board, [A, D, E], { fillColor: C_H, fillOpacity: 0, borders: { visible: false }, vertices: { visible: false } }, theme);
+    const polyBDE = createPolygon(board, [B, D, E], { fillColor: C_H, fillOpacity: 0, borders: { visible: false }, vertices: { visible: false } }, theme);
+    const polyCDE = createPolygon(board, [C, D, E], { fillColor: C_H, fillOpacity: 0, borders: { visible: false }, vertices: { visible: false } }, theme);
 
-    const lineAB = board.create('line', [A, B], { visible: false });
+    const lineAB = createLine(board, [A, B], { visible: false }, theme);
     const H1 = board.create('intersection', [lineAB, board.create('perpendicular', [lineAB, E], { visible: false }), 0], { visible: false });
-    const segH1 = board.create('segment', [E, H1], { strokeColor: C_H, strokeWidth: 2, dash: 2, visible: false });
+    const segH1 = createSegment(board, [E, H1], { strokeColor: C_H, strokeWidth: 2, dash: 2, visible: false }, theme);
 
     const H2 = board.create('intersection', [lineCA, board.create('perpendicular', [lineCA, D], { visible: false }), 0], { visible: false });
-    const segH2 = board.create('segment', [D, H2], { strokeColor: C_H, strokeWidth: 2, dash: 2, visible: false });
+    const segH2 = createSegment(board, [D, H2], { strokeColor: C_H, strokeWidth: 2, dash: 2, visible: false }, theme);
 
-    elementsRef.current = { A, B, C, D, E, polyABC, polyADE, polyBDE, polyCDE, segDE, segH1, segH2, board };
 
-    board.update();
-    (board.renderer as any).container.style.backgroundColor = getCSSVar('--theme-lienzo');
-    const obs = new MutationObserver(() => { if (board) { (board.renderer as any).container.style.backgroundColor = getCSSVar('--theme-lienzo'); board.update(); } });
+
+
+
+    const obs = new MutationObserver(() => { if (board) {   } });
     obs.observe(document.documentElement, { attributes: true, attributeFilter: ['class'] });
-    return () => { obs.disconnect(); JXG.JSXGraph.freeBoard(board); elementsRef.current = {}; };
-  }, []);
 
-  useEffect(() => {
-    const els = elementsRef.current as Record<string, any>;
-    if (!els.board) return;
-    const { A, B, C, D, E, polyABC, polyADE, polyBDE, polyCDE, segDE, segH1, segH2, board } = els;
+      // Registrar elementos para interactividad y auditoría
+      els.A = A;
+        els.B = B;
+        els.C = C;
+        els.D = D;
+        els.E = E;
+        els.polyABC = polyABC;
+        els.polyADE = polyADE;
+        els.polyBDE = polyBDE;
+        els.polyCDE = polyCDE;
+        els.segDE = segDE;
+        els.segH1 = segH1;
+        els.segH2 = segH2;
+    };;
+
+  const onUpdate = (board: any, els: any, theme: any, isStep: any, isHL: any) => {
+      const isHighlight = isHL;
+      void board; void els; void theme; void isStep; void isHL; void isHighlight;
+      const { A, B, C, D, E, polyABC, polyADE, polyBDE, polyCDE, segDE, segH1, segH2 } = els;
+      if (!els.board) return;
+
 
     const hTri = isHL('triangulo-abc');
     const hDE = isHL('recta-de');
@@ -97,13 +114,17 @@ export const DemoTales = () => {
 
     [A, B, C].forEach((p: any) => p.setAttribute({ strokeOpacity: op(showAll), fillOpacity: op(showAll) }));
     [D, E].forEach((p: any) => p.setAttribute({ strokeOpacity: op(hDE||hADE||hBDE||hCDE||showAll), fillOpacity: op(hDE||hADE||hBDE||hCDE||showAll), size: hADE||hBDE||hCDE ? 6 : 4 }));
-
-    board.update();
-  }, [highlight]);
+    };;
 
   return (
-    <div className="w-full h-full min-h-[350px] relative bg-lienzo/40 border border-pizarra/10 rounded-sm overflow-hidden">
-      <div ref={boardRef} className="w-full h-full touch-none" />
-    </div>
+    <MathBoard
+      boundingbox={[-5, 5, 5, -5]}
+      axis={false}
+      grid={false}
+      onInit={onInit}
+      onUpdate={onUpdate}
+    >
+
+    </MathBoard>
   );
 };

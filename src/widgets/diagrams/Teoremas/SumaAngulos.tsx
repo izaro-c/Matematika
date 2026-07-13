@@ -1,45 +1,39 @@
-import { useRef, useEffect } from 'react';
-import { getCSSVar } from '@/features/graph/ui/MathUtils';
-import JXG from 'jsxgraph';
-import { useMathStore } from '@/app/providers/MathStoreContext';
+import { MathBoard } from '@/shared/diagrams/core/MathBoard';
+import {
+  createPoint, createCircle, createPolygon, createAngle
+} from '@/shared/diagrams/core/MathFactory';
+
+
+
+
 
 export const SumaAngulos = () => {
-  const boardRef = useRef<HTMLDivElement>(null);
-  const elementsRef = useRef<Record<string, unknown>>({});
 
-  const highlight = useMathStore((state) => state.variables['highlight']);
-  const isHighlight = (id: string) => Array.isArray(highlight) ? (highlight as unknown as string[]).includes(id) : highlight === id;
 
-  useEffect(() => {
-    if (!boardRef.current) return;
 
-    if (!boardRef.current.id) boardRef.current.id = "jxgbox_" + Math.random().toString(36).substring(2, 9);
-    const board = JXG.JSXGraph.initBoard(boardRef.current.id, {
-      boundingbox: [-5, 5, 5, -5],
-      axis: false,
-      showCopyright: false,
-      keepaspectratio: true,
-      grid: false,
-    });
 
-    const C_PRIM = getCSSVar('--theme-carbon');
-    const C_ANG  = getCSSVar('--theme-salvia');
-    const C_POL  = getCSSVar('--theme-pavo');
+
+
+  const onInit = (board: any, els: any, theme: any) => {
+      void board; void els; void theme;
+      const C_PRIM = theme.carbon;
+    const C_ANG  = theme.salvia;
+    const C_POL  = theme.pavo;
 
     const SNAP = 0.5;
-    const A = board.create('point', [-2.5, -2], { name: 'A', size: 5, fillColor: C_PRIM, strokeColor: C_PRIM, showInfobox: false, snapToGrid: true, snapSizeX: SNAP, snapSizeY: SNAP });
-    const B = board.create('point', [3, -1.5],  { name: 'B', size: 5, fillColor: C_PRIM, strokeColor: C_PRIM, showInfobox: false, snapToGrid: true, snapSizeX: SNAP, snapSizeY: SNAP });
-    const C = board.create('point', [0, 3],     { name: 'C', size: 5, fillColor: C_PRIM, strokeColor: C_PRIM, showInfobox: false, snapToGrid: true, snapSizeX: SNAP, snapSizeY: SNAP });
+    const A = createPoint(board, [-2.5, -2], { name: 'A', size: 5, fillColor: C_PRIM, strokeColor: C_PRIM, showInfobox: false, snapToGrid: true, snapSizeX: SNAP, snapSizeY: SNAP }, theme);
+    const B = createPoint(board, [3, -1.5], { name: 'B', size: 5, fillColor: C_PRIM, strokeColor: C_PRIM, showInfobox: false, snapToGrid: true, snapSizeX: SNAP, snapSizeY: SNAP }, theme);
+    const C = createPoint(board, [0, 3], { name: 'C', size: 5, fillColor: C_PRIM, strokeColor: C_PRIM, showInfobox: false, snapToGrid: true, snapSizeX: SNAP, snapSizeY: SNAP }, theme);
 
-    const poly = board.create('polygon', [A, B, C], {
+    const poly = createPolygon(board, [A, B, C], {
       fillColor: C_POL, fillOpacity: 0.08,
       borders: { strokeWidth: 2.5, strokeColor: C_PRIM },
       vertices: { visible: false }
-    });
+    }, theme);
 
-    const angleA = board.create('angle', [B, A, C], { name: '&alpha;', radius: 0.9, fillColor: C_ANG, strokeColor: C_ANG, fillOpacity: 0.3, type: 'sector' }) as any;
-    const angleB = board.create('angle', [C, B, A], { name: '&beta;',  radius: 0.9, fillColor: C_ANG, strokeColor: C_ANG, fillOpacity: 0.3, type: 'sector' }) as any;
-    const angleC = board.create('angle', [A, C, B], { name: '&gamma;', radius: 0.9, fillColor: C_ANG, strokeColor: C_ANG, fillOpacity: 0.3, type: 'sector' }) as any;
+    const angleA = createAngle(board, [B, A, C], { name: '&alpha;', radius: 0.9, fillColor: C_ANG, strokeColor: C_ANG, fillOpacity: 0.3, type: 'sector' }, theme) as any;
+    const angleB = createAngle(board, [C, B, A], { name: '&beta;',  radius: 0.9, fillColor: C_ANG, strokeColor: C_ANG, fillOpacity: 0.3, type: 'sector' }, theme) as any;
+    const angleC = createAngle(board, [A, C, B], { name: '&gamma;', radius: 0.9, fillColor: C_ANG, strokeColor: C_ANG, fillOpacity: 0.3, type: 'sector' }, theme) as any;
 
     const infoText = board.create('text', [
       -4.5, 4.5,
@@ -47,10 +41,10 @@ export const SumaAngulos = () => {
         const vA = angleA.Value(), vB = angleB.Value(), vC = angleC.Value();
         const sum = vA + vB + vC;
         const sumDeg = Math.round(sum * 180 / Math.PI);
-        return `<div style="font-family: var(--font-serif); color: ${getCSSVar('--theme-carbon')}; line-height:1.5;">
+        return `<div style="font-family: var(--font-serif); color: ${theme.carbon}; line-height:1.5;">
           <strong style="font-size: 1.15rem;">Suma de &aacute;ngulos</strong><br/>
           &alpha; + &beta; + &gamma; = ${sumDeg}&deg;<br/>
-          <strong style="color:${sumDeg === 180 ? getCSSVar('--theme-musgo') : getCSSVar('--theme-granada')};">
+          <strong style="color:${sumDeg === 180 ? theme.musgo : theme.granada};">
             ${sumDeg === 180 ? '\u2261 180\u00b0' : '\u2260 180\u00b0'}
           </strong>
           <br/><small>(${Math.round(vA*180/Math.PI)}&deg; + ${Math.round(vB*180/Math.PI)}&deg; + ${Math.round(vC*180/Math.PI)}&deg;)</small>
@@ -58,14 +52,14 @@ export const SumaAngulos = () => {
       }
     ], { fixed: true, anchorX: 'left', anchorY: 'top' });
 
-    board.update();
+
 
     const midAB = board.create('midpoint', [A, B], { visible: false });
     const midBC = board.create('midpoint', [B, C], { visible: false });
     const midCA = board.create('midpoint', [C, A], { visible: false });
-    const thalesAB = board.create('circle', [midAB, A], { visible: false });
-    const thalesBC = board.create('circle', [midBC, B], { visible: false });
-    const thalesCA = board.create('circle', [midCA, C], { visible: false });
+    const thalesAB = createCircle(board, [midAB, A], { visible: false }, theme);
+    const thalesBC = createCircle(board, [midBC, B], { visible: false }, theme);
+    const thalesCA = createCircle(board, [midCA, C], { visible: false }, theme);
     C.setAttribute({ attractors: [thalesAB], attractorDistance: 0.3, snatchDistance: 0.5 });
     A.setAttribute({ attractors: [thalesBC], attractorDistance: 0.3, snatchDistance: 0.5 });
     B.setAttribute({ attractors: [thalesCA], attractorDistance: 0.3, snatchDistance: 0.5 });
@@ -87,31 +81,22 @@ export const SumaAngulos = () => {
       });
     });
 
-    elementsRef.current = { A, B, C, poly, angleA, angleB, angleC, infoText, board };
+      // Registrar elementos para interactividad y auditoría
+      els.A = A;
+        els.B = B;
+        els.C = C;
+        els.poly = poly;
+        els.angleA = angleA;
+        els.angleB = angleB;
+        els.angleC = angleC;
+        els.infoText = infoText;
+    };;
 
-    board.update();
-    (board.renderer as any).container.style.backgroundColor = getCSSVar('--theme-lienzo');
-
-    const observer = new MutationObserver(() => {
-      if (board) {
-        (board.renderer as any).container.style.backgroundColor = getCSSVar('--theme-lienzo');
-        board.update();
-      }
-    });
-    observer.observe(document.documentElement, { attributes: true, attributeFilter: ['class'] });
-
-    return () => {
-      observer.disconnect();
-      JXG.JSXGraph.freeBoard(board);
-      elementsRef.current = {};
-    };
-  }, []);
-
-  useEffect(() => {
-    const { A, B, C, poly, angleA, angleB, angleC, board } = elementsRef.current as Record<string, any>;
-    if (!board) return;
-
-    const hAngulos = isHighlight('angulos');
+  const onUpdate = (board: any, els: any, theme: any, isStep: any, isHL: any) => {
+      const isHighlight = isHL;
+      void board; void els; void theme; void isStep; void isHL; void isHighlight;
+      const { A, B, C, poly, angleA, angleB, angleC } = els;
+      const hAngulos = isHighlight('angulos');
     const hTri = isHighlight('triangulo');
     const showAll = !hAngulos && !hTri;
 
@@ -125,16 +110,19 @@ export const SumaAngulos = () => {
     [A, B, C].forEach((p: any) => p.setAttribute({ strokeOpacity: dim(showAll), fillOpacity: dim(showAll) }));
     poly.setAttribute({ fillOpacity: hTri ? 0.2 : 0.08 });
     ((poly as any).borders as any[]).forEach((b: any) => b.setAttribute({ strokeOpacity: dim(showAll) }));
-
-    board.update();
-  }, [highlight, isHighlight]);
+    };;
 
   return (
-    <div className="w-full h-full min-h-[300px] relative bg-lienzo/40 border border-pizarra/10 rounded-sm overflow-hidden">
+    <MathBoard
+      boundingbox={[-5, 5, 5, -5]}
+      axis={false}
+      grid={false}
+      onInit={onInit}
+      onUpdate={onUpdate}
+    >
       <div className="absolute top-2 left-3 z-10 text-xs font-serif italic text-pizarra/50">
         Arrastra los v&eacute;rtices: la suma siempre es 180&deg;
       </div>
-      <div ref={boardRef} className="w-full h-full touch-none" />
-    </div>
+    </MathBoard>
   );
 };
