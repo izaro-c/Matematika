@@ -152,7 +152,7 @@ describe('useEditorCore lossless integration', () => {
     await act(async () => { saved = await result.current.saveCurrentFile(); });
 
     expect(saved).toBe(false);
-    expect(result.current.message).toContain('requieren una aprobación de diff vigente');
+    expect(result.current.message).toContain('requiere una revisión de diff vigente');
   });
 
   it('blocks applying invalid MDX source before persistence', async () => {

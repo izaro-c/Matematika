@@ -133,8 +133,8 @@ describe('Diagram Reducer', () => {
     expect(parsedSynced.status).toBe('synced');
 
     expect(diagramReducer(loadedState, {
-      type: 'PARSE_UNSUPPORTED',
-      diagnostics: [{ code: 'u', severity: 'warning', message: 'unsupported' }],
+      type: 'PARSE_CODE_PREVIEW',
+      diagnostics: [{ code: 'u', severity: 'warning', message: 'code preview' }],
     }).status).toBe('source-authoritative');
     expect(diagramReducer(loadedState, {
       type: 'PARSE_FAILED',
@@ -169,12 +169,12 @@ describe('Diagram Reducer', () => {
     });
     expect(saved.status).toBe('synced');
     expect(saved.expectedVersion).toBe('v2');
-    expect(diagramReducer({ ...loadedState, parseStatus: 'unsupported' }, {
+    expect(diagramReducer({ ...loadedState, parseStatus: 'code-preview' }, {
       type: 'SAVE_SUCCESS',
       source: 'manual saved',
       model: null,
       expectedVersion: 'v3',
-    }).parseStatus).toBe('unsupported');
+    }).parseStatus).toBe('code-preview');
     expect(diagramReducer(loadedState, { type: 'SAVE_FAILURE', error: 'network' }).status)
       .toBe('visual-authoritative');
     expect(diagramReducer(loadedState, { type: 'SAVE_FAILURE', error: 'conflict', isConflict: true }).status)
@@ -205,7 +205,7 @@ describe('Diagram Reducer', () => {
     expect(state.originalSource).toBe(originalManualSource);
   });
 
-  it('keeps unsupported TSX source authoritative instead of syncing a default model', () => {
+  it('keeps code-with-preview TSX source authoritative instead of syncing a partial model', () => {
     const manualSource = [
       "import React from 'react';",
       'export const Bespoke = () => <svg><path d="M0 0 L1 1" /></svg>;',
@@ -217,11 +217,11 @@ describe('Diagram Reducer', () => {
       componentName: 'Bespoke',
       source: manualSource,
       model: null,
-      parseStatus: 'unsupported',
+      parseStatus: 'code-preview',
       diagnostics: [{
-        code: 'unsupported-source',
+        code: 'code-preview',
         severity: 'warning',
-        message: 'No supported visual model could be extracted.',
+        message: 'The complete source is authoritative.',
         source: 'source',
       }],
     });
@@ -229,7 +229,7 @@ describe('Diagram Reducer', () => {
     expect(state.status).toBe('source-authoritative');
     expect(state.currentModel).toBeNull();
     expect(state.currentSource).toBe(manualSource);
-    expect(getDiagramSaveCapability(state)).toEqual({ allowed: false, reason: 'unsupported' });
+    expect(getDiagramSaveCapability(state)).toEqual({ allowed: true });
   });
 
   it('never reuses the previous diagram model when the next source is invalid', () => {

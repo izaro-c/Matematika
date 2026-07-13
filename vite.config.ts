@@ -2,7 +2,6 @@ import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react'
 import tailwindcss from '@tailwindcss/vite'
 import mdx from '@mdx-js/rollup'
-import fs from 'fs'
 import path from 'path'
 import crypto from 'node:crypto'
 import { fileURLToPath } from 'url'
@@ -23,6 +22,7 @@ import {
 import { BackendError, EditorPersistenceBackend } from './scripts/editor/editorPersistenceBackend';
 import { parseDiagramSourceAST } from './scripts/editor/parseDiagramSourceAST';
 import { updateMdxImportsExports } from './scripts/editor/updateDiagramImportsExports';
+import { listEditableCatalogResources } from './scripts/editor/buildEditorResourceCatalog';
 
 /**
  * Plugin personalizado de Vite (`editorAPI`) para Matematika.
@@ -73,19 +73,27 @@ function editorAPI(): Plugin {
       const srcRoot = editorSrcRoot;
       const writeRoots = [
         path.resolve(srcRoot, 'database/content'),
-        path.resolve(srcRoot, 'shared/diagrams'),
         path.resolve(srcRoot, 'widgets/diagrams')
       ];
       const backend = new EditorPersistenceBackend({
         srcRoot,
         storageRoot: editorStorageRoot,
         allowedRoots: writeRoots,
-        readRoots: [...writeRoots, path.resolve(srcRoot, 'shared/templates')],
+        readRoots: writeRoots,
         validateSource(filePath, source) {
           if (filePath.endsWith('.mdx') && parseEditorDocument(source).compatibility === 'unsupported') {
             throw new BackendError(400, { message: 'Invalid MDX source' });
           }
-          if (filePath.endsWith('.tsx') && source.trim().length === 0) throw new BackendError(400, { message: 'Empty TSX source' });
+          if (filePath.endsWith('.tsx')) {
+            if (source.trim().length === 0) throw new BackendError(400, { message: 'Empty TSX source' });
+            const parsed = parseDiagramSourceAST(source);
+            if (parsed.status === 'invalid') {
+              throw new BackendError(400, {
+                message: 'Invalid TSX diagram source',
+                diagnostics: parsed.diagnostics,
+              });
+            }
+          }
         }
       });
 
@@ -184,37 +192,8 @@ function editorAPI(): Plugin {
 
       server.middlewares.use('/api/list-content', (req: IncomingMessage, res: ServerResponse) => {
         if (req.method === 'GET') {
-          const contentDir = path.resolve(srcRoot, 'database', 'content');
-          const componentsDir = path.resolve(srcRoot, 'widgets', 'diagrams');
-          const sharedComponentsDir = path.resolve(srcRoot, 'shared', 'diagrams');
-          const results: { path: string, name: string, type: string, fullPath?: string }[] = [];
-
-          function walk(dir: string, baseType: string, prefix: string) {
-            if (!fs.existsSync(dir)) return;
-            const files = fs.readdirSync(dir);
-            for (const file of files) {
-              const fullPath = path.join(dir, file);
-              const stat = fs.statSync(fullPath);
-              if (stat.isDirectory()) {
-                walk(fullPath, baseType || file, prefix);
-              } else if (file.endsWith('.mdx') || file.endsWith('.tsx')) {
-                const relativePath = path.relative(srcRoot, fullPath);
-                results.push({
-                  path: relativePath, 
-                  name: file,
-                  type: baseType || path.dirname(relativePath).split(path.sep)[1] || prefix,
-                  fullPath
-                });
-              }
-            }
-          }
-
-          walk(contentDir, '', 'content');
-          walk(componentsDir, 'components', 'components');
-          walk(sharedComponentsDir, 'components', 'components');
-
           res.setHeader('Content-Type', 'application/json');
-          res.end(JSON.stringify(results));
+          res.end(JSON.stringify(listEditableCatalogResources(srcRoot)));
           return;
         }
         res.statusCode = 405

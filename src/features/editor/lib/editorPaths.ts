@@ -43,7 +43,7 @@ export function buildDiagramPath(category: string, fileName: string): string {
     .map(segment => normalizeContentId(segment))
     .filter(Boolean)
     .join('/');
-  return `shared/diagrams/${normalizedCategory}/${normalizeContentId(fileName.replace(/\.(tsx|mdx)$/i, ''))}.tsx`;
+  return `widgets/diagrams/${normalizedCategory}/${normalizeContentId(fileName.replace(/\.(tsx|mdx)$/i, ''))}.tsx`;
 }
 
 export function buildDiagramTemplatePath(templateType: string): string {

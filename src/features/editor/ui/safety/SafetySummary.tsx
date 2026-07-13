@@ -39,6 +39,13 @@ export const SafetySummary: React.FC<SafetySummaryProps> = ({
   isDiagramFile,
 }) => {
   const blockedLabels = presentation.blockedActions.map(action => action.label).join(', ');
+  const documentCapability = compatibility === 'fully-editable' || compatibility === 'partially-editable'
+    ? 'visual-exact'
+    : compatibility === 'read-only'
+      ? 'code-preview'
+      : compatibility === 'unsupported'
+        ? 'invalid'
+        : undefined;
   return (
     <section
       className={`border-b px-4 py-3 text-xs ${LEVEL_STYLES[presentation.level]}`}
@@ -59,9 +66,9 @@ export const SafetySummary: React.FC<SafetySummaryProps> = ({
           </div>
           <p className="mt-1 max-w-5xl leading-snug text-carbon/70">{presentation.description}</p>
           <div className="mt-2 flex flex-wrap gap-1.5 font-mono text-[9px] select-none">
-            {compatibility && (
-              <span className="rounded bg-carbon/10 px-1.5 py-0.5 font-semibold text-carbon" title="Compatibilidad del documento">
-                compat:{compatibility}
+            {documentCapability && (
+              <span className="rounded bg-carbon/10 px-1.5 py-0.5 font-semibold text-carbon" title="Capacidad real del documento">
+                capacidad:{documentCapability}
               </span>
             )}
             {persistenceStatus && (

@@ -61,9 +61,9 @@ export const DiagramValidationPanel: React.FC<DiagramValidationPanelProps> = ({
 
         {/* Target snippets list */}
         <div className="p-3 overflow-y-auto space-y-2">
-          <p className="text-[10px] font-bold uppercase tracking-widest text-carbon/35">Targets MDX Enlazables</p>
+          <p className="text-[10px] font-bold uppercase tracking-widest text-carbon/35">Elementos enlazables desde MDX</p>
           {targets.length === 0 ? (
-            <p className="text-xs italic text-carbon/50">Marque puntos o elementos como 'Target MDX' para verlos aquí.</p>
+            <p className="text-xs italic text-carbon/50">Marque puntos o elementos como enlazables desde MDX para verlos aquí.</p>
           ) : (
             <div className="space-y-1.5">
               {targets.map(target => {

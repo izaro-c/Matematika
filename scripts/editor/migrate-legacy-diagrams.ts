@@ -111,7 +111,7 @@ walk(DIAGRAMS_DIR, (filePath) => {
   }
 
   const result = parseDiagramSourceAST(content);
-  if (result.status === 'supported') {
+  if (result.status === 'visual-exact') {
     return; // Already compatible
   }
 

@@ -89,6 +89,7 @@ interface TrackedVisualOperation {
 
 export const useEditorCore = () => {
   const [files, setFiles] = useState<FileNode[]>([]);
+  const [filesLoading, setFilesLoading] = useState(true);
   const [editorMode, setEditorMode] = useState<EditorMode>('code');
   const [metadata] = useState<Record<string, unknown>>({});
   const [imports, setImportsView] = useState('');
@@ -168,8 +169,10 @@ export const useEditorCore = () => {
   }, [doc, isDiagramSource]);
 
   const loadFileList = useCallback(async () => {
+    setFilesLoading(true);
     try { setFiles(await editorApiClient.listContent() as FileNode[]); }
     catch (error) { console.error('Error cargando lista de archivos:', error); }
+    finally { setFilesLoading(false); }
   }, []);
 
   const syncProjection = useCallback((nextDoc: EditorDocument) => {
@@ -347,7 +350,7 @@ export const useEditorCore = () => {
       const candidateDoc = parseEditorDocument(captured.source);
       if (candidateDoc.compatibility === 'partially-editable' && !hasValidPartialApproval(approval, captured)) {
         dispatch({ type: 'VALIDATION_FAILED', file: captured.file, localRevision: captured.localRevision, reason: 'Diff approval required' });
-        setMessage('No se puede aplicar: los documentos parcialmente editables requieren una aprobación de diff vigente.');
+        setMessage('No se puede aplicar: la edición visual exacta por rangos requiere una revisión de diff vigente.');
         return false;
       }
     }
@@ -385,7 +388,7 @@ export const useEditorCore = () => {
   }, [coordinator, editorSessionId]);
 
   return {
-    files, loading, currentFile, editorMode, metadata, imports, exports, blocks, rawBody,
+    files, filesLoading, loading, currentFile, editorMode, metadata, imports, exports, blocks, rawBody,
     baseSource, localRevision: persistence.localRevision, baseVersion: persistence.version,
     saving, dirtyState, validation, message, persistenceStatus: persistence.status,
     persistenceLabel: persistenceStatusLabel(persistence.status),

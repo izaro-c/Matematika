@@ -1,7 +1,8 @@
-import { act, fireEvent, render, screen, waitFor } from '@testing-library/react';
+import { fireEvent, render, screen, waitFor } from '@testing-library/react';
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 import { DiagramWorkbench } from '../../../../src/features/editor/ui/diagrams/DiagramWorkbench';
 import { createTemplateModel } from '../../../../src/features/editor/diagrams/model/commands';
+import { generateDiagramSource } from '../../../../src/features/editor/diagrams/source/generator';
 
 const repositoryMocks = vi.hoisted(() => ({
   readDiagram: vi.fn(),
@@ -53,12 +54,9 @@ describe('DiagramWorkbench authority adapters', () => {
       />
     );
 
-    await waitFor(() => expect(screen.getByText(/Inline Diagram/)).toBeTruthy());
+    await waitFor(() => expect(screen.getByText(/sync:source-authoritative/)).toBeTruthy());
     expect(readDiagram).not.toHaveBeenCalled();
-
-    await act(async () => {
-      fireEvent.click(screen.getByRole('button', { name: 'Código TSX' }));
-    });
+    expect(screen.queryByText('Añadir rápido')).toBeNull();
 
     const sourceEditor = screen.getByRole('textbox') as HTMLTextAreaElement;
     expect(sourceEditor.value).toBe(initialSource);
@@ -92,7 +90,7 @@ describe('DiagramWorkbench authority adapters', () => {
     readDiagram.mockResolvedValueOnce({
       source: persistedSource,
       model: null,
-      parseStatus: 'unsupported',
+      parseStatus: 'code-preview',
       diagnostics: [],
       version: 'repo-version',
     });
@@ -131,5 +129,45 @@ describe('DiagramWorkbench authority adapters', () => {
     await waitFor(() => expect(screen.getByText(/Diagrama interactivo/)).toBeTruthy());
     expect(screen.getByText(/sync:visual-authoritative/)).toBeTruthy();
     expect(screen.getByText('Añadir rápido')).toBeTruthy();
+  });
+
+  it('does not lose axis, grid, note, mode or category when opening the raw visual model', async () => {
+    const model = {
+      ...createTemplateModel('circunferencia', 'Campos completos', 'definicion'),
+      axis: true,
+      grid: true,
+      note: 'Overlay conservado',
+      mode: 'diagram' as const,
+      category: 'Models',
+    };
+    const generated = generateDiagramSource(model, 'CamposCompletos');
+    expect(generated.ok).toBe(true);
+    if (!generated.ok) return;
+    readDiagram.mockResolvedValueOnce({
+      source: generated.source,
+      model,
+      parseStatus: 'visual-exact',
+      diagnostics: [],
+      version: 'v1',
+    });
+
+    render(
+      <DiagramWorkbench
+        isOpen
+        mode={{ kind: 'file', path: 'widgets/diagrams/Models/CamposCompletos.tsx' }}
+        metadataType="definicion"
+        onClose={vi.fn()}
+        onConfirm={vi.fn()}
+      />
+    );
+
+    await waitFor(() => expect(screen.getByText(/Campos completos/)).toBeTruthy());
+    expect((screen.getByLabelText('Cuadrícula') as HTMLInputElement).checked).toBe(true);
+    expect((screen.getByLabelText('Ejes') as HTMLInputElement).checked).toBe(true);
+    fireEvent.click(screen.getByRole('button', { name: 'Código TSX' }));
+    const source = (screen.getByRole('textbox') as HTMLTextAreaElement).value;
+    expect(source).toContain('Overlay conservado');
+    expect(source).toContain('"mode": "diagram"');
+    expect(source).toContain('"category": "Models"');
   });
 });

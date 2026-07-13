@@ -248,7 +248,7 @@ function validateBlocks(blocks: Block[]): EditorValidationIssue[] {
       issues.push(issue(`block-${block.id}-visual-language`, 'warning', 'block', 'Revisa el tono: evita "claramente", "se ve" o argumentos visuales.', block.id));
     }
     if (block.type === 'diagram' && block.content === 'InteractiveGeometryCanvas') {
-      issues.push(issue(`diagram-${block.id}-legacy-canvas`, 'error', 'diagram', 'Este diagrama usa el canvas legacy; crea un diagrama canónico en src/shared/diagrams.', block.id));
+      issues.push(issue(`diagram-${block.id}-retired-canvas`, 'error', 'diagram', 'InteractiveGeometryCanvas fue retirado por no tener consumidores válidos. Enlaza un diagrama final de src/widgets/diagrams/.', block.id));
     }
     if (block.type === 'diagram' && block.metadata?.visualModel) {
       issues.push(...validateVisualDiagramModel(block.metadata.visualModel, block.id));

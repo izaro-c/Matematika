@@ -138,20 +138,21 @@ describe('useDiagramState safety policy', () => {
     expect(saveDiagram).not.toHaveBeenCalled();
   });
 
-  it('blocks unsupported source without creating an editable fallback model', async () => {
+  it('saves valid manual code without creating or regenerating an editable fallback model', async () => {
     const model = createTemplateModel('circunferencia', 'Unsupported', 'definicion');
     const manualSource = 'export const Unsupported = () => <svg><path d="M0 0 L1 1" /></svg>;\n';
     readDiagram.mockResolvedValueOnce({ source: 'original', model, version: 'v1' });
     vi.mocked(fetch).mockResolvedValueOnce(parseResponse({
-      status: 'unsupported',
+      status: 'code-preview',
       diagnostics: [{
-        code: 'unsupported-source',
+        code: 'code-preview',
         severity: 'warning',
-        message: 'No visual model could be extracted.',
+        message: 'The complete source is authoritative.',
         source: 'source',
       }],
     }));
     const { result } = renderHook(() => useDiagramState());
+    saveDiagram.mockResolvedValueOnce({ version: 'v2', backupId: 'backup-code' });
 
     await act(async () => result.current.loadDiagram('src/shared/diagrams/Unsupported.tsx', 'Unsupported'));
     act(() => result.current.handleSourceEdit(manualSource));
@@ -170,8 +171,12 @@ describe('useDiagramState safety policy', () => {
       saved = await result.current.saveDiagram();
     });
 
-    expect(saved).toBe(false);
-    expect(saveDiagram).not.toHaveBeenCalled();
+    expect(saved).toBe(true);
+    expect(saveDiagram).toHaveBeenCalledWith(
+      'src/shared/diagrams/Unsupported.tsx',
+      manualSource,
+      'v1',
+    );
   });
 
   it('blocks save when the file revision is stale or missing', async () => {
@@ -229,7 +234,7 @@ describe('useDiagramState safety policy', () => {
 
     await act(async () => result.current.loadDiagram('src/shared/diagrams/Missing.tsx', 'Missing'));
 
-    expect(result.current.state.status).toBe('visual-authoritative');
+    expect(result.current.state.status).toBe('invalid-source');
     expect(result.current.state.currentModel).toBeNull();
     expect(result.current.state.diagnostics.at(-1)).toMatchObject({
       code: 'save-error',
@@ -242,7 +247,7 @@ describe('useDiagramState safety policy', () => {
     readDiagram.mockResolvedValueOnce({ source: 'original', model, version: 'v1' });
     vi.mocked(fetch)
       .mockResolvedValueOnce(parseResponse({
-        status: 'supported',
+        status: 'visual-exact',
         model: { ...model, title: 'Parsed from source' },
         diagnostics: [{ code: 'supported', severity: 'info', message: 'ok' }],
       }));
@@ -291,7 +296,7 @@ describe('useDiagramState safety policy', () => {
     const model = createTemplateModel('circunferencia', 'Source', 'definicion');
     readDiagram.mockResolvedValueOnce({ source: 'original', model, version: 'v1' });
     vi.mocked(fetch).mockResolvedValueOnce(parseResponse({
-      status: 'supported',
+      status: 'visual-exact',
       model: { ...model, title: 'Source parsed' },
       diagnostics: [],
     }));

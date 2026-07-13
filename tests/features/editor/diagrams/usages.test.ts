@@ -65,7 +65,15 @@ describe('Diagram Usages Index', () => {
     };
     const contentRepository = { read: vi.fn() };
     const { result } = renderHook(() => useDiagramUsages('Demo', [
-      { name: 'demo.mdx', path: 'src/database/content/demo.mdx', type: 'file' },
+      {
+        name: 'demo.mdx',
+        path: 'src/database/content/demo.mdx',
+        type: 'file',
+        kind: 'mdx-document',
+        capability: 'code-preview',
+        capabilityLabel: 'Edición de código con vista previa',
+        reason: 'fixture',
+      },
     ], repository));
 
     expect(repository.getUsages).toHaveBeenCalledWith('Demo');

@@ -48,40 +48,37 @@ describe('DiagramRepository', () => {
 
     const result = await new DiagramRepository().readDiagram('src/shared/diagrams/Local.tsx');
 
-    expect(result).toMatchObject({ version: 'v1', parseStatus: 'parsed', diagnostics: [] });
+    expect(result).toMatchObject({ version: 'v1', parseStatus: 'visual-exact', diagnostics: [] });
     expect(result.model?.title).toBe('Repository Local');
     expect(parseDiagramSourceOnServer).not.toHaveBeenCalled();
   });
 
-  it('uses server parsing for supported manual sources', async () => {
+  it('keeps valid manual sources in code-with-preview mode without an editable partial model', async () => {
     const model = createTemplateModel('circunferencia', 'Repository Server', 'definicion');
     readContent.mockResolvedValueOnce({ source: 'manual source', version: 'v2' });
     parseDiagramSourceOnServer.mockResolvedValueOnce({
-      status: 'supported',
-      model,
+      status: 'code-preview',
+      previewModel: model,
       diagnostics: [{ code: 'partial', severity: 'warning', message: 'Recovered.' }],
     });
 
     const result = await new DiagramRepository().readDiagram('src/shared/diagrams/Server.tsx');
 
-    expect(result.parseStatus).toBe('parsed');
-    expect(result.model).toBe(model);
+    expect(result.parseStatus).toBe('code-preview');
+    expect(result.model).toBeNull();
     expect(result.diagnostics).toHaveLength(1);
   });
 
-  it.each([
-    ['invalid', 'invalid'],
-    ['unsupported', 'unsupported'],
-  ] as const)('preserves source authority for %s server parse result', async (serverStatus, parseStatus) => {
+  it('preserves source authority for an invalid server parse result', async () => {
     readContent.mockResolvedValueOnce({ source: 'manual source', version: 'v3' });
     parseDiagramSourceOnServer.mockResolvedValueOnce({
-      status: serverStatus,
-      diagnostics: [{ code: serverStatus, severity: 'error', message: serverStatus }],
+      status: 'invalid',
+      diagnostics: [{ code: 'invalid', severity: 'error', message: 'invalid' }],
     });
 
     const result = await new DiagramRepository().readDiagram('src/shared/diagrams/Manual.tsx');
 
-    expect(result).toMatchObject({ source: 'manual source', version: 'v3', model: null, parseStatus });
+    expect(result).toMatchObject({ source: 'manual source', version: 'v3', model: null, parseStatus: 'invalid' });
   });
 
   it('saves a diagram through the content API with a source hash and version', async () => {

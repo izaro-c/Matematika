@@ -1,0 +1,91 @@
+import fs from 'node:fs';
+import os from 'node:os';
+import path from 'node:path';
+import { afterEach, describe, expect, it } from 'vitest';
+import {
+  buildEditorResourceCatalog,
+  listEditableCatalogResources,
+} from '../../../../scripts/editor/buildEditorResourceCatalog';
+import { createTemplateModel } from '../../../../src/features/editor/diagrams/model/commands';
+import { generateDiagramSource } from '../../../../src/features/editor/diagrams/source/generator';
+
+const roots: string[] = [];
+
+function fixtureRoot(): string {
+  const root = fs.mkdtempSync(path.join(os.tmpdir(), 'matematika-editor-catalog-'));
+  roots.push(root);
+  return root;
+}
+
+function write(root: string, relativePath: string, source: string): void {
+  const target = path.join(root, relativePath);
+  fs.mkdirSync(path.dirname(target), { recursive: true });
+  fs.writeFileSync(target, source, 'utf8');
+}
+
+afterEach(() => {
+  for (const root of roots.splice(0)) fs.rmSync(root, { recursive: true, force: true });
+});
+
+describe('catálogo seguro del editor', () => {
+  it('clasifica las cuatro capacidades y excluye infraestructura de la lista editable', () => {
+    const srcRoot = fixtureRoot();
+    write(srcRoot, 'database/content/definitions/punto.mdx', '## Punto\n\nTexto editable.\n');
+
+    const exactModel = createTemplateModel('circunferencia', 'Exacto', 'definicion');
+    const exact = generateDiagramSource(exactModel, 'Exacto');
+    expect(exact.ok).toBe(true);
+    if (!exact.ok) return;
+    write(srcRoot, 'widgets/diagrams/Definiciones/Exacto.tsx', exact.source);
+    write(srcRoot, 'widgets/diagrams/Teoremas/CurvaManual.tsx', `
+      const expression = (x: number) => Math.sin(x);
+      const steps = [{ id: 'paso-1', expression }];
+      export const CurvaManual = () => (
+        <section data-overlay="manual">
+          <svg><path d="M0 0 C1 2 2 1 3 3" /></svg>
+          <output>{steps[0].expression(1)}</output>
+        </section>
+      );
+    `);
+    write(srcRoot, 'widgets/diagrams/Teoremas/Invalido.tsx', 'export const Invalido = () => <svg>');
+    write(srcRoot, 'widgets/diagrams/index.ts', 'export {};');
+    write(srcRoot, 'shared/diagrams/core/MathBoard.tsx', 'export const MathBoard = () => null;');
+    write(srcRoot, 'shared/diagrams/core/MathFactory.ts', 'export const createPoint = () => null;');
+    write(srcRoot, 'shared/diagrams/core/MathUtils.ts', 'export const utility = true;');
+    write(srcRoot, 'shared/diagrams/InteractiveGeometryCanvas.tsx', 'export const InteractiveGeometryCanvas = () => null;');
+    write(srcRoot, 'shared/templates/diagrams/base.template.tsx', 'export const Template = () => null;');
+
+    const catalog = buildEditorResourceCatalog({ srcRoot });
+    const byName = new Map(catalog.map(item => [item.name, item]));
+    expect(byName.get('punto.mdx')).toMatchObject({ kind: 'mdx-document', capability: 'visual-exact' });
+    expect(byName.get('Exacto.tsx')).toMatchObject({ kind: 'diagram', capability: 'visual-exact' });
+    expect(byName.get('CurvaManual.tsx')).toMatchObject({ kind: 'diagram', capability: 'code-preview' });
+    expect(byName.get('Invalido.tsx')).toMatchObject({ kind: 'diagram', capability: 'invalid' });
+    for (const name of ['index.ts', 'MathBoard.tsx', 'MathFactory.ts', 'MathUtils.ts', 'InteractiveGeometryCanvas.tsx', 'base.template.tsx']) {
+      expect(byName.get(name)).toMatchObject({ kind: 'internal', capability: 'internal' });
+    }
+
+    const editable = listEditableCatalogResources(srcRoot);
+    expect(editable.map(item => item.name)).toEqual([
+      'punto.mdx',
+      'Exacto.tsx',
+      'CurvaManual.tsx',
+      'Invalido.tsx',
+    ]);
+    expect(editable.every(item => item.path.startsWith('database/content/') || item.path.startsWith('widgets/diagrams/'))).toBe(true);
+  });
+
+  it('expone en el repositorio real solo documentos MDX y diagramas finales', () => {
+    const srcRoot = path.join(process.cwd(), 'src');
+    const editable = listEditableCatalogResources(srcRoot);
+    const documents = editable.filter(item => item.kind === 'mdx-document');
+    const diagrams = editable.filter(item => item.kind === 'diagram');
+
+    expect(documents).toHaveLength(120);
+    expect(documents.every(item => item.path.startsWith('database/content/') && item.path.endsWith('.mdx'))).toBe(true);
+    expect(diagrams).toHaveLength(85);
+    expect(diagrams.every(item => item.path.startsWith('widgets/diagrams/') && item.path.endsWith('.tsx'))).toBe(true);
+    expect(diagrams.every(item => item.capability === 'code-preview')).toBe(true);
+    expect(editable.some(item => ['MathBoard.tsx', 'MathFactory.ts', 'MathUtils.ts', 'InteractiveGeometryCanvas.tsx'].includes(item.name))).toBe(false);
+  });
+});

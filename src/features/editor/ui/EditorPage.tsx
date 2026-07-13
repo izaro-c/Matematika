@@ -56,6 +56,7 @@ function findDiagramFile(files: FileNode[], componentName: string, importSource?
 export const EditorPage: React.FC = () => {
   const {
     files,
+    filesLoading,
     loading,
     currentFile,
     editorMode,
@@ -166,6 +167,7 @@ export const EditorPage: React.FC = () => {
   }, [loadFileList]);
 
   const isDiagramFile = currentFile?.endsWith('.tsx') ?? false;
+  const currentResource = files.find(file => file.path === currentFile);
   const diagramUsageLookup = useDiagramUsages(isDiagramFile ? currentFile : null, files);
 
   const handleMetadataChange = (key: string, value: any) => {
@@ -652,7 +654,7 @@ export const EditorPage: React.FC = () => {
           <div className="flex-1 overflow-y-auto p-8">
             {compatibility === 'unsupported' && !isDiagramFile && (
               <div className="mx-auto mb-4 max-w-3xl rounded border border-terracota/30 bg-terracota/5 p-3 text-xs text-carbon shadow-sm">
-                <span className="font-bold text-terracota">❌ Modo Visual no Disponible:</span> Este archivo contiene sintaxis compleja o expresiones matemáticas con llaves <code>{`{}`}</code> que impiden el parseo seguro en modo visual.
+                <span className="font-bold text-terracota">Recurso MDX inválido:</span> El análisis sintáctico no puede representar este documento con seguridad. El código original se conserva y el guardado queda bloqueado hasta corregirlo.
                 {compatibilityReasons.length > 0 && (
                   <div className="mt-1 font-mono text-[10px] text-carbon/70">
                     {compatibilityReasons.join(' ')}
@@ -675,6 +677,7 @@ export const EditorPage: React.FC = () => {
           <MetadataPanel
             metadata={metadata}
             canEditVisualMetadata={canEditVisualMetadata}
+            canMutateVisualStructure={canMutateVisualStructure}
             handleMetadataChange={handleMetadataChange}
             handleRemoveMetadataField={handleRemoveMetadataField}
             handleAddCustomMetadataField={handleAddCustomMetadataField}
@@ -699,6 +702,7 @@ export const EditorPage: React.FC = () => {
             setActiveDiagramBlockId={setActiveDiagramBlockId}
             setActiveDiagramIndex={setActiveDiagramIndex}
             setDiagramBuilderOpen={setDiagramBuilderOpen}
+            capability={currentResource?.capability}
           />
         )}
       </>
@@ -731,6 +735,7 @@ export const EditorPage: React.FC = () => {
         isSidebarOpen ? (
           <EditorNavigation
             files={files}
+            isLoading={filesLoading}
             currentFile={currentFile}
             openFile={openFileSafely}
             setIsSidebarOpen={setIsSidebarOpen}

@@ -1,7 +1,7 @@
 import { editorApiClient } from '../../persistence/editorApiClient';
 import { hashSource } from '../../persistence/revision';
 import type { VisualDiagramModel } from '../model/types';
-import { parseDiagramSourceLocally, parseDiagramSourceOnServer } from '../source/parser';
+import { classifyEmbeddedDiagramSource, parseDiagramSourceOnServer } from '../source/parser';
 import type { DiagramDiagnostic } from '../source/generator';
 import type { DiagramParseStatus } from '../state/types';
 
@@ -16,26 +16,36 @@ export interface ReadDiagramResult {
 export class DiagramRepository {
   async readDiagram(filePath: string, signal?: AbortSignal): Promise<ReadDiagramResult> {
     const response = await editorApiClient.readContent({ path: filePath }, signal);
-    const localModel = parseDiagramSourceLocally(response.source);
+    const localClassification = classifyEmbeddedDiagramSource(response.source);
     
-    if (localModel) {
+    if (localClassification?.status === 'visual-exact') {
       return {
         source: response.source,
-        model: localModel,
+        model: localClassification.model,
         version: response.version,
-        parseStatus: 'parsed',
+        parseStatus: 'visual-exact',
         diagnostics: [],
       };
     }
 
     // Fallback to server AST parsing
     const serverResult = await parseDiagramSourceOnServer(response.source, signal);
-    if ((serverResult.status === 'supported' || serverResult.status === 'partially-supported') && serverResult.model) {
+    if (serverResult.status === 'visual-exact') {
       return {
         source: response.source,
         model: serverResult.model,
         version: response.version,
-        parseStatus: 'parsed',
+        parseStatus: 'visual-exact',
+        diagnostics: serverResult.diagnostics,
+      };
+    }
+
+    if (serverResult.status === 'code-preview') {
+      return {
+        source: response.source,
+        version: response.version,
+        model: null,
+        parseStatus: 'code-preview',
         diagnostics: serverResult.diagnostics,
       };
     }
@@ -44,7 +54,7 @@ export class DiagramRepository {
       source: response.source,
       version: response.version,
       model: null,
-      parseStatus: serverResult.status === 'invalid' ? 'invalid' : 'unsupported',
+      parseStatus: 'invalid',
       diagnostics: serverResult.diagnostics,
     };
   }

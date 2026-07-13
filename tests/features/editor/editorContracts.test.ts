@@ -53,12 +53,16 @@ describe('editor identity and path contracts', () => {
       'database/content/theorems/angulo-recto-ii.mdx',
     );
     expect(buildDiagramPath('Definiciones', 'Triángulo.tsx')).toBe(
-      'shared/diagrams/definiciones/triangulo.tsx',
+      'widgets/diagrams/definiciones/triangulo.tsx',
     );
     expect(getInternalLinkUrl({
       path: 'database/content/theorems/Ángulo Recto.mdx',
       name: 'Ángulo Recto.mdx',
       type: 'theorems',
+      kind: 'mdx-document',
+      capability: 'visual-exact',
+      capabilityLabel: 'Edición visual exacta',
+      reason: 'fixture',
     })).toBe('/teorema/angulo-recto');
   });
 
@@ -151,16 +155,20 @@ describe('editor metadata and import contracts', () => {
       currentFile: 'database/content/theorems/teorema-tales.mdx',
       files: [
         {
-          path: 'shared/diagrams/Teoremas/DemoTales.tsx',
+          path: 'widgets/diagrams/Teoremas/DemoTales.tsx',
           name: 'DemoTales.tsx',
-          type: 'components',
+          type: 'diagram-teoremas',
+          kind: 'diagram',
+          capability: 'code-preview',
+          capabilityLabel: 'Edición de código con vista previa',
+          reason: 'fixture',
         },
       ],
     });
 
     expect(result.added).toBe(1);
     expect(result.imports).toContain(
-      "import { DemoTales } from '../../../shared/diagrams/Teoremas/DemoTales';",
+      "import { DemoTales } from '../../../widgets/diagrams/Teoremas/DemoTales';",
     );
     expect(result.imports.match(/DemoTales/g)).toHaveLength(2);
   });

@@ -141,19 +141,13 @@ export const DiagramWorkbenchCore: React.FC<DiagramWorkbenchCoreProps> = ({
 
   if (!isOpen) return null;
 
-  const rawModel = state.currentModel;
-  const model: VisualDiagramModel | null = rawModel ? {
-    title: rawModel.title || 'Diagrama',
-    points: rawModel.points || [],
-    elements: rawModel.elements || [],
-    sliders: rawModel.sliders || [],
-    steps: rawModel.steps || [],
-    category: rawModel.category || 'geogebra',
-    mode: rawModel.mode || 'standard',
-    boundingBox: rawModel.boundingBox || [-4, 4, 4, -4],
-  } as VisualDiagramModel : null;
+  const model: VisualDiagramModel | null = state.currentModel;
   const componentName = state.componentName || 'DiagramaInteractivo';
   const saveCapability = getDiagramSaveCapability(state);
+
+  const saveCodeOnlyDiagram = () => {
+    if (isFileMode) void saveDiagram();
+  };
 
   if (!model) {
     if (state.currentSource || state.diagnostics.length > 0) {
@@ -161,7 +155,7 @@ export const DiagramWorkbenchCore: React.FC<DiagramWorkbenchCoreProps> = ({
         <div className="fixed inset-0 z-50 flex flex-col bg-lienzo text-carbon font-sans">
           <header className="flex items-center justify-between border-b border-carbon/15 px-4 py-3 bg-carbon/5">
             <div>
-              <h2 className="text-sm font-bold text-carbon">Workbench de Diagramas: fuente TSX</h2>
+              <h2 className="text-sm font-bold text-carbon">Editor de diagramas: código TSX</h2>
               <p className="text-[11px] text-carbon/55 font-mono">{state.filePath}</p>
             </div>
             <button
@@ -173,9 +167,10 @@ export const DiagramWorkbenchCore: React.FC<DiagramWorkbenchCoreProps> = ({
           </header>
           <DiagramCodePanel
             source={state.currentSource}
-            sourceTouched
+            sourceTouched={isDirty}
+            filePath={state.filePath}
+            componentName={componentName}
             onSourceChange={handleSourceEdit}
-            onRegenerate={() => {}}
           />
           <DiagramValidationPanel
             diagnostics={state.diagnostics}
@@ -187,7 +182,7 @@ export const DiagramWorkbenchCore: React.FC<DiagramWorkbenchCoreProps> = ({
             status={state.status}
             isDirty={isDirty}
             saveCapability={isFileMode ? saveCapability : undefined}
-            onSave={() => {}}
+            onSave={saveCodeOnlyDiagram}
           />
         </div>
       );
@@ -195,7 +190,7 @@ export const DiagramWorkbenchCore: React.FC<DiagramWorkbenchCoreProps> = ({
     return (
       <div className="fixed inset-0 z-50 flex items-center justify-center bg-carbon/40 backdrop-blur-sm">
         <div className="rounded bg-lienzo p-6 shadow-xl max-w-sm w-full text-center">
-          <p className="text-sm font-bold text-carbon">Cargando Workbench de diagramas...</p>
+          <p className="text-sm font-bold text-carbon">Cargando el editor de diagramas…</p>
         </div>
       </div>
     );
@@ -321,7 +316,7 @@ export const DiagramWorkbenchCore: React.FC<DiagramWorkbenchCoreProps> = ({
       {/* Header */}
       <header className="flex items-center justify-between border-b border-carbon/15 px-4 py-3 bg-carbon/5">
         <div>
-          <h2 className="text-sm font-bold text-carbon">Workbench de Diagramas: {model.title}</h2>
+          <h2 className="text-sm font-bold text-carbon">Editor visual exacto: {model.title}</h2>
           <p className="text-[11px] text-carbon/55 font-mono">{state.filePath}</p>
         </div>
 
@@ -331,7 +326,7 @@ export const DiagramWorkbenchCore: React.FC<DiagramWorkbenchCoreProps> = ({
               onClick={() => setTab('visual')}
               className={`rounded px-3 py-1 text-xs font-bold transition-all ${tab === 'visual' ? 'bg-carbon text-lienzo' : 'text-carbon/60 hover:bg-carbon/5'}`}
             >
-              Visual
+              Modelo visual
             </button>
             <button
               onClick={() => setTab('source')}
@@ -357,14 +352,14 @@ export const DiagramWorkbenchCore: React.FC<DiagramWorkbenchCoreProps> = ({
             <div className="rounded border border-carbon/10 bg-lienzo p-3">
               <p className="text-[10px] font-bold uppercase tracking-widest text-carbon/45 border-b border-carbon/10 pb-1 mb-2">Añadir rápido</p>
               <div className="grid grid-cols-2 gap-1.5">
-                <button onClick={handleAddPoint} className="rounded border border-carbon/15 bg-lienzo py-1.5 text-xs font-bold text-carbon hover:bg-carbon/5">Point</button>
-                <button onClick={() => handleAddElement('segment')} disabled={model.points.length < 2} className="rounded border border-carbon/15 bg-lienzo py-1.5 text-xs font-bold text-carbon hover:bg-carbon/5 disabled:opacity-40">Segment</button>
-                <button onClick={() => handleAddElement('line')} disabled={model.points.length < 2} className="rounded border border-carbon/15 bg-lienzo py-1.5 text-xs font-bold text-carbon hover:bg-carbon/5 disabled:opacity-40">Line</button>
-                <button onClick={() => handleAddElement('circle')} disabled={model.points.length < 2} className="rounded border border-carbon/15 bg-lienzo py-1.5 text-xs font-bold text-carbon hover:bg-carbon/5 disabled:opacity-40">Circle</button>
-                <button onClick={() => handleAddElement('polygon')} disabled={model.points.length < 3} className="rounded border border-carbon/15 bg-lienzo py-1.5 text-xs font-bold text-carbon hover:bg-carbon/5 disabled:opacity-40">Polygon</button>
-                <button onClick={handleAddGliderPoint} disabled={supportElements(model).length < 1} className="rounded border border-carbon/15 bg-lienzo py-1.5 text-xs font-bold text-carbon hover:bg-carbon/5 disabled:opacity-40">Glider</button>
-                <button onClick={handleAddSlider} className="rounded border border-carbon/15 bg-lienzo py-1.5 text-xs font-bold text-carbon hover:bg-carbon/5">Slider</button>
-                <button onClick={handleAddStep} className="rounded border border-carbon/15 bg-lienzo py-1.5 text-xs font-bold text-carbon hover:bg-carbon/5">Step</button>
+                <button onClick={handleAddPoint} className="rounded border border-carbon/15 bg-lienzo py-1.5 text-xs font-bold text-carbon hover:bg-carbon/5">Punto</button>
+                <button onClick={() => handleAddElement('segment')} disabled={model.points.length < 2} className="rounded border border-carbon/15 bg-lienzo py-1.5 text-xs font-bold text-carbon hover:bg-carbon/5 disabled:opacity-40">Segmento</button>
+                <button onClick={() => handleAddElement('line')} disabled={model.points.length < 2} className="rounded border border-carbon/15 bg-lienzo py-1.5 text-xs font-bold text-carbon hover:bg-carbon/5 disabled:opacity-40">Recta</button>
+                <button onClick={() => handleAddElement('circle')} disabled={model.points.length < 2} className="rounded border border-carbon/15 bg-lienzo py-1.5 text-xs font-bold text-carbon hover:bg-carbon/5 disabled:opacity-40">Circunferencia</button>
+                <button onClick={() => handleAddElement('polygon')} disabled={model.points.length < 3} className="rounded border border-carbon/15 bg-lienzo py-1.5 text-xs font-bold text-carbon hover:bg-carbon/5 disabled:opacity-40">Polígono</button>
+                <button onClick={handleAddGliderPoint} disabled={supportElements(model).length < 1} className="rounded border border-carbon/15 bg-lienzo py-1.5 text-xs font-bold text-carbon hover:bg-carbon/5 disabled:opacity-40">Punto sobre objeto</button>
+                <button onClick={handleAddSlider} className="rounded border border-carbon/15 bg-lienzo py-1.5 text-xs font-bold text-carbon hover:bg-carbon/5">Control</button>
+                <button onClick={handleAddStep} className="rounded border border-carbon/15 bg-lienzo py-1.5 text-xs font-bold text-carbon hover:bg-carbon/5">Paso</button>
               </div>
             </div>
 
@@ -411,9 +406,9 @@ export const DiagramWorkbenchCore: React.FC<DiagramWorkbenchCoreProps> = ({
 
             {/* Preview controls */}
             <div className="rounded border border-carbon/10 bg-lienzo p-3 space-y-2">
-              <p className="text-[10px] font-bold uppercase tracking-widest text-carbon/45 border-b border-carbon/10 pb-1 mb-2">Visualización de Preview</p>
+              <p className="text-[10px] font-bold uppercase tracking-widest text-carbon/45 border-b border-carbon/10 pb-1 mb-2">Estado de la vista previa</p>
               <div>
-                <label className="block text-[10px] font-bold text-carbon mb-1">Highlight Target</label>
+                <label className="block text-[10px] font-bold text-carbon mb-1">Elemento resaltado</label>
                 <select
                   className="w-full rounded border border-carbon/15 bg-lienzo p-1.5 text-xs"
                   value={previewHighlightId}
@@ -442,7 +437,7 @@ export const DiagramWorkbenchCore: React.FC<DiagramWorkbenchCoreProps> = ({
 
             {/* Bounding box settings */}
             <div className="rounded border border-carbon/10 bg-lienzo p-3">
-              <p className="text-[10px] font-bold uppercase tracking-widest text-carbon/45 border-b border-carbon/10 pb-1 mb-2">Límites (BoundingBox)</p>
+              <p className="text-[10px] font-bold uppercase tracking-widest text-carbon/45 border-b border-carbon/10 pb-1 mb-2">Límites del plano</p>
               <div className="grid grid-cols-2 gap-2 text-xs">
                 {(['Min X', 'Max Y', 'Max X', 'Min Y'] as const).map((label, idx) => (
                   <div key={label}>
@@ -522,13 +517,15 @@ export const DiagramWorkbenchCore: React.FC<DiagramWorkbenchCoreProps> = ({
         <DiagramCodePanel
           source={state.currentSource}
           sourceTouched={state.status === 'source-authoritative' || state.status === 'diverged'}
+          filePath={state.filePath}
+          componentName={componentName}
           onSourceChange={handleSourceEdit}
-          onRegenerate={() => {
+          onRegenerate={state.parseStatus === 'visual-exact' && state.status !== 'source-authoritative' && state.status !== 'diverged' ? () => {
             const gen = generateDiagramSource(model, componentName);
             if (gen.ok) {
               handleSourceEdit(gen.source);
             }
-          }}
+          } : undefined}
         />
       )}
 

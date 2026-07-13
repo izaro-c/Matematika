@@ -31,7 +31,7 @@ export const EditorModeSwitcher: React.FC<EditorModeSwitcherProps> = ({
             : 'text-carbon/60 hover:text-carbon'
         }`}
       >
-        Modo Visual (Experimental)
+        Edición visual exacta
       </button>
       <button
         type="button"
@@ -42,7 +42,7 @@ export const EditorModeSwitcher: React.FC<EditorModeSwitcherProps> = ({
             : 'text-carbon/60 hover:text-carbon'
         }`}
       >
-        Código Fuente
+        Código fuente
       </button>
     </div>
   );

@@ -9,6 +9,17 @@ interface DiagramSourcePanelProps {
   setActiveDiagramBlockId: (id: string | null) => void;
   setActiveDiagramIndex: (index: number | null) => void;
   setDiagramBuilderOpen: (open: boolean) => void;
+  capability?: FileNode['capability'];
+}
+
+function capabilityDescription(capability: FileNode['capability'] | undefined): string {
+  if (capability === 'visual-exact') {
+    return 'El modelo visual representa el archivo completo y puede regenerarlo sin pérdida.';
+  }
+  if (capability === 'invalid') {
+    return 'El recurso es inválido. Solo se ofrece el código para corregirlo; el guardado permanece bloqueado mientras no sea TSX válido.';
+  }
+  return 'El TSX completo es autoritativo. Se ofrece una vista previa real, sin regeneración desde un modelo parcial.';
 }
 
 export const DiagramSourcePanel: React.FC<DiagramSourcePanelProps> = ({
@@ -19,6 +30,7 @@ export const DiagramSourcePanel: React.FC<DiagramSourcePanelProps> = ({
   setActiveDiagramBlockId,
   setActiveDiagramIndex,
   setDiagramBuilderOpen,
+  capability,
 }) => {
   const formatFileName = (name: string) => {
     let clean = name.replace(/\.(mdx|tsx)$/, '');
@@ -80,10 +92,10 @@ export const DiagramSourcePanel: React.FC<DiagramSourcePanelProps> = ({
             }}
             className="mb-3 w-full rounded bg-salvia/10 px-3 py-2 text-xs font-bold text-salvia hover:bg-salvia/20 cursor-pointer"
           >
-            Editar visualmente
+            {capability === 'visual-exact' ? 'Abrir edición visual exacta' : 'Abrir código y vista previa'}
           </button>
           <p className="text-xs italic text-carbon/55 select-none">
-            Si el archivo contiene un modelo generado por el editor, se reabrirá en modo visual. Si es manual, se conserva como TSX avanzado.
+            {capabilityDescription(capability)}
           </p>
         </section>
       </div>

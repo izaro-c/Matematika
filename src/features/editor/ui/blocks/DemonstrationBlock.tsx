@@ -61,7 +61,7 @@ export const DemonstrationBlock: React.FC<DemonstrationBlockProps> = ({ steps, d
       <div className="flex justify-between items-center border-b border-carbon/10 pb-1.5">
         <div>
           <label className="block text-[9px] font-bold text-carbon/40 uppercase tracking-widest">
-            Proof Workbench
+            Editor de demostración
           </label>
           <p className="mt-1 text-[10px] italic text-carbon/45">Cada paso debe decir qué prueba, por qué es válido y qué elemento visual acompaña la lectura.</p>
         </div>

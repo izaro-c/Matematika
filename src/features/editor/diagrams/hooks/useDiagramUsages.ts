@@ -38,6 +38,10 @@ export function useDiagramUsages(
         name: usage.contentPath.split('/').pop() ?? usage.contentPath,
         path: usage.contentPath,
         type: 'file' as const,
+        kind: 'mdx-document' as const,
+        capability: 'invalid' as const,
+        capabilityLabel: 'Recurso inválido',
+        reason: 'La referencia existe en el índice de usos, pero el documento no está disponible en el catálogo editable.',
       })
       .sort((a, b) => a.path.localeCompare(b.path));
   }, [files, state.usages]);

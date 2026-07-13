@@ -79,8 +79,8 @@ function compatibilityPresentation(
     case 'fully-editable':
       return {
         level: 'safe',
-        title: 'Documento completamente editable',
-        description: 'Todos los bloques proyectados admiten edición localizada y verificada.',
+        title: 'Edición visual exacta',
+        description: 'Todos los rangos representados admiten edición localizada y verificada sin reconstruir el documento.',
         reasons: [],
         allowedActions: [ACTIONS.editVisual, ACTIONS.editCode, ACTIONS.reviewDiff],
         blockedActions: [],
@@ -89,8 +89,8 @@ function compatibilityPresentation(
     case 'partially-editable':
       return {
         level: 'attention',
-        title: 'Documento parcialmente editable',
-        description: 'Las zonas seguras pueden editarse; los bloques opacos se preservan literalmente.',
+        title: 'Edición visual exacta por rangos',
+        description: 'Solo se editan los rangos demostrablemente exactos; las zonas no representadas se preservan literalmente.',
         reasons: reasons.map((reason, index) => ({
           id: `compatibility-${index}`,
           level: 'attention',
@@ -104,8 +104,8 @@ function compatibilityPresentation(
     case 'read-only':
       return {
         level: 'blocked',
-        title: 'Documento de solo lectura visual',
-        description: 'El contenido puede inspeccionarse, pero no contiene rangos visuales editables seguros.',
+        title: 'Edición de código con vista previa',
+        description: 'El documento se puede editar como código y previsualizar, pero no contiene rangos visuales exactos.',
         reasons: reasons.map((reason, index) => ({
           id: `read-only-${index}`,
           level: 'blocked',
@@ -119,13 +119,13 @@ function compatibilityPresentation(
     case 'unsupported':
       return {
         level: 'error',
-        title: 'Documento no soportado en visual',
-        description: 'El editor mantiene el source en código y bloquea cualquier proyección destructiva.',
+        title: 'Recurso MDX inválido',
+        description: 'El análisis sintáctico falló. El editor conserva el código y bloquea cualquier proyección o guardado destructivo.',
         reasons: reasons.length > 0
           ? reasons.map((reason, index) => ({
             id: `unsupported-${index}`,
             level: 'error',
-            title: 'Sintaxis no soportada',
+            title: 'Sintaxis MDX inválida',
             description: reason,
           }))
           : [{
@@ -291,12 +291,12 @@ function savePresentation(status: EditorPersistenceStatus, validation: EditorVal
     case 'unsupported':
       return {
         level: 'error',
-        title: 'Archivo no compatible',
+        title: 'Recurso inválido',
         description: status.reason,
         reasons: [{
           id: 'unsupported-file',
           level: 'error',
-          title: 'Compatibilidad bloqueante',
+          title: 'Validación bloqueante',
           description: status.reason,
         }],
         allowedActions: [ACTIONS.editCode],
@@ -366,8 +366,10 @@ export function buildDiagramAuthorityPresentation(status: DiagramSyncStatus, isD
     case 'source-authoritative':
       return {
         level: 'attention',
-        title: 'Fuente TSX autoritativa',
-        description: 'La fuente contiene los cambios recientes. El modelo visual se actualizará solo tras parseo válido.',
+        title: 'Edición de código con vista previa',
+        description: isDirty
+          ? 'El TSX completo contiene cambios locales. La vista visual no puede regenerarlo sin perder código.'
+          : 'El TSX completo es la única representación autoritativa; se ejecuta una vista previa del componente guardado.',
         reasons: [],
         allowedActions: [ACTIONS.reviewDiff],
         blockedActions: [],
