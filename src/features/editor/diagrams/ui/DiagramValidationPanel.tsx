@@ -72,7 +72,7 @@ export const DiagramValidationPanel: React.FC<DiagramValidationPanelProps> = ({
                 const snippetCH = conceptHighlightSnippet(target);
                 return (
                   <div
-                    key={target.id}
+                    key={target.qualifiedId ?? `${target.id}-${target.objectId ?? ''}`}
                     onClick={() => onSelectTarget(target)}
                     className={`rounded border p-2 transition-all cursor-pointer ${
                       isSelected ? 'border-ocre/35 bg-ocre/5' : 'border-carbon/10 bg-transparent hover:bg-carbon/5'

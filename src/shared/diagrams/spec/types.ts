@@ -110,6 +110,8 @@ export interface DiagramSceneItemBase {
   selection: DiagramSelectionMetadata;
   /** Indica si el objeto se publica como target de InteractiveElement/MathStore. */
   target: boolean;
+  /** ID público estable. Permite renombrar el objeto interno sin romper MDX. */
+  targetId?: string;
   extensions?: Record<string, unknown>;
 }
 
@@ -142,11 +144,37 @@ export interface DiagramSlider extends DiagramSceneItemBase {
   step: number;
 }
 
+export type DiagramStepEmphasis = 'none' | 'secondary' | 'primary';
+
+export type DiagramOverlayPosition = 'top-left' | 'top-right' | 'bottom-left' | 'bottom-right';
+
+export interface DiagramStepOverlay {
+  visible: boolean;
+  title: string;
+  content: string;
+  expression?: string;
+  unit?: string;
+  precision?: number;
+  position?: DiagramOverlayPosition;
+}
+
+export interface DiagramStepObjectState {
+  visible?: boolean;
+  emphasis?: DiagramStepEmphasis;
+  label?: string;
+  overlay?: DiagramStepOverlay;
+  interactive?: boolean;
+  /** Valor temporal de sliders; no modifica el valor persistente base. */
+  value?: number;
+}
+
 export interface DiagramStep {
   id: string;
   label: string;
   description: string;
   visibleTargets: string[];
+  durationMs?: number;
+  objectStates?: Record<string, DiagramStepObjectState>;
   extensions?: Record<string, unknown>;
 }
 

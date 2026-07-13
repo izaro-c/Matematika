@@ -71,6 +71,8 @@ export const ProofStep: React.FC<ProofStepProps> = ({
       className={`mt-10 mb-6 w-full proof-step ${isActive ? 'is-active' : ''}`}
       data-target={typeof finalTarget === 'string' ? finalTarget : JSON.stringify(finalTarget)}
       data-justifications={JSON.stringify(activeJustifications)}
+      data-proof-step-number={number}
+      id={`proof-step-${number}`}
     >
       {/* Cabecera: número + título */}
       <div className="flex items-center gap-3 lg:gap-4 mb-4">
@@ -117,3 +119,5 @@ export const ProofStep: React.FC<ProofStepProps> = ({
     </div>
   );
 };
+
+ProofStep.displayName = 'ProofStep';

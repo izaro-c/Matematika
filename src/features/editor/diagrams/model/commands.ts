@@ -12,11 +12,12 @@ import type {
   TemplateKind, ConstructionKind, ColorToken, ElementKind, PointConstraint,
   ConstructionRefKey, ConstructionSlot, CanvasTool
 } from './types';
+import type { DiagramStepObjectState } from '../../../../shared/diagrams/spec';
 
 // Helper constructors
 export function point(id: string, label: string, x: number, y: number, fixed = false, color: ColorToken = 'terracota', constraint: PointConstraint = fixed ? 'fixed' : 'free', gliderTarget?: string): VisualPoint {
   return {
-    id, label, x, y, fixed, color, target: true, constraint, gliderTarget,
+    id, label, x, y, fixed, color, target: true, targetId: id, constraint, gliderTarget,
     layerId: 'geometry', order: 0, visible: true, locked: false, groupIds: [],
     selection: { selectable: true, role: 'primary', ariaLabel: `Punto ${label}` },
   };
@@ -53,7 +54,7 @@ export function diagramConstraint(
 
 export function element(id: string, label: string, kind: ElementKind, refs: string[], color: ColorToken, target = true, extra: Partial<VisualElement> = {}): VisualElement {
   return {
-    id, label, kind, refs, color, target,
+    id, label, kind, refs, color, target, targetId: target ? id : undefined,
     layerId: 'geometry', order: 1000, visible: true, locked: false, groupIds: [],
     selection: { selectable: true, role: kind === 'text' || kind === 'measurement' ? 'annotation' : 'secondary', ariaLabel: label },
     ...extra,
@@ -62,14 +63,80 @@ export function element(id: string, label: string, kind: ElementKind, refs: stri
 
 export function slider(id: string, label: string, x: number, y: number, value: number, color: ColorToken = 'pavo'): VisualSlider {
   return {
-    id, label, x, y, min: 0, max: 10, value, step: 0.1, color, target: true,
+    id, label, x, y, min: 0, max: 10, value, step: 0.1, color, target: true, targetId: id,
     layerId: 'controls', order: 2000, visible: true, locked: false, groupIds: [],
     selection: { selectable: true, role: 'annotation', ariaLabel: label },
   };
 }
 
 export function step(id: string, label: string, description: string, visibleTargets: string[]): VisualStep {
-  return { id, label, description, visibleTargets };
+  return {
+    id,
+    label,
+    description,
+    visibleTargets,
+    durationMs: 1800,
+    objectStates: Object.fromEntries(visibleTargets.map(targetId => [targetId, { visible: true, emphasis: 'none', interactive: true }])),
+  };
+}
+
+export function duplicateStep(steps: VisualStep[], stepId: string): VisualStep[] {
+  const index = steps.findIndex(item => item.id === stepId);
+  if (index < 0) return steps;
+  const id = nextStepId(steps);
+  const source = steps[index];
+  const copy: VisualStep = {
+    ...source,
+    id,
+    label: `${source.label} (copia)`,
+    visibleTargets: [...source.visibleTargets],
+    objectStates: source.objectStates
+      ? Object.fromEntries(Object.entries(source.objectStates).map(([objectId, state]) => [objectId, {
+          ...state,
+          overlay: state.overlay ? { ...state.overlay } : undefined,
+        }]))
+      : undefined,
+    extensions: source.extensions ? { ...source.extensions } : undefined,
+  };
+  return [...steps.slice(0, index + 1), copy, ...steps.slice(index + 1)];
+}
+
+export function removeStep(steps: VisualStep[], stepId: string): VisualStep[] {
+  return steps.filter(item => item.id !== stepId);
+}
+
+export function moveStep(steps: VisualStep[], stepId: string, direction: -1 | 1): VisualStep[] {
+  const index = steps.findIndex(item => item.id === stepId);
+  const nextIndex = index + direction;
+  if (index < 0 || nextIndex < 0 || nextIndex >= steps.length) return steps;
+  const reordered = [...steps];
+  [reordered[index], reordered[nextIndex]] = [reordered[nextIndex], reordered[index]];
+  return reordered;
+}
+
+export function updateStepObjectState(
+  steps: VisualStep[],
+  stepId: string,
+  objectId: string,
+  update: Partial<DiagramStepObjectState>,
+): VisualStep[] {
+  return steps.map(item => {
+    if (item.id !== stepId) return item;
+    const previous = item.objectStates?.[objectId] ?? {
+      visible: item.visibleTargets.includes(objectId),
+      emphasis: 'none' as const,
+      interactive: true,
+    };
+    const nextState = { ...previous, ...update };
+    const visibleTargets = nextState.visible === false
+      ? item.visibleTargets.filter(id => id !== objectId)
+      : [...new Set([...item.visibleTargets, objectId])];
+    return {
+      ...item,
+      visibleTargets,
+      objectStates: { ...(item.objectStates ?? {}), [objectId]: nextState },
+    };
+  });
 }
 
 export const TEMPLATE_OPTIONS: Array<{ value: TemplateKind; label: string; description: string }> = [
@@ -587,6 +654,7 @@ export function renamePoint(model: VisualDiagramModel, oldId: string, newIdRaw: 
     steps: model.steps.map(item => ({
       ...item,
       visibleTargets: item.visibleTargets.map(target => target === oldId ? newId : target),
+      objectStates: item.objectStates ? Object.fromEntries(Object.entries(item.objectStates).map(([id, state]) => [id === oldId ? newId : id, state])) : undefined,
     })),
     groups: model.groups.map(group => ({ ...group, memberIds: group.memberIds.map(id => id === oldId ? newId : id) })),
     constraints: model.constraints?.map(constraint => ({ ...constraint, refs: constraint.refs.map(id => id === oldId ? newId : id) })),
@@ -614,6 +682,7 @@ export function renameElement(model: VisualDiagramModel, oldId: string, newIdRaw
     steps: model.steps.map(item => ({
       ...item,
       visibleTargets: item.visibleTargets.map(target => target === oldId ? newId : target),
+      objectStates: item.objectStates ? Object.fromEntries(Object.entries(item.objectStates).map(([id, state]) => [id === oldId ? newId : id, state])) : undefined,
     })),
     groups: model.groups.map(group => ({ ...group, memberIds: group.memberIds.map(id => id === oldId ? newId : id) })),
     constraints: model.constraints?.map(constraint => ({ ...constraint, refs: constraint.refs.map(id => id === oldId ? newId : id) })),
@@ -634,6 +703,7 @@ export function renameSlider(model: VisualDiagramModel, oldId: string, newIdRaw:
     steps: model.steps.map(item => ({
       ...item,
       visibleTargets: item.visibleTargets.map(target => target === oldId ? newId : target),
+      objectStates: item.objectStates ? Object.fromEntries(Object.entries(item.objectStates).map(([id, state]) => [id === oldId ? newId : id, state])) : undefined,
     })),
     groups: model.groups.map(group => ({ ...group, memberIds: group.memberIds.map(id => id === oldId ? newId : id) })),
   };

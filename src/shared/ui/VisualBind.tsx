@@ -1,5 +1,6 @@
 import React from 'react';
 import { useMathStore } from '@/shared/lib/MathStoreContext';
+import { useDiagramTargetRegistry } from '@/shared/lib/DiagramTargetRegistryContext';
 
 interface VisualBindProps {
   element: string;
@@ -20,13 +21,25 @@ const COLOR_MAP: Record<string, string> = {
 
 export const VisualBind: React.FC<VisualBindProps> = ({ element, color = 'salvia', children }) => {
   const setVariable = useMathStore(state => state.setVariable);
+  const targetRegistry = useDiagramTargetRegistry();
   const cssColor = COLOR_MAP[color] ?? COLOR_MAP['salvia'];
+  const activate = () => setVariable('highlight', targetRegistry.resolve(element));
 
   return (
     <span
-      onClick={() => setVariable('highlight', element)}
-      onMouseEnter={() => setVariable('highlight', element)}
+      onClick={activate}
+      onMouseEnter={activate}
       onMouseLeave={() => setVariable('highlight', null)}
+      onFocus={activate}
+      onBlur={() => setVariable('highlight', null)}
+      onKeyDown={(event) => {
+        if (event.key !== 'Enter' && event.key !== ' ') return;
+        event.preventDefault();
+        activate();
+      }}
+      role="button"
+      tabIndex={0}
+      aria-label={`Resaltar ${element} en el diagrama`}
       className="cursor-pointer border-b-2 transition-colors rounded-none px-[2px] py-[1px] font-bold text-carbon shadow-sm box-decoration-clone"
       style={{
         borderColor: cssColor,

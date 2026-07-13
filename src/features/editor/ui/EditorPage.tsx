@@ -61,6 +61,11 @@ function findDiagramFile(files: FileNode[], componentName: string, importSource?
   ));
 }
 
+function proofStepTargetIds(target: string | string[] | undefined): string[] {
+  if (!target) return [];
+  return Array.isArray(target) ? target : [target];
+}
+
 export const EditorPage: React.FC = () => {
   const {
     files,
@@ -611,26 +616,27 @@ export const EditorPage: React.FC = () => {
     const interactiveTargets = [...text.matchAll(/<InteractiveElement\b([^>]*?)>([\s\S]*?)<\/InteractiveElement>/g)]
       .map(match => ({ attrs: parseAttributes(match[1] || ''), label: match[2].replace(/<[^>]+>/g, '').trim() }))
       .filter(item => item.attrs.target);
+    const proofTargets = blocks
+      .filter(block => block.type === 'demonstration')
+      .flatMap(block => ((block.metadata?.steps ?? []) as Array<{ target?: string | string[] }>).flatMap(item => proofStepTargetIds(item.target)))
+      .map(target => ({ attrs: { target }, label: 'Paso de demostración' }));
+    const references = [
+      ...conceptHighlights.map(item => ({ target: String(item.attrs.highlightTarget), label: item.label, kind: 'concepto + diagrama' })),
+      ...interactiveTargets.map(item => ({ target: String(item.attrs.target), label: item.label, kind: 'diagrama' })),
+      ...proofTargets.map(item => ({ target: String(item.attrs.target), label: item.label, kind: 'paso de demostración' })),
+    ];
     const connectedTargetIds = new Set<string>([
-      ...conceptHighlights.map(item => String(item.attrs.highlightTarget)),
-      ...interactiveTargets.map(item => String(item.attrs.target)),
+      ...references.map(item => item.target),
     ]);
-    const missingTargets = diagramTargets.filter(target => !connectedTargetIds.has(target.id));
+    const missingTargets = diagramTargets.filter(target => !connectedTargetIds.has(target.id) && !connectedTargetIds.has(target.qualifiedId ?? ''));
+    const invalidConnections = references.filter(reference => !diagramTargets.some(target => target.id === reference.target || target.qualifiedId === reference.target));
+    const ambiguousConnections = references.filter(reference => !reference.target.includes(':') && diagramTargets.filter(target => target.id === reference.target).length > 1);
 
     return {
-      connected: [
-        ...conceptHighlights.map(item => ({
-          target: String(item.attrs.highlightTarget),
-          label: item.label,
-          kind: 'concepto + diagrama',
-        })),
-        ...interactiveTargets.map(item => ({
-          target: String(item.attrs.target),
-          label: item.label,
-          kind: 'diagrama',
-        })),
-      ],
+      connected: references,
       missingTargets,
+      invalidConnections,
+      ambiguousConnections,
     };
   }, [blocks, diagramTargets]);
 

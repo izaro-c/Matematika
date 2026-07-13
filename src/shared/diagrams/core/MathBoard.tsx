@@ -1,6 +1,7 @@
 import React, { useEffect, useId, useRef } from 'react';
 import JXG from 'jsxgraph';
 import { useMathStore } from '@/shared/lib/MathStoreContext';
+import { matchesScopedDiagramTarget } from '@/shared/lib/DiagramTargetRegistryContext';
 
 export interface ThemeColors {
   carbon: string;
@@ -45,6 +46,7 @@ export interface MathBoardProps {
   pan?: boolean;
   zoom?: boolean;
   revision?: string;
+  scopeId?: string;
   onBoundingBoxChange?: (bounds: [number, number, number, number]) => void;
   onInit: (board: any, elements: Record<string, any>, theme: ThemeColors) => void;
   onUpdate?: (
@@ -55,6 +57,9 @@ export interface MathBoardProps {
     isHL: (id: string) => boolean,
   ) => void;
   children?: React.ReactNode;
+  borderWidth?: number | string;
+  borderColor?: string;
+  borderRadius?: number | string;
 }
 
 export const MathBoard: React.FC<MathBoardProps> = ({
@@ -67,10 +72,14 @@ export const MathBoard: React.FC<MathBoardProps> = ({
   pan = false,
   zoom = false,
   revision = '',
+  scopeId = '',
   onBoundingBoxChange,
   onInit,
   onUpdate,
   children,
+  borderWidth = 1,
+  borderColor = 'var(--page-accent, var(--theme-pizarra))',
+  borderRadius = 20,
 }) => {
   const boardRef = useRef<HTMLDivElement>(null);
   const boardObj = useRef<any>(null);
@@ -79,8 +88,8 @@ export const MathBoard: React.FC<MathBoardProps> = ({
   const onUpdateRef = useRef(onUpdate);
   const onBoundingBoxChangeRef = useRef(onBoundingBoxChange);
   const boundingboxRef = useRef(boundingbox);
-  const highlight = useMathStore(state => state.variables?.['highlight']);
-  const step = useMathStore(state => state.variables?.['step']);
+  const highlight = useMathStore(state => state.variables?.[scopeId ? `highlight:${scopeId}` : 'highlight'] ?? state.variables?.['highlight']);
+  const step = useMathStore(state => state.variables?.[scopeId ? `step:${scopeId}` : 'step'] ?? state.variables?.['step']);
   const highlightRef = useRef(highlight);
   const stepRef = useRef(step);
   const generatedId = useId().replace(/:/g, '');
@@ -99,11 +108,8 @@ export const MathBoard: React.FC<MathBoardProps> = ({
 
     if (!boardObj.current) return;
     const currentTheme = getTheme();
-    const isStep = (target: string) => stepRef.current === target;
-    const isHL = (target: string) => {
-      const current = highlightRef.current;
-      return Array.isArray(current) ? current.some(item => item === target) : current === target;
-    };
+    const isStep = (target: string) => matchesScopedDiagramTarget(stepRef.current, target, scopeId);
+    const isHL = (target: string) => matchesScopedDiagramTarget(highlightRef.current, target, scopeId);
     onUpdateRef.current?.(boardObj.current, elementsRef.current, currentTheme, isStep, isHL);
     boardObj.current.update();
   }, [highlight, step]);
@@ -129,11 +135,8 @@ export const MathBoard: React.FC<MathBoardProps> = ({
 
     const runUpdate = () => {
       const currentTheme = getTheme();
-      const isStep = (target: string) => stepRef.current === target;
-      const isHL = (target: string) => {
-        const current = highlightRef.current;
-        return Array.isArray(current) ? current.some(item => item === target) : current === target;
-      };
+      const isStep = (target: string) => matchesScopedDiagramTarget(stepRef.current, target, scopeId);
+      const isHL = (target: string) => matchesScopedDiagramTarget(highlightRef.current, target, scopeId);
       onUpdateRef.current?.(board, elementsRef.current, currentTheme, isStep, isHL);
     };
 
@@ -173,7 +176,7 @@ export const MathBoard: React.FC<MathBoardProps> = ({
       boardObj.current = null;
       elementsRef.current = {};
     };
-  }, [axis, generatedId, grid, id, keepaspectratio, pan, revision, zoom]);
+  }, [axis, generatedId, grid, id, keepaspectratio, pan, revision, scopeId, zoom]);
 
   useEffect(() => {
     const board = boardObj.current;
@@ -188,7 +191,15 @@ export const MathBoard: React.FC<MathBoardProps> = ({
 
   return (
     <div className={`${className} h-full`}>
-      <div ref={boardRef} className="jxgbox absolute inset-0 h-full w-full touch-none" />
+      <div ref={boardRef} className="jxgbox absolute inset-0 h-full w-full touch-none" 
+        style={{
+          borderStyle: 'solid',
+          borderWidth,
+          borderColor,
+          borderRadius,
+          boxSizing: 'border-box',
+        }} 
+      />
       {children}
     </div>
   );
