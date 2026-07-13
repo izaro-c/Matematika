@@ -613,9 +613,7 @@ a:focus-visible, button:focus-visible {
   width: 100%;
   height: clamp(16rem, 42svh, 28rem);
   min-height: 0;
-  background: var(--theme-lienzo);
-  border-block: 3px double color-mix(in srgb, var(--theme-carbon) 22%, transparent);
-  box-shadow: 0 0.75rem 1.5rem color-mix(in srgb, var(--theme-carbon) 7%, transparent);
+  background: none;
 }
 
 .triptych-diagram::before {
@@ -624,16 +622,6 @@ a:focus-visible, button:focus-visible {
   inset: 0 0 auto;
   z-index: 0;
   height: var(--triptych-top);
-  background: var(--theme-lienzo);
-  pointer-events: none;
-}
-
-.triptych-diagram::after {
-  content: "";
-  position: absolute;
-  inset: auto 0 -0.75rem;
-  z-index: 2;
-  height: 0.75rem;
   background: var(--theme-lienzo);
   pointer-events: none;
 }
@@ -654,8 +642,8 @@ a:focus-visible, button:focus-visible {
   align-items: center;
   justify-content: center;
   overflow: hidden;
-  padding: clamp(0.5rem, 1.5vw, 1rem);
-  background: var(--theme-lienzo);
+  padding: 0 clamp(0.5rem, 1.5vw, 1rem) clamp(0.5rem, 1.5vw, 1rem);
+  background: none;
 }
 
 .triptych-diagram-surface {
@@ -728,7 +716,6 @@ a:focus-visible, button:focus-visible {
   background-repeat: repeat;
   border: none;
   border-right: 4px double color-mix(in srgb, var(--theme-carbon) 22%, transparent);
-  box-shadow: 1rem 0 2.5rem color-mix(in srgb, var(--theme-carbon) 18%, transparent);
   transform: translateX(-105%);
   transition: transform 220ms ease;
 }
@@ -1306,7 +1293,6 @@ a:focus-visible, button:focus-visible {
   .demonstration-triptych .triptych-diagram {
     border-top: 0;
     border-bottom: 1px solid color-mix(in srgb, var(--theme-carbon) 18%, transparent);
-    box-shadow: 0 0.75rem 1.25rem color-mix(in srgb, var(--theme-carbon) 6%, transparent);
   }
 }
 

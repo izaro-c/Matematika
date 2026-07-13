@@ -22,6 +22,9 @@ export interface EditorValidationResult {
 
 export interface DiagramTarget {
   id: string;
+  objectId?: string;
+  scopeId?: string;
+  qualifiedId?: string;
   label: string;
   color: string;
   kind: 'point' | 'segment' | 'polygon' | 'angle' | 'line' | 'measurement' | 'step' | 'slider' | 'other';

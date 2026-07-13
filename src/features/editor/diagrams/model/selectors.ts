@@ -15,15 +15,15 @@ export function targetKind(kind: ElementKind): DiagramTarget['kind'] {
 export function buildTargets(model: VisualDiagramModel): DiagramTargetRegistry {
   const pointTargets = model.points
     .filter(item => item.target)
-    .map(item => ({ id: item.id, label: `Punto ${item.label}`, color: item.color, kind: 'point' as const }));
+    .map(item => ({ id: item.targetId ?? item.id, objectId: item.id, scopeId: model.componentId, qualifiedId: `${model.componentId}:${item.targetId ?? item.id}`, label: `Punto ${item.label}`, color: item.color, kind: 'point' as const }));
   const elementTargets = model.elements
     .filter(item => item.target)
-    .map(item => ({ id: item.id, label: item.label, color: item.color, kind: targetKind(item.kind) }));
+    .map(item => ({ id: item.targetId ?? item.id, objectId: item.id, scopeId: model.componentId, qualifiedId: `${model.componentId}:${item.targetId ?? item.id}`, label: item.label, color: item.color, kind: targetKind(item.kind) }));
   const sliderTargets = model.sliders
     .filter(item => item.target)
-    .map(item => ({ id: item.id, label: item.label, color: item.color, kind: 'slider' as const }));
+    .map(item => ({ id: item.targetId ?? item.id, objectId: item.id, scopeId: model.componentId, qualifiedId: `${model.componentId}:${item.targetId ?? item.id}`, label: item.label, color: item.color, kind: 'slider' as const }));
   const stepTargets = model.steps
-    .map(item => ({ id: item.id, label: item.label, color: 'ocre' as const, kind: 'step' as const }));
+    .map(item => ({ id: item.id, objectId: item.id, scopeId: model.componentId, qualifiedId: `${model.componentId}:${item.id}`, label: item.label, color: 'ocre' as const, kind: 'step' as const }));
   return [...pointTargets, ...elementTargets, ...sliderTargets, ...stepTargets];
 }
 

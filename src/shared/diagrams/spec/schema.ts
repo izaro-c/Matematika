@@ -74,6 +74,7 @@ const sceneBaseShape = {
   groupIds: z.array(idSchema),
   selection: selectionSchema,
   target: z.boolean(),
+  targetId: idSchema.optional(),
   extensions: optionalExtensionsSchema,
 };
 
@@ -129,11 +130,32 @@ const sliderSchema = z.object({
   if (slider.value < slider.min || slider.value > slider.max) context.addIssue({ code: 'custom', message: 'value debe estar dentro de [min, max].', path: ['value'] });
 });
 
+const stepOverlaySchema = z.object({
+  visible: z.boolean(),
+  title: z.string(),
+  content: z.string(),
+  expression: expressionSchema.optional(),
+  unit: z.string().max(32).optional(),
+  precision: z.number().int().min(0).max(12).optional(),
+  position: z.enum(['top-left', 'top-right', 'bottom-left', 'bottom-right']).optional(),
+}).strict();
+
+const stepObjectStateSchema = z.object({
+  visible: z.boolean().optional(),
+  emphasis: z.enum(['none', 'secondary', 'primary']).optional(),
+  label: z.string().optional(),
+  overlay: stepOverlaySchema.optional(),
+  interactive: z.boolean().optional(),
+  value: finiteNumber.optional(),
+}).strict();
+
 const stepSchema = z.object({
   id: idSchema,
   label: z.string().min(1),
   description: z.string(),
   visibleTargets: z.array(idSchema),
+  durationMs: z.number().int().min(200).max(60_000).optional(),
+  objectStates: z.record(idSchema, stepObjectStateSchema).optional(),
   extensions: optionalExtensionsSchema,
 }).strict();
 
@@ -212,6 +234,22 @@ export const diagramSpecV2Schema = z.object({
   const layerIds = new Set(spec.layers.map(layer => layer.id));
   const groupIds = new Set(spec.groups.map(group => group.id));
 
+  const publicTargetIds = new Map<string, string>();
+  items.filter(item => item.target).forEach(item => {
+    const publicId = item.targetId ?? item.id;
+    const previous = publicTargetIds.get(publicId);
+    if (previous) {
+      context.addIssue({ code: 'custom', message: `El target público ${publicId} está duplicado en ${previous} y ${item.id}.` });
+    } else {
+      publicTargetIds.set(publicId, item.id);
+    }
+  });
+  spec.steps.forEach(step => {
+    const previous = publicTargetIds.get(step.id);
+    if (previous) context.addIssue({ code: 'custom', message: `El target público ${step.id} está duplicado en ${previous} y el paso ${step.id}.` });
+    else publicTargetIds.set(step.id, step.id);
+  });
+
   items.forEach((item, index) => {
     if (!layerIds.has(item.layerId)) context.addIssue({ code: 'custom', message: `La capa ${item.layerId} de ${item.id} no existe.`, path: ['scene', index, 'layerId'] });
     item.groupIds.forEach(groupId => {
@@ -236,7 +274,6 @@ export const diagramSpecV2Schema = z.object({
       context.addIssue({ code: 'custom', message: `${element.id} necesita expresiones x e y.`, path: ['elements', index, 'properties'] });
     }
   });
-
   spec.points.forEach((point, index) => {
     if (point.constraint === 'glider' && (!point.gliderTarget || !referenceIds.has(point.gliderTarget))) {
       context.addIssue({ code: 'custom', message: `El glider ${point.id} necesita un soporte existente.`, path: ['points', index, 'gliderTarget'] });
@@ -249,6 +286,28 @@ export const diagramSpecV2Schema = z.object({
     }
     point.dependencies?.forEach(dependency => {
       if (!referenceIds.has(dependency)) context.addIssue({ code: 'custom', message: `${point.id} depende de ${dependency}, que no existe.`, path: ['points', index, 'dependencies'] });
+    });
+  });
+
+  spec.steps.forEach((step, index) => {
+    const stateIds = Object.keys(step.objectStates ?? {});
+    const referencedIds = [...step.visibleTargets, ...stateIds];
+    referencedIds.forEach(target => {
+      if (!itemIds.has(target)) {
+        context.addIssue({ code: 'custom', message: `El paso ${step.id} referencia el objeto inexistente ${target}.`, path: ['steps', index] });
+      }
+    });
+    if (new Set(step.visibleTargets).size !== step.visibleTargets.length) {
+      context.addIssue({ code: 'custom', message: `El paso ${step.id} repite objetos visibles.`, path: ['steps', index, 'visibleTargets'] });
+    }
+    Object.entries(step.objectStates ?? {}).forEach(([targetId, state]) => {
+      const slider = spec.sliders.find(item => item.id === targetId);
+      if (state.value !== undefined && !slider) {
+        context.addIssue({ code: 'custom', message: `Solo un slider puede recibir value temporal; ${targetId} no lo es.`, path: ['steps', index, 'objectStates', targetId, 'value'] });
+      }
+      if (slider && state.value !== undefined && (state.value < slider.min || state.value > slider.max)) {
+        context.addIssue({ code: 'custom', message: `El valor temporal de ${targetId} queda fuera de [${slider.min}, ${slider.max}].`, path: ['steps', index, 'objectStates', targetId, 'value'] });
+      }
     });
   });
 
@@ -268,6 +327,14 @@ export const diagramSpecV2Schema = z.object({
     if (properties.expression) expressionEntries.push({ source: properties.expression, path: ['elements', index, 'properties', 'expression'], parameter: properties.parameter, targetId: element.id });
     if (properties.xExpression) expressionEntries.push({ source: properties.xExpression, path: ['elements', index, 'properties', 'xExpression'], parameter: properties.parameter, targetId: element.id });
     if (properties.yExpression) expressionEntries.push({ source: properties.yExpression, path: ['elements', index, 'properties', 'yExpression'], parameter: properties.parameter, targetId: element.id });
+  });
+  spec.steps.forEach((step, stepIndex) => {
+    Object.entries(step.objectStates ?? {}).forEach(([objectId, state]) => {
+      if (state.overlay?.expression) expressionEntries.push({
+        source: state.overlay.expression,
+        path: ['steps', stepIndex, 'objectStates', objectId, 'overlay', 'expression'],
+      });
+    });
   });
   (spec.constraints ?? []).forEach((constraint, index) => {
     const requiredRefs = constraint.kind === 'fixed' || constraint.kind === 'expression'

@@ -126,7 +126,7 @@ export const DiagramInspector: React.FC<DiagramInspectorProps> = ({
       {selectedPoint && (
         <div className="space-y-3">
           <div>
-            <label className="block text-xs font-bold text-carbon mb-1">Target ID</label>
+            <label className="block text-xs font-bold text-carbon mb-1">ID interno del objeto</label>
             <input
               className="w-full rounded border border-carbon/15 bg-lienzo p-1.5 font-mono text-xs"
               value={selectedPoint.id}
@@ -311,7 +311,7 @@ export const DiagramInspector: React.FC<DiagramInspectorProps> = ({
       {selectedElement && (
         <div className="space-y-3">
           <div>
-            <label className="block text-xs font-bold text-carbon mb-1">Target ID</label>
+            <label className="block text-xs font-bold text-carbon mb-1">ID interno del objeto</label>
             <input
               className="w-full rounded border border-carbon/15 bg-lienzo p-1.5 font-mono text-xs"
               value={selectedElement.id}
@@ -479,7 +479,7 @@ export const DiagramInspector: React.FC<DiagramInspectorProps> = ({
       {selectedSlider && (
         <div className="space-y-3">
           <div>
-            <label className="block text-xs font-bold text-carbon mb-1">Target ID</label>
+            <label className="block text-xs font-bold text-carbon mb-1">ID interno del objeto</label>
             <input
               className="w-full rounded border border-carbon/15 bg-lienzo p-1.5 font-mono text-xs"
               value={selectedSlider.id}

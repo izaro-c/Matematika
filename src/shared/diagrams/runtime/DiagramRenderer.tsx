@@ -1,4 +1,4 @@
-import React, { useMemo, useState } from 'react';
+import React, { useEffect, useMemo, useRef, useState } from 'react';
 import { MathBoard, type ThemeColors } from '../core/MathBoard';
 import {
   createAngle,
@@ -29,6 +29,9 @@ import {
   createText,
 } from '../core/MathFactory';
 import { DiagramInfoPanel, DiagramTitle } from '@/shared/ui/DiagramOverlay';
+import { StepNavigator } from '@/shared/ui/StepNavigator';
+import { useMathStore } from '@/shared/lib/MathStoreContext';
+import { useDiagramTargetRegistry } from '@/shared/lib/DiagramTargetRegistryContext';
 import {
   DIAGRAM_RENDERER_ID,
   constrainPointCoordinates,
@@ -42,6 +45,7 @@ import {
   withViewportBounds,
   zoomViewport,
   evaluateMathExpression,
+  evaluateStepOverlayContent,
   type DiagramBounds,
   type DiagramElement,
   type DiagramSceneItem,
@@ -60,6 +64,7 @@ export interface DiagramRendererProps {
   onPointMove?: (id: string, x: number, y: number) => void;
   onCanvasPointCreate?: (x: number, y: number) => void;
   onViewportChange?: (bounds: DiagramBounds) => void;
+  stepControls?: boolean;
 }
 
 function outsideBaseExtension(baseA: any, baseB: any, foot: any): boolean {
@@ -100,6 +105,43 @@ function liveVariables(elements: Record<string, any>, spec: DiagramSpecV2): Reco
     if (a?.Dist && b) variables[`${item.id}.length`] = a.Dist(b);
   });
   return variables;
+}
+
+function StepOverlayPanels({
+  spec,
+  activeStepId,
+  variables,
+}: {
+  spec: DiagramSpecV2;
+  activeStepId?: string;
+  variables: Record<string, number>;
+}) {
+  const storeStep = useMathStore(state => state.variables?.[`step:${spec.componentId}`] ?? state.variables?.['step']);
+  const stepId = activeStepId ?? (typeof storeStep === 'string' ? storeStep.replace(`${spec.componentId}:`, '') : '');
+  const step = spec.steps.find(item => item.id === stepId);
+  const overlays = Object.entries(step?.objectStates ?? {})
+    .map(([objectId, state]) => ({ objectId, overlay: state.overlay }))
+    .filter((entry): entry is { objectId: string; overlay: NonNullable<typeof entry.overlay> } => Boolean(entry.overlay?.visible));
+  if (overlays.length === 0) return null;
+  const grouped = new Map<string, typeof overlays>();
+  overlays.forEach(entry => {
+    const position = entry.overlay.position ?? 'bottom-right';
+    grouped.set(position, [...(grouped.get(position) ?? []), entry]);
+  });
+  return <>{[...grouped.entries()].map(([position, entries]) => (
+    <DiagramInfoPanel key={position} title={step?.label ?? 'Información del paso'} position={position as 'top-left' | 'top-right' | 'bottom-left' | 'bottom-right'}>
+      <div className="space-y-2" aria-live="polite">
+        {entries.map(({ objectId, overlay }) => {
+          return (
+            <div key={objectId} data-step-overlay={objectId}>
+              {overlay.title && <strong className="block">{overlay.title}</strong>}
+              <span>{evaluateStepOverlayContent(overlay, variables)}</span>
+            </div>
+          );
+        })}
+      </div>
+    </DiagramInfoPanel>
+  ))}</>;
 }
 
 function evaluatedValue(item: DiagramElement, elements: Record<string, any>, spec: DiagramSpecV2): number | undefined {
@@ -265,7 +307,13 @@ export const DiagramRenderer: React.FC<DiagramRendererProps> = ({
   onPointMove,
   onCanvasPointCreate,
   onViewportChange,
+  stepControls,
 }) => {
+  const targetRegistry = useDiagramTargetRegistry();
+  const [liveSceneVariables, setLiveSceneVariables] = useState<Record<string, number>>(() => {
+    try { return liveVariables({}, spec); } catch { return {}; }
+  });
+  const liveVariablesSignature = useRef('');
   const [viewportState, setViewportState] = useState({
     base: spec.viewport.bounds,
     current: spec.viewport.bounds,
@@ -274,6 +322,14 @@ export const DiagramRenderer: React.FC<DiagramRendererProps> = ({
     ? viewportState.current
     : spec.viewport.bounds;
   const revision = useMemo(() => sceneRevision(spec), [spec]);
+  const registeredTargets = useMemo(() => [
+    ...[...spec.points, ...spec.elements, ...spec.sliders]
+      .filter(item => item.target)
+      .map(item => ({ targetId: item.targetId ?? item.id, objectId: item.id, label: item.label, kind: 'object' as const })),
+    ...spec.steps.map(step => ({ targetId: step.id, objectId: step.id, label: step.label, kind: 'step' as const })),
+  ], [spec.elements, spec.points, spec.sliders, spec.steps]);
+
+  useEffect(() => targetRegistry.register(spec.componentId, registeredTargets), [registeredTargets, spec.componentId, targetRegistry]);
 
   const commitBounds = (next: DiagramBounds) => {
     setViewportState({ base: spec.viewport.bounds, current: next });
@@ -290,6 +346,7 @@ export const DiagramRenderer: React.FC<DiagramRendererProps> = ({
       data-diagram-mode={mode}
     >
       <MathBoard
+        scopeId={spec.componentId}
         boundingbox={bounds}
         axis={spec.axis}
         grid={spec.grid}
@@ -383,30 +440,45 @@ export const DiagramRenderer: React.FC<DiagramRendererProps> = ({
         onUpdate={(_board, elements, theme, isStep, isHL) => {
           const storeStep = spec.steps.find(step => isStep(step.id))?.id;
           const effectiveStep = activeStepId || storeStep;
+          const items = [...spec.points, ...spec.elements, ...spec.sliders];
           const effectiveHighlights = new Set([
-            ...highlightedIds,
-            ...[...spec.points, ...spec.elements, ...spec.sliders].filter(item => isHL(item.id)).map(item => item.id),
+            ...items.filter(item => highlightedIds.includes(item.id) || highlightedIds.includes(item.targetId ?? item.id)).map(item => item.id),
+            ...items.filter(item => isHL(item.targetId ?? item.id)).map(item => item.id),
           ]);
           const plan = createScenePlan(spec, {
             activeStepId: effectiveStep,
             highlightedIds: [...effectiveHighlights],
             selectedIds,
           });
-          const anyEmphasis = plan.some(entry => entry.highlighted || entry.selected);
+          const anyExternalEmphasis = plan.some(entry => entry.highlighted || entry.selected);
           plan.forEach(entry => {
             const item = entry.item;
             const element = elements[item.id];
             if (!element) return;
-            const active = entry.highlighted || entry.selected;
-            const opacity = active || !anyEmphasis ? 1 : 0.28;
-            const color = active ? theme.ocre : theme[item.color];
+            const externalActive = entry.highlighted || entry.selected;
+            const stepPrimary = entry.stepEmphasis === 'primary';
+            const stepSecondary = entry.stepEmphasis === 'secondary';
+            const active = externalActive || stepPrimary || stepSecondary;
+            const opacity = externalActive || !anyExternalEmphasis ? 1 : 0.28;
+            const color = externalActive ? theme.ocre : stepPrimary ? theme.terracota : stepSecondary ? theme.pavo : theme[item.color];
             const visible = entry.visible && (('kind' in item && item.kind === 'baseExtension')
               ? outsideBaseExtension(elements[item.refs[0]], elements[item.refs[1]], elements[item.refs[2]])
               : true);
-            const base = { visible, layer: itemLayerNumber(spec, item), opacity };
+            const base = { visible, layer: itemLayerNumber(spec, item), opacity, fixed: entry.locked };
+            if (element.__matematikaStepLabel !== entry.label) {
+              element.setAttribute?.({ name: entry.label });
+              element.__matematikaStepLabel = entry.label;
+            }
             if ('constraint' in item) {
               element.setAttribute({ ...base, size: active ? 8.5 : 5, fillColor: color, strokeColor: color, fillOpacity: opacity });
             } else if ('min' in item) {
+              if (entry.stepValue !== undefined && element.__matematikaStepValue !== entry.stepValue) {
+                element.setValue?.(entry.stepValue);
+                element.__matematikaStepValue = entry.stepValue;
+              } else if (entry.stepValue === undefined && element.__matematikaStepValue !== undefined) {
+                element.setValue?.(item.value);
+                delete element.__matematikaStepValue;
+              }
               element.setAttribute({ ...base, strokeColor: color });
             } else if (item.kind === 'polygon' || item.kind === 'areaDecomposition') {
               element.setAttribute({ ...base, fillColor: color, fillOpacity: active ? 0.34 : 0.16 * opacity });
@@ -417,9 +489,15 @@ export const DiagramRenderer: React.FC<DiagramRendererProps> = ({
             } else if (item.kind === 'text' || item.kind === 'label' || item.kind === 'formula' || item.kind === 'infoPanel' || item.kind === 'measurement') {
               element.setAttribute({ ...base, color });
             } else {
-              element.setAttribute({ ...base, strokeColor: color, strokeOpacity: opacity, strokeWidth: active ? 4.8 : 2.4 });
+              element.setAttribute({ ...base, strokeColor: color, strokeOpacity: opacity, strokeWidth: externalActive ? 4.8 : stepPrimary ? 4 : stepSecondary ? 3.2 : 2.4 });
             }
           });
+          const nextLiveVariables = liveVariables(elements, spec);
+          const signature = JSON.stringify(nextLiveVariables);
+          if (signature !== liveVariablesSignature.current) {
+            liveVariablesSignature.current = signature;
+            setLiveSceneVariables(nextLiveVariables);
+          }
         }}
       >
         <DiagramTitle>{spec.title}</DiagramTitle>
@@ -428,7 +506,12 @@ export const DiagramRenderer: React.FC<DiagramRendererProps> = ({
             <span>{spec.note}</span>
           </DiagramInfoPanel>
         )}
+        <StepOverlayPanels spec={spec} activeStepId={activeStepId} variables={liveSceneVariables} />
       </MathBoard>
+
+      {(stepControls ?? mode === 'runtime') && spec.steps.length > 0 && (
+        <StepNavigator steps={spec.steps} scopeId={spec.componentId} compact className="absolute bottom-2 left-2 right-2 z-30" />
+      )}
 
       {viewportControls && (
         <div className="absolute right-2 top-2 z-20 flex items-center gap-1 rounded border border-carbon/15 bg-lienzo/95 p-1 shadow-sm" aria-label="Controles del viewport">

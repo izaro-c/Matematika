@@ -131,12 +131,18 @@ export const DemonstrationBlock: React.FC<DemonstrationBlockProps> = ({ steps, d
                     <label className="block text-[8px] font-bold text-carbon/40 uppercase tracking-wider mb-1">Target del diagrama</label>
                     <select
                       className="w-full bg-carbon/5 border border-carbon/15 text-carbon p-1.5 rounded text-xs focus:outline-none focus:border-terracota"
-                      value={step.target || ''}
+                      value={Array.isArray(step.target) ? JSON.stringify(step.target) : step.target || ''}
                       onChange={(e) => handleStepChange(index, 'target', e.target.value)}
                     >
                       <option value="">Sin target</option>
+                      {Array.isArray(step.target) && <option value={JSON.stringify(step.target)}>Grupo actual: {step.target.join(', ')}</option>}
                       {diagramTargets.map(target => (
-                        <option key={target.id} value={target.id}>{target.id} · {target.label}</option>
+                        <option
+                          key={target.qualifiedId ?? `${target.id}-${target.objectId ?? ''}`}
+                          value={diagramTargets.filter(item => item.id === target.id).length > 1 ? target.qualifiedId ?? target.id : target.id}
+                        >
+                          {diagramTargets.filter(item => item.id === target.id).length > 1 ? target.qualifiedId : target.id} · {target.label}
+                        </option>
                       ))}
                     </select>
                   </div>
@@ -198,6 +204,16 @@ export const DemonstrationBlock: React.FC<DemonstrationBlockProps> = ({ steps, d
                     <p className="mt-1 text-[10px] italic text-ocre">Aviso: este paso no enlaza ningún InteractiveElement o highlightTarget.</p>
                   )}
                 </div>
+
+                {(step.leanBlocks?.length || step.leanBlocksExpression) && (
+                  <aside className="rounded border border-pavo/20 bg-pavo/5 p-2" aria-label={`Traza Lean del paso ${step.number}`}>
+                    <p className="text-[9px] font-bold uppercase tracking-wider text-pavo">Traza Lean · solo lectura</p>
+                    <p className="mt-1 font-mono text-[10px] text-carbon/65">
+                      {step.leanBlocks?.join(', ') || step.leanBlocksExpression}
+                    </p>
+                    <p className="mt-1 text-[10px] italic text-carbon/50">Complementa la comprobación mecánica; la justificación pedagógica anterior sigue siendo obligatoria.</p>
+                  </aside>
+                )}
               </div>
             );
           })}

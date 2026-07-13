@@ -10,15 +10,15 @@
 
 ## Resumen ejecutivo
 
-**Hallazgos objetivos.** Se inspeccionaron 733 archivos de texto, 426 archivos TS/TSX, 86 archivos de test y 120 archivos MDX.
+**Hallazgos objetivos.** Se inspeccionaron 741 archivos de texto, 434 archivos TS/TSX, 89 archivos de test y 120 archivos MDX.
 
-**Heurísticas aproximadas.** Se localizaron 1053 apariciones léxicas de `any`, 276 colores hex, 27 marcas TODO/FIXME, 41 archivos TS/TSX grandes y 40 rutas de importación potencialmente incompatibles con FSD.
+**Heurísticas aproximadas.** Se localizaron 1055 apariciones léxicas de `any`, 276 colores hex, 27 marcas TODO/FIXME, 41 archivos TS/TSX grandes y 40 rutas de importación potencialmente incompatibles con FSD.
 
 **Recomendación.** Empezar por las rutas FSD y supresiones TypeScript, continuar con hex fuera de tokens, descomponer puntos de alta responsabilidad y cerrar después cobertura, contenido, Lean y duplicación IA.
 
 ## Deuda TypeScript
 
-**Hallazgo objetivo.** Hay 426 archivos TS/TSX en el alcance; 0 archivo(s) contienen 0 supresiones `@ts-*`.
+**Hallazgo objetivo.** Hay 434 archivos TS/TSX en el alcance; 0 archivo(s) contienen 0 supresiones `@ts-*`.
 
 _Ninguno detectado._
 
@@ -123,6 +123,7 @@ _Ninguno detectado._
 | `src/widgets/diagrams/Axiomas/Incidence5.tsx` | 2 |
 | `src/widgets/diagrams/Axiomas/Incidence7.tsx` | 2 |
 | `src/widgets/layouts/InteractiveLessonLayout.tsx` | 2 |
+| `tests/features/editor/diagrams/Phase4Interaction.test.tsx` | 2 |
 | `scripts/ai/generate-ai-indexes.ts` | 1 |
 | `scripts/utils/detect-missing-links.ts` | 1 |
 | `src/features/editor/ui/components/SemanticLinker.tsx` | 1 |
@@ -201,23 +202,24 @@ _Ninguno detectado._
 | Archivo | Líneas | Bytes |
 | --- | --- | --- |
 | `src/features/editor/ui/panels/VisualEditorPanel.tsx` | 988 | 54649 |
-| `src/features/editor/ui/EditorPage.tsx` | 895 | 33888 |
+| `src/features/editor/ui/EditorPage.tsx` | 901 | 34793 |
 | `scripts/ai/generate-debt-report.ts` | 848 | 35233 |
 | `scripts/ai/generate-ai-indexes.ts` | 770 | 29276 |
-| `src/features/editor/ui/diagrams/DiagramWorkbench.tsx` | 718 | 33101 |
-| `src/features/editor/diagrams/ui/DiagramInspector.tsx` | 715 | 37991 |
-| `src/features/editor/diagrams/model/commands.ts` | 648 | 26857 |
-| `src/features/editor/core/parser.ts` | 625 | 21040 |
+| `src/features/editor/ui/diagrams/DiagramWorkbench.tsx` | 742 | 34066 |
+| `src/features/editor/diagrams/model/commands.ts` | 718 | 29786 |
+| `src/features/editor/diagrams/ui/DiagramInspector.tsx` | 715 | 38027 |
+| `src/features/editor/core/parser.ts` | 639 | 21841 |
 | `scripts/editor/parseDiagramSourceAST.ts` | 547 | 21238 |
 | `tests/e2e/editor/editor-safe-ux.e2e.ts` | 545 | 27385 |
+| `src/shared/diagrams/runtime/DiagramRenderer.tsx` | 538 | 26032 |
 | `src/shared/diagrams/core/MathFactory.ts` | 526 | 18378 |
 | `tests/features/editor/useEditorCore.test.ts` | 517 | 23552 |
 | `src/features/graph/graph.worker.ts` | 509 | 15887 |
 | `src/widgets/diagrams/Definiciones/Cuadrilatero.tsx` | 490 | 21785 |
 | `src/shared/lib/glossaryDictionary.ts` | 483 | 18549 |
-| `src/shared/diagrams/runtime/DiagramRenderer.tsx` | 455 | 21382 |
-| `src/shared/diagrams/spec/scene.ts` | 449 | 20613 |
+| `src/shared/diagrams/spec/scene.ts` | 473 | 21652 |
 | `src/entities/content/ContentStore.ts` | 448 | 17825 |
+| `src/shared/diagrams/spec/schema.ts` | 446 | 22171 |
 | `scripts/core/lean-graph-utils.ts` | 439 | 15008 |
 | `src/entities/content/msc2020.ts` | 431 | 17110 |
 | `src/features/editor/ux/safetyPresentation.ts` | 431 | 16086 |
@@ -225,7 +227,6 @@ _Ninguno detectado._
 | `src/features/editor/core/useEditorCore.ts` | 407 | 20508 |
 | `tests/features/editor/persistence/editorPersistenceBackend.test.ts` | 400 | 21891 |
 | `src/features/editor/ux/diffReview.ts` | 380 | 13109 |
-| `src/shared/diagrams/spec/schema.ts` | 379 | 18967 |
 | `src/widgets/content/MarginaliaPanel.tsx` | 368 | 14638 |
 | `src/features/graph/ui/AxiomaticTree.tsx` | 366 | 16130 |
 | `tests/features/editor/diagrams/reducer.test.ts` | 360 | 14034 |
@@ -251,11 +252,11 @@ _Ninguno detectado._
 | Componente | Líneas | Imports | Hooks | Handlers |
 | --- | --- | --- | --- | --- |
 | `src/features/editor/ui/panels/VisualEditorPanel.tsx` | 988 | 6 | 0 | 113 |
-| `src/features/editor/ui/EditorPage.tsx` | 895 | 24 | 21 | 56 |
-| `src/features/editor/ui/diagrams/DiagramWorkbench.tsx` | 718 | 14 | 7 | 102 |
+| `src/features/editor/ui/EditorPage.tsx` | 901 | 24 | 21 | 56 |
+| `src/features/editor/ui/diagrams/DiagramWorkbench.tsx` | 742 | 16 | 6 | 109 |
 | `src/features/editor/diagrams/ui/DiagramInspector.tsx` | 715 | 6 | 0 | 140 |
+| `src/shared/diagrams/runtime/DiagramRenderer.tsx` | 538 | 8 | 7 | 23 |
 | `src/widgets/diagrams/Definiciones/Cuadrilatero.tsx` | 490 | 3 | 0 | 8 |
-| `src/shared/diagrams/runtime/DiagramRenderer.tsx` | 455 | 5 | 2 | 23 |
 | `src/widgets/content/MarginaliaPanel.tsx` | 368 | 8 | 1 | 4 |
 | `src/features/graph/ui/AxiomaticTree.tsx` | 366 | 15 | 27 | 22 |
 | `src/features/editor/ui/components/SemanticLinker.tsx` | 356 | 3 | 7 | 29 |
@@ -270,33 +271,36 @@ _Ninguno detectado._
 | `src/pages/Home/components/BranchLibrary.tsx` | 271 | 3 | 1 | 0 |
 | `src/pages/TheoremPage.tsx` | 263 | 16 | 3 | 0 |
 | `src/features/exercises/ui/Emparejar.tsx` | 262 | 3 | 8 | 2 |
+| `src/features/editor/ui/blocks/DemonstrationBlock.tsx` | 224 | 3 | 0 | 28 |
 | `src/features/exercises/ui/Clasificador.tsx` | 220 | 3 | 4 | 16 |
-| `src/features/editor/ui/blocks/DemonstrationBlock.tsx` | 208 | 3 | 0 | 28 |
-| `src/shared/diagrams/core/MathBoard.tsx` | 195 | 3 | 13 | 25 |
+| `src/features/editor/diagrams/ui/DiagramStepsEditor.tsx` | 211 | 5 | 0 | 34 |
+| `src/features/editor/ui/panels/MetadataPanel.tsx` | 200 | 5 | 0 | 21 |
 | `src/features/exercises/ui/Hueco.tsx` | 195 | 2 | 5 | 16 |
-| `src/features/editor/ui/panels/MetadataPanel.tsx` | 188 | 5 | 0 | 21 |
+| `src/shared/diagrams/core/MathBoard.tsx` | 192 | 4 | 13 | 25 |
 | `src/features/editor/ui/EditorToolbar.tsx` | 171 | 8 | 0 | 13 |
 | `src/features/editor/ui/components/MetadataInspector.tsx` | 166 | 2 | 1 | 24 |
 | `src/features/editor/ui/diff/DiffReviewPanel.tsx` | 164 | 2 | 1 | 19 |
 | `src/features/editor/diagrams/ui/DiagramToolbar.tsx` | 134 | 3 | 0 | 27 |
 | `src/features/glossary/ui/ConceptLink.tsx` | 113 | 6 | 3 | 15 |
+| `src/shared/ui/StepNavigator.tsx` | 109 | 3 | 5 | 12 |
 | `src/features/editor/ui/safety/UnsavedChangesDialog.tsx` | 107 | 2 | 1 | 21 |
+| `src/features/editor/diagrams/ui/DiagramTargetSelector.tsx` | 101 | 4 | 0 | 12 |
 | `src/features/editor/diagrams/ui/DiagramCanvas.tsx` | 65 | 5 | 0 | 16 |
 
 **Recomendación.** Separar coordinación, estado y presentación solo cuando la revisión confirme más de una razón de cambio.
 
 ## Deuda de tests por zona
 
-**Hallazgo objetivo.** Se detectaron 86 archivos de test. La tabla cuenta archivos fuente y tests que importan directamente cada zona.
+**Hallazgo objetivo.** Se detectaron 89 archivos de test. La tabla cuenta archivos fuente y tests que importan directamente cada zona.
 
 | Zona | TS/TSX fuente | Tests con import directo |
 | --- | --- | --- |
 | app | 6 | 2 |
 | pages | 22 | 0 |
-| widgets | 108 | 4 |
-| features | 124 | 36 |
+| widgets | 108 | 5 |
+| features | 126 | 38 |
 | entities | 9 | 7 |
-| shared | 54 | 23 |
+| shared | 57 | 26 |
 | database | 0 | 0 |
 
 **Heurística aproximada.** Cero imports directos no significa cero cobertura: una prueba puede cubrir una zona de forma transitiva. La tabla no usa instrumentación.

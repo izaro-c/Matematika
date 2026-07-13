@@ -5,6 +5,7 @@ import type {
   DiagramSceneItem,
   DiagramSceneState,
   DiagramSpecV2,
+  DiagramStepOverlay,
 } from './types';
 import { evaluateMathExpression } from './expressions';
 
@@ -26,8 +27,24 @@ export interface PlannedSceneItem {
   locked: boolean;
   highlighted: boolean;
   selected: boolean;
+  stepEmphasis: 'none' | 'secondary' | 'primary';
+  label: string;
+  interactive: boolean;
+  stepValue?: number;
   layerOrder: number;
   visualOrder: number;
+}
+
+export function evaluateStepOverlayContent(overlay: DiagramStepOverlay, variables: Record<string, number>): string {
+  if (!overlay.expression) return overlay.content;
+  try {
+    const evaluated = evaluateMathExpression(overlay.expression, variables);
+    const suffix = overlay.unit ? ` ${overlay.unit}` : '';
+    const value = `${evaluated.toFixed(overlay.precision ?? 2)}${suffix}`;
+    return overlay.content.split('{value}').join(value);
+  } catch {
+    return overlay.content.split('{value}').join('valor no definido');
+  }
 }
 
 export function resolvePointCoordinates(spec: DiagramSpecV2, id: string, visiting = new Set<string>()): { x: number; y: number } | undefined {
@@ -174,18 +191,21 @@ export function createScenePlan(spec: DiagramSpecV2, state: DiagramSceneState = 
   const selected = new Set(state.selectedIds ?? []);
   const activeStep = state.activeStepId ? spec.steps.find(step => step.id === state.activeStepId) : undefined;
   const stepTargets = activeStep ? new Set(activeStep.visibleTargets) : null;
+  const objectStates = activeStep?.objectStates ?? {};
   const layers = new Map(spec.layers.map(layer => [layer.id, layer]));
   const groups = new Map(spec.groups.map(group => [group.id, group]));
 
   return [...spec.points, ...spec.elements, ...spec.sliders]
     .map(item => {
+      const objectState = objectStates[item.id];
       const layer = layers.get(item.layerId);
       const itemGroups = item.groupIds.map(id => groups.get(id)).filter(Boolean);
       const visible = item.visible
         && layer?.visible !== false
         && itemGroups.every(group => group?.visible !== false)
-        && (!stepTargets || stepTargets.has(item.id));
-      const locked = item.locked || layer?.locked === true || itemGroups.some(group => group?.locked === true);
+        && (objectState?.visible ?? (!stepTargets || stepTargets.has(item.id)));
+      const interactive = objectState?.interactive ?? true;
+      const locked = !interactive || item.locked || layer?.locked === true || itemGroups.some(group => group?.locked === true);
       const layerOrder = layer?.order ?? 0;
       return {
         item,
@@ -193,6 +213,10 @@ export function createScenePlan(spec: DiagramSpecV2, state: DiagramSceneState = 
         locked,
         highlighted: highlighted.has(item.id),
         selected: selected.has(item.id) || itemGroups.some(group => selected.has(group?.id ?? '')),
+        stepEmphasis: objectState?.emphasis ?? 'none',
+        label: objectState?.label || item.label,
+        interactive,
+        stepValue: objectState?.value,
         layerOrder,
         visualOrder: layerOrder * 100_000 + item.order,
       };

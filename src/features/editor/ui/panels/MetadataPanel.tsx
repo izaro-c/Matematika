@@ -25,7 +25,9 @@ interface MetadataPanelProps {
   pageDiagramLinks: PageDiagramLink[];
   pageConnectionSummary: {
     connected: Array<{ target: string; label: string; kind: string }>;
-    missingTargets: Array<{ id: string; label?: string; color?: string }>;
+    missingTargets: Array<{ id: string; label?: string; color?: string; qualifiedId?: string }>;
+    invalidConnections: Array<{ target: string; label: string; kind: string }>;
+    ambiguousConnections: Array<{ target: string; label: string; kind: string }>;
   };
   setActiveDiagramIndex: (index: number | null) => void;
   setActiveDiagramBlockId: (id: string | null) => void;
@@ -95,7 +97,7 @@ export const MetadataPanel: React.FC<MetadataPanelProps> = ({
                 <div className="mt-2 flex flex-wrap gap-1">
                   {link.targets.slice(0, 6).map(target => (
                     <button
-                      key={target.id}
+                      key={target.qualifiedId ?? target.id}
                       type="button"
                       onClick={() => insertInteractiveTargetParagraph(target)}
                       className="rounded border border-carbon/10 bg-lienzo px-1.5 py-0.5 font-mono text-[9px] text-carbon/60 hover:border-salvia/30 hover:text-salvia cursor-pointer"
@@ -134,6 +136,16 @@ export const MetadataPanel: React.FC<MetadataPanelProps> = ({
         {(pageConnectionSummary.connected.length > 0 || pageConnectionSummary.missingTargets.length > 0) && (
           <div className="mt-4 rounded border border-carbon/10 bg-carbon/5 p-3">
             <h4 className="text-[10px] font-bold uppercase tracking-widest text-carbon/55 select-none">Conexiones texto-diagrama</h4>
+            {pageConnectionSummary.invalidConnections.length > 0 && (
+              <div className="mt-2 rounded border border-granada/25 bg-granada/5 p-2 text-[10px] text-granada" role="alert">
+                Referencias inexistentes: {pageConnectionSummary.invalidConnections.map(item => item.target).join(', ')}.
+              </div>
+            )}
+            {pageConnectionSummary.ambiguousConnections.length > 0 && (
+              <div className="mt-2 rounded border border-ocre/25 bg-ocre/5 p-2 text-[10px] text-carbon" role="status">
+                Targets presentes en varios diagramas: {pageConnectionSummary.ambiguousConnections.map(item => item.target).join(', ')}. Use el formato diagrama:target.
+              </div>
+            )}
             {pageConnectionSummary.connected.length > 0 && (
               <div className="mt-2 space-y-1">
                 {pageConnectionSummary.connected.slice(0, 8).map((connection, index) => (

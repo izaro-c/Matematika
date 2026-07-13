@@ -10,6 +10,8 @@ import { DiagramStatusBar } from '../../diagrams/ui/DiagramStatusBar';
 import { DiagramReferencesPanel } from '../../diagrams/ui/DiagramReferencesPanel';
 import { DiagramCodePanel } from '../../diagrams/ui/DiagramCodePanel';
 import { DiagramValidationPanel } from '../../diagrams/ui/DiagramValidationPanel';
+import { DiagramStepsEditor } from '../../diagrams/ui/DiagramStepsEditor';
+import { DiagramTargetSelector } from '../../diagrams/ui/DiagramTargetSelector';
 import { generateDiagramSource } from '../../diagrams/source/generator';
 import {
   CONSTRUCTION_OPTIONS, KIND_LABELS, refsNeededForTool,
@@ -17,7 +19,7 @@ import {
   generatedElementId, elementColorForKind,
   supportElements, applyGuidedConstruction,
   normalizeConstructionRefs, validConstructionRefs,
-  normalizeVisualModel, createTemplateModel
+  normalizeVisualModel, createTemplateModel, nextStepId
 } from '../../diagrams/model/commands';
 
 export type DiagramWorkbenchMode =
@@ -79,6 +81,7 @@ export const DiagramWorkbenchCore: React.FC<DiagramWorkbenchCoreProps> = ({
     redo,
     selectElement,
     setCanvasTool,
+    setActiveStep,
     resolveDivergence,
     saveDiagram,
   } = useDiagramState();
@@ -87,7 +90,6 @@ export const DiagramWorkbenchCore: React.FC<DiagramWorkbenchCoreProps> = ({
 
   // Local UI states
   const [previewHighlightId, setPreviewHighlightId] = useState('');
-  const [previewStepId, setPreviewStepId] = useState('');
   const [selectedTargetId, setSelectedTargetId] = useState('');
 
   // Guided constructions
@@ -244,7 +246,7 @@ export const DiagramWorkbenchCore: React.FC<DiagramWorkbenchCoreProps> = ({
   };
 
   const handleAddStep = () => {
-    const id = `step${model.steps.length + 1}`;
+    const id = nextStepId(model.steps);
     const visibleTargets = [
       ...model.points.map(item => item.id),
       ...model.elements.map(item => item.id),
@@ -256,7 +258,7 @@ export const DiagramWorkbenchCore: React.FC<DiagramWorkbenchCoreProps> = ({
       steps: [...model.steps, newStep],
     });
     selectElement(id);
-    setPreviewStepId(id);
+    setActiveStep(id);
   };
 
   const handleAddElement = (kind: ElementKind, explicitRefs?: string[]) => {
@@ -313,6 +315,9 @@ export const DiagramWorkbenchCore: React.FC<DiagramWorkbenchCoreProps> = ({
       steps: model.steps.filter(item => item.id !== selectedId).map(item => ({
         ...item,
         visibleTargets: item.visibleTargets.filter(t => t !== selectedId),
+        objectStates: item.objectStates
+          ? Object.fromEntries(Object.entries(item.objectStates).filter(([id]) => id !== selectedId))
+          : undefined,
       })),
       groups: model.groups.map(group => ({ ...group, memberIds: group.memberIds.filter(id => id !== selectedId) })),
       constraints: model.constraints?.filter(constraint => constraint.id !== selectedId && !constraint.refs.includes(selectedId)),
@@ -470,8 +475,8 @@ export const DiagramWorkbenchCore: React.FC<DiagramWorkbenchCoreProps> = ({
                 <label className="block text-[10px] font-bold text-carbon mb-1">Paso Activo</label>
                 <select
                   className="w-full rounded border border-carbon/15 bg-lienzo p-1.5 text-xs"
-                  value={previewStepId}
-                  onChange={(e) => setPreviewStepId(e.target.value)}
+                  value={state.activeStepId}
+                  onChange={(e) => setActiveStep(e.target.value)}
                 >
                   <option value="">Mostrar todo</option>
                   {model.steps.map(s => (
@@ -619,10 +624,29 @@ export const DiagramWorkbenchCore: React.FC<DiagramWorkbenchCoreProps> = ({
               canvasTool={state.canvasTool}
               pendingRefs={pendingRefs}
               previewHighlightId={previewHighlightId}
-              previewStepId={previewStepId}
+              previewStepId={state.activeStepId}
               onSelect={selectElement}
               onModelEdit={handleVisualEdit}
               onChoosePointForTool={choosePointForTool}
+            />
+
+            <DiagramStepsEditor
+              model={model}
+              activeStepId={state.activeStepId || model.steps[0]?.id || ''}
+              onActiveStepChange={setActiveStep}
+              onModelEdit={handleVisualEdit}
+              onSelectObject={selectElement}
+            />
+
+            <DiagramTargetSelector
+              model={model}
+              selectedTargetId={selectedTargetId}
+              onSelectTarget={(objectId, targetId) => {
+                selectElement(objectId);
+                setSelectedTargetId(targetId);
+                setPreviewHighlightId(targetId);
+              }}
+              onModelEdit={handleVisualEdit}
             />
 
             <DiagramValidationPanel

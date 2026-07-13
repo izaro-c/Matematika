@@ -1,6 +1,7 @@
 import { createContext, useContext, useState, type ReactNode } from 'react';
 import { useStore } from 'zustand';
 import { createMathStore, type MathState, type MathStore } from './MathStore';
+import { DiagramTargetRegistryProvider } from './DiagramTargetRegistryContext';
 
 const MathContext = createContext<MathStore | null>(null);
 
@@ -9,7 +10,7 @@ export const MathProvider = ({ children }: { children: ReactNode }) => {
 
   return (
     <MathContext.Provider value={store}>
-      {children}
+      <DiagramTargetRegistryProvider>{children}</DiagramTargetRegistryProvider>
     </MathContext.Provider>
   );
 };

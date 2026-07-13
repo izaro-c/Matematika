@@ -50,7 +50,7 @@ export function diagramReducer(state: DiagramState, action: DiagramAction): Diag
         expectedVersion: action.expectedVersion ?? null,
         diagnostics,
         selectedId: model?.points[0]?.id || '',
-        activeStepId: '',
+        activeStepId: model?.steps[0]?.id || '',
         canvasTool: 'select',
         modelHistory: createCommandHistory(model),
       };
@@ -71,7 +71,7 @@ export function diagramReducer(state: DiagramState, action: DiagramAction): Diag
         expectedVersion: null,
         diagnostics,
         selectedId: action.model.points[0]?.id || '',
-        activeStepId: '',
+        activeStepId: action.model.steps[0]?.id || '',
         canvasTool: 'select',
         modelHistory: createCommandHistory(action.model),
       };

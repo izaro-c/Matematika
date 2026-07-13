@@ -28,10 +28,14 @@ export interface ProofStepData {
   number: number;
   title: string;
   justificacion: string;
-  target?: string;
+  target?: string | string[];
   body?: string;
   justificationType?: 'hipotesis' | 'axioma' | 'teorema' | 'definicion' | 'paso-previo' | 'regla-logica' | 'construccion';
   dependencyId?: string;
+  /** IDs Lean resueltos cuando la fuente contiene un array literal. Solo lectura en el editor. */
+  leanBlocks?: string[];
+  /** Expresión fuente (p. ej. metadata.stepTacticMap["1"]). Se conserva sin editar. */
+  leanBlocksExpression?: string;
 }
 
 export interface Block {
@@ -65,6 +69,12 @@ function serializeAttributeLines(attrs: Record<string, any>): string {
     .map(([key, value]) => serializeAttribute(key, value))
     .filter(Boolean)
     .join('\n  ');
+}
+
+function serializeProofTarget(target: ProofStepData['target']): string {
+  if (!target) return '';
+  if (Array.isArray(target)) return `target={${JSON.stringify(target)}}`;
+  return `target="${target}"`;
 }
 
 function markdownChunkToBlock(trimmed: string): Block {
@@ -298,7 +308,9 @@ export function parseBodyToBlocks(body: string): Block[] {
         target: attrs.target || '',
         body: (stepMatch[2] || '').trim(),
         justificationType: attrs.justificationType || undefined,
-        dependencyId: attrs.dependencyId || ''
+        dependencyId: attrs.dependencyId || '',
+        leanBlocks: Array.isArray(attrs.leanBlocks) ? attrs.leanBlocks : undefined,
+        leanBlocksExpression: typeof attrs.leanBlocks === 'string' ? attrs.leanBlocks : undefined,
       });
     }
 
@@ -593,11 +605,13 @@ export function stringifyBlocksToBody(blocks: Block[]): string {
       const stepParts = steps.map((s: ProofStepData) => {
         const attrs = [
           `number={${s.number}}`,
-          s.target ? `target="${s.target}"` : '',
+          serializeProofTarget(s.target),
           s.title ? `title="${s.title}"` : '',
           s.justificacion ? `justificacion="${s.justificacion}"` : '',
           s.justificationType ? `justificationType="${s.justificationType}"` : '',
-          s.dependencyId ? `dependencyId="${s.dependencyId}"` : ''
+          s.dependencyId ? `dependencyId="${s.dependencyId}"` : '',
+          s.leanBlocks ? `leanBlocks={${JSON.stringify(s.leanBlocks)}}` : '',
+          s.leanBlocksExpression ? `leanBlocks={${s.leanBlocksExpression}}` : '',
         ].filter(Boolean).join(' ');
         const body = s.body?.trim();
         if (!body) return `  <ProofStep ${attrs} />`;
