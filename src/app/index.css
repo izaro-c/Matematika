@@ -1,3 +1,4 @@
+@import url('https://fonts.googleapis.com/css2?family=Fondamento:ital@0;1&display=swap');
 @import "katex/dist/katex.min.css";
 
 .katex-display,
@@ -9,6 +10,8 @@
 @import "tailwindcss";
 
 @theme {
+  --font-title: "Fondamento", ui-serif, Georgia, Cambria, "Times New Roman", Times, serif;
+
   /* Nuestra Paleta Semántica referenciando a variables CSS */
   --color-lienzo: var(--theme-lienzo);
   --color-carbon: var(--theme-carbon);
@@ -207,7 +210,7 @@ body {
 }
 
 .demo-container h1 {
-  font-family: ui-serif, Georgia, Cambria, "Times New Roman", Times, serif;
+  font-family: var(--font-title);
   font-size: 3.75rem; /* text-6xl equivalente para los demos que son a pantalla completa */
   color: var(--theme-terracota);
   margin-bottom: 1.5rem;
@@ -334,6 +337,11 @@ a:focus-visible, button:focus-visible {
   font-size: 1.125rem;
 }
 
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-title) !important;
+  font-style: normal !important;
+}
+
 .prose h1 {
   font-size: 3rem;
   line-height: 1.15;
@@ -359,7 +367,7 @@ a:focus-visible, button:focus-visible {
 .prose h3 {
   font-size: 1.375rem;
   line-height: 1.3;
-  font-style: italic;
+  font-style: normal;
   font-weight: 700;
   color: var(--theme-terracota);
   margin-top: 2rem;

@@ -15,7 +15,7 @@ interface SemanticLinkerProps {
   diagramTargets?: DiagramTargetRegistry;
 }
 
-type LinkType = 'concept' | 'graphic' | 'combined';
+type LinkType = 'concept' | 'reference' | 'graphic' | 'combined';
 
 const ARTS_CRAFTS_COLORS = [
   { name: 'salvia' },
@@ -84,6 +84,10 @@ export const SemanticLinker: React.FC<SemanticLinkerProps> = ({
           setSelectedColor('salvia');
           setIsDependency(initialAttrs.isDependency === true || initialAttrs.isDependency === 'true');
         }
+      } else if (editingTag === 'RefLink') {
+        setLinkType('reference');
+        setSelectedConcept(initialAttrs.targetId || null);
+        setGraphElementId('');
       } else if (editingTag === 'InteractiveElement') {
         setLinkType('graphic');
         setGraphElementId(initialAttrs.target || '');
@@ -150,6 +154,9 @@ export const SemanticLinker: React.FC<SemanticLinkerProps> = ({
     if (linkType === 'concept') {
       if (!selectedConcept) return;
       markup = `<ConceptLink targetId="${selectedConcept}" isDependency={${isDependency}}>${selectedText}</ConceptLink>`;
+    } else if (linkType === 'reference') {
+      if (!selectedConcept) return;
+      markup = `<RefLink targetId="${selectedConcept}">${selectedText}</RefLink>`;
     } else if (linkType === 'graphic') {
       if (!graphElementId.trim()) return;
       markup = `<InteractiveElement target="${graphElementId.trim()}" color="${selectedColor}">${selectedText}</InteractiveElement>`;
@@ -161,6 +168,7 @@ export const SemanticLinker: React.FC<SemanticLinkerProps> = ({
     onLinkCreated(markup);
     onClose();
   };
+  const selectedTargetIsValid = !graphElementId.trim() || diagramTargets.some(target => target.id === graphElementId.trim() || target.qualifiedId === graphElementId.trim());
 
   return (
     <div
@@ -191,6 +199,13 @@ export const SemanticLinker: React.FC<SemanticLinkerProps> = ({
         </button>
         <button
           type="button"
+          onClick={() => setLinkType('reference')}
+          className={`flex-1 py-1 rounded-sm text-center transition-all ${linkType === 'reference' ? 'bg-lienzo shadow-sm text-carbon' : 'text-carbon/50 hover:text-carbon'}`}
+        >
+          Ref
+        </button>
+        <button
+          type="button"
           onClick={() => setLinkType('graphic')}
           className={`flex-1 py-1 rounded-sm text-center transition-all ${linkType === 'graphic' ? 'bg-lienzo shadow-sm text-carbon' : 'text-carbon/50 hover:text-carbon'}`}
         >
@@ -206,7 +221,7 @@ export const SemanticLinker: React.FC<SemanticLinkerProps> = ({
       </div>
 
       {/* Contenido según pestaña */}
-      {(linkType === 'concept' || linkType === 'combined') && (
+      {(linkType === 'concept' || linkType === 'reference' || linkType === 'combined') && (
         <div className="space-y-1.5">
           <label className="block text-[9px] uppercase font-bold text-carbon/50 font-sans">Concepto en Biblioteca</label>
           {selectedConcept ? (
@@ -256,7 +271,7 @@ export const SemanticLinker: React.FC<SemanticLinkerProps> = ({
             </div>
           )}
 
-          <label className="flex items-center justify-between rounded border border-carbon/10 bg-carbon/5 px-2 py-1.5 text-[10px] font-bold text-carbon/60">
+          {linkType !== 'reference' && <label className="flex items-center justify-between rounded border border-carbon/10 bg-carbon/5 px-2 py-1.5 text-[10px] font-bold text-carbon/60">
             <span>Crear dependencia formal</span>
             <input
               type="checkbox"
@@ -264,7 +279,7 @@ export const SemanticLinker: React.FC<SemanticLinkerProps> = ({
               onChange={(event) => setIsDependency(event.target.checked)}
               className="accent-salvia"
             />
-          </label>
+          </label>}
         </div>
       )}
 
@@ -298,6 +313,7 @@ export const SemanticLinker: React.FC<SemanticLinkerProps> = ({
               value={graphElementId}
               onChange={(e) => setGraphElementId(e.target.value)}
             />
+            {!selectedTargetIsValid && <p className="text-[10px] text-granada" role="alert">El target no está publicado por ningún diagrama enlazado.</p>}
           </div>
 
           <div className="space-y-1">
@@ -329,8 +345,10 @@ export const SemanticLinker: React.FC<SemanticLinkerProps> = ({
           type="button"
           disabled={
             (linkType === 'concept' && !selectedConcept) ||
+            (linkType === 'reference' && !selectedConcept) ||
             (linkType === 'graphic' && !graphElementId.trim()) ||
-            (linkType === 'combined' && (!selectedConcept || !graphElementId.trim()))
+            (linkType === 'combined' && (!selectedConcept || !graphElementId.trim())) ||
+            ((linkType === 'graphic' || linkType === 'combined') && !selectedTargetIsValid)
           }
           onClick={handleCreate}
           className="w-full py-1.5 bg-salvia text-lienzo rounded text-xs font-serif font-bold hover:bg-salvia/80 disabled:opacity-40 transition-all shadow-sm"

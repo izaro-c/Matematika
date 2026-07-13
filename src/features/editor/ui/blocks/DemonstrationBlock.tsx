@@ -6,6 +6,7 @@ interface DemonstrationBlockProps {
   steps: ProofStepData[];
   diagramTargets?: DiagramTargetRegistry;
   onChange: (updatedSteps: ProofStepData[]) => void;
+  singleStepMode?: boolean;
 }
 
 const JUSTIFICATION_TYPES: Array<{ value: NonNullable<ProofStepData['justificationType']>; label: string }> = [
@@ -18,7 +19,7 @@ const JUSTIFICATION_TYPES: Array<{ value: NonNullable<ProofStepData['justificati
   { value: 'construccion', label: 'Construcción' },
 ];
 
-export const DemonstrationBlock: React.FC<DemonstrationBlockProps> = ({ steps, diagramTargets = [], onChange }) => {
+export const DemonstrationBlock: React.FC<DemonstrationBlockProps> = ({ steps, diagramTargets = [], onChange, singleStepMode = false }) => {
   const handleStepChange = (index: number, field: keyof ProofStepData, value: string | number) => {
     const updated = steps.map((s, i) => i === index ? { ...s, [field]: value } : s);
     onChange(updated);
@@ -65,13 +66,13 @@ export const DemonstrationBlock: React.FC<DemonstrationBlockProps> = ({ steps, d
           </label>
           <p className="mt-1 text-[10px] italic text-carbon/45">Cada paso debe decir qué prueba, por qué es válido y qué elemento visual acompaña la lectura.</p>
         </div>
-        <button
+        {!singleStepMode && <button
           type="button"
           onClick={handleAddStep}
           className="text-[10px] bg-terracota text-lienzo px-3 py-1 rounded shadow-sm hover:bg-terracota/80 transition-all font-bold"
         >
           + Añadir Paso Lógico
-        </button>
+        </button>}
       </div>
 
       {steps.length === 0 ? (
@@ -96,7 +97,7 @@ export const DemonstrationBlock: React.FC<DemonstrationBlockProps> = ({ steps, d
                   <span className="text-xs font-bold text-carbon/50 font-mono">
                     Paso {step.number}
                   </span>
-                  <div className="flex items-center gap-2">
+                  {!singleStepMode && <div className="flex items-center gap-2">
                     <button
                       type="button"
                       onClick={() => handleDuplicateStep(index)}
@@ -113,7 +114,7 @@ export const DemonstrationBlock: React.FC<DemonstrationBlockProps> = ({ steps, d
                     >
                       Eliminar
                     </button>
-                  </div>
+                  </div>}
                 </div>
 
                 <div className="grid grid-cols-2 gap-3">

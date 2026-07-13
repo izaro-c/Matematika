@@ -63,6 +63,7 @@ export const MetadataInspector: React.FC<MetadataInspectorProps> = ({
           <textarea
             className="min-h-[58px] w-full resize-y rounded border border-carbon/15 bg-lienzo p-1.5 text-xs text-carbon focus:border-terracota focus:outline-none"
             value={String(value)}
+            disabled={field.readonly}
             placeholder={field.placeholder}
             onChange={(event) => onChange(field.key, event.target.value)}
           />
@@ -70,6 +71,7 @@ export const MetadataInspector: React.FC<MetadataInspectorProps> = ({
           <input
             className="w-full rounded border border-carbon/15 bg-lienzo p-1.5 text-xs text-carbon focus:border-terracota focus:outline-none"
             value={Array.isArray(value) ? value.join(', ') : String(value || '')}
+            disabled={field.readonly}
             placeholder={field.placeholder || 'id-uno, id-dos'}
             onChange={(event) => onChange(
               field.key,
@@ -82,6 +84,7 @@ export const MetadataInspector: React.FC<MetadataInspectorProps> = ({
             <input
               type="checkbox"
               checked={Boolean(value)}
+              disabled={field.readonly}
               onChange={(event) => onChange(field.key, event.target.checked)}
             />
           </div>
@@ -89,6 +92,7 @@ export const MetadataInspector: React.FC<MetadataInspectorProps> = ({
           <input
             className="w-full rounded border border-carbon/15 bg-lienzo p-1.5 text-xs text-carbon focus:border-terracota focus:outline-none"
             value={String(value)}
+            disabled={field.readonly}
             placeholder={field.placeholder}
             onChange={(event) => onChange(field.key, event.target.value)}
           />

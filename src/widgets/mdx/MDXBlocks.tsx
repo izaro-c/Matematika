@@ -219,7 +219,10 @@ interface CapitularProps {
   letra: string;
 }
 export const Capitular: React.FC<CapitularProps> = ({ letra }) => (
-  <span className="page-accent-text float-left text-7xl font-serif font-bold pr-3 pl-1 leading-[0.7] mt-2 mb-[-8px] select-none pointer-events-none drop-shadow-sm">
+  <span
+    className="page-accent-text float-left text-7xl font-bold pr-3 pl-1 leading-[0.7] mt-2 mb-[-8px] select-none pointer-events-none drop-shadow-sm"
+    style={{ fontFamily: 'Georgia, serif' }}
+  >
     {letra}
   </span>
 );

@@ -1,9 +1,11 @@
-import React from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import { KatexText } from '@/shared/ui/KatexText';
 import { FormulaBlock } from '../blocks/FormulaBlock';
 import { DemonstrationBlock } from '../blocks/DemonstrationBlock';
 import { Block, BlockType, parseInlineNodes } from '../../core/parser';
 import type { DiagramTargetRegistry } from '../../core/editorTypes';
+import { useMathStore } from '@/shared/lib/MathStoreContext';
+import { buildDocumentOutline } from '../../ux/authoringModel';
 
 const LATEX_SYMBOLS = [
   { label: '∀', code: '\\forall ' },
@@ -33,7 +35,7 @@ const GENERAL_BLOCK_PRESETS: BlockPreset[] = [
   { label: 'Tabla', type: 'table', content: '| Magnitud | Valor |\n|---|---|\n| a | $1$ |' },
   { label: 'Fórmula', type: 'formula', content: '$$ x = y $$' },
   { label: 'Definición', type: 'definition_box', content: 'Se define con precisión el objeto matemático.', metadata: { title: 'Definición' } },
-  { label: 'Nota', type: 'note', content: 'Observación, caso límite o aclaración breve.' },
+  { label: 'Advertencia / nota', type: 'note', content: 'Se declara con precisión una advertencia, un caso límite o una aclaración.' },
   { label: 'Cita', type: 'citation', content: 'Texto de la cita.', metadata: { author: '' } },
   { label: 'Separador', type: 'separator', content: '' },
   { label: 'Demostración', type: 'demonstration', content: '', metadata: { steps: [] } },
@@ -52,6 +54,12 @@ const PAGE_PROFILE_PRESETS: Record<string, BlockPreset[]> = {
   ],
   demostracion: [
     { label: 'Paso lógico', type: 'demonstration', content: '', metadata: { steps: [{ number: 1, title: 'Paso lógico', justificacion: 'Por hipótesis o por resultado previo especificado.', target: '', body: 'Se escribe la afirmación del paso con sus enlaces semánticos e interactivos.' }] }, group: 'profile' },
+  ],
+  ejemplo: [
+    { label: 'Datos del ejemplo', type: 'definition_box', content: 'Se fijan los datos y las hipótesis del caso concreto.', metadata: { title: 'Datos' }, group: 'profile' },
+    { label: 'Desarrollo razonado', type: 'paragraph', content: 'Se aplica el resultado correspondiente y se justifica cada transformación.', group: 'profile' },
+    { label: 'Resultado', type: 'formula', content: '$$ x = y $$', group: 'profile' },
+    { label: 'Comprobación', type: 'note', content: 'Se comprueba el resultado sin usar la apariencia del diagrama como argumento.', group: 'profile' },
   ],
   ejercicio: [
     {
@@ -124,40 +132,60 @@ function renderFormattedText(
         ? 'text-salvia border-b border-dashed border-salvia/30'
         : 'text-pavo border-b border-dashed border-pavo/30';
       const targetLabel = Array.isArray(node.attrs.targetId) ? node.attrs.targetId.join(', ') : node.attrs.targetId || '';
-      return (
-        <span
-          key={key}
-          onClick={(e) => onEditLink && onEditLink(blockId, node.raw, node.value, node.attrs, tag, e)}
-          className={`${colorClass} font-bold cursor-pointer hover:bg-salvia/10 px-0.5 transition-colors relative group/link`}
-          title={`Vínculo a: ${targetLabel} (Click para editar)`}
-        >
-          {renderFormattedText(node.value, `${key}-inner`, onEditLink)}
-          <span className="absolute bottom-full left-1/2 -translate-x-1/2 mb-1 hidden group-hover/link:block bg-carbon text-lienzo text-[9px] px-1.5 py-0.5 rounded shadow-md whitespace-nowrap z-30 font-sans">
-            Concepto: {targetLabel || 'sin destino'}
-          </span>
-        </span>
-      );
+      return <InteractivePreviewToken key={key} blockId={blockId} raw={node.raw} text={node.value} attrs={node.attrs}
+        tag={tag} target={String(node.attrs.highlightTarget || '')} colorClass={colorClass}
+        title={`Vínculo a: ${targetLabel} (Click para editar)`} onEditLink={onEditLink}
+        tooltip={`Concepto: ${targetLabel || 'sin destino'}`} />;
     }
 
     const color = node.attrs.color || 'salvia';
     const colorClass = `text-${color} border-b border-dashed border-${color}/30`;
-    return (
-      <span
-        key={key}
-        onClick={(e) => onEditLink && onEditLink(blockId, node.raw, node.value, node.attrs, 'InteractiveElement', e)}
-        className={`${colorClass} font-bold cursor-pointer hover:bg-carbon/10 px-0.5 transition-colors relative group/link`}
-        title={`Resalta en gráfico: ${node.attrs.target || ''} (Click para editar)`}
-      >
-        {renderFormattedText(node.value, `${key}-inner`, onEditLink)}
-        <span className="absolute bottom-full left-1/2 -translate-x-1/2 mb-1 hidden group-hover/link:block bg-carbon text-lienzo text-[9px] px-1.5 py-0.5 rounded shadow-md whitespace-nowrap z-30 font-sans">
-          Resalta: {node.attrs.target || ''} ({color})
-        </span>
-      </span>
-    );
+    return <InteractivePreviewToken key={key} blockId={blockId} raw={node.raw} text={node.value} attrs={node.attrs}
+      tag="InteractiveElement" target={String(node.attrs.target || '')} colorClass={colorClass}
+      title={`Resalta en gráfico: ${node.attrs.target || ''} (Click para editar)`} onEditLink={onEditLink}
+      tooltip={`Resalta: ${node.attrs.target || ''} (${color})`} />;
   });
 
   return parts.length > 0 ? parts : text;
 }
+
+interface InteractivePreviewTokenProps {
+  blockId: string;
+  raw: string;
+  text: string;
+  attrs: Record<string, unknown>;
+  tag: string;
+  target: string;
+  colorClass: string;
+  title: string;
+  tooltip: string;
+  onEditLink?: (blockId: string, rawMarkup: string, text: string, attrs: Record<string, unknown>, tag: string, e: React.MouseEvent) => void;
+}
+
+const InteractivePreviewToken: React.FC<InteractivePreviewTokenProps> = ({
+  blockId, raw, text, attrs, tag, target, colorClass, title, tooltip, onEditLink,
+}) => {
+  const highlight = useMathStore(state => state.variables.highlight);
+  const setVariable = useMathStore(state => state.setVariable);
+  const active = target.length > 0 && (Array.isArray(highlight) ? highlight.some(item => item === target) : highlight === target || (typeof highlight === 'string' && highlight.endsWith(`:${target}`)));
+  const activate = () => { if (target) setVariable('highlight', target); };
+  return (
+    <span
+      onClick={(event) => onEditLink?.(blockId, raw, text, attrs, tag, event)}
+      onMouseEnter={activate}
+      onMouseLeave={() => target && setVariable('highlight', null)}
+      onFocus={activate}
+      onBlur={() => target && setVariable('highlight', null)}
+      tabIndex={target ? 0 : undefined}
+      className={`${colorClass} ${active ? 'bg-ocre/15 ring-2 ring-ocre/25' : ''} relative cursor-pointer rounded px-0.5 font-bold transition-colors group/link`}
+      title={title}
+      data-diagram-reference={target || undefined}
+    >
+      {renderFormattedText(text, `${blockId}-inner`, onEditLink)}
+      <span className="absolute bottom-full left-1/2 z-30 mb-1 hidden -translate-x-1/2 whitespace-nowrap rounded bg-carbon px-1.5 py-0.5 font-sans text-[9px] text-lienzo shadow-md group-hover/link:block">{tooltip}</span>
+    </span>
+  );
+};
 
 interface VisualEditorPanelProps {
   currentFile: string | null;
@@ -169,7 +197,7 @@ interface VisualEditorPanelProps {
   editingBlockId: string | null;
   setEditingBlockId: (id: string | null) => void;
   handleMetadataChange: (key: string, value: unknown) => void;
-  addBlock: (index: number, type: BlockType) => void;
+  addBlock: (index: number, type: BlockType, content?: string, metadata?: Record<string, unknown>) => void;
   moveBlock: (from: number, to: number) => void;
   duplicateBlock: (id: string) => void;
   removeBlock: (id: string) => void;
@@ -204,7 +232,22 @@ export const VisualEditorPanel: React.FC<VisualEditorPanelProps> = ({
   setDiagramBuilderOpen,
   diagramTargets,
 }) => {
+  const [commandOpen, setCommandOpen] = useState(false);
+  const [commandQuery, setCommandQuery] = useState('');
   const showStatement = ['teorema', 'lema', 'corolario', 'definicion', 'axioma'].includes(String(metadata.type));
+  const outline = useMemo(() => buildDocumentOutline(blocks), [blocks]);
+
+  useEffect(() => {
+    const onKeyDown = (event: KeyboardEvent) => {
+      if ((event.ctrlKey || event.metaKey) && event.key === '/') {
+        event.preventDefault();
+        setCommandOpen(value => !value);
+      }
+      if (event.key === 'Escape') setCommandOpen(false);
+    };
+    window.addEventListener('keydown', onKeyDown);
+    return () => window.removeEventListener('keydown', onKeyDown);
+  }, []);
 
   const applyInlineTransform = (
     block: Block,
@@ -253,7 +296,9 @@ export const VisualEditorPanel: React.FC<VisualEditorPanelProps> = ({
   );
 
   const insertPresetAt = (index: number, preset: BlockPreset) => {
-    addBlock(index, preset.type);
+    addBlock(index, preset.type, preset.content, preset.metadata);
+    setCommandOpen(false);
+    setCommandQuery('');
   };
   const insertPresetAtEnd = (preset: BlockPreset) => insertPresetAt(blocks.length, preset);
   const profilePresets = PAGE_PROFILE_PRESETS[String(metadata.type || '')] || [];
@@ -361,9 +406,22 @@ export const VisualEditorPanel: React.FC<VisualEditorPanelProps> = ({
 
         {blocks.map((block, index) => {
           const isFirstParagraph = index === blocks.findIndex(b => b.type === 'paragraph');
+          const hasDropCap = isFirstParagraph && /^\p{L}/u.test(block.content);
+          const isSourceOnly = block.metadata?.preserved === true || block.metadata?.opaque === true;
           return (
-            <div key={block.id} className="relative group/block bg-transparent border border-transparent hover:bg-carbon/5 hover:border-carbon/15 rounded p-3 transition-all">
-              {!isReadOnly && canMutateVisualStructure && (
+            <div
+              key={block.id}
+              id={`block-${block.id}`}
+              tabIndex={0}
+              aria-label={`Bloque ${index + 1}: ${block.type}. Alt y flechas para reordenar.`}
+              onKeyDown={(event) => {
+                if (!event.altKey || !canMutateVisualStructure || isSourceOnly) return;
+                if (event.key === 'ArrowUp' && index > 0) { event.preventDefault(); moveBlock(index, index - 1); }
+                if (event.key === 'ArrowDown' && index < blocks.length - 1) { event.preventDefault(); moveBlock(index, index + 1); }
+              }}
+              className="relative group/block rounded border border-transparent bg-transparent p-3 transition-all hover:border-carbon/15 hover:bg-carbon/5 focus:border-salvia/40 focus:outline-none"
+            >
+              {!isReadOnly && canMutateVisualStructure && !isSourceOnly && (
                 <div className="absolute -left-12 top-2 flex flex-col items-center gap-1 opacity-0 group-hover/block:opacity-100 transition-opacity">
                   <button
                     type="button"
@@ -434,7 +492,7 @@ export const VisualEditorPanel: React.FC<VisualEditorPanelProps> = ({
                       onClick={() => !isReadOnly && setEditingBlockId(block.id)}
                       className="w-full text-base leading-relaxed text-carbon font-serif cursor-text py-1 select-text"
                     >
-                      {isFirstParagraph ? (
+                      {hasDropCap ? (
                         <>
                           <span className="float-left text-5xl font-serif font-bold text-salvia mr-2 leading-none mt-1 select-none">
                             {block.content.charAt(0).toUpperCase()}
@@ -719,6 +777,7 @@ export const VisualEditorPanel: React.FC<VisualEditorPanelProps> = ({
                   steps={block.metadata?.steps || []}
                   diagramTargets={diagramTargets}
                   onChange={(updatedSteps) => updateBlock(block.id, '', { steps: updatedSteps })}
+                  singleStepMode
                 />
               )}
 
@@ -789,15 +848,14 @@ export const VisualEditorPanel: React.FC<VisualEditorPanelProps> = ({
                     <span className="font-mono text-[9px] text-carbon/35">{block.metadata?.component || 'MDX'}</span>
                   </div>
                   <div className="rounded border border-pavo/20 bg-pavo/5 p-4">
-                    <p className="mb-3 text-xs italic text-carbon/55 select-none">
-                      Este componente se conserva como MDX válido. Puede editarse aquí o ajustarse con más precisión en código fuente.
-                    </p>
-                    <textarea
-                      value={block.content}
-                      onChange={(e) => updateBlock(block.id, e.target.value)}
-                      onSelect={(e) => handleTextareaSelect(e, block.id)}
-                      className="min-h-32 w-full resize-y rounded border border-carbon/15 bg-lienzo p-3 font-mono text-xs leading-relaxed text-carbon outline-none focus:border-pavo"
-                    />
+                    {block.metadata?.editable ? <>
+                      <p className="mb-3 text-xs italic text-carbon/55 select-none">Este componente registrado se edita mediante su rango exacto y también puede ajustarse en código.</p>
+                      <textarea value={block.content} onChange={(e) => updateBlock(block.id, e.target.value)} onSelect={(e) => handleTextareaSelect(e, block.id)}
+                        className="min-h-32 w-full resize-y rounded border border-carbon/15 bg-lienzo p-3 font-mono text-xs leading-relaxed text-carbon outline-none focus:border-pavo" />
+                    </> : <>
+                      <p className="mb-3 text-xs italic text-carbon/55 select-none">Bloque desconocido preservado byte a byte. Se modifica exclusivamente en la vista de código.</p>
+                      <pre className="max-h-48 overflow-auto whitespace-pre-wrap rounded border border-carbon/10 bg-lienzo p-3 font-mono text-[10px] leading-relaxed text-carbon/65">{block.content}</pre>
+                    </>}
                   </div>
                 </div>
               )}
@@ -934,7 +992,22 @@ export const VisualEditorPanel: React.FC<VisualEditorPanelProps> = ({
   };
 
   return (
-    <div className="flex-1 overflow-y-auto p-8">
+    <div className="relative flex min-w-0 flex-1 flex-col overflow-hidden xl:flex-row">
+      <aside className="hidden w-56 shrink-0 overflow-y-auto border-r border-carbon/10 bg-carbon/[0.025] p-3 xl:block" aria-label="Outline del documento">
+        <div className="mb-2 flex items-center justify-between">
+          <h2 className="text-[10px] font-bold uppercase tracking-widest text-carbon/50">Outline</h2>
+          <button type="button" onClick={() => setCommandOpen(true)} className="rounded border border-carbon/15 px-1.5 py-0.5 text-[9px] font-bold text-carbon/55" title="Comando rápido (Ctrl/⌘ /)">＋</button>
+        </div>
+        <nav className="space-y-1" aria-label="Outline del documento">
+          {outline.map(item => <button key={item.id} type="button" onClick={() => document.getElementById(`block-${item.id}`)?.scrollIntoView({ behavior: 'smooth', block: 'center' })}
+            className="block w-full truncate rounded px-2 py-1.5 text-left text-[10px] text-carbon/65 hover:bg-salvia/10 hover:text-salvia" style={{ paddingLeft: `${Math.max(8, (item.level - 2) * 8)}px` }}>{item.label}</button>)}
+        </nav>
+      </aside>
+      <nav className="flex shrink-0 gap-1 overflow-x-auto border-b border-carbon/10 bg-carbon/[0.025] p-2 xl:hidden" aria-label="Outline responsive del documento">
+        {outline.map(item => <button key={item.id} type="button" onClick={() => document.getElementById(`block-${item.id}`)?.scrollIntoView({ behavior: 'smooth', block: 'center' })}
+          className="whitespace-nowrap rounded border border-carbon/10 bg-lienzo px-2 py-1 text-[10px] text-carbon/65">{item.label}</button>)}
+      </nav>
+      <div className="flex-1 overflow-y-auto p-4 sm:p-8">
       <div className="mx-auto mb-4 max-w-3xl space-y-2">
         <div className="rounded border border-ocre/30 bg-ocre/5 p-3 text-xs text-carbon shadow-sm">
           <span className="font-bold text-ocre">Motor MDX estructural:</span> Los cambios se aplican sobre rangos concretos del CST/AST. Borrados, duplicados y reordenaciones requieren revisar el diff antes de guardar.
@@ -992,6 +1065,23 @@ export const VisualEditorPanel: React.FC<VisualEditorPanelProps> = ({
       )}
 
       {renderBlocksList()}
+      </div>
+
+      {commandOpen && <div className="absolute inset-0 z-40 flex items-start justify-center bg-carbon/20 p-4 pt-[10vh]" role="dialog" aria-modal="true" aria-label="Insertar bloque">
+        <div className="w-full max-w-lg rounded border border-carbon/20 bg-lienzo p-3 shadow-xl">
+          <div className="flex items-center gap-2">
+            <input autoFocus value={commandQuery} onChange={event => setCommandQuery(event.target.value)} placeholder="Buscar bloque: definición, advertencia, ejemplo…" className="min-w-0 flex-1 rounded border border-carbon/15 bg-carbon/5 px-3 py-2 text-sm text-carbon outline-none focus:border-salvia" />
+            <button type="button" onClick={() => setCommandOpen(false)} className="rounded px-2 py-1 text-xs text-carbon/55">Esc</button>
+          </div>
+          <div className="mt-3 grid max-h-80 gap-2 overflow-y-auto sm:grid-cols-2">
+            {[...profilePresets, ...GENERAL_BLOCK_PRESETS].filter((preset, index, all) => all.findIndex(item => item.label === preset.label && item.type === preset.type) === index)
+              .filter(preset => `${preset.label} ${preset.type}`.toLowerCase().includes(commandQuery.toLowerCase()))
+              .map(preset => <button key={`${preset.label}-${preset.type}`} type="button" onClick={() => insertPresetAtEnd(preset)} className="rounded border border-carbon/10 bg-carbon/5 p-3 text-left hover:border-salvia/30 hover:bg-salvia/5">
+                <span className="block font-serif text-xs font-bold text-carbon">{preset.label}</span><span className="mt-1 block text-[9px] text-carbon/45">{preset.type}</span>
+              </button>)}
+          </div>
+        </div>
+      </div>}
     </div>
   );
 };

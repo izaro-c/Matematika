@@ -50,7 +50,11 @@ export const AppRouter = () => {
     }>
       <Switch>
         <Route path="/" component={HomePage} />
-        <Route path="/editor" component={EditorPage} />
+        <Route path="/editor">
+          <MathProvider>
+            <EditorPage />
+          </MathProvider>
+        </Route>
           <Route path="/diccionario" component={DictionaryPage} />
           <Route path="/historia" component={HistoryTimeline} />
           <Route path="/metodos" component={MethodsPage} />

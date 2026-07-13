@@ -191,7 +191,7 @@ export function projectRegisteredBlock(source: string, node: MdxAstNode): Regist
   return { blockType, editRange, data };
 }
 
-function serializeJsxBlock(component: string, content: string, attributes: Record<string, unknown> = {}): string {
+export function serializeJsxBlock(component: string, content: string, attributes: Record<string, unknown> = {}): string {
   const serializedAttributes = Object.entries(attributes)
     .filter(([, value]) => value !== undefined && value !== null && value !== '')
     .map(([key, value]) => {
@@ -202,6 +202,17 @@ function serializeJsxBlock(component: string, content: string, attributes: Recor
   const suffix = serializedAttributes ? ` ${serializedAttributes}` : '';
   if (!content) return `<${component}${suffix} />`;
   return `<${component}${suffix}>\n${content}\n</${component}>`;
+}
+
+export function registeredBlockAttributes(blockType: string, data: unknown): Record<string, unknown> {
+  if (!data || typeof data !== 'object') return {};
+  const record = data as Record<string, unknown>;
+  const attributes = record.attributes;
+  if (attributes && typeof attributes === 'object' && !Array.isArray(attributes)) {
+    return attributes as Record<string, unknown>;
+  }
+  if (blockType === 'heading' && typeof record.depth === 'number') return { level: record.depth };
+  return {};
 }
 
 /** Canonical source is used only for newly inserted blocks; existing source is never normalized. */

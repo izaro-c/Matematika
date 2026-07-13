@@ -44,6 +44,12 @@ export const applyContentRequestSchema = z.object({
 }).strict();
 export type ApplyContentRequest = z.infer<typeof applyContentRequestSchema>;
 
+export const createContentRequestSchema = z.object({
+  path: z.string().min(1), source: z.string(), sourceHash: z.string().min(1),
+  localRevision: z.number().int().nonnegative(), create: z.literal(true),
+}).strict();
+export type CreateContentRequest = z.infer<typeof createContentRequestSchema>;
+
 export const applyContentResponseSchema = z.object({
   path: z.string().min(1), sourceHash: z.string().min(1), previousVersion: z.string().min(1),
   version: z.string().min(1), confirmedRevision: z.number().int().nonnegative(), backupId: z.string().min(1)

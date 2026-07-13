@@ -3,6 +3,9 @@ import path from 'node:path';
 import os from 'node:os';
 import { spawn, type ChildProcess } from 'node:child_process';
 import puppeteer, { type Browser, type HTTPRequest, type Page } from 'puppeteer';
+import { createTemplateModel } from '../../../src/features/editor/diagrams/model/commands';
+import { buildTargets } from '../../../src/features/editor/diagrams/model/selectors';
+import { generateDiagramSource } from '../../../src/features/editor/diagrams/source/generator';
 
 interface E2EResult {
   name: string;
@@ -17,6 +20,13 @@ const SAFE_DIAGRAM_SOURCE = [
   '  return null;',
   '}',
 ].join('\n');
+const COMPLEX_DIAGRAM_MODEL = createTemplateModel('triangulo-deformable', 'Complejo', 'definicion');
+const COMPLEX_DIAGRAM_TARGET = buildTargets(COMPLEX_DIAGRAM_MODEL)[0];
+const COMPLEX_DIAGRAM_RESULT = generateDiagramSource(COMPLEX_DIAGRAM_MODEL, 'Complejo');
+if (!COMPLEX_DIAGRAM_TARGET || !COMPLEX_DIAGRAM_RESULT.ok) {
+  throw new Error('The complex E2E diagram fixture could not be generated');
+}
+const COMPLEX_DIAGRAM_SOURCE = COMPLEX_DIAGRAM_RESULT.source;
 let currentDebugPage: Page | undefined;
 
 async function writeFixture(root: string, relative: string, source: string) {
@@ -68,6 +78,7 @@ async function seedFixtures(root: string) {
     'Texto { un syntax error here } y cierre.',
   ].join('\n'));
   await writeFixture(root, 'widgets/diagrams/Definitions/Seguro.tsx', SAFE_DIAGRAM_SOURCE);
+  await writeFixture(root, 'widgets/diagrams/Definitions/Complejo.tsx', COMPLEX_DIAGRAM_SOURCE);
 }
 
 function startVite(root: string, storageRoot: string): ChildProcess {
@@ -239,7 +250,8 @@ async function main() {
       console.log(`[${new Date().toISOString()}] FLOW 1: Editor opened, clicking Compatible...`);
       await clickByText(page, 'Compatible');
       await expectText(page, 'Edición visual exacta');
-      const next = '## Documento compatible\n\nTexto editado desde E2E.';
+      const current = await readContent('database/content/definitions/compatible.mdx');
+      const next = current.source.replace('Texto inicial.', 'Texto editado desde E2E.');
       await setMonacoValue(page, next);
       await expectText(page, 'Cambios locales');
       await clickByText(page, 'Revisar diff');
@@ -544,6 +556,88 @@ async function main() {
       const overflow = await page.evaluate(() => document.documentElement.scrollWidth > window.innerWidth);
       if (overflow) throw new Error('The mobile editor introduced horizontal page overflow');
       await page.screenshot({ path: path.join(evidenceDir, 'fase-1-mobile-390x844.png'), fullPage: false });
+      await page.setViewport({ width: 1440, height: 900, deviceScaleFactor: 1 });
+    });
+
+    await runTest(results, '17 Autoría visual compleja, diagrama y roundtrip de Fase 7', evidenceDir, async () => {
+      await page.setViewport({ width: 1440, height: 900, deviceScaleFactor: 1 });
+      await openEditor(page);
+      await clickByText(page, 'Nueva');
+      await page.waitForSelector('[aria-label="Crear página matemática"]');
+
+      const dialogInputs = await page.$$('[aria-label="Crear página matemática"] input');
+      if (dialogInputs.length < 2) throw new Error('The structured creation form is incomplete');
+      await dialogInputs[0].type('definicion-e2e-compleja');
+      await dialogInputs[1].type('Definición E2E compleja');
+      const description = await page.$('[aria-label="Crear página matemática"] textarea');
+      if (!description) throw new Error('The motivational description field is missing');
+      await description.type('Una definición compleja creada y reabierta sin pérdida.');
+      await clickByText(page, 'Crear y abrir');
+      await expectText(page, 'definicion-e2e-compleja.mdx');
+      await expectText(page, 'Edición visual exacta');
+
+      const targetId = COMPLEX_DIAGRAM_TARGET.id;
+      const complexSource = [
+        'export const metadata = {',
+        '  "id": "definicion-e2e-compleja",',
+        '  "type": "definicion",',
+        '  "title": "Definición E2E compleja",',
+        '  "description": "Una definición compleja creada y reabierta sin pérdida.",',
+        '  "subtype": "nominal",',
+        '  "hasSimulation": true',
+        '};',
+        '',
+        "import { Complejo } from '@/widgets/diagrams/Definitions/Complejo';",
+        'export const Simulation = Complejo;',
+        '',
+        '<Capitular letra="U" />na definición visual conserva estructura y conexiones.',
+        '',
+        '<Separador />',
+        '',
+        '### Definición formal',
+        '',
+        '<Definicion title="Objeto complejo">',
+        `Un objeto complejo referencia <ConceptLink targetId="compatible" highlightTarget="${targetId}" highlightColor="terracota">un punto publicado</ConceptLink> del diagrama.`,
+        '</Definicion>',
+        '',
+        '<Nota>',
+        'La conclusión se obtiene de las condiciones declaradas, no de la apariencia visual.',
+        '</Nota>',
+        '',
+        '### Referencia',
+        '',
+        '<RefLink targetId="compatible">Documento compatible</RefLink>.',
+        '',
+      ].join('\n');
+
+      await clickByText(page, 'Visual + código');
+      await setMonacoValue(page, complexSource);
+      await expectText(page, 'Cambios locales');
+      await clickByText(page, 'Revisar y guardar');
+      await expectText(page, 'Diff listo para aplicar');
+      await clickByText(page, 'Aplicar archivo');
+      await expectText(page, 'Archivo guardado');
+
+      const saved = await readContent('database/content/definitions/definicion-e2e-compleja.mdx');
+      if (saved.source !== complexSource) throw new Error('The first complex save was not lossless');
+
+      await clickByText(page, 'Parcial');
+      await clickByText(page, 'Definicion E2e Compleja');
+      await expectText(page, 'Edición visual exacta');
+      await expectText(page, COMPLEX_DIAGRAM_TARGET.label);
+      const reopened = await readContent('database/content/definitions/definicion-e2e-compleja.mdx');
+      if (reopened.source !== complexSource) throw new Error('Reopening changed the complex MDX source');
+
+      await clickByText(page, 'Vista publicada');
+      await expectText(page, 'Runtime publicado compartido');
+      await clickByText(page, 'Volver al editor');
+
+      await page.setViewport({ width: 390, height: 844, deviceScaleFactor: 1 });
+      await expectText(page, 'Nueva');
+      await expectText(page, 'Revisar y guardar');
+      await expectText(page, 'Una vista');
+      const overflow = await page.evaluate(() => document.documentElement.scrollWidth > window.innerWidth);
+      if (overflow) throw new Error('The Phase 7 mobile authoring UI introduced horizontal page overflow');
       await page.setViewport({ width: 1440, height: 900, deviceScaleFactor: 1 });
     });
 
