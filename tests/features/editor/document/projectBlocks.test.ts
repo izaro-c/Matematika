@@ -21,12 +21,14 @@ describe('safe body projection', () => {
     expect(doc.compatibility).toBe('fully-editable');
   });
 
-  it('preserves lists, GFM tables, math and JSX as opaque body blocks', () => {
+  it('registers lists, GFM tables and math while keeping unknown JSX opaque', () => {
     const source = `Texto.\n\n- uno\n\n| a | b |\n|---|---|\n| 1 | 2 |\n\n$$\nx^2\n$$\n\n<Caja value={{ a: [1, 2] }} />`;
     const doc = parseEditorDocument(source);
     expect(doc.compatibility).toBe('partially-editable');
+    expect(doc.bodyBlocks.filter(block => block.kind === 'editable').map(block => block.blockType))
+      .toEqual(['paragraph', 'list', 'table', 'formula']);
     expect(doc.bodyBlocks.filter(block => block.kind === 'opaque').map(block => block.nodeType))
-      .toEqual(['list', 'table', 'math', 'mdxJsxFlowElement']);
+      .toEqual(['mdxJsxFlowElement']);
   });
 
   it('makes an opaque-only body visual read-only and unsupported source non-visual', () => {

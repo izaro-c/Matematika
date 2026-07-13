@@ -30,10 +30,14 @@ export interface CorpusAuditEntry {
   cycles: number;
   authorizedOperations: string[];
   reversibleOperationExact: boolean | null;
+  metadataReadable: boolean;
+  metadataSchemaValid: boolean;
+  opaqueBlocks: number;
+  preservedBlocks: number;
 }
 
 export interface CorpusAuditReport {
-  schemaVersion: 3;
+  schemaVersion: 4;
   corpusRoot: string;
   totalFiles: number;
   counts: Record<VisualCompatibility, number>;
@@ -73,7 +77,10 @@ function cycle(source: string) {
 
 function reversibleEdit(source: string): { exact: boolean | null; operationIds: string[] } {
   let session = enterVisualMode(openEditorDocument(source));
-  const block = session.document.bodyBlocks.find(candidate => candidate.kind === 'editable');
+  const block = session.document.bodyBlocks.find(candidate => (
+    candidate.kind === 'editable'
+      && (candidate.blockType === 'paragraph' || candidate.blockType === 'heading')
+  ));
   if (session.mode !== 'visual' || !block || block.kind !== 'editable') return { exact: null, operationIds: [] };
   const changedText = `${block.originalSource}\u2060`;
   session = applyVisualOperation(session, { operationId: 'audit-edit', blockId: block.id, range: block.editRange,
@@ -140,7 +147,11 @@ export function auditSource(source: string, relativePath: string): CorpusAuditEn
     diagnosticsStable,
     cycles: 3,
     authorizedOperations: reversible.operationIds,
-    reversibleOperationExact: reversible.exact
+    reversibleOperationExact: reversible.exact,
+    metadataReadable: opening.metadata.status === 'readable',
+    metadataSchemaValid: opening.metadata.schemaValid,
+    opaqueBlocks: opening.bodyBlocks.filter(block => block.kind === 'opaque').length,
+    preservedBlocks: opening.bodyBlocks.filter(block => block.kind === 'preserved').length,
   };
 }
 
@@ -162,7 +173,7 @@ export function runCorpusAudit(
     return result;
   });
   return {
-    schemaVersion: 3,
+    schemaVersion: 4,
     corpusRoot: path.relative(repositoryRoot, corpusRoot).split(path.sep).join('/'),
     totalFiles: entries.length,
     counts,
@@ -174,6 +185,7 @@ export function assertSafeReport(report: CorpusAuditReport): void {
   const unsafe = report.files.filter(entry =>
     !entry.exact || !entry.idempotent || !entry.envelopePreserved || !entry.bodyPreserved
       || !entry.compatibilityStable || !entry.diagnosticsStable || entry.reversibleOperationExact === false
+      || !entry.metadataReadable || !entry.metadataSchemaValid
   );
   if (unsafe.length > 0) {
     throw new Error(`Corpus preservation failed for: ${unsafe.map(entry => entry.path).join(', ')}`);

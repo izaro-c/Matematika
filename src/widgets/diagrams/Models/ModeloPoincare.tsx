@@ -233,6 +233,56 @@ export const ModeloPoincareSpec = createDiagramSpec(
       "yExpression": "sin(atan2(((L2.x*((P.x^2+P.y^2+1)/2)-P.x)/(max(abs(L2.x*P.y-L2.y*P.x),0.000001)*sign(L2.x*P.y-L2.y*P.x+0.0000001))),((P.y-L2.y*((P.x^2+P.y^2+1)/2))/(max(abs(L2.x*P.y-L2.y*P.x),0.000001)*sign(L2.x*P.y-L2.y*P.x+0.0000001))))*2-atan2(L2.y,L2.x))"
     },
     {
+      "id": "DA",
+      "label": "delta angular",
+      "color": "carbon",
+      "layerId": "construccion",
+      "order": 22,
+      "visible": false,
+      "locked": true,
+      "groupIds": [],
+      "selection": {
+        "selectable": false,
+        "role": "construction"
+      },
+      "target": false,
+      "x": 0,
+      "y": 0,
+      "fixed": true,
+      "constraint": "derived",
+      "dependencies": [
+        "L1",
+        "L2",
+        "E2"
+      ],
+      "xExpression": "atan2(sin(atan2(E2.y,E2.x)-atan2(L1.y,L1.x)),cos(atan2(E2.y,E2.x)-atan2(L1.y,L1.x)))",
+      "yExpression": "atan2(sin(atan2(L2.y,L2.x)-atan2(L1.y,L1.x)),cos(atan2(L2.y,L2.x)-atan2(L1.y,L1.x)))"
+    },
+    {
+      "id": "DS",
+      "label": "delta segura",
+      "color": "carbon",
+      "layerId": "construccion",
+      "order": 23,
+      "visible": false,
+      "locked": true,
+      "groupIds": [],
+      "selection": {
+        "selectable": false,
+        "role": "construction"
+      },
+      "target": false,
+      "x": 0,
+      "y": 0,
+      "fixed": true,
+      "constraint": "derived",
+      "dependencies": [
+        "DA"
+      ],
+      "xExpression": "DA.x-2*atan2(0,-1)*sign(DA.x)*max(sign(DA.x*DA.y),0)*max(sign(abs(DA.x)-abs(DA.y)),0)",
+      "yExpression": "0"
+    },
+    {
       "id": "U1",
       "label": "U1",
       "color": "carbon",
@@ -252,10 +302,10 @@ export const ModeloPoincareSpec = createDiagramSpec(
       "constraint": "derived",
       "dependencies": [
         "L1",
-        "E1"
+        "DS"
       ],
-      "xExpression": "cos((atan2(L1.y,L1.x)+0.2*atan2(sin(atan2(E1.y,E1.x)-atan2(L1.y,L1.x)),cos(atan2(E1.y,E1.x)-atan2(L1.y,L1.x)))))",
-      "yExpression": "sin((atan2(L1.y,L1.x)+0.2*atan2(sin(atan2(E1.y,E1.x)-atan2(L1.y,L1.x)),cos(atan2(E1.y,E1.x)-atan2(L1.y,L1.x)))))"
+      "xExpression": "cos(atan2(L1.y,L1.x)+0.2*DS.x)",
+      "yExpression": "sin(atan2(L1.y,L1.x)+0.2*DS.x)"
     },
     {
       "id": "V1",
@@ -302,10 +352,10 @@ export const ModeloPoincareSpec = createDiagramSpec(
       "constraint": "derived",
       "dependencies": [
         "L1",
-        "E1"
+        "DS"
       ],
-      "xExpression": "cos((atan2(L1.y,L1.x)+0.4*atan2(sin(atan2(E1.y,E1.x)-atan2(L1.y,L1.x)),cos(atan2(E1.y,E1.x)-atan2(L1.y,L1.x)))))",
-      "yExpression": "sin((atan2(L1.y,L1.x)+0.4*atan2(sin(atan2(E1.y,E1.x)-atan2(L1.y,L1.x)),cos(atan2(E1.y,E1.x)-atan2(L1.y,L1.x)))))"
+      "xExpression": "cos(atan2(L1.y,L1.x)+0.4*DS.x)",
+      "yExpression": "sin(atan2(L1.y,L1.x)+0.4*DS.x)"
     },
     {
       "id": "V2",
@@ -352,10 +402,10 @@ export const ModeloPoincareSpec = createDiagramSpec(
       "constraint": "derived",
       "dependencies": [
         "L1",
-        "E1"
+        "DS"
       ],
-      "xExpression": "cos((atan2(L1.y,L1.x)+0.6*atan2(sin(atan2(E1.y,E1.x)-atan2(L1.y,L1.x)),cos(atan2(E1.y,E1.x)-atan2(L1.y,L1.x)))))",
-      "yExpression": "sin((atan2(L1.y,L1.x)+0.6*atan2(sin(atan2(E1.y,E1.x)-atan2(L1.y,L1.x)),cos(atan2(E1.y,E1.x)-atan2(L1.y,L1.x)))))"
+      "xExpression": "cos(atan2(L1.y,L1.x)+0.6*DS.x)",
+      "yExpression": "sin(atan2(L1.y,L1.x)+0.6*DS.x)"
     },
     {
       "id": "V3",
@@ -402,10 +452,10 @@ export const ModeloPoincareSpec = createDiagramSpec(
       "constraint": "derived",
       "dependencies": [
         "L1",
-        "E1"
+        "DS"
       ],
-      "xExpression": "cos((atan2(L1.y,L1.x)+0.8*atan2(sin(atan2(E1.y,E1.x)-atan2(L1.y,L1.x)),cos(atan2(E1.y,E1.x)-atan2(L1.y,L1.x)))))",
-      "yExpression": "sin((atan2(L1.y,L1.x)+0.8*atan2(sin(atan2(E1.y,E1.x)-atan2(L1.y,L1.x)),cos(atan2(E1.y,E1.x)-atan2(L1.y,L1.x)))))"
+      "xExpression": "cos(atan2(L1.y,L1.x)+0.8*DS.x)",
+      "yExpression": "sin(atan2(L1.y,L1.x)+0.8*DS.x)"
     },
     {
       "id": "V4",
@@ -725,12 +775,62 @@ export const ModeloPoincareSpec = createDiagramSpec(
     },
     {
       "sourceId": "L1",
+      "targetId": "DA",
+      "relation": "expression"
+    },
+    {
+      "sourceId": "L2",
+      "targetId": "DA",
+      "relation": "expression"
+    },
+    {
+      "sourceId": "E2",
+      "targetId": "DA",
+      "relation": "expression"
+    },
+    {
+      "sourceId": "DA",
+      "targetId": "DS",
+      "relation": "expression"
+    },
+    {
+      "sourceId": "L1",
       "targetId": "U1",
       "relation": "expression"
     },
     {
-      "sourceId": "E1",
+      "sourceId": "DS",
       "targetId": "U1",
+      "relation": "expression"
+    },
+    {
+      "sourceId": "L1",
+      "targetId": "U2",
+      "relation": "expression"
+    },
+    {
+      "sourceId": "DS",
+      "targetId": "U2",
+      "relation": "expression"
+    },
+    {
+      "sourceId": "L1",
+      "targetId": "U3",
+      "relation": "expression"
+    },
+    {
+      "sourceId": "DS",
+      "targetId": "U3",
+      "relation": "expression"
+    },
+    {
+      "sourceId": "L1",
+      "targetId": "U4",
+      "relation": "expression"
+    },
+    {
+      "sourceId": "DS",
+      "targetId": "U4",
       "relation": "expression"
     },
     {
@@ -744,16 +844,6 @@ export const ModeloPoincareSpec = createDiagramSpec(
       "relation": "expression"
     },
     {
-      "sourceId": "L1",
-      "targetId": "U2",
-      "relation": "expression"
-    },
-    {
-      "sourceId": "E1",
-      "targetId": "U2",
-      "relation": "expression"
-    },
-    {
       "sourceId": "U2",
       "targetId": "V2",
       "relation": "expression"
@@ -764,16 +854,6 @@ export const ModeloPoincareSpec = createDiagramSpec(
       "relation": "expression"
     },
     {
-      "sourceId": "L1",
-      "targetId": "U3",
-      "relation": "expression"
-    },
-    {
-      "sourceId": "E1",
-      "targetId": "U3",
-      "relation": "expression"
-    },
-    {
       "sourceId": "U3",
       "targetId": "V3",
       "relation": "expression"
@@ -781,16 +861,6 @@ export const ModeloPoincareSpec = createDiagramSpec(
     {
       "sourceId": "P",
       "targetId": "V3",
-      "relation": "expression"
-    },
-    {
-      "sourceId": "L1",
-      "targetId": "U4",
-      "relation": "expression"
-    },
-    {
-      "sourceId": "E1",
-      "targetId": "U4",
       "relation": "expression"
     },
     {

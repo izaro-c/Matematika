@@ -171,6 +171,7 @@ interface VisualEditorPanelProps {
   handleMetadataChange: (key: string, value: unknown) => void;
   addBlock: (index: number, type: BlockType) => void;
   moveBlock: (from: number, to: number) => void;
+  duplicateBlock: (id: string) => void;
   removeBlock: (id: string) => void;
   updateBlock: (id: string, content: string, metadata?: Record<string, unknown>) => void;
   handleTextareaSelect: (e: React.SyntheticEvent<HTMLTextAreaElement>, blockId: string) => void;
@@ -193,6 +194,7 @@ export const VisualEditorPanel: React.FC<VisualEditorPanelProps> = ({
   handleMetadataChange,
   addBlock,
   moveBlock,
+  duplicateBlock,
   removeBlock,
   updateBlock,
   handleTextareaSelect,
@@ -383,8 +385,16 @@ export const VisualEditorPanel: React.FC<VisualEditorPanelProps> = ({
                   </button>
                   <button
                     type="button"
+                    onClick={() => duplicateBlock(block.id)}
+                    className="w-6 h-6 flex items-center justify-center bg-lienzo border border-pavo/30 rounded hover:bg-pavo/10 text-[10px] text-pavo mt-2 cursor-pointer"
+                    title="Duplicar Bloque"
+                  >
+                    ⧉
+                  </button>
+                  <button
+                    type="button"
                     onClick={() => removeBlock(block.id)}
-                    className="w-6 h-6 flex items-center justify-center bg-terracota text-lienzo rounded hover:bg-terracota/80 text-[10px] mt-2 cursor-pointer"
+                    className="w-6 h-6 flex items-center justify-center bg-terracota text-lienzo rounded hover:bg-terracota/80 text-[10px] cursor-pointer"
                     title="Eliminar Bloque"
                   >
                     ✕
@@ -927,7 +937,7 @@ export const VisualEditorPanel: React.FC<VisualEditorPanelProps> = ({
     <div className="flex-1 overflow-y-auto p-8">
       <div className="mx-auto mb-4 max-w-3xl space-y-2">
         <div className="rounded border border-ocre/30 bg-ocre/5 p-3 text-xs text-carbon shadow-sm">
-          <span className="font-bold text-ocre">Edición visual exacta por rangos:</span> La metadata y las operaciones estructurales se ocultan porque aún no disponen de parches localizados exactos. Solo se admiten cambios en bloques explícitamente editables.
+          <span className="font-bold text-ocre">Motor MDX estructural:</span> Los cambios se aplican sobre rangos concretos del CST/AST. Borrados, duplicados y reordenaciones requieren revisar el diff antes de guardar.
         </div>
         {isReadOnly && (
           <div className="rounded border border-pavo/30 bg-pavo/5 p-3 text-xs text-carbon shadow-sm">

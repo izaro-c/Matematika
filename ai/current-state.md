@@ -2,13 +2,29 @@
 
 **Actualizado:** 2026-07-13
 
-**Fase:** Fase 5 — migración de casos matemáticos complejos, cerrada.
+**Fase:** Fase 6 — motor MDX estructural y lossless, cerrada.
 
-**Estado:** Pitágoras, el disco de Poincaré, congruencia ALA y paralelogramo son modelos `DiagramSpec v2` visualmente exactos. Los cuatro regeneran su TSX byte a byte, conservan sus consumidores MDX y se renderizan en sus páginas reales sin colapso ni pérdida de textos reactivos. La Fase 6 permanece pendiente y no se ha iniciado.
+**Estado:** El editor proyecta los 120 documentos MDX desde AST/ESTree con rangos exactos, metadatos reales validados contra `src/entities/content/schemas.ts` y un registro explícito de bloques. Las mutaciones se expresan como parches localizados verificables; abrir y guardar sin cambios conserva el corpus byte a byte. La Fase 7 permanece pendiente y no se ha iniciado.
 
 ## Roadmap activo
 
-La fuente canónica del estado es [`phases/editor-authoring/README.md`](phases/editor-authoring/README.md). Las Fases 0, 1, 2, 3, 4 y 5 están cerradas. La [Fase 6 — Motor MDX estructural y lossless](phases/editor-authoring/phase-6-lossless-mdx-engine.md) permanece pendiente y solo puede comenzar en una conversación nueva.
+La fuente canónica del estado es [`phases/editor-authoring/README.md`](phases/editor-authoring/README.md). Las Fases 0, 1, 2, 3, 4, 5 y 6 están cerradas. La [Fase 7 — Experiencia visual del editor MDX](phases/editor-authoring/phase-7-mdx-authoring-ux.md) permanece pendiente y no se ha iniciado.
+
+## Motor MDX estructural y lossless
+
+- `parseEditorDocument` conserva el source como autoridad y usa los rangos de remark-mdx/ESTree para proyectar imports, exports, contenedores, metadatos y bloques sin serializar de nuevo el documento.
+- La proyección segura de `export const metadata` evalúa únicamente literales estáticos, conserva los rangos de cada propiedad y valida el objeto contra los schemas de contenido. Un export ausente o dinámico y un schema inválido se diagnostican sin habilitar escritura destructiva.
+- El registro de bloques distingue bloques editables, regiones reconocidas preservadas y sintaxis realmente desconocida opaca. `DemonstrationSection` actúa como contenedor transparente y sus `ProofStep` mantienen rangos y operaciones propias.
+- Inserción, sustitución, borrado, duplicación y movimiento producen planes de mutación con fingerprint, bytes esperados, rango afectado y preview antes/después. Las operaciones se rechazan si el documento cambió, atraviesan una región no editable, duplican un ID público o dejan el documento sin parsear.
+- Las ediciones de metadatos reemplazan solo el valor o propiedad afectada, preservan imports, exports, comentarios, JSX y espacios, y vuelven a validar el schema y la inmutabilidad del ID antes de aceptar el parche.
+- El editor exige aprobación de un diff vigente antes de guardar operaciones amplias o destructivas; los cambios fuera de los rangos declarados se rechazan.
+
+## Corpus y compatibilidad MDX
+
+- El corpus de aceptación incluye 12 documentos reales representativos con metadatos, imports, exports, comentarios, Markdown, matemáticas, tablas, demostraciones anidadas, JSX conocido y JSX desconocido.
+- La auditoría completa cubre los 120 documentos: 120 metadatos legibles y válidos, 120 documentos totalmente editables, 0 parciales, 0 de solo lectura, 0 no soportados y 0 regiones opacas en el corpus actual.
+- Los informes `editor-roundtrip-baseline` y `editor-lossless-compatibility` registran fingerprint, esquema, recuentos de bloques y compatibilidad por documento. El gate exige roundtrip byte a byte y un parche reversible localizado.
+- La sintaxis reconocida pero sin editor visual específico permanece preservada en código. Solo un nodo no registrado se trata como opaco, y nunca se reescribe al editar otra región.
 
 ## Casos reales migrados
 
@@ -56,6 +72,12 @@ La fuente canónica del estado es [`phases/editor-authoring/README.md`](phases/e
 
 ## Evidencia de aceptación
 
+- `phase6LosslessEngine.test.ts` cubre roundtrip exacto, lectura y parche de metadatos, imports y exports contiguos, comentarios, bloques anidados, JSX desconocido, CRUD, reordenación, diff previo y recuperación ante parseo, metadata dinámica o schema inválido.
+- Las suites dirigidas del documento, núcleo y diff aprueban 56/56 pruebas; `editor:test:integration` aprueba 79/79. `editor:roundtrip:check` y `editor:lossless:check` aprueban los 120 documentos.
+- `editor:lint` aprueba con 114 advertencias dentro del presupuesto de 119 y 0 errores; TypeScript y el build de producción aprueban. Dependency Cruiser informa 0 errores y 56 advertencias históricas; el gate de seguridad no detecta patrones inseguros.
+- Referencias, DAG de 120 nodos, Lean, cobertura de contenido y auditoría bridge aprueban. Lean compila 12 trabajos, conserva 66 nodos verificados y 9 bloques; la cobertura es 24/24 páginas y 25/25 demostraciones.
+- `full-check` alcanzó lint y TypeScript y ejecutó 656 pruebas: 650 aprobaron. Las seis regresiones restantes pertenecen a cambios de diagramas de Fase 5 ya presentes en el árbol (`ModeloPoincare` y la restricción del glider de `Pitagoras`); no afectan al motor MDX y se conservaron sin modificación.
+
 - `Phase5AcceptanceMigrations.test.ts` fija snapshots estructurales de los cuatro diagramas, roundtrip byte a byte, targets MDX reales, restricciones, geodésicas ortogonales, dependencias, capas, pasos y clasificación.
 - Las regresiones del renderer montan el componente y el editor de pasos reales de Pitágoras sin `MathProvider` exterior; `MathBoardViewport.test.tsx` separa cambios de usuario y ajustes programáticos.
 - `npm run test:e2e:phase5` abre las cuatro rutas publicadas en Chromium, exige boards no colapsados, escenas completas, textos reactivos visibles y ausencia de errores; después recorre catálogo → Pitágoras → edición visual exacta y comprueba estado sincronizado.
@@ -71,6 +93,10 @@ La fuente canónica del estado es [`phases/editor-authoring/README.md`](phases/e
 
 ## Límites y deuda explícita
 
+- La experiencia visual específica de cada bloque no forma parte de esta fase. La Fase 7 sigue pendiente y deberá reutilizar exclusivamente estos planes de mutación, sin crear otra vía de persistencia.
+- Los helpers antiguos de presentación inline permanecen por compatibilidad, pero no intervienen en la proyección, mutación ni persistencia estructural del documento.
+- El `full-check` global no queda verde mientras las seis regresiones preexistentes de los casos de aceptación de Fase 5 sigan en el árbol; deben resolverse en su alcance propio sin relajar las garantías lossless.
+
 - No se realizó una migración masiva de los 85 diagramas; solo los cuatro casos de aceptación cuentan con evidencia de fidelidad y edición visual exacta en esta fase.
 - Las extensiones temporales de `DiagramSpec v2` son opcionales y no cambian su versión literal ni normalizan escenas anteriores de forma destructiva.
 - Los targets no cualificados duplicados entre diagramas se mantienen como broadcast compatible en runtime, pero el editor exige la forma cualificada para una conexión inequívoca.
@@ -79,4 +105,4 @@ La fuente canónica del estado es [`phases/editor-authoring/README.md`](phases/e
 
 ## Veredicto
 
-`FASE 5 CERRADA — CUATRO DIAGRAMAS REALES EDITABLES, REABRIBLES Y PUBLICADOS SIN PÉRDIDA; FASE 6 NO INICIADA`
+`FASE 6 CERRADA — MOTOR MDX ESTRUCTURAL, LOCALIZADO Y LOSSLESS VALIDADO EN 120/120 DOCUMENTOS; FASE 7 NO INICIADA`

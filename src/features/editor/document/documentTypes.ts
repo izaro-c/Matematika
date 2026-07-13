@@ -38,6 +38,28 @@ export interface SourceEdit {
   reason?: string;
 }
 
+export interface MetadataPropertyProjection {
+  key: string;
+  propertyRange: SourceRange;
+  valueRange: SourceRange;
+}
+
+export interface MetadataProjection {
+  status: 'missing' | 'readable' | 'unsupported';
+  value: Record<string, unknown> | null;
+  objectRange?: SourceRange;
+  properties: MetadataPropertyProjection[];
+  schemaValid: boolean;
+  schemaName?: string;
+}
+
+export interface BlockContainer {
+  id: string;
+  kind: 'root' | 'jsx-container';
+  name?: string;
+  contentRange: SourceRange;
+}
+
 export interface OpaqueBlock {
   kind: 'opaque';
   id: string;
@@ -45,6 +67,22 @@ export interface OpaqueBlock {
   location: SourceLocation;
   reason: string;
   nodeType?: string;
+  parentId: string;
+}
+
+/**
+ * Syntax understood by the parser and preserved byte-for-byte, but without a
+ * registered visual mutation contract. It is deliberately not called opaque:
+ * opaque is reserved for syntax that the structural engine does not know.
+ */
+export interface PreservedBlock {
+  kind: 'preserved';
+  id: string;
+  source: string;
+  location: SourceLocation;
+  reason: string;
+  nodeType?: string;
+  parentId: string;
 }
 
 export interface EditableBlock {
@@ -55,9 +93,10 @@ export interface EditableBlock {
   location: SourceLocation;
   editRange: SourceRange;
   data: unknown;
+  parentId: string;
 }
 
-export type ProjectedBlock = EditableBlock | OpaqueBlock;
+export type ProjectedBlock = EditableBlock | PreservedBlock | OpaqueBlock;
 
 export interface EditorDocument {
   source: string;
@@ -68,11 +107,38 @@ export interface EditorDocument {
     importRanges: SourceRange[];
     exportRanges: SourceRange[];
   };
+  metadata: MetadataProjection;
   bodyRange: SourceRange;
+  containers: BlockContainer[];
   bodyBlocks: ProjectedBlock[];
   diagnostics: EditorDiagnostic[];
   compatibility: VisualCompatibility;
   compatibilityReasons: string[];
+}
+
+export type StructuralOperationKind =
+  | 'replace-block'
+  | 'insert-block'
+  | 'delete-block'
+  | 'duplicate-block'
+  | 'move-block'
+  | 'update-metadata';
+
+export interface MutationPreview {
+  title: string;
+  summary: string;
+  originalSnippet: string;
+  candidateSnippet: string;
+  affectedRange: SourceRange;
+  requiresReview: boolean;
+}
+
+export interface DocumentMutationPlan {
+  operationId: string;
+  kind: StructuralOperationKind;
+  baseFingerprint: string;
+  edits: SourceEdit[];
+  preview: MutationPreview;
 }
 
 /** Temporary alias for consumers being migrated from the phase-2 prototype. */

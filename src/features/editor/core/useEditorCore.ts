@@ -3,10 +3,12 @@ import type { FileNode } from '../lib/editorContracts';
 import type { DirtyState, EditorMode, EditorValidationResult } from './editorTypes';
 import type { Block, BlockType } from './parser';
 import {
-  openEditorDocument, enterVisualMode, applyVisualOperation,
+  openEditorDocument, enterVisualMode,
   parseEditorDocument, getVisualCapabilities,
   computeFingerprint,
-  type EditorDocument, type ProjectedBlock, type SourceEdit, type SourceRange
+  applyMutationPlan, planBlockReplacement, planBlockInsertion, planBlockDeletion,
+  planBlockDuplication, planBlockMove, planMetadataUpdate,
+  type DocumentMutationPlan, type EditorDocument, type ProjectedBlock, type SourceRange
 } from '../document';
 import {
   ContentRepository, DraftRepository, SaveCoordinator, editorApiClient, hashSource,
@@ -29,7 +31,7 @@ const contentRepository = new ContentRepository(editorApiClient);
 const draftRepository = new DraftRepository(editorApiClient);
 
 function blockText(block: ProjectedBlock): string {
-  if (block.kind === 'opaque') return block.source;
+  if (block.kind !== 'editable') return block.source;
   if (block.data && typeof block.data === 'object' && 'text' in block.data) return String((block.data as { text: unknown }).text);
   return block.originalSource;
 }
@@ -41,9 +43,15 @@ function mapProjectedBlocks(projected: ProjectedBlock[]): Block[] {
     content: blockText(block),
     metadata: block.kind === 'editable'
       ? { location: block.location, editRange: block.editRange, originalSource: block.originalSource, editable: true,
+          ...(block.data && typeof block.data === 'object' && 'attributes' in block.data
+            ? (block.data as { attributes?: Record<string, unknown> }).attributes : {}),
+          ...(block.data && typeof block.data === 'object' && 'component' in block.data
+            ? { component: (block.data as { component?: string }).component } : {}),
+          ...(block.data && typeof block.data === 'object' && 'steps' in block.data
+            ? { steps: (block.data as { steps?: unknown[] }).steps } : {}),
           ...(block.blockType === 'heading' && block.data && typeof block.data === 'object'
             ? { level: (block.data as { depth?: number }).depth } : {}) }
-      : { location: block.location, opaque: true, reason: block.reason, nodeType: block.nodeType }
+      : { location: block.location, opaque: block.kind === 'opaque', preserved: block.kind === 'preserved', reason: block.reason, nodeType: block.nodeType }
   }));
 }
 
@@ -85,6 +93,7 @@ interface TrackedVisualOperation {
   blockId: string;
   range: SourceRange;
   reason: string;
+  requiresReview: boolean;
 }
 
 export const useEditorCore = () => {
@@ -92,7 +101,7 @@ export const useEditorCore = () => {
   const [filesLoading, setFilesLoading] = useState(true);
   const [filesError, setFilesError] = useState<string | null>(null);
   const [editorMode, setEditorMode] = useState<EditorMode>('code');
-  const [metadata] = useState<Record<string, unknown>>({});
+  const [metadata, setMetadataView] = useState<Record<string, unknown>>({});
   const [imports, setImportsView] = useState('');
   const [exports, setExportsView] = useState('');
   const [blocks, setBlocksView] = useState<Block[]>([]);
@@ -157,16 +166,16 @@ export const useEditorCore = () => {
   const isDiagramSource = currentFile?.endsWith('.tsx') ?? false;
   const validation = useMemo<EditorValidationResult>(() => {
     if (isDiagramSource) return { issues: [], canSave: true, errorCount: 0, warningCount: 0 };
-    const critical = doc?.diagnostics.filter(item => item.severity === 'critical') ?? [];
-    return { issues: critical.map(item => ({
+    const blocking = doc?.diagnostics.filter(item => item.severity === 'critical' || item.severity === 'error') ?? [];
+    return { issues: blocking.map(item => ({
       id: item.code,
-      area: 'body' as const,
+      area: item.panel === 'metadata' ? 'metadata' as const : 'body' as const,
       severity: 'error' as const,
       message: item.message,
       blockId: item.blockId,
       sourceRange: item.sourceRange ?? item.location?.range
     })),
-      canSave: critical.length === 0, errorCount: critical.length, warningCount: 0 };
+      canSave: blocking.length === 0, errorCount: blocking.length, warningCount: 0 };
   }, [doc, isDiagramSource]);
 
   const loadFileList = useCallback(async () => {
@@ -182,6 +191,7 @@ export const useEditorCore = () => {
 
   const syncProjection = useCallback((nextDoc: EditorDocument) => {
     setDoc(nextDoc);
+    setMetadataView(nextDoc.metadata.value ?? {});
     setBlocksView(mapProjectedBlocks(nextDoc.bodyBlocks));
     setImportsView(sliceRanges(nextDoc.source, nextDoc.envelope.importRanges));
     setExportsView(sliceRanges(nextDoc.source, nextDoc.envelope.exportRanges));
@@ -222,11 +232,11 @@ export const useEditorCore = () => {
     }
   }, [coordinator, saveIdentity, syncProjection]);
 
-  const commitSourceChange = useCallback((source: string, nextDoc?: EditorDocument, visualOperation?: TrackedVisualOperation) => {
+  const commitSourceChange = useCallback((source: string, nextDoc?: EditorDocument, visualOperations?: TrackedVisualOperation[]) => {
     const file = persistenceRef.current.file;
     if (!file) return;
     sourceRef.current = source;
-    visualOperationsRef.current = visualOperation ? [...visualOperationsRef.current, visualOperation] : [];
+    visualOperationsRef.current = visualOperations ? [...visualOperationsRef.current, ...visualOperations] : [];
     setMessage('');
     revisionRef.current += 1;
     const revision = revisionRef.current;
@@ -265,29 +275,80 @@ export const useEditorCore = () => {
     commitSourceChange(source, nextDoc);
   }, [commitSourceChange, currentFile]);
 
+  const commitMutation = useCallback((mutation: DocumentMutationPlan, successMessage: string) => {
+    if (!doc) { setMessage(blockedMessage); return; }
+    try {
+      const nextDoc = applyMutationPlan(doc, mutation);
+      commitSourceChange(nextDoc.source, nextDoc, mutation.edits.map(edit => ({
+        operationId: edit.operationId,
+        blockId: edit.blockId,
+        range: edit.range.start === edit.range.end
+          ? { start: Math.max(0, edit.range.start - 2), end: Math.min(doc.source.length, edit.range.end + 2) }
+          : edit.range,
+        reason: edit.reason ?? mutation.preview.summary,
+        requiresReview: mutation.preview.requiresReview,
+      })));
+      setMessage(mutation.preview.requiresReview
+        ? `${successMessage} Revise el diff antes de guardar.`
+        : successMessage);
+    } catch (error) {
+      setMessage(`Cambio rechazado: ${error instanceof Error ? error.message : String(error)}`);
+    }
+  }, [commitSourceChange, doc]);
+
   const updateBlock = useCallback((id: string, content: string, _metadata?: Record<string, unknown>) => {
     if (!doc || !capabilities.canEditSafeBlocks) { setMessage(blockedMessage); return; }
-    const block = doc.bodyBlocks.find(candidate => candidate.id === id);
-    if (!block || block.kind !== 'editable') { setMessage('Acción visual bloqueada: los bloques opacos son inmutables.'); return; }
-    const edit: SourceEdit = { operationId: `edit-${id}-${doc.sourceFingerprint}`, blockId: id, range: block.editRange,
-      expectedSource: block.originalSource, replacement: content };
     try {
-      const nextDoc = applyVisualOperation(enterVisualMode({ document: doc, mode: 'code', appliedOperationIds: [] }), edit).document;
-      commitSourceChange(nextDoc.source, nextDoc, {
-        operationId: edit.operationId,
-        blockId: id,
-        range: block.editRange,
-        reason: `Bloque visual ${id} editado.`,
-      });
-      setMessage('Cambio visual aplicado localmente; el guardado visual permanece deshabilitado.');
-    } catch (error) { setMessage(`Cambio rechazado: ${error instanceof Error ? error.message : String(error)}`); }
-  }, [capabilities.canEditSafeBlocks, commitSourceChange, doc]);
+      commitMutation(planBlockReplacement(doc, id, content), 'Cambio localizado aplicado.');
+    } catch (error) {
+      setMessage(`Cambio rechazado: ${error instanceof Error ? error.message : String(error)}`);
+    }
+  }, [capabilities.canEditSafeBlocks, commitMutation, doc]);
 
   const blockUnsafeAction = useCallback((_id?: string) => setMessage(blockedMessage), []);
-  const setMetadata = useCallback((_next: SetStateAction<Record<string, unknown>>) => blockUnsafeAction(), [blockUnsafeAction]);
+  const setMetadata = useCallback((nextAction: SetStateAction<Record<string, unknown>>) => {
+    if (!doc || doc.metadata.status !== 'readable') { setMessage('Los metadatos no son legibles de forma estática. Edítelos en código.'); return; }
+    const next = typeof nextAction === 'function' ? nextAction(metadata) : nextAction;
+    try {
+      commitMutation(planMetadataUpdate(doc, next), 'Metadatos actualizados mediante parches de propiedades.');
+    } catch (error) {
+      setMessage(`Cambio rechazado: ${error instanceof Error ? error.message : String(error)}`);
+    }
+  }, [commitMutation, doc, metadata]);
   const setImports = useCallback((_next: SetStateAction<string>) => blockUnsafeAction(), [blockUnsafeAction]);
   const setExports = useCallback((_next: SetStateAction<string>) => blockUnsafeAction(), [blockUnsafeAction]);
   const setBlocks = useCallback((_next: SetStateAction<Block[]>) => blockUnsafeAction(), [blockUnsafeAction]);
+
+  const removeBlock = useCallback((id: string) => {
+    if (!doc) { blockUnsafeAction(id); return; }
+    try { commitMutation(planBlockDeletion(doc, id), 'Bloque eliminado localmente.'); }
+    catch (error) { setMessage(`Cambio rechazado: ${error instanceof Error ? error.message : String(error)}`); }
+  }, [blockUnsafeAction, commitMutation, doc]);
+
+  const addBlock = useCallback((index: number, type: BlockType) => {
+    if (!doc) { blockUnsafeAction(); return; }
+    try { commitMutation(planBlockInsertion(doc, { index, blockType: type }), 'Bloque insertado localmente.'); }
+    catch (error) { setMessage(`Cambio rechazado: ${error instanceof Error ? error.message : String(error)}`); }
+  }, [blockUnsafeAction, commitMutation, doc]);
+
+  const moveBlock = useCallback((from: number, to: number) => {
+    if (!doc) { blockUnsafeAction(); return; }
+    const moving = doc.bodyBlocks[from];
+    if (!moving) { setMessage('No existe el bloque que se intenta mover.'); return; }
+    const sameParent = doc.bodyBlocks.filter(block => block.parentId === moving.parentId);
+    const target = doc.bodyBlocks[to];
+    const localTarget = target?.parentId === moving.parentId
+      ? sameParent.findIndex(block => block.id === target.id)
+      : Math.max(0, sameParent.length - 1);
+    try { commitMutation(planBlockMove(doc, moving.id, localTarget), 'Bloque reordenado localmente.'); }
+    catch (error) { setMessage(`Cambio rechazado: ${error instanceof Error ? error.message : String(error)}`); }
+  }, [blockUnsafeAction, commitMutation, doc]);
+
+  const duplicateBlock = useCallback((id: string) => {
+    if (!doc) { blockUnsafeAction(id); return; }
+    try { commitMutation(planBlockDuplication(doc, id), 'Bloque duplicado localmente.'); }
+    catch (error) { setMessage(`Cambio rechazado: ${error instanceof Error ? error.message : String(error)}`); }
+  }, [blockUnsafeAction, commitMutation, doc]);
 
   const getExpectedDiffRanges = useCallback((): ExpectedDiffRange[] => {
     return visualOperationsRef.current.map(operation => ({
@@ -353,9 +414,15 @@ export const useEditorCore = () => {
     }
     if (captured.file.path.endsWith('.mdx')) {
       const candidateDoc = parseEditorDocument(captured.source);
-      if (candidateDoc.compatibility === 'partially-editable' && !hasValidPartialApproval(approval, captured)) {
+      if (candidateDoc.metadata.status !== 'readable' || !candidateDoc.metadata.schemaValid) {
+        dispatch({ type: 'VALIDATION_FAILED', file: captured.file, localRevision: captured.localRevision, reason: 'Invalid MDX metadata' });
+        setMessage('No se puede aplicar: los metadatos no cumplen el schema de contenido autoritativo.');
+        return false;
+      }
+      const broadVisualChange = visualOperationsRef.current.some(operation => operation.requiresReview);
+      if ((candidateDoc.compatibility === 'partially-editable' || broadVisualChange) && !hasValidPartialApproval(approval, captured)) {
         dispatch({ type: 'VALIDATION_FAILED', file: captured.file, localRevision: captured.localRevision, reason: 'Diff approval required' });
-        setMessage('No se puede aplicar: la edición visual exacta por rangos requiere una revisión de diff vigente.');
+        setMessage('No se puede aplicar: esta edición estructural requiere una revisión de diff vigente.');
         return false;
       }
     }
@@ -399,9 +466,9 @@ export const useEditorCore = () => {
     persistenceLabel: persistenceStatusLabel(persistence.status),
     loadFileList, openFile, toggleEditorMode, setEditorMode, updateRawBody, updateBlock, saveCurrentFile, saveDraftCurrentFile,
     compatibility, compatibilityReasons, capabilities,
-    removeBlock: (id: string) => blockUnsafeAction(id), addBlock: (_index: number, _type: BlockType) => blockUnsafeAction(),
-    moveBlock: (_from: number, _to: number) => blockUnsafeAction(), setMetadata, setImports, setExports, setBlocks,
-    canMutateVisualStructure: false, canEditVisualMetadata: false,
+    removeBlock, addBlock, moveBlock, duplicateBlock, setMetadata, setImports, setExports, setBlocks,
+    canMutateVisualStructure: capabilities.canEditSafeBlocks,
+    canEditVisualMetadata: doc?.metadata.status === 'readable' && doc.metadata.schemaValid,
     getExpectedDiffRanges
   };
 };

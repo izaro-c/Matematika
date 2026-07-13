@@ -17,6 +17,8 @@ El informe ejecuta apertura, proyección, cambios de modo y tres ciclos sobre el
 - No idempotentes: ${report.files.filter(file => !file.idempotent).length}
 - Envelope alterado: ${report.files.filter(file => !file.envelopePreserved).length}
 - Body alterado: ${report.files.filter(file => !file.bodyPreserved).length}
+- Metadata legible y válida: ${report.files.filter(file => file.metadataReadable && file.metadataSchemaValid).length}/${report.totalFiles}
+- Regiones opacas: ${report.files.reduce((total, file) => total + file.opaqueBlocks, 0)}
 
 | Compatibilidad | Documentos |
 | --- | ---: |

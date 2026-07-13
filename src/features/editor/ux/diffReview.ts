@@ -86,14 +86,16 @@ function lineStarts(source: string): number[] {
   return starts;
 }
 
-function lineRange(starts: number[], lineIndex: number, source: string) {
-  const start = starts[lineIndex] ?? source.length;
-  const end = starts[lineIndex + 1] ?? source.length;
-  return { start, end };
-}
-
 function contains(outer: SourceRange, inner: SourceRange): boolean {
   return outer.start <= inner.start && inner.end <= outer.end;
+}
+
+function includeAdjacentWhitespace(source: string, range: ExpectedDiffRange): ExpectedDiffRange {
+  let start = range.start;
+  let end = range.end;
+  while (start > 0 && /\s/.test(source[start - 1])) start -= 1;
+  while (end < source.length && /\s/.test(source[end])) end += 1;
+  return { ...range, start, end };
 }
 
 function classifyChange(
@@ -102,18 +104,6 @@ function classifyChange(
   compatibility?: string,
   bodyBlocks?: ProjectedBlock[],
 ): { classification: DiffClassification; reason: string; operationId?: string; blockId?: string } {
-  if (compatibility === 'fully-editable') {
-    return {
-      classification: 'expected',
-      reason: 'El documento es completamente editable; todos los cambios de bloque son seguros.',
-    };
-  }
-  if (compatibility === 'partially-editable' && (!expectedRanges || expectedRanges.length === 0)) {
-    return {
-      classification: 'unknown',
-      reason: 'La revisión no declara rangos esperados ni operaciones de usuario verificables.',
-    };
-  }
   if (expectedRanges && expectedRanges.length > 0) {
     const match = expectedRanges.find(expected => expected.operationId && contains(expected, range));
     if (match) {
@@ -124,6 +114,14 @@ function classifyChange(
         blockId: match.blockId,
       };
     }
+  }
+  if (!expectedRanges || expectedRanges.length === 0) {
+    return {
+      classification: 'unknown',
+      reason: compatibility === 'fully-editable'
+        ? 'El documento es estructuralmente compatible, pero el cambio no está ligado a una operación localizada.'
+        : 'La revisión no declara rangos esperados ni operaciones de usuario verificables.',
+    };
   }
   if (compatibility === 'partially-editable' && bodyBlocks) {
     const containingBlock = bodyBlocks.find(
@@ -180,6 +178,8 @@ function trimSharedEdges(
   };
 }
 
+// The LCS walk is deliberately local to the diff engine and keeps insertions aligned.
+// eslint-disable-next-line sonarjs/cognitive-complexity
 function buildLineHunks(baseSource: string, candidateSource: string): Array<{
   originalRange: SourceRange;
   candidateRange: SourceRange;
@@ -192,7 +192,6 @@ function buildLineHunks(baseSource: string, candidateSource: string): Array<{
   const afterLines = candidateSource.split('\n');
   const beforeStarts = lineStarts(baseSource);
   const afterStarts = lineStarts(candidateSource);
-  const max = Math.max(beforeLines.length, afterLines.length);
   const hunks: Array<{
     originalRange: SourceRange;
     candidateRange: SourceRange;
@@ -202,23 +201,58 @@ function buildLineHunks(baseSource: string, candidateSource: string): Array<{
     afterLine: number | null;
   }> = [];
 
-  for (let index = 0; index < max; index += 1) {
-    const beforeText = beforeLines[index] ?? '';
-    const afterText = afterLines[index] ?? '';
-    if (beforeText === afterText) continue;
-    const originalLineRange = index < beforeLines.length
-      ? lineRange(beforeStarts, index, baseSource)
-      : { start: baseSource.length, end: baseSource.length };
-    const candidateLineRange = index < afterLines.length
-      ? lineRange(afterStarts, index, candidateSource)
-      : { start: candidateSource.length, end: candidateSource.length };
-    const originalRange = { start: originalLineRange.start, end: originalLineRange.start + beforeText.length };
-    const candidateRange = { start: candidateLineRange.start, end: candidateLineRange.start + afterText.length };
-    const trimmed = trimSharedEdges(beforeText, afterText, originalRange, candidateRange);
+  // LCS aligns unchanged lines first. This prevents one insertion or move from
+  // making every following line look modified.
+  const rows = beforeLines.length + 1;
+  const columns = afterLines.length + 1;
+  const lcs = Array.from({ length: rows }, () => new Uint32Array(columns));
+  for (let before = beforeLines.length - 1; before >= 0; before -= 1) {
+    for (let after = afterLines.length - 1; after >= 0; after -= 1) {
+      lcs[before][after] = beforeLines[before] === afterLines[after]
+        ? lcs[before + 1][after + 1] + 1
+        : Math.max(lcs[before + 1][after], lcs[before][after + 1]);
+    }
+  }
+
+  let before = 0;
+  let after = 0;
+  while (before < beforeLines.length || after < afterLines.length) {
+    if (before < beforeLines.length && after < afterLines.length && beforeLines[before] === afterLines[after]) {
+      before += 1;
+      after += 1;
+      continue;
+    }
+    const beforeStart = before;
+    const afterStart = after;
+    while (before < beforeLines.length || after < afterLines.length) {
+      if (before < beforeLines.length && after < afterLines.length && beforeLines[before] === afterLines[after]) break;
+      if (after >= afterLines.length || (before < beforeLines.length && lcs[before + 1][after] >= lcs[before][after + 1])) before += 1;
+      else after += 1;
+    }
+
+    const removed = beforeLines.slice(beforeStart, before);
+    const added = afterLines.slice(afterStart, after);
+    const originalRange = {
+      start: beforeStarts[beforeStart] ?? baseSource.length,
+      end: before > beforeStart
+        ? (beforeStarts[before - 1] ?? baseSource.length) + (beforeLines[before - 1]?.length ?? 0)
+        : beforeStarts[beforeStart] ?? baseSource.length,
+    };
+    const candidateRange = {
+      start: afterStarts[afterStart] ?? candidateSource.length,
+      end: after > afterStart
+        ? (afterStarts[after - 1] ?? candidateSource.length) + (afterLines[after - 1]?.length ?? 0)
+        : afterStarts[afterStart] ?? candidateSource.length,
+    };
+    const originalText = removed.join('\n');
+    const candidateText = added.join('\n');
+    const exact = removed.length === 1 && added.length === 1
+      ? trimSharedEdges(originalText, candidateText, originalRange, candidateRange)
+      : { originalText, candidateText, originalRange, candidateRange };
     hunks.push({
-      ...trimmed,
-      beforeLine: index < beforeLines.length ? index + 1 : null,
-      afterLine: index < afterLines.length ? index + 1 : null,
+      ...exact,
+      beforeLine: removed.length > 0 ? beforeStart + 1 : null,
+      afterLine: added.length > 0 ? afterStart + 1 : null,
     });
   }
   return hunks;
@@ -228,6 +262,7 @@ export function buildDiffReview(input: BuildDiffReviewInput): DiffReview {
   const baseSourceHash = computeFingerprint(input.baseSource);
   const candidateSourceHash = computeFingerprint(input.candidateSource);
   const expectedRanges = input.expectedRanges ?? [];
+  const classificationRanges = expectedRanges.map(range => includeAdjacentWhitespace(input.baseSource, range));
   const operationIds = [...new Set(expectedRanges.map(range => range.operationId).filter(Boolean))].sort();
   const id = `${input.documentId}:${input.baseVersion ?? 'no-version'}:${input.localRevision}:${baseSourceHash}:${candidateSourceHash}:${operationIds.join(',')}`;
   if (input.baseSource === input.candidateSource) {
@@ -291,7 +326,7 @@ export function buildDiffReview(input: BuildDiffReviewInput): DiffReview {
   const lineHunks = buildLineHunks(input.baseSource, input.candidateSource);
   const hunks: DiffHunk[] = lineHunks
     .map((hunk, index) => {
-      const classification = classifyChange(hunk.originalRange, input.expectedRanges, baseParse.compatibility, baseParse.bodyBlocks);
+      const classification = classifyChange(hunk.originalRange, classificationRanges, baseParse.compatibility, baseParse.bodyBlocks);
       return {
         id: `hunk-${index + 1}`,
         originalRange: hunk.originalRange,

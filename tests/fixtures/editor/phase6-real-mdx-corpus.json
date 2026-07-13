@@ -1,0 +1,14 @@
+[
+  { "path": "src/database/content/axioms/axioma-incidencia-1.mdx", "feature": "imports-and-simulation-export" },
+  { "path": "src/database/content/axiomatic-systems/sistema-euclidiano.mdx", "feature": "metadata-arrays" },
+  { "path": "src/database/content/definitions/segmento.mdx", "feature": "inline-jsx-and-math" },
+  { "path": "src/database/content/theorems/teorema-pitagoras.mdx", "feature": "semantic-links-and-gfm" },
+  { "path": "src/database/content/demonstrations/demo-existencia-bisectriz.mdx", "feature": "nested-proof-steps-and-lean-expressions" },
+  { "path": "src/database/content/examples/ejemplo-pitagoras-calculo.mdx", "feature": "interactive-example" },
+  { "path": "src/database/content/exercises/ejercicio-pitagoras-cateto.mdx", "feature": "exercise-components" },
+  { "path": "src/database/content/lessons/leccion-metodo-induccion.mdx", "feature": "lesson-steps" },
+  { "path": "src/database/content/mathematicians/euclides.mdx", "feature": "biographical-metadata" },
+  { "path": "src/database/content/models/modelo-poincare.mdx", "feature": "diagram-export" },
+  { "path": "src/database/content/plans/plan-de-estudio-camino-teorema-pitagoras.mdx", "feature": "study-plan-components" },
+  { "path": "src/database/content/usecases/caso-gps-trilateracion.mdx", "feature": "use-case-simulation" }
+]

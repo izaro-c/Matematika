@@ -1,153 +1,161 @@
-import type { ProjectedBlock, VisualCompatibility, EditorDocument } from './documentTypes';
+import type {
+  BlockContainer,
+  EditorDocument,
+  ProjectedBlock,
+  SourceLocation,
+  VisualCompatibility,
+} from './documentTypes';
+import {
+  PRESERVED_MDAST_NODE_TYPES,
+  TRANSPARENT_JSX_CONTAINERS,
+  jsxContentRange,
+  projectRegisteredBlock,
+  type MdxAstNode,
+} from './blockRegistry';
 
-function mapLocation(position: any) {
+function mapLocation(position: MdxAstNode['position']): SourceLocation {
   return {
-    range: { start: position?.start?.offset ?? 0, end: position?.end?.offset ?? 0 },
+    range: {
+      start: position?.start?.offset ?? 0,
+      end: position?.end?.offset ?? 0,
+    },
     startLine: position?.start?.line,
     startColumn: position?.start?.column,
     endLine: position?.end?.line,
-    endColumn: position?.end?.column
+    endColumn: position?.end?.column,
   };
 }
 
-function isComplexParagraph(node: any): boolean {
-  return !Array.isArray(node.children) || node.children.length !== 1 || node.children[0].type !== 'text';
+export interface BlockProjectionResult {
+  blocks: ProjectedBlock[];
+  containers: BlockContainer[];
+  compatibility: VisualCompatibility;
 }
 
-export function projectBlocks(source: string, bodyNodes: any[]): { blocks: ProjectedBlock[]; compatibility: VisualCompatibility } {
+export function projectBlocks(source: string, bodyNodes: MdxAstNode[]): BlockProjectionResult {
   const blocks: ProjectedBlock[] = [];
-  let compatibility: VisualCompatibility = 'fully-editable';
+  const bodyStart = bodyNodes[0]?.position?.start?.offset ?? 0;
+  const bodyEnd = bodyNodes[bodyNodes.length - 1]?.position?.end?.offset ?? bodyStart;
+  const containers: BlockContainer[] = [{
+    id: 'container-root',
+    kind: 'root',
+    contentRange: { start: bodyStart, end: bodyEnd },
+  }];
+  let sequence = 0;
 
-  if (!Array.isArray(bodyNodes)) {
-    return { blocks, compatibility: 'unsupported' };
-  }
-
-  let index = 0;
-  let hasOpaque = false;
-
-  for (const node of bodyNodes) {
+  const projectNode = (node: MdxAstNode, parentId: string): void => {
+    if (!node.position) return;
     const location = mapLocation(node.position);
     const nodeSource = source.slice(location.range.start, location.range.end);
-    const id = `block-${index}`;
-    index += 1;
 
-    if (node.type === 'paragraph') {
-      if (isComplexParagraph(node)) {
-        hasOpaque = true;
+    if (
+      node.type === 'mdxJsxFlowElement'
+      && node.name
+      && TRANSPARENT_JSX_CONTAINERS.has(node.name)
+    ) {
+      const contentRange = jsxContentRange(source, node);
+      if (!contentRange) {
+        const id = `block-${sequence++}`;
         blocks.push({
           kind: 'opaque',
           id,
           source: nodeSource,
           location,
-          reason: 'Paragraph contains complex JSX or HTML inline nodes',
-          nodeType: node.type
+          reason: `Known JSX container <${node.name}> has no safe content range`,
+          nodeType: node.type,
+          parentId,
         });
-      } else {
-        const child = node.children?.[0];
-        const editRange = child?.position ? mapLocation(child.position).range : location.range;
-        blocks.push({
-          kind: 'editable',
-          id,
-          blockType: 'paragraph',
-          location,
-          editRange,
-          originalSource: source.slice(editRange.start, editRange.end),
-          data: {
-            text: source.slice(editRange.start, editRange.end)
-          }
-        });
+        return;
       }
-    } else if (node.type === 'heading') {
-      if (isComplexParagraph(node)) {
-        hasOpaque = true;
-        blocks.push({
-          kind: 'opaque',
-          id,
-          source: nodeSource,
-          location,
-          reason: 'Heading contains complex JSX or HTML inline nodes',
-          nodeType: node.type
-        });
-      } else {
-        const child = node.children?.[0];
-        const editRange = child?.position ? mapLocation(child.position).range : location.range;
-        blocks.push({
-          kind: 'editable',
-          id,
-          blockType: 'heading',
-          location,
-          editRange,
-          originalSource: source.slice(editRange.start, editRange.end),
-          data: {
-            depth: node.depth,
-            text: source.slice(editRange.start, editRange.end)
-          }
-        });
-      }
-    } else {
-      hasOpaque = true;
-      let reason = `Unsupported AST node type: ${node.type}`;
-      
-      if (node.type === 'mdxJsxFlowElement') {
-        reason = `JSX block component: <${node.name}>`;
-      } else if (node.type === 'mdxFlowExpression') {
-        reason = 'JSX multiline expression block';
-      } else if (node.type === 'list') {
-        reason = 'Standard markdown list block';
-      } else if (node.type === 'table') {
-        reason = 'Standard markdown table block';
-      } else if (node.type === 'math') {
-        reason = 'Display math block';
-      }
+      const containerId = `container-${containers.length}`;
+      containers.push({ id: containerId, kind: 'jsx-container', name: node.name, contentRange });
+      for (const child of node.children ?? []) projectNode(child, containerId);
+      return;
+    }
 
+    const id = `block-${sequence++}`;
+    const registered = projectRegisteredBlock(source, node);
+    if (registered) {
       blocks.push({
-        kind: 'opaque',
+        kind: 'editable',
+        id,
+        blockType: registered.blockType,
+        originalSource: source.slice(registered.editRange.start, registered.editRange.end),
+        location,
+        editRange: registered.editRange,
+        data: registered.data,
+        parentId,
+      });
+      return;
+    }
+
+    if (node.type && PRESERVED_MDAST_NODE_TYPES.has(node.type)) {
+      blocks.push({
+        kind: 'preserved',
         id,
         source: nodeSource,
         location,
-        reason,
-        nodeType: node.type
+        reason: `Recognized source-only syntax: ${node.type}`,
+        nodeType: node.type,
+        parentId,
       });
+      return;
     }
-  }
 
-  if (blocks.length > 0 && blocks.every(block => block.kind === 'opaque')) {
-    compatibility = 'read-only';
-  } else if (hasOpaque) {
-    compatibility = 'partially-editable';
-  }
+    blocks.push({
+      kind: 'opaque',
+      id,
+      source: nodeSource,
+      location,
+      reason: node.type === 'mdxJsxFlowElement'
+        ? `Unregistered JSX block component: <${node.name ?? 'anonymous'}>`
+        : `Unregistered AST node type: ${node.type ?? 'unknown'}`,
+      nodeType: node.type,
+      parentId,
+    });
+  };
 
-  return { blocks, compatibility };
+  for (const node of bodyNodes) projectNode(node, 'container-root');
+
+  const nonEditable = blocks.filter(block => block.kind !== 'editable');
+  let compatibility: VisualCompatibility = 'fully-editable';
+  if (blocks.length === 0 || nonEditable.length === blocks.length) compatibility = 'read-only';
+  else if (nonEditable.length > 0) compatibility = 'partially-editable';
+  return { blocks, containers, compatibility };
 }
 
-export function classifyVisualCompatibility(doc: EditorDocument): { compatibility: VisualCompatibility; reasons: string[] } {
-  const reasons: string[] = [];
-  
-  if (doc.diagnostics.some(d => d.severity === 'critical')) {
-    reasons.push('Document contains critical parse exceptions.');
-    return { compatibility: 'unsupported', reasons };
+export function classifyVisualCompatibility(doc: EditorDocument): {
+  compatibility: VisualCompatibility;
+  reasons: string[];
+} {
+  if (doc.diagnostics.some(diagnostic => diagnostic.severity === 'critical')) {
+    return {
+      compatibility: 'unsupported',
+      reasons: ['Document contains critical parse exceptions.'],
+    };
   }
 
-  const opacities = doc.bodyBlocks.filter(b => b.kind === 'opaque');
-  
   if (doc.bodyBlocks.length === 0) {
-    reasons.push('Document body has no editable visual blocks.');
-    return { compatibility: 'read-only', reasons };
+    return {
+      compatibility: 'read-only',
+      reasons: ['Document body has no registered visual blocks.'],
+    };
   }
 
-  if (opacities.length === doc.bodyBlocks.length) {
-    reasons.push('Document body contains only opaque blocks.');
-    return { compatibility: 'read-only', reasons };
+  const nonEditable = doc.bodyBlocks.filter(block => block.kind !== 'editable');
+  if (nonEditable.length === doc.bodyBlocks.length) {
+    return {
+      compatibility: 'read-only',
+      reasons: nonEditable.map(block => `Block ${block.id} is ${block.kind}: ${block.reason}`),
+    };
   }
-
-  if (opacities.length > 0) {
-    for (const b of opacities) {
-      reasons.push(`Block ${b.id} is opaque: ${b.reason}`);
-    }
-    return { compatibility: 'partially-editable', reasons };
+  if (nonEditable.length > 0) {
+    return {
+      compatibility: 'partially-editable',
+      reasons: nonEditable.map(block => `Block ${block.id} is ${block.kind}: ${block.reason}`),
+    };
   }
-
-  return { compatibility: 'fully-editable', reasons };
+  return { compatibility: 'fully-editable', reasons: [] };
 }
 
 export function getVisualCapabilities(compatibility: VisualCompatibility): {
@@ -160,6 +168,6 @@ export function getVisualCapabilities(compatibility: VisualCompatibility): {
     canViewVisual: compatibility !== 'unsupported',
     canEditSafeBlocks: compatibility === 'fully-editable' || compatibility === 'partially-editable',
     canApplyVisualChanges: compatibility === 'fully-editable' || compatibility === 'partially-editable',
-    canSwitchFromCodeToVisual: compatibility !== 'unsupported'
+    canSwitchFromCodeToVisual: compatibility !== 'unsupported',
   };
 }

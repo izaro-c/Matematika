@@ -9,7 +9,7 @@ assertSafeReport(report);
 
 if (process.argv.includes('--audit')) {
   fs.writeFileSync(output, `${JSON.stringify(report, null, 2)}\n`, 'utf8');
-  fs.writeFileSync(markdownOutput, `# Compatibilidad lossless del corpus\n\n| Compatibilidad | Documentos |\n| --- | ---: |\n| fully-editable | ${report.counts['fully-editable']} |\n| partially-editable | ${report.counts['partially-editable']} |\n| read-only | ${report.counts['read-only']} |\n| unsupported | ${report.counts.unsupported} |\n| **Total** | **${report.totalFiles}** |\n\nTodos los documentos se conservaron exactamente tras apertura, proyección, cambios de modo y tres ciclos.\n`, 'utf8');
+  fs.writeFileSync(markdownOutput, `# Compatibilidad lossless del corpus\n\n| Compatibilidad | Documentos |\n| --- | ---: |\n| fully-editable | ${report.counts['fully-editable']} |\n| partially-editable | ${report.counts['partially-editable']} |\n| read-only | ${report.counts['read-only']} |\n| unsupported | ${report.counts.unsupported} |\n| **Total** | **${report.totalFiles}** |\n\nMetadata legible y válida: ${report.files.filter(file => file.metadataReadable && file.metadataSchemaValid).length}/${report.totalFiles}. Regiones opacas: ${report.files.reduce((total, file) => total + file.opaqueBlocks, 0)}.\n\nTodos los documentos se conservaron exactamente tras apertura, proyección, cambios de modo y tres ciclos.\n`, 'utf8');
   console.log(`[SUCCESS] Compatibilidad auditada para ${report.totalFiles} documentos.`);
 } else if (process.argv.includes('--check')) {
   if (!fs.existsSync(output)) throw new Error(`Baseline missing: ${output}`);

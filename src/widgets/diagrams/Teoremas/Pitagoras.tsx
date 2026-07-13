@@ -39,21 +39,21 @@ export const PitagorasSpec = createDiagramSpec(
     {
       "id": "geometria",
       "label": "Triángulo",
-      "order": 1,
+      "order": 3,
       "visible": true,
       "locked": false
     },
     {
       "id": "areas",
       "label": "Cuadrados",
-      "order": 2,
+      "order": 1,
       "visible": true,
       "locked": false
     },
     {
       "id": "anotaciones",
       "label": "Medidas",
-      "order": 3,
+      "order": 2,
       "visible": true,
       "locked": false
     }
@@ -143,7 +143,7 @@ export const PitagorasSpec = createDiagramSpec(
       "label": "C",
       "color": "carbon",
       "layerId": "geometria",
-      "order": 10,
+      "order": 3,
       "visible": true,
       "locked": false,
       "groupIds": [
@@ -207,7 +207,7 @@ export const PitagorasSpec = createDiagramSpec(
       "label": "A",
       "color": "carbon",
       "layerId": "geometria",
-      "order": 11,
+      "order": 1,
       "visible": true,
       "locked": false,
       "groupIds": [
@@ -234,7 +234,7 @@ export const PitagorasSpec = createDiagramSpec(
       "label": "B",
       "color": "carbon",
       "layerId": "geometria",
-      "order": 12,
+      "order": 2,
       "visible": true,
       "locked": false,
       "groupIds": [
