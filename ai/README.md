@@ -40,6 +40,10 @@ Se elige primero un flujo en [`agent-workflows.md`](agent-workflows.md), despué
 
 La Fase 8 de estabilizacion del editor esta registrada como parcial en [`phases/editor-stabilization.md`](phases/editor-stabilization.md). Los gates oficiales viven en `package.json` bajo el prefijo `editor:*`; la declaracion operativa esta en [`../docs/editor/stability.md`](../docs/editor/stability.md) y el informe de cierre parcial en [`reports/editor-stabilization-final.md`](reports/editor-stabilization-final.md).
 
+## Editor completo de documentos y diagramas
+
+La evolución funcional y de UX posterior a la estabilización se coordina desde [`phases/editor-authoring/README.md`](phases/editor-authoring/README.md). Esa matriz es la fuente canónica del estado de sus fases 0–8; cada ficha enlazada contiene alcance, entregables, criterios de aceptación, validación y límites. La numeración pertenece a una épica distinta y no reemplaza el historial de `editor-stabilization.md`.
+
 ## Inicio de sesión
 
 1. Leer `AGENTS.md`.
