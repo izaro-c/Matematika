@@ -121,7 +121,8 @@ function validateMetadata(metadata: Record<string, unknown>): EditorValidationIs
 
 function validateProofStep(step: ProofStepData, blockId: string): EditorValidationIssue[] {
   const issues: EditorValidationIssue[] = [];
-  if (!step.justificacion?.trim()) {
+  const bodyContainsJustification = /\b(?:por (?:hipótesis|axioma|teorema|definición|el paso|regla (?:de )?lógica|construcción)|hipótesis)\b/i.test(step.body ?? '');
+  if (!step.justificacion?.trim() && !bodyContainsJustification) {
     issues.push(issue(`proof-${step.number}-justification`, 'error', 'proof', `El paso ${step.number} necesita justificación Greenberg.`, blockId));
   }
   if (!step.body?.includes('<InteractiveElement') && !step.body?.includes('highlightTarget=')) {

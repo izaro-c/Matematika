@@ -118,11 +118,13 @@ export interface EditorDocument {
 
 export type StructuralOperationKind =
   | 'replace-block'
+  | 'update-block'
   | 'insert-block'
   | 'delete-block'
   | 'duplicate-block'
   | 'move-block'
-  | 'update-metadata';
+  | 'update-metadata'
+  | 'bind-diagram';
 
 export interface MutationPreview {
   title: string;

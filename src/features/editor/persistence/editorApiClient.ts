@@ -6,6 +6,7 @@ import {
   type ReadDraftResponse, type RestoreBackupRequest, type RestoreBackupResponse,
   type SaveDraftRequest, type SaveDraftResponse
 } from './persistenceContracts';
+import { createContentRequestSchema, type CreateContentRequest } from './persistenceContracts';
 import { PersistenceFailure } from './persistenceErrors';
 
 const fileListSchema = z.array(z.object({
@@ -82,6 +83,10 @@ export class EditorApiClient {
   }
   applyContent(value: ApplyContentRequest, signal?: AbortSignal): Promise<ApplyContentResponse> {
     return request('/api/content', applyContentResponseSchema, json(value, signal));
+  }
+  createContent(value: CreateContentRequest, signal?: AbortSignal): Promise<ApplyContentResponse> {
+    const checked = createContentRequestSchema.parse(value);
+    return request('/api/content', applyContentResponseSchema, json(checked, signal));
   }
   restoreBackup(value: RestoreBackupRequest, signal?: AbortSignal): Promise<RestoreBackupResponse> {
     return request('/api/content/restore', restoreBackupResponseSchema, json(value, signal));

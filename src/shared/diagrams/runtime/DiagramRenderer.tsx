@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useRef, useState } from 'react';
+import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { MathBoard, type ThemeColors } from '../core/MathBoard';
 import {
   createAngle,
@@ -299,11 +299,26 @@ function createElement(board: any, elements: Record<string, any>, item: DiagramE
   }, theme) : null;
 }
 
-function attachSelection(element: any, item: DiagramSceneItem, mode: DiagramRendererProps['mode'], onSelectionChange?: (id: string) => void) {
+function attachSelection(
+  element: any,
+  item: DiagramSceneItem,
+  mode: DiagramRendererProps['mode'],
+  onSelectionChange?: (id: string) => void,
+  onTargetHighlight?: (target: string | null) => void,
+) {
   if (!element) return;
   const node = element.rendNode as HTMLElement | undefined;
   node?.setAttribute('aria-label', item.selection.ariaLabel ?? item.label);
   if (item.selection.role) node?.setAttribute('data-selection-role', item.selection.role);
+  if (item.target) {
+    const target = item.targetId ?? item.id;
+    node?.setAttribute('tabindex', '0');
+    node?.setAttribute('data-diagram-target', target);
+    node?.addEventListener('mouseenter', () => onTargetHighlight?.(target));
+    node?.addEventListener('mouseleave', () => onTargetHighlight?.(null));
+    node?.addEventListener('focus', () => onTargetHighlight?.(target));
+    node?.addEventListener('blur', () => onTargetHighlight?.(null));
+  }
   if (mode !== 'editor' || !item.selection.selectable) return;
   node?.setAttribute('tabindex', '0');
   node?.addEventListener('keydown', (event) => {
@@ -333,6 +348,10 @@ const DiagramRendererContent: React.FC<DiagramRendererProps> = ({
   stepControls,
 }) => {
   const targetRegistry = useDiagramTargetRegistry();
+  const setVariable = useMathStore(state => state.setVariable);
+  const setTargetHighlight = useCallback((target: string | null) => {
+    setVariable('highlight', target ? `${spec.componentId}:${target}` : null);
+  }, [setVariable, spec.componentId]);
   const [liveSceneVariables, setLiveSceneVariables] = useState<Record<string, number>>(() => {
     try { return liveVariables({}, spec); } catch { return {}; }
   });
@@ -465,7 +484,7 @@ const DiagramRendererContent: React.FC<DiagramRendererProps> = ({
                 layer: itemLayerNumber(spec, sceneItem),
               }, theme);
             }
-            attachSelection(elements[sceneItem.id], sceneItem, mode, onSelectionChange);
+            attachSelection(elements[sceneItem.id], sceneItem, mode, onSelectionChange, setTargetHighlight);
           });
         }}
         onUpdate={(_board, elements, theme, isStep, isHL) => {

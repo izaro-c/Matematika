@@ -4,12 +4,15 @@ import { useNavigationStore } from '@/features/search/NavigationStore';
 import { useEditorCore } from '../core/useEditorCore';
 import { SemanticLinker } from './components/SemanticLinker';
 import { DiagramWorkbench, type DiagramWorkbenchMode } from './diagrams/DiagramWorkbench';
-import { Block, createBlockId, parseAttributes } from '../core/parser';
+import { parseAttributes } from '../core/parser';
 import type { EditorDiagramReference, DiagramTargetRegistry } from '../core/editorTypes';
 import type { FileNode } from '../lib/editorContracts';
 import { approveDiffReview, buildDiffReview, isDiffReviewStale, type DiffReview } from '../ux/diffReview';
 import { buildEditorSafetyPresentation } from '../ux/safetyPresentation';
 import { useDiagramUsages } from '../diagrams/hooks/useDiagramUsages';
+import { usePageDiagramTargets } from '../diagrams/hooks/usePageDiagramTargets';
+import { PublishedRuntimePreview } from './preview/PublishedRuntimePreview';
+import { CreatePageDialog } from './create/CreatePageDialog';
 import {
   readEditorWorkspacePreferences,
   recordRecentPath,
@@ -100,9 +103,8 @@ export const EditorPage: React.FC = () => {
     saveCurrentFile,
     saveDraftCurrentFile,
     setMetadata,
-    setImports,
-    setExports,
-    setBlocks,
+    bindDiagram,
+    createPage,
     getExpectedDiffRanges,
     compatibility,
     compatibilityReasons,
@@ -121,6 +123,9 @@ export const EditorPage: React.FC = () => {
   const [diffReview, setDiffReview] = useState<DiffReview | null>(null);
   const [pendingFileNavigation, setPendingFileNavigation] = useState<string | null>(null);
   const [focusRange, setFocusRange] = useState<{ start: number; end: number } | undefined>(undefined);
+  const [coordinatedView, setCoordinatedView] = useState(false);
+  const [previewOpen, setPreviewOpen] = useState(false);
+  const [createPageOpen, setCreatePageOpen] = useState(false);
 
   // Estado para el enlazador semántico
   const [linkerState, setLinkerState] = useState<{
@@ -144,7 +149,7 @@ export const EditorPage: React.FC = () => {
   // Estado para el constructor visual de diagramas
   const [diagramBuilderOpen, setDiagramBuilderOpen] = useState(false);
   const [activeDiagramBlockId, setActiveDiagramBlockId] = useState<string | null>(null);
-  const [activeDiagramIndex, setActiveDiagramIndex] = useState<number | null>(null);
+  const [, setActiveDiagramIndex] = useState<number | null>(null);
 
   const [, setLocation] = useLocation();
   const { toggleSearch } = useNavigationStore();
@@ -322,13 +327,24 @@ export const EditorPage: React.FC = () => {
       void saveCurrentFile();
       return;
     }
+    const structuralRanges = getExpectedDiffRanges();
+    const explicitCodeEdit = structuralRanges.length === 0
+      && compatibility === 'fully-editable'
+      && (editorMode === 'code' || coordinatedView);
+    const expectedRanges = explicitCodeEdit ? [{
+      start: 0,
+      end: baseSource.length,
+      reason: 'Edición explícita del source completo en la vista de código.',
+      operationId: `code-edit:${localRevision}`,
+      blockId: 'source',
+    }] : structuralRanges;
     setDiffReview(buildDiffReview({
       documentId: currentFile,
       baseSource,
       candidateSource: rawBody,
       localRevision,
       baseVersion,
-      expectedRanges: getExpectedDiffRanges(),
+      expectedRanges,
     }));
   };
 
@@ -380,7 +396,7 @@ export const EditorPage: React.FC = () => {
     }
   };
 
-  const diagramTargets: DiagramTargetRegistry = useMemo(() => {
+  const inlineDiagramTargets: DiagramTargetRegistry = useMemo(() => {
     return blocks.flatMap(block => {
       if (block.type !== 'diagram') return [];
       return Array.isArray(block.metadata?.targets) ? block.metadata.targets : [];
@@ -457,6 +473,12 @@ export const EditorPage: React.FC = () => {
       link.role === 'Inline'
     ));
   }, [blocks, currentFile, exports, files, imports]);
+
+  const diagramTargetLookup = usePageDiagramTargets(pageDiagramLinks);
+  const diagramTargets = useMemo<DiagramTargetRegistry>(() => {
+    const byId = new Map([...inlineDiagramTargets, ...diagramTargetLookup.targets].map(target => [target.qualifiedId ?? target.id, target]));
+    return [...byId.values()];
+  }, [diagramTargetLookup.targets, inlineDiagramTargets]);
 
   const getPreviewPath = () => {
     const id = String(metadata.id || '').trim();
@@ -546,53 +568,7 @@ export const EditorPage: React.FC = () => {
       return;
     }
 
-    const importLine = `import { ${spec.componentName} } from '${spec.importPath}';`;
-    setImports(prev => prev.includes(importLine) || prev.includes(spec.componentName)
-      ? prev
-      : `${prev.trim()}\n${importLine}`.trim()
-    );
-
-    const exportName = spec.mode === 'diagram' ? 'Diagram' : 'Simulation';
-    const exportLine = `export const ${exportName} = ${spec.componentName};`;
-    setExports(prev => {
-      const withoutSameExport = prev
-        .split('\n')
-        .filter(line => !new RegExp(`^\\s*export\\s+const\\s+${exportName}\\s*=`).test(line))
-        .join('\n')
-        .trim();
-      return `${withoutSameExport}\n${exportLine}`.trim();
-    });
-
-    setMetadata(prev => ({
-      ...prev,
-      hasDiagram: true,
-      hasSimulation: spec.mode !== 'diagram',
-      layout: String(prev.type) === 'demostracion' ? 'split' : prev.layout,
-    }));
-
-    const diagramMetadata = {
-      path: spec.path,
-      importPath: spec.importPath,
-      targets: spec.targets,
-      generatedBy: 'DiagramWorkbench',
-      visualModel: spec.visualModel,
-    };
-
-    if (activeDiagramBlockId) {
-      updateBlock(activeDiagramBlockId, spec.componentName, diagramMetadata);
-    } else if (activeDiagramIndex !== null) {
-      const newBlock: Block = {
-        id: createBlockId(),
-        type: 'diagram',
-        content: spec.componentName,
-        metadata: diagramMetadata
-      };
-      setBlocks(prev => {
-        const updated = [...prev];
-        updated.splice(activeDiagramIndex, 0, newBlock);
-        return updated;
-      });
-    }
+    bindDiagram(spec);
     setDiagramBuilderOpen(false);
     setActiveDiagramBlockId(null);
     setActiveDiagramIndex(null);
@@ -601,12 +577,7 @@ export const EditorPage: React.FC = () => {
   const insertInteractiveTargetParagraph = (target: { id: string; label?: string; color?: string }) => {
     const label = target.label || target.id;
     const color = target.color || 'salvia';
-    const newBlock: Block = {
-      id: createBlockId(),
-      type: 'paragraph',
-      content: `<InteractiveElement target="${target.id}" color="${color}">${label}</InteractiveElement>`,
-    };
-    setBlocks(prev => [...prev, newBlock]);
+    addBlock(blocks.length, 'paragraph', `<InteractiveElement target="${target.id}" color="${color}">${label}</InteractiveElement>`);
   };
 
   const pageConnectionSummary = useMemo(() => {
@@ -677,7 +648,25 @@ export const EditorPage: React.FC = () => {
     return (
       <>
         {/* PANEL CENTRAL: Editor Híbrido */}
-        {!isDiagramFile && editorMode === 'visual' ? (
+        {!isDiagramFile && coordinatedView ? (
+          <div className="flex min-w-0 flex-1 flex-col overflow-hidden lg:flex-row" data-testid="coordinated-editor-view">
+            <section className="flex min-h-0 min-w-0 flex-1 overflow-hidden border-b border-carbon/15 lg:border-b-0 lg:border-r" aria-label="Vista visual coordinada">
+              <VisualEditorPanel
+                currentFile={currentFile} metadata={metadata} isReadOnly={isReadOnly}
+                canEditVisualMetadata={canEditVisualMetadata} canMutateVisualStructure={canMutateVisualStructure}
+                blocks={blocks} editingBlockId={editingBlockId} setEditingBlockId={setEditingBlockId}
+                handleMetadataChange={handleMetadataChange} addBlock={addBlock} moveBlock={moveBlock}
+                duplicateBlock={duplicateBlock} removeBlock={removeBlock} updateBlock={updateBlock}
+                handleTextareaSelect={handleTextareaSelect} handleEditLink={handleEditLink}
+                setActiveDiagramIndex={setActiveDiagramIndex} setActiveDiagramBlockId={setActiveDiagramBlockId}
+                setDiagramBuilderOpen={setDiagramBuilderOpen} diagramTargets={diagramTargets}
+              />
+            </section>
+            <section className="min-h-[20rem] min-w-0 flex-1 overflow-y-auto p-3 sm:p-5" aria-label="Código coordinado">
+              <CodeEditorPanel rawBody={rawBody} updateRawBody={updateRawBody} isDiagramFile={false} isDark={isDark} focusRange={focusRange} />
+            </section>
+          </div>
+        ) : !isDiagramFile && editorMode === 'visual' ? (
           <VisualEditorPanel
             currentFile={currentFile}
             metadata={metadata}
@@ -744,6 +733,9 @@ export const EditorPage: React.FC = () => {
             openFile={openFileSafely}
             pageDiagramLinks={pageDiagramLinks}
             pageConnectionSummary={pageConnectionSummary}
+            diagramTargets={diagramTargets}
+            diagramTargetsLoading={diagramTargetLookup.loading}
+            diagramTargetsError={diagramTargetLookup.error}
             setActiveDiagramIndex={setActiveDiagramIndex}
             setActiveDiagramBlockId={setActiveDiagramBlockId}
             setDiagramBuilderOpen={setDiagramBuilderOpen}
@@ -783,7 +775,6 @@ export const EditorPage: React.FC = () => {
           saveCurrentFile={isDiagramFile ? saveCurrentFile : reviewCurrentDiff}
           saving={saving}
           previewPath={getPreviewPath()}
-          setLocation={setLocation}
           isInspectorOpen={isInspectorOpen}
           setIsInspectorOpen={setIsInspectorOpen}
           isDiagnosticsOpen={isDiagnosticsOpen}
@@ -791,6 +782,10 @@ export const EditorPage: React.FC = () => {
           level={workspace.level}
           setLevel={level => setWorkspace(previous => ({ ...previous, level }))}
           toggleSearch={toggleSearch}
+          onCreatePage={() => setCreatePageOpen(true)}
+          onOpenPreview={() => setPreviewOpen(true)}
+          coordinatedView={coordinatedView}
+          onToggleCoordinatedView={() => setCoordinatedView(value => !value)}
         />
       }
       navigation={
@@ -896,6 +891,8 @@ export const EditorPage: React.FC = () => {
         canReviewDiff={canReviewDiff}
         canSaveDraft={canSaveDraft}
       />
+      <PublishedRuntimePreview open={previewOpen} path={getPreviewPath()} hasPendingChanges={hasLocalChanges} revision={localRevision} onClose={() => setPreviewOpen(false)} />
+      <CreatePageDialog open={createPageOpen} onClose={() => setCreatePageOpen(false)} onCreate={createPage} />
     </EditorShell>
   );
 };

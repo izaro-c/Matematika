@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { MathProvider } from '@/shared/lib/MathStoreContext';
+import { MathProviderBoundary } from '@/shared/lib/MathStoreContext';
 import { ErrorBoundary } from '@/widgets/layouts/ErrorBoundary';
 
 type DiagramModule = Record<string, unknown>;
@@ -93,9 +93,9 @@ export const DiagramRuntimePreview: React.FC<DiagramRuntimePreviewProps> = ({ fi
         key={`${filePath}:${componentName}`}
         fallback={<p className="p-4 text-xs text-granada" role="alert">El diagrama guardado produjo un error al renderizarse.</p>}
       >
-        <MathProvider>
+        <MathProviderBoundary>
           <Component />
-        </MathProvider>
+        </MathProviderBoundary>
       </ErrorBoundary>
     </div>
   );

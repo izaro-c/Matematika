@@ -3,6 +3,8 @@ import type { Block } from '../../core/parser';
 import type { DiagramTargetRegistry, EditorValidationIssue, EditorValidationResult } from '../../core/editorTypes';
 import { MetadataInspector } from '../components/MetadataInspector';
 import { ValidationPanel } from '../components/ValidationPanel';
+import { DiagramRuntimePreview } from '../../diagrams/ui/DiagramRuntimePreview';
+import { useMathStore } from '@/shared/lib/MathStoreContext';
 
 interface PageDiagramLink {
   componentName: string;
@@ -29,6 +31,9 @@ interface MetadataPanelProps {
     invalidConnections: Array<{ target: string; label: string; kind: string }>;
     ambiguousConnections: Array<{ target: string; label: string; kind: string }>;
   };
+  diagramTargets: DiagramTargetRegistry;
+  diagramTargetsLoading: boolean;
+  diagramTargetsError: string | null;
   setActiveDiagramIndex: (index: number | null) => void;
   setActiveDiagramBlockId: (id: string | null) => void;
   setDiagramBuilderOpen: (open: boolean) => void;
@@ -48,12 +53,16 @@ export const MetadataPanel: React.FC<MetadataPanelProps> = ({
   openFile,
   pageDiagramLinks,
   pageConnectionSummary,
+  diagramTargets,
+  diagramTargetsLoading,
+  diagramTargetsError,
   setActiveDiagramIndex,
   setActiveDiagramBlockId,
   setDiagramBuilderOpen,
   insertInteractiveTargetParagraph,
   onSelectIssue,
 }) => {
+  const setVariable = useMathStore(state => state.setVariable);
   const renderPageDiagramPanel = () => {
     if (pageDiagramLinks.length === 0) {
       return (
@@ -61,7 +70,12 @@ export const MetadataPanel: React.FC<MetadataPanelProps> = ({
           <h3 className="text-[10px] font-bold uppercase tracking-widest text-carbon/55">Diagramas</h3>
           <div className="mt-3 rounded border border-dashed border-carbon/20 bg-carbon/5 p-3">
             <p className="text-xs italic text-carbon/55">Esta página aún no tiene diagramas enlazados.</p>
-            <p className="mt-2 text-[10px] text-carbon/45">La creación y el enlace visual permanecerán ocultos hasta disponer de una operación localizada exacta.</p>
+            <p className="mt-2 text-[10px] text-carbon/45">El constructor añade import, export publicado y metadatos mediante un único plan lossless revisable.</p>
+            {canMutateVisualStructure && <button type="button" onClick={() => {
+              setActiveDiagramIndex(blocks.length);
+              setActiveDiagramBlockId(null);
+              setDiagramBuilderOpen(true);
+            }} className="mt-3 rounded bg-pavo px-3 py-1.5 text-[10px] font-bold text-lienzo">Vincular diagrama</button>}
           </div>
         </section>
       );
@@ -130,8 +144,23 @@ export const MetadataPanel: React.FC<MetadataPanelProps> = ({
                   Reemplazar
                 </button>}
               </div>
+              {link.path && <div className="mt-3"><DiagramRuntimePreview filePath={link.path} componentName={link.componentName} /></div>}
             </div>
           ))}
+        </div>
+        <div className="mt-4 rounded border border-carbon/10 bg-carbon/5 p-3" aria-label="Navegador de targets">
+          <div className="flex items-center justify-between"><h4 className="text-[10px] font-bold uppercase tracking-widest text-carbon/55">Targets publicados</h4>{diagramTargetsLoading && <span className="text-[9px] text-carbon/45">Analizando…</span>}</div>
+          {diagramTargetsError && <p className="mt-2 text-[10px] text-granada" role="alert">{diagramTargetsError}</p>}
+          {!diagramTargetsLoading && diagramTargets.length === 0 && <p className="mt-2 text-[10px] italic text-carbon/45">El diagrama no publica targets editables o requiere modo código.</p>}
+          <div className="mt-2 flex flex-wrap gap-1">
+            {diagramTargets.map(target => <button key={target.qualifiedId ?? target.id} type="button"
+              onMouseEnter={() => setVariable('highlight', target.qualifiedId ?? target.id)} onMouseLeave={() => setVariable('highlight', null)}
+              onFocus={() => setVariable('highlight', target.qualifiedId ?? target.id)} onBlur={() => setVariable('highlight', null)}
+              onClick={() => setVariable('highlight', target.qualifiedId ?? target.id)}
+              className="rounded border border-carbon/10 bg-lienzo px-2 py-1 text-left hover:border-ocre/35 hover:bg-ocre/5" aria-label={`Resaltar target ${target.label}`}>
+              <span className="block text-[10px] font-bold text-carbon">{target.label}</span><span className="block font-mono text-[8px] text-carbon/45">{target.qualifiedId ?? target.id}</span>
+            </button>)}
+          </div>
         </div>
         {(pageConnectionSummary.connected.length > 0 || pageConnectionSummary.missingTargets.length > 0) && (
           <div className="mt-4 rounded border border-carbon/10 bg-carbon/5 p-3">

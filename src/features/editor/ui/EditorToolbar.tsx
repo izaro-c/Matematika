@@ -21,7 +21,6 @@ interface EditorToolbarProps {
   saveCurrentFile: () => Promise<boolean> | void;
   saving: boolean;
   previewPath: string | null;
-  setLocation: (loc: string) => void;
   isInspectorOpen: boolean;
   setIsInspectorOpen: (open: boolean) => void;
   isDiagnosticsOpen: boolean;
@@ -29,6 +28,10 @@ interface EditorToolbarProps {
   level: EditorWorkspaceLevel;
   setLevel: (level: EditorWorkspaceLevel) => void;
   toggleSearch: () => void;
+  onCreatePage: () => void;
+  onOpenPreview: () => void;
+  coordinatedView: boolean;
+  onToggleCoordinatedView: () => void;
 }
 
 function changeIndicatorClass(hasPendingChanges: boolean, hasCurrentFile: boolean): string {
@@ -56,7 +59,6 @@ export const EditorToolbar: React.FC<EditorToolbarProps> = ({
   saveCurrentFile,
   saving,
   previewPath,
-  setLocation,
   isInspectorOpen,
   setIsInspectorOpen,
   isDiagnosticsOpen,
@@ -64,6 +66,10 @@ export const EditorToolbar: React.FC<EditorToolbarProps> = ({
   level,
   setLevel,
   toggleSearch,
+  onCreatePage,
+  onOpenPreview,
+  coordinatedView,
+  onToggleCoordinatedView,
 }) => {
   const fileName = currentFile?.split('/').pop() ?? 'Ningún recurso abierto';
   const hasPendingChanges = dirtyState !== 'clean';
@@ -85,6 +91,7 @@ export const EditorToolbar: React.FC<EditorToolbarProps> = ({
         >
           {isSidebarOpen ? 'Ocultar recursos' : 'Recursos'}
         </button>
+        <button type="button" onClick={onCreatePage} className="rounded border border-salvia/25 bg-salvia/5 px-2.5 py-2 text-xs font-bold text-salvia hover:bg-salvia/10" title="Crear una página MDX estructurada">Nueva</button>
 
         <div className="min-w-0 flex-1 px-1">
           <div className="flex items-center gap-2">
@@ -114,7 +121,7 @@ export const EditorToolbar: React.FC<EditorToolbarProps> = ({
           <button
             type="button"
             onClick={() => saveCurrentFile()}
-            disabled={saving || !validation.canSave || (!isDiagramFile && editorMode === 'visual')}
+            disabled={saving || !validation.canSave}
             className="rounded bg-salvia px-3 py-1.5 text-xs font-bold text-lienzo hover:bg-salvia/85 disabled:cursor-not-allowed disabled:opacity-40"
             title={isDiagramFile ? 'Guardar el archivo TSX completo' : 'Revisar los cambios antes de aplicarlos'}
           >
@@ -122,12 +129,13 @@ export const EditorToolbar: React.FC<EditorToolbarProps> = ({
           </button>
           {!isDiagramFile && <button
             type="button"
-            onClick={() => previewPath && setLocation(routePath(previewPath))}
+            onClick={onOpenPreview}
             disabled={!previewPath}
             className="rounded border border-carbon/20 px-3 py-1.5 text-xs font-bold text-carbon/70 hover:bg-carbon/5 disabled:cursor-not-allowed disabled:opacity-40"
           >
             Vista publicada
           </button>}
+          {!isDiagramFile && <button type="button" onClick={onToggleCoordinatedView} aria-pressed={coordinatedView} className={`rounded border px-3 py-1.5 text-xs font-bold ${coordinatedView ? 'border-pavo/30 bg-pavo/10 text-pavo' : 'border-carbon/20 text-carbon/70 hover:bg-carbon/5'}`}>Visual + código</button>}
         </div>}
 
         <div className="flex items-center gap-1 border-l border-carbon/10 pl-2">
@@ -161,7 +169,9 @@ export const EditorToolbar: React.FC<EditorToolbarProps> = ({
 
       {currentFile && <div className="flex items-center gap-2 overflow-x-auto border-t border-carbon/10 px-2 py-2 lg:hidden">
         <EditorModeSwitcher editorMode={editorMode} isDiagramFile={isDiagramFile} onToggleMode={toggleEditorMode} />
-        <button type="button" onClick={() => saveCurrentFile()} disabled={saving || !validation.canSave || (!isDiagramFile && editorMode === 'visual')} className="whitespace-nowrap rounded bg-salvia px-3 py-1 text-xs font-bold text-lienzo disabled:opacity-40">{isDiagramFile ? 'Guardar TSX' : 'Revisar y guardar'}</button>
+        <button type="button" onClick={() => saveCurrentFile()} disabled={saving || !validation.canSave} className="whitespace-nowrap rounded bg-salvia px-3 py-1 text-xs font-bold text-lienzo disabled:opacity-40">{isDiagramFile ? 'Guardar TSX' : 'Revisar y guardar'}</button>
+        {!isDiagramFile && <button type="button" onClick={onToggleCoordinatedView} className="whitespace-nowrap rounded border border-carbon/15 px-2 py-1 text-xs">{coordinatedView ? 'Una vista' : 'Visual + código'}</button>}
+        {!isDiagramFile && <button type="button" onClick={onOpenPreview} disabled={!previewPath} className="whitespace-nowrap rounded border border-carbon/15 px-2 py-1 text-xs disabled:opacity-40">Preview</button>}
         <button type="button" onClick={() => setIsInspectorOpen(!isInspectorOpen)} className="whitespace-nowrap rounded border border-carbon/15 px-2 py-1 text-xs">Inspector</button>
         <button type="button" onClick={() => setIsDiagnosticsOpen(!isDiagnosticsOpen)} className="whitespace-nowrap rounded border border-carbon/15 px-2 py-1 text-xs">Diagnósticos</button>
         <button type="button" onClick={() => setLevel(level === 'basic' ? 'advanced' : 'basic')} className="whitespace-nowrap rounded border border-carbon/15 px-2 py-1 text-xs">Vista {level === 'basic' ? 'básica' : 'avanzada'}</button>

@@ -6,8 +6,8 @@ import {
   openEditorDocument, enterVisualMode,
   parseEditorDocument, getVisualCapabilities,
   computeFingerprint,
-  applyMutationPlan, planBlockReplacement, planBlockInsertion, planBlockDeletion,
-  planBlockDuplication, planBlockMove, planMetadataUpdate,
+  applyMutationPlan, planBlockUpdate, planBlockInsertion, planBlockDeletion,
+  planBlockDuplication, planBlockMove, planMetadataUpdate, planDiagramBinding,
   type DocumentMutationPlan, type EditorDocument, type ProjectedBlock, type SourceRange
 } from '../document';
 import {
@@ -18,6 +18,9 @@ import {
   editorPersistenceReducer, initialEditorPersistenceState, persistenceStatusLabel
 } from '../state';
 import type { ApprovedDiff, ExpectedDiffRange } from '../ux/diffReview';
+import { validateEditorDocument } from './validation';
+import { buildAuthoringIntegrityReport, createPagePath, createPageSource, type CreatePageInput } from '../ux/authoringModel';
+import type { DiagramTargetRegistry, EditorDiagramReference } from './editorTypes';
 
 export type VisualSavePolicy = 'disabled' | 'manual-reviewed' | 'enabled';
 export const VISUAL_SAVE_POLICY: VisualSavePolicy = 'enabled';
@@ -166,17 +169,27 @@ export const useEditorCore = () => {
   const isDiagramSource = currentFile?.endsWith('.tsx') ?? false;
   const validation = useMemo<EditorValidationResult>(() => {
     if (isDiagramSource) return { issues: [], canSave: true, errorCount: 0, warningCount: 0 };
-    const blocking = doc?.diagnostics.filter(item => item.severity === 'critical' || item.severity === 'error') ?? [];
-    return { issues: blocking.map(item => ({
+    const documentIssues = (doc?.diagnostics ?? []).map(item => ({
       id: item.code,
       area: item.panel === 'metadata' ? 'metadata' as const : 'body' as const,
-      severity: 'error' as const,
+      severity: item.severity === 'info' ? 'info' as const : item.severity === 'warning' ? 'warning' as const : 'error' as const,
       message: item.message,
       blockId: item.blockId,
       sourceRange: item.sourceRange ?? item.location?.range
-    })),
-      canSave: blocking.length === 0, errorCount: blocking.length, warningCount: 0 };
-  }, [doc, isDiagramSource]);
+    }));
+    const structured = validateEditorDocument({ metadata, imports, exports, blocks, rawBody });
+    const integrity = buildAuthoringIntegrityReport({
+      source: rawBody,
+      metadata,
+      currentFile,
+      diagramTargets: blocks.flatMap(block => Array.isArray(block.metadata?.targets) ? block.metadata.targets : []) as DiagramTargetRegistry,
+    });
+    const byId = new Map([...documentIssues, ...structured.issues, ...integrity].map(issue => [issue.id, issue]));
+    const issues = [...byId.values()];
+    const errorCount = issues.filter(issue => issue.severity === 'error').length;
+    const warningCount = issues.filter(issue => issue.severity === 'warning').length;
+    return { issues, canSave: errorCount === 0, errorCount, warningCount };
+  }, [blocks, currentFile, doc, exports, imports, isDiagramSource, metadata, rawBody]);
 
   const loadFileList = useCallback(async () => {
     setFilesLoading(true);
@@ -296,10 +309,10 @@ export const useEditorCore = () => {
     }
   }, [commitSourceChange, doc]);
 
-  const updateBlock = useCallback((id: string, content: string, _metadata?: Record<string, unknown>) => {
+  const updateBlock = useCallback((id: string, content: string, blockMetadata?: Record<string, unknown>) => {
     if (!doc || !capabilities.canEditSafeBlocks) { setMessage(blockedMessage); return; }
     try {
-      commitMutation(planBlockReplacement(doc, id, content), 'Cambio localizado aplicado.');
+      commitMutation(planBlockUpdate(doc, id, { content, metadata: blockMetadata }), 'Cambio localizado aplicado.');
     } catch (error) {
       setMessage(`Cambio rechazado: ${error instanceof Error ? error.message : String(error)}`);
     }
@@ -325,9 +338,9 @@ export const useEditorCore = () => {
     catch (error) { setMessage(`Cambio rechazado: ${error instanceof Error ? error.message : String(error)}`); }
   }, [blockUnsafeAction, commitMutation, doc]);
 
-  const addBlock = useCallback((index: number, type: BlockType) => {
+  const addBlock = useCallback((index: number, type: BlockType, content?: string, blockMetadata?: Record<string, unknown>) => {
     if (!doc) { blockUnsafeAction(); return; }
-    try { commitMutation(planBlockInsertion(doc, { index, blockType: type }), 'Bloque insertado localmente.'); }
+    try { commitMutation(planBlockInsertion(doc, { index, blockType: type, content, metadata: blockMetadata }), 'Bloque insertado localmente.'); }
     catch (error) { setMessage(`Cambio rechazado: ${error instanceof Error ? error.message : String(error)}`); }
   }, [blockUnsafeAction, commitMutation, doc]);
 
@@ -349,6 +362,48 @@ export const useEditorCore = () => {
     try { commitMutation(planBlockDuplication(doc, id), 'Bloque duplicado localmente.'); }
     catch (error) { setMessage(`Cambio rechazado: ${error instanceof Error ? error.message : String(error)}`); }
   }, [blockUnsafeAction, commitMutation, doc]);
+
+  const bindDiagram = useCallback((spec: EditorDiagramReference) => {
+    if (!doc || spec.mode === 'inline') {
+      setMessage(spec.mode === 'inline'
+        ? 'Los diagramas inline requieren edición explícita del contenedor en modo código.'
+        : blockedMessage);
+      return;
+    }
+    try {
+      commitMutation(planDiagramBinding(doc, {
+        componentName: spec.componentName,
+        importPath: spec.importPath,
+        mode: spec.mode,
+      }), 'Diagrama vinculado mediante un plan estructural único.');
+    } catch (error) {
+      setMessage(`Vinculación rechazada: ${error instanceof Error ? error.message : String(error)}`);
+    }
+  }, [commitMutation, doc]);
+
+  const createPage = useCallback(async (input: CreatePageInput): Promise<boolean> => {
+    try {
+      const source = createPageSource(input);
+      const path = createPagePath(input);
+      const candidate = parseEditorDocument(source);
+      if (candidate.metadata.status !== 'readable' || !candidate.metadata.schemaValid || candidate.compatibility === 'unsupported') {
+        throw new Error('La plantilla inicial no cumple el schema autoritativo o no es MDX estructurable.');
+      }
+      const sourceHash = await hashSource(source);
+      await editorApiClient.createContent({ path, source, sourceHash, localRevision: 0, create: true });
+      await loadFileList();
+      await openFile(path, { discardLocalChanges: true });
+      setEditorMode('visual');
+      setMessage('Página creada con estructura y metadatos validados.');
+      return true;
+    } catch (error) {
+      const detail = error && typeof error === 'object' && 'detail' in error
+        ? (error as { detail: PersistenceError }).detail
+        : null;
+      setMessage(detail ? persistenceMessage(detail) : `No se pudo crear la página: ${error instanceof Error ? error.message : String(error)}`);
+      return false;
+    }
+  }, [loadFileList, openFile]);
 
   const getExpectedDiffRanges = useCallback((): ExpectedDiffRange[] => {
     return visualOperationsRef.current.map(operation => ({
@@ -466,7 +521,7 @@ export const useEditorCore = () => {
     persistenceLabel: persistenceStatusLabel(persistence.status),
     loadFileList, openFile, toggleEditorMode, setEditorMode, updateRawBody, updateBlock, saveCurrentFile, saveDraftCurrentFile,
     compatibility, compatibilityReasons, capabilities,
-    removeBlock, addBlock, moveBlock, duplicateBlock, setMetadata, setImports, setExports, setBlocks,
+    removeBlock, addBlock, moveBlock, duplicateBlock, bindDiagram, createPage, setMetadata, setImports, setExports, setBlocks,
     canMutateVisualStructure: capabilities.canEditSafeBlocks,
     canEditVisualMetadata: doc?.metadata.status === 'readable' && doc.metadata.schemaValid,
     getExpectedDiffRanges

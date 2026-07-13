@@ -46,7 +46,7 @@ const proofMethodOptions = [
 ];
 
 const common: MetadataFieldConfig[] = [
-  { key: 'id', label: 'ID', type: 'text', required: true, placeholder: 'teorema-pitagoras' },
+  { key: 'id', label: 'ID', type: 'text', required: true, readonly: true, placeholder: 'teorema-pitagoras' },
   { key: 'type', label: 'Tipo', type: 'select', required: true, options: [...CONTENT_TYPE_OPTIONS] },
   { key: 'title', label: 'Título', type: 'text', required: true },
   { key: 'description', label: 'Descripción', type: 'textarea' },
@@ -134,7 +134,7 @@ export function getMetadataFields(type?: string): MetadataFieldConfig[] {
       ];
     case 'matematico':
       return [
-        { key: 'id', label: 'ID', type: 'text', required: true },
+        { key: 'id', label: 'ID', type: 'text', required: true, readonly: true },
         { key: 'type', label: 'Tipo', type: 'select', required: true, options: [...CONTENT_TYPE_OPTIONS] },
         { key: 'name', label: 'Nombre', type: 'text', required: true },
         { key: 'description', label: 'Descripción', type: 'textarea', required: true },

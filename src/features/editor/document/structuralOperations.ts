@@ -1,5 +1,5 @@
 import { applySourceEdits } from './applySourceEdits';
-import { serializeRegisteredBlock } from './blockRegistry';
+import { registeredBlockAttributes, serializeRegisteredBlock } from './blockRegistry';
 import type {
   DocumentMutationPlan,
   EditableBlock,
@@ -139,6 +139,84 @@ export function planBlockReplacement(
     `Solo cambia el rango editable de ${blockId}; el envelope y los demás bloques quedan intactos.`,
     edits,
     false,
+  ));
+}
+
+export interface UpdateBlockInput {
+  content?: string;
+  metadata?: Record<string, unknown>;
+}
+
+const INTERNAL_BLOCK_METADATA = new Set([
+  'location', 'editRange', 'originalSource', 'editable', 'opaque', 'preserved',
+  'reason', 'nodeType', 'component', 'steps',
+]);
+
+function editableMetadata(metadata: Record<string, unknown> | undefined): Record<string, unknown> {
+  return Object.fromEntries(Object.entries(metadata ?? {}).filter(([key]) => !INTERNAL_BLOCK_METADATA.has(key)));
+}
+
+function proofStepInput(input: UpdateBlockInput): UpdateBlockInput {
+  const first = Array.isArray(input.metadata?.steps) ? input.metadata?.steps[0] : undefined;
+  if (!first || typeof first !== 'object') return input;
+  const step = first as Record<string, unknown>;
+  return {
+    content: typeof step.body === 'string' ? step.body : input.content,
+    metadata: {
+      number: step.number ?? 1,
+      title: step.title ?? '',
+      justificacion: step.justificacion ?? '',
+      target: step.target ?? '',
+      justificationType: step.justificationType,
+      dependencyId: step.dependencyId,
+      leanBlocks: step.leanBlocks ?? step.leanBlocksExpression,
+    },
+  };
+}
+
+/**
+ * Updates a registered block through its canonical lossless projection. Plain
+ * text keeps the narrow content range; JSX attributes intentionally replace
+ * only the selected registered block and therefore require diff review.
+ */
+export function planBlockUpdate(
+  document: EditorDocument,
+  blockId: string,
+  rawInput: UpdateBlockInput,
+): DocumentMutationPlan {
+  const block = editableBlock(document, blockId);
+  const input = block.blockType === 'demonstration' ? proofStepInput(rawInput) : rawInput;
+  const currentData = block.data && typeof block.data === 'object'
+    ? block.data as Record<string, unknown>
+    : {};
+  const currentContent = typeof currentData.text === 'string' ? currentData.text : block.originalSource;
+  const requestedMetadata = editableMetadata(input.metadata);
+  const changesAttributes = Object.keys(requestedMetadata).length > 0;
+
+  if (!changesAttributes) {
+    return planBlockReplacement(document, blockId, input.content ?? currentContent);
+  }
+
+  const attributes = {
+    ...registeredBlockAttributes(block.blockType, block.data),
+    ...requestedMetadata,
+  };
+  const content = input.content ?? currentContent;
+  const replacement = serializeRegisteredBlock(block.blockType, { content, metadata: attributes });
+  const id = operationId(document, 'update-block', blockId);
+  const edits: SourceEdit[] = [{
+    operationId: id,
+    blockId,
+    range: block.location.range,
+    expectedSource: document.source.slice(block.location.range.start, block.location.range.end),
+    replacement,
+    reason: `Update registered ${block.blockType} block content and attributes`,
+  }];
+  return plan(document, 'update-block', id, edits, preview(
+    'Edición estructurada de bloque',
+    `Se reescribirá únicamente el bloque registrado ${blockId}; el resto del documento permanece byte a byte.`,
+    edits,
+    true,
   ));
 }
 
@@ -392,5 +470,76 @@ export function planMetadataUpdate(
     `${edits.length} parche(s) sobre propiedades concretas; imports, exports y cuerpo permanecen intactos.`,
     edits,
     edits.length > 3 || removed.length > 0,
+  ));
+}
+
+export interface BindDiagramInput {
+  componentName: string;
+  importPath: string;
+  mode: 'simulation' | 'diagram';
+}
+
+function statementSource(document: EditorDocument, range: SourceRange): string {
+  return document.source.slice(range.start, range.end);
+}
+
+/** Binds a saved diagram without invoking the legacy import/export writer. */
+export function planDiagramBinding(document: EditorDocument, input: BindDiagramInput): DocumentMutationPlan {
+  const exportName = input.mode === 'diagram' ? 'Diagram' : 'Simulation';
+  const importLine = `import { ${input.componentName} } from '${input.importPath}';`;
+  const exportLine = `export const ${exportName} = ${input.componentName};`;
+  const edits: SourceEdit[] = [];
+  const id = operationId(document, 'bind-diagram', input.componentName);
+  const eol = lineEnding(document.source);
+
+  const hasImport = document.envelope.importRanges.some(range => {
+    const source = statementSource(document, range);
+    return source.includes(input.componentName) && source.includes(input.importPath);
+  });
+  const existingExport = document.envelope.exportRanges.find(range => (
+    /^\s*export\s+const\s+(?:Simulation|Diagram)\s*=/.test(statementSource(document, range))
+  ));
+  if (existingExport) {
+    edits.push({
+      operationId: `${id}:export`, blockId: 'envelope', range: existingExport,
+      expectedSource: statementSource(document, existingExport), replacement: exportLine,
+      reason: `Bind published ${exportName} export`,
+    });
+  }
+
+  const additions = [
+    ...(!hasImport ? [importLine] : []),
+    ...(!existingExport ? [exportLine] : []),
+  ];
+  if (additions.length > 0) {
+    const anchor = document.envelope.importRanges[document.envelope.importRanges.length - 1]?.end
+      ?? document.envelope.metadataRange?.end
+      ?? 0;
+    const spacing = `${eol}${eol}`;
+    edits.push({
+      operationId: `${id}:additions`, blockId: 'envelope', range: { start: anchor, end: anchor }, expectedSource: '',
+      replacement: `${spacing}${additions.join(spacing)}`,
+      reason: `Insert diagram import and published ${exportName} export`,
+    });
+  }
+
+  if (document.metadata.value) {
+    const nextMetadata = { ...document.metadata.value };
+    if (input.mode === 'diagram') nextMetadata.hasDiagram = true;
+    else nextMetadata.hasSimulation = true;
+    if (!sameValue(nextMetadata, document.metadata.value)) {
+      const metadataPlan = planMetadataUpdate(document, nextMetadata);
+      metadataPlan.edits.forEach((edit, index) => edits.push({
+        ...edit,
+        operationId: `${id}:metadata:${index}`,
+      }));
+    }
+  }
+
+  return plan(document, 'bind-diagram', id, edits, preview(
+    'Vinculación de diagrama',
+    `Se actualizarán import, export publicado y metadatos en ${edits.length} regiones localizadas.`,
+    edits,
+    true,
   ));
 }

@@ -17,7 +17,7 @@ import type { IncomingMessage, ServerResponse } from 'http';
 import { visualizer } from 'rollup-plugin-visualizer';
 import { parseEditorDocument } from './src/features/editor/document/parseEditorDocument';
 import {
-  applyContentRequestSchema, restoreBackupRequestSchema, saveDraftRequestSchema
+  applyContentRequestSchema, createContentRequestSchema, restoreBackupRequestSchema, saveDraftRequestSchema
 } from './src/features/editor/persistence/persistenceContracts';
 import { BackendError, EditorPersistenceBackend } from './scripts/editor/editorPersistenceBackend';
 import { parseDiagramSourceAST } from './scripts/editor/parseDiagramSourceAST';
@@ -153,6 +153,11 @@ function editorAPI(): Plugin {
         if (req.method === 'POST') {
           try {
             const payload = await readJsonBody(req);
+            const creation = createContentRequestSchema.safeParse(payload);
+            if (creation.success) {
+              const { path, source, sourceHash, localRevision } = creation.data;
+              return sendJson(res, 200, await backend.createContent({ path, source, sourceHash, localRevision }));
+            }
             if (payload && typeof payload === 'object' && 'path' in payload && 'content' in payload &&
                 typeof payload.path === 'string' && payload.path.endsWith('.tsx') && typeof payload.content === 'string') {
               const sourceHash = crypto.createHash('sha256').update(payload.content, 'utf8').digest('hex');

@@ -20,6 +20,7 @@ const expectedFlows = [
   'Diagrama no convertible',
   'Diagrama fuente autoritativa',
   'Conflicto de diagrama',
+  'Autoría visual compleja, diagrama y roundtrip de Fase 7',
 ];
 
 if (!fs.existsSync(absoluteSuitePath)) {

@@ -1,14 +1,26 @@
 # Estado actual de la infraestructura IA
 
-**Actualizado:** 2026-07-13
+**Actualizado:** 2026-07-14
 
-**Fase:** Fase 6 — motor MDX estructural y lossless, cerrada.
+**Fase:** Fase 7 — experiencia visual del editor MDX, en validación.
 
-**Estado:** El editor proyecta los 120 documentos MDX desde AST/ESTree con rangos exactos, metadatos reales validados contra `src/entities/content/schemas.ts` y un registro explícito de bloques. Las mutaciones se expresan como parches localizados verificables; abrir y guardar sin cambios conserva el corpus byte a byte. La Fase 7 permanece pendiente y no se ha iniciado.
+**Estado:** La experiencia visual de Fase 7 está implementada sobre la única fuente lossless de Fase 6: autoría visual y código coordinado, outline, inserción y reordenación, formularios y bloques por tipo, enlaces semánticos, diagramas y targets, validación integral, preview publicado y diff estructural. La fase permanece en validación hasta repetir el E2E real después del límite temporal del entorno de ejecución.
 
 ## Roadmap activo
 
-La fuente canónica del estado es [`phases/editor-authoring/README.md`](phases/editor-authoring/README.md). Las Fases 0, 1, 2, 3, 4, 5 y 6 están cerradas. La [Fase 7 — Experiencia visual del editor MDX](phases/editor-authoring/phase-7-mdx-authoring-ux.md) permanece pendiente y no se ha iniciado.
+La fuente canónica del estado es [`phases/editor-authoring/README.md`](phases/editor-authoring/README.md). Las Fases 0, 1, 2, 3, 4, 5 y 6 están cerradas. La [Fase 7 — Experiencia visual del editor MDX](phases/editor-authoring/phase-7-mdx-authoring-ux.md) está en validación.
+
+## Experiencia visual de autoría MDX
+
+- La vista visual y Monaco comparten el mismo source y pueden mostrarse coordinadas; no existe un segundo serializer ni una segunda vía de persistencia.
+- El outline navega a cada bloque. La paleta contextual y `Ctrl/⌘ + /` insertan presets generales y perfiles para definiciones, teoremas, demostraciones, ejemplos, ejercicios, casos de uso, modelos y otros tipos.
+- Los bloques se reordenan mediante controles y `Alt + ↑/↓`. Definiciones, notas, ejercicios y `ProofStep` disponen de editores estructurados; una demostración conserva un bloque por paso, justificación obligatoria, dependencia y target.
+- La creación de páginas cubre todos los tipos expuestos por el formulario, genera metadatos válidos contra el schema autoritativo y persiste mediante el backend atómico ya existente.
+- `ConceptLink` y `RefLink` se seleccionan desde el catálogo; los targets se seleccionan desde el registro publicado y se rechazan los destinos de diagrama inexistentes.
+- El inspector carga diagramas guardados, su runtime real y sus targets. Texto, navegador y objetos del canvas comparten `MathStore`, por lo que el resaltado funciona en ambos sentidos y con foco de teclado.
+- El informe de integridad detecta enlaces rotos, IDs de contenido o JSX duplicados, targets duplicados o ausentes y dependencias propias o cíclicas.
+- El preview abre la ruta publicada en un `iframe`; si existen cambios pendientes declara que muestra el último guardado. Las operaciones multirregión y destructivas exigen un diff vigente.
+- Los bloques desconocidos se muestran como source preservado de solo lectura visual y siguen editables en código.
 
 ## Motor MDX estructural y lossless
 
@@ -72,6 +84,11 @@ La fuente canónica del estado es [`phases/editor-authoring/README.md`](phases/e
 
 ## Evidencia de aceptación
 
+- Las suites nuevas de Fase 7 aprueban 12/12 casos de motor estructural, creación por tipo, metadatos, outline responsive, paleta, teclado, bloques preservados, enlaces y targets. La regresión del renderer añade interacción objeto → referencia MDX.
+- `editor:test:integration` aprueba 79/79; TypeScript, `editor:lint` con 119/119 advertencias permitidas, `git diff --check` y el build directo de Vite aprueban.
+- El E2E real declara 17 flujos e incluye creación de una definición compleja, diagrama exacto, conexión, diff, guardado, reapertura, comparación byte a byte, preview y responsive. La primera ejecución dejó 13 flujos verdes y señaló cuatro expectativas de diff anteriores; se corrigieron. La repetición quedó impedida por el límite temporal del entorno, no por un fallo observado del código.
+- `editor:test:unit` aprueba 167/169; las dos regresiones restantes son las históricas de Fase 5 en el fingerprint de Poincaré y la proyección del glider de Pitágoras.
+
 - `phase6LosslessEngine.test.ts` cubre roundtrip exacto, lectura y parche de metadatos, imports y exports contiguos, comentarios, bloques anidados, JSX desconocido, CRUD, reordenación, diff previo y recuperación ante parseo, metadata dinámica o schema inválido.
 - Las suites dirigidas del documento, núcleo y diff aprueban 56/56 pruebas; `editor:test:integration` aprueba 79/79. `editor:roundtrip:check` y `editor:lossless:check` aprueban los 120 documentos.
 - `editor:lint` aprueba con 114 advertencias dentro del presupuesto de 119 y 0 errores; TypeScript y el build de producción aprueban. Dependency Cruiser informa 0 errores y 56 advertencias históricas; el gate de seguridad no detecta patrones inseguros.
@@ -93,9 +110,9 @@ La fuente canónica del estado es [`phases/editor-authoring/README.md`](phases/e
 
 ## Límites y deuda explícita
 
-- La experiencia visual específica de cada bloque no forma parte de esta fase. La Fase 7 sigue pendiente y deberá reutilizar exclusivamente estos planes de mutación, sin crear otra vía de persistencia.
+- La Fase 7 no se cierra hasta repetir en Chromium el flujo E2E corregido y ejecutar los gates basados en `tsx`; el sandbox negó el socket IPC y el segundo permiso no pudo concederse por el límite de uso del entorno.
 - Los helpers antiguos de presentación inline permanecen por compatibilidad, pero no intervienen en la proyección, mutación ni persistencia estructural del documento.
-- El `full-check` global no queda verde mientras las seis regresiones preexistentes de los casos de aceptación de Fase 5 sigan en el árbol; deben resolverse en su alcance propio sin relajar las garantías lossless.
+- El `full-check` global no queda verde mientras las dos regresiones preexistentes de los casos de aceptación de Fase 5 sigan en el árbol; deben resolverse en su alcance propio sin relajar las garantías lossless.
 
 - No se realizó una migración masiva de los 85 diagramas; solo los cuatro casos de aceptación cuentan con evidencia de fidelidad y edición visual exacta en esta fase.
 - Las extensiones temporales de `DiagramSpec v2` son opcionales y no cambian su versión literal ni normalizan escenas anteriores de forma destructiva.
@@ -105,4 +122,4 @@ La fuente canónica del estado es [`phases/editor-authoring/README.md`](phases/e
 
 ## Veredicto
 
-`FASE 6 CERRADA — MOTOR MDX ESTRUCTURAL, LOCALIZADO Y LOSSLESS VALIDADO EN 120/120 DOCUMENTOS; FASE 7 NO INICIADA`
+`FASE 7 EN VALIDACIÓN — EXPERIENCIA VISUAL IMPLEMENTADA SOBRE EL MOTOR LOSSLESS; CIERRE PENDIENTE DE REPETIR E2E Y GATES TSX`
