@@ -6,6 +6,19 @@ import type {
   DiagramSceneState,
   DiagramSpecV2,
 } from './types';
+import { evaluateMathExpression } from './expressions';
+
+export interface DiagramDependencyEdge {
+  sourceId: string;
+  targetId: string;
+  relation: 'construction' | 'expression' | 'constraint';
+  constraintId?: string;
+}
+
+export interface DiagramDependencyGraph {
+  nodes: string[];
+  edges: DiagramDependencyEdge[];
+}
 
 export interface PlannedSceneItem {
   item: DiagramSceneItem;
@@ -19,9 +32,29 @@ export interface PlannedSceneItem {
 
 export function resolvePointCoordinates(spec: DiagramSpecV2, id: string, visiting = new Set<string>()): { x: number; y: number } | undefined {
   const direct = spec.points.find(point => point.id === id);
-  if (direct) return { x: direct.x, y: direct.y };
+  if (direct && direct.constraint !== 'derived') return { x: direct.x, y: direct.y };
   if (visiting.has(id)) return undefined;
   visiting.add(id);
+  if (direct?.constraint === 'derived' && direct.xExpression && direct.yExpression) {
+    const variables: Record<string, number> = {};
+    for (const dependencyId of direct.dependencies ?? []) {
+      const coordinates = resolvePointCoordinates(spec, dependencyId, new Set(visiting));
+      if (coordinates) {
+        variables[`${dependencyId}.x`] = coordinates.x;
+        variables[`${dependencyId}.y`] = coordinates.y;
+      }
+      const slider = spec.sliders.find(item => item.id === dependencyId);
+      if (slider) variables[dependencyId] = slider.value;
+    }
+    try {
+      return {
+        x: evaluateMathExpression(direct.xExpression, variables),
+        y: evaluateMathExpression(direct.yExpression, variables),
+      };
+    } catch {
+      return { x: direct.x, y: direct.y };
+    }
+  }
   const derived = spec.elements.find(element => element.id === id);
   if (!derived) return undefined;
   if (derived.kind === 'midpoint') {
@@ -43,8 +76,37 @@ export function resolvePointCoordinates(spec: DiagramSpecV2, id: string, visitin
   return undefined;
 }
 
+export function expressionVariables(spec: DiagramSpecV2): Record<string, number> {
+  const variables: Record<string, number> = {};
+  spec.points.forEach(point => {
+    const coordinates = resolvePointCoordinates(spec, point.id);
+    if (!coordinates) return;
+    variables[`${point.id}.x`] = coordinates.x;
+    variables[`${point.id}.y`] = coordinates.y;
+  });
+  spec.sliders.forEach(slider => {
+    variables[slider.id] = slider.value;
+  });
+  spec.elements.forEach(element => {
+    const coordinates = resolvePointCoordinates(spec, element.id);
+    if (coordinates) {
+      variables[`${element.id}.x`] = coordinates.x;
+      variables[`${element.id}.y`] = coordinates.y;
+    }
+    if (element.refs.length >= 2) {
+      const a = resolvePointCoordinates(spec, element.refs[0]);
+      const b = resolvePointCoordinates(spec, element.refs[1]);
+      if (a && b) variables[`${element.id}.length`] = Math.hypot(b.x - a.x, b.y - a.y);
+    }
+  });
+  return variables;
+}
+
 export function supportElements(spec: DiagramSpecV2): DiagramElement[] {
-  return spec.elements.filter(item => ['segment', 'line', 'ray', 'circle', 'perpendicular', 'parallel', 'angleBisector'].includes(item.kind));
+  return spec.elements.filter(item => [
+    'segment', 'line', 'ray', 'circle', 'arc', 'functionCurve', 'parametricCurve',
+    'poincareGeodesic', 'poincareArc', 'perpendicular', 'parallel', 'angleBisector',
+  ].includes(item.kind));
 }
 
 export function projectPointToSupport(
@@ -139,7 +201,10 @@ export function createScenePlan(spec: DiagramSpecV2, state: DiagramSceneState = 
 }
 
 function creationDependencies(item: DiagramSceneItem): string[] {
-  if ('constraint' in item) return item.constraint === 'glider' && item.gliderTarget ? [item.gliderTarget] : [];
+  if ('constraint' in item) return [
+    ...(item.constraint === 'glider' && item.gliderTarget ? [item.gliderTarget] : []),
+    ...(item.dependencies ?? []),
+  ];
   if ('kind' in item) return item.refs;
   return [];
 }
@@ -151,7 +216,12 @@ export function createSceneConstructionPlan(spec: DiagramSpecV2): PlannedSceneIt
   const ordered: PlannedSceneItem[] = [];
 
   while (pending.length > 0) {
-    const ready = pending.filter(entry => creationDependencies(entry.item).every(id => !itemIds.has(id) || created.has(id)));
+    const ready = pending.filter(entry => {
+      const explicitSources = (spec.dependencies ?? [])
+        .filter(dependency => dependency.targetId === entry.item.id)
+        .map(dependency => dependency.sourceId);
+      return [...creationDependencies(entry.item), ...explicitSources].every(id => !itemIds.has(id) || created.has(id));
+    });
     if (ready.length === 0) return [...ordered, ...pending];
     ready.forEach(entry => {
       ordered.push(entry);
@@ -171,6 +241,29 @@ function boundsFromCoordinates(coordinates: Array<{ x: number; y: number }>): Di
 
 function elementCoordinates(spec: DiagramSpecV2, element: DiagramElement): Array<{ x: number; y: number }> {
   const refs = element.refs.map(ref => resolvePointCoordinates(spec, ref)).filter((point): point is { x: number; y: number } => Boolean(point));
+  if ((element.kind === 'functionCurve' || element.kind === 'parametricCurve') && element.properties?.domain) {
+    const variables = expressionVariables(spec);
+    const [minimum, maximum] = element.properties.domain;
+    const samples = Math.min(64, element.properties.samples ?? 32);
+    const parameter = element.properties.parameter ?? (element.kind === 'functionCurve' ? 'x' : 't');
+    const coordinates: Array<{ x: number; y: number }> = [];
+    for (let index = 0; index <= samples; index += 1) {
+      const value = minimum + (maximum - minimum) * index / samples;
+      try {
+        if (element.kind === 'functionCurve' && element.properties.expression) {
+          coordinates.push({ x: value, y: evaluateMathExpression(element.properties.expression, { ...variables, [parameter]: value, x: value }) });
+        } else if (element.properties.xExpression && element.properties.yExpression) {
+          coordinates.push({
+            x: evaluateMathExpression(element.properties.xExpression, { ...variables, [parameter]: value, t: value }),
+            y: evaluateMathExpression(element.properties.yExpression, { ...variables, [parameter]: value, t: value }),
+          });
+        }
+      } catch {
+        // Invalid samples are omitted; schema validation reports invalid expressions.
+      }
+    }
+    return coordinates;
+  }
   if (element.kind !== 'circle' || refs.length < 2) return refs;
   const [center, edge] = refs;
   const radius = Math.hypot(edge.x - center.x, edge.y - center.y);
@@ -255,9 +348,83 @@ export function withViewportBounds(spec: DiagramSpecV2, bounds: DiagramBounds): 
 }
 
 export function withMovedPoint(spec: DiagramSpecV2, pointId: string, x: number, y: number): DiagramSpecV2 {
+  const point = spec.points.find(item => item.id === pointId);
+  if (!point || point.fixed || point.constraint === 'fixed' || point.constraint === 'derived') return spec;
+  const constrained = constrainPointCoordinates(spec, point, { x, y });
   return {
     ...spec,
-    points: spec.points.map(point => point.id === pointId ? { ...point, x, y } : point),
+    points: spec.points.map(item => item.id === pointId ? { ...item, ...constrained } : item),
+  };
+}
+
+export function constrainPointCoordinates(
+  spec: DiagramSpecV2,
+  point: DiagramPoint,
+  coordinates: { x: number; y: number },
+): { x: number; y: number } {
+  if (point.constraint === 'glider') return projectPointToSupport(spec, point, coordinates);
+  if (point.constraint === 'horizontal') return { x: coordinates.x, y: point.y };
+  if (point.constraint === 'vertical') return { x: point.x, y: coordinates.y };
+  let result = coordinates;
+  for (const constraintId of point.constraintIds ?? []) {
+    const constraint = (spec.constraints ?? []).find(item => item.id === constraintId && item.enabled);
+    if (!constraint) continue;
+    const otherId = constraint.refs.find(ref => ref !== point.id);
+    const other = otherId ? resolvePointCoordinates(spec, otherId) : undefined;
+    if (constraint.kind === 'fixed') result = { x: point.x, y: point.y };
+    else if (constraint.kind === 'horizontal' && other) result = { x: result.x, y: other.y };
+    else if (constraint.kind === 'vertical' && other) result = { x: other.x, y: result.y };
+    else if (constraint.kind === 'coincident' && other) result = other;
+    else if (constraint.kind === 'on' && otherId) result = projectPointToSupport(spec, { ...point, constraint: 'glider', gliderTarget: otherId }, result);
+    else if (constraint.kind === 'distance' && other) {
+      const variables = expressionVariables(spec);
+      const distance = constraint.value ?? (constraint.expression ? evaluateMathExpression(constraint.expression, variables) : 0);
+      const dx = result.x - other.x;
+      const dy = result.y - other.y;
+      const length = Math.hypot(dx, dy) || 1;
+      result = { x: other.x + dx / length * distance, y: other.y + dy / length * distance };
+    } else if (constraint.kind === 'insideDisk' && constraint.refs.length >= 3) {
+      const center = resolvePointCoordinates(spec, constraint.refs[1]);
+      const boundary = resolvePointCoordinates(spec, constraint.refs[2]);
+      if (!center || !boundary) continue;
+      const radius = Math.hypot(boundary.x - center.x, boundary.y - center.y) * 0.999;
+      const dx = result.x - center.x;
+      const dy = result.y - center.y;
+      const length = Math.hypot(dx, dy);
+      if (length > radius) result = { x: center.x + dx / length * radius, y: center.y + dy / length * radius };
+    } else if ((constraint.kind === 'perpendicular' || constraint.kind === 'parallel') && constraint.refs.length >= 3) {
+      const baseA = resolvePointCoordinates(spec, constraint.refs[1]);
+      const baseB = resolvePointCoordinates(spec, constraint.refs[2]);
+      const origin = constraint.refs[3] ? resolvePointCoordinates(spec, constraint.refs[3]) : baseA;
+      if (!baseA || !baseB || !origin) continue;
+      const dx = baseB.x - baseA.x;
+      const dy = baseB.y - baseA.y;
+      const vx = constraint.kind === 'perpendicular' ? -dy : dx;
+      const vy = constraint.kind === 'perpendicular' ? dx : dy;
+      const lengthSquared = vx * vx + vy * vy || 1;
+      const amount = ((result.x - origin.x) * vx + (result.y - origin.y) * vy) / lengthSquared;
+      result = { x: origin.x + amount * vx, y: origin.y + amount * vy };
+    }
+  }
+  return result;
+}
+
+export function buildDependencyGraph(spec: DiagramSpecV2): DiagramDependencyGraph {
+  const edges: DiagramDependencyEdge[] = [];
+  spec.points.forEach(point => {
+    if (point.constraint === 'glider' && point.gliderTarget) edges.push({ sourceId: point.gliderTarget, targetId: point.id, relation: 'constraint' });
+    point.dependencies?.forEach(sourceId => edges.push({ sourceId, targetId: point.id, relation: 'expression' }));
+  });
+  spec.elements.forEach(element => element.refs.forEach(sourceId => edges.push({ sourceId, targetId: element.id, relation: 'construction' })));
+  (spec.constraints ?? []).forEach(constraint => {
+    const targetId = constraint.refs[0];
+    constraint.refs.slice(1).forEach(sourceId => edges.push({ sourceId, targetId, relation: 'constraint', constraintId: constraint.id }));
+  });
+  edges.push(...(spec.dependencies ?? []));
+  const unique = new Map(edges.map(edge => [`${edge.sourceId}:${edge.targetId}:${edge.relation}:${edge.constraintId ?? ''}`, edge]));
+  return {
+    nodes: [...spec.points, ...spec.elements, ...spec.sliders].map(item => item.id),
+    edges: [...unique.values()],
   };
 }
 
@@ -267,6 +434,8 @@ export function sceneRevision(spec: DiagramSpecV2): string {
     elements: spec.elements,
     sliders: spec.sliders,
     layers: spec.layers.map(({ id, order }) => [id, order]),
+    constraints: spec.constraints,
+    dependencies: spec.dependencies,
   });
 }
 

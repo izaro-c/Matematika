@@ -47,12 +47,16 @@ function componentNameFromSource(source: string | undefined, fallback: string): 
 }
 
 function refsForElementKind(kind: ElementKind, refs: string[]): string[] {
-  if (kind === 'segment' || kind === 'line' || kind === 'ray' || kind === 'circle' || kind === 'midpoint') {
+  if (kind === 'polygon') return refs;
+  if (kind === 'segment' || kind === 'line' || kind === 'ray' || kind === 'circle' || kind === 'midpoint' || kind === 'congruenceMark' || kind === 'dimensionLine') {
     return refs.slice(0, 2);
   }
-  if (kind === 'perpendicularFoot' || kind === 'baseExtension' || kind === 'perpendicular' || kind === 'parallel' || kind === 'angleBisector' || kind === 'angle' || kind === 'rightAngle') {
+  if (kind === 'arc' || kind === 'perpendicularFoot' || kind === 'baseExtension' || kind === 'perpendicular' || kind === 'parallel' || kind === 'angleBisector' || kind === 'angle' || kind === 'rightAngle' || kind === 'perpendicularMark') {
     return refs.slice(0, 3);
   }
+  if (kind === 'areaDecomposition') return refs.slice(0, 4);
+  if (kind === 'poincareGeodesic' || kind === 'poincareArc' || kind === 'grid') return refs.slice(0, 4);
+  if (kind === 'functionCurve' || kind === 'parametricCurve') return [];
   return refs.slice(0, 1);
 }
 
@@ -260,10 +264,25 @@ export const DiagramWorkbenchCore: React.FC<DiagramWorkbenchCoreProps> = ({
     const elementRefs = refsForElementKind(kind, refs);
 
     const id = generatedElementId(kind, elementRefs, model.elements);
-    const newElement = element(id, KIND_LABELS[kind], kind, elementRefs, elementColorForKind(kind));
+    const properties = kind === 'functionCurve'
+      ? { expression: 'sin(x)', parameter: 'x', domain: [-5, 5] as [number, number], samples: 128 }
+      : kind === 'parametricCurve'
+        ? { xExpression: '3*cos(t)', yExpression: '2*sin(t)', parameter: 't', domain: [0, 6.283185307179586] as [number, number], samples: 128 }
+        : kind === 'congruenceMark'
+          ? { markCount: 1 }
+          : kind === 'grid' || kind === 'areaDecomposition'
+            ? { rows: 4, columns: 4 }
+            : kind === 'dimensionLine' || kind === 'measurement'
+              ? { precision: 2 }
+              : undefined;
+    const newElement = element(id, KIND_LABELS[kind], kind, elementRefs, elementColorForKind(kind), true, properties ? { properties } : {});
     handleVisualEdit({
       ...model,
       elements: [...model.elements, newElement],
+      dependencies: [
+        ...(model.dependencies || []),
+        ...elementRefs.map(sourceId => ({ sourceId, targetId: id, relation: 'construction' as const })),
+      ],
     });
     selectElement(id);
   };
@@ -296,6 +315,8 @@ export const DiagramWorkbenchCore: React.FC<DiagramWorkbenchCoreProps> = ({
         visibleTargets: item.visibleTargets.filter(t => t !== selectedId),
       })),
       groups: model.groups.map(group => ({ ...group, memberIds: group.memberIds.filter(id => id !== selectedId) })),
+      constraints: model.constraints?.filter(constraint => constraint.id !== selectedId && !constraint.refs.includes(selectedId)),
+      dependencies: model.dependencies?.filter(dependency => dependency.sourceId !== selectedId && dependency.targetId !== selectedId && dependency.constraintId !== selectedId),
     });
     selectElement('');
   };
@@ -484,6 +505,45 @@ export const DiagramWorkbenchCore: React.FC<DiagramWorkbenchCoreProps> = ({
                   </div>
                 ))}
               </div>
+              <button
+                type="button"
+                className="mt-2 w-full rounded border border-carbon/15 px-2 py-1 text-[10px] font-bold text-carbon"
+                onClick={() => {
+                  const index = model.layers.length + 1;
+                  handleVisualEdit({ ...model, layers: [...model.layers, { id: `layer${index}`, label: `Capa ${index}`, order: index, visible: true, locked: false }] }, { label: 'Añadir capa' });
+                }}
+              >
+                + Capa
+              </button>
+            </div>
+
+            <div className="rounded border border-carbon/10 bg-lienzo p-3">
+              <p className="text-[10px] font-bold uppercase tracking-widest text-carbon/45 border-b border-carbon/10 pb-1 mb-2">Grupos de objetos</p>
+              <div className="space-y-2">
+                {model.groups.map(group => (
+                  <div key={group.id} className="rounded border border-carbon/10 p-2">
+                    <p className="text-xs font-bold text-carbon">{group.label}</p>
+                    <p className="text-[10px] font-mono text-carbon/45">{group.memberIds.length} objeto(s)</p>
+                    <div className="mt-1 flex gap-1">
+                      <button type="button" className="rounded border border-carbon/15 px-1.5 py-0.5 text-[10px]" onClick={() => handleVisualEdit({ ...model, groups: model.groups.map(item => item.id === group.id ? { ...item, visible: !item.visible } : item) }, { label: `${group.visible ? 'Ocultar' : 'Mostrar'} grupo ${group.label}` })}>{group.visible ? 'Visible' : 'Oculto'}</button>
+                      <button type="button" className="rounded border border-carbon/15 px-1.5 py-0.5 text-[10px]" onClick={() => handleVisualEdit({ ...model, groups: model.groups.map(item => item.id === group.id ? { ...item, locked: !item.locked } : item) }, { label: `${group.locked ? 'Desbloquear' : 'Bloquear'} grupo ${group.label}` })}>{group.locked ? 'Fijo' : 'Editable'}</button>
+                    </div>
+                  </div>
+                ))}
+              </div>
+              <button
+                type="button"
+                className="mt-2 w-full rounded border border-carbon/15 px-2 py-1 text-[10px] font-bold text-carbon"
+                onClick={() => {
+                  const index = model.groups.length + 1;
+                  handleVisualEdit({
+                    ...model,
+                    groups: [...model.groups, { id: `group${index}`, label: `Grupo ${index}`, memberIds: [], visible: true, locked: false, selection: { selectable: true, role: 'secondary' } }],
+                  }, { label: 'Añadir grupo' });
+                }}
+              >
+                + Grupo
+              </button>
             </div>
 
             <div className="rounded border border-carbon/10 bg-lienzo p-3">
@@ -546,6 +606,7 @@ export const DiagramWorkbenchCore: React.FC<DiagramWorkbenchCoreProps> = ({
               canvasTool={state.canvasTool}
               syncStatus={state.status}
               onSetCanvasTool={setCanvasTool}
+              onAddElement={handleAddElement}
               onModelEdit={handleVisualEdit}
               onAddSlider={handleAddSlider}
               onAddStep={handleAddStep}

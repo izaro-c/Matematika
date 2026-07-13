@@ -1,11 +1,27 @@
 import React from 'react';
 import type { VisualDiagramModel, CanvasTool } from '../model/types';
+import { KIND_LABELS, refsNeededForTool } from '../model/commands';
+
+const TOOL_GROUPS: Array<{ label: string; tools: CanvasTool[] }> = [
+  { label: 'Edición', tools: ['select', 'point'] },
+  { label: 'Geometría', tools: ['segment', 'line', 'ray', 'polygon', 'circle', 'arc'] },
+  { label: 'Curvas', tools: ['functionCurve', 'parametricCurve', 'poincareGeodesic', 'poincareArc'] },
+  { label: 'Relaciones', tools: ['angle', 'perpendicularMark', 'congruenceMark', 'dimensionLine', 'measurement'] },
+  { label: 'Explicación', tools: ['grid', 'areaDecomposition', 'label', 'formula', 'infoPanel'] },
+];
+
+function toolLabel(tool: CanvasTool): string {
+  if (tool === 'select') return 'Seleccionar';
+  if (tool === 'point') return 'Punto libre';
+  return KIND_LABELS[tool];
+}
 
 interface DiagramToolbarProps {
   model: VisualDiagramModel;
   canvasTool: CanvasTool;
   syncStatus: string;
   onSetCanvasTool: (tool: CanvasTool) => void;
+  onAddElement: (tool: Exclude<CanvasTool, 'select' | 'point'>) => void;
   onModelEdit: (model: VisualDiagramModel) => void;
   onAddSlider: () => void;
   onAddStep: () => void;
@@ -17,6 +33,7 @@ export const DiagramToolbar: React.FC<DiagramToolbarProps> = ({
   canvasTool,
   syncStatus,
   onSetCanvasTool,
+  onAddElement,
   onModelEdit,
   onAddSlider,
   onAddStep,
@@ -24,44 +41,32 @@ export const DiagramToolbar: React.FC<DiagramToolbarProps> = ({
 }) => {
   return (
     <div className="flex flex-wrap items-center gap-4 border-b border-carbon/15 bg-carbon/5 p-3">
-      {/* Tools */}
-      <div className="flex items-center gap-1">
-        <button
-          className={`rounded px-2.5 py-1 text-xs font-bold transition-all ${canvasTool === 'select' ? 'bg-carbon text-lienzo' : 'bg-transparent text-carbon/75 hover:bg-carbon/10'}`}
-          onClick={() => onSetCanvasTool('select')}
-        >
-          Seleccionar
-        </button>
-        <button
-          className={`rounded px-2.5 py-1 text-xs font-bold transition-all ${canvasTool === 'point' ? 'bg-carbon text-lienzo' : 'bg-transparent text-carbon/75 hover:bg-carbon/10'}`}
-          onClick={() => onSetCanvasTool('point')}
-        >
-          Punto
-        </button>
-        <button
-          className={`rounded px-2.5 py-1 text-xs font-bold transition-all ${canvasTool === 'segment' ? 'bg-carbon text-lienzo' : 'bg-transparent text-carbon/75 hover:bg-carbon/10'}`}
-          onClick={() => onSetCanvasTool('segment')}
-        >
-          Segmento
-        </button>
-        <button
-          className={`rounded px-2.5 py-1 text-xs font-bold transition-all ${canvasTool === 'line' ? 'bg-carbon text-lienzo' : 'bg-transparent text-carbon/75 hover:bg-carbon/10'}`}
-          onClick={() => onSetCanvasTool('line')}
-        >
-          Recta
-        </button>
-        <button
-          className={`rounded px-2.5 py-1 text-xs font-bold transition-all ${canvasTool === 'circle' ? 'bg-carbon text-lienzo' : 'bg-transparent text-carbon/75 hover:bg-carbon/10'}`}
-          onClick={() => onSetCanvasTool('circle')}
-        >
-          Circunferencia
-        </button>
-        <button
-          className={`rounded px-2.5 py-1 text-xs font-bold transition-all ${canvasTool === 'polygon' ? 'bg-carbon text-lienzo' : 'bg-transparent text-carbon/75 hover:bg-carbon/10'}`}
-          onClick={() => onSetCanvasTool('polygon')}
-        >
-          Polígono
-        </button>
+      <div className="flex flex-wrap items-end gap-3" aria-label="Herramientas agrupadas por propósito">
+        {TOOL_GROUPS.map(group => (
+          <fieldset key={group.label} className="flex flex-wrap gap-1 rounded border border-carbon/10 p-1">
+            <legend className="px-1 text-[9px] font-bold uppercase tracking-wider text-carbon/45">{group.label}</legend>
+            {group.tools.map(tool => {
+              const required = refsNeededForTool(tool);
+              const disabled = required > model.points.length;
+              return (
+                <button
+                  key={tool}
+                  type="button"
+                  aria-label={toolLabel(tool)}
+                  title={disabled ? `Requiere ${required} puntos` : toolLabel(tool)}
+                  disabled={disabled}
+                  className={`rounded px-2 py-1 text-[10px] font-bold transition-all disabled:opacity-35 ${canvasTool === tool ? 'bg-carbon text-lienzo' : 'bg-transparent text-carbon/75 hover:bg-carbon/10'}`}
+                  onClick={() => {
+                    if (required === 0 && tool !== 'select' && tool !== 'point') onAddElement(tool);
+                    else onSetCanvasTool(tool);
+                  }}
+                >
+                  {toolLabel(tool)}
+                </button>
+              );
+            })}
+          </fieldset>
+        ))}
       </div>
 
       <div className="h-4 w-px bg-carbon/15" />

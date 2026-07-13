@@ -1,0 +1,16 @@
+{
+  "version": 2, "renderer": "matematika-diagram-renderer-v2", "title": "Ángulos y marcas", "componentId": "phase3-marks-angles", "category": "Demos", "mode": "diagram", "axis": false, "grid": false,
+  "viewport": { "bounds": [-4, 4, 4, -4], "home": [-4, 4, 4, -4], "minZoom": 0.2, "maxZoom": 12, "padding": 0.16 },
+  "layers": [{ "id": "geometry", "label": "Geometría", "order": 0, "visible": true, "locked": false }], "groups": [],
+  "points": [
+    { "id": "pA", "label": "A", "x": -2, "y": 0, "fixed": false, "constraint": "free", "color": "terracota", "layerId": "geometry", "order": 0, "visible": true, "locked": false, "groupIds": [], "selection": { "selectable": true }, "target": true },
+    { "id": "pV", "label": "V", "x": 0, "y": 0, "fixed": true, "constraint": "fixed", "color": "terracota", "layerId": "geometry", "order": 1, "visible": true, "locked": true, "groupIds": [], "selection": { "selectable": true }, "target": true },
+    { "id": "pB", "label": "B", "x": 0, "y": 2, "fixed": false, "constraint": "free", "color": "terracota", "layerId": "geometry", "order": 2, "visible": true, "locked": false, "groupIds": [], "selection": { "selectable": true }, "target": true }
+  ],
+  "elements": [
+    { "id": "angleAVB", "label": "Ángulo AVB", "kind": "angle", "refs": ["pA", "pV", "pB"], "color": "ocre", "layerId": "geometry", "order": 10, "visible": true, "locked": false, "groupIds": [], "selection": { "selectable": true }, "target": true },
+    { "id": "perpAVB", "label": "Perpendicularidad", "kind": "perpendicularMark", "refs": ["pA", "pV", "pB"], "color": "ocre", "layerId": "geometry", "order": 11, "visible": true, "locked": false, "groupIds": [], "selection": { "selectable": true }, "target": true },
+    { "id": "congAV", "label": "Congruencia AV", "kind": "congruenceMark", "refs": ["pA", "pV"], "color": "terracota", "layerId": "geometry", "order": 12, "visible": true, "locked": false, "groupIds": [], "selection": { "selectable": true }, "target": true, "properties": { "markCount": 2 } }
+  ],
+  "sliders": [], "steps": [], "constraints": [], "dependencies": [], "note": "Ángulo, congruencia y perpendicularidad.", "extensions": { "acceptanceFamily": "marks-angles" }
+}

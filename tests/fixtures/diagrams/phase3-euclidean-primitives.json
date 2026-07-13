@@ -1,0 +1,20 @@
+{
+  "version": 2, "renderer": "matematika-diagram-renderer-v2", "title": "Primitivas euclídeas", "componentId": "phase3-euclidean-primitives", "category": "Demos", "mode": "diagram", "axis": false, "grid": false,
+  "viewport": { "bounds": [-5, 5, 5, -5], "home": [-5, 5, 5, -5], "minZoom": 0.2, "maxZoom": 12, "padding": 0.16 },
+  "layers": [{ "id": "geometry", "label": "Geometría", "order": 0, "visible": true, "locked": false }], "groups": [],
+  "points": [
+    { "id": "pO", "label": "O", "x": 0, "y": 0, "fixed": true, "constraint": "fixed", "color": "carbon", "layerId": "geometry", "order": 0, "visible": true, "locked": true, "groupIds": [], "selection": { "selectable": true }, "target": true },
+    { "id": "pA", "label": "A", "x": 2, "y": 0, "fixed": false, "constraint": "free", "color": "terracota", "layerId": "geometry", "order": 1, "visible": true, "locked": false, "groupIds": [], "selection": { "selectable": true }, "target": true },
+    { "id": "pB", "label": "B", "x": 0, "y": 2, "fixed": false, "constraint": "free", "color": "terracota", "layerId": "geometry", "order": 2, "visible": true, "locked": false, "groupIds": [], "selection": { "selectable": true }, "target": true },
+    { "id": "pC", "label": "C", "x": -2, "y": -1, "fixed": false, "constraint": "free", "color": "terracota", "layerId": "geometry", "order": 3, "visible": true, "locked": false, "groupIds": [], "selection": { "selectable": true }, "target": true }
+  ],
+  "elements": [
+    { "id": "segAB", "label": "Segmento", "kind": "segment", "refs": ["pA", "pB"], "color": "carbon", "layerId": "geometry", "order": 10, "visible": true, "locked": false, "groupIds": [], "selection": { "selectable": true }, "target": true },
+    { "id": "lineBC", "label": "Recta", "kind": "line", "refs": ["pB", "pC"], "color": "pavo", "layerId": "geometry", "order": 11, "visible": true, "locked": false, "groupIds": [], "selection": { "selectable": true }, "target": true },
+    { "id": "rayOA", "label": "Semirrecta", "kind": "ray", "refs": ["pO", "pA"], "color": "pavo", "layerId": "geometry", "order": 12, "visible": true, "locked": false, "groupIds": [], "selection": { "selectable": true }, "target": true },
+    { "id": "polyABC", "label": "Polígono", "kind": "polygon", "refs": ["pA", "pB", "pC"], "color": "salvia", "layerId": "geometry", "order": 13, "visible": true, "locked": false, "groupIds": [], "selection": { "selectable": true }, "target": true },
+    { "id": "circleOA", "label": "Círculo", "kind": "circle", "refs": ["pO", "pA"], "color": "salvia", "layerId": "geometry", "order": 14, "visible": true, "locked": false, "groupIds": [], "selection": { "selectable": true }, "target": true },
+    { "id": "arcOAB", "label": "Arco", "kind": "arc", "refs": ["pO", "pA", "pB"], "color": "ocre", "layerId": "geometry", "order": 15, "visible": true, "locked": false, "groupIds": [], "selection": { "selectable": true }, "target": true }
+  ],
+  "sliders": [], "steps": [], "constraints": [], "dependencies": [], "note": "Familia de primitivas euclídeas.", "extensions": { "acceptanceFamily": "euclidean-primitives" }
+}

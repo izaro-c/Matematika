@@ -8,6 +8,7 @@ import {
 } from '../../../../shared/diagrams/spec';
 import type {
   VisualDiagramModel, VisualPoint, VisualElement, VisualSlider, VisualStep,
+  VisualConstraint,
   TemplateKind, ConstructionKind, ColorToken, ElementKind, PointConstraint,
   ConstructionRefKey, ConstructionSlot, CanvasTool
 } from './types';
@@ -19,6 +20,35 @@ export function point(id: string, label: string, x: number, y: number, fixed = f
     layerId: 'geometry', order: 0, visible: true, locked: false, groupIds: [],
     selection: { selectable: true, role: 'primary', ariaLabel: `Punto ${label}` },
   };
+}
+
+export function derivedPoint(
+  id: string,
+  label: string,
+  xExpression: string,
+  yExpression: string,
+  dependencies: string[],
+  fallback: { x: number; y: number } = { x: 0, y: 0 },
+  color: ColorToken = 'ocre',
+): VisualPoint {
+  return {
+    ...point(id, label, fallback.x, fallback.y, true, color, 'derived'),
+    fixed: true,
+    dependencies,
+    xExpression,
+    yExpression,
+    selection: { selectable: true, role: 'construction', ariaLabel: `Punto derivado ${label}` },
+  };
+}
+
+export function diagramConstraint(
+  id: string,
+  label: string,
+  kind: VisualConstraint['kind'],
+  refs: string[],
+  extra: Partial<VisualConstraint> = {},
+): VisualConstraint {
+  return { id, label, kind, refs, enabled: true, ...extra };
 }
 
 export function element(id: string, label: string, kind: ElementKind, refs: string[], color: ColorToken, target = true, extra: Partial<VisualElement> = {}): VisualElement {
@@ -111,6 +141,11 @@ export const KIND_LABELS: Record<ElementKind, string> = {
   ray: 'Semirrecta',
   polygon: 'Polígono',
   circle: 'Circunferencia',
+  arc: 'Arco de circunferencia',
+  functionCurve: 'Gráfica de función',
+  parametricCurve: 'Curva paramétrica',
+  poincareGeodesic: 'Geodésica de Poincaré',
+  poincareArc: 'Arco de Poincaré',
   midpoint: 'Punto medio',
   perpendicularFoot: 'Pie perpendicular',
   baseExtension: 'Extensión de base',
@@ -119,8 +154,16 @@ export const KIND_LABELS: Record<ElementKind, string> = {
   angleBisector: 'Bisectriz',
   angle: 'Ángulo',
   rightAngle: 'Ángulo recto',
+  congruenceMark: 'Marca de congruencia',
+  perpendicularMark: 'Marca de perpendicularidad',
+  dimensionLine: 'Línea de cota',
   measurement: 'Medición',
+  grid: 'Cuadrícula geométrica',
+  areaDecomposition: 'Descomposición de área',
   text: 'Etiqueta',
+  label: 'Etiqueta matemática',
+  formula: 'Fórmula',
+  infoPanel: 'Panel informativo',
 };
 
 export function defaultCategory(metadataType: string): string {
@@ -160,6 +203,8 @@ export function createTemplateModel(kind: TemplateKind, title: string, metadataT
     groups: [],
     sliders: [] as VisualSlider[],
     steps: [] as VisualStep[],
+    constraints: [],
+    dependencies: [],
     note: 'Arrastre los puntos para explorar la figura.',
     extensions: {},
   };
@@ -320,9 +365,11 @@ export function nextStepId(steps: VisualStep[]): string {
 }
 
 export function refsNeededForTool(tool: CanvasTool): number {
-  if (tool === 'segment' || tool === 'line' || tool === 'ray' || tool === 'circle' || tool === 'midpoint') return 2;
-  if (tool === 'polygon' || tool === 'perpendicularFoot' || tool === 'baseExtension' || tool === 'perpendicular' || tool === 'parallel' || tool === 'angleBisector' || tool === 'angle' || tool === 'rightAngle') return 3;
-  if (tool === 'measurement' || tool === 'text') return 1;
+  if (tool === 'segment' || tool === 'line' || tool === 'ray' || tool === 'circle' || tool === 'midpoint' || tool === 'congruenceMark' || tool === 'dimensionLine' || tool === 'measurement') return 2;
+  if (tool === 'arc' || tool === 'polygon' || tool === 'perpendicularFoot' || tool === 'baseExtension' || tool === 'perpendicular' || tool === 'parallel' || tool === 'angleBisector' || tool === 'angle' || tool === 'rightAngle' || tool === 'perpendicularMark' || tool === 'areaDecomposition') return 3;
+  if (tool === 'poincareGeodesic' || tool === 'poincareArc' || tool === 'grid') return 4;
+  if (tool === 'text' || tool === 'label' || tool === 'formula' || tool === 'infoPanel') return 1;
+  if (tool === 'functionCurve' || tool === 'parametricCurve') return 0;
   return 0;
 }
 
@@ -332,6 +379,7 @@ export function generatedElementId(kind: ElementKind, refs: string[], existing: 
     : kind === 'line' ? `line${suffix}`
       : kind === 'ray' ? `ray${suffix}`
         : kind === 'circle' ? `circle${suffix || existing.length + 1}`
+          : kind === 'arc' ? `arc${suffix || existing.length + 1}`
           : kind === 'midpoint' ? `mid${suffix || existing.length + 1}`
             : kind === 'perpendicularFoot' ? `foot${suffix || existing.length + 1}`
               : kind === 'baseExtension' ? `ext${suffix || existing.length + 1}`
@@ -351,14 +399,15 @@ export function generatedElementId(kind: ElementKind, refs: string[], existing: 
 }
 
 export function elementColorForKind(kind: ElementKind): ColorToken {
-  if (kind === 'polygon') return 'salvia';
+  if (kind === 'polygon' || kind === 'areaDecomposition' || kind === 'grid') return 'salvia';
   if (kind === 'midpoint') return 'terracota';
   if (kind === 'perpendicularFoot') return 'ocre';
   if (kind === 'baseExtension') return 'pizarra';
   if (kind === 'perpendicular' || kind === 'parallel' || kind === 'angleBisector') return 'pavo';
-  if (kind === 'angle' || kind === 'rightAngle') return 'ocre';
+  if (kind === 'angle' || kind === 'rightAngle' || kind === 'perpendicularMark' || kind === 'congruenceMark') return 'ocre';
   if (kind === 'line' || kind === 'ray') return 'pavo';
-  if (kind === 'measurement') return 'pizarra';
+  if (kind === 'functionCurve' || kind === 'parametricCurve' || kind === 'poincareGeodesic' || kind === 'poincareArc') return 'pavo';
+  if (kind === 'measurement' || kind === 'dimensionLine' || kind === 'formula' || kind === 'infoPanel') return 'pizarra';
   return 'carbon';
 }
 
@@ -527,7 +576,10 @@ export function renamePoint(model: VisualDiagramModel, oldId: string, newIdRaw: 
   if (newId !== oldId && model.points.some(item => item.id === newId)) return model;
   return {
     ...model,
-    points: model.points.map(item => item.id === oldId ? { ...item, id: newId } : item),
+    points: model.points.map(item => ({
+      ...(item.id === oldId ? { ...item, id: newId } : item),
+      dependencies: item.dependencies?.map(id => id === oldId ? newId : id),
+    })),
     elements: model.elements.map(item => ({
       ...item,
       refs: item.refs.map(ref => ref === oldId ? newId : ref),
@@ -537,6 +589,12 @@ export function renamePoint(model: VisualDiagramModel, oldId: string, newIdRaw: 
       visibleTargets: item.visibleTargets.map(target => target === oldId ? newId : target),
     })),
     groups: model.groups.map(group => ({ ...group, memberIds: group.memberIds.map(id => id === oldId ? newId : id) })),
+    constraints: model.constraints?.map(constraint => ({ ...constraint, refs: constraint.refs.map(id => id === oldId ? newId : id) })),
+    dependencies: model.dependencies?.map(dependency => ({
+      ...dependency,
+      sourceId: dependency.sourceId === oldId ? newId : dependency.sourceId,
+      targetId: dependency.targetId === oldId ? newId : dependency.targetId,
+    })),
   };
 }
 
@@ -545,7 +603,10 @@ export function renameElement(model: VisualDiagramModel, oldId: string, newIdRaw
   if (newId !== oldId && model.elements.some(item => item.id === newId)) return model;
   return {
     ...model,
-    points: model.points.map(item => item.gliderTarget === oldId ? { ...item, gliderTarget: newId } : item),
+    points: model.points.map(item => ({
+      ...(item.gliderTarget === oldId ? { ...item, gliderTarget: newId } : item),
+      dependencies: item.dependencies?.map(id => id === oldId ? newId : id),
+    })),
     elements: model.elements.map(item => ({
       ...(item.id === oldId ? { ...item, id: newId } : item),
       refs: item.refs.map(ref => ref === oldId ? newId : ref),
@@ -555,6 +616,12 @@ export function renameElement(model: VisualDiagramModel, oldId: string, newIdRaw
       visibleTargets: item.visibleTargets.map(target => target === oldId ? newId : target),
     })),
     groups: model.groups.map(group => ({ ...group, memberIds: group.memberIds.map(id => id === oldId ? newId : id) })),
+    constraints: model.constraints?.map(constraint => ({ ...constraint, refs: constraint.refs.map(id => id === oldId ? newId : id) })),
+    dependencies: model.dependencies?.map(dependency => ({
+      ...dependency,
+      sourceId: dependency.sourceId === oldId ? newId : dependency.sourceId,
+      targetId: dependency.targetId === oldId ? newId : dependency.targetId,
+    })),
   };
 }
 

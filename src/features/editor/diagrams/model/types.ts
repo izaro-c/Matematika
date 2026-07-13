@@ -18,6 +18,8 @@ import type {
   DiagramSlider,
   DiagramSpecV2,
   DiagramStep,
+  DiagramConstraint,
+  DiagramDependency,
 } from '../../../../shared/diagrams/spec';
 
 export type ColorToken = DiagramColorToken;
@@ -43,4 +45,6 @@ export type VisualPoint = DiagramPoint;
 export type VisualElement = DiagramElement;
 export type VisualSlider = DiagramSlider;
 export type VisualStep = DiagramStep;
+export type VisualConstraint = DiagramConstraint;
+export type VisualDependency = DiagramDependency;
 export type VisualDiagramModel = DiagramSpecV2;

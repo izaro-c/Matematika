@@ -19,6 +19,11 @@ export type DiagramElementKind =
   | 'ray'
   | 'polygon'
   | 'circle'
+  | 'arc'
+  | 'functionCurve'
+  | 'parametricCurve'
+  | 'poincareGeodesic'
+  | 'poincareArc'
   | 'midpoint'
   | 'perpendicularFoot'
   | 'baseExtension'
@@ -27,11 +32,65 @@ export type DiagramElementKind =
   | 'angleBisector'
   | 'angle'
   | 'rightAngle'
+  | 'congruenceMark'
+  | 'perpendicularMark'
+  | 'dimensionLine'
   | 'measurement'
-  | 'text';
+  | 'grid'
+  | 'areaDecomposition'
+  | 'text'
+  | 'label'
+  | 'formula'
+  | 'infoPanel';
 
-export type DiagramPointConstraint = 'free' | 'fixed' | 'horizontal' | 'vertical' | 'glider';
+export type DiagramPointConstraint = 'free' | 'fixed' | 'horizontal' | 'vertical' | 'glider' | 'derived' | 'constrained';
 export type DiagramMode = 'simulation' | 'diagram' | 'inline';
+
+export interface DiagramElementProperties {
+  expression?: string;
+  xExpression?: string;
+  yExpression?: string;
+  parameter?: string;
+  domain?: [number, number];
+  samples?: number;
+  unit?: string;
+  precision?: number;
+  offset?: number;
+  markCount?: number;
+  rows?: number;
+  columns?: number;
+  title?: string;
+  clockwise?: boolean;
+}
+
+export type DiagramConstraintKind =
+  | 'fixed'
+  | 'horizontal'
+  | 'vertical'
+  | 'coincident'
+  | 'on'
+  | 'distance'
+  | 'perpendicular'
+  | 'parallel'
+  | 'insideDisk'
+  | 'expression';
+
+export interface DiagramConstraint {
+  id: string;
+  label: string;
+  kind: DiagramConstraintKind;
+  refs: string[];
+  expression?: string;
+  value?: number;
+  enabled: boolean;
+}
+
+export interface DiagramDependency {
+  sourceId: string;
+  targetId: string;
+  relation: 'construction' | 'expression' | 'constraint';
+  constraintId?: string;
+}
 
 export interface DiagramSelectionMetadata {
   selectable: boolean;
@@ -60,6 +119,10 @@ export interface DiagramPoint extends DiagramSceneItemBase {
   fixed: boolean;
   constraint: DiagramPointConstraint;
   gliderTarget?: string;
+  dependencies?: string[];
+  xExpression?: string;
+  yExpression?: string;
+  constraintIds?: string[];
 }
 
 export interface DiagramElement extends DiagramSceneItemBase {
@@ -67,6 +130,7 @@ export interface DiagramElement extends DiagramSceneItemBase {
   refs: string[];
   dashed?: boolean;
   text?: string;
+  properties?: DiagramElementProperties;
 }
 
 export interface DiagramSlider extends DiagramSceneItemBase {
@@ -129,6 +193,8 @@ export interface DiagramSpecV2 {
   elements: DiagramElement[];
   sliders: DiagramSlider[];
   steps: DiagramStep[];
+  constraints?: DiagramConstraint[];
+  dependencies?: DiagramDependency[];
   note: string;
   extensions: Record<string, unknown>;
 }

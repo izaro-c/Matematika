@@ -43,3 +43,26 @@ El estado vigente se consulta en la [matriz canónica](README.md#fuente-canónic
 ## Fuera de alcance
 
 Los fixtures prueban el lenguaje; la migración de casos de producción se reserva para la Fase 5.
+
+## Cierre demostrado — 2026-07-13
+
+- `DiagramSpec v2` conserva su versión y compatibilidad exacta, y amplía su contrato con puntos libres, derivados y restringidos; primitivas euclidianas; curvas; objetos del disco de Poincaré; relaciones geométricas; mediciones; cuadrículas; descomposiciones; anotaciones reactivas; capas y grupos.
+- Las restricciones y las dependencias son entidades serializadas, referencialmente validadas y ordenadas como un DAG. El movimiento aplica las restricciones habilitadas y rechaza puntos fijos o derivados.
+- Las expresiones usan un parser matemático propio con operadores, constantes y funciones permitidas. No se usa `eval`, `Function`, JessieCode ni evaluación arbitraria de JavaScript.
+- `DiagramRenderer` interpreta las nuevas familias y concentra en `MathFactory` la creación recurrente, incluidos arcos, curvas, geodésicas, marcas, cotas, cuadrículas y descomposiciones.
+- El editor agrupa las herramientas por propósito y ofrece un inspector contextual para referencias, expresiones, restricciones, dependencias, medidas, anotaciones, capa, grupo, visibilidad, bloqueo y orden.
+- Ocho fixtures de aceptación cubren por separado puntos y restricciones, primitivas euclidianas, curvas, disco de Poincaré, relaciones y ángulos, mediciones, áreas y cuadrículas, y anotaciones con capas.
+- La regresión previa de Fase 2 se verificó antes de implementar: 9 archivos y 44 pruebas aprobadas. El cierre completo alcanza 63 archivos y 622 pruebas aprobadas.
+- No se migró ningún diagrama real y no se incorporaron pasos, animaciones ni interacción de demostraciones de la Fase 4.
+
+## Objetos todavía no representables
+
+El contrato declara estos límites de forma conservadora; requieren una fase posterior o una ampliación explícita del lenguaje:
+
+- Curvas implícitas y regiones definidas por ecuaciones o desigualdades de dos variables.
+- Funciones a trozos, condicionales y discontinuidades con ramas semánticas propias.
+- Intersecciones, tangencias o lugares geométricos que exijan resolución simbólica o numérica genérica entre curvas arbitrarias.
+- Transformaciones geométricas y composiciones como objetos de primer nivel; actualmente pueden expresarse coordenadas derivadas, pero no una transformación reusable del grafo.
+- Geometría tridimensional, esférica o proyectiva, campos vectoriales y objetos topológicos.
+- Imágenes, SVG libre, Canvas libre o extensiones de código arbitrario dentro de `DiagramSpec`; esos casos conservan autoridad de código y preview.
+- Secuencias, animaciones, estados interactivos y guiones de demostración, reservados expresamente para la Fase 4.

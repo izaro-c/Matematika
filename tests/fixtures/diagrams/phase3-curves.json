@@ -1,0 +1,11 @@
+{
+  "version": 2, "renderer": "matematika-diagram-renderer-v2", "title": "Curvas seguras", "componentId": "phase3-curves", "category": "Demos", "mode": "simulation", "axis": true, "grid": true,
+  "viewport": { "bounds": [-6, 5, 6, -5], "home": [-6, 5, 6, -5], "minZoom": 0.2, "maxZoom": 12, "padding": 0.16 },
+  "layers": [{ "id": "geometry", "label": "Geometría", "order": 0, "visible": true, "locked": false }], "groups": [],
+  "points": [{ "id": "pO", "label": "O", "x": 0, "y": 0, "fixed": true, "constraint": "fixed", "color": "carbon", "layerId": "geometry", "order": 0, "visible": false, "locked": true, "groupIds": [], "selection": { "selectable": false }, "target": false }],
+  "elements": [
+    { "id": "functionSin", "label": "y = sin(x)", "kind": "functionCurve", "refs": [], "color": "terracota", "layerId": "geometry", "order": 10, "visible": true, "locked": false, "groupIds": [], "selection": { "selectable": true }, "target": true, "properties": { "expression": "sin(x)", "parameter": "x", "domain": [-6, 6], "samples": 128 } },
+    { "id": "ellipse", "label": "Elipse paramétrica", "kind": "parametricCurve", "refs": [], "color": "pavo", "layerId": "geometry", "order": 11, "visible": true, "locked": false, "groupIds": [], "selection": { "selectable": true }, "target": true, "properties": { "xExpression": "3*cos(t)", "yExpression": "2*sin(t)", "parameter": "t", "domain": [0, 6.283185307179586], "samples": 128 } }
+  ],
+  "sliders": [], "steps": [], "constraints": [], "dependencies": [], "note": "Funciones y curvas paramétricas sin JavaScript arbitrario.", "extensions": { "acceptanceFamily": "curves" }
+}
