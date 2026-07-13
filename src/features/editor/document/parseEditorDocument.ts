@@ -5,6 +5,8 @@ import remarkGfm from 'remark-gfm';
 import remarkMath from 'remark-math';
 import type { EditorDocument, EditorDiagnostic, VisualCompatibility, SourceLocation, ProjectedBlock } from './documentTypes';
 import { projectBlocks, classifyVisualCompatibility } from './projectBlocks';
+import { projectMetadata } from './metadataProjection';
+import type { MdxAstNode } from './blockRegistry';
 
 export function computeFingerprint(content: string): string {
   let hash = 5381;
@@ -34,6 +36,17 @@ export function parseEditorDocument(source: string): EditorDocument {
   let blocks: ProjectedBlock[] = [];
   let compatibility: VisualCompatibility;
   const envelope: EditorDocument['envelope'] = { importRanges: [], exportRanges: [] };
+  let metadata: EditorDocument['metadata'] = {
+    status: 'missing',
+    value: null,
+    properties: [],
+    schemaValid: false,
+  };
+  let containers: EditorDocument['containers'] = [{
+    id: 'container-root',
+    kind: 'root',
+    contentRange: { start: 0, end: source.length },
+  }];
   let bodyRange = { start: 0, end: source.length };
 
   try {
@@ -42,19 +55,29 @@ export function parseEditorDocument(source: string): EditorDocument {
     const processor = unified().use(remarkParse).use(remarkMdx).use(remarkGfm).use(remarkMath);
     ast = processor.parse(source);
 
-    const children = Array.isArray(ast.children) ? ast.children : [];
-    const esmNodes = children.filter((node: any) => node.type === 'mdxjsEsm' && node.position);
+    const children = Array.isArray(ast.children) ? ast.children as MdxAstNode[] : [];
+    const esmNodes = children.filter(node => node.type === 'mdxjsEsm' && node.position);
     for (const node of esmNodes) {
-      const range = mapLocation(node.position).range;
-      const text = source.slice(range.start, range.end).trimStart();
-      if (/^import\s/.test(text)) envelope.importRanges.push(range);
-      else {
-        envelope.exportRanges.push(range);
-        if (/^export\s+const\s+metadata\b/.test(text)) envelope.metadataRange = range;
+      const statements = Array.isArray(node.data?.estree?.body)
+        ? node.data.estree.body as MdxAstNode[]
+        : [];
+      for (const statement of statements) {
+        if (typeof statement.start !== 'number' || typeof statement.end !== 'number') continue;
+        const range = { start: statement.start, end: statement.end };
+        const text = source.slice(range.start, range.end).trimStart();
+        if (statement.type === 'ImportDeclaration') envelope.importRanges.push(range);
+        else {
+          envelope.exportRanges.push(range);
+          if (/^export\s+const\s+metadata\b/.test(text)) envelope.metadataRange = range;
+        }
       }
     }
 
-    const bodyNodes = children.filter((node: any) => node.type !== 'mdxjsEsm' && node.position);
+    const metadataProjection = projectMetadata(esmNodes);
+    metadata = metadataProjection.metadata;
+    diagnostics.push(...metadataProjection.diagnostics);
+
+    const bodyNodes = children.filter(node => node.type !== 'mdxjsEsm' && node.position);
     if (bodyNodes.length > 0) {
       const first = mapLocation(bodyNodes[0].position).range.start;
       const last = mapLocation(bodyNodes[bodyNodes.length - 1].position).range.end;
@@ -69,6 +92,7 @@ export function parseEditorDocument(source: string): EditorDocument {
 
     const proj = projectBlocks(source, bodyNodes);
     blocks = proj.blocks;
+    containers = proj.containers;
     compatibility = proj.compatibility;
   } catch (e: any) {
     compatibility = 'unsupported';
@@ -84,7 +108,9 @@ export function parseEditorDocument(source: string): EditorDocument {
     sourceFingerprint: fingerprint,
     ast,
     envelope,
+    metadata,
     bodyRange,
+    containers,
     bodyBlocks: blocks,
     diagnostics,
     compatibility,

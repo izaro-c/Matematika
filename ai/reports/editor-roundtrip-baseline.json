@@ -1,11 +1,11 @@
 {
-  "schemaVersion": 3,
+  "schemaVersion": 4,
   "corpusRoot": "src/database/content",
   "totalFiles": 120,
   "counts": {
-    "fully-editable": 0,
-    "partially-editable": 94,
-    "read-only": 26,
+    "fully-editable": 120,
+    "partially-editable": 0,
+    "read-only": 0,
     "unsupported": 0
   },
   "files": [
@@ -13,7 +13,7 @@
       "path": "src/database/content/axiomatic-systems/sistema-absoluto.mdx",
       "originalHash": "74e777886f16602bb19c46f88e5593fcd76cf1d3e09824ee3ec8f348ca9d6c09",
       "finalHash": "74e777886f16602bb19c46f88e5593fcd76cf1d3e09824ee3ec8f348ca9d6c09",
-      "compatibility": "partially-editable",
+      "compatibility": "fully-editable",
       "diagnostics": [],
       "exact": true,
       "idempotent": true,
@@ -27,13 +27,17 @@
         "audit-edit",
         "audit-revert"
       ],
-      "reversibleOperationExact": true
+      "reversibleOperationExact": true,
+      "metadataReadable": true,
+      "metadataSchemaValid": true,
+      "opaqueBlocks": 0,
+      "preservedBlocks": 0
     },
     {
       "path": "src/database/content/axiomatic-systems/sistema-euclidiano.mdx",
       "originalHash": "32182a0436fb437e467e93642e4e60d7bdf33e85a8285fcd869388d4a1247f2f",
       "finalHash": "32182a0436fb437e467e93642e4e60d7bdf33e85a8285fcd869388d4a1247f2f",
-      "compatibility": "partially-editable",
+      "compatibility": "fully-editable",
       "diagnostics": [],
       "exact": true,
       "idempotent": true,
@@ -47,13 +51,17 @@
         "audit-edit",
         "audit-revert"
       ],
-      "reversibleOperationExact": true
+      "reversibleOperationExact": true,
+      "metadataReadable": true,
+      "metadataSchemaValid": true,
+      "opaqueBlocks": 0,
+      "preservedBlocks": 0
     },
     {
       "path": "src/database/content/axiomatic-systems/sistema-hiperbolico.mdx",
       "originalHash": "0237212699b81ebadd628d48586df414b9e22ffef0f52f470a6c1f5f45084510",
       "finalHash": "0237212699b81ebadd628d48586df414b9e22ffef0f52f470a6c1f5f45084510",
-      "compatibility": "partially-editable",
+      "compatibility": "fully-editable",
       "diagnostics": [],
       "exact": true,
       "idempotent": true,
@@ -67,13 +75,17 @@
         "audit-edit",
         "audit-revert"
       ],
-      "reversibleOperationExact": true
+      "reversibleOperationExact": true,
+      "metadataReadable": true,
+      "metadataSchemaValid": true,
+      "opaqueBlocks": 0,
+      "preservedBlocks": 0
     },
     {
       "path": "src/database/content/axiomatic-systems/sistema-incidencia.mdx",
       "originalHash": "306c8d1c7c658a54c927b06aeb7fbe58ae63f898d026aa069dfa6783fe8f0c5e",
       "finalHash": "306c8d1c7c658a54c927b06aeb7fbe58ae63f898d026aa069dfa6783fe8f0c5e",
-      "compatibility": "partially-editable",
+      "compatibility": "fully-editable",
       "diagnostics": [],
       "exact": true,
       "idempotent": true,
@@ -87,13 +99,17 @@
         "audit-edit",
         "audit-revert"
       ],
-      "reversibleOperationExact": true
+      "reversibleOperationExact": true,
+      "metadataReadable": true,
+      "metadataSchemaValid": true,
+      "opaqueBlocks": 0,
+      "preservedBlocks": 0
     },
     {
       "path": "src/database/content/axioms/axioma-arquimedes.mdx",
       "originalHash": "96f1a27cd697e3895157700759426ab497b53c605aa5c8f12156345f19f191a7",
       "finalHash": "96f1a27cd697e3895157700759426ab497b53c605aa5c8f12156345f19f191a7",
-      "compatibility": "partially-editable",
+      "compatibility": "fully-editable",
       "diagnostics": [],
       "exact": true,
       "idempotent": true,
@@ -107,13 +123,17 @@
         "audit-edit",
         "audit-revert"
       ],
-      "reversibleOperationExact": true
+      "reversibleOperationExact": true,
+      "metadataReadable": true,
+      "metadataSchemaValid": true,
+      "opaqueBlocks": 0,
+      "preservedBlocks": 0
     },
     {
       "path": "src/database/content/axioms/axioma-completitud.mdx",
       "originalHash": "98597a19bc02e2a7dc20409f44fd6288d70f432dc78e0df967e796342be4144a",
       "finalHash": "98597a19bc02e2a7dc20409f44fd6288d70f432dc78e0df967e796342be4144a",
-      "compatibility": "partially-editable",
+      "compatibility": "fully-editable",
       "diagnostics": [],
       "exact": true,
       "idempotent": true,
@@ -127,13 +147,17 @@
         "audit-edit",
         "audit-revert"
       ],
-      "reversibleOperationExact": true
+      "reversibleOperationExact": true,
+      "metadataReadable": true,
+      "metadataSchemaValid": true,
+      "opaqueBlocks": 0,
+      "preservedBlocks": 0
     },
     {
       "path": "src/database/content/axioms/axioma-congruencia-1.mdx",
       "originalHash": "0545f6a5378a4426c36fda3f35b02255194a42614680866129d9739c9d032915",
       "finalHash": "0545f6a5378a4426c36fda3f35b02255194a42614680866129d9739c9d032915",
-      "compatibility": "partially-editable",
+      "compatibility": "fully-editable",
       "diagnostics": [],
       "exact": true,
       "idempotent": true,
@@ -147,13 +171,17 @@
         "audit-edit",
         "audit-revert"
       ],
-      "reversibleOperationExact": true
+      "reversibleOperationExact": true,
+      "metadataReadable": true,
+      "metadataSchemaValid": true,
+      "opaqueBlocks": 0,
+      "preservedBlocks": 0
     },
     {
       "path": "src/database/content/axioms/axioma-congruencia-2.mdx",
       "originalHash": "03777fc9374207cc6c94ee0077919c7ac91f017c9f22c68d5cf0dc81e533a623",
       "finalHash": "03777fc9374207cc6c94ee0077919c7ac91f017c9f22c68d5cf0dc81e533a623",
-      "compatibility": "partially-editable",
+      "compatibility": "fully-editable",
       "diagnostics": [],
       "exact": true,
       "idempotent": true,
@@ -167,13 +195,17 @@
         "audit-edit",
         "audit-revert"
       ],
-      "reversibleOperationExact": true
+      "reversibleOperationExact": true,
+      "metadataReadable": true,
+      "metadataSchemaValid": true,
+      "opaqueBlocks": 0,
+      "preservedBlocks": 0
     },
     {
       "path": "src/database/content/axioms/axioma-congruencia-3.mdx",
       "originalHash": "0aa20dc35a8f75d66796fe72149a48c821b9974e05f77e425566ce6b6d8ed1fa",
       "finalHash": "0aa20dc35a8f75d66796fe72149a48c821b9974e05f77e425566ce6b6d8ed1fa",
-      "compatibility": "partially-editable",
+      "compatibility": "fully-editable",
       "diagnostics": [],
       "exact": true,
       "idempotent": true,
@@ -187,13 +219,17 @@
         "audit-edit",
         "audit-revert"
       ],
-      "reversibleOperationExact": true
+      "reversibleOperationExact": true,
+      "metadataReadable": true,
+      "metadataSchemaValid": true,
+      "opaqueBlocks": 0,
+      "preservedBlocks": 0
     },
     {
       "path": "src/database/content/axioms/axioma-congruencia-4.mdx",
       "originalHash": "5d5d13ac370502668f34093cdffa58ff9eb8181b6a26827cf29744d8047e6a69",
       "finalHash": "5d5d13ac370502668f34093cdffa58ff9eb8181b6a26827cf29744d8047e6a69",
-      "compatibility": "partially-editable",
+      "compatibility": "fully-editable",
       "diagnostics": [],
       "exact": true,
       "idempotent": true,
@@ -207,13 +243,17 @@
         "audit-edit",
         "audit-revert"
       ],
-      "reversibleOperationExact": true
+      "reversibleOperationExact": true,
+      "metadataReadable": true,
+      "metadataSchemaValid": true,
+      "opaqueBlocks": 0,
+      "preservedBlocks": 0
     },
     {
       "path": "src/database/content/axioms/axioma-congruencia-5.mdx",
       "originalHash": "31c85751ff294bb710bf764ebc1f562a64bcde5ed3ad7336e65ade0afed2cb12",
       "finalHash": "31c85751ff294bb710bf764ebc1f562a64bcde5ed3ad7336e65ade0afed2cb12",
-      "compatibility": "partially-editable",
+      "compatibility": "fully-editable",
       "diagnostics": [],
       "exact": true,
       "idempotent": true,
@@ -227,13 +267,17 @@
         "audit-edit",
         "audit-revert"
       ],
-      "reversibleOperationExact": true
+      "reversibleOperationExact": true,
+      "metadataReadable": true,
+      "metadataSchemaValid": true,
+      "opaqueBlocks": 0,
+      "preservedBlocks": 0
     },
     {
       "path": "src/database/content/axioms/axioma-incidencia-1.mdx",
       "originalHash": "c7d52e8ff9c4fec6d403d489850774a1ecad48e886c29fdc8bb53f22028479a4",
       "finalHash": "c7d52e8ff9c4fec6d403d489850774a1ecad48e886c29fdc8bb53f22028479a4",
-      "compatibility": "partially-editable",
+      "compatibility": "fully-editable",
       "diagnostics": [],
       "exact": true,
       "idempotent": true,
@@ -247,13 +291,17 @@
         "audit-edit",
         "audit-revert"
       ],
-      "reversibleOperationExact": true
+      "reversibleOperationExact": true,
+      "metadataReadable": true,
+      "metadataSchemaValid": true,
+      "opaqueBlocks": 0,
+      "preservedBlocks": 0
     },
     {
       "path": "src/database/content/axioms/axioma-incidencia-2.mdx",
       "originalHash": "6ca2136581fff3afcbc89026ca1560a0d1da1877602cdb80ad4b0e1466db4e09",
       "finalHash": "6ca2136581fff3afcbc89026ca1560a0d1da1877602cdb80ad4b0e1466db4e09",
-      "compatibility": "partially-editable",
+      "compatibility": "fully-editable",
       "diagnostics": [],
       "exact": true,
       "idempotent": true,
@@ -267,13 +315,17 @@
         "audit-edit",
         "audit-revert"
       ],
-      "reversibleOperationExact": true
+      "reversibleOperationExact": true,
+      "metadataReadable": true,
+      "metadataSchemaValid": true,
+      "opaqueBlocks": 0,
+      "preservedBlocks": 0
     },
     {
       "path": "src/database/content/axioms/axioma-incidencia-3.mdx",
       "originalHash": "9bbcd71e53081c1b7582ca923a251aff30ac0d7c82d4bad0b899313a174b6538",
       "finalHash": "9bbcd71e53081c1b7582ca923a251aff30ac0d7c82d4bad0b899313a174b6538",
-      "compatibility": "partially-editable",
+      "compatibility": "fully-editable",
       "diagnostics": [],
       "exact": true,
       "idempotent": true,
@@ -287,13 +339,17 @@
         "audit-edit",
         "audit-revert"
       ],
-      "reversibleOperationExact": true
+      "reversibleOperationExact": true,
+      "metadataReadable": true,
+      "metadataSchemaValid": true,
+      "opaqueBlocks": 0,
+      "preservedBlocks": 0
     },
     {
       "path": "src/database/content/axioms/axioma-incidencia-4.mdx",
       "originalHash": "cb83523638636a3edcda7027c3c001cb11cd2cadc12c9d8b531b80aa30e28b84",
       "finalHash": "cb83523638636a3edcda7027c3c001cb11cd2cadc12c9d8b531b80aa30e28b84",
-      "compatibility": "partially-editable",
+      "compatibility": "fully-editable",
       "diagnostics": [],
       "exact": true,
       "idempotent": true,
@@ -307,13 +363,17 @@
         "audit-edit",
         "audit-revert"
       ],
-      "reversibleOperationExact": true
+      "reversibleOperationExact": true,
+      "metadataReadable": true,
+      "metadataSchemaValid": true,
+      "opaqueBlocks": 0,
+      "preservedBlocks": 0
     },
     {
       "path": "src/database/content/axioms/axioma-incidencia-5.mdx",
       "originalHash": "2c1e45dbbcd727788cc134790faeab96a386a009beea1aa3524708ce268cf71d",
       "finalHash": "2c1e45dbbcd727788cc134790faeab96a386a009beea1aa3524708ce268cf71d",
-      "compatibility": "partially-editable",
+      "compatibility": "fully-editable",
       "diagnostics": [],
       "exact": true,
       "idempotent": true,
@@ -327,13 +387,17 @@
         "audit-edit",
         "audit-revert"
       ],
-      "reversibleOperationExact": true
+      "reversibleOperationExact": true,
+      "metadataReadable": true,
+      "metadataSchemaValid": true,
+      "opaqueBlocks": 0,
+      "preservedBlocks": 0
     },
     {
       "path": "src/database/content/axioms/axioma-incidencia-6.mdx",
       "originalHash": "77e9c5f304e358591a373838dfb80296a484d45bb2dfea4c4ac21ad5d5bb86d6",
       "finalHash": "77e9c5f304e358591a373838dfb80296a484d45bb2dfea4c4ac21ad5d5bb86d6",
-      "compatibility": "partially-editable",
+      "compatibility": "fully-editable",
       "diagnostics": [],
       "exact": true,
       "idempotent": true,
@@ -347,13 +411,17 @@
         "audit-edit",
         "audit-revert"
       ],
-      "reversibleOperationExact": true
+      "reversibleOperationExact": true,
+      "metadataReadable": true,
+      "metadataSchemaValid": true,
+      "opaqueBlocks": 0,
+      "preservedBlocks": 0
     },
     {
       "path": "src/database/content/axioms/axioma-incidencia-7.mdx",
       "originalHash": "8f3993f864f313bd4e693827e693fc726881a6e31446b82d58c0cae452933d38",
       "finalHash": "8f3993f864f313bd4e693827e693fc726881a6e31446b82d58c0cae452933d38",
-      "compatibility": "partially-editable",
+      "compatibility": "fully-editable",
       "diagnostics": [],
       "exact": true,
       "idempotent": true,
@@ -367,13 +435,17 @@
         "audit-edit",
         "audit-revert"
       ],
-      "reversibleOperationExact": true
+      "reversibleOperationExact": true,
+      "metadataReadable": true,
+      "metadataSchemaValid": true,
+      "opaqueBlocks": 0,
+      "preservedBlocks": 0
     },
     {
       "path": "src/database/content/axioms/axioma-incidencia-8.mdx",
       "originalHash": "e257546231eebb795bc65abb76357107c188ad06fb2e9f05358658643f454304",
       "finalHash": "e257546231eebb795bc65abb76357107c188ad06fb2e9f05358658643f454304",
-      "compatibility": "partially-editable",
+      "compatibility": "fully-editable",
       "diagnostics": [],
       "exact": true,
       "idempotent": true,
@@ -387,13 +459,17 @@
         "audit-edit",
         "audit-revert"
       ],
-      "reversibleOperationExact": true
+      "reversibleOperationExact": true,
+      "metadataReadable": true,
+      "metadataSchemaValid": true,
+      "opaqueBlocks": 0,
+      "preservedBlocks": 0
     },
     {
       "path": "src/database/content/axioms/axioma-orden-1.mdx",
       "originalHash": "5dfc89a1cfeaa3ff27aee0e4bd6a1dcd101e2d0c6100ac8a4cb2e90cba995a7e",
       "finalHash": "5dfc89a1cfeaa3ff27aee0e4bd6a1dcd101e2d0c6100ac8a4cb2e90cba995a7e",
-      "compatibility": "partially-editable",
+      "compatibility": "fully-editable",
       "diagnostics": [],
       "exact": true,
       "idempotent": true,
@@ -407,13 +483,17 @@
         "audit-edit",
         "audit-revert"
       ],
-      "reversibleOperationExact": true
+      "reversibleOperationExact": true,
+      "metadataReadable": true,
+      "metadataSchemaValid": true,
+      "opaqueBlocks": 0,
+      "preservedBlocks": 0
     },
     {
       "path": "src/database/content/axioms/axioma-orden-2.mdx",
       "originalHash": "e18b47d5c3c86ae601547ed537f2648f2f8cb4ee41ef624c6275b55431190322",
       "finalHash": "e18b47d5c3c86ae601547ed537f2648f2f8cb4ee41ef624c6275b55431190322",
-      "compatibility": "partially-editable",
+      "compatibility": "fully-editable",
       "diagnostics": [],
       "exact": true,
       "idempotent": true,
@@ -427,13 +507,17 @@
         "audit-edit",
         "audit-revert"
       ],
-      "reversibleOperationExact": true
+      "reversibleOperationExact": true,
+      "metadataReadable": true,
+      "metadataSchemaValid": true,
+      "opaqueBlocks": 0,
+      "preservedBlocks": 0
     },
     {
       "path": "src/database/content/axioms/axioma-orden-3.mdx",
       "originalHash": "ac844d15373f670f087e9ba0b26744211b17eb4e56dda9dfa9237ca3d4d8ae6e",
       "finalHash": "ac844d15373f670f087e9ba0b26744211b17eb4e56dda9dfa9237ca3d4d8ae6e",
-      "compatibility": "partially-editable",
+      "compatibility": "fully-editable",
       "diagnostics": [],
       "exact": true,
       "idempotent": true,
@@ -447,13 +531,17 @@
         "audit-edit",
         "audit-revert"
       ],
-      "reversibleOperationExact": true
+      "reversibleOperationExact": true,
+      "metadataReadable": true,
+      "metadataSchemaValid": true,
+      "opaqueBlocks": 0,
+      "preservedBlocks": 0
     },
     {
       "path": "src/database/content/axioms/axioma-orden-4.mdx",
       "originalHash": "eb8c45d4dd51a4b8073e55cd712c800afe7bf5e3b18d62042960918a1056bb63",
       "finalHash": "eb8c45d4dd51a4b8073e55cd712c800afe7bf5e3b18d62042960918a1056bb63",
-      "compatibility": "partially-editable",
+      "compatibility": "fully-editable",
       "diagnostics": [],
       "exact": true,
       "idempotent": true,
@@ -467,13 +555,17 @@
         "audit-edit",
         "audit-revert"
       ],
-      "reversibleOperationExact": true
+      "reversibleOperationExact": true,
+      "metadataReadable": true,
+      "metadataSchemaValid": true,
+      "opaqueBlocks": 0,
+      "preservedBlocks": 0
     },
     {
       "path": "src/database/content/axioms/axioma-paralelas-euclides.mdx",
       "originalHash": "cfd02abcb75d25e166a3c54b939a8cdeeeadbbeeda36da9f5b8de4a3d2b4775b",
       "finalHash": "cfd02abcb75d25e166a3c54b939a8cdeeeadbbeeda36da9f5b8de4a3d2b4775b",
-      "compatibility": "partially-editable",
+      "compatibility": "fully-editable",
       "diagnostics": [],
       "exact": true,
       "idempotent": true,
@@ -487,13 +579,17 @@
         "audit-edit",
         "audit-revert"
       ],
-      "reversibleOperationExact": true
+      "reversibleOperationExact": true,
+      "metadataReadable": true,
+      "metadataSchemaValid": true,
+      "opaqueBlocks": 0,
+      "preservedBlocks": 0
     },
     {
       "path": "src/database/content/axioms/axioma-paralelas-hiperbolico.mdx",
       "originalHash": "260880ed3b225e06a438a0a8c0a34545de84f625826b2faa8a97749d8764a32f",
       "finalHash": "260880ed3b225e06a438a0a8c0a34545de84f625826b2faa8a97749d8764a32f",
-      "compatibility": "partially-editable",
+      "compatibility": "fully-editable",
       "diagnostics": [],
       "exact": true,
       "idempotent": true,
@@ -507,13 +603,17 @@
         "audit-edit",
         "audit-revert"
       ],
-      "reversibleOperationExact": true
+      "reversibleOperationExact": true,
+      "metadataReadable": true,
+      "metadataSchemaValid": true,
+      "opaqueBlocks": 0,
+      "preservedBlocks": 0
     },
     {
       "path": "src/database/content/definitions/altura.mdx",
       "originalHash": "9abcc85c9455047aa8d06c45ef2edf1e563a3388980aedeea3fdccacdfdb37cc",
       "finalHash": "9abcc85c9455047aa8d06c45ef2edf1e563a3388980aedeea3fdccacdfdb37cc",
-      "compatibility": "partially-editable",
+      "compatibility": "fully-editable",
       "diagnostics": [],
       "exact": true,
       "idempotent": true,
@@ -527,13 +627,17 @@
         "audit-edit",
         "audit-revert"
       ],
-      "reversibleOperationExact": true
+      "reversibleOperationExact": true,
+      "metadataReadable": true,
+      "metadataSchemaValid": true,
+      "opaqueBlocks": 0,
+      "preservedBlocks": 0
     },
     {
       "path": "src/database/content/definitions/angulo.mdx",
       "originalHash": "e0f2e60c58473408b323f480f727779da3cbd1280439873833601c70843563f7",
       "finalHash": "e0f2e60c58473408b323f480f727779da3cbd1280439873833601c70843563f7",
-      "compatibility": "partially-editable",
+      "compatibility": "fully-editable",
       "diagnostics": [],
       "exact": true,
       "idempotent": true,
@@ -547,13 +651,17 @@
         "audit-edit",
         "audit-revert"
       ],
-      "reversibleOperationExact": true
+      "reversibleOperationExact": true,
+      "metadataReadable": true,
+      "metadataSchemaValid": true,
+      "opaqueBlocks": 0,
+      "preservedBlocks": 0
     },
     {
       "path": "src/database/content/definitions/angulos-suplementarios.mdx",
       "originalHash": "676dc51e809244598f8da60f7a56b67c0203352cd80c8418b9b400c03d966fcc",
       "finalHash": "676dc51e809244598f8da60f7a56b67c0203352cd80c8418b9b400c03d966fcc",
-      "compatibility": "partially-editable",
+      "compatibility": "fully-editable",
       "diagnostics": [],
       "exact": true,
       "idempotent": true,
@@ -567,13 +675,17 @@
         "audit-edit",
         "audit-revert"
       ],
-      "reversibleOperationExact": true
+      "reversibleOperationExact": true,
+      "metadataReadable": true,
+      "metadataSchemaValid": true,
+      "opaqueBlocks": 0,
+      "preservedBlocks": 0
     },
     {
       "path": "src/database/content/definitions/bisectriz.mdx",
       "originalHash": "452b310b93859d34d86c496471552d0cc80673524a9c8afcfd9d74ea4401262c",
       "finalHash": "452b310b93859d34d86c496471552d0cc80673524a9c8afcfd9d74ea4401262c",
-      "compatibility": "partially-editable",
+      "compatibility": "fully-editable",
       "diagnostics": [],
       "exact": true,
       "idempotent": true,
@@ -587,13 +699,17 @@
         "audit-edit",
         "audit-revert"
       ],
-      "reversibleOperationExact": true
+      "reversibleOperationExact": true,
+      "metadataReadable": true,
+      "metadataSchemaValid": true,
+      "opaqueBlocks": 0,
+      "preservedBlocks": 0
     },
     {
       "path": "src/database/content/definitions/circunferencia.mdx",
       "originalHash": "4e24e8de643edeee089f4147d7f3b2732c879d73b186231d32f9da7c2be2e4b0",
       "finalHash": "4e24e8de643edeee089f4147d7f3b2732c879d73b186231d32f9da7c2be2e4b0",
-      "compatibility": "partially-editable",
+      "compatibility": "fully-editable",
       "diagnostics": [],
       "exact": true,
       "idempotent": true,
@@ -607,13 +723,17 @@
         "audit-edit",
         "audit-revert"
       ],
-      "reversibleOperationExact": true
+      "reversibleOperationExact": true,
+      "metadataReadable": true,
+      "metadataSchemaValid": true,
+      "opaqueBlocks": 0,
+      "preservedBlocks": 0
     },
     {
       "path": "src/database/content/definitions/congruencia.mdx",
       "originalHash": "f06ce0deff80fe57319e4e85767328becffa5f8535b28f30c21c193ad6b3f3a8",
       "finalHash": "f06ce0deff80fe57319e4e85767328becffa5f8535b28f30c21c193ad6b3f3a8",
-      "compatibility": "partially-editable",
+      "compatibility": "fully-editable",
       "diagnostics": [],
       "exact": true,
       "idempotent": true,
@@ -627,13 +747,17 @@
         "audit-edit",
         "audit-revert"
       ],
-      "reversibleOperationExact": true
+      "reversibleOperationExact": true,
+      "metadataReadable": true,
+      "metadataSchemaValid": true,
+      "opaqueBlocks": 0,
+      "preservedBlocks": 0
     },
     {
       "path": "src/database/content/definitions/contenido.mdx",
       "originalHash": "fb1dfdc6e45868b3d3ebfeafe684b59519800de63c35703e007689ec937a9ec2",
       "finalHash": "fb1dfdc6e45868b3d3ebfeafe684b59519800de63c35703e007689ec937a9ec2",
-      "compatibility": "partially-editable",
+      "compatibility": "fully-editable",
       "diagnostics": [],
       "exact": true,
       "idempotent": true,
@@ -647,13 +771,17 @@
         "audit-edit",
         "audit-revert"
       ],
-      "reversibleOperationExact": true
+      "reversibleOperationExact": true,
+      "metadataReadable": true,
+      "metadataSchemaValid": true,
+      "opaqueBlocks": 0,
+      "preservedBlocks": 0
     },
     {
       "path": "src/database/content/definitions/cuadrilatero.mdx",
       "originalHash": "990e4a9204d1a7f7a3aa10b6fbb035564c5ee0ef47f34fa5fc11fbb8431a5c17",
       "finalHash": "990e4a9204d1a7f7a3aa10b6fbb035564c5ee0ef47f34fa5fc11fbb8431a5c17",
-      "compatibility": "partially-editable",
+      "compatibility": "fully-editable",
       "diagnostics": [],
       "exact": true,
       "idempotent": true,
@@ -667,13 +795,17 @@
         "audit-edit",
         "audit-revert"
       ],
-      "reversibleOperationExact": true
+      "reversibleOperationExact": true,
+      "metadataReadable": true,
+      "metadataSchemaValid": true,
+      "opaqueBlocks": 0,
+      "preservedBlocks": 0
     },
     {
       "path": "src/database/content/definitions/estar-entre.mdx",
       "originalHash": "045a8c04d2d5c6e2e606f40f05d6f2a060b46785dc5495bfd67545517454aa83",
       "finalHash": "045a8c04d2d5c6e2e606f40f05d6f2a060b46785dc5495bfd67545517454aa83",
-      "compatibility": "partially-editable",
+      "compatibility": "fully-editable",
       "diagnostics": [],
       "exact": true,
       "idempotent": true,
@@ -687,13 +819,17 @@
         "audit-edit",
         "audit-revert"
       ],
-      "reversibleOperationExact": true
+      "reversibleOperationExact": true,
+      "metadataReadable": true,
+      "metadataSchemaValid": true,
+      "opaqueBlocks": 0,
+      "preservedBlocks": 0
     },
     {
       "path": "src/database/content/definitions/incidencia.mdx",
       "originalHash": "a269b0582d75bfe4fc24e4f69c2b70eaae70aa8607ff9ba3e164ba3bd8b9ad46",
       "finalHash": "a269b0582d75bfe4fc24e4f69c2b70eaae70aa8607ff9ba3e164ba3bd8b9ad46",
-      "compatibility": "partially-editable",
+      "compatibility": "fully-editable",
       "diagnostics": [],
       "exact": true,
       "idempotent": true,
@@ -707,13 +843,17 @@
         "audit-edit",
         "audit-revert"
       ],
-      "reversibleOperationExact": true
+      "reversibleOperationExact": true,
+      "metadataReadable": true,
+      "metadataSchemaValid": true,
+      "opaqueBlocks": 0,
+      "preservedBlocks": 0
     },
     {
       "path": "src/database/content/definitions/mediana.mdx",
       "originalHash": "f1d7888b944a8488e092038531bd6c8c9807d54470787dc2bb8e205624641aca",
       "finalHash": "f1d7888b944a8488e092038531bd6c8c9807d54470787dc2bb8e205624641aca",
-      "compatibility": "partially-editable",
+      "compatibility": "fully-editable",
       "diagnostics": [],
       "exact": true,
       "idempotent": true,
@@ -727,13 +867,17 @@
         "audit-edit",
         "audit-revert"
       ],
-      "reversibleOperationExact": true
+      "reversibleOperationExact": true,
+      "metadataReadable": true,
+      "metadataSchemaValid": true,
+      "opaqueBlocks": 0,
+      "preservedBlocks": 0
     },
     {
       "path": "src/database/content/definitions/mediatriz.mdx",
       "originalHash": "64be79aaae6e62e5756b67add1af42891cb85671ef46cf97e2855dc0f3b5e550",
       "finalHash": "64be79aaae6e62e5756b67add1af42891cb85671ef46cf97e2855dc0f3b5e550",
-      "compatibility": "partially-editable",
+      "compatibility": "fully-editable",
       "diagnostics": [],
       "exact": true,
       "idempotent": true,
@@ -747,13 +891,17 @@
         "audit-edit",
         "audit-revert"
       ],
-      "reversibleOperationExact": true
+      "reversibleOperationExact": true,
+      "metadataReadable": true,
+      "metadataSchemaValid": true,
+      "opaqueBlocks": 0,
+      "preservedBlocks": 0
     },
     {
       "path": "src/database/content/definitions/paralelas.mdx",
       "originalHash": "d63cdc2b763fa61d6f212ae5ac1e8feeee2cceac8741b392a86871cb21134c6f",
       "finalHash": "d63cdc2b763fa61d6f212ae5ac1e8feeee2cceac8741b392a86871cb21134c6f",
-      "compatibility": "partially-editable",
+      "compatibility": "fully-editable",
       "diagnostics": [],
       "exact": true,
       "idempotent": true,
@@ -767,13 +915,17 @@
         "audit-edit",
         "audit-revert"
       ],
-      "reversibleOperationExact": true
+      "reversibleOperationExact": true,
+      "metadataReadable": true,
+      "metadataSchemaValid": true,
+      "opaqueBlocks": 0,
+      "preservedBlocks": 0
     },
     {
       "path": "src/database/content/definitions/paralelogramo.mdx",
       "originalHash": "6a5b3ee488c42dfdbf6c6703315d9a5567eb0275e885ca6c1e01daeb6440ca3d",
       "finalHash": "6a5b3ee488c42dfdbf6c6703315d9a5567eb0275e885ca6c1e01daeb6440ca3d",
-      "compatibility": "partially-editable",
+      "compatibility": "fully-editable",
       "diagnostics": [],
       "exact": true,
       "idempotent": true,
@@ -787,13 +939,17 @@
         "audit-edit",
         "audit-revert"
       ],
-      "reversibleOperationExact": true
+      "reversibleOperationExact": true,
+      "metadataReadable": true,
+      "metadataSchemaValid": true,
+      "opaqueBlocks": 0,
+      "preservedBlocks": 0
     },
     {
       "path": "src/database/content/definitions/perpendicular.mdx",
       "originalHash": "1bc999e3c29ef164490f0b5c93df47e4d3e993b03b366ac6f478b4f2c704bdf4",
       "finalHash": "1bc999e3c29ef164490f0b5c93df47e4d3e993b03b366ac6f478b4f2c704bdf4",
-      "compatibility": "partially-editable",
+      "compatibility": "fully-editable",
       "diagnostics": [],
       "exact": true,
       "idempotent": true,
@@ -807,13 +963,17 @@
         "audit-edit",
         "audit-revert"
       ],
-      "reversibleOperationExact": true
+      "reversibleOperationExact": true,
+      "metadataReadable": true,
+      "metadataSchemaValid": true,
+      "opaqueBlocks": 0,
+      "preservedBlocks": 0
     },
     {
       "path": "src/database/content/definitions/plano.mdx",
       "originalHash": "d2987288a7a672f95c7b027ed60431c82215fcf4b508d507072e81bf6d29e744",
       "finalHash": "d2987288a7a672f95c7b027ed60431c82215fcf4b508d507072e81bf6d29e744",
-      "compatibility": "partially-editable",
+      "compatibility": "fully-editable",
       "diagnostics": [],
       "exact": true,
       "idempotent": true,
@@ -827,13 +987,17 @@
         "audit-edit",
         "audit-revert"
       ],
-      "reversibleOperationExact": true
+      "reversibleOperationExact": true,
+      "metadataReadable": true,
+      "metadataSchemaValid": true,
+      "opaqueBlocks": 0,
+      "preservedBlocks": 0
     },
     {
       "path": "src/database/content/definitions/punto.mdx",
       "originalHash": "26328e6a5784bd7b869e5be6ba7a663a5172103e0c6be3ff0fc20183123e4b66",
       "finalHash": "26328e6a5784bd7b869e5be6ba7a663a5172103e0c6be3ff0fc20183123e4b66",
-      "compatibility": "partially-editable",
+      "compatibility": "fully-editable",
       "diagnostics": [],
       "exact": true,
       "idempotent": true,
@@ -847,13 +1011,17 @@
         "audit-edit",
         "audit-revert"
       ],
-      "reversibleOperationExact": true
+      "reversibleOperationExact": true,
+      "metadataReadable": true,
+      "metadataSchemaValid": true,
+      "opaqueBlocks": 0,
+      "preservedBlocks": 0
     },
     {
       "path": "src/database/content/definitions/recta.mdx",
       "originalHash": "9dc543b8616bdf740d9ca55aa9e2a1e8447c50863a6c12f48c1307965658a397",
       "finalHash": "9dc543b8616bdf740d9ca55aa9e2a1e8447c50863a6c12f48c1307965658a397",
-      "compatibility": "partially-editable",
+      "compatibility": "fully-editable",
       "diagnostics": [],
       "exact": true,
       "idempotent": true,
@@ -867,13 +1035,17 @@
         "audit-edit",
         "audit-revert"
       ],
-      "reversibleOperationExact": true
+      "reversibleOperationExact": true,
+      "metadataReadable": true,
+      "metadataSchemaValid": true,
+      "opaqueBlocks": 0,
+      "preservedBlocks": 0
     },
     {
       "path": "src/database/content/definitions/segmento.mdx",
       "originalHash": "91ee9a979fe60fd45c1e19766a6ba16c599cf80435ff7db79de83ac778657e2e",
       "finalHash": "91ee9a979fe60fd45c1e19766a6ba16c599cf80435ff7db79de83ac778657e2e",
-      "compatibility": "partially-editable",
+      "compatibility": "fully-editable",
       "diagnostics": [],
       "exact": true,
       "idempotent": true,
@@ -887,13 +1059,17 @@
         "audit-edit",
         "audit-revert"
       ],
-      "reversibleOperationExact": true
+      "reversibleOperationExact": true,
+      "metadataReadable": true,
+      "metadataSchemaValid": true,
+      "opaqueBlocks": 0,
+      "preservedBlocks": 0
     },
     {
       "path": "src/database/content/definitions/semirrecta.mdx",
       "originalHash": "2eb85fb253cc0ef63f8bd58cd3cfc4dc307f82544509a388afff8d9c948c4cc0",
       "finalHash": "2eb85fb253cc0ef63f8bd58cd3cfc4dc307f82544509a388afff8d9c948c4cc0",
-      "compatibility": "partially-editable",
+      "compatibility": "fully-editable",
       "diagnostics": [],
       "exact": true,
       "idempotent": true,
@@ -907,13 +1083,17 @@
         "audit-edit",
         "audit-revert"
       ],
-      "reversibleOperationExact": true
+      "reversibleOperationExact": true,
+      "metadataReadable": true,
+      "metadataSchemaValid": true,
+      "opaqueBlocks": 0,
+      "preservedBlocks": 0
     },
     {
       "path": "src/database/content/definitions/teoria-medida-area.mdx",
       "originalHash": "c6e42f2b83caeda3373e59d82e3db72f7c1cdf90505eae6080070abe5eee610c",
       "finalHash": "c6e42f2b83caeda3373e59d82e3db72f7c1cdf90505eae6080070abe5eee610c",
-      "compatibility": "partially-editable",
+      "compatibility": "fully-editable",
       "diagnostics": [],
       "exact": true,
       "idempotent": true,
@@ -927,13 +1107,17 @@
         "audit-edit",
         "audit-revert"
       ],
-      "reversibleOperationExact": true
+      "reversibleOperationExact": true,
+      "metadataReadable": true,
+      "metadataSchemaValid": true,
+      "opaqueBlocks": 0,
+      "preservedBlocks": 0
     },
     {
       "path": "src/database/content/definitions/triangulo.mdx",
       "originalHash": "e8f7b9edcb06b142bb31a7e197b9cd115076496ea94cae792640f6c851987ef1",
       "finalHash": "e8f7b9edcb06b142bb31a7e197b9cd115076496ea94cae792640f6c851987ef1",
-      "compatibility": "partially-editable",
+      "compatibility": "fully-editable",
       "diagnostics": [],
       "exact": true,
       "idempotent": true,
@@ -947,13 +1131,17 @@
         "audit-edit",
         "audit-revert"
       ],
-      "reversibleOperationExact": true
+      "reversibleOperationExact": true,
+      "metadataReadable": true,
+      "metadataSchemaValid": true,
+      "opaqueBlocks": 0,
+      "preservedBlocks": 0
     },
     {
       "path": "src/database/content/demonstrations/demo-angulo-externo.mdx",
       "originalHash": "6ac60e785cfd4ede87757914d9ac15f1470cfcafb87baacdd4f7d3a2725762a5",
       "finalHash": "6ac60e785cfd4ede87757914d9ac15f1470cfcafb87baacdd4f7d3a2725762a5",
-      "compatibility": "read-only",
+      "compatibility": "fully-editable",
       "diagnostics": [],
       "exact": true,
       "idempotent": true,
@@ -963,14 +1151,21 @@
       "compatibilityStable": true,
       "diagnosticsStable": true,
       "cycles": 3,
-      "authorizedOperations": [],
-      "reversibleOperationExact": null
+      "authorizedOperations": [
+        "audit-edit",
+        "audit-revert"
+      ],
+      "reversibleOperationExact": true,
+      "metadataReadable": true,
+      "metadataSchemaValid": true,
+      "opaqueBlocks": 0,
+      "preservedBlocks": 0
     },
     {
       "path": "src/database/content/demonstrations/demo-angulos-alternos-internos.mdx",
       "originalHash": "3c49c87df168298575e7943516ac79846e55d8913030bed9b89a593b3b3ad53f",
       "finalHash": "3c49c87df168298575e7943516ac79846e55d8913030bed9b89a593b3b3ad53f",
-      "compatibility": "read-only",
+      "compatibility": "fully-editable",
       "diagnostics": [],
       "exact": true,
       "idempotent": true,
@@ -980,14 +1175,21 @@
       "compatibilityStable": true,
       "diagnosticsStable": true,
       "cycles": 3,
-      "authorizedOperations": [],
-      "reversibleOperationExact": null
+      "authorizedOperations": [
+        "audit-edit",
+        "audit-revert"
+      ],
+      "reversibleOperationExact": true,
+      "metadataReadable": true,
+      "metadataSchemaValid": true,
+      "opaqueBlocks": 0,
+      "preservedBlocks": 0
     },
     {
       "path": "src/database/content/demonstrations/demo-angulos-opuestos-verticales.mdx",
       "originalHash": "efcdd3081312302028e9557c6d55f7394150336166c777a128e6771484f87fb1",
       "finalHash": "efcdd3081312302028e9557c6d55f7394150336166c777a128e6771484f87fb1",
-      "compatibility": "read-only",
+      "compatibility": "fully-editable",
       "diagnostics": [],
       "exact": true,
       "idempotent": true,
@@ -997,14 +1199,21 @@
       "compatibilityStable": true,
       "diagnosticsStable": true,
       "cycles": 3,
-      "authorizedOperations": [],
-      "reversibleOperationExact": null
+      "authorizedOperations": [
+        "audit-edit",
+        "audit-revert"
+      ],
+      "reversibleOperationExact": true,
+      "metadataReadable": true,
+      "metadataSchemaValid": true,
+      "opaqueBlocks": 0,
+      "preservedBlocks": 0
     },
     {
       "path": "src/database/content/demonstrations/demo-area-aditividad.mdx",
       "originalHash": "766b2e0b32173107c648825fb4be222027c636a60b6a314bdf839df429ca3d5d",
       "finalHash": "766b2e0b32173107c648825fb4be222027c636a60b6a314bdf839df429ca3d5d",
-      "compatibility": "read-only",
+      "compatibility": "fully-editable",
       "diagnostics": [],
       "exact": true,
       "idempotent": true,
@@ -1014,14 +1223,21 @@
       "compatibilityStable": true,
       "diagnosticsStable": true,
       "cycles": 3,
-      "authorizedOperations": [],
-      "reversibleOperationExact": null
+      "authorizedOperations": [
+        "audit-edit",
+        "audit-revert"
+      ],
+      "reversibleOperationExact": true,
+      "metadataReadable": true,
+      "metadataSchemaValid": true,
+      "opaqueBlocks": 0,
+      "preservedBlocks": 0
     },
     {
       "path": "src/database/content/demonstrations/demo-area-invariancia.mdx",
       "originalHash": "2fb4175c7607412f52f8a028f60fc68910cf197affb92df6a79b3681d05750a1",
       "finalHash": "2fb4175c7607412f52f8a028f60fc68910cf197affb92df6a79b3681d05750a1",
-      "compatibility": "read-only",
+      "compatibility": "fully-editable",
       "diagnostics": [],
       "exact": true,
       "idempotent": true,
@@ -1031,14 +1247,21 @@
       "compatibilityStable": true,
       "diagnosticsStable": true,
       "cycles": 3,
-      "authorizedOperations": [],
-      "reversibleOperationExact": null
+      "authorizedOperations": [
+        "audit-edit",
+        "audit-revert"
+      ],
+      "reversibleOperationExact": true,
+      "metadataReadable": true,
+      "metadataSchemaValid": true,
+      "opaqueBlocks": 0,
+      "preservedBlocks": 0
     },
     {
       "path": "src/database/content/demonstrations/demo-area-rectangulo.mdx",
       "originalHash": "1db4983c067941fed6b45e1d3f14a885d23b79a55a62ceaade4da71d96ee0324",
       "finalHash": "1db4983c067941fed6b45e1d3f14a885d23b79a55a62ceaade4da71d96ee0324",
-      "compatibility": "read-only",
+      "compatibility": "fully-editable",
       "diagnostics": [],
       "exact": true,
       "idempotent": true,
@@ -1048,14 +1271,21 @@
       "compatibilityStable": true,
       "diagnosticsStable": true,
       "cycles": 3,
-      "authorizedOperations": [],
-      "reversibleOperationExact": null
+      "authorizedOperations": [
+        "audit-edit",
+        "audit-revert"
+      ],
+      "reversibleOperationExact": true,
+      "metadataReadable": true,
+      "metadataSchemaValid": true,
+      "opaqueBlocks": 0,
+      "preservedBlocks": 0
     },
     {
       "path": "src/database/content/demonstrations/demo-area-triangulo.mdx",
       "originalHash": "f09937ac37a30ffc9b7017cc8316a602a5faac3170ec831d2e31464ed8a0fed6",
       "finalHash": "f09937ac37a30ffc9b7017cc8316a602a5faac3170ec831d2e31464ed8a0fed6",
-      "compatibility": "read-only",
+      "compatibility": "fully-editable",
       "diagnostics": [],
       "exact": true,
       "idempotent": true,
@@ -1065,14 +1295,21 @@
       "compatibilityStable": true,
       "diagnosticsStable": true,
       "cycles": 3,
-      "authorizedOperations": [],
-      "reversibleOperationExact": null
+      "authorizedOperations": [
+        "audit-edit",
+        "audit-revert"
+      ],
+      "reversibleOperationExact": true,
+      "metadataReadable": true,
+      "metadataSchemaValid": true,
+      "opaqueBlocks": 0,
+      "preservedBlocks": 0
     },
     {
       "path": "src/database/content/demonstrations/demo-congruencia-aal.mdx",
       "originalHash": "04481a990405712d2d27d4922b3cc9ff3cc2107e8e7234eb99eefa911a1daea8",
       "finalHash": "04481a990405712d2d27d4922b3cc9ff3cc2107e8e7234eb99eefa911a1daea8",
-      "compatibility": "read-only",
+      "compatibility": "fully-editable",
       "diagnostics": [],
       "exact": true,
       "idempotent": true,
@@ -1082,14 +1319,21 @@
       "compatibilityStable": true,
       "diagnosticsStable": true,
       "cycles": 3,
-      "authorizedOperations": [],
-      "reversibleOperationExact": null
+      "authorizedOperations": [
+        "audit-edit",
+        "audit-revert"
+      ],
+      "reversibleOperationExact": true,
+      "metadataReadable": true,
+      "metadataSchemaValid": true,
+      "opaqueBlocks": 0,
+      "preservedBlocks": 0
     },
     {
       "path": "src/database/content/demonstrations/demo-congruencia-ala.mdx",
       "originalHash": "5042ee5ca347546b5687d7b552a4b7dce353e638253754dc87365205db7f79dc",
       "finalHash": "5042ee5ca347546b5687d7b552a4b7dce353e638253754dc87365205db7f79dc",
-      "compatibility": "read-only",
+      "compatibility": "fully-editable",
       "diagnostics": [],
       "exact": true,
       "idempotent": true,
@@ -1099,14 +1343,21 @@
       "compatibilityStable": true,
       "diagnosticsStable": true,
       "cycles": 3,
-      "authorizedOperations": [],
-      "reversibleOperationExact": null
+      "authorizedOperations": [
+        "audit-edit",
+        "audit-revert"
+      ],
+      "reversibleOperationExact": true,
+      "metadataReadable": true,
+      "metadataSchemaValid": true,
+      "opaqueBlocks": 0,
+      "preservedBlocks": 0
     },
     {
       "path": "src/database/content/demonstrations/demo-congruencia-lll.mdx",
       "originalHash": "575709a9103586c1972a4277d7bc85aedb035555bb226eb3fa340165988bde33",
       "finalHash": "575709a9103586c1972a4277d7bc85aedb035555bb226eb3fa340165988bde33",
-      "compatibility": "read-only",
+      "compatibility": "fully-editable",
       "diagnostics": [],
       "exact": true,
       "idempotent": true,
@@ -1116,14 +1367,21 @@
       "compatibilityStable": true,
       "diagnosticsStable": true,
       "cycles": 3,
-      "authorizedOperations": [],
-      "reversibleOperationExact": null
+      "authorizedOperations": [
+        "audit-edit",
+        "audit-revert"
+      ],
+      "reversibleOperationExact": true,
+      "metadataReadable": true,
+      "metadataSchemaValid": true,
+      "opaqueBlocks": 0,
+      "preservedBlocks": 0
     },
     {
       "path": "src/database/content/demonstrations/demo-desigualdad-triangular.mdx",
       "originalHash": "3f53d478c449fe356e940c267924bffe49169645ce3e9c316740d3f3cf6b9d74",
       "finalHash": "3f53d478c449fe356e940c267924bffe49169645ce3e9c316740d3f3cf6b9d74",
-      "compatibility": "read-only",
+      "compatibility": "fully-editable",
       "diagnostics": [],
       "exact": true,
       "idempotent": true,
@@ -1133,14 +1391,21 @@
       "compatibilityStable": true,
       "diagnosticsStable": true,
       "cycles": 3,
-      "authorizedOperations": [],
-      "reversibleOperationExact": null
+      "authorizedOperations": [
+        "audit-edit",
+        "audit-revert"
+      ],
+      "reversibleOperationExact": true,
+      "metadataReadable": true,
+      "metadataSchemaValid": true,
+      "opaqueBlocks": 0,
+      "preservedBlocks": 0
     },
     {
       "path": "src/database/content/demonstrations/demo-dos-rectas-un-punto.mdx",
       "originalHash": "5832bf96567aeb7ce430919ad4cfa2b0004a1e0c2d5f76e620a349c287e18f6b",
       "finalHash": "5832bf96567aeb7ce430919ad4cfa2b0004a1e0c2d5f76e620a349c287e18f6b",
-      "compatibility": "read-only",
+      "compatibility": "fully-editable",
       "diagnostics": [],
       "exact": true,
       "idempotent": true,
@@ -1150,14 +1415,21 @@
       "compatibilityStable": true,
       "diagnosticsStable": true,
       "cycles": 3,
-      "authorizedOperations": [],
-      "reversibleOperationExact": null
+      "authorizedOperations": [
+        "audit-edit",
+        "audit-revert"
+      ],
+      "reversibleOperationExact": true,
+      "metadataReadable": true,
+      "metadataSchemaValid": true,
+      "opaqueBlocks": 0,
+      "preservedBlocks": 0
     },
     {
       "path": "src/database/content/demonstrations/demo-existencia-bisectriz.mdx",
       "originalHash": "5b0626f97a821b36154002c11155fcb95a3ba58e035e84c0644e510438c35480",
       "finalHash": "5b0626f97a821b36154002c11155fcb95a3ba58e035e84c0644e510438c35480",
-      "compatibility": "read-only",
+      "compatibility": "fully-editable",
       "diagnostics": [],
       "exact": true,
       "idempotent": true,
@@ -1167,14 +1439,21 @@
       "compatibilityStable": true,
       "diagnosticsStable": true,
       "cycles": 3,
-      "authorizedOperations": [],
-      "reversibleOperationExact": null
+      "authorizedOperations": [
+        "audit-edit",
+        "audit-revert"
+      ],
+      "reversibleOperationExact": true,
+      "metadataReadable": true,
+      "metadataSchemaValid": true,
+      "opaqueBlocks": 0,
+      "preservedBlocks": 0
     },
     {
       "path": "src/database/content/demonstrations/demo-existencia-perpendicular.mdx",
       "originalHash": "2ce4dfcacec58493829f27147918943caba92d374ab52a3fd141e3c0c8dffec0",
       "finalHash": "2ce4dfcacec58493829f27147918943caba92d374ab52a3fd141e3c0c8dffec0",
-      "compatibility": "read-only",
+      "compatibility": "fully-editable",
       "diagnostics": [],
       "exact": true,
       "idempotent": true,
@@ -1184,14 +1463,21 @@
       "compatibilityStable": true,
       "diagnosticsStable": true,
       "cycles": 3,
-      "authorizedOperations": [],
-      "reversibleOperationExact": null
+      "authorizedOperations": [
+        "audit-edit",
+        "audit-revert"
+      ],
+      "reversibleOperationExact": true,
+      "metadataReadable": true,
+      "metadataSchemaValid": true,
+      "opaqueBlocks": 0,
+      "preservedBlocks": 0
     },
     {
       "path": "src/database/content/demonstrations/demo-invariancia-triangulacion.mdx",
       "originalHash": "c48200d47a728000cb701163958d51975e34919c1716eb96623b7873132e3e9c",
       "finalHash": "c48200d47a728000cb701163958d51975e34919c1716eb96623b7873132e3e9c",
-      "compatibility": "read-only",
+      "compatibility": "fully-editable",
       "diagnostics": [],
       "exact": true,
       "idempotent": true,
@@ -1201,14 +1487,21 @@
       "compatibilityStable": true,
       "diagnosticsStable": true,
       "cycles": 3,
-      "authorizedOperations": [],
-      "reversibleOperationExact": null
+      "authorizedOperations": [
+        "audit-edit",
+        "audit-revert"
+      ],
+      "reversibleOperationExact": true,
+      "metadataReadable": true,
+      "metadataSchemaValid": true,
+      "opaqueBlocks": 0,
+      "preservedBlocks": 0
     },
     {
       "path": "src/database/content/demonstrations/demo-pitagoras-areas.mdx",
       "originalHash": "ec62c1a7d8cafdd40f6e626d24712455126039fed5080146ffb48a1121ac2294",
       "finalHash": "ec62c1a7d8cafdd40f6e626d24712455126039fed5080146ffb48a1121ac2294",
-      "compatibility": "read-only",
+      "compatibility": "fully-editable",
       "diagnostics": [],
       "exact": true,
       "idempotent": true,
@@ -1218,14 +1511,21 @@
       "compatibilityStable": true,
       "diagnosticsStable": true,
       "cycles": 3,
-      "authorizedOperations": [],
-      "reversibleOperationExact": null
+      "authorizedOperations": [
+        "audit-edit",
+        "audit-revert"
+      ],
+      "reversibleOperationExact": true,
+      "metadataReadable": true,
+      "metadataSchemaValid": true,
+      "opaqueBlocks": 0,
+      "preservedBlocks": 0
     },
     {
       "path": "src/database/content/demonstrations/demo-pitagoras-euclides.mdx",
       "originalHash": "e3a8c8056008dcecbcee859798b07b689b4bf241c1d83f027023cc4769d44945",
       "finalHash": "e3a8c8056008dcecbcee859798b07b689b4bf241c1d83f027023cc4769d44945",
-      "compatibility": "read-only",
+      "compatibility": "fully-editable",
       "diagnostics": [],
       "exact": true,
       "idempotent": true,
@@ -1235,14 +1535,21 @@
       "compatibilityStable": true,
       "diagnosticsStable": true,
       "cycles": 3,
-      "authorizedOperations": [],
-      "reversibleOperationExact": null
+      "authorizedOperations": [
+        "audit-edit",
+        "audit-revert"
+      ],
+      "reversibleOperationExact": true,
+      "metadataReadable": true,
+      "metadataSchemaValid": true,
+      "opaqueBlocks": 0,
+      "preservedBlocks": 0
     },
     {
       "path": "src/database/content/demonstrations/demo-punto-medio-perpendicular.mdx",
       "originalHash": "5224e99ade965972c61a4424c6d291199e91664711b4e4a0b059d11534ca8415",
       "finalHash": "5224e99ade965972c61a4424c6d291199e91664711b4e4a0b059d11534ca8415",
-      "compatibility": "read-only",
+      "compatibility": "fully-editable",
       "diagnostics": [],
       "exact": true,
       "idempotent": true,
@@ -1252,14 +1559,21 @@
       "compatibilityStable": true,
       "diagnosticsStable": true,
       "cycles": 3,
-      "authorizedOperations": [],
-      "reversibleOperationExact": null
+      "authorizedOperations": [
+        "audit-edit",
+        "audit-revert"
+      ],
+      "reversibleOperationExact": true,
+      "metadataReadable": true,
+      "metadataSchemaValid": true,
+      "opaqueBlocks": 0,
+      "preservedBlocks": 0
     },
     {
       "path": "src/database/content/demonstrations/demo-punto-medio.mdx",
       "originalHash": "65278d877733fe10f510baa3a9e6a5189e4b9b7d3ba34a04610c3a9bb186479e",
       "finalHash": "65278d877733fe10f510baa3a9e6a5189e4b9b7d3ba34a04610c3a9bb186479e",
-      "compatibility": "read-only",
+      "compatibility": "fully-editable",
       "diagnostics": [],
       "exact": true,
       "idempotent": true,
@@ -1269,14 +1583,21 @@
       "compatibilityStable": true,
       "diagnosticsStable": true,
       "cycles": 3,
-      "authorizedOperations": [],
-      "reversibleOperationExact": null
+      "authorizedOperations": [
+        "audit-edit",
+        "audit-revert"
+      ],
+      "reversibleOperationExact": true,
+      "metadataReadable": true,
+      "metadataSchemaValid": true,
+      "opaqueBlocks": 0,
+      "preservedBlocks": 0
     },
     {
       "path": "src/database/content/demonstrations/demo-reciproco-triangulo-isosceles.mdx",
       "originalHash": "3b4b693804f5321723ae2697956382eabd653c3e463d3018a76445b956ccaf11",
       "finalHash": "3b4b693804f5321723ae2697956382eabd653c3e463d3018a76445b956ccaf11",
-      "compatibility": "read-only",
+      "compatibility": "fully-editable",
       "diagnostics": [],
       "exact": true,
       "idempotent": true,
@@ -1286,14 +1607,21 @@
       "compatibilityStable": true,
       "diagnosticsStable": true,
       "cycles": 3,
-      "authorizedOperations": [],
-      "reversibleOperationExact": null
+      "authorizedOperations": [
+        "audit-edit",
+        "audit-revert"
+      ],
+      "reversibleOperationExact": true,
+      "metadataReadable": true,
+      "metadataSchemaValid": true,
+      "opaqueBlocks": 0,
+      "preservedBlocks": 0
     },
     {
       "path": "src/database/content/demonstrations/demo-rectas-coincidentes.mdx",
       "originalHash": "a8bbd316b2a6ab606c997fd3dde677520a6708c6cfc629a8110ef59f5eb579d6",
       "finalHash": "a8bbd316b2a6ab606c997fd3dde677520a6708c6cfc629a8110ef59f5eb579d6",
-      "compatibility": "read-only",
+      "compatibility": "fully-editable",
       "diagnostics": [],
       "exact": true,
       "idempotent": true,
@@ -1303,14 +1631,21 @@
       "compatibilityStable": true,
       "diagnosticsStable": true,
       "cycles": 3,
-      "authorizedOperations": [],
-      "reversibleOperationExact": null
+      "authorizedOperations": [
+        "audit-edit",
+        "audit-revert"
+      ],
+      "reversibleOperationExact": true,
+      "metadataReadable": true,
+      "metadataSchemaValid": true,
+      "opaqueBlocks": 0,
+      "preservedBlocks": 0
     },
     {
       "path": "src/database/content/demonstrations/demo-suma-angulos-triangulo.mdx",
       "originalHash": "9dd86347e30017643aceb9753213875ada56cc51a4aec0c41a5b8f1fe174e38f",
       "finalHash": "9dd86347e30017643aceb9753213875ada56cc51a4aec0c41a5b8f1fe174e38f",
-      "compatibility": "read-only",
+      "compatibility": "fully-editable",
       "diagnostics": [],
       "exact": true,
       "idempotent": true,
@@ -1320,14 +1655,21 @@
       "compatibilityStable": true,
       "diagnosticsStable": true,
       "cycles": 3,
-      "authorizedOperations": [],
-      "reversibleOperationExact": null
+      "authorizedOperations": [
+        "audit-edit",
+        "audit-revert"
+      ],
+      "reversibleOperationExact": true,
+      "metadataReadable": true,
+      "metadataSchemaValid": true,
+      "opaqueBlocks": 0,
+      "preservedBlocks": 0
     },
     {
       "path": "src/database/content/demonstrations/demo-tales.mdx",
       "originalHash": "ac82c6848737fd8d5ab06976c4ff769eff67061effb36a75d3cbdaff2e357989",
       "finalHash": "ac82c6848737fd8d5ab06976c4ff769eff67061effb36a75d3cbdaff2e357989",
-      "compatibility": "read-only",
+      "compatibility": "fully-editable",
       "diagnostics": [],
       "exact": true,
       "idempotent": true,
@@ -1337,14 +1679,21 @@
       "compatibilityStable": true,
       "diagnosticsStable": true,
       "cycles": 3,
-      "authorizedOperations": [],
-      "reversibleOperationExact": null
+      "authorizedOperations": [
+        "audit-edit",
+        "audit-revert"
+      ],
+      "reversibleOperationExact": true,
+      "metadataReadable": true,
+      "metadataSchemaValid": true,
+      "opaqueBlocks": 0,
+      "preservedBlocks": 0
     },
     {
       "path": "src/database/content/demonstrations/demo-triangulacion-poligono.mdx",
       "originalHash": "9f2fa9ed549d99dbcfd7d2b5b534647e9e47194f23d58684b4ba0331bce5b265",
       "finalHash": "9f2fa9ed549d99dbcfd7d2b5b534647e9e47194f23d58684b4ba0331bce5b265",
-      "compatibility": "read-only",
+      "compatibility": "fully-editable",
       "diagnostics": [],
       "exact": true,
       "idempotent": true,
@@ -1354,14 +1703,21 @@
       "compatibilityStable": true,
       "diagnosticsStable": true,
       "cycles": 3,
-      "authorizedOperations": [],
-      "reversibleOperationExact": null
+      "authorizedOperations": [
+        "audit-edit",
+        "audit-revert"
+      ],
+      "reversibleOperationExact": true,
+      "metadataReadable": true,
+      "metadataSchemaValid": true,
+      "opaqueBlocks": 0,
+      "preservedBlocks": 0
     },
     {
       "path": "src/database/content/demonstrations/demo-triangulo-isosceles.mdx",
       "originalHash": "1696e3a3389246b5fcc1b8fc440cda48745ece1077f041c37b89a2087c5a23ea",
       "finalHash": "1696e3a3389246b5fcc1b8fc440cda48745ece1077f041c37b89a2087c5a23ea",
-      "compatibility": "read-only",
+      "compatibility": "fully-editable",
       "diagnostics": [],
       "exact": true,
       "idempotent": true,
@@ -1371,14 +1727,21 @@
       "compatibilityStable": true,
       "diagnosticsStable": true,
       "cycles": 3,
-      "authorizedOperations": [],
-      "reversibleOperationExact": null
+      "authorizedOperations": [
+        "audit-edit",
+        "audit-revert"
+      ],
+      "reversibleOperationExact": true,
+      "metadataReadable": true,
+      "metadataSchemaValid": true,
+      "opaqueBlocks": 0,
+      "preservedBlocks": 0
     },
     {
       "path": "src/database/content/examples/ejemplo-pitagoras-calculo.mdx",
       "originalHash": "1a014b735688875ec6e053f8f8da652ea8bd6e004f120ddf7c9cc63208574be7",
       "finalHash": "1a014b735688875ec6e053f8f8da652ea8bd6e004f120ddf7c9cc63208574be7",
-      "compatibility": "partially-editable",
+      "compatibility": "fully-editable",
       "diagnostics": [],
       "exact": true,
       "idempotent": true,
@@ -1392,13 +1755,17 @@
         "audit-edit",
         "audit-revert"
       ],
-      "reversibleOperationExact": true
+      "reversibleOperationExact": true,
+      "metadataReadable": true,
+      "metadataSchemaValid": true,
+      "opaqueBlocks": 0,
+      "preservedBlocks": 0
     },
     {
       "path": "src/database/content/exercises/ejercicio-pitagoras-cateto.mdx",
       "originalHash": "31886f9dbc62de2f0359c8c19b034ac718ddbd44a5864a6385b3586a4c56a545",
       "finalHash": "31886f9dbc62de2f0359c8c19b034ac718ddbd44a5864a6385b3586a4c56a545",
-      "compatibility": "read-only",
+      "compatibility": "fully-editable",
       "diagnostics": [],
       "exact": true,
       "idempotent": true,
@@ -1408,14 +1775,21 @@
       "compatibilityStable": true,
       "diagnosticsStable": true,
       "cycles": 3,
-      "authorizedOperations": [],
-      "reversibleOperationExact": null
+      "authorizedOperations": [
+        "audit-edit",
+        "audit-revert"
+      ],
+      "reversibleOperationExact": true,
+      "metadataReadable": true,
+      "metadataSchemaValid": true,
+      "opaqueBlocks": 0,
+      "preservedBlocks": 0
     },
     {
       "path": "src/database/content/lessons/leccion-metodo-constructivo.mdx",
       "originalHash": "6f1fa2b0279d360e2816990e603485db1c8c1e5171f750f1432dfc8bb79a0b1f",
       "finalHash": "6f1fa2b0279d360e2816990e603485db1c8c1e5171f750f1432dfc8bb79a0b1f",
-      "compatibility": "partially-editable",
+      "compatibility": "fully-editable",
       "diagnostics": [],
       "exact": true,
       "idempotent": true,
@@ -1429,13 +1803,17 @@
         "audit-edit",
         "audit-revert"
       ],
-      "reversibleOperationExact": true
+      "reversibleOperationExact": true,
+      "metadataReadable": true,
+      "metadataSchemaValid": true,
+      "opaqueBlocks": 0,
+      "preservedBlocks": 0
     },
     {
       "path": "src/database/content/lessons/leccion-metodo-contradiccion.mdx",
       "originalHash": "0981aa1150705f7f565048854dd68c3b31cef148be2c51067bba13fb89bc7b66",
       "finalHash": "0981aa1150705f7f565048854dd68c3b31cef148be2c51067bba13fb89bc7b66",
-      "compatibility": "partially-editable",
+      "compatibility": "fully-editable",
       "diagnostics": [],
       "exact": true,
       "idempotent": true,
@@ -1449,13 +1827,17 @@
         "audit-edit",
         "audit-revert"
       ],
-      "reversibleOperationExact": true
+      "reversibleOperationExact": true,
+      "metadataReadable": true,
+      "metadataSchemaValid": true,
+      "opaqueBlocks": 0,
+      "preservedBlocks": 0
     },
     {
       "path": "src/database/content/lessons/leccion-metodo-contraposicion.mdx",
       "originalHash": "75c20999289729b204ddc522a92da3ffc20b43691ff0625fecb5158457ec3e49",
       "finalHash": "75c20999289729b204ddc522a92da3ffc20b43691ff0625fecb5158457ec3e49",
-      "compatibility": "partially-editable",
+      "compatibility": "fully-editable",
       "diagnostics": [],
       "exact": true,
       "idempotent": true,
@@ -1469,13 +1851,17 @@
         "audit-edit",
         "audit-revert"
       ],
-      "reversibleOperationExact": true
+      "reversibleOperationExact": true,
+      "metadataReadable": true,
+      "metadataSchemaValid": true,
+      "opaqueBlocks": 0,
+      "preservedBlocks": 0
     },
     {
       "path": "src/database/content/lessons/leccion-metodo-directo.mdx",
       "originalHash": "c00569218a6ed500b248ab2cf2f98082443ce25de7e88b8be568ef89ba8c89fb",
       "finalHash": "c00569218a6ed500b248ab2cf2f98082443ce25de7e88b8be568ef89ba8c89fb",
-      "compatibility": "partially-editable",
+      "compatibility": "fully-editable",
       "diagnostics": [],
       "exact": true,
       "idempotent": true,
@@ -1489,13 +1875,17 @@
         "audit-edit",
         "audit-revert"
       ],
-      "reversibleOperationExact": true
+      "reversibleOperationExact": true,
+      "metadataReadable": true,
+      "metadataSchemaValid": true,
+      "opaqueBlocks": 0,
+      "preservedBlocks": 0
     },
     {
       "path": "src/database/content/lessons/leccion-metodo-exhaustivo.mdx",
       "originalHash": "c4ae013637dc783fe5b1c44d30676b6931a5e5cdffb0ed1a46e9157ad0f64312",
       "finalHash": "c4ae013637dc783fe5b1c44d30676b6931a5e5cdffb0ed1a46e9157ad0f64312",
-      "compatibility": "partially-editable",
+      "compatibility": "fully-editable",
       "diagnostics": [],
       "exact": true,
       "idempotent": true,
@@ -1509,13 +1899,17 @@
         "audit-edit",
         "audit-revert"
       ],
-      "reversibleOperationExact": true
+      "reversibleOperationExact": true,
+      "metadataReadable": true,
+      "metadataSchemaValid": true,
+      "opaqueBlocks": 0,
+      "preservedBlocks": 0
     },
     {
       "path": "src/database/content/lessons/leccion-metodo-geometrico.mdx",
       "originalHash": "06e8c9c0b7b26f92de5b35caa4370799cbb1fc1fb34ed976f779b341fab29c4b",
       "finalHash": "06e8c9c0b7b26f92de5b35caa4370799cbb1fc1fb34ed976f779b341fab29c4b",
-      "compatibility": "partially-editable",
+      "compatibility": "fully-editable",
       "diagnostics": [],
       "exact": true,
       "idempotent": true,
@@ -1529,13 +1923,17 @@
         "audit-edit",
         "audit-revert"
       ],
-      "reversibleOperationExact": true
+      "reversibleOperationExact": true,
+      "metadataReadable": true,
+      "metadataSchemaValid": true,
+      "opaqueBlocks": 0,
+      "preservedBlocks": 0
     },
     {
       "path": "src/database/content/lessons/leccion-metodo-induccion.mdx",
       "originalHash": "a37ad9171b6bb4bdcd59da16da9f122f8ffef1fba5a861c5f8f16ac5e4c2821b",
       "finalHash": "a37ad9171b6bb4bdcd59da16da9f122f8ffef1fba5a861c5f8f16ac5e4c2821b",
-      "compatibility": "partially-editable",
+      "compatibility": "fully-editable",
       "diagnostics": [],
       "exact": true,
       "idempotent": true,
@@ -1549,13 +1947,17 @@
         "audit-edit",
         "audit-revert"
       ],
-      "reversibleOperationExact": true
+      "reversibleOperationExact": true,
+      "metadataReadable": true,
+      "metadataSchemaValid": true,
+      "opaqueBlocks": 0,
+      "preservedBlocks": 0
     },
     {
       "path": "src/database/content/mathematicians/arquimedes.mdx",
       "originalHash": "69c1a986c3870e77f2c5f99f46d88ac80e09eca24eb50c9892121de073819295",
       "finalHash": "69c1a986c3870e77f2c5f99f46d88ac80e09eca24eb50c9892121de073819295",
-      "compatibility": "partially-editable",
+      "compatibility": "fully-editable",
       "diagnostics": [],
       "exact": true,
       "idempotent": true,
@@ -1569,13 +1971,17 @@
         "audit-edit",
         "audit-revert"
       ],
-      "reversibleOperationExact": true
+      "reversibleOperationExact": true,
+      "metadataReadable": true,
+      "metadataSchemaValid": true,
+      "opaqueBlocks": 0,
+      "preservedBlocks": 0
     },
     {
       "path": "src/database/content/mathematicians/bolyai.mdx",
       "originalHash": "3c5291f687a79f4ac7998ae123884a4a78a2e742745fded662b49117d35897dc",
       "finalHash": "3c5291f687a79f4ac7998ae123884a4a78a2e742745fded662b49117d35897dc",
-      "compatibility": "partially-editable",
+      "compatibility": "fully-editable",
       "diagnostics": [],
       "exact": true,
       "idempotent": true,
@@ -1589,13 +1995,17 @@
         "audit-edit",
         "audit-revert"
       ],
-      "reversibleOperationExact": true
+      "reversibleOperationExact": true,
+      "metadataReadable": true,
+      "metadataSchemaValid": true,
+      "opaqueBlocks": 0,
+      "preservedBlocks": 0
     },
     {
       "path": "src/database/content/mathematicians/dedekind.mdx",
       "originalHash": "7b5523d207206aa434ee5807256bd1fed12b81f4751a5ce43ff0645626f78a7a",
       "finalHash": "7b5523d207206aa434ee5807256bd1fed12b81f4751a5ce43ff0645626f78a7a",
-      "compatibility": "partially-editable",
+      "compatibility": "fully-editable",
       "diagnostics": [],
       "exact": true,
       "idempotent": true,
@@ -1609,13 +2019,17 @@
         "audit-edit",
         "audit-revert"
       ],
-      "reversibleOperationExact": true
+      "reversibleOperationExact": true,
+      "metadataReadable": true,
+      "metadataSchemaValid": true,
+      "opaqueBlocks": 0,
+      "preservedBlocks": 0
     },
     {
       "path": "src/database/content/mathematicians/euclides.mdx",
       "originalHash": "ae856d69ad11d99e7ef056b2c49b9e5cc6a76bf96e6b952cb375a0cd9e56f4d1",
       "finalHash": "ae856d69ad11d99e7ef056b2c49b9e5cc6a76bf96e6b952cb375a0cd9e56f4d1",
-      "compatibility": "partially-editable",
+      "compatibility": "fully-editable",
       "diagnostics": [],
       "exact": true,
       "idempotent": true,
@@ -1629,13 +2043,17 @@
         "audit-edit",
         "audit-revert"
       ],
-      "reversibleOperationExact": true
+      "reversibleOperationExact": true,
+      "metadataReadable": true,
+      "metadataSchemaValid": true,
+      "opaqueBlocks": 0,
+      "preservedBlocks": 0
     },
     {
       "path": "src/database/content/mathematicians/hilbert.mdx",
       "originalHash": "7dbe5cdc8365b26fda8de9f56752474b8941d458eac3f9c1d43ec7ac931e87c3",
       "finalHash": "7dbe5cdc8365b26fda8de9f56752474b8941d458eac3f9c1d43ec7ac931e87c3",
-      "compatibility": "partially-editable",
+      "compatibility": "fully-editable",
       "diagnostics": [],
       "exact": true,
       "idempotent": true,
@@ -1649,13 +2067,17 @@
         "audit-edit",
         "audit-revert"
       ],
-      "reversibleOperationExact": true
+      "reversibleOperationExact": true,
+      "metadataReadable": true,
+      "metadataSchemaValid": true,
+      "opaqueBlocks": 0,
+      "preservedBlocks": 0
     },
     {
       "path": "src/database/content/mathematicians/lobachevski.mdx",
       "originalHash": "ae37be31a978ea007225ab0a89f8281dd1ed40a966e04261d592c83c9f5d2240",
       "finalHash": "ae37be31a978ea007225ab0a89f8281dd1ed40a966e04261d592c83c9f5d2240",
-      "compatibility": "partially-editable",
+      "compatibility": "fully-editable",
       "diagnostics": [],
       "exact": true,
       "idempotent": true,
@@ -1669,13 +2091,17 @@
         "audit-edit",
         "audit-revert"
       ],
-      "reversibleOperationExact": true
+      "reversibleOperationExact": true,
+      "metadataReadable": true,
+      "metadataSchemaValid": true,
+      "opaqueBlocks": 0,
+      "preservedBlocks": 0
     },
     {
       "path": "src/database/content/mathematicians/pasch.mdx",
       "originalHash": "6c8cc56d7c8f88b7b93748fe6e58ac2b1db645422470761f1ddc38cfe286d846",
       "finalHash": "6c8cc56d7c8f88b7b93748fe6e58ac2b1db645422470761f1ddc38cfe286d846",
-      "compatibility": "partially-editable",
+      "compatibility": "fully-editable",
       "diagnostics": [],
       "exact": true,
       "idempotent": true,
@@ -1689,13 +2115,17 @@
         "audit-edit",
         "audit-revert"
       ],
-      "reversibleOperationExact": true
+      "reversibleOperationExact": true,
+      "metadataReadable": true,
+      "metadataSchemaValid": true,
+      "opaqueBlocks": 0,
+      "preservedBlocks": 0
     },
     {
       "path": "src/database/content/mathematicians/pitagoras.mdx",
       "originalHash": "7a28cdc2a61f0c0acfbaf9f9dab6ea7c14c5237826c3837a988bdc7b383580f1",
       "finalHash": "7a28cdc2a61f0c0acfbaf9f9dab6ea7c14c5237826c3837a988bdc7b383580f1",
-      "compatibility": "partially-editable",
+      "compatibility": "fully-editable",
       "diagnostics": [],
       "exact": true,
       "idempotent": true,
@@ -1709,13 +2139,17 @@
         "audit-edit",
         "audit-revert"
       ],
-      "reversibleOperationExact": true
+      "reversibleOperationExact": true,
+      "metadataReadable": true,
+      "metadataSchemaValid": true,
+      "opaqueBlocks": 0,
+      "preservedBlocks": 0
     },
     {
       "path": "src/database/content/mathematicians/tales.mdx",
       "originalHash": "e97ae4f86aba29ee31d58e20899e6eeeda224ce8ce40c64c8931f7e1f9767df0",
       "finalHash": "e97ae4f86aba29ee31d58e20899e6eeeda224ce8ce40c64c8931f7e1f9767df0",
-      "compatibility": "partially-editable",
+      "compatibility": "fully-editable",
       "diagnostics": [],
       "exact": true,
       "idempotent": true,
@@ -1729,13 +2163,17 @@
         "audit-edit",
         "audit-revert"
       ],
-      "reversibleOperationExact": true
+      "reversibleOperationExact": true,
+      "metadataReadable": true,
+      "metadataSchemaValid": true,
+      "opaqueBlocks": 0,
+      "preservedBlocks": 0
     },
     {
       "path": "src/database/content/models/modelo-cartesiano.mdx",
       "originalHash": "47941d14635dbabd537f496548a0d9070e0a84852b77b2b3eef993914000c3d7",
       "finalHash": "47941d14635dbabd537f496548a0d9070e0a84852b77b2b3eef993914000c3d7",
-      "compatibility": "partially-editable",
+      "compatibility": "fully-editable",
       "diagnostics": [],
       "exact": true,
       "idempotent": true,
@@ -1749,13 +2187,17 @@
         "audit-edit",
         "audit-revert"
       ],
-      "reversibleOperationExact": true
+      "reversibleOperationExact": true,
+      "metadataReadable": true,
+      "metadataSchemaValid": true,
+      "opaqueBlocks": 0,
+      "preservedBlocks": 0
     },
     {
       "path": "src/database/content/models/modelo-fano.mdx",
       "originalHash": "4fa5daa4b2e222f92233f2f19ab22a3d326f377cae03c7ab72feef52ecf74fd3",
       "finalHash": "4fa5daa4b2e222f92233f2f19ab22a3d326f377cae03c7ab72feef52ecf74fd3",
-      "compatibility": "partially-editable",
+      "compatibility": "fully-editable",
       "diagnostics": [],
       "exact": true,
       "idempotent": true,
@@ -1769,13 +2211,17 @@
         "audit-edit",
         "audit-revert"
       ],
-      "reversibleOperationExact": true
+      "reversibleOperationExact": true,
+      "metadataReadable": true,
+      "metadataSchemaValid": true,
+      "opaqueBlocks": 0,
+      "preservedBlocks": 0
     },
     {
       "path": "src/database/content/models/modelo-poincare.mdx",
       "originalHash": "34d418c77e6878d66eea13532b6846847a4333e5da8c2d0c3e9a17d285570e2a",
       "finalHash": "34d418c77e6878d66eea13532b6846847a4333e5da8c2d0c3e9a17d285570e2a",
-      "compatibility": "partially-editable",
+      "compatibility": "fully-editable",
       "diagnostics": [],
       "exact": true,
       "idempotent": true,
@@ -1789,13 +2235,17 @@
         "audit-edit",
         "audit-revert"
       ],
-      "reversibleOperationExact": true
+      "reversibleOperationExact": true,
+      "metadataReadable": true,
+      "metadataSchemaValid": true,
+      "opaqueBlocks": 0,
+      "preservedBlocks": 0
     },
     {
       "path": "src/database/content/models/modelo-tres-puntos.mdx",
       "originalHash": "c549748be24c46773fd83e0f3c43c43a7606593ecb1dc52caea3f98bbeee0f42",
       "finalHash": "c549748be24c46773fd83e0f3c43c43a7606593ecb1dc52caea3f98bbeee0f42",
-      "compatibility": "partially-editable",
+      "compatibility": "fully-editable",
       "diagnostics": [],
       "exact": true,
       "idempotent": true,
@@ -1809,13 +2259,17 @@
         "audit-edit",
         "audit-revert"
       ],
-      "reversibleOperationExact": true
+      "reversibleOperationExact": true,
+      "metadataReadable": true,
+      "metadataSchemaValid": true,
+      "opaqueBlocks": 0,
+      "preservedBlocks": 0
     },
     {
       "path": "src/database/content/plans/plan-de-estudio-camino-teorema-pitagoras.mdx",
       "originalHash": "eafc4af90f7381bb67e0fb02bba4a2e4829fce87eb4ac372637229192adb5e64",
       "finalHash": "eafc4af90f7381bb67e0fb02bba4a2e4829fce87eb4ac372637229192adb5e64",
-      "compatibility": "partially-editable",
+      "compatibility": "fully-editable",
       "diagnostics": [],
       "exact": true,
       "idempotent": true,
@@ -1829,13 +2283,17 @@
         "audit-edit",
         "audit-revert"
       ],
-      "reversibleOperationExact": true
+      "reversibleOperationExact": true,
+      "metadataReadable": true,
+      "metadataSchemaValid": true,
+      "opaqueBlocks": 0,
+      "preservedBlocks": 0
     },
     {
       "path": "src/database/content/theorems/corolario-rectas-coincidentes.mdx",
       "originalHash": "b718b0b9c5c97c337865e31e1a6f62698333513d90d6e91edf48d417dc04dffb",
       "finalHash": "b718b0b9c5c97c337865e31e1a6f62698333513d90d6e91edf48d417dc04dffb",
-      "compatibility": "partially-editable",
+      "compatibility": "fully-editable",
       "diagnostics": [],
       "exact": true,
       "idempotent": true,
@@ -1849,13 +2307,17 @@
         "audit-edit",
         "audit-revert"
       ],
-      "reversibleOperationExact": true
+      "reversibleOperationExact": true,
+      "metadataReadable": true,
+      "metadataSchemaValid": true,
+      "opaqueBlocks": 0,
+      "preservedBlocks": 0
     },
     {
       "path": "src/database/content/theorems/lema-punto-medio.mdx",
       "originalHash": "ee3ccf9caaf2e1f2f5140280bab62687080d1299010ec6d0e627632ece1668ce",
       "finalHash": "ee3ccf9caaf2e1f2f5140280bab62687080d1299010ec6d0e627632ece1668ce",
-      "compatibility": "partially-editable",
+      "compatibility": "fully-editable",
       "diagnostics": [],
       "exact": true,
       "idempotent": true,
@@ -1869,13 +2331,17 @@
         "audit-edit",
         "audit-revert"
       ],
-      "reversibleOperationExact": true
+      "reversibleOperationExact": true,
+      "metadataReadable": true,
+      "metadataSchemaValid": true,
+      "opaqueBlocks": 0,
+      "preservedBlocks": 0
     },
     {
       "path": "src/database/content/theorems/teorema-angulo-externo.mdx",
       "originalHash": "5927bf11d471e8294a52e98f8c716c37d03203e25709e91ce404178464040268",
       "finalHash": "5927bf11d471e8294a52e98f8c716c37d03203e25709e91ce404178464040268",
-      "compatibility": "partially-editable",
+      "compatibility": "fully-editable",
       "diagnostics": [],
       "exact": true,
       "idempotent": true,
@@ -1889,13 +2355,17 @@
         "audit-edit",
         "audit-revert"
       ],
-      "reversibleOperationExact": true
+      "reversibleOperationExact": true,
+      "metadataReadable": true,
+      "metadataSchemaValid": true,
+      "opaqueBlocks": 0,
+      "preservedBlocks": 0
     },
     {
       "path": "src/database/content/theorems/teorema-angulos-alternos-internos.mdx",
       "originalHash": "1fb121cf1809da989eea97152d12d745c3077a872b783cc55ffc7b4da0183fa8",
       "finalHash": "1fb121cf1809da989eea97152d12d745c3077a872b783cc55ffc7b4da0183fa8",
-      "compatibility": "partially-editable",
+      "compatibility": "fully-editable",
       "diagnostics": [],
       "exact": true,
       "idempotent": true,
@@ -1909,13 +2379,17 @@
         "audit-edit",
         "audit-revert"
       ],
-      "reversibleOperationExact": true
+      "reversibleOperationExact": true,
+      "metadataReadable": true,
+      "metadataSchemaValid": true,
+      "opaqueBlocks": 0,
+      "preservedBlocks": 0
     },
     {
       "path": "src/database/content/theorems/teorema-angulos-opuestos-verticales.mdx",
       "originalHash": "ce295d974a5864af6a49ce59af48d55a30c3d4823389acfebc4cf4c34337f8e5",
       "finalHash": "ce295d974a5864af6a49ce59af48d55a30c3d4823389acfebc4cf4c34337f8e5",
-      "compatibility": "partially-editable",
+      "compatibility": "fully-editable",
       "diagnostics": [],
       "exact": true,
       "idempotent": true,
@@ -1929,13 +2403,17 @@
         "audit-edit",
         "audit-revert"
       ],
-      "reversibleOperationExact": true
+      "reversibleOperationExact": true,
+      "metadataReadable": true,
+      "metadataSchemaValid": true,
+      "opaqueBlocks": 0,
+      "preservedBlocks": 0
     },
     {
       "path": "src/database/content/theorems/teorema-area-aditividad.mdx",
       "originalHash": "90ae0fb33295c4418a187f537b0d15664e3aeeed1e661da2258af4a7089b1b9a",
       "finalHash": "90ae0fb33295c4418a187f537b0d15664e3aeeed1e661da2258af4a7089b1b9a",
-      "compatibility": "partially-editable",
+      "compatibility": "fully-editable",
       "diagnostics": [],
       "exact": true,
       "idempotent": true,
@@ -1949,13 +2427,17 @@
         "audit-edit",
         "audit-revert"
       ],
-      "reversibleOperationExact": true
+      "reversibleOperationExact": true,
+      "metadataReadable": true,
+      "metadataSchemaValid": true,
+      "opaqueBlocks": 0,
+      "preservedBlocks": 0
     },
     {
       "path": "src/database/content/theorems/teorema-area-invariancia.mdx",
       "originalHash": "28a6d95f8dab25c36a2f2aee779f54896c283838b8ee34bdfff1bc305c84edb0",
       "finalHash": "28a6d95f8dab25c36a2f2aee779f54896c283838b8ee34bdfff1bc305c84edb0",
-      "compatibility": "partially-editable",
+      "compatibility": "fully-editable",
       "diagnostics": [],
       "exact": true,
       "idempotent": true,
@@ -1969,13 +2451,17 @@
         "audit-edit",
         "audit-revert"
       ],
-      "reversibleOperationExact": true
+      "reversibleOperationExact": true,
+      "metadataReadable": true,
+      "metadataSchemaValid": true,
+      "opaqueBlocks": 0,
+      "preservedBlocks": 0
     },
     {
       "path": "src/database/content/theorems/teorema-area-rectangulo.mdx",
       "originalHash": "e8afcd07b0e6389dadac8fa1ab0c4ed9871c0bd02c887fa9d37ff3c1a32785b5",
       "finalHash": "e8afcd07b0e6389dadac8fa1ab0c4ed9871c0bd02c887fa9d37ff3c1a32785b5",
-      "compatibility": "partially-editable",
+      "compatibility": "fully-editable",
       "diagnostics": [],
       "exact": true,
       "idempotent": true,
@@ -1989,13 +2475,17 @@
         "audit-edit",
         "audit-revert"
       ],
-      "reversibleOperationExact": true
+      "reversibleOperationExact": true,
+      "metadataReadable": true,
+      "metadataSchemaValid": true,
+      "opaqueBlocks": 0,
+      "preservedBlocks": 0
     },
     {
       "path": "src/database/content/theorems/teorema-area-triangulo.mdx",
       "originalHash": "33e9b840485903dc4e399a0e294fbb95b3122c9c4eb4316c949fca27a9ec1ebf",
       "finalHash": "33e9b840485903dc4e399a0e294fbb95b3122c9c4eb4316c949fca27a9ec1ebf",
-      "compatibility": "partially-editable",
+      "compatibility": "fully-editable",
       "diagnostics": [],
       "exact": true,
       "idempotent": true,
@@ -2009,13 +2499,17 @@
         "audit-edit",
         "audit-revert"
       ],
-      "reversibleOperationExact": true
+      "reversibleOperationExact": true,
+      "metadataReadable": true,
+      "metadataSchemaValid": true,
+      "opaqueBlocks": 0,
+      "preservedBlocks": 0
     },
     {
       "path": "src/database/content/theorems/teorema-congruencia-aal.mdx",
       "originalHash": "65a21b5c55e2b25e687e03f669b402d9afaabac3608be61e821f6ff51bd89453",
       "finalHash": "65a21b5c55e2b25e687e03f669b402d9afaabac3608be61e821f6ff51bd89453",
-      "compatibility": "partially-editable",
+      "compatibility": "fully-editable",
       "diagnostics": [],
       "exact": true,
       "idempotent": true,
@@ -2029,13 +2523,17 @@
         "audit-edit",
         "audit-revert"
       ],
-      "reversibleOperationExact": true
+      "reversibleOperationExact": true,
+      "metadataReadable": true,
+      "metadataSchemaValid": true,
+      "opaqueBlocks": 0,
+      "preservedBlocks": 0
     },
     {
       "path": "src/database/content/theorems/teorema-congruencia-ala.mdx",
       "originalHash": "f63b88959d2987139424c23799c58b1e7a85a63ed31754cf5b39df5f2856547c",
       "finalHash": "f63b88959d2987139424c23799c58b1e7a85a63ed31754cf5b39df5f2856547c",
-      "compatibility": "partially-editable",
+      "compatibility": "fully-editable",
       "diagnostics": [],
       "exact": true,
       "idempotent": true,
@@ -2049,13 +2547,17 @@
         "audit-edit",
         "audit-revert"
       ],
-      "reversibleOperationExact": true
+      "reversibleOperationExact": true,
+      "metadataReadable": true,
+      "metadataSchemaValid": true,
+      "opaqueBlocks": 0,
+      "preservedBlocks": 0
     },
     {
       "path": "src/database/content/theorems/teorema-congruencia-lll.mdx",
       "originalHash": "eeb5ba2bc3bc2f1c26317b0db23f1046f03564c193f56567282da6601a0a6c0f",
       "finalHash": "eeb5ba2bc3bc2f1c26317b0db23f1046f03564c193f56567282da6601a0a6c0f",
-      "compatibility": "partially-editable",
+      "compatibility": "fully-editable",
       "diagnostics": [],
       "exact": true,
       "idempotent": true,
@@ -2069,13 +2571,17 @@
         "audit-edit",
         "audit-revert"
       ],
-      "reversibleOperationExact": true
+      "reversibleOperationExact": true,
+      "metadataReadable": true,
+      "metadataSchemaValid": true,
+      "opaqueBlocks": 0,
+      "preservedBlocks": 0
     },
     {
       "path": "src/database/content/theorems/teorema-desigualdad-triangular.mdx",
       "originalHash": "e54ca3f84a69dacae7af5c3730a87d82b91be56106bd45f98efa456f8313a530",
       "finalHash": "e54ca3f84a69dacae7af5c3730a87d82b91be56106bd45f98efa456f8313a530",
-      "compatibility": "partially-editable",
+      "compatibility": "fully-editable",
       "diagnostics": [],
       "exact": true,
       "idempotent": true,
@@ -2089,13 +2595,17 @@
         "audit-edit",
         "audit-revert"
       ],
-      "reversibleOperationExact": true
+      "reversibleOperationExact": true,
+      "metadataReadable": true,
+      "metadataSchemaValid": true,
+      "opaqueBlocks": 0,
+      "preservedBlocks": 0
     },
     {
       "path": "src/database/content/theorems/teorema-dos-rectas-un-punto.mdx",
       "originalHash": "34935b01c7548c65b5ee860e0326c696aea75e3e8ace685d9346877483f8a80d",
       "finalHash": "34935b01c7548c65b5ee860e0326c696aea75e3e8ace685d9346877483f8a80d",
-      "compatibility": "partially-editable",
+      "compatibility": "fully-editable",
       "diagnostics": [],
       "exact": true,
       "idempotent": true,
@@ -2109,13 +2619,17 @@
         "audit-edit",
         "audit-revert"
       ],
-      "reversibleOperationExact": true
+      "reversibleOperationExact": true,
+      "metadataReadable": true,
+      "metadataSchemaValid": true,
+      "opaqueBlocks": 0,
+      "preservedBlocks": 0
     },
     {
       "path": "src/database/content/theorems/teorema-existencia-bisectriz.mdx",
       "originalHash": "e14cd669e05267931bbf115909c03fabcf805e85b1c9bf5eb0e50df3f89d208a",
       "finalHash": "e14cd669e05267931bbf115909c03fabcf805e85b1c9bf5eb0e50df3f89d208a",
-      "compatibility": "partially-editable",
+      "compatibility": "fully-editable",
       "diagnostics": [],
       "exact": true,
       "idempotent": true,
@@ -2129,13 +2643,17 @@
         "audit-edit",
         "audit-revert"
       ],
-      "reversibleOperationExact": true
+      "reversibleOperationExact": true,
+      "metadataReadable": true,
+      "metadataSchemaValid": true,
+      "opaqueBlocks": 0,
+      "preservedBlocks": 0
     },
     {
       "path": "src/database/content/theorems/teorema-existencia-perpendicular.mdx",
       "originalHash": "e72dc7de2f2dc4b801d3ca14a626bc679157e69e375972c5d5a307f302bcb2f1",
       "finalHash": "e72dc7de2f2dc4b801d3ca14a626bc679157e69e375972c5d5a307f302bcb2f1",
-      "compatibility": "partially-editable",
+      "compatibility": "fully-editable",
       "diagnostics": [],
       "exact": true,
       "idempotent": true,
@@ -2149,13 +2667,17 @@
         "audit-edit",
         "audit-revert"
       ],
-      "reversibleOperationExact": true
+      "reversibleOperationExact": true,
+      "metadataReadable": true,
+      "metadataSchemaValid": true,
+      "opaqueBlocks": 0,
+      "preservedBlocks": 0
     },
     {
       "path": "src/database/content/theorems/teorema-invariancia-triangulacion.mdx",
       "originalHash": "4100862e8820a2d82ae2edd866ff92bc42f3b0b626c0e86798d60402de6410cb",
       "finalHash": "4100862e8820a2d82ae2edd866ff92bc42f3b0b626c0e86798d60402de6410cb",
-      "compatibility": "partially-editable",
+      "compatibility": "fully-editable",
       "diagnostics": [],
       "exact": true,
       "idempotent": true,
@@ -2169,13 +2691,17 @@
         "audit-edit",
         "audit-revert"
       ],
-      "reversibleOperationExact": true
+      "reversibleOperationExact": true,
+      "metadataReadable": true,
+      "metadataSchemaValid": true,
+      "opaqueBlocks": 0,
+      "preservedBlocks": 0
     },
     {
       "path": "src/database/content/theorems/teorema-pitagoras.mdx",
       "originalHash": "3e1fc8a8cfd690b0339d28b7cf33b08833c9543b211c8780c5284f3a19868e65",
       "finalHash": "3e1fc8a8cfd690b0339d28b7cf33b08833c9543b211c8780c5284f3a19868e65",
-      "compatibility": "partially-editable",
+      "compatibility": "fully-editable",
       "diagnostics": [],
       "exact": true,
       "idempotent": true,
@@ -2189,13 +2715,17 @@
         "audit-edit",
         "audit-revert"
       ],
-      "reversibleOperationExact": true
+      "reversibleOperationExact": true,
+      "metadataReadable": true,
+      "metadataSchemaValid": true,
+      "opaqueBlocks": 0,
+      "preservedBlocks": 0
     },
     {
       "path": "src/database/content/theorems/teorema-punto-medio-perpendicular.mdx",
       "originalHash": "c71f6789b0cf01d517d657aae0dd143fe12cf5b7a7df7e52b5dddd1b7bb15b1d",
       "finalHash": "c71f6789b0cf01d517d657aae0dd143fe12cf5b7a7df7e52b5dddd1b7bb15b1d",
-      "compatibility": "partially-editable",
+      "compatibility": "fully-editable",
       "diagnostics": [],
       "exact": true,
       "idempotent": true,
@@ -2209,13 +2739,17 @@
         "audit-edit",
         "audit-revert"
       ],
-      "reversibleOperationExact": true
+      "reversibleOperationExact": true,
+      "metadataReadable": true,
+      "metadataSchemaValid": true,
+      "opaqueBlocks": 0,
+      "preservedBlocks": 0
     },
     {
       "path": "src/database/content/theorems/teorema-reciproco-triangulo-isosceles.mdx",
       "originalHash": "cd6d5f71de48279d5c0ca5b3cc1467eb95829b99ab4a19256e8bb30e254c60db",
       "finalHash": "cd6d5f71de48279d5c0ca5b3cc1467eb95829b99ab4a19256e8bb30e254c60db",
-      "compatibility": "partially-editable",
+      "compatibility": "fully-editable",
       "diagnostics": [],
       "exact": true,
       "idempotent": true,
@@ -2229,13 +2763,17 @@
         "audit-edit",
         "audit-revert"
       ],
-      "reversibleOperationExact": true
+      "reversibleOperationExact": true,
+      "metadataReadable": true,
+      "metadataSchemaValid": true,
+      "opaqueBlocks": 0,
+      "preservedBlocks": 0
     },
     {
       "path": "src/database/content/theorems/teorema-suma-angulos-triangulo.mdx",
       "originalHash": "3dc53907242ef7cba6fe5f562f10dc643b2e0503252dee1237d517a8f688d733",
       "finalHash": "3dc53907242ef7cba6fe5f562f10dc643b2e0503252dee1237d517a8f688d733",
-      "compatibility": "partially-editable",
+      "compatibility": "fully-editable",
       "diagnostics": [],
       "exact": true,
       "idempotent": true,
@@ -2249,13 +2787,17 @@
         "audit-edit",
         "audit-revert"
       ],
-      "reversibleOperationExact": true
+      "reversibleOperationExact": true,
+      "metadataReadable": true,
+      "metadataSchemaValid": true,
+      "opaqueBlocks": 0,
+      "preservedBlocks": 0
     },
     {
       "path": "src/database/content/theorems/teorema-tales.mdx",
       "originalHash": "b57c03a337d63ca1a66f5c26743191ff4d5cd5f54b24372465787b9ea30b5e89",
       "finalHash": "b57c03a337d63ca1a66f5c26743191ff4d5cd5f54b24372465787b9ea30b5e89",
-      "compatibility": "partially-editable",
+      "compatibility": "fully-editable",
       "diagnostics": [],
       "exact": true,
       "idempotent": true,
@@ -2269,13 +2811,17 @@
         "audit-edit",
         "audit-revert"
       ],
-      "reversibleOperationExact": true
+      "reversibleOperationExact": true,
+      "metadataReadable": true,
+      "metadataSchemaValid": true,
+      "opaqueBlocks": 0,
+      "preservedBlocks": 0
     },
     {
       "path": "src/database/content/theorems/teorema-triangulacion-poligono.mdx",
       "originalHash": "59f4766c6d79b4890c42dfca2c1375dd7794b4022408421f6c18a3606b746c30",
       "finalHash": "59f4766c6d79b4890c42dfca2c1375dd7794b4022408421f6c18a3606b746c30",
-      "compatibility": "partially-editable",
+      "compatibility": "fully-editable",
       "diagnostics": [],
       "exact": true,
       "idempotent": true,
@@ -2289,13 +2835,17 @@
         "audit-edit",
         "audit-revert"
       ],
-      "reversibleOperationExact": true
+      "reversibleOperationExact": true,
+      "metadataReadable": true,
+      "metadataSchemaValid": true,
+      "opaqueBlocks": 0,
+      "preservedBlocks": 0
     },
     {
       "path": "src/database/content/theorems/teorema-triangulo-isosceles.mdx",
       "originalHash": "2e9d72b6db243172d9a9298aa2a1e6fbbe1ef2deb4b7de195a672044c5626739",
       "finalHash": "2e9d72b6db243172d9a9298aa2a1e6fbbe1ef2deb4b7de195a672044c5626739",
-      "compatibility": "partially-editable",
+      "compatibility": "fully-editable",
       "diagnostics": [],
       "exact": true,
       "idempotent": true,
@@ -2309,13 +2859,17 @@
         "audit-edit",
         "audit-revert"
       ],
-      "reversibleOperationExact": true
+      "reversibleOperationExact": true,
+      "metadataReadable": true,
+      "metadataSchemaValid": true,
+      "opaqueBlocks": 0,
+      "preservedBlocks": 0
     },
     {
       "path": "src/database/content/usecases/caso-gps-trilateracion.mdx",
       "originalHash": "9b0f887df7809838e3b525c7b7bac4a664ce52ccd77e942d42ccc0a18251ef90",
       "finalHash": "9b0f887df7809838e3b525c7b7bac4a664ce52ccd77e942d42ccc0a18251ef90",
-      "compatibility": "partially-editable",
+      "compatibility": "fully-editable",
       "diagnostics": [],
       "exact": true,
       "idempotent": true,
@@ -2329,7 +2883,11 @@
         "audit-edit",
         "audit-revert"
       ],
-      "reversibleOperationExact": true
+      "reversibleOperationExact": true,
+      "metadataReadable": true,
+      "metadataSchemaValid": true,
+      "opaqueBlocks": 0,
+      "preservedBlocks": 0
     }
   ]
 }

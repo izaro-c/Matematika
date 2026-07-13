@@ -27,18 +27,46 @@ async function writeFixture(root: string, relative: string, source: string) {
 
 async function seedFixtures(root: string) {
   await writeFixture(root, 'database/content/definitions/compatible.mdx', [
+    'export const metadata = {',
+    '  "id": "compatible",',
+    '  "type": "definicion",',
+    '  "title": "Documento compatible",',
+    '  "description": "Fixture E2E compatible.",',
+    '  "subtype": "nominal"',
+    '};',
+    '',
     '## Documento compatible',
     '',
     'Texto inicial.',
   ].join('\n'));
   await writeFixture(root, 'database/content/definitions/parcial.mdx', [
+    'export const metadata = {',
+    '  "id": "parcial",',
+    '  "type": "definicion",',
+    '  "title": "Documento parcial",',
+    '  "description": "Fixture E2E parcial.",',
+    '  "subtype": "nominal"',
+    '};',
+    '',
     '## Documento parcial',
     '',
     '<Formula>{String.raw`a^2+b^2=c^2`}</Formula>',
     '',
+    '<FutureWidget keep={{ nested: true }} />',
+    '',
     'Texto seguro.',
   ].join('\n'));
-  await writeFixture(root, 'database/content/definitions/no-soportado.mdx', 'Texto { un syntax error here } y cierre.');
+  await writeFixture(root, 'database/content/definitions/no-soportado.mdx', [
+    'export const metadata = {',
+    '  "id": "no-soportado",',
+    '  "type": "definicion",',
+    '  "title": "Documento no soportado",',
+    '  "description": "Fixture E2E inválido.",',
+    '  "subtype": "nominal"',
+    '};',
+    '',
+    'Texto { un syntax error here } y cierre.',
+  ].join('\n'));
   await writeFixture(root, 'widgets/diagrams/Definitions/Seguro.tsx', SAFE_DIAGRAM_SOURCE);
 }
 

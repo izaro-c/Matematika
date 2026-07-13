@@ -9,10 +9,12 @@ El informe ejecuta apertura, proyección, cambios de modo y tres ciclos sobre el
 - No idempotentes: 0
 - Envelope alterado: 0
 - Body alterado: 0
+- Metadata legible y válida: 120/120
+- Regiones opacas: 0
 
 | Compatibilidad | Documentos |
 | --- | ---: |
-| fully-editable | 0 |
-| partially-editable | 94 |
-| read-only | 26 |
+| fully-editable | 120 |
+| partially-editable | 0 |
+| read-only | 0 |
 | unsupported | 0 |

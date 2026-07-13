@@ -81,8 +81,14 @@ function editorAPI(): Plugin {
         allowedRoots: writeRoots,
         readRoots: writeRoots,
         validateSource(filePath, source) {
-          if (filePath.endsWith('.mdx') && parseEditorDocument(source).compatibility === 'unsupported') {
-            throw new BackendError(400, { message: 'Invalid MDX source' });
+          if (filePath.endsWith('.mdx')) {
+            const document = parseEditorDocument(source);
+            if (document.compatibility === 'unsupported') {
+              throw new BackendError(400, { message: 'Invalid MDX source', diagnostics: document.diagnostics });
+            }
+            if (document.metadata.status !== 'readable' || !document.metadata.schemaValid) {
+              throw new BackendError(400, { message: 'Invalid MDX metadata', diagnostics: document.diagnostics });
+            }
           }
           if (filePath.endsWith('.tsx')) {
             if (source.trim().length === 0) throw new BackendError(400, { message: 'Empty TSX source' });

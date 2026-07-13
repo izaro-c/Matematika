@@ -34,7 +34,7 @@ describe('safe diff review', () => {
     expect(approveDiffReview(review)).toBeNull();
   });
 
-  it('allows fully editable documents without operation ranges', () => {
+  it('blocks fully editable documents when no operation range identifies the change', () => {
     const fullyEditable = [
       '# Título',
       '',
@@ -48,10 +48,10 @@ describe('safe diff review', () => {
       baseVersion: 'sha256:base',
     });
 
-    expect(review.status).toBe('reviewable');
+    expect(review.status).toBe('blocked');
     expect(review.hunks[0]).toMatchObject({
-      classification: 'expected',
-      expected: true,
+      classification: 'unknown',
+      expected: false,
     });
   });
 

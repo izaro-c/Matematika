@@ -8,8 +8,9 @@ describe('Production Lossless MDX Parser', () => {
 
     expect(doc.source).toBe(source);
     expect(doc.sourceFingerprint).toHaveLength(8);
-    expect(doc.diagnostics).toHaveLength(0);
-    expect(doc.compatibility).toBe('fully-editable'); // No ast nodes are projected yet
+    expect(doc.diagnostics).toContainEqual(expect.objectContaining({ code: 'METADATA_EXPORT_MISSING' }));
+    expect(doc.metadata.status).toBe('missing');
+    expect(doc.compatibility).toBe('fully-editable');
     expect(doc.ast).toBeDefined();
   });
 
@@ -29,7 +30,7 @@ describe('Production Lossless MDX Parser', () => {
     const source = 'Sea 𝕏 un espacio de Banach.';
     const doc = parseEditorDocument(source);
 
-    expect(doc.diagnostics).toHaveLength(0);
+    expect(doc.diagnostics).toContainEqual(expect.objectContaining({ code: 'METADATA_EXPORT_MISSING' }));
     expect(doc.sourceFingerprint).toBeDefined();
   });
 });

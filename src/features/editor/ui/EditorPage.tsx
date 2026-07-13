@@ -96,6 +96,7 @@ export const EditorPage: React.FC = () => {
     removeBlock,
     addBlock,
     moveBlock,
+    duplicateBlock,
     saveCurrentFile,
     saveDraftCurrentFile,
     setMetadata,
@@ -689,6 +690,7 @@ export const EditorPage: React.FC = () => {
             handleMetadataChange={handleMetadataChange}
             addBlock={addBlock}
             moveBlock={moveBlock}
+            duplicateBlock={duplicateBlock}
             removeBlock={removeBlock}
             updateBlock={updateBlock}
             handleTextareaSelect={handleTextareaSelect}

@@ -7,7 +7,11 @@ import { approveDiffReview, buildDiffReview } from '@/features/editor/ux/diffRev
 const source = `import X from './x';
 
 export const metadata = {
-  title: 'Segmento'
+  "id": "segmento-prueba",
+  "type": "definicion",
+  "title": "Segmento",
+  "description": "Documento de prueba.",
+  "subtype": "nominal"
 };
 
 ## Título
@@ -17,12 +21,18 @@ Un cuerpo que debe conservarse.
 export const value = { nested: true };`;
 
 const partialSource = `export const metadata = {
-  title: 'Parcial'
+  "id": "parcial-prueba",
+  "type": "definicion",
+  "title": "Parcial",
+  "description": "Documento parcialmente editable.",
+  "subtype": "nominal"
 };
 
 ## Título parcial
 
 <Formula>{String.raw\`a^2+b^2=c^2\`}</Formula>
+
+<FutureWidget keep={{ nested: true }} />
 
 Texto editable.`;
 
@@ -92,25 +102,20 @@ describe('useEditorCore lossless integration', () => {
     expect(result.current.rawBody).toContain('export const value = { nested: true };');
   });
 
-  it('blocks destructive visual operations and visual save', async () => {
+  it('applies destructive structural operations locally but requires diff approval before save', async () => {
     vi.mocked(fetch).mockResolvedValueOnce(readResponse(source));
     const { result } = renderHook(() => useEditorCore());
     await act(() => result.current.openFile('content/test.mdx'));
     act(() => result.current.toggleEditorMode());
     const before = result.current.rawBody;
     act(() => result.current.removeBlock(result.current.blocks[0].id));
-    expect(result.current.rawBody).toBe(before);
-    expect(result.current.message).toContain('bloqueada');
-
-    // Blocks visual save for read-only document
-    const readOnlySource = `export const metadata = {};\n\n<Formula>{String.raw\`a^2+b^2=c^2\`}</Formula>`;
-    vi.mocked(fetch).mockResolvedValueOnce(readResponse(readOnlySource, 'content/readonly.mdx'));
-    await act(() => result.current.openFile('content/readonly.mdx'));
-    act(() => result.current.toggleEditorMode());
+    expect(result.current.rawBody).not.toBe(before);
+    expect(result.current.rawBody).not.toContain('## Título');
+    expect(result.current.message).toContain('Revise el diff');
     let saved = true;
     await act(async () => { saved = await result.current.saveCurrentFile(); });
     expect(saved).toBe(false);
-    expect(result.current.message).toContain('desactivado para documentos de solo lectura');
+    expect(result.current.message).toContain('requiere una revisión de diff vigente');
   });
 
   it('manual code save sends the exact current source and checks HTTP status', async () => {
