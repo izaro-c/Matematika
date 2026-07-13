@@ -1,6 +1,6 @@
 import ts from 'typescript';
 import type {
-  VisualDiagramModel, VisualPoint, VisualElement, VisualSlider, VisualStep, ElementKind, ColorToken
+  VisualDiagramModel, VisualStep, ElementKind, ColorToken
 } from '../../src/features/editor/diagrams/model/types';
 import {
   type ParseDiagramSourceResult,
@@ -8,6 +8,7 @@ import {
   parseDiagramSourceLocally,
 } from '../../src/features/editor/diagrams/source/parser';
 import { KIND_LABELS } from '../../src/features/editor/diagrams/model/commands';
+import { migrateDiagramSpec } from '../../src/shared/diagrams/spec/migrations';
 
 function parseCoords(node?: ts.Expression): { x: number; y: number } | null {
   if (!node || !ts.isArrayLiteralExpression(node)) return null;
@@ -75,6 +76,7 @@ function extractElId(node: ts.Expression): string | null {
 export function parseDiagramSourceAST(source: string, metadataType = ''): ParseDiagramSourceResult {
   const embeddedClassification = classifyEmbeddedDiagramSource(source, metadataType);
   if (embeddedClassification?.status === 'visual-exact') return embeddedClassification;
+  if (embeddedClassification?.status === 'invalid') return embeddedClassification;
   const diagnostics: any[] = [];
   let sourceFile: ts.SourceFile;
   try {
@@ -115,9 +117,9 @@ export function parseDiagramSourceAST(source: string, metadataType = ''): ParseD
   let boundingBox: [number, number, number, number] = [-5, 5, 5, -5];
   let note = '';
 
-  const points: VisualPoint[] = [];
-  const elements: VisualElement[] = [];
-  const sliders: VisualSlider[] = [];
+  const points: Array<Record<string, any>> = [];
+  const elements: Array<Record<string, any>> = [];
+  const sliders: Array<Record<string, any>> = [];
   let steps: VisualStep[] = [];
   const namedBlocks = new Map<string, ts.Block>();
 
@@ -483,7 +485,7 @@ export function parseDiagramSourceAST(source: string, metadataType = ''): ParseD
     if (steps.length === 0) steps = embedded.steps;
     else {
       steps = steps.map(s => {
-        const found = embedded.steps.find(item => item.id === s.id);
+        const found = embedded.steps.find((item: VisualStep) => item.id === s.id);
         return found ? { ...s, label: found.label, description: found.description } : s;
       });
     }
@@ -492,7 +494,7 @@ export function parseDiagramSourceAST(source: string, metadataType = ''): ParseD
     note = note || embedded.note;
   }
 
-  const resultModel: VisualDiagramModel = {
+  const legacyResultModel = {
     title,
     componentId,
     category,
@@ -506,6 +508,12 @@ export function parseDiagramSourceAST(source: string, metadataType = ''): ParseD
     steps,
     note,
   };
+  let resultModel: VisualDiagramModel | undefined;
+  try {
+    resultModel = migrateDiagramSpec(legacyResultModel).spec;
+  } catch {
+    resultModel = undefined;
+  }
 
   const hasExportedComponent = /export\s+(?:const|function)\s+[A-Z]\w*\b/.test(source);
   if (!hasExportedComponent) {

@@ -126,7 +126,7 @@ describe('DiagramWorkbench authority adapters', () => {
       />
     );
 
-    await waitFor(() => expect(screen.getByText(/Diagrama interactivo/)).toBeTruthy());
+    await waitFor(() => expect(screen.getAllByText(/Diagrama interactivo/).length).toBeGreaterThan(0));
     expect(screen.getByText(/sync:visual-authoritative/)).toBeTruthy();
     expect(screen.getByText('Añadir rápido')).toBeTruthy();
   });
@@ -161,7 +161,7 @@ describe('DiagramWorkbench authority adapters', () => {
       />
     );
 
-    await waitFor(() => expect(screen.getByText(/Campos completos/)).toBeTruthy());
+    await waitFor(() => expect(screen.getAllByText(/Campos completos/).length).toBeGreaterThan(0));
     expect((screen.getByLabelText('Cuadrícula') as HTMLInputElement).checked).toBe(true);
     expect((screen.getByLabelText('Ejes') as HTMLInputElement).checked).toBe(true);
     fireEvent.click(screen.getByRole('button', { name: 'Código TSX' }));

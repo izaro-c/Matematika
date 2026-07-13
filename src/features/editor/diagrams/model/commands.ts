@@ -1,4 +1,11 @@
 import { normalizeContentId } from '../../lib/editorContracts';
+import {
+  DIAGRAM_RENDERER_ID,
+  DIAGRAM_SPEC_VERSION,
+  migrateDiagramSpec,
+  projectPointToSupport,
+  supportElements,
+} from '../../../../shared/diagrams/spec';
 import type {
   VisualDiagramModel, VisualPoint, VisualElement, VisualSlider, VisualStep,
   TemplateKind, ConstructionKind, ColorToken, ElementKind, PointConstraint,
@@ -7,15 +14,28 @@ import type {
 
 // Helper constructors
 export function point(id: string, label: string, x: number, y: number, fixed = false, color: ColorToken = 'terracota', constraint: PointConstraint = fixed ? 'fixed' : 'free', gliderTarget?: string): VisualPoint {
-  return { id, label, x, y, fixed, color, target: true, constraint, gliderTarget };
+  return {
+    id, label, x, y, fixed, color, target: true, constraint, gliderTarget,
+    layerId: 'geometry', order: 0, visible: true, locked: false, groupIds: [],
+    selection: { selectable: true, role: 'primary', ariaLabel: `Punto ${label}` },
+  };
 }
 
 export function element(id: string, label: string, kind: ElementKind, refs: string[], color: ColorToken, target = true, extra: Partial<VisualElement> = {}): VisualElement {
-  return { id, label, kind, refs, color, target, ...extra };
+  return {
+    id, label, kind, refs, color, target,
+    layerId: 'geometry', order: 1000, visible: true, locked: false, groupIds: [],
+    selection: { selectable: true, role: kind === 'text' || kind === 'measurement' ? 'annotation' : 'secondary', ariaLabel: label },
+    ...extra,
+  };
 }
 
 export function slider(id: string, label: string, x: number, y: number, value: number, color: ColorToken = 'pavo'): VisualSlider {
-  return { id, label, x, y, min: 0, max: 10, value, step: 0.1, color, target: true };
+  return {
+    id, label, x, y, min: 0, max: 10, value, step: 0.1, color, target: true,
+    layerId: 'controls', order: 2000, visible: true, locked: false, groupIds: [],
+    selection: { selectable: true, role: 'annotation', ariaLabel: label },
+  };
 }
 
 export function step(id: string, label: string, description: string, visibleTargets: string[]): VisualStep {
@@ -118,16 +138,30 @@ export function defaultMode(metadataType: string): VisualDiagramModel['mode'] {
 
 export function createTemplateModel(kind: TemplateKind, title: string, metadataType: string): VisualDiagramModel {
   const base = {
+    version: DIAGRAM_SPEC_VERSION,
+    renderer: DIAGRAM_RENDERER_ID,
     title,
     componentId: normalizeContentId(title || 'diagrama-interactivo'),
     category: defaultCategory(metadataType),
     mode: defaultMode(metadataType),
     axis: false,
     grid: false,
-    boundingBox: [-5, 5, 5, -5] as [number, number, number, number],
+    viewport: {
+      bounds: [-5, 5, 5, -5] as [number, number, number, number],
+      home: [-5, 5, 5, -5] as [number, number, number, number],
+      minZoom: 0.2,
+      maxZoom: 12,
+      padding: 0.16,
+    },
+    layers: [
+      { id: 'geometry', label: 'Geometría', order: 0, visible: true, locked: false },
+      { id: 'controls', label: 'Controles', order: 1, visible: true, locked: false },
+    ],
+    groups: [],
     sliders: [] as VisualSlider[],
     steps: [] as VisualStep[],
     note: 'Arrastre los puntos para explorar la figura.',
+    extensions: {},
   };
 
   if (kind === 'circunferencia') {
@@ -263,104 +297,7 @@ export function cleanTargetId(value: string, fallback: string): string {
   return value.replace(/[^A-Za-z0-9_-]/g, '') || fallback;
 }
 
-export function findPoint(model: VisualDiagramModel, id: string): VisualPoint | undefined {
-  return model.points.find(item => item.id === id);
-}
-
-export function visualPointCoords(model: VisualDiagramModel, id: string): { x: number; y: number } | undefined {
-  const direct = findPoint(model, id);
-  if (direct) return { x: direct.x, y: direct.y };
-  const derived = model.elements.find(item => item.id === id);
-  if (!derived) return undefined;
-  if (derived.kind === 'midpoint') {
-    const a = visualPointCoords(model, derived.refs[0]);
-    const b = visualPointCoords(model, derived.refs[1]);
-    if (!a || !b) return undefined;
-    return { x: (a.x + b.x) / 2, y: (a.y + b.y) / 2 };
-  }
-  if (derived.kind === 'perpendicularFoot') {
-    const baseA = visualPointCoords(model, derived.refs[0]);
-    const baseB = visualPointCoords(model, derived.refs[1]);
-    const source = visualPointCoords(model, derived.refs[2]);
-    if (!baseA || !baseB || !source) return undefined;
-    const dx = baseB.x - baseA.x;
-    const dy = baseB.y - baseA.y;
-    const len2 = dx * dx + dy * dy || 1;
-    const t = ((source.x - baseA.x) * dx + (source.y - baseA.y) * dy) / len2;
-    return { x: baseA.x + dx * t, y: baseA.y + dy * t };
-  }
-  return undefined;
-}
-
-export function baseExtensionCoords(model: VisualDiagramModel, item: VisualElement): { start: { x: number; y: number }; end: { x: number; y: number } } | undefined {
-  const baseA = visualPointCoords(model, item.refs[0]);
-  const baseB = visualPointCoords(model, item.refs[1]);
-  const foot = visualPointCoords(model, item.refs[2]);
-  if (!baseA || !baseB || !foot) return undefined;
-  const dx = baseB.x - baseA.x;
-  const dy = baseB.y - baseA.y;
-  const len2 = dx * dx + dy * dy;
-  if (len2 < 1e-10) return undefined;
-  const t = ((foot.x - baseA.x) * dx + (foot.y - baseA.y) * dy) / len2;
-  if (t >= -0.001 && t <= 1.001) return undefined;
-  return { start: t < 0 ? baseA : baseB, end: foot };
-}
-
-export function supportElements(model: VisualDiagramModel): VisualElement[] {
-  return model.elements.filter(item => ['segment', 'line', 'ray', 'circle', 'perpendicular', 'parallel', 'angleBisector'].includes(item.kind));
-}
-
-export function projectPointToSupport(model: VisualDiagramModel, pointItem: VisualPoint, coords: { x: number; y: number }): { x: number; y: number } {
-  if (pointItem.constraint !== 'glider' || !pointItem.gliderTarget) return coords;
-  const support = model.elements.find(item => item.id === pointItem.gliderTarget);
-  if (!support) return coords;
-
-  if (support.kind === 'circle') {
-    const center = visualPointCoords(model, support.refs[0]);
-    const edge = visualPointCoords(model, support.refs[1]);
-    if (!center || !edge) return coords;
-    const radius = Math.hypot(edge.x - center.x, edge.y - center.y) || 1;
-    const dx = coords.x - center.x;
-    const dy = coords.y - center.y;
-    const len = Math.hypot(dx, dy) || 1;
-    return { x: center.x + (dx / len) * radius, y: center.y + (dy / len) * radius };
-  }
-
-  const a = visualPointCoords(model, support.refs[0]);
-  const b = visualPointCoords(model, support.refs[1]);
-  const through = visualPointCoords(model, support.refs[2]);
-  const lineA = support.kind === 'perpendicular' || support.kind === 'parallel' ? through : a;
-  const baseA = a;
-  const baseB = b;
-  if (!lineA || !baseA || !baseB) return coords;
-
-  const dx = baseB.x - baseA.x;
-  const dy = baseB.y - baseA.y;
-  const angleLeg = support.kind === 'angleBisector' ? visualPointCoords(model, support.refs[0]) : undefined;
-  const angleVertex = support.kind === 'angleBisector' ? visualPointCoords(model, support.refs[1]) : undefined;
-  const angleOtherLeg = support.kind === 'angleBisector' ? visualPointCoords(model, support.refs[2]) : undefined;
-  const angleDirection = angleLeg && angleVertex && angleOtherLeg
-    ? (() => {
-      const ux = angleLeg.x - angleVertex.x;
-      const uy = angleLeg.y - angleVertex.y;
-      const wx = angleOtherLeg.x - angleVertex.x;
-      const wy = angleOtherLeg.y - angleVertex.y;
-      const uLen = Math.hypot(ux, uy) || 1;
-      const wLen = Math.hypot(wx, wy) || 1;
-      const sumX = ux / uLen + wx / wLen;
-      const sumY = uy / uLen + wy / wLen;
-      const sumLen = Math.hypot(sumX, sumY);
-      return sumLen < 1e-6 ? { x: -uy / uLen, y: ux / uLen } : { x: sumX / sumLen, y: sumY / sumLen };
-    })()
-    : undefined;
-  const vx = support.kind === 'angleBisector' && angleDirection ? angleDirection.x : support.kind === 'perpendicular' ? -dy : dx;
-  const vy = support.kind === 'angleBisector' && angleDirection ? angleDirection.y : support.kind === 'perpendicular' ? dx : dy;
-  const origin = support.kind === 'angleBisector' && angleVertex ? angleVertex : lineA;
-  const len2 = vx * vx + vy * vy || 1;
-  const t = ((coords.x - origin.x) * vx + (coords.y - origin.y) * vy) / len2;
-  const clampedT = support.kind === 'ray' || support.kind === 'angleBisector' ? Math.max(0, t) : t;
-  return { x: origin.x + vx * clampedT, y: origin.y + vy * clampedT };
-}
+export { projectPointToSupport, supportElements };
 
 export function nextPointId(points: VisualPoint[]): string {
   const letters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
@@ -599,6 +536,7 @@ export function renamePoint(model: VisualDiagramModel, oldId: string, newIdRaw: 
       ...item,
       visibleTargets: item.visibleTargets.map(target => target === oldId ? newId : target),
     })),
+    groups: model.groups.map(group => ({ ...group, memberIds: group.memberIds.map(id => id === oldId ? newId : id) })),
   };
 }
 
@@ -607,11 +545,16 @@ export function renameElement(model: VisualDiagramModel, oldId: string, newIdRaw
   if (newId !== oldId && model.elements.some(item => item.id === newId)) return model;
   return {
     ...model,
-    elements: model.elements.map(item => item.id === oldId ? { ...item, id: newId } : item),
+    points: model.points.map(item => item.gliderTarget === oldId ? { ...item, gliderTarget: newId } : item),
+    elements: model.elements.map(item => ({
+      ...(item.id === oldId ? { ...item, id: newId } : item),
+      refs: item.refs.map(ref => ref === oldId ? newId : ref),
+    })),
     steps: model.steps.map(item => ({
       ...item,
       visibleTargets: item.visibleTargets.map(target => target === oldId ? newId : target),
     })),
+    groups: model.groups.map(group => ({ ...group, memberIds: group.memberIds.map(id => id === oldId ? newId : id) })),
   };
 }
 
@@ -625,125 +568,14 @@ export function renameSlider(model: VisualDiagramModel, oldId: string, newIdRaw:
       ...item,
       visibleTargets: item.visibleTargets.map(target => target === oldId ? newId : target),
     })),
+    groups: model.groups.map(group => ({ ...group, memberIds: group.memberIds.map(id => id === oldId ? newId : id) })),
   };
 }
 
-// Normalizers
-function isColorToken(value: unknown): value is ColorToken {
-  return COLOR_OPTIONS.some(option => option.value === value);
-}
-
-function isElementKind(value: unknown): value is ElementKind {
-  return typeof value === 'string' && value in KIND_LABELS;
-}
-
-function isPointConstraint(value: unknown): value is PointConstraint {
-  return value === 'free' || value === 'fixed' || value === 'horizontal' || value === 'vertical' || value === 'glider';
-}
-
-function toNumber(value: unknown, fallback: number): number {
-  return typeof value === 'number' && Number.isFinite(value) ? value : fallback;
-}
-
-function normalizePoint(value: unknown): VisualPoint | null {
-  if (!value || typeof value !== 'object') return null;
-  const record = value as Record<string, unknown>;
-  const id = typeof record.id === 'string' ? cleanTargetId(record.id, '') : '';
-  if (!id) return null;
-  return {
-    id,
-    label: typeof record.label === 'string' ? record.label : id.replace(/^p/, ''),
-    x: toNumber(record.x, 0),
-    y: toNumber(record.y, 0),
-    color: isColorToken(record.color) ? record.color : 'terracota',
-    fixed: record.fixed === true,
-    target: record.target !== false,
-    constraint: isPointConstraint(record.constraint) ? record.constraint : record.fixed === true ? 'fixed' : 'free',
-    gliderTarget: typeof record.gliderTarget === 'string' ? record.gliderTarget : undefined,
-  };
-}
-
-function normalizeElement(value: unknown): VisualElement | null {
-  if (!value || typeof value !== 'object') return null;
-  const record = value as Record<string, unknown>;
-  const id = typeof record.id === 'string' ? cleanTargetId(record.id, '') : '';
-  if (!id || !isElementKind(record.kind)) return null;
-  return {
-    id,
-    label: typeof record.label === 'string' ? record.label : KIND_LABELS[record.kind],
-    kind: record.kind,
-    refs: Array.isArray(record.refs) ? record.refs.filter((ref): ref is string => typeof ref === 'string') : [],
-    color: isColorToken(record.color) ? record.color : 'carbon',
-    target: record.target !== false,
-    dashed: record.dashed === true,
-    text: typeof record.text === 'string' ? record.text : undefined,
-  };
-}
-
-function normalizeSlider(value: unknown): VisualSlider | null {
-  if (!value || typeof value !== 'object') return null;
-  const record = value as Record<string, unknown>;
-  const id = typeof record.id === 'string' ? cleanTargetId(record.id, '') : '';
-  if (!id) return null;
-  const min = toNumber(record.min, 0);
-  const max = Math.max(min + 0.1, toNumber(record.max, 10));
-  return {
-    id,
-    label: typeof record.label === 'string' ? record.label : id,
-    x: toNumber(record.x, -4),
-    y: toNumber(record.y, -4),
-    min,
-    max,
-    value: Math.min(max, Math.max(min, toNumber(record.value, min))),
-    step: Math.max(0.01, toNumber(record.step, 0.1)),
-    color: isColorToken(record.color) ? record.color : 'pavo',
-    target: record.target !== false,
-  };
-}
-
-function normalizeStep(value: unknown): VisualStep | null {
-  if (!value || typeof value !== 'object') return null;
-  const record = value as Record<string, unknown>;
-  const id = typeof record.id === 'string' ? cleanTargetId(record.id, '') : '';
-  if (!id) return null;
-  return {
-    id,
-    label: typeof record.label === 'string' ? record.label : id,
-    description: typeof record.description === 'string' ? record.description : '',
-    visibleTargets: Array.isArray(record.visibleTargets)
-      ? record.visibleTargets.filter((target): target is string => typeof target === 'string')
-      : [],
-  };
-}
-
-export function normalizeVisualModel(value: unknown, metadataType: string): VisualDiagramModel | null {
-  if (!value || typeof value !== 'object') return null;
-  const record = value as Record<string, unknown>;
-  const points = Array.isArray(record.points) ? record.points.map(normalizePoint).filter(Boolean) as VisualPoint[] : [];
-  if (points.length === 0) return null;
-  const elements = Array.isArray(record.elements) ? record.elements.map(normalizeElement).filter(Boolean) as VisualElement[] : [];
-  const sliders = Array.isArray(record.sliders) ? record.sliders.map(normalizeSlider).filter(Boolean) as VisualSlider[] : [];
-  const steps = Array.isArray(record.steps) ? record.steps.map(normalizeStep).filter(Boolean) as VisualStep[] : [];
-  const fallback = createTemplateModel('triangulo-deformable', 'Diagrama interactivo', metadataType);
-  const box = Array.isArray(record.boundingBox) && record.boundingBox.length === 4
-    ? record.boundingBox.map((item, index) => toNumber(item, fallback.boundingBox[index])) as [number, number, number, number]
-    : fallback.boundingBox;
-  const mode = record.mode === 'diagram' || record.mode === 'inline' || record.mode === 'simulation'
-    ? record.mode
-    : defaultMode(metadataType);
-
-  return {
-    title: typeof record.title === 'string' ? record.title : fallback.title,
-    componentId: typeof record.componentId === 'string' ? normalizeContentId(record.componentId) : fallback.componentId,
-    category: typeof record.category === 'string' ? record.category.replace(/[^A-Za-z0-9_-]/g, '') || fallback.category : fallback.category,
-    mode,
-    axis: record.axis === true,
-    grid: record.grid === true,
-    boundingBox: box,
-    points,
-    elements,
-    sliders,
-    steps,
-    note: typeof record.note === 'string' ? record.note : fallback.note,
-  };
+export function normalizeVisualModel(value: unknown, _metadataType: string): VisualDiagramModel | null {
+  try {
+    return migrateDiagramSpec(value).spec;
+  } catch {
+    return null;
+  }
 }

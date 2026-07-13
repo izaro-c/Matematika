@@ -9,27 +9,22 @@ export type TemplateKind =
 
 export type ConstructionKind = 'mediatriz' | 'mediana' | 'altura' | 'bisectriz';
 export type WorkbenchTab = 'visual' | 'source';
-export type ColorToken = 'carbon' | 'terracota' | 'salvia' | 'pizarra' | 'ocre' | 'pavo' | 'granada' | 'musgo';
+import type {
+  DiagramColorToken,
+  DiagramElement,
+  DiagramElementKind,
+  DiagramPoint,
+  DiagramPointConstraint,
+  DiagramSlider,
+  DiagramSpecV2,
+  DiagramStep,
+} from '../../../../shared/diagrams/spec';
 
-export type ElementKind =
-  | 'segment'
-  | 'line'
-  | 'ray'
-  | 'polygon'
-  | 'circle'
-  | 'midpoint'
-  | 'perpendicularFoot'
-  | 'baseExtension'
-  | 'perpendicular'
-  | 'parallel'
-  | 'angleBisector'
-  | 'angle'
-  | 'rightAngle'
-  | 'measurement'
-  | 'text';
+export type ColorToken = DiagramColorToken;
+export type ElementKind = DiagramElementKind;
 
 export type CanvasTool = 'select' | 'point' | ElementKind;
-export type PointConstraint = 'free' | 'fixed' | 'horizontal' | 'vertical' | 'glider';
+export type PointConstraint = DiagramPointConstraint;
 
 export interface RefSlot {
   label: string;
@@ -44,60 +39,8 @@ export interface ConstructionSlot {
   label: string;
 }
 
-export interface VisualPoint {
-  id: string;
-  label: string;
-  x: number;
-  y: number;
-  color: ColorToken;
-  fixed: boolean;
-  target: boolean;
-  constraint?: PointConstraint;
-  gliderTarget?: string;
-}
-
-export interface VisualElement {
-  id: string;
-  label: string;
-  kind: ElementKind;
-  refs: string[];
-  color: ColorToken;
-  target: boolean;
-  dashed?: boolean;
-  text?: string;
-}
-
-export interface VisualSlider {
-  id: string;
-  label: string;
-  x: number;
-  y: number;
-  min: number;
-  max: number;
-  value: number;
-  step: number;
-  color: ColorToken;
-  target: boolean;
-}
-
-export interface VisualStep {
-  id: string;
-  label: string;
-  description: string;
-  visibleTargets: string[];
-}
-
-export interface VisualDiagramModel {
-  title: string;
-  componentId: string;
-  category: string;
-  mode: 'simulation' | 'diagram' | 'inline';
-  axis: boolean;
-  grid: boolean;
-  boundingBox: [number, number, number, number];
-  points: VisualPoint[];
-  elements: VisualElement[];
-  sliders: VisualSlider[];
-  steps: VisualStep[];
-  note: string;
-}
+export type VisualPoint = DiagramPoint;
+export type VisualElement = DiagramElement;
+export type VisualSlider = DiagramSlider;
+export type VisualStep = DiagramStep;
+export type VisualDiagramModel = DiagramSpecV2;

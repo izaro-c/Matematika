@@ -95,8 +95,13 @@ export function useDiagramState() {
     });
   }, []);
 
-  const handleVisualEdit = useCallback((nextModel: VisualDiagramModel) => {
-    dispatch({ type: 'VISUAL_EDIT', model: nextModel });
+  const handleVisualEdit = useCallback((nextModel: VisualDiagramModel, command?: { label?: string; mergeKey?: string }) => {
+    dispatch({
+      type: 'VISUAL_EDIT', model: nextModel,
+      commandId: `diagram-command-${Date.now()}`,
+      label: command?.label,
+      mergeKey: command?.mergeKey,
+    });
     
     // Automatically regenerate source from visual model if authoritative or synced
     const current = stateRef.current;
@@ -108,6 +113,17 @@ export function useDiagramState() {
         dispatch({ type: 'SET_DIAGNOSTICS', diagnostics: gen.diagnostics });
       }
     }
+  }, []);
+
+  const regenerateFromHistory = useCallback((direction: 'undo' | 'redo') => {
+    const current = stateRef.current;
+    const history = direction === 'undo'
+      ? current.modelHistory.past[current.modelHistory.past.length - 1]?.before
+      : current.modelHistory.future[0]?.after;
+    if (!history) return;
+    dispatch({ type: direction === 'undo' ? 'UNDO' : 'REDO' });
+    const generated = generateDiagramSource(history, current.componentName);
+    if (generated.ok) dispatch({ type: 'RESOLVE_TO_VISUAL', source: generated.source });
   }, []);
 
   const triggerServerParse = useCallback(async (sourceText: string) => {
@@ -252,6 +268,8 @@ export function useDiagramState() {
     loadNewDiagram,
     handleVisualEdit,
     handleSourceEdit,
+    undo: () => regenerateFromHistory('undo'),
+    redo: () => regenerateFromHistory('redo'),
     selectElement,
     setCanvasTool,
     setActiveStep,

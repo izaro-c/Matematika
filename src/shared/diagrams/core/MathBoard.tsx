@@ -42,6 +42,10 @@ export interface MathBoardProps {
   keepaspectratio?: boolean;
   axis?: boolean;
   grid?: boolean;
+  pan?: boolean;
+  zoom?: boolean;
+  revision?: string;
+  onBoundingBoxChange?: (bounds: [number, number, number, number]) => void;
   onInit: (board: any, elements: Record<string, any>, theme: ThemeColors) => void;
   onUpdate?: (
     board: any,
@@ -60,6 +64,10 @@ export const MathBoard: React.FC<MathBoardProps> = ({
   keepaspectratio = true,
   axis = false,
   grid = false,
+  pan = false,
+  zoom = false,
+  revision = '',
+  onBoundingBoxChange,
   onInit,
   onUpdate,
   children,
@@ -69,6 +77,8 @@ export const MathBoard: React.FC<MathBoardProps> = ({
   const elementsRef = useRef<Record<string, any>>({});
   const onInitRef = useRef(onInit);
   const onUpdateRef = useRef(onUpdate);
+  const onBoundingBoxChangeRef = useRef(onBoundingBoxChange);
+  const boundingboxRef = useRef(boundingbox);
   const highlight = useMathStore(state => state.variables?.['highlight']);
   const step = useMathStore(state => state.variables?.['step']);
   const highlightRef = useRef(highlight);
@@ -78,7 +88,10 @@ export const MathBoard: React.FC<MathBoardProps> = ({
   useEffect(() => {
     onInitRef.current = onInit;
     onUpdateRef.current = onUpdate;
-  }, [onInit, onUpdate]);
+    onBoundingBoxChangeRef.current = onBoundingBoxChange;
+    boundingboxRef.current = boundingbox;
+    boardObj.current?.update();
+  }, [boundingbox, onBoundingBoxChange, onInit, onUpdate]);
 
   useEffect(() => {
     highlightRef.current = highlight;
@@ -100,9 +113,11 @@ export const MathBoard: React.FC<MathBoardProps> = ({
     boardRef.current.id ||= id || `shared-jxgbox-${generatedId}`;
 
     const board = JXG.JSXGraph.initBoard(boardRef.current.id, {
-      boundingbox,
+      boundingbox: boundingboxRef.current,
       axis,
       grid,
+      pan: { enabled: pan },
+      zoom: { wheel: zoom, pinchHorizontal: zoom, pinchVertical: zoom },
       keepaspectratio,
       showCopyright: false,
       showNavigation: false,
@@ -125,13 +140,21 @@ export const MathBoard: React.FC<MathBoardProps> = ({
     board.on('update', runUpdate);
     runUpdate();
 
-    const resizeObserver = new ResizeObserver(() => {
+    const reportBoundingBox = () => {
+      const current = board.getBoundingBox?.();
+      if (Array.isArray(current) && current.length === 4) {
+        onBoundingBoxChangeRef.current?.([...current] as [number, number, number, number]);
+      }
+    };
+    board.on('boundingbox', reportBoundingBox);
+
+    const resizeObserver = typeof ResizeObserver === 'undefined' ? null : new ResizeObserver(() => {
       if (!boardRef.current) return;
       board.resizeContainer(boardRef.current.clientWidth, boardRef.current.clientHeight);
-      board.setBoundingBox(boundingbox, keepaspectratio);
+      board.setBoundingBox(boundingboxRef.current, keepaspectratio);
       board.update();
     });
-    resizeObserver.observe(boardRef.current);
+    resizeObserver?.observe(boardRef.current);
 
     const themeObserver = new MutationObserver(() => {
       const currentTheme = getTheme();
@@ -145,12 +168,23 @@ export const MathBoard: React.FC<MathBoardProps> = ({
 
     return () => {
       themeObserver.disconnect();
-      resizeObserver.disconnect();
+      resizeObserver?.disconnect();
       JXG.JSXGraph.freeBoard(board);
       boardObj.current = null;
       elementsRef.current = {};
     };
-  }, [axis, boundingbox, generatedId, grid, id, keepaspectratio]);
+  }, [axis, generatedId, grid, id, keepaspectratio, pan, revision, zoom]);
+
+  useEffect(() => {
+    const board = boardObj.current;
+    if (!board) return;
+    const current = board.getBoundingBox?.() as number[] | undefined;
+    const changed = !current || boundingbox.some((value, index) => Math.abs(value - current[index]) > 1e-8);
+    if (changed) {
+      board.setBoundingBox(boundingbox, keepaspectratio);
+      board.update();
+    }
+  }, [boundingbox, keepaspectratio]);
 
   return (
     <div className={`${className} h-full`}>

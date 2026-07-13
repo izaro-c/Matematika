@@ -5,7 +5,7 @@ import { useEditorCore } from '../core/useEditorCore';
 import { SemanticLinker } from './components/SemanticLinker';
 import { DiagramWorkbench, type DiagramWorkbenchMode } from './diagrams/DiagramWorkbench';
 import { Block, createBlockId, parseAttributes } from '../core/parser';
-import type { DiagramSpec, DiagramTargetRegistry } from '../core/editorTypes';
+import type { EditorDiagramReference, DiagramTargetRegistry } from '../core/editorTypes';
 import type { FileNode } from '../lib/editorContracts';
 import { approveDiffReview, buildDiffReview, isDiffReviewStale, type DiffReview } from '../ux/diffReview';
 import { buildEditorSafetyPresentation } from '../ux/safetyPresentation';
@@ -531,7 +531,7 @@ export const EditorPage: React.FC = () => {
     });
   };
 
-  const handleConfirmDiagram = (spec: DiagramSpec) => {
+  const handleConfirmDiagram = (spec: EditorDiagramReference) => {
     if (currentFile?.endsWith('.tsx')) {
       updateRawBody(spec.source);
       setDiagramBuilderOpen(false);

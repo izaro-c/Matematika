@@ -1,5 +1,5 @@
 import React, { useEffect, useMemo, useState } from 'react';
-import type { DiagramSpec } from '../../core/editorTypes';
+import type { EditorDiagramReference } from '../../core/editorTypes';
 import type { ConstructionKind, ElementKind, VisualDiagramModel } from '../../diagrams/model/types';
 import { useDiagramState } from '../../diagrams/hooks/useDiagramState';
 import { buildTargets, getDiagramSaveCapability } from '../../diagrams/model/selectors';
@@ -30,7 +30,7 @@ interface DiagramWorkbenchCoreProps {
   mode: DiagramWorkbenchMode;
   metadataType: string;
   onClose: () => void;
-  onConfirm: (spec: DiagramSpec) => void;
+  onConfirm: (spec: EditorDiagramReference) => void;
 }
 
 type DiagramWorkbenchAdapterProps = Omit<DiagramWorkbenchCoreProps, 'mode'>;
@@ -71,6 +71,8 @@ export const DiagramWorkbenchCore: React.FC<DiagramWorkbenchCoreProps> = ({
     loadNewDiagram,
     handleVisualEdit,
     handleSourceEdit,
+    undo,
+    redo,
     selectElement,
     setCanvasTool,
     resolveDivergence,
@@ -293,6 +295,7 @@ export const DiagramWorkbenchCore: React.FC<DiagramWorkbenchCoreProps> = ({
         ...item,
         visibleTargets: item.visibleTargets.filter(t => t !== selectedId),
       })),
+      groups: model.groups.map(group => ({ ...group, memberIds: group.memberIds.filter(id => id !== selectedId) })),
     });
     selectElement('');
   };
@@ -321,6 +324,28 @@ export const DiagramWorkbenchCore: React.FC<DiagramWorkbenchCoreProps> = ({
         </div>
 
         <div className="flex items-center gap-3">
+          <div className="flex rounded border border-carbon/15 p-0.5 bg-lienzo" aria-label="Historial de comandos">
+            <button
+              type="button"
+              onClick={undo}
+              disabled={state.modelHistory.past.length === 0}
+              className="rounded px-2 py-1 text-xs font-bold text-carbon/70 hover:bg-carbon/5 disabled:opacity-35"
+              aria-label="Deshacer"
+              title={state.modelHistory.past[state.modelHistory.past.length - 1]?.label ?? 'Nada que deshacer'}
+            >
+              ↶
+            </button>
+            <button
+              type="button"
+              onClick={redo}
+              disabled={state.modelHistory.future.length === 0}
+              className="rounded px-2 py-1 text-xs font-bold text-carbon/70 hover:bg-carbon/5 disabled:opacity-35"
+              aria-label="Rehacer"
+              title={state.modelHistory.future[0]?.label ?? 'Nada que rehacer'}
+            >
+              ↷
+            </button>
+          </div>
           <div className="flex rounded border border-carbon/15 p-0.5 bg-lienzo">
             <button
               onClick={() => setTab('visual')}
@@ -446,16 +471,68 @@ export const DiagramWorkbenchCore: React.FC<DiagramWorkbenchCoreProps> = ({
                       type="number"
                       step="0.5"
                       className="w-full rounded border border-carbon/15 bg-lienzo p-1 text-xs font-mono"
-                      value={model.boundingBox[idx]}
+                      value={model.viewport.bounds[idx]}
                       onChange={(e) => {
                         const val = Number(e.target.value);
                         if (Number.isFinite(val)) {
-                          const nextBox = [...model.boundingBox] as [number, number, number, number];
+                          const nextBox = [...model.viewport.bounds] as [number, number, number, number];
                           nextBox[idx] = val;
-                          handleVisualEdit({ ...model, boundingBox: nextBox });
+                          handleVisualEdit({ ...model, viewport: { ...model.viewport, bounds: nextBox } }, { label: 'Editar límites del viewport', mergeKey: 'viewport-input' });
                         }
                       }}
                     />
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            <div className="rounded border border-carbon/10 bg-lienzo p-3">
+              <p className="text-[10px] font-bold uppercase tracking-widest text-carbon/45 border-b border-carbon/10 pb-1 mb-2">Capas de escena</p>
+              <div className="space-y-2">
+                {model.layers.slice().sort((a, b) => a.order - b.order).map((layer, index, orderedLayers) => (
+                  <div key={layer.id} className="grid grid-cols-[1fr_auto] items-center gap-2 rounded border border-carbon/10 p-2">
+                    <div>
+                      <p className="text-xs font-bold text-carbon">{layer.label}</p>
+                      <p className="text-[10px] font-mono text-carbon/45">{layer.id}</p>
+                    </div>
+                    <div className="flex gap-1">
+                      <button
+                        type="button"
+                        aria-label={`${layer.visible ? 'Ocultar' : 'Mostrar'} capa ${layer.label}`}
+                        className="rounded border border-carbon/15 px-1.5 py-0.5 text-[10px]"
+                        onClick={() => handleVisualEdit({ ...model, layers: model.layers.map(item => item.id === layer.id ? { ...item, visible: !item.visible } : item) }, { label: `${layer.visible ? 'Ocultar' : 'Mostrar'} capa ${layer.label}` })}
+                      >
+                        {layer.visible ? 'Visible' : 'Oculta'}
+                      </button>
+                      <button
+                        type="button"
+                        aria-label={`${layer.locked ? 'Desbloquear' : 'Bloquear'} capa ${layer.label}`}
+                        className="rounded border border-carbon/15 px-1.5 py-0.5 text-[10px]"
+                        onClick={() => handleVisualEdit({ ...model, layers: model.layers.map(item => item.id === layer.id ? { ...item, locked: !item.locked } : item) }, { label: `${layer.locked ? 'Desbloquear' : 'Bloquear'} capa ${layer.label}` })}
+                      >
+                        {layer.locked ? 'Fija' : 'Editable'}
+                      </button>
+                      <button
+                        type="button"
+                        aria-label={`Bajar capa ${layer.label}`}
+                        disabled={index === 0}
+                        className="rounded border border-carbon/15 px-1 disabled:opacity-30"
+                        onClick={() => {
+                          const previous = orderedLayers[index - 1];
+                          handleVisualEdit({ ...model, layers: model.layers.map(item => item.id === layer.id ? { ...item, order: previous.order } : item.id === previous.id ? { ...item, order: layer.order } : item) }, { label: `Reordenar capa ${layer.label}` });
+                        }}
+                      >↓</button>
+                      <button
+                        type="button"
+                        aria-label={`Subir capa ${layer.label}`}
+                        disabled={index === orderedLayers.length - 1}
+                        className="rounded border border-carbon/15 px-1 disabled:opacity-30"
+                        onClick={() => {
+                          const next = orderedLayers[index + 1];
+                          handleVisualEdit({ ...model, layers: model.layers.map(item => item.id === layer.id ? { ...item, order: next.order } : item.id === next.id ? { ...item, order: layer.order } : item) }, { label: `Reordenar capa ${layer.label}` });
+                        }}
+                      >↑</button>
+                    </div>
                   </div>
                 ))}
               </div>

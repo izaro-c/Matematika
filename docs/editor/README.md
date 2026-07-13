@@ -16,6 +16,8 @@ La estabilización del editor cuenta con soporte transaccional, control de compa
 | Estado | `src/features/editor/state/` | Reducer de persistencia y estados visibles. |
 | UI | `src/features/editor/ui/` | Shell, toolbar, navegación y paneles. No debe acceder directamente a filesystem ni hacer `fetch`. |
 | Diagramas | `src/features/editor/diagrams/` | Modelo, parser/generador TSX, reducer, índice inverso y UI del workbench. |
+| Spec de diagramas | `src/shared/diagrams/spec/` | Contrato v2, validación, migraciones, semántica de escena, viewport e historial de comandos. |
+| Runtime de diagramas | `src/shared/diagrams/runtime/` | Renderer único sobre `MathBoard`/`MathFactory` para editor, preview y publicación. |
 | Backend dev | `vite.config.ts` y `scripts/editor/editorPersistenceBackend.ts` | API local de lectura, borradores, backups y escritura atómica. |
 
 ## Compatibilidad MDX y Política de Guardado
@@ -43,6 +45,10 @@ El guardado visual está habilitado dinámicamente según el nivel de compatibil
 
 El workbench usa autoridad explícita de modelo o fuente. Un cambio visual desde fuente autoritativa produce `diverged`; una fuente inválida produce `invalid-source`; los estados inválidos bloquean guardado. Las referencias MDX se consultan mediante `src/entities/content/diagramUsageIndex.json`, generado por `npm run diagram-usages:index`, para evitar escaneo O(N) al abrir un diagrama.
 
+Las escenas nuevas representables usan `DiagramSpec v2`. El workbench y el TSX publicado entregan la misma especificación a `DiagramRenderer`; el editor solo añade callbacks de autoría. El TSX generado se limita a declarar el spec y montar ese renderer. Una fuente manual o extendida permanece en `code-preview` salvo que el roundtrip completo sea idéntico, por lo que no se regenera ni pierde comportamiento.
+
+El viewport forma parte del spec y admite pan, zoom, ajuste al contenido y recuperación de objetos fuera de vista. Capas, grupos, visibilidad, bloqueo, orden y selección se resuelven en la semántica compartida de `src/shared/diagrams/spec/scene.ts`. El contrato y sus límites se documentan en [ADR-003](../adr/ADR-003-diagram-spec-v2-shared-renderer.md).
+
 ## Comandos Operacionales
 
 | Comando | Propósito | Escribe archivos |
@@ -60,7 +66,7 @@ El workbench usa autoridad explícita de modelo o fuente. Un cambio visual desde
 
 ## Fixtures y Regresiones
 
-Los fixtures MDX viven en `tests/fixtures/editor/`. Para agregar una regresión:
+Los fixtures MDX viven en `tests/fixtures/editor/` y los specs representativos en `tests/fixtures/diagrams/`. Para agregar una regresión MDX:
 
 1. Crear un fixture mínimo que aisle la corrupción en `tests/fixtures/editor/`.
 2. Agregar una aserción en `tests/features/editor/roundtrip.test.ts`.

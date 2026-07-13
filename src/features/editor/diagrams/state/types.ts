@@ -1,5 +1,6 @@
 import type { VisualDiagramModel, CanvasTool } from '../model/types';
 import type { DiagramDiagnostic } from '../source/generator';
+import type { CommandHistory } from '../../../../shared/diagrams/spec';
 
 export type DiagramSyncStatus =
   | 'synced'
@@ -26,6 +27,7 @@ export interface DiagramState {
   selectedId: string;
   activeStepId: string;
   canvasTool: CanvasTool;
+  modelHistory: CommandHistory<VisualDiagramModel | null>;
 }
 
 export type DiagramAction =
@@ -46,7 +48,9 @@ export type DiagramAction =
       model: VisualDiagramModel;
       diagnostics?: DiagramDiagnostic[];
     }
-  | { type: 'VISUAL_EDIT'; model: VisualDiagramModel }
+  | { type: 'VISUAL_EDIT'; model: VisualDiagramModel; commandId?: string; label?: string; mergeKey?: string }
+  | { type: 'UNDO' }
+  | { type: 'REDO' }
   | { type: 'SOURCE_EDIT'; source: string }
   | { type: 'SELECT_ELEMENT'; id: string }
   | { type: 'SET_CANVAS_TOOL'; tool: CanvasTool }
