@@ -1,0 +1,14 @@
+{
+  "version": 2, "renderer": "matematika-diagram-renderer-v2", "title": "Anotaciones y escena", "componentId": "phase3-annotations-layers", "category": "Demos", "mode": "simulation", "axis": false, "grid": false,
+  "viewport": { "bounds": [-4, 4, 4, -4], "home": [-4, 4, 4, -4], "minZoom": 0.2, "maxZoom": 12, "padding": 0.16 },
+  "layers": [{ "id": "geometry", "label": "Geometría", "order": 0, "visible": true, "locked": true }, { "id": "annotations", "label": "Anotaciones", "order": 1, "visible": true, "locked": false }],
+  "groups": [{ "id": "explanation", "label": "Explicación", "memberIds": ["labelA", "formulaA", "panelA"], "visible": true, "locked": false, "selection": { "selectable": true, "role": "annotation" } }],
+  "points": [{ "id": "pA", "label": "A", "x": 0, "y": 0, "fixed": false, "constraint": "free", "color": "terracota", "layerId": "geometry", "order": 0, "visible": true, "locked": false, "groupIds": [], "selection": { "selectable": true }, "target": true }],
+  "elements": [
+    { "id": "labelA", "label": "Etiqueta A", "kind": "label", "refs": ["pA"], "color": "carbon", "layerId": "annotations", "order": 10, "visible": true, "locked": false, "groupIds": ["explanation"], "selection": { "selectable": true, "role": "annotation" }, "target": true, "text": "Punto A" },
+    { "id": "formulaA", "label": "Fórmula", "kind": "formula", "refs": ["pA"], "color": "pizarra", "layerId": "annotations", "order": 11, "visible": true, "locked": false, "groupIds": ["explanation"], "selection": { "selectable": true, "role": "annotation" }, "target": true, "text": "x + y = {value}", "properties": { "expression": "pA.x + pA.y", "precision": 2 } },
+    { "id": "panelA", "label": "Panel de coordenadas", "kind": "infoPanel", "refs": ["pA"], "color": "pavo", "layerId": "annotations", "order": 12, "visible": true, "locked": false, "groupIds": ["explanation"], "selection": { "selectable": true, "role": "annotation" }, "target": true, "text": "Suma de coordenadas: {value}", "properties": { "expression": "pA.x + pA.y", "title": "Coordenadas", "precision": 2 } }
+  ],
+  "sliders": [], "steps": [], "constraints": [], "dependencies": [{ "sourceId": "pA", "targetId": "formulaA", "relation": "expression" }, { "sourceId": "pA", "targetId": "panelA", "relation": "expression" }],
+  "note": "Capas, grupo, bloqueo, orden y anotaciones reactivas.", "extensions": { "acceptanceFamily": "annotations-layers" }
+}

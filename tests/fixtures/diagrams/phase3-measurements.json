@@ -1,0 +1,15 @@
+{
+  "version": 2, "renderer": "matematika-diagram-renderer-v2", "title": "Cotas y medidas", "componentId": "phase3-measurements", "category": "Axiomas", "mode": "simulation", "axis": false, "grid": false,
+  "viewport": { "bounds": [-4, 4, 4, -4], "home": [-4, 4, 4, -4], "minZoom": 0.2, "maxZoom": 12, "padding": 0.16 },
+  "layers": [{ "id": "geometry", "label": "Geometría", "order": 0, "visible": true, "locked": false }, { "id": "annotations", "label": "Anotaciones", "order": 1, "visible": true, "locked": false }], "groups": [],
+  "points": [
+    { "id": "pA", "label": "A", "x": -2, "y": 0, "fixed": false, "constraint": "free", "color": "terracota", "layerId": "geometry", "order": 0, "visible": true, "locked": false, "groupIds": [], "selection": { "selectable": true }, "target": true },
+    { "id": "pB", "label": "B", "x": 2, "y": 0, "fixed": false, "constraint": "free", "color": "terracota", "layerId": "geometry", "order": 1, "visible": true, "locked": false, "groupIds": [], "selection": { "selectable": true }, "target": true }
+  ],
+  "elements": [
+    { "id": "segAB", "label": "Segmento AB", "kind": "segment", "refs": ["pA", "pB"], "color": "carbon", "layerId": "geometry", "order": 10, "visible": true, "locked": false, "groupIds": [], "selection": { "selectable": true }, "target": true },
+    { "id": "dimAB", "label": "Longitud AB", "kind": "dimensionLine", "refs": ["pA", "pB"], "color": "pizarra", "layerId": "annotations", "order": 20, "visible": true, "locked": false, "groupIds": [], "selection": { "selectable": true }, "target": true, "text": "AB = {value}", "properties": { "expression": "segAB.length", "unit": "cm", "precision": 2, "offset": 0.45 } },
+    { "id": "measureAB", "label": "Medida AB", "kind": "measurement", "refs": ["pA", "pB"], "color": "pizarra", "layerId": "annotations", "order": 21, "visible": true, "locked": false, "groupIds": [], "selection": { "selectable": true }, "target": true, "text": "m(AB) = {value}", "properties": { "precision": 3 } }
+  ],
+  "sliders": [], "steps": [], "constraints": [], "dependencies": [{ "sourceId": "segAB", "targetId": "dimAB", "relation": "expression" }], "note": "Medidas reactivas para axiomas de congruencia.", "extensions": { "acceptanceFamily": "measurements" }
+}

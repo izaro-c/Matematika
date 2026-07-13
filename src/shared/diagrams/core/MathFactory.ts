@@ -61,6 +61,240 @@ export function createCircle(board: any, points: [any, any], options: any = {}, 
   });
 }
 
+export function createArc(board: any, points: [any, any, any], options: any = {}, theme: ThemeColors) {
+  return board.create('arc', points, {
+    strokeColor: theme.salvia,
+    strokeWidth: 2,
+    fillOpacity: 0,
+    ...options,
+  });
+}
+
+export function createFunctionCurve(
+  board: any,
+  evaluate: (x: number) => number,
+  domain: [number, number],
+  options: any = {},
+  theme: ThemeColors,
+) {
+  return board.create('functiongraph', [evaluate, domain[0], domain[1]], {
+    strokeColor: theme.pavo,
+    strokeWidth: 2.4,
+    ...options,
+  });
+}
+
+export function createParametricCurve(
+  board: any,
+  evaluateX: (t: number) => number,
+  evaluateY: (t: number) => number,
+  domain: [number, number],
+  options: any = {},
+  theme: ThemeColors,
+) {
+  return board.create('curve', [evaluateX, evaluateY, domain[0], domain[1]], {
+    strokeColor: theme.pavo,
+    strokeWidth: 2.4,
+    ...options,
+  });
+}
+
+function poincareCircle(center: any, boundary: any, a: any, b: any) {
+  const ox = center.X();
+  const oy = center.Y();
+  const ax = a.X();
+  const ay = a.Y();
+  const bx = b.X();
+  const by = b.Y();
+  const radius = Math.hypot(boundary.X() - ox, boundary.Y() - oy) || 1;
+  const matrixA = 2 * (bx - ax);
+  const matrixB = 2 * (by - ay);
+  const matrixC = 2 * (ax - ox);
+  const matrixD = 2 * (ay - oy);
+  const rhs1 = bx * bx + by * by - ax * ax - ay * ay;
+  const rhs2 = ax * ax + ay * ay - ox * ox - oy * oy + radius * radius;
+  const determinant = matrixA * matrixD - matrixB * matrixC;
+  if (Math.abs(determinant) < 1e-8) return { diameter: true as const, ox, oy, radius };
+  const cx = (rhs1 * matrixD - matrixB * rhs2) / determinant;
+  const cy = (matrixA * rhs2 - rhs1 * matrixC) / determinant;
+  return { diameter: false as const, ox, oy, radius, cx, cy, geodesicRadius: Math.hypot(ax - cx, ay - cy) };
+}
+
+function normalizedArcDelta(start: number, end: number): number {
+  let delta = end - start;
+  while (delta > Math.PI) delta -= Math.PI * 2;
+  while (delta < -Math.PI) delta += Math.PI * 2;
+  return delta;
+}
+
+export function createPoincareArc(
+  board: any,
+  points: [any, any, any, any],
+  options: any = {},
+  theme: ThemeColors,
+) {
+  const [center, boundary, a, b] = points;
+  const coordinates = (t: number) => {
+    const circle = poincareCircle(center, boundary, a, b);
+    if (circle.diameter) return { x: a.X() + (b.X() - a.X()) * t, y: a.Y() + (b.Y() - a.Y()) * t };
+    const start = Math.atan2(a.Y() - circle.cy, a.X() - circle.cx);
+    const end = Math.atan2(b.Y() - circle.cy, b.X() - circle.cx);
+    const angle = start + normalizedArcDelta(start, end) * t;
+    return { x: circle.cx + circle.geodesicRadius * Math.cos(angle), y: circle.cy + circle.geodesicRadius * Math.sin(angle) };
+  };
+  return createParametricCurve(board, t => coordinates(t).x, t => coordinates(t).y, [0, 1], options, theme);
+}
+
+export function createPoincareGeodesic(
+  board: any,
+  points: [any, any, any, any],
+  options: any = {},
+  theme: ThemeColors,
+) {
+  const [center, boundary, a, b] = points;
+  const coordinates = (t: number) => {
+    const circle = poincareCircle(center, boundary, a, b);
+    if (circle.diameter) {
+      const dx = b.X() - a.X();
+      const dy = b.Y() - a.Y();
+      const length = Math.hypot(dx, dy) || 1;
+      return {
+        x: circle.ox + dx / length * circle.radius * (2 * t - 1),
+        y: circle.oy + dy / length * circle.radius * (2 * t - 1),
+      };
+    }
+    const distance = Math.hypot(circle.cx - circle.ox, circle.cy - circle.oy) || 1;
+    const along = (circle.radius * circle.radius - circle.geodesicRadius * circle.geodesicRadius + distance * distance) / (2 * distance);
+    const height = Math.sqrt(Math.max(0, circle.radius * circle.radius - along * along));
+    const ux = (circle.cx - circle.ox) / distance;
+    const uy = (circle.cy - circle.oy) / distance;
+    const baseX = circle.ox + along * ux;
+    const baseY = circle.oy + along * uy;
+    const q1 = { x: baseX - uy * height, y: baseY + ux * height };
+    const q2 = { x: baseX + uy * height, y: baseY - ux * height };
+    const start = Math.atan2(q1.y - circle.cy, q1.x - circle.cx);
+    const end = Math.atan2(q2.y - circle.cy, q2.x - circle.cx);
+    let delta = normalizedArcDelta(start, end);
+    const middleAngle = start + delta / 2;
+    const middleX = circle.cx + circle.geodesicRadius * Math.cos(middleAngle);
+    const middleY = circle.cy + circle.geodesicRadius * Math.sin(middleAngle);
+    if (Math.hypot(middleX - circle.ox, middleY - circle.oy) > circle.radius) delta += delta > 0 ? -Math.PI * 2 : Math.PI * 2;
+    const angle = start + delta * t;
+    return { x: circle.cx + circle.geodesicRadius * Math.cos(angle), y: circle.cy + circle.geodesicRadius * Math.sin(angle) };
+  };
+  return createParametricCurve(board, t => coordinates(t).x, t => coordinates(t).y, [0, 1], options, theme);
+}
+
+function createComposite(elements: any[]) {
+  const primary = elements.find(Boolean);
+  return {
+    rendNode: primary?.rendNode,
+    setAttribute: (attributes: any) => elements.forEach(element => element?.setAttribute?.(attributes)),
+    on: (event: string, handler: (...args: any[]) => void) => elements.forEach(element => element?.on?.(event, handler)),
+    elements,
+  };
+}
+
+export function createCongruenceMark(
+  board: any,
+  points: [any, any],
+  count = 1,
+  options: any = {},
+  theme: ThemeColors,
+) {
+  const [a, b] = points;
+  const marks = Array.from({ length: count }, (_, index) => {
+    const centered = index - (count - 1) / 2;
+    const offset = centered * 0.14;
+    const half = 0.16;
+    const coordinate = (side: -1 | 1, axis: 'x' | 'y') => () => {
+      const dx = b.X() - a.X();
+      const dy = b.Y() - a.Y();
+      const length = Math.hypot(dx, dy) || 1;
+      const tangentX = dx / length;
+      const tangentY = dy / length;
+      const normalX = -tangentY;
+      const normalY = tangentX;
+      const x = (a.X() + b.X()) / 2 + tangentX * offset + normalX * half * side;
+      const y = (a.Y() + b.Y()) / 2 + tangentY * offset + normalY * half * side;
+      return axis === 'x' ? x : y;
+    };
+    const p1 = board.create('point', [coordinate(-1, 'x'), coordinate(-1, 'y')], { visible: false });
+    const p2 = board.create('point', [coordinate(1, 'x'), coordinate(1, 'y')], { visible: false });
+    return board.create('segment', [p1, p2], { strokeColor: theme.ocre, strokeWidth: 2, fixed: true, ...options });
+  });
+  return createComposite(marks);
+}
+
+export function createDimensionLine(
+  board: any,
+  points: [any, any],
+  label: () => string,
+  offset = 0.35,
+  options: any = {},
+  theme: ThemeColors,
+) {
+  const [a, b] = points;
+  const shifted = (point: any, axis: 'x' | 'y') => () => {
+    const dx = b.X() - a.X();
+    const dy = b.Y() - a.Y();
+    const length = Math.hypot(dx, dy) || 1;
+    return (axis === 'x' ? point.X() - dy / length * offset : point.Y() + dx / length * offset);
+  };
+  const a2 = board.create('point', [shifted(a, 'x'), shifted(a, 'y')], { visible: false });
+  const b2 = board.create('point', [shifted(b, 'x'), shifted(b, 'y')], { visible: false });
+  const line = createSegment(board, [a2, b2], { strokeColor: theme.pizarra, strokeWidth: 1.5, ...options }, theme);
+  const ticks = createCongruenceMark(board, [a2, b2], 1, { strokeColor: theme.pizarra, strokeWidth: 1.5 }, theme);
+  const text = createText(board, [
+    () => (a2.X() + b2.X()) / 2,
+    () => (a2.Y() + b2.Y()) / 2 + 0.18,
+    label,
+  ], { color: theme.pizarra }, theme);
+  return createComposite([line, ticks, text]);
+}
+
+export function createGridOverlay(
+  board: any,
+  points: [any, any, any, any],
+  rows: number,
+  columns: number,
+  options: any = {},
+  theme: ThemeColors,
+) {
+  const [a, b, c, d] = points;
+  const lines: any[] = [];
+  const interpolate = (p: any, q: any, amount: number, axis: 'x' | 'y') => () => (
+    (axis === 'x' ? p.X() : p.Y()) + ((axis === 'x' ? q.X() : q.Y()) - (axis === 'x' ? p.X() : p.Y())) * amount
+  );
+  for (let row = 1; row < rows; row += 1) {
+    const amount = row / rows;
+    const left = board.create('point', [interpolate(a, d, amount, 'x'), interpolate(a, d, amount, 'y')], { visible: false });
+    const right = board.create('point', [interpolate(b, c, amount, 'x'), interpolate(b, c, amount, 'y')], { visible: false });
+    lines.push(createSegment(board, [left, right], { strokeColor: theme.carbon, strokeWidth: 0.8, strokeOpacity: 0.35, ...options }, theme));
+  }
+  for (let column = 1; column < columns; column += 1) {
+    const amount = column / columns;
+    const bottom = board.create('point', [interpolate(a, b, amount, 'x'), interpolate(a, b, amount, 'y')], { visible: false });
+    const top = board.create('point', [interpolate(d, c, amount, 'x'), interpolate(d, c, amount, 'y')], { visible: false });
+    lines.push(createSegment(board, [bottom, top], { strokeColor: theme.carbon, strokeWidth: 0.8, strokeOpacity: 0.35, ...options }, theme));
+  }
+  return createComposite(lines);
+}
+
+export function createAreaDecomposition(
+  board: any,
+  points: any[],
+  rows: number,
+  columns: number,
+  options: any = {},
+  theme: ThemeColors,
+) {
+  const polygon = createPolygon(board, points, options, theme);
+  if (points.length !== 4) return polygon;
+  const grid = createGridOverlay(board, points as [any, any, any, any], rows, columns, options.borders ?? {}, theme);
+  return createComposite([polygon, grid]);
+}
+
 export function createMidpoint(board: any, points: [any, any], options: any = {}, theme: ThemeColors) {
   return board.create('midpoint', points, {
     size: 5,

@@ -4,6 +4,7 @@ import {
   DIAGRAM_SPEC_VERSION,
   type DiagramSpecV2,
 } from './types';
+import { DiagramExpressionError, extractMathExpressionIdentifiers, parseMathExpression } from './expressions';
 
 const idSchema = z.string().min(1).regex(/^[A-Za-z][A-Za-z0-9_-]*$/, 'Debe empezar por una letra y usar solo letras, números, _ o -.');
 const finiteNumber = z.number().finite();
@@ -20,10 +21,41 @@ export const diagramColorTokenSchema = z.enum([
 ]);
 
 export const diagramElementKindSchema = z.enum([
-  'segment', 'line', 'ray', 'polygon', 'circle', 'midpoint', 'perpendicularFoot',
+  'segment', 'line', 'ray', 'polygon', 'circle', 'arc', 'functionCurve', 'parametricCurve',
+  'poincareGeodesic', 'poincareArc', 'midpoint', 'perpendicularFoot',
   'baseExtension', 'perpendicular', 'parallel', 'angleBisector', 'angle',
-  'rightAngle', 'measurement', 'text',
+  'rightAngle', 'congruenceMark', 'perpendicularMark', 'dimensionLine', 'measurement',
+  'grid', 'areaDecomposition', 'text', 'label', 'formula', 'infoPanel',
 ]);
+
+const expressionSchema = z.string().min(1).superRefine((source, context) => {
+  try {
+    parseMathExpression(source);
+  } catch (error) {
+    context.addIssue({ code: 'custom', message: error instanceof DiagramExpressionError ? error.message : 'Expresión matemática no válida.' });
+  }
+});
+
+const elementPropertiesSchema = z.object({
+  expression: expressionSchema.optional(),
+  xExpression: expressionSchema.optional(),
+  yExpression: expressionSchema.optional(),
+  parameter: idSchema.optional(),
+  domain: z.tuple([finiteNumber, finiteNumber]).optional(),
+  samples: z.number().int().min(8).max(2048).optional(),
+  unit: z.string().max(32).optional(),
+  precision: z.number().int().min(0).max(12).optional(),
+  offset: finiteNumber.optional(),
+  markCount: z.number().int().min(1).max(4).optional(),
+  rows: z.number().int().min(1).max(100).optional(),
+  columns: z.number().int().min(1).max(100).optional(),
+  title: z.string().min(1).optional(),
+  clockwise: z.boolean().optional(),
+}).strict().superRefine((properties, context) => {
+  if (properties.domain && properties.domain[0] >= properties.domain[1]) {
+    context.addIssue({ code: 'custom', message: 'El inicio del dominio debe ser menor que el final.', path: ['domain'] });
+  }
+});
 
 const selectionSchema = z.object({
   selectable: z.boolean(),
@@ -50,8 +82,12 @@ const pointSchema = z.object({
   x: finiteNumber,
   y: finiteNumber,
   fixed: z.boolean(),
-  constraint: z.enum(['free', 'fixed', 'horizontal', 'vertical', 'glider']),
+  constraint: z.enum(['free', 'fixed', 'horizontal', 'vertical', 'glider', 'derived', 'constrained']),
   gliderTarget: idSchema.optional(),
+  dependencies: z.array(idSchema).optional(),
+  xExpression: expressionSchema.optional(),
+  yExpression: expressionSchema.optional(),
+  constraintIds: z.array(idSchema).optional(),
 }).strict();
 
 const elementSchema = z.object({
@@ -60,6 +96,24 @@ const elementSchema = z.object({
   refs: z.array(idSchema),
   dashed: z.boolean().optional(),
   text: z.string().optional(),
+  properties: elementPropertiesSchema.optional(),
+}).strict();
+
+const constraintSchema = z.object({
+  id: idSchema,
+  label: z.string().min(1),
+  kind: z.enum(['fixed', 'horizontal', 'vertical', 'coincident', 'on', 'distance', 'perpendicular', 'parallel', 'insideDisk', 'expression']),
+  refs: z.array(idSchema),
+  expression: expressionSchema.optional(),
+  value: finiteNumber.optional(),
+  enabled: z.boolean(),
+}).strict();
+
+const dependencySchema = z.object({
+  sourceId: idSchema,
+  targetId: idSchema,
+  relation: z.enum(['construction', 'expression', 'constraint']),
+  constraintId: idSchema.optional(),
 }).strict();
 
 const sliderSchema = z.object({
@@ -103,9 +157,12 @@ const groupSchema = z.object({
 }).strict();
 
 const minimumRefs: Record<string, number> = {
-  segment: 2, line: 2, ray: 2, polygon: 3, circle: 2, midpoint: 2,
+  segment: 2, line: 2, ray: 2, polygon: 3, circle: 2, arc: 3,
+  functionCurve: 0, parametricCurve: 0, poincareGeodesic: 4, poincareArc: 4, midpoint: 2,
   perpendicularFoot: 3, baseExtension: 3, perpendicular: 3, parallel: 3,
-  angleBisector: 3, angle: 3, rightAngle: 3, measurement: 1, text: 1,
+  angleBisector: 3, angle: 3, rightAngle: 3, congruenceMark: 2,
+  perpendicularMark: 3, dimensionLine: 2, measurement: 1, grid: 4,
+  areaDecomposition: 3, text: 1, label: 1, formula: 1, infoPanel: 1,
 };
 
 export const diagramSpecV2Schema = z.object({
@@ -132,11 +189,13 @@ export const diagramSpecV2Schema = z.object({
   elements: z.array(elementSchema),
   sliders: z.array(sliderSchema),
   steps: z.array(stepSchema),
+  constraints: z.array(constraintSchema).optional(),
+  dependencies: z.array(dependencySchema).optional(),
   note: z.string(),
   extensions: extensionsSchema,
 }).strict().superRefine((spec, context) => {
   const items = [...spec.points, ...spec.elements, ...spec.sliders];
-  const allIds = [...items.map(item => item.id), ...spec.steps.map(step => step.id), ...spec.groups.map(group => group.id)];
+  const allIds = [...items.map(item => item.id), ...spec.steps.map(step => step.id), ...spec.groups.map(group => group.id), ...(spec.constraints ?? []).map(constraint => constraint.id)];
   const seen = new Set<string>();
   for (const id of allIds) {
     if (seen.has(id)) context.addIssue({ code: 'custom', message: `El ID ${id} está duplicado.` });
@@ -149,7 +208,7 @@ export const diagramSpecV2Schema = z.object({
   });
 
   const itemIds = new Set(items.map(item => item.id));
-  const referenceIds = new Set([...spec.points.map(item => item.id), ...spec.elements.map(item => item.id)]);
+  const referenceIds = new Set([...spec.points.map(item => item.id), ...spec.elements.map(item => item.id), ...spec.sliders.map(item => item.id)]);
   const layerIds = new Set(spec.layers.map(layer => layer.id));
   const groupIds = new Set(spec.groups.map(group => group.id));
 
@@ -170,12 +229,84 @@ export const diagramSpecV2Schema = z.object({
     element.refs.forEach(ref => {
       if (!referenceIds.has(ref)) context.addIssue({ code: 'custom', message: `${element.id} referencia el objeto inexistente ${ref}.`, path: ['elements', index, 'refs'] });
     });
+    if (element.kind === 'functionCurve' && !element.properties?.expression) {
+      context.addIssue({ code: 'custom', message: `${element.id} necesita properties.expression.`, path: ['elements', index, 'properties', 'expression'] });
+    }
+    if (element.kind === 'parametricCurve' && (!element.properties?.xExpression || !element.properties.yExpression)) {
+      context.addIssue({ code: 'custom', message: `${element.id} necesita expresiones x e y.`, path: ['elements', index, 'properties'] });
+    }
   });
 
   spec.points.forEach((point, index) => {
     if (point.constraint === 'glider' && (!point.gliderTarget || !referenceIds.has(point.gliderTarget))) {
       context.addIssue({ code: 'custom', message: `El glider ${point.id} necesita un soporte existente.`, path: ['points', index, 'gliderTarget'] });
     }
+    if (point.constraint === 'derived' && (!point.xExpression || !point.yExpression || !point.dependencies?.length)) {
+      context.addIssue({ code: 'custom', message: `El punto derivado ${point.id} necesita expresiones x/y y dependencias explícitas.`, path: ['points', index] });
+    }
+    if (point.constraint === 'constrained' && !point.constraintIds?.length) {
+      context.addIssue({ code: 'custom', message: `El punto restringido ${point.id} necesita al menos una restricción.`, path: ['points', index, 'constraintIds'] });
+    }
+    point.dependencies?.forEach(dependency => {
+      if (!referenceIds.has(dependency)) context.addIssue({ code: 'custom', message: `${point.id} depende de ${dependency}, que no existe.`, path: ['points', index, 'dependencies'] });
+    });
+  });
+
+  const constraintIds = new Set((spec.constraints ?? []).map(constraint => constraint.id));
+  spec.points.forEach((point, index) => point.constraintIds?.forEach(constraintId => {
+    if (!constraintIds.has(constraintId)) context.addIssue({ code: 'custom', message: `${point.id} usa la restricción inexistente ${constraintId}.`, path: ['points', index, 'constraintIds'] });
+  }));
+
+  const expressionEntries: Array<{ source: string; path: Array<string | number>; parameter?: string; targetId?: string }> = [];
+  spec.points.forEach((point, index) => {
+    if (point.xExpression) expressionEntries.push({ source: point.xExpression, path: ['points', index, 'xExpression'], targetId: point.id });
+    if (point.yExpression) expressionEntries.push({ source: point.yExpression, path: ['points', index, 'yExpression'], targetId: point.id });
+  });
+  spec.elements.forEach((element, index) => {
+    const properties = element.properties;
+    if (!properties) return;
+    if (properties.expression) expressionEntries.push({ source: properties.expression, path: ['elements', index, 'properties', 'expression'], parameter: properties.parameter, targetId: element.id });
+    if (properties.xExpression) expressionEntries.push({ source: properties.xExpression, path: ['elements', index, 'properties', 'xExpression'], parameter: properties.parameter, targetId: element.id });
+    if (properties.yExpression) expressionEntries.push({ source: properties.yExpression, path: ['elements', index, 'properties', 'yExpression'], parameter: properties.parameter, targetId: element.id });
+  });
+  (spec.constraints ?? []).forEach((constraint, index) => {
+    const requiredRefs = constraint.kind === 'fixed' || constraint.kind === 'expression'
+      ? 1
+      : constraint.kind === 'perpendicular' || constraint.kind === 'parallel' || constraint.kind === 'insideDisk'
+        ? 3
+        : 2;
+    if (constraint.refs.length < requiredRefs) context.addIssue({ code: 'custom', message: `${constraint.id} necesita al menos ${requiredRefs} referencias.`, path: ['constraints', index, 'refs'] });
+    constraint.refs.forEach(ref => {
+      if (!referenceIds.has(ref)) context.addIssue({ code: 'custom', message: `${constraint.id} referencia ${ref}, que no existe.`, path: ['constraints', index, 'refs'] });
+    });
+    if ((constraint.kind === 'distance' || constraint.kind === 'expression') && constraint.value === undefined && !constraint.expression) {
+      context.addIssue({ code: 'custom', message: `${constraint.id} necesita value o expression.`, path: ['constraints', index] });
+    }
+    if (constraint.expression) expressionEntries.push({ source: constraint.expression, path: ['constraints', index, 'expression'] });
+  });
+  expressionEntries.forEach(entry => {
+    try {
+      extractMathExpressionIdentifiers(entry.source).forEach(identifier => {
+        const root = identifier.split('.')[0];
+        if (!referenceIds.has(root) && root !== entry.parameter && root !== 'x' && root !== 't') {
+          context.addIssue({ code: 'custom', message: `La variable ${identifier} no corresponde a un objeto de la escena.`, path: entry.path });
+        } else if (entry.targetId && referenceIds.has(root) && !(spec.dependencies ?? []).some(dependency => dependency.sourceId === root && dependency.targetId === entry.targetId)) {
+          context.addIssue({ code: 'custom', message: `La dependencia ${root} → ${entry.targetId} debe declararse explícitamente.`, path: entry.path });
+        }
+      });
+    } catch {
+      // expressionSchema already reports syntax errors with the precise field path.
+    }
+  });
+
+  const dependencyKeys = new Set<string>();
+  (spec.dependencies ?? []).forEach((dependency, index) => {
+    if (!referenceIds.has(dependency.sourceId)) context.addIssue({ code: 'custom', message: `La dependencia parte de ${dependency.sourceId}, que no existe.`, path: ['dependencies', index, 'sourceId'] });
+    if (!referenceIds.has(dependency.targetId)) context.addIssue({ code: 'custom', message: `La dependencia termina en ${dependency.targetId}, que no existe.`, path: ['dependencies', index, 'targetId'] });
+    if (dependency.constraintId && !constraintIds.has(dependency.constraintId)) context.addIssue({ code: 'custom', message: `La dependencia usa la restricción inexistente ${dependency.constraintId}.`, path: ['dependencies', index, 'constraintId'] });
+    const key = `${dependency.sourceId}:${dependency.targetId}:${dependency.relation}:${dependency.constraintId ?? ''}`;
+    if (dependencyKeys.has(key)) context.addIssue({ code: 'custom', message: 'La arista de dependencia está duplicada.', path: ['dependencies', index] });
+    dependencyKeys.add(key);
   });
 
   spec.steps.forEach((step, index) => step.visibleTargets.forEach(target => {
@@ -190,11 +321,18 @@ export const diagramSpecV2Schema = z.object({
     }
   }));
 
-  const dependencyMap = new Map<string, string[]>([
-    ...spec.points.map(point => [point.id, point.constraint === 'glider' && point.gliderTarget ? [point.gliderTarget] : []] as const),
-    ...spec.elements.map(element => [element.id, element.refs] as const),
+  const dependencyMap = new Map<string, readonly string[]>([
+    ...spec.points.map(point => [point.id, [
+      ...(point.constraint === 'glider' && point.gliderTarget ? [point.gliderTarget] : []),
+      ...(point.dependencies ?? []),
+    ]] as const),
+    ...spec.elements.map(element => [element.id, [...element.refs]] as const),
     ...spec.sliders.map(slider => [slider.id, [] as string[]] as const),
   ]);
+  (spec.dependencies ?? []).forEach(dependency => {
+    if (!dependencyMap.has(dependency.targetId)) return;
+    dependencyMap.set(dependency.targetId, [...(dependencyMap.get(dependency.targetId) ?? []), dependency.sourceId]);
+  });
   const visited = new Set<string>();
   const visiting = new Set<string>();
   const visit = (id: string): boolean => {

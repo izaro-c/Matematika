@@ -3,14 +3,23 @@ import { MathBoard, type ThemeColors } from '../core/MathBoard';
 import {
   createAngle,
   createAngleBisectorRay,
+  createArc,
+  createAreaDecomposition,
   createBaseExtensionToFoot,
   createCircle,
+  createCongruenceMark,
+  createDimensionLine,
+  createFunctionCurve,
   createGlider,
+  createGridOverlay,
   createLine,
   createMidpoint,
   createParallelLine,
+  createParametricCurve,
   createPerpendicularFoot,
   createPerpendicularLine,
+  createPoincareArc,
+  createPoincareGeodesic,
   createPoint,
   createPolygon,
   createRay,
@@ -22,6 +31,7 @@ import {
 import { DiagramInfoPanel, DiagramTitle } from '@/shared/ui/DiagramOverlay';
 import {
   DIAGRAM_RENDERER_ID,
+  constrainPointCoordinates,
   createSceneConstructionPlan,
   createScenePlan,
   fitViewport,
@@ -31,6 +41,7 @@ import {
   sceneRevision,
   withViewportBounds,
   zoomViewport,
+  evaluateMathExpression,
   type DiagramBounds,
   type DiagramElement,
   type DiagramSceneItem,
@@ -65,7 +76,54 @@ function refsFor(item: DiagramElement, elements: Record<string, any>): any[] {
   return item.refs.map(ref => elements[ref]).filter(Boolean);
 }
 
-function createElement(board: any, elements: Record<string, any>, item: DiagramElement, theme: ThemeColors, layer: number) {
+function liveVariables(elements: Record<string, any>, spec: DiagramSpecV2): Record<string, number> {
+  const variables: Record<string, number> = {};
+  spec.points.forEach(point => {
+    const element = elements[point.id];
+    if (!element) return;
+    variables[`${point.id}.x`] = element.X();
+    variables[`${point.id}.y`] = element.Y();
+  });
+  spec.sliders.forEach(slider => {
+    const element = elements[slider.id];
+    variables[slider.id] = element?.Value?.() ?? slider.value;
+  });
+  spec.elements.forEach(item => {
+    const element = elements[item.id];
+    if (element?.X && element?.Y) {
+      variables[`${item.id}.x`] = element.X();
+      variables[`${item.id}.y`] = element.Y();
+    }
+    if (item.refs.length < 2) return;
+    const a = elements[item.refs[0]];
+    const b = elements[item.refs[1]];
+    if (a?.Dist && b) variables[`${item.id}.length`] = a.Dist(b);
+  });
+  return variables;
+}
+
+function evaluatedValue(item: DiagramElement, elements: Record<string, any>, spec: DiagramSpecV2): number | undefined {
+  const expression = item.properties?.expression;
+  try {
+    if (expression) return evaluateMathExpression(expression, liveVariables(elements, spec));
+    const refs = refsFor(item, elements);
+    if (refs.length >= 2 && refs[0]?.Dist) return refs[0].Dist(refs[1]);
+    return undefined;
+  } catch {
+    return undefined;
+  }
+}
+
+function measurementText(item: DiagramElement, elements: Record<string, any>, spec: DiagramSpecV2): string {
+  const value = evaluatedValue(item, elements, spec);
+  if (value === undefined) return item.text || `${item.label}: valor no definido`;
+  const precision = item.properties?.precision ?? 2;
+  const unit = item.properties?.unit ? ` ${item.properties.unit}` : '';
+  const content = `${value.toFixed(precision)}${unit}`;
+  return (item.text || `${item.label}: {value}`).split('{value}').join(content);
+}
+
+function createElement(board: any, elements: Record<string, any>, item: DiagramElement, theme: ThemeColors, layer: number, spec: DiagramSpecV2) {
   const refs = refsFor(item, elements);
   const lineOptions = { strokeColor: theme[item.color], strokeWidth: 2.4, dash: item.dashed ? 2 : 0, layer };
   if (item.kind === 'segment') return refs.length >= 2 ? createSegment(board, [refs[0], refs[1]], lineOptions, theme) : null;
@@ -75,6 +133,37 @@ function createElement(board: any, elements: Record<string, any>, item: DiagramE
     fillColor: theme[item.color], fillOpacity: 0.16, borders: { strokeColor: theme[item.color], strokeWidth: 1.5 }, layer,
   }, theme) : null;
   if (item.kind === 'circle') return refs.length >= 2 ? createCircle(board, [refs[0], refs[1]], lineOptions, theme) : null;
+  if (item.kind === 'arc') return refs.length >= 3 ? createArc(board, [refs[0], refs[1], refs[2]], lineOptions, theme) : null;
+  if (item.kind === 'functionCurve' && item.properties?.expression) {
+    const domain = item.properties.domain ?? [-5, 5];
+    const parameter = item.properties.parameter ?? 'x';
+    return createFunctionCurve(board, value => {
+      try {
+        return evaluateMathExpression(item.properties?.expression ?? '0', { ...liveVariables(elements, spec), [parameter]: value, x: value });
+      } catch {
+        return Number.NaN;
+      }
+    }, domain, lineOptions, theme);
+  }
+  if (item.kind === 'parametricCurve' && item.properties?.xExpression && item.properties.yExpression) {
+    const domain = item.properties.domain ?? [0, Math.PI * 2];
+    const parameter = item.properties.parameter ?? 't';
+    const variables = (value: number) => ({ ...liveVariables(elements, spec), [parameter]: value, t: value });
+    return createParametricCurve(
+      board,
+      value => {
+        try { return evaluateMathExpression(item.properties?.xExpression ?? '0', variables(value)); } catch { return Number.NaN; }
+      },
+      value => {
+        try { return evaluateMathExpression(item.properties?.yExpression ?? '0', variables(value)); } catch { return Number.NaN; }
+      },
+      domain,
+      lineOptions,
+      theme,
+    );
+  }
+  if (item.kind === 'poincareGeodesic') return refs.length >= 4 ? createPoincareGeodesic(board, [refs[0], refs[1], refs[2], refs[3]], lineOptions, theme) : null;
+  if (item.kind === 'poincareArc') return refs.length >= 4 ? createPoincareArc(board, [refs[0], refs[1], refs[2], refs[3]], lineOptions, theme) : null;
   if (item.kind === 'midpoint') return refs.length >= 2 ? createMidpoint(board, [refs[0], refs[1]], {
     name: item.label, fillColor: theme[item.color], strokeColor: theme[item.color], layer,
   }, theme) : null;
@@ -91,9 +180,57 @@ function createElement(board: any, elements: Record<string, any>, item: DiagramE
   if (item.kind === 'rightAngle') return refs.length >= 3 ? createRightAngleMarker(board, [refs[0], refs[1], refs[2]], {
     fillColor: theme[item.color], strokeColor: theme[item.color], layer,
   }, theme) : null;
+  if (item.kind === 'perpendicularMark') return refs.length >= 3 ? createRightAngleMarker(board, [refs[0], refs[1], refs[2]], {
+    fillColor: theme[item.color], strokeColor: theme[item.color], layer,
+  }, theme) : null;
+  if (item.kind === 'congruenceMark') return refs.length >= 2 ? createCongruenceMark(
+    board,
+    [refs[0], refs[1]],
+    item.properties?.markCount ?? 1,
+    lineOptions,
+    theme,
+  ) : null;
+  if (item.kind === 'dimensionLine') return refs.length >= 2 ? createDimensionLine(
+    board,
+    [refs[0], refs[1]],
+    () => measurementText(item, elements, spec),
+    item.properties?.offset ?? 0.35,
+    lineOptions,
+    theme,
+  ) : null;
+  if (item.kind === 'grid') return refs.length >= 4 ? createGridOverlay(
+    board,
+    [refs[0], refs[1], refs[2], refs[3]],
+    item.properties?.rows ?? 4,
+    item.properties?.columns ?? 4,
+    lineOptions,
+    theme,
+  ) : null;
+  if (item.kind === 'areaDecomposition') return refs.length >= 3 ? createAreaDecomposition(
+    board,
+    refs,
+    item.properties?.rows ?? 2,
+    item.properties?.columns ?? 2,
+    { fillColor: theme[item.color], fillOpacity: 0.16, borders: lineOptions, layer },
+    theme,
+  ) : null;
   const anchor = refs[0];
-  return anchor ? createText(board, [() => anchor.X() + 0.25, () => anchor.Y() + 0.35, item.text || item.label], {
-    color: theme[item.color], layer,
+  const dynamicText = () => {
+    const body = item.kind === 'measurement' || item.kind === 'dimensionLine' || item.properties?.expression
+      ? measurementText(item, elements, spec)
+      : item.text || item.label;
+    return item.kind === 'infoPanel' && item.properties?.title
+      ? `<strong>${item.properties.title}</strong><br/>${body}`
+      : body;
+  };
+  return anchor ? createText(board, [() => anchor.X() + 0.25, () => anchor.Y() + 0.35, dynamicText], {
+    color: theme[item.color],
+    layer,
+    cssClass: item.kind === 'formula'
+      ? 'font-serif text-sm italic'
+      : item.kind === 'infoPanel'
+        ? 'rounded border border-carbon/15 bg-lienzo/95 p-2 font-serif text-sm shadow-sm'
+        : 'font-serif text-sm',
   }, theme) : null;
 }
 
@@ -175,7 +312,22 @@ export const DiagramRenderer: React.FC<DiagramRendererProps> = ({
           createSceneConstructionPlan(spec).forEach(entry => {
             const sceneItem = entry.item;
             if ('constraint' in sceneItem) {
-              const item = sceneItem.constraint === 'glider' && sceneItem.gliderTarget
+              const item = sceneItem.constraint === 'derived' && sceneItem.xExpression && sceneItem.yExpression
+                ? createPoint(board, [
+                  () => {
+                    try { return evaluateMathExpression(sceneItem.xExpression ?? '0', liveVariables(elements, spec)); } catch { return sceneItem.x; }
+                  },
+                  () => {
+                    try { return evaluateMathExpression(sceneItem.yExpression ?? '0', liveVariables(elements, spec)); } catch { return sceneItem.y; }
+                  },
+                ], {
+                  name: sceneItem.label,
+                  fixed: true,
+                  fillColor: theme[sceneItem.color],
+                  strokeColor: theme[sceneItem.color],
+                  layer: itemLayerNumber(spec, sceneItem),
+                }, theme)
+                : sceneItem.constraint === 'glider' && sceneItem.gliderTarget
                 ? createGlider(board, [sceneItem.x, sceneItem.y, elements[sceneItem.gliderTarget]], {
                   name: sceneItem.label,
                   fixed: sceneItem.fixed || entry.locked,
@@ -191,11 +343,30 @@ export const DiagramRenderer: React.FC<DiagramRendererProps> = ({
                   layer: itemLayerNumber(spec, sceneItem),
                 }, theme);
               elements[sceneItem.id] = item;
-              if (sceneItem.constraint === 'horizontal' && !sceneItem.fixed) item.on('drag', () => item.moveTo([item.X(), sceneItem.y], 0));
-              if (sceneItem.constraint === 'vertical' && !sceneItem.fixed) item.on('drag', () => item.moveTo([sceneItem.x, item.Y()], 0));
-              if (!sceneItem.fixed && !entry.locked) item.on('up', () => onPointMove?.(sceneItem.id, item.X(), item.Y()));
+              if (!sceneItem.fixed && !entry.locked && sceneItem.constraint !== 'derived' && sceneItem.constraint !== 'glider') {
+                let enforcing = false;
+                item.on('drag', () => {
+                  if (enforcing) return;
+                  const liveSpec: DiagramSpecV2 = {
+                    ...spec,
+                    points: spec.points.map(point => elements[point.id]
+                      ? { ...point, x: elements[point.id].X(), y: elements[point.id].Y() }
+                      : point),
+                    sliders: spec.sliders.map(slider => elements[slider.id]?.Value
+                      ? { ...slider, value: elements[slider.id].Value() }
+                      : slider),
+                  };
+                  const next = constrainPointCoordinates(liveSpec, sceneItem, { x: item.X(), y: item.Y() });
+                  if (Math.abs(next.x - item.X()) > 1e-8 || Math.abs(next.y - item.Y()) > 1e-8) {
+                    enforcing = true;
+                    item.moveTo([next.x, next.y], 0);
+                    enforcing = false;
+                  }
+                });
+              }
+              if (!sceneItem.fixed && !entry.locked && sceneItem.constraint !== 'derived') item.on('up', () => onPointMove?.(sceneItem.id, item.X(), item.Y()));
             } else if ('kind' in sceneItem) {
-              elements[sceneItem.id] = createElement(board, elements, sceneItem, theme, itemLayerNumber(spec, sceneItem));
+              elements[sceneItem.id] = createElement(board, elements, sceneItem, theme, itemLayerNumber(spec, sceneItem), spec);
             } else {
               elements[sceneItem.id] = createSlider(board, [[sceneItem.x, sceneItem.y], [sceneItem.x + 2.6, sceneItem.y]], [sceneItem.min, sceneItem.value, sceneItem.max], {
                 name: sceneItem.label,
@@ -237,13 +408,13 @@ export const DiagramRenderer: React.FC<DiagramRendererProps> = ({
               element.setAttribute({ ...base, size: active ? 8.5 : 5, fillColor: color, strokeColor: color, fillOpacity: opacity });
             } else if ('min' in item) {
               element.setAttribute({ ...base, strokeColor: color });
-            } else if (item.kind === 'polygon') {
+            } else if (item.kind === 'polygon' || item.kind === 'areaDecomposition') {
               element.setAttribute({ ...base, fillColor: color, fillOpacity: active ? 0.34 : 0.16 * opacity });
-            } else if (item.kind === 'angle' || item.kind === 'rightAngle') {
+            } else if (item.kind === 'angle' || item.kind === 'rightAngle' || item.kind === 'perpendicularMark') {
               element.setAttribute({ ...base, fillColor: color, strokeColor: color, fillOpacity: active ? 0.45 : 0.18 * opacity, strokeWidth: active ? 3 : 1.5 });
             } else if (item.kind === 'midpoint' || item.kind === 'perpendicularFoot') {
               element.setAttribute({ ...base, size: active ? 8.5 : 5, fillColor: color, strokeColor: color, fillOpacity: opacity });
-            } else if (item.kind === 'text' || item.kind === 'measurement') {
+            } else if (item.kind === 'text' || item.kind === 'label' || item.kind === 'formula' || item.kind === 'infoPanel' || item.kind === 'measurement') {
               element.setAttribute({ ...base, color });
             } else {
               element.setAttribute({ ...base, strokeColor: color, strokeOpacity: opacity, strokeWidth: active ? 4.8 : 2.4 });

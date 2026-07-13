@@ -1,0 +1,23 @@
+{
+  "version": 2, "renderer": "matematika-diagram-renderer-v2", "title": "Disco de Poincaré", "componentId": "phase3-poincare", "category": "Models", "mode": "simulation", "axis": false, "grid": false,
+  "viewport": { "bounds": [-4, 4, 4, -4], "home": [-4, 4, 4, -4], "minZoom": 0.2, "maxZoom": 12, "padding": 0.16 },
+  "layers": [{ "id": "geometry", "label": "Geometría", "order": 0, "visible": true, "locked": false }], "groups": [],
+  "points": [
+    { "id": "pO", "label": "O", "x": 0, "y": 0, "fixed": true, "constraint": "fixed", "color": "carbon", "layerId": "geometry", "order": 0, "visible": true, "locked": true, "groupIds": [], "selection": { "selectable": true }, "target": true },
+    { "id": "pR", "label": "R", "x": 3, "y": 0, "fixed": true, "constraint": "fixed", "color": "carbon", "layerId": "geometry", "order": 1, "visible": false, "locked": true, "groupIds": [], "selection": { "selectable": false }, "target": false },
+    { "id": "pA", "label": "A", "x": -1.5, "y": -0.5, "fixed": false, "constraint": "constrained", "constraintIds": ["insideA"], "color": "terracota", "layerId": "geometry", "order": 2, "visible": true, "locked": false, "groupIds": [], "selection": { "selectable": true }, "target": true },
+    { "id": "pB", "label": "B", "x": 1.2, "y": 1.1, "fixed": false, "constraint": "constrained", "constraintIds": ["insideB"], "color": "terracota", "layerId": "geometry", "order": 3, "visible": true, "locked": false, "groupIds": [], "selection": { "selectable": true }, "target": true }
+  ],
+  "elements": [
+    { "id": "disk", "label": "Borde del disco", "kind": "circle", "refs": ["pO", "pR"], "color": "carbon", "layerId": "geometry", "order": 10, "visible": true, "locked": true, "groupIds": [], "selection": { "selectable": true }, "target": true },
+    { "id": "geodesicAB", "label": "Geodésica AB", "kind": "poincareGeodesic", "refs": ["pO", "pR", "pA", "pB"], "color": "pavo", "layerId": "geometry", "order": 11, "visible": true, "locked": false, "groupIds": [], "selection": { "selectable": true }, "target": true },
+    { "id": "arcAB", "label": "Arco AB", "kind": "poincareArc", "refs": ["pO", "pR", "pA", "pB"], "color": "terracota", "layerId": "geometry", "order": 12, "visible": true, "locked": false, "groupIds": [], "selection": { "selectable": true }, "target": true }
+  ],
+  "sliders": [], "steps": [],
+  "constraints": [
+    { "id": "insideA", "label": "A dentro del disco", "kind": "insideDisk", "refs": ["pA", "pO", "pR"], "enabled": true },
+    { "id": "insideB", "label": "B dentro del disco", "kind": "insideDisk", "refs": ["pB", "pO", "pR"], "enabled": true }
+  ],
+  "dependencies": [{ "sourceId": "pO", "targetId": "pA", "relation": "constraint", "constraintId": "insideA" }, { "sourceId": "pR", "targetId": "pA", "relation": "constraint", "constraintId": "insideA" }],
+  "note": "Geodésica completa y arco finito ortogonales al borde.", "extensions": { "acceptanceFamily": "poincare" }
+}

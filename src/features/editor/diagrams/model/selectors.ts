@@ -3,12 +3,12 @@ import type { VisualDiagramModel, ElementKind, ColorToken } from './types';
 import type { DiagramState } from '../state/types';
 
 export function targetKind(kind: ElementKind): DiagramTarget['kind'] {
-  if (kind === 'segment' || kind === 'baseExtension') return 'segment';
-  if (kind === 'line' || kind === 'ray' || kind === 'perpendicular' || kind === 'parallel' || kind === 'angleBisector') return 'line';
-  if (kind === 'polygon') return 'polygon';
+  if (kind === 'segment' || kind === 'baseExtension' || kind === 'dimensionLine') return 'segment';
+  if (kind === 'line' || kind === 'ray' || kind === 'perpendicular' || kind === 'parallel' || kind === 'angleBisector' || kind === 'functionCurve' || kind === 'parametricCurve' || kind === 'poincareGeodesic' || kind === 'poincareArc') return 'line';
+  if (kind === 'polygon' || kind === 'areaDecomposition' || kind === 'grid') return 'polygon';
   if (kind === 'midpoint' || kind === 'perpendicularFoot') return 'point';
-  if (kind === 'angle' || kind === 'rightAngle') return 'angle';
-  if (kind === 'circle') return 'other';
+  if (kind === 'angle' || kind === 'rightAngle' || kind === 'perpendicularMark') return 'angle';
+  if (kind === 'circle' || kind === 'arc' || kind === 'congruenceMark') return 'other';
   return 'measurement';
 }
 

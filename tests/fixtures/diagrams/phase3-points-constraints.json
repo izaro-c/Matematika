@@ -1,0 +1,19 @@
+{
+  "version": 2, "renderer": "matematika-diagram-renderer-v2", "title": "Puntos y restricciones", "componentId": "phase3-points-constraints", "category": "Demos", "mode": "simulation", "axis": false, "grid": false,
+  "viewport": { "bounds": [-5, 5, 5, -5], "home": [-5, 5, 5, -5], "minZoom": 0.2, "maxZoom": 12, "padding": 0.16 },
+  "layers": [{ "id": "geometry", "label": "Geometría", "order": 0, "visible": true, "locked": false }], "groups": [],
+  "points": [
+    { "id": "pA", "label": "A", "x": -2, "y": 0, "fixed": false, "constraint": "free", "color": "terracota", "layerId": "geometry", "order": 0, "visible": true, "locked": false, "groupIds": [], "selection": { "selectable": true, "role": "primary" }, "target": true },
+    { "id": "pB", "label": "B", "x": 0, "y": 0, "fixed": true, "constraint": "derived", "dependencies": ["pA"], "xExpression": "pA.x + 2", "yExpression": "pA.y + 1", "color": "ocre", "layerId": "geometry", "order": 1, "visible": true, "locked": true, "groupIds": [], "selection": { "selectable": true, "role": "construction" }, "target": true },
+    { "id": "pC", "label": "C", "x": 2, "y": 2, "fixed": false, "constraint": "constrained", "constraintIds": ["horizontalC"], "color": "pavo", "layerId": "geometry", "order": 2, "visible": true, "locked": false, "groupIds": [], "selection": { "selectable": true, "role": "primary" }, "target": true }
+  ],
+  "elements": [{ "id": "segAC", "label": "Segmento AC", "kind": "segment", "refs": ["pA", "pC"], "color": "carbon", "layerId": "geometry", "order": 10, "visible": true, "locked": false, "groupIds": [], "selection": { "selectable": true, "role": "secondary" }, "target": true }], "sliders": [], "steps": [],
+  "constraints": [{ "id": "horizontalC", "label": "C horizontal con A", "kind": "horizontal", "refs": ["pC", "pA"], "enabled": true }],
+  "dependencies": [
+    { "sourceId": "pA", "targetId": "pB", "relation": "expression" },
+    { "sourceId": "pA", "targetId": "pC", "relation": "constraint", "constraintId": "horizontalC" },
+    { "sourceId": "pA", "targetId": "segAC", "relation": "construction" },
+    { "sourceId": "pC", "targetId": "segAC", "relation": "construction" }
+  ],
+  "note": "Punto libre, derivado y restringido.", "extensions": { "acceptanceFamily": "points-constraints" }
+}

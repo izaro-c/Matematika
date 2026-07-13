@@ -1,0 +1,16 @@
+{
+  "version": 2, "renderer": "matematika-diagram-renderer-v2", "title": "Cuadrículas y áreas", "componentId": "phase3-area-grids", "category": "Teoremas", "mode": "diagram", "axis": false, "grid": false,
+  "viewport": { "bounds": [-4, 4, 4, -4], "home": [-4, 4, 4, -4], "minZoom": 0.2, "maxZoom": 12, "padding": 0.16 },
+  "layers": [{ "id": "areas", "label": "Áreas", "order": 0, "visible": true, "locked": false }], "groups": [],
+  "points": [
+    { "id": "pA", "label": "A", "x": -2, "y": -2, "fixed": true, "constraint": "fixed", "color": "carbon", "layerId": "areas", "order": 0, "visible": true, "locked": true, "groupIds": [], "selection": { "selectable": true }, "target": true },
+    { "id": "pB", "label": "B", "x": 2, "y": -2, "fixed": true, "constraint": "fixed", "color": "carbon", "layerId": "areas", "order": 1, "visible": true, "locked": true, "groupIds": [], "selection": { "selectable": true }, "target": true },
+    { "id": "pC", "label": "C", "x": 2, "y": 2, "fixed": true, "constraint": "fixed", "color": "carbon", "layerId": "areas", "order": 2, "visible": true, "locked": true, "groupIds": [], "selection": { "selectable": true }, "target": true },
+    { "id": "pD", "label": "D", "x": -2, "y": 2, "fixed": true, "constraint": "fixed", "color": "carbon", "layerId": "areas", "order": 3, "visible": true, "locked": true, "groupIds": [], "selection": { "selectable": true }, "target": true }
+  ],
+  "elements": [
+    { "id": "squareGrid", "label": "Cuadrícula del cuadrado", "kind": "grid", "refs": ["pA", "pB", "pC", "pD"], "color": "carbon", "layerId": "areas", "order": 10, "visible": true, "locked": true, "groupIds": [], "selection": { "selectable": true }, "target": true, "properties": { "rows": 4, "columns": 4 } },
+    { "id": "areaSquare", "label": "Descomposición del cuadrado", "kind": "areaDecomposition", "refs": ["pA", "pB", "pC", "pD"], "color": "salvia", "layerId": "areas", "order": 11, "visible": true, "locked": true, "groupIds": [], "selection": { "selectable": true }, "target": true, "properties": { "rows": 2, "columns": 2 } }
+  ],
+  "sliders": [], "steps": [], "constraints": [], "dependencies": [], "note": "Fixture para cuadrados de Pitágoras y descomposición de área.", "extensions": { "acceptanceFamily": "area-grids" }
+}
