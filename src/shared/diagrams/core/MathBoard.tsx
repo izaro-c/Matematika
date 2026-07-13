@@ -153,8 +153,8 @@ export const MathBoard: React.FC<MathBoardProps> = ({
   }, [axis, boundingbox, generatedId, grid, id, keepaspectratio]);
 
   return (
-    <div className={className}>
-      <div ref={boardRef} className="absolute inset-0" />
+    <div className={`${className} h-full`}>
+      <div ref={boardRef} className="jxgbox absolute inset-0 h-full w-full touch-none" />
       {children}
     </div>
   );
