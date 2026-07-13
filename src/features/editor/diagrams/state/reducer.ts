@@ -1,4 +1,11 @@
 import type { DiagramState, DiagramAction, DiagramSyncStatus, DiagramParseStatus } from './types';
+import {
+  createCommandHistory,
+  createDiagramCommand,
+  executeCommand,
+  redoCommand,
+  undoCommand,
+} from '../../../../shared/diagrams/spec';
 
 export const initialDiagramState: DiagramState = {
   filePath: null,
@@ -14,6 +21,7 @@ export const initialDiagramState: DiagramState = {
   selectedId: '',
   activeStepId: '',
   canvasTool: 'select',
+  modelHistory: createCommandHistory(null),
 };
 
 function statusForParseStatus(parseStatus: DiagramParseStatus): DiagramSyncStatus {
@@ -44,6 +52,7 @@ export function diagramReducer(state: DiagramState, action: DiagramAction): Diag
         selectedId: model?.points[0]?.id || '',
         activeStepId: '',
         canvasTool: 'select',
+        modelHistory: createCommandHistory(model),
       };
     }
 
@@ -64,6 +73,7 @@ export function diagramReducer(state: DiagramState, action: DiagramAction): Diag
         selectedId: action.model.points[0]?.id || '',
         activeStepId: '',
         canvasTool: 'select',
+        modelHistory: createCommandHistory(action.model),
       };
     }
 
@@ -77,9 +87,28 @@ export function diagramReducer(state: DiagramState, action: DiagramAction): Diag
       return {
         ...state,
         currentModel: action.model,
+        modelHistory: executeCommand(state.modelHistory, createDiagramCommand(
+          action.commandId ?? `diagram-command-${state.modelHistory.past.length + 1}`,
+          action.label ?? 'Editar diagrama',
+          state.currentModel,
+          action.model,
+          action.mergeKey,
+        )),
         parseStatus: 'visual-exact',
         status: nextStatus,
       };
+    }
+
+    case 'UNDO': {
+      const history = undoCommand(state.modelHistory);
+      if (history === state.modelHistory) return state;
+      return { ...state, modelHistory: history, currentModel: history.present, status: 'visual-authoritative', parseStatus: 'visual-exact' };
+    }
+
+    case 'REDO': {
+      const history = redoCommand(state.modelHistory);
+      if (history === state.modelHistory) return state;
+      return { ...state, modelHistory: history, currentModel: history.present, status: 'visual-authoritative', parseStatus: 'visual-exact' };
     }
 
     case 'SOURCE_EDIT': {
@@ -137,6 +166,7 @@ export function diagramReducer(state: DiagramState, action: DiagramAction): Diag
         diagnostics: action.diagnostics,
         parseStatus: 'visual-exact',
         status: state.currentSource === state.originalSource ? 'synced' : 'source-authoritative',
+        modelHistory: createCommandHistory(action.model),
       };
 
     case 'PARSE_CODE_PREVIEW':
@@ -192,6 +222,7 @@ export function diagramReducer(state: DiagramState, action: DiagramAction): Diag
         parseStatus: action.model ? 'visual-exact' : state.parseStatus,
         expectedVersion: action.expectedVersion,
         diagnostics: [],
+        modelHistory: createCommandHistory(action.model),
       };
 
     case 'SAVE_FAILURE':

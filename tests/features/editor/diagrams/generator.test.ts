@@ -1,21 +1,28 @@
-import { describe, it, expect } from 'vitest';
-import { generateDiagramSource } from '../../../../src/features/editor/diagrams/source/generator';
+import { describe, expect, it } from 'vitest';
+import { readFileSync } from 'node:fs';
 import { parseDiagramSourceAST } from '../../../../scripts/editor/parseDiagramSourceAST';
-import { createTemplateModel, point, element, slider, step } from '../../../../src/features/editor/diagrams/model/commands';
-import type { VisualDiagramModel } from '../../../../src/features/editor/diagrams/model/types';
+import { createTemplateModel, step } from '../../../../src/features/editor/diagrams/model/commands';
+import { generateDiagramSource } from '../../../../src/features/editor/diagrams/source/generator';
 
-describe('Diagram TSX Generator', () => {
-  it('preserves every model field through an exact generate-parse-generate roundtrip', () => {
-    const model: VisualDiagramModel = {
-      ...createTemplateModel('circunferencia', 'Roundtrip completo', 'definicion'),
+describe('DiagramSpec v2 TSX adapter generator', () => {
+  it('preserves every v2 field through an exact generate-parse-generate roundtrip', () => {
+    const base = createTemplateModel('circunferencia', 'Roundtrip completo', 'definicion');
+    const model = {
+      ...base,
       componentId: 'roundtrip-completo',
       category: 'Teoremas',
-      mode: 'diagram',
+      mode: 'diagram' as const,
       axis: true,
       grid: true,
-      boundingBox: [-9, 8, 11, -7],
+      viewport: { ...base.viewport, bounds: [-9, 8, 11, -7] as [number, number, number, number] },
       note: 'Overlay con expresión f(x) y pasos.',
-      steps: [step('paso-expresion', 'Paso expresión', 'Evalúa f(x).', ['pO', 'circunferencia'])],
+      steps: [step('paso-expresion', 'Paso expresión', 'Evalúa f(x).', ['pO', 'circle'])],
+      groups: [{
+        id: 'circle-group', label: 'Circunferencia', memberIds: ['pO', 'pA', 'circle'], visible: true, locked: false,
+        selection: { selectable: true, role: 'primary' as const },
+      }],
+      points: base.points.map(point => ({ ...point, groupIds: ['circle-group'] })),
+      elements: base.elements.map(element => ({ ...element, groupIds: element.id === 'circle' ? ['circle-group'] : [] })),
     };
     const first = generateDiagramSource(model, 'RoundtripCompleto');
     expect(first.ok).toBe(true);
@@ -28,127 +35,49 @@ describe('Diagram TSX Generator', () => {
     expect(second.ok && second.source).toBe(first.source);
   });
 
-  it('should generate source for a template model', () => {
-    const model = createTemplateModel('circunferencia', 'Círculo de prueba', 'definicion');
-    const result = generateDiagramSource(model, 'CirculoDePrueba');
-    expect(result.ok).toBe(true);
-    if (result.ok) {
-      expect(result.source).toContain('export const CirculoDePrueba = () => {');
-      expect(result.source).toContain('MathBoard');
-      expect(result.source).toContain('createPoint');
-      expect(result.source).toContain('createCircle');
-    }
-  });
-
-  it('should return error diagnostics on invalid model state', () => {
-    // Model with empty componentId or no points
-    const model = {
-      title: 'Empty',
-      componentId: '',
-      category: 'Teoremas',
-      mode: 'simulation' as const,
-      axis: false,
-      grid: false,
-      boundingBox: [-5, 5, 5, -5] as [number, number, number, number],
-      points: [],
-      elements: [],
-      sliders: [],
-      steps: [],
-      note: 'None',
-    };
-
-    const result = generateDiagramSource(model, 'Empty');
-    expect(result.ok).toBe(false);
-    if (!result.ok) {
-      expect(result.diagnostics.length).toBeGreaterThan(0);
-      expect(result.diagnostics.some(d => d.code === 'empty-component-id')).toBe(true);
-      expect(result.diagnostics.some(d => d.code === 'no-points')).toBe(true);
-    }
-  });
-
-  it('should flag elements referencing non-existent points', () => {
-    const model = {
-      title: 'Dangling Ref',
-      componentId: 'dangling-ref',
-      category: 'Teoremas',
-      mode: 'simulation' as const,
-      axis: false,
-      grid: false,
-      boundingBox: [-5, 5, 5, -5] as [number, number, number, number],
-      points: [point('pA', 'A', 0, 0)],
-      elements: [element('segAB', 'Segment AB', 'segment', ['pA', 'pB'], 'carbon')],
-      sliders: [],
-      steps: [],
-      note: 'None',
-    };
-
-    const result = generateDiagramSource(model, 'DanglingRef');
-    expect(result.ok).toBe(false);
-    if (!result.ok) {
-      expect(result.diagnostics.some(d => d.code === 'invalid-reference')).toBe(true);
-    }
-  });
-
-  it('generates all supported construction helpers, sliders, gliders and step visibility', () => {
-    const model: VisualDiagramModel = {
-      title: 'Completo',
-      componentId: 'completo',
-      category: 'geogebra',
-      mode: 'simulation',
-      axis: true,
-      grid: true,
-      boundingBox: [-5, 5, 5, -5],
-      points: [
-        point('pA', 'A', -1, 0, false, 'pavo'),
-        point('pB', 'B', 1, 0),
-        point('pC', 'C', 0, 2),
-        point('pD', 'D', 2, 2, false, 'salvia', 'horizontal'),
-        point('pE', 'E', -2, 2, false, 'terracota', 'vertical'),
-        point('pG', 'G', 0, 0, false, 'ocre', 'glider', 'segAB'),
-      ],
-      elements: [
-        element('segAB', 'AB', 'segment', ['pA', 'pB'], 'carbon', true, { dashed: true }),
-        element('lineAB', 'recta AB', 'line', ['pA', 'pB'], 'pavo', false),
-        element('rayAC', 'rayo AC', 'ray', ['pA', 'pC'], 'salvia'),
-        element('polyABC', 'ABC', 'polygon', ['pA', 'pB', 'pC'], 'musgo', false, true),
-        element('circAB', 'cAB', 'circle', ['pA', 'pB'], 'granada'),
-        element('midAB', 'M', 'midpoint', ['pA', 'pB'], 'ocre'),
-        element('footCAB', 'F', 'perpendicularFoot', ['pC', 'pA', 'pB'], 'terracota'),
-        element('extCAB', 'ext', 'baseExtension', ['pC', 'pA', 'pB'], 'pizarra'),
-        element('perpCAB', 'perp', 'perpendicular', ['pC', 'pA', 'pB'], 'pavo', true),
-        element('parCAB', 'par', 'parallel', ['pC', 'pA', 'pB'], 'salvia'),
-        element('bisABC', 'bis', 'angleBisector', ['pA', 'pB', 'pC'], 'musgo'),
-        element('angABC', 'ang', 'angle', ['pA', 'pB', 'pC'], 'granada'),
-        element('rightABC', 'right', 'rightAngle', ['pA', 'pB', 'pC'], 'ocre'),
-        { ...element('txtA', 'texto', 'text', ['pA'], 'carbon'), text: 'Texto' },
-        { ...element('measureG', 'medida', 'measurement', ['pG'], 'pavo'), text: 'm' },
-      ],
-      sliders: [{ ...slider('s1', 'Control', -4, -4, 2, 'granada'), min: 0, max: 4, step: 0.5 }],
-      steps: [step('step1', 'Paso 1', 'Mostrar AB', ['pA', 'pB', 'segAB'])],
-      note: 'Nota',
-    };
-
-    const result = generateDiagramSource(model, 'Completo');
-
+  it('generates a thin adapter around the shared renderer instead of duplicating MathFactory logic', () => {
+    const result = generateDiagramSource(createTemplateModel('circunferencia', 'Círculo de prueba', 'definicion'), 'CirculoDePrueba');
     expect(result.ok).toBe(true);
     if (!result.ok) return;
-    for (const helper of [
-      'createBaseExtensionToFoot',
-      'createGlider',
-      'createParallelLine',
-      'createPerpendicularFoot',
-      'createPerpendicularLine',
-      'createSlider',
-      'createText',
-      'createRightAngleMarker',
-    ]) {
-      expect(result.source).toContain(helper);
-    }
-    expect(result.source).toContain('axis');
-    expect(result.source).toContain('grid');
-    expect(result.source).toContain('"step1"');
-    expect(result.source).toContain('outsideBaseExtension');
-    expect(result.source).toContain('els["pD"].on');
-    expect(result.source).toContain('els["pE"].on');
+    expect(result.source).toContain("import { createDiagramSpec, DiagramRenderer } from '@/shared/diagrams/public'");
+    expect(result.source).toContain('createDiagramSpec(');
+    expect(result.source).toContain('export const CirculoDePrueba = () => <DiagramRenderer spec={CirculoDePruebaSpec} />;');
+    expect(result.source).not.toContain('MathBoard');
+    expect(result.source).not.toContain('createPoint');
+  });
+
+  it('keeps editor preview and published runtime on the same renderer import path', () => {
+    const previewAdapter = readFileSync('src/features/editor/diagrams/ui/DiagramCanvas.tsx', 'utf8');
+    const generated = generateDiagramSource(createTemplateModel('modelo-estatico', 'Ruta común', 'modelo'), 'RutaComun');
+    expect(generated.ok).toBe(true);
+    if (!generated.ok) return;
+    const sharedImport = "from '@/shared/diagrams/public'";
+    expect(previewAdapter).toContain(`DiagramRenderer, withMovedPoint, withViewportBounds } ${sharedImport}`);
+    expect(previewAdapter).not.toContain('<svg');
+    expect(generated.source).toContain(`createDiagramSpec, DiagramRenderer } ${sharedImport}`);
+    expect(generated.source).not.toContain('MathBoard');
+  });
+
+  it('reports schema paths for invalid IDs, missing points and dangling references', () => {
+    const valid = createTemplateModel('circunferencia', 'Inválido', 'definicion');
+    const invalid = {
+      ...valid,
+      componentId: '',
+      points: [],
+      elements: [{ ...valid.elements[0], refs: ['missing-a', 'missing-b'] }],
+    };
+    const result = generateDiagramSource(invalid, 'Invalido');
+    expect(result.ok).toBe(false);
+    if (result.ok) return;
+    expect(result.diagnostics[0].code).toBe('invalid-diagram-spec-v2');
+    expect(result.diagnostics[0].message).toContain('componentId');
+    expect(result.diagnostics[0].message).toContain('points');
+  });
+
+  it('rejects component names that cannot be exported safely', () => {
+    const result = generateDiagramSource(createTemplateModel('modelo-estatico', 'Modelo', 'modelo'), 'not-valid');
+    expect(result.ok).toBe(false);
+    if (result.ok) return;
+    expect(result.diagnostics).toContainEqual(expect.objectContaining({ code: 'invalid-component-name' }));
   });
 });

@@ -29,7 +29,7 @@ export interface DiagramTarget {
 
 export type DiagramTargetRegistry = DiagramTarget[];
 
-export interface DiagramSpec {
+export interface EditorDiagramReference {
   componentName: string;
   category: string;
   path: string;
@@ -47,7 +47,7 @@ export interface EditorDocument {
   exports: string;
   blocks: Block[];
   rawBody: string;
-  diagrams: DiagramSpec[];
+  diagrams: EditorDiagramReference[];
   dirtyState: DirtyState;
   validation: EditorValidationResult;
 }

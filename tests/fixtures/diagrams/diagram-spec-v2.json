@@ -1,0 +1,72 @@
+{
+  "version": 2,
+  "renderer": "matematika-diagram-renderer-v2",
+  "title": "Escena por capas",
+  "componentId": "escena-por-capas",
+  "category": "Demos",
+  "mode": "simulation",
+  "axis": true,
+  "grid": true,
+  "viewport": {
+    "bounds": [-3, 3, 3, -3],
+    "home": [-5, 5, 5, -5],
+    "minZoom": 0.25,
+    "maxZoom": 10,
+    "padding": 0.15
+  },
+  "layers": [
+    { "id": "construction", "label": "Construcción", "order": 0, "visible": true, "locked": true },
+    { "id": "geometry", "label": "Geometría", "order": 1, "visible": true, "locked": false },
+    { "id": "annotations", "label": "Anotaciones", "order": 2, "visible": true, "locked": false }
+  ],
+  "groups": [
+    {
+      "id": "triangle-group",
+      "label": "Triángulo",
+      "memberIds": ["pA", "pB", "pC", "polyABC"],
+      "visible": true,
+      "locked": false,
+      "selection": { "selectable": true, "ariaLabel": "Triángulo ABC", "role": "primary" }
+    }
+  ],
+  "points": [
+    {
+      "id": "pA", "label": "A", "x": -2, "y": -1, "fixed": false, "constraint": "free", "color": "terracota",
+      "layerId": "geometry", "order": 10, "visible": true, "locked": false, "groupIds": ["triangle-group"], "target": true,
+      "selection": { "selectable": true, "ariaLabel": "Punto A", "role": "primary" }
+    },
+    {
+      "id": "pB", "label": "B", "x": 2, "y": -1, "fixed": false, "constraint": "horizontal", "color": "terracota",
+      "layerId": "geometry", "order": 20, "visible": true, "locked": false, "groupIds": ["triangle-group"], "target": true,
+      "selection": { "selectable": true, "ariaLabel": "Punto B", "role": "primary" }
+    },
+    {
+      "id": "pC", "label": "C", "x": 0, "y": 2, "fixed": false, "constraint": "free", "color": "terracota",
+      "layerId": "geometry", "order": 30, "visible": true, "locked": false, "groupIds": ["triangle-group"], "target": true,
+      "selection": { "selectable": true, "ariaLabel": "Punto C", "role": "primary" }
+    },
+    {
+      "id": "pFar", "label": "F", "x": 12, "y": 9, "fixed": true, "constraint": "fixed", "color": "ocre",
+      "layerId": "annotations", "order": 5, "visible": true, "locked": true, "groupIds": [], "target": false,
+      "selection": { "selectable": true, "ariaLabel": "Punto fuera del lienzo", "role": "annotation" }
+    }
+  ],
+  "elements": [
+    {
+      "id": "polyABC", "label": "Triángulo ABC", "kind": "polygon", "refs": ["pA", "pB", "pC"], "color": "salvia",
+      "layerId": "geometry", "order": 100, "visible": true, "locked": false, "groupIds": ["triangle-group"], "target": true,
+      "selection": { "selectable": true, "ariaLabel": "Triángulo ABC", "role": "primary" }
+    },
+    {
+      "id": "segAB", "label": "Base AB", "kind": "segment", "refs": ["pA", "pB"], "color": "carbon",
+      "layerId": "construction", "order": 10, "visible": true, "locked": false, "groupIds": [], "target": true,
+      "selection": { "selectable": true, "ariaLabel": "Segmento AB", "role": "construction" }
+    }
+  ],
+  "sliders": [],
+  "steps": [
+    { "id": "step1", "label": "Paso 1", "description": "Figura base", "visibleTargets": ["pA", "pB", "pC", "polyABC", "segAB"] }
+  ],
+  "note": "Fixture v2 con capas, grupo y objeto recuperable.",
+  "extensions": { "fixture": true }
+}

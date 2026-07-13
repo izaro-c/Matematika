@@ -32,7 +32,8 @@ describe('Diagram TSX Parser (Local & AST)', () => {
       expect(parsed.status).toBe('visual-exact');
       if (parsed.status !== 'visual-exact') return;
       expect(parsed.model.title).toBe('Test');
-      expect(parsed.model.boundingBox).toEqual([-5, 5, 5, -5]);
+      expect(parsed.model.version).toBe(2);
+      expect(parsed.model.viewport.bounds).toEqual([-5, 5, 5, -5]);
       expect(parsed.model.points).toHaveLength(2);
       expect(parsed.model.elements).toHaveLength(3);
       const regenerated = generateDiagramSource(parsed.model, 'Test');
@@ -128,6 +129,6 @@ describe('Diagram TSX Parser (Local & AST)', () => {
     const parsed = parseDiagramSourceAST(source);
     expect(parsed.status).toBe('code-preview');
     expect('model' in parsed).toBe(false);
-    expect(parsed.diagnostics.some(item => item.code === 'embedded-model-not-lossless')).toBe(true);
+    expect(parsed.diagnostics.some(item => item.code === 'embedded-spec-not-lossless')).toBe(true);
   });
 });

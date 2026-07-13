@@ -47,6 +47,20 @@ describe('Diagram Reducer', () => {
     expect(editedState.currentModel?.title).toBe('Updated');
   });
 
+  it('undoes and redoes visual commands without changing manual source authority', () => {
+    const model = createTemplateModel('circunferencia', 'History', 'definicion');
+    const loaded = diagramReducer(initialDiagramState, {
+      type: 'LOAD_DIAGRAM', filePath: 'src/widgets/diagrams/History.tsx', componentName: 'History', source: 'source', model,
+    });
+    const edited = diagramReducer(loaded, { type: 'VISUAL_EDIT', model: { ...model, title: 'Edited' }, label: 'Editar título' });
+    const undone = diagramReducer(edited, { type: 'UNDO' });
+    expect(undone.currentModel?.title).toBe('History');
+    expect(undone.currentSource).toBe('source');
+    const redone = diagramReducer(undone, { type: 'REDO' });
+    expect(redone.currentModel?.title).toBe('Edited');
+    expect(redone.modelHistory.past[0]?.label).toBe('Editar título');
+  });
+
   it('should transition to diverged on visual edit from source-authoritative', () => {
     const model = createTemplateModel('circunferencia', 'Test', 'definicion');
     const state: DiagramState = {

@@ -1,89 +1,100 @@
+import { DiagramSpecMigrationError, migrateDiagramSpec } from '../../../../shared/diagrams/spec';
 import type { VisualDiagramModel } from '../model/types';
 import type { DiagramDiagnostic } from './generator';
-import { normalizeVisualModel } from '../model/commands';
-import { generateDiagramSource } from './generator';
+import { generateDiagramSource, SPEC_END, SPEC_START } from './generator';
 
 export type ParseDiagramSourceResult =
-  | {
-      status: 'visual-exact';
-      model: VisualDiagramModel;
-      diagnostics: DiagramDiagnostic[];
-    }
-  | {
-      status: 'code-preview';
-      previewModel?: VisualDiagramModel;
-      diagnostics: DiagramDiagnostic[];
-    }
-  | {
-      status: 'invalid';
-      diagnostics: DiagramDiagnostic[];
-    };
+  | { status: 'visual-exact'; model: VisualDiagramModel; diagnostics: DiagramDiagnostic[] }
+  | { status: 'code-preview'; previewModel?: VisualDiagramModel; diagnostics: DiagramDiagnostic[] }
+  | { status: 'invalid'; diagnostics: DiagramDiagnostic[] };
 
-const MODEL_START = '/* @matematika-diagram-model';
-const MODEL_END = '*/';
+const LEGACY_MODEL_START = '/* @matematika-diagram-model';
+const LEGACY_MODEL_END = '*/';
 
 function exportedComponentName(source: string): string | null {
-  return source.match(/export\s+const\s+([A-Z]\w*)\b/)?.[1]
-    ?? source.match(/export\s+function\s+([A-Z]\w*)\b/)?.[1]
-    ?? null;
+  const names = [...source.matchAll(/export\s+(?:const|function)\s+([A-Z]\w*)\b/g)].map(match => match[1]);
+  return names.find(name => !name.endsWith('Spec')) ?? null;
 }
 
-export function parseDiagramSourceLocally(source?: string, metadataType = ''): VisualDiagramModel | null {
-  if (!source) return null;
-  const start = source.indexOf(MODEL_START);
+function extractV2Json(source: string): string | null {
+  const start = source.indexOf(SPEC_START);
+  const end = source.indexOf(SPEC_END, start + SPEC_START.length);
+  if (start === -1 || end === -1) return null;
+  const envelope = source.slice(start + SPEC_START.length, end);
+  const callStart = envelope.indexOf('createDiagramSpec(');
+  if (callStart === -1) return null;
+  const jsonStart = callStart + 'createDiagramSpec('.length;
+  const callEnd = envelope.lastIndexOf(');');
+  return callEnd > jsonStart ? envelope.slice(jsonStart, callEnd).trim() : null;
+}
+
+function extractLegacyJson(source: string): string | null {
+  const start = source.indexOf(LEGACY_MODEL_START);
   if (start === -1) return null;
-  const jsonStart = start + MODEL_START.length;
-  const end = source.indexOf(MODEL_END, jsonStart);
-  if (end === -1) return null;
+  const jsonStart = start + LEGACY_MODEL_START.length;
+  const end = source.indexOf(LEGACY_MODEL_END, jsonStart);
+  return end === -1 ? null : source.slice(jsonStart, end).trim();
+}
+
+function migrationDiagnostic(error: unknown): DiagramDiagnostic {
+  return {
+    code: error instanceof DiagramSpecMigrationError ? error.code : 'invalid-embedded-spec',
+    severity: 'error',
+    message: error instanceof Error ? error.message : 'La especificación embebida no es válida.',
+    source: 'model',
+  };
+}
+
+export function parseDiagramSourceLocally(source?: string, _metadataType = ''): VisualDiagramModel | null {
+  if (!source) return null;
+  const json = extractV2Json(source) ?? extractLegacyJson(source);
+  if (!json) return null;
   try {
-    const raw = JSON.parse(source.slice(jsonStart, end).trim()) as Record<string, unknown>;
-    const normalized = normalizeVisualModel(raw, metadataType);
-    if (!normalized) return null;
-    const hasCompleteEnvelope = typeof raw.title === 'string'
-      && typeof raw.componentId === 'string'
-      && typeof raw.category === 'string'
-      && (raw.mode === 'simulation' || raw.mode === 'diagram' || raw.mode === 'inline')
-      && typeof raw.axis === 'boolean'
-      && typeof raw.grid === 'boolean'
-      && Array.isArray(raw.boundingBox)
-      && Array.isArray(raw.points)
-      && Array.isArray(raw.elements)
-      && Array.isArray(raw.sliders)
-      && Array.isArray(raw.steps)
-      && typeof raw.note === 'string';
-    return hasCompleteEnvelope ? raw as unknown as VisualDiagramModel : normalized;
+    return migrateDiagramSpec(JSON.parse(json)).spec;
   } catch {
     return null;
   }
 }
 
-export function classifyEmbeddedDiagramSource(source: string, metadataType = ''): ParseDiagramSourceResult | null {
-  const model = parseDiagramSourceLocally(source, metadataType);
-  if (!model) return null;
+export function classifyEmbeddedDiagramSource(source: string, _metadataType = ''): ParseDiagramSourceResult | null {
+  const json = extractV2Json(source) ?? extractLegacyJson(source);
+  if (!json) return null;
+
+  let migrated;
+  try {
+    migrated = migrateDiagramSpec(JSON.parse(json));
+  } catch (error) {
+    return { status: 'invalid', diagnostics: [migrationDiagnostic(error)] };
+  }
+
   const componentName = exportedComponentName(source);
   if (!componentName) {
     return {
       status: 'code-preview',
-      previewModel: model,
+      previewModel: migrated.spec,
       diagnostics: [{
-        code: 'embedded-model-without-export',
+        code: 'embedded-spec-without-export',
         severity: 'warning',
-        message: 'El modelo embebido no identifica un componente exportado; la fuente conserva la autoridad.',
+        message: 'La especificación no identifica un componente de diagrama exportado; la fuente conserva la autoridad.',
         source: 'source',
       }],
     };
   }
-  const generated = generateDiagramSource(model, componentName);
-  if (generated.ok && generated.source === source) {
-    return { status: 'visual-exact', model, diagnostics: [] };
+
+  const generated = generateDiagramSource(migrated.spec, componentName);
+  if (generated.ok && generated.source === source && migrated.migratedFrom === null) {
+    return { status: 'visual-exact', model: migrated.spec, diagnostics: [] };
   }
+
   return {
     status: 'code-preview',
-    previewModel: model,
+    previewModel: migrated.spec,
     diagnostics: [{
-      code: 'embedded-model-not-lossless',
+      code: migrated.migratedFrom === null ? 'embedded-spec-not-lossless' : 'embedded-spec-migrated',
       severity: 'warning',
-      message: 'El modelo embebido no regenera todo el TSX de forma idéntica. La edición visual y la regeneración están bloqueadas.',
+      message: migrated.migratedFrom === null
+        ? 'La especificación embebida no regenera el TSX byte por byte. El código manual conserva la autoridad.'
+        : migrated.warnings.join(' '),
       source: 'synchronization',
     }],
   };
@@ -95,42 +106,30 @@ export async function parseDiagramSourceOnServer(source: string, signal?: AbortS
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ source }),
-      signal
+      signal,
     });
     if (!response.ok) {
-      const errText = await response.text();
       return {
         status: 'invalid',
         diagnostics: [{
-          code: 'server-error',
-          severity: 'error',
-          message: `Error del servidor al parsear diagrama: ${errText}`,
+          code: 'server-error', severity: 'error',
+          message: `Error del servidor al parsear diagrama: ${await response.text()}`,
           source: 'source',
-        }]
+        }],
       };
     }
-    const data = await response.json() as ParseDiagramSourceResult;
-    return data;
+    return await response.json() as ParseDiagramSourceResult;
   } catch (error) {
     if (error instanceof DOMException && error.name === 'AbortError') {
-      return {
-        status: 'invalid',
-        diagnostics: [{
-          code: 'aborted',
-          severity: 'info',
-          message: 'Petición de parseo cancelada.',
-          source: 'source'
-        }]
-      };
+      return { status: 'invalid', diagnostics: [{ code: 'aborted', severity: 'info', message: 'Petición de parseo cancelada.', source: 'source' }] };
     }
     return {
       status: 'invalid',
       diagnostics: [{
-        code: 'network-error',
-        severity: 'error',
+        code: 'network-error', severity: 'error',
         message: error instanceof Error ? error.message : 'Error de conexión con el servidor de parseo.',
-        source: 'source'
-      }]
+        source: 'source',
+      }],
     };
   }
 }

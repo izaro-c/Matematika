@@ -1,0 +1,22 @@
+{
+  "title": "Triángulo heredado",
+  "componentId": "triangulo-heredado",
+  "category": "Teoremas",
+  "mode": "simulation",
+  "axis": false,
+  "grid": false,
+  "boundingBox": [-4, 4, 4, -4],
+  "points": [
+    { "id": "pA", "label": "A", "x": -2, "y": -1, "color": "terracota", "fixed": false, "target": true },
+    { "id": "pB", "label": "B", "x": 2, "y": -1, "color": "terracota", "fixed": false, "target": true },
+    { "id": "pC", "label": "C", "x": 0, "y": 2, "color": "terracota", "fixed": false, "target": true }
+  ],
+  "elements": [
+    { "id": "polyABC", "label": "Triángulo ABC", "kind": "polygon", "refs": ["pA", "pB", "pC"], "color": "salvia", "target": true }
+  ],
+  "sliders": [],
+  "steps": [
+    { "id": "step1", "label": "Paso 1", "description": "Figura inicial", "visibleTargets": ["pA", "pB", "pC", "polyABC"] }
+  ],
+  "note": "Fixture v1 representativo."
+}

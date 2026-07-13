@@ -23,6 +23,7 @@ export const DiagramInspector: React.FC<DiagramInspectorProps> = ({
   const selectedElement = model.elements.find(item => item.id === selectedId);
   const selectedSlider = model.sliders.find(item => item.id === selectedId);
   const selectedStep = model.steps.find(item => item.id === selectedId);
+  const selectedSceneItem = selectedPoint || selectedElement || selectedSlider;
 
   const hasSelection = selectedPoint || selectedElement || selectedSlider || selectedStep;
 
@@ -44,6 +45,12 @@ export const DiagramInspector: React.FC<DiagramInspectorProps> = ({
   const handleStepChange = (update: Partial<VisualStep>) => {
     if (!selectedStep) return;
     onModelEdit(updateStep(model, selectedStep.id, update));
+  };
+
+  const handleSceneItemChange = (update: Pick<VisualPoint, 'layerId' | 'order' | 'visible' | 'locked' | 'selection'> | Partial<Pick<VisualPoint, 'layerId' | 'order' | 'visible' | 'locked' | 'selection'>>) => {
+    if (selectedPoint) handlePointChange(update);
+    else if (selectedElement) handleElementChange(update);
+    else if (selectedSlider) handleSliderChange(update);
   };
 
   return (
@@ -318,6 +325,49 @@ export const DiagramInspector: React.FC<DiagramInspectorProps> = ({
               className="w-full h-16 rounded border border-carbon/15 bg-lienzo p-1.5 text-xs resize-none"
               value={selectedStep.description}
               onChange={(e) => handleStepChange({ description: e.target.value })}
+            />
+          </div>
+        </div>
+      )}
+
+      {selectedSceneItem && (
+        <div className="mt-4 space-y-3 border-t border-carbon/10 pt-3">
+          <p className="text-[10px] font-bold uppercase tracking-widest text-carbon/45">Escena y selección</p>
+          <div className="grid grid-cols-2 gap-2">
+            <label className="flex items-center gap-1.5 text-xs font-bold text-carbon">
+              <input type="checkbox" checked={selectedSceneItem.visible} onChange={(event) => handleSceneItemChange({ visible: event.target.checked })} />
+              Visible
+            </label>
+            <label className="flex items-center gap-1.5 text-xs font-bold text-carbon">
+              <input type="checkbox" checked={selectedSceneItem.locked} onChange={(event) => handleSceneItemChange({ locked: event.target.checked })} />
+              Bloqueado
+            </label>
+            <label className="flex items-center gap-1.5 text-xs font-bold text-carbon">
+              <input
+                type="checkbox"
+                checked={selectedSceneItem.selection.selectable}
+                onChange={(event) => handleSceneItemChange({ selection: { ...selectedSceneItem.selection, selectable: event.target.checked } })}
+              />
+              Seleccionable
+            </label>
+          </div>
+          <div>
+            <label className="block text-xs font-bold text-carbon mb-1">Capa</label>
+            <select
+              className="w-full rounded border border-carbon/15 bg-lienzo p-1.5 text-xs"
+              value={selectedSceneItem.layerId}
+              onChange={(event) => handleSceneItemChange({ layerId: event.target.value })}
+            >
+              {model.layers.slice().sort((a, b) => a.order - b.order).map(layer => <option key={layer.id} value={layer.id}>{layer.label}</option>)}
+            </select>
+          </div>
+          <div>
+            <label className="block text-xs font-bold text-carbon mb-1">Orden visual</label>
+            <input
+              type="number"
+              className="w-full rounded border border-carbon/15 bg-lienzo p-1.5 text-xs font-mono"
+              value={selectedSceneItem.order}
+              onChange={(event) => handleSceneItemChange({ order: Number(event.target.value) })}
             />
           </div>
         </div>

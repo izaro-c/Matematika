@@ -14,6 +14,7 @@ import {
 } from '@/entities/content/schemas';
 import type { Block, ProofStepData } from './parser';
 import type { EditorValidationIssue, EditorValidationResult } from './editorTypes';
+import { parseDiagramSpecV2 } from '../../../shared/diagrams/spec';
 
 const CONTENT_ID_RE = /^[a-z0-9]+(?:-[a-z0-9]+)*$/;
 const HEX_RE = /#[0-9a-fA-F]{3,8}\b/;
@@ -144,6 +145,17 @@ function validateVisualDiagramModel(value: unknown, blockId: string): EditorVali
   if (!value || typeof value !== 'object') return issues;
 
   const record = value as Record<string, unknown>;
+  if (record.version === 2) {
+    const parsed = parseDiagramSpecV2(record);
+    if (parsed.success) return issues;
+    return parsed.error.issues.map((schemaIssue, index) => issue(
+      `diagram-${blockId}-spec-v2-${index}`,
+      'error',
+      'diagram',
+      `${schemaIssue.path.join('.') || 'spec'}: ${schemaIssue.message}`,
+      blockId,
+    ));
+  }
   const points = Array.isArray(record.points) ? record.points as Array<Record<string, unknown>> : [];
   const elements = Array.isArray(record.elements) ? record.elements as Array<Record<string, unknown>> : [];
   const sliders = Array.isArray(record.sliders) ? record.sliders as Array<Record<string, unknown>> : [];
