@@ -1,75 +1,68 @@
-import { useRef, useEffect } from 'react';
-import { getCSSVar } from '@/features/graph/ui/MathUtils';
-import JXG from 'jsxgraph';
-import { useMathStore } from '@/app/providers/MathStoreContext';
-import { useLessonStore } from '@/features/lessons/LessonStore';
+import { MathBoard } from '@/shared/diagrams/core/MathBoard';
+import {
+  createPoint, createLine, createSegment, createGlider, createPolygon
+} from '@/shared/diagrams/core/MathFactory';
+
+
+
+
+
 
 
 export const Pasch = () => {
-  const boardRef = useRef<HTMLDivElement>(null);
-  const jxgBoard = useRef<any>(null);
-  const elementsRef = useRef<Record<string, unknown>>({});
 
-  const mathHighlight = useMathStore(state => state.variables?.['highlight']);
-  const lessonHighlight = useLessonStore(state => state.activeStep);
-  const highlight = mathHighlight || lessonHighlight;
 
-  useEffect(() => {
-    if (!boardRef.current) return;
 
-    if (!boardRef.current.id) boardRef.current.id = "jxgbox_" + Math.random().toString(36).substring(2, 9);
-      const board = JXG.JSXGraph.initBoard(boardRef.current.id, {
-      boundingbox: [-5, 5, 6, -5],
-      axis: false,
-      showCopyright: false,
-      keepaspectratio: true,
-      grid: false,
-    });
-    jxgBoard.current = board;
 
-    const pA = board.create('point', [0, 2.5], {
-      name: 'A', size: 5, fillColor: getCSSVar('--theme-terracota'), strokeColor: getCSSVar('--theme-terracota'),
+
+
+
+
+  const onInit = (board: any, els: any, theme: any) => {
+      void board; void els; void theme;
+      const pA = createPoint(board, [0, 2.5], {
+      name: 'A', size: 5, fillColor: theme.terracota, strokeColor: theme.terracota,
       showInfobox: false, fixed: false,
-    });
-    const pB = board.create('point', [-3.5, -2], {
-      name: 'B', size: 5, fillColor: getCSSVar('--theme-terracota'), strokeColor: getCSSVar('--theme-terracota'),
+    }, theme);
+    const pB = createPoint(board, [-3.5, -2], {
+      name: 'B', size: 5, fillColor: theme.terracota, strokeColor: theme.terracota,
       showInfobox: false, fixed: false,
-    });
-    const pC = board.create('point', [4, -1.5], {
-      name: 'C', size: 5, fillColor: getCSSVar('--theme-terracota'), strokeColor: getCSSVar('--theme-terracota'),
+    }, theme);
+    const pC = createPoint(board, [4, -1.5], {
+      name: 'C', size: 5, fillColor: theme.terracota, strokeColor: theme.terracota,
       showInfobox: false, fixed: false,
-    });
+    }, theme);
 
-    const sideAB = board.create('segment', [pA, pB], {
-      strokeColor: getCSSVar('--theme-carbon'), strokeWidth: 2,
-    });
-    const sideBC = board.create('segment', [pB, pC], {
-      strokeColor: getCSSVar('--theme-carbon'), strokeWidth: 2,
-    });
-    const sideCA = board.create('segment', [pC, pA], {
-      strokeColor: getCSSVar('--theme-carbon'), strokeWidth: 2,
-    });
+    const sideAB = createSegment(board, [pA, pB], {
+      strokeColor: theme.carbon, strokeWidth: 2,
+    }, theme);
+    const sideBC = createSegment(board, [pB, pC], {
+      strokeColor: theme.carbon, strokeWidth: 2,
+    }, theme);
+    const sideCA = createSegment(board, [pC, pA], {
+      strokeColor: theme.carbon, strokeWidth: 2,
+    }, theme);
 
-    const triangle = board.create('polygon', [pA, pB, pC], {
-      fillColor: getCSSVar('--theme-terracota'), fillOpacity: 0.04,
+    const triangle = createPolygon(board, [pA, pB, pC], {
+      fillColor: theme.terracota, fillOpacity: 0.04,
       borders: { visible: false }, vertices: { visible: false },
-    });
+    }, theme);
 
-    const pP = board.create('glider', [-1, 0.5, sideAB], {
-      name: 'P', size: 5, fillColor: getCSSVar('--theme-terracota'), strokeColor: getCSSVar('--theme-terracota'),
+    const pP = createGlider(board, [-1, 0.5, sideAB], {
+      name: 'P', size: 5, fillColor: theme.terracota, strokeColor: theme.terracota,
       showInfobox: false,
-    });
-    
+    }, theme);
+
     // Punto libre para dirigir la línea
-    const pDir = board.create('point', [2, -1], {
-      name: '', size: 5, fillColor: getCSSVar('--theme-pizarra'), strokeColor: getCSSVar('--theme-pizarra'),
+    const pDir = createPoint(board, [2, -1], {
+      name: '', size: 5, fillColor: theme.pizarra, strokeColor: theme.pizarra,
       showInfobox: false,
-    });
+    }, theme);
 
-    const lineL = board.create('line', [pP, pDir], {
-      name: 'l', withLabel: true, label: { position: 'top', offset: [-15, 15], strokeColor: getCSSVar('--theme-pizarra'), fontSize: 16 },
-      strokeColor: getCSSVar('--theme-pizarra'), strokeWidth: 2.5, straightFirst: true, straightLast: true,
-    });
+    const lineL = createLine(board, [pP, pDir], {
+      name: 'l', withLabel: true, label: { position: 'top', offset: [-15, 15], strokeColor: theme.pizarra, fontSize: 16 },
+      strokeColor: theme.pizarra, strokeWidth: 2.5, straightFirst: true, straightLast: true,
+    }, theme);
 
     // Función robusta para comprobar si un punto está dentro del segmento usando coordenadas
     const isOnSegment = (pt: any, seg: any) => {
@@ -82,66 +75,62 @@ export const Pasch = () => {
 
     // Intersecciones con los otros dos lados
     const intBC = board.create('intersection', [lineL, sideBC, 0], {
-      name: 'Q', size: 5, fillColor: getCSSVar('--theme-terracota'), strokeColor: getCSSVar('--theme-terracota'),
+      name: 'Q', size: 5, fillColor: theme.terracota, strokeColor: theme.terracota,
       showInfobox: false
     });
     intBC.setAttribute({ visible: () => isOnSegment(intBC, sideBC) });
 
     const intCA = board.create('intersection', [lineL, sideCA, 0], {
-      name: 'Q', size: 5, fillColor: getCSSVar('--theme-terracota'), strokeColor: getCSSVar('--theme-terracota'),
+      name: 'Q', size: 5, fillColor: theme.terracota, strokeColor: theme.terracota,
       showInfobox: false
     });
     intCA.setAttribute({ visible: () => isOnSegment(intCA, sideCA) });
 
-    elementsRef.current = { pA, pB, pC, pP, pDir, intBC, intCA, sideAB, sideBC, sideCA, triangle, lineL, board };
+      // Registrar elementos para interactividad y auditoría
+      els.pA = pA;
+        els.pB = pB;
+        els.pC = pC;
+        els.pP = pP;
+        els.pDir = pDir;
+        els.intBC = intBC;
+        els.intCA = intCA;
+        els.sideAB = sideAB;
+        els.sideBC = sideBC;
+        els.sideCA = sideCA;
+        els.triangle = triangle;
+        els.lineL = lineL;
+    };;
 
-    board.update();    (board.renderer as any).container.style.backgroundColor = getCSSVar('--theme-lienzo');
-
-
-
-        const observer = new MutationObserver(() => {
-      if (board) {
-        (board.renderer as any).container.style.backgroundColor = getCSSVar('--theme-lienzo');
-        board.update();
-      }
-    });
-    observer.observe(document.documentElement, { attributes: true, attributeFilter: ['class'] });
-
-    return () => {
-      observer.disconnect();
-      JXG.JSXGraph.freeBoard(board);
-      jxgBoard.current = null;
-      elementsRef.current = {};
-    };
-  }, []);
-
-  useEffect(() => {
-    const { pA, pB, pC, pP, pDir, intBC, intCA, sideAB, sideBC, sideCA, triangle, lineL, board } = elementsRef.current as Record<string, any>;
-    if (!board) return;
-
-    [pA, pB, pC, pP, intBC, intCA].forEach(pt => pt.setAttribute({ size: 5, fillColor: getCSSVar('--theme-terracota'), strokeColor: getCSSVar('--theme-terracota') }));
-    pDir.setAttribute({ size: 5, fillColor: getCSSVar('--theme-pizarra'), strokeColor: getCSSVar('--theme-pizarra') });
-    [sideAB, sideBC, sideCA].forEach(s => s.setAttribute({ strokeColor: getCSSVar('--theme-carbon'), strokeWidth: 2 }));
-    lineL.setAttribute({ strokeColor: getCSSVar('--theme-pizarra'), strokeWidth: 2.5 });
+  const onUpdate = (board: any, els: any, theme: any, isStep: any, isHL: any) => {
+      const isHighlight = isHL;
+      void board; void els; void theme; void isStep; void isHL; void isHighlight;
+      const { pA, pB, pC, pP, pDir, intBC, intCA, sideAB, sideBC, sideCA, triangle, lineL } = els;
+      [pA, pB, pC, pP, intBC, intCA].forEach(pt => pt.setAttribute({ size: 5, fillColor: theme.terracota, strokeColor: theme.terracota }));
+    pDir.setAttribute({ size: 5, fillColor: theme.pizarra, strokeColor: theme.pizarra });
+    [sideAB, sideBC, sideCA].forEach(s => s.setAttribute({ strokeColor: theme.carbon, strokeWidth: 2 }));
+    lineL.setAttribute({ strokeColor: theme.pizarra, strokeWidth: 2.5 });
     triangle.setAttribute({ fillOpacity: 0.04 });
 
-    if (highlight === 'triangle') triangle.setAttribute({ fillOpacity: 0.15 });
-    if (highlight === 'lineL') lineL.setAttribute({ strokeColor: getCSSVar('--theme-terracota'), strokeWidth: 4 });
-    if (highlight === 'pP') pP.setAttribute({ size: 9, fillColor: getCSSVar('--theme-ocre') });
-    if (highlight === 'pQ') {
-      intBC.setAttribute({ size: 9, fillColor: getCSSVar('--theme-ocre') });
-      intCA.setAttribute({ size: 9, fillColor: getCSSVar('--theme-ocre') });
+    if (isHL('triangle')) triangle.setAttribute({ fillOpacity: 0.15 });
+    if (isHL('lineL')) lineL.setAttribute({ strokeColor: theme.terracota, strokeWidth: 4 });
+    if (isHL('pP')) pP.setAttribute({ size: 9, fillColor: theme.ocre });
+    if (isHL('pQ')) {
+      intBC.setAttribute({ size: 9, fillColor: theme.ocre });
+      intCA.setAttribute({ size: 9, fillColor: theme.ocre });
     }
-
-    board.update();
-  }, [highlight]);
+    };;
 
   return (
-    <div className="w-full h-full min-h-[500px] relative bg-lienzo/30">
+    <MathBoard
+      boundingbox={[-5, 5, 6, -5]}
+      axis={false}
+      grid={false}
+      onInit={onInit}
+      onUpdate={onUpdate}
+    >
       <div className="absolute top-3 left-3 z-10 text-[10px] font-sans text-pizarra/50 uppercase tracking-wider">
         Arrastra los vértices, el punto P y el punto de dirección
       </div>
-      <div ref={boardRef} className="w-full h-full touch-none" />
-    </div>
+    </MathBoard>
   );
 };

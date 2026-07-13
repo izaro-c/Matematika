@@ -1,5 +1,5 @@
 import { useRef, useEffect } from 'react';
-import { getCSSVar } from '@/features/graph/ui/MathUtils';
+import { getCSSVar } from '@/shared/diagrams/core/MathUtils';
 import { Canvas, useThree } from '@react-three/fiber';
 import * as THREE from 'three';
 import { OrbitControls, Html, Line } from '@react-three/drei';
@@ -8,9 +8,9 @@ import { useMathStore } from '@/app/providers/MathStoreContext';
 
 function SceneContent() {
   const { camera } = useThree();
-  const highlight = useMathStore(state => state.variables?.['highlight']);
+  const highlight = useMathStore((state: any) => state.variables?.['highlight']);
   const controlsRef = useRef<any>(null);
-  
+
   useEffect(() => {
     camera.position.set(4, 4, 5);
     camera.lookAt(0, 0, 0);
@@ -31,13 +31,13 @@ function SceneContent() {
   return (
     <>
       <OrbitControls ref={controlsRef} enablePan={true} enableZoom={true} autoRotate={true} autoRotateSpeed={1.0} />
-      
+
       {/* Plane Pi (horizontal) */}
       <mesh rotation={[-Math.PI / 2, 0, 0]}>
         <planeGeometry args={[5, 5]} />
         <meshBasicMaterial color={piColor} transparent opacity={highlight === 'plano-pi' ? 0.4 : 0.25} side={THREE.DoubleSide} depthWrite={false} />
       </mesh>
-      
+
       {/* Plane Sigma (tilted) */}
       <mesh rotation={[-Math.PI / 4, 0, 0]}>
         <planeGeometry args={[5, 5]} />

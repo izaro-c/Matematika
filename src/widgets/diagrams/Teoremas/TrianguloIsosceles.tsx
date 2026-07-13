@@ -1,54 +1,48 @@
-import { useRef, useEffect } from 'react';
-import { getCSSVar } from '@/features/graph/ui/MathUtils';
-import JXG from 'jsxgraph';
-import { useMathStore } from '@/app/providers/MathStoreContext';
+import { MathBoard } from '@/shared/diagrams/core/MathBoard';
+import {
+  createPoint, createLine, createSegment, createPolygon, createAngle
+} from '@/shared/diagrams/core/MathFactory';
+
+
+
+
 
 export const TrianguloIsosceles = () => {
-  const boardRef = useRef<HTMLDivElement>(null);
-  const elementsRef = useRef<Record<string, unknown>>({});
 
-  const highlight = useMathStore((state) => state.variables['highlight']);
-  const isHighlight = (id: string) => Array.isArray(highlight) ? (highlight as unknown as string[]).includes(id) : highlight === id;
 
-  useEffect(() => {
-    if (!boardRef.current) return;
 
-    if (!boardRef.current.id) boardRef.current.id = "jxgbox_" + Math.random().toString(36).substring(2, 9);
-    const board = JXG.JSXGraph.initBoard(boardRef.current.id, {
-      boundingbox: [-5, 5, 5, -5],
-      axis: false,
-      showCopyright: false,
-      keepaspectratio: true,
-      grid: false,
-    });
 
-    const C_PRIM = getCSSVar('--theme-carbon');
-    const C_ACC  = getCSSVar('--theme-terracota');
-    const C_ANG  = getCSSVar('--theme-salvia');
-    const C_POL  = getCSSVar('--theme-pavo');
+
+
+  const onInit = (board: any, els: any, theme: any) => {
+      void board; void els; void theme;
+      const C_PRIM = theme.carbon;
+    const C_ACC  = theme.terracota;
+    const C_ANG  = theme.salvia;
+    const C_POL  = theme.pavo;
 
     const SNAP = 0.5;
     const pCfg = { size: 5, fillColor: C_PRIM, strokeColor: C_PRIM, showInfobox: false, snapToGrid: true, snapSizeX: SNAP, snapSizeY: SNAP };
 
-    const A = board.create('point', [-2.5, -2], { name: 'A', ...pCfg });
-    const B = board.create('point', [2.5, -2],  { name: 'B', ...pCfg });
-    const C = board.create('point', [0, 3],     { name: 'C', ...pCfg });
+    const A = createPoint(board, [-2.5, -2], { name: 'A', ...pCfg }, theme);
+    const B = createPoint(board, [2.5, -2], { name: 'B', ...pCfg }, theme);
+    const C = createPoint(board, [0, 3], { name: 'C', ...pCfg }, theme);
 
-    const poly = board.create('polygon', [A, B, C], {
+    const poly = createPolygon(board, [A, B, C], {
       fillColor: C_POL, fillOpacity: 0.06,
       borders: { strokeWidth: 2.5, strokeColor: C_PRIM },
       vertices: { visible: false }
-    });
+    }, theme);
 
-    const angleA = board.create('angle', [B, A, C], { name: '&alpha;', radius: 0.85, fillColor: C_ANG, strokeColor: C_ANG, fillOpacity: 0.35, type: 'sector', visible: false }) as any;
-    const angleB = board.create('angle', [C, B, A], { name: '&alpha;', radius: 0.85, fillColor: C_ANG, strokeColor: C_ANG, fillOpacity: 0.35, type: 'sector', visible: false }) as any;
+    const angleA = createAngle(board, [B, A, C], { name: '&alpha;', radius: 0.85, fillColor: C_ANG, strokeColor: C_ANG, fillOpacity: 0.35, type: 'sector', visible: false }, theme) as any;
+    const angleB = createAngle(board, [C, B, A], { name: '&alpha;', radius: 0.85, fillColor: C_ANG, strokeColor: C_ANG, fillOpacity: 0.35, type: 'sector', visible: false }, theme) as any;
 
-    board.update();
+
 
     const sides = { AB: (poly as any).borders[0], AC: (poly as any).borders[1], BC: (poly as any).borders[2] };
 
     const mkTick = (p: any, q: any) => {
-      const mA = board.create('point', [() => (p.X() + q.X()) / 2, () => (p.Y() + q.Y()) / 2], { visible: false });
+      const mA = createPoint(board, [() => (p.X() + q.X()) / 2, () => (p.Y() + q.Y()) / 2], { visible: false }, theme);
       const t0 = board.create('point', [
         () => { const dx = q.X()-p.X(), dy = q.Y()-p.Y(); const len = Math.hypot(dx, dy) || 1; return mA.X() + dy/len * 0.28; },
         () => { const dx = q.X()-p.X(), dy = q.Y()-p.Y(); const len = Math.hypot(dx, dy) || 1; return mA.Y() - dx/len * 0.28; }
@@ -57,14 +51,14 @@ export const TrianguloIsosceles = () => {
         () => { const dx = q.X()-p.X(), dy = q.Y()-p.Y(); const len = Math.hypot(dx, dy) || 1; return mA.X() - dy/len * 0.28; },
         () => { const dx = q.X()-p.X(), dy = q.Y()-p.Y(); const len = Math.hypot(dx, dy) || 1; return mA.Y() + dx/len * 0.28; }
       ], { visible: false });
-      return board.create('segment', [t0, t1], { strokeColor: C_ACC, strokeWidth: 2.2, visible: false }) as any;
+      return createSegment(board, [t0, t1], { strokeColor: C_ACC, strokeWidth: 2.2, visible: false }, theme) as any;
     };
 
     const congAC = mkTick(A, C);
     const congBC = mkTick(B, C);
 
     const midAB = board.create('midpoint', [A, B], { visible: false });
-    const lineAB = board.create('line', [A, B], { visible: false });
+    const lineAB = createLine(board, [A, B], { visible: false }, theme);
     const bisector = board.create('perpendicular', [lineAB, midAB], { visible: false });
     C.setAttribute({ attractors: [bisector], attractorDistance: 0.3, snatchDistance: 0.6 });
 
@@ -108,41 +102,36 @@ export const TrianguloIsosceles = () => {
           angleB.setAttribute({ visible: false });
         }
 
-        return `<div style="font-family: var(--font-serif); color: ${getCSSVar('--theme-carbon')}; line-height:1.5;">
-          <strong style="font-size: 1.15rem; color:${isIsosc ? getCSSVar('--theme-terracota') : getCSSVar('--theme-carbon')};">${isIsosc ? 'Tri\u00e1ngulo Is\u00f3sceles' : 'Tri\u00e1ngulo Escaleno'}</strong><br/>
+        return `<div style="font-family: var(--font-serif); color: ${theme.carbon}; line-height:1.5;">
+          <strong style="font-size: 1.15rem; color:${isIsosc ? theme.terracota : theme.carbon};">${isIsosc ? 'Tri\u00e1ngulo Is\u00f3sceles' : 'Tri\u00e1ngulo Escaleno'}</strong><br/>
           <small>AC = ${dAC.toFixed(2)} &nbsp; BC = ${dBC.toFixed(2)}</small>
         </div>`;
       }
     ], { fixed: true, anchorX: 'left', anchorY: 'top' });
 
-    elementsRef.current = { A, B, C, poly, sides, angleA, angleB, congAC, congBC, infoText, board };
+      // Registrar elementos para interactividad y auditoría
+      els.A = A;
+        els.B = B;
+        els.C = C;
+        els.poly = poly;
+        els.sides = sides;
+        els.angleA = angleA;
+        els.angleB = angleB;
+        els.congAC = congAC;
+        els.congBC = congBC;
+        els.infoText = infoText;
+    };;
 
-    board.update();
-    (board.renderer as any).container.style.backgroundColor = getCSSVar('--theme-lienzo');
+  const onUpdate = (board: any, els: any, theme: any, isStep: any, isHL: any) => {
+      const isHighlight = isHL;
+      void board; void els; void theme; void isStep; void isHL; void isHighlight;
+      const { A, B, C, poly, sides, angleA, angleB, congAC, congBC } = els;
+      if (!els.board) return;
 
-    const observer = new MutationObserver(() => {
-      if (board) {
-        (board.renderer as any).container.style.backgroundColor = getCSSVar('--theme-lienzo');
-        board.update();
-      }
-    });
-    observer.observe(document.documentElement, { attributes: true, attributeFilter: ['class'] });
 
-    return () => {
-      observer.disconnect();
-      JXG.JSXGraph.freeBoard(board);
-      elementsRef.current = {};
-    };
-  }, []);
-
-  useEffect(() => {
-    const els = elementsRef.current as Record<string, any>;
-    if (!els.board) return;
-    const { A, B, C, poly, sides, angleA, angleB, congAC, congBC, board } = els;
-
-    const C_PRIM = getCSSVar('--theme-carbon');
-    const C_ACC  = getCSSVar('--theme-terracota');
-    const C_ANG  = getCSSVar('--theme-salvia');
+    const C_PRIM = theme.carbon;
+    const C_ACC  = theme.terracota;
+    const C_ANG  = theme.salvia;
 
     const hLados = isHighlight('lados-iguales');
     const hAngulos = isHighlight('angulos-iguales');
@@ -181,16 +170,19 @@ export const TrianguloIsosceles = () => {
     });
 
     poly.setAttribute({ fillOpacity: hTri ? 0.2 : 0.06 });
-
-    board.update();
-  }, [highlight, isHighlight]);
+    };;
 
   return (
-    <div className="w-full h-full min-h-[300px] relative bg-lienzo/40 border border-pizarra/10 rounded-sm overflow-hidden">
+    <MathBoard
+      boundingbox={[-5, 5, 5, -5]}
+      axis={false}
+      grid={false}
+      onInit={onInit}
+      onUpdate={onUpdate}
+    >
       <div className="absolute top-2 left-3 z-10 text-xs font-serif italic text-pizarra/50">
         Arrastra <span className="font-bold not-italic text-terracota">C</span> hacia el centro para hacerlo is&oacute;sceles
       </div>
-      <div ref={boardRef} className="w-full h-full touch-none" />
-    </div>
+    </MathBoard>
   );
 };

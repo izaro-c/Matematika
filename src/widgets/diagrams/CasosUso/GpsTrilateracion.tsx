@@ -1,13 +1,13 @@
 import { useState } from 'react';
 import { useMathStore } from '@/app/providers/MathStoreContext';
-import { MathBoard } from '@/features/graph/ui/MathBoard';
+import { MathBoard } from '@/shared/diagrams/core/MathBoard';
 import { DiagramTitle, DiagramInfoPanel } from '@/shared/ui/DiagramOverlay';
-import { createRobustRightAngle } from '@/features/graph/ui/MathUtils';
+import { createRobustRightAngle } from '@/shared/diagrams/core/MathUtils';
 import {
   createPoint,
   createSegment,
   createCircle
-} from '@/features/graph/ui/MathFactory';
+} from '@/shared/diagrams/core/MathFactory';
 
 /**
  * GpsTrilateracion — Simulación interactiva del caso de uso de geolocalización satelital.
@@ -58,8 +58,8 @@ export const GpsTrilateracion = () => {
         }, theme);
 
         els.S2 = createPoint(board, [-4, 2], {
-          name: 'S₂ (-4, 2)', fillColor: theme.crema, strokeColor: theme.crema, fixed: true,
-          label: { offset: [-15, 15], cssClass: 'font-sans font-bold text-[10px] uppercase tracking-wider', color: theme.crema }
+          name: 'S₂ (-4, 2)', fillColor: theme.ocre, strokeColor: theme.ocre, fixed: true,
+          label: { offset: [-15, 15], cssClass: 'font-sans font-bold text-[10px] uppercase tracking-wider', color: theme.ocre }
         }, theme);
 
         els.S3 = createPoint(board, [6, -2], {
@@ -75,12 +75,12 @@ export const GpsTrilateracion = () => {
 
         // 4. Distancias directas (Hipotenusas)
         els.rad1 = createSegment(board, [els.S1, els.R], { strokeColor: theme.terracota, strokeWidth: 1.5, dash: 2 }, theme);
-        els.rad2 = createSegment(board, [els.S2, els.R], { strokeColor: theme.crema, strokeWidth: 1.5, dash: 2 }, theme);
+        els.rad2 = createSegment(board, [els.S2, els.R], { strokeColor: theme.ocre, strokeWidth: 1.5, dash: 2 }, theme);
         els.rad3 = createSegment(board, [els.S3, els.R], { strokeColor: theme.pizarra, strokeWidth: 1.5, dash: 2 }, theme);
 
         // 5. Señales de alcance satelital (Circunferencias)
         els.circ1 = createCircle(board, [els.S1, els.R], { strokeColor: theme.terracota, strokeWidth: 1, strokeOpacity: 0.35 }, theme);
-        els.circ2 = createCircle(board, [els.S2, els.R], { strokeColor: theme.crema, strokeWidth: 1, strokeOpacity: 0.35 }, theme);
+        els.circ2 = createCircle(board, [els.S2, els.R], { strokeColor: theme.ocre, strokeWidth: 1, strokeOpacity: 0.35 }, theme);
         els.circ3 = createCircle(board, [els.S3, els.R], { strokeColor: theme.pizarra, strokeWidth: 1, strokeOpacity: 0.35 }, theme);
 
         // 6. Proyecciones y triángulo rectángulo de Pitágoras para el Satélite 1
@@ -99,7 +99,8 @@ export const GpsTrilateracion = () => {
           setPos({ x: els.R.X(), y: els.R.Y() });
         });
       }}
-      onUpdate={(_board, els, _theme, _isStep, _isHL) => {
+      onUpdate={(board: any, els: any, theme: any, isStep: any, isHL: any) => {
+        void board; void theme; void isStep; void isHL;
         // Estados de hovers individuales estrictos
         const hoverS1 = isHighlight('s1');
         const hoverS2 = isHighlight('s2');

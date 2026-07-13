@@ -1,72 +1,72 @@
-import { useRef, useEffect } from 'react';
-import { getCSSVar } from '@/features/graph/ui/MathUtils';
-import JXG from 'jsxgraph';
-import { useMathStore } from '@/app/providers/MathStoreContext';
-import { useLessonStore } from '@/features/lessons/LessonStore';
+import { MathBoard } from '@/shared/diagrams/core/MathBoard';
+import {
+  createLine, createSegment, createGlider
+} from '@/shared/diagrams/core/MathFactory';
+
+
+
+
+
 
 
 export const Order1 = () => {
-  const boardRef = useRef<HTMLDivElement>(null);
-  const jxgBoard = useRef<any>(null);
-  const elementsRef = useRef<Record<string, unknown>>({});
-  const mathHighlight = useMathStore(state => state.variables?.['highlight']);
-  const lessonHighlight = useLessonStore(state => state.activeStep);
-  const highlight = mathHighlight || lessonHighlight;
 
-  useEffect(() => {
-    if (!boardRef.current) return;
-    if (!boardRef.current.id) boardRef.current.id = "jxgbox_" + Math.random().toString(36).substring(2, 9);
-      const board = JXG.JSXGraph.initBoard(boardRef.current.id, {
-      boundingbox: [-5, 2, 5, -2], axis: false, showCopyright: false, keepaspectratio: true,
-    });
-    jxgBoard.current = board;
 
-    const line = board.create('line', [[-10, 0], [10, 0]], {
-      name: 'l', withLabel: true, label: { position: 'bot', offset: [-15, -15], strokeColor: getCSSVar('--theme-carbon'), fontSize: 16 },
-      strokeColor: getCSSVar('--theme-carbon'), strokeWidth: 2, straightFirst: true, straightLast: true,
-    });
 
-    const pA = board.create('glider', [-3, 0, line], {
-      name: 'A', size: 5, fillColor: getCSSVar('--theme-terracota'), strokeColor: getCSSVar('--theme-terracota'), showInfobox: false,
-    });
-    const pC = board.create('glider', [3, 0, line], {
-      name: 'C', size: 5, fillColor: getCSSVar('--theme-terracota'), strokeColor: getCSSVar('--theme-terracota'), showInfobox: false,
-    });
-    
-    const seg = board.create('segment', [pA, pC], { visible: false });
-    const pB = board.create('glider', [0, 0, seg], {
-      name: 'B', size: 5, fillColor: getCSSVar('--theme-terracota'), strokeColor: getCSSVar('--theme-terracota'), showInfobox: false,
-    });
 
-    elementsRef.current = { line, pA, pB, pC, board };
 
-    return () => {
-      JXG.JSXGraph.freeBoard(board);
-      jxgBoard.current = null;
-    };
-  }, []);
 
-  useEffect(() => {
-    const { line, pA, pB, pC, board } = elementsRef.current as Record<string, any>;
-    if (!board) return;
 
-    line.setAttribute({ strokeColor: highlight === 'line' ? getCSSVar('--theme-ocre') : getCSSVar('--theme-carbon'), strokeWidth: highlight === 'line' ? 4 : 2 });
-    
-    [pA, pB, pC].forEach(p => p.setAttribute({ fillColor: getCSSVar('--theme-terracota'), strokeColor: getCSSVar('--theme-terracota'), size: 5 }));
-    
-    if (highlight === 'pA') pA.setAttribute({ fillColor: getCSSVar('--theme-ocre'), strokeColor: getCSSVar('--theme-ocre'), size: 8 });
-    if (highlight === 'pB') pB.setAttribute({ fillColor: getCSSVar('--theme-ocre'), strokeColor: getCSSVar('--theme-ocre'), size: 8 });
-    if (highlight === 'pC') pC.setAttribute({ fillColor: getCSSVar('--theme-ocre'), strokeColor: getCSSVar('--theme-ocre'), size: 8 });
+  const onInit = (board: any, els: any, theme: any) => {
+      void board; void els; void theme;
+      const line = createLine(board, [[-10, 0], [10, 0]], {
+      name: 'l', withLabel: true, label: { position: 'bot', offset: [-15, -15], strokeColor: theme.carbon, fontSize: 16 },
+      strokeColor: theme.carbon, strokeWidth: 2, straightFirst: true, straightLast: true,
+    }, theme);
 
-    board.update();
-  }, [highlight]);
+    const pA = createGlider(board, [-3, 0, line], {
+      name: 'A', size: 5, fillColor: theme.terracota, strokeColor: theme.terracota, showInfobox: false,
+    }, theme);
+    const pC = createGlider(board, [3, 0, line], {
+      name: 'C', size: 5, fillColor: theme.terracota, strokeColor: theme.terracota, showInfobox: false,
+    }, theme);
+
+    const seg = createSegment(board, [pA, pC], { visible: false }, theme);
+    const pB = createGlider(board, [0, 0, seg], {
+      name: 'B', size: 5, fillColor: theme.terracota, strokeColor: theme.terracota, showInfobox: false,
+    }, theme);
+
+      // Registrar elementos para interactividad y auditoría
+      els.line = line;
+        els.pA = pA;
+        els.pB = pB;
+        els.pC = pC;
+    };;
+
+  const onUpdate = (board: any, els: any, theme: any, isStep: any, isHL: any) => {
+      const isHighlight = isHL;
+      void board; void els; void theme; void isStep; void isHL; void isHighlight;
+      const { line, pA, pB, pC } = els;
+      line.setAttribute({ strokeColor: isHL('line') ? theme.ocre : theme.carbon, strokeWidth: isHL('line') ? 4 : 2 });
+
+    [pA, pB, pC].forEach(p => p.setAttribute({ fillColor: theme.terracota, strokeColor: theme.terracota, size: 5 }));
+
+    if (isHL('pA')) pA.setAttribute({ fillColor: theme.ocre, strokeColor: theme.ocre, size: 8 });
+    if (isHL('pB')) pB.setAttribute({ fillColor: theme.ocre, strokeColor: theme.ocre, size: 8 });
+    if (isHL('pC')) pC.setAttribute({ fillColor: theme.ocre, strokeColor: theme.ocre, size: 8 });
+    };;
 
   return (
-    <div className="w-full h-full min-h-[250px] relative bg-lienzo/30 border border-pizarra/10 rounded-sm">
+    <MathBoard
+      boundingbox={[-5, 2, 5, -2]}
+      axis={false}
+      grid={false}
+      onInit={onInit}
+      onUpdate={onUpdate}
+    >
       <div className="absolute top-3 left-3 z-10 text-[10px] font-sans text-pizarra/50 uppercase tracking-wider">
         Desplaza el punto B
       </div>
-      <div ref={boardRef} className="w-full h-full touch-none" />
-    </div>
+    </MathBoard>
   );
 };

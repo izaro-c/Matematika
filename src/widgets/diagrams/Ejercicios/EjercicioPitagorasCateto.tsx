@@ -1,18 +1,18 @@
 import { useMathStore } from '@/app/providers/MathStoreContext';
 import { useLessonStore } from '@/features/lessons/LessonStore';
 import { useExercise } from '@/features/exercises/ui/ExerciseContext';
-import { MathBoard } from '@/features/graph/ui/MathBoard';
+import { MathBoard } from '@/shared/diagrams/core/MathBoard';
 import { DiagramTitle } from '@/shared/ui/DiagramOverlay';
 import {
   projectSquareVertices,
   createSquareGrid
-} from '@/features/graph/ui/MathUtils';
+} from '@/shared/diagrams/core/MathUtils';
 import {
   createPoint,
   createSegment,
   createPolygon,
   createRightAngle
-} from '@/features/graph/ui/MathFactory';
+} from '@/shared/diagrams/core/MathFactory';
 
 /**
  * EjercicioPitagorasCateto — Diagrama interactivo del ejercicio de despeje del cateto.

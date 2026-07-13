@@ -1,7 +1,7 @@
-import { MathBoard } from '@/features/graph/ui/MathBoard';
-import { 
-  createPoint, createLine, createGlider 
-} from '@/features/graph/ui/MathFactory';
+import { MathBoard } from '@/shared/diagrams/core/MathBoard';
+import {
+  createPoint, createLine, createGlider
+} from '@/shared/diagrams/core/MathFactory';
 
 export const DemoDosRectasUnPunto = () => {
   return (
@@ -14,23 +14,23 @@ export const DemoDosRectasUnPunto = () => {
         // Punto para definir la recta l
         els.A = createPoint(board, [-3, -1], { name: '', size: 0, visible: false, fixed: true }, theme);
 
-        els.rectaL = createLine(board, [els.P, els.A], { 
+        els.rectaL = createLine(board, [els.P, els.A], {
           name: 'l', withLabel: true, label: { position: 'lft', offset: [15, 15] }, strokeWidth: 2.5
         }, theme);
 
         // Punto Q sobre la recta l (ahora visible por defecto)
-        els.Q = createGlider(board, [3, 1, els.rectaL], { 
+        els.Q = createGlider(board, [3, 1, els.rectaL], {
           name: 'Q', size: 5, strokeColor: theme.terracota, fillColor: theme.terracota, showInfobox: false, visible: true, label: { strokeColor: theme.terracota }
         }, theme);
 
         // Transformación de rotación para la recta m
         // Se inicializa con un ángulo que luego se animará
         els.angleVar = board.create('slider', [[-4, -4], [2, -4], [0, 0.5, 0.5]], { visible: false });
-        
+
         els.tRot = board.create('transform', [() => els.angleVar.Value(), els.P], { type: 'rotate' });
         els.B = board.create('point', [els.A, els.tRot], { visible: false });
 
-        els.rectaM = createLine(board, [els.P, els.B], { 
+        els.rectaM = createLine(board, [els.P, els.B], {
           name: 'm', strokeColor: theme.terracota, strokeWidth: 2.5, withLabel: true, label: { position: 'lft', offset: [15, -15], strokeColor: theme.terracota }
         }, theme);
       }}
@@ -47,7 +47,7 @@ export const DemoDosRectasUnPunto = () => {
         const hlRectas = isHL('rectas');
 
         const anyH = hlL || hlM || hlP || hlQ || hlRectas;
-        
+
         // Base Opacity Logic
         const getOp = (hovered: boolean, activeInStep: boolean) => {
           if (hovered) return 1;
@@ -68,7 +68,7 @@ export const DemoDosRectasUnPunto = () => {
         const stepActP = s1 || s2 || s3 || s4;
         els.P.setAttribute({ fillOpacity: getOp(hlP, stepActP), strokeOpacity: getOp(hlP, stepActP) });
         if (els.P.label) els.P.label.setAttribute({ strokeOpacity: getOp(hlP, stepActP) });
-        
+
         const stepActQ = s1 || s2 || s3 || s4;
         els.Q.setAttribute({ fillOpacity: getOp(hlQ, stepActQ), strokeOpacity: getOp(hlQ, stepActQ) });
         if (els.Q.label) els.Q.label.setAttribute({ strokeOpacity: getOp(hlQ, stepActQ) });
@@ -76,7 +76,7 @@ export const DemoDosRectasUnPunto = () => {
         // Lógica de colapso de la recta m sobre l
         if (s3 || s4) {
           // Valor 0 corresponde a x=-4 en el slider
-          els.angleVar.moveTo([-4, -4], 500); 
+          els.angleVar.moveTo([-4, -4], 500);
         } else {
           // Valor 0.5 corresponde a x=2 en el slider
           els.angleVar.moveTo([2, -4], 500);

@@ -1,75 +1,86 @@
-import { MathBoard } from '@/features/graph/ui/MathBoard';
+import { MathBoard } from '@/shared/diagrams/core/MathBoard';
+import {
+  createAngle,
+  createGlider,
+  createMidpoint,
+  createPerpendicularLine,
+  createPoint,
+  createPolygon,
+  createSegment,
+} from '@/shared/diagrams/core/MathFactory';
 
 export const DemoTrianguloIsosceles = () => {
   return (
     <MathBoard
       boundingbox={[-5, 6, 5, -3]}
       onInit={(board, els, theme) => {
-        const B = board.create('point', [-3, -2], {
+        const B = createPoint(board, [-3, -2], {
           name: 'B', size: 5,
           fillColor: theme.carbon, strokeColor: theme.carbon, fixed: true,
           label: { fontSize: 18, cssClass: 'font-serif font-bold italic', strokeColor: theme.carbon }
-        });
-        const C = board.create('point', [3, -2], {
+        }, theme);
+        const C = createPoint(board, [3, -2], {
           name: 'C', size: 5,
           fillColor: theme.carbon, strokeColor: theme.carbon, fixed: true,
           label: { fontSize: 18, cssClass: 'font-serif font-bold italic', strokeColor: theme.carbon }
-        });
-        const M = board.create('midpoint', [B, C], { visible: false });
-        const baseBC = board.create('line', [B, C], { visible: false });
-        const perp = board.create('perpendicular', [baseBC, M], { visible: false });
+        }, theme);
+        const M = createMidpoint(board, [B, C], { visible: false }, theme);
+        const perp = createPerpendicularLine(board, [B, C, M], { visible: false }, theme);
 
-        const A = board.create('glider', [0, 4, perp], {
+        const A = createGlider(board, [0, 4, perp], {
           name: 'A', size: 5,
           fillColor: theme.terracota, strokeColor: theme.terracota,
           label: { fontSize: 18, cssClass: 'font-serif font-bold italic', strokeColor: theme.terracota }
-        });
+        }, theme);
 
-        els.ladoAB = board.create('segment', [A, B], { strokeColor: theme.carbon, strokeWidth: 2 });
-        els.ladoAC = board.create('segment', [A, C], { strokeColor: theme.carbon, strokeWidth: 2 });
-        els.ladoBC = board.create('segment', [B, C], { strokeColor: theme.carbon, strokeWidth: 2 });
+        els.A = A;
+        els.B = B;
+        els.C = C;
+        els.ladoAB = createSegment(board, [A, B], { strokeColor: theme.carbon, strokeWidth: 2 }, theme);
+        els.ladoAC = createSegment(board, [A, C], { strokeColor: theme.carbon, strokeWidth: 2 }, theme);
+        els.ladoBC = createSegment(board, [B, C], { strokeColor: theme.carbon, strokeWidth: 2 }, theme);
 
-        els.polyABC = board.create('polygon', [A, B, C], {
+        els.polyABC = createPolygon(board, [A, B, C], {
           fillColor: theme.salvia, fillOpacity: 0.1,
           borders: { visible: false }, vertices: { visible: false }
-        });
+        }, theme);
 
-        const puntoD = board.create('point', [() => M.X(), () => M.Y()], {
+        const puntoD = createPoint(board, [() => M.X(), () => M.Y()], {
           name: 'D', size: 3,
           fillColor: theme.pizarra, strokeColor: theme.pizarra,
           label: { fontSize: 14, cssClass: 'font-serif italic', strokeColor: theme.pizarra },
           visible: false
-        });
+        }, theme);
         els.puntoD = puntoD;
-        els.bisectriz = board.create('segment', [A, puntoD], {
+        els.bisectriz = createSegment(board, [A, puntoD], {
           dash: 2, strokeColor: theme.pizarra, strokeWidth: 1.5, visible: false
-        });
+        }, theme);
 
-        els.polyABD = board.create('polygon', [A, B, puntoD], {
+        els.polyABD = createPolygon(board, [A, B, puntoD], {
           fillColor: theme.terracota, fillOpacity: 0.3,
           borders: { visible: false }, vertices: { visible: false }, visible: false
-        });
-        els.polyACD = board.create('polygon', [A, C, puntoD], {
+        }, theme);
+        els.polyACD = createPolygon(board, [A, C, puntoD], {
           fillColor: theme.salvia, fillOpacity: 0.3,
           borders: { visible: false }, vertices: { visible: false }, visible: false
-        });
+        }, theme);
 
-        els.anguloBAD = board.create('angle', [puntoD, A, B], {
+        els.anguloBAD = createAngle(board, [puntoD, A, B], {
           name: '', radius: 0.8,
           fillColor: theme.terracota, strokeColor: theme.terracota, fillOpacity: 0.2, visible: false
-        });
-        els.anguloCAD = board.create('angle', [C, A, puntoD], {
+        }, theme);
+        els.anguloCAD = createAngle(board, [C, A, puntoD], {
           name: '', radius: 0.8,
           fillColor: theme.salvia, strokeColor: theme.salvia, fillOpacity: 0.2, visible: false
-        });
-        els.anguloB = board.create('angle', [C, B, A], {
+        }, theme);
+        els.anguloB = createAngle(board, [C, B, A], {
           name: '\\beta', radius: 1,
           fillColor: theme.pizarra, strokeColor: theme.pizarra, fillOpacity: 0.2, visible: false
-        });
-        els.anguloC = board.create('angle', [A, C, B], {
+        }, theme);
+        els.anguloC = createAngle(board, [A, C, B], {
           name: '\\gamma', radius: 1,
           fillColor: theme.pizarra, strokeColor: theme.pizarra, fillOpacity: 0.2, visible: false
-        });
+        }, theme);
       }}
       onUpdate={(_board, els, theme, _isStep, isHL) => {
         const isTriangulo = isHL('triangulo-abc');

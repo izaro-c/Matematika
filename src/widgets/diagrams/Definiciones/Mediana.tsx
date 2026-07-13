@@ -1,53 +1,47 @@
-import { useRef, useEffect } from 'react';
-import { getCSSVar } from '@/features/graph/ui/MathUtils';
-import JXG from 'jsxgraph';
-import { useMathStore } from '@/app/providers/MathStoreContext';
+import { MathBoard } from '@/shared/diagrams/core/MathBoard';
+import {
+  createPoint, createSegment
+} from '@/shared/diagrams/core/MathFactory';
+
+
+
+
 
 export const Mediana = () => {
-  const boardRef = useRef<HTMLDivElement>(null);
-  const elementsRef = useRef<Record<string, unknown>>({});
 
-  const highlight = useMathStore((state) => state.variables['highlight']);
-  const isHighlight = (id: string) => Array.isArray(highlight) ? (highlight as unknown as string[]).includes(id) : highlight === id;
 
-  useEffect(() => {
-    if (!boardRef.current) return;
 
-    if (!boardRef.current.id) boardRef.current.id = "jxgbox_" + Math.random().toString(36).substring(2, 9);
-    const board = JXG.JSXGraph.initBoard(boardRef.current.id, {
-      boundingbox: [-5, 5, 5, -5],
-      axis: false,
-      showCopyright: false,
-      keepaspectratio: true,
-      grid: false,
-    });
 
-    const C_PRIM = getCSSVar('--theme-pavo');
-    const C_MED  = getCSSVar('--theme-ocre');
-    const C_BAR  = getCSSVar('--theme-terracota');
-    const C_SIDE = getCSSVar('--theme-carbon');
+
+
+  const onInit = (board: any, els: any, theme: any) => {
+      void board; void els; void theme;
+      const C_PRIM = theme.pavo;
+    const C_MED  = theme.ocre;
+    const C_BAR  = theme.terracota;
+    const C_SIDE = theme.carbon;
 
     const SNAP = 0.5;
-    const A = board.create('point', [-2.5, -2], { name: 'A', size: 5, fillColor: C_PRIM, strokeColor: C_PRIM, showInfobox: false, snapToGrid: true, snapSizeX: SNAP, snapSizeY: SNAP });
-    const B = board.create('point', [3, -1.5],  { name: 'B', size: 5, fillColor: C_PRIM, strokeColor: C_PRIM, showInfobox: false, snapToGrid: true, snapSizeX: SNAP, snapSizeY: SNAP });
-    const C = board.create('point', [0, 3],     { name: 'C', size: 5, fillColor: C_PRIM, strokeColor: C_PRIM, showInfobox: false, snapToGrid: true, snapSizeX: SNAP, snapSizeY: SNAP });
+    const A = createPoint(board, [-2.5, -2], { name: 'A', size: 5, fillColor: C_PRIM, strokeColor: C_PRIM, showInfobox: false, snapToGrid: true, snapSizeX: SNAP, snapSizeY: SNAP }, theme);
+    const B = createPoint(board, [3, -1.5], { name: 'B', size: 5, fillColor: C_PRIM, strokeColor: C_PRIM, showInfobox: false, snapToGrid: true, snapSizeX: SNAP, snapSizeY: SNAP }, theme);
+    const C = createPoint(board, [0, 3], { name: 'C', size: 5, fillColor: C_PRIM, strokeColor: C_PRIM, showInfobox: false, snapToGrid: true, snapSizeX: SNAP, snapSizeY: SNAP }, theme);
 
-    const ladoAB = board.create('segment', [A, B], { strokeColor: C_SIDE, strokeWidth: 2 });
-    const ladoBC = board.create('segment', [B, C], { strokeColor: C_SIDE, strokeWidth: 2 });
-    const ladoCA = board.create('segment', [C, A], { strokeColor: C_SIDE, strokeWidth: 2 });
+    const ladoAB = createSegment(board, [A, B], { strokeColor: C_SIDE, strokeWidth: 2 }, theme);
+    const ladoBC = createSegment(board, [B, C], { strokeColor: C_SIDE, strokeWidth: 2 }, theme);
+    const ladoCA = createSegment(board, [C, A], { strokeColor: C_SIDE, strokeWidth: 2 }, theme);
 
     const M_AB = board.create('midpoint', [A, B], { name: 'M_c', size: 4, fillColor: C_MED, strokeColor: C_MED });
     const M_BC = board.create('midpoint', [B, C], { name: 'M_a', size: 4, fillColor: C_MED, strokeColor: C_MED });
     const M_CA = board.create('midpoint', [C, A], { name: 'M_b', size: 4, fillColor: C_MED, strokeColor: C_MED });
 
-    const medA = board.create('segment', [A, M_BC], { strokeColor: C_MED, strokeWidth: 2.5, dash: 2 });
-    const medB = board.create('segment', [B, M_CA], { strokeColor: C_MED, strokeWidth: 2.5, dash: 2 });
-    const medC = board.create('segment', [C, M_AB], { strokeColor: C_MED, strokeWidth: 2.5, dash: 2 });
+    const medA = createSegment(board, [A, M_BC], { strokeColor: C_MED, strokeWidth: 2.5, dash: 2 }, theme);
+    const medB = createSegment(board, [B, M_CA], { strokeColor: C_MED, strokeWidth: 2.5, dash: 2 }, theme);
+    const medC = createSegment(board, [C, M_AB], { strokeColor: C_MED, strokeWidth: 2.5, dash: 2 }, theme);
 
     const G = board.create('intersection', [medA, medB, 0], { name: 'G', size: 6, fillColor: C_BAR, strokeColor: C_BAR });
 
     const mkTick = (p: any, q: any) => {
-      const mA = board.create('point', [() => (p.X() + q.X()) / 2, () => (p.Y() + q.Y()) / 2], { visible: false });
+      const mA = createPoint(board, [() => (p.X() + q.X()) / 2, () => (p.Y() + q.Y()) / 2], { visible: false }, theme);
       const t0 = board.create('point', [
         () => { const dx = q.X()-p.X(), dy = q.Y()-p.Y(); const len = Math.hypot(dx, dy) || 1; return mA.X() + dy/len * 0.25; },
         () => { const dx = q.X()-p.X(), dy = q.Y()-p.Y(); const len = Math.hypot(dx, dy) || 1; return mA.Y() - dx/len * 0.25; }
@@ -56,7 +50,7 @@ export const Mediana = () => {
         () => { const dx = q.X()-p.X(), dy = q.Y()-p.Y(); const len = Math.hypot(dx, dy) || 1; return mA.X() - dy/len * 0.25; },
         () => { const dx = q.X()-p.X(), dy = q.Y()-p.Y(); const len = Math.hypot(dx, dy) || 1; return mA.Y() + dx/len * 0.25; }
       ], { visible: false });
-      return board.create('segment', [t0, t1], { strokeColor: C_MED, strokeWidth: 2.2, visible: false }) as any;
+      return createSegment(board, [t0, t1], { strokeColor: C_MED, strokeWidth: 2.2, visible: false }, theme) as any;
     };
 
     const halfTicks = [
@@ -71,8 +65,8 @@ export const Mediana = () => {
         const dAG = A.Dist(G), dGMbc = G.Dist(M_BC);
         const dBG = B.Dist(G), dGMcA = G.Dist(M_CA);
         const dCG = C.Dist(G), dGMAb = G.Dist(M_AB);
-        return `<div style="font-family: var(--font-serif); color: ${getCSSVar('--theme-carbon')}; line-height:1.3;">
-          <strong style="font-size: 1.1rem; color:${getCSSVar('--theme-terracota')};">Baricentro G</strong><br/>
+        return `<div style="font-family: var(--font-serif); color: ${theme.carbon}; line-height:1.3;">
+          <strong style="font-size: 1.1rem; color:${theme.terracota};">Baricentro G</strong><br/>
           <small>AG/GM<sub>a</sub> = ${(dAG / Math.max(dGMbc, 0.001)).toFixed(2)}</small><br/>
           <small>BG/GM<sub>b</sub> = ${(dBG / Math.max(dGMcA, 0.001)).toFixed(2)}</small><br/>
           <small>CG/GM<sub>c</sub> = ${(dCG / Math.max(dGMAb, 0.001)).toFixed(2)}</small>
@@ -80,31 +74,29 @@ export const Mediana = () => {
       }
     ], { fixed: true, anchorX: 'left', anchorY: 'top' });
 
-    elementsRef.current = { A, B, C, ladoAB, ladoBC, ladoCA, M_AB, M_BC, M_CA, medA, medB, medC, G, halfTicks, infoText, board };
+      // Registrar elementos para interactividad y auditoría
+      els.A = A;
+        els.B = B;
+        els.C = C;
+        els.ladoAB = ladoAB;
+        els.ladoBC = ladoBC;
+        els.ladoCA = ladoCA;
+        els.M_AB = M_AB;
+        els.M_BC = M_BC;
+        els.M_CA = M_CA;
+        els.medA = medA;
+        els.medB = medB;
+        els.medC = medC;
+        els.G = G;
+        els.halfTicks = halfTicks;
+        els.infoText = infoText;
+    };;
 
-    board.update();
-    (board.renderer as any).container.style.backgroundColor = getCSSVar('--theme-lienzo');
-
-    const observer = new MutationObserver(() => {
-      if (board) {
-        (board.renderer as any).container.style.backgroundColor = getCSSVar('--theme-lienzo');
-        board.update();
-      }
-    });
-    observer.observe(document.documentElement, { attributes: true, attributeFilter: ['class'] });
-
-    return () => {
-      observer.disconnect();
-      JXG.JSXGraph.freeBoard(board);
-      elementsRef.current = {};
-    };
-  }, []);
-
-  useEffect(() => {
-    const { A, B, C, ladoAB, ladoBC, ladoCA, M_AB, M_BC, M_CA, medA, medB, medC, G, halfTicks, board } = elementsRef.current as Record<string, any>;
-    if (!board) return;
-
-    const hVertice = isHighlight('vertice');
+  const onUpdate = (board: any, els: any, theme: any, isStep: any, isHL: any) => {
+      const isHighlight = isHL;
+      void board; void els; void theme; void isStep; void isHL; void isHighlight;
+      const { A, B, C, ladoAB, ladoBC, ladoCA, M_AB, M_BC, M_CA, medA, medB, medC, G, halfTicks } = els;
+      const hVertice = isHighlight('vertice');
     const hMedio = isHighlight('punto-medio');
     const hMediana = isHighlight('mediana');
     const hBaricentro = isHighlight('baricentro');
@@ -139,13 +131,17 @@ export const Mediana = () => {
       fillOpacity: hBaricentro || showAll ? 1 : 0.2,
       size: hBaricentro ? 8 : 6
     });
-
-    board.update();
-  }, [highlight, isHighlight]);
+    };;
 
   return (
-    <div className="w-full h-full min-h-[300px] relative bg-lienzo/40 border border-pizarra/10 rounded-sm overflow-hidden">
-      <div ref={boardRef} className="w-full h-full touch-none" />
-    </div>
+    <MathBoard
+      boundingbox={[-5, 5, 5, -5]}
+      axis={false}
+      grid={false}
+      onInit={onInit}
+      onUpdate={onUpdate}
+    >
+
+    </MathBoard>
   );
 };

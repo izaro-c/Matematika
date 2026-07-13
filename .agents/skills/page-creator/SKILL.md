@@ -466,39 +466,39 @@ Esta conexión no es opcional y tiene reglas estrictas:
 
 Cada `<ProofStep>` DEBE contener al menos un `<InteractiveElement>` referenciando un elemento del diagrama. No hay excepciones: si un paso no tiene nada que resaltar en el diagrama, el paso no necesita diagrama (y probablemente pertenece a la sección de análisis, no a un paso de la demostración).
 
-**Patrón — Component + JSX (demostraciones con justificación de Greenberg):**
+**Patrón de Demostración en marcado MDX (justificación de Greenberg):**
 
 ```mdx
-export const metadata = { ... "layout": "split" ... };
-
-import { DemonstrationSection } from "../../components/content/DemonstrationSection";
-import { ProofStep } from "../../components/content/ProofStep";
-import { InteractiveElement } from "../../components/ui/VisualBind";
-import { Step1Diagram } from "../../diagrams/Teoremas/Step1Diagram";
-import { Step2Diagram } from "../../diagrams/Teoremas/Step2Diagram";
-
-export const Component = () => {
-  const diagrams = {
-    "step1": Step1Diagram,
-    "step2": Step2Diagram
-  };
-
-  return (
-    <DemonstrationSection diagrams={diagrams}>
-      <ProofStep number={1} target="step1" title="Existencia">
-        Por el <ConceptLink targetId="axioma-incidencia-1">Axioma de Incidencia 1</ConceptLink>, dados los puntos <InteractiveElement target="punto-a" color="terracota">$A$</InteractiveElement> y <InteractiveElement target="punto-b" color="terracota">$B$</InteractiveElement>, existe una única <InteractiveElement target="recta-ab" color="salvia">recta $AB$</InteractiveElement> que los contiene.
-      </ProofStep>
-
-      <ProofStep number={2} target="step2" title="Construcción">
-        Por el <ConceptLink targetId="axioma-orden-2">Axioma de Extensión (Orden 2)</ConceptLink>, existe un punto <InteractiveElement target="punto-c" color="terracota">$C$</InteractiveElement> tal que $A * B * C$.
-      </ProofStep>
-
-      <ProofStep number={3} target="step2" title="Conclusión">
-        Por el Paso 2 y por la <ConceptLink targetId="definicion-segmento">definición de segmento</ConceptLink>, concluimos que el punto $B$ pertenece al segmento $AC$. $\blacksquare$
-      </ProofStep>
-    </DemonstrationSection>
-  );
+export const metadata = {
+  "id": "demo-mi-teorema",
+  "type": "demostracion",
+  "title": "Demostración: Mi Teorema",
+  "parentTheorem": "teorema-mi-teorema",
+  "proofMethod": "directo",
+  "layout": "split"
 };
+
+import { DemoMiTeorema } from '@/widgets/diagrams/Demos/DemoMiTeorema';
+
+<DemonstrationSection diagram={<DemoMiTeorema />}>
+
+<Capitular letra="S" />ea $\triangle ABC$ un triángulo rectángulo...
+
+<Separador />
+
+<ProofStep number={1} title="Existencia" target="step1">
+  Por el <ConceptLink targetId="axioma-incidencia-1">Axioma de Incidencia 1</ConceptLink>, dados los puntos <InteractiveElement target="punto-a" color="terracota">$A$</InteractiveElement> y <InteractiveElement target="punto-b" color="terracota">$B$</InteractiveElement>, existe una única <InteractiveElement target="recta-ab" color="salvia">recta $AB$</InteractiveElement> que los contiene.
+</ProofStep>
+
+<ProofStep number={2} title="Construcción" target="step2">
+  Por el <ConceptLink targetId="axioma-orden-2">Axioma de Extensión (Orden 2)</ConceptLink>, existe un punto <InteractiveElement target="punto-c" color="terracota">$C$</InteractiveElement> tal que $A * B * C$.
+</ProofStep>
+
+<ProofStep number={3} title="Conclusión" target="step3">
+  Por el paso 2 y por la <ConceptLink targetId="definicion-segmento">definición de segmento</ConceptLink>, concluimos que el punto $B$ pertenece al segmento $AC$. $\blacksquare$
+</ProofStep>
+
+</DemonstrationSection>
 ```
 
 ---
@@ -645,7 +645,7 @@ src/database/content/
 
 | Qué | Dónde |
 |---|---|
-| Diagramas interactivos | `src/shared/diagrams/{Axiomas,Definiciones,Teoremas,Demos,Models}/` |
+| Diagramas interactivos | `src/widgets/diagrams/{Axiomas,Definiciones,Teoremas,Demos,Models}/` |
 | Plantillas MDX | `src/shared/templates/{tipo}.template.mdx` |
 | Schemas Zod | `src/entities/content/schemas.ts` |
 | Índice de contenido | `src/entities/content/contentIndex.json` |
@@ -719,7 +719,7 @@ npm run bridge:audit
 - [ ] El método de demostración (`proofMethod`) describe correctamente el enfoque
 - [ ] Para split-layout: cada paso tiene diagrama o usa uno compartido
 - [ ] La demostración es completa (sin huecos) y finaliza con $\blacksquare$
-- [ ] Usa `export const Component` (no body MDX plano)
+- [ ] Se escribe en el body MDX plano usando `<DemonstrationSection>` (no exporta Component de forma nombrada)
 
 ---
 

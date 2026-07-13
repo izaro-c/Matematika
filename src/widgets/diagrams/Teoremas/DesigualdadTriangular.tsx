@@ -1,159 +1,133 @@
-import { useRef, useEffect } from 'react';
-import { getCSSVar } from '@/features/graph/ui/MathUtils';
-import JXG from 'jsxgraph';
-import { useMathStore } from '@/app/providers/MathStoreContext';
+import { MathBoard } from '@/shared/diagrams/core/MathBoard';
+import {
+  createPoint,
+  createPolygon,
+  createSegment,
+  createText,
+} from '@/shared/diagrams/core/MathFactory';
 
 export const DesigualdadTriangular = () => {
-  const boardRef = useRef<HTMLDivElement>(null);
-  const elementsRef = useRef<Record<string, unknown>>({});
-  const hlRef = useRef<any>(null);
+  const onInit = (board: any, els: any, theme: any) => {
+    const pointOptions = {
+      size: 5,
+      fillColor: theme.carbon,
+      strokeColor: theme.carbon,
+      showInfobox: false,
+      snapToGrid: true,
+      snapSizeX: 0.5,
+      snapSizeY: 0.5,
+    };
+    const A = createPoint(board, [-2.5, -2], { name: 'A', ...pointOptions }, theme);
+    const B = createPoint(board, [2.5, -2], { name: 'B', ...pointOptions }, theme);
+    const C = createPoint(board, [0, 2.5], { name: 'C', ...pointOptions }, theme);
 
-  const highlight = useMathStore((state) => state.variables['highlight']);
-  const isHighlight = (id: string) => Array.isArray(highlight) ? (highlight as unknown as string[]).includes(id) : highlight === id;
+    const segAB = createSegment(board, [A, B], { strokeColor: theme.carbon, strokeWidth: 2.5 }, theme);
+    const segBC = createSegment(board, [B, C], { strokeColor: theme.carbon, strokeWidth: 2.5 }, theme);
+    const segCA = createSegment(board, [C, A], { strokeColor: theme.carbon, strokeWidth: 2.5 }, theme);
+    const poly = createPolygon(board, [A, B, C], {
+      fillColor: theme.pavo,
+      fillOpacity: 0.06,
+      borders: { visible: false },
+      vertices: { visible: false },
+    }, theme);
 
-  useEffect(() => { hlRef.current = highlight; }, [highlight]);
-
-  useEffect(() => {
-    if (!boardRef.current) return;
-
-    if (!boardRef.current.id) boardRef.current.id = "jxgbox_" + Math.random().toString(36).substring(2, 9);
-    const board = JXG.JSXGraph.initBoard(boardRef.current.id, {
-      boundingbox: [-5, 5, 5, -5],
-      axis: false,
-      showCopyright: false,
-      keepaspectratio: true,
-      grid: false,
-    });
-
-    const C_PRIM = getCSSVar('--theme-carbon');
-    const C_POL  = getCSSVar('--theme-pavo');
-
-    const SNAP = 0.5;
-    const pCfg = { size: 5, fillColor: C_PRIM, strokeColor: C_PRIM, showInfobox: false, snapToGrid: true, snapSizeX: SNAP, snapSizeY: SNAP };
-
-    const A = board.create('point', [-2.5, -2], { name: 'A', ...pCfg });
-    const B = board.create('point', [2.5, -2],  { name: 'B', ...pCfg });
-    const C = board.create('point', [0, 2.5],   { name: 'C', ...pCfg });
-
-    const segAB = board.create('segment', [A, B], { strokeColor: C_PRIM, strokeWidth: 2.5 });
-    const segBC = board.create('segment', [B, C], { strokeColor: C_PRIM, strokeWidth: 2.5 });
-    const segCA = board.create('segment', [C, A], { strokeColor: C_PRIM, strokeWidth: 2.5 });
-
-    const poly = board.create('polygon', [A, B, C], {
-      fillColor: C_POL, fillOpacity: 0.06,
-      borders: { visible: false }, vertices: { visible: false }
-    });
-
-    const mkLabel = (p: any, q: any, offX: number, offY: number) => board.create('text', [
+    const mkLabel = (p: any, q: any, offX: number, offY: number) => createText(board, [
       () => (p.X() + q.X()) / 2 + offX,
       () => (p.Y() + q.Y()) / 2 + offY,
-      () => p.Dist(q).toFixed(1)
-    ], { fixed: true, fontSize: 15, cssClass: 'font-serif font-bold', color: C_PRIM, anchorX: 'middle', anchorY: 'middle' });
+      () => p.Dist(q).toFixed(1),
+    ], {
+      fixed: true,
+      fontSize: 15,
+      cssClass: 'font-serif font-bold',
+      color: theme.carbon,
+      anchorX: 'middle',
+      anchorY: 'middle',
+    }, theme);
 
     const labAB = mkLabel(A, B, 0, -0.55);
     const labBC = mkLabel(B, C, 0.55, 0);
     const labCA = mkLabel(C, A, -0.55, 0);
 
-    const orientABC = () => (B.X() - A.X()) * (C.Y() - A.Y()) - (B.Y() - A.Y()) * (C.X() - A.X());
-    const initialOrient = orientABC();
+    const orientation = () => (B.X() - A.X()) * (C.Y() - A.Y()) - (B.Y() - A.Y()) * (C.X() - A.X());
+    const initialOrientation = orientation();
     const lastValid: Record<string, [number, number]> = { A: [A.X(), A.Y()], B: [B.X(), B.Y()], C: [C.X(), C.Y()] };
-    [A, B, C].forEach((p: any, idx: number) => {
-      const name = String.fromCharCode(65 + idx);
-      p.on('drag', () => {
-        const cur = orientABC();
-        if (Math.abs(cur) < 0.01 || (initialOrient > 0.01 && cur < -0.01) || (initialOrient < -0.01 && cur > 0.01)) {
-          p.moveTo([lastValid[name][0], lastValid[name][1]], 0);
+    [A, B, C].forEach((point: any, index: number) => {
+      const name = String.fromCharCode(65 + index);
+      point.on('drag', () => {
+        const current = orientation();
+        const changedSign = (initialOrientation > 0.01 && current < -0.01) || (initialOrientation < -0.01 && current > 0.01);
+        if (Math.abs(current) < 0.01 || changedSign) {
+          point.moveTo(lastValid[name], 0);
         } else {
-          lastValid[name][0] = p.X();
-          lastValid[name][1] = p.Y();
+          lastValid[name] = [point.X(), point.Y()];
         }
       });
     });
 
-    const infoText = board.create('text', [
-      -4.5, 4.5,
-      () => {
-        const c = A.Dist(B), a = B.Dist(C), b = C.Dist(A);
-        const ok1 = a + b > c + 0.001, ok2 = a + c > b + 0.001, ok3 = b + c > a + 0.001;
-        const allOk = ok1 && ok2 && ok3;
-        const h = hlRef.current;
-        const isDesig = h === 'desigualdad' || (Array.isArray(h) && (h as string[]).includes('desigualdad'));
-        const col = isDesig ? getCSSVar('--theme-terracota') : getCSSVar('--theme-carbon');
-        const fs = isDesig ? 14 : 13;
-        return `<div style="font-family: var(--font-serif); color:${col}; font-size:${fs}px; line-height:1.5;">
-          <strong style="font-size: 1.15rem;">Desigualdad Triangular</strong><br/>
-          <span style="color:${ok1 ? getCSSVar('--theme-musgo') : getCSSVar('--theme-granada')};">a + b = ${(a+b).toFixed(1)} ${ok1 ? '>' : '\u2264'} c = ${c.toFixed(1)}</span><br/>
-          <span style="color:${ok2 ? getCSSVar('--theme-musgo') : getCSSVar('--theme-granada')};">a + c = ${(a+c).toFixed(1)} ${ok2 ? '>' : '\u2264'} b = ${b.toFixed(1)}</span><br/>
-          <span style="color:${ok3 ? getCSSVar('--theme-musgo') : getCSSVar('--theme-granada')};">b + c = ${(b+c).toFixed(1)} ${ok3 ? '>' : '\u2264'} a = ${a.toFixed(1)}</span><br/>
-          <strong style="color:${allOk ? getCSSVar('--theme-musgo') : getCSSVar('--theme-granada')};">${allOk ? 'Tri\u00e1ngulo v\u00e1lido' : 'Tri\u00e1ngulo degenerado'}</strong>
-        </div>`;
-      }
-    ], { fixed: true, anchorX: 'left', anchorY: 'top' });
+    const infoText = createText(board, [-4.5, 4.5, () => {
+      const c = A.Dist(B);
+      const a = B.Dist(C);
+      const b = C.Dist(A);
+      const ok1 = a + b > c + 0.001;
+      const ok2 = a + c > b + 0.001;
+      const ok3 = b + c > a + 0.001;
+      const allOk = ok1 && ok2 && ok3;
+      return `<div style="font-family: var(--font-serif); color:${theme.carbon}; font-size:13px; line-height:1.5;">
+        <strong style="font-size: 1.15rem;">Desigualdad Triangular</strong><br/>
+        <span style="color:${ok1 ? theme.musgo : theme.granada};">a + b = ${(a + b).toFixed(1)} ${ok1 ? '>' : '≤'} c = ${c.toFixed(1)}</span><br/>
+        <span style="color:${ok2 ? theme.musgo : theme.granada};">a + c = ${(a + c).toFixed(1)} ${ok2 ? '>' : '≤'} b = ${b.toFixed(1)}</span><br/>
+        <span style="color:${ok3 ? theme.musgo : theme.granada};">b + c = ${(b + c).toFixed(1)} ${ok3 ? '>' : '≤'} a = ${a.toFixed(1)}</span><br/>
+        <strong style="color:${allOk ? theme.musgo : theme.granada};">${allOk ? 'Triángulo válido' : 'Triángulo degenerado'}</strong>
+      </div>`;
+    }], {
+      fixed: true,
+      anchorX: 'left',
+      anchorY: 'top',
+    }, theme);
 
-    elementsRef.current = { A, B, C, poly, segAB, segBC, segCA, labAB, labBC, labCA, infoText, board };
+    Object.assign(els, { A, B, C, poly, segAB, segBC, segCA, labAB, labBC, labCA, infoText });
+  };
 
-    board.update();
-    (board.renderer as any).container.style.backgroundColor = getCSSVar('--theme-lienzo');
-
-    const observer = new MutationObserver(() => {
-      if (board) {
-        (board.renderer as any).container.style.backgroundColor = getCSSVar('--theme-lienzo');
-        board.update();
-      }
-    });
-    observer.observe(document.documentElement, { attributes: true, attributeFilter: ['class'] });
-
-    return () => {
-      observer.disconnect();
-      JXG.JSXGraph.freeBoard(board);
-      elementsRef.current = {};
-    };
-  }, []);
-
-  useEffect(() => {
-    const els = elementsRef.current as Record<string, any>;
-    if (!els.board) return;
-    const { A, B, C, poly, segAB, segBC, segCA, labAB, labBC, labCA, board } = els;
-
-    const C_PRIM = getCSSVar('--theme-carbon');
-    const C_ACC  = getCSSVar('--theme-terracota');
-
-    const hTri = isHighlight('triangulo');
-    const hLados = isHighlight('lados');
-    const hDesig = isHighlight('desigualdad');
-    const hLadoA = isHighlight('lado-a');
-    const hLadoB = isHighlight('lado-b');
-    const hLadoC = isHighlight('lado-c');
+  const onUpdate = (_board: any, els: any, theme: any, _isStep: any, isHL: any) => {
+    const hTri = isHL('triangulo');
+    const hLados = isHL('lados');
+    const hDesig = isHL('desigualdad');
+    const hLadoA = isHL('lado-a');
+    const hLadoB = isHL('lado-b');
+    const hLadoC = isHL('lado-c');
     const anyH = hTri || hLados || hDesig || hLadoA || hLadoB || hLadoC;
     const showAll = !anyH;
-
-    const vOp = anyH ? 0.12 : 1;
+    const muted = anyH ? 0.12 : 1;
 
     const sideStyle = (seg: any, lab: any, active: boolean) => {
-      seg.setAttribute({ strokeOpacity: showAll ? 1 : vOp, strokeColor: active ? C_ACC : C_PRIM, strokeWidth: active ? 4 : 2.5 });
-      lab.setAttribute({ visible: showAll || active, color: active ? C_ACC : C_PRIM });
+      seg.setAttribute({
+        strokeOpacity: showAll ? 1 : muted,
+        strokeColor: active ? theme.terracota : theme.carbon,
+        strokeWidth: active ? 4 : 2.5,
+      });
+      lab.setAttribute({ visible: showAll || active, color: active ? theme.terracota : theme.carbon });
     };
 
-    sideStyle(segAB, labAB, hLadoC || hLados || hDesig);
-    sideStyle(segBC, labBC, hLadoA || hLados || hDesig);
-    sideStyle(segCA, labCA, hLadoB || hLados || hDesig);
+    sideStyle(els.segAB, els.labAB, hLadoC || hLados || hDesig);
+    sideStyle(els.segBC, els.labBC, hLadoA || hLados || hDesig);
+    sideStyle(els.segCA, els.labCA, hLadoB || hLados || hDesig);
 
-    [A, B, C].forEach((p: any) => p.setAttribute({
-      strokeOpacity: showAll ? 1 : vOp, fillOpacity: showAll ? 1 : vOp,
-      size: hTri ? 7 : 5, fillColor: hTri ? C_ACC : C_PRIM, strokeColor: hTri ? C_ACC : C_PRIM
+    [els.A, els.B, els.C].forEach((point: any) => point.setAttribute({
+      strokeOpacity: showAll ? 1 : muted,
+      fillOpacity: showAll ? 1 : muted,
+      size: hTri ? 7 : 5,
+      fillColor: hTri ? theme.terracota : theme.carbon,
+      strokeColor: hTri ? theme.terracota : theme.carbon,
     }));
 
-    poly.setAttribute({ fillOpacity: hTri ? 0.18 : 0.06 });
-
-    board.update();
-  }, [highlight, isHighlight]);
+    els.poly.setAttribute({ fillOpacity: hTri ? 0.18 : 0.06 });
+  };
 
   return (
-    <div className="w-full h-full min-h-[300px] relative bg-lienzo/40 border border-pizarra/10 rounded-sm overflow-hidden">
+    <MathBoard boundingbox={[-5, 5, 5, -5]} onInit={onInit} onUpdate={onUpdate}>
       <div className="absolute top-2 left-3 z-10 text-xs font-serif italic text-pizarra/50">
         La suma de dos lados siempre supera al tercero
       </div>
-      <div ref={boardRef} className="w-full h-full touch-none" />
-    </div>
+    </MathBoard>
   );
 };

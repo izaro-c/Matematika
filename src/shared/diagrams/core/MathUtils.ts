@@ -1,4 +1,4 @@
-import type { ThemeColors } from '@/features/graph/ui/MathBoard';
+import type { ThemeColors } from './MathBoard';
 
 // ─── Paleta Arts & Crafts ───────────────────────────────────────────────────
 

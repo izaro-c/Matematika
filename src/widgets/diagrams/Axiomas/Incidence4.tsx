@@ -1,112 +1,96 @@
-import { useRef, useEffect } from 'react';
-import { getCSSVar } from '@/features/graph/ui/MathUtils';
-import JXG from 'jsxgraph';
-import { useMathStore } from '@/app/providers/MathStoreContext';
-import { useLessonStore } from '@/features/lessons/LessonStore';
+import { MathBoard } from '@/shared/diagrams/core/MathBoard';
+import {
+  createPoint, createLine, createSegment, createPolygon
+} from '@/shared/diagrams/core/MathFactory';
+
+
+
+
+
 
 
 export const Incidence4 = () => {
-  const boardRef = useRef<HTMLDivElement>(null);
-  const jxgBoard = useRef<any>(null);
-  const elementsRef = useRef<Record<string, unknown>>({});
 
-  const mathHighlight = useMathStore(state => state.variables?.['highlight']);
-  const lessonHighlight = useLessonStore(state => state.activeStep);
-  const highlight = mathHighlight || lessonHighlight;
 
-  useEffect(() => {
-    if (!boardRef.current) return;
 
-    if (!boardRef.current.id) boardRef.current.id = "jxgbox_" + Math.random().toString(36).substring(2, 9);
-      const board = JXG.JSXGraph.initBoard(boardRef.current.id, {
-      boundingbox: [-4, 4, 4, -3],
-      axis: false,
-      showCopyright: false,
-      keepaspectratio: true,
-      grid: false,
-    });
-    jxgBoard.current = board;
 
-    // Triángulo: tres puntos no colineales
-    const A = board.create('point', [-2.5, -1], {
-      name: 'A', size: 5, fillColor: getCSSVar('--theme-terracota'), strokeColor: getCSSVar('--theme-terracota'), showInfobox: false,
-    });
-    const B = board.create('point', [2.5, -1], {
-      name: 'B', size: 5, fillColor: getCSSVar('--theme-terracota'), strokeColor: getCSSVar('--theme-terracota'), showInfobox: false,
-    });
-    const C = board.create('point', [0, 2.5], {
-      name: 'C', size: 5, fillColor: getCSSVar('--theme-terracota'), strokeColor: getCSSVar('--theme-terracota'), showInfobox: false,
-    });
+
+
+
+
+  const onInit = (board: any, els: any, theme: any) => {
+      void board; void els; void theme;
+      // Triángulo: tres puntos no colineales
+    const A = createPoint(board, [-2.5, -1], {
+      name: 'A', size: 5, fillColor: theme.terracota, strokeColor: theme.terracota, showInfobox: false,
+    }, theme);
+    const B = createPoint(board, [2.5, -1], {
+      name: 'B', size: 5, fillColor: theme.terracota, strokeColor: theme.terracota, showInfobox: false,
+    }, theme);
+    const C = createPoint(board, [0, 2.5], {
+      name: 'C', size: 5, fillColor: theme.terracota, strokeColor: theme.terracota, showInfobox: false,
+    }, theme);
 
     // Lados del triángulo
-    const lab = board.create('line', [A, B], {
-      strokeColor: getCSSVar('--theme-carbon'), strokeWidth: 1.5, highlight: false, dash: 1,
-    });
-    const lac = board.create('line', [A, C], {
-      strokeColor: getCSSVar('--theme-carbon'), strokeWidth: 1.5, highlight: false, dash: 1,
-    });
-    const lbc = board.create('line', [B, C], {
-      strokeColor: getCSSVar('--theme-carbon'), strokeWidth: 1.5, highlight: false, dash: 1,
-    });
+    const lab = createLine(board, [A, B], {
+      strokeColor: theme.carbon, strokeWidth: 1.5, highlight: false, dash: 1,
+    }, theme);
+    const lac = createLine(board, [A, C], {
+      strokeColor: theme.carbon, strokeWidth: 1.5, highlight: false, dash: 1,
+    }, theme);
+    const lbc = createLine(board, [B, C], {
+      strokeColor: theme.carbon, strokeWidth: 1.5, highlight: false, dash: 1,
+    }, theme);
 
     // Segmentos destacados
-    board.create('segment', [A, B], { strokeColor: getCSSVar('--theme-musgo'), strokeWidth: 2.5, highlight: false });
-    board.create('segment', [A, C], { strokeColor: getCSSVar('--theme-musgo'), strokeWidth: 2.5, highlight: false });
-    board.create('segment', [B, C], { strokeColor: getCSSVar('--theme-musgo'), strokeWidth: 2.5, highlight: false });
+    createSegment(board, [A, B], { strokeColor: theme.musgo, strokeWidth: 2.5, highlight: false }, theme);
+    createSegment(board, [A, C], { strokeColor: theme.musgo, strokeWidth: 2.5, highlight: false }, theme);
+    createSegment(board, [B, C], { strokeColor: theme.musgo, strokeWidth: 2.5, highlight: false }, theme);
 
     // Etiqueta "plano" con relleno suave
-    const polygonABC = board.create('polygon', [A, B, C], {
-      fillColor: getCSSVar('--theme-pizarra'), fillOpacity: 0.08, borders: { visible: false }, vertices: { visible: false },
-    });
+    const polygonABC = createPolygon(board, [A, B, C], {
+      fillColor: theme.pizarra, fillOpacity: 0.08, borders: { visible: false }, vertices: { visible: false },
+    }, theme);
 
-    elementsRef.current = { board, A, B, C, lab, lac, lbc, polygonABC };
+      // Registrar elementos para interactividad y auditoría
+      els.A = A;
+        els.B = B;
+        els.C = C;
+        els.lab = lab;
+        els.lac = lac;
+        els.lbc = lbc;
+        els.polygonABC = polygonABC;
+    };;
 
-    board.update();    (board.renderer as any).container.style.backgroundColor = getCSSVar('--theme-lienzo');
-
-
-
-        const observer = new MutationObserver(() => {
-      if (board) {
-        (board.renderer as any).container.style.backgroundColor = getCSSVar('--theme-lienzo');
-        board.update();
-      }
-    });
-    observer.observe(document.documentElement, { attributes: true, attributeFilter: ['class'] });
-
-    return () => {
-      observer.disconnect();
-      JXG.JSXGraph.freeBoard(board);
-      jxgBoard.current = null;
-      elementsRef.current = {};
-    };
-  }, []);
-
-  useEffect(() => {
-    const { board, A, B, C, polygonABC } = elementsRef.current as Record<string, any>;
-    if (!board) return;
-
-    const reset = () => {
-      A.setAttribute({ size: 5, fillColor: getCSSVar('--theme-terracota'), strokeColor: getCSSVar('--theme-terracota') });
-      B.setAttribute({ size: 5, fillColor: getCSSVar('--theme-terracota'), strokeColor: getCSSVar('--theme-terracota') });
-      C.setAttribute({ size: 5, fillColor: getCSSVar('--theme-terracota'), strokeColor: getCSSVar('--theme-terracota') });
-      if (polygonABC) polygonABC.setAttribute({ fillOpacity: 0.08, fillColor: getCSSVar('--theme-pizarra') });
+  const onUpdate = (board: any, els: any, theme: any, isStep: any, isHL: any) => {
+      const isHighlight = isHL;
+      void board; void els; void theme; void isStep; void isHL; void isHighlight;
+      const { A, B, C, polygonABC } = els;
+      const reset = () => {
+      A.setAttribute({ size: 5, fillColor: theme.terracota, strokeColor: theme.terracota });
+      B.setAttribute({ size: 5, fillColor: theme.terracota, strokeColor: theme.terracota });
+      C.setAttribute({ size: 5, fillColor: theme.terracota, strokeColor: theme.terracota });
+      if (polygonABC) polygonABC.setAttribute({ fillOpacity: 0.08, fillColor: theme.pizarra });
     };
 
     reset();
-    if (highlight === 'pA') A.setAttribute({ size: 10, fillColor: getCSSVar('--theme-ocre'), strokeColor: getCSSVar('--theme-ocre') });
-    else if (highlight === 'pB') B.setAttribute({ size: 10, fillColor: getCSSVar('--theme-ocre'), strokeColor: getCSSVar('--theme-ocre') });
-    else if (highlight === 'pC') C.setAttribute({ size: 10, fillColor: getCSSVar('--theme-ocre'), strokeColor: getCSSVar('--theme-ocre') });
-    else if (highlight === 'polygonABC' && polygonABC) polygonABC.setAttribute({ fillOpacity: 0.25, fillColor: getCSSVar('--theme-musgo') });
-
-    board.update();
-  }, [highlight]);
+    if (isHL('pA')) A.setAttribute({ size: 10, fillColor: theme.ocre, strokeColor: theme.ocre });
+    else if (isHL('pB')) B.setAttribute({ size: 10, fillColor: theme.ocre, strokeColor: theme.ocre });
+    else if (isHL('pC')) C.setAttribute({ size: 10, fillColor: theme.ocre, strokeColor: theme.ocre });
+    else if (isHL('polygonABC') && polygonABC) polygonABC.setAttribute({ fillOpacity: 0.25, fillColor: theme.musgo });
+    };;
 
   return (
-    <div className="w-full h-full min-h-[300px] relative bg-lienzo/40 border border-pizarra/10 rounded-sm overflow-hidden">
+    <MathBoard
+      boundingbox={[-4, 4, 4, -3]}
+      axis={false}
+      grid={false}
+      onInit={onInit}
+      onUpdate={onUpdate}
+    >
       <div className="absolute top-2 left-3 z-10 text-xs font-serif italic text-pizarra/50">
         Tres puntos no colineales determinan un <span className="font-bold not-italic text-terracota">plano</span>
       </div>
-      <div ref={boardRef} className="w-full h-full touch-none" />
-    </div>
+    </MathBoard>
   );
 };

@@ -1,53 +1,47 @@
-import { useRef, useEffect } from 'react';
-import { getCSSVar } from '@/features/graph/ui/MathUtils';
-import JXG from 'jsxgraph';
-import { useMathStore } from '@/app/providers/MathStoreContext';
+import { MathBoard } from '@/shared/diagrams/core/MathBoard';
+import {
+  createPoint, createLine, createSegment, createPolygon, createAngle
+} from '@/shared/diagrams/core/MathFactory';
+
+
+
+
 
 export const Paralelogramo = () => {
-  const boardRef = useRef<HTMLDivElement>(null);
-  const elementsRef = useRef<Record<string, unknown>>({});
 
-  const highlight = useMathStore((state) => state.variables['highlight']);
-  const isHighlight = (id: string) => Array.isArray(highlight) ? (highlight as unknown as string[]).includes(id) : highlight === id;
 
-  useEffect(() => {
-    if (!boardRef.current) return;
 
-    if (!boardRef.current.id) boardRef.current.id = "jxgbox_" + Math.random().toString(36).substring(2, 9);
-    const board = JXG.JSXGraph.initBoard(boardRef.current.id, {
-      boundingbox: [-6, 6, 6, -5],
-      axis: false,
-      showCopyright: false,
-      keepaspectratio: true,
-      grid: false,
-    });
 
-    const C_PRIM = getCSSVar('--theme-carbon');
-    const C_ACC2 = getCSSVar('--theme-pavo');
-    const C_ANG  = getCSSVar('--theme-salvia');
-    const C_RIGHT = getCSSVar('--theme-ocre');
-    const C_DIAG  = getCSSVar('--theme-pizarra');
+
+
+  const onInit = (board: any, els: any, theme: any) => {
+      void board; void els; void theme;
+      const C_PRIM = theme.carbon;
+    const C_ACC2 = theme.pavo;
+    const C_ANG  = theme.salvia;
+    const C_RIGHT = theme.ocre;
+    const C_DIAG  = theme.pizarra;
 
     const SNAP = 0.5;
     const pCfg = { size: 5, fillColor: C_PRIM, strokeColor: C_PRIM, showInfobox: false, snapToGrid: true, snapSizeX: SNAP, snapSizeY: SNAP };
 
-    const A = board.create('point', [-3, -2], { name: 'A', ...pCfg });
-    const B = board.create('point', [2, -2],  { name: 'B', ...pCfg });
-    const C = board.create('point', [4, 2],   { name: 'C', ...pCfg });
+    const A = createPoint(board, [-3, -2], { name: 'A', ...pCfg }, theme);
+    const B = createPoint(board, [2, -2], { name: 'B', ...pCfg }, theme);
+    const C = createPoint(board, [4, 2], { name: 'C', ...pCfg }, theme);
 
-    const lineAB = board.create('line', [A, B], { visible: false });
-    const lineBC = board.create('line', [B, C], { visible: false });
+    const lineAB = createLine(board, [A, B], { visible: false }, theme);
+    const lineBC = createLine(board, [B, C], { visible: false }, theme);
     const parCD = board.create('parallel', [lineAB, C], { visible: false });
     const parAD = board.create('parallel', [lineBC, A], { visible: false });
     const D = board.create('intersection', [parCD, parAD, 0], { name: 'D', ...pCfg });
 
-    const poly = board.create('polygon', [A, B, C, D], {
+    const poly = createPolygon(board, [A, B, C, D], {
       fillColor: C_ACC2, fillOpacity: 0.08,
       borders: { strokeWidth: 2.5, strokeColor: C_PRIM },
       vertices: { visible: false }
-    });
+    }, theme);
 
-    board.update();
+
 
     const orientABC = () => (B.X() - A.X()) * (C.Y() - A.Y()) - (B.Y() - A.Y()) * (C.X() - A.X());
     const initialOrient = orientABC();
@@ -74,7 +68,7 @@ export const Paralelogramo = () => {
     };
 
     const mkTickSeg = (p: any, q: any, color: string, centerOffset = 0) => {
-      const mA = board.create('point', [() => (p.X() + q.X()) / 2, () => (p.Y() + q.Y()) / 2], { visible: false });
+      const mA = createPoint(board, [() => (p.X() + q.X()) / 2, () => (p.Y() + q.Y()) / 2], { visible: false }, theme);
       const dNorm = () => { const dx = q.X()-p.X(), dy = q.Y()-p.Y(); const len = Math.hypot(dx, dy) || 1; return { dx: dx/len, dy: dy/len }; };
       const cx = () => { const dn = dNorm(); return mA.X() + dn.dx * centerOffset; };
       const cy = () => { const dn = dNorm(); return mA.Y() + dn.dy * centerOffset; };
@@ -86,7 +80,7 @@ export const Paralelogramo = () => {
         () => { const dn = dNorm(); return cx() - dn.dy * 0.3; },
         () => { const dn = dNorm(); return cy() + dn.dx * 0.3; }
       ], { visible: false });
-      return board.create('segment', [t0, t1], { strokeColor: color, strokeWidth: 2.4, visible: false }) as any;
+      return createSegment(board, [t0, t1], { strokeColor: color, strokeWidth: 2.4, visible: false }, theme) as any;
     };
 
     const congAB = mkTickSeg(A, B, C_PRIM);
@@ -96,18 +90,18 @@ export const Paralelogramo = () => {
     const congDA1 = mkTickSeg(D, A, C_PRIM, -0.18);
     const congDA2 = mkTickSeg(D, A, C_PRIM, 0.18);
 
-    const angleA = board.create('angle', [B, A, D], { name: '&alpha;', radius: 0.85, fillColor: C_ANG, strokeColor: C_ANG, fillOpacity: 0.22, type: 'sector', visible: false }) as any;
-    const angleC = board.create('angle', [D, C, B], { name: '&alpha;', radius: 0.85, fillColor: C_ANG, strokeColor: C_ANG, fillOpacity: 0.22, type: 'sector', visible: false }) as any;
-    const angleB = board.create('angle', [C, B, A], { name: '&beta;',  radius: 0.85, fillColor: C_ANG, strokeColor: C_ANG, fillOpacity: 0.22, type: 'sector', visible: false }) as any;
-    const angleD = board.create('angle', [A, D, C], { name: '&beta;',  radius: 0.85, fillColor: C_ANG, strokeColor: C_ANG, fillOpacity: 0.22, type: 'sector', visible: false }) as any;
+    const angleA = createAngle(board, [B, A, D], { name: '&alpha;', radius: 0.85, fillColor: C_ANG, strokeColor: C_ANG, fillOpacity: 0.22, type: 'sector', visible: false }, theme) as any;
+    const angleC = createAngle(board, [D, C, B], { name: '&alpha;', radius: 0.85, fillColor: C_ANG, strokeColor: C_ANG, fillOpacity: 0.22, type: 'sector', visible: false }, theme) as any;
+    const angleB = createAngle(board, [C, B, A], { name: '&beta;',  radius: 0.85, fillColor: C_ANG, strokeColor: C_ANG, fillOpacity: 0.22, type: 'sector', visible: false }, theme) as any;
+    const angleD = createAngle(board, [A, D, C], { name: '&beta;',  radius: 0.85, fillColor: C_ANG, strokeColor: C_ANG, fillOpacity: 0.22, type: 'sector', visible: false }, theme) as any;
 
-    const rightA = board.create('angle', [B, A, D], { radius: 0.55, type: 'sector', orthotype: 'square', fillColor: C_RIGHT, strokeColor: C_RIGHT, fillOpacity: 0.4, visible: false }) as any;
-    const rightB = board.create('angle', [C, B, A], { radius: 0.55, type: 'sector', orthotype: 'square', fillColor: C_RIGHT, strokeColor: C_RIGHT, fillOpacity: 0.4, visible: false }) as any;
-    const rightC = board.create('angle', [D, C, B], { radius: 0.55, type: 'sector', orthotype: 'square', fillColor: C_RIGHT, strokeColor: C_RIGHT, fillOpacity: 0.4, visible: false }) as any;
-    const rightD = board.create('angle', [A, D, C], { radius: 0.55, type: 'sector', orthotype: 'square', fillColor: C_RIGHT, strokeColor: C_RIGHT, fillOpacity: 0.4, visible: false }) as any;
+    const rightA = createAngle(board, [B, A, D], { radius: 0.55, type: 'sector', orthotype: 'square', fillColor: C_RIGHT, strokeColor: C_RIGHT, fillOpacity: 0.4, visible: false }, theme) as any;
+    const rightB = createAngle(board, [C, B, A], { radius: 0.55, type: 'sector', orthotype: 'square', fillColor: C_RIGHT, strokeColor: C_RIGHT, fillOpacity: 0.4, visible: false }, theme) as any;
+    const rightC = createAngle(board, [D, C, B], { radius: 0.55, type: 'sector', orthotype: 'square', fillColor: C_RIGHT, strokeColor: C_RIGHT, fillOpacity: 0.4, visible: false }, theme) as any;
+    const rightD = createAngle(board, [A, D, C], { radius: 0.55, type: 'sector', orthotype: 'square', fillColor: C_RIGHT, strokeColor: C_RIGHT, fillOpacity: 0.4, visible: false }, theme) as any;
 
-    const diagAC = board.create('segment', [A, C], { strokeColor: C_DIAG, strokeWidth: 1.2, dash: 3, fixed: true, visible: true });
-    const diagBD = board.create('segment', [B, D], { strokeColor: C_DIAG, strokeWidth: 1.2, dash: 3, fixed: true, visible: true });
+    const diagAC = createSegment(board, [A, C], { strokeColor: C_DIAG, strokeWidth: 1.2, dash: 3, fixed: true, visible: true }, theme);
+    const diagBD = createSegment(board, [B, D], { strokeColor: C_DIAG, strokeWidth: 1.2, dash: 3, fixed: true, visible: true }, theme);
     const diagM = board.create('intersection', [diagAC, diagBD, 0], { name: 'M', fillColor: C_PRIM, strokeColor: C_PRIM, size: 3, visible: true });
 
     const infoText = board.create('text', [
@@ -127,38 +121,47 @@ export const Paralelogramo = () => {
         else if (allRight) { clase = "Rect\u00e1ngulo"; props = "4 \u2220 rectos \u00b7 diags \u2261"; }
         else if (allSidesEq) { clase = "Rombo"; props = "4 lados \u2261 \u00b7 diags \u22a5"; }
 
-        return `<div style="font-family: var(--font-serif); color: ${getCSSVar('--theme-carbon')}; line-height:1.4;">
-          <strong style="font-size: 1.25rem; color:${clase==='Paralelogramo' ? getCSSVar('--theme-carbon') : getCSSVar('--theme-terracota')};">${clase}</strong><br/>
-          <small style="color:${getCSSVar('--theme-pizarra')};">${props}</small>
+        return `<div style="font-family: var(--font-serif); color: ${theme.carbon}; line-height:1.4;">
+          <strong style="font-size: 1.25rem; color:${clase==='Paralelogramo' ? theme.carbon : theme.terracota};">${clase}</strong><br/>
+          <small style="color:${theme.pizarra};">${props}</small>
         </div>`;
       }
     ], { fixed: true, anchorX: 'left', anchorY: 'top' });
 
-    elementsRef.current = { A, B, C, D, poly, sides, congAB, congCD, congBC1, congBC2, congDA1, congDA2, angleA, angleB, angleC, angleD, rightA, rightB, rightC, rightD, diagAC, diagBD, diagM, infoText, board };
+      // Registrar elementos para interactividad y auditoría
+      els.A = A;
+        els.B = B;
+        els.C = C;
+        els.D = D;
+        els.poly = poly;
+        els.sides = sides;
+        els.congAB = congAB;
+        els.congCD = congCD;
+        els.congBC1 = congBC1;
+        els.congBC2 = congBC2;
+        els.congDA1 = congDA1;
+        els.congDA2 = congDA2;
+        els.angleA = angleA;
+        els.angleB = angleB;
+        els.angleC = angleC;
+        els.angleD = angleD;
+        els.rightA = rightA;
+        els.rightB = rightB;
+        els.rightC = rightC;
+        els.rightD = rightD;
+        els.diagAC = diagAC;
+        els.diagBD = diagBD;
+        els.diagM = diagM;
+        els.infoText = infoText;
+    };;
 
-    board.update();
-    (board.renderer as any).container.style.backgroundColor = getCSSVar('--theme-lienzo');
+  const onUpdate = (board: any, els: any, theme: any, isStep: any, isHL: any) => {
+      const isHighlight = isHL;
+      void board; void els; void theme; void isStep; void isHL; void isHighlight;
+      const { A, B, C, D, poly, sides, congAB, congCD, congBC1, congBC2, congDA1, congDA2, angleA, angleB, angleC, angleD, rightA, rightB, rightC, rightD, diagAC, diagBD, diagM } = els;
+      if (!els.board) return;
 
-    const observer = new MutationObserver(() => {
-      if (board) {
-        (board.renderer as any).container.style.backgroundColor = getCSSVar('--theme-lienzo');
-        board.update();
-      }
-    });
-    observer.observe(document.documentElement, { attributes: true, attributeFilter: ['class'] });
 
-    return () => {
-      observer.disconnect();
-      JXG.JSXGraph.freeBoard(board);
-      elementsRef.current = {};
-    };
-  }, []);
-
-  useEffect(() => {
-    const els = elementsRef.current as Record<string, any>;
-    if (!els.board) return;
-
-    const { A, B, C, D, poly, sides, congAB, congCD, congBC1, congBC2, congDA1, congDA2, angleA, angleB, angleC, angleD, rightA, rightB, rightC, rightD, diagAC, diagBD, diagM, board } = els;
 
     const isPara = isHighlight('paralelogramo');
     const isLados = isHighlight('lados-opuestos');
@@ -178,10 +181,10 @@ export const Paralelogramo = () => {
     const isRectOrSquare = allRight;
     const isSquare = allRight && allSidesEq;
 
-    const C_PRIM = getCSSVar('--theme-carbon');
-    const C_ACC  = getCSSVar('--theme-terracota');
-    const C_ACC2 = getCSSVar('--theme-pavo');
-    const C_DIAG  = getCSSVar('--theme-pizarra');
+    const C_PRIM = theme.carbon;
+    const C_ACC  = theme.terracota;
+    const C_ACC2 = theme.pavo;
+    const C_DIAG  = theme.pizarra;
 
     const dim = (showAllValue: boolean) => showAllValue ? 1 : 0.2;
     const dimVis = (showAllValue: boolean) => showAllValue;
@@ -215,16 +218,19 @@ export const Paralelogramo = () => {
     diagM.setAttribute({ visible: diagVis, strokeOpacity: dim(isDiagonales || showAll), fillOpacity: dim(isDiagonales || showAll) });
 
     poly.setAttribute({ fillOpacity: isPara ? 0.25 : 0.08 });
-
-    board.update();
-  }, [highlight, isHighlight]);
+    };;
 
   return (
-    <div className="w-full h-full min-h-[300px] relative bg-lienzo/40 border border-pizarra/10 rounded-sm overflow-hidden">
+    <MathBoard
+      boundingbox={[-6, 6, 6, -5]}
+      axis={false}
+      grid={false}
+      onInit={onInit}
+      onUpdate={onUpdate}
+    >
       <div className="absolute top-2 left-3 z-10 text-xs font-serif italic text-pizarra/50">
         Arrastra <span className="font-bold not-italic text-terracota">A</span>, <span className="font-bold not-italic text-terracota">B</span> o <span className="font-bold not-italic text-terracota">C</span>
       </div>
-      <div ref={boardRef} className="w-full h-full touch-none" />
-    </div>
+    </MathBoard>
   );
 };

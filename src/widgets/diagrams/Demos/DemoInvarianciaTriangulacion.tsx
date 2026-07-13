@@ -1,6 +1,6 @@
 import React from 'react';
-import { MathBoard } from '@/features/graph/ui/MathBoard';
-import { createPoint, createPolygon, createSegment } from '@/features/graph/ui/MathFactory';
+import { MathBoard } from '@/shared/diagrams/core/MathBoard';
+import { createPoint, createPolygon, createSegment } from '@/shared/diagrams/core/MathFactory';
 
 export const DemoInvarianciaTriangulacion: React.FC = () => {
   return (
@@ -28,8 +28,8 @@ export const DemoInvarianciaTriangulacion: React.FC = () => {
         els.diagT2 = createSegment(board, [els.P_B, els.P_D], { strokeColor: theme.salvia, strokeWidth: 2, dash: 2 }, theme);
 
         // Intersección
-        els.intersect = board.create('intersection', [els.diagT1, els.diagT2], { 
-          name: '', fillColor: theme.pizarra, strokeColor: theme.pizarra, size: 5, visible: false 
+        els.intersect = board.create('intersection', [els.diagT1, els.diagT2], {
+          name: '', fillColor: theme.pizarra, strokeColor: theme.pizarra, size: 5, visible: false
         });
 
       }}
@@ -48,8 +48,8 @@ export const DemoInvarianciaTriangulacion: React.FC = () => {
         els.diagT1.setAttribute({ visible: showT1, strokeWidth: hlT1 ? 4 : 2 });
         els.diagT2.setAttribute({ visible: showT2, strokeWidth: hlT2 ? 4 : 2 });
 
-        els.intersect.setAttribute({ 
-          visible: s3 || hlInter, 
+        els.intersect.setAttribute({
+          visible: s3 || hlInter,
           size: hlInter ? 8 : 4,
           fillColor: hlInter ? theme.terracota : theme.pizarra
         });

@@ -267,7 +267,7 @@ Cada principio se refleja en la arquitectura de carpetas:
 |---|---|---|
 | Jardín Digital | Páginas independientes en `pages/` | Cada página es autocontenida |
 | Universalidad | Contenido en `entities/content/` sin referencias externas | Schemas sin campos educativos |
-| Interactividad | Diagramas en `shared/diagrams/`, ejercicios en `features/exercises/` | `hasSimulation` en metadata |
+| Interactividad | Diagramas en `widgets/diagrams/`, ejercicios en `features/exercises/` | `hasSimulation` en metadata |
 | Elegante | Colores en `shared/lib/constants.ts`, componentes en `shared/ui/` | `depcruise` + grep hex |
 | Rigor | Demostraciones en `database/content/demonstrations/` | `validate-references` |
 | Orden topológico | Grafo en `entities/graph/` | `validate-graph` |
@@ -303,5 +303,5 @@ Cada principio se refleja en la arquitectura de carpetas:
 | `src/entities/content/ContentStore.ts` | API de consulta de contenido |
 | `src/shared/lib/constants.ts` | Paleta Arts & Crafts, configuración de tipos |
 | `src/shared/templates/` | Plantillas MDX por tipo de contenido |
-| `src/shared/diagrams/` | Diagramas interactivos |
+| `src/widgets/diagrams/` | Diagramas interactivos |
 | `.dependency-cruiser.js` | Reglas de arquitectura FSD |

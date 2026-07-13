@@ -1,8 +1,8 @@
-import { MathBoard } from '@/features/graph/ui/MathBoard';
-import { 
-  createPoint, createSegment, createPolygon, createAngle, createTicks 
-} from '@/features/graph/ui/MathFactory';
-import { StyleManager } from '@/features/graph/ui/MathUtils';
+import { MathBoard } from '@/shared/diagrams/core/MathBoard';
+import {
+  createPoint, createSegment, createPolygon, createAngle, createTicks
+} from '@/shared/diagrams/core/MathFactory';
+import { StyleManager } from '@/shared/diagrams/core/MathUtils';
 
 export const DemoCongruenciaLLL = () => {
   return (
@@ -12,10 +12,10 @@ export const DemoCongruenciaLLL = () => {
         // Points
         els.A = createPoint(board, [0, 0], { name: "A'", fixed: true }, theme);
         els.B = createPoint(board, [4, 0], { name: "B'", fixed: true }, theme);
-        
+
         // C can be draggable above the x-axis
         els.C = createPoint(board, [1.6, 2], { name: "C'" }, theme);
-        
+
         // C* is the reflection of C over AB
         els.CStar = createPoint(board, [() => els.C.X(), () => -els.C.Y()], { name: "C*", size: 4, visible: false }, theme);
 
@@ -43,7 +43,7 @@ export const DemoCongruenciaLLL = () => {
         // Angles
         els.angC1 = createAngle(board, [els.A, els.C, els.CStar], { radius: 0.6, fillColor: theme.salvia, strokeColor: theme.salvia, fillOpacity: 0, visible: false }, theme);
         els.angCStar1 = createAngle(board, [els.C, els.CStar, els.A], { radius: 0.6, fillColor: theme.salvia, strokeColor: theme.salvia, fillOpacity: 0, visible: false }, theme);
-        
+
         els.angC2 = createAngle(board, [els.CStar, els.C, els.B], { radius: 0.7, fillColor: theme.terracota, strokeColor: theme.terracota, fillOpacity: 0, visible: false }, theme);
         els.angCStar2 = createAngle(board, [els.B, els.CStar, els.C], { radius: 0.7, fillColor: theme.terracota, strokeColor: theme.terracota, fillOpacity: 0, visible: false }, theme);
       }}
@@ -67,10 +67,10 @@ export const DemoCongruenciaLLL = () => {
         els.segAB.setAttribute({ strokeWidth: styler.getW(styler.isHL('sideAB')), strokeOpacity: styler.getOp(styler.isHL(['sideAB', 'triangleCPrime', 'triangleCStar']), true), strokeColor: styler.getC(styler.isHL('sideAB'), theme.carbon, theme.terracota) });
         els.segAC.setAttribute({ strokeWidth: styler.getW(styler.isHL('sideAC')), strokeOpacity: styler.getOp(styler.isHL(['sideAC', 'triangleCPrime']), true), strokeColor: styler.getC(styler.isHL('sideAC'), theme.carbon, theme.terracota) });
         els.segBC.setAttribute({ strokeWidth: styler.getW(styler.isHL('sideBC')), strokeOpacity: styler.getOp(styler.isHL(['sideBC', 'triangleCPrime']), true), strokeColor: styler.getC(styler.isHL('sideBC'), theme.carbon, theme.terracota) });
-        
+
         els.segACStar.setAttribute({ visible: visBottom, strokeWidth: styler.getW(styler.isHL('sideACStar')), strokeOpacity: styler.getOp(styler.isHL(['sideACStar', 'triangleCStar']), actBottom), strokeColor: styler.getC(styler.isHL('sideACStar'), theme.carbon, theme.terracota) });
         els.segBCStar.setAttribute({ visible: visBottom, strokeWidth: styler.getW(styler.isHL('sideBCStar')), strokeOpacity: styler.getOp(styler.isHL(['sideBCStar', 'triangleCStar']), actBottom), strokeColor: styler.getC(styler.isHL('sideBCStar'), theme.carbon, theme.terracota) });
-        
+
         const actLineCC = styler.isStep(['step3', 'step4']);
         els.segCCStar.setAttribute({ visible: actLineCC || styler.isHL('lineCC'), strokeWidth: styler.getW(styler.isHL('lineCC')), strokeOpacity: styler.getOp(styler.isHL('lineCC'), actLineCC), strokeColor: styler.getC(styler.isHL('lineCC'), theme.salvia, theme.terracota) });
 
@@ -89,7 +89,7 @@ export const DemoCongruenciaLLL = () => {
         const actAng = styler.isStep('step4');
         const hlAng = styler.isHL('angleC');
         const opAngArea = styler.getOpAng(hlAng, actAng, 0, 0.3, 0.2);
-        
+
         els.angC1.setAttribute({ fillOpacity: opAngArea, strokeOpacity: styler.getOp(hlAng, actAng, 0), visible: actAng || hlAng, fillColor: styler.getC(hlAng, theme.salvia, theme.terracota) });
         els.angCStar1.setAttribute({ fillOpacity: opAngArea, strokeOpacity: styler.getOp(hlAng, actAng, 0), visible: actAng || hlAng, fillColor: styler.getC(hlAng, theme.salvia, theme.terracota) });
         els.angC2.setAttribute({ fillOpacity: opAngArea, strokeOpacity: styler.getOp(hlAng, actAng, 0), visible: actAng || hlAng, fillColor: styler.getC(hlAng, theme.terracota, theme.terracota) });

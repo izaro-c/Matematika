@@ -1,49 +1,43 @@
-import { useRef, useEffect } from 'react';
-import { getCSSVar } from '@/features/graph/ui/MathUtils';
-import JXG from 'jsxgraph';
-import { useMathStore } from '@/app/providers/MathStoreContext';
+import { MathBoard } from '@/shared/diagrams/core/MathBoard';
+import {
+  createPoint, createLine, createSegment, createGlider, createPolygon, createAngle
+} from '@/shared/diagrams/core/MathFactory';
+
+
+
+
 
 export const Pitagoras = () => {
-  const boardRef = useRef<HTMLDivElement>(null);
-  const elementsRef = useRef<Record<string, unknown>>({});
 
-  const highlight = useMathStore((state) => state.variables['highlight']);
-  const isHighlight = (id: string) => Array.isArray(highlight) ? (highlight as unknown as string[]).includes(id) : highlight === id;
 
-  useEffect(() => {
-    if (!boardRef.current) return;
 
-    if (!boardRef.current.id) boardRef.current.id = "jxgbox_" + Math.random().toString(36).substring(2, 9);
-    const board = JXG.JSXGraph.initBoard(boardRef.current.id, {
-      boundingbox: [-8, 8, 8, -8],
-      axis: false,
-      showCopyright: false,
-      keepaspectratio: true,
-      grid: false,
-    });
 
-    const C_PRIM  = getCSSVar('--theme-carbon');
-    const C_SQ_A  = getCSSVar('--theme-salvia');
-    const C_SQ_B  = getCSSVar('--theme-terracota');
-    const C_SQ_C  = getCSSVar('--theme-ocre');
-    const C_RIGHT = getCSSVar('--theme-pavo');
 
-    const C = board.create('point', [0, 0], { name: 'C', size: 5, fillColor: C_PRIM, strokeColor: C_PRIM, showInfobox: false, fixed: true });
 
-    const axisY = board.create('line', [C, board.create('point', [0, 1], { visible: false })], { visible: false });
-    const axisX = board.create('line', [C, board.create('point', [1, 0], { visible: false })], { visible: false });
+  const onInit = (board: any, els: any, theme: any) => {
+      void board; void els; void theme;
+      const C_PRIM  = theme.carbon;
+    const C_SQ_A  = theme.salvia;
+    const C_SQ_B  = theme.terracota;
+    const C_SQ_C  = theme.ocre;
+    const C_RIGHT = theme.pavo;
 
-    const A = board.create('glider', [0, 4, axisY], { name: 'A', size: 5, fillColor: C_PRIM, strokeColor: C_PRIM, showInfobox: false, snapToGrid: true, snapSizeX: 0.5, snapSizeY: 0.5 });
-    const B = board.create('glider', [3, 0, axisX], { name: 'B', size: 5, fillColor: C_PRIM, strokeColor: C_PRIM, showInfobox: false, snapToGrid: true, snapSizeX: 0.5, snapSizeY: 0.5 });
+    const C = createPoint(board, [0, 0], { name: 'C', size: 5, fillColor: C_PRIM, strokeColor: C_PRIM, showInfobox: false, fixed: true }, theme);
 
-    const segBC = board.create('segment', [B, C], { strokeColor: C_PRIM, strokeWidth: 2 });
-    const segCA = board.create('segment', [C, A], { strokeColor: C_PRIM, strokeWidth: 2 });
-    const segAB = board.create('segment', [A, B], { strokeColor: C_PRIM, strokeWidth: 2.5 });
+    const axisY = createLine(board, [C, createPoint(board, [0, 1], { visible: false }, theme)], { visible: false }, theme);
+    const axisX = createLine(board, [C, createPoint(board, [1, 0], { visible: false }, theme)], { visible: false }, theme);
 
-    const poly = board.create('polygon', [A, B, C], {
+    const A = createGlider(board, [0, 4, axisY], { name: 'A', size: 5, fillColor: C_PRIM, strokeColor: C_PRIM, showInfobox: false, snapToGrid: true, snapSizeX: 0.5, snapSizeY: 0.5 }, theme);
+    const B = createGlider(board, [3, 0, axisX], { name: 'B', size: 5, fillColor: C_PRIM, strokeColor: C_PRIM, showInfobox: false, snapToGrid: true, snapSizeX: 0.5, snapSizeY: 0.5 }, theme);
+
+    const segBC = createSegment(board, [B, C], { strokeColor: C_PRIM, strokeWidth: 2 }, theme);
+    const segCA = createSegment(board, [C, A], { strokeColor: C_PRIM, strokeWidth: 2 }, theme);
+    const segAB = createSegment(board, [A, B], { strokeColor: C_PRIM, strokeWidth: 2.5 }, theme);
+
+    const poly = createPolygon(board, [A, B, C], {
       fillColor: C_PRIM, fillOpacity: 0.06,
       borders: { visible: false }, vertices: { visible: false }
-    });
+    }, theme);
 
     const label = (p: any, q: any, text: string, color: string) => {
       const mx = () => (p.X() + q.X()) / 2;
@@ -99,10 +93,10 @@ export const Pitagoras = () => {
       vertices: { visible: false }
     });
 
-    const rightAng = board.create('angle', [B, C, A], {
+    const rightAng = createAngle(board, [B, C, A], {
       radius: 0.6, type: 'sector', orthotype: 'square',
       fillColor: C_RIGHT, strokeColor: C_RIGHT, fillOpacity: 0.4
-    });
+    }, theme);
 
     const infoText = board.create('text', [
       -7.5, 7.5,
@@ -112,11 +106,11 @@ export const Pitagoras = () => {
         const c = A.Dist(B);
         const a2 = a * a, b2 = b * b, c2 = c * c;
         const sum = a2 + b2;
-        return `<div style="font-family: var(--font-serif); color: ${getCSSVar('--theme-carbon')}; line-height:1.5;">
+        return `<div style="font-family: var(--font-serif); color: ${theme.carbon}; line-height:1.5;">
           <strong style="font-size: 1.15rem;">Teorema de Pit\u00e1goras</strong><br/>
-          <span style="color:${getCSSVar('--theme-ocre')};">c\u00b2 = ${c2.toFixed(1)}</span><br/>
-          <span style="color:${getCSSVar('--theme-salvia')};">a\u00b2 = ${a2.toFixed(1)}</span> &nbsp;
-          <span style="color:${getCSSVar('--theme-terracota')};">b\u00b2 = ${b2.toFixed(1)}</span><br/>
+          <span style="color:${theme.ocre};">c\u00b2 = ${c2.toFixed(1)}</span><br/>
+          <span style="color:${theme.salvia};">a\u00b2 = ${a2.toFixed(1)}</span> &nbsp;
+          <span style="color:${theme.terracota};">b\u00b2 = ${b2.toFixed(1)}</span><br/>
           <strong>a\u00b2 + b\u00b2 = ${sum.toFixed(1)} ${Math.abs(sum - c2) < 0.5 ? '\u2261' : '\u2260'} c\u00b2</strong>
         </div>`;
       }
@@ -127,31 +121,29 @@ export const Pitagoras = () => {
     A.on('drag', () => { if (A.Y() < 0.25) A.moveTo([lastValidA[0], lastValidA[1]], 0); else { lastValidA[0] = A.X(); lastValidA[1] = A.Y(); } });
     B.on('drag', () => { if (B.X() < 0.25) B.moveTo([lastValidB[0], lastValidB[1]], 0); else { lastValidB[0] = B.X(); lastValidB[1] = B.Y(); } });
 
-    elementsRef.current = { A, B, C, poly, segBC, segCA, segAB, sqBC, sqCA, sqAB, rightAng, labA, labB, labC, infoText, board };
+      // Registrar elementos para interactividad y auditoría
+      els.A = A;
+        els.B = B;
+        els.C = C;
+        els.poly = poly;
+        els.segBC = segBC;
+        els.segCA = segCA;
+        els.segAB = segAB;
+        els.sqBC = sqBC;
+        els.sqCA = sqCA;
+        els.sqAB = sqAB;
+        els.rightAng = rightAng;
+        els.labA = labA;
+        els.labB = labB;
+        els.labC = labC;
+        els.infoText = infoText;
+    };;
 
-    board.update();
-    (board.renderer as any).container.style.backgroundColor = getCSSVar('--theme-lienzo');
-
-    const observer = new MutationObserver(() => {
-      if (board) {
-        (board.renderer as any).container.style.backgroundColor = getCSSVar('--theme-lienzo');
-        board.update();
-      }
-    });
-    observer.observe(document.documentElement, { attributes: true, attributeFilter: ['class'] });
-
-    return () => {
-      observer.disconnect();
-      JXG.JSXGraph.freeBoard(board);
-      elementsRef.current = {};
-    };
-  }, []);
-
-  useEffect(() => {
-    const { A, B, C, segBC, segCA, segAB, sqBC, sqCA, sqAB, rightAng, labA, labB, labC, board } = elementsRef.current as Record<string, any>;
-    if (!board) return;
-
-    const hSqA = isHighlight('cuadrado-a');
+  const onUpdate = (board: any, els: any, theme: any, isStep: any, isHL: any) => {
+      const isHighlight = isHL;
+      void board; void els; void theme; void isStep; void isHL; void isHighlight;
+      const { A, B, C, segBC, segCA, segAB, sqBC, sqCA, sqAB, rightAng, labA, labB, labC } = els;
+      const hSqA = isHighlight('cuadrado-a');
     const hSqB = isHighlight('cuadrado-b');
     const hSqC = isHighlight('cuadrado-c');
     const hTri = isHighlight('triangulo');
@@ -177,15 +169,19 @@ export const Pitagoras = () => {
       strokeOpacity: dim(showAll),
       fillOpacity: dim(showAll),
       size: hTri ? 7 : 5,
-      fillColor: hTri ? getCSSVar('--theme-terracota') : getCSSVar('--theme-carbon')
+      fillColor: hTri ? theme.terracota : theme.carbon
     }));
-
-    board.update();
-  }, [highlight, isHighlight]);
+    };;
 
   return (
-    <div className="w-full h-full min-h-[350px] relative bg-lienzo/40 border border-pizarra/10 rounded-sm overflow-hidden">
-      <div ref={boardRef} className="w-full h-full touch-none" />
-    </div>
+    <MathBoard
+      boundingbox={[-8, 8, 8, -8]}
+      axis={false}
+      grid={false}
+      onInit={onInit}
+      onUpdate={onUpdate}
+    >
+
+    </MathBoard>
   );
 };

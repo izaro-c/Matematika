@@ -1,6 +1,6 @@
 import React from 'react';
-import { MathBoard } from '@/features/graph/ui/MathBoard';
-import { createPoint, createPolygon, createSegment } from '@/features/graph/ui/MathFactory';
+import { MathBoard } from '@/shared/diagrams/core/MathBoard';
+import { createPoint, createPolygon, createSegment } from '@/shared/diagrams/core/MathFactory';
 
 export const DemoAreaRectangulo_Conmensurable: React.FC = () => {
   return (
@@ -45,7 +45,7 @@ export const DemoAreaRectangulo_Conmensurable: React.FC = () => {
         const hlRect = isHL('rectangulo-r');
         const hlUnit = isHL('cuadrado-unidad');
 
-        els.rect.setAttribute({ 
+        els.rect.setAttribute({
           fillColor: hlRect ? theme.salvia : theme.lienzo,
           fillOpacity: hlRect ? 0.3 : 0.2
         });

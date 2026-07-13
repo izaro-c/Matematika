@@ -77,6 +77,7 @@ export const TheoremSchema = z.object({
   exercises: z.array(z.string()).optional(),
   parentTheorem: z.string().optional(),
   difficulty: z.enum(['básico', 'intermedio', 'avanzado']).optional(),
+  hasSimulation: z.boolean().optional(),
   ...LeanMetadataSchema,
 });
 
@@ -91,6 +92,8 @@ export const LessonSchema = z.object({
   title: z.string(),
   description: z.string().optional(),
   difficulty: z.enum(['básico', 'intermedio', 'avanzado']).optional(),
+  hasSimulation: z.boolean().optional(),
+  hasVisualizer: z.boolean().optional(),
 });
 
 /**
@@ -128,6 +131,7 @@ export const DefinitionSchema = z.object({
   authors: z.array(z.string()).optional(),
   color: z.string().optional(),
   subtype: z.enum(['primitivo', 'nominal', 'fundamentada']).optional(),
+  hasSimulation: z.boolean().optional(),
   ...LeanMetadataSchema,
 });
 
@@ -145,6 +149,7 @@ export const ExampleSchema = z.object({
   /** ID del teorema o definición principal que ilustra */
   relatedTheorem: z.string().optional(),
   difficulty: z.enum(['básico', 'intermedio', 'avanzado']).optional(),
+  hasSimulation: z.boolean().optional(),
 });
 
 /**
@@ -162,6 +167,7 @@ export const ExerciseSchema = z.object({
   difficulty: z.enum(['básico', 'intermedio', 'avanzado']).optional(),
   /** Pista visible antes de revelar la solución */
   hint: z.string().optional(),
+  hasSimulation: z.boolean().optional(),
 });
 
 // Tipos Inferidos
@@ -187,6 +193,7 @@ export const AxiomSchema = z.object({
   statement: z.string().optional(),
   authors: z.array(z.string()).optional(),
   axiomSystem: z.string().optional(),
+  hasSimulation: z.boolean().optional(),
   ...LeanMetadataSchema,
 });
 

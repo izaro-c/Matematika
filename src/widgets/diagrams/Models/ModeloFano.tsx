@@ -1,113 +1,102 @@
-import { useRef, useEffect } from 'react';
-import { getCSSVar } from '@/features/graph/ui/MathUtils';
-import JXG from 'jsxgraph';
-import { useMathStore } from '@/app/providers/MathStoreContext';
+import { MathBoard } from '@/shared/diagrams/core/MathBoard';
+import {
+  createCircle,
+  createPoint,
+  createSegment,
+} from '@/shared/diagrams/core/MathFactory';
+
 export const ModeloFano = () => {
-  const boardRef = useRef<HTMLDivElement>(null);
-  const jxgBoard = useRef<any>(null);
-
-  useEffect(() => {
-    if (!boardRef.current) return;
-
-    if (!boardRef.current.id) boardRef.current.id = "jxgbox_" + Math.random().toString(36).substring(2, 9);
-      const board = JXG.JSXGraph.initBoard(boardRef.current.id, {
-      boundingbox: [-3, 3, 3, -3],
-      axis: false,
-      showCopyright: false,
-      keepaspectratio: true,
-      grid: false,
-    });
-    jxgBoard.current = board;
-
+  const onInit = (board: any, els: any, theme: any) => {
     const sqrt3 = Math.sqrt(3);
-    const p1 = board.create('point', [0, 2], { name: '1', size: 5, fillColor: getCSSVar('--theme-terracota'), strokeColor: getCSSVar('--theme-terracota'), fixed: true });
-    const p2 = board.create('point', [-sqrt3, -1], { name: '2', size: 5, fillColor: getCSSVar('--theme-terracota'), strokeColor: getCSSVar('--theme-terracota'), fixed: true });
-    const p3 = board.create('point', [sqrt3, -1], { name: '3', size: 5, fillColor: getCSSVar('--theme-terracota'), strokeColor: getCSSVar('--theme-terracota'), fixed: true });
+    const p1 = createPoint(board, [0, 2], {
+      name: '1',
+      size: 5,
+      fillColor: theme.terracota,
+      strokeColor: theme.terracota,
+      fixed: true,
+    }, theme);
+    const p2 = createPoint(board, [-sqrt3, -1], {
+      name: '2',
+      size: 5,
+      fillColor: theme.terracota,
+      strokeColor: theme.terracota,
+      fixed: true,
+    }, theme);
+    const p3 = createPoint(board, [sqrt3, -1], {
+      name: '3',
+      size: 5,
+      fillColor: theme.terracota,
+      strokeColor: theme.terracota,
+      fixed: true,
+    }, theme);
+    const p4 = createPoint(board, [0, -1], {
+      name: '4',
+      size: 5,
+      fillColor: theme.terracota,
+      strokeColor: theme.terracota,
+      fixed: true,
+    }, theme);
+    const p5 = createPoint(board, [sqrt3 / 2, 0.5], {
+      name: '5',
+      size: 5,
+      fillColor: theme.terracota,
+      strokeColor: theme.terracota,
+      fixed: true,
+    }, theme);
+    const p6 = createPoint(board, [-sqrt3 / 2, 0.5], {
+      name: '6',
+      size: 5,
+      fillColor: theme.terracota,
+      strokeColor: theme.terracota,
+      fixed: true,
+    }, theme);
+    const p7 = createPoint(board, [0, 0], {
+      name: '7',
+      size: 5,
+      fillColor: theme.musgo,
+      strokeColor: theme.musgo,
+      fixed: true,
+    }, theme);
 
-    const p4 = board.create('point', [0, -1], { name: '4', size: 5, fillColor: getCSSVar('--theme-terracota'), strokeColor: getCSSVar('--theme-terracota'), fixed: true });
-    const p5 = board.create('point', [sqrt3/2, 0.5], { name: '5', size: 5, fillColor: getCSSVar('--theme-terracota'), strokeColor: getCSSVar('--theme-terracota'), fixed: true });
-    const p6 = board.create('point', [-sqrt3/2, 0.5], { name: '6', size: 5, fillColor: getCSSVar('--theme-terracota'), strokeColor: getCSSVar('--theme-terracota'), fixed: true });
+    const l1 = createSegment(board, [p1, p2], { strokeColor: theme.carbon, name: 'l1' }, theme);
+    const l2 = createSegment(board, [p2, p3], { strokeColor: theme.carbon, name: 'l2' }, theme);
+    const l3 = createSegment(board, [p3, p1], { strokeColor: theme.carbon, name: 'l3' }, theme);
+    const l4 = createSegment(board, [p1, p4], { strokeColor: theme.carbon, name: 'l4' }, theme);
+    const l5 = createSegment(board, [p2, p5], { strokeColor: theme.carbon, name: 'l5' }, theme);
+    const l6 = createSegment(board, [p3, p6], { strokeColor: theme.carbon, name: 'l6' }, theme);
+    const l7 = createCircle(board, [p7, p4], {
+      strokeColor: theme.carbon,
+      dash: 2,
+      name: 'l7',
+    }, theme);
 
-    const p7 = board.create('point', [0, 0], { name: '7', size: 5, fillColor: getCSSVar('--theme-musgo'), strokeColor: getCSSVar('--theme-musgo'), fixed: true });
+    Object.assign(els, { p1, p2, p3, p4, p5, p6, p7, l1, l2, l3, l4, l5, l6, l7 });
+  };
 
-    const l1 = board.create('segment', [p1, p2], { strokeColor: getCSSVar('--theme-carbon'), highlight: false, name: 'l1' });
-    const l2 = board.create('segment', [p2, p3], { strokeColor: getCSSVar('--theme-carbon'), highlight: false, name: 'l2' });
-    const l3 = board.create('segment', [p3, p1], { strokeColor: getCSSVar('--theme-carbon'), highlight: false, name: 'l3' });
+  const onUpdate = (_board: any, els: any, _theme: any, _isStep: any, isHL: any) => {
+    const points = [els.p1, els.p2, els.p3, els.p4, els.p5, els.p6, els.p7];
+    const lines = [els.l1, els.l2, els.l3, els.l4, els.l5, els.l6, els.l7];
 
-    const l4 = board.create('segment', [p1, p4], { strokeColor: getCSSVar('--theme-carbon'), highlight: false, name: 'l4' });
-    const l5 = board.create('segment', [p2, p5], { strokeColor: getCSSVar('--theme-carbon'), highlight: false, name: 'l5' });
-    const l6 = board.create('segment', [p3, p6], { strokeColor: getCSSVar('--theme-carbon'), highlight: false, name: 'l6' });
+    points.forEach((point: any) => point.setAttribute({ size: 5, fillOpacity: 1, strokeOpacity: 1 }));
+    lines.forEach((line: any, index: number) => line.setAttribute({ strokeWidth: index === 6 ? 1 : 2, strokeOpacity: 1 }));
 
-    const l7 = board.create('circle', [p7, p4], { strokeColor: getCSSVar('--theme-carbon'), dash: 2, highlight: false, name: 'l7' });
-
-    (board as any)._el_p1 = p1;
-    (board as any)._el_p2 = p2;
-    (board as any)._el_p3 = p3;
-    (board as any)._el_p4 = p4;
-    (board as any)._el_p5 = p5;
-    (board as any)._el_p6 = p6;
-    (board as any)._el_p7 = p7;
-    (board as any)._el_l1 = l1;
-    (board as any)._el_l2 = l2;
-    (board as any)._el_l3 = l3;
-    (board as any)._el_l4 = l4;
-    (board as any)._el_l5 = l5;
-    (board as any)._el_l6 = l6;
-    (board as any)._el_l7 = l7;
-
-    board.update();    (board.renderer as any).container.style.backgroundColor = getCSSVar('--theme-lienzo');
-
-
-
-        const observer = new MutationObserver(() => {
-      if (board) {
-        (board.renderer as any).container.style.backgroundColor = getCSSVar('--theme-lienzo');
-        board.update();
+    for (let i = 1; i <= 7; i++) {
+      if (isHL(String(i))) {
+        points.forEach((point: any) => point.setAttribute({ fillOpacity: 0.2, strokeOpacity: 0.2 }));
+        points[i - 1].setAttribute({ size: 9, fillOpacity: 1, strokeOpacity: 1 });
       }
-    });
-    observer.observe(document.documentElement, { attributes: true, attributeFilter: ['class'] });
-
-    return () => {
-      observer.disconnect();
-      JXG.JSXGraph.freeBoard(board);
-      jxgBoard.current = null;
-    };
-  }, []);
-
-  const highlight = useMathStore(state => state.variables?.['highlight']);
-
-  useEffect(() => {
-    const board = jxgBoard.current;
-    if (!board) return;
-
-    const points = [1, 2, 3, 4, 5, 6, 7].map(i => (board as any)[`_el_p${i}`]);
-    const lines = [1, 2, 3, 4, 5, 6, 7].map(i => (board as any)[`_el_l${i}`]);
-
-    // reset
-    points.forEach(pt => pt?.setAttribute({ size: 5, fillOpacity: 1, strokeOpacity: 1 }));
-    lines.forEach(ln => ln?.setAttribute({ strokeWidth: ln.name === 'l7' ? 1 : 2, strokeOpacity: 1 }));
-
-    if (typeof highlight === 'string') {
-      if (['1', '2', '3', '4', '5', '6', '7'].includes(highlight)) {
-        points.forEach(pt => pt?.setAttribute({ fillOpacity: 0.2, strokeOpacity: 0.2 }));
-        const idx = parseInt(highlight) - 1;
-        if (points[idx]) points[idx]?.setAttribute({ size: 9, fillOpacity: 1, strokeOpacity: 1 });
-      } else if (['l1', 'l2', 'l3', 'l4', 'l5', 'l6', 'l7'].includes(highlight)) {
-        lines.forEach(ln => ln?.setAttribute({ strokeOpacity: 0.2 }));
-        const idx = parseInt(highlight.replace('l', '')) - 1;
-        if (lines[idx]) lines[idx]?.setAttribute({ strokeWidth: 4, strokeOpacity: 1 });
+      if (isHL(`l${i}`)) {
+        lines.forEach((line: any) => line.setAttribute({ strokeOpacity: 0.2 }));
+        lines[i - 1].setAttribute({ strokeWidth: 4, strokeOpacity: 1 });
       }
     }
-
-    board.update();
-  }, [highlight]);
+  };
 
   return (
-    <div className="w-full aspect-square md:aspect-video min-h-[350px] relative bg-lienzo/40 border border-pizarra/10 rounded-sm overflow-hidden">
+    <MathBoard boundingbox={[-3, 3, 3, -3]} onInit={onInit} onUpdate={onUpdate}>
       <div className="absolute top-2 left-3 z-10 text-xs font-serif italic text-pizarra/50">
         Plano de Fano
       </div>
-      <div ref={boardRef} id="board-fano" className="jxgbox absolute inset-0 touch-none" style={{ width: '100%', height: '100%' }} />
-    </div>
+    </MathBoard>
   );
 };

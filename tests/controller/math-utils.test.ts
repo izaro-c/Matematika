@@ -1,5 +1,5 @@
 import { describe, it, expect, vi } from 'vitest';
-import { StyleManager } from '@/features/graph/ui/MathUtils';
+import { StyleManager } from '@/shared/diagrams/core/MathUtils';
 
 describe('StyleManager', () => {
   const dummyTheme = {

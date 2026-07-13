@@ -62,10 +62,10 @@ export const DemoDesigualdadTriangular: React.FC = () => {
 
   return (
     <svg viewBox="0 0 350 300" className="w-full h-auto max-h-[60vh] drop-shadow-md touch-none min-h-[400px]">
-      
+
       {/* Triángulo isósceles relleno */}
       <polygon points={`${C.x},${C.y} ${B.x},${B.y} ${D.x},${D.y}`} fill="var(--theme-salvia)" opacity={opIso} className="transition-opacity duration-500" />
-      
+
       {/* Ángulo ABD (completo) */}
       {/* Vector BA = (-140, 0) -> Angle 180 */}
       {/* Vector BD = (36.15, -176.15) -> Angle aprox -78 o 282 */}
@@ -89,7 +89,7 @@ export const DemoDesigualdadTriangular: React.FC = () => {
       <line x1={A.x} y1={A.y} x2={B.x} y2={B.y} stroke={getColor('lado-ab', 'var(--theme-carbon)')} strokeWidth={getStrokeWidth('lado-ab', 3)} className="transition-all duration-300" opacity={getOpacity('lado-ab')}/>
       <line x1={B.x} y1={B.y} x2={C.x} y2={C.y} stroke={getColor('lado-bc', 'var(--theme-carbon)')} strokeWidth={getStrokeWidth('lado-bc', 3)} className="transition-all duration-300" opacity={getOpacity('lado-bc')}/>
       <line x1={A.x} y1={A.y} x2={C.x} y2={C.y} stroke={getColor('lado-ac', 'var(--theme-carbon)')} strokeWidth={getStrokeWidth('lado-ac', 3)} className="transition-all duration-300" opacity={getOpacity('lado-ac')}/>
-      
+
       {/* Labels para ABC */}
       <text x={150} y={270} className="font-serif italic text-sm" opacity={getOpacity('lado-ab')}>c</text>
       <text x={210} y={195} className="font-serif italic text-sm" opacity={getOpacity('lado-bc')}>a</text>
@@ -97,7 +97,7 @@ export const DemoDesigualdadTriangular: React.FC = () => {
 
       <circle cx={A.x} cy={A.y} r="4" fill="var(--theme-carbon)"/>
       <text x={A.x - 20} y={A.y + 5} className="font-serif text-sm">A</text>
-      
+
       <circle cx={B.x} cy={B.y} r="4" fill="var(--theme-carbon)"/>
       <text x={B.x + 10} y={B.y + 5} className="font-serif text-sm">B</text>
 
