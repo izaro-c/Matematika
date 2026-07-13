@@ -61,6 +61,8 @@ export interface DiagramElementProperties {
   columns?: number;
   title?: string;
   clockwise?: boolean;
+  visibleWhen?: string;
+  textRules?: Array<{ when: string; text: string }>;
 }
 
 export type DiagramConstraintKind =
@@ -73,6 +75,7 @@ export type DiagramConstraintKind =
   | 'perpendicular'
   | 'parallel'
   | 'insideDisk'
+  | 'sameSide'
   | 'expression';
 
 export interface DiagramConstraint {
@@ -98,6 +101,23 @@ export interface DiagramSelectionMetadata {
   role?: 'primary' | 'secondary' | 'construction' | 'annotation';
 }
 
+export interface DiagramVisualStyle {
+  strokeWidth?: number;
+  strokeOpacity?: number;
+  fillOpacity?: number;
+  pointSize?: number;
+  angleRadius?: number;
+  labelOffset?: [number, number];
+  textOffset?: [number, number];
+  highlightStrokeWidth?: number;
+  highlightFillOpacity?: number;
+  highlightPointSize?: number;
+  /** Permite revelar una construcción oculta cuando su target recibe énfasis. */
+  highlightVisible?: boolean;
+  /** Conserva el color semántico del objeto cuando recibe énfasis desde MDX. */
+  preserveColorOnHighlight?: boolean;
+}
+
 export interface DiagramSceneItemBase {
   id: string;
   label: string;
@@ -112,6 +132,7 @@ export interface DiagramSceneItemBase {
   target: boolean;
   /** ID público estable. Permite renombrar el objeto interno sin romper MDX. */
   targetId?: string;
+  style?: DiagramVisualStyle;
   extensions?: Record<string, unknown>;
 }
 
@@ -194,6 +215,10 @@ export interface DiagramGroup {
   visible: boolean;
   locked: boolean;
   selection: DiagramSelectionMetadata;
+  /** Un target de grupo resalta todos sus miembros con un único ID público. */
+  target?: boolean;
+  targetId?: string;
+  color?: DiagramColorToken;
   extensions?: Record<string, unknown>;
 }
 

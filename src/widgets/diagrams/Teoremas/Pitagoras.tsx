@@ -1,187 +1,1181 @@
-import { MathBoard } from '@/shared/diagrams/core/MathBoard';
-import {
-  createPoint, createLine, createSegment, createGlider, createPolygon, createAngle
-} from '@/shared/diagrams/core/MathFactory';
+import { createDiagramSpec, DiagramRenderer } from '@/shared/diagrams/public';
 
-
-
-
-
-export const Pitagoras = () => {
-
-
-
-
-
-
-  const onInit = (board: any, els: any, theme: any) => {
-      void board; void els; void theme;
-      const C_PRIM  = theme.carbon;
-    const C_SQ_A  = theme.salvia;
-    const C_SQ_B  = theme.terracota;
-    const C_SQ_C  = theme.ocre;
-    const C_RIGHT = theme.pavo;
-
-    const C = createPoint(board, [0, 0], { name: 'C', size: 5, fillColor: C_PRIM, strokeColor: C_PRIM, showInfobox: false, fixed: true }, theme);
-
-    const axisY = createLine(board, [C, createPoint(board, [0, 1], { visible: false }, theme)], { visible: false }, theme);
-    const axisX = createLine(board, [C, createPoint(board, [1, 0], { visible: false }, theme)], { visible: false }, theme);
-
-    const A = createGlider(board, [0, 4, axisY], { name: 'A', size: 5, fillColor: C_PRIM, strokeColor: C_PRIM, showInfobox: false, snapToGrid: true, snapSizeX: 0.5, snapSizeY: 0.5 }, theme);
-    const B = createGlider(board, [3, 0, axisX], { name: 'B', size: 5, fillColor: C_PRIM, strokeColor: C_PRIM, showInfobox: false, snapToGrid: true, snapSizeX: 0.5, snapSizeY: 0.5 }, theme);
-
-    const segBC = createSegment(board, [B, C], { strokeColor: C_PRIM, strokeWidth: 2 }, theme);
-    const segCA = createSegment(board, [C, A], { strokeColor: C_PRIM, strokeWidth: 2 }, theme);
-    const segAB = createSegment(board, [A, B], { strokeColor: C_PRIM, strokeWidth: 2.5 }, theme);
-
-    const poly = createPolygon(board, [A, B, C], {
-      fillColor: C_PRIM, fillOpacity: 0.06,
-      borders: { visible: false }, vertices: { visible: false }
-    }, theme);
-
-    const label = (p: any, q: any, text: string, color: string) => {
-      const mx = () => (p.X() + q.X()) / 2;
-      const my = () => (p.Y() + q.Y()) / 2;
-      const dx = () => q.X() - p.X();
-      const dy = () => q.Y() - p.Y();
-      const nl = () => Math.hypot(dx(), dy()) || 1;
-      const off = 0.5;
-      return board.create('text', [
-        () => mx() - dy() / nl() * off,
-        () => my() + dx() / nl() * off,
-        text
-      ], { fixed: true, fontSize: 18, cssClass: 'font-serif font-bold', anchorX: 'middle', anchorY: 'middle', color });
-    };
-
-    const labA = label(B, C, 'a', C_SQ_A);
-    const labB = label(C, A, 'b', C_SQ_B);
-    const labC = label(A, B, 'c', C_SQ_C);
-
-    const mkSqPts = (p1: any, p2: any, opp: any) => {
-      const lenAB = () => p1.Dist(p2);
-      const dx = () => p2.X() - p1.X();
-      const dy = () => p2.Y() - p1.Y();
-      const ndx = () => -dy() / Math.max(lenAB(), 0.001);
-      const ndy = () => dx() / Math.max(lenAB(), 0.001);
-      const mx = () => (p1.X() + p2.X()) / 2;
-      const my = () => (p1.Y() + p2.Y()) / 2;
-      const sign = () => ((opp.X() - mx()) * ndx() + (opp.Y() - my()) * ndy() > 0 ? -1 : 1);
-      const p3 = board.create('point', [
-        () => p2.X() + ndx() * lenAB() * sign(),
-        () => p2.Y() + ndy() * lenAB() * sign()
-      ], { visible: false });
-      const p4 = board.create('point', [
-        () => p1.X() + ndx() * lenAB() * sign(),
-        () => p1.Y() + ndy() * lenAB() * sign()
-      ], { visible: false });
-      return [p1, p2, p3, p4];
-    };
-
-    const sqBC = board.create('polygon', mkSqPts(B, C, A), {
-      fillColor: C_SQ_A, fillOpacity: 0.15,
-      borders: { strokeColor: C_SQ_A, strokeWidth: 2 },
-      vertices: { visible: false }
-    });
-    const sqCA = board.create('polygon', mkSqPts(C, A, B), {
-      fillColor: C_SQ_B, fillOpacity: 0.15,
-      borders: { strokeColor: C_SQ_B, strokeWidth: 2 },
-      vertices: { visible: false }
-    });
-    const sqAB = board.create('polygon', mkSqPts(A, B, C), {
-      fillColor: C_SQ_C, fillOpacity: 0.15,
-      borders: { strokeColor: C_SQ_C, strokeWidth: 2.5 },
-      vertices: { visible: false }
-    });
-
-    const rightAng = createAngle(board, [B, C, A], {
-      radius: 0.6, type: 'sector', orthotype: 'square',
-      fillColor: C_RIGHT, strokeColor: C_RIGHT, fillOpacity: 0.4
-    }, theme);
-
-    const infoText = board.create('text', [
-      -7.5, 7.5,
-      () => {
-        const a = B.Dist(C);
-        const b = C.Dist(A);
-        const c = A.Dist(B);
-        const a2 = a * a, b2 = b * b, c2 = c * c;
-        const sum = a2 + b2;
-        return `<div style="font-family: var(--font-serif); color: ${theme.carbon}; line-height:1.5;">
-          <strong style="font-size: 1.15rem;">Teorema de Pit\u00e1goras</strong><br/>
-          <span style="color:${theme.ocre};">c\u00b2 = ${c2.toFixed(1)}</span><br/>
-          <span style="color:${theme.salvia};">a\u00b2 = ${a2.toFixed(1)}</span> &nbsp;
-          <span style="color:${theme.terracota};">b\u00b2 = ${b2.toFixed(1)}</span><br/>
-          <strong>a\u00b2 + b\u00b2 = ${sum.toFixed(1)} ${Math.abs(sum - c2) < 0.5 ? '\u2261' : '\u2260'} c\u00b2</strong>
-        </div>`;
+/* @matematika-diagram-spec:start */
+export const PitagorasSpec = createDiagramSpec(
+{
+  "version": 2,
+  "renderer": "matematika-diagram-renderer-v2",
+  "title": "Teorema de Pitágoras",
+  "componentId": "Pitagoras",
+  "category": "Teoremas",
+  "mode": "simulation",
+  "axis": false,
+  "grid": false,
+  "viewport": {
+    "bounds": [
+      -8,
+      8,
+      8,
+      -8
+    ],
+    "home": [
+      -8,
+      8,
+      8,
+      -8
+    ],
+    "minZoom": 0.65,
+    "maxZoom": 4,
+    "padding": 0.18
+  },
+  "layers": [
+    {
+      "id": "construccion",
+      "label": "Construcción",
+      "order": 0,
+      "visible": true,
+      "locked": false
+    },
+    {
+      "id": "geometria",
+      "label": "Triángulo",
+      "order": 1,
+      "visible": true,
+      "locked": false
+    },
+    {
+      "id": "areas",
+      "label": "Cuadrados",
+      "order": 2,
+      "visible": true,
+      "locked": false
+    },
+    {
+      "id": "anotaciones",
+      "label": "Medidas",
+      "order": 3,
+      "visible": true,
+      "locked": false
+    }
+  ],
+  "groups": [
+    {
+      "id": "trianguloGrupo",
+      "label": "Triángulo rectángulo",
+      "memberIds": [
+        "A",
+        "B",
+        "C",
+        "triangulo",
+        "segBC",
+        "segCA",
+        "segAB",
+        "anguloRecto"
+      ],
+      "visible": true,
+      "locked": false,
+      "selection": {
+        "selectable": true,
+        "role": "primary"
+      },
+      "target": true,
+      "targetId": "triangulo",
+      "color": "carbon"
+    },
+    {
+      "id": "cuadradoAGrupo",
+      "label": "Cuadrado del cateto a",
+      "memberIds": [
+        "segBC",
+        "cuadradoA",
+        "areaA"
+      ],
+      "visible": true,
+      "locked": false,
+      "selection": {
+        "selectable": true,
+        "role": "primary"
+      },
+      "target": true,
+      "targetId": "cuadrado-a",
+      "color": "salvia"
+    },
+    {
+      "id": "cuadradoBGrupo",
+      "label": "Cuadrado del cateto b",
+      "memberIds": [
+        "segCA",
+        "cuadradoB",
+        "areaB"
+      ],
+      "visible": true,
+      "locked": false,
+      "selection": {
+        "selectable": true,
+        "role": "primary"
+      },
+      "target": true,
+      "targetId": "cuadrado-b",
+      "color": "terracota"
+    },
+    {
+      "id": "cuadradoCGrupo",
+      "label": "Cuadrado de la hipotenusa",
+      "memberIds": [
+        "segAB",
+        "cuadradoC",
+        "areaC"
+      ],
+      "visible": true,
+      "locked": false,
+      "selection": {
+        "selectable": true,
+        "role": "primary"
+      },
+      "target": true,
+      "targetId": "cuadrado-c",
+      "color": "ocre"
+    }
+  ],
+  "points": [
+    {
+      "id": "C",
+      "label": "C",
+      "color": "carbon",
+      "layerId": "geometria",
+      "order": 10,
+      "visible": true,
+      "locked": false,
+      "groupIds": [
+        "trianguloGrupo"
+      ],
+      "selection": {
+        "selectable": true,
+        "role": "primary"
+      },
+      "target": false,
+      "style": {
+        "pointSize": 5,
+        "highlightPointSize": 7,
+        "preserveColorOnHighlight": true
+      },
+      "x": 0,
+      "y": 0,
+      "fixed": true,
+      "constraint": "fixed"
+    },
+    {
+      "id": "ejeX",
+      "label": "eje X",
+      "color": "carbon",
+      "layerId": "construccion",
+      "order": 1,
+      "visible": false,
+      "locked": true,
+      "groupIds": [],
+      "selection": {
+        "selectable": false,
+        "role": "construction"
+      },
+      "target": false,
+      "x": 1,
+      "y": 0,
+      "fixed": true,
+      "constraint": "fixed"
+    },
+    {
+      "id": "ejeY",
+      "label": "eje Y",
+      "color": "carbon",
+      "layerId": "construccion",
+      "order": 2,
+      "visible": false,
+      "locked": true,
+      "groupIds": [],
+      "selection": {
+        "selectable": false,
+        "role": "construction"
+      },
+      "target": false,
+      "x": 0,
+      "y": 1,
+      "fixed": true,
+      "constraint": "fixed"
+    },
+    {
+      "id": "A",
+      "label": "A",
+      "color": "carbon",
+      "layerId": "geometria",
+      "order": 11,
+      "visible": true,
+      "locked": false,
+      "groupIds": [
+        "trianguloGrupo"
+      ],
+      "selection": {
+        "selectable": true,
+        "role": "primary"
+      },
+      "target": false,
+      "style": {
+        "pointSize": 5,
+        "highlightPointSize": 7,
+        "preserveColorOnHighlight": true
+      },
+      "x": 0,
+      "y": 4,
+      "fixed": false,
+      "constraint": "vertical",
+      "gliderTarget": "rayoY"
+    },
+    {
+      "id": "B",
+      "label": "B",
+      "color": "carbon",
+      "layerId": "geometria",
+      "order": 12,
+      "visible": true,
+      "locked": false,
+      "groupIds": [
+        "trianguloGrupo"
+      ],
+      "selection": {
+        "selectable": true,
+        "role": "primary"
+      },
+      "target": false,
+      "style": {
+        "pointSize": 5,
+        "highlightPointSize": 7,
+        "preserveColorOnHighlight": true
+      },
+      "x": 3,
+      "y": 0,
+      "fixed": false,
+      "constraint": "horizontal",
+      "gliderTarget": "rayoX"
+    },
+    {
+      "id": "sqA3",
+      "label": "sqA3",
+      "color": "carbon",
+      "layerId": "construccion",
+      "order": 20,
+      "visible": false,
+      "locked": true,
+      "groupIds": [],
+      "selection": {
+        "selectable": false,
+        "role": "construction"
+      },
+      "target": false,
+      "x": 0,
+      "y": 0,
+      "fixed": true,
+      "constraint": "derived",
+      "dependencies": [
+        "B",
+        "C"
+      ],
+      "xExpression": "C.x",
+      "yExpression": "C.y-B.x"
+    },
+    {
+      "id": "cuadrado-a",
+      "label": "sqA4",
+      "color": "carbon",
+      "layerId": "construccion",
+      "order": 21,
+      "visible": false,
+      "locked": true,
+      "groupIds": [],
+      "selection": {
+        "selectable": false,
+        "role": "construction"
+      },
+      "target": false,
+      "x": 0,
+      "y": 0,
+      "fixed": true,
+      "constraint": "derived",
+      "dependencies": [
+        "B"
+      ],
+      "xExpression": "B.x",
+      "yExpression": "B.y-B.x"
+    },
+    {
+      "id": "cuadrado-b",
+      "label": "sqB3",
+      "color": "carbon",
+      "layerId": "construccion",
+      "order": 22,
+      "visible": false,
+      "locked": true,
+      "groupIds": [],
+      "selection": {
+        "selectable": false,
+        "role": "construction"
+      },
+      "target": false,
+      "x": 0,
+      "y": 0,
+      "fixed": true,
+      "constraint": "derived",
+      "dependencies": [
+        "A"
+      ],
+      "xExpression": "A.x-A.y",
+      "yExpression": "A.y"
+    },
+    {
+      "id": "sqB4",
+      "label": "sqB4",
+      "color": "carbon",
+      "layerId": "construccion",
+      "order": 23,
+      "visible": false,
+      "locked": true,
+      "groupIds": [],
+      "selection": {
+        "selectable": false,
+        "role": "construction"
+      },
+      "target": false,
+      "x": 0,
+      "y": 0,
+      "fixed": true,
+      "constraint": "derived",
+      "dependencies": [
+        "A",
+        "C"
+      ],
+      "xExpression": "C.x-A.y",
+      "yExpression": "C.y"
+    },
+    {
+      "id": "cuadrado-c",
+      "label": "sqC3",
+      "color": "carbon",
+      "layerId": "construccion",
+      "order": 24,
+      "visible": false,
+      "locked": true,
+      "groupIds": [],
+      "selection": {
+        "selectable": false,
+        "role": "construction"
+      },
+      "target": false,
+      "x": 0,
+      "y": 0,
+      "fixed": true,
+      "constraint": "derived",
+      "dependencies": [
+        "A",
+        "B"
+      ],
+      "xExpression": "B.x+A.y",
+      "yExpression": "B.y+B.x"
+    },
+    {
+      "id": "sqC4",
+      "label": "sqC4",
+      "color": "carbon",
+      "layerId": "construccion",
+      "order": 25,
+      "visible": false,
+      "locked": true,
+      "groupIds": [],
+      "selection": {
+        "selectable": false,
+        "role": "construction"
+      },
+      "target": false,
+      "x": 0,
+      "y": 0,
+      "fixed": true,
+      "constraint": "derived",
+      "dependencies": [
+        "A",
+        "B"
+      ],
+      "xExpression": "A.x+A.y",
+      "yExpression": "A.y+B.x"
+    }
+  ],
+  "elements": [
+    {
+      "id": "rayoX",
+      "label": "semirrecta horizontal",
+      "color": "carbon",
+      "layerId": "construccion",
+      "order": 1,
+      "visible": false,
+      "locked": true,
+      "groupIds": [],
+      "selection": {
+        "selectable": false,
+        "role": "construction"
+      },
+      "target": false,
+      "kind": "ray",
+      "refs": [
+        "C",
+        "ejeX"
+      ]
+    },
+    {
+      "id": "rayoY",
+      "label": "semirrecta vertical",
+      "color": "carbon",
+      "layerId": "construccion",
+      "order": 2,
+      "visible": false,
+      "locked": true,
+      "groupIds": [],
+      "selection": {
+        "selectable": false,
+        "role": "construction"
+      },
+      "target": false,
+      "kind": "ray",
+      "refs": [
+        "C",
+        "ejeY"
+      ]
+    },
+    {
+      "id": "triangulo",
+      "label": "triángulo ABC",
+      "color": "carbon",
+      "layerId": "geometria",
+      "order": 10,
+      "visible": true,
+      "locked": false,
+      "groupIds": [
+        "trianguloGrupo"
+      ],
+      "selection": {
+        "selectable": true,
+        "role": "secondary"
+      },
+      "target": false,
+      "style": {
+        "strokeWidth": 2,
+        "fillOpacity": 0.06,
+        "highlightFillOpacity": 0.22,
+        "preserveColorOnHighlight": true
+      },
+      "kind": "polygon",
+      "refs": [
+        "A",
+        "B",
+        "C"
+      ]
+    },
+    {
+      "id": "segBC",
+      "label": "cateto a",
+      "color": "salvia",
+      "layerId": "geometria",
+      "order": 11,
+      "visible": true,
+      "locked": false,
+      "groupIds": [
+        "trianguloGrupo",
+        "cuadradoAGrupo"
+      ],
+      "selection": {
+        "selectable": true,
+        "role": "secondary"
+      },
+      "target": false,
+      "style": {
+        "strokeWidth": 2,
+        "highlightStrokeWidth": 4,
+        "preserveColorOnHighlight": true
+      },
+      "kind": "segment",
+      "refs": [
+        "B",
+        "C"
+      ]
+    },
+    {
+      "id": "segCA",
+      "label": "cateto b",
+      "color": "terracota",
+      "layerId": "geometria",
+      "order": 12,
+      "visible": true,
+      "locked": false,
+      "groupIds": [
+        "trianguloGrupo",
+        "cuadradoBGrupo"
+      ],
+      "selection": {
+        "selectable": true,
+        "role": "secondary"
+      },
+      "target": false,
+      "style": {
+        "strokeWidth": 2,
+        "highlightStrokeWidth": 4,
+        "preserveColorOnHighlight": true
+      },
+      "kind": "segment",
+      "refs": [
+        "C",
+        "A"
+      ]
+    },
+    {
+      "id": "segAB",
+      "label": "hipotenusa c",
+      "color": "ocre",
+      "layerId": "geometria",
+      "order": 13,
+      "visible": true,
+      "locked": false,
+      "groupIds": [
+        "trianguloGrupo",
+        "cuadradoCGrupo"
+      ],
+      "selection": {
+        "selectable": true,
+        "role": "secondary"
+      },
+      "target": false,
+      "style": {
+        "strokeWidth": 2.5,
+        "highlightStrokeWidth": 4.5,
+        "preserveColorOnHighlight": true
+      },
+      "kind": "segment",
+      "refs": [
+        "A",
+        "B"
+      ]
+    },
+    {
+      "id": "anguloRecto",
+      "label": "ángulo recto en C",
+      "color": "pavo",
+      "layerId": "geometria",
+      "order": 14,
+      "visible": true,
+      "locked": false,
+      "groupIds": [
+        "trianguloGrupo"
+      ],
+      "selection": {
+        "selectable": true,
+        "role": "secondary"
+      },
+      "target": false,
+      "style": {
+        "strokeWidth": 1.5,
+        "fillOpacity": 0.4,
+        "angleRadius": 0.6,
+        "highlightFillOpacity": 0.55,
+        "preserveColorOnHighlight": true
+      },
+      "kind": "rightAngle",
+      "refs": [
+        "B",
+        "C",
+        "A"
+      ]
+    },
+    {
+      "id": "cuadradoA",
+      "label": "cuadrado sobre a",
+      "color": "salvia",
+      "layerId": "areas",
+      "order": 20,
+      "visible": true,
+      "locked": false,
+      "groupIds": [
+        "cuadradoAGrupo"
+      ],
+      "selection": {
+        "selectable": true,
+        "role": "secondary"
+      },
+      "target": false,
+      "style": {
+        "strokeWidth": 2,
+        "strokeOpacity": 0.45,
+        "fillOpacity": 0.1,
+        "highlightFillOpacity": 0.3,
+        "preserveColorOnHighlight": true
+      },
+      "kind": "areaDecomposition",
+      "refs": [
+        "B",
+        "C",
+        "sqA3",
+        "cuadrado-a"
+      ],
+      "properties": {
+        "rows": 3,
+        "columns": 3
       }
-    ], { fixed: true, anchorX: 'left', anchorY: 'top' });
+    },
+    {
+      "id": "cuadradoB",
+      "label": "cuadrado sobre b",
+      "color": "terracota",
+      "layerId": "areas",
+      "order": 21,
+      "visible": true,
+      "locked": false,
+      "groupIds": [
+        "cuadradoBGrupo"
+      ],
+      "selection": {
+        "selectable": true,
+        "role": "secondary"
+      },
+      "target": false,
+      "style": {
+        "strokeWidth": 2,
+        "strokeOpacity": 0.45,
+        "fillOpacity": 0.1,
+        "highlightFillOpacity": 0.3,
+        "preserveColorOnHighlight": true
+      },
+      "kind": "areaDecomposition",
+      "refs": [
+        "C",
+        "A",
+        "cuadrado-b",
+        "sqB4"
+      ],
+      "properties": {
+        "rows": 4,
+        "columns": 4
+      }
+    },
+    {
+      "id": "cuadradoC",
+      "label": "cuadrado sobre c",
+      "color": "ocre",
+      "layerId": "areas",
+      "order": 22,
+      "visible": true,
+      "locked": false,
+      "groupIds": [
+        "cuadradoCGrupo"
+      ],
+      "selection": {
+        "selectable": true,
+        "role": "secondary"
+      },
+      "target": false,
+      "style": {
+        "strokeWidth": 2.5,
+        "strokeOpacity": 0.5,
+        "fillOpacity": 0.12,
+        "highlightFillOpacity": 0.35,
+        "preserveColorOnHighlight": true
+      },
+      "kind": "areaDecomposition",
+      "refs": [
+        "A",
+        "B",
+        "cuadrado-c",
+        "sqC4"
+      ],
+      "properties": {
+        "rows": 5,
+        "columns": 5
+      }
+    },
+    {
+      "id": "areaA",
+      "label": "área a²",
+      "color": "salvia",
+      "layerId": "anotaciones",
+      "order": 30,
+      "visible": true,
+      "locked": false,
+      "groupIds": [
+        "cuadradoAGrupo"
+      ],
+      "selection": {
+        "selectable": true,
+        "role": "secondary"
+      },
+      "target": false,
+      "style": {
+        "textOffset": [
+          0.25,
+          -0.35
+        ],
+        "preserveColorOnHighlight": true
+      },
+      "kind": "measurement",
+      "refs": [
+        "sqA3"
+      ],
+      "text": "a² = {value}",
+      "properties": {
+        "expression": "segBC.length^2",
+        "unit": "u²",
+        "precision": 1
+      }
+    },
+    {
+      "id": "areaB",
+      "label": "área b²",
+      "color": "terracota",
+      "layerId": "anotaciones",
+      "order": 31,
+      "visible": true,
+      "locked": false,
+      "groupIds": [
+        "cuadradoBGrupo"
+      ],
+      "selection": {
+        "selectable": true,
+        "role": "secondary"
+      },
+      "target": false,
+      "style": {
+        "textOffset": [
+          0.25,
+          0.35
+        ],
+        "preserveColorOnHighlight": true
+      },
+      "kind": "measurement",
+      "refs": [
+        "cuadrado-b"
+      ],
+      "text": "b² = {value}",
+      "properties": {
+        "expression": "segCA.length^2",
+        "unit": "u²",
+        "precision": 1
+      }
+    },
+    {
+      "id": "areaC",
+      "label": "área c²",
+      "color": "ocre",
+      "layerId": "anotaciones",
+      "order": 32,
+      "visible": true,
+      "locked": false,
+      "groupIds": [
+        "cuadradoCGrupo"
+      ],
+      "selection": {
+        "selectable": true,
+        "role": "secondary"
+      },
+      "target": false,
+      "style": {
+        "textOffset": [
+          -1.75,
+          0.35
+        ],
+        "preserveColorOnHighlight": true
+      },
+      "kind": "measurement",
+      "refs": [
+        "cuadrado-c"
+      ],
+      "text": "c² = {value}",
+      "properties": {
+        "expression": "segAB.length^2",
+        "unit": "u²",
+        "precision": 1
+      }
+    },
+    {
+      "id": "identidad",
+      "label": "identidad de áreas",
+      "color": "pizarra",
+      "layerId": "anotaciones",
+      "order": 33,
+      "visible": true,
+      "locked": false,
+      "groupIds": [],
+      "selection": {
+        "selectable": true,
+        "role": "secondary"
+      },
+      "target": false,
+      "style": {
+        "textOffset": [
+          -7.4,
+          7.2
+        ],
+        "preserveColorOnHighlight": true
+      },
+      "kind": "infoPanel",
+      "refs": [
+        "C"
+      ],
+      "text": "a² + b² − c² = {value}",
+      "properties": {
+        "expression": "segBC.length^2+segCA.length^2-segAB.length^2",
+        "unit": "u²",
+        "precision": 2,
+        "title": "Comprobación dinámica"
+      }
+    }
+  ],
+  "sliders": [],
+  "steps": [
+    {
+      "id": "step1",
+      "label": "Triángulo rectángulo",
+      "description": "Se fijan los catetos y el ángulo recto.",
+      "visibleTargets": [
+        "A",
+        "B",
+        "C",
+        "triangulo",
+        "segBC",
+        "segCA",
+        "segAB",
+        "anguloRecto"
+      ],
+      "durationMs": 900,
+      "objectStates": {
+        "triangulo": {
+          "emphasis": "primary"
+        },
+        "anguloRecto": {
+          "emphasis": "secondary"
+        }
+      }
+    },
+    {
+      "id": "step2",
+      "label": "Cuadrados y cuadrículas",
+      "description": "Se construye un cuadrado cuadriculado sobre cada lado.",
+      "visibleTargets": [
+        "A",
+        "B",
+        "C",
+        "triangulo",
+        "segBC",
+        "segCA",
+        "segAB",
+        "anguloRecto",
+        "cuadradoA",
+        "cuadradoB",
+        "cuadradoC",
+        "areaA",
+        "areaB",
+        "areaC"
+      ],
+      "durationMs": 1200,
+      "objectStates": {
+        "cuadradoA": {
+          "emphasis": "secondary"
+        },
+        "cuadradoB": {
+          "emphasis": "secondary"
+        },
+        "cuadradoC": {
+          "emphasis": "primary"
+        }
+      }
+    },
+    {
+      "id": "step3",
+      "label": "Igualdad de áreas",
+      "description": "Las áreas de los catetos suman el área de la hipotenusa.",
+      "visibleTargets": [
+        "A",
+        "B",
+        "C",
+        "triangulo",
+        "segBC",
+        "segCA",
+        "segAB",
+        "anguloRecto",
+        "cuadradoA",
+        "cuadradoB",
+        "cuadradoC",
+        "areaA",
+        "areaB",
+        "areaC",
+        "identidad"
+      ],
+      "durationMs": 1400,
+      "objectStates": {
+        "identidad": {
+          "emphasis": "primary",
+          "overlay": {
+            "visible": true,
+            "title": "Identidad pitagórica",
+            "content": "a² + b² − c² = {value}",
+            "expression": "segBC.length^2+segCA.length^2-segAB.length^2",
+            "unit": "u²",
+            "precision": 2,
+            "position": "top-left"
+          }
+        }
+      }
+    }
+  ],
+  "constraints": [],
+  "dependencies": [
+    {
+      "sourceId": "B",
+      "targetId": "sqA3",
+      "relation": "expression"
+    },
+    {
+      "sourceId": "C",
+      "targetId": "sqA3",
+      "relation": "expression"
+    },
+    {
+      "sourceId": "B",
+      "targetId": "cuadrado-a",
+      "relation": "expression"
+    },
+    {
+      "sourceId": "A",
+      "targetId": "cuadrado-b",
+      "relation": "expression"
+    },
+    {
+      "sourceId": "A",
+      "targetId": "sqB4",
+      "relation": "expression"
+    },
+    {
+      "sourceId": "C",
+      "targetId": "sqB4",
+      "relation": "expression"
+    },
+    {
+      "sourceId": "A",
+      "targetId": "cuadrado-c",
+      "relation": "expression"
+    },
+    {
+      "sourceId": "B",
+      "targetId": "cuadrado-c",
+      "relation": "expression"
+    },
+    {
+      "sourceId": "A",
+      "targetId": "sqC4",
+      "relation": "expression"
+    },
+    {
+      "sourceId": "B",
+      "targetId": "sqC4",
+      "relation": "expression"
+    },
+    {
+      "sourceId": "C",
+      "targetId": "rayoX",
+      "relation": "construction"
+    },
+    {
+      "sourceId": "ejeX",
+      "targetId": "rayoX",
+      "relation": "construction"
+    },
+    {
+      "sourceId": "C",
+      "targetId": "rayoY",
+      "relation": "construction"
+    },
+    {
+      "sourceId": "ejeY",
+      "targetId": "rayoY",
+      "relation": "construction"
+    },
+    {
+      "sourceId": "A",
+      "targetId": "triangulo",
+      "relation": "construction"
+    },
+    {
+      "sourceId": "B",
+      "targetId": "triangulo",
+      "relation": "construction"
+    },
+    {
+      "sourceId": "C",
+      "targetId": "triangulo",
+      "relation": "construction"
+    },
+    {
+      "sourceId": "B",
+      "targetId": "segBC",
+      "relation": "construction"
+    },
+    {
+      "sourceId": "C",
+      "targetId": "segBC",
+      "relation": "construction"
+    },
+    {
+      "sourceId": "C",
+      "targetId": "segCA",
+      "relation": "construction"
+    },
+    {
+      "sourceId": "A",
+      "targetId": "segCA",
+      "relation": "construction"
+    },
+    {
+      "sourceId": "A",
+      "targetId": "segAB",
+      "relation": "construction"
+    },
+    {
+      "sourceId": "B",
+      "targetId": "segAB",
+      "relation": "construction"
+    },
+    {
+      "sourceId": "B",
+      "targetId": "anguloRecto",
+      "relation": "construction"
+    },
+    {
+      "sourceId": "C",
+      "targetId": "anguloRecto",
+      "relation": "construction"
+    },
+    {
+      "sourceId": "A",
+      "targetId": "anguloRecto",
+      "relation": "construction"
+    },
+    {
+      "sourceId": "B",
+      "targetId": "cuadradoA",
+      "relation": "construction"
+    },
+    {
+      "sourceId": "C",
+      "targetId": "cuadradoA",
+      "relation": "construction"
+    },
+    {
+      "sourceId": "sqA3",
+      "targetId": "cuadradoA",
+      "relation": "construction"
+    },
+    {
+      "sourceId": "cuadrado-a",
+      "targetId": "cuadradoA",
+      "relation": "construction"
+    },
+    {
+      "sourceId": "C",
+      "targetId": "cuadradoB",
+      "relation": "construction"
+    },
+    {
+      "sourceId": "A",
+      "targetId": "cuadradoB",
+      "relation": "construction"
+    },
+    {
+      "sourceId": "cuadrado-b",
+      "targetId": "cuadradoB",
+      "relation": "construction"
+    },
+    {
+      "sourceId": "sqB4",
+      "targetId": "cuadradoB",
+      "relation": "construction"
+    },
+    {
+      "sourceId": "A",
+      "targetId": "cuadradoC",
+      "relation": "construction"
+    },
+    {
+      "sourceId": "B",
+      "targetId": "cuadradoC",
+      "relation": "construction"
+    },
+    {
+      "sourceId": "cuadrado-c",
+      "targetId": "cuadradoC",
+      "relation": "construction"
+    },
+    {
+      "sourceId": "sqC4",
+      "targetId": "cuadradoC",
+      "relation": "construction"
+    },
+    {
+      "sourceId": "sqA3",
+      "targetId": "areaA",
+      "relation": "construction"
+    },
+    {
+      "sourceId": "cuadrado-b",
+      "targetId": "areaB",
+      "relation": "construction"
+    },
+    {
+      "sourceId": "cuadrado-c",
+      "targetId": "areaC",
+      "relation": "construction"
+    },
+    {
+      "sourceId": "C",
+      "targetId": "identidad",
+      "relation": "construction"
+    },
+    {
+      "sourceId": "segBC",
+      "targetId": "areaA",
+      "relation": "expression"
+    },
+    {
+      "sourceId": "segCA",
+      "targetId": "areaB",
+      "relation": "expression"
+    },
+    {
+      "sourceId": "segAB",
+      "targetId": "areaC",
+      "relation": "expression"
+    },
+    {
+      "sourceId": "segBC",
+      "targetId": "identidad",
+      "relation": "expression"
+    },
+    {
+      "sourceId": "segCA",
+      "targetId": "identidad",
+      "relation": "expression"
+    },
+    {
+      "sourceId": "segAB",
+      "targetId": "identidad",
+      "relation": "expression"
+    }
+  ],
+  "note": "Arrastre A y B sobre las semirrectas: las áreas y la igualdad se actualizan sin perder el ángulo recto.",
+  "extensions": {
+    "acceptanceCase": "phase-5-pythagoras"
+  }
+}
+);
+/* @matematika-diagram-spec:end */
 
-    const lastValidA = [0, 4];
-    const lastValidB = [3, 0];
-    A.on('drag', () => { if (A.Y() < 0.25) A.moveTo([lastValidA[0], lastValidA[1]], 0); else { lastValidA[0] = A.X(); lastValidA[1] = A.Y(); } });
-    B.on('drag', () => { if (B.X() < 0.25) B.moveTo([lastValidB[0], lastValidB[1]], 0); else { lastValidB[0] = B.X(); lastValidB[1] = B.Y(); } });
-
-      // Registrar elementos para interactividad y auditoría
-      els.A = A;
-        els.B = B;
-        els.C = C;
-        els.poly = poly;
-        els.segBC = segBC;
-        els.segCA = segCA;
-        els.segAB = segAB;
-        els.sqBC = sqBC;
-        els.sqCA = sqCA;
-        els.sqAB = sqAB;
-        els.rightAng = rightAng;
-        els.labA = labA;
-        els.labB = labB;
-        els.labC = labC;
-        els.infoText = infoText;
-    };;
-
-  const onUpdate = (board: any, els: any, theme: any, isStep: any, isHL: any) => {
-      const isHighlight = isHL;
-      void board; void els; void theme; void isStep; void isHL; void isHighlight;
-      const { A, B, C, segBC, segCA, segAB, sqBC, sqCA, sqAB, rightAng, labA, labB, labC } = els;
-      const hSqA = isHighlight('cuadrado-a');
-    const hSqB = isHighlight('cuadrado-b');
-    const hSqC = isHighlight('cuadrado-c');
-    const hTri = isHighlight('triangulo');
-    const showAll = !hSqA && !hSqB && !hSqC && !hTri;
-
-    const dim = (active: boolean) => active || showAll ? 1 : 0.15;
-    const sop = (active: boolean) => active || showAll ? 1 : 0.15;
-
-    sqBC.setAttribute({ fillOpacity: hSqA ? 0.3 : 0.10, strokeOpacity: sop(hSqA) });
-    sqCA.setAttribute({ fillOpacity: hSqB ? 0.3 : 0.10, strokeOpacity: sop(hSqB) });
-    sqAB.setAttribute({ fillOpacity: hSqC ? 0.35 : 0.12, strokeOpacity: sop(hSqC) });
-    rightAng.setAttribute({ fillOpacity: showAll ? 0.4 : 0.08 });
-
-    segBC.setAttribute({ strokeOpacity: dim(showAll), strokeWidth: hSqA ? 4 : 2 });
-    segCA.setAttribute({ strokeOpacity: dim(showAll), strokeWidth: hSqB ? 4 : 2 });
-    segAB.setAttribute({ strokeOpacity: dim(showAll), strokeWidth: hSqC ? 4 : 2.5 });
-
-    labA.setAttribute({ visible: dim(hSqA || showAll) > 0.5 });
-    labB.setAttribute({ visible: dim(hSqB || showAll) > 0.5 });
-    labC.setAttribute({ visible: dim(hSqC || showAll) > 0.5 });
-
-    [A, B, C].forEach((p: any) => p.setAttribute({
-      strokeOpacity: dim(showAll),
-      fillOpacity: dim(showAll),
-      size: hTri ? 7 : 5,
-      fillColor: hTri ? theme.terracota : theme.carbon
-    }));
-    };;
-
-  return (
-    <MathBoard
-      boundingbox={[-8, 8, 8, -8]}
-      axis={false}
-      grid={false}
-      onInit={onInit}
-      onUpdate={onUpdate}
-    >
-
-    </MathBoard>
-  );
-};
+export const Pitagoras = () => <DiagramRenderer spec={PitagorasSpec} />;

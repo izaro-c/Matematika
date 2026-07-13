@@ -1,5 +1,5 @@
 import React, { useEffect, useMemo, useReducer } from 'react';
-import { useMathStore } from '@/shared/lib/MathStoreContext';
+import { MathProviderBoundary, useMathStore } from '@/shared/lib/MathStoreContext';
 import {
   diagramPlaybackReducer,
   initialDiagramPlaybackState,
@@ -15,7 +15,7 @@ interface StepNavigatorProps {
   className?: string;
 }
 
-export const StepNavigator: React.FC<StepNavigatorProps> = ({
+const StepNavigatorContent: React.FC<StepNavigatorProps> = ({
   steps,
   scopeId = '',
   activeStepId,
@@ -105,5 +105,11 @@ export const StepNavigator: React.FC<StepNavigatorProps> = ({
     </nav>
   );
 };
+
+export const StepNavigator: React.FC<StepNavigatorProps> = props => (
+  <MathProviderBoundary>
+    <StepNavigatorContent {...props} />
+  </MathProviderBoundary>
+);
 
 export default StepNavigator;

@@ -81,6 +81,7 @@ export const MathBoard: React.FC<MathBoardProps> = ({
   borderColor = 'var(--page-accent, var(--theme-pizarra))',
   borderRadius = 20,
 }) => {
+  const containerRef = useRef<HTMLDivElement>(null);
   const boardRef = useRef<HTMLDivElement>(null);
   const boardObj = useRef<any>(null);
   const elementsRef = useRef<Record<string, any>>({});
@@ -93,6 +94,8 @@ export const MathBoard: React.FC<MathBoardProps> = ({
   const highlightRef = useRef(highlight);
   const stepRef = useRef(step);
   const generatedId = useId().replace(/:/g, '');
+  const suppressBoundingBoxReportRef = useRef(false);
+  const programmaticBoundingBoxRef = useRef<[number, number, number, number] | null>(null);
 
   useEffect(() => {
     onInitRef.current = onInit;
@@ -130,6 +133,10 @@ export const MathBoard: React.FC<MathBoardProps> = ({
     });
 
     boardObj.current = board;
+    const initialBounds = board.getBoundingBox?.();
+    if (Array.isArray(initialBounds) && initialBounds.length === 4) {
+      programmaticBoundingBoxRef.current = [...initialBounds] as [number, number, number, number];
+    }
     const theme = getTheme();
     onInitRef.current(board, elementsRef.current, theme);
 
@@ -144,20 +151,32 @@ export const MathBoard: React.FC<MathBoardProps> = ({
     runUpdate();
 
     const reportBoundingBox = () => {
+      if (suppressBoundingBoxReportRef.current) return;
       const current = board.getBoundingBox?.();
       if (Array.isArray(current) && current.length === 4) {
+        const programmatic = programmaticBoundingBoxRef.current;
+        if (programmatic && current.every((value, index) => Math.abs(value - programmatic[index]) <= 1e-8)) return;
         onBoundingBoxChangeRef.current?.([...current] as [number, number, number, number]);
       }
     };
     board.on('boundingbox', reportBoundingBox);
 
     const resizeObserver = typeof ResizeObserver === 'undefined' ? null : new ResizeObserver(() => {
-      if (!boardRef.current) return;
-      board.resizeContainer(boardRef.current.clientWidth, boardRef.current.clientHeight);
+      if (!containerRef.current) return;
+      const width = containerRef.current.clientWidth;
+      const height = containerRef.current.clientHeight;
+      if (width <= 2 || height <= 2) return;
+      suppressBoundingBoxReportRef.current = true;
+      board.resizeContainer(width, height);
       board.setBoundingBox(boundingboxRef.current, keepaspectratio);
       board.update();
+      const resizedBounds = board.getBoundingBox?.();
+      if (Array.isArray(resizedBounds) && resizedBounds.length === 4) {
+        programmaticBoundingBoxRef.current = [...resizedBounds] as [number, number, number, number];
+      }
+      suppressBoundingBoxReportRef.current = false;
     });
-    resizeObserver?.observe(boardRef.current);
+    if (resizeObserver && containerRef.current) resizeObserver.observe(containerRef.current);
 
     const themeObserver = new MutationObserver(() => {
       const currentTheme = getTheme();
@@ -184,13 +203,19 @@ export const MathBoard: React.FC<MathBoardProps> = ({
     const current = board.getBoundingBox?.() as number[] | undefined;
     const changed = !current || boundingbox.some((value, index) => Math.abs(value - current[index]) > 1e-8);
     if (changed) {
+      suppressBoundingBoxReportRef.current = true;
       board.setBoundingBox(boundingbox, keepaspectratio);
       board.update();
+      const nextBounds = board.getBoundingBox?.();
+      if (Array.isArray(nextBounds) && nextBounds.length === 4) {
+        programmaticBoundingBoxRef.current = [...nextBounds] as [number, number, number, number];
+      }
+      suppressBoundingBoxReportRef.current = false;
     }
   }, [boundingbox, keepaspectratio]);
 
   return (
-    <div className={`${className} h-full`}>
+    <div ref={containerRef} className={`${className} h-full`}>
       <div ref={boardRef} className="jxgbox absolute inset-0 h-full w-full touch-none" 
         style={{
           borderStyle: 'solid',

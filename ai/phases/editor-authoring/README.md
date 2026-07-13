@@ -17,7 +17,7 @@ Esta tabla es la única fuente de verdad del estado de la épica. Las fichas de 
 | [2](phase-2-diagram-spec-v2.md) | `DiagramSpec v2` y renderer compartido | **Cerrada** | Cierre, decisiones, deuda y gates registrados en [`../../current-state.md`](../../current-state.md), 2026-07-13 |
 | [3](phase-3-geometry-language.md) | Lenguaje geométrico completo | **Cerrada** | Cierre, límites y gates registrados en [`../../current-state.md`](../../current-state.md), 2026-07-13 |
 | [4](phase-4-steps-and-interaction.md) | Pasos, interacción y demostraciones | **Cerrada** | Cierre, evidencia de persistencia y gates registrados en [`../../current-state.md`](../../current-state.md), 2026-07-13 |
-| [5](phase-5-acceptance-migrations.md) | Migración de casos matemáticos complejos | **Pendiente** | Requiere Fase 4 cerrada |
+| [5](phase-5-acceptance-migrations.md) | Migración de casos matemáticos complejos | **Cerrada** | Cuatro casos reales, roundtrip exacto, páginas publicadas y E2E registrados en [`../../current-state.md`](../../current-state.md), 2026-07-13 |
 | [6](phase-6-lossless-mdx-engine.md) | Motor MDX estructural y lossless | **Pendiente** | Requiere Fase 5 cerrada y preservar la línea base lossless |
 | [7](phase-7-mdx-authoring-ux.md) | Experiencia visual del editor MDX | **Pendiente** | Requiere Fase 6 cerrada |
 | [8](phase-8-quality-and-governance.md) | Calidad, accesibilidad y cierre | **Pendiente** | Requiere Fases 0–7 cerradas |

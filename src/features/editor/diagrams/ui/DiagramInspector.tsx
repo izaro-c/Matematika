@@ -64,12 +64,18 @@ export const DiagramInspector: React.FC<DiagramInspectorProps> = ({
     if (!selectedElement) return;
     const properties = { ...selectedElement.properties, ...update };
     const next = updateElement(model, selectedElement.id, { properties });
-    if (!('expression' in update) && !('xExpression' in update) && !('yExpression' in update)) {
+    if (!('expression' in update) && !('xExpression' in update) && !('yExpression' in update) && !('visibleWhen' in update) && !('textRules' in update)) {
       onModelEdit(next);
       return;
     }
     const sources = new Set<string>();
-    [properties.expression, properties.xExpression, properties.yExpression].filter((source): source is string => Boolean(source)).forEach(source => {
+    [
+      properties.expression,
+      properties.xExpression,
+      properties.yExpression,
+      properties.visibleWhen,
+      ...(properties.textRules?.map(rule => rule.when) ?? []),
+    ].filter((source): source is string => Boolean(source)).forEach(source => {
       try {
         extractMathExpressionIdentifiers(source).forEach(identifier => {
           const root = identifier.split('.')[0];
@@ -86,6 +92,14 @@ export const DiagramInspector: React.FC<DiagramInspectorProps> = ({
         ...[...sources].map(sourceId => ({ sourceId, targetId: selectedElement.id, relation: 'expression' as const })),
       ],
     });
+  };
+
+  const handlePointStyleChange = (update: NonNullable<VisualPoint['style']>) => {
+    if (selectedPoint) handlePointChange({ style: { ...selectedPoint.style, ...update } });
+  };
+
+  const handleElementStyleChange = (update: NonNullable<VisualElement['style']>) => {
+    if (selectedElement) handleElementChange({ style: { ...selectedElement.style, ...update } });
   };
 
   const handleSliderChange = (update: Partial<VisualSlider>) => {
@@ -296,6 +310,12 @@ export const DiagramInspector: React.FC<DiagramInspectorProps> = ({
             </select>
           </div>
 
+          <div className="grid grid-cols-2 gap-2 rounded border border-carbon/10 p-2">
+            <label className="text-xs font-bold text-carbon">Tamaño<input type="number" min="0" max="30" step="0.5" aria-label="Tamaño del punto" className="mt-1 w-full rounded border border-carbon/15 bg-lienzo p-1.5 text-xs" value={selectedPoint.style?.pointSize ?? 5} onChange={(event) => handlePointStyleChange({ pointSize: Number(event.target.value) })} /></label>
+            <label className="text-xs font-bold text-carbon">Tamaño resaltado<input type="number" min="0" max="40" step="0.5" aria-label="Tamaño resaltado del punto" className="mt-1 w-full rounded border border-carbon/15 bg-lienzo p-1.5 text-xs" value={selectedPoint.style?.highlightPointSize ?? 8.5} onChange={(event) => handlePointStyleChange({ highlightPointSize: Number(event.target.value) })} /></label>
+            <label className="col-span-2 flex items-center gap-1.5 text-xs font-bold text-carbon"><input type="checkbox" checked={selectedPoint.style?.preserveColorOnHighlight ?? false} onChange={(event) => handlePointStyleChange({ preserveColorOnHighlight: event.target.checked })} />Conservar color al resaltar</label>
+          </div>
+
           <label className="flex items-center gap-1.5 text-xs font-bold text-carbon">
             <input
               type="checkbox"
@@ -441,6 +461,22 @@ export const DiagramInspector: React.FC<DiagramInspectorProps> = ({
             </div>
           )}
 
+          <label className="block text-xs font-bold text-carbon">Visible cuando<input aria-label="Condición de visibilidad" placeholder="Expresión segura; vacío = siempre" className="mt-1 w-full rounded border border-carbon/15 bg-lienzo p-1.5 font-mono text-xs" value={selectedElement.properties?.visibleWhen ?? ''} onChange={(event) => handleElementPropertiesChange({ visibleWhen: event.target.value || undefined })} /></label>
+
+          {(['text', 'label', 'formula', 'infoPanel'].includes(selectedElement.kind)) && (
+            <div className="space-y-2 rounded border border-carbon/10 p-2">
+              <p className="text-[10px] font-bold uppercase tracking-wider text-carbon/45">Texto condicional</p>
+              {(selectedElement.properties?.textRules ?? []).map((rule, index) => (
+                <div key={`${selectedElement.id}-text-rule-${index}`} className="grid grid-cols-[1fr_1fr_auto] gap-1">
+                  <input aria-label={`Condición de texto ${index + 1}`} className="rounded border border-carbon/15 bg-lienzo p-1 font-mono text-[10px]" value={rule.when} onChange={(event) => handleElementPropertiesChange({ textRules: selectedElement.properties?.textRules?.map((item, itemIndex) => itemIndex === index ? { ...item, when: event.target.value } : item) })} />
+                  <input aria-label={`Texto reactivo ${index + 1}`} className="rounded border border-carbon/15 bg-lienzo p-1 text-[10px]" value={rule.text} onChange={(event) => handleElementPropertiesChange({ textRules: selectedElement.properties?.textRules?.map((item, itemIndex) => itemIndex === index ? { ...item, text: event.target.value } : item) })} />
+                  <button type="button" aria-label={`Eliminar regla ${index + 1}`} className="rounded border border-granada/20 px-1 text-granada" onClick={() => handleElementPropertiesChange({ textRules: selectedElement.properties?.textRules?.filter((_, itemIndex) => itemIndex !== index) })}>×</button>
+                </div>
+              ))}
+              <button type="button" className="w-full rounded border border-carbon/15 px-2 py-1 text-[10px] font-bold" onClick={() => handleElementPropertiesChange({ textRules: [...(selectedElement.properties?.textRules ?? []), { when: '1', text: selectedElement.text || selectedElement.label }] })}>+ Regla de texto</button>
+            </div>
+          )}
+
           <div>
             <label className="block text-xs font-bold text-carbon mb-1">Color</label>
             <select
@@ -452,6 +488,14 @@ export const DiagramInspector: React.FC<DiagramInspectorProps> = ({
                 <option key={opt.value} value={opt.value}>{opt.label}</option>
               ))}
             </select>
+          </div>
+
+          <div className="grid grid-cols-2 gap-2 rounded border border-carbon/10 p-2">
+            <label className="text-xs font-bold text-carbon">Grosor<input type="number" min="0" max="20" step="0.1" aria-label="Grosor del elemento" className="mt-1 w-full rounded border border-carbon/15 bg-lienzo p-1.5 text-xs" value={selectedElement.style?.strokeWidth ?? 2.4} onChange={(event) => handleElementStyleChange({ strokeWidth: Number(event.target.value) })} /></label>
+            <label className="text-xs font-bold text-carbon">Grosor resaltado<input type="number" min="0" max="30" step="0.1" aria-label="Grosor resaltado del elemento" className="mt-1 w-full rounded border border-carbon/15 bg-lienzo p-1.5 text-xs" value={selectedElement.style?.highlightStrokeWidth ?? 4.8} onChange={(event) => handleElementStyleChange({ highlightStrokeWidth: Number(event.target.value) })} /></label>
+            <label className="text-xs font-bold text-carbon">Relleno<input type="number" min="0" max="1" step="0.01" aria-label="Opacidad de relleno" className="mt-1 w-full rounded border border-carbon/15 bg-lienzo p-1.5 text-xs" value={selectedElement.style?.fillOpacity ?? 0.16} onChange={(event) => handleElementStyleChange({ fillOpacity: Number(event.target.value) })} /></label>
+            <label className="text-xs font-bold text-carbon">Relleno resaltado<input type="number" min="0" max="1" step="0.01" aria-label="Opacidad de relleno resaltado" className="mt-1 w-full rounded border border-carbon/15 bg-lienzo p-1.5 text-xs" value={selectedElement.style?.highlightFillOpacity ?? 0.34} onChange={(event) => handleElementStyleChange({ highlightFillOpacity: Number(event.target.value) })} /></label>
+            <label className="col-span-2 flex items-center gap-1.5 text-xs font-bold text-carbon"><input type="checkbox" checked={selectedElement.style?.preserveColorOnHighlight ?? false} onChange={(event) => handleElementStyleChange({ preserveColorOnHighlight: event.target.checked })} />Conservar color al resaltar</label>
           </div>
 
           <label className="flex items-center gap-1.5 text-xs font-bold text-carbon">
@@ -571,7 +615,7 @@ export const DiagramInspector: React.FC<DiagramInspectorProps> = ({
                   >
                     <option value="fixed">Fijo</option><option value="horizontal">Horizontal</option><option value="vertical">Vertical</option>
                     <option value="coincident">Coincidente</option><option value="on">Sobre objeto</option><option value="distance">Distancia fija</option>
-                    <option value="perpendicular">Perpendicular</option><option value="parallel">Paralela</option><option value="insideDisk">Dentro del disco</option><option value="expression">Expresión</option>
+                    <option value="perpendicular">Perpendicular</option><option value="parallel">Paralela</option><option value="insideDisk">Dentro del disco</option><option value="sameSide">Mismo semiplano</option><option value="expression">Expresión</option>
                   </select>
                   <label className="flex items-center gap-1 text-[10px]"><input type="checkbox" checked={constraint.enabled} onChange={(event) => onModelEdit({ ...model, constraints: model.constraints?.map(item => item.id === constraint.id ? { ...item, enabled: event.target.checked } : item) })} />Activa</label>
                 </div>

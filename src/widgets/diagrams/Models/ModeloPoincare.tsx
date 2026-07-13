@@ -1,225 +1,988 @@
-import { MathBoard } from '@/shared/diagrams/core/MathBoard';
-import {
-  createCircle,
-  createGlider,
-  createPoint,
-  createText,
-} from '@/shared/diagrams/core/MathFactory';
+import { createDiagramSpec, DiagramRenderer } from '@/shared/diagrams/public';
 
-export const ModeloPoincare = () => {
-  const onInit = (board: any, els: any, theme: any) => {
-    const O = createPoint(board, [0, 0], {
-      visible: false,
-      fixed: true,
-      target: false,
-    }, theme);
-    const unitCircle = createCircle(board, [O, 1], {
-      strokeColor: theme.carbon,
-      strokeWidth: 2.5,
-      fillColor: theme.pavo,
-      fillOpacity: 0.04,
-      fixed: true,
-    }, theme);
-
-    const L1 = createGlider(board, [0.866, 0.5, unitCircle], {
-      name: '',
-      size: 5,
-      fillColor: theme.terracota,
-      strokeColor: theme.terracota,
-      showInfobox: false,
-    }, theme);
-    const L2 = createGlider(board, [-0.866, 0.5, unitCircle], {
-      name: '',
-      size: 5,
-      fillColor: theme.terracota,
-      strokeColor: theme.terracota,
-      showInfobox: false,
-    }, theme);
-    const P = createPoint(board, [0.4, -0.25], {
-      name: 'P',
-      size: 6,
-      fillColor: theme.terracota,
-      strokeColor: theme.terracota,
-      showInfobox: false,
-    }, theme);
-    P.on('drag', () => {
-      if (P.Dist(O) <= 0.95) return;
-      const angle = Math.atan2(P.Y(), P.X());
-      P.moveTo([0.9 * Math.cos(angle), 0.9 * Math.sin(angle)], 0);
-    });
-
-    const calcOtherEndpoint = (bp: any, id: string) => createPoint(board, [
-      () => {
-        const p1 = P.X();
-        const p2 = P.Y();
-        const u1 = bp.X();
-        const u2 = bp.Y();
-        const det = u1 * p2 - u2 * p1;
-        if (Math.abs(det) < 1e-10) return -bp.X();
-        const s = (p1 * p1 + p2 * p2 + 1) / 2;
-        const cx = (p2 - u2 * s) / det;
-        const cy = (u1 * s - p1) / det;
-        const phi = Math.atan2(cy, cx);
-        const uAng = Math.atan2(u2, u1);
-        return Math.cos(2 * phi - uAng);
-      },
-      () => {
-        const p1 = P.X();
-        const p2 = P.Y();
-        const u1 = bp.X();
-        const u2 = bp.Y();
-        const det = u1 * p2 - u2 * p1;
-        if (Math.abs(det) < 1e-10) return -bp.Y();
-        const s = (p1 * p1 + p2 * p2 + 1) / 2;
-        const cx = (p2 - u2 * s) / det;
-        const cy = (u1 * s - p1) / det;
-        const phi = Math.atan2(cy, cx);
-        const uAng = Math.atan2(u2, u1);
-        return Math.sin(2 * phi - uAng);
-      },
-    ], {
-      visible: false,
-      target: false,
-      name: id,
-    }, theme);
-
-    const createHyperbolicLine = (pA: any, pB: any, color: string, width: number, dash = 0) => board.create('curve', [
-      (t: number) => {
-        const ax = pA.X();
-        const ay = pA.Y();
-        const bx = pB.X();
-        const by = pB.Y();
-        const det = ax * by - ay * bx;
-        if (Math.abs(det) < 1e-4) return ax + t * (bx - ax);
-        const cx = (by - ay) / det;
-        const cy = (ax - bx) / det;
-        const radius = Math.sqrt(Math.max(0, cx * cx + cy * cy - 1));
-        let angleA = Math.atan2(ay - cy, ax - cx);
-        let angleB = Math.atan2(by - cy, bx - cx);
-        if ((ax - cx) * (by - cy) - (ay - cy) * (bx - cx) > 0) {
-          if (angleB < angleA) angleB += 2 * Math.PI;
-        } else if (angleA < angleB) {
-          angleA += 2 * Math.PI;
-        }
-        return cx + radius * Math.cos(angleA + t * (angleB - angleA));
-      },
-      (t: number) => {
-        const ax = pA.X();
-        const ay = pA.Y();
-        const bx = pB.X();
-        const by = pB.Y();
-        const det = ax * by - ay * bx;
-        if (Math.abs(det) < 1e-4) return ay + t * (by - ay);
-        const cx = (by - ay) / det;
-        const cy = (ax - bx) / det;
-        const radius = Math.sqrt(Math.max(0, cx * cx + cy * cy - 1));
-        let angleA = Math.atan2(ay - cy, ax - cx);
-        let angleB = Math.atan2(by - cy, bx - cx);
-        if ((ax - cx) * (by - cy) - (ay - cy) * (bx - cx) > 0) {
-          if (angleB < angleA) angleB += 2 * Math.PI;
-        } else if (angleA < angleB) {
-          angleA += 2 * Math.PI;
-        }
-        return cy + radius * Math.sin(angleA + t * (angleB - angleA));
-      },
-      0,
-      1,
-    ], {
-      strokeColor: color,
-      strokeWidth: width,
-      dash,
-    });
-
-    const lineL = createHyperbolicLine(L1, L2, theme.terracota, 3);
-    const E1 = calcOtherEndpoint(L1, 'E1');
-    const E2 = calcOtherEndpoint(L2, 'E2');
-    const limit1 = createHyperbolicLine(L1, E1, theme.ocre, 2.5, 2);
-    const limit2 = createHyperbolicLine(L2, E2, theme.ocre, 2.5, 2);
-
-    const getUltraAngle = (i: number) => {
-      const pts = [
-        { type: 'L', angle: Math.atan2(L1.Y(), L1.X()) },
-        { type: 'L', angle: Math.atan2(L2.Y(), L2.X()) },
-        { type: 'E', angle: Math.atan2(E1.Y(), E1.X()) },
-        { type: 'E', angle: Math.atan2(E2.Y(), E2.X()) },
-      ];
-      pts.forEach((point) => {
-        if (point.angle < 0) point.angle += 2 * Math.PI;
-      });
-      pts.sort((a, b) => a.angle - b.angle);
-
-      let startAngle = 0;
-      let span = 0;
-      for (let index = 0; index < 4; index++) {
-        const pointA = pts[index];
-        const pointB = pts[(index + 1) % 4];
-        if (pointA.type === pointB.type) continue;
-        startAngle = pointA.angle;
-        let endAngle = pointB.angle;
-        if (endAngle < startAngle) endAngle += 2 * Math.PI;
-        span = endAngle - startAngle;
-        break;
-      }
-      return startAngle + (span * i) / 5;
-    };
-
-    const ultras: any[] = [];
-    for (let i = 1; i <= 4; i++) {
-      const endpoint = createPoint(board, [
-        () => Math.cos(getUltraAngle(i)),
-        () => Math.sin(getUltraAngle(i)),
-      ], {
-        visible: false,
-        target: false,
-        name: `U${i}`,
-      }, theme);
-      const opposite = calcOtherEndpoint(endpoint, `V${i}`);
-      ultras.push(createHyperbolicLine(endpoint, opposite, theme.salvia, 2, 2));
+/* @matematika-diagram-spec:start */
+export const ModeloPoincareSpec = createDiagramSpec(
+{
+  "version": 2,
+  "renderer": "matematika-diagram-renderer-v2",
+  "title": "Disco de Poincaré",
+  "componentId": "ModeloPoincare",
+  "category": "Models",
+  "mode": "diagram",
+  "axis": false,
+  "grid": false,
+  "viewport": {
+    "bounds": [
+      -1.18,
+      1.18,
+      1.18,
+      -1.18
+    ],
+    "home": [
+      -1.18,
+      1.18,
+      1.18,
+      -1.18
+    ],
+    "minZoom": 0.85,
+    "maxZoom": 6,
+    "padding": 0.08
+  },
+  "layers": [
+    {
+      "id": "construccion",
+      "label": "Construcción",
+      "order": 0,
+      "visible": true,
+      "locked": false
+    },
+    {
+      "id": "disco",
+      "label": "Disco",
+      "order": 1,
+      "visible": true,
+      "locked": false
+    },
+    {
+      "id": "geodesicas",
+      "label": "Geodésicas",
+      "order": 2,
+      "visible": true,
+      "locked": false
+    },
+    {
+      "id": "puntos",
+      "label": "Puntos móviles",
+      "order": 3,
+      "visible": true,
+      "locked": false
+    },
+    {
+      "id": "anotaciones",
+      "label": "Medidas",
+      "order": 4,
+      "visible": true,
+      "locked": false
     }
+  ],
+  "groups": [],
+  "points": [
+    {
+      "id": "O",
+      "label": "centro",
+      "color": "carbon",
+      "layerId": "disco",
+      "order": 1,
+      "visible": false,
+      "locked": true,
+      "groupIds": [],
+      "selection": {
+        "selectable": false,
+        "role": "construction"
+      },
+      "target": false,
+      "x": 0,
+      "y": 0,
+      "fixed": true,
+      "constraint": "fixed"
+    },
+    {
+      "id": "R",
+      "label": "frontera",
+      "color": "carbon",
+      "layerId": "disco",
+      "order": 2,
+      "visible": false,
+      "locked": true,
+      "groupIds": [],
+      "selection": {
+        "selectable": false,
+        "role": "construction"
+      },
+      "target": false,
+      "x": 1,
+      "y": 0,
+      "fixed": true,
+      "constraint": "fixed"
+    },
+    {
+      "id": "L1",
+      "label": "L₁",
+      "color": "terracota",
+      "layerId": "puntos",
+      "order": 10,
+      "visible": true,
+      "locked": false,
+      "groupIds": [],
+      "selection": {
+        "selectable": true,
+        "role": "primary"
+      },
+      "target": false,
+      "style": {
+        "pointSize": 5,
+        "highlightPointSize": 7,
+        "preserveColorOnHighlight": true
+      },
+      "x": 0.866,
+      "y": 0.5,
+      "fixed": false,
+      "constraint": "glider",
+      "gliderTarget": "frontera"
+    },
+    {
+      "id": "L2",
+      "label": "L₂",
+      "color": "terracota",
+      "layerId": "puntos",
+      "order": 11,
+      "visible": true,
+      "locked": false,
+      "groupIds": [],
+      "selection": {
+        "selectable": true,
+        "role": "primary"
+      },
+      "target": false,
+      "style": {
+        "pointSize": 5,
+        "highlightPointSize": 7,
+        "preserveColorOnHighlight": true
+      },
+      "x": -0.866,
+      "y": 0.5,
+      "fixed": false,
+      "constraint": "glider",
+      "gliderTarget": "frontera"
+    },
+    {
+      "id": "P",
+      "label": "P",
+      "color": "terracota",
+      "layerId": "puntos",
+      "order": 12,
+      "visible": true,
+      "locked": false,
+      "groupIds": [],
+      "selection": {
+        "selectable": true,
+        "role": "primary"
+      },
+      "target": false,
+      "style": {
+        "pointSize": 6,
+        "highlightPointSize": 8,
+        "preserveColorOnHighlight": true
+      },
+      "x": 0.4,
+      "y": -0.25,
+      "fixed": false,
+      "constraint": "constrained",
+      "constraintIds": [
+        "pDentro"
+      ]
+    },
+    {
+      "id": "E1",
+      "label": "E1",
+      "color": "carbon",
+      "layerId": "construccion",
+      "order": 20,
+      "visible": false,
+      "locked": true,
+      "groupIds": [],
+      "selection": {
+        "selectable": false,
+        "role": "construction"
+      },
+      "target": false,
+      "x": 0,
+      "y": 0,
+      "fixed": true,
+      "constraint": "derived",
+      "dependencies": [
+        "L1",
+        "P"
+      ],
+      "xExpression": "cos(atan2(((L1.x*((P.x^2+P.y^2+1)/2)-P.x)/(max(abs(L1.x*P.y-L1.y*P.x),0.000001)*sign(L1.x*P.y-L1.y*P.x+0.0000001))),((P.y-L1.y*((P.x^2+P.y^2+1)/2))/(max(abs(L1.x*P.y-L1.y*P.x),0.000001)*sign(L1.x*P.y-L1.y*P.x+0.0000001))))*2-atan2(L1.y,L1.x))",
+      "yExpression": "sin(atan2(((L1.x*((P.x^2+P.y^2+1)/2)-P.x)/(max(abs(L1.x*P.y-L1.y*P.x),0.000001)*sign(L1.x*P.y-L1.y*P.x+0.0000001))),((P.y-L1.y*((P.x^2+P.y^2+1)/2))/(max(abs(L1.x*P.y-L1.y*P.x),0.000001)*sign(L1.x*P.y-L1.y*P.x+0.0000001))))*2-atan2(L1.y,L1.x))"
+    },
+    {
+      "id": "E2",
+      "label": "E2",
+      "color": "carbon",
+      "layerId": "construccion",
+      "order": 21,
+      "visible": false,
+      "locked": true,
+      "groupIds": [],
+      "selection": {
+        "selectable": false,
+        "role": "construction"
+      },
+      "target": false,
+      "x": 0,
+      "y": 0,
+      "fixed": true,
+      "constraint": "derived",
+      "dependencies": [
+        "L2",
+        "P"
+      ],
+      "xExpression": "cos(atan2(((L2.x*((P.x^2+P.y^2+1)/2)-P.x)/(max(abs(L2.x*P.y-L2.y*P.x),0.000001)*sign(L2.x*P.y-L2.y*P.x+0.0000001))),((P.y-L2.y*((P.x^2+P.y^2+1)/2))/(max(abs(L2.x*P.y-L2.y*P.x),0.000001)*sign(L2.x*P.y-L2.y*P.x+0.0000001))))*2-atan2(L2.y,L2.x))",
+      "yExpression": "sin(atan2(((L2.x*((P.x^2+P.y^2+1)/2)-P.x)/(max(abs(L2.x*P.y-L2.y*P.x),0.000001)*sign(L2.x*P.y-L2.y*P.x+0.0000001))),((P.y-L2.y*((P.x^2+P.y^2+1)/2))/(max(abs(L2.x*P.y-L2.y*P.x),0.000001)*sign(L2.x*P.y-L2.y*P.x+0.0000001))))*2-atan2(L2.y,L2.x))"
+    },
+    {
+      "id": "U1",
+      "label": "U1",
+      "color": "carbon",
+      "layerId": "construccion",
+      "order": 31,
+      "visible": false,
+      "locked": true,
+      "groupIds": [],
+      "selection": {
+        "selectable": false,
+        "role": "construction"
+      },
+      "target": false,
+      "x": 0,
+      "y": 0,
+      "fixed": true,
+      "constraint": "derived",
+      "dependencies": [
+        "L1",
+        "E1"
+      ],
+      "xExpression": "cos((atan2(L1.y,L1.x)+0.2*atan2(sin(atan2(E1.y,E1.x)-atan2(L1.y,L1.x)),cos(atan2(E1.y,E1.x)-atan2(L1.y,L1.x)))))",
+      "yExpression": "sin((atan2(L1.y,L1.x)+0.2*atan2(sin(atan2(E1.y,E1.x)-atan2(L1.y,L1.x)),cos(atan2(E1.y,E1.x)-atan2(L1.y,L1.x)))))"
+    },
+    {
+      "id": "V1",
+      "label": "V1",
+      "color": "carbon",
+      "layerId": "construccion",
+      "order": 41,
+      "visible": false,
+      "locked": true,
+      "groupIds": [],
+      "selection": {
+        "selectable": false,
+        "role": "construction"
+      },
+      "target": false,
+      "x": 0,
+      "y": 0,
+      "fixed": true,
+      "constraint": "derived",
+      "dependencies": [
+        "U1",
+        "P"
+      ],
+      "xExpression": "cos(atan2(((U1.x*((P.x^2+P.y^2+1)/2)-P.x)/(max(abs(U1.x*P.y-U1.y*P.x),0.000001)*sign(U1.x*P.y-U1.y*P.x+0.0000001))),((P.y-U1.y*((P.x^2+P.y^2+1)/2))/(max(abs(U1.x*P.y-U1.y*P.x),0.000001)*sign(U1.x*P.y-U1.y*P.x+0.0000001))))*2-atan2(U1.y,U1.x))",
+      "yExpression": "sin(atan2(((U1.x*((P.x^2+P.y^2+1)/2)-P.x)/(max(abs(U1.x*P.y-U1.y*P.x),0.000001)*sign(U1.x*P.y-U1.y*P.x+0.0000001))),((P.y-U1.y*((P.x^2+P.y^2+1)/2))/(max(abs(U1.x*P.y-U1.y*P.x),0.000001)*sign(U1.x*P.y-U1.y*P.x+0.0000001))))*2-atan2(U1.y,U1.x))"
+    },
+    {
+      "id": "U2",
+      "label": "U2",
+      "color": "carbon",
+      "layerId": "construccion",
+      "order": 32,
+      "visible": false,
+      "locked": true,
+      "groupIds": [],
+      "selection": {
+        "selectable": false,
+        "role": "construction"
+      },
+      "target": false,
+      "x": 0,
+      "y": 0,
+      "fixed": true,
+      "constraint": "derived",
+      "dependencies": [
+        "L1",
+        "E1"
+      ],
+      "xExpression": "cos((atan2(L1.y,L1.x)+0.4*atan2(sin(atan2(E1.y,E1.x)-atan2(L1.y,L1.x)),cos(atan2(E1.y,E1.x)-atan2(L1.y,L1.x)))))",
+      "yExpression": "sin((atan2(L1.y,L1.x)+0.4*atan2(sin(atan2(E1.y,E1.x)-atan2(L1.y,L1.x)),cos(atan2(E1.y,E1.x)-atan2(L1.y,L1.x)))))"
+    },
+    {
+      "id": "V2",
+      "label": "V2",
+      "color": "carbon",
+      "layerId": "construccion",
+      "order": 42,
+      "visible": false,
+      "locked": true,
+      "groupIds": [],
+      "selection": {
+        "selectable": false,
+        "role": "construction"
+      },
+      "target": false,
+      "x": 0,
+      "y": 0,
+      "fixed": true,
+      "constraint": "derived",
+      "dependencies": [
+        "U2",
+        "P"
+      ],
+      "xExpression": "cos(atan2(((U2.x*((P.x^2+P.y^2+1)/2)-P.x)/(max(abs(U2.x*P.y-U2.y*P.x),0.000001)*sign(U2.x*P.y-U2.y*P.x+0.0000001))),((P.y-U2.y*((P.x^2+P.y^2+1)/2))/(max(abs(U2.x*P.y-U2.y*P.x),0.000001)*sign(U2.x*P.y-U2.y*P.x+0.0000001))))*2-atan2(U2.y,U2.x))",
+      "yExpression": "sin(atan2(((U2.x*((P.x^2+P.y^2+1)/2)-P.x)/(max(abs(U2.x*P.y-U2.y*P.x),0.000001)*sign(U2.x*P.y-U2.y*P.x+0.0000001))),((P.y-U2.y*((P.x^2+P.y^2+1)/2))/(max(abs(U2.x*P.y-U2.y*P.x),0.000001)*sign(U2.x*P.y-U2.y*P.x+0.0000001))))*2-atan2(U2.y,U2.x))"
+    },
+    {
+      "id": "U3",
+      "label": "U3",
+      "color": "carbon",
+      "layerId": "construccion",
+      "order": 33,
+      "visible": false,
+      "locked": true,
+      "groupIds": [],
+      "selection": {
+        "selectable": false,
+        "role": "construction"
+      },
+      "target": false,
+      "x": 0,
+      "y": 0,
+      "fixed": true,
+      "constraint": "derived",
+      "dependencies": [
+        "L1",
+        "E1"
+      ],
+      "xExpression": "cos((atan2(L1.y,L1.x)+0.6*atan2(sin(atan2(E1.y,E1.x)-atan2(L1.y,L1.x)),cos(atan2(E1.y,E1.x)-atan2(L1.y,L1.x)))))",
+      "yExpression": "sin((atan2(L1.y,L1.x)+0.6*atan2(sin(atan2(E1.y,E1.x)-atan2(L1.y,L1.x)),cos(atan2(E1.y,E1.x)-atan2(L1.y,L1.x)))))"
+    },
+    {
+      "id": "V3",
+      "label": "V3",
+      "color": "carbon",
+      "layerId": "construccion",
+      "order": 43,
+      "visible": false,
+      "locked": true,
+      "groupIds": [],
+      "selection": {
+        "selectable": false,
+        "role": "construction"
+      },
+      "target": false,
+      "x": 0,
+      "y": 0,
+      "fixed": true,
+      "constraint": "derived",
+      "dependencies": [
+        "U3",
+        "P"
+      ],
+      "xExpression": "cos(atan2(((U3.x*((P.x^2+P.y^2+1)/2)-P.x)/(max(abs(U3.x*P.y-U3.y*P.x),0.000001)*sign(U3.x*P.y-U3.y*P.x+0.0000001))),((P.y-U3.y*((P.x^2+P.y^2+1)/2))/(max(abs(U3.x*P.y-U3.y*P.x),0.000001)*sign(U3.x*P.y-U3.y*P.x+0.0000001))))*2-atan2(U3.y,U3.x))",
+      "yExpression": "sin(atan2(((U3.x*((P.x^2+P.y^2+1)/2)-P.x)/(max(abs(U3.x*P.y-U3.y*P.x),0.000001)*sign(U3.x*P.y-U3.y*P.x+0.0000001))),((P.y-U3.y*((P.x^2+P.y^2+1)/2))/(max(abs(U3.x*P.y-U3.y*P.x),0.000001)*sign(U3.x*P.y-U3.y*P.x+0.0000001))))*2-atan2(U3.y,U3.x))"
+    },
+    {
+      "id": "U4",
+      "label": "U4",
+      "color": "carbon",
+      "layerId": "construccion",
+      "order": 34,
+      "visible": false,
+      "locked": true,
+      "groupIds": [],
+      "selection": {
+        "selectable": false,
+        "role": "construction"
+      },
+      "target": false,
+      "x": 0,
+      "y": 0,
+      "fixed": true,
+      "constraint": "derived",
+      "dependencies": [
+        "L1",
+        "E1"
+      ],
+      "xExpression": "cos((atan2(L1.y,L1.x)+0.8*atan2(sin(atan2(E1.y,E1.x)-atan2(L1.y,L1.x)),cos(atan2(E1.y,E1.x)-atan2(L1.y,L1.x)))))",
+      "yExpression": "sin((atan2(L1.y,L1.x)+0.8*atan2(sin(atan2(E1.y,E1.x)-atan2(L1.y,L1.x)),cos(atan2(E1.y,E1.x)-atan2(L1.y,L1.x)))))"
+    },
+    {
+      "id": "V4",
+      "label": "V4",
+      "color": "carbon",
+      "layerId": "construccion",
+      "order": 44,
+      "visible": false,
+      "locked": true,
+      "groupIds": [],
+      "selection": {
+        "selectable": false,
+        "role": "construction"
+      },
+      "target": false,
+      "x": 0,
+      "y": 0,
+      "fixed": true,
+      "constraint": "derived",
+      "dependencies": [
+        "U4",
+        "P"
+      ],
+      "xExpression": "cos(atan2(((U4.x*((P.x^2+P.y^2+1)/2)-P.x)/(max(abs(U4.x*P.y-U4.y*P.x),0.000001)*sign(U4.x*P.y-U4.y*P.x+0.0000001))),((P.y-U4.y*((P.x^2+P.y^2+1)/2))/(max(abs(U4.x*P.y-U4.y*P.x),0.000001)*sign(U4.x*P.y-U4.y*P.x+0.0000001))))*2-atan2(U4.y,U4.x))",
+      "yExpression": "sin(atan2(((U4.x*((P.x^2+P.y^2+1)/2)-P.x)/(max(abs(U4.x*P.y-U4.y*P.x),0.000001)*sign(U4.x*P.y-U4.y*P.x+0.0000001))),((P.y-U4.y*((P.x^2+P.y^2+1)/2))/(max(abs(U4.x*P.y-U4.y*P.x),0.000001)*sign(U4.x*P.y-U4.y*P.x+0.0000001))))*2-atan2(U4.y,U4.x))"
+    }
+  ],
+  "elements": [
+    {
+      "id": "frontera",
+      "label": "horizonte absoluto",
+      "color": "carbon",
+      "layerId": "disco",
+      "order": 1,
+      "visible": true,
+      "locked": true,
+      "groupIds": [],
+      "selection": {
+        "selectable": true,
+        "role": "secondary"
+      },
+      "target": false,
+      "style": {
+        "strokeWidth": 2.5,
+        "fillOpacity": 0.04,
+        "preserveColorOnHighlight": true
+      },
+      "kind": "circle",
+      "refs": [
+        "O",
+        "R"
+      ]
+    },
+    {
+      "id": "geodesicaL",
+      "label": "recta hiperbólica l",
+      "color": "terracota",
+      "layerId": "geodesicas",
+      "order": 10,
+      "visible": true,
+      "locked": false,
+      "groupIds": [],
+      "selection": {
+        "selectable": true,
+        "role": "secondary"
+      },
+      "target": true,
+      "targetId": "geodesica-principal",
+      "style": {
+        "strokeWidth": 3,
+        "highlightStrokeWidth": 5,
+        "preserveColorOnHighlight": true
+      },
+      "kind": "poincareGeodesic",
+      "refs": [
+        "O",
+        "R",
+        "L1",
+        "L2"
+      ]
+    },
+    {
+      "id": "limite1",
+      "label": "paralela límite por L₁",
+      "color": "ocre",
+      "layerId": "geodesicas",
+      "order": 11,
+      "visible": true,
+      "locked": false,
+      "groupIds": [],
+      "selection": {
+        "selectable": true,
+        "role": "secondary"
+      },
+      "target": false,
+      "style": {
+        "strokeWidth": 2.5,
+        "highlightStrokeWidth": 4,
+        "preserveColorOnHighlight": true
+      },
+      "kind": "poincareGeodesic",
+      "refs": [
+        "O",
+        "R",
+        "L1",
+        "P"
+      ],
+      "dashed": true
+    },
+    {
+      "id": "limite2",
+      "label": "paralela límite por L₂",
+      "color": "ocre",
+      "layerId": "geodesicas",
+      "order": 12,
+      "visible": true,
+      "locked": false,
+      "groupIds": [],
+      "selection": {
+        "selectable": true,
+        "role": "secondary"
+      },
+      "target": false,
+      "style": {
+        "strokeWidth": 2.5,
+        "highlightStrokeWidth": 4,
+        "preserveColorOnHighlight": true
+      },
+      "kind": "poincareGeodesic",
+      "refs": [
+        "O",
+        "R",
+        "L2",
+        "P"
+      ],
+      "dashed": true
+    },
+    {
+      "id": "ultra1",
+      "label": "ultraparalela 1",
+      "color": "salvia",
+      "layerId": "geodesicas",
+      "order": 21,
+      "visible": true,
+      "locked": false,
+      "groupIds": [],
+      "selection": {
+        "selectable": true,
+        "role": "secondary"
+      },
+      "target": false,
+      "style": {
+        "strokeWidth": 2,
+        "strokeOpacity": 0.9,
+        "preserveColorOnHighlight": true
+      },
+      "kind": "poincareGeodesic",
+      "refs": [
+        "O",
+        "R",
+        "U1",
+        "V1"
+      ],
+      "dashed": true
+    },
+    {
+      "id": "ultra2",
+      "label": "ultraparalela 2",
+      "color": "salvia",
+      "layerId": "geodesicas",
+      "order": 22,
+      "visible": true,
+      "locked": false,
+      "groupIds": [],
+      "selection": {
+        "selectable": true,
+        "role": "secondary"
+      },
+      "target": false,
+      "style": {
+        "strokeWidth": 2,
+        "strokeOpacity": 0.9,
+        "preserveColorOnHighlight": true
+      },
+      "kind": "poincareGeodesic",
+      "refs": [
+        "O",
+        "R",
+        "U2",
+        "V2"
+      ],
+      "dashed": true
+    },
+    {
+      "id": "ultra3",
+      "label": "ultraparalela 3",
+      "color": "salvia",
+      "layerId": "geodesicas",
+      "order": 23,
+      "visible": true,
+      "locked": false,
+      "groupIds": [],
+      "selection": {
+        "selectable": true,
+        "role": "secondary"
+      },
+      "target": false,
+      "style": {
+        "strokeWidth": 2,
+        "strokeOpacity": 0.9,
+        "preserveColorOnHighlight": true
+      },
+      "kind": "poincareGeodesic",
+      "refs": [
+        "O",
+        "R",
+        "U3",
+        "V3"
+      ],
+      "dashed": true
+    },
+    {
+      "id": "ultra4",
+      "label": "ultraparalela 4",
+      "color": "salvia",
+      "layerId": "geodesicas",
+      "order": 24,
+      "visible": true,
+      "locked": false,
+      "groupIds": [],
+      "selection": {
+        "selectable": true,
+        "role": "secondary"
+      },
+      "target": false,
+      "style": {
+        "strokeWidth": 2,
+        "strokeOpacity": 0.9,
+        "preserveColorOnHighlight": true
+      },
+      "kind": "poincareGeodesic",
+      "refs": [
+        "O",
+        "R",
+        "U4",
+        "V4"
+      ],
+      "dashed": true
+    },
+    {
+      "id": "radioP",
+      "label": "distancia euclídea de P al centro",
+      "color": "pizarra",
+      "layerId": "anotaciones",
+      "order": 30,
+      "visible": true,
+      "locked": false,
+      "groupIds": [],
+      "selection": {
+        "selectable": true,
+        "role": "secondary"
+      },
+      "target": false,
+      "style": {
+        "textOffset": [
+          -1.25,
+          1.25
+        ],
+        "preserveColorOnHighlight": true
+      },
+      "kind": "measurement",
+      "refs": [
+        "P"
+      ],
+      "text": "|P| = {value}",
+      "properties": {
+        "expression": "hypot(P.x,P.y)",
+        "precision": 2
+      }
+    }
+  ],
+  "sliders": [],
+  "steps": [],
+  "constraints": [
+    {
+      "id": "pDentro",
+      "label": "P permanece dentro del disco abierto",
+      "kind": "insideDisk",
+      "refs": [
+        "P",
+        "O",
+        "R"
+      ],
+      "enabled": true
+    }
+  ],
+  "dependencies": [
+    {
+      "sourceId": "L1",
+      "targetId": "E1",
+      "relation": "expression"
+    },
+    {
+      "sourceId": "P",
+      "targetId": "E1",
+      "relation": "expression"
+    },
+    {
+      "sourceId": "L2",
+      "targetId": "E2",
+      "relation": "expression"
+    },
+    {
+      "sourceId": "P",
+      "targetId": "E2",
+      "relation": "expression"
+    },
+    {
+      "sourceId": "L1",
+      "targetId": "U1",
+      "relation": "expression"
+    },
+    {
+      "sourceId": "E1",
+      "targetId": "U1",
+      "relation": "expression"
+    },
+    {
+      "sourceId": "U1",
+      "targetId": "V1",
+      "relation": "expression"
+    },
+    {
+      "sourceId": "P",
+      "targetId": "V1",
+      "relation": "expression"
+    },
+    {
+      "sourceId": "L1",
+      "targetId": "U2",
+      "relation": "expression"
+    },
+    {
+      "sourceId": "E1",
+      "targetId": "U2",
+      "relation": "expression"
+    },
+    {
+      "sourceId": "U2",
+      "targetId": "V2",
+      "relation": "expression"
+    },
+    {
+      "sourceId": "P",
+      "targetId": "V2",
+      "relation": "expression"
+    },
+    {
+      "sourceId": "L1",
+      "targetId": "U3",
+      "relation": "expression"
+    },
+    {
+      "sourceId": "E1",
+      "targetId": "U3",
+      "relation": "expression"
+    },
+    {
+      "sourceId": "U3",
+      "targetId": "V3",
+      "relation": "expression"
+    },
+    {
+      "sourceId": "P",
+      "targetId": "V3",
+      "relation": "expression"
+    },
+    {
+      "sourceId": "L1",
+      "targetId": "U4",
+      "relation": "expression"
+    },
+    {
+      "sourceId": "E1",
+      "targetId": "U4",
+      "relation": "expression"
+    },
+    {
+      "sourceId": "U4",
+      "targetId": "V4",
+      "relation": "expression"
+    },
+    {
+      "sourceId": "P",
+      "targetId": "V4",
+      "relation": "expression"
+    },
+    {
+      "sourceId": "O",
+      "targetId": "frontera",
+      "relation": "construction"
+    },
+    {
+      "sourceId": "R",
+      "targetId": "frontera",
+      "relation": "construction"
+    },
+    {
+      "sourceId": "O",
+      "targetId": "geodesicaL",
+      "relation": "construction"
+    },
+    {
+      "sourceId": "R",
+      "targetId": "geodesicaL",
+      "relation": "construction"
+    },
+    {
+      "sourceId": "L1",
+      "targetId": "geodesicaL",
+      "relation": "construction"
+    },
+    {
+      "sourceId": "L2",
+      "targetId": "geodesicaL",
+      "relation": "construction"
+    },
+    {
+      "sourceId": "O",
+      "targetId": "limite1",
+      "relation": "construction"
+    },
+    {
+      "sourceId": "R",
+      "targetId": "limite1",
+      "relation": "construction"
+    },
+    {
+      "sourceId": "L1",
+      "targetId": "limite1",
+      "relation": "construction"
+    },
+    {
+      "sourceId": "P",
+      "targetId": "limite1",
+      "relation": "construction"
+    },
+    {
+      "sourceId": "O",
+      "targetId": "limite2",
+      "relation": "construction"
+    },
+    {
+      "sourceId": "R",
+      "targetId": "limite2",
+      "relation": "construction"
+    },
+    {
+      "sourceId": "L2",
+      "targetId": "limite2",
+      "relation": "construction"
+    },
+    {
+      "sourceId": "P",
+      "targetId": "limite2",
+      "relation": "construction"
+    },
+    {
+      "sourceId": "O",
+      "targetId": "ultra1",
+      "relation": "construction"
+    },
+    {
+      "sourceId": "R",
+      "targetId": "ultra1",
+      "relation": "construction"
+    },
+    {
+      "sourceId": "U1",
+      "targetId": "ultra1",
+      "relation": "construction"
+    },
+    {
+      "sourceId": "V1",
+      "targetId": "ultra1",
+      "relation": "construction"
+    },
+    {
+      "sourceId": "O",
+      "targetId": "ultra2",
+      "relation": "construction"
+    },
+    {
+      "sourceId": "R",
+      "targetId": "ultra2",
+      "relation": "construction"
+    },
+    {
+      "sourceId": "U2",
+      "targetId": "ultra2",
+      "relation": "construction"
+    },
+    {
+      "sourceId": "V2",
+      "targetId": "ultra2",
+      "relation": "construction"
+    },
+    {
+      "sourceId": "O",
+      "targetId": "ultra3",
+      "relation": "construction"
+    },
+    {
+      "sourceId": "R",
+      "targetId": "ultra3",
+      "relation": "construction"
+    },
+    {
+      "sourceId": "U3",
+      "targetId": "ultra3",
+      "relation": "construction"
+    },
+    {
+      "sourceId": "V3",
+      "targetId": "ultra3",
+      "relation": "construction"
+    },
+    {
+      "sourceId": "O",
+      "targetId": "ultra4",
+      "relation": "construction"
+    },
+    {
+      "sourceId": "R",
+      "targetId": "ultra4",
+      "relation": "construction"
+    },
+    {
+      "sourceId": "U4",
+      "targetId": "ultra4",
+      "relation": "construction"
+    },
+    {
+      "sourceId": "V4",
+      "targetId": "ultra4",
+      "relation": "construction"
+    },
+    {
+      "sourceId": "P",
+      "targetId": "radioP",
+      "relation": "construction"
+    },
+    {
+      "sourceId": "P",
+      "targetId": "radioP",
+      "relation": "expression"
+    },
+    {
+      "sourceId": "O",
+      "targetId": "P",
+      "relation": "constraint",
+      "constraintId": "pDentro"
+    },
+    {
+      "sourceId": "R",
+      "targetId": "P",
+      "relation": "constraint",
+      "constraintId": "pDentro"
+    }
+  ],
+  "note": "Arrastre L₁ y L₂ sobre la frontera y P dentro del disco. Terracota: recta l; ocre: paralelas límite; salvia: ultraparalelas.",
+  "extensions": {
+    "acceptanceCase": "phase-5-poincare",
+    "mathematicalInvariant": "Las geodésicas son diámetros o arcos ortogonales a la frontera."
+  }
+}
+);
+/* @matematika-diagram-spec:end */
 
-    const info = createText(board, [-1.0, 1.0, () => {
-      const angle1 = Math.round((Math.atan2(L1.Y(), L1.X()) * 180) / Math.PI);
-      const angle2 = Math.round((Math.atan2(L2.Y(), L2.X()) * 180) / Math.PI);
-      return `<div style="font-family: var(--font-serif); color:${theme.carbon}; font-size:12px;">
-        l: ${angle1}° – ${angle2}° &nbsp;|P|=${P.Dist(O).toFixed(2)}
-      </div>`;
-    }], {
-      fixed: true,
-      anchorX: 'left',
-      anchorY: 'bottom',
-    }, theme);
-
-    Object.assign(els, {
-      O,
-      unitCircle,
-      L1,
-      L2,
-      P,
-      E1,
-      E2,
-      lineL,
-      limit1,
-      limit2,
-      info,
-      ultras,
-    });
-  };
-
-  return (
-    <MathBoard
-      boundingbox={[-1.1, 1.1, 1.1, -1.1]}
-      className="relative min-h-[420px] w-full overflow-hidden"
-      onInit={onInit}
-    >
-      <div className="absolute top-2 left-3 z-10 text-xs font-serif italic text-pizarra/50">
-        Disco de Poincar&eacute; &middot; Arrastra L&#8321;, L&#8322; y P
-      </div>
-      <div className="absolute bottom-3 right-4 z-10 flex flex-col gap-1.5 text-xs font-sans text-carbon/80 bg-lienzo/95 p-3 rounded-md shadow-sm border border-pizarra/20 backdrop-blur-md pointer-events-none">
-        <h4 className="font-bold text-[10px] uppercase tracking-widest text-carbon/60 mb-0.5">Leyenda</h4>
-        <div className="flex items-center gap-2"><div className="w-4 h-[2px] rounded-full bg-terracota" /> Recta principal (l)</div>
-        <div className="flex items-center gap-2"><div className="w-4 h-[2px] border-t-2 border-dashed border-ocre" /> Paralelas l&iacute;mite</div>
-        <div className="flex items-center gap-2"><div className="w-4 h-[2px] border-t-2 border-dashed border-salvia" /> Ultraparalelas</div>
-      </div>
-    </MathBoard>
-  );
-};
+export const ModeloPoincare = () => <DiagramRenderer spec={ModeloPoincareSpec} />;

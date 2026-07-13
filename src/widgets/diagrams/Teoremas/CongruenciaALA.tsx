@@ -1,184 +1,1448 @@
-import { MathBoard } from '@/shared/diagrams/core/MathBoard';
-import {
-  createPoint, createSegment, createPolygon, createAngle
-} from '@/shared/diagrams/core/MathFactory';
+import { createDiagramSpec, DiagramRenderer } from '@/shared/diagrams/public';
 
-
-
-
-
-export const CongruenciaALA = () => {
-
-
-
-
-
-
-  const onInit = (board: any, els: any, theme: any) => {
-      void board; void els; void theme;
-      const C_PRIM = theme.carbon;
-    const C_ACC  = theme.terracota;
-    const C_POL1 = theme.salvia;
-    const C_POL2 = theme.pavo;
-    const C_ANG  = theme.ocre;
-
-    const SNAP = 0.5;
-    const pCfg = { size: 5, fillColor: C_PRIM, strokeColor: C_PRIM, showInfobox: false, snapToGrid: true, snapSizeX: SNAP, snapSizeY: SNAP };
-
-    const A1 = createPoint(board, [0, 0], { name: 'A', ...pCfg, fixed: true }, theme);
-    const B1 = createPoint(board, [5, 0], { name: 'B', ...pCfg, fixed: true }, theme);
-    const C1 = createPoint(board, [1.5, 4], { name: 'C', ...pCfg }, theme);
-
-    const segAB1 = createSegment(board, [A1, B1], { strokeColor: C_PRIM, strokeWidth: 3 }, theme);
-    const segAC1 = createSegment(board, [A1, C1], { strokeColor: C_PRIM, strokeWidth: 2.5 }, theme);
-    const segBC1 = createSegment(board, [B1, C1], { strokeColor: C_PRIM, strokeWidth: 2.5 }, theme);
-    createPolygon(board, [A1, B1, C1], { fillColor: C_POL1, fillOpacity: 0.07, borders: { visible: false }, vertices: { visible: false } }, theme);
-
-    const angleA1 = createAngle(board, [B1, A1, C1], { name: '∠A', radius: 0.6, fillColor: C_ANG, strokeColor: C_ANG, fillOpacity: 0.25, type: 'sector' }, theme) as any;
-    const angleB1 = createAngle(board, [C1, B1, A1], { name: '∠B', radius: 0.6, fillColor: C_ANG, strokeColor: C_ANG, fillOpacity: 0.25, type: 'sector' }, theme) as any;
-
-    const A2 = createPoint(board, [0, -3], { name: "A'", size: 5, fillColor: C_PRIM, strokeColor: C_PRIM, showInfobox: false, fixed: true }, theme);
-    const B2 = createPoint(board, [() => A2.X() + A1.Dist(B1), () => A2.Y()], { name: "B'", size: 5, fillColor: C_PRIM, strokeColor: C_PRIM, showInfobox: false, fixed: true }, theme);
-
-    const C2 = board.create('point', [
-      () => A2.X() + (C1.X() - A1.X()),
-      () => A2.Y() - (C1.Y() - A1.Y())
-    ], { name: "C'", size: 5, fillColor: C_PRIM, strokeColor: C_PRIM, showInfobox: false });
-
-    const segAB2 = createSegment(board, [A2, B2], { strokeColor: C_PRIM, strokeWidth: 3 }, theme);
-    const segAC2 = createSegment(board, [A2, C2], { strokeColor: C_PRIM, strokeWidth: 2.5 }, theme);
-    const segBC2 = createSegment(board, [B2, C2], { strokeColor: C_PRIM, strokeWidth: 2.5 }, theme);
-    createPolygon(board, [A2, B2, C2], { fillColor: C_POL2, fillOpacity: 0.07, borders: { visible: false }, vertices: { visible: false } }, theme);
-
-    const angleA2 = createAngle(board, [C2, A2, B2], { name: '∠A', radius: 0.6, fillColor: C_ANG, strokeColor: C_ANG, fillOpacity: 0.25, type: 'sector', visible: false }, theme) as any;
-    const angleB2 = createAngle(board, [A2, B2, C2], { name: '∠B', radius: 0.6, fillColor: C_ANG, strokeColor: C_ANG, fillOpacity: 0.25, type: 'sector', visible: false }, theme) as any;
-    const angleC1 = createAngle(board, [A1, C1, B1], { name: '∠C', radius: 0.6, fillColor: C_ANG, strokeColor: C_ANG, fillOpacity: 0.25, type: 'sector', visible: false }, theme) as any;
-    const angleC2 = createAngle(board, [B2, C2, A2], { name: '∠C', radius: 0.6, fillColor: C_ANG, strokeColor: C_ANG, fillOpacity: 0.25, type: 'sector', visible: false }, theme) as any;
-
-    const mkTick = (p: any, q: any, cnt: number) => {
-      const mx = () => (p.X()+q.X())/2, my = () => (p.Y()+q.Y())/2;
-      const dy = () => { const dx= q.X()-p.X(), dyy= q.Y()-p.Y(); const l = Math.hypot(dx,dyy)||1; return dyy/l; };
-      const dx = () => { const dxx= q.X()-p.X(), dyy= q.Y()-p.Y(); const l = Math.hypot(dxx,dyy)||1; return dxx/l; };
-      const ts: any[] = [];
-      const off = (k: number) => (k - (cnt-1)/2) * 0.22;
-      for (let i = 0; i < cnt; i++) {
-        const o = off(i);
-        const cx = () => mx() + dx() * o;
-        const cy = () => my() + dy() * o;
-        const t0 = createPoint(board, [() => cx() + dy()*.28, () => cy() - dx()*.28], { visible: false }, theme);
-        const t1 = createPoint(board, [() => cx() - dy()*.28, () => cy() + dx()*.28], { visible: false }, theme);
-        ts.push(createSegment(board, [t0, t1], { strokeColor: C_ACC, strokeWidth: 2.2, visible: true }, theme) as any);
+/* @matematika-diagram-spec:start */
+export const CongruenciaALASpec = createDiagramSpec(
+{
+  "version": 2,
+  "renderer": "matematika-diagram-renderer-v2",
+  "title": "Criterio de congruencia ALA",
+  "componentId": "CongruenciaALA",
+  "category": "Teoremas",
+  "mode": "simulation",
+  "axis": false,
+  "grid": false,
+  "viewport": {
+    "bounds": [
+      -4,
+      8.5,
+      9,
+      -8.5
+    ],
+    "home": [
+      -4,
+      8.5,
+      9,
+      -8.5
+    ],
+    "minZoom": 0.7,
+    "maxZoom": 4,
+    "padding": 0.16
+  },
+  "layers": [
+    {
+      "id": "rellenos",
+      "label": "Triángulos",
+      "order": 0,
+      "visible": true,
+      "locked": false
+    },
+    {
+      "id": "geometria",
+      "label": "Lados y vértices",
+      "order": 1,
+      "visible": true,
+      "locked": false
+    },
+    {
+      "id": "angulos",
+      "label": "Ángulos",
+      "order": 2,
+      "visible": true,
+      "locked": false
+    },
+    {
+      "id": "marcas",
+      "label": "Marcas de igualdad",
+      "order": 3,
+      "visible": true,
+      "locked": false
+    },
+    {
+      "id": "cotas",
+      "label": "Cotas y texto",
+      "order": 4,
+      "visible": true,
+      "locked": false
+    }
+  ],
+  "groups": [
+    {
+      "id": "globalGrupo",
+      "label": "Triángulos globalmente congruentes",
+      "memberIds": [
+        "A1",
+        "B1",
+        "C1",
+        "A2",
+        "B2",
+        "C2",
+        "triangulo1",
+        "triangulo2",
+        "segAB1",
+        "segAC1",
+        "segBC1",
+        "segAB2",
+        "segAC2",
+        "segBC2",
+        "anguloA1",
+        "anguloA2",
+        "anguloB1",
+        "anguloB2",
+        "anguloC1",
+        "anguloC2",
+        "marcaAB1",
+        "marcaAB2",
+        "marcaAC1",
+        "marcaAC2",
+        "marcaBC1",
+        "marcaBC2",
+        "cotaAB1",
+        "cotaAB2",
+        "medidaA",
+        "medidaB"
+      ],
+      "visible": true,
+      "locked": false,
+      "selection": {
+        "selectable": true,
+        "role": "primary"
+      },
+      "target": true,
+      "targetId": "globalmente-congruentes",
+      "color": "terracota"
+    },
+    {
+      "id": "ladoABGrupo",
+      "label": "Lados AB y A′B′",
+      "memberIds": [
+        "segAB1",
+        "segAB2",
+        "marcaAB1",
+        "marcaAB2",
+        "cotaAB1",
+        "cotaAB2"
+      ],
+      "visible": true,
+      "locked": false,
+      "selection": {
+        "selectable": true,
+        "role": "primary"
+      },
+      "target": true,
+      "targetId": "lado-ab",
+      "color": "terracota"
+    },
+    {
+      "id": "anguloAGrupo",
+      "label": "Ángulos A y A′",
+      "memberIds": [
+        "anguloA1",
+        "anguloA2",
+        "medidaA"
+      ],
+      "visible": true,
+      "locked": false,
+      "selection": {
+        "selectable": true,
+        "role": "primary"
+      },
+      "target": true,
+      "targetId": "angulo-a",
+      "color": "ocre"
+    },
+    {
+      "id": "anguloBGrupo",
+      "label": "Ángulos B y B′",
+      "memberIds": [
+        "anguloB1",
+        "anguloB2",
+        "medidaB"
+      ],
+      "visible": true,
+      "locked": false,
+      "selection": {
+        "selectable": true,
+        "role": "primary"
+      },
+      "target": true,
+      "targetId": "angulo-b",
+      "color": "ocre"
+    }
+  ],
+  "points": [
+    {
+      "id": "A1",
+      "label": "A",
+      "color": "carbon",
+      "layerId": "geometria",
+      "order": 1,
+      "visible": true,
+      "locked": false,
+      "groupIds": [
+        "globalGrupo"
+      ],
+      "selection": {
+        "selectable": true,
+        "role": "primary"
+      },
+      "target": false,
+      "style": {
+        "pointSize": 5,
+        "highlightPointSize": 7,
+        "preserveColorOnHighlight": true
+      },
+      "x": 0,
+      "y": 0,
+      "fixed": true,
+      "constraint": "fixed"
+    },
+    {
+      "id": "B1",
+      "label": "B",
+      "color": "carbon",
+      "layerId": "geometria",
+      "order": 2,
+      "visible": true,
+      "locked": false,
+      "groupIds": [
+        "globalGrupo"
+      ],
+      "selection": {
+        "selectable": true,
+        "role": "primary"
+      },
+      "target": false,
+      "style": {
+        "pointSize": 5,
+        "highlightPointSize": 7,
+        "preserveColorOnHighlight": true
+      },
+      "x": 5,
+      "y": 0,
+      "fixed": true,
+      "constraint": "fixed"
+    },
+    {
+      "id": "C1",
+      "label": "C",
+      "color": "carbon",
+      "layerId": "geometria",
+      "order": 3,
+      "visible": true,
+      "locked": false,
+      "groupIds": [
+        "globalGrupo"
+      ],
+      "selection": {
+        "selectable": true,
+        "role": "primary"
+      },
+      "target": false,
+      "style": {
+        "pointSize": 5,
+        "highlightPointSize": 7,
+        "preserveColorOnHighlight": true
+      },
+      "x": 1.5,
+      "y": 4,
+      "fixed": false,
+      "constraint": "constrained",
+      "constraintIds": [
+        "mismoSemiplano"
+      ]
+    },
+    {
+      "id": "A2",
+      "label": "A′",
+      "color": "carbon",
+      "layerId": "geometria",
+      "order": 4,
+      "visible": true,
+      "locked": false,
+      "groupIds": [
+        "globalGrupo"
+      ],
+      "selection": {
+        "selectable": true,
+        "role": "primary"
+      },
+      "target": false,
+      "style": {
+        "pointSize": 5,
+        "highlightPointSize": 7,
+        "preserveColorOnHighlight": true
+      },
+      "x": 0,
+      "y": -3,
+      "fixed": true,
+      "constraint": "fixed"
+    },
+    {
+      "id": "B2",
+      "label": "B′",
+      "color": "carbon",
+      "layerId": "geometria",
+      "order": 5,
+      "visible": true,
+      "locked": false,
+      "groupIds": [
+        "globalGrupo"
+      ],
+      "selection": {
+        "selectable": true,
+        "role": "primary"
+      },
+      "target": false,
+      "style": {
+        "pointSize": 5,
+        "highlightPointSize": 7,
+        "preserveColorOnHighlight": true
+      },
+      "x": 5,
+      "y": -3,
+      "fixed": true,
+      "constraint": "derived",
+      "dependencies": [
+        "A1",
+        "A2",
+        "B1"
+      ],
+      "xExpression": "A2.x+B1.x-A1.x",
+      "yExpression": "A2.y"
+    },
+    {
+      "id": "C2",
+      "label": "C′",
+      "color": "carbon",
+      "layerId": "geometria",
+      "order": 6,
+      "visible": true,
+      "locked": false,
+      "groupIds": [
+        "globalGrupo"
+      ],
+      "selection": {
+        "selectable": true,
+        "role": "primary"
+      },
+      "target": false,
+      "style": {
+        "pointSize": 5,
+        "highlightPointSize": 7,
+        "preserveColorOnHighlight": true
+      },
+      "x": 1.5,
+      "y": -7,
+      "fixed": true,
+      "constraint": "derived",
+      "dependencies": [
+        "A1",
+        "A2",
+        "C1"
+      ],
+      "xExpression": "A2.x+C1.x-A1.x",
+      "yExpression": "A2.y-(C1.y-A1.y)"
+    }
+  ],
+  "elements": [
+    {
+      "id": "triangulo1",
+      "label": "triángulo ABC",
+      "color": "salvia",
+      "layerId": "rellenos",
+      "order": 1,
+      "visible": true,
+      "locked": false,
+      "groupIds": [
+        "globalGrupo"
+      ],
+      "selection": {
+        "selectable": true,
+        "role": "secondary"
+      },
+      "target": false,
+      "style": {
+        "strokeWidth": 2,
+        "fillOpacity": 0.07,
+        "highlightFillOpacity": 0.22,
+        "preserveColorOnHighlight": true
+      },
+      "kind": "polygon",
+      "refs": [
+        "A1",
+        "B1",
+        "C1"
+      ]
+    },
+    {
+      "id": "triangulo2",
+      "label": "triángulo A′B′C′",
+      "color": "pavo",
+      "layerId": "rellenos",
+      "order": 2,
+      "visible": true,
+      "locked": false,
+      "groupIds": [
+        "globalGrupo"
+      ],
+      "selection": {
+        "selectable": true,
+        "role": "secondary"
+      },
+      "target": false,
+      "style": {
+        "strokeWidth": 2,
+        "fillOpacity": 0.07,
+        "highlightFillOpacity": 0.22,
+        "preserveColorOnHighlight": true
+      },
+      "kind": "polygon",
+      "refs": [
+        "A2",
+        "B2",
+        "C2"
+      ]
+    },
+    {
+      "id": "segAB1",
+      "label": "lado AB",
+      "color": "carbon",
+      "layerId": "geometria",
+      "order": 10,
+      "visible": true,
+      "locked": false,
+      "groupIds": [
+        "globalGrupo",
+        "ladoABGrupo"
+      ],
+      "selection": {
+        "selectable": true,
+        "role": "secondary"
+      },
+      "target": false,
+      "style": {
+        "strokeWidth": 3,
+        "highlightStrokeWidth": 5,
+        "preserveColorOnHighlight": true
+      },
+      "kind": "segment",
+      "refs": [
+        "A1",
+        "B1"
+      ]
+    },
+    {
+      "id": "segAC1",
+      "label": "lado AC",
+      "color": "carbon",
+      "layerId": "geometria",
+      "order": 11,
+      "visible": true,
+      "locked": false,
+      "groupIds": [
+        "globalGrupo"
+      ],
+      "selection": {
+        "selectable": true,
+        "role": "secondary"
+      },
+      "target": false,
+      "style": {
+        "strokeWidth": 2.5,
+        "highlightStrokeWidth": 4.5,
+        "preserveColorOnHighlight": true
+      },
+      "kind": "segment",
+      "refs": [
+        "A1",
+        "C1"
+      ]
+    },
+    {
+      "id": "segBC1",
+      "label": "lado BC",
+      "color": "carbon",
+      "layerId": "geometria",
+      "order": 12,
+      "visible": true,
+      "locked": false,
+      "groupIds": [
+        "globalGrupo"
+      ],
+      "selection": {
+        "selectable": true,
+        "role": "secondary"
+      },
+      "target": false,
+      "style": {
+        "strokeWidth": 2.5,
+        "highlightStrokeWidth": 4.5,
+        "preserveColorOnHighlight": true
+      },
+      "kind": "segment",
+      "refs": [
+        "B1",
+        "C1"
+      ]
+    },
+    {
+      "id": "segAB2",
+      "label": "lado A′B′",
+      "color": "carbon",
+      "layerId": "geometria",
+      "order": 13,
+      "visible": true,
+      "locked": false,
+      "groupIds": [
+        "globalGrupo",
+        "ladoABGrupo"
+      ],
+      "selection": {
+        "selectable": true,
+        "role": "secondary"
+      },
+      "target": false,
+      "style": {
+        "strokeWidth": 3,
+        "highlightStrokeWidth": 5,
+        "preserveColorOnHighlight": true
+      },
+      "kind": "segment",
+      "refs": [
+        "A2",
+        "B2"
+      ]
+    },
+    {
+      "id": "segAC2",
+      "label": "lado A′C′",
+      "color": "carbon",
+      "layerId": "geometria",
+      "order": 14,
+      "visible": true,
+      "locked": false,
+      "groupIds": [
+        "globalGrupo"
+      ],
+      "selection": {
+        "selectable": true,
+        "role": "secondary"
+      },
+      "target": false,
+      "style": {
+        "strokeWidth": 2.5,
+        "highlightStrokeWidth": 4.5,
+        "preserveColorOnHighlight": true
+      },
+      "kind": "segment",
+      "refs": [
+        "A2",
+        "C2"
+      ]
+    },
+    {
+      "id": "segBC2",
+      "label": "lado B′C′",
+      "color": "carbon",
+      "layerId": "geometria",
+      "order": 15,
+      "visible": true,
+      "locked": false,
+      "groupIds": [
+        "globalGrupo"
+      ],
+      "selection": {
+        "selectable": true,
+        "role": "secondary"
+      },
+      "target": false,
+      "style": {
+        "strokeWidth": 2.5,
+        "highlightStrokeWidth": 4.5,
+        "preserveColorOnHighlight": true
+      },
+      "kind": "segment",
+      "refs": [
+        "B2",
+        "C2"
+      ]
+    },
+    {
+      "id": "anguloA1",
+      "label": "ángulo A",
+      "color": "ocre",
+      "layerId": "angulos",
+      "order": 20,
+      "visible": true,
+      "locked": false,
+      "groupIds": [
+        "globalGrupo",
+        "anguloAGrupo"
+      ],
+      "selection": {
+        "selectable": true,
+        "role": "secondary"
+      },
+      "target": false,
+      "style": {
+        "strokeWidth": 1.5,
+        "fillOpacity": 0.25,
+        "angleRadius": 0.6,
+        "highlightFillOpacity": 0.5,
+        "preserveColorOnHighlight": true
+      },
+      "kind": "angle",
+      "refs": [
+        "B1",
+        "A1",
+        "C1"
+      ]
+    },
+    {
+      "id": "anguloA2",
+      "label": "ángulo A′",
+      "color": "ocre",
+      "layerId": "angulos",
+      "order": 21,
+      "visible": true,
+      "locked": false,
+      "groupIds": [
+        "globalGrupo",
+        "anguloAGrupo"
+      ],
+      "selection": {
+        "selectable": true,
+        "role": "secondary"
+      },
+      "target": false,
+      "style": {
+        "strokeWidth": 1.5,
+        "fillOpacity": 0.25,
+        "angleRadius": 0.6,
+        "highlightFillOpacity": 0.5,
+        "preserveColorOnHighlight": true
+      },
+      "kind": "angle",
+      "refs": [
+        "C2",
+        "A2",
+        "B2"
+      ]
+    },
+    {
+      "id": "anguloB1",
+      "label": "ángulo B",
+      "color": "ocre",
+      "layerId": "angulos",
+      "order": 22,
+      "visible": true,
+      "locked": false,
+      "groupIds": [
+        "globalGrupo",
+        "anguloBGrupo"
+      ],
+      "selection": {
+        "selectable": true,
+        "role": "secondary"
+      },
+      "target": false,
+      "style": {
+        "strokeWidth": 1.5,
+        "fillOpacity": 0.25,
+        "angleRadius": 0.6,
+        "highlightFillOpacity": 0.5,
+        "preserveColorOnHighlight": true
+      },
+      "kind": "angle",
+      "refs": [
+        "C1",
+        "B1",
+        "A1"
+      ]
+    },
+    {
+      "id": "anguloB2",
+      "label": "ángulo B′",
+      "color": "ocre",
+      "layerId": "angulos",
+      "order": 23,
+      "visible": true,
+      "locked": false,
+      "groupIds": [
+        "globalGrupo",
+        "anguloBGrupo"
+      ],
+      "selection": {
+        "selectable": true,
+        "role": "secondary"
+      },
+      "target": false,
+      "style": {
+        "strokeWidth": 1.5,
+        "fillOpacity": 0.25,
+        "angleRadius": 0.6,
+        "highlightFillOpacity": 0.5,
+        "preserveColorOnHighlight": true
+      },
+      "kind": "angle",
+      "refs": [
+        "A2",
+        "B2",
+        "C2"
+      ]
+    },
+    {
+      "id": "anguloC1",
+      "label": "ángulo C",
+      "color": "ocre",
+      "layerId": "angulos",
+      "order": 24,
+      "visible": false,
+      "locked": false,
+      "groupIds": [
+        "globalGrupo"
+      ],
+      "selection": {
+        "selectable": true,
+        "role": "secondary"
+      },
+      "target": false,
+      "style": {
+        "strokeWidth": 1.5,
+        "fillOpacity": 0.25,
+        "angleRadius": 0.6,
+        "highlightFillOpacity": 0.5,
+        "highlightVisible": true,
+        "preserveColorOnHighlight": true
+      },
+      "kind": "angle",
+      "refs": [
+        "A1",
+        "C1",
+        "B1"
+      ]
+    },
+    {
+      "id": "anguloC2",
+      "label": "ángulo C′",
+      "color": "ocre",
+      "layerId": "angulos",
+      "order": 25,
+      "visible": false,
+      "locked": false,
+      "groupIds": [
+        "globalGrupo"
+      ],
+      "selection": {
+        "selectable": true,
+        "role": "secondary"
+      },
+      "target": false,
+      "style": {
+        "strokeWidth": 1.5,
+        "fillOpacity": 0.25,
+        "angleRadius": 0.6,
+        "highlightFillOpacity": 0.5,
+        "highlightVisible": true,
+        "preserveColorOnHighlight": true
+      },
+      "kind": "angle",
+      "refs": [
+        "B2",
+        "C2",
+        "A2"
+      ]
+    },
+    {
+      "id": "marcaAB1",
+      "label": "marca AB",
+      "color": "terracota",
+      "layerId": "marcas",
+      "order": 30,
+      "visible": true,
+      "locked": false,
+      "groupIds": [
+        "globalGrupo",
+        "ladoABGrupo"
+      ],
+      "selection": {
+        "selectable": true,
+        "role": "secondary"
+      },
+      "target": false,
+      "style": {
+        "strokeWidth": 2.2,
+        "highlightStrokeWidth": 4,
+        "preserveColorOnHighlight": true
+      },
+      "kind": "congruenceMark",
+      "refs": [
+        "A1",
+        "B1"
+      ],
+      "properties": {
+        "markCount": 1
       }
-      return ts;
-    };
+    },
+    {
+      "id": "marcaAB2",
+      "label": "marca A′B′",
+      "color": "terracota",
+      "layerId": "marcas",
+      "order": 31,
+      "visible": true,
+      "locked": false,
+      "groupIds": [
+        "globalGrupo",
+        "ladoABGrupo"
+      ],
+      "selection": {
+        "selectable": true,
+        "role": "secondary"
+      },
+      "target": false,
+      "style": {
+        "strokeWidth": 2.2,
+        "highlightStrokeWidth": 4,
+        "preserveColorOnHighlight": true
+      },
+      "kind": "congruenceMark",
+      "refs": [
+        "A2",
+        "B2"
+      ],
+      "properties": {
+        "markCount": 1
+      }
+    },
+    {
+      "id": "marcaAC1",
+      "label": "marcas AC",
+      "color": "terracota",
+      "layerId": "marcas",
+      "order": 32,
+      "visible": false,
+      "locked": false,
+      "groupIds": [
+        "globalGrupo"
+      ],
+      "selection": {
+        "selectable": true,
+        "role": "secondary"
+      },
+      "target": false,
+      "style": {
+        "strokeWidth": 2.2,
+        "highlightStrokeWidth": 4,
+        "highlightVisible": true,
+        "preserveColorOnHighlight": true
+      },
+      "kind": "congruenceMark",
+      "refs": [
+        "A1",
+        "C1"
+      ],
+      "properties": {
+        "markCount": 2
+      }
+    },
+    {
+      "id": "marcaAC2",
+      "label": "marcas A′C′",
+      "color": "terracota",
+      "layerId": "marcas",
+      "order": 33,
+      "visible": false,
+      "locked": false,
+      "groupIds": [
+        "globalGrupo"
+      ],
+      "selection": {
+        "selectable": true,
+        "role": "secondary"
+      },
+      "target": false,
+      "style": {
+        "strokeWidth": 2.2,
+        "highlightStrokeWidth": 4,
+        "highlightVisible": true,
+        "preserveColorOnHighlight": true
+      },
+      "kind": "congruenceMark",
+      "refs": [
+        "A2",
+        "C2"
+      ],
+      "properties": {
+        "markCount": 2
+      }
+    },
+    {
+      "id": "marcaBC1",
+      "label": "marcas BC",
+      "color": "terracota",
+      "layerId": "marcas",
+      "order": 34,
+      "visible": false,
+      "locked": false,
+      "groupIds": [
+        "globalGrupo"
+      ],
+      "selection": {
+        "selectable": true,
+        "role": "secondary"
+      },
+      "target": false,
+      "style": {
+        "strokeWidth": 2.2,
+        "highlightStrokeWidth": 4,
+        "highlightVisible": true,
+        "preserveColorOnHighlight": true
+      },
+      "kind": "congruenceMark",
+      "refs": [
+        "B1",
+        "C1"
+      ],
+      "properties": {
+        "markCount": 3
+      }
+    },
+    {
+      "id": "marcaBC2",
+      "label": "marcas B′C′",
+      "color": "terracota",
+      "layerId": "marcas",
+      "order": 35,
+      "visible": false,
+      "locked": false,
+      "groupIds": [
+        "globalGrupo"
+      ],
+      "selection": {
+        "selectable": true,
+        "role": "secondary"
+      },
+      "target": false,
+      "style": {
+        "strokeWidth": 2.2,
+        "highlightStrokeWidth": 4,
+        "highlightVisible": true,
+        "preserveColorOnHighlight": true
+      },
+      "kind": "congruenceMark",
+      "refs": [
+        "B2",
+        "C2"
+      ],
+      "properties": {
+        "markCount": 3
+      }
+    },
+    {
+      "id": "cotaAB1",
+      "label": "cota AB",
+      "color": "pizarra",
+      "layerId": "cotas",
+      "order": 40,
+      "visible": true,
+      "locked": false,
+      "groupIds": [
+        "globalGrupo",
+        "ladoABGrupo"
+      ],
+      "selection": {
+        "selectable": true,
+        "role": "secondary"
+      },
+      "target": false,
+      "style": {
+        "strokeWidth": 1.5,
+        "highlightStrokeWidth": 3,
+        "preserveColorOnHighlight": true
+      },
+      "kind": "dimensionLine",
+      "refs": [
+        "A1",
+        "B1"
+      ],
+      "text": "AB = {value}",
+      "properties": {
+        "unit": "u",
+        "precision": 1,
+        "offset": -0.45
+      }
+    },
+    {
+      "id": "cotaAB2",
+      "label": "cota A′B′",
+      "color": "pizarra",
+      "layerId": "cotas",
+      "order": 41,
+      "visible": true,
+      "locked": false,
+      "groupIds": [
+        "globalGrupo",
+        "ladoABGrupo"
+      ],
+      "selection": {
+        "selectable": true,
+        "role": "secondary"
+      },
+      "target": false,
+      "style": {
+        "strokeWidth": 1.5,
+        "highlightStrokeWidth": 3,
+        "preserveColorOnHighlight": true
+      },
+      "kind": "dimensionLine",
+      "refs": [
+        "A2",
+        "B2"
+      ],
+      "text": "A′B′ = {value}",
+      "properties": {
+        "unit": "u",
+        "precision": 1,
+        "offset": 0.45
+      }
+    },
+    {
+      "id": "medidaA",
+      "label": "medida angular A",
+      "color": "ocre",
+      "layerId": "cotas",
+      "order": 42,
+      "visible": true,
+      "locked": false,
+      "groupIds": [
+        "globalGrupo",
+        "anguloAGrupo"
+      ],
+      "selection": {
+        "selectable": true,
+        "role": "secondary"
+      },
+      "target": false,
+      "style": {
+        "textOffset": [
+          -2.4,
+          7.5
+        ],
+        "preserveColorOnHighlight": true
+      },
+      "kind": "measurement",
+      "refs": [
+        "A1"
+      ],
+      "text": "∠A = {value}",
+      "properties": {
+        "expression": "abs(atan2(C1.y-A1.y,C1.x-A1.x)-atan2(B1.y-A1.y,B1.x-A1.x))*180/pi",
+        "unit": "°",
+        "precision": 0
+      }
+    },
+    {
+      "id": "medidaB",
+      "label": "medida angular B",
+      "color": "ocre",
+      "layerId": "cotas",
+      "order": 43,
+      "visible": true,
+      "locked": false,
+      "groupIds": [
+        "globalGrupo",
+        "anguloBGrupo"
+      ],
+      "selection": {
+        "selectable": true,
+        "role": "secondary"
+      },
+      "target": false,
+      "style": {
+        "textOffset": [
+          -5.5,
+          7.5
+        ],
+        "preserveColorOnHighlight": true
+      },
+      "kind": "measurement",
+      "refs": [
+        "B1"
+      ],
+      "text": "∠B = {value}",
+      "properties": {
+        "expression": "abs(atan2(C1.y-B1.y,C1.x-B1.x)-atan2(A1.y-B1.y,A1.x-B1.x))*180/pi",
+        "unit": "°",
+        "precision": 0
+      }
+    }
+  ],
+  "sliders": [],
+  "steps": [],
+  "constraints": [
+    {
+      "id": "mismoSemiplano",
+      "label": "C conserva la orientación del triángulo",
+      "kind": "sameSide",
+      "refs": [
+        "C1",
+        "A1",
+        "B1"
+      ],
+      "enabled": true
+    }
+  ],
+  "dependencies": [
+    {
+      "sourceId": "A1",
+      "targetId": "B2",
+      "relation": "expression"
+    },
+    {
+      "sourceId": "A2",
+      "targetId": "B2",
+      "relation": "expression"
+    },
+    {
+      "sourceId": "B1",
+      "targetId": "B2",
+      "relation": "expression"
+    },
+    {
+      "sourceId": "A1",
+      "targetId": "C2",
+      "relation": "expression"
+    },
+    {
+      "sourceId": "A2",
+      "targetId": "C2",
+      "relation": "expression"
+    },
+    {
+      "sourceId": "C1",
+      "targetId": "C2",
+      "relation": "expression"
+    },
+    {
+      "sourceId": "A1",
+      "targetId": "triangulo1",
+      "relation": "construction"
+    },
+    {
+      "sourceId": "B1",
+      "targetId": "triangulo1",
+      "relation": "construction"
+    },
+    {
+      "sourceId": "C1",
+      "targetId": "triangulo1",
+      "relation": "construction"
+    },
+    {
+      "sourceId": "A2",
+      "targetId": "triangulo2",
+      "relation": "construction"
+    },
+    {
+      "sourceId": "B2",
+      "targetId": "triangulo2",
+      "relation": "construction"
+    },
+    {
+      "sourceId": "C2",
+      "targetId": "triangulo2",
+      "relation": "construction"
+    },
+    {
+      "sourceId": "A1",
+      "targetId": "segAB1",
+      "relation": "construction"
+    },
+    {
+      "sourceId": "B1",
+      "targetId": "segAB1",
+      "relation": "construction"
+    },
+    {
+      "sourceId": "A1",
+      "targetId": "segAC1",
+      "relation": "construction"
+    },
+    {
+      "sourceId": "C1",
+      "targetId": "segAC1",
+      "relation": "construction"
+    },
+    {
+      "sourceId": "B1",
+      "targetId": "segBC1",
+      "relation": "construction"
+    },
+    {
+      "sourceId": "C1",
+      "targetId": "segBC1",
+      "relation": "construction"
+    },
+    {
+      "sourceId": "A2",
+      "targetId": "segAB2",
+      "relation": "construction"
+    },
+    {
+      "sourceId": "B2",
+      "targetId": "segAB2",
+      "relation": "construction"
+    },
+    {
+      "sourceId": "A2",
+      "targetId": "segAC2",
+      "relation": "construction"
+    },
+    {
+      "sourceId": "C2",
+      "targetId": "segAC2",
+      "relation": "construction"
+    },
+    {
+      "sourceId": "B2",
+      "targetId": "segBC2",
+      "relation": "construction"
+    },
+    {
+      "sourceId": "C2",
+      "targetId": "segBC2",
+      "relation": "construction"
+    },
+    {
+      "sourceId": "B1",
+      "targetId": "anguloA1",
+      "relation": "construction"
+    },
+    {
+      "sourceId": "A1",
+      "targetId": "anguloA1",
+      "relation": "construction"
+    },
+    {
+      "sourceId": "C1",
+      "targetId": "anguloA1",
+      "relation": "construction"
+    },
+    {
+      "sourceId": "C2",
+      "targetId": "anguloA2",
+      "relation": "construction"
+    },
+    {
+      "sourceId": "A2",
+      "targetId": "anguloA2",
+      "relation": "construction"
+    },
+    {
+      "sourceId": "B2",
+      "targetId": "anguloA2",
+      "relation": "construction"
+    },
+    {
+      "sourceId": "C1",
+      "targetId": "anguloB1",
+      "relation": "construction"
+    },
+    {
+      "sourceId": "B1",
+      "targetId": "anguloB1",
+      "relation": "construction"
+    },
+    {
+      "sourceId": "A1",
+      "targetId": "anguloB1",
+      "relation": "construction"
+    },
+    {
+      "sourceId": "A2",
+      "targetId": "anguloB2",
+      "relation": "construction"
+    },
+    {
+      "sourceId": "B2",
+      "targetId": "anguloB2",
+      "relation": "construction"
+    },
+    {
+      "sourceId": "C2",
+      "targetId": "anguloB2",
+      "relation": "construction"
+    },
+    {
+      "sourceId": "A1",
+      "targetId": "anguloC1",
+      "relation": "construction"
+    },
+    {
+      "sourceId": "C1",
+      "targetId": "anguloC1",
+      "relation": "construction"
+    },
+    {
+      "sourceId": "B1",
+      "targetId": "anguloC1",
+      "relation": "construction"
+    },
+    {
+      "sourceId": "B2",
+      "targetId": "anguloC2",
+      "relation": "construction"
+    },
+    {
+      "sourceId": "C2",
+      "targetId": "anguloC2",
+      "relation": "construction"
+    },
+    {
+      "sourceId": "A2",
+      "targetId": "anguloC2",
+      "relation": "construction"
+    },
+    {
+      "sourceId": "A1",
+      "targetId": "marcaAB1",
+      "relation": "construction"
+    },
+    {
+      "sourceId": "B1",
+      "targetId": "marcaAB1",
+      "relation": "construction"
+    },
+    {
+      "sourceId": "A2",
+      "targetId": "marcaAB2",
+      "relation": "construction"
+    },
+    {
+      "sourceId": "B2",
+      "targetId": "marcaAB2",
+      "relation": "construction"
+    },
+    {
+      "sourceId": "A1",
+      "targetId": "marcaAC1",
+      "relation": "construction"
+    },
+    {
+      "sourceId": "C1",
+      "targetId": "marcaAC1",
+      "relation": "construction"
+    },
+    {
+      "sourceId": "A2",
+      "targetId": "marcaAC2",
+      "relation": "construction"
+    },
+    {
+      "sourceId": "C2",
+      "targetId": "marcaAC2",
+      "relation": "construction"
+    },
+    {
+      "sourceId": "B1",
+      "targetId": "marcaBC1",
+      "relation": "construction"
+    },
+    {
+      "sourceId": "C1",
+      "targetId": "marcaBC1",
+      "relation": "construction"
+    },
+    {
+      "sourceId": "B2",
+      "targetId": "marcaBC2",
+      "relation": "construction"
+    },
+    {
+      "sourceId": "C2",
+      "targetId": "marcaBC2",
+      "relation": "construction"
+    },
+    {
+      "sourceId": "A1",
+      "targetId": "cotaAB1",
+      "relation": "construction"
+    },
+    {
+      "sourceId": "B1",
+      "targetId": "cotaAB1",
+      "relation": "construction"
+    },
+    {
+      "sourceId": "A2",
+      "targetId": "cotaAB2",
+      "relation": "construction"
+    },
+    {
+      "sourceId": "B2",
+      "targetId": "cotaAB2",
+      "relation": "construction"
+    },
+    {
+      "sourceId": "A1",
+      "targetId": "medidaA",
+      "relation": "construction"
+    },
+    {
+      "sourceId": "B1",
+      "targetId": "medidaB",
+      "relation": "construction"
+    },
+    {
+      "sourceId": "A1",
+      "targetId": "medidaA",
+      "relation": "expression"
+    },
+    {
+      "sourceId": "B1",
+      "targetId": "medidaA",
+      "relation": "expression"
+    },
+    {
+      "sourceId": "C1",
+      "targetId": "medidaA",
+      "relation": "expression"
+    },
+    {
+      "sourceId": "A1",
+      "targetId": "medidaB",
+      "relation": "expression"
+    },
+    {
+      "sourceId": "B1",
+      "targetId": "medidaB",
+      "relation": "expression"
+    },
+    {
+      "sourceId": "C1",
+      "targetId": "medidaB",
+      "relation": "expression"
+    },
+    {
+      "sourceId": "A1",
+      "targetId": "C1",
+      "relation": "constraint",
+      "constraintId": "mismoSemiplano"
+    },
+    {
+      "sourceId": "B1",
+      "targetId": "C1",
+      "relation": "constraint",
+      "constraintId": "mismoSemiplano"
+    }
+  ],
+  "note": "Arrastre C: el segundo triángulo se recalcula como copia congruente. Las cotas, ángulos y marcas conservan la correspondencia ALA.",
+  "extensions": {
+    "acceptanceCase": "phase-5-congruence-ala"
+  }
+}
+);
+/* @matematika-diagram-spec:end */
 
-    const tAB1 = mkTick(A1, B1, 1), tAB2 = mkTick(A2, B2, 1);
-    const tAC1 = mkTick(A1, C1, 2), tAC2 = mkTick(A2, C2, 2);
-    const tBC1 = mkTick(B1, C1, 3), tBC2 = mkTick(B2, C2, 3);
-    const ticksAB = [...tAB1, ...tAB2], ticksAC = [...tAC1, ...tAC2], ticksBC = [...tBC1, ...tBC2];
-
-    const orientABC = () => (B1.X()-A1.X())*(C1.Y()-A1.Y()) - (B1.Y()-A1.Y())*(C1.X()-A1.X());
-    const initialOrient = orientABC();
-    const last = [C1.X(), C1.Y()];
-    C1.on('drag', () => {
-      const cur = orientABC();
-      if (Math.abs(cur) < 0.01 || (initialOrient > 0.01 && cur < -0.01) || (initialOrient < -0.01 && cur > 0.01)) {
-        C1.moveTo([last[0], last[1]], 0);
-      } else { last[0] = C1.X(); last[1] = C1.Y(); }
-    });
-
-    const infoText = board.create('text', [-2.5, 7.5, () => {
-      const vA = angleA1.Value(), vB = angleB1.Value();
-      return `<div style="font-family: var(--font-serif); color:${theme.carbon}; line-height:1.3;">
-        <strong style="font-size:1.1rem;">Criterio ALA</strong><br/>
-        <small>∠A = ${Math.round(vA*180/Math.PI)}° &nbsp; ∠B = ${Math.round(vB*180/Math.PI)}°</small><br/>
-        <small>AB = ${A1.Dist(B1).toFixed(1)} ≅ A'B'</small>
-      </div>`;
-    }], { fixed: true, anchorX: 'left', anchorY: 'top' });
-
-
-
-
-
-
-    const obs = new MutationObserver(() => {
-      if (board) {   }
-    });
-    obs.observe(document.documentElement, { attributes: true, attributeFilter: ['class'] });
-
-      // Registrar elementos para interactividad y auditoría
-      els.A1 = A1;
-        els.B1 = B1;
-        els.C1 = C1;
-        els.A2 = A2;
-        els.B2 = B2;
-        els.C2 = C2;
-        els.segAB1 = segAB1;
-        els.segAC1 = segAC1;
-        els.segBC1 = segBC1;
-        els.segAB2 = segAB2;
-        els.segAC2 = segAC2;
-        els.segBC2 = segBC2;
-        els.angleA1 = angleA1;
-        els.angleB1 = angleB1;
-        els.angleC1 = angleC1;
-        els.angleA2 = angleA2;
-        els.angleB2 = angleB2;
-        els.angleC2 = angleC2;
-        els.ticksAB = ticksAB;
-        els.ticksAC = ticksAC;
-        els.ticksBC = ticksBC;
-        els.infoText = infoText;
-    };;
-
-  const onUpdate = (board: any, els: any, theme: any, isStep: any, isHL: any) => {
-      const isHighlight = isHL;
-      void board; void els; void theme; void isStep; void isHL; void isHighlight;
-      const { segAB1, segAC1, segBC1, segAB2, segAC2, segBC2, angleA1, angleB1, angleC1, angleA2, angleB2, angleC2, ticksAB, ticksAC, ticksBC } = els;
-      if (!els.board) return;
-
-
-    const hGlobal = isHighlight('globalmente-congruentes');
-    const hLadoAB = isHighlight('lado-ab');
-    const hAngA = isHighlight('angulo-a');
-    const hAngB = isHighlight('angulo-b');
-    const anyH = hGlobal || hLadoAB || hAngA || hAngB;
-    const showAll = !anyH;
-
-    const C_ACC = theme.terracota;
-    const C_PRIM = theme.carbon;
-    const C_ANG = theme.ocre;
-
-    const bright = (target: any) => showAll || target || hGlobal;
-    const op = (target: any) => bright(target) ? 1 : 0.15;
-
-    segAB1.setAttribute({ strokeColor: (hLadoAB || hGlobal) ? C_ACC : C_PRIM, strokeWidth: (hLadoAB || hGlobal) ? 4 : 3, strokeOpacity: op(hLadoAB) });
-    segAB2.setAttribute({ strokeColor: (hLadoAB || hGlobal) ? C_ACC : C_PRIM, strokeWidth: (hLadoAB || hGlobal) ? 4 : 3, strokeOpacity: op(hLadoAB) });
-    segAC1.setAttribute({ strokeColor: hGlobal ? C_ACC : C_PRIM, strokeOpacity: op(hGlobal) });
-    segBC1.setAttribute({ strokeColor: hGlobal ? C_ACC : C_PRIM, strokeOpacity: op(hGlobal) });
-    segAC2.setAttribute({ strokeColor: hGlobal ? C_ACC : C_PRIM, strokeOpacity: op(hGlobal) });
-    segBC2.setAttribute({ strokeColor: hGlobal ? C_ACC : C_PRIM, strokeOpacity: op(hGlobal) });
-
-    ticksAB.forEach((t: any) => t.setAttribute({ visible: true, strokeOpacity: op(hLadoAB || hGlobal) }));
-    ticksAC.forEach((t: any) => t.setAttribute({ visible: hGlobal, strokeOpacity: op(hGlobal) }));
-    ticksBC.forEach((t: any) => t.setAttribute({ visible: hGlobal, strokeOpacity: op(hGlobal) }));
-
-    [angleA1, angleA2].forEach((a: any) => a.setAttribute({ visible: true, fillOpacity: (hAngA || hGlobal) ? 0.5 : 0.25, strokeOpacity: op(hAngA), strokeColor: (hAngA || hGlobal) ? C_ACC : C_ANG, strokeWidth: (hAngA || hGlobal) ? 3 : 1.5 }));
-    [angleB1, angleB2].forEach((a: any) => a.setAttribute({ visible: true, fillOpacity: (hAngB || hGlobal) ? 0.5 : 0.25, strokeOpacity: op(hAngB), strokeColor: (hAngB || hGlobal) ? C_ACC : C_ANG, strokeWidth: (hAngB || hGlobal) ? 3 : 1.5 }));
-    [angleC1, angleC2].forEach((a: any) => a.setAttribute({ visible: hGlobal, fillOpacity: 0.25, strokeOpacity: op(hGlobal) }));
-    };;
-
-  return (
-    <MathBoard
-      boundingbox={[-4, 9, 9, -9]}
-      axis={false}
-      grid={false}
-      onInit={onInit}
-      onUpdate={onUpdate}
-    >
-      <div className="absolute top-2 left-3 z-10 text-xs font-serif italic text-pizarra/50">
-        Arrastra <span className="font-bold not-italic text-terracota">C</span>: ambos tri&aacute;ngulos son congruentes
-      </div>
-    </MathBoard>
-  );
-};
+export const CongruenciaALA = () => <DiagramRenderer spec={CongruenciaALASpec} />;

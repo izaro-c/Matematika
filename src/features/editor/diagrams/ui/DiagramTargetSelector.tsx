@@ -16,14 +16,15 @@ export const DiagramTargetSelector: React.FC<DiagramTargetSelectorProps> = ({
   onSelectTarget,
   onModelEdit,
 }) => {
-  const items = [...model.points, ...model.elements, ...model.sliders];
+  const sceneItems = [...model.points, ...model.elements, ...model.sliders];
+  const items = [...sceneItems, ...model.groups];
   const targets = buildTargets(model);
   const duplicateIds = targets.map(item => item.id).filter((id, index, ids) => ids.indexOf(id) !== index);
   const stepReferences = new Set(model.steps.flatMap(item => [
     ...item.visibleTargets,
     ...Object.keys(item.objectStates ?? {}),
   ]));
-  const missingReferences = [...stepReferences].filter(id => !items.some(item => item.id === id));
+  const missingReferences = [...stepReferences].filter(id => !sceneItems.some(item => item.id === id));
 
   const updateItem = (objectId: string, update: { target?: boolean; targetId?: string }) => {
     onModelEdit({
@@ -31,6 +32,7 @@ export const DiagramTargetSelector: React.FC<DiagramTargetSelectorProps> = ({
       points: model.points.map(item => item.id === objectId ? { ...item, ...update } : item),
       elements: model.elements.map(item => item.id === objectId ? { ...item, ...update } : item),
       sliders: model.sliders.map(item => item.id === objectId ? { ...item, ...update } : item),
+      groups: model.groups.map(item => item.id === objectId ? { ...item, ...update } : item),
     }, { label: `Editar target ${objectId}`, mergeKey: `target-${objectId}` });
   };
 

@@ -2,13 +2,27 @@
 
 **Actualizado:** 2026-07-13
 
-**Fase:** Fase 4 — pasos, interacción y demostraciones, cerrada.
+**Fase:** Fase 5 — migración de casos matemáticos complejos, cerrada.
 
-**Estado:** `DiagramSpec v2`, el renderer compartido y el editor visual comparten una semántica temporal completa. Una secuencia puede construirse, inspeccionarse en una matriz objetos × pasos, reproducirse, persistirse y reabrirse sin editar el TSX. Los targets públicos son estables y admiten varios diagramas por página. La Fase 5 permanece pendiente: no se migró ningún diagrama real ni se amplió el alcance de aceptación matemática.
+**Estado:** Pitágoras, el disco de Poincaré, congruencia ALA y paralelogramo son modelos `DiagramSpec v2` visualmente exactos. Los cuatro regeneran su TSX byte a byte, conservan sus consumidores MDX y se renderizan en sus páginas reales sin colapso ni pérdida de textos reactivos. La Fase 6 permanece pendiente y no se ha iniciado.
 
 ## Roadmap activo
 
-La fuente canónica del estado es [`phases/editor-authoring/README.md`](phases/editor-authoring/README.md). Las Fases 0, 1, 2, 3 y 4 están cerradas. La [Fase 5 — Migración de casos matemáticos complejos](phases/editor-authoring/phase-5-acceptance-migrations.md) permanece pendiente y solo puede comenzar en una conversación nueva.
+La fuente canónica del estado es [`phases/editor-authoring/README.md`](phases/editor-authoring/README.md). Las Fases 0, 1, 2, 3, 4 y 5 están cerradas. La [Fase 6 — Motor MDX estructural y lossless](phases/editor-authoring/phase-6-lossless-mdx-engine.md) permanece pendiente y solo puede comenzar en una conversación nueva.
+
+## Casos reales migrados
+
+- **Pitágoras:** conserva `triangulo`, `cuadrado-a`, `cuadrado-b` y `cuadrado-c`; incluye tres cuadrados cuadriculados, áreas e identidad dinámicas, gliders sobre semirrectas positivas y tres pasos con resaltados.
+- **Disco de Poincaré:** muestra la frontera completa, una geodésica principal, dos paralelas límite y cuatro ultraparalelas como arcos ortogonales; los extremos permanecen en la frontera y el punto interior se restringe al disco.
+- **Congruencia ALA:** conserva `globalmente-congruentes`, `lado-ab`, `angulo-a` y `angulo-b`; incluye dos triángulos dependientes, seis ángulos, seis marcas de congruencia, dos cotas y textos reactivos.
+- **Paralelogramo:** conserva `paralelogramo`, `lados-opuestos`, `angulos-opuestos` y `diagonales`; deriva `D` y el punto medio `M`, mantiene siete capas, tres pasos y clasificación reactiva de paralelogramo, rombo, rectángulo y cuadrado.
+
+## Correcciones del modelo común
+
+- Los grupos publican targets estables y trasladan su resaltado a todos sus miembros sin cambiar IDs públicos.
+- La restricción `sameSide`, los estilos visuales persistibles y las reglas `visibleWhen`/`textRules` amplían el lenguaje común; no hay parches exclusivos de un caso.
+- `MathBoard` observa un contenedor estable, distingue resize programático de pan/zoom y evita mutar el viewport al abrir. `DiagramRenderer` y `StepNavigator` reutilizan el `MathProvider` exterior o crean uno solo para previews aislados.
+- Los textos JSXGraph se mantienen como HTML fuera de las capas SVG; áreas, cotas y paneles reactivos tienen dimensiones visibles reales. El disco preserva su relleno translúcido y los paneles de pasos no se superponen.
 
 ## Autoría visual de secuencias
 
@@ -42,18 +56,22 @@ La fuente canónica del estado es [`phases/editor-authoring/README.md`](phases/e
 
 ## Evidencia de aceptación
 
+- `Phase5AcceptanceMigrations.test.ts` fija snapshots estructurales de los cuatro diagramas, roundtrip byte a byte, targets MDX reales, restricciones, geodésicas ortogonales, dependencias, capas, pasos y clasificación.
+- Las regresiones del renderer montan el componente y el editor de pasos reales de Pitágoras sin `MathProvider` exterior; `MathBoardViewport.test.tsx` separa cambios de usuario y ajustes programáticos.
+- `npm run test:e2e:phase5` abre las cuatro rutas publicadas en Chromium, exige boards no colapsados, escenas completas, textos reactivos visibles y ausencia de errores; después recorre catálogo → Pitágoras → edición visual exacta y comprueba estado sincronizado.
+- La inspección visual real se realizó a 1440 × 900 y la del editor a 1600 × 1100. Poincaré, paralelogramo, ALA y Pitágoras muestran el diagrama completo; el editor de Pitágoras conserva `[-8, 8, 8, -8]` al abrir.
 - Tres suites nuevas cubren CRUD y reordenación, separación paso/resaltado, targets estables, referencias ausentes o duplicadas, overlays reactivos, reproducción, accesibilidad, múltiples diagramas y trazas Lean.
 - La prueba de persistencia construye una secuencia compleja con estados y overlays, genera TSX, lo vuelve a abrir con el parser y exige regeneración byte a byte idéntica.
 - La regresión de demostraciones comprueba que `ProofStep` sigue presente y que no existe una navegación `StepNavigator` en la página.
-- `editor:full-check`, ejecutado con índice Git temporal aislado: artefactos deterministas actualizados, roundtrip lossless 120/120, lint dirigido, 147 pruebas unitarias, 79 de integración, arquitectura, seguridad, TypeScript y build aprobados.
+- `editor:full-check`, ejecutado con índice Git temporal aislado: artefactos deterministas actualizados, roundtrip lossless 120/120, lint dirigido, 157 pruebas unitarias, 79 de integración, arquitectura, seguridad, TypeScript y build aprobados.
 - `editor:lint`: 119 advertencias dentro del presupuesto máximo de 119 y 0 errores.
-- Dependency Cruiser: 56 advertencias históricas, 0 errores, 360 módulos y 1031 dependencias.
-- `full-check`: lint sin errores, TypeScript, 66 archivos y 637 pruebas, arquitectura, referencias, grafo, Lean, cobertura y bridge aprobados.
+- Dependency Cruiser: 56 advertencias históricas, 0 errores, 360 módulos y 1027 dependencias.
+- `full-check`: lint sin errores, TypeScript, 67 archivos y 649 pruebas, arquitectura, referencias, grafo, Lean, cobertura y bridge aprobados.
 - Lean compila 12 trabajos; el grafo conserva 66 nodos verificados y 9 bloques, y la cobertura Lean-MDX permanece en 24/24 páginas y 25/25 demostraciones.
 
 ## Límites y deuda explícita
 
-- No se migró ni se declaró editable visualmente ningún caso de producción; esa aceptación pertenece exclusivamente a la Fase 5.
+- No se realizó una migración masiva de los 85 diagramas; solo los cuatro casos de aceptación cuentan con evidencia de fidelidad y edición visual exacta en esta fase.
 - Las extensiones temporales de `DiagramSpec v2` son opcionales y no cambian su versión literal ni normalizan escenas anteriores de forma destructiva.
 - Los targets no cualificados duplicados entre diagramas se mantienen como broadcast compatible en runtime, pero el editor exige la forma cualificada para una conexión inequívoca.
 - El presupuesto dirigido de lint queda agotado en 119 advertencias. El build conserva avisos históricos de chunks superiores a 500 kB y del `eval` interno de JessieCode/JSXGraph; la DSL de overlays no usa esas vías.
@@ -61,4 +79,4 @@ La fuente canónica del estado es [`phases/editor-authoring/README.md`](phases/e
 
 ## Veredicto
 
-`FASE 4 CERRADA — SECUENCIAS VISUALES, INTERACCIÓN, TARGETS ESTABLES Y CONEXIÓN CON DEMOSTRACIONES OPERATIVOS SIN ADELANTAR LA FASE 5`
+`FASE 5 CERRADA — CUATRO DIAGRAMAS REALES EDITABLES, REABRIBLES Y PUBLICADOS SIN PÉRDIDA; FASE 6 NO INICIADA`

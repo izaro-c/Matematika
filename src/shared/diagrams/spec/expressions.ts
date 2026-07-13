@@ -28,6 +28,7 @@ const MAX_TOKENS = 256;
 const SAFE_FUNCTIONS = new Set([
   'abs', 'acos', 'asin', 'atan', 'atan2', 'ceil', 'cos', 'exp', 'floor', 'hypot',
   'ln', 'log', 'max', 'min', 'round', 'sign', 'sin', 'sqrt', 'tan',
+  'and', 'approx', 'eq', 'gt', 'gte', 'lt', 'lte', 'not', 'or',
 ]);
 
 function tokenize(source: string): Token[] {
@@ -185,6 +186,15 @@ function callSafeFunction(name: string, args: number[]): number {
   if (name === 'sin') return Math.sin(args[0]);
   if (name === 'sqrt') return Math.sqrt(args[0]);
   if (name === 'tan') return Math.tan(args[0]);
+  if (name === 'and') return args.every(Boolean) ? 1 : 0;
+  if (name === 'or') return args.some(Boolean) ? 1 : 0;
+  if (name === 'not') return args[0] ? 0 : 1;
+  if (name === 'eq') return args[0] === args[1] ? 1 : 0;
+  if (name === 'approx') return Math.abs(args[0] - args[1]) <= Math.abs(args[2] ?? 1e-8) ? 1 : 0;
+  if (name === 'gt') return args[0] > args[1] ? 1 : 0;
+  if (name === 'gte') return args[0] >= args[1] ? 1 : 0;
+  if (name === 'lt') return args[0] < args[1] ? 1 : 0;
+  if (name === 'lte') return args[0] <= args[1] ? 1 : 0;
   throw new DiagramExpressionError(`La función ${name} no está permitida`);
 }
 

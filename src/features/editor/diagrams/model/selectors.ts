@@ -22,9 +22,16 @@ export function buildTargets(model: VisualDiagramModel): DiagramTargetRegistry {
   const sliderTargets = model.sliders
     .filter(item => item.target)
     .map(item => ({ id: item.targetId ?? item.id, objectId: item.id, scopeId: model.componentId, qualifiedId: `${model.componentId}:${item.targetId ?? item.id}`, label: item.label, color: item.color, kind: 'slider' as const }));
+  const groupTargets = model.groups
+    .filter(group => group.target)
+    .map(group => {
+      const member = [...model.points, ...model.elements, ...model.sliders].find(item => group.memberIds.includes(item.id));
+      const color = group.color ?? member?.color ?? 'ocre';
+      return { id: group.targetId ?? group.id, objectId: group.id, scopeId: model.componentId, qualifiedId: `${model.componentId}:${group.targetId ?? group.id}`, label: group.label, color, kind: 'other' as const };
+    });
   const stepTargets = model.steps
     .map(item => ({ id: item.id, objectId: item.id, scopeId: model.componentId, qualifiedId: `${model.componentId}:${item.id}`, label: item.label, color: 'ocre' as const, kind: 'step' as const }));
-  return [...pointTargets, ...elementTargets, ...sliderTargets, ...stepTargets];
+  return [...pointTargets, ...elementTargets, ...sliderTargets, ...groupTargets, ...stepTargets];
 }
 
 export function safeColorToken(value: string): ColorToken {

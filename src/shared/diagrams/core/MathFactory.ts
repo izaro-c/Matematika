@@ -483,6 +483,7 @@ export function createRightAngleMarker(board: any, points: [any, any, any], opti
 export function createText(board: any, coords: [JXGCoord, JXGCoord, string | (() => string)], options: any = {}, theme: ThemeColors) {
   return board.create('text', coords, {
     fixed: true,
+    display: 'html',
     color: theme.carbon,
     cssClass: 'font-serif text-sm',
     ...options,
