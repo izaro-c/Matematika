@@ -13,7 +13,7 @@ Esta tabla es la única fuente de verdad del estado de la épica. Las fichas de 
 | Fase | Resultado | Estado | Evidencia o siguiente condición |
 | --- | --- | --- | --- |
 | [0](phase-0-capability-truth.md) | Catálogo seguro y capacidades reales | **Cerrada** | Cierre y gates registrados en [`../../current-state.md`](../../current-state.md), 2026-07-13 |
-| [1](phase-1-information-architecture.md) | Arquitectura visual y navegación | **Pendiente** | Puede iniciarse cuando el cierre de Fase 0 esté preservado |
+| [1](phase-1-information-architecture.md) | Arquitectura visual y navegación | **Cerrada** | Cierre, decisiones, deuda y gates registrados en [`../../current-state.md`](../../current-state.md), 2026-07-13 |
 | [2](phase-2-diagram-spec-v2.md) | `DiagramSpec v2` y renderer compartido | **Pendiente** | Requiere Fase 1 cerrada |
 | [3](phase-3-geometry-language.md) | Lenguaje geométrico completo | **Pendiente** | Requiere Fase 2 cerrada |
 | [4](phase-4-steps-and-interaction.md) | Pasos, interacción y demostraciones | **Pendiente** | Requiere Fase 3 cerrada |

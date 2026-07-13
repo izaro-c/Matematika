@@ -10,7 +10,7 @@
 
 ## Resumen ejecutivo
 
-**Hallazgos objetivos.** Se inspeccionaron 686 archivos de texto, 400 archivos TS/TSX, 64 archivos de test y 120 archivos MDX.
+**Hallazgos objetivos.** Se inspeccionaron 702 archivos de texto, 406 archivos TS/TSX, 67 archivos de test y 120 archivos MDX.
 
 **Heurísticas aproximadas.** Se localizaron 985 apariciones léxicas de `any`, 276 colores hex, 27 marcas TODO/FIXME, 38 archivos TS/TSX grandes y 40 rutas de importación potencialmente incompatibles con FSD.
 
@@ -18,7 +18,7 @@
 
 ## Deuda TypeScript
 
-**Hallazgo objetivo.** Hay 400 archivos TS/TSX en el alcance; 0 archivo(s) contienen 0 supresiones `@ts-*`.
+**Hallazgo objetivo.** Hay 406 archivos TS/TSX en el alcance; 0 archivo(s) contienen 0 supresiones `@ts-*`.
 
 _Ninguno detectado._
 
@@ -200,17 +200,17 @@ _Ninguno detectado._
 | Archivo | Líneas | Bytes |
 | --- | --- | --- |
 | `src/features/editor/ui/panels/VisualEditorPanel.tsx` | 988 | 54649 |
+| `src/features/editor/ui/EditorPage.tsx` | 895 | 33866 |
 | `scripts/ai/generate-debt-report.ts` | 848 | 35233 |
-| `src/features/editor/ui/EditorPage.tsx` | 810 | 29173 |
 | `scripts/ai/generate-ai-indexes.ts` | 770 | 29276 |
 | `src/features/editor/diagrams/model/commands.ts` | 749 | 32247 |
 | `src/features/editor/core/parser.ts` | 625 | 21040 |
 | `src/features/editor/ui/diagrams/DiagramWorkbench.tsx` | 580 | 23943 |
+| `tests/e2e/editor/editor-safe-ux.e2e.ts` | 545 | 27385 |
 | `scripts/editor/parseDiagramSourceAST.ts` | 539 | 20915 |
 | `tests/features/editor/useEditorCore.test.ts` | 517 | 23552 |
 | `src/features/editor/diagrams/ui/DiagramCanvas.tsx` | 517 | 18497 |
 | `src/features/graph/graph.worker.ts` | 509 | 15887 |
-| `tests/e2e/editor/editor-safe-ux.e2e.ts` | 498 | 24758 |
 | `src/widgets/diagrams/Definiciones/Cuadrilatero.tsx` | 490 | 21785 |
 | `src/shared/lib/glossaryDictionary.ts` | 483 | 18549 |
 | `src/entities/content/ContentStore.ts` | 448 | 17825 |
@@ -218,7 +218,7 @@ _Ninguno detectado._
 | `src/entities/content/msc2020.ts` | 431 | 17110 |
 | `src/features/editor/ux/safetyPresentation.ts` | 431 | 16086 |
 | `src/features/graph/GraphStore.ts` | 414 | 14785 |
-| `src/features/editor/core/useEditorCore.ts` | 402 | 20287 |
+| `src/features/editor/core/useEditorCore.ts` | 407 | 20508 |
 | `tests/features/editor/persistence/editorPersistenceBackend.test.ts` | 400 | 21891 |
 | `src/features/editor/ux/diffReview.ts` | 380 | 13109 |
 | `src/widgets/content/MarginaliaPanel.tsx` | 368 | 14638 |
@@ -247,7 +247,7 @@ _Ninguno detectado._
 | Componente | Líneas | Imports | Hooks | Handlers |
 | --- | --- | --- | --- | --- |
 | `src/features/editor/ui/panels/VisualEditorPanel.tsx` | 988 | 6 | 0 | 113 |
-| `src/features/editor/ui/EditorPage.tsx` | 810 | 22 | 19 | 51 |
+| `src/features/editor/ui/EditorPage.tsx` | 895 | 24 | 21 | 56 |
 | `src/features/editor/ui/diagrams/DiagramWorkbench.tsx` | 580 | 14 | 7 | 82 |
 | `src/features/editor/diagrams/ui/DiagramCanvas.tsx` | 517 | 3 | 0 | 40 |
 | `src/widgets/diagrams/Definiciones/Cuadrilatero.tsx` | 490 | 3 | 0 | 8 |
@@ -260,6 +260,7 @@ _Ninguno detectado._
 | `src/widgets/graph/LocalDependencyGraph.tsx` | 303 | 6 | 2 | 3 |
 | `src/features/progress/ui/TaxonomyGraph.tsx` | 302 | 7 | 12 | 9 |
 | `src/pages/GraphPage.tsx` | 297 | 13 | 14 | 17 |
+| `src/features/editor/ui/EditorNavigation.tsx` | 291 | 3 | 6 | 17 |
 | `src/widgets/mdx/MDXBlocks.tsx` | 281 | 25 | 3 | 1 |
 | `src/widgets/navigation/SearchOmnibar.tsx` | 271 | 6 | 12 | 14 |
 | `src/pages/Home/components/BranchLibrary.tsx` | 271 | 3 | 1 | 0 |
@@ -269,6 +270,7 @@ _Ninguno detectado._
 | `src/features/editor/ui/blocks/DemonstrationBlock.tsx` | 208 | 3 | 0 | 28 |
 | `src/features/exercises/ui/Hueco.tsx` | 195 | 2 | 5 | 16 |
 | `src/features/editor/ui/panels/MetadataPanel.tsx` | 188 | 5 | 0 | 21 |
+| `src/features/editor/ui/EditorToolbar.tsx` | 171 | 8 | 0 | 13 |
 | `src/features/editor/ui/components/MetadataInspector.tsx` | 166 | 2 | 1 | 24 |
 | `src/features/editor/ui/diff/DiffReviewPanel.tsx` | 164 | 2 | 1 | 19 |
 | `src/shared/diagrams/core/MathBoard.tsx` | 161 | 3 | 10 | 17 |
@@ -280,14 +282,14 @@ _Ninguno detectado._
 
 ## Deuda de tests por zona
 
-**Hallazgo objetivo.** Se detectaron 64 archivos de test. La tabla cuenta archivos fuente y tests que importan directamente cada zona.
+**Hallazgo objetivo.** Se detectaron 67 archivos de test. La tabla cuenta archivos fuente y tests que importan directamente cada zona.
 
 | Zona | TS/TSX fuente | Tests con import directo |
 | --- | --- | --- |
 | app | 6 | 2 |
 | pages | 22 | 0 |
 | widgets | 108 | 4 |
-| features | 121 | 31 |
+| features | 124 | 34 |
 | entities | 9 | 7 |
 | shared | 43 | 13 |
 | database | 0 | 0 |
@@ -500,7 +502,7 @@ _Ninguno detectado._
 
 | Capa | Archivos |
 | --- | --- |
-| `ai/` | 47 |
+| `ai/` | 57 |
 | `docs/ai/` | 2 |
 | `.agents/` | 19 |
 | `.opencode/` | 11 |
@@ -523,7 +525,7 @@ _Ninguno detectado._
 | new-diagram.md | `.opencode/commands/new-diagram.md`<br>`ai/prompts/opencode/new-diagram.md` |
 | package-lock.json | `.auxiliary/.opencode/package-lock.json`<br>`.opencode/package-lock.json` |
 | package.json | `.auxiliary/.opencode/package.json`<br>`.opencode/package.json` |
-| README.md | `ai/prompts/README.md`<br>`ai/README.md`<br>`docs/ai/README.md` |
+| README.md | `ai/phases/editor-authoring/README.md`<br>`ai/prompts/README.md`<br>`ai/README.md`<br>`docs/ai/README.md` |
 | sistema-axiomatico.mdx | `.agents/skills/page-creator/templates/sistema-axiomatico.mdx`<br>`.auxiliary/.opencode/skills/antigravity/templates/sistema-axiomatico.mdx` |
 | SKILL.md | `.agents/skills/diagrama/SKILL.md`<br>`.agents/skills/lean-formalizer/SKILL.md`<br>`.agents/skills/page-creator/SKILL.md`<br>`.agents/skills/project-philosophy/SKILL.md`<br>`.auxiliary/.opencode/skills/antigravity/SKILL.md`<br>`.auxiliary/.opencode/skills/diagrama/SKILL.md` |
 | SVGCanon.tsx | `.agents/skills/diagrama/examples/SVGCanon.tsx`<br>`.auxiliary/.opencode/skills/diagrama/examples/SVGCanon.tsx` |

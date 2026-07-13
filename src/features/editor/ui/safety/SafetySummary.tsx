@@ -25,6 +25,7 @@ interface SafetySummaryProps {
   compatibility?: string;
   persistenceStatus?: string;
   isDiagramFile?: boolean;
+  showTechnicalDetails?: boolean;
 }
 
 export const SafetySummary: React.FC<SafetySummaryProps> = ({
@@ -37,6 +38,7 @@ export const SafetySummary: React.FC<SafetySummaryProps> = ({
   compatibility,
   persistenceStatus,
   isDiagramFile,
+  showTechnicalDetails = false,
 }) => {
   const blockedLabels = presentation.blockedActions.map(action => action.label).join(', ');
   const documentCapability = compatibility === 'fully-editable' || compatibility === 'partially-editable'
@@ -65,23 +67,23 @@ export const SafetySummary: React.FC<SafetySummaryProps> = ({
             )}
           </div>
           <p className="mt-1 max-w-5xl leading-snug text-carbon/70">{presentation.description}</p>
-          <div className="mt-2 flex flex-wrap gap-1.5 font-mono text-[9px] select-none">
+          {showTechnicalDetails && <div className="mt-2 flex flex-wrap gap-1.5 font-mono text-[9px] select-none">
             {documentCapability && (
               <span className="rounded bg-carbon/10 px-1.5 py-0.5 font-semibold text-carbon" title="Capacidad real del documento">
-                capacidad:{documentCapability}
+                capacidad: {documentCapability}
               </span>
             )}
             {persistenceStatus && (
               <span className="rounded bg-carbon/10 px-1.5 py-0.5 font-semibold text-carbon" title="Estado de persistencia">
-                persistence:{persistenceStatus === 'ready-clean' ? 'saved' : (persistenceStatus === 'saving-file' || persistenceStatus === 'saving-draft') ? 'saving' : persistenceStatus}
+                persistencia: {persistenceStatus === 'ready-clean' ? 'guardado' : (persistenceStatus === 'saving-file' || persistenceStatus === 'saving-draft') ? 'guardando' : persistenceStatus}
               </span>
             )}
             {isDiagramFile && (
               <span className="rounded bg-pavo/10 px-1.5 py-0.5 font-semibold text-pavo" title="Archivo de Diagrama TSX">
-                diagram-file
+                archivo de diagrama
               </span>
             )}
-          </div>
+          </div>}
           {presentation.reasons.length > 0 && (
             <ul className="mt-2 grid gap-1 text-carbon/70 sm:grid-cols-2">
               {presentation.reasons.slice(0, 4).map(reason => (

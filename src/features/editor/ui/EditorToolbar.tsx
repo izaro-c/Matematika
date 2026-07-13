@@ -3,7 +3,8 @@ import { Link } from 'wouter';
 import { Logo } from '@/shared/ui/Logo';
 import { routePath } from '@/shared/lib/routeHelper';
 import { ThemeToggle } from '@/widgets/navigation/ThemeToggle';
-import type { EditorMode, EditorValidationResult } from '../core/editorTypes';
+import type { DirtyState, EditorMode, EditorValidationResult } from '../core/editorTypes';
+import type { EditorWorkspaceLevel } from '../navigation/editorNavigationModel';
 import { EditorModeSwitcher } from './EditorModeSwitcher';
 
 interface EditorToolbarProps {
@@ -12,6 +13,7 @@ interface EditorToolbarProps {
   currentFile: string | null;
   message: string;
   persistenceLabel: string;
+  dirtyState: DirtyState;
   isDiagramFile: boolean;
   editorMode: EditorMode;
   toggleEditorMode: () => void;
@@ -22,7 +24,22 @@ interface EditorToolbarProps {
   setLocation: (loc: string) => void;
   isInspectorOpen: boolean;
   setIsInspectorOpen: (open: boolean) => void;
+  isDiagnosticsOpen: boolean;
+  setIsDiagnosticsOpen: (open: boolean) => void;
+  level: EditorWorkspaceLevel;
+  setLevel: (level: EditorWorkspaceLevel) => void;
   toggleSearch: () => void;
+}
+
+function changeIndicatorClass(hasPendingChanges: boolean, hasCurrentFile: boolean): string {
+  if (hasPendingChanges) return 'bg-ocre';
+  if (hasCurrentFile) return 'bg-salvia';
+  return 'bg-carbon/20';
+}
+
+function saveLabel(saving: boolean, isDiagramFile: boolean): string {
+  if (saving) return 'Guardando…';
+  return isDiagramFile ? 'Guardar TSX' : 'Revisar y guardar';
 }
 
 export const EditorToolbar: React.FC<EditorToolbarProps> = ({
@@ -31,6 +48,7 @@ export const EditorToolbar: React.FC<EditorToolbarProps> = ({
   currentFile,
   message,
   persistenceLabel,
+  dirtyState,
   isDiagramFile,
   editorMode,
   toggleEditorMode,
@@ -41,101 +59,113 @@ export const EditorToolbar: React.FC<EditorToolbarProps> = ({
   setLocation,
   isInspectorOpen,
   setIsInspectorOpen,
+  isDiagnosticsOpen,
+  setIsDiagnosticsOpen,
+  level,
+  setLevel,
   toggleSearch,
 }) => {
+  const fileName = currentFile?.split('/').pop() ?? 'Ningún recurso abierto';
+  const hasPendingChanges = dirtyState !== 'clean';
+  const indicatorClass = changeIndicatorClass(hasPendingChanges, Boolean(currentFile));
+  const resourceClass = isDiagramFile ? 'bg-pavo/10 text-pavo' : 'bg-salvia/10 text-salvia';
+  const resourceLabel = isDiagramFile ? 'Diagrama' : 'Documento MDX';
+  const primarySaveLabel = saveLabel(saving, isDiagramFile);
+
   return (
-    <div className="h-14 bg-lienzo border-b border-carbon/15 flex justify-between items-center px-6 shrink-0 z-10">
-      <div className="flex items-center gap-3">
-        {!isSidebarOpen && (
-          <button
-            type="button"
-            onClick={() => setIsSidebarOpen(true)}
-            className="p-1 text-carbon/50 hover:text-carbon text-sm mr-2 cursor-pointer"
-            title="Mostrar archivos"
-          >
-            ▸
-          </button>
-        )}
-        <div>
-          <h1 className="text-sm font-serif font-bold text-carbon">
-            {currentFile ? currentFile.split('/').pop() : 'Seleccionar Archivo'}
-          </h1>
-          <p className="text-[10px] text-carbon/40 font-serif italic">
-            {message || persistenceLabel}
-          </p>
+    <header className="shrink-0 border-b border-carbon/15 bg-lienzo" aria-label="Barra del editor">
+      <div className="flex min-h-14 items-center gap-2 px-2 sm:px-4">
+        <button
+          type="button"
+          onClick={() => setIsSidebarOpen(!isSidebarOpen)}
+          aria-expanded={isSidebarOpen}
+          aria-controls="editor-navigation"
+          className="rounded border border-carbon/15 px-2.5 py-2 text-xs font-bold text-carbon/70 hover:bg-carbon/5"
+          title="Mostrar u ocultar recursos (Ctrl/⌘ Mayús E)"
+        >
+          {isSidebarOpen ? 'Ocultar recursos' : 'Recursos'}
+        </button>
+
+        <div className="min-w-0 flex-1 px-1">
+          <div className="flex items-center gap-2">
+            <span className={`h-2 w-2 shrink-0 rounded-full ${indicatorClass}`} aria-hidden="true" />
+            <h1 className="truncate font-serif text-sm font-bold text-carbon">{fileName}</h1>
+            {currentFile && <span className={`hidden rounded px-1.5 py-0.5 text-[9px] font-bold uppercase tracking-wide sm:inline ${resourceClass}`}>{resourceLabel}</span>}
+          </div>
+          <p className="truncate text-[10px] text-carbon/45" aria-live="polite">{message || persistenceLabel}</p>
         </div>
-      </div>
 
-      <div className="flex items-center gap-4">
-        {currentFile && (
-          <>
-            <EditorModeSwitcher
-              editorMode={editorMode}
-              isDiagramFile={isDiagramFile}
-              onToggleMode={toggleEditorMode}
-            />
-
-            <div className={`text-[10px] font-bold uppercase tracking-wider ${validation.canSave ? 'text-salvia' : 'text-granada'}`}>
-              {validation.canSave ? `${validation.warningCount} avisos` : `${validation.errorCount} errores`}
-            </div>
-
+        <div className="hidden items-center rounded border border-carbon/15 p-0.5 xl:flex" aria-label="Complejidad de la interfaz">
+          {(['basic', 'advanced'] as const).map(option => (
             <button
+              key={option}
               type="button"
-              onClick={() => saveCurrentFile()}
-              disabled={saving || !validation.canSave || (!isDiagramFile && editorMode === 'visual')}
-              className="rounded bg-salvia px-3 py-1 text-xs font-serif font-bold text-lienzo shadow-sm transition-colors hover:bg-salvia/80 disabled:cursor-not-allowed disabled:opacity-40 cursor-pointer"
-              title={isDiagramFile ? 'Guardar el archivo TSX del diagrama' : validation.canSave ? 'Guardar en el archivo real' : 'Corrige los errores críticos para poder aplicar'}
+              onClick={() => setLevel(option)}
+              aria-pressed={level === option}
+              className={`rounded px-2.5 py-1 text-[10px] font-bold ${level === option ? 'bg-carbon text-lienzo' : 'text-carbon/55 hover:bg-carbon/5'}`}
             >
-              {isDiagramFile ? 'Guardar TSX' : 'Guardar'}
+              {option === 'basic' ? 'Básico' : 'Avanzado'}
             </button>
+          ))}
+        </div>
 
-            <button
-              type="button"
-              onClick={() => {
-                if (previewPath) setLocation(routePath(previewPath));
-              }}
-              disabled={isDiagramFile || !previewPath}
-              className="rounded border border-carbon/25 px-3 py-1 text-xs font-serif font-bold text-carbon transition-colors hover:bg-carbon/5 disabled:cursor-not-allowed disabled:opacity-40 cursor-pointer"
-            >
-              Ver como estudiante
-            </button>
-
-            {/* Toggle del Panel Lateral Derecho */}
-            {!isDiagramFile && (
-              <button
-                type="button"
-                onClick={() => setIsInspectorOpen(!isInspectorOpen)}
-                className="text-xs border border-carbon/25 px-3 py-1 rounded-sm hover:bg-carbon/5 text-carbon font-serif font-bold transition-all cursor-pointer"
-              >
-                {isInspectorOpen ? 'Ocultar Metadatos' : 'Mostrar Metadatos'}
-              </button>
-            )}
-          </>
-        )}
-
-        {/* Controles de Navegación y Tema Global del Editor */}
-        <div className="flex items-center gap-2 border-l border-carbon/15 pl-4">
-          <Link
-            href={routePath('/')}
-            className="w-12 h-12 flex items-center justify-center elegant-panel text-carbon"
-            title="Volver a la Biblioteca"
-          >
-            <Logo className="w-8 h-8" />
-          </Link>
+        {currentFile && <div className="hidden items-center gap-2 lg:flex">
+          <EditorModeSwitcher editorMode={editorMode} isDiagramFile={isDiagramFile} onToggleMode={toggleEditorMode} />
           <button
             type="button"
-            onClick={toggleSearch}
-            className="w-12 h-12 flex items-center justify-center elegant-panel text-carbon cursor-pointer"
-            title="Buscar (Cmd + K)"
+            onClick={() => saveCurrentFile()}
+            disabled={saving || !validation.canSave || (!isDiagramFile && editorMode === 'visual')}
+            className="rounded bg-salvia px-3 py-1.5 text-xs font-bold text-lienzo hover:bg-salvia/85 disabled:cursor-not-allowed disabled:opacity-40"
+            title={isDiagramFile ? 'Guardar el archivo TSX completo' : 'Revisar los cambios antes de aplicarlos'}
           >
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-              <circle cx="11" cy="11" r="8" />
-              <line x1="21" y1="21" x2="16.65" y2="16.65" />
-            </svg>
+            {primarySaveLabel}
+          </button>
+          {!isDiagramFile && <button
+            type="button"
+            onClick={() => previewPath && setLocation(routePath(previewPath))}
+            disabled={!previewPath}
+            className="rounded border border-carbon/20 px-3 py-1.5 text-xs font-bold text-carbon/70 hover:bg-carbon/5 disabled:cursor-not-allowed disabled:opacity-40"
+          >
+            Vista publicada
+          </button>}
+        </div>}
+
+        <div className="flex items-center gap-1 border-l border-carbon/10 pl-2">
+          {currentFile && <>
+            <button
+              type="button"
+              onClick={() => setIsInspectorOpen(!isInspectorOpen)}
+              aria-expanded={isInspectorOpen}
+              className={`hidden rounded px-2 py-1.5 text-xs font-bold sm:block ${isInspectorOpen ? 'bg-carbon/10 text-carbon' : 'text-carbon/55'}`}
+              title="Mostrar u ocultar inspector (Ctrl/⌘ Mayús I)"
+            >
+              Inspector
+            </button>
+            <button
+              type="button"
+              onClick={() => setIsDiagnosticsOpen(!isDiagnosticsOpen)}
+              aria-expanded={isDiagnosticsOpen}
+              className={`hidden rounded px-2 py-1.5 text-xs font-bold md:block ${isDiagnosticsOpen ? 'bg-carbon/10 text-carbon' : 'text-carbon/55'}`}
+              title="Mostrar u ocultar diagnósticos (Ctrl/⌘ J)"
+            >
+              Diagnósticos {validation.errorCount > 0 ? `(${validation.errorCount})` : ''}
+            </button>
+          </>}
+          <Link href={routePath('/')} className="flex h-9 w-9 items-center justify-center rounded border border-carbon/10 text-carbon" title="Volver a la biblioteca"><Logo className="h-6 w-6" /></Link>
+          <button type="button" onClick={toggleSearch} className="hidden h-9 w-9 items-center justify-center rounded border border-carbon/10 text-carbon sm:flex" title="Búsqueda global (Ctrl/⌘ K)" aria-label="Abrir búsqueda global">
+            <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><circle cx="11" cy="11" r="8" /><line x1="21" y1="21" x2="16.65" y2="16.65" /></svg>
           </button>
           <ThemeToggle />
         </div>
       </div>
-    </div>
+
+      {currentFile && <div className="flex items-center gap-2 overflow-x-auto border-t border-carbon/10 px-2 py-2 lg:hidden">
+        <EditorModeSwitcher editorMode={editorMode} isDiagramFile={isDiagramFile} onToggleMode={toggleEditorMode} />
+        <button type="button" onClick={() => saveCurrentFile()} disabled={saving || !validation.canSave || (!isDiagramFile && editorMode === 'visual')} className="whitespace-nowrap rounded bg-salvia px-3 py-1 text-xs font-bold text-lienzo disabled:opacity-40">{isDiagramFile ? 'Guardar TSX' : 'Revisar y guardar'}</button>
+        <button type="button" onClick={() => setIsInspectorOpen(!isInspectorOpen)} className="whitespace-nowrap rounded border border-carbon/15 px-2 py-1 text-xs">Inspector</button>
+        <button type="button" onClick={() => setIsDiagnosticsOpen(!isDiagnosticsOpen)} className="whitespace-nowrap rounded border border-carbon/15 px-2 py-1 text-xs">Diagnósticos</button>
+        <button type="button" onClick={() => setLevel(level === 'basic' ? 'advanced' : 'basic')} className="whitespace-nowrap rounded border border-carbon/15 px-2 py-1 text-xs">Vista {level === 'basic' ? 'básica' : 'avanzada'}</button>
+      </div>}
+    </header>
   );
 };
