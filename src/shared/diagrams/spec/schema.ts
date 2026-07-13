@@ -51,6 +51,8 @@ const elementPropertiesSchema = z.object({
   columns: z.number().int().min(1).max(100).optional(),
   title: z.string().min(1).optional(),
   clockwise: z.boolean().optional(),
+  visibleWhen: expressionSchema.optional(),
+  textRules: z.array(z.object({ when: expressionSchema, text: z.string() }).strict()).max(12).optional(),
 }).strict().superRefine((properties, context) => {
   if (properties.domain && properties.domain[0] >= properties.domain[1]) {
     context.addIssue({ code: 'custom', message: 'El inicio del dominio debe ser menor que el final.', path: ['domain'] });
@@ -61,6 +63,21 @@ const selectionSchema = z.object({
   selectable: z.boolean(),
   ariaLabel: z.string().min(1).optional(),
   role: z.enum(['primary', 'secondary', 'construction', 'annotation']).optional(),
+}).strict();
+
+const visualStyleSchema = z.object({
+  strokeWidth: finiteNumber.min(0).max(20).optional(),
+  strokeOpacity: finiteNumber.min(0).max(1).optional(),
+  fillOpacity: finiteNumber.min(0).max(1).optional(),
+  pointSize: finiteNumber.min(0).max(30).optional(),
+  angleRadius: finiteNumber.positive().max(10).optional(),
+  labelOffset: z.tuple([finiteNumber, finiteNumber]).optional(),
+  textOffset: z.tuple([finiteNumber, finiteNumber]).optional(),
+  highlightStrokeWidth: finiteNumber.min(0).max(30).optional(),
+  highlightFillOpacity: finiteNumber.min(0).max(1).optional(),
+  highlightPointSize: finiteNumber.min(0).max(40).optional(),
+  highlightVisible: z.boolean().optional(),
+  preserveColorOnHighlight: z.boolean().optional(),
 }).strict();
 
 const sceneBaseShape = {
@@ -75,6 +92,7 @@ const sceneBaseShape = {
   selection: selectionSchema,
   target: z.boolean(),
   targetId: idSchema.optional(),
+  style: visualStyleSchema.optional(),
   extensions: optionalExtensionsSchema,
 };
 
@@ -103,7 +121,7 @@ const elementSchema = z.object({
 const constraintSchema = z.object({
   id: idSchema,
   label: z.string().min(1),
-  kind: z.enum(['fixed', 'horizontal', 'vertical', 'coincident', 'on', 'distance', 'perpendicular', 'parallel', 'insideDisk', 'expression']),
+  kind: z.enum(['fixed', 'horizontal', 'vertical', 'coincident', 'on', 'distance', 'perpendicular', 'parallel', 'insideDisk', 'sameSide', 'expression']),
   refs: z.array(idSchema),
   expression: expressionSchema.optional(),
   value: finiteNumber.optional(),
@@ -175,6 +193,9 @@ const groupSchema = z.object({
   visible: z.boolean(),
   locked: z.boolean(),
   selection: selectionSchema,
+  target: z.boolean().optional(),
+  targetId: idSchema.optional(),
+  color: diagramColorTokenSchema.optional(),
   extensions: optionalExtensionsSchema,
 }).strict();
 
@@ -243,6 +264,12 @@ export const diagramSpecV2Schema = z.object({
     } else {
       publicTargetIds.set(publicId, item.id);
     }
+  });
+  spec.groups.filter(group => group.target).forEach(group => {
+    const publicId = group.targetId ?? group.id;
+    const previous = publicTargetIds.get(publicId);
+    if (previous) context.addIssue({ code: 'custom', message: `El target público ${publicId} está duplicado en ${previous} y el grupo ${group.id}.` });
+    else publicTargetIds.set(publicId, group.id);
   });
   spec.steps.forEach(step => {
     const previous = publicTargetIds.get(step.id);
@@ -327,6 +354,8 @@ export const diagramSpecV2Schema = z.object({
     if (properties.expression) expressionEntries.push({ source: properties.expression, path: ['elements', index, 'properties', 'expression'], parameter: properties.parameter, targetId: element.id });
     if (properties.xExpression) expressionEntries.push({ source: properties.xExpression, path: ['elements', index, 'properties', 'xExpression'], parameter: properties.parameter, targetId: element.id });
     if (properties.yExpression) expressionEntries.push({ source: properties.yExpression, path: ['elements', index, 'properties', 'yExpression'], parameter: properties.parameter, targetId: element.id });
+    if (properties.visibleWhen) expressionEntries.push({ source: properties.visibleWhen, path: ['elements', index, 'properties', 'visibleWhen'], targetId: element.id });
+    properties.textRules?.forEach((rule, ruleIndex) => expressionEntries.push({ source: rule.when, path: ['elements', index, 'properties', 'textRules', ruleIndex, 'when'], targetId: element.id }));
   });
   spec.steps.forEach((step, stepIndex) => {
     Object.entries(step.objectStates ?? {}).forEach(([objectId, state]) => {
@@ -339,7 +368,7 @@ export const diagramSpecV2Schema = z.object({
   (spec.constraints ?? []).forEach((constraint, index) => {
     const requiredRefs = constraint.kind === 'fixed' || constraint.kind === 'expression'
       ? 1
-      : constraint.kind === 'perpendicular' || constraint.kind === 'parallel' || constraint.kind === 'insideDisk'
+      : constraint.kind === 'perpendicular' || constraint.kind === 'parallel' || constraint.kind === 'insideDisk' || constraint.kind === 'sameSide'
         ? 3
         : 2;
     if (constraint.refs.length < requiredRefs) context.addIssue({ code: 'custom', message: `${constraint.id} necesita al menos ${requiredRefs} referencias.`, path: ['constraints', index, 'refs'] });

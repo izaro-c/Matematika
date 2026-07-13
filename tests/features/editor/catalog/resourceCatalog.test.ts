@@ -85,7 +85,13 @@ describe('catálogo seguro del editor', () => {
     expect(documents.every(item => item.path.startsWith('database/content/') && item.path.endsWith('.mdx'))).toBe(true);
     expect(diagrams).toHaveLength(85);
     expect(diagrams.every(item => item.path.startsWith('widgets/diagrams/') && item.path.endsWith('.tsx'))).toBe(true);
-    expect(diagrams.every(item => item.capability === 'code-preview')).toBe(true);
+    expect(diagrams.filter(item => item.capability === 'visual-exact').map(item => item.path).sort()).toEqual([
+      'widgets/diagrams/Definiciones/Paralelogramo.tsx',
+      'widgets/diagrams/Models/ModeloPoincare.tsx',
+      'widgets/diagrams/Teoremas/CongruenciaALA.tsx',
+      'widgets/diagrams/Teoremas/Pitagoras.tsx',
+    ]);
+    expect(diagrams.filter(item => item.capability === 'code-preview')).toHaveLength(81);
     expect(editable.some(item => ['MathBoard.tsx', 'MathFactory.ts', 'MathUtils.ts', 'InteractiveGeometryCanvas.tsx'].includes(item.name))).toBe(false);
   });
 });

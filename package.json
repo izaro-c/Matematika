@@ -39,6 +39,7 @@
     "test:coverage": "vitest run --coverage",
     "test:e2e": "tsx tests/e2e/editor/editor-safe-ux.e2e.ts",
     "test:e2e:editor": "tsx tests/e2e/editor/editor-safe-ux.e2e.ts",
+    "test:e2e:phase5": "tsx tests/e2e/editor/phase5-real-diagrams.e2e.ts",
     "test:e2e:ui": "tsx tests/e2e/editor/editor-safe-ux.e2e.ts",
     "editor:roundtrip:audit": "tsx scripts/editor/audit-mdx-roundtrip.ts --audit",
     "editor:roundtrip:check": "tsx scripts/editor/audit-mdx-roundtrip.ts --check",

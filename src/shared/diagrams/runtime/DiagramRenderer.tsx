@@ -30,7 +30,7 @@ import {
 } from '../core/MathFactory';
 import { DiagramInfoPanel, DiagramTitle } from '@/shared/ui/DiagramOverlay';
 import { StepNavigator } from '@/shared/ui/StepNavigator';
-import { useMathStore } from '@/shared/lib/MathStoreContext';
+import { MathProviderBoundary, useMathStore } from '@/shared/lib/MathStoreContext';
 import { useDiagramTargetRegistry } from '@/shared/lib/DiagramTargetRegistryContext';
 import {
   DIAGRAM_RENDERER_ID,
@@ -165,16 +165,38 @@ function measurementText(item: DiagramElement, elements: Record<string, any>, sp
   return (item.text || `${item.label}: {value}`).split('{value}').join(content);
 }
 
+function reactiveText(item: DiagramElement, elements: Record<string, any>, spec: DiagramSpecV2): string | undefined {
+  const variables = liveVariables(elements, spec);
+  const rule = item.properties?.textRules?.find(candidate => {
+    try { return evaluateMathExpression(candidate.when, variables) !== 0; } catch { return false; }
+  });
+  return rule?.text;
+}
+
+function conditionAllows(item: DiagramSceneItem, elements: Record<string, any>, spec: DiagramSpecV2): boolean {
+  if (!('kind' in item) || !item.properties?.visibleWhen) return true;
+  try { return evaluateMathExpression(item.properties.visibleWhen, liveVariables(elements, spec)) !== 0; } catch { return false; }
+}
+
 function createElement(board: any, elements: Record<string, any>, item: DiagramElement, theme: ThemeColors, layer: number, spec: DiagramSpecV2) {
   const refs = refsFor(item, elements);
-  const lineOptions = { strokeColor: theme[item.color], strokeWidth: 2.4, dash: item.dashed ? 2 : 0, layer };
+  const lineOptions = {
+    strokeColor: theme[item.color],
+    strokeWidth: item.style?.strokeWidth ?? 2.4,
+    strokeOpacity: item.style?.strokeOpacity ?? 1,
+    dash: item.dashed ? 2 : 0,
+    layer,
+  };
   if (item.kind === 'segment') return refs.length >= 2 ? createSegment(board, [refs[0], refs[1]], lineOptions, theme) : null;
   if (item.kind === 'line') return refs.length >= 2 ? createLine(board, [refs[0], refs[1]], lineOptions, theme) : null;
   if (item.kind === 'ray') return refs.length >= 2 ? createRay(board, [refs[0], refs[1]], lineOptions, theme) : null;
   if (item.kind === 'polygon') return refs.length >= 3 ? createPolygon(board, refs, {
-    fillColor: theme[item.color], fillOpacity: 0.16, borders: { strokeColor: theme[item.color], strokeWidth: 1.5 }, layer,
+    fillColor: theme[item.color], fillOpacity: item.style?.fillOpacity ?? 0.16,
+    borders: { strokeColor: theme[item.color], strokeWidth: item.style?.strokeWidth ?? 1.5, strokeOpacity: item.style?.strokeOpacity ?? 1 }, layer,
   }, theme) : null;
-  if (item.kind === 'circle') return refs.length >= 2 ? createCircle(board, [refs[0], refs[1]], lineOptions, theme) : null;
+  if (item.kind === 'circle') return refs.length >= 2 ? createCircle(board, [refs[0], refs[1]], {
+    ...lineOptions, fillColor: theme[item.color], fillOpacity: item.style?.fillOpacity ?? 0,
+  }, theme) : null;
   if (item.kind === 'arc') return refs.length >= 3 ? createArc(board, [refs[0], refs[1], refs[2]], lineOptions, theme) : null;
   if (item.kind === 'functionCurve' && item.properties?.expression) {
     const domain = item.properties.domain ?? [-5, 5];
@@ -217,13 +239,13 @@ function createElement(board: any, elements: Record<string, any>, item: DiagramE
   if (item.kind === 'parallel') return refs.length >= 3 ? createParallelLine(board, [refs[0], refs[1], refs[2]], lineOptions, theme) : null;
   if (item.kind === 'angleBisector') return refs.length >= 3 ? createAngleBisectorRay(board, [refs[0], refs[1], refs[2]], lineOptions, theme) : null;
   if (item.kind === 'angle') return refs.length >= 3 ? createAngle(board, [refs[0], refs[1], refs[2]], {
-    fillColor: theme[item.color], strokeColor: theme[item.color], layer,
+    fillColor: theme[item.color], strokeColor: theme[item.color], radius: item.style?.angleRadius, layer,
   }, theme) : null;
   if (item.kind === 'rightAngle') return refs.length >= 3 ? createRightAngleMarker(board, [refs[0], refs[1], refs[2]], {
-    fillColor: theme[item.color], strokeColor: theme[item.color], layer,
+    fillColor: theme[item.color], strokeColor: theme[item.color], size: item.style?.angleRadius, layer,
   }, theme) : null;
   if (item.kind === 'perpendicularMark') return refs.length >= 3 ? createRightAngleMarker(board, [refs[0], refs[1], refs[2]], {
-    fillColor: theme[item.color], strokeColor: theme[item.color], layer,
+    fillColor: theme[item.color], strokeColor: theme[item.color], size: item.style?.angleRadius, layer,
   }, theme) : null;
   if (item.kind === 'congruenceMark') return refs.length >= 2 ? createCongruenceMark(
     board,
@@ -253,19 +275,20 @@ function createElement(board: any, elements: Record<string, any>, item: DiagramE
     refs,
     item.properties?.rows ?? 2,
     item.properties?.columns ?? 2,
-    { fillColor: theme[item.color], fillOpacity: 0.16, borders: lineOptions, layer },
+    { fillColor: theme[item.color], fillOpacity: item.style?.fillOpacity ?? 0.16, borders: lineOptions, layer },
     theme,
   ) : null;
   const anchor = refs[0];
   const dynamicText = () => {
-    const body = item.kind === 'measurement' || item.kind === 'dimensionLine' || item.properties?.expression
+    const body = reactiveText(item, elements, spec) ?? (item.kind === 'measurement' || item.kind === 'dimensionLine' || item.properties?.expression
       ? measurementText(item, elements, spec)
-      : item.text || item.label;
+      : item.text || item.label);
     return item.kind === 'infoPanel' && item.properties?.title
       ? `<strong>${item.properties.title}</strong><br/>${body}`
       : body;
   };
-  return anchor ? createText(board, [() => anchor.X() + 0.25, () => anchor.Y() + 0.35, dynamicText], {
+  const textOffset = item.style?.textOffset ?? [0.25, 0.35];
+  return anchor ? createText(board, [() => anchor.X() + textOffset[0], () => anchor.Y() + textOffset[1], dynamicText], {
     color: theme[item.color],
     layer,
     cssClass: item.kind === 'formula'
@@ -295,7 +318,7 @@ function sameBounds(left: DiagramBounds, right: DiagramBounds): boolean {
   return left.every((value, index) => Math.abs(value - right[index]) <= 1e-8);
 }
 
-export const DiagramRenderer: React.FC<DiagramRendererProps> = ({
+const DiagramRendererContent: React.FC<DiagramRendererProps> = ({
   spec,
   mode = 'runtime',
   selectedIds = [],
@@ -326,6 +349,8 @@ export const DiagramRenderer: React.FC<DiagramRendererProps> = ({
     ...[...spec.points, ...spec.elements, ...spec.sliders]
       .filter(item => item.target)
       .map(item => ({ targetId: item.targetId ?? item.id, objectId: item.id, label: item.label, kind: 'object' as const })),
+    ...spec.groups.filter(group => group.target)
+      .map(group => ({ targetId: group.targetId ?? group.id, objectId: group.id, label: group.label, kind: 'object' as const })),
     ...spec.steps.map(step => ({ targetId: step.id, objectId: step.id, label: step.label, kind: 'step' as const })),
   ], [spec.elements, spec.points, spec.sliders, spec.steps]);
 
@@ -341,7 +366,7 @@ export const DiagramRenderer: React.FC<DiagramRendererProps> = ({
 
   return (
     <div
-      className={`relative min-h-[360px] overflow-hidden rounded border border-carbon/10 bg-lienzo ${className ?? ''}`}
+      className={`relative min-h-[360px] h-full w-full overflow-hidden rounded border border-carbon/10 bg-lienzo ${className ?? ''}`}
       data-diagram-renderer={DIAGRAM_RENDERER_ID}
       data-diagram-mode={mode}
     >
@@ -380,23 +405,29 @@ export const DiagramRenderer: React.FC<DiagramRendererProps> = ({
                 ], {
                   name: sceneItem.label,
                   fixed: true,
+                  ...(sceneItem.style?.pointSize !== undefined ? { size: sceneItem.style.pointSize } : {}),
                   fillColor: theme[sceneItem.color],
                   strokeColor: theme[sceneItem.color],
+                  ...(sceneItem.style?.labelOffset ? { label: { offset: sceneItem.style.labelOffset } } : {}),
                   layer: itemLayerNumber(spec, sceneItem),
                 }, theme)
                 : sceneItem.constraint === 'glider' && sceneItem.gliderTarget
                 ? createGlider(board, [sceneItem.x, sceneItem.y, elements[sceneItem.gliderTarget]], {
                   name: sceneItem.label,
                   fixed: sceneItem.fixed || entry.locked,
+                  ...(sceneItem.style?.pointSize !== undefined ? { size: sceneItem.style.pointSize } : {}),
                   fillColor: theme[sceneItem.color],
                   strokeColor: theme[sceneItem.color],
+                  ...(sceneItem.style?.labelOffset ? { label: { offset: sceneItem.style.labelOffset } } : {}),
                   layer: itemLayerNumber(spec, sceneItem),
                 }, theme)
                 : createPoint(board, [sceneItem.x, sceneItem.y], {
                   name: sceneItem.label,
                   fixed: sceneItem.fixed || entry.locked,
+                  ...(sceneItem.style?.pointSize !== undefined ? { size: sceneItem.style.pointSize } : {}),
                   fillColor: theme[sceneItem.color],
                   strokeColor: theme[sceneItem.color],
+                  ...(sceneItem.style?.labelOffset ? { label: { offset: sceneItem.style.labelOffset } } : {}),
                   layer: itemLayerNumber(spec, sceneItem),
                 }, theme);
               elements[sceneItem.id] = item;
@@ -444,6 +475,7 @@ export const DiagramRenderer: React.FC<DiagramRendererProps> = ({
           const effectiveHighlights = new Set([
             ...items.filter(item => highlightedIds.includes(item.id) || highlightedIds.includes(item.targetId ?? item.id)).map(item => item.id),
             ...items.filter(item => isHL(item.targetId ?? item.id)).map(item => item.id),
+            ...spec.groups.filter(group => isHL(group.targetId ?? group.id)).map(group => group.id),
           ]);
           const plan = createScenePlan(spec, {
             activeStepId: effectiveStep,
@@ -460,17 +492,27 @@ export const DiagramRenderer: React.FC<DiagramRendererProps> = ({
             const stepSecondary = entry.stepEmphasis === 'secondary';
             const active = externalActive || stepPrimary || stepSecondary;
             const opacity = externalActive || !anyExternalEmphasis ? 1 : 0.28;
-            const color = externalActive ? theme.ocre : stepPrimary ? theme.terracota : stepSecondary ? theme.pavo : theme[item.color];
-            const visible = entry.visible && (('kind' in item && item.kind === 'baseExtension')
+            const color = externalActive && !item.style?.preserveColorOnHighlight
+              ? theme.ocre
+              : stepPrimary ? theme.terracota : stepSecondary ? theme.pavo : theme[item.color];
+            const sceneVisible = entry.visible || (externalActive && item.style?.highlightVisible === true);
+            const conditionVisible = externalActive && item.style?.highlightVisible === true
+              ? true
+              : conditionAllows(item, elements, spec);
+            const visible = sceneVisible && conditionVisible && (('kind' in item && item.kind === 'baseExtension')
               ? outsideBaseExtension(elements[item.refs[0]], elements[item.refs[1]], elements[item.refs[2]])
               : true);
-            const base = { visible, layer: itemLayerNumber(spec, item), opacity, fixed: entry.locked };
+            const base = { visible, fixed: entry.locked };
             if (element.__matematikaStepLabel !== entry.label) {
               element.setAttribute?.({ name: entry.label });
               element.__matematikaStepLabel = entry.label;
             }
-            if ('constraint' in item) {
-              element.setAttribute({ ...base, size: active ? 8.5 : 5, fillColor: color, strokeColor: color, fillOpacity: opacity });
+            if ('constraint' in item || ('kind' in item && (item.kind === 'midpoint' || item.kind === 'perpendicularFoot'))) {
+              element.setAttribute({
+                ...base,
+                size: active ? item.style?.highlightPointSize ?? 8.5 : item.style?.pointSize ?? 5,
+                fillColor: color, strokeColor: color, fillOpacity: opacity,
+              });
             } else if ('min' in item) {
               if (entry.stepValue !== undefined && element.__matematikaStepValue !== entry.stepValue) {
                 element.setValue?.(entry.stepValue);
@@ -479,17 +521,40 @@ export const DiagramRenderer: React.FC<DiagramRendererProps> = ({
                 element.setValue?.(item.value);
                 delete element.__matematikaStepValue;
               }
-              element.setAttribute({ ...base, strokeColor: color });
+              element.setAttribute({ ...base, strokeColor: color, strokeOpacity: opacity });
             } else if (item.kind === 'polygon' || item.kind === 'areaDecomposition') {
-              element.setAttribute({ ...base, fillColor: color, fillOpacity: active ? 0.34 : 0.16 * opacity });
+              element.setAttribute({
+                ...base, fillColor: color,
+                fillOpacity: active ? item.style?.highlightFillOpacity ?? 0.34 : (item.style?.fillOpacity ?? 0.16) * opacity,
+              });
             } else if (item.kind === 'angle' || item.kind === 'rightAngle' || item.kind === 'perpendicularMark') {
-              element.setAttribute({ ...base, fillColor: color, strokeColor: color, fillOpacity: active ? 0.45 : 0.18 * opacity, strokeWidth: active ? 3 : 1.5 });
-            } else if (item.kind === 'midpoint' || item.kind === 'perpendicularFoot') {
-              element.setAttribute({ ...base, size: active ? 8.5 : 5, fillColor: color, strokeColor: color, fillOpacity: opacity });
+              element.setAttribute({
+                ...base, fillColor: color, strokeColor: color,
+                fillOpacity: active ? item.style?.highlightFillOpacity ?? 0.45 : (item.style?.fillOpacity ?? 0.18) * opacity,
+                strokeWidth: active ? item.style?.highlightStrokeWidth ?? 3 : item.style?.strokeWidth ?? 1.5,
+              });
             } else if (item.kind === 'text' || item.kind === 'label' || item.kind === 'formula' || item.kind === 'infoPanel' || item.kind === 'measurement') {
-              element.setAttribute({ ...base, color });
+              element.setAttribute({ ...base, color, opacity });
+            } else if (item.kind === 'circle') {
+              element.setAttribute({
+                ...base,
+                fillColor: theme[item.color],
+                fillOpacity: (item.style?.fillOpacity ?? 0) * opacity,
+                strokeColor: color,
+                strokeOpacity: (item.style?.strokeOpacity ?? 1) * opacity,
+                strokeWidth: externalActive
+                  ? item.style?.highlightStrokeWidth ?? 4.8
+                  : stepPrimary ? 4 : stepSecondary ? 3.2 : item.style?.strokeWidth ?? 2.4,
+              });
             } else {
-              element.setAttribute({ ...base, strokeColor: color, strokeOpacity: opacity, strokeWidth: externalActive ? 4.8 : stepPrimary ? 4 : stepSecondary ? 3.2 : 2.4 });
+              element.setAttribute({
+                ...base,
+                strokeColor: color,
+                strokeOpacity: (item.style?.strokeOpacity ?? 1) * opacity,
+                strokeWidth: externalActive
+                  ? item.style?.highlightStrokeWidth ?? 4.8
+                  : stepPrimary ? 4 : stepSecondary ? 3.2 : item.style?.strokeWidth ?? 2.4,
+              });
             }
           });
           const nextLiveVariables = liveVariables(elements, spec);
@@ -502,7 +567,7 @@ export const DiagramRenderer: React.FC<DiagramRendererProps> = ({
       >
         <DiagramTitle>{spec.title}</DiagramTitle>
         {spec.note && (
-          <DiagramInfoPanel title="Exploración" position="bottom-right">
+          <DiagramInfoPanel title="Exploración" position="bottom-right" className={spec.steps.length > 0 ? 'mb-14' : ''}>
             <span>{spec.note}</span>
           </DiagramInfoPanel>
         )}
@@ -532,6 +597,12 @@ export const DiagramRenderer: React.FC<DiagramRendererProps> = ({
     </div>
   );
 };
+
+export const DiagramRenderer: React.FC<DiagramRendererProps> = props => (
+  <MathProviderBoundary>
+    <DiagramRendererContent {...props} />
+  </MathProviderBoundary>
+);
 
 DiagramRenderer.displayName = 'DiagramRenderer';
 

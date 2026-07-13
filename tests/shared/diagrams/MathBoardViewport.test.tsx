@@ -35,7 +35,9 @@ describe('MathBoard controlled viewport', () => {
     const onBoundingBoxChange = vi.fn();
     render(<MathBoard onInit={vi.fn()} onBoundingBoxChange={onBoundingBoxChange} pan zoom />);
     expect(mocks.handlers.boundingbox).toBeTypeOf('function');
+    expect(onBoundingBoxChange).not.toHaveBeenCalled();
+    mocks.board.getBoundingBox.mockReturnValueOnce([-3, 2, 3, -2]);
     act(() => mocks.handlers.boundingbox());
-    expect(onBoundingBoxChange).toHaveBeenCalledWith([-2, 2, 2, -2]);
+    expect(onBoundingBoxChange).toHaveBeenCalledWith([-3, 2, 3, -2]);
   });
 });

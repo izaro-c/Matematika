@@ -10,6 +10,9 @@ vi.mock('../../../src/shared/diagrams/core/MathBoard', () => ({
 }));
 
 import { DiagramRenderer } from '../../../src/shared/diagrams/runtime/DiagramRenderer';
+import { Pitagoras } from '../../../src/widgets/diagrams/Teoremas/Pitagoras';
+import { PitagorasSpec } from '../../../src/widgets/diagrams/Teoremas/Pitagoras';
+import { DiagramStepsEditor } from '../../../src/features/editor/diagrams/ui/DiagramStepsEditor';
 
 describe('DiagramRenderer shared runtime', () => {
   beforeEach(() => vi.clearAllMocks());
@@ -26,5 +29,25 @@ describe('DiagramRenderer shared runtime', () => {
     fireEvent.click(screen.getByRole('button', { name: 'Acercar' }));
     expect(onViewportChange).toHaveBeenCalledTimes(1);
     expect((screen.getByRole('button', { name: 'Recuperar' }) as HTMLButtonElement).disabled).toBe(false);
+  });
+
+  it('opens the real Pitágoras editor preview without requiring an outer MathProvider', () => {
+    expect(() => render(
+      <Pitagoras />,
+    )).not.toThrow();
+    expect(screen.getByTestId('math-board')).toBeTruthy();
+  });
+
+  it('opens the real Pitágoras steps editor without requiring an outer MathProvider', () => {
+    expect(() => render(
+      <DiagramStepsEditor
+        model={PitagorasSpec}
+        activeStepId="step1"
+        onActiveStepChange={vi.fn()}
+        onModelEdit={vi.fn()}
+        onSelectObject={vi.fn()}
+      />,
+    )).not.toThrow();
+    expect(screen.getByRole('navigation', { name: 'Navegación de pasos del diagrama' })).toBeTruthy();
   });
 });

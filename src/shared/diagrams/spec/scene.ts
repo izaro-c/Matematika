@@ -200,10 +200,9 @@ export function createScenePlan(spec: DiagramSpecV2, state: DiagramSceneState = 
       const objectState = objectStates[item.id];
       const layer = layers.get(item.layerId);
       const itemGroups = item.groupIds.map(id => groups.get(id)).filter(Boolean);
-      const visible = item.visible
-        && layer?.visible !== false
+      const visible = layer?.visible !== false
         && itemGroups.every(group => group?.visible !== false)
-        && (objectState?.visible ?? (!stepTargets || stepTargets.has(item.id)));
+        && (objectState?.visible ?? (item.visible && (!stepTargets || stepTargets.has(item.id))));
       const interactive = objectState?.interactive ?? true;
       const locked = !interactive || item.locked || layer?.locked === true || itemGroups.some(group => group?.locked === true);
       const layerOrder = layer?.order ?? 0;
@@ -211,7 +210,7 @@ export function createScenePlan(spec: DiagramSpecV2, state: DiagramSceneState = 
         item,
         visible,
         locked,
-        highlighted: highlighted.has(item.id),
+        highlighted: highlighted.has(item.id) || itemGroups.some(group => highlighted.has(group?.id ?? '')),
         selected: selected.has(item.id) || itemGroups.some(group => selected.has(group?.id ?? '')),
         stepEmphasis: objectState?.emphasis ?? 'none',
         label: objectState?.label || item.label,
@@ -416,6 +415,25 @@ export function constrainPointCoordinates(
       const dy = result.y - center.y;
       const length = Math.hypot(dx, dy);
       if (length > radius) result = { x: center.x + dx / length * radius, y: center.y + dy / length * radius };
+    } else if (constraint.kind === 'sameSide' && constraint.refs.length >= 3) {
+      const baseA = resolvePointCoordinates(spec, constraint.refs[1]);
+      const baseB = resolvePointCoordinates(spec, constraint.refs[2]);
+      if (!baseA || !baseB) continue;
+      const dx = baseB.x - baseA.x;
+      const dy = baseB.y - baseA.y;
+      const length = Math.hypot(dx, dy) || 1;
+      const initialCross = dx * (point.y - baseA.y) - dy * (point.x - baseA.x);
+      const currentCross = dx * (result.y - baseA.y) - dy * (result.x - baseA.x);
+      const side = Math.sign(initialCross) || 1;
+      if (currentCross * side <= 0.01) {
+        const projection = ((result.x - baseA.x) * dx + (result.y - baseA.y) * dy) / (length * length);
+        const normalX = -dy / length * side;
+        const normalY = dx / length * side;
+        result = {
+          x: baseA.x + projection * dx + normalX * 0.05,
+          y: baseA.y + projection * dy + normalY * 0.05,
+        };
+      }
     } else if ((constraint.kind === 'perpendicular' || constraint.kind === 'parallel') && constraint.refs.length >= 3) {
       const baseA = resolvePointCoordinates(spec, constraint.refs[1]);
       const baseB = resolvePointCoordinates(spec, constraint.refs[2]);
