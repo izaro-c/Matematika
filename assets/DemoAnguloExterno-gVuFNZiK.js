@@ -1,0 +1,1 @@
+import{t as e}from"./jsx-runtime-DUAcabCT.js";var t=e(),n=()=>(0,t.jsx)(`div`,{className:`w-full h-full min-h-[350px] relative bg-lienzo/40 border border-pizarra/10 rounded-sm overflow-hidden flex items-center justify-center`,children:(0,t.jsx)(`span`,{className:`text-pizarra/30 font-serif italic text-sm`,children:`Diagrama en construcción`})});export{n as DemoAnguloExterno};

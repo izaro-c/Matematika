@@ -1,1 +1,0 @@
-import{n as e,t}from"./jsx-runtime-n5LQ9ujS.js";e();var n=t(),r=({children:e,delay:t=0,duration:r=400,className:i=``,as:a=`div`})=>(0,n.jsx)(a,{className:`animate-fade-in ${i}`,style:{animationDelay:`${t}ms`,animationDuration:`${r}ms`,opacity:0},children:e});export{r as t};

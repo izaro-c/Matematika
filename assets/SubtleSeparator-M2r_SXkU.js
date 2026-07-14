@@ -1,0 +1,1 @@
+import{t as e}from"./jsx-runtime-DUAcabCT.js";import{t}from"./react-DbyrFoBd.js";t();var n=e(),r=({ornament:e=`✦`})=>(0,n.jsx)(`div`,{className:`subtle-separator`,"aria-hidden":!0,children:(0,n.jsx)(`span`,{className:`subtle-separator-ornament`,children:e})});export{r as t};

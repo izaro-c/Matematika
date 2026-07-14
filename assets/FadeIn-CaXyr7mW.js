@@ -1,0 +1,1 @@
+import{t as e}from"./jsx-runtime-DUAcabCT.js";import{t}from"./react-DbyrFoBd.js";t();var n=e(),r=({children:e,delay:t=0,duration:r=400,className:i=``,as:a=`div`})=>(0,n.jsx)(a,{className:`animate-fade-in ${i}`,style:{animationDelay:`${t}ms`,animationDuration:`${r}ms`,opacity:0},children:e});export{r as t};
