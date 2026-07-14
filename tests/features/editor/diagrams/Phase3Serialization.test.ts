@@ -35,4 +35,20 @@ describe('Phase 3 source serialization', () => {
     if (generated.ok) return;
     expect(generated.diagnostics[0].message).toContain('elements.1.properties.expression');
   });
+
+  it('roundtrips viewport-relative information panel positions', () => {
+    const model = migrateDiagramSpec(annotationsFixture).spec;
+    const positioned = {
+      ...model,
+      elements: model.elements.map(element => element.id === 'panelA'
+        ? { ...element, refs: [], properties: { ...element.properties, anchorMode: 'viewport' as const, viewportPosition: [0.12, 0.18] as [number, number] } }
+        : element),
+    };
+    const generated = generateDiagramSource(positioned, 'ViewportPanel');
+    expect(generated.ok).toBe(true);
+    if (!generated.ok) return;
+    const parsed = parseDiagramSourceAST(generated.source);
+    expect(parsed.status).toBe('visual-exact');
+    if (parsed.status === 'visual-exact') expect(parsed.model).toEqual(positioned);
+  });
 });

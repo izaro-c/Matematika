@@ -38,7 +38,38 @@
 .notebook-diagram {
   width: 100%;
   min-width: 0;
-  height: clamp(20rem, 50svh, 32rem);
+  height: clamp(20rem, 50svh, 28rem);
+}
+
+@media (max-width: 1023px) {
+  .notebook-diagram [data-diagram-renderer],
+  .notebook-diagram [data-diagram-renderer] > div,
+  .notebook-diagram [data-diagram-renderer] .jxgbox {
+    height: 100% !important;
+    min-height: 0 !important;
+  }
+}
+
+@media (max-width: 639px) {
+  .notebook-diagram [data-diagram-header] {
+    padding: 0.75rem 0.875rem 0;
+  }
+
+  .notebook-diagram [data-diagram-header] > p {
+    margin-bottom: 0.375rem;
+    font-size: 0.75rem;
+    line-height: 1.25;
+  }
+
+  .notebook-diagram [data-diagram-title] {
+    font-size: 1.25rem;
+  }
+
+  .notebook-diagram [data-diagram-header] > output {
+    margin-top: 0.25rem;
+    column-gap: 0.5rem;
+    font-size: 0.875rem;
+  }
 }
 
 @media (min-width: 1024px) {
@@ -66,4 +97,3 @@
   border: 1px dashed color-mix(in srgb, var(--theme-carbon) 20%, transparent);
   background: color-mix(in srgb, var(--theme-lienzo) 95%, var(--theme-carbon));
 }
-

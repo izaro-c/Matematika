@@ -11,15 +11,20 @@ import annotationsFixture from '../../fixtures/diagrams/phase3-annotations-layer
 import { migrateDiagramSpec } from '../../../src/shared/diagrams/public';
 import { MathProvider, useMathStore } from '../../../src/shared/lib/MathStoreContext';
 
-const rendererState = vi.hoisted(() => ({ createdKinds: [] as string[], nodes: [] as HTMLElement[] }));
+const rendererState = vi.hoisted(() => ({
+  createdKinds: [] as string[],
+  createdOptions: [] as Array<{ kind: string; args: any[]; options: Record<string, unknown> }>,
+  nodes: [] as HTMLElement[],
+}));
 
 vi.mock('../../../src/shared/diagrams/core/MathBoard', () => ({
   MathBoard: ({ children, onInit, onUpdate }: { children?: React.ReactNode; onInit?: (board: unknown, elements: Record<string, unknown>, theme: Record<string, string>) => void; onUpdate?: (board: unknown, elements: Record<string, unknown>, theme: Record<string, string>, isStep: () => boolean, isHL: () => boolean) => void }) => {
     const elementsRef = React.useRef<Record<string, any>>({});
     const number = (value: unknown, fallback = 0) => typeof value === 'function' ? fallback : typeof value === 'number' ? value : fallback;
     const boardRef = React.useRef({
-        create: (kind: string, args: any[] = []) => {
+        create: (kind: string, args: any[] = [], options: Record<string, unknown> = {}) => {
           rendererState.createdKinds.push(kind);
+          rendererState.createdOptions.push({ kind, args, options });
           const node = document.createElement('span');
           rendererState.nodes.push(node);
           let x = number(args[0]);
@@ -42,6 +47,7 @@ vi.mock('../../../src/shared/diagrams/core/MathBoard', () => ({
         update: vi.fn(),
         getAllObjectsUnderMouse: vi.fn(() => []),
         getUsrCoordsOfMouse: vi.fn(() => [0, 0]),
+        getBoundingBox: vi.fn(() => [-4, 4, 4, -4]),
       });
     const themeRef = React.useRef({ carbon: 'carbon', terracota: 'terracota', salvia: 'salvia', pizarra: 'pizarra', ocre: 'ocre', pavo: 'pavo', granada: 'granada', musgo: 'musgo', lienzo: 'lienzo' });
     React.useEffect(() => {
@@ -57,6 +63,7 @@ import { DiagramRenderer } from '../../../src/shared/diagrams/runtime/DiagramRen
 afterEach(() => {
   cleanup();
   rendererState.createdKinds.length = 0;
+  rendererState.createdOptions.length = 0;
   rendererState.nodes.length = 0;
 });
 
@@ -105,5 +112,48 @@ describe('Phase 3 shared renderer', () => {
       </MathProvider>,
     );
     expectedKinds.forEach(kind => expect(rendererState.createdKinds).toContain(kind));
+  });
+
+  it('keeps information panels in their editorial hover style at rest and on hover', () => {
+    render(
+      <MathProvider>
+        <DiagramRenderer spec={migrateDiagramSpec(annotationsFixture).spec} viewportControls={false} />
+      </MathProvider>,
+    );
+    const panel = rendererState.createdOptions.find(({ kind, options }) => kind === 'text' && String(options.cssClass).includes('matematika-info-panel'));
+    expect(panel?.options).toMatchObject({
+      cssClass: 'JXGtext matematika-info-panel',
+      highlightCssClass: 'JXGtext matematika-info-panel',
+      highlightStrokeOpacity: 1,
+    });
+  });
+
+  it('anchors an information panel to normalized viewport coordinates without a geometric reference', () => {
+    const spec = migrateDiagramSpec(annotationsFixture).spec;
+    const viewportPanelSpec = {
+      ...spec,
+      elements: spec.elements.map(item => item.id === 'panelA'
+        ? { ...item, refs: [], properties: { ...item.properties, anchorMode: 'viewport' as const, viewportPosition: [0.25, 0.2] as [number, number] } }
+        : item),
+    };
+    render(<MathProvider><DiagramRenderer spec={viewportPanelSpec} viewportControls={false} /></MathProvider>);
+    const panel = rendererState.createdOptions.find(({ kind, options }) => kind === 'text' && String(options.cssClass).includes('matematika-info-panel'));
+    expect(panel).toBeDefined();
+    expect((panel?.args[0] as () => number)()).toBe(-2);
+    expect((panel?.args[1] as () => number)()).toBeCloseTo(2.4);
+    expect(panel?.options).toMatchObject({ anchorX: 'left', anchorY: 'top' });
+  });
+
+  it('turns viewport panel anchors inward near the lower-right edge', () => {
+    const spec = migrateDiagramSpec(annotationsFixture).spec;
+    const viewportPanelSpec = {
+      ...spec,
+      elements: spec.elements.map(item => item.id === 'panelA'
+        ? { ...item, refs: [], properties: { ...item.properties, anchorMode: 'viewport' as const, viewportPosition: [0.9, 0.85] as [number, number] } }
+        : item),
+    };
+    render(<MathProvider><DiagramRenderer spec={viewportPanelSpec} viewportControls={false} /></MathProvider>);
+    const panel = rendererState.createdOptions.find(({ kind, options }) => kind === 'text' && String(options.cssClass).includes('matematika-info-panel'));
+    expect(panel?.options).toMatchObject({ anchorX: 'right', anchorY: 'bottom' });
   });
 });

@@ -190,7 +190,6 @@ describe('Phase 5 real acceptance migrations', () => {
             "midpoint": 1,
             "parallel": 2,
             "polygon": 1,
-            "rightAngle": 4,
             "segment": 6,
           },
           "layers": [
@@ -298,8 +297,12 @@ describe('Phase 5 real acceptance migrations', () => {
     const graph = buildDependencyGraph(model);
     expect(graph.edges).toContainEqual({ sourceId: 'C', targetId: 'D', relation: 'expression' });
     expect(model.layers).toHaveLength(7);
-    expect(createScenePlan(model, { activeStepId: 'step1' }).find(entry => entry.item.id === 'paralelaAB')?.visible).toBe(true);
-    const classification = model.elements.find(element => element.id === 'clasificacion')?.properties?.textRules?.[0];
+    const firstStep = createScenePlan(model, { activeStepId: 'step1' });
+    expect(firstStep.find(entry => entry.item.id === 'paralelaAB')?.visible).toBe(false);
+    expect(firstStep.find(entry => entry.item.id === 'poligono')?.visible).toBe(true);
+    const classificationPanel = model.elements.find(element => element.id === 'clasificacion');
+    expect(classificationPanel?.properties).toMatchObject({ anchorMode: 'viewport', viewportPosition: [0, 0] });
+    const classification = classificationPanel?.properties?.textRules?.[0];
     expect(classification).toBeTruthy();
     expect(evaluateMathExpression(classification!.when, expressionVariables(moved))).toBe(1);
   });

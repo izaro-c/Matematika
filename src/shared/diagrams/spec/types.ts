@@ -60,6 +60,10 @@ export interface DiagramElementProperties {
   rows?: number;
   columns?: number;
   title?: string;
+  /** Define si una anotación sigue un objeto geométrico o una posición estable del viewport. */
+  anchorMode?: 'reference' | 'viewport';
+  /** Posición normalizada [x, y] desde la esquina superior izquierda del viewport. */
+  viewportPosition?: [number, number];
   clockwise?: boolean;
   visibleWhen?: string;
   textRules?: Array<{ when: string; text: string }>;

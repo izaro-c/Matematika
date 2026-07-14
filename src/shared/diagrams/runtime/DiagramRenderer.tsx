@@ -40,7 +40,6 @@ import {
   fitViewport,
   itemLayerNumber,
   offscreenItemIds,
-  recoverViewport,
   sceneRevision,
   withViewportBounds,
   zoomViewport,
@@ -116,12 +115,16 @@ function StepOverlayPanels({
   activeStepId?: string;
   variables: Record<string, number>;
 }) {
-  const storeStep = useMathStore(state => state.variables?.[`step:${spec.componentId}`] ?? state.variables?.['step']);
-  const stepId = activeStepId ?? (typeof storeStep === 'string' ? storeStep.replace(`${spec.componentId}:`, '') : '');
+  const storeStep = useMathStore(state => state.variables?.[`step:${spec.componentId}`]);
+  const stepId = activeStepId
+    ?? ((typeof storeStep === 'string' ? storeStep.replace(`${spec.componentId}:`, '') : '') || spec.steps[0]?.id);
   const step = spec.steps.find(item => item.id === stepId);
   const overlays = Object.entries(step?.objectStates ?? {})
     .map(([objectId, state]) => ({ objectId, overlay: state.overlay }))
-    .filter((entry): entry is { objectId: string; overlay: NonNullable<typeof entry.overlay> } => Boolean(entry.overlay?.visible));
+    .filter((entry): entry is { objectId: string; overlay: NonNullable<typeof entry.overlay> } => (
+      Boolean(entry.overlay?.visible)
+      && !headerReadingItems(spec).some(item => item.id === entry.objectId)
+    ));
   if (overlays.length === 0) return null;
   const grouped = new Map<string, typeof overlays>();
   overlays.forEach(entry => {
@@ -165,6 +168,112 @@ function measurementText(item: DiagramElement, elements: Record<string, any>, sp
   return (item.text || `${item.label}: {value}`).split('{value}').join(content);
 }
 
+function headerReadingItems(spec: DiagramSpecV2): DiagramElement[] {
+  const dynamicPanels = spec.elements.filter(item => item.kind === 'infoPanel' && item.properties?.expression);
+  if (dynamicPanels.length > 0) return dynamicPanels;
+  return spec.elements
+    .filter(item => (item.kind === 'measurement' || item.kind === 'dimensionLine') && (item.properties?.expression || item.refs.length >= 2))
+    .slice(0, 4);
+}
+
+function headerReadingText(item: DiagramElement, variables: Record<string, number>): string | null {
+  let value: number | undefined;
+  try {
+    if (item.properties?.expression) {
+      value = evaluateMathExpression(item.properties.expression, variables);
+    } else if (item.refs.length >= 2) {
+      const [a, b] = item.refs;
+      const ax = variables[`${a}.x`];
+      const ay = variables[`${a}.y`];
+      const bx = variables[`${b}.x`];
+      const by = variables[`${b}.y`];
+      if ([ax, ay, bx, by].every(Number.isFinite)) value = Math.hypot(bx - ax, by - ay);
+    }
+  } catch {
+    return null;
+  }
+  if (value === undefined || !Number.isFinite(value)) return null;
+  const precision = item.properties?.precision ?? 2;
+  const unit = item.properties?.unit ? ` ${item.properties.unit}` : '';
+  return (item.text || `${item.label}: {value}`).split('{value}').join(`${value.toFixed(precision)}${unit}`);
+}
+
+function movableCueLabels(spec: DiagramSpecV2): string[] {
+  return [...new Set([
+    ...spec.points
+      .filter(point => !point.fixed && !point.locked && point.constraint !== 'derived')
+      .map(point => point.label.trim()),
+    ...spec.sliders
+      .filter(slider => !slider.locked)
+      .map(slider => slider.label.trim()),
+  ].filter(Boolean))].sort((left, right) => right.length - left.length);
+}
+
+function cueLabelRanges(text: string, labels: readonly string[]): Array<{ start: number; end: number }> {
+  const ranges: Array<{ start: number; end: number }> = [];
+  const isWordCharacter = (character: string | undefined) => Boolean(character && /[\p{L}\p{N}_]/u.test(character));
+
+  labels.forEach(label => {
+    let offset = 0;
+    while (offset < text.length) {
+      const start = text.indexOf(label, offset);
+      if (start < 0) break;
+      const end = start + label.length;
+      const overlaps = ranges.some(range => start < range.end && end > range.start);
+      if (!overlaps && !isWordCharacter(text[start - 1]) && !isWordCharacter(text[end])) {
+        ranges.push({ start, end });
+      }
+      offset = end;
+    }
+  });
+
+  return ranges.sort((left, right) => left.start - right.start);
+}
+
+function ExplorationCue({ children, labels }: { children: string; labels: readonly string[] }) {
+  const ranges = cueLabelRanges(children, labels);
+  if (ranges.length === 0) return <>{children}</>;
+
+  const fragments: React.ReactNode[] = [];
+  let offset = 0;
+  ranges.forEach(({ start, end }) => {
+    if (start > offset) fragments.push(children.slice(offset, start));
+    fragments.push(
+      <strong key={`${start}-${end}`} className="font-semibold text-terracota" data-interactive-label={children.slice(start, end)}>
+        {children.slice(start, end)}
+      </strong>,
+    );
+    offset = end;
+  });
+  if (offset < children.length) fragments.push(children.slice(offset));
+  return <>{fragments}</>;
+}
+
+function compactHeaderReadings(entries: Array<{ item: DiagramElement; text: string }>): Array<{ id: string; itemIds: string[]; text: string }> {
+  const compacted: Array<{ id: string; itemIds: string[]; text: string }> = [];
+  for (let index = 0; index < entries.length; index += 1) {
+    const current = entries[index];
+    const next = entries[index + 1];
+    if (current.item.kind === 'dimensionLine' && next?.item.kind === 'dimensionLine') {
+      const currentParts = current.text.split('=');
+      const nextParts = next.text.split('=');
+      const currentValue = currentParts.slice(1).join('=').trim();
+      const nextValue = nextParts.slice(1).join('=').trim();
+      if (currentValue && currentValue === nextValue) {
+        compacted.push({
+          id: `${current.item.id}-${next.item.id}`,
+          itemIds: [current.item.id, next.item.id],
+          text: `${currentParts[0].trim()} = ${nextParts[0].trim()} = ${currentValue}`,
+        });
+        index += 1;
+        continue;
+      }
+    }
+    compacted.push({ id: current.item.id, itemIds: [current.item.id], text: current.text });
+  }
+  return compacted;
+}
+
 function reactiveText(item: DiagramElement, elements: Record<string, any>, spec: DiagramSpecV2): string | undefined {
   const variables = liveVariables(elements, spec);
   const rule = item.properties?.textRules?.find(candidate => {
@@ -178,11 +287,48 @@ function conditionAllows(item: DiagramSceneItem, elements: Record<string, any>, 
   try { return evaluateMathExpression(item.properties.visibleWhen, liveVariables(elements, spec)) !== 0; } catch { return false; }
 }
 
-function createElement(board: any, elements: Record<string, any>, item: DiagramElement, theme: ThemeColors, layer: number, spec: DiagramSpecV2) {
+function viewportPositionCoordinates(
+  board: any,
+  position: [number, number],
+  fallbackBounds: DiagramBounds,
+): [number, number] {
+  const [left, top, right, bottom] = board.getBoundingBox?.() ?? fallbackBounds;
+  const width = board.__matematikaContainerSize?.width ?? board.canvasWidth ?? 1;
+  const height = board.__matematikaContainerSize?.height ?? board.canvasHeight ?? 1;
+  const safeArea = board.__matematikaViewportSafeArea ?? board.__matematikaSafeArea ?? {};
+  const safeLeft = Math.max(0, safeArea.left ?? 0);
+  const safeRight = Math.max(0, safeArea.right ?? 0);
+  const safeTop = Math.max(0, safeArea.top ?? 0);
+  const safeBottom = Math.max(0, safeArea.bottom ?? 0);
+  const pixelX = safeLeft + Math.max(1, width - safeLeft - safeRight) * position[0];
+  const pixelY = safeTop + Math.max(1, height - safeTop - safeBottom) * position[1];
+  return [
+    left + (right - left) * pixelX / width,
+    top - (top - bottom) * pixelY / height,
+  ];
+}
+
+function viewportPanelAnchors(position: [number, number]): { anchorX: 'left' | 'middle' | 'right'; anchorY: 'top' | 'middle' | 'bottom' } {
+  const [x, y] = position;
+  return {
+    anchorX: x < 0.34 ? 'left' : x > 0.66 ? 'right' : 'middle',
+    anchorY: y < 0.34 ? 'top' : y > 0.66 ? 'bottom' : 'middle',
+  };
+}
+
+function createElement(
+  board: any,
+  elements: Record<string, any>,
+  item: DiagramElement,
+  theme: ThemeColors,
+  layer: number,
+  spec: DiagramSpecV2,
+  liftedIntoHeader = false,
+) {
   const refs = refsFor(item, elements);
   const lineOptions = {
     strokeColor: theme[item.color],
-    strokeWidth: item.style?.strokeWidth ?? 2.4,
+    strokeWidth: item.style?.strokeWidth ?? 2,
     strokeOpacity: item.style?.strokeOpacity ?? 1,
     dash: item.dashed ? 2 : 0,
     layer,
@@ -191,7 +337,7 @@ function createElement(board: any, elements: Record<string, any>, item: DiagramE
   if (item.kind === 'line') return refs.length >= 2 ? createLine(board, [refs[0], refs[1]], lineOptions, theme) : null;
   if (item.kind === 'ray') return refs.length >= 2 ? createRay(board, [refs[0], refs[1]], lineOptions, theme) : null;
   if (item.kind === 'polygon') return refs.length >= 3 ? createPolygon(board, refs, {
-    fillColor: theme[item.color], fillOpacity: item.style?.fillOpacity ?? 0.16,
+    fillColor: theme[item.color], fillOpacity: item.style?.fillOpacity ?? 0.1,
     borders: { strokeColor: theme[item.color], strokeWidth: item.style?.strokeWidth ?? 1.5, strokeOpacity: item.style?.strokeOpacity ?? 1 }, layer,
   }, theme) : null;
   if (item.kind === 'circle') return refs.length >= 2 ? createCircle(board, [refs[0], refs[1]], {
@@ -257,7 +403,7 @@ function createElement(board: any, elements: Record<string, any>, item: DiagramE
   if (item.kind === 'dimensionLine') return refs.length >= 2 ? createDimensionLine(
     board,
     [refs[0], refs[1]],
-    () => measurementText(item, elements, spec),
+    () => liftedIntoHeader ? '' : measurementText(item, elements, spec),
     item.properties?.offset ?? 0.35,
     lineOptions,
     theme,
@@ -275,7 +421,7 @@ function createElement(board: any, elements: Record<string, any>, item: DiagramE
     refs,
     item.properties?.rows ?? 2,
     item.properties?.columns ?? 2,
-    { fillColor: theme[item.color], fillOpacity: item.style?.fillOpacity ?? 0.16, borders: lineOptions, layer },
+    { fillColor: theme[item.color], fillOpacity: item.style?.fillOpacity ?? 0.1, borders: lineOptions, layer },
     theme,
   ) : null;
   const anchor = refs[0];
@@ -288,14 +434,33 @@ function createElement(board: any, elements: Record<string, any>, item: DiagramE
       : body;
   };
   const textOffset = item.style?.textOffset ?? [0.25, 0.35];
-  return anchor ? createText(board, [() => anchor.X() + textOffset[0], () => anchor.Y() + textOffset[1], dynamicText], {
+  const viewportPosition = item.kind === 'infoPanel' && item.properties?.anchorMode === 'viewport'
+    ? item.properties.viewportPosition
+    : undefined;
+  const viewportPanelAnchor = viewportPosition ? viewportPanelAnchors(viewportPosition) : undefined;
+  const textCoordinates: [() => number, () => number, () => string] | null = viewportPosition
+    ? [
+      () => viewportPositionCoordinates(board, viewportPosition, spec.viewport.bounds)[0],
+      () => viewportPositionCoordinates(board, viewportPosition, spec.viewport.bounds)[1],
+      dynamicText,
+    ]
+    : anchor
+      ? [() => anchor.X() + textOffset[0], () => anchor.Y() + textOffset[1], dynamicText]
+      : null;
+  return textCoordinates ? createText(board, textCoordinates, {
     color: theme[item.color],
     layer,
+    ...(viewportPanelAnchor ?? {}),
     cssClass: item.kind === 'formula'
       ? 'font-serif text-sm italic'
       : item.kind === 'infoPanel'
-        ? 'rounded border border-carbon/15 bg-lienzo/95 p-2 font-serif text-sm shadow-sm'
+        ? 'JXGtext matematika-info-panel'
         : 'font-serif text-sm',
+    ...(item.kind === 'infoPanel' ? {
+      highlightCssClass: 'JXGtext matematika-info-panel',
+      highlightStrokeColor: theme[item.color],
+      highlightStrokeOpacity: 1,
+    } : {}),
   }, theme) : null;
 }
 
@@ -311,6 +476,7 @@ function attachSelection(
 ) {
   if (!element) return;
   const node = element.rendNode as HTMLElement | undefined;
+  node?.setAttribute('data-diagram-object-id', item.id);
   node?.setAttribute('aria-label', item.selection.ariaLabel ?? item.label);
   if (item.selection.role) node?.setAttribute('data-selection-role', item.selection.role);
   if (item.target) {
@@ -373,13 +539,22 @@ const DiagramRendererContent: React.FC<DiagramRendererProps> = ({
   const setTargetHighlight = useCallback((target: string | null) => {
     setVariable('highlight', target ? `${spec.componentId}:${target}` : null);
   }, [setVariable, spec.componentId]);
+  const scopedStoreStep = useMathStore(state => state.variables?.[`step:${spec.componentId}`]);
+  const effectiveStepId = activeStepId
+    ?? ((typeof scopedStoreStep === 'string' ? scopedStoreStep.replace(`${spec.componentId}:`, '') : '') || spec.steps[0]?.id);
   const [liveSceneVariables, setLiveSceneVariables] = useState<Record<string, number>>(() => {
     try { return liveVariables({}, spec); } catch { return {}; }
   });
   const liveVariablesSignature = useRef('');
+  const runtimeSequenceTargets = mode === 'runtime'
+    ? [...new Set(spec.steps.flatMap(step => step.visibleTargets ?? []))]
+    : [];
+  const initialViewportBounds = runtimeSequenceTargets.length > 0
+    ? fitViewport(spec, runtimeSequenceTargets, Math.min(spec.viewport.padding, 0.06))
+    : spec.viewport.bounds;
   const [viewportState, setViewportState] = useState({
     base: spec.viewport.bounds,
-    current: spec.viewport.bounds,
+    current: initialViewportBounds,
   });
   const bounds = sameBounds(viewportState.base, spec.viewport.bounds)
     ? viewportState.current
@@ -401,29 +576,163 @@ const DiagramRendererContent: React.FC<DiagramRendererProps> = ({
     onViewportChange?.(next);
   };
 
-  const runtimeSpec = bounds === spec.viewport.bounds ? spec : withViewportBounds(spec, bounds);
-  const missingItems = offscreenItemIds(runtimeSpec, bounds);
+  const liveViewportSpec: DiagramSpecV2 = {
+    ...spec,
+    points: spec.points.map(point => {
+      const x = liveSceneVariables[`${point.id}.x`];
+      const y = liveSceneVariables[`${point.id}.y`];
+      return Number.isFinite(x) && Number.isFinite(y) ? { ...point, x, y } : point;
+    }),
+    sliders: spec.sliders.map(slider => {
+      const value = liveSceneVariables[slider.id];
+      return Number.isFinite(value) ? { ...slider, value } : slider;
+    }),
+  };
+  const viewportItemIds = runtimeSequenceTargets.length > 0
+    ? runtimeSequenceTargets
+    : createScenePlan(liveViewportSpec, { activeStepId: effectiveStepId })
+      .filter(entry => entry.visible)
+      .map(entry => entry.item.id);
+  const viewportItemIdSet = new Set(viewportItemIds);
+  const fitRelevantViewport = () => fitViewport(
+    liveViewportSpec,
+    viewportItemIds,
+    Math.min(spec.viewport.padding, 0.06),
+  );
+  const runtimeSpec = withViewportBounds(liveViewportSpec, bounds);
+  const missingItems = offscreenItemIds(runtimeSpec, bounds).filter(id => viewportItemIdSet.has(id));
+  const allHeaderItems = useMemo(() => headerReadingItems(spec), [spec]);
+  const allHeaderItemIds = useMemo(() => new Set(allHeaderItems.map(item => item.id)), [allHeaderItems]);
+  const hasTopViewportPanel = useMemo(() => spec.elements.some(item => (
+    item.kind === 'infoPanel'
+    && item.properties?.anchorMode === 'viewport'
+    && (item.properties.viewportPosition?.[1] ?? 0) <= 0.34
+    && !allHeaderItemIds.has(item.id)
+  )), [allHeaderItemIds, spec.elements]);
+  const headerItems = useMemo(() => {
+    const visibleIds = new Set(createScenePlan(spec, { activeStepId: effectiveStepId })
+      .filter(entry => entry.visible)
+      .map(entry => entry.item.id));
+    return allHeaderItems.filter(item => visibleIds.has(item.id));
+  }, [allHeaderItems, effectiveStepId, spec]);
+  const headerItemIds = useMemo(() => new Set(headerItems.map(item => item.id)), [headerItems]);
+  const allHeaderReadings = allHeaderItems
+    .map(item => ({ item, text: headerReadingText(item, liveSceneVariables) }))
+    .filter((entry): entry is { item: DiagramElement; text: string } => Boolean(entry.text));
+  const compactReadings = compactHeaderReadings(allHeaderReadings);
+  const visibleHeaderItemIds = new Set(headerItems.map(item => item.id));
+  const rendererRef = useRef<HTMLDivElement>(null);
+  const headerRef = useRef<HTMLElement>(null);
+  const toolbarRef = useRef<HTMLDivElement>(null);
+  const showStepControls = (stepControls ?? mode === 'runtime') && spec.steps.length > 0;
+  const showToolbar = viewportControls || showStepControls;
+  const [safeArea, setSafeArea] = useState({ top: 150, right: 20, bottom: showToolbar ? 68 : 20, left: 20 });
+  const [viewportSafeArea, setViewportSafeArea] = useState({ top: 150, right: 20, bottom: showToolbar ? 68 : 20, left: 20 });
+  const [toolbarLayout, setToolbarLayout] = useState<'bar' | 'rails'>('bar');
+  const [viewportMenuOpen, setViewportMenuOpen] = useState(false);
+
+  useEffect(() => {
+    let cancelled = false;
+    const resizeObserver = typeof ResizeObserver === 'undefined' ? null : new ResizeObserver(() => updateSafeArea());
+    const updateSafeArea = () => {
+      const rootBounds = rendererRef.current?.getBoundingClientRect();
+      const headerChildren = [...(headerRef.current?.children ?? [])];
+      const visibleHeaderChildren = headerChildren.filter(child => (
+        child.tagName !== 'OUTPUT' || Boolean(child.querySelector('span:not(.invisible)'))
+      ));
+      const visibleHeaderContentBottom = rootBounds && visibleHeaderChildren.length > 0
+        ? Math.max(
+          ...visibleHeaderChildren.map(child => child.getBoundingClientRect().bottom - rootBounds.top),
+          0,
+        )
+        : headerRef.current?.getBoundingClientRect().height ?? 130;
+      const viewportHeaderBottom = Math.ceil(visibleHeaderContentBottom) + 10;
+      const stableHeaderBottom = Math.ceil(headerRef.current?.getBoundingClientRect().height ?? 130) + 10;
+      const bottom = Math.ceil(toolbarRef.current?.getBoundingClientRect().height ?? (showToolbar ? 56 : 0)) + (showToolbar ? 8 : 20);
+      const useRails = Boolean(showToolbar && rootBounds && (rootBounds.width < 480 || rootBounds.height < 400));
+      const headerInset = typeof window !== 'undefined'
+        && typeof window.matchMedia === 'function'
+        && window.matchMedia('(min-width: 640px)').matches ? 32 : 20;
+      setToolbarLayout(current => current === (useRails ? 'rails' : 'bar') ? current : (useRails ? 'rails' : 'bar'));
+      const viewportArea = {
+        top: viewportHeaderBottom,
+        right: headerInset,
+        bottom: useRails ? 16 : bottom,
+        left: headerInset,
+      };
+      const geometryBaseArea = useRails
+        ? {
+          top: stableHeaderBottom + (hasTopViewportPanel ? 84 : 0),
+          right: showStepControls ? 52 : 16,
+          bottom: 16,
+          left: viewportControls ? 52 : 16,
+        }
+        : { ...viewportArea, top: stableHeaderBottom + (hasTopViewportPanel ? 84 : 0) };
+      const geometryArea = geometryBaseArea;
+      const sameArea = (current: typeof geometryArea, next: typeof geometryArea) => (
+        current.top === next.top && current.right === next.right && current.bottom === next.bottom && current.left === next.left
+      );
+      setViewportSafeArea(current => sameArea(current, viewportArea) ? current : viewportArea);
+      setSafeArea(current => sameArea(current, geometryArea) ? current : geometryArea);
+    };
+    updateSafeArea();
+    if (headerRef.current) resizeObserver?.observe(headerRef.current);
+    if (toolbarRef.current) resizeObserver?.observe(toolbarRef.current);
+    if (rendererRef.current) resizeObserver?.observe(rendererRef.current);
+    const rendererNode = rendererRef.current;
+    const mutationObserver = typeof MutationObserver === 'undefined' || !rendererNode
+      ? null
+      : new MutationObserver(updateSafeArea);
+    if (rendererNode) mutationObserver?.observe(rendererNode, { childList: true, subtree: true });
+    const frameId = typeof window !== 'undefined' && typeof window.requestAnimationFrame === 'function'
+      ? window.requestAnimationFrame(() => updateSafeArea())
+      : null;
+    if (typeof document !== 'undefined' && document.fonts?.ready) {
+      void document.fonts.ready.then(() => {
+        if (!cancelled) updateSafeArea();
+      });
+    }
+    return () => {
+      cancelled = true;
+      if (frameId !== null) window.cancelAnimationFrame(frameId);
+      resizeObserver?.disconnect();
+      mutationObserver?.disconnect();
+    };
+  }, [effectiveStepId, hasTopViewportPanel, showStepControls, showToolbar, spec.componentId, viewportControls]);
 
   return (
     <div
-      className={`relative min-h-[360px] h-full w-full overflow-hidden rounded border border-carbon/10 bg-lienzo ${className ?? ''}`}
+      ref={rendererRef}
+      className={`relative min-h-[360px] h-full w-full overflow-hidden rounded-[20px] ${className ?? ''}`}
       data-diagram-renderer={DIAGRAM_RENDERER_ID}
       data-diagram-mode={mode}
+      data-diagram-active-step={effectiveStepId}
+      data-diagram-viewport-bounds={bounds.join(',')}
+      data-diagram-layout={toolbarLayout}
+      style={{
+        '--diagram-safe-top': `${viewportSafeArea.top}px`,
+        '--diagram-safe-right': `${viewportSafeArea.right}px`,
+        '--diagram-safe-bottom': `${viewportSafeArea.bottom}px`,
+        '--diagram-safe-left': `${viewportSafeArea.left}px`,
+        '--diagram-panel-right': `${toolbarLayout === 'rails' && showStepControls ? 52 : viewportSafeArea.right}px`,
+      } as React.CSSProperties}
     >
       <MathBoard
-        scopeId={spec.componentId}
-        boundingbox={bounds}
-        axis={spec.axis}
-        grid={spec.grid}
-        pan
-        zoom
-        revision={revision}
-        ariaLabel={`${spec.title}. Diagrama matemático interactivo.`}
-        className="relative min-h-[360px] w-full overflow-hidden"
-        onBoundingBoxChange={(next) => {
-          if (next.some((value, index) => Math.abs(value - bounds[index]) > 1e-7)) commitBounds(next);
-        }}
-        onInit={(board, elements, theme) => {
+          scopeId={spec.componentId}
+          boundingbox={bounds}
+          axis={spec.axis}
+          grid={spec.grid}
+          pan
+          zoom
+          revision={revision}
+          safeArea={safeArea}
+          viewportSafeArea={viewportSafeArea}
+          ariaLabel={`${spec.title}. Diagrama matemático interactivo.`}
+          className="relative min-h-[360px] h-full w-full overflow-hidden rounded-[20px]"
+          onBoundingBoxChange={(next) => {
+            if (next.some((value, index) => Math.abs(value - bounds[index]) > 1e-7)) commitBounds(next);
+          }}
+          onInit={(board, elements, theme) => {
           if (mode === 'editor' && onCanvasPointCreate) {
             board.on('down', (event: unknown) => {
               const objects = board.getAllObjectsUnderMouse?.(event);
@@ -495,7 +804,15 @@ const DiagramRendererContent: React.FC<DiagramRendererProps> = ({
               }
               if (!sceneItem.fixed && !entry.locked && sceneItem.constraint !== 'derived') item.on('up', () => onPointMove?.(sceneItem.id, item.X(), item.Y()));
             } else if ('kind' in sceneItem) {
-              elements[sceneItem.id] = createElement(board, elements, sceneItem, theme, itemLayerNumber(spec, sceneItem), spec);
+              elements[sceneItem.id] = createElement(
+                board,
+                elements,
+                sceneItem,
+                theme,
+                itemLayerNumber(spec, sceneItem),
+                spec,
+                mode === 'runtime' && allHeaderItemIds.has(sceneItem.id),
+              );
             } else {
               elements[sceneItem.id] = createSlider(board, [[sceneItem.x, sceneItem.y], [sceneItem.x + 2.6, sceneItem.y]], [sceneItem.min, sceneItem.value, sceneItem.max], {
                 name: sceneItem.label,
@@ -551,9 +868,9 @@ const DiagramRendererContent: React.FC<DiagramRendererProps> = ({
             attachSelection(element, sceneItem, mode, onSelectionChange, setTargetHighlight, keyboardAdjust);
           });
         }}
-        onUpdate={(_board, elements, theme, isStep, isHL) => {
+          onUpdate={(_board, elements, theme, isStep, isHL) => {
           const storeStep = spec.steps.find(step => isStep(step.id))?.id;
-          const effectiveStep = activeStepId || storeStep;
+          const effectiveStep = effectiveStepId || storeStep;
           const items = [...spec.points, ...spec.elements, ...spec.sliders];
           const effectiveHighlights = new Set([
             ...items.filter(item => highlightedIds.includes(item.id) || highlightedIds.includes(item.targetId ?? item.id)).map(item => item.id),
@@ -593,7 +910,7 @@ const DiagramRendererContent: React.FC<DiagramRendererProps> = ({
             if ('constraint' in item || ('kind' in item && (item.kind === 'midpoint' || item.kind === 'perpendicularFoot'))) {
               element.setAttribute({
                 ...base,
-                size: active ? item.style?.highlightPointSize ?? 8.5 : item.style?.pointSize ?? 5,
+                size: active ? item.style?.highlightPointSize ?? 7 : item.style?.pointSize ?? 4,
                 fillColor: color, strokeColor: color, fillOpacity: opacity,
               });
             } else if ('min' in item) {
@@ -608,16 +925,17 @@ const DiagramRendererContent: React.FC<DiagramRendererProps> = ({
             } else if (item.kind === 'polygon' || item.kind === 'areaDecomposition') {
               element.setAttribute({
                 ...base, fillColor: color,
-                fillOpacity: active ? item.style?.highlightFillOpacity ?? 0.34 : (item.style?.fillOpacity ?? 0.16) * opacity,
+                fillOpacity: active ? item.style?.highlightFillOpacity ?? 0.24 : (item.style?.fillOpacity ?? 0.1) * opacity,
               });
             } else if (item.kind === 'angle' || item.kind === 'rightAngle' || item.kind === 'perpendicularMark') {
               element.setAttribute({
                 ...base, fillColor: color, strokeColor: color,
-                fillOpacity: active ? item.style?.highlightFillOpacity ?? 0.45 : (item.style?.fillOpacity ?? 0.18) * opacity,
+                fillOpacity: active ? item.style?.highlightFillOpacity ?? 0.28 : (item.style?.fillOpacity ?? 0.1) * opacity,
                 strokeWidth: active ? item.style?.highlightStrokeWidth ?? 3 : item.style?.strokeWidth ?? 1.5,
               });
             } else if (item.kind === 'text' || item.kind === 'label' || item.kind === 'formula' || item.kind === 'infoPanel' || item.kind === 'measurement') {
-              element.setAttribute({ ...base, color, opacity });
+              const liftedIntoHeader = mode === 'runtime' && headerItemIds.has(item.id);
+              element.setAttribute({ ...base, visible: base.visible && !liftedIntoHeader, color, opacity });
             } else if (item.kind === 'circle') {
               element.setAttribute({
                 ...base,
@@ -626,8 +944,8 @@ const DiagramRendererContent: React.FC<DiagramRendererProps> = ({
                 strokeColor: color,
                 strokeOpacity: (item.style?.strokeOpacity ?? 1) * opacity,
                 strokeWidth: externalActive
-                  ? item.style?.highlightStrokeWidth ?? 4.8
-                  : stepPrimary ? 4 : stepSecondary ? 3.2 : item.style?.strokeWidth ?? 2.4,
+                  ? item.style?.highlightStrokeWidth ?? 3.6
+                  : stepPrimary ? 3.2 : stepSecondary ? 2.6 : item.style?.strokeWidth ?? 2,
               });
             } else {
               element.setAttribute({
@@ -635,8 +953,8 @@ const DiagramRendererContent: React.FC<DiagramRendererProps> = ({
                 strokeColor: color,
                 strokeOpacity: (item.style?.strokeOpacity ?? 1) * opacity,
                 strokeWidth: externalActive
-                  ? item.style?.highlightStrokeWidth ?? 4.8
-                  : stepPrimary ? 4 : stepSecondary ? 3.2 : item.style?.strokeWidth ?? 2.4,
+                  ? item.style?.highlightStrokeWidth ?? 3.6
+                  : stepPrimary ? 3.2 : stepSecondary ? 2.6 : item.style?.strokeWidth ?? 2,
               });
             }
           });
@@ -646,38 +964,100 @@ const DiagramRendererContent: React.FC<DiagramRendererProps> = ({
             liveVariablesSignature.current = signature;
             setLiveSceneVariables(nextLiveVariables);
           }
-        }}
-      >
-        <DiagramTitle>{spec.title}</DiagramTitle>
-        {spec.note && (
-          <DiagramInfoPanel title="Exploración" position="bottom-right" className={spec.steps.length > 0 ? 'mb-14' : ''}>
-            <span>{spec.note}</span>
-          </DiagramInfoPanel>
-        )}
-        <StepOverlayPanels spec={spec} activeStepId={activeStepId} variables={liveSceneVariables} />
-      </MathBoard>
-
-      {(stepControls ?? mode === 'runtime') && spec.steps.length > 0 && (
-        <StepNavigator steps={spec.steps} scopeId={spec.componentId} compact className="absolute bottom-2 left-2 right-2 z-30" />
-      )}
-
-      {viewportControls && (
-        <div className="absolute right-2 top-2 z-20 flex items-center gap-1 rounded border border-carbon/15 bg-lienzo/95 p-1 shadow-sm" aria-label="Controles del viewport">
-          <button type="button" className="rounded px-2 py-1 text-xs font-bold text-carbon hover:bg-carbon/5" aria-label="Acercar" onClick={() => commitBounds(zoomViewport(spec, bounds, 1.25))}>+</button>
-          <button type="button" className="rounded px-2 py-1 text-xs font-bold text-carbon hover:bg-carbon/5" aria-label="Alejar" onClick={() => commitBounds(zoomViewport(spec, bounds, 0.8))}>−</button>
-          <button type="button" className="rounded px-2 py-1 text-[10px] font-bold text-carbon hover:bg-carbon/5" aria-label="Ajustar todos los objetos al viewport" onClick={() => commitBounds(fitViewport(spec))}>Ajustar</button>
-          <button
-            type="button"
-            className="rounded px-2 py-1 text-[10px] font-bold text-carbon hover:bg-carbon/5 disabled:opacity-40"
-            disabled={missingItems.length === 0}
-            aria-label="Recuperar objetos fuera del viewport"
-            title={missingItems.length > 0 ? `${missingItems.length} objeto(s) fuera de vista` : 'No hay objetos fuera de vista'}
-            onClick={() => commitBounds(recoverViewport(runtimeSpec, selectedIds))}
-          >
-            Recuperar
-          </button>
-        </div>
-      )}
+          }}
+        >
+          <header ref={headerRef} className="pointer-events-none absolute inset-x-0 top-0 z-20 px-5 pt-5 sm:px-8 sm:pt-6" data-diagram-header>
+            {spec.note && (
+              <p className="mb-3 max-w-[44rem] font-serif text-sm italic leading-snug text-carbon/65">
+                <ExplorationCue labels={movableCueLabels(spec)}>{spec.note}</ExplorationCue>
+              </p>
+            )}
+            <DiagramTitle layout="inline">{spec.title}</DiagramTitle>
+            {compactReadings.length > 0 && (
+              <output className="mt-2 flex flex-wrap items-baseline gap-x-3 gap-y-1 font-serif text-base italic text-carbon/80" aria-live="polite" aria-label="Lecturas dinámicas del diagrama">
+                {compactReadings.map(({ id, itemIds, text }, index) => {
+                  const visible = itemIds.some(itemId => visibleHeaderItemIds.has(itemId));
+                  return (
+                    <React.Fragment key={id}>
+                      {index > 0 && <span className={`text-ocre/55 ${visible ? '' : 'invisible'}`} aria-hidden>·</span>}
+                      <span className={visible ? '' : 'invisible'} aria-hidden={visible ? undefined : true}>{text}</span>
+                    </React.Fragment>
+                  );
+                })}
+              </output>
+            )}
+          </header>
+          <StepOverlayPanels spec={spec} activeStepId={effectiveStepId} variables={liveSceneVariables} />
+          {showToolbar && (
+            <div
+              ref={toolbarRef}
+              className="absolute inset-x-0 bottom-0 z-30 grid grid-cols-[auto_1fr] items-center gap-2 px-3 pb-3 pt-2"
+              data-diagram-toolbar
+              data-diagram-toolbar-layout={toolbarLayout}
+            >
+              {viewportControls && (
+                <>
+                  <div className="flex h-9 items-stretch justify-self-start divide-x divide-carbon/10 overflow-hidden rounded-full border border-carbon/15 bg-lienzo/90 backdrop-blur-[2px]" role="group" aria-label="Controles del viewport">
+                    <button type="button" className="w-9 font-serif text-base text-carbon transition-colors hover:bg-carbon/5 focus-visible:z-10 focus-visible:outline-2 focus-visible:outline-pavo" aria-label="Acercar" onClick={() => commitBounds(zoomViewport(spec, bounds, 1.25))}>+</button>
+                    <button type="button" className="w-9 font-serif text-base text-carbon transition-colors hover:bg-carbon/5 focus-visible:z-10 focus-visible:outline-2 focus-visible:outline-pavo" aria-label="Alejar" onClick={() => commitBounds(zoomViewport(spec, bounds, 0.8))}>−</button>
+                    <button type="button" className="diagram-viewport-secondary px-2.5 font-serif text-[11px] text-carbon transition-colors hover:bg-carbon/5 focus-visible:z-10 focus-visible:outline-2 focus-visible:outline-pavo" aria-label="Ajustar todos los objetos al viewport" title="Reencuadrar para mostrar todos los objetos visibles" onClick={() => commitBounds(fitRelevantViewport())}>Ajustar</button>
+                    <button
+                      type="button"
+                      className="diagram-viewport-secondary px-2.5 font-serif text-[11px] text-carbon transition-colors hover:bg-carbon/5 focus-visible:z-10 focus-visible:outline-2 focus-visible:outline-pavo disabled:opacity-35"
+                      disabled={missingItems.length === 0}
+                      aria-label="Recuperar objetos fuera del viewport"
+                      title={missingItems.length > 0 ? `${missingItems.length} objeto(s) visible(s) fuera de vista` : 'No hay objetos visibles fuera de vista'}
+                      onClick={() => commitBounds(fitRelevantViewport())}
+                    >
+                      Recuperar
+                    </button>
+                    {toolbarLayout === 'rails' && (
+                      <button
+                        type="button"
+                        className="w-9 font-serif text-base text-carbon transition-colors hover:bg-carbon/5 focus-visible:z-10 focus-visible:outline-2 focus-visible:outline-pavo"
+                        aria-label="Opciones de encuadre"
+                        aria-expanded={viewportMenuOpen}
+                        title="Ajustar o recuperar el encuadre"
+                        onClick={() => setViewportMenuOpen(open => !open)}
+                      >
+                        ⌖
+                      </button>
+                    )}
+                  </div>
+                  {toolbarLayout === 'rails' && viewportMenuOpen && (
+                    <div className="absolute bottom-2 left-14 z-40 min-w-40 overflow-hidden rounded-xl border border-carbon/15 bg-lienzo/95 p-1 font-serif text-xs text-carbon shadow-lg backdrop-blur-[3px]" role="menu" aria-label="Opciones de encuadre">
+                      <button
+                        type="button"
+                        className="block w-full rounded-lg px-3 py-2 text-left hover:bg-carbon/5 focus-visible:outline-2 focus-visible:outline-pavo"
+                        role="menuitem"
+                        onClick={() => { commitBounds(fitRelevantViewport()); setViewportMenuOpen(false); }}
+                      >
+                        Ajustar al contenido
+                      </button>
+                      <button
+                        type="button"
+                        className="block w-full rounded-lg px-3 py-2 text-left hover:bg-carbon/5 focus-visible:outline-2 focus-visible:outline-pavo disabled:opacity-35"
+                        role="menuitem"
+                        disabled={missingItems.length === 0}
+                        onClick={() => { commitBounds(fitRelevantViewport()); setViewportMenuOpen(false); }}
+                      >
+                        Recuperar fuera de vista
+                      </button>
+                    </div>
+                  )}
+                </>
+              )}
+              {showStepControls && (
+                <StepNavigator
+                  steps={spec.steps}
+                  scopeId={spec.componentId}
+                  compact
+                  className="col-start-2 justify-self-end"
+                />
+              )}
+            </div>
+          )}
+        </MathBoard>
     </div>
   );
 };

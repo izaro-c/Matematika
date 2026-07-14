@@ -114,13 +114,13 @@
   min-height: 0 !important;
 }
 
-.codex-diagram-surface div[class*="bg-lienzo"] {
+.codex-diagram-surface div[class*="bg-lienzo"]:not([data-diagram-renderer]) {
   background: transparent !important;
   border: none !important;
   box-shadow: none !important;
 }
 
-.codex-diagram-surface div[class*="border"] {
+.codex-diagram-surface div[class*="border"]:not([data-diagram-renderer]) {
   border: none !important;
 }
 
@@ -190,4 +190,3 @@
     padding-left: 5rem; /* Alineado de 80px (pl-20) clásico para escritorio */
   }
 }
-

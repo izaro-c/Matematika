@@ -130,6 +130,106 @@
   color: var(--theme-terracota) !important;
 }
 
+/* Conserva el estilo editorial existente; solo limita la caja al espacio
+ * realmente libre entre la cabecera y los controles. */
+.matematika-info-panel {
+  display: block !important;
+  width: max-content;
+  max-width: min(30rem, calc(100% - var(--diagram-safe-left, 1rem) - var(--diagram-panel-right, var(--diagram-safe-right, 1rem)) - 1rem));
+  overflow-wrap: anywhere;
+  white-space: normal !important;
+}
+
+@media (min-width: 36rem) and (max-height: 30rem) {
+  [data-diagram-layout="rails"] .matematika-info-panel {
+    max-width: min(18rem, calc(100% - var(--diagram-safe-left, 1rem) - var(--diagram-panel-right, var(--diagram-safe-right, 1rem)) - 1rem));
+  }
+}
+
+[data-diagram-info-panel][data-layout="overlay"] {
+  min-width: 0;
+  max-width: min(30rem, calc(100% - var(--diagram-safe-left, 1rem) - var(--diagram-safe-right, 1rem) - 1rem));
+}
+
+[data-diagram-info-panel][data-layout="overlay"][data-position="top-left"] {
+  top: calc(var(--diagram-safe-top, 3.5rem) + 0.5rem);
+  left: calc(var(--diagram-safe-left, 1rem) + 0.5rem);
+}
+
+[data-diagram-info-panel][data-layout="overlay"][data-position="top-right"] {
+  top: calc(var(--diagram-safe-top, 3.5rem) + 0.5rem);
+  right: calc(var(--diagram-safe-right, 1rem) + 0.5rem);
+}
+
+[data-diagram-info-panel][data-layout="overlay"][data-position="bottom-left"] {
+  bottom: calc(var(--diagram-safe-bottom, 1rem) + 0.5rem);
+  left: calc(var(--diagram-safe-left, 1rem) + 0.5rem);
+}
+
+[data-diagram-info-panel][data-layout="overlay"][data-position="bottom-right"] {
+  right: calc(var(--diagram-safe-right, 1rem) + 0.5rem);
+  bottom: calc(var(--diagram-safe-bottom, 1rem) + 0.5rem);
+}
+
+[data-diagram-layout="rails"] [data-diagram-info-panel][data-layout="overlay"][data-position="bottom-left"] {
+  left: 3.75rem;
+}
+
+[data-diagram-layout="rails"] [data-diagram-info-panel][data-layout="overlay"][data-position="bottom-right"] {
+  right: 3.75rem;
+}
+
+/* La barra responde al ancho real del lienzo, no al de la ventana. */
+[data-diagram-toolbar] {
+  container-type: inline-size;
+}
+
+/* En lienzos móviles bajos, los controles forman raíles laterales. De este
+ * modo la geometría recupera altura sin invadir botones ni anotaciones. */
+[data-diagram-toolbar][data-diagram-toolbar-layout="rails"] {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 0.5rem;
+  padding: 0.5rem;
+  pointer-events: none;
+}
+
+[data-diagram-toolbar][data-diagram-toolbar-layout="rails"] > * {
+  pointer-events: auto;
+}
+
+[data-diagram-toolbar][data-diagram-toolbar-layout="rails"] > [role="group"] {
+  width: 2.25rem;
+  height: auto;
+  flex-direction: column;
+}
+
+[data-diagram-toolbar][data-diagram-toolbar-layout="rails"] > [role="group"] > button + button {
+  border-left-width: 0;
+  border-top: 1px solid color-mix(in srgb, var(--theme-carbon) 10%, transparent);
+}
+
+[data-diagram-toolbar][data-diagram-toolbar-layout="rails"] [data-step-navigator] > div {
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.diagram-viewport-secondary {
+  display: none;
+}
+
+@container (min-width: 32rem) {
+  .diagram-viewport-secondary {
+    display: block;
+  }
+}
+
+/* En el modo lateral las acciones secundarias pasan al menú compacto. */
+[data-diagram-toolbar][data-diagram-toolbar-layout="rails"] .diagram-viewport-secondary {
+  display: none;
+}
+
 /* Suavizado en enlaces globales pero menos elástico */
 a, button {
   transition: all 0.15s ease-out;

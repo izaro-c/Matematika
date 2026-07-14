@@ -8,10 +8,10 @@ const PORT = Number(process.env.MATEMATIKA_PHASE5_E2E_PORT || 5178);
 const BASE_URL = `http://127.0.0.1:${PORT}/Matematika`;
 
 const CASES = [
-  { name: 'Pitágoras', route: '/teorema/teorema-pitagoras', minObjects: 100, texts: ['a² =', 'b² =', 'c² ='] },
-  { name: 'Poincaré', route: '/modelo/modelo-poincare', minObjects: 40, texts: ['L₁', 'L₂'] },
-  { name: 'Congruencia ALA', route: '/teorema/teorema-congruencia-ala', minObjects: 100, texts: ['AB =', '∠A ='] },
-  { name: 'Paralelogramo', route: '/definicion/paralelogramo', minObjects: 120, texts: ['Clasificación', 'AM =', 'MC ='] },
+  { name: 'Pitágoras', route: '/teorema/teorema-pitagoras', minObjects: 100, texts: ['a² =', 'b² =', 'c² ='], advanceSteps: 1 },
+  { name: 'Poincaré', route: '/modelo/modelo-poincare', minObjects: 40, texts: ['L₁', 'L₂'], advanceSteps: 0 },
+  { name: 'Congruencia ALA', route: '/teorema/teorema-congruencia-ala', minObjects: 100, texts: ['AB =', '∠A ='], advanceSteps: 0 },
+  { name: 'Paralelogramo', route: '/definicion/paralelogramo', minObjects: 90, texts: ['Clasificación', 'AM =', 'MC ='], advanceSteps: 2 },
 ] as const;
 
 function startVite(): ChildProcess {
@@ -47,13 +47,17 @@ function collectBrowserErrors(page: Page): string[] {
 async function verifyPublishedCase(page: Page, acceptanceCase: typeof CASES[number]) {
   const errors = collectBrowserErrors(page);
   await page.goto(`${BASE_URL}${acceptanceCase.route}`, { waitUntil: 'networkidle0', timeout: 30_000 });
+  for (let index = 0; index < acceptanceCase.advanceSteps; index += 1) {
+    await page.click('[aria-label="Paso siguiente"]');
+    await new Promise(resolve => setTimeout(resolve, 100));
+  }
   const result = await page.evaluate((expectedTexts) => {
     const renderer = document.querySelector<HTMLElement>('[data-diagram-renderer]');
     const board = renderer?.querySelector<HTMLElement>('.jxgbox');
     const rendererBox = renderer?.getBoundingClientRect();
     const boardBox = board?.getBoundingClientRect();
     const visibleTexts = expectedTexts.map(expected => {
-      const node = [...(board?.querySelectorAll<HTMLElement>('div') ?? [])]
+      const node = [...(renderer?.querySelectorAll<HTMLElement>('div') ?? [])]
         .find(element => element.textContent?.includes(expected));
       const bounds = node?.getBoundingClientRect();
       return { expected, visible: Boolean(bounds && bounds.width > 0 && bounds.height > 0) };

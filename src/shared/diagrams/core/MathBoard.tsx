@@ -36,6 +36,85 @@ function getTheme(): ThemeColors {
   };
 }
 
+export function fitBoundsToAspect(
+  bounds: [number, number, number, number],
+  width: number,
+  height: number,
+): [number, number, number, number] {
+  if (width <= 0 || height <= 0) return [...bounds];
+  const [left, top, right, bottom] = bounds;
+  const spanX = Math.abs(right - left);
+  const spanY = Math.abs(top - bottom);
+  if (spanX <= 0 || spanY <= 0) return [...bounds];
+  const centerX = (left + right) / 2;
+  const centerY = (top + bottom) / 2;
+  const containerAspect = width / height;
+  const boundsAspect = spanX / spanY;
+  if (containerAspect > boundsAspect) {
+    const fittedSpanX = spanY * containerAspect;
+    return [centerX - fittedSpanX / 2, top, centerX + fittedSpanX / 2, bottom];
+  }
+  const fittedSpanY = spanX / containerAspect;
+  return [left, centerY + fittedSpanY / 2, right, centerY - fittedSpanY / 2];
+}
+
+export interface MathBoardSafeArea {
+  top?: number;
+  right?: number;
+  bottom?: number;
+  left?: number;
+}
+
+function resolvedSafeArea(safeArea: MathBoardSafeArea | undefined, width: number, height: number) {
+  const left = Math.max(0, Math.min(safeArea?.left ?? 0, Math.max(0, width - 1)));
+  const right = Math.max(0, Math.min(safeArea?.right ?? 0, Math.max(0, width - left - 1)));
+  const top = Math.max(0, Math.min(safeArea?.top ?? 0, Math.max(0, height - 1)));
+  const bottom = Math.max(0, Math.min(safeArea?.bottom ?? 0, Math.max(0, height - top - 1)));
+  return { top, right, bottom, left };
+}
+
+export function fitBoundsToSafeArea(
+  bounds: [number, number, number, number],
+  width: number,
+  height: number,
+  safeArea?: MathBoardSafeArea,
+): [number, number, number, number] {
+  if (width <= 0 || height <= 0) return [...bounds];
+  const [left, top, right, bottom] = bounds;
+  const spanX = Math.abs(right - left);
+  const spanY = Math.abs(top - bottom);
+  if (spanX <= 0 || spanY <= 0) return [...bounds];
+  const insets = resolvedSafeArea(safeArea, width, height);
+  const safeWidth = width - insets.left - insets.right;
+  const safeHeight = height - insets.top - insets.bottom;
+  const scale = Math.min(safeWidth / spanX, safeHeight / spanY);
+  if (!Number.isFinite(scale) || scale <= 0) return fitBoundsToAspect(bounds, width, height);
+  const xStart = insets.left + (safeWidth - spanX * scale) / 2;
+  const yStart = insets.top + (safeHeight - spanY * scale) / 2;
+  const displayLeft = left - xStart / scale;
+  const displayTop = top + yStart / scale;
+  return [displayLeft, displayTop, displayLeft + width / scale, displayTop - height / scale];
+}
+
+export function contentBoundsFromSafeArea(
+  displayBounds: [number, number, number, number],
+  width: number,
+  height: number,
+  safeArea?: MathBoardSafeArea,
+): [number, number, number, number] {
+  if (width <= 0 || height <= 0) return [...displayBounds];
+  const [left, top, right, bottom] = displayBounds;
+  const insets = resolvedSafeArea(safeArea, width, height);
+  const unitX = (right - left) / width;
+  const unitY = (top - bottom) / height;
+  return [
+    left + insets.left * unitX,
+    top - insets.top * unitY,
+    right - insets.right * unitX,
+    bottom + insets.bottom * unitY,
+  ];
+}
+
 export interface MathBoardProps {
   id?: string;
   className?: string;
@@ -62,6 +141,9 @@ export interface MathBoardProps {
   borderRadius?: number | string;
   ariaLabel?: string;
   keyboardInstructions?: string;
+  safeArea?: MathBoardSafeArea;
+  /** Área usada por anotaciones ligadas al viewport; no altera la escala geométrica. */
+  viewportSafeArea?: MathBoardSafeArea;
 }
 
 export const MathBoard: React.FC<MathBoardProps> = ({
@@ -79,11 +161,13 @@ export const MathBoard: React.FC<MathBoardProps> = ({
   onInit,
   onUpdate,
   children,
-  borderWidth = 1,
+  borderWidth = 2,
   borderColor = 'var(--page-accent, var(--theme-pizarra))',
   borderRadius = 20,
   ariaLabel = 'Diagrama matemático interactivo',
   keyboardInstructions = 'Use Tab para recorrer los objetos interactivos. En puntos móviles y deslizadores, use las flechas para cambiar el valor.',
+  safeArea,
+  viewportSafeArea,
 }) => {
   const containerRef = useRef<HTMLDivElement>(null);
   const boardRef = useRef<HTMLDivElement>(null);
@@ -93,8 +177,12 @@ export const MathBoard: React.FC<MathBoardProps> = ({
   const onUpdateRef = useRef(onUpdate);
   const onBoundingBoxChangeRef = useRef(onBoundingBoxChange);
   const boundingboxRef = useRef(boundingbox);
+  const safeAreaRef = useRef<MathBoardSafeArea>(safeArea ?? {});
+  const viewportSafeAreaRef = useRef<MathBoardSafeArea>(viewportSafeArea ?? safeArea ?? {});
   const highlight = useMathStore(state => state.variables?.[scopeId ? `highlight:${scopeId}` : 'highlight'] ?? state.variables?.['highlight']);
-  const step = useMathStore(state => state.variables?.[scopeId ? `step:${scopeId}` : 'step'] ?? state.variables?.['step']);
+  const step = useMathStore(state => scopeId
+    ? state.variables?.[`step:${scopeId}`]
+    : state.variables?.['step']);
   const highlightRef = useRef(highlight);
   const stepRef = useRef(step);
   const generatedId = useId().replace(/:/g, '');
@@ -107,8 +195,14 @@ export const MathBoard: React.FC<MathBoardProps> = ({
     onUpdateRef.current = onUpdate;
     onBoundingBoxChangeRef.current = onBoundingBoxChange;
     boundingboxRef.current = boundingbox;
+    safeAreaRef.current = safeArea ?? {};
+    viewportSafeAreaRef.current = viewportSafeArea ?? safeArea ?? {};
+    if (boardObj.current) {
+      boardObj.current.__matematikaSafeArea = safeAreaRef.current;
+      boardObj.current.__matematikaViewportSafeArea = viewportSafeAreaRef.current;
+    }
     boardObj.current?.update();
-  }, [boundingbox, onBoundingBoxChange, onInit, onUpdate]);
+  }, [boundingbox, onBoundingBoxChange, onInit, onUpdate, safeArea, viewportSafeArea]);
 
   useEffect(() => {
     highlightRef.current = highlight;
@@ -126,8 +220,11 @@ export const MathBoard: React.FC<MathBoardProps> = ({
     if (!boardRef.current) return;
     boardRef.current.id ||= id || `shared-jxgbox-${generatedId}`;
 
+    const initialBounds = keepaspectratio
+      ? fitBoundsToSafeArea(boundingboxRef.current, boardRef.current.clientWidth, boardRef.current.clientHeight, safeAreaRef.current)
+      : boundingboxRef.current;
     const board = JXG.JSXGraph.initBoard(boardRef.current.id, {
-      boundingbox: boundingboxRef.current,
+      boundingbox: initialBounds,
       axis,
       grid,
       pan: { enabled: pan },
@@ -145,11 +242,15 @@ export const MathBoard: React.FC<MathBoardProps> = ({
     boardRef.current.setAttribute('tabindex', '0');
 
     boardObj.current = board;
-    const initialBounds = board.getBoundingBox?.();
-    if (Array.isArray(initialBounds) && initialBounds.length === 4) {
-      programmaticBoundingBoxRef.current = [...initialBounds] as [number, number, number, number];
+    (board as any).__matematikaSafeArea = safeAreaRef.current;
+    (board as any).__matematikaViewportSafeArea = viewportSafeAreaRef.current;
+    (board as any).__matematikaContainerSize = { width: boardRef.current.clientWidth, height: boardRef.current.clientHeight };
+    const actualInitialBounds = board.getBoundingBox?.();
+    if (Array.isArray(actualInitialBounds) && actualInitialBounds.length === 4) {
+      programmaticBoundingBoxRef.current = [...actualInitialBounds] as [number, number, number, number];
     }
     const theme = getTheme();
+    boardRef.current.style.backgroundColor = theme.lienzo;
     onInitRef.current(board, elementsRef.current, theme);
 
     const runUpdate = () => {
@@ -168,7 +269,12 @@ export const MathBoard: React.FC<MathBoardProps> = ({
       if (Array.isArray(current) && current.length === 4) {
         const programmatic = programmaticBoundingBoxRef.current;
         if (programmatic && current.every((value, index) => Math.abs(value - programmatic[index]) <= 1e-8)) return;
-        onBoundingBoxChangeRef.current?.([...current] as [number, number, number, number]);
+        onBoundingBoxChangeRef.current?.(contentBoundsFromSafeArea(
+          [...current] as [number, number, number, number],
+          boardRef.current?.clientWidth ?? 0,
+          boardRef.current?.clientHeight ?? 0,
+          safeAreaRef.current,
+        ));
       }
     };
     board.on('boundingbox', reportBoundingBox);
@@ -180,7 +286,11 @@ export const MathBoard: React.FC<MathBoardProps> = ({
       if (width <= 2 || height <= 2) return;
       suppressBoundingBoxReportRef.current = true;
       board.resizeContainer(width, height);
-      board.setBoundingBox(boundingboxRef.current, keepaspectratio);
+      const fittedBounds = keepaspectratio
+        ? fitBoundsToSafeArea(boundingboxRef.current, width, height, safeAreaRef.current)
+        : boundingboxRef.current;
+      board.setBoundingBox(fittedBounds, keepaspectratio);
+      (board as any).__matematikaContainerSize = { width, height };
       board.update();
       const resizedBounds = board.getBoundingBox?.();
       if (Array.isArray(resizedBounds) && resizedBounds.length === 4) {
@@ -212,11 +322,16 @@ export const MathBoard: React.FC<MathBoardProps> = ({
   useEffect(() => {
     const board = boardObj.current;
     if (!board) return;
+    const width = boardRef.current?.clientWidth ?? 0;
+    const height = boardRef.current?.clientHeight ?? 0;
+    const fittedBounds = keepaspectratio
+      ? fitBoundsToSafeArea(boundingbox, width, height, safeArea)
+      : boundingbox;
     const current = board.getBoundingBox?.() as number[] | undefined;
-    const changed = !current || boundingbox.some((value, index) => Math.abs(value - current[index]) > 1e-8);
+    const changed = !current || fittedBounds.some((value, index) => Math.abs(value - current[index]) > 1e-8);
     if (changed) {
       suppressBoundingBoxReportRef.current = true;
-      board.setBoundingBox(boundingbox, keepaspectratio);
+      board.setBoundingBox(fittedBounds, keepaspectratio);
       board.update();
       const nextBounds = board.getBoundingBox?.();
       if (Array.isArray(nextBounds) && nextBounds.length === 4) {
@@ -224,7 +339,10 @@ export const MathBoard: React.FC<MathBoardProps> = ({
       }
       suppressBoundingBoxReportRef.current = false;
     }
-  }, [boundingbox, keepaspectratio]);
+    board.__matematikaSafeArea = safeArea ?? {};
+    board.__matematikaViewportSafeArea = viewportSafeArea ?? safeArea ?? {};
+    board.__matematikaContainerSize = { width, height };
+  }, [boundingbox, keepaspectratio, safeArea, viewportSafeArea]);
 
   return (
     <div ref={containerRef} className={`${className} h-full`}>
