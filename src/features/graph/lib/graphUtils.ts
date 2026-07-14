@@ -1,4 +1,5 @@
 import { CONTENT_TYPE_CONFIG } from '@/shared/lib/constants';
+import { CONTENT_TYPE_COLORS } from '@/shared/design/contentTypeColors';
 
 export const NODE_URL_PREFIX: Record<string, string> = {
   axioma: 'axioma',
@@ -21,10 +22,10 @@ export function getNodeUrlPrefix(type: string): string {
 }
 
 export const AXIOM_GROUPS = [
-  { test: (id: string) => id.startsWith('axioma-incidencia'), color: '#b85c38', label: 'Incidencia' },
-  { test: (id: string) => id.startsWith('axioma-orden'), color: '#4a6070', label: 'Orden' },
-  { test: (id: string) => id.startsWith('axioma-congruencia'), color: '#6b9e6b', label: 'Congruencia' },
-  { test: (id: string) => ['axioma-paralelas-euclides', 'axioma-paralelas-hiperbolico'].includes(id), color: '#c9a87c', label: 'Paralelas' },
+  { test: (id: string) => id.startsWith('axioma-incidencia'), color: CONTENT_TYPE_COLORS.teorema.cssVar, label: 'Incidencia' },
+  { test: (id: string) => id.startsWith('axioma-orden'), color: CONTENT_TYPE_COLORS.lema.cssVar, label: 'Orden' },
+  { test: (id: string) => id.startsWith('axioma-congruencia'), color: CONTENT_TYPE_COLORS.definicion.cssVar, label: 'Congruencia' },
+  { test: (id: string) => ['axioma-paralelas-euclides', 'axioma-paralelas-hiperbolico'].includes(id), color: CONTENT_TYPE_COLORS.axioma.cssVar, label: 'Paralelas' },
 ];
 
 export function getAxiomGroup(id: string): { color: string; label: string } | null {

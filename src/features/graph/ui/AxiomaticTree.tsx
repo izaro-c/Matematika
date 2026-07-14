@@ -1,4 +1,4 @@
-import { useEffect, useCallback, useState, useMemo } from 'react';
+import { useEffect, useCallback, useState, useMemo, type CSSProperties } from 'react';
 import { publicAsset } from '@/shared/lib/routeHelper';
 import {
   ReactFlow,
@@ -17,6 +17,7 @@ import { useGraphSandboxStore } from '@/features/graph/GraphSandboxStore';
 import { MathNode } from '@/features/graph/ui/CustomNode';
 import type { MathNodeData } from '@/features/graph/ui/CustomNode';
 import { TYPE_STYLES, CONTENT_TYPE_CONFIG } from '@/shared/lib/constants';
+import { useThemeColors } from '@/shared/hooks/useThemeColors';
 
 
 import { GroupBraceNode } from './components/GroupBraceNode';
@@ -27,6 +28,11 @@ import { getAxiomGroup, computeDependencyChain } from '../lib/graphUtils';
 
 // ── Componente principal ──────────────────────────────────────────────────────
 function FlowContent() {
+  const theme = useThemeColors();
+  const graphBackgroundStyle = {
+    '--graph-light-background': `url("${publicAsset('/images/bg-arts-crafts-1.png')}")`,
+    '--graph-dark-background': `url("${publicAsset('/images/bg-arts-crafts-dark.jpg')}")`,
+  } as CSSProperties;
   const {
     baseNodes, edges: baseEdges, isLoading,
     activeStates, dependsOn,
@@ -235,25 +241,26 @@ function FlowContent() {
       .map((e) => {
         const isRelated = selectedNodeId ? relatedEdgesSet.has(e.id) : true;
         const baseStyle = e.style || {};
-        let finalStroke = baseStyle.stroke;
-        let finalStrokeWidth = baseStyle.strokeWidth;
-        let finalMarkerColor = (e.markerEnd as Record<string, string>)?.color;
-        if (sandboxEnabled) {
-          const srcActive = validNodes.has(e.source);
-          const tgtActive = validNodes.has(e.target);
-          const isLive = srcActive && tgtActive;
-          finalStroke = isLive ? '#333333AA' : '#33333322';
-          finalStrokeWidth = isLive ? 1.5 : 1;
-          finalMarkerColor = isLive ? '#333333AA' : '#33333322';
-        }
+        const sourceNode = rfNodes.find((node) => node.id === e.source);
+        const sourceType = sourceNode
+          ? ((sourceNode.data as unknown) as MathNodeData).nodeType
+          : null;
+        const isFromPrimitive = sourceType === 'concepto';
+        const srcActive = sandboxEnabled ? validNodes.has(e.source) : (activeStates[e.source] ?? true);
+        const tgtActive = sandboxEnabled ? validNodes.has(e.target) : (activeStates[e.target] ?? true);
+        const isLive = srcActive && tgtActive;
+        const edgeColor = isFromPrimitive ? theme.getHex('modelo') : theme.carbon;
+        const finalStroke = `${edgeColor}${isLive ? 'AA' : '22'}`;
+        let finalStrokeWidth = 1;
+        if (isLive) finalStrokeWidth = isFromPrimitive ? 2.5 : 1.5;
         return {
           ...e,
           style: { ...baseStyle, opacity: isRelated ? 1 : 0.12, stroke: finalStroke, strokeWidth: finalStrokeWidth },
-          markerEnd: e.markerEnd ? { ...(e.markerEnd as Record<string, string>), color: finalMarkerColor } : undefined,
+          markerEnd: e.markerEnd ? { ...(e.markerEnd as Record<string, string>), color: finalStroke } : undefined,
         } as Edge;
       })
       .filter(e => visibleNodeIds.has(e.source) && visibleNodeIds.has(e.target));
-  }, [baseEdges, selectedNodeId, relatedEdgesSet, visibleNodeIds, sandboxEnabled, validNodes]);
+  }, [baseEdges, selectedNodeId, relatedEdgesSet, visibleNodeIds, sandboxEnabled, validNodes, activeStates, rfNodes, theme]);
 
   // ── Node interactions ───────────────────────────────────────────────────────
   const onNodeMouseEnter: NodeMouseHandler = useCallback((_, node) => setHoveredNodeId(node.id), []);
@@ -278,8 +285,8 @@ function FlowContent() {
   // ── Loading ─────────────────────────────────────────────────────────────────
   if (isLoading && rfNodes.length === 0) {
     return (
-      <div className="w-full h-full flex items-center justify-center bg-lienzo"
-        style={{ backgroundImage: `url(${publicAsset('/images/bg-arts-crafts-1.png')})`, backgroundSize: '600px', backgroundRepeat: 'repeat' }}>
+      <div className="graph-theme-background w-full h-full flex items-center justify-center bg-lienzo"
+        style={graphBackgroundStyle}>
         <p className="font-serif italic text-carbon/50 text-xl animate-pulse">Calculando estructura axiomática…</p>
       </div>
     );
@@ -287,8 +294,8 @@ function FlowContent() {
 
   // ── Render ──────────────────────────────────────────────────────────────────
   return (
-    <div className="w-full h-full flex bg-lienzo"
-      style={{ backgroundImage: `url(${publicAsset('/images/bg-arts-crafts-1.png')})`, backgroundSize: '600px', backgroundRepeat: 'repeat' }}>
+    <div className="graph-theme-background w-full h-full flex bg-lienzo"
+      style={graphBackgroundStyle}>
 
       {/* ── Sidebar ──────────────────────────────────────────────────────── */}
       <AxiomaticSidebar
@@ -302,11 +309,11 @@ function FlowContent() {
       />
 
       {/* ── Graph area ──────────────────────────────────────────────────────── */}
-      <div className="flex-1 min-w-0 relative">
+      <div className="h-full flex-1 min-w-0 relative">
         {/* Mobile sidebar toggle */}
         {isMobile && !sidebarOpen && (
           <button onClick={() => setSidebarOpen(true)}
-            className="absolute top-3 left-3 z-30 w-9 h-9 bg-lienzo border border-carbon/20 shadow flex items-center justify-center text-sm text-carbon/60 hover:text-carbon">
+            className="absolute top-36 left-6 z-30 w-9 h-9 bg-lienzo border border-carbon/20 shadow flex items-center justify-center text-sm text-carbon/60 hover:text-carbon">
             ☰
           </button>
         )}
@@ -332,6 +339,7 @@ function FlowContent() {
 
         {/* React Flow */}
         <ReactFlow
+          className="axiomatic-graph"
           nodes={visibleNodes}
           edges={visibleEdges}
           onNodesChange={onNodesChange}
@@ -348,7 +356,7 @@ function FlowContent() {
           elementsSelectable={false}
           nodesConnectable={false}
         >
-          <Background color="rgba(51,51,51,0.07)" gap={24} size={1} />
+          <Background color={`${theme.carbon}12`} gap={24} size={1} />
           <Controls position="bottom-left" />
         </ReactFlow>
       </div>

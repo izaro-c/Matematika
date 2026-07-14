@@ -9,15 +9,12 @@ import type {
   LinkObject,
   NodeObject,
 } from 'react-force-graph-2d';
-import { GRAPH_NODE_COLORS } from '@/shared/lib/constants';
 import { useGlossaryStore } from '@/features/glossary/GlossaryStore';
 import { useProgressStore } from '@/features/progress/UserProgressStore';
 import { buildKnowledgeGraphData, GraphNode, GraphLink } from '@/features/graph/lib/knowledgeGraphBuilder';
 import { GraphLegend } from '@/features/graph/ui/components/GraphLegend';
 import { GraphSearch } from '@/features/graph/ui/components/GraphSearch';
 import { useThemeColors } from '@/shared/hooks/useThemeColors';
-import { CONTENT_TYPE_COLORS } from '@/shared/design/contentTypeColors';
-
 
 type KnowledgeGraphNode = NodeObject<GraphNode>;
 type KnowledgeGraphLink = LinkObject<GraphNode, GraphLink>;
@@ -44,6 +41,10 @@ export const GraphPage: React.FC = () => {
   const { openTerm } = useGlossaryStore();
   const theme = useThemeColors();
   const graphRef = useRef<KnowledgeGraphRef | undefined>(undefined);
+  const graphBackgroundStyle = {
+    '--graph-light-background': `url("${publicAsset('/images/bg-arts-crafts-1.png')}")`,
+    '--graph-dark-background': `url("${publicAsset('/images/bg-arts-crafts-dark.jpg')}")`,
+  } as React.CSSProperties;
 
   // Extraer datos del ContentStore usando jerarquía MSC2020 definida
   const graphData: GraphData<GraphNode, GraphLink> = useMemo(() => buildKnowledgeGraphData(), []);
@@ -120,8 +121,10 @@ export const GraphPage: React.FC = () => {
     }
   }, [setLocation, openTerm]);
 
-  const getNodeColor = (node: GraphNode) => {
+  const getNodeColor = useCallback((node: GraphNode) => {
     const groupMap: Record<string, string> = {
+      'central': 'matematico',
+      'branch': 'teorema',
       'teorema': 'theorem',
       'lema': 'lemma',
       'corolario': 'corollary',
@@ -137,9 +140,8 @@ export const GraphPage: React.FC = () => {
       'axioma': 'axioma',
     };
     const key = groupMap[node.group] || node.group;
-    return GRAPH_NODE_COLORS[key] ?? theme.carbon;
-
-  };
+    return theme.getHex(key);
+  }, [theme]);
 
   const drawNodeLabel = useCallback((
     ctx: CanvasRenderingContext2D,
@@ -179,10 +181,10 @@ export const GraphPage: React.FC = () => {
     const textY = nodeY + radius + (fontSize / 2) + (4 / globalScale);
 
     // Shadow for readability
-    ctx.shadowColor = 'rgba(248, 246, 241, 0.9)';
+    ctx.shadowColor = `${theme.lienzo}E6`;
     ctx.shadowBlur = 4 / globalScale;
     ctx.lineWidth = 3 / globalScale;
-    ctx.strokeStyle = 'rgba(248, 246, 241, 0.9)';
+    ctx.strokeStyle = `${theme.lienzo}E6`;
     ctx.strokeText(label, nodeX, textY);
 
     ctx.shadowBlur = 0;
@@ -195,7 +197,7 @@ export const GraphPage: React.FC = () => {
 
     ctx.fillStyle = textColor;
     ctx.fillText(label, nodeX, textY);
-  }, []);
+  }, [theme]);
 
   const drawNode: NonNullable<KnowledgeGraphProps['nodeCanvasObject']> = useCallback((node, ctx, globalScale) => {
     if (node.x === undefined || node.y === undefined || !Number.isFinite(node.x) || !Number.isFinite(node.y)) return;
@@ -209,7 +211,7 @@ export const GraphPage: React.FC = () => {
 
     // Si está completado, dibujar un anillo concéntrico de estilo astrolabio/diagrama clásico
     if (isCompleted && node.group !== 'central' && node.group !== 'branch') {
-      const completedColor = CONTENT_TYPE_COLORS.corolario.hex;
+      const completedColor = theme.getHex('corolario');
       color = completedColor;
       ctx.beginPath();
       ctx.arc(node.x, node.y, radius + (3 / globalScale), 0, 2 * Math.PI, false);
@@ -232,7 +234,7 @@ export const GraphPage: React.FC = () => {
     ctx.stroke();
 
     drawNodeLabel(ctx, node, globalScale, isHighlighted, hoverNode, highlightNodes, radius);
-  }, [hoverNode, highlightNodes, drawNodeLabel]);
+  }, [hoverNode, highlightNodes, drawNodeLabel, getNodeColor, theme]);
 
   // Ajustar cámara inicial
   useEffect(() => {
@@ -260,7 +262,7 @@ export const GraphPage: React.FC = () => {
   }, []);
 
   return (
-    <div className="w-full h-screen bg-lienzo overflow-hidden font-serif relative" style={{ backgroundImage: `url(${publicAsset('/images/bg-arts-crafts-1.png')})`, backgroundSize: '600px', backgroundRepeat: 'repeat' }}>
+    <div className="graph-theme-background w-full h-screen bg-lienzo overflow-hidden font-serif relative" style={graphBackgroundStyle}>
 
       <GraphSearch
         searchQuery={searchQuery}
@@ -289,7 +291,7 @@ export const GraphPage: React.FC = () => {
           linkDirectionalParticleWidth={(link: KnowledgeGraphLink) => highlightLinks.has(link) ? 6 : 2}
           linkDirectionalParticleSpeed={0.005}
           onNodeClick={handleNodeClick}
-          backgroundColor="rgba(0,0,0,0)" // Transparente para ver el fondo
+          backgroundColor="transparent"
         />
       </div>
     </div>

@@ -75,10 +75,12 @@ export function GraphLegend() {
           </div>
 
           <div className="mt-4 pt-3 border-t border-carbon/10">
-            <Link href="/axiomas">
-              <a className="flex items-center justify-center gap-2 text-[9px] font-sans font-bold uppercase tracking-widest text-terracota hover:text-carbon transition-colors" style={{ textDecoration: 'none' }}>
-                Grafo de Axiomas &rarr;
-              </a>
+            <Link
+              href="/axiomas"
+              className="flex items-center justify-center gap-2 text-[9px] font-sans font-bold uppercase tracking-widest text-terracota hover:text-carbon transition-colors"
+              style={{ textDecoration: 'none' }}
+            >
+              Grafo de Axiomas &rarr;
             </Link>
           </div>
         </div>

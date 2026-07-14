@@ -21,7 +21,7 @@ export function GraphSearch({
   onSearchSelect,
 }: GraphSearchProps) {
   return (
-    <div className="absolute top-8 left-1/2 -translate-x-1/2 z-50">
+    <div className="absolute top-24 md:top-8 left-1/2 -translate-x-1/2 z-50">
       <div className="relative">
         <input
           type="text"

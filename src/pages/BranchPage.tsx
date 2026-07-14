@@ -61,19 +61,19 @@ export const BranchPage = () => {
                 <h2 className="text-sm font-sans font-bold uppercase tracking-widest text-carbon/50 mb-6">Sub-ramas</h2>
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
                   {taxonomy.subBranches.map(sub => (
-                    <Link key={sub.slug} href={`/rama/${sub.slug}`}>
-                      <a 
-                        className="group flex items-center justify-between p-6 elegant-panel"
-                        style={{ ['--hover-accent' as string]: 'var(--theme-pizarra)' }}
-                      >
-                        <span className="flex items-baseline gap-3">
+                    <Link
+                      key={sub.slug}
+                      href={`/rama/${sub.slug}`}
+                      className="group flex items-center justify-between p-6 elegant-panel"
+                      style={{ ['--hover-accent' as string]: 'var(--theme-pizarra)' }}
+                    >
+                      <span className="flex items-baseline gap-3">
                           {/^\d{2}[A-Z]?$/.test(sub.slug) && (
                             <span className="text-base font-sans font-bold text-carbon/40">{sub.slug}</span>
                           )}
-                          <span className="text-xl font-bold">{sub.name}</span>
-                        </span>
-                        <span className="text-xs font-sans tracking-widest opacity-50 group-hover:opacity-100 text-pizarra">Explorar →</span>
-                      </a>
+                        <span className="text-xl font-bold">{sub.name}</span>
+                      </span>
+                      <span className="text-xs font-sans tracking-widest opacity-50 group-hover:opacity-100 text-pizarra">Explorar →</span>
                     </Link>
                   ))}
                 </div>

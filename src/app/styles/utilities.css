@@ -14,6 +14,45 @@
   outline-color: color-mix(in srgb, var(--hover-accent) 40%, transparent);
 }
 
+/* Superficie compartida por los exploradores de grafos. Las URLs se inyectan
+   desde React para respetar BASE_URL también en el despliegue de GitHub Pages. */
+.graph-theme-background {
+  --theme-graph-bg-url: var(--graph-light-background);
+  background-image: var(--theme-graph-bg-url);
+  background-repeat: repeat;
+  background-size: 600px;
+}
+
+.dark .graph-theme-background {
+  --theme-graph-bg-url: var(--graph-dark-background);
+}
+
+/* Los controles de React Flow traen superficies blancas en su CSS de origen. */
+.axiomatic-graph .react-flow__controls {
+  border: 1px solid color-mix(in srgb, var(--theme-carbon) 20%, transparent);
+  box-shadow: var(--theme-shadow-classic);
+}
+
+.axiomatic-graph .react-flow__controls-button {
+  background: var(--theme-lienzo);
+  border-bottom-color: color-mix(in srgb, var(--theme-carbon) 15%, transparent);
+  color: var(--theme-carbon);
+}
+
+.axiomatic-graph .react-flow__controls-button:hover {
+  background: color-mix(in srgb, var(--theme-carbon) 8%, var(--theme-lienzo));
+}
+
+.axiomatic-graph .react-flow__controls-button svg {
+  fill: currentColor;
+}
+
+/* Los nodos axiomáticos conservan el acento editorial pleno. El lienzo actúa
+   como tinta y se invierte con el tema: papel claro de día, códice de noche. */
+.axiomatic-math-node {
+  --graph-node-text: var(--theme-lienzo);
+}
+
 
 .scale-animation {
   animation: popIn 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
@@ -51,4 +90,3 @@
   position: relative;
   z-index: 1;
 }
-

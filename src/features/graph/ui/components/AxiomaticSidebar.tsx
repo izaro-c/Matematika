@@ -41,15 +41,15 @@ export function AxiomaticSidebar({
   return (
     <aside className={
       isMobile
-        ? 'fixed inset-0 z-50 bg-lienzo overflow-y-auto'
-        : 'w-[260px] shrink-0 border-r border-carbon/15 bg-lienzo overflow-y-auto'
+        ? 'fixed inset-x-0 bottom-0 top-24 z-50 border-t border-carbon/15 bg-lienzo overflow-y-auto'
+        : 'h-full w-[260px] shrink-0 border-r border-carbon/15 bg-lienzo/95 overflow-y-auto'
     }>
       {isMobile && (
         <button onClick={() => setSidebarOpen(false)} className="absolute top-3 right-3 text-carbon/40 text-lg z-10">✕</button>
       )}
 
       {/* ── Título ─────────────────────────────────────────────────── */}
-      <div className="px-4 pt-5 pb-3">
+      <div className={isMobile ? 'px-4 pt-5 pb-3' : 'px-4 pt-24 pb-3'}>
         <h2 className="font-serif text-base text-carbon tracking-tight leading-tight">
           Grafo de<br />Dependencias
         </h2>
@@ -66,7 +66,7 @@ export function AxiomaticSidebar({
       <div className="px-3 flex flex-col gap-4">
 
         {/* ── Sandbox ─────────────────────────────────────────────────── */}
-        <div className="border border-carbon/15 p-3 bg-white/40">
+        <div className="border border-carbon/15 p-3 bg-carbon/[0.04]">
           <div className="flex items-center justify-between mb-3">
             <h3 className="font-serif text-sm text-carbon">
               <span className="page-accent-text mr-1.5">☙</span>Sandbox Lógico
@@ -202,9 +202,9 @@ export function AxiomaticSidebar({
           <h3 className="font-sans text-[9px] uppercase tracking-[0.15em] text-carbon/50 mb-2">Aristas</h3>
           <div className="text-[10px] font-sans text-carbon/45 space-y-1.5">
             <div className="flex items-center gap-2"><span className="w-7 h-[2px] bg-carbon/50 shrink-0" /><span>Sólida — directa</span></div>
-            <div className="flex items-center gap-2"><span className="w-7 h-[2px] shrink-0" style={{ background: 'repeating-linear-gradient(90deg, rgba(51,51,51,0.5) 0, rgba(51,51,51,0.5) 4px, transparent 4px, transparent 8px)' }} /><span>Discontinua — lema</span></div>
-            <div className="flex items-center gap-2"><span className="w-7 h-[2px] shrink-0" style={{ background: 'repeating-linear-gradient(90deg, rgba(51,51,51,0.5) 0, rgba(51,51,51,0.5) 2px, transparent 2px, transparent 5px)' }} /><span>Punteada — definición</span></div>
-            <div className="flex items-center gap-2"><span className="w-7 h-[2.5px] shrink-0" style={{ background: '#818cf8' }} /><span className="text-carbon/55">Índigo — concepto→axioma</span></div>
+            <div className="flex items-center gap-2"><span className="w-7 h-[2px] shrink-0" style={{ background: 'repeating-linear-gradient(90deg, color-mix(in srgb, var(--theme-carbon) 50%, transparent) 0, color-mix(in srgb, var(--theme-carbon) 50%, transparent) 4px, transparent 4px, transparent 8px)' }} /><span>Discontinua — lema</span></div>
+            <div className="flex items-center gap-2"><span className="w-7 h-[2px] shrink-0" style={{ background: 'repeating-linear-gradient(90deg, color-mix(in srgb, var(--theme-carbon) 50%, transparent) 0, color-mix(in srgb, var(--theme-carbon) 50%, transparent) 2px, transparent 2px, transparent 5px)' }} /><span>Punteada — definición</span></div>
+            <div className="flex items-center gap-2"><span className="w-7 h-[2.5px] shrink-0 bg-pavo" /><span className="text-carbon/55">Pavo — concepto→axioma</span></div>
           </div>
         </div>
 
