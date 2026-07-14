@@ -79,6 +79,7 @@
   --theme-salvia:    #4E7056;  /* Salvia legible — Definiciones */
   --theme-pavo:      #3A5A7A;  /* Azul pavo apagado — Modelos */
   --theme-pizarra:   #5C728A;  /* Pizarra grisáceo — Ejemplos */
+  --theme-graph-bg-url: url('/images/bg-arts-crafts-1.png');
 }
 
 .dark {
@@ -86,12 +87,13 @@
   --theme-lienzo:    #101113; /* Midnight mate profundo */
   --theme-carbon:    #ECE7DF; /* Crema suave de códice nocturno */
   --theme-terracota: #D67A60;
-  --theme-ocre:      #CBA05D;
+  --theme-ocre:      #ECC37A;
   --theme-granada:   #C26666; /* Contraste mejorado (antes #B85C5C) */
   --theme-musgo:     #7BA173; /* Contraste mejorado (antes #708E68) */
   --theme-salvia:    #7BA887;
   --theme-pavo:      #6D8FB8; /* Contraste mejorado (antes #5E7FA3) */
   --theme-pizarra:   #7FA1C2;
+  --theme-graph-bg-url: url('/images/bg-arts-crafts-dark.jpg');
 
   /* Parámetros Visuales y Decorativos del Códice */
   --bg-texture-opacity: 0.96; /* Textura del pergamino extremadamente tenue */

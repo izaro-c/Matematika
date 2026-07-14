@@ -4,7 +4,7 @@ import { routePath, publicAsset } from '@/shared/lib/routeHelper';
 import ForceGraph2D from 'react-force-graph-2d';
 import { useProgressStore } from '@/features/progress/UserProgressStore';
 import { useThemeColors } from '@/shared/hooks/useThemeColors';
-import { CONTENT_TYPE_COLORS } from '@/shared/design/contentTypeColors';
+import { getAllDescendantCodes } from '@/entities/content/msc2020';
 
 
 /**
@@ -40,9 +40,23 @@ interface GraphLink {
   target: string | GraphNode;
 }
 
+function resolveSubBranchNodeId(
+  subBranches: TaxonomyGraphProps['taxonomy']['subBranches'],
+  classifiedSlug: string,
+): string | null {
+  const branch = subBranches.find((subBranch) => (
+    subBranch.slug === classifiedSlug || getAllDescendantCodes(subBranch.slug).includes(classifiedSlug)
+  ));
+  return branch ? `branch-${branch.slug}` : null;
+}
+
 export const TaxonomyGraph: React.FC<TaxonomyGraphProps> = ({ taxonomy }) => {
   const { isRead } = useProgressStore();
   const theme = useThemeColors();
+  const graphBackgroundStyle = {
+    '--graph-light-background': `url("${publicAsset('/images/bg-arts-crafts-1.png')}")`,
+    '--graph-dark-background': `url("${publicAsset('/images/bg-arts-crafts-dark.jpg')}")`,
+  } as React.CSSProperties;
   const [hoverNode, setHoverNode] = useState<GraphNode | null>(null);
 
   const [highlightNodes, setHighlightNodes] = useState(new Set());
@@ -108,7 +122,8 @@ export const TaxonomyGraph: React.FC<TaxonomyGraphProps> = ({ taxonomy }) => {
       // lo anclamos a la sub-rama a la que pertenece, o a la raíz de la rama si no tiene sub-rama.
       if (!hasLocalDependency) {
         if (itemObj.subBranchSlug) {
-          links.push({ source: item.id, target: `branch-${itemObj.subBranchSlug}` });
+          const subBranchNodeId = resolveSubBranchNodeId(taxonomy.subBranches, itemObj.subBranchSlug);
+          links.push({ source: item.id, target: subBranchNodeId ?? taxonomy.slug });
         } else {
           links.push({ source: item.id, target: taxonomy.slug });
         }
@@ -152,11 +167,11 @@ export const TaxonomyGraph: React.FC<TaxonomyGraphProps> = ({ taxonomy }) => {
     }
   }, []);
 
-  const getNodeColor = (node: GraphNode): string => {
+  const getNodeColor = useCallback((node: GraphNode): string => {
     if (node.group === 'central') return theme.carbon;
     if (node.group === 'branch')  return theme.getHex('teorema');
     return theme.getHex(node.group);
-  };
+  }, [theme]);
 
 
   const drawNodeLabel = useCallback((
@@ -204,7 +219,7 @@ export const TaxonomyGraph: React.FC<TaxonomyGraphProps> = ({ taxonomy }) => {
 
       ctx.fillText(label, node.x!, textY);
     }
-  }, []);
+  }, [theme]);
 
   const drawNode = useCallback((node: GraphNode, ctx: CanvasRenderingContext2D, globalScale: number) => {
     if (node.x === undefined || node.y === undefined || !Number.isFinite(node.x) || !Number.isFinite(node.y)) return;
@@ -216,7 +231,7 @@ export const TaxonomyGraph: React.FC<TaxonomyGraphProps> = ({ taxonomy }) => {
     let color = getNodeColor(node);
 
     if (isCompleted && node.group !== 'central' && node.group !== 'branch') {
-      const completedColor = CONTENT_TYPE_COLORS.corolario.hex;
+      const completedColor = theme.getHex('corolario');
       color = completedColor;
       ctx.beginPath();
       ctx.arc(node.x, node.y, radius + (3 / globalScale), 0, 2 * Math.PI, false);
@@ -252,7 +267,7 @@ export const TaxonomyGraph: React.FC<TaxonomyGraphProps> = ({ taxonomy }) => {
       isHighlighted,
       radius
     );
-  }, [hoverNode, highlightNodes, isRead, taxonomy.slug, drawNodeLabel]);
+  }, [hoverNode, highlightNodes, isRead, taxonomy.slug, drawNodeLabel, getNodeColor, theme]);
 
   // Ajuste automático de tamaño del Canvas
   const [dimensions, setDimensions] = useState({ width: 0, height: 400 });
@@ -278,7 +293,11 @@ export const TaxonomyGraph: React.FC<TaxonomyGraphProps> = ({ taxonomy }) => {
   }, []);
 
   return (
-    <div ref={containerRef} className="w-full h-[400px] border-y border-carbon/20 overflow-hidden relative shadow-inner cursor-move" style={{ backgroundImage: `url(${publicAsset('/images/bg-arts-crafts-1.png')})`, backgroundSize: '600px', backgroundRepeat: 'repeat' }}>
+    <div
+      ref={containerRef}
+      className="graph-theme-background w-full h-[400px] border-y border-carbon/20 overflow-hidden relative shadow-inner cursor-move"
+      style={graphBackgroundStyle}
+    >
       <div className="absolute z-10 top-4 left-4 text-[10px] font-sans uppercase tracking-widest text-carbon/60 select-none pointer-events-none bg-lienzo/90 px-3 py-1.5 border border-carbon/10 shadow-sm backdrop-blur-sm rounded-none">
         Grafo de dependencias: {taxonomy.name || taxonomy.id}
       </div>
@@ -296,6 +315,7 @@ export const TaxonomyGraph: React.FC<TaxonomyGraphProps> = ({ taxonomy }) => {
         enableNodeDrag={true}
         enableZoomInteraction={true}
         enablePanInteraction={true}
+        backgroundColor="transparent"
       />
     </div>
   );

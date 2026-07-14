@@ -1,6 +1,6 @@
 import { Handle, Position } from '@xyflow/react';
 import type { NodeProps } from '@xyflow/react';
-import { TYPE_STYLES } from '@/shared/lib/constants';
+import { CONTENT_TYPE_CONFIG } from '@/shared/lib/constants';
 
 /**
  * Definición de los datos que almacena cada nodo del grafo lógico interactivo.
@@ -26,7 +26,9 @@ export interface MathNodeData {
  */
 export function MathNode({ data }: NodeProps) {
   const { label, nodeType, isActive, scale, isHighlighted, isDimmed, inChain, axiomGroupColor } = (data as unknown) as MathNodeData;
-  const s = TYPE_STYLES[nodeType] || TYPE_STYLES.teorema;
+  const nodeConfig = CONTENT_TYPE_CONFIG[nodeType] ?? CONTENT_TYPE_CONFIG.teorema;
+  const nodeColor = nodeConfig.graphColor;
+  const nodeBorder = `color-mix(in srgb, ${nodeColor} 68%, var(--theme-carbon))`;
 
   // Lógica de opacidad:
   // - nodo atenuado (fuera de cadena) → 0.18
@@ -42,22 +44,22 @@ export function MathNode({ data }: NodeProps) {
   let borderWidth: number, borderColor: string;
   if (isHighlighted) {
     borderWidth = 4;
-    borderColor = s.ringColor;
+    borderColor = 'var(--theme-carbon)';
   } else if (groupColor) {
     borderWidth = 5;
     borderColor = groupColor;
   } else {
     borderWidth = 2;
-    borderColor = s.border;
+    borderColor = nodeBorder;
   }
 
   let boxShadow: string;
   if (isHighlighted) {
-    boxShadow = `0 0 0 2px ${s.bg}, 0 0 18px ${s.ringColor}80`;
+    boxShadow = `0 0 0 2px var(--theme-lienzo), 0 0 22px color-mix(in srgb, ${nodeColor} 70%, transparent)`;
   } else if (groupColor) {
-    boxShadow = `0 0 0 8px ${groupColor}45, 0 0 0 18px ${groupColor}15, 0 0 50px ${groupColor}40, 0 2px 8px rgba(0,0,0,0.18)`;
+    boxShadow = `0 0 0 8px color-mix(in srgb, ${groupColor} 27%, transparent), 0 0 0 18px color-mix(in srgb, ${groupColor} 8%, transparent), 0 0 50px color-mix(in srgb, ${groupColor} 25%, transparent), var(--theme-shadow-classic)`;
   } else {
-    boxShadow = '0 2px 8px rgba(0,0,0,0.18)';
+    boxShadow = 'var(--theme-shadow-classic)';
   }
 
   return (
@@ -65,7 +67,11 @@ export function MathNode({ data }: NodeProps) {
      * Contenedor EXTERNO: tamaño fijo = huella en React Flow.
      * NUNCA cambia de tamaño → posiciones dagre estables en hover.
      */
-    <div style={{ width: '100%', height: '100%', position: 'relative' }}>
+    <div
+      className="axiomatic-math-node"
+      data-node-type={nodeType}
+      style={{ width: '100%', height: '100%', position: 'relative' }}
+    >
       {/**
        * Contenedor escalado: incluye los handles para que escalen
        * con el contenido y React Flow detecte sus posiciones correctas
@@ -88,8 +94,8 @@ export function MathNode({ data }: NodeProps) {
           style={{
             width: 12,
             height: 12,
-            background: s.ringColor,
-            border: `2px solid ${s.bg}`,
+            background: nodeColor,
+            border: '2px solid var(--theme-lienzo)',
             borderRadius: '50%',
             opacity: 0.25,
           }}
@@ -99,10 +105,10 @@ export function MathNode({ data }: NodeProps) {
           style={{
             width: '100%',
             height: '100%',
-            backgroundColor: s.bg,
+            backgroundColor: nodeColor,
             border: `${borderWidth}px solid ${borderColor}`,
             borderRadius: '50%',
-            outline: `2px solid ${s.border}`,
+            outline: `2px solid ${nodeBorder}`,
             outlineOffset: isHighlighted ? 3 : 2,
             display: 'flex',
             flexDirection: 'column',
@@ -121,13 +127,13 @@ export function MathNode({ data }: NodeProps) {
               fontFamily: '"Inter", "system-ui", sans-serif',
               letterSpacing: '0.14em',
               textTransform: 'uppercase',
-              color: s.text,
+              color: 'var(--graph-node-text)',
               opacity: 0.65,
               lineHeight: 1,
               userSelect: 'none',
             }}
           >
-            {s.badge}
+            {nodeConfig.nodeStyle.badge}
           </span>
 
           {/* Título del nodo */}
@@ -136,7 +142,7 @@ export function MathNode({ data }: NodeProps) {
               fontSize: 15,
               fontFamily: '"Georgia", "Times New Roman", serif',
               fontWeight: 'bold',
-              color: s.text,
+              color: 'var(--graph-node-text)',
               textAlign: 'center',
               lineHeight: 1.25,
               display: '-webkit-box',
@@ -158,8 +164,8 @@ export function MathNode({ data }: NodeProps) {
           style={{
             width: 12,
             height: 12,
-            background: s.ringColor,
-            border: `2px solid ${s.bg}`,
+            background: nodeColor,
+            border: '2px solid var(--theme-lienzo)',
             borderRadius: '50%',
             opacity: 0.25,
           }}

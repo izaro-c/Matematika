@@ -34,7 +34,7 @@ export const THEME_PALETTE_HEX = {
   lienzo:    { hex: '#F8F6F1', ring: '#F8F6F1' },
   carbon:    { hex: '#333333', ring: '#555555' },
   terracota: { hex: '#A94E35', ring: '#D67A60' },
-  ocre:      { hex: '#8C641F', ring: '#CBA05D' },
+  ocre:      { hex: '#8C641F', ring: '#ECC37A' },
   granada:   { hex: '#9E3B33', ring: '#C26666' },
   musgo:     { hex: '#526E4A', ring: '#7BA173' },
   salvia:    { hex: '#4E7056', ring: '#7BA887' },

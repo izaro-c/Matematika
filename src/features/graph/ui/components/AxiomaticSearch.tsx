@@ -24,7 +24,7 @@ export function AxiomaticSearch({
   const [searchOpen, setSearchOpen] = useState(false);
 
   return (
-    <div className="absolute top-3 left-1/2 -translate-x-1/2 z-30" style={{ width: 300 }}>
+    <div className="absolute top-24 md:top-3 left-1/2 -translate-x-1/2 z-30 w-[min(300px,calc(100%-3rem))]">
       <div className="relative">
         <div className="flex items-center bg-lienzo border border-carbon/30 shadow-sm">
           <span className="pl-3 text-carbon/40 text-base select-none">⌕</span>
@@ -55,8 +55,12 @@ export function AxiomaticSearch({
                 onMouseDown={() => { setSearchOpen(false); onSelect(r.id); }}
                 className="w-full text-left px-4 py-2.5 hover:bg-carbon/5 border-b border-carbon/8 last:border-0 flex items-center gap-3"
               >
-                <span className="text-[8px] uppercase tracking-widest shrink-0 px-1.5 py-0.5 rounded font-sans font-bold"
-                  style={{ background: getNodeTypeColor(r.nodeType), color: '#fff' }}>
+                <span className="text-[8px] uppercase tracking-widest shrink-0 px-1.5 py-0.5 rounded border font-sans font-bold"
+                  style={{
+                    background: `color-mix(in srgb, ${getNodeTypeColor(r.nodeType)} 14%, var(--theme-lienzo))`,
+                    borderColor: getNodeTypeColor(r.nodeType),
+                    color: getNodeTypeColor(r.nodeType),
+                  }}>
                   {r.nodeType}
                 </span>
                 <span className="font-serif text-sm text-carbon capitalize">{r.label}</span>

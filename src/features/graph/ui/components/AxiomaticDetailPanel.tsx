@@ -29,7 +29,7 @@ export function AxiomaticDetailPanel({
     <div className={
       isMobile
         ? 'fixed bottom-0 left-0 right-0 z-50 bg-lienzo border-t border-carbon/20 shadow-xl p-4 max-h-[70vh] overflow-y-auto rounded-t-xl'
-        : 'absolute top-3 right-3 z-30 bg-lienzo/95 border border-carbon/20 shadow p-4 w-[280px] max-h-[calc(100vh-2rem)] overflow-y-auto'
+        : 'absolute top-24 right-3 z-30 bg-lienzo/95 border border-carbon/20 shadow p-4 w-[280px] max-h-[calc(100vh-7rem)] overflow-y-auto'
     }>
       <div className="flex justify-between items-start mb-2">
         {(() => {
