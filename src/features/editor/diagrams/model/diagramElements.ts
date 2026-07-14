@@ -140,7 +140,8 @@ export function refsNeededForTool(tool: CanvasTool): number {
   if (['segment', 'line', 'ray', 'circle', 'midpoint', 'congruenceMark', 'dimensionLine', 'measurement'].includes(tool)) return 2;
   if (['arc', 'polygon', 'perpendicularFoot', 'baseExtension', 'perpendicular', 'parallel', 'angleBisector', 'angle', 'rightAngle', 'perpendicularMark', 'areaDecomposition'].includes(tool)) return 3;
   if (['poincareGeodesic', 'poincareArc', 'grid'].includes(tool)) return 4;
-  if (['text', 'label', 'formula', 'infoPanel'].includes(tool)) return 1;
+  if (['text', 'label', 'formula'].includes(tool)) return 1;
+  if (tool === 'infoPanel') return 0;
   return 0;
 }
 

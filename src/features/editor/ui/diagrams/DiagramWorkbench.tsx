@@ -59,7 +59,7 @@ function refsForElementKind(kind: ElementKind, refs: string[]): string[] {
   }
   if (kind === 'areaDecomposition') return refs.slice(0, 4);
   if (kind === 'poincareGeodesic' || kind === 'poincareArc' || kind === 'grid') return refs.slice(0, 4);
-  if (kind === 'functionCurve' || kind === 'parametricCurve') return [];
+  if (kind === 'functionCurve' || kind === 'parametricCurve' || kind === 'infoPanel') return [];
   return refs.slice(0, 1);
 }
 
@@ -281,6 +281,8 @@ export const DiagramWorkbenchCore: React.FC<DiagramWorkbenchCoreProps> = ({
             ? { rows: 4, columns: 4 }
             : kind === 'dimensionLine' || kind === 'measurement'
               ? { precision: 2 }
+              : kind === 'infoPanel'
+                ? { anchorMode: 'viewport' as const, viewportPosition: [0.08, 0.22] as [number, number], title: 'Información' }
               : undefined;
     const newElement = element(id, KIND_LABELS[kind], kind, elementRefs, elementColorForKind(kind), true, properties ? { properties } : {});
     handleVisualEdit({

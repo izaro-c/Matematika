@@ -12,6 +12,7 @@ vi.mock('../../../src/shared/diagrams/core/MathBoard', () => ({
 import { DiagramRenderer } from '../../../src/shared/diagrams/runtime/DiagramRenderer';
 import { Pitagoras } from '../../../src/widgets/diagrams/Teoremas/Pitagoras';
 import { PitagorasSpec } from '../../../src/widgets/diagrams/Teoremas/Pitagoras';
+import { Paralelogramo } from '../../../src/widgets/diagrams/Definiciones/Paralelogramo';
 import { DiagramStepsEditor } from '../../../src/features/editor/diagrams/ui/DiagramStepsEditor';
 
 describe('DiagramRenderer shared runtime', () => {
@@ -25,10 +26,18 @@ describe('DiagramRenderer shared runtime', () => {
       </MathProvider>,
     );
     expect(screen.getByTestId('math-board')).toBeTruthy();
-    expect(document.querySelector('[data-diagram-renderer="matematika-diagram-renderer-v2"]')).toBeTruthy();
+    const renderer = document.querySelector('[data-diagram-renderer="matematika-diagram-renderer-v2"]');
+    expect(renderer).toBeTruthy();
+    expect(renderer?.className).toContain('rounded-[20px]');
+    const board = renderer?.querySelector('[data-testid="math-board"]');
+    expect(board).toBeTruthy();
+    expect(board?.querySelector('[data-diagram-header]')).toBeTruthy();
+    expect(renderer?.querySelector('[data-diagram-toolbar] [aria-label="Controles del viewport"]')).toBeTruthy();
+    expect(board?.querySelector('[aria-label="Controles del viewport"]')).toBeTruthy();
     fireEvent.click(screen.getByRole('button', { name: 'Acercar' }));
     expect(onViewportChange).toHaveBeenCalledTimes(1);
-    expect((screen.getByRole('button', { name: 'Recuperar objetos fuera del viewport' }) as HTMLButtonElement).disabled).toBe(false);
+    fireEvent.click(screen.getByRole('button', { name: 'Ajustar todos los objetos al viewport' }));
+    expect(onViewportChange).toHaveBeenCalledTimes(2);
   });
 
   it('opens the real Pitágoras editor preview without requiring an outer MathProvider', () => {
@@ -36,6 +45,8 @@ describe('DiagramRenderer shared runtime', () => {
       <Pitagoras />,
     )).not.toThrow();
     expect(screen.getByTestId('math-board')).toBeTruthy();
+    expect([...document.querySelectorAll('[data-interactive-label]')].map(node => node.textContent)).toEqual(['A', 'B']);
+    expect(screen.getByText(/Arrastre/).className).not.toContain('text-terracota');
   });
 
   it('opens the real Pitágoras steps editor without requiring an outer MathProvider', () => {
@@ -49,5 +60,17 @@ describe('DiagramRenderer shared runtime', () => {
       />,
     )).not.toThrow();
     expect(screen.getByRole('navigation', { name: 'Navegación de pasos del diagrama' })).toBeTruthy();
+  });
+
+  it('starts a published multi-step diagram at step 1 and only advances through its scoped navigator', () => {
+    render(<Paralelogramo />);
+    const renderer = document.querySelector('[data-diagram-renderer="matematika-diagram-renderer-v2"]');
+    expect(renderer?.getAttribute('data-diagram-active-step')).toBe('step1');
+    expect(screen.queryByLabelText('Lecturas dinámicas del diagrama')).toBeNull();
+    const initialBounds = renderer?.getAttribute('data-diagram-viewport-bounds');
+
+    fireEvent.click(screen.getByRole('button', { name: 'Paso siguiente' }));
+    expect(renderer?.getAttribute('data-diagram-active-step')).toBe('step2');
+    expect(renderer?.getAttribute('data-diagram-viewport-bounds')).toBe(initialBounds);
   });
 });

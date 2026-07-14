@@ -50,6 +50,11 @@ const elementPropertiesSchema = z.object({
   rows: z.number().int().min(1).max(100).optional(),
   columns: z.number().int().min(1).max(100).optional(),
   title: z.string().min(1).optional(),
+  anchorMode: z.enum(['reference', 'viewport']).optional(),
+  viewportPosition: z.tuple([
+    finiteNumber.min(0).max(1),
+    finiteNumber.min(0).max(1),
+  ]).optional(),
   clockwise: z.boolean().optional(),
   visibleWhen: expressionSchema.optional(),
   textRules: z.array(z.object({ when: expressionSchema, text: z.string() }).strict()).max(12).optional(),
@@ -289,7 +294,8 @@ export const diagramSpecV2Schema = z.object({
   });
 
   spec.elements.forEach((element, index) => {
-    const required = minimumRefs[element.kind] ?? 1;
+    const viewportAnchoredPanel = element.kind === 'infoPanel' && element.properties?.anchorMode === 'viewport';
+    const required = viewportAnchoredPanel ? 0 : minimumRefs[element.kind] ?? 1;
     if (element.refs.length < required) context.addIssue({ code: 'custom', message: `${element.id} necesita al menos ${required} referencias.`, path: ['elements', index, 'refs'] });
     element.refs.forEach(ref => {
       if (!referenceIds.has(ref)) context.addIssue({ code: 'custom', message: `${element.id} referencia el objeto inexistente ${ref}.`, path: ['elements', index, 'refs'] });
@@ -299,6 +305,9 @@ export const diagramSpecV2Schema = z.object({
     }
     if (element.kind === 'parametricCurve' && (!element.properties?.xExpression || !element.properties.yExpression)) {
       context.addIssue({ code: 'custom', message: `${element.id} necesita expresiones x e y.`, path: ['elements', index, 'properties'] });
+    }
+    if (viewportAnchoredPanel && !element.properties?.viewportPosition) {
+      context.addIssue({ code: 'custom', message: `${element.id} necesita properties.viewportPosition.`, path: ['elements', index, 'properties', 'viewportPosition'] });
     }
   });
   spec.points.forEach((point, index) => {

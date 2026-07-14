@@ -2,6 +2,7 @@ import React from 'react';
 
 interface DiagramTitleProps {
   children: React.ReactNode;
+  layout?: 'overlay' | 'inline';
   className?: string;
 }
 
@@ -9,9 +10,17 @@ interface DiagramTitleProps {
  * DiagramTitle — Componente estandarizado para mostrar el título en la esquina superior izquierda de un diagrama.
  * Hereda los estilos Arts & Crafts de Matematika de forma unificada.
  */
-export const DiagramTitle: React.FC<DiagramTitleProps> = ({ children, className = "" }) => {
+export const DiagramTitle: React.FC<DiagramTitleProps> = ({ children, layout = 'overlay', className = "" }) => {
+  const layoutClasses = layout === 'overlay'
+    ? 'pointer-events-none absolute left-4 top-4 z-10 max-w-[calc(100%-8rem)] border-l-2 border-ocre/70 pl-3 text-lg text-carbon/80 select-none'
+    : 'relative text-2xl text-carbon sm:text-3xl';
+
   return (
-    <div className={`absolute top-3 left-3 z-10 text-[10px] font-sans text-pizarra/50 dark:text-lienzo/40 uppercase tracking-wider select-none ${className}`}>
+    <div
+      className={`${layoutClasses} font-serif font-semibold leading-none tracking-tight ${className}`}
+      data-diagram-title
+      data-layout={layout}
+    >
       {children}
     </div>
   );
@@ -20,6 +29,7 @@ export const DiagramTitle: React.FC<DiagramTitleProps> = ({ children, className 
 interface DiagramInfoPanelProps {
   title?: string;
   position?: 'top-left' | 'top-right' | 'bottom-left' | 'bottom-right';
+  layout?: 'overlay' | 'inline';
   className?: string;
   children: React.ReactNode;
 }
@@ -31,25 +41,33 @@ interface DiagramInfoPanelProps {
 export const DiagramInfoPanel: React.FC<DiagramInfoPanelProps> = ({
   title,
   position = 'bottom-right',
+  layout = 'overlay',
   className = "",
   children
 }) => {
-  // Mapear posición física a clases CSS absolutas
   const positionClasses = {
-    'top-left': 'top-3 left-3',
-    'top-right': 'top-3 right-3',
+    'top-left': 'top-14 left-4',
+    'top-right': 'top-14 right-4',
     'bottom-left': 'bottom-4 left-4',
     'bottom-right': 'bottom-4 right-4',
   };
+  const layoutClasses = layout === 'overlay'
+    ? `absolute ${positionClasses[position]} z-10 bg-lienzo/90 backdrop-blur-[2px]`
+    : 'relative w-full bg-transparent';
 
   return (
-    <div className={`absolute ${positionClasses[position]} z-10 bg-lienzo/90 dark:bg-carbon/95 backdrop-blur-sm border border-carbon/15 dark:border-lienzo/15 p-4 font-serif text-[11px] text-carbon/80 dark:text-lienzo/80 shadow-sm leading-relaxed min-w-[210px] rounded-sm select-none ${className}`}>
+    <aside
+      className={`${layoutClasses} max-w-[min(30rem,calc(100%-2rem))] min-w-[12rem] border-l-2 border-ocre/70 px-3 py-2 font-serif text-xs leading-relaxed text-carbon/75 select-none ${className}`}
+      data-diagram-info-panel
+      data-layout={layout}
+      data-position={position}
+    >
       {title && (
-        <div className="font-sans font-bold text-[8px] uppercase tracking-wider text-carbon/40 dark:text-lienzo/30 mb-2 border-b border-carbon/10 dark:border-lienzo/10 pb-1">
+        <div className="mb-1 font-serif text-sm font-semibold leading-tight text-carbon">
           {title}
         </div>
       )}
       {children}
-    </div>
+    </aside>
   );
 };

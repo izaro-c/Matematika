@@ -419,6 +419,91 @@ export const DiagramInspector: React.FC<DiagramInspectorProps> = ({
             </div>
           )}
 
+          {selectedElement.kind === 'infoPanel' && (
+            <fieldset className="space-y-2 rounded border border-carbon/10 p-2">
+              <legend className="px-1 text-[10px] font-bold uppercase tracking-wider text-carbon/45">Posición del panel</legend>
+              <label className="block text-xs font-bold text-carbon">
+                Tipo de anclaje
+                <select
+                  aria-label="Tipo de anclaje del panel"
+                  className="mt-1 w-full rounded border border-carbon/15 bg-lienzo p-1.5 text-xs"
+                  value={selectedElement.properties?.anchorMode ?? 'reference'}
+                  onChange={(event) => {
+                    const anchorMode = event.target.value as 'reference' | 'viewport';
+                    handleElementChange({
+                      refs: anchorMode === 'viewport'
+                        ? []
+                        : selectedElement.refs.length > 0 ? selectedElement.refs : [model.points[0].id],
+                      properties: {
+                        ...selectedElement.properties,
+                        anchorMode,
+                        ...(anchorMode === 'viewport' && !selectedElement.properties?.viewportPosition
+                          ? { viewportPosition: [0.08, 0.22] as [number, number] }
+                          : {}),
+                      },
+                    });
+                  }}
+                >
+                  <option value="reference">Referencia geométrica</option>
+                  <option value="viewport">Posición relativa al lienzo</option>
+                </select>
+              </label>
+              {(selectedElement.properties?.anchorMode ?? 'reference') === 'viewport' && (
+                <div className="space-y-2">
+                  <button
+                    type="button"
+                    className="w-full rounded border border-carbon/15 bg-lienzo px-2 py-1.5 text-left text-xs font-semibold text-carbon transition-colors hover:border-ocre/60 hover:bg-ocre/5"
+                    aria-label="Alinear panel con el título"
+                    onClick={() => handleElementPropertiesChange({ viewportPosition: [0, 0] })}
+                  >
+                    Alinear con el título
+                  </button>
+                  <div className="grid grid-cols-2 gap-2">
+                    <label className="text-xs font-bold text-carbon">
+                      Horizontal (%)
+                      <input
+                        type="number"
+                        min="0"
+                        max="100"
+                        step="1"
+                        aria-label="Posición horizontal del panel"
+                        className="mt-1 w-full rounded border border-carbon/15 bg-lienzo p-1.5 text-xs"
+                        value={Math.round((selectedElement.properties?.viewportPosition?.[0] ?? 0.08) * 100)}
+                        onChange={(event) => handleElementPropertiesChange({
+                          viewportPosition: [Number(event.target.value) / 100, selectedElement.properties?.viewportPosition?.[1] ?? 0.22],
+                        })}
+                      />
+                    </label>
+                    <label className="text-xs font-bold text-carbon">
+                      Vertical (%)
+                      <input
+                        type="number"
+                        min="0"
+                        max="100"
+                        step="1"
+                        aria-label="Posición vertical del panel"
+                        className="mt-1 w-full rounded border border-carbon/15 bg-lienzo p-1.5 text-xs"
+                        value={Math.round((selectedElement.properties?.viewportPosition?.[1] ?? 0.22) * 100)}
+                        onChange={(event) => handleElementPropertiesChange({
+                          viewportPosition: [selectedElement.properties?.viewportPosition?.[0] ?? 0.08, Number(event.target.value) / 100],
+                        })}
+                      />
+                    </label>
+                  </div>
+                </div>
+              )}
+              <label className="block text-xs font-bold text-carbon">
+                Título del panel
+                <input
+                  aria-label="Título del panel"
+                  className="mt-1 w-full rounded border border-carbon/15 bg-lienzo p-1.5 text-xs"
+                  value={selectedElement.properties?.title ?? ''}
+                  onChange={(event) => handleElementPropertiesChange({ title: event.target.value || undefined })}
+                />
+              </label>
+            </fieldset>
+          )}
+
           {selectedElement.kind === 'functionCurve' && (
             <label className="block text-xs font-bold text-carbon">
               f(x)

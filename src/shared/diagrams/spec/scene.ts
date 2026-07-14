@@ -318,9 +318,13 @@ export function padBounds(bounds: DiagramBounds, padding: number): DiagramBounds
   return [left - width * padding, top + height * padding, right + width * padding, bottom - height * padding];
 }
 
-export function fitViewport(spec: DiagramSpecV2, itemIds?: readonly string[]): DiagramBounds {
+export function fitViewport(
+  spec: DiagramSpecV2,
+  itemIds?: readonly string[],
+  padding = spec.viewport.padding,
+): DiagramBounds {
   const bounds = contentBounds(spec, itemIds);
-  return bounds ? padBounds(bounds, spec.viewport.padding) : spec.viewport.home;
+  return bounds ? padBounds(bounds, padding) : spec.viewport.home;
 }
 
 export function zoomViewport(spec: DiagramSpecV2, bounds: DiagramBounds, factor: number): DiagramBounds {

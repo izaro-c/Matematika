@@ -2,17 +2,24 @@ import type { ThemeColors } from './MathBoard';
 
 type JXGCoord = number | (() => number);
 
+function pointLabel(theme: ThemeColors, label: Record<string, unknown> = {}) {
+  return {
+    fontSize: 16,
+    cssClass: 'font-serif font-semibold italic tracking-tight',
+    strokeColor: theme.carbon,
+    ...label,
+  };
+}
+
 export function createPoint(board: any, coords: [JXGCoord, JXGCoord], options: any = {}, theme: ThemeColors) {
+  const { label, ...attributes } = options;
   return board.create('point', coords, {
-    size: 5,
+    size: 4,
     fillColor: theme.carbon,
     strokeColor: theme.carbon,
-    label: {
-      fontSize: 18,
-      cssClass: 'font-serif font-bold italic',
-      strokeColor: theme.carbon,
-    },
-    ...options,
+    showInfobox: false,
+    ...attributes,
+    label: pointLabel(theme, label),
   });
 }
 
@@ -79,7 +86,7 @@ export function createFunctionCurve(
 ) {
   return board.create('functiongraph', [evaluate, domain[0], domain[1]], {
     strokeColor: theme.pavo,
-    strokeWidth: 2.4,
+    strokeWidth: 2,
     ...options,
   });
 }
@@ -94,7 +101,7 @@ export function createParametricCurve(
 ) {
   return board.create('curve', [evaluateX, evaluateY, domain[0], domain[1]], {
     strokeColor: theme.pavo,
-    strokeWidth: 2.4,
+    strokeWidth: 2,
     ...options,
   });
 }
@@ -296,30 +303,26 @@ export function createAreaDecomposition(
 }
 
 export function createMidpoint(board: any, points: [any, any], options: any = {}, theme: ThemeColors) {
+  const { label, ...attributes } = options;
   return board.create('midpoint', points, {
-    size: 5,
+    size: 4,
     fillColor: theme.terracota,
     strokeColor: theme.terracota,
-    label: {
-      fontSize: 18,
-      cssClass: 'font-serif font-bold italic',
-      strokeColor: theme.carbon,
-    },
-    ...options,
+    showInfobox: false,
+    ...attributes,
+    label: pointLabel(theme, label),
   });
 }
 
 export function createGlider(board: any, coordsAndSupport: [JXGCoord, JXGCoord, any], options: any = {}, theme: ThemeColors) {
+  const { label, ...attributes } = options;
   return board.create('glider', coordsAndSupport, {
-    size: 5,
+    size: 4,
     fillColor: theme.ocre,
     strokeColor: theme.ocre,
-    label: {
-      fontSize: 18,
-      cssClass: 'font-serif font-bold italic',
-      strokeColor: theme.carbon,
-    },
-    ...options,
+    showInfobox: false,
+    ...attributes,
+    label: pointLabel(theme, label),
   });
 }
 
@@ -355,19 +358,17 @@ export function createPerpendicularFoot(board: any, points: [any, any, any], opt
     return { x: baseA.X() + dx * t, y: baseA.Y() + dy * t };
   };
 
+  const { label, ...attributes } = options;
   return board.create('point', [
     () => projected().x,
     () => projected().y,
   ], {
-    size: 5,
+    size: 4,
     fillColor: theme.ocre,
     strokeColor: theme.ocre,
-    label: {
-      fontSize: 18,
-      cssClass: 'font-serif font-bold italic',
-      strokeColor: theme.carbon,
-    },
-    ...options,
+    showInfobox: false,
+    ...attributes,
+    label: pointLabel(theme, label),
   });
 }
 
@@ -438,7 +439,7 @@ export function createAngle(board: any, points: [any, any, any], options: any = 
     type: 'sector',
     radius: 0.55,
     fillColor: theme.ocre,
-    fillOpacity: 0.18,
+    fillOpacity: 0.1,
     strokeColor: theme.ocre,
     strokeWidth: 1.5,
     label: { visible: false },
@@ -471,7 +472,7 @@ export function createRightAngleMarker(board: any, points: [any, any, any], opti
 
   return board.create('polygon', [p0, p1, p2, p3], {
     fillColor: theme.ocre,
-    fillOpacity: 0.18,
+    fillOpacity: 0.1,
     strokeColor: theme.ocre,
     strokeWidth: 1.5,
     vertices: { visible: false },

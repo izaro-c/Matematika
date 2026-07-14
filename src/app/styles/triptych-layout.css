@@ -50,12 +50,11 @@
 
 .triptych-diagram {
   grid-area: diagram;
-  position: sticky;
-  top: var(--triptych-top);
-  z-index: 50;
+  position: relative;
+  z-index: 1;
   isolation: isolate;
   width: 100%;
-  height: clamp(16rem, 42svh, 28rem);
+  height: clamp(18rem, 46svh, 28rem);
   min-height: 0;
   background: none;
 }
@@ -68,6 +67,28 @@
   height: var(--triptych-top);
   background: var(--theme-lienzo);
   pointer-events: none;
+}
+
+@media (max-width: 639px) {
+  .triptych-layout:not([data-page-type="demostracion"]) [data-diagram-header] {
+    padding: 0.75rem 0.875rem 0;
+  }
+
+  .triptych-layout:not([data-page-type="demostracion"]) [data-diagram-header] > p {
+    margin-bottom: 0.375rem;
+    font-size: 0.75rem;
+    line-height: 1.25;
+  }
+
+  .triptych-layout:not([data-page-type="demostracion"]) [data-diagram-title] {
+    font-size: 1.25rem;
+  }
+
+  .triptych-layout:not([data-page-type="demostracion"]) [data-diagram-header] > output {
+    margin-top: 0.25rem;
+    column-gap: 0.5rem;
+    font-size: 0.875rem;
+  }
 }
 
 .triptych-diagram-sticky,
@@ -105,7 +126,7 @@
   min-height: 0;
 }
 
-.triptych-diagram-surface > [class*="border"] {
+.triptych-diagram-surface > [class*="border"]:not([data-diagram-renderer]) {
   border-color: transparent;
   border-radius: 0;
 }
@@ -187,6 +208,26 @@
 
 .triptych-metadata-trigger:hover {
   background: color-mix(in srgb, var(--theme-terracota) 86%, var(--theme-carbon));
+}
+
+@media (max-width: 1279px) {
+  .triptych-metadata-trigger {
+    left: 0;
+    width: 3rem;
+    height: 3rem;
+    justify-content: flex-end;
+    padding: 0 0.65rem 0 0;
+    transform: translateX(-55%);
+  }
+
+  .triptych-metadata-trigger:hover,
+  .triptych-metadata-trigger:focus-visible {
+    transform: translateX(0);
+  }
+
+  .triptych-metadata-trigger-label {
+    display: none;
+  }
 }
 
 @media (max-width: 479px) {

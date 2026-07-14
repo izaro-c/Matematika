@@ -58,6 +58,31 @@ describe('DiagramSpec v2 schema and migrations', () => {
     expect(parsed.error.message).toContain('forma un ciclo');
   });
 
+  it('accepts viewport-relative information panels without a geometric reference', () => {
+    const candidate = structuredClone(v2Fixture);
+    candidate.elements.push({
+      id: 'viewport-panel', label: 'Panel fijo', kind: 'infoPanel', refs: [], color: 'carbon',
+      layerId: 'annotations', order: 99, visible: true, locked: false, groupIds: [],
+      selection: { selectable: true, role: 'annotation' }, target: false, text: 'Lectura estable',
+      properties: { anchorMode: 'viewport', viewportPosition: [0.1, 0.2], title: 'Información' },
+    });
+    const parsed = parseDiagramSpecV2(candidate);
+    expect(parsed.success).toBe(true);
+  });
+
+  it('requires normalized coordinates for viewport-relative information panels', () => {
+    const candidate = structuredClone(v2Fixture);
+    candidate.elements.push({
+      id: 'viewport-panel', label: 'Panel fijo', kind: 'infoPanel', refs: [], color: 'carbon',
+      layerId: 'annotations', order: 99, visible: true, locked: false, groupIds: [],
+      selection: { selectable: true, role: 'annotation' }, target: false, text: 'Lectura estable',
+      properties: { anchorMode: 'viewport' },
+    });
+    const parsed = parseDiagramSpecV2(candidate);
+    expect(parsed.success).toBe(false);
+    if (!parsed.success) expect(parsed.error.message).toContain('viewportPosition');
+  });
+
   it('distinguishes future and unsupported versions with understandable errors', () => {
     expect(() => migrateDiagramSpec({ ...v2Fixture, version: 3 })).toThrowError(DiagramSpecMigrationError);
     try {

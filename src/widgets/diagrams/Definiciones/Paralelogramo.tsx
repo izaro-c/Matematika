@@ -101,10 +101,6 @@ export const ParalelogramoSpec = createDiagramSpec(
         "anguloB",
         "anguloC",
         "anguloD",
-        "rectoA",
-        "rectoB",
-        "rectoC",
-        "rectoD",
         "diagAC",
         "diagBD",
         "M",
@@ -625,7 +621,7 @@ export const ParalelogramoSpec = createDiagramSpec(
     {
       "id": "anguloA",
       "label": "ángulo A",
-      "color": "salvia",
+      "color": "terracota",
       "layerId": "propiedades",
       "order": 30,
       "visible": true,
@@ -695,7 +691,7 @@ export const ParalelogramoSpec = createDiagramSpec(
     {
       "id": "anguloC",
       "label": "ángulo C",
-      "color": "salvia",
+      "color": "terracota",
       "layerId": "propiedades",
       "order": 32,
       "visible": true,
@@ -763,134 +759,6 @@ export const ParalelogramoSpec = createDiagramSpec(
       }
     },
     {
-      "id": "rectoA",
-      "label": "ángulo recto A",
-      "color": "ocre",
-      "layerId": "propiedades",
-      "order": 34,
-      "visible": true,
-      "locked": false,
-      "groupIds": [
-        "paralelogramoGrupo"
-      ],
-      "selection": {
-        "selectable": true,
-        "role": "secondary"
-      },
-      "target": false,
-      "style": {
-        "strokeWidth": 1.5,
-        "fillOpacity": 0.4,
-        "angleRadius": 0.55,
-        "preserveColorOnHighlight": true
-      },
-      "kind": "rightAngle",
-      "refs": [
-        "B",
-        "A",
-        "D"
-      ],
-      "properties": {
-        "visibleWhen": "approx(abs(atan2(D.y-A.y,D.x-A.x)-atan2(B.y-A.y,B.x-A.x)),pi/2,0.1)"
-      }
-    },
-    {
-      "id": "rectoB",
-      "label": "ángulo recto B",
-      "color": "ocre",
-      "layerId": "propiedades",
-      "order": 35,
-      "visible": true,
-      "locked": false,
-      "groupIds": [
-        "paralelogramoGrupo"
-      ],
-      "selection": {
-        "selectable": true,
-        "role": "secondary"
-      },
-      "target": false,
-      "style": {
-        "strokeWidth": 1.5,
-        "fillOpacity": 0.4,
-        "angleRadius": 0.55,
-        "preserveColorOnHighlight": true
-      },
-      "kind": "rightAngle",
-      "refs": [
-        "C",
-        "B",
-        "A"
-      ],
-      "properties": {
-        "visibleWhen": "approx(abs(atan2(A.y-B.y,A.x-B.x)-atan2(C.y-B.y,C.x-B.x)),pi/2,0.1)"
-      }
-    },
-    {
-      "id": "rectoC",
-      "label": "ángulo recto C",
-      "color": "ocre",
-      "layerId": "propiedades",
-      "order": 36,
-      "visible": true,
-      "locked": false,
-      "groupIds": [
-        "paralelogramoGrupo"
-      ],
-      "selection": {
-        "selectable": true,
-        "role": "secondary"
-      },
-      "target": false,
-      "style": {
-        "strokeWidth": 1.5,
-        "fillOpacity": 0.4,
-        "angleRadius": 0.55,
-        "preserveColorOnHighlight": true
-      },
-      "kind": "rightAngle",
-      "refs": [
-        "D",
-        "C",
-        "B"
-      ],
-      "properties": {
-        "visibleWhen": "approx(abs(atan2(B.y-C.y,B.x-C.x)-atan2(D.y-C.y,D.x-C.x)),pi/2,0.1)"
-      }
-    },
-    {
-      "id": "rectoD",
-      "label": "ángulo recto D",
-      "color": "ocre",
-      "layerId": "propiedades",
-      "order": 37,
-      "visible": true,
-      "locked": false,
-      "groupIds": [
-        "paralelogramoGrupo"
-      ],
-      "selection": {
-        "selectable": true,
-        "role": "secondary"
-      },
-      "target": false,
-      "style": {
-        "strokeWidth": 1.5,
-        "fillOpacity": 0.4,
-        "angleRadius": 0.55,
-        "preserveColorOnHighlight": true
-      },
-      "kind": "rightAngle",
-      "refs": [
-        "A",
-        "D",
-        "C"
-      ],
-      "properties": {
-        "visibleWhen": "approx(abs(atan2(C.y-D.y,C.x-D.x)-atan2(A.y-D.y,A.x-D.x)),pi/2,0.1)"
-      }
-    },
-    {
       "id": "diagAC",
       "label": "diagonal AC",
       "color": "pizarra",
@@ -950,7 +818,7 @@ export const ParalelogramoSpec = createDiagramSpec(
     },
     {
       "id": "M",
-      "label": "punto medio común M",
+      "label": "M",
       "color": "carbon",
       "layerId": "diagonales",
       "order": 42,
@@ -1061,19 +929,18 @@ export const ParalelogramoSpec = createDiagramSpec(
       },
       "target": false,
       "style": {
-        "textOffset": [
-          -2.5,
-          7.5
-        ],
         "preserveColorOnHighlight": true
       },
       "kind": "infoPanel",
-      "refs": [
-        "A"
-      ],
+      "refs": [],
       "text": "<strong>Paralelogramo</strong><br/><small>2 pares ∥ · lados y ángulos opuestos ≡ · diagonales se bisecan</small>",
       "properties": {
         "title": "Clasificación",
+        "anchorMode": "viewport",
+        "viewportPosition": [
+          0,
+          0
+        ],
         "textRules": [
           {
             "when": "and(and(approx(segAB.length,segBC.length,0.15),approx(segBC.length,segCD.length,0.15),approx(segCD.length,segDA.length,0.15)),and(approx((D.x-A.x)*(B.x-A.x)+(D.y-A.y)*(B.y-A.y),0,0.15),approx((A.x-B.x)*(C.x-B.x)+(A.y-B.y)*(C.y-B.y),0,0.15),approx((B.x-C.x)*(D.x-C.x)+(B.y-C.y)*(D.y-C.y),0,0.15),approx((C.x-D.x)*(A.x-D.x)+(C.y-D.y)*(A.y-D.y),0,0.15)))",
@@ -1106,21 +973,95 @@ export const ParalelogramoSpec = createDiagramSpec(
         "B",
         "C",
         "D",
-        "paralelaAB",
-        "paralelaBC"
+        "poligono",
+        "segAB",
+        "segBC",
+        "segCD",
+        "clasificacion",
+        "segDA"
       ],
       "durationMs": 1000,
       "objectStates": {
         "paralelaAB": {
-          "visible": true,
+          "visible": false,
           "emphasis": "secondary"
         },
         "paralelaBC": {
-          "visible": true,
+          "visible": false,
           "emphasis": "secondary"
         },
         "D": {
           "emphasis": "primary"
+        },
+        "poligono": {
+          "visible": true,
+          "emphasis": "none",
+          "interactive": true
+        },
+        "segAB": {
+          "visible": true,
+          "emphasis": "none",
+          "interactive": true
+        },
+        "segBC": {
+          "visible": true,
+          "emphasis": "none",
+          "interactive": true
+        },
+        "segCD": {
+          "visible": true,
+          "emphasis": "none",
+          "interactive": true
+        },
+        "clasificacion": {
+          "visible": true,
+          "emphasis": "none",
+          "interactive": true
+        },
+        "segDA": {
+          "visible": true,
+          "emphasis": "none",
+          "interactive": true
+        },
+        "marcaAB": {
+          "visible": false,
+          "emphasis": "none",
+          "interactive": true
+        },
+        "marcaCD": {
+          "visible": false,
+          "emphasis": "none",
+          "interactive": true
+        },
+        "marcaBC": {
+          "visible": false,
+          "emphasis": "none",
+          "interactive": true
+        },
+        "marcaDA": {
+          "visible": false,
+          "emphasis": "none",
+          "interactive": true
+        },
+        "anguloA": {
+          "visible": false,
+          "emphasis": "none",
+          "interactive": true
+        },
+        "anguloB": {
+          "visible": false,
+          "emphasis": "none",
+          "interactive": true
+        },
+        "anguloC": {
+          "visible": false,
+          "emphasis": "none",
+          "interactive": true
+        },
+        "anguloD": {
+          "visible": false,
+          "emphasis": "none",
+          "interactive": true
         }
       }
     },
@@ -1146,10 +1087,6 @@ export const ParalelogramoSpec = createDiagramSpec(
         "anguloB",
         "anguloC",
         "anguloD",
-        "rectoA",
-        "rectoB",
-        "rectoC",
-        "rectoD",
         "clasificacion"
       ],
       "durationMs": 1200,
@@ -1187,10 +1124,6 @@ export const ParalelogramoSpec = createDiagramSpec(
         "anguloB",
         "anguloC",
         "anguloD",
-        "rectoA",
-        "rectoB",
-        "rectoC",
-        "rectoD",
         "clasificacion",
         "diagAC",
         "diagBD",
@@ -1443,66 +1376,6 @@ export const ParalelogramoSpec = createDiagramSpec(
       "relation": "construction"
     },
     {
-      "sourceId": "B",
-      "targetId": "rectoA",
-      "relation": "construction"
-    },
-    {
-      "sourceId": "A",
-      "targetId": "rectoA",
-      "relation": "construction"
-    },
-    {
-      "sourceId": "D",
-      "targetId": "rectoA",
-      "relation": "construction"
-    },
-    {
-      "sourceId": "C",
-      "targetId": "rectoB",
-      "relation": "construction"
-    },
-    {
-      "sourceId": "B",
-      "targetId": "rectoB",
-      "relation": "construction"
-    },
-    {
-      "sourceId": "A",
-      "targetId": "rectoB",
-      "relation": "construction"
-    },
-    {
-      "sourceId": "D",
-      "targetId": "rectoC",
-      "relation": "construction"
-    },
-    {
-      "sourceId": "C",
-      "targetId": "rectoC",
-      "relation": "construction"
-    },
-    {
-      "sourceId": "B",
-      "targetId": "rectoC",
-      "relation": "construction"
-    },
-    {
-      "sourceId": "A",
-      "targetId": "rectoD",
-      "relation": "construction"
-    },
-    {
-      "sourceId": "D",
-      "targetId": "rectoD",
-      "relation": "construction"
-    },
-    {
-      "sourceId": "C",
-      "targetId": "rectoD",
-      "relation": "construction"
-    },
-    {
       "sourceId": "A",
       "targetId": "diagAC",
       "relation": "construction"
@@ -1550,11 +1423,6 @@ export const ParalelogramoSpec = createDiagramSpec(
     {
       "sourceId": "C",
       "targetId": "cotaMC",
-      "relation": "construction"
-    },
-    {
-      "sourceId": "A",
-      "targetId": "clasificacion",
       "relation": "construction"
     },
     {
@@ -1647,66 +1515,6 @@ export const ParalelogramoSpec = createDiagramSpec(
     {
       "sourceId": "C",
       "targetId": "anguloD",
-      "relation": "expression"
-    },
-    {
-      "sourceId": "D",
-      "targetId": "rectoA",
-      "relation": "expression"
-    },
-    {
-      "sourceId": "A",
-      "targetId": "rectoA",
-      "relation": "expression"
-    },
-    {
-      "sourceId": "B",
-      "targetId": "rectoA",
-      "relation": "expression"
-    },
-    {
-      "sourceId": "A",
-      "targetId": "rectoB",
-      "relation": "expression"
-    },
-    {
-      "sourceId": "B",
-      "targetId": "rectoB",
-      "relation": "expression"
-    },
-    {
-      "sourceId": "C",
-      "targetId": "rectoB",
-      "relation": "expression"
-    },
-    {
-      "sourceId": "B",
-      "targetId": "rectoC",
-      "relation": "expression"
-    },
-    {
-      "sourceId": "C",
-      "targetId": "rectoC",
-      "relation": "expression"
-    },
-    {
-      "sourceId": "D",
-      "targetId": "rectoC",
-      "relation": "expression"
-    },
-    {
-      "sourceId": "C",
-      "targetId": "rectoD",
-      "relation": "expression"
-    },
-    {
-      "sourceId": "D",
-      "targetId": "rectoD",
-      "relation": "expression"
-    },
-    {
-      "sourceId": "A",
-      "targetId": "rectoD",
       "relation": "expression"
     },
     {
