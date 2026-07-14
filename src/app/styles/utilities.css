@@ -1,0 +1,54 @@
+
+/* Panel Elegante Impreso */
+.elegant-panel {
+  --hover-accent: var(--theme-terracota);
+  background-color: var(--theme-lienzo);
+  border: 1px solid color-mix(in srgb, var(--theme-carbon) 30%, transparent);
+  outline: 1px solid color-mix(in srgb, var(--theme-carbon) 15%, transparent);
+  outline-offset: -4px;
+  transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
+}
+
+.elegant-panel:hover {
+  border-color: color-mix(in srgb, var(--hover-accent) 70%, transparent);
+  outline-color: color-mix(in srgb, var(--hover-accent) 40%, transparent);
+}
+
+
+.scale-animation {
+  animation: popIn 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+}
+
+@keyframes popIn {
+  0% { transform: scale(0.5); opacity: 0; }
+  100% { transform: scale(1); opacity: 1; }
+}
+
+.bg-arts-and-crafts {
+  background-color: var(--theme-lienzo);
+  background-image: var(--bg-arts-and-crafts-url, none);
+  background-repeat: repeat;
+  background-size: 800px;
+  background-attachment: fixed;
+  position: relative;
+}
+
+.bg-arts-and-crafts::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: var(--theme-lienzo);
+  opacity: 0.90;
+  /* Fondo mucho menos visible */
+  z-index: 0;
+  pointer-events: none;
+}
+
+.bg-arts-and-crafts>* {
+  position: relative;
+  z-index: 1;
+}
+
