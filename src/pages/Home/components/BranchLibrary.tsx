@@ -72,7 +72,7 @@ const SECTIONS: SectionDef[] = [
     roman: 'V',
     codes: ['05', '68'],
     groups: [],
-    accent: 'var(--theme-lila)',
+    accent: 'var(--theme-pizarra)',
     desc: 'Estructuras discretas, combinatoria, teoría de grafos y fundamentos algorítmicos.',
     icon: '◇',
   },
@@ -122,7 +122,7 @@ export const BranchLibrary = () => {
     <main className="max-w-5xl mx-auto px-8 py-16">
       <div className="flex flex-col md:flex-row items-baseline justify-between gap-4 mb-10 border-b border-carbon/15 pb-4">
         <div className="flex items-baseline gap-4">
-          <h2 className="text-2xl text-carbon" style={{ fontVariant: 'small-caps' }}>Biblioteca MSC2020</h2>
+          <h2 className="text-2xl text-carbon">Biblioteca MSC2020</h2>
           <span className="text-xs text-carbon/40 uppercase tracking-widest font-sans">
             {SECTIONS.length} secciones · {totalEntries} entradas
           </span>
@@ -167,7 +167,6 @@ export const BranchLibrary = () => {
                     <Link
                       href={`/rama/${section.slug}`}
                       className="block text-2xl text-carbon leading-none transition-colors hover:underline decoration-1 underline-offset-4"
-                      style={{ fontVariant: 'small-caps' }}
                     >
                       {section.title}
                     </Link>

@@ -88,7 +88,7 @@ export const StudyTask: React.FC<StudyTaskProps> = ({ id, type, title }) => {
         </div>
         <div>
           <div className="text-[9px] font-sans uppercase tracking-[0.2em] text-carbon/50 mb-1 font-bold">{type}</div>
-          <h3 className="text-xl font-serif text-carbon" style={{ fontVariant: 'small-caps' }}>{title}</h3>
+          <h3 className="text-xl font-serif text-carbon">{title}</h3>
           <div className="text-xs italic text-carbon/50 mt-1">Próximamente</div>
         </div>
       </div>
@@ -110,7 +110,7 @@ export const StudyTask: React.FC<StudyTaskProps> = ({ id, type, title }) => {
           <div className="text-[9px] font-sans uppercase tracking-[0.2em] text-carbon/40 mb-1 font-bold">
             {type} (Bloqueado)
           </div>
-          <h3 className="text-xl font-serif text-carbon/50 font-bold" style={{ fontVariant: 'small-caps' }}>
+          <h3 className="text-xl font-serif text-carbon/50 font-bold">
             {title}
           </h3>
           <div className="text-xs italic text-carbon/40 mt-1">Asimila los conceptos previos para desbloquear</div>
@@ -143,7 +143,7 @@ export const StudyTask: React.FC<StudyTaskProps> = ({ id, type, title }) => {
             <div className={`text-[9px] font-sans uppercase tracking-[0.2em] mb-1 font-bold transition-colors ${completed ? 'text-salvia/80' : 'page-accent-group-hover text-carbon/50'}`}>
               {type}
             </div>
-            <h3 className={`text-xl font-serif font-bold transition-colors ${completed ? 'text-salvia' : 'page-accent-group-hover text-carbon'}`} style={{ fontVariant: 'small-caps' }}>
+            <h3 className={`text-xl font-serif font-bold transition-colors ${completed ? 'text-salvia' : 'page-accent-group-hover text-carbon'}`}>
               {title}
             </h3>
           </div>

@@ -25,10 +25,10 @@ function SceneContent() {
     }
   }, [camera]);
 
-  const salvia = getCSSVar('--theme-salvia') || '#A2C2A2';
-  const terracota = getCSSVar('--theme-terracota') || '#C86446';
-  const carbon = getCSSVar('--theme-carbon') || '#333333';
-  const ocre = getCSSVar('--theme-ocre') || '#c49b4f';
+  const salvia = getCSSVar('--theme-salvia');
+  const terracota = getCSSVar('--theme-terracota');
+  const carbon = getCSSVar('--theme-carbon');
+  const ocre = getCSSVar('--theme-ocre');
 
   const planeColor = highlight === 'planeMesh' ? ocre : salvia;
   const planeOpacity = highlight === 'planeMesh' ? 0.4 : 0.3;

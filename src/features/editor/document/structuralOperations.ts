@@ -169,7 +169,8 @@ function proofStepInput(input: UpdateBlockInput): UpdateBlockInput {
       target: step.target ?? '',
       justificationType: step.justificationType,
       dependencyId: step.dependencyId,
-      leanBlocks: step.leanBlocks ?? step.leanBlocksExpression,
+      leanBlocks: Array.isArray(step.leanBlocks) ? step.leanBlocks : undefined,
+      leanBlocksExpression: typeof step.leanBlocksExpression === 'string' ? step.leanBlocksExpression : undefined,
     },
   };
 }

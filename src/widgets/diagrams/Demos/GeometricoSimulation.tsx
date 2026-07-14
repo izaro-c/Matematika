@@ -24,7 +24,7 @@ export const GeometricoSimulation = () => {
 
           {/* Rectangulo subyacente */}
           <polygon points="80,180 300,180 300,70 80,70"
-            fill="rgba(200,100,70,0.06)"
+            fill="color-mix(in srgb, var(--theme-terracota) 6%, transparent)"
             stroke="var(--theme-carbon)" strokeWidth="2"
             strokeDasharray={s(2) && !s(3) ? "0" : "8,4"}
             opacity={s(2) ? (s(3) ? 1 : 0.55) : 0.06}
@@ -59,7 +59,7 @@ export const GeometricoSimulation = () => {
               <circle cx="300" cy="180" r="3" fill="var(--theme-pizarra)" opacity="0.4" />
               {/* Hueco derecho fijo (donde debe encajar el triangulo) */}
               <polygon points="260,180 300,70 300,180"
-                fill="rgba(162,194,162,0.08)" stroke="var(--theme-salvia)" strokeWidth="1" strokeDasharray="3,3" opacity="0.5" />
+                fill="color-mix(in srgb, var(--theme-salvia) 8%, transparent)" stroke="var(--theme-salvia)" strokeWidth="1" strokeDasharray="3,3" opacity="0.5" />
               <text x="190" y="140" textAnchor="middle" fontSize="16"
                 fill="var(--theme-carbon)" fontFamily="serif" opacity={s(2) ? 0.08 : 0.4}>≅</text>
             </>
@@ -72,7 +72,7 @@ export const GeometricoSimulation = () => {
               transition: 'transform 0.9s cubic-bezier(0.25, 0.1, 0.25, 1.0)',
             }}>
               <polygon points="40,180 80,70 80,180"
-                fill={s(2) ? "rgba(200,100,70,0.25)" : "rgba(200,100,70,0.18)"}
+                fill={s(2) ? "color-mix(in srgb, var(--theme-terracota) 25%, transparent)" : "color-mix(in srgb, var(--theme-terracota) 18%, transparent)"}
                 stroke="var(--theme-terracota)"
                 strokeWidth={s(2) ? "2" : "1.5"} />
             </g>
@@ -81,7 +81,7 @@ export const GeometricoSimulation = () => {
           {/* Rectangulo final */}
           {s(3) && (
             <polygon points="80,180 300,180 300,70 80,70"
-              fill="rgba(200,100,70,0.1)" stroke="var(--theme-carbon)" strokeWidth="2.5" />
+              fill="color-mix(in srgb, var(--theme-terracota) 10%, transparent)" stroke="var(--theme-carbon)" strokeWidth="2.5" />
           )}
         </svg>
       </div>

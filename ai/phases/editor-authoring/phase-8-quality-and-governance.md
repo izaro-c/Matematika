@@ -49,3 +49,7 @@ El estado vigente se consulta en la [matriz canónica](README.md#fuente-canónic
 - `git diff --check`
 
 Un fallo relacionado bloquea el cierre. Los fallos preexistentes no relacionados se documentan con evidencia; no se ocultan ni se corrigen ampliando el alcance sin autorización.
+
+## Evidencia de cierre
+
+La fase se cerró el 2026-07-14. `npm run full-check` y `npm run editor:release-check` terminaron correctamente; este último incluyó 18/18 flujos E2E reales, regresión visual de cuatro páginas matemáticas en temas claro/oscuro y todos los gates de cobertura, referencias, DAG, Lean y bridge. Resultados, métricas reales y excepciones: [`../../reports/editor-phase-8-quality-and-governance.md`](../../reports/editor-phase-8-quality-and-governance.md).

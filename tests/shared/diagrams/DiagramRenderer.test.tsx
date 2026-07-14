@@ -28,7 +28,7 @@ describe('DiagramRenderer shared runtime', () => {
     expect(document.querySelector('[data-diagram-renderer="matematika-diagram-renderer-v2"]')).toBeTruthy();
     fireEvent.click(screen.getByRole('button', { name: 'Acercar' }));
     expect(onViewportChange).toHaveBeenCalledTimes(1);
-    expect((screen.getByRole('button', { name: 'Recuperar' }) as HTMLButtonElement).disabled).toBe(false);
+    expect((screen.getByRole('button', { name: 'Recuperar objetos fuera del viewport' }) as HTMLButtonElement).disabled).toBe(false);
   });
 
   it('opens the real Pitágoras editor preview without requiring an outer MathProvider', () => {

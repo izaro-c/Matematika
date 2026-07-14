@@ -31,7 +31,6 @@ const CSS_VARS = [
   '--theme-salvia',
   '--theme-pavo',
   '--theme-pizarra',
-  '--theme-lila',
 ] as const;
 
 export type ThemeColorSnapshot = {

@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useState } from 'react';
+import React, { useEffect, useMemo, useRef, useState } from 'react';
 import type { EditorDiagramReference } from '../../core/editorTypes';
 import type { ConstructionKind, ElementKind, VisualDiagramModel } from '../../diagrams/model/types';
 import { useDiagramState } from '../../diagrams/hooks/useDiagramState';
@@ -21,6 +21,7 @@ import {
   normalizeConstructionRefs, validConstructionRefs,
   normalizeVisualModel, createTemplateModel, nextStepId
 } from '../../diagrams/model/commands';
+import { useModalFocus } from '../hooks/useModalFocus';
 
 export type DiagramWorkbenchMode =
   | { kind: 'file'; path: string }
@@ -87,6 +88,8 @@ export const DiagramWorkbenchCore: React.FC<DiagramWorkbenchCoreProps> = ({
   } = useDiagramState();
 
   const [tab, setTab] = useState<'visual' | 'source'>('visual');
+  const closeButtonRef = useRef<HTMLButtonElement>(null);
+  const workbenchRef = useModalFocus<HTMLDivElement>(isOpen, onClose, closeButtonRef);
 
   // Local UI states
   const [previewHighlightId, setPreviewHighlightId] = useState('');
@@ -160,13 +163,15 @@ export const DiagramWorkbenchCore: React.FC<DiagramWorkbenchCoreProps> = ({
   if (!model) {
     if (state.currentSource || state.diagnostics.length > 0) {
       return (
-        <div className="fixed inset-0 z-50 flex flex-col bg-lienzo text-carbon font-sans">
+        <div ref={workbenchRef} className="fixed inset-0 z-50 flex flex-col bg-lienzo text-carbon font-sans" role="dialog" aria-modal="true" aria-label="Editor de diagramas en código">
           <header className="flex items-center justify-between border-b border-carbon/15 px-4 py-3 bg-carbon/5">
             <div>
               <h2 className="text-sm font-bold text-carbon">Editor de diagramas: código TSX</h2>
               <p className="text-[11px] text-carbon/55 font-mono">{state.filePath}</p>
             </div>
             <button
+              ref={closeButtonRef}
+              type="button"
               onClick={onClose}
               className="rounded border border-carbon/20 px-3 py-1 text-xs font-bold text-carbon/75 hover:bg-carbon/5 transition-all"
             >
@@ -196,7 +201,7 @@ export const DiagramWorkbenchCore: React.FC<DiagramWorkbenchCoreProps> = ({
       );
     }
     return (
-      <div className="fixed inset-0 z-50 flex items-center justify-center bg-carbon/40 backdrop-blur-sm">
+      <div ref={workbenchRef} className="fixed inset-0 z-50 flex items-center justify-center bg-carbon/40 backdrop-blur-sm" role="dialog" aria-modal="true" aria-label="Cargando editor de diagramas" aria-busy="true" tabIndex={-1}>
         <div className="rounded bg-lienzo p-6 shadow-xl max-w-sm w-full text-center">
           <p className="text-sm font-bold text-carbon">Cargando el editor de diagramas…</p>
         </div>
@@ -341,11 +346,11 @@ export const DiagramWorkbenchCore: React.FC<DiagramWorkbenchCoreProps> = ({
   const mdxTargets = buildTargets(model);
 
   return (
-    <div className="fixed inset-0 z-50 flex flex-col bg-lienzo text-carbon font-sans">
+    <div ref={workbenchRef} className="fixed inset-0 z-50 flex flex-col bg-lienzo text-carbon font-sans" role="dialog" aria-modal="true" aria-labelledby="diagram-workbench-title">
       {/* Header */}
-      <header className="flex items-center justify-between border-b border-carbon/15 px-4 py-3 bg-carbon/5">
-        <div>
-          <h2 className="text-sm font-bold text-carbon">Editor visual exacto: {model.title}</h2>
+      <header className="flex flex-wrap items-center justify-between gap-3 border-b border-carbon/15 bg-carbon/5 px-3 py-3 sm:px-4">
+        <div className="min-w-0">
+          <h2 id="diagram-workbench-title" className="truncate text-sm font-bold text-carbon">Editor visual exacto: {model.title}</h2>
           <p className="text-[11px] text-carbon/55 font-mono">{state.filePath}</p>
         </div>
 
@@ -372,14 +377,20 @@ export const DiagramWorkbenchCore: React.FC<DiagramWorkbenchCoreProps> = ({
               ↷
             </button>
           </div>
-          <div className="flex rounded border border-carbon/15 p-0.5 bg-lienzo">
+          <div className="flex rounded border border-carbon/15 p-0.5 bg-lienzo" role="tablist" aria-label="Vista del diagrama">
             <button
+              type="button"
+              role="tab"
+              aria-selected={tab === 'visual'}
               onClick={() => setTab('visual')}
               className={`rounded px-3 py-1 text-xs font-bold transition-all ${tab === 'visual' ? 'bg-carbon text-lienzo' : 'text-carbon/60 hover:bg-carbon/5'}`}
             >
               Modelo visual
             </button>
             <button
+              type="button"
+              role="tab"
+              aria-selected={tab === 'source'}
               onClick={() => setTab('source')}
               className={`rounded px-3 py-1 text-xs font-bold transition-all ${tab === 'source' ? 'bg-carbon text-lienzo' : 'text-carbon/60 hover:bg-carbon/5'}`}
             >
@@ -387,6 +398,8 @@ export const DiagramWorkbenchCore: React.FC<DiagramWorkbenchCoreProps> = ({
             </button>
           </div>
           <button
+            ref={closeButtonRef}
+            type="button"
             onClick={onClose}
             className="rounded border border-carbon/20 px-3 py-1 text-xs font-bold text-carbon/75 hover:bg-carbon/5 transition-all"
           >
@@ -396,7 +409,7 @@ export const DiagramWorkbenchCore: React.FC<DiagramWorkbenchCoreProps> = ({
       </header>
 
       {tab === 'visual' ? (
-        <div className="grid min-h-0 flex-1 grid-cols-[300px_minmax(0,1fr)_320px] overflow-hidden">
+        <div className="grid min-h-0 flex-1 grid-cols-1 overflow-y-auto lg:grid-cols-[260px_minmax(0,1fr)] lg:overflow-hidden 2xl:grid-cols-[300px_minmax(0,1fr)_320px]">
           {/* Left panel: tools & quick actions */}
           <aside className="border-r border-carbon/15 bg-carbon/5 p-4 space-y-4 overflow-y-auto">
             {/* Quick Actions */}
@@ -605,7 +618,7 @@ export const DiagramWorkbenchCore: React.FC<DiagramWorkbenchCoreProps> = ({
           </aside>
 
           {/* Center panel: toolbar + canvas + validation */}
-          <main className="min-w-0 flex flex-col p-4 gap-4 overflow-y-auto">
+          <main className="flex min-h-[480px] min-w-0 flex-col gap-4 overflow-y-auto p-4">
             <DiagramToolbar
               model={model}
               canvasTool={state.canvasTool}
@@ -661,7 +674,7 @@ export const DiagramWorkbenchCore: React.FC<DiagramWorkbenchCoreProps> = ({
           </main>
 
           {/* Right panel: properties & references */}
-          <aside className="border-l border-carbon/15 bg-carbon/5 p-4 space-y-4 overflow-y-auto">
+          <aside className="space-y-4 overflow-y-auto border-l border-carbon/15 bg-carbon/5 p-4 lg:col-span-2 lg:border-l-0 lg:border-t 2xl:col-span-1 2xl:border-l 2xl:border-t-0">
             <DiagramInspector
               model={model}
               selectedId={state.selectedId}

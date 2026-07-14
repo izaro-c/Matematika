@@ -31,7 +31,7 @@ export const GlossaryLink: React.FC<GlossaryLinkProps> = ({ term, description, c
 
       {showTooltip && (
         <div className="absolute z-50 bottom-full left-1/2 -translate-x-1/2 mb-4 w-72 bg-lienzo border border-carbon/20 text-carbon rounded-none shadow-[0_10px_40px_-10px_rgba(0,0,0,0.15)] p-5 pointer-events-none transition-all animate-in fade-in slide-in-from-bottom-2 duration-300">
-          <div className="page-accent-text font-serif text-lg font-bold mb-3 border-b border-carbon/10 pb-2" style={{ fontVariant: 'small-caps' }}>{term}</div>
+          <div className="page-accent-text font-serif text-lg font-bold mb-3 border-b border-carbon/10 pb-2">{term}</div>
           <div className="leading-relaxed opacity-80 text-sm font-serif">
             {description || "Término fundamental."}
           </div>

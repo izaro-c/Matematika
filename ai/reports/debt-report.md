@@ -10,15 +10,15 @@
 
 ## Resumen ejecutivo
 
-**Hallazgos objetivos.** Se inspeccionaron 745 archivos de texto, 436 archivos TS/TSX, 91 archivos de test y 120 archivos MDX.
+**Hallazgos objetivos.** Se inspeccionaron 769 archivos de texto, 450 archivos TS/TSX, 98 archivos de test y 120 archivos MDX.
 
-**Heurísticas aproximadas.** Se localizaron 985 apariciones léxicas de `any`, 276 colores hex, 27 marcas TODO/FIXME, 46 archivos TS/TSX grandes y 40 rutas de importación potencialmente incompatibles con FSD.
+**Heurísticas aproximadas.** Se localizaron 980 apariciones léxicas de `any`, 179 colores hex, 27 marcas TODO/FIXME, 48 archivos TS/TSX grandes y 40 rutas de importación potencialmente incompatibles con FSD.
 
 **Recomendación.** Empezar por las rutas FSD y supresiones TypeScript, continuar con hex fuera de tokens, descomponer puntos de alta responsabilidad y cerrar después cobertura, contenido, Lean y duplicación IA.
 
 ## Deuda TypeScript
 
-**Hallazgo objetivo.** Hay 436 archivos TS/TSX en el alcance; 0 archivo(s) contienen 0 supresiones `@ts-*`.
+**Hallazgo objetivo.** Hay 450 archivos TS/TSX en el alcance; 0 archivo(s) contienen 0 supresiones `@ts-*`.
 
 _Ninguno detectado._
 
@@ -99,16 +99,15 @@ _Ninguno detectado._
 | `src/widgets/diagrams/Demos/DemoTriangulacionPoligono.tsx` | 8 |
 | `src/widgets/diagrams/Demos/DemoTrianguloIsosceles.tsx` | 8 |
 | `src/shared/diagrams/core/MathBoard.tsx` | 7 |
-| `src/features/editor/document/parseEditorDocument.ts` | 6 |
 | `tests/features/graph/GraphStore.test.ts` | 6 |
 | `tests/scripts/generate-test-report.ts` | 6 |
 | `.agents/skills/diagrama/examples/JSXGraphCanon.tsx` | 5 |
 | `.auxiliary/.opencode/skills/diagrama/examples/JSXGraphCanon.tsx` | 5 |
 | `src/features/editor/ui/EditorPage.tsx` | 5 |
+| `src/features/editor/document/parseEditorDocument.ts` | 4 |
 | `src/widgets/diagrams/Ejercicios/EjemploPitagorasCalculo.tsx` | 4 |
 | `src/widgets/diagrams/Ejercicios/EjercicioPitagorasCateto.tsx` | 4 |
 | `tests/shared/diagrams/Phase3Renderer.test.tsx` | 4 |
-| `src/features/editor/document/projectBlocks.ts` | 3 |
 | `src/widgets/diagrams/Axiomas/AxiomaDedekind.tsx` | 3 |
 | `src/widgets/diagrams/Definiciones/Plano.tsx` | 3 |
 | `src/widgets/diagrams/Demos/DemoDosRectasUnPunto.tsx` | 3 |
@@ -137,16 +136,13 @@ _Ninguno detectado._
 | Archivo | Apariciones |
 | --- | --- |
 | `.auxiliary/.opencode/skills/diagrama/SKILL.md` | 47 |
-| `src/shared/design/primitives.ts` | 38 |
-| `.agents/skills/diagrama/SKILL.md` | 32 |
-| `src/app/index.css` | 28 |
+| `src/app/theme.css` | 21 |
+| `src/shared/design/primitives.ts` | 18 |
 | `src/shared/lib/constants.ts` | 14 |
-| `.agents/skills/page-creator/SKILL.md` | 10 |
 | `.auxiliary/.opencode/skills/antigravity/SKILL.md` | 10 |
 | `src/shared/lib/theme.ts` | 10 |
 | `src/widgets/graph/LocalDependencyGraph.tsx` | 7 |
 | `src/pages/HistoryTimeline.tsx` | 6 |
-| `src/widgets/diagrams/Definiciones/Triangulo.tsx` | 6 |
 | `tests/controller/math-utils.test.ts` | 6 |
 | `src/features/graph/lib/graphUtils.ts` | 5 |
 | `.agents/skills/diagrama/examples/JSXGraphCanon.tsx` | 4 |
@@ -155,15 +151,9 @@ _Ninguno detectado._
 | `src/features/graph/ui/AxiomaticTree.tsx` | 4 |
 | `src/shared/hooks/useThemeColors.ts` | 4 |
 | `src/widgets/content/ProofStep.tsx` | 4 |
-| `src/widgets/diagrams/Axiomas/Incidence5.tsx` | 4 |
-| `src/widgets/diagrams/Axiomas/Incidence6.tsx` | 4 |
-| `src/widgets/diagrams/Axiomas/Incidence7.tsx` | 4 |
-| `src/widgets/diagrams/Axiomas/Incidence8.tsx` | 4 |
-| `src/widgets/diagrams/Definiciones/Plano.tsx` | 4 |
 | `.agents/skills/project-philosophy/SKILL.md` | 2 |
 | `.auxiliary/TODO.md` | 2 |
 | `ai/audits/code-quality-audit.md` | 2 |
-| `src/shared/diagrams/core/MathUtils.ts` | 2 |
 | `.opencode/plugins/matematika-guard.ts` | 1 |
 | `docs/requirements/Product_Backlog.md` | 1 |
 | `src/features/graph/ui/components/AxiomaticSearch.tsx` | 1 |
@@ -199,21 +189,23 @@ _Ninguno detectado._
 | --- | --- | --- |
 | `src/widgets/diagrams/Definiciones/Paralelogramo.tsx` | 1761 | 38163 |
 | `src/widgets/diagrams/Teoremas/CongruenciaALA.tsx` | 1448 | 29635 |
-| `src/widgets/diagrams/Teoremas/Pitagoras.tsx` | 1181 | 24367 |
-| `src/features/editor/ui/panels/VisualEditorPanel.tsx` | 988 | 54649 |
-| `src/widgets/diagrams/Models/ModeloPoincare.tsx` | 988 | 23754 |
-| `src/features/editor/ui/EditorPage.tsx` | 901 | 34793 |
+| `src/widgets/diagrams/Teoremas/Pitagoras.tsx` | 1181 | 24357 |
+| `src/features/editor/ui/panels/VisualEditorPanel.tsx` | 1109 | 63562 |
+| `src/widgets/diagrams/Models/ModeloPoincare.tsx` | 1058 | 24739 |
+| `src/features/editor/ui/EditorPage.tsx` | 900 | 36578 |
 | `scripts/ai/generate-debt-report.ts` | 848 | 35233 |
+| `tests/e2e/editor/editor-safe-ux.e2e.ts` | 809 | 40551 |
 | `scripts/ai/generate-ai-indexes.ts` | 770 | 29276 |
 | `src/features/editor/diagrams/ui/DiagramInspector.tsx` | 759 | 44222 |
-| `src/features/editor/ui/diagrams/DiagramWorkbench.tsx` | 742 | 34066 |
+| `src/features/editor/ui/diagrams/DiagramWorkbench.tsx` | 755 | 35205 |
 | `src/features/editor/diagrams/model/commands.ts` | 718 | 29786 |
+| `src/shared/diagrams/runtime/DiagramRenderer.tsx` | 693 | 34612 |
 | `src/features/editor/core/parser.ts` | 639 | 21841 |
-| `src/shared/diagrams/runtime/DiagramRenderer.tsx` | 609 | 29845 |
 | `scripts/editor/parseDiagramSourceAST.ts` | 547 | 21238 |
-| `tests/e2e/editor/editor-safe-ux.e2e.ts` | 545 | 27385 |
+| `src/features/editor/document/structuralOperations.ts` | 545 | 22256 |
+| `src/features/editor/core/useEditorCore.ts` | 529 | 27537 |
 | `src/shared/diagrams/core/MathFactory.ts` | 527 | 18399 |
-| `tests/features/editor/useEditorCore.test.ts` | 517 | 23552 |
+| `tests/features/editor/useEditorCore.test.ts` | 522 | 23569 |
 | `src/features/graph/graph.worker.ts` | 509 | 15887 |
 | `src/shared/diagrams/spec/scene.ts` | 491 | 22683 |
 | `src/widgets/diagrams/Definiciones/Cuadrilatero.tsx` | 490 | 21785 |
@@ -221,20 +213,20 @@ _Ninguno detectado._
 | `src/shared/diagrams/spec/schema.ts` | 475 | 24002 |
 | `src/entities/content/ContentStore.ts` | 448 | 17825 |
 | `scripts/core/lean-graph-utils.ts` | 439 | 15008 |
+| `src/features/editor/ux/diffReview.ts` | 436 | 15737 |
 | `src/entities/content/msc2020.ts` | 431 | 17110 |
 | `src/features/editor/ux/safetyPresentation.ts` | 431 | 16086 |
 | `src/features/graph/GraphStore.ts` | 414 | 14785 |
-| `src/features/editor/core/useEditorCore.ts` | 407 | 20508 |
 | `tests/features/editor/persistence/editorPersistenceBackend.test.ts` | 400 | 21891 |
-| `src/features/editor/ux/diffReview.ts` | 380 | 13109 |
-| `src/widgets/content/MarginaliaPanel.tsx` | 368 | 14638 |
+| `src/features/editor/ui/components/SemanticLinker.tsx` | 382 | 16343 |
+| `src/widgets/content/MarginaliaPanel.tsx` | 367 | 14546 |
 | `src/features/graph/ui/AxiomaticTree.tsx` | 366 | 16130 |
 | `tests/features/editor/diagrams/reducer.test.ts` | 360 | 14034 |
 | `scripts/ai/review-working-tree.ts` | 360 | 12260 |
-| `src/features/editor/ui/components/SemanticLinker.tsx` | 356 | 14648 |
 | `src/widgets/diagrams/Teoremas/DemoPitagorasEuclides.tsx` | 345 | 13603 |
+| `tests/features/editor/ux/diffReview.test.ts` | 334 | 12241 |
+| `src/features/editor/core/validation.ts` | 327 | 15044 |
 | `src/features/metadata/ui/PageDependencyGraph.tsx` | 327 | 9793 |
-| `src/features/editor/core/validation.ts` | 326 | 14843 |
 | `tests/features/editor/diagrams/useDiagramState.test.tsx` | 323 | 12934 |
 | `scripts/editor/migrate-legacy-diagrams.ts` | 322 | 15630 |
 | `tests/database/content-store.test.ts` | 320 | 9637 |
@@ -255,57 +247,58 @@ _Ninguno detectado._
 | `src/widgets/diagrams/Definiciones/Paralelogramo.tsx` | 1761 | 1 | 0 | 0 |
 | `src/widgets/diagrams/Teoremas/CongruenciaALA.tsx` | 1448 | 1 | 0 | 0 |
 | `src/widgets/diagrams/Teoremas/Pitagoras.tsx` | 1181 | 1 | 0 | 0 |
-| `src/features/editor/ui/panels/VisualEditorPanel.tsx` | 988 | 6 | 0 | 113 |
-| `src/widgets/diagrams/Models/ModeloPoincare.tsx` | 988 | 1 | 0 | 0 |
-| `src/features/editor/ui/EditorPage.tsx` | 901 | 24 | 21 | 56 |
+| `src/features/editor/ui/panels/VisualEditorPanel.tsx` | 1109 | 9 | 6 | 134 |
+| `src/widgets/diagrams/Models/ModeloPoincare.tsx` | 1058 | 1 | 0 | 0 |
+| `src/features/editor/ui/EditorPage.tsx` | 900 | 27 | 25 | 68 |
 | `src/features/editor/diagrams/ui/DiagramInspector.tsx` | 759 | 6 | 0 | 170 |
-| `src/features/editor/ui/diagrams/DiagramWorkbench.tsx` | 742 | 16 | 6 | 109 |
-| `src/shared/diagrams/runtime/DiagramRenderer.tsx` | 609 | 8 | 7 | 23 |
+| `src/features/editor/ui/diagrams/DiagramWorkbench.tsx` | 755 | 17 | 6 | 110 |
+| `src/shared/diagrams/runtime/DiagramRenderer.tsx` | 693 | 8 | 9 | 32 |
 | `src/widgets/diagrams/Definiciones/Cuadrilatero.tsx` | 490 | 3 | 0 | 8 |
-| `src/widgets/content/MarginaliaPanel.tsx` | 368 | 8 | 1 | 4 |
+| `src/features/editor/ui/components/SemanticLinker.tsx` | 382 | 4 | 7 | 31 |
+| `src/widgets/content/MarginaliaPanel.tsx` | 367 | 8 | 1 | 4 |
 | `src/features/graph/ui/AxiomaticTree.tsx` | 366 | 15 | 27 | 22 |
-| `src/features/editor/ui/components/SemanticLinker.tsx` | 356 | 3 | 7 | 29 |
 | `src/widgets/diagrams/Teoremas/DemoPitagorasEuclides.tsx` | 345 | 2 | 0 | 6 |
 | `src/features/metadata/ui/PageDependencyGraph.tsx` | 327 | 6 | 8 | 6 |
 | `src/widgets/graph/LocalDependencyGraph.tsx` | 303 | 6 | 2 | 3 |
 | `src/features/progress/ui/TaxonomyGraph.tsx` | 302 | 7 | 12 | 9 |
 | `src/pages/GraphPage.tsx` | 297 | 13 | 14 | 17 |
 | `src/features/editor/ui/EditorNavigation.tsx` | 291 | 3 | 6 | 17 |
-| `src/widgets/mdx/MDXBlocks.tsx` | 281 | 25 | 3 | 1 |
+| `src/widgets/mdx/MDXBlocks.tsx` | 284 | 25 | 3 | 1 |
 | `src/widgets/navigation/SearchOmnibar.tsx` | 271 | 6 | 12 | 14 |
-| `src/pages/Home/components/BranchLibrary.tsx` | 271 | 3 | 1 | 0 |
+| `src/pages/Home/components/BranchLibrary.tsx` | 270 | 3 | 1 | 0 |
 | `src/pages/TheoremPage.tsx` | 263 | 16 | 3 | 0 |
 | `src/features/exercises/ui/Emparejar.tsx` | 262 | 3 | 8 | 2 |
-| `src/shared/diagrams/core/MathBoard.tsx` | 231 | 4 | 14 | 25 |
-| `src/features/editor/ui/blocks/DemonstrationBlock.tsx` | 224 | 3 | 0 | 28 |
+| `src/shared/diagrams/core/MathBoard.tsx` | 248 | 4 | 14 | 25 |
+| `src/features/editor/ui/panels/MetadataPanel.tsx` | 229 | 7 | 1 | 27 |
+| `src/features/editor/ui/blocks/DemonstrationBlock.tsx` | 225 | 3 | 0 | 28 |
 | `src/features/exercises/ui/Clasificador.tsx` | 220 | 3 | 4 | 16 |
 | `src/features/editor/diagrams/ui/DiagramStepsEditor.tsx` | 211 | 5 | 0 | 34 |
-| `src/features/editor/ui/panels/MetadataPanel.tsx` | 200 | 5 | 0 | 21 |
 | `src/features/exercises/ui/Hueco.tsx` | 195 | 2 | 5 | 16 |
-| `src/features/editor/ui/EditorToolbar.tsx` | 171 | 8 | 0 | 13 |
-| `src/features/editor/ui/components/MetadataInspector.tsx` | 166 | 2 | 1 | 24 |
-| `src/features/editor/ui/diff/DiffReviewPanel.tsx` | 164 | 2 | 1 | 19 |
+| `src/features/editor/ui/EditorToolbar.tsx` | 181 | 8 | 0 | 28 |
+| `src/features/editor/ui/components/MetadataInspector.tsx` | 170 | 2 | 1 | 24 |
+| `src/features/editor/ui/diff/DiffReviewPanel.tsx` | 153 | 3 | 0 | 15 |
 | `src/features/editor/diagrams/ui/DiagramToolbar.tsx` | 134 | 3 | 0 | 27 |
 | `src/shared/ui/StepNavigator.tsx` | 115 | 3 | 5 | 12 |
 | `src/features/glossary/ui/ConceptLink.tsx` | 113 | 6 | 3 | 15 |
-| `src/features/editor/ui/safety/UnsavedChangesDialog.tsx` | 107 | 2 | 1 | 21 |
 | `src/features/editor/diagrams/ui/DiagramTargetSelector.tsx` | 103 | 4 | 0 | 12 |
+| `src/features/editor/ui/safety/UnsavedChangesDialog.tsx` | 96 | 3 | 0 | 17 |
 | `src/features/editor/diagrams/ui/DiagramCanvas.tsx` | 67 | 5 | 0 | 16 |
+| `src/features/editor/ui/create/CreatePageDialog.tsx` | 60 | 4 | 1 | 15 |
 
 **Recomendación.** Separar coordinación, estado y presentación solo cuando la revisión confirme más de una razón de cambio.
 
 ## Deuda de tests por zona
 
-**Hallazgo objetivo.** Se detectaron 91 archivos de test. La tabla cuenta archivos fuente y tests que importan directamente cada zona.
+**Hallazgo objetivo.** Se detectaron 98 archivos de test. La tabla cuenta archivos fuente y tests que importan directamente cada zona.
 
 | Zona | TS/TSX fuente | Tests con import directo |
 | --- | --- | --- |
 | app | 6 | 2 |
 | pages | 22 | 0 |
-| widgets | 108 | 6 |
-| features | 126 | 40 |
+| widgets | 108 | 8 |
+| features | 134 | 46 |
 | entities | 9 | 7 |
-| shared | 57 | 27 |
+| shared | 57 | 29 |
 | database | 0 | 0 |
 
 **Heurística aproximada.** Cero imports directos no significa cero cobertura: una prueba puede cubrir una zona de forma transitiva. La tabla no usa instrumentación.

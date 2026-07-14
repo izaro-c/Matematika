@@ -77,6 +77,7 @@ interface BuildDiffReviewInput {
 }
 
 const BLOCKING_CLASSIFICATIONS: DiffClassification[] = ['outside-edited-range', 'unknown', 'blocking'];
+const MAX_LCS_CELLS = 4_000_000;
 
 function lineStarts(source: string): number[] {
   const starts = [0];
@@ -200,6 +201,26 @@ function buildLineHunks(baseSource: string, candidateSource: string): Array<{
     beforeLine: number | null;
     afterLine: number | null;
   }> = [];
+
+  // A full LCS matrix is useful for ordinary documents but grows quadratically.
+  // Above this budget, keep the shared prefix/suffix and return one conservative
+  // middle hunk. A localized edit remains exact; dispersed edits are deliberately
+  // grouped and therefore cannot be falsely approved by a narrow expected range.
+  if (beforeLines.length * afterLines.length > MAX_LCS_CELLS) {
+    const exact = trimSharedEdges(
+      baseSource,
+      candidateSource,
+      { start: 0, end: baseSource.length },
+      { start: 0, end: candidateSource.length },
+    );
+    const beforeLine = exact.originalText.length > 0
+      ? (baseSource.slice(0, exact.originalRange.start).match(/\n/g)?.length ?? 0) + 1
+      : null;
+    const afterLine = exact.candidateText.length > 0
+      ? (candidateSource.slice(0, exact.candidateRange.start).match(/\n/g)?.length ?? 0) + 1
+      : null;
+    return [{ ...exact, beforeLine, afterLine }];
+  }
 
   // LCS aligns unchanged lines first. This prevents one insertion or move from
   // making every following line look modified.

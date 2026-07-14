@@ -14,7 +14,6 @@ export const ConstructionPage: React.FC = () => {
 
           <h1
             className="text-4xl md:text-5xl font-bold mb-6 text-carbon"
-            style={{ fontVariant: 'small-caps' }}
           >
             En Construcción
           </h1>
@@ -22,7 +21,7 @@ export const ConstructionPage: React.FC = () => {
           <div className="w-16 h-px bg-terracota/60 mx-auto mb-8" />
 
           <p className="text-lg text-carbon/70 italic leading-relaxed mb-8">
-            La página para <strong className="text-carbon not-italic" style={{ fontVariant: 'small-caps' }}>{displayId}</strong>
+            La página para <strong className="text-carbon not-italic">{displayId}</strong>
             {' '}está siendo desarrollada como parte del jardín digital de Matematika.
             El contenido aparecerá aquí cuando esté listo, con el rigor y la interactividad que caracterizan al proyecto.
           </p>

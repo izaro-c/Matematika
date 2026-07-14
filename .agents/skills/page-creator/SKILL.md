@@ -7,6 +7,14 @@ description: Genera páginas MDX de contenido matemático con metadatos Zod vali
 
 > **Fuente pedagógica.** Este documento gobierna MDX, navegación y escritura. Para páginas con `leanId`, Lean es la verdad mecánica verificable y MDX es la capa pedagógica.
 
+## Arquitectura vigente de autoría (Fase 8)
+
+- El source MDX completo es la única autoridad. El editor visual aplica parches por rangos y nunca serializa de nuevo el documento entero.
+- Las demostraciones se escriben en body MDX con `DemonstrationSection` y `ProofStep`; no exportan un `Component` alternativo.
+- Los diagramas publicados se importan desde `@/widgets/diagrams/...`; las escenas exactas convergen en `DiagramSpec v2` y `DiagramRenderer` de `src/shared/diagrams/`.
+- `ConceptLink`, `RefLink` e `InteractiveElement` son componentes globales del runtime MDX. Los targets deben existir en el registro publicado o quedar diagnosticados.
+- La paleta se referencia solo por los nueve tokens canónicos; los valores concretos pertenecen a `src/app/theme.css` y no se copian como hex.
+
 **Skills hermanas:**
 - `project-philosophy` — principios no negociables (cárgala si dudas sobre la filosofía del proyecto)
 - `diagrama` — para crear diagramas interactivos asociados a este contenido (cárgala cuando el contenido necesite visualización)
@@ -280,7 +288,7 @@ Cada archivo MDX DEBE exportar un objeto `metadata`. Los schemas Zod (`src/entit
 - Toda demostración DEBE tener un `parentTheorem` apuntando a un teorema existente
 - El campo `layout` determina el renderizado: `"split"` para diagrama+lado a lado, `"text"` para ancho completo
 - Las demostraciones geométricas DEBEN usar `layout: "split"` SIEMPRE, sin excepción, independientemente de su longitud, para mantener la consistencia.
-- **PATRÓN DE EXPORT:** Las demostraciones exportan `Component` (no body MDX plano). Ver §6.2.
+- **PATRÓN DE CUERPO:** Las demostraciones usan body MDX plano con `DemonstrationSection` y pasos justificados. No exportan `Component`.
 
 ### 5.6 Ejemplo (`type: "ejemplo"`)
 
@@ -590,17 +598,17 @@ Para maximizar el valor educativo y la coherencia del jardín digital de Matemat
 
 ## 9. Paleta Arts & Crafts
 
-| Token | Clase Tailwind | Hex | Significado matemático |
-|---|---|---|---|
-| `lienzo` | `bg-lienzo` | `#F8F6F1` | Fondo general, lienzo |
-| `carbon` | `text-carbon` | `#333333` | Ejes, bordes, texto principal, grid |
-| `salvia` | `text-salvia` | `#A2C2A2` | Planos, coeficientes, geometría secundaria |
-| `terracota` | `text-terracota` | `#C86446` | Puntos, vectores, incógnitas |
-| `pizarra` | `text-pizarra` | `#5D7080` | Distancias, resultados, mediciones |
-| `ocre` | `text-ocre` | `#c49b4f` | Resaltados, valores especiales |
-| `pavo` | `text-pavo` | `#3b5e6b` | Acento alternativo |
-| `granada` | `text-granada` | `#8b3a3a` | Errores, contradicciones, absurdos lógicos (RAA) |
-| `musgo` | `text-musgo` | `#4a5d23` | Aplicaciones, resultados verificados |
+| Token | Clase Tailwind | Significado matemático |
+|---|---|---|
+| `lienzo` | `bg-lienzo` | Fondo general, lienzo |
+| `carbon` | `text-carbon` | Ejes, bordes, texto principal, grid |
+| `salvia` | `text-salvia` | Planos, coeficientes, geometría secundaria |
+| `terracota` | `text-terracota` | Puntos, vectores, incógnitas |
+| `pizarra` | `text-pizarra` | Distancias, resultados, mediciones |
+| `ocre` | `text-ocre` | Resaltados, valores especiales |
+| `pavo` | `text-pavo` | Acento alternativo |
+| `granada` | `text-granada` | Errores, contradicciones, absurdos lógicos (RAA) |
+| `musgo` | `text-musgo` | Aplicaciones, resultados verificados |
 
 ---
 
@@ -649,7 +657,7 @@ src/database/content/
 | Plantillas MDX | `src/shared/templates/{tipo}.template.mdx` |
 | Schemas Zod | `src/entities/content/schemas.ts` |
 | Índice de contenido | `src/entities/content/contentIndex.json` |
-| Constantes y paleta | `src/shared/lib/constants.ts` |
+| Paleta y tema | `src/app/theme.css` y tokens tipados de `src/shared/design/` |
 | Componentes UI | `src/shared/ui/` |
 | Componentes de ejercicio | `src/features/exercises/ui/` |
 
@@ -657,7 +665,7 @@ src/database/content/
 
 ## 13. Exportación de Simulaciones y Diagramas
 
-Se mantiene inalterado. Exportar `Component`, `Simulation` o `Diagram` según tipo de nodo.
+Se exporta `Simulation` o `Diagram` únicamente cuando el layout publicado lo requiere. Las demostraciones conservan el body MDX como autoridad y no exportan `Component`.
 
 ## 14. Diseño de Diagramas e Interactividad (JSXGraph)
 
@@ -715,7 +723,7 @@ npm run bridge:audit
 - [ ] Rigor de Greenberg: Cada afirmación en los pasos utiliza estrictamente una de las 6 justificaciones (Hipótesis, Axioma, Teorema, Definición, Paso Previo, Regla Lógica).
 - [ ] No existen deducciones topológicas basadas en asunciones visuales del diagrama (ej. asumir intersecciones sin invocar el Axioma de Pasch).
 - [ ] Cada `ProofStep` tiene un `<InteractiveElement>` correspondiente en el cuerpo
-- [ ] `InteractiveElement` está importado desde `VisualBind` (no desde MDXBlocks)
+- [ ] `InteractiveElement` está disponible como componente global MDX; no se añade un import duplicado al documento
 - [ ] El método de demostración (`proofMethod`) describe correctamente el enfoque
 - [ ] Para split-layout: cada paso tiene diagrama o usa uno compartido
 - [ ] La demostración es completa (sin huecos) y finaliza con $\blacksquare$
@@ -761,7 +769,7 @@ Los planes de estudio en Matematika son itinerarios pedagógicos guiados. Deben 
 * **Bloqueo del checkpoint:** El checkpoint permanece bloqueado (no interactuable) hasta que el estudiante haya completado todos los conceptos de su misma fase.
 
 ### 22.3 Directrices Estéticas y de Interfaz
-* **Color de Acento:** Los planes de estudio emplean `secondaryAccent` (azul pavo real, `#3b5e6b`) para una visualización premium y vibrante.
+* **Color de Acento:** Los planes de estudio emplean `secondaryAccent`, resuelto mediante el token `pavo` del tema activo.
 * **Prohibición de Candados:** Queda estrictamente prohibido el uso de emojis de candados (`🔒`) para indicar bloqueo. En su lugar, se deben usar:
   * El rombo atenuado `◈` (con opacidad reducida) en las tarjetas de tareas.
   * Un signo de interrogación `?` en los checkpoints y minimapa.

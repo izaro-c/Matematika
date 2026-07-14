@@ -111,7 +111,7 @@ export const DictionaryPage = () => {
           <div className="flex justify-center mb-6">
             <Logo className="w-16 h-16 opacity-50" />
           </div>
-          <h1 className="text-5xl md:text-7xl text-terracota tracking-tight mb-6" style={{ fontVariant: 'small-caps' }}>
+          <h1 className="text-5xl md:text-7xl text-terracota tracking-tight mb-6">
             Índice Enciclopédico
           </h1>
           <p className="text-xl text-carbon/60 italic max-w-2xl mx-auto mb-12">
@@ -137,7 +137,7 @@ export const DictionaryPage = () => {
           return (
             <div key={category} className="mb-24">
               <div className="flex items-center gap-6 mb-12">
-                <h2 className="text-3xl text-terracota font-bold tracking-widest uppercase" style={{ fontVariant: 'small-caps' }}>
+                <h2 className="text-3xl text-terracota font-bold tracking-widest uppercase">
                   {category}
                 </h2>
                 <div className="flex-1 h-[1px] bg-carbon/10" />
@@ -146,7 +146,7 @@ export const DictionaryPage = () => {
               <div className="grid grid-cols-1 md:grid-cols-2 gap-x-12 gap-y-16">
                 {entries.map(([key, data]) => (
                   <div key={key} className="group relative">
-                    <h3 className="text-2xl text-carbon mb-2 font-bold" style={{ fontVariant: 'small-caps' }}>
+                    <h3 className="text-2xl text-carbon mb-2 font-bold">
                       {data.title}
                     </h3>
                     <div className="w-8 h-[1px] bg-terracota/30 mb-4 transition-all duration-500 group-hover:w-full group-hover:bg-terracota/50" />

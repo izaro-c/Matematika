@@ -59,7 +59,7 @@ export function ModelPage() {
         {system && (
           <section className="mt-16">
             <SubtleSeparator />
-            <h2 className="text-2xl font-bold mb-6 border-b border-carbon/10 pb-4" style={{ fontVariant: 'small-caps' }}>
+            <h2 className="text-2xl font-bold mb-6 border-b border-carbon/10 pb-4">
               Sistema axiomático
             </h2>
             <ContentCard
@@ -76,7 +76,7 @@ export function ModelPage() {
         {verifiedAxioms.length > 0 && (
           <section className="mt-16">
             <SubtleSeparator />
-            <h2 className="text-2xl font-bold mb-6 border-b border-carbon/10 pb-4" style={{ fontVariant: 'small-caps' }}>
+            <h2 className="text-2xl font-bold mb-6 border-b border-carbon/10 pb-4">
               Axiomas verificados ({verifiedAxioms.length})
             </h2>
             <div className="flex flex-col gap-3 max-w-2xl">

@@ -1,0 +1,123 @@
+/* ==========================================================================
+   MATEMATIKA DESIGN SYSTEM - THEME CONFIGURATION
+   ========================================================================== */
+
+@import url('https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400..700;1,400..700&family=Fondamento:ital@0;1&display=swap');
+
+@theme {
+  --font-title: var(--font-title-family);
+  --font-serif: var(--font-body-family);
+  --font-sans: var(--font-sans-family);
+  --font-mono: var(--font-mono-family);
+
+  /* Nuestra Paleta Semántica referenciando a variables CSS */
+  --color-lienzo: var(--theme-lienzo);
+  --color-carbon: var(--theme-carbon);
+  --color-salvia: var(--theme-salvia);
+  --color-terracota: var(--theme-terracota);
+  --color-pizarra: var(--theme-pizarra);
+  --color-ocre: var(--theme-ocre);
+  --color-pavo: var(--theme-pavo);
+  --color-granada: var(--theme-granada);
+  --color-musgo: var(--theme-musgo);
+
+  /* Sombras y bordes semánticos de Arts & Crafts */
+  --shadow-elegant: var(--theme-shadow-elegant);
+  --shadow-classic: var(--theme-shadow-classic);
+  --shadow-parchment: var(--theme-shadow-parchment);
+  --border-double: var(--theme-border-double);
+
+}
+
+:root {
+  /* ── 1. Familias Tipográficas ─────────────────────────────────────────── */
+  --font-title-family: "Fondamento", ui-serif, Georgia, Cambria, "Times New Roman", Times, serif;
+  --font-body-family-fallback: ui-serif, Georgia, Cambria, "Times New Roman", Times, serif;
+  --font-body-family: "EB Garamond", var(--font-body-family-fallback);
+  --font-mono-family: ui-monospace, "SF Mono", Menlo, monospace;
+  --font-sans-family: ui-sans-serif, system-ui, -apple-system, sans-serif;
+
+  /* ── 2. Escala Tipográfica Canónica y Ritmo ─────────────────────────────── */
+  --font-size-h1: 3rem;
+  --font-size-h2: 1.875rem;
+  --font-size-h3: 1.375rem;
+  --font-size-h4: 1.125rem;
+  --line-height-body: 1.85; /* Altura de línea ampliada para EB Garamond */
+  --letter-spacing-body: 0.01em; /* Interletraje sutil para mayor legibilidad serif */
+  --letter-spacing-title: -0.01em;
+
+  /* ── 3. Transiciones e Interactividad ─────────────────────────────────── */
+  --transition-fast: 0.15s;
+  --transition-normal: 0.2s;
+  --transition-slow: 0.4s;
+  --transition-theme: 0.6s;
+  --ease-interactive: ease-out;
+  --ease-panels: cubic-bezier(0.25, 0.8, 0.25, 1);
+  --ease-theme: cubic-bezier(0.22, 1, 0.36, 1);
+
+  /* ── 4. Parámetros Visuales y Decorativos ─────────────────────────────── */
+  --bg-texture-opacity: 0.88; /* Pergamino sutil pero más visible */
+  --border-radius-base: 6px;
+
+  /* ── 4b. Sombras y Bordes Semánticos de Arts & Crafts ─────────────────── */
+  --theme-shadow-elegant: 0 4px 20px -2px color-mix(in srgb, var(--theme-carbon) 12%, transparent), 0 2px 8px -1px color-mix(in srgb, var(--theme-carbon) 6%, transparent);
+  --theme-shadow-classic: 0 0 0 1px color-mix(in srgb, var(--theme-carbon) 10%, transparent), 0 4px 12px color-mix(in srgb, var(--theme-carbon) 8%, transparent);
+  --theme-shadow-parchment: 0 12px 36px -4px color-mix(in srgb, var(--theme-terracota) 14%, transparent), 0 4px 16px -2px color-mix(in srgb, var(--theme-terracota) 7%, transparent);
+  --theme-border-double: 3px double color-mix(in srgb, var(--theme-carbon) 22%, transparent);
+
+  /* ── 4c. Selección de Texto (Imprenta) ─────────────────────────────────── */
+  --theme-selection-bg: color-mix(in srgb, var(--theme-ocre) 16%, transparent);
+  --theme-selection-text: var(--theme-carbon);
+
+  /* ── 5. Paleta Arts & Crafts – Modo Pergamino ─────────────────────────── */
+  --theme-lienzo:    #F8F6F1;  /* Papel de pergamino */
+  --theme-carbon:    #333333;  /* Tinta de imprenta */
+  --theme-terracota: #A94E35;  /* Terracota legible — Teoremas */
+  --theme-ocre:      #8C641F;  /* Ocre legible — Axiomas */
+  --theme-granada:   #9E3B33;  /* Granada mate — Demostraciones */
+  --theme-musgo:     #526E4A;  /* Musgo medio — Corolarios */
+  --theme-salvia:    #4E7056;  /* Salvia legible — Definiciones */
+  --theme-pavo:      #3A5A7A;  /* Azul pavo apagado — Modelos */
+  --theme-pizarra:   #5C728A;  /* Pizarra grisáceo — Ejemplos */
+}
+
+.dark {
+  /* ── 6. El Códice Nocturno ────────────────────────────────────────────── */
+  --theme-lienzo:    #101113; /* Midnight mate profundo */
+  --theme-carbon:    #ECE7DF; /* Crema suave de códice nocturno */
+  --theme-terracota: #D67A60;
+  --theme-ocre:      #CBA05D;
+  --theme-granada:   #C26666; /* Contraste mejorado (antes #B85C5C) */
+  --theme-musgo:     #7BA173; /* Contraste mejorado (antes #708E68) */
+  --theme-salvia:    #7BA887;
+  --theme-pavo:      #6D8FB8; /* Contraste mejorado (antes #5E7FA3) */
+  --theme-pizarra:   #7FA1C2;
+
+  /* Parámetros Visuales y Decorativos del Códice */
+  --bg-texture-opacity: 0.96; /* Textura del pergamino extremadamente tenue */
+
+  /* Sombras y Bordes Semánticos del Códice */
+  --theme-shadow-elegant: 0 4px 20px -2px color-mix(in srgb, var(--theme-carbon) 40%, transparent), 0 2px 8px -1px color-mix(in srgb, var(--theme-carbon) 30%, transparent);
+  --theme-shadow-classic: 0 0 0 1px color-mix(in srgb, var(--theme-carbon) 5%, transparent), 0 4px 12px color-mix(in srgb, var(--theme-carbon) 40%, transparent);
+  --theme-shadow-parchment: 0 12px 36px -4px color-mix(in srgb, var(--theme-carbon) 50%, transparent), 0 4px 16px -2px color-mix(in srgb, var(--theme-carbon) 35%, transparent);
+  --theme-border-double: 3px double color-mix(in srgb, var(--theme-carbon) 18%, transparent);
+
+  /* Selección de Texto en Códice Nocturno */
+  --theme-selection-bg: color-mix(in srgb, var(--theme-ocre) 22%, transparent);
+  --theme-selection-text: var(--theme-carbon);
+
+}
+
+/* ── 7. Reglas Globales de Imprenta y Selección ─────────────────────────────────── */
+::selection {
+  background-color: var(--theme-selection-bg);
+  color: var(--theme-selection-text);
+}
+
+.prose {
+  letter-spacing: var(--letter-spacing-body);
+}
+
+h1, h2, h3, h4, h5, h6 {
+  letter-spacing: var(--letter-spacing-title);
+}

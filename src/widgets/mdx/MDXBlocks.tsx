@@ -38,7 +38,7 @@ export const BlockTitle: React.FC<BlockTitleProps> = ({ subtitle, children }) =>
   return (
     <div className="my-16 text-center">
       {subtitle && <div className="page-accent-text text-[10px] uppercase tracking-[0.3em] font-sans mb-3 font-bold">{subtitle}</div>}
-      <h2 className="text-4xl md:text-5xl font-serif text-carbon border-b border-carbon/10 pb-6 inline-block px-12" style={{ fontVariant: 'small-caps' }}>
+      <h2 className="text-4xl md:text-5xl font-serif text-carbon border-b border-carbon/10 pb-6 inline-block px-12">
         {children}
       </h2>
     </div>
@@ -221,7 +221,7 @@ interface CapitularProps {
 export const Capitular: React.FC<CapitularProps> = ({ letra }) => (
   <span
     className="page-accent-text float-left text-7xl font-bold pr-3 pl-1 leading-[0.7] mt-2 mb-[-8px] select-none pointer-events-none drop-shadow-sm"
-    style={{ fontFamily: 'Georgia, serif' }}
+    style={{ fontFamily: 'var(--font-title)' }}
   >
     {letra}
   </span>

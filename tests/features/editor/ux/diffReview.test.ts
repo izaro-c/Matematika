@@ -282,4 +282,53 @@ describe('safe diff review', () => {
     expect(isDiffReviewStale(review, 1, 'sha256:base')).toBe(false);
     expect(isDiffReviewStale(review, 1, 'sha256:other')).toBe(true);
   });
+
+  it('reviews a localized edit in a large document without allocating a quadratic matrix', () => {
+    const largeBase = Array.from({ length: 2_500 }, (_, index) => `Párrafo ${index}: contenido estable.`).join('\n\n');
+    const marker = 'contenido estable';
+    const start = largeBase.indexOf(marker, Math.floor(largeBase.length / 2));
+    const largeCandidate = `${largeBase.slice(0, start)}contenido revisado${largeBase.slice(start + marker.length)}`;
+    const startedAt = performance.now();
+
+    const review = buildDiffReview({
+      documentId: 'content/large.mdx',
+      baseSource: largeBase,
+      candidateSource: largeCandidate,
+      localRevision: 1,
+      baseVersion: 'sha256:large',
+      expectedRanges: [{ start, end: start + marker.length, reason: 'Edición localizada.', operationId: 'op-large' }],
+    });
+
+    // Includes MDX parsing and hashing. Keep enough headroom for V8 coverage
+    // instrumentation while still catching quadratic regressions.
+    expect(performance.now() - startedAt).toBeLessThan(5_000);
+    expect(review.status).toBe('reviewable');
+    expect(review.hunks).toHaveLength(1);
+    expect(review.hunks[0]).toMatchObject({
+      originalText: 'estable',
+      candidateText: 'revisado',
+      classification: 'expected',
+    });
+  });
+
+  it('conservatively blocks dispersed edits in a large document', () => {
+    const largeBase = Array.from({ length: 2_500 }, (_, index) => `Párrafo ${index}: contenido estable.`).join('\n\n');
+    const firstStart = largeBase.indexOf('contenido estable');
+    const largeCandidate = largeBase
+      .replace('contenido estable', 'primer cambio')
+      .replace(/contenido estable\.$/, 'segundo cambio.');
+
+    const review = buildDiffReview({
+      documentId: 'content/large-dispersed.mdx',
+      baseSource: largeBase,
+      candidateSource: largeCandidate,
+      localRevision: 1,
+      baseVersion: 'sha256:large',
+      expectedRanges: [{ start: firstStart, end: firstStart + 'contenido estable'.length, reason: 'Solo primer cambio.', operationId: 'op-first' }],
+    });
+
+    expect(review.status).toBe('blocked');
+    expect(review.hunks).toHaveLength(1);
+    expect(review.hunks[0]?.classification).toBe('outside-edited-range');
+  });
 });

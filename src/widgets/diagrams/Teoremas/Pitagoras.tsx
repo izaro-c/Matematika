@@ -226,7 +226,7 @@ export const PitagorasSpec = createDiagramSpec(
       "x": 0,
       "y": 4,
       "fixed": false,
-      "constraint": "vertical",
+      "constraint": "glider",
       "gliderTarget": "rayoY"
     },
     {
@@ -253,7 +253,7 @@ export const PitagorasSpec = createDiagramSpec(
       "x": 3,
       "y": 0,
       "fixed": false,
-      "constraint": "horizontal",
+      "constraint": "glider",
       "gliderTarget": "rayoX"
     },
     {

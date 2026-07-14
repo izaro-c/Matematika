@@ -68,7 +68,7 @@ export const AxiomSandboxPanel: React.FC = () => {
                 onClick={() => loadModel(model.id, model.axioms_verified || [])}
                 className="text-left px-3 py-2 border border-carbon/20 hover:border-terracota hover:bg-carbon/5 transition-colors group flex justify-between items-center"
               >
-                <span className="font-bold font-serif text-carbon" style={{ fontVariant: 'small-caps' }}>
+                <span className="font-bold font-serif text-carbon">
                   {model.title}
                 </span>
                 <span className="text-xs text-carbon/40 font-sans group-hover:text-terracota">Cargar</span>
@@ -106,7 +106,7 @@ export const AxiomSandboxPanel: React.FC = () => {
                     />
                   </div>
                   <div>
-                    <div className={`font-bold text-sm font-serif ${isActive ? 'text-terracota' : 'text-carbon'}`} style={{ fontVariant: 'small-caps' }}>
+                    <div className={`font-bold text-sm font-serif ${isActive ? 'text-terracota' : 'text-carbon'}`}>
                       {axiom.title}
                     </div>
                     {axiom.description && (

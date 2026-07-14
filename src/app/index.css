@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Fondamento:ital@0;1&display=swap');
+@import "./theme.css";
 @import "katex/dist/katex.min.css";
 
 .katex-display,
@@ -8,83 +8,6 @@
   max-width: 100%;
 }
 @import "tailwindcss";
-
-@theme {
-  --font-title: "Fondamento", ui-serif, Georgia, Cambria, "Times New Roman", Times, serif;
-
-  /* Nuestra Paleta Semántica referenciando a variables CSS */
-  --color-lienzo: var(--theme-lienzo);
-  --color-carbon: var(--theme-carbon);
-  --color-salvia: var(--theme-salvia);
-  --color-terracota: var(--theme-terracota);
-  --color-pizarra: var(--theme-pizarra);
-  --color-ocre: var(--theme-ocre);
-  --color-pavo: var(--theme-pavo);
-  --color-granada: var(--theme-granada);
-  --color-musgo: var(--theme-musgo);
-  --color-lila: var(--theme-lila);
-  --color-cardenal: var(--theme-cardenal);
-  --color-nogal: var(--theme-nogal);
-  --color-piedra: var(--theme-piedra);
-  --color-cromo: var(--theme-cromo);
-
-  /* Nombres semánticos obsoletos conservados para compatibilidad de estilos */
-  --color-modelo: var(--theme-modelo);
-  --color-leccion: var(--theme-leccion);
-  --color-ejemplo: var(--theme-ejemplo);
-  --color-ejercicio: var(--theme-ejercicio);
-  --color-matematico: var(--theme-matematico);
-}
-
-:root {
-  /* ── Paleta Arts & Crafts – Modo Pergamino ────────────────────────────── */
-  --theme-lienzo:    #F8F6F1;  /* Papel de pergamino */
-  --theme-carbon:    #333333;  /* Tinta de imprenta */
-  --theme-terracota: #C05C3E;  /* Terracota cálido — Teoremas */
-  --theme-ocre:      #C28A2E;  /* Ocre antiguo — Axiomas */
-  --theme-cromo:     #BFA15C;  /* Cromo oro viejo — Matemáticos */
-  --theme-granada:   #9E3B33;  /* Granada mate — Demostraciones */
-  --theme-musgo:     #526E4A;  /* Musgo medio — Corolarios */
-  --theme-salvia:    #5E8066;  /* Salvia natural — Definiciones */
-  --theme-pavo:      #3A5A7A;  /* Azul pavo apagado — Modelos */
-  --theme-pizarra:   #5C728A;  /* Pizarra grisáceo — Ejemplos */
-  --theme-lila:      #83697B;  /* Lila brezo — Lemas */
-  --theme-cardenal:  #7A536E;  /* Cardenal suave — Ejercicios */
-  --theme-nogal:     #705545;  /* Nogal cuero — Lecciones */
-  --theme-piedra:    #808277;  /* Piedra neutro — Conceptos */
-
-  /* Colores derivados (sincronizados con el nuevo diseño) */
-  --theme-matematico: var(--theme-cromo);
-  --theme-modelo:     var(--theme-pavo);
-  --theme-leccion:    var(--theme-nogal);
-  --theme-ejemplo:    var(--theme-pizarra);
-  --theme-ejercicio:  var(--theme-cardenal);
-}
-
-.dark {
-  /* ── El Códice Nocturno ───────────────────────────────────────────────── */
-  --theme-lienzo:    #121315;
-  --theme-carbon:    #EFECE6;
-  --theme-terracota: #D67A60;
-  --theme-ocre:      #CBA05D;
-  --theme-cromo:     #CCA86B;
-  --theme-granada:   #B85C5C;
-  --theme-musgo:     #708E68;
-  --theme-salvia:    #7BA887;
-  --theme-pavo:      #5E7FA3;
-  --theme-pizarra:   #7FA1C2;
-  --theme-lila:      #A890A3;
-  --theme-cardenal:  #9C7790;
-  --theme-nogal:     #8F796B;
-  --theme-piedra:    #9AA096;
-
-  /* Colores derivados (sincronizados con el nuevo diseño) */
-  --theme-matematico: var(--theme-cromo);
-  --theme-modelo:     var(--theme-pavo);
-  --theme-leccion:    var(--theme-nogal);
-  --theme-ejemplo:    var(--theme-pizarra);
-  --theme-ejercicio:  var(--theme-cardenal);
-}
 
 html, body {
   overscroll-behavior: none;
@@ -215,7 +138,6 @@ body {
   color: var(--theme-terracota);
   margin-bottom: 1.5rem;
   line-height: 1.2;
-  font-variant: small-caps;
   text-align: left;
 }
 
@@ -345,7 +267,6 @@ h1, h2, h3, h4, h5, h6 {
 .prose h1 {
   font-size: 3rem;
   line-height: 1.15;
-  font-variant: small-caps;
   font-weight: 700;
   letter-spacing: -0.01em;
   margin-top: 0;
@@ -558,7 +479,6 @@ h1, h2, h3, h4, h5, h6 {
   font-weight: 600;
   font-size: 11px;
   letter-spacing: 0.08em;
-  font-variant: small-caps;
   font-style: normal;
   text-transform: none;
 }
@@ -746,7 +666,6 @@ h1, h2, h3, h4, h5, h6 {
   border: 3px double color-mix(in srgb, var(--theme-lienzo) 70%, transparent);
   border-radius: 999px;
   box-shadow: 0 0.5rem 1.5rem color-mix(in srgb, var(--theme-carbon) 20%, transparent);
-  font-variant: small-caps;
   letter-spacing: 0.08em;
 }
 
@@ -817,7 +736,6 @@ h1, h2, h3, h4, h5, h6 {
 .metadata-sidebar__eyebrow {
   font-size: 0.7rem;
   font-weight: 700;
-  font-variant: small-caps;
   letter-spacing: 0.16em;
   margin-bottom: 0.35rem;
   color: var(--page-accent, var(--theme-terracota));
@@ -861,7 +779,6 @@ h1, h2, h3, h4, h5, h6 {
   margin-bottom: 0.9rem;
   color: var(--page-accent, var(--theme-terracota));
   font-family: ui-serif, Georgia, serif;
-  font-variant: small-caps;
   letter-spacing: 0.12em;
   font-weight: 600;
   font-size: 0.85rem;
@@ -910,7 +827,7 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .metadata-sidebar__links--lema li::before {
-  color: var(--theme-lila);
+  color: var(--theme-pizarra);
 }
 
 .metadata-sidebar__links--demo li::before {
@@ -922,7 +839,7 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .metadata-sidebar__links--lema a:hover {
-  color: var(--theme-lila);
+  color: var(--theme-pizarra);
 }
 
 .metadata-sidebar__links--demo a:hover {
@@ -1217,7 +1134,6 @@ h1, h2, h3, h4, h5, h6 {
     padding: 0;
     overflow: visible;
     background: transparent;
-    border-left: 1px solid color-mix(in srgb, var(--theme-carbon) 10%, transparent);
   }
 
   .triptych-diagram-surface {
@@ -1457,7 +1373,6 @@ h1, h2, h3, h4, h5, h6 {
     height: 100svh;
     grid-column: 2;
     grid-row: 1;
-    border-left: 1px solid color-mix(in srgb, var(--theme-carbon) 10%, transparent);
     background: transparent;
   }
   .codex-reading {

@@ -54,7 +54,6 @@ export function GraphLegend() {
 
           <h4
             className="font-bold text-[10px] uppercase tracking-widest mb-4 text-carbon/50 text-center mt-1"
-            style={{ fontVariant: 'small-caps' }}
           >
             Leyenda
           </h4>

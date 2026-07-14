@@ -140,8 +140,22 @@ function readJsxAttributes(source: string, node: MdxAstNode): Record<string, unk
         // Dynamic attributes remain exact source strings and are never executed.
       }
     }
+    // Dynamic attributes fallback to the raw expression content inside {}
     const attributeRange = rangeOf(attribute);
-    result[attribute.name] = attributeRange ? source.slice(attributeRange.start, attributeRange.end) : '';
+    if (attributeRange) {
+      const rawAttr = source.slice(attributeRange.start, attributeRange.end).trim();
+      const equalsIndex = rawAttr.indexOf('=');
+      if (equalsIndex !== -1 && rawAttr.substring(0, equalsIndex).trim() === attribute.name) {
+        const valuePart = rawAttr.substring(equalsIndex + 1).trim();
+        if (valuePart.startsWith('{') && valuePart.endsWith('}')) {
+          result[attribute.name] = valuePart.slice(1, -1).trim();
+          continue;
+        }
+      }
+      result[attribute.name] = rawAttr;
+    } else {
+      result[attribute.name] = '';
+    }
   }
   return result;
 }
@@ -185,16 +199,32 @@ export function projectRegisteredBlock(source: string, node: MdxAstNode): Regist
       justificacion: attributes.justificacion ?? '',
       target: attributes.target ?? '',
       body: source.slice(editRange.start, editRange.end),
-      leanBlocks: attributes.leanBlocks,
+      leanBlocks: Array.isArray(attributes.leanBlocks) ? attributes.leanBlocks : undefined,
+      leanBlocksExpression: typeof attributes.leanBlocks === 'string' ? attributes.leanBlocks : undefined,
     }];
   }
   return { blockType, editRange, data };
 }
 
 export function serializeJsxBlock(component: string, content: string, attributes: Record<string, unknown> = {}): string {
-  const serializedAttributes = Object.entries(attributes)
-    .filter(([, value]) => value !== undefined && value !== null && value !== '')
-    .map(([key, value]) => {
+  const processedAttrs: Record<string, { value: any; isExpression?: boolean }> = {};
+
+  for (const [key, value] of Object.entries(attributes)) {
+    if (value === undefined || value === null || value === '') continue;
+
+    if (key.endsWith('Expression')) {
+      const baseKey = key.slice(0, -10);
+      if (attributes[baseKey] === undefined || attributes[baseKey] === null || attributes[baseKey] === '') {
+        processedAttrs[baseKey] = { value: String(value), isExpression: true };
+      }
+    } else {
+      processedAttrs[key] = { value };
+    }
+  }
+
+  const serializedAttributes = Object.entries(processedAttrs)
+    .map(([key, { value, isExpression }]) => {
+      if (isExpression) return `${key}={${value}}`;
       if (typeof value === 'string') return `${key}=${JSON.stringify(value)}`;
       return `${key}={${JSON.stringify(value)}}`;
     })

@@ -102,7 +102,7 @@ export const HistoryTimeline = () => {
             <div className="text-xs font-sans uppercase tracking-[0.3em] text-terracota/60 mb-2">
               Crónica Universal
             </div>
-            <h1 className="text-5xl text-carbon font-bold leading-none" style={{ fontVariant: 'small-caps' }}>
+            <h1 className="text-5xl text-carbon font-bold leading-none">
               Índice Biográfico
             </h1>
             <p className="mt-3 text-sm italic text-carbon/50">
@@ -187,7 +187,6 @@ export const HistoryTimeline = () => {
                             <EraInsignia era={getEra(node.birthYear || 0).label} year={(node.birthYear || 0)} />
                             <h2
                               className="text-2xl font-bold text-carbon group-hover:text-terracota transition-colors leading-tight mt-1 mb-2"
-                              style={{ fontVariant: 'small-caps' }}
                             >
                               {node.name}
                             </h2>

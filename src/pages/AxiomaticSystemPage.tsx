@@ -59,7 +59,7 @@ export function AxiomaticSystemPage() {
         {axioms.length > 0 && (
           <section className="mt-16">
             <SubtleSeparator />
-            <h2 className="text-2xl font-bold mb-8 border-b border-carbon/10 pb-4" style={{ fontVariant: 'small-caps' }}>
+            <h2 className="text-2xl font-bold mb-8 border-b border-carbon/10 pb-4">
               Axiomas del sistema ({axioms.length})
             </h2>
             <div className="flex flex-col gap-3 max-w-4xl">
@@ -80,7 +80,7 @@ export function AxiomaticSystemPage() {
         {models.length > 0 && (
           <section className="mt-16">
             <SubtleSeparator />
-            <h2 className="text-2xl font-bold mb-8 border-b border-carbon/10 pb-4" style={{ fontVariant: 'small-caps' }}>
+            <h2 className="text-2xl font-bold mb-8 border-b border-carbon/10 pb-4">
               Modelos que satisfacen este sistema ({models.length})
             </h2>
             <div className="flex flex-col gap-3 max-w-4xl">
