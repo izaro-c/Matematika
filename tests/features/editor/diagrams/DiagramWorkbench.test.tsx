@@ -164,7 +164,7 @@ describe('DiagramWorkbench authority adapters', () => {
     await waitFor(() => expect(screen.getAllByText(/Campos completos/).length).toBeGreaterThan(0));
     expect((screen.getByLabelText('Cuadrícula') as HTMLInputElement).checked).toBe(true);
     expect((screen.getByLabelText('Ejes') as HTMLInputElement).checked).toBe(true);
-    fireEvent.click(screen.getByRole('button', { name: 'Código TSX' }));
+    fireEvent.click(screen.getByRole('tab', { name: 'Código TSX' }));
     const source = (screen.getByRole('textbox') as HTMLTextAreaElement).value;
     expect(source).toContain('Overlay conservado');
     expect(source).toContain('"mode": "diagram"');

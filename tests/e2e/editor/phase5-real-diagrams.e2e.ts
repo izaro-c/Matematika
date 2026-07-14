@@ -1,4 +1,5 @@
 import assert from 'node:assert/strict';
+import { createHash } from 'node:crypto';
 import { spawn, type ChildProcess } from 'node:child_process';
 import path from 'node:path';
 import puppeteer, { type Page } from 'puppeteer';
@@ -74,6 +75,15 @@ async function verifyPublishedCase(page: Page, acceptanceCase: typeof CASES[numb
   if (acceptanceCase.name === 'Poincaré') {
     assert.ok(Number(result.boundaryFillOpacity) <= 0.1, 'Poincaré: el disco oculta las geodésicas');
   }
+  const renderer = await page.$('[data-diagram-renderer]');
+  assert.ok(renderer, `${acceptanceCase.name}: renderer ausente para la regresión visual`);
+  const lightScreenshot = await renderer.screenshot({ encoding: 'binary' });
+  assert.ok(lightScreenshot.length > 5_000, `${acceptanceCase.name}: captura visual vacía`);
+  await page.evaluate(() => document.documentElement.classList.add('dark'));
+  await new Promise(resolve => setTimeout(resolve, 100));
+  const darkScreenshot = await renderer.screenshot({ encoding: 'binary' });
+  const digest = (value: Uint8Array) => createHash('sha256').update(value).digest('hex');
+  assert.notEqual(digest(lightScreenshot), digest(darkScreenshot), `${acceptanceCase.name}: el tema oscuro no alteró el renderer compartido`);
   assert.deepEqual(errors, [], `${acceptanceCase.name}: errores de navegador`);
 }
 

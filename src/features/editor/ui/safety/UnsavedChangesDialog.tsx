@@ -1,5 +1,6 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useRef } from 'react';
 import type { SafetyPresentation } from '../../ux/safetyPresentation';
+import { useModalFocus } from '../hooks/useModalFocus';
 
 interface UnsavedChangesDialogProps {
   isOpen: boolean;
@@ -25,26 +26,14 @@ export const UnsavedChangesDialog: React.FC<UnsavedChangesDialogProps> = ({
   canSaveDraft,
 }) => {
   const cancelRef = useRef<HTMLButtonElement>(null);
-
-  useEffect(() => {
-    if (!isOpen) return undefined;
-    const previous = document.activeElement instanceof HTMLElement ? document.activeElement : null;
-    cancelRef.current?.focus();
-    const onKeyDown = (event: KeyboardEvent) => {
-      if (event.key === 'Escape') onCancel();
-    };
-    document.addEventListener('keydown', onKeyDown);
-    return () => {
-      document.removeEventListener('keydown', onKeyDown);
-      previous?.focus();
-    };
-  }, [isOpen, onCancel]);
+  const dialogRef = useModalFocus<HTMLElement>(isOpen, onCancel, cancelRef);
 
   if (!isOpen) return null;
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-carbon/30 p-4" role="presentation">
       <section
+        ref={dialogRef}
         role="dialog"
         aria-modal="true"
         aria-labelledby="unsaved-dialog-title"

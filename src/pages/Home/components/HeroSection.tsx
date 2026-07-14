@@ -21,7 +21,6 @@ export const HeroSection = () => {
           <Logo className="w-24 h-24 md:w-[7.5rem] md:h-[7.5rem] opacity-90 mb-1" />
           <h1
             className="text-[4.5rem] md:text-[7rem] text-carbon tracking-tight leading-none"
-            style={{ fontVariant: 'small-caps' }}
           >
             atematika
           </h1>
@@ -45,7 +44,7 @@ export const HeroSection = () => {
             <div className="absolute inset-[6px] border border-lienzo/20 pointer-events-none transition-all duration-500 group-hover:inset-[8px] group-hover:border-lienzo/40" />
             <div className="absolute inset-[10px] border border-lienzo/10 pointer-events-none transition-all duration-500 group-hover:inset-[12px] group-hover:border-lienzo/20" />
             <span className="text-[10px] tracking-[0.2em] uppercase font-sans opacity-80 mb-2">Plan de Estudio</span>
-            <span className="text-2xl font-bold" style={{ fontVariant: 'small-caps' }}>Camino a Pitágoras</span>
+            <span className="text-2xl font-bold">Camino a Pitágoras</span>
             <span className="mt-3 text-xs font-sans tracking-widest uppercase opacity-70 group-hover:opacity-100 transition-opacity">Acceder a la Ruta →</span>
           </Link>
 
@@ -53,7 +52,7 @@ export const HeroSection = () => {
             <div className="absolute inset-[6px] border border-lienzo/20 pointer-events-none transition-all duration-500 group-hover:inset-[8px] group-hover:border-lienzo/40" />
             <div className="absolute inset-[10px] border border-lienzo/10 pointer-events-none transition-all duration-500 group-hover:inset-[12px] group-hover:border-lienzo/20" />
             <span className="text-[10px] tracking-[0.2em] uppercase font-sans opacity-80 mb-2">Demostraciones lógicas</span>
-            <span className="text-2xl font-bold" style={{ fontVariant: 'small-caps' }}>Métodos de Prueba</span>
+            <span className="text-2xl font-bold">Métodos de Prueba</span>
             <span className="mt-3 text-xs font-sans tracking-widest uppercase opacity-70 group-hover:opacity-100 transition-opacity">Explorar →</span>
           </Link>
 
@@ -61,7 +60,7 @@ export const HeroSection = () => {
             <div className="absolute inset-[6px] border border-lienzo/20 pointer-events-none transition-all duration-500 group-hover:inset-[8px] group-hover:border-lienzo/40" />
             <div className="absolute inset-[10px] border border-lienzo/10 pointer-events-none transition-all duration-500 group-hover:inset-[12px] group-hover:border-lienzo/20" />
             <span className="text-[10px] tracking-[0.2em] uppercase font-sans opacity-80 mb-2">Mapa Interactivo</span>
-            <span className="text-2xl font-bold" style={{ fontVariant: 'small-caps' }}>Grafo Visual</span>
+            <span className="text-2xl font-bold">Grafo Visual</span>
             <span className="mt-3 text-xs font-sans tracking-widest uppercase opacity-70 group-hover:opacity-100 transition-opacity">Ver Dependencias →</span>
           </Link>
 
@@ -69,7 +68,7 @@ export const HeroSection = () => {
             <div className="absolute inset-[6px] border border-lienzo/20 pointer-events-none transition-all duration-500 group-hover:inset-[8px] group-hover:border-lienzo/40" />
             <div className="absolute inset-[10px] border border-lienzo/10 pointer-events-none transition-all duration-500 group-hover:inset-[12px] group-hover:border-lienzo/20" />
             <span className="text-[10px] tracking-[0.2em] uppercase font-sans opacity-80 mb-2">Axiomas</span>
-            <span className="text-2xl font-bold" style={{ fontVariant: 'small-caps' }}>Axiomas</span>
+            <span className="text-2xl font-bold">Axiomas</span>
             <span className="mt-3 text-xs font-sans tracking-widest uppercase opacity-70 group-hover:opacity-100 transition-opacity">Ver Relaciones →</span>
           </Link>
         </div>

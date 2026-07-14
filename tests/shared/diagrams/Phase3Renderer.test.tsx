@@ -22,10 +22,15 @@ vi.mock('../../../src/shared/diagrams/core/MathBoard', () => ({
           rendererState.createdKinds.push(kind);
           const node = document.createElement('span');
           rendererState.nodes.push(node);
+          let x = number(args[0]);
+          let y = number(args[1]);
+          let value = 1;
           const geometry: any = {
-            X: () => number(args[0]),
-            Y: () => number(args[1]),
-            Value: () => 1,
+            X: () => x,
+            Y: () => y,
+            Value: () => value,
+            moveTo: vi.fn(([nextX, nextY]: [number, number]) => { x = nextX; y = nextY; }),
+            setValue: vi.fn((next: number) => { value = next; }),
             Dist: (other: any) => Math.hypot(geometry.X() - other.X(), geometry.Y() - other.Y()),
             setAttribute: vi.fn(),
             on: vi.fn(),
@@ -34,6 +39,7 @@ vi.mock('../../../src/shared/diagrams/core/MathBoard', () => ({
           return geometry;
         },
         on: vi.fn(),
+        update: vi.fn(),
         getAllObjectsUnderMouse: vi.fn(() => []),
         getUsrCoordsOfMouse: vi.fn(() => [0, 0]),
       });
@@ -69,6 +75,19 @@ describe('Phase 3 shared renderer', () => {
     expect(screen.getByLabelText('highlight desde diagrama').textContent).toBe(`${spec.componentId}:${targetNode?.dataset.diagramTarget}`);
     fireEvent.mouseLeave(targetNode as HTMLElement);
     expect(screen.getByLabelText('highlight desde diagrama').textContent).toBe('');
+  });
+
+  it('exposes movable points to the keyboard and reports their constrained coordinates', () => {
+    const spec = migrateDiagramSpec(primitivesFixture).spec;
+    const onPointMove = vi.fn();
+    render(<MathProvider><DiagramRenderer spec={spec} viewportControls={false} onPointMove={onPointMove} /></MathProvider>);
+    const pointNode = rendererState.nodes.find(node => node.getAttribute('aria-roledescription') === 'punto móvil del diagrama');
+
+    expect(pointNode).toBeDefined();
+    expect(pointNode?.getAttribute('tabindex')).toBe('0');
+    fireEvent.keyDown(pointNode as HTMLElement, { key: 'ArrowRight' });
+    expect(onPointMove).toHaveBeenCalledTimes(1);
+    expect(pointNode?.getAttribute('aria-label')).toMatch(/x -?\d+\.\d{2}, y -?\d+\.\d{2}/);
   });
 
   it.each([

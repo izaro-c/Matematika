@@ -1,6 +1,7 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useMemo, useRef } from 'react';
 import type { FileNode } from '../../lib/editorContracts';
 import type { DiagramTargetRegistry } from '../../core/editorTypes';
+import { useModalFocus } from '../hooks/useModalFocus';
 
 interface SemanticLinkerProps {
   isOpen: boolean;
@@ -60,14 +61,12 @@ export const SemanticLinker: React.FC<SemanticLinkerProps> = ({
   const [graphElementId, setGraphElementId] = useState('');
   const [selectedColor, setSelectedColor] = useState('salvia');
   const [isDependency, setIsDependency] = useState(false);
-  const [suggestions, setSuggestions] = useState<FileNode[]>([]);
-  const containerRef = useRef<HTMLDivElement>(null);
+  const closeButtonRef = useRef<HTMLButtonElement>(null);
+  const containerRef = useModalFocus<HTMLDivElement>(isOpen, onClose, closeButtonRef);
 
   useEffect(() => {
     if (!isOpen) return;
     setSearchQuery('');
-    setSuggestions(files.filter(f => f.path.endsWith('.mdx')));
-
     if (editingMarkup && initialAttrs) {
       // Modo edición: inicializar estado con los atributos del enlace existente
       if (editingTag === 'ConceptLink') {
@@ -105,10 +104,9 @@ export const SemanticLinker: React.FC<SemanticLinkerProps> = ({
     }
   }, [isOpen, files, initialAttrs, editingTag, editingMarkup, selectedText, diagramTargets.length]);
 
-  useEffect(() => {
+  const suggestions = useMemo(() => {
     if (!searchQuery.trim()) {
-      setSuggestions(files.filter(f => f.path.endsWith('.mdx')));
-      return;
+      return files.filter(f => f.path.endsWith('.mdx'));
     }
 
     const query = searchQuery.toLowerCase();
@@ -124,7 +122,7 @@ export const SemanticLinker: React.FC<SemanticLinkerProps> = ({
         const bScore = bName === query ? 0 : bName.startsWith(query) ? 1 : 2;
         return aScore - bScore || aName.localeCompare(bName);
       });
-    setSuggestions(filtered);
+    return filtered;
   }, [searchQuery, files]);
 
   useEffect(() => {
@@ -139,7 +137,7 @@ export const SemanticLinker: React.FC<SemanticLinkerProps> = ({
     return () => {
       document.removeEventListener('mousedown', handleOutsideClick);
     };
-  }, [isOpen, onClose]);
+  }, [containerRef, isOpen, onClose]);
 
   if (!isOpen) return null;
 
@@ -173,6 +171,8 @@ export const SemanticLinker: React.FC<SemanticLinkerProps> = ({
   return (
     <div
       ref={containerRef}
+      role="dialog"
+      aria-label="Conectar texto con contenido o diagrama"
       className="absolute z-50 bg-lienzo border border-carbon/20 rounded shadow-xl p-3 w-80 flex flex-col gap-3 transition-all duration-200 animate-in fade-in zoom-in-95 text-carbon"
       style={{
         top: `${position.top}px`,
@@ -181,7 +181,7 @@ export const SemanticLinker: React.FC<SemanticLinkerProps> = ({
     >
       <div className="flex justify-between items-center border-b border-carbon/15 pb-1">
         <span className="text-[10px] font-serif font-bold text-carbon/60 uppercase tracking-wider">Conectar texto</span>
-        <button onClick={onClose} className="text-xs text-carbon/40 hover:text-carbon font-bold">✕</button>
+        <button ref={closeButtonRef} type="button" onClick={onClose} className="text-xs text-carbon/40 hover:text-carbon font-bold" aria-label="Cerrar enlazador">✕</button>
       </div>
       
       <p className="text-xs italic text-carbon/75 truncate select-none">
@@ -189,9 +189,11 @@ export const SemanticLinker: React.FC<SemanticLinkerProps> = ({
       </p>
 
       {/* Pestañas de tipo de enlace */}
-      <div className="flex bg-carbon/5 rounded p-0.5 text-[10px] font-sans font-bold">
+      <div className="flex bg-carbon/5 rounded p-0.5 text-[10px] font-sans font-bold" role="tablist" aria-label="Tipo de enlace">
         <button
           type="button"
+          role="tab"
+          aria-selected={linkType === 'concept'}
           onClick={() => setLinkType('concept')}
           className={`flex-1 py-1 rounded-sm text-center transition-all ${linkType === 'concept' ? 'bg-lienzo shadow-sm text-carbon' : 'text-carbon/50 hover:text-carbon'}`}
         >
@@ -199,6 +201,8 @@ export const SemanticLinker: React.FC<SemanticLinkerProps> = ({
         </button>
         <button
           type="button"
+          role="tab"
+          aria-selected={linkType === 'reference'}
           onClick={() => setLinkType('reference')}
           className={`flex-1 py-1 rounded-sm text-center transition-all ${linkType === 'reference' ? 'bg-lienzo shadow-sm text-carbon' : 'text-carbon/50 hover:text-carbon'}`}
         >
@@ -206,6 +210,8 @@ export const SemanticLinker: React.FC<SemanticLinkerProps> = ({
         </button>
         <button
           type="button"
+          role="tab"
+          aria-selected={linkType === 'graphic'}
           onClick={() => setLinkType('graphic')}
           className={`flex-1 py-1 rounded-sm text-center transition-all ${linkType === 'graphic' ? 'bg-lienzo shadow-sm text-carbon' : 'text-carbon/50 hover:text-carbon'}`}
         >
@@ -213,6 +219,8 @@ export const SemanticLinker: React.FC<SemanticLinkerProps> = ({
         </button>
         <button
           type="button"
+          role="tab"
+          aria-selected={linkType === 'combined'}
           onClick={() => setLinkType('combined')}
           className={`flex-1 py-1 rounded-sm text-center transition-all ${linkType === 'combined' ? 'bg-lienzo shadow-sm text-carbon' : 'text-carbon/50 hover:text-carbon'}`}
         >

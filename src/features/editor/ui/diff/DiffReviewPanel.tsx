@@ -1,5 +1,6 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useRef } from 'react';
 import type { DiffReview } from '../../ux/diffReview';
+import { useModalFocus } from '../hooks/useModalFocus';
 
 interface DiffReviewPanelProps {
   review: DiffReview | null;
@@ -35,20 +36,7 @@ export const DiffReviewPanel: React.FC<DiffReviewPanelProps> = ({
   onSelectChange,
 }) => {
   const closeButtonRef = useRef<HTMLButtonElement>(null);
-
-  useEffect(() => {
-    if (!review) return undefined;
-    const previous = document.activeElement instanceof HTMLElement ? document.activeElement : null;
-    closeButtonRef.current?.focus();
-    const onKeyDown = (event: KeyboardEvent) => {
-      if (event.key === 'Escape' && !isApplying) onClose();
-    };
-    document.addEventListener('keydown', onKeyDown);
-    return () => {
-      document.removeEventListener('keydown', onKeyDown);
-      previous?.focus();
-    };
-  }, [isApplying, onClose, review]);
+  const dialogRef = useModalFocus<HTMLElement>(Boolean(review), onClose, closeButtonRef, isApplying);
 
   if (!review) return null;
 
@@ -57,6 +45,7 @@ export const DiffReviewPanel: React.FC<DiffReviewPanelProps> = ({
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-carbon/30 p-4" role="presentation">
       <section
+        ref={dialogRef}
         role="dialog"
         aria-modal="true"
         aria-labelledby="editor-diff-title"

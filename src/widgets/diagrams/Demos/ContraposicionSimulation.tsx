@@ -20,7 +20,7 @@ export const ContraposicionSimulation = () => {
           style={{
             left: 40, top: 30, width: 300, height: 240,
             borderColor: 'var(--theme-salvia)',
-            backgroundColor: d ? 'rgba(162,194,162,0.13)' : 'rgba(162,194,162,0.04)',
+            backgroundColor: d ? 'color-mix(in srgb, var(--theme-salvia) 13%, transparent)' : 'color-mix(in srgb, var(--theme-salvia) 4%, transparent)',
           }}
         >
           <span className="text-xl font-bold mt-3 ml-4 transition-all duration-500"
@@ -34,7 +34,7 @@ export const ContraposicionSimulation = () => {
             style={{
               left: 42, top: 44, width: 140, height: 130,
               borderColor: 'var(--theme-terracota)',
-              backgroundColor: d ? 'rgba(200,100,70,0.18)' : 'rgba(200,100,70,0.05)',
+              backgroundColor: d ? 'color-mix(in srgb, var(--theme-terracota) 18%, transparent)' : 'color-mix(in srgb, var(--theme-terracota) 5%, transparent)',
             }}
           >
             <span className="text-xl font-bold mt-3 ml-4 transition-all duration-500"

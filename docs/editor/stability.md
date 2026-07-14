@@ -1,49 +1,34 @@
 # Declaración de estabilidad del editor
 
-**Fecha:** 2026-07-12  
-**Veredicto:** FASE 8 reforzada con gates reales; cierre aceptable con deuda explícita de cobertura de ramas en generador/diff y validaciones finales pendientes de ejecución completa.
+**Fecha:** 2026-07-14
+**Alcance:** corpus y arquitectura presentes en el repositorio; no MDX o TSX arbitrario.
 
-La estabilidad del editor de Matematika ha sido endurecida y validada de forma definitiva mediante gates automatizados.
+## Veredicto
 
-| Subsistema | Estado | Garantías | Limitaciones | Gate asociado |
-| --- | --- | --- | --- | --- |
-| **Motor MDX** | `stable` | Round-trip exacto y byte-for-byte para 120 documentos MDX del corpus. | Nodos MDX complejos no soportados se parsean como bloques opacos inmutables. | `npm run editor:roundtrip:check` |
-| **Compatibilidad visual** | `stable` | Clasificación automática (`fully-editable`, `partially-editable`, `read-only`, `unsupported`). | La escritura en modo visual está estrictamente limitada a las zonas compatibles. | `npm run editor:lossless:check` |
-| **Persistencia** | `stable` | Hash/versión, borradores en base de datos local, backups automáticos y control de concurrencia. | Depende del backend local provisto por el HMR de Vite. | `npm run editor:test:integration` |
-| **Diff** | `stable` | Diff visual línea a línea interactivo para revisar cambios antes de aplicar. | El diff se genera en base al AST MDX compilado. | `npm run editor:test:unit` |
-| **Editor visual** | `stable` | Edición WYSIWYG de bloques compatibles de texto y cabeceras. | Los bloques opacos/avanzados se preservan literalmente y no son editables visualmente. | `npm run test:editor` |
-| **Editor de código** | `stable` | Monaco Editor integrado de alto rendimiento con validación MDX en tiempo real. | Requiere inicialización del worker de Monaco. | `npm run editor:test:integration` |
-| **Backups** | `stable` | Copias de seguridad atómicas creadas en `.matematika/editor/backups/` antes de cada guardado. | Almacenamiento ilimitado en desarrollo (requiere depuración periódica manual). | Tests de backend y persistencia. |
-| **Conflictos** | `stable` | Detección de colisiones (409) entre sesiones concurrentes previniendo pérdida de datos. | Resolución interactiva manual (el usuario debe decidir). | `npm run editor:test:integration` |
-| **DiagramWorkbench** | `stable` | Authority model, parser AST de diagramas TSX e índice inverso de usos para abrir sin escaneo O(N). | Modificaciones de diagramas complejos requieren edición de código. | `npm run editor:test:unit` y `diagram-usages:check` |
-| **Accesibilidad** | `stable` | Marcadores de seguridad de contraste y navegación completa por teclado con Enter/Tab. | Requiere lectores de pantalla compatibles con ARIA estándar. | `npm run editor:test:e2e` (Flujo 9) |
-| **Responsive** | `stable` | Layout modular con panel lateral flexible y adaptabilidad a viewports. | Editor avanzado optimizado para pantallas de escritorio. | Manual y E2E. |
-| **E2E** | `stable` | Suite de 14 flujos críticos en Puppeteer contra Vite real, sin globals internos `__MATEMATIKA_`. | Depende de Chromium/Puppeteer disponibles en el entorno. | `npm run editor:test:e2e` |
-| **CI** | `stable` | Pipeline con 13 jobs independientes y bloqueantes configurados en GitHub Actions. | Ninguna. | `.github/workflows/ci.yml` |
+El editor queda estable para los flujos comprobados de autoría, revisión y recuperación. La estabilidad no significa edición visual universal: 4 diagramas son `visual-exact` y 81 permanecen deliberadamente en `code-preview`; un documento futuro puede clasificarse como parcial, solo lectura o no soportado.
 
-## Resultado de cobertura crítica verificado
+El cierre del 2026-07-14 aprobó tanto `npm run full-check` como `npm run editor:release-check`, incluidos 18/18 flujos E2E y la regresión visual de cuatro páginas reales.
 
-| Módulo | Líneas | Ramas |
-| --- | ---: | ---: |
-| `diagrams/state/reducer.ts` | 100% | 91.37% |
-| `diagrams/hooks/useDiagramState.ts` | 91.42% | 68.11% |
-| `diagrams/persistence/repository.ts` | 100% | 100% |
-| `diagrams/source/parser.ts` | 100% | 93.33% |
-| `diagrams/source/generator.ts` | 100% | 83.03% |
-| `ux/diffReview.ts` | 98.66% | 83.83% |
-| `core/useEditorCore.ts` | 89.2% | 76.68% |
-| `persistence/saveCoordinator.ts` | 100% | 81.25% |
+| Subsistema | Estado | Evidencia | Límite explícito |
+| --- | --- | --- | --- |
+| Motor MDX | Estable en corpus | 120/120 roundtrip exacto y metadata válida | La métrica no cubre sintaxis externa al corpus. |
+| Compatibilidad visual | Conservadora | 120 fully-editable; guardas para los otros tres estados | La clasificación se recalcula por documento. |
+| Persistencia | Estable | Integración + E2E de red, 409, backup y reintento | Backend local de Vite; resolución de conflicto manual. |
+| Protección de datos | Estable | Diff vigente, rangos esperados, diálogo de navegación y `beforeunload` | No hay autosave automático. |
+| Diagramas | Estable con capacidad desigual | 85 finales: 4 visual-exact, 81 code-preview, 0 inválidos | No se regenera código manual complejo. |
+| Renderer compartido | Estable en casos de aceptación | Cuatro páginas reales, screenshots light/dark y conteos estructurales | Regresión por invariantes/digest, no baseline pixel-perfect. |
+| Accesibilidad | Verificada automáticamente | Foco modal, teclado, roles, nombres y contraste AA claro/oscuro | Falta sesión humana con lector de pantalla. |
+| Responsive | Verificado | 390×844, 1024×768, 1440×900 y 1600×1100 | Monaco/JSXGraph siguen orientados a autoría avanzada de escritorio. |
+| Rendimiento del diff | Protegido | 2.500 párrafos; presupuesto LCS de 4 M de celdas | Umbral de 5 s con coverage; ~1,6 s sin instrumentar. No es un SLA multiplataforma. |
 
----
+## Deuda aceptada
 
-## Auditoría de Dependencias (`npm audit`)
+- `editor:lint` conserva un presupuesto histórico de 119 advertencias; esta fase lo deja por debajo del máximo, sin errores. La complejidad del parser/generador y algunos efectos React deben reducirse de forma incremental.
+- El gate de cobertura se recalibró contra la arquitectura estructural real: motor MDX 87,96% líneas / 63,67% ramas / 90,2% funciones; guardas de `useEditorCore` 73,49% / 62,98% / 75,86% en la repetición completa. Se añadieron pisos por archivo para impedir que el agregado oculte módulos débiles. Las ramas siguen siendo deuda prioritaria.
+- El lint global informa más de mil advertencias históricas en todo el repositorio. El gate global no las trata como error, pero no se presentan como deuda resuelta.
+- La validación de lector de pantalla es semántica y automatizada; falta una pasada manual con tecnología asistiva real.
+- Los 81 diagramas `code-preview` son funcionales y previsualizables, pero no visualmente editables con roundtrip exacto.
+- El build todavía genera chunks grandes (`EditorPage` 787,74 kB, `OrbitControls` 900,76 kB y `MathFactory` 989,43 kB) y conserva el aviso de `eval` interno de JessieCode/JSXGraph.
+- Las referencias a conceptos sin página publicada y 56 avisos históricos de Dependency Cruiser siguen visibles aunque sus gates no registran errores.
 
-Hemos detectado y clasificado las siguientes vulnerabilidades de dependencias del proyecto:
-
-1. **`gh-pages` / `q-io` / `qs` / `trim-newlines`** (Crítica/Alta):
-   - *Impacto real*: `accepted-risk`. Se trata de herramientas empleadas únicamente en tiempo de desarrollo/despliegue estático, que no forman parte del bundle de producción distribuido al cliente final.
-   - *Mitigación*: Se preservará la versión actual para asegurar la estabilidad del script de despliegue.
-
-2. **`uuid`** (Transitiva a través de `@react-three/drei`) (Moderada):
-   - *Impacto real*: `accepted-risk`. La vulnerabilidad se activa si se proporcionan buffers de entrada controlados por atacantes a los generadores v3/v5/v6, lo cual no ocurre en el cliente.
-   - *Mitigación*: Mantener bajo vigilancia para futuras actualizaciones de `@react-three/drei`.
+El detalle reproducible de comandos, resultados y riesgos está en `ai/reports/editor-phase-8-quality-and-governance.md`.

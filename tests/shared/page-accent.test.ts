@@ -5,7 +5,7 @@ import {
 } from '@/shared/design';
 
 describe('page accents', () => {
-  it('assigns distinct accents to the main editorial page types', () => {
+  it('assigns an explicit accent to every main editorial page type', () => {
     const types = [
       'axioma',
       'definicion',
@@ -20,7 +20,7 @@ describe('page accents', () => {
       'matematico',
     ];
 
-    expect(new Set(types.map(getContentPageAccent)).size).toBe(types.length);
+    expect(types.every(type => CONTENT_PAGE_ACCENTS[type as keyof typeof CONTENT_PAGE_ACCENTS] === getContentPageAccent(type))).toBe(true);
   });
 
   it('uses only canonical Arts & Crafts theme variables', () => {
@@ -33,16 +33,6 @@ describe('page accents', () => {
       'var(--theme-pavo)',
       'var(--theme-granada)',
       'var(--theme-musgo)',
-      'var(--theme-modelo)',
-      'var(--theme-leccion)',
-      'var(--theme-ejemplo)',
-      'var(--theme-ejercicio)',
-      'var(--theme-matematico)',
-      'var(--theme-lila)',
-      'var(--theme-nogal)',
-      'var(--theme-cardenal)',
-      'var(--theme-piedra)',
-      'var(--theme-cromo)',
     ]);
 
     expect(Object.values(CONTENT_PAGE_ACCENTS).every((accent) => canonicalTokens.has(accent))).toBe(true);

@@ -16,10 +16,10 @@ export interface ThemeColors {
 }
 
 function getCSSVar(name: keyof ThemeColors): string {
-  if (typeof document === 'undefined') return name === 'lienzo' ? 'white' : 'black';
+  if (typeof document === 'undefined') return '';
   return getComputedStyle(document.documentElement)
     .getPropertyValue(`--theme-${name}`)
-    .trim() || (name === 'lienzo' ? 'white' : 'black');
+    .trim();
 }
 
 function getTheme(): ThemeColors {
@@ -60,6 +60,8 @@ export interface MathBoardProps {
   borderWidth?: number | string;
   borderColor?: string;
   borderRadius?: number | string;
+  ariaLabel?: string;
+  keyboardInstructions?: string;
 }
 
 export const MathBoard: React.FC<MathBoardProps> = ({
@@ -80,6 +82,8 @@ export const MathBoard: React.FC<MathBoardProps> = ({
   borderWidth = 1,
   borderColor = 'var(--page-accent, var(--theme-pizarra))',
   borderRadius = 20,
+  ariaLabel = 'Diagrama matemático interactivo',
+  keyboardInstructions = 'Use Tab para recorrer los objetos interactivos. En puntos móviles y deslizadores, use las flechas para cambiar el valor.',
 }) => {
   const containerRef = useRef<HTMLDivElement>(null);
   const boardRef = useRef<HTMLDivElement>(null);
@@ -94,6 +98,7 @@ export const MathBoard: React.FC<MathBoardProps> = ({
   const highlightRef = useRef(highlight);
   const stepRef = useRef(step);
   const generatedId = useId().replace(/:/g, '');
+  const instructionsId = `math-board-instructions-${generatedId}`;
   const suppressBoundingBoxReportRef = useRef(false);
   const programmaticBoundingBoxRef = useRef<[number, number, number, number] | null>(null);
 
@@ -115,7 +120,7 @@ export const MathBoard: React.FC<MathBoardProps> = ({
     const isHL = (target: string) => matchesScopedDiagramTarget(highlightRef.current, target, scopeId);
     onUpdateRef.current?.(boardObj.current, elementsRef.current, currentTheme, isStep, isHL);
     boardObj.current.update();
-  }, [highlight, step]);
+  }, [highlight, scopeId, step]);
 
   useEffect(() => {
     if (!boardRef.current) return;
@@ -131,6 +136,13 @@ export const MathBoard: React.FC<MathBoardProps> = ({
       showCopyright: false,
       showNavigation: false,
     });
+
+    // JSXGraph replaces accessibility attributes while initializing its
+    // container. Restore the editor-owned name and instructions afterwards.
+    boardRef.current.setAttribute('role', 'region');
+    boardRef.current.setAttribute('aria-label', ariaLabel);
+    boardRef.current.setAttribute('aria-describedby', instructionsId);
+    boardRef.current.setAttribute('tabindex', '0');
 
     boardObj.current = board;
     const initialBounds = board.getBoundingBox?.();
@@ -195,7 +207,7 @@ export const MathBoard: React.FC<MathBoardProps> = ({
       boardObj.current = null;
       elementsRef.current = {};
     };
-  }, [axis, generatedId, grid, id, keepaspectratio, pan, revision, scopeId, zoom]);
+  }, [ariaLabel, axis, generatedId, grid, id, instructionsId, keepaspectratio, pan, revision, scopeId, zoom]);
 
   useEffect(() => {
     const board = boardObj.current;
@@ -216,7 +228,12 @@ export const MathBoard: React.FC<MathBoardProps> = ({
 
   return (
     <div ref={containerRef} className={`${className} h-full`}>
-      <div ref={boardRef} className="jxgbox absolute inset-0 h-full w-full touch-none" 
+      <p id={instructionsId} className="sr-only">{keyboardInstructions}</p>
+      <div ref={boardRef} className="jxgbox absolute inset-0 h-full w-full touch-none"
+        role="region"
+        aria-label={ariaLabel}
+        aria-describedby={instructionsId}
+        tabIndex={0}
         style={{
           borderStyle: 'solid',
           borderWidth,

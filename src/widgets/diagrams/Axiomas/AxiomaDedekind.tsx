@@ -62,10 +62,10 @@ export const AxiomaDedekind = () => {
       -1.5,
       () => {
         const x = pP.X().toFixed(2);
-        return `<div style="font-family: monospace; font-size: 16px; text-align: center; width: 300px; margin-left: -150px; background: rgba(255,255,255,0.7); padding: 10px; border-radius: 8px;">
+        return `<div style="font-family: monospace; font-size: 16px; text-align: center; width: 300px; margin-left: -150px; background: color-mix(in srgb, ${theme.lienzo} 85%, transparent); padding: 10px; border-radius: 8px;">
           L = { x ∈ ℝ | x ≤ ${x} }<br/>
           R = { x ∈ ℝ | x > ${x} }<br/>
-          <hr style="margin: 5px 0; border-color: rgba(0,0,0,0.1);" />
+          <hr style="margin: 5px 0; border-color: color-mix(in srgb, ${theme.carbon} 10%, transparent);" />
           El supremo de L es <span style="color:${theme.terracota}; font-weight: bold;">P = ${x}</span><br/>
           P pertenece a L, pero no a R.
         </div>`;

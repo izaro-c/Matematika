@@ -299,12 +299,15 @@ function createElement(board: any, elements: Record<string, any>, item: DiagramE
   }, theme) : null;
 }
 
+type KeyboardAdjustmentKey = 'ArrowLeft' | 'ArrowRight' | 'ArrowUp' | 'ArrowDown' | 'Home' | 'End';
+
 function attachSelection(
   element: any,
   item: DiagramSceneItem,
   mode: DiagramRendererProps['mode'],
   onSelectionChange?: (id: string) => void,
   onTargetHighlight?: (target: string | null) => void,
+  onKeyboardAdjust?: (key: KeyboardAdjustmentKey, largeStep: boolean) => void,
 ) {
   if (!element) return;
   const node = element.rendNode as HTMLElement | undefined;
@@ -318,6 +321,24 @@ function attachSelection(
     node?.addEventListener('mouseleave', () => onTargetHighlight?.(null));
     node?.addEventListener('focus', () => onTargetHighlight?.(target));
     node?.addEventListener('blur', () => onTargetHighlight?.(null));
+  }
+  if (onKeyboardAdjust) {
+    node?.setAttribute('tabindex', '0');
+    node?.setAttribute('aria-keyshortcuts', 'ArrowLeft ArrowRight ArrowUp ArrowDown Home End');
+    if ('min' in item) {
+      node?.setAttribute('role', 'slider');
+      node?.setAttribute('aria-valuemin', String(item.min));
+      node?.setAttribute('aria-valuemax', String(item.max));
+      node?.setAttribute('aria-valuenow', String(item.value));
+    } else {
+      node?.setAttribute('role', 'button');
+      node?.setAttribute('aria-roledescription', 'punto móvil del diagrama');
+    }
+    node?.addEventListener('keydown', (event) => {
+      if (!['ArrowLeft', 'ArrowRight', 'ArrowUp', 'ArrowDown', 'Home', 'End'].includes(event.key)) return;
+      event.preventDefault();
+      onKeyboardAdjust(event.key as KeyboardAdjustmentKey, event.shiftKey);
+    });
   }
   if (mode !== 'editor' || !item.selection.selectable) return;
   node?.setAttribute('tabindex', '0');
@@ -397,6 +418,7 @@ const DiagramRendererContent: React.FC<DiagramRendererProps> = ({
         pan
         zoom
         revision={revision}
+        ariaLabel={`${spec.title}. Diagrama matemático interactivo.`}
         className="relative min-h-[360px] w-full overflow-hidden"
         onBoundingBoxChange={(next) => {
           if (next.some((value, index) => Math.abs(value - bounds[index]) > 1e-7)) commitBounds(next);
@@ -484,7 +506,49 @@ const DiagramRendererContent: React.FC<DiagramRendererProps> = ({
                 layer: itemLayerNumber(spec, sceneItem),
               }, theme);
             }
-            attachSelection(elements[sceneItem.id], sceneItem, mode, onSelectionChange, setTargetHighlight);
+            const element = elements[sceneItem.id];
+            const keyboardAdjust = 'constraint' in sceneItem && !sceneItem.fixed && !entry.locked && sceneItem.constraint !== 'derived'
+              ? (key: 'ArrowLeft' | 'ArrowRight' | 'ArrowUp' | 'ArrowDown' | 'Home' | 'End', largeStep: boolean) => {
+                if (key === 'Home' || key === 'End') return;
+                const step = (bounds[2] - bounds[0]) / (largeStep ? 20 : 100);
+                const dx = key === 'ArrowLeft' ? -step : key === 'ArrowRight' ? step : 0;
+                const dy = key === 'ArrowDown' ? -step : key === 'ArrowUp' ? step : 0;
+                const requested = { x: element.X() + dx, y: element.Y() + dy };
+                const liveSpec: DiagramSpecV2 = {
+                  ...spec,
+                  points: spec.points.map(point => elements[point.id]
+                    ? { ...point, x: elements[point.id].X(), y: elements[point.id].Y() }
+                    : point),
+                  sliders: spec.sliders.map(slider => elements[slider.id]?.Value
+                    ? { ...slider, value: elements[slider.id].Value() }
+                    : slider),
+                };
+                const next = sceneItem.constraint === 'glider'
+                  ? requested
+                  : constrainPointCoordinates(liveSpec, sceneItem, requested);
+                element.moveTo([next.x, next.y], 0);
+                board.update();
+                onPointMove?.(sceneItem.id, element.X(), element.Y());
+                const node = element.rendNode as HTMLElement | undefined;
+                node?.setAttribute('aria-label', `${sceneItem.selection.ariaLabel ?? sceneItem.label}: x ${element.X().toFixed(2)}, y ${element.Y().toFixed(2)}`);
+              }
+              : 'min' in sceneItem && !entry.locked
+                ? (key: 'ArrowLeft' | 'ArrowRight' | 'ArrowUp' | 'ArrowDown' | 'Home' | 'End', largeStep: boolean) => {
+                  const delta = sceneItem.step * (largeStep ? 10 : 1);
+                  const current = element.Value?.() ?? sceneItem.value;
+                  const next = key === 'Home'
+                    ? sceneItem.min
+                    : key === 'End'
+                      ? sceneItem.max
+                      : Math.min(sceneItem.max, Math.max(sceneItem.min, current + (key === 'ArrowLeft' || key === 'ArrowDown' ? -delta : delta)));
+                  element.setValue?.(next);
+                  board.update();
+                  const node = element.rendNode as HTMLElement | undefined;
+                  node?.setAttribute('aria-valuenow', String(next));
+                  node?.setAttribute('aria-label', `${sceneItem.selection.ariaLabel ?? sceneItem.label}: ${next}`);
+                }
+                : undefined;
+            attachSelection(element, sceneItem, mode, onSelectionChange, setTargetHighlight, keyboardAdjust);
           });
         }}
         onUpdate={(_board, elements, theme, isStep, isHL) => {
@@ -601,11 +665,12 @@ const DiagramRendererContent: React.FC<DiagramRendererProps> = ({
         <div className="absolute right-2 top-2 z-20 flex items-center gap-1 rounded border border-carbon/15 bg-lienzo/95 p-1 shadow-sm" aria-label="Controles del viewport">
           <button type="button" className="rounded px-2 py-1 text-xs font-bold text-carbon hover:bg-carbon/5" aria-label="Acercar" onClick={() => commitBounds(zoomViewport(spec, bounds, 1.25))}>+</button>
           <button type="button" className="rounded px-2 py-1 text-xs font-bold text-carbon hover:bg-carbon/5" aria-label="Alejar" onClick={() => commitBounds(zoomViewport(spec, bounds, 0.8))}>−</button>
-          <button type="button" className="rounded px-2 py-1 text-[10px] font-bold text-carbon hover:bg-carbon/5" onClick={() => commitBounds(fitViewport(spec))}>Ajustar</button>
+          <button type="button" className="rounded px-2 py-1 text-[10px] font-bold text-carbon hover:bg-carbon/5" aria-label="Ajustar todos los objetos al viewport" onClick={() => commitBounds(fitViewport(spec))}>Ajustar</button>
           <button
             type="button"
             className="rounded px-2 py-1 text-[10px] font-bold text-carbon hover:bg-carbon/5 disabled:opacity-40"
             disabled={missingItems.length === 0}
+            aria-label="Recuperar objetos fuera del viewport"
             title={missingItems.length > 0 ? `${missingItems.length} objeto(s) fuera de vista` : 'No hay objetos fuera de vista'}
             onClick={() => commitBounds(recoverViewport(runtimeSpec, selectedIds))}
           >

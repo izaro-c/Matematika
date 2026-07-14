@@ -35,7 +35,7 @@ export const BranchPage = () => {
             {taxonomy.id && /^\d{2}[A-Z]?$/.test(taxonomy.id) && taxonomy.id !== taxonomy.name && (
               <span className="text-2xl font-sans font-bold text-carbon/40 tracking-wider">{taxonomy.id}</span>
             )}
-            <h1 className="text-5xl font-bold tracking-tight" style={{ fontVariant: 'small-caps' }}>
+            <h1 className="text-5xl font-bold tracking-tight">
               {taxonomy.name || taxonomy.id || branchSlug}
             </h1>
           </div>
@@ -70,7 +70,7 @@ export const BranchPage = () => {
                           {/^\d{2}[A-Z]?$/.test(sub.slug) && (
                             <span className="text-base font-sans font-bold text-carbon/40">{sub.slug}</span>
                           )}
-                          <span className="text-xl font-bold" style={{ fontVariant: 'small-caps' }}>{sub.name}</span>
+                          <span className="text-xl font-bold">{sub.name}</span>
                         </span>
                         <span className="text-xs font-sans tracking-widest opacity-50 group-hover:opacity-100 text-pizarra">Explorar →</span>
                       </a>

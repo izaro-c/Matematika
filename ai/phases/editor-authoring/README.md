@@ -19,8 +19,8 @@ Esta tabla es la única fuente de verdad del estado de la épica. Las fichas de 
 | [4](phase-4-steps-and-interaction.md) | Pasos, interacción y demostraciones | **Cerrada** | Cierre, evidencia de persistencia y gates registrados en [`../../current-state.md`](../../current-state.md), 2026-07-13 |
 | [5](phase-5-acceptance-migrations.md) | Migración de casos matemáticos complejos | **Cerrada** | Cuatro casos reales, roundtrip exacto, páginas publicadas y E2E registrados en [`../../current-state.md`](../../current-state.md), 2026-07-13 |
 | [6](phase-6-lossless-mdx-engine.md) | Motor MDX estructural y lossless | **Cerrada** | CST/AST posicional, metadatos reales, operaciones localizadas y corpus lossless 120/120 registrados en [`../../current-state.md`](../../current-state.md), 2026-07-13 |
-| [7](phase-7-mdx-authoring-ux.md) | Experiencia visual del editor MDX | **En validación** | Entregables implementados sobre el motor lossless; queda repetir el E2E real tras el límite temporal del entorno |
-| [8](phase-8-quality-and-governance.md) | Calidad, accesibilidad y cierre | **Pendiente** | Requiere Fases 0–7 cerradas |
+| [7](phase-7-mdx-authoring-ux.md) | Experiencia visual del editor MDX | **Cerrada** | Autoría compleja, roundtrip, preview, responsive y reapertura aprobados en el E2E real de Fase 8, 2026-07-14 |
+| [8](phase-8-quality-and-governance.md) | Calidad, accesibilidad y cierre | **Cerrada** | `full-check` y `editor:release-check` aprobados; informe y deuda en [`../../reports/editor-phase-8-quality-and-governance.md`](../../reports/editor-phase-8-quality-and-governance.md), 2026-07-14 |
 
 Estados permitidos: `pendiente`, `en progreso`, `en validación`, `bloqueada` y `cerrada`.
 

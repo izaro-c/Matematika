@@ -50,7 +50,7 @@ export function AxiomaticSidebar({
 
       {/* ── Título ─────────────────────────────────────────────────── */}
       <div className="px-4 pt-5 pb-3">
-        <h2 className="font-serif text-base text-carbon tracking-tight leading-tight" style={{ fontVariant: 'small-caps' }}>
+        <h2 className="font-serif text-base text-carbon tracking-tight leading-tight">
           Grafo de<br />Dependencias
         </h2>
         <p className="text-[10px] font-sans text-carbon/40 mt-1.5 leading-relaxed">
@@ -68,7 +68,7 @@ export function AxiomaticSidebar({
         {/* ── Sandbox ─────────────────────────────────────────────────── */}
         <div className="border border-carbon/15 p-3 bg-white/40">
           <div className="flex items-center justify-between mb-3">
-            <h3 className="font-serif text-sm text-carbon" style={{ fontVariant: 'small-caps' }}>
+            <h3 className="font-serif text-sm text-carbon">
               <span className="page-accent-text mr-1.5">☙</span>Sandbox Lógico
             </h3>
             <button onClick={toggleSandbox}
@@ -89,7 +89,7 @@ export function AxiomaticSidebar({
                 {sandboxModels.map(model => (
                   <button key={model.id} onClick={() => loadModel(model.id, model.axioms_verified || [])}
                     className="text-left px-3 py-1.5 border border-carbon/10 hover:border-[var(--page-accent,var(--theme-terracota))]/50 hover:bg-[color-mix(in_srgb,var(--page-accent,var(--theme-terracota))_4%,transparent)] text-xs font-serif text-carbon/80 hover:text-[var(--page-accent,var(--theme-terracota))] transition-all flex justify-between items-center group">
-                    <span style={{ fontVariant: 'small-caps' }}>{model.title}</span>
+                    <span>{model.title}</span>
                     <span className="text-[9px] text-carbon/20 group-hover:text-[var(--page-accent,var(--theme-terracota))]/50 font-sans">Cargar</span>
                   </button>
                 ))}
@@ -114,7 +114,7 @@ export function AxiomaticSidebar({
                     >
                       <input type="checkbox" checked={isActive} onChange={() => toggleSandboxAxiom(axiom.id)}
                         className="w-3 h-3 mt-0.5 shrink-0 cursor-pointer" />
-                      <span className={`font-serif leading-tight ${isActive ? 'page-accent-text font-bold' : 'text-carbon/70'}`} style={{ fontVariant: 'small-caps' }}>
+                      <span className={`font-serif leading-tight ${isActive ? 'page-accent-text font-bold' : 'text-carbon/70'}`}>
                         {axiom.title}
                       </span>
                     </label>

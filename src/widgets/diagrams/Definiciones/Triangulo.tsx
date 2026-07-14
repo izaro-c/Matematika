@@ -143,9 +143,9 @@ export const Triangulo = () => {
           if (Math.abs(vC - pi2) < 0.05) angleC.setAttribute({ visible: true, type: 'sectordot', fillColor: theme.ocre, strokeColor: theme.ocre });
         } else if (maxAng > pi2) {
           classAngulos = "Obtusángulo";
-          if (vA > pi2) angleA.setAttribute({ visible: true, fillColor: '#ef4444', strokeColor: '#ef4444' }); // Red
-          if (vB > pi2) angleB.setAttribute({ visible: true, fillColor: '#ef4444', strokeColor: '#ef4444' });
-          if (vC > pi2) angleC.setAttribute({ visible: true, fillColor: '#ef4444', strokeColor: '#ef4444' });
+          if (vA > pi2) angleA.setAttribute({ visible: true, fillColor: theme.granada, strokeColor: theme.granada });
+          if (vB > pi2) angleB.setAttribute({ visible: true, fillColor: theme.granada, strokeColor: theme.granada });
+          if (vC > pi2) angleC.setAttribute({ visible: true, fillColor: theme.granada, strokeColor: theme.granada });
         }
 
         const maxAngDeg = Math.round(maxAng * 180 / Math.PI);

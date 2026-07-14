@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useState } from 'react';
+import React, { useEffect, useMemo, useRef, useState } from 'react';
 import { KatexText } from '@/shared/ui/KatexText';
 import { FormulaBlock } from '../blocks/FormulaBlock';
 import { DemonstrationBlock } from '../blocks/DemonstrationBlock';
@@ -6,6 +6,7 @@ import { Block, BlockType, parseInlineNodes } from '../../core/parser';
 import type { DiagramTargetRegistry } from '../../core/editorTypes';
 import { useMathStore } from '@/shared/lib/MathStoreContext';
 import { buildDocumentOutline } from '../../ux/authoringModel';
+import { useModalFocus } from '../hooks/useModalFocus';
 
 const LATEX_SYMBOLS = [
   { label: '∀', code: '\\forall ' },
@@ -88,6 +89,10 @@ const PAGE_PROFILE_PRESETS: Record<string, BlockPreset[]> = {
     { label: 'Axiomas satisfechos', type: 'list', content: '<ConceptLink targetId="axioma" isDependency={false}>axioma verificado</ConceptLink>', metadata: { ordered: false }, group: 'profile' },
   ],
 };
+
+const INLINE_EDITABLE_BLOCKS = new Set<BlockType>([
+  'paragraph', 'heading', 'list', 'table', 'note', 'citation', 'definition_box', 'exercise',
+]);
 
 const insertSymbol = (textareaId: string, symbol: string) => {
   const textarea = document.getElementById(textareaId) as HTMLTextAreaElement;
@@ -176,7 +181,15 @@ const InteractivePreviewToken: React.FC<InteractivePreviewTokenProps> = ({
       onMouseLeave={() => target && setVariable('highlight', null)}
       onFocus={activate}
       onBlur={() => target && setVariable('highlight', null)}
-      tabIndex={target ? 0 : undefined}
+      onKeyDown={(event) => {
+        if ((event.key === 'Enter' || event.key === ' ') && onEditLink) {
+          event.preventDefault();
+          onEditLink(blockId, raw, text, attrs, tag, event as unknown as React.MouseEvent);
+        }
+      }}
+      role={onEditLink ? 'button' : undefined}
+      tabIndex={target || onEditLink ? 0 : undefined}
+      aria-label={`${text}. ${tooltip}`}
       className={`${colorClass} ${active ? 'bg-ocre/15 ring-2 ring-ocre/25' : ''} relative cursor-pointer rounded px-0.5 font-bold transition-colors group/link`}
       title={title}
       data-diagram-reference={target || undefined}
@@ -234,6 +247,9 @@ export const VisualEditorPanel: React.FC<VisualEditorPanelProps> = ({
 }) => {
   const [commandOpen, setCommandOpen] = useState(false);
   const [commandQuery, setCommandQuery] = useState('');
+  const commandSearchRef = useRef<HTMLInputElement>(null);
+  const closeCommand = () => setCommandOpen(false);
+  const commandDialogRef = useModalFocus<HTMLDivElement>(commandOpen, closeCommand, commandSearchRef);
   const showStatement = ['teorema', 'lema', 'corolario', 'definicion', 'axioma'].includes(String(metadata.type));
   const outline = useMemo(() => buildDocumentOutline(blocks), [blocks]);
 
@@ -288,9 +304,9 @@ export const VisualEditorPanel: React.FC<VisualEditorPanelProps> = ({
 
   const renderInlineToolbar = (block: Block) => (
     <div className="flex flex-wrap items-center gap-1 rounded border border-carbon/10 bg-lienzo px-2 py-1 shadow-sm">
-      <button type="button" onMouseDown={(event) => event.preventDefault()} onClick={() => applyInlineTransform(block, value => `**${value}**`, 'énfasis')} className="h-6 min-w-6 rounded px-1.5 text-[10px] font-bold text-carbon hover:bg-carbon/5 cursor-pointer" title="Negrita">B</button>
-      <button type="button" onMouseDown={(event) => event.preventDefault()} onClick={() => applyInlineTransform(block, value => `*${value}*`, 'énfasis')} className="h-6 min-w-6 rounded px-1.5 text-[10px] italic text-carbon hover:bg-carbon/5 cursor-pointer" title="Cursiva">I</button>
-      <button type="button" onMouseDown={(event) => event.preventDefault()} onClick={() => applyInlineTransform(block, value => `$${value}$`, 'x')} className="h-6 rounded px-1.5 font-mono text-[10px] text-ocre hover:bg-ocre/10 cursor-pointer" title="LaTeX inline">$x$</button>
+      <button type="button" onMouseDown={(event) => event.preventDefault()} onClick={() => applyInlineTransform(block, value => `**${value}**`, 'énfasis')} className="h-6 min-w-6 rounded px-1.5 text-[10px] font-bold text-carbon hover:bg-carbon/5 cursor-pointer" title="Negrita" aria-label="Aplicar negrita">B</button>
+      <button type="button" onMouseDown={(event) => event.preventDefault()} onClick={() => applyInlineTransform(block, value => `*${value}*`, 'énfasis')} className="h-6 min-w-6 rounded px-1.5 text-[10px] italic text-carbon hover:bg-carbon/5 cursor-pointer" title="Cursiva" aria-label="Aplicar cursiva">I</button>
+      <button type="button" onMouseDown={(event) => event.preventDefault()} onClick={() => applyInlineTransform(block, value => `$${value}$`, 'x')} className="h-6 rounded px-1.5 font-mono text-[10px] text-ocre hover:bg-ocre/10 cursor-pointer" title="LaTeX inline" aria-label="Aplicar LaTeX en línea">$x$</button>
       <button type="button" onMouseDown={(event) => event.preventDefault()} onClick={() => openLinkerFromActiveSelection(block)} className="h-6 rounded px-1.5 text-[10px] font-bold text-salvia hover:bg-salvia/10 cursor-pointer" title="Conectar a concepto o diagrama">Vínculo</button>
     </div>
   );
@@ -415,6 +431,11 @@ export const VisualEditorPanel: React.FC<VisualEditorPanelProps> = ({
               tabIndex={0}
               aria-label={`Bloque ${index + 1}: ${block.type}. Alt y flechas para reordenar.`}
               onKeyDown={(event) => {
+                if (event.target === event.currentTarget && (event.key === 'Enter' || event.key === 'F2') && !isReadOnly && !isSourceOnly && INLINE_EDITABLE_BLOCKS.has(block.type)) {
+                  event.preventDefault();
+                  setEditingBlockId(block.id);
+                  return;
+                }
                 if (!event.altKey || !canMutateVisualStructure || isSourceOnly) return;
                 if (event.key === 'ArrowUp' && index > 0) { event.preventDefault(); moveBlock(index, index - 1); }
                 if (event.key === 'ArrowDown' && index < blocks.length - 1) { event.preventDefault(); moveBlock(index, index + 1); }
@@ -422,7 +443,7 @@ export const VisualEditorPanel: React.FC<VisualEditorPanelProps> = ({
               className="relative group/block rounded border border-transparent bg-transparent p-3 transition-all hover:border-carbon/15 hover:bg-carbon/5 focus:border-salvia/40 focus:outline-none"
             >
               {!isReadOnly && canMutateVisualStructure && !isSourceOnly && (
-                <div className="absolute -left-12 top-2 flex flex-col items-center gap-1 opacity-0 group-hover/block:opacity-100 transition-opacity">
+                <div className="absolute -left-12 top-2 flex flex-col items-center gap-1 opacity-0 group-hover/block:opacity-100 group-focus-within/block:opacity-100 transition-opacity">
                   <button
                     type="button"
                     disabled={index === 0}
@@ -1067,10 +1088,10 @@ export const VisualEditorPanel: React.FC<VisualEditorPanelProps> = ({
       {renderBlocksList()}
       </div>
 
-      {commandOpen && <div className="absolute inset-0 z-40 flex items-start justify-center bg-carbon/20 p-4 pt-[10vh]" role="dialog" aria-modal="true" aria-label="Insertar bloque">
-        <div className="w-full max-w-lg rounded border border-carbon/20 bg-lienzo p-3 shadow-xl">
+      {commandOpen && <div className="absolute inset-0 z-40 flex items-start justify-center bg-carbon/20 p-4 pt-[10vh]" role="presentation">
+        <div ref={commandDialogRef} className="w-full max-w-lg rounded border border-carbon/20 bg-lienzo p-3 shadow-xl" role="dialog" aria-modal="true" aria-label="Insertar bloque">
           <div className="flex items-center gap-2">
-            <input autoFocus value={commandQuery} onChange={event => setCommandQuery(event.target.value)} placeholder="Buscar bloque: definición, advertencia, ejemplo…" className="min-w-0 flex-1 rounded border border-carbon/15 bg-carbon/5 px-3 py-2 text-sm text-carbon outline-none focus:border-salvia" />
+            <input ref={commandSearchRef} value={commandQuery} onChange={event => setCommandQuery(event.target.value)} placeholder="Buscar bloque: definición, advertencia, ejemplo…" aria-label="Buscar tipo de bloque" className="min-w-0 flex-1 rounded border border-carbon/15 bg-carbon/5 px-3 py-2 text-sm text-carbon outline-none focus:border-salvia" />
             <button type="button" onClick={() => setCommandOpen(false)} className="rounded px-2 py-1 text-xs text-carbon/55">Esc</button>
           </div>
           <div className="mt-3 grid max-h-80 gap-2 overflow-y-auto sm:grid-cols-2">

@@ -121,7 +121,7 @@ describe('Phase 5 real acceptance migrations', () => {
         },
         {
           "componentId": "ModeloPoincare",
-          "derived": 10,
+          "derived": 12,
           "kinds": {
             "circle": 1,
             "measurement": 1,
@@ -134,7 +134,7 @@ describe('Phase 5 real acceptance migrations', () => {
             "puntos",
             "anotaciones",
           ],
-          "points": 15,
+          "points": 17,
           "steps": [],
           "targets": [
             "geodesica-principal",

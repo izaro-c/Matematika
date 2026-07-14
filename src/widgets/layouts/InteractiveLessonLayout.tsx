@@ -88,7 +88,7 @@ export const InteractiveLessonLayout: React.FC<InteractiveLessonLayoutProps> = (
                 Lección Interactiva
               </span>
             </div>
-            <h1 className="text-4xl md:text-5xl font-bold tracking-tight mb-4" style={{ fontVariant: 'small-caps' }}>
+            <h1 className="text-4xl md:text-5xl font-bold tracking-tight mb-4">
               {lesson.title || 'Lección'}
             </h1>
             {lesson.description && (
@@ -107,7 +107,7 @@ export const InteractiveLessonLayout: React.FC<InteractiveLessonLayoutProps> = (
         {/* Ejemplos y Ejercicios */}
         {(examples.length > 0 || exercises.length > 0) && (
           <div className="mb-24 mt-24">
-            <h2 className="text-2xl font-bold mb-8 border-b border-carbon/10 pb-4" style={{ fontVariant: 'small-caps' }}>
+            <h2 className="text-2xl font-bold mb-8 border-b border-carbon/10 pb-4">
               Material Práctico
             </h2>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">

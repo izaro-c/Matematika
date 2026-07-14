@@ -26,8 +26,8 @@ export function getDiagramColor(token: DiagramThemeToken): string {
 
 /** Lee cualquier variable CSS por nombre completo (ej. '--theme-carbon'). */
 export function getCSSVar(name: string): string {
-  if (typeof document === 'undefined') return '#000';
-  return getComputedStyle(document.documentElement).getPropertyValue(name).trim() || '#000';
+  if (typeof document === 'undefined') return '';
+  return getComputedStyle(document.documentElement).getPropertyValue(name).trim();
 }
 
 // ─── Highlight helpers ───────────────────────────────────────────────────────

@@ -20,7 +20,10 @@ const expectedFlows = [
   'Diagrama no convertible',
   'Diagrama fuente autoritativa',
   'Conflicto de diagrama',
+  'Navegación y filtros de Fase 1',
+  'Paneles, teclado y responsive de Fase 1',
   'Autoría visual compleja, diagrama y roundtrip de Fase 7',
+  'Cierre con cambios pendientes',
 ];
 
 if (!fs.existsSync(absoluteSuitePath)) {

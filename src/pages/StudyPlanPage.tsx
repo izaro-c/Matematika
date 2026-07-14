@@ -188,7 +188,7 @@ export const StudyPlanPage = () => {
             <p className="page-accent-text text-xs tracking-[0.3em] uppercase font-sans mb-4 font-bold">
               {plan.subtitle}
             </p>
-            <h1 className="text-5xl md:text-6xl font-bold tracking-tight text-carbon leading-none mb-6" style={{ fontVariant: 'small-caps' }}>
+            <h1 className="text-5xl md:text-6xl font-bold tracking-tight text-carbon leading-none mb-6">
               {plan.title}
             </h1>
             <p className="text-xl text-carbon/60 italic leading-relaxed max-w-2xl">

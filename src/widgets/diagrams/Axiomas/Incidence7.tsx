@@ -16,10 +16,10 @@ function SceneContent() {
     camera.lookAt(0, 0, 0);
   }, [camera]);
 
-  const salvia = getCSSVar('--theme-salvia') || '#A2C2A2';
-  const terracota = getCSSVar('--theme-terracota') || '#C86446';
-  const carbon = getCSSVar('--theme-carbon') || '#333333';
-  const ocre = getCSSVar('--theme-ocre') || '#c49b4f';
+  const salvia = getCSSVar('--theme-salvia');
+  const terracota = getCSSVar('--theme-terracota');
+  const carbon = getCSSVar('--theme-carbon');
+  const ocre = getCSSVar('--theme-ocre');
 
   const piColor = highlight === 'plano-pi' ? terracota : salvia;
   const sigmaColor = highlight === 'plano-sigma' ? terracota : ocre;

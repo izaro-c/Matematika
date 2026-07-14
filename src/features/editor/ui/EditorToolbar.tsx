@@ -159,7 +159,7 @@ export const EditorToolbar: React.FC<EditorToolbarProps> = ({
               Diagnósticos {validation.errorCount > 0 ? `(${validation.errorCount})` : ''}
             </button>
           </>}
-          <Link href={routePath('/')} className="flex h-9 w-9 items-center justify-center rounded border border-carbon/10 text-carbon" title="Volver a la biblioteca"><Logo className="h-6 w-6" /></Link>
+          <Link href={routePath('/')} className="flex h-9 w-9 items-center justify-center rounded border border-carbon/10 text-carbon" title="Volver a la biblioteca" aria-label="Volver a la biblioteca"><Logo className="h-6 w-6" /></Link>
           <button type="button" onClick={toggleSearch} className="hidden h-9 w-9 items-center justify-center rounded border border-carbon/10 text-carbon sm:flex" title="Búsqueda global (Ctrl/⌘ K)" aria-label="Abrir búsqueda global">
             <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><circle cx="11" cy="11" r="8" /><line x1="21" y1="21" x2="16.65" y2="16.65" /></svg>
           </button>
@@ -170,11 +170,11 @@ export const EditorToolbar: React.FC<EditorToolbarProps> = ({
       {currentFile && <div className="flex items-center gap-2 overflow-x-auto border-t border-carbon/10 px-2 py-2 lg:hidden">
         <EditorModeSwitcher editorMode={editorMode} isDiagramFile={isDiagramFile} onToggleMode={toggleEditorMode} />
         <button type="button" onClick={() => saveCurrentFile()} disabled={saving || !validation.canSave} className="whitespace-nowrap rounded bg-salvia px-3 py-1 text-xs font-bold text-lienzo disabled:opacity-40">{isDiagramFile ? 'Guardar TSX' : 'Revisar y guardar'}</button>
-        {!isDiagramFile && <button type="button" onClick={onToggleCoordinatedView} className="whitespace-nowrap rounded border border-carbon/15 px-2 py-1 text-xs">{coordinatedView ? 'Una vista' : 'Visual + código'}</button>}
+        {!isDiagramFile && <button type="button" onClick={onToggleCoordinatedView} aria-pressed={coordinatedView} className="whitespace-nowrap rounded border border-carbon/15 px-2 py-1 text-xs">{coordinatedView ? 'Una vista' : 'Visual + código'}</button>}
         {!isDiagramFile && <button type="button" onClick={onOpenPreview} disabled={!previewPath} className="whitespace-nowrap rounded border border-carbon/15 px-2 py-1 text-xs disabled:opacity-40">Preview</button>}
-        <button type="button" onClick={() => setIsInspectorOpen(!isInspectorOpen)} className="whitespace-nowrap rounded border border-carbon/15 px-2 py-1 text-xs">Inspector</button>
-        <button type="button" onClick={() => setIsDiagnosticsOpen(!isDiagnosticsOpen)} className="whitespace-nowrap rounded border border-carbon/15 px-2 py-1 text-xs">Diagnósticos</button>
-        <button type="button" onClick={() => setLevel(level === 'basic' ? 'advanced' : 'basic')} className="whitespace-nowrap rounded border border-carbon/15 px-2 py-1 text-xs">Vista {level === 'basic' ? 'básica' : 'avanzada'}</button>
+        <button type="button" onClick={() => setIsInspectorOpen(!isInspectorOpen)} aria-expanded={isInspectorOpen} className="whitespace-nowrap rounded border border-carbon/15 px-2 py-1 text-xs">Inspector</button>
+        <button type="button" onClick={() => setIsDiagnosticsOpen(!isDiagnosticsOpen)} aria-expanded={isDiagnosticsOpen} className="whitespace-nowrap rounded border border-carbon/15 px-2 py-1 text-xs">Diagnósticos</button>
+        <button type="button" onClick={() => setLevel(level === 'basic' ? 'advanced' : 'basic')} aria-pressed={level === 'advanced'} className="whitespace-nowrap rounded border border-carbon/15 px-2 py-1 text-xs">Vista {level === 'basic' ? 'básica' : 'avanzada'}</button>
       </div>}
     </header>
   );

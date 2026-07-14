@@ -221,7 +221,6 @@ export const MarginaliaPanel = () => {
               )}
               <h2
                 className="text-4xl md:text-5xl text-carbon mb-4 font-bold leading-tight"
-                style={{ fontVariant: 'small-caps' }}
               >
                 <span className="page-accent-text float-left text-5xl md:text-6xl font-serif font-bold pr-3 pl-1 leading-[0.7] mt-2 select-none">
                   {term.title.charAt(0)}
@@ -283,7 +282,7 @@ export const MarginaliaPanel = () => {
               className="mb-12 last:mb-0"
               style={{ '--page-accent': accent } as React.CSSProperties}
             >
-              <h2 className="text-4xl text-carbon mb-4 font-bold" style={{ fontVariant: 'small-caps' }}>
+              <h2 className="text-4xl text-carbon mb-4 font-bold">
                 <span className="page-accent-text float-left text-5xl font-serif font-bold pr-3 pl-1 leading-[0.7] mt-2 select-none">
                   {data.title.charAt(0)}
                 </span>

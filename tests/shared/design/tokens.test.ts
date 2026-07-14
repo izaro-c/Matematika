@@ -13,17 +13,17 @@ import {
 
 const BASELINE_TYPE_COLORS = {
   teorema: 'var(--theme-terracota)',
-  lección: 'var(--theme-nogal)',
+  lección: 'var(--theme-ocre)',
   definición: 'var(--theme-salvia)',
   axioma: 'var(--theme-ocre)',
   modelo: 'var(--theme-pavo)',
   ejemplo: 'var(--theme-pizarra)',
-  ejercicio: 'var(--theme-cardenal)',
+  ejercicio: 'var(--theme-granada)',
   demo: 'var(--theme-granada)',
-  matemático: 'var(--theme-cromo)',
-  caso_uso: 'var(--theme-lila)',
-  glosario: 'var(--theme-piedra)',
-  msc2020: 'var(--theme-piedra)',
+  matemático: 'var(--theme-ocre)',
+  caso_uso: 'var(--theme-pizarra)',
+  glosario: 'var(--theme-carbon)',
+  msc2020: 'var(--theme-carbon)',
 } as const;
 
 describe('design token contracts', () => {
@@ -38,16 +38,6 @@ describe('design token contracts', () => {
       pavo: 'var(--theme-pavo)',
       granada: 'var(--theme-granada)',
       musgo: 'var(--theme-musgo)',
-      lila: 'var(--theme-lila)',
-      cardenal: 'var(--theme-cardenal)',
-      nogal: 'var(--theme-nogal)',
-      piedra: 'var(--theme-piedra)',
-      cromo: 'var(--theme-cromo)',
-      modelo: 'var(--theme-modelo)',
-      leccion: 'var(--theme-leccion)',
-      ejemplo: 'var(--theme-ejemplo)',
-      ejercicio: 'var(--theme-ejercicio)',
-      matematico: 'var(--theme-matematico)',
     });
   });
 

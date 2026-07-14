@@ -71,7 +71,7 @@ Si un concepto puede visualizarse, se visualiza. Si un ejercicio puede ser inter
 - ❌ Una definición de "ángulo" con solo texto, sin simulación
 - ❌ Un ejercicio de tipo test con radio buttons HTML en lugar de `<Hueco>` interactivo
 
-**Cómo detectar:** Verificar que cada página de tipo `teorema`, `definicion`, `ejercicio` tiene `hasSimulation: true` o un diagrama asociado. Para teoremas geométricos, verificar que existe un archivo en `src/shared/diagrams/`.
+**Cómo detectar:** Verificar que cada página de tipo `teorema`, `definicion`, `ejercicio` tiene `hasSimulation: true` o un diagrama asociado. Los componentes publicados viven en `src/widgets/diagrams/`; su contrato y renderer comunes viven en `src/shared/diagrams/`.
 
 **Delegación:** Para crear el diagrama, carga la skill `diagrama`.
 
@@ -93,7 +93,11 @@ El diseño sirve a las matemáticas, no compite con ellas.
 - ❌ `className="bg-blue-500"` en lugar de `className="bg-pavo"`
 - ❌ Fuentes decorativas para contenido matemático
 
-**Cómo detectar:** `grep -rn '#[0-9a-fA-F]\{3,8\}' src/` busca hex colors. Verificar que todas las clases Tailwind usan tokens de la paleta Arts & Crafts. En diagramas, verificar que usan `getCSSVar('--theme-*')`.
+**Cómo detectar:** `rg '#[0-9a-fA-F]{3,8}' src/` busca hex locales; las únicas definiciones hex admitidas son los nueve tokens de `src/app/theme.css` y sus valores tipados para APIs canvas. Verificar que Tailwind usa tokens Arts & Crafts y que los diagramas consumen `theme.*`, `getCSSVar('--theme-*')` o `var(--theme-*)`.
+
+### 1.4.1 Autoría segura y accesible
+
+El editor no puede anunciar una capacidad por la mera presencia de un control. El source completo sigue siendo la autoridad, toda mutación amplia requiere diff verificable y un estado parcial o no soportado se declara de forma conservadora. Teclado, foco visible, lectores de pantalla, responsive, temas, errores, carga y protección de cambios pendientes son parte de la capacidad, no mejoras opcionales.
 
 ---
 
@@ -217,7 +221,7 @@ Cuando se carga esta skill, el agente DEBE verificar:
 6. ¿El `contentIndex.json` está actualizado? → ejecutar `npm run generate-index`
 
 ### 3.3 Consistencia de estilo
-7. ¿Hay hex colors arbitrarios? → `grep -rn '#[0-9a-fA-F]\{3,8\}' src/shared/`
+7. ¿Hay hex colors arbitrarios? → `rg '#[0-9a-fA-F]{3,8}' src/` y distinguir únicamente las definiciones canónicas de tema
 8. ¿Hay imports de capas incorrectas? → ejecutar `npm run depcruise`
 9. ¿Los IDs usan kebab-case? → verificar `contentIndex.json`
 
@@ -241,7 +245,7 @@ Para usar durante una revisión de código/contenido (ej: con el agente `@review
 - [ ] ¿IDs en kebab-case? (buscar `_` en `metadata.id`)
 - [ ] ¿`<Capitular>` al inicio de cada MDX?
 - [ ] ¿`<ConceptLink>` en lugar de `<a href>`?
-- [ ] ¿Cero hex colors en `src/shared/diagrams/`?
+- [ ] ¿Cero colores locales fuera de las definiciones canónicas de tema?
 - [ ] ¿Tercera persona impersonal? (buscar "demostramos", "vemos")
 - [ ] ¿`npm run depcruise` pasa sin errores?
 
@@ -250,7 +254,8 @@ Para usar durante una revisión de código/contenido (ej: con el agente `@review
 - [ ] ¿Tipos de `schemas.ts` coinciden con `page-creator`?
 - [ ] ¿Cada teorema tiene su demostración en página separada?
 - [ ] ¿Las dependencias (`requires`) respetan el orden topológico?
-- [ ] ¿Los diagramas usan `getCSSVar('--theme-*')`?
+- [ ] ¿Los diagramas usan el renderer/spec común o, para fuente manual, `MathBoard` + `MathFactory` y tokens del tema?
+- [ ] ¿Controles y objetos móviles tienen teclado, nombre accesible y foco visible?
 - [ ] ¿Cada `<ProofStep>` tiene `justificacion`?
 - [ ] ¿Las definiciones cubren casos límite?
 - [ ] ¿Cada concepto nuevo tiene motivación?
@@ -268,7 +273,7 @@ Cada principio se refleja en la arquitectura de carpetas:
 | Jardín Digital | Páginas independientes en `pages/` | Cada página es autocontenida |
 | Universalidad | Contenido en `entities/content/` sin referencias externas | Schemas sin campos educativos |
 | Interactividad | Diagramas en `widgets/diagrams/`, ejercicios en `features/exercises/` | `hasSimulation` en metadata |
-| Elegante | Colores en `shared/lib/constants.ts`, componentes en `shared/ui/` | `depcruise` + grep hex |
+| Elegante | Tema en `app/theme.css`, tokens en `shared/design/`, componentes en `shared/ui/` | `depcruise` + auditoría de color |
 | Rigor | Demostraciones en `database/content/demonstrations/` | `validate-references` |
 | Orden topológico | Grafo en `entities/graph/` | `validate-graph` |
 | Educativo | Templates en `shared/templates/`, lecciones en `features/lessons/` | Revisión manual |
@@ -301,7 +306,7 @@ Cada principio se refleja en la arquitectura de carpetas:
 | `src/entities/graph/lean_graph.json` | Grafo Lean generado para páginas con `leanId` |
 | `src/entities/graph/proof_blocks.json` | Bloques de táctica Lean para `ProofStepExpander` |
 | `src/entities/content/ContentStore.ts` | API de consulta de contenido |
-| `src/shared/lib/constants.ts` | Paleta Arts & Crafts, configuración de tipos |
+| `src/app/theme.css` y `src/shared/design/` | Paleta Arts & Crafts y roles semánticos |
 | `src/shared/templates/` | Plantillas MDX por tipo de contenido |
 | `src/widgets/diagrams/` | Diagramas interactivos |
 | `.dependency-cruiser.js` | Reglas de arquitectura FSD |

@@ -29,6 +29,7 @@ describe('Phase 7 visual authoring interactions', () => {
   it('offers outline, quick command, complete presets and keyboard reordering', () => {
     const addBlock = vi.fn();
     const moveBlock = vi.fn();
+    const setEditingBlockId = vi.fn();
     render(
       <MathProvider>
         <VisualEditorPanel
@@ -39,7 +40,7 @@ describe('Phase 7 visual authoring interactions', () => {
           canMutateVisualStructure
           blocks={blocks}
           editingBlockId={null}
-          setEditingBlockId={vi.fn()}
+          setEditingBlockId={setEditingBlockId}
           handleMetadataChange={vi.fn()}
           addBlock={addBlock}
           moveBlock={moveBlock}
@@ -67,6 +68,8 @@ describe('Phase 7 visual authoring interactions', () => {
 
     fireEvent.keyDown(screen.getByLabelText(/Bloque 2: paragraph/), { key: 'ArrowUp', altKey: true });
     expect(moveBlock).toHaveBeenCalledWith(1, 0);
+    fireEvent.keyDown(screen.getByLabelText(/Bloque 2: paragraph/), { key: 'Enter' });
+    expect(setEditingBlockId).toHaveBeenCalledWith('text');
   });
 
   it('coordinates MDX references with the shared diagram highlight store', () => {
@@ -90,6 +93,9 @@ describe('Phase 7 visual authoring interactions', () => {
     expect(screen.getByLabelText('highlight actual').textContent).toBe('lado-ab');
     fireEvent.mouseLeave(reference);
     expect(screen.getByLabelText('highlight actual').textContent).toBe('');
+    reference.focus();
+    fireEvent.keyDown(reference, { key: 'Enter' });
+    expect(reference.getAttribute('role')).toBe('button');
   });
 
   it('preserves unknown MDX as source-only instead of exposing a false visual editor', () => {

@@ -15,21 +15,21 @@ export const SEMANTIC_COLOR_ROLES = {
   neutralStrong:      THEME_COLOR_VARS.carbon,
   warningAccent:      THEME_COLOR_VARS.terracota,
 
-  // Editorial principal (acentos únicos para los 11 tipos principales de Matematika)
+  // Roles editoriales resueltos con los nueve tokens canónicos.
   axiomAccent:        THEME_COLOR_VARS.ocre,       // ocre
   definitionAccent:   THEME_COLOR_VARS.salvia,     // salvia
-  lemmaAccent:        THEME_COLOR_VARS.lila,       // lila
+  lemmaAccent:        THEME_COLOR_VARS.pizarra,
   theoremAccent:      THEME_COLOR_VARS.terracota,  // terracota
   corollaryAccent:    THEME_COLOR_VARS.musgo,      // musgo
   proofAccent:        THEME_COLOR_VARS.granada,    // granada
-  lessonAccent:       THEME_COLOR_VARS.nogal,      // nogal
+  lessonAccent:       THEME_COLOR_VARS.ocre,
   modelAccent:        THEME_COLOR_VARS.pavo,       // pavo
   exampleAccent:      THEME_COLOR_VARS.pizarra,    // pizarra
-  exerciseAccent:     THEME_COLOR_VARS.cardenal,   // cardenal
-  biographyAccent:    THEME_COLOR_VARS.cromo,      // cromo
+  exerciseAccent:     THEME_COLOR_VARS.granada,
+  biographyAccent:    THEME_COLOR_VARS.ocre,
 
   // Editorial secundario y roles de utilidad
-  conceptAccent:      THEME_COLOR_VARS.piedra,     // piedra
+  conceptAccent:      THEME_COLOR_VARS.carbon,
   referenceAccent:    THEME_COLOR_VARS.salvia,     // salvia
   foundationalAccent: THEME_COLOR_VARS.ocre,       // ocre
 } as const satisfies Record<string, ThemeColorVar>;
@@ -50,17 +50,17 @@ export const SEMANTIC_HEX: Record<SemanticColorRole, { hex: string; ring: string
   // Mapeo exacto a las paletas estáticas
   axiomAccent:        THEME_PALETTE_HEX.ocre,
   definitionAccent:   THEME_PALETTE_HEX.salvia,
-  lemmaAccent:        THEME_PALETTE_HEX.lila,
+  lemmaAccent:        THEME_PALETTE_HEX.pizarra,
   theoremAccent:      THEME_PALETTE_HEX.terracota,
   corollaryAccent:    THEME_PALETTE_HEX.musgo,
   proofAccent:        THEME_PALETTE_HEX.granada,
-  lessonAccent:       THEME_PALETTE_HEX.nogal,
+  lessonAccent:       THEME_PALETTE_HEX.ocre,
   modelAccent:        THEME_PALETTE_HEX.pavo,
   exampleAccent:      THEME_PALETTE_HEX.pizarra,
-  exerciseAccent:     THEME_PALETTE_HEX.cardenal,
-  biographyAccent:    THEME_PALETTE_HEX.cromo,
+  exerciseAccent:     THEME_PALETTE_HEX.granada,
+  biographyAccent:    THEME_PALETTE_HEX.ocre,
 
-  conceptAccent:      THEME_PALETTE_HEX.piedra,
+  conceptAccent:      THEME_PALETTE_HEX.carbon,
   referenceAccent:    THEME_PALETTE_HEX.salvia,
   foundationalAccent: THEME_PALETTE_HEX.ocre,
 };

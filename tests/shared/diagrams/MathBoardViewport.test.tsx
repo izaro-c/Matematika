@@ -1,5 +1,5 @@
 import React from 'react';
-import { act, render } from '@testing-library/react';
+import { act, render, screen } from '@testing-library/react';
 import { describe, expect, it, vi } from 'vitest';
 
 const mocks = vi.hoisted(() => {
@@ -31,6 +31,14 @@ vi.mock('../../../src/shared/lib/MathStoreContext', () => ({
 import { MathBoard } from '../../../src/shared/diagrams/core/MathBoard';
 
 describe('MathBoard controlled viewport', () => {
+  it('names the interactive region and exposes keyboard instructions', () => {
+    render(<MathBoard onInit={vi.fn()} ariaLabel="Construcción de prueba" />);
+
+    const board = screen.getByRole('region', { name: 'Construcción de prueba' });
+    expect(board.getAttribute('tabindex')).toBe('0');
+    expect(screen.getByText(/Use Tab para recorrer/).classList.contains('sr-only')).toBe(true);
+  });
+
   it('reports the JSXGraph boundingbox event used by pan and wheel zoom', () => {
     const onBoundingBoxChange = vi.fn();
     render(<MathBoard onInit={vi.fn()} onBoundingBoxChange={onBoundingBoxChange} pan zoom />);
