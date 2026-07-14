@@ -3,10 +3,8 @@ import { useLocation } from 'wouter';
 import { useNavigationStore } from '@/features/search/NavigationStore';
 import { useEditorCore } from '../core/useEditorCore';
 import { SemanticLinker } from './components/SemanticLinker';
-import { DiagramWorkbench, type DiagramWorkbenchMode } from './diagrams/DiagramWorkbench';
-import { parseAttributes } from '../core/parser';
-import type { EditorDiagramReference, DiagramTargetRegistry } from '../core/editorTypes';
-import type { FileNode } from '../lib/editorContracts';
+import { DiagramWorkbench } from './diagrams/DiagramWorkbench';
+import type { EditorDiagramReference } from '../core/editorTypes';
 import { approveDiffReview, buildDiffReview, isDiffReviewStale, type DiffReview } from '../ux/diffReview';
 import { buildEditorSafetyPresentation } from '../ux/safetyPresentation';
 import { useDiagramUsages } from '../diagrams/hooks/useDiagramUsages';
@@ -33,41 +31,7 @@ import { SafetySummary } from './safety/SafetySummary';
 import { DiffReviewPanel } from './diff/DiffReviewPanel';
 import { UnsavedChangesDialog } from './safety/UnsavedChangesDialog';
 import { EditorDiagnosticsPanel } from './panels/EditorDiagnosticsPanel';
-
-interface PageDiagramLink {
-  componentName: string;
-  importSource?: string;
-  path?: string;
-  role: 'Simulation' | 'Diagram' | 'Inline' | 'Imported';
-  targets?: DiagramTargetRegistry;
-}
-
-function normalizeDiagramImportPath(source: string): string | undefined {
-  const withoutExtension = source.replace(/\.tsx$/, '');
-  if (withoutExtension.startsWith('@/')) return `${withoutExtension.slice(2)}.tsx`;
-
-  const sharedIndex = withoutExtension.indexOf('shared/diagrams/');
-  if (sharedIndex >= 0) return `${withoutExtension.slice(sharedIndex)}.tsx`;
-
-  const widgetsIndex = withoutExtension.indexOf('widgets/diagrams/');
-  if (widgetsIndex >= 0) return `${withoutExtension.slice(widgetsIndex)}.tsx`;
-
-  return undefined;
-}
-
-function findDiagramFile(files: FileNode[], componentName: string, importSource?: string): FileNode | undefined {
-  const normalizedPath = importSource ? normalizeDiagramImportPath(importSource) : undefined;
-  return files.find(file => (
-    file.path === normalizedPath ||
-    file.path.endsWith(`/${componentName}.tsx`) ||
-    file.name === `${componentName}.tsx`
-  ));
-}
-
-function proofStepTargetIds(target: string | string[] | undefined): string[] {
-  if (!target) return [];
-  return Array.isArray(target) ? target : [target];
-}
+import { buildPageConnectionSummary, buildPageDiagramLinks, getDiagramWorkbenchMode, getInlineDiagramTargets, getPreviewPath, mergeDiagramTargets } from './editorPageModel';
 
 export const EditorPage: React.FC = () => {
   const {
@@ -396,105 +360,25 @@ export const EditorPage: React.FC = () => {
     }
   };
 
-  const inlineDiagramTargets: DiagramTargetRegistry = useMemo(() => {
-    return blocks.flatMap(block => {
-      if (block.type !== 'diagram') return [];
-      return Array.isArray(block.metadata?.targets) ? block.metadata.targets : [];
-    });
-  }, [blocks]);
-
-  const activeDiagramBlock = useMemo(() => {
-    return activeDiagramBlockId
-      ? blocks.find(block => block.id === activeDiagramBlockId)
-      : null;
-  }, [activeDiagramBlockId, blocks]);
-
-  const diagramWorkbenchMode = useMemo<DiagramWorkbenchMode>(() => {
-    if (currentFile?.endsWith('.tsx')) {
-      return { kind: 'file', path: currentFile };
-    }
-
-    if (activeDiagramBlock) {
-      return {
-        kind: 'inline',
-        source: typeof activeDiagramBlock.metadata?.source === 'string' ? activeDiagramBlock.metadata.source : '',
-        componentName: activeDiagramBlock.content || 'DiagramaInteractivo',
-        model: activeDiagramBlock.metadata?.visualModel as Record<string, unknown> | undefined,
-      };
-    }
-
-    return { kind: 'new', componentName: 'DiagramaInteractivo' };
-  }, [activeDiagramBlock, currentFile]);
-
-  const pageDiagramLinks = useMemo<PageDiagramLink[]>(() => {
-    if (!currentFile?.endsWith('.mdx')) return [];
-
-    const links = new Map<string, PageDiagramLink>();
-    const importRegex = /import\s+\{\s*([^}]+)\s*\}\s+from\s+['"]([^'"]+)['"]/g;
-    let match: RegExpExecArray | null;
-
-    while ((match = importRegex.exec(imports)) !== null) {
-      const names = match[1].split(',').map(name => name.trim()).filter(Boolean);
-      const importSource = match[2];
-      for (const name of names) {
-        const componentName = name.split(/\s+as\s+/i)[0].trim();
-        if (!componentName) continue;
-        const role = exports.includes(`Simulation = ${componentName}`)
-          ? 'Simulation'
-          : exports.includes(`Diagram = ${componentName}`)
-            ? 'Diagram'
-            : 'Imported';
-        const diagramFile = findDiagramFile(files, componentName, importSource);
-        links.set(componentName, {
-          componentName,
-          importSource,
-          path: diagramFile?.path ?? normalizeDiagramImportPath(importSource),
-          role,
-        });
-      }
-    }
-
-    for (const block of blocks) {
-      if (block.type !== 'diagram') continue;
-      const existing = links.get(block.content);
-      links.set(block.content, {
-        componentName: block.content,
-        importSource: typeof block.metadata?.importPath === 'string' ? block.metadata.importPath : existing?.importSource,
-        path: typeof block.metadata?.path === 'string' ? block.metadata.path : existing?.path,
-        role: existing?.role === 'Simulation' || existing?.role === 'Diagram' ? existing.role : 'Inline',
-        targets: Array.isArray(block.metadata?.targets) ? block.metadata.targets : existing?.targets,
-      });
-    }
-
-    return [...links.values()].filter(link => (
-      link.path?.includes('diagrams') ||
-      link.role === 'Simulation' ||
-      link.role === 'Diagram' ||
-      link.role === 'Inline'
-    ));
-  }, [blocks, currentFile, exports, files, imports]);
-
+  const inlineDiagramTargets = useMemo(() => getInlineDiagramTargets(blocks), [blocks]);
+  const activeDiagramBlock = useMemo(
+    () => activeDiagramBlockId ? blocks.find(block => block.id === activeDiagramBlockId) : null,
+    [activeDiagramBlockId, blocks],
+  );
+  const diagramWorkbenchMode = useMemo(
+    () => getDiagramWorkbenchMode(currentFile, activeDiagramBlock),
+    [activeDiagramBlock, currentFile],
+  );
+  const pageDiagramLinks = useMemo(
+    () => buildPageDiagramLinks(currentFile, imports, exports, files, blocks),
+    [blocks, currentFile, exports, files, imports],
+  );
   const diagramTargetLookup = usePageDiagramTargets(pageDiagramLinks);
-  const diagramTargets = useMemo<DiagramTargetRegistry>(() => {
-    const byId = new Map([...inlineDiagramTargets, ...diagramTargetLookup.targets].map(target => [target.qualifiedId ?? target.id, target]));
-    return [...byId.values()];
-  }, [diagramTargetLookup.targets, inlineDiagramTargets]);
-
-  const getPreviewPath = () => {
-    const id = String(metadata.id || '').trim();
-    if (!id) return null;
-    const type = String(metadata.type || '');
-    if (type === 'definicion') return `/definicion/${id}`;
-    if (type === 'teorema' || type === 'lema' || type === 'corolario') return `/teorema/${id}`;
-    if (type === 'demostracion') return `/demo/${id}`;
-    if (type === 'axioma') return `/axioma/${id}`;
-    if (type === 'modelo') return `/modelo/${id}`;
-    if (type === 'ejemplo') return `/ejemplo/${id}`;
-    if (type === 'ejercicio') return `/ejercicio/${id}`;
-    if (type === 'caso-de-uso') return `/caso/${id}`;
-    if (type === 'plan-de-estudio') return `/plan/${id}`;
-    return null;
-  };
+  const diagramTargets = useMemo(
+    () => mergeDiagramTargets(inlineDiagramTargets, diagramTargetLookup.targets),
+    [diagramTargetLookup.targets, inlineDiagramTargets],
+  );
+  const previewPath = useMemo(() => getPreviewPath(metadata), [metadata]);
 
   const handleTextareaSelect = (e: React.SyntheticEvent<HTMLTextAreaElement>, blockId: string) => {
     const target = e.target as HTMLTextAreaElement;
@@ -580,37 +464,7 @@ export const EditorPage: React.FC = () => {
     addBlock(blocks.length, 'paragraph', `<InteractiveElement target="${target.id}" color="${color}">${label}</InteractiveElement>`);
   };
 
-  const pageConnectionSummary = useMemo(() => {
-    const text = blocks.map(block => block.content).join('\n');
-    const conceptHighlights = [...text.matchAll(/<ConceptLink\b([^>]*?)>([\s\S]*?)<\/ConceptLink>/g)]
-      .map(match => ({ attrs: parseAttributes(match[1] || ''), label: match[2].replace(/<[^>]+>/g, '').trim() }))
-      .filter(item => item.attrs.highlightTarget);
-    const interactiveTargets = [...text.matchAll(/<InteractiveElement\b([^>]*?)>([\s\S]*?)<\/InteractiveElement>/g)]
-      .map(match => ({ attrs: parseAttributes(match[1] || ''), label: match[2].replace(/<[^>]+>/g, '').trim() }))
-      .filter(item => item.attrs.target);
-    const proofTargets = blocks
-      .filter(block => block.type === 'demonstration')
-      .flatMap(block => ((block.metadata?.steps ?? []) as Array<{ target?: string | string[] }>).flatMap(item => proofStepTargetIds(item.target)))
-      .map(target => ({ attrs: { target }, label: 'Paso de demostración' }));
-    const references = [
-      ...conceptHighlights.map(item => ({ target: String(item.attrs.highlightTarget), label: item.label, kind: 'concepto + diagrama' })),
-      ...interactiveTargets.map(item => ({ target: String(item.attrs.target), label: item.label, kind: 'diagrama' })),
-      ...proofTargets.map(item => ({ target: String(item.attrs.target), label: item.label, kind: 'paso de demostración' })),
-    ];
-    const connectedTargetIds = new Set<string>([
-      ...references.map(item => item.target),
-    ]);
-    const missingTargets = diagramTargets.filter(target => !connectedTargetIds.has(target.id) && !connectedTargetIds.has(target.qualifiedId ?? ''));
-    const invalidConnections = references.filter(reference => !diagramTargets.some(target => target.id === reference.target || target.qualifiedId === reference.target));
-    const ambiguousConnections = references.filter(reference => !reference.target.includes(':') && diagramTargets.filter(target => target.id === reference.target).length > 1);
-
-    return {
-      connected: references,
-      missingTargets,
-      invalidConnections,
-      ambiguousConnections,
-    };
-  }, [blocks, diagramTargets]);
+  const pageConnectionSummary = useMemo(() => buildPageConnectionSummary(blocks, diagramTargets), [blocks, diagramTargets]);
 
   const renderContent = () => {
     if (loading) {
@@ -774,7 +628,7 @@ export const EditorPage: React.FC = () => {
           validation={validation}
           saveCurrentFile={isDiagramFile ? saveCurrentFile : reviewCurrentDiff}
           saving={saving}
-          previewPath={getPreviewPath()}
+          previewPath={previewPath}
           isInspectorOpen={isInspectorOpen}
           setIsInspectorOpen={setIsInspectorOpen}
           isDiagnosticsOpen={isDiagnosticsOpen}
@@ -891,7 +745,7 @@ export const EditorPage: React.FC = () => {
         canReviewDiff={canReviewDiff}
         canSaveDraft={canSaveDraft}
       />
-      <PublishedRuntimePreview open={previewOpen} path={getPreviewPath()} hasPendingChanges={hasLocalChanges} revision={localRevision} onClose={() => setPreviewOpen(false)} />
+      <PublishedRuntimePreview open={previewOpen} path={previewPath} hasPendingChanges={hasLocalChanges} revision={localRevision} onClose={() => setPreviewOpen(false)} />
       <CreatePageDialog open={createPageOpen} onClose={() => setCreatePageOpen(false)} onCreate={createPage} />
     </EditorShell>
   );
