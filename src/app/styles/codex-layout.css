@@ -1,0 +1,193 @@
+
+/* === CÓDICE DIVIDIDO (CodexLayout) ======================================== */
+.codex-layout {
+  --codex-top: 5.5rem;
+  width: 100%;
+  min-height: 100vh;
+  /* Eliminado padding-top global para permitir full-bleed del diagrama */
+  background: var(--theme-lienzo);
+}
+
+.codex-content {
+  width: 100%;
+  margin-inline: auto;
+  padding-inline: clamp(1rem, 3vw, 3rem);
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 2rem;
+}
+
+@media (min-width: 1024px) {
+  .codex-content {
+    grid-template-columns: minmax(0, 65ch) minmax(32rem, 1.5fr);
+    gap: clamp(2rem, 4vw, 4rem);
+    align-items: start;
+    width: 100%;
+    max-width: 100%;
+    padding-left: clamp(2rem, 8vw, 12rem); /* Margen izquierdo dinámico */
+    padding-right: 0; /* Full bleed a la derecha */
+  }
+  .codex-content.is-single-column {
+    display: block;
+    max-width: 100ch;
+    margin-inline: auto;
+    padding-inline: clamp(1.5rem, 5vw, 4rem);
+  }
+}
+
+.codex-reading {
+  width: 100%;
+  min-width: 0;
+  padding-top: var(--codex-top);
+}
+
+@media (max-width: 1023px) {
+  .codex-layout.has-no-diagram {
+    padding-top: var(--codex-top);
+  }
+  .codex-reading {
+    min-height: 62svh;
+    padding-top: 1.5rem;
+    padding-bottom: 3rem;
+  }
+}
+
+.codex-diagram {
+  width: 100%;
+  height: 45svh;
+  transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+@media (max-width: 1023px) {
+  .codex-diagram {
+    position: sticky;
+    top: 0;
+    z-index: 50;
+    background: var(--theme-lienzo);
+    border-bottom: 1px solid color-mix(in srgb, var(--theme-carbon) 15%, transparent);
+    box-shadow: 0 4px 12px color-mix(in srgb, var(--theme-carbon) 6%, transparent);
+  }
+}
+
+@media (min-width: 1024px) {
+  .codex-diagram {
+    position: sticky;
+    top: 0;
+    height: 100svh;
+    grid-column: 2;
+    grid-row: 1;
+    background: transparent;
+  }
+  .codex-reading {
+    grid-column: 1;
+    grid-row: 1;
+  }
+}
+
+.codex-diagram-sticky {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  background: transparent;
+  position: relative;
+  /* El panel de justificaciones medirá exactamente 8rem, restándolo al diagrama */
+}
+
+.codex-diagram-surface {
+  flex: 1;
+  min-height: 0;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.codex-diagram-surface [class*="min-h-"] {
+  min-height: 0 !important;
+  height: 100% !important;
+}
+
+.codex-diagram-surface .jxgbox {
+  width: 100% !important;
+  height: 100% !important;
+  min-height: 0 !important;
+}
+
+.codex-diagram-surface div[class*="bg-lienzo"] {
+  background: transparent !important;
+  border: none !important;
+  box-shadow: none !important;
+}
+
+.codex-diagram-surface div[class*="border"] {
+  border: none !important;
+}
+
+.mobile-header-container {
+  padding-top: var(--codex-top);
+}
+
+@media (min-width: 1024px) {
+  .mobile-header-container {
+    padding-top: 0;
+  }
+}
+
+.codex-justifications {
+  height: 8rem; /* Altura fija para evitar saltos en el layout */
+  flex-shrink: 0;
+  background: transparent;
+  padding: 1rem 0 0.5rem 0;
+  margin: 0 1rem;
+  font-family: ui-serif, Georgia, serif;
+  font-size: 0.9rem;
+  line-height: 1.5;
+  color: color-mix(in srgb, var(--theme-carbon) 85%, transparent);
+  font-style: italic;
+  overflow-y: auto;
+  border-top: 1px solid color-mix(in srgb, var(--theme-carbon) 10%, transparent);
+}
+
+@media (max-width: 1023px) {
+  .codex-justifications {
+    display: none; /* Ocultar en móvil para priorizar espacio del dibujo geométrico */
+  }
+}
+
+.codex-justifications h4 {
+  font-family: var(--font-sans, sans-serif);
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: var(--theme-terracota);
+  margin-top: 0;
+  margin-bottom: 0.5rem;
+  font-style: normal;
+  font-weight: 600;
+}
+
+/* Focus Mode en Demostraciones */
+
+/* Focus Mode en Demostraciones */
+.codex-layout.is-focus-mode .proof-step {
+  opacity: 0.45;
+  filter: grayscale(15%);
+  transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.codex-layout.is-focus-mode .proof-step.is-active {
+  opacity: 1;
+  filter: none;
+}
+
+.proof-step-content {
+  padding-left: 0.5rem; /* Ajustado en móvil para no desaprovechar espacio lateral */
+}
+
+@media (min-width: 1024px) {
+  .proof-step-content {
+    padding-left: 5rem; /* Alineado de 80px (pl-20) clásico para escritorio */
+  }
+}
+

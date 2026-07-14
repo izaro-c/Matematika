@@ -1,0 +1,71 @@
+
+/* === ARTS & CRAFTS PILL — Estilo unificado para badges, tags y píldoras ===
+ * Rediseño minimalista de inspiración editorial clásica.
+ * Tipografía serif itálica elegante enmarcada por líneas superior e inferior.
+ */
+.ac-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  font-family: ui-serif, Georgia, Cambria, "Times New Roman", Times, serif;
+  font-size: 11px;
+  font-style: italic;
+  font-weight: 500;
+  text-transform: none;
+  letter-spacing: 0.02em;
+  padding: 0.15rem 0.25rem; /* Margen interno más discreto */
+  border-radius: 0;
+  border-top: 1px solid color-mix(in srgb, var(--theme-carbon) 20%, transparent);
+  border-bottom: 1px solid color-mix(in srgb, var(--theme-carbon) 20%, transparent);
+  border-left: none;
+  border-right: none;
+  background-color: transparent;
+  color: var(--theme-carbon);
+  transition: all 0.25s ease;
+  line-height: 1.2;
+  white-space: nowrap;
+}
+
+.ac-pill:hover {
+  border-top-color: var(--theme-terracota);
+  border-bottom-color: var(--theme-terracota);
+  color: var(--theme-terracota);
+  background-color: transparent;
+  text-decoration: none;
+}
+
+/* Variante con color semántico (token Arts & Crafts) */
+.ac-pill-accent {
+  border-top-color: color-mix(in srgb, var(--pill-accent, var(--theme-carbon)) 25%, transparent);
+  border-bottom-color: color-mix(in srgb, var(--pill-accent, var(--theme-carbon)) 25%, transparent);
+  color: var(--pill-accent, var(--theme-carbon));
+  background-color: transparent;
+}
+
+.ac-pill-accent:hover {
+  border-top-color: var(--pill-accent, var(--theme-carbon));
+  border-bottom-color: var(--pill-accent, var(--theme-carbon));
+  color: var(--pill-accent, var(--theme-carbon));
+  background-color: transparent;
+  opacity: 0.85;
+}
+
+/* Ornamento opcional antes del texto */
+.ac-pill-ornament {
+  font-family: ui-serif, Georgia, serif;
+  font-style: normal;
+  font-weight: 400;
+  font-size: 12px;
+  line-height: 1;
+  opacity: 0.8;
+}
+
+/* Variante serif con small-caps (para badges de contenido con nombre) */
+.ac-pill-serif {
+  font-family: ui-serif, Georgia, serif;
+  font-weight: 600;
+  font-size: 11px;
+  letter-spacing: 0.08em;
+  font-style: normal;
+  text-transform: none;
+}

@@ -1,0 +1,41 @@
+html, body {
+  overscroll-behavior: none;
+}
+
+body {
+  background-color: var(--theme-lienzo);
+  color: var(--theme-carbon);
+  transition: background-color 0.6s cubic-bezier(0.22, 1, 0.36, 1), color 0.6s cubic-bezier(0.22, 1, 0.36, 1);
+  font-feature-settings: "liga" 1, "kern" 1;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Scrollbar Universal Estilo Arts & Crafts */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: var(--theme-pizarra) transparent;
+}
+
+[id] {
+  scroll-margin-top: 7rem;
+}
+
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: var(--theme-pizarra);
+  border: 3px solid transparent;
+  background-clip: padding-box;
+  border-radius: 6px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background-color: var(--theme-terracota);
+}
