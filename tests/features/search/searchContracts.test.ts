@@ -1,3 +1,4 @@
+import Fuse from 'fuse.js';
 import { describe, expect, it } from 'vitest';
 import { db } from '@/entities/content';
 import { mscNames } from '@/entities/content/msc2020';
@@ -5,6 +6,9 @@ import {
   ALL_TYPES,
   TYPE_COLORS,
   TYPE_ICONS,
+  TYPE_LABELS,
+  TYPE_RESULT_LABELS,
+  SEARCH_FUSE_OPTIONS,
   buildSearchIndex,
 } from '@/features/search/lib/searchContracts';
 import { dictionary } from '@/shared/lib/glossaryDictionary';
@@ -16,6 +20,21 @@ describe('search contracts', () => {
   it('defines an icon and color for every result type', () => {
     expect(new Set(Object.keys(TYPE_ICONS))).toEqual(new Set(ALL_TYPES));
     expect(new Set(Object.keys(TYPE_COLORS))).toEqual(new Set(ALL_TYPES));
+    expect(new Set(Object.keys(TYPE_LABELS))).toEqual(new Set(ALL_TYPES));
+    expect(new Set(Object.keys(TYPE_RESULT_LABELS))).toEqual(new Set(ALL_TYPES));
+  });
+
+  it('treats accented and unaccented queries as the same search', () => {
+    const fuse = new Fuse(
+      [{ id: 'pitagoras', type: 'teorema' as const, title: 'Pitágoras', href: '/pitagoras' }],
+      { ...SEARCH_FUSE_OPTIONS, includeScore: true },
+    );
+
+    const [result] = fuse.search('pitagoras');
+
+    expect(SEARCH_FUSE_OPTIONS.ignoreDiacritics).toBe(true);
+    expect(result?.item.title).toBe('Pitágoras');
+    expect(result?.score).toBeLessThan(0.000001);
   });
 
   it('includes real theorem and definition content with routePath hrefs', () => {
@@ -62,7 +81,7 @@ describe('search contracts', () => {
     });
   });
 
-  it('includes MSC2020 entries with an empty href', () => {
+  it('links MSC2020 entries to their branch pages', () => {
     const mscEntry = Object.entries(mscNames)[0];
 
     expect(mscEntry).toBeDefined();
@@ -76,7 +95,7 @@ describe('search contracts', () => {
       type: 'msc2020',
       title: `${code} — ${name}`,
       subtitle: 'Clasificación MSC2020',
-      href: '',
+      href: routePath(`/rama/${code}`),
     });
   });
 

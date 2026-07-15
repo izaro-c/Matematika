@@ -33,7 +33,7 @@ describe('UC-1: Buscar Nodo (Omnibar)', () => {
 
   it('TC-1.1: Query normal válida -> Muestra resultados', async () => {
     render(<SearchOmnibar />);
-    const input = screen.getByPlaceholderText(/Buscar teoremas/i);
+    const input = screen.getByRole('searchbox', { name: 'Buscar contenido matemático' });
     fireEvent.change(input, { target: { value: 'pitagoras' } });
     
     // Verifica que el input tiene el valor correcto
@@ -42,10 +42,10 @@ describe('UC-1: Buscar Nodo (Omnibar)', () => {
 
   it('TC-1.3: Query inválida / Inexistente -> Lista vacía', () => {
     render(<SearchOmnibar />);
-    const input = screen.getByPlaceholderText(/Buscar teoremas/i);
+    const input = screen.getByRole('searchbox', { name: 'Buscar contenido matemático' });
     fireEvent.change(input, { target: { value: 'xxyyzz_inexistente' } });
     
-    expect(screen.getByText(/Sin resultados para "xxyyzz_inexistente"/i)).toBeDefined();
+    expect(screen.getByText('No se encontraron resultados')).toBeDefined();
   });
 });
 
