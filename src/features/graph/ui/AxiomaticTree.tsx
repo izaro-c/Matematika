@@ -13,7 +13,6 @@ import type { Node, Edge, NodeMouseHandler } from '@xyflow/react';
 import '@xyflow/react/dist/style.css';
 
 import { useGraphStore } from '@/features/graph/GraphStore';
-import { useGraphSandboxStore } from '@/features/graph/GraphSandboxStore';
 import { MathNode } from '@/features/graph/ui/CustomNode';
 import type { MathNodeData } from '@/features/graph/ui/CustomNode';
 import { TYPE_STYLES, CONTENT_TYPE_CONFIG } from '@/shared/lib/constants';
@@ -39,10 +38,6 @@ function FlowContent() {
     toggleAxiom, initWorker,
     systems,
   } = useGraphStore();
-  const {
-    sandboxEnabled, validNodes,
-    toggleAxiom: toggleSandboxAxiom,
-  } = useGraphSandboxStore();
 
   const [rfNodes, setRfNodes, onNodesChange] = useNodesState<Node>([]);
   const [, , onEdgesChange] = useEdgesState<Edge>([]);
@@ -181,7 +176,7 @@ function FlowContent() {
       // Axiomas no esconden el grafo; otros nodos atenúan lo que no está en la cadena
       const isDimmed = !isAxiomSelected && selectedNodeId && !isSelected && !inChain;
       const group = d.nodeType === 'axioma' ? getAxiomGroup(n.id) : null;
-      const active = sandboxEnabled ? validNodes.has(n.id) : (activeStates[n.id] ?? true);
+      const active = activeStates[n.id] ?? true;
       let scale = 1;
       if (isHovered) scale = 1.08;
       else if (isDimmed) scale = 0.82;
@@ -199,7 +194,7 @@ function FlowContent() {
         },
       };
     });
-  }, [rfNodes, selectedNodeId, selectedChain, hoveredNodeId, sandboxEnabled, validNodes, activeStates]);
+  }, [rfNodes, selectedNodeId, selectedChain, hoveredNodeId, activeStates]);
 
   const visibleNodes = useMemo(() => {
     return displayNodes.filter(n => visibleTypes.has(((n.data as unknown) as MathNodeData).nodeType));
@@ -246,8 +241,8 @@ function FlowContent() {
           ? ((sourceNode.data as unknown) as MathNodeData).nodeType
           : null;
         const isFromPrimitive = sourceType === 'concepto';
-        const srcActive = sandboxEnabled ? validNodes.has(e.source) : (activeStates[e.source] ?? true);
-        const tgtActive = sandboxEnabled ? validNodes.has(e.target) : (activeStates[e.target] ?? true);
+        const srcActive = activeStates[e.source] ?? true;
+        const tgtActive = activeStates[e.target] ?? true;
         const isLive = srcActive && tgtActive;
         const edgeColor = isFromPrimitive ? theme.getHex('modelo') : theme.carbon;
         const finalStroke = `${edgeColor}${isLive ? 'AA' : '22'}`;
@@ -260,7 +255,7 @@ function FlowContent() {
         } as Edge;
       })
       .filter(e => visibleNodeIds.has(e.source) && visibleNodeIds.has(e.target));
-  }, [baseEdges, selectedNodeId, relatedEdgesSet, visibleNodeIds, sandboxEnabled, validNodes, activeStates, rfNodes, theme]);
+  }, [baseEdges, selectedNodeId, relatedEdgesSet, visibleNodeIds, activeStates, rfNodes, theme]);
 
   // ── Node interactions ───────────────────────────────────────────────────────
   const onNodeMouseEnter: NodeMouseHandler = useCallback((_, node) => setHoveredNodeId(node.id), []);
@@ -268,13 +263,12 @@ function FlowContent() {
   const onNodeClick: NodeMouseHandler = useCallback((_, node) => {
     const d = (node.data as unknown) as MathNodeData;
     if (d.nodeType === 'axioma') {
-      if (sandboxEnabled) toggleSandboxAxiom(node.id);
-      else toggleAxiom(node.id);
+      toggleAxiom(node.id);
       setSelectedNodeId(prev => prev === node.id ? null : node.id);
     } else {
       setSelectedNodeId(prev => prev === node.id ? null : node.id);
     }
-  }, [toggleAxiom, sandboxEnabled, toggleSandboxAxiom]);
+  }, [toggleAxiom]);
 
   const handleDependencyClick = useCallback((depId: string) => {
     setSelectedNodeId(depId);
@@ -312,9 +306,14 @@ function FlowContent() {
       <div className="h-full flex-1 min-w-0 relative">
         {/* Mobile sidebar toggle */}
         {isMobile && !sidebarOpen && (
-          <button onClick={() => setSidebarOpen(true)}
-            className="absolute top-36 left-6 z-30 w-9 h-9 bg-lienzo border border-carbon/20 shadow flex items-center justify-center text-sm text-carbon/60 hover:text-carbon">
-            ☰
+          <button
+            type="button"
+            onClick={() => setSidebarOpen(true)}
+            className="absolute left-4 top-36 z-30 flex size-11 items-center justify-center border border-carbon/20 bg-lienzo text-base text-carbon/65 shadow transition-colors hover:border-carbon/35 hover:text-carbon focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-terracota"
+            aria-label="Abrir controles del grafo"
+            aria-expanded="false"
+          >
+            <span aria-hidden="true">☰</span>
           </button>
         )}
 

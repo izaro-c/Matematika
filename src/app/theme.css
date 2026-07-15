@@ -70,30 +70,33 @@
   --theme-selection-text: var(--theme-carbon);
 
   /* ── 5. Paleta Arts & Crafts – Modo Pergamino ─────────────────────────── */
-  --theme-lienzo:    #F8F6F1;  /* Papel de pergamino */
-  --theme-carbon:    #333333;  /* Tinta de imprenta */
-  --theme-terracota: #A94E35;  /* Terracota legible — Teoremas */
-  --theme-ocre:      #8C641F;  /* Ocre legible — Axiomas */
-  --theme-granada:   #9E3B33;  /* Granada mate — Demostraciones */
-  --theme-musgo:     #526E4A;  /* Musgo medio — Corolarios */
-  --theme-salvia:    #4E7056;  /* Salvia legible — Definiciones */
-  --theme-pavo:      #3A5A7A;  /* Azul pavo apagado — Modelos */
-  --theme-pizarra:   #5C728A;  /* Pizarra grisáceo — Ejemplos */
+  --theme-lienzo:    #F3EFE7;  /* Papel de pergamino (Avena) */
+  --theme-carbon:    #35312E;  /* Tinta de imprenta (Sepia) */
+  
+  --theme-terracota: #A04F3D;  /* Teoremas — (Óxido/Sanguina) */
+  --theme-ocre:      #8B6914;  /* Axiomas — (Oro óptimo WCAG) */
+  --theme-granada:   #8A3A52;  /* Demostraciones — (Carmín/Rubia) */
+  --theme-musgo:     #406E45;  /* Biografías — (Verde botánico) */
+  --theme-salvia:    #9E5B22;  /* Definiciones — (Naranja/Cobre) */
+  --theme-pavo:      #2A4B7C;  /* Modelos — (Azul Lapislázuli) */
+  --theme-pizarra:   #63457A;  /* Ejemplos — (Violeta/Amatista) */
+  
   --theme-graph-bg-url: var(--bg-arts-and-crafts-light-url, url('/images/bg-arts-crafts-1.png'));
   --bg-arts-and-crafts-url: var(--theme-graph-bg-url);
 }
 
 .dark {
   /* ── 6. El Códice Nocturno ────────────────────────────────────────────── */
-  --theme-lienzo:    #101113; /* Midnight mate profundo */
-  --theme-carbon:    #ECE7DF; /* Crema suave de códice nocturno */
-  --theme-terracota: #D67A60;
-  --theme-ocre:      #ECC37A;
-  --theme-granada:   #C26666; /* Contraste mejorado (antes #B85C5C) */
-  --theme-musgo:     #7BA173; /* Contraste mejorado (antes #708E68) */
-  --theme-salvia:    #7BA887;
-  --theme-pavo:      #6D8FB8; /* Contraste mejorado (antes #5E7FA3) */
-  --theme-pizarra:   #7FA1C2;
+  --theme-lienzo:    #161514;  /* Midnight mate profundo */
+  --theme-carbon:    #DFD9CF;  /* Crema suave de códice nocturno */
+  
+  --theme-terracota: #E68571;  /* Teoremas (Alta luminancia) */
+  --theme-ocre:      #E5C355;  /* Axiomas (Alta luminancia) */
+  --theme-granada:   #D9738E;  /* Demostraciones (Alta luminancia) */
+  --theme-musgo:     #88BE8D;  /* Biografías (Alta luminancia) */
+  --theme-salvia:    #E08643;  /* Definiciones (Alta luminancia) */
+  --theme-pavo:      #7DA2DA;  /* Modelos (Alta luminancia) */
+  --theme-pizarra:   #B392CD;  /* Ejemplos (Alta luminancia) */
   --theme-graph-bg-url: var(--bg-arts-and-crafts-dark-url, url('/images/bg-arts-crafts-dark.jpg'));
   --bg-arts-and-crafts-url: var(--theme-graph-bg-url);
 

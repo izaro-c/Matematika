@@ -56,8 +56,12 @@ export interface GraphWorkerOutput {
   dependsOn: Record<string, string[]>;
 }
 
-export interface GraphWorkerRequest {
-  type: 'compute-graph';
+export interface GraphWorkerEvaluationOutput {
+  changedActiveStates: Record<string, boolean>;
+}
+
+export interface GraphWorkerInitializeRequest {
+  type: 'initialize-graph';
   requestId: number;
   payload: {
     graphData: GraphWorkerStructure;
@@ -65,8 +69,19 @@ export interface GraphWorkerRequest {
   };
 }
 
+export interface GraphWorkerEvaluateRequest {
+  type: 'evaluate-graph';
+  requestId: number;
+  payload: {
+    disabledAxioms: string[];
+  };
+}
+
+export type GraphWorkerRequest = GraphWorkerInitializeRequest | GraphWorkerEvaluateRequest;
+
 export type GraphWorkerErrorCode =
   | 'INVALID_REQUEST'
+  | 'NOT_INITIALIZED'
   | 'COMPUTE_ERROR'
   | 'WORKER_ERROR'
   | 'TIMEOUT';
@@ -76,10 +91,16 @@ export interface GraphWorkerError {
   message: string;
 }
 
-export interface GraphWorkerSuccessResponse {
-  type: 'success';
+export interface GraphWorkerInitializedResponse {
+  type: 'initialized';
   requestId: number;
   result: GraphWorkerOutput;
+}
+
+export interface GraphWorkerEvaluatedResponse {
+  type: 'evaluated';
+  requestId: number;
+  result: GraphWorkerEvaluationOutput;
 }
 
 export interface GraphWorkerErrorResponse {
@@ -87,6 +108,8 @@ export interface GraphWorkerErrorResponse {
   requestId: number | null;
   error: GraphWorkerError;
 }
+
+export type GraphWorkerSuccessResponse = GraphWorkerInitializedResponse | GraphWorkerEvaluatedResponse;
 
 export type GraphWorkerResponse = GraphWorkerSuccessResponse | GraphWorkerErrorResponse;
 
@@ -96,6 +119,7 @@ export type GraphWorkerRequestParseResult =
 
 const ERROR_CODES = new Set<GraphWorkerErrorCode>([
   'INVALID_REQUEST',
+  'NOT_INITIALIZED',
   'COMPUTE_ERROR',
   'WORKER_ERROR',
   'TIMEOUT',
@@ -185,6 +209,10 @@ export function isGraphWorkerOutput(value: unknown): value is GraphWorkerOutput 
     && isStringArrayRecord(value.dependsOn);
 }
 
+export function isGraphWorkerEvaluationOutput(value: unknown): value is GraphWorkerEvaluationOutput {
+  return isRecord(value) && isBooleanRecord(value.changedActiveStates);
+}
+
 export function normalizeGraphWorkerError(
   error: unknown,
   code: GraphWorkerErrorCode = 'COMPUTE_ERROR',
@@ -215,15 +243,26 @@ export function isGraphWorkerError(value: unknown): value is GraphWorkerError {
     && typeof value.message === 'string';
 }
 
-export function createGraphWorkerRequest(
+export function createGraphWorkerInitializeRequest(
   requestId: number,
   graphData: GraphWorkerStructure,
   disabledAxioms: string[],
-): GraphWorkerRequest {
+): GraphWorkerInitializeRequest {
   return {
-    type: 'compute-graph',
+    type: 'initialize-graph',
     requestId,
     payload: { graphData, disabledAxioms },
+  };
+}
+
+export function createGraphWorkerEvaluateRequest(
+  requestId: number,
+  disabledAxioms: string[],
+): GraphWorkerEvaluateRequest {
+  return {
+    type: 'evaluate-graph',
+    requestId,
+    payload: { disabledAxioms },
   };
 }
 
@@ -234,10 +273,9 @@ export function parseGraphWorkerRequest(value: unknown): GraphWorkerRequestParse
 
   if (
     !isRecord(value)
-    || value.type !== 'compute-graph'
+    || (value.type !== 'initialize-graph' && value.type !== 'evaluate-graph')
     || requestId === null
     || !isRecord(value.payload)
-    || !isGraphWorkerStructure(value.payload.graphData)
     || !isStringArray(value.payload.disabledAxioms)
   ) {
     return {
@@ -250,15 +288,37 @@ export function parseGraphWorkerRequest(value: unknown): GraphWorkerRequestParse
     };
   }
 
+  if (value.type === 'initialize-graph') {
+    if (!isGraphWorkerStructure(value.payload.graphData)) {
+      return {
+        ok: false,
+        requestId,
+        error: {
+          code: 'INVALID_REQUEST',
+          message: 'Invalid graph worker request',
+        },
+      };
+    }
+
+    return {
+      ok: true,
+      value: {
+        type: 'initialize-graph',
+        requestId,
+        payload: {
+          graphData: value.payload.graphData,
+          disabledAxioms: value.payload.disabledAxioms,
+        },
+      },
+    };
+  }
+
   return {
     ok: true,
     value: {
-      type: 'compute-graph',
+      type: 'evaluate-graph',
       requestId,
-      payload: {
-        graphData: value.payload.graphData,
-        disabledAxioms: value.payload.disabledAxioms,
-      },
+      payload: { disabledAxioms: value.payload.disabledAxioms },
     },
   };
 }
@@ -269,12 +329,24 @@ export function parseGraphWorkerResponse(value: unknown): GraphWorkerResponse | 
   }
 
   if (
-    value.type === 'success'
+    value.type === 'initialized'
     && isRequestId(value.requestId)
     && isGraphWorkerOutput(value.result)
   ) {
     return {
-      type: 'success',
+      type: 'initialized',
+      requestId: value.requestId,
+      result: value.result,
+    };
+  }
+
+  if (
+    value.type === 'evaluated'
+    && isRequestId(value.requestId)
+    && isGraphWorkerEvaluationOutput(value.result)
+  ) {
+    return {
+      type: 'evaluated',
       requestId: value.requestId,
       result: value.result,
     };

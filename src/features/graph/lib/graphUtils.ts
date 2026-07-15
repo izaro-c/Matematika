@@ -8,9 +8,75 @@ export const NODE_URL_PREFIX: Record<string, string> = {
   modelo: 'modelo',
 };
 
+const KNOWLEDGE_GRAPH_GROUP_TYPES: Record<string, string> = {
+  axioma: 'axioma',
+  axiom: 'axioma',
+  definition: 'definicion',
+  definicion: 'definicion',
+  theorem: 'teorema',
+  teorema: 'teorema',
+  lemma: 'lema',
+  lema: 'lema',
+  corollary: 'corolario',
+  corolario: 'corolario',
+  modelo: 'modelo',
+  model: 'modelo',
+  mathematician: 'matematico',
+  matematico: 'matematico',
+};
+
+const KNOWLEDGE_GRAPH_SPECIAL_GROUPS: Record<string, { label: string; colorType: string }> = {
+  central: { label: 'Mapa', colorType: 'matematico' },
+  branch: { label: 'Rama', colorType: 'teorema' },
+};
+
+const KNOWLEDGE_GRAPH_LEGEND_ORDER = [
+  'teorema',
+  'lema',
+  'corolario',
+  'axioma',
+  'definicion',
+  'modelo',
+  'matematico',
+] as const;
+
+export function getKnowledgeGraphContentType(group: string): string | null {
+  return KNOWLEDGE_GRAPH_GROUP_TYPES[group] ?? null;
+}
+
+export function getKnowledgeGraphGroupPresentation(group: string): {
+  label: string;
+  color: string;
+} {
+  const special = KNOWLEDGE_GRAPH_SPECIAL_GROUPS[group];
+  if (special) {
+    return {
+      label: special.label,
+      color: CONTENT_TYPE_CONFIG[special.colorType].graphColor,
+    };
+  }
+
+  const contentType = getKnowledgeGraphContentType(group);
+  const config = contentType ? CONTENT_TYPE_CONFIG[contentType] : undefined;
+  return {
+    label: config?.labelSingular ?? group,
+    color: config?.graphColor ?? 'var(--theme-carbon)',
+  };
+}
+
+/** Devuelve únicamente los tipos que tienen al menos un nodo en el grafo. */
+export function getKnowledgeGraphLegendTypes(groups: Iterable<string>): string[] {
+  const presentTypes = new Set<string>();
+  for (const group of groups) {
+    const contentType = getKnowledgeGraphContentType(group);
+    if (contentType) presentTypes.add(contentType);
+  }
+  return KNOWLEDGE_GRAPH_LEGEND_ORDER.filter(type => presentTypes.has(type));
+}
+
 export function getNodeTypeColor(type: string): string {
   const config = CONTENT_TYPE_CONFIG[type];
-  return config?.graphColor ?? '#888';
+  return config?.graphColor ?? 'var(--theme-carbon)';
 }
 
 export function getDependencyDotColor(type: string): string {

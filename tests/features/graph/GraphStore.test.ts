@@ -88,6 +88,7 @@ describe('GraphStore worker coordination', () => {
       disabledAxioms: [],
       isLoading: true,
       toggleAxiom: expect.any(Function),
+      setActiveAxioms: expect.any(Function),
       toggleModel: expect.any(Function),
       toggleSystem: expect.any(Function),
       initWorker: expect.any(Function),
@@ -102,7 +103,7 @@ describe('GraphStore worker coordination', () => {
     if (!parsedRequest.ok) return;
 
     worker.emitMessage({
-      type: 'success',
+      type: 'initialized',
       requestId: parsedRequest.value.requestId,
       result: makeOutput('latest'),
     });
@@ -118,37 +119,99 @@ describe('GraphStore worker coordination', () => {
     }));
   });
 
-  it('ignores an obsolete response and applies the most recent response', async () => {
+  it('keeps the layout cached and coalesces rapid logical evaluations', async () => {
     const { useGraphStore } = await import('@/features/graph/GraphStore');
-
-    useGraphStore.getState().toggleAxiom('axioma-incidencia-1');
-    useGraphStore.getState().toggleAxiom('axioma-incidencia-2');
+    useGraphStore.getState().initWorker();
 
     const worker = FakeWorker.instances[0];
-    const firstRequest = parseGraphWorkerRequest(worker.postedMessages[0]);
-    const latestRequest = parseGraphWorkerRequest(worker.postedMessages[1]);
-    expect(firstRequest.ok).toBe(true);
-    expect(latestRequest.ok).toBe(true);
-    if (!firstRequest.ok || !latestRequest.ok) return;
+    const initialization = parseGraphWorkerRequest(worker.postedMessages[0]);
+    expect(initialization.ok).toBe(true);
+    if (!initialization.ok) return;
 
     worker.emitMessage({
-      type: 'success',
-      requestId: latestRequest.value.requestId,
-      result: makeOutput('latest'),
-    });
-    await flushPromises();
-    worker.emitMessage({
-      type: 'success',
-      requestId: firstRequest.value.requestId,
-      result: makeOutput('obsolete'),
+      type: 'initialized',
+      requestId: initialization.value.requestId,
+      result: makeOutput('stable-layout'),
     });
     await flushPromises();
 
-    expect(useGraphStore.getState().baseNodes.map((node) => node.id)).toEqual(['latest']);
+    useGraphStore.getState().toggleAxiom('axioma-incidencia-1');
+    await flushPromises();
+    useGraphStore.getState().toggleAxiom('axioma-incidencia-2');
+
+    expect(worker.postedMessages).toHaveLength(2);
+    const firstEvaluation = parseGraphWorkerRequest(worker.postedMessages[1]);
+    expect(firstEvaluation.ok).toBe(true);
+    if (!firstEvaluation.ok) return;
+    expect(firstEvaluation.value.type).toBe('evaluate-graph');
+    expect(firstEvaluation.value.payload).not.toHaveProperty('graphData');
+
+    worker.emitMessage({
+      type: 'evaluated',
+      requestId: firstEvaluation.value.requestId,
+      result: { changedActiveStates: { 'axioma-incidencia-1': false } },
+    });
+    await flushPromises();
+
+    expect(worker.postedMessages).toHaveLength(3);
+    const latestEvaluation = parseGraphWorkerRequest(worker.postedMessages[2]);
+    expect(latestEvaluation.ok).toBe(true);
+    if (!latestEvaluation.ok) return;
+    expect(latestEvaluation.value).toEqual(expect.objectContaining({
+      type: 'evaluate-graph',
+      payload: {
+        disabledAxioms: expect.arrayContaining([
+          'axioma-incidencia-1',
+          'axioma-incidencia-2',
+        ]),
+      },
+    }));
+
+    worker.emitMessage({
+      type: 'evaluated',
+      requestId: latestEvaluation.value.requestId,
+      result: { changedActiveStates: { 'axioma-incidencia-2': false } },
+    });
+    await flushPromises();
+
+    expect(useGraphStore.getState().baseNodes.map((node) => node.id)).toEqual(['stable-layout']);
+    expect(useGraphStore.getState().activeStates).toEqual(expect.objectContaining({
+      'axioma-incidencia-1': false,
+      'axioma-incidencia-2': false,
+    }));
     expect(useGraphStore.getState().status).toBe('success');
   });
 
-  it('stores a normalized latest-request error and clears loading', async () => {
+  it('represents the empty universe in the main store without a secondary mode', async () => {
+    const { useGraphStore } = await import('@/features/graph/GraphStore');
+    const axiomIds = useGraphStore.getState().axioms;
+
+    useGraphStore.getState().setActiveAxioms([]);
+
+    const worker = FakeWorker.instances[0];
+    const initialization = parseGraphWorkerRequest(worker.postedMessages[0]);
+    expect(initialization.ok).toBe(true);
+    if (!initialization.ok || initialization.value.type !== 'initialize-graph') return;
+
+    expect(initialization.value.payload.disabledAxioms).toEqual(axiomIds);
+    expect(useGraphStore.getState().inactiveModels).toHaveLength(
+      useGraphStore.getState().models.length,
+    );
+    expect(useGraphStore.getState().inactiveSystems).toHaveLength(
+      useGraphStore.getState().systems.length,
+    );
+
+    worker.emitMessage({
+      type: 'initialized',
+      requestId: initialization.value.requestId,
+      result: makeOutput('empty-universe'),
+    });
+    await flushPromises();
+
+    expect(useGraphStore.getState().status).toBe('success');
+  });
+
+  it('stores a normalized initialization error and clears loading', async () => {
     const { useGraphStore } = await import('@/features/graph/GraphStore');
 
     useGraphStore.getState().toggleAxiom('axioma-incidencia-1');
@@ -162,7 +225,7 @@ describe('GraphStore worker coordination', () => {
       requestId: request.value.requestId,
       error: {
         code: 'COMPUTE_ERROR',
-        message: 'layout failed',
+        message: 'initialization failed',
       },
     });
     await flushPromises();
@@ -172,7 +235,7 @@ describe('GraphStore worker coordination', () => {
       status: 'error',
       error: {
         code: 'COMPUTE_ERROR',
-        message: 'layout failed',
+        message: 'initialization failed',
       },
     }));
   });

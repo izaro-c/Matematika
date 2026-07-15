@@ -20,7 +20,7 @@ const BASELINE_TYPE_COLORS = {
   ejemplo: 'var(--theme-pizarra)',
   ejercicio: 'var(--theme-granada)',
   demo: 'var(--theme-granada)',
-  matemático: 'var(--theme-ocre)',
+  matemático: 'var(--theme-musgo)',
   caso_uso: 'var(--theme-pizarra)',
   glosario: 'var(--theme-carbon)',
   msc2020: 'var(--theme-carbon)',

@@ -48,7 +48,7 @@ export const PAGE_ACCENT_ROLES = {
   ejercicio: 'exerciseAccent',
   demo: 'proofAccent',
   matemático: 'biographyAccent',
-  caso_uso: 'lemmaAccent',
+  caso_uso: 'exampleAccent',
   glosario: 'conceptAccent',
   msc2020: 'conceptAccent',
 } as const satisfies Record<PageAccentType, SemanticColorRole>;
@@ -85,7 +85,7 @@ export const CONTENT_PAGE_ACCENT_ROLES = {
   demostracion: 'proofAccent',
   ejemplo: PAGE_ACCENT_ROLES.ejemplo,
   ejercicio: PAGE_ACCENT_ROLES.ejercicio,
-  'caso-de-uso': 'lemmaAccent',
+  'caso-de-uso': PAGE_ACCENT_ROLES.caso_uso,
   matematico: 'biographyAccent',
   metodo: PAGE_ACCENT_ROLES.método,
   modelo: PAGE_ACCENT_ROLES.modelo,
