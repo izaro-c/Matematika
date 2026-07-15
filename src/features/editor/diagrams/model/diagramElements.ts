@@ -150,7 +150,7 @@ export function nextStepId(steps: VisualStep[]): string {
 }
 
 export function refsNeededForTool(tool: CanvasTool): number {
-  if (['segment', 'line', 'ray', 'circle', 'midpoint', 'congruenceMark', 'dimensionLine', 'measurement'].includes(tool)) return 2;
+  if (['segment', 'line', 'ray', 'circle', 'intersection', 'midpoint', 'congruenceMark', 'dimensionLine', 'measurement'].includes(tool)) return 2;
   if (['arc', 'polygon', 'perpendicularFoot', 'baseExtension', 'perpendicular', 'parallel', 'angleBisector', 'angle', 'rightAngle', 'perpendicularMark', 'areaDecomposition'].includes(tool)) return 3;
   if (['poincareGeodesic', 'poincareArc', 'grid'].includes(tool)) return 4;
   if (['text', 'label', 'formula'].includes(tool)) return 1;
@@ -161,7 +161,7 @@ export function refsNeededForTool(tool: CanvasTool): number {
 export function generatedElementId(kind: ElementKind, refs: string[], existing: VisualElement[]): string {
   const suffix = refs.map(ref => ref.replace(/^p/, '')).join('');
   const prefixes: Partial<Record<ElementKind, string>> = {
-    segment: 'seg', line: 'line', ray: 'ray', circle: 'circle', arc: 'arc', midpoint: 'mid',
+    segment: 'seg', line: 'line', ray: 'ray', circle: 'circle', arc: 'arc', intersection: 'int', midpoint: 'mid',
     perpendicularFoot: 'foot', baseExtension: 'ext', perpendicular: 'perp', parallel: 'par',
     angleBisector: 'bis', angle: 'angle', rightAngle: 'rightAngle',
   };
@@ -171,7 +171,7 @@ export function generatedElementId(kind: ElementKind, refs: string[], existing: 
 
 export function elementColorForKind(kind: ElementKind): ColorToken {
   if (kind === 'polygon' || kind === 'areaDecomposition' || kind === 'grid') return 'salvia';
-  if (kind === 'midpoint') return 'terracota';
+  if (kind === 'intersection' || kind === 'midpoint') return 'terracota';
   if (kind === 'perpendicularFoot' || kind === 'angle' || kind === 'rightAngle' || kind === 'perpendicularMark' || kind === 'congruenceMark') return 'ocre';
   if (kind === 'baseExtension' || kind === 'measurement' || kind === 'dimensionLine' || kind === 'formula' || kind === 'infoPanel') return 'pizarra';
   if (kind === 'perpendicular' || kind === 'parallel' || kind === 'angleBisector' || kind === 'line' || kind === 'ray' || kind === 'functionCurve' || kind === 'parametricCurve' || kind === 'poincareGeodesic' || kind === 'poincareArc') return 'pavo';

@@ -74,6 +74,21 @@ export function resolvePointCoordinates(spec: DiagramSpecV2, id: string, visitin
   }
   const derived = spec.elements.find(element => element.id === id);
   if (!derived) return undefined;
+  if (derived.kind === 'intersection') {
+    const first = linearSupportCarrier(spec, derived.refs[0], visiting);
+    const second = linearSupportCarrier(spec, derived.refs[1], visiting);
+    if (!first || !second) return undefined;
+    const firstDx = first.b.x - first.a.x;
+    const firstDy = first.b.y - first.a.y;
+    const secondDx = second.b.x - second.a.x;
+    const secondDy = second.b.y - second.a.y;
+    const denominator = firstDx * secondDy - firstDy * secondDx;
+    if (Math.abs(denominator) < 1e-10) return undefined;
+    const offsetX = second.a.x - first.a.x;
+    const offsetY = second.a.y - first.a.y;
+    const parameter = (offsetX * secondDy - offsetY * secondDx) / denominator;
+    return { x: first.a.x + parameter * firstDx, y: first.a.y + parameter * firstDy };
+  }
   if (derived.kind === 'midpoint') {
     const a = resolvePointCoordinates(spec, derived.refs[0], visiting);
     const b = resolvePointCoordinates(spec, derived.refs[1], visiting);
@@ -89,6 +104,44 @@ export function resolvePointCoordinates(spec: DiagramSpecV2, id: string, visitin
     const lengthSquared = dx * dx + dy * dy || 1;
     const t = ((source.x - a.x) * dx + (source.y - a.y) * dy) / lengthSquared;
     return { x: a.x + dx * t, y: a.y + dy * t };
+  }
+  return undefined;
+}
+
+function linearSupportCarrier(
+  spec: DiagramSpecV2,
+  id: string,
+  visiting: Set<string>,
+): { a: { x: number; y: number }; b: { x: number; y: number } } | undefined {
+  const support = spec.elements.find(element => element.id === id);
+  if (!support) return undefined;
+  const first = resolvePointCoordinates(spec, support.refs[0], new Set(visiting));
+  const second = resolvePointCoordinates(spec, support.refs[1], new Set(visiting));
+  if (!first || !second) return undefined;
+  if (support.kind === 'segment' || support.kind === 'line' || support.kind === 'ray') return { a: first, b: second };
+  const through = resolvePointCoordinates(spec, support.refs[2], new Set(visiting));
+  if (!through) return undefined;
+  if (support.kind === 'parallel') {
+    return { a: through, b: { x: through.x + second.x - first.x, y: through.y + second.y - first.y } };
+  }
+  if (support.kind === 'perpendicular') {
+    return { a: through, b: { x: through.x - (second.y - first.y), y: through.y + second.x - first.x } };
+  }
+  if (support.kind === 'angleBisector') {
+    const vertex = second;
+    const firstDx = first.x - vertex.x;
+    const firstDy = first.y - vertex.y;
+    const secondDx = through.x - vertex.x;
+    const secondDy = through.y - vertex.y;
+    const firstLength = Math.hypot(firstDx, firstDy) || 1;
+    const secondLength = Math.hypot(secondDx, secondDy) || 1;
+    let directionX = firstDx / firstLength + secondDx / secondLength;
+    let directionY = firstDy / firstLength + secondDy / secondLength;
+    if (Math.hypot(directionX, directionY) < 1e-10) {
+      directionX = -firstDy / firstLength;
+      directionY = firstDx / firstLength;
+    }
+    return { a: vertex, b: { x: vertex.x + directionX, y: vertex.y + directionY } };
   }
   return undefined;
 }
@@ -207,12 +260,15 @@ export function createScenePlan(spec: DiagramSpecV2, state: DiagramSceneState = 
       const fixedPoint = 'constraint' in item && (item.fixed || item.constraint === 'fixed' || item.constraint === 'derived');
       const locked = !interactive || fixedPoint || item.locked || layer?.locked === true || itemGroups.some(group => group?.locked === true);
       const layerOrder = layer?.order ?? 0;
+      const highlightable = item.selection.highlightable !== false;
+      const highlightedByGroup = itemGroups.some(group => group?.selection.highlightable !== false && highlighted.has(group?.id ?? ''));
+      const selectedByGroup = itemGroups.some(group => group?.selection.highlightable !== false && selected.has(group?.id ?? ''));
       return {
         item,
         visible,
         locked,
-        highlighted: highlighted.has(item.id) || itemGroups.some(group => highlighted.has(group?.id ?? '')),
-        selected: selected.has(item.id) || itemGroups.some(group => selected.has(group?.id ?? '')),
+        highlighted: highlightable && (highlighted.has(item.id) || highlightedByGroup),
+        selected: highlightable && (selected.has(item.id) || selectedByGroup),
         stepEmphasis: objectState?.emphasis ?? 'none',
         label: objectState?.label || item.label,
         interactive,
@@ -264,6 +320,10 @@ function boundsFromCoordinates(coordinates: Array<{ x: number; y: number }>): Di
 }
 
 function elementCoordinates(spec: DiagramSpecV2, element: DiagramElement): Array<{ x: number; y: number }> {
+  if (element.kind === 'intersection') {
+    const intersection = resolvePointCoordinates(spec, element.id);
+    return intersection ? [intersection] : [];
+  }
   const refs = element.refs.map(ref => resolvePointCoordinates(spec, ref)).filter((point): point is { x: number; y: number } => Boolean(point));
   if ((element.kind === 'functionCurve' || element.kind === 'parametricCurve') && element.properties?.domain) {
     const variables = expressionVariables(spec);

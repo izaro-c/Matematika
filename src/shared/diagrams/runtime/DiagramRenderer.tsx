@@ -12,6 +12,7 @@ import {
   createFunctionCurve,
   createGlider,
   createGridOverlay,
+  createIntersection,
   createLine,
   createMidpoint,
   createParallelLine,
@@ -78,6 +79,31 @@ function outsideBaseExtension(baseA: any, baseB: any, foot: any): boolean {
   if (lengthSquared < 1e-10) return false;
   const t = ((foot.X() - baseA.X()) * dx + (foot.Y() - baseA.Y()) * dy) / lengthSquared;
   return t < -0.001 || t > 1.001;
+}
+
+function intersectionBelongsToSupports(
+  item: DiagramElement,
+  intersection: any,
+  elements: Record<string, any>,
+  spec: DiagramSpecV2,
+): boolean {
+  if (item.kind !== 'intersection' || item.properties?.restrictToSupports !== true) return true;
+  if (!intersection || !Number.isFinite(intersection.X?.()) || !Number.isFinite(intersection.Y?.())) return false;
+  return item.refs.every(supportId => {
+    const supportSpec = spec.elements.find(candidate => candidate.id === supportId);
+    if (!supportSpec || !['segment', 'ray', 'angleBisector'].includes(supportSpec.kind)) return true;
+    const support = elements[supportId];
+    const start = support?.point1;
+    const end = support?.point2;
+    if (!start || !end) return false;
+    const dx = end.X() - start.X();
+    const dy = end.Y() - start.Y();
+    const lengthSquared = dx * dx + dy * dy;
+    if (lengthSquared < 1e-10) return false;
+    const t = ((intersection.X() - start.X()) * dx + (intersection.Y() - start.Y()) * dy) / lengthSquared;
+    if (supportSpec.kind === 'segment') return t >= -0.001 && t <= 1.001;
+    return t >= -0.001;
+  });
 }
 
 function refsFor(item: DiagramElement, elements: Record<string, any>): any[] {
@@ -343,8 +369,10 @@ function createElement(
   liftedIntoHeader = false,
 ) {
   const refs = refsFor(item, elements);
-  const hoverColor = item.style?.preserveColorOnHighlight ? theme[item.color] : theme.ocre;
+  const highlightable = item.selection.highlightable !== false;
+  const hoverColor = !highlightable || item.style?.preserveColorOnHighlight ? theme[item.color] : theme.ocre;
   const lineOptions = {
+    highlight: highlightable,
     strokeColor: theme[item.color],
     highlightStrokeColor: hoverColor,
     strokeWidth: item.style?.strokeWidth ?? 2,
@@ -356,8 +384,9 @@ function createElement(
   if (item.kind === 'line') return refs.length >= 2 ? createLine(board, [refs[0], refs[1]], lineOptions, theme) : null;
   if (item.kind === 'ray') return refs.length >= 2 ? createRay(board, [refs[0], refs[1]], lineOptions, theme) : null;
   if (item.kind === 'polygon') return refs.length >= 3 ? createPolygon(board, refs, {
+    highlight: highlightable,
     fillColor: theme[item.color], highlightFillColor: hoverColor, fillOpacity: item.style?.fillOpacity ?? 0.1,
-    borders: { strokeColor: theme[item.color], strokeWidth: item.style?.strokeWidth ?? 1.5, strokeOpacity: item.style?.strokeOpacity ?? 1, dash: item.dashed ? 2 : 0 }, layer,
+    borders: { highlight: highlightable, strokeColor: theme[item.color], strokeWidth: item.style?.strokeWidth ?? 1.5, strokeOpacity: item.style?.strokeOpacity ?? 1, dash: item.dashed ? 2 : 0 }, layer,
   }, theme) : null;
   if (item.kind === 'circle') return refs.length >= 2 ? createCircle(board, [refs[0], refs[1]], {
     ...lineOptions, fillColor: theme[item.color], fillOpacity: item.style?.fillOpacity ?? 0,
@@ -393,28 +422,41 @@ function createElement(
   }
   if (item.kind === 'poincareGeodesic') return refs.length >= 4 ? createPoincareGeodesic(board, [refs[0], refs[1], refs[2], refs[3]], lineOptions, theme) : null;
   if (item.kind === 'poincareArc') return refs.length >= 4 ? createPoincareArc(board, [refs[0], refs[1], refs[2], refs[3]], lineOptions, theme) : null;
+  if (item.kind === 'intersection') return refs.length >= 2 ? createIntersection(board, [refs[0], refs[1]], 0, {
+    highlight: highlightable,
+    name: renderKatexTextToHtml(item.label),
+    size: item.style?.pointSize ?? 4,
+    fillColor: theme[item.color],
+    strokeColor: theme[item.color],
+    highlightFillColor: hoverColor,
+    highlightStrokeColor: hoverColor,
+    label: { highlight: highlightable, highlightColor: hoverColor, highlightStrokeColor: hoverColor },
+    layer,
+  }, theme) : null;
   if (item.kind === 'midpoint') return refs.length >= 2 ? createMidpoint(board, [refs[0], refs[1]], {
+    highlight: highlightable,
     name: renderKatexTextToHtml(item.label), fillColor: theme[item.color], strokeColor: theme[item.color],
     highlightFillColor: hoverColor, highlightStrokeColor: hoverColor,
-    label: { highlightColor: hoverColor, highlightStrokeColor: hoverColor }, layer,
+    label: { highlight: highlightable, highlightColor: hoverColor, highlightStrokeColor: hoverColor }, layer,
   }, theme) : null;
   if (item.kind === 'perpendicularFoot') return refs.length >= 3 ? createPerpendicularFoot(board, [refs[0], refs[1], refs[2]], {
+    highlight: highlightable,
     name: renderKatexTextToHtml(item.label), fillColor: theme[item.color], strokeColor: theme[item.color],
     highlightFillColor: hoverColor, highlightStrokeColor: hoverColor,
-    label: { highlightColor: hoverColor, highlightStrokeColor: hoverColor }, layer,
+    label: { highlight: highlightable, highlightColor: hoverColor, highlightStrokeColor: hoverColor }, layer,
   }, theme) : null;
   if (item.kind === 'baseExtension') return refs.length >= 3 ? createBaseExtensionToFoot(board, [refs[0], refs[1], refs[2]], lineOptions, theme) : null;
   if (item.kind === 'perpendicular') return refs.length >= 3 ? createPerpendicularLine(board, [refs[0], refs[1], refs[2]], lineOptions, theme) : null;
   if (item.kind === 'parallel') return refs.length >= 3 ? createParallelLine(board, [refs[0], refs[1], refs[2]], lineOptions, theme) : null;
   if (item.kind === 'angleBisector') return refs.length >= 3 ? createAngleBisectorRay(board, [refs[0], refs[1], refs[2]], lineOptions, theme) : null;
   if (item.kind === 'angle') return refs.length >= 3 ? createAngle(board, [refs[0], refs[1], refs[2]], {
-    fillColor: theme[item.color], strokeColor: theme[item.color], radius: item.style?.angleRadius ?? DEFAULT_ANGLE_RADIUS, layer,
+    highlight: highlightable, fillColor: theme[item.color], strokeColor: theme[item.color], radius: item.style?.angleRadius ?? DEFAULT_ANGLE_RADIUS, layer,
   }, theme) : null;
   if (item.kind === 'rightAngle') return refs.length >= 3 ? createRightAngleMarker(board, [refs[0], refs[1], refs[2]], {
-    fillColor: theme[item.color], strokeColor: theme[item.color], size: item.style?.angleRadius ?? DEFAULT_RIGHT_ANGLE_RADIUS, layer,
+    highlight: highlightable, fillColor: theme[item.color], strokeColor: theme[item.color], size: item.style?.angleRadius ?? DEFAULT_RIGHT_ANGLE_RADIUS, layer,
   }, theme) : null;
   if (item.kind === 'perpendicularMark') return refs.length >= 3 ? createRightAngleMarker(board, [refs[0], refs[1], refs[2]], {
-    fillColor: theme[item.color], strokeColor: theme[item.color], size: item.style?.angleRadius ?? DEFAULT_RIGHT_ANGLE_RADIUS, layer,
+    highlight: highlightable, fillColor: theme[item.color], strokeColor: theme[item.color], size: item.style?.angleRadius ?? DEFAULT_RIGHT_ANGLE_RADIUS, layer,
   }, theme) : null;
   if (item.kind === 'congruenceMark') return refs.length >= 2 ? createCongruenceMark(
     board,
@@ -444,7 +486,7 @@ function createElement(
     refs,
     item.properties?.rows ?? 2,
     item.properties?.columns ?? 2,
-    { fillColor: theme[item.color], fillOpacity: item.style?.fillOpacity ?? 0.1, borders: lineOptions, layer },
+    { highlight: highlightable, fillColor: theme[item.color], fillOpacity: item.style?.fillOpacity ?? 0.1, borders: lineOptions, layer },
     theme,
   ) : null;
   const anchor = refs[0];
@@ -471,6 +513,7 @@ function createElement(
       ? [() => anchor.X() + textOffset[0], () => anchor.Y() + textOffset[1], dynamicText]
       : null;
   return textCoordinates ? createText(board, textCoordinates, {
+    highlight: highlightable,
     color: theme[item.color],
     layer,
     ...(viewportPanelAnchor ?? {}),
@@ -500,6 +543,7 @@ function attachSelection(
   if (!element) return;
   const node = element.rendNode as HTMLElement | undefined;
   node?.setAttribute('data-diagram-object-id', item.id);
+  node?.setAttribute('data-diagram-highlightable', String(item.selection.highlightable !== false));
   node?.setAttribute('aria-label', item.selection.ariaLabel ?? item.label);
   if (item.style?.preserveColorOnHighlight) node?.setAttribute('data-diagram-preserve-color', 'true');
   if (item.selection.role) node?.setAttribute('data-selection-role', item.selection.role);
@@ -563,11 +607,12 @@ function attachLabelSelection(
 }
 
 function synchronizeElementAndLabelHover(element: any, item: DiagramSceneItem) {
+  if (item.selection.highlightable === false) return;
   const label = nativeElementLabel(element);
   if (!label) return;
   const labelNode = label.rendNode as HTMLElement | undefined;
   const pointLike = 'constraint' in item
-    || ('kind' in item && (item.kind === 'midpoint' || item.kind === 'perpendicularFoot'));
+    || ('kind' in item && (item.kind === 'intersection' || item.kind === 'midpoint' || item.kind === 'perpendicularFoot'));
   const highlightPair = () => {
     if (pointLike) element.setAttribute?.({ size: item.style?.highlightPointSize ?? 6 });
     element.highlight?.();
@@ -841,8 +886,10 @@ const DiagramRendererContent: React.FC<DiagramRendererProps> = ({
           }
           createSceneConstructionPlan(spec).forEach(entry => {
             const sceneItem = entry.item;
-            const hoverColor = sceneItem.style?.preserveColorOnHighlight ? theme[sceneItem.color] : theme.ocre;
+            const highlightable = sceneItem.selection.highlightable !== false;
+            const hoverColor = !highlightable || sceneItem.style?.preserveColorOnHighlight ? theme[sceneItem.color] : theme.ocre;
             const pointLabelOptions = {
+              highlight: highlightable,
               ...(sceneItem.style?.labelOffset ? { offset: sceneItem.style.labelOffset } : {}),
               highlightColor: hoverColor,
               highlightStrokeColor: hoverColor,
@@ -857,6 +904,7 @@ const DiagramRendererContent: React.FC<DiagramRendererProps> = ({
                     try { return evaluateMathExpression(sceneItem.yExpression ?? '0', liveVariables(elements, spec)); } catch { return sceneItem.y; }
                   },
                 ], {
+                  highlight: highlightable,
                   name: renderKatexTextToHtml(sceneItem.label),
                   fixed: true,
                   ...(sceneItem.style?.pointSize !== undefined ? { size: sceneItem.style.pointSize } : {}),
@@ -869,6 +917,7 @@ const DiagramRendererContent: React.FC<DiagramRendererProps> = ({
                 }, theme)
                 : sceneItem.constraint === 'glider' && sceneItem.gliderTarget
                 ? createGlider(board, [sceneItem.x, sceneItem.y, elements[sceneItem.gliderTarget]], {
+                  highlight: highlightable,
                   name: renderKatexTextToHtml(sceneItem.label),
                   fixed: sceneItem.fixed || entry.locked,
                   ...(sceneItem.style?.pointSize !== undefined ? { size: sceneItem.style.pointSize } : {}),
@@ -880,6 +929,7 @@ const DiagramRendererContent: React.FC<DiagramRendererProps> = ({
                   layer: itemLayerNumber(spec, sceneItem),
                 }, theme)
                 : createPoint(board, [sceneItem.x, sceneItem.y], {
+                  highlight: highlightable,
                   name: renderKatexTextToHtml(sceneItem.label),
                   fixed: sceneItem.fixed || entry.locked,
                   ...(sceneItem.style?.pointSize !== undefined ? { size: sceneItem.style.pointSize } : {}),
@@ -925,13 +975,20 @@ const DiagramRendererContent: React.FC<DiagramRendererProps> = ({
               );
             } else {
               elements[sceneItem.id] = createSlider(board, [[sceneItem.x, sceneItem.y], [sceneItem.x + 2.6, sceneItem.y]], [sceneItem.min, sceneItem.value, sceneItem.max], {
+                highlight: highlightable,
                 name: renderKatexTextToHtml(sceneItem.label),
                 snapWidth: sceneItem.step,
                 fillColor: theme[sceneItem.color],
                 strokeColor: theme[sceneItem.color],
                 highlightFillColor: hoverColor,
                 highlightStrokeColor: hoverColor,
-                label: { highlightColor: hoverColor, highlightStrokeColor: hoverColor },
+                ...(!highlightable ? {
+                  baseline: { highlight: false, strokeColor: theme.pizarra, strokeWidth: 2 },
+                  highline: { highlight: false, strokeColor: theme.terracota, strokeWidth: 3 },
+                  point1: { highlight: false },
+                  point2: { highlight: false },
+                } : {}),
+                label: { highlight: highlightable, highlightColor: hoverColor, highlightStrokeColor: hoverColor },
                 fixed: entry.locked,
                 layer: itemLayerNumber(spec, sceneItem),
               }, theme);
@@ -1034,17 +1091,21 @@ const DiagramRendererContent: React.FC<DiagramRendererProps> = ({
               : externalActive && item.style?.highlightVisible === true
               ? true
               : conditionAllows(item, elements, spec);
-            const visible = sceneVisible && conditionVisible && (('kind' in item && item.kind === 'baseExtension')
-              ? outsideBaseExtension(elements[item.refs[0]], elements[item.refs[1]], elements[item.refs[2]])
-              : true);
+            const visible = sceneVisible && conditionVisible
+              && (('kind' in item && item.kind === 'baseExtension')
+                ? outsideBaseExtension(elements[item.refs[0]], elements[item.refs[1]], elements[item.refs[2]])
+                : true)
+              && (('kind' in item && item.kind === 'intersection')
+                ? intersectionBelongsToSupports(item, element, elements, spec)
+                : true);
             const base = { visible, fixed: entry.locked };
-            const hoverColor = item.style?.preserveColorOnHighlight ? theme[item.color] : theme.ocre;
+            const hoverColor = item.selection.highlightable === false || item.style?.preserveColorOnHighlight ? theme[item.color] : theme.ocre;
             syncNativeElementLabel(element, { visible, color, highlightColor: hoverColor, opacity, text: entry.label });
             if (element.__matematikaStepLabel !== entry.label) {
               element.setAttribute?.({ name: renderKatexTextToHtml(entry.label) });
               element.__matematikaStepLabel = entry.label;
             }
-            if ('constraint' in item || ('kind' in item && (item.kind === 'midpoint' || item.kind === 'perpendicularFoot'))) {
+            if ('constraint' in item || ('kind' in item && (item.kind === 'intersection' || item.kind === 'midpoint' || item.kind === 'perpendicularFoot'))) {
               element.setAttribute({
                 ...base,
                 size: active ? item.style?.highlightPointSize ?? 7 : item.style?.pointSize ?? 4,

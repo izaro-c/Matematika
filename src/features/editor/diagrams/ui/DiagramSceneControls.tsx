@@ -52,6 +52,10 @@ export const DiagramSceneControls: React.FC<DiagramSceneControlsProps> = ({ mode
           <input type="checkbox" checked={item.selection.selectable} onChange={event => changeItem({ selection: { ...item.selection, selectable: event.target.checked } })} />
           <span>Permitir selección directa<span className="mt-0.5 block text-[9px] font-normal leading-relaxed text-carbon/45">Si se desactiva, se selecciona desde la lista de objetos para evitar clics accidentales.</span></span>
         </label>
+        <label className="flex items-start gap-1.5 text-xs font-bold text-carbon">
+          <input type="checkbox" checked={item.selection.highlightable !== false} onChange={event => changeItem({ selection: { ...item.selection, highlightable: event.target.checked } })} />
+          <span>Permitir resaltado visual<span className="mt-0.5 block text-[9px] font-normal leading-relaxed text-carbon/45">Si se desactiva, el objeto conserva el clic, el foco y sus demás interacciones sin cambiar de aspecto.</span></span>
+        </label>
       </div>
       <details className="rounded border border-carbon/10">
         <summary className="cursor-pointer list-none px-2 py-1.5 text-xs font-bold text-carbon/70 [&::-webkit-details-marker]:hidden">Organización visual <span className="float-right text-[9px] font-normal text-carbon/40">{layer?.label ?? item.layerId} ▾</span></summary>

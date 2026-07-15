@@ -2,7 +2,7 @@ import React from 'react';
 import { DiagramRenderer, withMovedPoint, withViewportBounds } from '@/shared/diagrams/public';
 import { MathProvider } from '@/shared/lib/MathStoreContext';
 import type { VisualDiagramModel, CanvasTool } from '../model/types';
-import { nextPointId, point } from '../model/commands';
+import { nextPointId, point, toolReferenceCandidates } from '../model/commands';
 
 interface DiagramCanvasProps {
   model: VisualDiagramModel;
@@ -13,7 +13,7 @@ interface DiagramCanvasProps {
   previewStepId: string;
   onSelect: (id: string) => void;
   onModelEdit: (model: VisualDiagramModel, command?: { label?: string; mergeKey?: string }) => void;
-  onChoosePointForTool: (pointId: string) => boolean;
+  onChooseReferenceForTool: (referenceId: string) => boolean;
   onCompleteTool: () => void;
 }
 
@@ -26,7 +26,7 @@ export const DiagramCanvas: React.FC<DiagramCanvasProps> = ({
   previewStepId,
   onSelect,
   onModelEdit,
-  onChoosePointForTool,
+  onChooseReferenceForTool,
   onCompleteTool,
 }) => (
   <div className="shrink-0 overflow-hidden rounded border border-carbon/15 bg-lienzo">
@@ -43,8 +43,8 @@ export const DiagramCanvas: React.FC<DiagramCanvasProps> = ({
           highlightedIds={previewHighlightId ? [previewHighlightId] : []}
           activeStepId={previewStepId || undefined}
           onSelectionChange={(id) => {
-            if (canvasTool !== 'select' && canvasTool !== 'point' && model.points.some(item => item.id === id)) {
-              onChoosePointForTool(id);
+            if (canvasTool !== 'select' && canvasTool !== 'point' && toolReferenceCandidates(model, canvasTool).some(item => item.id === id)) {
+              onChooseReferenceForTool(id);
             }
             onSelect(id);
           }}

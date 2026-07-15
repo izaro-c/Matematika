@@ -12,6 +12,45 @@ import { DiagramToolbar } from '../../../../src/features/editor/diagrams/ui/Diag
 import { DiagramToolReferencePicker } from '../../../../src/features/editor/diagrams/ui/DiagramToolReferencePicker';
 
 describe('Phase 3 visual editing', () => {
+  it('disables visual highlighting without disabling direct interaction', () => {
+    const model = migrateDiagramSpec(pointsFixture).spec;
+    const target = model.points.find(point => point.selection.selectable)!;
+    const onModelEdit = vi.fn();
+    render(<DiagramInspector model={model} selectedId={target.id} onSelect={vi.fn()} onModelEdit={onModelEdit} onDeleteSelected={vi.fn()} />);
+
+    fireEvent.click(screen.getByRole('checkbox', { name: /Permitir resaltado visual/ }));
+
+    const edited = onModelEdit.mock.calls.at(-1)?.[0];
+    expect(edited.points.find((item: { id: string }) => item.id === target.id).selection).toMatchObject({
+      selectable: true,
+      highlightable: false,
+    });
+  });
+
+  it('creates and edits an intersection from two compatible supports', () => {
+    const base = migrateDiagramSpec(primitivesFixture).spec;
+    const line = { ...base.elements.find(item => item.id === 'lineBC')!, id: 'lineOC', label: 'Recta OC', refs: ['pO', 'pC'], target: false };
+    const intersection = {
+      ...base.elements.find(item => item.id === 'segAB')!,
+      id: 'intQ', label: 'Q', kind: 'intersection' as const, refs: ['lineOC', 'segAB'], order: 80,
+      locked: true, target: false, properties: { restrictToSupports: true },
+    };
+    const model = { ...base, elements: [...base.elements, line, intersection] };
+    const onRefsChange = vi.fn();
+    const picker = render(<DiagramToolReferencePicker model={model} tool="intersection" refs={[]} onRefsChange={onRefsChange} onCreate={vi.fn()} />);
+
+    expect(screen.getByLabelText('Soporte lineal 1 para Intersección')).toBeTruthy();
+    expect(screen.getByLabelText('Soporte lineal 2 para Intersección')).toBeTruthy();
+    expect(screen.queryByRole('option', { name: /Polígono/ })).toBeNull();
+
+    picker.unmount();
+    const onModelEdit = vi.fn();
+    render(<DiagramInspector model={model} selectedId="intQ" onSelect={vi.fn()} onModelEdit={onModelEdit} onDeleteSelected={vi.fn()} />);
+    fireEvent.click(screen.getByRole('checkbox', { name: /Exigir pertenencia a los soportes finitos/ }));
+    const edited = onModelEdit.mock.calls.at(-1)?.[0];
+    expect(edited.elements.find((item: { id: string }) => item.id === 'intQ')).toMatchObject({ properties: { restrictToSupports: false } });
+  });
+
   it('edits safe function properties in the contextual inspector', () => {
     const model = migrateDiagramSpec(curvesFixture).spec;
     const onModelEdit = vi.fn();
@@ -71,7 +110,8 @@ describe('Phase 3 visual editing', () => {
 
   it('groups tools by purpose and creates expression-only curves without fake point references', () => {
     const curveModel = migrateDiagramSpec(curvesFixture).spec;
-    const model = { ...curveModel, points: migrateDiagramSpec(pointsFixture).spec.points };
+    const primitiveModel = migrateDiagramSpec(primitivesFixture).spec;
+    const model = { ...curveModel, points: primitiveModel.points, elements: [...curveModel.elements, ...primitiveModel.elements] };
     const onAddElement = vi.fn();
     const onSetCanvasTool = vi.fn();
     render(
@@ -103,6 +143,9 @@ describe('Phase 3 visual editing', () => {
     fireEvent.click(addObjects);
     fireEvent.click(screen.getByRole('menuitem', { name: 'Panel informativo' }));
     expect(onAddElement).toHaveBeenCalledWith('infoPanel');
+    fireEvent.click(addObjects);
+    fireEvent.click(screen.getByRole('menuitem', { name: 'Intersección' }));
+    expect(onSetCanvasTool).toHaveBeenCalledWith('intersection');
     fireEvent.click(addObjects);
     fireEvent.click(screen.getByRole('menuitem', { name: 'Punto medio' }));
     expect(onSetCanvasTool).toHaveBeenCalledWith('midpoint');

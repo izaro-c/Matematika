@@ -35,6 +35,28 @@ export function createPoint(board: any, coords: [JXGCoord, JXGCoord], options: a
   });
 }
 
+export function createIntersection(
+  board: any,
+  supports: [any, any],
+  index: 0 | 1 = 0,
+  options: any = {},
+  theme: ThemeColors,
+) {
+  const { label, ...attributes } = options;
+  return board.create('intersection', [supports[0], supports[1], index], {
+    size: 4,
+    highlightSize: 6,
+    fillColor: theme.terracota,
+    strokeColor: theme.terracota,
+    highlightFillColor: theme.ocre,
+    highlightStrokeColor: theme.ocre,
+    showInfobox: false,
+    fixed: true,
+    ...attributes,
+    label: pointLabel(theme, label),
+  });
+}
+
 export function createSegment(board: any, points: [any, any], options: any = {}, theme: ThemeColors) {
   return board.create('segment', points, {
     strokeColor: theme.carbon,
@@ -263,12 +285,13 @@ export function createDimensionLine(
   const a2 = board.create('point', [shifted(a, 'x'), shifted(a, 'y')], { visible: false });
   const b2 = board.create('point', [shifted(b, 'x'), shifted(b, 'y')], { visible: false });
   const line = createSegment(board, [a2, b2], { strokeColor: theme.pizarra, strokeWidth: 1.5, ...options }, theme);
-  const ticks = createCongruenceMark(board, [a2, b2], 1, { strokeColor: theme.pizarra, strokeWidth: 1.5 }, theme);
+  const highlightOptOut = options.highlight === false ? { highlight: false } : {};
+  const ticks = createCongruenceMark(board, [a2, b2], 1, { strokeColor: theme.pizarra, strokeWidth: 1.5, ...highlightOptOut }, theme);
   const text = createText(board, [
     () => (a2.X() + b2.X()) / 2,
     () => (a2.Y() + b2.Y()) / 2 + 0.18,
     label,
-  ], { color: theme.pizarra }, theme);
+  ], { color: theme.pizarra, ...highlightOptOut }, theme);
   return createComposite([line, ticks, text]);
 }
 
@@ -498,7 +521,7 @@ export function createRightAngleMarker(board: any, points: [any, any, any], opti
     strokeColor: theme.ocre,
     strokeWidth: 1.5,
     vertices: { visible: false },
-    borders: { strokeColor: theme.ocre, strokeWidth: 1.5 },
+    borders: { strokeColor: theme.ocre, strokeWidth: 1.5, ...(attrs.highlight === false ? { highlight: false } : {}) },
     ...attrs,
   });
 }

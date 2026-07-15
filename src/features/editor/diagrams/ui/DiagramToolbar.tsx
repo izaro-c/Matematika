@@ -1,10 +1,10 @@
 import React, { useEffect, useRef, useState } from 'react';
 import type { VisualDiagramModel, CanvasTool } from '../model/types';
-import { KIND_LABELS, refsNeededForTool } from '../model/commands';
+import { KIND_LABELS, refsNeededForTool, toolReferenceCandidates } from '../model/commands';
 
 const TOOL_GROUPS: Array<{ label: string; description: string; tools: CanvasTool[] }> = [
   { label: 'Geometría básica', description: 'Objetos definidos por puntos.', tools: ['segment', 'line', 'ray', 'polygon', 'circle', 'arc'] },
-  { label: 'Puntos y construcciones', description: 'Construcciones exactas a partir de puntos existentes.', tools: ['midpoint', 'perpendicularFoot', 'baseExtension', 'perpendicular', 'parallel', 'angleBisector'] },
+  { label: 'Puntos y construcciones', description: 'Construcciones exactas a partir de objetos existentes.', tools: ['intersection', 'midpoint', 'perpendicularFoot', 'baseExtension', 'perpendicular', 'parallel', 'angleBisector'] },
   { label: 'Curvas', description: 'Gráficas y geometrías no euclidianas.', tools: ['functionCurve', 'parametricCurve', 'poincareGeodesic', 'poincareArc'] },
   { label: 'Ángulos y medidas', description: 'Marcas, relaciones y medidas visibles.', tools: ['angle', 'rightAngle', 'perpendicularMark', 'congruenceMark', 'dimensionLine', 'measurement'] },
   { label: 'Explicación', description: 'Texto, fórmulas y descomposición visual.', tools: ['grid', 'areaDecomposition', 'text', 'label', 'formula', 'infoPanel'] },
@@ -20,6 +20,7 @@ function toolInstruction(tool: CanvasTool): string {
   const required = refsNeededForTool(tool);
   if (required === 0) return 'Se crea inmediatamente y después se edita en Propiedades.';
   if (tool === 'polygon') return 'Elija al menos 3 vértices y finalice con Crear polígono.';
+  if (tool === 'intersection') return 'Elija dos rectas, segmentos o semirrectas; después podrá exigir que el punto pertenezca a ambos soportes finitos.';
   if (tool === 'angle' || tool === 'rightAngle' || tool === 'perpendicularMark' || tool === 'angleBisector') {
     return 'Elija un punto del primer lado, el vértice y un punto del segundo lado, en ese orden.';
   }
@@ -122,14 +123,15 @@ export const DiagramToolbar: React.FC<DiagramToolbarProps> = ({
                 <div className="grid gap-1 sm:grid-cols-2">
                   {group.tools.map(tool => {
                     const required = refsNeededForTool(tool);
-                    const disabled = required > model.points.length;
+                    const candidates = toolReferenceCandidates(model, tool);
+                    const disabled = required > candidates.length;
                     return (
                       <button
                         key={tool}
                         type="button"
                         role="menuitem"
                         aria-label={toolLabel(tool)}
-                        title={disabled ? `Se necesitan ${required} puntos; ahora hay ${model.points.length}.` : toolInstruction(tool)}
+                        title={disabled ? `Se necesitan ${required} referencias compatibles; ahora hay ${candidates.length}.` : toolInstruction(tool)}
                         disabled={disabled}
                         className={`rounded border px-2 py-1.5 text-left text-[10px] font-bold disabled:opacity-35 ${canvasTool === tool ? 'border-carbon bg-carbon text-lienzo' : 'border-carbon/10 text-carbon/75 hover:bg-carbon/5'}`}
                         onClick={() => {
@@ -139,7 +141,7 @@ export const DiagramToolbar: React.FC<DiagramToolbarProps> = ({
                         }}
                       >
                         <span className="block">{toolLabel(tool)}</span>
-                        <span className={`block text-[9px] font-normal ${canvasTool === tool ? 'text-lienzo/70' : 'text-carbon/45'}`}>{disabled ? `Faltan ${required - model.points.length} punto(s)` : toolInstruction(tool)}</span>
+                        <span className={`block text-[9px] font-normal ${canvasTool === tool ? 'text-lienzo/70' : 'text-carbon/45'}`}>{disabled ? `Faltan ${required - candidates.length} referencia(s)` : toolInstruction(tool)}</span>
                       </button>
                     );
                   })}

@@ -2,6 +2,7 @@ import { describe, expect, it } from 'vitest';
 import pointsFixture from '../../../fixtures/diagrams/phase3-points-constraints.json';
 import annotationsFixture from '../../../fixtures/diagrams/phase3-annotations-layers.json';
 import marksFixture from '../../../fixtures/diagrams/phase3-marks-angles.json';
+import primitivesFixture from '../../../fixtures/diagrams/phase3-euclidean-primitives.json';
 import { parseDiagramSourceAST } from '../../../../scripts/editor/parseDiagramSourceAST';
 import { migrateDiagramSpec } from '../../../../src/shared/diagrams/public';
 import { generateDiagramSource } from '../../../../src/features/editor/diagrams/source/generator';
@@ -52,5 +53,49 @@ describe('Phase 3 source serialization', () => {
     const parsed = parseDiagramSourceAST(generated.source);
     expect(parsed.status).toBe('visual-exact');
     if (parsed.status === 'visual-exact') expect(parsed.model).toEqual(positioned);
+  });
+
+  it('roundtrips the independent highlightability option exactly', () => {
+    const base = migrateDiagramSpec(primitivesFixture).spec;
+    const target = base.elements[0];
+    const model = {
+      ...base,
+      elements: base.elements.map(element => element.id === target.id
+        ? { ...element, selection: { ...element.selection, highlightable: false } }
+        : element),
+    };
+    const generated = generateDiagramSource(model, 'NonHighlightableElement');
+    expect(generated.ok).toBe(true);
+    if (!generated.ok) return;
+    const parsed = parseDiagramSourceAST(generated.source);
+    expect(parsed.status).toBe('visual-exact');
+    if (parsed.status !== 'visual-exact') return;
+    expect(parsed.model.elements.find(item => item.id === target.id)?.selection).toMatchObject({ selectable: true, highlightable: false });
+    const regenerated = generateDiagramSource(parsed.model, 'NonHighlightableElement');
+    expect(regenerated.ok && regenerated.source).toBe(generated.source);
+  });
+
+  it('roundtrips an editable intersection and its finite-support policy', () => {
+    const base = migrateDiagramSpec(primitivesFixture).spec;
+    const line = { ...base.elements.find(item => item.id === 'lineBC')!, id: 'lineOC', label: 'Recta OC', refs: ['pO', 'pC'], target: false };
+    const intersection = {
+      ...base.elements.find(item => item.id === 'segAB')!,
+      id: 'intQ', label: 'Q', kind: 'intersection' as const, refs: ['lineOC', 'segAB'], order: 80,
+      locked: true, target: false, properties: { restrictToSupports: true },
+    };
+    const model = { ...base, elements: [...base.elements, line, intersection] };
+    const generated = generateDiagramSource(model, 'EditableIntersection');
+    expect(generated.ok).toBe(true);
+    if (!generated.ok) return;
+    const parsed = parseDiagramSourceAST(generated.source);
+    expect(parsed.status).toBe('visual-exact');
+    if (parsed.status !== 'visual-exact') return;
+    expect(parsed.model.elements.find(item => item.id === 'intQ')).toMatchObject({
+      kind: 'intersection',
+      refs: ['lineOC', 'segAB'],
+      properties: { restrictToSupports: true },
+    });
+    const regenerated = generateDiagramSource(parsed.model, 'EditableIntersection');
+    expect(regenerated.ok && regenerated.source).toBe(generated.source);
   });
 });

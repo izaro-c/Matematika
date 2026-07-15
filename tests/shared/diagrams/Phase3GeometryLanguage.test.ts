@@ -28,6 +28,31 @@ const fixtures = [
   annotationsFixture,
 ];
 
+function modelWithIntersection() {
+  const model = structuredClone(primitivesFixture);
+  model.elements.push({
+    ...model.elements[1],
+    id: 'lineOC',
+    label: 'Recta OC',
+    kind: 'line',
+    refs: ['pO', 'pC'],
+    target: false,
+  });
+  model.elements.push({
+    ...model.elements[0],
+    id: 'intQ',
+    label: 'Q',
+    kind: 'intersection',
+    refs: ['lineOC', 'segAB'],
+    order: 80,
+    locked: true,
+    target: true,
+    properties: { restrictToSupports: true },
+    style: { pointSize: 5, highlightPointSize: 8 },
+  });
+  return model;
+}
+
 describe('Phase 3 geometry language', () => {
   it.each(fixtures.map(fixture => [fixture.extensions.acceptanceFamily, fixture] as const))('validates and serializes the %s family without loss', (_family, fixture) => {
     const parsed = parseDiagramSpecV2(fixture);
@@ -64,6 +89,24 @@ describe('Phase 3 geometry language', () => {
     const graph = buildDependencyGraph(parsed.data);
     expect(graph.edges).toContainEqual({ sourceId: 'pA', targetId: 'pB', relation: 'expression' });
     expect(graph.edges).toContainEqual({ sourceId: 'pA', targetId: 'pC', relation: 'constraint', constraintId: 'horizontalC' });
+  });
+
+  it('validates and resolves an exact intersection between two authored supports', () => {
+    const parsed = parseDiagramSpecV2(modelWithIntersection());
+    expect(parsed.success).toBe(true);
+    if (!parsed.success) return;
+    const coordinates = resolvePointCoordinates(parsed.data, 'intQ');
+    expect(coordinates?.x).toBeCloseTo(4 / 3);
+    expect(coordinates?.y).toBeCloseTo(2 / 3);
+  });
+
+  it('rejects intersection references that are not compatible supports', () => {
+    const model = modelWithIntersection();
+    const intersection = model.elements.find(element => element.id === 'intQ');
+    if (intersection) intersection.refs = ['pO', 'segAB'];
+    const parsed = parseDiagramSpecV2(model);
+    expect(parsed.success).toBe(false);
+    if (!parsed.success) expect(parsed.error.message).toContain('solo admite rectas, segmentos, semirrectas');
   });
 
   it('keeps constrained Poincaré points inside the represented disk', () => {

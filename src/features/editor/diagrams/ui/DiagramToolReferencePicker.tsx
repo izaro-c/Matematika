@@ -4,6 +4,7 @@ import {
   KIND_LABELS,
   normalizedToolReferences,
   toolReferenceLabel,
+  toolReferenceCandidates,
   toolReferencesAreReady,
   updateToolReference,
 } from '../model/commands';
@@ -25,13 +26,15 @@ export const DiagramToolReferencePicker: React.FC<DiagramToolReferencePickerProp
 }) => {
   const normalizedRefs = normalizedToolReferences(tool, refs);
   const ready = toolReferencesAreReady(tool, normalizedRefs);
+  const candidates = toolReferenceCandidates(model, tool);
+  const candidateKind = tool === 'intersection' ? 'soporte' : 'punto';
 
   return (
     <section className="rounded border border-pavo/20 bg-pavo/5 p-3" aria-labelledby="manual-reference-title">
       <div className="flex flex-wrap items-start justify-between gap-2">
         <div>
           <h3 id="manual-reference-title" className="text-[10px] font-bold uppercase tracking-widest text-carbon/60">
-            Elegir puntos sin usar el lienzo
+            Elegir referencias sin usar el lienzo
           </h3>
           <p className="mt-1 text-[10px] leading-relaxed text-carbon/55">
             Alternativa al clic: asigne cada referencia y cree {KIND_LABELS[tool].toLocaleLowerCase()} cuando estén completas.
@@ -55,12 +58,12 @@ export const DiagramToolReferencePicker: React.FC<DiagramToolReferencePickerProp
                 onChange={event => onRefsChange(updateToolReference(tool, normalizedRefs, index, event.target.value))}
                 className="mt-1 w-full rounded border border-carbon/15 bg-lienzo p-1.5 text-xs font-normal text-carbon"
               >
-                <option value="">Seleccionar punto</option>
-                {model.points.map(point => {
-                  const usedElsewhere = normalizedRefs.some((selectedRef, selectedIndex) => selectedIndex !== index && selectedRef === point.id);
+                <option value="">Seleccionar {candidateKind}</option>
+                {candidates.map(candidate => {
+                  const usedElsewhere = normalizedRefs.some((selectedRef, selectedIndex) => selectedIndex !== index && selectedRef === candidate.id);
                   return (
-                    <option key={point.id} value={point.id} disabled={usedElsewhere}>
-                      {point.label} · {point.id}
+                    <option key={candidate.id} value={candidate.id} disabled={usedElsewhere}>
+                      {candidate.label} · {candidate.id}
                     </option>
                   );
                 })}

@@ -1,13 +1,21 @@
 import { refsNeededForTool } from './diagramElements';
-import type { CanvasTool } from './types';
+import type { CanvasTool, VisualDiagramModel } from './types';
 
 const ANGLE_REFERENCE_LABELS = ['Punto del primer lado', 'Vértice', 'Punto del segundo lado'] as const;
+export const INTERSECTION_SUPPORT_KINDS = new Set(['segment', 'line', 'ray', 'perpendicular', 'parallel', 'angleBisector']);
 
 export function toolReferenceLabel(tool: CanvasTool, index: number): string {
+  if (tool === 'intersection') return `Soporte lineal ${index + 1}`;
   if (tool === 'angle' || tool === 'rightAngle' || tool === 'perpendicularMark' || tool === 'angleBisector') {
     return ANGLE_REFERENCE_LABELS[index] ?? `Punto ${index + 1}`;
   }
   return `${tool === 'polygon' ? 'Vértice' : 'Punto'} ${index + 1}`;
+}
+
+export function toolReferenceCandidates(model: VisualDiagramModel, tool: CanvasTool) {
+  return tool === 'intersection'
+    ? model.elements.filter(element => INTERSECTION_SUPPORT_KINDS.has(element.kind))
+    : model.points;
 }
 
 export function normalizedToolReferences(tool: CanvasTool, refs: readonly string[]): string[] {
@@ -16,19 +24,19 @@ export function normalizedToolReferences(tool: CanvasTool, refs: readonly string
   return Array.from({ length }, (_, index) => refs[index] ?? '');
 }
 
-export function addToolReference(tool: CanvasTool, refs: readonly string[], pointId: string): string[] {
+export function addToolReference(tool: CanvasTool, refs: readonly string[], referenceId: string): string[] {
   const normalized = normalizedToolReferences(tool, refs);
-  if (normalized.includes(pointId)) return normalized;
+  if (normalized.includes(referenceId)) return normalized;
   const openIndex = normalized.findIndex(ref => ref === '');
-  if (openIndex >= 0) normalized[openIndex] = pointId;
-  else if (tool === 'polygon') normalized.push(pointId);
+  if (openIndex >= 0) normalized[openIndex] = referenceId;
+  else if (tool === 'polygon') normalized.push(referenceId);
   return normalized;
 }
 
-export function updateToolReference(tool: CanvasTool, refs: readonly string[], index: number, pointId: string): string[] {
+export function updateToolReference(tool: CanvasTool, refs: readonly string[], index: number, referenceId: string): string[] {
   const normalized = normalizedToolReferences(tool, refs);
   if (index < 0 || index >= normalized.length) return normalized;
-  normalized[index] = pointId;
+  normalized[index] = referenceId;
   return normalized;
 }
 

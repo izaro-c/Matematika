@@ -26,6 +26,7 @@ export type DiagramElementKind =
   | 'parametricCurve'
   | 'poincareGeodesic'
   | 'poincareArc'
+  | 'intersection'
   | 'midpoint'
   | 'perpendicularFoot'
   | 'baseExtension'
@@ -67,6 +68,8 @@ export interface DiagramElementProperties {
   /** Posición normalizada [x, y] desde la esquina superior izquierda del viewport. */
   viewportPosition?: [number, number];
   clockwise?: boolean;
+  /** Oculta la intersección cuando cae fuera de un segmento o semirrecta referenciado. */
+  restrictToSupports?: boolean;
   visibleWhen?: string;
   textRules?: Array<{ when: string; text: string }>;
 }
@@ -103,6 +106,8 @@ export interface DiagramDependency {
 
 export interface DiagramSelectionMetadata {
   selectable: boolean;
+  /** Permite énfasis visual por hover, foco, selección o targets externos. */
+  highlightable?: boolean;
   ariaLabel?: string;
   role?: 'primary' | 'secondary' | 'construction' | 'annotation';
 }

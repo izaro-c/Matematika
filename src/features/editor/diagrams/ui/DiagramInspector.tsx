@@ -1,6 +1,6 @@
 import React from 'react';
 import type { VisualDiagramModel, VisualPoint, VisualElement, VisualSlider, VisualStep, ColorToken, PointConstraint } from '../model/types';
-import { COLOR_OPTIONS, KIND_LABELS, toolReferenceLabel } from '../model/commands';
+import { COLOR_OPTIONS, KIND_LABELS, toolReferenceCandidates, toolReferenceLabel } from '../model/commands';
 import { cleanTargetId, renamePoint, renameElement, renameSlider } from '../model/commands';
 import { updatePoint, updateElement, updateSlider, updateStep } from '../model/commands';
 import { DEFAULT_ANGLE_RADIUS, DEFAULT_RIGHT_ANGLE_RADIUS, extractMathExpressionIdentifiers } from '@/shared/diagrams/public';
@@ -336,7 +336,9 @@ export const DiagramInspector: React.FC<DiagramInspectorProps> = ({
                       value={ref}
                       onChange={(event) => handleElementChange({ refs: selectedElement.refs.map((value, refIndex) => refIndex === index ? event.target.value : value) })}
                     >
-                      {[...model.points, ...model.elements.filter(element => element.id !== selectedElement.id)].map(item => (
+                      {(selectedElement.kind === 'intersection'
+                        ? toolReferenceCandidates(model, 'intersection')
+                        : [...model.points, ...model.elements.filter(element => element.id !== selectedElement.id)]).map(item => (
                         <option key={item.id} value={item.id}>{item.label} ({item.id})</option>
                       ))}
                     </select>
@@ -365,6 +367,20 @@ export const DiagramInspector: React.FC<DiagramInspectorProps> = ({
                   </button>
                 </div>
               )}
+            </fieldset>
+          )}
+
+          {selectedElement.kind === 'intersection' && (
+            <fieldset className="space-y-2 rounded border border-pavo/20 bg-pavo/5 p-2">
+              <legend className="px-1 text-[10px] font-bold uppercase tracking-wider text-pavo">Intersección exacta</legend>
+              <label className="flex items-start gap-1.5 text-xs font-bold text-carbon">
+                <input
+                  type="checkbox"
+                  checked={selectedElement.properties?.restrictToSupports ?? true}
+                  onChange={(event) => handleElementPropertiesChange({ restrictToSupports: event.target.checked })}
+                />
+                <span>Exigir pertenencia a los soportes finitos<span className="mt-0.5 block text-[10px] font-normal leading-relaxed text-carbon/50">Si un soporte es un segmento o una semirrecta, el punto se oculta cuando la intersección de sus rectas portadoras cae fuera.</span></span>
+              </label>
             </fieldset>
           )}
 
@@ -557,6 +573,12 @@ export const DiagramInspector: React.FC<DiagramInspectorProps> = ({
           </div>
 
           <div className="grid grid-cols-2 gap-2 rounded border border-carbon/10 p-2">
+            {selectedElement.kind === 'intersection' && (
+              <>
+                <label className="text-xs font-bold text-carbon">Tamaño<input type="number" min="0" max="30" step="0.5" aria-label="Tamaño de la intersección" className="mt-1 w-full rounded border border-carbon/15 bg-lienzo p-1.5 text-xs" value={selectedElement.style?.pointSize ?? 4} onChange={(event) => handleElementStyleChange({ pointSize: Number(event.target.value) })} /></label>
+                <label className="text-xs font-bold text-carbon">Tamaño resaltado<input type="number" min="0" max="40" step="0.5" aria-label="Tamaño resaltado de la intersección" className="mt-1 w-full rounded border border-carbon/15 bg-lienzo p-1.5 text-xs" value={selectedElement.style?.highlightPointSize ?? 7} onChange={(event) => handleElementStyleChange({ highlightPointSize: Number(event.target.value) })} /></label>
+              </>
+            )}
             {(selectedElement.kind === 'angle' || selectedElement.kind === 'rightAngle' || selectedElement.kind === 'perpendicularMark') && (
               <label className="col-span-2 text-xs font-bold text-carbon">Radio de la marca<input type="number" min="0.05" max="10" step="0.05" aria-label="Radio de la marca angular" className="mt-1 w-full rounded border border-carbon/15 bg-lienzo p-1.5 text-xs" value={selectedElement.style?.angleRadius ?? (selectedElement.kind === 'angle' ? DEFAULT_ANGLE_RADIUS : DEFAULT_RIGHT_ANGLE_RADIUS)} onChange={(event) => handleElementStyleChange({ angleRadius: Number(event.target.value) })} /></label>
             )}
