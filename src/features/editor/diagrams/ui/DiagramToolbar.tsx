@@ -20,6 +20,9 @@ function toolInstruction(tool: CanvasTool): string {
   const required = refsNeededForTool(tool);
   if (required === 0) return 'Se crea inmediatamente y después se edita en Propiedades.';
   if (tool === 'polygon') return 'Elija al menos 3 vértices y finalice con Crear polígono.';
+  if (tool === 'angle' || tool === 'rightAngle' || tool === 'perpendicularMark' || tool === 'angleBisector') {
+    return 'Elija un punto del primer lado, el vértice y un punto del segundo lado, en ese orden.';
+  }
   return `Después se eligen ${required} ${required === 1 ? 'punto' : 'puntos'} en el lienzo.`;
 }
 

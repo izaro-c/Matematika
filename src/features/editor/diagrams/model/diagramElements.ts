@@ -1,4 +1,8 @@
-import type { DiagramStepObjectState } from '../../../../shared/diagrams/spec';
+import {
+  DEFAULT_ANGLE_RADIUS,
+  DEFAULT_RIGHT_ANGLE_RADIUS,
+  type DiagramStepObjectState,
+} from '../../../../shared/diagrams/spec';
 import type {
   CanvasTool,
   ColorToken,
@@ -37,11 +41,19 @@ export function diagramConstraint(id: string, label: string, kind: VisualConstra
 }
 
 export function element(id: string, label: string, kind: ElementKind, refs: string[], color: ColorToken, target = true, extra: Partial<VisualElement> = {}): VisualElement {
+  const defaultStyle = kind === 'angle'
+    ? { angleRadius: DEFAULT_ANGLE_RADIUS }
+    : kind === 'rightAngle' || kind === 'perpendicularMark'
+      ? { angleRadius: DEFAULT_RIGHT_ANGLE_RADIUS }
+      : undefined;
+  const mergedExtra = defaultStyle
+    ? { ...extra, style: { ...defaultStyle, ...extra.style } }
+    : extra;
   return {
     id, label, kind, refs, color, target, targetId: target ? id : undefined,
     layerId: 'geometry', order: 1000, visible: true, locked: false, groupIds: [],
     selection: { selectable: true, role: kind === 'text' || kind === 'measurement' ? 'annotation' : 'secondary', ariaLabel: label },
-    ...extra,
+    ...mergedExtra,
   };
 }
 

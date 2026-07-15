@@ -1,72 +1,267 @@
-import { MathBoard } from '@/shared/diagrams/core/MathBoard';
-import {
-  createLine, createSegment, createGlider
-} from '@/shared/diagrams/core/MathFactory';
+import { createDiagramSpec, DiagramRenderer } from '@/shared/diagrams/public';
 
+/* @matematika-diagram-spec:start */
+export const Order1Spec = createDiagramSpec(
+{
+  "version": 2,
+  "renderer": "matematika-diagram-renderer-v2",
+  "title": "Axioma de Orden I",
+  "componentId": "axioma-de-orden-i",
+  "category": "Teoremas",
+  "mode": "simulation",
+  "axis": false,
+  "grid": false,
+  "viewport": {
+    "bounds": [
+      -5,
+      5,
+      5,
+      -5
+    ],
+    "home": [
+      -5,
+      5,
+      5,
+      -5
+    ],
+    "minZoom": 0.2,
+    "maxZoom": 12,
+    "padding": 0.16
+  },
+  "layers": [
+    {
+      "id": "geometry",
+      "label": "Geometría",
+      "order": 0,
+      "visible": true,
+      "locked": false
+    },
+    {
+      "id": "controls",
+      "label": "Controles",
+      "order": 1,
+      "visible": true,
+      "locked": false
+    },
+    {
+      "id": "layer3",
+      "label": "Oculto",
+      "order": 2,
+      "visible": false,
+      "locked": false
+    }
+  ],
+  "groups": [],
+  "points": [
+    {
+      "id": "pA",
+      "label": "A",
+      "color": "ocre",
+      "layerId": "geometry",
+      "order": 5000,
+      "visible": true,
+      "locked": false,
+      "groupIds": [],
+      "selection": {
+        "selectable": true,
+        "ariaLabel": "Punto A",
+        "role": "primary"
+      },
+      "target": true,
+      "targetId": "pA",
+      "style": {
+        "pointSize": 7,
+        "highlightPointSize": 10,
+        "preserveColorOnHighlight": true
+      },
+      "x": -2.5,
+      "y": 0,
+      "fixed": false,
+      "constraint": "glider",
+      "gliderTarget": "lineDC"
+    },
+    {
+      "id": "pC",
+      "label": "C",
+      "color": "ocre",
+      "layerId": "geometry",
+      "order": 6000,
+      "visible": true,
+      "locked": false,
+      "groupIds": [],
+      "selection": {
+        "selectable": true,
+        "ariaLabel": "Punto B",
+        "role": "primary"
+      },
+      "target": true,
+      "targetId": "pB",
+      "style": {
+        "pointSize": 7,
+        "highlightPointSize": 10,
+        "preserveColorOnHighlight": true
+      },
+      "x": 4.5,
+      "y": 0,
+      "fixed": false,
+      "constraint": "glider",
+      "gliderTarget": "lineDC"
+    },
+    {
+      "id": "pL",
+      "label": "l",
+      "color": "carbon",
+      "layerId": "geometry",
+      "order": 2000,
+      "visible": true,
+      "locked": false,
+      "groupIds": [],
+      "selection": {
+        "selectable": true,
+        "ariaLabel": "Punto C",
+        "role": "primary"
+      },
+      "target": true,
+      "targetId": "pC",
+      "style": {
+        "pointSize": 0,
+        "highlightPointSize": 0,
+        "preserveColorOnHighlight": true
+      },
+      "x": 0,
+      "y": 0,
+      "fixed": false,
+      "constraint": "free"
+    },
+    {
+      "id": "pD",
+      "label": "D",
+      "color": "terracota",
+      "layerId": "layer3",
+      "order": 3000,
+      "visible": true,
+      "locked": false,
+      "groupIds": [],
+      "selection": {
+        "selectable": true,
+        "ariaLabel": "Punto D",
+        "role": "primary"
+      },
+      "target": true,
+      "targetId": "pD",
+      "x": 1,
+      "y": 0,
+      "fixed": false,
+      "constraint": "free"
+    },
+    {
+      "id": "pB",
+      "label": "B",
+      "color": "terracota",
+      "layerId": "geometry",
+      "order": 8000,
+      "visible": true,
+      "locked": false,
+      "groupIds": [],
+      "selection": {
+        "selectable": true,
+        "ariaLabel": "Punto E",
+        "role": "primary"
+      },
+      "target": true,
+      "targetId": "pE",
+      "style": {
+        "pointSize": 7,
+        "highlightPointSize": 10,
+        "preserveColorOnHighlight": true
+      },
+      "x": 1,
+      "y": 0,
+      "fixed": false,
+      "constraint": "glider",
+      "gliderTarget": "segAB"
+    }
+  ],
+  "elements": [
+    {
+      "id": "lineDC",
+      "label": "Recta",
+      "color": "carbon",
+      "layerId": "geometry",
+      "order": 4000,
+      "visible": true,
+      "locked": false,
+      "groupIds": [],
+      "selection": {
+        "selectable": true,
+        "ariaLabel": "Recta",
+        "role": "secondary"
+      },
+      "target": true,
+      "targetId": "lineDC",
+      "style": {
+        "strokeWidth": 2,
+        "highlightStrokeWidth": 2,
+        "preserveColorOnHighlight": true
+      },
+      "kind": "line",
+      "refs": [
+        "pD",
+        "pL"
+      ]
+    },
+    {
+      "id": "segAB",
+      "label": "Segmento",
+      "color": "carbon",
+      "layerId": "layer3",
+      "order": 7000,
+      "visible": true,
+      "locked": false,
+      "groupIds": [],
+      "selection": {
+        "selectable": true,
+        "ariaLabel": "Segmento",
+        "role": "secondary"
+      },
+      "target": true,
+      "targetId": "segAB",
+      "kind": "segment",
+      "refs": [
+        "pA",
+        "pC"
+      ]
+    }
+  ],
+  "sliders": [],
+  "steps": [],
+  "constraints": [],
+  "dependencies": [
+    {
+      "sourceId": "pD",
+      "targetId": "lineDC",
+      "relation": "construction"
+    },
+    {
+      "sourceId": "pL",
+      "targetId": "lineDC",
+      "relation": "construction"
+    },
+    {
+      "sourceId": "pA",
+      "targetId": "segAB",
+      "relation": "construction"
+    },
+    {
+      "sourceId": "pC",
+      "targetId": "segAB",
+      "relation": "construction"
+    }
+  ],
+  "note": "Arrastra B",
+  "extensions": {}
+}
+);
+/* @matematika-diagram-spec:end */
 
-
-
-
-
-
-export const Order1 = () => {
-
-
-
-
-
-
-
-  const onInit = (board: any, els: any, theme: any) => {
-      void board; void els; void theme;
-      const line = createLine(board, [[-10, 0], [10, 0]], {
-      name: 'l', withLabel: true, label: { position: 'bot', offset: [-15, -15], strokeColor: theme.carbon, fontSize: 16 },
-      strokeColor: theme.carbon, strokeWidth: 2, straightFirst: true, straightLast: true,
-    }, theme);
-
-    const pA = createGlider(board, [-3, 0, line], {
-      name: 'A', size: 5, fillColor: theme.terracota, strokeColor: theme.terracota, showInfobox: false,
-    }, theme);
-    const pC = createGlider(board, [3, 0, line], {
-      name: 'C', size: 5, fillColor: theme.terracota, strokeColor: theme.terracota, showInfobox: false,
-    }, theme);
-
-    const seg = createSegment(board, [pA, pC], { visible: false }, theme);
-    const pB = createGlider(board, [0, 0, seg], {
-      name: 'B', size: 5, fillColor: theme.terracota, strokeColor: theme.terracota, showInfobox: false,
-    }, theme);
-
-      // Registrar elementos para interactividad y auditoría
-      els.line = line;
-        els.pA = pA;
-        els.pB = pB;
-        els.pC = pC;
-    };;
-
-  const onUpdate = (board: any, els: any, theme: any, isStep: any, isHL: any) => {
-      const isHighlight = isHL;
-      void board; void els; void theme; void isStep; void isHL; void isHighlight;
-      const { line, pA, pB, pC } = els;
-      line.setAttribute({ strokeColor: isHL('line') ? theme.ocre : theme.carbon, strokeWidth: isHL('line') ? 4 : 2 });
-
-    [pA, pB, pC].forEach(p => p.setAttribute({ fillColor: theme.terracota, strokeColor: theme.terracota, size: 5 }));
-
-    if (isHL('pA')) pA.setAttribute({ fillColor: theme.ocre, strokeColor: theme.ocre, size: 8 });
-    if (isHL('pB')) pB.setAttribute({ fillColor: theme.ocre, strokeColor: theme.ocre, size: 8 });
-    if (isHL('pC')) pC.setAttribute({ fillColor: theme.ocre, strokeColor: theme.ocre, size: 8 });
-    };;
-
-  return (
-    <MathBoard
-      boundingbox={[-5, 2, 5, -2]}
-      axis={false}
-      grid={false}
-      onInit={onInit}
-      onUpdate={onUpdate}
-    >
-      <div className="absolute top-3 left-3 z-10 text-[10px] font-sans text-pizarra/50 uppercase tracking-wider">
-        Desplaza el punto B
-      </div>
-    </MathBoard>
-  );
-};
+export const Order1 = () => <DiagramRenderer spec={Order1Spec} />;

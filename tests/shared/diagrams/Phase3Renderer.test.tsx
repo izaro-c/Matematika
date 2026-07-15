@@ -278,6 +278,13 @@ describe('Phase 3 shared renderer', () => {
     expectedKinds.forEach(kind => expect(rendererState.createdKinds).toContain(kind));
   });
 
+  it('renders angles without an authored radius using the canonical default', () => {
+    render(<MathProvider><DiagramRenderer spec={migrateDiagramSpec(marksFixture).spec} viewportControls={false} /></MathProvider>);
+
+    const renderedAngle = rendererState.createdOptions.find(({ kind }) => kind === 'angle');
+    expect(renderedAngle?.options.radius).toBe(0.55);
+  });
+
   it('applies the dashed style to polygon borders', () => {
     const base = migrateDiagramSpec(primitivesFixture).spec;
     const polygon = base.elements.find(item => item.kind === 'polygon');

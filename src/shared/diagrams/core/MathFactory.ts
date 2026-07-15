@@ -1,4 +1,5 @@
 import type { ThemeColors } from './MathBoard';
+import { DEFAULT_ANGLE_RADIUS, DEFAULT_RIGHT_ANGLE_RADIUS } from '../spec';
 
 type JXGCoord = number | (() => number);
 const diagramFontStyle = 'font-family: var(--font-diagram-family);';
@@ -455,21 +456,22 @@ export function createAngleBisectorRay(board: any, points: [any, any, any], opti
 }
 
 export function createAngle(board: any, points: [any, any, any], options: any = {}, theme: ThemeColors) {
+  const { radius = DEFAULT_ANGLE_RADIUS, ...attrs } = options;
   return board.create('angle', points, {
     type: 'sector',
-    radius: 0.55,
+    radius,
     fillColor: theme.ocre,
     fillOpacity: 0.1,
     strokeColor: theme.ocre,
     strokeWidth: 1.5,
     label: { visible: false },
-    ...options,
+    ...attrs,
   });
 }
 
 export function createRightAngleMarker(board: any, points: [any, any, any], options: any = {}, theme: ThemeColors) {
   const [legA, vertex, legB] = points;
-  const { size = 0.45, ...attrs } = options;
+  const { size = DEFAULT_RIGHT_ANGLE_RADIUS, ...attrs } = options;
   const unit = (from: any, to: any) => {
     const dx = to.X() - from.X();
     const dy = to.Y() - from.Y();

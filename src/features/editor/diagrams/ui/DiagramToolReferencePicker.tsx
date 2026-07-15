@@ -3,6 +3,7 @@ import type { CanvasTool, VisualDiagramModel } from '../model/types';
 import {
   KIND_LABELS,
   normalizedToolReferences,
+  toolReferenceLabel,
   toolReferencesAreReady,
   updateToolReference,
 } from '../model/commands';
@@ -43,27 +44,30 @@ export const DiagramToolReferencePicker: React.FC<DiagramToolReferencePickerProp
       </div>
 
       <div className="mt-3 grid gap-2 sm:grid-cols-2">
-        {normalizedRefs.map((ref, index) => (
-          <label key={index} className="text-[10px] font-bold text-carbon/60">
-            {tool === 'polygon' ? 'Vértice' : 'Punto'} {index + 1}
-            <select
-              aria-label={`${tool === 'polygon' ? 'Vértice' : 'Punto'} ${index + 1} para ${KIND_LABELS[tool]}`}
-              value={ref}
-              onChange={event => onRefsChange(updateToolReference(tool, normalizedRefs, index, event.target.value))}
-              className="mt-1 w-full rounded border border-carbon/15 bg-lienzo p-1.5 text-xs font-normal text-carbon"
-            >
-              <option value="">Seleccionar punto</option>
-              {model.points.map(point => {
-                const usedElsewhere = normalizedRefs.some((selectedRef, selectedIndex) => selectedIndex !== index && selectedRef === point.id);
-                return (
-                  <option key={point.id} value={point.id} disabled={usedElsewhere}>
-                    {point.label} · {point.id}
-                  </option>
-                );
-              })}
-            </select>
-          </label>
-        ))}
+        {normalizedRefs.map((ref, index) => {
+          const referenceLabel = toolReferenceLabel(tool, index);
+          return (
+            <label key={index} className="text-[10px] font-bold text-carbon/60">
+              {referenceLabel}
+              <select
+                aria-label={`${referenceLabel} para ${KIND_LABELS[tool]}`}
+                value={ref}
+                onChange={event => onRefsChange(updateToolReference(tool, normalizedRefs, index, event.target.value))}
+                className="mt-1 w-full rounded border border-carbon/15 bg-lienzo p-1.5 text-xs font-normal text-carbon"
+              >
+                <option value="">Seleccionar punto</option>
+                {model.points.map(point => {
+                  const usedElsewhere = normalizedRefs.some((selectedRef, selectedIndex) => selectedIndex !== index && selectedRef === point.id);
+                  return (
+                    <option key={point.id} value={point.id} disabled={usedElsewhere}>
+                      {point.label} · {point.id}
+                    </option>
+                  );
+                })}
+              </select>
+            </label>
+          );
+        })}
       </div>
 
       {tool === 'polygon' && (
