@@ -85,7 +85,10 @@ describe('GraphStore worker coordination', () => {
       adjacency: {},
       dependsOn: {},
       activeStates: {},
-      disabledAxioms: [],
+      disabledAxioms: expect.arrayContaining([
+        'axioma-paralelas-euclides',
+        'axioma-paralelas-hiperbolico',
+      ]),
       isLoading: true,
       toggleAxiom: expect.any(Function),
       setActiveAxioms: expect.any(Function),
@@ -95,6 +98,7 @@ describe('GraphStore worker coordination', () => {
       getAdjacency: expect.any(Function),
       getDependsOn: expect.any(Function),
     }));
+    expect(initial.inactiveSystems).toEqual(initial.systems.map((system) => system.id));
 
     initial.initWorker();
     const worker = FakeWorker.instances[0];
@@ -117,6 +121,57 @@ describe('GraphStore worker coordination', () => {
       status: 'success',
       error: null,
     }));
+  });
+
+  it('keeps alternative parallel postulates mutually exclusive', async () => {
+    const { useGraphStore } = await import('@/features/graph/GraphStore');
+
+    useGraphStore.getState().toggleAxiom('axioma-paralelas-euclides');
+    expect(useGraphStore.getState().disabledAxioms).not.toContain('axioma-paralelas-euclides');
+    expect(useGraphStore.getState().disabledAxioms).toContain('axioma-paralelas-hiperbolico');
+
+    useGraphStore.getState().toggleAxiom('axioma-paralelas-hiperbolico');
+    expect(useGraphStore.getState().disabledAxioms).toContain('axioma-paralelas-euclides');
+    expect(useGraphStore.getState().disabledAxioms).not.toContain('axioma-paralelas-hiperbolico');
+  });
+
+  it('neutralizes contradictory bulk selections and restores named systems exactly', async () => {
+    const { useGraphStore } = await import('@/features/graph/GraphStore');
+    const state = useGraphStore.getState();
+
+    state.setActiveAxioms(state.axioms);
+    expect(useGraphStore.getState().disabledAxioms).toEqual(expect.arrayContaining([
+      'axioma-paralelas-euclides',
+      'axioma-paralelas-hiperbolico',
+    ]));
+
+    useGraphStore.getState().toggleSystem('sistema-euclidiano');
+    expect(useGraphStore.getState().disabledAxioms).not.toContain('axioma-paralelas-euclides');
+    expect(useGraphStore.getState().disabledAxioms).toContain('axioma-paralelas-hiperbolico');
+
+    useGraphStore.getState().toggleSystem('sistema-euclidiano');
+    expect(useGraphStore.getState().inactiveSystems).not.toContain('sistema-euclidiano');
+  });
+
+  it('migrates a legacy all-active state to a domain-neutral manual base', async () => {
+    const { db } = await import('@/entities/content');
+    localStorage.setItem('graph-model-storage', JSON.stringify({
+      state: {
+        inactiveModels: db.getAllModels().map((model) => model.id),
+        inactiveSystems: db.getAllAxiomaticSystems().map((system) => system.id),
+        disabledAxioms: [],
+      },
+      version: 0,
+    }));
+
+    const { useGraphStore } = await import('@/features/graph/GraphStore');
+    const migrated = useGraphStore.getState();
+
+    expect(migrated.disabledAxioms).toEqual(expect.arrayContaining([
+      'axioma-paralelas-euclides',
+      'axioma-paralelas-hiperbolico',
+    ]));
+    expect(migrated.inactiveSystems).toEqual(migrated.systems.map((system) => system.id));
   });
 
   it('keeps the layout cached and coalesces rapid logical evaluations', async () => {

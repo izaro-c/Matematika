@@ -108,6 +108,45 @@ describe('graph worker message contract', () => {
     });
   });
 
+  it('rejects an inconsistent axiom universe defensively', async () => {
+    const inconsistentGraph: GraphWorkerStructure = {
+      topologicalOrder: ['axioma-euclides', 'axioma-hiperbolico'],
+      nodes: {
+        'axioma-euclides': {
+          id: 'axioma-euclides',
+          type: 'axioma',
+          alternativeGroup: 'postulado-paralelas',
+          title: 'Paralelas de Euclides',
+          description: '',
+          proofs: [],
+          directDependencies: [],
+        },
+        'axioma-hiperbolico': {
+          id: 'axioma-hiperbolico',
+          type: 'axioma',
+          alternativeGroup: 'postulado-paralelas',
+          title: 'Paralelas de Lobachevski',
+          description: '',
+          proofs: [],
+          directDependencies: [],
+        },
+      },
+    };
+
+    expect(await processGraphWorkerMessage(createGraphWorkerInitializeRequest(
+      10,
+      inconsistentGraph,
+      [],
+    ))).toEqual({
+      type: 'error',
+      requestId: 10,
+      error: {
+        code: 'INCONSISTENT_AXIOMS',
+        message: expect.stringContaining('postulado-paralelas'),
+      },
+    });
+  });
+
   it('rejects malformed worker responses instead of trusting their payload', () => {
     expect(parseGraphWorkerResponse({
       type: 'initialized',

@@ -191,6 +191,7 @@ describe('AxiomSchema', () => {
     expectValid(AxiomSchema, {
       ...valid, statement: 'stmt',
       tags: ['tag'], authors: ['euclides'], links: ['link-1'],
+      axiomFamily: 'Teoría de conjuntos', alternativeGroup: 'principio-eleccion',
     });
   });
   it('rejects missing title', () => expectInvalid(AxiomSchema, { id: 'x', type: 'axioma', description: 'd' }));

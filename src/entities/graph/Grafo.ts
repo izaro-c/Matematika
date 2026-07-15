@@ -1,5 +1,6 @@
 import type { GraphStructure, ModelInfo } from './graphTypes';
 import { Nodo } from './Nodo';
+import { findAxiomSelectionConflicts } from './axiomSelection';
 
 const VISIBLE = new Set(['axioma', 'lema', 'corolario', 'teorema', 'definicion', 'modelo']);
 
@@ -48,6 +49,20 @@ export class Grafo {
   }
 
   evaluate(activeAxioms: Record<string, boolean>): Set<string> {
+    const activeAxiomIds = Object.entries(activeAxioms)
+      .filter(([, isActive]) => isActive)
+      .map(([axiomId]) => axiomId);
+    const selectableAxioms = [...this.nodi.values()]
+      .filter((nodo) => nodo.isAxiom)
+      .map((nodo) => ({ id: nodo.id, alternativeGroup: nodo.alternativeGroup }));
+    const conflicts = findAxiomSelectionConflicts(selectableAxioms, activeAxiomIds);
+    if (conflicts.length > 0) {
+      const conflict = conflicts[0];
+      throw new Error(
+        `Selección axiomática inconsistente en ${conflict.group}: ${conflict.axiomIds.join(', ')}`,
+      );
+    }
+
     const validNodes = new Set<string>();
 
     for (const [axiomId, isActive] of Object.entries(activeAxioms)) {
@@ -74,7 +89,7 @@ export class Grafo {
     activeModelIds: string[],
     allAxioms: string[] = [],
   ): string[] {
-    if (activeModelIds.length === 0) return [];
+    if (activeModelIds.length === 0) return [...allAxioms];
     const activeModels = models.filter((m) => activeModelIds.includes(m.id));
     const enabled = new Set<string>();
     for (const m of activeModels) {

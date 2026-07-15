@@ -48,11 +48,19 @@ export function AxiomaticSidebar({
   const axiomPages = db.getAllAxioms();
   const disabledAxiomIds = new Set(disabledAxioms);
   const activeAxiomCount = axioms.length - disabledAxioms.length;
+  const neutralAxiomIds = axiomPages
+    .filter((axiom) => !axiom.alternativeGroup)
+    .map((axiom) => axiom.id);
+  const neutralAxiomIdSet = new Set(neutralAxiomIds);
+  const isNeutralBase = activeAxiomCount === neutralAxiomIds.length
+    && axioms.every((id) => disabledAxiomIds.has(id) || neutralAxiomIdSet.has(id));
   const validNodeCount = Object.values(activeStates).filter(Boolean).length;
   const evaluatedNodeCount = Object.keys(activeStates).length;
   const activeSystem = systems.find(system => !inactiveSystems.includes(system.id));
   const activeModel = models.find(model => !inactiveModels.includes(model.id));
-  const activeContext = activeSystem?.title ?? activeModel?.title ?? 'Selección manual';
+  const activeContext = activeSystem?.title
+    ?? activeModel?.title
+    ?? (isNeutralBase ? 'Base neutral' : 'Selección manual');
 
   let statusLabel = 'Actualizado';
   let statusColor = 'text-musgo';
@@ -206,8 +214,9 @@ export function AxiomaticSidebar({
         <AxiomaticAxiomPicker
           axioms={axiomPages}
           disabledAxioms={disabledAxiomIds}
+          baselineAxiomIds={neutralAxiomIds}
           onToggle={toggleAxiom}
-          onActivateAll={() => setActiveAxioms(axioms)}
+          onRestoreBaseline={() => setActiveAxioms(neutralAxiomIds)}
           onDeactivateAll={() => setActiveAxioms([])}
         />
       </div>

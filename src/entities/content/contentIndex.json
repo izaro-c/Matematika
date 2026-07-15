@@ -969,6 +969,7 @@
         "euclides",
         "hilbert"
       ],
+      "alternativeGroup": "postulado-paralelas",
       "hasSimulation": true,
       "links": [
         "punto",
@@ -997,6 +998,7 @@
         "lobachevski",
         "bolyai"
       ],
+      "alternativeGroup": "postulado-paralelas",
       "hasSimulation": true,
       "links": [
         "punto",

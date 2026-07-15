@@ -25,11 +25,11 @@ export const SEMANTIC_COLOR_ROLES = {
   modelAccent:        THEME_COLOR_VARS.pavo,       // pavo
   exampleAccent:      THEME_COLOR_VARS.pizarra,    // pizarra
   exerciseAccent:     THEME_COLOR_VARS.granada,
-  biographyAccent:    THEME_COLOR_VARS.salvia,
+  biographyAccent:    THEME_COLOR_VARS.pizarra,
 
   // Editorial secundario y roles de utilidad
   conceptAccent:      THEME_COLOR_VARS.carbon,
-  referenceAccent:    THEME_COLOR_VARS.musgo,     // salvia
+  referenceAccent:    THEME_COLOR_VARS.musgo,
   foundationalAccent: THEME_COLOR_VARS.ocre,       // ocre
 } as const satisfies Record<string, ThemeColorVar>;
 

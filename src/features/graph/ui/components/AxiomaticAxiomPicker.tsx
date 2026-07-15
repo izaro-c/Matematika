@@ -5,13 +5,16 @@ import { getAxiomGroup } from '../../lib/graphUtils';
 export interface AxiomOption {
   id: string;
   title: string;
+  axiomFamily?: string;
+  alternativeGroup?: string;
 }
 
 interface AxiomaticAxiomPickerProps {
   axioms: AxiomOption[];
   disabledAxioms: Set<string>;
+  baselineAxiomIds: string[];
   onToggle: (id: string) => void;
-  onActivateAll: () => void;
+  onRestoreBaseline: () => void;
   onDeactivateAll: () => void;
 }
 
@@ -28,7 +31,9 @@ function groupAxioms(axioms: AxiomOption[]): AxiomGroup[] {
   for (const axiom of axioms) {
     const presentation = getAxiomGroup(axiom.id);
     const isContinuityAxiom = axiom.id === 'axioma-arquimedes' || axiom.id === 'axioma-completitud';
-    const label = presentation?.label ?? (isContinuityAxiom ? 'Continuidad' : 'Otros axiomas');
+    const label = axiom.axiomFamily
+      ?? presentation?.label
+      ?? (isContinuityAxiom ? 'Continuidad' : 'Otros axiomas');
     const group = groups.get(label) ?? {
       label,
       color: presentation?.color ?? CONTENT_TYPE_COLORS.axioma.cssVar,
@@ -41,20 +46,32 @@ function groupAxioms(axioms: AxiomOption[]): AxiomGroup[] {
   return [...groups.values()].sort((left, right) => {
     const leftIndex = groupOrder.indexOf(left.label);
     const rightIndex = groupOrder.indexOf(right.label);
-    return (leftIndex < 0 ? groupOrder.length : leftIndex)
-      - (rightIndex < 0 ? groupOrder.length : rightIndex);
+    if (leftIndex >= 0 && rightIndex >= 0) return leftIndex - rightIndex;
+    if (leftIndex >= 0) return -1;
+    if (rightIndex >= 0) return 1;
+    return left.label.localeCompare(right.label, 'es');
   });
+}
+
+function formatAlternativeGroup(groupId: string): string {
+  const words = groupId.split('-').join(' ');
+  return words.charAt(0).toUpperCase() + words.slice(1);
 }
 
 export function AxiomaticAxiomPicker({
   axioms,
   disabledAxioms,
+  baselineAxiomIds,
   onToggle,
-  onActivateAll,
+  onRestoreBaseline,
   onDeactivateAll,
 }: AxiomaticAxiomPickerProps) {
   const activeCount = axioms.length - disabledAxioms.size;
   const groups = groupAxioms(axioms);
+  const activeAxiomIds = new Set(axioms.filter((axiom) => !disabledAxioms.has(axiom.id)).map((axiom) => axiom.id));
+  const baselineIds = new Set(baselineAxiomIds);
+  const isBaselineActive = activeAxiomIds.size === baselineIds.size
+    && [...activeAxiomIds].every((id) => baselineIds.has(id));
 
   return (
     <section aria-labelledby="axiom-picker-title">
@@ -64,7 +81,7 @@ export function AxiomaticAxiomPicker({
             Ajuste axiomático
           </h2>
           <p className="mt-1 font-sans text-[10px] leading-relaxed text-carbon/60">
-            Se puede afinar la base por familias.
+            Las alternativas incompatibles se eligen por separado.
           </p>
         </div>
         <span className="shrink-0 font-sans text-[9px] tabular-nums text-carbon/50">
@@ -75,11 +92,11 @@ export function AxiomaticAxiomPicker({
       <div className="mt-3 flex gap-4 border-y border-carbon/10 py-2">
         <button
           type="button"
-          onClick={onActivateAll}
-          disabled={activeCount === axioms.length}
+          onClick={onRestoreBaseline}
+          disabled={isBaselineActive}
           className="font-sans text-[10px] font-semibold text-terracota transition-colors hover:text-carbon focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-terracota disabled:cursor-default disabled:text-carbon/30"
         >
-          Activar todos
+          Restaurar base neutral
         </button>
         <button
           type="button"
@@ -87,7 +104,7 @@ export function AxiomaticAxiomPicker({
           disabled={activeCount === 0}
           className="font-sans text-[10px] font-semibold text-carbon/55 transition-colors hover:text-carbon focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-terracota disabled:cursor-default disabled:text-carbon/30"
         >
-          Desactivar todos
+          Vaciar base
         </button>
       </div>
 
@@ -95,6 +112,15 @@ export function AxiomaticAxiomPicker({
         {groups.map(group => {
           const groupActiveCount = group.axioms.filter(axiom => !disabledAxioms.has(axiom.id)).length;
           const groupStyle = { '--axiom-group-color': group.color } as CSSProperties;
+          const independentAxioms = group.axioms.filter((axiom) => !axiom.alternativeGroup);
+          const alternatives = new Map<string, AxiomOption[]>();
+          for (const axiom of group.axioms) {
+            if (!axiom.alternativeGroup) continue;
+            const options = alternatives.get(axiom.alternativeGroup) ?? [];
+            options.push(axiom);
+            alternatives.set(axiom.alternativeGroup, options);
+          }
+          const showAlternativeLabels = independentAxioms.length > 0 || alternatives.size > 1;
 
           return (
             <details key={group.label} className="group border-b border-carbon/10" style={groupStyle}>
@@ -109,7 +135,7 @@ export function AxiomaticAxiomPicker({
 
               <fieldset className="pb-2 pl-4">
                 <legend className="sr-only">Axiomas de {group.label}</legend>
-                {group.axioms.map(axiom => {
+                {independentAxioms.map(axiom => {
                   const isActive = !disabledAxioms.has(axiom.id);
                   return (
                     <label
@@ -129,6 +155,60 @@ export function AxiomaticAxiomPicker({
                       />
                       <span className="font-serif text-[11px] leading-tight">{axiom.title}</span>
                     </label>
+                  );
+                })}
+                {[...alternatives.entries()].map(([alternativeGroup, options]) => {
+                  const activeOptions = options.filter((axiom) => !disabledAxioms.has(axiom.id));
+                  return (
+                    <div key={alternativeGroup} role="group" aria-label={formatAlternativeGroup(alternativeGroup)}>
+                      {showAlternativeLabels && (
+                        <p className="px-2 pb-1 pt-2 font-sans text-[8px] font-bold uppercase tracking-[0.12em] text-carbon/45">
+                          {formatAlternativeGroup(alternativeGroup)}
+                        </p>
+                      )}
+                      <label
+                        className={`flex min-h-10 cursor-pointer items-start gap-2.5 border-l-2 px-2 py-2 transition-colors ${
+                          activeOptions.length === 0
+                            ? 'border-[var(--axiom-group-color)] bg-[color-mix(in_srgb,var(--axiom-group-color)_7%,transparent)] text-carbon'
+                            : 'border-transparent text-carbon/55 hover:bg-carbon/[0.025] hover:text-carbon'
+                        }`}
+                      >
+                        <input
+                          type="radio"
+                          name={`axiom-alternative-${alternativeGroup}`}
+                          checked={activeOptions.length === 0}
+                          onChange={() => {
+                            for (const axiom of activeOptions) onToggle(axiom.id);
+                          }}
+                          className="mt-0.5 size-3.5 shrink-0 cursor-pointer"
+                          style={{ accentColor: group.color }}
+                        />
+                        <span className="font-serif text-[11px] leading-tight">Ninguno — sin decidir</span>
+                      </label>
+                      {options.map((axiom) => {
+                        const isActive = !disabledAxioms.has(axiom.id);
+                        return (
+                          <label
+                            key={axiom.id}
+                            className={`flex min-h-10 cursor-pointer items-start gap-2.5 border-l-2 px-2 py-2 transition-colors ${
+                              isActive
+                                ? 'border-[var(--axiom-group-color)] bg-[color-mix(in_srgb,var(--axiom-group-color)_7%,transparent)] text-carbon'
+                                : 'border-transparent text-carbon/55 hover:bg-carbon/[0.025] hover:text-carbon'
+                            }`}
+                          >
+                            <input
+                              type="radio"
+                              name={`axiom-alternative-${alternativeGroup}`}
+                              checked={isActive}
+                              onChange={() => onToggle(axiom.id)}
+                              className="mt-0.5 size-3.5 shrink-0 cursor-pointer"
+                              style={{ accentColor: group.color }}
+                            />
+                            <span className="font-serif text-[11px] leading-tight">{axiom.title}</span>
+                          </label>
+                        );
+                      })}
+                    </div>
                   );
                 })}
               </fieldset>

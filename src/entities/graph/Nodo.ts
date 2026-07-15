@@ -7,12 +7,14 @@ const THEOREM_TYPES = new Set([
 export class Nodo {
   readonly id: string;
   readonly type: string;
+  readonly alternativeGroup?: string;
   readonly proofs: GraphNodeMeta['proofs'];
   readonly directDependencies: string[];
 
   constructor(id: string, meta: GraphNodeMeta) {
     this.id = id;
     this.type = meta.type;
+    this.alternativeGroup = meta.alternativeGroup;
     this.proofs = meta.proofs;
     this.directDependencies = meta.directDependencies;
   }

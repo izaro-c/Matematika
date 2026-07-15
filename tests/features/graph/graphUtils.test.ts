@@ -41,9 +41,9 @@ describe('knowledge graph presentation', () => {
     const colors = types.map(type => CONTENT_TYPE_CONFIG[type].graphColor);
 
     expect(new Set(colors).size).toBe(colors.length);
-    expect(CONTENT_TYPE_CONFIG.definicion.graphColor).toBe('var(--theme-salvia)');
-    expect(CONTENT_TYPE_CONFIG.corolario.graphColor).toBe('var(--theme-pizarra)');
+    expect(CONTENT_TYPE_CONFIG.definicion.graphColor).toBe('var(--theme-musgo)');
+    expect(CONTENT_TYPE_CONFIG.corolario.graphColor).toBe('var(--theme-salvia)');
     expect(CONTENT_TYPE_CONFIG.lema.graphColor).toBe('var(--theme-granada)');
-    expect(CONTENT_TYPE_CONFIG.matematico.graphColor).toBe('var(--theme-musgo)');
+    expect(CONTENT_TYPE_CONFIG.matematico.graphColor).toBe('var(--theme-pizarra)');
   });
 });

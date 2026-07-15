@@ -6,6 +6,7 @@ export interface GraphWorkerProof {
 export interface GraphWorkerNode {
   id: string;
   type: string;
+  alternativeGroup?: string;
   subtype?: string;
   title: string;
   description: string;
@@ -81,6 +82,7 @@ export type GraphWorkerRequest = GraphWorkerInitializeRequest | GraphWorkerEvalu
 
 export type GraphWorkerErrorCode =
   | 'INVALID_REQUEST'
+  | 'INCONSISTENT_AXIOMS'
   | 'NOT_INITIALIZED'
   | 'COMPUTE_ERROR'
   | 'WORKER_ERROR'
@@ -119,6 +121,7 @@ export type GraphWorkerRequestParseResult =
 
 const ERROR_CODES = new Set<GraphWorkerErrorCode>([
   'INVALID_REQUEST',
+  'INCONSISTENT_AXIOMS',
   'NOT_INITIALIZED',
   'COMPUTE_ERROR',
   'WORKER_ERROR',
@@ -147,6 +150,7 @@ function isGraphWorkerNode(value: unknown): value is GraphWorkerNode {
   return isRecord(value)
     && typeof value.id === 'string'
     && typeof value.type === 'string'
+    && (value.alternativeGroup === undefined || typeof value.alternativeGroup === 'string')
     && (value.subtype === undefined || typeof value.subtype === 'string')
     && typeof value.title === 'string'
     && typeof value.description === 'string'

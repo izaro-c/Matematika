@@ -458,6 +458,7 @@
     "axioma-paralelas-euclides": {
       "id": "axioma-paralelas-euclides",
       "type": "axioma",
+      "alternativeGroup": "postulado-paralelas",
       "title": "Axioma de las Paralelas (Euclides)",
       "description": "Por un punto exterior a una recta pasa exactamente una recta paralela a la dada.",
       "proofs": [],
@@ -470,6 +471,7 @@
     "axioma-paralelas-hiperbolico": {
       "id": "axioma-paralelas-hiperbolico",
       "type": "axioma",
+      "alternativeGroup": "postulado-paralelas",
       "title": "Axioma de las Paralelas (Lobachevski)",
       "description": "Por un punto exterior a una recta pasan al menos dos rectas paralelas a la dada.",
       "proofs": [],
