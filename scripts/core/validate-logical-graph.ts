@@ -150,7 +150,7 @@ const HIERARCHY_LEVEL: Record<string, number> = {
   'sistema-axiomatico': 6,
   'modelo': 7,
   'matematico': 10,
-  'leccion': 10,
+  'metodo': 10,
   'ejercicio': 10,
   'ejemplo': 10,
   'caso_de_uso': 10,

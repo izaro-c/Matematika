@@ -22,7 +22,7 @@ export const SEMANTIC_COLOR_ROLES = {
   theoremAccent:      THEME_COLOR_VARS.terracota,  // terracota
   corollaryAccent:    THEME_COLOR_VARS.musgo,      // musgo
   proofAccent:        THEME_COLOR_VARS.granada,    // granada
-  lessonAccent:       THEME_COLOR_VARS.ocre,
+  methodAccent:       THEME_COLOR_VARS.ocre,
   modelAccent:        THEME_COLOR_VARS.pavo,       // pavo
   exampleAccent:      THEME_COLOR_VARS.pizarra,    // pizarra
   exerciseAccent:     THEME_COLOR_VARS.granada,
@@ -54,7 +54,7 @@ export const SEMANTIC_HEX: Record<SemanticColorRole, { hex: string; ring: string
   theoremAccent:      THEME_PALETTE_HEX.terracota,
   corollaryAccent:    THEME_PALETTE_HEX.musgo,
   proofAccent:        THEME_PALETTE_HEX.granada,
-  lessonAccent:       THEME_PALETTE_HEX.ocre,
+  methodAccent:       THEME_PALETTE_HEX.ocre,
   modelAccent:        THEME_PALETTE_HEX.pavo,
   exampleAccent:      THEME_PALETTE_HEX.pizarra,
   exerciseAccent:     THEME_PALETTE_HEX.granada,

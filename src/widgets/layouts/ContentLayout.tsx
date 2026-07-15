@@ -1,7 +1,7 @@
-import { useEffect, useId, useState } from 'react';
+import { Suspense, useEffect, useId, useState, type ComponentType } from 'react';
 import { getContentPageAccent } from '@/shared/design';
 
-interface TriptychLayoutProps {
+interface ContentLayoutProps {
   /** Índice, atribución y relaciones del contenido. */
   metadata?: React.ReactNode;
   /** Texto principal, limitado por el layout a una medida de lectura cómoda. */
@@ -16,7 +16,23 @@ interface TriptychLayoutProps {
   embedded?: boolean;
   /** Tipo semántico que determina el acento editorial de la página. */
   pageType?: string;
+  /** Proporción editorial. `balanced` concede al diagrama un área equivalente al texto. */
+  variant?: 'reading' | 'balanced';
   className?: string;
+}
+
+/** Montaje uniforme de componentes gráficos perezosos dentro del layout editorial. */
+export function ContentDiagram({ component: Diagram }: {
+  component?: ComponentType<Record<string, unknown>> | null;
+}) {
+  if (!Diagram) return null;
+  return (
+    <div className="simulation-panel">
+      <Suspense fallback={<div className="diagram-loading">Preparando visualización…</div>}>
+        <Diagram />
+      </Suspense>
+    </div>
+  );
 }
 
 /**
@@ -26,7 +42,7 @@ interface TriptychLayoutProps {
  * diagrama se renderiza una sola vez y conserva su ciclo de vida al cruzar los
  * breakpoints móvil, portátil y escritorio.
  */
-export function TriptychLayout({
+export function ContentLayout({
   metadata,
   children,
   diagram,
@@ -34,8 +50,9 @@ export function TriptychLayout({
   diagramLabel = 'Visualización interactiva',
   embedded = false,
   pageType,
+  variant = 'reading',
   className = '',
-}: TriptychLayoutProps) {
+}: ContentLayoutProps) {
   const [isMetadataOpen, setIsMetadataOpen] = useState(false);
   const metadataId = useId();
   const hasMetadata = metadata !== undefined && metadata !== null;
@@ -66,28 +83,29 @@ export function TriptychLayout({
 
   return (
     <div
-      className={`triptych-layout ${pageType ? 'page-accent-scope' : ''} ${embedded ? 'triptych-layout--embedded' : ''} ${className}`}
+      className={`content-layout ${pageType ? 'page-accent-scope' : ''} ${embedded ? 'content-layout--embedded' : ''} ${className}`}
       data-has-diagram={hasDiagram}
       data-has-metadata={hasMetadata}
       data-page-type={pageType}
+      data-layout-variant={variant}
       style={pageType ? ({ '--page-accent': getContentPageAccent(pageType) } as React.CSSProperties) : undefined}
     >
       {hasMetadata && (
         <>
           <button
             type="button"
-            className="triptych-metadata-trigger"
+            className="content-metadata-trigger"
             aria-controls={metadataId}
             aria-expanded={isMetadataOpen}
             onClick={() => setIsMetadataOpen(true)}
           >
             <span aria-hidden>☰</span>
-            <span className="triptych-metadata-trigger-label">Índice</span>
+            <span className="content-metadata-trigger-label">Índice</span>
           </button>
 
           <button
             type="button"
-            className={`triptych-metadata-backdrop ${isMetadataOpen ? 'is-open' : ''}`}
+            className={`content-metadata-backdrop ${isMetadataOpen ? 'is-open' : ''}`}
             aria-label="Cerrar índice"
             tabIndex={isMetadataOpen ? 0 : -1}
             onClick={() => setIsMetadataOpen(false)}
@@ -95,12 +113,12 @@ export function TriptychLayout({
 
           <aside
             id={metadataId}
-            className={`triptych-metadata ${isMetadataOpen ? 'is-open' : ''}`}
+            className={`content-metadata ${isMetadataOpen ? 'is-open' : ''}`}
             aria-label="Metadatos e índice"
           >
             <button
               type="button"
-              className="triptych-metadata-close"
+              className="content-metadata-close"
               aria-label="Cerrar índice"
               onClick={() => setIsMetadataOpen(false)}
             >
@@ -111,24 +129,24 @@ export function TriptychLayout({
         </>
       )}
 
-      <div className="triptych-content">
-        <section className="triptych-primary">
-          <div className="triptych-reading" role={embedded ? undefined : 'main'}>
+      <div className="content-content">
+        <section className="content-primary">
+          <div className="content-reading" role={embedded ? undefined : 'main'}>
             {children}
           </div>
 
           {hasDiagram && (
-            <aside className="triptych-diagram" aria-label={diagramLabel}>
-              <div className="triptych-diagram-sticky">
-                <div className="triptych-diagram-surface">{diagram}</div>
+            <aside className="content-diagram" aria-label={diagramLabel}>
+              <div className="content-diagram-sticky">
+                <div className="content-diagram-surface">{diagram}</div>
               </div>
             </aside>
           )}
         </section>
 
         {secondary !== undefined && secondary !== null && (
-          <section className="triptych-secondary" aria-label="Contenido relacionado">
-            <div className="triptych-secondary-inner">{secondary}</div>
+          <section className="content-secondary" aria-label="Contenido relacionado">
+            <div className="content-secondary-inner">{secondary}</div>
           </section>
         )}
       </div>

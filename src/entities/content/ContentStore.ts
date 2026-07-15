@@ -2,7 +2,7 @@ import { lazy } from 'react';
 import {
   MathematicianSchema,
   TheoremSchema,
-  LessonSchema,
+  MethodSchema,
   DemoSchema,
   DefinitionSchema,
   ExampleSchema,
@@ -19,7 +19,7 @@ import { buildBranchTaxonomy, getItemsByBranch } from './msc2020';
 import type {
   Mathematician,
   Theorem,
-  Lesson,
+  Method,
   Demo,
   Definition,
   Example,
@@ -52,7 +52,7 @@ interface ContentIndexEntry {
 export class ContentStore {
   public mathematicians: Map<string, Mathematician> = new Map();
   public theorems: Map<string, Theorem> = new Map();
-  public lessons: Map<string, Lesson> = new Map();
+  public methods: Map<string, Method> = new Map();
   public demos: Map<string, Demo> = new Map();
   public definitions: Map<string, Definition> = new Map();
   public examples: Map<string, Example> = new Map();
@@ -73,15 +73,10 @@ export class ContentStore {
   /**
    * Extrae el slug o ID de la ruta del archivo MDX
    * @param path Ruta del archivo
-   * @param isLesson Indica si es una lección para sanitizar sufijos "Demo"
    * @returns El slug normalizado
    */
-  private extractSlug(path: string, isLesson = false): string {
-    let slug = path.split('/').pop()?.replace('.mdx', '') || '';
-    if (isLesson) {
-      slug = slug.replace(/Demo$/, '');
-    }
-    return slug.toLowerCase();
+  private extractSlug(path: string): string {
+    return (path.split('/').pop()?.replace('.mdx', '') || '').toLowerCase();
   }
 
   /**
@@ -113,8 +108,8 @@ export class ContentStore {
       buildEntry: (meta: Record<string, unknown>, id: string, slug: string, loader: () => Promise<unknown>) => T,
     ) => {
       for (const path in loaders) {
-        const slug = this.extractSlug(path, dirName === 'lessons');
-        const entry = index[slug] || index[slug.replace(/demo$/, '')];
+        const slug = this.extractSlug(path);
+        const entry = index[slug];
         if (!entry) {
           console.warn(`[ContentStore] No metadata in index for ${path}`);
           continue;
@@ -140,12 +135,11 @@ export class ContentStore {
         Simulation: meta.hasSimulation ? this.createLazyComponent(loader, 'Simulation') : undefined,
       }));
 
-    processType(contentLoaders.lessonLoaders, 'lessons', LessonSchema, this.lessons,
+    processType(contentLoaders.methodLoaders, 'methods', MethodSchema, this.methods,
       (meta, id, slug, loader) => ({
-        ...(meta as unknown as Lesson), id, slug,
+        ...(meta as unknown as Method), id, slug,
         Component: this.createLazyComponent(loader),
         Simulation: meta.hasSimulation ? this.createLazyComponent(loader, 'Simulation') : undefined,
-        Visualizer: meta.hasVisualizer ? this.createLazyComponent(loader, 'Visualizer') : undefined,
       }));
 
     processType(contentLoaders.demoLoaders, 'demonstrations', DemoSchema, this.demos,
@@ -348,16 +342,13 @@ export class ContentStore {
   /** @returns Todos los modelos concretos instanciados. */
   getAllModels(): Model[] { return Array.from(this.models.values()); }
 
-  /**
-   * Obtiene una lección guiada iterativa.
-   * @param id - Identificador de la lección.
-   */
-  getLesson(id: string): Lesson | undefined {
-    return this.lessons.get(id) ?? this.lessons.get(this.slugIndex.get(id) ?? '');
+  /** Obtiene un método matemático por ID o slug. */
+  getMethod(id: string): Method | undefined {
+    return this.methods.get(id) ?? this.methods.get(this.slugIndex.get(id) ?? '');
   }
 
-  /** @returns Todas las lecciones guiadas disponibles. */
-  getAllLessons(): Lesson[] { return Array.from(this.lessons.values()); }
+  /** @returns Todos los métodos matemáticos disponibles. */
+  getAllMethods(): Method[] { return Array.from(this.methods.values()); }
 
   /** @returns Todas las demostraciones paso a paso separadas de los teoremas. */
   getAllDemos(): Demo[] { return Array.from(this.demos.values()); }
@@ -415,7 +406,7 @@ export class ContentStore {
   private buildAllItems(): { type: string; item: BaseContent & { tags?: string[] } }[] {
     const items: { type: string; item: BaseContent & { tags?: string[] } }[] = [];
     for (const thm of this.theorems.values()) items.push({ type: 'theorem', item: thm });
-    for (const lesson of this.lessons.values()) items.push({ type: 'lesson', item: lesson });
+    for (const method of this.methods.values()) items.push({ type: 'method', item: method });
     for (const def of this.definitions.values()) items.push({ type: 'definition', item: def });
     for (const ex of this.examples.values()) items.push({ type: 'example', item: ex });
     for (const ez of this.exercises.values()) items.push({ type: 'exercise', item: ez });

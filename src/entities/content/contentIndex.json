@@ -1619,7 +1619,7 @@
       "title": "Demostración: Teorema del ángulo externo",
       "description": "Prueba constructiva usando el lema del punto medio, el teorema de ángulos opuestos por el vértice y el criterio LAL. El punto construido cae en el interior del ángulo externo, forzando la desigualdad.",
       "parentTheorem": "teorema-angulo-externo",
-      "proofMethod": "directo",
+      "proofMethod": "metodo-directo",
       "authors": [
         "euclides"
       ],
@@ -1667,7 +1667,7 @@
       "title": "Demostración: Teorema de los ángulos alternos internos",
       "description": "Prueba en dos partes: la ida (absoluta) por reducción al absurdo usando el teorema del ángulo externo; la vuelta (euclidiana) usando la unicidad de la paralela.",
       "parentTheorem": "teorema-angulos-alternos-internos",
-      "proofMethod": "directo",
+      "proofMethod": "metodo-directo",
       "authors": [
         "euclides"
       ],
@@ -1708,7 +1708,7 @@
       "title": "Demostración: Ángulos opuestos por el vértice",
       "description": "Prueba directa usando axiomas de congruencia de ángulos y resta de congruentes.",
       "parentTheorem": "teorema-angulos-opuestos-verticales",
-      "proofMethod": "directo",
+      "proofMethod": "metodo-directo",
       "authors": [
         "euclides"
       ],
@@ -1753,7 +1753,7 @@
       "title": "Demostración: Aditividad del Contenido",
       "description": "Prueba directa: dadas triangulaciones de P₁ y P₂, su unión es una triangulación de P = P₁ ∪ P₂. Aplicando la definición de contenido a P con esta triangulación se obtiene Cont(P) = Cont(P₁) + Cont(P₂).",
       "parentTheorem": "teorema-area-aditividad",
-      "proofMethod": "directo",
+      "proofMethod": "metodo-directo",
       "layout": "split",
       "authors": [
         "hilbert"
@@ -1790,7 +1790,7 @@
       "title": "Demostración: Invariancia del Contenido por Congruencia",
       "description": "Prueba directa: si dos polígonos son congruentes, por el teorema de triangulación ambos admiten triangulaciones, y la isometría transporta una triangulación a la otra triángulo a triángulo, preservando el contenido por definición.",
       "parentTheorem": "teorema-area-invariancia",
-      "proofMethod": "directo",
+      "proofMethod": "metodo-directo",
       "layout": "split",
       "authors": [
         "hilbert"
@@ -1829,7 +1829,7 @@
       "title": "Demostración: Área del Rectángulo",
       "description": "Prueba por casos: si base y altura son conmensurables, el rectángulo se descompone en cuadrados unidad; si son inconmensurables, se usan aproximaciones vía el axioma de Arquímedes.",
       "parentTheorem": "teorema-area-rectangulo",
-      "proofMethod": "exhaustivo",
+      "proofMethod": "metodo-exhaustivo",
       "layout": "split",
       "authors": [
         "hilbert"
@@ -1867,7 +1867,7 @@
       "title": "Demostración: Área del Triángulo",
       "description": "Prueba directa por descomposición: el área de un triángulo es la mitad del producto de la base por la altura.",
       "parentTheorem": "teorema-area-triangulo",
-      "proofMethod": "directo",
+      "proofMethod": "metodo-directo",
       "layout": "split",
       "authors": [
         "euclides"
@@ -1907,7 +1907,7 @@
       "title": "Demostración: Criterio de congruencia AAL",
       "description": "Prueba por reducción al absurdo: se supone desigualdad de lados, se construye un triángulo auxiliar por LAL, y el teorema del ángulo externo fuerza la contradicción.",
       "parentTheorem": "teorema-congruencia-aal",
-      "proofMethod": "contradiccion",
+      "proofMethod": "metodo-contradiccion",
       "authors": [
         "euclides"
       ],
@@ -1955,7 +1955,7 @@
       "title": "Demostración: Criterio de congruencia ALA",
       "description": "Prueba por transporte de segmentos y aplicación del axioma LAL con unicidad.",
       "parentTheorem": "teorema-congruencia-ala",
-      "proofMethod": "constructivo",
+      "proofMethod": "metodo-constructivo",
       "authors": [
         "euclides"
       ],
@@ -1993,7 +1993,7 @@
       "title": "Demostración: Criterio de congruencia LLL",
       "description": "Prueba por transporte de un ángulo y aplicación de LAL, seguida de unicidad de intersección.",
       "parentTheorem": "teorema-congruencia-lll",
-      "proofMethod": "constructivo",
+      "proofMethod": "metodo-constructivo",
       "authors": [
         "euclides"
       ],
@@ -2040,7 +2040,7 @@
         "euclides"
       ],
       "parentTheorem": "teorema-desigualdad-triangular",
-      "proofMethod": "directo",
+      "proofMethod": "metodo-directo",
       "layout": "split",
       "leanId": "Matematika.Geometry.Hilbert.demo_desigualdad_triangular",
       "stepTacticMap": {
@@ -2072,7 +2072,7 @@
       "title": "Demostración: Dos rectas se cortan en a lo sumo un punto",
       "description": "Prueba por contradicción usando el axioma de unicidad I-1.",
       "parentTheorem": "teorema-dos-rectas-un-punto",
-      "proofMethod": "contradiccion",
+      "proofMethod": "metodo-contradiccion",
       "authors": [
         "hilbert"
       ],
@@ -2126,7 +2126,7 @@
       "title": "Demostración: Existencia y unicidad de la bisectriz",
       "description": "Prueba constructiva usando el lema del punto medio y el criterio LLL. Se toman puntos equidistantes del vértice sobre cada lado del ángulo y se traza la mediana al segmento que los une.",
       "parentTheorem": "teorema-existencia-bisectriz",
-      "proofMethod": "constructivo",
+      "proofMethod": "metodo-constructivo",
       "authors": [
         "euclides"
       ],
@@ -2166,7 +2166,7 @@
       "title": "Demostración: Existencia y unicidad de la perpendicular",
       "description": "Prueba constructiva para ambos casos: punto sobre la recta (transporte de ángulos) y punto exterior (triángulo auxiliar + LAL + ángulo externo para unicidad).",
       "parentTheorem": "teorema-existencia-perpendicular",
-      "proofMethod": "constructivo",
+      "proofMethod": "metodo-constructivo",
       "authors": [
         "hilbert"
       ],
@@ -2209,7 +2209,7 @@
       "title": "Demostración: Independencia de la Triangulación",
       "description": "Prueba mediante refinamiento común: toda subdivisión de un triángulo preserva el contenido (por aditividad); dos triangulaciones comparten un refinamiento común; por tanto producen la misma suma.",
       "parentTheorem": "teorema-invariancia-triangulacion",
-      "proofMethod": "directo",
+      "proofMethod": "metodo-directo",
       "layout": "split",
       "authors": [
         "hilbert"
@@ -2259,7 +2259,7 @@
         "pitagoras"
       ],
       "parentTheorem": "teorema-pitagoras",
-      "proofMethod": "directo",
+      "proofMethod": "metodo-directo",
       "layout": "split",
       "leanId": "Matematika.Geometry.Hilbert.demo_pitagoras_areas",
       "stepTacticMap": {
@@ -2300,7 +2300,7 @@
         "hilbert"
       ],
       "parentTheorem": "teorema-pitagoras",
-      "proofMethod": "directo",
+      "proofMethod": "metodo-directo",
       "layout": "split",
       "leanId": "Matematika.Geometry.Hilbert.demo_pitagoras_euclides",
       "stepTacticMap": {
@@ -2334,7 +2334,7 @@
       "title": "Demostración: La mediatriz es perpendicular al segmento",
       "description": "Prueba bidireccional usando LAL y LLL.",
       "parentTheorem": "teorema-punto-medio-perpendicular",
-      "proofMethod": "directo",
+      "proofMethod": "metodo-directo",
       "authors": [
         "euclides"
       ],
@@ -2374,7 +2374,7 @@
       "title": "Demostración: Existencia y unicidad del punto medio",
       "description": "Prueba de existencia y unicidad usando rigurosamente los axiomas de congruencia y orden.",
       "parentTheorem": "lema-punto-medio",
-      "proofMethod": "constructivo",
+      "proofMethod": "metodo-constructivo",
       "authors": [
         "hilbert"
       ],
@@ -2414,7 +2414,7 @@
       "title": "Demostración: Teorema recíproco del triángulo isósceles",
       "description": "Prueba por reducción al absurdo: se supone AB > AC, se transporta AC sobre AB, y el Pons Asinorum junto con el teorema del ángulo externo fuerzan una contradicción.",
       "parentTheorem": "teorema-reciproco-triangulo-isosceles",
-      "proofMethod": "contradiccion",
+      "proofMethod": "metodo-contradiccion",
       "authors": [
         "euclides"
       ],
@@ -2461,7 +2461,7 @@
       "title": "Demostración: Identidad de rectas con dos puntos en común",
       "description": "Prueba por reducción al absurdo: si dos rectas comparten dos puntos distintos, son la misma recta.",
       "parentTheorem": "corolario-rectas-coincidentes",
-      "proofMethod": "contradiccion",
+      "proofMethod": "metodo-contradiccion",
       "authors": [
         "hilbert"
       ],
@@ -2522,7 +2522,7 @@
         "euclides"
       ],
       "parentTheorem": "teorema-suma-angulos-triangulo",
-      "proofMethod": "directo",
+      "proofMethod": "metodo-directo",
       "layout": "split",
       "leanId": "Matematika.Geometry.Hilbert.demo_suma_angulos_triangulo",
       "stepTacticMap": {
@@ -2561,7 +2561,7 @@
         "euclides"
       ],
       "parentTheorem": "teorema-tales",
-      "proofMethod": "directo",
+      "proofMethod": "metodo-directo",
       "layout": "split",
       "leanId": "Matematika.Geometry.Hilbert.demo_tales",
       "stepTacticMap": {
@@ -2594,7 +2594,7 @@
       "title": "Demostración: Triangulación de Polígonos",
       "description": "Prueba por inducción: todo polígono simple de n vértices posee al menos un vértice oreja; al extraerlo se reduce a n−1 vértices, y por inducción se completa la triangulación.",
       "parentTheorem": "teorema-triangulacion-poligono",
-      "proofMethod": "induccion",
+      "proofMethod": "metodo-induccion",
       "layout": "split",
       "authors": [
         "hilbert"
@@ -2641,7 +2641,7 @@
         "euclides"
       ],
       "parentTheorem": "teorema-triangulo-isosceles",
-      "proofMethod": "directo",
+      "proofMethod": "metodo-directo",
       "layout": "split",
       "sources": [
         {
@@ -2696,214 +2696,6 @@
       "hasSimulation": true,
       "difficulty": "básico",
       "hint": "El teorema de Pitágoras relaciona los cuadrados de los tres lados: a² + b² = c². Para despejar un cateto, debes restar el cuadrado del cateto conocido al cuadrado de la hipotenusa: a² = c² - b²."
-    }
-  },
-  "leccion-metodo-constructivo": {
-    "id": "leccion-metodo-constructivo",
-    "slug": "leccion-metodo-constructivo",
-    "filePath": "lessons/leccion-metodo-constructivo.mdx",
-    "contentType": "leccion",
-    "metadata": {
-      "id": "leccion-metodo-constructivo",
-      "type": "lesson",
-      "title": "Método Constructivo",
-      "description": "Demostrar la existencia de un objeto matemático construyéndolo explícitamente, proporcionando un algoritmo o procedimiento para obtenerlo.",
-      "tags": [
-        "logica",
-        "metodos",
-        "demostracion",
-        "constructivo"
-      ],
-      "authors": [],
-      "links": [
-        "demo-congruencia-ala",
-        "demo-congruencia-lll",
-        "demo-existencia-bisectriz",
-        "demo-punto-medio"
-      ],
-      "seeAlso": [
-        "leccion-metodo-directo",
-        "leccion-metodo-exhaustivo"
-      ],
-      "satisfies": [],
-      "hasSimulation": true,
-      "difficulty": "intermedio"
-    }
-  },
-  "leccion-metodo-contradiccion": {
-    "id": "leccion-metodo-contradiccion",
-    "slug": "leccion-metodo-contradiccion",
-    "filePath": "lessons/leccion-metodo-contradiccion.mdx",
-    "contentType": "leccion",
-    "metadata": {
-      "id": "leccion-metodo-contradiccion",
-      "type": "lesson",
-      "title": "Demostración por Contradicción",
-      "description": "Probar que una afirmación es verdadera mostrando que su negación conduce a una imposibilidad lógica. También conocida como reductio ad absurdum o reducción al absurdo.",
-      "tags": [
-        "logica",
-        "metodos",
-        "demostracion",
-        "absurdo"
-      ],
-      "authors": [],
-      "links": [
-        "teorema-dos-rectas-un-punto",
-        "demo-reciproco-triangulo-isosceles",
-        "demo-congruencia-aal"
-      ],
-      "seeAlso": [
-        "leccion-metodo-directo",
-        "leccion-metodo-contraposicion"
-      ],
-      "satisfies": [],
-      "hasSimulation": true,
-      "difficulty": "intermedio"
-    }
-  },
-  "leccion-metodo-contraposicion": {
-    "id": "leccion-metodo-contraposicion",
-    "slug": "leccion-metodo-contraposicion",
-    "filePath": "lessons/leccion-metodo-contraposicion.mdx",
-    "contentType": "leccion",
-    "metadata": {
-      "id": "leccion-metodo-contraposicion",
-      "type": "lesson",
-      "title": "Demostración por Contraposición",
-      "description": "Probar una implicación demostrando su contrarrecíproco: en lugar de P implica Q, se demuestra que no Q implica no P.",
-      "tags": [
-        "logica",
-        "metodos",
-        "demostracion",
-        "contraposicion"
-      ],
-      "authors": [],
-      "links": [],
-      "seeAlso": [
-        "leccion-metodo-directo",
-        "leccion-metodo-contradiccion"
-      ],
-      "satisfies": [],
-      "hasSimulation": true,
-      "difficulty": "intermedio"
-    }
-  },
-  "leccion-metodo-directo": {
-    "id": "leccion-metodo-directo",
-    "slug": "leccion-metodo-directo",
-    "filePath": "lessons/leccion-metodo-directo.mdx",
-    "contentType": "leccion",
-    "metadata": {
-      "id": "leccion-metodo-directo",
-      "type": "lesson",
-      "title": "Método Directo",
-      "description": "La estrategia fundamental de demostración: encadenar implicaciones lógicas desde la hipótesis hasta la tesis mediante inferencias válidas.",
-      "tags": [
-        "logica",
-        "metodos",
-        "demostracion"
-      ],
-      "authors": [],
-      "links": [
-        "teorema-pitagoras",
-        "teorema-congruencia-ala",
-        "teorema-suma-angulos-triangulo"
-      ],
-      "seeAlso": [
-        "leccion-metodo-contradiccion",
-        "leccion-metodo-contraposicion"
-      ],
-      "satisfies": [],
-      "hasSimulation": true,
-      "difficulty": "intermedio"
-    }
-  },
-  "leccion-metodo-exhaustivo": {
-    "id": "leccion-metodo-exhaustivo",
-    "slug": "leccion-metodo-exhaustivo",
-    "filePath": "lessons/leccion-metodo-exhaustivo.mdx",
-    "contentType": "leccion",
-    "metadata": {
-      "id": "leccion-metodo-exhaustivo",
-      "type": "lesson",
-      "title": "Método Exhaustivo",
-      "description": "Demostrar una propiedad analizando todos los casos posibles, dividiendo el problema en un número finito de escenarios mutuamente excluyentes.",
-      "tags": [
-        "logica",
-        "metodos",
-        "demostracion",
-        "exhaustivo"
-      ],
-      "authors": [],
-      "links": [],
-      "seeAlso": [
-        "leccion-metodo-directo",
-        "leccion-metodo-induccion"
-      ],
-      "satisfies": [],
-      "hasSimulation": true,
-      "difficulty": "intermedio"
-    }
-  },
-  "leccion-metodo-geometrico": {
-    "id": "leccion-metodo-geometrico",
-    "slug": "leccion-metodo-geometrico",
-    "filePath": "lessons/leccion-metodo-geometrico.mdx",
-    "contentType": "leccion",
-    "metadata": {
-      "id": "leccion-metodo-geometrico",
-      "type": "lesson",
-      "title": "Método Geométrico",
-      "description": "Demostrar teoremas mediante razonamiento visual y espacial: construcciones, transformaciones, congruencias y semejanzas de figuras.",
-      "tags": [
-        "logica",
-        "metodos",
-        "demostracion",
-        "geometria"
-      ],
-      "authors": [],
-      "links": [
-        "teorema-pitagoras",
-        "demo-pitagoras-areas",
-        "demo-pitagoras-euclides",
-        "teorema-tales",
-        "demo-tales"
-      ],
-      "seeAlso": [
-        "leccion-metodo-directo",
-        "leccion-metodo-constructivo"
-      ],
-      "satisfies": [],
-      "hasSimulation": true,
-      "difficulty": "intermedio"
-    }
-  },
-  "leccion-metodo-induccion": {
-    "id": "leccion-metodo-induccion",
-    "slug": "leccion-metodo-induccion",
-    "filePath": "lessons/leccion-metodo-induccion.mdx",
-    "contentType": "leccion",
-    "metadata": {
-      "id": "leccion-metodo-induccion",
-      "type": "lesson",
-      "title": "Inducción Matemática",
-      "description": "El principio de inducción: probar que una propiedad vale para todos los números naturales demostrando el caso base y el paso inductivo.",
-      "tags": [
-        "logica",
-        "metodos",
-        "demostracion",
-        "induccion",
-        "numeros"
-      ],
-      "authors": [],
-      "links": [],
-      "seeAlso": [
-        "leccion-metodo-directo",
-        "leccion-metodo-contradiccion"
-      ],
-      "satisfies": [],
-      "hasSimulation": true,
-      "difficulty": "intermedio"
     }
   },
   "arquimedes": {
@@ -3066,6 +2858,214 @@
         "euclides",
         "pitagoras"
       ]
+    }
+  },
+  "metodo-constructivo": {
+    "id": "metodo-constructivo",
+    "slug": "metodo-constructivo",
+    "filePath": "methods/metodo-constructivo.mdx",
+    "contentType": "metodo",
+    "metadata": {
+      "id": "metodo-constructivo",
+      "type": "metodo",
+      "subtype": "demostracion",
+      "title": "Método Constructivo",
+      "description": "Demostrar la existencia de un objeto matemático construyéndolo explícitamente, proporcionando un algoritmo o procedimiento para obtenerlo.",
+      "tags": [
+        "logica",
+        "metodos",
+        "demostracion",
+        "constructivo"
+      ],
+      "authors": [],
+      "links": [
+        "demo-congruencia-ala",
+        "demo-congruencia-lll",
+        "demo-existencia-bisectriz",
+        "demo-punto-medio"
+      ],
+      "seeAlso": [
+        "metodo-directo",
+        "metodo-exhaustivo"
+      ],
+      "hasSimulation": true,
+      "difficulty": "intermedio"
+    }
+  },
+  "metodo-contradiccion": {
+    "id": "metodo-contradiccion",
+    "slug": "metodo-contradiccion",
+    "filePath": "methods/metodo-contradiccion.mdx",
+    "contentType": "metodo",
+    "metadata": {
+      "id": "metodo-contradiccion",
+      "type": "metodo",
+      "subtype": "demostracion",
+      "title": "Demostración por Contradicción",
+      "description": "Probar que una afirmación es verdadera mostrando que su negación conduce a una imposibilidad lógica. También conocida como reductio ad absurdum o reducción al absurdo.",
+      "tags": [
+        "logica",
+        "metodos",
+        "demostracion",
+        "absurdo"
+      ],
+      "authors": [],
+      "links": [
+        "teorema-dos-rectas-un-punto",
+        "demo-reciproco-triangulo-isosceles",
+        "demo-congruencia-aal"
+      ],
+      "seeAlso": [
+        "metodo-directo",
+        "metodo-contraposicion"
+      ],
+      "hasSimulation": true,
+      "difficulty": "intermedio"
+    }
+  },
+  "metodo-contraposicion": {
+    "id": "metodo-contraposicion",
+    "slug": "metodo-contraposicion",
+    "filePath": "methods/metodo-contraposicion.mdx",
+    "contentType": "metodo",
+    "metadata": {
+      "id": "metodo-contraposicion",
+      "type": "metodo",
+      "subtype": "demostracion",
+      "title": "Demostración por Contraposición",
+      "description": "Probar una implicación demostrando su contrarrecíproco: en lugar de P implica Q, se demuestra que no Q implica no P.",
+      "tags": [
+        "logica",
+        "metodos",
+        "demostracion",
+        "contraposicion"
+      ],
+      "authors": [],
+      "links": [],
+      "seeAlso": [
+        "metodo-directo",
+        "metodo-contradiccion"
+      ],
+      "hasSimulation": true,
+      "difficulty": "intermedio"
+    }
+  },
+  "metodo-directo": {
+    "id": "metodo-directo",
+    "slug": "metodo-directo",
+    "filePath": "methods/metodo-directo.mdx",
+    "contentType": "metodo",
+    "metadata": {
+      "id": "metodo-directo",
+      "type": "metodo",
+      "subtype": "demostracion",
+      "title": "Método Directo",
+      "description": "La estrategia fundamental de demostración: encadenar implicaciones lógicas desde la hipótesis hasta la tesis mediante inferencias válidas.",
+      "tags": [
+        "logica",
+        "metodos",
+        "demostracion"
+      ],
+      "authors": [],
+      "links": [
+        "teorema-pitagoras",
+        "teorema-congruencia-ala",
+        "teorema-suma-angulos-triangulo"
+      ],
+      "seeAlso": [
+        "metodo-contradiccion",
+        "metodo-contraposicion"
+      ],
+      "hasSimulation": true,
+      "difficulty": "intermedio"
+    }
+  },
+  "metodo-exhaustivo": {
+    "id": "metodo-exhaustivo",
+    "slug": "metodo-exhaustivo",
+    "filePath": "methods/metodo-exhaustivo.mdx",
+    "contentType": "metodo",
+    "metadata": {
+      "id": "metodo-exhaustivo",
+      "type": "metodo",
+      "subtype": "demostracion",
+      "title": "Método Exhaustivo",
+      "description": "Demostrar una propiedad analizando todos los casos posibles, dividiendo el problema en un número finito de escenarios mutuamente excluyentes.",
+      "tags": [
+        "logica",
+        "metodos",
+        "demostracion",
+        "exhaustivo"
+      ],
+      "authors": [],
+      "links": [],
+      "seeAlso": [
+        "metodo-directo",
+        "metodo-induccion"
+      ],
+      "hasSimulation": true,
+      "difficulty": "intermedio"
+    }
+  },
+  "metodo-geometrico": {
+    "id": "metodo-geometrico",
+    "slug": "metodo-geometrico",
+    "filePath": "methods/metodo-geometrico.mdx",
+    "contentType": "metodo",
+    "metadata": {
+      "id": "metodo-geometrico",
+      "type": "metodo",
+      "subtype": "demostracion",
+      "title": "Método Geométrico",
+      "description": "Demostrar teoremas mediante razonamiento visual y espacial: construcciones, transformaciones, congruencias y semejanzas de figuras.",
+      "tags": [
+        "logica",
+        "metodos",
+        "demostracion",
+        "geometria"
+      ],
+      "authors": [],
+      "links": [
+        "teorema-pitagoras",
+        "demo-pitagoras-areas",
+        "demo-pitagoras-euclides",
+        "teorema-tales",
+        "demo-tales"
+      ],
+      "seeAlso": [
+        "metodo-directo",
+        "metodo-constructivo"
+      ],
+      "hasSimulation": true,
+      "difficulty": "intermedio"
+    }
+  },
+  "metodo-induccion": {
+    "id": "metodo-induccion",
+    "slug": "metodo-induccion",
+    "filePath": "methods/metodo-induccion.mdx",
+    "contentType": "metodo",
+    "metadata": {
+      "id": "metodo-induccion",
+      "type": "metodo",
+      "subtype": "demostracion",
+      "title": "Inducción Matemática",
+      "description": "El principio de inducción: probar que una propiedad vale para todos los números naturales demostrando el caso base y el paso inductivo.",
+      "tags": [
+        "logica",
+        "metodos",
+        "demostracion",
+        "induccion",
+        "numeros"
+      ],
+      "authors": [],
+      "links": [],
+      "seeAlso": [
+        "metodo-directo",
+        "metodo-contradiccion"
+      ],
+      "hasSimulation": true,
+      "difficulty": "intermedio"
     }
   },
   "modelo-cartesiano": {

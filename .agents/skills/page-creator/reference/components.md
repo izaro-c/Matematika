@@ -183,7 +183,10 @@ Valor dinámico ligado a una variable del MathStore.
 ## Componentes Adicionales
 
 ### `<Concept>`
-Contenedor de concepto (usado en lecciones).
+Contenedor semántico de concepto.
 
-### `<HighlightLink>`
-Enlace con highlight (variante de ConceptLink).
+### `<StepBind step="..." scopeId="...">`
+Control inline accesible que sincroniza texto y diagrama mediante `MathStore`.
+
+### `<StepSection step="..." scopeId="...">`
+Sección que activa un paso visual al alcanzar el centro de la vista.

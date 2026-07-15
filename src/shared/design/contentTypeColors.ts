@@ -36,7 +36,7 @@ const CONTENT_TYPE_ROLE_MAP = {
   concepto:            'conceptAccent',
   'sistema-axiomatico':'neutralStrong',
   // Tipos pedagógicos
-  leccion:             'lessonAccent',
+  metodo:              'methodAccent',
   ejemplo:             'exampleAccent',
   ejercicio:           'exerciseAccent',
   'caso-de-uso':       'lemmaAccent',
@@ -101,7 +101,7 @@ const ENGLISH_TO_SPANISH: Record<string, string> = {
   definition:   'definicion',
   concept:      'concepto',
   model:        'modelo',
-  lesson:       'leccion',
+  method:       'metodo',
   example:      'ejemplo',
   exercise:     'ejercicio',
   mathematician:'matematico',

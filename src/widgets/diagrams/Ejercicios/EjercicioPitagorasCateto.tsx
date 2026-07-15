@@ -1,5 +1,5 @@
 import { useMathStore } from '@/app/providers/MathStoreContext';
-import { useLessonStore } from '@/features/lessons/LessonStore';
+import { useStepBinding } from '@/shared/ui/StepBinding';
 import { useExercise } from '@/features/exercises/ui/ExerciseContext';
 import { MathBoard } from '@/shared/diagrams/core/MathBoard';
 import { DiagramTitle } from '@/shared/ui/DiagramOverlay';
@@ -26,9 +26,9 @@ export const EjercicioPitagorasCateto = () => {
   // Obtener estado interactivo del ejercicio
   const { state: exerciseState } = useExercise();
 
-  // Suscripción a hovers del MDX y pasos de la lección
+  // Suscripción a los pasos activados desde el MDX.
   const mathHighlight = useMathStore((state) => state.variables['highlight']);
-  const activeStep = useLessonStore((state) => state.activeStep);
+  const { activeStep } = useStepBinding();
 
   const highlight = mathHighlight || activeStep;
   const isHighlight = (id: string) =>

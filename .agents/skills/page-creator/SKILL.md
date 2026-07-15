@@ -274,7 +274,7 @@ Cada archivo MDX DEBE exportar un objeto `metadata`. Los schemas Zod (`src/entit
 "description"?: string
 "parentTheorem": string — ID del teorema que se prueba
 "lemmas"?: string[] — IDs de lemas usados
-"proofMethod"?: "directo" | "contradiccion" | "induccion" | "contraposicion" | "constructivo" | "geometrico" | "exhaustivo" | "reduccion"
+"proofMethod"?: string — ID canónico `metodo-*` de la página que describe el procedimiento (p. ej. `metodo-directo`)
 "authors"?: string[]
 "layout"?: "split" | "text" — split (por defecto para pruebas geométricas): diagrama izquierda, texto derecha; text: ancho completo
 "dependencias"?: string[] — IDs de contenido del que depende esta demostración
@@ -346,17 +346,24 @@ Los ejercicios DEBEN tener **interacción progresiva**:
 "difficulty"?: "básico" | "intermedio" | "avanzado"
 ```
 
-### 5.10 Lección (`type: "leccion"`)
+### 5.10 Método (`type: "metodo"`)
 
 ```
 "id": string (kebab-case)
-"type": "leccion"
+"type": "metodo"
+"subtype": "demostracion" | "construccion" | "calculo" | "algoritmo"
 "title": string
-"description"?: string
+"description": string
+"tags"?: string[]
+"authors"?: string[]
+"links"?: string[]
+"seeAlso"?: string[]
+"requires"?: string[]
 "difficulty"?: "básico" | "intermedio" | "avanzado"
 "hasSimulation"?: boolean
-"hasVisualizer"?: boolean
 ```
+
+Un método contiene conocimiento procedimental reutilizable. No agrupa una secuencia educativa: para recorridos ordenados se usa un plan de estudio.
 
 ### 5.11 Matemático (`type: "matematico"`)
 
@@ -482,7 +489,7 @@ export const metadata = {
   "type": "demostracion",
   "title": "Demostración: Mi Teorema",
   "parentTheorem": "teorema-mi-teorema",
-  "proofMethod": "directo",
+  "proofMethod": "metodo-directo",
   "layout": "split"
 };
 
@@ -642,7 +649,7 @@ src/database/content/
   demonstrations/     → demo-*.mdx
   examples/           → ejemplo-*.mdx
   exercises/          → ejercicio-*.mdx
-  lessons/            → leccion-*.mdx
+  methods/            → metodo-*.mdx
   mathematicians/     → matematico-*.mdx
   models/             → modelo-*.mdx
   plans/              → plan-de-estudio-*.mdx

@@ -53,7 +53,7 @@ beforeAll(() => {
 // Mock content store to avoid MDX import failures in test environment
 vi.mock('@/entities/content', () => ({
   db: {
-    getAllLessons: () => [],
+    getAllMethods: () => [],
     getAllMathematicians: () => [],
     getAllDefinitions: () => [],
     getAllExamples: () => [],
@@ -89,7 +89,7 @@ vi.mock('@/entities/content', () => ({
     demos: new Map(),
     usecases: new Map(),
     mathematicians: new Map(),
-    lessons: new Map(),
+    methods: new Map(),
   },
 }));
 

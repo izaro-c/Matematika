@@ -17,7 +17,7 @@ import { Clasificador } from '@/features/exercises/ui/Clasificador';
 import { Ordenacion } from '@/features/exercises/ui/Ordenacion';
 import { MatrizInteractiva } from '@/features/exercises/ui/MatrizInteractiva';
 import { DeslizadorEnLine, DynamicValue } from '@/features/exercises/ui/DeslizadorEnLine';
-import { HighlightLink } from '@/features/lessons/ui/HighlightLink';
+import { StepBind, StepSection } from '@/shared/ui/StepBinding';
 import { ConceptLink } from "@/features/glossary/ui/ConceptLink";
 import { RefLink } from "@/features/glossary/ui/RefLink";
 import { GlossaryLink } from '@/shared/ui/GlossaryLink';
@@ -260,7 +260,8 @@ export const MDXComponents = {
   MatrizInteractiva,
   DeslizadorEnLine,
   DynamicValue,
-  HighlightLink,
+  StepBind,
+  StepSection,
   ConceptLink,
   RefLink,
   GlossaryLink,

@@ -20,7 +20,7 @@ type TypeFilter = SearchResultType | 'all';
 const QUICK_FILTERS: SearchResultType[] = [
   'teorema',
   'definición',
-  'lección',
+  'método',
   'matemático',
 ];
 

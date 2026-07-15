@@ -34,7 +34,7 @@ type LinkForce = {
 /**
  * Página Explorador (Knowledge Graph).
  * Renderiza una red tridimensional (2D proyectada) de todos los conceptos matemáticos.
- * Permite explorar conexiones entre teoremas, lecciones, biógrafias y demostraciones.
+ * Permite explorar conexiones entre teoremas, métodos, biografías y demostraciones.
  */
 export const GraphPage: React.FC = () => {
   const [, setLocation] = useLocation();
@@ -134,7 +134,7 @@ export const GraphPage: React.FC = () => {
       'demostracion': 'demostracion',
       'caso-de-uso': 'usecase',
       'matematico': 'mathematician',
-      'leccion': 'lesson',
+      'metodo': 'method',
       'modelo': 'modelo',
       'plan-de-estudio': 'plan-de-estudio',
       'axioma': 'axioma',

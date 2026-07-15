@@ -5,7 +5,7 @@ import {
   DemoSchema,
   ExampleSchema,
   ExerciseSchema,
-  LessonSchema,
+  MethodSchema,
   MathematicianSchema,
   ModelSchema,
   StudyPlanSchema,
@@ -29,7 +29,7 @@ type EstreeNode = {
 const CONTENT_ID_RE = /^[a-z0-9]+(?:-[a-z0-9]+)*$/;
 const REFERENCE_FIELDS = new Set([
   'authors', 'lemmas', 'corollaries', 'demos', 'requires', 'examples', 'exercises',
-  'parentTheorem', 'axiomas', 'models', 'relatedTheorem', 'satisfies',
+  'parentTheorem', 'axiomas', 'models', 'relatedTheorem', 'satisfies', 'proofMethod',
   'axioms_verified', 'concept', 'requiredNodes', 'dependencias',
 ]);
 
@@ -43,8 +43,7 @@ const METADATA_SCHEMAS = {
   demostracion: DemoSchema,
   ejemplo: ExampleSchema,
   ejercicio: ExerciseSchema,
-  leccion: LessonSchema,
-  lesson: LessonSchema,
+  metodo: MethodSchema,
   matematico: MathematicianSchema,
   modelo: ModelSchema,
   'caso-de-uso': UseCaseSchema,

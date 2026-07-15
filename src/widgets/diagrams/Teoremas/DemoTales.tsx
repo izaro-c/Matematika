@@ -1,5 +1,5 @@
 import { useMathStore } from '@/app/providers/MathStoreContext';
-import { useLessonStore } from '@/features/lessons/LessonStore';
+import { useStepBinding } from '@/shared/ui/StepBinding';
 import { MathBoard } from '@/shared/diagrams/core/MathBoard';
 import {
   createPoint, createLine, createSegment, createGlider, createPolygon
@@ -15,8 +15,8 @@ export const DemoTales = () => {
 
 
   const mathHL = useMathStore(s => s.variables?.['highlight']);
-  const lessonHL = useLessonStore(s => s.activeStep);
-  const highlight = mathHL || lessonHL;
+  const { activeStep } = useStepBinding();
+  const highlight = mathHL || activeStep;
   const isHL = (id: string) => Array.isArray(highlight) ? (highlight as unknown as string[]).includes(id) : highlight === id;
   void highlight;
   void isHL;

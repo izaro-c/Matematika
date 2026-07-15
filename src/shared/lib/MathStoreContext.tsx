@@ -18,7 +18,7 @@ export const MathProvider = ({ children }: { children: ReactNode }) => {
 /**
  * Keeps standalone previews safe without shadowing the page-level store.
  *
- * Published lessons already provide their own MathProvider so MDX controls and
+ * Published content pages provide their own MathProvider so MDX controls and
  * diagrams keep sharing the same state. Editor previews and isolated component
  * renders, however, may not have that outer shell.
  */

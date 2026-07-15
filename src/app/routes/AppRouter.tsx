@@ -1,7 +1,6 @@
-import { Route, Switch } from "wouter";
+import { Redirect, Route, Switch } from "wouter";
 import { MathProvider } from "@/app/providers/MathStoreContext";
 import { Suspense, lazy } from 'react';
-import { InteractiveLessonLayout } from "@/widgets/layouts/InteractiveLessonLayout";
 import { BiographyLayout } from "@/widgets/layouts/BiographyLayout";
 import { Logo } from "@/shared/ui/Logo";
 import { db } from '@/entities/content';
@@ -16,6 +15,7 @@ const ExamplePage = lazy(() => import("@/pages/ExamplePage").then(m => ({ defaul
 const ExercisePage = lazy(() => import("@/pages/ExercisePage").then(m => ({ default: m.ExercisePage })));
 const StudyPlanPage = lazy(() => import("@/pages/StudyPlanPage").then(m => ({ default: m.StudyPlanPage })));
 const MethodsPage = lazy(() => import("@/pages/MethodsPage").then(m => ({ default: m.MethodsPage })));
+const MethodPage = lazy(() => import("@/pages/MethodPage").then(m => ({ default: m.MethodPage })));
 const UseCasePage = lazy(() => import("@/pages/UseCasePage").then(m => ({ default: m.UseCasePage })));
 const AxiomPage = lazy(() => import("@/pages/AxiomPage").then(m => ({ default: m.AxiomPage })));
 const ModelPage = lazy(() => import("@/pages/ModelPage").then(m => ({ default: m.ModelPage })));
@@ -31,12 +31,12 @@ const AxiomGraphPage = lazy(() => import("@/pages/AxiomGraphPage").then(m => ({ 
 /**
  * Componente principal de enrutamiento de la aplicación.
  * * Lee dinámicamente el contenido indexado en el `ContentStore` y
- * genera las rutas necesarias para Lecciones y Biografías. Además,
+ * genera las rutas necesarias para contenido y biografías. Además,
  * define las rutas estáticas para páginas especiales (Grafo, Diccionario, etc.).
  * * @returns {JSX.Element} Un componente de wouter con todas las rutas.
  */
 export const AppRouter = () => {
-  const lessons = db.getAllLessons();
+  const methods = db.getAllMethods();
   const biographies = db.getAllMathematicians();
 
   return (
@@ -79,12 +79,15 @@ export const AppRouter = () => {
             </MathProvider>
           </Route>
 
-          {/* RUTAS DE LECCIONES INTERACTIVAS */}
-          {lessons.map(({ id, slug, Component, Simulation }) => (
-            <Route key={`lesson-${id}`} path={`/${slug}`}>
-              <MathProvider>
-                <InteractiveLessonLayout id={id} Component={Component} SimulationFallback={Simulation || null} />
-              </MathProvider>
+          {/* MÉTODOS Y ALIAS DE LAS ANTIGUAS URL DE LECCIÓN */}
+          <Route path="/metodo/:id">
+            <MathProvider>
+              <MethodPage />
+            </MathProvider>
+          </Route>
+          {methods.map(({ id }) => (
+            <Route key={`legacy-method-${id}`} path={`/leccion-${id}`}>
+              <Redirect to={`/metodo/${id}`} replace />
             </Route>
           ))}
 

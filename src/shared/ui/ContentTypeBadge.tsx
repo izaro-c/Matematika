@@ -12,7 +12,7 @@ const TYPE_ORNAMENTS: Record<string, string> = {
   ejercicio: '✎',
   'caso-de-uso': '◎',
   matematico: '❦',
-  leccion: '📖',
+  metodo: '↦',
   modelo: '☙',
   'sistema-axiomatico': '⬡',
   'plan-de-estudio': '✚',

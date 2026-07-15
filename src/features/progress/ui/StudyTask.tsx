@@ -12,7 +12,7 @@ interface StudyTaskProps {
   /** ID único o slug del elemento de contenido */
   id: string;
   /** Tipo de contenido para formatear el botón y el icono visualmente */
-  type: 'teorema' | 'ejercicio' | 'ejemplo' | 'caso' | 'lección' | 'definicion' | 'axioma';
+  type: 'teorema' | 'ejercicio' | 'ejemplo' | 'caso' | 'metodo' | 'definicion' | 'axioma';
   /** Título human-readable que se mostrará en la lista */
   title: string;
 }
@@ -26,6 +26,7 @@ interface StudyTaskProps {
 const TYPE_PATH_PREFIX: Record<string, string> = {
   teorema: '/teorema/', ejercicio: '/ejercicio/', ejemplo: '/ejemplo/',
   caso: '/caso/', definicion: '/definicion/', axioma: '/axioma/',
+  metodo: '/metodo/',
 };
 
 function lookupExists(id: string): boolean {
@@ -36,6 +37,7 @@ function lookupExists(id: string): boolean {
     db.getUseCase(id) ||
     db.getExample(id) ||
     db.getExercise(id) ||
+    db.getMethod(id) ||
     db.models.get(id) ||
     db.demos.get(id)
   );
@@ -58,10 +60,11 @@ export const StudyTask: React.FC<StudyTaskProps> = ({ id, type, title }) => {
   else if (db.getUseCase(id))     resolvedType = 'caso';
   else if (db.getExample(id))     resolvedType = 'ejemplo';
   else if (db.getExercise(id))    resolvedType = 'ejercicio';
+  else if (db.getMethod(id))      resolvedType = 'metodo';
 
   const href = TYPE_PATH_PREFIX[resolvedType] ? `${TYPE_PATH_PREFIX[resolvedType]}${id}` : `/${id}`;
 
-  const isTheory = ['teorema', 'definicion', 'lección', 'axioma'].includes(resolvedType);
+  const isTheory = ['teorema', 'definicion', 'metodo', 'axioma'].includes(resolvedType);
   const isPractice = ['ejercicio', 'ejemplo', 'caso'].includes(resolvedType);
   const containerStyle = isTheory ? 'border-solid bg-lienzo' : 'border-dashed border-2 bg-carbon/[0.02]';
 
@@ -76,7 +79,7 @@ export const StudyTask: React.FC<StudyTaskProps> = ({ id, type, title }) => {
     actionLabel = 'Estudiar →';
   }
 
-  if (!exists && type !== 'lección') {
+  if (!exists) {
     return (
       <div
         ref={(el) => registerTaskRef?.(id, el)}

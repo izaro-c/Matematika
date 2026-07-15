@@ -92,7 +92,7 @@ const SECTIONS: SectionDef[] = [
 ];
 
 function itemHref(entry: { type: string; item: { slug?: string; id?: string } }): string {
-  if (entry.type === 'lesson') return `/${entry.item.slug}`;
+  if (entry.type === 'method') return `/metodo/${entry.item.slug}`;
   if (entry.type === 'theorem') return `/teorema/${entry.item.id}`;
   if (entry.type === 'definition') return `/definicion/${entry.item.id}`;
   if (entry.type === 'axiom') return `/axioma/${entry.item.id}`;
@@ -104,7 +104,7 @@ function itemHref(entry: { type: string; item: { slug?: string; id?: string } })
 }
 
 const TYPE_LABELS: Record<string, string> = {
-  lesson: 'Lección',
+  method: 'Método',
   theorem: 'Teorema',
   definition: 'Definición',
   axiom: 'Axioma',

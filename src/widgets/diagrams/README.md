@@ -50,7 +50,7 @@ simulaciones HTML y placeholders quedan fuera del editor geométrico visual.
 ## Límites
 
 La fachada no reexporta `MathBoard`, `MathFactory`, `MathUtils`,
-`MathStoreContext` ni `LessonStore`. Esos módulos tienen rutas explícitas para
+`MathStoreContext`. Ese módulo tiene una ruta explícita para
 mantener clara la frontera FSD. Tampoco incluye helpers geométricos específicos,
 estado React ni adapters de compatibilidad: solo se añadirá una responsabilidad
 cuando tenga un contrato estable y pilotos que la justifiquen.

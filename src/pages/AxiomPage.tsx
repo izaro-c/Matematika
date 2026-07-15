@@ -1,7 +1,7 @@
 import { useEffect } from 'react';
 import { useRoute } from 'wouter';
 import { db } from '@/entities/content';
-import { SimulationLayout } from "@/widgets/layouts/SimulationLayout";
+import { ContentDiagram, ContentLayout } from '@/widgets/layouts/ContentLayout';
 import { FadeIn } from '@/shared/ui/FadeIn';
 import { ContentHeader } from '@/widgets/content/ContentHeader';
 import { ReadingButton } from '@/features/progress/ui/ReadingButton';
@@ -71,8 +71,8 @@ export function AxiomPage() {
   );
 
   return (
-    <SimulationLayout pageType="axioma" simulationComponent={axiom.Simulation}>
+    <ContentLayout pageType="axioma" diagram={axiom.Simulation ? <ContentDiagram component={axiom.Simulation} /> : undefined}>
       {content}
-    </SimulationLayout>
+    </ContentLayout>
   );
 }

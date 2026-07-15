@@ -5,22 +5,25 @@ import { describe, expect, it, vi } from 'vitest';
 
 vi.mock('@/entities/content', () => ({
   db: {
-    getAllLessons: () => [
+    getAllMethods: () => [
       {
-        id: 'leccion-metodo-directo',
+        id: 'metodo-directo',
         slug: 'metodo-directo',
+        subtype: 'demostracion',
         title: 'Método directo',
         description: 'Parte de las hipótesis y encadena inferencias válidas.',
       },
       {
-        id: 'leccion-ajena',
-        slug: 'leccion-ajena',
-        title: 'Otra lección',
+        id: 'metodo-calculo',
+        slug: 'metodo-calculo',
+        subtype: 'calculo',
+        title: 'Otro método',
         description: 'No pertenece a esta colección.',
       },
       {
-        id: 'leccion-metodo-contradiccion',
+        id: 'metodo-contradiccion',
         slug: 'metodo-contradiccion',
+        subtype: 'demostracion',
         title: 'Demostración por contradicción',
         description: 'La negación de la conclusión conduce a una contradicción.',
       },
@@ -44,9 +47,9 @@ describe('MethodsPage', () => {
     expect(screen.getByRole('list').tagName).toBe('UL');
     expect(screen.getAllByRole('listitem')).toHaveLength(2);
     expect(screen.getByText('2 métodos')).toBeTruthy();
-    expect(screen.queryByText('Otra lección')).toBeNull();
+    expect(screen.queryByText('Otro método')).toBeNull();
 
     const directMethod = screen.getByRole('link', { name: /Método directo/ });
-    expect(directMethod.getAttribute('href')).toBe('/metodo-directo');
+    expect(directMethod.getAttribute('href')).toBe('/metodo/metodo-directo');
   });
 });

@@ -23,7 +23,7 @@ export const JSXGraphWrapper = () => {
         });
 
         // 3. LA FUNCIÓN DE LIMPIEZA (Vital para no dejar Memory Leaks)
-        // Cuando el usuario cambie de lección, React desmontará el componente.
+        // Cuando el usuario cambie de página, React desmontará el componente.
         // Al hacerlo, ejecutará esta función para limpiar la memoria gráfica.
         return () => {
             JXG.JSXGraph.freeBoard(board);

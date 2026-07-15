@@ -1,7 +1,7 @@
 import { Suspense } from 'react';
 import { useRoute } from 'wouter';
 import { db } from '@/entities/content';
-import { SimulationLayout } from '@/widgets/layouts/SimulationLayout';
+import { ContentDiagram, ContentLayout } from '@/widgets/layouts/ContentLayout';
 import { FadeIn } from '@/shared/ui/FadeIn';
 import { ContentHeader } from '@/widgets/content/ContentHeader';
 import { ContentBody } from '@/shared/ui/ContentBody';
@@ -98,8 +98,8 @@ export function ModelPage() {
   );
 
   return (
-    <SimulationLayout pageType="modelo" simulationComponent={model.Simulation || model.Diagram}>
+    <ContentLayout pageType="modelo" diagram={(model.Simulation || model.Diagram) ? <ContentDiagram component={model.Simulation || model.Diagram} /> : undefined}>
       {renderContent()}
-    </SimulationLayout>
+    </ContentLayout>
   );
 }

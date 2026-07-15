@@ -7,7 +7,7 @@ import { ContentCard } from '@/shared/ui/ContentCard';
 
 /**
  * Página principal de una Rama (ej. "Álgebra Lineal").
- * Renderiza la red/taxonomía completa de temas, lecciones y teoremas
+ * Renderiza la red/taxonomía completa de temas, métodos y teoremas.
  * asociados a esta rama en un grafo interactivo.
  */
 export const BranchPage = () => {
@@ -87,7 +87,7 @@ export const BranchPage = () => {
                 <div className="flex flex-col gap-4">
                   {taxonomy.directItems.map((entry, idx) => {
                     let link = '/';
-                    if (entry.type === 'lesson') link = `/${entry.item.slug}`;
+                    if (entry.type === 'method') link = `/metodo/${entry.item.slug}`;
                     else if (entry.type === 'theorem') link = `/teorema/${entry.item.id}`;
                     else if (entry.type === 'definition') link = `/definicion/${entry.item.id}`;
                     else if (entry.type === 'axiom') link = `/axioma/${entry.item.id}`;
@@ -96,7 +96,7 @@ export const BranchPage = () => {
                     const typeMap: Record<string, string> = {
                       'theorem': 'teorema',
                       'definition': 'definicion',
-                      'lesson': 'leccion',
+                      'method': 'metodo',
                       'exercise': 'ejercicio',
                       'example': 'ejemplo',
                       'useCase': 'caso-de-uso',

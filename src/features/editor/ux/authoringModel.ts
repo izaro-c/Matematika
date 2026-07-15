@@ -67,7 +67,7 @@ function referencesFromMetadata(metadata: Record<string, unknown>): string[] {
   const keys = [
     'authors', 'lemmas', 'corollaries', 'demos', 'requires', 'examples', 'exercises',
     'parentTheorem', 'axiomas', 'models', 'relatedTheorem', 'satisfies', 'axioms_verified',
-    'concept', 'requiredNodes', 'dependencias',
+    'concept', 'requiredNodes', 'dependencias', 'proofMethod',
   ];
   return keys.flatMap(key => {
     const value = metadata[key];
@@ -189,7 +189,7 @@ export function buildAuthoringIntegrityReport(input: AuthoringIntegrityInput): E
 export const PAGE_TYPE_DIRECTORIES: Record<string, string> = {
   axioma: 'axioms', 'sistema-axiomatico': 'axiomatic-systems', definicion: 'definitions',
   teorema: 'theorems', lema: 'theorems', corolario: 'theorems', demostracion: 'demonstrations',
-  ejemplo: 'examples', ejercicio: 'exercises', leccion: 'lessons', matematico: 'mathematicians',
+  ejemplo: 'examples', ejercicio: 'exercises', metodo: 'methods', matematico: 'mathematicians',
   modelo: 'models', 'caso-de-uso': 'usecases', 'plan-de-estudio': 'plans',
 };
 
@@ -212,6 +212,7 @@ function metadataForNewPage(input: CreatePageInput): Record<string, unknown> {
     id: input.id, type: input.type, title: input.title, description: input.description,
   };
   if (input.type === 'definicion') metadata.subtype = 'nominal';
+  if (input.type === 'metodo') metadata.subtype = 'demostracion';
   if (['lema', 'corolario', 'demostracion'].includes(input.type)) metadata.parentTheorem = input.relatedId || 'teorema-pendiente';
   if (['ejemplo', 'ejercicio'].includes(input.type)) metadata.relatedTheorem = input.relatedId || undefined;
   if (input.type === 'modelo') metadata.satisfies = input.relatedId || 'sistema-pendiente';

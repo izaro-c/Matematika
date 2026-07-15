@@ -6,7 +6,7 @@
   { "path": "src/database/content/demonstrations/demo-existencia-bisectriz.mdx", "feature": "nested-proof-steps-and-lean-expressions" },
   { "path": "src/database/content/examples/ejemplo-pitagoras-calculo.mdx", "feature": "interactive-example" },
   { "path": "src/database/content/exercises/ejercicio-pitagoras-cateto.mdx", "feature": "exercise-components" },
-  { "path": "src/database/content/lessons/leccion-metodo-induccion.mdx", "feature": "lesson-steps" },
+  { "path": "src/database/content/methods/metodo-induccion.mdx", "feature": "method-steps" },
   { "path": "src/database/content/mathematicians/euclides.mdx", "feature": "biographical-metadata" },
   { "path": "src/database/content/models/modelo-poincare.mdx", "feature": "diagram-export" },
   { "path": "src/database/content/plans/plan-de-estudio-camino-teorema-pitagoras.mdx", "feature": "study-plan-components" },

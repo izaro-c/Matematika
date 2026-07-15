@@ -1,6 +1,6 @@
 import { useParams } from 'wouter';
 import { db } from '@/entities/content';
-import { SimulationLayout } from "@/widgets/layouts/SimulationLayout";
+import { ContentDiagram, ContentLayout } from '@/widgets/layouts/ContentLayout';
 import { ReadingButton } from '@/features/progress/ui/ReadingButton';
 import { ContentCard } from '@/shared/ui/ContentCard';
 import { FadeIn } from '@/shared/ui/FadeIn';
@@ -35,7 +35,7 @@ export const ExamplePage: React.FC = () => {
     : [];
 
   return (
-    <SimulationLayout pageType="ejemplo" simulationComponent={example.Simulation}>
+    <ContentLayout pageType="ejemplo" diagram={example.Simulation ? <ContentDiagram component={example.Simulation} /> : undefined}>
       <div className="min-h-screen bg-transparent text-carbon font-serif pb-32">
         <FadeIn className="w-full px-6 md:px-10 pt-4 pb-16">
           <ContentHeader
@@ -80,6 +80,6 @@ export const ExamplePage: React.FC = () => {
           <ReadingButton id={slug} />
         </FadeIn>
       </div>
-    </SimulationLayout>
+    </ContentLayout>
   );
 };

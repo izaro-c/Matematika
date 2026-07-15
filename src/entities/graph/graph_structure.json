@@ -89,24 +89,24 @@
     "demo-tales",
     "ejemplo-pitagoras-calculo",
     "ejercicio-pitagoras-cateto",
-    "leccion-metodo-constructivo",
-    "leccion-metodo-contradiccion",
-    "leccion-metodo-contraposicion",
-    "teorema-pitagoras",
-    "leccion-metodo-directo",
-    "leccion-metodo-exhaustivo",
-    "teorema-tales",
-    "leccion-metodo-geometrico",
-    "leccion-metodo-induccion",
     "arquimedes",
     "bolyai",
     "dedekind",
+    "teorema-pitagoras",
+    "teorema-tales",
     "euclides",
     "hilbert",
     "lobachevski",
     "pasch",
     "pitagoras",
     "tales",
+    "metodo-constructivo",
+    "metodo-contradiccion",
+    "metodo-contraposicion",
+    "metodo-directo",
+    "metodo-exhaustivo",
+    "metodo-geometrico",
+    "metodo-induccion",
     "modelo-cartesiano",
     "modelo-fano",
     "modelo-poincare",
@@ -953,81 +953,6 @@
       "proofs": [],
       "directDependencies": []
     },
-    "leccion-metodo-constructivo": {
-      "id": "leccion-metodo-constructivo",
-      "type": "lesson",
-      "title": "Método Constructivo",
-      "description": "Demostrar la existencia de un objeto matemático construyéndolo explícitamente, proporcionando un algoritmo o procedimiento para obtenerlo.",
-      "proofs": [],
-      "directDependencies": [
-        "demo-congruencia-ala",
-        "demo-congruencia-lll",
-        "demo-existencia-bisectriz",
-        "demo-punto-medio"
-      ]
-    },
-    "leccion-metodo-contradiccion": {
-      "id": "leccion-metodo-contradiccion",
-      "type": "lesson",
-      "title": "Demostración por Contradicción",
-      "description": "Probar que una afirmación es verdadera mostrando que su negación conduce a una imposibilidad lógica. También conocida como reductio ad absurdum o reducción al absurdo.",
-      "proofs": [],
-      "directDependencies": [
-        "teorema-dos-rectas-un-punto",
-        "demo-reciproco-triangulo-isosceles",
-        "demo-congruencia-aal"
-      ]
-    },
-    "leccion-metodo-contraposicion": {
-      "id": "leccion-metodo-contraposicion",
-      "type": "lesson",
-      "title": "Demostración por Contraposición",
-      "description": "Probar una implicación demostrando su contrarrecíproco: en lugar de P implica Q, se demuestra que no Q implica no P.",
-      "proofs": [],
-      "directDependencies": []
-    },
-    "leccion-metodo-directo": {
-      "id": "leccion-metodo-directo",
-      "type": "lesson",
-      "title": "Método Directo",
-      "description": "La estrategia fundamental de demostración: encadenar implicaciones lógicas desde la hipótesis hasta la tesis mediante inferencias válidas.",
-      "proofs": [],
-      "directDependencies": [
-        "teorema-pitagoras",
-        "teorema-congruencia-ala",
-        "teorema-suma-angulos-triangulo"
-      ]
-    },
-    "leccion-metodo-exhaustivo": {
-      "id": "leccion-metodo-exhaustivo",
-      "type": "lesson",
-      "title": "Método Exhaustivo",
-      "description": "Demostrar una propiedad analizando todos los casos posibles, dividiendo el problema en un número finito de escenarios mutuamente excluyentes.",
-      "proofs": [],
-      "directDependencies": []
-    },
-    "leccion-metodo-geometrico": {
-      "id": "leccion-metodo-geometrico",
-      "type": "lesson",
-      "title": "Método Geométrico",
-      "description": "Demostrar teoremas mediante razonamiento visual y espacial: construcciones, transformaciones, congruencias y semejanzas de figuras.",
-      "proofs": [],
-      "directDependencies": [
-        "teorema-pitagoras",
-        "demo-pitagoras-areas",
-        "demo-pitagoras-euclides",
-        "teorema-tales",
-        "demo-tales"
-      ]
-    },
-    "leccion-metodo-induccion": {
-      "id": "leccion-metodo-induccion",
-      "type": "lesson",
-      "title": "Inducción Matemática",
-      "description": "El principio de inducción: probar que una propiedad vale para todos los números naturales demostrando el caso base y el paso inductivo.",
-      "proofs": [],
-      "directDependencies": []
-    },
     "arquimedes": {
       "id": "arquimedes",
       "type": "matematico",
@@ -1109,6 +1034,88 @@
       "directDependencies": [
         "teorema-tales"
       ]
+    },
+    "metodo-constructivo": {
+      "id": "metodo-constructivo",
+      "type": "metodo",
+      "subtype": "demostracion",
+      "title": "Método Constructivo",
+      "description": "Demostrar la existencia de un objeto matemático construyéndolo explícitamente, proporcionando un algoritmo o procedimiento para obtenerlo.",
+      "proofs": [],
+      "directDependencies": [
+        "demo-congruencia-ala",
+        "demo-congruencia-lll",
+        "demo-existencia-bisectriz",
+        "demo-punto-medio"
+      ]
+    },
+    "metodo-contradiccion": {
+      "id": "metodo-contradiccion",
+      "type": "metodo",
+      "subtype": "demostracion",
+      "title": "Demostración por Contradicción",
+      "description": "Probar que una afirmación es verdadera mostrando que su negación conduce a una imposibilidad lógica. También conocida como reductio ad absurdum o reducción al absurdo.",
+      "proofs": [],
+      "directDependencies": [
+        "teorema-dos-rectas-un-punto",
+        "demo-reciproco-triangulo-isosceles",
+        "demo-congruencia-aal"
+      ]
+    },
+    "metodo-contraposicion": {
+      "id": "metodo-contraposicion",
+      "type": "metodo",
+      "subtype": "demostracion",
+      "title": "Demostración por Contraposición",
+      "description": "Probar una implicación demostrando su contrarrecíproco: en lugar de P implica Q, se demuestra que no Q implica no P.",
+      "proofs": [],
+      "directDependencies": []
+    },
+    "metodo-directo": {
+      "id": "metodo-directo",
+      "type": "metodo",
+      "subtype": "demostracion",
+      "title": "Método Directo",
+      "description": "La estrategia fundamental de demostración: encadenar implicaciones lógicas desde la hipótesis hasta la tesis mediante inferencias válidas.",
+      "proofs": [],
+      "directDependencies": [
+        "teorema-pitagoras",
+        "teorema-congruencia-ala",
+        "teorema-suma-angulos-triangulo"
+      ]
+    },
+    "metodo-exhaustivo": {
+      "id": "metodo-exhaustivo",
+      "type": "metodo",
+      "subtype": "demostracion",
+      "title": "Método Exhaustivo",
+      "description": "Demostrar una propiedad analizando todos los casos posibles, dividiendo el problema en un número finito de escenarios mutuamente excluyentes.",
+      "proofs": [],
+      "directDependencies": []
+    },
+    "metodo-geometrico": {
+      "id": "metodo-geometrico",
+      "type": "metodo",
+      "subtype": "demostracion",
+      "title": "Método Geométrico",
+      "description": "Demostrar teoremas mediante razonamiento visual y espacial: construcciones, transformaciones, congruencias y semejanzas de figuras.",
+      "proofs": [],
+      "directDependencies": [
+        "teorema-pitagoras",
+        "demo-pitagoras-areas",
+        "demo-pitagoras-euclides",
+        "teorema-tales",
+        "demo-tales"
+      ]
+    },
+    "metodo-induccion": {
+      "id": "metodo-induccion",
+      "type": "metodo",
+      "subtype": "demostracion",
+      "title": "Inducción Matemática",
+      "description": "El principio de inducción: probar que una propiedad vale para todos los números naturales demostrando el caso base y el paso inductivo.",
+      "proofs": [],
+      "directDependencies": []
     },
     "modelo-cartesiano": {
       "id": "modelo-cartesiano",

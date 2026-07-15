@@ -5,7 +5,7 @@ import { persist } from 'zustand/middleware';
  * Estado persistente para gamificación y progreso del usuario en Matematika.
  */
 export interface UserProgressState {
-  /** IDs de teoremas, definiciones o lecciones marcados como completados/leídos */
+  /** IDs de páginas matemáticas marcadas como completadas o leídas. */
   readConcepts: string[];
   /** IDs de ejercicios donde se ha conseguido un 100% de precisión */
   completedExercises: string[];

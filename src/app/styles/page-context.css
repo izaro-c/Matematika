@@ -10,7 +10,7 @@
     padding-inline: clamp(1rem, 3vw, 3rem);
   }
 
-  .theorem-layout--ultrawide .triptych-content {
+  .theorem-layout--ultrawide .content-content {
     grid-column: 2 / span 2;
     display: grid;
     grid-template-columns: minmax(0, 85ch) minmax(24rem, 1fr);
@@ -19,18 +19,18 @@
     margin-inline: 0;
   }
 
-  .theorem-layout--ultrawide .triptych-primary {
+  .theorem-layout--ultrawide .content-primary {
     grid-template-columns: 1fr;
     grid-template-areas: "reading";
     padding-inline: 0;
   }
 
-  .theorem-layout--ultrawide .triptych-diagram {
+  .theorem-layout--ultrawide .content-diagram {
     grid-column: 2;
     grid-row: 1;
     position: sticky;
-    top: var(--triptych-top);
-    height: calc(100svh - var(--triptych-top) - 1.5rem);
+    top: var(--content-top);
+    height: calc(100svh - var(--content-top) - 1.5rem);
     min-height: 24rem;
     border-left: 3px double color-mix(in srgb, var(--theme-carbon) 18%, transparent);
     padding-left: 1.5rem;
@@ -39,12 +39,12 @@
     box-shadow: none;
   }
 
-  .theorem-layout--ultrawide .triptych-diagram::before,
-  .theorem-layout--ultrawide .triptych-diagram::after {
+  .theorem-layout--ultrawide .content-diagram::before,
+  .theorem-layout--ultrawide .content-diagram::after {
     display: none;
   }
 
-  .theorem-layout--ultrawide .triptych-diagram-sticky {
+  .theorem-layout--ultrawide .content-diagram-sticky {
     height: 100%;
     overflow: visible;
     background: transparent;
@@ -55,8 +55,8 @@
 /* === MINIGRAFO DE DEPENDENCIAS (LocalDependencyGraph) ====================== */
 .local-dependency-graph-container {
   position: sticky;
-  top: var(--triptych-top);
-  max-height: calc(100svh - var(--triptych-top) - 2rem);
+  top: var(--content-top);
+  max-height: calc(100svh - var(--content-top) - 2rem);
   overflow-y: auto;
   padding: 1.25rem;
   border: 4px double color-mix(in srgb, var(--theme-carbon) 18%, transparent);

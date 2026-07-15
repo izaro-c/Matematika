@@ -48,8 +48,9 @@ export function applyTypeSpecificMetadata(
       for (const f of COMMON_FIELDS) applyFieldIfPresent(result, w, f);
       if (w.lemmas) result.lemmas = parseCSV(String(w.lemmas));
     },
-    lessons: () => {
-      result.type = 'leccion';
+    methods: () => {
+      result.type = 'metodo';
+      result.subtype = 'demostracion';
       if (w.tags) result.tags = parseCSV(String(w.tags));
     },
     mathematicians: () => {

@@ -2,7 +2,7 @@ import { describe, it, expect } from 'vitest';
 import {
   MathematicianSchema,
   TheoremSchema,
-  LessonSchema,
+  MethodSchema,
   DemoSchema,
   DefinitionSchema,
   ExampleSchema,
@@ -87,14 +87,18 @@ describe('TheoremSchema', () => {
   });
 });
 
-describe('LessonSchema', () => {
-  const valid = { id: 'test-lesson', type: 'leccion', title: 'Lesson' };
+describe('MethodSchema', () => {
+  const valid = { id: 'metodo-test', type: 'metodo', subtype: 'demostracion', title: 'Método', description: 'Procedimiento' };
 
-  it('accepts minimal valid metadata', () => expectValid(LessonSchema, valid));
-  it('accepts with description', () => expectValid(LessonSchema, { ...valid, description: 'desc' }));
-  it('rejects missing title', () => expectInvalid(LessonSchema, { id: 'x', type: 'leccion' }));
-  it('rejects wrong type', () => expectInvalid(LessonSchema, { id: 'x', type: 'teorema', title: 'x' }));
-  it('rejects missing id', () => expectInvalid(LessonSchema, { type: 'leccion', title: 'Lesson' }));
+  it('accepts minimal valid metadata', () => expectValid(MethodSchema, valid));
+  it('accepts every procedural subtype', () => {
+    for (const subtype of ['demostracion', 'construccion', 'calculo', 'algoritmo']) {
+      expectValid(MethodSchema, { ...valid, subtype });
+    }
+  });
+  it('rejects missing title', () => expectInvalid(MethodSchema, { ...valid, title: undefined }));
+  it('rejects wrong type', () => expectInvalid(MethodSchema, { ...valid, type: 'teorema' }));
+  it('rejects missing subtype', () => expectInvalid(MethodSchema, { ...valid, subtype: undefined }));
 });
 
 describe('DemoSchema', () => {
@@ -105,13 +109,13 @@ describe('DemoSchema', () => {
     expectValid(DemoSchema, {
       ...valid, description: 'desc',
       parentTheorem: 'thm-1', lemmas: ['lema-1'],
-      proofMethod: 'directo', authors: ['gauss'],
+      proofMethod: 'metodo-directo', authors: ['gauss'],
       tags: ['geo'], links: ['link-1'], layout: 'split',
       dependencias: ['def-1'],
     });
   });
   it('accepts all proof methods', () => {
-    for (const method of ['directo', 'contradiccion', 'induccion', 'contraposicion', 'constructivo', 'geometrico', 'exhaustivo'] as const) {
+    for (const method of ['metodo-directo', 'metodo-contradiccion', 'metodo-induccion', 'metodo-contraposicion', 'metodo-constructivo', 'metodo-geometrico', 'metodo-exhaustivo'] as const) {
       expectValid(DemoSchema, { ...valid, proofMethod: method });
     }
   });

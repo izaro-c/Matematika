@@ -5,8 +5,8 @@ import { Breadcrumbs } from '@/shared/ui/Breadcrumbs';
 /** Índice navegable de los métodos de demostración publicados. */
 export const MethodsPage = () => {
   const methods = db
-    .getAllLessons()
-    .filter(lesson => lesson.id.startsWith('leccion-metodo-'))
+    .getAllMethods()
+    .filter(method => method.subtype === 'demostracion')
     .sort((a, b) => (a.title ?? a.id).localeCompare(b.title ?? b.id, 'es'));
 
   return (
@@ -45,7 +45,7 @@ export const MethodsPage = () => {
             {methods.map(method => (
               <li key={method.id} className="flex">
                 <Link
-                  href={`/${method.slug}`}
+                  href={`/metodo/${method.slug}`}
                   className="group elegant-panel flex w-full flex-col p-6 shadow-sm transition-[border-color,box-shadow,transform] duration-300 hover:shadow-elegant focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-granada motion-safe:hover:-translate-y-0.5 motion-reduce:transition-none sm:p-7"
                   style={{ ['--hover-accent' as string]: 'var(--theme-granada)' }}
                 >

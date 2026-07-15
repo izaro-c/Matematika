@@ -26,7 +26,7 @@ const mdxComponents = {
 /**
  * Página principal de un Plan de Estudio.
  * 
- * Un plan de estudio es un currículo orquestado que incluye pasos, lecciones, 
+ * Un plan de estudio es un recorrido orquestado que incluye pasos y páginas
  * ejercicios y evaluaciones organizadas para dominar un tema.
  * Provee un contexto React (`StudyPlanContext`) para que los componentes interactivos
  * MDX puedan registrar su estado (completado, pendiente) e influir en el progreso global.

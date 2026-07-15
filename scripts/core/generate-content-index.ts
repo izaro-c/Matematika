@@ -63,7 +63,7 @@ export function getLeanNodeStatus(leanGraphPath = LEAN_GRAPH_PATH): Map<string, 
 const contentTypes: Record<string, string> = {
   mathematicians: 'matematico',
   theorems: 'teorema',
-  lessons: 'leccion',
+  methods: 'metodo',
   demonstrations: 'demostracion',
   definitions: 'definicion',
   examples: 'ejemplo',

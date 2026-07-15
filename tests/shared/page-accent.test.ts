@@ -13,7 +13,7 @@ describe('page accents', () => {
       'teorema',
       'corolario',
       'demostracion',
-      'leccion',
+      'metodo',
       'modelo',
       'ejemplo',
       'ejercicio',

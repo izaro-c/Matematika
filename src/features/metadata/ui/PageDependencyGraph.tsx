@@ -132,7 +132,7 @@ export const PageDependencyGraph: React.FC<PageDependencyGraphProps> = ({
       // 1. data-target-id attributes (ConceptLink / RefLink — valid entities)
       document
         .querySelectorAll(
-          '.triptych-reading [data-target-id], .triptych-secondary [data-target-id]'
+          '.content-reading [data-target-id], .content-secondary [data-target-id]'
         )
         .forEach((el) => {
           const attr = el.getAttribute('data-target-id') || '';
@@ -141,7 +141,7 @@ export const PageDependencyGraph: React.FC<PageDependencyGraphProps> = ({
 
       // 2. href-based <a> links to known routes (RefLink, construction links, etc.)
       document
-        .querySelectorAll('.triptych-reading a[href], .triptych-secondary a[href]')
+        .querySelectorAll('.content-reading a[href], .content-secondary a[href]')
         .forEach((el) => {
           const href = el.getAttribute('href') || '';
           const clean = href.replace(basePrefix, '').replace(/^\//, '');

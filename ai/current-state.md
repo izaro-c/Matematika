@@ -1,6 +1,6 @@
 # Estado actual de la infraestructura IA
 
-**Actualizado:** 2026-07-14
+**Actualizado:** 2026-07-15
 
 **Fase:** Fase 8 — calidad, accesibilidad y gobierno, cerrada.
 
@@ -20,6 +20,14 @@ La matriz canónica es [`phases/editor-authoring/README.md`](phases/editor-autho
 - La interfaz responde a 390×844, 1024×768 y 1440×900. Las páginas de aceptación del renderer también se verifican a 1600×1100 y en temas claro/oscuro.
 - Los diálogos gestionan foco inicial, ciclo de Tab, Escape y restauración. Toolbar, tabs, bloques, enlaces, puntos y sliders tienen operación por teclado, nombres y roles accesibles; el foco global es visible.
 - La paleta activa contiene exclusivamente los nueve tokens Arts & Crafts autorizados y los pares funcionales de temas claro/oscuro superan los contrastes AA comprobados.
+
+## Arquitectura editorial vigente
+
+- `leccion` ya no es un tipo de contenido. Los siete procedimientos de demostración viven en `database/content/methods/` como `type: "metodo"`, con IDs canónicos `metodo-*`; las URL antiguas `leccion-metodo-*` redirigen a `/metodo/metodo-*`.
+- `proofMethod` referencia directamente una página `metodo-*` y los validadores comprueban tanto su existencia como su tipo.
+- `ContentLayout` es el layout editorial general. Sustituye a `TriptychLayout`, `NotebookLayout`, `SimulationLayout` e `InteractiveLessonLayout`; `CodexLayout` permanece especializado para demostraciones.
+- La sincronización texto-diagrama usa exclusivamente `MathStore`. `StepBind` y `StepSection` permiten vincular pasos desde cualquier MDX, con scopes independientes; `LessonStore`, `HighlightLink` y `SimSection` se eliminaron.
+- Los métodos mantienen una proporción equilibrada texto-diagrama y el mismo marco canónico que las demás visualizaciones: borde sólido con radio de 20 px y acento semántico. Se verificaron los siete métodos a 390×844, 1024×768 y 1440×900, además de modo oscuro y redirects, sin errores ni desbordamiento horizontal.
 
 ## Métricas conservadoras
 

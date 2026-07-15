@@ -1,7 +1,7 @@
 import { Suspense } from 'react';
 import { useRoute } from 'wouter';
 import { db } from '@/entities/content';
-import { SimulationLayout } from '@/widgets/layouts/SimulationLayout';
+import { ContentDiagram, ContentLayout } from '@/widgets/layouts/ContentLayout';
 import { FadeIn } from '@/shared/ui/FadeIn';
 import { ContentHeader } from '@/widgets/content/ContentHeader';
 import { ContentBody } from '@/shared/ui/ContentBody';
@@ -103,9 +103,9 @@ export function AxiomaticSystemPage() {
 
   return (
     <div className="min-h-screen flex flex-col w-full">
-      <SimulationLayout pageType="sistema-axiomatico" simulationComponent={system.Simulation}>
+      <ContentLayout pageType="sistema-axiomatico" diagram={system.Simulation ? <ContentDiagram component={system.Simulation} /> : undefined}>
         {renderMainContent()}
-      </SimulationLayout>
+      </ContentLayout>
       {renderSecondaryContent()}
     </div>
   );

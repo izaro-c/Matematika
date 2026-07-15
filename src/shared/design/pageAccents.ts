@@ -6,7 +6,7 @@ import type { ThemeColorVar } from './primitives';
 
 export type PageAccentType =
   | 'teorema'
-  | 'lección'
+  | 'método'
   | 'definición'
   | 'ejemplo'
   | 'ejercicio'
@@ -30,7 +30,7 @@ export type ContentPageAccentType =
   | 'ejercicio'
   | 'caso-de-uso'
   | 'matematico'
-  | 'leccion'
+  | 'metodo'
   | 'modelo'
   | 'sistema-axiomatico'
   | 'plan-de-estudio';
@@ -40,7 +40,7 @@ export type ContentPageAccentType =
  */
 export const PAGE_ACCENT_ROLES = {
   teorema: 'theoremAccent',
-  lección: 'lessonAccent',
+  método: 'methodAccent',
   definición: 'definitionAccent',
   axioma: 'axiomAccent',
   modelo: 'modelAccent',
@@ -58,7 +58,7 @@ export const PAGE_ACCENT_ROLES = {
  */
 export const PAGE_ACCENTS = {
   teorema: SEMANTIC_COLOR_ROLES[PAGE_ACCENT_ROLES.teorema],
-  lección: SEMANTIC_COLOR_ROLES[PAGE_ACCENT_ROLES.lección],
+  método: SEMANTIC_COLOR_ROLES[PAGE_ACCENT_ROLES.método],
   definición: SEMANTIC_COLOR_ROLES[PAGE_ACCENT_ROLES.definición],
   axioma: SEMANTIC_COLOR_ROLES[PAGE_ACCENT_ROLES.axioma],
   modelo: SEMANTIC_COLOR_ROLES[PAGE_ACCENT_ROLES.modelo],
@@ -87,7 +87,7 @@ export const CONTENT_PAGE_ACCENT_ROLES = {
   ejercicio: PAGE_ACCENT_ROLES.ejercicio,
   'caso-de-uso': 'lemmaAccent',
   matematico: 'biographyAccent',
-  leccion: PAGE_ACCENT_ROLES.lección,
+  metodo: PAGE_ACCENT_ROLES.método,
   modelo: PAGE_ACCENT_ROLES.modelo,
   'sistema-axiomatico': 'neutralStrong',
   'plan-de-estudio': 'secondaryAccent',

@@ -276,7 +276,7 @@ Cada principio se refleja en la arquitectura de carpetas:
 | Elegante | Tema en `app/theme.css`, tokens en `shared/design/`, componentes en `shared/ui/` | `depcruise` + auditoría de color |
 | Rigor | Demostraciones en `database/content/demonstrations/` | `validate-references` |
 | Orden topológico | Grafo en `entities/graph/` | `validate-graph` |
-| Educativo | Templates en `shared/templates/`, lecciones en `features/lessons/` | Revisión manual |
+| Educativo | Templates en `shared/templates/`, recorridos en planes y procedimientos en métodos | Revisión manual |
 
 ---
 

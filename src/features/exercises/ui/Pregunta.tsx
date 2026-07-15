@@ -18,7 +18,7 @@
  * />
  */
 import React, { useState, useEffect } from 'react';
-import { useLessonStore } from '@/features/lessons/LessonStore';
+import { useStepBinding } from '@/shared/ui/StepBinding';
 import { useExercise } from '@/features/exercises/ui/ExerciseContext';
 import { KatexText } from '@/shared/ui/KatexText';
 
@@ -44,7 +44,7 @@ interface PreguntaProps {
  */
 export const Pregunta: React.FC<PreguntaProps> = ({ id, texto, question, correct, answer: answerAlias, opciones, options }) => {
   const { register, answer } = useExercise();
-  const { setActiveStep } = useLessonStore();
+  const { setActiveStep } = useStepBinding();
   const [selected, setSelected] = useState<string | null>(null);
 
   const displayTexto = texto || question || '';

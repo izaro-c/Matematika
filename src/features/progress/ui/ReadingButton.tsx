@@ -10,7 +10,7 @@ interface ReadingButtonProps {
 }
 
 /**
- * Botón grande al final de las lecciones/conceptos para marcar un elemento como "Leído" (completado).
+ * Botón al final del contenido para marcar un elemento como leído.
  * Actualiza el `UserProgressStore` global y muestra una animación de rotación en el rombo
  * cuando cambia de estado.
  */

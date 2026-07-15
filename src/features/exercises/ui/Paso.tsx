@@ -12,7 +12,7 @@
  * </Paso>
  */
 import React, { useState } from 'react';
-import { useLessonStore } from '@/features/lessons/LessonStore';
+import { useStepBinding } from '@/shared/ui/StepBinding';
 
 interface PasoProps {
   id?: string;
@@ -30,7 +30,7 @@ interface PasoProps {
  */
 export const Paso: React.FC<PasoProps> = ({ id, numero, titulo, children, visible = false }) => {
   const [revealed, setRevealed] = useState(visible);
-  const { setActiveStep } = useLessonStore();
+  const { setActiveStep } = useStepBinding();
   const displayNum = numero;
 
   return (

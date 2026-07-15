@@ -186,12 +186,12 @@ export const CodexLayout: React.FC<CodexLayoutProps> = ({
           } : undefined}
           badgesSlot={demo.proofMethod ? (
             <Link
-              href={`/leccion-metodo-${demo.proofMethod}`}
+              href={`/metodo/${demo.proofMethod}`}
               className="ac-pill ac-pill-accent"
               style={{ ['--pill-accent' as string]: 'var(--page-accent)' }}
             >
               <span className="ac-pill-ornament" aria-hidden>❧</span>
-              Método: {demo.proofMethod}
+              {db.getMethod(demo.proofMethod)?.title ?? demo.proofMethod.replace(/^metodo-/, '')}
             </Link>
           ) : undefined}
         />
