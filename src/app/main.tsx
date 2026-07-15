@@ -5,8 +5,10 @@ import App from './App'
 
 import { publicAsset } from '@/shared/lib/routeHelper';
 
-// Configurar variables CSS globales que dependen de BASE_URL
-document.documentElement.style.setProperty('--bg-arts-and-crafts-url', `url(${publicAsset('/images/bg-arts-crafts-1.png')})`);
+// Configurar las dos texturas con BASE_URL. El tema elige cuál queda activa
+// desde CSS, de modo que el atributo inline no bloquee el cambio a modo oscuro.
+document.documentElement.style.setProperty('--bg-arts-and-crafts-light-url', `url(${publicAsset('/images/bg-arts-crafts-1.png')})`);
+document.documentElement.style.setProperty('--bg-arts-and-crafts-dark-url', `url(${publicAsset('/images/bg-arts-crafts-dark.jpg')})`);
 
 /**
  * Punto de entrada principal de la aplicación React.

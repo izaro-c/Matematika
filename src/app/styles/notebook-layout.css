@@ -25,7 +25,7 @@
   }
   .notebook-content.is-single-column {
     grid-template-columns: 1fr;
-    max-width: 80ch;
+    max-width: 115ch;
     margin-inline: auto;
   }
 }
