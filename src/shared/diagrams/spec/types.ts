@@ -1,5 +1,7 @@
 export const DIAGRAM_SPEC_VERSION = 2 as const;
 export const DIAGRAM_RENDERER_ID = 'matematika-diagram-renderer-v2' as const;
+export const DEFAULT_ANGLE_RADIUS = 0.55;
+export const DEFAULT_RIGHT_ANGLE_RADIUS = 0.45;
 
 export type DiagramBounds = [number, number, number, number];
 

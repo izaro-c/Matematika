@@ -5,6 +5,7 @@ import pointsFixture from '../../../fixtures/diagrams/phase3-points-constraints.
 import annotationsFixture from '../../../fixtures/diagrams/phase3-annotations-layers.json';
 import areasFixture from '../../../fixtures/diagrams/phase3-area-grids.json';
 import primitivesFixture from '../../../fixtures/diagrams/phase3-euclidean-primitives.json';
+import marksFixture from '../../../fixtures/diagrams/phase3-marks-angles.json';
 import { migrateDiagramSpec } from '../../../../src/shared/diagrams/public';
 import { DiagramInspector } from '../../../../src/features/editor/diagrams/ui/DiagramInspector';
 import { DiagramToolbar } from '../../../../src/features/editor/diagrams/ui/DiagramToolbar';
@@ -138,6 +139,33 @@ describe('Phase 3 visual editing', () => {
     fireEvent.click(screen.getByRole('button', { name: 'Crear Polígono' }));
     expect(onCreate).toHaveBeenCalledTimes(1);
     expect(screen.getByLabelText('Vértice 4 para Polígono')).toBeTruthy();
+  });
+
+  it('names angular references by role and edits the angular radius', () => {
+    const model = migrateDiagramSpec(marksFixture).spec;
+    const onRefsChange = vi.fn();
+    const picker = render(
+      <DiagramToolReferencePicker
+        model={model}
+        tool="angle"
+        refs={[]}
+        onRefsChange={onRefsChange}
+        onCreate={vi.fn()}
+      />,
+    );
+
+    expect(screen.getByLabelText('Punto del primer lado para Ángulo')).toBeTruthy();
+    expect(screen.getByLabelText('Vértice para Ángulo')).toBeTruthy();
+    expect(screen.getByLabelText('Punto del segundo lado para Ángulo')).toBeTruthy();
+
+    picker.unmount();
+    const onModelEdit = vi.fn();
+    render(<DiagramInspector model={model} selectedId="angleAVB" onSelect={vi.fn()} onModelEdit={onModelEdit} onDeleteSelected={vi.fn()} />);
+    expect(screen.getByLabelText('Vértice de Ángulo')).toBeTruthy();
+    fireEvent.change(screen.getByLabelText('Radio de la marca angular'), { target: { value: '0.8' } });
+
+    const edited = onModelEdit.mock.calls.at(-1)?.[0];
+    expect(edited.elements.find((item: { id: string }) => item.id === 'angleAVB')).toMatchObject({ style: { angleRadius: 0.8 } });
   });
 
   it('persists the dashed option for a polygon', () => {

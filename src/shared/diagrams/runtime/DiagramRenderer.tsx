@@ -29,11 +29,14 @@ import {
   createText,
 } from '../core/MathFactory';
 import { DiagramInfoPanel, DiagramTitle } from '@/shared/ui/DiagramOverlay';
+import { renderKatexTextToHtml } from '@/shared/ui/KatexText';
 import { StepNavigator } from '@/shared/ui/StepNavigator';
 import { MathProviderBoundary, useMathStore } from '@/shared/lib/MathStoreContext';
 import { useDiagramTargetRegistry } from '@/shared/lib/DiagramTargetRegistryContext';
 import {
   DIAGRAM_RENDERER_ID,
+  DEFAULT_ANGLE_RADIUS,
+  DEFAULT_RIGHT_ANGLE_RADIUS,
   constrainPointCoordinates,
   createSceneConstructionPlan,
   createScenePlan,
@@ -377,12 +380,12 @@ function createElement(
   if (item.kind === 'poincareGeodesic') return refs.length >= 4 ? createPoincareGeodesic(board, [refs[0], refs[1], refs[2], refs[3]], lineOptions, theme) : null;
   if (item.kind === 'poincareArc') return refs.length >= 4 ? createPoincareArc(board, [refs[0], refs[1], refs[2], refs[3]], lineOptions, theme) : null;
   if (item.kind === 'midpoint') return refs.length >= 2 ? createMidpoint(board, [refs[0], refs[1]], {
-    name: item.label, fillColor: theme[item.color], strokeColor: theme[item.color],
+    name: renderKatexTextToHtml(item.label), fillColor: theme[item.color], strokeColor: theme[item.color],
     highlightFillColor: hoverColor, highlightStrokeColor: hoverColor,
     label: { highlightColor: hoverColor, highlightStrokeColor: hoverColor }, layer,
   }, theme) : null;
   if (item.kind === 'perpendicularFoot') return refs.length >= 3 ? createPerpendicularFoot(board, [refs[0], refs[1], refs[2]], {
-    name: item.label, fillColor: theme[item.color], strokeColor: theme[item.color],
+    name: renderKatexTextToHtml(item.label), fillColor: theme[item.color], strokeColor: theme[item.color],
     highlightFillColor: hoverColor, highlightStrokeColor: hoverColor,
     label: { highlightColor: hoverColor, highlightStrokeColor: hoverColor }, layer,
   }, theme) : null;
@@ -391,13 +394,13 @@ function createElement(
   if (item.kind === 'parallel') return refs.length >= 3 ? createParallelLine(board, [refs[0], refs[1], refs[2]], lineOptions, theme) : null;
   if (item.kind === 'angleBisector') return refs.length >= 3 ? createAngleBisectorRay(board, [refs[0], refs[1], refs[2]], lineOptions, theme) : null;
   if (item.kind === 'angle') return refs.length >= 3 ? createAngle(board, [refs[0], refs[1], refs[2]], {
-    fillColor: theme[item.color], strokeColor: theme[item.color], radius: item.style?.angleRadius, layer,
+    fillColor: theme[item.color], strokeColor: theme[item.color], radius: item.style?.angleRadius ?? DEFAULT_ANGLE_RADIUS, layer,
   }, theme) : null;
   if (item.kind === 'rightAngle') return refs.length >= 3 ? createRightAngleMarker(board, [refs[0], refs[1], refs[2]], {
-    fillColor: theme[item.color], strokeColor: theme[item.color], size: item.style?.angleRadius, layer,
+    fillColor: theme[item.color], strokeColor: theme[item.color], size: item.style?.angleRadius ?? DEFAULT_RIGHT_ANGLE_RADIUS, layer,
   }, theme) : null;
   if (item.kind === 'perpendicularMark') return refs.length >= 3 ? createRightAngleMarker(board, [refs[0], refs[1], refs[2]], {
-    fillColor: theme[item.color], strokeColor: theme[item.color], size: item.style?.angleRadius, layer,
+    fillColor: theme[item.color], strokeColor: theme[item.color], size: item.style?.angleRadius ?? DEFAULT_RIGHT_ANGLE_RADIUS, layer,
   }, theme) : null;
   if (item.kind === 'congruenceMark') return refs.length >= 2 ? createCongruenceMark(
     board,
@@ -436,8 +439,8 @@ function createElement(
       ? measurementText(item, elements, spec)
       : item.text || item.label);
     return item.kind === 'infoPanel' && item.properties?.title
-      ? `<strong>${item.properties.title}</strong><br/>${body}`
-      : body;
+      ? `<strong>${renderKatexTextToHtml(item.properties.title)}</strong><br/>${renderKatexTextToHtml(body)}`
+      : renderKatexTextToHtml(body);
   };
   const textOffset = item.style?.textOffset ?? [0.25, 0.35];
   const viewportPosition = item.kind === 'infoPanel' && item.properties?.anchorMode === 'viewport'
@@ -577,7 +580,7 @@ function syncNativeElementLabel(
 ) {
   const label = nativeElementLabel(element);
   if (!label) return;
-  label.setText?.(state.text);
+  label.setText?.(renderKatexTextToHtml(state.text));
   (label.rendNode as HTMLElement | undefined)?.style.setProperty('--diagram-label-highlight-color', state.highlightColor);
   label.setAttribute({
     visible: state.visible && state.text.trim().length > 0,
@@ -840,7 +843,7 @@ const DiagramRendererContent: React.FC<DiagramRendererProps> = ({
                     try { return evaluateMathExpression(sceneItem.yExpression ?? '0', liveVariables(elements, spec)); } catch { return sceneItem.y; }
                   },
                 ], {
-                  name: sceneItem.label,
+                  name: renderKatexTextToHtml(sceneItem.label),
                   fixed: true,
                   ...(sceneItem.style?.pointSize !== undefined ? { size: sceneItem.style.pointSize } : {}),
                   fillColor: theme[sceneItem.color],
@@ -852,7 +855,7 @@ const DiagramRendererContent: React.FC<DiagramRendererProps> = ({
                 }, theme)
                 : sceneItem.constraint === 'glider' && sceneItem.gliderTarget
                 ? createGlider(board, [sceneItem.x, sceneItem.y, elements[sceneItem.gliderTarget]], {
-                  name: sceneItem.label,
+                  name: renderKatexTextToHtml(sceneItem.label),
                   fixed: sceneItem.fixed || entry.locked,
                   ...(sceneItem.style?.pointSize !== undefined ? { size: sceneItem.style.pointSize } : {}),
                   fillColor: theme[sceneItem.color],
@@ -863,7 +866,7 @@ const DiagramRendererContent: React.FC<DiagramRendererProps> = ({
                   layer: itemLayerNumber(spec, sceneItem),
                 }, theme)
                 : createPoint(board, [sceneItem.x, sceneItem.y], {
-                  name: sceneItem.label,
+                  name: renderKatexTextToHtml(sceneItem.label),
                   fixed: sceneItem.fixed || entry.locked,
                   ...(sceneItem.style?.pointSize !== undefined ? { size: sceneItem.style.pointSize } : {}),
                   fillColor: theme[sceneItem.color],
@@ -908,7 +911,7 @@ const DiagramRendererContent: React.FC<DiagramRendererProps> = ({
               );
             } else {
               elements[sceneItem.id] = createSlider(board, [[sceneItem.x, sceneItem.y], [sceneItem.x + 2.6, sceneItem.y]], [sceneItem.min, sceneItem.value, sceneItem.max], {
-                name: sceneItem.label,
+                name: renderKatexTextToHtml(sceneItem.label),
                 snapWidth: sceneItem.step,
                 fillColor: theme[sceneItem.color],
                 strokeColor: theme[sceneItem.color],
@@ -1024,7 +1027,7 @@ const DiagramRendererContent: React.FC<DiagramRendererProps> = ({
             const hoverColor = item.style?.preserveColorOnHighlight ? theme[item.color] : theme.ocre;
             syncNativeElementLabel(element, { visible, color, highlightColor: hoverColor, opacity, text: entry.label });
             if (element.__matematikaStepLabel !== entry.label) {
-              element.setAttribute?.({ name: entry.label });
+              element.setAttribute?.({ name: renderKatexTextToHtml(entry.label) });
               element.__matematikaStepLabel = entry.label;
             }
             if ('constraint' in item || ('kind' in item && (item.kind === 'midpoint' || item.kind === 'perpendicularFoot'))) {

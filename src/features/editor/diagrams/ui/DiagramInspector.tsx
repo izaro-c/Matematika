@@ -1,9 +1,9 @@
 import React from 'react';
 import type { VisualDiagramModel, VisualPoint, VisualElement, VisualSlider, VisualStep, ColorToken, PointConstraint } from '../model/types';
-import { COLOR_OPTIONS, KIND_LABELS } from '../model/commands';
+import { COLOR_OPTIONS, KIND_LABELS, toolReferenceLabel } from '../model/commands';
 import { cleanTargetId, renamePoint, renameElement, renameSlider } from '../model/commands';
 import { updatePoint, updateElement, updateSlider, updateStep } from '../model/commands';
-import { extractMathExpressionIdentifiers } from '@/shared/diagrams/public';
+import { DEFAULT_ANGLE_RADIUS, DEFAULT_RIGHT_ANGLE_RADIUS, extractMathExpressionIdentifiers } from '@/shared/diagrams/public';
 import { DiagramConstraintEditor } from './DiagramConstraintEditor';
 import { constraintPresentation } from '../model/constraintOptions';
 import { DiagramSceneControls } from './DiagramSceneControls';
@@ -150,6 +150,7 @@ export const DiagramInspector: React.FC<DiagramInspectorProps> = ({
               value={selectedPoint.label}
               onChange={(e) => handlePointChange({ label: e.target.value })}
             />
+            <span className="mt-1 block text-[10px] text-carbon/45">Admite LaTeX entre <code>$...$</code> o <code>$$...$$</code>.</span>
           </div>
 
           <div className="grid grid-cols-2 gap-2">
@@ -314,6 +315,7 @@ export const DiagramInspector: React.FC<DiagramInspectorProps> = ({
               value={selectedElement.label}
               onChange={(e) => handleElementChange({ label: e.target.value })}
             />
+            <span className="mt-1 block text-[10px] text-carbon/45">Admite LaTeX entre <code>$...$</code> o <code>$$...$$</code>.</span>
           </div>
 
           <div>
@@ -323,19 +325,24 @@ export const DiagramInspector: React.FC<DiagramInspectorProps> = ({
           {selectedElement.refs.length > 0 && (
             <fieldset className="space-y-1 rounded border border-carbon/10 p-2">
               <legend className="px-1 text-[10px] font-bold uppercase tracking-wider text-carbon/45">Referencias geométricas</legend>
-              {selectedElement.refs.map((ref, index) => (
-                <select
-                  key={`${selectedElement.id}-ref-${index}`}
-                  aria-label={`Referencia ${index + 1}`}
-                  className="w-full rounded border border-carbon/15 bg-lienzo p-1.5 font-mono text-xs"
-                  value={ref}
-                  onChange={(event) => handleElementChange({ refs: selectedElement.refs.map((value, refIndex) => refIndex === index ? event.target.value : value) })}
-                >
-                  {[...model.points, ...model.elements.filter(element => element.id !== selectedElement.id)].map(item => (
-                    <option key={item.id} value={item.id}>{item.label} ({item.id})</option>
-                  ))}
-                </select>
-              ))}
+              {selectedElement.refs.map((ref, index) => {
+                const referenceLabel = toolReferenceLabel(selectedElement.kind, index);
+                return (
+                  <label key={`${selectedElement.id}-ref-${index}`} className="block text-[10px] font-bold text-carbon/60">
+                    {referenceLabel}
+                    <select
+                      aria-label={`${referenceLabel} de ${KIND_LABELS[selectedElement.kind]}`}
+                      className="w-full rounded border border-carbon/15 bg-lienzo p-1.5 font-mono text-xs"
+                      value={ref}
+                      onChange={(event) => handleElementChange({ refs: selectedElement.refs.map((value, refIndex) => refIndex === index ? event.target.value : value) })}
+                    >
+                      {[...model.points, ...model.elements.filter(element => element.id !== selectedElement.id)].map(item => (
+                        <option key={item.id} value={item.id}>{item.label} ({item.id})</option>
+                      ))}
+                    </select>
+                  </label>
+                );
+              })}
               {(selectedElement.kind === 'polygon' || selectedElement.kind === 'areaDecomposition') && (
                 <div className="flex gap-1 pt-1">
                   <button
@@ -369,6 +376,7 @@ export const DiagramInspector: React.FC<DiagramInspectorProps> = ({
                 value={selectedElement.text || ''}
                 onChange={(e) => handleElementChange({ text: e.target.value })}
               />
+              <span className="mt-1 block text-[10px] text-carbon/45">Puede mezclar texto y LaTeX, por ejemplo <code>{'$\\alpha + \\beta$'}</code>.</span>
             </div>
           )}
 
@@ -380,6 +388,7 @@ export const DiagramInspector: React.FC<DiagramInspectorProps> = ({
                 value={selectedElement.text || ''}
                 onChange={(event) => handleElementChange({ text: event.target.value })}
               />
+              <span className="mt-1 block text-[10px] text-carbon/45">Puede mezclar texto y LaTeX, por ejemplo <code>{'$x^2$'}</code>.</span>
             </div>
           )}
 
@@ -548,6 +557,9 @@ export const DiagramInspector: React.FC<DiagramInspectorProps> = ({
           </div>
 
           <div className="grid grid-cols-2 gap-2 rounded border border-carbon/10 p-2">
+            {(selectedElement.kind === 'angle' || selectedElement.kind === 'rightAngle' || selectedElement.kind === 'perpendicularMark') && (
+              <label className="col-span-2 text-xs font-bold text-carbon">Radio de la marca<input type="number" min="0.05" max="10" step="0.05" aria-label="Radio de la marca angular" className="mt-1 w-full rounded border border-carbon/15 bg-lienzo p-1.5 text-xs" value={selectedElement.style?.angleRadius ?? (selectedElement.kind === 'angle' ? DEFAULT_ANGLE_RADIUS : DEFAULT_RIGHT_ANGLE_RADIUS)} onChange={(event) => handleElementStyleChange({ angleRadius: Number(event.target.value) })} /></label>
+            )}
             <label className="text-xs font-bold text-carbon">Grosor<input type="number" min="0" max="20" step="0.1" aria-label="Grosor del elemento" className="mt-1 w-full rounded border border-carbon/15 bg-lienzo p-1.5 text-xs" value={selectedElement.style?.strokeWidth ?? 2.4} onChange={(event) => handleElementStyleChange({ strokeWidth: Number(event.target.value) })} /></label>
             <label className="text-xs font-bold text-carbon">Grosor resaltado<input type="number" min="0" max="30" step="0.1" aria-label="Grosor resaltado del elemento" className="mt-1 w-full rounded border border-carbon/15 bg-lienzo p-1.5 text-xs" value={selectedElement.style?.highlightStrokeWidth ?? 4.8} onChange={(event) => handleElementStyleChange({ highlightStrokeWidth: Number(event.target.value) })} /></label>
             <label className="text-xs font-bold text-carbon">Relleno<input type="number" min="0" max="1" step="0.01" aria-label="Opacidad de relleno" className="mt-1 w-full rounded border border-carbon/15 bg-lienzo p-1.5 text-xs" value={selectedElement.style?.fillOpacity ?? 0.16} onChange={(event) => handleElementStyleChange({ fillOpacity: Number(event.target.value) })} /></label>
@@ -599,6 +611,7 @@ export const DiagramInspector: React.FC<DiagramInspectorProps> = ({
               value={selectedSlider.label}
               onChange={(e) => handleSliderChange({ label: e.target.value })}
             />
+            <span className="mt-1 block text-[10px] text-carbon/45">Admite LaTeX entre <code>$...$</code> o <code>$$...$$</code>.</span>
           </div>
 
           <div className="grid grid-cols-3 gap-1">

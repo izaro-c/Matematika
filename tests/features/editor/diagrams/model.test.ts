@@ -1,5 +1,6 @@
 import { describe, it, expect } from 'vitest';
-import { createTemplateModel, point, element, generatedElementId, projectPointToSupport, updatePoint } from '../../../../src/features/editor/diagrams/model/commands';
+import { createTemplateModel, point, element, generatedElementId, projectPointToSupport, toolReferenceLabel, updatePoint } from '../../../../src/features/editor/diagrams/model/commands';
+import { DEFAULT_ANGLE_RADIUS, DEFAULT_RIGHT_ANGLE_RADIUS } from '../../../../src/shared/diagrams/public';
 import { buildTargets, targetKind } from '../../../../src/features/editor/diagrams/model/selectors';
 
 describe('Diagram Model & Selectors', () => {
@@ -43,6 +44,14 @@ describe('Diagram Model & Selectors', () => {
     expect(el.kind).toBe('segment');
     expect(el.refs).toEqual(['pA', 'pB']);
     expect(el.color).toBe('carbon');
+  });
+
+  it('creates angular marks with explicit valid radii and identifies the vertex slot', () => {
+    expect(element('angleABC', 'Ángulo ABC', 'angle', ['pA', 'pB', 'pC'], 'ocre').style?.angleRadius).toBe(DEFAULT_ANGLE_RADIUS);
+    expect(element('rightABC', 'Ángulo recto ABC', 'rightAngle', ['pA', 'pB', 'pC'], 'ocre').style?.angleRadius).toBe(DEFAULT_RIGHT_ANGLE_RADIUS);
+    expect(toolReferenceLabel('angle', 0)).toBe('Punto del primer lado');
+    expect(toolReferenceLabel('angle', 1)).toBe('Vértice');
+    expect(toolReferenceLabel('angle', 2)).toBe('Punto del segundo lado');
   });
 
   it('should create template models successfully', () => {

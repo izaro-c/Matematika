@@ -1,6 +1,7 @@
 import { describe, expect, it } from 'vitest';
 import pointsFixture from '../../../fixtures/diagrams/phase3-points-constraints.json';
 import annotationsFixture from '../../../fixtures/diagrams/phase3-annotations-layers.json';
+import marksFixture from '../../../fixtures/diagrams/phase3-marks-angles.json';
 import { parseDiagramSourceAST } from '../../../../scripts/editor/parseDiagramSourceAST';
 import { migrateDiagramSpec } from '../../../../src/shared/diagrams/public';
 import { generateDiagramSource } from '../../../../src/features/editor/diagrams/source/generator';
@@ -9,6 +10,7 @@ describe('Phase 3 source serialization', () => {
   it.each([
     ['constraints', pointsFixture, 'Phase3Constraints'],
     ['reactive annotations', annotationsFixture, 'Phase3Annotations'],
+    ['angular marks', marksFixture, 'Phase3Angles'],
   ] as const)('roundtrips %s through the production TSX adapter', (_family, fixture, componentName) => {
     const model = migrateDiagramSpec(fixture).spec;
     const generated = generateDiagramSource(model, componentName);

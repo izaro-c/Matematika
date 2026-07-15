@@ -1,96 +1,341 @@
-import { MathBoard } from '@/shared/diagrams/core/MathBoard';
-import {
-  createPoint, createLine, createSegment, createPolygon
-} from '@/shared/diagrams/core/MathFactory';
+import { createDiagramSpec, DiagramRenderer } from '@/shared/diagrams/public';
 
+/* @matematika-diagram-spec:start */
+export const Incidence4Spec = createDiagramSpec(
+{
+  "version": 2,
+  "renderer": "matematika-diagram-renderer-v2",
+  "title": "Axioma de Incidencia IV",
+  "componentId": "incidence4",
+  "category": "Teoremas",
+  "mode": "simulation",
+  "axis": false,
+  "grid": false,
+  "viewport": {
+    "bounds": [
+      -5,
+      5,
+      5,
+      -5
+    ],
+    "home": [
+      -5,
+      5,
+      5,
+      -5
+    ],
+    "minZoom": 0.2,
+    "maxZoom": 12,
+    "padding": 0.16
+  },
+  "layers": [
+    {
+      "id": "geometry",
+      "label": "Geometría",
+      "order": 0,
+      "visible": true,
+      "locked": false
+    },
+    {
+      "id": "controls",
+      "label": "Controles",
+      "order": 1,
+      "visible": true,
+      "locked": false
+    }
+  ],
+  "groups": [],
+  "points": [
+    {
+      "id": "pA",
+      "label": "A",
+      "color": "ocre",
+      "layerId": "geometry",
+      "order": 2000,
+      "visible": true,
+      "locked": false,
+      "groupIds": [],
+      "selection": {
+        "selectable": true,
+        "ariaLabel": "Punto A",
+        "role": "primary"
+      },
+      "target": true,
+      "targetId": "pA",
+      "style": {
+        "pointSize": 7,
+        "highlightPointSize": 10,
+        "preserveColorOnHighlight": true
+      },
+      "x": -0.73,
+      "y": 4.05,
+      "fixed": false,
+      "constraint": "free"
+    },
+    {
+      "id": "pB",
+      "label": "B",
+      "color": "ocre",
+      "layerId": "geometry",
+      "order": 7000,
+      "visible": true,
+      "locked": false,
+      "groupIds": [],
+      "selection": {
+        "selectable": true,
+        "ariaLabel": "Punto B",
+        "role": "primary"
+      },
+      "target": true,
+      "targetId": "pB",
+      "style": {
+        "pointSize": 7,
+        "highlightPointSize": 10,
+        "preserveColorOnHighlight": true
+      },
+      "x": 2.27,
+      "y": 0.04,
+      "fixed": false,
+      "constraint": "free"
+    },
+    {
+      "id": "pC",
+      "label": "C",
+      "color": "ocre",
+      "layerId": "geometry",
+      "order": 4000,
+      "visible": true,
+      "locked": false,
+      "groupIds": [],
+      "selection": {
+        "selectable": true,
+        "ariaLabel": "Punto C",
+        "role": "primary"
+      },
+      "target": true,
+      "targetId": "pC",
+      "style": {
+        "pointSize": 7,
+        "highlightPointSize": 10,
+        "preserveColorOnHighlight": true
+      },
+      "x": -4.13,
+      "y": -1.4,
+      "fixed": false,
+      "constraint": "free"
+    }
+  ],
+  "elements": [
+    {
+      "id": "polyTriangulo",
+      "label": "Triángulo",
+      "color": "salvia",
+      "layerId": "geometry",
+      "order": 1000,
+      "visible": true,
+      "locked": false,
+      "groupIds": [],
+      "selection": {
+        "selectable": true,
+        "ariaLabel": "Triángulo",
+        "role": "secondary"
+      },
+      "target": true,
+      "targetId": "polyTriangulo",
+      "kind": "polygon",
+      "refs": [
+        "pA",
+        "pB",
+        "pC"
+      ]
+    },
+    {
+      "id": "segAB",
+      "label": "Lado AB",
+      "color": "carbon",
+      "layerId": "geometry",
+      "order": 1000,
+      "visible": true,
+      "locked": false,
+      "groupIds": [],
+      "selection": {
+        "selectable": true,
+        "ariaLabel": "Lado AB",
+        "role": "secondary"
+      },
+      "target": true,
+      "targetId": "segAB",
+      "kind": "segment",
+      "refs": [
+        "pA",
+        "pB"
+      ]
+    },
+    {
+      "id": "segBC",
+      "label": "Lado BC",
+      "color": "carbon",
+      "layerId": "geometry",
+      "order": 1000,
+      "visible": true,
+      "locked": false,
+      "groupIds": [],
+      "selection": {
+        "selectable": true,
+        "ariaLabel": "Lado BC",
+        "role": "secondary"
+      },
+      "target": true,
+      "targetId": "segBC",
+      "kind": "segment",
+      "refs": [
+        "pB",
+        "pC"
+      ]
+    },
+    {
+      "id": "segCA",
+      "label": "Lado CA",
+      "color": "carbon",
+      "layerId": "geometry",
+      "order": 1000,
+      "visible": true,
+      "locked": false,
+      "groupIds": [],
+      "selection": {
+        "selectable": true,
+        "ariaLabel": "Lado CA",
+        "role": "secondary"
+      },
+      "target": true,
+      "targetId": "segCA",
+      "kind": "segment",
+      "refs": [
+        "pC",
+        "pA"
+      ]
+    },
+    {
+      "id": "lineAB",
+      "label": "Recta",
+      "color": "carbon",
+      "layerId": "geometry",
+      "order": -1000,
+      "visible": true,
+      "locked": false,
+      "groupIds": [],
+      "selection": {
+        "selectable": true,
+        "ariaLabel": "Recta",
+        "role": "secondary"
+      },
+      "target": true,
+      "targetId": "lineAB",
+      "style": {
+        "highlightStrokeWidth": 2.4,
+        "preserveColorOnHighlight": true
+      },
+      "kind": "line",
+      "refs": [
+        "pA",
+        "pB"
+      ],
+      "dashed": true
+    },
+    {
+      "id": "lineAC",
+      "label": "Recta",
+      "color": "carbon",
+      "layerId": "geometry",
+      "order": -2000,
+      "visible": true,
+      "locked": false,
+      "groupIds": [],
+      "selection": {
+        "selectable": true,
+        "ariaLabel": "Recta",
+        "role": "secondary"
+      },
+      "target": true,
+      "targetId": "lineAC",
+      "style": {
+        "highlightStrokeWidth": 2.4,
+        "preserveColorOnHighlight": true
+      },
+      "kind": "line",
+      "refs": [
+        "pA",
+        "pC"
+      ],
+      "dashed": true
+    },
+    {
+      "id": "lineCB",
+      "label": "Recta",
+      "color": "carbon",
+      "layerId": "geometry",
+      "order": -3000,
+      "visible": true,
+      "locked": false,
+      "groupIds": [],
+      "selection": {
+        "selectable": true,
+        "ariaLabel": "Recta",
+        "role": "secondary"
+      },
+      "target": true,
+      "targetId": "lineCB",
+      "style": {
+        "highlightStrokeWidth": 2.4,
+        "preserveColorOnHighlight": true
+      },
+      "kind": "line",
+      "refs": [
+        "pC",
+        "pB"
+      ],
+      "dashed": true
+    }
+  ],
+  "sliders": [],
+  "steps": [],
+  "constraints": [],
+  "dependencies": [
+    {
+      "sourceId": "pA",
+      "targetId": "lineAB",
+      "relation": "construction"
+    },
+    {
+      "sourceId": "pB",
+      "targetId": "lineAB",
+      "relation": "construction"
+    },
+    {
+      "sourceId": "pA",
+      "targetId": "lineAC",
+      "relation": "construction"
+    },
+    {
+      "sourceId": "pC",
+      "targetId": "lineAC",
+      "relation": "construction"
+    },
+    {
+      "sourceId": "pC",
+      "targetId": "lineCB",
+      "relation": "construction"
+    },
+    {
+      "sourceId": "pB",
+      "targetId": "lineCB",
+      "relation": "construction"
+    }
+  ],
+  "note": "Arrastra A, B y C",
+  "extensions": {}
+}
+);
+/* @matematika-diagram-spec:end */
 
-
-
-
-
-
-export const Incidence4 = () => {
-
-
-
-
-
-
-
-
-  const onInit = (board: any, els: any, theme: any) => {
-      void board; void els; void theme;
-      // Triángulo: tres puntos no colineales
-    const A = createPoint(board, [-2.5, -1], {
-      name: 'A', size: 5, fillColor: theme.terracota, strokeColor: theme.terracota, showInfobox: false,
-    }, theme);
-    const B = createPoint(board, [2.5, -1], {
-      name: 'B', size: 5, fillColor: theme.terracota, strokeColor: theme.terracota, showInfobox: false,
-    }, theme);
-    const C = createPoint(board, [0, 2.5], {
-      name: 'C', size: 5, fillColor: theme.terracota, strokeColor: theme.terracota, showInfobox: false,
-    }, theme);
-
-    // Lados del triángulo
-    const lab = createLine(board, [A, B], {
-      strokeColor: theme.carbon, strokeWidth: 1.5, highlight: false, dash: 1,
-    }, theme);
-    const lac = createLine(board, [A, C], {
-      strokeColor: theme.carbon, strokeWidth: 1.5, highlight: false, dash: 1,
-    }, theme);
-    const lbc = createLine(board, [B, C], {
-      strokeColor: theme.carbon, strokeWidth: 1.5, highlight: false, dash: 1,
-    }, theme);
-
-    // Segmentos destacados
-    createSegment(board, [A, B], { strokeColor: theme.musgo, strokeWidth: 2.5, highlight: false }, theme);
-    createSegment(board, [A, C], { strokeColor: theme.musgo, strokeWidth: 2.5, highlight: false }, theme);
-    createSegment(board, [B, C], { strokeColor: theme.musgo, strokeWidth: 2.5, highlight: false }, theme);
-
-    // Etiqueta "plano" con relleno suave
-    const polygonABC = createPolygon(board, [A, B, C], {
-      fillColor: theme.pizarra, fillOpacity: 0.08, borders: { visible: false }, vertices: { visible: false },
-    }, theme);
-
-      // Registrar elementos para interactividad y auditoría
-      els.A = A;
-        els.B = B;
-        els.C = C;
-        els.lab = lab;
-        els.lac = lac;
-        els.lbc = lbc;
-        els.polygonABC = polygonABC;
-    };;
-
-  const onUpdate = (board: any, els: any, theme: any, isStep: any, isHL: any) => {
-      const isHighlight = isHL;
-      void board; void els; void theme; void isStep; void isHL; void isHighlight;
-      const { A, B, C, polygonABC } = els;
-      const reset = () => {
-      A.setAttribute({ size: 5, fillColor: theme.terracota, strokeColor: theme.terracota });
-      B.setAttribute({ size: 5, fillColor: theme.terracota, strokeColor: theme.terracota });
-      C.setAttribute({ size: 5, fillColor: theme.terracota, strokeColor: theme.terracota });
-      if (polygonABC) polygonABC.setAttribute({ fillOpacity: 0.08, fillColor: theme.pizarra });
-    };
-
-    reset();
-    if (isHL('pA')) A.setAttribute({ size: 10, fillColor: theme.ocre, strokeColor: theme.ocre });
-    else if (isHL('pB')) B.setAttribute({ size: 10, fillColor: theme.ocre, strokeColor: theme.ocre });
-    else if (isHL('pC')) C.setAttribute({ size: 10, fillColor: theme.ocre, strokeColor: theme.ocre });
-    else if (isHL('polygonABC') && polygonABC) polygonABC.setAttribute({ fillOpacity: 0.25, fillColor: theme.musgo });
-    };;
-
-  return (
-    <MathBoard
-      boundingbox={[-4, 4, 4, -3]}
-      axis={false}
-      grid={false}
-      onInit={onInit}
-      onUpdate={onUpdate}
-    >
-      <div className="absolute top-2 left-3 z-10 text-xs font-serif italic text-pizarra/50">
-        Tres puntos no colineales determinan un <span className="font-bold not-italic text-terracota">plano</span>
-      </div>
-    </MathBoard>
-  );
-};
+export const Incidence4 = () => <DiagramRenderer spec={Incidence4Spec} />;
