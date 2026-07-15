@@ -2,7 +2,8 @@ import fs from 'node:fs';
 import path from 'node:path';
 import { describe, expect, it } from 'vitest';
 import {
-  createGraphWorkerRequest,
+  createGraphWorkerEvaluateRequest,
+  createGraphWorkerInitializeRequest,
   isGraphWorkerOutput,
   normalizeGraphWorkerError,
   parseGraphWorkerRequest,
@@ -43,26 +44,52 @@ const output: GraphWorkerOutput = {
 };
 
 describe('graph worker message contract', () => {
-  it('accepts a valid typed request and produces a matching success response', async () => {
-    const request = createGraphWorkerRequest(7, graphData, []);
-    const parsedRequest = parseGraphWorkerRequest(request);
-    const response = await processGraphWorkerMessage(request);
+  it('initializes once and returns only logical changes on later evaluations', async () => {
+    const initialization = createGraphWorkerInitializeRequest(7, graphData, []);
+    const parsedInitialization = parseGraphWorkerRequest(initialization);
+    const initialized = await processGraphWorkerMessage(initialization);
 
-    expect(parsedRequest).toEqual({ ok: true, value: request });
-    expect(response.type).toBe('success');
-    expect(response.requestId).toBe(7);
-    if (response.type === 'success') {
-      expect(isGraphWorkerOutput(response.result)).toBe(true);
-      expect(response.result.nodes.map((node) => node.id)).toEqual([
+    expect(parsedInitialization).toEqual({ ok: true, value: initialization });
+    expect(initialized.type).toBe('initialized');
+    expect(initialized.requestId).toBe(7);
+    if (initialized.type === 'initialized') {
+      expect(isGraphWorkerOutput(initialized.result)).toBe(true);
+      expect(initialized.result.nodes.map((node) => node.id)).toEqual([
         'axioma-uno',
         'teorema-uno',
       ]);
     }
+
+    const evaluation = createGraphWorkerEvaluateRequest(8, ['axioma-uno']);
+    const parsedEvaluation = parseGraphWorkerRequest(evaluation);
+    const evaluated = await processGraphWorkerMessage(evaluation);
+
+    expect(parsedEvaluation).toEqual({ ok: true, value: evaluation });
+    expect(evaluation.payload).not.toHaveProperty('graphData');
+    expect(evaluated).toEqual({
+      type: 'evaluated',
+      requestId: 8,
+      result: {
+        changedActiveStates: {
+          'axioma-uno': false,
+          'teorema-uno': false,
+        },
+      },
+    });
+
+    expect(await processGraphWorkerMessage(createGraphWorkerEvaluateRequest(
+      9,
+      ['axioma-uno'],
+    ))).toEqual({
+      type: 'evaluated',
+      requestId: 9,
+      result: { changedActiveStates: {} },
+    });
   });
 
   it('normalizes invalid messages and thrown values into a stable error shape', async () => {
     const response = await processGraphWorkerMessage({
-      type: 'compute-graph',
+      type: 'initialize-graph',
       requestId: 9,
       payload: { graphData: null, disabledAxioms: [] },
     });
@@ -83,9 +110,14 @@ describe('graph worker message contract', () => {
 
   it('rejects malformed worker responses instead of trusting their payload', () => {
     expect(parseGraphWorkerResponse({
-      type: 'success',
+      type: 'initialized',
       requestId: 3,
       result: { ...output, nodes: 'not-an-array' },
+    })).toBeNull();
+    expect(parseGraphWorkerResponse({
+      type: 'evaluated',
+      requestId: 4,
+      result: { changedActiveStates: ['not-a-map'] },
     })).toBeNull();
   });
 

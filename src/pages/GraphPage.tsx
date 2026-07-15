@@ -14,6 +14,7 @@ import { useProgressStore } from '@/features/progress/UserProgressStore';
 import { buildKnowledgeGraphData, GraphNode, GraphLink } from '@/features/graph/lib/knowledgeGraphBuilder';
 import { GraphLegend } from '@/features/graph/ui/components/GraphLegend';
 import { GraphSearch } from '@/features/graph/ui/components/GraphSearch';
+import { getKnowledgeGraphContentType } from '@/features/graph/lib/graphUtils';
 import { useThemeColors } from '@/shared/hooks/useThemeColors';
 
 type KnowledgeGraphNode = NodeObject<GraphNode>;
@@ -122,25 +123,9 @@ export const GraphPage: React.FC = () => {
   }, [setLocation, openTerm]);
 
   const getNodeColor = useCallback((node: GraphNode) => {
-    const groupMap: Record<string, string> = {
-      'central': 'matematico',
-      'branch': 'teorema',
-      'teorema': 'theorem',
-      'lema': 'lemma',
-      'corolario': 'corollary',
-      'definicion': 'definition',
-      'ejemplo': 'example',
-      'ejercicio': 'exercise',
-      'demostracion': 'demostracion',
-      'caso-de-uso': 'usecase',
-      'matematico': 'mathematician',
-      'metodo': 'method',
-      'modelo': 'modelo',
-      'plan-de-estudio': 'plan-de-estudio',
-      'axioma': 'axioma',
-    };
-    const key = groupMap[node.group] || node.group;
-    return theme.getHex(key);
+    if (node.group === 'central') return theme.getHex('matematico');
+    if (node.group === 'branch') return theme.getHex('teorema');
+    return theme.getHex(getKnowledgeGraphContentType(node.group) ?? node.group);
   }, [theme]);
 
   const drawNodeLabel = useCallback((
@@ -269,10 +254,9 @@ export const GraphPage: React.FC = () => {
         setSearchQuery={handleSearchChange}
         searchResults={searchResults}
         onSearchSelect={handleSearchResultClick}
-        graphNodes={graphData.nodes}
       />
 
-      <GraphLegend />
+      <GraphLegend nodeGroups={graphData.nodes.map(node => node.group)} />
 
       <div className="absolute inset-0 cursor-move">
         <ForceGraph2D<GraphNode, GraphLink>

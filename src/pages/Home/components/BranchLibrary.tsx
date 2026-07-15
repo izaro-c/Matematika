@@ -72,7 +72,7 @@ const SECTIONS: SectionDef[] = [
     roman: 'V',
     codes: ['05', '68'],
     groups: [],
-    accent: 'var(--theme-pizarra)',
+    accent: 'var(--theme-pavo)',
     desc: 'Estructuras discretas, combinatoria, teoría de grafos y fundamentos algorítmicos.',
     icon: '◇',
   },

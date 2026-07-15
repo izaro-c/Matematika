@@ -1,11 +1,12 @@
 import { GraphNode } from '../../lib/knowledgeGraphBuilder';
+import { getKnowledgeGraphGroupPresentation } from '../../lib/graphUtils';
+import { GraphSearchResults } from './GraphSearchResults';
 
 interface GraphSearchProps {
   searchQuery: string;
   setSearchQuery: (q: string) => void;
   searchResults: GraphNode[];
   onSearchSelect: (node: GraphNode) => void;
-  graphNodes: GraphNode[];
 }
 
 /**
@@ -21,29 +22,41 @@ export function GraphSearch({
   onSearchSelect,
 }: GraphSearchProps) {
   return (
-    <div className="absolute top-24 md:top-8 left-1/2 -translate-x-1/2 z-50">
+    <div className="absolute top-24 md:top-8 left-1/2 -translate-x-1/2 z-50 w-[min(300px,calc(100vw-8rem))]">
       <div className="relative">
-        <input
-          type="text"
-          value={searchQuery}
-          onChange={(e) => setSearchQuery(e.target.value)}
-          placeholder="Buscar concepto..."
-          className="w-64 elegant-panel px-4 py-2 text-carbon outline-none placeholder:text-carbon/30 italic font-serif shadow-lg"
+        <div className="elegant-panel flex items-center shadow-lg">
+          <span className="pl-3 text-carbon/40 text-base select-none" aria-hidden="true">⌕</span>
+          <input
+            type="search"
+            value={searchQuery}
+            onChange={(e) => setSearchQuery(e.target.value)}
+            placeholder="Buscar concepto…"
+            aria-label="Buscar en el mapa de conexiones"
+            className="graph-search-input min-w-0 flex-1 bg-transparent px-3 py-2 text-sm text-carbon outline-none placeholder:italic placeholder:text-carbon/35 font-serif"
+          />
+          {searchQuery && (
+            <button
+              type="button"
+              onClick={() => setSearchQuery('')}
+              className="min-h-9 min-w-9 text-carbon/40 transition-colors hover:text-carbon focus-visible:outline-2 focus-visible:outline-offset-[-4px] focus-visible:outline-terracota"
+              aria-label="Borrar búsqueda"
+            >
+              ✕
+            </button>
+          )}
+        </div>
+        <GraphSearchResults
+          items={searchResults.map(node => {
+            const presentation = getKnowledgeGraphGroupPresentation(node.group);
+            return {
+              ...node,
+              label: node.name,
+              typeLabel: presentation.label,
+              color: presentation.color,
+            };
+          })}
+          onSelect={onSearchSelect}
         />
-        {searchResults.length > 0 && (
-          <div className="absolute top-full left-0 mt-1 w-full elegant-panel shadow-2xl max-h-60 overflow-y-auto z-50">
-            {searchResults.map((node) => (
-              <div
-                key={node.id}
-                className="px-4 py-2 hover:bg-carbon/5 cursor-pointer text-carbon text-sm border-b border-carbon/10 last:border-0"
-                onClick={() => onSearchSelect(node)}
-              >
-                <div className="font-bold font-serif">{node.name}</div>
-                <div className="text-[10px] font-sans text-carbon/50 uppercase tracking-wider mt-0.5">{node.group}</div>
-              </div>
-            ))}
-          </div>
-        )}
       </div>
     </div>
   );

@@ -18,7 +18,7 @@
  */
 
 import { useState, useEffect, useCallback } from 'react';
-import { CONTENT_TYPE_COLORS, getTypeHex } from '@/shared/design/contentTypeColors';
+import { getTypeCssVar } from '@/shared/design/contentTypeColors';
 
 // Nombres de variables CSS que queremos resolver
 const CSS_VARS = [
@@ -40,8 +40,6 @@ export type ThemeColorSnapshot = {
   carbon:  string;
   /** Devuelve el hex actual del tipo de contenido según el tema activo */
   getHex:  (contentType: string) => string;
-  /** Devuelve el hex del ring actual del tipo de contenido */
-  getRing: (contentType: string) => string;
   /** Mapa completo de var CSS → hex computado */
   resolved: Record<string, string>;
 };
@@ -56,26 +54,16 @@ function resolve(): Record<string, string> {
 function snapshot(resolved: Record<string, string>): ThemeColorSnapshot {
   // Función que reemplaza la var CSS de un tipo por su valor computado actual
   const getHex = (contentType: string): string => {
-    const cssVar = CONTENT_TYPE_COLORS[contentType as keyof typeof CONTENT_TYPE_COLORS]?.cssVar;
-    if (!cssVar) return resolved['--theme-carbon'] ?? '#333333';
+    const cssVar = getTypeCssVar(contentType);
     // cssVar es 'var(--theme-X)', extraer el nombre
     const varName = cssVar.slice(4, -1); // quita 'var(' y ')'
-    return resolved[varName] ?? getTypeHex(contentType);
-  };
-
-  const getRing = (contentType: string): string => {
-    // Para el ring, usamos el valor un poco más claro — tomamos el hex dark-mode
-    // como aproximación porque siempre es más claro que el light-mode
-    return CONTENT_TYPE_COLORS[contentType as keyof typeof CONTENT_TYPE_COLORS]?.ringHex
-      ?? resolved['--theme-carbon']
-      ?? '#555555';
+    return resolved[varName] || resolved['--theme-carbon'] || 'currentColor';
   };
 
   return {
-    lienzo:   resolved['--theme-lienzo']  ?? '#F8F6F1',
-    carbon:   resolved['--theme-carbon']  ?? '#333333',
+    lienzo:   resolved['--theme-lienzo'] || 'transparent',
+    carbon:   resolved['--theme-carbon'] || 'currentColor',
     getHex,
-    getRing,
     resolved,
   };
 }

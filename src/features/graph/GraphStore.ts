@@ -7,129 +7,25 @@
 import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
 import {
-  createGraphWorkerRequest,
   isGraphWorkerStructure,
   normalizeGraphWorkerError,
-  parseGraphWorkerResponse,
 } from './lib/graphWorkerContract';
 import type {
   FlowEdge,
   FlowNode,
   GraphWorkerError,
-  GraphWorkerOutput,
-  GraphWorkerRequest,
 } from './lib/graphWorkerContract';
+import { graphWorkerClient } from './lib/graphWorkerClient';
 import type { ModelInfo, SystemInfo } from '@/entities/graph/graphTypes';
 import { Grafo } from '@/entities/graph/Grafo';
 import { db } from '@/entities/content';
 import graphStructureData from '@/entities/graph/graph_structure.json';
 
-// --- Worker Integration ---
-const WORKER_TIMEOUT_MS = 15_000;
-
-let workerInstance: Worker | null = null;
-let requestCounter = 0;
-let latestRequestId: number | null = null;
-
-interface PendingRequest {
-  resolve: (value: GraphWorkerOutput) => void;
-  reject: (error: GraphWorkerError) => void;
-  timeoutId: ReturnType<typeof setTimeout>;
-}
-
-const pendingRequests = new Map<number, PendingRequest>();
-
-function settlePendingRequest(requestId: number): PendingRequest | undefined {
-  const pending = pendingRequests.get(requestId);
-  if (pending) {
-    clearTimeout(pending.timeoutId);
-    pendingRequests.delete(requestId);
-  }
-  return pending;
-}
-
-function rejectAllPendingRequests(error: GraphWorkerError): void {
-  for (const [requestId, pending] of pendingRequests) {
-    clearTimeout(pending.timeoutId);
-    pending.reject(error);
-    pendingRequests.delete(requestId);
-  }
-}
-
-function resetFailedWorker(error: GraphWorkerError): void {
-  rejectAllPendingRequests(error);
-  workerInstance?.terminate();
-  workerInstance = null;
-}
-
-function getWorker(): Worker | null {
-  if (typeof window === 'undefined') return null;
-  if (!workerInstance) {
-    workerInstance = new Worker(new URL('./graph.worker.ts', import.meta.url), { type: 'module' });
-    workerInstance.onmessage = (event: MessageEvent<unknown>) => {
-      const response = parseGraphWorkerResponse(event.data);
-      if (!response) {
-        resetFailedWorker({
-          code: 'WORKER_ERROR',
-          message: 'Invalid graph worker response',
-        });
-        return;
-      }
-
-      if (response.type === 'error') {
-        if (response.requestId === null) {
-          resetFailedWorker(response.error);
-          return;
-        }
-        const pending = settlePendingRequest(response.requestId);
-        if (!pending) return;
-        pending.reject(response.error);
-      } else {
-        const pending = settlePendingRequest(response.requestId);
-        if (!pending) return;
-        pending.resolve(response.result);
-      }
-    };
-    workerInstance.onerror = (event: ErrorEvent) => {
-      resetFailedWorker(normalizeGraphWorkerError(event, 'WORKER_ERROR'));
-    };
-    workerInstance.onmessageerror = () => {
-      resetFailedWorker({
-        code: 'WORKER_ERROR',
-        message: 'Graph worker response could not be deserialized',
-      });
-    };
-  }
-  return workerInstance;
-}
-
-async function computeGraphAsync(request: GraphWorkerRequest): Promise<GraphWorkerOutput> {
-  const worker = getWorker();
-  if (!worker) {
-    // Fallback for SSR / Node
-    const { computeGraph } = await import('./graph.worker');
-    return computeGraph(request.payload.graphData, request.payload.disabledAxioms);
-  }
-
-  return new Promise((resolve, reject) => {
-    const timeoutId = setTimeout(() => {
-      const pending = settlePendingRequest(request.requestId);
-      pending?.reject({
-        code: 'TIMEOUT',
-        message: `Graph worker request ${request.requestId} timed out`,
-      });
-    }, WORKER_TIMEOUT_MS);
-
-    pendingRequests.set(request.requestId, { resolve, reject, timeoutId });
-    try {
-      worker.postMessage(request);
-    } catch (error: unknown) {
-      settlePendingRequest(request.requestId);
-      reject(normalizeGraphWorkerError(error, 'WORKER_ERROR'));
-    }
-  });
-}
-// --------------------------
+let graphInitialized = false;
+let workerDisabledAxioms: string[] | null = null;
+let initializationPromise: Promise<void> | null = null;
+let evaluationInFlight = false;
+let queuedDisabledAxioms: string[] | null = null;
 
 
 /**
@@ -174,6 +70,9 @@ interface GraphState {
    * @param axiomId - Identificador del axioma a alternar.
    */
   toggleAxiom: (axiomId: string) => void;
+
+  /** Sustituye la selección axiomática por un conjunto explícito de axiomas activos. */
+  setActiveAxioms: (axiomIds: string[]) => void;
   
   /**
    * Alterna un modelo completo. 
@@ -202,51 +101,127 @@ interface GraphState {
 }
 
 type GraphStoreSet = (partial: Partial<GraphState>) => void;
+type GraphStoreGet = () => GraphState;
 
-function requestGraphComputation(set: GraphStoreSet, disabledAxioms: string[]): void {
-  const requestId = ++requestCounter;
-  latestRequestId = requestId;
+function sameAxiomSelection(left: string[], right: string[]): boolean {
+  if (left.length !== right.length) return false;
+  const rightSet = new Set(right);
+  return left.every((id) => rightSet.has(id));
+}
+
+function applyGraphError(set: GraphStoreSet, error: unknown): void {
+  set({
+    isLoading: false,
+    status: 'error',
+    error: normalizeGraphWorkerError(error, 'WORKER_ERROR'),
+  });
+}
+
+function invalidateGraphSession(): void {
+  graphInitialized = false;
+  workerDisabledAxioms = null;
+}
+
+function ensureGraphInitialized(
+  set: GraphStoreSet,
+  disabledAxioms: string[],
+): Promise<void> {
+  if (graphInitialized) return Promise.resolve();
+  if (initializationPromise) return initializationPromise;
+
   set({ isLoading: true, status: 'loading', error: null });
 
   if (!isGraphWorkerStructure(graphStructureData)) {
-    set({
-      isLoading: false,
-      status: 'error',
-      error: {
-        code: 'INVALID_REQUEST',
-        message: 'Invalid graph structure data',
-      },
-    });
-    return;
+    const error: GraphWorkerError = {
+      code: 'INVALID_REQUEST',
+      message: 'Invalid graph structure data',
+    };
+    applyGraphError(set, error);
+    return Promise.reject(error);
   }
 
-  const request = createGraphWorkerRequest(requestId, graphStructureData, disabledAxioms);
-  computeGraphAsync(request)
+  const initializedAxioms = [...disabledAxioms];
+  initializationPromise = graphWorkerClient.initialize(graphStructureData, initializedAxioms)
     .then((result) => {
-      if (latestRequestId !== requestId) return;
+      graphInitialized = true;
+      workerDisabledAxioms = initializedAxioms;
+      if (queuedDisabledAxioms && sameAxiomSelection(queuedDisabledAxioms, initializedAxioms)) {
+        queuedDisabledAxioms = null;
+      }
       set({
         baseNodes: result.nodes,
         edges: result.edges,
         adjacency: result.adjacency,
         dependsOn: result.dependsOn,
         activeStates: result.activeStates,
-        isLoading: false,
-        status: 'success',
+        isLoading: queuedDisabledAxioms !== null,
+        status: queuedDisabledAxioms === null ? 'success' : 'loading',
         error: null,
       });
     })
     .catch((error: unknown) => {
-      if (latestRequestId !== requestId) return;
+      invalidateGraphSession();
+      queuedDisabledAxioms = null;
+      applyGraphError(set, error);
+      throw error;
+    })
+    .finally(() => {
+      initializationPromise = null;
+    });
+
+  return initializationPromise;
+}
+
+function flushQueuedEvaluation(set: GraphStoreSet, get: GraphStoreGet): void {
+  if (!graphInitialized || evaluationInFlight || !queuedDisabledAxioms) return;
+
+  if (workerDisabledAxioms && sameAxiomSelection(workerDisabledAxioms, queuedDisabledAxioms)) {
+    queuedDisabledAxioms = null;
+    set({ isLoading: false, status: 'success', error: null });
+    return;
+  }
+
+  const disabledAxioms = queuedDisabledAxioms;
+  queuedDisabledAxioms = null;
+  evaluationInFlight = true;
+  graphWorkerClient.evaluate(disabledAxioms)
+    .then((result) => {
+      workerDisabledAxioms = disabledAxioms;
       set({
-        isLoading: false,
-        status: 'error',
-        error: normalizeGraphWorkerError(error, 'WORKER_ERROR'),
+        activeStates: {
+          ...get().activeStates,
+          ...result.changedActiveStates,
+        },
+        isLoading: queuedDisabledAxioms !== null,
+        status: queuedDisabledAxioms === null ? 'success' : 'loading',
+        error: null,
       });
+    })
+    .catch((error: unknown) => {
+      invalidateGraphSession();
+      queuedDisabledAxioms = null;
+      applyGraphError(set, error);
+    })
+    .finally(() => {
+      evaluationInFlight = false;
+      flushQueuedEvaluation(set, get);
     });
 }
 
-// Bandera global para evitar inicializaciones duplicadas en StrictMode de React.
-let initialized = false;
+function requestGraphState(
+  set: GraphStoreSet,
+  get: GraphStoreGet,
+  disabledAxioms: string[],
+): void {
+  queuedDisabledAxioms = [...disabledAxioms];
+  set({ isLoading: true, status: 'loading', error: null });
+
+  ensureGraphInitialized(set, disabledAxioms)
+    .then(() => flushQueuedEvaluation(set, get))
+    .catch(() => {
+      // `ensureGraphInitialized` ya publica el error normalizado en el store.
+    });
+}
 
 /**
  * Zustand Store para el grafo, persistido en LocalStorage.
@@ -295,8 +270,20 @@ export const useGraphStore = create<GraphState>()(
         
         set({ disabledAxioms: newDisabled, inactiveModels: allModelsOff, inactiveSystems: allSystemsOff });
         
-        // Recalculamos el layout topológico en el WebWorker
-        requestGraphComputation(set, newDisabled);
+        requestGraphState(set, get, newDisabled);
+      },
+
+      setActiveAxioms: (axiomIds: string[]) => {
+        const state = get();
+        const activeAxiomIds = new Set(axiomIds.filter((id) => state.axioms.includes(id)));
+        const newDisabled = state.axioms.filter((id) => !activeAxiomIds.has(id));
+
+        set({
+          disabledAxioms: newDisabled,
+          inactiveModels: state.models.map((model) => model.id),
+          inactiveSystems: state.systems.map((system) => system.id),
+        });
+        requestGraphState(set, get, newDisabled);
       },
 
       toggleModel: (modelId: string) => {
@@ -325,7 +312,7 @@ export const useGraphStore = create<GraphState>()(
         
         set({ disabledAxioms: newDisabled });
         
-        requestGraphComputation(set, newDisabled);
+        requestGraphState(set, get, newDisabled);
       },
 
       toggleSystem: (systemId: string) => {
@@ -352,14 +339,11 @@ export const useGraphStore = create<GraphState>()(
         
         set({ disabledAxioms: newDisabled });
         
-        requestGraphComputation(set, newDisabled);
+        requestGraphState(set, get, newDisabled);
       },
 
       initWorker: () => {
-        if (initialized) return;
-        initialized = true;
-        // La inicialización usa el estado actual persistido
-        requestGraphComputation(set, get().disabledAxioms);
+        requestGraphState(set, get, get().disabledAxioms);
       },
 
       getAdjacency: () => get().adjacency,

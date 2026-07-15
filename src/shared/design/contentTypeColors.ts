@@ -1,16 +1,15 @@
 /**
  * contentTypeColors — módulo puente entre el sistema de diseño y los grafos.
  *
- * Para cada tipo de contenido editorial expone:
- *   cssVar  — 'var(--theme-X)' para componentes React y React Flow
- *   hex     — hex estático modo claro para canvas APIs
- *   ringHex — hex más claro para halos de nodo en canvas
+ * Para cada tipo de contenido editorial expone la variable `--theme-*`
+ * canónica para componentes React, SVG y React Flow. Canvas resuelve esa
+ * misma variable en runtime mediante useThemeColors().
  *
  * Cambiar un rol en semanticTokens.ts propaga automáticamente aquí,
  * y desde aquí a constants.ts y todos los grafos.
  */
 
-import { SEMANTIC_COLOR_ROLES, SEMANTIC_HEX } from './semanticTokens';
+import { SEMANTIC_COLOR_ROLES } from './semanticTokens';
 import type { ContentPageAccentType } from './pageAccents';
 
 // Tipos de contenido que aparecen en grafos (superset de ContentPageAccentType)
@@ -39,7 +38,7 @@ const CONTENT_TYPE_ROLE_MAP = {
   metodo:              'methodAccent',
   ejemplo:             'exampleAccent',
   ejercicio:           'exerciseAccent',
-  'caso-de-uso':       'lemmaAccent',
+  'caso-de-uso':       'exampleAccent',
   'plan-de-estudio':   'secondaryAccent',
   // Biográfico / clasificatorio
   matematico:          'biographyAccent',
@@ -55,31 +54,10 @@ export const CONTENT_TYPE_COLORS = Object.fromEntries(
   Object.entries(CONTENT_TYPE_ROLE_MAP).map(([type, role]) => [
     type,
     {
-      cssVar:  SEMANTIC_COLOR_ROLES[role as keyof typeof SEMANTIC_COLOR_ROLES],
-      hex:     SEMANTIC_HEX[role as keyof typeof SEMANTIC_HEX].hex,
-      ringHex: SEMANTIC_HEX[role as keyof typeof SEMANTIC_HEX].ring,
+      cssVar: SEMANTIC_COLOR_ROLES[role as keyof typeof SEMANTIC_COLOR_ROLES],
     },
   ]),
-) as Record<ContentTypeKey, { cssVar: string; hex: string; ringHex: string }>;
-
-// ── Función de acceso seguro para canvas ─────────────────────────────────────
-
-const FALLBACK_HEX = '#555555';
-
-/**
- * Devuelve el hex del tipo, aceptando variantes en inglés y español.
- * Para uso en funciones nodeColor() de canvas.
- */
-export function getTypeHex(group: string): string {
-  // Normalizar aliases en inglés → español
-  const normalized = ENGLISH_TO_SPANISH[group] ?? group;
-  return CONTENT_TYPE_COLORS[normalized as ContentTypeKey]?.hex ?? FALLBACK_HEX;
-}
-
-export function getTypeRingHex(group: string): string {
-  const normalized = ENGLISH_TO_SPANISH[group] ?? group;
-  return CONTENT_TYPE_COLORS[normalized as ContentTypeKey]?.ringHex ?? FALLBACK_HEX;
-}
+) as Record<ContentTypeKey, { cssVar: string }>;
 
 export function getTypeCssVar(group: string): string {
   const normalized = ENGLISH_TO_SPANISH[group] ?? group;

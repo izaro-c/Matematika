@@ -70,7 +70,7 @@ export const CONTENT_TYPE_CONFIG: Record<string, ContentTypeConfig> = {
     routePrefix: 'axioma',
     graphGroup: 'axioma',
     graphColor: c('axioma').cssVar,
-    nodeStyle: { bg: c('axioma').hex, border: c('axioma').hex, text: '#ffffff', badge: 'AXIOMA', ringColor: c('axioma').ringHex },
+    nodeStyle: { bg: c('axioma').cssVar, border: c('axioma').cssVar, text: 'var(--theme-lienzo)', badge: 'AXIOMA', ringColor: c('axioma').cssVar },
     hierarchyLevel: 0,
   },
   concepto: {
@@ -80,7 +80,7 @@ export const CONTENT_TYPE_CONFIG: Record<string, ContentTypeConfig> = {
     routePrefix: 'definicion',
     graphGroup: 'definition',
     graphColor: c('concepto').cssVar,
-    nodeStyle: { bg: c('concepto').hex, border: c('concepto').hex, text: '#ffffff', badge: 'CONCEPTO', ringColor: c('concepto').ringHex },
+    nodeStyle: { bg: c('concepto').cssVar, border: c('concepto').cssVar, text: 'var(--theme-lienzo)', badge: 'CONCEPTO', ringColor: c('concepto').cssVar },
     hierarchyLevel: 0,
   },
   definicion: {
@@ -90,7 +90,7 @@ export const CONTENT_TYPE_CONFIG: Record<string, ContentTypeConfig> = {
     routePrefix: 'definicion',
     graphGroup: 'definition',
     graphColor: c('definicion').cssVar,
-    nodeStyle: { bg: c('definicion').hex, border: c('definicion').hex, text: '#ffffff', badge: 'DEFINICION', ringColor: c('definicion').ringHex },
+    nodeStyle: { bg: c('definicion').cssVar, border: c('definicion').cssVar, text: 'var(--theme-lienzo)', badge: 'DEFINICION', ringColor: c('definicion').cssVar },
     hierarchyLevel: 1,
   },
   lema: {
@@ -100,7 +100,7 @@ export const CONTENT_TYPE_CONFIG: Record<string, ContentTypeConfig> = {
     routePrefix: 'teorema',
     graphGroup: 'lemma',
     graphColor: c('lema').cssVar,
-    nodeStyle: { bg: c('lema').hex, border: c('lema').hex, text: '#ffffff', badge: 'LEMA', ringColor: c('lema').ringHex },
+    nodeStyle: { bg: c('lema').cssVar, border: c('lema').cssVar, text: 'var(--theme-lienzo)', badge: 'LEMA', ringColor: c('lema').cssVar },
     hierarchyLevel: 2,
   },
   teorema: {
@@ -110,7 +110,7 @@ export const CONTENT_TYPE_CONFIG: Record<string, ContentTypeConfig> = {
     routePrefix: 'teorema',
     graphGroup: 'theorem',
     graphColor: c('teorema').cssVar,
-    nodeStyle: { bg: c('teorema').hex, border: c('teorema').hex, text: '#ffffff', badge: 'TEOREMA', ringColor: c('teorema').ringHex },
+    nodeStyle: { bg: c('teorema').cssVar, border: c('teorema').cssVar, text: 'var(--theme-lienzo)', badge: 'TEOREMA', ringColor: c('teorema').cssVar },
     hierarchyLevel: 3,
   },
   corolario: {
@@ -120,7 +120,7 @@ export const CONTENT_TYPE_CONFIG: Record<string, ContentTypeConfig> = {
     routePrefix: 'teorema',
     graphGroup: 'corollary',
     graphColor: c('corolario').cssVar,
-    nodeStyle: { bg: c('corolario').hex, border: c('corolario').hex, text: '#ffffff', badge: 'COROLARIO', ringColor: c('corolario').ringHex },
+    nodeStyle: { bg: c('corolario').cssVar, border: c('corolario').cssVar, text: 'var(--theme-lienzo)', badge: 'COROLARIO', ringColor: c('corolario').cssVar },
     hierarchyLevel: 4,
   },
   demostracion: {
@@ -130,7 +130,7 @@ export const CONTENT_TYPE_CONFIG: Record<string, ContentTypeConfig> = {
     routePrefix: 'demo',
     graphGroup: 'demostracion',
     graphColor: c('demostracion').cssVar,
-    nodeStyle: { bg: c('demostracion').hex, border: c('demostracion').hex, text: '#ffffff', badge: 'DEMO', ringColor: c('demostracion').ringHex },
+    nodeStyle: { bg: c('demostracion').cssVar, border: c('demostracion').cssVar, text: 'var(--theme-lienzo)', badge: 'DEMO', ringColor: c('demostracion').cssVar },
     hierarchyLevel: 5,
   },
   ejemplo: {
@@ -140,7 +140,7 @@ export const CONTENT_TYPE_CONFIG: Record<string, ContentTypeConfig> = {
     routePrefix: 'ejemplo',
     graphGroup: 'example',
     graphColor: c('ejemplo').cssVar,
-    nodeStyle: { bg: c('ejemplo').hex, border: c('ejemplo').hex, text: '#ffffff', badge: 'EJEMPLO', ringColor: c('ejemplo').ringHex },
+    nodeStyle: { bg: c('ejemplo').cssVar, border: c('ejemplo').cssVar, text: 'var(--theme-lienzo)', badge: 'EJEMPLO', ringColor: c('ejemplo').cssVar },
     hierarchyLevel: 10,
   },
   ejercicio: {
@@ -150,7 +150,7 @@ export const CONTENT_TYPE_CONFIG: Record<string, ContentTypeConfig> = {
     routePrefix: 'ejercicio',
     graphGroup: 'exercise',
     graphColor: c('ejercicio').cssVar,
-    nodeStyle: { bg: c('ejercicio').hex, border: c('ejercicio').hex, text: '#ffffff', badge: 'EJERCICIO', ringColor: c('ejercicio').ringHex },
+    nodeStyle: { bg: c('ejercicio').cssVar, border: c('ejercicio').cssVar, text: 'var(--theme-lienzo)', badge: 'EJERCICIO', ringColor: c('ejercicio').cssVar },
     hierarchyLevel: 10,
   },
   'caso-de-uso': {
@@ -160,7 +160,7 @@ export const CONTENT_TYPE_CONFIG: Record<string, ContentTypeConfig> = {
     routePrefix: 'caso',
     graphGroup: 'usecase',
     graphColor: c('caso-de-uso').cssVar,
-    nodeStyle: { bg: c('caso-de-uso').hex, border: c('caso-de-uso').hex, text: '#ffffff', badge: 'USO', ringColor: c('caso-de-uso').ringHex },
+    nodeStyle: { bg: c('caso-de-uso').cssVar, border: c('caso-de-uso').cssVar, text: 'var(--theme-lienzo)', badge: 'USO', ringColor: c('caso-de-uso').cssVar },
     hierarchyLevel: 10,
   },
   matematico: {
@@ -170,7 +170,7 @@ export const CONTENT_TYPE_CONFIG: Record<string, ContentTypeConfig> = {
     routePrefix: 'bio',
     graphGroup: 'mathematician',
     graphColor: c('matematico').cssVar,
-    nodeStyle: { bg: c('matematico').hex, border: c('matematico').hex, text: '#ffffff', badge: 'BIO', ringColor: c('matematico').ringHex },
+    nodeStyle: { bg: c('matematico').cssVar, border: c('matematico').cssVar, text: 'var(--theme-lienzo)', badge: 'BIO', ringColor: c('matematico').cssVar },
     hierarchyLevel: 10,
   },
   metodo: {
@@ -180,7 +180,7 @@ export const CONTENT_TYPE_CONFIG: Record<string, ContentTypeConfig> = {
     routePrefix: 'metodo',
     graphGroup: 'method',
     graphColor: c('metodo').cssVar,
-    nodeStyle: { bg: c('metodo').hex, border: c('metodo').hex, text: '#ffffff', badge: 'MÉTODO', ringColor: c('metodo').ringHex },
+    nodeStyle: { bg: c('metodo').cssVar, border: c('metodo').cssVar, text: 'var(--theme-lienzo)', badge: 'MÉTODO', ringColor: c('metodo').cssVar },
     hierarchyLevel: 10,
   },
   modelo: {
@@ -190,7 +190,7 @@ export const CONTENT_TYPE_CONFIG: Record<string, ContentTypeConfig> = {
     routePrefix: 'modelo',
     graphGroup: 'modelo',
     graphColor: c('modelo').cssVar,
-    nodeStyle: { bg: c('modelo').hex, border: c('modelo').hex, text: '#ffffff', badge: 'MODELO', ringColor: c('modelo').ringHex },
+    nodeStyle: { bg: c('modelo').cssVar, border: c('modelo').cssVar, text: 'var(--theme-lienzo)', badge: 'MODELO', ringColor: c('modelo').cssVar },
     hierarchyLevel: 10,
   },
   'plan-de-estudio': {
@@ -200,14 +200,14 @@ export const CONTENT_TYPE_CONFIG: Record<string, ContentTypeConfig> = {
     routePrefix: 'plan',
     graphGroup: 'plan-de-estudio',
     graphColor: c('plan-de-estudio').cssVar,
-    nodeStyle: { bg: c('plan-de-estudio').hex, border: c('plan-de-estudio').hex, text: '#ffffff', badge: 'PLAN', ringColor: c('plan-de-estudio').ringHex },
+    nodeStyle: { bg: c('plan-de-estudio').cssVar, border: c('plan-de-estudio').cssVar, text: 'var(--theme-lienzo)', badge: 'PLAN', ringColor: c('plan-de-estudio').cssVar },
     hierarchyLevel: 10,
   },
 };
 
 export const GRAPH_NODE_COLORS: Record<string, string> = {
-  central: CONTENT_TYPE_COLORS.matematico.hex,
-  branch:  CONTENT_TYPE_COLORS.teorema.hex,
+  central: CONTENT_TYPE_COLORS.matematico.cssVar,
+  branch:  CONTENT_TYPE_COLORS.teorema.cssVar,
   ...Object.fromEntries(
     Object.values(CONTENT_TYPE_CONFIG).map(cfg => [cfg.graphGroup, cfg.nodeStyle.bg]),
   ),

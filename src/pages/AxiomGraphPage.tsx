@@ -5,7 +5,7 @@ import { AxiomaticTree } from '@/features/graph/ui/AxiomaticTree';
  * Página principal del explorador de dependencia de axiomas lógicos.
  *
  * Muestra el grafo interactivo con un panel lateral unificado
- * que integra filtros, sandbox y leyenda.
+ * que integra filtros, selección axiomática y leyenda.
  */
 export const AxiomGraphPage: React.FC = () => {
   return (

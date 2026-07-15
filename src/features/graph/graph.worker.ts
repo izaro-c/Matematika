@@ -5,6 +5,7 @@ import {
 import type {
   FlowEdge,
   FlowNode,
+  GraphWorkerEvaluationOutput,
   GraphWorkerOutput,
   GraphWorkerResponse,
   GraphWorkerStructure,
@@ -17,23 +18,30 @@ export type {
   FlowNodeData,
   GraphWorkerError,
   GraphWorkerErrorResponse,
+  GraphWorkerEvaluatedResponse,
+  GraphWorkerEvaluationOutput,
+  GraphWorkerInitializedResponse,
   GraphWorkerOutput as WorkerOutput,
   GraphWorkerRequest as WorkerInput,
   GraphWorkerResponse,
-  GraphWorkerSuccessResponse,
 } from './lib/graphWorkerContract';
 
 const VISIBLE_TYPES = new Set(['axioma', 'lema', 'corolario', 'teorema', 'definicion', 'modelo']);
 
 type JsonNode = GraphWorkerNode;
 
-// Se inicializa en computeGraph()
-let structure: GraphWorkerStructure;
+// La estructura y el último estado lógico permanecen en el worker tras la
+// inicialización. Las evaluaciones posteriores no vuelven a transferir ni a
+// preparar el DAG completo.
+let structure: GraphWorkerStructure | null = null;
+let preparedNodes: Record<string, JsonNode> | null = null;
+let previousActiveStates: Record<string, boolean> | null = null;
 
 const NODE_W = 150;
 const NODE_H = 150;
 
 function filterNodes(): Record<string, JsonNode> {
+  if (!structure) return {};
   const out: Record<string, JsonNode> = {};
   for (const [id, node] of Object.entries(structure.nodes)) {
     if (VISIBLE_TYPES.has(node.type)) out[id] = node;
@@ -90,6 +98,8 @@ function evaluateActiveNodes(
 ): Record<string, boolean> {
   const active: Record<string, boolean> = {};
 
+  if (!structure) return active;
+
   for (const id of structure.topologicalOrder) {
     if (!filtered[id]) continue;
     const node = filtered[id];
@@ -100,7 +110,6 @@ function evaluateActiveNodes(
     }
 
     // lema, teorema, corolario → OR sobre demostraciones
-    // (misma lógica que el sandbox: Nodo.isSatisfiedBy → isTheorem)
     if (node.type === 'teorema' || node.type === 'corolario' || node.type === 'lema') {
       if (node.proofs.length === 0) {
         // Sin demostraciones: activo si no tiene dependencias directas
@@ -183,31 +192,47 @@ function minimizeCrossings(
     preds[target].push(source);
   }
 
+  const sortByNeighborBarycenter = (
+    nodes: string[],
+    neighbors: Record<string, string[]>,
+    neighborLayer: number,
+  ): void => {
+    const neighborPositions = new Map(
+      (byLayer[neighborLayer] ?? []).map((id, index) => [id, index]),
+    );
+    const barycenters = new Map<string, number>();
+
+    for (const id of nodes) {
+      const positions = neighbors[id]
+        .filter((neighborId) => layers[neighborId] === neighborLayer)
+        .map((neighborId) => neighborPositions.get(neighborId))
+        .filter((position): position is number => position !== undefined);
+      barycenters.set(
+        id,
+        positions.length > 0
+          ? positions.reduce((sum, position) => sum + position, 0) / positions.length
+          : Infinity,
+      );
+    }
+
+    nodes.sort((left, right) => (
+      (barycenters.get(left) ?? Infinity) - (barycenters.get(right) ?? Infinity)
+    ));
+  };
+
   // 4 iteraciones: 2 pasadas completas (top-down + bottom-up)
   for (let iter = 0; iter < 4; iter++) {
     // Top-down: ordenar capa i+1 según baricentro de padres en capa i
     for (let i = 1; i < layerKeys.length; i++) {
       const l = layerKeys[i];
       const prevL = layerKeys[i - 1];
-      byLayer[l].sort((a, b) => {
-        const pa = preds[a].filter(p => layers[p] === prevL);
-        const pb = preds[b].filter(p => layers[p] === prevL);
-        const ba = pa.length > 0 ? pa.reduce((s, p) => s + byLayer[prevL].indexOf(p), 0) / pa.length : Infinity;
-        const bb = pb.length > 0 ? pb.reduce((s, p) => s + byLayer[prevL].indexOf(p), 0) / pb.length : Infinity;
-        return ba - bb;
-      });
+      sortByNeighborBarycenter(byLayer[l], preds, prevL);
     }
     // Bottom-up: ordenar capa i según baricentro de hijos en capa i+1
     for (let i = layerKeys.length - 2; i >= 0; i--) {
       const l = layerKeys[i];
       const nextL = layerKeys[i + 1];
-      byLayer[l].sort((a, b) => {
-        const ca = succs[a].filter(c => layers[c] === nextL);
-        const cb = succs[b].filter(c => layers[c] === nextL);
-        const ba = ca.length > 0 ? ca.reduce((s, c) => s + byLayer[nextL].indexOf(c), 0) / ca.length : Infinity;
-        const bb = cb.length > 0 ? cb.reduce((s, c) => s + byLayer[nextL].indexOf(c), 0) / cb.length : Infinity;
-        return ba - bb;
-      });
+      sortByNeighborBarycenter(byLayer[l], succs, nextL);
     }
   }
 }
@@ -366,7 +391,7 @@ function arrangeLayers(
 }
 
  
-export async function computeGraph(
+export async function initializeGraph(
   graphData: GraphWorkerStructure,
   disabledAxioms: string[],
 ): Promise<GraphWorkerOutput> {
@@ -375,13 +400,16 @@ export async function computeGraph(
 
   const filtered = filterNodes();
   const activeStates = evaluateActiveNodes(filtered, disabledSet);
+  preparedNodes = filtered;
+  previousActiveStates = activeStates;
   const edgeList = buildEdgeList(filtered);
 
   const nodeIds = Object.keys(filtered);
+  const nodeIdSet = new Set(nodeIds);
   const axiomIds = new Set(nodeIds.filter(id => filtered[id].type === 'axioma'));
   const primitiveIds = new Set(nodeIds.filter(id => filtered[id].type === 'definicion' && filtered[id].subtype === 'primitivo'));
 
-  const sortedIds = structure.topologicalOrder.filter(id => nodeIds.includes(id));
+  const sortedIds = structure.topologicalOrder.filter(id => nodeIdSet.has(id));
   const layers = computeLayers(sortedIds, edgeList, axiomIds, primitiveIds);
 
   const positions = arrangeLayers(nodeIds, layers, edgeList);
@@ -423,12 +451,8 @@ export async function computeGraph(
     };
   });
 
-  // eslint-disable-next-line sonarjs/cognitive-complexity
   const flowEdges: FlowEdge[] = edgeList.map(({ source, target }) => {
     const srcNode = filtered[source];
-    const srcActive = activeStates[source] ?? true;
-    const tgtActive = activeStates[target] ?? true;
-    const isLive = srcActive && tgtActive;
 
     let strokeDasharray: string | undefined;
     if (srcNode?.type === 'lema') {
@@ -437,31 +461,16 @@ export async function computeGraph(
       strokeDasharray = '2,3';
     }
 
-    const isFromPrimitive = srcNode?.type === 'definicion' && srcNode?.subtype === 'primitivo';
-    let edgeColor: string;
-    let edgeWidth: number;
-    if (isFromPrimitive) {
-      edgeColor = isLive ? '#576070AA' : '#57607022';
-
-      edgeWidth = isLive ? 2.5 : 1;
-    } else {
-      edgeColor = isLive ? '#333333AA' : '#33333322';
-      edgeWidth = isLive ? 1.5 : 1;
-    }
-
     return {
       id: `e-${source}-${target}`,
       source,
       target,
       type: 'default',
       style: {
-        stroke: edgeColor,
-        strokeWidth: edgeWidth,
         ...(strokeDasharray ? { strokeDasharray } : {}),
       },
       markerEnd: {
         type: 'arrowclosed',
-        color: edgeColor,
         width: 10,
         height: 10,
       },
@@ -470,6 +479,35 @@ export async function computeGraph(
 
   return { nodes: flowNodes, edges: flowEdges, adjacency, activeStates, dependsOn };
 }
+
+export async function evaluateGraph(
+  disabledAxioms: string[],
+): Promise<GraphWorkerEvaluationOutput> {
+  if (!preparedNodes || !previousActiveStates) {
+    throw {
+      code: 'NOT_INITIALIZED',
+      message: 'Graph worker must be initialized before evaluation',
+    };
+  }
+
+  const nextActiveStates = evaluateActiveNodes(preparedNodes, new Set(disabledAxioms));
+  const changedActiveStates: Record<string, boolean> = {};
+
+  for (const [id, isActive] of Object.entries(nextActiveStates)) {
+    if (previousActiveStates[id] !== isActive) {
+      changedActiveStates[id] = isActive;
+    }
+  }
+
+  previousActiveStates = nextActiveStates;
+  return { changedActiveStates };
+}
+
+/**
+ * Compatibilidad para consumidores puros y benchmarks. El flujo de producción
+ * usa `initializeGraph` una vez y `evaluateGraph` para las interacciones.
+ */
+export const computeGraph = initializeGraph;
 
 // ── Web Worker Interface ──────────────────────────────────────────────────────
 
@@ -484,12 +522,21 @@ export async function processGraphWorkerMessage(data: unknown): Promise<GraphWor
   }
 
   try {
-    const result = await computeGraph(
-      parsed.value.payload.graphData,
-      parsed.value.payload.disabledAxioms,
-    );
+    if (parsed.value.type === 'initialize-graph') {
+      const result = await initializeGraph(
+        parsed.value.payload.graphData,
+        parsed.value.payload.disabledAxioms,
+      );
+      return {
+        type: 'initialized',
+        requestId: parsed.value.requestId,
+        result,
+      };
+    }
+
+    const result = await evaluateGraph(parsed.value.payload.disabledAxioms);
     return {
-      type: 'success',
+      type: 'evaluated',
       requestId: parsed.value.requestId,
       result,
     };

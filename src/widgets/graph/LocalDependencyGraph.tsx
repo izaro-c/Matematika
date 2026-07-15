@@ -203,7 +203,7 @@ export const LocalDependencyGraph: React.FC<LocalDependencyGraphProps> = ({ node
             markerHeight="5"
             orient="auto-start-reverse"
           >
-            <path d="M 0 2.5 L 7 5 L 0 7.5 z" fill="#333333" opacity="0.75" />
+            <path d="M 0 2.5 L 7 5 L 0 7.5 z" fill="var(--theme-carbon)" opacity="0.75" />
           </marker>
         </defs>
 
@@ -224,7 +224,7 @@ export const LocalDependencyGraph: React.FC<LocalDependencyGraphProps> = ({ node
               key={edge.id}
               d={pathData}
               fill="none"
-              stroke="#333333"
+              stroke="var(--theme-carbon)"
               strokeWidth={1}
               strokeOpacity={0.65}
               strokeDasharray="4 3"
@@ -238,7 +238,6 @@ export const LocalDependencyGraph: React.FC<LocalDependencyGraphProps> = ({ node
           const isCurrent = node.id === nodeId;
           const typeStyle = TYPE_STYLES[node.type];
           const nodeColor = typeStyle?.bg ?? 'var(--theme-pizarra)';
-          const hasWhiteText = typeStyle?.text === '#ffffff';
 
           return (
             <g
@@ -266,7 +265,7 @@ export const LocalDependencyGraph: React.FC<LocalDependencyGraphProps> = ({ node
                 cy={node.y}
                 r={node.radius}
                 fill={nodeColor}
-                stroke="#333333"
+                stroke="var(--theme-carbon)"
                 strokeWidth={isCurrent ? 2 : 1}
               />
               
@@ -275,7 +274,7 @@ export const LocalDependencyGraph: React.FC<LocalDependencyGraphProps> = ({ node
                 cx={node.x}
                 cy={node.y}
                 r={1.5}
-                fill={hasWhiteText ? '#ffffff' : '#333333'}
+                fill="var(--theme-lienzo)"
                 opacity={0.8}
               />
 
@@ -288,7 +287,7 @@ export const LocalDependencyGraph: React.FC<LocalDependencyGraphProps> = ({ node
                 fontFamily="Georgia, ui-serif, serif"
                 fontStyle="italic"
                 fontWeight={isCurrent ? 'bold' : 'normal'}
-                fill="#333333"
+                fill="var(--theme-carbon)"
                 opacity={isCurrent ? 1 : 0.8}
                 style={{ userSelect: 'none' }}
               >

@@ -28,8 +28,8 @@ export function AxiomaticDetailPanel({
   return (
     <div className={
       isMobile
-        ? 'fixed bottom-0 left-0 right-0 z-50 bg-lienzo border-t border-carbon/20 shadow-xl p-4 max-h-[70vh] overflow-y-auto rounded-t-xl'
-        : 'absolute top-24 right-3 z-30 bg-lienzo/95 border border-carbon/20 shadow p-4 w-[280px] max-h-[calc(100vh-7rem)] overflow-y-auto'
+        ? 'elegant-panel fixed bottom-0 left-0 right-0 z-50 shadow-xl p-4 max-h-[70vh] overflow-y-auto'
+        : 'elegant-panel absolute top-24 right-3 z-30 shadow-xl p-4 w-[280px] max-h-[calc(100vh-7rem)] overflow-y-auto'
     }>
       <div className="flex justify-between items-start mb-2">
         {(() => {
@@ -47,7 +47,14 @@ export function AxiomaticDetailPanel({
             </span>
           );
         })()}
-        <button onClick={() => setSelectedNodeId(null)} className="text-carbon/40 hover:text-carbon text-sm">✕</button>
+        <button
+          type="button"
+          onClick={() => setSelectedNodeId(null)}
+          className="min-h-8 min-w-8 text-carbon/40 hover:text-carbon text-sm focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-terracota"
+          aria-label="Cerrar detalle"
+        >
+          ✕
+        </button>
       </div>
       <h2 className="font-serif text-base text-carbon font-bold leading-tight mb-2 capitalize">{selectedNodeData.label}</h2>
       <p className="font-sans text-xs text-carbon/70 leading-relaxed mb-3">{selectedNodeData.description || 'Sin descripción.'}</p>
