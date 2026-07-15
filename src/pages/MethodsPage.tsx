@@ -1,58 +1,80 @@
-import { useLocation } from 'wouter';
+import { Link } from 'wouter';
 import { db } from '@/entities/content';
+import { Breadcrumbs } from '@/shared/ui/Breadcrumbs';
 
-/**
- * Página índice para los "Métodos de Demostración".
- * Filtra las lecciones especiales (cuyos IDs empiezan por "metodo-") y las muestra
- * en un diseño de cuadrícula (grid) para fácil acceso a las herramientas lógicas.
- */
+/** Índice navegable de los métodos de demostración publicados. */
 export const MethodsPage = () => {
-  const [, setLocation] = useLocation();
-  const allLessons = db.getAllLessons();
-  
-  // Filtrar solo los métodos de demostración (ID empieza por leccion-metodo-)
-  const methods = allLessons.filter(l => l.id.startsWith('leccion-metodo-'));
+  const methods = db
+    .getAllLessons()
+    .filter(lesson => lesson.id.startsWith('leccion-metodo-'))
+    .sort((a, b) => (a.title ?? a.id).localeCompare(b.title ?? b.id, 'es'));
 
   return (
-    <div className="min-h-screen bg-lienzo bg-arts-and-crafts text-carbon p-12 lg:p-24 flex justify-center">
-      <div className="max-w-4xl mx-auto w-full">
-        
-        <header className="mb-16 text-center">
-          <h1 className="text-5xl lg:text-7xl font-serif text-carbon tracking-tight mb-6">
-            El Arsenal Lógico
-          </h1>
-          <p className="text-xl text-pizarra font-serif italic max-w-2xl mx-auto">
-            "Las matemáticas no son más que el arte de decir lo mismo con diferentes palabras." <br/>
-            <span className="text-sm opacity-70 mt-2 block">— Henri Poincaré</span>
+    <main className="min-h-screen bg-lienzo bg-arts-and-crafts text-carbon font-serif">
+      <div className="mx-auto w-full max-w-5xl px-6 pb-24 pt-20 sm:px-10 sm:pt-24 lg:px-12 lg:pb-32">
+        <Breadcrumbs crumbs={[{ name: 'Métodos de demostración' }]} className="mb-12" />
+
+        <header className="max-w-3xl border-b border-carbon/15 pb-10 sm:pb-12">
+          <p className="mb-4 font-sans text-xs font-semibold uppercase tracking-[0.18em] text-granada">
+            Formas de razonar
           </p>
-          <div className="w-24 h-px bg-terracota mx-auto mt-12 opacity-50"></div>
+          <h1 className="text-4xl font-semibold leading-none tracking-tight sm:text-5xl lg:text-6xl">
+            Métodos de demostración
+          </h1>
+          <p className="mt-6 max-w-2xl text-lg leading-relaxed text-carbon/70 sm:text-xl">
+            Cada método organiza de una manera distinta el paso desde las hipótesis hasta la
+            conclusión. La elección depende de la forma lógica del enunciado y de los objetos
+            que intervienen.
+          </p>
         </header>
 
-        <section className="grid grid-cols-1 md:grid-cols-2 gap-8">
-          {methods.map(method => (
-            <div 
-              key={method.id} 
-              onClick={() => setLocation(`/${method.slug}`)}
-              className="group bg-white p-8 border border-carbon/10 shadow-sm hover:shadow-xl hover:-translate-y-1 transition-all cursor-pointer rounded-sm flex flex-col"
+        <section aria-labelledby="methods-index-title" className="mt-12 sm:mt-16">
+          <div className="mb-6 flex items-baseline justify-between gap-6">
+            <h2
+              id="methods-index-title"
+              className="font-sans text-xs font-semibold uppercase tracking-[0.18em] text-carbon/55"
             >
-              <h2 className="text-2xl font-serif text-salvia group-hover:text-terracota transition-colors mb-4">
-                {method.title}
-              </h2>
-              {method.description && (
-                <p className="text-sm text-carbon/70 font-sans mb-4 flex-grow">
-                  {method.description}
-                </p>
-              )}
-              <div className="mt-auto pt-8 flex justify-end">
-                <span className="text-xs font-bold tracking-widest uppercase text-carbon/40 group-hover:text-carbon transition-colors">
-                  Estudiar Método &rarr;
-                </span>
-              </div>
-            </div>
-          ))}
-        </section>
+              Índice
+            </h2>
+            <p className="font-sans text-xs text-carbon/45">
+              {methods.length} {methods.length === 1 ? 'método' : 'métodos'}
+            </p>
+          </div>
 
+          <ul className="grid grid-cols-1 gap-5 md:grid-cols-2">
+            {methods.map(method => (
+              <li key={method.id} className="flex">
+                <Link
+                  href={`/${method.slug}`}
+                  className="group elegant-panel flex w-full flex-col p-6 shadow-sm transition-[border-color,box-shadow,transform] duration-300 hover:shadow-elegant focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-granada motion-safe:hover:-translate-y-0.5 motion-reduce:transition-none sm:p-7"
+                  style={{ ['--hover-accent' as string]: 'var(--theme-granada)' }}
+                >
+                  <span
+                    className="mb-8 h-px w-10 bg-granada/45 transition-[width,background-color] duration-300 group-hover:w-16 group-hover:bg-granada/80"
+                    aria-hidden="true"
+                  />
+
+                  <h3 className="text-2xl font-semibold leading-tight text-carbon transition-colors group-hover:text-granada">
+                    {method.title ?? method.id}
+                  </h3>
+                  {method.description && (
+                    <p className="mt-3 flex-grow text-base leading-relaxed text-carbon/65">
+                      {method.description}
+                    </p>
+                  )}
+
+                  <span className="mt-8 inline-flex items-center gap-2 self-start font-sans text-xs font-semibold uppercase tracking-[0.14em] text-granada">
+                    Abrir método
+                    <span aria-hidden="true" className="transition-transform group-hover:translate-x-1">
+                      →
+                    </span>
+                  </span>
+                </Link>
+              </li>
+            ))}
+          </ul>
+        </section>
       </div>
-    </div>
+    </main>
   );
 };

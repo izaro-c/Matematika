@@ -33,9 +33,39 @@ export const TYPE_ICONS: Record<SearchResultType, string> = {
   glosario: 'Σ',
   matemático: '✦',
   caso_uso: '◈',
-  axioma: ' A',
+  axioma: 'A',
   msc2020: '⊞',
   modelo: 'M',
+};
+
+export const TYPE_LABELS: Record<SearchResultType, string> = {
+  teorema: 'Teoremas',
+  lección: 'Lecciones',
+  definición: 'Definiciones',
+  axioma: 'Axiomas',
+  modelo: 'Modelos',
+  ejemplo: 'Ejemplos',
+  ejercicio: 'Ejercicios',
+  demo: 'Demostraciones',
+  matemático: 'Matemáticos',
+  caso_uso: 'Casos de uso',
+  glosario: 'Glosario',
+  msc2020: 'Clasificación MSC2020',
+};
+
+export const TYPE_RESULT_LABELS: Record<SearchResultType, string> = {
+  teorema: 'Teorema',
+  lección: 'Lección',
+  definición: 'Definición',
+  axioma: 'Axioma',
+  modelo: 'Modelo',
+  ejemplo: 'Ejemplo',
+  ejercicio: 'Ejercicio',
+  demo: 'Demostración',
+  matemático: 'Matemático',
+  caso_uso: 'Caso de uso',
+  glosario: 'Glosario',
+  msc2020: 'MSC2020',
 };
 
 export const TYPE_COLORS: Record<SearchResultType, string> = PAGE_ACCENTS;
@@ -46,6 +76,7 @@ export const SEARCH_FUSE_OPTIONS: IFuseOptions<SearchResult> = {
     { name: 'subtitle', weight: 1 },
   ],
   threshold: 0.35,
+  ignoreDiacritics: true,
   includeMatches: true,
   minMatchCharLength: 2,
 };
@@ -168,7 +199,7 @@ export function buildSearchIndex(): SearchResult[] {
       type: 'msc2020',
       title: `${code} — ${name}`,
       subtitle: `Clasificación MSC2020`,
-      href: '',
+      href: routePath(`/rama/${code}`),
     });
   }
 
