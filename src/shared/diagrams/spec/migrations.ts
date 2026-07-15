@@ -42,6 +42,7 @@ function legacySelection(value: unknown) {
   const selection = recordOf(value);
   return {
     selectable: selection?.selectable !== false,
+    ...(typeof selection?.highlightable === 'boolean' ? { highlightable: selection.highlightable } : {}),
     ...(typeof selection?.ariaLabel === 'string' ? { ariaLabel: selection.ariaLabel } : {}),
     ...(selection?.role === 'primary' || selection?.role === 'secondary' || selection?.role === 'construction' || selection?.role === 'annotation'
       ? { role: selection.role }

@@ -22,7 +22,7 @@ export const diagramColorTokenSchema = z.enum([
 
 export const diagramElementKindSchema = z.enum([
   'segment', 'line', 'ray', 'polygon', 'circle', 'arc', 'functionCurve', 'parametricCurve',
-  'poincareGeodesic', 'poincareArc', 'midpoint', 'perpendicularFoot',
+  'poincareGeodesic', 'poincareArc', 'intersection', 'midpoint', 'perpendicularFoot',
   'baseExtension', 'perpendicular', 'parallel', 'angleBisector', 'angle',
   'rightAngle', 'congruenceMark', 'perpendicularMark', 'dimensionLine', 'measurement',
   'grid', 'areaDecomposition', 'text', 'label', 'formula', 'infoPanel',
@@ -56,6 +56,7 @@ const elementPropertiesSchema = z.object({
     finiteNumber.min(0).max(1),
   ]).optional(),
   clockwise: z.boolean().optional(),
+  restrictToSupports: z.boolean().optional(),
   visibleWhen: expressionSchema.optional(),
   textRules: z.array(z.object({ when: expressionSchema, text: z.string() }).strict()).max(12).optional(),
 }).strict().superRefine((properties, context) => {
@@ -66,6 +67,7 @@ const elementPropertiesSchema = z.object({
 
 const selectionSchema = z.object({
   selectable: z.boolean(),
+  highlightable: z.boolean().optional(),
   ariaLabel: z.string().min(1).optional(),
   role: z.enum(['primary', 'secondary', 'construction', 'annotation']).optional(),
 }).strict();
@@ -206,7 +208,7 @@ const groupSchema = z.object({
 
 const minimumRefs: Record<string, number> = {
   segment: 2, line: 2, ray: 2, polygon: 3, circle: 2, arc: 3,
-  functionCurve: 0, parametricCurve: 0, poincareGeodesic: 4, poincareArc: 4, midpoint: 2,
+  functionCurve: 0, parametricCurve: 0, poincareGeodesic: 4, poincareArc: 4, intersection: 2, midpoint: 2,
   perpendicularFoot: 3, baseExtension: 3, perpendicular: 3, parallel: 3,
   angleBisector: 3, angle: 3, rightAngle: 3, congruenceMark: 2,
   perpendicularMark: 3, dimensionLine: 2, measurement: 1, grid: 4,
@@ -300,6 +302,22 @@ export const diagramSpecV2Schema = z.object({
     element.refs.forEach(ref => {
       if (!referenceIds.has(ref)) context.addIssue({ code: 'custom', message: `${element.id} referencia el objeto inexistente ${ref}.`, path: ['elements', index, 'refs'] });
     });
+    if (element.kind === 'intersection') {
+      const linearSupportKinds = new Set(['segment', 'line', 'ray', 'perpendicular', 'parallel', 'angleBisector']);
+      if (element.refs.length !== 2) {
+        context.addIssue({ code: 'custom', message: `${element.id} necesita exactamente dos soportes lineales.`, path: ['elements', index, 'refs'] });
+      }
+      element.refs.forEach((ref, refIndex) => {
+        const support = spec.elements.find(candidate => candidate.id === ref);
+        if (!support || !linearSupportKinds.has(support.kind)) {
+          context.addIssue({
+            code: 'custom',
+            message: `${element.id} solo admite rectas, segmentos, semirrectas, perpendiculares, paralelas o bisectrices como soportes.`,
+            path: ['elements', index, 'refs', refIndex],
+          });
+        }
+      });
+    }
     if (element.kind === 'functionCurve' && !element.properties?.expression) {
       context.addIssue({ code: 'custom', message: `${element.id} necesita properties.expression.`, path: ['elements', index, 'properties', 'expression'] });
     }

@@ -23,7 +23,8 @@ import {
   generatedElementId, elementColorForKind,
   supportElements, applyGuidedConstruction,
   normalizeConstructionRefs, validConstructionRefs,
-  normalizeVisualModel, createTemplateModel, nextStepId
+  normalizeVisualModel, createTemplateModel, nextStepId,
+  toolReferenceCandidates
 } from '../../diagrams/model/commands';
 import { useModalFocus } from '../hooks/useModalFocus';
 
@@ -56,7 +57,7 @@ function componentNameFromSource(source: string | undefined, fallback: string): 
 
 function refsForElementKind(kind: ElementKind, refs: string[]): string[] {
   if (kind === 'polygon') return refs;
-  if (kind === 'segment' || kind === 'line' || kind === 'ray' || kind === 'circle' || kind === 'midpoint' || kind === 'congruenceMark' || kind === 'dimensionLine' || kind === 'measurement') {
+  if (kind === 'segment' || kind === 'line' || kind === 'ray' || kind === 'circle' || kind === 'intersection' || kind === 'midpoint' || kind === 'congruenceMark' || kind === 'dimensionLine' || kind === 'measurement') {
     return refs.slice(0, 2);
   }
   if (kind === 'arc' || kind === 'perpendicularFoot' || kind === 'baseExtension' || kind === 'perpendicular' || kind === 'parallel' || kind === 'angleBisector' || kind === 'angle' || kind === 'rightAngle' || kind === 'perpendicularMark') {
@@ -126,18 +127,18 @@ export const DiagramWorkbenchCore: React.FC<DiagramWorkbenchCoreProps> = ({
     setCanvasTool(tool);
   };
 
-  const choosePointForTool = (pointId: string) => {
+  const chooseReferenceForTool = (referenceId: string) => {
     const canvasTool = state.canvasTool;
     if (canvasTool === 'select' || canvasTool === 'point') return false;
     const needed = refsNeededForTool(canvasTool);
     if (needed === 0) return false;
-    const nextRefs = addToolReference(canvasTool, pendingRefs, pointId);
+    const nextRefs = addToolReference(canvasTool, pendingRefs, referenceId);
     if (canvasTool !== 'polygon' && nextRefs.every(Boolean) && toolReferencesAreReady(canvasTool, nextRefs)) {
       handleAddElement(canvasTool as ElementKind, nextRefs);
       setPendingRefs([]);
     } else {
       setPendingRefs(nextRefs);
-      selectElement(pointId);
+      selectElement(referenceId);
     }
     return true;
   };
@@ -290,11 +291,13 @@ export const DiagramWorkbenchCore: React.FC<DiagramWorkbenchCoreProps> = ({
   };
 
   const handleAddElement = (kind: ElementKind, explicitRefs?: string[]) => {
-    const refs = explicitRefs || model.points.map(item => item.id);
+    const refs = explicitRefs || toolReferenceCandidates(model, kind).map(item => item.id);
     const elementRefs = refsForElementKind(kind, refs);
 
     const id = generatedElementId(kind, elementRefs, model.elements);
-    const properties = kind === 'functionCurve'
+    const properties = kind === 'intersection'
+      ? { restrictToSupports: true }
+      : kind === 'functionCurve'
       ? { expression: 'sin(x)', parameter: 'x', domain: [-5, 5] as [number, number], samples: 128 }
       : kind === 'parametricCurve'
         ? { xExpression: '3*cos(t)', yExpression: '2*sin(t)', parameter: 't', domain: [0, 6.283185307179586] as [number, number], samples: 128 }
@@ -610,7 +613,7 @@ export const DiagramWorkbenchCore: React.FC<DiagramWorkbenchCoreProps> = ({
                 {state.canvasTool === 'point' && 'Haga clic una vez en el lugar exacto del lienzo. Después se volverá automáticamente a Seleccionar.'}
                 {state.canvasTool !== 'select' && state.canvasTool !== 'point' && refsNeededForTool(state.canvasTool) > 0 && (state.canvasTool === 'polygon'
                   ? `Creando polígono: elija al menos 3 vértices distintos en el lienzo o en los selectores inferiores y pulse Crear polígono (${completedToolReferenceCount(state.canvasTool, pendingRefs)} elegidos).`
-                  : `Creando ${KIND_LABELS[state.canvasTool]}: elija ${refsNeededForTool(state.canvasTool)} puntos distintos en el lienzo o en los selectores inferiores (${completedToolReferenceCount(state.canvasTool, pendingRefs)}/${refsNeededForTool(state.canvasTool)}).`)}
+                  : `Creando ${KIND_LABELS[state.canvasTool]}: elija ${refsNeededForTool(state.canvasTool)} referencias compatibles distintas en el lienzo o en los selectores inferiores (${completedToolReferenceCount(state.canvasTool, pendingRefs)}/${refsNeededForTool(state.canvasTool)}).`)}
                 {pendingRefs.some(Boolean) && <span className="ml-1 font-mono text-[10px] text-pavo">Elegidos: {pendingRefs.filter(Boolean).join(', ')}</span>}
               </span>
               {state.canvasTool !== 'select' && <button type="button" className="rounded border border-carbon/15 bg-lienzo px-2 py-1 text-[10px] font-bold text-carbon" onClick={() => activateCanvasTool('select')}>Cancelar</button>}
@@ -639,7 +642,7 @@ export const DiagramWorkbenchCore: React.FC<DiagramWorkbenchCoreProps> = ({
               previewStepId={state.activeStepId}
               onSelect={selectElement}
               onModelEdit={handleVisualEdit}
-              onChoosePointForTool={choosePointForTool}
+              onChooseReferenceForTool={chooseReferenceForTool}
               onCompleteTool={() => activateCanvasTool('select')}
             />
 
@@ -671,7 +674,7 @@ export const DiagramWorkbenchCore: React.FC<DiagramWorkbenchCoreProps> = ({
                 }}
               />
               <div className="sticky top-0">
-                <DiagramCanvas model={model} selectedId={state.selectedId} canvasTool="select" pendingRefs={[]} previewHighlightId={previewHighlightId} previewStepId={state.activeStepId} onSelect={selectElement} onModelEdit={handleVisualEdit} onChoosePointForTool={() => false} onCompleteTool={() => {}} />
+                <DiagramCanvas model={model} selectedId={state.selectedId} canvasTool="select" pendingRefs={[]} previewHighlightId={previewHighlightId} previewStepId={state.activeStepId} onSelect={selectElement} onModelEdit={handleVisualEdit} onChooseReferenceForTool={() => false} onCompleteTool={() => {}} />
                 <p className="mt-2 rounded border border-carbon/10 bg-lienzo p-2 text-[10px] text-carbon/55">La vista muestra el paso activo. Cambie de paso en la matriz para comprobar exactamente qué aparece.</p>
               </div>
             </div>

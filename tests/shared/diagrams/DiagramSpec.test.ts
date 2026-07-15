@@ -16,6 +16,14 @@ describe('DiagramSpec v2 schema and migrations', () => {
     expect(parsed.data.layers.map(layer => layer.id)).toEqual(['construction', 'geometry', 'annotations']);
   });
 
+  it('accepts an interactable scene item that opts out of visual highlighting', () => {
+    const candidate = structuredClone(v2Fixture);
+    candidate.points[0].selection.highlightable = false;
+    const parsed = parseDiagramSpecV2(candidate);
+    expect(parsed.success).toBe(true);
+    if (parsed.success) expect(parsed.data.points[0].selection).toMatchObject({ selectable: true, highlightable: false });
+  });
+
   it('migrates an unversioned v1 scene explicitly and preserves its geometry', () => {
     const result = migrateDiagramSpec(legacyFixture);
     expect(result.migratedFrom).toBe(1);

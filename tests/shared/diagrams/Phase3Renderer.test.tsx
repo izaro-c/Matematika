@@ -34,6 +34,24 @@ vi.mock('../../../src/shared/diagrams/core/MathBoard', () => ({
           const labelHandlers: Record<string, Array<(event?: unknown) => void>> = {};
           let x = number(args[0]);
           let y = number(args[1]);
+          if (kind === 'intersection') {
+            const first = args[0];
+            const second = args[1];
+            const a = first?.point1;
+            const b = first?.point2;
+            const c = second?.point1;
+            const d = second?.point2;
+            if (a && b && c && d) {
+              const abX = b.X() - a.X();
+              const abY = b.Y() - a.Y();
+              const cdX = d.X() - c.X();
+              const cdY = d.Y() - c.Y();
+              const denominator = abX * cdY - abY * cdX;
+              const parameter = ((c.X() - a.X()) * cdY - (c.Y() - a.Y()) * cdX) / denominator;
+              x = a.X() + parameter * abX;
+              y = a.Y() + parameter * abY;
+            }
+          }
           let value = 1;
           const handlers: Record<string, Array<(event?: unknown) => void>> = {};
           const geometry: any = {
@@ -52,6 +70,10 @@ vi.mock('../../../src/shared/diagrams/core/MathBoard', () => ({
             handlers,
             rendNode: node,
           };
+          if (args[0]?.X && args[1]?.X && kind !== 'intersection') {
+            geometry.point1 = args[0];
+            geometry.point2 = args[1];
+          }
           if (options.name) {
             geometry.label = {
               setAttribute: vi.fn(),
@@ -92,6 +114,7 @@ vi.mock('../../../src/shared/diagrams/core/MathBoard', () => ({
 
 import { DiagramRenderer } from '../../../src/shared/diagrams/runtime/DiagramRenderer';
 import { Incidence2Spec } from '../../../src/widgets/diagrams/Axiomas/Incidence2';
+import { PaschSpec } from '../../../src/widgets/diagrams/Axiomas/Pasch';
 
 afterEach(() => {
   cleanup();
@@ -109,6 +132,111 @@ function HighlightProbe() {
 }
 
 describe('Phase 3 shared renderer', () => {
+  it('keeps a non-highlightable point selectable and target-interactive without visual emphasis', () => {
+    const base = migrateDiagramSpec(primitivesFixture).spec;
+    const target = base.points.find(point => !point.fixed && point.target)!;
+    const spec = {
+      ...base,
+      points: base.points.map(point => point.id === target.id
+        ? { ...point, selection: { ...point.selection, selectable: true, highlightable: false } }
+        : point),
+    };
+    const onSelectionChange = vi.fn();
+    render(
+      <MathProvider>
+        <DiagramRenderer spec={spec} mode="editor" selectedIds={[target.id]} viewportControls={false} onSelectionChange={onSelectionChange} />
+        <HighlightProbe />
+      </MathProvider>,
+    );
+
+    const pointIndex = rendererState.nodes.findIndex(node => node.dataset.diagramObjectId === target.id);
+    const point = rendererState.geometries[pointIndex];
+    const creation = rendererState.createdOptions[pointIndex];
+    expect(creation.options).toMatchObject({
+      highlight: false,
+      highlightFillColor: target.color,
+      highlightStrokeColor: target.color,
+      label: expect.objectContaining({ highlight: false, highlightColor: target.color, highlightStrokeColor: target.color }),
+    });
+    expect(point.setAttribute).toHaveBeenCalledWith(expect.objectContaining({
+      size: target.style?.pointSize ?? 4,
+      fillColor: target.color,
+      strokeColor: target.color,
+      fillOpacity: 1,
+    }));
+    expect(point.handlers.over).toBeUndefined();
+
+    point.handlers.down[0]();
+    expect(onSelectionChange).toHaveBeenCalledWith(target.id);
+    fireEvent.mouseEnter(rendererState.nodes[pointIndex]);
+    expect(screen.getByLabelText('highlight desde diagrama').textContent).toBe(`${spec.componentId}:${target.targetId ?? target.id}`);
+  });
+
+  it('renders exact intersections and keeps them on finite authored supports', () => {
+    const base = migrateDiagramSpec(primitivesFixture).spec;
+    const line = {
+      ...base.elements.find(item => item.id === 'lineBC')!,
+      id: 'lineOC',
+      label: 'Recta OC',
+      refs: ['pO', 'pC'],
+      target: false,
+    };
+    const intersection = {
+      ...base.elements.find(item => item.id === 'segAB')!,
+      id: 'intQ',
+      label: 'Q',
+      kind: 'intersection' as const,
+      refs: ['lineOC', 'segAB'],
+      order: 80,
+      locked: true,
+      target: false,
+      properties: { restrictToSupports: true },
+      style: { pointSize: 5, highlightPointSize: 8 },
+    };
+    const spec = { ...base, elements: [...base.elements, line, intersection] };
+
+    render(<MathProvider><DiagramRenderer spec={spec} viewportControls={false} /></MathProvider>);
+
+    const rendered = rendererState.createdOptions.find(item => item.kind === 'intersection');
+    expect(rendered?.options).toMatchObject({ name: 'Q', fixed: true, size: 5 });
+    const geometryIndex = rendererState.createdOptions.findIndex(item => item.kind === 'intersection');
+    expect(rendererState.geometries[geometryIndex].setAttribute).toHaveBeenCalledWith(expect.objectContaining({ visible: true, size: 5 }));
+  });
+
+  it('hides a restricted intersection when the carrier meets only the extension of a segment', () => {
+    const base = migrateDiagramSpec(primitivesFixture).spec;
+    const line = { ...base.elements.find(item => item.id === 'lineBC')!, id: 'lineOC', label: 'Recta OC', refs: ['pO', 'pC'], target: false };
+    const intersection = {
+      ...base.elements.find(item => item.id === 'segAB')!,
+      id: 'intQ', label: 'Q', kind: 'intersection' as const, refs: ['lineOC', 'segAB'], order: 80,
+      locked: true, target: false, properties: { restrictToSupports: true },
+    };
+    const spec = {
+      ...base,
+      points: base.points.map(point => point.id === 'pC' ? { ...point, y: 1 } : point),
+      elements: [...base.elements, line, intersection],
+    };
+
+    render(<MathProvider><DiagramRenderer spec={spec} viewportControls={false} /></MathProvider>);
+
+    const geometryIndex = rendererState.createdOptions.findIndex(item => item.kind === 'intersection');
+    expect(rendererState.geometries[geometryIndex].setAttribute).toHaveBeenCalledWith(expect.objectContaining({ visible: false }));
+  });
+
+  it('shows exactly one exit point Q on the two candidate sides of Pasch', () => {
+    render(<MathProvider><DiagramRenderer spec={PaschSpec} viewportControls={false} /></MathProvider>);
+
+    const intersectionIndexes = rendererState.createdOptions
+      .map((item, index) => item.kind === 'intersection' ? index : -1)
+      .filter(index => index >= 0);
+    expect(intersectionIndexes).toHaveLength(2);
+    const visibilities = intersectionIndexes.map(index => {
+      const calls = rendererState.geometries[index].setAttribute.mock.calls;
+      return calls.at(-1)?.[0]?.visible;
+    });
+    expect(visibilities.filter(Boolean)).toHaveLength(1);
+  });
+
   it('renders incidence points as movable gliders on their supporting line', () => {
     render(<MathProvider><DiagramRenderer spec={Incidence2Spec} viewportControls={false} /></MathProvider>);
 

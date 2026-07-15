@@ -21,6 +21,21 @@ describe('shared diagram scene semantics', () => {
     expect(plan.find(entry => entry.item.id === 'pFar')?.visible).toBe(false);
   });
 
+  it('keeps non-highlightable items out of direct and grouped emphasis', () => {
+    const target = spec.points.find(point => point.groupIds.includes('triangle-group'))!;
+    const quietSpec = {
+      ...spec,
+      points: spec.points.map(point => point.id === target.id
+        ? { ...point, selection: { ...point.selection, highlightable: false } }
+        : point),
+    };
+    const plan = createScenePlan(quietSpec, {
+      selectedIds: [target.id],
+      highlightedIds: [target.id, 'triangle-group'],
+    });
+    expect(plan.find(entry => entry.item.id === target.id)).toMatchObject({ highlighted: false, selected: false });
+  });
+
   it('fits, zooms and recovers objects outside the persisted viewport', () => {
     expect(offscreenItemIds(spec)).toContain('pFar');
     const fitted = fitViewport(spec);

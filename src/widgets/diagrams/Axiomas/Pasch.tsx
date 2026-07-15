@@ -1,136 +1,546 @@
-import { MathBoard } from '@/shared/diagrams/core/MathBoard';
-import {
-  createPoint, createLine, createSegment, createGlider, createPolygon
-} from '@/shared/diagrams/core/MathFactory';
+import { createDiagramSpec, DiagramRenderer } from '@/shared/diagrams/public';
 
-
-
-
-
-
-
-export const Pasch = () => {
-
-
-
-
-
-
-
-
-  const onInit = (board: any, els: any, theme: any) => {
-      void board; void els; void theme;
-      const pA = createPoint(board, [0, 2.5], {
-      name: 'A', size: 5, fillColor: theme.terracota, strokeColor: theme.terracota,
-      showInfobox: false, fixed: false,
-    }, theme);
-    const pB = createPoint(board, [-3.5, -2], {
-      name: 'B', size: 5, fillColor: theme.terracota, strokeColor: theme.terracota,
-      showInfobox: false, fixed: false,
-    }, theme);
-    const pC = createPoint(board, [4, -1.5], {
-      name: 'C', size: 5, fillColor: theme.terracota, strokeColor: theme.terracota,
-      showInfobox: false, fixed: false,
-    }, theme);
-
-    const sideAB = createSegment(board, [pA, pB], {
-      strokeColor: theme.carbon, strokeWidth: 2,
-    }, theme);
-    const sideBC = createSegment(board, [pB, pC], {
-      strokeColor: theme.carbon, strokeWidth: 2,
-    }, theme);
-    const sideCA = createSegment(board, [pC, pA], {
-      strokeColor: theme.carbon, strokeWidth: 2,
-    }, theme);
-
-    const triangle = createPolygon(board, [pA, pB, pC], {
-      fillColor: theme.terracota, fillOpacity: 0.04,
-      borders: { visible: false }, vertices: { visible: false },
-    }, theme);
-
-    const pP = createGlider(board, [-1, 0.5, sideAB], {
-      name: 'P', size: 5, fillColor: theme.terracota, strokeColor: theme.terracota,
-      showInfobox: false,
-    }, theme);
-
-    // Punto libre para dirigir la línea
-    const pDir = createPoint(board, [2, -1], {
-      name: '', size: 5, fillColor: theme.pizarra, strokeColor: theme.pizarra,
-      showInfobox: false,
-    }, theme);
-
-    const lineL = createLine(board, [pP, pDir], {
-      name: 'l', withLabel: true, label: { position: 'top', offset: [-15, 15], strokeColor: theme.pizarra, fontSize: 16 },
-      strokeColor: theme.pizarra, strokeWidth: 2.5, straightFirst: true, straightLast: true,
-    }, theme);
-
-    // Función robusta para comprobar si un punto está dentro del segmento usando coordenadas
-    const isOnSegment = (pt: any, seg: any) => {
-      if (!pt || !seg || !seg.point1 || !seg.point2) return false;
-      const d1 = Math.hypot(pt.X() - seg.point1.X(), pt.Y() - seg.point1.Y());
-      const d2 = Math.hypot(pt.X() - seg.point2.X(), pt.Y() - seg.point2.Y());
-      const d = Math.hypot(seg.point1.X() - seg.point2.X(), seg.point1.Y() - seg.point2.Y());
-      return Math.abs(d1 + d2 - d) < 0.001;
-    };
-
-    // Intersecciones con los otros dos lados
-    const intBC = board.create('intersection', [lineL, sideBC, 0], {
-      name: 'Q', size: 5, fillColor: theme.terracota, strokeColor: theme.terracota,
-      showInfobox: false
-    });
-    intBC.setAttribute({ visible: () => isOnSegment(intBC, sideBC) });
-
-    const intCA = board.create('intersection', [lineL, sideCA, 0], {
-      name: 'Q', size: 5, fillColor: theme.terracota, strokeColor: theme.terracota,
-      showInfobox: false
-    });
-    intCA.setAttribute({ visible: () => isOnSegment(intCA, sideCA) });
-
-      // Registrar elementos para interactividad y auditoría
-      els.pA = pA;
-        els.pB = pB;
-        els.pC = pC;
-        els.pP = pP;
-        els.pDir = pDir;
-        els.intBC = intBC;
-        els.intCA = intCA;
-        els.sideAB = sideAB;
-        els.sideBC = sideBC;
-        els.sideCA = sideCA;
-        els.triangle = triangle;
-        els.lineL = lineL;
-    };;
-
-  const onUpdate = (board: any, els: any, theme: any, isStep: any, isHL: any) => {
-      const isHighlight = isHL;
-      void board; void els; void theme; void isStep; void isHL; void isHighlight;
-      const { pA, pB, pC, pP, pDir, intBC, intCA, sideAB, sideBC, sideCA, triangle, lineL } = els;
-      [pA, pB, pC, pP, intBC, intCA].forEach(pt => pt.setAttribute({ size: 5, fillColor: theme.terracota, strokeColor: theme.terracota }));
-    pDir.setAttribute({ size: 5, fillColor: theme.pizarra, strokeColor: theme.pizarra });
-    [sideAB, sideBC, sideCA].forEach(s => s.setAttribute({ strokeColor: theme.carbon, strokeWidth: 2 }));
-    lineL.setAttribute({ strokeColor: theme.pizarra, strokeWidth: 2.5 });
-    triangle.setAttribute({ fillOpacity: 0.04 });
-
-    if (isHL('triangle')) triangle.setAttribute({ fillOpacity: 0.15 });
-    if (isHL('lineL')) lineL.setAttribute({ strokeColor: theme.terracota, strokeWidth: 4 });
-    if (isHL('pP')) pP.setAttribute({ size: 9, fillColor: theme.ocre });
-    if (isHL('pQ')) {
-      intBC.setAttribute({ size: 9, fillColor: theme.ocre });
-      intCA.setAttribute({ size: 9, fillColor: theme.ocre });
+/* @matematika-diagram-spec:start */
+export const PaschSpec = createDiagramSpec(
+{
+  "version": 2,
+  "renderer": "matematika-diagram-renderer-v2",
+  "title": "Axioma de Orden IV (de Pasch)",
+  "componentId": "axioma-de-orden-iv-de-pasch",
+  "category": "Teoremas",
+  "mode": "simulation",
+  "axis": false,
+  "grid": false,
+  "viewport": {
+    "bounds": [
+      -5,
+      5,
+      5,
+      -5
+    ],
+    "home": [
+      -5,
+      5,
+      5,
+      -5
+    ],
+    "minZoom": 0.2,
+    "maxZoom": 12,
+    "padding": 0.16
+  },
+  "layers": [
+    {
+      "id": "geometry",
+      "label": "Geometría",
+      "order": 0,
+      "visible": true,
+      "locked": false
+    },
+    {
+      "id": "controls",
+      "label": "Controles",
+      "order": 1,
+      "visible": true,
+      "locked": false
     }
-    };;
+  ],
+  "groups": [
+    {
+      "id": "groupQ",
+      "label": "Punto Q",
+      "memberIds": [
+        "intQCA",
+        "intQBC"
+      ],
+      "visible": true,
+      "locked": true,
+      "selection": {
+        "selectable": true,
+        "role": "primary"
+      },
+      "target": true,
+      "targetId": "pQ",
+      "color": "terracota"
+    }
+  ],
+  "points": [
+    {
+      "id": "pA",
+      "label": "A",
+      "color": "ocre",
+      "layerId": "geometry",
+      "order": 19001,
+      "visible": true,
+      "locked": false,
+      "groupIds": [],
+      "selection": {
+        "selectable": true,
+        "ariaLabel": "Punto A",
+        "role": "primary"
+      },
+      "target": true,
+      "targetId": "pA",
+      "style": {
+        "pointSize": 7,
+        "highlightPointSize": 10
+      },
+      "x": -0.56,
+      "y": 4.25,
+      "fixed": false,
+      "constraint": "free"
+    },
+    {
+      "id": "pB",
+      "label": "B",
+      "color": "ocre",
+      "layerId": "geometry",
+      "order": 20001,
+      "visible": true,
+      "locked": false,
+      "groupIds": [],
+      "selection": {
+        "selectable": true,
+        "ariaLabel": "Punto B",
+        "role": "primary"
+      },
+      "target": true,
+      "targetId": "pB",
+      "style": {
+        "pointSize": 7,
+        "highlightPointSize": 10,
+        "preserveColorOnHighlight": true
+      },
+      "x": -2.41,
+      "y": -3.04,
+      "fixed": false,
+      "constraint": "free"
+    },
+    {
+      "id": "pC",
+      "label": "C",
+      "color": "ocre",
+      "layerId": "geometry",
+      "order": 7001,
+      "visible": true,
+      "locked": false,
+      "groupIds": [],
+      "selection": {
+        "selectable": true,
+        "ariaLabel": "Punto C",
+        "role": "primary"
+      },
+      "target": true,
+      "targetId": "pC",
+      "style": {
+        "pointSize": 7,
+        "highlightPointSize": 10,
+        "preserveColorOnHighlight": true
+      },
+      "x": 5.18,
+      "y": -0.38,
+      "fixed": false,
+      "constraint": "free"
+    },
+    {
+      "id": "pP",
+      "label": "P",
+      "color": "terracota",
+      "layerId": "geometry",
+      "order": 21001,
+      "visible": true,
+      "locked": false,
+      "groupIds": [],
+      "selection": {
+        "selectable": true,
+        "highlightable": false,
+        "ariaLabel": "Punto D",
+        "role": "primary"
+      },
+      "target": true,
+      "targetId": "pP",
+      "style": {
+        "pointSize": 7,
+        "highlightPointSize": 10,
+        "preserveColorOnHighlight": true
+      },
+      "x": -1.3618042449077725,
+      "y": 1.0904578673634262,
+      "fixed": false,
+      "constraint": "glider",
+      "gliderTarget": "segAB"
+    },
+    {
+      "id": "pDir",
+      "label": "dir",
+      "color": "pizarra",
+      "layerId": "geometry",
+      "order": 22001,
+      "visible": true,
+      "locked": false,
+      "groupIds": [],
+      "selection": {
+        "selectable": true,
+        "highlightable": false,
+        "ariaLabel": "Punto D",
+        "role": "primary"
+      },
+      "target": true,
+      "targetId": "pDir",
+      "style": {
+        "pointSize": 4,
+        "highlightPointSize": 4,
+        "preserveColorOnHighlight": true
+      },
+      "x": -6.35,
+      "y": 3.34,
+      "fixed": false,
+      "constraint": "free"
+    }
+  ],
+  "elements": [
+    {
+      "id": "polyTriangulo",
+      "label": "Triángulo",
+      "color": "ocre",
+      "layerId": "geometry",
+      "order": 1000,
+      "visible": true,
+      "locked": false,
+      "groupIds": [],
+      "selection": {
+        "selectable": true,
+        "highlightable": false,
+        "ariaLabel": "Triángulo",
+        "role": "secondary"
+      },
+      "target": true,
+      "targetId": "triangle",
+      "style": {
+        "preserveColorOnHighlight": true
+      },
+      "kind": "polygon",
+      "refs": [
+        "pA",
+        "pB",
+        "pC"
+      ],
+      "properties": {}
+    },
+    {
+      "id": "segAB",
+      "label": "Lado AB",
+      "color": "ocre",
+      "layerId": "geometry",
+      "order": 1000,
+      "visible": true,
+      "locked": false,
+      "groupIds": [],
+      "selection": {
+        "selectable": true,
+        "ariaLabel": "Lado AB",
+        "role": "secondary"
+      },
+      "target": true,
+      "targetId": "segAB",
+      "kind": "segment",
+      "refs": [
+        "pA",
+        "pB"
+      ]
+    },
+    {
+      "id": "segBC",
+      "label": "Lado BC",
+      "color": "ocre",
+      "layerId": "geometry",
+      "order": 15001,
+      "visible": true,
+      "locked": false,
+      "groupIds": [],
+      "selection": {
+        "selectable": true,
+        "ariaLabel": "Lado BC",
+        "role": "secondary"
+      },
+      "target": true,
+      "targetId": "segBC",
+      "kind": "segment",
+      "refs": [
+        "pB",
+        "pC"
+      ]
+    },
+    {
+      "id": "segCA",
+      "label": "Lado CA",
+      "color": "ocre",
+      "layerId": "geometry",
+      "order": 1000,
+      "visible": true,
+      "locked": false,
+      "groupIds": [],
+      "selection": {
+        "selectable": true,
+        "ariaLabel": "Lado CA",
+        "role": "secondary"
+      },
+      "target": true,
+      "targetId": "segCA",
+      "kind": "segment",
+      "refs": [
+        "pC",
+        "pA"
+      ]
+    },
+    {
+      "id": "lineDirP",
+      "label": "Recta",
+      "color": "pizarra",
+      "layerId": "geometry",
+      "order": -1000,
+      "visible": true,
+      "locked": false,
+      "groupIds": [],
+      "selection": {
+        "selectable": true,
+        "ariaLabel": "Recta",
+        "role": "secondary"
+      },
+      "target": true,
+      "targetId": "lineL",
+      "style": {
+        "strokeWidth": 2,
+        "highlightStrokeWidth": 2,
+        "preserveColorOnHighlight": true
+      },
+      "kind": "line",
+      "refs": [
+        "pDir",
+        "pP"
+      ]
+    },
+    {
+      "id": "intQCA",
+      "label": "Q",
+      "color": "terracota",
+      "layerId": "geometry",
+      "order": 17001,
+      "visible": true,
+      "locked": true,
+      "groupIds": [
+        "groupQ"
+      ],
+      "selection": {
+        "selectable": true,
+        "ariaLabel": "Intersección Q sobre el lado CA",
+        "role": "primary"
+      },
+      "target": false,
+      "style": {
+        "pointSize": 7,
+        "highlightPointSize": 10,
+        "preserveColorOnHighlight": true
+      },
+      "kind": "intersection",
+      "refs": [
+        "lineDirP",
+        "segCA"
+      ],
+      "properties": {
+        "restrictToSupports": true
+      }
+    },
+    {
+      "id": "intQBC",
+      "label": "Q",
+      "color": "terracota",
+      "layerId": "geometry",
+      "order": 23001,
+      "visible": true,
+      "locked": true,
+      "groupIds": [
+        "groupQ"
+      ],
+      "selection": {
+        "selectable": true,
+        "ariaLabel": "Intersección Q sobre el lado BC",
+        "role": "primary"
+      },
+      "target": false,
+      "style": {
+        "pointSize": 7,
+        "highlightPointSize": 10,
+        "preserveColorOnHighlight": true
+      },
+      "kind": "intersection",
+      "refs": [
+        "lineDirP",
+        "segBC"
+      ],
+      "properties": {
+        "restrictToSupports": true
+      }
+    },
+    {
+      "id": "segAC",
+      "label": "Segmento",
+      "color": "ocre",
+      "layerId": "geometry",
+      "order": 14001,
+      "visible": true,
+      "locked": false,
+      "groupIds": [],
+      "selection": {
+        "selectable": true,
+        "ariaLabel": "Segmento",
+        "role": "secondary"
+      },
+      "target": true,
+      "targetId": "segAC",
+      "style": {
+        "strokeWidth": 5,
+        "highlightStrokeWidth": 5,
+        "preserveColorOnHighlight": true
+      },
+      "kind": "segment",
+      "refs": [
+        "pA",
+        "pC"
+      ],
+      "properties": {
+        "visibleWhen": "and(gte(((pC.x-pDir.x)*(pP.y-pDir.y)-(pC.y-pDir.y)*(pP.x-pDir.x))/((pP.x-pDir.x)*(pA.y-pC.y)-(pP.y-pDir.y)*(pA.x-pC.x)),-0.001),lte(((pC.x-pDir.x)*(pP.y-pDir.y)-(pC.y-pDir.y)*(pP.x-pDir.x))/((pP.x-pDir.x)*(pA.y-pC.y)-(pP.y-pDir.y)*(pA.x-pC.x)),1.001))"
+      }
+    },
+    {
+      "id": "segBC_2",
+      "label": "Segmento",
+      "color": "ocre",
+      "layerId": "geometry",
+      "order": 13001,
+      "visible": true,
+      "locked": false,
+      "groupIds": [],
+      "selection": {
+        "selectable": true,
+        "ariaLabel": "Segmento",
+        "role": "secondary"
+      },
+      "target": true,
+      "targetId": "segBC_2",
+      "style": {
+        "strokeWidth": 5,
+        "highlightStrokeWidth": 5,
+        "preserveColorOnHighlight": true
+      },
+      "kind": "segment",
+      "refs": [
+        "pB",
+        "pC"
+      ],
+      "properties": {
+        "visibleWhen": "and(gte(((pB.x-pDir.x)*(pP.y-pDir.y)-(pB.y-pDir.y)*(pP.x-pDir.x))/((pP.x-pDir.x)*(pC.y-pB.y)-(pP.y-pDir.y)*(pC.x-pB.x)),-0.001),lte(((pB.x-pDir.x)*(pP.y-pDir.y)-(pB.y-pDir.y)*(pP.x-pDir.x))/((pP.x-pDir.x)*(pC.y-pB.y)-(pP.y-pDir.y)*(pC.x-pB.x)),1.001))"
+      }
+    }
+  ],
+  "sliders": [],
+  "steps": [],
+  "constraints": [],
+  "dependencies": [
+    {
+      "sourceId": "pDir",
+      "targetId": "lineDirP",
+      "relation": "construction"
+    },
+    {
+      "sourceId": "pP",
+      "targetId": "lineDirP",
+      "relation": "construction"
+    },
+    {
+      "sourceId": "lineDirP",
+      "targetId": "intQCA",
+      "relation": "construction"
+    },
+    {
+      "sourceId": "segCA",
+      "targetId": "intQCA",
+      "relation": "construction"
+    },
+    {
+      "sourceId": "lineDirP",
+      "targetId": "intQBC",
+      "relation": "construction"
+    },
+    {
+      "sourceId": "segBC",
+      "targetId": "intQBC",
+      "relation": "construction"
+    },
+    {
+      "sourceId": "pA",
+      "targetId": "segAC",
+      "relation": "construction"
+    },
+    {
+      "sourceId": "pC",
+      "targetId": "segAC",
+      "relation": "construction"
+    },
+    {
+      "sourceId": "pC",
+      "targetId": "segAC",
+      "relation": "expression"
+    },
+    {
+      "sourceId": "pDir",
+      "targetId": "segAC",
+      "relation": "expression"
+    },
+    {
+      "sourceId": "pP",
+      "targetId": "segAC",
+      "relation": "expression"
+    },
+    {
+      "sourceId": "pA",
+      "targetId": "segAC",
+      "relation": "expression"
+    },
+    {
+      "sourceId": "pB",
+      "targetId": "segBC_2",
+      "relation": "construction"
+    },
+    {
+      "sourceId": "pC",
+      "targetId": "segBC_2",
+      "relation": "construction"
+    },
+    {
+      "sourceId": "pB",
+      "targetId": "segBC_2",
+      "relation": "expression"
+    },
+    {
+      "sourceId": "pDir",
+      "targetId": "segBC_2",
+      "relation": "expression"
+    },
+    {
+      "sourceId": "pP",
+      "targetId": "segBC_2",
+      "relation": "expression"
+    },
+    {
+      "sourceId": "pC",
+      "targetId": "segBC_2",
+      "relation": "expression"
+    }
+  ],
+  "note": "Arrastre los puntos para explorar la figura.",
+  "extensions": {}
+}
+);
+/* @matematika-diagram-spec:end */
 
-  return (
-    <MathBoard
-      boundingbox={[-5, 5, 6, -5]}
-      axis={false}
-      grid={false}
-      onInit={onInit}
-      onUpdate={onUpdate}
-    >
-      <div className="absolute top-3 left-3 z-10 text-[10px] font-sans text-pizarra/50 uppercase tracking-wider">
-        Arrastra los vértices, el punto P y el punto de dirección
-      </div>
-    </MathBoard>
-  );
-};
+export const Pasch = () => <DiagramRenderer spec={PaschSpec} />;
