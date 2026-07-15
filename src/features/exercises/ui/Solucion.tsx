@@ -5,7 +5,7 @@
  * Se puede usar tanto en ejercicios como en ejemplos.
  */
 import React, { useState } from 'react';
-import { useLessonStore } from '@/features/lessons/LessonStore';
+import { useStepBinding } from '@/shared/ui/StepBinding';
 
 interface SolucionProps {
   children: React.ReactNode;
@@ -18,7 +18,7 @@ interface SolucionProps {
  */
 export const Solucion: React.FC<SolucionProps> = ({ children, label = 'Ver Solución Completa' }) => {
   const [revealed, setRevealed] = useState(false);
-  const { setActiveStep } = useLessonStore();
+  const { setActiveStep } = useStepBinding();
 
   return (
     <div className="my-8 font-serif relative">

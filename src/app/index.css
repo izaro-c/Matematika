@@ -6,7 +6,6 @@
 @import "./styles/utilities.css";
 @import "./styles/editorial-content.css";
 @import "./styles/components.css";
-@import "./styles/triptych-layout.css";
-@import "./styles/notebook-layout.css";
+@import "./styles/content-layout.css";
 @import "./styles/codex-layout.css";
 @import "./styles/page-context.css";

@@ -17,7 +17,7 @@ export const RefLink: React.FC<RefLinkProps> = ({ targetId, children }) => {
     db.getTheorem(targetId) ||
     db.getDefinition(targetId) ||
     db.getMathematicianById(targetId) ||
-    db.lessons.get(targetId) ||
+    db.methods.get(targetId) ||
     db.examples.get(targetId) ||
     db.exercises.get(targetId) ||
     db.usecases.get(targetId) ||

@@ -22,7 +22,7 @@ interface TaxonomyGraphProps {
 
 /**
  * Componente interactivo que renderiza un grafo de fuerza 2D.
- * Visualiza la taxonomía matemática de una rama específica (teoremas, lecciones, definiciones).
+ * Visualiza la taxonomía matemática de una rama específica (teoremas, métodos, definiciones).
  * Muestra dependencias (requerimientos) entre conceptos de manera dinámica.
  */
 interface GraphNode {
@@ -86,7 +86,7 @@ export const TaxonomyGraph: React.FC<TaxonomyGraphProps> = ({ taxonomy }) => {
       const type = itemObj.type;
 
       let url = routePath('/');
-      if (type === 'lesson') url = routePath(`/${item.slug}`);
+      if (type === 'method') url = routePath(`/metodo/${item.slug}`);
       else if (type === 'theorem') url = routePath(`/teorema/${item.id}`);
       else if (type === 'definition') url = routePath(`/definicion/${item.id}`);
       else if (type === 'example') url = routePath(`/ejemplo/${item.id}`);
@@ -98,7 +98,7 @@ export const TaxonomyGraph: React.FC<TaxonomyGraphProps> = ({ taxonomy }) => {
       nodes.push({
         id: item.id, // ID exacto para isRead
         name: item.title || item.id,
-        group: type, // 'theorem', 'definition', 'lesson'
+        group: type,
         val: 7,
         url
       });

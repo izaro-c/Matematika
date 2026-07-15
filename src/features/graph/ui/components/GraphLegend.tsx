@@ -10,7 +10,7 @@ const LEGEND_TYPES = [
   'definicion',
   'corolario',
   'modelo',
-  'leccion',
+  'metodo',
   'lema',
   'ejercicio',
   'ejemplo',

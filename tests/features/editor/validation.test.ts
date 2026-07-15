@@ -82,7 +82,7 @@ describe('editor validation', () => {
         type: 'demostracion',
         title: 'Demostración',
         parentTheorem: 'segmento',
-        proofMethod: 'directo',
+        proofMethod: 'metodo-directo',
         layout: 'split',
       },
       imports: '',

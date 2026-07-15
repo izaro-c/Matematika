@@ -4,7 +4,7 @@ vi.mock('@/entities/content/loaders', () => ({
   contentLoaders: {
     mathMetas: {}, mathLoaders: {},
     thmMetas: {}, thmLoaders: {},
-    lessonMetas: {}, lessonLoaders: {},
+    methodMetas: {}, methodLoaders: {},
     demoMetas: {}, demoLoaders: {},
     defMetas: {}, defLoaders: {},
     exampleMetas: {}, exampleLoaders: {},
@@ -92,8 +92,8 @@ describe('ContentStore', () => {
       Component: (() => null) as never,
     });
 
-    store.lessons.set('lesson-1', {
-      id: 'lesson-1', slug: 'lesson-1', title: 'Lesson 1', description: '',
+    store.methods.set('metodo-1', {
+      id: 'metodo-1', slug: 'metodo-1', type: 'metodo', subtype: 'demostracion', title: 'Método 1', description: '',
       Component: (() => null) as never,
     });
 
@@ -222,9 +222,9 @@ describe('ContentStore', () => {
     });
   });
 
-  describe('getLesson', () => {
-    it('returns lesson by id', () => {
-      expect(store.getLesson('lesson-1')?.title).toBe('Lesson 1');
+  describe('getMethod', () => {
+    it('returns a method by id', () => {
+      expect(store.getMethod('metodo-1')?.title).toBe('Método 1');
     });
   });
 
@@ -264,8 +264,8 @@ describe('ContentStore', () => {
       expect(store.getAllDemos()).toHaveLength(1);
     });
 
-    it('getAllLessons', () => {
-      expect(store.getAllLessons()).toHaveLength(1);
+    it('getAllMethods', () => {
+      expect(store.getAllMethods()).toHaveLength(1);
     });
 
     it('getAllAxioms', () => {

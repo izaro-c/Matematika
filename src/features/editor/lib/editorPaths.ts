@@ -19,14 +19,14 @@ export function buildTemplatePath(templateName: string): string {
 }
 
 export function getTemplateName(wizardType: string): string {
-  return wizardType === 'lessons' ? 'lesson' : wizardType.slice(0, -1);
+  return wizardType.slice(0, -1);
 }
 
 export function getInternalLinkUrl(fileNode: FileNode): string {
   const id = getContentId(fileNode);
   switch (fileNode.type) {
     case 'theorems': return `/teorema/${id}`;
-    case 'lessons': return `/${id}`;
+    case 'methods': return `/metodo/${id}`;
     case 'demonstrations': return `/demo/${id}`;
     case 'mathematicians': return `/bio/${id.toLowerCase()}`;
     default: return '';

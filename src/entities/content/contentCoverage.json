@@ -9,8 +9,8 @@
       "demostracion": 25,
       "ejemplo": 1,
       "ejercicio": 1,
-      "lesson": 7,
       "matematico": 9,
+      "metodo": 7,
       "modelo": 4,
       "plan-de-estudio": 1,
       "corolario": 1,
@@ -1601,146 +1601,6 @@
       "demos": []
     },
     {
-      "id": "leccion-metodo-constructivo",
-      "type": "lesson",
-      "title": "Método Constructivo",
-      "filePath": "lessons/leccion-metodo-constructivo.mdx",
-      "hasDeclaredDiagram": true,
-      "diagramExports": [
-        "Simulation"
-      ],
-      "diagramStatus": "exported",
-      "leanId": null,
-      "leanVerified": false,
-      "verificationStatus": "none",
-      "foundation": "pending",
-      "sourcesCount": 0,
-      "proofSteps": 0,
-      "mappedProofSteps": [],
-      "parentTheorem": null,
-      "demos": []
-    },
-    {
-      "id": "leccion-metodo-contradiccion",
-      "type": "lesson",
-      "title": "Demostración por Contradicción",
-      "filePath": "lessons/leccion-metodo-contradiccion.mdx",
-      "hasDeclaredDiagram": true,
-      "diagramExports": [
-        "Simulation"
-      ],
-      "diagramStatus": "exported",
-      "leanId": null,
-      "leanVerified": false,
-      "verificationStatus": "none",
-      "foundation": "pending",
-      "sourcesCount": 0,
-      "proofSteps": 0,
-      "mappedProofSteps": [],
-      "parentTheorem": null,
-      "demos": []
-    },
-    {
-      "id": "leccion-metodo-contraposicion",
-      "type": "lesson",
-      "title": "Demostración por Contraposición",
-      "filePath": "lessons/leccion-metodo-contraposicion.mdx",
-      "hasDeclaredDiagram": true,
-      "diagramExports": [
-        "Simulation"
-      ],
-      "diagramStatus": "exported",
-      "leanId": null,
-      "leanVerified": false,
-      "verificationStatus": "none",
-      "foundation": "pending",
-      "sourcesCount": 0,
-      "proofSteps": 0,
-      "mappedProofSteps": [],
-      "parentTheorem": null,
-      "demos": []
-    },
-    {
-      "id": "leccion-metodo-directo",
-      "type": "lesson",
-      "title": "Método Directo",
-      "filePath": "lessons/leccion-metodo-directo.mdx",
-      "hasDeclaredDiagram": true,
-      "diagramExports": [
-        "Simulation"
-      ],
-      "diagramStatus": "exported",
-      "leanId": null,
-      "leanVerified": false,
-      "verificationStatus": "none",
-      "foundation": "pending",
-      "sourcesCount": 0,
-      "proofSteps": 0,
-      "mappedProofSteps": [],
-      "parentTheorem": null,
-      "demos": []
-    },
-    {
-      "id": "leccion-metodo-exhaustivo",
-      "type": "lesson",
-      "title": "Método Exhaustivo",
-      "filePath": "lessons/leccion-metodo-exhaustivo.mdx",
-      "hasDeclaredDiagram": true,
-      "diagramExports": [
-        "Simulation"
-      ],
-      "diagramStatus": "exported",
-      "leanId": null,
-      "leanVerified": false,
-      "verificationStatus": "none",
-      "foundation": "pending",
-      "sourcesCount": 0,
-      "proofSteps": 0,
-      "mappedProofSteps": [],
-      "parentTheorem": null,
-      "demos": []
-    },
-    {
-      "id": "leccion-metodo-geometrico",
-      "type": "lesson",
-      "title": "Método Geométrico",
-      "filePath": "lessons/leccion-metodo-geometrico.mdx",
-      "hasDeclaredDiagram": true,
-      "diagramExports": [
-        "Simulation"
-      ],
-      "diagramStatus": "exported",
-      "leanId": null,
-      "leanVerified": false,
-      "verificationStatus": "none",
-      "foundation": "pending",
-      "sourcesCount": 0,
-      "proofSteps": 0,
-      "mappedProofSteps": [],
-      "parentTheorem": null,
-      "demos": []
-    },
-    {
-      "id": "leccion-metodo-induccion",
-      "type": "lesson",
-      "title": "Inducción Matemática",
-      "filePath": "lessons/leccion-metodo-induccion.mdx",
-      "hasDeclaredDiagram": true,
-      "diagramExports": [
-        "Simulation"
-      ],
-      "diagramStatus": "exported",
-      "leanId": null,
-      "leanVerified": false,
-      "verificationStatus": "none",
-      "foundation": "pending",
-      "sourcesCount": 0,
-      "proofSteps": 0,
-      "mappedProofSteps": [],
-      "parentTheorem": null,
-      "demos": []
-    },
-    {
       "id": "arquimedes",
       "type": "matematico",
       "title": "arquimedes",
@@ -1892,6 +1752,146 @@
       "hasDeclaredDiagram": false,
       "diagramExports": [],
       "diagramStatus": "none",
+      "leanId": null,
+      "leanVerified": false,
+      "verificationStatus": "none",
+      "foundation": "pending",
+      "sourcesCount": 0,
+      "proofSteps": 0,
+      "mappedProofSteps": [],
+      "parentTheorem": null,
+      "demos": []
+    },
+    {
+      "id": "metodo-constructivo",
+      "type": "metodo",
+      "title": "Método Constructivo",
+      "filePath": "methods/metodo-constructivo.mdx",
+      "hasDeclaredDiagram": true,
+      "diagramExports": [
+        "Simulation"
+      ],
+      "diagramStatus": "exported",
+      "leanId": null,
+      "leanVerified": false,
+      "verificationStatus": "none",
+      "foundation": "pending",
+      "sourcesCount": 0,
+      "proofSteps": 0,
+      "mappedProofSteps": [],
+      "parentTheorem": null,
+      "demos": []
+    },
+    {
+      "id": "metodo-contradiccion",
+      "type": "metodo",
+      "title": "Demostración por Contradicción",
+      "filePath": "methods/metodo-contradiccion.mdx",
+      "hasDeclaredDiagram": true,
+      "diagramExports": [
+        "Simulation"
+      ],
+      "diagramStatus": "exported",
+      "leanId": null,
+      "leanVerified": false,
+      "verificationStatus": "none",
+      "foundation": "pending",
+      "sourcesCount": 0,
+      "proofSteps": 0,
+      "mappedProofSteps": [],
+      "parentTheorem": null,
+      "demos": []
+    },
+    {
+      "id": "metodo-contraposicion",
+      "type": "metodo",
+      "title": "Demostración por Contraposición",
+      "filePath": "methods/metodo-contraposicion.mdx",
+      "hasDeclaredDiagram": true,
+      "diagramExports": [
+        "Simulation"
+      ],
+      "diagramStatus": "exported",
+      "leanId": null,
+      "leanVerified": false,
+      "verificationStatus": "none",
+      "foundation": "pending",
+      "sourcesCount": 0,
+      "proofSteps": 0,
+      "mappedProofSteps": [],
+      "parentTheorem": null,
+      "demos": []
+    },
+    {
+      "id": "metodo-directo",
+      "type": "metodo",
+      "title": "Método Directo",
+      "filePath": "methods/metodo-directo.mdx",
+      "hasDeclaredDiagram": true,
+      "diagramExports": [
+        "Simulation"
+      ],
+      "diagramStatus": "exported",
+      "leanId": null,
+      "leanVerified": false,
+      "verificationStatus": "none",
+      "foundation": "pending",
+      "sourcesCount": 0,
+      "proofSteps": 0,
+      "mappedProofSteps": [],
+      "parentTheorem": null,
+      "demos": []
+    },
+    {
+      "id": "metodo-exhaustivo",
+      "type": "metodo",
+      "title": "Método Exhaustivo",
+      "filePath": "methods/metodo-exhaustivo.mdx",
+      "hasDeclaredDiagram": true,
+      "diagramExports": [
+        "Simulation"
+      ],
+      "diagramStatus": "exported",
+      "leanId": null,
+      "leanVerified": false,
+      "verificationStatus": "none",
+      "foundation": "pending",
+      "sourcesCount": 0,
+      "proofSteps": 0,
+      "mappedProofSteps": [],
+      "parentTheorem": null,
+      "demos": []
+    },
+    {
+      "id": "metodo-geometrico",
+      "type": "metodo",
+      "title": "Método Geométrico",
+      "filePath": "methods/metodo-geometrico.mdx",
+      "hasDeclaredDiagram": true,
+      "diagramExports": [
+        "Simulation"
+      ],
+      "diagramStatus": "exported",
+      "leanId": null,
+      "leanVerified": false,
+      "verificationStatus": "none",
+      "foundation": "pending",
+      "sourcesCount": 0,
+      "proofSteps": 0,
+      "mappedProofSteps": [],
+      "parentTheorem": null,
+      "demos": []
+    },
+    {
+      "id": "metodo-induccion",
+      "type": "metodo",
+      "title": "Inducción Matemática",
+      "filePath": "methods/metodo-induccion.mdx",
+      "hasDeclaredDiagram": true,
+      "diagramExports": [
+        "Simulation"
+      ],
+      "diagramStatus": "exported",
       "leanId": null,
       "leanVerified": false,
       "verificationStatus": "none",

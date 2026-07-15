@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "generatedBy": "scripts/editor/generate-diagram-usages.ts",
-  "corpusHash": "dc00d008510f96cebea93bb291d997c2e3f70bfad26cd60f406b2982f4feeda1",
+  "corpusHash": "23b34eeb3b85d6d7bd182dd9d5260e3b43819317d1722ed6ccd755f6fd795d4d",
   "paths": {
     "AxiomaArquimedes": "src/widgets/diagrams/Axiomas/AxiomaArquimedes.tsx",
     "AxiomaDedekind": "src/widgets/diagrams/Axiomas/AxiomaDedekind.tsx",
@@ -547,38 +547,38 @@
     ],
     "ConstructivoSimulation": [
       {
-        "contentId": "leccion-metodo-constructivo",
-        "contentPath": "src/database/content/lessons/leccion-metodo-constructivo.mdx",
+        "contentId": "metodo-constructivo",
+        "contentPath": "src/database/content/methods/metodo-constructivo.mdx",
         "referenceKind": "Simulation",
         "sourceRange": {
-          "start": 707,
-          "end": 755
+          "start": 693,
+          "end": 741
         },
-        "blockId": "leccion-metodo-constructivo:diagram:ConstructivoSimulation"
+        "blockId": "metodo-constructivo:diagram:ConstructivoSimulation"
       }
     ],
     "ContradictionSimulation": [
       {
-        "contentId": "leccion-metodo-contradiccion",
-        "contentPath": "src/database/content/lessons/leccion-metodo-contradiccion.mdx",
+        "contentId": "metodo-contradiccion",
+        "contentPath": "src/database/content/methods/metodo-contradiccion.mdx",
         "referenceKind": "Simulation",
         "sourceRange": {
-          "start": 745,
-          "end": 794
+          "start": 731,
+          "end": 780
         },
-        "blockId": "leccion-metodo-contradiccion:diagram:ContradictionSimulation"
+        "blockId": "metodo-contradiccion:diagram:ContradictionSimulation"
       }
     ],
     "ContraposicionSimulation": [
       {
-        "contentId": "leccion-metodo-contraposicion",
-        "contentPath": "src/database/content/lessons/leccion-metodo-contraposicion.mdx",
+        "contentId": "metodo-contraposicion",
+        "contentPath": "src/database/content/methods/metodo-contraposicion.mdx",
         "referenceKind": "Simulation",
         "sourceRange": {
-          "start": 613,
-          "end": 663
+          "start": 599,
+          "end": 649
         },
-        "blockId": "leccion-metodo-contraposicion:diagram:ContraposicionSimulation"
+        "blockId": "metodo-contraposicion:diagram:ContraposicionSimulation"
       }
     ],
     "DemoAngulosOpuestos": [
@@ -587,8 +587,8 @@
         "contentPath": "src/database/content/demonstrations/demo-angulos-opuestos-verticales.mdx",
         "referenceKind": "Component",
         "sourceRange": {
-          "start": 933,
-          "end": 954
+          "start": 940,
+          "end": 961
         },
         "blockId": "demo-angulos-opuestos-verticales:diagram:DemoAngulosOpuestos"
       }
@@ -599,8 +599,8 @@
         "contentPath": "src/database/content/demonstrations/demo-area-aditividad.mdx",
         "referenceKind": "Component",
         "sourceRange": {
-          "start": 841,
-          "end": 861
+          "start": 848,
+          "end": 868
         },
         "blockId": "demo-area-aditividad:diagram:DemoAreaAditividad"
       }
@@ -611,8 +611,8 @@
         "contentPath": "src/database/content/demonstrations/demo-area-rectangulo.mdx",
         "referenceKind": "Component",
         "sourceRange": {
-          "start": 974,
-          "end": 1008
+          "start": 981,
+          "end": 1015
         },
         "blockId": "demo-area-rectangulo:diagram:DemoAreaRectangulo_Conmensurable"
       }
@@ -623,8 +623,8 @@
         "contentPath": "src/database/content/demonstrations/demo-area-rectangulo.mdx",
         "referenceKind": "Component",
         "sourceRange": {
-          "start": 2163,
-          "end": 2199
+          "start": 2170,
+          "end": 2206
         },
         "blockId": "demo-area-rectangulo:diagram:DemoAreaRectangulo_Inconmensurable"
       }
@@ -635,8 +635,8 @@
         "contentPath": "src/database/content/demonstrations/demo-congruencia-ala.mdx",
         "referenceKind": "Component",
         "sourceRange": {
-          "start": 784,
-          "end": 804
+          "start": 791,
+          "end": 811
         },
         "blockId": "demo-congruencia-ala:diagram:DemoCongruenciaALA"
       }
@@ -647,8 +647,8 @@
         "contentPath": "src/database/content/demonstrations/demo-congruencia-lll.mdx",
         "referenceKind": "Component",
         "sourceRange": {
-          "start": 809,
-          "end": 829
+          "start": 816,
+          "end": 836
         },
         "blockId": "demo-congruencia-lll:diagram:DemoCongruenciaLLL"
       }
@@ -659,8 +659,8 @@
         "contentPath": "src/database/content/demonstrations/demo-dos-rectas-un-punto.mdx",
         "referenceKind": "Component",
         "sourceRange": {
-          "start": 1244,
-          "end": 1266
+          "start": 1251,
+          "end": 1273
         },
         "blockId": "demo-dos-rectas-un-punto:diagram:DemoDosRectasUnPunto"
       }
@@ -679,8 +679,8 @@
         "contentPath": "src/database/content/demonstrations/demo-rectas-coincidentes.mdx",
         "referenceKind": "Component",
         "sourceRange": {
-          "start": 1308,
-          "end": 1332
+          "start": 1315,
+          "end": 1339
         },
         "blockId": "demo-rectas-coincidentes:diagram:DemoRectasCoincidentes"
       }
@@ -699,58 +699,58 @@
         "contentPath": "src/database/content/demonstrations/demo-triangulo-isosceles.mdx",
         "referenceKind": "Component",
         "sourceRange": {
-          "start": 974,
-          "end": 998
+          "start": 981,
+          "end": 1005
         },
         "blockId": "demo-triangulo-isosceles:diagram:DemoTrianguloIsosceles"
       }
     ],
     "DirectoSimulation": [
       {
-        "contentId": "leccion-metodo-directo",
-        "contentPath": "src/database/content/lessons/leccion-metodo-directo.mdx",
+        "contentId": "metodo-directo",
+        "contentPath": "src/database/content/methods/metodo-directo.mdx",
         "referenceKind": "Simulation",
         "sourceRange": {
-          "start": 666,
-          "end": 709
+          "start": 652,
+          "end": 695
         },
-        "blockId": "leccion-metodo-directo:diagram:DirectoSimulation"
+        "blockId": "metodo-directo:diagram:DirectoSimulation"
       }
     ],
     "ExhaustivoSimulation": [
       {
-        "contentId": "leccion-metodo-exhaustivo",
-        "contentPath": "src/database/content/lessons/leccion-metodo-exhaustivo.mdx",
+        "contentId": "metodo-exhaustivo",
+        "contentPath": "src/database/content/methods/metodo-exhaustivo.mdx",
         "referenceKind": "Simulation",
         "sourceRange": {
-          "start": 604,
-          "end": 650
+          "start": 590,
+          "end": 636
         },
-        "blockId": "leccion-metodo-exhaustivo:diagram:ExhaustivoSimulation"
+        "blockId": "metodo-exhaustivo:diagram:ExhaustivoSimulation"
       }
     ],
     "GeometricoSimulation": [
       {
-        "contentId": "leccion-metodo-geometrico",
-        "contentPath": "src/database/content/lessons/leccion-metodo-geometrico.mdx",
+        "contentId": "metodo-geometrico",
+        "contentPath": "src/database/content/methods/metodo-geometrico.mdx",
         "referenceKind": "Simulation",
         "sourceRange": {
-          "start": 697,
-          "end": 743
+          "start": 683,
+          "end": 729
         },
-        "blockId": "leccion-metodo-geometrico:diagram:GeometricoSimulation"
+        "blockId": "metodo-geometrico:diagram:GeometricoSimulation"
       }
     ],
     "InduccionSimulation": [
       {
-        "contentId": "leccion-metodo-induccion",
-        "contentPath": "src/database/content/lessons/leccion-metodo-induccion.mdx",
+        "contentId": "metodo-induccion",
+        "contentPath": "src/database/content/methods/metodo-induccion.mdx",
         "referenceKind": "Simulation",
         "sourceRange": {
-          "start": 612,
-          "end": 657
+          "start": 598,
+          "end": 643
         },
-        "blockId": "leccion-metodo-induccion:diagram:InduccionSimulation"
+        "blockId": "metodo-induccion:diagram:InduccionSimulation"
       }
     ],
     "EjemploPitagorasCalculo": [
@@ -867,8 +867,8 @@
         "contentPath": "src/database/content/demonstrations/demo-angulo-externo.mdx",
         "referenceKind": "Component",
         "sourceRange": {
-          "start": 1037,
-          "end": 1056
+          "start": 1044,
+          "end": 1063
         },
         "blockId": "demo-angulo-externo:diagram:DemoAnguloExterno"
       }
@@ -879,8 +879,8 @@
         "contentPath": "src/database/content/demonstrations/demo-angulos-alternos-internos.mdx",
         "referenceKind": "Component",
         "sourceRange": {
-          "start": 910,
-          "end": 939
+          "start": 917,
+          "end": 946
         },
         "blockId": "demo-angulos-alternos-internos:diagram:DemoAngulosAlternosInternos"
       }
@@ -891,8 +891,8 @@
         "contentPath": "src/database/content/demonstrations/demo-congruencia-aal.mdx",
         "referenceKind": "Component",
         "sourceRange": {
-          "start": 1018,
-          "end": 1038
+          "start": 1025,
+          "end": 1045
         },
         "blockId": "demo-congruencia-aal:diagram:DemoCongruenciaAAL"
       }
@@ -903,8 +903,8 @@
         "contentPath": "src/database/content/demonstrations/demo-desigualdad-triangular.mdx",
         "referenceKind": "Component",
         "sourceRange": {
-          "start": 888,
-          "end": 915
+          "start": 895,
+          "end": 922
         },
         "blockId": "demo-desigualdad-triangular:diagram:DemoDesigualdadTriangular"
       }
@@ -915,8 +915,8 @@
         "contentPath": "src/database/content/demonstrations/demo-existencia-bisectriz.mdx",
         "referenceKind": "Component",
         "sourceRange": {
-          "start": 905,
-          "end": 930
+          "start": 912,
+          "end": 937
         },
         "blockId": "demo-existencia-bisectriz:diagram:DemoExistenciaBisectriz"
       }
@@ -927,8 +927,8 @@
         "contentPath": "src/database/content/demonstrations/demo-existencia-perpendicular.mdx",
         "referenceKind": "Component",
         "sourceRange": {
-          "start": 943,
-          "end": 972
+          "start": 950,
+          "end": 979
         },
         "blockId": "demo-existencia-perpendicular:diagram:DemoExistenciaPerpendicular"
       }
@@ -939,8 +939,8 @@
         "contentPath": "src/database/content/demonstrations/demo-pitagoras-areas.mdx",
         "referenceKind": "Component",
         "sourceRange": {
-          "start": 825,
-          "end": 845
+          "start": 832,
+          "end": 852
         },
         "blockId": "demo-pitagoras-areas:diagram:DemoPitagorasAreas"
       }
@@ -951,8 +951,8 @@
         "contentPath": "src/database/content/demonstrations/demo-pitagoras-euclides.mdx",
         "referenceKind": "Component",
         "sourceRange": {
-          "start": 850,
-          "end": 873
+          "start": 857,
+          "end": 880
         },
         "blockId": "demo-pitagoras-euclides:diagram:DemoPitagorasEuclides"
       }
@@ -963,8 +963,8 @@
         "contentPath": "src/database/content/demonstrations/demo-reciproco-triangulo-isosceles.mdx",
         "referenceKind": "Component",
         "sourceRange": {
-          "start": 1089,
-          "end": 1122
+          "start": 1096,
+          "end": 1129
         },
         "blockId": "demo-reciproco-triangulo-isosceles:diagram:DemoReciprocoTrianguloIsosceles"
       }
@@ -975,8 +975,8 @@
         "contentPath": "src/database/content/demonstrations/demo-suma-angulos-triangulo.mdx",
         "referenceKind": "Component",
         "sourceRange": {
-          "start": 781,
-          "end": 798
+          "start": 788,
+          "end": 805
         },
         "blockId": "demo-suma-angulos-triangulo:diagram:DemoSumaAngulos"
       }
@@ -987,8 +987,8 @@
         "contentPath": "src/database/content/demonstrations/demo-tales.mdx",
         "referenceKind": "Component",
         "sourceRange": {
-          "start": 720,
-          "end": 731
+          "start": 727,
+          "end": 738
         },
         "blockId": "demo-tales:diagram:DemoTales"
       }

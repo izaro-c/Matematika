@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { useExercise } from '@/features/exercises/ui/ExerciseContext';
-import { useLessonStore } from '@/features/lessons/LessonStore';
+import { useStepBinding } from '@/shared/ui/StepBinding';
 import { PasoContext } from '@/features/exercises/ui/PasoContext';
 
 interface PasoEjercicioProps {
@@ -27,7 +27,7 @@ export const PasoEjercicio: React.FC<PasoEjercicioProps> = ({
   children
 }) => {
   const { state, register } = useExercise();
-  const { setActiveStep } = useLessonStore();
+  const { setActiveStep } = useStepBinding();
 
   // Registrar todas las preguntas de este paso inmediatamente al montarse el componente
   useEffect(() => {
@@ -46,7 +46,7 @@ export const PasoEjercicio: React.FC<PasoEjercicioProps> = ({
     qId => state.questions[qId]?.isCorrect === true || state.questions[qId]?.revealed === true
   );
 
-  // Reportar hover o click al store de lección para actualizar el diagrama lateral
+  // Reportar hover o click al estado matemático compartido con el diagrama lateral.
   const handleActivation = () => {
     if (isUnlocked) {
       setActiveStep(id);

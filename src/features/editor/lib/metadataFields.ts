@@ -24,7 +24,7 @@ export const CONTENT_TYPE_OPTIONS = [
   { value: 'ejemplo', label: 'Ejemplo' },
   { value: 'ejercicio', label: 'Ejercicio' },
   { value: 'caso-de-uso', label: 'Caso de uso' },
-  { value: 'leccion', label: 'Lección' },
+  { value: 'metodo', label: 'Método' },
   { value: 'plan-de-estudio', label: 'Plan de estudio' },
   { value: 'matematico', label: 'Matemático' },
 ] as const;
@@ -36,13 +36,13 @@ const difficultyOptions = [
 ];
 
 const proofMethodOptions = [
-  { value: 'directo', label: 'Directo' },
-  { value: 'contradiccion', label: 'Contradicción' },
-  { value: 'induccion', label: 'Inducción' },
-  { value: 'contraposicion', label: 'Contraposición' },
-  { value: 'constructivo', label: 'Constructivo' },
-  { value: 'geometrico', label: 'Geométrico' },
-  { value: 'exhaustivo', label: 'Exhaustivo' },
+  { value: 'metodo-directo', label: 'Directo' },
+  { value: 'metodo-contradiccion', label: 'Contradicción' },
+  { value: 'metodo-induccion', label: 'Inducción' },
+  { value: 'metodo-contraposicion', label: 'Contraposición' },
+  { value: 'metodo-constructivo', label: 'Constructivo' },
+  { value: 'metodo-geometrico', label: 'Geométrico' },
+  { value: 'metodo-exhaustivo', label: 'Exhaustivo' },
 ];
 
 const common: MetadataFieldConfig[] = [
@@ -94,6 +94,20 @@ export function getMetadataFields(type?: string): MetadataFieldConfig[] {
         { key: 'dependencias', label: 'Dependencias', type: 'array' },
         { key: 'lemmas', label: 'Lemas', type: 'array' },
         { key: 'authors', label: 'Autores', type: 'array' },
+      ];
+    case 'metodo':
+      return [
+        ...common,
+        { key: 'subtype', label: 'Clase de procedimiento', type: 'select', required: true, options: [
+          { value: 'demostracion', label: 'Demostración' },
+          { value: 'construccion', label: 'Construcción' },
+          { value: 'calculo', label: 'Cálculo' },
+          { value: 'algoritmo', label: 'Algoritmo' },
+        ] },
+        { key: 'authors', label: 'Autores', type: 'array' },
+        { key: 'requires', label: 'Dependencias', type: 'array' },
+        { key: 'difficulty', label: 'Dificultad', type: 'select', options: difficultyOptions },
+        { key: 'hasSimulation', label: 'Tiene diagrama', type: 'boolean' },
       ];
     case 'modelo':
       return [

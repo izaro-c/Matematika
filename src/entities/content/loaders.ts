@@ -3,7 +3,7 @@ export const contentLoaders = {
 
   thmLoaders: import.meta.glob('../../database/content/theorems/*.mdx'),
 
-  lessonLoaders: import.meta.glob('../../database/content/lessons/*.mdx'),
+  methodLoaders: import.meta.glob('../../database/content/methods/*.mdx'),
 
   demoLoaders: import.meta.glob('../../database/content/demonstrations/*.mdx'),
 

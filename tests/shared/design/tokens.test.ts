@@ -13,7 +13,7 @@ import {
 
 const BASELINE_TYPE_COLORS = {
   teorema: 'var(--theme-terracota)',
-  lección: 'var(--theme-ocre)',
+  método: 'var(--theme-ocre)',
   definición: 'var(--theme-salvia)',
   axioma: 'var(--theme-ocre)',
   modelo: 'var(--theme-pavo)',

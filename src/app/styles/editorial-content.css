@@ -72,7 +72,11 @@
 
 /* Tablas con estilo clásico de libro de matemáticas */
 .prose table {
+  display: block;
   width: 100%;
+  max-width: 100%;
+  overflow-x: auto;
+  overscroll-behavior-inline: contain;
   border-collapse: collapse;
   font-family: ui-serif, Georgia, Cambria, "Times New Roman", Times, serif;
   margin: 2.5rem 0;

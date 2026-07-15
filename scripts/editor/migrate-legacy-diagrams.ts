@@ -124,7 +124,6 @@ walk(DIAGRAMS_DIR, (filePath) => {
   updated = updated.replace(/const\s+jxgBoard\s*=\s*useRef[\s\S]*?;/g, '');
   updated = updated.replace(/const\s+elementsRef\s*=\s*useRef[\s\S]*?;/g, '');
   updated = updated.replace(/const\s+mathHighlight\s*=\s*useMathStore[\s\S]*?;/g, '');
-  updated = updated.replace(/const\s+lessonHighlight\s*=\s*useLessonStore[\s\S]*?;/g, '');
   updated = updated.replace(/const\s+highlight\s*=\s*mathHighlight[\s\S]*?;/g, '');
   updated = updated.replace(/const\s+isHighlight\s*=\s*[\s\S]*?highlight\s*===\s*id;?/g, '');
 
@@ -254,7 +253,6 @@ walk(DIAGRAMS_DIR, (filePath) => {
   updated = updated.replace(/import\s*JXG\s*from\s*['"]jsxgraph['"];?/g, '');
   updated = updated.replace(/import\s*\{\s*getCSSVar\s*\}\s*from\s*['"].*?MathUtils['"];?/g, '');
   updated = updated.replace(/import\s*\{\s*useMathStore\s*\}\s*from\s*['"].*?MathStoreContext['"];?/g, '');
-  updated = updated.replace(/import\s*\{\s*useLessonStore\s*\}\s*from\s*['"].*?LessonStore['"];?/g, '');
 
   updated = updated.replace(/const\s+highlight\s*=\s*useMathStore[\s\S]*?;/g, '');
 
@@ -273,9 +271,6 @@ walk(DIAGRAMS_DIR, (filePath) => {
   let storeImportStr = '';
   if (updated.includes('useMathStore')) {
     storeImportStr += `import { useMathStore } from '@/app/providers/MathStoreContext';\n`;
-  }
-  if (updated.includes('useLessonStore')) {
-    storeImportStr += `import { useLessonStore } from '@/features/lessons/LessonStore';\n`;
   }
   if (updated.includes('getCSSVar')) {
     storeImportStr += `import { getCSSVar } from '@/shared/diagrams/core/MathUtils';\n`;

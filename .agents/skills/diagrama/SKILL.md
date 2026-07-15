@@ -71,4 +71,4 @@ npm run typecheck
 git diff --check
 ```
 
-Para cambios de producto, terminar con `npm run full-check`. Si cambia un diagrama final, comprobar también catálogo e índice de usos. Validar siempre esta skill con `quick_validate.py`.
+Para cambios de producto, terminar con `npm run full-check`. Si cambia un diagrama final, comprobar también catálogo e índice de usos.

@@ -50,7 +50,6 @@ export interface Theorem {
   statement?: string;
   color?: string;
   authors: string[];
-  lesson?: string;
   type?: 'theorem' | 'lemma' | 'corollary' | 'teorema';
   corollaries?: string[];
   demos?: string[];
@@ -74,16 +73,20 @@ export interface Theorem {
   sources?: MathematicalSource[];
 }
 
-export interface Lesson {
+export interface Method {
   id: string;
   slug: string;
-  title?: string;
-  description?: string;
+  type: 'metodo';
+  subtype: 'demostracion' | 'construccion' | 'calculo' | 'algoritmo';
+  title: string;
+  description: string;
   tags?: string[];
+  authors?: string[];
+  links?: string[];
+  requires?: string[];
   difficulty?: Difficulty;
   Component: MDXComponent;
   Simulation?: MDXComponent;
-  Visualizer?: MDXComponent;
   seeAlso?: string[];
 }
 

@@ -1,7 +1,7 @@
 import { useGlossaryStore, dictionary } from '@/features/glossary/GlossaryStore';
 import { db } from '@/entities/content';
 import type { 
-  Theorem, Definition, Mathematician, Lesson, 
+  Theorem, Definition, Mathematician, Method,
   Example, Exercise, UseCase, Axiom, 
   AxiomaticSystem, Model, Demo 
 } from '@/entities/content';
@@ -39,7 +39,7 @@ interface EntityWrapper {
   theorem?: Theorem | null;
   definition?: Definition | null;
   bio?: Mathematician | null;
-  lesson?: Lesson | null;
+  method?: Method | null;
   example?: Example | null;
   exercise?: Exercise | null;
   useCase?: UseCase | null;
@@ -62,7 +62,7 @@ function resolveEntityMeta(entity: EntityWrapper): TermMeta | null {
   }
   if (entity.definition) return { type: 'definicion', typeLabel: 'Definición', href: routePath(`/definicion/${entity.definition.slug}`) };
   if (entity.bio) return { type: 'matematico', typeLabel: 'Matemático', href: routePath(`/bio/${entity.bio.slug}`) };
-  if (entity.lesson) return { type: 'leccion', typeLabel: 'Lección', href: routePath(`/${entity.lesson.slug}`) };
+  if (entity.method) return { type: 'metodo', typeLabel: 'Método', href: routePath(`/metodo/${entity.method.slug}`) };
   if (entity.example) return { type: 'ejemplo', typeLabel: 'Ejemplo', href: routePath(`/ejemplo/${entity.example.slug}`) };
   if (entity.exercise) return { type: 'ejercicio', typeLabel: 'Ejercicio', href: routePath(`/ejercicio/${entity.exercise.slug}`) };
   if (entity.useCase) return { type: 'caso-de-uso', typeLabel: 'Caso de Uso', href: routePath(`/caso/${entity.useCase.slug}`) };
@@ -77,7 +77,7 @@ function resolveTermFromDb(activeTerm: string): TermData | null {
   const theorem = db.getTheorem(activeTerm);
   const definition = db.getDefinition(activeTerm);
   const bio = db.getMathematicianById(activeTerm);
-  const lesson = db.lessons.get(activeTerm);
+  const method = db.methods.get(activeTerm);
   const example = db.examples.get(activeTerm);
   const exercise = db.exercises.get(activeTerm);
   const useCase = db.usecases.get(activeTerm);
@@ -86,14 +86,14 @@ function resolveTermFromDb(activeTerm: string): TermData | null {
   const model = db.models.get(activeTerm);
   const demo = db.demos.get(activeTerm);
 
-  const entity = theorem || definition || bio || lesson || example || exercise || useCase || axiom || system || model || demo;
+  const entity = theorem || definition || bio || method || example || exercise || useCase || axiom || system || model || demo;
   if (!entity) return null;
 
   const meta = resolveEntityMeta({
     theorem,
     definition,
     bio,
-    lesson,
+    method,
     example,
     exercise,
     useCase,

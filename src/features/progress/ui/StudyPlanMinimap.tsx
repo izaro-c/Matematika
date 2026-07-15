@@ -19,12 +19,13 @@ export const StudyPlanMinimap: React.FC<StudyPlanMinimapProps> = ({ requiredNode
       db.getUseCase(id) ||
       db.getExample(id) ||
       db.getExercise(id)
+      || db.getMethod(id)
     ) as any;
 
     return {
       id,
       title: meta?.title || id,
-      type: meta?.type || 'lección',
+      type: meta?.type || 'contenido',
       completed: isRead(id),
     };
   });

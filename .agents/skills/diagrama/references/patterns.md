@@ -141,7 +141,7 @@ Diagrama (panel izquierdo)
 
 ### 2.1 Store — MathStore ÚNICO
 
-**Hay un solo store para highlight y step:** `MathStore`. No se usa `LessonStore` para el progreso en demostraciones (se reserva para ejercicios interactivos).
+**Hay un solo store para highlight y step:** `MathStore`. La misma vinculación se usa en demostraciones, métodos, ejercicios y cualquier otra página con texto y diagrama sincronizados.
 
 | Store | Variable | Cuándo usar | Escribe | Leído por |
 |---|---|---|---|---|
@@ -588,7 +588,7 @@ Archivo: `src/widgets/diagrams/<Categoria>/<Nombre>.tsx`
 
 ### Paso 2: En el MDX, importar y exportar
 
-**Para teoremas/axiomas/definiciones (SimulationLayout):**
+**Para páginas de contenido (`ContentLayout`):**
 ```typescript
 import { MyDiagram } from '@/widgets/diagrams/Categoria/MyDiagram';
 export const Simulation = MyDiagram;
@@ -857,7 +857,7 @@ Los diagramas viven en `src/widgets/diagrams/` (arquitectura FSD: capa `widgets/
 |---|---|
 | Fachada y utilidades | `src/widgets/diagrams/index.ts` |
 | Componentes JSXGraph base | `src/shared/diagrams/core/{MathBoard.tsx,MathFactory.ts,MathUtils.ts}` |
-| Stores para interactividad | `src/shared/lib/MathStoreContext.tsx`, `src/features/lessons/LessonStore.ts` |
+| Store para interactividad | `src/shared/lib/MathStoreContext.tsx`; enlaces de paso en `src/shared/ui/StepBinding.tsx` |
 | Paleta de colores | `src/app/theme.css`; leer mediante `theme.*`, `getCSSVar('--theme-*')` o `var(--theme-*)` según el renderer |
 | Contenido MDX asociado | `src/database/content/{theorems,definitions,axioms,demonstrations}/` |
 

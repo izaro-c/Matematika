@@ -2,7 +2,7 @@ import { useParams, Link } from 'wouter';
 import { useEffect } from 'react';
 import { db } from '@/entities/content';
 import { ExerciseProvider, useExercise } from '@/features/exercises/ui/ExerciseContext';
-import { SimulationLayout } from "@/widgets/layouts/SimulationLayout";
+import { ContentDiagram, ContentLayout } from '@/widgets/layouts/ContentLayout';
 import { useProgressStore } from '@/features/progress/UserProgressStore';
 import { ContentHeader } from '@/widgets/content/ContentHeader';
 import { ContentBody } from '@/shared/ui/ContentBody';
@@ -74,7 +74,7 @@ const ExerciseContent: React.FC<{ id: string }> = ({ id }) => {
     : [];
 
   return (
-    <SimulationLayout pageType="ejercicio" simulationComponent={exercise.Simulation}>
+    <ContentLayout pageType="ejercicio" diagram={exercise.Simulation ? <ContentDiagram component={exercise.Simulation} /> : undefined}>
       <div className="min-h-screen bg-transparent text-carbon font-serif pb-32">
         <ProgressBar />
         <div className="w-full px-6 md:px-10 pt-4 pb-16">
@@ -111,7 +111,7 @@ const ExerciseContent: React.FC<{ id: string }> = ({ id }) => {
           )}
         </div>
       </div>
-    </SimulationLayout>
+    </ContentLayout>
   );
 };
 

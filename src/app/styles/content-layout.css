@@ -1,30 +1,30 @@
 
 /* === TRÍPTICO EDITORIAL =================================================== */
-.triptych-layout {
-  --triptych-top: 5.5rem;
+.content-layout {
+  --content-top: 5.5rem;
   width: 100%;
   min-height: 100vh;
-  padding-top: var(--triptych-top);
+  padding-top: var(--content-top);
 }
 
 @media (min-width: 1024px) {
-  .triptych-layout {
+  .content-layout {
     padding-top: 0;
   }
 }
 
-.triptych-layout--embedded {
+.content-layout--embedded {
   min-height: 0;
   padding-top: 0;
 }
 
-.triptych-content {
+.content-content {
   width: min(100%, 112rem);
   min-width: 0;
   margin-inline: auto;
 }
 
-.triptych-primary {
+.content-primary {
   display: grid;
   grid-template-areas: "reading";
   grid-template-columns: minmax(0, 1fr);
@@ -35,20 +35,20 @@
   align-items: start;
 }
 
-.triptych-layout[data-has-diagram="true"] .triptych-primary {
+.content-layout[data-has-diagram="true"] .content-primary {
   grid-template-areas:
     "diagram"
     "reading";
 }
 
-.triptych-reading {
+.content-reading {
   grid-area: reading;
   width: min(100%, 85ch);
   min-width: 0;
   margin-inline: auto;
 }
 
-.triptych-diagram {
+.content-diagram {
   grid-area: diagram;
   position: relative;
   z-index: 1;
@@ -59,40 +59,40 @@
   background: none;
 }
 
-.triptych-diagram::before {
+.content-diagram::before {
   content: "";
   position: fixed;
   inset: 0 0 auto;
   z-index: 0;
-  height: var(--triptych-top);
+  height: var(--content-top);
   background: var(--theme-lienzo);
   pointer-events: none;
 }
 
 @media (max-width: 639px) {
-  .triptych-layout:not([data-page-type="demostracion"]) [data-diagram-header] {
+  .content-layout:not([data-page-type="demostracion"]) [data-diagram-header] {
     padding: 0.75rem 0.875rem 0;
   }
 
-  .triptych-layout:not([data-page-type="demostracion"]) [data-diagram-header] > p {
+  .content-layout:not([data-page-type="demostracion"]) [data-diagram-header] > p {
     margin-bottom: 0.375rem;
     font-size: 0.75rem;
     line-height: 1.25;
   }
 
-  .triptych-layout:not([data-page-type="demostracion"]) [data-diagram-title] {
+  .content-layout:not([data-page-type="demostracion"]) [data-diagram-title] {
     font-size: 1.25rem;
   }
 
-  .triptych-layout:not([data-page-type="demostracion"]) [data-diagram-header] > output {
+  .content-layout:not([data-page-type="demostracion"]) [data-diagram-header] > output {
     margin-top: 0.25rem;
     column-gap: 0.5rem;
     font-size: 0.875rem;
   }
 }
 
-.triptych-diagram-sticky,
-.triptych-diagram-surface,
+.content-diagram-sticky,
+.content-diagram-surface,
 .simulation-panel {
   width: 100%;
   height: 100%;
@@ -100,7 +100,7 @@
   min-height: 0;
 }
 
-.triptych-diagram-sticky {
+.content-diagram-sticky {
   position: relative;
   z-index: 1;
   display: flex;
@@ -111,14 +111,14 @@
   background: none;
 }
 
-.triptych-diagram-surface {
+.content-diagram-surface {
   display: flex;
   align-items: stretch;
   justify-content: stretch;
   overflow: hidden;
 }
 
-.triptych-diagram-surface > * {
+.content-diagram-surface > * {
   width: 100%;
   max-width: 100%;
   max-height: 100%;
@@ -126,23 +126,29 @@
   min-height: 0;
 }
 
-.triptych-diagram-surface > [class*="border"]:not([data-diagram-renderer]) {
+.content-diagram-surface > [class*="border"]:not([data-diagram-renderer]) {
   border-color: transparent;
   border-radius: 0;
 }
 
-.triptych-diagram-surface [class*="min-h-"] {
+.content-layout[data-page-type="metodo"] .content-diagram-surface {
+  overflow: hidden;
+  border: 2px solid var(--page-accent);
+  border-radius: 20px;
+}
+
+.content-diagram-surface [class*="min-h-"] {
   min-height: 0;
 }
 
-.triptych-diagram-surface .jxgbox {
+.content-diagram-surface .jxgbox {
   width: 100% !important;
   height: 100% !important;
   min-height: 0;
 }
 
-.triptych-diagram-surface > svg,
-.triptych-diagram-surface [role="img"] {
+.content-diagram-surface > svg,
+.content-diagram-surface [role="img"] {
   max-height: 100%;
 }
 
@@ -151,9 +157,9 @@
   font-style: italic;
 }
 
-.triptych-secondary {
+.content-secondary {
   width: 100%;
-  scroll-margin-top: var(--triptych-top);
+  scroll-margin-top: var(--content-top);
   margin-top: clamp(2rem, 4vw, 4rem);
   padding-block: clamp(2.5rem, 4vw, 4rem) clamp(4rem, 7vw, 7rem);
   padding-inline: clamp(1rem, 3vw, 3rem);
@@ -161,13 +167,13 @@
   border-top: 3px double color-mix(in srgb, var(--theme-carbon) 20%, transparent);
 }
 
-.triptych-secondary-inner {
+.content-secondary-inner {
   width: 100%;
   margin-inline: auto;
 }
 
 /* Metadatos: un único nodo sirve como drawer y como columna de escritorio. */
-.triptych-metadata {
+.content-metadata {
   position: fixed;
   inset: 0 auto 0 0;
   z-index: 80;
@@ -185,11 +191,11 @@
   transition: transform 220ms ease;
 }
 
-.triptych-metadata.is-open {
+.content-metadata.is-open {
   transform: translateX(0);
 }
 
-.triptych-metadata-trigger {
+.content-metadata-trigger {
   position: fixed;
   left: 1.25rem;
   bottom: 1.25rem;
@@ -206,12 +212,12 @@
   letter-spacing: 0.08em;
 }
 
-.triptych-metadata-trigger:hover {
+.content-metadata-trigger:hover {
   background: color-mix(in srgb, var(--theme-terracota) 86%, var(--theme-carbon));
 }
 
 @media (max-width: 1279px) {
-  .triptych-metadata-trigger {
+  .content-metadata-trigger {
     left: 0;
     width: 3rem;
     height: 3rem;
@@ -220,18 +226,18 @@
     transform: translateX(-55%);
   }
 
-  .triptych-metadata-trigger:hover,
-  .triptych-metadata-trigger:focus-visible {
+  .content-metadata-trigger:hover,
+  .content-metadata-trigger:focus-visible {
     transform: translateX(0);
   }
 
-  .triptych-metadata-trigger-label {
+  .content-metadata-trigger-label {
     display: none;
   }
 }
 
 @media (max-width: 479px) {
-  .triptych-metadata-trigger {
+  .content-metadata-trigger {
     left: 0;
     width: 3rem;
     justify-content: center;
@@ -240,7 +246,7 @@
     border-radius: 0 999px 999px 0;
   }
 
-  .triptych-metadata-trigger-label {
+  .content-metadata-trigger-label {
     position: absolute;
     width: 1px;
     height: 1px;
@@ -250,7 +256,7 @@
   }
 }
 
-.triptych-metadata-backdrop {
+.content-metadata-backdrop {
   position: fixed;
   inset: 0;
   z-index: 70;
@@ -262,12 +268,12 @@
   transition: opacity 220ms ease, visibility 220ms ease;
 }
 
-.triptych-metadata-backdrop.is-open {
+.content-metadata-backdrop.is-open {
   visibility: visible;
   opacity: 1;
 }
 
-.triptych-metadata-close {
+.content-metadata-close {
   display: grid;
   width: 2.5rem;
   height: 2.5rem;
@@ -593,19 +599,19 @@
   background-color: var(--page-accent, var(--theme-terracota));
 }
 
-.page-accent-scope .triptych-metadata {
+.page-accent-scope .content-metadata {
   background-color: color-mix(in srgb, var(--theme-lienzo) 95%, var(--page-accent) 5%);
 }
 
-.page-accent-scope .triptych-metadata-trigger {
+.page-accent-scope .content-metadata-trigger {
   background: var(--page-accent);
 }
 
-.page-accent-scope .triptych-metadata-trigger:hover {
+.page-accent-scope .content-metadata-trigger:hover {
   background: color-mix(in srgb, var(--page-accent) 86%, var(--theme-carbon));
 }
 
-.page-accent-scope .triptych-metadata-close:hover {
+.page-accent-scope .content-metadata-close:hover {
   color: var(--page-accent);
   border-color: var(--page-accent);
 }
@@ -633,38 +639,42 @@
 }
 
 @media (min-width: 1024px) {
-  .triptych-primary {
+  .content-primary {
     grid-template-areas: "reading diagram";
     grid-template-columns: minmax(0, 1.2fr) minmax(20rem, 1fr);
     gap: 0;
     padding-inline: 0;
   }
 
-  .triptych-layout[data-has-diagram="true"] .triptych-primary {
+  .content-layout[data-has-diagram="true"] .content-primary {
     grid-template-areas: "reading diagram";
     grid-template-columns: minmax(0, 1.2fr) minmax(20rem, 1fr);
     gap: 0;
     padding-inline: 0;
   }
 
-  .theorem-triptych[data-has-diagram="true"] .triptych-primary {
+  .content-layout[data-has-diagram="true"][data-layout-variant="balanced"] .content-primary {
+    grid-template-columns: minmax(30rem, 1fr) minmax(30rem, 1fr);
+  }
+
+  .theorem-content-layout[data-has-diagram="true"] .content-primary {
     grid-template-columns: minmax(0, 1.1fr) minmax(21rem, 1fr);
   }
 
-  .triptych-layout[data-has-diagram="false"] .triptych-primary {
+  .content-layout[data-has-diagram="false"] .content-primary {
     grid-template-areas: "reading";
     grid-template-columns: minmax(0, 85ch);
     justify-content: center;
   }
 
-  .triptych-reading {
+  .content-reading {
     padding-top: 6rem;
     padding-inline: clamp(1rem, 2.5vw, 2.5rem);
     width: 100%;
     max-width: 85ch;
   }
 
-  .triptych-diagram {
+  .content-diagram {
     position: relative;
     top: auto;
     z-index: auto;
@@ -675,15 +685,15 @@
     box-shadow: none;
   }
 
-  .triptych-diagram::before {
+  .content-diagram::before {
     display: none;
   }
 
-  .triptych-diagram::after {
+  .content-diagram::after {
     display: none;
   }
 
-  .triptych-diagram-sticky {
+  .content-diagram-sticky {
     position: sticky;
     top: 0;
     height: 100svh;
@@ -693,14 +703,14 @@
     background: transparent;
   }
 
-  .triptych-diagram-surface {
+  .content-diagram-surface {
     overflow: hidden;
     background: transparent;
   }
 }
 
 @media (min-width: 1280px) {
-  .triptych-layout[data-has-metadata="true"] {
+  .content-layout[data-has-metadata="true"] {
     display: grid;
     grid-template-columns: minmax(15rem, 19rem) minmax(0, 1fr);
     gap: 0;
@@ -710,21 +720,21 @@
     padding-inline: 0;
   }
 
-  .triptych-layout[data-has-metadata="true"] .triptych-content {
+  .content-layout[data-has-metadata="true"] .content-content {
     grid-column: 2;
     width: 100%;
     margin-inline: 0;
   }
 
-  .triptych-layout[data-has-metadata="true"] .triptych-primary {
+  .content-layout[data-has-metadata="true"] .content-primary {
     padding-inline: 0;
   }
 
-  .triptych-layout[data-has-metadata="true"] .triptych-secondary {
+  .content-layout[data-has-metadata="true"] .content-secondary {
     padding-inline: clamp(2rem, 5vw, 6rem);
   }
 
-  .triptych-metadata {
+  .content-metadata {
     grid-column: 1;
     grid-row: 1;
     position: sticky;
@@ -747,39 +757,39 @@
     transition: none;
   }
 
-  .triptych-metadata-trigger,
-  .triptych-metadata-backdrop,
-  .triptych-metadata-close {
+  .content-metadata-trigger,
+  .content-metadata-backdrop,
+  .content-metadata-close {
     display: none;
   }
 }
 
 @media (min-width: 1440px) {
-  .triptych-primary,
-  .triptych-layout[data-has-diagram="true"] .triptych-primary {
+  .content-primary,
+  .content-layout[data-has-diagram="true"] .content-primary {
     grid-template-columns: minmax(0, 85ch) minmax(24rem, 1fr);
   }
 
-  .theorem-triptych[data-has-diagram="true"] .triptych-primary {
+  .theorem-content-layout[data-has-diagram="true"] .content-primary {
     grid-template-columns: minmax(0, 80ch) minmax(26rem, 1fr);
   }
 }
 
-.demonstration-triptych .triptych-primary {
+.demonstration-content-layout .content-primary {
   padding-top: clamp(1.5rem, 3vw, 2.75rem);
   padding-bottom: clamp(1rem, 2vw, 2rem);
 }
 
 @media (max-width: 1023px) {
-  .demonstration-triptych .triptych-diagram {
+  .demonstration-content-layout .content-diagram {
     border-top: 0;
     border-bottom: 1px solid color-mix(in srgb, var(--theme-carbon) 18%, transparent);
   }
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .triptych-metadata,
-  .triptych-metadata-backdrop {
+  .content-metadata,
+  .content-metadata-backdrop {
     transition: none;
   }
 }

@@ -2,7 +2,7 @@ import { Suspense, useEffect } from 'react';
 import type { Demo, Theorem } from '@/entities/content/types';
 import { useParams } from "wouter";
 import { db } from "@/entities/content";
-import { TriptychLayout } from "@/widgets/layouts/TriptychLayout";
+import { ContentLayout } from "@/widgets/layouts/ContentLayout";
 import { ReadingButton } from '@/features/progress/ui/ReadingButton';
 import { MetadataSidebar } from '@/features/metadata/ui/MetadataSidebar';
 import { FadeIn } from '@/shared/ui/FadeIn';
@@ -59,7 +59,7 @@ export const TheoremPage = () => {
         // Query all headings inside the reading area and the secondary sections
         const elements = Array.from(
           document.querySelectorAll(
-            '.triptych-reading h2, .triptych-reading h3, .triptych-reading h4, .triptych-secondary section'
+            '.content-reading h2, .content-reading h3, .content-reading h4, .content-secondary section'
           )
         );
 
@@ -245,8 +245,8 @@ export const TheoremPage = () => {
   );
 
   return (
-    <TriptychLayout
-      className="theorem-triptych"
+    <ContentLayout
+      className="theorem-content-layout"
       pageType={theorem.type || 'teorema'}
       metadata={<MetadataSidebar />}
       diagram={Simulation ? (
@@ -258,6 +258,6 @@ export const TheoremPage = () => {
       secondary={renderSecondaryContent()}
     >
       {renderMainContent()}
-    </TriptychLayout>
+    </ContentLayout>
   );
 };

@@ -28,7 +28,7 @@ const CATEGORY_LABELS: Record<string, string> = {
   theorems: 'Teoremas y lemas',
   definitions: 'Definiciones',
   demonstrations: 'Demostraciones',
-  lessons: 'Lecciones',
+  methods: 'Métodos',
   exercises: 'Ejercicios',
   mathematicians: 'Matemáticos',
   axioms: 'Axiomas',

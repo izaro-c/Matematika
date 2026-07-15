@@ -4,14 +4,14 @@ import { Canvas, useThree } from '@react-three/fiber';
 import * as THREE from 'three';
 import { OrbitControls, Html } from '@react-three/drei';
 import { useMathStore } from '@/app/providers/MathStoreContext';
-import { useLessonStore } from '@/features/lessons/LessonStore';
+import { useStepBinding } from '@/shared/ui/StepBinding';
 
 function SceneContent() {
   const { camera } = useThree();
 
   const mathHighlight = useMathStore((state: any) => state.variables?.['highlight']);
-  const lessonHighlight = useLessonStore((state: any) => state.activeStep);
-  const highlight = mathHighlight || lessonHighlight;
+  const { activeStep } = useStepBinding();
+  const highlight = mathHighlight || activeStep;
 
   const controlsRef = useRef<any>(null);
   const meshRef = useRef<THREE.Mesh>(null);

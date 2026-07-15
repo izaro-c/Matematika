@@ -4,7 +4,7 @@ export const metadata = {
   "title": "Demostración: Teorema de los ángulos alternos internos",
   "description": "Prueba en dos partes: la ida (absoluta) por reducción al absurdo usando el teorema del ángulo externo; la vuelta (euclidiana) usando la unicidad de la paralela.",
   "parentTheorem": "teorema-angulos-alternos-internos",
-  "proofMethod": "directo",
+  "proofMethod": "metodo-directo",
   "authors": ["euclides"],
   "tags": ["geometria", "angulos", "paralelas"],
   "layout": "split",
@@ -58,7 +58,7 @@ Pero por hipótesis $\angle 1 \cong \angle 2$, y por el <ConceptLink targetId="t
 </ProofStep>
 
 <ProofStep number={4} title="Conclusión de paralelismo" target={["recta-l", "recta-m"]} leanBlocks={metadata.stepTacticMap["4"]}>
-La <ConceptLink targetId="leccion-metodo-contradiccion" isDependency={false}>contradicción</ConceptLink> proviene de haber supuesto que $l$ y $m$ se cortan. Por <ConceptLink targetId="leccion-metodo-contradiccion" isDependency={false}>reducción al absurdo</ConceptLink>, $l$ y $m$ no pueden intersecarse. Por la <ConceptLink targetId="paralelas" isDependency={false}>definición de rectas paralelas</ConceptLink>:
+La <ConceptLink targetId="metodo-contradiccion" isDependency={false}>contradicción</ConceptLink> proviene de haber supuesto que $l$ y $m$ se cortan. Por <ConceptLink targetId="metodo-contradiccion" isDependency={false}>reducción al absurdo</ConceptLink>, $l$ y $m$ no pueden intersecarse. Por la <ConceptLink targetId="paralelas" isDependency={false}>definición de rectas paralelas</ConceptLink>:
 
 <Formula>
   $$ l \parallel m $$

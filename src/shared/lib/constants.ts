@@ -173,14 +173,14 @@ export const CONTENT_TYPE_CONFIG: Record<string, ContentTypeConfig> = {
     nodeStyle: { bg: c('matematico').hex, border: c('matematico').hex, text: '#ffffff', badge: 'BIO', ringColor: c('matematico').ringHex },
     hierarchyLevel: 10,
   },
-  leccion: {
-    id: 'leccion',
-    labelSingular: 'Lección',
-    labelPlural: 'Lecciones',
-    routePrefix: 'leccion',
-    graphGroup: 'lesson',
-    graphColor: c('leccion').cssVar,
-    nodeStyle: { bg: c('leccion').hex, border: c('leccion').hex, text: '#ffffff', badge: 'LECCIÓN', ringColor: c('leccion').ringHex },
+  metodo: {
+    id: 'metodo',
+    labelSingular: 'Método',
+    labelPlural: 'Métodos',
+    routePrefix: 'metodo',
+    graphGroup: 'method',
+    graphColor: c('metodo').cssVar,
+    nodeStyle: { bg: c('metodo').hex, border: c('metodo').hex, text: '#ffffff', badge: 'MÉTODO', ringColor: c('metodo').ringHex },
     hierarchyLevel: 10,
   },
   modelo: {

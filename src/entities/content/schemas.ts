@@ -82,18 +82,23 @@ export const TheoremSchema = z.object({
 });
 
 /**
- * LessonSchema - Esquema para Lecciones o Ramas
- * 
- * Agrupa múltiples teoremas y definiciones bajo una misma categoría de aprendizaje.
+ * MethodSchema - Esquema para métodos matemáticos reutilizables.
+ *
+ * Describe conocimiento procedimental: cómo construir, calcular o demostrar.
  */
-export const LessonSchema = z.object({
+export const MethodSchema = z.object({
   id: z.string(),
-  type: z.union([z.literal('leccion'), z.literal('lesson')]),
+  type: z.literal('metodo'),
+  subtype: z.enum(['demostracion', 'construccion', 'calculo', 'algoritmo']),
   title: z.string(),
-  description: z.string().optional(),
+  description: z.string(),
+  tags: z.array(z.string()).optional(),
+  authors: z.array(z.string()).optional(),
+  links: z.array(z.string()).optional(),
+  seeAlso: z.array(z.string()).optional(),
+  requires: z.array(z.string()).optional(),
   difficulty: z.enum(['básico', 'intermedio', 'avanzado']).optional(),
   hasSimulation: z.boolean().optional(),
-  hasVisualizer: z.boolean().optional(),
 });
 
 /**
@@ -109,7 +114,8 @@ export const DemoSchema = z.object({
   description: z.string().optional(),
   parentTheorem: z.string().optional(),
   lemmas: z.array(z.string()).optional(),
-  proofMethod: z.enum(['directo', 'contradiccion', 'induccion', 'contraposicion', 'constructivo', 'geometrico', 'exhaustivo']).optional(),
+  /** ID de la página de método que organiza esta demostración. */
+  proofMethod: z.string().regex(/^metodo-[a-z0-9]+(?:-[a-z0-9]+)*$/).optional(),
   authors: z.array(z.string()).optional(),
   layout: z.enum(['split', 'text']).optional(),
   dependencias: z.array(z.string()).optional(),
@@ -173,7 +179,7 @@ export const ExerciseSchema = z.object({
 // Tipos Inferidos
 export type MathematicianMeta = z.infer<typeof MathematicianSchema>;
 export type TheoremMeta = z.infer<typeof TheoremSchema>;
-export type LessonMeta = z.infer<typeof LessonSchema>;
+export type MethodMeta = z.infer<typeof MethodSchema>;
 export type DemoMeta = z.infer<typeof DemoSchema>;
 export type DefinitionMeta = z.infer<typeof DefinitionSchema>;
 export type ExampleMeta = z.infer<typeof ExampleSchema>;

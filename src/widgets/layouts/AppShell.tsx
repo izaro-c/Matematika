@@ -49,10 +49,11 @@ export const AppShell: React.FC<{ children: React.ReactNode }> = ({ children }) 
     case 'caso':
       pageType = 'caso-de-uso';
       break;
+    case 'metodo':
+      pageType = 'metodo';
+      break;
     default:
-      if (db.getAllLessons().some((lesson) => lesson.slug === routePrefix)) {
-        pageType = 'leccion';
-      }
+      break;
   }
 
   const isEditor = location === '/editor';

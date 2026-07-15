@@ -1,7 +1,7 @@
 import { useParams } from 'wouter';
 import { Suspense, useEffect } from 'react';
 import { db } from '@/entities/content';
-import { SimulationLayout } from "@/widgets/layouts/SimulationLayout";
+import { ContentDiagram, ContentLayout } from '@/widgets/layouts/ContentLayout';
 import { useProgressStore } from '@/features/progress/UserProgressStore';
 import { ReadingButton } from '@/features/progress/ui/ReadingButton';
 import { FadeIn } from '@/shared/ui/FadeIn';
@@ -67,16 +67,23 @@ export const UseCasePage: React.FC = () => {
   const concept = usecase.concept
     ? (db.getTheorem(usecase.concept) ||
        db.getDefinition(usecase.concept) ||
-       db.lessons.get(usecase.concept))
+       db.getMethod(usecase.concept))
     : null;
 
   const related = usecase.concept
     ? db.getUseCasesByConcept(usecase.concept).filter(u => u.id !== usecase.id)
     : [];
 
-  const c = concept as { title?: string; slug: string } | null;
+  const c = concept as { title?: string; slug: string; type?: string } | null;
   const breadcrumbs = c
-    ? [{ name: c.title || c.slug, href: `/teorema/${c.slug || usecase.concept}` }]
+    ? [{
+        name: c.title || c.slug,
+        href: c.type === 'metodo'
+          ? `/metodo/${c.slug}`
+          : c.type === 'definicion'
+            ? `/definicion/${c.slug}`
+            : `/teorema/${c.slug}`,
+      }]
     : [];
 
   const renderContent = () => (
@@ -140,8 +147,8 @@ export const UseCasePage: React.FC = () => {
   );
 
   return (
-    <SimulationLayout pageType="caso-de-uso" simulationComponent={usecase.Simulation}>
+    <ContentLayout pageType="caso-de-uso" diagram={usecase.Simulation ? <ContentDiagram component={usecase.Simulation} /> : undefined}>
       {renderContent()}
-    </SimulationLayout>
+    </ContentLayout>
   );
 };

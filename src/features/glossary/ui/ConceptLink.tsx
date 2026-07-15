@@ -17,7 +17,7 @@ interface ConceptLinkProps {
 
 const isIdValid = (id: string): boolean => !!(  
   dictionary[id] || db.getTheorem(id) || db.getDefinition(id) || db.getMathematicianById(id) ||
-  db.lessons.get(id) || db.examples.get(id) || db.exercises.get(id) ||
+  db.methods.get(id) || db.examples.get(id) || db.exercises.get(id) ||
   db.usecases.get(id) || db.axioms.get(id) || db.getAxiomaticSystem(id) ||
   db.models.get(id) || db.demos.get(id)
 );

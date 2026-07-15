@@ -19,13 +19,13 @@ export type SearchResult = {
 };
 
 export const ALL_TYPES: SearchResultType[] = [
-  'teorema', 'lección', 'definición', 'axioma', 'modelo',
+  'teorema', 'método', 'definición', 'axioma', 'modelo',
   'ejemplo', 'ejercicio', 'demo', 'matemático', 'caso_uso', 'glosario', 'msc2020',
 ];
 
 export const TYPE_ICONS: Record<SearchResultType, string> = {
   teorema: 'T',
-  lección: '§',
+  método: '↦',
   definición: 'D',
   ejemplo: 'E',
   ejercicio: 'P',
@@ -40,7 +40,7 @@ export const TYPE_ICONS: Record<SearchResultType, string> = {
 
 export const TYPE_LABELS: Record<SearchResultType, string> = {
   teorema: 'Teoremas',
-  lección: 'Lecciones',
+  método: 'Métodos',
   definición: 'Definiciones',
   axioma: 'Axiomas',
   modelo: 'Modelos',
@@ -55,7 +55,7 @@ export const TYPE_LABELS: Record<SearchResultType, string> = {
 
 export const TYPE_RESULT_LABELS: Record<SearchResultType, string> = {
   teorema: 'Teorema',
-  lección: 'Lección',
+  método: 'Método',
   definición: 'Definición',
   axioma: 'Axioma',
   modelo: 'Modelo',
@@ -94,12 +94,13 @@ export function buildSearchIndex(): SearchResult[] {
     });
   }
 
-  for (const lesson of db.lessons.values()) {
+  for (const method of db.methods.values()) {
     index.push({
-      id: `lesson-${lesson.id}`,
-      type: 'lección',
-      title: lesson.title || lesson.id,
-      href: routePath(`/${lesson.slug}`),
+      id: `method-${method.id}`,
+      type: 'método',
+      title: method.title,
+      subtitle: method.description,
+      href: routePath(`/metodo/${method.slug}`),
     });
   }
 

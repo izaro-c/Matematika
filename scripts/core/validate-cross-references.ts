@@ -214,6 +214,16 @@ for (const file of allFiles) {
   // 14. requiredNodes (study plans) → existing content
   checkIds('requiredNodes', meta.requiredNodes);
 
+  // 14b. proofMethod (demonstrations) → canonical method page
+  if (meta.proofMethod) {
+    const method = allContent.get(meta.proofMethod);
+    if (!method) {
+      error(`${relPath}: 'proofMethod' apunta a '${meta.proofMethod}' que no existe`);
+    } else if (method.type !== 'metodo') {
+      error(`${relPath}: 'proofMethod' debe apuntar a una página de tipo 'metodo', no '${method.type}'`);
+    }
+  }
+
   // 15. <ConceptLink targetId=""> → existing content
   const conceptLinkTargets = extractTargetIds(content, 'ConceptLink', 'targetId');
   for (const targetId of conceptLinkTargets) {

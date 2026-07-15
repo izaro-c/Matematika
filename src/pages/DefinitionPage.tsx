@@ -1,7 +1,7 @@
 import { Suspense, useEffect } from "react";
 import { useParams } from "wouter";
 import { db } from "@/entities/content";
-import { NotebookLayout } from "@/widgets/layouts/NotebookLayout";
+import { ContentLayout } from "@/widgets/layouts/ContentLayout";
 import { ReadingButton } from '@/features/progress/ui/ReadingButton';
 import { useMetadataStore } from '@/features/metadata/MetadataStore';
 import { FadeIn } from '@/shared/ui/FadeIn';
@@ -93,8 +93,9 @@ export const DefinitionPage = () => {
   );
 
   return (
-    <NotebookLayout
+    <ContentLayout
       pageType="definicion"
+      variant="balanced"
       diagram={Simulation ? (
         <Suspense fallback={<div className="diagram-loading">Preparando visualización…</div>}>
           <Simulation />
@@ -104,6 +105,6 @@ export const DefinitionPage = () => {
       secondary={renderSecondaryContent()}
     >
       {renderMainContent()}
-    </NotebookLayout>
+    </ContentLayout>
   );
 };
