@@ -83,6 +83,7 @@ export const PageDependencyGraph: React.FC<PageDependencyGraphProps> = ({
   const [, setLocation] = useLocation();
   const containerRef = useRef<HTMLDivElement>(null);
   const theme = useThemeColors();
+  const linkColor = `${theme.carbon}8C`;
   const [dimensions, setDimensions] = useState({ width: 0, height: 200 });
   const [domIds, setDomIds] = useState<string[]>([]);
 
@@ -312,10 +313,11 @@ export const PageDependencyGraph: React.FC<PageDependencyGraphProps> = ({
           nodeLabel={() => ''}
           nodeCanvasObject={drawNode}
           onNodeClick={handleNodeClick}
-          linkColor={() => theme.carbon + '26'}
-          linkWidth={1}
-          linkDirectionalArrowLength={4}
-          linkDirectionalArrowRelPos={1}
+          linkColor={() => linkColor}
+          linkWidth={1.25}
+          linkDirectionalArrowColor={() => linkColor}
+          linkDirectionalArrowLength={5}
+          linkDirectionalArrowRelPos={0.82}
           enableNodeDrag
           enableZoomInteraction={false}
           enablePanInteraction={false}
