@@ -4,6 +4,9 @@ import { COLOR_OPTIONS, KIND_LABELS } from '../model/commands';
 import { cleanTargetId, renamePoint, renameElement, renameSlider } from '../model/commands';
 import { updatePoint, updateElement, updateSlider, updateStep } from '../model/commands';
 import { extractMathExpressionIdentifiers } from '@/shared/diagrams/public';
+import { DiagramConstraintEditor } from './DiagramConstraintEditor';
+import { constraintPresentation } from '../model/constraintOptions';
+import { DiagramSceneControls } from './DiagramSceneControls';
 
 interface DiagramInspectorProps {
   model: VisualDiagramModel;
@@ -11,6 +14,11 @@ interface DiagramInspectorProps {
   onSelect: (id: string) => void;
   onModelEdit: (model: VisualDiagramModel) => void;
   onDeleteSelected: () => void;
+}
+
+function sceneItemLabel(model: VisualDiagramModel, id: string): string {
+  const item = [...model.points, ...model.elements, ...model.sliders].find(candidate => candidate.id === id);
+  return item ? `${item.label} (${item.id})` : id;
 }
 
 export const DiagramInspector: React.FC<DiagramInspectorProps> = ({
@@ -112,23 +120,6 @@ export const DiagramInspector: React.FC<DiagramInspectorProps> = ({
     onModelEdit(updateStep(model, selectedStep.id, update));
   };
 
-  const handleConstraintRefsChange = (constraintId: string, refs: string[]) => {
-    onModelEdit({
-      ...model,
-      constraints: model.constraints?.map(constraint => constraint.id === constraintId ? { ...constraint, refs } : constraint),
-      dependencies: [
-        ...(model.dependencies || []).filter(dependency => dependency.constraintId !== constraintId),
-        ...refs.slice(1).map(sourceId => ({ sourceId, targetId: refs[0], relation: 'constraint' as const, constraintId })),
-      ],
-    });
-  };
-
-  const handleSceneItemChange = (update: Pick<VisualPoint, 'layerId' | 'order' | 'visible' | 'locked' | 'selection'> | Partial<Pick<VisualPoint, 'layerId' | 'order' | 'visible' | 'locked' | 'selection'>>) => {
-    if (selectedPoint) handlePointChange(update);
-    else if (selectedElement) handleElementChange(update);
-    else if (selectedSlider) handleSliderChange(update);
-  };
-
   return (
     <section className="rounded border border-carbon/10 bg-lienzo p-3 h-full overflow-y-auto">
       <h4 className="text-[10px] font-bold uppercase tracking-widest text-carbon/45 border-b border-carbon/10 pb-1 mb-3">Propiedades</h4>
@@ -187,6 +178,7 @@ export const DiagramInspector: React.FC<DiagramInspectorProps> = ({
           <div>
             <label className="block text-xs font-bold text-carbon mb-1">Restricción</label>
             <select
+              aria-label="Restricción del punto"
               className="w-full rounded border border-carbon/15 bg-lienzo p-1.5 text-xs"
               value={selectedPoint.constraint || 'free'}
               onChange={(e) => handlePointChange({ constraint: e.target.value as PointConstraint })}
@@ -199,6 +191,15 @@ export const DiagramInspector: React.FC<DiagramInspectorProps> = ({
               <option value="derived">Derivado por expresiones</option>
               <option value="constrained">Restringido por relaciones</option>
             </select>
+            <p className="mt-1 text-[10px] leading-relaxed text-carbon/50">
+              {selectedPoint.constraint === 'free' && 'Se puede mover en cualquier dirección.'}
+              {selectedPoint.constraint === 'fixed' && 'Su posición forma parte de la construcción y no se puede arrastrar.'}
+              {selectedPoint.constraint === 'horizontal' && 'Solo cambia su coordenada x; permanece en su altura actual.'}
+              {selectedPoint.constraint === 'vertical' && 'Solo cambia su coordenada y; permanece en su vertical actual.'}
+              {selectedPoint.constraint === 'glider' && 'Se mueve únicamente sobre el objeto base elegido.'}
+              {selectedPoint.constraint === 'derived' && 'La posición se calcula; no se arrastra directamente.'}
+              {selectedPoint.constraint === 'constrained' && 'Combina relaciones geométricas editables con otros objetos.'}
+            </p>
           </div>
 
           {selectedPoint.constraint === 'glider' && (
@@ -258,44 +259,7 @@ export const DiagramInspector: React.FC<DiagramInspectorProps> = ({
             </div>
           )}
 
-          {selectedPoint.constraint === 'constrained' && (
-            <div className="space-y-2 rounded border border-pavo/20 bg-pavo/5 p-2">
-              <p className="text-[10px] font-bold uppercase tracking-wider text-pavo">Restricciones activas</p>
-              {(model.constraints || []).map(constraint => (
-                <label key={constraint.id} className="flex items-center gap-1.5 text-xs text-carbon">
-                  <input
-                    type="checkbox"
-                    checked={(selectedPoint.constraintIds || []).includes(constraint.id)}
-                    onChange={(event) => handlePointChange({
-                      constraintIds: event.target.checked
-                        ? [...(selectedPoint.constraintIds || []), constraint.id]
-                        : (selectedPoint.constraintIds || []).filter(id => id !== constraint.id),
-                    })}
-                  />
-                  {constraint.label}
-                </label>
-              ))}
-              <button
-                type="button"
-                className="w-full rounded border border-pavo/25 bg-lienzo px-2 py-1 text-xs font-bold text-pavo"
-                onClick={() => {
-                  const anchor = model.points.find(point => point.id !== selectedPoint.id);
-                  if (!anchor) return;
-                  const id = `constraint${(model.constraints || []).length + 1}`;
-                  onModelEdit({
-                    ...model,
-                    constraints: [...(model.constraints || []), { id, label: `Horizontal con ${anchor.label}`, kind: 'horizontal', refs: [selectedPoint.id, anchor.id], enabled: true }],
-                    dependencies: [...(model.dependencies || []), { sourceId: anchor.id, targetId: selectedPoint.id, relation: 'constraint', constraintId: id }],
-                    points: model.points.map(point => point.id === selectedPoint.id
-                      ? { ...point, constraintIds: [...(point.constraintIds || []), id] }
-                      : point),
-                  });
-                }}
-              >
-                + Restricción horizontal
-              </button>
-            </div>
-          )}
+          {selectedPoint.constraint === 'constrained' && <DiagramConstraintEditor model={model} point={selectedPoint} onModelEdit={onModelEdit} />}
 
           <div>
             <label className="block text-xs font-bold text-carbon mb-1">Color</label>
@@ -433,7 +397,7 @@ export const DiagramInspector: React.FC<DiagramInspectorProps> = ({
                     handleElementChange({
                       refs: anchorMode === 'viewport'
                         ? []
-                        : selectedElement.refs.length > 0 ? selectedElement.refs : [model.points[0].id],
+                        : selectedElement.refs.length > 0 ? selectedElement.refs : model.points[0] ? [model.points[0].id] : [],
                       properties: {
                         ...selectedElement.properties,
                         anchorMode,
@@ -448,6 +412,14 @@ export const DiagramInspector: React.FC<DiagramInspectorProps> = ({
                   <option value="viewport">Posición relativa al lienzo</option>
                 </select>
               </label>
+              {(selectedElement.properties?.anchorMode ?? 'reference') === 'reference' && <label className="block text-xs font-bold text-carbon">
+                Objeto al que acompaña
+                <select aria-label="Objeto de referencia del panel" className="mt-1 w-full rounded border border-carbon/15 bg-lienzo p-1.5 text-xs" value={selectedElement.refs[0] ?? ''} onChange={event => handleElementChange({ refs: event.target.value ? [event.target.value] : [] })}>
+                  <option value="">Seleccione un objeto…</option>
+                  {[...model.points, ...model.elements.filter(item => item.id !== selectedElement.id), ...model.sliders].map(item => <option key={item.id} value={item.id}>{item.label} ({item.id})</option>)}
+                </select>
+                <span className="mt-1 block text-[10px] font-normal leading-relaxed text-carbon/45">El panel seguirá la posición del objeto cuando este se mueva.</span>
+              </label>}
               {(selectedElement.properties?.anchorMode ?? 'reference') === 'viewport' && (
                 <div className="space-y-2">
                   <button
@@ -676,68 +648,25 @@ export const DiagramInspector: React.FC<DiagramInspectorProps> = ({
       )}
 
       {(model.constraints?.length || model.dependencies?.length) ? (
-        <div className="mt-4 border-t border-carbon/10 pt-3">
-          <p className="text-[10px] font-bold uppercase tracking-widest text-carbon/45">Grafo de dependencias y restricciones</p>
-          <p className="mt-1 text-[10px] text-carbon/55">{model.dependencies?.length ?? 0} aristas explícitas · {model.constraints?.length ?? 0} restricciones</p>
-          <ul className="mt-2 space-y-1 text-[10px] text-carbon/70">
-            {model.dependencies?.slice(0, 8).map((dependency, index) => <li key={`${dependency.sourceId}-${dependency.targetId}-${index}`} className="font-mono">{dependency.sourceId} → {dependency.targetId}</li>)}
-          </ul>
-          <div className="mt-2 space-y-2">
-            {model.constraints?.map(constraint => (
-              <div key={constraint.id} className="rounded border border-carbon/10 p-2">
-                <input
-                  aria-label={`Nombre de ${constraint.id}`}
-                  className="w-full bg-transparent text-xs font-bold text-carbon"
-                  value={constraint.label}
-                  onChange={(event) => onModelEdit({ ...model, constraints: model.constraints?.map(item => item.id === constraint.id ? { ...item, label: event.target.value } : item) })}
-                />
-                <div className="mt-1 grid grid-cols-[1fr_auto] gap-1">
-                  <select
-                    aria-label={`Tipo de ${constraint.id}`}
-                    className="rounded border border-carbon/15 bg-lienzo p-1 text-[10px]"
-                    value={constraint.kind}
-                    onChange={(event) => onModelEdit({ ...model, constraints: model.constraints?.map(item => item.id === constraint.id ? { ...item, kind: event.target.value as typeof constraint.kind } : item) })}
-                  >
-                    <option value="fixed">Fijo</option><option value="horizontal">Horizontal</option><option value="vertical">Vertical</option>
-                    <option value="coincident">Coincidente</option><option value="on">Sobre objeto</option><option value="distance">Distancia fija</option>
-                    <option value="perpendicular">Perpendicular</option><option value="parallel">Paralela</option><option value="insideDisk">Dentro del disco</option><option value="sameSide">Mismo semiplano</option><option value="expression">Expresión</option>
-                  </select>
-                  <label className="flex items-center gap-1 text-[10px]"><input type="checkbox" checked={constraint.enabled} onChange={(event) => onModelEdit({ ...model, constraints: model.constraints?.map(item => item.id === constraint.id ? { ...item, enabled: event.target.checked } : item) })} />Activa</label>
-                </div>
-                <div className="mt-1 space-y-1">
-                  {constraint.refs.map((ref, index) => (
-                    <select
-                      key={`${constraint.id}-ref-${index}`}
-                      aria-label={`Referencia ${index + 1} de ${constraint.id}`}
-                      className="w-full rounded border border-carbon/15 bg-lienzo p-1 font-mono text-[10px]"
-                      value={ref}
-                      onChange={(event) => handleConstraintRefsChange(constraint.id, constraint.refs.map((value, refIndex) => refIndex === index ? event.target.value : value))}
-                    >
-                      {[...model.points, ...model.elements].map(item => <option key={item.id} value={item.id}>{item.id}</option>)}
-                    </select>
-                  ))}
-                  <button
-                    type="button"
-                    className="w-full rounded border border-carbon/15 px-1 py-0.5 text-[10px]"
-                    onClick={() => {
-                      const candidate = [...model.points, ...model.elements].find(item => !constraint.refs.includes(item.id));
-                      if (candidate) handleConstraintRefsChange(constraint.id, [...constraint.refs, candidate.id]);
-                    }}
-                  >+ Referencia</button>
-                </div>
-                {(constraint.kind === 'distance' || constraint.kind === 'expression') && (
-                  <input
-                    aria-label={`Expresión de ${constraint.id}`}
-                    className="mt-1 w-full rounded border border-carbon/15 bg-lienzo p-1 font-mono text-[10px]"
-                    placeholder="Expresión matemática segura"
-                    value={constraint.expression || ''}
-                    onChange={(event) => onModelEdit({ ...model, constraints: model.constraints?.map(item => item.id === constraint.id ? { ...item, expression: event.target.value || undefined } : item) })}
-                  />
-                )}
-              </div>
-            ))}
+        <details className="mt-4 border-t border-carbon/10 pt-3">
+          <summary className="cursor-pointer list-none text-[10px] font-bold uppercase tracking-widest text-carbon/45 [&::-webkit-details-marker]:hidden">
+            Cómo se construye <span className="float-right font-mono font-normal">{model.constraints?.length ?? 0} relaciones ▾</span>
+          </summary>
+          <div className="mt-2 rounded border border-carbon/10 bg-carbon/[0.02] p-2">
+            <p className="text-[10px] leading-relaxed text-carbon/55">Estas dependencias se generan automáticamente al construir objetos. Indican qué debe recalcularse cuando se mueve un punto; no son una segunda lista de objetos.</p>
+            {(model.constraints?.length ?? 0) > 0 && (
+              <ul className="mt-2 space-y-1.5">
+                {model.constraints?.map(constraint => (
+                  <li key={constraint.id} className="rounded bg-lienzo px-2 py-1.5 text-[10px] text-carbon/65">
+                    <strong>{constraintPresentation(constraint.kind).label}</strong>: {constraint.refs.map(ref => sceneItemLabel(model, ref)).join(' → ')}
+                    {!constraint.enabled && <span className="ml-1 text-carbon/40">(pausada)</span>}
+                  </li>
+                ))}
+              </ul>
+            )}
+            <p className="mt-2 text-[9px] text-carbon/40">{model.dependencies?.length ?? 0} dependencias automáticas. Se editan cambiando las referencias del objeto o sus relaciones.</p>
           </div>
-        </div>
+        </details>
       ) : null}
 
       {selectedStep && (
@@ -762,73 +691,7 @@ export const DiagramInspector: React.FC<DiagramInspectorProps> = ({
         </div>
       )}
 
-      {selectedSceneItem && (
-        <div className="mt-4 space-y-3 border-t border-carbon/10 pt-3">
-          <p className="text-[10px] font-bold uppercase tracking-widest text-carbon/45">Escena y selección</p>
-          <div className="grid grid-cols-2 gap-2">
-            <label className="flex items-center gap-1.5 text-xs font-bold text-carbon">
-              <input type="checkbox" checked={selectedSceneItem.visible} onChange={(event) => handleSceneItemChange({ visible: event.target.checked })} />
-              Visible
-            </label>
-            <label className="flex items-center gap-1.5 text-xs font-bold text-carbon">
-              <input type="checkbox" checked={selectedSceneItem.locked} onChange={(event) => handleSceneItemChange({ locked: event.target.checked })} />
-              Bloqueado
-            </label>
-            <label className="flex items-center gap-1.5 text-xs font-bold text-carbon">
-              <input
-                type="checkbox"
-                checked={selectedSceneItem.selection.selectable}
-                onChange={(event) => handleSceneItemChange({ selection: { ...selectedSceneItem.selection, selectable: event.target.checked } })}
-              />
-              Seleccionable
-            </label>
-          </div>
-          <div>
-            <label className="block text-xs font-bold text-carbon mb-1">Capa</label>
-            <select
-              className="w-full rounded border border-carbon/15 bg-lienzo p-1.5 text-xs"
-              value={selectedSceneItem.layerId}
-              onChange={(event) => handleSceneItemChange({ layerId: event.target.value })}
-            >
-              {model.layers.slice().sort((a, b) => a.order - b.order).map(layer => <option key={layer.id} value={layer.id}>{layer.label}</option>)}
-            </select>
-          </div>
-          <div>
-            <label className="block text-xs font-bold text-carbon mb-1">Orden visual</label>
-            <input
-              type="number"
-              className="w-full rounded border border-carbon/15 bg-lienzo p-1.5 text-xs font-mono"
-              value={selectedSceneItem.order}
-              onChange={(event) => handleSceneItemChange({ order: Number(event.target.value) })}
-            />
-          </div>
-          {model.groups.length > 0 && (
-            <fieldset className="space-y-1">
-              <legend className="text-xs font-bold text-carbon">Grupos</legend>
-              {model.groups.map(group => (
-                <label key={group.id} className="flex items-center gap-1.5 text-xs text-carbon">
-                  <input
-                    type="checkbox"
-                    checked={selectedSceneItem.groupIds.includes(group.id)}
-                    onChange={(event) => {
-                      const nextGroupIds = event.target.checked
-                        ? [...selectedSceneItem.groupIds, group.id]
-                        : selectedSceneItem.groupIds.filter(id => id !== group.id);
-                      const nextGroups = model.groups.map(item => item.id === group.id
-                        ? { ...item, memberIds: event.target.checked ? [...new Set([...item.memberIds, selectedSceneItem.id])] : item.memberIds.filter(id => id !== selectedSceneItem.id) }
-                        : item);
-                      if (selectedPoint) onModelEdit({ ...updatePoint(model, selectedPoint.id, { groupIds: nextGroupIds }), groups: nextGroups });
-                      else if (selectedElement) onModelEdit({ ...updateElement(model, selectedElement.id, { groupIds: nextGroupIds }), groups: nextGroups });
-                      else if (selectedSlider) onModelEdit({ ...updateSlider(model, selectedSlider.id, { groupIds: nextGroupIds }), groups: nextGroups });
-                    }}
-                  />
-                  {group.label}
-                </label>
-              ))}
-            </fieldset>
-          )}
-        </div>
-      )}
+      {selectedSceneItem && <DiagramSceneControls model={model} point={selectedPoint} element={selectedElement} slider={selectedSlider} onModelEdit={onModelEdit} />}
 
       {hasSelection && (
         <button

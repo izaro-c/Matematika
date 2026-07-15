@@ -34,11 +34,12 @@ export const DiagramValidationPanel: React.FC<DiagramValidationPanelProps> = ({
 
   return (
     <div className="rounded border border-carbon/10 bg-lienzo overflow-hidden">
-      <div className="flex items-center justify-between border-b border-carbon/10 bg-carbon/5 px-3 py-2">
-        <p className="text-[10px] font-bold uppercase tracking-widest text-carbon/45">Diagnósticos y Targets</p>
+      <div className="flex flex-wrap items-center justify-between gap-2 border-b border-carbon/10 bg-carbon/5 px-3 py-3">
+        <div><p className="text-[10px] font-bold uppercase tracking-widest text-carbon/45">Comprobación antes de guardar</p><p className="mt-0.5 text-[10px] text-carbon/50">Revise la coherencia del modelo y pruebe cada enlace disponible para MDX.</p></div>
+        <div className="flex gap-2"><span className={`rounded px-2 py-1 text-[10px] font-bold ${errors.length > 0 ? 'bg-granada/10 text-granada' : 'bg-salvia/10 text-salvia'}`}>{errors.length} errores</span><span className="rounded bg-ocre/10 px-2 py-1 text-[10px] font-bold text-ocre">{warnings.length} avisos</span><span className="rounded bg-pavo/10 px-2 py-1 text-[10px] font-bold text-pavo">{targets.length} enlaces</span></div>
       </div>
 
-      <div className="grid grid-cols-[1fr_1px_1.2fr] min-h-36 max-h-48 divide-x divide-carbon/10">
+      <div className="grid min-h-72 lg:grid-cols-[minmax(0,0.9fr)_minmax(0,1.1fr)] lg:divide-x lg:divide-carbon/10">
         {/* Diagnostics list */}
         <div className="p-3 overflow-y-auto space-y-2">
           <p className="text-[10px] font-bold uppercase tracking-widest text-carbon/35">Diagnósticos</p>
@@ -57,10 +58,8 @@ export const DiagramValidationPanel: React.FC<DiagramValidationPanelProps> = ({
           ))}
         </div>
 
-        <div className="w-px bg-carbon/10" />
-
         {/* Target snippets list */}
-        <div className="p-3 overflow-y-auto space-y-2">
+        <div className="space-y-2 border-t border-carbon/10 p-3 lg:border-t-0">
           <p className="text-[10px] font-bold uppercase tracking-widest text-carbon/35">Elementos enlazables desde MDX</p>
           {targets.length === 0 ? (
             <p className="text-xs italic text-carbon/50">Marque puntos o elementos como enlazables desde MDX para verlos aquí.</p>
@@ -88,13 +87,13 @@ export const DiagramValidationPanel: React.FC<DiagramValidationPanelProps> = ({
                         onClick={(e) => { e.stopPropagation(); copySnippet(`${target.id}-ie`, snippetIE); }}
                         className="rounded bg-carbon/10 px-2 py-0.5 text-[9px] font-bold text-carbon hover:bg-carbon/20 transition-all"
                       >
-                        {copiedSnippet === `${target.id}-ie` ? 'Copied!' : 'Copy <InteractiveElement>'}
+                        {copiedSnippet === `${target.id}-ie` ? 'Copiado' : 'Copiar vínculo interactivo'}
                       </button>
                       <button
                         onClick={(e) => { e.stopPropagation(); copySnippet(`${target.id}-ch`, snippetCH); }}
                         className="rounded bg-carbon/10 px-2 py-0.5 text-[9px] font-bold text-carbon hover:bg-carbon/20 transition-all"
                       >
-                        {copiedSnippet === `${target.id}-ch` ? 'Copied!' : 'Copy <ConceptLink>'}
+                        {copiedSnippet === `${target.id}-ch` ? 'Copiado' : 'Copiar ConceptLink'}
                       </button>
                     </div>
                   </div>

@@ -3,7 +3,8 @@ import { useLocation } from 'wouter';
 import { useNavigationStore } from '@/features/search/NavigationStore';
 import { useEditorCore } from '../core/useEditorCore';
 import { SemanticLinker } from './components/SemanticLinker';
-import { DiagramWorkbench } from './diagrams/DiagramWorkbench';
+import { DiagramWorkbench, type DiagramWorkbenchMode } from './diagrams/DiagramWorkbench';
+import { DiagramRewriteDialog } from '../diagrams/ui/DiagramRewriteDialog';
 import type { EditorDiagramReference } from '../core/editorTypes';
 import { approveDiffReview, buildDiffReview, isDiffReviewStale, type DiffReview } from '../ux/diffReview';
 import { buildEditorSafetyPresentation } from '../ux/safetyPresentation';
@@ -32,6 +33,12 @@ import { DiffReviewPanel } from './diff/DiffReviewPanel';
 import { UnsavedChangesDialog } from './safety/UnsavedChangesDialog';
 import { EditorDiagnosticsPanel } from './panels/EditorDiagnosticsPanel';
 import { buildPageConnectionSummary, buildPageDiagramLinks, getDiagramWorkbenchMode, getInlineDiagramTargets, getPreviewPath, mergeDiagramTargets } from './editorPageModel';
+
+function diagramComponentName(path: string): string {
+  const fileName = path.split('/').pop()?.replace(/\.tsx$/, '') ?? 'DiagramaInteractivo';
+  const cleaned = fileName.replace(/[^A-Za-z0-9_$]/g, '');
+  return /^[A-Za-z_$]/.test(cleaned) ? cleaned : `Diagrama${cleaned}`;
+}
 
 export const EditorPage: React.FC = () => {
   const {
@@ -112,6 +119,8 @@ export const EditorPage: React.FC = () => {
 
   // Estado para el constructor visual de diagramas
   const [diagramBuilderOpen, setDiagramBuilderOpen] = useState(false);
+  const [diagramWorkbenchOverride, setDiagramWorkbenchOverride] = useState<DiagramWorkbenchMode | null>(null);
+  const [rewriteDiagramPath, setRewriteDiagramPath] = useState<string | null>(null);
   const [activeDiagramBlockId, setActiveDiagramBlockId] = useState<string | null>(null);
   const [, setActiveDiagramIndex] = useState<number | null>(null);
 
@@ -280,6 +289,7 @@ export const EditorPage: React.FC = () => {
     }
     setWorkspace(previous => ({ ...previous, recentPaths: recordRecentPath(previous.recentPaths, path) }));
     openFile(path);
+    if (window.innerWidth < 1024) setIsSidebarOpen(false);
   };
 
   const toggleFavorite = (path: string) => {
@@ -366,8 +376,8 @@ export const EditorPage: React.FC = () => {
     [activeDiagramBlockId, blocks],
   );
   const diagramWorkbenchMode = useMemo(
-    () => getDiagramWorkbenchMode(currentFile, activeDiagramBlock),
-    [activeDiagramBlock, currentFile],
+    () => diagramWorkbenchOverride ?? getDiagramWorkbenchMode(currentFile, activeDiagramBlock),
+    [activeDiagramBlock, currentFile, diagramWorkbenchOverride],
   );
   const pageDiagramLinks = useMemo(
     () => buildPageDiagramLinks(currentFile, imports, exports, files, blocks),
@@ -443,19 +453,21 @@ export const EditorPage: React.FC = () => {
     });
   };
 
-  const handleConfirmDiagram = (spec: EditorDiagramReference) => {
+  const handleConfirmDiagram = async (spec: EditorDiagramReference): Promise<boolean> => {
     if (currentFile?.endsWith('.tsx')) {
-      updateRawBody(spec.source);
+      await loadFileList();
+      await openFile(currentFile, { discardLocalChanges: true });
       setDiagramBuilderOpen(false);
       setActiveDiagramBlockId(null);
       setActiveDiagramIndex(null);
-      return;
+      return true;
     }
 
     bindDiagram(spec);
     setDiagramBuilderOpen(false);
     setActiveDiagramBlockId(null);
     setActiveDiagramIndex(null);
+    return true;
   };
 
   const insertInteractiveTargetParagraph = (target: { id: string; label?: string; color?: string }) => {
@@ -605,6 +617,9 @@ export const EditorPage: React.FC = () => {
             setActiveDiagramBlockId={setActiveDiagramBlockId}
             setActiveDiagramIndex={setActiveDiagramIndex}
             setDiagramBuilderOpen={setDiagramBuilderOpen}
+            onRewriteVisually={() => {
+              if (currentFile) setRewriteDiagramPath(currentFile);
+            }}
             capability={currentResource?.capability}
           />
         )}
@@ -721,11 +736,32 @@ export const EditorPage: React.FC = () => {
         metadataType={String(metadata.type || '')}
         onClose={() => {
           setDiagramBuilderOpen(false);
+          setDiagramWorkbenchOverride(null);
           setActiveDiagramBlockId(null);
           setActiveDiagramIndex(null);
         }}
         onConfirm={handleConfirmDiagram}
       />
+      {rewriteDiagramPath && (
+        <DiagramRewriteDialog
+          path={rewriteDiagramPath}
+          initialTitle={diagramComponentName(rewriteDiagramPath)}
+          onClose={() => setRewriteDiagramPath(null)}
+          onStart={({ title, template }) => {
+            setDiagramWorkbenchOverride({
+              kind: 'rewrite',
+              path: rewriteDiagramPath,
+              componentName: diagramComponentName(rewriteDiagramPath),
+              title,
+              template,
+            });
+            setRewriteDiagramPath(null);
+            setActiveDiagramBlockId(null);
+            setActiveDiagramIndex(null);
+            setDiagramBuilderOpen(true);
+          }}
+        />
+      )}
       <DiffReviewPanel
         review={diffReview}
         isStale={diffReview ? isDiffReviewStale(diffReview, localRevision, baseVersion) : false}

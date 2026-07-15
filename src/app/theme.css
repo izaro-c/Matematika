@@ -2,11 +2,12 @@
    MATEMATIKA DESIGN SYSTEM - THEME CONFIGURATION
    ========================================================================== */
 
-@import url('https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400..700;1,400..700&family=Fondamento:ital@0;1&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400..700;1,400..700&family=EB+Garamond:ital,wght@0,400..700;1,400..700&family=Fondamento:ital@0;1&display=swap');
 
 @theme {
   --font-title: var(--font-title-family);
   --font-serif: var(--font-body-family);
+  --font-diagram: var(--font-diagram-family);
   --font-sans: var(--font-sans-family);
   --font-mono: var(--font-mono-family);
 
@@ -34,6 +35,7 @@
   --font-title-family: "Fondamento", ui-serif, Georgia, Cambria, "Times New Roman", Times, serif;
   --font-body-family-fallback: ui-serif, Georgia, Cambria, "Times New Roman", Times, serif;
   --font-body-family: "EB Garamond", var(--font-body-family-fallback);
+  --font-diagram-family: "Cormorant Garamond", "EB Garamond", Cambria, "Times New Roman", serif;
   --font-mono-family: ui-monospace, "SF Mono", Menlo, monospace;
   --font-sans-family: ui-sans-serif, system-ui, -apple-system, sans-serif;
 

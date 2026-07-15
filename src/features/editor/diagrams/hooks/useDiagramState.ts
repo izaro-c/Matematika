@@ -95,6 +95,38 @@ export function useDiagramState() {
     });
   }, []);
 
+  const loadDiagramForRewrite = useCallback(async (filePath: string, componentName: string, model: VisualDiagramModel) => {
+    try {
+      parseRequestIdRef.current += 1;
+      if (parseDebounceTimerRef.current) clearTimeout(parseDebounceTimerRef.current);
+      parseControllerRef.current?.abort();
+      dispatch({ type: 'SET_STATUS', status: 'saving' });
+      const existing = await diagramRepository.readDiagram(filePath);
+      const generated = generateDiagramSource(model, componentName);
+      if (!generated.ok) {
+        dispatch({ type: 'SAVE_FAILURE', error: 'La plantilla visual inicial no genera una fuente TSX válida.' });
+        dispatch({ type: 'SET_DIAGNOSTICS', diagnostics: generated.diagnostics });
+        return;
+      }
+      versionRef.current = existing.version;
+      dispatch({
+        type: 'LOAD_REWRITE_DIAGRAM',
+        filePath,
+        componentName,
+        originalSource: existing.source,
+        source: generated.source,
+        model,
+        expectedVersion: existing.version,
+        diagnostics: [],
+      });
+    } catch (error) {
+      dispatch({
+        type: 'SAVE_FAILURE',
+        error: error instanceof Error ? error.message : 'Error al preparar la reescritura visual del diagrama.',
+      });
+    }
+  }, []);
+
   const handleVisualEdit = useCallback((nextModel: VisualDiagramModel, command?: { label?: string; mergeKey?: string }) => {
     dispatch({
       type: 'VISUAL_EDIT', model: nextModel,
@@ -108,7 +140,7 @@ export function useDiagramState() {
     if (current.status === 'synced' || current.status === 'visual-authoritative') {
       const gen = generateDiagramSource(nextModel, current.componentName);
       if (gen.ok) {
-        dispatch({ type: 'RESOLVE_TO_VISUAL', source: gen.source });
+        dispatch({ type: 'RESOLVE_TO_VISUAL', source: gen.source, diagnostics: gen.diagnostics });
       } else {
         dispatch({ type: 'SET_DIAGNOSTICS', diagnostics: gen.diagnostics });
       }
@@ -123,7 +155,11 @@ export function useDiagramState() {
     if (!history) return;
     dispatch({ type: direction === 'undo' ? 'UNDO' : 'REDO' });
     const generated = generateDiagramSource(history, current.componentName);
-    if (generated.ok) dispatch({ type: 'RESOLVE_TO_VISUAL', source: generated.source });
+    if (generated.ok) {
+      dispatch({ type: 'RESOLVE_TO_VISUAL', source: generated.source, diagnostics: generated.diagnostics });
+    } else {
+      dispatch({ type: 'SET_DIAGNOSTICS', diagnostics: generated.diagnostics });
+    }
   }, []);
 
   const triggerServerParse = useCallback(async (sourceText: string) => {
@@ -197,7 +233,7 @@ export function useDiagramState() {
       if (!current.currentModel) return;
       const gen = generateDiagramSource(current.currentModel, current.componentName);
       if (gen.ok) {
-        dispatch({ type: 'RESOLVE_TO_VISUAL', source: gen.source });
+        dispatch({ type: 'RESOLVE_TO_VISUAL', source: gen.source, diagnostics: gen.diagnostics });
         dispatch({ type: 'SET_STATUS', status: 'visual-authoritative' });
       } else {
         dispatch({ type: 'SET_DIAGNOSTICS', diagnostics: gen.diagnostics });
@@ -266,6 +302,7 @@ export function useDiagramState() {
     loadDiagram,
     loadInlineDiagram,
     loadNewDiagram,
+    loadDiagramForRewrite,
     handleVisualEdit,
     handleSourceEdit,
     undo: () => regenerateFromHistory('undo'),

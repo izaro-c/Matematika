@@ -32,6 +32,10 @@ function renderNavigation(overrides: Partial<React.ComponentProps<typeof EditorN
 describe('explorador de recursos', () => {
   it('presenta entradas primarias inequívocas para documentos y diagramas', () => {
     renderNavigation();
+    const filterDisclosure = screen.getByText('Filtrar resultados').closest('details');
+    expect(filterDisclosure?.open).toBe(false);
+    fireEvent.click(screen.getByText('Filtrar resultados'));
+    expect(filterDisclosure?.open).toBe(true);
     expect(screen.getByRole('tab', { name: /Documentos 2/ }).getAttribute('aria-selected')).toBe('true');
     expect(screen.getByRole('button', { name: /PuntoEdición exacta/ })).toBeTruthy();
     expect(screen.queryByText('Código + vista previa')).toBeNull();

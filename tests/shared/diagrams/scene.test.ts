@@ -60,4 +60,13 @@ describe('shared diagram scene semantics', () => {
     expect(visualIds.indexOf('lineAfterMidpoint')).toBeLessThan(visualIds.indexOf('midAB'));
     expect(constructionIds.indexOf('midAB')).toBeLessThan(constructionIds.indexOf('lineAfterMidpoint'));
   });
+
+  it('treats a point with the fixed constraint as immovable scene state', () => {
+    const fixedSpec = {
+      ...spec,
+      points: spec.points.map((point, index) => index === 0 ? { ...point, fixed: false, constraint: 'fixed' as const } : point),
+    };
+    const fixedPoint = createScenePlan(fixedSpec).find(entry => entry.item.id === fixedSpec.points[0].id);
+    expect(fixedPoint?.locked).toBe(true);
+  });
 });

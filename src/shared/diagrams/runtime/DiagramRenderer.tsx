@@ -326,8 +326,10 @@ function createElement(
   liftedIntoHeader = false,
 ) {
   const refs = refsFor(item, elements);
+  const hoverColor = item.style?.preserveColorOnHighlight ? theme[item.color] : theme.ocre;
   const lineOptions = {
     strokeColor: theme[item.color],
+    highlightStrokeColor: hoverColor,
     strokeWidth: item.style?.strokeWidth ?? 2,
     strokeOpacity: item.style?.strokeOpacity ?? 1,
     dash: item.dashed ? 2 : 0,
@@ -337,8 +339,8 @@ function createElement(
   if (item.kind === 'line') return refs.length >= 2 ? createLine(board, [refs[0], refs[1]], lineOptions, theme) : null;
   if (item.kind === 'ray') return refs.length >= 2 ? createRay(board, [refs[0], refs[1]], lineOptions, theme) : null;
   if (item.kind === 'polygon') return refs.length >= 3 ? createPolygon(board, refs, {
-    fillColor: theme[item.color], fillOpacity: item.style?.fillOpacity ?? 0.1,
-    borders: { strokeColor: theme[item.color], strokeWidth: item.style?.strokeWidth ?? 1.5, strokeOpacity: item.style?.strokeOpacity ?? 1 }, layer,
+    fillColor: theme[item.color], highlightFillColor: hoverColor, fillOpacity: item.style?.fillOpacity ?? 0.1,
+    borders: { strokeColor: theme[item.color], strokeWidth: item.style?.strokeWidth ?? 1.5, strokeOpacity: item.style?.strokeOpacity ?? 1, dash: item.dashed ? 2 : 0 }, layer,
   }, theme) : null;
   if (item.kind === 'circle') return refs.length >= 2 ? createCircle(board, [refs[0], refs[1]], {
     ...lineOptions, fillColor: theme[item.color], fillOpacity: item.style?.fillOpacity ?? 0,
@@ -375,10 +377,14 @@ function createElement(
   if (item.kind === 'poincareGeodesic') return refs.length >= 4 ? createPoincareGeodesic(board, [refs[0], refs[1], refs[2], refs[3]], lineOptions, theme) : null;
   if (item.kind === 'poincareArc') return refs.length >= 4 ? createPoincareArc(board, [refs[0], refs[1], refs[2], refs[3]], lineOptions, theme) : null;
   if (item.kind === 'midpoint') return refs.length >= 2 ? createMidpoint(board, [refs[0], refs[1]], {
-    name: item.label, fillColor: theme[item.color], strokeColor: theme[item.color], layer,
+    name: item.label, fillColor: theme[item.color], strokeColor: theme[item.color],
+    highlightFillColor: hoverColor, highlightStrokeColor: hoverColor,
+    label: { highlightColor: hoverColor, highlightStrokeColor: hoverColor }, layer,
   }, theme) : null;
   if (item.kind === 'perpendicularFoot') return refs.length >= 3 ? createPerpendicularFoot(board, [refs[0], refs[1], refs[2]], {
-    name: item.label, fillColor: theme[item.color], strokeColor: theme[item.color], layer,
+    name: item.label, fillColor: theme[item.color], strokeColor: theme[item.color],
+    highlightFillColor: hoverColor, highlightStrokeColor: hoverColor,
+    label: { highlightColor: hoverColor, highlightStrokeColor: hoverColor }, layer,
   }, theme) : null;
   if (item.kind === 'baseExtension') return refs.length >= 3 ? createBaseExtensionToFoot(board, [refs[0], refs[1], refs[2]], lineOptions, theme) : null;
   if (item.kind === 'perpendicular') return refs.length >= 3 ? createPerpendicularLine(board, [refs[0], refs[1], refs[2]], lineOptions, theme) : null;
@@ -452,10 +458,10 @@ function createElement(
     layer,
     ...(viewportPanelAnchor ?? {}),
     cssClass: item.kind === 'formula'
-      ? 'font-serif text-sm italic'
+      ? 'font-diagram text-sm italic'
       : item.kind === 'infoPanel'
         ? 'JXGtext matematika-info-panel'
-        : 'font-serif text-sm',
+        : 'font-diagram text-sm',
     ...(item.kind === 'infoPanel' ? {
       highlightCssClass: 'JXGtext matematika-info-panel',
       highlightStrokeColor: theme[item.color],
@@ -478,6 +484,7 @@ function attachSelection(
   const node = element.rendNode as HTMLElement | undefined;
   node?.setAttribute('data-diagram-object-id', item.id);
   node?.setAttribute('aria-label', item.selection.ariaLabel ?? item.label);
+  if (item.style?.preserveColorOnHighlight) node?.setAttribute('data-diagram-preserve-color', 'true');
   if (item.selection.role) node?.setAttribute('data-selection-role', item.selection.role);
   if (item.target) {
     const target = item.targetId ?? item.id;
@@ -516,6 +523,74 @@ function attachSelection(
   element.on?.('down', () => onSelectionChange?.(item.id));
 }
 
+function nativeElementLabel(element: any): any | null {
+  const label = element?.label;
+  return label && label !== element && typeof label.setAttribute === 'function' ? label : null;
+}
+
+function attachLabelSelection(
+  element: any,
+  item: DiagramSceneItem,
+  mode: DiagramRendererProps['mode'],
+  onSelectionChange?: (id: string) => void,
+  onTargetHighlight?: (target: string | null) => void,
+) {
+  const label = nativeElementLabel(element);
+  if (!label) return;
+  attachSelection(label, item, mode, onSelectionChange, onTargetHighlight);
+  const node = label.rendNode as HTMLElement | undefined;
+  node?.setAttribute('data-diagram-label-for', item.id);
+  // The geometric object remains the single keyboard stop; its label mirrors
+  // pointer interaction without duplicating the same control in the tab order.
+  node?.removeAttribute('tabindex');
+}
+
+function synchronizeElementAndLabelHover(element: any, item: DiagramSceneItem) {
+  const label = nativeElementLabel(element);
+  if (!label) return;
+  const labelNode = label.rendNode as HTMLElement | undefined;
+  const pointLike = 'constraint' in item
+    || ('kind' in item && (item.kind === 'midpoint' || item.kind === 'perpendicularFoot'));
+  const highlightPair = () => {
+    if (pointLike) element.setAttribute?.({ size: item.style?.highlightPointSize ?? 6 });
+    element.highlight?.();
+    label.highlight?.();
+    labelNode?.classList.add('matematika-point-label--highlight');
+    labelNode?.style.setProperty('transform', 'scale(1.12)', 'important');
+  };
+  const restorePair = () => {
+    if (pointLike) element.setAttribute?.({ size: item.style?.pointSize ?? 4 });
+    element.noHighlight?.();
+    label.noHighlight?.();
+    labelNode?.classList.remove('matematika-point-label--highlight');
+    labelNode?.style.removeProperty('transform');
+  };
+  element.on?.('over', highlightPair);
+  element.on?.('out', restorePair);
+  label.on?.('over', highlightPair);
+  label.on?.('out', restorePair);
+}
+
+function syncNativeElementLabel(
+  element: any,
+  state: { visible: boolean; color: string; highlightColor: string; opacity: number; text: string },
+) {
+  const label = nativeElementLabel(element);
+  if (!label) return;
+  label.setText?.(state.text);
+  (label.rendNode as HTMLElement | undefined)?.style.setProperty('--diagram-label-highlight-color', state.highlightColor);
+  label.setAttribute({
+    visible: state.visible && state.text.trim().length > 0,
+    color: state.color,
+    strokeColor: state.color,
+    highlightColor: state.highlightColor,
+    highlightStrokeColor: state.highlightColor,
+    opacity: state.opacity,
+    strokeOpacity: state.opacity,
+    highlightStrokeOpacity: state.opacity,
+  });
+}
+
 function sameBounds(left: DiagramBounds, right: DiagramBounds): boolean {
   return left.every((value, index) => Math.abs(value - right[index]) <= 1e-8);
 }
@@ -535,6 +610,10 @@ const DiagramRendererContent: React.FC<DiagramRendererProps> = ({
   stepControls,
 }) => {
   const targetRegistry = useDiagramTargetRegistry();
+  const interactionCallbacksRef = useRef({ onSelectionChange, onPointMove, onCanvasPointCreate });
+  useEffect(() => {
+    interactionCallbacksRef.current = { onSelectionChange, onPointMove, onCanvasPointCreate };
+  }, [onCanvasPointCreate, onPointMove, onSelectionChange]);
   const setVariable = useMathStore(state => state.setVariable);
   const setTargetHighlight = useCallback((target: string | null) => {
     setVariable('highlight', target ? `${spec.componentId}:${target}` : null);
@@ -728,21 +807,29 @@ const DiagramRendererContent: React.FC<DiagramRendererProps> = ({
           safeArea={safeArea}
           viewportSafeArea={viewportSafeArea}
           ariaLabel={`${spec.title}. Diagrama matemático interactivo.`}
-          className="relative min-h-[360px] h-full w-full overflow-hidden rounded-[20px]"
+          className="relative min-h-[360px] h-full w-full overflow-hidden rounded-[20px] font-diagram"
           onBoundingBoxChange={(next) => {
             if (next.some((value, index) => Math.abs(value - bounds[index]) > 1e-7)) commitBounds(next);
           }}
           onInit={(board, elements, theme) => {
-          if (mode === 'editor' && onCanvasPointCreate) {
+          if (mode === 'editor') {
             board.on('down', (event: unknown) => {
+              const createPointAt = interactionCallbacksRef.current.onCanvasPointCreate;
+              if (!createPointAt) return;
               const objects = board.getAllObjectsUnderMouse?.(event);
               if (Array.isArray(objects) && objects.length > 0) return;
               const coordinates = board.getUsrCoordsOfMouse?.(event);
-              if (Array.isArray(coordinates) && coordinates.length >= 2) onCanvasPointCreate(coordinates[0], coordinates[1]);
+              if (Array.isArray(coordinates) && coordinates.length >= 2) createPointAt(coordinates[0], coordinates[1]);
             });
           }
           createSceneConstructionPlan(spec).forEach(entry => {
             const sceneItem = entry.item;
+            const hoverColor = sceneItem.style?.preserveColorOnHighlight ? theme[sceneItem.color] : theme.ocre;
+            const pointLabelOptions = {
+              ...(sceneItem.style?.labelOffset ? { offset: sceneItem.style.labelOffset } : {}),
+              highlightColor: hoverColor,
+              highlightStrokeColor: hoverColor,
+            };
             if ('constraint' in sceneItem) {
               const item = sceneItem.constraint === 'derived' && sceneItem.xExpression && sceneItem.yExpression
                 ? createPoint(board, [
@@ -758,7 +845,9 @@ const DiagramRendererContent: React.FC<DiagramRendererProps> = ({
                   ...(sceneItem.style?.pointSize !== undefined ? { size: sceneItem.style.pointSize } : {}),
                   fillColor: theme[sceneItem.color],
                   strokeColor: theme[sceneItem.color],
-                  ...(sceneItem.style?.labelOffset ? { label: { offset: sceneItem.style.labelOffset } } : {}),
+                  highlightFillColor: hoverColor,
+                  highlightStrokeColor: hoverColor,
+                  label: pointLabelOptions,
                   layer: itemLayerNumber(spec, sceneItem),
                 }, theme)
                 : sceneItem.constraint === 'glider' && sceneItem.gliderTarget
@@ -768,7 +857,9 @@ const DiagramRendererContent: React.FC<DiagramRendererProps> = ({
                   ...(sceneItem.style?.pointSize !== undefined ? { size: sceneItem.style.pointSize } : {}),
                   fillColor: theme[sceneItem.color],
                   strokeColor: theme[sceneItem.color],
-                  ...(sceneItem.style?.labelOffset ? { label: { offset: sceneItem.style.labelOffset } } : {}),
+                  highlightFillColor: hoverColor,
+                  highlightStrokeColor: hoverColor,
+                  label: pointLabelOptions,
                   layer: itemLayerNumber(spec, sceneItem),
                 }, theme)
                 : createPoint(board, [sceneItem.x, sceneItem.y], {
@@ -777,7 +868,9 @@ const DiagramRendererContent: React.FC<DiagramRendererProps> = ({
                   ...(sceneItem.style?.pointSize !== undefined ? { size: sceneItem.style.pointSize } : {}),
                   fillColor: theme[sceneItem.color],
                   strokeColor: theme[sceneItem.color],
-                  ...(sceneItem.style?.labelOffset ? { label: { offset: sceneItem.style.labelOffset } } : {}),
+                  highlightFillColor: hoverColor,
+                  highlightStrokeColor: hoverColor,
+                  label: pointLabelOptions,
                   layer: itemLayerNumber(spec, sceneItem),
                 }, theme);
               elements[sceneItem.id] = item;
@@ -802,7 +895,7 @@ const DiagramRendererContent: React.FC<DiagramRendererProps> = ({
                   }
                 });
               }
-              if (!sceneItem.fixed && !entry.locked && sceneItem.constraint !== 'derived') item.on('up', () => onPointMove?.(sceneItem.id, item.X(), item.Y()));
+              if (!sceneItem.fixed && !entry.locked && sceneItem.constraint !== 'derived') item.on('up', () => interactionCallbacksRef.current.onPointMove?.(sceneItem.id, item.X(), item.Y()));
             } else if ('kind' in sceneItem) {
               elements[sceneItem.id] = createElement(
                 board,
@@ -819,6 +912,9 @@ const DiagramRendererContent: React.FC<DiagramRendererProps> = ({
                 snapWidth: sceneItem.step,
                 fillColor: theme[sceneItem.color],
                 strokeColor: theme[sceneItem.color],
+                highlightFillColor: hoverColor,
+                highlightStrokeColor: hoverColor,
+                label: { highlightColor: hoverColor, highlightStrokeColor: hoverColor },
                 fixed: entry.locked,
                 layer: itemLayerNumber(spec, sceneItem),
               }, theme);
@@ -845,7 +941,7 @@ const DiagramRendererContent: React.FC<DiagramRendererProps> = ({
                   : constrainPointCoordinates(liveSpec, sceneItem, requested);
                 element.moveTo([next.x, next.y], 0);
                 board.update();
-                onPointMove?.(sceneItem.id, element.X(), element.Y());
+                interactionCallbacksRef.current.onPointMove?.(sceneItem.id, element.X(), element.Y());
                 const node = element.rendNode as HTMLElement | undefined;
                 node?.setAttribute('aria-label', `${sceneItem.selection.ariaLabel ?? sceneItem.label}: x ${element.X().toFixed(2)}, y ${element.Y().toFixed(2)}`);
               }
@@ -865,7 +961,22 @@ const DiagramRendererContent: React.FC<DiagramRendererProps> = ({
                   node?.setAttribute('aria-label', `${sceneItem.selection.ariaLabel ?? sceneItem.label}: ${next}`);
                 }
                 : undefined;
-            attachSelection(element, sceneItem, mode, onSelectionChange, setTargetHighlight, keyboardAdjust);
+            attachSelection(
+              element,
+              sceneItem,
+              mode,
+              id => interactionCallbacksRef.current.onSelectionChange?.(id),
+              setTargetHighlight,
+              keyboardAdjust,
+            );
+            attachLabelSelection(
+              element,
+              sceneItem,
+              mode,
+              id => interactionCallbacksRef.current.onSelectionChange?.(id),
+              setTargetHighlight,
+            );
+            synchronizeElementAndLabelHover(element, sceneItem);
           });
         }}
           onUpdate={(_board, elements, theme, isStep, isHL) => {
@@ -895,14 +1006,23 @@ const DiagramRendererContent: React.FC<DiagramRendererProps> = ({
             const color = externalActive && !item.style?.preserveColorOnHighlight
               ? theme.ocre
               : stepPrimary ? theme.terracota : stepSecondary ? theme.pavo : theme[item.color];
-            const sceneVisible = entry.visible || (externalActive && item.style?.highlightVisible === true);
-            const conditionVisible = externalActive && item.style?.highlightVisible === true
+            // Authoring previews must always reveal the object being inspected,
+            // even when the active step, its group or its base visibility hides it.
+            // Runtime publication keeps the explicit highlightVisible contract.
+            const sceneVisible = mode === 'editor' && externalActive
+              ? true
+              : entry.visible || (externalActive && item.style?.highlightVisible === true);
+            const conditionVisible = mode === 'editor' && externalActive
+              ? true
+              : externalActive && item.style?.highlightVisible === true
               ? true
               : conditionAllows(item, elements, spec);
             const visible = sceneVisible && conditionVisible && (('kind' in item && item.kind === 'baseExtension')
               ? outsideBaseExtension(elements[item.refs[0]], elements[item.refs[1]], elements[item.refs[2]])
               : true);
             const base = { visible, fixed: entry.locked };
+            const hoverColor = item.style?.preserveColorOnHighlight ? theme[item.color] : theme.ocre;
+            syncNativeElementLabel(element, { visible, color, highlightColor: hoverColor, opacity, text: entry.label });
             if (element.__matematikaStepLabel !== entry.label) {
               element.setAttribute?.({ name: entry.label });
               element.__matematikaStepLabel = entry.label;
@@ -968,13 +1088,13 @@ const DiagramRendererContent: React.FC<DiagramRendererProps> = ({
         >
           <header ref={headerRef} className="pointer-events-none absolute inset-x-0 top-0 z-20 px-5 pt-5 sm:px-8 sm:pt-6" data-diagram-header>
             {spec.note && (
-              <p className="mb-3 max-w-[44rem] font-serif text-sm italic leading-snug text-carbon/65">
+              <p className="mb-3 max-w-[44rem] font-diagram text-sm italic leading-snug text-carbon/65">
                 <ExplorationCue labels={movableCueLabels(spec)}>{spec.note}</ExplorationCue>
               </p>
             )}
             <DiagramTitle layout="inline">{spec.title}</DiagramTitle>
             {compactReadings.length > 0 && (
-              <output className="mt-2 flex flex-wrap items-baseline gap-x-3 gap-y-1 font-serif text-base italic text-carbon/80" aria-live="polite" aria-label="Lecturas dinámicas del diagrama">
+              <output className="mt-2 flex flex-wrap items-baseline gap-x-3 gap-y-1 font-diagram text-base italic text-carbon/80" aria-live="polite" aria-label="Lecturas dinámicas del diagrama">
                 {compactReadings.map(({ id, itemIds, text }, index) => {
                   const visible = itemIds.some(itemId => visibleHeaderItemIds.has(itemId));
                   return (
@@ -998,12 +1118,12 @@ const DiagramRendererContent: React.FC<DiagramRendererProps> = ({
               {viewportControls && (
                 <>
                   <div className="flex h-9 items-stretch justify-self-start divide-x divide-carbon/10 overflow-hidden rounded-full border border-carbon/15 bg-lienzo/90 backdrop-blur-[2px]" role="group" aria-label="Controles del viewport">
-                    <button type="button" className="w-9 font-serif text-base text-carbon transition-colors hover:bg-carbon/5 focus-visible:z-10 focus-visible:outline-2 focus-visible:outline-pavo" aria-label="Acercar" onClick={() => commitBounds(zoomViewport(spec, bounds, 1.25))}>+</button>
-                    <button type="button" className="w-9 font-serif text-base text-carbon transition-colors hover:bg-carbon/5 focus-visible:z-10 focus-visible:outline-2 focus-visible:outline-pavo" aria-label="Alejar" onClick={() => commitBounds(zoomViewport(spec, bounds, 0.8))}>−</button>
-                    <button type="button" className="diagram-viewport-secondary px-2.5 font-serif text-[11px] text-carbon transition-colors hover:bg-carbon/5 focus-visible:z-10 focus-visible:outline-2 focus-visible:outline-pavo" aria-label="Ajustar todos los objetos al viewport" title="Reencuadrar para mostrar todos los objetos visibles" onClick={() => commitBounds(fitRelevantViewport())}>Ajustar</button>
+                    <button type="button" className="w-9 font-diagram text-base text-carbon transition-colors hover:bg-carbon/5 focus-visible:z-10 focus-visible:outline-2 focus-visible:outline-pavo" aria-label="Acercar" onClick={() => commitBounds(zoomViewport(spec, bounds, 1.25))}>+</button>
+                    <button type="button" className="w-9 font-diagram text-base text-carbon transition-colors hover:bg-carbon/5 focus-visible:z-10 focus-visible:outline-2 focus-visible:outline-pavo" aria-label="Alejar" onClick={() => commitBounds(zoomViewport(spec, bounds, 0.8))}>−</button>
+                    <button type="button" className="diagram-viewport-secondary px-2.5 font-diagram text-[11px] text-carbon transition-colors hover:bg-carbon/5 focus-visible:z-10 focus-visible:outline-2 focus-visible:outline-pavo" aria-label="Ajustar todos los objetos al viewport" title="Reencuadrar para mostrar todos los objetos visibles" onClick={() => commitBounds(fitRelevantViewport())}>Ajustar</button>
                     <button
                       type="button"
-                      className="diagram-viewport-secondary px-2.5 font-serif text-[11px] text-carbon transition-colors hover:bg-carbon/5 focus-visible:z-10 focus-visible:outline-2 focus-visible:outline-pavo disabled:opacity-35"
+                      className="diagram-viewport-secondary px-2.5 font-diagram text-[11px] text-carbon transition-colors hover:bg-carbon/5 focus-visible:z-10 focus-visible:outline-2 focus-visible:outline-pavo disabled:opacity-35"
                       disabled={missingItems.length === 0}
                       aria-label="Recuperar objetos fuera del viewport"
                       title={missingItems.length > 0 ? `${missingItems.length} objeto(s) visible(s) fuera de vista` : 'No hay objetos visibles fuera de vista'}
@@ -1014,7 +1134,7 @@ const DiagramRendererContent: React.FC<DiagramRendererProps> = ({
                     {toolbarLayout === 'rails' && (
                       <button
                         type="button"
-                        className="w-9 font-serif text-base text-carbon transition-colors hover:bg-carbon/5 focus-visible:z-10 focus-visible:outline-2 focus-visible:outline-pavo"
+                        className="w-9 font-diagram text-base text-carbon transition-colors hover:bg-carbon/5 focus-visible:z-10 focus-visible:outline-2 focus-visible:outline-pavo"
                         aria-label="Opciones de encuadre"
                         aria-expanded={viewportMenuOpen}
                         title="Ajustar o recuperar el encuadre"
@@ -1025,7 +1145,7 @@ const DiagramRendererContent: React.FC<DiagramRendererProps> = ({
                     )}
                   </div>
                   {toolbarLayout === 'rails' && viewportMenuOpen && (
-                    <div className="absolute bottom-2 left-14 z-40 min-w-40 overflow-hidden rounded-xl border border-carbon/15 bg-lienzo/95 p-1 font-serif text-xs text-carbon shadow-lg backdrop-blur-[3px]" role="menu" aria-label="Opciones de encuadre">
+                    <div className="absolute bottom-2 left-14 z-40 min-w-40 overflow-hidden rounded-xl border border-carbon/15 bg-lienzo/95 p-1 font-diagram text-xs text-carbon shadow-lg backdrop-blur-[3px]" role="menu" aria-label="Opciones de encuadre">
                       <button
                         type="button"
                         className="block w-full rounded-lg px-3 py-2 text-left hover:bg-carbon/5 focus-visible:outline-2 focus-visible:outline-pavo"

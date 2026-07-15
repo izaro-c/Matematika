@@ -1,5 +1,5 @@
 import React, { useRef, useState } from 'react';
-import { routePath } from '@/shared/lib/routeHelper';
+import { appPath } from '@/shared/lib/routeHelper';
 import { useModalFocus } from '../hooks/useModalFocus';
 
 interface PublishedRuntimePreviewProps {
@@ -29,7 +29,7 @@ export const PublishedRuntimePreview: React.FC<PublishedRuntimePreviewProps> = (
       </header>
       {path ? <div className="relative flex min-h-0 flex-1 flex-col">
         {loading && <div className="absolute inset-x-0 top-0 z-10 bg-ocre/10 px-3 py-2 text-center text-xs font-bold text-ocre" role="status">Cargando runtime publicado…</div>}
-        <iframe key={frameKey} src={routePath(path)} title="Página renderizada con el runtime publicado" onLoad={() => setLoadedFrameKey(frameKey)} className="min-h-0 flex-1 border-0 bg-lienzo" />
+        <iframe key={frameKey} src={appPath(path)} title="Página renderizada con el runtime publicado" onLoad={() => setLoadedFrameKey(frameKey)} className="min-h-0 flex-1 border-0 bg-lienzo" />
       </div>
         : <div className="flex flex-1 items-center justify-center p-8 text-center font-serif text-carbon/55">Este tipo de página no tiene una ruta publicada.</div>}
     </div>

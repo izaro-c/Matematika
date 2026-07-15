@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "generatedBy": "scripts/editor/generate-diagram-usages.ts",
-  "corpusHash": "23b34eeb3b85d6d7bd182dd9d5260e3b43819317d1722ed6ccd755f6fd795d4d",
+  "corpusHash": "e2916e8b545d6b84559cb301d33939c8355be88a3de4e6a115382bcea16e4202",
   "paths": {
     "AxiomaArquimedes": "src/widgets/diagrams/Axiomas/AxiomaArquimedes.tsx",
     "AxiomaDedekind": "src/widgets/diagrams/Axiomas/AxiomaDedekind.tsx",
@@ -167,8 +167,8 @@
         "contentPath": "src/database/content/axioms/axioma-paralelas-euclides.mdx",
         "referenceKind": "Simulation",
         "sourceRange": {
-          "start": 611,
-          "end": 651
+          "start": 656,
+          "end": 696
         },
         "blockId": "axioma-paralelas-euclides:diagram:EuclidParallel"
       }
@@ -179,8 +179,8 @@
         "contentPath": "src/database/content/axioms/axioma-paralelas-hiperbolico.mdx",
         "referenceKind": "Simulation",
         "sourceRange": {
-          "start": 650,
-          "end": 694
+          "start": 695,
+          "end": 739
         },
         "blockId": "axioma-paralelas-hiperbolico:diagram:HyperbolicParallel"
       }

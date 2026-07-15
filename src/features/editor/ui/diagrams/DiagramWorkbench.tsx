@@ -1,6 +1,6 @@
 import React, { useEffect, useMemo, useRef, useState } from 'react';
 import type { EditorDiagramReference } from '../../core/editorTypes';
-import type { ConstructionKind, ElementKind, VisualDiagramModel } from '../../diagrams/model/types';
+import type { CanvasTool, ConstructionKind, ElementKind, TemplateKind, VisualDiagramModel } from '../../diagrams/model/types';
 import { useDiagramState } from '../../diagrams/hooks/useDiagramState';
 import { buildTargets, getDiagramSaveCapability } from '../../diagrams/model/selectors';
 import { DiagramCanvas } from '../../diagrams/ui/DiagramCanvas';
@@ -12,9 +12,13 @@ import { DiagramCodePanel } from '../../diagrams/ui/DiagramCodePanel';
 import { DiagramValidationPanel } from '../../diagrams/ui/DiagramValidationPanel';
 import { DiagramStepsEditor } from '../../diagrams/ui/DiagramStepsEditor';
 import { DiagramTargetSelector } from '../../diagrams/ui/DiagramTargetSelector';
+import { DiagramObjectList } from '../../diagrams/ui/DiagramObjectList';
+import { DiagramOrganizationPanel } from '../../diagrams/ui/DiagramOrganizationPanel';
+import { DiagramToolReferencePicker } from '../../diagrams/ui/DiagramToolReferencePicker';
 import { generateDiagramSource } from '../../diagrams/source/generator';
 import {
   CONSTRUCTION_OPTIONS, KIND_LABELS, refsNeededForTool,
+  addToolReference, completedToolReferenceCount, toolReferencesAreReady,
   point, element, slider, step, projectPointToSupport,
   generatedElementId, elementColorForKind,
   supportElements, applyGuidedConstruction,
@@ -26,14 +30,15 @@ import { useModalFocus } from '../hooks/useModalFocus';
 export type DiagramWorkbenchMode =
   | { kind: 'file'; path: string }
   | { kind: 'inline'; source: string; componentName?: string; model?: Record<string, unknown> | null }
-  | { kind: 'new'; componentName: string };
+  | { kind: 'new'; componentName: string }
+  | { kind: 'rewrite'; path: string; componentName: string; title: string; template: TemplateKind };
 
 interface DiagramWorkbenchCoreProps {
   isOpen: boolean;
   mode: DiagramWorkbenchMode;
   metadataType: string;
   onClose: () => void;
-  onConfirm: (spec: EditorDiagramReference) => void;
+  onConfirm: (spec: EditorDiagramReference) => boolean | void | Promise<boolean | void>;
 }
 
 type DiagramWorkbenchAdapterProps = Omit<DiagramWorkbenchCoreProps, 'mode'>;
@@ -51,7 +56,7 @@ function componentNameFromSource(source: string | undefined, fallback: string): 
 
 function refsForElementKind(kind: ElementKind, refs: string[]): string[] {
   if (kind === 'polygon') return refs;
-  if (kind === 'segment' || kind === 'line' || kind === 'ray' || kind === 'circle' || kind === 'midpoint' || kind === 'congruenceMark' || kind === 'dimensionLine') {
+  if (kind === 'segment' || kind === 'line' || kind === 'ray' || kind === 'circle' || kind === 'midpoint' || kind === 'congruenceMark' || kind === 'dimensionLine' || kind === 'measurement') {
     return refs.slice(0, 2);
   }
   if (kind === 'arc' || kind === 'perpendicularFoot' || kind === 'baseExtension' || kind === 'perpendicular' || kind === 'parallel' || kind === 'angleBisector' || kind === 'angle' || kind === 'rightAngle' || kind === 'perpendicularMark') {
@@ -76,6 +81,7 @@ export const DiagramWorkbenchCore: React.FC<DiagramWorkbenchCoreProps> = ({
     loadDiagram,
     loadInlineDiagram,
     loadNewDiagram,
+    loadDiagramForRewrite,
     handleVisualEdit,
     handleSourceEdit,
     undo,
@@ -88,6 +94,7 @@ export const DiagramWorkbenchCore: React.FC<DiagramWorkbenchCoreProps> = ({
   } = useDiagramState();
 
   const [tab, setTab] = useState<'visual' | 'source'>('visual');
+  const [visualSection, setVisualSection] = useState<'build' | 'steps' | 'targets' | 'check'>('build');
   const closeButtonRef = useRef<HTMLButtonElement>(null);
   const workbenchRef = useModalFocus<HTMLDivElement>(isOpen, onClose, closeButtonRef);
 
@@ -101,25 +108,31 @@ export const DiagramWorkbenchCore: React.FC<DiagramWorkbenchCoreProps> = ({
 
   // Tool references selection
   const [pendingRefs, setPendingRefs] = useState<string[]>([]);
-  const isFileMode = mode.kind === 'file';
+  const isFileMode = mode.kind === 'file' || mode.kind === 'rewrite';
   const inlineModel = useMemo(() => (
     mode.kind === 'inline'
       ? normalizeVisualModel(mode.model, metadataType)
       : null
   ), [mode, metadataType]);
-  const newModel = useMemo(() => (
-    mode.kind === 'new' && isOpen
-      ? createTemplateModel('circunferencia', 'Diagrama interactivo', metadataType)
-      : null
-  ), [mode.kind, isOpen, metadataType]);
+  const newModel = useMemo(() => {
+    if (!isOpen) return null;
+    if (mode.kind === 'new') return createTemplateModel('circunferencia', 'Diagrama interactivo', metadataType);
+    if (mode.kind === 'rewrite') return createTemplateModel(mode.template, mode.title, metadataType);
+    return null;
+  }, [isOpen, metadataType, mode]);
+
+  const activateCanvasTool = (tool: CanvasTool) => {
+    setPendingRefs([]);
+    setCanvasTool(tool);
+  };
 
   const choosePointForTool = (pointId: string) => {
     const canvasTool = state.canvasTool;
     if (canvasTool === 'select' || canvasTool === 'point') return false;
     const needed = refsNeededForTool(canvasTool);
     if (needed === 0) return false;
-    const nextRefs = [...pendingRefs, pointId].slice(0, needed);
-    if (nextRefs.length === needed) {
+    const nextRefs = addToolReference(canvasTool, pendingRefs, pointId);
+    if (canvasTool !== 'polygon' && nextRefs.every(Boolean) && toolReferencesAreReady(canvasTool, nextRefs)) {
       handleAddElement(canvasTool as ElementKind, nextRefs);
       setPendingRefs([]);
     } else {
@@ -145,16 +158,31 @@ export const DiagramWorkbenchCore: React.FC<DiagramWorkbenchCoreProps> = ({
       return;
     }
 
+    if (mode.kind === 'rewrite' && newModel) {
+      void loadDiagramForRewrite(mode.path, mode.componentName, newModel);
+      return;
+    }
+
     if (newModel) {
       loadNewDiagram(mode.componentName, newModel);
     }
-  }, [isOpen, mode, inlineModel, newModel, loadDiagram, loadInlineDiagram, loadNewDiagram]);
+  }, [isOpen, mode, inlineModel, newModel, loadDiagram, loadInlineDiagram, loadNewDiagram, loadDiagramForRewrite]);
 
   if (!isOpen) return null;
 
   const model: VisualDiagramModel | null = state.currentModel;
   const componentName = state.componentName || 'DiagramaInteractivo';
   const saveCapability = getDiagramSaveCapability(state);
+  const makeVisibleInEveryStep = (candidate: VisualDiagramModel, objectId: string): VisualDiagramModel => ({
+    ...candidate,
+    steps: candidate.steps.map(item => ({
+      ...item,
+      visibleTargets: item.visibleTargets.includes(objectId) ? item.visibleTargets : [...item.visibleTargets, objectId],
+      objectStates: item.objectStates?.[objectId]
+        ? { ...item.objectStates, [objectId]: { ...item.objectStates[objectId], visible: true } }
+        : item.objectStates,
+    })),
+  });
 
   const saveCodeOnlyDiagram = () => {
     if (isFileMode) void saveDiagram();
@@ -216,38 +244,33 @@ export const DiagramWorkbenchCore: React.FC<DiagramWorkbenchCoreProps> = ({
     } else if (state.status === 'invalid-source' || state.status === 'diverged' || state.status === 'conflict' || state.diagnostics.some(d => d.severity === 'error')) {
       return;
     }
-    onConfirm({
+    const confirmed = await onConfirm({
       componentName,
       category: model.category,
-      path: isFileMode && mode.kind === 'file' ? mode.path : '',
-      importPath: isFileMode && mode.kind === 'file' ? mode.path : '',
+      path: mode.kind === 'file' || mode.kind === 'rewrite' ? mode.path : '',
+      importPath: mode.kind === 'file' || mode.kind === 'rewrite' ? mode.path : '',
       source: state.currentSource,
       targets: buildTargets(model),
       mode: model.mode,
       visualModel: model as unknown as Record<string, unknown>,
     });
+    if (confirmed === false) return;
     onClose();
   };
 
   // Quick action handlers
-  const handleAddPoint = () => {
-    const id = `p${model.points.length + 1}`;
-    const newPoint = point(id, id.replace(/^p/, ''), 0, 0);
-    handleVisualEdit({
-      ...model,
-      points: [...model.points, newPoint],
-    });
-    selectElement(id);
-  };
-
   const handleAddSlider = () => {
     const id = `slider${model.sliders.length + 1}`;
-    const newSlider = slider(id, `Control ${model.sliders.length + 1}`, -4, -4 + model.sliders.length * 0.45, 1);
-    handleVisualEdit({
+    const newSlider = {
+      ...slider(id, `Control ${model.sliders.length + 1}`, -4, -4 + model.sliders.length * 0.45, 1),
+      order: Math.max(0, ...model.sliders.filter(item => item.layerId === 'controls').map(item => item.order)) + 1000,
+    };
+    handleVisualEdit(makeVisibleInEveryStep({
       ...model,
       sliders: [...model.sliders, newSlider],
-    });
+    }, id), { label: `Añadir control ${id}` });
     selectElement(id);
+    activateCanvasTool('select');
   };
 
   const handleAddStep = () => {
@@ -284,16 +307,21 @@ export const DiagramWorkbenchCore: React.FC<DiagramWorkbenchCoreProps> = ({
               : kind === 'infoPanel'
                 ? { anchorMode: 'viewport' as const, viewportPosition: [0.08, 0.22] as [number, number], title: 'Información' }
               : undefined;
-    const newElement = element(id, KIND_LABELS[kind], kind, elementRefs, elementColorForKind(kind), true, properties ? { properties } : {});
-    handleVisualEdit({
+    const baseElement = element(id, KIND_LABELS[kind], kind, elementRefs, elementColorForKind(kind), true, properties ? { properties } : {});
+    const newElement = {
+      ...baseElement,
+      order: Math.max(0, ...[...model.points, ...model.elements].filter(item => item.layerId === baseElement.layerId).map(item => item.order)) + 1000,
+    };
+    handleVisualEdit(makeVisibleInEveryStep({
       ...model,
       elements: [...model.elements, newElement],
       dependencies: [
         ...(model.dependencies || []),
         ...elementRefs.map(sourceId => ({ sourceId, targetId: id, relation: 'construction' as const })),
       ],
-    });
+    }, id), { label: `Añadir ${KIND_LABELS[kind]}` });
     selectElement(id);
+    activateCanvasTool('select');
   };
 
   const handleAddGliderPoint = () => {
@@ -301,13 +329,17 @@ export const DiagramWorkbenchCore: React.FC<DiagramWorkbenchCoreProps> = ({
     if (!support) return;
     const id = `p${model.points.length + 1}`;
     const initial = { x: 0, y: 0 };
-    const nextPoint = point(id, id.replace(/^p/, ''), initial.x, initial.y, false, 'ocre', 'glider', support.id);
+    const nextPoint = {
+      ...point(id, id.replace(/^p/, ''), initial.x, initial.y, false, 'ocre', 'glider', support.id),
+      order: Math.max(0, ...[...model.points, ...model.elements].filter(item => item.layerId === 'geometry').map(item => item.order)) + 1000,
+    };
     const projected = projectPointToSupport(model, nextPoint, initial);
-    handleVisualEdit({
+    handleVisualEdit(makeVisibleInEveryStep({
       ...model,
       points: [...model.points, { ...nextPoint, ...projected }],
-    });
+    }, id), { label: `Añadir punto sobre ${support.id}` });
     selectElement(id);
+    activateCanvasTool('select');
   };
 
   const handleDeleteSelected = () => {
@@ -342,7 +374,7 @@ export const DiagramWorkbenchCore: React.FC<DiagramWorkbenchCoreProps> = ({
     const result = applyGuidedConstruction(model, constructionKind, normalizedRefs);
     handleVisualEdit(result.model);
     selectElement(result.selectedId);
-    setCanvasTool('select');
+    activateCanvasTool('select');
   };
 
   const mdxTargets = buildTargets(model);
@@ -410,28 +442,50 @@ export const DiagramWorkbenchCore: React.FC<DiagramWorkbenchCoreProps> = ({
         </div>
       </header>
 
+      {mode.kind === 'rewrite' && (
+        <div className="shrink-0 border-b border-ocre/25 bg-ocre/10 px-4 py-2 text-xs text-carbon" role="status">
+          <strong className="text-ocre">Reescritura visual desde cero.</strong>{' '}
+          El TSX actual permanece intacto mientras trabaja. Al guardar, se sustituirá por este modelo visual exacto y se conservará un backup recuperable.
+        </div>
+      )}
+
       {tab === 'visual' ? (
-        <div className="grid min-h-0 flex-1 grid-cols-1 overflow-y-auto lg:grid-cols-[260px_minmax(0,1fr)] lg:overflow-hidden 2xl:grid-cols-[300px_minmax(0,1fr)_320px]">
+        <div className="flex min-h-0 flex-1 flex-col">
+          <nav className="flex shrink-0 items-center gap-1 overflow-x-auto border-b border-carbon/15 bg-lienzo px-3 py-2" role="tablist" aria-label="Tareas del editor visual">
+            {([
+              ['build', 'Construir', `${model.points.length + model.elements.length} objetos`],
+              ['steps', 'Secuencia', `${model.steps.length} pasos`],
+              ['targets', 'Enlaces MDX', `${mdxTargets.length} targets`],
+              ['check', 'Comprobar', state.diagnostics.length > 0 ? `${state.diagnostics.length} avisos` : 'Sin errores'],
+            ] as const).map(([id, label, detail]) => (
+              <button
+                key={id}
+                type="button"
+                role="tab"
+                aria-selected={visualSection === id}
+                onClick={() => setVisualSection(id)}
+                className={`whitespace-nowrap rounded px-3 py-1.5 text-left text-xs font-bold ${visualSection === id ? 'bg-carbon text-lienzo' : 'text-carbon/60 hover:bg-carbon/5'}`}
+              >
+                {label} <span className={`ml-1 font-mono text-[9px] ${visualSection === id ? 'text-lienzo/65' : 'text-carbon/35'}`}>{detail}</span>
+              </button>
+            ))}
+          </nav>
+
+          {visualSection === 'build' && <div className="grid min-h-0 flex-1 grid-cols-1 overflow-y-auto lg:grid-cols-[260px_minmax(0,1fr)] lg:overflow-hidden xl:grid-cols-[280px_minmax(0,1fr)_320px]">
           {/* Left panel: tools & quick actions */}
           <aside className="border-r border-carbon/15 bg-carbon/5 p-4 space-y-4 overflow-y-auto">
-            {/* Quick Actions */}
-            <div className="rounded border border-carbon/10 bg-lienzo p-3">
-              <p className="text-[10px] font-bold uppercase tracking-widest text-carbon/45 border-b border-carbon/10 pb-1 mb-2">Añadir rápido</p>
-              <div className="grid grid-cols-2 gap-1.5">
-                <button onClick={handleAddPoint} className="rounded border border-carbon/15 bg-lienzo py-1.5 text-xs font-bold text-carbon hover:bg-carbon/5">Punto</button>
-                <button onClick={() => handleAddElement('segment')} disabled={model.points.length < 2} className="rounded border border-carbon/15 bg-lienzo py-1.5 text-xs font-bold text-carbon hover:bg-carbon/5 disabled:opacity-40">Segmento</button>
-                <button onClick={() => handleAddElement('line')} disabled={model.points.length < 2} className="rounded border border-carbon/15 bg-lienzo py-1.5 text-xs font-bold text-carbon hover:bg-carbon/5 disabled:opacity-40">Recta</button>
-                <button onClick={() => handleAddElement('circle')} disabled={model.points.length < 2} className="rounded border border-carbon/15 bg-lienzo py-1.5 text-xs font-bold text-carbon hover:bg-carbon/5 disabled:opacity-40">Circunferencia</button>
-                <button onClick={() => handleAddElement('polygon')} disabled={model.points.length < 3} className="rounded border border-carbon/15 bg-lienzo py-1.5 text-xs font-bold text-carbon hover:bg-carbon/5 disabled:opacity-40">Polígono</button>
-                <button onClick={handleAddGliderPoint} disabled={supportElements(model).length < 1} className="rounded border border-carbon/15 bg-lienzo py-1.5 text-xs font-bold text-carbon hover:bg-carbon/5 disabled:opacity-40">Punto sobre objeto</button>
-                <button onClick={handleAddSlider} className="rounded border border-carbon/15 bg-lienzo py-1.5 text-xs font-bold text-carbon hover:bg-carbon/5">Control</button>
-                <button onClick={handleAddStep} className="rounded border border-carbon/15 bg-lienzo py-1.5 text-xs font-bold text-carbon hover:bg-carbon/5">Paso</button>
-              </div>
-            </div>
+            <section className="rounded border border-carbon/10 bg-lienzo p-3">
+              <p className="text-[10px] font-bold uppercase tracking-widest text-carbon/45">Cabecera del diagrama</p>
+              <label className="mt-2 block text-[10px] font-bold text-carbon/55">Título<input value={model.title} onChange={event => handleVisualEdit({ ...model, title: event.target.value }, { label: 'Editar título' })} className="mt-1 w-full rounded border border-carbon/15 bg-lienzo p-2 font-serif text-xs font-bold" /></label>
+              <label className="mt-2 block text-[10px] font-bold text-carbon/55">Nota para la lectura<textarea value={model.note} onChange={event => handleVisualEdit({ ...model, note: event.target.value }, { label: 'Editar nota' })} className="mt-1 min-h-16 w-full rounded border border-carbon/15 bg-lienzo p-2 font-serif text-xs leading-relaxed" /></label>
+              <div className="mt-2 grid grid-cols-2 gap-2"><label className="text-[10px] font-bold text-carbon/55">Categoría<input value={model.category} onChange={event => handleVisualEdit({ ...model, category: event.target.value }, { label: 'Editar categoría' })} className="mt-1 w-full rounded border border-carbon/15 p-1.5 text-xs" /></label><label className="text-[10px] font-bold text-carbon/55">Uso<select value={model.mode} onChange={event => handleVisualEdit({ ...model, mode: event.target.value as VisualDiagramModel['mode'] }, { label: 'Editar modo' })} className="mt-1 w-full rounded border border-carbon/15 p-1.5 text-xs"><option value="diagram">Diagrama</option><option value="simulation">Simulación</option><option value="inline">Inline</option></select></label></div>
+            </section>
+            <DiagramObjectList model={model} selectedId={state.selectedId} onSelect={selectElement} />
 
             {/* Guided Constructions */}
-            <div className="rounded border border-pavo/20 bg-pavo/5 p-3">
-              <p className="text-[10px] font-bold uppercase tracking-widest text-carbon/45 border-b border-carbon/10 pb-1 mb-2">Construcciones guiadas</p>
+            <details className="group rounded border border-pavo/20 bg-pavo/5">
+              <summary className="cursor-pointer list-none px-3 py-2 text-[10px] font-bold uppercase tracking-widest text-carbon/55 hover:bg-pavo/5 [&::-webkit-details-marker]:hidden">Construcciones guiadas <span className="float-right" aria-hidden="true">▾</span></summary>
+              <div className="border-t border-pavo/15 p-3">
               <select
                 className="w-full rounded border border-carbon/15 bg-lienzo p-2 text-xs mb-2"
                 value={constructionKind}
@@ -468,11 +522,13 @@ export const DiagramWorkbenchCore: React.FC<DiagramWorkbenchCoreProps> = ({
               >
                 Crear {selectedConstruction.label}
               </button>
-            </div>
+              </div>
+            </details>
 
             {/* Preview controls */}
-            <div className="rounded border border-carbon/10 bg-lienzo p-3 space-y-2">
-              <p className="text-[10px] font-bold uppercase tracking-widest text-carbon/45 border-b border-carbon/10 pb-1 mb-2">Estado de la vista previa</p>
+            <details className="group rounded border border-carbon/10 bg-lienzo">
+              <summary className="cursor-pointer list-none px-3 py-2 text-[10px] font-bold uppercase tracking-widest text-carbon/55 hover:bg-carbon/5 [&::-webkit-details-marker]:hidden">Vista previa <span className="float-right" aria-hidden="true">▾</span></summary>
+              <div className="space-y-2 border-t border-carbon/10 p-3">
               <div>
                 <label className="block text-[10px] font-bold text-carbon mb-1">Elemento resaltado</label>
                 <select
@@ -482,7 +538,7 @@ export const DiagramWorkbenchCore: React.FC<DiagramWorkbenchCoreProps> = ({
                 >
                   <option value="">Ninguno</option>
                   {mdxTargets.map(t => (
-                    <option key={t.id} value={t.id}>{t.label} ({t.id})</option>
+                    <option key={t.qualifiedId ?? t.id} value={t.objectId ?? t.id}>{t.label} ({t.id})</option>
                   ))}
                 </select>
               </div>
@@ -499,11 +555,13 @@ export const DiagramWorkbenchCore: React.FC<DiagramWorkbenchCoreProps> = ({
                   ))}
                 </select>
               </div>
-            </div>
+              </div>
+            </details>
 
             {/* Bounding box settings */}
-            <div className="rounded border border-carbon/10 bg-lienzo p-3">
-              <p className="text-[10px] font-bold uppercase tracking-widest text-carbon/45 border-b border-carbon/10 pb-1 mb-2">Límites del plano</p>
+            <details className="group rounded border border-carbon/10 bg-lienzo">
+              <summary className="cursor-pointer list-none px-3 py-2 text-[10px] font-bold uppercase tracking-widest text-carbon/55 hover:bg-carbon/5 [&::-webkit-details-marker]:hidden">Plano y viewport <span className="float-right" aria-hidden="true">▾</span></summary>
+              <div className="border-t border-carbon/10 p-3">
               <div className="grid grid-cols-2 gap-2 text-xs">
                 {(['Min X', 'Max Y', 'Max X', 'Min Y'] as const).map((label, idx) => (
                   <div key={label}>
@@ -525,98 +583,10 @@ export const DiagramWorkbenchCore: React.FC<DiagramWorkbenchCoreProps> = ({
                   </div>
                 ))}
               </div>
-              <button
-                type="button"
-                className="mt-2 w-full rounded border border-carbon/15 px-2 py-1 text-[10px] font-bold text-carbon"
-                onClick={() => {
-                  const index = model.layers.length + 1;
-                  handleVisualEdit({ ...model, layers: [...model.layers, { id: `layer${index}`, label: `Capa ${index}`, order: index, visible: true, locked: false }] }, { label: 'Añadir capa' });
-                }}
-              >
-                + Capa
-              </button>
-            </div>
-
-            <div className="rounded border border-carbon/10 bg-lienzo p-3">
-              <p className="text-[10px] font-bold uppercase tracking-widest text-carbon/45 border-b border-carbon/10 pb-1 mb-2">Grupos de objetos</p>
-              <div className="space-y-2">
-                {model.groups.map(group => (
-                  <div key={group.id} className="rounded border border-carbon/10 p-2">
-                    <p className="text-xs font-bold text-carbon">{group.label}</p>
-                    <p className="text-[10px] font-mono text-carbon/45">{group.memberIds.length} objeto(s)</p>
-                    <div className="mt-1 flex gap-1">
-                      <button type="button" className="rounded border border-carbon/15 px-1.5 py-0.5 text-[10px]" onClick={() => handleVisualEdit({ ...model, groups: model.groups.map(item => item.id === group.id ? { ...item, visible: !item.visible } : item) }, { label: `${group.visible ? 'Ocultar' : 'Mostrar'} grupo ${group.label}` })}>{group.visible ? 'Visible' : 'Oculto'}</button>
-                      <button type="button" className="rounded border border-carbon/15 px-1.5 py-0.5 text-[10px]" onClick={() => handleVisualEdit({ ...model, groups: model.groups.map(item => item.id === group.id ? { ...item, locked: !item.locked } : item) }, { label: `${group.locked ? 'Desbloquear' : 'Bloquear'} grupo ${group.label}` })}>{group.locked ? 'Fijo' : 'Editable'}</button>
-                    </div>
-                  </div>
-                ))}
               </div>
-              <button
-                type="button"
-                className="mt-2 w-full rounded border border-carbon/15 px-2 py-1 text-[10px] font-bold text-carbon"
-                onClick={() => {
-                  const index = model.groups.length + 1;
-                  handleVisualEdit({
-                    ...model,
-                    groups: [...model.groups, { id: `group${index}`, label: `Grupo ${index}`, memberIds: [], visible: true, locked: false, selection: { selectable: true, role: 'secondary' } }],
-                  }, { label: 'Añadir grupo' });
-                }}
-              >
-                + Grupo
-              </button>
-            </div>
+            </details>
 
-            <div className="rounded border border-carbon/10 bg-lienzo p-3">
-              <p className="text-[10px] font-bold uppercase tracking-widest text-carbon/45 border-b border-carbon/10 pb-1 mb-2">Capas de escena</p>
-              <div className="space-y-2">
-                {model.layers.slice().sort((a, b) => a.order - b.order).map((layer, index, orderedLayers) => (
-                  <div key={layer.id} className="grid grid-cols-[1fr_auto] items-center gap-2 rounded border border-carbon/10 p-2">
-                    <div>
-                      <p className="text-xs font-bold text-carbon">{layer.label}</p>
-                      <p className="text-[10px] font-mono text-carbon/45">{layer.id}</p>
-                    </div>
-                    <div className="flex gap-1">
-                      <button
-                        type="button"
-                        aria-label={`${layer.visible ? 'Ocultar' : 'Mostrar'} capa ${layer.label}`}
-                        className="rounded border border-carbon/15 px-1.5 py-0.5 text-[10px]"
-                        onClick={() => handleVisualEdit({ ...model, layers: model.layers.map(item => item.id === layer.id ? { ...item, visible: !item.visible } : item) }, { label: `${layer.visible ? 'Ocultar' : 'Mostrar'} capa ${layer.label}` })}
-                      >
-                        {layer.visible ? 'Visible' : 'Oculta'}
-                      </button>
-                      <button
-                        type="button"
-                        aria-label={`${layer.locked ? 'Desbloquear' : 'Bloquear'} capa ${layer.label}`}
-                        className="rounded border border-carbon/15 px-1.5 py-0.5 text-[10px]"
-                        onClick={() => handleVisualEdit({ ...model, layers: model.layers.map(item => item.id === layer.id ? { ...item, locked: !item.locked } : item) }, { label: `${layer.locked ? 'Desbloquear' : 'Bloquear'} capa ${layer.label}` })}
-                      >
-                        {layer.locked ? 'Fija' : 'Editable'}
-                      </button>
-                      <button
-                        type="button"
-                        aria-label={`Bajar capa ${layer.label}`}
-                        disabled={index === 0}
-                        className="rounded border border-carbon/15 px-1 disabled:opacity-30"
-                        onClick={() => {
-                          const previous = orderedLayers[index - 1];
-                          handleVisualEdit({ ...model, layers: model.layers.map(item => item.id === layer.id ? { ...item, order: previous.order } : item.id === previous.id ? { ...item, order: layer.order } : item) }, { label: `Reordenar capa ${layer.label}` });
-                        }}
-                      >↓</button>
-                      <button
-                        type="button"
-                        aria-label={`Subir capa ${layer.label}`}
-                        disabled={index === orderedLayers.length - 1}
-                        className="rounded border border-carbon/15 px-1 disabled:opacity-30"
-                        onClick={() => {
-                          const next = orderedLayers[index + 1];
-                          handleVisualEdit({ ...model, layers: model.layers.map(item => item.id === layer.id ? { ...item, order: next.order } : item.id === next.id ? { ...item, order: layer.order } : item) }, { label: `Reordenar capa ${layer.label}` });
-                        }}
-                      >↑</button>
-                    </div>
-                  </div>
-                ))}
-              </div>
-            </div>
+            <DiagramOrganizationPanel model={model} onModelEdit={handleVisualEdit} />
           </aside>
 
           {/* Center panel: toolbar + canvas + validation */}
@@ -625,13 +595,40 @@ export const DiagramWorkbenchCore: React.FC<DiagramWorkbenchCoreProps> = ({
               model={model}
               canvasTool={state.canvasTool}
               syncStatus={state.status}
-              onSetCanvasTool={setCanvasTool}
+              onSetCanvasTool={activateCanvasTool}
               onAddElement={handleAddElement}
               onModelEdit={handleVisualEdit}
               onAddSlider={handleAddSlider}
+              onAddGliderPoint={handleAddGliderPoint}
               onAddStep={handleAddStep}
               onResolveDivergence={resolveDivergence}
             />
+
+            <div className={`flex flex-wrap items-center gap-2 rounded border px-3 py-2 text-xs ${state.canvasTool === 'select' ? 'border-carbon/10 bg-carbon/5 text-carbon/55' : 'border-pavo/25 bg-pavo/5 text-carbon'}`} role="status">
+              <span className="min-w-0 flex-1">
+                {state.canvasTool === 'select' && 'Seleccione un objeto en el lienzo o en la lista de la izquierda para editarlo.'}
+                {state.canvasTool === 'point' && 'Haga clic una vez en el lugar exacto del lienzo. Después se volverá automáticamente a Seleccionar.'}
+                {state.canvasTool !== 'select' && state.canvasTool !== 'point' && refsNeededForTool(state.canvasTool) > 0 && (state.canvasTool === 'polygon'
+                  ? `Creando polígono: elija al menos 3 vértices distintos en el lienzo o en los selectores inferiores y pulse Crear polígono (${completedToolReferenceCount(state.canvasTool, pendingRefs)} elegidos).`
+                  : `Creando ${KIND_LABELS[state.canvasTool]}: elija ${refsNeededForTool(state.canvasTool)} puntos distintos en el lienzo o en los selectores inferiores (${completedToolReferenceCount(state.canvasTool, pendingRefs)}/${refsNeededForTool(state.canvasTool)}).`)}
+                {pendingRefs.some(Boolean) && <span className="ml-1 font-mono text-[10px] text-pavo">Elegidos: {pendingRefs.filter(Boolean).join(', ')}</span>}
+              </span>
+              {state.canvasTool !== 'select' && <button type="button" className="rounded border border-carbon/15 bg-lienzo px-2 py-1 text-[10px] font-bold text-carbon" onClick={() => activateCanvasTool('select')}>Cancelar</button>}
+            </div>
+
+            {state.canvasTool !== 'select' && state.canvasTool !== 'point' && refsNeededForTool(state.canvasTool) > 0 && (
+              <DiagramToolReferencePicker
+                model={model}
+                tool={state.canvasTool}
+                refs={pendingRefs}
+                onRefsChange={setPendingRefs}
+                onCreate={() => {
+                  if (toolReferencesAreReady(state.canvasTool, pendingRefs)) {
+                    handleAddElement(state.canvasTool as ElementKind, pendingRefs);
+                  }
+                }}
+              />
+            )}
 
             <DiagramCanvas
               model={model}
@@ -643,40 +640,13 @@ export const DiagramWorkbenchCore: React.FC<DiagramWorkbenchCoreProps> = ({
               onSelect={selectElement}
               onModelEdit={handleVisualEdit}
               onChoosePointForTool={choosePointForTool}
+              onCompleteTool={() => activateCanvasTool('select')}
             />
 
-            <DiagramStepsEditor
-              model={model}
-              activeStepId={state.activeStepId || model.steps[0]?.id || ''}
-              onActiveStepChange={setActiveStep}
-              onModelEdit={handleVisualEdit}
-              onSelectObject={selectElement}
-            />
-
-            <DiagramTargetSelector
-              model={model}
-              selectedTargetId={selectedTargetId}
-              onSelectTarget={(objectId, targetId) => {
-                selectElement(objectId);
-                setSelectedTargetId(targetId);
-                setPreviewHighlightId(targetId);
-              }}
-              onModelEdit={handleVisualEdit}
-            />
-
-            <DiagramValidationPanel
-              diagnostics={state.diagnostics}
-              targets={mdxTargets}
-              selectedTargetId={selectedTargetId}
-              onSelectTarget={(t) => {
-                setSelectedTargetId(t.id);
-                setPreviewHighlightId(t.id);
-              }}
-            />
           </main>
 
-          {/* Right panel: properties & references */}
-          <aside className="space-y-4 overflow-y-auto border-l border-carbon/15 bg-carbon/5 p-4 lg:col-span-2 lg:border-l-0 lg:border-t 2xl:col-span-1 2xl:border-l 2xl:border-t-0">
+          {/* Right panel: contextual properties */}
+          <aside className="space-y-4 overflow-y-auto border-l border-carbon/15 bg-carbon/5 p-4 lg:col-span-2 lg:border-l-0 lg:border-t xl:col-span-1 xl:border-l xl:border-t-0">
             <DiagramInspector
               model={model}
               selectedId={state.selectedId}
@@ -685,10 +655,60 @@ export const DiagramWorkbenchCore: React.FC<DiagramWorkbenchCoreProps> = ({
               onDeleteSelected={handleDeleteSelected}
             />
 
-            <DiagramReferencesPanel
-              filePath={state.filePath}
-            />
           </aside>
+        </div>}
+        {visualSection === 'steps' && (
+          <main className="min-h-0 flex-1 overflow-y-auto bg-carbon/[0.02] p-3 sm:p-5" aria-label="Edición de la secuencia">
+            <div className="mx-auto grid max-w-[96rem] items-start gap-4 xl:grid-cols-[minmax(0,1fr)_minmax(24rem,0.8fr)]">
+              <DiagramStepsEditor
+                model={model}
+                activeStepId={state.activeStepId || model.steps[0]?.id || ''}
+                onActiveStepChange={setActiveStep}
+                onModelEdit={handleVisualEdit}
+                onSelectObject={(id) => {
+                  selectElement(id);
+                  setVisualSection('build');
+                }}
+              />
+              <div className="sticky top-0">
+                <DiagramCanvas model={model} selectedId={state.selectedId} canvasTool="select" pendingRefs={[]} previewHighlightId={previewHighlightId} previewStepId={state.activeStepId} onSelect={selectElement} onModelEdit={handleVisualEdit} onChoosePointForTool={() => false} onCompleteTool={() => {}} />
+                <p className="mt-2 rounded border border-carbon/10 bg-lienzo p-2 text-[10px] text-carbon/55">La vista muestra el paso activo. Cambie de paso en la matriz para comprobar exactamente qué aparece.</p>
+              </div>
+            </div>
+          </main>
+        )}
+        {visualSection === 'targets' && (
+          <main className="min-h-0 flex-1 overflow-y-auto bg-carbon/[0.02] p-3 sm:p-5" aria-label="Enlaces entre el diagrama y MDX">
+            <div className="mx-auto max-w-6xl">
+              <DiagramTargetSelector
+                model={model}
+                selectedTargetId={selectedTargetId}
+                onSelectTarget={(objectId, targetId) => {
+                  selectElement(objectId);
+                  setSelectedTargetId(targetId);
+                  setPreviewHighlightId(objectId);
+                }}
+                onModelEdit={handleVisualEdit}
+              />
+            </div>
+          </main>
+        )}
+        {visualSection === 'check' && (
+          <main className="min-h-0 flex-1 overflow-y-auto bg-carbon/[0.02] p-3 sm:p-5" aria-label="Comprobaciones del diagrama">
+            <div className="mx-auto grid max-w-6xl gap-4 lg:grid-cols-[minmax(0,2fr)_minmax(16rem,1fr)]">
+              <DiagramValidationPanel
+                diagnostics={state.diagnostics}
+                targets={mdxTargets}
+                selectedTargetId={selectedTargetId}
+                onSelectTarget={(target) => {
+                  setSelectedTargetId(target.id);
+                  setPreviewHighlightId(target.objectId ?? target.id);
+                }}
+              />
+              <DiagramReferencesPanel filePath={state.filePath} />
+            </div>
+          </main>
+        )}
         </div>
       ) : (
         <DiagramCodePanel

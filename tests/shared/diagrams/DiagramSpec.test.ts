@@ -58,6 +58,18 @@ describe('DiagramSpec v2 schema and migrations', () => {
     expect(parsed.error.message).toContain('forma un ciclo');
   });
 
+  it('rejects points marked as fixed while using a movable constraint', () => {
+    const invalid = structuredClone(v2Fixture);
+    invalid.points[0].fixed = true;
+    invalid.points[0].constraint = 'glider';
+    invalid.points[0].gliderTarget = invalid.elements[0].id;
+
+    const parsed = parseDiagramSpecV2(invalid);
+
+    expect(parsed.success).toBe(false);
+    if (!parsed.success) expect(parsed.error.message).toContain('restricción móvil');
+  });
+
   it('accepts viewport-relative information panels without a geometric reference', () => {
     const candidate = structuredClone(v2Fixture);
     candidate.elements.push({

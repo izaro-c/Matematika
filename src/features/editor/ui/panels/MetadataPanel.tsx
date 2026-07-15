@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import type { Block } from '../../core/parser';
 import type { DiagramTargetRegistry, EditorValidationIssue, EditorValidationResult } from '../../core/editorTypes';
 import { MetadataInspector } from '../components/MetadataInspector';
@@ -63,6 +63,7 @@ export const MetadataPanel: React.FC<MetadataPanelProps> = ({
   onSelectIssue,
 }) => {
   const setVariable = useMathStore(state => state.setVariable);
+  const [section, setSection] = useState<'page' | 'diagrams' | 'validation'>('page');
   const renderPageDiagramPanel = () => {
     if (pageDiagramLinks.length === 0) {
       return (
@@ -211,18 +212,31 @@ export const MetadataPanel: React.FC<MetadataPanelProps> = ({
 
   return (
     <div className="h-full w-full bg-lienzo flex flex-col overflow-hidden">
-      <div className="p-4 border-b border-carbon/15 bg-carbon/5 select-none">
-        <h3 className="text-xs uppercase tracking-widest font-bold text-carbon/60">Configuración</h3>
+      <div className="border-b border-carbon/15 bg-carbon/5 p-3 select-none">
+        <h3 className="text-[10px] font-bold uppercase tracking-widest text-carbon/50">Inspector de la página</h3>
+        <div className="mt-2 grid grid-cols-3 gap-1" role="tablist" aria-label="Secciones del inspector">
+          {([
+            ['page', 'Página', Object.keys(metadata).length],
+            ['diagrams', 'Diagramas', pageDiagramLinks.length],
+            ['validation', 'Validación', validation.errorCount + validation.warningCount],
+          ] as const).map(([id, label, count]) => (
+            <button key={id} type="button" role="tab" aria-selected={section === id} onClick={() => setSection(id)} className={`rounded px-2 py-1.5 text-[10px] font-bold ${section === id ? 'bg-carbon text-lienzo' : 'text-carbon/55 hover:bg-carbon/5'}`}>
+              {label} <span className="font-mono text-[8px] opacity-60">{count}</span>
+            </button>
+          ))}
+        </div>
       </div>
-      <MetadataInspector
-        metadata={metadata}
-        disabled={!canEditVisualMetadata}
-        onChange={handleMetadataChange}
-        onRemove={handleRemoveMetadataField}
-        onAddCustom={handleAddCustomMetadataField}
-      />
-      {renderPageDiagramPanel()}
-      <ValidationPanel validation={validation} onSelectIssue={onSelectIssue} />
+      <div className="min-h-0 flex-1 overflow-y-auto">
+        {section === 'page' && <MetadataInspector
+          metadata={metadata}
+          disabled={!canEditVisualMetadata}
+          onChange={handleMetadataChange}
+          onRemove={handleRemoveMetadataField}
+          onAddCustom={handleAddCustomMetadataField}
+        />}
+        {section === 'diagrams' && renderPageDiagramPanel()}
+        {section === 'validation' && <ValidationPanel validation={validation} onSelectIssue={onSelectIssue} />}
+      </div>
     </div>
   );
 };

@@ -34,6 +34,15 @@ export function createTemplateModel(kind: TemplateKind, title: string, metadataT
     extensions: {},
   };
 
+  if (kind === 'lienzo-inicial') {
+    return {
+      ...base,
+      points: [point('pA', 'A', 0, 0)],
+      elements: [],
+      note: 'Añada puntos y construcciones para reconstruir visualmente el diagrama.',
+    };
+  }
+
   if (kind === 'circunferencia') {
     return {
       ...base,

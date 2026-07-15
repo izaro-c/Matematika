@@ -6,6 +6,7 @@ import { useModalFocus } from '../hooks/useModalFocus';
 import { insertSymbol } from './InlineContentPreview';
 import { GENERAL_BLOCK_PRESETS, LATEX_SYMBOLS, PAGE_PROFILE_PRESETS, type BlockPreset } from './visualEditorPresets';
 import { VisualEditorBlock } from './VisualEditorBlock';
+import { resolvePublicOrExternalAsset } from '@/shared/lib/routeHelper';
 
 interface VisualEditorPanelProps {
   currentFile: string | null;
@@ -54,10 +55,12 @@ export const VisualEditorPanel: React.FC<VisualEditorPanelProps> = ({
 }) => {
   const [commandOpen, setCommandOpen] = useState(false);
   const [commandQuery, setCommandQuery] = useState('');
+  const [outlineOpen, setOutlineOpen] = useState(false);
   const commandSearchRef = useRef<HTMLInputElement>(null);
   const closeCommand = () => setCommandOpen(false);
   const commandDialogRef = useModalFocus<HTMLDivElement>(commandOpen, closeCommand, commandSearchRef);
   const showStatement = ['teorema', 'lema', 'corolario', 'definicion', 'axioma'].includes(String(metadata.type));
+  const isMathematician = metadata.type === 'matematico';
   const outline = useMemo(() => buildDocumentOutline(blocks), [blocks]);
 
   useEffect(() => {
@@ -164,6 +167,19 @@ export const VisualEditorPanel: React.FC<VisualEditorPanelProps> = ({
           />
         </div>
 
+        {isMathematician && <section className="grid gap-4 rounded border border-salvia/20 bg-salvia/5 p-4 sm:grid-cols-[7rem_1fr]" aria-label="Ficha del matemático">
+          <div className="overflow-hidden rounded border border-carbon/10 bg-lienzo">
+            {metadata.image ? <img src={resolvePublicOrExternalAsset(String(metadata.image))} alt="" className="aspect-[4/5] h-full w-full object-cover" /> : <div className="flex aspect-[4/5] items-center justify-center font-serif text-3xl text-carbon/25">∑</div>}
+          </div>
+          <div className="grid content-start gap-3 sm:grid-cols-2">
+            <label className="text-[10px] font-bold text-carbon/55 sm:col-span-2">Nombre completo<input value={String(metadata.name || metadata.title || '')} onChange={event => handleMetadataChange('name', event.target.value)} className="mt-1 w-full rounded border border-carbon/15 bg-lienzo px-3 py-2 font-serif text-base font-bold text-carbon" /></label>
+            <label className="text-[10px] font-bold text-carbon/55">Nacimiento<input type="number" value={Number(metadata.birthYear || 0)} onChange={event => handleMetadataChange('birthYear', Number(event.target.value))} className="mt-1 w-full rounded border border-carbon/15 bg-lienzo px-2 py-1.5 text-xs text-carbon" /></label>
+            <label className="text-[10px] font-bold text-carbon/55">Fallecimiento<input type="number" value={Number(metadata.deathYear || 0)} onChange={event => handleMetadataChange('deathYear', Number(event.target.value))} className="mt-1 w-full rounded border border-carbon/15 bg-lienzo px-2 py-1.5 text-xs text-carbon" /></label>
+            <label className="text-[10px] font-bold text-carbon/55 sm:col-span-2">Lugar o tradición<input value={String(metadata.country || '')} onChange={event => handleMetadataChange('country', event.target.value)} className="mt-1 w-full rounded border border-carbon/15 bg-lienzo px-2 py-1.5 text-xs text-carbon" /></label>
+            <label className="text-[10px] font-bold text-carbon/55 sm:col-span-2">Ruta de la imagen<input value={String(metadata.image || '')} onChange={event => handleMetadataChange('image', event.target.value)} className="mt-1 w-full rounded border border-carbon/15 bg-lienzo px-2 py-1.5 font-mono text-[10px] text-carbon" /></label>
+          </div>
+        </section>}
+
         {showStatement && (
           <div className="p-4 border-l-4 border-ocre/50 bg-ocre/5 rounded-r space-y-2">
             <div className="flex justify-between items-center select-none">
@@ -256,26 +272,22 @@ export const VisualEditorPanel: React.FC<VisualEditorPanelProps> = ({
   };
 
   return (
-    <div className="relative flex min-w-0 flex-1 flex-col overflow-hidden xl:flex-row">
-      <aside className="hidden w-56 shrink-0 overflow-y-auto border-r border-carbon/10 bg-carbon/[0.025] p-3 xl:block" aria-label="Outline del documento">
+    <div className="relative flex min-w-0 flex-1 flex-col overflow-hidden">
+      <button type="button" onClick={() => setOutlineOpen(value => !value)} aria-expanded={outlineOpen} className="absolute left-3 top-3 z-30 rounded border border-carbon/15 bg-lienzo/95 px-2.5 py-1.5 text-[10px] font-bold text-carbon/60 shadow-sm backdrop-blur">
+        Índice {outline.length > 0 ? `(${outline.length})` : ''}
+      </button>
+      {outlineOpen && <aside className="absolute bottom-3 left-3 top-12 z-30 w-52 overflow-y-auto rounded border border-carbon/15 bg-lienzo/95 p-3 shadow-xl backdrop-blur" aria-label="Outline del documento">
         <div className="mb-2 flex items-center justify-between">
           <h2 className="text-[10px] font-bold uppercase tracking-widest text-carbon/50">Outline</h2>
-          <button type="button" onClick={() => setCommandOpen(true)} className="rounded border border-carbon/15 px-1.5 py-0.5 text-[9px] font-bold text-carbon/55" title="Comando rápido (Ctrl/⌘ /)">＋</button>
+          <button type="button" onClick={() => setOutlineOpen(false)} className="rounded px-1.5 py-0.5 text-[9px] font-bold text-carbon/55" aria-label="Cerrar índice">Cerrar</button>
         </div>
         <nav className="space-y-1" aria-label="Outline del documento">
-          {outline.map(item => <button key={item.id} type="button" onClick={() => document.getElementById(`block-${item.id}`)?.scrollIntoView({ behavior: 'smooth', block: 'center' })}
+          {outline.map(item => <button key={item.id} type="button" onClick={() => { document.getElementById(`block-${item.id}`)?.scrollIntoView({ behavior: 'smooth', block: 'center' }); setOutlineOpen(false); }}
             className="block w-full truncate rounded px-2 py-1.5 text-left text-[10px] text-carbon/65 hover:bg-salvia/10 hover:text-salvia" style={{ paddingLeft: `${Math.max(8, (item.level - 2) * 8)}px` }}>{item.label}</button>)}
         </nav>
-      </aside>
-      <nav className="flex shrink-0 gap-1 overflow-x-auto border-b border-carbon/10 bg-carbon/[0.025] p-2 xl:hidden" aria-label="Outline responsive del documento">
-        {outline.map(item => <button key={item.id} type="button" onClick={() => document.getElementById(`block-${item.id}`)?.scrollIntoView({ behavior: 'smooth', block: 'center' })}
-          className="whitespace-nowrap rounded border border-carbon/10 bg-lienzo px-2 py-1 text-[10px] text-carbon/65">{item.label}</button>)}
-      </nav>
+      </aside>}
       <div className="flex-1 overflow-y-auto p-4 sm:p-8">
-      <div className="mx-auto mb-4 max-w-3xl space-y-2">
-        <div className="rounded border border-ocre/30 bg-ocre/5 p-3 text-xs text-carbon shadow-sm">
-          <span className="font-bold text-ocre">Motor MDX estructural:</span> Los cambios se aplican sobre rangos concretos del CST/AST. Borrados, duplicados y reordenaciones requieren revisar el diff antes de guardar.
-        </div>
+      <div className="mx-auto mb-4 max-w-3xl space-y-2 pt-8">
         {isReadOnly && (
           <div className="rounded border border-pavo/30 bg-pavo/5 p-3 text-xs text-carbon shadow-sm">
             <span className="font-bold text-pavo">Edición de código con vista previa:</span> El cuerpo no contiene ningún bloque visual que pueda editarse mediante un parche localizado exacto.
@@ -285,17 +297,9 @@ export const VisualEditorPanel: React.FC<VisualEditorPanelProps> = ({
 
       {!isReadOnly && canMutateVisualStructure && (
         <div className="sticky top-0 z-20 mx-auto mb-4 max-w-3xl rounded border border-carbon/15 bg-lienzo/95 p-2 shadow-sm backdrop-blur select-none">
-          <div className="flex flex-wrap items-center justify-center gap-1">
-            {GENERAL_BLOCK_PRESETS.map(preset => (
-              <button
-                key={`${preset.type}-${preset.label}`}
-                type="button"
-                onClick={() => insertPresetAtEnd(preset)}
-                className="rounded px-2 py-1 text-[10px] font-bold text-carbon/65 hover:bg-carbon/5 hover:text-carbon cursor-pointer"
-              >
-                {preset.label}
-              </button>
-            ))}
+          <div className="flex flex-wrap items-center justify-center gap-2">
+            <button type="button" onClick={() => setCommandOpen(true)} className="rounded bg-salvia px-3 py-1.5 text-xs font-bold text-lienzo hover:bg-salvia/85">＋ Insertar bloque</button>
+            <button type="button" onClick={() => addBlock(blocks.length, 'paragraph')} className="rounded border border-carbon/15 px-3 py-1.5 text-xs font-bold text-carbon/65 hover:bg-carbon/5">Párrafo</button>
             <button
               type="button"
               onClick={() => {
@@ -308,23 +312,6 @@ export const VisualEditorPanel: React.FC<VisualEditorPanelProps> = ({
               Diagrama
             </button>
           </div>
-          {profilePresets.length > 0 && (
-            <div className="mt-2 flex flex-wrap items-center justify-center gap-1 border-t border-carbon/10 pt-2">
-              <span className="mr-1 text-[9px] font-bold uppercase tracking-widest text-carbon/40">
-                {String(metadata.type)}
-              </span>
-              {profilePresets.map(preset => (
-                <button
-                  key={`${preset.type}-${preset.label}`}
-                  type="button"
-                  onClick={() => insertPresetAtEnd(preset)}
-                  className="rounded border border-salvia/20 bg-salvia/5 px-2 py-1 text-[10px] font-bold text-salvia hover:bg-salvia/10 cursor-pointer"
-                >
-                  {preset.label}
-                </button>
-              ))}
-            </div>
-          )}
         </div>
       )}
 

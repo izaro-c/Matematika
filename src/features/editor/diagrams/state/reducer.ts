@@ -77,6 +77,27 @@ export function diagramReducer(state: DiagramState, action: DiagramAction): Diag
       };
     }
 
+    case 'LOAD_REWRITE_DIAGRAM': {
+      const diagnostics = action.diagnostics ?? [];
+      return {
+        ...state,
+        filePath: action.filePath,
+        componentName: action.componentName,
+        originalSource: action.originalSource,
+        currentSource: action.source,
+        originalModel: null,
+        currentModel: action.model,
+        status: 'visual-authoritative',
+        parseStatus: 'visual-exact',
+        expectedVersion: action.expectedVersion,
+        diagnostics,
+        selectedId: action.model.points[0]?.id || '',
+        activeStepId: action.model.steps[0]?.id || '',
+        canvasTool: 'select',
+        modelHistory: createCommandHistory(action.model),
+      };
+    }
+
     case 'VISUAL_EDIT': {
       let nextStatus: DiagramSyncStatus = state.status;
       if (state.status === 'synced' || state.status === 'visual-authoritative') {
@@ -193,7 +214,7 @@ export function diagramReducer(state: DiagramState, action: DiagramAction): Diag
         currentSource: action.source,
         status: 'visual-authoritative',
         parseStatus: 'visual-exact',
-        diagnostics: state.diagnostics.filter(d => d.source !== 'synchronization'),
+        diagnostics: action.diagnostics,
       };
 
     case 'RESOLVE_TO_SOURCE':

@@ -85,6 +85,50 @@ describe('DiagramWorkbench authority adapters', () => {
     expect(sourceEditor.value).toBe(originalSource);
   });
 
+  it('opens a code-preview rewrite as a new visual model and only replaces it on save', async () => {
+    const legacySource = 'export const LegacyDiagram = () => <svg data-legacy />;\n';
+    readDiagram.mockResolvedValueOnce({
+      source: legacySource,
+      model: null,
+      parseStatus: 'code-preview',
+      diagnostics: [],
+      version: 'legacy-v1',
+    });
+    saveDiagram.mockResolvedValueOnce({ version: 'visual-v2', backupId: 'backup-legacy' });
+    const onConfirm = vi.fn();
+
+    render(
+      <DiagramWorkbench
+        isOpen
+        mode={{
+          kind: 'rewrite',
+          path: 'src/widgets/diagrams/LegacyDiagram.tsx',
+          componentName: 'LegacyDiagram',
+          title: 'Diagrama legado',
+          template: 'lienzo-inicial',
+        }}
+        metadataType="definicion"
+        onClose={vi.fn()}
+        onConfirm={onConfirm}
+      />
+    );
+
+    await waitFor(() => expect(screen.getByText('Reescritura visual desde cero.')).toBeTruthy());
+    expect(screen.getByText('Objetos')).toBeTruthy();
+    expect(saveDiagram).not.toHaveBeenCalled();
+    fireEvent.click(screen.getByRole('button', { name: 'Guardar diagrama' }));
+
+    await waitFor(() => expect(saveDiagram).toHaveBeenCalledWith(
+      'src/widgets/diagrams/LegacyDiagram.tsx',
+      expect.stringContaining('createDiagramSpec'),
+      'legacy-v1',
+    ));
+    expect(onConfirm).toHaveBeenCalledWith(expect.objectContaining({
+      componentName: 'LegacyDiagram',
+      path: 'src/widgets/diagrams/LegacyDiagram.tsx',
+    }));
+  });
+
   it('loads file diagram source only from the repository', async () => {
     const persistedSource = 'export const Persisted = () => <svg data-source="persisted" />;\n';
     readDiagram.mockResolvedValueOnce({
@@ -128,7 +172,58 @@ describe('DiagramWorkbench authority adapters', () => {
 
     await waitFor(() => expect(screen.getAllByText(/Diagrama interactivo/).length).toBeGreaterThan(0));
     expect(screen.getByText(/sync:visual-authoritative/)).toBeTruthy();
-    expect(screen.getByText('Añadir rápido')).toBeTruthy();
+    expect(screen.getByText('Objetos')).toBeTruthy();
+    fireEvent.click(screen.getByRole('button', { name: 'Punto libre' }));
+    await waitFor(() => expect(screen.getByText(/Haga clic una vez en el lugar exacto/)).toBeTruthy());
+  });
+
+  it('creates a multi-reference object from manual point selectors', async () => {
+    render(
+      <DiagramWorkbench
+        isOpen
+        mode={{ kind: 'new', componentName: 'ConstruccionManual' }}
+        metadataType="definicion"
+        onClose={vi.fn()}
+        onConfirm={vi.fn()}
+      />
+    );
+
+    await waitFor(() => expect(screen.getByText('Objetos')).toBeTruthy());
+    fireEvent.click(screen.getByRole('button', { name: /Añadir objeto/ }));
+    fireEvent.click(screen.getByRole('menuitem', { name: 'Punto medio' }));
+    fireEvent.change(screen.getByLabelText('Punto 1 para Punto medio'), { target: { value: 'pO' } });
+    fireEvent.change(screen.getByLabelText('Punto 2 para Punto medio'), { target: { value: 'pA' } });
+    fireEvent.click(screen.getByRole('button', { name: 'Crear Punto medio' }));
+
+    await waitFor(() => expect(screen.getAllByText(/midOA/).length).toBeGreaterThan(0));
+    expect(screen.getByText(/Seleccione un objeto en el lienzo/)).toBeTruthy();
+  });
+
+  it('separates construction, sequence, MDX links and checks into understandable tasks', async () => {
+    render(
+      <DiagramWorkbench
+        isOpen
+        mode={{ kind: 'new', componentName: 'DiagramaOrganizado' }}
+        metadataType="definicion"
+        onClose={vi.fn()}
+        onConfirm={vi.fn()}
+      />
+    );
+
+    await waitFor(() => expect(screen.getByRole('tab', { name: /Construir/ }).getAttribute('aria-selected')).toBe('true'));
+    expect(screen.getByText('Objetos')).toBeTruthy();
+    expect(screen.queryByRole('heading', { name: 'Línea temporal y comportamiento' })).toBeNull();
+
+    fireEvent.click(screen.getByRole('tab', { name: /Secuencia/ }));
+    expect(screen.getByRole('heading', { name: 'Línea temporal y comportamiento' })).toBeTruthy();
+    expect(screen.queryByText('Objetos')).toBeNull();
+
+    fireEvent.click(screen.getByRole('tab', { name: /Enlaces MDX/ }));
+    expect(screen.getByRole('heading', { name: 'Registro estable de targets' })).toBeTruthy();
+
+    fireEvent.click(screen.getByRole('tab', { name: /Comprobar/ }));
+    expect(screen.getByText('Comprobación antes de guardar')).toBeTruthy();
+    expect(screen.getByText('Referencias del Diagrama')).toBeTruthy();
   });
 
   it('does not lose axis, grid, note, mode or category when opening the raw visual model', async () => {
@@ -162,6 +257,7 @@ describe('DiagramWorkbench authority adapters', () => {
     );
 
     await waitFor(() => expect(screen.getAllByText(/Campos completos/).length).toBeGreaterThan(0));
+    fireEvent.click(screen.getByRole('button', { name: /Vista/ }));
     expect((screen.getByLabelText('Cuadrícula') as HTMLInputElement).checked).toBe(true);
     expect((screen.getByLabelText('Ejes') as HTMLInputElement).checked).toBe(true);
     fireEvent.click(screen.getByRole('tab', { name: 'Código TSX' }));

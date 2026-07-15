@@ -201,4 +201,23 @@ La conclusión se obtiene de las condiciones declaradas, no de la apariencia vis
     expect(updated.source).not.toContain('leanBlocks="metadata.stepTacticMap["1"]"');
     expect(updated.source).toContain('justificacion="Nueva justificación"');
   });
+
+  it('updates a self-closing capitular without nesting the previous tag', () => {
+    const source = definitionSource.replace(
+      '<Definicion title="Original">\nTexto <ConceptLink targetId="punto">inicial</ConceptLink>.\n</Definicion>',
+      '<Capitular letra="U" />na introducción rigurosa.',
+    );
+    const document = parseEditorDocument(source);
+    const block = document.bodyBlocks.find(item => item.kind === 'editable' && item.blockType === 'paragraph' && item.data.capitular === 'U');
+    expect(block).toBeDefined();
+    expect(block!.data.text).toBe('na introducción rigurosa.');
+
+    const updated = applyMutationPlan(document, planBlockUpdate(document, block!.id, {
+      content: 'na introducción rigurosa.',
+      metadata: { capitular: 'E' },
+    }));
+
+    expect(updated.source).toContain('<Capitular letra="E" />na introducción rigurosa.');
+    expect(updated.source).not.toContain('<Capitular letra="E">');
+  });
 });

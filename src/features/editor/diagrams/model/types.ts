@@ -1,4 +1,5 @@
 export type TemplateKind =
+  | 'lienzo-inicial'
   | 'triangulo-deformable'
   | 'cuadrilatero-clasificable'
   | 'circunferencia'

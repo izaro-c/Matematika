@@ -125,7 +125,8 @@ export const DiagramStepsEditor: React.FC<DiagramStepsEditorProps> = ({
             </fieldset>
           )}
 
-          <div className="mt-4 overflow-x-auto rounded border border-carbon/10">
+          <div className="mt-4 grid items-start gap-3 lg:grid-cols-[minmax(0,1fr)_20rem]">
+          <div className="overflow-x-auto rounded border border-carbon/10">
             <table className="min-w-full border-collapse text-[10px]">
               <caption className="border-b border-carbon/10 bg-carbon/5 px-3 py-2 text-left font-bold uppercase tracking-widest text-carbon/50">Matriz objetos × pasos</caption>
               <thead>
@@ -170,7 +171,7 @@ export const DiagramStepsEditor: React.FC<DiagramStepsEditorProps> = ({
           </div>
 
           {selectedCell && selectedStep && selectedObject && selectedState && (
-            <fieldset className="mt-3 space-y-3 rounded border border-terracota/25 bg-terracota/5 p-3">
+            <fieldset className="sticky top-3 space-y-3 rounded border border-terracota/25 bg-terracota/5 p-3">
               <legend className="px-1 text-xs font-bold text-carbon">{selectedObject.label} · {selectedStep.label}</legend>
               <div className="grid gap-3 sm:grid-cols-3">
                 <label className="flex items-center gap-2 text-xs font-bold text-carbon"><input type="checkbox" checked={selectedState.visible !== false} onChange={event => editState({ visible: event.target.checked }, 'Cambiar visibilidad del paso')} />Visible</label>
@@ -202,6 +203,8 @@ export const DiagramStepsEditor: React.FC<DiagramStepsEditorProps> = ({
               </div>
             </fieldset>
           )}
+          {!selectedCell && <aside className="sticky top-3 rounded border border-dashed border-carbon/20 bg-carbon/[0.02] p-4 text-center text-xs text-carbon/50">Seleccione una celda de la matriz para editar aquí su visibilidad, énfasis, interacción y panel informativo.</aside>}
+          </div>
         </>
       )}
     </section>

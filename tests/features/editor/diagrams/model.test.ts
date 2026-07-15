@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest';
-import { createTemplateModel, point, element, generatedElementId, projectPointToSupport } from '../../../../src/features/editor/diagrams/model/commands';
+import { createTemplateModel, point, element, generatedElementId, projectPointToSupport, updatePoint } from '../../../../src/features/editor/diagrams/model/commands';
 import { buildTargets, targetKind } from '../../../../src/features/editor/diagrams/model/selectors';
 
 describe('Diagram Model & Selectors', () => {
@@ -12,6 +12,29 @@ describe('Diagram Model & Selectors', () => {
     expect(pt.fixed).toBe(true);
     expect(pt.color).toBe('salvia');
     expect(pt.constraint).toBe('fixed');
+  });
+
+  it('keeps the legacy fixed flag consistent with the selected movement constraint', () => {
+    const model = createTemplateModel('circunferencia', 'Restricciones', 'definicion');
+    const source = model.points[0];
+    const fixedModel = {
+      ...model,
+      points: model.points.map(item => item.id === source.id
+        ? { ...item, fixed: true, constraint: 'fixed' as const }
+        : item),
+    };
+
+    const gliderModel = updatePoint(fixedModel, source.id, {
+      constraint: 'glider',
+      gliderTarget: model.elements[0].id,
+    });
+    const glider = gliderModel.points.find(item => item.id === source.id);
+
+    expect(glider).toMatchObject({
+      fixed: false,
+      constraint: 'glider',
+      gliderTarget: model.elements[0].id,
+    });
   });
 
   it('should construct elements with correct references', () => {

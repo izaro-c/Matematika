@@ -99,6 +99,7 @@ describe('Diagram Reducer', () => {
     const resolved = diagramReducer(divergedState, {
       type: 'RESOLVE_TO_VISUAL',
       source: 'resolved_code',
+      diagnostics: [],
     });
 
     expect(resolved.status).toBe('visual-authoritative');
@@ -171,8 +172,11 @@ describe('Diagram Reducer', () => {
     }, {
       type: 'RESOLVE_TO_VISUAL',
       source: 'visual source',
+      diagnostics: [{ code: 'fresh', severity: 'info', message: 'fresh validation', source: 'model' }],
     });
-    expect(visualResolved.diagnostics).toEqual([{ code: 'm', severity: 'warning', message: 'model', source: 'model' }]);
+    expect(visualResolved.diagnostics).toEqual([
+      { code: 'fresh', severity: 'info', message: 'fresh validation', source: 'model' },
+    ]);
 
     expect(diagramReducer(loadedState, { type: 'SAVE_START' }).status).toBe('saving');
     const saved = diagramReducer(loadedState, {

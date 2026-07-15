@@ -170,6 +170,18 @@ export function projectRegisteredBlock(source: string, node: MdxAstNode): Regist
   if (standardType) {
     let editRange = location;
     const data: Record<string, unknown> = { text: source.slice(location.start, location.end) };
+    if (node.type === 'paragraph') {
+      const firstChild = node.children?.[0];
+      if (firstChild?.type === 'mdxJsxTextElement' && firstChild.name === 'Capitular') {
+        const capitularRange = rangeOf(firstChild);
+        if (capitularRange) {
+          const attributes = readJsxAttributes(source, firstChild);
+          editRange = { start: capitularRange.end, end: location.end };
+          data.text = source.slice(editRange.start, editRange.end);
+          data.capitular = typeof attributes.letra === 'string' ? attributes.letra : '';
+        }
+      }
+    }
     if (node.type === 'heading') {
       const children = node.children ?? [];
       const firstRange = children[0] ? rangeOf(children[0]) : null;
@@ -188,7 +200,9 @@ export function projectRegisteredBlock(source: string, node: MdxAstNode): Regist
   const editRange = contentRange ?? location;
   const attributes = readJsxAttributes(source, node);
   const data: Record<string, unknown> = {
-    text: source.slice(editRange.start, editRange.end),
+    // A self-closing JSX component has no editable body. Keeping the whole tag
+    // as `text` made visual attribute edits accidentally nest the old tag.
+    text: contentRange ? source.slice(editRange.start, editRange.end) : '',
     component: node.name,
     attributes,
   };
@@ -252,7 +266,12 @@ export function serializeRegisteredBlock(
 ): string {
   const content = data.content ?? '';
   const metadata = data.metadata ?? {};
-  if (blockType === 'paragraph') return content || 'Nuevo párrafo.';
+  if (blockType === 'paragraph') {
+    const prefix = typeof metadata.capitular === 'string' && metadata.capitular
+      ? `<Capitular letra=${JSON.stringify(metadata.capitular.slice(0, 1).toUpperCase())} />`
+      : '';
+    return `${prefix}${content || 'Nuevo párrafo.'}`;
+  }
   if (blockType === 'heading') return `${'#'.repeat(Number(metadata.level) || 3)} ${content || 'Nueva sección'}`;
   if (blockType === 'list') return (content || 'Primer elemento').split('\n').map((line, index) => (
     metadata.ordered === true ? `${index + 1}. ${line}` : `- ${line}`

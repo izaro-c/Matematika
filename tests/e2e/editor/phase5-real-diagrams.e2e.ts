@@ -44,6 +44,81 @@ function collectBrowserErrors(page: Page): string[] {
   return errors;
 }
 
+async function verifySynchronizedElementLabelHover(page: Page, caseName: string) {
+  const pair = await page.evaluate(() => {
+    const probe = document.createElement('span');
+    probe.style.color = 'var(--theme-ocre)';
+    document.body.appendChild(probe);
+    const emphasisColor = getComputedStyle(probe).color;
+    probe.remove();
+    const labels = [...document.querySelectorAll<HTMLElement>('[data-diagram-label-for]')]
+      .filter(candidate => candidate.getBoundingClientRect().width > 0 && candidate.getBoundingClientRect().height > 0);
+    const pairs = labels.map(label => {
+      const objectId = label.dataset.diagramLabelFor;
+      const object = objectId
+        ? [...document.querySelectorAll<HTMLElement>(`[data-diagram-object-id="${objectId}"]`)]
+          .find(candidate => candidate !== label
+            && !candidate.dataset.diagramLabelFor
+            && candidate.getBoundingClientRect().width > 0
+            && candidate.getBoundingClientRect().height > 0)
+        : undefined;
+      return objectId && object ? { label, objectId, object } : null;
+    }).filter(pair => pair !== null);
+    const selected = pairs.find(pair => pair.label.dataset.diagramPreserveColor === 'true')
+      ?? pairs.find(pair => getComputedStyle(pair.label).color !== emphasisColor)
+      ?? pairs[0];
+    const objectBounds = selected?.object.getBoundingClientRect();
+    return selected ? {
+      objectId: selected.objectId,
+      objectDomId: selected.object.id,
+      labelDomId: selected.label.id,
+      labelColor: getComputedStyle(selected.label).color,
+      labelFontFamily: getComputedStyle(selected.label).fontFamily,
+      labelFontSize: getComputedStyle(selected.label).fontSize,
+      labelFontWeight: getComputedStyle(selected.label).fontWeight,
+      labelTransform: getComputedStyle(selected.label).transform,
+      preserveColor: selected.label.dataset.diagramPreserveColor === 'true',
+      objectVisual: `${getComputedStyle(selected.object).fill}|${getComputedStyle(selected.object).stroke}|${getComputedStyle(selected.object).strokeWidth}`,
+      objectBounds: objectBounds ? `${objectBounds.width}|${objectBounds.height}` : '',
+    } : null;
+  });
+  assert.ok(pair, `${caseName}: no se encontró un par elemento-etiqueta enlazado`);
+  assert.match(pair.labelFontFamily, /Cormorant Garamond/, `${caseName}: la etiqueta no usa la tipografía editorial de diagramas`);
+  assert.equal(pair.labelFontSize, '19px', `${caseName}: la etiqueta no usa el tamaño reforzado`);
+  assert.equal(pair.labelFontWeight, '700', `${caseName}: la etiqueta no usa el peso reforzado`);
+
+  await page.hover(`[id="${pair.objectDomId}"]`);
+  await new Promise(resolve => setTimeout(resolve, 50));
+  const labelAfterElementHover = await page.$eval(
+    `[id="${pair.labelDomId}"]`,
+    label => ({ color: getComputedStyle(label).color, transform: getComputedStyle(label).transform }),
+  );
+  if (pair.preserveColor) {
+    assert.equal(labelAfterElementHover.color, pair.labelColor, `${caseName}: la etiqueta ignoró preserveColorOnHighlight`);
+  } else {
+    assert.notEqual(labelAfterElementHover.color, pair.labelColor, `${caseName}: la etiqueta no cambió de color con el elemento`);
+  }
+  assert.notEqual(labelAfterElementHover.transform, pair.labelTransform, `${caseName}: la etiqueta no aumentó de escala con el elemento`);
+
+  await page.mouse.move(0, 0);
+  await page.hover(`[id="${pair.labelDomId}"]`);
+  await new Promise(resolve => setTimeout(resolve, 50));
+  const objectAfterLabelHover = await page.$eval(
+    `[id="${pair.objectDomId}"]`,
+    object => {
+      const bounds = object.getBoundingClientRect();
+      return {
+        visual: `${getComputedStyle(object).fill}|${getComputedStyle(object).stroke}|${getComputedStyle(object).strokeWidth}`,
+        bounds: `${bounds.width}|${bounds.height}`,
+      };
+    },
+  );
+  if (pair.preserveColor) {
+    assert.equal(objectAfterLabelHover.visual, pair.objectVisual, `${caseName}: el elemento ignoró preserveColorOnHighlight`);
+  }
+  assert.notEqual(objectAfterLabelHover.bounds, pair.objectBounds, `${caseName}: el elemento no creció con el hover de la etiqueta`);
+}
+
 async function verifyPublishedCase(page: Page, acceptanceCase: typeof CASES[number]) {
   const errors = collectBrowserErrors(page);
   await page.goto(`${BASE_URL}${acceptanceCase.route}`, { waitUntil: 'networkidle0', timeout: 30_000 });
@@ -83,6 +158,7 @@ async function verifyPublishedCase(page: Page, acceptanceCase: typeof CASES[numb
   assert.ok(renderer, `${acceptanceCase.name}: renderer ausente para la regresión visual`);
   const lightScreenshot = await renderer.screenshot({ encoding: 'binary' });
   assert.ok(lightScreenshot.length > 5_000, `${acceptanceCase.name}: captura visual vacía`);
+  if (acceptanceCase.name === 'Pitágoras') await verifySynchronizedElementLabelHover(page, acceptanceCase.name);
   await page.evaluate(() => document.documentElement.classList.add('dark'));
   await new Promise(resolve => setTimeout(resolve, 100));
   const darkScreenshot = await renderer.screenshot({ encoding: 'binary' });

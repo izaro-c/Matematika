@@ -118,20 +118,50 @@
 
 /* Etiquetas de JSXGraph — tipografía editorial */
 .JXGtext {
-  font-family: ui-serif, Georgia, Cambria, "Times New Roman", Times, serif !important;
-  font-style: italic !important;
+  font-family: var(--font-diagram-family) !important;
+  font-style: normal !important;
   font-weight: 600 !important;
-  font-size: 16px !important;
+  font-size: 17px !important;
+  letter-spacing: 0.005em;
   paint-order: stroke;
   stroke: var(--theme-lienzo);
   stroke-width: 3px;
   stroke-linejoin: round;
 }
 
-/* Etiquetas de puntos — terracota */
+/* Etiquetas de puntos — variables y vinculadas al color interactivo del objeto. */
 .JXGtext.JXgpointLabel {
-  fill: var(--theme-terracota) !important;
-  color: var(--theme-terracota) !important;
+  color: inherit;
+  fill: currentColor !important;
+  font-style: italic !important;
+  font-size: 19px !important;
+  font-weight: 700 !important;
+}
+
+.matematika-point-label {
+  transform-origin: center;
+  transition:
+    color var(--transition-fast) var(--ease-interactive),
+    fill var(--transition-fast) var(--ease-interactive),
+    opacity var(--transition-fast) var(--ease-interactive),
+    transform var(--transition-fast) var(--ease-interactive),
+    text-shadow var(--transition-fast) var(--ease-interactive);
+}
+
+.matematika-point-label--highlight {
+  transform: scale(1.12);
+  text-shadow:
+    0 1px 0 var(--theme-lienzo),
+    0 0 0.35rem color-mix(in srgb, var(--diagram-label-highlight-color, var(--theme-ocre)) 35%, transparent);
+}
+
+[data-diagram-renderer] [data-diagram-object-id],
+[data-diagram-renderer] [data-diagram-label-for] {
+  transition:
+    color var(--transition-fast) var(--ease-interactive),
+    fill var(--transition-fast) var(--ease-interactive),
+    stroke var(--transition-fast) var(--ease-interactive),
+    opacity var(--transition-fast) var(--ease-interactive);
 }
 
 /* Conserva el estilo editorial existente; solo limita la caja al espacio
