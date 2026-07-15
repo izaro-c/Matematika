@@ -11,6 +11,7 @@ import type {
   GraphWorkerStructure,
   GraphWorkerNode,
 } from './lib/graphWorkerContract';
+import { findAxiomSelectionConflicts } from '@/entities/graph/axiomSelection';
 
 export type {
   FlowEdge,
@@ -92,6 +93,26 @@ function buildEdgeList(filtered: Record<string, JsonNode>): Array<{ source: stri
   return edges;
 }
 
+function assertConsistentAxiomSelection(
+  filtered: Record<string, JsonNode>,
+  disabledAxioms: Set<string>,
+): void {
+  const selectableAxioms = Object.values(filtered)
+    .filter((node) => node.type === 'axioma')
+    .map((node) => ({ id: node.id, alternativeGroup: node.alternativeGroup }));
+  const activeAxiomIds = selectableAxioms
+    .filter((axiom) => !disabledAxioms.has(axiom.id))
+    .map((axiom) => axiom.id);
+  const conflicts = findAxiomSelectionConflicts(selectableAxioms, activeAxiomIds);
+  if (conflicts.length === 0) return;
+
+  const conflict = conflicts[0];
+  throw {
+    code: 'INCONSISTENT_AXIOMS',
+    message: `Selección axiomática inconsistente en ${conflict.group}: ${conflict.axiomIds.join(', ')}`,
+  };
+}
+
 function evaluateActiveNodes(
   filtered: Record<string, JsonNode>,
   disabledAxioms: Set<string>,
@@ -99,6 +120,7 @@ function evaluateActiveNodes(
   const active: Record<string, boolean> = {};
 
   if (!structure) return active;
+  assertConsistentAxiomSelection(filtered, disabledAxioms);
 
   for (const id of structure.topologicalOrder) {
     if (!filtered[id]) continue;

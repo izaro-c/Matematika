@@ -186,10 +186,14 @@ Cada archivo MDX DEBE exportar un objeto `metadata`. Los schemas Zod (`src/entit
 "formalizationStatus"?: string — generado, no manual
 "sources"?: Array<{ title, author?, locator?, role? }>
 "axiomSystem"?: string
+"axiomFamily"?: string — etiqueta presentacional para organizar el selector de axiomas
+"alternativeGroup"?: string — ID kebab-case compartido por axiomas mutuamente excluyentes
 ```
 
 **Reglas:**
 - El axioma debe ser independiente (no demostrable desde otros axiomas de su sistema)
+- `axiomFamily` solo organiza la interfaz (por ejemplo, «Lógica» o «Teoría de conjuntos»); nunca expresa dependencia, compatibilidad ni pertenencia a un sistema.
+- Los axiomas con el mismo `alternativeGroup` son opciones incompatibles: un sistema axiomático no puede incluir más de una y la selección manual debe tratarlas como elección exclusiva.
 - Todo axioma Lean enlazado declara `axiomSystem`, una fuente primaria o secundaria y un `leanId` anotado con estado `axiomatic`.
 - Usa solo términos primitivos o previamente definidos
 - La descripción informal debe reflejar fielmente el enunciado formal

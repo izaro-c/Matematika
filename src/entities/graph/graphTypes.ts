@@ -20,6 +20,8 @@ export interface GraphNodeProof {
 export interface GraphNodeMeta {
   /** Tipo de nodo: 'teorema', 'axioma', 'definicion', etc. */
   type: string;
+  /** Grupo de axiomas mutuamente excluyentes, cuando el nodo es un axioma alternativo. */
+  alternativeGroup?: string;
   /** Lista de las demostraciones disponibles para este nodo */
   proofs: GraphNodeProof[];
   /** Dependencias lógicas directas si el nodo no requiere una demostración formal pero sí concepto previo */

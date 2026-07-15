@@ -189,6 +189,8 @@ export interface Axiom {
   tags?: string[];
   authors?: string[];
   axiomSystem?: string;
+  axiomFamily?: string;
+  alternativeGroup?: string;
   links?: string[];
   Component: MDXComponent;
   Simulation?: MDXComponent;

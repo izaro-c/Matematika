@@ -121,6 +121,8 @@ export function getMetadataFields(type?: string): MetadataFieldConfig[] {
         ...common,
         { key: 'statement', label: 'Enunciado', type: 'textarea' },
         { key: 'axiomSystem', label: 'Sistema axiomático', type: 'text' },
+        { key: 'axiomFamily', label: 'Familia axiomática', type: 'text' },
+        { key: 'alternativeGroup', label: 'Grupo de alternativas', type: 'text' },
         { key: 'authors', label: 'Autores', type: 'array' },
         { key: 'hasSimulation', label: 'Tiene diagrama', type: 'boolean' },
       ];

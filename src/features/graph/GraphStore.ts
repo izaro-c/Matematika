@@ -17,7 +17,11 @@ import type {
 } from './lib/graphWorkerContract';
 import { graphWorkerClient } from './lib/graphWorkerClient';
 import type { ModelInfo, SystemInfo } from '@/entities/graph/graphTypes';
-import { Grafo } from '@/entities/graph/Grafo';
+import {
+  disabledAxiomIdsFromActive,
+  normalizeActiveAxiomIds,
+  type SelectableAxiom,
+} from '@/entities/graph/axiomSelection';
 import { db } from '@/entities/content';
 import graphStructureData from '@/entities/graph/graph_structure.json';
 
@@ -26,6 +30,44 @@ let workerDisabledAxioms: string[] | null = null;
 let initializationPromise: Promise<void> | null = null;
 let evaluationInFlight = false;
 let queuedDisabledAxioms: string[] | null = null;
+
+const AXIOM_CATALOG: SelectableAxiom[] = db.getAllAxioms().map((axiom) => ({
+  id: axiom.id,
+  alternativeGroup: axiom.alternativeGroup,
+}));
+const MODEL_CATALOG: ModelInfo[] = db.getAllModels().map((model) => ({
+  id: model.id,
+  title: model.title,
+  axioms: model.axioms_verified || [],
+}));
+const SYSTEM_CATALOG: SystemInfo[] = db.getAllAxiomaticSystems().map((system) => ({
+  id: system.id,
+  title: system.title,
+  axioms: system.axiomas || [],
+}));
+
+function normalizedDisabledAxioms(
+  requestedActiveAxiomIds: Iterable<string>,
+  preferredAxiomId?: string,
+): string[] {
+  const active = normalizeActiveAxiomIds(
+    AXIOM_CATALOG,
+    requestedActiveAxiomIds,
+    preferredAxiomId,
+  );
+  return disabledAxiomIdsFromActive(AXIOM_CATALOG, active);
+}
+
+function disabledAxiomsForFramework(framework: ModelInfo | SystemInfo): string[] {
+  return normalizedDisabledAxioms(framework.axioms);
+}
+
+// La base neutral es independiente de cualquier rama matemática concreta:
+// incluye los axiomas sin decisión alternativa y deja cada disyuntiva abierta.
+const NEUTRAL_ACTIVE_AXIOM_IDS = AXIOM_CATALOG
+  .filter((axiom) => !axiom.alternativeGroup)
+  .map((axiom) => axiom.id);
+const DEFAULT_DISABLED_AXIOMS = normalizedDisabledAxioms(NEUTRAL_ACTIVE_AXIOM_IDS);
 
 
 /**
@@ -99,6 +141,11 @@ interface GraphState {
   /** Devuelve el mapa de dependencias inversas en tiempo real. */
   getDependsOn: () => Record<string, string[]>;
 }
+
+type PersistedGraphState = Pick<
+  GraphState,
+  'inactiveModels' | 'inactiveSystems' | 'disabledAxioms'
+>;
 
 type GraphStoreSet = (partial: Partial<GraphState>) => void;
 type GraphStoreGet = () => GraphState;
@@ -234,34 +281,33 @@ export const useGraphStore = create<GraphState>()(
       adjacency: {},
       dependsOn: {},
       activeStates: {},
-      disabledAxioms: [],
+      // La base neutral no elige ninguna alternativa incompatible.
+      disabledAxioms: DEFAULT_DISABLED_AXIOMS,
       isLoading: true,
       status: 'loading',
       error: null,
 
       // Carga inicial síncrona desde la "base de datos" (archivos MDX transformados)
-      axioms: db.getAllAxioms().map(a => (a.id)),
-      models: db.getAllModels().map(m => ({
-        id: m.id,
-        title: m.title,
-        axioms: m.axioms_verified || [],
-      })),
+      axioms: AXIOM_CATALOG.map((axiom) => axiom.id),
+      models: MODEL_CATALOG,
       // Por defecto, todos los modelos inician apagados.
-      inactiveModels: db.getAllModels().map(m => m.id),
-      systems: db.getAllAxiomaticSystems().map(s => ({
-        id: s.id,
-        title: s.title,
-        axioms: s.axiomas || [],
-      })),
-      // Por defecto, todos los sistemas inician apagados.
-      inactiveSystems: db.getAllAxiomaticSystems().map(s => s.id),
+      inactiveModels: MODEL_CATALOG.map((model) => model.id),
+      systems: SYSTEM_CATALOG,
+      // Ningún sistema temático queda privilegiado como marco inicial.
+      inactiveSystems: SYSTEM_CATALOG.map((system) => system.id),
 
       toggleAxiom: (axiomId: string) => {
         const state = get();
-        // Calculamos la nueva lista de axiomas desactivados
-        const newDisabled = state.disabledAxioms.includes(axiomId)
-          ? state.disabledAxioms.filter((id) => id !== axiomId)
-          : [...state.disabledAxioms, axiomId];
+        if (!state.axioms.includes(axiomId)) return;
+
+        const wasDisabled = state.disabledAxioms.includes(axiomId);
+        const requestedActive = state.axioms.filter((id) => (
+          id === axiomId ? wasDisabled : !state.disabledAxioms.includes(id)
+        ));
+        const newDisabled = normalizedDisabledAxioms(
+          requestedActive,
+          wasDisabled ? axiomId : undefined,
+        );
           
         // Si tocamos un axioma individual, perdemos la "coherencia" de sistemas enteros, 
         // así que reseteamos los selectores visuales de modelos y sistemas a "desactivado".
@@ -275,8 +321,7 @@ export const useGraphStore = create<GraphState>()(
 
       setActiveAxioms: (axiomIds: string[]) => {
         const state = get();
-        const activeAxiomIds = new Set(axiomIds.filter((id) => state.axioms.includes(id)));
-        const newDisabled = state.axioms.filter((id) => !activeAxiomIds.has(id));
+        const newDisabled = normalizedDisabledAxioms(axiomIds);
 
         set({
           disabledAxioms: newDisabled,
@@ -288,56 +333,37 @@ export const useGraphStore = create<GraphState>()(
 
       toggleModel: (modelId: string) => {
         const state = get();
-        const isActive = !state.inactiveModels.includes(modelId);
-        let newInactive: string[];
-        
-        // Comportamiento XOR para modelos: Solo uno puede estar encendido a la vez para evitar contradicciones lógicas.
-        if (isActive) {
-          newInactive = state.models.map(m => m.id); // Apaga todos
-        } else {
-          newInactive = state.models.filter(m => m.id !== modelId).map(m => m.id); // Apaga todos menos el seleccionado
-        }
-        
-        // Al encender un modelo, apagamos sistemas abstractos
-        const allSystemsOff = state.systems.map(s => s.id);
-        set({ inactiveModels: newInactive, inactiveSystems: allSystemsOff });
+        const selectedModel = state.models.find((model) => model.id === modelId);
+        if (!selectedModel) return;
 
-        // Calculamos qué axiomas debemos apagar basados en el modelo encendido
-        const activeModels = state.models.filter(m => !newInactive.includes(m.id));
-        const newDisabled = Grafo.computeDisabledAxiomsFromModels(
-          state.models.map(s => ({ id: s.id, title: s.title, axioms: s.axioms })), 
-          activeModels.map(m => m.id), 
-          state.axioms
-        );
-        
-        set({ disabledAxioms: newDisabled });
+        // Los menús seleccionan un marco; volver a elegirlo no vacía la base.
+        const newInactive = state.models.filter((model) => model.id !== modelId).map((model) => model.id);
+        const allSystemsOff = state.systems.map(s => s.id);
+        const newDisabled = disabledAxiomsForFramework(selectedModel);
+
+        set({
+          inactiveModels: newInactive,
+          inactiveSystems: allSystemsOff,
+          disabledAxioms: newDisabled,
+        });
         
         requestGraphState(set, get, newDisabled);
       },
 
       toggleSystem: (systemId: string) => {
         const state = get();
-        const isActive = !state.inactiveSystems.includes(systemId);
-        let newInactive: string[];
-        
-        if (isActive) {
-          newInactive = state.systems.map(s => s.id);
-        } else {
-          // Corrección de bug sintáctico previo
-          newInactive = state.systems.filter(s => s.id !== systemId).map(s => s.id);
-        }
-        
-        const allModelsOff = state.models.map(m => m.id);
-        set({ inactiveSystems: newInactive, inactiveModels: allModelsOff });
+        const selectedSystem = state.systems.find((system) => system.id === systemId);
+        if (!selectedSystem) return;
 
-        const activeSystems = state.systems.filter(s => !newInactive.includes(s.id));
-        const newDisabled = Grafo.computeDisabledAxiomsFromModels(
-          state.systems.map(s => ({ id: s.id, title: s.title, axioms: s.axioms })),
-          activeSystems.map(s => s.id),
-          state.axioms,
-        );
-        
-        set({ disabledAxioms: newDisabled });
+        const newInactive = state.systems.filter((system) => system.id !== systemId).map((system) => system.id);
+        const allModelsOff = state.models.map(m => m.id);
+        const newDisabled = disabledAxiomsForFramework(selectedSystem);
+
+        set({
+          inactiveSystems: newInactive,
+          inactiveModels: allModelsOff,
+          disabledAxioms: newDisabled,
+        });
         
         requestGraphState(set, get, newDisabled);
       },
@@ -351,6 +377,23 @@ export const useGraphStore = create<GraphState>()(
     }),
     {
       name: 'graph-model-storage',
+      version: 2,
+      // La migración estructural se completa en `merge`, donde está disponible
+      // el catálogo vigente para retirar alternativas contradictorias.
+      migrate: (persisted): PersistedGraphState => {
+        const legacy = persisted as Partial<PersistedGraphState> | undefined;
+        return {
+          inactiveModels: Array.isArray(legacy?.inactiveModels)
+            ? legacy.inactiveModels
+            : MODEL_CATALOG.map((model) => model.id),
+          inactiveSystems: Array.isArray(legacy?.inactiveSystems)
+            ? legacy.inactiveSystems
+            : SYSTEM_CATALOG.map((system) => system.id),
+          disabledAxioms: Array.isArray(legacy?.disabledAxioms)
+            ? legacy.disabledAxioms
+            : [],
+        };
+      },
       // Solo persistimos las decisiones de alto nivel del usuario, el grafo en sí se recalcula
       partialize: (state) => ({
         inactiveModels: state.inactiveModels,
@@ -373,25 +416,45 @@ export const useGraphStore = create<GraphState>()(
           ? p.inactiveSystems.filter((id: string) => validSystemIds.includes(id))
           : current.inactiveSystems;
 
+        const activeSystem = current.systems.find((system) => !inactiveSystems.includes(system.id));
+        const activeModel = current.models.find((model) => !inactiveModels.includes(model.id));
+
         let disabledAxioms: string[];
-        const activeSystems = current.systems.filter(s => !inactiveSystems.includes(s.id));
-        
-        if (activeSystems.length > 0) {
-          disabledAxioms = Grafo.computeDisabledAxiomsFromModels(
-            current.systems.map(s => ({ id: s.id, title: s.title, axioms: s.axioms })),
-            activeSystems.map(s => s.id),
-            current.axioms,
-          );
+        let normalizedInactiveSystems: string[];
+        let normalizedInactiveModels: string[];
+
+        if (activeSystem) {
+          disabledAxioms = disabledAxiomsForFramework(activeSystem);
+          normalizedInactiveSystems = current.systems
+            .filter((system) => system.id !== activeSystem.id)
+            .map((system) => system.id);
+          normalizedInactiveModels = current.models.map((model) => model.id);
+        } else if (activeModel) {
+          disabledAxioms = disabledAxiomsForFramework(activeModel);
+          normalizedInactiveModels = current.models
+            .filter((model) => model.id !== activeModel.id)
+            .map((model) => model.id);
+          normalizedInactiveSystems = current.systems.map((system) => system.id);
         } else {
-          const activeModels = current.models.filter(m => !inactiveModels.includes(m.id));
-          disabledAxioms = Grafo.computeDisabledAxiomsFromModels(
-            current.models.map(s => ({ id: s.id, title: s.title, axioms: s.axioms })), 
-            activeModels.map(m => m.id), 
-            current.axioms
-          );
+          const persistedDisabled = Array.isArray(p.disabledAxioms)
+            ? p.disabledAxioms.filter((id): id is string => typeof id === 'string')
+            : current.disabledAxioms;
+          const persistedDisabledSet = new Set(persistedDisabled);
+          const requestedActive = current.axioms.filter((id) => !persistedDisabledSet.has(id));
+          disabledAxioms = normalizedDisabledAxioms(requestedActive);
+
+          // Una selección manual continúa siendo manual aunque coincida con un
+          // sistema conocido: ningún dominio obtiene prioridad por migración.
+          normalizedInactiveSystems = current.systems.map((system) => system.id);
+          normalizedInactiveModels = current.models.map((model) => model.id);
         }
-        
-        return { ...current, inactiveModels, inactiveSystems, disabledAxioms };
+
+        return {
+          ...current,
+          inactiveModels: normalizedInactiveModels,
+          inactiveSystems: normalizedInactiveSystems,
+          disabledAxioms,
+        };
       },
     }
   )

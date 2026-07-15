@@ -199,6 +199,10 @@ export const AxiomSchema = z.object({
   statement: z.string().optional(),
   authors: z.array(z.string()).optional(),
   axiomSystem: z.string().optional(),
+  /** Familia presentacional para organizar axiomas sin inferirla desde su ID. */
+  axiomFamily: z.string().min(1).optional(),
+  /** Grupo de alternativas mutuamente excluyentes dentro de una base lógica. */
+  alternativeGroup: z.string().regex(/^[a-z0-9]+(?:-[a-z0-9]+)*$/).optional(),
   hasSimulation: z.boolean().optional(),
   ...LeanMetadataSchema,
 });

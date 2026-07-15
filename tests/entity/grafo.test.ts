@@ -106,6 +106,31 @@ describe('Grafo.evaluate', () => {
     expect(result.has('ax-1')).toBe(true);
     expect(result.has('def-1')).toBe(true);
   });
+
+  it('rejects mutually exclusive axioms before evaluating consequences', () => {
+    const incompatible: GraphStructure = {
+      topologicalOrder: ['ax-euclid', 'ax-hyperbolic'],
+      nodes: {
+        'ax-euclid': {
+          type: 'axioma',
+          alternativeGroup: 'parallel-postulate',
+          proofs: [],
+          directDependencies: [],
+        },
+        'ax-hyperbolic': {
+          type: 'axioma',
+          alternativeGroup: 'parallel-postulate',
+          proofs: [],
+          directDependencies: [],
+        },
+      },
+    };
+
+    expect(() => Grafo.from(incompatible).evaluate({
+      'ax-euclid': true,
+      'ax-hyperbolic': true,
+    })).toThrow(/Selección axiomática inconsistente/);
+  });
 });
 
 // UC4 EsploraModelli / RF11 — dados los modelos activos,
@@ -117,8 +142,8 @@ describe('Grafo.computeDisabledAxiomsFromModels', () => {
   ];
   const allAxioms = ['ax-1', 'ax-2', 'ax-3', 'ax-4'];
 
-  it('returns empty array when no active models', () => {
-    expect(Grafo.computeDisabledAxiomsFromModels(models, [], allAxioms)).toEqual([]);
+  it('disables every axiom when no model is active', () => {
+    expect(Grafo.computeDisabledAxiomsFromModels(models, [], allAxioms)).toEqual(allAxioms);
   });
 
   it('disables axioms not in active model', () => {

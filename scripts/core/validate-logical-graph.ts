@@ -107,6 +107,36 @@ function processMdxFile(file: string) {
 
 mdxFiles.forEach(processMdxFile);
 
+// Un sistema formal no puede contener dos axiomas declarados como alternativas
+// del mismo grupo. Esta condición lógica no se manifiesta como un ciclo del DAG.
+let alternativeGroupErrors = 0;
+for (const [systemId, systemMeta] of metadataMap) {
+  if (systemMeta.type !== 'sistema-axiomatico' || !Array.isArray(systemMeta.axiomas)) continue;
+
+  const alternativesByGroup = new Map<string, string[]>();
+  for (const axiomId of systemMeta.axiomas) {
+    if (typeof axiomId !== 'string') continue;
+    const group = metadataMap.get(axiomId)?.alternativeGroup;
+    if (typeof group !== 'string') continue;
+    const alternatives = alternativesByGroup.get(group) ?? [];
+    alternatives.push(axiomId);
+    alternativesByGroup.set(group, alternatives);
+  }
+
+  for (const [group, alternatives] of alternativesByGroup) {
+    if (alternatives.length < 2) continue;
+    alternativeGroupErrors += 1;
+    console.error(
+      `[ERROR] ${systemId} contiene alternativas incompatibles del grupo ${group}: ${alternatives.join(', ')}`,
+    );
+  }
+}
+
+if (alternativeGroupErrors > 0) {
+  console.error(`\nValidación detenida: ${alternativeGroupErrors} conflicto(s) axiomático(s).`);
+  process.exit(1);
+}
+
 // Las definiciones participan en el grafo lógico.
 // Las definiciones primitivas (subtype: 'primitivo') no propagan dependencias:
 // son conceptos no definidos (punto, recta, plano) cuyos axiomas las gobiernan
@@ -118,6 +148,7 @@ mdxFiles.forEach(processMdxFile);
 interface GraphNode {
   id: string;
   type: string;
+  alternativeGroup?: string;
   subtype?: string;
   title: string;
   description: string;
@@ -132,6 +163,7 @@ for (const id of allNodes) {
   graphNodes[id] = {
     id,
     type: meta.type || 'unknown',
+    alternativeGroup: typeof meta.alternativeGroup === 'string' ? meta.alternativeGroup : undefined,
     subtype: meta.subtype || undefined,
     title: meta.title || id,
     description: meta.description || '',
