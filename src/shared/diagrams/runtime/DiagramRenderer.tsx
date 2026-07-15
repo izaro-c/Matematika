@@ -49,6 +49,7 @@ import {
   evaluateMathExpression,
   evaluateStepOverlayContent,
   type DiagramBounds,
+  type DiagramColorToken,
   type DiagramElement,
   type DiagramSceneItem,
   type DiagramSpecV2,
@@ -201,22 +202,29 @@ function headerReadingText(item: DiagramElement, variables: Record<string, numbe
   return (item.text || `${item.label}: {value}`).split('{value}').join(`${value.toFixed(precision)}${unit}`);
 }
 
-function movableCueLabels(spec: DiagramSpecV2): string[] {
-  return [...new Set([
-    ...spec.points
-      .filter(point => !point.fixed && !point.locked && point.constraint !== 'derived')
-      .map(point => point.label.trim()),
-    ...spec.sliders
-      .filter(slider => !slider.locked)
-      .map(slider => slider.label.trim()),
-  ].filter(Boolean))].sort((left, right) => right.length - left.length);
+interface MovableCueLabel {
+  label: string;
+  color: DiagramColorToken;
 }
 
-function cueLabelRanges(text: string, labels: readonly string[]): Array<{ start: number; end: number }> {
-  const ranges: Array<{ start: number; end: number }> = [];
+function movableCueLabels(spec: DiagramSpecV2): MovableCueLabel[] {
+  const labels = new Map<string, DiagramColorToken>();
+  [
+    ...spec.points.filter(point => !point.fixed && !point.locked && point.constraint !== 'derived'),
+    ...spec.sliders.filter(slider => !slider.locked),
+  ].forEach(item => {
+    const label = item.label.trim();
+    if (label && !labels.has(label)) labels.set(label, item.color);
+  });
+  return [...labels].map(([label, color]) => ({ label, color }))
+    .sort((left, right) => right.label.length - left.label.length);
+}
+
+function cueLabelRanges(text: string, labels: readonly MovableCueLabel[]): Array<{ start: number; end: number; color: DiagramColorToken }> {
+  const ranges: Array<{ start: number; end: number; color: DiagramColorToken }> = [];
   const isWordCharacter = (character: string | undefined) => Boolean(character && /[\p{L}\p{N}_]/u.test(character));
 
-  labels.forEach(label => {
+  labels.forEach(({ label, color }) => {
     let offset = 0;
     while (offset < text.length) {
       const start = text.indexOf(label, offset);
@@ -224,7 +232,7 @@ function cueLabelRanges(text: string, labels: readonly string[]): Array<{ start:
       const end = start + label.length;
       const overlaps = ranges.some(range => start < range.end && end > range.start);
       if (!overlaps && !isWordCharacter(text[start - 1]) && !isWordCharacter(text[end])) {
-        ranges.push({ start, end });
+        ranges.push({ start, end, color });
       }
       offset = end;
     }
@@ -233,16 +241,22 @@ function cueLabelRanges(text: string, labels: readonly string[]): Array<{ start:
   return ranges.sort((left, right) => left.start - right.start);
 }
 
-function ExplorationCue({ children, labels }: { children: string; labels: readonly string[] }) {
+function ExplorationCue({ children, labels }: { children: string; labels: readonly MovableCueLabel[] }) {
   const ranges = cueLabelRanges(children, labels);
   if (ranges.length === 0) return <>{children}</>;
 
   const fragments: React.ReactNode[] = [];
   let offset = 0;
-  ranges.forEach(({ start, end }) => {
+  ranges.forEach(({ start, end, color }) => {
     if (start > offset) fragments.push(children.slice(offset, start));
     fragments.push(
-      <strong key={`${start}-${end}`} className="font-semibold text-terracota" data-interactive-label={children.slice(start, end)}>
+      <strong
+        key={`${start}-${end}`}
+        className="font-semibold"
+        style={{ color: `var(--theme-${color})` }}
+        data-interactive-label={children.slice(start, end)}
+        data-interactive-color={color}
+      >
         {children.slice(start, end)}
       </strong>,
     );

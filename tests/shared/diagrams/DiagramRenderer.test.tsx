@@ -49,6 +49,32 @@ describe('DiagramRenderer shared runtime', () => {
     expect(screen.getByText(/Arrastre/).className).not.toContain('text-terracota');
   });
 
+  it('uses each movable element color for its reference in the diagram header', () => {
+    const movableColors: ReadonlyMap<string, 'salvia' | 'pavo'> = new Map([
+      ['A', 'salvia'],
+      ['B', 'pavo'],
+    ]);
+    const spec = {
+      ...PitagorasSpec,
+      points: PitagorasSpec.points.map(point => {
+        const color = movableColors.get(point.id);
+        return color ? { ...point, color } : point;
+      }),
+    };
+
+    render(<DiagramRenderer spec={spec} viewportControls={false} />);
+
+    const labels = [...document.querySelectorAll<HTMLElement>('[data-interactive-label]')];
+    expect(labels.map(label => [label.textContent, label.dataset.interactiveColor])).toEqual([
+      ['A', 'salvia'],
+      ['B', 'pavo'],
+    ]);
+    expect(labels.map(label => label.style.color)).toEqual([
+      'var(--theme-salvia)',
+      'var(--theme-pavo)',
+    ]);
+  });
+
   it('opens the real Pitágoras steps editor without requiring an outer MathProvider', () => {
     expect(() => render(
       <DiagramStepsEditor
