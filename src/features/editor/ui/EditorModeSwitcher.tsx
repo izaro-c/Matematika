@@ -14,35 +14,39 @@ export const EditorModeSwitcher: React.FC<EditorModeSwitcherProps> = ({
 }) => {
   if (isDiagramFile) {
     return (
-      <span className="rounded border border-pavo/20 bg-pavo/10 px-3 py-1 text-xs font-serif font-bold text-pavo">
-        Diagrama TSX
+      <span className="rounded border border-pavo/20 bg-pavo/10 px-3 py-1.5 text-xs font-serif font-bold text-pavo">
+        Código de diagrama
       </span>
     );
   }
 
   return (
-    <div className="flex bg-carbon/5 border border-carbon/15 rounded-sm p-0.5">
+    <div className="flex rounded border border-carbon/15 bg-carbon/5 p-0.5" aria-label="Modo de edición">
       <button
         type="button"
         onClick={() => editorMode === 'code' && onToggleMode()}
-        className={`px-3 py-1 text-xs rounded-sm transition-all font-bold font-serif cursor-pointer ${
+        aria-pressed={editorMode === 'visual'}
+        title="Editar el documento mediante bloques estructurados"
+        className={`rounded px-3 py-1.5 text-xs font-bold transition-all ${
           editorMode === 'visual'
             ? 'bg-lienzo text-carbon shadow-sm'
             : 'text-carbon/60 hover:text-carbon'
         }`}
       >
-        Edición visual exacta
+        Visual
       </button>
       <button
         type="button"
         onClick={() => editorMode === 'visual' && onToggleMode()}
-        className={`px-3 py-1 text-xs rounded-sm transition-all font-bold font-serif cursor-pointer ${
+        aria-pressed={editorMode === 'code'}
+        title="Editar directamente el código fuente MDX"
+        className={`rounded px-3 py-1.5 text-xs font-bold transition-all ${
           editorMode === 'code'
             ? 'bg-lienzo text-carbon shadow-sm'
             : 'text-carbon/60 hover:text-carbon'
         }`}
       >
-        Código fuente
+        Código
       </button>
     </div>
   );

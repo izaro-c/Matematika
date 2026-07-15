@@ -204,7 +204,8 @@ export function createScenePlan(spec: DiagramSpecV2, state: DiagramSceneState = 
         && itemGroups.every(group => group?.visible !== false)
         && (objectState?.visible ?? (item.visible && (!stepTargets || stepTargets.has(item.id))));
       const interactive = objectState?.interactive ?? true;
-      const locked = !interactive || item.locked || layer?.locked === true || itemGroups.some(group => group?.locked === true);
+      const fixedPoint = 'constraint' in item && (item.fixed || item.constraint === 'fixed' || item.constraint === 'derived');
+      const locked = !interactive || fixedPoint || item.locked || layer?.locked === true || itemGroups.some(group => group?.locked === true);
       const layerOrder = layer?.order ?? 0;
       return {
         item,

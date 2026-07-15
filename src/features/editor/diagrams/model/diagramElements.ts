@@ -13,8 +13,9 @@ import type {
 } from './types';
 
 export function point(id: string, label: string, x: number, y: number, fixed = false, color: ColorToken = 'terracota', constraint: PointConstraint = fixed ? 'fixed' : 'free', gliderTarget?: string): VisualPoint {
+  const constraintLocksPosition = constraint === 'fixed' || constraint === 'derived';
   return {
-    id, label, x, y, fixed, color, target: true, targetId: id, constraint, gliderTarget,
+    id, label, x, y, fixed: constraintLocksPosition, color, target: true, targetId: id, constraint, gliderTarget,
     layerId: 'geometry', order: 0, visible: true, locked: false, groupIds: [],
     selection: { selectable: true, role: 'primary', ariaLabel: `Punto ${label}` },
   };
@@ -166,7 +167,35 @@ export function elementColorForKind(kind: ElementKind): ColorToken {
 }
 
 export function updatePoint(model: VisualDiagramModel, pointId: string, update: Partial<VisualPoint>): VisualDiagramModel {
-  return { ...model, points: model.points.map(item => item.id === pointId ? { ...item, ...update } : item) };
+  const previous = model.points.find(item => item.id === pointId);
+  if (!previous) return model;
+  const removedConstraintIds = update.constraint && update.constraint !== 'constrained'
+    ? new Set(previous.constraintIds ?? [])
+    : new Set<string>();
+  const points = model.points.map(item => {
+    if (item.id !== pointId) return item;
+    if (!update.constraint) return { ...item, ...update };
+    const next = {
+      ...item,
+      ...update,
+      fixed: update.constraint === 'fixed' || update.constraint === 'derived',
+    };
+    if (update.constraint !== 'glider') delete next.gliderTarget;
+    if (update.constraint !== 'derived') {
+      delete next.dependencies;
+      delete next.xExpression;
+      delete next.yExpression;
+    }
+    if (update.constraint !== 'constrained') delete next.constraintIds;
+    return next;
+  });
+  if (removedConstraintIds.size === 0) return { ...model, points };
+  return {
+    ...model,
+    points,
+    constraints: model.constraints?.filter(item => !removedConstraintIds.has(item.id)),
+    dependencies: model.dependencies?.filter(item => !item.constraintId || !removedConstraintIds.has(item.constraintId)),
+  };
 }
 
 export function updateElement(model: VisualDiagramModel, elementId: string, update: Partial<VisualElement>): VisualDiagramModel {

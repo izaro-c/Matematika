@@ -1,84 +1,151 @@
-import { MathBoard } from '@/shared/diagrams/core/MathBoard';
-import {
-  createPoint, createLine
-} from '@/shared/diagrams/core/MathFactory';
+import { createDiagramSpec, DiagramRenderer } from '@/shared/diagrams/public';
 
-
-
-
-
-
-
-export const Incidence1 = () => {
-
-
-
-
-
-
-
-
-  const onInit = (board: any, els: any, theme: any) => {
-      void board; void els; void theme;
-      const pA = createPoint(board, [-1, 1.5], {
-      name: 'A',
-      size: 6,
-      fillColor: theme.terracota,
-      strokeColor: theme.terracota,
-      showInfobox: false,
-      fixed: false,
-    }, theme);
-
-    const pB = createPoint(board, [3, -0.5], {
-      name: 'B',
-      size: 6,
-      fillColor: theme.terracota,
-      strokeColor: theme.terracota,
-      showInfobox: false,
-      fixed: false,
-    }, theme);
-
-    const lineAB = createLine(board, [pA, pB], {
-      strokeColor: theme.carbon,
-      strokeWidth: 2,
-    }, theme);
-
-      // Registrar elementos para interactividad y auditoría
-      els.pA = pA;
-        els.pB = pB;
-        els.lineAB = lineAB;
-    };;
-
-  const onUpdate = (board: any, els: any, theme: any, isStep: any, isHL: any) => {
-      const isHighlight = isHL;
-      void board; void els; void theme; void isStep; void isHL; void isHighlight;
-      const { pA, pB, lineAB } = els;
-      pA.setAttribute({ size: 6, fillColor: theme.terracota, strokeColor: theme.terracota });
-    pB.setAttribute({ size: 6, fillColor: theme.terracota, strokeColor: theme.terracota });
-    lineAB.setAttribute({ strokeColor: theme.carbon, strokeWidth: 2 });
-
-    if (isHL('pA')) {
-      pA.setAttribute({ size: 10, fillColor: theme.ocre, strokeColor: theme.ocre });
+/* @matematika-diagram-spec:start */
+export const Incidence1Spec = createDiagramSpec(
+{
+  "version": 2,
+  "renderer": "matematika-diagram-renderer-v2",
+  "title": "Axioma de Incidencia 1",
+  "componentId": "axioma-de-incidencia-1",
+  "category": "Teoremas",
+  "mode": "simulation",
+  "axis": false,
+  "grid": false,
+  "viewport": {
+    "bounds": [
+      -5,
+      5,
+      5,
+      -5
+    ],
+    "home": [
+      -5,
+      5,
+      5,
+      -5
+    ],
+    "minZoom": 0.2,
+    "maxZoom": 12,
+    "padding": 0.16
+  },
+  "layers": [
+    {
+      "id": "geometry",
+      "label": "Geometría",
+      "order": 0,
+      "visible": true,
+      "locked": false
+    },
+    {
+      "id": "controls",
+      "label": "Controles",
+      "order": 1,
+      "visible": true,
+      "locked": false
     }
-    if (isHL('pB')) {
-      pB.setAttribute({ size: 10, fillColor: theme.ocre, strokeColor: theme.ocre });
+  ],
+  "groups": [],
+  "points": [
+    {
+      "id": "pA",
+      "label": "A",
+      "color": "terracota",
+      "layerId": "geometry",
+      "order": 7000,
+      "visible": true,
+      "locked": false,
+      "groupIds": [],
+      "selection": {
+        "selectable": true,
+        "ariaLabel": "Punto A",
+        "role": "primary"
+      },
+      "target": true,
+      "targetId": "pA",
+      "style": {
+        "pointSize": 7,
+        "highlightPointSize": 10,
+        "preserveColorOnHighlight": true
+      },
+      "x": -3.44,
+      "y": 2.3,
+      "fixed": false,
+      "constraint": "free"
+    },
+    {
+      "id": "pB",
+      "label": "B",
+      "color": "terracota",
+      "layerId": "geometry",
+      "order": 8000,
+      "visible": true,
+      "locked": false,
+      "groupIds": [],
+      "selection": {
+        "selectable": true,
+        "ariaLabel": "Punto B",
+        "role": "primary"
+      },
+      "target": true,
+      "targetId": "pB",
+      "style": {
+        "pointSize": 7,
+        "highlightPointSize": 10,
+        "preserveColorOnHighlight": true
+      },
+      "x": 3.87,
+      "y": -1.34,
+      "fixed": false,
+      "constraint": "free"
     }
-    if (isHL('lineAB')) {
-      lineAB.setAttribute({ strokeColor: theme.terracota, strokeWidth: 4 });
+  ],
+  "elements": [
+    {
+      "id": "lineAB",
+      "label": "Recta",
+      "color": "carbon",
+      "layerId": "geometry",
+      "order": 4000,
+      "visible": true,
+      "locked": false,
+      "groupIds": [],
+      "selection": {
+        "selectable": true,
+        "ariaLabel": "Recta",
+        "role": "secondary"
+      },
+      "target": true,
+      "targetId": "lineAB",
+      "style": {
+        "strokeWidth": 2.4,
+        "highlightStrokeWidth": 3
+      },
+      "kind": "line",
+      "refs": [
+        "pA",
+        "pB"
+      ]
     }
-    };;
+  ],
+  "sliders": [],
+  "steps": [],
+  "constraints": [],
+  "dependencies": [
+    {
+      "sourceId": "pA",
+      "targetId": "lineAB",
+      "relation": "construction"
+    },
+    {
+      "sourceId": "pB",
+      "targetId": "lineAB",
+      "relation": "construction"
+    }
+  ],
+  "note": "Arrastra los puntos A, B",
+  "extensions": {}
+}
+);
+/* @matematika-diagram-spec:end */
 
-  return (
-    <MathBoard
-      boundingbox={[-5, 4, 6, -4]}
-      axis={false}
-      grid={false}
-      onInit={onInit}
-      onUpdate={onUpdate}
-    >
-      <div className="absolute top-3 left-3 z-10 text-[10px] font-sans text-pizarra/50 uppercase tracking-wider">
-        Arrastra los puntos A, B
-      </div>
-    </MathBoard>
-  );
-};
+export const Incidence1 = () => <DiagramRenderer spec={Incidence1Spec} />;

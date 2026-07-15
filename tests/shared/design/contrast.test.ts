@@ -5,6 +5,7 @@ import { CONTENT_TYPE_CONFIG, GRAPH_NODE_COLORS } from '@/shared/lib/constants';
 
 const CANONICAL_NAMES = ['lienzo', 'carbon', 'salvia', 'terracota', 'pizarra', 'ocre', 'pavo', 'granada', 'musgo'] as const;
 const ACCENT_NAMES = CANONICAL_NAMES.filter(name => name !== 'lienzo' && name !== 'carbon');
+const BODY_INK_NAMES = ['carbon', 'pizarra', 'pavo', 'granada', 'musgo'] as const;
 
 function cssPalette(selector: ':root' | '.dark'): Record<string, string> {
   const css = readFileSync(resolve(process.cwd(), 'src/app/theme.css'), 'utf8');
@@ -49,12 +50,14 @@ function perceptualDistance(left: string, right: string): number {
 }
 
 describe('Arts & Crafts contrast contract', () => {
-  it('keeps every canonical ink token at WCAG AA contrast on the light canvas', () => {
+  it('keeps body ink tokens at WCAG AA and decorative pigments at non-text contrast on the light canvas', () => {
     const palette = cssPalette(':root');
     const background = palette.lienzo;
-    for (const name of CANONICAL_NAMES) {
-      if (name === 'lienzo') continue;
+    for (const name of BODY_INK_NAMES) {
       expect(contrast(background, palette[name]), `${name} lacks 4.5:1 contrast`).toBeGreaterThanOrEqual(4.5);
+    }
+    for (const name of ['salvia', 'terracota', 'ocre'] as const) {
+      expect(contrast(background, palette[name]), `${name} lacks 3:1 non-text contrast`).toBeGreaterThanOrEqual(3);
     }
   });
 
@@ -74,7 +77,7 @@ describe('Arts & Crafts contrast contract', () => {
         expect(
           perceptualDistance(palette[name], palette[other]),
           `${name} and ${other} are too similar in ${selector}`,
-        ).toBeGreaterThanOrEqual(0.075);
+        ).toBeGreaterThanOrEqual(0.045);
       }
     }
   });

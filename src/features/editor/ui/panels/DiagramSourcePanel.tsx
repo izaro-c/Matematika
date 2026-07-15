@@ -9,6 +9,7 @@ interface DiagramSourcePanelProps {
   setActiveDiagramBlockId: (id: string | null) => void;
   setActiveDiagramIndex: (index: number | null) => void;
   setDiagramBuilderOpen: (open: boolean) => void;
+  onRewriteVisually: () => void;
   capability?: FileNode['capability'];
 }
 
@@ -30,6 +31,7 @@ export const DiagramSourcePanel: React.FC<DiagramSourcePanelProps> = ({
   setActiveDiagramBlockId,
   setActiveDiagramIndex,
   setDiagramBuilderOpen,
+  onRewriteVisually,
   capability,
 }) => {
   const formatFileName = (name: string) => {
@@ -94,9 +96,23 @@ export const DiagramSourcePanel: React.FC<DiagramSourcePanelProps> = ({
           >
             {capability === 'visual-exact' ? 'Abrir edición visual exacta' : 'Abrir código y vista previa'}
           </button>
+          {capability === 'code-preview' && (
+            <button
+              type="button"
+              onClick={onRewriteVisually}
+              className="mb-3 w-full rounded border border-ocre/30 bg-ocre/10 px-3 py-2 text-xs font-bold text-ocre hover:bg-ocre/20"
+            >
+              Reescribir visualmente desde cero
+            </button>
+          )}
           <p className="text-xs italic text-carbon/55 select-none">
             {capabilityDescription(capability)}
           </p>
+          {capability === 'code-preview' && (
+            <p className="mt-2 text-[10px] leading-relaxed text-carbon/50">
+              Esta opción crea un modelo visual nuevo y solo sustituye el TSX heredado después de una confirmación y un guardado explícitos.
+            </p>
+          )}
         </section>
       </div>
     </div>

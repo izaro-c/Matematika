@@ -311,6 +311,13 @@ export const diagramSpecV2Schema = z.object({
     }
   });
   spec.points.forEach((point, index) => {
+    if (point.fixed && point.constraint !== 'fixed' && point.constraint !== 'derived') {
+      context.addIssue({
+        code: 'custom',
+        message: `${point.id} está marcado como fijo y a la vez usa una restricción móvil (${point.constraint}).`,
+        path: ['points', index, 'fixed'],
+      });
+    }
     if (point.constraint === 'glider' && (!point.gliderTarget || !referenceIds.has(point.gliderTarget))) {
       context.addIssue({ code: 'custom', message: `El glider ${point.id} necesita un soporte existente.`, path: ['points', index, 'gliderTarget'] });
     }

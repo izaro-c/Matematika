@@ -57,8 +57,9 @@ describe('Phase 7 visual authoring interactions', () => {
       </MathProvider>,
     );
 
+    fireEvent.click(screen.getByRole('button', { name: /Índice/ }));
     expect(screen.getByRole('navigation', { name: 'Outline del documento' }).textContent).toContain('Construcción');
-    expect(screen.getByRole('navigation', { name: 'Outline responsive del documento' }).textContent).toContain('Construcción');
+    expect(screen.queryByRole('navigation', { name: 'Outline responsive del documento' })).toBeNull();
     fireEvent.keyDown(window, { key: '/', ctrlKey: true });
     const dialog = screen.getByRole('dialog', { name: 'Insertar bloque' });
     expect(dialog).toBeTruthy();
@@ -115,5 +116,21 @@ describe('Phase 7 visual authoring interactions', () => {
     );
     expect(screen.getByText(/Bloque desconocido preservado byte a byte/)).toBeTruthy();
     expect(screen.queryByDisplayValue('<FutureWidget keep={{ nested: true }} />')).toBeNull();
+  });
+
+  it('edits nested exercise questions as visual fields instead of raw JSX', () => {
+    const updateBlock = vi.fn();
+    const exercise: Block = {
+      id: 'exercise-step',
+      type: 'exercise',
+      content: `Planteamiento.\n<Pregunta id="q1" correct="a" texto="¿Cuál es el resultado?" opciones={[{ value: 'a', texto: '$2$' }, { value: 'b', texto: '$3$' }]} />`,
+      metadata: { editable: true, id: 'p1', numero: 1, titulo: 'Cálculo' },
+    };
+    render(<MathProvider><VisualEditorPanel currentFile="database/content/exercises/test.mdx" metadata={{ id: 'test', type: 'ejercicio', title: 'Test', description: 'Descripción' }} isReadOnly={false} canEditVisualMetadata canMutateVisualStructure blocks={[exercise]} editingBlockId={null} setEditingBlockId={vi.fn()} handleMetadataChange={vi.fn()} addBlock={vi.fn()} moveBlock={vi.fn()} duplicateBlock={vi.fn()} removeBlock={vi.fn()} updateBlock={updateBlock} handleTextareaSelect={vi.fn()} handleEditLink={vi.fn()} setActiveDiagramIndex={vi.fn()} setActiveDiagramBlockId={vi.fn()} setDiagramBuilderOpen={vi.fn()} diagramTargets={[]} /></MathProvider>);
+
+    expect(screen.getByText('Pregunta 1')).toBeTruthy();
+    expect(screen.getByText('Correcta')).toBeTruthy();
+    fireEvent.change(screen.getByDisplayValue('¿Cuál es el resultado?'), { target: { value: '¿Cuál es el valor?' } });
+    expect(updateBlock).toHaveBeenCalledWith('exercise-step', expect.stringContaining('texto="¿Cuál es el valor?"'));
   });
 });

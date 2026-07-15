@@ -1,6 +1,7 @@
 import type { ColorToken, ConstructionKind, ConstructionSlot, ElementKind, TemplateKind, VisualDiagramModel } from './types';
 
 export const TEMPLATE_OPTIONS: Array<{ value: TemplateKind; label: string; description: string }> = [
+  { value: 'lienzo-inicial', label: 'Lienzo inicial', description: 'Un único punto libre para reconstruir el diagrama desde sus elementos básicos.' },
   { value: 'triangulo-deformable', label: 'Triángulo deformable', description: 'Vértices arrastrables, lados, área y targets listos para texto interactivo.' },
   { value: 'cuadrilatero-clasificable', label: 'Cuadrilátero clasificable', description: 'Cuatro vértices, lados, diagonales opcionales y lectura visual de clases.' },
   { value: 'circunferencia', label: 'Circunferencia', description: 'Centro, punto sobre la circunferencia, radio y medición enlazable.' },

@@ -136,7 +136,8 @@ export const EditorNavigation: React.FC<EditorNavigationProps> = ({
     return [...groups.entries()].sort(([a], [b]) => categoryLabel(a).localeCompare(categoryLabel(b), 'es'));
   }, [filtered]);
 
-  const filtersActive = filters.query !== '' || filters.type !== 'all' || filters.status !== 'all' || filters.capability !== 'all';
+  const advancedFilterCount = [filters.type !== 'all', filters.status !== 'all', filters.capability !== 'all'].filter(Boolean).length;
+  const filtersActive = filters.query !== '' || advancedFilterCount > 0;
   const updateFilter = <Key extends keyof EditorCatalogFilters>(key: Key, value: EditorCatalogFilters[Key]) => setFilters(previous => ({ ...previous, [key]: value }));
   const handleResourceKeys = (event: React.KeyboardEvent<HTMLDivElement>) => {
     if (event.key !== 'ArrowDown' && event.key !== 'ArrowUp') return;
@@ -195,33 +196,42 @@ export const EditorNavigation: React.FC<EditorNavigationProps> = ({
             className="w-full rounded border border-carbon/20 bg-lienzo px-3 py-2 text-xs text-carbon outline-none placeholder:text-carbon/35 focus:border-salvia"
           />
         </label>
-        <div className="grid grid-cols-2 gap-2">
-          <label className="text-[9px] font-bold uppercase tracking-wide text-carbon/50">
-            Tipo
-            <select value={filters.type} onChange={event => updateFilter('type', event.target.value)} className="mt-1 w-full rounded border border-carbon/15 bg-lienzo px-2 py-1.5 text-xs font-normal normal-case text-carbon">
-              <option value="all">Todos</option>
-              {types.map(type => <option key={type} value={type}>{categoryLabel(type)}</option>)}
-            </select>
-          </label>
-          <label className="text-[9px] font-bold uppercase tracking-wide text-carbon/50">
-            Estado
-            <select value={filters.status} onChange={event => updateFilter('status', event.target.value as EditorCatalogFilters['status'])} className="mt-1 w-full rounded border border-carbon/15 bg-lienzo px-2 py-1.5 text-xs font-normal normal-case text-carbon">
-              <option value="all">Todos</option>
-              <option value="available">Disponible</option>
-              <option value="attention">Con límites</option>
-              <option value="invalid">Con errores</option>
-            </select>
-          </label>
-        </div>
-        <label className="block text-[9px] font-bold uppercase tracking-wide text-carbon/50">
-          Capacidad de edición
-          <select value={filters.capability} onChange={event => updateFilter('capability', event.target.value as EditorCatalogFilters['capability'])} className="mt-1 w-full rounded border border-carbon/15 bg-lienzo px-2 py-1.5 text-xs font-normal normal-case text-carbon">
-            <option value="all">Todas</option>
-            <option value="visual-exact">Edición visual exacta</option>
-            <option value="code-preview">Código con vista previa</option>
-            <option value="invalid">Requiere corrección</option>
-          </select>
-        </label>
+        <details className="group rounded border border-carbon/10 bg-carbon/[0.02]" open={advancedFilterCount > 0 || undefined}>
+          <summary className="flex cursor-pointer list-none items-center justify-between rounded px-3 py-2 text-[10px] font-bold text-carbon/60 hover:bg-carbon/5 focus-visible:outline focus-visible:outline-2 focus-visible:outline-salvia [&::-webkit-details-marker]:hidden">
+            <span>Filtrar resultados</span>
+            <span className="font-mono text-[9px] text-carbon/45">{advancedFilterCount > 0 ? `${advancedFilterCount} activos` : 'Tipo, estado, capacidad'} <span aria-hidden="true">▾</span></span>
+          </summary>
+          <div className="space-y-2 border-t border-carbon/10 p-2.5">
+            <div className="grid grid-cols-2 gap-2">
+              <label className="text-[9px] font-bold uppercase tracking-wide text-carbon/50">
+                Tipo
+                <select value={filters.type} onChange={event => updateFilter('type', event.target.value)} className="mt-1 w-full rounded border border-carbon/15 bg-lienzo px-2 py-1.5 text-xs font-normal normal-case text-carbon">
+                  <option value="all">Todos</option>
+                  {types.map(type => <option key={type} value={type}>{categoryLabel(type)}</option>)}
+                </select>
+              </label>
+              <label className="text-[9px] font-bold uppercase tracking-wide text-carbon/50">
+                Estado
+                <select value={filters.status} onChange={event => updateFilter('status', event.target.value as EditorCatalogFilters['status'])} className="mt-1 w-full rounded border border-carbon/15 bg-lienzo px-2 py-1.5 text-xs font-normal normal-case text-carbon">
+                  <option value="all">Todos</option>
+                  <option value="available">Disponible</option>
+                  <option value="attention">Con límites</option>
+                  <option value="invalid">Con errores</option>
+                </select>
+              </label>
+            </div>
+            <label className="block text-[9px] font-bold uppercase tracking-wide text-carbon/50">
+              Capacidad de edición
+              <select value={filters.capability} onChange={event => updateFilter('capability', event.target.value as EditorCatalogFilters['capability'])} className="mt-1 w-full rounded border border-carbon/15 bg-lienzo px-2 py-1.5 text-xs font-normal normal-case text-carbon">
+                <option value="all">Todas</option>
+                <option value="visual-exact">Edición visual exacta</option>
+                <option value="code-preview">Código con vista previa</option>
+                <option value="invalid">Requiere corrección</option>
+              </select>
+            </label>
+            {advancedFilterCount > 0 && <button type="button" onClick={() => setFilters(previous => ({ ...DEFAULT_EDITOR_CATALOG_FILTERS, query: previous.query }))} className="w-full rounded border border-carbon/15 px-2 py-1.5 text-[10px] font-bold text-carbon/65 hover:bg-carbon/5">Restablecer filtros avanzados</button>}
+          </div>
+        </details>
       </div>
 
       <div className="flex-1 overflow-y-auto p-3" onKeyDown={handleResourceKeys}>

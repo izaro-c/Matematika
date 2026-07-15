@@ -1,12 +1,20 @@
 import type { ThemeColors } from './MathBoard';
 
 type JXGCoord = number | (() => number);
+const diagramFontStyle = 'font-family: var(--font-diagram-family);';
 
 function pointLabel(theme: ThemeColors, label: Record<string, unknown> = {}) {
+  const cssClass = 'JXGtext JXgpointLabel matematika-point-label';
+  const highlightCssClass = `${cssClass} matematika-point-label--highlight`;
   return {
-    fontSize: 16,
-    cssClass: 'font-serif font-semibold italic tracking-tight',
+    fontSize: 19,
+    cssClass,
+    highlightCssClass,
+    cssDefaultStyle: diagramFontStyle,
+    highlightCssDefaultStyle: diagramFontStyle,
     strokeColor: theme.carbon,
+    highlightStrokeColor: theme.ocre,
+    highlightStrokeOpacity: 1,
     ...label,
   };
 }
@@ -15,8 +23,11 @@ export function createPoint(board: any, coords: [JXGCoord, JXGCoord], options: a
   const { label, ...attributes } = options;
   return board.create('point', coords, {
     size: 4,
+    highlightSize: 6,
     fillColor: theme.carbon,
     strokeColor: theme.carbon,
+    highlightFillColor: theme.ocre,
+    highlightStrokeColor: theme.ocre,
     showInfobox: false,
     ...attributes,
     label: pointLabel(theme, label),
@@ -306,8 +317,11 @@ export function createMidpoint(board: any, points: [any, any], options: any = {}
   const { label, ...attributes } = options;
   return board.create('midpoint', points, {
     size: 4,
+    highlightSize: 6,
     fillColor: theme.terracota,
     strokeColor: theme.terracota,
+    highlightFillColor: theme.ocre,
+    highlightStrokeColor: theme.ocre,
     showInfobox: false,
     ...attributes,
     label: pointLabel(theme, label),
@@ -318,8 +332,11 @@ export function createGlider(board: any, coordsAndSupport: [JXGCoord, JXGCoord, 
   const { label, ...attributes } = options;
   return board.create('glider', coordsAndSupport, {
     size: 4,
+    highlightSize: 6,
     fillColor: theme.ocre,
     strokeColor: theme.ocre,
+    highlightFillColor: theme.ocre,
+    highlightStrokeColor: theme.ocre,
     showInfobox: false,
     ...attributes,
     label: pointLabel(theme, label),
@@ -364,8 +381,11 @@ export function createPerpendicularFoot(board: any, points: [any, any, any], opt
     () => projected().y,
   ], {
     size: 4,
+    highlightSize: 6,
     fillColor: theme.ocre,
     strokeColor: theme.ocre,
+    highlightFillColor: theme.ocre,
+    highlightStrokeColor: theme.ocre,
     showInfobox: false,
     ...attributes,
     label: pointLabel(theme, label),
@@ -486,7 +506,9 @@ export function createText(board: any, coords: [JXGCoord, JXGCoord, string | (()
     fixed: true,
     display: 'html',
     color: theme.carbon,
-    cssClass: 'font-serif text-sm',
+    cssClass: 'font-diagram text-sm',
+    cssDefaultStyle: diagramFontStyle,
+    highlightCssDefaultStyle: diagramFontStyle,
     ...options,
   });
 }
@@ -498,14 +520,22 @@ export function createSlider(
   options: any = {},
   theme: ThemeColors,
 ) {
+  const { label, ...attributes } = options;
   return board.create('slider', [anchors[0], anchors[1], values], {
     name: '',
     baseline: { strokeColor: theme.pizarra, strokeWidth: 2 },
     highline: { strokeColor: theme.terracota, strokeWidth: 3 },
     fillColor: theme.terracota,
     strokeColor: theme.terracota,
-    label: { cssClass: 'font-serif text-sm', strokeColor: theme.carbon },
-    ...options,
+    ...attributes,
+    label: {
+      cssClass: 'font-diagram text-sm',
+      highlightCssClass: 'font-diagram text-sm',
+      cssDefaultStyle: diagramFontStyle,
+      highlightCssDefaultStyle: diagramFontStyle,
+      strokeColor: theme.carbon,
+      ...label,
+    },
   });
 }
 

@@ -76,6 +76,75 @@ describe('useDiagramState safety policy', () => {
     expect(readDiagram).not.toHaveBeenCalled();
   });
 
+  it('replaces stale model errors after the visual correction becomes valid', async () => {
+    const model = createTemplateModel('circunferencia', 'Validación visual', 'definicion');
+    readDiagram.mockResolvedValueOnce({
+      source: 'original',
+      model,
+      version: 'v1',
+      parseStatus: 'visual-exact',
+      diagnostics: [],
+    });
+    const { result } = renderHook(() => useDiagramState());
+
+    await act(async () => result.current.loadDiagram(
+      'src/shared/diagrams/ValidacionVisual.tsx',
+      'ValidacionVisual',
+    ));
+
+    act(() => result.current.handleVisualEdit({
+      ...model,
+      points: [...model.points, { ...model.points[0] }],
+    }));
+    expect(result.current.state.diagnostics).toContainEqual(expect.objectContaining({
+      code: 'invalid-diagram-spec-v2',
+      severity: 'error',
+      source: 'model',
+    }));
+
+    act(() => result.current.handleVisualEdit({ ...model, title: 'Validación corregida' }));
+
+    expect(result.current.state.diagnostics).toEqual([]);
+    expect(result.current.state.currentSource).toContain('Validación corregida');
+    expect(result.current.state.status).toBe('visual-authoritative');
+  });
+
+  it('prepares a code-preview rewrite without touching its source and saves against the original version', async () => {
+    const model = createTemplateModel('lienzo-inicial', 'Reescritura', 'definicion');
+    const originalSource = 'export const Legacy = () => <svg data-legacy />;\n';
+    readDiagram.mockResolvedValueOnce({
+      source: originalSource,
+      model: null,
+      version: 'legacy-v1',
+      parseStatus: 'code-preview',
+      diagnostics: [],
+    });
+    saveDiagram.mockResolvedValueOnce({ version: 'visual-v2', backupId: 'backup-legacy' });
+    const { result } = renderHook(() => useDiagramState());
+
+    await act(async () => result.current.loadDiagramForRewrite(
+      'src/widgets/diagrams/Legacy.tsx',
+      'Legacy',
+      model,
+    ));
+
+    expect(result.current.state.originalSource).toBe(originalSource);
+    expect(result.current.state.currentSource).toContain('createDiagramSpec');
+    expect(result.current.state.currentModel).toEqual(model);
+    expect(result.current.state.status).toBe('visual-authoritative');
+    expect(result.current.isDirty).toBe(true);
+
+    await act(async () => {
+      expect(await result.current.saveDiagram()).toBe(true);
+    });
+    expect(saveDiagram).toHaveBeenCalledWith(
+      'src/widgets/diagrams/Legacy.tsx',
+      expect.stringContaining('createDiagramSpec'),
+      'legacy-v1',
+    );
+    expect(result.current.state.status).toBe('synced');
+  });
+
   it('blocks conflict state after the first rejected save', async () => {
     const model = createTemplateModel('circunferencia', 'Conflict', 'definicion');
     readDiagram.mockResolvedValueOnce({ source: 'original', model, version: 'v1' });

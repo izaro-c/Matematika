@@ -48,6 +48,16 @@ export type DiagramAction =
       model: VisualDiagramModel;
       diagnostics?: DiagramDiagnostic[];
     }
+  | {
+      type: 'LOAD_REWRITE_DIAGRAM';
+      filePath: string;
+      componentName: string;
+      originalSource: string;
+      source: string;
+      model: VisualDiagramModel;
+      expectedVersion: string;
+      diagnostics?: DiagramDiagnostic[];
+    }
   | { type: 'VISUAL_EDIT'; model: VisualDiagramModel; commandId?: string; label?: string; mergeKey?: string }
   | { type: 'UNDO' }
   | { type: 'REDO' }
@@ -60,7 +70,7 @@ export type DiagramAction =
   | { type: 'APPLY_PARSED_MODEL'; model: VisualDiagramModel; diagnostics: DiagramDiagnostic[] }
   | { type: 'PARSE_CODE_PREVIEW'; diagnostics: DiagramDiagnostic[] }
   | { type: 'PARSE_FAILED'; diagnostics: DiagramDiagnostic[] }
-  | { type: 'RESOLVE_TO_VISUAL'; source: string }
+  | { type: 'RESOLVE_TO_VISUAL'; source: string; diagnostics: DiagramDiagnostic[] }
   | { type: 'RESOLVE_TO_SOURCE'; model: VisualDiagramModel }
   | { type: 'SAVE_START' }
   | { type: 'SAVE_SUCCESS'; source: string; model: VisualDiagramModel | null; expectedVersion: string }

@@ -17,7 +17,7 @@ export const DiagramTitle: React.FC<DiagramTitleProps> = ({ children, layout = '
 
   return (
     <div
-      className={`${layoutClasses} font-serif font-semibold leading-none tracking-tight ${className}`}
+      className={`${layoutClasses} font-diagram font-semibold leading-none tracking-normal ${className}`}
       data-diagram-title
       data-layout={layout}
     >
@@ -57,13 +57,13 @@ export const DiagramInfoPanel: React.FC<DiagramInfoPanelProps> = ({
 
   return (
     <aside
-      className={`${layoutClasses} max-w-[min(30rem,calc(100%-2rem))] min-w-[12rem] border-l-2 border-ocre/70 px-3 py-2 font-serif text-xs leading-relaxed text-carbon/75 select-none ${className}`}
+      className={`${layoutClasses} max-w-[min(30rem,calc(100%-2rem))] min-w-[12rem] border-l-2 border-ocre/70 px-3 py-2 font-diagram text-xs leading-relaxed text-carbon/75 select-none ${className}`}
       data-diagram-info-panel
       data-layout={layout}
       data-position={position}
     >
       {title && (
-        <div className="mb-1 font-serif text-sm font-semibold leading-tight text-carbon">
+        <div className="mb-1 font-diagram text-sm font-semibold leading-tight text-carbon">
           {title}
         </div>
       )}

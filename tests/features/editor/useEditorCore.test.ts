@@ -55,25 +55,25 @@ describe('useEditorCore lossless integration', () => {
   beforeEach(() => vi.stubGlobal('fetch', vi.fn()));
   afterEach(() => { vi.restoreAllMocks(); vi.unstubAllGlobals(); });
 
-  it('keeps visual persistence disabled and opens MDX in code mode with full source', async () => {
+  it('opens compatible MDX in visual mode while preserving the full source', async () => {
     const fetchMock = vi.mocked(fetch).mockResolvedValueOnce(readResponse(source));
     const { result } = renderHook(() => useEditorCore());
     await act(() => result.current.openFile('content/test.mdx'));
     expect(VISUAL_SAVE_POLICY).toBe('enabled');
-    expect(result.current.editorMode).toBe('code');
+    expect(result.current.editorMode).toBe('visual');
     expect(result.current.rawBody).toBe(source);
     expect(result.current.blocks).toHaveLength(2);
     expect(fetchMock).toHaveBeenCalledTimes(1);
   });
 
-  it('changes code to visual to code without changing one byte', async () => {
+  it('changes visual to code to visual without changing one byte', async () => {
     vi.mocked(fetch).mockResolvedValueOnce(readResponse(source));
     const { result } = renderHook(() => useEditorCore());
     await act(() => result.current.openFile('content/test.mdx'));
     act(() => result.current.toggleEditorMode());
-    expect(result.current.editorMode).toBe('visual');
-    act(() => result.current.toggleEditorMode());
     expect(result.current.editorMode).toBe('code');
+    act(() => result.current.toggleEditorMode());
+    expect(result.current.editorMode).toBe('visual');
     expect(result.current.rawBody).toBe(source);
   });
 
@@ -92,11 +92,11 @@ describe('useEditorCore lossless integration', () => {
     vi.mocked(fetch).mockResolvedValueOnce(readResponse(source));
     const { result } = renderHook(() => useEditorCore());
     await act(() => result.current.openFile('content/test.mdx'));
-    act(() => result.current.toggleEditorMode());
     const heading = result.current.blocks[0];
     act(() => result.current.updateBlock(heading.id, 'Nuevo título'));
     await waitFor(() => expect(result.current.rawBody).toContain('## Nuevo título'));
     act(() => result.current.toggleEditorMode());
+    expect(result.current.editorMode).toBe('code');
     expect(result.current.rawBody).toBe(source.replace('## Título', '## Nuevo título'));
     expect(result.current.rawBody).toContain(`import X from './x';`);
     expect(result.current.rawBody).toContain('export const value = { nested: true };');
@@ -106,7 +106,6 @@ describe('useEditorCore lossless integration', () => {
     vi.mocked(fetch).mockResolvedValueOnce(readResponse(source));
     const { result } = renderHook(() => useEditorCore());
     await act(() => result.current.openFile('content/test.mdx'));
-    act(() => result.current.toggleEditorMode());
     const before = result.current.rawBody;
     act(() => result.current.removeBlock(result.current.blocks[0].id));
     expect(result.current.rawBody).not.toBe(before);
@@ -171,7 +170,7 @@ describe('useEditorCore lossless integration', () => {
     await act(async () => { saved = await result.current.saveCurrentFile(); });
 
     expect(saved).toBe(false);
-    expect(result.current.message).toContain('source MDX actual no se puede analizar');
+    expect(result.current.message).toContain('documentos no soportados');
     expect(fetchMock).toHaveBeenCalledTimes(1);
   });
 
@@ -219,7 +218,6 @@ describe('useEditorCore lossless integration', () => {
       });
     const { result } = renderHook(() => useEditorCore());
     await act(() => result.current.openFile('content/partial.mdx'));
-    act(() => result.current.toggleEditorMode());
     const heading = result.current.blocks.find(block => block.type === 'heading');
     expect(heading).toBeDefined();
     act(() => result.current.updateBlock(heading!.id, 'Título aprobado'));
@@ -248,7 +246,6 @@ describe('useEditorCore lossless integration', () => {
     vi.mocked(fetch).mockResolvedValueOnce(readResponse(partialSource, 'content/partial.mdx'));
     const { result } = renderHook(() => useEditorCore());
     await act(() => result.current.openFile('content/partial.mdx'));
-    act(() => result.current.toggleEditorMode());
     const heading = result.current.blocks.find(block => block.type === 'heading');
     act(() => result.current.updateBlock(heading!.id, 'Título aprobado'));
     await waitFor(() => expect(result.current.rawBody).toContain('## Título aprobado'));
@@ -279,7 +276,6 @@ describe('useEditorCore lossless integration', () => {
     vi.mocked(fetch).mockResolvedValueOnce(readResponse(partialSource, 'content/partial.mdx'));
     const { result } = renderHook(() => useEditorCore());
     await act(() => result.current.openFile('content/partial.mdx'));
-    act(() => result.current.toggleEditorMode());
     const heading = result.current.blocks.find(block => block.type === 'heading');
     act(() => result.current.updateBlock(heading!.id, 'Título aprobado'));
     await waitFor(() => expect(result.current.rawBody).toContain('## Título aprobado'));
@@ -433,7 +429,7 @@ describe('useEditorCore lossless integration', () => {
     act(() => result.current.updateRawBody(updated));
 
     act(() => result.current.toggleEditorMode());
-    expect(result.current.editorMode).toBe('visual');
+    expect(result.current.editorMode).toBe('code');
     expect(result.current.rawBody).toBe(updated);
 
     await act(async () => { pendingHash.resolve(digest(5)); });

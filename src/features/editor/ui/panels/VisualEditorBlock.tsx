@@ -6,6 +6,9 @@ import type { Block, BlockType } from '../../core/parser';
 import { insertSymbol, parseMarkdownTable, renderFormattedText, type EditLinkHandler } from './InlineContentPreview';
 import { INLINE_EDITABLE_BLOCKS, LATEX_SYMBOLS } from './visualEditorPresets';
 import { BlockActions, BlockInsertMenu } from './VisualBlockControls';
+import { RegisteredMdxBlockEditor } from './RegisteredMdxBlockEditor';
+import { ExerciseBlockEditor } from './ExerciseBlockEditor';
+import { DiagramRuntimePreview } from '../../diagrams/ui/DiagramRuntimePreview';
 
 interface VisualEditorBlockProps {
   block: Block;
@@ -35,8 +38,11 @@ export const VisualEditorBlock: React.FC<VisualEditorBlockProps> = ({
   handleTextareaSelect, handleEditLink, renderInlineToolbar, setActiveDiagramIndex,
   setActiveDiagramBlockId, setDiagramBuilderOpen, diagramTargets,
 }) => {
-  const isFirstParagraph = index === blocks.findIndex(item => item.type === 'paragraph');
-  const hasDropCap = isFirstParagraph && /^\p{L}/u.test(block.content);
+  const precedingCapitular = blocks[index - 1]?.metadata?.component === 'Capitular' ? blocks[index - 1] : null;
+  const dropCapLetter = block.metadata?.capitular
+    ? String(block.metadata.capitular).slice(0, 1)
+    : precedingCapitular ? String(precedingCapitular.metadata?.letra || '').slice(0, 1) : '';
+  const hasDropCap = block.type === 'paragraph' && Boolean(dropCapLetter);
   const isSourceOnly = block.metadata?.preserved === true || block.metadata?.opaque === true;
 
   return (
@@ -65,7 +71,8 @@ export const VisualEditorBlock: React.FC<VisualEditorBlockProps> = ({
                 <div className="space-y-1">
                   <div className="flex justify-between items-center opacity-0 group-hover/block:opacity-100 transition-opacity select-none">
                     <label className="block text-[8px] font-bold text-carbon/40 uppercase tracking-widest font-sans">Párrafo</label>
-                    <span className="text-[8px] text-carbon/30 italic font-sans">
+                    <span className="flex items-center gap-2 text-[8px] text-carbon/30 italic font-sans">
+                      {hasDropCap && <label className="not-italic font-bold text-salvia">Capitular <input aria-label="Letra capitular" maxLength={1} value={dropCapLetter} onChange={event => updateBlock(block.id, block.content, { ...block.metadata, capitular: event.target.value.toUpperCase() })} className="ml-1 h-5 w-6 rounded border border-salvia/20 bg-lienzo text-center font-serif text-xs font-bold text-salvia" /></label>}
                       {editingBlockId === block.id ? 'Subraye texto para vincular concepto' : 'Haga clic para editar'}
                     </span>
                   </div>
@@ -96,9 +103,9 @@ export const VisualEditorBlock: React.FC<VisualEditorBlockProps> = ({
                       {hasDropCap ? (
                         <>
                           <span className="float-left text-5xl font-serif font-bold text-salvia mr-2 leading-none mt-1 select-none">
-                            {block.content.charAt(0).toUpperCase()}
+                            {dropCapLetter}
                           </span>
-                          {renderFormattedText(block.content.substring(1), block.id, handleEditLink) || (
+                          {renderFormattedText(block.content, block.id, handleEditLink) || (
                             <span className="text-carbon/25 italic">Escriba prosa explicativa o notas aquí...</span>
                           )}
                         </>
@@ -383,82 +390,15 @@ export const VisualEditorBlock: React.FC<VisualEditorBlockProps> = ({
               )}
 
               {block.type === 'exercise' && (
-                <div className="space-y-2">
-                  <div className="flex justify-between items-center border-b border-carbon/10 pb-1 opacity-0 group-hover/block:opacity-100 transition-opacity select-none">
-                    <label className="block text-[8px] font-bold text-carbon/40 uppercase tracking-widest font-sans">
-                      Paso de ejercicio interactivo
-                    </label>
-                    <span className="font-mono text-[9px] text-carbon/35">{block.metadata?.id || 'sin-id'}</span>
-                  </div>
-                  <div className="rounded border border-ocre/20 bg-ocre/5 p-4">
-                    <div className="mb-3 grid gap-2 sm:grid-cols-3">
-                      <input
-                        value={block.metadata?.id || ''}
-                        onChange={(e) => updateBlock(block.id, block.content, { ...block.metadata, id: e.target.value })}
-                        className="rounded border border-carbon/15 bg-lienzo px-2 py-1 text-xs text-carbon outline-none focus:border-ocre"
-                        placeholder="id del paso"
-                      />
-                      <input
-                        type="number"
-                        value={block.metadata?.numero || 1}
-                        onChange={(e) => updateBlock(block.id, block.content, { ...block.metadata, numero: Number(e.target.value) || 1 })}
-                        className="rounded border border-carbon/15 bg-lienzo px-2 py-1 text-xs text-carbon outline-none focus:border-ocre"
-                        placeholder="número"
-                      />
-                      <input
-                        value={block.metadata?.titulo || ''}
-                        onChange={(e) => updateBlock(block.id, block.content, { ...block.metadata, titulo: e.target.value })}
-                        className="rounded border border-carbon/15 bg-lienzo px-2 py-1 text-xs text-carbon outline-none focus:border-ocre"
-                        placeholder="título del paso"
-                      />
-                    </div>
-                    {editingBlockId === block.id ? (
-                      <div className="space-y-2">
-                        {renderInlineToolbar(block)}
-                        <textarea
-                          autoFocus
-                          value={block.content}
-                          onChange={(e) => updateBlock(block.id, e.target.value)}
-                          onSelect={(e) => handleTextareaSelect(e, block.id)}
-                          onBlur={() => setEditingBlockId(null)}
-                          className="min-h-56 w-full resize-y rounded border border-carbon/15 bg-lienzo p-3 font-mono text-xs leading-relaxed text-carbon outline-none focus:border-ocre"
-                        />
-                      </div>
-                    ) : (
-                      <button
-                        type="button"
-                        onClick={() => !isReadOnly && setEditingBlockId(block.id)}
-                        className="block w-full rounded border border-dashed border-carbon/15 bg-lienzo/70 p-3 text-left font-serif text-sm leading-relaxed text-carbon hover:border-ocre/30 cursor-pointer"
-                      >
-                        <span className="mb-2 block text-[10px] font-bold uppercase tracking-widest text-ocre/75">
-                          {block.metadata?.titulo || 'Paso interactivo'}
-                        </span>
-                        <span className="line-clamp-6 whitespace-pre-wrap">{renderFormattedText(block.content, block.id, handleEditLink)}</span>
-                      </button>
-                    )}
-                  </div>
-                </div>
+                <ExerciseBlockEditor block={block} isReadOnly={isReadOnly} updateBlock={updateBlock} handleTextareaSelect={handleTextareaSelect} handleEditLink={handleEditLink} renderInlineToolbar={renderInlineToolbar} />
               )}
 
               {block.type === 'advancedMdx' && (
-                <div className="space-y-2">
-                  <div className="flex justify-between items-center border-b border-carbon/10 pb-1 opacity-0 group-hover/block:opacity-100 transition-opacity select-none">
-                    <label className="block text-[8px] font-bold text-carbon/40 uppercase tracking-widest font-sans">
-                      Componente MDX avanzado
-                    </label>
-                    <span className="font-mono text-[9px] text-carbon/35">{block.metadata?.component || 'MDX'}</span>
-                  </div>
-                  <div className="rounded border border-pavo/20 bg-pavo/5 p-4">
-                    {block.metadata?.editable ? <>
-                      <p className="mb-3 text-xs italic text-carbon/55 select-none">Este componente registrado se edita mediante su rango exacto y también puede ajustarse en código.</p>
-                      <textarea value={block.content} onChange={(e) => updateBlock(block.id, e.target.value)} onSelect={(e) => handleTextareaSelect(e, block.id)}
-                        className="min-h-32 w-full resize-y rounded border border-carbon/15 bg-lienzo p-3 font-mono text-xs leading-relaxed text-carbon outline-none focus:border-pavo" />
-                    </> : <>
+                block.metadata?.editable ? <RegisteredMdxBlockEditor block={block} isReadOnly={isReadOnly} updateBlock={updateBlock} handleTextareaSelect={handleTextareaSelect} handleEditLink={handleEditLink} renderInlineToolbar={renderInlineToolbar} /> :
+                <div className="space-y-2"><div className="rounded border border-pavo/20 bg-pavo/5 p-4"><>
                       <p className="mb-3 text-xs italic text-carbon/55 select-none">Bloque desconocido preservado byte a byte. Se modifica exclusivamente en la vista de código.</p>
                       <pre className="max-h-48 overflow-auto whitespace-pre-wrap rounded border border-carbon/10 bg-lienzo p-3 font-mono text-[10px] leading-relaxed text-carbon/65">{block.content}</pre>
-                    </>}
-                  </div>
-                </div>
+                    </></div></div>
               )}
 
               {block.type === 'diagram' && (
@@ -496,6 +436,9 @@ export const VisualEditorBlock: React.FC<VisualEditorBlockProps> = ({
                         ))}
                       </div>
                     )}
+                    <div className="mt-4">
+                      <DiagramRuntimePreview filePath={typeof block.metadata?.path === 'string' ? block.metadata.path : null} componentName={block.content} />
+                    </div>
                   </div>
                 </div>
               )}
@@ -514,4 +457,3 @@ export const VisualEditorBlock: React.FC<VisualEditorBlockProps> = ({
             </div>
   );
 };
-

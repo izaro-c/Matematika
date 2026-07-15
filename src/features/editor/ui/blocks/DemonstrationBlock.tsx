@@ -62,7 +62,7 @@ export const DemonstrationBlock: React.FC<DemonstrationBlockProps> = ({ steps, d
       <div className="flex justify-between items-center border-b border-carbon/10 pb-1.5">
         <div>
           <label className="block text-[9px] font-bold text-carbon/40 uppercase tracking-widest">
-            Editor de demostración
+            {singleStepMode ? 'Paso de demostración' : 'Demostración por pasos'}
           </label>
           <p className="mt-1 text-[10px] italic text-carbon/45">Cada paso debe decir qué prueba, por qué es válido y qué elemento visual acompaña la lectura.</p>
         </div>
@@ -117,7 +117,7 @@ export const DemonstrationBlock: React.FC<DemonstrationBlockProps> = ({ steps, d
                   </div>}
                 </div>
 
-                <div className="grid grid-cols-2 gap-3">
+                <div className="grid gap-3 sm:grid-cols-[minmax(0,1fr)_minmax(12rem,0.7fr)]">
                   <div>
                     <label className="block text-[8px] font-bold text-carbon/40 uppercase tracking-wider mb-1">Objetivo del paso</label>
                     <input
@@ -149,7 +149,9 @@ export const DemonstrationBlock: React.FC<DemonstrationBlockProps> = ({ steps, d
                   </div>
                 </div>
 
-                <div className="grid grid-cols-3 gap-3">
+                <details className="rounded border border-carbon/10 bg-carbon/[0.02]">
+                  <summary className="cursor-pointer px-3 py-2 text-[10px] font-bold text-carbon/60">Por qué es válido {step.justificacion ? `· ${step.justificacion}` : '· falta justificar'} <span className="float-right" aria-hidden="true">▾</span></summary>
+                <div className="grid gap-3 border-t border-carbon/10 p-3 sm:grid-cols-3">
                   <div>
                     <label className="block text-[8px] font-bold text-carbon/40 uppercase tracking-wider mb-1">Tipo de justificación</label>
                     <select
@@ -192,6 +194,7 @@ export const DemonstrationBlock: React.FC<DemonstrationBlockProps> = ({ steps, d
                     />
                   </div>
                 </div>
+                </details>
 
                 <div>
                   <label className="block text-[8px] font-bold text-carbon/40 uppercase tracking-wider mb-1">Cuerpo visible del paso</label>

@@ -52,6 +52,8 @@ function mapProjectedBlocks(projected: ProjectedBlock[]): Block[] {
             ? { component: (block.data as { component?: string }).component } : {}),
           ...(block.data && typeof block.data === 'object' && 'steps' in block.data
             ? { steps: (block.data as { steps?: unknown[] }).steps } : {}),
+          ...(block.data && typeof block.data === 'object' && 'capitular' in block.data
+            ? { capitular: (block.data as { capitular?: string }).capitular } : {}),
           ...(block.blockType === 'heading' && block.data && typeof block.data === 'object'
             ? { level: (block.data as { depth?: number }).depth } : {}) }
       : { location: block.location, opaque: block.kind === 'opaque', preserved: block.kind === 'preserved', reason: block.reason, nodeType: block.nodeType }
@@ -103,7 +105,7 @@ export const useEditorCore = () => {
   const [files, setFiles] = useState<FileNode[]>([]);
   const [filesLoading, setFilesLoading] = useState(true);
   const [filesError, setFilesError] = useState<string | null>(null);
-  const [editorMode, setEditorMode] = useState<EditorMode>('code');
+  const [editorMode, setEditorMode] = useState<EditorMode>('visual');
   const [metadata, setMetadataView] = useState<Record<string, unknown>>({});
   const [imports, setImportsView] = useState('');
   const [exports, setExportsView] = useState('');
@@ -233,9 +235,14 @@ export const useEditorCore = () => {
       revisionRef.current = 0;
       saveIdentity.set(file.path, response.source, 0);
       dispatch({ type: 'FILE_LOAD_SUCCEEDED', file, source: response.source, sourceHash: response.sourceHash, version: response.version });
-      if (filePath.endsWith('.mdx')) syncProjection(parseEditorDocument(response.source));
-      else { setDoc(null); setBlocksView([]); setImportsView(''); setExportsView(''); }
-      setEditorMode('code');
+      if (filePath.endsWith('.mdx')) {
+        const nextDocument = parseEditorDocument(response.source);
+        syncProjection(nextDocument);
+        setEditorMode(nextDocument.compatibility === 'unsupported' ? 'code' : 'visual');
+      } else {
+        setDoc(null); setBlocksView([]); setImportsView(''); setExportsView('');
+        setEditorMode('code');
+      }
     } catch (error) {
       if (controller.signal.aborted) return;
       const detail: PersistenceError = error && typeof error === 'object' && 'detail' in error

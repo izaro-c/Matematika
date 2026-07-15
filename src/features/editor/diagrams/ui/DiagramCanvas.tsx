@@ -2,7 +2,7 @@ import React from 'react';
 import { DiagramRenderer, withMovedPoint, withViewportBounds } from '@/shared/diagrams/public';
 import { MathProvider } from '@/shared/lib/MathStoreContext';
 import type { VisualDiagramModel, CanvasTool } from '../model/types';
-import { point } from '../model/commands';
+import { nextPointId, point } from '../model/commands';
 
 interface DiagramCanvasProps {
   model: VisualDiagramModel;
@@ -14,6 +14,7 @@ interface DiagramCanvasProps {
   onSelect: (id: string) => void;
   onModelEdit: (model: VisualDiagramModel, command?: { label?: string; mergeKey?: string }) => void;
   onChoosePointForTool: (pointId: string) => boolean;
+  onCompleteTool: () => void;
 }
 
 export const DiagramCanvas: React.FC<DiagramCanvasProps> = ({
@@ -26,6 +27,7 @@ export const DiagramCanvas: React.FC<DiagramCanvasProps> = ({
   onSelect,
   onModelEdit,
   onChoosePointForTool,
+  onCompleteTool,
 }) => (
   <div className="shrink-0 overflow-hidden rounded border border-carbon/15 bg-lienzo">
     <div className="flex items-center justify-between border-b border-carbon/10 bg-carbon/5 px-3 py-2">
@@ -53,9 +55,23 @@ export const DiagramCanvas: React.FC<DiagramCanvasProps> = ({
           onCanvasPointCreate={canvasTool === 'point' ? (x, y) => {
             const snappedX = Math.round(x * 2) / 2;
             const snappedY = Math.round(y * 2) / 2;
-            const id = `p${model.points.length + 1}`;
-            onModelEdit({ ...model, points: [...model.points, point(id, id.replace(/^p/, ''), snappedX, snappedY)] });
+            const id = nextPointId(model.points);
+            onModelEdit({
+              ...model,
+              points: [...model.points, {
+                ...point(id, id.replace(/^p/, ''), snappedX, snappedY),
+                order: Math.max(0, ...[...model.points, ...model.elements].filter(item => item.layerId === 'geometry').map(item => item.order)) + 1000,
+              }],
+              steps: model.steps.map(item => ({
+                ...item,
+                visibleTargets: item.visibleTargets.includes(id) ? item.visibleTargets : [...item.visibleTargets, id],
+                objectStates: item.objectStates?.[id]
+                  ? { ...item.objectStates, [id]: { ...item.objectStates[id], visible: true } }
+                  : item.objectStates,
+              })),
+            }, { label: `Añadir punto ${id}` });
             onSelect(id);
+            onCompleteTool();
           } : undefined}
           onViewportChange={(bounds) => onModelEdit(withViewportBounds(model, bounds), { label: 'Cambiar viewport', mergeKey: 'viewport' })}
         />
