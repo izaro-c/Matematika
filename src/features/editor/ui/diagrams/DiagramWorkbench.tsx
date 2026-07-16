@@ -349,21 +349,43 @@ export const DiagramWorkbenchCore: React.FC<DiagramWorkbenchCoreProps> = ({
     const selectedId = state.selectedId;
     if (!selectedId) return;
 
+    const removedSceneIds = new Set([
+      selectedId,
+      ...model.elements.filter(item => item.id === selectedId || item.refs.includes(selectedId)).map(item => item.id),
+    ]);
+    const removedConstraintIds = new Set((model.constraints ?? [])
+      .filter(constraint => constraint.id === selectedId || constraint.refs.some(ref => removedSceneIds.has(ref)))
+      .map(constraint => constraint.id));
+    const points = model.points
+      .filter(item => !removedSceneIds.has(item.id))
+      .map(item => {
+        const constraintIds = item.constraintIds?.filter(id => !removedConstraintIds.has(id));
+        if (item.constraint !== 'constrained' || constraintIds?.length) {
+          return constraintIds ? { ...item, constraintIds } : item;
+        }
+        const next = { ...item, fixed: false, constraint: 'free' as const };
+        delete next.constraintIds;
+        return next;
+      });
     handleVisualEdit({
       ...model,
-      points: model.points.filter(item => item.id !== selectedId),
-      elements: model.elements.filter(item => item.id !== selectedId && !item.refs.includes(selectedId)),
-      sliders: model.sliders.filter(item => item.id !== selectedId),
-      steps: model.steps.filter(item => item.id !== selectedId).map(item => ({
+      points,
+      elements: model.elements.filter(item => !removedSceneIds.has(item.id)),
+      sliders: model.sliders.filter(item => !removedSceneIds.has(item.id)),
+      steps: model.steps.filter(item => !removedSceneIds.has(item.id)).map(item => ({
         ...item,
-        visibleTargets: item.visibleTargets.filter(t => t !== selectedId),
+        visibleTargets: item.visibleTargets.filter(targetId => !removedSceneIds.has(targetId)),
         objectStates: item.objectStates
-          ? Object.fromEntries(Object.entries(item.objectStates).filter(([id]) => id !== selectedId))
+          ? Object.fromEntries(Object.entries(item.objectStates).filter(([id]) => !removedSceneIds.has(id)))
           : undefined,
       })),
-      groups: model.groups.map(group => ({ ...group, memberIds: group.memberIds.filter(id => id !== selectedId) })),
-      constraints: model.constraints?.filter(constraint => constraint.id !== selectedId && !constraint.refs.includes(selectedId)),
-      dependencies: model.dependencies?.filter(dependency => dependency.sourceId !== selectedId && dependency.targetId !== selectedId && dependency.constraintId !== selectedId),
+      groups: model.groups.map(group => ({ ...group, memberIds: group.memberIds.filter(id => !removedSceneIds.has(id)) })),
+      constraints: model.constraints?.filter(constraint => !removedConstraintIds.has(constraint.id)),
+      dependencies: model.dependencies?.filter(dependency => (
+        !removedSceneIds.has(dependency.sourceId)
+        && !removedSceneIds.has(dependency.targetId)
+        && (!dependency.constraintId || !removedConstraintIds.has(dependency.constraintId))
+      )),
     });
     selectElement('');
   };

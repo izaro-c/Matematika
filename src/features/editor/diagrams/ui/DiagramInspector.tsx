@@ -7,6 +7,7 @@ import { DEFAULT_ANGLE_RADIUS, DEFAULT_RIGHT_ANGLE_RADIUS, extractMathExpression
 import { DiagramConstraintEditor } from './DiagramConstraintEditor';
 import { constraintPresentation } from '../model/constraintOptions';
 import { DiagramSceneControls } from './DiagramSceneControls';
+import { SegmentLengthConstraintEditor } from './SegmentLengthConstraintEditor';
 
 interface DiagramInspectorProps {
   model: VisualDiagramModel;
@@ -177,7 +178,7 @@ export const DiagramInspector: React.FC<DiagramInspectorProps> = ({
           </div>
 
           <div>
-            <label className="block text-xs font-bold text-carbon mb-1">Restricción</label>
+            <label className="block text-xs font-bold text-carbon mb-1">Movimiento del punto</label>
             <select
               aria-label="Restricción del punto"
               className="w-full rounded border border-carbon/15 bg-lienzo p-1.5 text-xs"
@@ -190,7 +191,7 @@ export const DiagramInspector: React.FC<DiagramInspectorProps> = ({
               <option value="vertical">Vertical</option>
               <option value="glider">Punto sobre elemento</option>
               <option value="derived">Derivado por expresiones</option>
-              <option value="constrained">Restringido por relaciones</option>
+              <option value="constrained">Combinar relaciones geométricas</option>
             </select>
             <p className="mt-1 text-[10px] leading-relaxed text-carbon/50">
               {selectedPoint.constraint === 'free' && 'Se puede mover en cualquier dirección.'}
@@ -199,7 +200,7 @@ export const DiagramInspector: React.FC<DiagramInspectorProps> = ({
               {selectedPoint.constraint === 'vertical' && 'Solo cambia su coordenada y; permanece en su vertical actual.'}
               {selectedPoint.constraint === 'glider' && 'Se mueve únicamente sobre el objeto base elegido.'}
               {selectedPoint.constraint === 'derived' && 'La posición se calcula; no se arrastra directamente.'}
-              {selectedPoint.constraint === 'constrained' && 'Combina relaciones geométricas editables con otros objetos.'}
+              {selectedPoint.constraint === 'constrained' && 'Combina relaciones geométricas editables con otros objetos. Para igualar dos segmentos, resulta más directo seleccionar el segmento en el lienzo.'}
             </p>
           </div>
 
@@ -368,6 +369,15 @@ export const DiagramInspector: React.FC<DiagramInspectorProps> = ({
                 </div>
               )}
             </fieldset>
+          )}
+
+          {selectedElement.kind === 'segment' && (
+            <SegmentLengthConstraintEditor
+              key={selectedElement.id}
+              model={model}
+              segment={selectedElement}
+              onModelEdit={onModelEdit}
+            />
           )}
 
           {selectedElement.kind === 'intersection' && (

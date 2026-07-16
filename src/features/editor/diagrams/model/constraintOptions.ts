@@ -13,6 +13,8 @@ export const CONSTRAINT_OPTIONS: Array<ConstraintPresentation & { value: VisualC
   { value: 'coincident', label: 'Coincidir con un punto', description: 'Ocupa exactamente la posición de otro punto.', refs: 2 },
   { value: 'on', label: 'Sobre un objeto', description: 'Solo puede desplazarse sobre una recta, segmento, arco o circunferencia.', refs: 2 },
   { value: 'distance', label: 'A distancia fija', description: 'Mantiene una distancia numérica respecto de otro punto.', refs: 2 },
+  { value: 'equalLength', label: 'Misma longitud que otro segmento', description: 'Ajusta un extremo para que su segmento conserve la longitud de otro segmento.', refs: 3 },
+  { value: 'midpoint', label: 'Punto medio', description: 'Mantiene el punto exactamente a mitad de camino entre otros dos puntos.', refs: 3 },
   { value: 'perpendicular', label: 'Sobre una perpendicular', description: 'Se mueve sobre la perpendicular a una dirección dada.', refs: 3 },
   { value: 'parallel', label: 'Sobre una paralela', description: 'Se mueve sobre una paralela a una dirección dada.', refs: 3 },
   { value: 'insideDisk', label: 'Dentro de un disco', description: 'No puede salir del disco definido por centro y borde.', refs: 3 },
@@ -38,6 +40,12 @@ export function defaultConstraintRefs(model: VisualDiagramModel, kind: VisualCon
   if (kind === 'on') {
     const support = model.elements.find(item => SUPPORT_KINDS.has(item.kind));
     return support ? [targetId, support.id] : [targetId];
+  }
+  if (kind === 'equalLength') {
+    const targetSegment = model.elements.find(item => item.kind === 'segment' && item.refs.includes(targetId));
+    const anchorId = targetSegment?.refs.find(ref => ref !== targetId);
+    const sourceSegment = model.elements.find(item => item.kind === 'segment' && item.id !== targetSegment?.id);
+    return anchorId && sourceSegment ? [targetId, anchorId, sourceSegment.id] : [targetId, ...(anchorId ? [anchorId] : [])];
   }
   const otherPoints = model.points.filter(item => item.id !== targetId).map(item => item.id);
   return [targetId, ...otherPoints.slice(0, presentation.refs - 1)];

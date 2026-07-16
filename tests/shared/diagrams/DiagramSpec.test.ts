@@ -24,6 +24,18 @@ describe('DiagramSpec v2 schema and migrations', () => {
     if (parsed.success) expect(parsed.data.points[0].selection).toMatchObject({ selectable: true, highlightable: false });
   });
 
+  it('accepts additive MDX highlighting for objects and groups without changing the default', () => {
+    const candidate = structuredClone(v2Fixture);
+    candidate.points[0].selection.dimOthersOnHighlight = false;
+    candidate.groups[0].selection.dimOthersOnHighlight = false;
+    const parsed = parseDiagramSpecV2(candidate);
+    expect(parsed.success).toBe(true);
+    if (!parsed.success) return;
+    expect(parsed.data.points[0].selection.dimOthersOnHighlight).toBe(false);
+    expect(parsed.data.groups[0].selection.dimOthersOnHighlight).toBe(false);
+    expect(parsed.data.points[1].selection.dimOthersOnHighlight).toBeUndefined();
+  });
+
   it('migrates an unversioned v1 scene explicitly and preserves its geometry', () => {
     const result = migrateDiagramSpec(legacyFixture);
     expect(result.migratedFrom).toBe(1);

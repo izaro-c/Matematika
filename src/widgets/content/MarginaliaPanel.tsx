@@ -170,6 +170,23 @@ function renderMathString(mathString: string): { __html: string } {
   }
 }
 
+function renderTitleParts(title: string): React.ReactNode {
+  // Split on parenthesized groups, keeping the delimiters as captured groups
+  const parts = title.split(/(\([^)]*\))/g);
+  return parts.map((part, i) => {
+    if (part.startsWith('(') && part.endsWith(')')) {
+      // Keep the preceding space glued to the opening paren so "Word (X)"
+      // doesn't break between "Word" and "(X)"
+      return (
+        <span key={i} style={{ whiteSpace: 'nowrap' }}>
+          {part}
+        </span>
+      );
+    }
+    return <span key={i}>{part}</span>;
+  });
+}
+
 function renderTextWithMath(text: string): React.ReactNode {
   if (!text) return null;
   const parts = text.split(/(\$.*?\$)/g);
@@ -225,7 +242,7 @@ export const MarginaliaPanel = () => {
                 <span className="page-accent-text float-left text-5xl md:text-6xl font-serif font-bold pr-3 pl-1 leading-[0.7] mt-2 select-none">
                   {term.title.charAt(0)}
                 </span>
-                {term.title.slice(1)}
+                {renderTitleParts(term.title.slice(1))}
               </h2>
               <div className="flex items-center gap-3 my-6 opacity-50">
                 <div className="page-accent-bg w-12 h-px opacity-60" />
@@ -286,7 +303,7 @@ export const MarginaliaPanel = () => {
                 <span className="page-accent-text float-left text-5xl font-serif font-bold pr-3 pl-1 leading-[0.7] mt-2 select-none">
                   {data.title.charAt(0)}
                 </span>
-                {data.title.slice(1)}
+                {renderTitleParts(data.title.slice(1))}
               </h2>
               <div className="flex items-center gap-3 my-6 opacity-50">
                 <div className="page-accent-bg w-12 h-px opacity-60" />

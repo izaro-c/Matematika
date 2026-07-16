@@ -53,6 +53,32 @@ function modelWithIntersection() {
   return model;
 }
 
+function modelWithLengthConstraint() {
+  const model = structuredClone(primitivesFixture);
+  model.points = model.points.map(point => point.id === 'pC'
+    ? { ...point, constraint: 'constrained', constraintIds: ['equalOCAB'] }
+    : point);
+  model.elements.push({
+    ...model.elements[0],
+    id: 'segOC',
+    label: 'Segmento OC',
+    refs: ['pO', 'pC'],
+    order: 20,
+  });
+  model.constraints = [{
+    id: 'equalOCAB',
+    label: 'OC tiene la misma longitud que AB',
+    kind: 'equalLength',
+    refs: ['pC', 'pO', 'segAB'],
+    enabled: true,
+  }];
+  model.dependencies = [
+    { sourceId: 'pO', targetId: 'pC', relation: 'constraint', constraintId: 'equalOCAB' },
+    { sourceId: 'segAB', targetId: 'pC', relation: 'constraint', constraintId: 'equalOCAB' },
+  ];
+  return model;
+}
+
 describe('Phase 3 geometry language', () => {
   it.each(fixtures.map(fixture => [fixture.extensions.acceptanceFamily, fixture] as const))('validates and serializes the %s family without loss', (_family, fixture) => {
     const parsed = parseDiagramSpecV2(fixture);
@@ -89,6 +115,60 @@ describe('Phase 3 geometry language', () => {
     const graph = buildDependencyGraph(parsed.data);
     expect(graph.edges).toContainEqual({ sourceId: 'pA', targetId: 'pB', relation: 'expression' });
     expect(graph.edges).toContainEqual({ sourceId: 'pA', targetId: 'pC', relation: 'constraint', constraintId: 'horizontalC' });
+  });
+
+  it('keeps one authored segment equal in length to another when either source endpoint moves', () => {
+    const parsed = parseDiagramSpecV2(modelWithLengthConstraint());
+    expect(parsed.success).toBe(true);
+    if (!parsed.success) return;
+
+    const moved = withMovedPoint(parsed.data, 'pA', 4, 0);
+    const pointO = moved.points.find(point => point.id === 'pO')!;
+    const pointC = moved.points.find(point => point.id === 'pC')!;
+    const pointA = moved.points.find(point => point.id === 'pA')!;
+    const pointB = moved.points.find(point => point.id === 'pB')!;
+
+    expect(Math.hypot(pointC.x - pointO.x, pointC.y - pointO.y))
+      .toBeCloseTo(Math.hypot(pointB.x - pointA.x, pointB.y - pointA.y));
+    expect(buildDependencyGraph(moved).edges).toContainEqual({
+      sourceId: 'segAB',
+      targetId: 'pC',
+      relation: 'constraint',
+      constraintId: 'equalOCAB',
+    });
+  });
+
+  it('keeps an authored point at the midpoint of two moving endpoints', () => {
+    const model = structuredClone(pointsFixture);
+    model.points = model.points.map(point => point.id === 'pC'
+      ? { ...point, constraint: 'constrained', constraintIds: ['midpointC'] }
+      : point);
+    model.constraints = [{
+      id: 'midpointC',
+      label: 'C es el punto medio de A y B',
+      kind: 'midpoint',
+      refs: ['pC', 'pA', 'pB'],
+      enabled: true,
+    }];
+    model.dependencies = [
+      { sourceId: 'pA', targetId: 'pB', relation: 'expression' },
+      { sourceId: 'pA', targetId: 'pC', relation: 'constraint', constraintId: 'midpointC' },
+      { sourceId: 'pB', targetId: 'pC', relation: 'constraint', constraintId: 'midpointC' },
+      { sourceId: 'pA', targetId: 'segAC', relation: 'construction' },
+      { sourceId: 'pC', targetId: 'segAC', relation: 'construction' },
+    ];
+    const parsed = parseDiagramSpecV2(model);
+    expect(parsed.success).toBe(true);
+    if (!parsed.success) return;
+
+    const moved = withMovedPoint(parsed.data, 'pA', 2, 3);
+    const pointA = moved.points.find(point => point.id === 'pA')!;
+    const pointB = resolvePointCoordinates(moved, 'pB')!;
+    const pointC = moved.points.find(point => point.id === 'pC')!;
+    expect(pointC).toMatchObject({
+      x: (pointA.x + pointB.x) / 2,
+      y: (pointA.y + pointB.y) / 2,
+    });
   });
 
   it('validates and resolves an exact intersection between two authored supports', () => {

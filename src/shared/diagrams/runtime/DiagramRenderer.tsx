@@ -38,13 +38,14 @@ import {
   DIAGRAM_RENDERER_ID,
   DEFAULT_ANGLE_RADIUS,
   DEFAULT_RIGHT_ANGLE_RADIUS,
-  constrainPointCoordinates,
   createSceneConstructionPlan,
   createScenePlan,
   fitViewport,
   itemLayerNumber,
   offscreenItemIds,
   sceneRevision,
+  withMovedPoint,
+  withResolvedPointConstraints,
   withViewportBounds,
   zoomViewport,
   evaluateMathExpression,
@@ -658,7 +659,7 @@ function sameBounds(left: DiagramBounds, right: DiagramBounds): boolean {
 }
 
 const DiagramRendererContent: React.FC<DiagramRendererProps> = ({
-  spec,
+  spec: inputSpec,
   mode = 'runtime',
   selectedIds = [],
   highlightedIds = [],
@@ -671,13 +672,16 @@ const DiagramRendererContent: React.FC<DiagramRendererProps> = ({
   onViewportChange,
   stepControls,
 }) => {
+  const spec = useMemo(() => withResolvedPointConstraints(inputSpec), [inputSpec]);
   const targetRegistry = useDiagramTargetRegistry();
   const interactionCallbacksRef = useRef({ onSelectionChange, onPointMove, onCanvasPointCreate });
+  const localTargetHighlightRef = useRef<string | null>(null);
   useEffect(() => {
     interactionCallbacksRef.current = { onSelectionChange, onPointMove, onCanvasPointCreate };
   }, [onCanvasPointCreate, onPointMove, onSelectionChange]);
   const setVariable = useMathStore(state => state.setVariable);
   const setTargetHighlight = useCallback((target: string | null) => {
+    localTargetHighlightRef.current = target;
     setVariable('highlight', target ? `${spec.componentId}:${target}` : null);
   }, [setVariable, spec.componentId]);
   const scopedStoreStep = useMathStore(state => state.variables?.[`step:${spec.componentId}`]);
@@ -941,7 +945,7 @@ const DiagramRendererContent: React.FC<DiagramRendererProps> = ({
                   layer: itemLayerNumber(spec, sceneItem),
                 }, theme);
               elements[sceneItem.id] = item;
-              if (!sceneItem.fixed && !entry.locked && sceneItem.constraint !== 'derived' && sceneItem.constraint !== 'glider') {
+              if (!sceneItem.fixed && !entry.locked && sceneItem.constraint !== 'derived') {
                 let enforcing = false;
                 item.on('drag', () => {
                   if (enforcing) return;
@@ -954,12 +958,15 @@ const DiagramRendererContent: React.FC<DiagramRendererProps> = ({
                       ? { ...slider, value: elements[slider.id].Value() }
                       : slider),
                   };
-                  const next = constrainPointCoordinates(liveSpec, sceneItem, { x: item.X(), y: item.Y() });
-                  if (Math.abs(next.x - item.X()) > 1e-8 || Math.abs(next.y - item.Y()) > 1e-8) {
-                    enforcing = true;
-                    item.moveTo([next.x, next.y], 0);
-                    enforcing = false;
-                  }
+                  const nextSpec = withMovedPoint(liveSpec, sceneItem.id, item.X(), item.Y());
+                  enforcing = true;
+                  nextSpec.points.forEach(nextPoint => {
+                    const renderedPoint = elements[nextPoint.id];
+                    if (!renderedPoint) return;
+                    if (Math.abs(nextPoint.x - renderedPoint.X()) <= 1e-8 && Math.abs(nextPoint.y - renderedPoint.Y()) <= 1e-8) return;
+                    renderedPoint.moveTo([nextPoint.x, nextPoint.y], 0);
+                  });
+                  enforcing = false;
                 });
               }
               if (!sceneItem.fixed && !entry.locked && sceneItem.constraint !== 'derived') item.on('up', () => interactionCallbacksRef.current.onPointMove?.(sceneItem.id, item.X(), item.Y()));
@@ -1010,10 +1017,12 @@ const DiagramRendererContent: React.FC<DiagramRendererProps> = ({
                     ? { ...slider, value: elements[slider.id].Value() }
                     : slider),
                 };
-                const next = sceneItem.constraint === 'glider'
-                  ? requested
-                  : constrainPointCoordinates(liveSpec, sceneItem, requested);
-                element.moveTo([next.x, next.y], 0);
+                const nextSpec = withMovedPoint(liveSpec, sceneItem.id, requested.x, requested.y);
+                nextSpec.points.forEach(nextPoint => {
+                  const renderedPoint = elements[nextPoint.id];
+                  if (!renderedPoint) return;
+                  renderedPoint.moveTo([nextPoint.x, nextPoint.y], 0);
+                });
                 board.update();
                 interactionCallbacksRef.current.onPointMove?.(sceneItem.id, element.X(), element.Y());
                 const node = element.rendNode as HTMLElement | undefined;
@@ -1057,17 +1066,31 @@ const DiagramRendererContent: React.FC<DiagramRendererProps> = ({
           const storeStep = spec.steps.find(step => isStep(step.id))?.id;
           const effectiveStep = effectiveStepId || storeStep;
           const items = [...spec.points, ...spec.elements, ...spec.sliders];
-          const effectiveHighlights = new Set([
-            ...items.filter(item => highlightedIds.includes(item.id) || highlightedIds.includes(item.targetId ?? item.id)).map(item => item.id),
-            ...items.filter(item => isHL(item.targetId ?? item.id)).map(item => item.id),
-            ...spec.groups.filter(group => isHL(group.targetId ?? group.id)).map(group => group.id),
-          ]);
+          const highlightSources = [...items, ...spec.groups];
+          const propHighlights = highlightSources
+            .filter(item => highlightedIds.includes(item.id) || highlightedIds.includes(item.targetId ?? item.id))
+            .map(item => item.id);
+          const storeHighlights = highlightSources
+            .filter(item => isHL(item.targetId ?? item.id))
+            .map(item => item.id);
+          const externalStoreHighlights = storeHighlights.filter(id => {
+            const source = highlightSources.find(item => item.id === id);
+            return (source?.targetId ?? source?.id) !== localTargetHighlightRef.current;
+          });
+          const effectiveHighlights = new Set([...propHighlights, ...storeHighlights]);
+          const externalHighlightSources = new Set([...propHighlights, ...externalStoreHighlights]);
           const plan = createScenePlan(spec, {
             activeStepId: effectiveStep,
             highlightedIds: [...effectiveHighlights],
             selectedIds,
           });
-          const anyExternalEmphasis = plan.some(entry => entry.highlighted || entry.selected);
+          const externalHighlightRequestsDimming = plan.some(entry => entry.highlighted)
+            && [...externalHighlightSources].some(id => {
+              const source = highlightSources.find(item => item.id === id);
+              return source?.selection.highlightable !== false
+                && source?.selection.dimOthersOnHighlight !== false;
+            });
+          const shouldDimOthers = plan.some(entry => entry.selected) || externalHighlightRequestsDimming;
           plan.forEach(entry => {
             const item = entry.item;
             const element = elements[item.id];
@@ -1076,7 +1099,7 @@ const DiagramRendererContent: React.FC<DiagramRendererProps> = ({
             const stepPrimary = entry.stepEmphasis === 'primary';
             const stepSecondary = entry.stepEmphasis === 'secondary';
             const active = externalActive || stepPrimary || stepSecondary;
-            const opacity = externalActive || !anyExternalEmphasis ? 1 : 0.28;
+            const opacity = externalActive || !shouldDimOthers ? 1 : 0.28;
             const color = externalActive && !item.style?.preserveColorOnHighlight
               ? theme.ocre
               : stepPrimary ? theme.terracota : stepSecondary ? theme.pavo : theme[item.color];

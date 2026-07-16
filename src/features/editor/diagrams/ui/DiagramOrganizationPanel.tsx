@@ -58,6 +58,20 @@ export const DiagramOrganizationPanel: React.FC<DiagramOrganizationPanelProps> =
                   <button type="button" className="rounded border border-carbon/15 px-1.5 py-0.5 text-[10px]" onClick={() => onModelEdit({ ...model, groups: model.groups.map(item => item.id === group.id ? { ...item, visible: !item.visible } : item) }, { label: `${group.visible ? 'Ocultar' : 'Mostrar'} grupo ${group.label}` })}>{group.visible ? 'Visible' : 'Oculto'}</button>
                   <button type="button" className="rounded border border-carbon/15 px-1.5 py-0.5 text-[10px]" onClick={() => onModelEdit({ ...model, groups: model.groups.map(item => item.id === group.id ? { ...item, locked: !item.locked } : item) }, { label: `${group.locked ? 'Desbloquear' : 'Bloquear'} grupo ${group.label}` })}>{group.locked ? 'Fijo' : 'Editable'}</button>
                   <button type="button" aria-pressed={group.selection.highlightable !== false} className="rounded border border-carbon/15 px-1.5 py-0.5 text-[10px]" onClick={() => onModelEdit({ ...model, groups: model.groups.map(item => item.id === group.id ? { ...item, selection: { ...item.selection, highlightable: item.selection.highlightable === false } } : item) }, { label: `${group.selection.highlightable === false ? 'Permitir' : 'Impedir'} resaltado del grupo ${group.label}` })}>{group.selection.highlightable === false ? 'Sin resaltado' : 'Resaltable'}</button>
+                  <button
+                    type="button"
+                    aria-label={`Atenuar los demás al resaltar el grupo ${group.label} desde MDX`}
+                    aria-pressed={group.selection.dimOthersOnHighlight !== false}
+                    className="rounded border border-carbon/15 px-1.5 py-0.5 text-[10px]"
+                    onClick={() => onModelEdit({
+                      ...model,
+                      groups: model.groups.map(item => item.id === group.id
+                        ? { ...item, selection: { ...item.selection, dimOthersOnHighlight: item.selection.dimOthersOnHighlight === false } }
+                        : item),
+                    }, { label: `Cambiar modo de resaltado MDX del grupo ${group.label}` })}
+                  >
+                    {group.selection.dimOthersOnHighlight === false ? 'Resalte aditivo' : 'Atenúa resto'}
+                  </button>
                   <button type="button" className="ml-auto text-[10px] font-bold text-granada hover:underline" onClick={() => deleteGroup(group.id, group.label)}>Eliminar</button>
                 </div>
               </div>
