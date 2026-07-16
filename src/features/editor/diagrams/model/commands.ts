@@ -5,6 +5,7 @@ export * from './guidedConstructions';
 export * from './modelRenaming';
 export * from './constraintOptions';
 export * from './segmentLengthConstraints';
+export * from './angleConstraints';
 export * from './segmentMarks';
 export * from './toolReferences';
 export { projectPointToSupport, supportElements } from '../../../../shared/diagrams/spec';

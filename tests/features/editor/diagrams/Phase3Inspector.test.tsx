@@ -1,5 +1,6 @@
 import { fireEvent, render, screen } from '@testing-library/react';
 import { describe, expect, it, vi } from 'vitest';
+import { readFileSync } from 'node:fs';
 import curvesFixture from '../../../fixtures/diagrams/phase3-curves.json';
 import pointsFixture from '../../../fixtures/diagrams/phase3-points-constraints.json';
 import annotationsFixture from '../../../fixtures/diagrams/phase3-annotations-layers.json';
@@ -10,6 +11,7 @@ import { migrateDiagramSpec } from '../../../../src/shared/diagrams/public';
 import { DiagramInspector } from '../../../../src/features/editor/diagrams/ui/DiagramInspector';
 import { DiagramToolbar } from '../../../../src/features/editor/diagrams/ui/DiagramToolbar';
 import { DiagramToolReferencePicker } from '../../../../src/features/editor/diagrams/ui/DiagramToolReferencePicker';
+import { parseDiagramSourceAST } from '../../../../scripts/editor/parseDiagramSourceAST';
 
 describe('Phase 3 visual editing', () => {
   it('authors direct interaction separately from fixed position and relations', () => {
@@ -194,6 +196,68 @@ describe('Phase 3 visual editing', () => {
     });
   });
 
+  it('explains and creates equal angles directly from the selected angle', () => {
+    const base = migrateDiagramSpec(marksFixture).spec;
+    const pointTemplate = base.points[0];
+    const angleTemplate = base.elements.find(element => element.kind === 'nonReflexAngle')!;
+    const model = {
+      ...base,
+      points: [
+        ...base.points,
+        { ...pointTemplate, id: 'pC', label: 'C', x: 5, y: 0, order: 3 },
+        { ...pointTemplate, id: 'pW', label: 'W', x: 4, y: 0, fixed: true, constraint: 'fixed' as const, locked: true, order: 4 },
+        { ...pointTemplate, id: 'pD', label: 'D', x: 4.5, y: Math.sqrt(3) / 2, order: 5 },
+      ],
+      elements: [
+        ...base.elements,
+        { ...angleTemplate, id: 'angleCWD', label: 'Ángulo CWD', refs: ['pC', 'pW', 'pD'], order: 20 },
+      ],
+    };
+    const onModelEdit = vi.fn();
+    const view = render(<DiagramInspector model={model} selectedId="nonReflexAngleAVB" onSelect={vi.fn()} onModelEdit={onModelEdit} onDeleteSelected={vi.fn()} />);
+
+    const summary = screen.getByText('Igualar ángulos');
+    expect(summary.closest('details')?.open).toBe(true);
+    expect(screen.getByText(/girará alrededor del vértice/)).toBeTruthy();
+    expect((screen.getByLabelText('Extremo que se ajusta para igualar ángulos') as HTMLSelectElement).value).toBe('pA');
+    expect((screen.getByLabelText('Ángulo de referencia para igualar ángulos') as HTMLSelectElement).value).toBe('angleCWD');
+
+    fireEvent.click(screen.getByRole('button', { name: 'Mantener el mismo ángulo' }));
+    const edited = onModelEdit.mock.calls.at(-1)?.[0];
+    expect(edited).toMatchObject({
+      points: expect.arrayContaining([expect.objectContaining({
+        id: 'pA',
+        constraint: 'constrained',
+        constraintIds: expect.any(Array),
+      })]),
+      constraints: expect.arrayContaining([expect.objectContaining({
+        kind: 'equalAngle',
+        refs: ['pA', 'pV', 'pB', 'angleCWD', 'nonReflexAngleAVB'],
+      })]),
+    });
+
+    view.rerender(<DiagramInspector model={edited} selectedId="nonReflexAngleAVB" onSelect={vi.fn()} onModelEdit={onModelEdit} onDeleteSelected={vi.fn()} />);
+    expect(screen.getByText('Igualar ángulos').closest('details')?.open).toBe(true);
+    fireEvent.click(screen.getByRole('button', { name: 'Quitar igualdad de ángulos' }));
+    const removed = onModelEdit.mock.calls.at(-1)?.[0];
+    expect(removed.constraints?.some((constraint: { kind: string }) => constraint.kind === 'equalAngle')).toBe(false);
+    expect(removed.points.find((point: { id: string }) => point.id === 'pA')).toMatchObject({ constraint: 'free' });
+  });
+
+  it('shows equal-angle authoring immediately for the real SAS diagram', () => {
+    const parsed = parseDiagramSourceAST(readFileSync('src/widgets/diagrams/Axiomas/SAS.tsx', 'utf8'));
+    expect(parsed.status).toBe('visual-exact');
+    if (parsed.status !== 'visual-exact') return;
+
+    render(<DiagramInspector model={parsed.model} selectedId="nonReflexAngleBAC" onSelect={vi.fn()} onModelEdit={vi.fn()} onDeleteSelected={vi.fn()} />);
+
+    const summary = screen.getByText('Igualar ángulos');
+    expect(summary.closest('details')?.open).toBe(true);
+    expect((screen.getByLabelText('Ángulo de referencia para igualar ángulos') as HTMLSelectElement).value)
+      .toBe('nonReflexAngleBBAACC');
+    expect((screen.getByRole('button', { name: 'Mantener el mismo ángulo' }) as HTMLButtonElement).disabled).toBe(false);
+  });
+
   it('adds, edits and removes segment measure marks directly from the selected segment', () => {
     const model = migrateDiagramSpec(primitivesFixture).spec;
     const segment = model.elements.find(element => element.id === 'segAB')!;
@@ -340,6 +404,10 @@ describe('Phase 3 visual editing', () => {
     expect(screen.getByText('Explicación')).toBeTruthy();
     expect(screen.getByRole('menuitem', { name: 'Marca de congruencia' })).toBeTruthy();
     expect(screen.getByRole('menuitem', { name: 'Marcas de medida' })).toBeTruthy();
+    expect(screen.getByRole('menuitem', { name: 'Ángulo orientado' })).toBeTruthy();
+    fireEvent.click(screen.getByRole('menuitem', { name: 'Ángulo no reflejo (≤ 180°)' }));
+    expect(onSetCanvasTool).toHaveBeenCalledWith('nonReflexAngle');
+    fireEvent.click(addObjects);
     fireEvent.click(screen.getByRole('menuitem', { name: 'Gráfica de función' }));
     expect(onAddElement).toHaveBeenCalledWith('functionCurve');
     expect(addObjects.getAttribute('aria-expanded')).toBe('false');
@@ -417,18 +485,30 @@ describe('Phase 3 visual editing', () => {
       />,
     );
 
-    expect(screen.getByLabelText('Punto del primer lado para Ángulo')).toBeTruthy();
-    expect(screen.getByLabelText('Vértice para Ángulo')).toBeTruthy();
-    expect(screen.getByLabelText('Punto del segundo lado para Ángulo')).toBeTruthy();
+    expect(screen.getByLabelText('Punto del primer lado para Ángulo orientado')).toBeTruthy();
+    expect(screen.getByLabelText('Vértice para Ángulo orientado')).toBeTruthy();
+    expect(screen.getByLabelText('Punto del segundo lado para Ángulo orientado')).toBeTruthy();
 
     picker.unmount();
     const onModelEdit = vi.fn();
     render(<DiagramInspector model={model} selectedId="angleAVB" onSelect={vi.fn()} onModelEdit={onModelEdit} onDeleteSelected={vi.fn()} />);
-    expect(screen.getByLabelText('Vértice de Ángulo')).toBeTruthy();
+    expect(screen.getByLabelText('Vértice de Ángulo orientado')).toBeTruthy();
     fireEvent.change(screen.getByLabelText('Radio de la marca angular'), { target: { value: '0.8' } });
 
     const edited = onModelEdit.mock.calls.at(-1)?.[0];
     expect(edited.elements.find((item: { id: string }) => item.id === 'angleAVB')).toMatchObject({ style: { angleRadius: 0.8 } });
+  });
+
+  it('edits the radius of a non-reflex angle through the same visual controls', () => {
+    const model = migrateDiagramSpec(marksFixture).spec;
+    const onModelEdit = vi.fn();
+    render(<DiagramInspector model={model} selectedId="nonReflexAngleAVB" onSelect={vi.fn()} onModelEdit={onModelEdit} onDeleteSelected={vi.fn()} />);
+
+    expect(screen.getByLabelText('Vértice de Ángulo no reflejo (≤ 180°)')).toBeTruthy();
+    fireEvent.change(screen.getByLabelText('Radio de la marca angular'), { target: { value: '0.9' } });
+
+    const edited = onModelEdit.mock.calls.at(-1)?.[0];
+    expect(edited.elements.find((item: { id: string }) => item.id === 'nonReflexAngleAVB')).toMatchObject({ style: { angleRadius: 0.9 } });
   });
 
   it('persists the dashed option for a polygon', () => {

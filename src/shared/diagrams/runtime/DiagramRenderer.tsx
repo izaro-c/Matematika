@@ -15,6 +15,7 @@ import {
   createIntersection,
   createLine,
   createMidpoint,
+  createNonReflexAngle,
   createParallelLine,
   createParametricCurve,
   createPerpendicularFoot,
@@ -368,7 +369,6 @@ function createElement(
   theme: ThemeColors,
   layer: number,
   spec: DiagramSpecV2,
-  directInteractionLocked: boolean,
   liftedIntoHeader = false,
 ) {
   const refs = refsFor(item, elements);
@@ -381,7 +381,7 @@ function createElement(
     strokeWidth: item.style?.strokeWidth ?? 2,
     strokeOpacity: item.style?.strokeOpacity ?? 1,
     dash: item.dashed ? 2 : 0,
-    fixed: directInteractionLocked,
+    fixed: true,
     layer,
   };
   if (item.kind === 'segment') return refs.length >= 2 ? createSegment(board, [refs[0], refs[1]], lineOptions, theme) : null;
@@ -390,8 +390,8 @@ function createElement(
   if (item.kind === 'polygon') return refs.length >= 3 ? createPolygon(board, refs, {
     highlight: highlightable,
     fillColor: theme[item.color], highlightFillColor: hoverColor, fillOpacity: item.style?.fillOpacity ?? 0.1,
-    fixed: directInteractionLocked,
-    borders: { highlight: highlightable, strokeColor: theme[item.color], strokeWidth: item.style?.strokeWidth ?? 1.5, strokeOpacity: item.style?.strokeOpacity ?? 1, dash: item.dashed ? 2 : 0, fixed: directInteractionLocked }, layer,
+    fixed: true,
+    borders: { highlight: highlightable, strokeColor: theme[item.color], strokeWidth: item.style?.strokeWidth ?? 1.5, strokeOpacity: item.style?.strokeOpacity ?? 1, dash: item.dashed ? 2 : 0, fixed: true }, layer,
   }, theme) : null;
   if (item.kind === 'circle') return refs.length >= 2 ? createCircle(board, [refs[0], refs[1]], {
     ...lineOptions, fillColor: theme[item.color], fillOpacity: item.style?.fillOpacity ?? 0,
@@ -436,7 +436,7 @@ function createElement(
     highlightFillColor: hoverColor,
     highlightStrokeColor: hoverColor,
     label: { highlight: highlightable, highlightColor: hoverColor, highlightStrokeColor: hoverColor },
-    fixed: directInteractionLocked,
+    fixed: true,
     layer,
   }, theme) : null;
   if (item.kind === 'midpoint') return refs.length >= 2 ? createMidpoint(board, [refs[0], refs[1]], {
@@ -444,27 +444,30 @@ function createElement(
     name: renderKatexTextToHtml(item.label), fillColor: theme[item.color], strokeColor: theme[item.color],
     highlightFillColor: hoverColor, highlightStrokeColor: hoverColor,
     label: { highlight: highlightable, highlightColor: hoverColor, highlightStrokeColor: hoverColor },
-    fixed: directInteractionLocked, layer,
+    fixed: true, layer,
   }, theme) : null;
   if (item.kind === 'perpendicularFoot') return refs.length >= 3 ? createPerpendicularFoot(board, [refs[0], refs[1], refs[2]], {
     highlight: highlightable,
     name: renderKatexTextToHtml(item.label), fillColor: theme[item.color], strokeColor: theme[item.color],
     highlightFillColor: hoverColor, highlightStrokeColor: hoverColor,
     label: { highlight: highlightable, highlightColor: hoverColor, highlightStrokeColor: hoverColor },
-    fixed: directInteractionLocked, layer,
+    fixed: true, layer,
   }, theme) : null;
   if (item.kind === 'baseExtension') return refs.length >= 3 ? createBaseExtensionToFoot(board, [refs[0], refs[1], refs[2]], lineOptions, theme) : null;
   if (item.kind === 'perpendicular') return refs.length >= 3 ? createPerpendicularLine(board, [refs[0], refs[1], refs[2]], lineOptions, theme) : null;
   if (item.kind === 'parallel') return refs.length >= 3 ? createParallelLine(board, [refs[0], refs[1], refs[2]], lineOptions, theme) : null;
   if (item.kind === 'angleBisector') return refs.length >= 3 ? createAngleBisectorRay(board, [refs[0], refs[1], refs[2]], lineOptions, theme) : null;
   if (item.kind === 'angle') return refs.length >= 3 ? createAngle(board, [refs[0], refs[1], refs[2]], {
-    highlight: highlightable, fillColor: theme[item.color], strokeColor: theme[item.color], radius: item.style?.angleRadius ?? DEFAULT_ANGLE_RADIUS, fixed: directInteractionLocked, layer,
+    highlight: highlightable, fillColor: theme[item.color], strokeColor: theme[item.color], radius: item.style?.angleRadius ?? DEFAULT_ANGLE_RADIUS, fixed: true, layer,
+  }, theme) : null;
+  if (item.kind === 'nonReflexAngle') return refs.length >= 3 ? createNonReflexAngle(board, [refs[0], refs[1], refs[2]], {
+    highlight: highlightable, fillColor: theme[item.color], strokeColor: theme[item.color], radius: item.style?.angleRadius ?? DEFAULT_ANGLE_RADIUS, fixed: true, layer,
   }, theme) : null;
   if (item.kind === 'rightAngle') return refs.length >= 3 ? createRightAngleMarker(board, [refs[0], refs[1], refs[2]], {
-    highlight: highlightable, fillColor: theme[item.color], strokeColor: theme[item.color], size: item.style?.angleRadius ?? DEFAULT_RIGHT_ANGLE_RADIUS, fixed: directInteractionLocked, layer,
+    highlight: highlightable, fillColor: theme[item.color], strokeColor: theme[item.color], size: item.style?.angleRadius ?? DEFAULT_RIGHT_ANGLE_RADIUS, fixed: true, layer,
   }, theme) : null;
   if (item.kind === 'perpendicularMark') return refs.length >= 3 ? createRightAngleMarker(board, [refs[0], refs[1], refs[2]], {
-    highlight: highlightable, fillColor: theme[item.color], strokeColor: theme[item.color], size: item.style?.angleRadius ?? DEFAULT_RIGHT_ANGLE_RADIUS, fixed: directInteractionLocked, layer,
+    highlight: highlightable, fillColor: theme[item.color], strokeColor: theme[item.color], size: item.style?.angleRadius ?? DEFAULT_RIGHT_ANGLE_RADIUS, fixed: true, layer,
   }, theme) : null;
   if (item.kind === 'congruenceMark') return refs.length >= 2 ? createCongruenceMark(
     board,
@@ -500,7 +503,7 @@ function createElement(
     refs,
     item.properties?.rows ?? 2,
     item.properties?.columns ?? 2,
-    { highlight: highlightable, fillColor: theme[item.color], fillOpacity: item.style?.fillOpacity ?? 0.1, borders: lineOptions, fixed: directInteractionLocked, layer },
+    { highlight: highlightable, fillColor: theme[item.color], fillOpacity: item.style?.fillOpacity ?? 0.1, borders: lineOptions, fixed: true, layer },
     theme,
   ) : null;
   const anchor = refs[0];
@@ -529,7 +532,7 @@ function createElement(
   return textCoordinates ? createText(board, textCoordinates, {
     highlight: highlightable,
     color: theme[item.color],
-    fixed: directInteractionLocked,
+    fixed: true,
     layer,
     ...(viewportPanelAnchor ?? {}),
     cssClass: item.kind === 'formula'
@@ -1007,7 +1010,6 @@ const DiagramRendererContent: React.FC<DiagramRendererProps> = ({
                 theme,
                 itemLayerNumber(spec, sceneItem),
                 spec,
-                directInteractionLocked,
                 mode === 'runtime' && allHeaderItemIds.has(sceneItem.id),
               );
             } else {
@@ -1150,7 +1152,10 @@ const DiagramRendererContent: React.FC<DiagramRendererProps> = ({
               && (('kind' in item && item.kind === 'intersection')
                 ? intersectionBelongsToSupports(item, element, elements, spec)
                 : true);
-            const base = { visible, fixed: entry.locked || !item.selection.selectable };
+            const base = {
+              visible,
+              fixed: 'kind' in item ? true : entry.locked || !item.selection.selectable,
+            };
             const hoverColor = item.selection.highlightable === false || item.style?.preserveColorOnHighlight ? theme[item.color] : theme.ocre;
             syncNativeElementLabel(element, { visible, color, highlightColor: hoverColor, opacity, text: entry.label });
             if (element.__matematikaStepLabel !== entry.label) {
@@ -1177,7 +1182,7 @@ const DiagramRendererContent: React.FC<DiagramRendererProps> = ({
                 ...base, fillColor: color,
                 fillOpacity: active ? item.style?.highlightFillOpacity ?? 0.24 : (item.style?.fillOpacity ?? 0.1) * opacity,
               });
-            } else if (item.kind === 'angle' || item.kind === 'rightAngle' || item.kind === 'perpendicularMark') {
+            } else if (item.kind === 'angle' || item.kind === 'nonReflexAngle' || item.kind === 'rightAngle' || item.kind === 'perpendicularMark') {
               element.setAttribute({
                 ...base, fillColor: color, strokeColor: color,
                 fillOpacity: active ? item.style?.highlightFillOpacity ?? 0.28 : (item.style?.fillOpacity ?? 0.1) * opacity,

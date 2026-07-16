@@ -498,6 +498,40 @@ export function constrainPointCoordinates(
         x: anchor.x + directionX * desiredLength,
         y: anchor.y + directionY * desiredLength,
       };
+    } else if (constraint.kind === 'equalAngle' && constraint.refs.length >= 5) {
+      const vertex = resolvePointCoordinates(spec, constraint.refs[1]);
+      const fixedRayPoint = resolvePointCoordinates(spec, constraint.refs[2]);
+      const sourceAngle = spec.elements.find(element => element.id === constraint.refs[3]);
+      const targetAngle = spec.elements.find(element => element.id === constraint.refs[4]);
+      const desiredAngle = sourceAngle ? angleMagnitude(spec, sourceAngle) : undefined;
+      if (!vertex || !fixedRayPoint || !targetAngle || desiredAngle === undefined) continue;
+      const fixedDx = fixedRayPoint.x - vertex.x;
+      const fixedDy = fixedRayPoint.y - vertex.y;
+      const fixedLength = Math.hypot(fixedDx, fixedDy);
+      if (fixedLength < 1e-10) continue;
+      const requestedDx = result.x - vertex.x;
+      const requestedDy = result.y - vertex.y;
+      const previousDx = point.x - vertex.x;
+      const previousDy = point.y - vertex.y;
+      const requestedLength = Math.hypot(requestedDx, requestedDy);
+      const previousLength = Math.hypot(previousDx, previousDy);
+      const radius = requestedLength > 1e-10 ? requestedLength : previousLength;
+      if (radius < 1e-10) continue;
+      const fixedDirection = { x: fixedDx / fixedLength, y: fixedDy / fixedLength };
+      const movingFirst = targetAngle.refs[0] === point.id;
+      const orientedRotation = movingFirst ? -desiredAngle : desiredAngle;
+      let direction = rotateUnit(fixedDirection, orientedRotation);
+      if (targetAngle.kind === 'nonReflexAngle') {
+        const alternate = rotateUnit(fixedDirection, -orientedRotation);
+        const requestedDirection = requestedLength > 1e-10
+          ? { x: requestedDx / requestedLength, y: requestedDy / requestedLength }
+          : { x: previousDx / radius, y: previousDy / radius };
+        if (dot(alternate, requestedDirection) > dot(direction, requestedDirection)) direction = alternate;
+      }
+      result = {
+        x: vertex.x + direction.x * radius,
+        y: vertex.y + direction.y * radius,
+      };
     } else if (constraint.kind === 'midpoint' && constraint.refs.length >= 3) {
       const firstEndpoint = resolvePointCoordinates(spec, constraint.refs[1]);
       const secondEndpoint = resolvePointCoordinates(spec, constraint.refs[2]);
@@ -549,6 +583,37 @@ export function constrainPointCoordinates(
     }
   }
   return result;
+}
+
+function angleMagnitude(spec: DiagramSpecV2, angle: DiagramElement): number | undefined {
+  const first = resolvePointCoordinates(spec, angle.refs[0]);
+  const vertex = resolvePointCoordinates(spec, angle.refs[1]);
+  const second = resolvePointCoordinates(spec, angle.refs[2]);
+  if (!first || !vertex || !second) return undefined;
+  const firstDx = first.x - vertex.x;
+  const firstDy = first.y - vertex.y;
+  const secondDx = second.x - vertex.x;
+  const secondDy = second.y - vertex.y;
+  const firstLength = Math.hypot(firstDx, firstDy);
+  const secondLength = Math.hypot(secondDx, secondDy);
+  if (firstLength < 1e-10 || secondLength < 1e-10) return undefined;
+  const cosine = Math.max(-1, Math.min(1, (firstDx * secondDx + firstDy * secondDy) / (firstLength * secondLength)));
+  if (angle.kind === 'nonReflexAngle') return Math.acos(cosine);
+  const oriented = Math.atan2(firstDx * secondDy - firstDy * secondDx, firstDx * secondDx + firstDy * secondDy);
+  return oriented < 0 ? oriented + Math.PI * 2 : oriented;
+}
+
+function rotateUnit(vector: { x: number; y: number }, angle: number): { x: number; y: number } {
+  const cosine = Math.cos(angle);
+  const sine = Math.sin(angle);
+  return {
+    x: vector.x * cosine - vector.y * sine,
+    y: vector.x * sine + vector.y * cosine,
+  };
+}
+
+function dot(first: { x: number; y: number }, second: { x: number; y: number }): number {
+  return first.x * second.x + first.y * second.y;
 }
 
 function pointOnLinearSupportAtEqualLength(
@@ -629,7 +694,8 @@ export function buildDependencyGraph(spec: DiagramSpecV2): DiagramDependencyGrap
   spec.elements.forEach(element => element.refs.forEach(sourceId => edges.push({ sourceId, targetId: element.id, relation: 'construction' })));
   (spec.constraints ?? []).forEach(constraint => {
     const targetId = constraint.refs[0];
-    constraint.refs.slice(1).forEach(sourceId => edges.push({ sourceId, targetId, relation: 'constraint', constraintId: constraint.id }));
+    const sourceIds = constraint.kind === 'equalAngle' ? constraint.refs.slice(1, 4) : constraint.refs.slice(1);
+    sourceIds.forEach(sourceId => edges.push({ sourceId, targetId, relation: 'constraint', constraintId: constraint.id }));
   });
   edges.push(...(spec.dependencies ?? []));
   const unique = new Map(edges.map(edge => [`${edge.sourceId}:${edge.targetId}:${edge.relation}:${edge.constraintId ?? ''}`, edge]));

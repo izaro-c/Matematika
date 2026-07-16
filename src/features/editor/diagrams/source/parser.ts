@@ -102,7 +102,7 @@ export function classifyEmbeddedDiagramSource(source: string, _metadataType = ''
 
 export async function parseDiagramSourceOnServer(source: string, signal?: AbortSignal): Promise<ParseDiagramSourceResult> {
   const embeddedClassification = classifyEmbeddedDiagramSource(source);
-  if (embeddedClassification) return embeddedClassification;
+  if (embeddedClassification?.status === 'visual-exact') return embeddedClassification;
 
   try {
     const response = await fetch('/api/content/parse-diagram', {
@@ -112,6 +112,7 @@ export async function parseDiagramSourceOnServer(source: string, signal?: AbortS
       signal,
     });
     if (!response.ok) {
+      if (embeddedClassification) return embeddedClassification;
       return {
         status: 'invalid',
         diagnostics: [{
@@ -126,6 +127,7 @@ export async function parseDiagramSourceOnServer(source: string, signal?: AbortS
     if (error instanceof DOMException && error.name === 'AbortError') {
       return { status: 'invalid', diagnostics: [{ code: 'aborted', severity: 'info', message: 'Petición de parseo cancelada.', source: 'source' }] };
     }
+    if (embeddedClassification) return embeddedClassification;
     return {
       status: 'invalid',
       diagnostics: [{

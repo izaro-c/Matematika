@@ -67,7 +67,7 @@ function referencesFromMetadata(metadata: Record<string, unknown>): string[] {
   const keys = [
     'authors', 'lemmas', 'corollaries', 'demos', 'requires', 'examples', 'exercises',
     'parentTheorem', 'axiomas', 'models', 'relatedTheorem', 'satisfies', 'axioms_verified',
-    'concept', 'requiredNodes', 'dependencias', 'proofMethod',
+    'concept', 'requiredNodes', 'dependencias', 'proofMethod', 'axiomSystem', 'links',
   ];
   return keys.flatMap(key => {
     const value = metadata[key];
@@ -75,6 +75,27 @@ function referencesFromMetadata(metadata: Record<string, unknown>): string[] {
       typeof item === 'string' && item.length > 0 && !item.startsWith('checkpoint-')
     ));
   });
+}
+
+function dependenciesFromMetadata(metadata: Record<string, unknown>): string[] {
+  const keys = [
+    'lemmas', 'corollaries', 'demos', 'requires', 'parentTheorem', 'axiomas',
+    'axioms_verified', 'dependencias', 'links',
+  ];
+  return keys.flatMap(key => {
+    const value = metadata[key];
+    return (Array.isArray(value) ? value : [value]).filter((item): item is string => (
+      typeof item === 'string' && item.length > 0
+    ));
+  });
+}
+
+function semanticAssociationsFromMetadata(metadata: Record<string, unknown>): Set<string> {
+  const associations = new Set<string>();
+  if (metadata.type === 'axioma' && typeof metadata.axiomSystem === 'string') {
+    associations.add(metadata.axiomSystem);
+  }
+  return associations;
 }
 
 function dependsTransitively(start: string, target: string, graph: Map<string, string[]>): boolean {
@@ -168,10 +189,13 @@ export function buildAuthoringIntegrityReport(input: AuthoringIntegrityInput): E
     }
   }
 
-  const graph = new Map(entries.map(entry => [entry.id, referencesFromMetadata(entry.metadata)]));
+  const graph = new Map(entries.map(entry => [entry.id, dependenciesFromMetadata(entry.metadata)]));
+  const semanticAssociations = semanticAssociationsFromMetadata(input.metadata);
   const dependencies = new Set([
-    ...referencesFromMetadata(input.metadata),
-    ...refs.filter(reference => reference.isDependency).map(reference => reference.targetId),
+    ...dependenciesFromMetadata(input.metadata),
+    ...refs
+      .filter(reference => reference.isDependency && !semanticAssociations.has(reference.targetId))
+      .map(reference => reference.targetId),
   ]);
   for (const dependency of dependencies) {
     if (dependency === currentId) issues.push({

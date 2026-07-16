@@ -314,6 +314,9 @@ export function parseDiagramSourceAST(source: string, metadataType = ''): ParseD
       } else if (helper === 'createAngle') {
         kind = 'angle';
         refs = extractRefIdsForModel(args[1], localToEls);
+      } else if (helper === 'createNonReflexAngle') {
+        kind = 'nonReflexAngle';
+        refs = extractRefIdsForModel(args[1], localToEls);
       } else if (helper === 'createRightAngleMarker') {
         kind = 'rightAngle';
         refs = extractRefIdsForModel(args[1], localToEls);

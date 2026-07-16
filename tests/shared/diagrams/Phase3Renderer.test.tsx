@@ -140,6 +140,29 @@ function ExternalHighlightControl({ value }: { value: string }) {
 }
 
 describe('Phase 3 shared renderer', () => {
+  it('keeps constructed sides selectable but immovable so constraints cannot be bypassed', () => {
+    const spec = migrateDiagramSpec(primitivesFixture).spec;
+    const onSelectionChange = vi.fn();
+    render(
+      <MathProvider>
+        <DiagramRenderer spec={spec} mode="editor" viewportControls={false} onSelectionChange={onSelectionChange} />
+      </MathProvider>,
+    );
+
+    const segmentIndex = rendererState.nodes.findIndex(node => node.dataset.diagramObjectId === 'segAB');
+    const segment = rendererState.geometries[segmentIndex];
+    expect(rendererState.createdOptions[segmentIndex]?.options.fixed).toBe(true);
+    expect(segment.setAttribute).toHaveBeenCalledWith(expect.objectContaining({ fixed: true }));
+
+    segment.handlers.down[0]();
+    expect(onSelectionChange).toHaveBeenCalledWith('segAB');
+
+    const movablePoint = spec.points.find(point => !point.fixed && point.selection.selectable)!;
+    const pointIndex = rendererState.nodes.findIndex(node => node.dataset.diagramObjectId === movablePoint.id);
+    expect(rendererState.createdOptions[pointIndex]?.options.fixed).toBe(false);
+    expect(rendererState.geometries[pointIndex].setAttribute).toHaveBeenCalledWith(expect.objectContaining({ fixed: false }));
+  });
+
   it('keeps local hover disabled while allowing explicit MDX emphasis', () => {
     const base = migrateDiagramSpec(primitivesFixture).spec;
     const target = base.points.find(point => !point.fixed && point.target)!;
@@ -543,7 +566,7 @@ describe('Phase 3 shared renderer', () => {
     ['primitives', primitivesFixture, ['segment', 'line', 'polygon', 'circle', 'arc']],
     ['curves', curvesFixture, ['functiongraph', 'curve']],
     ['Poincaré', poincareFixture, ['circle', 'curve']],
-    ['marks', marksFixture, ['angle', 'polygon', 'segment', 'ticks']],
+    ['marks', marksFixture, ['angle', 'nonreflexangle', 'polygon', 'segment', 'ticks']],
     ['measurements', measurementsFixture, ['segment', 'text']],
     ['area grids', areasFixture, ['polygon', 'segment']],
     ['annotations', annotationsFixture, ['text']],
@@ -560,7 +583,9 @@ describe('Phase 3 shared renderer', () => {
     render(<MathProvider><DiagramRenderer spec={migrateDiagramSpec(marksFixture).spec} viewportControls={false} /></MathProvider>);
 
     const renderedAngle = rendererState.createdOptions.find(({ kind }) => kind === 'angle');
+    const renderedNonReflexAngle = rendererState.createdOptions.find(({ kind }) => kind === 'nonreflexangle');
     expect(renderedAngle?.options.radius).toBe(0.55);
+    expect(renderedNonReflexAngle?.options.radius).toBe(0.55);
   });
 
   it('renders measure ticks as repeated ruler graduations while keeping congruence marks separate', () => {

@@ -7,7 +7,7 @@ export function targetKind(kind: ElementKind): DiagramTarget['kind'] {
   if (kind === 'line' || kind === 'ray' || kind === 'perpendicular' || kind === 'parallel' || kind === 'angleBisector' || kind === 'functionCurve' || kind === 'parametricCurve' || kind === 'poincareGeodesic' || kind === 'poincareArc') return 'line';
   if (kind === 'polygon' || kind === 'areaDecomposition' || kind === 'grid') return 'polygon';
   if (kind === 'intersection' || kind === 'midpoint' || kind === 'perpendicularFoot') return 'point';
-  if (kind === 'angle' || kind === 'rightAngle' || kind === 'perpendicularMark') return 'angle';
+  if (kind === 'angle' || kind === 'nonReflexAngle' || kind === 'rightAngle' || kind === 'perpendicularMark') return 'angle';
   if (kind === 'circle' || kind === 'arc' || kind === 'congruenceMark') return 'other';
   if (kind === 'measureTicks') return 'measurement';
   return 'measurement';

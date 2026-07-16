@@ -23,7 +23,7 @@ export const diagramColorTokenSchema = z.enum([
 export const diagramElementKindSchema = z.enum([
   'segment', 'line', 'ray', 'polygon', 'circle', 'arc', 'functionCurve', 'parametricCurve',
   'poincareGeodesic', 'poincareArc', 'intersection', 'midpoint', 'perpendicularFoot',
-  'baseExtension', 'perpendicular', 'parallel', 'angleBisector', 'angle',
+  'baseExtension', 'perpendicular', 'parallel', 'angleBisector', 'angle', 'nonReflexAngle',
   'rightAngle', 'congruenceMark', 'measureTicks', 'perpendicularMark', 'dimensionLine', 'measurement',
   'grid', 'areaDecomposition', 'text', 'label', 'formula', 'infoPanel',
 ]);
@@ -131,7 +131,7 @@ const elementSchema = z.object({
 const constraintSchema = z.object({
   id: idSchema,
   label: z.string().min(1),
-  kind: z.enum(['fixed', 'horizontal', 'vertical', 'coincident', 'on', 'distance', 'equalLength', 'midpoint', 'perpendicular', 'parallel', 'insideDisk', 'sameSide', 'expression']),
+  kind: z.enum(['fixed', 'horizontal', 'vertical', 'coincident', 'on', 'distance', 'equalLength', 'equalAngle', 'midpoint', 'perpendicular', 'parallel', 'insideDisk', 'sameSide', 'expression']),
   refs: z.array(idSchema),
   expression: expressionSchema.optional(),
   value: finiteNumber.optional(),
@@ -213,7 +213,7 @@ const minimumRefs: Record<string, number> = {
   segment: 2, line: 2, ray: 2, polygon: 3, circle: 2, arc: 3,
   functionCurve: 0, parametricCurve: 0, poincareGeodesic: 4, poincareArc: 4, intersection: 2, midpoint: 2,
   perpendicularFoot: 3, baseExtension: 3, perpendicular: 3, parallel: 3,
-  angleBisector: 3, angle: 3, rightAngle: 3, congruenceMark: 2, measureTicks: 1,
+  angleBisector: 3, angle: 3, nonReflexAngle: 3, rightAngle: 3, congruenceMark: 2, measureTicks: 1,
   perpendicularMark: 3, dimensionLine: 2, measurement: 1, grid: 4,
   areaDecomposition: 3, text: 1, label: 1, formula: 1, infoPanel: 1,
 };
@@ -415,7 +415,9 @@ export const diagramSpecV2Schema = z.object({
   (spec.constraints ?? []).forEach((constraint, index) => {
     const requiredRefs = constraint.kind === 'fixed' || constraint.kind === 'expression'
       ? 1
-      : constraint.kind === 'equalLength' || constraint.kind === 'midpoint'
+      : constraint.kind === 'equalAngle'
+        ? 5
+        : constraint.kind === 'equalLength' || constraint.kind === 'midpoint'
         || constraint.kind === 'perpendicular' || constraint.kind === 'parallel'
         || constraint.kind === 'insideDisk' || constraint.kind === 'sameSide'
         ? 3
@@ -445,6 +447,34 @@ export const diagramSpecV2Schema = z.object({
         context.addIssue({ code: 'custom', message: `${constraint.id} necesita que los dos primeros puntos formen un segmento existente.`, path: ['constraints', index, 'refs'] });
       } else if (targetSegment.id === sourceSegmentId) {
         context.addIssue({ code: 'custom', message: `${constraint.id} debe relacionar dos segmentos distintos.`, path: ['constraints', index, 'refs', 2] });
+      }
+      const assignedPoint = spec.points.find(point => point.id === targetPointId);
+      if (!assignedPoint?.constraintIds?.includes(constraint.id)) {
+        context.addIssue({ code: 'custom', message: `${constraint.id} debe estar asignada al extremo móvil ${targetPointId}.`, path: ['constraints', index] });
+      }
+    }
+    if (constraint.kind === 'equalAngle') {
+      const [targetPointId, vertexPointId, fixedRayPointId, sourceAngleId, targetAngleId] = constraint.refs;
+      const sourceAngle = spec.elements.find(element => element.id === sourceAngleId);
+      const targetAngle = spec.elements.find(element => element.id === targetAngleId);
+      if (![targetPointId, vertexPointId, fixedRayPointId].every(id => spec.points.some(point => point.id === id))) {
+        context.addIssue({ code: 'custom', message: `${constraint.id} necesita un lado móvil, un vértice y un lado fijo definidos por puntos.`, path: ['constraints', index, 'refs'] });
+      }
+      if (!targetAngle || (targetAngle.kind !== 'angle' && targetAngle.kind !== 'nonReflexAngle')) {
+        context.addIssue({ code: 'custom', message: `${constraint.id} necesita que los tres primeros puntos formen un ángulo editable existente.`, path: ['constraints', index, 'refs'] });
+      } else if (
+        targetAngle.refs[1] !== vertexPointId
+        || !targetAngle.refs.includes(targetPointId)
+        || !targetAngle.refs.includes(fixedRayPointId)
+      ) {
+        context.addIssue({ code: 'custom', message: `${constraint.id} no coincide con los puntos del ángulo que se ajustará.`, path: ['constraints', index, 'refs'] });
+      }
+      if (!sourceAngle || (sourceAngle.kind !== 'angle' && sourceAngle.kind !== 'nonReflexAngle')) {
+        context.addIssue({ code: 'custom', message: `${constraint.id} necesita un ángulo de referencia.`, path: ['constraints', index, 'refs', 3] });
+      } else if (targetAngle?.id === sourceAngle.id) {
+        context.addIssue({ code: 'custom', message: `${constraint.id} debe relacionar dos ángulos distintos.`, path: ['constraints', index, 'refs', 3] });
+      } else if (targetAngle && targetAngle.kind !== sourceAngle.kind) {
+        context.addIssue({ code: 'custom', message: `${constraint.id} debe relacionar ángulos del mismo tipo.`, path: ['constraints', index, 'refs', 3] });
       }
       const assignedPoint = spec.points.find(point => point.id === targetPointId);
       if (!assignedPoint?.constraintIds?.includes(constraint.id)) {

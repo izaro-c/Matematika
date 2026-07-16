@@ -227,10 +227,11 @@ describe('editor validation', () => {
                 { id: 'segAlturaCAB', kind: 'segment', refs: ['pC', 'footCAB'] },
                 { id: 'rightAngleAlturaCAB', kind: 'rightAngle', refs: ['pA', 'footCAB', 'pC'] },
                 { id: 'angleABC', kind: 'angle', refs: ['pA', 'pB', 'pC'] },
+                { id: 'nonReflexAngleABC', kind: 'nonReflexAngle', refs: ['pA', 'pB', 'pC'] },
                 { id: 'bisABC', kind: 'angleBisector', refs: ['pA', 'pB', 'pC'] },
               ],
               steps: [
-                { id: 'step1', visibleTargets: ['midAB', 'lineMediatrizAB', 'segMedianaCAB', 'footCAB', 'extAlturaCAB', 'lineAlturaCAB', 'segAlturaCAB', 'rightAngleAlturaCAB', 'angleABC', 'bisABC'] },
+                { id: 'step1', visibleTargets: ['midAB', 'lineMediatrizAB', 'segMedianaCAB', 'footCAB', 'extAlturaCAB', 'lineAlturaCAB', 'segAlturaCAB', 'rightAngleAlturaCAB', 'angleABC', 'nonReflexAngleABC', 'bisABC'] },
               ],
             },
           },

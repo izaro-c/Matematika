@@ -41,7 +41,7 @@ export function diagramConstraint(id: string, label: string, kind: VisualConstra
 }
 
 export function element(id: string, label: string, kind: ElementKind, refs: string[], color: ColorToken, target = true, extra: Partial<VisualElement> = {}): VisualElement {
-  const defaultStyle = kind === 'angle'
+  const defaultStyle = kind === 'angle' || kind === 'nonReflexAngle'
     ? { angleRadius: DEFAULT_ANGLE_RADIUS }
     : kind === 'rightAngle' || kind === 'perpendicularMark'
       ? { angleRadius: DEFAULT_RIGHT_ANGLE_RADIUS }
@@ -152,7 +152,7 @@ export function nextStepId(steps: VisualStep[]): string {
 export function refsNeededForTool(tool: CanvasTool): number {
   if (tool === 'measureTicks') return 1;
   if (['segment', 'line', 'ray', 'circle', 'intersection', 'midpoint', 'congruenceMark', 'dimensionLine', 'measurement'].includes(tool)) return 2;
-  if (['arc', 'polygon', 'perpendicularFoot', 'baseExtension', 'perpendicular', 'parallel', 'angleBisector', 'angle', 'rightAngle', 'perpendicularMark', 'areaDecomposition'].includes(tool)) return 3;
+  if (['arc', 'polygon', 'perpendicularFoot', 'baseExtension', 'perpendicular', 'parallel', 'angleBisector', 'angle', 'nonReflexAngle', 'rightAngle', 'perpendicularMark', 'areaDecomposition'].includes(tool)) return 3;
   if (['poincareGeodesic', 'poincareArc', 'grid'].includes(tool)) return 4;
   if (['text', 'label', 'formula'].includes(tool)) return 1;
   if (tool === 'infoPanel') return 0;
@@ -164,7 +164,7 @@ export function generatedElementId(kind: ElementKind, refs: string[], existing: 
   const prefixes: Partial<Record<ElementKind, string>> = {
     segment: 'seg', line: 'line', ray: 'ray', circle: 'circle', arc: 'arc', intersection: 'int', midpoint: 'mid',
     perpendicularFoot: 'foot', baseExtension: 'ext', perpendicular: 'perp', parallel: 'par',
-    angleBisector: 'bis', angle: 'angle', rightAngle: 'rightAngle', measureTicks: 'ticks',
+    angleBisector: 'bis', angle: 'angle', nonReflexAngle: 'nonReflexAngle', rightAngle: 'rightAngle', measureTicks: 'ticks',
   };
   const base = `${prefixes[kind] ?? kind}${suffix || existing.length + 1}`;
   return uniqueElementId(base, existing);
@@ -174,7 +174,7 @@ export function elementColorForKind(kind: ElementKind): ColorToken {
   if (kind === 'polygon' || kind === 'areaDecomposition' || kind === 'grid') return 'salvia';
   if (kind === 'intersection' || kind === 'midpoint') return 'terracota';
   if (kind === 'measureTicks') return 'carbon';
-  if (kind === 'perpendicularFoot' || kind === 'angle' || kind === 'rightAngle' || kind === 'perpendicularMark' || kind === 'congruenceMark') return 'ocre';
+  if (kind === 'perpendicularFoot' || kind === 'angle' || kind === 'nonReflexAngle' || kind === 'rightAngle' || kind === 'perpendicularMark' || kind === 'congruenceMark') return 'ocre';
   if (kind === 'baseExtension' || kind === 'measurement' || kind === 'dimensionLine' || kind === 'formula' || kind === 'infoPanel') return 'pizarra';
   if (kind === 'perpendicular' || kind === 'parallel' || kind === 'angleBisector' || kind === 'line' || kind === 'ray' || kind === 'functionCurve' || kind === 'parametricCurve' || kind === 'poincareGeodesic' || kind === 'poincareArc') return 'pavo';
   return 'carbon';
