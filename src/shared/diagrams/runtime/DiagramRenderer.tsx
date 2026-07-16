@@ -237,8 +237,8 @@ interface MovableCueLabel {
 function movableCueLabels(spec: DiagramSpecV2): MovableCueLabel[] {
   const labels = new Map<string, DiagramColorToken>();
   [
-    ...spec.points.filter(point => !point.fixed && !point.locked && point.constraint !== 'derived'),
-    ...spec.sliders.filter(slider => !slider.locked),
+    ...spec.points.filter(point => point.selection.selectable && !point.fixed && !point.locked && point.constraint !== 'derived'),
+    ...spec.sliders.filter(slider => slider.selection.selectable && !slider.locked),
   ].forEach(item => {
     const label = item.label.trim();
     if (label && !labels.has(label)) labels.set(label, item.color);
@@ -367,6 +367,7 @@ function createElement(
   theme: ThemeColors,
   layer: number,
   spec: DiagramSpecV2,
+  directInteractionLocked: boolean,
   liftedIntoHeader = false,
 ) {
   const refs = refsFor(item, elements);
@@ -379,6 +380,7 @@ function createElement(
     strokeWidth: item.style?.strokeWidth ?? 2,
     strokeOpacity: item.style?.strokeOpacity ?? 1,
     dash: item.dashed ? 2 : 0,
+    fixed: directInteractionLocked,
     layer,
   };
   if (item.kind === 'segment') return refs.length >= 2 ? createSegment(board, [refs[0], refs[1]], lineOptions, theme) : null;
@@ -387,7 +389,8 @@ function createElement(
   if (item.kind === 'polygon') return refs.length >= 3 ? createPolygon(board, refs, {
     highlight: highlightable,
     fillColor: theme[item.color], highlightFillColor: hoverColor, fillOpacity: item.style?.fillOpacity ?? 0.1,
-    borders: { highlight: highlightable, strokeColor: theme[item.color], strokeWidth: item.style?.strokeWidth ?? 1.5, strokeOpacity: item.style?.strokeOpacity ?? 1, dash: item.dashed ? 2 : 0 }, layer,
+    fixed: directInteractionLocked,
+    borders: { highlight: highlightable, strokeColor: theme[item.color], strokeWidth: item.style?.strokeWidth ?? 1.5, strokeOpacity: item.style?.strokeOpacity ?? 1, dash: item.dashed ? 2 : 0, fixed: directInteractionLocked }, layer,
   }, theme) : null;
   if (item.kind === 'circle') return refs.length >= 2 ? createCircle(board, [refs[0], refs[1]], {
     ...lineOptions, fillColor: theme[item.color], fillOpacity: item.style?.fillOpacity ?? 0,
@@ -432,32 +435,35 @@ function createElement(
     highlightFillColor: hoverColor,
     highlightStrokeColor: hoverColor,
     label: { highlight: highlightable, highlightColor: hoverColor, highlightStrokeColor: hoverColor },
+    fixed: directInteractionLocked,
     layer,
   }, theme) : null;
   if (item.kind === 'midpoint') return refs.length >= 2 ? createMidpoint(board, [refs[0], refs[1]], {
     highlight: highlightable,
     name: renderKatexTextToHtml(item.label), fillColor: theme[item.color], strokeColor: theme[item.color],
     highlightFillColor: hoverColor, highlightStrokeColor: hoverColor,
-    label: { highlight: highlightable, highlightColor: hoverColor, highlightStrokeColor: hoverColor }, layer,
+    label: { highlight: highlightable, highlightColor: hoverColor, highlightStrokeColor: hoverColor },
+    fixed: directInteractionLocked, layer,
   }, theme) : null;
   if (item.kind === 'perpendicularFoot') return refs.length >= 3 ? createPerpendicularFoot(board, [refs[0], refs[1], refs[2]], {
     highlight: highlightable,
     name: renderKatexTextToHtml(item.label), fillColor: theme[item.color], strokeColor: theme[item.color],
     highlightFillColor: hoverColor, highlightStrokeColor: hoverColor,
-    label: { highlight: highlightable, highlightColor: hoverColor, highlightStrokeColor: hoverColor }, layer,
+    label: { highlight: highlightable, highlightColor: hoverColor, highlightStrokeColor: hoverColor },
+    fixed: directInteractionLocked, layer,
   }, theme) : null;
   if (item.kind === 'baseExtension') return refs.length >= 3 ? createBaseExtensionToFoot(board, [refs[0], refs[1], refs[2]], lineOptions, theme) : null;
   if (item.kind === 'perpendicular') return refs.length >= 3 ? createPerpendicularLine(board, [refs[0], refs[1], refs[2]], lineOptions, theme) : null;
   if (item.kind === 'parallel') return refs.length >= 3 ? createParallelLine(board, [refs[0], refs[1], refs[2]], lineOptions, theme) : null;
   if (item.kind === 'angleBisector') return refs.length >= 3 ? createAngleBisectorRay(board, [refs[0], refs[1], refs[2]], lineOptions, theme) : null;
   if (item.kind === 'angle') return refs.length >= 3 ? createAngle(board, [refs[0], refs[1], refs[2]], {
-    highlight: highlightable, fillColor: theme[item.color], strokeColor: theme[item.color], radius: item.style?.angleRadius ?? DEFAULT_ANGLE_RADIUS, layer,
+    highlight: highlightable, fillColor: theme[item.color], strokeColor: theme[item.color], radius: item.style?.angleRadius ?? DEFAULT_ANGLE_RADIUS, fixed: directInteractionLocked, layer,
   }, theme) : null;
   if (item.kind === 'rightAngle') return refs.length >= 3 ? createRightAngleMarker(board, [refs[0], refs[1], refs[2]], {
-    highlight: highlightable, fillColor: theme[item.color], strokeColor: theme[item.color], size: item.style?.angleRadius ?? DEFAULT_RIGHT_ANGLE_RADIUS, layer,
+    highlight: highlightable, fillColor: theme[item.color], strokeColor: theme[item.color], size: item.style?.angleRadius ?? DEFAULT_RIGHT_ANGLE_RADIUS, fixed: directInteractionLocked, layer,
   }, theme) : null;
   if (item.kind === 'perpendicularMark') return refs.length >= 3 ? createRightAngleMarker(board, [refs[0], refs[1], refs[2]], {
-    highlight: highlightable, fillColor: theme[item.color], strokeColor: theme[item.color], size: item.style?.angleRadius ?? DEFAULT_RIGHT_ANGLE_RADIUS, layer,
+    highlight: highlightable, fillColor: theme[item.color], strokeColor: theme[item.color], size: item.style?.angleRadius ?? DEFAULT_RIGHT_ANGLE_RADIUS, fixed: directInteractionLocked, layer,
   }, theme) : null;
   if (item.kind === 'congruenceMark') return refs.length >= 2 ? createCongruenceMark(
     board,
@@ -487,7 +493,7 @@ function createElement(
     refs,
     item.properties?.rows ?? 2,
     item.properties?.columns ?? 2,
-    { highlight: highlightable, fillColor: theme[item.color], fillOpacity: item.style?.fillOpacity ?? 0.1, borders: lineOptions, layer },
+    { highlight: highlightable, fillColor: theme[item.color], fillOpacity: item.style?.fillOpacity ?? 0.1, borders: lineOptions, fixed: directInteractionLocked, layer },
     theme,
   ) : null;
   const anchor = refs[0];
@@ -516,6 +522,7 @@ function createElement(
   return textCoordinates ? createText(board, textCoordinates, {
     highlight: highlightable,
     color: theme[item.color],
+    fixed: directInteractionLocked,
     layer,
     ...(viewportPanelAnchor ?? {}),
     cssClass: item.kind === 'formula'
@@ -550,13 +557,16 @@ function attachSelection(
   if (item.selection.role) node?.setAttribute('data-selection-role', item.selection.role);
   if (item.target) {
     const target = item.targetId ?? item.id;
-    node?.setAttribute('tabindex', '0');
     node?.setAttribute('data-diagram-target', target);
-    node?.addEventListener('mouseenter', () => onTargetHighlight?.(target));
-    node?.addEventListener('mouseleave', () => onTargetHighlight?.(null));
-    node?.addEventListener('focus', () => onTargetHighlight?.(target));
-    node?.addEventListener('blur', () => onTargetHighlight?.(null));
+    node?.setAttribute('tabindex', '0');
+    if (item.selection.highlightable !== false) {
+      node?.addEventListener('mouseenter', () => onTargetHighlight?.(target));
+      node?.addEventListener('mouseleave', () => onTargetHighlight?.(null));
+      node?.addEventListener('focus', () => onTargetHighlight?.(target));
+      node?.addEventListener('blur', () => onTargetHighlight?.(null));
+    }
   }
+  if (!item.selection.selectable) return;
   if (onKeyboardAdjust) {
     node?.setAttribute('tabindex', '0');
     node?.setAttribute('aria-keyshortcuts', 'ArrowLeft ArrowRight ArrowUp ArrowDown Home End');
@@ -575,7 +585,7 @@ function attachSelection(
       onKeyboardAdjust(event.key as KeyboardAdjustmentKey, event.shiftKey);
     });
   }
-  if (mode !== 'editor' || !item.selection.selectable) return;
+  if (mode !== 'editor') return;
   node?.setAttribute('tabindex', '0');
   node?.addEventListener('keydown', (event) => {
     if (event.key !== 'Enter' && event.key !== ' ') return;
@@ -890,6 +900,7 @@ const DiagramRendererContent: React.FC<DiagramRendererProps> = ({
           }
           createSceneConstructionPlan(spec).forEach(entry => {
             const sceneItem = entry.item;
+            const directInteractionLocked = entry.locked || !sceneItem.selection.selectable;
             const highlightable = sceneItem.selection.highlightable !== false;
             const hoverColor = !highlightable || sceneItem.style?.preserveColorOnHighlight ? theme[sceneItem.color] : theme.ocre;
             const pointLabelOptions = {
@@ -899,6 +910,17 @@ const DiagramRendererContent: React.FC<DiagramRendererProps> = ({
               highlightStrokeColor: hoverColor,
             };
             if ('constraint' in sceneItem) {
+              const onConstraint = sceneItem.constraint === 'constrained'
+                ? (spec.constraints ?? []).find(constraint => (
+                  constraint.enabled
+                  && constraint.kind === 'on'
+                  && constraint.refs[0] === sceneItem.id
+                  && elements[constraint.refs[1]]
+                ))
+                : undefined;
+              const gliderTarget = sceneItem.constraint === 'glider'
+                ? sceneItem.gliderTarget
+                : onConstraint?.refs[1];
               const item = sceneItem.constraint === 'derived' && sceneItem.xExpression && sceneItem.yExpression
                 ? createPoint(board, [
                   () => {
@@ -919,11 +941,11 @@ const DiagramRendererContent: React.FC<DiagramRendererProps> = ({
                   label: pointLabelOptions,
                   layer: itemLayerNumber(spec, sceneItem),
                 }, theme)
-                : sceneItem.constraint === 'glider' && sceneItem.gliderTarget
-                ? createGlider(board, [sceneItem.x, sceneItem.y, elements[sceneItem.gliderTarget]], {
+                : gliderTarget
+                ? createGlider(board, [sceneItem.x, sceneItem.y, elements[gliderTarget]], {
                   highlight: highlightable,
                   name: renderKatexTextToHtml(sceneItem.label),
-                  fixed: sceneItem.fixed || entry.locked,
+                  fixed: directInteractionLocked,
                   ...(sceneItem.style?.pointSize !== undefined ? { size: sceneItem.style.pointSize } : {}),
                   fillColor: theme[sceneItem.color],
                   strokeColor: theme[sceneItem.color],
@@ -935,7 +957,7 @@ const DiagramRendererContent: React.FC<DiagramRendererProps> = ({
                 : createPoint(board, [sceneItem.x, sceneItem.y], {
                   highlight: highlightable,
                   name: renderKatexTextToHtml(sceneItem.label),
-                  fixed: sceneItem.fixed || entry.locked,
+                  fixed: directInteractionLocked,
                   ...(sceneItem.style?.pointSize !== undefined ? { size: sceneItem.style.pointSize } : {}),
                   fillColor: theme[sceneItem.color],
                   strokeColor: theme[sceneItem.color],
@@ -945,7 +967,7 @@ const DiagramRendererContent: React.FC<DiagramRendererProps> = ({
                   layer: itemLayerNumber(spec, sceneItem),
                 }, theme);
               elements[sceneItem.id] = item;
-              if (!sceneItem.fixed && !entry.locked && sceneItem.constraint !== 'derived') {
+              if (!directInteractionLocked && sceneItem.constraint !== 'derived') {
                 let enforcing = false;
                 item.on('drag', () => {
                   if (enforcing) return;
@@ -969,7 +991,7 @@ const DiagramRendererContent: React.FC<DiagramRendererProps> = ({
                   enforcing = false;
                 });
               }
-              if (!sceneItem.fixed && !entry.locked && sceneItem.constraint !== 'derived') item.on('up', () => interactionCallbacksRef.current.onPointMove?.(sceneItem.id, item.X(), item.Y()));
+              if (!directInteractionLocked && sceneItem.constraint !== 'derived') item.on('up', () => interactionCallbacksRef.current.onPointMove?.(sceneItem.id, item.X(), item.Y()));
             } else if ('kind' in sceneItem) {
               elements[sceneItem.id] = createElement(
                 board,
@@ -978,6 +1000,7 @@ const DiagramRendererContent: React.FC<DiagramRendererProps> = ({
                 theme,
                 itemLayerNumber(spec, sceneItem),
                 spec,
+                directInteractionLocked,
                 mode === 'runtime' && allHeaderItemIds.has(sceneItem.id),
               );
             } else {
@@ -996,12 +1019,12 @@ const DiagramRendererContent: React.FC<DiagramRendererProps> = ({
                   point2: { highlight: false },
                 } : {}),
                 label: { highlight: highlightable, highlightColor: hoverColor, highlightStrokeColor: hoverColor },
-                fixed: entry.locked,
+                fixed: directInteractionLocked,
                 layer: itemLayerNumber(spec, sceneItem),
               }, theme);
             }
             const element = elements[sceneItem.id];
-            const keyboardAdjust = 'constraint' in sceneItem && !sceneItem.fixed && !entry.locked && sceneItem.constraint !== 'derived'
+            const keyboardAdjust = 'constraint' in sceneItem && !directInteractionLocked && sceneItem.constraint !== 'derived'
               ? (key: 'ArrowLeft' | 'ArrowRight' | 'ArrowUp' | 'ArrowDown' | 'Home' | 'End', largeStep: boolean) => {
                 if (key === 'Home' || key === 'End') return;
                 const step = (bounds[2] - bounds[0]) / (largeStep ? 20 : 100);
@@ -1028,7 +1051,7 @@ const DiagramRendererContent: React.FC<DiagramRendererProps> = ({
                 const node = element.rendNode as HTMLElement | undefined;
                 node?.setAttribute('aria-label', `${sceneItem.selection.ariaLabel ?? sceneItem.label}: x ${element.X().toFixed(2)}, y ${element.Y().toFixed(2)}`);
               }
-              : 'min' in sceneItem && !entry.locked
+              : 'min' in sceneItem && !directInteractionLocked
                 ? (key: 'ArrowLeft' | 'ArrowRight' | 'ArrowUp' | 'ArrowDown' | 'Home' | 'End', largeStep: boolean) => {
                   const delta = sceneItem.step * (largeStep ? 10 : 1);
                   const current = element.Value?.() ?? sceneItem.value;
@@ -1087,8 +1110,7 @@ const DiagramRendererContent: React.FC<DiagramRendererProps> = ({
           const externalHighlightRequestsDimming = plan.some(entry => entry.highlighted)
             && [...externalHighlightSources].some(id => {
               const source = highlightSources.find(item => item.id === id);
-              return source?.selection.highlightable !== false
-                && source?.selection.dimOthersOnHighlight !== false;
+              return source?.selection.dimOthersOnHighlight !== false;
             });
           const shouldDimOthers = plan.some(entry => entry.selected) || externalHighlightRequestsDimming;
           plan.forEach(entry => {
@@ -1121,7 +1143,7 @@ const DiagramRendererContent: React.FC<DiagramRendererProps> = ({
               && (('kind' in item && item.kind === 'intersection')
                 ? intersectionBelongsToSupports(item, element, elements, spec)
                 : true);
-            const base = { visible, fixed: entry.locked };
+            const base = { visible, fixed: entry.locked || !item.selection.selectable };
             const hoverColor = item.selection.highlightable === false || item.style?.preserveColorOnHighlight ? theme[item.color] : theme.ocre;
             syncNativeElementLabel(element, { visible, color, highlightColor: hoverColor, opacity, text: entry.label });
             if (element.__matematikaStepLabel !== entry.label) {

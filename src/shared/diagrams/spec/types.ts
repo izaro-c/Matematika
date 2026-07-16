@@ -108,7 +108,11 @@ export interface DiagramDependency {
 
 export interface DiagramSelectionMetadata {
   selectable: boolean;
-  /** Permite énfasis visual por hover, foco, selección o targets externos. */
+  /**
+   * Permite el énfasis visual iniciado dentro del lienzo por hover o foco.
+   * Las referencias MDX y la selección explícita pueden resaltar el objeto
+   * aunque esta interacción local esté desactivada.
+   */
   highlightable?: boolean;
   /** Las referencias externas atenúan el resto de la escena; el hover local nunca lo hace. */
   dimOthersOnHighlight?: boolean;

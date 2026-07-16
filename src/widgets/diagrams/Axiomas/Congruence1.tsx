@@ -44,7 +44,60 @@ export const Congruence1Spec = createDiagramSpec(
       "locked": false
     }
   ],
-  "groups": [],
+  "groups": [
+    {
+      "id": "group1",
+      "label": "AB",
+      "memberIds": [
+        "pA",
+        "pB",
+        "segAB"
+      ],
+      "visible": true,
+      "locked": false,
+      "selection": {
+        "selectable": true,
+        "highlightable": true,
+        "role": "secondary"
+      },
+      "target": true,
+      "targetId": "AB"
+    },
+    {
+      "id": "group2",
+      "label": "CD",
+      "memberIds": [
+        "pC",
+        "pD",
+        "segCD"
+      ],
+      "visible": true,
+      "locked": false,
+      "selection": {
+        "selectable": true,
+        "role": "secondary"
+      },
+      "target": true,
+      "targetId": "CD"
+    },
+    {
+      "id": "group3",
+      "label": "r",
+      "memberIds": [
+        "pC",
+        "pDir",
+        "rayCDir"
+      ],
+      "visible": true,
+      "locked": false,
+      "selection": {
+        "selectable": true,
+        "role": "secondary"
+      },
+      "target": true,
+      "targetId": "r"
+    }
+  ],
   "points": [
     {
       "id": "pA",
@@ -54,20 +107,24 @@ export const Congruence1Spec = createDiagramSpec(
       "order": 9000,
       "visible": true,
       "locked": false,
-      "groupIds": [],
+      "groupIds": [
+        "group1"
+      ],
       "selection": {
         "selectable": true,
-        "highlightable": false,
+        "highlightable": true,
         "ariaLabel": "Punto A",
         "role": "primary"
       },
       "target": true,
       "targetId": "pA",
       "style": {
-        "pointSize": 7
+        "pointSize": 7,
+        "highlightPointSize": 10,
+        "preserveColorOnHighlight": true
       },
-      "x": -4.71,
-      "y": 4.85,
+      "x": -3.64,
+      "y": 3.04,
       "fixed": false,
       "constraint": "free"
     },
@@ -79,20 +136,23 @@ export const Congruence1Spec = createDiagramSpec(
       "order": 10000,
       "visible": true,
       "locked": false,
-      "groupIds": [],
+      "groupIds": [
+        "group1"
+      ],
       "selection": {
         "selectable": true,
-        "highlightable": false,
+        "highlightable": true,
         "ariaLabel": "Punto B",
         "role": "primary"
       },
       "target": true,
       "targetId": "pB",
       "style": {
-        "pointSize": 7
+        "pointSize": 7,
+        "highlightPointSize": 10
       },
-      "x": -0.74,
-      "y": 4.27,
+      "x": 0.03,
+      "y": 4.36,
       "fixed": false,
       "constraint": "free"
     },
@@ -104,20 +164,25 @@ export const Congruence1Spec = createDiagramSpec(
       "order": 11000,
       "visible": true,
       "locked": false,
-      "groupIds": [],
+      "groupIds": [
+        "group2",
+        "group3"
+      ],
       "selection": {
         "selectable": true,
-        "highlightable": false,
+        "highlightable": true,
         "ariaLabel": "Punto C",
         "role": "primary"
       },
       "target": true,
       "targetId": "pC",
       "style": {
-        "pointSize": 7
+        "pointSize": 7,
+        "highlightPointSize": 10,
+        "preserveColorOnHighlight": true
       },
-      "x": -1.43,
-      "y": -0.66,
+      "x": -1.2,
+      "y": -1.26,
       "fixed": false,
       "constraint": "free"
     },
@@ -126,19 +191,27 @@ export const Congruence1Spec = createDiagramSpec(
       "label": "D",
       "color": "terracota",
       "layerId": "geometry",
-      "order": 4000,
+      "order": 12000,
       "visible": true,
       "locked": false,
-      "groupIds": [],
+      "groupIds": [
+        "group2"
+      ],
       "selection": {
         "selectable": true,
+        "highlightable": false,
         "ariaLabel": "Punto D",
         "role": "primary"
       },
       "target": true,
       "targetId": "pD",
-      "x": 2.143596509479922,
-      "y": 1.1639265301631294,
+      "style": {
+        "pointSize": 7,
+        "highlightPointSize": 10,
+        "preserveColorOnHighlight": true
+      },
+      "x": 2.582735168797865,
+      "y": -0.31015019990538195,
       "fixed": false,
       "constraint": "constrained",
       "constraintIds": [
@@ -149,12 +222,14 @@ export const Congruence1Spec = createDiagramSpec(
     {
       "id": "pDir",
       "label": "dir",
-      "color": "terracota",
+      "color": "pavo",
       "layerId": "geometry",
       "order": 7000,
       "visible": true,
       "locked": false,
-      "groupIds": [],
+      "groupIds": [
+        "group3"
+      ],
       "selection": {
         "selectable": true,
         "ariaLabel": "Punto E",
@@ -162,8 +237,12 @@ export const Congruence1Spec = createDiagramSpec(
       },
       "target": true,
       "targetId": "pE",
-      "x": 6.27,
-      "y": 3.27,
+      "style": {
+        "highlightPointSize": 6,
+        "preserveColorOnHighlight": true
+      },
+      "x": 5.61,
+      "y": 0.45,
       "fixed": false,
       "constraint": "free"
     }
@@ -177,7 +256,9 @@ export const Congruence1Spec = createDiagramSpec(
       "order": 2000,
       "visible": true,
       "locked": false,
-      "groupIds": [],
+      "groupIds": [
+        "group1"
+      ],
       "selection": {
         "selectable": true,
         "highlightable": false,
@@ -187,7 +268,9 @@ export const Congruence1Spec = createDiagramSpec(
       "target": true,
       "targetId": "segAB",
       "style": {
-        "strokeWidth": 4
+        "strokeWidth": 4,
+        "highlightStrokeWidth": 6,
+        "preserveColorOnHighlight": true
       },
       "kind": "segment",
       "refs": [
@@ -198,19 +281,27 @@ export const Congruence1Spec = createDiagramSpec(
     {
       "id": "segCD",
       "label": "Segmento",
-      "color": "carbon",
+      "color": "terracota",
       "layerId": "geometry",
       "order": 5000,
       "visible": true,
       "locked": false,
-      "groupIds": [],
+      "groupIds": [
+        "group2"
+      ],
       "selection": {
         "selectable": true,
+        "highlightable": false,
         "ariaLabel": "Segmento",
         "role": "secondary"
       },
       "target": true,
       "targetId": "segCD",
+      "style": {
+        "strokeWidth": 4,
+        "highlightStrokeWidth": 6,
+        "preserveColorOnHighlight": true
+      },
       "kind": "segment",
       "refs": [
         "pC",
@@ -227,7 +318,8 @@ export const Congruence1Spec = createDiagramSpec(
       "locked": false,
       "groupIds": [],
       "selection": {
-        "selectable": true,
+        "selectable": false,
+        "highlightable": false,
         "ariaLabel": "Circunferencia",
         "role": "secondary"
       },
@@ -245,17 +337,23 @@ export const Congruence1Spec = createDiagramSpec(
       "label": "Semirrecta",
       "color": "pavo",
       "layerId": "geometry",
-      "order": 8000,
+      "order": -1000,
       "visible": true,
       "locked": false,
-      "groupIds": [],
+      "groupIds": [
+        "group3"
+      ],
       "selection": {
-        "selectable": true,
+        "selectable": false,
+        "highlightable": false,
         "ariaLabel": "Semirrecta",
         "role": "secondary"
       },
       "target": true,
       "targetId": "rayCDir",
+      "style": {
+        "preserveColorOnHighlight": true
+      },
       "kind": "ray",
       "refs": [
         "pC",

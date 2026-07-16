@@ -140,7 +140,7 @@ function ExternalHighlightControl({ value }: { value: string }) {
 }
 
 describe('Phase 3 shared renderer', () => {
-  it('keeps a non-highlightable point selectable and target-interactive without visual emphasis', () => {
+  it('keeps local hover disabled while allowing explicit MDX emphasis', () => {
     const base = migrateDiagramSpec(primitivesFixture).spec;
     const target = base.points.find(point => !point.fixed && point.target)!;
     const spec = {
@@ -152,8 +152,9 @@ describe('Phase 3 shared renderer', () => {
     const onSelectionChange = vi.fn();
     render(
       <MathProvider>
-        <DiagramRenderer spec={spec} mode="editor" selectedIds={[target.id]} viewportControls={false} onSelectionChange={onSelectionChange} />
+        <DiagramRenderer spec={spec} mode="editor" viewportControls={false} onSelectionChange={onSelectionChange} />
         <HighlightProbe />
+        <ExternalHighlightControl value={`${spec.componentId}:${target.targetId ?? target.id}`} />
       </MathProvider>,
     );
 
@@ -177,7 +178,15 @@ describe('Phase 3 shared renderer', () => {
     point.handlers.down[0]();
     expect(onSelectionChange).toHaveBeenCalledWith(target.id);
     fireEvent.mouseEnter(rendererState.nodes[pointIndex]);
-    expect(screen.getByLabelText('highlight desde diagrama').textContent).toBe(`${spec.componentId}:${target.targetId ?? target.id}`);
+    expect(screen.getByLabelText('highlight desde diagrama').textContent).toBe('');
+
+    fireEvent.click(screen.getByRole('button', { name: 'Resaltar desde MDX' }));
+    expect(point.setAttribute).toHaveBeenLastCalledWith(expect.objectContaining({
+      size: target.style?.highlightPointSize ?? 7,
+      fillColor: 'ocre',
+      strokeColor: 'ocre',
+      fillOpacity: 1,
+    }));
   });
 
   it('renders exact intersections and keeps them on finite authored supports', () => {
@@ -256,6 +265,10 @@ describe('Phase 3 shared renderer', () => {
 
   it('propagates equal segment lengths live while a source endpoint is dragged', () => {
     render(<MathProvider><DiagramRenderer spec={Congruence1Spec} viewportControls={false} /></MathProvider>);
+    const pointDCreation = rendererState.createdOptions.find((item, index) => (
+      item.kind === 'glider' && rendererState.nodes[index]?.dataset.diagramObjectId === 'pD'
+    ));
+    expect(pointDCreation).toBeDefined();
     const geometryFor = (id: string) => {
       const index = rendererState.nodes.findIndex(node => node.dataset.diagramObjectId === id);
       return rendererState.geometries[index];
@@ -269,6 +282,73 @@ describe('Phase 3 shared renderer', () => {
     pointA.handlers.drag[0]();
 
     expect(pointC.Dist(pointD)).toBeCloseTo(pointA.Dist(pointB));
+
+    pointD.moveTo([2, 4], 0);
+    pointD.handlers.drag[0]();
+    const pointDir = geometryFor('pDir');
+    const rayX = pointDir.X() - pointC.X();
+    const rayY = pointDir.Y() - pointC.Y();
+    const cdX = pointD.X() - pointC.X();
+    const cdY = pointD.Y() - pointC.Y();
+    expect(rayX * cdY - rayY * cdX).toBeCloseTo(0);
+    expect(pointC.Dist(pointD)).toBeCloseTo(pointA.Dist(pointB));
+  });
+
+  it('blocks direct interaction without making a point immovable for relations', () => {
+    const spec = {
+      ...Congruence1Spec,
+      points: Congruence1Spec.points.map(point => point.id === 'pD'
+        ? { ...point, selection: { ...point.selection, selectable: false, highlightable: true } }
+        : point),
+    };
+    const onSelectionChange = vi.fn();
+    const onPointMove = vi.fn();
+    render(
+      <MathProvider>
+        <DiagramRenderer
+          spec={spec}
+          mode="editor"
+          viewportControls={false}
+          onSelectionChange={onSelectionChange}
+          onPointMove={onPointMove}
+        />
+        <HighlightProbe />
+      </MathProvider>,
+    );
+    const geometryFor = (id: string) => {
+      const index = rendererState.nodes.findIndex(node => node.dataset.diagramObjectId === id);
+      return {
+        creation: rendererState.createdOptions[index],
+        geometry: rendererState.geometries[index],
+        node: rendererState.nodes[index],
+      };
+    };
+    const pointA = geometryFor('pA');
+    const pointB = geometryFor('pB');
+    const pointC = geometryFor('pC');
+    const pointD = geometryFor('pD');
+
+    expect(pointD.creation.options.fixed).toBe(true);
+    expect(pointD.geometry.handlers.down).toBeUndefined();
+    expect(pointD.geometry.handlers.drag).toBeUndefined();
+    expect(pointD.geometry.handlers.up).toBeUndefined();
+    expect(pointD.node.getAttribute('tabindex')).toBe('0');
+    expect(pointD.node.getAttribute('aria-keyshortcuts')).toBeNull();
+    fireEvent.focus(pointD.node);
+    expect(screen.getByLabelText('highlight desde diagrama').textContent).toBe(`${spec.componentId}:pD`);
+    fireEvent.keyDown(pointD.node, { key: 'Enter' });
+    expect(onSelectionChange).not.toHaveBeenCalled();
+    expect(onPointMove).not.toHaveBeenCalled();
+
+    pointA.geometry.moveTo([-8, 2], 0);
+    pointA.geometry.handlers.drag[0]();
+
+    expect(pointD.geometry.moveTo).toHaveBeenCalled();
+    expect(pointC.geometry.Dist(pointD.geometry)).toBeCloseTo(pointA.geometry.Dist(pointB.geometry));
+    expect(spec.points.find(point => point.id === 'pD')).toMatchObject({
+      fixed: false,
+      selection: { selectable: false, highlightable: true },
+    });
   });
 
   it('uses the dedicated mathematical typography for diagram labels and headings', () => {
