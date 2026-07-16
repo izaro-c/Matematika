@@ -24,7 +24,7 @@ export const diagramElementKindSchema = z.enum([
   'segment', 'line', 'ray', 'polygon', 'circle', 'arc', 'functionCurve', 'parametricCurve',
   'poincareGeodesic', 'poincareArc', 'intersection', 'midpoint', 'perpendicularFoot',
   'baseExtension', 'perpendicular', 'parallel', 'angleBisector', 'angle',
-  'rightAngle', 'congruenceMark', 'perpendicularMark', 'dimensionLine', 'measurement',
+  'rightAngle', 'congruenceMark', 'measureTicks', 'perpendicularMark', 'dimensionLine', 'measurement',
   'grid', 'areaDecomposition', 'text', 'label', 'formula', 'infoPanel',
 ]);
 
@@ -47,6 +47,7 @@ const elementPropertiesSchema = z.object({
   precision: z.number().int().min(0).max(12).optional(),
   offset: finiteNumber.optional(),
   markCount: z.number().int().min(1).max(4).optional(),
+  tickDistance: finiteNumber.positive().max(100).optional(),
   rows: z.number().int().min(1).max(100).optional(),
   columns: z.number().int().min(1).max(100).optional(),
   title: z.string().min(1).optional(),
@@ -79,6 +80,7 @@ const visualStyleSchema = z.object({
   fillOpacity: finiteNumber.min(0).max(1).optional(),
   pointSize: finiteNumber.min(0).max(30).optional(),
   angleRadius: finiteNumber.positive().max(10).optional(),
+  markHeight: finiteNumber.positive().max(100).optional(),
   labelOffset: z.tuple([finiteNumber, finiteNumber]).optional(),
   textOffset: z.tuple([finiteNumber, finiteNumber]).optional(),
   highlightStrokeWidth: finiteNumber.min(0).max(30).optional(),
@@ -211,7 +213,7 @@ const minimumRefs: Record<string, number> = {
   segment: 2, line: 2, ray: 2, polygon: 3, circle: 2, arc: 3,
   functionCurve: 0, parametricCurve: 0, poincareGeodesic: 4, poincareArc: 4, intersection: 2, midpoint: 2,
   perpendicularFoot: 3, baseExtension: 3, perpendicular: 3, parallel: 3,
-  angleBisector: 3, angle: 3, rightAngle: 3, congruenceMark: 2,
+  angleBisector: 3, angle: 3, rightAngle: 3, congruenceMark: 2, measureTicks: 1,
   perpendicularMark: 3, dimensionLine: 2, measurement: 1, grid: 4,
   areaDecomposition: 3, text: 1, label: 1, formula: 1, infoPanel: 1,
 };
@@ -318,6 +320,16 @@ export const diagramSpecV2Schema = z.object({
           });
         }
       });
+    }
+    if (element.kind === 'measureTicks') {
+      const segment = spec.elements.find(candidate => candidate.id === element.refs[0]);
+      if (element.refs.length !== 1 || segment?.kind !== 'segment') {
+        context.addIssue({
+          code: 'custom',
+          message: `${element.id} necesita exactamente un segmento como referencia.`,
+          path: ['elements', index, 'refs'],
+        });
+      }
     }
     if (element.kind === 'functionCurve' && !element.properties?.expression) {
       context.addIssue({ code: 'custom', message: `${element.id} necesita properties.expression.`, path: ['elements', index, 'properties', 'expression'] });

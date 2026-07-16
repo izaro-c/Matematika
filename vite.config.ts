@@ -37,6 +37,14 @@ const editorSrcRoot = process.env.MATEMATIKA_EDITOR_SRC_ROOT
 const editorStorageRoot = process.env.MATEMATIKA_EDITOR_STORAGE_ROOT
   ? path.resolve(process.env.MATEMATIKA_EDITOR_STORAGE_ROOT)
   : path.resolve(__dirname, '.matematika/editor');
+const diagramParserContractFiles = new Set([
+  path.resolve(__dirname, 'scripts/editor/parseDiagramSourceAST.ts'),
+  path.resolve(__dirname, 'src/features/editor/diagrams/model/commands.ts'),
+  path.resolve(__dirname, 'src/features/editor/diagrams/source/generator.ts'),
+  path.resolve(__dirname, 'src/features/editor/diagrams/source/parser.ts'),
+  path.resolve(__dirname, 'src/shared/diagrams/spec/migrations.ts'),
+  path.resolve(__dirname, 'src/shared/diagrams/spec/schema.ts'),
+].map(filePath => path.normalize(filePath)));
 
 function sendJson(res: ServerResponse, status: number, payload: unknown) {
   res.statusCode = status;
@@ -70,6 +78,15 @@ function editorAPI(): Plugin {
     enforce: 'pre' as const,
     apply: 'serve',
     configureServer(server: ViteDevServer) {
+      server.watcher.add([...diagramParserContractFiles]);
+      server.watcher.on('change', changedPath => {
+        if (diagramParserContractFiles.has(path.normalize(changedPath))) {
+          server.restart().catch(error => server.config.logger.error(
+            `No se pudo reiniciar Vite tras cambiar el parser de diagramas: ${error instanceof Error ? error.message : String(error)}`,
+          ));
+        }
+      });
+
       const srcRoot = editorSrcRoot;
       const writeRoots = [
         path.resolve(srcRoot, 'database/content'),

@@ -543,7 +543,7 @@ describe('Phase 3 shared renderer', () => {
     ['primitives', primitivesFixture, ['segment', 'line', 'polygon', 'circle', 'arc']],
     ['curves', curvesFixture, ['functiongraph', 'curve']],
     ['Poincaré', poincareFixture, ['circle', 'curve']],
-    ['marks', marksFixture, ['angle', 'polygon', 'segment']],
+    ['marks', marksFixture, ['angle', 'polygon', 'segment', 'ticks']],
     ['measurements', measurementsFixture, ['segment', 'text']],
     ['area grids', areasFixture, ['polygon', 'segment']],
     ['annotations', annotationsFixture, ['text']],
@@ -561,6 +561,33 @@ describe('Phase 3 shared renderer', () => {
 
     const renderedAngle = rendererState.createdOptions.find(({ kind }) => kind === 'angle');
     expect(renderedAngle?.options.radius).toBe(0.55);
+  });
+
+  it('renders measure ticks as repeated ruler graduations while keeping congruence marks separate', () => {
+    render(<MathProvider><DiagramRenderer spec={migrateDiagramSpec(marksFixture).spec} viewportControls={false} /></MathProvider>);
+
+    const renderedTicks = rendererState.createdOptions.find(({ kind }) => kind === 'ticks');
+    expect(renderedTicks?.args).toHaveLength(1);
+    expect(renderedTicks?.options).toMatchObject({
+      insertTicks: false,
+      ticksDistance: 2,
+      minorTicks: 4,
+      drawLabels: false,
+      majorHeight: 12,
+    });
+    expect(renderedTicks?.options.minorHeight).toBeCloseTo(4.8);
+    const centralCongruenceSegments = rendererState.createdOptions.filter(({ kind, options }) => (
+      kind === 'segment' && options.strokeColor === 'terracota'
+    ));
+    expect(centralCongruenceSegments.length).toBeGreaterThanOrEqual(2);
+    const hiddenCongruencePoints = rendererState.createdOptions.filter(({ kind, options }) => (
+      kind === 'point' && options.visible === false
+    ));
+    const hiddenCoordinates = hiddenCongruencePoints.map(point => [point.args[0](), point.args[1]()] as const);
+    expect(hiddenCoordinates.some((first, index) => hiddenCoordinates.slice(index + 1).some(second => (
+      Math.hypot(second[0] - first[0], second[1] - first[1]) >= 0.395
+      && Math.hypot(second[0] - first[0], second[1] - first[1]) <= 0.405
+    )))).toBe(true);
   });
 
   it('applies the dashed style to polygon borders', () => {

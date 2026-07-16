@@ -29,7 +29,7 @@ export const KIND_LABELS: Record<ElementKind, string> = {
   segment: 'Segmento', line: 'Recta', ray: 'Semirrecta', polygon: 'Polígono', circle: 'Circunferencia', arc: 'Arco de circunferencia',
   functionCurve: 'Gráfica de función', parametricCurve: 'Curva paramétrica', poincareGeodesic: 'Geodésica de Poincaré', poincareArc: 'Arco de Poincaré',
   intersection: 'Intersección', midpoint: 'Punto medio', perpendicularFoot: 'Pie perpendicular', baseExtension: 'Extensión de base', perpendicular: 'Perpendicular', parallel: 'Paralela',
-  angleBisector: 'Bisectriz', angle: 'Ángulo', rightAngle: 'Ángulo recto', congruenceMark: 'Marca de congruencia', perpendicularMark: 'Marca de perpendicularidad',
+  angleBisector: 'Bisectriz', angle: 'Ángulo', rightAngle: 'Ángulo recto', congruenceMark: 'Marca de congruencia', measureTicks: 'Marcas de medida', perpendicularMark: 'Marca de perpendicularidad',
   dimensionLine: 'Línea de cota', measurement: 'Medición', grid: 'Cuadrícula geométrica', areaDecomposition: 'Descomposición de área',
   text: 'Etiqueta', label: 'Etiqueta matemática', formula: 'Fórmula', infoPanel: 'Panel informativo',
 };

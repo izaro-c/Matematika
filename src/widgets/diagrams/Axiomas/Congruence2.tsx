@@ -1,116 +1,592 @@
-import { MathBoard } from '@/shared/diagrams/core/MathBoard';
-import {
-  createCircle,
-  createGlider,
-  createPoint,
-  createSegment,
-  createTicks,
-} from '@/shared/diagrams/core/MathFactory';
+import { createDiagramSpec, DiagramRenderer } from '@/shared/diagrams/public';
 
-export const Congruence2 = () => {
-  const onInit = (board: any, els: any, theme: any) => {
-    const pA = createPoint(board, [-2, 1.5], {
-      name: 'A',
-      size: 4,
-      fillColor: theme.terracota,
-      strokeColor: theme.terracota,
-      label: { offset: [-15, 15] },
-    }, theme);
-    const pB = createPoint(board, [1, 1.5], {
-      name: 'B',
-      size: 4,
-      fillColor: theme.terracota,
-      strokeColor: theme.terracota,
-      label: { offset: [15, 15] },
-    }, theme);
-    const segAB = createSegment(board, [pA, pB], {
-      strokeColor: theme.terracota,
-      strokeWidth: 3,
-    }, theme);
+/* @matematika-diagram-spec:start */
+export const Congruence2Spec = createDiagramSpec(
+{
+  "version": 2,
+  "renderer": "matematika-diagram-renderer-v2",
+  "title": "Axioma de Congruencia II",
+  "componentId": "axioma-de-congruencia-ii",
+  "category": "Teoremas",
+  "mode": "simulation",
+  "axis": false,
+  "grid": false,
+  "viewport": {
+    "bounds": [
+      -5,
+      5,
+      5,
+      -5
+    ],
+    "home": [
+      -5,
+      5,
+      5,
+      -5
+    ],
+    "minZoom": 0.2,
+    "maxZoom": 12,
+    "padding": 0.16
+  },
+  "layers": [
+    {
+      "id": "geometry",
+      "label": "Geometría",
+      "order": 0,
+      "visible": true,
+      "locked": false
+    },
+    {
+      "id": "controls",
+      "label": "Controles",
+      "order": 1,
+      "visible": true,
+      "locked": false
+    }
+  ],
+  "groups": [
+    {
+      "id": "group1",
+      "label": "ABCD",
+      "memberIds": [
+        "pA",
+        "pB",
+        "pC",
+        "segAB",
+        "segCD",
+        "tickssegCD",
+        "tickssegAB",
+        "pD"
+      ],
+      "visible": true,
+      "locked": false,
+      "selection": {
+        "selectable": true,
+        "role": "secondary"
+      },
+      "target": true,
+      "targetId": "ABCD"
+    },
+    {
+      "id": "group2",
+      "label": "ABEF",
+      "memberIds": [
+        "pA",
+        "pB",
+        "pE",
+        "pF",
+        "segAB",
+        "segEF",
+        "tickssegEF",
+        "tickssegAB"
+      ],
+      "visible": true,
+      "locked": false,
+      "selection": {
+        "selectable": true,
+        "role": "secondary"
+      },
+      "target": true,
+      "targetId": "ABEF"
+    },
+    {
+      "id": "group3",
+      "label": "CDEF",
+      "memberIds": [
+        "pC",
+        "pE",
+        "segCD",
+        "segEF",
+        "tickssegCD",
+        "tickssegEF",
+        "pD",
+        "pF"
+      ],
+      "visible": true,
+      "locked": false,
+      "selection": {
+        "selectable": true,
+        "role": "secondary"
+      },
+      "target": true,
+      "targetId": "CDEF"
+    }
+  ],
+  "points": [
+    {
+      "id": "pA",
+      "label": "A",
+      "color": "ocre",
+      "layerId": "geometry",
+      "order": 14000,
+      "visible": true,
+      "locked": false,
+      "groupIds": [
+        "group1",
+        "group2"
+      ],
+      "selection": {
+        "selectable": true,
+        "ariaLabel": "Punto A",
+        "role": "primary"
+      },
+      "target": true,
+      "targetId": "pA",
+      "style": {
+        "pointSize": 7,
+        "highlightPointSize": 10,
+        "preserveColorOnHighlight": true
+      },
+      "x": -2,
+      "y": 2,
+      "fixed": false,
+      "constraint": "free"
+    },
+    {
+      "id": "pB",
+      "label": "B",
+      "color": "ocre",
+      "layerId": "geometry",
+      "order": 15000,
+      "visible": true,
+      "locked": false,
+      "groupIds": [
+        "group1",
+        "group2"
+      ],
+      "selection": {
+        "selectable": true,
+        "ariaLabel": "Punto B",
+        "role": "primary"
+      },
+      "target": true,
+      "targetId": "pB",
+      "style": {
+        "pointSize": 7,
+        "highlightPointSize": 10,
+        "preserveColorOnHighlight": true
+      },
+      "x": 2,
+      "y": 2,
+      "fixed": false,
+      "constraint": "free"
+    },
+    {
+      "id": "pC",
+      "label": "C",
+      "color": "pizarra",
+      "layerId": "geometry",
+      "order": 13000,
+      "visible": true,
+      "locked": false,
+      "groupIds": [
+        "group1",
+        "group3"
+      ],
+      "selection": {
+        "selectable": true,
+        "ariaLabel": "Punto C",
+        "role": "primary"
+      },
+      "target": true,
+      "targetId": "pC",
+      "style": {
+        "pointSize": 7,
+        "highlightPointSize": 10,
+        "preserveColorOnHighlight": true
+      },
+      "x": -2,
+      "y": 0,
+      "fixed": false,
+      "constraint": "free"
+    },
+    {
+      "id": "pD",
+      "label": "D",
+      "color": "pizarra",
+      "layerId": "geometry",
+      "order": 16000,
+      "visible": true,
+      "locked": false,
+      "groupIds": [
+        "group1",
+        "group3"
+      ],
+      "selection": {
+        "selectable": true,
+        "ariaLabel": "Punto D",
+        "role": "primary"
+      },
+      "target": true,
+      "targetId": "pD",
+      "style": {
+        "pointSize": 7,
+        "highlightPointSize": 10,
+        "preserveColorOnHighlight": true
+      },
+      "x": 2,
+      "y": 0,
+      "fixed": false,
+      "constraint": "constrained",
+      "constraintIds": [
+        "equalLengthsegCD"
+      ]
+    },
+    {
+      "id": "pE",
+      "label": "E",
+      "color": "terracota",
+      "layerId": "geometry",
+      "order": 17000,
+      "visible": true,
+      "locked": false,
+      "groupIds": [
+        "group2",
+        "group3"
+      ],
+      "selection": {
+        "selectable": true,
+        "ariaLabel": "Punto E",
+        "role": "primary"
+      },
+      "target": true,
+      "targetId": "pE",
+      "style": {
+        "pointSize": 7,
+        "highlightPointSize": 10,
+        "preserveColorOnHighlight": true
+      },
+      "x": -2,
+      "y": -2,
+      "fixed": false,
+      "constraint": "free"
+    },
+    {
+      "id": "pF",
+      "label": "F",
+      "color": "terracota",
+      "layerId": "geometry",
+      "order": 18000,
+      "visible": true,
+      "locked": false,
+      "groupIds": [
+        "group2",
+        "group3"
+      ],
+      "selection": {
+        "selectable": true,
+        "ariaLabel": "Punto F",
+        "role": "primary"
+      },
+      "target": true,
+      "targetId": "pF",
+      "style": {
+        "pointSize": 7,
+        "highlightPointSize": 10,
+        "preserveColorOnHighlight": true
+      },
+      "x": 2,
+      "y": -2,
+      "fixed": false,
+      "constraint": "constrained",
+      "constraintIds": [
+        "equalLengthsegEF"
+      ]
+    }
+  ],
+  "elements": [
+    {
+      "id": "segAB",
+      "label": "Segmento",
+      "color": "ocre",
+      "layerId": "geometry",
+      "order": 6000,
+      "visible": true,
+      "locked": false,
+      "groupIds": [
+        "group1",
+        "group2"
+      ],
+      "selection": {
+        "selectable": true,
+        "ariaLabel": "Segmento",
+        "role": "secondary"
+      },
+      "target": true,
+      "targetId": "segAB",
+      "style": {
+        "strokeWidth": 3,
+        "highlightStrokeWidth": 5,
+        "preserveColorOnHighlight": true
+      },
+      "kind": "segment",
+      "refs": [
+        "pA",
+        "pB"
+      ]
+    },
+    {
+      "id": "segCD",
+      "label": "Segmento",
+      "color": "pizarra",
+      "layerId": "geometry",
+      "order": 7000,
+      "visible": true,
+      "locked": false,
+      "groupIds": [
+        "group1",
+        "group3"
+      ],
+      "selection": {
+        "selectable": true,
+        "ariaLabel": "Segmento",
+        "role": "secondary"
+      },
+      "target": true,
+      "targetId": "segCD",
+      "style": {
+        "strokeWidth": 3,
+        "highlightStrokeWidth": 5,
+        "preserveColorOnHighlight": true
+      },
+      "kind": "segment",
+      "refs": [
+        "pC",
+        "pD"
+      ]
+    },
+    {
+      "id": "segEF",
+      "label": "Segmento",
+      "color": "terracota",
+      "layerId": "geometry",
+      "order": 8000,
+      "visible": true,
+      "locked": false,
+      "groupIds": [
+        "group2",
+        "group3"
+      ],
+      "selection": {
+        "selectable": true,
+        "ariaLabel": "Segmento",
+        "role": "secondary"
+      },
+      "target": true,
+      "targetId": "segEF",
+      "style": {
+        "strokeWidth": 3,
+        "highlightStrokeWidth": 5,
+        "preserveColorOnHighlight": true
+      },
+      "kind": "segment",
+      "refs": [
+        "pE",
+        "pF"
+      ]
+    },
+    {
+      "id": "tickssegCD",
+      "label": "Marcas de medida de Segmento",
+      "color": "carbon",
+      "layerId": "geometry",
+      "order": -4000,
+      "visible": true,
+      "locked": false,
+      "groupIds": [
+        "group1",
+        "group3"
+      ],
+      "selection": {
+        "selectable": false,
+        "ariaLabel": "Marcas de medida de Segmento",
+        "role": "secondary"
+      },
+      "target": true,
+      "targetId": "tickssegCD",
+      "style": {
+        "strokeWidth": 2,
+        "markHeight": 15,
+        "highlightStrokeWidth": 2.5,
+        "preserveColorOnHighlight": true
+      },
+      "kind": "measureTicks",
+      "refs": [
+        "segCD"
+      ],
+      "properties": {
+        "tickDistance": 1
+      }
+    },
+    {
+      "id": "tickssegEF",
+      "label": "Marcas de medida de Segmento",
+      "color": "carbon",
+      "layerId": "geometry",
+      "order": -3000,
+      "visible": true,
+      "locked": false,
+      "groupIds": [
+        "group2",
+        "group3"
+      ],
+      "selection": {
+        "selectable": false,
+        "ariaLabel": "Marcas de medida de Segmento",
+        "role": "secondary"
+      },
+      "target": true,
+      "targetId": "tickssegEF",
+      "style": {
+        "strokeWidth": 2,
+        "markHeight": 15,
+        "highlightStrokeWidth": 2.5,
+        "preserveColorOnHighlight": true
+      },
+      "kind": "measureTicks",
+      "refs": [
+        "segEF"
+      ],
+      "dashed": false,
+      "properties": {
+        "tickDistance": 1
+      }
+    },
+    {
+      "id": "tickssegAB",
+      "label": "Marcas de medida de Segmento",
+      "color": "carbon",
+      "layerId": "geometry",
+      "order": -2000,
+      "visible": true,
+      "locked": false,
+      "groupIds": [
+        "group1",
+        "group2"
+      ],
+      "selection": {
+        "selectable": false,
+        "ariaLabel": "Marcas de medida de Segmento",
+        "role": "secondary"
+      },
+      "target": true,
+      "targetId": "tickssegAB",
+      "style": {
+        "strokeWidth": 2,
+        "markHeight": 15,
+        "highlightStrokeWidth": 2.5,
+        "preserveColorOnHighlight": true
+      },
+      "kind": "measureTicks",
+      "refs": [
+        "segAB"
+      ],
+      "properties": {
+        "tickDistance": 1
+      }
+    }
+  ],
+  "sliders": [],
+  "steps": [],
+  "constraints": [
+    {
+      "id": "equalLengthsegCD",
+      "label": "Segmento tiene la misma longitud que Segmento",
+      "kind": "equalLength",
+      "refs": [
+        "pD",
+        "pC",
+        "segAB"
+      ],
+      "enabled": true
+    },
+    {
+      "id": "equalLengthsegEF",
+      "label": "Segmento tiene la misma longitud que Segmento",
+      "kind": "equalLength",
+      "refs": [
+        "pF",
+        "pE",
+        "segAB"
+      ],
+      "enabled": true
+    }
+  ],
+  "dependencies": [
+    {
+      "sourceId": "pA",
+      "targetId": "segAB",
+      "relation": "construction"
+    },
+    {
+      "sourceId": "pB",
+      "targetId": "segAB",
+      "relation": "construction"
+    },
+    {
+      "sourceId": "pC",
+      "targetId": "segCD",
+      "relation": "construction"
+    },
+    {
+      "sourceId": "pD",
+      "targetId": "segCD",
+      "relation": "construction"
+    },
+    {
+      "sourceId": "pE",
+      "targetId": "segEF",
+      "relation": "construction"
+    },
+    {
+      "sourceId": "pF",
+      "targetId": "segEF",
+      "relation": "construction"
+    },
+    {
+      "sourceId": "segCD",
+      "targetId": "tickssegCD",
+      "relation": "construction"
+    },
+    {
+      "sourceId": "segEF",
+      "targetId": "tickssegEF",
+      "relation": "construction"
+    },
+    {
+      "sourceId": "segAB",
+      "targetId": "tickssegAB",
+      "relation": "construction"
+    },
+    {
+      "sourceId": "pC",
+      "targetId": "pD",
+      "relation": "constraint",
+      "constraintId": "equalLengthsegCD"
+    },
+    {
+      "sourceId": "segAB",
+      "targetId": "pD",
+      "relation": "constraint",
+      "constraintId": "equalLengthsegCD"
+    },
+    {
+      "sourceId": "pE",
+      "targetId": "pF",
+      "relation": "constraint",
+      "constraintId": "equalLengthsegEF"
+    },
+    {
+      "sourceId": "segAB",
+      "targetId": "pF",
+      "relation": "constraint",
+      "constraintId": "equalLengthsegEF"
+    }
+  ],
+  "note": "Arrastra A, B, C, D, E y F",
+  "extensions": {}
+}
+);
+/* @matematika-diagram-spec:end */
 
-    const pC = createPoint(board, [-2, 0], {
-      name: 'C',
-      size: 4,
-      fillColor: theme.salvia,
-      strokeColor: theme.salvia,
-      label: { offset: [-15, 15] },
-    }, theme);
-    const cCD = createCircle(board, [pC, () => pA.Dist(pB)], { visible: false }, theme);
-    const pD = createGlider(board, [1, 0, cCD], {
-      name: 'D',
-      size: 4,
-      fillColor: theme.salvia,
-      strokeColor: theme.salvia,
-      label: { offset: [15, 15] },
-    }, theme);
-    const segCD = createSegment(board, [pC, pD], {
-      strokeColor: theme.salvia,
-      strokeWidth: 3,
-    }, theme);
-
-    const pE = createPoint(board, [-2, -1.5], {
-      name: 'E',
-      size: 4,
-      fillColor: theme.ocre,
-      strokeColor: theme.ocre,
-      label: { offset: [-15, -15] },
-    }, theme);
-    const cEF = createCircle(board, [pE, () => pA.Dist(pB)], { visible: false }, theme);
-    const pF = createGlider(board, [1, -1.5, cEF], {
-      name: 'F',
-      size: 4,
-      fillColor: theme.ocre,
-      strokeColor: theme.ocre,
-      label: { offset: [15, -15] },
-    }, theme);
-    const segEF = createSegment(board, [pE, pF], {
-      strokeColor: theme.ocre,
-      strokeWidth: 3,
-    }, theme);
-
-    const ticksAB = createTicks(board, [segAB, 2], { strokeColor: theme.carbon }, theme);
-    const ticksCD = createTicks(board, [segCD, 2], { strokeColor: theme.carbon }, theme);
-    const ticksEF = createTicks(board, [segEF, 2], { strokeColor: theme.carbon }, theme);
-
-    els.pA = pA;
-    els.pB = pB;
-    els.pC = pC;
-    els.pD = pD;
-    els.pE = pE;
-    els.pF = pF;
-    els.cCD = cCD;
-    els.cEF = cEF;
-    els.segAB = segAB;
-    els.segCD = segCD;
-    els.segEF = segEF;
-    els.ticksAB = ticksAB;
-    els.ticksCD = ticksCD;
-    els.ticksEF = ticksEF;
-  };
-
-  const onUpdate = (_board: any, els: any, _theme: any, _isStep: any, isHL: any) => {
-    els.segAB.setAttribute({ strokeWidth: 3, opacity: 1 });
-    els.segCD.setAttribute({ strokeWidth: 3, opacity: 1 });
-    els.segEF.setAttribute({ strokeWidth: 3, opacity: 1 });
-
-    const highlightPair = (first: any, second?: any) => {
-      first.setAttribute({ strokeWidth: 6, opacity: 1 });
-      second?.setAttribute({ strokeWidth: 6, opacity: 1 });
-    };
-
-    if (isHL('segmento-ab')) highlightPair(els.segAB);
-    if (isHL('segmento-cd')) highlightPair(els.segCD);
-    if (isHL('segmento-ef')) highlightPair(els.segEF);
-    if (isHL('ab-cd')) highlightPair(els.segAB, els.segCD);
-    if (isHL('ab-ef')) highlightPair(els.segAB, els.segEF);
-    if (isHL('cd-ef')) highlightPair(els.segCD, els.segEF);
-  };
-
-  return (
-    <MathBoard boundingbox={[-5, 5, 5, -5]} onInit={onInit} onUpdate={onUpdate}>
-      <div className="absolute bottom-3 left-3 right-3 z-10 text-sm text-center text-carbon/70 font-sans">
-        Modifica AB; CD y EF conservan la misma longitud.
-      </div>
-    </MathBoard>
-  );
-};
+export const Congruence2 = () => <DiagramRenderer spec={Congruence2Spec} />;

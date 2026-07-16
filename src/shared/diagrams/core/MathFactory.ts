@@ -244,10 +244,11 @@ export function createCongruenceMark(
   theme: ThemeColors,
 ) {
   const [a, b] = points;
+  const { markHeight = 0.32, ...markOptions } = options;
   const marks = Array.from({ length: count }, (_, index) => {
     const centered = index - (count - 1) / 2;
     const offset = centered * 0.14;
-    const half = 0.16;
+    const half = markHeight / 2;
     const coordinate = (side: -1 | 1, axis: 'x' | 'y') => () => {
       const dx = b.X() - a.X();
       const dy = b.Y() - a.Y();
@@ -262,7 +263,7 @@ export function createCongruenceMark(
     };
     const p1 = board.create('point', [coordinate(-1, 'x'), coordinate(-1, 'y')], { visible: false });
     const p2 = board.create('point', [coordinate(1, 'x'), coordinate(1, 'y')], { visible: false });
-    return board.create('segment', [p1, p2], { strokeColor: theme.ocre, strokeWidth: 2, fixed: true, ...options });
+    return board.create('segment', [p1, p2], { strokeColor: theme.ocre, strokeWidth: 2, fixed: true, ...markOptions });
   });
   return createComposite(marks);
 }
@@ -565,10 +566,18 @@ export function createSlider(
 }
 
 export function createTicks(board: any, elements: [any, number], options: any = {}, theme: ThemeColors) {
-  return board.create('ticks', elements, {
+  const [support, ticksDistance] = elements;
+  const { majorHeight = 10, ...tickOptions } = options;
+  return board.create('ticks', [support], {
     strokeColor: theme.carbon,
     strokeWidth: 2,
-    ...options,
+    insertTicks: false,
+    ticksDistance,
+    minorTicks: 4,
+    minorHeight: Math.max(1, majorHeight * 0.4),
+    majorHeight,
+    drawLabels: false,
+    ...tickOptions,
   });
 }
 

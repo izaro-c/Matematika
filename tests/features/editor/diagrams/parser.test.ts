@@ -96,6 +96,45 @@ describe('Diagram TSX Parser (Local & AST)', () => {
     });
   });
 
+  it('classifies canonical embedded specs locally without consulting a stale dev-server parser', async () => {
+    const model = createTemplateModel('triangulo-deformable', 'MarcasMedida', 'definicion');
+    model.elements.push({
+      id: 'ticks-segmento',
+      label: 'Marcas de medida',
+      kind: 'measureTicks',
+      refs: ['segAB'],
+      color: 'ocre',
+      layerId: 'geometry',
+      order: 30,
+      visible: true,
+      locked: false,
+      groupIds: [],
+      selection: { selectable: true, role: 'secondary' },
+      target: false,
+      properties: { tickDistance: 1.5 },
+      style: { strokeWidth: 2, markHeight: 12 },
+    });
+    const generated = generateDiagramSource(model, 'MarcasMedida');
+    expect(generated.ok).toBe(true);
+    if (!generated.ok) return;
+    const fetchSpy = vi.fn();
+    vi.stubGlobal('fetch', fetchSpy);
+
+    await expect(parseDiagramSourceOnServer(generated.source)).resolves.toMatchObject({
+      status: 'visual-exact',
+      model: {
+        elements: expect.arrayContaining([
+          expect.objectContaining({
+            kind: 'measureTicks',
+            properties: { tickDistance: 1.5 },
+            style: expect.objectContaining({ markHeight: 12 }),
+          }),
+        ]),
+      },
+    });
+    expect(fetchSpy).not.toHaveBeenCalled();
+  });
+
   it('never grants visual editing because a partial AST contains a point', () => {
     const manual = `
       import { MathBoard } from '@/shared/diagrams/core/MathBoard';
