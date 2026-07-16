@@ -101,6 +101,9 @@ export function classifyEmbeddedDiagramSource(source: string, _metadataType = ''
 }
 
 export async function parseDiagramSourceOnServer(source: string, signal?: AbortSignal): Promise<ParseDiagramSourceResult> {
+  const embeddedClassification = classifyEmbeddedDiagramSource(source);
+  if (embeddedClassification) return embeddedClassification;
+
   try {
     const response = await fetch('/api/content/parse-diagram', {
       method: 'POST',

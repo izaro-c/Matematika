@@ -8,6 +8,7 @@ import { DiagramConstraintEditor } from './DiagramConstraintEditor';
 import { constraintPresentation } from '../model/constraintOptions';
 import { DiagramSceneControls } from './DiagramSceneControls';
 import { SegmentLengthConstraintEditor } from './SegmentLengthConstraintEditor';
+import { SegmentMarksEditor } from './SegmentMarksEditor';
 
 interface DiagramInspectorProps {
   model: VisualDiagramModel;
@@ -20,6 +21,12 @@ interface DiagramInspectorProps {
 function sceneItemLabel(model: VisualDiagramModel, id: string): string {
   const item = [...model.points, ...model.elements, ...model.sliders].find(candidate => candidate.id === id);
   return item ? `${item.label} (${item.id})` : id;
+}
+
+function elementReferenceCandidates(model: VisualDiagramModel, element: VisualElement) {
+  if (element.kind === 'intersection') return toolReferenceCandidates(model, 'intersection');
+  if (element.kind === 'measureTicks') return toolReferenceCandidates(model, 'measureTicks');
+  return [...model.points, ...model.elements.filter(candidate => candidate.id !== element.id)];
 }
 
 export const DiagramInspector: React.FC<DiagramInspectorProps> = ({
@@ -337,9 +344,7 @@ export const DiagramInspector: React.FC<DiagramInspectorProps> = ({
                       value={ref}
                       onChange={(event) => handleElementChange({ refs: selectedElement.refs.map((value, refIndex) => refIndex === index ? event.target.value : value) })}
                     >
-                      {(selectedElement.kind === 'intersection'
-                        ? toolReferenceCandidates(model, 'intersection')
-                        : [...model.points, ...model.elements.filter(element => element.id !== selectedElement.id)]).map(item => (
+                      {elementReferenceCandidates(model, selectedElement).map(item => (
                         <option key={item.id} value={item.id}>{item.label} ({item.id})</option>
                       ))}
                     </select>
@@ -372,12 +377,19 @@ export const DiagramInspector: React.FC<DiagramInspectorProps> = ({
           )}
 
           {selectedElement.kind === 'segment' && (
-            <SegmentLengthConstraintEditor
-              key={selectedElement.id}
-              model={model}
-              segment={selectedElement}
-              onModelEdit={onModelEdit}
-            />
+            <>
+              <SegmentMarksEditor
+                model={model}
+                segment={selectedElement}
+                onModelEdit={onModelEdit}
+              />
+              <SegmentLengthConstraintEditor
+                key={selectedElement.id}
+                model={model}
+                segment={selectedElement}
+                onModelEdit={onModelEdit}
+              />
+            </>
           )}
 
           {selectedElement.kind === 'intersection' && (
@@ -543,7 +555,17 @@ export const DiagramInspector: React.FC<DiagramInspectorProps> = ({
           )}
 
           {selectedElement.kind === 'congruenceMark' && (
-            <label className="block text-xs font-bold text-carbon">Número de marcas<input type="number" min="1" max="4" aria-label="Número de marcas" className="mt-1 w-full rounded border border-carbon/15 bg-lienzo p-1.5 text-xs" value={selectedElement.properties?.markCount ?? 1} onChange={(event) => handleElementPropertiesChange({ markCount: Number(event.target.value) })} /></label>
+            <div className="grid grid-cols-2 gap-2">
+              <label className="text-xs font-bold text-carbon">Número de marcas<input type="number" min="1" max="4" aria-label="Número de marcas" className="mt-1 w-full rounded border border-carbon/15 bg-lienzo p-1.5 text-xs" value={selectedElement.properties?.markCount ?? 1} onChange={(event) => handleElementPropertiesChange({ markCount: Number(event.target.value) })} /></label>
+              <label className="text-xs font-bold text-carbon">Altura<input type="number" min="0.05" max="100" step="0.05" aria-label="Altura de las marcas de congruencia" className="mt-1 w-full rounded border border-carbon/15 bg-lienzo p-1.5 text-xs" value={selectedElement.style?.markHeight ?? 0.32} onChange={(event) => handleElementStyleChange({ markHeight: Number(event.target.value) })} /></label>
+            </div>
+          )}
+
+          {selectedElement.kind === 'measureTicks' && (
+            <div className="grid grid-cols-2 gap-2">
+              <label className="text-xs font-bold text-carbon">Separación<input type="number" min="0.05" max="100" step="0.05" aria-label="Separación entre marcas de medida" className="mt-1 w-full rounded border border-carbon/15 bg-lienzo p-1.5 text-xs" value={selectedElement.properties?.tickDistance ?? 2} onChange={(event) => handleElementPropertiesChange({ tickDistance: Number(event.target.value) })} /></label>
+              <label className="text-xs font-bold text-carbon">Altura<input type="number" min="0.05" max="100" step="0.5" aria-label="Altura de las marcas de medida" className="mt-1 w-full rounded border border-carbon/15 bg-lienzo p-1.5 text-xs" value={selectedElement.style?.markHeight ?? 10} onChange={(event) => handleElementStyleChange({ markHeight: Number(event.target.value) })} /></label>
+            </div>
           )}
 
           {(['grid', 'areaDecomposition'].includes(selectedElement.kind)) && (

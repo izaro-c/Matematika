@@ -27,7 +27,9 @@ export const DiagramToolReferencePicker: React.FC<DiagramToolReferencePickerProp
   const normalizedRefs = normalizedToolReferences(tool, refs);
   const ready = toolReferencesAreReady(tool, normalizedRefs);
   const candidates = toolReferenceCandidates(model, tool);
-  const candidateKind = tool === 'intersection' ? 'soporte' : 'punto';
+  let candidateKind = 'punto';
+  if (tool === 'intersection') candidateKind = 'soporte';
+  if (tool === 'measureTicks') candidateKind = 'segmento';
 
   return (
     <section className="rounded border border-pavo/20 bg-pavo/5 p-3" aria-labelledby="manual-reference-title">

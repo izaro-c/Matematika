@@ -36,6 +36,7 @@ export type DiagramElementKind =
   | 'angle'
   | 'rightAngle'
   | 'congruenceMark'
+  | 'measureTicks'
   | 'perpendicularMark'
   | 'dimensionLine'
   | 'measurement'
@@ -60,6 +61,8 @@ export interface DiagramElementProperties {
   precision?: number;
   offset?: number;
   markCount?: number;
+  /** Distancia entre graduaciones repetidas a lo largo de un segmento. */
+  tickDistance?: number;
   rows?: number;
   columns?: number;
   title?: string;
@@ -126,6 +129,8 @@ export interface DiagramVisualStyle {
   fillOpacity?: number;
   pointSize?: number;
   angleRadius?: number;
+  /** Altura visual de rayas de congruencia o graduaciones de medida. */
+  markHeight?: number;
   labelOffset?: [number, number];
   textOffset?: [number, number];
   highlightStrokeWidth?: number;

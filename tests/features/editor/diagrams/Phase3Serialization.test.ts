@@ -7,6 +7,7 @@ import primitivesFixture from '../../../fixtures/diagrams/phase3-euclidean-primi
 import { parseDiagramSourceAST } from '../../../../scripts/editor/parseDiagramSourceAST';
 import { migrateDiagramSpec } from '../../../../src/shared/diagrams/public';
 import { generateDiagramSource } from '../../../../src/features/editor/diagrams/source/generator';
+import { setSegmentMeasureTicks } from '../../../../src/features/editor/diagrams/model/commands';
 
 describe('Phase 3 source serialization', () => {
   it.each([
@@ -120,6 +121,20 @@ describe('Phase 3 source serialization', () => {
     expect(regenerated.ok && regenerated.source).toBe(generated.source);
   });
 
+  it('roundtrips measure marks added from the segment inspector byte for byte', () => {
+    const base = migrateDiagramSpec(primitivesFixture).spec;
+    const model = setSegmentMeasureTicks(base, 'segAB', 2);
+    const generated = generateDiagramSource(model, 'SegmentMeasureMarks');
+    expect(generated.ok).toBe(true);
+    if (!generated.ok) return;
+    const parsed = parseDiagramSourceAST(generated.source);
+    expect(parsed.status).toBe('visual-exact');
+    if (parsed.status !== 'visual-exact') return;
+    expect(parsed.model).toEqual(model);
+    const regenerated = generateDiagramSource(parsed.model, 'SegmentMeasureMarks');
+    expect(regenerated.ok && regenerated.source).toBe(generated.source);
+  });
+
   it('roundtrips the equal-length relation authored in Congruence1 byte for byte', () => {
     const source = readFileSync('src/widgets/diagrams/Axiomas/Congruence1.tsx', 'utf8');
     const parsed = parseDiagramSourceAST(source);
@@ -129,6 +144,19 @@ describe('Phase 3 source serialization', () => {
       expect.objectContaining({ kind: 'equalLength', refs: ['pD', 'pC', 'segAB'] }),
     ]));
     const regenerated = generateDiagramSource(parsed.model, 'Congruence1');
+    expect(regenerated.ok && regenerated.source).toBe(source);
+  });
+
+  it('reopens Congruence2 with independent ruler spacing and height controls', () => {
+    const source = readFileSync('src/widgets/diagrams/Axiomas/Congruence2.tsx', 'utf8');
+    const parsed = parseDiagramSourceAST(source);
+    expect(parsed.status).toBe('visual-exact');
+    if (parsed.status !== 'visual-exact') return;
+    const measureTicks = parsed.model.elements.filter(element => element.kind === 'measureTicks');
+    expect(measureTicks).toHaveLength(3);
+    expect(measureTicks.every(element => (element.properties?.tickDistance ?? 0) > 0)).toBe(true);
+    expect(measureTicks.every(element => (element.style?.markHeight ?? 0) > 0)).toBe(true);
+    const regenerated = generateDiagramSource(parsed.model, 'Congruence2');
     expect(regenerated.ok && regenerated.source).toBe(source);
   });
 });

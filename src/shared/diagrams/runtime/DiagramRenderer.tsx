@@ -28,6 +28,7 @@ import {
   createSegment,
   createSlider,
   createText,
+  createTicks,
 } from '../core/MathFactory';
 import { DiagramInfoPanel, DiagramTitle } from '@/shared/ui/DiagramOverlay';
 import { renderKatexTextToHtml } from '@/shared/ui/KatexText';
@@ -469,7 +470,13 @@ function createElement(
     board,
     [refs[0], refs[1]],
     item.properties?.markCount ?? 1,
-    lineOptions,
+    { ...lineOptions, markHeight: item.style?.markHeight ?? 0.32 },
+    theme,
+  ) : null;
+  if (item.kind === 'measureTicks') return refs.length >= 1 ? createTicks(
+    board,
+    [refs[0], item.properties?.tickDistance ?? 2],
+    { ...lineOptions, majorHeight: item.style?.markHeight ?? 10 },
     theme,
   ) : null;
   if (item.kind === 'dimensionLine') return refs.length >= 2 ? createDimensionLine(

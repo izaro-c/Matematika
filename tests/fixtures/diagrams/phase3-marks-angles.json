@@ -8,9 +8,11 @@
     { "id": "pB", "label": "B", "x": 0, "y": 2, "fixed": false, "constraint": "free", "color": "terracota", "layerId": "geometry", "order": 2, "visible": true, "locked": false, "groupIds": [], "selection": { "selectable": true }, "target": true }
   ],
   "elements": [
+    { "id": "segAV", "label": "Segmento AV", "kind": "segment", "refs": ["pA", "pV"], "color": "carbon", "layerId": "geometry", "order": 9, "visible": true, "locked": false, "groupIds": [], "selection": { "selectable": true }, "target": true },
     { "id": "angleAVB", "label": "Ángulo AVB", "kind": "angle", "refs": ["pA", "pV", "pB"], "color": "ocre", "layerId": "geometry", "order": 10, "visible": true, "locked": false, "groupIds": [], "selection": { "selectable": true }, "target": true },
     { "id": "perpAVB", "label": "Perpendicularidad", "kind": "perpendicularMark", "refs": ["pA", "pV", "pB"], "color": "ocre", "layerId": "geometry", "order": 11, "visible": true, "locked": false, "groupIds": [], "selection": { "selectable": true }, "target": true },
-    { "id": "congAV", "label": "Congruencia AV", "kind": "congruenceMark", "refs": ["pA", "pV"], "color": "terracota", "layerId": "geometry", "order": 12, "visible": true, "locked": false, "groupIds": [], "selection": { "selectable": true }, "target": true, "properties": { "markCount": 2 } }
+    { "id": "congAV", "label": "Congruencia AV", "kind": "congruenceMark", "refs": ["pA", "pV"], "color": "terracota", "layerId": "geometry", "order": 12, "visible": true, "locked": false, "groupIds": [], "selection": { "selectable": true }, "target": true, "properties": { "markCount": 2 }, "style": { "markHeight": 0.4 } },
+    { "id": "ticksAV", "label": "Marcas de medida AV", "kind": "measureTicks", "refs": ["segAV"], "color": "carbon", "layerId": "geometry", "order": 13, "visible": true, "locked": false, "groupIds": [], "selection": { "selectable": true }, "target": true, "properties": { "tickDistance": 2 }, "style": { "markHeight": 12 } }
   ],
   "sliders": [], "steps": [], "constraints": [], "dependencies": [], "note": "Ángulo, congruencia y perpendicularidad.", "extensions": { "acceptanceFamily": "marks-angles" }
 }

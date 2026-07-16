@@ -303,6 +303,8 @@ export const DiagramWorkbenchCore: React.FC<DiagramWorkbenchCoreProps> = ({
         ? { xExpression: '3*cos(t)', yExpression: '2*sin(t)', parameter: 't', domain: [0, 6.283185307179586] as [number, number], samples: 128 }
         : kind === 'congruenceMark'
           ? { markCount: 1 }
+          : kind === 'measureTicks'
+            ? { tickDistance: 2 }
           : kind === 'grid' || kind === 'areaDecomposition'
             ? { rows: 4, columns: 4 }
             : kind === 'dimensionLine' || kind === 'measurement'

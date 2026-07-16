@@ -194,6 +194,76 @@ describe('Phase 3 visual editing', () => {
     });
   });
 
+  it('adds, edits and removes segment measure marks directly from the selected segment', () => {
+    const model = migrateDiagramSpec(primitivesFixture).spec;
+    const segment = model.elements.find(element => element.id === 'segAB')!;
+    const onModelEdit = vi.fn();
+    const view = render(<DiagramInspector model={model} selectedId={segment.id} onSelect={vi.fn()} onModelEdit={onModelEdit} onDeleteSelected={vi.fn()} />);
+
+    expect(screen.getByRole('region', { name: 'Marcas del segmento' })).toBeTruthy();
+    expect(screen.getByRole('checkbox', { name: /Congruencia rayas centrales/ })).toBeTruthy();
+    expect(screen.queryByLabelText('Separación entre marcas de medida')).toBeNull();
+    fireEvent.click(screen.getByRole('checkbox', { name: /Medida graduación de regla/ }));
+
+    const withMarks = onModelEdit.mock.calls.at(-1)?.[0];
+    const createdMark = withMarks.elements.find((element: { kind: string }) => element.kind === 'measureTicks');
+    expect(createdMark).toMatchObject({
+      refs: [segment.id],
+      color: 'carbon',
+      properties: { tickDistance: 2 },
+      style: { strokeWidth: 2 },
+    });
+    expect(withMarks.dependencies).toEqual(expect.arrayContaining([{
+      sourceId: segment.id,
+      targetId: createdMark.id,
+      relation: 'construction',
+    }]));
+
+    view.rerender(<DiagramInspector model={withMarks} selectedId={segment.id} onSelect={vi.fn()} onModelEdit={onModelEdit} onDeleteSelected={vi.fn()} />);
+    fireEvent.change(screen.getByLabelText('Separación entre marcas de medida'), { target: { value: '1.5' } });
+    const withCloserMarks = onModelEdit.mock.calls.at(-1)?.[0];
+    expect(withCloserMarks.elements.find((element: { id: string }) => element.id === createdMark.id))
+      .toMatchObject({ properties: { tickDistance: 1.5 } });
+
+    view.rerender(<DiagramInspector model={withCloserMarks} selectedId={segment.id} onSelect={vi.fn()} onModelEdit={onModelEdit} onDeleteSelected={vi.fn()} />);
+    fireEvent.change(screen.getByLabelText('Altura de las marcas de medida'), { target: { value: '14' } });
+    const withTallerMarks = onModelEdit.mock.calls.at(-1)?.[0];
+    expect(withTallerMarks.elements.find((element: { id: string }) => element.id === createdMark.id))
+      .toMatchObject({ style: { markHeight: 14 } });
+
+    view.rerender(<DiagramInspector model={withTallerMarks} selectedId={segment.id} onSelect={vi.fn()} onModelEdit={onModelEdit} onDeleteSelected={vi.fn()} />);
+    fireEvent.click(screen.getByRole('checkbox', { name: /Medida graduación de regla/ }));
+    const withoutMarks = onModelEdit.mock.calls.at(-1)?.[0];
+    expect(withoutMarks.elements.some((element: { id: string }) => element.id === createdMark.id)).toBe(false);
+    expect(withoutMarks.dependencies.some((dependency: { targetId: string }) => dependency.targetId === createdMark.id)).toBe(false);
+  });
+
+  it('adds compact congruence marks to a segment and edits their count and height separately', () => {
+    const model = migrateDiagramSpec(primitivesFixture).spec;
+    const onModelEdit = vi.fn();
+    const view = render(<DiagramInspector model={model} selectedId="segAB" onSelect={vi.fn()} onModelEdit={onModelEdit} onDeleteSelected={vi.fn()} />);
+
+    fireEvent.click(screen.getByRole('checkbox', { name: /Congruencia rayas centrales/ }));
+    const withCongruence = onModelEdit.mock.calls.at(-1)?.[0];
+    const mark = withCongruence.elements.find((element: { kind: string }) => element.kind === 'congruenceMark');
+    expect(mark).toMatchObject({
+      refs: ['pA', 'pB'],
+      properties: { markCount: 1 },
+      style: { markHeight: 0.32, strokeWidth: 2 },
+    });
+
+    view.rerender(<DiagramInspector model={withCongruence} selectedId="segAB" onSelect={vi.fn()} onModelEdit={onModelEdit} onDeleteSelected={vi.fn()} />);
+    fireEvent.change(screen.getByLabelText('Número de marcas de congruencia'), { target: { value: '3' } });
+    const withThreeMarks = onModelEdit.mock.calls.at(-1)?.[0];
+    view.rerender(<DiagramInspector model={withThreeMarks} selectedId="segAB" onSelect={vi.fn()} onModelEdit={onModelEdit} onDeleteSelected={vi.fn()} />);
+    fireEvent.change(screen.getByLabelText('Altura de las marcas de congruencia'), { target: { value: '0.5' } });
+    const edited = onModelEdit.mock.calls.at(-1)?.[0];
+    expect(edited.elements.find((element: { id: string }) => element.id === mark.id)).toMatchObject({
+      properties: { markCount: 3 },
+      style: { markHeight: 0.5 },
+    });
+  });
+
   it('describes relation activation as a reversible pause instead of an extra movement mode', () => {
     const model = migrateDiagramSpec(pointsFixture).spec;
     const onModelEdit = vi.fn();
@@ -268,6 +338,8 @@ describe('Phase 3 visual editing', () => {
     expect(screen.getByText('Curvas')).toBeTruthy();
     expect(screen.getByText('Ángulos y medidas')).toBeTruthy();
     expect(screen.getByText('Explicación')).toBeTruthy();
+    expect(screen.getByRole('menuitem', { name: 'Marca de congruencia' })).toBeTruthy();
+    expect(screen.getByRole('menuitem', { name: 'Marcas de medida' })).toBeTruthy();
     fireEvent.click(screen.getByRole('menuitem', { name: 'Gráfica de función' }));
     expect(onAddElement).toHaveBeenCalledWith('functionCurve');
     expect(addObjects.getAttribute('aria-expanded')).toBe('false');
@@ -281,6 +353,23 @@ describe('Phase 3 visual editing', () => {
     fireEvent.click(screen.getByRole('menuitem', { name: 'Punto medio' }));
     expect(onSetCanvasTool).toHaveBeenCalledWith('midpoint');
     expect(addObjects.getAttribute('aria-expanded')).toBe('false');
+  });
+
+  it('chooses an existing segment, rather than two points, for ruler-like measure marks', () => {
+    const model = migrateDiagramSpec(primitivesFixture).spec;
+    render(
+      <DiagramToolReferencePicker
+        model={model}
+        tool="measureTicks"
+        refs={[]}
+        onRefsChange={vi.fn()}
+        onCreate={vi.fn()}
+      />,
+    );
+
+    expect(screen.getByLabelText('Segmento graduado para Marcas de medida')).toBeTruthy();
+    expect(screen.getByRole('option', { name: 'Segmento · segAB' })).toBeTruthy();
+    expect(screen.queryByRole('option', { name: /^A · pA$/ })).toBeNull();
   });
 
   it('allows choosing tool references manually and polygons with more than three vertices', () => {
