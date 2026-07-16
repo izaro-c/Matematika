@@ -24,6 +24,34 @@ function referenceCandidates(model: VisualDiagramModel, constraint: VisualConstr
       return model.elements.filter(element => element.kind === 'segment' && element.id !== targetSegment?.id);
     }
   }
+  if (constraint.kind === 'equalAngle') {
+    const targetAngles = model.elements.filter(element => (
+      (element.kind === 'angle' || element.kind === 'nonReflexAngle')
+      && (element.refs[0] === constraint.refs[0] || element.refs[2] === constraint.refs[0])
+    ));
+    if (index === 1) {
+      return model.points.filter(candidate => targetAngles.some(angle => angle.refs[1] === candidate.id));
+    }
+    if (index === 2) {
+      return model.points.filter(candidate => targetAngles.some(angle => (
+        angle.refs[1] === constraint.refs[1]
+        && candidate.id !== constraint.refs[0]
+        && (angle.refs[0] === candidate.id || angle.refs[2] === candidate.id)
+      )));
+    }
+    if (index === 3) {
+      const targetAngle = targetAngles.find(angle => (
+        angle.refs[1] === constraint.refs[1]
+        && angle.refs.includes(constraint.refs[2])
+      ));
+      return model.elements.filter(element => (
+        element.id !== targetAngle?.id
+        && element.kind === targetAngle?.kind
+        && !element.refs.includes(constraint.refs[0])
+      ));
+    }
+    if (index === 4) return targetAngles;
+  }
   if (constraint.kind === 'midpoint') {
     return model.points.filter(candidate => !constraint.refs.slice(0, index).includes(candidate.id));
   }
@@ -36,6 +64,9 @@ function referenceLabel(constraint: VisualConstraint, index: number): string {
   }
   if (constraint.kind === 'midpoint') {
     return ['Punto medio', 'Primer extremo', 'Segundo extremo'][index] ?? `Referencia ${index}`;
+  }
+  if (constraint.kind === 'equalAngle') {
+    return ['Extremo ajustado', 'Vértice', 'Punto del lado fijo', 'Ángulo de referencia', 'Ángulo ajustado'][index] ?? `Referencia ${index}`;
   }
   return index === 0 ? 'Punto restringido' : `Referencia ${index}`;
 }
@@ -50,7 +81,9 @@ export const DiagramConstraintEditor: React.FC<DiagramConstraintEditorProps> = (
   const [newKind, setNewKind] = useState<VisualConstraint['kind']>('horizontal');
 
   const changeRefs = (constraintId: string, refs: string[]) => {
-    const next = withConstraintDependencies(model, constraintId, refs);
+    const constraint = model.constraints?.find(item => item.id === constraintId);
+    const dependencyRefs = constraint?.kind === 'equalAngle' ? refs.slice(0, 4) : refs;
+    const next = withConstraintDependencies(model, constraintId, dependencyRefs);
     onModelEdit({
       ...next,
       constraints: model.constraints?.map(constraint => constraint.id === constraintId ? { ...constraint, refs } : constraint),
@@ -59,7 +92,7 @@ export const DiagramConstraintEditor: React.FC<DiagramConstraintEditorProps> = (
 
   const changeKind = (constraint: VisualConstraint, kind: VisualConstraint['kind']) => {
     const refs = defaultConstraintRefs(model, kind, constraint.refs[0]);
-    const next = withConstraintDependencies(model, constraint.id, refs);
+    const next = withConstraintDependencies(model, constraint.id, kind === 'equalAngle' ? refs.slice(0, 4) : refs);
     let expression: string | undefined;
     if (kind === 'expression') expression = constraint.expression ?? '1';
     else if (kind === 'distance') expression = constraint.expression;
@@ -97,7 +130,7 @@ export const DiagramConstraintEditor: React.FC<DiagramConstraintEditorProps> = (
       enabled: true,
       ...(newKind === 'distance' ? { value: 1 } : {}),
     };
-    const next = withConstraintDependencies(model, id, refs);
+    const next = withConstraintDependencies(model, id, newKind === 'equalAngle' ? refs.slice(0, 4) : refs);
     const nextWithConstraint = {
       ...next,
       constraints: [...(model.constraints || []), constraint],
@@ -135,6 +168,7 @@ export const DiagramConstraintEditor: React.FC<DiagramConstraintEditorProps> = (
               <p className="text-[10px] leading-relaxed text-carbon/55">{presentation.description}</p>
               <select aria-label={`Tipo de ${constraint.id}`} className="w-full rounded border border-carbon/15 bg-lienzo p-1.5 text-xs" value={constraint.kind} onChange={event => changeKind(constraint, event.target.value as VisualConstraint['kind'])}>
                 {CONSTRAINT_OPTIONS.map(option => <option key={option.value} value={option.value}>{option.label}</option>)}
+                {constraint.kind === 'equalAngle' && <option value="equalAngle">Misma amplitud que otro ángulo</option>}
                 {constraint.kind === 'expression' && <option value="expression">Relación por expresión</option>}
               </select>
               {constraint.refs.map((ref, index) => {

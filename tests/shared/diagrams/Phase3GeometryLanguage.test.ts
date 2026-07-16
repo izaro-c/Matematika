@@ -80,6 +80,37 @@ function modelWithLengthConstraint() {
   return model;
 }
 
+function modelWithAngleConstraint() {
+  const model = structuredClone(marksFixture);
+  const pointTemplate = model.points[0];
+  const targetAngle = model.elements.find(element => element.kind === 'nonReflexAngle')!;
+  model.points = [
+    { ...pointTemplate, id: 'pA', label: 'A', x: 2, y: 0, order: 0 },
+    { ...pointTemplate, id: 'pV', label: 'V', x: 0, y: 0, fixed: true, constraint: 'fixed', locked: true, order: 1 },
+    { ...pointTemplate, id: 'pB', label: 'B', x: 0, y: 2, constraint: 'constrained', constraintIds: ['equalAVBCWD'], order: 2 },
+    { ...pointTemplate, id: 'pC', label: 'C', x: 5, y: 0, order: 3 },
+    { ...pointTemplate, id: 'pW', label: 'W', x: 4, y: 0, fixed: true, constraint: 'fixed', locked: true, order: 4 },
+    { ...pointTemplate, id: 'pD', label: 'D', x: 4.5, y: Math.sqrt(3) / 2, order: 5 },
+  ];
+  model.elements = [
+    { ...targetAngle, id: 'angleAVB', label: 'Ángulo AVB', refs: ['pA', 'pV', 'pB'], order: 10 },
+    { ...targetAngle, id: 'angleCWD', label: 'Ángulo CWD', refs: ['pC', 'pW', 'pD'], color: 'pavo', order: 11 },
+  ];
+  model.constraints = [{
+    id: 'equalAVBCWD',
+    label: 'AVB tiene la misma amplitud que CWD',
+    kind: 'equalAngle',
+    refs: ['pB', 'pV', 'pA', 'angleCWD', 'angleAVB'],
+    enabled: true,
+  }];
+  model.dependencies = [
+    { sourceId: 'pV', targetId: 'pB', relation: 'constraint', constraintId: 'equalAVBCWD' },
+    { sourceId: 'pA', targetId: 'pB', relation: 'constraint', constraintId: 'equalAVBCWD' },
+    { sourceId: 'angleCWD', targetId: 'pB', relation: 'constraint', constraintId: 'equalAVBCWD' },
+  ];
+  return model;
+}
+
 describe('Phase 3 geometry language', () => {
   it.each(fixtures.map(fixture => [fixture.extensions.acceptanceFamily, fixture] as const))('validates and serializes the %s family without loss', (_family, fixture) => {
     const parsed = parseDiagramSpecV2(fixture);
@@ -92,7 +123,7 @@ describe('Phase 3 geometry language', () => {
     const kinds = new Set(fixtures.flatMap(fixture => fixture.elements.map(element => element.kind)));
     [
       'segment', 'line', 'ray', 'polygon', 'circle', 'arc', 'functionCurve', 'parametricCurve',
-      'poincareGeodesic', 'poincareArc', 'angle', 'congruenceMark', 'measureTicks', 'perpendicularMark',
+      'poincareGeodesic', 'poincareArc', 'angle', 'nonReflexAngle', 'congruenceMark', 'measureTicks', 'perpendicularMark',
       'dimensionLine', 'measurement', 'grid', 'areaDecomposition', 'label', 'formula', 'infoPanel',
     ].forEach(kind => expect(kinds.has(kind)).toBe(true));
   });
@@ -137,6 +168,37 @@ describe('Phase 3 geometry language', () => {
       relation: 'constraint',
       constraintId: 'equalOCAB',
     });
+  });
+
+  it('keeps one authored angle equal to another when the source angle changes', () => {
+    const parsed = parseDiagramSpecV2(modelWithAngleConstraint());
+    expect(parsed.success).toBe(true);
+    if (!parsed.success) return;
+
+    const initiallyResolved = withMovedPoint(parsed.data, 'pB', 0, 2);
+    const pointB = initiallyResolved.points.find(point => point.id === 'pB')!;
+    expect(pointB.x).toBeCloseTo(1);
+    expect(pointB.y).toBeCloseTo(Math.sqrt(3));
+
+    const movedSource = withMovedPoint(initiallyResolved, 'pD', 4, 2);
+    const updatedB = movedSource.points.find(point => point.id === 'pB')!;
+    expect(updatedB.x).toBeCloseTo(0);
+    expect(updatedB.y).toBeCloseTo(2);
+    expect(buildDependencyGraph(movedSource).edges).toContainEqual({
+      sourceId: 'angleCWD',
+      targetId: 'pB',
+      relation: 'constraint',
+      constraintId: 'equalAVBCWD',
+    });
+  });
+
+  it('rejects equal-angle relations that mix oriented and non-reflex angles', () => {
+    const model = modelWithAngleConstraint();
+    const sourceAngle = model.elements.find(element => element.id === 'angleCWD');
+    if (sourceAngle) sourceAngle.kind = 'angle';
+    const parsed = parseDiagramSpecV2(model);
+    expect(parsed.success).toBe(false);
+    if (!parsed.success) expect(parsed.error.message).toContain('ángulos del mismo tipo');
   });
 
   it('keeps D on the ray and at distance AB when D itself is moved', () => {

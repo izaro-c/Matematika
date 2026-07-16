@@ -24,6 +24,13 @@ export const CONSTRAINT_OPTIONS: Array<ConstraintPresentation & { value: VisualC
 const SUPPORT_KINDS = new Set(['segment', 'line', 'ray', 'circle', 'arc', 'functionCurve', 'parametricCurve', 'perpendicular', 'parallel', 'angleBisector']);
 
 export function constraintPresentation(kind: VisualConstraint['kind']): ConstraintPresentation {
+  if (kind === 'equalAngle') {
+    return {
+      label: 'Misma amplitud que otro ángulo',
+      description: 'Ajusta uno de los lados para que el ángulo conserve la amplitud de otro ángulo.',
+      refs: 5,
+    };
+  }
   const configured = CONSTRAINT_OPTIONS.find(option => option.value === kind);
   if (configured) return configured;
   return {
@@ -46,6 +53,22 @@ export function defaultConstraintRefs(model: VisualDiagramModel, kind: VisualCon
     const anchorId = targetSegment?.refs.find(ref => ref !== targetId);
     const sourceSegment = model.elements.find(item => item.kind === 'segment' && item.id !== targetSegment?.id);
     return anchorId && sourceSegment ? [targetId, anchorId, sourceSegment.id] : [targetId, ...(anchorId ? [anchorId] : [])];
+  }
+  if (kind === 'equalAngle') {
+    const targetAngle = model.elements.find(item => (
+      (item.kind === 'angle' || item.kind === 'nonReflexAngle')
+      && (item.refs[0] === targetId || item.refs[2] === targetId)
+    ));
+    if (!targetAngle) return [targetId];
+    const fixedRayPointId = targetAngle.refs[0] === targetId ? targetAngle.refs[2] : targetAngle.refs[0];
+    const sourceAngle = model.elements.find(item => (
+      item.id !== targetAngle.id
+      && item.kind === targetAngle.kind
+      && !item.refs.includes(targetId)
+    ));
+    return sourceAngle
+      ? [targetId, targetAngle.refs[1], fixedRayPointId, sourceAngle.id, targetAngle.id]
+      : [targetId, targetAngle.refs[1], fixedRayPointId];
   }
   const otherPoints = model.points.filter(item => item.id !== targetId).map(item => item.id);
   return [targetId, ...otherPoints.slice(0, presentation.refs - 1)];

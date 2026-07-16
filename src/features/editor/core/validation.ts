@@ -20,7 +20,7 @@ const CONTENT_ID_RE = /^[a-z0-9]+(?:-[a-z0-9]+)*$/;
 const HEX_RE = /#[0-9a-fA-F]{3,8}\b/;
 const MARKDOWN_LINK_RE = /\[[^\]]+\]\((?!https?:\/\/|mailto:|#)[^)]+\)/;
 const VISUAL_ARGUMENT_RE = /\b(como se ve|claramente|evidentemente|es obvio|vemos que|observamos que)\b/i;
-const DIAGRAM_ELEMENT_KINDS = new Set(['segment', 'line', 'ray', 'polygon', 'circle', 'midpoint', 'perpendicularFoot', 'baseExtension', 'perpendicular', 'parallel', 'angleBisector', 'angle', 'rightAngle', 'measurement', 'text']);
+const DIAGRAM_ELEMENT_KINDS = new Set(['segment', 'line', 'ray', 'polygon', 'circle', 'midpoint', 'perpendicularFoot', 'baseExtension', 'perpendicular', 'parallel', 'angleBisector', 'angle', 'nonReflexAngle', 'rightAngle', 'measurement', 'text']);
 const DIAGRAM_MIN_REFS: Record<string, number> = {
   segment: 2,
   line: 2,
@@ -34,6 +34,7 @@ const DIAGRAM_MIN_REFS: Record<string, number> = {
   parallel: 3,
   angleBisector: 3,
   angle: 3,
+  nonReflexAngle: 3,
   rightAngle: 3,
   measurement: 1,
   text: 1,

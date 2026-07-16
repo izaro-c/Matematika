@@ -40,10 +40,14 @@ const editorStorageRoot = process.env.MATEMATIKA_EDITOR_STORAGE_ROOT
 const diagramParserContractFiles = new Set([
   path.resolve(__dirname, 'scripts/editor/parseDiagramSourceAST.ts'),
   path.resolve(__dirname, 'src/features/editor/diagrams/model/commands.ts'),
+  path.resolve(__dirname, 'src/features/editor/diagrams/model/angleConstraints.ts'),
+  path.resolve(__dirname, 'src/features/editor/diagrams/model/constraintOptions.ts'),
   path.resolve(__dirname, 'src/features/editor/diagrams/source/generator.ts'),
   path.resolve(__dirname, 'src/features/editor/diagrams/source/parser.ts'),
   path.resolve(__dirname, 'src/shared/diagrams/spec/migrations.ts'),
+  path.resolve(__dirname, 'src/shared/diagrams/spec/scene.ts'),
   path.resolve(__dirname, 'src/shared/diagrams/spec/schema.ts'),
+  path.resolve(__dirname, 'src/shared/diagrams/spec/types.ts'),
 ].map(filePath => path.normalize(filePath)));
 
 function sendJson(res: ServerResponse, status: number, payload: unknown) {

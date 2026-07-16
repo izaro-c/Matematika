@@ -9,6 +9,7 @@ import { constraintPresentation } from '../model/constraintOptions';
 import { DiagramSceneControls } from './DiagramSceneControls';
 import { SegmentLengthConstraintEditor } from './SegmentLengthConstraintEditor';
 import { SegmentMarksEditor } from './SegmentMarksEditor';
+import { AngleEqualityConstraintEditor } from './AngleEqualityConstraintEditor';
 
 interface DiagramInspectorProps {
   model: VisualDiagramModel;
@@ -392,6 +393,15 @@ export const DiagramInspector: React.FC<DiagramInspectorProps> = ({
             </>
           )}
 
+          {(selectedElement.kind === 'angle' || selectedElement.kind === 'nonReflexAngle') && (
+            <AngleEqualityConstraintEditor
+              key={selectedElement.id}
+              model={model}
+              angle={selectedElement}
+              onModelEdit={onModelEdit}
+            />
+          )}
+
           {selectedElement.kind === 'intersection' && (
             <fieldset className="space-y-2 rounded border border-pavo/20 bg-pavo/5 p-2">
               <legend className="px-1 text-[10px] font-bold uppercase tracking-wider text-pavo">Intersección exacta</legend>
@@ -611,8 +621,8 @@ export const DiagramInspector: React.FC<DiagramInspectorProps> = ({
                 <label className="text-xs font-bold text-carbon">Tamaño resaltado<input type="number" min="0" max="40" step="0.5" aria-label="Tamaño resaltado de la intersección" className="mt-1 w-full rounded border border-carbon/15 bg-lienzo p-1.5 text-xs" value={selectedElement.style?.highlightPointSize ?? 7} onChange={(event) => handleElementStyleChange({ highlightPointSize: Number(event.target.value) })} /></label>
               </>
             )}
-            {(selectedElement.kind === 'angle' || selectedElement.kind === 'rightAngle' || selectedElement.kind === 'perpendicularMark') && (
-              <label className="col-span-2 text-xs font-bold text-carbon">Radio de la marca<input type="number" min="0.05" max="10" step="0.05" aria-label="Radio de la marca angular" className="mt-1 w-full rounded border border-carbon/15 bg-lienzo p-1.5 text-xs" value={selectedElement.style?.angleRadius ?? (selectedElement.kind === 'angle' ? DEFAULT_ANGLE_RADIUS : DEFAULT_RIGHT_ANGLE_RADIUS)} onChange={(event) => handleElementStyleChange({ angleRadius: Number(event.target.value) })} /></label>
+            {(selectedElement.kind === 'angle' || selectedElement.kind === 'nonReflexAngle' || selectedElement.kind === 'rightAngle' || selectedElement.kind === 'perpendicularMark') && (
+              <label className="col-span-2 text-xs font-bold text-carbon">Radio de la marca<input type="number" min="0.05" max="10" step="0.05" aria-label="Radio de la marca angular" className="mt-1 w-full rounded border border-carbon/15 bg-lienzo p-1.5 text-xs" value={selectedElement.style?.angleRadius ?? (selectedElement.kind === 'angle' || selectedElement.kind === 'nonReflexAngle' ? DEFAULT_ANGLE_RADIUS : DEFAULT_RIGHT_ANGLE_RADIUS)} onChange={(event) => handleElementStyleChange({ angleRadius: Number(event.target.value) })} /></label>
             )}
             <label className="text-xs font-bold text-carbon">Grosor<input type="number" min="0" max="20" step="0.1" aria-label="Grosor del elemento" className="mt-1 w-full rounded border border-carbon/15 bg-lienzo p-1.5 text-xs" value={selectedElement.style?.strokeWidth ?? 2.4} onChange={(event) => handleElementStyleChange({ strokeWidth: Number(event.target.value) })} /></label>
             <label className="text-xs font-bold text-carbon">Grosor resaltado<input type="number" min="0" max="30" step="0.1" aria-label="Grosor resaltado del elemento" className="mt-1 w-full rounded border border-carbon/15 bg-lienzo p-1.5 text-xs" value={selectedElement.style?.highlightStrokeWidth ?? 4.8} onChange={(event) => handleElementStyleChange({ highlightStrokeWidth: Number(event.target.value) })} /></label>

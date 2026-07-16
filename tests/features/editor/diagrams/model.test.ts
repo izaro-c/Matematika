@@ -6,6 +6,7 @@ import {
   generatedElementId,
   projectPointToSupport,
   removeConstraintFromModel,
+  setEqualAngleConstraint,
   setEqualLengthConstraint,
   toolReferenceLabel,
   updatePoint,
@@ -58,10 +59,12 @@ describe('Diagram Model & Selectors', () => {
 
   it('creates angular marks with explicit valid radii and identifies the vertex slot', () => {
     expect(element('angleABC', 'Ángulo ABC', 'angle', ['pA', 'pB', 'pC'], 'ocre').style?.angleRadius).toBe(DEFAULT_ANGLE_RADIUS);
+    expect(element('minorABC', 'Ángulo no reflejo ABC', 'nonReflexAngle', ['pA', 'pB', 'pC'], 'ocre').style?.angleRadius).toBe(DEFAULT_ANGLE_RADIUS);
     expect(element('rightABC', 'Ángulo recto ABC', 'rightAngle', ['pA', 'pB', 'pC'], 'ocre').style?.angleRadius).toBe(DEFAULT_RIGHT_ANGLE_RADIUS);
     expect(toolReferenceLabel('angle', 0)).toBe('Punto del primer lado');
     expect(toolReferenceLabel('angle', 1)).toBe('Vértice');
     expect(toolReferenceLabel('angle', 2)).toBe('Punto del segundo lado');
+    expect(toolReferenceLabel('nonReflexAngle', 1)).toBe('Vértice');
   });
 
   it('should create template models successfully', () => {
@@ -76,6 +79,7 @@ describe('Diagram Model & Selectors', () => {
     expect(targetKind('perpendicular')).toBe('line');
     expect(targetKind('midpoint')).toBe('point');
     expect(targetKind('angle')).toBe('angle');
+    expect(targetKind('nonReflexAngle')).toBe('angle');
     expect(targetKind('text')).toBe('measurement');
   });
 
@@ -144,5 +148,44 @@ describe('Diagram Model & Selectors', () => {
       constraint: 'constrained',
       constraintIds: [onRay.id],
     });
+  });
+
+  it('creates an equal-angle relation from the selected angular object', () => {
+    const base = createTemplateModel('modelo-estatico', 'Ángulos', 'definicion');
+    const model = {
+      ...base,
+      points: [
+        point('pA', 'A', 2, 0),
+        point('pV', 'V', 0, 0, true),
+        point('pB', 'B', 0, 2),
+        point('pC', 'C', 5, 0),
+        point('pW', 'W', 4, 0, true),
+        point('pD', 'D', 4.5, Math.sqrt(3) / 2),
+      ],
+      elements: [
+        element('angleAVB', 'Ángulo AVB', 'nonReflexAngle', ['pA', 'pV', 'pB'], 'ocre'),
+        element('angleCWD', 'Ángulo CWD', 'nonReflexAngle', ['pC', 'pW', 'pD'], 'pavo'),
+      ],
+      constraints: [],
+      dependencies: [],
+    };
+
+    const edited = setEqualAngleConstraint(model, 'angleAVB', 'pB', 'angleCWD');
+    const equalAngle = edited.constraints?.find(item => item.kind === 'equalAngle');
+    expect(equalAngle).toBeDefined();
+    if (!equalAngle) return;
+
+    expect(equalAngle.refs).toEqual(['pB', 'pV', 'pA', 'angleCWD', 'angleAVB']);
+    expect(edited.points.find(item => item.id === 'pB')).toMatchObject({
+      constraint: 'constrained',
+      constraintIds: [equalAngle.id],
+    });
+    expect(edited.dependencies).toEqual(expect.arrayContaining([
+      { sourceId: 'angleCWD', targetId: 'pB', relation: 'constraint', constraintId: equalAngle.id },
+    ]));
+
+    const removed = removeConstraintFromModel(edited, equalAngle.id);
+    expect(removed.constraints?.some(item => item.id === equalAngle.id)).toBe(false);
+    expect(removed.points.find(item => item.id === 'pB')).toMatchObject({ constraint: 'free' });
   });
 });

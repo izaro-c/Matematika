@@ -135,6 +135,26 @@ describe('Diagram TSX Parser (Local & AST)', () => {
     expect(fetchSpy).not.toHaveBeenCalled();
   });
 
+  it('delegates an embedded spec rejected by the local contract to the dev-server parser', async () => {
+    const model = createTemplateModel('triangulo-deformable', 'ContratoNuevo', 'definicion');
+    const generated = generateDiagramSource(model, 'ContratoNuevo');
+    expect(generated.ok).toBe(true);
+    if (!generated.ok) return;
+    const locallyUnknown = generated.source.replace(
+      '"constraints": []',
+      '"constraints": [{"id":"future","label":"Contrato futuro","kind":"futureConstraint","refs":["pA"],"enabled":true}]',
+    );
+    const serverResult = { status: 'visual-exact', model, diagnostics: [] };
+    const fetchSpy = vi.fn().mockResolvedValue(new Response(JSON.stringify(serverResult), {
+      status: 200,
+      headers: { 'Content-Type': 'application/json' },
+    }));
+    vi.stubGlobal('fetch', fetchSpy);
+
+    await expect(parseDiagramSourceOnServer(locallyUnknown)).resolves.toEqual(serverResult);
+    expect(fetchSpy).toHaveBeenCalledOnce();
+  });
+
   it('never grants visual editing because a partial AST contains a point', () => {
     const manual = `
       import { MathBoard } from '@/shared/diagrams/core/MathBoard';

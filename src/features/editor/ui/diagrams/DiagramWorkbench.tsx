@@ -60,7 +60,7 @@ function refsForElementKind(kind: ElementKind, refs: string[]): string[] {
   if (kind === 'segment' || kind === 'line' || kind === 'ray' || kind === 'circle' || kind === 'intersection' || kind === 'midpoint' || kind === 'congruenceMark' || kind === 'dimensionLine' || kind === 'measurement') {
     return refs.slice(0, 2);
   }
-  if (kind === 'arc' || kind === 'perpendicularFoot' || kind === 'baseExtension' || kind === 'perpendicular' || kind === 'parallel' || kind === 'angleBisector' || kind === 'angle' || kind === 'rightAngle' || kind === 'perpendicularMark') {
+  if (kind === 'arc' || kind === 'perpendicularFoot' || kind === 'baseExtension' || kind === 'perpendicular' || kind === 'parallel' || kind === 'angleBisector' || kind === 'angle' || kind === 'nonReflexAngle' || kind === 'rightAngle' || kind === 'perpendicularMark') {
     return refs.slice(0, 3);
   }
   if (kind === 'areaDecomposition') return refs.slice(0, 4);

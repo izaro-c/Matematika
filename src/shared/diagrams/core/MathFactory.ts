@@ -493,6 +493,20 @@ export function createAngle(board: any, points: [any, any, any], options: any = 
   });
 }
 
+export function createNonReflexAngle(board: any, points: [any, any, any], options: any = {}, theme: ThemeColors) {
+  const { radius = DEFAULT_ANGLE_RADIUS, ...attrs } = options;
+  return board.create('nonreflexangle', points, {
+    type: 'sector',
+    radius,
+    fillColor: theme.ocre,
+    fillOpacity: 0.1,
+    strokeColor: theme.ocre,
+    strokeWidth: 1.5,
+    label: { visible: false },
+    ...attrs,
+  });
+}
+
 export function createRightAngleMarker(board: any, points: [any, any, any], options: any = {}, theme: ThemeColors) {
   const [legA, vertex, legB] = points;
   const { size = DEFAULT_RIGHT_ANGLE_RADIUS, ...attrs } = options;

@@ -91,6 +91,71 @@ describe('Phase 7 lossless authoring UX', () => {
     expect(report.some(issue => issue.id.startsWith('broken-ConceptLink-no-existe'))).toBe(true);
   });
 
+  it('treats an axiom system as membership instead of a logical dependency', () => {
+    const report = buildAuthoringIntegrityReport({
+      source: [
+        '<ConceptLink targetId={["sistema-absoluto", "geometria"]}>geometría absoluta</ConceptLink>',
+        '<ConceptLink targetId="dependencia-ciclica">dependencia real</ConceptLink>',
+      ].join('\n'),
+      metadata: {
+        id: 'axioma-congruencia-5',
+        type: 'axioma',
+        axiomSystem: 'sistema-absoluto',
+      },
+      currentFile: 'database/content/axioms/axioma-congruencia-5.mdx',
+      diagramTargets: [],
+      entries: [
+        {
+          id: 'axioma-congruencia-5',
+          filePath: 'axioms/axioma-congruencia-5.mdx',
+          contentType: 'axioma',
+          metadata: {
+            id: 'axioma-congruencia-5',
+            type: 'axioma',
+            axiomSystem: 'sistema-absoluto',
+          },
+        },
+        {
+          id: 'sistema-absoluto',
+          filePath: 'axiomatic-systems/sistema-absoluto.mdx',
+          contentType: 'sistema-axiomatico',
+          metadata: {
+            id: 'sistema-absoluto',
+            type: 'sistema-axiomatico',
+            axiomas: ['axioma-congruencia-5'],
+          },
+        },
+        {
+          id: 'geometria',
+          filePath: 'definitions/geometria.mdx',
+          contentType: 'definicion',
+          metadata: {
+            id: 'geometria',
+            type: 'definicion',
+            subtype: 'primitivo',
+          },
+        },
+        {
+          id: 'dependencia-ciclica',
+          filePath: 'theorems/dependencia-ciclica.mdx',
+          contentType: 'teorema',
+          metadata: {
+            id: 'dependencia-ciclica',
+            type: 'teorema',
+            requires: ['axioma-congruencia-5'],
+          },
+        },
+      ],
+    });
+
+    expect(report).not.toEqual(expect.arrayContaining([
+      expect.objectContaining({ id: 'cyclic-dependency-sistema-absoluto' }),
+    ]));
+    expect(report).toEqual(expect.arrayContaining([
+      expect.objectContaining({ id: 'cyclic-dependency-dependencia-ciclica' }),
+    ]));
+  });
+
   it('creates schema-valid structured pages that reopen in visual mode', () => {
     const input = {
       id: 'demo-editor-compleja',

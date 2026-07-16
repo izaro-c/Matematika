@@ -7,7 +7,7 @@ import primitivesFixture from '../../../fixtures/diagrams/phase3-euclidean-primi
 import { parseDiagramSourceAST } from '../../../../scripts/editor/parseDiagramSourceAST';
 import { migrateDiagramSpec } from '../../../../src/shared/diagrams/public';
 import { generateDiagramSource } from '../../../../src/features/editor/diagrams/source/generator';
-import { setSegmentMeasureTicks } from '../../../../src/features/editor/diagrams/model/commands';
+import { setEqualAngleConstraint, setSegmentMeasureTicks } from '../../../../src/features/editor/diagrams/model/commands';
 
 describe('Phase 3 source serialization', () => {
   it.each([
@@ -145,6 +145,50 @@ describe('Phase 3 source serialization', () => {
     ]));
     const regenerated = generateDiagramSource(parsed.model, 'Congruence1');
     expect(regenerated.ok && regenerated.source).toBe(source);
+  });
+
+  it('reopens Congruence4 with its equal-angle relation as visual-exact', () => {
+    const source = readFileSync('src/widgets/diagrams/Axiomas/Congruence4.tsx', 'utf8');
+    const parsed = parseDiagramSourceAST(source);
+    expect(parsed.status).toBe('visual-exact');
+    if (parsed.status !== 'visual-exact') return;
+    expect(parsed.model.constraints).toEqual(expect.arrayContaining([
+      expect.objectContaining({
+        kind: 'equalAngle',
+        refs: ['pBB', 'pOO', 'pAA', 'nonReflexAngleAOB', 'nonReflexAngleAAOOBB'],
+      }),
+    ]));
+    const regenerated = generateDiagramSource(parsed.model, 'Congruence4');
+    expect(regenerated.ok && regenerated.source).toBe(source);
+  });
+
+  it('roundtrips an equal-angle relation authored from the angle inspector byte for byte', () => {
+    const base = migrateDiagramSpec(marksFixture).spec;
+    const pointTemplate = base.points[0];
+    const angleTemplate = base.elements.find(element => element.kind === 'nonReflexAngle')!;
+    const model = setEqualAngleConstraint({
+      ...base,
+      points: [
+        ...base.points,
+        { ...pointTemplate, id: 'pC', label: 'C', x: 5, y: 0, order: 3 },
+        { ...pointTemplate, id: 'pW', label: 'W', x: 4, y: 0, fixed: true, constraint: 'fixed' as const, locked: true, order: 4 },
+        { ...pointTemplate, id: 'pD', label: 'D', x: 4.5, y: Math.sqrt(3) / 2, order: 5 },
+      ],
+      elements: [
+        ...base.elements,
+        { ...angleTemplate, id: 'angleCWD', label: 'Ángulo CWD', refs: ['pC', 'pW', 'pD'], order: 20 },
+      ],
+    }, 'nonReflexAngleAVB', 'pA', 'angleCWD');
+
+    const generated = generateDiagramSource(model, 'EqualAngles');
+    expect(generated.ok).toBe(true);
+    if (!generated.ok) return;
+    const parsed = parseDiagramSourceAST(generated.source);
+    expect(parsed.status).toBe('visual-exact');
+    if (parsed.status !== 'visual-exact') return;
+    expect(parsed.model).toEqual(model);
+    const regenerated = generateDiagramSource(parsed.model, 'EqualAngles');
+    expect(regenerated.ok && regenerated.source).toBe(generated.source);
   });
 
   it('reopens Congruence2 with independent ruler spacing and height controls', () => {
