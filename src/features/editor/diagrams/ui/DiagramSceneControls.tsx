@@ -50,11 +50,11 @@ export const DiagramSceneControls: React.FC<DiagramSceneControlsProps> = ({ mode
         </label>
         <label className="flex items-start gap-1.5 text-xs font-bold text-carbon">
           <input type="checkbox" checked={item.selection.selectable} onChange={event => changeItem({ selection: { ...item.selection, selectable: event.target.checked } })} />
-          <span>Permitir selección directa<span className="mt-0.5 block text-[9px] font-normal leading-relaxed text-carbon/45">Si se desactiva, se selecciona desde la lista de objetos para evitar clics accidentales.</span></span>
+          <span>Permitir selección directa<span className="mt-0.5 block text-[9px] font-normal leading-relaxed text-carbon/45">Si se desactiva, no puede seleccionarse, arrastrarse ni ajustarse con el teclado en el lienzo. Conserva el foco y el resaltado; las relaciones aún pueden moverlo y se edita desde la lista.</span></span>
         </label>
         <label className="flex items-start gap-1.5 text-xs font-bold text-carbon">
           <input type="checkbox" checked={item.selection.highlightable !== false} onChange={event => changeItem({ selection: { ...item.selection, highlightable: event.target.checked } })} />
-          <span>Permitir resaltado visual<span className="mt-0.5 block text-[9px] font-normal leading-relaxed text-carbon/45">Si se desactiva, el objeto conserva el clic, el foco y sus demás interacciones sin cambiar de aspecto.</span></span>
+          <span>Resaltar por hover o foco<span className="mt-0.5 block text-[9px] font-normal leading-relaxed text-carbon/45">Si se desactiva, la interacción dentro del lienzo no cambia su aspecto. Las referencias MDX y la selección explícita sí pueden resaltarlo.</span></span>
         </label>
         <label className="flex items-start gap-1.5 text-xs font-bold text-carbon">
           <input type="checkbox" checked={item.selection.dimOthersOnHighlight !== false} onChange={event => changeItem({ selection: { ...item.selection, dimOthersOnHighlight: event.target.checked } })} />

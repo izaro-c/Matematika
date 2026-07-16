@@ -121,7 +121,7 @@ export const DiagramConstraintEditor: React.FC<DiagramConstraintEditorProps> = (
     <div className="space-y-2 rounded border border-pavo/20 bg-pavo/5 p-2">
       <div>
         <p className="text-[10px] font-bold uppercase tracking-wider text-pavo">Cómo puede moverse este punto</p>
-        <p className="mt-1 text-[10px] leading-relaxed text-carbon/55">Las relaciones se aplican en orden al arrastrar el punto. Cada tarjeta explica qué objetos intervienen.</p>
+        <p className="mt-1 text-[10px] leading-relaxed text-carbon/55">Las relaciones activas se cumplen simultáneamente al mover el punto. Cada tarjeta explica qué objetos intervienen.</p>
       </div>
       {assignedConstraints.length === 0 && <p className="rounded bg-lienzo p-2 text-[10px] text-carbon/55">Todavía no hay ninguna relación asignada.</p>}
       {assignedConstraints.map(constraint => {
@@ -159,7 +159,10 @@ export const DiagramConstraintEditor: React.FC<DiagramConstraintEditorProps> = (
                 </label>
               )}
               <div className="flex items-center justify-between gap-2">
-                <label className="flex items-center gap-1.5 text-[10px] text-carbon"><input type="checkbox" checked={constraint.enabled} onChange={event => onModelEdit({ ...model, constraints: model.constraints?.map(item => item.id === constraint.id ? { ...item, enabled: event.target.checked } : item) })} />Aplicar al mover</label>
+                <label className="flex items-start gap-1.5 text-[10px] text-carbon">
+                  <input type="checkbox" checked={constraint.enabled} onChange={event => onModelEdit({ ...model, constraints: model.constraints?.map(item => item.id === constraint.id ? { ...item, enabled: event.target.checked } : item) })} />
+                  <span>Relación activa<span className="block font-normal leading-relaxed text-carbon/45">Desmarcar para pausarla sin eliminarla.</span></span>
+                </label>
                 <button type="button" className="text-[10px] font-bold text-granada hover:underline" onClick={() => deleteConstraint(constraint.id)}>Eliminar relación</button>
               </div>
             </div>

@@ -43,6 +43,7 @@ function legacySelection(value: unknown) {
   return {
     selectable: selection?.selectable !== false,
     ...(typeof selection?.highlightable === 'boolean' ? { highlightable: selection.highlightable } : {}),
+    ...(typeof selection?.dimOthersOnHighlight === 'boolean' ? { dimOthersOnHighlight: selection.dimOthersOnHighlight } : {}),
     ...(typeof selection?.ariaLabel === 'string' ? { ariaLabel: selection.ariaLabel } : {}),
     ...(selection?.role === 'primary' || selection?.role === 'secondary' || selection?.role === 'construction' || selection?.role === 'annotation'
       ? { role: selection.role }

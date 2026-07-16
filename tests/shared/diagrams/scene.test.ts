@@ -21,7 +21,7 @@ describe('shared diagram scene semantics', () => {
     expect(plan.find(entry => entry.item.id === 'pFar')?.visible).toBe(false);
   });
 
-  it('keeps non-highlightable items out of direct and grouped emphasis', () => {
+  it('lets explicit references and selection override the local hover opt-out', () => {
     const target = spec.points.find(point => point.groupIds.includes('triangle-group'))!;
     const quietSpec = {
       ...spec,
@@ -33,7 +33,7 @@ describe('shared diagram scene semantics', () => {
       selectedIds: [target.id],
       highlightedIds: [target.id, 'triangle-group'],
     });
-    expect(plan.find(entry => entry.item.id === target.id)).toMatchObject({ highlighted: false, selected: false });
+    expect(plan.find(entry => entry.item.id === target.id)).toMatchObject({ highlighted: true, selected: true });
   });
 
   it('fits, zooms and recovers objects outside the persisted viewport', () => {

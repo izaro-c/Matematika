@@ -16,6 +16,7 @@ import {
   resolvePointCoordinates,
   withMovedPoint,
 } from '../../../src/shared/diagrams/public';
+import { Congruence1Spec } from '../../../src/widgets/diagrams/Axiomas/Congruence1';
 
 const fixtures = [
   pointsFixture,
@@ -136,6 +137,23 @@ describe('Phase 3 geometry language', () => {
       relation: 'constraint',
       constraintId: 'equalOCAB',
     });
+  });
+
+  it('keeps D on the ray and at distance AB when D itself is moved', () => {
+    const moved = withMovedPoint(Congruence1Spec, 'pD', 2, 4);
+    const pointA = moved.points.find(point => point.id === 'pA')!;
+    const pointB = moved.points.find(point => point.id === 'pB')!;
+    const pointC = moved.points.find(point => point.id === 'pC')!;
+    const pointD = moved.points.find(point => point.id === 'pD')!;
+    const pointDir = moved.points.find(point => point.id === 'pDir')!;
+    const rayX = pointDir.x - pointC.x;
+    const rayY = pointDir.y - pointC.y;
+    const cdX = pointD.x - pointC.x;
+    const cdY = pointD.y - pointC.y;
+
+    expect(rayX * cdY - rayY * cdX).toBeCloseTo(0);
+    expect(rayX * cdX + rayY * cdY).toBeGreaterThanOrEqual(0);
+    expect(Math.hypot(cdX, cdY)).toBeCloseTo(Math.hypot(pointB.x - pointA.x, pointB.y - pointA.y));
   });
 
   it('keeps an authored point at the midpoint of two moving endpoints', () => {

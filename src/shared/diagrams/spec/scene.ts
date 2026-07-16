@@ -1,5 +1,6 @@
 import type {
   DiagramBounds,
+  DiagramConstraint,
   DiagramElement,
   DiagramPoint,
   DiagramSceneItem,
@@ -260,15 +261,14 @@ export function createScenePlan(spec: DiagramSpecV2, state: DiagramSceneState = 
       const fixedPoint = 'constraint' in item && (item.fixed || item.constraint === 'fixed' || item.constraint === 'derived');
       const locked = !interactive || fixedPoint || item.locked || layer?.locked === true || itemGroups.some(group => group?.locked === true);
       const layerOrder = layer?.order ?? 0;
-      const highlightable = item.selection.highlightable !== false;
       const highlightedByGroup = itemGroups.some(group => group?.selection.highlightable !== false && highlighted.has(group?.id ?? ''));
       const selectedByGroup = itemGroups.some(group => group?.selection.highlightable !== false && selected.has(group?.id ?? ''));
       return {
         item,
         visible,
         locked,
-        highlighted: highlightable && (highlighted.has(item.id) || highlightedByGroup),
-        selected: highlightable && (selected.has(item.id) || selectedByGroup),
+        highlighted: highlighted.has(item.id) || highlightedByGroup,
+        selected: selected.has(item.id) || selectedByGroup,
         stepEmphasis: objectState?.emphasis ?? 'none',
         label: objectState?.label || item.label,
         interactive,
@@ -453,10 +453,18 @@ export function constrainPointCoordinates(
   if (point.constraint === 'glider') return projectPointToSupport(spec, point, coordinates);
   if (point.constraint === 'horizontal') return { x: coordinates.x, y: point.y };
   if (point.constraint === 'vertical') return { x: point.x, y: coordinates.y };
+  const activeConstraints = (point.constraintIds ?? [])
+    .map(constraintId => (spec.constraints ?? []).find(item => item.id === constraintId && item.enabled))
+    .filter((constraint): constraint is DiagramConstraint => Boolean(constraint));
+  const onConstraint = activeConstraints.find(constraint => constraint.kind === 'on' && constraint.refs[0] === point.id);
+  const equalLengthConstraint = activeConstraints.find(constraint => constraint.kind === 'equalLength' && constraint.refs[0] === point.id);
+  const exactSupportLength = onConstraint && equalLengthConstraint
+    ? pointOnLinearSupportAtEqualLength(spec, point, coordinates, onConstraint.refs[1], equalLengthConstraint)
+    : undefined;
   let result = coordinates;
-  for (const constraintId of point.constraintIds ?? []) {
-    const constraint = (spec.constraints ?? []).find(item => item.id === constraintId && item.enabled);
-    if (!constraint) continue;
+  if (exactSupportLength) result = exactSupportLength;
+  for (const constraint of activeConstraints) {
+    if (exactSupportLength && (constraint.id === onConstraint?.id || constraint.id === equalLengthConstraint?.id)) continue;
     const otherId = constraint.refs.find(ref => ref !== point.id);
     const other = otherId ? resolvePointCoordinates(spec, otherId) : undefined;
     if (constraint.kind === 'fixed') result = { x: point.x, y: point.y };
@@ -541,6 +549,55 @@ export function constrainPointCoordinates(
     }
   }
   return result;
+}
+
+function pointOnLinearSupportAtEqualLength(
+  spec: DiagramSpecV2,
+  point: DiagramPoint,
+  requested: { x: number; y: number },
+  supportId: string,
+  equalLengthConstraint: DiagramConstraint,
+): { x: number; y: number } | undefined {
+  const support = spec.elements.find(element => element.id === supportId);
+  const sourceSegment = spec.elements.find(element => element.id === equalLengthConstraint.refs[2] && element.kind === 'segment');
+  const anchor = resolvePointCoordinates(spec, equalLengthConstraint.refs[1]);
+  const sourceA = sourceSegment ? resolvePointCoordinates(spec, sourceSegment.refs[0]) : undefined;
+  const sourceB = sourceSegment ? resolvePointCoordinates(spec, sourceSegment.refs[1]) : undefined;
+  if (!support || !anchor || !sourceA || !sourceB) return undefined;
+  if (!['segment', 'line', 'ray', 'perpendicular', 'parallel', 'angleBisector'].includes(support.kind)) return undefined;
+
+  const carrier = linearSupportCarrier(spec, supportId, new Set());
+  if (!carrier) return undefined;
+  const dx = carrier.b.x - carrier.a.x;
+  const dy = carrier.b.y - carrier.a.y;
+  const carrierLength = Math.hypot(dx, dy);
+  if (carrierLength < 1e-10) return undefined;
+  const unitX = dx / carrierLength;
+  const unitY = dy / carrierLength;
+  const offsetX = carrier.a.x - anchor.x;
+  const offsetY = carrier.a.y - anchor.y;
+  const projection = offsetX * unitX + offsetY * unitY;
+  const desiredLength = Math.hypot(sourceB.x - sourceA.x, sourceB.y - sourceA.y);
+  const discriminant = projection * projection
+    - (offsetX * offsetX + offsetY * offsetY - desiredLength * desiredLength);
+  if (discriminant < -1e-10) return undefined;
+  const root = Math.sqrt(Math.max(0, discriminant));
+  const candidates = [-projection - root, -projection + root].filter(parameter => {
+    if (support.kind === 'segment') return parameter >= -1e-10 && parameter <= carrierLength + 1e-10;
+    if (support.kind === 'ray' || support.kind === 'angleBisector') return parameter >= -1e-10;
+    return true;
+  });
+  if (candidates.length === 0) return undefined;
+  const requestedParameter = (requested.x - carrier.a.x) * unitX + (requested.y - carrier.a.y) * unitY;
+  const previousParameter = (point.x - carrier.a.x) * unitX + (point.y - carrier.a.y) * unitY;
+  const preferredParameter = Number.isFinite(requestedParameter) ? requestedParameter : previousParameter;
+  const parameter = candidates.reduce((best, candidate) => (
+    Math.abs(candidate - preferredParameter) < Math.abs(best - preferredParameter) ? candidate : best
+  ));
+  return {
+    x: carrier.a.x + parameter * unitX,
+    y: carrier.a.y + parameter * unitY,
+  };
 }
 
 export function withResolvedPointConstraints(spec: DiagramSpecV2): DiagramSpecV2 {

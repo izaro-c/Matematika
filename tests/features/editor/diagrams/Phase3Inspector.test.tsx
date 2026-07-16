@@ -12,13 +12,34 @@ import { DiagramToolbar } from '../../../../src/features/editor/diagrams/ui/Diag
 import { DiagramToolReferencePicker } from '../../../../src/features/editor/diagrams/ui/DiagramToolReferencePicker';
 
 describe('Phase 3 visual editing', () => {
-  it('disables visual highlighting without disabling direct interaction', () => {
+  it('authors direct interaction separately from fixed position and relations', () => {
+    const model = migrateDiagramSpec(pointsFixture).spec;
+    const target = model.points.find(point => !point.fixed && point.selection.selectable)!;
+    const onModelEdit = vi.fn();
+    render(<DiagramInspector model={model} selectedId={target.id} onSelect={vi.fn()} onModelEdit={onModelEdit} onDeleteSelected={vi.fn()} />);
+
+    const directSelectionControl = screen.getByRole('checkbox', { name: /Permitir selección directa/ });
+    fireEvent.click(directSelectionControl);
+
+    const edited = onModelEdit.mock.calls.at(-1)?.[0];
+    expect(edited.points.find((item: { id: string }) => item.id === target.id)).toMatchObject({
+      fixed: false,
+      constraint: target.constraint,
+      selection: { selectable: false },
+    });
+    expect(directSelectionControl.closest('label')?.textContent).toContain('Conserva el foco y el resaltado');
+    expect(directSelectionControl.closest('label')?.textContent).toContain('las relaciones aún pueden moverlo');
+  });
+
+  it('disables local hover highlighting without blocking MDX references', () => {
     const model = migrateDiagramSpec(pointsFixture).spec;
     const target = model.points.find(point => point.selection.selectable)!;
     const onModelEdit = vi.fn();
     render(<DiagramInspector model={model} selectedId={target.id} onSelect={vi.fn()} onModelEdit={onModelEdit} onDeleteSelected={vi.fn()} />);
 
-    fireEvent.click(screen.getByRole('checkbox', { name: /Permitir resaltado visual/ }));
+    const control = screen.getByRole('checkbox', { name: /Resaltar por hover o foco/ });
+    expect(control.closest('label')?.textContent).toContain('Las referencias MDX');
+    fireEvent.click(control);
 
     const edited = onModelEdit.mock.calls.at(-1)?.[0];
     expect(edited.points.find((item: { id: string }) => item.id === target.id).selection).toMatchObject({
@@ -141,7 +162,10 @@ describe('Phase 3 visual editing', () => {
     const onModelEdit = vi.fn();
     const view = render(<DiagramInspector model={model} selectedId="segOC" onSelect={vi.fn()} onModelEdit={onModelEdit} onDeleteSelected={vi.fn()} />);
 
-    expect(screen.getByText('Igualar longitudes')).toBeTruthy();
+    const summary = screen.getByText('Igualar longitudes');
+    expect(summary.closest('details')?.open).toBe(false);
+    fireEvent.click(summary);
+    expect(summary.closest('details')?.open).toBe(true);
     expect(screen.getByText(/Un extremo queda como ancla/)).toBeTruthy();
     expect((screen.getByLabelText('Extremo que se ajusta para igualar longitudes') as HTMLSelectElement).value).toBe('pC');
     expect((screen.getByLabelText('Segmento de referencia para igualar longitudes') as HTMLSelectElement).value).toBe('segAB');
@@ -161,12 +185,23 @@ describe('Phase 3 visual editing', () => {
     });
 
     view.rerender(<DiagramInspector model={edited} selectedId="segOC" onSelect={vi.fn()} onModelEdit={onModelEdit} onDeleteSelected={vi.fn()} />);
+    expect(screen.getByText('Igualar longitudes').closest('details')?.open).toBe(true);
     fireEvent.click(screen.getByRole('button', { name: 'Quitar igualdad de longitudes' }));
     const removed = onModelEdit.mock.calls.at(-1)?.[0];
     expect(removed.constraints?.some((constraint: { kind: string }) => constraint.kind === 'equalLength')).toBe(false);
     expect(removed.points.find((point: { id: string }) => point.id === 'pC')).toMatchObject({
       constraint: 'free',
     });
+  });
+
+  it('describes relation activation as a reversible pause instead of an extra movement mode', () => {
+    const model = migrateDiagramSpec(pointsFixture).spec;
+    const onModelEdit = vi.fn();
+    render(<DiagramInspector model={model} selectedId="pC" onSelect={vi.fn()} onModelEdit={onModelEdit} onDeleteSelected={vi.fn()} />);
+
+    expect(screen.getByText('Relación activa')).toBeTruthy();
+    expect(screen.getByText('Desmarcar para pausarla sin eliminarla.')).toBeTruthy();
+    expect(screen.queryByText('Aplicar al mover')).toBeNull();
   });
 
   it('unlocks a formerly fixed point when a movable constraint is selected', () => {
