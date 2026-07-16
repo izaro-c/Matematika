@@ -81,6 +81,8 @@ export type DiagramConstraintKind =
   | 'coincident'
   | 'on'
   | 'distance'
+  | 'equalLength'
+  | 'midpoint'
   | 'perpendicular'
   | 'parallel'
   | 'insideDisk'
@@ -108,6 +110,8 @@ export interface DiagramSelectionMetadata {
   selectable: boolean;
   /** Permite énfasis visual por hover, foco, selección o targets externos. */
   highlightable?: boolean;
+  /** Las referencias externas atenúan el resto de la escena; el hover local nunca lo hace. */
+  dimOthersOnHighlight?: boolean;
   ariaLabel?: string;
   role?: 'primary' | 'secondary' | 'construction' | 'annotation';
 }

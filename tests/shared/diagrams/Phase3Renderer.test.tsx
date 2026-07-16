@@ -21,8 +21,9 @@ const rendererState = vi.hoisted(() => ({
 }));
 
 vi.mock('../../../src/shared/diagrams/core/MathBoard', () => ({
-  MathBoard: ({ children, onInit, onUpdate }: { children?: React.ReactNode; onInit?: (board: unknown, elements: Record<string, unknown>, theme: Record<string, string>) => void; onUpdate?: (board: unknown, elements: Record<string, unknown>, theme: Record<string, string>, isStep: () => boolean, isHL: () => boolean) => void }) => {
+  MathBoard: ({ children, onInit, onUpdate, scopeId = '' }: { children?: React.ReactNode; onInit?: (board: unknown, elements: Record<string, unknown>, theme: Record<string, string>) => void; onUpdate?: (board: unknown, elements: Record<string, unknown>, theme: Record<string, string>, isStep: () => boolean, isHL: (target: string) => boolean) => void; scopeId?: string }) => {
     const elementsRef = React.useRef<Record<string, any>>({});
+    const highlight = useMathStore(state => state.variables?.[scopeId ? `highlight:${scopeId}` : 'highlight'] ?? state.variables?.highlight);
     const number = (value: unknown, fallback = 0) => typeof value === 'function' ? fallback : typeof value === 'number' ? value : fallback;
     const boardRef = React.useRef({
         create: (kind: string, args: any[] = [], options: Record<string, unknown> = {}) => {
@@ -106,14 +107,16 @@ vi.mock('../../../src/shared/diagrams/core/MathBoard', () => ({
       onInitRef.current?.(boardRef.current, elementsRef.current, themeRef.current);
     }, []);
     React.useEffect(() => {
-      onUpdate?.(boardRef.current, elementsRef.current, themeRef.current, () => false, () => false);
-    }, [onUpdate]);
+      const isHL = (target: string) => highlight === target || highlight === `${scopeId}:${target}`;
+      onUpdate?.(boardRef.current, elementsRef.current, themeRef.current, () => false, isHL);
+    }, [highlight, onUpdate, scopeId]);
     return <div data-testid="phase3-board">{children}</div>;
   },
 }));
 
 import { DiagramRenderer } from '../../../src/shared/diagrams/runtime/DiagramRenderer';
 import { Incidence2Spec } from '../../../src/widgets/diagrams/Axiomas/Incidence2';
+import { Congruence1Spec } from '../../../src/widgets/diagrams/Axiomas/Congruence1';
 import { PaschSpec } from '../../../src/widgets/diagrams/Axiomas/Pasch';
 
 afterEach(() => {
@@ -129,6 +132,11 @@ afterEach(() => {
 function HighlightProbe() {
   const highlight = useMathStore(state => state.variables.highlight);
   return <output aria-label="highlight desde diagrama">{String(highlight ?? '')}</output>;
+}
+
+function ExternalHighlightControl({ value }: { value: string }) {
+  const setVariable = useMathStore(state => state.setVariable);
+  return <button type="button" onClick={() => setVariable('highlight', value)}>Resaltar desde MDX</button>;
 }
 
 describe('Phase 3 shared renderer', () => {
@@ -246,6 +254,23 @@ describe('Phase 3 shared renderer', () => {
     expect(rendererState.nodes.filter(node => node.getAttribute('aria-roledescription') === 'punto móvil del diagrama')).toHaveLength(2);
   });
 
+  it('propagates equal segment lengths live while a source endpoint is dragged', () => {
+    render(<MathProvider><DiagramRenderer spec={Congruence1Spec} viewportControls={false} /></MathProvider>);
+    const geometryFor = (id: string) => {
+      const index = rendererState.nodes.findIndex(node => node.dataset.diagramObjectId === id);
+      return rendererState.geometries[index];
+    };
+    const pointA = geometryFor('pA');
+    const pointB = geometryFor('pB');
+    const pointC = geometryFor('pC');
+    const pointD = geometryFor('pD');
+
+    pointA.moveTo([-8, 2], 0);
+    pointA.handlers.drag[0]();
+
+    expect(pointC.Dist(pointD)).toBeCloseTo(pointA.Dist(pointB));
+  });
+
   it('uses the dedicated mathematical typography for diagram labels and headings', () => {
     const spec = migrateDiagramSpec(primitivesFixture).spec;
     render(<MathProvider><DiagramRenderer spec={spec} viewportControls={false} /></MathProvider>);
@@ -303,6 +328,51 @@ describe('Phase 3 shared renderer', () => {
     expect(screen.getByLabelText('highlight desde diagrama').textContent).toBe(`${spec.componentId}:${targetNode?.dataset.diagramTarget}`);
     fireEvent.mouseLeave(targetNode as HTMLElement);
     expect(screen.getByLabelText('highlight desde diagrama').textContent).toBe('');
+  });
+
+  it('keeps local hover additive while MDX references dim the rest by default', () => {
+    const spec = migrateDiagramSpec(primitivesFixture).spec;
+    const target = spec.points.find(point => point.target)!;
+    const other = spec.points.find(point => point.id !== target.id)!;
+    render(
+      <MathProvider>
+        <DiagramRenderer spec={spec} viewportControls={false} />
+        <ExternalHighlightControl value={`${spec.componentId}:${target.targetId ?? target.id}`} />
+      </MathProvider>,
+    );
+    const targetIndex = rendererState.nodes.findIndex(node => node.dataset.diagramObjectId === target.id);
+    const otherIndex = rendererState.nodes.findIndex(node => node.dataset.diagramObjectId === other.id);
+    const otherPoint = rendererState.geometries[otherIndex];
+
+    fireEvent.mouseEnter(rendererState.nodes[targetIndex]);
+    expect(otherPoint.setAttribute.mock.calls.at(-1)?.[0]).toMatchObject({ fillOpacity: 1 });
+    fireEvent.mouseLeave(rendererState.nodes[targetIndex]);
+
+    fireEvent.click(screen.getByRole('button', { name: 'Resaltar desde MDX' }));
+    expect(otherPoint.setAttribute.mock.calls.at(-1)?.[0]).toMatchObject({ fillOpacity: 0.28 });
+  });
+
+  it('supports additive highlighting for an MDX target when authored in the editor', () => {
+    const base = migrateDiagramSpec(primitivesFixture).spec;
+    const target = base.points.find(point => point.target)!;
+    const other = base.points.find(point => point.id !== target.id)!;
+    const spec = {
+      ...base,
+      points: base.points.map(point => point.id === target.id
+        ? { ...point, selection: { ...point.selection, dimOthersOnHighlight: false } }
+        : point),
+    };
+    render(
+      <MathProvider>
+        <DiagramRenderer spec={spec} viewportControls={false} />
+        <ExternalHighlightControl value={`${spec.componentId}:${target.targetId ?? target.id}`} />
+      </MathProvider>,
+    );
+    const otherIndex = rendererState.nodes.findIndex(node => node.dataset.diagramObjectId === other.id);
+    const otherPoint = rendererState.geometries[otherIndex];
+
+    fireEvent.click(screen.getByRole('button', { name: 'Resaltar desde MDX' }));
+    expect(otherPoint.setAttribute.mock.calls.at(-1)?.[0]).toMatchObject({ fillOpacity: 1 });
   });
 
   it('keeps a native label interactive and visually synchronized with its point', () => {

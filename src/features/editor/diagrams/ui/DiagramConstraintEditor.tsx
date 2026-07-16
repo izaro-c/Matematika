@@ -2,11 +2,42 @@ import React, { useState } from 'react';
 import type { VisualConstraint, VisualDiagramModel, VisualPoint } from '../model/types';
 import { updatePoint } from '../model/commands';
 import { CONSTRAINT_OPTIONS, constraintPresentation, defaultConstraintRefs, withConstraintDependencies } from '../model/constraintOptions';
+import { removeConstraintFromModel } from '../model/segmentLengthConstraints';
 
 function referenceCandidates(model: VisualDiagramModel, constraint: VisualConstraint, index: number) {
   if (index === 0) return model.points;
   if (constraint.kind === 'on' && index === 1) return model.elements;
+  if (constraint.kind === 'equalLength') {
+    if (index === 1) {
+      return model.points.filter(candidate => model.elements.some(element => (
+        element.kind === 'segment'
+        && element.refs.includes(constraint.refs[0])
+        && element.refs.includes(candidate.id)
+      )));
+    }
+    if (index === 2) {
+      const targetSegment = model.elements.find(element => (
+        element.kind === 'segment'
+        && element.refs.includes(constraint.refs[0])
+        && element.refs.includes(constraint.refs[1])
+      ));
+      return model.elements.filter(element => element.kind === 'segment' && element.id !== targetSegment?.id);
+    }
+  }
+  if (constraint.kind === 'midpoint') {
+    return model.points.filter(candidate => !constraint.refs.slice(0, index).includes(candidate.id));
+  }
   return [...model.points, ...model.elements];
+}
+
+function referenceLabel(constraint: VisualConstraint, index: number): string {
+  if (constraint.kind === 'equalLength') {
+    return ['Extremo ajustado', 'Extremo ancla', 'Segmento de referencia'][index] ?? `Referencia ${index}`;
+  }
+  if (constraint.kind === 'midpoint') {
+    return ['Punto medio', 'Primer extremo', 'Segundo extremo'][index] ?? `Referencia ${index}`;
+  }
+  return index === 0 ? 'Punto restringido' : `Referencia ${index}`;
 }
 
 interface DiagramConstraintEditorProps {
@@ -78,19 +109,7 @@ export const DiagramConstraintEditor: React.FC<DiagramConstraintEditorProps> = (
   };
 
   const deleteConstraint = (constraintId: string) => {
-    const affectedPoints = model.points.filter(item => item.constraintIds?.includes(constraintId));
-    const withoutConstraint: VisualDiagramModel = {
-      ...model,
-      constraints: model.constraints?.filter(item => item.id !== constraintId),
-      dependencies: model.dependencies?.filter(item => item.constraintId !== constraintId),
-    };
-    const next = affectedPoints.reduce((current, affectedPoint) => {
-      const remainingIds = (affectedPoint.constraintIds ?? []).filter(id => id !== constraintId);
-      return remainingIds.length > 0
-        ? updatePoint(current, affectedPoint.id, { constraintIds: remainingIds })
-        : updatePoint(current, affectedPoint.id, { constraint: 'free' });
-    }, withoutConstraint);
-    onModelEdit(next);
+    onModelEdit(removeConstraintFromModel(model, constraintId));
   };
 
   const assignedConstraints = (point.constraintIds || [])
@@ -122,7 +141,7 @@ export const DiagramConstraintEditor: React.FC<DiagramConstraintEditorProps> = (
                 const candidates = referenceCandidates(model, constraint, index);
                 return (
                   <label key={`${constraint.id}-ref-${index}`} className="block text-[10px] font-bold text-carbon/60">
-                    {index === 0 ? 'Punto restringido' : `Referencia ${index}`}
+                    {referenceLabel(constraint, index)}
                     <select aria-label={`Referencia ${index + 1} de ${constraint.id}`} className="mt-1 w-full rounded border border-carbon/15 bg-lienzo p-1.5 text-xs" value={ref} onChange={event => changeReference(constraint, index, event.target.value)}>
                       {candidates.map(item => <option key={item.id} value={item.id}>{item.label} ({item.id})</option>)}
                     </select>

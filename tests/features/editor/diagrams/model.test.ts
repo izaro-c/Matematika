@@ -1,5 +1,15 @@
 import { describe, it, expect } from 'vitest';
-import { createTemplateModel, point, element, generatedElementId, projectPointToSupport, toolReferenceLabel, updatePoint } from '../../../../src/features/editor/diagrams/model/commands';
+import {
+  createTemplateModel,
+  point,
+  element,
+  generatedElementId,
+  projectPointToSupport,
+  removeConstraintFromModel,
+  setEqualLengthConstraint,
+  toolReferenceLabel,
+  updatePoint,
+} from '../../../../src/features/editor/diagrams/model/commands';
 import { DEFAULT_ANGLE_RADIUS, DEFAULT_RIGHT_ANGLE_RADIUS } from '../../../../src/shared/diagrams/public';
 import { buildTargets, targetKind } from '../../../../src/features/editor/diagrams/model/selectors';
 
@@ -91,5 +101,48 @@ describe('Diagram Model & Selectors', () => {
     ];
     const nextId = generatedElementId('segment', ['pA', 'pB'], existing);
     expect(nextId).toBe('segAB_2');
+  });
+
+  it('creates an equal-length relation from a segment while preserving a glider support', () => {
+    const base = createTemplateModel('modelo-estatico', 'Longitudes', 'definicion');
+    const model = {
+      ...base,
+      points: [
+        point('pA', 'A', -3, 1),
+        point('pB', 'B', -1, 1),
+        point('pC', 'C', 1, -1),
+        point('pD', 'D', 3, -1, false, 'terracota', 'glider', 'rayCDir'),
+        point('pDir', 'dir', 4, 0),
+      ],
+      elements: [
+        element('segAB', 'Segmento AB', 'segment', ['pA', 'pB'], 'carbon'),
+        element('segCD', 'Segmento CD', 'segment', ['pC', 'pD'], 'carbon'),
+        element('rayCDir', 'Semirrecta desde C', 'ray', ['pC', 'pDir'], 'pavo'),
+      ],
+      constraints: [],
+      dependencies: [],
+    };
+
+    const edited = setEqualLengthConstraint(model, 'segCD', 'pD', 'segAB');
+    const pointD = edited.points.find(item => item.id === 'pD')!;
+    const equalLength = edited.constraints?.find(item => item.kind === 'equalLength');
+    const onRay = edited.constraints?.find(item => item.kind === 'on');
+    expect(equalLength).toBeDefined();
+    expect(onRay).toBeDefined();
+    if (!equalLength || !onRay) return;
+
+    expect(pointD).toMatchObject({
+      constraint: 'constrained',
+      constraintIds: expect.arrayContaining([equalLength.id, onRay.id]),
+    });
+    expect(equalLength.refs).toEqual(['pD', 'pC', 'segAB']);
+    expect(onRay.refs).toEqual(['pD', 'rayCDir']);
+
+    const removed = removeConstraintFromModel(edited, equalLength.id);
+    expect(removed.constraints?.some(item => item.id === equalLength.id)).toBe(false);
+    expect(removed.points.find(item => item.id === 'pD')).toMatchObject({
+      constraint: 'constrained',
+      constraintIds: [onRay.id],
+    });
   });
 });

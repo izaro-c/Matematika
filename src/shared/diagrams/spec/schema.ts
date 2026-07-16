@@ -68,6 +68,7 @@ const elementPropertiesSchema = z.object({
 const selectionSchema = z.object({
   selectable: z.boolean(),
   highlightable: z.boolean().optional(),
+  dimOthersOnHighlight: z.boolean().optional(),
   ariaLabel: z.string().min(1).optional(),
   role: z.enum(['primary', 'secondary', 'construction', 'annotation']).optional(),
 }).strict();
@@ -128,7 +129,7 @@ const elementSchema = z.object({
 const constraintSchema = z.object({
   id: idSchema,
   label: z.string().min(1),
-  kind: z.enum(['fixed', 'horizontal', 'vertical', 'coincident', 'on', 'distance', 'perpendicular', 'parallel', 'insideDisk', 'sameSide', 'expression']),
+  kind: z.enum(['fixed', 'horizontal', 'vertical', 'coincident', 'on', 'distance', 'equalLength', 'midpoint', 'perpendicular', 'parallel', 'insideDisk', 'sameSide', 'expression']),
   refs: z.array(idSchema),
   expression: expressionSchema.optional(),
   value: finiteNumber.optional(),
@@ -402,7 +403,9 @@ export const diagramSpecV2Schema = z.object({
   (spec.constraints ?? []).forEach((constraint, index) => {
     const requiredRefs = constraint.kind === 'fixed' || constraint.kind === 'expression'
       ? 1
-      : constraint.kind === 'perpendicular' || constraint.kind === 'parallel' || constraint.kind === 'insideDisk' || constraint.kind === 'sameSide'
+      : constraint.kind === 'equalLength' || constraint.kind === 'midpoint'
+        || constraint.kind === 'perpendicular' || constraint.kind === 'parallel'
+        || constraint.kind === 'insideDisk' || constraint.kind === 'sameSide'
         ? 3
         : 2;
     if (constraint.refs.length < requiredRefs) context.addIssue({ code: 'custom', message: `${constraint.id} necesita al menos ${requiredRefs} referencias.`, path: ['constraints', index, 'refs'] });
@@ -411,6 +414,43 @@ export const diagramSpecV2Schema = z.object({
     });
     if ((constraint.kind === 'distance' || constraint.kind === 'expression') && constraint.value === undefined && !constraint.expression) {
       context.addIssue({ code: 'custom', message: `${constraint.id} necesita value o expression.`, path: ['constraints', index] });
+    }
+    if (constraint.kind === 'equalLength') {
+      const [targetPointId, anchorPointId, sourceSegmentId] = constraint.refs;
+      const sourceSegment = spec.elements.find(element => element.id === sourceSegmentId);
+      const targetSegment = spec.elements.find(element => (
+        element.kind === 'segment'
+        && element.refs.includes(targetPointId)
+        && element.refs.includes(anchorPointId)
+      ));
+      if (!spec.points.some(point => point.id === targetPointId) || !spec.points.some(point => point.id === anchorPointId)) {
+        context.addIssue({ code: 'custom', message: `${constraint.id} necesita un extremo móvil y un extremo ancla que sean puntos.`, path: ['constraints', index, 'refs'] });
+      }
+      if (!sourceSegment || sourceSegment.kind !== 'segment') {
+        context.addIssue({ code: 'custom', message: `${constraint.id} necesita un segmento de referencia.`, path: ['constraints', index, 'refs', 2] });
+      }
+      if (!targetSegment) {
+        context.addIssue({ code: 'custom', message: `${constraint.id} necesita que los dos primeros puntos formen un segmento existente.`, path: ['constraints', index, 'refs'] });
+      } else if (targetSegment.id === sourceSegmentId) {
+        context.addIssue({ code: 'custom', message: `${constraint.id} debe relacionar dos segmentos distintos.`, path: ['constraints', index, 'refs', 2] });
+      }
+      const assignedPoint = spec.points.find(point => point.id === targetPointId);
+      if (!assignedPoint?.constraintIds?.includes(constraint.id)) {
+        context.addIssue({ code: 'custom', message: `${constraint.id} debe estar asignada al extremo móvil ${targetPointId}.`, path: ['constraints', index] });
+      }
+    }
+    if (constraint.kind === 'midpoint') {
+      const [targetPointId, firstEndpointId, secondEndpointId] = constraint.refs;
+      if (![targetPointId, firstEndpointId, secondEndpointId].every(id => spec.points.some(point => point.id === id))) {
+        context.addIssue({ code: 'custom', message: `${constraint.id} solo admite puntos como referencias.`, path: ['constraints', index, 'refs'] });
+      }
+      if (firstEndpointId === secondEndpointId || targetPointId === firstEndpointId || targetPointId === secondEndpointId) {
+        context.addIssue({ code: 'custom', message: `${constraint.id} necesita tres puntos distintos.`, path: ['constraints', index, 'refs'] });
+      }
+      const assignedPoint = spec.points.find(point => point.id === targetPointId);
+      if (!assignedPoint?.constraintIds?.includes(constraint.id)) {
+        context.addIssue({ code: 'custom', message: `${constraint.id} debe estar asignada al punto medio ${targetPointId}.`, path: ['constraints', index] });
+      }
     }
     if (constraint.expression) expressionEntries.push({ source: constraint.expression, path: ['constraints', index, 'expression'] });
   });

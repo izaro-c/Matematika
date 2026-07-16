@@ -439,10 +439,10 @@ export function withMovedPoint(spec: DiagramSpecV2, pointId: string, x: number, 
   const point = spec.points.find(item => item.id === pointId);
   if (!point || point.fixed || point.constraint === 'fixed' || point.constraint === 'derived') return spec;
   const constrained = constrainPointCoordinates(spec, point, { x, y });
-  return {
+  return withResolvedPointConstraints({
     ...spec,
     points: spec.points.map(item => item.id === pointId ? { ...item, ...constrained } : item),
-  };
+  });
 }
 
 export function constrainPointCoordinates(
@@ -471,6 +471,33 @@ export function constrainPointCoordinates(
       const dy = result.y - other.y;
       const length = Math.hypot(dx, dy) || 1;
       result = { x: other.x + dx / length * distance, y: other.y + dy / length * distance };
+    } else if (constraint.kind === 'equalLength' && constraint.refs.length >= 3) {
+      const anchor = resolvePointCoordinates(spec, constraint.refs[1]);
+      const sourceSegment = spec.elements.find(element => element.id === constraint.refs[2] && element.kind === 'segment');
+      const sourceA = sourceSegment ? resolvePointCoordinates(spec, sourceSegment.refs[0]) : undefined;
+      const sourceB = sourceSegment ? resolvePointCoordinates(spec, sourceSegment.refs[1]) : undefined;
+      if (!anchor || !sourceA || !sourceB) continue;
+      const desiredLength = Math.hypot(sourceB.x - sourceA.x, sourceB.y - sourceA.y);
+      const requestedDx = result.x - anchor.x;
+      const requestedDy = result.y - anchor.y;
+      const previousDx = point.x - anchor.x;
+      const previousDy = point.y - anchor.y;
+      const directionLength = Math.hypot(requestedDx, requestedDy);
+      const fallbackLength = Math.hypot(previousDx, previousDy) || 1;
+      const directionX = directionLength > 1e-10 ? requestedDx / directionLength : previousDx / fallbackLength;
+      const directionY = directionLength > 1e-10 ? requestedDy / directionLength : previousDy / fallbackLength;
+      result = {
+        x: anchor.x + directionX * desiredLength,
+        y: anchor.y + directionY * desiredLength,
+      };
+    } else if (constraint.kind === 'midpoint' && constraint.refs.length >= 3) {
+      const firstEndpoint = resolvePointCoordinates(spec, constraint.refs[1]);
+      const secondEndpoint = resolvePointCoordinates(spec, constraint.refs[2]);
+      if (!firstEndpoint || !secondEndpoint) continue;
+      result = {
+        x: (firstEndpoint.x + secondEndpoint.x) / 2,
+        y: (firstEndpoint.y + secondEndpoint.y) / 2,
+      };
     } else if (constraint.kind === 'insideDisk' && constraint.refs.length >= 3) {
       const center = resolvePointCoordinates(spec, constraint.refs[1]);
       const boundary = resolvePointCoordinates(spec, constraint.refs[2]);
@@ -514,6 +541,26 @@ export function constrainPointCoordinates(
     }
   }
   return result;
+}
+
+export function withResolvedPointConstraints(spec: DiagramSpecV2): DiagramSpecV2 {
+  let current = spec;
+  const maximumPasses = Math.max(1, spec.points.length);
+  for (let pass = 0; pass < maximumPasses; pass += 1) {
+    let changed = false;
+    for (const point of current.points) {
+      if (!point.constraintIds?.length) continue;
+      const coordinates = constrainPointCoordinates(current, point, { x: point.x, y: point.y });
+      if (Math.abs(coordinates.x - point.x) <= 1e-10 && Math.abs(coordinates.y - point.y) <= 1e-10) continue;
+      current = {
+        ...current,
+        points: current.points.map(item => item.id === point.id ? { ...item, ...coordinates } : item),
+      };
+      changed = true;
+    }
+    if (!changed) break;
+  }
+  return current;
 }
 
 export function buildDependencyGraph(spec: DiagramSpecV2): DiagramDependencyGraph {

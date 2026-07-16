@@ -27,6 +27,22 @@ describe('Phase 3 visual editing', () => {
     });
   });
 
+  it('authors additive MDX highlighting while keeping dimming as the default', () => {
+    const model = migrateDiagramSpec(pointsFixture).spec;
+    const target = model.points.find(point => point.selection.selectable)!;
+    const onModelEdit = vi.fn();
+    render(<DiagramInspector model={model} selectedId={target.id} onSelect={vi.fn()} onModelEdit={onModelEdit} onDeleteSelected={vi.fn()} />);
+
+    const control = screen.getByRole('checkbox', { name: /Atenuar los demás desde MDX/ });
+    expect((control as HTMLInputElement).checked).toBe(true);
+    fireEvent.click(control);
+
+    const edited = onModelEdit.mock.calls.at(-1)?.[0];
+    expect(edited.points.find((item: { id: string }) => item.id === target.id).selection).toMatchObject({
+      dimOthersOnHighlight: false,
+    });
+  });
+
   it('creates and edits an intersection from two compatible supports', () => {
     const base = migrateDiagramSpec(primitivesFixture).spec;
     const line = { ...base.elements.find(item => item.id === 'lineBC')!, id: 'lineOC', label: 'Recta OC', refs: ['pO', 'pC'], target: false };
@@ -71,6 +87,86 @@ describe('Phase 3 visual editing', () => {
       constraints: expect.arrayContaining([expect.objectContaining({ kind: 'vertical', refs: ['pC', 'pA'] })]),
       dependencies: expect.arrayContaining([expect.objectContaining({ targetId: 'pC', relation: 'constraint' })]),
     }));
+  });
+
+  it('authors equal-length and midpoint relations with geometry-specific references', () => {
+    const base = migrateDiagramSpec(primitivesFixture).spec;
+    const model = {
+      ...base,
+      elements: [
+        ...base.elements,
+        { ...base.elements[0], id: 'segOC', label: 'Segmento OC', refs: ['pO', 'pC'], order: 20 },
+      ],
+      points: base.points.map(point => point.id === 'pC'
+        ? { ...point, constraint: 'constrained' as const, constraintIds: [] }
+        : point),
+    };
+    const onModelEdit = vi.fn();
+    const view = render(<DiagramInspector model={model} selectedId="pC" onSelect={vi.fn()} onModelEdit={onModelEdit} onDeleteSelected={vi.fn()} />);
+
+    fireEvent.change(screen.getByLabelText('Nueva restricción'), { target: { value: 'equalLength' } });
+    fireEvent.click(screen.getByRole('button', { name: 'Añadir relación' }));
+    expect(onModelEdit).toHaveBeenLastCalledWith(expect.objectContaining({
+      constraints: expect.arrayContaining([expect.objectContaining({
+        kind: 'equalLength',
+        refs: ['pC', 'pO', 'segAB'],
+      })]),
+      dependencies: expect.arrayContaining([expect.objectContaining({
+        sourceId: 'segAB',
+        targetId: 'pC',
+        relation: 'constraint',
+      })]),
+    }));
+
+    view.rerender(<DiagramInspector model={model} selectedId="pC" onSelect={vi.fn()} onModelEdit={onModelEdit} onDeleteSelected={vi.fn()} />);
+    fireEvent.change(screen.getByLabelText('Nueva restricción'), { target: { value: 'midpoint' } });
+    fireEvent.click(screen.getByRole('button', { name: 'Añadir relación' }));
+    expect(onModelEdit).toHaveBeenLastCalledWith(expect.objectContaining({
+      constraints: expect.arrayContaining([expect.objectContaining({
+        kind: 'midpoint',
+        refs: ['pC', 'pO', 'pA'],
+      })]),
+    }));
+  });
+
+  it('explains and creates equal lengths directly from the selected segment', () => {
+    const base = migrateDiagramSpec(primitivesFixture).spec;
+    const model = {
+      ...base,
+      elements: [
+        ...base.elements,
+        { ...base.elements[0], id: 'segOC', label: 'Segmento OC', refs: ['pO', 'pC'], order: 20 },
+      ],
+    };
+    const onModelEdit = vi.fn();
+    const view = render(<DiagramInspector model={model} selectedId="segOC" onSelect={vi.fn()} onModelEdit={onModelEdit} onDeleteSelected={vi.fn()} />);
+
+    expect(screen.getByText('Igualar longitudes')).toBeTruthy();
+    expect(screen.getByText(/Un extremo queda como ancla/)).toBeTruthy();
+    expect((screen.getByLabelText('Extremo que se ajusta para igualar longitudes') as HTMLSelectElement).value).toBe('pC');
+    expect((screen.getByLabelText('Segmento de referencia para igualar longitudes') as HTMLSelectElement).value).toBe('segAB');
+
+    fireEvent.click(screen.getByRole('button', { name: 'Mantener la misma longitud' }));
+    const edited = onModelEdit.mock.calls.at(-1)?.[0];
+    expect(edited).toMatchObject({
+      points: expect.arrayContaining([expect.objectContaining({
+        id: 'pC',
+        constraint: 'constrained',
+        constraintIds: expect.any(Array),
+      })]),
+      constraints: expect.arrayContaining([expect.objectContaining({
+        kind: 'equalLength',
+        refs: ['pC', 'pO', 'segAB'],
+      })]),
+    });
+
+    view.rerender(<DiagramInspector model={edited} selectedId="segOC" onSelect={vi.fn()} onModelEdit={onModelEdit} onDeleteSelected={vi.fn()} />);
+    fireEvent.click(screen.getByRole('button', { name: 'Quitar igualdad de longitudes' }));
+    const removed = onModelEdit.mock.calls.at(-1)?.[0];
+    expect(removed.constraints?.some((constraint: { kind: string }) => constraint.kind === 'equalLength')).toBe(false);
+    expect(removed.points.find((point: { id: string }) => point.id === 'pC')).toMatchObject({
+      constraint: 'free',
+    });
   });
 
   it('unlocks a formerly fixed point when a movable constraint is selected', () => {

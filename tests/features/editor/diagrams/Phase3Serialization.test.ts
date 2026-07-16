@@ -1,4 +1,5 @@
 import { describe, expect, it } from 'vitest';
+import { readFileSync } from 'node:fs';
 import pointsFixture from '../../../fixtures/diagrams/phase3-points-constraints.json';
 import annotationsFixture from '../../../fixtures/diagrams/phase3-annotations-layers.json';
 import marksFixture from '../../../fixtures/diagrams/phase3-marks-angles.json';
@@ -75,6 +76,26 @@ describe('Phase 3 source serialization', () => {
     expect(regenerated.ok && regenerated.source).toBe(generated.source);
   });
 
+  it('roundtrips additive MDX highlighting exactly', () => {
+    const base = migrateDiagramSpec(primitivesFixture).spec;
+    const target = base.elements[0];
+    const model = {
+      ...base,
+      elements: base.elements.map(element => element.id === target.id
+        ? { ...element, selection: { ...element.selection, dimOthersOnHighlight: false } }
+        : element),
+    };
+    const generated = generateDiagramSource(model, 'AdditiveHighlightElement');
+    expect(generated.ok).toBe(true);
+    if (!generated.ok) return;
+    const parsed = parseDiagramSourceAST(generated.source);
+    expect(parsed.status).toBe('visual-exact');
+    if (parsed.status !== 'visual-exact') return;
+    expect(parsed.model.elements.find(item => item.id === target.id)?.selection.dimOthersOnHighlight).toBe(false);
+    const regenerated = generateDiagramSource(parsed.model, 'AdditiveHighlightElement');
+    expect(regenerated.ok && regenerated.source).toBe(generated.source);
+  });
+
   it('roundtrips an editable intersection and its finite-support policy', () => {
     const base = migrateDiagramSpec(primitivesFixture).spec;
     const line = { ...base.elements.find(item => item.id === 'lineBC')!, id: 'lineOC', label: 'Recta OC', refs: ['pO', 'pC'], target: false };
@@ -97,5 +118,17 @@ describe('Phase 3 source serialization', () => {
     });
     const regenerated = generateDiagramSource(parsed.model, 'EditableIntersection');
     expect(regenerated.ok && regenerated.source).toBe(generated.source);
+  });
+
+  it('roundtrips the equal-length relation authored in Congruence1 byte for byte', () => {
+    const source = readFileSync('src/widgets/diagrams/Axiomas/Congruence1.tsx', 'utf8');
+    const parsed = parseDiagramSourceAST(source);
+    expect(parsed.status).toBe('visual-exact');
+    if (parsed.status !== 'visual-exact') return;
+    expect(parsed.model.constraints).toEqual(expect.arrayContaining([
+      expect.objectContaining({ kind: 'equalLength', refs: ['pD', 'pC', 'segAB'] }),
+    ]));
+    const regenerated = generateDiagramSource(parsed.model, 'Congruence1');
+    expect(regenerated.ok && regenerated.source).toBe(source);
   });
 });
