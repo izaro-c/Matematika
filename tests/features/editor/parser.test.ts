@@ -81,6 +81,38 @@ describe('Editor MDX Parser', () => {
     ]));
   });
 
+  it('projects a nested InteractiveElement and ConceptLink as one editable combined link', () => {
+    const raw = '<InteractiveElement target="pA" color="ocre"><ConceptLink targetId="punto">punto</ConceptLink></InteractiveElement>';
+    const nodes = parseInlineNodes(raw);
+
+    expect(nodes).toEqual([{
+      type: 'conceptLink',
+      value: 'punto',
+      attrs: {
+        targetId: 'punto',
+        highlightTarget: 'pA',
+        highlightColor: 'ocre',
+      },
+      raw,
+    }]);
+  });
+
+  it('prefers the current ConceptLink highlight over a stale outer InteractiveElement target', () => {
+    const raw = '<InteractiveElement target="pP" color="terracota"><ConceptLink targetId="punto" highlightTarget="pA" highlightColor="ocre">punto</ConceptLink></InteractiveElement>';
+    const nodes = parseInlineNodes(raw);
+
+    expect(nodes).toEqual([{
+      type: 'conceptLink',
+      value: 'punto',
+      attrs: {
+        targetId: 'punto',
+        highlightTarget: 'pA',
+        highlightColor: 'ocre',
+      },
+      raw,
+    }]);
+  });
+
   it('should parse and serialize interactive exercise steps as editable blocks', () => {
     const rawBody = `<PasoEjercicio\n  id="p1"\n  numero={1}\n  titulo="Planteamiento"\n  questionIds={["p1_q1"]}\n>\n  Identifica la ecuación.\n\n  <Pregunta id="p1_q1" correct="a" texto="Pregunta" options={["a", "b"]} />\n\n  <Resolucion>\n    Se justifica la respuesta.\n  </Resolucion>\n</PasoEjercicio>`;
     const blocks = parseBodyToBlocks(rawBody);

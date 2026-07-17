@@ -17,6 +17,7 @@ interface SemanticLinkerProps {
 }
 
 type LinkType = 'concept' | 'reference' | 'graphic' | 'combined';
+type SelectedConcept = string | string[] | null;
 
 const ARTS_CRAFTS_COLORS = [
   { name: 'salvia' },
@@ -43,6 +44,18 @@ function readableType(file: FileNode): string {
                 : parts[2] || 'contenido';
 }
 
+function selectedConceptFrom(value: unknown): SelectedConcept {
+  if (typeof value === 'string' && value.length > 0) return value;
+  if (Array.isArray(value) && value.every(item => typeof item === 'string' && item.length > 0)) return value;
+  return null;
+}
+
+function targetIdAttribute(target: Exclude<SelectedConcept, null>): string {
+  return Array.isArray(target)
+    ? `targetId={${JSON.stringify(target)}}`
+    : `targetId="${target}"`;
+}
+
 export const SemanticLinker: React.FC<SemanticLinkerProps> = ({
   isOpen,
   onClose,
@@ -57,7 +70,7 @@ export const SemanticLinker: React.FC<SemanticLinkerProps> = ({
 }) => {
   const [linkType, setLinkType] = useState<LinkType>('concept');
   const [searchQuery, setSearchQuery] = useState('');
-  const [selectedConcept, setSelectedConcept] = useState<string | null>(null);
+  const [selectedConcept, setSelectedConcept] = useState<SelectedConcept>(null);
   const [graphElementId, setGraphElementId] = useState('');
   const [selectedColor, setSelectedColor] = useState('salvia');
   const [isDependency, setIsDependency] = useState(false);
@@ -72,20 +85,20 @@ export const SemanticLinker: React.FC<SemanticLinkerProps> = ({
       if (editingTag === 'ConceptLink') {
         if (initialAttrs.highlightTarget) {
           setLinkType('combined');
-          setSelectedConcept(initialAttrs.targetId || null);
+          setSelectedConcept(selectedConceptFrom(initialAttrs.targetId));
           setGraphElementId(initialAttrs.highlightTarget || '');
           setSelectedColor(initialAttrs.highlightColor || 'salvia');
           setIsDependency(initialAttrs.isDependency === true || initialAttrs.isDependency === 'true');
         } else {
           setLinkType('concept');
-          setSelectedConcept(initialAttrs.targetId || null);
+          setSelectedConcept(selectedConceptFrom(initialAttrs.targetId));
           setGraphElementId('');
           setSelectedColor('salvia');
           setIsDependency(initialAttrs.isDependency === true || initialAttrs.isDependency === 'true');
         }
       } else if (editingTag === 'RefLink') {
         setLinkType('reference');
-        setSelectedConcept(initialAttrs.targetId || null);
+        setSelectedConcept(selectedConceptFrom(initialAttrs.targetId));
         setGraphElementId('');
       } else if (editingTag === 'InteractiveElement') {
         setLinkType('graphic');
@@ -151,16 +164,16 @@ export const SemanticLinker: React.FC<SemanticLinkerProps> = ({
     
     if (linkType === 'concept') {
       if (!selectedConcept) return;
-      markup = `<ConceptLink targetId="${selectedConcept}" isDependency={${isDependency}}>${selectedText}</ConceptLink>`;
+      markup = `<ConceptLink ${targetIdAttribute(selectedConcept)} isDependency={${isDependency}}>${selectedText}</ConceptLink>`;
     } else if (linkType === 'reference') {
       if (!selectedConcept) return;
-      markup = `<RefLink targetId="${selectedConcept}">${selectedText}</RefLink>`;
+      markup = `<RefLink ${targetIdAttribute(selectedConcept)}>${selectedText}</RefLink>`;
     } else if (linkType === 'graphic') {
       if (!graphElementId.trim()) return;
       markup = `<InteractiveElement target="${graphElementId.trim()}" color="${selectedColor}">${selectedText}</InteractiveElement>`;
     } else if (linkType === 'combined') {
       if (!selectedConcept || !graphElementId.trim()) return;
-      markup = `<ConceptLink targetId="${selectedConcept}" isDependency={${isDependency}} highlightTarget="${graphElementId.trim()}" highlightColor="${selectedColor}">${selectedText}</ConceptLink>`;
+      markup = `<ConceptLink ${targetIdAttribute(selectedConcept)} isDependency={${isDependency}} highlightTarget="${graphElementId.trim()}" highlightColor="${selectedColor}">${selectedText}</ConceptLink>`;
     }
 
     onLinkCreated(markup);
@@ -234,7 +247,7 @@ export const SemanticLinker: React.FC<SemanticLinkerProps> = ({
           <label className="block text-[9px] uppercase font-bold text-carbon/50 font-sans">Concepto en Biblioteca</label>
           {selectedConcept ? (
             <div className="flex items-center justify-between p-1.5 bg-salvia/5 border border-salvia/20 rounded text-xs">
-              <span className="font-serif font-bold text-salvia">{selectedConcept}</span>
+              <span className="font-serif font-bold text-salvia">{Array.isArray(selectedConcept) ? selectedConcept.join(', ') : selectedConcept}</span>
               <button
                 type="button"
                 onClick={() => setSelectedConcept(null)}

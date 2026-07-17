@@ -36,6 +36,15 @@ const partialSource = `export const metadata = {
 
 Texto editable.`;
 
+const linkedSource = `export const metadata = {
+  "id": "enlace-prueba",
+  "type": "axioma",
+  "title": "Enlace",
+  "description": "Documento con un enlace semántico anidado."
+};
+
+<InteractiveElement target="pP" color="terracota"><ConceptLink targetId="punto">punto</ConceptLink></InteractiveElement>.`;
+
 function response(payload: unknown, status = 200): Response {
   return new Response(JSON.stringify(payload), { status, headers: { 'Content-Type': 'application/json' } });
 }
@@ -100,6 +109,35 @@ describe('useEditorCore lossless integration', () => {
     expect(result.current.rawBody).toBe(source.replace('## Título', '## Nuevo título'));
     expect(result.current.rawBody).toContain(`import X from './x';`);
     expect(result.current.rawBody).toContain('export const value = { nested: true };');
+  });
+
+  it('persists a localized nested semantic-link edit in the saved source', async () => {
+    const fetchMock = vi.mocked(fetch)
+      .mockResolvedValueOnce(readResponse(linkedSource, 'content/linked.mdx'))
+      .mockImplementationOnce(async (_url, init) => {
+        const request = JSON.parse(String(init?.body));
+        return response({ path: request.path, sourceHash: request.sourceHash, previousVersion: request.expectedVersion,
+          version: `sha256:${request.sourceHash}`, confirmedRevision: request.localRevision, backupId: 'backup-link' });
+      });
+    const { result } = renderHook(() => useEditorCore());
+    await act(() => result.current.openFile('content/linked.mdx'));
+    const paragraph = result.current.blocks.find(block => block.type === 'paragraph');
+    expect(paragraph).toBeDefined();
+    const nextContent = paragraph!.content.replace(
+      '<InteractiveElement target="pP" color="terracota"><ConceptLink targetId="punto">punto</ConceptLink></InteractiveElement>',
+      '<ConceptLink targetId="recta" isDependency={false} highlightTarget="lineBC" highlightColor="pavo">recta</ConceptLink>',
+    );
+
+    act(() => result.current.updateBlock(paragraph!.id, nextContent));
+    await waitFor(() => expect(result.current.rawBody).toContain('targetId="recta"'));
+
+    let saved = false;
+    await act(async () => { saved = await result.current.saveCurrentFile(); });
+
+    expect(saved).toBe(true);
+    const payload = JSON.parse(String((fetchMock.mock.calls[1][1] as RequestInit).body));
+    expect(payload.source).toContain('<ConceptLink targetId="recta" isDependency={false} highlightTarget="lineBC" highlightColor="pavo">recta</ConceptLink>');
+    expect(payload.source).not.toContain('<InteractiveElement target="pP"');
   });
 
   it('applies destructive structural operations locally but requires diff approval before save', async () => {

@@ -77,6 +77,19 @@ async function seedFixtures(root: string) {
     '',
     'Texto { un syntax error here } y cierre.',
   ].join('\n'));
+  await writeFixture(root, 'database/content/definitions/enlace-anidado.mdx', [
+    'export const metadata = {',
+    '  "id": "enlace-anidado",',
+    '  "type": "definicion",',
+    '  "title": "Enlace anidado",',
+    '  "description": "Fixture E2E para editar y guardar enlaces heredados.",',
+    '  "subtype": "nominal"',
+    '};',
+    '',
+    '## Enlace anidado',
+    '',
+    '<InteractiveElement target="target-obsoleto" color="terracota"><ConceptLink targetId="compatible" highlightTarget="target-vigente" highlightColor="ocre">Documento compatible</ConceptLink></InteractiveElement>.',
+  ].join('\n'));
   await writeFixture(root, 'widgets/diagrams/Definitions/Seguro.tsx', SAFE_DIAGRAM_SOURCE);
   await writeFixture(root, 'widgets/diagrams/Definitions/Complejo.tsx', COMPLEX_DIAGRAM_SOURCE);
 }
@@ -236,6 +249,8 @@ async function openEditor(page: Page) {
 }
 
 async function runTest(results: E2EResult[], name: string, evidenceDir: string, fn: () => Promise<void>) {
+  const onlyFlow = process.env.MATEMATIKA_E2E_ONLY_FLOW;
+  if (onlyFlow && !name.startsWith(`${onlyFlow} `)) return;
   let timeout: ReturnType<typeof setTimeout> | undefined;
   try {
     await Promise.race([
@@ -657,7 +672,34 @@ async function main() {
     });
 
     await resetPage();
-    await runTest(results, '17 Autoría visual compleja, diagrama y roundtrip de Fase 7', evidenceDir, async () => {
+    await runTest(results, '17 Enlace anidado se edita y persiste desde la vista visual', evidenceDir, async () => {
+      await page.setViewport({ width: 1440, height: 900, deviceScaleFactor: 1 });
+      await openEditor(page);
+      await clickByText(page, 'Enlace Anidado');
+      await expectText(page, 'Edición visual exacta');
+
+      const linkSelector = '[role="button"][aria-label*="Documento compatible. Concepto: compatible"]';
+      await page.waitForSelector(linkSelector);
+      await page.click(linkSelector);
+      await page.waitForSelector('[aria-label="Conectar texto con contenido o diagrama"]');
+      await clickByExactText(page, 'Concepto');
+      await waitForEnabledButton(page, 'Guardar Cambios');
+      await clickByExactText(page, 'Guardar Cambios');
+
+      await expectText(page, 'Cambios locales');
+      await clickByText(page, 'Revisar y guardar');
+      await expectText(page, 'Diff listo para aplicar');
+      await clickByText(page, 'Aplicar archivo');
+      await expectText(page, 'El archivo real fue aplicado.');
+
+      const saved = await readContent('database/content/definitions/enlace-anidado.mdx');
+      const expected = '<ConceptLink targetId="compatible" isDependency={false}>Documento compatible</ConceptLink>.';
+      if (!saved.source.includes(expected)) throw new Error('The edited semantic link was not persisted');
+      if (saved.source.includes('<InteractiveElement')) throw new Error('The stale outer interactive wrapper survived the edit');
+    });
+
+    await resetPage();
+    await runTest(results, '18 Autoría visual compleja, diagrama y roundtrip de Fase 7', evidenceDir, async () => {
       await page.setViewport({ width: 1440, height: 900, deviceScaleFactor: 1 });
       await openEditor(page);
       await clickByText(page, 'Nueva');
@@ -745,7 +787,7 @@ async function main() {
     });
 
     await resetPage();
-    await runTest(results, '18 Cierre con cambios pendientes', evidenceDir, async () => {
+    await runTest(results, '19 Cierre con cambios pendientes', evidenceDir, async () => {
       await page.setViewport({ width: 1440, height: 900, deviceScaleFactor: 1 });
       await openEditor(page);
       await clickByText(page, 'Compatible');

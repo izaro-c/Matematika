@@ -166,6 +166,26 @@ function nextInlineMatch(regex: RegExp, text: string, start: number): RegExpExec
   return regex.exec(text);
 }
 
+function combinedConceptLink(
+  value: string,
+  interactiveAttrs: Record<string, any>,
+  raw: string,
+): Extract<InlineNode, { type: 'conceptLink' }> | null {
+  const nested = value.trim().match(/^<ConceptLink\b([^>]*)>([\s\S]*?)<\/ConceptLink>$/);
+  if (!nested) return null;
+  const attrs = parseAttributes(nested[1] || '');
+  return {
+    type: 'conceptLink',
+    value: nested[2] || '',
+    attrs: {
+      ...attrs,
+      highlightTarget: attrs.highlightTarget || interactiveAttrs.target,
+      highlightColor: attrs.highlightColor || interactiveAttrs.color,
+    },
+    raw,
+  };
+}
+
 export function parseInlineNodes(text: string): InlineNode[] {
   const nodes: InlineNode[] = [];
   const componentRegex = /<(ConceptLink|InteractiveElement|RefLink)\b([^>]*)>([\s\S]*?)<\/\1>/g;
@@ -198,7 +218,9 @@ export function parseInlineNodes(text: string): InlineNode[] {
       const raw = next.match[0];
       if (tag === 'ConceptLink') nodes.push({ type: 'conceptLink', value, attrs, raw });
       if (tag === 'RefLink') nodes.push({ type: 'refLink', value, attrs, raw });
-      if (tag === 'InteractiveElement') nodes.push({ type: 'interactiveElement', value, attrs, raw });
+      if (tag === 'InteractiveElement') {
+        nodes.push(combinedConceptLink(value, attrs, raw) ?? { type: 'interactiveElement', value, attrs, raw });
+      }
     } else if (next.kind === 'latex') {
       nodes.push({ type: 'inlineLatex', value: next.match[1] });
     } else if (next.kind === 'bold') {

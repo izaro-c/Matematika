@@ -31,4 +31,19 @@ describe('Phase 7 semantic link selector', () => {
     expect(screen.getByRole('alert').textContent).toContain('no está publicado');
     expect((screen.getByRole('button', { name: 'Crear Vínculo' }) as HTMLButtonElement).disabled).toBe(true);
   });
+
+  it('preserves multiple target IDs when editing an existing semantic link', () => {
+    const onLinkCreated = vi.fn();
+    render(<SemanticLinker isOpen onClose={vi.fn()} files={files} selectedText="geometría euclídea"
+      onLinkCreated={onLinkCreated} position={{ top: 0, left: 0 }}
+      editingTag="ConceptLink"
+      editingMarkup={'<ConceptLink targetId={["sistema-euclidiano", "geometria"]}>geometría euclídea</ConceptLink>'}
+      initialAttrs={{ targetId: ['sistema-euclidiano', 'geometria'] }} />);
+
+    fireEvent.click(screen.getByRole('button', { name: 'Guardar Cambios' }));
+
+    expect(onLinkCreated).toHaveBeenCalledWith(
+      '<ConceptLink targetId={["sistema-euclidiano","geometria"]} isDependency={false}>geometría euclídea</ConceptLink>',
+    );
+  });
 });

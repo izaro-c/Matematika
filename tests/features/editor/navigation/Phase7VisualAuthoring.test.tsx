@@ -99,6 +99,48 @@ describe('Phase 7 visual authoring interactions', () => {
     expect(reference.getAttribute('role')).toBe('button');
   });
 
+  it('keeps the owning block identity when editing a nested semantic link', () => {
+    const handleEditLink = vi.fn((
+      _blockId: string,
+      _rawMarkup: string,
+      _text: string,
+      _attrs: Record<string, unknown>,
+      _tag: string,
+      event: React.MouseEvent,
+    ) => event.stopPropagation());
+    const nestedLinkBlock: Block = {
+      id: 'paragraph-with-link',
+      type: 'paragraph',
+      content: '<InteractiveElement target="pP" color="terracota"><ConceptLink targetId="punto">punto</ConceptLink></InteractiveElement>',
+      metadata: { editable: true },
+    };
+
+    render(
+      <MathProvider>
+        <VisualEditorPanel
+          currentFile="database/content/axioms/test.mdx"
+          metadata={{ id: 'test', type: 'axioma', title: 'Test', description: 'Descripción' }}
+          isReadOnly={false} canEditVisualMetadata canMutateVisualStructure blocks={[nestedLinkBlock]}
+          editingBlockId={null} setEditingBlockId={vi.fn()} handleMetadataChange={vi.fn()}
+          addBlock={vi.fn()} moveBlock={vi.fn()} duplicateBlock={vi.fn()} removeBlock={vi.fn()} updateBlock={vi.fn()}
+          handleTextareaSelect={vi.fn()} handleEditLink={handleEditLink} setActiveDiagramIndex={vi.fn()}
+          setActiveDiagramBlockId={vi.fn()} setDiagramBuilderOpen={vi.fn()} diagramTargets={[]}
+        />
+      </MathProvider>,
+    );
+
+    fireEvent.click(screen.getByRole('button', { name: /punto\. Concepto: punto/ }));
+
+    expect(handleEditLink).toHaveBeenCalledWith(
+      'paragraph-with-link',
+      '<InteractiveElement target="pP" color="terracota"><ConceptLink targetId="punto">punto</ConceptLink></InteractiveElement>',
+      'punto',
+      expect.objectContaining({ targetId: 'punto', highlightTarget: 'pP', highlightColor: 'terracota' }),
+      'ConceptLink',
+      expect.anything(),
+    );
+  });
+
   it('preserves unknown MDX as source-only instead of exposing a false visual editor', () => {
     render(
       <MathProvider>

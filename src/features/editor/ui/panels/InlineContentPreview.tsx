@@ -37,7 +37,7 @@ export function renderFormattedText(text: string, blockId: string, onEditLink?: 
       return <InteractivePreviewToken key={key} blockId={blockId} raw={node.raw} text={node.value} attrs={node.attrs} tag={tag}
         target={String(node.attrs.highlightTarget || '')} colorClass={colorClass} title={`Vínculo a: ${targetLabel} (Click para editar)`}
         onEditLink={onEditLink} tooltip={`Concepto: ${targetLabel || 'sin destino'}`}>
-        {renderFormattedText(node.value, `${blockId}-inner`, onEditLink)}
+        {renderFormattedText(node.value, blockId, onEditLink)}
       </InteractivePreviewToken>;
     }
 
@@ -46,7 +46,7 @@ export function renderFormattedText(text: string, blockId: string, onEditLink?: 
       target={String(node.attrs.target || '')} colorClass={`text-${color} border-b border-dashed border-${color}/30`}
       title={`Resalta en gráfico: ${node.attrs.target || ''} (Click para editar)`} onEditLink={onEditLink}
       tooltip={`Resalta: ${node.attrs.target || ''} (${color})`}>
-      {renderFormattedText(node.value, `${blockId}-inner`, onEditLink)}
+      {renderFormattedText(node.value, blockId, onEditLink)}
     </InteractivePreviewToken>;
   });
   return parts.length > 0 ? parts : text;
