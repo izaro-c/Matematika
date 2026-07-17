@@ -263,7 +263,37 @@ export const DiagramInspector: React.FC<DiagramInspectorProps> = ({
             </p>
           </div>
 
+          {['free', 'horizontal', 'vertical'].includes(selectedPoint.constraint) && (
+            <div className="space-y-2 rounded border border-carbon/10 p-2">
+              <label className="flex items-center gap-1.5 text-xs font-bold text-carbon">
+                <input
+                  type="checkbox"
+                  aria-label="Ajuste a cuadrícula"
+                  checked={selectedPoint.snapToGrid ?? false}
+                  onChange={(e) => handlePointChange({ snapToGrid: e.target.checked || undefined })}
+                />
+                Ajuste a cuadrícula
+              </label>
+              {selectedPoint.snapToGrid && (
+                <label className="block text-xs font-bold text-carbon">
+                  Tamaño de celda
+                  <input
+                    type="number"
+                    min="0.01"
+                    max="10"
+                    step="0.25"
+                    aria-label="Tamaño de celda de ajuste"
+                    className="mt-1 w-full rounded border border-carbon/15 bg-lienzo p-1.5 text-xs"
+                    value={selectedPoint.snapSize ?? 0.5}
+                    onChange={(e) => handlePointChange({ snapSize: Math.max(0.01, Number(e.target.value)) })}
+                  />
+                </label>
+              )}
+            </div>
+          )}
+
           {selectedPoint.constraint === 'glider' && (
+
             <div>
               <label className="block text-xs font-bold text-carbon mb-1">Elemento base</label>
               <select

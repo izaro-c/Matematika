@@ -182,6 +182,10 @@ export interface DiagramPoint extends DiagramSceneItemBase {
   xExpression?: string;
   yExpression?: string;
   constraintIds?: string[];
+  /** Activa el ajuste a la cuadrícula al arrastrar el punto. Solo tiene efecto en puntos `free`, `horizontal` o `vertical`. */
+  snapToGrid?: boolean;
+  /** Tamaño de celda de la cuadrícula de ajuste, en unidades del sistema de coordenadas. Por defecto 0.5. */
+  snapSize?: number;
 }
 
 export interface DiagramElement extends DiagramSceneItemBase {
