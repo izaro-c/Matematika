@@ -86,7 +86,7 @@ export const DiagramInspector: React.FC<DiagramInspectorProps> = ({
     if (!selectedElement) return;
     const properties = { ...selectedElement.properties, ...update };
     const next = updateElement(model, selectedElement.id, { properties });
-    if (!('expression' in update) && !('xExpression' in update) && !('yExpression' in update) && !('visibleWhen' in update) && !('textRules' in update)) {
+    if (!('expression' in update) && !('xExpression' in update) && !('yExpression' in update) && !('tickDistanceExpression' in update) && !('visibleWhen' in update) && !('textRules' in update)) {
       onModelEdit(next);
       return;
     }
@@ -95,6 +95,7 @@ export const DiagramInspector: React.FC<DiagramInspectorProps> = ({
       properties.expression,
       properties.xExpression,
       properties.yExpression,
+      properties.tickDistanceExpression,
       properties.visibleWhen,
       ...(properties.textRules?.map(rule => rule.when) ?? []),
     ].filter((source): source is string => Boolean(source)).forEach(source => {
@@ -126,7 +127,29 @@ export const DiagramInspector: React.FC<DiagramInspectorProps> = ({
 
   const handleSliderChange = (update: Partial<VisualSlider>) => {
     if (!selectedSlider) return;
-    onModelEdit(updateSlider(model, selectedSlider.id, update));
+    const next = updateSlider(model, selectedSlider.id, update);
+    if (!('maxExpression' in update)) {
+      onModelEdit(next);
+      return;
+    }
+    const sources = new Set<string>();
+    if (update.maxExpression) {
+      try {
+        extractMathExpressionIdentifiers(update.maxExpression).forEach(identifier => {
+          const root = identifier.split('.')[0];
+          if ([...model.points, ...model.elements, ...model.sliders].some(item => item.id === root)) sources.add(root);
+        });
+      } catch {
+        // El schema compartido muestra el error sin descartar el texto editado.
+      }
+    }
+    onModelEdit({
+      ...next,
+      dependencies: [
+        ...(model.dependencies || []).filter(dependency => dependency.targetId !== selectedSlider.id || dependency.relation !== 'expression'),
+        ...[...sources].map(sourceId => ({ sourceId, targetId: selectedSlider.id, relation: 'expression' as const })),
+      ],
+    });
   };
 
   const handleStepChange = (update: Partial<VisualStep>) => {
@@ -279,18 +302,18 @@ export const DiagramInspector: React.FC<DiagramInspectorProps> = ({
               </label>
               <fieldset>
                 <legend className="text-xs font-bold text-carbon">Dependencias</legend>
-                {model.points.filter(point => point.id !== selectedPoint.id).map(point => (
-                  <label key={point.id} className="mt-1 flex items-center gap-1.5 text-xs text-carbon">
+                {[...model.points, ...model.elements, ...model.sliders].filter(item => item.id !== selectedPoint.id).map(item => (
+                  <label key={item.id} className="mt-1 flex items-center gap-1.5 text-xs text-carbon">
                     <input
                       type="checkbox"
-                      checked={(selectedPoint.dependencies || []).includes(point.id)}
+                      checked={(selectedPoint.dependencies || []).includes(item.id)}
                       onChange={(event) => handlePointChange({
                         dependencies: event.target.checked
-                          ? [...(selectedPoint.dependencies || []), point.id]
-                          : (selectedPoint.dependencies || []).filter(id => id !== point.id),
+                          ? [...(selectedPoint.dependencies || []), item.id]
+                          : (selectedPoint.dependencies || []).filter(id => id !== item.id),
                       })}
                     />
-                    {point.label} <span className="font-mono text-carbon/45">{point.id}</span>
+                    {item.label} <span className="font-mono text-carbon/45">{item.id}</span>
                   </label>
                 ))}
               </fieldset>
@@ -689,6 +712,8 @@ export const DiagramInspector: React.FC<DiagramInspectorProps> = ({
             <div className="grid grid-cols-2 gap-2">
               <label className="text-xs font-bold text-carbon">Separación<input type="number" min="0.05" max="100" step="0.05" aria-label="Separación entre marcas de medida" className="mt-1 w-full rounded border border-carbon/15 bg-lienzo p-1.5 text-xs" value={selectedElement.properties?.tickDistance ?? 2} onChange={(event) => handleElementPropertiesChange({ tickDistance: Number(event.target.value) })} /></label>
               <label className="text-xs font-bold text-carbon">Altura<input type="number" min="0.05" max="100" step="0.5" aria-label="Altura de las marcas de medida" className="mt-1 w-full rounded border border-carbon/15 bg-lienzo p-1.5 text-xs" value={selectedElement.style?.markHeight ?? 10} onChange={(event) => handleElementStyleChange({ markHeight: Number(event.target.value) })} /></label>
+              <label className="col-span-2 text-xs font-bold text-carbon">Subdivisiones menores<input type="number" min="0" max="10" step="1" aria-label="Número de subdivisiones menores" className="mt-1 w-full rounded border border-carbon/15 bg-lienzo p-1.5 text-xs" value={selectedElement.properties?.minorTickCount ?? 4} onChange={(event) => handleElementPropertiesChange({ minorTickCount: Number(event.target.value) })} /></label>
+              <label className="col-span-2 text-xs font-bold text-carbon">Separación dinámica<input aria-label="Expresión de separación entre marcas" placeholder="Vacío = usar separación fija" className="mt-1 w-full rounded border border-carbon/15 bg-lienzo p-1.5 font-mono text-xs" value={selectedElement.properties?.tickDistanceExpression ?? ''} onChange={(event) => handleElementPropertiesChange({ tickDistanceExpression: event.target.value || undefined })} /></label>
             </div>
           )}
 
@@ -822,6 +847,18 @@ export const DiagramInspector: React.FC<DiagramInspectorProps> = ({
               />
             </div>
           </div>
+
+          <label className="block text-xs font-bold text-carbon">
+            Máximo dinámico
+            <input
+              aria-label="Expresión del máximo dinámico del slider"
+              placeholder="Vacío = usar máximo fijo"
+              className="mt-1 w-full rounded border border-carbon/15 bg-lienzo p-1.5 font-mono text-xs"
+              value={selectedSlider.maxExpression ?? ''}
+              onChange={(event) => handleSliderChange({ maxExpression: event.target.value || undefined })}
+            />
+            <span className="mt-1 block text-[10px] font-normal leading-relaxed text-carbon/45">El máximo fijo se conserva como valor de respaldo si la expresión no puede evaluarse.</span>
+          </label>
 
           <div>
             <label className="block text-xs font-bold text-carbon mb-1">Color</label>

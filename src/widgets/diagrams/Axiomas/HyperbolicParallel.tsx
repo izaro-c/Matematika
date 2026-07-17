@@ -33,28 +33,28 @@ export const HyperbolicParallelSpec = createDiagramSpec(
     {
       "id": "construccion",
       "label": "Construcción",
-      "order": 0,
+      "order": 3,
       "visible": true,
       "locked": false
     },
     {
       "id": "disco",
       "label": "Disco de Poincaré",
-      "order": 1,
+      "order": 0,
       "visible": true,
       "locked": false
     },
     {
       "id": "geodesicas",
       "label": "Rectas hiperbólicas",
-      "order": 2,
+      "order": 1,
       "visible": true,
       "locked": false
     },
     {
       "id": "puntos",
       "label": "Puntos",
-      "order": 3,
+      "order": 2,
       "visible": true,
       "locked": false
     },
@@ -115,42 +115,50 @@ export const HyperbolicParallelSpec = createDiagramSpec(
       "label": "extremo ideal izquierdo de l",
       "color": "pavo",
       "layerId": "construccion",
-      "order": 3,
-      "visible": false,
-      "locked": true,
+      "order": 1004,
+      "visible": true,
+      "locked": false,
       "groupIds": [],
       "selection": {
-        "selectable": false,
+        "selectable": true,
         "ariaLabel": "Extremo ideal izquierdo de la recta l",
         "role": "construction"
       },
       "target": false,
+      "style": {
+        "preserveColorOnHighlight": true
+      },
       "x": -1,
       "y": 0,
       "showLabel": false,
-      "fixed": true,
-      "constraint": "fixed"
+      "fixed": false,
+      "constraint": "glider",
+      "gliderTarget": "frontera"
     },
     {
       "id": "L2",
       "label": "extremo ideal derecho de l",
       "color": "pavo",
       "layerId": "construccion",
-      "order": 4,
-      "visible": false,
-      "locked": true,
+      "order": 2004,
+      "visible": true,
+      "locked": false,
       "groupIds": [],
       "selection": {
-        "selectable": false,
+        "selectable": true,
         "ariaLabel": "Extremo ideal derecho de la recta l",
         "role": "construction"
       },
       "target": false,
+      "style": {
+        "preserveColorOnHighlight": true
+      },
       "x": 1,
       "y": 0,
       "showLabel": false,
-      "fixed": true,
-      "constraint": "fixed"
+      "fixed": false,
+      "constraint": "glider",
+      "gliderTarget": "frontera"
     },
     {
       "id": "pP",

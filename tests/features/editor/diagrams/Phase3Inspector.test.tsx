@@ -13,6 +13,7 @@ import { DiagramToolbar } from '../../../../src/features/editor/diagrams/ui/Diag
 import { DiagramToolReferencePicker } from '../../../../src/features/editor/diagrams/ui/DiagramToolReferencePicker';
 import { parseDiagramSourceAST } from '../../../../scripts/editor/parseDiagramSourceAST';
 import { addLabelToElement } from '../../../../src/features/editor/diagrams/model/commands';
+import { AxiomaArquimedesSpec } from '../../../../src/widgets/diagrams/Axiomas/AxiomaArquimedes';
 
 describe('Phase 3 visual editing', () => {
   it('adds, hides and positions an element label from contextual visual controls', () => {
@@ -175,6 +176,45 @@ describe('Phase 3 visual editing', () => {
     fireEvent.change(screen.getByLabelText('Expresión de función'), { target: { value: 'cos(x)' } });
     expect(onModelEdit).toHaveBeenCalledWith(expect.objectContaining({
       elements: expect.arrayContaining([expect.objectContaining({ id: 'functionSin', properties: expect.objectContaining({ expression: 'cos(x)' }) })]),
+    }));
+  });
+
+  it('authors a reactive slider maximum and reactive copy spacing without using source code', () => {
+    const onSliderEdit = vi.fn();
+    const sliderView = render(<DiagramInspector model={AxiomaArquimedesSpec} selectedId="n" onSelect={vi.fn()} onModelEdit={onSliderEdit} onDeleteSelected={vi.fn()} />);
+    fireEvent.change(screen.getByLabelText('Expresión del máximo dinámico del slider'), {
+      target: { value: 'floor(segCD.length/segAB.length)+2' },
+    });
+    expect(onSliderEdit).toHaveBeenLastCalledWith(expect.objectContaining({
+      sliders: expect.arrayContaining([expect.objectContaining({ id: 'n', maxExpression: 'floor(segCD.length/segAB.length)+2' })]),
+      dependencies: expect.arrayContaining([
+        { sourceId: 'segAB', targetId: 'n', relation: 'expression' },
+        { sourceId: 'segCD', targetId: 'n', relation: 'expression' },
+      ]),
+    }));
+
+    sliderView.unmount();
+    const onTicksEdit = vi.fn();
+    render(<DiagramInspector model={AxiomaArquimedesSpec} selectedId="copyTicks" onSelect={vi.fn()} onModelEdit={onTicksEdit} onDeleteSelected={vi.fn()} />);
+    fireEvent.change(screen.getByLabelText('Expresión de separación entre marcas'), {
+      target: { value: '2*abs(pB.x-pA.x)' },
+    });
+    expect(onTicksEdit).toHaveBeenLastCalledWith(expect.objectContaining({
+      elements: expect.arrayContaining([expect.objectContaining({
+        id: 'copyTicks',
+        properties: expect.objectContaining({ tickDistanceExpression: '2*abs(pB.x-pA.x)' }),
+      })]),
+      dependencies: expect.arrayContaining([
+        { sourceId: 'pA', targetId: 'copyTicks', relation: 'expression' },
+        { sourceId: 'pB', targetId: 'copyTicks', relation: 'expression' },
+      ]),
+    }));
+    fireEvent.change(screen.getByLabelText('Número de subdivisiones menores'), { target: { value: '2' } });
+    expect(onTicksEdit).toHaveBeenLastCalledWith(expect.objectContaining({
+      elements: expect.arrayContaining([expect.objectContaining({
+        id: 'copyTicks',
+        properties: expect.objectContaining({ minorTickCount: 2 }),
+      })]),
     }));
   });
 

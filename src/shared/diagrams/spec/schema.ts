@@ -48,6 +48,8 @@ const elementPropertiesSchema = z.object({
   offset: finiteNumber.optional(),
   markCount: z.number().int().min(1).max(4).optional(),
   tickDistance: finiteNumber.positive().max(100).optional(),
+  tickDistanceExpression: expressionSchema.optional(),
+  minorTickCount: z.number().int().min(0).max(10).optional(),
   rows: z.number().int().min(1).max(100).optional(),
   columns: z.number().int().min(1).max(100).optional(),
   title: z.string().min(1).optional(),
@@ -154,6 +156,7 @@ const sliderSchema = z.object({
   y: finiteNumber,
   min: finiteNumber,
   max: finiteNumber,
+  maxExpression: expressionSchema.optional(),
   value: finiteNumber,
   step: finiteNumber.positive(),
 }).strict().superRefine((slider, context) => {
@@ -412,8 +415,12 @@ export const diagramSpecV2Schema = z.object({
     if (properties.expression) expressionEntries.push({ source: properties.expression, path: ['elements', index, 'properties', 'expression'], parameter: properties.parameter, targetId: element.id });
     if (properties.xExpression) expressionEntries.push({ source: properties.xExpression, path: ['elements', index, 'properties', 'xExpression'], parameter: properties.parameter, targetId: element.id });
     if (properties.yExpression) expressionEntries.push({ source: properties.yExpression, path: ['elements', index, 'properties', 'yExpression'], parameter: properties.parameter, targetId: element.id });
+    if (properties.tickDistanceExpression) expressionEntries.push({ source: properties.tickDistanceExpression, path: ['elements', index, 'properties', 'tickDistanceExpression'], targetId: element.id });
     if (properties.visibleWhen) expressionEntries.push({ source: properties.visibleWhen, path: ['elements', index, 'properties', 'visibleWhen'], targetId: element.id });
     properties.textRules?.forEach((rule, ruleIndex) => expressionEntries.push({ source: rule.when, path: ['elements', index, 'properties', 'textRules', ruleIndex, 'when'], targetId: element.id }));
+  });
+  spec.sliders.forEach((slider, index) => {
+    if (slider.maxExpression) expressionEntries.push({ source: slider.maxExpression, path: ['sliders', index, 'maxExpression'], targetId: slider.id });
   });
   spec.steps.forEach((step, stepIndex) => {
     Object.entries(step.objectStates ?? {}).forEach(([objectId, state]) => {

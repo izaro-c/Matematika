@@ -118,6 +118,7 @@ import { DiagramRenderer } from '../../../src/shared/diagrams/runtime/DiagramRen
 import { Incidence2Spec } from '../../../src/widgets/diagrams/Axiomas/Incidence2';
 import { Congruence1Spec } from '../../../src/widgets/diagrams/Axiomas/Congruence1';
 import { PaschSpec } from '../../../src/widgets/diagrams/Axiomas/Pasch';
+import { AxiomaArquimedesSpec } from '../../../src/widgets/diagrams/Axiomas/AxiomaArquimedes';
 import { addLabelToElement } from '../../../src/features/editor/diagrams/model/commands';
 
 afterEach(() => {
@@ -614,6 +615,22 @@ describe('Phase 3 shared renderer', () => {
       Math.hypot(second[0] - first[0], second[1] - first[1]) >= 0.395
       && Math.hypot(second[0] - first[0], second[1] - first[1]) <= 0.405
     )))).toBe(true);
+  });
+
+  it('renders the Archimedean slider and copy graduations from live expressions with keyboard access', () => {
+    render(<MathProvider><DiagramRenderer spec={AxiomaArquimedesSpec} viewportControls={false} /></MathProvider>);
+
+    const sliderCreation = rendererState.createdOptions.find(({ kind }) => kind === 'slider');
+    expect(sliderCreation?.args[2]).toEqual([1, 4, 7]);
+    const sliderNode = rendererState.nodes.find(node => node.dataset.diagramObjectId === 'n');
+    expect(sliderNode?.getAttribute('role')).toBe('slider');
+    expect(sliderNode?.getAttribute('aria-valuemax')).toBe('7');
+    fireEvent.keyDown(sliderNode as HTMLElement, { key: 'End' });
+    const sliderIndex = rendererState.nodes.findIndex(node => node === sliderNode);
+    expect(rendererState.geometries[sliderIndex].setValue).toHaveBeenCalledWith(7);
+
+    const ticks = rendererState.createdOptions.find(({ kind, options }) => kind === 'ticks' && options.ticksDistance === 1);
+    expect(ticks?.options.ticksDistance).toBe(1);
   });
 
   it('applies the dashed style to polygon borders', () => {

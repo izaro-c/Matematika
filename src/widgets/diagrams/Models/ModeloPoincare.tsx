@@ -1046,7 +1046,7 @@ export const ModeloPoincareSpec = createDiagramSpec(
       "constraintId": "pDentro"
     }
   ],
-  "note": "Arrastre L₁ y L₂ sobre la frontera y P dentro del disco. Terracota: recta l; ocre: paralelas límite; salvia: ultraparalelas.",
+  "note": "Arrastre L₁ y L₂ sobre la frontera y P dentro del disco",
   "extensions": {
     "acceptanceCase": "phase-5-poincare",
     "mathematicalInvariant": "Las geodésicas son diámetros o arcos ortogonales a la frontera."
