@@ -1,5 +1,6 @@
 import { Suspense, useEffect, useId, useState, type ComponentType } from 'react';
 import { getContentPageAccent } from '@/shared/design';
+import { MobileContentHeaderSeparator, MobileDiagramToolbar } from './MobileDiagramChrome';
 
 interface ContentLayoutProps {
   /** Índice, atribución y relaciones del contenido. */
@@ -54,7 +55,9 @@ export function ContentLayout({
   className = '',
 }: ContentLayoutProps) {
   const [isMetadataOpen, setIsMetadataOpen] = useState(false);
+  const [isDiagramExpanded, setIsDiagramExpanded] = useState(true);
   const metadataId = useId();
+  const diagramId = useId();
   const hasMetadata = metadata !== undefined && metadata !== null;
   const hasDiagram = diagram !== undefined && diagram !== null;
 
@@ -90,6 +93,13 @@ export function ContentLayout({
       data-layout-variant={variant}
       style={pageType ? ({ '--page-accent': getContentPageAccent(pageType) } as React.CSSProperties) : undefined}
     >
+      {!embedded && (
+        <MobileContentHeaderSeparator
+          hasDiagram={hasDiagram}
+          isDiagramExpanded={isDiagramExpanded}
+        />
+      )}
+
       {hasMetadata && (
         <>
           <button
@@ -136,9 +146,18 @@ export function ContentLayout({
           </div>
 
           {hasDiagram && (
-            <aside className="content-diagram" aria-label={diagramLabel}>
+            <aside
+              className="content-diagram"
+              aria-label={diagramLabel}
+              data-mobile-collapsed={!isDiagramExpanded}
+            >
               <div className="content-diagram-sticky">
-                <div className="content-diagram-surface">{diagram}</div>
+                <div id={diagramId} className="content-diagram-surface">{diagram}</div>
+                <MobileDiagramToolbar
+                  diagramId={diagramId}
+                  isExpanded={isDiagramExpanded}
+                  onToggle={() => setIsDiagramExpanded((isExpanded) => !isExpanded)}
+                />
               </div>
             </aside>
           )}
