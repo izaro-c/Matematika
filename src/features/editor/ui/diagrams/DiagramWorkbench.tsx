@@ -21,6 +21,7 @@ import {
   addToolReference, completedToolReferenceCount, toolReferencesAreReady,
   point, element, slider, step, projectPointToSupport,
   generatedElementId, elementColorForKind,
+  addLabelToElement,
   supportElements, applyGuidedConstruction,
   normalizeConstructionRefs, validConstructionRefs,
   normalizeVisualModel, createTemplateModel, nextStepId,
@@ -311,8 +312,21 @@ export const DiagramWorkbenchCore: React.FC<DiagramWorkbenchCoreProps> = ({
               ? { precision: 2 }
               : kind === 'infoPanel'
                 ? { anchorMode: 'viewport' as const, viewportPosition: [0.08, 0.22] as [number, number], title: 'Información' }
+              : kind === 'label'
+                ? { anchorMode: 'reference' as const, anchorParameter: 0.5 }
               : undefined;
-    const baseElement = element(id, KIND_LABELS[kind], kind, elementRefs, elementColorForKind(kind), true, properties ? { properties } : {});
+    const baseElement = element(
+      id,
+      KIND_LABELS[kind],
+      kind,
+      elementRefs,
+      elementColorForKind(kind),
+      kind !== 'label',
+      {
+        ...(properties ? { properties } : {}),
+        ...(kind === 'label' ? { style: { textOffset: [0.04, 0.04] as [number, number], preserveColorOnHighlight: true } } : {}),
+      },
+    );
     const newElement = {
       ...baseElement,
       order: Math.max(0, ...[...model.points, ...model.elements].filter(item => item.layerId === baseElement.layerId).map(item => item.order)) + 1000,
@@ -344,6 +358,14 @@ export const DiagramWorkbenchCore: React.FC<DiagramWorkbenchCoreProps> = ({
       points: [...model.points, { ...nextPoint, ...projected }],
     }, id), { label: `Añadir punto sobre ${support.id}` });
     selectElement(id);
+    activateCanvasTool('select');
+  };
+
+  const handleAddElementLabel = (elementId: string) => {
+    const result = addLabelToElement(model, elementId);
+    const next = makeVisibleInEveryStep(result.model, result.labelId);
+    handleVisualEdit(next, { label: `Añadir etiqueta a ${elementId}` });
+    selectElement(result.labelId);
     activateCanvasTool('select');
   };
 
@@ -680,6 +702,7 @@ export const DiagramWorkbenchCore: React.FC<DiagramWorkbenchCoreProps> = ({
               onSelect={selectElement}
               onModelEdit={handleVisualEdit}
               onDeleteSelected={handleDeleteSelected}
+              onAddElementLabel={handleAddElementLabel}
             />
 
           </aside>

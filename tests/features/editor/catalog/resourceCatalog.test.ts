@@ -86,14 +86,27 @@ describe('catálogo seguro del editor', () => {
     expect(diagrams).toHaveLength(85);
     expect(diagrams.every(item => item.path.startsWith('widgets/diagrams/') && item.path.endsWith('.tsx'))).toBe(true);
     expect(diagrams.filter(item => item.capability === 'visual-exact').map(item => item.path).sort()).toEqual([
+      'widgets/diagrams/Axiomas/Congruence1.tsx',
+      'widgets/diagrams/Axiomas/Congruence2.tsx',
+      'widgets/diagrams/Axiomas/Congruence3.tsx',
+      'widgets/diagrams/Axiomas/Congruence4.tsx',
+      'widgets/diagrams/Axiomas/EuclidParallel.tsx',
+      'widgets/diagrams/Axiomas/HyperbolicParallel.tsx',
       'widgets/diagrams/Axiomas/Incidence1.tsx',
       'widgets/diagrams/Axiomas/Incidence2.tsx',
+      'widgets/diagrams/Axiomas/Incidence3.tsx',
+      'widgets/diagrams/Axiomas/Incidence4.tsx',
+      'widgets/diagrams/Axiomas/Order1.tsx',
+      'widgets/diagrams/Axiomas/Order2.tsx',
+      'widgets/diagrams/Axiomas/Order3.tsx',
+      'widgets/diagrams/Axiomas/Pasch.tsx',
+      'widgets/diagrams/Axiomas/SAS.tsx',
       'widgets/diagrams/Definiciones/Paralelogramo.tsx',
       'widgets/diagrams/Models/ModeloPoincare.tsx',
       'widgets/diagrams/Teoremas/CongruenciaALA.tsx',
       'widgets/diagrams/Teoremas/Pitagoras.tsx',
     ]);
-    expect(diagrams.filter(item => item.capability === 'code-preview')).toHaveLength(79);
+    expect(diagrams.filter(item => item.capability === 'code-preview')).toHaveLength(66);
     expect(editable.some(item => ['MathBoard.tsx', 'MathFactory.ts', 'MathUtils.ts', 'InteractiveGeometryCanvas.tsx'].includes(item.name))).toBe(false);
   });
 });

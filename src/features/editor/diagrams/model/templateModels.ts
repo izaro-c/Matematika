@@ -14,6 +14,7 @@ export function createTemplateModel(kind: TemplateKind, title: string, metadataT
     mode: defaultMode(metadataType),
     axis: false,
     grid: false,
+    showLabels: true,
     viewport: {
       bounds: [-5, 5, 5, -5] as [number, number, number, number],
       home: [-5, 5, 5, -5] as [number, number, number, number],

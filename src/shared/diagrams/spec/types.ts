@@ -71,6 +71,8 @@ export interface DiagramElementProperties {
   anchorMode?: 'reference' | 'viewport';
   /** Posición normalizada [x, y] desde la esquina superior izquierda del viewport. */
   viewportPosition?: [number, number];
+  /** Posición normalizada [0, 1] de una etiqueta a lo largo del objeto referenciado. */
+  anchorParameter?: number;
   clockwise?: boolean;
   /** Oculta la intersección cuando cae fuera de un segmento o semirrecta referenciado. */
   restrictToSupports?: boolean;
@@ -135,6 +137,8 @@ export interface DiagramVisualStyle {
   markHeight?: number;
   labelOffset?: [number, number];
   textOffset?: [number, number];
+  /** Tamaño tipográfico en píxeles para etiquetas nativas o vinculadas. */
+  labelSize?: number;
   highlightStrokeWidth?: number;
   highlightFillOpacity?: number;
   highlightPointSize?: number;
@@ -165,6 +169,8 @@ export interface DiagramSceneItemBase {
 export interface DiagramPoint extends DiagramSceneItemBase {
   x: number;
   y: number;
+  /** Conserva el nombre semántico del punto, pero permite ocultar solo su etiqueta nativa. */
+  showLabel?: boolean;
   fixed: boolean;
   constraint: DiagramPointConstraint;
   gliderTarget?: string;
@@ -265,6 +271,8 @@ export interface DiagramSpecV2 {
   mode: DiagramMode;
   axis: boolean;
   grid: boolean;
+  /** Permite ocultar en conjunto las etiquetas sin eliminar sus objetos editables. */
+  showLabels?: boolean;
   viewport: DiagramViewport;
   layers: DiagramLayer[];
   groups: DiagramGroup[];

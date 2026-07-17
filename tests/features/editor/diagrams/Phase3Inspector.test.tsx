@@ -12,8 +12,86 @@ import { DiagramInspector } from '../../../../src/features/editor/diagrams/ui/Di
 import { DiagramToolbar } from '../../../../src/features/editor/diagrams/ui/DiagramToolbar';
 import { DiagramToolReferencePicker } from '../../../../src/features/editor/diagrams/ui/DiagramToolReferencePicker';
 import { parseDiagramSourceAST } from '../../../../scripts/editor/parseDiagramSourceAST';
+import { addLabelToElement } from '../../../../src/features/editor/diagrams/model/commands';
 
 describe('Phase 3 visual editing', () => {
+  it('adds, hides and positions an element label from contextual visual controls', () => {
+    const base = migrateDiagramSpec(primitivesFixture).spec;
+    const source = base.elements.find(item => item.kind === 'segment')!;
+    const onAddElementLabel = vi.fn();
+    const onModelEdit = vi.fn();
+    const onSelect = vi.fn();
+    const view = render(
+      <DiagramInspector model={base} selectedId={source.id} onSelect={onSelect} onModelEdit={onModelEdit} onDeleteSelected={vi.fn()} onAddElementLabel={onAddElementLabel} />,
+    );
+
+    fireEvent.click(screen.getByRole('button', { name: 'Añadir etiqueta a este elemento' }));
+    expect(onAddElementLabel).toHaveBeenCalledWith(source.id);
+
+    const labelled = addLabelToElement(base, source.id);
+    view.rerender(<DiagramInspector model={labelled.model} selectedId={source.id} onSelect={onSelect} onModelEdit={onModelEdit} onDeleteSelected={vi.fn()} onAddElementLabel={onAddElementLabel} />);
+    fireEvent.click(screen.getByRole('checkbox', { name: `Mostrar etiqueta de ${source.label}` }));
+    expect(onModelEdit).toHaveBeenLastCalledWith(expect.objectContaining({
+      elements: expect.arrayContaining([expect.objectContaining({ id: labelled.labelId, visible: false })]),
+    }));
+    fireEvent.click(screen.getByRole('button', { name: 'Editar texto y posición' }));
+    expect(onSelect).toHaveBeenCalledWith(labelled.labelId);
+
+    view.rerender(<DiagramInspector model={labelled.model} selectedId={labelled.labelId} onSelect={onSelect} onModelEdit={onModelEdit} onDeleteSelected={vi.fn()} />);
+    fireEvent.change(screen.getByLabelText('Posición de la etiqueta sobre el elemento'), { target: { value: '0.7' } });
+    expect(onModelEdit).toHaveBeenLastCalledWith(expect.objectContaining({
+      elements: expect.arrayContaining([expect.objectContaining({ id: labelled.labelId, properties: expect.objectContaining({ anchorParameter: 0.7 }) })]),
+    }));
+    fireEvent.change(screen.getByLabelText('Separación horizontal de la etiqueta'), { target: { value: '0.02' } });
+    expect(onModelEdit).toHaveBeenLastCalledWith(expect.objectContaining({
+      elements: expect.arrayContaining([expect.objectContaining({ id: labelled.labelId, style: expect.objectContaining({ textOffset: [0.02, 0.04] }) })]),
+    }));
+    fireEvent.change(screen.getByLabelText('Tamaño de la etiqueta vinculada'), { target: { value: '18' } });
+    expect(onModelEdit).toHaveBeenLastCalledWith(expect.objectContaining({
+      elements: expect.arrayContaining([expect.objectContaining({ id: labelled.labelId, style: expect.objectContaining({ labelSize: 18 }) })]),
+    }));
+  });
+
+  it('makes all labels optional from the View menu', () => {
+    const model = migrateDiagramSpec(primitivesFixture).spec;
+    const onModelEdit = vi.fn();
+    render(
+      <DiagramToolbar
+        model={model}
+        canvasTool="select"
+        syncStatus="synced"
+        onSetCanvasTool={vi.fn()}
+        onAddElement={vi.fn()}
+        onModelEdit={onModelEdit}
+        onAddSlider={vi.fn()}
+        onAddGliderPoint={vi.fn()}
+        onAddStep={vi.fn()}
+        onResolveDivergence={vi.fn()}
+      />,
+    );
+    fireEvent.click(screen.getByRole('button', { name: /Vista/ }));
+    fireEvent.click(screen.getByRole('checkbox', { name: 'Mostrar etiquetas' }));
+    expect(onModelEdit).toHaveBeenCalledWith(expect.objectContaining({ showLabels: false }));
+  });
+
+  it('chooses independently whether a point label is drawn on the canvas', () => {
+    const model = migrateDiagramSpec(pointsFixture).spec;
+    const target = model.points.find(point => point.visible)!;
+    const onModelEdit = vi.fn();
+    render(<DiagramInspector model={model} selectedId={target.id} onSelect={vi.fn()} onModelEdit={onModelEdit} onDeleteSelected={vi.fn()} />);
+
+    const control = screen.getByRole('checkbox', { name: 'Mostrar etiqueta del punto en el lienzo' });
+    expect((control as HTMLInputElement).checked).toBe(true);
+    fireEvent.click(control);
+
+    const edited = onModelEdit.mock.calls.at(-1)?.[0];
+    expect(edited.points.find((item: { id: string }) => item.id === target.id)).toMatchObject({ showLabel: false });
+
+    fireEvent.change(screen.getByLabelText('Tamaño de la etiqueta del punto'), { target: { value: '24' } });
+    const resized = onModelEdit.mock.calls.at(-1)?.[0];
+    expect(resized.points.find((item: { id: string }) => item.id === target.id)).toMatchObject({ style: { labelSize: 24 } });
+  });
+
   it('authors direct interaction separately from fixed position and relations', () => {
     const model = migrateDiagramSpec(pointsFixture).spec;
     const target = model.points.find(point => !point.fixed && point.selection.selectable)!;

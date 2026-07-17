@@ -329,8 +329,59 @@ function reactiveText(item: DiagramElement, elements: Record<string, any>, spec:
 }
 
 function conditionAllows(item: DiagramSceneItem, elements: Record<string, any>, spec: DiagramSpecV2): boolean {
+  if ('kind' in item && item.kind === 'label' && spec.showLabels === false) return false;
   if (!('kind' in item) || !item.properties?.visibleWhen) return true;
   try { return evaluateMathExpression(item.properties.visibleWhen, liveVariables(elements, spec)) !== 0; } catch { return false; }
+}
+
+function renderedCoordinates(element: any, parameter?: number): [number, number] | null {
+  if (!element || typeof element.X !== 'function' || typeof element.Y !== 'function') return null;
+  try {
+    const x = parameter === undefined ? element.X() : element.X(parameter);
+    const y = parameter === undefined ? element.Y() : element.Y(parameter);
+    return Number.isFinite(x) && Number.isFinite(y) ? [x, y] : null;
+  } catch {
+    return null;
+  }
+}
+
+function referencedLabelAnchor(
+  referenceId: string,
+  parameter: number,
+  elements: Record<string, any>,
+  spec: DiagramSpecV2,
+): [number, number] {
+  const referencedItem = [...spec.points, ...spec.elements, ...spec.sliders].find(item => item.id === referenceId);
+  const rendered = elements[referenceId];
+  if (!referencedItem || !('kind' in referencedItem)) return renderedCoordinates(rendered) ?? [0, 0];
+
+  if (['poincareGeodesic', 'poincareArc', 'parametricCurve', 'functionCurve'].includes(referencedItem.kind)) {
+    const domain = referencedItem.kind === 'poincareGeodesic' || referencedItem.kind === 'poincareArc'
+      ? [0, 1]
+      : referencedItem.properties?.domain ?? (referencedItem.kind === 'functionCurve' ? [-5, 5] : [0, Math.PI * 2]);
+    const curveParameter = domain[0] + (domain[1] - domain[0]) * parameter;
+    const curveCoordinates = renderedCoordinates(rendered, curveParameter);
+    if (curveCoordinates) return curveCoordinates;
+  }
+
+  const referenceCoordinates = referencedItem.refs
+    .map(id => renderedCoordinates(elements[id]))
+    .filter((coordinates): coordinates is [number, number] => Boolean(coordinates));
+  if (referencedItem.kind === 'circle' && referenceCoordinates.length >= 2) {
+    const [center, boundary] = referenceCoordinates;
+    const radius = Math.hypot(boundary[0] - center[0], boundary[1] - center[1]);
+    const angle = Math.PI * 2 * parameter;
+    return [center[0] + radius * Math.cos(angle), center[1] + radius * Math.sin(angle)];
+  }
+  if (['segment', 'line', 'ray'].includes(referencedItem.kind) && referenceCoordinates.length >= 2) {
+    const [start, end] = referenceCoordinates;
+    return [start[0] + (end[0] - start[0]) * parameter, start[1] + (end[1] - start[1]) * parameter];
+  }
+  if (referenceCoordinates.length > 0) {
+    const total = referenceCoordinates.reduce(([x, y], coordinates) => [x + coordinates[0], y + coordinates[1]], [0, 0]);
+    return [total[0] / referenceCoordinates.length, total[1] / referenceCoordinates.length];
+  }
+  return renderedCoordinates(rendered) ?? [0, 0];
 }
 
 function viewportPositionCoordinates(
@@ -515,7 +566,7 @@ function createElement(
       ? `<strong>${renderKatexTextToHtml(item.properties.title)}</strong><br/>${renderKatexTextToHtml(body)}`
       : renderKatexTextToHtml(body);
   };
-  const textOffset = item.style?.textOffset ?? [0.25, 0.35];
+  const textOffset = item.style?.textOffset ?? (item.kind === 'label' ? [0.04, 0.04] : [0.25, 0.35]);
   const viewportPosition = item.kind === 'infoPanel' && item.properties?.anchorMode === 'viewport'
     ? item.properties.viewportPosition
     : undefined;
@@ -527,13 +578,18 @@ function createElement(
       dynamicText,
     ]
     : anchor
-      ? [() => anchor.X() + textOffset[0], () => anchor.Y() + textOffset[1], dynamicText]
+      ? [
+        () => referencedLabelAnchor(item.refs[0], item.properties?.anchorParameter ?? 0.5, elements, spec)[0] + textOffset[0],
+        () => referencedLabelAnchor(item.refs[0], item.properties?.anchorParameter ?? 0.5, elements, spec)[1] + textOffset[1],
+        dynamicText,
+      ]
       : null;
   return textCoordinates ? createText(board, textCoordinates, {
     highlight: highlightable,
     color: theme[item.color],
     fixed: true,
     layer,
+    ...(item.style?.labelSize !== undefined ? { fontSize: item.style.labelSize } : {}),
     ...(viewportPanelAnchor ?? {}),
     cssClass: item.kind === 'formula'
       ? 'font-diagram text-sm italic'
@@ -656,7 +712,7 @@ function synchronizeElementAndLabelHover(element: any, item: DiagramSceneItem) {
 
 function syncNativeElementLabel(
   element: any,
-  state: { visible: boolean; color: string; highlightColor: string; opacity: number; text: string },
+  state: { visible: boolean; color: string; highlightColor: string; opacity: number; text: string; fontSize?: number },
 ) {
   const label = nativeElementLabel(element);
   if (!label) return;
@@ -671,6 +727,7 @@ function syncNativeElementLabel(
     opacity: state.opacity,
     strokeOpacity: state.opacity,
     highlightStrokeOpacity: state.opacity,
+    ...(state.fontSize !== undefined ? { fontSize: state.fontSize } : {}),
   });
 }
 
@@ -915,6 +972,8 @@ const DiagramRendererContent: React.FC<DiagramRendererProps> = ({
             const hoverColor = !highlightable || sceneItem.style?.preserveColorOnHighlight ? theme[sceneItem.color] : theme.ocre;
             const pointLabelOptions = {
               highlight: highlightable,
+              visible: spec.showLabels !== false && (!('constraint' in sceneItem) || sceneItem.showLabel !== false),
+              ...('constraint' in sceneItem && sceneItem.style?.labelSize !== undefined ? { fontSize: sceneItem.style.labelSize } : {}),
               ...(sceneItem.style?.labelOffset ? { offset: sceneItem.style.labelOffset } : {}),
               highlightColor: hoverColor,
               highlightStrokeColor: hoverColor,
@@ -1157,7 +1216,16 @@ const DiagramRendererContent: React.FC<DiagramRendererProps> = ({
               fixed: 'kind' in item ? true : entry.locked || !item.selection.selectable,
             };
             const hoverColor = item.selection.highlightable === false || item.style?.preserveColorOnHighlight ? theme[item.color] : theme.ocre;
-            syncNativeElementLabel(element, { visible, color, highlightColor: hoverColor, opacity, text: entry.label });
+            const nativeLabelVisible = visible && spec.showLabels !== false
+              && (!('constraint' in item) || item.showLabel !== false);
+            syncNativeElementLabel(element, {
+              visible: nativeLabelVisible,
+              color,
+              highlightColor: hoverColor,
+              opacity,
+              text: entry.label,
+              fontSize: item.style?.labelSize,
+            });
             if (element.__matematikaStepLabel !== entry.label) {
               element.setAttribute?.({ name: renderKatexTextToHtml(entry.label) });
               element.__matematikaStepLabel = entry.label;
