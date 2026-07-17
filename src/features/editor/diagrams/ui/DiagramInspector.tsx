@@ -17,6 +17,7 @@ interface DiagramInspectorProps {
   onSelect: (id: string) => void;
   onModelEdit: (model: VisualDiagramModel) => void;
   onDeleteSelected: () => void;
+  onAddElementLabel?: (elementId: string) => void;
 }
 
 function sceneItemLabel(model: VisualDiagramModel, id: string): string {
@@ -36,12 +37,16 @@ export const DiagramInspector: React.FC<DiagramInspectorProps> = ({
   onSelect,
   onModelEdit,
   onDeleteSelected,
+  onAddElementLabel,
 }) => {
   const selectedPoint = model.points.find(item => item.id === selectedId);
   const selectedElement = model.elements.find(item => item.id === selectedId);
   const selectedSlider = model.sliders.find(item => item.id === selectedId);
   const selectedStep = model.steps.find(item => item.id === selectedId);
   const selectedSceneItem = selectedPoint || selectedElement || selectedSlider;
+  const attachedLabel = selectedElement?.kind === 'label'
+    ? undefined
+    : model.elements.find(item => item.kind === 'label' && item.refs[0] === selectedElement?.id);
 
   const hasSelection = selectedPoint || selectedElement || selectedSlider || selectedStep;
 
@@ -160,6 +165,29 @@ export const DiagramInspector: React.FC<DiagramInspectorProps> = ({
               onChange={(e) => handlePointChange({ label: e.target.value })}
             />
             <span className="mt-1 block text-[10px] text-carbon/45">Admite LaTeX entre <code>$...$</code> o <code>$$...$$</code>.</span>
+            <label className="mt-2 flex items-center gap-2 text-xs font-bold text-carbon">
+              <input
+                type="checkbox"
+                aria-label="Mostrar etiqueta del punto en el lienzo"
+                checked={selectedPoint.showLabel !== false}
+                onChange={(event) => handlePointChange({ showLabel: event.target.checked })}
+              />
+              Mostrar etiqueta en el lienzo
+            </label>
+            <label className="mt-2 block text-xs font-bold text-carbon">
+              Tamaño de la etiqueta
+              <input
+                type="number"
+                min="6"
+                max="72"
+                step="1"
+                aria-label="Tamaño de la etiqueta del punto"
+                className="mt-1 w-full rounded border border-carbon/15 bg-lienzo p-1.5 text-xs"
+                value={selectedPoint.style?.labelSize ?? 19}
+                onChange={(event) => handlePointStyleChange({ labelSize: Number(event.target.value) })}
+              />
+            </label>
+            <span className="mt-1 block text-[10px] leading-relaxed text-carbon/45">El nombre se conserva para el editor, la accesibilidad y los enlaces aunque no se dibuje.</span>
           </div>
 
           <div className="grid grid-cols-2 gap-2">
@@ -331,6 +359,33 @@ export const DiagramInspector: React.FC<DiagramInspectorProps> = ({
             <p className="block text-xs font-bold text-carbon mb-1">Tipo: <span className="font-normal text-carbon/75">{KIND_LABELS[selectedElement.kind]}</span></p>
           </div>
 
+          {selectedElement.kind !== 'label' && (
+            <fieldset className="space-y-2 rounded border border-ocre/20 bg-ocre/5 p-2">
+              <legend className="px-1 text-[10px] font-bold uppercase tracking-wider text-ocre">Etiqueta en el lienzo</legend>
+              {attachedLabel ? (
+                <>
+                  <label className="flex items-center gap-2 text-xs font-bold text-carbon">
+                    <input
+                      type="checkbox"
+                      aria-label={`Mostrar etiqueta de ${selectedElement.label}`}
+                      checked={attachedLabel.visible}
+                      onChange={(event) => onModelEdit(updateElement(model, attachedLabel.id, { visible: event.target.checked }))}
+                    />
+                    Mostrar junto al elemento
+                  </label>
+                  <button type="button" className="w-full rounded border border-ocre/25 bg-lienzo px-2 py-1.5 text-xs font-bold text-ocre" onClick={() => onSelect(attachedLabel.id)}>
+                    Editar texto y posición
+                  </button>
+                </>
+              ) : (
+                <button type="button" disabled={!onAddElementLabel} className="w-full rounded bg-ocre px-2 py-1.5 text-xs font-bold text-lienzo disabled:opacity-40" onClick={() => onAddElementLabel?.(selectedElement.id)}>
+                  Añadir etiqueta a este elemento
+                </button>
+              )}
+              <p className="text-[10px] leading-relaxed text-carbon/50">La etiqueta queda vinculada al objeto y lo sigue cuando cambia la geometría.</p>
+            </fieldset>
+          )}
+
           {selectedElement.refs.length > 0 && (
             <fieldset className="space-y-1 rounded border border-carbon/10 p-2">
               <legend className="px-1 text-[10px] font-bold uppercase tracking-wider text-carbon/45">Referencias geométricas</legend>
@@ -438,6 +493,65 @@ export const DiagramInspector: React.FC<DiagramInspectorProps> = ({
               />
               <span className="mt-1 block text-[10px] text-carbon/45">Puede mezclar texto y LaTeX, por ejemplo <code>{'$x^2$'}</code>.</span>
             </div>
+          )}
+
+          {selectedElement.kind === 'label' && (
+            <fieldset className="space-y-3 rounded border border-ocre/20 bg-ocre/5 p-2">
+              <legend className="px-1 text-[10px] font-bold uppercase tracking-wider text-ocre">Posición junto al elemento</legend>
+              <label className="block text-xs font-bold text-carbon">
+                Tamaño de la etiqueta
+                <input
+                  type="number"
+                  min="6"
+                  max="72"
+                  step="1"
+                  aria-label="Tamaño de la etiqueta vinculada"
+                  className="mt-1 w-full rounded border border-carbon/15 bg-lienzo p-1.5 text-xs"
+                  value={selectedElement.style?.labelSize ?? 14}
+                  onChange={(event) => handleElementStyleChange({ labelSize: Number(event.target.value) })}
+                />
+              </label>
+              {model.elements.some(item => item.id === selectedElement.refs[0]) && (
+                <label className="block text-xs font-bold text-carbon">
+                  Posición sobre el elemento: {Math.round((selectedElement.properties?.anchorParameter ?? 0.5) * 100)}%
+                  <input
+                    type="range"
+                    min="0"
+                    max="1"
+                    step="0.01"
+                    aria-label="Posición de la etiqueta sobre el elemento"
+                    className="mt-1 w-full accent-ocre"
+                    value={selectedElement.properties?.anchorParameter ?? 0.5}
+                    onChange={(event) => handleElementPropertiesChange({ anchorMode: 'reference', anchorParameter: Number(event.target.value) })}
+                  />
+                </label>
+              )}
+              <div className="grid grid-cols-2 gap-2">
+                <label className="text-xs font-bold text-carbon">
+                  Separación X
+                  <input
+                    type="number"
+                    step="0.01"
+                    aria-label="Separación horizontal de la etiqueta"
+                    className="mt-1 w-full rounded border border-carbon/15 bg-lienzo p-1.5 text-xs"
+                    value={selectedElement.style?.textOffset?.[0] ?? 0.04}
+                    onChange={(event) => handleElementStyleChange({ textOffset: [Number(event.target.value), selectedElement.style?.textOffset?.[1] ?? 0.04] })}
+                  />
+                </label>
+                <label className="text-xs font-bold text-carbon">
+                  Separación Y
+                  <input
+                    type="number"
+                    step="0.01"
+                    aria-label="Separación vertical de la etiqueta"
+                    className="mt-1 w-full rounded border border-carbon/15 bg-lienzo p-1.5 text-xs"
+                    value={selectedElement.style?.textOffset?.[1] ?? 0.04}
+                    onChange={(event) => handleElementStyleChange({ textOffset: [selectedElement.style?.textOffset?.[0] ?? 0.04, Number(event.target.value)] })}
+                  />
+                </label>
+              </div>
+              <p className="text-[10px] leading-relaxed text-carbon/50">0% corresponde al inicio y 100% al final. Las separaciones permiten evitar solapes sin crear puntos auxiliares.</p>
+            </fieldset>
           )}
 
           {selectedElement.kind === 'infoPanel' && (

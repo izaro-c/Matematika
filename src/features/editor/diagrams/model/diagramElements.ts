@@ -19,7 +19,7 @@ import type {
 export function point(id: string, label: string, x: number, y: number, fixed = false, color: ColorToken = 'terracota', constraint: PointConstraint = fixed ? 'fixed' : 'free', gliderTarget?: string): VisualPoint {
   const constraintLocksPosition = constraint === 'fixed' || constraint === 'derived';
   return {
-    id, label, x, y, fixed: constraintLocksPosition, color, target: true, targetId: id, constraint, gliderTarget,
+    id, label, x, y, showLabel: true, fixed: constraintLocksPosition, color, target: true, targetId: id, constraint, gliderTarget,
     layerId: 'geometry', order: 0, visible: true, locked: false, groupIds: [],
     selection: { selectable: true, role: 'primary', ariaLabel: `Punto ${label}` },
   };
@@ -243,4 +243,44 @@ export function uniqueElementId(base: string, elements: VisualElement[]): string
   let index = 2;
   while (elements.some(item => item.id === candidate)) candidate = `${cleanBase}_${index++}`;
   return candidate;
+}
+
+export function addLabelToElement(model: VisualDiagramModel, sourceId: string): { model: VisualDiagramModel; labelId: string } {
+  const source = model.elements.find(item => item.id === sourceId && item.kind !== 'label');
+  if (!source) return { model, labelId: sourceId };
+  const existing = model.elements.find(item => item.kind === 'label' && item.refs[0] === sourceId);
+  if (existing) return { model, labelId: existing.id };
+
+  const labelId = uniqueElementId(`label-${sourceId}`, model.elements);
+  const annotationLayer = model.layers.find(layer => /anot/i.test(`${layer.id} ${layer.label}`))?.id ?? source.layerId;
+  const labelElement: VisualElement = {
+    ...element(labelId, `Etiqueta de ${source.label}`, 'label', [sourceId], source.color, false),
+    layerId: annotationLayer,
+    order: Math.max(0, ...model.elements.filter(item => item.layerId === annotationLayer).map(item => item.order)) + 1000,
+    selection: {
+      selectable: true,
+      highlightable: true,
+      dimOthersOnHighlight: false,
+      ariaLabel: `Etiqueta de ${source.label}`,
+      role: 'annotation',
+    },
+    style: { textOffset: [0.04, 0.04], labelSize: 14, preserveColorOnHighlight: true },
+    text: source.label,
+    properties: { anchorMode: 'reference', anchorParameter: 0.5 },
+  };
+  return {
+    labelId,
+    model: {
+      ...model,
+      elements: [...model.elements, labelElement],
+      steps: model.steps.map(item => ({
+        ...item,
+        visibleTargets: item.visibleTargets.includes(labelId) ? item.visibleTargets : [...item.visibleTargets, labelId],
+      })),
+      dependencies: [
+        ...(model.dependencies || []),
+        { sourceId, targetId: labelId, relation: 'construction' },
+      ],
+    },
+  };
 }

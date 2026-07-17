@@ -118,6 +118,7 @@ import { DiagramRenderer } from '../../../src/shared/diagrams/runtime/DiagramRen
 import { Incidence2Spec } from '../../../src/widgets/diagrams/Axiomas/Incidence2';
 import { Congruence1Spec } from '../../../src/widgets/diagrams/Axiomas/Congruence1';
 import { PaschSpec } from '../../../src/widgets/diagrams/Axiomas/Pasch';
+import { addLabelToElement } from '../../../src/features/editor/diagrams/model/commands';
 
 afterEach(() => {
   cleanup();
@@ -484,7 +485,7 @@ describe('Phase 3 shared renderer', () => {
     const spec = {
       ...base,
       points: base.points.map(point => point.id === target.id
-        ? { ...point, style: { ...point.style, preserveColorOnHighlight: true } }
+        ? { ...point, style: { ...point.style, labelSize: 23, preserveColorOnHighlight: true } }
         : point),
     };
     const preservedColor = target.color;
@@ -501,7 +502,7 @@ describe('Phase 3 shared renderer', () => {
     expect(pointCreation?.options).toMatchObject({
       highlightFillColor: preservedColor,
       highlightStrokeColor: preservedColor,
-      label: { highlightColor: preservedColor, highlightStrokeColor: preservedColor },
+      label: { fontSize: 23, highlightColor: preservedColor, highlightStrokeColor: preservedColor },
     });
     expect(point.label.setAttribute).toHaveBeenCalledWith(expect.objectContaining({
       visible: true,
@@ -670,5 +671,56 @@ describe('Phase 3 shared renderer', () => {
     render(<MathProvider><DiagramRenderer spec={viewportPanelSpec} viewportControls={false} /></MathProvider>);
     const panel = rendererState.createdOptions.find(({ kind, options }) => kind === 'text' && String(options.cssClass).includes('matematika-info-panel'));
     expect(panel?.options).toMatchObject({ anchorX: 'right', anchorY: 'bottom' });
+  });
+
+  it('anchors an authored label close to the referenced element at the chosen parameter', () => {
+    const base = migrateDiagramSpec(primitivesFixture).spec;
+    const source = base.elements.find(item => item.kind === 'segment')!;
+    const labelled = addLabelToElement(base, source.id);
+    const labelModel = {
+      ...labelled.model,
+      elements: labelled.model.elements.map(item => item.id === labelled.labelId
+        ? { ...item, style: { ...item.style, labelSize: 17 }, properties: { ...item.properties, anchorParameter: 0.25 } }
+        : item),
+    };
+    render(<MathProvider><DiagramRenderer spec={labelModel} viewportControls={false} /></MathProvider>);
+
+    const renderedLabel = rendererState.createdOptions.find(({ kind, options }) => kind === 'text' && options.cssClass === 'font-diagram text-sm');
+    expect(renderedLabel?.options.fontSize).toBe(17);
+    const start = base.points.find(point => point.id === source.refs[0])!;
+    const end = base.points.find(point => point.id === source.refs[1])!;
+    expect((renderedLabel?.args[0] as () => number)()).toBeCloseTo(start.x + (end.x - start.x) * 0.25 + 0.04);
+    expect((renderedLabel?.args[1] as () => number)()).toBeCloseTo(start.y + (end.y - start.y) * 0.25 + 0.04);
+  });
+
+  it('hides authored and native labels together when labels are disabled', () => {
+    const base = migrateDiagramSpec(primitivesFixture).spec;
+    const source = base.elements.find(item => item.kind === 'segment')!;
+    const labelled = addLabelToElement(base, source.id);
+    render(<MathProvider><DiagramRenderer spec={{ ...labelled.model, showLabels: false }} viewportControls={false} /></MathProvider>);
+
+    const textIndex = rendererState.createdOptions.findIndex(({ kind, options }) => kind === 'text' && options.cssClass === 'font-diagram text-sm');
+    expect(rendererState.geometries[textIndex].setAttribute).toHaveBeenCalledWith(expect.objectContaining({ visible: false }));
+    expect(rendererState.geometries.some(geometry => geometry.label?.setAttribute.mock.calls.some((call: unknown[]) => (
+      typeof call[0] === 'object' && call[0] !== null && (call[0] as { visible?: boolean }).visible === false
+    )))).toBe(true);
+  });
+
+  it('hides one point label without hiding the point or the other labels', () => {
+    const base = migrateDiagramSpec(primitivesFixture).spec;
+    const target = base.points.find(point => point.visible)!;
+    const spec = {
+      ...base,
+      points: base.points.map(point => point.id === target.id ? { ...point, showLabel: false } : point),
+    };
+    render(<MathProvider><DiagramRenderer spec={spec} viewportControls={false} /></MathProvider>);
+
+    const pointIndex = rendererState.nodes.findIndex(node => node.dataset.diagramObjectId === target.id);
+    const point = rendererState.geometries[pointIndex];
+    expect(point.setAttribute).toHaveBeenCalledWith(expect.objectContaining({ visible: true }));
+    expect(point.label.setAttribute).toHaveBeenCalledWith(expect.objectContaining({ visible: false }));
+    expect(rendererState.geometries.some(geometry => geometry !== point && geometry.label?.setAttribute.mock.calls.some((call: unknown[]) => (
+      typeof call[0] === 'object' && call[0] !== null && (call[0] as { visible?: boolean }).visible === true
+    )))).toBe(true);
   });
 });

@@ -162,6 +162,7 @@ export const DiagramToolbar: React.FC<DiagramToolbarProps> = ({
           <div role="menu" className="absolute right-0 top-full z-30 mt-2 w-48 space-y-2 rounded border border-carbon/15 bg-lienzo p-3 shadow-xl">
             <label className="flex items-center gap-2 text-xs text-carbon"><input type="checkbox" aria-label="Cuadrícula" checked={model.grid} onChange={(event) => { onModelEdit({ ...model, grid: event.target.checked }); setOpenMenu(null); }} />Cuadrícula</label>
             <label className="flex items-center gap-2 text-xs text-carbon"><input type="checkbox" aria-label="Ejes" checked={model.axis} onChange={(event) => { onModelEdit({ ...model, axis: event.target.checked }); setOpenMenu(null); }} />Ejes</label>
+            <label className="flex items-center gap-2 text-xs text-carbon"><input type="checkbox" aria-label="Mostrar etiquetas" checked={model.showLabels !== false} onChange={(event) => { onModelEdit({ ...model, showLabels: event.target.checked }); setOpenMenu(null); }} />Etiquetas</label>
           </div>
         )}
       </div>

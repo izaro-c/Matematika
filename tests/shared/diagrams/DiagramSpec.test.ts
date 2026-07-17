@@ -5,6 +5,7 @@ import {
   DiagramSpecMigrationError,
   migrateDiagramSpec,
   parseDiagramSpecV2,
+  type DiagramSpecV2,
 } from '../../../src/shared/diagrams/public';
 
 describe('DiagramSpec v2 schema and migrations', () => {
@@ -100,6 +101,51 @@ describe('DiagramSpec v2 schema and migrations', () => {
     });
     const parsed = parseDiagramSpecV2(candidate);
     expect(parsed.success).toBe(true);
+  });
+
+  it('accepts labels attached directly to an element and an optional global visibility switch', () => {
+    const candidate = structuredClone(v2Fixture) as unknown as DiagramSpecV2;
+    candidate.showLabels = false;
+    candidate.elements.push({
+      id: 'label-segAB', label: 'Etiqueta de Base AB', kind: 'label', refs: ['segAB'], color: 'carbon',
+      layerId: 'annotations', order: 99, visible: true, locked: false, groupIds: [],
+      selection: { selectable: true, role: 'annotation' }, target: false, text: 'l',
+      style: { textOffset: [0.04, 0.04], labelSize: 18 },
+      properties: { anchorMode: 'reference', anchorParameter: 0.25 },
+    });
+
+    const parsed = parseDiagramSpecV2(candidate);
+
+    expect(parsed.success).toBe(true);
+    if (!parsed.success) return;
+    expect(parsed.data.showLabels).toBe(false);
+    expect(parsed.data.elements.at(-1)?.properties?.anchorParameter).toBe(0.25);
+    expect(parsed.data.elements.at(-1)?.style?.labelSize).toBe(18);
+  });
+
+  it('rejects label positions outside the normalized element range', () => {
+    const candidate = structuredClone(v2Fixture) as unknown as DiagramSpecV2;
+    candidate.elements.push({
+      id: 'label-segAB', label: 'Etiqueta de Base AB', kind: 'label', refs: ['segAB'], color: 'carbon',
+      layerId: 'annotations', order: 99, visible: true, locked: false, groupIds: [],
+      selection: { selectable: true, role: 'annotation' }, target: false, text: 'l',
+      properties: { anchorMode: 'reference', anchorParameter: 1.2 },
+    });
+
+    const parsed = parseDiagramSpecV2(candidate);
+
+    expect(parsed.success).toBe(false);
+    if (!parsed.success) expect(parsed.error.message).toContain('anchorParameter');
+  });
+
+  it('accepts an optional visibility choice for each point label', () => {
+    const candidate = structuredClone(v2Fixture) as unknown as DiagramSpecV2;
+    candidate.points[0].showLabel = false;
+
+    const parsed = parseDiagramSpecV2(candidate);
+
+    expect(parsed.success).toBe(true);
+    if (parsed.success) expect(parsed.data.points[0].showLabel).toBe(false);
   });
 
   it('requires normalized coordinates for viewport-relative information panels', () => {

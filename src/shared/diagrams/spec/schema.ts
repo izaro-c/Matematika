@@ -56,6 +56,7 @@ const elementPropertiesSchema = z.object({
     finiteNumber.min(0).max(1),
     finiteNumber.min(0).max(1),
   ]).optional(),
+  anchorParameter: finiteNumber.min(0).max(1).optional(),
   clockwise: z.boolean().optional(),
   restrictToSupports: z.boolean().optional(),
   visibleWhen: expressionSchema.optional(),
@@ -83,6 +84,7 @@ const visualStyleSchema = z.object({
   markHeight: finiteNumber.positive().max(100).optional(),
   labelOffset: z.tuple([finiteNumber, finiteNumber]).optional(),
   textOffset: z.tuple([finiteNumber, finiteNumber]).optional(),
+  labelSize: finiteNumber.min(6).max(72).optional(),
   highlightStrokeWidth: finiteNumber.min(0).max(30).optional(),
   highlightFillOpacity: finiteNumber.min(0).max(1).optional(),
   highlightPointSize: finiteNumber.min(0).max(40).optional(),
@@ -110,6 +112,7 @@ const pointSchema = z.object({
   ...sceneBaseShape,
   x: finiteNumber,
   y: finiteNumber,
+  showLabel: z.boolean().optional(),
   fixed: z.boolean(),
   constraint: z.enum(['free', 'fixed', 'horizontal', 'vertical', 'glider', 'derived', 'constrained']),
   gliderTarget: idSchema.optional(),
@@ -227,6 +230,7 @@ export const diagramSpecV2Schema = z.object({
   mode: z.enum(['simulation', 'diagram', 'inline']),
   axis: z.boolean(),
   grid: z.boolean(),
+  showLabels: z.boolean().optional(),
   viewport: z.object({
     bounds: boundsSchema,
     home: boundsSchema,
@@ -336,6 +340,13 @@ export const diagramSpecV2Schema = z.object({
     }
     if (element.kind === 'parametricCurve' && (!element.properties?.xExpression || !element.properties.yExpression)) {
       context.addIssue({ code: 'custom', message: `${element.id} necesita expresiones x e y.`, path: ['elements', index, 'properties'] });
+    }
+    if (element.kind !== 'label' && element.properties?.anchorParameter !== undefined) {
+      context.addIssue({
+        code: 'custom',
+        message: `${element.id} solo puede usar properties.anchorParameter si es una etiqueta.`,
+        path: ['elements', index, 'properties', 'anchorParameter'],
+      });
     }
     if (viewportAnchoredPanel && !element.properties?.viewportPosition) {
       context.addIssue({ code: 'custom', message: `${element.id} necesita properties.viewportPosition.`, path: ['elements', index, 'properties', 'viewportPosition'] });

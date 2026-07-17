@@ -1,5 +1,6 @@
 import { describe, it, expect } from 'vitest';
 import {
+  addLabelToElement,
   createTemplateModel,
   point,
   element,
@@ -9,6 +10,7 @@ import {
   setEqualAngleConstraint,
   setEqualLengthConstraint,
   toolReferenceLabel,
+  toolReferenceCandidates,
   updatePoint,
 } from '../../../../src/features/editor/diagrams/model/commands';
 import { DEFAULT_ANGLE_RADIUS, DEFAULT_RIGHT_ANGLE_RADIUS } from '../../../../src/shared/diagrams/public';
@@ -71,7 +73,32 @@ describe('Diagram Model & Selectors', () => {
     const model = createTemplateModel('circunferencia', 'Círculo de prueba', 'definicion');
     expect(model.title).toBe('Círculo de prueba');
     expect(model.points).toHaveLength(2); // O and A
+    expect(model.points.every(item => item.showLabel === true)).toBe(true);
     expect(model.elements.some(e => e.kind === 'circle')).toBe(true);
+    expect(model.showLabels).toBe(true);
+  });
+
+  it('adds one editable label directly to an element and reuses it on repeated requests', () => {
+    const model = createTemplateModel('triangulo-deformable', 'Etiquetas', 'definicion');
+    const source = model.elements.find(item => item.kind === 'segment')!;
+    const first = addLabelToElement(model, source.id);
+    const label = first.model.elements.find(item => item.id === first.labelId)!;
+
+    expect(label).toMatchObject({
+      kind: 'label',
+      refs: [source.id],
+      visible: true,
+      target: false,
+      properties: { anchorMode: 'reference', anchorParameter: 0.5 },
+      style: { textOffset: [0.04, 0.04], labelSize: 14 },
+    });
+    expect(first.model.dependencies).toContainEqual({ sourceId: source.id, targetId: label.id, relation: 'construction' });
+    expect(toolReferenceCandidates(model, 'label').map(item => item.id)).toContain(source.id);
+    expect(toolReferenceLabel('label', 0)).toBe('Objeto etiquetado');
+
+    const repeated = addLabelToElement(first.model, source.id);
+    expect(repeated.labelId).toBe(label.id);
+    expect(repeated.model.elements.filter(item => item.kind === 'label' && item.refs[0] === source.id)).toHaveLength(1);
   });
 
   it('should map element kinds to target kinds correctly', () => {

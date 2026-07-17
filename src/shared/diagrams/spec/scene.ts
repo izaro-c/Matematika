@@ -711,6 +711,7 @@ export function sceneRevision(spec: DiagramSpecV2): string {
     elements: spec.elements,
     sliders: spec.sliders,
     layers: spec.layers.map(({ id, order }) => [id, order]),
+    showLabels: spec.showLabels,
     constraints: spec.constraints,
     dependencies: spec.dependencies,
   });
