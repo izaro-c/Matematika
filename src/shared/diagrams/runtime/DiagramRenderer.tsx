@@ -1054,6 +1054,11 @@ const DiagramRendererContent: React.FC<DiagramRendererProps> = ({
                   highlightStrokeColor: hoverColor,
                   label: pointLabelOptions,
                   layer: itemLayerNumber(spec, sceneItem),
+                  ...(sceneItem.snapToGrid && !directInteractionLocked ? {
+                    snapToGrid: true,
+                    snapSizeX: sceneItem.snapSize ?? 0.5,
+                    snapSizeY: sceneItem.snapSize ?? 0.5,
+                  } : {}),
                 }, theme);
               elements[sceneItem.id] = item;
               if (!directInteractionLocked && sceneItem.constraint !== 'derived') {

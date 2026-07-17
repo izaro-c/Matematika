@@ -122,7 +122,10 @@ const pointSchema = z.object({
   xExpression: expressionSchema.optional(),
   yExpression: expressionSchema.optional(),
   constraintIds: z.array(idSchema).optional(),
+  snapToGrid: z.boolean().optional(),
+  snapSize: z.number().positive().finite().optional(),
 }).strict();
+
 
 const elementSchema = z.object({
   ...sceneBaseShape,

@@ -1,82 +1,309 @@
-import { MathBoard } from '@/shared/diagrams/core/MathBoard';
-import {
-  createLine,
-  createParallelLine,
-  createPoint,
-  createText,
-} from '@/shared/diagrams/core/MathFactory';
+import { createDiagramSpec, DiagramRenderer } from '@/shared/diagrams/public';
 
-export const ModeloCartesiano = () => {
-  const onInit = (board: any, els: any, theme: any) => {
-    const A = createPoint(board, [1, 2], {
-      name: 'A',
-      size: 5,
-      fillColor: theme.terracota,
-      strokeColor: theme.terracota,
-      showInfobox: false,
-      snapToGrid: true,
-      snapSizeX: 0.5,
-      snapSizeY: 0.5,
-    }, theme);
-    const B = createPoint(board, [-3, -1], {
-      name: 'B',
-      size: 5,
-      fillColor: theme.terracota,
-      strokeColor: theme.terracota,
-      showInfobox: false,
-      snapToGrid: true,
-      snapSizeX: 0.5,
-      snapSizeY: 0.5,
-    }, theme);
-    const P = createPoint(board, [3, -2], {
-      name: 'P',
-      size: 5,
-      fillColor: theme.terracota,
-      strokeColor: theme.terracota,
-      showInfobox: false,
-      snapToGrid: true,
-      snapSizeX: 0.5,
-      snapSizeY: 0.5,
-    }, theme);
+/* @matematika-diagram-spec:start */
+export const ModeloCartesianoSpec = createDiagramSpec(
+{
+  "version": 2,
+  "renderer": "matematika-diagram-renderer-v2",
+  "title": "Modelo cartesiano ℝ²",
+  "componentId": "ModeloCartesiano",
+  "category": "Models",
+  "mode": "simulation",
+  "axis": true,
+  "grid": true,
+  "viewport": {
+    "bounds": [
+      -6,
+      6,
+      6,
+      -6
+    ],
+    "home": [
+      -6,
+      6,
+      6,
+      -6
+    ],
+    "minZoom": 0.3,
+    "maxZoom": 8,
+    "padding": 0.1
+  },
+  "layers": [
+    {
+      "id": "rectas",
+      "label": "Rectas",
+      "order": 0,
+      "visible": true,
+      "locked": false
+    },
+    {
+      "id": "puntos",
+      "label": "Puntos",
+      "order": 1,
+      "visible": true,
+      "locked": false
+    },
+    {
+      "id": "medidas",
+      "label": "Medidas",
+      "order": 2,
+      "visible": true,
+      "locked": false
+    }
+  ],
+  "groups": [],
+  "points": [
+    {
+      "id": "A",
+      "label": "A",
+      "color": "terracota",
+      "layerId": "puntos",
+      "order": 10,
+      "visible": true,
+      "locked": false,
+      "groupIds": [],
+      "selection": {
+        "selectable": true,
+        "highlightable": true,
+        "dimOthersOnHighlight": false,
+        "ariaLabel": "Punto A",
+        "role": "primary"
+      },
+      "target": true,
+      "targetId": "A",
+      "style": {
+        "pointSize": 5,
+        "highlightPointSize": 8,
+        "preserveColorOnHighlight": true
+      },
+      "x": 1,
+      "y": 2,
+      "fixed": false,
+      "constraint": "free"
+    },
+    {
+      "id": "B",
+      "label": "B",
+      "color": "terracota",
+      "layerId": "puntos",
+      "order": 11,
+      "visible": true,
+      "locked": false,
+      "groupIds": [],
+      "selection": {
+        "selectable": true,
+        "highlightable": true,
+        "dimOthersOnHighlight": false,
+        "ariaLabel": "Punto B",
+        "role": "primary"
+      },
+      "target": true,
+      "targetId": "B",
+      "style": {
+        "pointSize": 5,
+        "highlightPointSize": 8,
+        "preserveColorOnHighlight": true
+      },
+      "x": -3,
+      "y": -1,
+      "fixed": false,
+      "constraint": "free"
+    },
+    {
+      "id": "P",
+      "label": "P",
+      "color": "ocre",
+      "layerId": "puntos",
+      "order": 12,
+      "visible": true,
+      "locked": false,
+      "groupIds": [],
+      "selection": {
+        "selectable": true,
+        "highlightable": true,
+        "dimOthersOnHighlight": false,
+        "ariaLabel": "Punto P",
+        "role": "primary"
+      },
+      "target": true,
+      "targetId": "P",
+      "style": {
+        "pointSize": 5,
+        "highlightPointSize": 8,
+        "preserveColorOnHighlight": true
+      },
+      "x": 3,
+      "y": -2,
+      "fixed": false,
+      "constraint": "free"
+    }
+  ],
+  "elements": [
+    {
+      "id": "lineAB",
+      "label": "l",
+      "color": "musgo",
+      "layerId": "rectas",
+      "order": 10,
+      "visible": true,
+      "locked": false,
+      "groupIds": [],
+      "selection": {
+        "selectable": true,
+        "highlightable": true,
+        "dimOthersOnHighlight": false,
+        "ariaLabel": "Recta l por A y B",
+        "role": "secondary"
+      },
+      "target": true,
+      "targetId": "lineAB",
+      "style": {
+        "strokeWidth": 2.5,
+        "highlightStrokeWidth": 4,
+        "preserveColorOnHighlight": true
+      },
+      "kind": "line",
+      "refs": [
+        "A",
+        "B"
+      ]
+    },
+    {
+      "id": "parallelP",
+      "label": "l′",
+      "color": "salvia",
+      "layerId": "rectas",
+      "order": 11,
+      "visible": true,
+      "locked": false,
+      "groupIds": [],
+      "selection": {
+        "selectable": true,
+        "highlightable": true,
+        "dimOthersOnHighlight": false,
+        "ariaLabel": "Recta l′ paralela a l por P",
+        "role": "secondary"
+      },
+      "target": true,
+      "targetId": "parallelP",
+      "style": {
+        "strokeWidth": 2,
+        "highlightStrokeWidth": 3.5,
+        "preserveColorOnHighlight": true
+      },
+      "kind": "parallel",
+      "refs": [
+        "A",
+        "B",
+        "P"
+      ],
+      "dashed": true
+    },
+    {
+      "id": "distAB",
+      "label": "d(A,B)",
+      "color": "pizarra",
+      "layerId": "medidas",
+      "order": 20,
+      "visible": true,
+      "locked": false,
+      "groupIds": [],
+      "selection": {
+        "selectable": true,
+        "role": "annotation"
+      },
+      "target": false,
+      "style": {
+        "textOffset": [
+          -1.5,
+          1.5
+        ],
+        "preserveColorOnHighlight": true
+      },
+      "kind": "measurement",
+      "refs": [
+        "A",
+        "B"
+      ],
+      "text": "d(A, B) = {value}",
+      "properties": {
+        "precision": 2
+      }
+    },
+    {
+      "id": "infoCarte",
+      "label": "ℝ²",
+      "color": "pavo",
+      "layerId": "medidas",
+      "order": 30,
+      "visible": true,
+      "locked": true,
+      "groupIds": [],
+      "selection": {
+        "selectable": false,
+        "role": "annotation"
+      },
+      "target": false,
+      "style": {
+        "strokeWidth": 0,
+        "preserveColorOnHighlight": true
+      },
+      "kind": "infoPanel",
+      "refs": [],
+      "text": "puntos → $(x, y)\\\\$ rectas → $ax + by + c = 0\\\\$$l' ∥ l$ por $P$",
+      "properties": {
+        "anchorMode": "viewport",
+        "viewportPosition": [
+          0,
+          0
+        ]
+      }
+    }
+  ],
+  "sliders": [],
+  "steps": [],
+  "constraints": [],
+  "dependencies": [
+    {
+      "sourceId": "A",
+      "targetId": "lineAB",
+      "relation": "construction"
+    },
+    {
+      "sourceId": "B",
+      "targetId": "lineAB",
+      "relation": "construction"
+    },
+    {
+      "sourceId": "A",
+      "targetId": "parallelP",
+      "relation": "construction"
+    },
+    {
+      "sourceId": "B",
+      "targetId": "parallelP",
+      "relation": "construction"
+    },
+    {
+      "sourceId": "P",
+      "targetId": "parallelP",
+      "relation": "construction"
+    },
+    {
+      "sourceId": "A",
+      "targetId": "distAB",
+      "relation": "construction"
+    },
+    {
+      "sourceId": "B",
+      "targetId": "distAB",
+      "relation": "construction"
+    }
+  ],
+  "note": "Arrastra A, B y P. La recta l′ permanece paralela a l.",
+  "extensions": {}
+}
+);
+/* @matematika-diagram-spec:end */
 
-    const lineAB = createLine(board, [A, B], {
-      strokeColor: theme.musgo,
-      strokeWidth: 2.5,
-    }, theme);
-    const parallelP = createParallelLine(board, [A, B, P], {
-      strokeColor: theme.salvia,
-      strokeWidth: 2,
-      dash: 2,
-    }, theme);
-    const info = createText(board, [4.5, 5.5, () => {
-      const dx = B.X() - A.X();
-      const dy = B.Y() - A.Y();
-      const distance = Math.hypot(dx, dy);
-      return `<div style="font-family: var(--font-serif); color:${theme.carbon}; text-align:right;">
-        <strong style="font-size:1.1rem;">&reals;<sup>2</sup></strong><br/>
-        <small style="color:${theme.musgo};">l: ${dy.toFixed(1)}x ${-dx >= 0 ? '+' : '-'} ${Math.abs(dx).toFixed(1)}y = c</small><br/>
-        <small style="color:${theme.salvia};">l' ∥ l por P</small><br/>
-        <small>d(A,B) = ${distance.toFixed(2)}</small>
-      </div>`;
-    }], {
-      fixed: true,
-      anchorX: 'right',
-      anchorY: 'top',
-    }, theme);
-
-    els.A = A;
-    els.B = B;
-    els.P = P;
-    els.lineAB = lineAB;
-    els.parallelP = parallelP;
-    els.info = info;
-  };
-
-  return (
-    <MathBoard boundingbox={[-6, 6, 6, -6]} axis grid onInit={onInit}>
-      <div className="absolute top-2 left-3 z-10 text-xs font-serif italic text-pizarra/50">
-        &reals;<sup>2</sup>: puntos &rarr; pares (x,y) &middot; rectas &rarr; ax+by+c=0
-      </div>
-    </MathBoard>
-  );
-};
+export const ModeloCartesiano = () => <DiagramRenderer spec={ModeloCartesianoSpec} />;
