@@ -64,6 +64,10 @@ export interface DiagramElementProperties {
   markCount?: number;
   /** Distancia entre graduaciones repetidas a lo largo de un segmento. */
   tickDistance?: number;
+  /** Distancia reactiva entre graduaciones, calculada a partir de la escena. */
+  tickDistanceExpression?: string;
+  /** Subdivisiones menores entre dos graduaciones principales. */
+  minorTickCount?: number;
   rows?: number;
   columns?: number;
   title?: string;
@@ -193,6 +197,8 @@ export interface DiagramSlider extends DiagramSceneItemBase {
   y: number;
   min: number;
   max: number;
+  /** Límite superior reactivo; `max` se conserva como fallback editable. */
+  maxExpression?: string;
   value: number;
   step: number;
 }

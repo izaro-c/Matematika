@@ -25,6 +25,37 @@ describe('DiagramSpec v2 schema and migrations', () => {
     if (parsed.success) expect(parsed.data.points[0].selection).toMatchObject({ selectable: true, highlightable: false });
   });
 
+  it('validates reactive slider maxima and reactive ruler spacing with explicit dependencies', () => {
+    const candidate = structuredClone(v2Fixture) as unknown as DiagramSpecV2;
+    candidate.sliders.push({
+      id: 'n', label: 'n', color: 'pavo', layerId: 'annotations', order: 90,
+      visible: true, locked: false, groupIds: [], selection: { selectable: true, role: 'primary' },
+      target: true, targetId: 'n', x: 0, y: -2, min: 1, max: 8,
+      maxExpression: 'floor(segAB.length)+2', value: 2, step: 1,
+    });
+    candidate.elements.push({
+      id: 'copyTicks', label: 'Separaciones', kind: 'measureTicks', refs: ['segAB'], color: 'carbon',
+      layerId: 'annotations', order: 91, visible: true, locked: false, groupIds: [],
+      selection: { selectable: true, role: 'construction' }, target: false,
+      properties: { tickDistance: 1, tickDistanceExpression: 'abs(pB.x-pA.x)', minorTickCount: 0 },
+    });
+    candidate.dependencies = [
+      ...(candidate.dependencies ?? []),
+      { sourceId: 'segAB', targetId: 'n', relation: 'expression' },
+      { sourceId: 'segAB', targetId: 'copyTicks', relation: 'construction' },
+      { sourceId: 'pA', targetId: 'copyTicks', relation: 'expression' },
+      { sourceId: 'pB', targetId: 'copyTicks', relation: 'expression' },
+    ];
+
+    const parsed = parseDiagramSpecV2(candidate);
+
+    expect(parsed.success).toBe(true);
+    if (!parsed.success) return;
+    expect(parsed.data.sliders[0].maxExpression).toBe('floor(segAB.length)+2');
+    expect(parsed.data.elements.at(-1)?.properties?.tickDistanceExpression).toBe('abs(pB.x-pA.x)');
+    expect(parsed.data.elements.at(-1)?.properties?.minorTickCount).toBe(0);
+  });
+
   it('accepts additive MDX highlighting for objects and groups without changing the default', () => {
     const candidate = structuredClone(v2Fixture);
     candidate.points[0].selection.dimOthersOnHighlight = false;

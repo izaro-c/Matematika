@@ -56,6 +56,7 @@ import {
   type DiagramColorToken,
   type DiagramElement,
   type DiagramSceneItem,
+  type DiagramSlider,
   type DiagramSpecV2,
 } from '../spec';
 
@@ -137,6 +138,16 @@ function liveVariables(elements: Record<string, any>, spec: DiagramSpecV2): Reco
     if (a?.Dist && b) variables[`${item.id}.length`] = a.Dist(b);
   });
   return variables;
+}
+
+function sliderMaximum(item: DiagramSlider, elements: Record<string, any>, spec: DiagramSpecV2): number {
+  if (!item.maxExpression) return item.max;
+  try {
+    const evaluated = evaluateMathExpression(item.maxExpression, liveVariables(elements, spec));
+    return evaluated > item.min ? evaluated : item.max;
+  } catch {
+    return item.max;
+  }
 }
 
 function StepOverlayPanels({
@@ -334,6 +345,15 @@ function conditionAllows(item: DiagramSceneItem, elements: Record<string, any>, 
   try { return evaluateMathExpression(item.properties.visibleWhen, liveVariables(elements, spec)) !== 0; } catch { return false; }
 }
 
+function tickDistance(item: DiagramElement, elements: Record<string, any>, spec: DiagramSpecV2): number {
+  if (!item.properties?.tickDistanceExpression) return item.properties?.tickDistance ?? 2;
+  try {
+    return evaluateMathExpression(item.properties.tickDistanceExpression, liveVariables(elements, spec));
+  } catch {
+    return item.properties.tickDistance ?? 2;
+  }
+}
+
 function renderedCoordinates(element: any, parameter?: number): [number, number] | null {
   if (!element || typeof element.X !== 'function' || typeof element.Y !== 'function') return null;
   try {
@@ -529,8 +549,8 @@ function createElement(
   ) : null;
   if (item.kind === 'measureTicks') return refs.length >= 1 ? createTicks(
     board,
-    [refs[0], item.properties?.tickDistance ?? 2],
-    { ...lineOptions, majorHeight: item.style?.markHeight ?? 10 },
+    [refs[0], tickDistance(item, elements, spec)],
+    { ...lineOptions, majorHeight: item.style?.markHeight ?? 10, minorTicks: item.properties?.minorTickCount ?? 4 },
     theme,
   ) : null;
   if (item.kind === 'dimensionLine') return refs.length >= 2 ? createDimensionLine(
@@ -1072,7 +1092,8 @@ const DiagramRendererContent: React.FC<DiagramRendererProps> = ({
                 mode === 'runtime' && allHeaderItemIds.has(sceneItem.id),
               );
             } else {
-              elements[sceneItem.id] = createSlider(board, [[sceneItem.x, sceneItem.y], [sceneItem.x + 2.6, sceneItem.y]], [sceneItem.min, sceneItem.value, sceneItem.max], {
+              const maximum = sliderMaximum(sceneItem, elements, spec);
+              elements[sceneItem.id] = createSlider(board, [[sceneItem.x, sceneItem.y], [sceneItem.x + 2.6, sceneItem.y]], [sceneItem.min, Math.min(sceneItem.value, maximum), maximum], {
                 highlight: highlightable,
                 name: renderKatexTextToHtml(sceneItem.label),
                 snapWidth: sceneItem.step,
@@ -1123,14 +1144,16 @@ const DiagramRendererContent: React.FC<DiagramRendererProps> = ({
                 ? (key: 'ArrowLeft' | 'ArrowRight' | 'ArrowUp' | 'ArrowDown' | 'Home' | 'End', largeStep: boolean) => {
                   const delta = sceneItem.step * (largeStep ? 10 : 1);
                   const current = element.Value?.() ?? sceneItem.value;
+                  const maximum = sliderMaximum(sceneItem, elements, spec);
                   const next = key === 'Home'
                     ? sceneItem.min
                     : key === 'End'
-                      ? sceneItem.max
-                      : Math.min(sceneItem.max, Math.max(sceneItem.min, current + (key === 'ArrowLeft' || key === 'ArrowDown' ? -delta : delta)));
+                      ? maximum
+                      : Math.min(maximum, Math.max(sceneItem.min, current + (key === 'ArrowLeft' || key === 'ArrowDown' ? -delta : delta)));
                   element.setValue?.(next);
                   board.update();
                   const node = element.rendNode as HTMLElement | undefined;
+                  node?.setAttribute('aria-valuemax', String(maximum));
                   node?.setAttribute('aria-valuenow', String(next));
                   node?.setAttribute('aria-label', `${sceneItem.selection.ariaLabel ?? sceneItem.label}: ${next}`);
                 }
@@ -1143,6 +1166,9 @@ const DiagramRendererContent: React.FC<DiagramRendererProps> = ({
               setTargetHighlight,
               keyboardAdjust,
             );
+            if ('min' in sceneItem && sceneItem.maxExpression) {
+              element.rendNode?.setAttribute('aria-valuemax', String(sliderMaximum(sceneItem, elements, spec)));
+            }
             attachLabelSelection(
               element,
               sceneItem,
@@ -1237,13 +1263,22 @@ const DiagramRendererContent: React.FC<DiagramRendererProps> = ({
                 fillColor: color, strokeColor: color, fillOpacity: opacity,
               });
             } else if ('min' in item) {
+              const maximum = sliderMaximum(item, elements, spec);
+              if (element.__matematikaMaximum !== maximum) {
+                const current = element.Value?.() ?? item.value;
+                element.setMax?.(maximum);
+                element.setValue?.(Math.min(maximum, Math.max(item.min, current)));
+                element.__matematikaMaximum = maximum;
+              }
               if (entry.stepValue !== undefined && element.__matematikaStepValue !== entry.stepValue) {
-                element.setValue?.(entry.stepValue);
+                element.setValue?.(Math.min(maximum, entry.stepValue));
                 element.__matematikaStepValue = entry.stepValue;
               } else if (entry.stepValue === undefined && element.__matematikaStepValue !== undefined) {
-                element.setValue?.(item.value);
+                element.setValue?.(Math.min(maximum, item.value));
                 delete element.__matematikaStepValue;
               }
+              element.rendNode?.setAttribute('aria-valuemax', String(maximum));
+              element.rendNode?.setAttribute('aria-valuenow', String(element.Value?.() ?? item.value));
               element.setAttribute({ ...base, strokeColor: color, strokeOpacity: opacity });
             } else if (item.kind === 'polygon' || item.kind === 'areaDecomposition') {
               element.setAttribute({
@@ -1255,6 +1290,14 @@ const DiagramRendererContent: React.FC<DiagramRendererProps> = ({
                 ...base, fillColor: color, strokeColor: color,
                 fillOpacity: active ? item.style?.highlightFillOpacity ?? 0.28 : (item.style?.fillOpacity ?? 0.1) * opacity,
                 strokeWidth: active ? item.style?.highlightStrokeWidth ?? 3 : item.style?.strokeWidth ?? 1.5,
+              });
+            } else if (item.kind === 'measureTicks') {
+              element.setAttribute({
+                ...base,
+                ticksDistance: tickDistance(item, elements, spec),
+                strokeColor: color,
+                strokeOpacity: (item.style?.strokeOpacity ?? 1) * opacity,
+                strokeWidth: externalActive ? item.style?.highlightStrokeWidth ?? 3.6 : item.style?.strokeWidth ?? 2,
               });
             } else if (item.kind === 'text' || item.kind === 'label' || item.kind === 'formula' || item.kind === 'infoPanel' || item.kind === 'measurement') {
               const liftedIntoHeader = mode === 'runtime' && headerItemIds.has(item.id);
