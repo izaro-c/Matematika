@@ -56,7 +56,7 @@ export function extractSemanticReferences(source: string): SemanticReference[] {
       .map(targetId => ({
         tag: match[1] as SemanticReference['tag'],
         targetId,
-        isDependency: match[1] === 'ConceptLink' && attrs.isDependency !== false && attrs.isDependency !== 'false',
+        isDependency: match[1] === 'ConceptLink' && (attrs.isDependency === true || attrs.isDependency === 'true'),
         start: match.index ?? 0,
         end: (match.index ?? 0) + match[0].length,
       }));
@@ -78,24 +78,13 @@ function referencesFromMetadata(metadata: Record<string, unknown>): string[] {
 }
 
 function dependenciesFromMetadata(metadata: Record<string, unknown>): string[] {
-  const keys = [
-    'lemmas', 'corollaries', 'demos', 'requires', 'parentTheorem', 'axiomas',
-    'axioms_verified', 'dependencias', 'links',
-  ];
+  const keys = ['lemmas', 'requires', 'axiomas', 'dependencias', 'links'];
   return keys.flatMap(key => {
     const value = metadata[key];
     return (Array.isArray(value) ? value : [value]).filter((item): item is string => (
       typeof item === 'string' && item.length > 0
     ));
   });
-}
-
-function semanticAssociationsFromMetadata(metadata: Record<string, unknown>): Set<string> {
-  const associations = new Set<string>();
-  if (metadata.type === 'axioma' && typeof metadata.axiomSystem === 'string') {
-    associations.add(metadata.axiomSystem);
-  }
-  return associations;
 }
 
 function dependsTransitively(start: string, target: string, graph: Map<string, string[]>): boolean {
@@ -190,11 +179,10 @@ export function buildAuthoringIntegrityReport(input: AuthoringIntegrityInput): E
   }
 
   const graph = new Map(entries.map(entry => [entry.id, dependenciesFromMetadata(entry.metadata)]));
-  const semanticAssociations = semanticAssociationsFromMetadata(input.metadata);
   const dependencies = new Set([
     ...dependenciesFromMetadata(input.metadata),
     ...refs
-      .filter(reference => reference.isDependency && !semanticAssociations.has(reference.targetId))
+      .filter(reference => reference.isDependency)
       .map(reference => reference.targetId),
   ]);
   for (const dependency of dependencies) {

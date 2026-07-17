@@ -1,4 +1,6 @@
 import { describe, expect, it } from 'vitest';
+import fs from 'node:fs';
+import path from 'node:path';
 import {
   applyMutationPlan,
   parseEditorDocument,
@@ -14,6 +16,7 @@ import {
   PAGE_TYPE_DIRECTORIES,
 } from '@/features/editor/ux/authoringModel';
 import type { Block } from '@/features/editor/core/parser';
+import { discoverMdxFiles } from '../../../../scripts/editor/corpusAuditCore';
 
 const definitionSource = `export const metadata = {
   "id": "definicion-prueba",
@@ -91,48 +94,50 @@ describe('Phase 7 lossless authoring UX', () => {
     expect(report.some(issue => issue.id.startsWith('broken-ConceptLink-no-existe'))).toBe(true);
   });
 
-  it('treats an axiom system as membership instead of a logical dependency', () => {
+  it('only treats explicitly marked semantic links as logical dependencies', () => {
     const report = buildAuthoringIntegrityReport({
       source: [
-        '<ConceptLink targetId={["sistema-absoluto", "geometria"]}>geometría absoluta</ConceptLink>',
-        '<ConceptLink targetId="dependencia-ciclica">dependencia real</ConceptLink>',
+        '<ConceptLink targetId="axioma-base">autorreferencia semántica</ConceptLink>',
+        '<ConceptLink targetId="sistema-compuesto">sistema asociado</ConceptLink>',
+        '<ConceptLink targetId="resultado-posterior">resultado equivalente</ConceptLink>',
+        '<ConceptLink targetId="dependencia-ciclica" isDependency={true}>dependencia real</ConceptLink>',
       ].join('\n'),
       metadata: {
-        id: 'axioma-congruencia-5',
+        id: 'axioma-base',
         type: 'axioma',
-        axiomSystem: 'sistema-absoluto',
+        axiomSystem: 'sistema-compuesto',
       },
-      currentFile: 'database/content/axioms/axioma-congruencia-5.mdx',
+      currentFile: 'database/content/axioms/axioma-base.mdx',
       diagramTargets: [],
       entries: [
         {
-          id: 'axioma-congruencia-5',
-          filePath: 'axioms/axioma-congruencia-5.mdx',
+          id: 'axioma-base',
+          filePath: 'axioms/axioma-base.mdx',
           contentType: 'axioma',
           metadata: {
-            id: 'axioma-congruencia-5',
+            id: 'axioma-base',
             type: 'axioma',
-            axiomSystem: 'sistema-absoluto',
+            axiomSystem: 'sistema-compuesto',
           },
         },
         {
-          id: 'sistema-absoluto',
-          filePath: 'axiomatic-systems/sistema-absoluto.mdx',
+          id: 'sistema-compuesto',
+          filePath: 'axiomatic-systems/sistema-compuesto.mdx',
           contentType: 'sistema-axiomatico',
           metadata: {
-            id: 'sistema-absoluto',
+            id: 'sistema-compuesto',
             type: 'sistema-axiomatico',
-            axiomas: ['axioma-congruencia-5'],
+            axiomas: ['axioma-base'],
           },
         },
         {
-          id: 'geometria',
-          filePath: 'definitions/geometria.mdx',
-          contentType: 'definicion',
+          id: 'resultado-posterior',
+          filePath: 'theorems/resultado-posterior.mdx',
+          contentType: 'teorema',
           metadata: {
-            id: 'geometria',
-            type: 'definicion',
-            subtype: 'primitivo',
+            id: 'resultado-posterior',
+            type: 'teorema',
+            requires: ['axioma-base'],
           },
         },
         {
@@ -142,19 +147,41 @@ describe('Phase 7 lossless authoring UX', () => {
           metadata: {
             id: 'dependencia-ciclica',
             type: 'teorema',
-            requires: ['axioma-congruencia-5'],
+            requires: ['axioma-base'],
           },
         },
       ],
     });
 
     expect(report).not.toEqual(expect.arrayContaining([
-      expect.objectContaining({ id: 'cyclic-dependency-sistema-absoluto' }),
+      expect.objectContaining({ id: 'self-dependency-axioma-base' }),
+      expect.objectContaining({ id: 'cyclic-dependency-sistema-compuesto' }),
+      expect.objectContaining({ id: 'cyclic-dependency-resultado-posterior' }),
     ]));
     expect(report).toEqual(expect.arrayContaining([
       expect.objectContaining({ id: 'cyclic-dependency-dependencia-ciclica' }),
     ]));
   });
+
+  it('does not report false dependency cycles across the published MDX corpus', () => {
+    const root = path.resolve('src/database/content');
+    const failures = discoverMdxFiles(root).flatMap(filePath => {
+      const source = fs.readFileSync(filePath, 'utf8');
+      const document = parseEditorDocument(source);
+      const relativePath = path.relative(root, filePath).replaceAll(path.sep, '/');
+      const report = buildAuthoringIntegrityReport({
+        source,
+        metadata: document.metadata.value ?? {},
+        currentFile: `database/content/${relativePath}`,
+        diagramTargets: [],
+      });
+      return report
+        .filter(issue => issue.id.startsWith('self-dependency-') || issue.id.startsWith('cyclic-dependency-'))
+        .map(issue => `${relativePath}: ${issue.message}`);
+    });
+
+    expect(failures).toEqual([]);
+  }, 180_000);
 
   it('creates schema-valid structured pages that reopen in visual mode', () => {
     const input = {
