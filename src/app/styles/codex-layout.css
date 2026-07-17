@@ -61,12 +61,58 @@
 @media (max-width: 1023px) {
   .codex-diagram {
     position: sticky;
-    top: 0;
-    z-index: 50;
-    background: var(--theme-lienzo);
-    border-bottom: 1px solid color-mix(in srgb, var(--theme-carbon) 15%, transparent);
-    box-shadow: 0 4px 12px color-mix(in srgb, var(--theme-carbon) 6%, transparent);
+    top: var(--codex-top);
+    z-index: 40;
+    width: 100vw;
+    height: clamp(14rem, 36svh, 20rem);
+    margin-left: calc(50% - 50vw);
+    background: transparent;
+    border: 0;
+    box-shadow: none;
   }
+
+  .codex-diagram::after {
+    content: "";
+    position: absolute;
+    right: 0;
+    bottom: -1.5rem;
+    left: 0;
+    z-index: 2;
+    height: 1.5rem;
+    pointer-events: none;
+    background: linear-gradient(to bottom, var(--theme-lienzo), transparent);
+  }
+
+  .codex-diagram-surface {
+    isolation: isolate;
+  }
+
+  .codex-diagram-surface::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    background: var(--theme-lienzo);
+  }
+
+  .codex-diagram-sticky {
+    padding-inline: clamp(0.5rem, 2vw, 0.75rem);
+  }
+
+  .codex-diagram[data-mobile-collapsed="true"] {
+    z-index: 50;
+    height: 2rem;
+  }
+
+  .codex-diagram[data-mobile-collapsed="true"] .codex-diagram-surface,
+  .codex-diagram[data-mobile-collapsed="true"] .codex-justifications {
+    display: none;
+  }
+
+  .codex-diagram[data-mobile-collapsed="true"] .mobile-diagram-toggle__chevron {
+    transform: rotate(180deg);
+  }
+
 }
 
 @media (min-width: 1024px) {

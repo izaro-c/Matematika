@@ -1,10 +1,11 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useId, useState } from 'react';
 import { useMathStore } from '@/app/providers/MathStoreContext';
 import { db } from '@/entities/content';
 import { Link, useLocation } from 'wouter';
 import { TYPE_STYLES } from '@/shared/lib/constants';
 import { getContentPageAccent } from '@/shared/design';
 import { ContentHeader } from '@/widgets/content/ContentHeader';
+import { MobileContentHeaderSeparator, MobileDiagramToolbar } from './MobileDiagramChrome';
 
 interface CodexLayoutProps {
   /** Pasos de la demostración (columna de lectura). */
@@ -30,6 +31,8 @@ export const CodexLayout: React.FC<CodexLayoutProps> = ({
   diagramLabel = 'Diagrama interactivo de la demostración',
   className = '',
 }) => {
+  const [isDiagramExpanded, setIsDiagramExpanded] = useState(true);
+  const diagramId = useId();
   const setVariable = useMathStore((state) => state.setVariable);
   const activeJustifications = useMathStore((state) => state.variables?.['activeJustifications']) as string[] | undefined;
   const [location] = useLocation();
@@ -65,8 +68,8 @@ export const CodexLayout: React.FC<CodexLayoutProps> = ({
       const isMobile = window.innerWidth < 1024;
       // Si hay diagrama en móvil, el centro de lectura está en la parte inferior (después del diagrama).
       // Si no hay diagrama, el centro es simplemente la mitad de la pantalla.
-      const viewportCenter = isMobile && hasDiagram
-        ? (window.innerHeight * 0.45) + ((window.innerHeight * 0.55) / 2)
+      const viewportCenter = isMobile && hasDiagram && isDiagramExpanded
+        ? (window.innerHeight * 0.46) + ((window.innerHeight * 0.54) / 2)
         : window.innerHeight / 2;
 
       let closestStep: Element | null = null;
@@ -124,7 +127,7 @@ export const CodexLayout: React.FC<CodexLayoutProps> = ({
       window.removeEventListener('scroll', handleScroll);
       window.removeEventListener('resize', handleScroll);
     };
-  }, [hasDiagram, setVariable]);
+  }, [hasDiagram, isDiagramExpanded, setVariable]);
 
   const renderedJustifications = () => {
     if (!activeJustifications || activeJustifications.length === 0) {
@@ -205,6 +208,11 @@ export const CodexLayout: React.FC<CodexLayoutProps> = ({
       data-page-type="demostracion"
       style={{ '--page-accent': getContentPageAccent('demostracion') } as React.CSSProperties}
     >
+      <MobileContentHeaderSeparator
+        hasDiagram={hasDiagram}
+        isDiagramExpanded={isDiagramExpanded}
+      />
+
       {/* Cabecera en móviles: antes del grid para que no quede aplastada por el diagrama sticky */}
       <div className="max-w-[80ch] mx-auto px-6 mobile-header-container">
         {renderHeader(true)}
@@ -216,11 +224,17 @@ export const CodexLayout: React.FC<CodexLayoutProps> = ({
           <aside 
             className="codex-diagram" 
             aria-label={diagramLabel}
+            data-mobile-collapsed={!isDiagramExpanded}
           >
             <div className="codex-diagram-sticky">
-              <div className="codex-diagram-surface">
+              <div id={diagramId} className="codex-diagram-surface">
                 {diagram}
               </div>
+              <MobileDiagramToolbar
+                diagramId={diagramId}
+                isExpanded={isDiagramExpanded}
+                onToggle={() => setIsDiagramExpanded((isExpanded) => !isExpanded)}
+              />
 
               {/* Panel de Justificaciones Activas */}
               <div className="codex-justifications">
