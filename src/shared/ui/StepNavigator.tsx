@@ -1,5 +1,6 @@
-import React, { useEffect, useMemo, useReducer } from 'react';
+import React, { useCallback, useEffect, useMemo, useReducer, useRef } from 'react';
 import { MathProviderBoundary, useMathStore } from '@/shared/lib/MathStoreContext';
+import { useDiagramStepSync } from '@/shared/lib/DiagramStepSyncContext';
 import {
   diagramPlaybackReducer,
   initialDiagramPlaybackState,
@@ -25,19 +26,52 @@ const StepNavigatorContent: React.FC<StepNavigatorProps> = ({
 }) => {
   const storeStep = useMathStore(state => state.variables?.[scopeId ? `step:${scopeId}` : 'step']);
   const setVariable = useMathStore(state => state.setVariable);
-  const externalStepId = activeStepId ?? (typeof storeStep === 'string' ? storeStep.replace(`${scopeId}:`, '') : '');
+  const stepSync = useDiagramStepSync();
+  const selectSynchronizedStep = stepSync?.selectDiagramStep;
+  const synchronizedStepId = stepSync?.activeStepIndex == null
+    ? undefined
+    : (steps[stepSync.activeStepIndex]?.id ?? '');
+  const storeStepId = typeof storeStep === 'string' ? storeStep.replace(`${scopeId}:`, '') : '';
+  const externalStepId = activeStepId ?? synchronizedStepId ?? storeStepId;
   const seed = useMemo(() => initialDiagramPlaybackState(steps, externalStepId), [steps, externalStepId]);
   const [playback, dispatch] = useReducer(diagramPlaybackReducer, seed);
+  const lastPublishedStepIdRef = useRef('');
+  const hasExternalStep = steps.some(step => step.id === externalStepId);
 
-  const storeStepId = typeof storeStep === 'string' ? storeStep.replace(`${scopeId}:`, '') : '';
-  const effectiveStepId = activeStepId ?? (steps.some(step => step.id === storeStepId) ? storeStepId : playback.activeStepId);
+  // External reading changes select and pause. Changes published by this
+  // navigator are already reflected in the reducer and must not stop playback.
+  useEffect(() => {
+    if (!hasExternalStep) return;
+    if (externalStepId === playback.activeStepId) {
+      if (lastPublishedStepIdRef.current === externalStepId) {
+        lastPublishedStepIdRef.current = '';
+      }
+      return;
+    }
+    if (lastPublishedStepIdRef.current === externalStepId) {
+      lastPublishedStepIdRef.current = '';
+      return;
+    }
+    dispatch({ type: 'select', stepId: externalStepId });
+  }, [externalStepId, hasExternalStep, playback.activeStepId]);
+
+  const effectiveStepId = hasExternalStep
+    ? externalStepId
+    : playback.activeStepId;
   const activeIndex = Math.max(0, steps.findIndex(step => step.id === effectiveStepId));
   const activeStep = steps[activeIndex];
 
-  const selectStep = (stepId: string) => {
-    dispatch({ type: 'select', stepId });
+  const publishStep = useCallback((stepId: string) => {
+    lastPublishedStepIdRef.current = stepId;
+    const stepIndex = steps.findIndex(step => step.id === stepId);
+    if (stepIndex >= 0) selectSynchronizedStep?.(stepIndex);
     if (onStepChange) onStepChange(stepId);
     else setVariable(scopeId ? `step:${scopeId}` : 'step', stepId);
+  }, [onStepChange, scopeId, selectSynchronizedStep, setVariable, steps]);
+
+  const selectStep = (stepId: string) => {
+    dispatch({ type: 'select', stepId });
+    publishStep(stepId);
   };
 
   useEffect(() => {
@@ -50,11 +84,10 @@ const StepNavigatorContent: React.FC<StepNavigatorProps> = ({
       }
       const nextId = steps[nextIndex].id;
       dispatch({ type: 'tick', steps });
-      if (onStepChange) onStepChange(nextId);
-      else setVariable(scopeId ? `step:${scopeId}` : 'step', nextId);
+      publishStep(nextId);
     }, activeStep.durationMs ?? 1800);
     return () => window.clearTimeout(timer);
-  }, [activeIndex, activeStep, onStepChange, playback.playing, scopeId, setVariable, steps]);
+  }, [activeIndex, activeStep, playback.playing, publishStep, steps]);
 
   if (steps.length === 0) return null;
 

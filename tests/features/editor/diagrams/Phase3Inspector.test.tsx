@@ -145,6 +145,22 @@ describe('Phase 3 visual editing', () => {
     });
   });
 
+  it('authors the reveal-on-MDX-highlight behavior without editing source code', () => {
+    const model = migrateDiagramSpec(pointsFixture).spec;
+    const target = model.points.find(point => point.selection.selectable)!;
+    const onModelEdit = vi.fn();
+    render(<DiagramInspector model={model} selectedId={target.id} onSelect={vi.fn()} onModelEdit={onModelEdit} onDeleteSelected={vi.fn()} />);
+
+    const control = screen.getByRole('checkbox', { name: /Revelar desde un enlace MDX/ });
+    expect((control as HTMLInputElement).checked).toBe(false);
+    fireEvent.click(control);
+
+    const edited = onModelEdit.mock.calls.at(-1)?.[0];
+    expect(edited.points.find((item: { id: string }) => item.id === target.id).style).toMatchObject({
+      highlightVisible: true,
+    });
+  });
+
   it('creates and edits an intersection from two compatible supports', () => {
     const base = migrateDiagramSpec(primitivesFixture).spec;
     const line = { ...base.elements.find(item => item.id === 'lineBC')!, id: 'lineOC', label: 'Recta OC', refs: ['pO', 'pC'], target: false };
@@ -442,6 +458,41 @@ describe('Phase 3 visual editing', () => {
     const edited = onModelEdit.mock.calls.at(-1)?.[0];
     expect(edited.elements.find((element: { id: string }) => element.id === mark.id)).toMatchObject({
       properties: { markCount: 3 },
+      style: { markHeight: 0.5 },
+    });
+  });
+
+  it('authors point attractors and their distances without editing source code', () => {
+    const model = migrateDiagramSpec(primitivesFixture).spec;
+    const onModelEdit = vi.fn();
+    const view = render(<DiagramInspector model={model} selectedId="pA" onSelect={vi.fn()} onModelEdit={onModelEdit} onDeleteSelected={vi.fn()} />);
+
+    fireEvent.click(screen.getByText('Atracción hacia formas notables'));
+    fireEvent.click(screen.getByRole('checkbox', { name: 'Usar Recta como atractor' }));
+    const withAttractor = onModelEdit.mock.calls.at(-1)?.[0];
+    expect(withAttractor.points.find((point: { id: string }) => point.id === 'pA').attractorIds).toEqual(['lineBC']);
+    expect(withAttractor.dependencies).toContainEqual({ sourceId: 'lineBC', targetId: 'pA', relation: 'constraint' });
+
+    view.rerender(<DiagramInspector model={withAttractor} selectedId="pA" onSelect={vi.fn()} onModelEdit={onModelEdit} onDeleteSelected={vi.fn()} />);
+    fireEvent.change(screen.getByLabelText('Distancia de atracción'), { target: { value: '0.35' } });
+    fireEvent.change(screen.getByLabelText('Distancia de captura'), { target: { value: '0.55' } });
+    const edited = onModelEdit.mock.calls.at(-1)?.[0];
+    expect(edited.points.find((point: { id: string }) => point.id === 'pA')).toMatchObject({ snatchDistance: 0.55 });
+  });
+
+  it('edits the count and size of a parallel mark from the visual inspector', () => {
+    const model = migrateDiagramSpec(marksFixture).spec;
+    const onModelEdit = vi.fn();
+    const view = render(<DiagramInspector model={model} selectedId="parallelAV" onSelect={vi.fn()} onModelEdit={onModelEdit} onDeleteSelected={vi.fn()} />);
+
+    fireEvent.change(screen.getByLabelText('Número de marcas'), { target: { value: '1' } });
+    const oneArrow = onModelEdit.mock.calls.at(-1)?.[0];
+    view.rerender(<DiagramInspector model={oneArrow} selectedId="parallelAV" onSelect={vi.fn()} onModelEdit={onModelEdit} onDeleteSelected={vi.fn()} />);
+    fireEvent.change(screen.getByLabelText('Altura de las marcas de paralelismo'), { target: { value: '0.5' } });
+    const edited = onModelEdit.mock.calls.at(-1)?.[0];
+
+    expect(edited.elements.find((element: { id: string }) => element.id === 'parallelAV')).toMatchObject({
+      properties: { markCount: 1 },
       style: { markHeight: 0.5 },
     });
   });

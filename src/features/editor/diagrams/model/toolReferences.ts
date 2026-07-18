@@ -7,6 +7,7 @@ export const INTERSECTION_SUPPORT_KINDS = new Set(['segment', 'line', 'ray', 'pe
 export function toolReferenceLabel(tool: CanvasTool, index: number): string {
   if (tool === 'intersection') return `Soporte lineal ${index + 1}`;
   if (tool === 'measureTicks') return 'Segmento graduado';
+  if (tool === 'parallelMark') return index === 0 ? 'Primer extremo del lado paralelo' : 'Segundo extremo del lado paralelo';
   if (tool === 'label') return 'Objeto etiquetado';
   if (tool === 'angle' || tool === 'nonReflexAngle' || tool === 'rightAngle' || tool === 'perpendicularMark' || tool === 'angleBisector') {
     return ANGLE_REFERENCE_LABELS[index] ?? `Punto ${index + 1}`;

@@ -37,6 +37,7 @@ export type DiagramElementKind =
   | 'nonReflexAngle'
   | 'rightAngle'
   | 'congruenceMark'
+  | 'parallelMark'
   | 'measureTicks'
   | 'perpendicularMark'
   | 'dimensionLine'
@@ -182,10 +183,16 @@ export interface DiagramPoint extends DiagramSceneItemBase {
   xExpression?: string;
   yExpression?: string;
   constraintIds?: string[];
-  /** Activa el ajuste a la cuadrícula al arrastrar el punto. Solo tiene efecto en puntos `free`, `horizontal` o `vertical`. */
+  /** Activa el ajuste a la cuadrícula al arrastrar un punto móvil, incluidas las combinaciones de restricciones. */
   snapToGrid?: boolean;
   /** Tamaño de celda de la cuadrícula de ajuste, en unidades del sistema de coordenadas. Por defecto 0.5. */
   snapSize?: number;
+  /** Soportes geométricos que atraen suavemente al punto durante el arrastre. */
+  attractorIds?: string[];
+  /** Distancia, en unidades del tablero, a partir de la que comienza la atracción. */
+  attractorDistance?: number;
+  /** Distancia de captura firme sobre un soporte atractor. */
+  snatchDistance?: number;
 }
 
 export interface DiagramElement extends DiagramSceneItemBase {

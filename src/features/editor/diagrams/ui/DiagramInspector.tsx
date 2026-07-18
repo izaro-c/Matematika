@@ -28,6 +28,7 @@ function sceneItemLabel(model: VisualDiagramModel, id: string): string {
 function elementReferenceCandidates(model: VisualDiagramModel, element: VisualElement) {
   if (element.kind === 'intersection') return toolReferenceCandidates(model, 'intersection');
   if (element.kind === 'measureTicks') return toolReferenceCandidates(model, 'measureTicks');
+  if (element.kind === 'congruenceMark' || element.kind === 'parallelMark') return model.points;
   return [...model.points, ...model.elements.filter(candidate => candidate.id !== element.id)];
 }
 
@@ -62,6 +63,24 @@ export const DiagramInspector: React.FC<DiagramInspectorProps> = ({
       dependencies: [
         ...(model.dependencies || []).filter(dependency => dependency.targetId !== selectedPoint.id || dependency.relation !== 'expression'),
         ...update.dependencies.map(sourceId => ({ sourceId, targetId: selectedPoint.id, relation: 'expression' as const })),
+      ],
+    });
+  };
+
+  const handlePointAttractorsChange = (attractorIds: string[]) => {
+    if (!selectedPoint) return;
+    const previousIds = new Set(selectedPoint.attractorIds ?? []);
+    const next = updatePoint(model, selectedPoint.id, { attractorIds: attractorIds.length ? attractorIds : undefined });
+    onModelEdit({
+      ...next,
+      dependencies: [
+        ...(model.dependencies ?? []).filter(dependency => !(
+          dependency.targetId === selectedPoint.id
+          && dependency.relation === 'constraint'
+          && !dependency.constraintId
+          && previousIds.has(dependency.sourceId)
+        )),
+        ...attractorIds.map(sourceId => ({ sourceId, targetId: selectedPoint.id, relation: 'constraint' as const })),
       ],
     });
   };
@@ -263,7 +282,7 @@ export const DiagramInspector: React.FC<DiagramInspectorProps> = ({
             </p>
           </div>
 
-          {['free', 'horizontal', 'vertical'].includes(selectedPoint.constraint) && (
+          {['free', 'horizontal', 'vertical', 'constrained'].includes(selectedPoint.constraint) && (
             <div className="space-y-2 rounded border border-carbon/10 p-2">
               <label className="flex items-center gap-1.5 text-xs font-bold text-carbon">
                 <input
@@ -290,6 +309,39 @@ export const DiagramInspector: React.FC<DiagramInspectorProps> = ({
                 </label>
               )}
             </div>
+          )}
+
+          {['free', 'horizontal', 'vertical', 'constrained'].includes(selectedPoint.constraint) && (
+            <details className="rounded border border-pavo/20 bg-pavo/5 p-2">
+              <summary className="cursor-pointer text-xs font-bold text-pavo">Atracción hacia formas notables</summary>
+              <p className="mt-1 text-[10px] leading-relaxed text-carbon/50">Acerca el punto a rectas, segmentos o curvas auxiliares durante el arrastre.</p>
+              <div className="mt-2 max-h-36 space-y-1 overflow-y-auto">
+                {model.elements
+                  .filter(element => ['line', 'ray', 'segment', 'circle', 'functionCurve', 'parametricCurve', 'perpendicular', 'parallel', 'angleBisector'].includes(element.kind))
+                  .map(element => {
+                    const checked = selectedPoint.attractorIds?.includes(element.id) ?? false;
+                    return (
+                      <label key={element.id} className="flex items-center gap-1.5 text-[10px] text-carbon">
+                        <input
+                          type="checkbox"
+                          aria-label={`Usar ${element.label} como atractor`}
+                          checked={checked}
+                          onChange={(event) => handlePointAttractorsChange(event.target.checked
+                            ? [...(selectedPoint.attractorIds ?? []), element.id]
+                            : (selectedPoint.attractorIds ?? []).filter(id => id !== element.id))}
+                        />
+                        <span>{element.label} <span className="font-mono text-carbon/45">({element.id})</span></span>
+                      </label>
+                    );
+                  })}
+              </div>
+              {(selectedPoint.attractorIds?.length ?? 0) > 0 && (
+                <div className="mt-2 grid grid-cols-2 gap-2">
+                  <label className="text-[10px] font-bold text-carbon">Distancia de atracción<input type="number" min="0.01" max="20" step="0.05" aria-label="Distancia de atracción" className="mt-1 w-full rounded border border-carbon/15 bg-lienzo p-1.5 text-xs" value={selectedPoint.attractorDistance ?? 0.4} onChange={(event) => handlePointChange({ attractorDistance: Math.max(0.01, Number(event.target.value)) })} /></label>
+                  <label className="text-[10px] font-bold text-carbon">Distancia de captura<input type="number" min="0.01" max="20" step="0.05" aria-label="Distancia de captura" className="mt-1 w-full rounded border border-carbon/15 bg-lienzo p-1.5 text-xs" value={selectedPoint.snatchDistance ?? 0.6} onChange={(event) => handlePointChange({ snatchDistance: Math.max(0.01, Number(event.target.value)) })} /></label>
+                </div>
+              )}
+            </details>
           )}
 
           {selectedPoint.constraint === 'glider' && (
@@ -366,9 +418,9 @@ export const DiagramInspector: React.FC<DiagramInspectorProps> = ({
           </div>
 
           <div className="grid grid-cols-2 gap-2 rounded border border-carbon/10 p-2">
-            <label className="text-xs font-bold text-carbon">Tamaño<input type="number" min="0" max="30" step="0.5" aria-label="Tamaño del punto" className="mt-1 w-full rounded border border-carbon/15 bg-lienzo p-1.5 text-xs" value={selectedPoint.style?.pointSize ?? 5} onChange={(event) => handlePointStyleChange({ pointSize: Number(event.target.value) })} /></label>
-            <label className="text-xs font-bold text-carbon">Tamaño resaltado<input type="number" min="0" max="40" step="0.5" aria-label="Tamaño resaltado del punto" className="mt-1 w-full rounded border border-carbon/15 bg-lienzo p-1.5 text-xs" value={selectedPoint.style?.highlightPointSize ?? 8.5} onChange={(event) => handlePointStyleChange({ highlightPointSize: Number(event.target.value) })} /></label>
-            <label className="col-span-2 flex items-center gap-1.5 text-xs font-bold text-carbon"><input type="checkbox" checked={selectedPoint.style?.preserveColorOnHighlight ?? false} onChange={(event) => handlePointStyleChange({ preserveColorOnHighlight: event.target.checked })} />Conservar color al resaltar</label>
+            <label className="text-xs font-bold text-carbon">Tamaño<input type="number" min="0" max="30" step="0.5" aria-label="Tamaño del punto" className="mt-1 w-full rounded border border-carbon/15 bg-lienzo p-1.5 text-xs" value={selectedPoint.style?.pointSize ?? 7} onChange={(event) => handlePointStyleChange({ pointSize: Number(event.target.value) })} /></label>
+            <label className="text-xs font-bold text-carbon">Tamaño resaltado<input type="number" min="0" max="40" step="0.5" aria-label="Tamaño resaltado del punto" className="mt-1 w-full rounded border border-carbon/15 bg-lienzo p-1.5 text-xs" value={selectedPoint.style?.highlightPointSize ?? 10} onChange={(event) => handlePointStyleChange({ highlightPointSize: Number(event.target.value) })} /></label>
+            <label className="col-span-2 flex items-center gap-1.5 text-xs font-bold text-carbon"><input type="checkbox" checked={selectedPoint.style?.preserveColorOnHighlight ?? true} onChange={(event) => handlePointStyleChange({ preserveColorOnHighlight: event.target.checked })} />Conservar color al resaltar</label>
           </div>
 
           <label className="flex items-center gap-1.5 text-xs font-bold text-carbon">
@@ -524,27 +576,215 @@ export const DiagramInspector: React.FC<DiagramInspectorProps> = ({
             </fieldset>
           )}
 
-          {(selectedElement.kind === 'text' || selectedElement.kind === 'measurement') && (
+          {selectedElement.kind === 'infoPanel' && (
+            <div className="space-y-3 rounded border border-carbon/10 p-3 bg-carbon/5">
+              <p className="text-[10px] font-bold uppercase tracking-wider text-carbon/50">Contenido y Valor Reactivo</p>
+
+              <label className="block text-xs font-bold text-carbon">
+                Título del panel
+                <input
+                  aria-label="Título del panel"
+                  className="mt-1 w-full rounded border border-carbon/15 bg-lienzo p-1.5 text-xs font-semibold"
+                  value={selectedElement.properties?.title ?? ''}
+                  onChange={(event) => handleElementPropertiesChange({ title: event.target.value || undefined })}
+                  placeholder="Ej. Teorema de Pitágoras"
+                />
+              </label>
+
+              <label className="block text-xs font-bold text-carbon">
+                Contenido del panel
+                <textarea
+                  aria-label="Contenido del panel"
+                  className="mt-1 w-full rounded border border-carbon/15 bg-lienzo p-1.5 text-xs h-20 resize-y"
+                  value={selectedElement.text || ''}
+                  onChange={(event) => handleElementChange({ text: event.target.value })}
+                  placeholder="Introduce el texto del panel..."
+                />
+                <span className="mt-1 block text-[10px] text-carbon/45 leading-relaxed">
+                  Admite texto, LaTeX (ej. <code>{'$x^2$'}</code>) y variables reactivas entre llaves.
+                  Ejemplo: <code>{'{a.x}'}</code> para mostrar coordenadas, o <code>{'{value}'}</code> para el valor calculado de la fórmula de abajo.
+                </span>
+              </label>
+
+              <fieldset className="space-y-2 rounded border border-carbon/15 p-2 bg-lienzo/40">
+                <legend className="px-1 text-[10px] font-bold uppercase tracking-wider text-carbon/50">Fórmula de {'{value}'} (Opcional)</legend>
+                <label className="block text-xs font-bold text-carbon">
+                  Fórmula matemática
+                  <input
+                    aria-label="Fórmula matemática"
+                    className="mt-1 w-full rounded border border-carbon/15 bg-lienzo p-1.5 font-mono text-xs"
+                    value={selectedElement.properties?.expression || ''}
+                    onChange={(event) => handleElementPropertiesChange({ expression: event.target.value || undefined })}
+                    placeholder="Ej. a^2 + b^2"
+                  />
+                </label>
+                <div className="grid grid-cols-2 gap-2">
+                  <label className="text-xs font-bold text-carbon">
+                    Unidad
+                    <input
+                      aria-label="Unidad"
+                      className="mt-1 w-full rounded border border-carbon/15 bg-lienzo p-1.5 text-xs"
+                      value={selectedElement.properties?.unit || ''}
+                      onChange={(event) => handleElementPropertiesChange({ unit: event.target.value })}
+                      placeholder="Ej. cm²"
+                    />
+                  </label>
+                  <label className="text-xs font-bold text-carbon">
+                    Decimales
+                    <input
+                      type="number"
+                      min="0"
+                      max="12"
+                      aria-label="Decimales"
+                      className="mt-1 w-full rounded border border-carbon/15 bg-lienzo p-1.5 text-xs"
+                      value={selectedElement.properties?.precision ?? 2}
+                      onChange={(event) => handleElementPropertiesChange({ precision: Number(event.target.value) })}
+                    />
+                  </label>
+                </div>
+              </fieldset>
+            </div>
+          )}
+
+          {(selectedElement.kind === 'measurement' || selectedElement.kind === 'dimensionLine') && (
+            <div className="space-y-3 rounded border border-carbon/10 p-3 bg-carbon/5">
+              <p className="text-[10px] font-bold uppercase tracking-wider text-carbon/50">Contenido y Valor de Medida</p>
+
+              <label className="block text-xs font-bold text-carbon">
+                Plantilla del texto
+                <input
+                  className="mt-1 w-full rounded border border-carbon/15 bg-lienzo p-1.5 text-xs"
+                  value={selectedElement.text || ''}
+                  onChange={(event) => handleElementChange({ text: event.target.value })}
+                  placeholder={`${selectedElement.label}: {value}`}
+                />
+                <span className="mt-1 block text-[10px] text-carbon/45 leading-relaxed">
+                  Use <code>{'{value}'}</code> para mostrar el resultado medido o calculado.
+                </span>
+              </label>
+
+              <fieldset className="space-y-2 rounded border border-carbon/15 p-2 bg-lienzo/40">
+                <legend className="px-1 text-[10px] font-bold uppercase tracking-wider text-carbon/50">Cálculo de la medida</legend>
+                <label className="block text-xs font-bold text-carbon">
+                  Fórmula matemática override
+                  <input
+                    aria-label="Fórmula de medida"
+                    className="mt-1 w-full rounded border border-carbon/15 bg-lienzo p-1.5 font-mono text-xs"
+                    value={selectedElement.properties?.expression || ''}
+                    onChange={(event) => handleElementPropertiesChange({ expression: event.target.value || undefined })}
+                    placeholder="Vacío = medir distancia automáticamente"
+                  />
+                </label>
+                <div className="grid grid-cols-2 gap-2">
+                  <label className="text-xs font-bold text-carbon">
+                    Unidad
+                    <input
+                      aria-label="Unidad"
+                      className="mt-1 w-full rounded border border-carbon/15 bg-lienzo p-1.5 text-xs"
+                      value={selectedElement.properties?.unit || ''}
+                      onChange={(event) => handleElementPropertiesChange({ unit: event.target.value })}
+                      placeholder="Ej. cm"
+                    />
+                  </label>
+                  <label className="text-xs font-bold text-carbon">
+                    Decimales
+                    <input
+                      type="number"
+                      min="0"
+                      max="12"
+                      aria-label="Decimales"
+                      className="mt-1 w-full rounded border border-carbon/15 bg-lienzo p-1.5 text-xs"
+                      value={selectedElement.properties?.precision ?? 2}
+                      onChange={(event) => handleElementPropertiesChange({ precision: Number(event.target.value) })}
+                    />
+                  </label>
+                </div>
+              </fieldset>
+            </div>
+          )}
+
+          {selectedElement.kind === 'formula' && (
+            <div className="space-y-3 rounded border border-carbon/10 p-3 bg-carbon/5">
+              <p className="text-[10px] font-bold uppercase tracking-wider text-carbon/50">Fórmula KaTeX y Valor</p>
+
+              <label className="block text-xs font-bold text-carbon">
+                Expresión de fórmula (KaTeX)
+                <input
+                  className="mt-1 w-full rounded border border-carbon/15 bg-lienzo p-1.5 text-xs font-mono"
+                  value={selectedElement.text || ''}
+                  onChange={(event) => handleElementChange({ text: event.target.value })}
+                  placeholder="Ej. a^2 + b^2 = c^2 o a = {value}"
+                />
+                <span className="mt-1 block text-[10px] text-carbon/45 leading-relaxed">
+                  Use llaves (ej. <code>{'{a.x}'}</code>) para incrustar variables, o <code>{'{value}'}</code> para la fórmula de abajo.
+                </span>
+              </label>
+
+              <fieldset className="space-y-2 rounded border border-carbon/15 p-2 bg-lienzo/40">
+                <legend className="px-1 text-[10px] font-bold uppercase tracking-wider text-carbon/50">Fórmula de {'{value}'} (Opcional)</legend>
+                <label className="block text-xs font-bold text-carbon">
+                  Fórmula matemática
+                  <input
+                    aria-label="Fórmula matemática"
+                    className="mt-1 w-full rounded border border-carbon/15 bg-lienzo p-1.5 font-mono text-xs"
+                    value={selectedElement.properties?.expression || ''}
+                    onChange={(event) => handleElementPropertiesChange({ expression: event.target.value || undefined })}
+                  />
+                </label>
+                <div className="grid grid-cols-2 gap-2">
+                  <label className="text-xs font-bold text-carbon">
+                    Unidad
+                    <input
+                      aria-label="Unidad"
+                      className="mt-1 w-full rounded border border-carbon/15 bg-lienzo p-1.5 text-xs"
+                      value={selectedElement.properties?.unit || ''}
+                      onChange={(event) => handleElementPropertiesChange({ unit: event.target.value })}
+                    />
+                  </label>
+                  <label className="text-xs font-bold text-carbon">
+                    Decimales
+                    <input
+                      type="number"
+                      min="0"
+                      max="12"
+                      aria-label="Decimales"
+                      className="mt-1 w-full rounded border border-carbon/15 bg-lienzo p-1.5 text-xs"
+                      value={selectedElement.properties?.precision ?? 2}
+                      onChange={(event) => handleElementPropertiesChange({ precision: Number(event.target.value) })}
+                    />
+                  </label>
+                </div>
+              </fieldset>
+            </div>
+          )}
+
+          {selectedElement.kind === 'text' && (
             <div>
               <label className="block text-xs font-bold text-carbon mb-1">Contenido de texto</label>
               <input
                 className="w-full rounded border border-carbon/15 bg-lienzo p-1.5 text-xs"
                 value={selectedElement.text || ''}
                 onChange={(e) => handleElementChange({ text: e.target.value })}
+                placeholder="Introduce el texto..."
               />
-              <span className="mt-1 block text-[10px] text-carbon/45">Puede mezclar texto y LaTeX, por ejemplo <code>{'$\\alpha + \\beta$'}</code>.</span>
+              <span className="mt-1 block text-[10px] text-carbon/45">
+                Admite texto y LaTeX (ej. <code>{'$\\alpha + \\beta$'}</code>). Puedes usar llaves (ej. <code>{'{a.x}'}</code>) para variables reactivas.
+              </span>
             </div>
           )}
 
-          {(['label', 'formula', 'infoPanel', 'dimensionLine'].includes(selectedElement.kind)) && (
+          {selectedElement.kind === 'label' && (
             <div>
-              <label className="block text-xs font-bold text-carbon mb-1">Contenido; use {'{value}'} para el valor reactivo</label>
+              <label className="block text-xs font-bold text-carbon mb-1">Contenido de la etiqueta</label>
               <input
                 className="w-full rounded border border-carbon/15 bg-lienzo p-1.5 text-xs"
                 value={selectedElement.text || ''}
-                onChange={(event) => handleElementChange({ text: event.target.value })}
+                onChange={(e) => handleElementChange({ text: e.target.value })}
+                placeholder={selectedElement.label}
               />
-              <span className="mt-1 block text-[10px] text-carbon/45">Puede mezclar texto y LaTeX, por ejemplo <code>{'$x^2$'}</code>.</span>
+              <span className="mt-1 block text-[10px] text-carbon/45">
+                Texto de la etiqueta junto al elemento. Admite LaTeX (ej. <code>{'$A$'}</code>).
+              </span>
             </div>
           )}
 
@@ -688,15 +928,6 @@ export const DiagramInspector: React.FC<DiagramInspectorProps> = ({
                   </div>
                 </div>
               )}
-              <label className="block text-xs font-bold text-carbon">
-                Título del panel
-                <input
-                  aria-label="Título del panel"
-                  className="mt-1 w-full rounded border border-carbon/15 bg-lienzo p-1.5 text-xs"
-                  value={selectedElement.properties?.title ?? ''}
-                  onChange={(event) => handleElementPropertiesChange({ title: event.target.value || undefined })}
-                />
-              </label>
             </fieldset>
           )}
 
@@ -721,20 +952,12 @@ export const DiagramInspector: React.FC<DiagramInspectorProps> = ({
             </div>
           )}
 
-          {(['measurement', 'dimensionLine', 'formula', 'infoPanel'].includes(selectedElement.kind)) && (
-            <div className="space-y-2 rounded border border-carbon/10 p-2">
-              <label className="block text-xs font-bold text-carbon">Expresión segura<input aria-label="Expresión de valor" className="mt-1 w-full rounded border border-carbon/15 bg-lienzo p-1.5 font-mono text-xs" value={selectedElement.properties?.expression || ''} onChange={(event) => handleElementPropertiesChange({ expression: event.target.value || undefined })} /></label>
-              <div className="grid grid-cols-2 gap-2">
-                <label className="text-xs font-bold text-carbon">Unidad<input aria-label="Unidad" className="mt-1 w-full rounded border border-carbon/15 bg-lienzo p-1.5 text-xs" value={selectedElement.properties?.unit || ''} onChange={(event) => handleElementPropertiesChange({ unit: event.target.value })} /></label>
-                <label className="text-xs font-bold text-carbon">Decimales<input type="number" min="0" max="12" aria-label="Decimales" className="mt-1 w-full rounded border border-carbon/15 bg-lienzo p-1.5 text-xs" value={selectedElement.properties?.precision ?? 2} onChange={(event) => handleElementPropertiesChange({ precision: Number(event.target.value) })} /></label>
-              </div>
-            </div>
-          )}
+          {/* El contenido, expresión y formato de valor ya se han agrupado en la sección superior para estos elementos */}
 
-          {selectedElement.kind === 'congruenceMark' && (
+          {(selectedElement.kind === 'congruenceMark' || selectedElement.kind === 'parallelMark') && (
             <div className="grid grid-cols-2 gap-2">
               <label className="text-xs font-bold text-carbon">Número de marcas<input type="number" min="1" max="4" aria-label="Número de marcas" className="mt-1 w-full rounded border border-carbon/15 bg-lienzo p-1.5 text-xs" value={selectedElement.properties?.markCount ?? 1} onChange={(event) => handleElementPropertiesChange({ markCount: Number(event.target.value) })} /></label>
-              <label className="text-xs font-bold text-carbon">Altura<input type="number" min="0.05" max="100" step="0.05" aria-label="Altura de las marcas de congruencia" className="mt-1 w-full rounded border border-carbon/15 bg-lienzo p-1.5 text-xs" value={selectedElement.style?.markHeight ?? 0.32} onChange={(event) => handleElementStyleChange({ markHeight: Number(event.target.value) })} /></label>
+              <label className="text-xs font-bold text-carbon">Altura<input type="number" min="0.05" max="100" step="0.05" aria-label={selectedElement.kind === 'parallelMark' ? 'Altura de las marcas de paralelismo' : 'Altura de las marcas de congruencia'} className="mt-1 w-full rounded border border-carbon/15 bg-lienzo p-1.5 text-xs" value={selectedElement.style?.markHeight ?? (selectedElement.kind === 'parallelMark' ? 0.42 : 0.32)} onChange={(event) => handleElementStyleChange({ markHeight: Number(event.target.value) })} /></label>
             </div>
           )}
 
@@ -786,18 +1009,18 @@ export const DiagramInspector: React.FC<DiagramInspectorProps> = ({
           <div className="grid grid-cols-2 gap-2 rounded border border-carbon/10 p-2">
             {selectedElement.kind === 'intersection' && (
               <>
-                <label className="text-xs font-bold text-carbon">Tamaño<input type="number" min="0" max="30" step="0.5" aria-label="Tamaño de la intersección" className="mt-1 w-full rounded border border-carbon/15 bg-lienzo p-1.5 text-xs" value={selectedElement.style?.pointSize ?? 4} onChange={(event) => handleElementStyleChange({ pointSize: Number(event.target.value) })} /></label>
-                <label className="text-xs font-bold text-carbon">Tamaño resaltado<input type="number" min="0" max="40" step="0.5" aria-label="Tamaño resaltado de la intersección" className="mt-1 w-full rounded border border-carbon/15 bg-lienzo p-1.5 text-xs" value={selectedElement.style?.highlightPointSize ?? 7} onChange={(event) => handleElementStyleChange({ highlightPointSize: Number(event.target.value) })} /></label>
+                <label className="text-xs font-bold text-carbon">Tamaño<input type="number" min="0" max="30" step="0.5" aria-label="Tamaño de la intersección" className="mt-1 w-full rounded border border-carbon/15 bg-lienzo p-1.5 text-xs" value={selectedElement.style?.pointSize ?? 7} onChange={(event) => handleElementStyleChange({ pointSize: Number(event.target.value) })} /></label>
+                <label className="text-xs font-bold text-carbon">Tamaño resaltado<input type="number" min="0" max="40" step="0.5" aria-label="Tamaño resaltado de la intersección" className="mt-1 w-full rounded border border-carbon/15 bg-lienzo p-1.5 text-xs" value={selectedElement.style?.highlightPointSize ?? 10} onChange={(event) => handleElementStyleChange({ highlightPointSize: Number(event.target.value) })} /></label>
               </>
             )}
             {(selectedElement.kind === 'angle' || selectedElement.kind === 'nonReflexAngle' || selectedElement.kind === 'rightAngle' || selectedElement.kind === 'perpendicularMark') && (
               <label className="col-span-2 text-xs font-bold text-carbon">Radio de la marca<input type="number" min="0.05" max="10" step="0.05" aria-label="Radio de la marca angular" className="mt-1 w-full rounded border border-carbon/15 bg-lienzo p-1.5 text-xs" value={selectedElement.style?.angleRadius ?? (selectedElement.kind === 'angle' || selectedElement.kind === 'nonReflexAngle' ? DEFAULT_ANGLE_RADIUS : DEFAULT_RIGHT_ANGLE_RADIUS)} onChange={(event) => handleElementStyleChange({ angleRadius: Number(event.target.value) })} /></label>
             )}
             <label className="text-xs font-bold text-carbon">Grosor<input type="number" min="0" max="20" step="0.1" aria-label="Grosor del elemento" className="mt-1 w-full rounded border border-carbon/15 bg-lienzo p-1.5 text-xs" value={selectedElement.style?.strokeWidth ?? 2.4} onChange={(event) => handleElementStyleChange({ strokeWidth: Number(event.target.value) })} /></label>
-            <label className="text-xs font-bold text-carbon">Grosor resaltado<input type="number" min="0" max="30" step="0.1" aria-label="Grosor resaltado del elemento" className="mt-1 w-full rounded border border-carbon/15 bg-lienzo p-1.5 text-xs" value={selectedElement.style?.highlightStrokeWidth ?? 4.8} onChange={(event) => handleElementStyleChange({ highlightStrokeWidth: Number(event.target.value) })} /></label>
+            <label className="text-xs font-bold text-carbon">Grosor resaltado<input type="number" min="0" max="30" step="0.1" aria-label="Grosor resaltado del elemento" className="mt-1 w-full rounded border border-carbon/15 bg-lienzo p-1.5 text-xs" value={selectedElement.style?.highlightStrokeWidth ?? 3} onChange={(event) => handleElementStyleChange({ highlightStrokeWidth: Number(event.target.value) })} /></label>
             <label className="text-xs font-bold text-carbon">Relleno<input type="number" min="0" max="1" step="0.01" aria-label="Opacidad de relleno" className="mt-1 w-full rounded border border-carbon/15 bg-lienzo p-1.5 text-xs" value={selectedElement.style?.fillOpacity ?? 0.16} onChange={(event) => handleElementStyleChange({ fillOpacity: Number(event.target.value) })} /></label>
             <label className="text-xs font-bold text-carbon">Relleno resaltado<input type="number" min="0" max="1" step="0.01" aria-label="Opacidad de relleno resaltado" className="mt-1 w-full rounded border border-carbon/15 bg-lienzo p-1.5 text-xs" value={selectedElement.style?.highlightFillOpacity ?? 0.34} onChange={(event) => handleElementStyleChange({ highlightFillOpacity: Number(event.target.value) })} /></label>
-            <label className="col-span-2 flex items-center gap-1.5 text-xs font-bold text-carbon"><input type="checkbox" checked={selectedElement.style?.preserveColorOnHighlight ?? false} onChange={(event) => handleElementStyleChange({ preserveColorOnHighlight: event.target.checked })} />Conservar color al resaltar</label>
+            <label className="col-span-2 flex items-center gap-1.5 text-xs font-bold text-carbon"><input type="checkbox" checked={selectedElement.style?.preserveColorOnHighlight ?? true} onChange={(event) => handleElementStyleChange({ preserveColorOnHighlight: event.target.checked })} />Conservar color al resaltar</label>
           </div>
 
           <label className="flex items-center gap-1.5 text-xs font-bold text-carbon">

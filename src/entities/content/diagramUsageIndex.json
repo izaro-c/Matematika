@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "generatedBy": "scripts/editor/generate-diagram-usages.ts",
-  "corpusHash": "39dc1953bb21f6b1daa73423e04c71bb586f03c5ed5ca7024bbe8394337cc67f",
+  "corpusHash": "d789b9332bbdb4c47301292bef1bd40a8eda8685412bb239a4b8b6bd3bcdaf8d",
   "paths": {
     "AxiomaArquimedes": "src/widgets/diagrams/Axiomas/AxiomaArquimedes.tsx",
     "AxiomaDedekind": "src/widgets/diagrams/Axiomas/AxiomaDedekind.tsx",
@@ -46,8 +46,6 @@
     "ContraposicionSimulation": "src/widgets/diagrams/Demos/ContraposicionSimulation.tsx",
     "DemoAngulosOpuestos": "src/widgets/diagrams/Demos/DemoAngulosOpuestos.tsx",
     "DemoAreaAditividad": "src/widgets/diagrams/Demos/DemoAreaAditividad.tsx",
-    "DemoAreaRectangulo_Conmensurable": "src/widgets/diagrams/Demos/DemoAreaRectangulo_Conmensurable.tsx",
-    "DemoAreaRectangulo_Inconmensurable": "src/widgets/diagrams/Demos/DemoAreaRectangulo_Inconmensurable.tsx",
     "DemoCongruenciaALA": "src/widgets/diagrams/Demos/DemoCongruenciaALA.tsx",
     "DemoCongruenciaLLL": "src/widgets/diagrams/Demos/DemoCongruenciaLLL.tsx",
     "DemoDosRectasUnPunto": "src/widgets/diagrams/Demos/DemoDosRectasUnPunto.tsx",
@@ -395,8 +393,8 @@
         "contentPath": "src/database/content/definitions/circunferencia.mdx",
         "referenceKind": "Simulation",
         "sourceRange": {
-          "start": 596,
-          "end": 636
+          "start": 609,
+          "end": 649
         },
         "blockId": "circunferencia:diagram:Circunferencia"
       }
@@ -603,30 +601,6 @@
           "end": 868
         },
         "blockId": "demo-area-aditividad:diagram:DemoAreaAditividad"
-      }
-    ],
-    "DemoAreaRectangulo_Conmensurable": [
-      {
-        "contentId": "demo-area-rectangulo",
-        "contentPath": "src/database/content/demonstrations/demo-area-rectangulo.mdx",
-        "referenceKind": "Component",
-        "sourceRange": {
-          "start": 981,
-          "end": 1015
-        },
-        "blockId": "demo-area-rectangulo:diagram:DemoAreaRectangulo_Conmensurable"
-      }
-    ],
-    "DemoAreaRectangulo_Inconmensurable": [
-      {
-        "contentId": "demo-area-rectangulo",
-        "contentPath": "src/database/content/demonstrations/demo-area-rectangulo.mdx",
-        "referenceKind": "Component",
-        "sourceRange": {
-          "start": 2170,
-          "end": 2206
-        },
-        "blockId": "demo-area-rectangulo:diagram:DemoAreaRectangulo_Inconmensurable"
       }
     ],
     "DemoCongruenciaALA": [

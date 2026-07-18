@@ -58,7 +58,7 @@
   --ease-theme: cubic-bezier(0.22, 1, 0.36, 1);
 
   /* ── 4. Parámetros Visuales y Decorativos ─────────────────────────────── */
-  --bg-texture-opacity: 0.88; /* Pergamino sutil pero más visible */
+  --bg-texture-opacity: 0.65; /* Pergamino sutil pero más visible */
   --border-radius-base: 6px;
 
   /* ── 4b. Sombras y Bordes Semánticos de Arts & Crafts ─────────────────── */
@@ -103,7 +103,7 @@
   --bg-arts-and-crafts-url: var(--theme-graph-bg-url);
 
   /* Parámetros Visuales y Decorativos del Códice */
-  --bg-texture-opacity: 0.96; /* Textura del pergamino extremadamente tenue */
+  --bg-texture-opacity: 0.90; /* Textura del pergamino extremadamente tenue */
 
   /* Sombras y Bordes Semánticos del Códice */
   --theme-shadow-elegant: 0 4px 20px -2px color-mix(in srgb, var(--theme-carbon) 40%, transparent), 0 2px 8px -1px color-mix(in srgb, var(--theme-carbon) 30%, transparent);

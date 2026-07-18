@@ -58,7 +58,7 @@ function componentNameFromSource(source: string | undefined, fallback: string): 
 
 function refsForElementKind(kind: ElementKind, refs: string[]): string[] {
   if (kind === 'polygon') return refs;
-  if (kind === 'segment' || kind === 'line' || kind === 'ray' || kind === 'circle' || kind === 'intersection' || kind === 'midpoint' || kind === 'congruenceMark' || kind === 'dimensionLine' || kind === 'measurement') {
+  if (kind === 'segment' || kind === 'line' || kind === 'ray' || kind === 'circle' || kind === 'intersection' || kind === 'midpoint' || kind === 'congruenceMark' || kind === 'parallelMark' || kind === 'dimensionLine' || kind === 'measurement') {
     return refs.slice(0, 2);
   }
   if (kind === 'arc' || kind === 'perpendicularFoot' || kind === 'baseExtension' || kind === 'perpendicular' || kind === 'parallel' || kind === 'angleBisector' || kind === 'angle' || kind === 'nonReflexAngle' || kind === 'rightAngle' || kind === 'perpendicularMark') {
@@ -302,7 +302,7 @@ export const DiagramWorkbenchCore: React.FC<DiagramWorkbenchCoreProps> = ({
       ? { expression: 'sin(x)', parameter: 'x', domain: [-5, 5] as [number, number], samples: 128 }
       : kind === 'parametricCurve'
         ? { xExpression: '3*cos(t)', yExpression: '2*sin(t)', parameter: 't', domain: [0, 6.283185307179586] as [number, number], samples: 128 }
-        : kind === 'congruenceMark'
+        : kind === 'congruenceMark' || kind === 'parallelMark'
           ? { markCount: 1 }
           : kind === 'measureTicks'
             ? { tickDistance: 2 }
@@ -384,10 +384,14 @@ export const DiagramWorkbenchCore: React.FC<DiagramWorkbenchCoreProps> = ({
       .filter(item => !removedSceneIds.has(item.id))
       .map(item => {
         const constraintIds = item.constraintIds?.filter(id => !removedConstraintIds.has(id));
+        const attractorIds = item.attractorIds?.filter(id => !removedSceneIds.has(id));
+        const attraction = attractorIds?.length
+          ? { attractorIds }
+          : { attractorIds: undefined, attractorDistance: undefined, snatchDistance: undefined };
         if (item.constraint !== 'constrained' || constraintIds?.length) {
-          return constraintIds ? { ...item, constraintIds } : item;
+          return { ...item, ...(constraintIds ? { constraintIds } : {}), ...attraction };
         }
-        const next = { ...item, fixed: false, constraint: 'free' as const };
+        const next = { ...item, ...attraction, fixed: false, constraint: 'free' as const };
         delete next.constraintIds;
         return next;
       });

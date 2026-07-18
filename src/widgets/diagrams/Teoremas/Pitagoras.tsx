@@ -87,8 +87,7 @@ export const PitagorasSpec = createDiagramSpec(
       "label": "Cuadrado del cateto a",
       "memberIds": [
         "segBC",
-        "cuadradoA",
-        "areaA"
+        "cuadradoA"
       ],
       "visible": true,
       "locked": false,
@@ -98,15 +97,14 @@ export const PitagorasSpec = createDiagramSpec(
       },
       "target": true,
       "targetId": "cuadrado-a",
-      "color": "salvia"
+      "color": "pavo"
     },
     {
       "id": "cuadradoBGrupo",
       "label": "Cuadrado del cateto b",
       "memberIds": [
         "segCA",
-        "cuadradoB",
-        "areaB"
+        "cuadradoB"
       ],
       "visible": true,
       "locked": false,
@@ -123,8 +121,7 @@ export const PitagorasSpec = createDiagramSpec(
       "label": "Cuadrado de la hipotenusa",
       "memberIds": [
         "segAB",
-        "cuadradoC",
-        "areaC"
+        "cuadradoC"
       ],
       "visible": true,
       "locked": false,
@@ -155,8 +152,8 @@ export const PitagorasSpec = createDiagramSpec(
       },
       "target": false,
       "style": {
-        "pointSize": 5,
-        "highlightPointSize": 7,
+        "pointSize": 7,
+        "highlightPointSize": 10,
         "preserveColorOnHighlight": true
       },
       "x": 0,
@@ -219,8 +216,8 @@ export const PitagorasSpec = createDiagramSpec(
       },
       "target": false,
       "style": {
-        "pointSize": 5,
-        "highlightPointSize": 7,
+        "pointSize": 7,
+        "highlightPointSize": 10,
         "preserveColorOnHighlight": true
       },
       "x": 0,
@@ -246,8 +243,8 @@ export const PitagorasSpec = createDiagramSpec(
       },
       "target": false,
       "style": {
-        "pointSize": 5,
-        "highlightPointSize": 7,
+        "pointSize": 7,
+        "highlightPointSize": 10,
         "preserveColorOnHighlight": true
       },
       "x": 3,
@@ -459,11 +456,12 @@ export const PitagorasSpec = createDiagramSpec(
       ],
       "selection": {
         "selectable": true,
+        "highlightable": false,
         "role": "secondary"
       },
       "target": false,
       "style": {
-        "strokeWidth": 2,
+        "strokeWidth": 2.4,
         "fillOpacity": 0.06,
         "highlightFillOpacity": 0.22,
         "preserveColorOnHighlight": true
@@ -478,7 +476,7 @@ export const PitagorasSpec = createDiagramSpec(
     {
       "id": "segBC",
       "label": "cateto a",
-      "color": "salvia",
+      "color": "pavo",
       "layerId": "geometria",
       "order": 11,
       "visible": true,
@@ -493,7 +491,7 @@ export const PitagorasSpec = createDiagramSpec(
       },
       "target": false,
       "style": {
-        "strokeWidth": 2,
+        "strokeWidth": 2.4,
         "highlightStrokeWidth": 4,
         "preserveColorOnHighlight": true
       },
@@ -521,7 +519,7 @@ export const PitagorasSpec = createDiagramSpec(
       },
       "target": false,
       "style": {
-        "strokeWidth": 2,
+        "strokeWidth": 2.4,
         "highlightStrokeWidth": 4,
         "preserveColorOnHighlight": true
       },
@@ -549,7 +547,7 @@ export const PitagorasSpec = createDiagramSpec(
       },
       "target": false,
       "style": {
-        "strokeWidth": 2.5,
+        "strokeWidth": 2.4,
         "highlightStrokeWidth": 4.5,
         "preserveColorOnHighlight": true
       },
@@ -562,7 +560,7 @@ export const PitagorasSpec = createDiagramSpec(
     {
       "id": "anguloRecto",
       "label": "ángulo recto en C",
-      "color": "pavo",
+      "color": "pizarra",
       "layerId": "geometria",
       "order": 14,
       "visible": true,
@@ -592,7 +590,7 @@ export const PitagorasSpec = createDiagramSpec(
     {
       "id": "cuadradoA",
       "label": "cuadrado sobre a",
-      "color": "salvia",
+      "color": "pavo",
       "layerId": "areas",
       "order": 20,
       "visible": true,
@@ -601,12 +599,13 @@ export const PitagorasSpec = createDiagramSpec(
         "cuadradoAGrupo"
       ],
       "selection": {
-        "selectable": true,
+        "selectable": false,
+        "highlightable": false,
         "role": "secondary"
       },
       "target": false,
       "style": {
-        "strokeWidth": 2,
+        "strokeWidth": 2.4,
         "strokeOpacity": 0.45,
         "fillOpacity": 0.1,
         "highlightFillOpacity": 0.3,
@@ -636,12 +635,13 @@ export const PitagorasSpec = createDiagramSpec(
         "cuadradoBGrupo"
       ],
       "selection": {
-        "selectable": true,
+        "selectable": false,
+        "highlightable": false,
         "role": "secondary"
       },
       "target": false,
       "style": {
-        "strokeWidth": 2,
+        "strokeWidth": 2.4,
         "strokeOpacity": 0.45,
         "fillOpacity": 0.1,
         "highlightFillOpacity": 0.3,
@@ -671,12 +671,13 @@ export const PitagorasSpec = createDiagramSpec(
         "cuadradoCGrupo"
       ],
       "selection": {
-        "selectable": true,
+        "selectable": false,
+        "highlightable": false,
         "role": "secondary"
       },
       "target": false,
       "style": {
-        "strokeWidth": 2.5,
+        "strokeWidth": 2.4,
         "strokeOpacity": 0.5,
         "fillOpacity": 0.12,
         "highlightFillOpacity": 0.35,
@@ -695,238 +696,39 @@ export const PitagorasSpec = createDiagramSpec(
       }
     },
     {
-      "id": "areaA",
-      "label": "área a²",
-      "color": "salvia",
-      "layerId": "anotaciones",
-      "order": 30,
-      "visible": true,
-      "locked": false,
-      "groupIds": [
-        "cuadradoAGrupo"
-      ],
-      "selection": {
-        "selectable": true,
-        "role": "secondary"
-      },
-      "target": false,
-      "style": {
-        "textOffset": [
-          0.25,
-          -0.35
-        ],
-        "preserveColorOnHighlight": true
-      },
-      "kind": "measurement",
-      "refs": [
-        "sqA3"
-      ],
-      "text": "a² = {value}",
-      "properties": {
-        "expression": "segBC.length^2",
-        "unit": "u²",
-        "precision": 1
-      }
-    },
-    {
-      "id": "areaB",
-      "label": "área b²",
-      "color": "terracota",
-      "layerId": "anotaciones",
-      "order": 31,
-      "visible": true,
-      "locked": false,
-      "groupIds": [
-        "cuadradoBGrupo"
-      ],
-      "selection": {
-        "selectable": true,
-        "role": "secondary"
-      },
-      "target": false,
-      "style": {
-        "textOffset": [
-          0.25,
-          0.35
-        ],
-        "preserveColorOnHighlight": true
-      },
-      "kind": "measurement",
-      "refs": [
-        "cuadrado-b"
-      ],
-      "text": "b² = {value}",
-      "properties": {
-        "expression": "segCA.length^2",
-        "unit": "u²",
-        "precision": 1
-      }
-    },
-    {
-      "id": "areaC",
-      "label": "área c²",
-      "color": "ocre",
-      "layerId": "anotaciones",
-      "order": 32,
-      "visible": true,
-      "locked": false,
-      "groupIds": [
-        "cuadradoCGrupo"
-      ],
-      "selection": {
-        "selectable": true,
-        "role": "secondary"
-      },
-      "target": false,
-      "style": {
-        "textOffset": [
-          -1.75,
-          0.35
-        ],
-        "preserveColorOnHighlight": true
-      },
-      "kind": "measurement",
-      "refs": [
-        "cuadrado-c"
-      ],
-      "text": "c² = {value}",
-      "properties": {
-        "expression": "segAB.length^2",
-        "unit": "u²",
-        "precision": 1
-      }
-    },
-    {
       "id": "identidad",
-      "label": "identidad de áreas",
-      "color": "pizarra",
-      "layerId": "anotaciones",
-      "order": 33,
+      "label": "Panel identidad",
+      "color": "terracota",
+      "layerId": "geometria",
+      "order": 1000,
       "visible": true,
       "locked": false,
       "groupIds": [],
       "selection": {
         "selectable": true,
+        "ariaLabel": "Panel informativo",
         "role": "secondary"
       },
-      "target": false,
+      "target": true,
+      "targetId": "infoPanel14",
       "style": {
-        "textOffset": [
-          -7.4,
-          7.2
-        ],
         "preserveColorOnHighlight": true
       },
       "kind": "infoPanel",
-      "refs": [
-        "C"
-      ],
-      "text": "a² + b² − c² = {value}",
+      "refs": [],
+      "text": "$a^2 + b^2 = c^2 \\implies {B.x^2} + {A.y^2} = {B.x^2 + A.y^2}$",
       "properties": {
-        "expression": "segBC.length^2+segCA.length^2-segAB.length^2",
         "unit": "u²",
-        "precision": 2,
-        "title": "Comprobación dinámica"
+        "anchorMode": "viewport",
+        "viewportPosition": [
+          0,
+          0
+        ]
       }
     }
   ],
   "sliders": [],
-  "steps": [
-    {
-      "id": "step1",
-      "label": "Triángulo rectángulo",
-      "description": "Se fijan los catetos y el ángulo recto.",
-      "visibleTargets": [
-        "A",
-        "B",
-        "C",
-        "triangulo",
-        "segBC",
-        "segCA",
-        "segAB",
-        "anguloRecto"
-      ],
-      "durationMs": 900,
-      "objectStates": {
-        "triangulo": {
-          "emphasis": "primary"
-        },
-        "anguloRecto": {
-          "emphasis": "secondary"
-        }
-      }
-    },
-    {
-      "id": "step2",
-      "label": "Cuadrados y cuadrículas",
-      "description": "Se construye un cuadrado cuadriculado sobre cada lado.",
-      "visibleTargets": [
-        "A",
-        "B",
-        "C",
-        "triangulo",
-        "segBC",
-        "segCA",
-        "segAB",
-        "anguloRecto",
-        "cuadradoA",
-        "cuadradoB",
-        "cuadradoC",
-        "areaA",
-        "areaB",
-        "areaC"
-      ],
-      "durationMs": 1200,
-      "objectStates": {
-        "cuadradoA": {
-          "emphasis": "secondary"
-        },
-        "cuadradoB": {
-          "emphasis": "secondary"
-        },
-        "cuadradoC": {
-          "emphasis": "primary"
-        }
-      }
-    },
-    {
-      "id": "step3",
-      "label": "Igualdad de áreas",
-      "description": "Las áreas de los catetos suman el área de la hipotenusa.",
-      "visibleTargets": [
-        "A",
-        "B",
-        "C",
-        "triangulo",
-        "segBC",
-        "segCA",
-        "segAB",
-        "anguloRecto",
-        "cuadradoA",
-        "cuadradoB",
-        "cuadradoC",
-        "areaA",
-        "areaB",
-        "areaC",
-        "identidad"
-      ],
-      "durationMs": 1400,
-      "objectStates": {
-        "identidad": {
-          "emphasis": "primary",
-          "overlay": {
-            "visible": true,
-            "title": "Identidad pitagórica",
-            "content": "a² + b² − c² = {value}",
-            "expression": "segBC.length^2+segCA.length^2-segAB.length^2",
-            "unit": "u²",
-            "precision": 2,
-            "position": "top-left"
-          }
-        }
-      }
-    }
-  ],
+  "steps": [],
   "constraints": [],
   "dependencies": [
     {
@@ -1118,56 +920,6 @@ export const PitagorasSpec = createDiagramSpec(
       "sourceId": "sqC4",
       "targetId": "cuadradoC",
       "relation": "construction"
-    },
-    {
-      "sourceId": "sqA3",
-      "targetId": "areaA",
-      "relation": "construction"
-    },
-    {
-      "sourceId": "cuadrado-b",
-      "targetId": "areaB",
-      "relation": "construction"
-    },
-    {
-      "sourceId": "cuadrado-c",
-      "targetId": "areaC",
-      "relation": "construction"
-    },
-    {
-      "sourceId": "C",
-      "targetId": "identidad",
-      "relation": "construction"
-    },
-    {
-      "sourceId": "segBC",
-      "targetId": "areaA",
-      "relation": "expression"
-    },
-    {
-      "sourceId": "segCA",
-      "targetId": "areaB",
-      "relation": "expression"
-    },
-    {
-      "sourceId": "segAB",
-      "targetId": "areaC",
-      "relation": "expression"
-    },
-    {
-      "sourceId": "segBC",
-      "targetId": "identidad",
-      "relation": "expression"
-    },
-    {
-      "sourceId": "segCA",
-      "targetId": "identidad",
-      "relation": "expression"
-    },
-    {
-      "sourceId": "segAB",
-      "targetId": "identidad",
-      "relation": "expression"
     }
   ],
   "note": "Arrastre A y B sobre las semirrectas: las áreas y la igualdad se actualizan sin perder el ángulo recto.",

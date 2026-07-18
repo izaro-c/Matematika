@@ -145,7 +145,7 @@
   right: 0;
   bottom: 0;
   background-color: var(--theme-lienzo);
-  opacity: 0.90;
+  opacity: var(--bg-texture-opacity, 0.90);
   /* Fondo mucho menos visible */
   z-index: 0;
   pointer-events: none;

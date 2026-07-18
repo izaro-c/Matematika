@@ -127,8 +127,10 @@ export function parseDiagramSourceAST(source: string, metadataType = ''): ParseD
     // 1. Component Name and ID
     if (ts.isVariableDeclaration(node) && ts.isIdentifier(node.name) && node.initializer && ts.isArrowFunction(node.initializer)) {
       const name = node.name.text;
-      componentId = name.replace(/([A-Z])/g, '-$1').toLowerCase().replace(/^-/, '');
-      title = name.replace(/([A-Z])/g, ' $1').trim();
+      if (/^[A-Z]/.test(name)) {
+        componentId = name.replace(/([A-Z])/g, '-$1').toLowerCase().replace(/^-/, '');
+        title = name.replace(/([A-Z])/g, ' $1').trim();
+      }
       if (ts.isBlock(node.initializer.body)) {
         namedBlocks.set(name, node.initializer.body);
       }
@@ -514,7 +516,8 @@ export function parseDiagramSourceAST(source: string, metadataType = ''): ParseD
   let resultModel: VisualDiagramModel | undefined;
   try {
     resultModel = migrateDiagramSpec(legacyResultModel).spec;
-  } catch {
+  } catch (err) {
+    console.error('MIGRATION ERROR IN AST PARSER:', err);
     resultModel = undefined;
   }
 

@@ -1,5 +1,6 @@
-import React, { useEffect, useId, useState } from 'react';
+import React, { useCallback, useEffect, useId, useMemo, useRef, useState } from 'react';
 import { useMathStore } from '@/app/providers/MathStoreContext';
+import { DiagramStepSyncContext } from '@/shared/lib/DiagramStepSyncContext';
 import { db } from '@/entities/content';
 import { Link, useLocation } from 'wouter';
 import { TYPE_STYLES } from '@/shared/lib/constants';
@@ -36,6 +37,13 @@ export const CodexLayout: React.FC<CodexLayoutProps> = ({
   const setVariable = useMathStore((state) => state.setVariable);
   const activeJustifications = useMathStore((state) => state.variables?.['activeJustifications']) as string[] | undefined;
   const [location] = useLocation();
+  const rootRef = useRef<HTMLDivElement>(null);
+  const [activeDiagramStepIndex, setActiveDiagramStepIndex] = useState<number | null>(null);
+
+  // Flag que bloquea el listener de scroll cuando el cambio de paso viene del diagrama,
+  // para evitar el bucle: diagrama → store → scroll → store.
+  const scrollLockRef = useRef(false);
+  const scrollLockTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
   
   const hasDiagram = !!diagram;
 
@@ -48,20 +56,77 @@ export const CodexLayout: React.FC<CodexLayoutProps> = ({
     ? [{ name: parentTheorem.title, href: `/teorema/${parentTheorem.id}` }]
     : [];
 
+  const proofSteps = useCallback(
+    () => rootRef.current?.querySelectorAll<HTMLElement>('.proof-step') ?? [],
+    [],
+  );
+
+  const syncProofStepState = useCallback((step: HTMLElement) => {
+    const targetValue = step.dataset.target;
+    const justificationsValue = step.dataset.justifications;
+
+    if (targetValue) {
+      try {
+        setVariable('step', targetValue.startsWith('[') ? JSON.parse(targetValue) : targetValue);
+      } catch {
+        setVariable('step', targetValue);
+      }
+    }
+
+    if (justificationsValue) {
+      try {
+        setVariable('activeJustifications', JSON.parse(justificationsValue));
+      } catch {
+        setVariable('activeJustifications', []);
+      }
+    }
+  }, [setVariable]);
+
+  const selectDiagramStep = useCallback((stepIndex: number) => {
+    const step = proofSteps()[stepIndex];
+    setActiveDiagramStepIndex(stepIndex);
+    if (!step) return;
+
+    syncProofStepState(step);
+    scrollLockRef.current = true;
+    if (scrollLockTimer.current) clearTimeout(scrollLockTimer.current);
+    scrollLockTimer.current = setTimeout(() => {
+      scrollLockRef.current = false;
+    }, 600);
+    step.scrollIntoView({ behavior: 'smooth', block: 'center' });
+  }, [proofSteps, syncProofStepState]);
+
+  const diagramStepSyncValue = useMemo(() => ({
+    activeStepIndex: activeDiagramStepIndex,
+    selectDiagramStep,
+  }), [activeDiagramStepIndex, selectDiagramStep]);
+
   // Algoritmo de scrollytelling de precisión adaptable:
   // - En móvil enfoca el paso en el centro de la zona de lectura.
   // - En escritorio enfoca el paso en el centro vertical completo (50vh).
   // - Restablece el foco a 'default' si el usuario se sitúa al inicio (scrollY < 80).
+  // - Respeta el flag scrollLockRef cuando el cambio viene del diagrama (no del scroll).
   useEffect(() => {
     const handleScroll = () => {
+      // Ignorar scroll detectado mientras el diagrama controla la posición,
+      // pero renovar el bloqueo para que se libere solo cuando el scroll termine realmente.
+      if (scrollLockRef.current) {
+        if (scrollLockTimer.current) clearTimeout(scrollLockTimer.current);
+        scrollLockTimer.current = setTimeout(() => {
+          scrollLockRef.current = false;
+        }, 150);
+        return;
+      }
+
       // 1. Limpieza de foco si estamos arriba leyendo la introducción
       if (window.scrollY < 80) {
+        setActiveDiagramStepIndex(null);
         setVariable('step', 'default');
         setVariable('activeJustifications', []);
         return;
       }
 
-      const steps = document.querySelectorAll('.proof-step');
+      const steps = proofSteps();
       if (steps.length === 0) return;
 
       // 2. Viewport Center Adaptable (Móvil vs Escritorio)
@@ -72,7 +137,8 @@ export const CodexLayout: React.FC<CodexLayoutProps> = ({
         ? (window.innerHeight * 0.46) + ((window.innerHeight * 0.54) / 2)
         : window.innerHeight / 2;
 
-      let closestStep: Element | null = null;
+      let closestStep: HTMLElement | null = null;
+      let closestStepIndex = -1;
       let minDistance = Infinity;
 
       const isAtBottom = window.innerHeight + window.scrollY >= document.body.offsetHeight - 20;
@@ -80,8 +146,9 @@ export const CodexLayout: React.FC<CodexLayoutProps> = ({
       if (isAtBottom && steps.length > 0) {
         // Forzar el último paso si estamos al final absoluto de la página
         closestStep = steps[steps.length - 1];
+        closestStepIndex = steps.length - 1;
       } else {
-        steps.forEach((step) => {
+        steps.forEach((step, index) => {
           const rect = step.getBoundingClientRect();
           const stepCenter = rect.top + rect.height / 2;
           const distance = Math.abs(viewportCenter - stepCenter);
@@ -89,31 +156,14 @@ export const CodexLayout: React.FC<CodexLayoutProps> = ({
           if (distance < minDistance) {
             minDistance = distance;
             closestStep = step;
+            closestStepIndex = index;
           }
         });
       }
 
-      if (closestStep) {
-        const targetStr = (closestStep as Element).getAttribute('data-target');
-        const justificationsStr = (closestStep as Element).getAttribute('data-justifications');
-        
-        if (targetStr) {
-          try {
-            const target = targetStr.startsWith('[') ? JSON.parse(targetStr) : targetStr;
-            setVariable('step', target);
-          } catch {
-            setVariable('step', targetStr);
-          }
-        }
-        
-        if (justificationsStr) {
-          try {
-            const justifications = JSON.parse(justificationsStr);
-            setVariable('activeJustifications', justifications);
-          } catch {
-            // Silenciar
-          }
-        }
+      if (closestStep && closestStepIndex >= 0) {
+        setActiveDiagramStepIndex(closestStepIndex);
+        syncProofStepState(closestStep);
       }
     };
 
@@ -127,7 +177,11 @@ export const CodexLayout: React.FC<CodexLayoutProps> = ({
       window.removeEventListener('scroll', handleScroll);
       window.removeEventListener('resize', handleScroll);
     };
-  }, [hasDiagram, isDiagramExpanded, setVariable]);
+  }, [hasDiagram, isDiagramExpanded, proofSteps, setVariable, syncProofStepState]);
+
+  useEffect(() => () => {
+    if (scrollLockTimer.current) clearTimeout(scrollLockTimer.current);
+  }, []);
 
   const renderedJustifications = () => {
     if (!activeJustifications || activeJustifications.length === 0) {
@@ -203,11 +257,13 @@ export const CodexLayout: React.FC<CodexLayoutProps> = ({
   };
 
   return (
-    <div
-      className={`codex-layout page-accent-scope is-focus-mode ${!hasDiagram ? 'has-no-diagram' : ''} ${className}`}
-      data-page-type="demostracion"
-      style={{ '--page-accent': getContentPageAccent('demostracion') } as React.CSSProperties}
-    >
+    <DiagramStepSyncContext.Provider value={diagramStepSyncValue}>
+      <div
+        ref={rootRef}
+        className={`codex-layout page-accent-scope is-focus-mode ${!hasDiagram ? 'has-no-diagram' : ''} ${className}`}
+        data-page-type="demostracion"
+        style={{ '--page-accent': getContentPageAccent('demostracion') } as React.CSSProperties}
+      >
       <MobileContentHeaderSeparator
         hasDiagram={hasDiagram}
         isDiagramExpanded={isDiagramExpanded}
@@ -251,7 +307,8 @@ export const CodexLayout: React.FC<CodexLayoutProps> = ({
           {children}
         </main>
       </div>
-    </div>
+      </div>
+    </DiagramStepSyncContext.Provider>
   );
 };
 export default CodexLayout;

@@ -10,7 +10,7 @@ interface DiagramSceneControlsProps {
   onModelEdit: (model: VisualDiagramModel) => void;
 }
 
-type SceneUpdate = Partial<Pick<VisualPoint, 'layerId' | 'order' | 'visible' | 'locked' | 'selection'>>;
+type SceneUpdate = Partial<Pick<VisualPoint, 'layerId' | 'order' | 'visible' | 'locked' | 'selection' | 'style'>>;
 
 export const DiagramSceneControls: React.FC<DiagramSceneControlsProps> = ({ model, point, element, slider, onModelEdit }) => {
   const item = point || element || slider;
@@ -59,6 +59,14 @@ export const DiagramSceneControls: React.FC<DiagramSceneControlsProps> = ({ mode
         <label className="flex items-start gap-1.5 text-xs font-bold text-carbon">
           <input type="checkbox" checked={item.selection.dimOthersOnHighlight !== false} onChange={event => changeItem({ selection: { ...item.selection, dimOthersOnHighlight: event.target.checked } })} />
           <span>Atenuar los demás desde MDX<span className="mt-0.5 block text-[9px] font-normal leading-relaxed text-carbon/45">Las referencias del texto usan este modo por defecto. El hover y el foco dentro del diagrama solo resaltan este objeto.</span></span>
+        </label>
+        <label className="flex items-start gap-1.5 text-xs font-bold text-carbon">
+          <input
+            type="checkbox"
+            checked={item.style?.highlightVisible ?? false}
+            onChange={event => changeItem({ style: { ...item.style, highlightVisible: event.target.checked || undefined } })}
+          />
+          <span>Revelar desde un enlace MDX<span className="mt-0.5 block text-[9px] font-normal leading-relaxed text-carbon/45">Si el objeto está oculto, aparece mientras su target —o el grupo al que pertenece— recibe foco o resaltado desde el texto.</span></span>
         </label>
       </div>
       <details className="rounded border border-carbon/10">

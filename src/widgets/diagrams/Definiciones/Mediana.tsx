@@ -1,147 +1,494 @@
-import { MathBoard } from '@/shared/diagrams/core/MathBoard';
-import {
-  createPoint, createSegment
-} from '@/shared/diagrams/core/MathFactory';
+import { createDiagramSpec, DiagramRenderer } from '@/shared/diagrams/public';
 
+/* @matematika-diagram-spec:start */
+export const MedianaSpec = createDiagramSpec(
+{
+  "version": 2,
+  "renderer": "matematika-diagram-renderer-v2",
+  "title": "Medianas y baricentro",
+  "componentId": "mediana",
+  "category": "Definiciones",
+  "mode": "simulation",
+  "axis": false,
+  "grid": false,
+  "viewport": {
+    "bounds": [
+      -5,
+      5,
+      5,
+      -4.5
+    ],
+    "home": [
+      -5,
+      5,
+      5,
+      -4.5
+    ],
+    "minZoom": 0.55,
+    "maxZoom": 5,
+    "padding": 0.16
+  },
+  "layers": [
+    {
+      "id": "geometry",
+      "label": "Geometría",
+      "order": 0,
+      "visible": true,
+      "locked": false
+    },
+    {
+      "id": "annotations",
+      "label": "Lecturas y controles",
+      "order": 1,
+      "visible": true,
+      "locked": false
+    }
+  ],
+  "groups": [
+    {
+      "id": "gMedian",
+      "label": "Tres medianas",
+      "memberIds": [
+        "medA",
+        "medB",
+        "medC"
+      ],
+      "visible": true,
+      "locked": false,
+      "selection": {
+        "selectable": true,
+        "ariaLabel": "Tres medianas",
+        "role": "primary"
+      },
+      "target": true,
+      "targetId": "mediana",
+      "color": "musgo"
+    },
+    {
+      "id": "gVertex",
+      "label": "Vértices",
+      "memberIds": [
+        "A",
+        "B",
+        "C"
+      ],
+      "visible": true,
+      "locked": false,
+      "selection": {
+        "selectable": true,
+        "ariaLabel": "Vértices",
+        "role": "primary"
+      },
+      "target": true,
+      "targetId": "vertice",
+      "color": "musgo"
+    },
+    {
+      "id": "gMidpoints",
+      "label": "Puntos medios",
+      "memberIds": [
+        "Ma",
+        "Mb",
+        "Mc"
+      ],
+      "visible": true,
+      "locked": false,
+      "selection": {
+        "selectable": true,
+        "ariaLabel": "Puntos medios",
+        "role": "primary"
+      },
+      "target": true,
+      "targetId": "punto-medio",
+      "color": "pizarra"
+    }
+  ],
+  "points": [
+    {
+      "id": "A",
+      "label": "A",
+      "color": "musgo",
+      "layerId": "geometry",
+      "order": 310,
+      "visible": true,
+      "locked": false,
+      "groupIds": [
+        "gVertex"
+      ],
+      "selection": {
+        "selectable": true,
+        "ariaLabel": "Mover el punto A",
+        "role": "primary"
+      },
+      "target": false,
+      "style": {
+        "pointSize": 7,
+        "highlightPointSize": 10,
+        "preserveColorOnHighlight": true
+      },
+      "x": -3,
+      "y": -2,
+      "showLabel": true,
+      "fixed": false,
+      "constraint": "free",
+      "snapToGrid": true,
+      "snapSize": 0.25
+    },
+    {
+      "id": "B",
+      "label": "B",
+      "color": "musgo",
+      "layerId": "geometry",
+      "order": 320,
+      "visible": true,
+      "locked": false,
+      "groupIds": [
+        "gVertex"
+      ],
+      "selection": {
+        "selectable": true,
+        "ariaLabel": "Mover el punto B",
+        "role": "primary"
+      },
+      "target": false,
+      "style": {
+        "pointSize": 7,
+        "highlightPointSize": 10,
+        "preserveColorOnHighlight": true
+      },
+      "x": 3,
+      "y": -1.4,
+      "showLabel": true,
+      "fixed": false,
+      "constraint": "free",
+      "snapToGrid": true,
+      "snapSize": 0.25
+    },
+    {
+      "id": "C",
+      "label": "C",
+      "color": "musgo",
+      "layerId": "geometry",
+      "order": 330,
+      "visible": true,
+      "locked": false,
+      "groupIds": [
+        "gVertex"
+      ],
+      "selection": {
+        "selectable": true,
+        "ariaLabel": "Mover el punto C",
+        "role": "primary"
+      },
+      "target": false,
+      "style": {
+        "pointSize": 7,
+        "highlightPointSize": 10,
+        "preserveColorOnHighlight": true
+      },
+      "x": 0.8,
+      "y": 3,
+      "showLabel": true,
+      "fixed": false,
+      "constraint": "constrained",
+      "constraintIds": [
+        "sameSideC"
+      ],
+      "snapToGrid": true,
+      "snapSize": 0.25
+    }
+  ],
+  "elements": [
+    {
+      "id": "triangle",
+      "label": "Triángulo ABC",
+      "color": "carbon",
+      "layerId": "geometry",
+      "order": 340,
+      "visible": true,
+      "locked": false,
+      "groupIds": [],
+      "selection": {
+        "selectable": true,
+        "ariaLabel": "Triángulo ABC",
+        "role": "secondary"
+      },
+      "target": false,
+      "style": {
+        "strokeWidth": 2.4,
+        "fillOpacity": 0.08,
+        "highlightFillOpacity": 0.28,
+        "preserveColorOnHighlight": true
+      },
+      "kind": "polygon",
+      "refs": [
+        "A",
+        "B",
+        "C"
+      ]
+    },
+    {
+      "id": "Ma",
+      "label": "$M_{bc}$",
+      "color": "pizarra",
+      "layerId": "geometry",
+      "order": 350,
+      "visible": true,
+      "locked": false,
+      "groupIds": [
+        "gMidpoints"
+      ],
+      "selection": {
+        "selectable": true,
+        "ariaLabel": "Punto medio de BC",
+        "role": "secondary"
+      },
+      "target": false,
+      "style": {
+        "preserveColorOnHighlight": true
+      },
+      "kind": "midpoint",
+      "refs": [
+        "B",
+        "C"
+      ]
+    },
+    {
+      "id": "Mb",
+      "label": "$M_{ac}$",
+      "color": "pizarra",
+      "layerId": "geometry",
+      "order": 360,
+      "visible": true,
+      "locked": false,
+      "groupIds": [
+        "gMidpoints"
+      ],
+      "selection": {
+        "selectable": true,
+        "ariaLabel": "Punto medio de CA",
+        "role": "secondary"
+      },
+      "target": false,
+      "style": {
+        "preserveColorOnHighlight": true
+      },
+      "kind": "midpoint",
+      "refs": [
+        "C",
+        "A"
+      ]
+    },
+    {
+      "id": "Mc",
+      "label": "$M_{ab}$",
+      "color": "pizarra",
+      "layerId": "geometry",
+      "order": 370,
+      "visible": true,
+      "locked": false,
+      "groupIds": [
+        "gMidpoints"
+      ],
+      "selection": {
+        "selectable": true,
+        "ariaLabel": "Punto medio de AB",
+        "role": "secondary"
+      },
+      "target": false,
+      "style": {
+        "preserveColorOnHighlight": true
+      },
+      "kind": "midpoint",
+      "refs": [
+        "A",
+        "B"
+      ]
+    },
+    {
+      "id": "medA",
+      "label": "Mediana desde A",
+      "color": "musgo",
+      "layerId": "geometry",
+      "order": 380,
+      "visible": true,
+      "locked": false,
+      "groupIds": [
+        "gMedian"
+      ],
+      "selection": {
+        "selectable": true,
+        "ariaLabel": "Mediana desde A",
+        "role": "secondary"
+      },
+      "target": false,
+      "style": {
+        "strokeWidth": 2.4,
+        "highlightStrokeWidth": 4.5,
+        "preserveColorOnHighlight": true
+      },
+      "kind": "segment",
+      "refs": [
+        "A",
+        "Ma"
+      ]
+    },
+    {
+      "id": "medB",
+      "label": "Mediana desde B",
+      "color": "musgo",
+      "layerId": "geometry",
+      "order": 390,
+      "visible": true,
+      "locked": false,
+      "groupIds": [
+        "gMedian"
+      ],
+      "selection": {
+        "selectable": true,
+        "ariaLabel": "Mediana desde B",
+        "role": "secondary"
+      },
+      "target": false,
+      "style": {
+        "strokeWidth": 2.4,
+        "highlightStrokeWidth": 4.5,
+        "preserveColorOnHighlight": true
+      },
+      "kind": "segment",
+      "refs": [
+        "B",
+        "Mb"
+      ]
+    },
+    {
+      "id": "medC",
+      "label": "Mediana desde C",
+      "color": "musgo",
+      "layerId": "geometry",
+      "order": 400,
+      "visible": true,
+      "locked": false,
+      "groupIds": [
+        "gMedian"
+      ],
+      "selection": {
+        "selectable": true,
+        "ariaLabel": "Mediana desde C",
+        "role": "secondary"
+      },
+      "target": false,
+      "style": {
+        "strokeWidth": 2.4,
+        "highlightStrokeWidth": 4.5,
+        "preserveColorOnHighlight": true
+      },
+      "kind": "segment",
+      "refs": [
+        "C",
+        "Mc"
+      ]
+    },
+    {
+      "id": "G",
+      "label": "G",
+      "color": "ocre",
+      "layerId": "geometry",
+      "order": 410,
+      "visible": true,
+      "locked": false,
+      "groupIds": [],
+      "selection": {
+        "selectable": true,
+        "ariaLabel": "G",
+        "role": "secondary"
+      },
+      "target": true,
+      "targetId": "baricentro",
+      "style": {
+        "pointSize": 7,
+        "highlightPointSize": 10,
+        "preserveColorOnHighlight": true
+      },
+      "kind": "intersection",
+      "refs": [
+        "medA",
+        "medB"
+      ]
+    },
+    {
+      "id": "AG",
+      "label": "AG",
+      "color": "musgo",
+      "layerId": "geometry",
+      "order": 420,
+      "visible": false,
+      "locked": false,
+      "groupIds": [],
+      "selection": {
+        "selectable": true,
+        "ariaLabel": "AG",
+        "role": "secondary"
+      },
+      "target": false,
+      "style": {
+        "strokeWidth": 2.4,
+        "highlightStrokeWidth": 3,
+        "preserveColorOnHighlight": true
+      },
+      "kind": "segment",
+      "refs": [
+        "A",
+        "G"
+      ]
+    },
+    {
+      "id": "GMa",
+      "label": "GMₐ",
+      "color": "pizarra",
+      "layerId": "geometry",
+      "order": 430,
+      "visible": false,
+      "locked": false,
+      "groupIds": [],
+      "selection": {
+        "selectable": true,
+        "ariaLabel": "GMₐ",
+        "role": "secondary"
+      },
+      "target": false,
+      "style": {
+        "strokeWidth": 2.4,
+        "highlightStrokeWidth": 3,
+        "preserveColorOnHighlight": true
+      },
+      "kind": "segment",
+      "refs": [
+        "G",
+        "Ma"
+      ]
+    }
+  ],
+  "sliders": [],
+  "steps": [],
+  "constraints": [
+    {
+      "id": "sameSideC",
+      "label": "C no cruza la base AB",
+      "kind": "sameSide",
+      "refs": [
+        "C",
+        "A",
+        "B"
+      ],
+      "enabled": true
+    }
+  ],
+  "dependencies": [],
+  "note": "Mueve A, B o C. Los puntos medios, las tres medianas y su intersección G se reconstruyen automáticamente.",
+  "extensions": {}
+}
+);
+/* @matematika-diagram-spec:end */
 
-
-
-
-export const Mediana = () => {
-
-
-
-
-
-
-  const onInit = (board: any, els: any, theme: any) => {
-      void board; void els; void theme;
-      const C_PRIM = theme.pavo;
-    const C_MED  = theme.ocre;
-    const C_BAR  = theme.terracota;
-    const C_SIDE = theme.carbon;
-
-    const SNAP = 0.5;
-    const A = createPoint(board, [-2.5, -2], { name: 'A', size: 5, fillColor: C_PRIM, strokeColor: C_PRIM, showInfobox: false, snapToGrid: true, snapSizeX: SNAP, snapSizeY: SNAP }, theme);
-    const B = createPoint(board, [3, -1.5], { name: 'B', size: 5, fillColor: C_PRIM, strokeColor: C_PRIM, showInfobox: false, snapToGrid: true, snapSizeX: SNAP, snapSizeY: SNAP }, theme);
-    const C = createPoint(board, [0, 3], { name: 'C', size: 5, fillColor: C_PRIM, strokeColor: C_PRIM, showInfobox: false, snapToGrid: true, snapSizeX: SNAP, snapSizeY: SNAP }, theme);
-
-    const ladoAB = createSegment(board, [A, B], { strokeColor: C_SIDE, strokeWidth: 2 }, theme);
-    const ladoBC = createSegment(board, [B, C], { strokeColor: C_SIDE, strokeWidth: 2 }, theme);
-    const ladoCA = createSegment(board, [C, A], { strokeColor: C_SIDE, strokeWidth: 2 }, theme);
-
-    const M_AB = board.create('midpoint', [A, B], { name: 'M_c', size: 4, fillColor: C_MED, strokeColor: C_MED });
-    const M_BC = board.create('midpoint', [B, C], { name: 'M_a', size: 4, fillColor: C_MED, strokeColor: C_MED });
-    const M_CA = board.create('midpoint', [C, A], { name: 'M_b', size: 4, fillColor: C_MED, strokeColor: C_MED });
-
-    const medA = createSegment(board, [A, M_BC], { strokeColor: C_MED, strokeWidth: 2.5, dash: 2 }, theme);
-    const medB = createSegment(board, [B, M_CA], { strokeColor: C_MED, strokeWidth: 2.5, dash: 2 }, theme);
-    const medC = createSegment(board, [C, M_AB], { strokeColor: C_MED, strokeWidth: 2.5, dash: 2 }, theme);
-
-    const G = board.create('intersection', [medA, medB, 0], { name: 'G', size: 6, fillColor: C_BAR, strokeColor: C_BAR });
-
-    const mkTick = (p: any, q: any) => {
-      const mA = createPoint(board, [() => (p.X() + q.X()) / 2, () => (p.Y() + q.Y()) / 2], { visible: false }, theme);
-      const t0 = board.create('point', [
-        () => { const dx = q.X()-p.X(), dy = q.Y()-p.Y(); const len = Math.hypot(dx, dy) || 1; return mA.X() + dy/len * 0.25; },
-        () => { const dx = q.X()-p.X(), dy = q.Y()-p.Y(); const len = Math.hypot(dx, dy) || 1; return mA.Y() - dx/len * 0.25; }
-      ], { visible: false });
-      const t1 = board.create('point', [
-        () => { const dx = q.X()-p.X(), dy = q.Y()-p.Y(); const len = Math.hypot(dx, dy) || 1; return mA.X() - dy/len * 0.25; },
-        () => { const dx = q.X()-p.X(), dy = q.Y()-p.Y(); const len = Math.hypot(dx, dy) || 1; return mA.Y() + dx/len * 0.25; }
-      ], { visible: false });
-      return createSegment(board, [t0, t1], { strokeColor: C_MED, strokeWidth: 2.2, visible: false }, theme) as any;
-    };
-
-    const halfTicks = [
-      mkTick(A, M_AB), mkTick(M_AB, B),
-      mkTick(B, M_BC), mkTick(M_BC, C),
-      mkTick(C, M_CA), mkTick(M_CA, A)
-    ];
-
-    const infoText = board.create('text', [
-      -4.5, 4.5,
-      () => {
-        const dAG = A.Dist(G), dGMbc = G.Dist(M_BC);
-        const dBG = B.Dist(G), dGMcA = G.Dist(M_CA);
-        const dCG = C.Dist(G), dGMAb = G.Dist(M_AB);
-        return `<div style="font-family: var(--font-serif); color: ${theme.carbon}; line-height:1.3;">
-          <strong style="font-size: 1.1rem; color:${theme.terracota};">Baricentro G</strong><br/>
-          <small>AG/GM<sub>a</sub> = ${(dAG / Math.max(dGMbc, 0.001)).toFixed(2)}</small><br/>
-          <small>BG/GM<sub>b</sub> = ${(dBG / Math.max(dGMcA, 0.001)).toFixed(2)}</small><br/>
-          <small>CG/GM<sub>c</sub> = ${(dCG / Math.max(dGMAb, 0.001)).toFixed(2)}</small>
-        </div>`;
-      }
-    ], { fixed: true, anchorX: 'left', anchorY: 'top' });
-
-      // Registrar elementos para interactividad y auditoría
-      els.A = A;
-        els.B = B;
-        els.C = C;
-        els.ladoAB = ladoAB;
-        els.ladoBC = ladoBC;
-        els.ladoCA = ladoCA;
-        els.M_AB = M_AB;
-        els.M_BC = M_BC;
-        els.M_CA = M_CA;
-        els.medA = medA;
-        els.medB = medB;
-        els.medC = medC;
-        els.G = G;
-        els.halfTicks = halfTicks;
-        els.infoText = infoText;
-    };;
-
-  const onUpdate = (board: any, els: any, theme: any, isStep: any, isHL: any) => {
-      const isHighlight = isHL;
-      void board; void els; void theme; void isStep; void isHL; void isHighlight;
-      const { A, B, C, ladoAB, ladoBC, ladoCA, M_AB, M_BC, M_CA, medA, medB, medC, G, halfTicks } = els;
-      const hVertice = isHighlight('vertice');
-    const hMedio = isHighlight('punto-medio');
-    const hMediana = isHighlight('mediana');
-    const hBaricentro = isHighlight('baricentro');
-    const hLado = isHighlight('lado');
-    const showAll = !hVertice && !hMedio && !hMediana && !hBaricentro && !hLado;
-
-    [A, B, C].forEach((v: any) => v.setAttribute({
-      strokeOpacity: hVertice || showAll ? 1 : 0.3,
-      fillOpacity: hVertice || showAll ? 1 : 0.3,
-      size: hVertice ? 7 : 5
-    }));
-
-    [ladoAB, ladoBC, ladoCA].forEach((l: any) => l.setAttribute({
-      strokeOpacity: hLado || showAll ? 1 : 0.2
-    }));
-
-    [M_AB, M_BC, M_CA].forEach((m: any) => m.setAttribute({
-      strokeOpacity: hMedio || showAll || hMediana ? 1 : 0.2,
-      fillOpacity: hMedio || showAll || hMediana ? 1 : 0.2,
-      size: hMedio ? 6 : 4
-    }));
-
-    halfTicks.forEach((t: any) => t.setAttribute({ visible: hMedio }));
-
-    [medA, medB, medC].forEach((m: any) => m.setAttribute({
-      strokeOpacity: hMediana || showAll || hBaricentro ? 1 : 0.15,
-      strokeWidth: hMediana ? 3.5 : 2.5
-    }));
-
-    G.setAttribute({
-      strokeOpacity: hBaricentro || showAll ? 1 : 0.2,
-      fillOpacity: hBaricentro || showAll ? 1 : 0.2,
-      size: hBaricentro ? 8 : 6
-    });
-    };;
-
-  return (
-    <MathBoard
-      boundingbox={[-5, 5, 5, -5]}
-      axis={false}
-      grid={false}
-      onInit={onInit}
-      onUpdate={onUpdate}
-    >
-
-    </MathBoard>
-  );
-};
+export const Mediana = () => <DiagramRenderer spec={MedianaSpec} />;

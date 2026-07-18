@@ -6,7 +6,7 @@ const TOOL_GROUPS: Array<{ label: string; description: string; tools: CanvasTool
   { label: 'Geometría básica', description: 'Objetos definidos por puntos.', tools: ['segment', 'line', 'ray', 'polygon', 'circle', 'arc'] },
   { label: 'Puntos y construcciones', description: 'Construcciones exactas a partir de objetos existentes.', tools: ['intersection', 'midpoint', 'perpendicularFoot', 'baseExtension', 'perpendicular', 'parallel', 'angleBisector'] },
   { label: 'Curvas', description: 'Gráficas y geometrías no euclidianas.', tools: ['functionCurve', 'parametricCurve', 'poincareGeodesic', 'poincareArc'] },
-  { label: 'Ángulos y medidas', description: 'Marcas, relaciones y medidas visibles.', tools: ['angle', 'nonReflexAngle', 'rightAngle', 'perpendicularMark', 'congruenceMark', 'measureTicks', 'dimensionLine', 'measurement'] },
+  { label: 'Ángulos y medidas', description: 'Marcas, relaciones y medidas visibles.', tools: ['angle', 'nonReflexAngle', 'rightAngle', 'perpendicularMark', 'congruenceMark', 'parallelMark', 'measureTicks', 'dimensionLine', 'measurement'] },
   { label: 'Explicación', description: 'Texto, fórmulas y descomposición visual.', tools: ['grid', 'areaDecomposition', 'text', 'label', 'formula', 'infoPanel'] },
 ];
 
@@ -22,6 +22,7 @@ function toolInstruction(tool: CanvasTool): string {
   if (tool === 'polygon') return 'Elija al menos 3 vértices y finalice con Crear polígono.';
   if (tool === 'intersection') return 'Elija dos rectas, segmentos o semirrectas; después podrá exigir que el punto pertenezca a ambos soportes finitos.';
   if (tool === 'congruenceMark') return 'Elija los dos extremos del segmento que recibirá las rayas centrales de congruencia.';
+  if (tool === 'parallelMark') return 'Elija los dos extremos del lado que recibirá una o dos flechas convencionales de paralelismo.';
   if (tool === 'measureTicks') return 'Elija el segmento que se graduará con marcas repetidas, como una regla.';
   if (tool === 'angle' || tool === 'nonReflexAngle' || tool === 'rightAngle' || tool === 'perpendicularMark' || tool === 'angleBisector') {
     return 'Elija un punto del primer lado, el vértice y un punto del segundo lado, en ese orden.';

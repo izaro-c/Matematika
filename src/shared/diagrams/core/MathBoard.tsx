@@ -180,7 +180,7 @@ export const MathBoard: React.FC<MathBoardProps> = ({
   const safeAreaRef = useRef<MathBoardSafeArea>(safeArea ?? {});
   const viewportSafeAreaRef = useRef<MathBoardSafeArea>(viewportSafeArea ?? safeArea ?? {});
   const highlight = useMathStore(state => state.variables?.[scopeId ? `highlight:${scopeId}` : 'highlight'] ?? state.variables?.['highlight']);
-  const step = useMathStore(state => scopeId
+  const step = useMathStore(state => (scopeId && state.variables?.[`step:${scopeId}`])
     ? state.variables?.[`step:${scopeId}`]
     : state.variables?.['step']);
   const highlightRef = useRef(highlight);
