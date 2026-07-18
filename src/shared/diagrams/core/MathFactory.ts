@@ -268,6 +268,45 @@ export function createCongruenceMark(
   return createComposite(marks);
 }
 
+export function createParallelMark(
+  board: any,
+  points: [any, any],
+  count = 1,
+  options: any = {},
+  theme: ThemeColors,
+) {
+  const [a, b] = points;
+  const { markHeight = 0.42, ...markOptions } = options;
+  const chevrons = Array.from({ length: count }, (_, index) => {
+    const centered = index - (count - 1) / 2;
+    const offset = centered * markHeight * 0.72;
+    const coordinate = (part: 'tip' | 'upper' | 'lower', axis: 'x' | 'y') => () => {
+      const dx = b.X() - a.X();
+      const dy = b.Y() - a.Y();
+      const length = Math.hypot(dx, dy) || 1;
+      const tangentX = dx / length;
+      const tangentY = dy / length;
+      const normalX = -tangentY;
+      const normalY = tangentX;
+      const centerX = (a.X() + b.X()) / 2 + tangentX * offset;
+      const centerY = (a.Y() + b.Y()) / 2 + tangentY * offset;
+      const direction = part === 'tip' ? 0.5 : -0.5;
+      const normal = part === 'upper' ? 0.38 : part === 'lower' ? -0.38 : 0;
+      const x = centerX + tangentX * markHeight * direction + normalX * markHeight * normal;
+      const y = centerY + tangentY * markHeight * direction + normalY * markHeight * normal;
+      return axis === 'x' ? x : y;
+    };
+    const tip = board.create('point', [coordinate('tip', 'x'), coordinate('tip', 'y')], { visible: false });
+    const upper = board.create('point', [coordinate('upper', 'x'), coordinate('upper', 'y')], { visible: false });
+    const lower = board.create('point', [coordinate('lower', 'x'), coordinate('lower', 'y')], { visible: false });
+    return [
+      board.create('segment', [upper, tip], { strokeColor: theme.pavo, strokeWidth: 2, fixed: true, ...markOptions }),
+      board.create('segment', [lower, tip], { strokeColor: theme.pavo, strokeWidth: 2, fixed: true, ...markOptions }),
+    ];
+  }).flat();
+  return createComposite(chevrons);
+}
+
 export function createDimensionLine(
   board: any,
   points: [any, any],

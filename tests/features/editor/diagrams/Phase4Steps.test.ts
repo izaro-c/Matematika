@@ -78,6 +78,21 @@ describe('Phase 4 step model', () => {
     expect(renamed.steps.some(step => step.visibleTargets.includes('segmentoInterno'))).toBe(true);
   });
 
+  it('renames a geometric attractor without losing the point relationship', () => {
+    const base = complexSequence();
+    const pointId = base.points.find(point => !base.elements.find(element => element.id === 'segAB')?.refs.includes(point.id))!.id;
+    const model = {
+      ...base,
+      points: base.points.map(point => point.id === pointId ? { ...point, attractorIds: ['segAB'] } : point),
+      dependencies: [...(base.dependencies ?? []), { sourceId: 'segAB', targetId: pointId, relation: 'constraint' as const }],
+    };
+
+    const renamed = renameElement(model, 'segAB', 'guiaBase');
+
+    expect(renamed.points.find(point => point.id === pointId)?.attractorIds).toEqual(['guiaBase']);
+    expect(renamed.dependencies).toContainEqual({ sourceId: 'guiaBase', targetId: pointId, relation: 'constraint' });
+  });
+
   it('navigates playback deterministically and pauses at the end', () => {
     const steps = complexSequence().steps;
     let state = initialDiagramPlaybackState(steps);

@@ -88,7 +88,6 @@ describe('Phase 5 real acceptance migrations', () => {
           "kinds": {
             "areaDecomposition": 3,
             "infoPanel": 1,
-            "measurement": 3,
             "polygon": 1,
             "ray": 2,
             "rightAngle": 1,
@@ -101,12 +100,9 @@ describe('Phase 5 real acceptance migrations', () => {
             "anotaciones",
           ],
           "points": 11,
-          "steps": [
-            "step1",
-            "step2",
-            "step3",
-          ],
+          "steps": [],
           "targets": [
+            "infoPanel14",
             "triangulo",
             "cuadrado-a",
             "cuadrado-b",
@@ -137,7 +133,11 @@ describe('Phase 5 real acceptance migrations', () => {
           "points": 17,
           "steps": [],
           "targets": [
+            "P",
+            "frontera",
             "geodesica-principal",
+            "limite1",
+            "ultra1",
           ],
           "viewport": [
             -1.18,
@@ -180,44 +180,44 @@ describe('Phase 5 real acceptance migrations', () => {
           ],
         },
         {
-          "componentId": "Paralelogramo",
+          "componentId": "paralelogramo",
           "derived": 1,
           "kinds": {
-            "angle": 4,
+            "circle": 1,
             "congruenceMark": 4,
-            "dimensionLine": 2,
             "infoPanel": 1,
-            "midpoint": 1,
-            "parallel": 2,
+            "intersection": 1,
+            "nonReflexAngle": 4,
+            "parallelMark": 4,
+            "perpendicular": 1,
             "polygon": 1,
+            "rightAngle": 4,
             "segment": 6,
           },
           "layers": [
-            "construccion",
-            "relleno",
-            "lados",
-            "vertices",
-            "propiedades",
-            "diagonales",
-            "anotaciones",
+            "guides",
+            "geometry",
+            "properties",
+            "details",
+            "annotations",
           ],
           "points": 4,
-          "steps": [
-            "step1",
-            "step2",
-            "step3",
-          ],
+          "steps": [],
           "targets": [
-            "paralelogramo",
+            "vertice-movil",
+            "clasificacion",
+            "poligono",
             "lados-opuestos",
+            "lados-iguales",
+            "angulos-rectos",
             "angulos-opuestos",
             "diagonales",
           ],
           "viewport": [
-            -6,
-            6,
-            6,
-            -5,
+            -5.2,
+            4.3,
+            5.2,
+            -4.1,
           ],
         },
       ]
@@ -246,6 +246,32 @@ describe('Phase 5 real acceptance migrations', () => {
     });
   });
 
+  it('keeps Circunferencia visually quiet and reveals every extra construction through a valid MDX target', () => {
+    const source = 'src/widgets/diagrams/Definiciones/Circunferencia.tsx';
+    const page = 'src/database/content/definitions/circunferencia.mdx';
+    const model = readModel(source);
+    const mdx = fs.readFileSync(page, 'utf8');
+    const publicTargets = new Set(buildTargets(model).map(target => target.id));
+    const references = [
+      ...mdx.matchAll(/<InteractiveElement\b[^>]*\btarget="([^"]+)"/g),
+      ...mdx.matchAll(/<ConceptLink\b[^>]*\bhighlightTarget="([^"]+)"/g),
+    ].map(match => match[1]);
+
+    expect(model.points.filter(point => point.visible).map(point => point.id)).toEqual(['O', 'P']);
+    expect(model.elements.filter(element => element.visible).map(element => element.id)).toEqual(['circunferenciaBase', 'radioOP']);
+    expect(model.groups.filter(group => group.target).map(group => group.targetId)).toEqual([
+      'diametro',
+      'cuerda',
+      'arco',
+      'tangente',
+    ]);
+    expect(references.length).toBeGreaterThan(0);
+    references.forEach(target => expect(publicTargets.has(target), `${page}: target ${target}`).toBe(true));
+    [...model.points, ...model.elements]
+      .filter(item => !item.visible)
+      .forEach(item => expect(item.style?.highlightVisible, item.id).toBe(true));
+  });
+
   it('projects Pitágoras gliders onto positive rays and changes area expressions reactively', () => {
     const model = readModel(CASES[0].source);
     const clamped = withMovedPoint(model, 'A', 0, -5);
@@ -253,8 +279,7 @@ describe('Phase 5 real acceptance migrations', () => {
     const moved = withMovedPoint(model, 'B', 6, 0);
     const variables = expressionVariables(moved);
     expect(evaluateMathExpression('segBC.length^2', variables)).toBe(36);
-    expect(createScenePlan(model, { activeStepId: 'step1' }).find(entry => entry.item.id === 'cuadradoA')?.visible).toBe(false);
-    expect(createScenePlan(model, { activeStepId: 'step2' }).find(entry => entry.item.id === 'cuadradoA')?.visible).toBe(true);
+    expect(createScenePlan(model, {}).find(entry => entry.item.id === 'cuadradoA')?.visible).toBe(true);
   });
 
   it('keeps P inside the disk and constructs geodesics orthogonal to its boundary', () => {
@@ -289,21 +314,33 @@ describe('Phase 5 real acceptance migrations', () => {
     expect(model.elements.filter(element => element.kind === 'dimensionLine')).toHaveLength(2);
   });
 
-  it('recomputes the parallelogram derived points, layers, steps and classification rules', () => {
+  it('classifies the parallelogram family and exposes only the marks justified by each shape', () => {
     const model = readModel(CASES[3].source);
-    const moved = withMovedPoint(model, 'C', 2, 3);
-    expect(resolvePointCoordinates(moved, 'D')).toEqual({ x: -3, y: 3 });
-    expect(resolvePointCoordinates(moved, 'M')).toEqual({ x: -0.5, y: 0.5 });
+    const mdx = fs.readFileSync(CASES[3].page, 'utf8');
+    const publicTargets = new Set(buildTargets(model).map(target => target.id));
+    const references = [
+      ...mdx.matchAll(/<InteractiveElement\b[^>]*\btarget="([^"]+)"/g),
+      ...mdx.matchAll(/<ConceptLink\b[^>]*\bhighlightTarget="([^"]+)"/g),
+    ].map(match => match[1]);
+    references.forEach(target => expect(publicTargets.has(target), `${CASES[3].page}: target ${target}`).toBe(true));
+    const square = withMovedPoint(model, 'D', -3, 3);
+    expect(resolvePointCoordinates(square, 'C')).toEqual({ x: 1.5, y: 3 });
+    expect(resolvePointCoordinates(square, 'M')).toEqual({ x: -0.75, y: 0.75 });
     const graph = buildDependencyGraph(model);
-    expect(graph.edges).toContainEqual({ sourceId: 'C', targetId: 'D', relation: 'expression' });
-    expect(model.layers).toHaveLength(7);
-    const firstStep = createScenePlan(model, { activeStepId: 'step1' });
-    expect(firstStep.find(entry => entry.item.id === 'paralelaAB')?.visible).toBe(false);
-    expect(firstStep.find(entry => entry.item.id === 'poligono')?.visible).toBe(true);
+    expect(graph.edges).toContainEqual({ sourceId: 'D', targetId: 'C', relation: 'expression' });
+    expect(graph.edges).toContainEqual({ sourceId: 'guiaRectangulo', targetId: 'D', relation: 'constraint' });
+    expect(model.points.find(point => point.id === 'D')?.attractorIds).toEqual(['guiaRectangulo', 'guiaLadosIguales']);
     const classificationPanel = model.elements.find(element => element.id === 'clasificacion');
-    expect(classificationPanel?.properties).toMatchObject({ anchorMode: 'viewport', viewportPosition: [0, 0] });
-    const classification = classificationPanel?.properties?.textRules?.[0];
-    expect(classification).toBeTruthy();
-    expect(evaluateMathExpression(classification!.when, expressionVariables(moved))).toBe(1);
+    expect(classificationPanel?.properties).toMatchObject({ anchorMode: 'viewport', viewportPosition: [0.97, 0.03] });
+    const [squareRule, rectangleRule, rhombusRule] = classificationPanel?.properties?.textRules ?? [];
+    expect(evaluateMathExpression(squareRule.when, expressionVariables(square))).toBe(1);
+    const rectangle = withMovedPoint(model, 'D', -3, 2);
+    expect(evaluateMathExpression(squareRule.when, expressionVariables(rectangle))).toBe(0);
+    expect(evaluateMathExpression(rectangleRule.when, expressionVariables(rectangle))).toBe(1);
+    const rhombus = withMovedPoint(model, 'D', -0.3, 2.1);
+    expect(evaluateMathExpression(rhombusRule.when, expressionVariables(rhombus))).toBe(1);
+    expect(model.elements.filter(element => element.kind === 'parallelMark').every(element => element.visible)).toBe(true);
+    expect(model.elements.filter(element => element.kind === 'congruenceMark').every(element => element.properties?.visibleWhen)).toBe(true);
+    expect(model.elements.filter(element => element.kind === 'rightAngle').every(element => element.properties?.visibleWhen)).toBe(true);
   });
 });

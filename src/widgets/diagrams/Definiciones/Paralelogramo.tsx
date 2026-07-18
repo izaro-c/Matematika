@@ -6,144 +6,154 @@ export const ParalelogramoSpec = createDiagramSpec(
   "version": 2,
   "renderer": "matematika-diagram-renderer-v2",
   "title": "Paralelogramo",
-  "componentId": "Paralelogramo",
+  "componentId": "paralelogramo",
   "category": "Definiciones",
   "mode": "simulation",
   "axis": false,
   "grid": false,
   "viewport": {
     "bounds": [
-      -6,
-      6,
-      6,
-      -5
+      -5.2,
+      4.3,
+      5.2,
+      -4.1
     ],
     "home": [
-      -6,
-      6,
-      6,
-      -5
+      -5.2,
+      4.3,
+      5.2,
+      -4.1
     ],
-    "minZoom": 0.7,
-    "maxZoom": 4,
-    "padding": 0.18
+    "minZoom": 0.55,
+    "maxZoom": 5,
+    "padding": 0.16
   },
   "layers": [
     {
-      "id": "construccion",
-      "label": "Construcción",
+      "id": "guides",
+      "label": "Guías magnéticas",
       "order": 0,
       "visible": true,
       "locked": false
     },
     {
-      "id": "relleno",
-      "label": "Área",
+      "id": "geometry",
+      "label": "Paralelogramo",
       "order": 1,
       "visible": true,
       "locked": false
     },
     {
-      "id": "lados",
-      "label": "Lados",
+      "id": "properties",
+      "label": "Marcas de clasificación",
       "order": 2,
       "visible": true,
       "locked": false
     },
     {
-      "id": "vertices",
-      "label": "Vértices derivados",
+      "id": "details",
+      "label": "Propiedades bajo demanda",
       "order": 3,
       "visible": true,
       "locked": false
     },
     {
-      "id": "propiedades",
-      "label": "Marcas y ángulos",
+      "id": "annotations",
+      "label": "Clasificación",
       "order": 4,
-      "visible": true,
-      "locked": false
-    },
-    {
-      "id": "diagonales",
-      "label": "Diagonales",
-      "order": 5,
-      "visible": true,
-      "locked": false
-    },
-    {
-      "id": "anotaciones",
-      "label": "Clasificación y cotas",
-      "order": 6,
       "visible": true,
       "locked": false
     }
   ],
   "groups": [
     {
-      "id": "paralelogramoGrupo",
-      "label": "Paralelogramo",
+      "id": "grupoPoligono",
+      "label": "Paralelogramo ABCD",
       "memberIds": [
-        "A",
-        "B",
-        "C",
-        "D",
-        "poligono",
-        "segAB",
-        "segBC",
-        "segCD",
-        "segDA",
-        "marcaAB",
-        "marcaCD",
-        "marcaBC",
-        "marcaDA",
-        "anguloA",
-        "anguloB",
-        "anguloC",
-        "anguloD",
-        "diagAC",
-        "diagBD",
-        "M",
-        "cotaAM",
-        "cotaMC",
-        "clasificacion"
+        "poligono"
       ],
       "visible": true,
       "locked": false,
       "selection": {
         "selectable": true,
+        "dimOthersOnHighlight": true,
+        "ariaLabel": "Paralelogramo ABCD",
         "role": "primary"
       },
       "target": true,
-      "targetId": "paralelogramo",
-      "color": "pavo"
+      "targetId": "poligono",
+      "color": "salvia"
     },
     {
-      "id": "ladosGrupo",
-      "label": "Lados opuestos",
+      "id": "grupoParalelismo",
+      "label": "Dos pares de lados opuestos paralelos",
       "memberIds": [
-        "segAB",
-        "segBC",
-        "segCD",
-        "segDA",
-        "marcaAB",
-        "marcaCD",
-        "marcaBC",
-        "marcaDA"
+        "AB",
+        "BC",
+        "CD",
+        "DA",
+        "parAB",
+        "parBC",
+        "parCD",
+        "parDA"
       ],
       "visible": true,
       "locked": false,
       "selection": {
         "selectable": true,
+        "dimOthersOnHighlight": false,
+        "ariaLabel": "Dos pares de lados opuestos paralelos",
         "role": "primary"
       },
       "target": true,
       "targetId": "lados-opuestos",
-      "color": "terracota"
+      "color": "pavo"
     },
     {
-      "id": "angulosGrupo",
-      "label": "Ángulos opuestos",
+      "id": "grupoIgualdad",
+      "label": "Cuatro lados congruentes",
+      "memberIds": [
+        "igualAB",
+        "igualBC",
+        "igualCD",
+        "igualDA"
+      ],
+      "visible": true,
+      "locked": false,
+      "selection": {
+        "selectable": true,
+        "dimOthersOnHighlight": false,
+        "ariaLabel": "Cuatro lados congruentes",
+        "role": "primary"
+      },
+      "target": true,
+      "targetId": "lados-iguales",
+      "color": "ocre"
+    },
+    {
+      "id": "grupoRectos",
+      "label": "Cuatro ángulos rectos",
+      "memberIds": [
+        "rectoA",
+        "rectoB",
+        "rectoC",
+        "rectoD"
+      ],
+      "visible": true,
+      "locked": false,
+      "selection": {
+        "selectable": true,
+        "dimOthersOnHighlight": false,
+        "ariaLabel": "Cuatro ángulos rectos",
+        "role": "primary"
+      },
+      "target": true,
+      "targetId": "angulos-rectos",
+      "color": "ocre"
+    },
+    {
+      "id": "grupoAngulosOpuestos",
+      "label": "Ángulos opuestos congruentes",
       "memberIds": [
         "anguloA",
         "anguloB",
@@ -154,26 +164,28 @@ export const ParalelogramoSpec = createDiagramSpec(
       "locked": false,
       "selection": {
         "selectable": true,
+        "dimOthersOnHighlight": false,
+        "ariaLabel": "Ángulos opuestos congruentes",
         "role": "primary"
       },
       "target": true,
       "targetId": "angulos-opuestos",
-      "color": "salvia"
+      "color": "terracota"
     },
     {
-      "id": "diagonalesGrupo",
-      "label": "Diagonales y punto medio",
+      "id": "grupoDiagonales",
+      "label": "Diagonales y punto medio común",
       "memberIds": [
-        "diagAC",
-        "diagBD",
-        "M",
-        "cotaAM",
-        "cotaMC"
+        "AC",
+        "BD",
+        "M"
       ],
       "visible": true,
       "locked": false,
       "selection": {
         "selectable": true,
+        "dimOthersOnHighlight": false,
+        "ariaLabel": "Diagonales que se bisecan",
         "role": "primary"
       },
       "target": true,
@@ -186,192 +198,232 @@ export const ParalelogramoSpec = createDiagramSpec(
       "id": "A",
       "label": "A",
       "color": "carbon",
-      "layerId": "vertices",
-      "order": 1,
+      "layerId": "geometry",
+      "order": 100,
       "visible": true,
-      "locked": false,
-      "groupIds": [
-        "paralelogramoGrupo"
-      ],
+      "locked": true,
+      "groupIds": [],
       "selection": {
         "selectable": true,
+        "dimOthersOnHighlight": true,
+        "ariaLabel": "Vértice fijo A",
         "role": "primary"
       },
       "target": false,
       "style": {
-        "pointSize": 5,
-        "highlightPointSize": 7,
+        "pointSize": 7,
+        "labelOffset": [
+          -16,
+          10
+        ],
+        "labelSize": 19,
+        "highlightPointSize": 10,
         "preserveColorOnHighlight": true
       },
       "x": -3,
-      "y": -2,
-      "fixed": false,
-      "constraint": "free"
+      "y": -1.5,
+      "showLabel": true,
+      "fixed": true,
+      "constraint": "fixed"
     },
     {
       "id": "B",
       "label": "B",
       "color": "carbon",
-      "layerId": "vertices",
-      "order": 2,
+      "layerId": "geometry",
+      "order": 110,
       "visible": true,
-      "locked": false,
-      "groupIds": [
-        "paralelogramoGrupo"
-      ],
+      "locked": true,
+      "groupIds": [],
       "selection": {
         "selectable": true,
+        "dimOthersOnHighlight": true,
+        "ariaLabel": "Vértice fijo B",
         "role": "primary"
       },
       "target": false,
       "style": {
-        "pointSize": 5,
-        "highlightPointSize": 7,
+        "pointSize": 7,
+        "labelOffset": [
+          10,
+          10
+        ],
+        "labelSize": 19,
+        "highlightPointSize": 10,
         "preserveColorOnHighlight": true
       },
-      "x": 2,
-      "y": -2,
+      "x": 1.5,
+      "y": -1.5,
+      "showLabel": true,
+      "fixed": true,
+      "constraint": "fixed"
+    },
+    {
+      "id": "D",
+      "label": "D",
+      "color": "terracota",
+      "layerId": "geometry",
+      "order": 120,
+      "visible": true,
+      "locked": false,
+      "groupIds": [],
+      "selection": {
+        "selectable": true,
+        "dimOthersOnHighlight": true,
+        "ariaLabel": "Mueve D para clasificar el paralelogramo",
+        "role": "primary"
+      },
+      "target": true,
+      "targetId": "vertice-movil",
+      "style": {
+        "pointSize": 7,
+        "labelOffset": [
+          -18,
+          -18
+        ],
+        "labelSize": 19,
+        "highlightPointSize": 10,
+        "preserveColorOnHighlight": true
+      },
+      "x": -1.5,
+      "y": 2,
+      "showLabel": true,
       "fixed": false,
-      "constraint": "free"
+      "constraint": "constrained",
+      "constraintIds": [
+        "mantenerConvexo"
+      ],
+      "snapToGrid": true,
+      "snapSize": 0.25,
+      "attractorIds": [
+        "guiaRectangulo",
+        "guiaLadosIguales"
+      ],
+      "attractorDistance": 0.45,
+      "snatchDistance": 0.62
     },
     {
       "id": "C",
       "label": "C",
       "color": "carbon",
-      "layerId": "vertices",
-      "order": 3,
+      "layerId": "geometry",
+      "order": 130,
       "visible": true,
-      "locked": false,
-      "groupIds": [
-        "paralelogramoGrupo"
-      ],
+      "locked": true,
+      "groupIds": [],
       "selection": {
         "selectable": true,
-        "role": "primary"
+        "dimOthersOnHighlight": true,
+        "ariaLabel": "Vértice C construido por traslación",
+        "role": "construction"
       },
       "target": false,
       "style": {
-        "pointSize": 5,
-        "highlightPointSize": 7,
+        "pointSize": 7,
+        "labelOffset": [
+          10,
+          -18
+        ],
+        "labelSize": 19,
+        "highlightPointSize": 10,
         "preserveColorOnHighlight": true
       },
-      "x": 4,
+      "x": 3,
       "y": 2,
-      "fixed": false,
-      "constraint": "constrained",
-      "constraintIds": [
-        "ladoC"
-      ]
-    },
-    {
-      "id": "D",
-      "label": "D",
-      "color": "carbon",
-      "layerId": "vertices",
-      "order": 4,
-      "visible": true,
-      "locked": false,
-      "groupIds": [
-        "paralelogramoGrupo"
-      ],
-      "selection": {
-        "selectable": true,
-        "role": "primary"
-      },
-      "target": false,
-      "style": {
-        "pointSize": 5,
-        "highlightPointSize": 7,
-        "preserveColorOnHighlight": true
-      },
-      "x": -1,
-      "y": 2,
+      "showLabel": true,
       "fixed": true,
       "constraint": "derived",
       "dependencies": [
         "A",
         "B",
-        "C"
+        "D"
       ],
-      "xExpression": "A.x+C.x-B.x",
-      "yExpression": "A.y+C.y-B.y"
+      "xExpression": "B.x+D.x-A.x",
+      "yExpression": "B.y+D.y-A.y"
     }
   ],
   "elements": [
     {
-      "id": "paralelaAB",
-      "label": "paralela a AB por C",
-      "color": "salvia",
-      "layerId": "construccion",
-      "order": 1,
+      "id": "guiaRectangulo",
+      "label": "Guía perpendicular para rectángulos",
+      "color": "pizarra",
+      "layerId": "guides",
+      "order": 10,
       "visible": false,
-      "locked": false,
+      "locked": true,
       "groupIds": [],
       "selection": {
         "selectable": true,
-        "role": "secondary"
+        "dimOthersOnHighlight": true,
+        "ariaLabel": "Guía magnética de ángulo recto",
+        "role": "construction"
       },
       "target": false,
       "style": {
-        "strokeWidth": 2,
-        "strokeOpacity": 0.75,
+        "strokeWidth": 1.2,
+        "strokeOpacity": 0.25,
+        "highlightStrokeWidth": 4.2,
         "preserveColorOnHighlight": true
       },
-      "kind": "parallel",
+      "kind": "perpendicular",
       "refs": [
         "A",
         "B",
-        "C"
-      ],
-      "dashed": true
+        "A"
+      ]
     },
     {
-      "id": "paralelaBC",
-      "label": "paralela a BC por A",
-      "color": "salvia",
-      "layerId": "construccion",
-      "order": 2,
+      "id": "guiaLadosIguales",
+      "label": "Guía circular para lados iguales",
+      "color": "pizarra",
+      "layerId": "guides",
+      "order": 20,
       "visible": false,
-      "locked": false,
+      "locked": true,
       "groupIds": [],
       "selection": {
         "selectable": true,
-        "role": "secondary"
+        "dimOthersOnHighlight": true,
+        "ariaLabel": "Guía magnética de lados iguales",
+        "role": "construction"
       },
       "target": false,
       "style": {
-        "strokeWidth": 2,
-        "strokeOpacity": 0.75,
+        "strokeWidth": 1.2,
+        "strokeOpacity": 0.25,
+        "fillOpacity": 0,
+        "highlightStrokeWidth": 4.2,
         "preserveColorOnHighlight": true
       },
-      "kind": "parallel",
+      "kind": "circle",
       "refs": [
-        "B",
-        "C",
-        "A"
-      ],
-      "dashed": true
+        "A",
+        "B"
+      ]
     },
     {
       "id": "poligono",
-      "label": "paralelogramo ABCD",
-      "color": "pavo",
-      "layerId": "relleno",
-      "order": 1,
+      "label": "Paralelogramo ABCD",
+      "color": "salvia",
+      "layerId": "geometry",
+      "order": 200,
       "visible": true,
       "locked": false,
       "groupIds": [
-        "paralelogramoGrupo"
+        "grupoPoligono"
       ],
       "selection": {
         "selectable": true,
-        "role": "secondary"
+        "dimOthersOnHighlight": true,
+        "ariaLabel": "Paralelogramo ABCD",
+        "role": "primary"
       },
       "target": false,
       "style": {
-        "strokeWidth": 2.5,
-        "fillOpacity": 0.08,
-        "highlightFillOpacity": 0.25,
+        "strokeWidth": 2.4,
+        "fillOpacity": 0.12,
+        "highlightStrokeWidth": 4.2,
+        "highlightFillOpacity": 0.28,
         "preserveColorOnHighlight": true
       },
       "kind": "polygon",
@@ -383,25 +435,26 @@ export const ParalelogramoSpec = createDiagramSpec(
       ]
     },
     {
-      "id": "segAB",
-      "label": "lado AB",
+      "id": "AB",
+      "label": "Lado AB",
       "color": "terracota",
-      "layerId": "lados",
-      "order": 10,
+      "layerId": "geometry",
+      "order": 210,
       "visible": true,
       "locked": false,
       "groupIds": [
-        "paralelogramoGrupo",
-        "ladosGrupo"
+        "grupoParalelismo"
       ],
       "selection": {
         "selectable": true,
+        "dimOthersOnHighlight": true,
+        "ariaLabel": "Lado AB",
         "role": "secondary"
       },
       "target": false,
       "style": {
-        "strokeWidth": 3,
-        "highlightStrokeWidth": 5,
+        "strokeWidth": 2.4,
+        "highlightStrokeWidth": 4.2,
         "preserveColorOnHighlight": true
       },
       "kind": "segment",
@@ -411,25 +464,26 @@ export const ParalelogramoSpec = createDiagramSpec(
       ]
     },
     {
-      "id": "segBC",
-      "label": "lado BC",
+      "id": "BC",
+      "label": "Lado BC",
       "color": "pavo",
-      "layerId": "lados",
-      "order": 11,
+      "layerId": "geometry",
+      "order": 220,
       "visible": true,
       "locked": false,
       "groupIds": [
-        "paralelogramoGrupo",
-        "ladosGrupo"
+        "grupoParalelismo"
       ],
       "selection": {
         "selectable": true,
+        "dimOthersOnHighlight": true,
+        "ariaLabel": "Lado BC",
         "role": "secondary"
       },
       "target": false,
       "style": {
-        "strokeWidth": 3,
-        "highlightStrokeWidth": 5,
+        "strokeWidth": 2.4,
+        "highlightStrokeWidth": 4.2,
         "preserveColorOnHighlight": true
       },
       "kind": "segment",
@@ -439,25 +493,26 @@ export const ParalelogramoSpec = createDiagramSpec(
       ]
     },
     {
-      "id": "segCD",
-      "label": "lado CD",
+      "id": "CD",
+      "label": "Lado CD",
       "color": "terracota",
-      "layerId": "lados",
-      "order": 12,
+      "layerId": "geometry",
+      "order": 230,
       "visible": true,
       "locked": false,
       "groupIds": [
-        "paralelogramoGrupo",
-        "ladosGrupo"
+        "grupoParalelismo"
       ],
       "selection": {
         "selectable": true,
+        "dimOthersOnHighlight": true,
+        "ariaLabel": "Lado CD",
         "role": "secondary"
       },
       "target": false,
       "style": {
-        "strokeWidth": 3,
-        "highlightStrokeWidth": 5,
+        "strokeWidth": 2.4,
+        "highlightStrokeWidth": 4.2,
         "preserveColorOnHighlight": true
       },
       "kind": "segment",
@@ -467,25 +522,26 @@ export const ParalelogramoSpec = createDiagramSpec(
       ]
     },
     {
-      "id": "segDA",
-      "label": "lado DA",
+      "id": "DA",
+      "label": "Lado DA",
       "color": "pavo",
-      "layerId": "lados",
-      "order": 13,
+      "layerId": "geometry",
+      "order": 240,
       "visible": true,
       "locked": false,
       "groupIds": [
-        "paralelogramoGrupo",
-        "ladosGrupo"
+        "grupoParalelismo"
       ],
       "selection": {
         "selectable": true,
+        "dimOthersOnHighlight": true,
+        "ariaLabel": "Lado DA",
         "role": "secondary"
       },
       "target": false,
       "style": {
-        "strokeWidth": 3,
-        "highlightStrokeWidth": 5,
+        "strokeWidth": 2.4,
+        "highlightStrokeWidth": 4.2,
         "preserveColorOnHighlight": true
       },
       "kind": "segment",
@@ -495,28 +551,30 @@ export const ParalelogramoSpec = createDiagramSpec(
       ]
     },
     {
-      "id": "marcaAB",
-      "label": "marca AB",
-      "color": "carbon",
-      "layerId": "propiedades",
-      "order": 20,
+      "id": "parAB",
+      "label": "Una flecha: AB paralelo a CD",
+      "color": "terracota",
+      "layerId": "properties",
+      "order": 300,
       "visible": true,
       "locked": false,
       "groupIds": [
-        "paralelogramoGrupo",
-        "ladosGrupo"
+        "grupoParalelismo"
       ],
       "selection": {
         "selectable": true,
+        "dimOthersOnHighlight": true,
+        "ariaLabel": "Una flecha: AB paralelo a CD",
         "role": "secondary"
       },
       "target": false,
       "style": {
-        "strokeWidth": 2.4,
-        "highlightStrokeWidth": 4,
+        "strokeWidth": 2.2,
+        "markHeight": 0.42,
+        "highlightStrokeWidth": 4.2,
         "preserveColorOnHighlight": true
       },
-      "kind": "congruenceMark",
+      "kind": "parallelMark",
       "refs": [
         "A",
         "B"
@@ -526,59 +584,63 @@ export const ParalelogramoSpec = createDiagramSpec(
       }
     },
     {
-      "id": "marcaCD",
-      "label": "marca CD",
-      "color": "carbon",
-      "layerId": "propiedades",
-      "order": 21,
+      "id": "parCD",
+      "label": "Una flecha: CD paralelo a AB",
+      "color": "terracota",
+      "layerId": "properties",
+      "order": 310,
       "visible": true,
       "locked": false,
       "groupIds": [
-        "paralelogramoGrupo",
-        "ladosGrupo"
+        "grupoParalelismo"
       ],
       "selection": {
         "selectable": true,
+        "dimOthersOnHighlight": true,
+        "ariaLabel": "Una flecha: CD paralelo a AB",
         "role": "secondary"
       },
       "target": false,
       "style": {
-        "strokeWidth": 2.4,
-        "highlightStrokeWidth": 4,
+        "strokeWidth": 2.2,
+        "markHeight": 0.42,
+        "highlightStrokeWidth": 4.2,
         "preserveColorOnHighlight": true
       },
-      "kind": "congruenceMark",
+      "kind": "parallelMark",
       "refs": [
-        "C",
-        "D"
+        "D",
+        "C"
       ],
       "properties": {
         "markCount": 1
       }
     },
     {
-      "id": "marcaBC",
-      "label": "marcas BC",
-      "color": "carbon",
-      "layerId": "propiedades",
-      "order": 22,
+      "id": "parBC",
+      "label": "Dos flechas: BC paralelo a DA",
+      "color": "pavo",
+      "layerId": "properties",
+      "order": 320,
       "visible": true,
       "locked": false,
       "groupIds": [
-        "paralelogramoGrupo",
-        "ladosGrupo"
+        "grupoParalelismo"
       ],
       "selection": {
         "selectable": true,
+        "dimOthersOnHighlight": true,
+        "ariaLabel": "Dos flechas: BC paralelo a DA",
         "role": "secondary"
       },
       "target": false,
       "style": {
-        "strokeWidth": 2.4,
-        "highlightStrokeWidth": 4,
+        "strokeWidth": 2.2,
+        "markHeight": 0.42,
+        "highlightStrokeWidth": 4.2,
         "preserveColorOnHighlight": true
       },
-      "kind": "congruenceMark",
+      "kind": "parallelMark",
       "refs": [
         "B",
         "C"
@@ -588,25 +650,162 @@ export const ParalelogramoSpec = createDiagramSpec(
       }
     },
     {
-      "id": "marcaDA",
-      "label": "marcas DA",
-      "color": "carbon",
-      "layerId": "propiedades",
-      "order": 23,
+      "id": "parDA",
+      "label": "Dos flechas: DA paralelo a BC",
+      "color": "pavo",
+      "layerId": "properties",
+      "order": 330,
       "visible": true,
       "locked": false,
       "groupIds": [
-        "paralelogramoGrupo",
-        "ladosGrupo"
+        "grupoParalelismo"
       ],
       "selection": {
         "selectable": true,
+        "dimOthersOnHighlight": true,
+        "ariaLabel": "Dos flechas: DA paralelo a BC",
         "role": "secondary"
       },
       "target": false,
       "style": {
-        "strokeWidth": 2.4,
-        "highlightStrokeWidth": 4,
+        "strokeWidth": 2.2,
+        "markHeight": 0.42,
+        "highlightStrokeWidth": 4.2,
+        "preserveColorOnHighlight": true
+      },
+      "kind": "parallelMark",
+      "refs": [
+        "A",
+        "D"
+      ],
+      "properties": {
+        "markCount": 2
+      }
+    },
+    {
+      "id": "igualAB",
+      "label": "Marca de igualdad en AB",
+      "color": "ocre",
+      "layerId": "properties",
+      "order": 400,
+      "visible": true,
+      "locked": false,
+      "groupIds": [
+        "grupoIgualdad"
+      ],
+      "selection": {
+        "selectable": true,
+        "dimOthersOnHighlight": true,
+        "ariaLabel": "Marca de igualdad en AB",
+        "role": "secondary"
+      },
+      "target": false,
+      "style": {
+        "strokeWidth": 2.2,
+        "markHeight": 0.34,
+        "highlightStrokeWidth": 4.2,
+        "preserveColorOnHighlight": true
+      },
+      "kind": "congruenceMark",
+      "refs": [
+        "A",
+        "B"
+      ],
+      "properties": {
+        "markCount": 1,
+        "visibleWhen": "lt(abs(AB.length-BC.length)/max(AB.length,BC.length),0.04)"
+      }
+    },
+    {
+      "id": "igualBC",
+      "label": "Marca de igualdad en BC",
+      "color": "ocre",
+      "layerId": "properties",
+      "order": 410,
+      "visible": true,
+      "locked": false,
+      "groupIds": [
+        "grupoIgualdad"
+      ],
+      "selection": {
+        "selectable": true,
+        "dimOthersOnHighlight": true,
+        "ariaLabel": "Marca de igualdad en BC",
+        "role": "secondary"
+      },
+      "target": false,
+      "style": {
+        "strokeWidth": 2.2,
+        "markHeight": 0.34,
+        "highlightStrokeWidth": 4.2,
+        "preserveColorOnHighlight": true
+      },
+      "kind": "congruenceMark",
+      "refs": [
+        "B",
+        "C"
+      ],
+      "properties": {
+        "markCount": 1,
+        "visibleWhen": "lt(abs(AB.length-BC.length)/max(AB.length,BC.length),0.04)"
+      }
+    },
+    {
+      "id": "igualCD",
+      "label": "Marca de igualdad en CD",
+      "color": "ocre",
+      "layerId": "properties",
+      "order": 420,
+      "visible": true,
+      "locked": false,
+      "groupIds": [
+        "grupoIgualdad"
+      ],
+      "selection": {
+        "selectable": true,
+        "dimOthersOnHighlight": true,
+        "ariaLabel": "Marca de igualdad en CD",
+        "role": "secondary"
+      },
+      "target": false,
+      "style": {
+        "strokeWidth": 2.2,
+        "markHeight": 0.34,
+        "highlightStrokeWidth": 4.2,
+        "preserveColorOnHighlight": true
+      },
+      "kind": "congruenceMark",
+      "refs": [
+        "C",
+        "D"
+      ],
+      "properties": {
+        "markCount": 1,
+        "visibleWhen": "lt(abs(AB.length-BC.length)/max(AB.length,BC.length),0.04)"
+      }
+    },
+    {
+      "id": "igualDA",
+      "label": "Marca de igualdad en DA",
+      "color": "ocre",
+      "layerId": "properties",
+      "order": 430,
+      "visible": true,
+      "locked": false,
+      "groupIds": [
+        "grupoIgualdad"
+      ],
+      "selection": {
+        "selectable": true,
+        "dimOthersOnHighlight": true,
+        "ariaLabel": "Marca de igualdad en DA",
+        "role": "secondary"
+      },
+      "target": false,
+      "style": {
+        "strokeWidth": 2.2,
+        "markHeight": 0.34,
+        "highlightStrokeWidth": 4.2,
         "preserveColorOnHighlight": true
       },
       "kind": "congruenceMark",
@@ -615,169 +814,312 @@ export const ParalelogramoSpec = createDiagramSpec(
         "A"
       ],
       "properties": {
-        "markCount": 2
+        "markCount": 1,
+        "visibleWhen": "lt(abs(AB.length-BC.length)/max(AB.length,BC.length),0.04)"
+      }
+    },
+    {
+      "id": "rectoA",
+      "label": "Ángulo recto en A",
+      "color": "ocre",
+      "layerId": "properties",
+      "order": 500,
+      "visible": true,
+      "locked": false,
+      "groupIds": [
+        "grupoRectos"
+      ],
+      "selection": {
+        "selectable": true,
+        "dimOthersOnHighlight": true,
+        "ariaLabel": "Ángulo recto en A",
+        "role": "secondary"
+      },
+      "target": false,
+      "style": {
+        "strokeWidth": 1.7,
+        "fillOpacity": 0.16,
+        "angleRadius": 0.42,
+        "highlightStrokeWidth": 4.2,
+        "highlightFillOpacity": 0.3,
+        "preserveColorOnHighlight": true
+      },
+      "kind": "rightAngle",
+      "refs": [
+        "B",
+        "A",
+        "D"
+      ],
+      "properties": {
+        "visibleWhen": "lt(abs((B.x-A.x)*(D.x-A.x)+(B.y-A.y)*(D.y-A.y))/(AB.length*DA.length),0.035)"
+      }
+    },
+    {
+      "id": "rectoB",
+      "label": "Ángulo recto en B",
+      "color": "ocre",
+      "layerId": "properties",
+      "order": 510,
+      "visible": true,
+      "locked": false,
+      "groupIds": [
+        "grupoRectos"
+      ],
+      "selection": {
+        "selectable": true,
+        "dimOthersOnHighlight": true,
+        "ariaLabel": "Ángulo recto en B",
+        "role": "secondary"
+      },
+      "target": false,
+      "style": {
+        "strokeWidth": 1.7,
+        "fillOpacity": 0.16,
+        "angleRadius": 0.42,
+        "highlightStrokeWidth": 4.2,
+        "highlightFillOpacity": 0.3,
+        "preserveColorOnHighlight": true
+      },
+      "kind": "rightAngle",
+      "refs": [
+        "C",
+        "B",
+        "A"
+      ],
+      "properties": {
+        "visibleWhen": "lt(abs((B.x-A.x)*(D.x-A.x)+(B.y-A.y)*(D.y-A.y))/(AB.length*DA.length),0.035)"
+      }
+    },
+    {
+      "id": "rectoC",
+      "label": "Ángulo recto en C",
+      "color": "ocre",
+      "layerId": "properties",
+      "order": 520,
+      "visible": true,
+      "locked": false,
+      "groupIds": [
+        "grupoRectos"
+      ],
+      "selection": {
+        "selectable": true,
+        "dimOthersOnHighlight": true,
+        "ariaLabel": "Ángulo recto en C",
+        "role": "secondary"
+      },
+      "target": false,
+      "style": {
+        "strokeWidth": 1.7,
+        "fillOpacity": 0.16,
+        "angleRadius": 0.42,
+        "highlightStrokeWidth": 4.2,
+        "highlightFillOpacity": 0.3,
+        "preserveColorOnHighlight": true
+      },
+      "kind": "rightAngle",
+      "refs": [
+        "D",
+        "C",
+        "B"
+      ],
+      "properties": {
+        "visibleWhen": "lt(abs((B.x-A.x)*(D.x-A.x)+(B.y-A.y)*(D.y-A.y))/(AB.length*DA.length),0.035)"
+      }
+    },
+    {
+      "id": "rectoD",
+      "label": "Ángulo recto en D",
+      "color": "ocre",
+      "layerId": "properties",
+      "order": 530,
+      "visible": true,
+      "locked": false,
+      "groupIds": [
+        "grupoRectos"
+      ],
+      "selection": {
+        "selectable": true,
+        "dimOthersOnHighlight": true,
+        "ariaLabel": "Ángulo recto en D",
+        "role": "secondary"
+      },
+      "target": false,
+      "style": {
+        "strokeWidth": 1.7,
+        "fillOpacity": 0.16,
+        "angleRadius": 0.42,
+        "highlightStrokeWidth": 4.2,
+        "highlightFillOpacity": 0.3,
+        "preserveColorOnHighlight": true
+      },
+      "kind": "rightAngle",
+      "refs": [
+        "A",
+        "D",
+        "C"
+      ],
+      "properties": {
+        "visibleWhen": "lt(abs((B.x-A.x)*(D.x-A.x)+(B.y-A.y)*(D.y-A.y))/(AB.length*DA.length),0.035)"
       }
     },
     {
       "id": "anguloA",
-      "label": "ángulo A",
+      "label": "Ángulo A",
       "color": "terracota",
-      "layerId": "propiedades",
-      "order": 30,
-      "visible": true,
+      "layerId": "details",
+      "order": 600,
+      "visible": false,
       "locked": false,
       "groupIds": [
-        "paralelogramoGrupo",
-        "angulosGrupo"
+        "grupoAngulosOpuestos"
       ],
       "selection": {
         "selectable": true,
+        "dimOthersOnHighlight": true,
+        "ariaLabel": "Ángulo A",
         "role": "secondary"
       },
       "target": false,
       "style": {
         "strokeWidth": 1.5,
-        "fillOpacity": 0.22,
-        "angleRadius": 0.85,
-        "highlightFillOpacity": 0.45,
+        "fillOpacity": 0.18,
+        "angleRadius": 0.62,
+        "highlightStrokeWidth": 4.2,
+        "highlightFillOpacity": 0.3,
         "highlightVisible": true,
         "preserveColorOnHighlight": true
       },
-      "kind": "angle",
+      "kind": "nonReflexAngle",
       "refs": [
         "B",
         "A",
         "D"
-      ],
-      "properties": {
-        "visibleWhen": "not(and(approx(abs(atan2(D.y-A.y,D.x-A.x)-atan2(B.y-A.y,B.x-A.x)),pi/2,0.1),approx(abs(atan2(A.y-B.y,A.x-B.x)-atan2(C.y-B.y,C.x-B.x)),pi/2,0.1),approx(abs(atan2(B.y-C.y,B.x-C.x)-atan2(D.y-C.y,D.x-C.x)),pi/2,0.1),approx(abs(atan2(C.y-D.y,C.x-D.x)-atan2(A.y-D.y,A.x-D.x)),pi/2,0.1)))"
-      }
+      ]
     },
     {
       "id": "anguloB",
-      "label": "ángulo B",
-      "color": "salvia",
-      "layerId": "propiedades",
-      "order": 31,
-      "visible": true,
+      "label": "Ángulo B",
+      "color": "pavo",
+      "layerId": "details",
+      "order": 610,
+      "visible": false,
       "locked": false,
       "groupIds": [
-        "paralelogramoGrupo",
-        "angulosGrupo"
+        "grupoAngulosOpuestos"
       ],
       "selection": {
         "selectable": true,
+        "dimOthersOnHighlight": true,
+        "ariaLabel": "Ángulo B",
         "role": "secondary"
       },
       "target": false,
       "style": {
         "strokeWidth": 1.5,
-        "fillOpacity": 0.22,
-        "angleRadius": 0.85,
-        "highlightFillOpacity": 0.45,
+        "fillOpacity": 0.18,
+        "angleRadius": 0.62,
+        "highlightStrokeWidth": 4.2,
+        "highlightFillOpacity": 0.3,
         "highlightVisible": true,
         "preserveColorOnHighlight": true
       },
-      "kind": "angle",
+      "kind": "nonReflexAngle",
       "refs": [
         "C",
         "B",
         "A"
-      ],
-      "properties": {
-        "visibleWhen": "not(and(approx(abs(atan2(D.y-A.y,D.x-A.x)-atan2(B.y-A.y,B.x-A.x)),pi/2,0.1),approx(abs(atan2(A.y-B.y,A.x-B.x)-atan2(C.y-B.y,C.x-B.x)),pi/2,0.1),approx(abs(atan2(B.y-C.y,B.x-C.x)-atan2(D.y-C.y,D.x-C.x)),pi/2,0.1),approx(abs(atan2(C.y-D.y,C.x-D.x)-atan2(A.y-D.y,A.x-D.x)),pi/2,0.1)))"
-      }
+      ]
     },
     {
       "id": "anguloC",
-      "label": "ángulo C",
+      "label": "Ángulo C",
       "color": "terracota",
-      "layerId": "propiedades",
-      "order": 32,
-      "visible": true,
+      "layerId": "details",
+      "order": 620,
+      "visible": false,
       "locked": false,
       "groupIds": [
-        "paralelogramoGrupo",
-        "angulosGrupo"
+        "grupoAngulosOpuestos"
       ],
       "selection": {
         "selectable": true,
+        "dimOthersOnHighlight": true,
+        "ariaLabel": "Ángulo C",
         "role": "secondary"
       },
       "target": false,
       "style": {
         "strokeWidth": 1.5,
-        "fillOpacity": 0.22,
-        "angleRadius": 0.85,
-        "highlightFillOpacity": 0.45,
+        "fillOpacity": 0.18,
+        "angleRadius": 0.62,
+        "highlightStrokeWidth": 4.2,
+        "highlightFillOpacity": 0.3,
         "highlightVisible": true,
         "preserveColorOnHighlight": true
       },
-      "kind": "angle",
+      "kind": "nonReflexAngle",
       "refs": [
         "D",
         "C",
         "B"
-      ],
-      "properties": {
-        "visibleWhen": "not(and(approx(abs(atan2(D.y-A.y,D.x-A.x)-atan2(B.y-A.y,B.x-A.x)),pi/2,0.1),approx(abs(atan2(A.y-B.y,A.x-B.x)-atan2(C.y-B.y,C.x-B.x)),pi/2,0.1),approx(abs(atan2(B.y-C.y,B.x-C.x)-atan2(D.y-C.y,D.x-C.x)),pi/2,0.1),approx(abs(atan2(C.y-D.y,C.x-D.x)-atan2(A.y-D.y,A.x-D.x)),pi/2,0.1)))"
-      }
+      ]
     },
     {
       "id": "anguloD",
-      "label": "ángulo D",
-      "color": "salvia",
-      "layerId": "propiedades",
-      "order": 33,
-      "visible": true,
+      "label": "Ángulo D",
+      "color": "pavo",
+      "layerId": "details",
+      "order": 630,
+      "visible": false,
       "locked": false,
       "groupIds": [
-        "paralelogramoGrupo",
-        "angulosGrupo"
+        "grupoAngulosOpuestos"
       ],
       "selection": {
         "selectable": true,
+        "dimOthersOnHighlight": true,
+        "ariaLabel": "Ángulo D",
         "role": "secondary"
       },
       "target": false,
       "style": {
         "strokeWidth": 1.5,
-        "fillOpacity": 0.22,
-        "angleRadius": 0.85,
-        "highlightFillOpacity": 0.45,
+        "fillOpacity": 0.18,
+        "angleRadius": 0.62,
+        "highlightStrokeWidth": 4.2,
+        "highlightFillOpacity": 0.3,
         "highlightVisible": true,
         "preserveColorOnHighlight": true
       },
-      "kind": "angle",
+      "kind": "nonReflexAngle",
       "refs": [
         "A",
         "D",
         "C"
-      ],
-      "properties": {
-        "visibleWhen": "not(and(approx(abs(atan2(D.y-A.y,D.x-A.x)-atan2(B.y-A.y,B.x-A.x)),pi/2,0.1),approx(abs(atan2(A.y-B.y,A.x-B.x)-atan2(C.y-B.y,C.x-B.x)),pi/2,0.1),approx(abs(atan2(B.y-C.y,B.x-C.x)-atan2(D.y-C.y,D.x-C.x)),pi/2,0.1),approx(abs(atan2(C.y-D.y,C.x-D.x)-atan2(A.y-D.y,A.x-D.x)),pi/2,0.1)))"
-      }
+      ]
     },
     {
-      "id": "diagAC",
-      "label": "diagonal AC",
+      "id": "AC",
+      "label": "Diagonal AC",
       "color": "pizarra",
-      "layerId": "diagonales",
-      "order": 40,
-      "visible": true,
+      "layerId": "details",
+      "order": 700,
+      "visible": false,
       "locked": false,
       "groupIds": [
-        "paralelogramoGrupo",
-        "diagonalesGrupo"
+        "grupoDiagonales"
       ],
       "selection": {
         "selectable": true,
+        "dimOthersOnHighlight": true,
+        "ariaLabel": "Diagonal AC",
         "role": "secondary"
       },
       "target": false,
       "style": {
-        "strokeWidth": 1.5,
-        "highlightStrokeWidth": 4,
+        "strokeWidth": 1.6,
+        "highlightStrokeWidth": 3.4,
+        "highlightVisible": true,
         "preserveColorOnHighlight": true
       },
       "kind": "segment",
@@ -788,25 +1130,27 @@ export const ParalelogramoSpec = createDiagramSpec(
       "dashed": true
     },
     {
-      "id": "diagBD",
-      "label": "diagonal BD",
+      "id": "BD",
+      "label": "Diagonal BD",
       "color": "pizarra",
-      "layerId": "diagonales",
-      "order": 41,
-      "visible": true,
+      "layerId": "details",
+      "order": 710,
+      "visible": false,
       "locked": false,
       "groupIds": [
-        "paralelogramoGrupo",
-        "diagonalesGrupo"
+        "grupoDiagonales"
       ],
       "selection": {
         "selectable": true,
+        "dimOthersOnHighlight": true,
+        "ariaLabel": "Diagonal BD",
         "role": "secondary"
       },
       "target": false,
       "style": {
-        "strokeWidth": 1.5,
-        "highlightStrokeWidth": 4,
+        "strokeWidth": 1.6,
+        "highlightStrokeWidth": 3.4,
+        "highlightVisible": true,
         "preserveColorOnHighlight": true
       },
       "kind": "segment",
@@ -818,124 +1162,62 @@ export const ParalelogramoSpec = createDiagramSpec(
     },
     {
       "id": "M",
-      "label": "M",
-      "color": "carbon",
-      "layerId": "diagonales",
-      "order": 42,
-      "visible": true,
+      "label": "Punto medio común M",
+      "color": "pizarra",
+      "layerId": "details",
+      "order": 720,
+      "visible": false,
       "locked": false,
       "groupIds": [
-        "paralelogramoGrupo",
-        "diagonalesGrupo"
+        "grupoDiagonales"
       ],
       "selection": {
         "selectable": true,
+        "dimOthersOnHighlight": true,
+        "ariaLabel": "Punto medio común M",
         "role": "secondary"
       },
       "target": false,
       "style": {
-        "pointSize": 3,
-        "highlightPointSize": 7,
+        "strokeWidth": 2.4,
+        "pointSize": 5,
+        "highlightStrokeWidth": 4.2,
+        "highlightPointSize": 8,
+        "highlightVisible": true,
         "preserveColorOnHighlight": true
       },
-      "kind": "midpoint",
+      "kind": "intersection",
       "refs": [
-        "A",
-        "C"
+        "AC",
+        "BD"
       ]
     },
     {
-      "id": "cotaAM",
-      "label": "cota AM",
-      "color": "pizarra",
-      "layerId": "anotaciones",
-      "order": 50,
-      "visible": true,
-      "locked": false,
-      "groupIds": [
-        "paralelogramoGrupo",
-        "diagonalesGrupo"
-      ],
-      "selection": {
-        "selectable": true,
-        "role": "secondary"
-      },
-      "target": false,
-      "style": {
-        "strokeWidth": 1.2,
-        "highlightStrokeWidth": 3,
-        "preserveColorOnHighlight": true
-      },
-      "kind": "dimensionLine",
-      "refs": [
-        "A",
-        "M"
-      ],
-      "text": "AM = {value}",
-      "properties": {
-        "unit": "u",
-        "precision": 2,
-        "offset": 0.3
-      }
-    },
-    {
-      "id": "cotaMC",
-      "label": "cota MC",
-      "color": "pizarra",
-      "layerId": "anotaciones",
-      "order": 51,
-      "visible": true,
-      "locked": false,
-      "groupIds": [
-        "paralelogramoGrupo",
-        "diagonalesGrupo"
-      ],
-      "selection": {
-        "selectable": true,
-        "role": "secondary"
-      },
-      "target": false,
-      "style": {
-        "strokeWidth": 1.2,
-        "highlightStrokeWidth": 3,
-        "preserveColorOnHighlight": true
-      },
-      "kind": "dimensionLine",
-      "refs": [
-        "M",
-        "C"
-      ],
-      "text": "MC = {value}",
-      "properties": {
-        "unit": "u",
-        "precision": 2,
-        "offset": 0.3
-      }
-    },
-    {
       "id": "clasificacion",
-      "label": "clasificación dinámica",
-      "color": "carbon",
-      "layerId": "anotaciones",
-      "order": 52,
+      "label": "Clasificación dinámica",
+      "color": "musgo",
+      "layerId": "annotations",
+      "order": 800,
       "visible": true,
       "locked": false,
-      "groupIds": [
-        "paralelogramoGrupo"
-      ],
+      "groupIds": [],
       "selection": {
         "selectable": true,
-        "role": "secondary"
+        "dimOthersOnHighlight": false,
+        "ariaLabel": "Clasificación dinámica del paralelogramo",
+        "role": "annotation"
       },
-      "target": false,
+      "target": true,
+      "targetId": "clasificacion",
       "style": {
+        "strokeWidth": 2.4,
+        "highlightStrokeWidth": 4.2,
         "preserveColorOnHighlight": true
       },
       "kind": "infoPanel",
       "refs": [],
-      "text": "<strong>Paralelogramo</strong><br/><small>2 pares ∥ · lados y ángulos opuestos ≡ · diagonales se bisecan</small>",
+      "text": "",
       "properties": {
-        "title": "Clasificación",
         "anchorMode": "viewport",
         "viewportPosition": [
           0,
@@ -943,226 +1225,34 @@ export const ParalelogramoSpec = createDiagramSpec(
         ],
         "textRules": [
           {
-            "when": "and(and(approx(segAB.length,segBC.length,0.15),approx(segBC.length,segCD.length,0.15),approx(segCD.length,segDA.length,0.15)),and(approx((D.x-A.x)*(B.x-A.x)+(D.y-A.y)*(B.y-A.y),0,0.15),approx((A.x-B.x)*(C.x-B.x)+(A.y-B.y)*(C.y-B.y),0,0.15),approx((B.x-C.x)*(D.x-C.x)+(B.y-C.y)*(D.y-C.y),0,0.15),approx((C.x-D.x)*(A.x-D.x)+(C.y-D.y)*(A.y-D.y),0,0.15)))",
-            "text": "<strong>Cuadrado</strong><br/><small>4 lados ≡ · 4 ángulos rectos · diagonales ⟂ y ≡</small>"
+            "when": "and(lt(abs(AB.length-BC.length)/max(AB.length,BC.length),0.04),lt(abs((B.x-A.x)*(D.x-A.x)+(B.y-A.y)*(D.y-A.y))/(AB.length*DA.length),0.035))",
+            "text": "Cuadrado $\\\\$ 4 lados iguales · 4 ángulos rectos"
           },
           {
-            "when": "and(approx((D.x-A.x)*(B.x-A.x)+(D.y-A.y)*(B.y-A.y),0,0.15),approx((A.x-B.x)*(C.x-B.x)+(A.y-B.y)*(C.y-B.y),0,0.15),approx((B.x-C.x)*(D.x-C.x)+(B.y-C.y)*(D.y-C.y),0,0.15),approx((C.x-D.x)*(A.x-D.x)+(C.y-D.y)*(A.y-D.y),0,0.15))",
-            "text": "<strong>Rectángulo</strong><br/><small>4 ángulos rectos · diagonales ≡</small>"
+            "when": "lt(abs((B.x-A.x)*(D.x-A.x)+(B.y-A.y)*(D.y-A.y))/(AB.length*DA.length),0.035)",
+            "text": "Rectángulo $\\\\$ 4 ángulos rectos"
           },
           {
-            "when": "and(approx(segAB.length,segBC.length,0.15),approx(segBC.length,segCD.length,0.15),approx(segCD.length,segDA.length,0.15))",
-            "text": "<strong>Rombo</strong><br/><small>4 lados ≡ · diagonales ⟂</small>"
+            "when": "lt(abs(AB.length-BC.length)/max(AB.length,BC.length),0.04)",
+            "text": "Rombo $\\\\$ 4 lados iguales"
           },
           {
             "when": "1",
-            "text": "<strong>Paralelogramo</strong><br/><small>2 pares ∥ · lados y ángulos opuestos ≡ · diagonales se bisecan</small>"
+            "text": "Paralelogramo $\\\\$ 2 pares de lados opuestos paralelos"
           }
         ]
       }
     }
   ],
   "sliders": [],
-  "steps": [
-    {
-      "id": "step1",
-      "label": "Construcción por paralelas",
-      "description": "D queda determinado por las paralelas trazadas por A y C.",
-      "visibleTargets": [
-        "A",
-        "B",
-        "C",
-        "D",
-        "poligono",
-        "segAB",
-        "segBC",
-        "segCD",
-        "clasificacion",
-        "segDA"
-      ],
-      "durationMs": 1000,
-      "objectStates": {
-        "paralelaAB": {
-          "visible": false,
-          "emphasis": "secondary"
-        },
-        "paralelaBC": {
-          "visible": false,
-          "emphasis": "secondary"
-        },
-        "D": {
-          "emphasis": "primary"
-        },
-        "poligono": {
-          "visible": true,
-          "emphasis": "none",
-          "interactive": true
-        },
-        "segAB": {
-          "visible": true,
-          "emphasis": "none",
-          "interactive": true
-        },
-        "segBC": {
-          "visible": true,
-          "emphasis": "none",
-          "interactive": true
-        },
-        "segCD": {
-          "visible": true,
-          "emphasis": "none",
-          "interactive": true
-        },
-        "clasificacion": {
-          "visible": true,
-          "emphasis": "none",
-          "interactive": true
-        },
-        "segDA": {
-          "visible": true,
-          "emphasis": "none",
-          "interactive": true
-        },
-        "marcaAB": {
-          "visible": false,
-          "emphasis": "none",
-          "interactive": true
-        },
-        "marcaCD": {
-          "visible": false,
-          "emphasis": "none",
-          "interactive": true
-        },
-        "marcaBC": {
-          "visible": false,
-          "emphasis": "none",
-          "interactive": true
-        },
-        "marcaDA": {
-          "visible": false,
-          "emphasis": "none",
-          "interactive": true
-        },
-        "anguloA": {
-          "visible": false,
-          "emphasis": "none",
-          "interactive": true
-        },
-        "anguloB": {
-          "visible": false,
-          "emphasis": "none",
-          "interactive": true
-        },
-        "anguloC": {
-          "visible": false,
-          "emphasis": "none",
-          "interactive": true
-        },
-        "anguloD": {
-          "visible": false,
-          "emphasis": "none",
-          "interactive": true
-        }
-      }
-    },
-    {
-      "id": "step2",
-      "label": "Lados y ángulos opuestos",
-      "description": "Se muestran las igualdades heredadas del paralelismo.",
-      "visibleTargets": [
-        "A",
-        "B",
-        "C",
-        "D",
-        "poligono",
-        "segAB",
-        "segBC",
-        "segCD",
-        "segDA",
-        "marcaAB",
-        "marcaCD",
-        "marcaBC",
-        "marcaDA",
-        "anguloA",
-        "anguloB",
-        "anguloC",
-        "anguloD",
-        "clasificacion"
-      ],
-      "durationMs": 1200,
-      "objectStates": {
-        "poligono": {
-          "emphasis": "primary"
-        },
-        "marcaAB": {
-          "emphasis": "secondary"
-        },
-        "marcaCD": {
-          "emphasis": "secondary"
-        }
-      }
-    },
-    {
-      "id": "step3",
-      "label": "Bisección de diagonales",
-      "description": "Las diagonales se cortan en su punto medio común M.",
-      "visibleTargets": [
-        "A",
-        "B",
-        "C",
-        "D",
-        "poligono",
-        "segAB",
-        "segBC",
-        "segCD",
-        "segDA",
-        "marcaAB",
-        "marcaCD",
-        "marcaBC",
-        "marcaDA",
-        "anguloA",
-        "anguloB",
-        "anguloC",
-        "anguloD",
-        "clasificacion",
-        "diagAC",
-        "diagBD",
-        "M",
-        "cotaAM",
-        "cotaMC"
-      ],
-      "durationMs": 1200,
-      "objectStates": {
-        "diagAC": {
-          "emphasis": "primary"
-        },
-        "diagBD": {
-          "emphasis": "primary"
-        },
-        "M": {
-          "emphasis": "primary"
-        },
-        "cotaAM": {
-          "overlay": {
-            "visible": true,
-            "title": "Bisección de AC",
-            "content": "AM = {value}",
-            "expression": "cotaAM.length",
-            "unit": "u",
-            "precision": 2,
-            "position": "bottom-right"
-          }
-        }
-      }
-    }
-  ],
+  "steps": [],
   "constraints": [
     {
-      "id": "ladoC",
-      "label": "C conserva la orientación respecto de AB",
+      "id": "mantenerConvexo",
+      "label": "D permanece en el semiplano superior de AB",
       "kind": "sameSide",
       "refs": [
-        "C",
+        "D",
         "A",
         "B"
       ],
@@ -1172,368 +1262,218 @@ export const ParalelogramoSpec = createDiagramSpec(
   "dependencies": [
     {
       "sourceId": "A",
+      "targetId": "guiaRectangulo",
+      "relation": "construction"
+    },
+    {
+      "sourceId": "B",
+      "targetId": "guiaRectangulo",
+      "relation": "construction"
+    },
+    {
+      "sourceId": "A",
+      "targetId": "guiaLadosIguales",
+      "relation": "construction"
+    },
+    {
+      "sourceId": "B",
+      "targetId": "guiaLadosIguales",
+      "relation": "construction"
+    },
+    {
+      "sourceId": "guiaRectangulo",
       "targetId": "D",
-      "relation": "expression"
+      "relation": "constraint"
+    },
+    {
+      "sourceId": "guiaLadosIguales",
+      "targetId": "D",
+      "relation": "constraint"
+    },
+    {
+      "sourceId": "A",
+      "targetId": "D",
+      "relation": "constraint",
+      "constraintId": "mantenerConvexo"
     },
     {
       "sourceId": "B",
       "targetId": "D",
-      "relation": "expression"
-    },
-    {
-      "sourceId": "C",
-      "targetId": "D",
-      "relation": "expression"
-    },
-    {
-      "sourceId": "A",
-      "targetId": "paralelaAB",
-      "relation": "construction"
-    },
-    {
-      "sourceId": "B",
-      "targetId": "paralelaAB",
-      "relation": "construction"
-    },
-    {
-      "sourceId": "C",
-      "targetId": "paralelaAB",
-      "relation": "construction"
-    },
-    {
-      "sourceId": "B",
-      "targetId": "paralelaBC",
-      "relation": "construction"
-    },
-    {
-      "sourceId": "C",
-      "targetId": "paralelaBC",
-      "relation": "construction"
-    },
-    {
-      "sourceId": "A",
-      "targetId": "paralelaBC",
-      "relation": "construction"
-    },
-    {
-      "sourceId": "A",
-      "targetId": "poligono",
-      "relation": "construction"
-    },
-    {
-      "sourceId": "B",
-      "targetId": "poligono",
-      "relation": "construction"
-    },
-    {
-      "sourceId": "C",
-      "targetId": "poligono",
-      "relation": "construction"
-    },
-    {
-      "sourceId": "D",
-      "targetId": "poligono",
-      "relation": "construction"
-    },
-    {
-      "sourceId": "A",
-      "targetId": "segAB",
-      "relation": "construction"
-    },
-    {
-      "sourceId": "B",
-      "targetId": "segAB",
-      "relation": "construction"
-    },
-    {
-      "sourceId": "B",
-      "targetId": "segBC",
-      "relation": "construction"
-    },
-    {
-      "sourceId": "C",
-      "targetId": "segBC",
-      "relation": "construction"
-    },
-    {
-      "sourceId": "C",
-      "targetId": "segCD",
-      "relation": "construction"
-    },
-    {
-      "sourceId": "D",
-      "targetId": "segCD",
-      "relation": "construction"
-    },
-    {
-      "sourceId": "D",
-      "targetId": "segDA",
-      "relation": "construction"
-    },
-    {
-      "sourceId": "A",
-      "targetId": "segDA",
-      "relation": "construction"
-    },
-    {
-      "sourceId": "A",
-      "targetId": "marcaAB",
-      "relation": "construction"
-    },
-    {
-      "sourceId": "B",
-      "targetId": "marcaAB",
-      "relation": "construction"
-    },
-    {
-      "sourceId": "C",
-      "targetId": "marcaCD",
-      "relation": "construction"
-    },
-    {
-      "sourceId": "D",
-      "targetId": "marcaCD",
-      "relation": "construction"
-    },
-    {
-      "sourceId": "B",
-      "targetId": "marcaBC",
-      "relation": "construction"
-    },
-    {
-      "sourceId": "C",
-      "targetId": "marcaBC",
-      "relation": "construction"
-    },
-    {
-      "sourceId": "D",
-      "targetId": "marcaDA",
-      "relation": "construction"
-    },
-    {
-      "sourceId": "A",
-      "targetId": "marcaDA",
-      "relation": "construction"
-    },
-    {
-      "sourceId": "B",
-      "targetId": "anguloA",
-      "relation": "construction"
-    },
-    {
-      "sourceId": "A",
-      "targetId": "anguloA",
-      "relation": "construction"
-    },
-    {
-      "sourceId": "D",
-      "targetId": "anguloA",
-      "relation": "construction"
-    },
-    {
-      "sourceId": "C",
-      "targetId": "anguloB",
-      "relation": "construction"
-    },
-    {
-      "sourceId": "B",
-      "targetId": "anguloB",
-      "relation": "construction"
-    },
-    {
-      "sourceId": "A",
-      "targetId": "anguloB",
-      "relation": "construction"
-    },
-    {
-      "sourceId": "D",
-      "targetId": "anguloC",
-      "relation": "construction"
-    },
-    {
-      "sourceId": "C",
-      "targetId": "anguloC",
-      "relation": "construction"
-    },
-    {
-      "sourceId": "B",
-      "targetId": "anguloC",
-      "relation": "construction"
-    },
-    {
-      "sourceId": "A",
-      "targetId": "anguloD",
-      "relation": "construction"
-    },
-    {
-      "sourceId": "D",
-      "targetId": "anguloD",
-      "relation": "construction"
-    },
-    {
-      "sourceId": "C",
-      "targetId": "anguloD",
-      "relation": "construction"
-    },
-    {
-      "sourceId": "A",
-      "targetId": "diagAC",
-      "relation": "construction"
-    },
-    {
-      "sourceId": "C",
-      "targetId": "diagAC",
-      "relation": "construction"
-    },
-    {
-      "sourceId": "B",
-      "targetId": "diagBD",
-      "relation": "construction"
-    },
-    {
-      "sourceId": "D",
-      "targetId": "diagBD",
-      "relation": "construction"
-    },
-    {
-      "sourceId": "A",
-      "targetId": "M",
-      "relation": "construction"
-    },
-    {
-      "sourceId": "C",
-      "targetId": "M",
-      "relation": "construction"
-    },
-    {
-      "sourceId": "A",
-      "targetId": "cotaAM",
-      "relation": "construction"
-    },
-    {
-      "sourceId": "M",
-      "targetId": "cotaAM",
-      "relation": "construction"
-    },
-    {
-      "sourceId": "M",
-      "targetId": "cotaMC",
-      "relation": "construction"
-    },
-    {
-      "sourceId": "C",
-      "targetId": "cotaMC",
-      "relation": "construction"
+      "relation": "constraint",
+      "constraintId": "mantenerConvexo"
     },
     {
       "sourceId": "A",
       "targetId": "C",
-      "relation": "constraint",
-      "constraintId": "ladoC"
+      "relation": "expression"
     },
     {
       "sourceId": "B",
       "targetId": "C",
-      "relation": "constraint",
-      "constraintId": "ladoC"
-    },
-    {
-      "sourceId": "D",
-      "targetId": "anguloA",
-      "relation": "expression"
-    },
-    {
-      "sourceId": "A",
-      "targetId": "anguloA",
-      "relation": "expression"
-    },
-    {
-      "sourceId": "B",
-      "targetId": "anguloA",
-      "relation": "expression"
-    },
-    {
-      "sourceId": "C",
-      "targetId": "anguloA",
       "relation": "expression"
     },
     {
       "sourceId": "D",
-      "targetId": "anguloB",
+      "targetId": "C",
+      "relation": "expression"
+    },
+    {
+      "sourceId": "AB",
+      "targetId": "igualAB",
+      "relation": "expression"
+    },
+    {
+      "sourceId": "BC",
+      "targetId": "igualAB",
+      "relation": "expression"
+    },
+    {
+      "sourceId": "AB",
+      "targetId": "igualBC",
+      "relation": "expression"
+    },
+    {
+      "sourceId": "BC",
+      "targetId": "igualBC",
+      "relation": "expression"
+    },
+    {
+      "sourceId": "AB",
+      "targetId": "igualCD",
+      "relation": "expression"
+    },
+    {
+      "sourceId": "BC",
+      "targetId": "igualCD",
+      "relation": "expression"
+    },
+    {
+      "sourceId": "AB",
+      "targetId": "igualDA",
+      "relation": "expression"
+    },
+    {
+      "sourceId": "BC",
+      "targetId": "igualDA",
       "relation": "expression"
     },
     {
       "sourceId": "A",
-      "targetId": "anguloB",
+      "targetId": "rectoA",
       "relation": "expression"
     },
     {
       "sourceId": "B",
-      "targetId": "anguloB",
-      "relation": "expression"
-    },
-    {
-      "sourceId": "C",
-      "targetId": "anguloB",
+      "targetId": "rectoA",
       "relation": "expression"
     },
     {
       "sourceId": "D",
-      "targetId": "anguloC",
+      "targetId": "rectoA",
+      "relation": "expression"
+    },
+    {
+      "sourceId": "AB",
+      "targetId": "rectoA",
+      "relation": "expression"
+    },
+    {
+      "sourceId": "DA",
+      "targetId": "rectoA",
       "relation": "expression"
     },
     {
       "sourceId": "A",
-      "targetId": "anguloC",
+      "targetId": "rectoB",
       "relation": "expression"
     },
     {
       "sourceId": "B",
-      "targetId": "anguloC",
-      "relation": "expression"
-    },
-    {
-      "sourceId": "C",
-      "targetId": "anguloC",
+      "targetId": "rectoB",
       "relation": "expression"
     },
     {
       "sourceId": "D",
-      "targetId": "anguloD",
+      "targetId": "rectoB",
+      "relation": "expression"
+    },
+    {
+      "sourceId": "AB",
+      "targetId": "rectoB",
+      "relation": "expression"
+    },
+    {
+      "sourceId": "DA",
+      "targetId": "rectoB",
       "relation": "expression"
     },
     {
       "sourceId": "A",
-      "targetId": "anguloD",
+      "targetId": "rectoC",
       "relation": "expression"
     },
     {
       "sourceId": "B",
-      "targetId": "anguloD",
+      "targetId": "rectoC",
       "relation": "expression"
     },
     {
-      "sourceId": "C",
-      "targetId": "anguloD",
+      "sourceId": "D",
+      "targetId": "rectoC",
       "relation": "expression"
     },
     {
-      "sourceId": "segAB",
+      "sourceId": "AB",
+      "targetId": "rectoC",
+      "relation": "expression"
+    },
+    {
+      "sourceId": "DA",
+      "targetId": "rectoC",
+      "relation": "expression"
+    },
+    {
+      "sourceId": "A",
+      "targetId": "rectoD",
+      "relation": "expression"
+    },
+    {
+      "sourceId": "B",
+      "targetId": "rectoD",
+      "relation": "expression"
+    },
+    {
+      "sourceId": "D",
+      "targetId": "rectoD",
+      "relation": "expression"
+    },
+    {
+      "sourceId": "AB",
+      "targetId": "rectoD",
+      "relation": "expression"
+    },
+    {
+      "sourceId": "DA",
+      "targetId": "rectoD",
+      "relation": "expression"
+    },
+    {
+      "sourceId": "AB",
       "targetId": "clasificacion",
       "relation": "expression"
     },
     {
-      "sourceId": "segBC",
+      "sourceId": "BC",
       "targetId": "clasificacion",
       "relation": "expression"
     },
     {
-      "sourceId": "segCD",
+      "sourceId": "B",
       "targetId": "clasificacion",
       "relation": "expression"
     },
     {
-      "sourceId": "segDA",
+      "sourceId": "A",
       "targetId": "clasificacion",
       "relation": "expression"
     },
@@ -1543,25 +1483,33 @@ export const ParalelogramoSpec = createDiagramSpec(
       "relation": "expression"
     },
     {
-      "sourceId": "A",
+      "sourceId": "DA",
       "targetId": "clasificacion",
       "relation": "expression"
     },
     {
-      "sourceId": "B",
-      "targetId": "clasificacion",
-      "relation": "expression"
+      "sourceId": "D",
+      "targetId": "parCD",
+      "relation": "construction"
     },
     {
       "sourceId": "C",
-      "targetId": "clasificacion",
-      "relation": "expression"
+      "targetId": "parCD",
+      "relation": "construction"
+    },
+    {
+      "sourceId": "A",
+      "targetId": "parDA",
+      "relation": "construction"
+    },
+    {
+      "sourceId": "D",
+      "targetId": "parDA",
+      "relation": "construction"
     }
   ],
-  "note": "Arrastre A, B o C. D y M son derivados; las restricciones conservan un paralelogramo no degenerado.",
-  "extensions": {
-    "acceptanceCase": "phase-5-complex-quadrilateral"
-  }
+  "note": "Mueve D para descubrir los diferentes tipos de paralelogramo",
+  "extensions": {}
 }
 );
 /* @matematika-diagram-spec:end */

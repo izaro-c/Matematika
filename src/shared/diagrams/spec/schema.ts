@@ -24,7 +24,7 @@ export const diagramElementKindSchema = z.enum([
   'segment', 'line', 'ray', 'polygon', 'circle', 'arc', 'functionCurve', 'parametricCurve',
   'poincareGeodesic', 'poincareArc', 'intersection', 'midpoint', 'perpendicularFoot',
   'baseExtension', 'perpendicular', 'parallel', 'angleBisector', 'angle', 'nonReflexAngle',
-  'rightAngle', 'congruenceMark', 'measureTicks', 'perpendicularMark', 'dimensionLine', 'measurement',
+  'rightAngle', 'congruenceMark', 'parallelMark', 'measureTicks', 'perpendicularMark', 'dimensionLine', 'measurement',
   'grid', 'areaDecomposition', 'text', 'label', 'formula', 'infoPanel',
 ]);
 
@@ -124,6 +124,9 @@ const pointSchema = z.object({
   constraintIds: z.array(idSchema).optional(),
   snapToGrid: z.boolean().optional(),
   snapSize: z.number().positive().finite().optional(),
+  attractorIds: z.array(idSchema).max(8).optional(),
+  attractorDistance: z.number().positive().finite().max(20).optional(),
+  snatchDistance: z.number().positive().finite().max(20).optional(),
 }).strict();
 
 
@@ -222,7 +225,7 @@ const minimumRefs: Record<string, number> = {
   segment: 2, line: 2, ray: 2, polygon: 3, circle: 2, arc: 3,
   functionCurve: 0, parametricCurve: 0, poincareGeodesic: 4, poincareArc: 4, intersection: 2, midpoint: 2,
   perpendicularFoot: 3, baseExtension: 3, perpendicular: 3, parallel: 3,
-  angleBisector: 3, angle: 3, nonReflexAngle: 3, rightAngle: 3, congruenceMark: 2, measureTicks: 1,
+  angleBisector: 3, angle: 3, nonReflexAngle: 3, rightAngle: 3, congruenceMark: 2, parallelMark: 2, measureTicks: 1,
   perpendicularMark: 3, dimensionLine: 2, measurement: 1, grid: 4,
   areaDecomposition: 3, text: 1, label: 1, formula: 1, infoPanel: 1,
 };
@@ -341,6 +344,16 @@ export const diagramSpecV2Schema = z.object({
         });
       }
     }
+    if (element.kind === 'congruenceMark' || element.kind === 'parallelMark') {
+      const pointIds = new Set(spec.points.map(point => point.id));
+      if (element.refs.length !== 2 || element.refs.some(ref => !pointIds.has(ref))) {
+        context.addIssue({
+          code: 'custom',
+          message: `${element.id} necesita exactamente dos puntos como extremos de la marca.`,
+          path: ['elements', index, 'refs'],
+        });
+      }
+    }
     if (element.kind === 'functionCurve' && !element.properties?.expression) {
       context.addIssue({ code: 'custom', message: `${element.id} necesita properties.expression.`, path: ['elements', index, 'properties', 'expression'] });
     }
@@ -377,6 +390,29 @@ export const diagramSpecV2Schema = z.object({
     }
     point.dependencies?.forEach(dependency => {
       if (!referenceIds.has(dependency)) context.addIssue({ code: 'custom', message: `${point.id} depende de ${dependency}, que no existe.`, path: ['points', index, 'dependencies'] });
+    });
+    if (point.attractorIds?.length && !['free', 'horizontal', 'vertical', 'constrained'].includes(point.constraint)) {
+      context.addIssue({ code: 'custom', message: `${point.id} solo puede usar atractores si es un punto móvil.`, path: ['points', index, 'attractorIds'] });
+    }
+    if (point.attractorIds && new Set(point.attractorIds).size !== point.attractorIds.length) {
+      context.addIssue({ code: 'custom', message: `${point.id} repite soportes atractores.`, path: ['points', index, 'attractorIds'] });
+    }
+    point.attractorIds?.forEach((attractorId, attractorIndex) => {
+      const support = spec.elements.find(element => element.id === attractorId);
+      if (!support || !['line', 'ray', 'segment', 'circle', 'functionCurve', 'parametricCurve', 'perpendicular', 'parallel', 'angleBisector'].includes(support.kind)) {
+        context.addIssue({
+          code: 'custom',
+          message: `${point.id} necesita que ${attractorId} sea un soporte geométrico apto para atracción.`,
+          path: ['points', index, 'attractorIds', attractorIndex],
+        });
+      }
+      if (!(spec.dependencies ?? []).some(dependency => dependency.sourceId === attractorId && dependency.targetId === point.id)) {
+        context.addIssue({
+          code: 'custom',
+          message: `${point.id} necesita una dependencia explícita desde su atractor ${attractorId}.`,
+          path: ['points', index, 'attractorIds', attractorIndex],
+        });
+      }
     });
   });
 

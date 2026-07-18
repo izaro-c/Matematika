@@ -12,7 +12,7 @@ vi.mock('../../../src/shared/diagrams/core/MathBoard', () => ({
 import { DiagramRenderer } from '../../../src/shared/diagrams/runtime/DiagramRenderer';
 import { Pitagoras } from '../../../src/widgets/diagrams/Teoremas/Pitagoras';
 import { PitagorasSpec } from '../../../src/widgets/diagrams/Teoremas/Pitagoras';
-import { Paralelogramo } from '../../../src/widgets/diagrams/Definiciones/Paralelogramo';
+import { DemoAngulosOpuestos, DemoAngulosOpuestosSpec } from '../../../src/widgets/diagrams/Demos/DemoAngulosOpuestos';
 import { DiagramStepsEditor } from '../../../src/features/editor/diagrams/ui/DiagramStepsEditor';
 
 describe('DiagramRenderer shared runtime', () => {
@@ -75,10 +75,10 @@ describe('DiagramRenderer shared runtime', () => {
     ]);
   });
 
-  it('opens the real Pitágoras steps editor without requiring an outer MathProvider', () => {
+  it('opens a real multi-step editor without requiring an outer MathProvider', () => {
     expect(() => render(
       <DiagramStepsEditor
-        model={PitagorasSpec}
+        model={DemoAngulosOpuestosSpec}
         activeStepId="step1"
         onActiveStepChange={vi.fn()}
         onModelEdit={vi.fn()}
@@ -89,7 +89,7 @@ describe('DiagramRenderer shared runtime', () => {
   });
 
   it('starts a published multi-step diagram at step 1 and only advances through its scoped navigator', () => {
-    render(<Paralelogramo />);
+    render(<DemoAngulosOpuestos />);
     const renderer = document.querySelector('[data-diagram-renderer="matematika-diagram-renderer-v2"]');
     expect(renderer?.getAttribute('data-diagram-active-step')).toBe('step1');
     expect(screen.queryByLabelText('Lecturas dinámicas del diagrama')).toBeNull();

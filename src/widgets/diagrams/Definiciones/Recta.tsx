@@ -1,97 +1,146 @@
-import { MathBoard } from '@/shared/diagrams/core/MathBoard';
-import {
-  createPoint, createLine
-} from '@/shared/diagrams/core/MathFactory';
+import { createDiagramSpec, DiagramRenderer } from '@/shared/diagrams/public';
 
-
-
-
-
-
-
-export const Recta = () => {
-
-
-
-
-
-
-
-
-  const onInit = (board: any, els: any, theme: any) => {
-      void board; void els; void theme;
-      const pA = createPoint(board, [-2, 1], {
-      name: 'A',
-      size: 6,
-      fillColor: theme.terracota,
-      strokeColor: theme.terracota,
-      showInfobox: false,
-      fixed: false,
-    }, theme);
-
-    const pB = createPoint(board, [3, -0.5], {
-      name: 'B',
-      size: 6,
-      fillColor: theme.terracota,
-      strokeColor: theme.terracota,
-      showInfobox: false,
-      fixed: false,
-    }, theme);
-
-    const lineAB = createLine(board, [pA, pB], {
-      strokeColor: theme.carbon,
-      strokeWidth: 2,
-      name: 'l',
-      withLabel: true,
-      label: {
-        position: 'top',
-        offset: [15, 15],
-        display: 'internal',
-        fontFamily: 'Charter, Georgia, serif',
-        fontStyle: 'italic',
-        fontSize: 24,
-        strokeColor: theme.carbon
-      }
-    }, theme);
-
-      // Registrar elementos para interactividad y auditoría
-      els.pA = pA;
-        els.pB = pB;
-        els.lineAB = lineAB;
-    };;
-
-  const onUpdate = (board: any, els: any, theme: any, isStep: any, isHL: any) => {
-      const isHighlight = isHL;
-      void board; void els; void theme; void isStep; void isHL; void isHighlight;
-      const { pA, pB, lineAB } = els;
-      pA.setAttribute({ size: 6, fillColor: theme.terracota, strokeColor: theme.terracota });
-    pB.setAttribute({ size: 6, fillColor: theme.terracota, strokeColor: theme.terracota });
-    lineAB.setAttribute({ strokeColor: theme.carbon, strokeWidth: 2 });
-    lineAB.label.setAttribute({ strokeColor: theme.carbon });
-
-    if (isHL('pA')) {
-      pA.setAttribute({ size: 10, fillColor: theme.ocre, strokeColor: theme.ocre });
+/* @matematika-diagram-spec:start */
+export const RectaSpec = createDiagramSpec(
+{
+  "version": 2,
+  "renderer": "matematika-diagram-renderer-v2",
+  "title": "Recta determinada por dos puntos",
+  "componentId": "recta",
+  "category": "Definiciones",
+  "mode": "simulation",
+  "axis": false,
+  "grid": false,
+  "viewport": {
+    "bounds": [
+      -5,
+      4.5,
+      5,
+      -4.5
+    ],
+    "home": [
+      -5,
+      4.5,
+      5,
+      -4.5
+    ],
+    "minZoom": 0.55,
+    "maxZoom": 5,
+    "padding": 0.16
+  },
+  "layers": [
+    {
+      "id": "geometry",
+      "label": "Geometría",
+      "order": 0,
+      "visible": true,
+      "locked": false
+    },
+    {
+      "id": "annotations",
+      "label": "Lecturas y controles",
+      "order": 1,
+      "visible": true,
+      "locked": false
     }
-    if (isHL('pB')) {
-      pB.setAttribute({ size: 10, fillColor: theme.ocre, strokeColor: theme.ocre });
+  ],
+  "groups": [],
+  "points": [
+    {
+      "id": "A",
+      "label": "A",
+      "color": "musgo",
+      "layerId": "geometry",
+      "order": 700,
+      "visible": true,
+      "locked": false,
+      "groupIds": [],
+      "selection": {
+        "selectable": true,
+        "ariaLabel": "Mover el punto A",
+        "role": "primary"
+      },
+      "target": true,
+      "targetId": "pA",
+      "style": {
+        "pointSize": 7,
+        "highlightPointSize": 10,
+        "preserveColorOnHighlight": true
+      },
+      "x": -2.5,
+      "y": -1,
+      "showLabel": true,
+      "fixed": false,
+      "constraint": "free",
+      "snapToGrid": true,
+      "snapSize": 0.25
+    },
+    {
+      "id": "B",
+      "label": "B",
+      "color": "musgo",
+      "layerId": "geometry",
+      "order": 710,
+      "visible": true,
+      "locked": false,
+      "groupIds": [],
+      "selection": {
+        "selectable": true,
+        "ariaLabel": "Mover el punto B",
+        "role": "primary"
+      },
+      "target": true,
+      "targetId": "pB",
+      "style": {
+        "pointSize": 7,
+        "highlightPointSize": 10,
+        "preserveColorOnHighlight": true
+      },
+      "x": 2,
+      "y": 1.5,
+      "showLabel": true,
+      "fixed": false,
+      "constraint": "free",
+      "snapToGrid": true,
+      "snapSize": 0.25
     }
-    if (isHL('lineAB')) {
-      lineAB.setAttribute({ strokeColor: theme.terracota, strokeWidth: 4 });
-      lineAB.label.setAttribute({ strokeColor: theme.terracota });
+  ],
+  "elements": [
+    {
+      "id": "line",
+      "label": "Recta l = AB",
+      "color": "musgo",
+      "layerId": "geometry",
+      "order": 720,
+      "visible": true,
+      "locked": false,
+      "groupIds": [],
+      "selection": {
+        "selectable": true,
+        "ariaLabel": "Recta l = AB",
+        "role": "secondary"
+      },
+      "target": true,
+      "targetId": "lineAB",
+      "style": {
+        "strokeWidth": 3,
+        "highlightStrokeWidth": 3,
+        "preserveColorOnHighlight": true
+      },
+      "kind": "line",
+      "refs": [
+        "A",
+        "B"
+      ]
     }
-    };;
+  ],
+  "sliders": [],
+  "steps": [],
+  "dependencies": [],
+  "note": "Mueve A o B. La recta se prolonga indefinidamente en ambos sentidos y siempre pasa por los dos puntos.",
+  "extensions": {}
+}
+);
+/* @matematika-diagram-spec:end */
 
-  return (
-    <MathBoard
-      boundingbox={[-5, 4, 5, -4]}
-      axis={false}
-      grid={false}
-      onInit={onInit}
-      onUpdate={onUpdate}
-    >
-      <div className="absolute top-2 left-3 z-10 text-xs font-serif italic text-pizarra/50">
-        Arrastra los puntos <span className="font-bold not-italic text-terracota">A</span>, <span className="font-bold not-italic text-terracota">B</span>
-      </div>
-    </MathBoard>
-  );
-};
+export const Recta = () => <DiagramRenderer spec={RectaSpec} />;

@@ -564,6 +564,30 @@ describe('Phase 3 shared renderer', () => {
     expect(rendererState.geometries[nodeIndex].label.setAttribute).toHaveBeenCalledWith(expect.objectContaining({ visible: true }));
   });
 
+  it('reveals a hidden runtime object only when its MDX target is highlighted', () => {
+    const base = migrateDiagramSpec(primitivesFixture).spec;
+    const target = base.points.find(point => point.target)!;
+    const spec = {
+      ...base,
+      points: base.points.map(point => point.id === target.id
+        ? { ...point, visible: false, style: { ...point.style, highlightVisible: true } }
+        : point),
+    };
+    render(
+      <MathProvider>
+        <DiagramRenderer spec={spec} viewportControls={false} />
+        <ExternalHighlightControl value={`${spec.componentId}:${target.targetId ?? target.id}`} />
+      </MathProvider>,
+    );
+    const nodeIndex = rendererState.nodes.findIndex(node => node.dataset.diagramObjectId === target.id);
+    const geometry = rendererState.geometries[nodeIndex];
+    expect(geometry.setAttribute.mock.calls.at(-1)?.[0]).toMatchObject({ visible: false });
+
+    fireEvent.click(screen.getByRole('button', { name: 'Resaltar desde MDX' }));
+    expect(geometry.setAttribute.mock.calls.at(-1)?.[0]).toMatchObject({ visible: true });
+    expect(geometry.label.setAttribute.mock.calls.at(-1)?.[0]).toMatchObject({ visible: true });
+  });
+
   it.each([
     ['primitives', primitivesFixture, ['segment', 'line', 'polygon', 'circle', 'arc']],
     ['curves', curvesFixture, ['functiongraph', 'curve']],
@@ -615,6 +639,33 @@ describe('Phase 3 shared renderer', () => {
       Math.hypot(second[0] - first[0], second[1] - first[1]) >= 0.395
       && Math.hypot(second[0] - first[0], second[1] - first[1]) <= 0.405
     )))).toBe(true);
+  });
+
+  it('renders conventional parallel arrows separately from congruence ticks', () => {
+    render(<MathProvider><DiagramRenderer spec={migrateDiagramSpec(marksFixture).spec} viewportControls={false} /></MathProvider>);
+
+    const parallelSegments = rendererState.createdOptions.filter(({ kind, options }) => (
+      kind === 'segment' && options.strokeColor === 'pavo'
+    ));
+    expect(parallelSegments).toHaveLength(4);
+    expect(parallelSegments.every(({ options }) => options.strokeWidth === 2)).toBe(true);
+  });
+
+  it('passes authored geometric attractors to a movable point after constructing their supports', () => {
+    const base = migrateDiagramSpec(primitivesFixture).spec;
+    const spec = {
+      ...base,
+      points: base.points.map(point => point.id === 'pA'
+        ? { ...point, attractorIds: ['lineBC'], attractorDistance: 0.4, snatchDistance: 0.6 }
+        : point),
+      dependencies: [...(base.dependencies ?? []), { sourceId: 'lineBC', targetId: 'pA', relation: 'constraint' as const }],
+    };
+
+    render(<MathProvider><DiagramRenderer spec={spec} viewportControls={false} /></MathProvider>);
+
+    const point = rendererState.createdOptions.find(({ kind, options }) => kind === 'point' && options.name === 'A' && options.attractorDistance === 0.4);
+    expect(point?.options).toMatchObject({ attractorDistance: 0.4, snatchDistance: 0.6 });
+    expect(point?.options.attractors).toHaveLength(1);
   });
 
   it('renders the Archimedean slider and copy graduations from live expressions with keyboard access', () => {

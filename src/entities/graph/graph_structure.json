@@ -536,7 +536,7 @@
       "type": "definicion",
       "subtype": "fundamentada",
       "title": "Circunferencia",
-      "description": "Lugar geométrico de los puntos de un plano que equidistan de un punto fijo llamado centro.",
+      "description": "Conjunto de los puntos de un plano situados a una distancia fija positiva de un punto llamado centro.",
       "proofs": [],
       "directDependencies": [
         "punto",

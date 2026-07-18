@@ -1,490 +1,2803 @@
-import { getCSSVar } from '@/shared/diagrams/core/MathUtils';
-import { MathBoard } from '@/shared/diagrams/core/MathBoard';
-import {
-  createPoint, createLine, createSegment, createPolygon, createAngle
-} from '@/shared/diagrams/core/MathFactory';
+import { createDiagramSpec, DiagramRenderer } from '@/shared/diagrams/public';
 
-
-
-
-
-function collinearXY(x1: number, y1: number, x2: number, y2: number, x3: number, y3: number, tol = 0.01): boolean {
-  const area = (x2 - x1) * (y3 - y1) - (x3 - x1) * (y2 - y1);
-  return Math.abs(area) < tol;
-}
-
-function segmentsIntersect(p1: any, p2: any, q1: any, q2: any): boolean {
-  const d1 = (q1.X() - p1.X()) * (q2.Y() - p1.Y()) - (q1.Y() - p1.Y()) * (q2.X() - p1.X());
-  const d2 = (q1.X() - p2.X()) * (q2.Y() - p2.Y()) - (q1.Y() - p2.Y()) * (q2.X() - p2.X());
-  const d3 = (p1.X() - q1.X()) * (p2.Y() - q1.Y()) - (p1.Y() - q1.Y()) * (p2.X() - q1.X());
-  const d4 = (p1.X() - q2.X()) * (p2.Y() - q2.Y()) - (p1.Y() - q2.Y()) * (p2.X() - q2.X());
-  return ((d1 > 0 && d2 < 0) || (d1 < 0 && d2 > 0)) && ((d3 > 0 && d4 < 0) || (d3 < 0 && d4 > 0));
-}
-
-const RIGHT_ANGLE_TOL = 0.1;
-const SIDE_EQ_TOL = 0.15;
-const PARALLEL_TOL = 0.06;
-const SNAP = 0.5;
-
-function isRightAngle(v: number): boolean {
-  return Math.abs(v - Math.PI / 2) < RIGHT_ANGLE_TOL;
-}
-
-function isApproxEq(a: number, b: number): boolean {
-  return Math.abs(a - b) < SIDE_EQ_TOL;
-}
-
-function nudgeOffLineFn(pt: any, others: any[], snap: number): boolean {
-  const dirs = [[snap,0],[-snap,0],[0,snap],[0,-snap],[snap,snap],[-snap,snap],[snap,-snap],[-snap,-snap]];
-  for (const [dx, dy] of dirs) {
-    const nx = pt.X() + dx, ny = pt.Y() + dy;
-    let ok = true;
-    for (let i = 0; i < others.length && ok; i++)
-      for (let j = i + 1; j < others.length && ok; j++)
-        if (collinearXY(nx, ny, others[i].X(), others[i].Y(), others[j].X(), others[j].Y())) ok = false;
-    if (ok) { pt.moveTo([nx, ny], 0); return true; }
-  }
-  return false;
-}
-
-function areParallelFn(p1: any, p2: any, q1: any, q2: any): boolean {
-  const dx1 = p2.X() - p1.X(), dy1 = p2.Y() - p1.Y();
-  const dx2 = q2.X() - q1.X(), dy2 = q2.Y() - q1.Y();
-  const cross = Math.abs(dx1 * dy2 - dy1 * dx2);
-  const len1 = Math.hypot(dx1, dy1) || 1;
-  const len2 = Math.hypot(dx2, dy2) || 1;
-  return cross / (len1 * len2) < PARALLEL_TOL;
-}
-
-function isInsideSegment(ax: number, bx: number, x: number): boolean {
-  return x > Math.min(ax, bx) + 0.01 && x < Math.max(ax, bx) - 0.01;
-}
-
-function diagsCrossInside(A: any, B: any, C: any, D: any, diagX: number, diagY: number): boolean {
-  return isInsideSegment(A.X(), C.X(), diagX) && isInsideSegment(A.Y(), C.Y(), diagY) &&
-         isInsideSegment(B.X(), D.X(), diagX) && isInsideSegment(B.Y(), D.Y(), diagY);
-}
-
-type ClassificationResult = {
-  clase: string;
-  props: string;
-  rightVisible: [boolean, boolean, boolean, boolean];
-  angleVisible: [boolean, boolean];
-  cong1Keys: string[];
-  cong2Keys: string[];
-  par1Keys: string[];
-  par2Keys: string[];
-  diagAcc: boolean;
-};
-
-function applyCuadrado(result: ClassificationResult) {
-  result.clase = "Cuadrado";
-  result.props = "4 lados \u2261 \u00b7 4 \u2220 rectos \u00b7 2 pares \u2225 \u00b7 diags \u22a5 y \u2261";
-  result.rightVisible = [true, true, true, true];
-  result.cong1Keys = ['AB', 'BC', 'CD', 'DA'];
-  result.par1Keys = ['AB', 'CD']; result.par2Keys = ['BC', 'DA'];
-  result.diagAcc = true;
-}
-
-function applyRectangulo(result: ClassificationResult, eqAB_CD: boolean, eqBC_DA: boolean, eqDiags: boolean, dAB: number, dBC: number) {
-  result.clase = "Rect\u00e1ngulo";
-  result.props = "4 \u2220 rectos \u00b7 2 pares \u2225 \u00b7 diags \u2261";
-  result.rightVisible = [true, true, true, true];
-  if (eqAB_CD && eqBC_DA && !isApproxEq(dAB, dBC)) {
-    result.cong1Keys = ['AB', 'CD']; result.cong2Keys = ['BC', 'DA'];
-  } else if (eqAB_CD) { result.cong1Keys.push('AB', 'CD'); }
-  if (eqBC_DA) { result.cong1Keys.push('BC', 'DA'); }
-  result.par1Keys = ['AB', 'CD']; result.par2Keys = ['BC', 'DA'];
-  if (eqDiags) { result.diagAcc = true; }
-}
-
-function applyRombo(result: ClassificationResult) {
-  result.clase = "Rombo";
-  result.props = "4 lados \u2261 \u00b7 2 pares \u2225 \u00b7 diags \u22a5";
-  result.cong1Keys = ['AB', 'BC', 'CD', 'DA'];
-  result.par1Keys = ['AB', 'CD']; result.par2Keys = ['BC', 'DA'];
-}
-
-function applyParalelogramo(result: ClassificationResult, eqAB_CD: boolean, eqBC_DA: boolean, dAB: number, dBC: number) {
-  result.clase = "Paralelogramo";
-  result.props = "2 pares \u2225 \u00b7 lados opuestos \u2261 \u00b7 \u2220 opuestos \u2261";
-  if (eqAB_CD && eqBC_DA && !isApproxEq(dAB, dBC)) {
-    result.cong1Keys = ['AB', 'CD']; result.cong2Keys = ['BC', 'DA'];
-  } else if (eqAB_CD) { result.cong1Keys.push('AB', 'CD'); }
-  if (eqBC_DA) { result.cong1Keys.push('BC', 'DA'); }
-  result.par1Keys = ['AB', 'CD']; result.par2Keys = ['BC', 'DA'];
-  result.angleVisible = [true, true];
-}
-
-function applyTrapecio(result: ClassificationResult, parAB_CD: boolean, parBC_DA: boolean) {
-  result.clase = "Trapecio";
-  result.props = "1 par \u2225";
-  if (parAB_CD) result.par1Keys = ['AB', 'CD'];
-  if (parBC_DA) result.par2Keys = ['BC', 'DA'];
-}
-
-function applyCometa(result: ClassificationResult, eqDA_AB: boolean, eqBC_CD: boolean, eqAB_BC: boolean, eqCD_DA: boolean, dDA: number, dBC: number, dAB: number, dCD: number) {
-  result.clase = "Cometa";
-  result.props = "2 pares lados consecutivos \u2261 \u00b7 diags \u22a5";
-  if (eqDA_AB && eqBC_CD) {
-    if (isApproxEq(dDA, dBC)) result.cong1Keys = ['AB', 'DA', 'BC', 'CD'];
-    else { result.cong1Keys = ['AB', 'DA']; result.cong2Keys = ['BC', 'CD']; }
-  }
-  if (eqAB_BC && eqCD_DA) {
-    if (isApproxEq(dAB, dCD)) result.cong1Keys = ['AB', 'BC', 'CD', 'DA'];
-    else { result.cong1Keys.push('AB', 'BC'); result.cong2Keys = ['CD', 'DA']; }
-  }
-}
-
-function classifyQuadrilateral(params: {
-  allSidesEq: boolean, allRight: boolean,
-  rtA: boolean, rtB: boolean, rtC: boolean, rtD: boolean,
-  eqAB_CD: boolean, eqBC_DA: boolean, eqDiags: boolean,
-  parBoth: boolean, parAB_CD: boolean, parBC_DA: boolean,
-  eqDA_AB: boolean, eqBC_CD: boolean, eqAB_BC: boolean, eqCD_DA: boolean,
-  dAB: number, dBC: number, dDA: number, dCD: number,
-}): ClassificationResult {
-  const { allSidesEq, allRight, rtA, rtB, rtC, rtD, eqAB_CD, eqBC_DA, eqDiags,
-          parBoth, parAB_CD, parBC_DA, eqDA_AB, eqBC_CD, eqAB_BC, eqCD_DA,
-          dAB, dBC, dDA, dCD } = params;
-
-  const result: ClassificationResult = {
-    clase: "Trapezoide", props: "",
-    rightVisible: [rtA, rtB, rtC, rtD],
-    angleVisible: [false, false],
-    cong1Keys: [], cong2Keys: [], par1Keys: [], par2Keys: [],
-    diagAcc: false,
-  };
-
-  if (allSidesEq && allRight) {
-    applyCuadrado(result);
-  } else if (allRight) {
-    applyRectangulo(result, eqAB_CD, eqBC_DA, eqDiags, dAB, dBC);
-  } else if (allSidesEq) {
-    applyRombo(result);
-  } else if (parBoth) {
-    applyParalelogramo(result, eqAB_CD, eqBC_DA, dAB, dBC);
-  } else if (parAB_CD || parBC_DA) {
-    applyTrapecio(result, parAB_CD, parBC_DA);
-  } else if ((eqDA_AB && eqBC_CD) || (eqAB_BC && eqCD_DA)) {
-    applyCometa(result, eqDA_AB, eqBC_CD, eqAB_BC, eqCD_DA, dDA, dBC, dAB, dCD);
-  }
-
-  return result;
-}
-
-function resetVisuals(deps: {
-  sides: Record<string, any>, cong1s: Record<string, any>, cong2s: Record<string, any[]>,
-  rightA: any, rightB: any, rightC: any, rightD: any,
-  angleA: any, angleB: any, angleC: any, angleD: any,
-  diagAC: any, diagBD: any,
-  C_PRIM: string, C_DIAG: string,
-}) {
-  const { sides, cong1s, cong2s, rightA, rightB, rightC, rightD,
-          angleA, angleB, angleC, angleD, diagAC, diagBD, C_PRIM, C_DIAG } = deps;
-  sides.AB.setAttribute({ strokeColor: C_PRIM, strokeWidth: 2.5, dash: 0 });
-  sides.BC.setAttribute({ strokeColor: C_PRIM, strokeWidth: 2.5, dash: 0 });
-  sides.CD.setAttribute({ strokeColor: C_PRIM, strokeWidth: 2.5, dash: 0 });
-  sides.DA.setAttribute({ strokeColor: C_PRIM, strokeWidth: 2.5, dash: 0 });
-  for (const k of ['AB', 'BC', 'CD', 'DA']) {
-    cong1s[k].setAttribute({ visible: false });
-    cong2s[k].forEach((s: any) => s.setAttribute({ visible: false }));
-  }
-  rightA.setAttribute({ visible: false }); rightB.setAttribute({ visible: false });
-  rightC.setAttribute({ visible: false }); rightD.setAttribute({ visible: false });
-  angleA.setAttribute({ visible: false }); angleB.setAttribute({ visible: false });
-  angleC.setAttribute({ visible: false }); angleD.setAttribute({ visible: false });
-  diagAC.setAttribute({ dash: 3, strokeColor: C_DIAG, strokeWidth: 1.2 });
-  diagBD.setAttribute({ dash: 3, strokeColor: C_DIAG, strokeWidth: 1.2 });
-}
-
-function applyClassificationVisuals(
-  result: ClassificationResult,
-  deps: {
-    rightA: any, rightB: any, rightC: any, rightD: any,
-    angleA: any, angleC: any,
-    cong1s: Record<string, any>, cong2s: Record<string, any[]>,
-    sides: Record<string, any>,
-    diagAC: any, diagBD: any,
-    C_ACC: string, C_ACC2: string,
-  }
-) {
-  const { rightA, rightB, rightC, rightD, angleA, angleC,
-          cong1s, cong2s, sides, diagAC, diagBD, C_ACC, C_ACC2 } = deps;
-  const { rightVisible, angleVisible, cong1Keys, cong2Keys, par1Keys, par2Keys, diagAcc } = result;
-
-  rightA.setAttribute({ visible: rightVisible[0] }); rightB.setAttribute({ visible: rightVisible[1] });
-  rightC.setAttribute({ visible: rightVisible[2] }); rightD.setAttribute({ visible: rightVisible[3] });
-
-  angleA.setAttribute({ visible: angleVisible[0] }); angleC.setAttribute({ visible: angleVisible[1] });
-
-  cong1Keys.forEach(k => cong1s[k].setAttribute({ visible: true }));
-  cong2Keys.forEach(k => cong2s[k].forEach((s: any) => s.setAttribute({ visible: true })));
-  par1Keys.forEach(k => sides[k].setAttribute({ strokeColor: C_ACC, strokeWidth: 3 }));
-  par2Keys.forEach(k => sides[k].setAttribute({ strokeColor: C_ACC2, strokeWidth: 3 }));
-
-  if (diagAcc) {
-    diagAC.setAttribute({ strokeColor: C_ACC, dash: 0 });
-    diagBD.setAttribute({ strokeColor: C_ACC, dash: 0 });
-  }
-}
-
-function buildInfoHtml(clase: string, cvxTag: string, props: string, isSimple: boolean): string {
-  return `<div style="font-family: var(--font-serif); color: ${getCSSVar('--theme-carbon')}; line-height:1.4;">
-    <strong style="font-size: 1.25rem; color:${clase==='Trapezoide' ? getCSSVar('--theme-carbon') : getCSSVar('--theme-terracota')};">${clase}</strong><br/>
-    <i style="font-size: 0.85rem;">${cvxTag}</i><br/>
-    <small style="color:${getCSSVar('--theme-pizarra')};">${props}</small><br/>
-    <small>&sum; &aacute;ng. = ${isSimple ? "360\u00b0" : "N/A"}</small>
-  </div>`;
-}
-
-function computeCvxTag(isSimple: boolean, diagsCross: boolean): string {
-  if (!isSimple) return "";
-  if (diagsCross) return "convexo";
-  return "cóncavo";
-}
-
-function buildOthersList(vertices: any[], excludeIdx: number): any[] {
-  const others: any[] = [];
-  for (let k = 0; k < vertices.length; k++) {
-    if (k !== excludeIdx) others.push(vertices[k]);
-  }
-  return others;
-}
-
-export const Cuadrilatero = () => {
-
-
-
-
-
-
-  const onInit = (board: any, els: any, theme: any) => {
-      void board; void els; void theme;
-      const C_PRIM  = theme.carbon;
-    const C_ACC   = theme.terracota;
-    const C_ACC2  = theme.pavo;
-    const C_ANG   = theme.salvia;
-    const C_POL   = theme.pavo;
-    const C_RIGHT = theme.ocre;
-    const C_DIAG  = theme.pizarra;
-
-    const A = createPoint(board, [-2.5, -2], { name: 'A', size: 5, fillColor: C_PRIM, strokeColor: C_PRIM, showInfobox: false, snapToGrid: true, snapSizeX: SNAP, snapSizeY: SNAP }, theme);
-    const B = createPoint(board, [2.5, -2], { name: 'B', size: 5, fillColor: C_PRIM, strokeColor: C_PRIM, showInfobox: false, snapToGrid: true, snapSizeX: SNAP, snapSizeY: SNAP }, theme);
-    const C = createPoint(board, [2, 3], { name: 'C', size: 5, fillColor: C_PRIM, strokeColor: C_PRIM, showInfobox: false, snapToGrid: true, snapSizeX: SNAP, snapSizeY: SNAP }, theme);
-    const D = createPoint(board, [-2, 2.5], { name: 'D', size: 5, fillColor: C_PRIM, strokeColor: C_PRIM, showInfobox: false, snapToGrid: true, snapSizeX: SNAP, snapSizeY: SNAP }, theme);
-
-    const poly = createPolygon(board, [A, B, C, D], {
-      fillColor: C_POL, fillOpacity: 0.08,
-      borders: { strokeWidth: 2.5, strokeColor: C_PRIM },
-      vertices: { visible: false }
-    }, theme);
-
-    const diagAC = createSegment(board, [A, C], { strokeColor: C_DIAG, strokeWidth: 1.2, dash: 3, fixed: true }, theme);
-    const diagBD = createSegment(board, [B, D], { strokeColor: C_DIAG, strokeWidth: 1.2, dash: 3, fixed: true }, theme);
-
-    const angleA = createAngle(board, [B, A, D], { name: '&alpha;', radius: 0.85, fillColor: C_ANG, strokeColor: C_ANG, fillOpacity: 0.22, type: 'sector', visible: false }, theme) as any;
-    const angleB = createAngle(board, [C, B, A], { name: '&beta;',  radius: 0.85, fillColor: C_ANG, strokeColor: C_ANG, fillOpacity: 0.22, type: 'sector', visible: false }, theme) as any;
-    const angleC = createAngle(board, [D, C, B], { name: '&gamma;', radius: 0.85, fillColor: C_ANG, strokeColor: C_ANG, fillOpacity: 0.22, type: 'sector', visible: false }, theme) as any;
-    const angleD = createAngle(board, [A, D, C], { name: '&delta;', radius: 0.85, fillColor: C_ANG, strokeColor: C_ANG, fillOpacity: 0.22, type: 'sector', visible: false }, theme) as any;
-
-    const rightA = createAngle(board, [B, A, D], { radius: 0.55, type: 'sector', orthotype: 'square', fillColor: C_RIGHT, strokeColor: C_RIGHT, fillOpacity: 0.4, visible: false }, theme) as any;
-    const rightB = createAngle(board, [C, B, A], { radius: 0.55, type: 'sector', orthotype: 'square', fillColor: C_RIGHT, strokeColor: C_RIGHT, fillOpacity: 0.4, visible: false }, theme) as any;
-    const rightC = createAngle(board, [D, C, B], { radius: 0.55, type: 'sector', orthotype: 'square', fillColor: C_RIGHT, strokeColor: C_RIGHT, fillOpacity: 0.4, visible: false }, theme) as any;
-    const rightD = createAngle(board, [A, D, C], { radius: 0.55, type: 'sector', orthotype: 'square', fillColor: C_RIGHT, strokeColor: C_RIGHT, fillOpacity: 0.4, visible: false }, theme) as any;
-
-
-
-    const sides: Record<string, any> = {
-      AB: (poly as any).borders[0],
-      BC: (poly as any).borders[1],
-      CD: (poly as any).borders[2],
-      DA: (poly as any).borders[3]
-    };
-
-    const mkTick = (p: any, q: any, centerOffset = 0) => {
-      const mA = createPoint(board, [() => (p.X() + q.X()) / 2, () => (p.Y() + q.Y()) / 2], { visible: false }, theme);
-      const dNorm = () => { const dx = q.X()-p.X(), dy = q.Y()-p.Y(); const len = Math.hypot(dx, dy) || 1; return { dx: dx/len, dy: dy/len }; };
-      const cx = () => { const dn = dNorm(); return mA.X() + dn.dx * centerOffset; };
-      const cy = () => { const dn = dNorm(); return mA.Y() + dn.dy * centerOffset; };
-      const t0 = board.create('point', [
-        () => { const dn = dNorm(); return cx() + dn.dy * 0.3; },
-        () => { const dn = dNorm(); return cy() - dn.dx * 0.3; }
-      ], { visible: false });
-      const t1 = board.create('point', [
-        () => { const dn = dNorm(); return cx() - dn.dy * 0.3; },
-        () => { const dn = dNorm(); return cy() + dn.dx * 0.3; }
-      ], { visible: false });
-      return createSegment(board, [t0, t1], { strokeColor: C_PRIM, strokeWidth: 2.4, visible: false }, theme) as any;
-    };
-
-    const cong1s: Record<string, any> = {};
-    const cong2s: Record<string, any[]> = {};
-    for (const [k, [p, q]] of Object.entries({ AB: [A, B], BC: [B, C], CD: [C, D], DA: [D, A] })) {
-      cong1s[k] = mkTick(p, q);
-      cong2s[k] = [mkTick(p, q, -0.18), mkTick(p, q, 0.18)];
+/* @matematika-diagram-spec:start */
+export const CuadrilateroSpec = createDiagramSpec(
+{
+  "version": 2,
+  "renderer": "matematika-diagram-renderer-v2",
+  "title": "Cuadrilátero",
+  "componentId": "cuadrilatero",
+  "category": "Definiciones",
+  "mode": "simulation",
+  "axis": false,
+  "grid": false,
+  "viewport": {
+    "bounds": [
+      -5.4,
+      4.5,
+      5.4,
+      -4.2
+    ],
+    "home": [
+      -5.4,
+      4.5,
+      5.4,
+      -4.2
+    ],
+    "minZoom": 0.55,
+    "maxZoom": 5,
+    "padding": 0.16
+  },
+  "layers": [
+    {
+      "id": "guides",
+      "label": "Guías magnéticas",
+      "order": 0,
+      "visible": true,
+      "locked": false
+    },
+    {
+      "id": "geometry",
+      "label": "Cuadrilátero",
+      "order": 1,
+      "visible": true,
+      "locked": false
+    },
+    {
+      "id": "properties",
+      "label": "Marcas de clasificación",
+      "order": 2,
+      "visible": true,
+      "locked": false
+    },
+    {
+      "id": "details",
+      "label": "Elementos bajo demanda",
+      "order": 3,
+      "visible": true,
+      "locked": false
+    },
+    {
+      "id": "annotations",
+      "label": "Clasificación",
+      "order": 4,
+      "visible": true,
+      "locked": false
     }
-
-    const lastValid: Record<string, [number, number]> = { A: [A.X(), A.Y()], B: [B.X(), B.Y()], C: [C.X(), C.Y()], D: [D.X(), D.Y()] };
-    const vertices = [A, B, C, D] as any[];
-    const vertexNames = ['A', 'B', 'C', 'D'] as const;
-
-    const onVertexDrag = (p: any, idx: number) => {
-      const name = vertexNames[idx];
-      const others = buildOthersList(vertices, idx);
-      let anyC = false;
-      for (let i = 0; i < others.length; i++)
-        for (let j = i + 1; j < others.length; j++)
-          if (collinearXY(p.X(), p.Y(), others[i].X(), others[i].Y(), others[j].X(), others[j].Y())) anyC = true;
-      if (anyC && !nudgeOffLineFn(p, others, SNAP)) {
-        p.moveTo([lastValid[name][0], lastValid[name][1]], 0);
-        return;
-      }
-      if (segmentsIntersect(A, B, C, D) || segmentsIntersect(B, C, D, A)) {
-        p.moveTo([lastValid[name][0], lastValid[name][1]], 0);
-      } else {
-        lastValid[name][0] = p.X();
-        lastValid[name][1] = p.Y();
-      }
-    };
-
-    vertices.forEach((p, idx) => {
-      p.on('drag', () => onVertexDrag(p, idx));
-    });
-
-    const diagIntersect = board.create('intersection', [
-      createLine(board, [A, C], { visible: false }, theme),
-      createLine(board, [B, D], { visible: false }, theme), 0
-    ], { visible: false, size: 2 });
-
-    const infoText = board.create('text', [
-      -5.5, 5.5,
-      () => {
-        const vA = angleA.Value(), vB = angleB.Value(), vC = angleC.Value(), vD = angleD.Value();
-        const dAB = A.Dist(B), dBC = B.Dist(C), dCD = C.Dist(D), dDA = D.Dist(A);
-        const dAC = A.Dist(C), dBD = B.Dist(D);
-
-        const rtA = isRightAngle(vA), rtB = isRightAngle(vB), rtC = isRightAngle(vC), rtD = isRightAngle(vD);
-        const allRight = rtA && rtB && rtC && rtD;
-
-        const eqAB_BC = isApproxEq(dAB, dBC), eqBC_CD = isApproxEq(dBC, dCD), eqCD_DA = isApproxEq(dCD, dDA), eqDA_AB = isApproxEq(dDA, dAB);
-        const eqAB_CD  = isApproxEq(dAB, dCD), eqBC_DA  = isApproxEq(dBC, dDA);
-        const allSidesEq = eqAB_BC && eqBC_CD && eqCD_DA;
-        const eqDiags = isApproxEq(dAC, dBD);
-
-        const parAB_CD = areParallelFn(A, B, C, D);
-        const parBC_DA = areParallelFn(B, C, D, A);
-        const parBoth = parAB_CD && parBC_DA;
-
-        const diagX = diagIntersect.X(), diagY = diagIntersect.Y();
-        const diagsCross = diagsCrossInside(A, B, C, D, diagX, diagY);
-
-        resetVisuals({ sides, cong1s, cong2s, rightA, rightB, rightC, rightD, angleA, angleB, angleC, angleD, diagAC, diagBD, C_PRIM, C_DIAG });
-
-        const classification = classifyQuadrilateral({
-          allSidesEq, allRight, rtA, rtB, rtC, rtD,
-          eqAB_CD, eqBC_DA, eqDiags,
-          parBoth, parAB_CD, parBC_DA,
-          eqDA_AB, eqBC_CD, eqAB_BC, eqCD_DA,
-          dAB, dBC, dDA, dCD,
-        });
-
-        const { clase } = classification;
-        applyClassificationVisuals(classification, {
-          rightA, rightB, rightC, rightD,
-          angleA, angleC,
-          cong1s, cong2s, sides, diagAC, diagBD,
-          C_ACC, C_ACC2,
-        });
-
-        if (rtA && clase !== "Cuadrado" && clase !== "Rect\u00e1ngulo") rightA.setAttribute({ visible: true });
-        if (rtB && clase !== "Cuadrado" && clase !== "Rect\u00e1ngulo") rightB.setAttribute({ visible: true });
-        if (rtC && clase !== "Cuadrado" && clase !== "Rect\u00e1ngulo") rightC.setAttribute({ visible: true });
-        if (rtD && clase !== "Cuadrado" && clase !== "Rect\u00e1ngulo") rightD.setAttribute({ visible: true });
-
-        const sumDeg = Math.round((vA + vB + vC + vD) * 180 / Math.PI);
-        const isSimple = (sumDeg >= 358 && sumDeg <= 362);
-        const cvxTag = computeCvxTag(isSimple, diagsCross);
-
-        return buildInfoHtml(clase, cvxTag, classification.props, isSimple);
-      }
-    ], { fixed: true, anchorX: 'left', anchorY: 'top' });
-
-      // Registrar elementos para interactividad y auditoría
-      els.A = A;
-        els.B = B;
-        els.C = C;
-        els.D = D;
-        els.poly = poly;
-        els.angleA = angleA;
-        els.angleB = angleB;
-        els.angleC = angleC;
-        els.angleD = angleD;
-        els.rightA = rightA;
-        els.rightB = rightB;
-        els.rightC = rightC;
-        els.rightD = rightD;
-        els.sides = sides;
-        els.cong1s = cong1s;
-        els.cong2s = cong2s;
-        els.diagAC = diagAC;
-        els.diagBD = diagBD;
-        els.infoText = infoText;
-    };;
-
-  const onUpdate = (board: any, els: any, theme: any, isStep: any, isHL: any) => {
-      const isHighlight = isHL;
-      void board; void els; void theme; void isStep; void isHL; void isHighlight;
-      const { A, B, C, D, poly, angleA, angleB, angleC, angleD } = els;
-      const C_PRIM = theme.carbon;
-    const C_ACC = theme.terracota;
-    const C_ANG = theme.salvia;
-
-    const isVertice = isHighlight('vertices') || isHighlight('vertice');
-    const isLados = isHighlight('lados');
-    const isAngulos = isHighlight('angulos');
-    const isPoli = isHighlight('poligono');
-    const showAll = !isVertice && !isLados && !isAngulos && !isPoli;
-
-    [A, B, C, D].forEach((p: any) => p.setAttribute({
-      strokeColor: isVertice ? C_ACC : C_PRIM,
-      fillColor: isVertice ? C_ACC : C_PRIM,
-      size: isVertice ? 7 : 5,
-      strokeOpacity: isVertice || showAll ? 1 : 0.3,
-      fillOpacity: isVertice || showAll ? 1 : 0.3
-    }));
-
-    ((poly as any).borders as any[]).forEach((b: any) => b.setAttribute({
-      strokeOpacity: isLados || showAll ? 1 : 0.3,
-      strokeWidth: isLados ? 5 : 2.5
-    }));
-
-    if (isAngulos || showAll) {
-      [angleA, angleB, angleC, angleD].forEach((ang: any) => {
-        if (ang) ang.setAttribute({
-          fillColor: isAngulos ? C_ACC : C_ANG,
-          strokeColor: isAngulos ? C_ACC : C_ANG,
-          fillOpacity: isAngulos ? 0.45 : 0.22,
-          strokeOpacity: 1,
-          visible: true
-        });
-      });
+  ],
+  "groups": [
+    {
+      "id": "grupoPoligono",
+      "label": "Cuadrilátero ABCD",
+      "memberIds": [
+        "poligono"
+      ],
+      "visible": true,
+      "locked": false,
+      "selection": {
+        "selectable": true,
+        "dimOthersOnHighlight": true,
+        "ariaLabel": "Cuadrilátero ABCD",
+        "role": "primary"
+      },
+      "target": true,
+      "targetId": "poligono",
+      "color": "salvia"
+    },
+    {
+      "id": "grupoLados",
+      "label": "Cuatro lados",
+      "memberIds": [
+        "AB",
+        "BC",
+        "CD",
+        "DA"
+      ],
+      "visible": true,
+      "locked": false,
+      "selection": {
+        "selectable": true,
+        "dimOthersOnHighlight": true,
+        "ariaLabel": "Cuatro lados",
+        "role": "primary"
+      },
+      "target": true,
+      "targetId": "lados",
+      "color": "carbon"
+    },
+    {
+      "id": "grupoVertices",
+      "label": "Cuatro vértices",
+      "memberIds": [
+        "A",
+        "B",
+        "C",
+        "D"
+      ],
+      "visible": true,
+      "locked": false,
+      "selection": {
+        "selectable": true,
+        "dimOthersOnHighlight": true,
+        "ariaLabel": "Cuatro vértices",
+        "role": "primary"
+      },
+      "target": true,
+      "targetId": "vertices",
+      "color": "terracota"
+    },
+    {
+      "id": "grupoMoviles",
+      "label": "Vértices móviles C y D",
+      "memberIds": [
+        "C",
+        "D"
+      ],
+      "visible": true,
+      "locked": false,
+      "selection": {
+        "selectable": true,
+        "dimOthersOnHighlight": true,
+        "ariaLabel": "Vértices móviles C y D",
+        "role": "primary"
+      },
+      "target": true,
+      "targetId": "vertices-moviles",
+      "color": "terracota"
+    },
+    {
+      "id": "grupoParalelismo",
+      "label": "Lados opuestos paralelos",
+      "memberIds": [
+        "parAB",
+        "parCD",
+        "parBC",
+        "parDA"
+      ],
+      "visible": true,
+      "locked": false,
+      "selection": {
+        "selectable": true,
+        "dimOthersOnHighlight": false,
+        "ariaLabel": "Marcas de lados opuestos paralelos",
+        "role": "primary"
+      },
+      "target": true,
+      "targetId": "paralelismo",
+      "color": "pavo"
+    },
+    {
+      "id": "grupoIgualdad",
+      "label": "Lados congruentes",
+      "memberIds": [
+        "igualTodoAB",
+        "igualTodoBC",
+        "igualTodoCD",
+        "igualTodoDA",
+        "cometaACAB",
+        "cometaACDA",
+        "cometaACBC",
+        "cometaACCD",
+        "cometaBDAB",
+        "cometaBDBC",
+        "cometaBDCD",
+        "cometaBDDA"
+      ],
+      "visible": true,
+      "locked": false,
+      "selection": {
+        "selectable": true,
+        "dimOthersOnHighlight": false,
+        "ariaLabel": "Marcas de lados congruentes",
+        "role": "primary"
+      },
+      "target": true,
+      "targetId": "lados-iguales",
+      "color": "ocre"
+    },
+    {
+      "id": "grupoRectos",
+      "label": "Cuatro ángulos rectos",
+      "memberIds": [
+        "rectoA",
+        "rectoB",
+        "rectoC",
+        "rectoD"
+      ],
+      "visible": true,
+      "locked": false,
+      "selection": {
+        "selectable": true,
+        "dimOthersOnHighlight": false,
+        "ariaLabel": "Cuatro ángulos rectos",
+        "role": "primary"
+      },
+      "target": true,
+      "targetId": "angulos-rectos",
+      "color": "ocre"
+    },
+    {
+      "id": "grupoAngulos",
+      "label": "Cuatro ángulos interiores",
+      "memberIds": [
+        "anguloA",
+        "anguloB",
+        "anguloC",
+        "anguloD"
+      ],
+      "visible": true,
+      "locked": false,
+      "selection": {
+        "selectable": true,
+        "dimOthersOnHighlight": false,
+        "ariaLabel": "Cuatro ángulos interiores",
+        "role": "primary"
+      },
+      "target": true,
+      "targetId": "angulos",
+      "color": "ocre"
+    },
+    {
+      "id": "grupoDiagonales",
+      "label": "Dos diagonales",
+      "memberIds": [
+        "AC",
+        "BD"
+      ],
+      "visible": true,
+      "locked": false,
+      "selection": {
+        "selectable": true,
+        "dimOthersOnHighlight": false,
+        "ariaLabel": "Dos diagonales",
+        "role": "primary"
+      },
+      "target": true,
+      "targetId": "diagonales",
+      "color": "pizarra"
     }
+  ],
+  "points": [
+    {
+      "id": "A",
+      "label": "A",
+      "color": "carbon",
+      "layerId": "geometry",
+      "order": 1250,
+      "visible": true,
+      "locked": true,
+      "groupIds": [
+        "grupoVertices"
+      ],
+      "selection": {
+        "selectable": true,
+        "dimOthersOnHighlight": true,
+        "ariaLabel": "Vértice fijo A",
+        "role": "primary"
+      },
+      "target": false,
+      "style": {
+        "pointSize": 7,
+        "labelOffset": [
+          -17,
+          9
+        ],
+        "labelSize": 19,
+        "highlightPointSize": 10,
+        "preserveColorOnHighlight": true
+      },
+      "x": -3,
+      "y": -2,
+      "showLabel": true,
+      "fixed": true,
+      "constraint": "fixed"
+    },
+    {
+      "id": "B",
+      "label": "B",
+      "color": "carbon",
+      "layerId": "geometry",
+      "order": 2250,
+      "visible": true,
+      "locked": true,
+      "groupIds": [
+        "grupoVertices"
+      ],
+      "selection": {
+        "selectable": true,
+        "dimOthersOnHighlight": true,
+        "ariaLabel": "Vértice fijo B",
+        "role": "primary"
+      },
+      "target": false,
+      "style": {
+        "pointSize": 7,
+        "labelOffset": [
+          10,
+          9
+        ],
+        "labelSize": 19,
+        "highlightPointSize": 10,
+        "preserveColorOnHighlight": true
+      },
+      "x": 2,
+      "y": -2,
+      "showLabel": true,
+      "fixed": true,
+      "constraint": "fixed"
+    },
+    {
+      "id": "C",
+      "label": "C",
+      "color": "terracota",
+      "layerId": "geometry",
+      "order": 3250,
+      "visible": true,
+      "locked": false,
+      "groupIds": [
+        "grupoVertices",
+        "grupoMoviles"
+      ],
+      "selection": {
+        "selectable": true,
+        "dimOthersOnHighlight": true,
+        "ariaLabel": "Mueve C para cambiar el cuadrilátero",
+        "role": "primary"
+      },
+      "target": false,
+      "style": {
+        "pointSize": 7,
+        "labelOffset": [
+          10,
+          -18
+        ],
+        "labelSize": 19,
+        "highlightPointSize": 10,
+        "preserveColorOnHighlight": true
+      },
+      "x": 2.75,
+      "y": 1.35,
+      "showLabel": true,
+      "fixed": false,
+      "constraint": "constrained",
+      "constraintIds": [
+        "CEncimaAB",
+        "CNoCruzaBD"
+      ],
+      "snapToGrid": true,
+      "snapSize": 0.25,
+      "attractorIds": [
+        "guiaRectoB",
+        "guiaIgualBC"
+      ],
+      "attractorDistance": 0.42,
+      "snatchDistance": 0.6
+    },
+    {
+      "id": "D",
+      "label": "D",
+      "color": "terracota",
+      "layerId": "geometry",
+      "order": 4250,
+      "visible": true,
+      "locked": false,
+      "groupIds": [
+        "grupoVertices",
+        "grupoMoviles"
+      ],
+      "selection": {
+        "selectable": true,
+        "dimOthersOnHighlight": true,
+        "ariaLabel": "Mueve D para clasificar el cuadrilátero",
+        "role": "primary"
+      },
+      "target": false,
+      "style": {
+        "pointSize": 7,
+        "labelOffset": [
+          -18,
+          -18
+        ],
+        "labelSize": 19,
+        "highlightPointSize": 10,
+        "preserveColorOnHighlight": true
+      },
+      "x": -1.6,
+      "y": 2.45,
+      "showLabel": true,
+      "fixed": false,
+      "constraint": "constrained",
+      "constraintIds": [
+        "DEncimaAB",
+        "DNoCruzaAC"
+      ],
+      "snapToGrid": true,
+      "snapSize": 0.25,
+      "attractorIds": [
+        "guiaParalelaCD",
+        "guiaParalelaDA",
+        "guiaRectoA",
+        "guiaIgualDA",
+        "guiaIgualCD"
+      ],
+      "attractorDistance": 0.42,
+      "snatchDistance": 0.6
+    }
+  ],
+  "elements": [
+    {
+      "id": "guiaRectoB",
+      "label": "Guía perpendicular en B",
+      "color": "pizarra",
+      "layerId": "guides",
+      "order": 10,
+      "visible": false,
+      "locked": true,
+      "groupIds": [],
+      "selection": {
+        "selectable": true,
+        "dimOthersOnHighlight": true,
+        "ariaLabel": "Guía magnética de ángulo recto en B",
+        "role": "construction"
+      },
+      "target": false,
+      "style": {
+        "strokeWidth": 1.2,
+        "strokeOpacity": 0.2,
+        "highlightStrokeWidth": 4.2,
+        "preserveColorOnHighlight": true
+      },
+      "kind": "perpendicular",
+      "refs": [
+        "A",
+        "B",
+        "B"
+      ]
+    },
+    {
+      "id": "guiaIgualBC",
+      "label": "Guía circular BC igual a AB",
+      "color": "pizarra",
+      "layerId": "guides",
+      "order": 20,
+      "visible": false,
+      "locked": true,
+      "groupIds": [],
+      "selection": {
+        "selectable": true,
+        "dimOthersOnHighlight": true,
+        "ariaLabel": "Guía magnética para BC igual a AB",
+        "role": "construction"
+      },
+      "target": false,
+      "style": {
+        "strokeWidth": 1.2,
+        "strokeOpacity": 0.2,
+        "highlightStrokeWidth": 4.2,
+        "preserveColorOnHighlight": true
+      },
+      "kind": "circle",
+      "refs": [
+        "B",
+        "A"
+      ]
+    },
+    {
+      "id": "guiaParalelaCD",
+      "label": "Guía CD paralela a AB",
+      "color": "pizarra",
+      "layerId": "guides",
+      "order": 30,
+      "visible": false,
+      "locked": true,
+      "groupIds": [],
+      "selection": {
+        "selectable": true,
+        "dimOthersOnHighlight": true,
+        "ariaLabel": "Guía magnética para CD paralela a AB",
+        "role": "construction"
+      },
+      "target": false,
+      "style": {
+        "strokeWidth": 1.2,
+        "strokeOpacity": 0.2,
+        "highlightStrokeWidth": 4.2,
+        "preserveColorOnHighlight": true
+      },
+      "kind": "parallel",
+      "refs": [
+        "A",
+        "B",
+        "C"
+      ]
+    },
+    {
+      "id": "guiaParalelaDA",
+      "label": "Guía DA paralela a BC",
+      "color": "pizarra",
+      "layerId": "guides",
+      "order": 40,
+      "visible": false,
+      "locked": true,
+      "groupIds": [],
+      "selection": {
+        "selectable": true,
+        "dimOthersOnHighlight": true,
+        "ariaLabel": "Guía magnética para DA paralela a BC",
+        "role": "construction"
+      },
+      "target": false,
+      "style": {
+        "strokeWidth": 1.2,
+        "strokeOpacity": 0.2,
+        "highlightStrokeWidth": 4.2,
+        "preserveColorOnHighlight": true
+      },
+      "kind": "parallel",
+      "refs": [
+        "B",
+        "C",
+        "A"
+      ]
+    },
+    {
+      "id": "guiaRectoA",
+      "label": "Guía perpendicular en A",
+      "color": "pizarra",
+      "layerId": "guides",
+      "order": 50,
+      "visible": false,
+      "locked": true,
+      "groupIds": [],
+      "selection": {
+        "selectable": true,
+        "dimOthersOnHighlight": true,
+        "ariaLabel": "Guía magnética de ángulo recto en A",
+        "role": "construction"
+      },
+      "target": false,
+      "style": {
+        "strokeWidth": 1.2,
+        "strokeOpacity": 0.2,
+        "highlightStrokeWidth": 4.2,
+        "preserveColorOnHighlight": true
+      },
+      "kind": "perpendicular",
+      "refs": [
+        "A",
+        "B",
+        "A"
+      ]
+    },
+    {
+      "id": "guiaIgualDA",
+      "label": "Guía circular DA igual a AB",
+      "color": "pizarra",
+      "layerId": "guides",
+      "order": 60,
+      "visible": false,
+      "locked": true,
+      "groupIds": [],
+      "selection": {
+        "selectable": true,
+        "dimOthersOnHighlight": true,
+        "ariaLabel": "Guía magnética para DA igual a AB",
+        "role": "construction"
+      },
+      "target": false,
+      "style": {
+        "strokeWidth": 1.2,
+        "strokeOpacity": 0.2,
+        "highlightStrokeWidth": 4.2,
+        "preserveColorOnHighlight": true
+      },
+      "kind": "circle",
+      "refs": [
+        "A",
+        "B"
+      ]
+    },
+    {
+      "id": "guiaIgualCD",
+      "label": "Guía circular CD igual a CB",
+      "color": "pizarra",
+      "layerId": "guides",
+      "order": 70,
+      "visible": false,
+      "locked": true,
+      "groupIds": [],
+      "selection": {
+        "selectable": true,
+        "dimOthersOnHighlight": true,
+        "ariaLabel": "Guía magnética para CD igual a CB",
+        "role": "construction"
+      },
+      "target": false,
+      "style": {
+        "strokeWidth": 1.2,
+        "strokeOpacity": 0.2,
+        "highlightStrokeWidth": 4.2,
+        "preserveColorOnHighlight": true
+      },
+      "kind": "circle",
+      "refs": [
+        "C",
+        "B"
+      ]
+    },
+    {
+      "id": "poligono",
+      "label": "Cuadrilátero ABCD",
+      "color": "salvia",
+      "layerId": "geometry",
+      "order": 200,
+      "visible": true,
+      "locked": false,
+      "groupIds": [
+        "grupoPoligono"
+      ],
+      "selection": {
+        "selectable": true,
+        "dimOthersOnHighlight": true,
+        "ariaLabel": "Cuadrilátero ABCD",
+        "role": "primary"
+      },
+      "target": false,
+      "style": {
+        "strokeWidth": 2.4,
+        "fillOpacity": 0.12,
+        "highlightStrokeWidth": 4.2,
+        "highlightFillOpacity": 0.26,
+        "preserveColorOnHighlight": true
+      },
+      "kind": "polygon",
+      "refs": [
+        "A",
+        "B",
+        "C",
+        "D"
+      ]
+    },
+    {
+      "id": "AB",
+      "label": "Lado AB",
+      "color": "carbon",
+      "layerId": "geometry",
+      "order": 220,
+      "visible": true,
+      "locked": false,
+      "groupIds": [
+        "grupoLados"
+      ],
+      "selection": {
+        "selectable": true,
+        "dimOthersOnHighlight": true,
+        "ariaLabel": "Lado AB",
+        "role": "secondary"
+      },
+      "target": false,
+      "style": {
+        "strokeWidth": 2.4,
+        "highlightStrokeWidth": 4.2,
+        "preserveColorOnHighlight": true
+      },
+      "kind": "segment",
+      "refs": [
+        "A",
+        "B"
+      ]
+    },
+    {
+      "id": "BC",
+      "label": "Lado BC",
+      "color": "carbon",
+      "layerId": "geometry",
+      "order": 230,
+      "visible": true,
+      "locked": false,
+      "groupIds": [
+        "grupoLados"
+      ],
+      "selection": {
+        "selectable": true,
+        "dimOthersOnHighlight": true,
+        "ariaLabel": "Lado BC",
+        "role": "secondary"
+      },
+      "target": false,
+      "style": {
+        "strokeWidth": 2.4,
+        "highlightStrokeWidth": 4.2,
+        "preserveColorOnHighlight": true
+      },
+      "kind": "segment",
+      "refs": [
+        "B",
+        "C"
+      ]
+    },
+    {
+      "id": "CD",
+      "label": "Lado CD",
+      "color": "carbon",
+      "layerId": "geometry",
+      "order": 240,
+      "visible": true,
+      "locked": false,
+      "groupIds": [
+        "grupoLados"
+      ],
+      "selection": {
+        "selectable": true,
+        "dimOthersOnHighlight": true,
+        "ariaLabel": "Lado CD",
+        "role": "secondary"
+      },
+      "target": false,
+      "style": {
+        "strokeWidth": 2.4,
+        "highlightStrokeWidth": 4.2,
+        "preserveColorOnHighlight": true
+      },
+      "kind": "segment",
+      "refs": [
+        "C",
+        "D"
+      ]
+    },
+    {
+      "id": "DA",
+      "label": "Lado DA",
+      "color": "carbon",
+      "layerId": "geometry",
+      "order": 250,
+      "visible": true,
+      "locked": false,
+      "groupIds": [
+        "grupoLados"
+      ],
+      "selection": {
+        "selectable": true,
+        "dimOthersOnHighlight": true,
+        "ariaLabel": "Lado DA",
+        "role": "secondary"
+      },
+      "target": false,
+      "style": {
+        "strokeWidth": 2.4,
+        "highlightStrokeWidth": 4.2,
+        "preserveColorOnHighlight": true
+      },
+      "kind": "segment",
+      "refs": [
+        "D",
+        "A"
+      ]
+    },
+    {
+      "id": "parAB",
+      "label": "Una flecha en AB",
+      "color": "terracota",
+      "layerId": "properties",
+      "order": 300,
+      "visible": true,
+      "locked": false,
+      "groupIds": [
+        "grupoParalelismo"
+      ],
+      "selection": {
+        "selectable": true,
+        "dimOthersOnHighlight": true,
+        "ariaLabel": "Una flecha en AB",
+        "role": "secondary"
+      },
+      "target": false,
+      "style": {
+        "strokeWidth": 2.2,
+        "markHeight": 0.42,
+        "highlightStrokeWidth": 4.2,
+        "preserveColorOnHighlight": true
+      },
+      "kind": "parallelMark",
+      "refs": [
+        "A",
+        "B"
+      ],
+      "properties": {
+        "markCount": 1,
+        "visibleWhen": "and(lt(abs((B.x-A.x)*(D.y-C.y)-(B.y-A.y)*(D.x-C.x))/(AB.length*CD.length),0.035),not(and(lt(abs((B.x-A.x)*(D.x-A.x)+(B.y-A.y)*(D.y-A.y))/(AB.length*DA.length),0.035),lt(abs((A.x-B.x)*(C.x-B.x)+(A.y-B.y)*(C.y-B.y))/(AB.length*BC.length),0.035),lt(abs((B.x-A.x)*(D.y-C.y)-(B.y-A.y)*(D.x-C.x))/(AB.length*CD.length),0.035))),not(and(lt(abs(AB.length-BC.length)/max(AB.length,BC.length),0.04),lt(abs(AB.length-CD.length)/max(AB.length,CD.length),0.04),lt(abs(AB.length-DA.length)/max(AB.length,DA.length),0.04))))"
+      }
+    },
+    {
+      "id": "parCD",
+      "label": "Una flecha en CD",
+      "color": "terracota",
+      "layerId": "properties",
+      "order": 310,
+      "visible": true,
+      "locked": false,
+      "groupIds": [
+        "grupoParalelismo"
+      ],
+      "selection": {
+        "selectable": true,
+        "dimOthersOnHighlight": true,
+        "ariaLabel": "Una flecha en CD",
+        "role": "secondary"
+      },
+      "target": false,
+      "style": {
+        "strokeWidth": 2.2,
+        "markHeight": 0.42,
+        "highlightStrokeWidth": 4.2,
+        "preserveColorOnHighlight": true
+      },
+      "kind": "parallelMark",
+      "refs": [
+        "D",
+        "C"
+      ],
+      "properties": {
+        "markCount": 1,
+        "visibleWhen": "and(lt(abs((B.x-A.x)*(D.y-C.y)-(B.y-A.y)*(D.x-C.x))/(AB.length*CD.length),0.035),not(and(lt(abs((B.x-A.x)*(D.x-A.x)+(B.y-A.y)*(D.y-A.y))/(AB.length*DA.length),0.035),lt(abs((A.x-B.x)*(C.x-B.x)+(A.y-B.y)*(C.y-B.y))/(AB.length*BC.length),0.035),lt(abs((B.x-A.x)*(D.y-C.y)-(B.y-A.y)*(D.x-C.x))/(AB.length*CD.length),0.035))),not(and(lt(abs(AB.length-BC.length)/max(AB.length,BC.length),0.04),lt(abs(AB.length-CD.length)/max(AB.length,CD.length),0.04),lt(abs(AB.length-DA.length)/max(AB.length,DA.length),0.04))))"
+      }
+    },
+    {
+      "id": "parBC",
+      "label": "Dos flechas en BC",
+      "color": "pavo",
+      "layerId": "properties",
+      "order": 320,
+      "visible": true,
+      "locked": false,
+      "groupIds": [
+        "grupoParalelismo"
+      ],
+      "selection": {
+        "selectable": true,
+        "dimOthersOnHighlight": true,
+        "ariaLabel": "Dos flechas en BC",
+        "role": "secondary"
+      },
+      "target": false,
+      "style": {
+        "strokeWidth": 2.2,
+        "markHeight": 0.42,
+        "highlightStrokeWidth": 4.2,
+        "preserveColorOnHighlight": true
+      },
+      "kind": "parallelMark",
+      "refs": [
+        "B",
+        "C"
+      ],
+      "properties": {
+        "markCount": 2,
+        "visibleWhen": "and(lt(abs((C.x-B.x)*(A.y-D.y)-(C.y-B.y)*(A.x-D.x))/(BC.length*DA.length),0.035),not(and(lt(abs((B.x-A.x)*(D.x-A.x)+(B.y-A.y)*(D.y-A.y))/(AB.length*DA.length),0.035),lt(abs((A.x-B.x)*(C.x-B.x)+(A.y-B.y)*(C.y-B.y))/(AB.length*BC.length),0.035),lt(abs((B.x-A.x)*(D.y-C.y)-(B.y-A.y)*(D.x-C.x))/(AB.length*CD.length),0.035))),not(and(lt(abs(AB.length-BC.length)/max(AB.length,BC.length),0.04),lt(abs(AB.length-CD.length)/max(AB.length,CD.length),0.04),lt(abs(AB.length-DA.length)/max(AB.length,DA.length),0.04))))"
+      }
+    },
+    {
+      "id": "parDA",
+      "label": "Dos flechas en DA",
+      "color": "pavo",
+      "layerId": "properties",
+      "order": 330,
+      "visible": true,
+      "locked": false,
+      "groupIds": [
+        "grupoParalelismo"
+      ],
+      "selection": {
+        "selectable": true,
+        "dimOthersOnHighlight": true,
+        "ariaLabel": "Dos flechas en DA",
+        "role": "secondary"
+      },
+      "target": false,
+      "style": {
+        "strokeWidth": 2.2,
+        "markHeight": 0.42,
+        "highlightStrokeWidth": 4.2,
+        "preserveColorOnHighlight": true
+      },
+      "kind": "parallelMark",
+      "refs": [
+        "A",
+        "D"
+      ],
+      "properties": {
+        "markCount": 2,
+        "visibleWhen": "and(lt(abs((C.x-B.x)*(A.y-D.y)-(C.y-B.y)*(A.x-D.x))/(BC.length*DA.length),0.035),not(and(lt(abs((B.x-A.x)*(D.x-A.x)+(B.y-A.y)*(D.y-A.y))/(AB.length*DA.length),0.035),lt(abs((A.x-B.x)*(C.x-B.x)+(A.y-B.y)*(C.y-B.y))/(AB.length*BC.length),0.035),lt(abs((B.x-A.x)*(D.y-C.y)-(B.y-A.y)*(D.x-C.x))/(AB.length*CD.length),0.035))),not(and(lt(abs(AB.length-BC.length)/max(AB.length,BC.length),0.04),lt(abs(AB.length-CD.length)/max(AB.length,CD.length),0.04),lt(abs(AB.length-DA.length)/max(AB.length,DA.length),0.04))))"
+      }
+    },
+    {
+      "id": "igualTodoAB",
+      "label": "Igualdad total en AB",
+      "color": "ocre",
+      "layerId": "properties",
+      "order": 400,
+      "visible": true,
+      "locked": false,
+      "groupIds": [
+        "grupoIgualdad"
+      ],
+      "selection": {
+        "selectable": true,
+        "dimOthersOnHighlight": true,
+        "ariaLabel": "Igualdad total en AB",
+        "role": "secondary"
+      },
+      "target": false,
+      "style": {
+        "strokeWidth": 2.2,
+        "markHeight": 0.34,
+        "highlightStrokeWidth": 4.2,
+        "preserveColorOnHighlight": true
+      },
+      "kind": "congruenceMark",
+      "refs": [
+        "A",
+        "B"
+      ],
+      "properties": {
+        "markCount": 1,
+        "visibleWhen": "and(lt(abs(AB.length-BC.length)/max(AB.length,BC.length),0.04),lt(abs(AB.length-CD.length)/max(AB.length,CD.length),0.04),lt(abs(AB.length-DA.length)/max(AB.length,DA.length),0.04))"
+      }
+    },
+    {
+      "id": "igualTodoBC",
+      "label": "Igualdad total en BC",
+      "color": "ocre",
+      "layerId": "properties",
+      "order": 410,
+      "visible": true,
+      "locked": false,
+      "groupIds": [
+        "grupoIgualdad"
+      ],
+      "selection": {
+        "selectable": true,
+        "dimOthersOnHighlight": true,
+        "ariaLabel": "Igualdad total en BC",
+        "role": "secondary"
+      },
+      "target": false,
+      "style": {
+        "strokeWidth": 2.2,
+        "markHeight": 0.34,
+        "highlightStrokeWidth": 4.2,
+        "preserveColorOnHighlight": true
+      },
+      "kind": "congruenceMark",
+      "refs": [
+        "B",
+        "C"
+      ],
+      "properties": {
+        "markCount": 1,
+        "visibleWhen": "and(lt(abs(AB.length-BC.length)/max(AB.length,BC.length),0.04),lt(abs(AB.length-CD.length)/max(AB.length,CD.length),0.04),lt(abs(AB.length-DA.length)/max(AB.length,DA.length),0.04))"
+      }
+    },
+    {
+      "id": "igualTodoCD",
+      "label": "Igualdad total en CD",
+      "color": "ocre",
+      "layerId": "properties",
+      "order": 420,
+      "visible": true,
+      "locked": false,
+      "groupIds": [
+        "grupoIgualdad"
+      ],
+      "selection": {
+        "selectable": true,
+        "dimOthersOnHighlight": true,
+        "ariaLabel": "Igualdad total en CD",
+        "role": "secondary"
+      },
+      "target": false,
+      "style": {
+        "strokeWidth": 2.2,
+        "markHeight": 0.34,
+        "highlightStrokeWidth": 4.2,
+        "preserveColorOnHighlight": true
+      },
+      "kind": "congruenceMark",
+      "refs": [
+        "C",
+        "D"
+      ],
+      "properties": {
+        "markCount": 1,
+        "visibleWhen": "and(lt(abs(AB.length-BC.length)/max(AB.length,BC.length),0.04),lt(abs(AB.length-CD.length)/max(AB.length,CD.length),0.04),lt(abs(AB.length-DA.length)/max(AB.length,DA.length),0.04))"
+      }
+    },
+    {
+      "id": "igualTodoDA",
+      "label": "Igualdad total en DA",
+      "color": "ocre",
+      "layerId": "properties",
+      "order": 430,
+      "visible": true,
+      "locked": false,
+      "groupIds": [
+        "grupoIgualdad"
+      ],
+      "selection": {
+        "selectable": true,
+        "dimOthersOnHighlight": true,
+        "ariaLabel": "Igualdad total en DA",
+        "role": "secondary"
+      },
+      "target": false,
+      "style": {
+        "strokeWidth": 2.2,
+        "markHeight": 0.34,
+        "highlightStrokeWidth": 4.2,
+        "preserveColorOnHighlight": true
+      },
+      "kind": "congruenceMark",
+      "refs": [
+        "D",
+        "A"
+      ],
+      "properties": {
+        "markCount": 1,
+        "visibleWhen": "and(lt(abs(AB.length-BC.length)/max(AB.length,BC.length),0.04),lt(abs(AB.length-CD.length)/max(AB.length,CD.length),0.04),lt(abs(AB.length-DA.length)/max(AB.length,DA.length),0.04))"
+      }
+    },
+    {
+      "id": "cometaACAB",
+      "label": "Primer par del cometa en AB",
+      "color": "ocre",
+      "layerId": "properties",
+      "order": 450,
+      "visible": true,
+      "locked": false,
+      "groupIds": [
+        "grupoIgualdad"
+      ],
+      "selection": {
+        "selectable": true,
+        "dimOthersOnHighlight": true,
+        "ariaLabel": "Primer par del cometa en AB",
+        "role": "secondary"
+      },
+      "target": false,
+      "style": {
+        "strokeWidth": 2.2,
+        "markHeight": 0.34,
+        "highlightStrokeWidth": 4.2,
+        "preserveColorOnHighlight": true
+      },
+      "kind": "congruenceMark",
+      "refs": [
+        "A",
+        "B"
+      ],
+      "properties": {
+        "markCount": 1,
+        "visibleWhen": "and(lt(abs(AB.length-DA.length)/max(AB.length,DA.length),0.04),lt(abs(BC.length-CD.length)/max(BC.length,CD.length),0.04),not(and(lt(abs(AB.length-BC.length)/max(AB.length,BC.length),0.04),lt(abs(AB.length-CD.length)/max(AB.length,CD.length),0.04),lt(abs(AB.length-DA.length)/max(AB.length,DA.length),0.04))))"
+      }
+    },
+    {
+      "id": "cometaACDA",
+      "label": "Primer par del cometa en DA",
+      "color": "ocre",
+      "layerId": "properties",
+      "order": 460,
+      "visible": true,
+      "locked": false,
+      "groupIds": [
+        "grupoIgualdad"
+      ],
+      "selection": {
+        "selectable": true,
+        "dimOthersOnHighlight": true,
+        "ariaLabel": "Primer par del cometa en DA",
+        "role": "secondary"
+      },
+      "target": false,
+      "style": {
+        "strokeWidth": 2.2,
+        "markHeight": 0.34,
+        "highlightStrokeWidth": 4.2,
+        "preserveColorOnHighlight": true
+      },
+      "kind": "congruenceMark",
+      "refs": [
+        "D",
+        "A"
+      ],
+      "properties": {
+        "markCount": 1,
+        "visibleWhen": "and(lt(abs(AB.length-DA.length)/max(AB.length,DA.length),0.04),lt(abs(BC.length-CD.length)/max(BC.length,CD.length),0.04),not(and(lt(abs(AB.length-BC.length)/max(AB.length,BC.length),0.04),lt(abs(AB.length-CD.length)/max(AB.length,CD.length),0.04),lt(abs(AB.length-DA.length)/max(AB.length,DA.length),0.04))))"
+      }
+    },
+    {
+      "id": "cometaACBC",
+      "label": "Segundo par del cometa en BC",
+      "color": "ocre",
+      "layerId": "properties",
+      "order": 470,
+      "visible": true,
+      "locked": false,
+      "groupIds": [
+        "grupoIgualdad"
+      ],
+      "selection": {
+        "selectable": true,
+        "dimOthersOnHighlight": true,
+        "ariaLabel": "Segundo par del cometa en BC",
+        "role": "secondary"
+      },
+      "target": false,
+      "style": {
+        "strokeWidth": 2.2,
+        "markHeight": 0.34,
+        "highlightStrokeWidth": 4.2,
+        "preserveColorOnHighlight": true
+      },
+      "kind": "congruenceMark",
+      "refs": [
+        "B",
+        "C"
+      ],
+      "properties": {
+        "markCount": 2,
+        "visibleWhen": "and(lt(abs(AB.length-DA.length)/max(AB.length,DA.length),0.04),lt(abs(BC.length-CD.length)/max(BC.length,CD.length),0.04),not(and(lt(abs(AB.length-BC.length)/max(AB.length,BC.length),0.04),lt(abs(AB.length-CD.length)/max(AB.length,CD.length),0.04),lt(abs(AB.length-DA.length)/max(AB.length,DA.length),0.04))))"
+      }
+    },
+    {
+      "id": "cometaACCD",
+      "label": "Segundo par del cometa en CD",
+      "color": "ocre",
+      "layerId": "properties",
+      "order": 480,
+      "visible": true,
+      "locked": false,
+      "groupIds": [
+        "grupoIgualdad"
+      ],
+      "selection": {
+        "selectable": true,
+        "dimOthersOnHighlight": true,
+        "ariaLabel": "Segundo par del cometa en CD",
+        "role": "secondary"
+      },
+      "target": false,
+      "style": {
+        "strokeWidth": 2.2,
+        "markHeight": 0.34,
+        "highlightStrokeWidth": 4.2,
+        "preserveColorOnHighlight": true
+      },
+      "kind": "congruenceMark",
+      "refs": [
+        "C",
+        "D"
+      ],
+      "properties": {
+        "markCount": 2,
+        "visibleWhen": "and(lt(abs(AB.length-DA.length)/max(AB.length,DA.length),0.04),lt(abs(BC.length-CD.length)/max(BC.length,CD.length),0.04),not(and(lt(abs(AB.length-BC.length)/max(AB.length,BC.length),0.04),lt(abs(AB.length-CD.length)/max(AB.length,CD.length),0.04),lt(abs(AB.length-DA.length)/max(AB.length,DA.length),0.04))))"
+      }
+    },
+    {
+      "id": "cometaBDAB",
+      "label": "Primer par del cometa en AB",
+      "color": "ocre",
+      "layerId": "properties",
+      "order": 500,
+      "visible": true,
+      "locked": false,
+      "groupIds": [
+        "grupoIgualdad"
+      ],
+      "selection": {
+        "selectable": true,
+        "dimOthersOnHighlight": true,
+        "ariaLabel": "Primer par del cometa en AB",
+        "role": "secondary"
+      },
+      "target": false,
+      "style": {
+        "strokeWidth": 2.2,
+        "markHeight": 0.34,
+        "highlightStrokeWidth": 4.2,
+        "preserveColorOnHighlight": true
+      },
+      "kind": "congruenceMark",
+      "refs": [
+        "A",
+        "B"
+      ],
+      "properties": {
+        "markCount": 1,
+        "visibleWhen": "and(lt(abs(AB.length-BC.length)/max(AB.length,BC.length),0.04),lt(abs(CD.length-DA.length)/max(CD.length,DA.length),0.04),not(and(lt(abs(AB.length-BC.length)/max(AB.length,BC.length),0.04),lt(abs(AB.length-CD.length)/max(AB.length,CD.length),0.04),lt(abs(AB.length-DA.length)/max(AB.length,DA.length),0.04))))"
+      }
+    },
+    {
+      "id": "cometaBDBC",
+      "label": "Primer par del cometa en BC",
+      "color": "ocre",
+      "layerId": "properties",
+      "order": 510,
+      "visible": true,
+      "locked": false,
+      "groupIds": [
+        "grupoIgualdad"
+      ],
+      "selection": {
+        "selectable": true,
+        "dimOthersOnHighlight": true,
+        "ariaLabel": "Primer par del cometa en BC",
+        "role": "secondary"
+      },
+      "target": false,
+      "style": {
+        "strokeWidth": 2.2,
+        "markHeight": 0.34,
+        "highlightStrokeWidth": 4.2,
+        "preserveColorOnHighlight": true
+      },
+      "kind": "congruenceMark",
+      "refs": [
+        "B",
+        "C"
+      ],
+      "properties": {
+        "markCount": 1,
+        "visibleWhen": "and(lt(abs(AB.length-BC.length)/max(AB.length,BC.length),0.04),lt(abs(CD.length-DA.length)/max(CD.length,DA.length),0.04),not(and(lt(abs(AB.length-BC.length)/max(AB.length,BC.length),0.04),lt(abs(AB.length-CD.length)/max(AB.length,CD.length),0.04),lt(abs(AB.length-DA.length)/max(AB.length,DA.length),0.04))))"
+      }
+    },
+    {
+      "id": "cometaBDCD",
+      "label": "Segundo par del cometa en CD",
+      "color": "ocre",
+      "layerId": "properties",
+      "order": 520,
+      "visible": true,
+      "locked": false,
+      "groupIds": [
+        "grupoIgualdad"
+      ],
+      "selection": {
+        "selectable": true,
+        "dimOthersOnHighlight": true,
+        "ariaLabel": "Segundo par del cometa en CD",
+        "role": "secondary"
+      },
+      "target": false,
+      "style": {
+        "strokeWidth": 2.2,
+        "markHeight": 0.34,
+        "highlightStrokeWidth": 4.2,
+        "preserveColorOnHighlight": true
+      },
+      "kind": "congruenceMark",
+      "refs": [
+        "C",
+        "D"
+      ],
+      "properties": {
+        "markCount": 2,
+        "visibleWhen": "and(lt(abs(AB.length-BC.length)/max(AB.length,BC.length),0.04),lt(abs(CD.length-DA.length)/max(CD.length,DA.length),0.04),not(and(lt(abs(AB.length-BC.length)/max(AB.length,BC.length),0.04),lt(abs(AB.length-CD.length)/max(AB.length,CD.length),0.04),lt(abs(AB.length-DA.length)/max(AB.length,DA.length),0.04))))"
+      }
+    },
+    {
+      "id": "cometaBDDA",
+      "label": "Segundo par del cometa en DA",
+      "color": "ocre",
+      "layerId": "properties",
+      "order": 530,
+      "visible": true,
+      "locked": false,
+      "groupIds": [
+        "grupoIgualdad"
+      ],
+      "selection": {
+        "selectable": true,
+        "dimOthersOnHighlight": true,
+        "ariaLabel": "Segundo par del cometa en DA",
+        "role": "secondary"
+      },
+      "target": false,
+      "style": {
+        "strokeWidth": 2.2,
+        "markHeight": 0.34,
+        "highlightStrokeWidth": 4.2,
+        "preserveColorOnHighlight": true
+      },
+      "kind": "congruenceMark",
+      "refs": [
+        "D",
+        "A"
+      ],
+      "properties": {
+        "markCount": 2,
+        "visibleWhen": "and(lt(abs(AB.length-BC.length)/max(AB.length,BC.length),0.04),lt(abs(CD.length-DA.length)/max(CD.length,DA.length),0.04),not(and(lt(abs(AB.length-BC.length)/max(AB.length,BC.length),0.04),lt(abs(AB.length-CD.length)/max(AB.length,CD.length),0.04),lt(abs(AB.length-DA.length)/max(AB.length,DA.length),0.04))))"
+      }
+    },
+    {
+      "id": "rectoA",
+      "label": "Ángulo recto en A",
+      "color": "ocre",
+      "layerId": "properties",
+      "order": 560,
+      "visible": true,
+      "locked": false,
+      "groupIds": [
+        "grupoRectos"
+      ],
+      "selection": {
+        "selectable": true,
+        "dimOthersOnHighlight": true,
+        "ariaLabel": "Ángulo recto en A",
+        "role": "secondary"
+      },
+      "target": false,
+      "style": {
+        "strokeWidth": 1.7,
+        "fillOpacity": 0.16,
+        "angleRadius": 0.42,
+        "highlightStrokeWidth": 4.2,
+        "highlightFillOpacity": 0.3,
+        "preserveColorOnHighlight": true
+      },
+      "kind": "rightAngle",
+      "refs": [
+        "B",
+        "A",
+        "D"
+      ],
+      "properties": {
+        "visibleWhen": "and(lt(abs((B.x-A.x)*(D.x-A.x)+(B.y-A.y)*(D.y-A.y))/(AB.length*DA.length),0.035),lt(abs((A.x-B.x)*(C.x-B.x)+(A.y-B.y)*(C.y-B.y))/(AB.length*BC.length),0.035),lt(abs((B.x-A.x)*(D.y-C.y)-(B.y-A.y)*(D.x-C.x))/(AB.length*CD.length),0.035))"
+      }
+    },
+    {
+      "id": "rectoB",
+      "label": "Ángulo recto en B",
+      "color": "ocre",
+      "layerId": "properties",
+      "order": 570,
+      "visible": true,
+      "locked": false,
+      "groupIds": [
+        "grupoRectos"
+      ],
+      "selection": {
+        "selectable": true,
+        "dimOthersOnHighlight": true,
+        "ariaLabel": "Ángulo recto en B",
+        "role": "secondary"
+      },
+      "target": false,
+      "style": {
+        "strokeWidth": 1.7,
+        "fillOpacity": 0.16,
+        "angleRadius": 0.42,
+        "highlightStrokeWidth": 4.2,
+        "highlightFillOpacity": 0.3,
+        "preserveColorOnHighlight": true
+      },
+      "kind": "rightAngle",
+      "refs": [
+        "C",
+        "B",
+        "A"
+      ],
+      "properties": {
+        "visibleWhen": "and(lt(abs((B.x-A.x)*(D.x-A.x)+(B.y-A.y)*(D.y-A.y))/(AB.length*DA.length),0.035),lt(abs((A.x-B.x)*(C.x-B.x)+(A.y-B.y)*(C.y-B.y))/(AB.length*BC.length),0.035),lt(abs((B.x-A.x)*(D.y-C.y)-(B.y-A.y)*(D.x-C.x))/(AB.length*CD.length),0.035))"
+      }
+    },
+    {
+      "id": "rectoC",
+      "label": "Ángulo recto en C",
+      "color": "ocre",
+      "layerId": "properties",
+      "order": 580,
+      "visible": true,
+      "locked": false,
+      "groupIds": [
+        "grupoRectos"
+      ],
+      "selection": {
+        "selectable": true,
+        "dimOthersOnHighlight": true,
+        "ariaLabel": "Ángulo recto en C",
+        "role": "secondary"
+      },
+      "target": false,
+      "style": {
+        "strokeWidth": 1.7,
+        "fillOpacity": 0.16,
+        "angleRadius": 0.42,
+        "highlightStrokeWidth": 4.2,
+        "highlightFillOpacity": 0.3,
+        "preserveColorOnHighlight": true
+      },
+      "kind": "rightAngle",
+      "refs": [
+        "D",
+        "C",
+        "B"
+      ],
+      "properties": {
+        "visibleWhen": "and(lt(abs((B.x-A.x)*(D.x-A.x)+(B.y-A.y)*(D.y-A.y))/(AB.length*DA.length),0.035),lt(abs((A.x-B.x)*(C.x-B.x)+(A.y-B.y)*(C.y-B.y))/(AB.length*BC.length),0.035),lt(abs((B.x-A.x)*(D.y-C.y)-(B.y-A.y)*(D.x-C.x))/(AB.length*CD.length),0.035))"
+      }
+    },
+    {
+      "id": "rectoD",
+      "label": "Ángulo recto en D",
+      "color": "ocre",
+      "layerId": "properties",
+      "order": 590,
+      "visible": true,
+      "locked": false,
+      "groupIds": [
+        "grupoRectos"
+      ],
+      "selection": {
+        "selectable": true,
+        "dimOthersOnHighlight": true,
+        "ariaLabel": "Ángulo recto en D",
+        "role": "secondary"
+      },
+      "target": false,
+      "style": {
+        "strokeWidth": 1.7,
+        "fillOpacity": 0.16,
+        "angleRadius": 0.42,
+        "highlightStrokeWidth": 4.2,
+        "highlightFillOpacity": 0.3,
+        "preserveColorOnHighlight": true
+      },
+      "kind": "rightAngle",
+      "refs": [
+        "A",
+        "D",
+        "C"
+      ],
+      "properties": {
+        "visibleWhen": "and(lt(abs((B.x-A.x)*(D.x-A.x)+(B.y-A.y)*(D.y-A.y))/(AB.length*DA.length),0.035),lt(abs((A.x-B.x)*(C.x-B.x)+(A.y-B.y)*(C.y-B.y))/(AB.length*BC.length),0.035),lt(abs((B.x-A.x)*(D.y-C.y)-(B.y-A.y)*(D.x-C.x))/(AB.length*CD.length),0.035))"
+      }
+    },
+    {
+      "id": "anguloA",
+      "label": "Ángulo interior A",
+      "color": "ocre",
+      "layerId": "details",
+      "order": 620,
+      "visible": false,
+      "locked": false,
+      "groupIds": [
+        "grupoAngulos"
+      ],
+      "selection": {
+        "selectable": true,
+        "dimOthersOnHighlight": true,
+        "ariaLabel": "Ángulo interior A",
+        "role": "secondary"
+      },
+      "target": false,
+      "style": {
+        "strokeWidth": 1.5,
+        "fillOpacity": 0.18,
+        "angleRadius": 0.58,
+        "highlightStrokeWidth": 4.2,
+        "highlightFillOpacity": 0.3,
+        "highlightVisible": true,
+        "preserveColorOnHighlight": true
+      },
+      "kind": "nonReflexAngle",
+      "refs": [
+        "B",
+        "A",
+        "D"
+      ]
+    },
+    {
+      "id": "anguloB",
+      "label": "Ángulo interior B",
+      "color": "ocre",
+      "layerId": "details",
+      "order": 630,
+      "visible": false,
+      "locked": false,
+      "groupIds": [
+        "grupoAngulos"
+      ],
+      "selection": {
+        "selectable": true,
+        "dimOthersOnHighlight": true,
+        "ariaLabel": "Ángulo interior B",
+        "role": "secondary"
+      },
+      "target": false,
+      "style": {
+        "strokeWidth": 1.5,
+        "fillOpacity": 0.18,
+        "angleRadius": 0.58,
+        "highlightStrokeWidth": 4.2,
+        "highlightFillOpacity": 0.3,
+        "highlightVisible": true,
+        "preserveColorOnHighlight": true
+      },
+      "kind": "nonReflexAngle",
+      "refs": [
+        "C",
+        "B",
+        "A"
+      ]
+    },
+    {
+      "id": "anguloC",
+      "label": "Ángulo interior C",
+      "color": "ocre",
+      "layerId": "details",
+      "order": 640,
+      "visible": false,
+      "locked": false,
+      "groupIds": [
+        "grupoAngulos"
+      ],
+      "selection": {
+        "selectable": true,
+        "dimOthersOnHighlight": true,
+        "ariaLabel": "Ángulo interior C",
+        "role": "secondary"
+      },
+      "target": false,
+      "style": {
+        "strokeWidth": 1.5,
+        "fillOpacity": 0.18,
+        "angleRadius": 0.58,
+        "highlightStrokeWidth": 4.2,
+        "highlightFillOpacity": 0.3,
+        "highlightVisible": true,
+        "preserveColorOnHighlight": true
+      },
+      "kind": "nonReflexAngle",
+      "refs": [
+        "D",
+        "C",
+        "B"
+      ]
+    },
+    {
+      "id": "anguloD",
+      "label": "Ángulo interior D",
+      "color": "ocre",
+      "layerId": "details",
+      "order": 650,
+      "visible": false,
+      "locked": false,
+      "groupIds": [
+        "grupoAngulos"
+      ],
+      "selection": {
+        "selectable": true,
+        "dimOthersOnHighlight": true,
+        "ariaLabel": "Ángulo interior D",
+        "role": "secondary"
+      },
+      "target": false,
+      "style": {
+        "strokeWidth": 1.5,
+        "fillOpacity": 0.18,
+        "angleRadius": 0.58,
+        "highlightStrokeWidth": 4.2,
+        "highlightFillOpacity": 0.3,
+        "highlightVisible": true,
+        "preserveColorOnHighlight": true
+      },
+      "kind": "nonReflexAngle",
+      "refs": [
+        "A",
+        "D",
+        "C"
+      ]
+    },
+    {
+      "id": "AC",
+      "label": "Diagonal AC",
+      "color": "pizarra",
+      "layerId": "details",
+      "order": 680,
+      "visible": false,
+      "locked": false,
+      "groupIds": [
+        "grupoDiagonales"
+      ],
+      "selection": {
+        "selectable": true,
+        "dimOthersOnHighlight": true,
+        "ariaLabel": "Diagonal AC",
+        "role": "secondary"
+      },
+      "target": false,
+      "style": {
+        "strokeWidth": 1.8,
+        "strokeOpacity": 0.8,
+        "highlightStrokeWidth": 4.2,
+        "highlightVisible": true,
+        "preserveColorOnHighlight": true
+      },
+      "kind": "segment",
+      "refs": [
+        "A",
+        "C"
+      ],
+      "dashed": true
+    },
+    {
+      "id": "BD",
+      "label": "Diagonal BD",
+      "color": "pizarra",
+      "layerId": "details",
+      "order": 690,
+      "visible": false,
+      "locked": false,
+      "groupIds": [
+        "grupoDiagonales"
+      ],
+      "selection": {
+        "selectable": true,
+        "dimOthersOnHighlight": true,
+        "ariaLabel": "Diagonal BD",
+        "role": "secondary"
+      },
+      "target": false,
+      "style": {
+        "strokeWidth": 1.8,
+        "strokeOpacity": 0.8,
+        "highlightStrokeWidth": 4.2,
+        "highlightVisible": true,
+        "preserveColorOnHighlight": true
+      },
+      "kind": "segment",
+      "refs": [
+        "B",
+        "D"
+      ],
+      "dashed": true
+    },
+    {
+      "id": "clasificacion",
+      "label": "Clasificación",
+      "color": "musgo",
+      "layerId": "annotations",
+      "order": 800,
+      "visible": true,
+      "locked": false,
+      "groupIds": [],
+      "selection": {
+        "selectable": true,
+        "dimOthersOnHighlight": false,
+        "ariaLabel": "Clasificación dinámica del cuadrilátero",
+        "role": "annotation"
+      },
+      "target": true,
+      "targetId": "clasificacion",
+      "style": {
+        "strokeWidth": 2.4,
+        "labelSize": 16,
+        "highlightStrokeWidth": 4.2,
+        "preserveColorOnHighlight": true
+      },
+      "kind": "infoPanel",
+      "refs": [],
+      "text": "",
+      "properties": {
+        "anchorMode": "viewport",
+        "viewportPosition": [
+          0,
+          0
+        ],
+        "textRules": [
+          {
+            "when": "and(and(lt(abs(AB.length-BC.length)/max(AB.length,BC.length),0.04),lt(abs(AB.length-CD.length)/max(AB.length,CD.length),0.04),lt(abs(AB.length-DA.length)/max(AB.length,DA.length),0.04)),and(lt(abs((B.x-A.x)*(D.x-A.x)+(B.y-A.y)*(D.y-A.y))/(AB.length*DA.length),0.035),lt(abs((A.x-B.x)*(C.x-B.x)+(A.y-B.y)*(C.y-B.y))/(AB.length*BC.length),0.035),lt(abs((B.x-A.x)*(D.y-C.y)-(B.y-A.y)*(D.x-C.x))/(AB.length*CD.length),0.035)))",
+            "text": "Cuadrado · 4 lados iguales · 4 ángulos rectos"
+          },
+          {
+            "when": "and(lt(abs((B.x-A.x)*(D.x-A.x)+(B.y-A.y)*(D.y-A.y))/(AB.length*DA.length),0.035),lt(abs((A.x-B.x)*(C.x-B.x)+(A.y-B.y)*(C.y-B.y))/(AB.length*BC.length),0.035),lt(abs((B.x-A.x)*(D.y-C.y)-(B.y-A.y)*(D.x-C.x))/(AB.length*CD.length),0.035))",
+            "text": "Rectángulo · 4 ángulos rectos"
+          },
+          {
+            "when": "and(lt(abs(AB.length-BC.length)/max(AB.length,BC.length),0.04),lt(abs(AB.length-CD.length)/max(AB.length,CD.length),0.04),lt(abs(AB.length-DA.length)/max(AB.length,DA.length),0.04))",
+            "text": "Rombo · 4 lados iguales"
+          },
+          {
+            "when": "and(lt(abs((B.x-A.x)*(D.y-C.y)-(B.y-A.y)*(D.x-C.x))/(AB.length*CD.length),0.035),lt(abs((C.x-B.x)*(A.y-D.y)-(C.y-B.y)*(A.x-D.x))/(BC.length*DA.length),0.035))",
+            "text": "Paralelogramo · 2 pares de lados opuestos paralelos"
+          },
+          {
+            "when": "or(and(lt(abs(AB.length-DA.length)/max(AB.length,DA.length),0.04),lt(abs(BC.length-CD.length)/max(BC.length,CD.length),0.04)),and(lt(abs(AB.length-BC.length)/max(AB.length,BC.length),0.04),lt(abs(CD.length-DA.length)/max(CD.length,DA.length),0.04)))",
+            "text": "Cometa · 2 pares de lados consecutivos iguales"
+          },
+          {
+            "when": "or(lt(abs((B.x-A.x)*(D.y-C.y)-(B.y-A.y)*(D.x-C.x))/(AB.length*CD.length),0.035),lt(abs((C.x-B.x)*(A.y-D.y)-(C.y-B.y)*(A.x-D.x))/(BC.length*DA.length),0.035))",
+            "text": "Trapecio · 1 par de lados opuestos paralelos"
+          },
+          {
+            "when": "1",
+            "text": "Trapezoide · ningún par de lados opuestos paralelos"
+          }
+        ]
+      }
+    }
+  ],
+  "sliders": [],
+  "steps": [],
+  "constraints": [
+    {
+      "id": "CEncimaAB",
+      "label": "C permanece sobre AB",
+      "kind": "sameSide",
+      "refs": [
+        "C",
+        "A",
+        "B"
+      ],
+      "enabled": true
+    },
+    {
+      "id": "CNoCruzaBD",
+      "label": "C no cruza la diagonal BD",
+      "kind": "sameSide",
+      "refs": [
+        "C",
+        "B",
+        "D"
+      ],
+      "enabled": true
+    },
+    {
+      "id": "DEncimaAB",
+      "label": "D permanece sobre AB",
+      "kind": "sameSide",
+      "refs": [
+        "D",
+        "A",
+        "B"
+      ],
+      "enabled": true
+    },
+    {
+      "id": "DNoCruzaAC",
+      "label": "D no cruza la diagonal AC",
+      "kind": "sameSide",
+      "refs": [
+        "D",
+        "A",
+        "C"
+      ],
+      "enabled": true
+    }
+  ],
+  "dependencies": [
+    {
+      "sourceId": "A",
+      "targetId": "guiaRectoB",
+      "relation": "construction"
+    },
+    {
+      "sourceId": "B",
+      "targetId": "guiaRectoB",
+      "relation": "construction"
+    },
+    {
+      "sourceId": "A",
+      "targetId": "guiaIgualBC",
+      "relation": "construction"
+    },
+    {
+      "sourceId": "B",
+      "targetId": "guiaIgualBC",
+      "relation": "construction"
+    },
+    {
+      "sourceId": "A",
+      "targetId": "guiaParalelaCD",
+      "relation": "construction"
+    },
+    {
+      "sourceId": "B",
+      "targetId": "guiaParalelaCD",
+      "relation": "construction"
+    },
+    {
+      "sourceId": "C",
+      "targetId": "guiaParalelaCD",
+      "relation": "construction"
+    },
+    {
+      "sourceId": "A",
+      "targetId": "guiaParalelaDA",
+      "relation": "construction"
+    },
+    {
+      "sourceId": "B",
+      "targetId": "guiaParalelaDA",
+      "relation": "construction"
+    },
+    {
+      "sourceId": "C",
+      "targetId": "guiaParalelaDA",
+      "relation": "construction"
+    },
+    {
+      "sourceId": "A",
+      "targetId": "guiaRectoA",
+      "relation": "construction"
+    },
+    {
+      "sourceId": "B",
+      "targetId": "guiaRectoA",
+      "relation": "construction"
+    },
+    {
+      "sourceId": "A",
+      "targetId": "guiaIgualDA",
+      "relation": "construction"
+    },
+    {
+      "sourceId": "B",
+      "targetId": "guiaIgualDA",
+      "relation": "construction"
+    },
+    {
+      "sourceId": "B",
+      "targetId": "guiaIgualCD",
+      "relation": "construction"
+    },
+    {
+      "sourceId": "C",
+      "targetId": "guiaIgualCD",
+      "relation": "construction"
+    },
+    {
+      "sourceId": "guiaRectoB",
+      "targetId": "C",
+      "relation": "constraint"
+    },
+    {
+      "sourceId": "guiaIgualBC",
+      "targetId": "C",
+      "relation": "constraint"
+    },
+    {
+      "sourceId": "guiaParalelaCD",
+      "targetId": "D",
+      "relation": "constraint"
+    },
+    {
+      "sourceId": "guiaParalelaDA",
+      "targetId": "D",
+      "relation": "constraint"
+    },
+    {
+      "sourceId": "guiaRectoA",
+      "targetId": "D",
+      "relation": "constraint"
+    },
+    {
+      "sourceId": "guiaIgualDA",
+      "targetId": "D",
+      "relation": "constraint"
+    },
+    {
+      "sourceId": "guiaIgualCD",
+      "targetId": "D",
+      "relation": "constraint"
+    },
+    {
+      "sourceId": "A",
+      "targetId": "C",
+      "relation": "constraint",
+      "constraintId": "CEncimaAB"
+    },
+    {
+      "sourceId": "B",
+      "targetId": "C",
+      "relation": "constraint",
+      "constraintId": "CEncimaAB"
+    },
+    {
+      "sourceId": "B",
+      "targetId": "C",
+      "relation": "constraint",
+      "constraintId": "CNoCruzaBD"
+    },
+    {
+      "sourceId": "A",
+      "targetId": "D",
+      "relation": "constraint",
+      "constraintId": "DEncimaAB"
+    },
+    {
+      "sourceId": "B",
+      "targetId": "D",
+      "relation": "constraint",
+      "constraintId": "DEncimaAB"
+    },
+    {
+      "sourceId": "A",
+      "targetId": "D",
+      "relation": "constraint",
+      "constraintId": "DNoCruzaAC"
+    },
+    {
+      "sourceId": "C",
+      "targetId": "D",
+      "relation": "constraint",
+      "constraintId": "DNoCruzaAC"
+    },
+    {
+      "sourceId": "A",
+      "targetId": "parAB",
+      "relation": "expression"
+    },
+    {
+      "sourceId": "B",
+      "targetId": "parAB",
+      "relation": "expression"
+    },
+    {
+      "sourceId": "C",
+      "targetId": "parAB",
+      "relation": "expression"
+    },
+    {
+      "sourceId": "D",
+      "targetId": "parAB",
+      "relation": "expression"
+    },
+    {
+      "sourceId": "AB",
+      "targetId": "parAB",
+      "relation": "expression"
+    },
+    {
+      "sourceId": "BC",
+      "targetId": "parAB",
+      "relation": "expression"
+    },
+    {
+      "sourceId": "CD",
+      "targetId": "parAB",
+      "relation": "expression"
+    },
+    {
+      "sourceId": "DA",
+      "targetId": "parAB",
+      "relation": "expression"
+    },
+    {
+      "sourceId": "A",
+      "targetId": "parCD",
+      "relation": "expression"
+    },
+    {
+      "sourceId": "B",
+      "targetId": "parCD",
+      "relation": "expression"
+    },
+    {
+      "sourceId": "C",
+      "targetId": "parCD",
+      "relation": "expression"
+    },
+    {
+      "sourceId": "D",
+      "targetId": "parCD",
+      "relation": "expression"
+    },
+    {
+      "sourceId": "AB",
+      "targetId": "parCD",
+      "relation": "expression"
+    },
+    {
+      "sourceId": "BC",
+      "targetId": "parCD",
+      "relation": "expression"
+    },
+    {
+      "sourceId": "CD",
+      "targetId": "parCD",
+      "relation": "expression"
+    },
+    {
+      "sourceId": "DA",
+      "targetId": "parCD",
+      "relation": "expression"
+    },
+    {
+      "sourceId": "A",
+      "targetId": "parBC",
+      "relation": "expression"
+    },
+    {
+      "sourceId": "B",
+      "targetId": "parBC",
+      "relation": "expression"
+    },
+    {
+      "sourceId": "C",
+      "targetId": "parBC",
+      "relation": "expression"
+    },
+    {
+      "sourceId": "D",
+      "targetId": "parBC",
+      "relation": "expression"
+    },
+    {
+      "sourceId": "AB",
+      "targetId": "parBC",
+      "relation": "expression"
+    },
+    {
+      "sourceId": "BC",
+      "targetId": "parBC",
+      "relation": "expression"
+    },
+    {
+      "sourceId": "CD",
+      "targetId": "parBC",
+      "relation": "expression"
+    },
+    {
+      "sourceId": "DA",
+      "targetId": "parBC",
+      "relation": "expression"
+    },
+    {
+      "sourceId": "A",
+      "targetId": "parDA",
+      "relation": "expression"
+    },
+    {
+      "sourceId": "B",
+      "targetId": "parDA",
+      "relation": "expression"
+    },
+    {
+      "sourceId": "C",
+      "targetId": "parDA",
+      "relation": "expression"
+    },
+    {
+      "sourceId": "D",
+      "targetId": "parDA",
+      "relation": "expression"
+    },
+    {
+      "sourceId": "AB",
+      "targetId": "parDA",
+      "relation": "expression"
+    },
+    {
+      "sourceId": "BC",
+      "targetId": "parDA",
+      "relation": "expression"
+    },
+    {
+      "sourceId": "CD",
+      "targetId": "parDA",
+      "relation": "expression"
+    },
+    {
+      "sourceId": "DA",
+      "targetId": "parDA",
+      "relation": "expression"
+    },
+    {
+      "sourceId": "A",
+      "targetId": "igualTodoAB",
+      "relation": "expression"
+    },
+    {
+      "sourceId": "B",
+      "targetId": "igualTodoAB",
+      "relation": "expression"
+    },
+    {
+      "sourceId": "C",
+      "targetId": "igualTodoAB",
+      "relation": "expression"
+    },
+    {
+      "sourceId": "D",
+      "targetId": "igualTodoAB",
+      "relation": "expression"
+    },
+    {
+      "sourceId": "AB",
+      "targetId": "igualTodoAB",
+      "relation": "expression"
+    },
+    {
+      "sourceId": "BC",
+      "targetId": "igualTodoAB",
+      "relation": "expression"
+    },
+    {
+      "sourceId": "CD",
+      "targetId": "igualTodoAB",
+      "relation": "expression"
+    },
+    {
+      "sourceId": "DA",
+      "targetId": "igualTodoAB",
+      "relation": "expression"
+    },
+    {
+      "sourceId": "A",
+      "targetId": "igualTodoBC",
+      "relation": "expression"
+    },
+    {
+      "sourceId": "B",
+      "targetId": "igualTodoBC",
+      "relation": "expression"
+    },
+    {
+      "sourceId": "C",
+      "targetId": "igualTodoBC",
+      "relation": "expression"
+    },
+    {
+      "sourceId": "D",
+      "targetId": "igualTodoBC",
+      "relation": "expression"
+    },
+    {
+      "sourceId": "AB",
+      "targetId": "igualTodoBC",
+      "relation": "expression"
+    },
+    {
+      "sourceId": "BC",
+      "targetId": "igualTodoBC",
+      "relation": "expression"
+    },
+    {
+      "sourceId": "CD",
+      "targetId": "igualTodoBC",
+      "relation": "expression"
+    },
+    {
+      "sourceId": "DA",
+      "targetId": "igualTodoBC",
+      "relation": "expression"
+    },
+    {
+      "sourceId": "A",
+      "targetId": "igualTodoCD",
+      "relation": "expression"
+    },
+    {
+      "sourceId": "B",
+      "targetId": "igualTodoCD",
+      "relation": "expression"
+    },
+    {
+      "sourceId": "C",
+      "targetId": "igualTodoCD",
+      "relation": "expression"
+    },
+    {
+      "sourceId": "D",
+      "targetId": "igualTodoCD",
+      "relation": "expression"
+    },
+    {
+      "sourceId": "AB",
+      "targetId": "igualTodoCD",
+      "relation": "expression"
+    },
+    {
+      "sourceId": "BC",
+      "targetId": "igualTodoCD",
+      "relation": "expression"
+    },
+    {
+      "sourceId": "CD",
+      "targetId": "igualTodoCD",
+      "relation": "expression"
+    },
+    {
+      "sourceId": "DA",
+      "targetId": "igualTodoCD",
+      "relation": "expression"
+    },
+    {
+      "sourceId": "A",
+      "targetId": "igualTodoDA",
+      "relation": "expression"
+    },
+    {
+      "sourceId": "B",
+      "targetId": "igualTodoDA",
+      "relation": "expression"
+    },
+    {
+      "sourceId": "C",
+      "targetId": "igualTodoDA",
+      "relation": "expression"
+    },
+    {
+      "sourceId": "D",
+      "targetId": "igualTodoDA",
+      "relation": "expression"
+    },
+    {
+      "sourceId": "AB",
+      "targetId": "igualTodoDA",
+      "relation": "expression"
+    },
+    {
+      "sourceId": "BC",
+      "targetId": "igualTodoDA",
+      "relation": "expression"
+    },
+    {
+      "sourceId": "CD",
+      "targetId": "igualTodoDA",
+      "relation": "expression"
+    },
+    {
+      "sourceId": "DA",
+      "targetId": "igualTodoDA",
+      "relation": "expression"
+    },
+    {
+      "sourceId": "A",
+      "targetId": "cometaACAB",
+      "relation": "expression"
+    },
+    {
+      "sourceId": "B",
+      "targetId": "cometaACAB",
+      "relation": "expression"
+    },
+    {
+      "sourceId": "C",
+      "targetId": "cometaACAB",
+      "relation": "expression"
+    },
+    {
+      "sourceId": "D",
+      "targetId": "cometaACAB",
+      "relation": "expression"
+    },
+    {
+      "sourceId": "AB",
+      "targetId": "cometaACAB",
+      "relation": "expression"
+    },
+    {
+      "sourceId": "BC",
+      "targetId": "cometaACAB",
+      "relation": "expression"
+    },
+    {
+      "sourceId": "CD",
+      "targetId": "cometaACAB",
+      "relation": "expression"
+    },
+    {
+      "sourceId": "DA",
+      "targetId": "cometaACAB",
+      "relation": "expression"
+    },
+    {
+      "sourceId": "A",
+      "targetId": "cometaACDA",
+      "relation": "expression"
+    },
+    {
+      "sourceId": "B",
+      "targetId": "cometaACDA",
+      "relation": "expression"
+    },
+    {
+      "sourceId": "C",
+      "targetId": "cometaACDA",
+      "relation": "expression"
+    },
+    {
+      "sourceId": "D",
+      "targetId": "cometaACDA",
+      "relation": "expression"
+    },
+    {
+      "sourceId": "AB",
+      "targetId": "cometaACDA",
+      "relation": "expression"
+    },
+    {
+      "sourceId": "BC",
+      "targetId": "cometaACDA",
+      "relation": "expression"
+    },
+    {
+      "sourceId": "CD",
+      "targetId": "cometaACDA",
+      "relation": "expression"
+    },
+    {
+      "sourceId": "DA",
+      "targetId": "cometaACDA",
+      "relation": "expression"
+    },
+    {
+      "sourceId": "A",
+      "targetId": "cometaACBC",
+      "relation": "expression"
+    },
+    {
+      "sourceId": "B",
+      "targetId": "cometaACBC",
+      "relation": "expression"
+    },
+    {
+      "sourceId": "C",
+      "targetId": "cometaACBC",
+      "relation": "expression"
+    },
+    {
+      "sourceId": "D",
+      "targetId": "cometaACBC",
+      "relation": "expression"
+    },
+    {
+      "sourceId": "AB",
+      "targetId": "cometaACBC",
+      "relation": "expression"
+    },
+    {
+      "sourceId": "BC",
+      "targetId": "cometaACBC",
+      "relation": "expression"
+    },
+    {
+      "sourceId": "CD",
+      "targetId": "cometaACBC",
+      "relation": "expression"
+    },
+    {
+      "sourceId": "DA",
+      "targetId": "cometaACBC",
+      "relation": "expression"
+    },
+    {
+      "sourceId": "A",
+      "targetId": "cometaACCD",
+      "relation": "expression"
+    },
+    {
+      "sourceId": "B",
+      "targetId": "cometaACCD",
+      "relation": "expression"
+    },
+    {
+      "sourceId": "C",
+      "targetId": "cometaACCD",
+      "relation": "expression"
+    },
+    {
+      "sourceId": "D",
+      "targetId": "cometaACCD",
+      "relation": "expression"
+    },
+    {
+      "sourceId": "AB",
+      "targetId": "cometaACCD",
+      "relation": "expression"
+    },
+    {
+      "sourceId": "BC",
+      "targetId": "cometaACCD",
+      "relation": "expression"
+    },
+    {
+      "sourceId": "CD",
+      "targetId": "cometaACCD",
+      "relation": "expression"
+    },
+    {
+      "sourceId": "DA",
+      "targetId": "cometaACCD",
+      "relation": "expression"
+    },
+    {
+      "sourceId": "A",
+      "targetId": "cometaBDAB",
+      "relation": "expression"
+    },
+    {
+      "sourceId": "B",
+      "targetId": "cometaBDAB",
+      "relation": "expression"
+    },
+    {
+      "sourceId": "C",
+      "targetId": "cometaBDAB",
+      "relation": "expression"
+    },
+    {
+      "sourceId": "D",
+      "targetId": "cometaBDAB",
+      "relation": "expression"
+    },
+    {
+      "sourceId": "AB",
+      "targetId": "cometaBDAB",
+      "relation": "expression"
+    },
+    {
+      "sourceId": "BC",
+      "targetId": "cometaBDAB",
+      "relation": "expression"
+    },
+    {
+      "sourceId": "CD",
+      "targetId": "cometaBDAB",
+      "relation": "expression"
+    },
+    {
+      "sourceId": "DA",
+      "targetId": "cometaBDAB",
+      "relation": "expression"
+    },
+    {
+      "sourceId": "A",
+      "targetId": "cometaBDBC",
+      "relation": "expression"
+    },
+    {
+      "sourceId": "B",
+      "targetId": "cometaBDBC",
+      "relation": "expression"
+    },
+    {
+      "sourceId": "C",
+      "targetId": "cometaBDBC",
+      "relation": "expression"
+    },
+    {
+      "sourceId": "D",
+      "targetId": "cometaBDBC",
+      "relation": "expression"
+    },
+    {
+      "sourceId": "AB",
+      "targetId": "cometaBDBC",
+      "relation": "expression"
+    },
+    {
+      "sourceId": "BC",
+      "targetId": "cometaBDBC",
+      "relation": "expression"
+    },
+    {
+      "sourceId": "CD",
+      "targetId": "cometaBDBC",
+      "relation": "expression"
+    },
+    {
+      "sourceId": "DA",
+      "targetId": "cometaBDBC",
+      "relation": "expression"
+    },
+    {
+      "sourceId": "A",
+      "targetId": "cometaBDCD",
+      "relation": "expression"
+    },
+    {
+      "sourceId": "B",
+      "targetId": "cometaBDCD",
+      "relation": "expression"
+    },
+    {
+      "sourceId": "C",
+      "targetId": "cometaBDCD",
+      "relation": "expression"
+    },
+    {
+      "sourceId": "D",
+      "targetId": "cometaBDCD",
+      "relation": "expression"
+    },
+    {
+      "sourceId": "AB",
+      "targetId": "cometaBDCD",
+      "relation": "expression"
+    },
+    {
+      "sourceId": "BC",
+      "targetId": "cometaBDCD",
+      "relation": "expression"
+    },
+    {
+      "sourceId": "CD",
+      "targetId": "cometaBDCD",
+      "relation": "expression"
+    },
+    {
+      "sourceId": "DA",
+      "targetId": "cometaBDCD",
+      "relation": "expression"
+    },
+    {
+      "sourceId": "A",
+      "targetId": "cometaBDDA",
+      "relation": "expression"
+    },
+    {
+      "sourceId": "B",
+      "targetId": "cometaBDDA",
+      "relation": "expression"
+    },
+    {
+      "sourceId": "C",
+      "targetId": "cometaBDDA",
+      "relation": "expression"
+    },
+    {
+      "sourceId": "D",
+      "targetId": "cometaBDDA",
+      "relation": "expression"
+    },
+    {
+      "sourceId": "AB",
+      "targetId": "cometaBDDA",
+      "relation": "expression"
+    },
+    {
+      "sourceId": "BC",
+      "targetId": "cometaBDDA",
+      "relation": "expression"
+    },
+    {
+      "sourceId": "CD",
+      "targetId": "cometaBDDA",
+      "relation": "expression"
+    },
+    {
+      "sourceId": "DA",
+      "targetId": "cometaBDDA",
+      "relation": "expression"
+    },
+    {
+      "sourceId": "A",
+      "targetId": "rectoA",
+      "relation": "expression"
+    },
+    {
+      "sourceId": "B",
+      "targetId": "rectoA",
+      "relation": "expression"
+    },
+    {
+      "sourceId": "C",
+      "targetId": "rectoA",
+      "relation": "expression"
+    },
+    {
+      "sourceId": "D",
+      "targetId": "rectoA",
+      "relation": "expression"
+    },
+    {
+      "sourceId": "AB",
+      "targetId": "rectoA",
+      "relation": "expression"
+    },
+    {
+      "sourceId": "BC",
+      "targetId": "rectoA",
+      "relation": "expression"
+    },
+    {
+      "sourceId": "CD",
+      "targetId": "rectoA",
+      "relation": "expression"
+    },
+    {
+      "sourceId": "DA",
+      "targetId": "rectoA",
+      "relation": "expression"
+    },
+    {
+      "sourceId": "A",
+      "targetId": "rectoB",
+      "relation": "expression"
+    },
+    {
+      "sourceId": "B",
+      "targetId": "rectoB",
+      "relation": "expression"
+    },
+    {
+      "sourceId": "C",
+      "targetId": "rectoB",
+      "relation": "expression"
+    },
+    {
+      "sourceId": "D",
+      "targetId": "rectoB",
+      "relation": "expression"
+    },
+    {
+      "sourceId": "AB",
+      "targetId": "rectoB",
+      "relation": "expression"
+    },
+    {
+      "sourceId": "BC",
+      "targetId": "rectoB",
+      "relation": "expression"
+    },
+    {
+      "sourceId": "CD",
+      "targetId": "rectoB",
+      "relation": "expression"
+    },
+    {
+      "sourceId": "DA",
+      "targetId": "rectoB",
+      "relation": "expression"
+    },
+    {
+      "sourceId": "A",
+      "targetId": "rectoC",
+      "relation": "expression"
+    },
+    {
+      "sourceId": "B",
+      "targetId": "rectoC",
+      "relation": "expression"
+    },
+    {
+      "sourceId": "C",
+      "targetId": "rectoC",
+      "relation": "expression"
+    },
+    {
+      "sourceId": "D",
+      "targetId": "rectoC",
+      "relation": "expression"
+    },
+    {
+      "sourceId": "AB",
+      "targetId": "rectoC",
+      "relation": "expression"
+    },
+    {
+      "sourceId": "BC",
+      "targetId": "rectoC",
+      "relation": "expression"
+    },
+    {
+      "sourceId": "CD",
+      "targetId": "rectoC",
+      "relation": "expression"
+    },
+    {
+      "sourceId": "DA",
+      "targetId": "rectoC",
+      "relation": "expression"
+    },
+    {
+      "sourceId": "A",
+      "targetId": "rectoD",
+      "relation": "expression"
+    },
+    {
+      "sourceId": "B",
+      "targetId": "rectoD",
+      "relation": "expression"
+    },
+    {
+      "sourceId": "C",
+      "targetId": "rectoD",
+      "relation": "expression"
+    },
+    {
+      "sourceId": "D",
+      "targetId": "rectoD",
+      "relation": "expression"
+    },
+    {
+      "sourceId": "AB",
+      "targetId": "rectoD",
+      "relation": "expression"
+    },
+    {
+      "sourceId": "BC",
+      "targetId": "rectoD",
+      "relation": "expression"
+    },
+    {
+      "sourceId": "CD",
+      "targetId": "rectoD",
+      "relation": "expression"
+    },
+    {
+      "sourceId": "DA",
+      "targetId": "rectoD",
+      "relation": "expression"
+    },
+    {
+      "sourceId": "A",
+      "targetId": "clasificacion",
+      "relation": "expression"
+    },
+    {
+      "sourceId": "B",
+      "targetId": "clasificacion",
+      "relation": "expression"
+    },
+    {
+      "sourceId": "C",
+      "targetId": "clasificacion",
+      "relation": "expression"
+    },
+    {
+      "sourceId": "D",
+      "targetId": "clasificacion",
+      "relation": "expression"
+    },
+    {
+      "sourceId": "AB",
+      "targetId": "clasificacion",
+      "relation": "expression"
+    },
+    {
+      "sourceId": "BC",
+      "targetId": "clasificacion",
+      "relation": "expression"
+    },
+    {
+      "sourceId": "CD",
+      "targetId": "clasificacion",
+      "relation": "expression"
+    },
+    {
+      "sourceId": "DA",
+      "targetId": "clasificacion",
+      "relation": "expression"
+    },
+    {
+      "sourceId": "D",
+      "targetId": "parCD",
+      "relation": "construction"
+    },
+    {
+      "sourceId": "C",
+      "targetId": "parCD",
+      "relation": "construction"
+    },
+    {
+      "sourceId": "A",
+      "targetId": "parDA",
+      "relation": "construction"
+    },
+    {
+      "sourceId": "D",
+      "targetId": "parDA",
+      "relation": "construction"
+    }
+  ],
+  "note": "Mueve C y D para descubrir los diferentes tipos de cuadriláteros",
+  "extensions": {}
+}
+);
+/* @matematika-diagram-spec:end */
 
-    poly.setAttribute({ fillOpacity: isPoli ? 0.22 : 0.08 });
-    };;
-
-  return (
-    <MathBoard
-      boundingbox={[-6, 6, 6, -5]}
-      axis={false}
-      grid={false}
-      onInit={onInit}
-      onUpdate={onUpdate}
-    >
-      <div className="absolute top-2 right-3 z-10 text-xs font-serif italic text-pizarra/50">
-        Arrastra los v&eacute;rtices para descubrir distintas clases
-      </div>
-    </MathBoard>
-  );
-};
+export const Cuadrilatero = () => <DiagramRenderer spec={CuadrilateroSpec} />;

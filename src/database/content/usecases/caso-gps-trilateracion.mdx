@@ -21,19 +21,19 @@ export const Simulation = GpsTrilateracion;
 
 Cuando un dispositivo receptor intenta geolocalizarse, mide las distancias directas a múltiples puntos de referencia con coordenadas conocidas en el espacio. El <InteractiveElement target="R" color="carbon">receptor $R(x, y)$</InteractiveElement> calcula su distancia a cada satélite midiendo el tiempo de tránsito de las señales electromagnéticas que viajan a la velocidad de la luz.
 
-Si tomamos el <InteractiveElement target="s1" color="terracota">Satélite 1 ($S_1$)</InteractiveElement> ubicado en la coordenada fija $(2, 8)$, la <InteractiveElement target="rad1" color="terracota">distancia física directa $d_1$</InteractiveElement> al receptor actúa geométricamente como la **hipotenusa** de un triángulo rectángulo en el plano cartesiano. Podemos proyectar este triángulo trazando sus catetos:
+Si tomamos el <InteractiveElement target="s1" color="pizarra">Satélite 1 ($S_1$)</InteractiveElement> ubicado en la coordenada fija $(2, 8)$, la <InteractiveElement target="rad1" color="pizarra">distancia física directa $d_1$</InteractiveElement> al receptor actúa geométricamente como la **hipotenusa** de un triángulo rectángulo en el plano cartesiano. Podemos proyectar este triángulo trazando sus catetos:
 
-* El cateto horizontal representa el desplazamiento en el eje de abscisas: <InteractiveElement target="catH1" color="terracota">$\Delta x = |x - 2|$</InteractiveElement>.
-* El cateto vertical representa el desplazamiento en el eje de ordenadas: <InteractiveElement target="catV1" color="terracota">$\Delta y = |y - 8|$</InteractiveElement>.
+* El cateto horizontal representa el desplazamiento en el eje de abscisas: <InteractiveElement target="catH1" color="pizarra">$\Delta x = |x - 2|$</InteractiveElement>.
+* El cateto vertical representa el desplazamiento en el eje de ordenadas: <InteractiveElement target="catV1" color="pizarra">$\Delta y = |y - 8|$</InteractiveElement>.
 
-Al aplicar de forma directa el teorema de Pitágoras sobre el <ConceptLink targetId="triangulo-rectangulo" isDependency={false} highlightTarget="tri1" highlightColor="terracota">triángulo rectángulo del satélite $S_1$</ConceptLink>, obtenemos la ecuación cuadrática de la distancia:
+Al aplicar de forma directa el teorema de Pitágoras sobre el <ConceptLink targetId="triangulo-rectangulo" isDependency={false} highlightTarget="trianguloRecto" highlightColor="pizarra">triángulo rectángulo del satélite $S_1$</ConceptLink>, obtenemos la ecuación cuadrática de la distancia:
 
 <Formula>
   $$ d_1^2 = (x - 2)^2 + (y - 8)^2 $$
 </Formula>
 
 #### ¿Por qué una ecuación define una circunferencia?
-Desde un punto de vista algebraico, dado que tenemos dos variables incógnitas ($x$ e $y$) y una sola ecuación de referencia, el sistema es indeterminado y posee infinitas soluciones. Geométricamente, el conjunto de todos los puntos del plano $(x, y)$ que satisfacen la distancia exacta $d_1$ forma una línea curva cerrada en la que todos sus puntos equidistan del centro: la <InteractiveElement target="circ1" color="terracota">circunferencia de señal de $S_1$</InteractiveElement>. El receptor sabe que está en algún punto de ese círculo, pero su posición exacta sigue siendo ambigua.
+Desde un punto de vista algebraico, dado que tenemos dos variables incógnitas ($x$ e $y$) y una sola ecuación de referencia, el sistema es indeterminado y posee infinitas soluciones. Geométricamente, el conjunto de todos los puntos del plano $(x, y)$ que satisfacen la distancia exacta $d_1$ forma una línea curva cerrada en la que todos sus puntos equidistan del centro: la <InteractiveElement target="circ1" color="pizarra">circunferencia de señal de $S_1$</InteractiveElement>. El receptor sabe que está en algún punto de ese círculo, pero su posición exacta sigue siendo ambigua.
 
 <Separador />
 
@@ -41,7 +41,7 @@ Desde un punto de vista algebraico, dado que tenemos dos variables incógnitas (
 
 Para despejar de forma unívoca las coordenadas incógnitas $(x, y)$, se requiere el uso de múltiples satélites de referencia simultáneos. Algebraicamente, este problema se plantea y resuelve mediante un **sistema de ecuaciones cuadráticas simultáneas**:
 
-1. **Un Satélite ($S_1$):** Define la primera ecuación cuadrática. Sus infinitas soluciones corresponden geométricamente a la <InteractiveElement target="circ1" color="terracota">circunferencia de $S_1$</InteractiveElement>.
+1. **Un Satélite ($S_1$):** Define la primera ecuación cuadrática. Sus infinitas soluciones corresponden geométricamente a la <InteractiveElement target="circ1" color="pizarra">circunferencia de $S_1$</InteractiveElement>.
 2. **Dos Satélites ($S_1$ y $S_2$):** Al recibir la señal del <InteractiveElement target="s2" color="ocre">Satélite 2 $S_2(-4, 2)$</InteractiveElement> de <InteractiveElement target="rad2" color="ocre">distancia $d_2$</InteractiveElement>, añadimos una segunda ecuación al sistema:
    $$ d_2^2 = (x + 4)^2 + (y - 2)^2 $$
    Geométricamente, las soluciones comunes de este sistema de dos ecuaciones son los puntos de cruce entre la primera circunferencia y la <InteractiveElement target="circ2" color="ocre">circunferencia de señal de $S_2$</InteractiveElement>. Dos círculos se intersectan en exactamente **dos puntos candidatos**, reduciendo significativamente la ambigüedad pero sin resolverla del todo.

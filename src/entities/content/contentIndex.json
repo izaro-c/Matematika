@@ -1132,8 +1132,8 @@
       "type": "definicion",
       "subtype": "fundamentada",
       "title": "Circunferencia",
-      "description": "Lugar geométrico de los puntos de un plano que equidistan de un punto fijo llamado centro.",
-      "statement": "La circunferencia C(O,r) es el conjunto de puntos P del plano tales que \\vert OP \\vert = r.",
+      "description": "Conjunto de los puntos de un plano situados a una distancia fija positiva de un punto llamado centro.",
+      "statement": "La circunferencia C(O,r), con r > 0, es el conjunto de puntos P del plano tales que d(O,P) = r.",
       "tags": [
         "geometria",
         "curvas"

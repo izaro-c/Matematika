@@ -16,6 +16,7 @@ import {
   createLine,
   createMidpoint,
   createNonReflexAngle,
+  createParallelMark,
   createParallelLine,
   createParametricCurve,
   createPerpendicularFoot,
@@ -35,6 +36,7 @@ import { DiagramInfoPanel, DiagramTitle } from '@/shared/ui/DiagramOverlay';
 import { renderKatexTextToHtml } from '@/shared/ui/KatexText';
 import { StepNavigator } from '@/shared/ui/StepNavigator';
 import { MathProviderBoundary, useMathStore } from '@/shared/lib/MathStoreContext';
+import { useDiagramStepSync } from '@/shared/lib/DiagramStepSyncContext';
 import { useDiagramTargetRegistry } from '@/shared/lib/DiagramTargetRegistryContext';
 import {
   DIAGRAM_RENDERER_ID,
@@ -159,7 +161,10 @@ function StepOverlayPanels({
   activeStepId?: string;
   variables: Record<string, number>;
 }) {
-  const storeStep = useMathStore(state => state.variables?.[`step:${spec.componentId}`]);
+  const rawStoreStep = useMathStore(state => state.variables?.[`step:${spec.componentId}`] ?? state.variables?.['step']);
+  const storeStep = Array.isArray(rawStoreStep)
+    ? (rawStoreStep.find(item => typeof item === 'string' && spec.steps.some(step => step.id === item)) ?? rawStoreStep[0])
+    : rawStoreStep;
   const stepId = activeStepId
     ?? ((typeof storeStep === 'string' ? storeStep.replace(`${spec.componentId}:`, '') : '') || spec.steps[0]?.id);
   const step = spec.steps.find(item => item.id === stepId);
@@ -204,12 +209,26 @@ function evaluatedValue(item: DiagramElement, elements: Record<string, any>, spe
 }
 
 function measurementText(item: DiagramElement, elements: Record<string, any>, spec: DiagramSpecV2): string {
-  const value = evaluatedValue(item, elements, spec);
-  if (value === undefined) return item.text || `${item.label}: valor no definido`;
+  const text = item.text || `${item.label}: {value}`;
+  const variables = liveVariables(elements, spec);
   const precision = item.properties?.precision ?? 2;
   const unit = item.properties?.unit ? ` ${item.properties.unit}` : '';
-  const content = `${value.toFixed(precision)}${unit}`;
-  return (item.text || `${item.label}: {value}`).split('{value}').join(content);
+
+  const regex = /\{([^{}]+)\}/g;
+  return text.replace(regex, (original, expr) => {
+    if (expr === 'value') {
+      const val = evaluatedValue(item, elements, spec);
+      if (val === undefined) return 'valor no definido';
+      return `${val.toFixed(precision)}${unit}`;
+    }
+    try {
+      const val = evaluateMathExpression(expr, variables);
+      return `${val.toFixed(precision)}${unit}`;
+    } catch (err) {
+      console.error("ERROR EVALUANDO EXPRESIÓN:", expr, err, "VARIABLES DISPONIBLES:", Object.keys(variables));
+      return original;
+    }
+  });
 }
 
 function headerReadingItems(spec: DiagramSpecV2): DiagramElement[] {
@@ -547,6 +566,13 @@ function createElement(
     { ...lineOptions, markHeight: item.style?.markHeight ?? 0.32 },
     theme,
   ) : null;
+  if (item.kind === 'parallelMark') return refs.length >= 2 ? createParallelMark(
+    board,
+    [refs[0], refs[1]],
+    item.properties?.markCount ?? 1,
+    { ...lineOptions, markHeight: item.style?.markHeight ?? 0.42 },
+    theme,
+  ) : null;
   if (item.kind === 'measureTicks') return refs.length >= 1 ? createTicks(
     board,
     [refs[0], tickDistance(item, elements, spec)],
@@ -579,7 +605,8 @@ function createElement(
   ) : null;
   const anchor = refs[0];
   const dynamicText = () => {
-    const body = reactiveText(item, elements, spec) ?? (item.kind === 'measurement' || item.kind === 'dimensionLine' || item.properties?.expression
+    const hasBraces = typeof item.text === 'string' && item.text.includes('{') && item.text.includes('}');
+    const body = reactiveText(item, elements, spec) ?? (item.kind === 'measurement' || item.properties?.expression || hasBraces
       ? measurementText(item, elements, spec)
       : item.text || item.label);
     return item.kind === 'infoPanel' && item.properties?.title
@@ -781,8 +808,14 @@ const DiagramRendererContent: React.FC<DiagramRendererProps> = ({
     localTargetHighlightRef.current = target;
     setVariable('highlight', target ? `${spec.componentId}:${target}` : null);
   }, [setVariable, spec.componentId]);
+
   const scopedStoreStep = useMathStore(state => state.variables?.[`step:${spec.componentId}`]);
+  const stepSync = useDiagramStepSync();
+  const synchronizedStepId = stepSync?.activeStepIndex == null
+    ? undefined
+    : spec.steps[stepSync.activeStepIndex]?.id;
   const effectiveStepId = activeStepId
+    ?? synchronizedStepId
     ?? ((typeof scopedStoreStep === 'string' ? scopedStoreStep.replace(`${spec.componentId}:`, '') : '') || spec.steps[0]?.id);
   const [liveSceneVariables, setLiveSceneVariables] = useState<Record<string, number>>(() => {
     try { return liveVariables({}, spec); } catch { return {}; }
@@ -1010,6 +1043,14 @@ const DiagramRendererContent: React.FC<DiagramRendererProps> = ({
               const gliderTarget = sceneItem.constraint === 'glider'
                 ? sceneItem.gliderTarget
                 : onConstraint?.refs[1];
+              const attractors = sceneItem.attractorIds?.map(id => elements[id]).filter(Boolean) ?? [];
+              const attractionOptions = attractors.length > 0 && !directInteractionLocked
+                ? {
+                  attractors,
+                  attractorDistance: sceneItem.attractorDistance ?? 0.4,
+                  snatchDistance: sceneItem.snatchDistance ?? 0.6,
+                }
+                : {};
               const item = sceneItem.constraint === 'derived' && sceneItem.xExpression && sceneItem.yExpression
                 ? createPoint(board, [
                   () => {
@@ -1054,6 +1095,7 @@ const DiagramRendererContent: React.FC<DiagramRendererProps> = ({
                   highlightStrokeColor: hoverColor,
                   label: pointLabelOptions,
                   layer: itemLayerNumber(spec, sceneItem),
+                  ...attractionOptions,
                   ...(sceneItem.snapToGrid && !directInteractionLocked ? {
                     snapToGrid: true,
                     snapSizeX: sceneItem.snapSize ?? 0.5,
@@ -1307,6 +1349,21 @@ const DiagramRendererContent: React.FC<DiagramRendererProps> = ({
             } else if (item.kind === 'text' || item.kind === 'label' || item.kind === 'formula' || item.kind === 'infoPanel' || item.kind === 'measurement') {
               const liftedIntoHeader = mode === 'runtime' && headerItemIds.has(item.id);
               element.setAttribute({ ...base, visible: base.visible && !liftedIntoHeader, color, opacity });
+              if (item.kind !== 'label') {
+                const hasBraces = typeof item.text === 'string' && item.text.includes('{') && item.text.includes('}');
+                const body = reactiveText(item, elements, spec) ?? (item.kind === 'measurement' || item.properties?.expression || hasBraces
+                  ? measurementText(item, elements, spec)
+                  : item.text || item.label);
+                const textContent = item.kind === 'infoPanel' && item.properties?.title
+                  ? `<strong>${renderKatexTextToHtml(item.properties.title)}</strong><br/>${renderKatexTextToHtml(body)}`
+                  : renderKatexTextToHtml(body);
+                if (element.__matematikaLastText !== textContent) {
+                  if (typeof element.setText === 'function') {
+                    element.setText(textContent);
+                  }
+                  element.__matematikaLastText = textContent;
+                }
+              }
             } else if (item.kind === 'circle') {
               element.setAttribute({
                 ...base,

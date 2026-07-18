@@ -63,7 +63,10 @@ describe('Phase 4 accessible interaction', () => {
     expect(screen.getByRole('button', { name: 'Pausar reproducción' }).getAttribute('aria-pressed')).toBe('true');
     act(() => { vi.advanceTimersByTime(310); });
     expect(screen.getByLabelText('paso activo').textContent).toBe('step2');
-    fireEvent.click(screen.getByRole('button', { name: 'Pausar reproducción' }));
+    act(() => { vi.advanceTimersByTime(310); });
+    expect(screen.getByLabelText('paso activo').textContent).toBe('step3');
+    act(() => { vi.advanceTimersByTime(310); });
+    expect(screen.getByRole('button', { name: 'Reproducir secuencia' })).toBeTruthy();
     fireEvent.click(screen.getByRole('button', { name: 'Reiniciar secuencia' }));
     expect(screen.getByLabelText('paso activo').textContent).toBe('step1');
   });

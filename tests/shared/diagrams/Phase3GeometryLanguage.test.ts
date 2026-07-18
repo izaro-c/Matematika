@@ -123,7 +123,7 @@ describe('Phase 3 geometry language', () => {
     const kinds = new Set(fixtures.flatMap(fixture => fixture.elements.map(element => element.kind)));
     [
       'segment', 'line', 'ray', 'polygon', 'circle', 'arc', 'functionCurve', 'parametricCurve',
-      'poincareGeodesic', 'poincareArc', 'angle', 'nonReflexAngle', 'congruenceMark', 'measureTicks', 'perpendicularMark',
+      'poincareGeodesic', 'poincareArc', 'angle', 'nonReflexAngle', 'congruenceMark', 'parallelMark', 'measureTicks', 'perpendicularMark',
       'dimensionLine', 'measurement', 'grid', 'areaDecomposition', 'label', 'formula', 'infoPanel',
     ].forEach(kind => expect(kinds.has(kind)).toBe(true));
   });

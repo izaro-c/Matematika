@@ -1,98 +1,175 @@
-import { MathBoard } from '@/shared/diagrams/core/MathBoard';
-import {
-  createPoint, createLine, createSegment
-} from '@/shared/diagrams/core/MathFactory';
+import { createDiagramSpec, DiagramRenderer } from '@/shared/diagrams/public';
 
-
-
-
-
-
-
-export const Segmento = () => {
-
-
-
-
-
-
-
-
-  const onInit = (board: any, els: any, theme: any) => {
-      void board; void els; void theme;
-      const pA = createPoint(board, [-2, 0.5], {
-      name: 'A',
-      size: 6,
-      fillColor: theme.terracota,
-      strokeColor: theme.terracota,
-      showInfobox: false,
-      fixed: false,
-    }, theme);
-
-    const pB = createPoint(board, [2, -0.3], {
-      name: 'B',
-      size: 6,
-      fillColor: theme.terracota,
-      strokeColor: theme.terracota,
-      showInfobox: false,
-      fixed: false,
-    }, theme);
-
-    const lineL = createLine(board, [pA, pB], {
-      strokeColor: theme.pizarra,
-      strokeWidth: 1,
-      dash: 2,
-      name: 'l',
-      withLabel: true,
-      label: { position: 'rt', offset: [10, 10] }
-    }, theme);
-
-    const seg = createSegment(board, [pA, pB], {
-      strokeColor: theme.carbon,
-      strokeWidth: 3,
-    }, theme);
-
-      // Registrar elementos para interactividad y auditoría
-      els.pA = pA;
-        els.pB = pB;
-        els.seg = seg;
-        els.lineL = lineL;
-    };;
-
-  const onUpdate = (board: any, els: any, theme: any, isStep: any, isHL: any) => {
-      const isHighlight = isHL;
-      void board; void els; void theme; void isStep; void isHL; void isHighlight;
-      const { pA, pB, seg, lineL } = els;
-      pA.setAttribute({ size: 6, fillColor: theme.terracota, strokeColor: theme.terracota });
-    pB.setAttribute({ size: 6, fillColor: theme.terracota, strokeColor: theme.terracota });
-    seg.setAttribute({ strokeColor: theme.carbon, strokeWidth: 3 });
-    lineL.setAttribute({ strokeColor: theme.pizarra, strokeWidth: 1, dash: 2 });
-
-    if (isHL('pA')) {
-      pA.setAttribute({ size: 10, fillColor: theme.ocre, strokeColor: theme.ocre });
+/* @matematika-diagram-spec:start */
+export const SegmentoSpec = createDiagramSpec(
+{
+  "version": 2,
+  "renderer": "matematika-diagram-renderer-v2",
+  "title": "Segmento",
+  "componentId": "segmento",
+  "category": "Definiciones",
+  "mode": "simulation",
+  "axis": false,
+  "grid": false,
+  "viewport": {
+    "bounds": [
+      -5,
+      4,
+      5,
+      -4
+    ],
+    "home": [
+      -5,
+      4,
+      5,
+      -4
+    ],
+    "minZoom": 0.55,
+    "maxZoom": 5,
+    "padding": 0.16
+  },
+  "layers": [
+    {
+      "id": "geometry",
+      "label": "Geometría",
+      "order": 0,
+      "visible": true,
+      "locked": false
+    },
+    {
+      "id": "annotations",
+      "label": "Lecturas y controles",
+      "order": 1,
+      "visible": true,
+      "locked": false
     }
-    if (isHL('pB')) {
-      pB.setAttribute({ size: 10, fillColor: theme.ocre, strokeColor: theme.ocre });
+  ],
+  "groups": [],
+  "points": [
+    {
+      "id": "A",
+      "label": "A",
+      "color": "musgo",
+      "layerId": "geometry",
+      "order": 740,
+      "visible": true,
+      "locked": false,
+      "groupIds": [],
+      "selection": {
+        "selectable": true,
+        "ariaLabel": "Mover el punto A",
+        "role": "primary"
+      },
+      "target": true,
+      "targetId": "pA",
+      "style": {
+        "pointSize": 7,
+        "highlightPointSize": 10,
+        "preserveColorOnHighlight": true
+      },
+      "x": -2.8,
+      "y": 0,
+      "showLabel": true,
+      "fixed": false,
+      "constraint": "free",
+      "snapToGrid": true,
+      "snapSize": 0.25
+    },
+    {
+      "id": "B",
+      "label": "B",
+      "color": "musgo",
+      "layerId": "geometry",
+      "order": 750,
+      "visible": true,
+      "locked": false,
+      "groupIds": [],
+      "selection": {
+        "selectable": true,
+        "ariaLabel": "Mover el punto B",
+        "role": "primary"
+      },
+      "target": true,
+      "targetId": "pB",
+      "style": {
+        "pointSize": 7,
+        "highlightPointSize": 10,
+        "preserveColorOnHighlight": true
+      },
+      "x": 2.8,
+      "y": 0.8,
+      "showLabel": true,
+      "fixed": false,
+      "constraint": "free",
+      "snapToGrid": true,
+      "snapSize": 0.25
     }
-    if (isHL('segmentAB')) {
-      seg.setAttribute({ strokeColor: theme.terracota, strokeWidth: 5 });
+  ],
+  "elements": [
+    {
+      "id": "carrier",
+      "label": "Recta soporte l",
+      "color": "carbon",
+      "layerId": "geometry",
+      "order": 760,
+      "visible": true,
+      "locked": false,
+      "groupIds": [],
+      "selection": {
+        "selectable": true,
+        "ariaLabel": "Recta soporte l",
+        "role": "secondary"
+      },
+      "target": true,
+      "targetId": "lineL",
+      "style": {
+        "strokeWidth": 2.4,
+        "strokeOpacity": 0.45,
+        "highlightStrokeWidth": 3,
+        "preserveColorOnHighlight": true
+      },
+      "kind": "line",
+      "refs": [
+        "A",
+        "B"
+      ],
+      "dashed": true
+    },
+    {
+      "id": "segment",
+      "label": "Segmento AB",
+      "color": "musgo",
+      "layerId": "geometry",
+      "order": 770,
+      "visible": true,
+      "locked": false,
+      "groupIds": [],
+      "selection": {
+        "selectable": true,
+        "ariaLabel": "Segmento AB",
+        "role": "secondary"
+      },
+      "target": true,
+      "targetId": "segmentAB",
+      "style": {
+        "strokeWidth": 3,
+        "highlightStrokeWidth": 3,
+        "preserveColorOnHighlight": true
+      },
+      "kind": "segment",
+      "refs": [
+        "A",
+        "B"
+      ]
     }
-    if (isHL('lineL')) {
-      lineL.setAttribute({ strokeColor: theme.terracota, strokeWidth: 2, dash: 0 });
-    }
-    };;
+  ],
+  "sliders": [],
+  "steps": [],
+  "dependencies": [],
+  "note": "Mueve A o B",
+  "extensions": {}
+}
+);
+/* @matematika-diagram-spec:end */
 
-  return (
-    <MathBoard
-      boundingbox={[-4, 3, 4, -3]}
-      axis={false}
-      grid={false}
-      onInit={onInit}
-      onUpdate={onUpdate}
-    >
-      <div className="absolute top-2 left-3 z-10 text-xs font-serif italic text-pizarra/50">
-        Arrastra los extremos <span className="font-bold not-italic text-terracota">A</span>, <span className="font-bold not-italic text-terracota">B</span>
-      </div>
-    </MathBoard>
-  );
-};
+export const Segmento = () => <DiagramRenderer spec={SegmentoSpec} />;

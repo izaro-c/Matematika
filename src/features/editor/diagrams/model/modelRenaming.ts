@@ -49,6 +49,7 @@ export function renameElement(model: VisualDiagramModel, oldId: string, newIdRaw
     points: model.points.map(item => ({
       ...(item.gliderTarget === oldId ? { ...item, gliderTarget: newId } : item),
       dependencies: item.dependencies?.map(id => id === oldId ? newId : id),
+      attractorIds: item.attractorIds?.map(id => id === oldId ? newId : id),
     })),
     elements: model.elements.map(item => ({
       ...(item.id === oldId ? { ...item, id: newId } : item),

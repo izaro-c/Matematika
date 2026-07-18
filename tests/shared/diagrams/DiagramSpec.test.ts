@@ -179,6 +179,25 @@ describe('DiagramSpec v2 schema and migrations', () => {
     if (parsed.success) expect(parsed.data.points[0].showLabel).toBe(false);
   });
 
+  it('validates editable point attractors with an explicit construction dependency', () => {
+    const candidate = structuredClone(v2Fixture) as unknown as DiagramSpecV2;
+    const point = candidate.points.find(item => item.id === 'pC')!;
+    point.attractorIds = ['segAB'];
+    point.attractorDistance = 0.4;
+    point.snatchDistance = 0.6;
+    candidate.dependencies = [{ sourceId: 'segAB', targetId: 'pC', relation: 'constraint' }];
+
+    const parsed = parseDiagramSpecV2(candidate);
+
+    expect(parsed.success).toBe(true);
+    if (!parsed.success) return;
+    expect(parsed.data.points.find(item => item.id === 'pC')).toMatchObject({
+      attractorIds: ['segAB'],
+      attractorDistance: 0.4,
+      snatchDistance: 0.6,
+    });
+  });
+
   it('requires normalized coordinates for viewport-relative information panels', () => {
     const candidate = structuredClone(v2Fixture);
     candidate.elements.push({
