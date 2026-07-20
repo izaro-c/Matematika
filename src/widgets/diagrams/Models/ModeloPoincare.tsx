@@ -168,7 +168,8 @@ export const ModeloPoincareSpec = createDiagramSpec(
         "selectable": true,
         "role": "primary"
       },
-      "target": false,
+      "target": true,
+      "targetId": "P",
       "style": {
         "pointSize": 6,
         "highlightPointSize": 8,
@@ -497,7 +498,8 @@ export const ModeloPoincareSpec = createDiagramSpec(
         "selectable": true,
         "role": "secondary"
       },
-      "target": false,
+      "target": true,
+      "targetId": "frontera",
       "style": {
         "strokeWidth": 2.5,
         "fillOpacity": 0.04,
@@ -550,7 +552,8 @@ export const ModeloPoincareSpec = createDiagramSpec(
         "selectable": true,
         "role": "secondary"
       },
-      "target": false,
+      "target": true,
+      "targetId": "limite1",
       "style": {
         "strokeWidth": 2.5,
         "highlightStrokeWidth": 4,
@@ -606,7 +609,8 @@ export const ModeloPoincareSpec = createDiagramSpec(
         "selectable": true,
         "role": "secondary"
       },
-      "target": false,
+      "target": true,
+      "targetId": "ultra1",
       "style": {
         "strokeWidth": 2,
         "strokeOpacity": 0.9,

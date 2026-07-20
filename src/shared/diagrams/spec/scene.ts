@@ -1,6 +1,7 @@
 import type {
   DiagramBounds,
   DiagramConstraint,
+  DiagramDependency,
   DiagramElement,
   DiagramPoint,
   DiagramSceneItem,
@@ -8,7 +9,7 @@ import type {
   DiagramSpecV2,
   DiagramStepOverlay,
 } from './types';
-import { evaluateMathExpression } from './expressions';
+import { evaluateMathExpression, extractMathExpressionIdentifiers } from './expressions';
 
 export interface DiagramDependencyEdge {
   sourceId: string;
@@ -34,6 +35,51 @@ export interface PlannedSceneItem {
   stepValue?: number;
   layerOrder: number;
   visualOrder: number;
+}
+
+function expressionUsesSource(source: string | undefined, sourceId: string): boolean {
+  if (!source) return false;
+  try {
+    return extractMathExpressionIdentifiers(source)
+      .some(identifier => identifier.split('.')[0] === sourceId);
+  } catch {
+    return false;
+  }
+}
+
+/**
+ * Distingue dependencias que construyen valores de las reactivas que solo
+ * afectan a presentación después de crear la escena. En particular,
+ * visibleWhen y las reglas de texto no introducen ciclos geométricos.
+ */
+export function dependencyDeterminesConstructionOrder(
+  spec: DiagramSpecV2,
+  dependency: DiagramDependency,
+): boolean {
+  if (dependency.relation === 'construction') return true;
+  const targetPoint = spec.points.find(point => point.id === dependency.targetId);
+  if (dependency.relation === 'constraint') {
+    return !targetPoint?.attractorIds?.includes(dependency.sourceId);
+  }
+  if (targetPoint) {
+    return expressionUsesSource(targetPoint.xExpression, dependency.sourceId)
+      || expressionUsesSource(targetPoint.yExpression, dependency.sourceId);
+  }
+  const targetSlider = spec.sliders.find(slider => slider.id === dependency.targetId);
+  if (targetSlider) return expressionUsesSource(targetSlider.maxExpression, dependency.sourceId);
+  const targetElement = spec.elements.find(element => element.id === dependency.targetId);
+  if (!targetElement) return false;
+  if (targetElement.kind === 'functionCurve') {
+    return expressionUsesSource(targetElement.properties?.expression, dependency.sourceId);
+  }
+  if (targetElement.kind === 'parametricCurve') {
+    return expressionUsesSource(targetElement.properties?.xExpression, dependency.sourceId)
+      || expressionUsesSource(targetElement.properties?.yExpression, dependency.sourceId);
+  }
+  if (targetElement.kind === 'measureTicks') {
+    return expressionUsesSource(targetElement.properties?.tickDistanceExpression, dependency.sourceId);
+  }
+  return false;
 }
 
 export function evaluateStepOverlayContent(overlay: DiagramStepOverlay, variables: Record<string, number>): string {
@@ -169,8 +215,47 @@ export function expressionVariables(spec: DiagramSpecV2): Record<string, number>
       const b = resolvePointCoordinates(spec, element.refs[1]);
       if (a && b) variables[`${element.id}.length`] = Math.hypot(b.x - a.x, b.y - a.y);
     }
+    if ((element.kind === 'angle' || element.kind === 'nonReflexAngle') && element.refs.length >= 3) {
+      const first = resolvePointCoordinates(spec, element.refs[0]);
+      const vertex = resolvePointCoordinates(spec, element.refs[1]);
+      const second = resolvePointCoordinates(spec, element.refs[2]);
+      const radians = first && vertex && second
+        ? angleMeasureRadians(element.kind, first, vertex, second)
+        : undefined;
+      if (radians !== undefined) {
+        variables[`${element.id}.value`] = radians;
+        variables[`${element.id}.radians`] = radians;
+        variables[`${element.id}.degrees`] = radians * 180 / Math.PI;
+      }
+    }
   });
   return variables;
+}
+
+/**
+ * Mide los dos objetos angulares editables con la misma convención que el
+ * renderer: el ángulo orientado pertenece a [0, 2π) y el no reflejo a [0, π].
+ */
+export function angleMeasureRadians(
+  kind: 'angle' | 'nonReflexAngle',
+  first: { x: number; y: number },
+  vertex: { x: number; y: number },
+  second: { x: number; y: number },
+): number | undefined {
+  const firstDx = first.x - vertex.x;
+  const firstDy = first.y - vertex.y;
+  const secondDx = second.x - vertex.x;
+  const secondDy = second.y - vertex.y;
+  const firstLength = Math.hypot(firstDx, firstDy);
+  const secondLength = Math.hypot(secondDx, secondDy);
+  if (firstLength < 1e-10 || secondLength < 1e-10) return undefined;
+  const dot = firstDx * secondDx + firstDy * secondDy;
+  if (kind === 'nonReflexAngle') {
+    const cosine = Math.max(-1, Math.min(1, dot / (firstLength * secondLength)));
+    return Math.acos(cosine);
+  }
+  const oriented = Math.atan2(firstDx * secondDy - firstDy * secondDx, dot);
+  return oriented < 0 ? oriented + Math.PI * 2 : oriented;
 }
 
 export function supportElements(spec: DiagramSpecV2): DiagramElement[] {
@@ -298,7 +383,10 @@ export function createSceneConstructionPlan(spec: DiagramSpecV2): PlannedSceneIt
   while (pending.length > 0) {
     const ready = pending.filter(entry => {
       const explicitSources = (spec.dependencies ?? [])
-        .filter(dependency => dependency.targetId === entry.item.id)
+        .filter(dependency => (
+          dependency.targetId === entry.item.id
+          && dependencyDeterminesConstructionOrder(spec, dependency)
+        ))
         .map(dependency => dependency.sourceId);
       return [...creationDependencies(entry.item), ...explicitSources].every(id => !itemIds.has(id) || created.has(id));
     });
@@ -590,17 +678,8 @@ function angleMagnitude(spec: DiagramSpecV2, angle: DiagramElement): number | un
   const vertex = resolvePointCoordinates(spec, angle.refs[1]);
   const second = resolvePointCoordinates(spec, angle.refs[2]);
   if (!first || !vertex || !second) return undefined;
-  const firstDx = first.x - vertex.x;
-  const firstDy = first.y - vertex.y;
-  const secondDx = second.x - vertex.x;
-  const secondDy = second.y - vertex.y;
-  const firstLength = Math.hypot(firstDx, firstDy);
-  const secondLength = Math.hypot(secondDx, secondDy);
-  if (firstLength < 1e-10 || secondLength < 1e-10) return undefined;
-  const cosine = Math.max(-1, Math.min(1, (firstDx * secondDx + firstDy * secondDy) / (firstLength * secondLength)));
-  if (angle.kind === 'nonReflexAngle') return Math.acos(cosine);
-  const oriented = Math.atan2(firstDx * secondDy - firstDy * secondDx, firstDx * secondDx + firstDy * secondDy);
-  return oriented < 0 ? oriented + Math.PI * 2 : oriented;
+  if (angle.kind !== 'angle' && angle.kind !== 'nonReflexAngle') return undefined;
+  return angleMeasureRadians(angle.kind, first, vertex, second);
 }
 
 function rotateUnit(vector: { x: number; y: number }, angle: number): { x: number; y: number } {

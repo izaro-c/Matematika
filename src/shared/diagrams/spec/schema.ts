@@ -5,6 +5,7 @@ import {
   type DiagramSpecV2,
 } from './types';
 import { DiagramExpressionError, extractMathExpressionIdentifiers, parseMathExpression } from './expressions';
+import { dependencyDeterminesConstructionOrder } from './scene';
 
 const idSchema = z.string().min(1).regex(/^[A-Za-z][A-Za-z0-9_-]*$/, 'Debe empezar por una letra y usar solo letras, números, _ o -.');
 const finiteNumber = z.number().finite();
@@ -36,6 +37,26 @@ const expressionSchema = z.string().min(1).superRefine((source, context) => {
   }
 });
 
+const infoPanelRuleSchema = z.object({
+  when: expressionSchema,
+  text: z.string(),
+  expression: expressionSchema.optional(),
+  unit: z.string().max(32).optional(),
+  precision: z.number().int().min(0).max(12).optional(),
+  color: diagramColorTokenSchema.optional(),
+}).strict();
+
+const infoPanelBlockSchema = z.object({
+  id: idSchema,
+  title: z.string().min(1).optional(),
+  text: z.string(),
+  expression: expressionSchema.optional(),
+  unit: z.string().max(32).optional(),
+  precision: z.number().int().min(0).max(12).optional(),
+  color: diagramColorTokenSchema.optional(),
+  rules: z.array(infoPanelRuleSchema).max(12).optional(),
+}).strict();
+
 const elementPropertiesSchema = z.object({
   expression: expressionSchema.optional(),
   xExpression: expressionSchema.optional(),
@@ -63,10 +84,17 @@ const elementPropertiesSchema = z.object({
   restrictToSupports: z.boolean().optional(),
   visibleWhen: expressionSchema.optional(),
   textRules: z.array(z.object({ when: expressionSchema, text: z.string() }).strict()).max(12).optional(),
+  infoPanelBlocks: z.array(infoPanelBlockSchema).min(1).max(12).optional(),
+  infoPanelLayout: z.enum(['stack', 'columns']).optional(),
 }).strict().superRefine((properties, context) => {
   if (properties.domain && properties.domain[0] >= properties.domain[1]) {
     context.addIssue({ code: 'custom', message: 'El inicio del dominio debe ser menor que el final.', path: ['domain'] });
   }
+  const blockIds = new Set<string>();
+  properties.infoPanelBlocks?.forEach((block, index) => {
+    if (blockIds.has(block.id)) context.addIssue({ code: 'custom', message: `El bloque ${block.id} está duplicado.`, path: ['infoPanelBlocks', index, 'id'] });
+    blockIds.add(block.id);
+  });
 });
 
 const selectionSchema = z.object({
@@ -137,6 +165,7 @@ const elementSchema = z.object({
   dashed: z.boolean().optional(),
   text: z.string().optional(),
   properties: elementPropertiesSchema.optional(),
+  showLabel: z.boolean().optional(),
 }).strict();
 
 const constraintSchema = z.object({
@@ -370,6 +399,13 @@ export const diagramSpecV2Schema = z.object({
     if (viewportAnchoredPanel && !element.properties?.viewportPosition) {
       context.addIssue({ code: 'custom', message: `${element.id} necesita properties.viewportPosition.`, path: ['elements', index, 'properties', 'viewportPosition'] });
     }
+    if (element.kind !== 'infoPanel' && (element.properties?.infoPanelBlocks || element.properties?.infoPanelLayout)) {
+      context.addIssue({
+        code: 'custom',
+        message: `${element.id} solo puede usar bloques y layout de panel si es un panel informativo.`,
+        path: ['elements', index, 'properties'],
+      });
+    }
   });
   spec.points.forEach((point, index) => {
     if (point.fixed && point.constraint !== 'fixed' && point.constraint !== 'derived') {
@@ -399,14 +435,20 @@ export const diagramSpecV2Schema = z.object({
     }
     point.attractorIds?.forEach((attractorId, attractorIndex) => {
       const support = spec.elements.find(element => element.id === attractorId);
-      if (!support || !['line', 'ray', 'segment', 'circle', 'functionCurve', 'parametricCurve', 'perpendicular', 'parallel', 'angleBisector'].includes(support.kind)) {
+      const attractorPoint = spec.points.find(candidate => candidate.id === attractorId);
+      if ((!support || !['line', 'ray', 'segment', 'circle', 'functionCurve', 'parametricCurve', 'perpendicular', 'parallel', 'angleBisector', 'intersection', 'midpoint', 'perpendicularFoot'].includes(support.kind)) && !attractorPoint) {
         context.addIssue({
           code: 'custom',
-          message: `${point.id} necesita que ${attractorId} sea un soporte geométrico apto para atracción.`,
+          message: `${point.id} necesita que ${attractorId} sea un objeto geométrico apto para atracción.`,
           path: ['points', index, 'attractorIds', attractorIndex],
         });
       }
-      if (!(spec.dependencies ?? []).some(dependency => dependency.sourceId === attractorId && dependency.targetId === point.id)) {
+      if (!(spec.dependencies ?? []).some(dependency => (
+        dependency.sourceId === attractorId
+        && dependency.targetId === point.id
+        && dependency.relation === 'constraint'
+        && !dependency.constraintId
+      ))) {
         context.addIssue({
           code: 'custom',
           message: `${point.id} necesita una dependencia explícita desde su atractor ${attractorId}.`,
@@ -457,6 +499,13 @@ export const diagramSpecV2Schema = z.object({
     if (properties.tickDistanceExpression) expressionEntries.push({ source: properties.tickDistanceExpression, path: ['elements', index, 'properties', 'tickDistanceExpression'], targetId: element.id });
     if (properties.visibleWhen) expressionEntries.push({ source: properties.visibleWhen, path: ['elements', index, 'properties', 'visibleWhen'], targetId: element.id });
     properties.textRules?.forEach((rule, ruleIndex) => expressionEntries.push({ source: rule.when, path: ['elements', index, 'properties', 'textRules', ruleIndex, 'when'], targetId: element.id }));
+    properties.infoPanelBlocks?.forEach((block, blockIndex) => {
+      if (block.expression) expressionEntries.push({ source: block.expression, path: ['elements', index, 'properties', 'infoPanelBlocks', blockIndex, 'expression'], targetId: element.id });
+      block.rules?.forEach((rule, ruleIndex) => {
+        expressionEntries.push({ source: rule.when, path: ['elements', index, 'properties', 'infoPanelBlocks', blockIndex, 'rules', ruleIndex, 'when'], targetId: element.id });
+        if (rule.expression) expressionEntries.push({ source: rule.expression, path: ['elements', index, 'properties', 'infoPanelBlocks', blockIndex, 'rules', ruleIndex, 'expression'], targetId: element.id });
+      });
+    });
   });
   spec.sliders.forEach((slider, index) => {
     if (slider.maxExpression) expressionEntries.push({ source: slider.maxExpression, path: ['sliders', index, 'maxExpression'], targetId: slider.id });
@@ -600,8 +649,27 @@ export const diagramSpecV2Schema = z.object({
   ]);
   (spec.dependencies ?? []).forEach(dependency => {
     if (!dependencyMap.has(dependency.targetId)) return;
+    if (!dependencyDeterminesConstructionOrder(spec, dependency)) return;
     dependencyMap.set(dependency.targetId, [...(dependencyMap.get(dependency.targetId) ?? []), dependency.sourceId]);
   });
+  const hasDependencyPath = (id: string, dependencyId: string, seen = new Set<string>()): boolean => {
+    if (id === dependencyId) return true;
+    if (seen.has(id)) return false;
+    seen.add(id);
+    return (dependencyMap.get(id) ?? []).some(dependency => (
+      dependency === dependencyId
+      || (dependencyMap.has(dependency) && hasDependencyPath(dependency, dependencyId, seen))
+    ));
+  };
+  spec.points.forEach((point, pointIndex) => point.attractorIds?.forEach((attractorId, attractorIndex) => {
+    if (hasDependencyPath(attractorId, point.id)) {
+      context.addIssue({
+        code: 'custom',
+        message: `${point.id} no puede usar ${attractorId} como atractor porque el soporte depende del propio punto.`,
+        path: ['points', pointIndex, 'attractorIds', attractorIndex],
+      });
+    }
+  }));
   const visited = new Set<string>();
   const visiting = new Set<string>();
   const visit = (id: string): boolean => {

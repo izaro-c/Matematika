@@ -10,6 +10,7 @@ import annotationsFixture from '../../fixtures/diagrams/phase3-annotations-layer
 import {
   buildDependencyGraph,
   evaluateMathExpression,
+  expressionVariables,
   extractMathExpressionIdentifiers,
   parseDiagramSpecV2,
   parseMathExpression,
@@ -135,6 +136,30 @@ describe('Phase 3 geometry language', () => {
     expect(() => parseMathExpression('globalThis.alert(1)')).toThrow(/no está permitida/);
     expect(() => parseMathExpression('(() => 42)()')).toThrow(/no está permitido|esperaba/);
     expect(() => parseMathExpression('a; process.exit()')).toThrow(/no está permitido/);
+  });
+
+  it('validates condition arity instead of silently ignoring arguments', () => {
+    expect(evaluateMathExpression('eq(2,2,2)')).toBe(1);
+    expect(evaluateMathExpression('eq(2,2,3)')).toBe(0);
+    expect(() => parseMathExpression('approx(90,90,0,1)')).toThrow(/entre 2 y 3 argumentos/);
+    expect(() => parseMathExpression('gt(2,1,0)')).toThrow(/necesita 2 argumentos/);
+  });
+
+  it('exports radians and degrees for oriented and non-reflex angles', () => {
+    const parsed = parseDiagramSpecV2(marksFixture);
+    expect(parsed.success).toBe(true);
+    if (!parsed.success) return;
+    const variables = expressionVariables(parsed.data);
+
+    expect(variables['angleAVB.radians']).toBeCloseTo(3 * Math.PI / 2);
+    expect(variables['angleAVB.degrees']).toBeCloseTo(270);
+    expect(variables['nonReflexAngleAVB.radians']).toBeCloseTo(Math.PI / 2);
+    expect(variables['nonReflexAngleAVB.degrees']).toBeCloseTo(90);
+    expect(variables['angleAVB.value']).toBe(variables['angleAVB.radians']);
+    expect(evaluateMathExpression(
+      'angleAVB.degrees + nonReflexAngleAVB.radians',
+      variables,
+    )).toBeCloseTo(270 + Math.PI / 2);
   });
 
   it('resolves derived points and enforces explicit point constraints', () => {
@@ -286,9 +311,25 @@ describe('Phase 3 geometry language', () => {
     if (!unsafeResult.success) expect(unsafeResult.error.message).toContain('elements.0.properties.expression');
 
     const cyclic = structuredClone(pointsFixture);
+    cyclic.points[0].fixed = true;
+    cyclic.points[0].constraint = 'derived';
+    cyclic.points[0].dependencies = ['pB'];
+    cyclic.points[0].xExpression = 'pB.x - 2';
+    cyclic.points[0].yExpression = 'pB.y - 1';
     cyclic.dependencies.push({ sourceId: 'pB', targetId: 'pA', relation: 'expression' });
     const cyclicResult = parseDiagramSpecV2(cyclic);
     expect(cyclicResult.success).toBe(false);
     if (!cyclicResult.success) expect(cyclicResult.error.message).toContain('forma un ciclo');
+  });
+
+  it('does not treat angular visibility as a geometric dependency cycle', () => {
+    const model = structuredClone(marksFixture);
+    const angle = model.elements.find(element => element.id === 'angleAVB')!;
+    angle.properties = { visibleWhen: 'gt(angleAVB.degrees, 180)' };
+    model.dependencies.push({ sourceId: angle.id, targetId: angle.id, relation: 'expression' });
+
+    const parsed = parseDiagramSpecV2(model);
+
+    expect(parsed.success).toBe(true);
   });
 });

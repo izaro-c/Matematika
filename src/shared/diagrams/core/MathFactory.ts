@@ -316,6 +316,7 @@ export function createDimensionLine(
   theme: ThemeColors,
 ) {
   const [a, b] = points;
+  const { fontSize, ...lineOptions } = options;
   const shifted = (point: any, axis: 'x' | 'y') => () => {
     const dx = b.X() - a.X();
     const dy = b.Y() - a.Y();
@@ -324,14 +325,14 @@ export function createDimensionLine(
   };
   const a2 = board.create('point', [shifted(a, 'x'), shifted(a, 'y')], { visible: false });
   const b2 = board.create('point', [shifted(b, 'x'), shifted(b, 'y')], { visible: false });
-  const line = createSegment(board, [a2, b2], { strokeColor: theme.pizarra, strokeWidth: 1.5, ...options }, theme);
-  const highlightOptOut = options.highlight === false ? { highlight: false } : {};
+  const line = createSegment(board, [a2, b2], { strokeColor: theme.pizarra, strokeWidth: 1.5, ...lineOptions }, theme);
+  const highlightOptOut = lineOptions.highlight === false ? { highlight: false } : {};
   const ticks = createCongruenceMark(board, [a2, b2], 1, { strokeColor: theme.pizarra, strokeWidth: 1.5, ...highlightOptOut }, theme);
   const text = createText(board, [
     () => (a2.X() + b2.X()) / 2,
     () => (a2.Y() + b2.Y()) / 2 + 0.18,
     label,
-  ], { color: theme.pizarra, ...highlightOptOut }, theme);
+  ], { color: theme.pizarra, ...(fontSize !== undefined ? { fontSize } : {}), ...highlightOptOut }, theme);
   return createComposite([line, ticks, text]);
 }
 

@@ -52,6 +52,32 @@ export type DiagramElementKind =
 export type DiagramPointConstraint = 'free' | 'fixed' | 'horizontal' | 'vertical' | 'glider' | 'derived' | 'constrained';
 export type DiagramMode = 'simulation' | 'diagram' | 'inline';
 
+export interface DiagramTextRule {
+  when: string;
+  text: string;
+}
+
+export interface DiagramInfoPanelRule extends DiagramTextRule {
+  /** Cálculo alternativo usado cuando esta variante es la primera que se cumple. */
+  expression?: string;
+  unit?: string;
+  precision?: number;
+  color?: DiagramColorToken;
+}
+
+export interface DiagramInfoPanelBlock {
+  /** Identificador estable y local al panel; permite reordenar sin perder la edición. */
+  id: string;
+  title?: string;
+  text: string;
+  expression?: string;
+  unit?: string;
+  precision?: number;
+  color?: DiagramColorToken;
+  /** Se evalúan en orden y la primera condición verdadera sustituye el contenido base. */
+  rules?: DiagramInfoPanelRule[];
+}
+
 export interface DiagramElementProperties {
   expression?: string;
   xExpression?: string;
@@ -82,7 +108,11 @@ export interface DiagramElementProperties {
   /** Oculta la intersección cuando cae fuera de un segmento o semirrecta referenciado. */
   restrictToSupports?: boolean;
   visibleWhen?: string;
-  textRules?: Array<{ when: string; text: string }>;
+  textRules?: DiagramTextRule[];
+  /** Bloques reactivos independientes dentro de un único panel informativo. */
+  infoPanelBlocks?: DiagramInfoPanelBlock[];
+  /** Una columna prioriza lectura secuencial; dos columnas compactan paneles anchos. */
+  infoPanelLayout?: 'stack' | 'columns';
 }
 
 export type DiagramConstraintKind =
@@ -174,7 +204,7 @@ export interface DiagramSceneItemBase {
 export interface DiagramPoint extends DiagramSceneItemBase {
   x: number;
   y: number;
-  /** Conserva el nombre semántico del punto, pero permite ocultar solo su etiqueta nativa. */
+  /** Conserva el nombre semántico del punto, pero permite ocultar su etiqueta nativa. */
   showLabel?: boolean;
   fixed: boolean;
   constraint: DiagramPointConstraint;
@@ -187,11 +217,11 @@ export interface DiagramPoint extends DiagramSceneItemBase {
   snapToGrid?: boolean;
   /** Tamaño de celda de la cuadrícula de ajuste, en unidades del sistema de coordenadas. Por defecto 0.5. */
   snapSize?: number;
-  /** Soportes geométricos que atraen suavemente al punto durante el arrastre. */
+  /** Objetos geométricos ordenados que atraen temporalmente al punto durante su arrastre. */
   attractorIds?: string[];
   /** Distancia, en unidades del tablero, a partir de la que comienza la atracción. */
   attractorDistance?: number;
-  /** Distancia de captura firme sobre un soporte atractor. */
+  /** Distancia necesaria para separarse del atractor durante el mismo arrastre. */
   snatchDistance?: number;
 }
 
@@ -201,6 +231,8 @@ export interface DiagramElement extends DiagramSceneItemBase {
   dashed?: boolean;
   text?: string;
   properties?: DiagramElementProperties;
+  /** Permite ocultar la etiqueta nativa sin eliminar el nombre semántico del elemento. */
+  showLabel?: boolean;
 }
 
 export interface DiagramSlider extends DiagramSceneItemBase {

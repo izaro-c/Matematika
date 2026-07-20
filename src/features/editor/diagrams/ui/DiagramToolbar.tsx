@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react';
 import type { VisualDiagramModel, CanvasTool } from '../model/types';
-import { KIND_LABELS, refsNeededForTool, toolReferenceCandidates } from '../model/commands';
+import { KIND_LABELS, refsNeededForTool, toolReferenceCandidates, toolReferenceSequenceDescription } from '../model/commands';
 
 const TOOL_GROUPS: Array<{ label: string; description: string; tools: CanvasTool[] }> = [
   { label: 'Geometría básica', description: 'Objetos definidos por puntos.', tools: ['segment', 'line', 'ray', 'polygon', 'circle', 'arc'] },
@@ -27,7 +27,7 @@ function toolInstruction(tool: CanvasTool): string {
   if (tool === 'angle' || tool === 'nonReflexAngle' || tool === 'rightAngle' || tool === 'perpendicularMark' || tool === 'angleBisector') {
     return 'Elija un punto del primer lado, el vértice y un punto del segundo lado, en ese orden.';
   }
-  return `Después se eligen ${required} ${required === 1 ? 'punto' : 'puntos'} en el lienzo.`;
+  return toolReferenceSequenceDescription(tool);
 }
 
 interface DiagramToolbarProps {
@@ -40,7 +40,10 @@ interface DiagramToolbarProps {
   onAddSlider: () => void;
   onAddGliderPoint: () => void;
   onAddStep: () => void;
+  onAddAllLabels?: () => void;
+  onRemoveAllLabels?: () => void;
   onResolveDivergence: (authority: 'visual' | 'source') => void;
+  guidedConstructions?: React.ReactNode;
 }
 
 type OpenMenu = 'objects' | 'view' | 'more' | null;
@@ -55,9 +58,14 @@ export const DiagramToolbar: React.FC<DiagramToolbarProps> = ({
   onAddSlider,
   onAddGliderPoint,
   onAddStep,
+  onAddAllLabels,
+  onRemoveAllLabels,
   onResolveDivergence,
+  guidedConstructions,
 }) => {
   const [openMenu, setOpenMenu] = useState<OpenMenu>(null);
+  const [catalogSection, setCatalogSection] = useState<'objects' | 'guided'>('objects');
+  const [toolQuery, setToolQuery] = useState('');
   const toolbarRef = useRef<HTMLDivElement>(null);
   const currentToolLabel = toolLabel(canvasTool);
 
@@ -78,6 +86,11 @@ export const DiagramToolbar: React.FC<DiagramToolbarProps> = ({
   }, [openMenu]);
 
   const toggleMenu = (menu: Exclude<OpenMenu, null>) => setOpenMenu(current => current === menu ? null : menu);
+  const normalizedQuery = toolQuery.trim().toLocaleLowerCase('es');
+  const matchingGroups = TOOL_GROUPS.map(group => ({
+    ...group,
+    tools: group.tools.filter(tool => `${toolLabel(tool)} ${toolInstruction(tool)} ${group.label} ${group.description}`.toLocaleLowerCase('es').includes(normalizedQuery)),
+  })).filter(group => group.tools.length > 0);
 
   return (
     <div ref={toolbarRef} className="relative flex flex-wrap items-center gap-2 rounded border border-carbon/15 bg-carbon/5 p-2" aria-label="Herramientas del lienzo">
@@ -118,8 +131,27 @@ export const DiagramToolbar: React.FC<DiagramToolbarProps> = ({
           Añadir objeto <span aria-hidden="true">▾</span>
         </button>
         {openMenu === 'objects' && (
-          <div role="menu" className="absolute left-0 top-full z-30 mt-2 grid max-h-[min(34rem,72vh)] w-[min(28rem,calc(100vw-2rem))] gap-2 overflow-y-auto rounded border border-carbon/15 bg-lienzo p-2 shadow-xl">
-            {TOOL_GROUPS.map(group => (
+          <div className="absolute left-0 top-full z-30 mt-2 w-[min(34rem,calc(100vw-2rem))] overflow-hidden rounded border border-carbon/15 bg-lienzo shadow-xl">
+            <div className="border-b border-carbon/10 bg-carbon/[0.02] p-2">
+              <div className="grid grid-cols-2 rounded border border-carbon/10 bg-lienzo p-0.5" role="tablist" aria-label="Catálogo de adición">
+                <button type="button" role="tab" aria-selected={catalogSection === 'objects'} onClick={() => setCatalogSection('objects')} className={`rounded px-2 py-1.5 text-[10px] font-bold ${catalogSection === 'objects' ? 'bg-carbon text-lienzo' : 'text-carbon/55'}`}>Objetos</button>
+                <button type="button" role="tab" aria-selected={catalogSection === 'guided'} onClick={() => setCatalogSection('guided')} className={`rounded px-2 py-1.5 text-[10px] font-bold ${catalogSection === 'guided' ? 'bg-pavo text-lienzo' : 'text-carbon/55'}`}>Construcciones guiadas</button>
+              </div>
+              {catalogSection === 'objects' && <label className="mt-2 block text-[9px] font-bold uppercase tracking-wider text-carbon/45">Buscar objeto
+                <input autoFocus type="search" aria-label="Buscar objeto para añadir" className="mt-1 w-full rounded border border-carbon/15 bg-lienzo px-2 py-1.5 text-xs font-normal normal-case tracking-normal" value={toolQuery} onChange={event => setToolQuery(event.target.value)} placeholder="Ej. circunferencia, medida, fórmula…" />
+              </label>}
+            </div>
+            {catalogSection === 'objects' ? <div role="menu" className="grid max-h-[min(31rem,65vh)] gap-2 overflow-y-auto p-2">
+            <section className="rounded border border-pavo/15 bg-pavo/5 p-2">
+              <h4 className="text-[9px] font-bold uppercase tracking-wider text-pavo">Puntos y controles</h4>
+              <p className="mb-2 mt-0.5 text-[9px] leading-relaxed text-carbon/45">Elementos independientes que después pueden moverse o alimentar fórmulas.</p>
+              <div className="grid gap-1 sm:grid-cols-2">
+                <button type="button" role="menuitem" className="rounded border border-carbon/10 px-2 py-1.5 text-left text-[10px] font-bold text-carbon/75 hover:bg-carbon/5" onClick={() => { setOpenMenu(null); onSetCanvasTool('point'); }}><span className="block">Punto libre</span><span className="block text-[9px] font-normal text-carbon/45">No requiere selección: haga clic en el lienzo.</span></button>
+                <button type="button" role="menuitem" disabled={!model.elements.some(item => ['segment', 'line', 'ray', 'circle', 'arc', 'functionCurve', 'parametricCurve', 'perpendicular', 'parallel', 'angleBisector'].includes(item.kind))} className="rounded border border-carbon/10 px-2 py-1.5 text-left text-[10px] font-bold text-carbon/75 hover:bg-carbon/5 disabled:opacity-35" onClick={() => { setOpenMenu(null); onAddGliderPoint(); }}><span className="block">Punto sobre objeto</span><span className="block text-[9px] font-normal text-carbon/45">Necesita una recta, segmento, circunferencia o curva.</span></button>
+                <button type="button" role="menuitem" className="rounded border border-carbon/10 px-2 py-1.5 text-left text-[10px] font-bold text-carbon/75 hover:bg-carbon/5" onClick={() => { setOpenMenu(null); onAddSlider(); }}><span className="block">Control deslizante</span><span className="block text-[9px] font-normal text-carbon/45">No requiere selección; crea una variable numérica.</span></button>
+              </div>
+            </section>
+            {matchingGroups.map(group => (
               <section key={group.label} className="rounded border border-carbon/10 p-2">
                 <h4 className="text-[9px] font-bold uppercase tracking-wider text-carbon/55">{group.label}</h4>
                 <p className="mb-2 mt-0.5 text-[9px] leading-relaxed text-carbon/45">{group.description}</p>
@@ -151,6 +183,8 @@ export const DiagramToolbar: React.FC<DiagramToolbarProps> = ({
                 </div>
               </section>
             ))}
+            {matchingGroups.length === 0 && <p className="rounded border border-dashed border-carbon/15 p-4 text-center text-xs text-carbon/50">No se encontró ningún objeto con “{toolQuery}”.</p>}
+            </div> : <div className="max-h-[min(31rem,65vh)] overflow-y-auto p-3">{guidedConstructions ?? <p className="text-xs text-carbon/50">No hay construcciones guiadas disponibles.</p>}</div>}
           </div>
         )}
       </div>
@@ -176,6 +210,9 @@ export const DiagramToolbar: React.FC<DiagramToolbarProps> = ({
           <div role="menu" className="absolute right-0 top-full z-30 mt-2 w-56 space-y-1 rounded border border-carbon/15 bg-lienzo p-1.5 shadow-xl">
             <button type="button" role="menuitem" onClick={() => { setOpenMenu(null); onAddSlider(); }} className="block w-full rounded px-2 py-2 text-left text-[10px] font-bold text-carbon hover:bg-carbon/5">+ Control deslizante</button>
             <button type="button" role="menuitem" onClick={() => { setOpenMenu(null); onAddStep(); }} className="block w-full rounded px-2 py-2 text-left text-[10px] font-bold text-carbon hover:bg-carbon/5">+ Paso de la secuencia</button>
+            <div className="my-1 border-t border-carbon/10" />
+            <button type="button" role="menuitem" onClick={() => { setOpenMenu(null); onAddAllLabels?.(); }} className="block w-full rounded px-2 py-2 text-left text-[10px] font-bold text-carbon hover:bg-carbon/5">Añadir etiquetas a todos</button>
+            <button type="button" role="menuitem" onClick={() => { setOpenMenu(null); onRemoveAllLabels?.(); }} className="block w-full rounded px-2 py-2 text-left text-[10px] font-bold text-carbon hover:bg-carbon/5">Quitar etiquetas a todos</button>
           </div>
         )}
       </div>

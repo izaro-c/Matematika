@@ -8,7 +8,7 @@ import {
   parseDiagramSourceLocally,
 } from '../../src/features/editor/diagrams/source/parser';
 import { KIND_LABELS } from '../../src/features/editor/diagrams/model/commands';
-import { migrateDiagramSpec } from '../../src/shared/diagrams/spec/migrations';
+import { DiagramSpecMigrationError, migrateDiagramSpec } from '../../src/shared/diagrams/spec/migrations';
 
 function parseCoords(node?: ts.Expression): { x: number; y: number } | null {
   if (!node || !ts.isArrayLiteralExpression(node)) return null;
@@ -75,9 +75,8 @@ function extractElId(node: ts.Expression): string | null {
 
 export function parseDiagramSourceAST(source: string, metadataType = ''): ParseDiagramSourceResult {
   const embeddedClassification = classifyEmbeddedDiagramSource(source, metadataType);
-  if (embeddedClassification?.status === 'visual-exact') return embeddedClassification;
-  if (embeddedClassification?.status === 'invalid') return embeddedClassification;
-  const diagnostics: any[] = [];
+  if (embeddedClassification) return embeddedClassification;
+  const diagnostics: ParseDiagramSourceResult['diagnostics'] = [];
   let sourceFile: ts.SourceFile;
   try {
     sourceFile = ts.createSourceFile('diagram.tsx', source, ts.ScriptTarget.Latest, true, ts.ScriptKind.TSX);
@@ -231,7 +230,7 @@ export function parseDiagramSourceAST(source: string, metadataType = ''): ParseD
             color: (opts.fillColor || 'ocre') as ColorToken,
             target: opts.target !== false,
             constraint: 'glider',
-            gliderTarget,
+            ...(gliderTarget ? { gliderTarget } : {}),
           });
         }
         return;
@@ -516,8 +515,12 @@ export function parseDiagramSourceAST(source: string, metadataType = ''): ParseD
   let resultModel: VisualDiagramModel | undefined;
   try {
     resultModel = migrateDiagramSpec(legacyResultModel).spec;
-  } catch (err) {
-    console.error('MIGRATION ERROR IN AST PARSER:', err);
+  } catch (error: unknown) {
+    const message = error instanceof Error ? error.message : String(error);
+    console.warn(`AST PARSER MIGRATION WARNING [${componentId}]:`, message);
+    if (error instanceof DiagramSpecMigrationError && error.details.length > 0) {
+      console.warn(`  - ${error.details.join('\n  - ')}`);
+    }
     resultModel = undefined;
   }
 
@@ -534,7 +537,6 @@ export function parseDiagramSourceAST(source: string, metadataType = ''): ParseD
     };
   }
 
-  diagnostics.push(...(embeddedClassification?.diagnostics ?? []));
   if (points.length > 0 || elements.length > 0 || sliders.length > 0) {
     diagnostics.push({
       code: 'partial-ast-model-not-authoritative',
@@ -545,9 +547,7 @@ export function parseDiagramSourceAST(source: string, metadataType = ''): ParseD
   }
   return {
     status: 'code-preview',
-    previewModel: embeddedClassification?.status === 'code-preview'
-      ? embeddedClassification.previewModel ?? resultModel
-      : resultModel,
+    previewModel: resultModel,
     diagnostics,
   };
 }

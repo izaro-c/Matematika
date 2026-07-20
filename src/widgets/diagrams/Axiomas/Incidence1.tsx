@@ -7,7 +7,7 @@ export const Incidence1Spec = createDiagramSpec(
   "renderer": "matematika-diagram-renderer-v2",
   "title": "Axioma de Incidencia 1",
   "componentId": "axioma-de-incidencia-1",
-  "category": "Teoremas",
+  "category": "Axiomas",
   "mode": "simulation",
   "axis": false,
   "grid": false,

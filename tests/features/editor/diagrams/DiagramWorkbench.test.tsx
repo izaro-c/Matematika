@@ -199,6 +199,27 @@ describe('DiagramWorkbench authority adapters', () => {
     expect(screen.getByText(/Seleccione un objeto en el lienzo/)).toBeTruthy();
   });
 
+  it('copies and pastes the selected object without using the code tab', async () => {
+    render(
+      <DiagramWorkbench
+        isOpen
+        mode={{ kind: 'new', componentName: 'DiagramaCopiable' }}
+        metadataType="definicion"
+        onClose={vi.fn()}
+        onConfirm={vi.fn()}
+      />
+    );
+
+    await waitFor(() => expect(screen.getByText('Objetos')).toBeTruthy());
+    fireEvent.click(screen.getByRole('button', { name: 'Copiar' }));
+    await waitFor(() => expect(screen.getByText('Objeto copiado.')).toBeTruthy());
+    fireEvent.click(screen.getByRole('button', { name: 'Pegar' }));
+
+    await waitFor(() => expect(screen.getAllByText(/pO_copy/).length).toBeGreaterThan(0));
+    expect(screen.getByText(/referencias internas se han actualizado/)).toBeTruthy();
+    expect(screen.getByRole('tab', { name: 'Código TSX' }).getAttribute('aria-selected')).toBe('false');
+  });
+
   it('separates construction, sequence, MDX links and checks into understandable tasks', async () => {
     render(
       <DiagramWorkbench

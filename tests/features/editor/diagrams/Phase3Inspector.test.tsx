@@ -467,7 +467,7 @@ describe('Phase 3 visual editing', () => {
     const onModelEdit = vi.fn();
     const view = render(<DiagramInspector model={model} selectedId="pA" onSelect={vi.fn()} onModelEdit={onModelEdit} onDeleteSelected={vi.fn()} />);
 
-    fireEvent.click(screen.getByText('Atracción hacia formas notables'));
+    fireEvent.click(screen.getByText('Magnetismo hacia formas notables'));
     fireEvent.click(screen.getByRole('checkbox', { name: 'Usar Recta como atractor' }));
     const withAttractor = onModelEdit.mock.calls.at(-1)?.[0];
     expect(withAttractor.points.find((point: { id: string }) => point.id === 'pA').attractorIds).toEqual(['lineBC']);
@@ -475,7 +475,7 @@ describe('Phase 3 visual editing', () => {
 
     view.rerender(<DiagramInspector model={withAttractor} selectedId="pA" onSelect={vi.fn()} onModelEdit={onModelEdit} onDeleteSelected={vi.fn()} />);
     fireEvent.change(screen.getByLabelText('Distancia de atracción'), { target: { value: '0.35' } });
-    fireEvent.change(screen.getByLabelText('Distancia de captura'), { target: { value: '0.55' } });
+    fireEvent.change(screen.getByLabelText('Distancia de liberación'), { target: { value: '0.55' } });
     const edited = onModelEdit.mock.calls.at(-1)?.[0];
     expect(edited.points.find((point: { id: string }) => point.id === 'pA')).toMatchObject({ snatchDistance: 0.55 });
   });
@@ -524,6 +524,28 @@ describe('Phase 3 visual editing', () => {
     expect(edited.points.find((item: { id: string }) => item.id === 'pC')).toMatchObject({
       fixed: false,
       constraint: 'glider',
+    });
+  });
+
+  it('keeps snap and magnetism visible for a fixed point and offers a direct movable conversion', () => {
+    const base = migrateDiagramSpec(pointsFixture).spec;
+    const model = {
+      ...base,
+      points: base.points.map(item => item.id === 'pC'
+        ? { ...item, fixed: true, constraint: 'fixed' as const }
+        : item),
+    };
+    const onModelEdit = vi.fn();
+    render(<DiagramInspector model={model} selectedId="pC" onSelect={vi.fn()} onModelEdit={onModelEdit} onDeleteSelected={vi.fn()} />);
+
+    expect(screen.getByText('Snap a cuadrícula')).toBeTruthy();
+    expect(screen.getByText('Magnetismo hacia formas notables')).toBeTruthy();
+    expect(screen.getByRole('checkbox', { name: 'Ajuste a cuadrícula' }).closest('fieldset')?.hasAttribute('disabled')).toBe(true);
+    fireEvent.click(screen.getByRole('button', { name: 'Cambiar a movimiento libre' }));
+
+    expect(onModelEdit.mock.calls.at(-1)?.[0].points.find((item: { id: string }) => item.id === 'pC')).toMatchObject({
+      fixed: false,
+      constraint: 'free',
     });
   });
 
@@ -696,6 +718,8 @@ describe('Phase 3 visual editing', () => {
     const model = migrateDiagramSpec(annotationsFixture).spec;
     const onModelEdit = vi.fn();
     render(<DiagramInspector model={model} selectedId="panelA" onSelect={vi.fn()} onModelEdit={onModelEdit} onDeleteSelected={vi.fn()} />);
+    const openBtn = screen.getByRole('button', { name: /Configurar Panel Informativo/i });
+    if (openBtn) fireEvent.click(openBtn);
     fireEvent.change(screen.getByLabelText('Tipo de anclaje del panel'), { target: { value: 'viewport' } });
     const positioned = onModelEdit.mock.calls.at(-1)?.[0];
     expect(positioned.elements.find((item: { id: string }) => item.id === 'panelA')).toMatchObject({
@@ -714,6 +738,9 @@ describe('Phase 3 visual editing', () => {
     };
     const onModelEdit = vi.fn();
     render(<DiagramInspector model={model} selectedId="panelA" onSelect={vi.fn()} onModelEdit={onModelEdit} onDeleteSelected={vi.fn()} />);
+
+    const openBtn = screen.getByRole('button', { name: /Configurar Panel Informativo/i });
+    if (openBtn) fireEvent.click(openBtn);
 
     expect(screen.getByLabelText('Posición horizontal del panel')).toBeTruthy();
     expect(screen.getByLabelText('Posición vertical del panel')).toBeTruthy();

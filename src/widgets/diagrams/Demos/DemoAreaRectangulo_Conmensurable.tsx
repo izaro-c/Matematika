@@ -1,59 +1,426 @@
-import React from 'react';
-import { MathBoard } from '@/shared/diagrams/core/MathBoard';
-import { createPoint, createPolygon, createSegment } from '@/shared/diagrams/core/MathFactory';
+import { createDiagramSpec, DiagramRenderer } from '@/shared/diagrams/public';
 
-export const DemoAreaRectangulo_Conmensurable: React.FC = () => {
-  return (
-    <MathBoard
-      boundingbox={[-1, 4, 6, -1]}
-      onInit={(board: any, els: any, theme: any) => {
-        const m = 4; // base
-        const n = 3; // altura
-
-        els.A = createPoint(board, [0, 0], { name: '', visible: false }, theme);
-        els.B = createPoint(board, [m, 0], { name: '', visible: false }, theme);
-        els.C = createPoint(board, [m, n], { name: '', visible: false }, theme);
-        els.D = createPoint(board, [0, n], { name: '', visible: false }, theme);
-
-        els.rect = createPolygon(board, [els.A, els.B, els.C, els.D], {
-          fillColor: theme.lienzo, fillOpacity: 0.2, borders: { strokeColor: theme.carbon, strokeWidth: 3 }
-        }, theme);
-
-        // Crear cuadrícula
-        els.grid = [];
-        for (let i = 1; i < m; i++) {
-          const p1 = createPoint(board, [i, 0], { visible: false }, theme);
-          const p2 = createPoint(board, [i, n], { visible: false }, theme);
-          els.grid.push(createSegment(board, [p1, p2], { strokeColor: theme.salvia, strokeWidth: 1, dash: 1 }, theme));
+/* @matematika-diagram-spec:start */
+export const DemoAreaRectanguloConmensurableSpec = createDiagramSpec(
+{
+  "version": 2,
+  "renderer": "matematika-diagram-renderer-v2",
+  "title": "Área del rectángulo: caso conmensurable",
+  "componentId": "demo-area-rectangulo-conmensurable",
+  "category": "Demostraciones",
+  "mode": "simulation",
+  "axis": false,
+  "grid": false,
+  "viewport": {
+    "bounds": [
+      -4.5,
+      4,
+      4.5,
+      -3
+    ],
+    "home": [
+      -4.5,
+      4,
+      4.5,
+      -3
+    ],
+    "minZoom": 0.55,
+    "maxZoom": 5,
+    "padding": 0.16
+  },
+  "layers": [
+    {
+      "id": "geometry",
+      "label": "Geometría",
+      "order": 0,
+      "visible": true,
+      "locked": false
+    },
+    {
+      "id": "annotations",
+      "label": "Lecturas y controles",
+      "order": 1,
+      "visible": true,
+      "locked": false
+    }
+  ],
+  "groups": [],
+  "points": [
+    {
+      "id": "A",
+      "label": "A",
+      "color": "granada",
+      "layerId": "geometry",
+      "order": 2430,
+      "visible": true,
+      "locked": false,
+      "groupIds": [],
+      "selection": {
+        "selectable": true,
+        "ariaLabel": "Punto fijo A",
+        "role": "secondary"
+      },
+      "target": false,
+      "style": {
+        "pointSize": 7,
+        "highlightPointSize": 10,
+        "preserveColorOnHighlight": true
+      },
+      "x": -3,
+      "y": -1.5,
+      "showLabel": false,
+      "fixed": true,
+      "constraint": "fixed"
+    },
+    {
+      "id": "B",
+      "label": "B",
+      "color": "granada",
+      "layerId": "geometry",
+      "order": 2440,
+      "visible": true,
+      "locked": false,
+      "groupIds": [],
+      "selection": {
+        "selectable": true,
+        "ariaLabel": "Punto fijo B",
+        "role": "secondary"
+      },
+      "target": false,
+      "style": {
+        "pointSize": 7,
+        "highlightPointSize": 10,
+        "preserveColorOnHighlight": true
+      },
+      "x": 3,
+      "y": -1.5,
+      "showLabel": false,
+      "fixed": true,
+      "constraint": "fixed"
+    },
+    {
+      "id": "C",
+      "label": "C",
+      "color": "granada",
+      "layerId": "geometry",
+      "order": 2450,
+      "visible": true,
+      "locked": false,
+      "groupIds": [],
+      "selection": {
+        "selectable": true,
+        "ariaLabel": "Punto fijo C",
+        "role": "secondary"
+      },
+      "target": false,
+      "style": {
+        "pointSize": 7,
+        "highlightPointSize": 10,
+        "preserveColorOnHighlight": true
+      },
+      "x": 3,
+      "y": 2.5,
+      "showLabel": false,
+      "fixed": true,
+      "constraint": "fixed"
+    },
+    {
+      "id": "D",
+      "label": "D",
+      "color": "granada",
+      "layerId": "geometry",
+      "order": 2460,
+      "visible": true,
+      "locked": false,
+      "groupIds": [],
+      "selection": {
+        "selectable": true,
+        "ariaLabel": "Punto fijo D",
+        "role": "secondary"
+      },
+      "target": false,
+      "style": {
+        "pointSize": 7,
+        "highlightPointSize": 10,
+        "preserveColorOnHighlight": true
+      },
+      "x": -3,
+      "y": 2.5,
+      "showLabel": false,
+      "fixed": true,
+      "constraint": "fixed"
+    },
+    {
+      "id": "U1",
+      "label": "U₁",
+      "color": "ocre",
+      "layerId": "geometry",
+      "order": 2470,
+      "visible": true,
+      "locked": false,
+      "groupIds": [],
+      "selection": {
+        "selectable": true,
+        "ariaLabel": "Punto fijo U₁",
+        "role": "secondary"
+      },
+      "target": false,
+      "style": {
+        "pointSize": 7,
+        "highlightPointSize": 10,
+        "preserveColorOnHighlight": true
+      },
+      "x": -3,
+      "y": -1.5,
+      "showLabel": false,
+      "fixed": true,
+      "constraint": "fixed"
+    },
+    {
+      "id": "U2",
+      "label": "U₂",
+      "color": "ocre",
+      "layerId": "geometry",
+      "order": 2480,
+      "visible": true,
+      "locked": false,
+      "groupIds": [],
+      "selection": {
+        "selectable": true,
+        "ariaLabel": "Punto fijo U₂",
+        "role": "secondary"
+      },
+      "target": false,
+      "style": {
+        "pointSize": 7,
+        "highlightPointSize": 10,
+        "preserveColorOnHighlight": true
+      },
+      "x": -2,
+      "y": -1.5,
+      "showLabel": false,
+      "fixed": true,
+      "constraint": "fixed"
+    },
+    {
+      "id": "U3",
+      "label": "U₃",
+      "color": "ocre",
+      "layerId": "geometry",
+      "order": 2490,
+      "visible": true,
+      "locked": false,
+      "groupIds": [],
+      "selection": {
+        "selectable": true,
+        "ariaLabel": "Punto fijo U₃",
+        "role": "secondary"
+      },
+      "target": false,
+      "style": {
+        "pointSize": 7,
+        "highlightPointSize": 10,
+        "preserveColorOnHighlight": true
+      },
+      "x": -2,
+      "y": -0.5,
+      "showLabel": false,
+      "fixed": true,
+      "constraint": "fixed"
+    },
+    {
+      "id": "U4",
+      "label": "U₄",
+      "color": "ocre",
+      "layerId": "geometry",
+      "order": 2500,
+      "visible": true,
+      "locked": false,
+      "groupIds": [],
+      "selection": {
+        "selectable": true,
+        "ariaLabel": "Punto fijo U₄",
+        "role": "secondary"
+      },
+      "target": false,
+      "style": {
+        "pointSize": 7,
+        "highlightPointSize": 10,
+        "preserveColorOnHighlight": true
+      },
+      "x": -3,
+      "y": -0.5,
+      "showLabel": false,
+      "fixed": true,
+      "constraint": "fixed"
+    }
+  ],
+  "elements": [
+    {
+      "id": "rect",
+      "label": "Rectángulo R",
+      "color": "granada",
+      "layerId": "geometry",
+      "order": 2510,
+      "visible": true,
+      "locked": false,
+      "groupIds": [],
+      "selection": {
+        "selectable": true,
+        "ariaLabel": "Rectángulo R",
+        "role": "secondary"
+      },
+      "target": true,
+      "targetId": "rectangulo-r",
+      "style": {
+        "strokeWidth": 3,
+        "fillOpacity": 0.08,
+        "highlightFillOpacity": 0.28,
+        "preserveColorOnHighlight": true
+      },
+      "kind": "polygon",
+      "refs": [
+        "A",
+        "B",
+        "C",
+        "D"
+      ]
+    },
+    {
+      "id": "grid",
+      "label": "Cuadrícula unitaria",
+      "color": "granada",
+      "layerId": "geometry",
+      "order": 2520,
+      "visible": true,
+      "locked": false,
+      "groupIds": [],
+      "selection": {
+        "selectable": true,
+        "ariaLabel": "Cuadrícula unitaria",
+        "role": "secondary"
+      },
+      "target": false,
+      "style": {
+        "strokeWidth": 1.2,
+        "strokeOpacity": 0.45,
+        "preserveColorOnHighlight": true
+      },
+      "kind": "grid",
+      "refs": [
+        "A",
+        "B",
+        "C",
+        "D"
+      ],
+      "properties": {
+        "rows": 4,
+        "columns": 6
+      }
+    },
+    {
+      "id": "unit",
+      "label": "Cuadrado unidad",
+      "color": "ocre",
+      "layerId": "geometry",
+      "order": 2530,
+      "visible": true,
+      "locked": false,
+      "groupIds": [],
+      "selection": {
+        "selectable": true,
+        "ariaLabel": "Cuadrado unidad",
+        "role": "secondary"
+      },
+      "target": true,
+      "targetId": "cuadrado-unidad",
+      "style": {
+        "strokeWidth": 3,
+        "fillOpacity": 0.3,
+        "highlightFillOpacity": 0.28,
+        "preserveColorOnHighlight": true
+      },
+      "kind": "polygon",
+      "refs": [
+        "U1",
+        "U2",
+        "U3",
+        "U4"
+      ]
+    },
+    {
+      "id": "gridInfo",
+      "label": "Conteo de unidades",
+      "color": "granada",
+      "layerId": "annotations",
+      "order": 2540,
+      "visible": true,
+      "locked": false,
+      "groupIds": [],
+      "selection": {
+        "selectable": true,
+        "ariaLabel": "Conteo de unidades",
+        "role": "annotation"
+      },
+      "target": false,
+      "style": {
+        "preserveColorOnHighlight": true
+      },
+      "kind": "infoPanel",
+      "refs": [],
+      "text": "6 × 4 cuadrados unidad ⇒ Cont(R) = b · h",
+      "properties": {
+        "title": "Conteo de unidades",
+        "anchorMode": "viewport",
+        "viewportPosition": [
+          0.98,
+          0.03
+        ]
+      }
+    }
+  ],
+  "sliders": [],
+  "steps": [
+    {
+      "id": "step1",
+      "label": "Caso conmensurable",
+      "description": "La cuadrícula cuenta m · n copias del cuadrado unidad.",
+      "visibleTargets": [
+        "rect",
+        "grid",
+        "unit",
+        "gridInfo"
+      ],
+      "durationMs": 1800,
+      "objectStates": {
+        "rect": {
+          "visible": true,
+          "emphasis": "primary",
+          "interactive": true
+        },
+        "grid": {
+          "visible": true,
+          "emphasis": "primary",
+          "interactive": true
+        },
+        "unit": {
+          "visible": true,
+          "emphasis": "primary",
+          "interactive": true
+        },
+        "gridInfo": {
+          "visible": true,
+          "emphasis": "none",
+          "interactive": true
         }
-        for (let j = 1; j < n; j++) {
-          const p1 = createPoint(board, [0, j], { visible: false }, theme);
-          const p2 = createPoint(board, [m, j], { visible: false }, theme);
-          els.grid.push(createSegment(board, [p1, p2], { strokeColor: theme.salvia, strokeWidth: 1, dash: 1 }, theme));
-        }
+      }
+    }
+  ],
+  "dependencies": [],
+  "note": "La cuadrícula interna traduce el producto b · h en un conteo de cuadrados unidad.",
+  "extensions": {}
+}
+);
+/* @matematika-diagram-spec:end */
 
-        // Un cuadrado unidad resaltado
-        els.u_A = createPoint(board, [1, 1], { visible: false }, theme);
-        els.u_B = createPoint(board, [2, 1], { visible: false }, theme);
-        els.u_C = createPoint(board, [2, 2], { visible: false }, theme);
-        els.u_D = createPoint(board, [1, 2], { visible: false }, theme);
-        els.unitSquare = createPolygon(board, [els.u_A, els.u_B, els.u_C, els.u_D], {
-          fillColor: theme.terracota, fillOpacity: 0.1, borders: { strokeWidth: 2, strokeColor: theme.terracota }
-        }, theme);
-      }}
-      onUpdate={(_board: any, els: any, theme: any, _isStep: any, isHL: any) => {
-        const hlRect = isHL('rectangulo-r');
-        const hlUnit = isHL('cuadrado-unidad');
-
-        els.rect.setAttribute({
-          fillColor: hlRect ? theme.salvia : theme.lienzo,
-          fillOpacity: hlRect ? 0.3 : 0.2
-        });
-
-        els.unitSquare.setAttribute({
-          fillOpacity: hlUnit ? 0.6 : 0.1
-        });
-      }}
-    />
-  );
-};
+export const DemoAreaRectanguloConmensurable = () => <DiagramRenderer spec={DemoAreaRectanguloConmensurableSpec} />;

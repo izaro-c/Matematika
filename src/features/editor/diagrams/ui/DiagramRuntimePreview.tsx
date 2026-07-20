@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import { MathProviderBoundary } from '@/shared/lib/MathStoreContext';
 import { ErrorBoundary } from '@/widgets/layouts/ErrorBoundary';
-import { DiagramRenderer, type DiagramSpecV2 } from '@/shared/diagrams/public';
+import { type DiagramSpecV2 } from '@/shared/diagrams/public';
 import { StepNavigator } from '@/shared/ui/StepNavigator';
+import { DiagramResponsivePreview } from './DiagramResponsivePreview';
 
 type DiagramModule = Record<string, unknown>;
 type DiagramComponent = React.ComponentType;
@@ -105,6 +106,16 @@ export const DiagramRuntimePreview: React.FC<DiagramRuntimePreviewProps> = ({ fi
   const Component = currentPreview.component;
   const spec = currentPreview.spec;
   const effectiveStepId = spec?.steps.some(item => item.id === activeStepId) ? activeStepId : spec?.steps[0]?.id;
+  let previewContent: React.ReactNode = null;
+  if (spec) {
+    previewContent = <div className="space-y-2 p-2">
+      <DiagramResponsivePreview model={spec} activeStepId={effectiveStepId} />
+      {spec.steps.length > 0 && <StepNavigator steps={spec.steps} scopeId={`preview-${spec.componentId}`} activeStepId={effectiveStepId} onStepChange={setActiveStepId} compact />}
+      <p className="px-1 text-[10px] text-carbon/50">{spec.points.length + spec.elements.length + spec.sliders.length} objetos · {spec.steps.length} pasos · {spec.points.filter(item => item.target).length + spec.elements.filter(item => item.target).length + spec.groups.filter(item => item.target).length} vínculos MDX</p>
+    </div>;
+  } else if (Component) {
+    previewContent = <Component />;
+  }
   return (
     <div className="min-h-[360px] overflow-hidden rounded border border-carbon/10 bg-lienzo" data-testid="diagram-runtime-preview">
       <ErrorBoundary
@@ -112,11 +123,7 @@ export const DiagramRuntimePreview: React.FC<DiagramRuntimePreviewProps> = ({ fi
         fallback={<p className="p-4 text-xs text-granada" role="alert">El diagrama guardado produjo un error al renderizarse.</p>}
       >
         <MathProviderBoundary>
-          {spec ? <div className="space-y-2 p-2">
-            <div className="h-[clamp(360px,46vh,520px)] overflow-hidden rounded"><DiagramRenderer spec={spec} activeStepId={effectiveStepId} /></div>
-            {spec.steps.length > 0 && <StepNavigator steps={spec.steps} scopeId={`preview-${spec.componentId}`} activeStepId={effectiveStepId} onStepChange={setActiveStepId} compact />}
-            <p className="px-1 text-[10px] text-carbon/50">{spec.points.length + spec.elements.length + spec.sliders.length} objetos · {spec.steps.length} pasos · {spec.points.filter(item => item.target).length + spec.elements.filter(item => item.target).length + spec.groups.filter(item => item.target).length} vínculos MDX</p>
-          </div> : Component ? <Component /> : null}
+          {previewContent}
         </MathProviderBoundary>
       </ErrorBoundary>
     </div>

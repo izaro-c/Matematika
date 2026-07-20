@@ -1,7 +1,7 @@
 import { describe, expect, it } from 'vitest';
 import { readFileSync } from 'node:fs';
 import { parseDiagramSourceAST } from '../../../../scripts/editor/parseDiagramSourceAST';
-import { createTemplateModel, step } from '../../../../src/features/editor/diagrams/model/commands';
+import { createTemplateModel, setPointAttractors, step } from '../../../../src/features/editor/diagrams/model/commands';
 import { generateDiagramSource } from '../../../../src/features/editor/diagrams/source/generator';
 
 describe('DiagramSpec v2 TSX adapter generator', () => {
@@ -33,6 +33,31 @@ describe('DiagramSpec v2 TSX adapter generator', () => {
     expect(parsed.model).toEqual(model);
     const second = generateDiagramSource(parsed.model, 'RoundtripCompleto');
     expect(second.ok && second.source).toBe(first.source);
+  });
+
+  it('roundtrips the three perpendicular-bisector attractors in Triangulo as valid exact TSX', () => {
+    const source = readFileSync('src/widgets/diagrams/Definiciones/Triangulo.tsx', 'utf8');
+    const initial = parseDiagramSourceAST(source);
+    expect(initial.status).toBe('visual-exact');
+    if (initial.status !== 'visual-exact') return;
+
+    const withA = setPointAttractors(initial.model, 'A', ['lineMediatrizBC']);
+    const withB = setPointAttractors(withA, 'B', ['lineMediatrizAC']);
+    const withC = setPointAttractors(withB, 'C', ['lineMediatrizAB']);
+    const generated = generateDiagramSource(withC, 'Triangulo');
+
+    expect(generated.ok).toBe(true);
+    if (!generated.ok) return;
+    const reopened = parseDiagramSourceAST(generated.source);
+    expect(reopened.status).toBe('visual-exact');
+    if (reopened.status !== 'visual-exact') return;
+    expect(reopened.model.points.filter(point => ['A', 'B', 'C'].includes(point.id)).map(point => point.attractorIds)).toEqual([
+      ['lineMediatrizBC'],
+      ['lineMediatrizAC'],
+      ['lineMediatrizAB'],
+    ]);
+    const regenerated = generateDiagramSource(reopened.model, 'Triangulo');
+    expect(regenerated.ok && regenerated.source).toBe(generated.source);
   });
 
   it('generates a thin adapter around the shared renderer instead of duplicating MathFactory logic', () => {

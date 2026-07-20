@@ -44,6 +44,7 @@ import {
   DEFAULT_RIGHT_ANGLE_RADIUS,
   createSceneConstructionPlan,
   createScenePlan,
+  angleMeasureRadians,
   fitViewport,
   itemLayerNumber,
   offscreenItemIds,
@@ -54,9 +55,11 @@ import {
   zoomViewport,
   evaluateMathExpression,
   evaluateStepOverlayContent,
+  resolveInfoPanelBlock,
   type DiagramBounds,
   type DiagramColorToken,
   type DiagramElement,
+  type DiagramPoint,
   type DiagramSceneItem,
   type DiagramSlider,
   type DiagramSpecV2,
@@ -134,10 +137,29 @@ function liveVariables(elements: Record<string, any>, spec: DiagramSpecV2): Reco
       variables[`${item.id}.x`] = element.X();
       variables[`${item.id}.y`] = element.Y();
     }
-    if (item.refs.length < 2) return;
-    const a = elements[item.refs[0]];
-    const b = elements[item.refs[1]];
-    if (a?.Dist && b) variables[`${item.id}.length`] = a.Dist(b);
+    if (item.refs.length >= 2) {
+      const a = elements[item.refs[0]];
+      const b = elements[item.refs[1]];
+      if (a?.Dist && b) variables[`${item.id}.length`] = a.Dist(b);
+    }
+    if ((item.kind === 'angle' || item.kind === 'nonReflexAngle') && item.refs.length >= 3) {
+      const first = elements[item.refs[0]];
+      const vertex = elements[item.refs[1]];
+      const second = elements[item.refs[2]];
+      const radians = first?.X && vertex?.X && second?.X
+        ? angleMeasureRadians(
+            item.kind,
+            { x: first.X(), y: first.Y() },
+            { x: vertex.X(), y: vertex.Y() },
+            { x: second.X(), y: second.Y() },
+          )
+        : undefined;
+      if (radians !== undefined) {
+        variables[`${item.id}.value`] = radians;
+        variables[`${item.id}.radians`] = radians;
+        variables[`${item.id}.degrees`] = radians * 180 / Math.PI;
+      }
+    }
   });
   return variables;
 }
@@ -358,6 +380,35 @@ function reactiveText(item: DiagramElement, elements: Record<string, any>, spec:
   return rule?.text;
 }
 
+function annotationTextHtml(item: DiagramElement, elements: Record<string, any>, spec: DiagramSpecV2): string {
+  const hasBraces = typeof item.text === 'string' && item.text.includes('{') && item.text.includes('}');
+  const defaultText = item.kind === 'infoPanel' ? (item.text || '') : (item.text || item.label);
+  const body = reactiveText(item, elements, spec) ?? (item.kind === 'measurement' || item.properties?.expression || hasBraces
+    ? measurementText(item, elements, spec)
+    : defaultText);
+  const blocks = item.kind === 'infoPanel' ? item.properties?.infoPanelBlocks : undefined;
+  if (blocks?.length) {
+    const variables = liveVariables(elements, spec);
+    const layout = item.properties?.infoPanelLayout ?? 'stack';
+    const intro = body ? `<div class="matematika-info-panel__intro">${renderKatexTextToHtml(body)}</div>` : '';
+    const blockHtml = blocks.map(block => {
+      const resolved = resolveInfoPanelBlock(block, variables);
+      const title = resolved.title
+        ? `<strong class="matematika-info-panel__block-title">${renderKatexTextToHtml(resolved.title)}</strong>`
+        : '';
+      const colorClass = resolved.color ? ` matematika-info-panel__block--${resolved.color}` : '';
+      return `<div class="matematika-info-panel__block${colorClass}" data-info-panel-block="${block.id}">${title}<span>${renderKatexTextToHtml(resolved.text)}</span></div>`;
+    }).join('');
+    const title = item.properties?.title
+      ? `<strong class="matematika-info-panel__title">${renderKatexTextToHtml(item.properties.title)}</strong>`
+      : '';
+    return `${title}${intro}<div class="matematika-info-panel__blocks" data-info-panel-layout="${layout}">${blockHtml}</div>`;
+  }
+  return item.kind === 'infoPanel' && item.properties?.title
+    ? `<strong>${renderKatexTextToHtml(item.properties.title)}</strong><br/>${renderKatexTextToHtml(body)}`
+    : renderKatexTextToHtml(body);
+}
+
 function conditionAllows(item: DiagramSceneItem, elements: Record<string, any>, spec: DiagramSpecV2): boolean {
   if ('kind' in item && item.kind === 'label' && spec.showLabels === false) return false;
   if (!('kind' in item) || !item.properties?.visibleWhen) return true;
@@ -416,6 +467,24 @@ function referencedLabelAnchor(
     const [start, end] = referenceCoordinates;
     return [start[0] + (end[0] - start[0]) * parameter, start[1] + (end[1] - start[1]) * parameter];
   }
+  if (['angle', 'nonReflexAngle', 'rightAngle', 'perpendicularMark'].includes(referencedItem.kind)) {
+    const labelCoordinates = renderedCoordinates(rendered?.label);
+    if (labelCoordinates) return labelCoordinates;
+
+    if (referenceCoordinates.length >= 3) {
+      const [pA, pO, pB] = referenceCoordinates;
+      const a = Math.atan2(pA[1] - pO[1], pA[0] - pO[0]);
+      const b = Math.atan2(pB[1] - pO[1], pB[0] - pO[0]);
+      const diff = (b - a + 2 * Math.PI) % (2 * Math.PI);
+      let midAngle = a + diff / 2;
+      if (referencedItem.kind !== 'angle') {
+        if (diff > Math.PI) midAngle += Math.PI;
+      }
+      const radius = (referencedItem.style?.angleRadius ?? 1) * 1.5;
+      return [pO[0] + radius * Math.cos(midAngle), pO[1] + radius * Math.sin(midAngle)];
+    }
+  }
+
   if (referenceCoordinates.length > 0) {
     const total = referenceCoordinates.reduce(([x, y], coordinates) => [x + coordinates[0], y + coordinates[1]], [0, 0]);
     return [total[0] / referenceCoordinates.length, total[1] / referenceCoordinates.length];
@@ -469,6 +538,7 @@ function createElement(
     strokeColor: theme[item.color],
     highlightStrokeColor: hoverColor,
     strokeWidth: item.style?.strokeWidth ?? 2,
+    highlightStrokeWidth: item.style?.highlightStrokeWidth ?? 3,
     strokeOpacity: item.style?.strokeOpacity ?? 1,
     dash: item.dashed ? 2 : 0,
     fixed: true,
@@ -480,11 +550,13 @@ function createElement(
   if (item.kind === 'polygon') return refs.length >= 3 ? createPolygon(board, refs, {
     highlight: highlightable,
     fillColor: theme[item.color], highlightFillColor: hoverColor, fillOpacity: item.style?.fillOpacity ?? 0.1,
+    highlightFillOpacity: item.style?.highlightFillOpacity ?? 0.24,
     fixed: true,
     borders: { highlight: highlightable, strokeColor: theme[item.color], strokeWidth: item.style?.strokeWidth ?? 1.5, strokeOpacity: item.style?.strokeOpacity ?? 1, dash: item.dashed ? 2 : 0, fixed: true }, layer,
   }, theme) : null;
   if (item.kind === 'circle') return refs.length >= 2 ? createCircle(board, [refs[0], refs[1]], {
     ...lineOptions, fillColor: theme[item.color], fillOpacity: item.style?.fillOpacity ?? 0,
+    highlightFillOpacity: item.style?.highlightFillOpacity ?? 0.2,
   }, theme) : null;
   if (item.kind === 'arc') return refs.length >= 3 ? createArc(board, [refs[0], refs[1], refs[2]], lineOptions, theme) : null;
   if (item.kind === 'functionCurve' && item.properties?.expression) {
@@ -532,6 +604,7 @@ function createElement(
   if (item.kind === 'midpoint') return refs.length >= 2 ? createMidpoint(board, [refs[0], refs[1]], {
     highlight: highlightable,
     name: renderKatexTextToHtml(item.label), fillColor: theme[item.color], strokeColor: theme[item.color],
+    size: item.style?.pointSize ?? 4,
     highlightFillColor: hoverColor, highlightStrokeColor: hoverColor,
     label: { highlight: highlightable, highlightColor: hoverColor, highlightStrokeColor: hoverColor },
     fixed: true, layer,
@@ -539,6 +612,7 @@ function createElement(
   if (item.kind === 'perpendicularFoot') return refs.length >= 3 ? createPerpendicularFoot(board, [refs[0], refs[1], refs[2]], {
     highlight: highlightable,
     name: renderKatexTextToHtml(item.label), fillColor: theme[item.color], strokeColor: theme[item.color],
+    size: item.style?.pointSize ?? 4,
     highlightFillColor: hoverColor, highlightStrokeColor: hoverColor,
     label: { highlight: highlightable, highlightColor: hoverColor, highlightStrokeColor: hoverColor },
     fixed: true, layer,
@@ -548,16 +622,24 @@ function createElement(
   if (item.kind === 'parallel') return refs.length >= 3 ? createParallelLine(board, [refs[0], refs[1], refs[2]], lineOptions, theme) : null;
   if (item.kind === 'angleBisector') return refs.length >= 3 ? createAngleBisectorRay(board, [refs[0], refs[1], refs[2]], lineOptions, theme) : null;
   if (item.kind === 'angle') return refs.length >= 3 ? createAngle(board, [refs[0], refs[1], refs[2]], {
-    highlight: highlightable, fillColor: theme[item.color], strokeColor: theme[item.color], radius: item.style?.angleRadius ?? DEFAULT_ANGLE_RADIUS, fixed: true, layer,
+    ...lineOptions, fillColor: theme[item.color], highlightFillColor: hoverColor,
+    fillOpacity: item.style?.fillOpacity ?? 0.1, highlightFillOpacity: item.style?.highlightFillOpacity ?? 0.28,
+    radius: item.style?.angleRadius ?? DEFAULT_ANGLE_RADIUS, fixed: true, layer,
   }, theme) : null;
   if (item.kind === 'nonReflexAngle') return refs.length >= 3 ? createNonReflexAngle(board, [refs[0], refs[1], refs[2]], {
-    highlight: highlightable, fillColor: theme[item.color], strokeColor: theme[item.color], radius: item.style?.angleRadius ?? DEFAULT_ANGLE_RADIUS, fixed: true, layer,
+    ...lineOptions, fillColor: theme[item.color], highlightFillColor: hoverColor,
+    fillOpacity: item.style?.fillOpacity ?? 0.1, highlightFillOpacity: item.style?.highlightFillOpacity ?? 0.28,
+    radius: item.style?.angleRadius ?? DEFAULT_ANGLE_RADIUS, fixed: true, layer,
   }, theme) : null;
   if (item.kind === 'rightAngle') return refs.length >= 3 ? createRightAngleMarker(board, [refs[0], refs[1], refs[2]], {
-    highlight: highlightable, fillColor: theme[item.color], strokeColor: theme[item.color], size: item.style?.angleRadius ?? DEFAULT_RIGHT_ANGLE_RADIUS, fixed: true, layer,
+    ...lineOptions, fillColor: theme[item.color], highlightFillColor: hoverColor,
+    fillOpacity: item.style?.fillOpacity ?? 0.1, highlightFillOpacity: item.style?.highlightFillOpacity ?? 0.28,
+    size: item.style?.angleRadius ?? DEFAULT_RIGHT_ANGLE_RADIUS, fixed: true, layer,
   }, theme) : null;
   if (item.kind === 'perpendicularMark') return refs.length >= 3 ? createRightAngleMarker(board, [refs[0], refs[1], refs[2]], {
-    highlight: highlightable, fillColor: theme[item.color], strokeColor: theme[item.color], size: item.style?.angleRadius ?? DEFAULT_RIGHT_ANGLE_RADIUS, fixed: true, layer,
+    ...lineOptions, fillColor: theme[item.color], highlightFillColor: hoverColor,
+    fillOpacity: item.style?.fillOpacity ?? 0.1, highlightFillOpacity: item.style?.highlightFillOpacity ?? 0.28,
+    size: item.style?.angleRadius ?? DEFAULT_RIGHT_ANGLE_RADIUS, fixed: true, layer,
   }, theme) : null;
   if (item.kind === 'congruenceMark') return refs.length >= 2 ? createCongruenceMark(
     board,
@@ -582,9 +664,9 @@ function createElement(
   if (item.kind === 'dimensionLine') return refs.length >= 2 ? createDimensionLine(
     board,
     [refs[0], refs[1]],
-    () => liftedIntoHeader ? '' : measurementText(item, elements, spec),
+    () => liftedIntoHeader ? '' : reactiveText(item, elements, spec) ?? measurementText(item, elements, spec),
     item.properties?.offset ?? 0.35,
-    lineOptions,
+    { ...lineOptions, fontSize: item.style?.labelSize },
     theme,
   ) : null;
   if (item.kind === 'grid') return refs.length >= 4 ? createGridOverlay(
@@ -604,15 +686,7 @@ function createElement(
     theme,
   ) : null;
   const anchor = refs[0];
-  const dynamicText = () => {
-    const hasBraces = typeof item.text === 'string' && item.text.includes('{') && item.text.includes('}');
-    const body = reactiveText(item, elements, spec) ?? (item.kind === 'measurement' || item.properties?.expression || hasBraces
-      ? measurementText(item, elements, spec)
-      : item.text || item.label);
-    return item.kind === 'infoPanel' && item.properties?.title
-      ? `<strong>${renderKatexTextToHtml(item.properties.title)}</strong><br/>${renderKatexTextToHtml(body)}`
-      : renderKatexTextToHtml(body);
-  };
+  const dynamicText = () => annotationTextHtml(item, elements, spec);
   const textOffset = item.style?.textOffset ?? (item.kind === 'label' ? [0.04, 0.04] : [0.25, 0.35]);
   const viewportPosition = item.kind === 'infoPanel' && item.properties?.anchorMode === 'viewport'
     ? item.properties.viewportPosition
@@ -755,6 +829,45 @@ function synchronizeElementAndLabelHover(element: any, item: DiagramSceneItem) {
   element.on?.('out', restorePair);
   label.on?.('over', highlightPair);
   label.on?.('out', restorePair);
+}
+
+/**
+ * JSXGraph implementa los atractores convirtiendo temporalmente un punto libre
+ * en glider. Matematika usa una única política de imán: el ajuste solo dura
+ * mientras ese punto se arrastra y nunca crea una relación persistente.
+ */
+function releaseAuthoredAttraction(point: DiagramPoint, elements: Record<string, any>): boolean {
+  const renderedPoint = elements[point.id];
+  if (!renderedPoint || typeof renderedPoint.popSlideObject !== 'function') return false;
+  const authoredAttractors = (point.attractorIds ?? []).map(id => elements[id]).filter(Boolean);
+  if (authoredAttractors.length === 0) return false;
+  let released = false;
+  let remaining = authoredAttractors.length + 1;
+  while (remaining > 0 && renderedPoint.slideObject && authoredAttractors.includes(renderedPoint.slideObject)) {
+    renderedPoint.popSlideObject();
+    released = true;
+    remaining -= 1;
+  }
+  return released;
+}
+
+function releaseInactiveAttractions(spec: DiagramSpecV2, elements: Record<string, any>, activePointId: string): boolean {
+  return spec.points.reduce((released, point) => (
+    point.id === activePointId ? released : releaseAuthoredAttraction(point, elements) || released
+  ), false);
+}
+
+function suspendInactiveAttractors(spec: DiagramSpecV2, elements: Record<string, any>, activePointId: string): () => void {
+  const suspended = spec.points.flatMap(point => {
+    const renderedPoint = elements[point.id];
+    if (point.id === activePointId || !renderedPoint?.visProp) return [];
+    const attractors = renderedPoint.visProp.attractors;
+    renderedPoint.visProp.attractors = [];
+    return [{ renderedPoint, attractors }];
+  });
+  return () => suspended.forEach(({ renderedPoint, attractors }) => {
+    renderedPoint.visProp.attractors = attractors;
+  });
 }
 
 function syncNativeElementLabel(
@@ -1025,7 +1138,7 @@ const DiagramRendererContent: React.FC<DiagramRendererProps> = ({
             const hoverColor = !highlightable || sceneItem.style?.preserveColorOnHighlight ? theme[sceneItem.color] : theme.ocre;
             const pointLabelOptions = {
               highlight: highlightable,
-              visible: spec.showLabels !== false && (!('constraint' in sceneItem) || sceneItem.showLabel !== false),
+              visible: spec.showLabels !== false && (!('showLabel' in sceneItem) || sceneItem.showLabel !== false),
               ...('constraint' in sceneItem && sceneItem.style?.labelSize !== undefined ? { fontSize: sceneItem.style.labelSize } : {}),
               ...(sceneItem.style?.labelOffset ? { offset: sceneItem.style.labelOffset } : {}),
               highlightColor: hoverColor,
@@ -1044,7 +1157,7 @@ const DiagramRendererContent: React.FC<DiagramRendererProps> = ({
                 ? sceneItem.gliderTarget
                 : onConstraint?.refs[1];
               const attractors = sceneItem.attractorIds?.map(id => elements[id]).filter(Boolean) ?? [];
-              const attractionOptions = attractors.length > 0 && !directInteractionLocked
+              const attractionOptions = !directInteractionLocked
                 ? {
                   attractors,
                   attractorDistance: sceneItem.attractorDistance ?? 0.4,
@@ -1107,6 +1220,7 @@ const DiagramRendererContent: React.FC<DiagramRendererProps> = ({
                 let enforcing = false;
                 item.on('drag', () => {
                   if (enforcing) return;
+                  releaseInactiveAttractions(spec, elements, sceneItem.id);
                   const liveSpec: DiagramSpecV2 = {
                     ...spec,
                     points: spec.points.map(point => elements[point.id]
@@ -1118,16 +1232,28 @@ const DiagramRendererContent: React.FC<DiagramRendererProps> = ({
                   };
                   const nextSpec = withMovedPoint(liveSpec, sceneItem.id, item.X(), item.Y());
                   enforcing = true;
-                  nextSpec.points.forEach(nextPoint => {
-                    const renderedPoint = elements[nextPoint.id];
-                    if (!renderedPoint) return;
-                    if (Math.abs(nextPoint.x - renderedPoint.X()) <= 1e-8 && Math.abs(nextPoint.y - renderedPoint.Y()) <= 1e-8) return;
-                    renderedPoint.moveTo([nextPoint.x, nextPoint.y], 0);
-                  });
-                  enforcing = false;
+                  const restoreInactiveAttractors = suspendInactiveAttractors(spec, elements, sceneItem.id);
+                  try {
+                    nextSpec.points.forEach(nextPoint => {
+                      const renderedPoint = elements[nextPoint.id];
+                      if (!renderedPoint) return;
+                      if (Math.abs(nextPoint.x - renderedPoint.X()) <= 1e-8 && Math.abs(nextPoint.y - renderedPoint.Y()) <= 1e-8) return;
+                      renderedPoint.moveTo([nextPoint.x, nextPoint.y], 0);
+                    });
+                  } finally {
+                    restoreInactiveAttractors();
+                    enforcing = false;
+                  }
                 });
               }
-              if (!directInteractionLocked && sceneItem.constraint !== 'derived') item.on('up', () => interactionCallbacksRef.current.onPointMove?.(sceneItem.id, item.X(), item.Y()));
+              if (!directInteractionLocked && sceneItem.constraint !== 'derived') item.on('up', () => {
+                const finalX = item.X();
+                const finalY = item.Y();
+                const released = releaseAuthoredAttraction(sceneItem, elements);
+                const releasedOthers = releaseInactiveAttractions(spec, elements, sceneItem.id);
+                if (released || releasedOthers) board.update();
+                interactionCallbacksRef.current.onPointMove?.(sceneItem.id, finalX, finalY);
+              });
             } else if ('kind' in sceneItem) {
               elements[sceneItem.id] = createElement(
                 board,
@@ -1163,6 +1289,7 @@ const DiagramRendererContent: React.FC<DiagramRendererProps> = ({
             const keyboardAdjust = 'constraint' in sceneItem && !directInteractionLocked && sceneItem.constraint !== 'derived'
               ? (key: 'ArrowLeft' | 'ArrowRight' | 'ArrowUp' | 'ArrowDown' | 'Home' | 'End', largeStep: boolean) => {
                 if (key === 'Home' || key === 'End') return;
+                releaseInactiveAttractions(spec, elements, sceneItem.id);
                 const step = (bounds[2] - bounds[0]) / (largeStep ? 20 : 100);
                 const dx = key === 'ArrowLeft' ? -step : key === 'ArrowRight' ? step : 0;
                 const dy = key === 'ArrowDown' ? -step : key === 'ArrowUp' ? step : 0;
@@ -1177,11 +1304,17 @@ const DiagramRendererContent: React.FC<DiagramRendererProps> = ({
                     : slider),
                 };
                 const nextSpec = withMovedPoint(liveSpec, sceneItem.id, requested.x, requested.y);
-                nextSpec.points.forEach(nextPoint => {
-                  const renderedPoint = elements[nextPoint.id];
-                  if (!renderedPoint) return;
-                  renderedPoint.moveTo([nextPoint.x, nextPoint.y], 0);
-                });
+                const restoreInactiveAttractors = suspendInactiveAttractors(spec, elements, sceneItem.id);
+                try {
+                  nextSpec.points.forEach(nextPoint => {
+                    const renderedPoint = elements[nextPoint.id];
+                    if (!renderedPoint) return;
+                    renderedPoint.moveTo([nextPoint.x, nextPoint.y], 0);
+                  });
+                } finally {
+                  restoreInactiveAttractors();
+                }
+                releaseAuthoredAttraction(sceneItem, elements);
                 board.update();
                 interactionCallbacksRef.current.onPointMove?.(sceneItem.id, element.X(), element.Y());
                 const node = element.rendNode as HTMLElement | undefined;
@@ -1224,6 +1357,27 @@ const DiagramRendererContent: React.FC<DiagramRendererProps> = ({
               setTargetHighlight,
             );
             synchronizeElementAndLabelHover(element, sceneItem);
+          });
+
+          // Bind point attractors dynamically after all elements are created to avoid creation-order crashes
+          spec.points.forEach(point => {
+            const element = elements[point.id];
+            if (!element) return;
+            const directInteractionLocked = point.locked || !point.selection.selectable;
+            if (directInteractionLocked) {
+              if (element.visProp) {
+                element.visProp.attractors = [];
+              }
+              return;
+            }
+            const attractors = point.attractorIds?.map(id => elements[id]).filter(Boolean) ?? [];
+            element.setAttribute({
+              attractorDistance: point.attractorDistance ?? 0.4,
+              snatchDistance: point.snatchDistance ?? 0.6,
+            });
+            if (element.visProp) {
+              element.visProp.attractors = attractors;
+            }
           });
         }}
           onUpdate={(_board, elements, theme, isStep, isHL) => {
@@ -1290,7 +1444,7 @@ const DiagramRendererContent: React.FC<DiagramRendererProps> = ({
             };
             const hoverColor = item.selection.highlightable === false || item.style?.preserveColorOnHighlight ? theme[item.color] : theme.ocre;
             const nativeLabelVisible = visible && spec.showLabels !== false
-              && (!('constraint' in item) || item.showLabel !== false);
+              && (!('showLabel' in item) || item.showLabel !== false);
             syncNativeElementLabel(element, {
               visible: nativeLabelVisible,
               color,
@@ -1350,13 +1504,7 @@ const DiagramRendererContent: React.FC<DiagramRendererProps> = ({
               const liftedIntoHeader = mode === 'runtime' && headerItemIds.has(item.id);
               element.setAttribute({ ...base, visible: base.visible && !liftedIntoHeader, color, opacity });
               if (item.kind !== 'label') {
-                const hasBraces = typeof item.text === 'string' && item.text.includes('{') && item.text.includes('}');
-                const body = reactiveText(item, elements, spec) ?? (item.kind === 'measurement' || item.properties?.expression || hasBraces
-                  ? measurementText(item, elements, spec)
-                  : item.text || item.label);
-                const textContent = item.kind === 'infoPanel' && item.properties?.title
-                  ? `<strong>${renderKatexTextToHtml(item.properties.title)}</strong><br/>${renderKatexTextToHtml(body)}`
-                  : renderKatexTextToHtml(body);
+                const textContent = annotationTextHtml(item, elements, spec);
                 if (element.__matematikaLastText !== textContent) {
                   if (typeof element.setText === 'function') {
                     element.setText(textContent);
@@ -1368,7 +1516,9 @@ const DiagramRendererContent: React.FC<DiagramRendererProps> = ({
               element.setAttribute({
                 ...base,
                 fillColor: theme[item.color],
-                fillOpacity: (item.style?.fillOpacity ?? 0) * opacity,
+                fillOpacity: externalActive
+                  ? item.style?.highlightFillOpacity ?? 0.2
+                  : (item.style?.fillOpacity ?? 0) * opacity,
                 strokeColor: color,
                 strokeOpacity: (item.style?.strokeOpacity ?? 1) * opacity,
                 strokeWidth: externalActive
@@ -1386,13 +1536,14 @@ const DiagramRendererContent: React.FC<DiagramRendererProps> = ({
               });
             }
           });
+
           const nextLiveVariables = liveVariables(elements, spec);
           const signature = JSON.stringify(nextLiveVariables);
           if (signature !== liveVariablesSignature.current) {
             liveVariablesSignature.current = signature;
             setLiveSceneVariables(nextLiveVariables);
           }
-          }}
+        }}
         >
           <header ref={headerRef} className="pointer-events-none absolute inset-x-0 top-0 z-20 px-5 pt-5 sm:px-8 sm:pt-6" data-diagram-header>
             {spec.note && (

@@ -7,7 +7,7 @@ export const PaschSpec = createDiagramSpec(
   "renderer": "matematika-diagram-renderer-v2",
   "title": "Axioma de Orden IV (de Pasch)",
   "componentId": "axioma-de-orden-iv-de-pasch",
-  "category": "Teoremas",
+  "category": "Axiomas",
   "mode": "simulation",
   "axis": false,
   "grid": false,

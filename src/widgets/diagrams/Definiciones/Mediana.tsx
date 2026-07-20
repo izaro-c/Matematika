@@ -202,7 +202,7 @@ export const MedianaSpec = createDiagramSpec(
     {
       "id": "triangle",
       "label": "Triángulo ABC",
-      "color": "carbon",
+      "color": "musgo",
       "layerId": "geometry",
       "order": 340,
       "visible": true,
@@ -229,7 +229,7 @@ export const MedianaSpec = createDiagramSpec(
     },
     {
       "id": "Ma",
-      "label": "$M_{bc}$",
+      "label": "Punto medio de BC",
       "color": "pizarra",
       "layerId": "geometry",
       "order": 350,
@@ -255,7 +255,7 @@ export const MedianaSpec = createDiagramSpec(
     },
     {
       "id": "Mb",
-      "label": "$M_{ac}$",
+      "label": "Punto medio de CA",
       "color": "pizarra",
       "layerId": "geometry",
       "order": 360,
@@ -281,7 +281,7 @@ export const MedianaSpec = createDiagramSpec(
     },
     {
       "id": "Mc",
-      "label": "$M_{ab}$",
+      "label": "Punto medio de AB",
       "color": "pizarra",
       "layerId": "geometry",
       "order": 370,
@@ -324,7 +324,7 @@ export const MedianaSpec = createDiagramSpec(
       "target": false,
       "style": {
         "strokeWidth": 2.4,
-        "highlightStrokeWidth": 4.5,
+        "highlightStrokeWidth": 3,
         "preserveColorOnHighlight": true
       },
       "kind": "segment",
@@ -352,7 +352,7 @@ export const MedianaSpec = createDiagramSpec(
       "target": false,
       "style": {
         "strokeWidth": 2.4,
-        "highlightStrokeWidth": 4.5,
+        "highlightStrokeWidth": 3,
         "preserveColorOnHighlight": true
       },
       "kind": "segment",
@@ -380,7 +380,7 @@ export const MedianaSpec = createDiagramSpec(
       "target": false,
       "style": {
         "strokeWidth": 2.4,
-        "highlightStrokeWidth": 4.5,
+        "highlightStrokeWidth": 3,
         "preserveColorOnHighlight": true
       },
       "kind": "segment",
@@ -467,6 +467,36 @@ export const MedianaSpec = createDiagramSpec(
         "G",
         "Ma"
       ]
+    },
+    {
+      "id": "ratio",
+      "label": "Propiedad del baricentro",
+      "color": "musgo",
+      "layerId": "annotations",
+      "order": 440,
+      "visible": true,
+      "locked": false,
+      "groupIds": [],
+      "selection": {
+        "selectable": true,
+        "ariaLabel": "Propiedad del baricentro",
+        "role": "annotation"
+      },
+      "target": false,
+      "style": {
+        "preserveColorOnHighlight": true
+      },
+      "kind": "infoPanel",
+      "refs": [],
+      "text": "En cada mediana, vértice–G : G–punto medio = 2 : 1.",
+      "properties": {
+        "title": "Propiedad del baricentro",
+        "anchorMode": "viewport",
+        "viewportPosition": [
+          0.98,
+          0.03
+        ]
+      }
     }
   ],
   "sliders": [],

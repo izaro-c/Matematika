@@ -4,6 +4,7 @@ import {
   KIND_LABELS,
   normalizedToolReferences,
   toolReferenceLabel,
+  toolReferencePurpose,
   toolReferenceCandidates,
   toolReferencesAreReady,
   updateToolReference,
@@ -51,16 +52,18 @@ export const DiagramToolReferencePicker: React.FC<DiagramToolReferencePickerProp
       <div className="mt-3 grid gap-2 sm:grid-cols-2">
         {normalizedRefs.map((ref, index) => {
           const referenceLabel = toolReferenceLabel(tool, index);
+          const referencePurpose = toolReferencePurpose(tool, index);
           return (
-            <label key={index} className="text-[10px] font-bold text-carbon/60">
-              {referenceLabel}
+            <label key={index} className="rounded border border-carbon/10 bg-lienzo/70 p-2 text-[10px] font-bold text-carbon/60">
+              <span className="block">{index + 1}. {referenceLabel}</span>
+              <span className="mt-0.5 block min-h-7 text-[9px] font-normal leading-relaxed text-carbon/45">{referencePurpose}</span>
               <select
                 aria-label={`${referenceLabel} para ${KIND_LABELS[tool]}`}
                 value={ref}
                 onChange={event => onRefsChange(updateToolReference(tool, normalizedRefs, index, event.target.value))}
                 className="mt-1 w-full rounded border border-carbon/15 bg-lienzo p-1.5 text-xs font-normal text-carbon"
               >
-                <option value="">Seleccionar {candidateKind}</option>
+                <option value="">Seleccionar {candidateKind} para este propósito…</option>
                 {candidates.map(candidate => {
                   const usedElsewhere = normalizedRefs.some((selectedRef, selectedIndex) => selectedIndex !== index && selectedRef === candidate.id);
                   return (

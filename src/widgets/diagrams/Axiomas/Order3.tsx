@@ -7,7 +7,7 @@ export const Order3Spec = createDiagramSpec(
   "renderer": "matematika-diagram-renderer-v2",
   "title": "Axioma de Orden III",
   "componentId": "axioma-de-orden-iii",
-  "category": "Teoremas",
+  "category": "Axiomas",
   "mode": "simulation",
   "axis": false,
   "grid": false,

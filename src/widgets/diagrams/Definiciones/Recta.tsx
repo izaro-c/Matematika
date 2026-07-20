@@ -132,6 +132,36 @@ export const RectaSpec = createDiagramSpec(
         "A",
         "B"
       ]
+    },
+    {
+      "id": "lineInfo",
+      "label": "Incidencia",
+      "color": "musgo",
+      "layerId": "annotations",
+      "order": 730,
+      "visible": true,
+      "locked": false,
+      "groupIds": [],
+      "selection": {
+        "selectable": true,
+        "ariaLabel": "Incidencia",
+        "role": "annotation"
+      },
+      "target": false,
+      "style": {
+        "preserveColorOnHighlight": true
+      },
+      "kind": "infoPanel",
+      "refs": [],
+      "text": "Dos puntos distintos determinan una única recta.",
+      "properties": {
+        "title": "Incidencia",
+        "anchorMode": "viewport",
+        "viewportPosition": [
+          0.98,
+          0.03
+        ]
+      }
     }
   ],
   "sliders": [],

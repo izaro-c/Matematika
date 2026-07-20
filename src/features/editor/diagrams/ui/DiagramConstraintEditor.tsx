@@ -3,55 +3,50 @@ import type { VisualConstraint, VisualDiagramModel, VisualPoint } from '../model
 import { updatePoint } from '../model/commands';
 import { CONSTRAINT_OPTIONS, constraintPresentation, defaultConstraintRefs, withConstraintDependencies } from '../model/constraintOptions';
 import { removeConstraintFromModel } from '../model/segmentLengthConstraints';
+import { DiagramExpressionField } from './DiagramExpressionField';
+
+function equalLengthReferenceCandidates(model: VisualDiagramModel, constraint: VisualConstraint, index: number) {
+  if (index === 1) {
+    return model.points.filter(candidate => model.elements.some(element => (
+      element.kind === 'segment'
+      && element.refs.includes(constraint.refs[0])
+      && element.refs.includes(candidate.id)
+    )));
+  }
+  if (index !== 2) return [...model.points, ...model.elements];
+  const targetSegment = model.elements.find(element => (
+    element.kind === 'segment'
+    && element.refs.includes(constraint.refs[0])
+    && element.refs.includes(constraint.refs[1])
+  ));
+  return model.elements.filter(element => element.kind === 'segment' && element.id !== targetSegment?.id);
+}
+
+function equalAngleReferenceCandidates(model: VisualDiagramModel, constraint: VisualConstraint, index: number) {
+  const targetAngles = model.elements.filter(element => (
+    (element.kind === 'angle' || element.kind === 'nonReflexAngle')
+    && (element.refs[0] === constraint.refs[0] || element.refs[2] === constraint.refs[0])
+  ));
+  if (index === 1) return model.points.filter(candidate => targetAngles.some(angle => angle.refs[1] === candidate.id));
+  if (index === 2) {
+    return model.points.filter(candidate => targetAngles.some(angle => (
+      angle.refs[1] === constraint.refs[1]
+      && candidate.id !== constraint.refs[0]
+      && (angle.refs[0] === candidate.id || angle.refs[2] === candidate.id)
+    )));
+  }
+  if (index === 3) {
+    const targetAngle = targetAngles.find(angle => angle.refs[1] === constraint.refs[1] && angle.refs.includes(constraint.refs[2]));
+    return model.elements.filter(element => element.id !== targetAngle?.id && element.kind === targetAngle?.kind && !element.refs.includes(constraint.refs[0]));
+  }
+  return index === 4 ? targetAngles : [...model.points, ...model.elements];
+}
 
 function referenceCandidates(model: VisualDiagramModel, constraint: VisualConstraint, index: number) {
   if (index === 0) return model.points;
   if (constraint.kind === 'on' && index === 1) return model.elements;
-  if (constraint.kind === 'equalLength') {
-    if (index === 1) {
-      return model.points.filter(candidate => model.elements.some(element => (
-        element.kind === 'segment'
-        && element.refs.includes(constraint.refs[0])
-        && element.refs.includes(candidate.id)
-      )));
-    }
-    if (index === 2) {
-      const targetSegment = model.elements.find(element => (
-        element.kind === 'segment'
-        && element.refs.includes(constraint.refs[0])
-        && element.refs.includes(constraint.refs[1])
-      ));
-      return model.elements.filter(element => element.kind === 'segment' && element.id !== targetSegment?.id);
-    }
-  }
-  if (constraint.kind === 'equalAngle') {
-    const targetAngles = model.elements.filter(element => (
-      (element.kind === 'angle' || element.kind === 'nonReflexAngle')
-      && (element.refs[0] === constraint.refs[0] || element.refs[2] === constraint.refs[0])
-    ));
-    if (index === 1) {
-      return model.points.filter(candidate => targetAngles.some(angle => angle.refs[1] === candidate.id));
-    }
-    if (index === 2) {
-      return model.points.filter(candidate => targetAngles.some(angle => (
-        angle.refs[1] === constraint.refs[1]
-        && candidate.id !== constraint.refs[0]
-        && (angle.refs[0] === candidate.id || angle.refs[2] === candidate.id)
-      )));
-    }
-    if (index === 3) {
-      const targetAngle = targetAngles.find(angle => (
-        angle.refs[1] === constraint.refs[1]
-        && angle.refs.includes(constraint.refs[2])
-      ));
-      return model.elements.filter(element => (
-        element.id !== targetAngle?.id
-        && element.kind === targetAngle?.kind
-        && !element.refs.includes(constraint.refs[0])
-      ));
-    }
-    if (index === 4) return targetAngles;
-  }
+  if (constraint.kind === 'equalLength') return equalLengthReferenceCandidates(model, constraint, index);
+  if (constraint.kind === 'equalAngle') return equalAngleReferenceCandidates(model, constraint, index);
   if (constraint.kind === 'midpoint') {
     return model.points.filter(candidate => !constraint.refs.slice(0, index).includes(candidate.id));
   }
@@ -188,9 +183,7 @@ export const DiagramConstraintEditor: React.FC<DiagramConstraintEditorProps> = (
                 </label>
               )}
               {constraint.kind === 'expression' && (
-                <label className="block text-[10px] font-bold text-carbon/60">Expresión conservada
-                  <input aria-label={`Expresión de ${constraint.id}`} className="mt-1 w-full rounded border border-carbon/15 bg-lienzo p-1.5 font-mono text-xs" value={constraint.expression ?? ''} onChange={event => onModelEdit({ ...model, constraints: model.constraints?.map(item => item.id === constraint.id ? { ...item, expression: event.target.value } : item) })} />
-                </label>
+                <DiagramExpressionField model={model} label="Expresión conservada" ariaLabel={`Expresión de ${constraint.id}`} value={constraint.expression ?? ''} onChange={value => onModelEdit({ ...model, constraints: model.constraints?.map(item => item.id === constraint.id ? { ...item, expression: value } : item) })} help="La relación usa el mismo lenguaje matemático seguro que fórmulas, curvas y condiciones de visibilidad." />
               )}
               <div className="flex items-center justify-between gap-2">
                 <label className="flex items-start gap-1.5 text-[10px] text-carbon">

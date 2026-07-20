@@ -7,7 +7,7 @@ export const SASSpec = createDiagramSpec(
   "renderer": "matematika-diagram-renderer-v2",
   "title": "Axioma de Congruencia V",
   "componentId": "axioma-de-congruencia-v",
-  "category": "Teoremas",
+  "category": "Axiomas",
   "mode": "simulation",
   "axis": false,
   "grid": false,

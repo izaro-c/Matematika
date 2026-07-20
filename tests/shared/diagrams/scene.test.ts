@@ -7,8 +7,10 @@ import {
   migrateDiagramSpec,
   offscreenItemIds,
   recoverViewport,
+  resolvePointCoordinates,
   zoomViewport,
 } from '../../../src/shared/diagrams/public';
+import { TrianguloSpec } from '../../../src/widgets/diagrams/Definiciones/Triangulo';
 
 const spec = migrateDiagramSpec(v2Fixture).spec;
 
@@ -74,6 +76,54 @@ describe('shared diagram scene semantics', () => {
     const constructionIds = createSceneConstructionPlan(derivedSpec).map(entry => entry.item.id);
     expect(visualIds.indexOf('lineAfterMidpoint')).toBeLessThan(visualIds.indexOf('midAB'));
     expect(constructionIds.indexOf('midAB')).toBeLessThan(constructionIds.indexOf('lineAfterMidpoint'));
+  });
+
+  it('keeps reciprocal drag attractors out of the construction order', () => {
+    const segment = spec.elements.find(item => item.id === 'segAB')!;
+    const reciprocalSpec = {
+      ...spec,
+      points: spec.points.map(point => {
+        if (point.id === 'pA') return { ...point, attractorIds: ['lineAfterMidpoint'] };
+        if (point.id === 'pB') return { ...point, attractorIds: ['segCA'] };
+        return point;
+      }),
+      elements: [
+        ...spec.elements,
+        { ...segment, id: 'midAB', label: 'Punto medio AB', kind: 'midpoint' as const, refs: ['pA', 'pB'], order: 100 },
+        { ...segment, id: 'lineAfterMidpoint', label: 'Mediatriz AB', kind: 'perpendicular' as const, refs: ['pA', 'pB', 'midAB'], order: -10 },
+        { ...segment, id: 'segCA', label: 'Segmento CA', refs: ['pC', 'pA'], order: 90 },
+      ],
+      dependencies: [
+        { sourceId: 'lineAfterMidpoint', targetId: 'pA', relation: 'constraint' as const },
+        { sourceId: 'segCA', targetId: 'pB', relation: 'constraint' as const },
+      ],
+    };
+
+    const constructionIds = createSceneConstructionPlan(reciprocalSpec).map(entry => entry.item.id);
+
+    expect(constructionIds.indexOf('midAB')).toBeLessThan(constructionIds.indexOf('lineAfterMidpoint'));
+    expect(new Set(constructionIds).size).toBe(constructionIds.length);
+    expect(constructionIds).toHaveLength(reciprocalSpec.points.length + reciprocalSpec.elements.length + reciprocalSpec.sliders.length);
+  });
+
+  it('computes exact equilateral magnetic targets for every triangle vertex', () => {
+    const oppositeVertices: Record<string, [string, string]> = {
+      A: ['B', 'C'],
+      B: ['A', 'C'],
+      C: ['A', 'B'],
+    };
+    for (const pointId of ['A', 'B', 'C']) {
+      const point = TrianguloSpec.points.find(item => item.id === pointId)!;
+      const equilateralTarget = resolvePointCoordinates(TrianguloSpec, point.attractorIds![0])!;
+      const [firstId, secondId] = oppositeVertices[pointId];
+      const first = resolvePointCoordinates(TrianguloSpec, firstId)!;
+      const second = resolvePointCoordinates(TrianguloSpec, secondId)!;
+      const targetToFirst = Math.hypot(equilateralTarget.x - first.x, equilateralTarget.y - first.y);
+      const targetToSecond = Math.hypot(equilateralTarget.x - second.x, equilateralTarget.y - second.y);
+      const oppositeSide = Math.hypot(second.x - first.x, second.y - first.y);
+      expect(targetToFirst).toBeCloseTo(oppositeSide, 10);
+      expect(targetToSecond).toBeCloseTo(oppositeSide, 10);
+    }
   });
 
   it('treats a point with the fixed constraint as immovable scene state', () => {
