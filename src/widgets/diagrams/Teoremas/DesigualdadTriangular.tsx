@@ -1,133 +1,580 @@
-import { MathBoard } from '@/shared/diagrams/core/MathBoard';
-import {
-  createPoint,
-  createPolygon,
-  createSegment,
-  createText,
-} from '@/shared/diagrams/core/MathFactory';
+import { createDiagramSpec, DiagramRenderer } from '@/shared/diagrams/public';
 
-export const DesigualdadTriangular = () => {
-  const onInit = (board: any, els: any, theme: any) => {
-    const pointOptions = {
-      size: 5,
-      fillColor: theme.carbon,
-      strokeColor: theme.carbon,
-      showInfobox: false,
-      snapToGrid: true,
-      snapSizeX: 0.5,
-      snapSizeY: 0.5,
-    };
-    const A = createPoint(board, [-2.5, -2], { name: 'A', ...pointOptions }, theme);
-    const B = createPoint(board, [2.5, -2], { name: 'B', ...pointOptions }, theme);
-    const C = createPoint(board, [0, 2.5], { name: 'C', ...pointOptions }, theme);
+/* @matematika-diagram-spec:start */
+export const DesigualdadTriangularSpec = createDiagramSpec(
+{
+  "version": 2,
+  "renderer": "matematika-diagram-renderer-v2",
+  "title": "Desigualdad triangular",
+  "componentId": "desigualdad-triangular",
+  "category": "Teoremas",
+  "mode": "simulation",
+  "axis": false,
+  "grid": false,
+  "viewport": {
+    "bounds": [
+      -5,
+      5,
+      5,
+      -4.5
+    ],
+    "home": [
+      -5,
+      5,
+      5,
+      -4.5
+    ],
+    "minZoom": 0.55,
+    "maxZoom": 5,
+    "padding": 0.16
+  },
+  "layers": [
+    {
+      "id": "geometry",
+      "label": "Geometría",
+      "order": 0,
+      "visible": true,
+      "locked": false
+    },
+    {
+      "id": "annotations",
+      "label": "Lecturas y controles",
+      "order": 1,
+      "visible": true,
+      "locked": false
+    }
+  ],
+  "groups": [
+    {
+      "id": "gTriangle",
+      "label": "Triángulo",
+      "memberIds": [
+        "poly",
+        "AB",
+        "BC",
+        "CA"
+      ],
+      "visible": true,
+      "locked": false,
+      "selection": {
+        "selectable": true,
+        "ariaLabel": "Triángulo",
+        "role": "primary"
+      },
+      "target": true,
+      "targetId": "triangulo",
+      "color": "terracota"
+    },
+    {
+      "id": "gSides",
+      "label": "Lados",
+      "memberIds": [
+        "AB",
+        "BC",
+        "CA"
+      ],
+      "visible": true,
+      "locked": false,
+      "selection": {
+        "selectable": true,
+        "ariaLabel": "Lados",
+        "role": "primary"
+      },
+      "target": true,
+      "targetId": "lados",
+      "color": "terracota"
+    },
+    {
+      "id": "gA",
+      "label": "Lado a",
+      "memberIds": [
+        "BC",
+        "dBC"
+      ],
+      "visible": true,
+      "locked": false,
+      "selection": {
+        "selectable": true,
+        "ariaLabel": "Lado a",
+        "role": "primary"
+      },
+      "target": true,
+      "targetId": "lado-a",
+      "color": "terracota"
+    },
+    {
+      "id": "gB",
+      "label": "Lado b",
+      "memberIds": [
+        "CA",
+        "dCA"
+      ],
+      "visible": true,
+      "locked": false,
+      "selection": {
+        "selectable": true,
+        "ariaLabel": "Lado b",
+        "role": "primary"
+      },
+      "target": true,
+      "targetId": "lado-b",
+      "color": "terracota"
+    },
+    {
+      "id": "gC",
+      "label": "Lado c",
+      "memberIds": [
+        "AB",
+        "dAB"
+      ],
+      "visible": true,
+      "locked": false,
+      "selection": {
+        "selectable": true,
+        "ariaLabel": "Lado c",
+        "role": "primary"
+      },
+      "target": true,
+      "targetId": "lado-c",
+      "color": "terracota"
+    },
+    {
+      "id": "gIneq",
+      "label": "Desigualdad triangular",
+      "memberIds": [
+        "poly",
+        "AB",
+        "BC",
+        "CA",
+        "slack"
+      ],
+      "visible": true,
+      "locked": false,
+      "selection": {
+        "selectable": true,
+        "ariaLabel": "Desigualdad triangular",
+        "role": "primary"
+      },
+      "target": true,
+      "targetId": "desigualdad",
+      "color": "terracota"
+    }
+  ],
+  "points": [
+    {
+      "id": "A",
+      "label": "A",
+      "color": "terracota",
+      "layerId": "geometry",
+      "order": 1310,
+      "visible": true,
+      "locked": false,
+      "groupIds": [],
+      "selection": {
+        "selectable": true,
+        "ariaLabel": "Mover el punto A",
+        "role": "primary"
+      },
+      "target": true,
+      "targetId": "A",
+      "style": {
+        "pointSize": 7,
+        "highlightPointSize": 10,
+        "preserveColorOnHighlight": true
+      },
+      "x": -3,
+      "y": -2,
+      "showLabel": true,
+      "fixed": false,
+      "constraint": "constrained",
+      "constraintIds": [
+        "sameA"
+      ],
+      "snapToGrid": true,
+      "snapSize": 0.25
+    },
+    {
+      "id": "B",
+      "label": "B",
+      "color": "terracota",
+      "layerId": "geometry",
+      "order": 1320,
+      "visible": true,
+      "locked": false,
+      "groupIds": [],
+      "selection": {
+        "selectable": true,
+        "ariaLabel": "Mover el punto B",
+        "role": "primary"
+      },
+      "target": true,
+      "targetId": "B",
+      "style": {
+        "pointSize": 7,
+        "highlightPointSize": 10,
+        "preserveColorOnHighlight": true
+      },
+      "x": 3,
+      "y": -1.7,
+      "showLabel": true,
+      "fixed": false,
+      "constraint": "constrained",
+      "constraintIds": [
+        "sameB"
+      ],
+      "snapToGrid": true,
+      "snapSize": 0.25
+    },
+    {
+      "id": "C",
+      "label": "C",
+      "color": "terracota",
+      "layerId": "geometry",
+      "order": 1330,
+      "visible": true,
+      "locked": false,
+      "groupIds": [],
+      "selection": {
+        "selectable": true,
+        "ariaLabel": "Mover el punto C",
+        "role": "primary"
+      },
+      "target": true,
+      "targetId": "C",
+      "style": {
+        "pointSize": 7,
+        "highlightPointSize": 10,
+        "preserveColorOnHighlight": true
+      },
+      "x": 0.3,
+      "y": 2.6,
+      "showLabel": true,
+      "fixed": false,
+      "constraint": "constrained",
+      "constraintIds": [
+        "sameC"
+      ],
+      "snapToGrid": true,
+      "snapSize": 0.25
+    }
+  ],
+  "elements": [
+    {
+      "id": "poly",
+      "label": "Triángulo ABC",
+      "color": "terracota",
+      "layerId": "geometry",
+      "order": 1340,
+      "visible": true,
+      "locked": false,
+      "groupIds": [
+        "gTriangle",
+        "gIneq"
+      ],
+      "selection": {
+        "selectable": true,
+        "ariaLabel": "Triángulo ABC",
+        "role": "secondary"
+      },
+      "target": false,
+      "style": {
+        "strokeWidth": 3,
+        "fillOpacity": 0.1,
+        "highlightFillOpacity": 0.28,
+        "preserveColorOnHighlight": true
+      },
+      "kind": "polygon",
+      "refs": [
+        "A",
+        "B",
+        "C"
+      ]
+    },
+    {
+      "id": "AB",
+      "label": "c = AB",
+      "color": "terracota",
+      "layerId": "geometry",
+      "order": 1350,
+      "visible": true,
+      "locked": false,
+      "groupIds": [
+        "gTriangle",
+        "gSides",
+        "gC",
+        "gIneq"
+      ],
+      "selection": {
+        "selectable": true,
+        "ariaLabel": "c = AB",
+        "role": "secondary"
+      },
+      "target": false,
+      "style": {
+        "strokeWidth": 2.4,
+        "highlightStrokeWidth": 3,
+        "preserveColorOnHighlight": true
+      },
+      "kind": "segment",
+      "refs": [
+        "A",
+        "B"
+      ]
+    },
+    {
+      "id": "BC",
+      "label": "a = BC",
+      "color": "terracota",
+      "layerId": "geometry",
+      "order": 1360,
+      "visible": true,
+      "locked": false,
+      "groupIds": [
+        "gTriangle",
+        "gSides",
+        "gA",
+        "gIneq"
+      ],
+      "selection": {
+        "selectable": true,
+        "ariaLabel": "a = BC",
+        "role": "secondary"
+      },
+      "target": false,
+      "style": {
+        "strokeWidth": 2.4,
+        "highlightStrokeWidth": 3,
+        "preserveColorOnHighlight": true
+      },
+      "kind": "segment",
+      "refs": [
+        "B",
+        "C"
+      ]
+    },
+    {
+      "id": "CA",
+      "label": "b = CA",
+      "color": "terracota",
+      "layerId": "geometry",
+      "order": 1370,
+      "visible": true,
+      "locked": false,
+      "groupIds": [
+        "gTriangle",
+        "gSides",
+        "gB",
+        "gIneq"
+      ],
+      "selection": {
+        "selectable": true,
+        "ariaLabel": "b = CA",
+        "role": "secondary"
+      },
+      "target": false,
+      "style": {
+        "strokeWidth": 2.4,
+        "highlightStrokeWidth": 3,
+        "preserveColorOnHighlight": true
+      },
+      "kind": "segment",
+      "refs": [
+        "C",
+        "A"
+      ]
+    },
+    {
+      "id": "dAB",
+      "label": "c",
+      "color": "pizarra",
+      "layerId": "geometry",
+      "order": 1380,
+      "visible": true,
+      "locked": false,
+      "groupIds": [
+        "gC"
+      ],
+      "selection": {
+        "selectable": true,
+        "ariaLabel": "c",
+        "role": "secondary"
+      },
+      "target": false,
+      "style": {
+        "strokeWidth": 2.4,
+        "highlightStrokeWidth": 3,
+        "preserveColorOnHighlight": true
+      },
+      "kind": "dimensionLine",
+      "refs": [
+        "A",
+        "B"
+      ],
+      "text": "c = {value}",
+      "properties": {
+        "precision": 2,
+        "offset": 0.35
+      }
+    },
+    {
+      "id": "dBC",
+      "label": "a",
+      "color": "pizarra",
+      "layerId": "geometry",
+      "order": 1390,
+      "visible": true,
+      "locked": false,
+      "groupIds": [
+        "gA"
+      ],
+      "selection": {
+        "selectable": true,
+        "ariaLabel": "a",
+        "role": "secondary"
+      },
+      "target": false,
+      "style": {
+        "strokeWidth": 2.4,
+        "highlightStrokeWidth": 3,
+        "preserveColorOnHighlight": true
+      },
+      "kind": "dimensionLine",
+      "refs": [
+        "B",
+        "C"
+      ],
+      "text": "a = {value}",
+      "properties": {
+        "precision": 2,
+        "offset": 0.35
+      }
+    },
+    {
+      "id": "dCA",
+      "label": "b",
+      "color": "pizarra",
+      "layerId": "geometry",
+      "order": 1400,
+      "visible": true,
+      "locked": false,
+      "groupIds": [
+        "gB"
+      ],
+      "selection": {
+        "selectable": true,
+        "ariaLabel": "b",
+        "role": "secondary"
+      },
+      "target": false,
+      "style": {
+        "strokeWidth": 2.4,
+        "highlightStrokeWidth": 3,
+        "preserveColorOnHighlight": true
+      },
+      "kind": "dimensionLine",
+      "refs": [
+        "C",
+        "A"
+      ],
+      "text": "b = {value}",
+      "properties": {
+        "precision": 2,
+        "offset": 0.35
+      }
+    },
+    {
+      "id": "slack",
+      "label": "Margen de la desigualdad",
+      "color": "terracota",
+      "layerId": "annotations",
+      "order": 1410,
+      "visible": true,
+      "locked": false,
+      "groupIds": [
+        "gIneq"
+      ],
+      "selection": {
+        "selectable": true,
+        "ariaLabel": "Margen de la desigualdad",
+        "role": "annotation"
+      },
+      "target": false,
+      "style": {
+        "preserveColorOnHighlight": true
+      },
+      "kind": "infoPanel",
+      "refs": [],
+      "text": "a + b − c = {value}",
+      "properties": {
+        "expression": "BC.length + CA.length - AB.length",
+        "precision": 2,
+        "title": "Margen de la desigualdad",
+        "anchorMode": "viewport",
+        "viewportPosition": [
+          0.98,
+          0.03
+        ]
+      }
+    }
+  ],
+  "sliders": [],
+  "steps": [],
+  "constraints": [
+    {
+      "id": "sameA",
+      "label": "A no cruza BC",
+      "kind": "sameSide",
+      "refs": [
+        "A",
+        "B",
+        "C"
+      ],
+      "enabled": true
+    },
+    {
+      "id": "sameB",
+      "label": "B no cruza CA",
+      "kind": "sameSide",
+      "refs": [
+        "B",
+        "C",
+        "A"
+      ],
+      "enabled": true
+    },
+    {
+      "id": "sameC",
+      "label": "C no cruza AB",
+      "kind": "sameSide",
+      "refs": [
+        "C",
+        "A",
+        "B"
+      ],
+      "enabled": true
+    }
+  ],
+  "dependencies": [
+    {
+      "sourceId": "BC",
+      "targetId": "slack",
+      "relation": "expression"
+    },
+    {
+      "sourceId": "CA",
+      "targetId": "slack",
+      "relation": "expression"
+    },
+    {
+      "sourceId": "AB",
+      "targetId": "slack",
+      "relation": "expression"
+    }
+  ],
+  "note": "Mueve los vértices y compara las tres longitudes. El margen a + b − c permanece positivo mientras el triángulo no sea degenerado.",
+  "extensions": {}
+}
+);
+/* @matematika-diagram-spec:end */
 
-    const segAB = createSegment(board, [A, B], { strokeColor: theme.carbon, strokeWidth: 2.5 }, theme);
-    const segBC = createSegment(board, [B, C], { strokeColor: theme.carbon, strokeWidth: 2.5 }, theme);
-    const segCA = createSegment(board, [C, A], { strokeColor: theme.carbon, strokeWidth: 2.5 }, theme);
-    const poly = createPolygon(board, [A, B, C], {
-      fillColor: theme.pavo,
-      fillOpacity: 0.06,
-      borders: { visible: false },
-      vertices: { visible: false },
-    }, theme);
-
-    const mkLabel = (p: any, q: any, offX: number, offY: number) => createText(board, [
-      () => (p.X() + q.X()) / 2 + offX,
-      () => (p.Y() + q.Y()) / 2 + offY,
-      () => p.Dist(q).toFixed(1),
-    ], {
-      fixed: true,
-      fontSize: 15,
-      cssClass: 'font-serif font-bold',
-      color: theme.carbon,
-      anchorX: 'middle',
-      anchorY: 'middle',
-    }, theme);
-
-    const labAB = mkLabel(A, B, 0, -0.55);
-    const labBC = mkLabel(B, C, 0.55, 0);
-    const labCA = mkLabel(C, A, -0.55, 0);
-
-    const orientation = () => (B.X() - A.X()) * (C.Y() - A.Y()) - (B.Y() - A.Y()) * (C.X() - A.X());
-    const initialOrientation = orientation();
-    const lastValid: Record<string, [number, number]> = { A: [A.X(), A.Y()], B: [B.X(), B.Y()], C: [C.X(), C.Y()] };
-    [A, B, C].forEach((point: any, index: number) => {
-      const name = String.fromCharCode(65 + index);
-      point.on('drag', () => {
-        const current = orientation();
-        const changedSign = (initialOrientation > 0.01 && current < -0.01) || (initialOrientation < -0.01 && current > 0.01);
-        if (Math.abs(current) < 0.01 || changedSign) {
-          point.moveTo(lastValid[name], 0);
-        } else {
-          lastValid[name] = [point.X(), point.Y()];
-        }
-      });
-    });
-
-    const infoText = createText(board, [-4.5, 4.5, () => {
-      const c = A.Dist(B);
-      const a = B.Dist(C);
-      const b = C.Dist(A);
-      const ok1 = a + b > c + 0.001;
-      const ok2 = a + c > b + 0.001;
-      const ok3 = b + c > a + 0.001;
-      const allOk = ok1 && ok2 && ok3;
-      return `<div style="font-family: var(--font-serif); color:${theme.carbon}; font-size:13px; line-height:1.5;">
-        <strong style="font-size: 1.15rem;">Desigualdad Triangular</strong><br/>
-        <span style="color:${ok1 ? theme.musgo : theme.granada};">a + b = ${(a + b).toFixed(1)} ${ok1 ? '>' : '≤'} c = ${c.toFixed(1)}</span><br/>
-        <span style="color:${ok2 ? theme.musgo : theme.granada};">a + c = ${(a + c).toFixed(1)} ${ok2 ? '>' : '≤'} b = ${b.toFixed(1)}</span><br/>
-        <span style="color:${ok3 ? theme.musgo : theme.granada};">b + c = ${(b + c).toFixed(1)} ${ok3 ? '>' : '≤'} a = ${a.toFixed(1)}</span><br/>
-        <strong style="color:${allOk ? theme.musgo : theme.granada};">${allOk ? 'Triángulo válido' : 'Triángulo degenerado'}</strong>
-      </div>`;
-    }], {
-      fixed: true,
-      anchorX: 'left',
-      anchorY: 'top',
-    }, theme);
-
-    Object.assign(els, { A, B, C, poly, segAB, segBC, segCA, labAB, labBC, labCA, infoText });
-  };
-
-  const onUpdate = (_board: any, els: any, theme: any, _isStep: any, isHL: any) => {
-    const hTri = isHL('triangulo');
-    const hLados = isHL('lados');
-    const hDesig = isHL('desigualdad');
-    const hLadoA = isHL('lado-a');
-    const hLadoB = isHL('lado-b');
-    const hLadoC = isHL('lado-c');
-    const anyH = hTri || hLados || hDesig || hLadoA || hLadoB || hLadoC;
-    const showAll = !anyH;
-    const muted = anyH ? 0.12 : 1;
-
-    const sideStyle = (seg: any, lab: any, active: boolean) => {
-      seg.setAttribute({
-        strokeOpacity: showAll ? 1 : muted,
-        strokeColor: active ? theme.terracota : theme.carbon,
-        strokeWidth: active ? 4 : 2.5,
-      });
-      lab.setAttribute({ visible: showAll || active, color: active ? theme.terracota : theme.carbon });
-    };
-
-    sideStyle(els.segAB, els.labAB, hLadoC || hLados || hDesig);
-    sideStyle(els.segBC, els.labBC, hLadoA || hLados || hDesig);
-    sideStyle(els.segCA, els.labCA, hLadoB || hLados || hDesig);
-
-    [els.A, els.B, els.C].forEach((point: any) => point.setAttribute({
-      strokeOpacity: showAll ? 1 : muted,
-      fillOpacity: showAll ? 1 : muted,
-      size: hTri ? 7 : 5,
-      fillColor: hTri ? theme.terracota : theme.carbon,
-      strokeColor: hTri ? theme.terracota : theme.carbon,
-    }));
-
-    els.poly.setAttribute({ fillOpacity: hTri ? 0.18 : 0.06 });
-  };
-
-  return (
-    <MathBoard boundingbox={[-5, 5, 5, -5]} onInit={onInit} onUpdate={onUpdate}>
-      <div className="absolute top-2 left-3 z-10 text-xs font-serif italic text-pizarra/50">
-        La suma de dos lados siempre supera al tercero
-      </div>
-    </MathBoard>
-  );
-};
+export const DesigualdadTriangular = () => <DiagramRenderer spec={DesigualdadTriangularSpec} />;

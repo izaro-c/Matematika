@@ -50,17 +50,17 @@ export function diagramConstraint(id: string, label: string, kind: VisualConstra
   return { id, label, kind, refs, enabled: true, ...extra };
 }
 
+function defaultElementStyle(kind: ElementKind): NonNullable<VisualElement['style']> {
+  if (kind === 'angle' || kind === 'nonReflexAngle') return { angleRadius: DEFAULT_ANGLE_RADIUS, preserveColorOnHighlight: true };
+  if (kind === 'rightAngle' || kind === 'perpendicularMark') return { angleRadius: DEFAULT_RIGHT_ANGLE_RADIUS, preserveColorOnHighlight: true };
+  if (kind === 'parallelMark') return { markHeight: 0.42, strokeWidth: 2, highlightStrokeWidth: 3, preserveColorOnHighlight: true };
+  const lineKinds: ElementKind[] = ['segment', 'line', 'ray', 'perpendicular', 'parallel', 'angleBisector', 'poincareGeodesic', 'poincareArc'];
+  if (lineKinds.includes(kind)) return { strokeWidth: 2.4, highlightStrokeWidth: 3, preserveColorOnHighlight: true };
+  return { preserveColorOnHighlight: true };
+}
+
 export function element(id: string, label: string, kind: ElementKind, refs: string[], color: ColorToken, target = true, extra: Partial<VisualElement> = {}): VisualElement {
-  const isLineLike = ['segment', 'line', 'ray', 'perpendicular', 'parallel', 'angleBisector', 'poincareGeodesic', 'poincareArc'].includes(kind);
-  const defaultStyle = kind === 'angle' || kind === 'nonReflexAngle'
-    ? { angleRadius: DEFAULT_ANGLE_RADIUS, preserveColorOnHighlight: true }
-    : kind === 'rightAngle' || kind === 'perpendicularMark'
-      ? { angleRadius: DEFAULT_RIGHT_ANGLE_RADIUS, preserveColorOnHighlight: true }
-      : kind === 'parallelMark'
-        ? { markHeight: 0.42, strokeWidth: 2, highlightStrokeWidth: 3, preserveColorOnHighlight: true }
-      : isLineLike
-        ? { strokeWidth: 2.4, highlightStrokeWidth: 3, preserveColorOnHighlight: true }
-        : { preserveColorOnHighlight: true };
+  const defaultStyle = defaultElementStyle(kind);
   const mergedExtra = {
     ...extra,
     style: { ...defaultStyle, ...extra.style },
@@ -197,12 +197,38 @@ export function elementColorForKind(kind: ElementKind): ColorToken {
   return 'carbon';
 }
 
+export function defaultElementProperties(kind: ElementKind): VisualElement['properties'] | undefined {
+  switch (kind) {
+    case 'intersection': return { restrictToSupports: true };
+    case 'functionCurve': return { expression: 'sin(x)', parameter: 'x', domain: [-5, 5], samples: 128 };
+    case 'parametricCurve': return { xExpression: '3*cos(t)', yExpression: '2*sin(t)', parameter: 't', domain: [0, 2 * Math.PI], samples: 128 };
+    case 'congruenceMark':
+    case 'parallelMark': return { markCount: 1 };
+    case 'measureTicks': return { tickDistance: 2 };
+    case 'grid':
+    case 'areaDecomposition': return { rows: 4, columns: 4 };
+    case 'dimensionLine':
+    case 'measurement': return { precision: 2 };
+    case 'infoPanel': return {
+      anchorMode: 'viewport',
+      viewportPosition: [0.08, 0.22],
+      title: 'Información',
+      infoPanelLayout: 'stack',
+      infoPanelBlocks: [{ id: 'bloque-1', title: 'Lectura', text: 'Contenido por defecto', rules: [] }],
+    };
+    case 'label': return { anchorMode: 'reference', anchorParameter: 0.5 };
+    default: return undefined;
+  }
+}
+
 export function updatePoint(model: VisualDiagramModel, pointId: string, update: Partial<VisualPoint>): VisualDiagramModel {
   const previous = model.points.find(item => item.id === pointId);
   if (!previous) return model;
   const removedConstraintIds = update.constraint && update.constraint !== 'constrained'
     ? new Set(previous.constraintIds ?? [])
     : new Set<string>();
+  const removesMovementAids = Boolean(update.constraint && !['free', 'horizontal', 'vertical', 'constrained'].includes(update.constraint));
+  const removedAttractorIds = removesMovementAids ? new Set(previous.attractorIds ?? []) : new Set<string>();
   const points = model.points.map(item => {
     if (item.id !== pointId) return item;
     if (!update.constraint) return { ...item, ...update };
@@ -225,12 +251,15 @@ export function updatePoint(model: VisualDiagramModel, pointId: string, update: 
     }
     return next;
   });
-  if (removedConstraintIds.size === 0) return { ...model, points };
+  if (removedConstraintIds.size === 0 && removedAttractorIds.size === 0) return { ...model, points };
   return {
     ...model,
     points,
     constraints: model.constraints?.filter(item => !removedConstraintIds.has(item.id)),
-    dependencies: model.dependencies?.filter(item => !item.constraintId || !removedConstraintIds.has(item.constraintId)),
+    dependencies: model.dependencies?.filter(item => (
+      (!item.constraintId || !removedConstraintIds.has(item.constraintId))
+      && !(item.targetId === pointId && item.relation === 'constraint' && !item.constraintId && removedAttractorIds.has(item.sourceId))
+    )),
   };
 }
 
@@ -304,5 +333,32 @@ export function addLabelToElement(model: VisualDiagramModel, sourceId: string): 
         { sourceId, targetId: labelId, relation: 'construction' },
       ],
     },
+  };
+}
+
+/** Elimina elementos y todas sus referencias editoriales sin dejar una spec parcial. */
+export function removeDiagramElements(model: VisualDiagramModel, elementIds: Iterable<string>): VisualDiagramModel {
+  const removedIds = new Set(elementIds);
+  if (removedIds.size === 0) return model;
+  const removedConstraintIds = new Set((model.constraints ?? [])
+    .filter(constraint => constraint.refs.some(ref => removedIds.has(ref)))
+    .map(constraint => constraint.id));
+  return {
+    ...model,
+    elements: model.elements.filter(element => !removedIds.has(element.id)),
+    steps: model.steps.map(item => ({
+      ...item,
+      visibleTargets: item.visibleTargets.filter(id => !removedIds.has(id)),
+      objectStates: item.objectStates
+        ? Object.fromEntries(Object.entries(item.objectStates).filter(([id]) => !removedIds.has(id)))
+        : undefined,
+    })),
+    groups: model.groups.map(group => ({ ...group, memberIds: group.memberIds.filter(id => !removedIds.has(id)) })),
+    constraints: model.constraints?.filter(constraint => !removedConstraintIds.has(constraint.id)),
+    dependencies: model.dependencies?.filter(dependency => (
+      !removedIds.has(dependency.sourceId)
+      && !removedIds.has(dependency.targetId)
+      && (!dependency.constraintId || !removedConstraintIds.has(dependency.constraintId))
+    )),
   };
 }

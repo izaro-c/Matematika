@@ -1,164 +1,497 @@
-import { MathBoard } from '@/shared/diagrams/core/MathBoard';
-import {
-  createPoint, createSegment, createGlider, createPolygon
-} from '@/shared/diagrams/core/MathFactory';
+import { createDiagramSpec, DiagramRenderer } from '@/shared/diagrams/public';
 
-
-
-
-
-export const Mediatriz = () => {
-
-
-
-
-
-
-  const onInit = (board: any, els: any, theme: any) => {
-      void board; void els; void theme;
-      const C_PRIM  = theme.ocre;
-    const C_MED   = theme.terracota;
-    const C_EQ    = theme.salvia;
-    const C_ORTHO = theme.pavo;
-
-    const SNAP = 0.5;
-    const A = createPoint(board, [-3.5, -1], { name: 'A', size: 5, fillColor: C_PRIM, strokeColor: C_PRIM, showInfobox: false, snapToGrid: true, snapSizeX: SNAP, snapSizeY: SNAP }, theme);
-    const B = createPoint(board, [3, 1.5], { name: 'B', size: 5, fillColor: C_PRIM, strokeColor: C_PRIM, showInfobox: false, snapToGrid: true, snapSizeX: SNAP, snapSizeY: SNAP }, theme);
-
-    const segmento = createSegment(board, [A, B], { strokeColor: C_PRIM, strokeWidth: 2.5 }, theme);
-
-    const M = board.create('midpoint', [A, B], { name: 'M', size: 5, fillColor: C_MED, strokeColor: C_MED });
-
-    const mediatriz = board.create('perpendicular', [segmento, M], {
-      strokeColor: C_MED, strokeWidth: 2.5
-    });
-
-    const P = createGlider(board, [0, 3, mediatriz], { name: 'P', size: 4, fillColor: C_EQ, strokeColor: C_EQ }, theme);
-
-    const distPA = createSegment(board, [P, A], { strokeColor: C_EQ, strokeWidth: 2, dash: 2 }, theme);
-    const distPB = createSegment(board, [P, B], { strokeColor: C_EQ, strokeWidth: 2, dash: 2 }, theme);
-
-    const sqSize = 0.45;
-    const segDir = () => {
-      const dx = B.X() - A.X(), dy = B.Y() - A.Y();
-      const len = Math.hypot(dx, dy);
-      if (len < 1e-6) return { x: 1, y: 0 };
-      return { x: dx / len, y: dy / len };
-    };
-    const perpDir = () => {
-      const d = segDir();
-      return { x: -d.y, y: d.x };
-    };
-
-    const sq0 = createPoint(board, [() => M.X(), () => M.Y()], { visible: false }, theme);
-    const sq1 = board.create('point', [
-      () => { const d = segDir(); return M.X() + d.x * sqSize; },
-      () => { const d = segDir(); return M.Y() + d.y * sqSize; }
-    ], { visible: false });
-    const sq2 = board.create('point', [
-      () => { const d = segDir(); const p = perpDir(); return M.X() + d.x * sqSize + p.x * sqSize; },
-      () => { const d = segDir(); const p = perpDir(); return M.Y() + d.y * sqSize + p.y * sqSize; }
-    ], { visible: false });
-    const sq3 = board.create('point', [
-      () => { const p = perpDir(); return M.X() + p.x * sqSize; },
-      () => { const p = perpDir(); return M.Y() + p.y * sqSize; }
-    ], { visible: false });
-
-    const angRecto = createPolygon(board, [sq0, sq1, sq2, sq3], {
-      fillColor: C_ORTHO, fillOpacity: 0.35,
-      strokeColor: C_ORTHO, strokeWidth: 1.5,
-      vertices: { visible: false },
-      borders: { strokeColor: C_ORTHO, strokeWidth: 1.5 },
-      visible: false
-    }, theme);
-
-    const mkTick = (p: any, q: any) => {
-      const mA = createPoint(board, [() => (p.X() + q.X()) / 2, () => (p.Y() + q.Y()) / 2], { visible: false }, theme);
-      const t0 = board.create('point', [
-        () => { const dx = q.X()-p.X(), dy = q.Y()-p.Y(); const len = Math.hypot(dx, dy) || 1; return mA.X() + dy/len * 0.25; },
-        () => { const dx = q.X()-p.X(), dy = q.Y()-p.Y(); const len = Math.hypot(dx, dy) || 1; return mA.Y() - dx/len * 0.25; }
-      ], { visible: false });
-      const t1 = board.create('point', [
-        () => { const dx = q.X()-p.X(), dy = q.Y()-p.Y(); const len = Math.hypot(dx, dy) || 1; return mA.X() - dy/len * 0.25; },
-        () => { const dx = q.X()-p.X(), dy = q.Y()-p.Y(); const len = Math.hypot(dx, dy) || 1; return mA.Y() + dx/len * 0.25; }
-      ], { visible: false });
-      return createSegment(board, [t0, t1], { strokeColor: C_PRIM, strokeWidth: 2.2, visible: false }, theme) as any;
-    };
-
-    const congAM = mkTick(A, M);
-    const congMB = mkTick(M, B);
-
-    const infoText = board.create('text', [
-      -5.5, 5.5,
-      () => {
-        const dPA = P.Dist(A), dPB = P.Dist(B);
-        return `<div style="font-family: var(--font-serif); color: ${theme.carbon}; line-height:1.3;">
-          <strong style="font-size: 1.1rem; color:${theme.terracota};">Equidistancia</strong><br/>
-          <small>PA = ${dPA.toFixed(2)}</small><br/>
-          <small>PB = ${dPB.toFixed(2)}</small><br/>
-          <small style="color:${dPA === dPB ? theme.musgo : theme.granada};">
-            ${Math.abs(dPA - dPB) < 0.01 ? 'PA \u2261 PB' : 'PA \u2260 PB'}
-          </small>
-        </div>`;
+/* @matematika-diagram-spec:start */
+export const MediatrizSpec = createDiagramSpec(
+{
+  "version": 2,
+  "renderer": "matematika-diagram-renderer-v2",
+  "title": "Mediatriz",
+  "componentId": "mediatriz",
+  "category": "Definiciones",
+  "mode": "simulation",
+  "axis": false,
+  "grid": false,
+  "showLabels": true,
+  "viewport": {
+    "bounds": [
+      -5,
+      5,
+      5,
+      -5
+    ],
+    "home": [
+      -5,
+      5,
+      5,
+      -5
+    ],
+    "minZoom": 0.2,
+    "maxZoom": 12,
+    "padding": 0.16
+  },
+  "layers": [
+    {
+      "id": "geometry",
+      "label": "Geometría",
+      "order": 0,
+      "visible": true,
+      "locked": false
+    },
+    {
+      "id": "controls",
+      "label": "Controles",
+      "order": 1,
+      "visible": true,
+      "locked": false
+    }
+  ],
+  "groups": [],
+  "points": [
+    {
+      "id": "pA",
+      "label": "A",
+      "color": "terracota",
+      "layerId": "geometry",
+      "order": 9000,
+      "visible": true,
+      "locked": false,
+      "groupIds": [],
+      "selection": {
+        "selectable": true,
+        "ariaLabel": "Punto A",
+        "role": "primary"
+      },
+      "target": true,
+      "targetId": "pA",
+      "style": {
+        "pointSize": 7,
+        "highlightPointSize": 10,
+        "preserveColorOnHighlight": true
+      },
+      "x": -3.35,
+      "y": -2.79,
+      "showLabel": true,
+      "fixed": false,
+      "constraint": "free"
+    },
+    {
+      "id": "pB",
+      "label": "B",
+      "color": "terracota",
+      "layerId": "geometry",
+      "order": 8000,
+      "visible": true,
+      "locked": false,
+      "groupIds": [],
+      "selection": {
+        "selectable": true,
+        "ariaLabel": "Punto B",
+        "role": "primary"
+      },
+      "target": true,
+      "targetId": "pB",
+      "style": {
+        "pointSize": 7,
+        "highlightPointSize": 10,
+        "preserveColorOnHighlight": true
+      },
+      "x": 3.83,
+      "y": -0.7,
+      "showLabel": true,
+      "fixed": false,
+      "constraint": "free"
+    },
+    {
+      "id": "pP",
+      "label": "P",
+      "color": "musgo",
+      "layerId": "geometry",
+      "order": 10000,
+      "visible": true,
+      "locked": false,
+      "groupIds": [],
+      "selection": {
+        "selectable": true,
+        "ariaLabel": "Punto P",
+        "role": "primary"
+      },
+      "target": true,
+      "targetId": "pP",
+      "style": {
+        "pointSize": 7,
+        "highlightPointSize": 10,
+        "preserveColorOnHighlight": true
+      },
+      "x": -0.7301694761504384,
+      "y": 3.309958057700899,
+      "showLabel": true,
+      "fixed": false,
+      "constraint": "glider",
+      "gliderTarget": "lineMediatriz"
+    },
+    {
+      "id": "p4",
+      "label": "4",
+      "color": "ocre",
+      "layerId": "geometry",
+      "order": 2000,
+      "visible": false,
+      "locked": false,
+      "groupIds": [],
+      "selection": {
+        "selectable": true,
+        "ariaLabel": "Punto 4",
+        "role": "primary"
+      },
+      "target": false,
+      "targetId": "p4",
+      "style": {
+        "pointSize": 7,
+        "highlightPointSize": 10,
+        "preserveColorOnHighlight": true
+      },
+      "x": 0.2802461930667155,
+      "y": 0.5189181708510687,
+      "showLabel": true,
+      "fixed": false,
+      "constraint": "glider",
+      "gliderTarget": "midAB"
+    }
+  ],
+  "elements": [
+    {
+      "id": "segAB",
+      "label": "Segmento AB",
+      "color": "terracota",
+      "layerId": "geometry",
+      "order": 1000,
+      "visible": true,
+      "locked": false,
+      "groupIds": [],
+      "selection": {
+        "selectable": true,
+        "ariaLabel": "Segmento AB",
+        "role": "secondary"
+      },
+      "target": true,
+      "targetId": "segAB",
+      "style": {
+        "strokeWidth": 2.4,
+        "highlightStrokeWidth": 3,
+        "preserveColorOnHighlight": true
+      },
+      "kind": "segment",
+      "refs": [
+        "pA",
+        "pB"
+      ]
+    },
+    {
+      "id": "midAB",
+      "label": "M",
+      "color": "musgo",
+      "layerId": "geometry",
+      "order": 7000,
+      "visible": true,
+      "locked": false,
+      "groupIds": [],
+      "selection": {
+        "selectable": true,
+        "ariaLabel": "Punto medio de AB",
+        "role": "secondary"
+      },
+      "target": true,
+      "targetId": "midAB",
+      "style": {
+        "preserveColorOnHighlight": true
+      },
+      "kind": "midpoint",
+      "refs": [
+        "pA",
+        "pB"
+      ]
+    },
+    {
+      "id": "lineMediatriz",
+      "label": "Mediatriz de AB",
+      "color": "musgo",
+      "layerId": "geometry",
+      "order": 1000,
+      "visible": true,
+      "locked": false,
+      "groupIds": [],
+      "selection": {
+        "selectable": true,
+        "ariaLabel": "Mediatriz de AB",
+        "role": "secondary"
+      },
+      "target": true,
+      "targetId": "lineMediatriz",
+      "style": {
+        "strokeWidth": 2.4,
+        "highlightStrokeWidth": 3,
+        "preserveColorOnHighlight": true
+      },
+      "kind": "perpendicular",
+      "refs": [
+        "pA",
+        "pB",
+        "midAB"
+      ],
+      "dashed": true
+    },
+    {
+      "id": "segPA",
+      "label": "Distancia PA",
+      "color": "salvia",
+      "layerId": "geometry",
+      "order": 1000,
+      "visible": true,
+      "locked": false,
+      "groupIds": [],
+      "selection": {
+        "selectable": true,
+        "ariaLabel": "Distancia PA",
+        "role": "secondary"
+      },
+      "target": true,
+      "targetId": "segPA",
+      "style": {
+        "strokeWidth": 2.4,
+        "highlightStrokeWidth": 3,
+        "preserveColorOnHighlight": true
+      },
+      "kind": "segment",
+      "refs": [
+        "pP",
+        "pA"
+      ],
+      "dashed": true
+    },
+    {
+      "id": "segPB",
+      "label": "Distancia PB",
+      "color": "salvia",
+      "layerId": "geometry",
+      "order": 1000,
+      "visible": true,
+      "locked": false,
+      "groupIds": [],
+      "selection": {
+        "selectable": true,
+        "ariaLabel": "Distancia PB",
+        "role": "secondary"
+      },
+      "target": true,
+      "targetId": "segPB",
+      "style": {
+        "strokeWidth": 2.4,
+        "highlightStrokeWidth": 3,
+        "preserveColorOnHighlight": true
+      },
+      "kind": "segment",
+      "refs": [
+        "pP",
+        "pB"
+      ],
+      "dashed": true
+    },
+    {
+      "id": "measEquidistancia",
+      "label": "Equidistancia",
+      "color": "carbon",
+      "layerId": "geometry",
+      "order": 1000,
+      "visible": true,
+      "locked": false,
+      "groupIds": [],
+      "selection": {
+        "selectable": true,
+        "ariaLabel": "Equidistancia",
+        "role": "annotation"
+      },
+      "target": true,
+      "targetId": "measEquidistancia",
+      "style": {
+        "textOffset": [
+          0.3,
+          0.4
+        ],
+        "labelSize": 15,
+        "preserveColorOnHighlight": true
+      },
+      "kind": "text",
+      "refs": [
+        "pP"
+      ],
+      "text": "PA = PB"
+    },
+    {
+      "id": "congruenceMarkA4",
+      "label": "Marca de congruencia",
+      "color": "terracota",
+      "layerId": "geometry",
+      "order": 5000,
+      "visible": true,
+      "locked": false,
+      "groupIds": [],
+      "selection": {
+        "selectable": true,
+        "ariaLabel": "Marca de congruencia",
+        "role": "secondary"
+      },
+      "target": true,
+      "targetId": "congruenceMarkA4",
+      "style": {
+        "markHeight": 0.5,
+        "preserveColorOnHighlight": true
+      },
+      "kind": "congruenceMark",
+      "refs": [
+        "pA",
+        "p4"
+      ],
+      "properties": {
+        "markCount": 1
       }
-    ], { fixed: true, anchorX: 'left', anchorY: 'top' });
+    },
+    {
+      "id": "congruenceMark4B",
+      "label": "Marca de congruencia",
+      "color": "terracota",
+      "layerId": "geometry",
+      "order": 6000,
+      "visible": true,
+      "locked": false,
+      "groupIds": [],
+      "selection": {
+        "selectable": true,
+        "ariaLabel": "Marca de congruencia",
+        "role": "secondary"
+      },
+      "target": true,
+      "targetId": "congruenceMark4B",
+      "style": {
+        "markHeight": 0.5,
+        "preserveColorOnHighlight": true
+      },
+      "kind": "congruenceMark",
+      "refs": [
+        "p4",
+        "pB"
+      ],
+      "properties": {
+        "markCount": 1
+      }
+    },
+    {
+      "id": "congruenceMarkPB",
+      "label": "Marca de congruencia",
+      "color": "ocre",
+      "layerId": "geometry",
+      "order": 11000,
+      "visible": true,
+      "locked": false,
+      "groupIds": [],
+      "selection": {
+        "selectable": true,
+        "ariaLabel": "Marca de congruencia",
+        "role": "secondary"
+      },
+      "target": true,
+      "targetId": "congruenceMarkPB",
+      "style": {
+        "markHeight": 0.5,
+        "preserveColorOnHighlight": true
+      },
+      "kind": "congruenceMark",
+      "refs": [
+        "pP",
+        "pB"
+      ],
+      "properties": {
+        "markCount": 2
+      }
+    },
+    {
+      "id": "congruenceMarkAP",
+      "label": "Marca de congruencia",
+      "color": "ocre",
+      "layerId": "geometry",
+      "order": 12000,
+      "visible": true,
+      "locked": false,
+      "groupIds": [],
+      "selection": {
+        "selectable": true,
+        "ariaLabel": "Marca de congruencia",
+        "role": "secondary"
+      },
+      "target": true,
+      "targetId": "congruenceMarkAP",
+      "style": {
+        "markHeight": 0.5,
+        "preserveColorOnHighlight": true
+      },
+      "kind": "congruenceMark",
+      "refs": [
+        "pA",
+        "pP"
+      ],
+      "properties": {
+        "markCount": 2
+      }
+    }
+  ],
+  "sliders": [],
+  "steps": [],
+  "constraints": [],
+  "dependencies": [
+    {
+      "sourceId": "pA",
+      "targetId": "congruenceMarkA4",
+      "relation": "construction"
+    },
+    {
+      "sourceId": "p4",
+      "targetId": "congruenceMarkA4",
+      "relation": "construction"
+    },
+    {
+      "sourceId": "p4",
+      "targetId": "congruenceMark4B",
+      "relation": "construction"
+    },
+    {
+      "sourceId": "pB",
+      "targetId": "congruenceMark4B",
+      "relation": "construction"
+    },
+    {
+      "sourceId": "pP",
+      "targetId": "congruenceMarkPB",
+      "relation": "construction"
+    },
+    {
+      "sourceId": "pB",
+      "targetId": "congruenceMarkPB",
+      "relation": "construction"
+    },
+    {
+      "sourceId": "pA",
+      "targetId": "congruenceMarkAP",
+      "relation": "construction"
+    },
+    {
+      "sourceId": "pP",
+      "targetId": "congruenceMarkAP",
+      "relation": "construction"
+    }
+  ],
+  "note": "Arrastra P sobre la mediatriz",
+  "extensions": {}
+}
+);
+/* @matematika-diagram-spec:end */
 
-      // Registrar elementos para interactividad y auditoría
-      els.A = A;
-        els.B = B;
-        els.segmento = segmento;
-        els.M = M;
-        els.mediatriz = mediatriz;
-        els.P = P;
-        els.distPA = distPA;
-        els.distPB = distPB;
-        els.angRecto = angRecto;
-        els.congAM = congAM;
-        els.congMB = congMB;
-        els.infoText = infoText;
-    };;
-
-  const onUpdate = (board: any, els: any, theme: any, isStep: any, isHL: any) => {
-      const isHighlight = isHL;
-      void board; void els; void theme; void isStep; void isHL; void isHighlight;
-      const { A, B, segmento, M, mediatriz, P, distPA, distPB, angRecto, congAM, congMB } = els;
-      const isExtr = isHighlight('extremo');
-    const isEq = isHighlight('equidistancia');
-    const isPP = isHighlight('punto-p');
-    const isMed = isHighlight('mediatriz');
-    const isMid = isHighlight('punto-medio');
-    const isSeg = isHighlight('segmento');
-    const showAll = !isExtr && !isEq && !isPP && !isMed && !isMid && !isSeg;
-
-    A.setAttribute({ strokeOpacity: isExtr || showAll ? 1 : 0.3, fillOpacity: isExtr || showAll ? 1 : 0.3, size: isExtr ? 7 : 5 });
-    B.setAttribute({ strokeOpacity: isExtr || showAll ? 1 : 0.3, fillOpacity: isExtr || showAll ? 1 : 0.3, size: isExtr ? 7 : 5 });
-
-    segmento.setAttribute({ strokeOpacity: isSeg || showAll ? 1 : 0.3, strokeWidth: isSeg ? 4 : 2.5 });
-
-    distPA.setAttribute({ strokeOpacity: isEq || showAll ? 1 : 0.2, strokeWidth: isEq ? 3 : 2 });
-    distPB.setAttribute({ strokeOpacity: isEq || showAll ? 1 : 0.2, strokeWidth: isEq ? 3 : 2 });
-    P.setAttribute({ strokeOpacity: isPP || isEq || showAll ? 1 : 0.3, fillOpacity: isPP || isEq || showAll ? 1 : 0.3, size: isPP ? 6 : 4 });
-
-    mediatriz.setAttribute({ strokeOpacity: isMed || showAll ? 1 : 0.3, strokeWidth: isMed ? 4 : 2.5 });
-
-    angRecto.setAttribute({ visible: isMed || showAll, strokeOpacity: isMed || showAll ? 1 : 0.2, fillOpacity: isMed ? 0.5 : 0.2 });
-    congAM.setAttribute({ visible: isMid || isMed || showAll });
-    congMB.setAttribute({ visible: isMid || isMed || showAll });
-
-    M.setAttribute({ strokeOpacity: isMid || isMed || showAll ? 1 : 0.3, fillOpacity: isMid || isMed || showAll ? 1 : 0.3, size: isMid ? 6 : 5 });
-    };;
-
-  return (
-    <MathBoard
-      boundingbox={[-6, 6, 6, -5]}
-      axis={false}
-      grid={false}
-      onInit={onInit}
-      onUpdate={onUpdate}
-    >
-      <div className="absolute top-2 left-3 z-10 text-xs font-serif italic text-pizarra/50">
-        Arrastra <span className="font-bold not-italic text-terracota">P</span> sobre la mediatriz
-      </div>
-    </MathBoard>
-  );
-};
+export const Mediatriz = () => <DiagramRenderer spec={MediatrizSpec} />;

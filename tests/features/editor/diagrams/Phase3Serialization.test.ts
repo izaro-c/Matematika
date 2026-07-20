@@ -7,7 +7,7 @@ import primitivesFixture from '../../../fixtures/diagrams/phase3-euclidean-primi
 import { parseDiagramSourceAST } from '../../../../scripts/editor/parseDiagramSourceAST';
 import { migrateDiagramSpec } from '../../../../src/shared/diagrams/public';
 import { generateDiagramSource } from '../../../../src/features/editor/diagrams/source/generator';
-import { setEqualAngleConstraint, setSegmentMeasureTicks } from '../../../../src/features/editor/diagrams/model/commands';
+import { convertAngleKind, setEqualAngleConstraint, setSegmentMeasureTicks } from '../../../../src/features/editor/diagrams/model/commands';
 
 describe('Phase 3 source serialization', () => {
   it.each([
@@ -24,6 +24,22 @@ describe('Phase 3 source serialization', () => {
     if (parsed.status !== 'visual-exact') return;
     expect(parsed.model).toEqual(model);
     const regenerated = generateDiagramSource(parsed.model, componentName);
+    expect(regenerated.ok && regenerated.source).toBe(generated.source);
+  });
+
+  it('roundtrips an in-place angular type conversion byte for byte', () => {
+    const base = migrateDiagramSpec(marksFixture).spec;
+    const converted = convertAngleKind(base, 'angleAVB', 'nonReflexAngle');
+    const generated = generateDiagramSource(converted, 'ConvertedAngle');
+    expect(generated.ok).toBe(true);
+    if (!generated.ok) return;
+
+    const parsed = parseDiagramSourceAST(generated.source);
+    expect(parsed.status).toBe('visual-exact');
+    if (parsed.status !== 'visual-exact') return;
+    expect(parsed.model).toEqual(converted);
+    expect(parsed.model.elements.find(element => element.id === 'angleAVB')).toMatchObject({ kind: 'nonReflexAngle' });
+    const regenerated = generateDiagramSource(parsed.model, 'ConvertedAngle');
     expect(regenerated.ok && regenerated.source).toBe(generated.source);
   });
 
@@ -57,6 +73,34 @@ describe('Phase 3 source serialization', () => {
     if (parsed.status === 'visual-exact') expect(parsed.model).toEqual(positioned);
   });
 
+  it('roundtrips composite panel blocks and their conditional values byte for byte', () => {
+    const base = migrateDiagramSpec(annotationsFixture).spec;
+    const composed = {
+      ...base,
+      elements: base.elements.map(element => element.id === 'panelA'
+        ? {
+            ...element,
+            properties: {
+              ...element.properties,
+              infoPanelLayout: 'columns' as const,
+              infoPanelBlocks: [
+                { id: 'x-reading', title: 'Coordenada x', text: 'x = {value}', expression: 'pA.x', precision: 3 },
+                { id: 'sign-reading', title: 'Signo', text: 'No positivo', rules: [{ when: 'gt(pA.x,0)', text: 'Positivo: {value}', expression: 'pA.x', unit: 'u', precision: 1 }] },
+              ],
+            },
+          }
+        : element),
+    };
+    const generated = generateDiagramSource(composed, 'CompositePanel');
+    expect(generated.ok).toBe(true);
+    if (!generated.ok) return;
+    const parsed = parseDiagramSourceAST(generated.source);
+    expect(parsed.status).toBe('visual-exact');
+    if (parsed.status !== 'visual-exact') return;
+    expect(parsed.model).toEqual(composed);
+    expect(generateDiagramSource(parsed.model, 'CompositePanel')).toMatchObject({ ok: true, source: generated.source });
+  });
+
   it('roundtrips the independent highlightability option exactly', () => {
     const base = migrateDiagramSpec(primitivesFixture).spec;
     const target = base.elements[0];
@@ -75,6 +119,21 @@ describe('Phase 3 source serialization', () => {
     expect(parsed.model.elements.find(item => item.id === target.id)?.selection).toMatchObject({ selectable: true, highlightable: false });
     const regenerated = generateDiagramSource(parsed.model, 'NonHighlightableElement');
     expect(regenerated.ok && regenerated.source).toBe(generated.source);
+  });
+
+  it('adds per-element label visibility without reordering canonical point fields', () => {
+    const base = migrateDiagramSpec(primitivesFixture).spec;
+    const model = {
+      ...base,
+      elements: base.elements.map((element, index) => index === 0 ? { ...element, showLabel: false } : element),
+    };
+    const generated = generateDiagramSource(model, 'ElementLabelVisibility');
+    expect(generated.ok).toBe(true);
+    if (!generated.ok) return;
+    expect(generated.source.indexOf('"y":')).toBeLessThan(generated.source.indexOf('"showLabel":'));
+    const parsed = parseDiagramSourceAST(generated.source);
+    expect(parsed.status).toBe('visual-exact');
+    if (parsed.status === 'visual-exact') expect(parsed.model.elements[0].showLabel).toBe(false);
   });
 
   it('roundtrips additive MDX highlighting exactly', () => {

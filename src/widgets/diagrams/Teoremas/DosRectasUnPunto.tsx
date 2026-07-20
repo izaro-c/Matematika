@@ -1,97 +1,326 @@
-import { MathBoard } from '@/shared/diagrams/core/MathBoard';
-import {
-  createPoint, createLine
-} from '@/shared/diagrams/core/MathFactory';
+import { createDiagramSpec, DiagramRenderer } from '@/shared/diagrams/public';
 
+/* @matematika-diagram-spec:start */
+export const DosRectasUnPuntoSpec = createDiagramSpec(
+{
+  "version": 2,
+  "renderer": "matematika-diagram-renderer-v2",
+  "title": "Dos rectas distintas comparten a lo sumo un punto",
+  "componentId": "dos-rectas-un-punto",
+  "category": "Teoremas",
+  "mode": "simulation",
+  "axis": false,
+  "grid": false,
+  "viewport": {
+    "bounds": [
+      -5,
+      5,
+      5,
+      -5
+    ],
+    "home": [
+      -5,
+      5,
+      5,
+      -5
+    ],
+    "minZoom": 0.55,
+    "maxZoom": 5,
+    "padding": 0.16
+  },
+  "layers": [
+    {
+      "id": "geometry",
+      "label": "Geometría",
+      "order": 0,
+      "visible": true,
+      "locked": false
+    },
+    {
+      "id": "annotations",
+      "label": "Lecturas y controles",
+      "order": 1,
+      "visible": true,
+      "locked": false
+    }
+  ],
+  "groups": [
+    {
+      "id": "gLines",
+      "label": "Dos rectas",
+      "memberIds": [
+        "line1",
+        "line2"
+      ],
+      "visible": true,
+      "locked": false,
+      "selection": {
+        "selectable": true,
+        "ariaLabel": "Dos rectas",
+        "role": "primary"
+      },
+      "target": true,
+      "targetId": "rectas",
+      "color": "terracota"
+    },
+    {
+      "id": "gPoint",
+      "label": "Punto de intersección",
+      "memberIds": [
+        "P"
+      ],
+      "visible": true,
+      "locked": false,
+      "selection": {
+        "selectable": true,
+        "ariaLabel": "Punto de intersección",
+        "role": "primary"
+      },
+      "target": true,
+      "targetId": "punto",
+      "color": "terracota"
+    }
+  ],
+  "points": [
+    {
+      "id": "A",
+      "label": "A",
+      "color": "terracota",
+      "layerId": "geometry",
+      "order": 1420,
+      "visible": true,
+      "locked": false,
+      "groupIds": [],
+      "selection": {
+        "selectable": true,
+        "ariaLabel": "Mover el punto A",
+        "role": "primary"
+      },
+      "target": false,
+      "style": {
+        "pointSize": 7,
+        "highlightPointSize": 10,
+        "preserveColorOnHighlight": true
+      },
+      "x": -3,
+      "y": -1.8,
+      "showLabel": true,
+      "fixed": false,
+      "constraint": "free",
+      "snapToGrid": true,
+      "snapSize": 0.25
+    },
+    {
+      "id": "B",
+      "label": "B",
+      "color": "terracota",
+      "layerId": "geometry",
+      "order": 1430,
+      "visible": true,
+      "locked": false,
+      "groupIds": [],
+      "selection": {
+        "selectable": true,
+        "ariaLabel": "Mover el punto B",
+        "role": "primary"
+      },
+      "target": false,
+      "style": {
+        "pointSize": 7,
+        "highlightPointSize": 10,
+        "preserveColorOnHighlight": true
+      },
+      "x": 2.8,
+      "y": 1.6,
+      "showLabel": true,
+      "fixed": false,
+      "constraint": "free",
+      "snapToGrid": true,
+      "snapSize": 0.25
+    },
+    {
+      "id": "C",
+      "label": "C",
+      "color": "pizarra",
+      "layerId": "geometry",
+      "order": 1440,
+      "visible": true,
+      "locked": false,
+      "groupIds": [],
+      "selection": {
+        "selectable": true,
+        "ariaLabel": "Mover el punto C",
+        "role": "primary"
+      },
+      "target": false,
+      "style": {
+        "pointSize": 7,
+        "highlightPointSize": 10,
+        "preserveColorOnHighlight": true
+      },
+      "x": -2.8,
+      "y": 2,
+      "showLabel": true,
+      "fixed": false,
+      "constraint": "free",
+      "snapToGrid": true,
+      "snapSize": 0.25
+    },
+    {
+      "id": "D",
+      "label": "D",
+      "color": "pizarra",
+      "layerId": "geometry",
+      "order": 1450,
+      "visible": true,
+      "locked": false,
+      "groupIds": [],
+      "selection": {
+        "selectable": true,
+        "ariaLabel": "Mover el punto D",
+        "role": "primary"
+      },
+      "target": false,
+      "style": {
+        "pointSize": 7,
+        "highlightPointSize": 10,
+        "preserveColorOnHighlight": true
+      },
+      "x": 3,
+      "y": -2.2,
+      "showLabel": true,
+      "fixed": false,
+      "constraint": "free",
+      "snapToGrid": true,
+      "snapSize": 0.25
+    }
+  ],
+  "elements": [
+    {
+      "id": "line1",
+      "label": "Recta l",
+      "color": "terracota",
+      "layerId": "geometry",
+      "order": 1460,
+      "visible": true,
+      "locked": false,
+      "groupIds": [
+        "gLines"
+      ],
+      "selection": {
+        "selectable": true,
+        "ariaLabel": "Recta l",
+        "role": "secondary"
+      },
+      "target": true,
+      "targetId": "line1",
+      "style": {
+        "strokeWidth": 2.4,
+        "highlightStrokeWidth": 3,
+        "preserveColorOnHighlight": true
+      },
+      "kind": "line",
+      "refs": [
+        "A",
+        "B"
+      ]
+    },
+    {
+      "id": "line2",
+      "label": "Recta m",
+      "color": "pizarra",
+      "layerId": "geometry",
+      "order": 1470,
+      "visible": true,
+      "locked": false,
+      "groupIds": [
+        "gLines"
+      ],
+      "selection": {
+        "selectable": true,
+        "ariaLabel": "Recta m",
+        "role": "secondary"
+      },
+      "target": true,
+      "targetId": "line2",
+      "style": {
+        "strokeWidth": 2.4,
+        "highlightStrokeWidth": 3,
+        "preserveColorOnHighlight": true
+      },
+      "kind": "line",
+      "refs": [
+        "C",
+        "D"
+      ]
+    },
+    {
+      "id": "P",
+      "label": "P",
+      "color": "terracota",
+      "layerId": "geometry",
+      "order": 1480,
+      "visible": true,
+      "locked": false,
+      "groupIds": [
+        "gPoint"
+      ],
+      "selection": {
+        "selectable": true,
+        "ariaLabel": "P",
+        "role": "secondary"
+      },
+      "target": true,
+      "targetId": "P_interseccion",
+      "style": {
+        "pointSize": 7,
+        "highlightPointSize": 10,
+        "preserveColorOnHighlight": true
+      },
+      "kind": "intersection",
+      "refs": [
+        "line1",
+        "line2"
+      ]
+    },
+    {
+      "id": "incidenceInfo",
+      "label": "Unicidad",
+      "color": "terracota",
+      "layerId": "annotations",
+      "order": 1490,
+      "visible": true,
+      "locked": false,
+      "groupIds": [],
+      "selection": {
+        "selectable": true,
+        "ariaLabel": "Unicidad",
+        "role": "annotation"
+      },
+      "target": false,
+      "style": {
+        "preserveColorOnHighlight": true
+      },
+      "kind": "infoPanel",
+      "refs": [],
+      "text": "Si l y m fueran distintas y compartieran dos puntos, I-1 obligaría a l = m.",
+      "properties": {
+        "title": "Unicidad",
+        "anchorMode": "viewport",
+        "viewportPosition": [
+          0.98,
+          0.03
+        ]
+      }
+    }
+  ],
+  "sliders": [],
+  "steps": [],
+  "dependencies": [],
+  "note": "Mueve los puntos que determinan l y m. Cuando no son paralelas, el renderer construye una única intersección P.",
+  "extensions": {}
+}
+);
+/* @matematika-diagram-spec:end */
 
-
-
-
-export const DosRectasUnPunto = () => {
-
-
-
-
-
-
-  const onInit = (board: any, els: any, theme: any) => {
-      void board; void els; void theme;
-      const C_LINE = theme.carbon;
-    const C_POINT = theme.terracota;
-
-    const A = createPoint(board, [-3, 2], { name: 'A', size: 4, fillColor: C_LINE, strokeColor: C_LINE, showInfobox: false, snapToGrid: true, snapSizeX: 0.5, snapSizeY: 0.5 }, theme);
-    const B = createPoint(board, [3, -1], { name: 'B', size: 4, fillColor: C_LINE, strokeColor: C_LINE, showInfobox: false, snapToGrid: true, snapSizeX: 0.5, snapSizeY: 0.5 }, theme);
-    const C = createPoint(board, [-2, -2], { name: 'C', size: 4, fillColor: C_LINE, strokeColor: C_LINE, showInfobox: false, snapToGrid: true, snapSizeX: 0.5, snapSizeY: 0.5 }, theme);
-    const D = createPoint(board, [4, 2], { name: 'D', size: 4, fillColor: C_LINE, strokeColor: C_LINE, showInfobox: false, snapToGrid: true, snapSizeX: 0.5, snapSizeY: 0.5 }, theme);
-
-    const line1 = createLine(board, [A, B], { strokeColor: C_LINE, strokeWidth: 2 }, theme);
-    const line2 = createLine(board, [C, D], { strokeColor: C_LINE, strokeWidth: 2 }, theme);
-
-    const P = board.create('intersection', [line1, line2, 0], { name: 'P', size: 6, fillColor: C_POINT, strokeColor: C_POINT });
-
-    const infoText = board.create('text', [-4.5, 4.5, () => {
-      const dPA = P.Dist(A), dPB = P.Dist(B), dPC = P.Dist(C), dPD = P.Dist(D);
-      const onAB = Math.abs(dPA + dPB - A.Dist(B)) < 0.1;
-      const onCD = Math.abs(dPC + dPD - C.Dist(D)) < 0.1;
-      return `<div style="font-family: var(--font-serif); color:${theme.carbon}; line-height:1.3;">
-        <strong style="font-size:1.1rem;">Intersecci&oacute;n &uacute;nica</strong><br/>
-        <small>P ∈ l ∩ m</small><br/>
-        <small>${onAB && onCD ? 'Un &uacute;nico punto com&uacute;n' : 'Rectas paralelas'}</small>
-      </div>`;
-    }], { fixed: true, anchorX: 'left', anchorY: 'top' });
-
-
-
-
-
-
-    const obs = new MutationObserver(() => {
-      if (board) {   }
-    });
-    obs.observe(document.documentElement, { attributes: true, attributeFilter: ['class'] });
-
-      // Registrar elementos para interactividad y auditoría
-      els.A = A;
-        els.B = B;
-        els.C = C;
-        els.D = D;
-        els.P = P;
-        els.line1 = line1;
-        els.line2 = line2;
-        els.infoText = infoText;
-    };;
-
-  const onUpdate = (board: any, els: any, theme: any, isStep: any, isHL: any) => {
-      const isHighlight = isHL;
-      void board; void els; void theme; void isStep; void isHL; void isHighlight;
-      const { A, B, C, D, P, line1, line2 } = els;
-      if (!els.board) return;
-
-
-    const hRectas = isHighlight('rectas');
-    const hPunto = isHighlight('punto');
-    const showAll = !hRectas && !hPunto;
-
-    const op = (t: any) => t || showAll ? 1 : 0.15;
-    const C_ACC = theme.terracota;
-
-    line1.setAttribute({ strokeOpacity: op(hRectas), strokeColor: hRectas ? C_ACC : theme.carbon, strokeWidth: hRectas ? 3 : 2 });
-    line2.setAttribute({ strokeOpacity: op(hRectas), strokeColor: hRectas ? C_ACC : theme.carbon, strokeWidth: hRectas ? 3 : 2 });
-    P.setAttribute({ strokeOpacity: op(hPunto), fillOpacity: op(hPunto), size: hPunto ? 8 : 6 });
-    [A, B, C, D].forEach((p: any) => p.setAttribute({ strokeOpacity: op(showAll), fillOpacity: op(showAll) }));
-    };;
-
-  return (
-    <MathBoard
-      boundingbox={[-5, 5, 5, -5]}
-      axis={false}
-      grid={false}
-      onInit={onInit}
-      onUpdate={onUpdate}
-    >
-      <div className="absolute top-2 left-3 z-10 text-xs font-serif italic text-pizarra/50">
-        Arrastra los puntos: dos rectas se cortan en a lo sumo un punto
-      </div>
-    </MathBoard>
-  );
-};
+export const DosRectasUnPunto = () => <DiagramRenderer spec={DosRectasUnPuntoSpec} />;

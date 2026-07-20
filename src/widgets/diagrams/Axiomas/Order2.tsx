@@ -7,7 +7,7 @@ export const Order2Spec = createDiagramSpec(
   "renderer": "matematika-diagram-renderer-v2",
   "title": "Axioma de Orden II",
   "componentId": "axioma-de-orden-ii",
-  "category": "Teoremas",
+  "category": "Axiomas",
   "mode": "simulation",
   "axis": false,
   "grid": false,

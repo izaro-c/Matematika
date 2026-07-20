@@ -5,8 +5,46 @@ import type { VisualConstraint, VisualDiagramModel, VisualElement, VisualPoint }
 
 const ANGLE_KINDS = new Set(['angle', 'nonReflexAngle']);
 
+type EditableAngleKind = 'angle' | 'nonReflexAngle';
+
 function isEditableAngle(element: VisualElement): boolean {
   return ANGLE_KINDS.has(element.kind) && element.refs.length >= 3;
+}
+
+/**
+ * Convierte un ángulo sin reemplazar el objeto. Las igualdades angulares
+ * conectadas cambian juntas para conservar un modelo válido y la relación.
+ */
+export function convertAngleKind(
+  model: VisualDiagramModel,
+  angleId: string,
+  kind: EditableAngleKind,
+): VisualDiagramModel {
+  const source = model.elements.find(element => element.id === angleId && isEditableAngle(element));
+  if (!source || source.kind === kind) return model;
+
+  const connectedIds = new Set([source.id]);
+  let changed = true;
+  while (changed) {
+    changed = false;
+    (model.constraints ?? []).forEach(constraint => {
+      if (constraint.kind !== 'equalAngle') return;
+      const angleIds = constraint.refs.slice(3, 5);
+      if (!angleIds.some(id => connectedIds.has(id))) return;
+      angleIds.forEach(id => {
+        const angle = model.elements.find(element => element.id === id);
+        if (angle && isEditableAngle(angle) && !connectedIds.has(id)) {
+          connectedIds.add(id);
+          changed = true;
+        }
+      });
+    });
+  }
+
+  return {
+    ...model,
+    elements: model.elements.map(element => connectedIds.has(element.id) ? { ...element, kind } : element),
+  };
 }
 
 function targetAngleForConstraint(model: VisualDiagramModel, constraint: VisualConstraint): VisualElement | undefined {

@@ -1,128 +1,432 @@
-import { MathBoard } from '@/shared/diagrams/core/MathBoard';
-import {
-  createPoint, createCircle, createPolygon, createAngle
-} from '@/shared/diagrams/core/MathFactory';
+import { createDiagramSpec, DiagramRenderer } from '@/shared/diagrams/public';
 
-
-
-
-
-export const SumaAngulos = () => {
-
-
-
-
-
-
-  const onInit = (board: any, els: any, theme: any) => {
-      void board; void els; void theme;
-      const C_PRIM = theme.carbon;
-    const C_ANG  = theme.salvia;
-    const C_POL  = theme.pavo;
-
-    const SNAP = 0.5;
-    const A = createPoint(board, [-2.5, -2], { name: 'A', size: 5, fillColor: C_PRIM, strokeColor: C_PRIM, showInfobox: false, snapToGrid: true, snapSizeX: SNAP, snapSizeY: SNAP }, theme);
-    const B = createPoint(board, [3, -1.5], { name: 'B', size: 5, fillColor: C_PRIM, strokeColor: C_PRIM, showInfobox: false, snapToGrid: true, snapSizeX: SNAP, snapSizeY: SNAP }, theme);
-    const C = createPoint(board, [0, 3], { name: 'C', size: 5, fillColor: C_PRIM, strokeColor: C_PRIM, showInfobox: false, snapToGrid: true, snapSizeX: SNAP, snapSizeY: SNAP }, theme);
-
-    const poly = createPolygon(board, [A, B, C], {
-      fillColor: C_POL, fillOpacity: 0.08,
-      borders: { strokeWidth: 2.5, strokeColor: C_PRIM },
-      vertices: { visible: false }
-    }, theme);
-
-    const angleA = createAngle(board, [B, A, C], { name: '&alpha;', radius: 0.9, fillColor: C_ANG, strokeColor: C_ANG, fillOpacity: 0.3, type: 'sector' }, theme) as any;
-    const angleB = createAngle(board, [C, B, A], { name: '&beta;',  radius: 0.9, fillColor: C_ANG, strokeColor: C_ANG, fillOpacity: 0.3, type: 'sector' }, theme) as any;
-    const angleC = createAngle(board, [A, C, B], { name: '&gamma;', radius: 0.9, fillColor: C_ANG, strokeColor: C_ANG, fillOpacity: 0.3, type: 'sector' }, theme) as any;
-
-    const infoText = board.create('text', [
-      -4.5, 4.5,
-      () => {
-        const vA = angleA.Value(), vB = angleB.Value(), vC = angleC.Value();
-        const sum = vA + vB + vC;
-        const sumDeg = Math.round(sum * 180 / Math.PI);
-        return `<div style="font-family: var(--font-serif); color: ${theme.carbon}; line-height:1.5;">
-          <strong style="font-size: 1.15rem;">Suma de &aacute;ngulos</strong><br/>
-          &alpha; + &beta; + &gamma; = ${sumDeg}&deg;<br/>
-          <strong style="color:${sumDeg === 180 ? theme.musgo : theme.granada};">
-            ${sumDeg === 180 ? '\u2261 180\u00b0' : '\u2260 180\u00b0'}
-          </strong>
-          <br/><small>(${Math.round(vA*180/Math.PI)}&deg; + ${Math.round(vB*180/Math.PI)}&deg; + ${Math.round(vC*180/Math.PI)}&deg;)</small>
-        </div>`;
+/* @matematika-diagram-spec:start */
+export const SumaAngulosSpec = createDiagramSpec(
+{
+  "version": 2,
+  "renderer": "matematika-diagram-renderer-v2",
+  "title": "Suma de los ángulos de un triángulo",
+  "componentId": "suma-angulos",
+  "category": "Teoremas",
+  "mode": "simulation",
+  "axis": false,
+  "grid": false,
+  "viewport": {
+    "bounds": [
+      -5,
+      5,
+      5,
+      -4.5
+    ],
+    "home": [
+      -5,
+      5,
+      5,
+      -4.5
+    ],
+    "minZoom": 0.55,
+    "maxZoom": 5,
+    "padding": 0.16
+  },
+  "layers": [
+    {
+      "id": "geometry",
+      "label": "Geometría",
+      "order": 0,
+      "visible": true,
+      "locked": false
+    },
+    {
+      "id": "annotations",
+      "label": "Lecturas y controles",
+      "order": 1,
+      "visible": true,
+      "locked": false
+    }
+  ],
+  "groups": [
+    {
+      "id": "gTriangle",
+      "label": "Triángulo ABC",
+      "memberIds": [
+        "poly",
+        "AB",
+        "BC",
+        "CA"
+      ],
+      "visible": true,
+      "locked": false,
+      "selection": {
+        "selectable": true,
+        "ariaLabel": "Triángulo ABC",
+        "role": "primary"
+      },
+      "target": true,
+      "targetId": "triangulo",
+      "color": "terracota"
+    },
+    {
+      "id": "gAngles",
+      "label": "Ángulos interiores",
+      "memberIds": [
+        "angA",
+        "angB",
+        "angC"
+      ],
+      "visible": true,
+      "locked": false,
+      "selection": {
+        "selectable": true,
+        "ariaLabel": "Ángulos interiores",
+        "role": "primary"
+      },
+      "target": true,
+      "targetId": "angulos",
+      "color": "terracota"
+    }
+  ],
+  "points": [
+    {
+      "id": "A",
+      "label": "A",
+      "color": "terracota",
+      "layerId": "geometry",
+      "order": 1580,
+      "visible": true,
+      "locked": false,
+      "groupIds": [],
+      "selection": {
+        "selectable": true,
+        "ariaLabel": "Mover el punto A",
+        "role": "primary"
+      },
+      "target": false,
+      "style": {
+        "pointSize": 7,
+        "highlightPointSize": 10,
+        "preserveColorOnHighlight": true
+      },
+      "x": -3,
+      "y": -2,
+      "showLabel": true,
+      "fixed": false,
+      "constraint": "free",
+      "snapToGrid": true,
+      "snapSize": 0.25
+    },
+    {
+      "id": "B",
+      "label": "B",
+      "color": "terracota",
+      "layerId": "geometry",
+      "order": 1590,
+      "visible": true,
+      "locked": false,
+      "groupIds": [],
+      "selection": {
+        "selectable": true,
+        "ariaLabel": "Mover el punto B",
+        "role": "primary"
+      },
+      "target": false,
+      "style": {
+        "pointSize": 7,
+        "highlightPointSize": 10,
+        "preserveColorOnHighlight": true
+      },
+      "x": 3,
+      "y": -1.5,
+      "showLabel": true,
+      "fixed": false,
+      "constraint": "free",
+      "snapToGrid": true,
+      "snapSize": 0.25
+    },
+    {
+      "id": "C",
+      "label": "C",
+      "color": "terracota",
+      "layerId": "geometry",
+      "order": 1600,
+      "visible": true,
+      "locked": false,
+      "groupIds": [],
+      "selection": {
+        "selectable": true,
+        "ariaLabel": "Mover el punto C",
+        "role": "primary"
+      },
+      "target": false,
+      "style": {
+        "pointSize": 7,
+        "highlightPointSize": 10,
+        "preserveColorOnHighlight": true
+      },
+      "x": 0.5,
+      "y": 2.7,
+      "showLabel": true,
+      "fixed": false,
+      "constraint": "constrained",
+      "constraintIds": [
+        "sameC"
+      ],
+      "snapToGrid": true,
+      "snapSize": 0.25
+    }
+  ],
+  "elements": [
+    {
+      "id": "poly",
+      "label": "Triángulo ABC",
+      "color": "terracota",
+      "layerId": "geometry",
+      "order": 1610,
+      "visible": true,
+      "locked": false,
+      "groupIds": [
+        "gTriangle"
+      ],
+      "selection": {
+        "selectable": true,
+        "ariaLabel": "Triángulo ABC",
+        "role": "secondary"
+      },
+      "target": false,
+      "style": {
+        "strokeWidth": 3,
+        "fillOpacity": 0.1,
+        "highlightFillOpacity": 0.28,
+        "preserveColorOnHighlight": true
+      },
+      "kind": "polygon",
+      "refs": [
+        "A",
+        "B",
+        "C"
+      ]
+    },
+    {
+      "id": "AB",
+      "label": "AB",
+      "color": "terracota",
+      "layerId": "geometry",
+      "order": 1620,
+      "visible": true,
+      "locked": false,
+      "groupIds": [
+        "gTriangle"
+      ],
+      "selection": {
+        "selectable": true,
+        "ariaLabel": "AB",
+        "role": "secondary"
+      },
+      "target": false,
+      "style": {
+        "strokeWidth": 2.4,
+        "highlightStrokeWidth": 3,
+        "preserveColorOnHighlight": true
+      },
+      "kind": "segment",
+      "refs": [
+        "A",
+        "B"
+      ]
+    },
+    {
+      "id": "BC",
+      "label": "BC",
+      "color": "terracota",
+      "layerId": "geometry",
+      "order": 1630,
+      "visible": true,
+      "locked": false,
+      "groupIds": [
+        "gTriangle"
+      ],
+      "selection": {
+        "selectable": true,
+        "ariaLabel": "BC",
+        "role": "secondary"
+      },
+      "target": false,
+      "style": {
+        "strokeWidth": 2.4,
+        "highlightStrokeWidth": 3,
+        "preserveColorOnHighlight": true
+      },
+      "kind": "segment",
+      "refs": [
+        "B",
+        "C"
+      ]
+    },
+    {
+      "id": "CA",
+      "label": "CA",
+      "color": "terracota",
+      "layerId": "geometry",
+      "order": 1640,
+      "visible": true,
+      "locked": false,
+      "groupIds": [
+        "gTriangle"
+      ],
+      "selection": {
+        "selectable": true,
+        "ariaLabel": "CA",
+        "role": "secondary"
+      },
+      "target": false,
+      "style": {
+        "strokeWidth": 2.4,
+        "highlightStrokeWidth": 3,
+        "preserveColorOnHighlight": true
+      },
+      "kind": "segment",
+      "refs": [
+        "C",
+        "A"
+      ]
+    },
+    {
+      "id": "angA",
+      "label": "α",
+      "color": "terracota",
+      "layerId": "geometry",
+      "order": 1650,
+      "visible": true,
+      "locked": false,
+      "groupIds": [
+        "gAngles"
+      ],
+      "selection": {
+        "selectable": true,
+        "ariaLabel": "α",
+        "role": "secondary"
+      },
+      "target": false,
+      "style": {
+        "fillOpacity": 0.22,
+        "angleRadius": 0.58,
+        "preserveColorOnHighlight": true
+      },
+      "kind": "angle",
+      "refs": [
+        "B",
+        "A",
+        "C"
+      ]
+    },
+    {
+      "id": "angB",
+      "label": "β",
+      "color": "terracota",
+      "layerId": "geometry",
+      "order": 1660,
+      "visible": true,
+      "locked": false,
+      "groupIds": [
+        "gAngles"
+      ],
+      "selection": {
+        "selectable": true,
+        "ariaLabel": "β",
+        "role": "secondary"
+      },
+      "target": false,
+      "style": {
+        "fillOpacity": 0.22,
+        "angleRadius": 0.58,
+        "preserveColorOnHighlight": true
+      },
+      "kind": "angle",
+      "refs": [
+        "C",
+        "B",
+        "A"
+      ]
+    },
+    {
+      "id": "angC",
+      "label": "γ",
+      "color": "terracota",
+      "layerId": "geometry",
+      "order": 1670,
+      "visible": true,
+      "locked": false,
+      "groupIds": [
+        "gAngles"
+      ],
+      "selection": {
+        "selectable": true,
+        "ariaLabel": "γ",
+        "role": "secondary"
+      },
+      "target": false,
+      "style": {
+        "fillOpacity": 0.22,
+        "angleRadius": 0.58,
+        "preserveColorOnHighlight": true
+      },
+      "kind": "angle",
+      "refs": [
+        "A",
+        "C",
+        "B"
+      ]
+    },
+    {
+      "id": "sumInfo",
+      "label": "Invariante euclidiano",
+      "color": "terracota",
+      "layerId": "annotations",
+      "order": 1680,
+      "visible": true,
+      "locked": false,
+      "groupIds": [],
+      "selection": {
+        "selectable": true,
+        "ariaLabel": "Invariante euclidiano",
+        "role": "annotation"
+      },
+      "target": false,
+      "style": {
+        "preserveColorOnHighlight": true
+      },
+      "kind": "infoPanel",
+      "refs": [],
+      "text": "α + β + γ = 180°",
+      "properties": {
+        "title": "Invariante euclidiano",
+        "anchorMode": "viewport",
+        "viewportPosition": [
+          0.98,
+          0.03
+        ]
       }
-    ], { fixed: true, anchorX: 'left', anchorY: 'top' });
+    }
+  ],
+  "sliders": [],
+  "steps": [],
+  "constraints": [
+    {
+      "id": "sameC",
+      "label": "C no cruza AB",
+      "kind": "sameSide",
+      "refs": [
+        "C",
+        "A",
+        "B"
+      ],
+      "enabled": true
+    }
+  ],
+  "dependencies": [],
+  "note": "Mueve los vértices. La figura cambia, pero el panel recuerda el invariante cuya demostración usa una paralela por C.",
+  "extensions": {}
+}
+);
+/* @matematika-diagram-spec:end */
 
-
-
-    const midAB = board.create('midpoint', [A, B], { visible: false });
-    const midBC = board.create('midpoint', [B, C], { visible: false });
-    const midCA = board.create('midpoint', [C, A], { visible: false });
-    const thalesAB = createCircle(board, [midAB, A], { visible: false }, theme);
-    const thalesBC = createCircle(board, [midBC, B], { visible: false }, theme);
-    const thalesCA = createCircle(board, [midCA, C], { visible: false }, theme);
-    C.setAttribute({ attractors: [thalesAB], attractorDistance: 0.3, snatchDistance: 0.5 });
-    A.setAttribute({ attractors: [thalesBC], attractorDistance: 0.3, snatchDistance: 0.5 });
-    B.setAttribute({ attractors: [thalesCA], attractorDistance: 0.3, snatchDistance: 0.5 });
-
-    const orientABC = () => (B.X() - A.X()) * (C.Y() - A.Y()) - (B.Y() - A.Y()) * (C.X() - A.X());
-    const initialOrient = orientABC();
-    const lastValid: Record<string, [number, number]> = { A: [A.X(), A.Y()], B: [B.X(), B.Y()], C: [C.X(), C.Y()] };
-
-    [A, B, C].forEach((p: any, idx: number) => {
-      const name = String.fromCharCode(65 + idx);
-      p.on('drag', () => {
-        const cur = orientABC();
-        if (Math.abs(cur) < 0.01 || (initialOrient > 0.01 && cur < -0.01) || (initialOrient < -0.01 && cur > 0.01)) {
-          p.moveTo([lastValid[name][0], lastValid[name][1]], 0);
-        } else {
-          lastValid[name][0] = p.X();
-          lastValid[name][1] = p.Y();
-        }
-      });
-    });
-
-      // Registrar elementos para interactividad y auditoría
-      els.A = A;
-        els.B = B;
-        els.C = C;
-        els.poly = poly;
-        els.angleA = angleA;
-        els.angleB = angleB;
-        els.angleC = angleC;
-        els.infoText = infoText;
-    };;
-
-  const onUpdate = (board: any, els: any, theme: any, isStep: any, isHL: any) => {
-      const isHighlight = isHL;
-      void board; void els; void theme; void isStep; void isHL; void isHighlight;
-      const { A, B, C, poly, angleA, angleB, angleC } = els;
-      const hAngulos = isHighlight('angulos');
-    const hTri = isHighlight('triangulo');
-    const showAll = !hAngulos && !hTri;
-
-    const dim = (active: boolean) => active || showAll ? 1 : 0.2;
-
-    [angleA, angleB, angleC].forEach((a: any) => a.setAttribute({
-      fillOpacity: hAngulos ? 0.5 : 0.3,
-      strokeOpacity: dim(hAngulos)
-    }));
-
-    [A, B, C].forEach((p: any) => p.setAttribute({ strokeOpacity: dim(showAll), fillOpacity: dim(showAll) }));
-    poly.setAttribute({ fillOpacity: hTri ? 0.2 : 0.08 });
-    ((poly as any).borders as any[]).forEach((b: any) => b.setAttribute({ strokeOpacity: dim(showAll) }));
-    };;
-
-  return (
-    <MathBoard
-      boundingbox={[-5, 5, 5, -5]}
-      axis={false}
-      grid={false}
-      onInit={onInit}
-      onUpdate={onUpdate}
-    >
-      <div className="absolute top-2 left-3 z-10 text-xs font-serif italic text-pizarra/50">
-        Arrastra los v&eacute;rtices: la suma siempre es 180&deg;
-      </div>
-    </MathBoard>
-  );
-};
+export const SumaAngulos = () => <DiagramRenderer spec={SumaAngulosSpec} />;

@@ -1,112 +1,780 @@
-import { MathBoard } from '@/shared/diagrams/core/MathBoard';
-import {
-  createPoint, createLine, createAngle, createGlider
-} from '@/shared/diagrams/core/MathFactory';
-import { StyleManager } from '@/shared/diagrams/core/MathUtils';
+import { createDiagramSpec, DiagramRenderer } from '@/shared/diagrams/public';
 
-export const DemoAngulosOpuestos = () => {
-  return (
-    <MathBoard
-      boundingbox={[-5, 4, 5, -4]}
-      onInit={(board: any, els: any, theme: any) => {
-        // Origen
-        els.O = createPoint(board, [0, 0], { name: 'O', size: 4, fixed: true }, theme);
+/* @matematika-diagram-spec:start */
+export const DemoAngulosOpuestosSpec = createDiagramSpec(
+{
+  "version": 2,
+  "renderer": "matematika-diagram-renderer-v2",
+  "title": "Demostración de los ángulos opuestos por el vértice",
+  "componentId": "demo-angulos-opuestos",
+  "category": "Demostraciones",
+  "mode": "simulation",
+  "axis": false,
+  "grid": false,
+  "viewport": {
+    "bounds": [
+      -5,
+      5,
+      5,
+      -5
+    ],
+    "home": [
+      -5,
+      5,
+      5,
+      -5
+    ],
+    "minZoom": 0.55,
+    "maxZoom": 5,
+    "padding": 0.16
+  },
+  "layers": [
+    {
+      "id": "geometry",
+      "label": "Geometría",
+      "order": 0,
+      "visible": true,
+      "locked": false
+    },
+    {
+      "id": "annotations",
+      "label": "Lecturas y controles",
+      "order": 1,
+      "visible": true,
+      "locked": false
+    }
+  ],
+  "groups": [
+    {
+      "id": "gAlpha",
+      "label": "Ángulos α y α′",
+      "memberIds": [
+        "angle1",
+        "angle3"
+      ],
+      "visible": true,
+      "locked": false,
+      "selection": {
+        "selectable": true,
+        "ariaLabel": "Ángulos α y α′",
+        "role": "primary"
+      },
+      "target": true,
+      "targetId": "alpha",
+      "color": "granada"
+    },
+    {
+      "id": "gBeta",
+      "label": "Ángulos β y β′",
+      "memberIds": [
+        "angle2",
+        "angle4"
+      ],
+      "visible": true,
+      "locked": false,
+      "selection": {
+        "selectable": true,
+        "ariaLabel": "Ángulos β y β′",
+        "role": "primary"
+      },
+      "target": true,
+      "targetId": "beta",
+      "color": "pizarra"
+    },
+    {
+      "id": "gSupp12",
+      "label": "Primer par suplementario",
+      "memberIds": [
+        "angle1",
+        "angle2"
+      ],
+      "visible": true,
+      "locked": false,
+      "selection": {
+        "selectable": true,
+        "ariaLabel": "Primer par suplementario",
+        "role": "primary"
+      },
+      "target": true,
+      "targetId": "supp12",
+      "color": "granada"
+    },
+    {
+      "id": "gSupp23",
+      "label": "Segundo par suplementario",
+      "memberIds": [
+        "angle2",
+        "angle3"
+      ],
+      "visible": true,
+      "locked": false,
+      "selection": {
+        "selectable": true,
+        "ariaLabel": "Segundo par suplementario",
+        "role": "primary"
+      },
+      "target": true,
+      "targetId": "supp23",
+      "color": "pizarra"
+    },
+    {
+      "id": "gCongruence13",
+      "label": "Resta del ángulo común",
+      "memberIds": [
+        "angle1",
+        "angle2",
+        "angle3"
+      ],
+      "visible": true,
+      "locked": false,
+      "selection": {
+        "selectable": true,
+        "ariaLabel": "Resta del ángulo común",
+        "role": "primary"
+      },
+      "target": true,
+      "targetId": "congruence13",
+      "color": "granada"
+    }
+  ],
+  "points": [
+    {
+      "id": "O",
+      "label": "O",
+      "color": "carbon",
+      "layerId": "geometry",
+      "order": 1020,
+      "visible": true,
+      "locked": false,
+      "groupIds": [],
+      "selection": {
+        "selectable": true,
+        "ariaLabel": "Punto fijo O",
+        "role": "secondary"
+      },
+      "target": false,
+      "style": {
+        "pointSize": 7,
+        "highlightPointSize": 10,
+        "preserveColorOnHighlight": true
+      },
+      "x": 0,
+      "y": 0,
+      "showLabel": true,
+      "fixed": true,
+      "constraint": "fixed"
+    },
+    {
+      "id": "A",
+      "label": "A",
+      "color": "granada",
+      "layerId": "geometry",
+      "order": 1030,
+      "visible": true,
+      "locked": false,
+      "groupIds": [],
+      "selection": {
+        "selectable": true,
+        "ariaLabel": "Mover el punto A",
+        "role": "primary"
+      },
+      "target": false,
+      "style": {
+        "pointSize": 7,
+        "highlightPointSize": 10,
+        "preserveColorOnHighlight": true
+      },
+      "x": 3.2,
+      "y": 1.4,
+      "showLabel": true,
+      "fixed": false,
+      "constraint": "free",
+      "snapToGrid": true,
+      "snapSize": 0.25
+    },
+    {
+      "id": "B",
+      "label": "B",
+      "color": "pizarra",
+      "layerId": "geometry",
+      "order": 1040,
+      "visible": true,
+      "locked": false,
+      "groupIds": [],
+      "selection": {
+        "selectable": true,
+        "ariaLabel": "Mover el punto B",
+        "role": "primary"
+      },
+      "target": false,
+      "style": {
+        "pointSize": 7,
+        "highlightPointSize": 10,
+        "preserveColorOnHighlight": true
+      },
+      "x": -1.7,
+      "y": 2.8,
+      "showLabel": true,
+      "fixed": false,
+      "constraint": "free",
+      "snapToGrid": true,
+      "snapSize": 0.25
+    },
+    {
+      "id": "Ap",
+      "label": "A'",
+      "color": "granada",
+      "layerId": "geometry",
+      "order": 1050,
+      "visible": true,
+      "locked": false,
+      "groupIds": [],
+      "selection": {
+        "selectable": true,
+        "ariaLabel": "Punto construido A'",
+        "role": "construction"
+      },
+      "target": false,
+      "style": {
+        "pointSize": 7,
+        "highlightPointSize": 10,
+        "preserveColorOnHighlight": true
+      },
+      "x": -3.2,
+      "y": -1.4,
+      "showLabel": true,
+      "fixed": true,
+      "constraint": "derived",
+      "dependencies": [
+        "A"
+      ],
+      "xExpression": "-A.x",
+      "yExpression": "-A.y"
+    },
+    {
+      "id": "Bp",
+      "label": "B'",
+      "color": "pizarra",
+      "layerId": "geometry",
+      "order": 1060,
+      "visible": true,
+      "locked": false,
+      "groupIds": [],
+      "selection": {
+        "selectable": true,
+        "ariaLabel": "Punto construido B'",
+        "role": "construction"
+      },
+      "target": false,
+      "style": {
+        "pointSize": 7,
+        "highlightPointSize": 10,
+        "preserveColorOnHighlight": true
+      },
+      "x": 1.7,
+      "y": -2.8,
+      "showLabel": true,
+      "fixed": true,
+      "constraint": "derived",
+      "dependencies": [
+        "B"
+      ],
+      "xExpression": "-B.x",
+      "yExpression": "-B.y"
+    }
+  ],
+  "elements": [
+    {
+      "id": "lineL",
+      "label": "Recta l",
+      "color": "carbon",
+      "layerId": "geometry",
+      "order": 1070,
+      "visible": true,
+      "locked": false,
+      "groupIds": [],
+      "selection": {
+        "selectable": true,
+        "ariaLabel": "Recta l",
+        "role": "secondary"
+      },
+      "target": true,
+      "targetId": "lineL",
+      "style": {
+        "strokeWidth": 2.4,
+        "highlightStrokeWidth": 3,
+        "preserveColorOnHighlight": true
+      },
+      "kind": "line",
+      "refs": [
+        "A",
+        "Ap"
+      ]
+    },
+    {
+      "id": "lineM",
+      "label": "Recta m",
+      "color": "carbon",
+      "layerId": "geometry",
+      "order": 1080,
+      "visible": true,
+      "locked": false,
+      "groupIds": [],
+      "selection": {
+        "selectable": true,
+        "ariaLabel": "Recta m",
+        "role": "secondary"
+      },
+      "target": true,
+      "targetId": "lineM",
+      "style": {
+        "strokeWidth": 2.4,
+        "highlightStrokeWidth": 3,
+        "preserveColorOnHighlight": true
+      },
+      "kind": "line",
+      "refs": [
+        "B",
+        "Bp"
+      ]
+    },
+    {
+      "id": "angle1",
+      "label": "α",
+      "color": "granada",
+      "layerId": "geometry",
+      "order": 1090,
+      "visible": true,
+      "locked": false,
+      "groupIds": [
+        "gAlpha",
+        "gSupp12",
+        "gCongruence13"
+      ],
+      "selection": {
+        "selectable": true,
+        "ariaLabel": "α",
+        "role": "secondary"
+      },
+      "target": true,
+      "targetId": "angle1",
+      "style": {
+        "fillOpacity": 0.28,
+        "angleRadius": 0.75,
+        "preserveColorOnHighlight": true
+      },
+      "kind": "nonReflexAngle",
+      "refs": [
+        "A",
+        "O",
+        "B"
+      ]
+    },
+    {
+      "id": "angle2",
+      "label": "β",
+      "color": "pizarra",
+      "layerId": "geometry",
+      "order": 1100,
+      "visible": true,
+      "locked": false,
+      "groupIds": [
+        "gBeta",
+        "gSupp12",
+        "gSupp23",
+        "gCongruence13"
+      ],
+      "selection": {
+        "selectable": true,
+        "ariaLabel": "β",
+        "role": "secondary"
+      },
+      "target": true,
+      "targetId": "angle2",
+      "style": {
+        "fillOpacity": 0.2,
+        "angleRadius": 0.58,
+        "preserveColorOnHighlight": true
+      },
+      "kind": "nonReflexAngle",
+      "refs": [
+        "B",
+        "O",
+        "Ap"
+      ]
+    },
+    {
+      "id": "angle3",
+      "label": "α'",
+      "color": "granada",
+      "layerId": "geometry",
+      "order": 1110,
+      "visible": true,
+      "locked": false,
+      "groupIds": [
+        "gAlpha",
+        "gSupp23",
+        "gCongruence13"
+      ],
+      "selection": {
+        "selectable": true,
+        "ariaLabel": "α'",
+        "role": "secondary"
+      },
+      "target": true,
+      "targetId": "angle3",
+      "style": {
+        "fillOpacity": 0.28,
+        "angleRadius": 0.75,
+        "preserveColorOnHighlight": true
+      },
+      "kind": "nonReflexAngle",
+      "refs": [
+        "Ap",
+        "O",
+        "Bp"
+      ]
+    },
+    {
+      "id": "angle4",
+      "label": "β'",
+      "color": "pizarra",
+      "layerId": "geometry",
+      "order": 1120,
+      "visible": true,
+      "locked": false,
+      "groupIds": [
+        "gBeta"
+      ],
+      "selection": {
+        "selectable": true,
+        "ariaLabel": "β'",
+        "role": "secondary"
+      },
+      "target": true,
+      "targetId": "angle4",
+      "style": {
+        "fillOpacity": 0.2,
+        "angleRadius": 0.58,
+        "preserveColorOnHighlight": true
+      },
+      "kind": "nonReflexAngle",
+      "refs": [
+        "Bp",
+        "O",
+        "A"
+      ]
+    },
+    {
+      "id": "oppositeInfo",
+      "label": "Pares opuestos",
+      "color": "granada",
+      "layerId": "annotations",
+      "order": 1130,
+      "visible": true,
+      "locked": false,
+      "groupIds": [],
+      "selection": {
+        "selectable": true,
+        "ariaLabel": "Pares opuestos",
+        "role": "annotation"
+      },
+      "target": false,
+      "style": {
+        "preserveColorOnHighlight": true
+      },
+      "kind": "infoPanel",
+      "refs": [],
+      "text": "α = α' y β = β' para cualquier inclinación de l y m.",
+      "properties": {
+        "title": "Pares opuestos",
+        "anchorMode": "viewport",
+        "viewportPosition": [
+          0.98,
+          0.03
+        ]
+      }
+    }
+  ],
+  "sliders": [],
+  "steps": [
+    {
+      "id": "step1",
+      "label": "Suplementarios I",
+      "description": "Los ángulos 1 y 2 forman un ángulo llano.",
+      "visibleTargets": [
+        "lineL",
+        "lineM",
+        "angle1",
+        "angle2",
+        "angle3",
+        "angle4",
+        "oppositeInfo"
+      ],
+      "durationMs": 1800,
+      "objectStates": {
+        "lineL": {
+          "visible": true,
+          "emphasis": "primary",
+          "interactive": true
+        },
+        "lineM": {
+          "visible": true,
+          "emphasis": "none",
+          "interactive": true
+        },
+        "angle1": {
+          "visible": true,
+          "emphasis": "primary",
+          "interactive": true
+        },
+        "angle2": {
+          "visible": true,
+          "emphasis": "primary",
+          "interactive": true
+        },
+        "angle3": {
+          "visible": true,
+          "emphasis": "none",
+          "interactive": true
+        },
+        "angle4": {
+          "visible": true,
+          "emphasis": "none",
+          "interactive": true
+        },
+        "oppositeInfo": {
+          "visible": true,
+          "emphasis": "none",
+          "interactive": true
+        }
+      }
+    },
+    {
+      "id": "step2",
+      "label": "Suplementarios II",
+      "description": "Los ángulos 2 y 3 forman otro ángulo llano.",
+      "visibleTargets": [
+        "lineL",
+        "lineM",
+        "angle1",
+        "angle2",
+        "angle3",
+        "angle4",
+        "oppositeInfo"
+      ],
+      "durationMs": 1800,
+      "objectStates": {
+        "lineL": {
+          "visible": true,
+          "emphasis": "none",
+          "interactive": true
+        },
+        "lineM": {
+          "visible": true,
+          "emphasis": "primary",
+          "interactive": true
+        },
+        "angle1": {
+          "visible": true,
+          "emphasis": "none",
+          "interactive": true
+        },
+        "angle2": {
+          "visible": true,
+          "emphasis": "primary",
+          "interactive": true
+        },
+        "angle3": {
+          "visible": true,
+          "emphasis": "primary",
+          "interactive": true
+        },
+        "angle4": {
+          "visible": true,
+          "emphasis": "none",
+          "interactive": true
+        },
+        "oppositeInfo": {
+          "visible": true,
+          "emphasis": "none",
+          "interactive": true
+        }
+      }
+    },
+    {
+      "id": "step3",
+      "label": "Transitividad",
+      "description": "Las dos sumas son congruentes por ser ángulos llanos.",
+      "visibleTargets": [
+        "lineL",
+        "lineM",
+        "angle1",
+        "angle2",
+        "angle3",
+        "angle4",
+        "oppositeInfo"
+      ],
+      "durationMs": 1800,
+      "objectStates": {
+        "lineL": {
+          "visible": true,
+          "emphasis": "none",
+          "interactive": true
+        },
+        "lineM": {
+          "visible": true,
+          "emphasis": "none",
+          "interactive": true
+        },
+        "angle1": {
+          "visible": true,
+          "emphasis": "primary",
+          "interactive": true
+        },
+        "angle2": {
+          "visible": true,
+          "emphasis": "primary",
+          "interactive": true
+        },
+        "angle3": {
+          "visible": true,
+          "emphasis": "primary",
+          "interactive": true
+        },
+        "angle4": {
+          "visible": true,
+          "emphasis": "none",
+          "interactive": true
+        },
+        "oppositeInfo": {
+          "visible": true,
+          "emphasis": "none",
+          "interactive": true
+        }
+      }
+    },
+    {
+      "id": "step4",
+      "label": "Resta",
+      "description": "Se resta el ángulo 2, común a ambas sumas.",
+      "visibleTargets": [
+        "lineL",
+        "lineM",
+        "angle1",
+        "angle2",
+        "angle3",
+        "angle4",
+        "oppositeInfo"
+      ],
+      "durationMs": 1800,
+      "objectStates": {
+        "lineL": {
+          "visible": true,
+          "emphasis": "none",
+          "interactive": true
+        },
+        "lineM": {
+          "visible": true,
+          "emphasis": "none",
+          "interactive": true
+        },
+        "angle1": {
+          "visible": true,
+          "emphasis": "primary",
+          "interactive": true
+        },
+        "angle2": {
+          "visible": true,
+          "emphasis": "none",
+          "interactive": true
+        },
+        "angle3": {
+          "visible": true,
+          "emphasis": "primary",
+          "interactive": true
+        },
+        "angle4": {
+          "visible": true,
+          "emphasis": "none",
+          "interactive": true
+        },
+        "oppositeInfo": {
+          "visible": true,
+          "emphasis": "none",
+          "interactive": true
+        }
+      }
+    },
+    {
+      "id": "step5",
+      "label": "Segundo par",
+      "description": "El mismo argumento demuestra la congruencia del otro par.",
+      "visibleTargets": [
+        "lineL",
+        "lineM",
+        "angle1",
+        "angle2",
+        "angle3",
+        "angle4",
+        "oppositeInfo"
+      ],
+      "durationMs": 1800,
+      "objectStates": {
+        "lineL": {
+          "visible": true,
+          "emphasis": "none",
+          "interactive": true
+        },
+        "lineM": {
+          "visible": true,
+          "emphasis": "none",
+          "interactive": true
+        },
+        "angle1": {
+          "visible": true,
+          "emphasis": "none",
+          "interactive": true
+        },
+        "angle2": {
+          "visible": true,
+          "emphasis": "primary",
+          "interactive": true
+        },
+        "angle3": {
+          "visible": true,
+          "emphasis": "none",
+          "interactive": true
+        },
+        "angle4": {
+          "visible": true,
+          "emphasis": "primary",
+          "interactive": true
+        },
+        "oppositeInfo": {
+          "visible": true,
+          "emphasis": "none",
+          "interactive": true
+        }
+      }
+    }
+  ],
+  "dependencies": [
+    {
+      "sourceId": "A",
+      "targetId": "Ap",
+      "relation": "expression"
+    },
+    {
+      "sourceId": "B",
+      "targetId": "Bp",
+      "relation": "expression"
+    }
+  ],
+  "note": "Avanza por los cinco pasos y mueve A o B para comprobar que el argumento no depende de una figura particular.",
+  "extensions": {}
+}
+);
+/* @matematika-diagram-spec:end */
 
-        // Puntos para la recta l (horizontal fija)
-        els.pA = createPoint(board, [3, 0], { name: '', size: 0, visible: false, fixed: true }, theme);
-        els.pB = createPoint(board, [-3, 0], { name: '', size: 0, visible: false, fixed: true }, theme);
-        els.rectaL = createLine(board, [els.pA, els.pB], {
-          name: 'l', withLabel: true, label: { position: 'rt', offset: [10, 10] }, strokeWidth: 2.5
-        }, theme);
-
-        // Circulo invisible para limitar a pC y que no se acerque demasiado al origen
-        els.pRight = createPoint(board, [2.5, 0], { visible: false }, theme);
-        els.pLeft = createPoint(board, [-2.5, 0], { visible: false }, theme);
-        els.arc = board.create('arc', [els.O, els.pRight, els.pLeft], { visible: false });
-
-        // Punto arrastrable para la recta m
-        els.pC = createGlider(board, [2, 2, els.arc], { name: '', withLabel: false }, theme);
-
-        // Punto opuesto en m
-        els.pD = createPoint(board, [() => -els.pC.X(), () => -els.pC.Y()], { name: '', size: 0, visible: false }, theme);
-        els.rectaM = createLine(board, [els.pC, els.pD], {
-          name: 'm', strokeColor: theme.terracota, strokeWidth: 2.5, withLabel: true, label: { position: 'rt', offset: [10, 15], strokeColor: theme.terracota }
-        }, theme);
-
-        // Ángulos
-        els.ang1 = createAngle(board, [els.pA, els.O, els.pC], { name: '1', radius: 1, fillColor: theme.terracota, fillOpacity: 0.1, strokeColor: theme.terracota, strokeWidth: 2, label: { fontSize: 16, strokeColor: theme.terracota } }, theme);
-        els.ang2 = createAngle(board, [els.pC, els.O, els.pB], { name: '2', radius: 1, fillColor: theme.salvia, fillOpacity: 0.1, strokeColor: theme.salvia, strokeWidth: 2, label: { fontSize: 16, strokeColor: theme.salvia } }, theme);
-        els.ang3 = createAngle(board, [els.pB, els.O, els.pD], { name: '3', radius: 1, fillColor: theme.terracota, fillOpacity: 0.1, strokeColor: theme.terracota, strokeWidth: 2, label: { fontSize: 16, strokeColor: theme.terracota } }, theme);
-        els.ang4 = createAngle(board, [els.pD, els.O, els.pA], { name: '4', radius: 1, fillColor: theme.salvia, fillOpacity: 0.1, strokeColor: theme.salvia, strokeWidth: 2, label: { fontSize: 16, strokeColor: theme.salvia } }, theme);
-      }}
-      onUpdate={(_board: any, els: any, theme: any, isStep: any, isHL: any) => {
-        const anyH = ['lineL', 'lineM', 'angle1', 'angle2', 'angle3', 'angle4', 'supp12', 'supp23', 'congruence13'].some(isHL);
-        const styler = new StyleManager(isStep, isHL, anyH, theme);
-
-        // Steps
-        const s1 = styler.isStep(['lineL', 'lineM', 'angle1', 'angle2', 'angle3', 'angle4']);
-        const s2 = styler.isStep(['supp12', 'supp23']);
-        const s3 = styler.isStep('congruence13');
-
-        // Actualizar líneas
-        const stepActL = s1 || s2 || s3 || styler.isStep('supp12');
-        const actHL_L = styler.isHL(['lineL', 'supp12']);
-        els.rectaL.setAttribute({ strokeOpacity: styler.getOp(actHL_L, stepActL), strokeWidth: styler.getW(actHL_L, 2.5) });
-        if (els.rectaL.label) els.rectaL.label.setAttribute({ strokeOpacity: styler.getOp(actHL_L, stepActL) });
-
-        const stepActM = s1 || s2 || s3 || styler.isStep('supp23');
-        const actHL_M = styler.isHL(['lineM', 'supp23']);
-        els.rectaM.setAttribute({ strokeOpacity: styler.getOp(actHL_M, stepActM), strokeWidth: styler.getW(actHL_M, 2.5) });
-        if (els.rectaM.label) els.rectaM.label.setAttribute({ strokeOpacity: styler.getOp(actHL_M, stepActM) });
-
-        // ang1
-        const hA1 = styler.isHL(['angle1', 'supp12', 'congruence13']);
-        const sA1 = styler.isStep(['angle1', 'supp12', 'congruence13']);
-        els.ang1.setAttribute({
-          fillOpacity: styler.getOpAng(hA1, sA1),
-          strokeOpacity: styler.getOp(hA1, sA1, 0.1),
-          fillColor: styler.getC(styler.isHL('supp12'), theme.salvia, theme.terracota),
-          strokeColor: styler.getC(styler.isHL('supp12'), theme.salvia, theme.terracota),
-          strokeWidth: styler.getW(hA1, 2, 3)
-        });
-        if (els.ang1.label) els.ang1.label.setAttribute({ strokeColor: styler.getC(styler.isHL('supp12'), theme.salvia, theme.terracota) });
-
-        // ang2
-        const hA2 = styler.isHL(['angle2', 'supp12', 'supp23']);
-        const sA2 = styler.isStep(['angle2', 'supp12', 'supp23']);
-        els.ang2.setAttribute({
-          fillOpacity: styler.getOpAng(hA2, sA2),
-          strokeOpacity: styler.getOp(hA2, sA2, 0.1),
-          fillColor: theme.salvia,
-          strokeColor: theme.salvia,
-          strokeWidth: styler.getW(hA2, 2, 3)
-        });
-
-        // ang3
-        const hA3 = styler.isHL(['angle3', 'supp23', 'congruence13']);
-        const sA3 = styler.isStep(['angle3', 'supp23', 'congruence13']);
-        els.ang3.setAttribute({
-          fillOpacity: styler.getOpAng(hA3, sA3),
-          strokeOpacity: styler.getOp(hA3, sA3, 0.1),
-          fillColor: styler.getC(styler.isHL('supp23'), theme.salvia, theme.terracota),
-          strokeColor: styler.getC(styler.isHL('supp23'), theme.salvia, theme.terracota),
-          strokeWidth: styler.getW(hA3, 2, 3)
-        });
-        if (els.ang3.label) els.ang3.label.setAttribute({ strokeColor: styler.getC(styler.isHL('supp23'), theme.salvia, theme.terracota) });
-
-        // ang4
-        const hA4 = styler.isHL('angle4');
-        const sA4 = styler.isStep('angle4');
-        els.ang4.setAttribute({
-          fillOpacity: styler.getOpAng(hA4, sA4),
-          strokeOpacity: styler.getOp(hA4, sA4, 0.1),
-          strokeWidth: styler.getW(hA4, 2, 3)
-        });
-      }}
-    >
-      <div className="absolute bottom-2 right-2 text-xs font-serif text-carbon/50 pointer-events-none">
-        Arrastra el punto de la recta m
-      </div>
-    </MathBoard>
-  );
-};
+export const DemoAngulosOpuestos = () => <DiagramRenderer spec={DemoAngulosOpuestosSpec} />;

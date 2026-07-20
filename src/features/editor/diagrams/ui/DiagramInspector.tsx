@@ -1,15 +1,23 @@
 import React from 'react';
 import type { VisualDiagramModel, VisualPoint, VisualElement, VisualSlider, VisualStep, ColorToken, PointConstraint } from '../model/types';
-import { COLOR_OPTIONS, KIND_LABELS, toolReferenceCandidates, toolReferenceLabel } from '../model/commands';
+import { COLOR_OPTIONS, KIND_LABELS, convertAngleKind, toolReferenceCandidates, toolReferenceLabel } from '../model/commands';
 import { cleanTargetId, renamePoint, renameElement, renameSlider } from '../model/commands';
-import { updatePoint, updateElement, updateSlider, updateStep } from '../model/commands';
-import { DEFAULT_ANGLE_RADIUS, DEFAULT_RIGHT_ANGLE_RADIUS, extractMathExpressionIdentifiers } from '@/shared/diagrams/public';
+import { removeDiagramElements, setPointAttractors, updatePoint, updateElement, updateSlider, updateStep } from '../model/commands';
+import { extractMathExpressionIdentifiers } from '@/shared/diagrams/public';
 import { DiagramConstraintEditor } from './DiagramConstraintEditor';
 import { constraintPresentation } from '../model/constraintOptions';
 import { DiagramSceneControls } from './DiagramSceneControls';
 import { SegmentLengthConstraintEditor } from './SegmentLengthConstraintEditor';
 import { SegmentMarksEditor } from './SegmentMarksEditor';
 import { AngleEqualityConstraintEditor } from './AngleEqualityConstraintEditor';
+import { DiagramExpressionField, DiagramFormulaField } from './DiagramExpressionField';
+import { DiagramElementAppearanceEditor } from './DiagramElementAppearanceEditor';
+import { DiagramElementBehaviorEditor } from './DiagramElementBehaviorEditor';
+import { DiagramTextRulesEditor } from './DiagramTextRulesEditor';
+import { DiagramAnnotationPositionEditor } from './DiagramAnnotationPositionEditor';
+import { DiagramInfoPanelContentEditor } from './DiagramInfoPanelContentEditor';
+import { DiagramPointMovementAidsEditor } from './DiagramPointMovementAidsEditor';
+import { elementInspectorCapabilities } from '../model/elementInspectorCapabilities';
 
 interface DiagramInspectorProps {
   model: VisualDiagramModel;
@@ -32,6 +40,29 @@ function elementReferenceCandidates(model: VisualDiagramModel, element: VisualEl
   return [...model.points, ...model.elements.filter(candidate => candidate.id !== element.id)];
 }
 
+function expressionDependencySources(model: VisualDiagramModel, expressions: Array<string | undefined>): string[] {
+  const sceneIds = new Set([...model.points, ...model.elements, ...model.sliders].map(item => item.id));
+  const sources = new Set<string>();
+  for (const source of expressions) {
+    if (!source) continue;
+    try {
+      for (const identifier of extractMathExpressionIdentifiers(source)) {
+        const root = identifier.split('.')[0];
+        if (sceneIds.has(root)) sources.add(root);
+      }
+    } catch {
+      // El schema compartido muestra el error sin descartar el texto editado.
+    }
+  }
+  return [...sources];
+}
+
+
+
+function curveParameter(element: VisualElement): string {
+  return element.properties?.parameter ?? (element.kind === 'functionCurve' ? 'x' : 't');
+}
+
 export const DiagramInspector: React.FC<DiagramInspectorProps> = ({
   model,
   selectedId,
@@ -45,6 +76,7 @@ export const DiagramInspector: React.FC<DiagramInspectorProps> = ({
   const selectedSlider = model.sliders.find(item => item.id === selectedId);
   const selectedStep = model.steps.find(item => item.id === selectedId);
   const selectedSceneItem = selectedPoint || selectedElement || selectedSlider;
+  const selectedElementCapabilities = selectedElement ? elementInspectorCapabilities(selectedElement.kind) : undefined;
   const attachedLabel = selectedElement?.kind === 'label'
     ? undefined
     : model.elements.find(item => item.kind === 'label' && item.refs[0] === selectedElement?.id);
@@ -69,20 +101,7 @@ export const DiagramInspector: React.FC<DiagramInspectorProps> = ({
 
   const handlePointAttractorsChange = (attractorIds: string[]) => {
     if (!selectedPoint) return;
-    const previousIds = new Set(selectedPoint.attractorIds ?? []);
-    const next = updatePoint(model, selectedPoint.id, { attractorIds: attractorIds.length ? attractorIds : undefined });
-    onModelEdit({
-      ...next,
-      dependencies: [
-        ...(model.dependencies ?? []).filter(dependency => !(
-          dependency.targetId === selectedPoint.id
-          && dependency.relation === 'constraint'
-          && !dependency.constraintId
-          && previousIds.has(dependency.sourceId)
-        )),
-        ...attractorIds.map(sourceId => ({ sourceId, targetId: selectedPoint.id, relation: 'constraint' as const })),
-      ],
-    });
+    onModelEdit(setPointAttractors(model, selectedPoint.id, attractorIds));
   };
 
   const handleElementChange = (update: Partial<VisualElement>) => {
@@ -104,34 +123,33 @@ export const DiagramInspector: React.FC<DiagramInspectorProps> = ({
   const handleElementPropertiesChange = (update: NonNullable<VisualElement['properties']>) => {
     if (!selectedElement) return;
     const properties = { ...selectedElement.properties, ...update };
+    for (const key in properties) {
+      if (properties[key as keyof typeof properties] === undefined) {
+        delete properties[key as keyof typeof properties];
+      }
+    }
     const next = updateElement(model, selectedElement.id, { properties });
-    if (!('expression' in update) && !('xExpression' in update) && !('yExpression' in update) && !('tickDistanceExpression' in update) && !('visibleWhen' in update) && !('textRules' in update)) {
+    if (!('expression' in update) && !('xExpression' in update) && !('yExpression' in update) && !('tickDistanceExpression' in update) && !('visibleWhen' in update) && !('textRules' in update) && !('infoPanelBlocks' in update)) {
       onModelEdit(next);
       return;
     }
-    const sources = new Set<string>();
-    [
+    const sources = expressionDependencySources(model, [
       properties.expression,
       properties.xExpression,
       properties.yExpression,
       properties.tickDistanceExpression,
       properties.visibleWhen,
       ...(properties.textRules?.map(rule => rule.when) ?? []),
-    ].filter((source): source is string => Boolean(source)).forEach(source => {
-      try {
-        extractMathExpressionIdentifiers(source).forEach(identifier => {
-          const root = identifier.split('.')[0];
-          if ([...model.points, ...model.elements, ...model.sliders].some(item => item.id === root)) sources.add(root);
-        });
-      } catch {
-        // The shared schema reports the syntax error without discarding the edited text.
-      }
-    });
+      ...(properties.infoPanelBlocks?.flatMap(block => [
+        block.expression,
+        ...(block.rules?.flatMap(rule => [rule.when, rule.expression]) ?? []),
+      ]) ?? []),
+    ]);
     onModelEdit({
       ...next,
       dependencies: [
         ...(model.dependencies || []).filter(dependency => dependency.targetId !== selectedElement.id || dependency.relation !== 'expression'),
-        ...[...sources].map(sourceId => ({ sourceId, targetId: selectedElement.id, relation: 'expression' as const })),
+        ...sources.map(sourceId => ({ sourceId, targetId: selectedElement.id, relation: 'expression' as const })),
       ],
     });
   };
@@ -200,7 +218,7 @@ export const DiagramInspector: React.FC<DiagramInspectorProps> = ({
           </div>
 
           <div>
-            <label className="block text-xs font-bold text-carbon mb-1">Etiqueta</label>
+            <label className="block text-xs font-bold text-carbon mb-1">Etiqueta del punto</label>
             <input
               className="w-full rounded border border-carbon/15 bg-lienzo p-1.5 text-xs"
               value={selectedPoint.label}
@@ -282,67 +300,12 @@ export const DiagramInspector: React.FC<DiagramInspectorProps> = ({
             </p>
           </div>
 
-          {['free', 'horizontal', 'vertical', 'constrained'].includes(selectedPoint.constraint) && (
-            <div className="space-y-2 rounded border border-carbon/10 p-2">
-              <label className="flex items-center gap-1.5 text-xs font-bold text-carbon">
-                <input
-                  type="checkbox"
-                  aria-label="Ajuste a cuadrícula"
-                  checked={selectedPoint.snapToGrid ?? false}
-                  onChange={(e) => handlePointChange({ snapToGrid: e.target.checked || undefined })}
-                />
-                Ajuste a cuadrícula
-              </label>
-              {selectedPoint.snapToGrid && (
-                <label className="block text-xs font-bold text-carbon">
-                  Tamaño de celda
-                  <input
-                    type="number"
-                    min="0.01"
-                    max="10"
-                    step="0.25"
-                    aria-label="Tamaño de celda de ajuste"
-                    className="mt-1 w-full rounded border border-carbon/15 bg-lienzo p-1.5 text-xs"
-                    value={selectedPoint.snapSize ?? 0.5}
-                    onChange={(e) => handlePointChange({ snapSize: Math.max(0.01, Number(e.target.value)) })}
-                  />
-                </label>
-              )}
-            </div>
-          )}
-
-          {['free', 'horizontal', 'vertical', 'constrained'].includes(selectedPoint.constraint) && (
-            <details className="rounded border border-pavo/20 bg-pavo/5 p-2">
-              <summary className="cursor-pointer text-xs font-bold text-pavo">Atracción hacia formas notables</summary>
-              <p className="mt-1 text-[10px] leading-relaxed text-carbon/50">Acerca el punto a rectas, segmentos o curvas auxiliares durante el arrastre.</p>
-              <div className="mt-2 max-h-36 space-y-1 overflow-y-auto">
-                {model.elements
-                  .filter(element => ['line', 'ray', 'segment', 'circle', 'functionCurve', 'parametricCurve', 'perpendicular', 'parallel', 'angleBisector'].includes(element.kind))
-                  .map(element => {
-                    const checked = selectedPoint.attractorIds?.includes(element.id) ?? false;
-                    return (
-                      <label key={element.id} className="flex items-center gap-1.5 text-[10px] text-carbon">
-                        <input
-                          type="checkbox"
-                          aria-label={`Usar ${element.label} como atractor`}
-                          checked={checked}
-                          onChange={(event) => handlePointAttractorsChange(event.target.checked
-                            ? [...(selectedPoint.attractorIds ?? []), element.id]
-                            : (selectedPoint.attractorIds ?? []).filter(id => id !== element.id))}
-                        />
-                        <span>{element.label} <span className="font-mono text-carbon/45">({element.id})</span></span>
-                      </label>
-                    );
-                  })}
-              </div>
-              {(selectedPoint.attractorIds?.length ?? 0) > 0 && (
-                <div className="mt-2 grid grid-cols-2 gap-2">
-                  <label className="text-[10px] font-bold text-carbon">Distancia de atracción<input type="number" min="0.01" max="20" step="0.05" aria-label="Distancia de atracción" className="mt-1 w-full rounded border border-carbon/15 bg-lienzo p-1.5 text-xs" value={selectedPoint.attractorDistance ?? 0.4} onChange={(event) => handlePointChange({ attractorDistance: Math.max(0.01, Number(event.target.value)) })} /></label>
-                  <label className="text-[10px] font-bold text-carbon">Distancia de captura<input type="number" min="0.01" max="20" step="0.05" aria-label="Distancia de captura" className="mt-1 w-full rounded border border-carbon/15 bg-lienzo p-1.5 text-xs" value={selectedPoint.snatchDistance ?? 0.6} onChange={(event) => handlePointChange({ snatchDistance: Math.max(0.01, Number(event.target.value)) })} /></label>
-                </div>
-              )}
-            </details>
-          )}
+          <DiagramPointMovementAidsEditor
+            model={model}
+            point={selectedPoint}
+            onPointChange={handlePointChange}
+            onAttractorsChange={handlePointAttractorsChange}
+          />
 
           {selectedPoint.constraint === 'glider' && (
 
@@ -364,24 +327,8 @@ export const DiagramInspector: React.FC<DiagramInspectorProps> = ({
           {selectedPoint.constraint === 'derived' && (
             <div className="space-y-2 rounded border border-pavo/20 bg-pavo/5 p-2">
               <p className="text-[10px] font-bold uppercase tracking-wider text-pavo">Coordenadas derivadas</p>
-              <label className="block text-xs font-bold text-carbon">
-                Expresión x
-                <input
-                  aria-label="Expresión x derivada"
-                  className="mt-1 w-full rounded border border-carbon/15 bg-lienzo p-1.5 font-mono text-xs"
-                  value={selectedPoint.xExpression || ''}
-                  onChange={(event) => handlePointChange({ xExpression: event.target.value })}
-                />
-              </label>
-              <label className="block text-xs font-bold text-carbon">
-                Expresión y
-                <input
-                  aria-label="Expresión y derivada"
-                  className="mt-1 w-full rounded border border-carbon/15 bg-lienzo p-1.5 font-mono text-xs"
-                  value={selectedPoint.yExpression || ''}
-                  onChange={(event) => handlePointChange({ yExpression: event.target.value })}
-                />
-              </label>
+              <DiagramExpressionField model={model} label="Expresión x" ariaLabel="Expresión x derivada" value={selectedPoint.xExpression || ''} onChange={value => handlePointChange({ xExpression: value })} help="Puede combinar coordenadas de otros puntos, longitudes y controles para calcular la coordenada horizontal." />
+              <DiagramExpressionField model={model} label="Expresión y" ariaLabel="Expresión y derivada" value={selectedPoint.yExpression || ''} onChange={value => handlePointChange({ yExpression: value })} help="Puede combinar coordenadas de otros puntos, longitudes y controles para calcular la coordenada vertical." />
               <fieldset>
                 <legend className="text-xs font-bold text-carbon">Dependencias</legend>
                 {[...model.points, ...model.elements, ...model.sliders].filter(item => item.id !== selectedPoint.id).map(item => (
@@ -451,20 +398,47 @@ export const DiagramInspector: React.FC<DiagramInspectorProps> = ({
           </div>
 
           <div>
-            <label className="block text-xs font-bold text-carbon mb-1">Etiqueta</label>
+            <label className="block text-xs font-bold text-carbon mb-1">Nombre en el editor</label>
             <input
               className="w-full rounded border border-carbon/15 bg-lienzo p-1.5 text-xs"
               value={selectedElement.label}
               onChange={(e) => handleElementChange({ label: e.target.value })}
             />
             <span className="mt-1 block text-[10px] text-carbon/45">Admite LaTeX entre <code>$...$</code> o <code>$$...$$</code>.</span>
+            <label className="mt-2 flex items-center gap-2 text-xs font-bold text-carbon">
+              <input
+                type="checkbox"
+                aria-label="Mostrar etiqueta en el lienzo"
+                checked={selectedElement.showLabel !== false}
+                onChange={(event) => handleElementChange({ showLabel: event.target.checked })}
+              />
+              Mostrar etiqueta en el lienzo
+            </label>
           </div>
 
-          <div>
-            <p className="block text-xs font-bold text-carbon mb-1">Tipo: <span className="font-normal text-carbon/75">{KIND_LABELS[selectedElement.kind]}</span></p>
-          </div>
+          {(selectedElement.kind === 'angle' || selectedElement.kind === 'nonReflexAngle') ? (
+            <div className="rounded border border-ocre/20 bg-ocre/5 p-2">
+              <label className="block text-xs font-bold text-carbon">
+                Tipo de ángulo
+                <select
+                  aria-label="Tipo de ángulo"
+                  className="mt-1 w-full rounded border border-carbon/15 bg-lienzo p-1.5 text-xs"
+                  value={selectedElement.kind}
+                  onChange={event => onModelEdit(convertAngleKind(model, selectedElement.id, event.target.value as 'angle' | 'nonReflexAngle'))}
+                >
+                  <option value="angle">Ángulo orientado (hasta 360°)</option>
+                  <option value="nonReflexAngle">Ángulo no reflejo (hasta 180°)</option>
+                </select>
+              </label>
+              <p className="mt-1 text-[10px] leading-relaxed text-carbon/50">Conserva el objeto, sus referencias, estilo y enlaces. Si participa en igualdades angulares, la red conectada cambia de tipo con él.</p>
+            </div>
+          ) : (
+            <div>
+              <p className="block text-xs font-bold text-carbon mb-1">Tipo: <span className="font-normal text-carbon/75">{KIND_LABELS[selectedElement.kind]}</span></p>
+            </div>
+          )}
 
-          {selectedElement.kind !== 'label' && (
+          {selectedElementCapabilities?.attachedLabel && (
             <fieldset className="space-y-2 rounded border border-ocre/20 bg-ocre/5 p-2">
               <legend className="px-1 text-[10px] font-bold uppercase tracking-wider text-ocre">Etiqueta en el lienzo</legend>
               {attachedLabel ? (
@@ -478,9 +452,18 @@ export const DiagramInspector: React.FC<DiagramInspectorProps> = ({
                     />
                     Mostrar junto al elemento
                   </label>
-                  <button type="button" className="w-full rounded border border-ocre/25 bg-lienzo px-2 py-1.5 text-xs font-bold text-ocre" onClick={() => onSelect(attachedLabel.id)}>
-                    Editar texto y posición
-                  </button>
+                  <div className="flex gap-2">
+                    <button type="button" className="flex-1 rounded border border-ocre/25 bg-lienzo px-2 py-1.5 text-xs font-bold text-ocre hover:bg-ocre/5" onClick={() => onSelect(attachedLabel.id)}>
+                      Editar texto y posición
+                    </button>
+                    <button
+                      type="button"
+                      className="rounded border border-granada/25 bg-lienzo px-2.5 py-1.5 text-xs font-bold text-granada hover:bg-granada/5"
+                      onClick={() => onModelEdit(removeDiagramElements(model, [attachedLabel.id]))}
+                    >
+                      Eliminar
+                    </button>
+                  </div>
                 </>
               ) : (
                 <button type="button" disabled={!onAddElementLabel} className="w-full rounded bg-ocre px-2 py-1.5 text-xs font-bold text-lienzo disabled:opacity-40" onClick={() => onAddElementLabel?.(selectedElement.id)}>
@@ -491,7 +474,7 @@ export const DiagramInspector: React.FC<DiagramInspectorProps> = ({
             </fieldset>
           )}
 
-          {selectedElement.refs.length > 0 && (
+          {selectedElement.refs.length > 0 && selectedElement.kind !== 'infoPanel' && selectedElement.kind !== 'label' && (
             <fieldset className="space-y-1 rounded border border-carbon/10 p-2">
               <legend className="px-1 text-[10px] font-bold uppercase tracking-wider text-carbon/45">Referencias geométricas</legend>
               {selectedElement.refs.map((ref, index) => {
@@ -577,73 +560,13 @@ export const DiagramInspector: React.FC<DiagramInspectorProps> = ({
           )}
 
           {selectedElement.kind === 'infoPanel' && (
-            <div className="space-y-3 rounded border border-carbon/10 p-3 bg-carbon/5">
-              <p className="text-[10px] font-bold uppercase tracking-wider text-carbon/50">Contenido y Valor Reactivo</p>
-
-              <label className="block text-xs font-bold text-carbon">
-                Título del panel
-                <input
-                  aria-label="Título del panel"
-                  className="mt-1 w-full rounded border border-carbon/15 bg-lienzo p-1.5 text-xs font-semibold"
-                  value={selectedElement.properties?.title ?? ''}
-                  onChange={(event) => handleElementPropertiesChange({ title: event.target.value || undefined })}
-                  placeholder="Ej. Teorema de Pitágoras"
-                />
-              </label>
-
-              <label className="block text-xs font-bold text-carbon">
-                Contenido del panel
-                <textarea
-                  aria-label="Contenido del panel"
-                  className="mt-1 w-full rounded border border-carbon/15 bg-lienzo p-1.5 text-xs h-20 resize-y"
-                  value={selectedElement.text || ''}
-                  onChange={(event) => handleElementChange({ text: event.target.value })}
-                  placeholder="Introduce el texto del panel..."
-                />
-                <span className="mt-1 block text-[10px] text-carbon/45 leading-relaxed">
-                  Admite texto, LaTeX (ej. <code>{'$x^2$'}</code>) y variables reactivas entre llaves.
-                  Ejemplo: <code>{'{a.x}'}</code> para mostrar coordenadas, o <code>{'{value}'}</code> para el valor calculado de la fórmula de abajo.
-                </span>
-              </label>
-
-              <fieldset className="space-y-2 rounded border border-carbon/15 p-2 bg-lienzo/40">
-                <legend className="px-1 text-[10px] font-bold uppercase tracking-wider text-carbon/50">Fórmula de {'{value}'} (Opcional)</legend>
-                <label className="block text-xs font-bold text-carbon">
-                  Fórmula matemática
-                  <input
-                    aria-label="Fórmula matemática"
-                    className="mt-1 w-full rounded border border-carbon/15 bg-lienzo p-1.5 font-mono text-xs"
-                    value={selectedElement.properties?.expression || ''}
-                    onChange={(event) => handleElementPropertiesChange({ expression: event.target.value || undefined })}
-                    placeholder="Ej. a^2 + b^2"
-                  />
-                </label>
-                <div className="grid grid-cols-2 gap-2">
-                  <label className="text-xs font-bold text-carbon">
-                    Unidad
-                    <input
-                      aria-label="Unidad"
-                      className="mt-1 w-full rounded border border-carbon/15 bg-lienzo p-1.5 text-xs"
-                      value={selectedElement.properties?.unit || ''}
-                      onChange={(event) => handleElementPropertiesChange({ unit: event.target.value })}
-                      placeholder="Ej. cm²"
-                    />
-                  </label>
-                  <label className="text-xs font-bold text-carbon">
-                    Decimales
-                    <input
-                      type="number"
-                      min="0"
-                      max="12"
-                      aria-label="Decimales"
-                      className="mt-1 w-full rounded border border-carbon/15 bg-lienzo p-1.5 text-xs"
-                      value={selectedElement.properties?.precision ?? 2}
-                      onChange={(event) => handleElementPropertiesChange({ precision: Number(event.target.value) })}
-                    />
-                  </label>
-                </div>
-              </fieldset>
-            </div>
+            <DiagramInfoPanelContentEditor
+              model={model}
+              panel={selectedElement}
+              onElementChange={handleElementChange}
+              onTextChange={text => handleElementChange({ text })}
+              onPropertiesChange={handleElementPropertiesChange}
+            />
           )}
 
           {(selectedElement.kind === 'measurement' || selectedElement.kind === 'dimensionLine') && (
@@ -663,18 +586,17 @@ export const DiagramInspector: React.FC<DiagramInspectorProps> = ({
                 </span>
               </label>
 
+              {selectedElement.kind === 'dimensionLine' && (
+                <label className="block text-xs font-bold text-carbon">
+                  Separación de la cota
+                  <input type="number" min="-10" max="10" step="0.05" aria-label="Separación de la línea de cota" className="mt-1 w-full rounded border border-carbon/15 bg-lienzo p-1.5 text-xs" value={selectedElement.properties?.offset ?? 0.35} onChange={event => handleElementPropertiesChange({ offset: Number(event.target.value) })} />
+                  <span className="mt-1 block text-[10px] font-normal leading-relaxed text-carbon/45">Desplaza la línea de cota respecto al segmento medido.</span>
+                </label>
+              )}
+
               <fieldset className="space-y-2 rounded border border-carbon/15 p-2 bg-lienzo/40">
                 <legend className="px-1 text-[10px] font-bold uppercase tracking-wider text-carbon/50">Cálculo de la medida</legend>
-                <label className="block text-xs font-bold text-carbon">
-                  Fórmula matemática override
-                  <input
-                    aria-label="Fórmula de medida"
-                    className="mt-1 w-full rounded border border-carbon/15 bg-lienzo p-1.5 font-mono text-xs"
-                    value={selectedElement.properties?.expression || ''}
-                    onChange={(event) => handleElementPropertiesChange({ expression: event.target.value || undefined })}
-                    placeholder="Vacío = medir distancia automáticamente"
-                  />
-                </label>
+                <DiagramExpressionField model={model} label="Fórmula matemática alternativa" ariaLabel="Fórmula de medida" value={selectedElement.properties?.expression || ''} onChange={value => handleElementPropertiesChange({ expression: value || undefined })} placeholder="Vacío = medir distancia automáticamente" optional />
                 <div className="grid grid-cols-2 gap-2">
                   <label className="text-xs font-bold text-carbon">
                     Unidad
@@ -700,6 +622,7 @@ export const DiagramInspector: React.FC<DiagramInspectorProps> = ({
                   </label>
                 </div>
               </fieldset>
+              <DiagramTextRulesEditor model={model} element={selectedElement} onChange={textRules => handleElementPropertiesChange({ textRules })} />
             </div>
           )}
 
@@ -707,30 +630,11 @@ export const DiagramInspector: React.FC<DiagramInspectorProps> = ({
             <div className="space-y-3 rounded border border-carbon/10 p-3 bg-carbon/5">
               <p className="text-[10px] font-bold uppercase tracking-wider text-carbon/50">Fórmula KaTeX y Valor</p>
 
-              <label className="block text-xs font-bold text-carbon">
-                Expresión de fórmula (KaTeX)
-                <input
-                  className="mt-1 w-full rounded border border-carbon/15 bg-lienzo p-1.5 text-xs font-mono"
-                  value={selectedElement.text || ''}
-                  onChange={(event) => handleElementChange({ text: event.target.value })}
-                  placeholder="Ej. a^2 + b^2 = c^2 o a = {value}"
-                />
-                <span className="mt-1 block text-[10px] text-carbon/45 leading-relaxed">
-                  Use llaves (ej. <code>{'{a.x}'}</code>) para incrustar variables, o <code>{'{value}'}</code> para la fórmula de abajo.
-                </span>
-              </label>
+              <DiagramFormulaField label="Fórmula visible (KaTeX)" value={selectedElement.text || ''} onChange={value => handleElementChange({ text: value })} placeholder="Ej. a^2 + b^2 = c^2 o a = {value}" />
 
               <fieldset className="space-y-2 rounded border border-carbon/15 p-2 bg-lienzo/40">
                 <legend className="px-1 text-[10px] font-bold uppercase tracking-wider text-carbon/50">Fórmula de {'{value}'} (Opcional)</legend>
-                <label className="block text-xs font-bold text-carbon">
-                  Fórmula matemática
-                  <input
-                    aria-label="Fórmula matemática"
-                    className="mt-1 w-full rounded border border-carbon/15 bg-lienzo p-1.5 font-mono text-xs"
-                    value={selectedElement.properties?.expression || ''}
-                    onChange={(event) => handleElementPropertiesChange({ expression: event.target.value || undefined })}
-                  />
-                </label>
+                <DiagramExpressionField model={model} label="Fórmula matemática" value={selectedElement.properties?.expression || ''} onChange={value => handleElementPropertiesChange({ expression: value || undefined })} optional help="Calcula el número que sustituirá a {value} en la fórmula visible." />
                 <div className="grid grid-cols-2 gap-2">
                   <label className="text-xs font-bold text-carbon">
                     Unidad
@@ -755,11 +659,12 @@ export const DiagramInspector: React.FC<DiagramInspectorProps> = ({
                   </label>
                 </div>
               </fieldset>
+              <DiagramTextRulesEditor model={model} element={selectedElement} onChange={textRules => handleElementPropertiesChange({ textRules })} />
             </div>
           )}
 
           {selectedElement.kind === 'text' && (
-            <div>
+            <div className="space-y-3 rounded border border-carbon/10 bg-carbon/5 p-3">
               <label className="block text-xs font-bold text-carbon mb-1">Contenido de texto</label>
               <input
                 className="w-full rounded border border-carbon/15 bg-lienzo p-1.5 text-xs"
@@ -770,11 +675,12 @@ export const DiagramInspector: React.FC<DiagramInspectorProps> = ({
               <span className="mt-1 block text-[10px] text-carbon/45">
                 Admite texto y LaTeX (ej. <code>{'$\\alpha + \\beta$'}</code>). Puedes usar llaves (ej. <code>{'{a.x}'}</code>) para variables reactivas.
               </span>
+              <DiagramTextRulesEditor model={model} element={selectedElement} onChange={textRules => handleElementPropertiesChange({ textRules })} />
             </div>
           )}
 
           {selectedElement.kind === 'label' && (
-            <div>
+            <div className="space-y-3 rounded border border-carbon/10 bg-carbon/5 p-3">
               <label className="block text-xs font-bold text-carbon mb-1">Contenido de la etiqueta</label>
               <input
                 className="w-full rounded border border-carbon/15 bg-lienzo p-1.5 text-xs"
@@ -785,6 +691,7 @@ export const DiagramInspector: React.FC<DiagramInspectorProps> = ({
               <span className="mt-1 block text-[10px] text-carbon/45">
                 Texto de la etiqueta junto al elemento. Admite LaTeX (ej. <code>{'$A$'}</code>).
               </span>
+              <DiagramTextRulesEditor model={model} element={selectedElement} onChange={textRules => handleElementPropertiesChange({ textRules })} />
             </div>
           )}
 
@@ -847,126 +754,43 @@ export const DiagramInspector: React.FC<DiagramInspectorProps> = ({
             </fieldset>
           )}
 
-          {selectedElement.kind === 'infoPanel' && (
-            <fieldset className="space-y-2 rounded border border-carbon/10 p-2">
-              <legend className="px-1 text-[10px] font-bold uppercase tracking-wider text-carbon/45">Posición del panel</legend>
-              <label className="block text-xs font-bold text-carbon">
-                Tipo de anclaje
-                <select
-                  aria-label="Tipo de anclaje del panel"
-                  className="mt-1 w-full rounded border border-carbon/15 bg-lienzo p-1.5 text-xs"
-                  value={selectedElement.properties?.anchorMode ?? 'reference'}
-                  onChange={(event) => {
-                    const anchorMode = event.target.value as 'reference' | 'viewport';
-                    handleElementChange({
-                      refs: anchorMode === 'viewport'
-                        ? []
-                        : selectedElement.refs.length > 0 ? selectedElement.refs : model.points[0] ? [model.points[0].id] : [],
-                      properties: {
-                        ...selectedElement.properties,
-                        anchorMode,
-                        ...(anchorMode === 'viewport' && !selectedElement.properties?.viewportPosition
-                          ? { viewportPosition: [0.08, 0.22] as [number, number] }
-                          : {}),
-                      },
-                    });
-                  }}
-                >
-                  <option value="reference">Referencia geométrica</option>
-                  <option value="viewport">Posición relativa al lienzo</option>
-                </select>
-              </label>
-              {(selectedElement.properties?.anchorMode ?? 'reference') === 'reference' && <label className="block text-xs font-bold text-carbon">
-                Objeto al que acompaña
-                <select aria-label="Objeto de referencia del panel" className="mt-1 w-full rounded border border-carbon/15 bg-lienzo p-1.5 text-xs" value={selectedElement.refs[0] ?? ''} onChange={event => handleElementChange({ refs: event.target.value ? [event.target.value] : [] })}>
-                  <option value="">Seleccione un objeto…</option>
-                  {[...model.points, ...model.elements.filter(item => item.id !== selectedElement.id), ...model.sliders].map(item => <option key={item.id} value={item.id}>{item.label} ({item.id})</option>)}
-                </select>
-                <span className="mt-1 block text-[10px] font-normal leading-relaxed text-carbon/45">El panel seguirá la posición del objeto cuando este se mueva.</span>
-              </label>}
-              {(selectedElement.properties?.anchorMode ?? 'reference') === 'viewport' && (
-                <div className="space-y-2">
-                  <button
-                    type="button"
-                    className="w-full rounded border border-carbon/15 bg-lienzo px-2 py-1.5 text-left text-xs font-semibold text-carbon transition-colors hover:border-ocre/60 hover:bg-ocre/5"
-                    aria-label="Alinear panel con el título"
-                    onClick={() => handleElementPropertiesChange({ viewportPosition: [0, 0] })}
-                  >
-                    Alinear con el título
-                  </button>
-                  <div className="grid grid-cols-2 gap-2">
-                    <label className="text-xs font-bold text-carbon">
-                      Horizontal (%)
-                      <input
-                        type="number"
-                        min="0"
-                        max="100"
-                        step="1"
-                        aria-label="Posición horizontal del panel"
-                        className="mt-1 w-full rounded border border-carbon/15 bg-lienzo p-1.5 text-xs"
-                        value={Math.round((selectedElement.properties?.viewportPosition?.[0] ?? 0.08) * 100)}
-                        onChange={(event) => handleElementPropertiesChange({
-                          viewportPosition: [Number(event.target.value) / 100, selectedElement.properties?.viewportPosition?.[1] ?? 0.22],
-                        })}
-                      />
-                    </label>
-                    <label className="text-xs font-bold text-carbon">
-                      Vertical (%)
-                      <input
-                        type="number"
-                        min="0"
-                        max="100"
-                        step="1"
-                        aria-label="Posición vertical del panel"
-                        className="mt-1 w-full rounded border border-carbon/15 bg-lienzo p-1.5 text-xs"
-                        value={Math.round((selectedElement.properties?.viewportPosition?.[1] ?? 0.22) * 100)}
-                        onChange={(event) => handleElementPropertiesChange({
-                          viewportPosition: [selectedElement.properties?.viewportPosition?.[0] ?? 0.08, Number(event.target.value) / 100],
-                        })}
-                      />
-                    </label>
-                  </div>
-                </div>
-              )}
-            </fieldset>
-          )}
+          <DiagramAnnotationPositionEditor element={selectedElement} onStyleChange={handleElementStyleChange} />
+
+
 
           {selectedElement.kind === 'functionCurve' && (
-            <label className="block text-xs font-bold text-carbon">
-              f(x)
-              <input aria-label="Expresión de función" className="mt-1 w-full rounded border border-carbon/15 bg-lienzo p-1.5 font-mono text-xs" value={selectedElement.properties?.expression || ''} onChange={(event) => handleElementPropertiesChange({ expression: event.target.value })} />
-            </label>
+            <DiagramExpressionField model={model} label="f(x)" ariaLabel="Expresión de función" value={selectedElement.properties?.expression || ''} onChange={value => handleElementPropertiesChange({ expression: value })} parameter={selectedElement.properties?.parameter ?? 'x'} help="x representa cada punto del dominio; también pueden usarse controles y valores de la escena." />
           )}
 
           {selectedElement.kind === 'parametricCurve' && (
-            <div className="grid grid-cols-2 gap-2">
-              <label className="text-xs font-bold text-carbon">x(t)<input aria-label="Expresión paramétrica x" className="mt-1 w-full rounded border border-carbon/15 bg-lienzo p-1.5 font-mono text-xs" value={selectedElement.properties?.xExpression || ''} onChange={(event) => handleElementPropertiesChange({ xExpression: event.target.value })} /></label>
-              <label className="text-xs font-bold text-carbon">y(t)<input aria-label="Expresión paramétrica y" className="mt-1 w-full rounded border border-carbon/15 bg-lienzo p-1.5 font-mono text-xs" value={selectedElement.properties?.yExpression || ''} onChange={(event) => handleElementPropertiesChange({ yExpression: event.target.value })} /></label>
+            <div className="space-y-2">
+              <DiagramExpressionField model={model} label="x(t)" ariaLabel="Expresión paramétrica x" value={selectedElement.properties?.xExpression || ''} onChange={value => handleElementPropertiesChange({ xExpression: value })} parameter={selectedElement.properties?.parameter ?? 't'} />
+              <DiagramExpressionField model={model} label="y(t)" ariaLabel="Expresión paramétrica y" value={selectedElement.properties?.yExpression || ''} onChange={value => handleElementPropertiesChange({ yExpression: value })} parameter={selectedElement.properties?.parameter ?? 't'} />
             </div>
           )}
 
           {(['functionCurve', 'parametricCurve'].includes(selectedElement.kind)) && (
-            <div className="grid grid-cols-2 gap-2">
+            <fieldset className="grid grid-cols-2 gap-2 rounded border border-carbon/10 p-2">
+              <legend className="px-1 text-[10px] font-bold uppercase tracking-wider text-carbon/45">Dominio y muestreo</legend>
               <label className="text-xs font-bold text-carbon">Dominio mínimo<input type="number" aria-label="Dominio mínimo" className="mt-1 w-full rounded border border-carbon/15 bg-lienzo p-1.5 text-xs" value={selectedElement.properties?.domain?.[0] ?? -5} onChange={(event) => handleElementPropertiesChange({ domain: [Number(event.target.value), selectedElement.properties?.domain?.[1] ?? 5] })} /></label>
               <label className="text-xs font-bold text-carbon">Dominio máximo<input type="number" aria-label="Dominio máximo" className="mt-1 w-full rounded border border-carbon/15 bg-lienzo p-1.5 text-xs" value={selectedElement.properties?.domain?.[1] ?? 5} onChange={(event) => handleElementPropertiesChange({ domain: [selectedElement.properties?.domain?.[0] ?? -5, Number(event.target.value)] })} /></label>
-            </div>
+              <label className="text-xs font-bold text-carbon">Variable<input aria-label="Variable de la curva" className="mt-1 w-full rounded border border-carbon/15 bg-lienzo p-1.5 font-mono text-xs" value={curveParameter(selectedElement)} onChange={event => handleElementPropertiesChange({ parameter: event.target.value || curveParameter(selectedElement) })} /></label>
+              <label className="text-xs font-bold text-carbon">Muestras<input type="number" min="8" max="512" step="8" aria-label="Número de muestras de la curva" className="mt-1 w-full rounded border border-carbon/15 bg-lienzo p-1.5 text-xs" value={selectedElement.properties?.samples ?? 128} onChange={event => handleElementPropertiesChange({ samples: Number(event.target.value) })} /></label>
+              <p className="col-span-2 text-[10px] leading-relaxed text-carbon/45">La variable debe coincidir con la usada en la expresión. Más muestras mejoran la estimación de la escena, con mayor coste de cálculo.</p>
+            </fieldset>
           )}
 
           {/* El contenido, expresión y formato de valor ya se han agrupado en la sección superior para estos elementos */}
 
           {(selectedElement.kind === 'congruenceMark' || selectedElement.kind === 'parallelMark') && (
-            <div className="grid grid-cols-2 gap-2">
-              <label className="text-xs font-bold text-carbon">Número de marcas<input type="number" min="1" max="4" aria-label="Número de marcas" className="mt-1 w-full rounded border border-carbon/15 bg-lienzo p-1.5 text-xs" value={selectedElement.properties?.markCount ?? 1} onChange={(event) => handleElementPropertiesChange({ markCount: Number(event.target.value) })} /></label>
-              <label className="text-xs font-bold text-carbon">Altura<input type="number" min="0.05" max="100" step="0.05" aria-label={selectedElement.kind === 'parallelMark' ? 'Altura de las marcas de paralelismo' : 'Altura de las marcas de congruencia'} className="mt-1 w-full rounded border border-carbon/15 bg-lienzo p-1.5 text-xs" value={selectedElement.style?.markHeight ?? (selectedElement.kind === 'parallelMark' ? 0.42 : 0.32)} onChange={(event) => handleElementStyleChange({ markHeight: Number(event.target.value) })} /></label>
-            </div>
+            <label className="block text-xs font-bold text-carbon">Número de marcas<input type="number" min="1" max="4" aria-label="Número de marcas" className="mt-1 w-full rounded border border-carbon/15 bg-lienzo p-1.5 text-xs" value={selectedElement.properties?.markCount ?? 1} onChange={(event) => handleElementPropertiesChange({ markCount: Number(event.target.value) })} /></label>
           )}
 
           {selectedElement.kind === 'measureTicks' && (
             <div className="grid grid-cols-2 gap-2">
               <label className="text-xs font-bold text-carbon">Separación<input type="number" min="0.05" max="100" step="0.05" aria-label="Separación entre marcas de medida" className="mt-1 w-full rounded border border-carbon/15 bg-lienzo p-1.5 text-xs" value={selectedElement.properties?.tickDistance ?? 2} onChange={(event) => handleElementPropertiesChange({ tickDistance: Number(event.target.value) })} /></label>
-              <label className="text-xs font-bold text-carbon">Altura<input type="number" min="0.05" max="100" step="0.5" aria-label="Altura de las marcas de medida" className="mt-1 w-full rounded border border-carbon/15 bg-lienzo p-1.5 text-xs" value={selectedElement.style?.markHeight ?? 10} onChange={(event) => handleElementStyleChange({ markHeight: Number(event.target.value) })} /></label>
               <label className="col-span-2 text-xs font-bold text-carbon">Subdivisiones menores<input type="number" min="0" max="10" step="1" aria-label="Número de subdivisiones menores" className="mt-1 w-full rounded border border-carbon/15 bg-lienzo p-1.5 text-xs" value={selectedElement.properties?.minorTickCount ?? 4} onChange={(event) => handleElementPropertiesChange({ minorTickCount: Number(event.target.value) })} /></label>
-              <label className="col-span-2 text-xs font-bold text-carbon">Separación dinámica<input aria-label="Expresión de separación entre marcas" placeholder="Vacío = usar separación fija" className="mt-1 w-full rounded border border-carbon/15 bg-lienzo p-1.5 font-mono text-xs" value={selectedElement.properties?.tickDistanceExpression ?? ''} onChange={(event) => handleElementPropertiesChange({ tickDistanceExpression: event.target.value || undefined })} /></label>
+              <div className="col-span-2"><DiagramExpressionField model={model} label="Separación dinámica" ariaLabel="Expresión de separación entre marcas" placeholder="Vacío = usar separación fija" value={selectedElement.properties?.tickDistanceExpression ?? ''} onChange={value => handleElementPropertiesChange({ tickDistanceExpression: value || undefined })} optional /></div>
             </div>
           )}
 
@@ -977,71 +801,8 @@ export const DiagramInspector: React.FC<DiagramInspectorProps> = ({
             </div>
           )}
 
-          <label className="block text-xs font-bold text-carbon">Visible cuando<input aria-label="Condición de visibilidad" placeholder="Expresión segura; vacío = siempre" className="mt-1 w-full rounded border border-carbon/15 bg-lienzo p-1.5 font-mono text-xs" value={selectedElement.properties?.visibleWhen ?? ''} onChange={(event) => handleElementPropertiesChange({ visibleWhen: event.target.value || undefined })} /></label>
-
-          {(['text', 'label', 'formula', 'infoPanel'].includes(selectedElement.kind)) && (
-            <div className="space-y-2 rounded border border-carbon/10 p-2">
-              <p className="text-[10px] font-bold uppercase tracking-wider text-carbon/45">Texto condicional</p>
-              {(selectedElement.properties?.textRules ?? []).map((rule, index) => (
-                <div key={`${selectedElement.id}-text-rule-${index}`} className="grid grid-cols-[1fr_1fr_auto] gap-1">
-                  <input aria-label={`Condición de texto ${index + 1}`} className="rounded border border-carbon/15 bg-lienzo p-1 font-mono text-[10px]" value={rule.when} onChange={(event) => handleElementPropertiesChange({ textRules: selectedElement.properties?.textRules?.map((item, itemIndex) => itemIndex === index ? { ...item, when: event.target.value } : item) })} />
-                  <input aria-label={`Texto reactivo ${index + 1}`} className="rounded border border-carbon/15 bg-lienzo p-1 text-[10px]" value={rule.text} onChange={(event) => handleElementPropertiesChange({ textRules: selectedElement.properties?.textRules?.map((item, itemIndex) => itemIndex === index ? { ...item, text: event.target.value } : item) })} />
-                  <button type="button" aria-label={`Eliminar regla ${index + 1}`} className="rounded border border-granada/20 px-1 text-granada" onClick={() => handleElementPropertiesChange({ textRules: selectedElement.properties?.textRules?.filter((_, itemIndex) => itemIndex !== index) })}>×</button>
-                </div>
-              ))}
-              <button type="button" className="w-full rounded border border-carbon/15 px-2 py-1 text-[10px] font-bold" onClick={() => handleElementPropertiesChange({ textRules: [...(selectedElement.properties?.textRules ?? []), { when: '1', text: selectedElement.text || selectedElement.label }] })}>+ Regla de texto</button>
-            </div>
-          )}
-
-          <div>
-            <label className="block text-xs font-bold text-carbon mb-1">Color</label>
-            <select
-              className="w-full rounded border border-carbon/15 bg-lienzo p-1.5 text-xs"
-              value={selectedElement.color}
-              onChange={(e) => handleElementChange({ color: e.target.value as ColorToken })}
-            >
-              {COLOR_OPTIONS.map(opt => (
-                <option key={opt.value} value={opt.value}>{opt.label}</option>
-              ))}
-            </select>
-          </div>
-
-          <div className="grid grid-cols-2 gap-2 rounded border border-carbon/10 p-2">
-            {selectedElement.kind === 'intersection' && (
-              <>
-                <label className="text-xs font-bold text-carbon">Tamaño<input type="number" min="0" max="30" step="0.5" aria-label="Tamaño de la intersección" className="mt-1 w-full rounded border border-carbon/15 bg-lienzo p-1.5 text-xs" value={selectedElement.style?.pointSize ?? 7} onChange={(event) => handleElementStyleChange({ pointSize: Number(event.target.value) })} /></label>
-                <label className="text-xs font-bold text-carbon">Tamaño resaltado<input type="number" min="0" max="40" step="0.5" aria-label="Tamaño resaltado de la intersección" className="mt-1 w-full rounded border border-carbon/15 bg-lienzo p-1.5 text-xs" value={selectedElement.style?.highlightPointSize ?? 10} onChange={(event) => handleElementStyleChange({ highlightPointSize: Number(event.target.value) })} /></label>
-              </>
-            )}
-            {(selectedElement.kind === 'angle' || selectedElement.kind === 'nonReflexAngle' || selectedElement.kind === 'rightAngle' || selectedElement.kind === 'perpendicularMark') && (
-              <label className="col-span-2 text-xs font-bold text-carbon">Radio de la marca<input type="number" min="0.05" max="10" step="0.05" aria-label="Radio de la marca angular" className="mt-1 w-full rounded border border-carbon/15 bg-lienzo p-1.5 text-xs" value={selectedElement.style?.angleRadius ?? (selectedElement.kind === 'angle' || selectedElement.kind === 'nonReflexAngle' ? DEFAULT_ANGLE_RADIUS : DEFAULT_RIGHT_ANGLE_RADIUS)} onChange={(event) => handleElementStyleChange({ angleRadius: Number(event.target.value) })} /></label>
-            )}
-            <label className="text-xs font-bold text-carbon">Grosor<input type="number" min="0" max="20" step="0.1" aria-label="Grosor del elemento" className="mt-1 w-full rounded border border-carbon/15 bg-lienzo p-1.5 text-xs" value={selectedElement.style?.strokeWidth ?? 2.4} onChange={(event) => handleElementStyleChange({ strokeWidth: Number(event.target.value) })} /></label>
-            <label className="text-xs font-bold text-carbon">Grosor resaltado<input type="number" min="0" max="30" step="0.1" aria-label="Grosor resaltado del elemento" className="mt-1 w-full rounded border border-carbon/15 bg-lienzo p-1.5 text-xs" value={selectedElement.style?.highlightStrokeWidth ?? 3} onChange={(event) => handleElementStyleChange({ highlightStrokeWidth: Number(event.target.value) })} /></label>
-            <label className="text-xs font-bold text-carbon">Relleno<input type="number" min="0" max="1" step="0.01" aria-label="Opacidad de relleno" className="mt-1 w-full rounded border border-carbon/15 bg-lienzo p-1.5 text-xs" value={selectedElement.style?.fillOpacity ?? 0.16} onChange={(event) => handleElementStyleChange({ fillOpacity: Number(event.target.value) })} /></label>
-            <label className="text-xs font-bold text-carbon">Relleno resaltado<input type="number" min="0" max="1" step="0.01" aria-label="Opacidad de relleno resaltado" className="mt-1 w-full rounded border border-carbon/15 bg-lienzo p-1.5 text-xs" value={selectedElement.style?.highlightFillOpacity ?? 0.34} onChange={(event) => handleElementStyleChange({ highlightFillOpacity: Number(event.target.value) })} /></label>
-            <label className="col-span-2 flex items-center gap-1.5 text-xs font-bold text-carbon"><input type="checkbox" checked={selectedElement.style?.preserveColorOnHighlight ?? true} onChange={(event) => handleElementStyleChange({ preserveColorOnHighlight: event.target.checked })} />Conservar color al resaltar</label>
-          </div>
-
-          <label className="flex items-center gap-1.5 text-xs font-bold text-carbon">
-            <input
-              type="checkbox"
-              checked={selectedElement.dashed || false}
-              onChange={(e) => handleElementChange({ dashed: e.target.checked })}
-              className="rounded border-carbon/15 bg-lienzo"
-            />
-            ¿Línea discontinua?
-          </label>
-
-          <label className="flex items-center gap-1.5 text-xs font-bold text-carbon">
-            <input
-              type="checkbox"
-              checked={selectedElement.target}
-              onChange={(e) => handleElementChange({ target: e.target.checked })}
-              className="rounded border-carbon/15 bg-lienzo"
-            />
-            ¿Se puede enlazar desde MDX?
-          </label>
+          <DiagramElementAppearanceEditor element={selectedElement} onElementChange={handleElementChange} onStyleChange={handleElementStyleChange} />
+          <DiagramElementBehaviorEditor model={model} element={selectedElement} onElementChange={handleElementChange} onPropertiesChange={handleElementPropertiesChange} />
         </div>
       )}
 
@@ -1101,17 +862,7 @@ export const DiagramInspector: React.FC<DiagramInspectorProps> = ({
             </div>
           </div>
 
-          <label className="block text-xs font-bold text-carbon">
-            Máximo dinámico
-            <input
-              aria-label="Expresión del máximo dinámico del slider"
-              placeholder="Vacío = usar máximo fijo"
-              className="mt-1 w-full rounded border border-carbon/15 bg-lienzo p-1.5 font-mono text-xs"
-              value={selectedSlider.maxExpression ?? ''}
-              onChange={(event) => handleSliderChange({ maxExpression: event.target.value || undefined })}
-            />
-            <span className="mt-1 block text-[10px] font-normal leading-relaxed text-carbon/45">El máximo fijo se conserva como valor de respaldo si la expresión no puede evaluarse.</span>
-          </label>
+          <DiagramExpressionField model={model} label="Expresión del máximo dinámico" ariaLabel="Expresión del máximo dinámico del slider" value={selectedSlider.maxExpression ?? ''} onChange={value => handleSliderChange({ maxExpression: value || undefined })} placeholder="Vacío = usar máximo fijo" optional help="El máximo fijo se conserva como respaldo si la expresión todavía no puede evaluarse." />
 
           <div>
             <label className="block text-xs font-bold text-carbon mb-1">Color</label>

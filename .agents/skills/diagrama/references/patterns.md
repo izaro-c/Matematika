@@ -1134,7 +1134,11 @@ D.setAttribute({ attractors: [thalesAC, bisectorAC], attractorDistance: 0.4, sna
 
 - `thalesBD` atrae A y C para formar ángulos rectos en esos vértices (∠DAB y ∠BCD).
 - `bisectorBD` atrae A y C para lados adyacentes iguales (DA=AB, BC=CD).
-- `attractorDistance`: radio de atracción progresiva. `snatchDistance`: distancia de captura instantánea.
+- `attractorDistance`: radio a partir del que el punto se convierte temporalmente en glider. `snatchDistance`: distancia necesaria para separarlo durante ese mismo arrastre.
+- El renderer libera siempre el glider magnético al terminar el arrastre. El punto conserva la posición ajustada, pero no sigue al soporte si después se mueve otro objeto.
+- Solo el punto arrastrado puede permanecer unido temporalmente. Antes de aplicar su movimiento se libera cualquier enganche magnético residual de los demás puntos.
+- Los puntos construidos también pueden actuar como destinos; se usan para configuraciones discretas como los dos vértices equiláteros asociados a un lado.
+- El orden de `attractorIds` define la prioridad y debe poder modificarse visualmente.
 - Usar `snapToGrid: true` junto con atractores para máxima fluidez.
 
 **Regla:** Todo diagrama de polígono deformable con clasificación DEBE tener atractores para las formas notables de su taxonomía. Esto transforma el diagrama de una ilustración en una herramienta de descubrimiento.
@@ -1439,6 +1443,8 @@ B.setAttribute({ attractors: [thalesCA], attractorDistance: 0.3, snatchDistance:
 ```
 
 Cuando un punto se aproxima a su Thales correspondiente, el triángulo se vuelve rectángulo en ese vértice. Esto permite al estudiante «descubrir» que los ángulos agudos de un triángulo rectángulo suman 90°.
+
+El enlace con la circunferencia solo dura durante el arrastre activo. Al soltar, el renderer conserva las coordenadas proyectadas y devuelve el vértice a movimiento libre.
 
 ---
 

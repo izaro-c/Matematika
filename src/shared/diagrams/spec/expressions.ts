@@ -31,6 +31,30 @@ const SAFE_FUNCTIONS = new Set([
   'and', 'approx', 'eq', 'gt', 'gte', 'lt', 'lte', 'not', 'or',
 ]);
 
+const FUNCTION_ARITY: Record<string, { minimum: number; maximum?: number }> = {
+  abs: { minimum: 1, maximum: 1 }, acos: { minimum: 1, maximum: 1 }, asin: { minimum: 1, maximum: 1 },
+  atan: { minimum: 1, maximum: 1 }, atan2: { minimum: 2, maximum: 2 }, ceil: { minimum: 1, maximum: 1 },
+  cos: { minimum: 1, maximum: 1 }, exp: { minimum: 1, maximum: 1 }, floor: { minimum: 1, maximum: 1 },
+  hypot: { minimum: 1 }, ln: { minimum: 1, maximum: 1 }, log: { minimum: 1, maximum: 1 },
+  max: { minimum: 1 }, min: { minimum: 1 }, round: { minimum: 1, maximum: 1 }, sign: { minimum: 1, maximum: 1 },
+  sin: { minimum: 1, maximum: 1 }, sqrt: { minimum: 1, maximum: 1 }, tan: { minimum: 1, maximum: 1 },
+  and: { minimum: 1 }, or: { minimum: 1 }, not: { minimum: 1, maximum: 1 },
+  eq: { minimum: 2 }, approx: { minimum: 2, maximum: 3 }, gt: { minimum: 2, maximum: 2 },
+  gte: { minimum: 2, maximum: 2 }, lt: { minimum: 2, maximum: 2 }, lte: { minimum: 2, maximum: 2 },
+};
+
+function validateFunctionArity(name: string, count: number, position: number): void {
+  const arity = FUNCTION_ARITY[name];
+  if (!arity || (count >= arity.minimum && (arity.maximum === undefined || count <= arity.maximum))) return;
+  let expected = `al menos ${arity.minimum}`;
+  if (arity.maximum !== undefined) {
+    expected = arity.minimum === arity.maximum
+      ? `${arity.minimum}`
+      : `entre ${arity.minimum} y ${arity.maximum}`;
+  }
+  throw new DiagramExpressionError(`${name} necesita ${expected} argumentos; se recibieron ${count}`, position);
+}
+
 function tokenize(source: string): Token[] {
   if (source.length > MAX_EXPRESSION_LENGTH) throw new DiagramExpressionError('La expresión supera 512 caracteres');
   const tokens: Token[] = [];
@@ -150,6 +174,7 @@ class Parser {
       }
       const closing = this.take();
       if (closing.kind !== 'rightParen') throw new DiagramExpressionError('Falta cerrar el paréntesis de la función', closing.position);
+      validateFunctionArity(token.value, args.length, token.position);
       return { kind: 'call', name: token.value, args };
     }
     if (token.kind === 'leftParen') {
@@ -189,7 +214,7 @@ function callSafeFunction(name: string, args: number[]): number {
   if (name === 'and') return args.every(Boolean) ? 1 : 0;
   if (name === 'or') return args.some(Boolean) ? 1 : 0;
   if (name === 'not') return args[0] ? 0 : 1;
-  if (name === 'eq') return args[0] === args[1] ? 1 : 0;
+  if (name === 'eq') return args.every(value => value === args[0]) ? 1 : 0;
   if (name === 'approx') return Math.abs(args[0] - args[1]) <= Math.abs(args[2] ?? 1e-8) ? 1 : 0;
   if (name === 'gt') return args[0] > args[1] ? 1 : 0;
   if (name === 'gte') return args[0] >= args[1] ? 1 : 0;

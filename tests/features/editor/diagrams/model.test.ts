@@ -1,6 +1,10 @@
 import { describe, it, expect } from 'vitest';
 import {
   addLabelToElement,
+  convertAngleKind,
+  movementAttractorCreatesCycle,
+  removeDiagramElements,
+  setPointAttractors,
   createTemplateModel,
   point,
   element,
@@ -99,6 +103,76 @@ describe('Diagram Model & Selectors', () => {
     const repeated = addLabelToElement(first.model, source.id);
     expect(repeated.labelId).toBe(label.id);
     expect(repeated.model.elements.filter(item => item.kind === 'label' && item.refs[0] === source.id)).toHaveLength(1);
+  });
+
+  it('removes attached labels without leaving dangling step, group or dependency references', () => {
+    const base = createTemplateModel('triangulo-deformable', 'Etiquetas', 'definicion');
+    const source = base.elements.find(item => item.kind === 'segment')!;
+    const labelled = addLabelToElement(base, source.id);
+    const removed = removeDiagramElements(labelled.model, [labelled.labelId]);
+
+    expect(removed.elements.some(item => item.id === labelled.labelId)).toBe(false);
+    expect(removed.steps.every(item => !item.visibleTargets.includes(labelled.labelId) && !item.objectStates?.[labelled.labelId])).toBe(true);
+    expect(removed.groups.every(item => !item.memberIds.includes(labelled.labelId))).toBe(true);
+    expect(removed.dependencies?.every(item => item.sourceId !== labelled.labelId && item.targetId !== labelled.labelId)).toBe(true);
+  });
+
+  it('keeps attractor dependencies synchronized and rejects supports that would close a cycle', () => {
+    const base = createTemplateModel('triangulo-deformable', 'Magnetismo', 'definicion');
+    const point = base.points[0];
+    const cyclicSupport = base.elements.find(item => item.refs.includes(point.id))!;
+    const safeSupport = base.elements.find(item => !item.refs.includes(point.id))!;
+
+    expect(movementAttractorCreatesCycle(base, point.id, cyclicSupport.id)).toBe(true);
+    const rejected = setPointAttractors(base, point.id, [cyclicSupport.id]);
+    expect(rejected.points.find(item => item.id === point.id)?.attractorIds).toBeUndefined();
+
+    const accepted = setPointAttractors(base, point.id, [safeSupport.id]);
+    expect(accepted.points.find(item => item.id === point.id)?.attractorIds).toEqual([safeSupport.id]);
+    expect(accepted.dependencies).toContainEqual({ sourceId: safeSupport.id, targetId: point.id, relation: 'constraint' });
+    const cleared = setPointAttractors(accepted, point.id, []);
+    expect(cleared.dependencies).not.toContainEqual({ sourceId: safeSupport.id, targetId: point.id, relation: 'constraint' });
+  });
+
+  it('allows attraction to the opposite perpendicular bisector when same-side constraints couple the triangle vertices', () => {
+    const base = createTemplateModel('triangulo-deformable', 'Mediatrices', 'definicion');
+    const model = {
+      ...base,
+      elements: [
+        ...base.elements,
+        element('midAB', 'Punto medio de AB', 'midpoint', ['pA', 'pB'], 'terracota'),
+        element('lineMediatrizAB', 'Mediatriz de AB', 'perpendicular', ['pA', 'pB', 'midAB'], 'pavo'),
+        element('midBC', 'Punto medio de BC', 'midpoint', ['pB', 'pC'], 'terracota'),
+        element('lineMediatrizBC', 'Mediatriz de BC', 'perpendicular', ['pB', 'pC', 'midBC'], 'pavo'),
+        element('midCA', 'Punto medio de CA', 'midpoint', ['pC', 'pA'], 'terracota'),
+        element('lineMediatrizCA', 'Mediatriz de CA', 'perpendicular', ['pC', 'pA', 'midCA'], 'pavo'),
+      ],
+      constraints: [
+        { id: 'sameA', label: 'A no cruza BC', kind: 'sameSide' as const, refs: ['pA', 'pB', 'pC'], enabled: true },
+        { id: 'sameB', label: 'B no cruza CA', kind: 'sameSide' as const, refs: ['pB', 'pC', 'pA'], enabled: true },
+        { id: 'sameC', label: 'C no cruza AB', kind: 'sameSide' as const, refs: ['pC', 'pA', 'pB'], enabled: true },
+      ],
+    };
+
+    expect(movementAttractorCreatesCycle(model, 'pA', 'lineMediatrizBC')).toBe(false);
+    expect(movementAttractorCreatesCycle(model, 'pA', 'lineMediatrizAB')).toBe(true);
+
+    const withA = setPointAttractors(model, 'pA', ['lineMediatrizBC']);
+    expect(movementAttractorCreatesCycle(withA, 'pB', 'lineMediatrizCA')).toBe(false);
+    const withB = setPointAttractors(withA, 'pB', ['lineMediatrizCA']);
+    expect(movementAttractorCreatesCycle(withB, 'pC', 'lineMediatrizAB')).toBe(false);
+    const edited = setPointAttractors(withB, 'pC', ['lineMediatrizAB']);
+
+    expect(edited.points.map(item => item.attractorIds)).toEqual([
+      ['lineMediatrizBC'],
+      ['lineMediatrizCA'],
+      ['lineMediatrizAB'],
+    ]);
+    expect(edited.dependencies).toEqual(expect.arrayContaining([
+      { sourceId: 'lineMediatrizBC', targetId: 'pA', relation: 'constraint' },
+      { sourceId: 'lineMediatrizCA', targetId: 'pB', relation: 'constraint' },
+      { sourceId: 'lineMediatrizAB', targetId: 'pC', relation: 'constraint' },
+    ]));
   });
 
   it('should map element kinds to target kinds correctly', () => {
@@ -210,6 +284,15 @@ describe('Diagram Model & Selectors', () => {
     expect(edited.dependencies).toEqual(expect.arrayContaining([
       { sourceId: 'angleCWD', targetId: 'pB', relation: 'constraint', constraintId: equalAngle.id },
     ]));
+
+    const converted = convertAngleKind(edited, 'angleAVB', 'angle');
+    expect(converted.elements.filter(item => item.id === 'angleAVB' || item.id === 'angleCWD'))
+      .toEqual(expect.arrayContaining([
+        expect.objectContaining({ id: 'angleAVB', kind: 'angle' }),
+        expect.objectContaining({ id: 'angleCWD', kind: 'angle' }),
+      ]));
+    expect(converted.constraints).toEqual(edited.constraints);
+    expect(converted.dependencies).toEqual(edited.dependencies);
 
     const removed = removeConstraintFromModel(edited, equalAngle.id);
     expect(removed.constraints?.some(item => item.id === equalAngle.id)).toBe(false);

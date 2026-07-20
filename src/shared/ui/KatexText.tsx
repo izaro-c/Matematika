@@ -41,13 +41,19 @@ export function renderKatexTextToHtml(text: string): string {
 
   return html
     .replace(/\n/g, '<br/>')
-    .replace(/\*\*([^*]+)\*\*/g, '<strong>$1</strong>');
+    .replace(/\*\*([^*]+)\*\*/g, '<strong>$1</strong>')
+    .replace(/\*([^*]+)\*/g, '<em>$1</em>')
+    .replace(/_([^_]+)_/g, '<em>$1</em>')
+    .replace(/\[(carbon|terracota|salvia|pizarra|ocre|pavo|granada|musgo):([^\]]+)\]/g, '<span style="color: var(--theme-$1)">$2</span>');
 }
 
 /**
  * Componente que renderiza expresiones matemáticas de LaTeX a HTML usando KaTeX.
  * Convierte strings como `$x^2$` en HTML estilizado matemáticamente.
- * También soporta resaltado básico en negrita con `**texto**`.
+ * También soporta:
+ * - Negrita: `**texto**`
+ * - Cursiva: `*texto*` o `_texto_`
+ * - Color: `[color:texto]` (ej. `[terracota:Atención]`)
  */
 export const KatexText: React.FC<KatexTextProps> = ({ text, className = '' }) => {
   return (

@@ -1,125 +1,506 @@
-import { MathBoard } from '@/shared/diagrams/core/MathBoard';
-import {
-  createPoint, createLine, createGlider
-} from '@/shared/diagrams/core/MathFactory';
+import { createDiagramSpec, DiagramRenderer } from '@/shared/diagrams/public';
 
-
-
-
-
-
-export const Perpendicular = () => {
-
-
-
-
-
-
-
-
-
-
-  const onInit = (board: any, els: any, theme: any) => {
-      void board; void els; void theme;
-      const pA = createPoint(board, [-3, -1], { visible: false }, theme);
-    const pB = createPoint(board, [3, 1], { visible: false }, theme);
-
-    const recta1 = createLine(board, [pA, pB], {
-      strokeColor: theme.carbon,
-      strokeWidth: 2,
-      name: 'l_1',
-      withLabel: true,
-      label: { position: 'rt', offset: [10, 10] }
-    }, theme);
-
-    const puntoC = createGlider(board, [0, 0, recta1], {
-      name: 'P',
-      size: 5,
-      fillColor: theme.terracota,
-      strokeColor: theme.terracota,
-      showInfobox: false,
-      fixed: false,
-    }, theme);
-
-    const recta2 = board.create('perpendicular', [recta1, puntoC], {
-      strokeColor: theme.carbon,
-      strokeWidth: 2,
-      name: 'l_2',
-      withLabel: true,
-      label: { position: 'rt', offset: [10, 10] }
-    });
-
-    // Angle representation points
-    const p1 = createGlider(board, [2, 2/3, recta1], { visible: false }, theme);
-    const p2 = createGlider(board, [-2, -2/3, recta1], { visible: false }, theme);
-    const p3 = createGlider(board, [-1, 3, recta2], { visible: false }, theme);
-    const p4 = createGlider(board, [1, -3, recta2], { visible: false }, theme);
-
-    // Angles
-    const angProps = { color: theme.salvia, radius: 1, type: 'sectordot', fillOpacity: 0.1, strokeOpacity: 0.5 };
-    const a1 = board.create('angle', [p1, puntoC, p3], angProps);
-    const a2 = board.create('angle', [p3, puntoC, p2], angProps);
-    const a3 = board.create('angle', [p2, puntoC, p4], angProps);
-    const a4 = board.create('angle', [p4, puntoC, p1], angProps);
-
-      // Registrar elementos para interactividad y auditoría
-      els.recta1 = recta1;
-        els.puntoC = puntoC;
-        els.recta2 = recta2;
-        els.a1 = a1;
-        els.a2 = a2;
-        els.a3 = a3;
-        els.a4 = a4;
-    };;
-
-  const onUpdate = (board: any, els: any, theme: any, isStep: any, isHL: any) => {
-      const isHighlight = isHL;
-      void board; void els; void theme; void isStep; void isHL; void isHighlight;
-      const { recta1, puntoC, recta2, a1, a2, a3, a4 } = els;
-      // Reset styles
-    recta1.setAttribute({ strokeWidth: 2, strokeColor: theme.carbon, strokeOpacity: 1 });
-    recta2.setAttribute({ strokeWidth: 2, strokeColor: theme.carbon, strokeOpacity: 1 });
-    puntoC.setAttribute({ size: 5, fillColor: theme.terracota, strokeColor: theme.terracota });
-
-    [a1, a2, a3, a4].forEach(a => {
-      a.setAttribute({ fillOpacity: 0.1, strokeOpacity: 0.5, strokeColor: theme.salvia, fillColor: theme.salvia });
-    });
-
-    const hR1 = isHighlight('recta');
-    const hR2 = isHighlight('perpendicular');
-    const hAng = isHighlight('angulos-rectos');
-    const showAllRectas = !hR1 && !hR2;
-
-    recta1.setAttribute({
-      strokeOpacity: hR1 || showAllRectas ? 1 : 0.3,
-      strokeWidth: hR1 ? 4 : 2,
-      strokeColor: hR1 ? theme.ocre : theme.carbon
-    });
-
-    recta2.setAttribute({
-      strokeOpacity: hR2 || showAllRectas ? 1 : 0.3,
-      strokeWidth: hR2 ? 4 : 2,
-      strokeColor: hR2 ? theme.ocre : theme.carbon
-    });
-
-    if (hAng) {
-      [a1, a2, a3, a4].forEach(a => {
-        a.setAttribute({ fillOpacity: 0.4, strokeOpacity: 1, strokeColor: theme.ocre, fillColor: theme.ocre });
-      });
+/* @matematika-diagram-spec:start */
+export const PerpendicularSpec = createDiagramSpec(
+{
+  "version": 2,
+  "renderer": "matematika-diagram-renderer-v2",
+  "title": "Perpendicular",
+  "componentId": "perpendicular",
+  "category": "Definiciones",
+  "mode": "simulation",
+  "axis": false,
+  "grid": false,
+  "showLabels": true,
+  "viewport": {
+    "bounds": [
+      -5,
+      5,
+      5,
+      -5
+    ],
+    "home": [
+      -5,
+      5,
+      5,
+      -5
+    ],
+    "minZoom": 0.2,
+    "maxZoom": 12,
+    "padding": 0.16
+  },
+  "layers": [
+    {
+      "id": "geometry",
+      "label": "Geometría",
+      "order": 0,
+      "visible": true,
+      "locked": false
+    },
+    {
+      "id": "controls",
+      "label": "Controles",
+      "order": 1,
+      "visible": true,
+      "locked": false
     }
-    };;
+  ],
+  "groups": [],
+  "points": [
+    {
+      "id": "pA",
+      "label": "A",
+      "color": "terracota",
+      "layerId": "geometry",
+      "order": 0,
+      "visible": true,
+      "locked": false,
+      "groupIds": [],
+      "selection": {
+        "selectable": true,
+        "ariaLabel": "Punto A",
+        "role": "primary"
+      },
+      "target": true,
+      "targetId": "pA",
+      "style": {
+        "pointSize": 7,
+        "highlightPointSize": 10,
+        "preserveColorOnHighlight": true
+      },
+      "x": -3.05,
+      "y": -1.11,
+      "showLabel": true,
+      "fixed": false,
+      "constraint": "free"
+    },
+    {
+      "id": "pB",
+      "label": "B",
+      "color": "terracota",
+      "layerId": "geometry",
+      "order": 1000,
+      "visible": true,
+      "locked": false,
+      "groupIds": [],
+      "selection": {
+        "selectable": true,
+        "ariaLabel": "Punto B",
+        "role": "primary"
+      },
+      "target": true,
+      "targetId": "pB",
+      "style": {
+        "pointSize": 7,
+        "highlightPointSize": 10,
+        "preserveColorOnHighlight": true
+      },
+      "x": 3.25,
+      "y": 1.14,
+      "showLabel": true,
+      "fixed": false,
+      "constraint": "free"
+    },
+    {
+      "id": "pP",
+      "label": "P",
+      "color": "musgo",
+      "layerId": "geometry",
+      "order": 3000,
+      "visible": true,
+      "locked": false,
+      "groupIds": [],
+      "selection": {
+        "selectable": true,
+        "ariaLabel": "Punto 3",
+        "role": "primary"
+      },
+      "target": true,
+      "targetId": "p3",
+      "style": {
+        "pointSize": 7,
+        "highlightPointSize": 10,
+        "preserveColorOnHighlight": true
+      },
+      "x": 0.17000000000000037,
+      "y": 0.040000000000000036,
+      "showLabel": true,
+      "fixed": false,
+      "constraint": "glider",
+      "gliderTarget": "lineAB"
+    },
+    {
+      "id": "p4",
+      "label": "4",
+      "color": "ocre",
+      "layerId": "geometry",
+      "order": 5000,
+      "visible": false,
+      "locked": false,
+      "groupIds": [],
+      "selection": {
+        "selectable": true,
+        "ariaLabel": "Punto 4",
+        "role": "primary"
+      },
+      "target": false,
+      "targetId": "p4",
+      "style": {
+        "pointSize": 7,
+        "highlightPointSize": 10,
+        "preserveColorOnHighlight": true
+      },
+      "x": -31.625443586631,
+      "y": -50,
+      "showLabel": true,
+      "fixed": false,
+      "constraint": "glider",
+      "gliderTarget": "perpABP"
+    },
+    {
+      "id": "p5",
+      "label": "5",
+      "color": "ocre",
+      "layerId": "geometry",
+      "order": 6000,
+      "visible": false,
+      "locked": false,
+      "groupIds": [],
+      "selection": {
+        "selectable": true,
+        "ariaLabel": "Punto 5",
+        "role": "primary"
+      },
+      "target": false,
+      "targetId": "p5",
+      "style": {
+        "pointSize": 7,
+        "highlightPointSize": 10,
+        "preserveColorOnHighlight": true
+      },
+      "x": 0,
+      "y": 50,
+      "showLabel": true,
+      "fixed": false,
+      "constraint": "glider",
+      "gliderTarget": "perpABP"
+    },
+    {
+      "id": "p6",
+      "label": "6",
+      "color": "ocre",
+      "layerId": "geometry",
+      "order": 11000,
+      "visible": true,
+      "locked": false,
+      "groupIds": [],
+      "selection": {
+        "selectable": true,
+        "ariaLabel": "Punto 6",
+        "role": "primary"
+      },
+      "target": true,
+      "targetId": "p6",
+      "style": {
+        "pointSize": 7,
+        "highlightPointSize": 10,
+        "preserveColorOnHighlight": true
+      },
+      "x": 30,
+      "y": 0.08384592179283312,
+      "showLabel": true,
+      "fixed": false,
+      "constraint": "glider",
+      "gliderTarget": "lineAB"
+    },
+    {
+      "id": "p7",
+      "label": "7",
+      "color": "ocre",
+      "layerId": "geometry",
+      "order": 12000,
+      "visible": true,
+      "locked": false,
+      "groupIds": [],
+      "selection": {
+        "selectable": true,
+        "ariaLabel": "Punto 7",
+        "role": "primary"
+      },
+      "target": true,
+      "targetId": "p7",
+      "style": {
+        "pointSize": 7,
+        "highlightPointSize": 10,
+        "preserveColorOnHighlight": true
+      },
+      "x": -30,
+      "y": 0.9323477112952232,
+      "showLabel": true,
+      "fixed": false,
+      "constraint": "glider",
+      "gliderTarget": "lineAB"
+    }
+  ],
+  "elements": [
+    {
+      "id": "lineAB",
+      "label": "Recta",
+      "color": "terracota",
+      "layerId": "geometry",
+      "order": 2000,
+      "visible": true,
+      "locked": false,
+      "groupIds": [],
+      "selection": {
+        "selectable": true,
+        "ariaLabel": "Recta",
+        "role": "secondary"
+      },
+      "target": true,
+      "targetId": "lineAB",
+      "style": {
+        "strokeWidth": 2.4,
+        "highlightStrokeWidth": 3,
+        "preserveColorOnHighlight": true
+      },
+      "kind": "line",
+      "refs": [
+        "pA",
+        "pB"
+      ]
+    },
+    {
+      "id": "perpABP",
+      "label": "Perpendicular",
+      "color": "musgo",
+      "layerId": "geometry",
+      "order": 4000,
+      "visible": true,
+      "locked": false,
+      "groupIds": [],
+      "selection": {
+        "selectable": true,
+        "ariaLabel": "Perpendicular",
+        "role": "secondary"
+      },
+      "target": true,
+      "targetId": "perpABP",
+      "style": {
+        "strokeWidth": 2.4,
+        "highlightStrokeWidth": 3,
+        "preserveColorOnHighlight": true
+      },
+      "kind": "perpendicular",
+      "refs": [
+        "pA",
+        "pB",
+        "pP"
+      ]
+    },
+    {
+      "id": "perpendicularMarkBP4",
+      "label": "Marca de perpendicularidad",
+      "color": "ocre",
+      "layerId": "geometry",
+      "order": 7000,
+      "visible": true,
+      "locked": false,
+      "groupIds": [],
+      "selection": {
+        "selectable": true,
+        "ariaLabel": "Marca de perpendicularidad",
+        "role": "secondary"
+      },
+      "target": true,
+      "targetId": "perpendicularMarkBP4",
+      "style": {
+        "angleRadius": 1,
+        "preserveColorOnHighlight": true
+      },
+      "kind": "perpendicularMark",
+      "refs": [
+        "p6",
+        "pP",
+        "p4"
+      ]
+    },
+    {
+      "id": "perpendicularMarkBP5",
+      "label": "Marca de perpendicularidad",
+      "color": "ocre",
+      "layerId": "geometry",
+      "order": 8000,
+      "visible": true,
+      "locked": false,
+      "groupIds": [],
+      "selection": {
+        "selectable": true,
+        "ariaLabel": "Marca de perpendicularidad",
+        "role": "secondary"
+      },
+      "target": true,
+      "targetId": "perpendicularMarkBP5",
+      "style": {
+        "angleRadius": 1,
+        "preserveColorOnHighlight": true
+      },
+      "kind": "perpendicularMark",
+      "refs": [
+        "p6",
+        "pP",
+        "p5"
+      ]
+    },
+    {
+      "id": "perpendicularMarkAP5",
+      "label": "Marca de perpendicularidad",
+      "color": "ocre",
+      "layerId": "geometry",
+      "order": 9000,
+      "visible": true,
+      "locked": false,
+      "groupIds": [],
+      "selection": {
+        "selectable": true,
+        "ariaLabel": "Marca de perpendicularidad",
+        "role": "secondary"
+      },
+      "target": true,
+      "targetId": "perpendicularMarkAP5",
+      "style": {
+        "angleRadius": 1,
+        "preserveColorOnHighlight": true
+      },
+      "kind": "perpendicularMark",
+      "refs": [
+        "p7",
+        "pP",
+        "p5"
+      ]
+    },
+    {
+      "id": "perpendicularMarkAP4",
+      "label": "Marca de perpendicularidad",
+      "color": "ocre",
+      "layerId": "geometry",
+      "order": 10000,
+      "visible": true,
+      "locked": false,
+      "groupIds": [],
+      "selection": {
+        "selectable": true,
+        "ariaLabel": "Marca de perpendicularidad",
+        "role": "secondary"
+      },
+      "target": true,
+      "targetId": "perpendicularMarkAP4",
+      "style": {
+        "angleRadius": 1,
+        "preserveColorOnHighlight": true
+      },
+      "kind": "perpendicularMark",
+      "refs": [
+        "p7",
+        "pP",
+        "p4"
+      ]
+    }
+  ],
+  "sliders": [],
+  "steps": [],
+  "constraints": [],
+  "dependencies": [
+    {
+      "sourceId": "pA",
+      "targetId": "lineAB",
+      "relation": "construction"
+    },
+    {
+      "sourceId": "pB",
+      "targetId": "lineAB",
+      "relation": "construction"
+    },
+    {
+      "sourceId": "pA",
+      "targetId": "perpABP",
+      "relation": "construction"
+    },
+    {
+      "sourceId": "pB",
+      "targetId": "perpABP",
+      "relation": "construction"
+    },
+    {
+      "sourceId": "pP",
+      "targetId": "perpABP",
+      "relation": "construction"
+    },
+    {
+      "sourceId": "p7",
+      "targetId": "perpendicularMarkAP5",
+      "relation": "construction"
+    },
+    {
+      "sourceId": "pP",
+      "targetId": "perpendicularMarkAP5",
+      "relation": "construction"
+    },
+    {
+      "sourceId": "p5",
+      "targetId": "perpendicularMarkAP5",
+      "relation": "construction"
+    },
+    {
+      "sourceId": "p6",
+      "targetId": "perpendicularMarkBP5",
+      "relation": "construction"
+    },
+    {
+      "sourceId": "pP",
+      "targetId": "perpendicularMarkBP5",
+      "relation": "construction"
+    },
+    {
+      "sourceId": "p5",
+      "targetId": "perpendicularMarkBP5",
+      "relation": "construction"
+    },
+    {
+      "sourceId": "p7",
+      "targetId": "perpendicularMarkAP4",
+      "relation": "construction"
+    },
+    {
+      "sourceId": "pP",
+      "targetId": "perpendicularMarkAP4",
+      "relation": "construction"
+    },
+    {
+      "sourceId": "p4",
+      "targetId": "perpendicularMarkAP4",
+      "relation": "construction"
+    },
+    {
+      "sourceId": "p6",
+      "targetId": "perpendicularMarkBP4",
+      "relation": "construction"
+    },
+    {
+      "sourceId": "pP",
+      "targetId": "perpendicularMarkBP4",
+      "relation": "construction"
+    },
+    {
+      "sourceId": "p4",
+      "targetId": "perpendicularMarkBP4",
+      "relation": "construction"
+    }
+  ],
+  "note": "Arrastra A, B y P",
+  "extensions": {}
+}
+);
+/* @matematika-diagram-spec:end */
 
-  return (
-    <MathBoard
-      boundingbox={[-4, 4, 4, -4]}
-      axis={false}
-      grid={false}
-      onInit={onInit}
-      onUpdate={onUpdate}
-    >
-      <div className="absolute top-2 left-3 z-10 text-xs font-serif italic text-pizarra/50">
-        Arrastra el punto de intersección <span className="font-bold not-italic text-terracota">P</span>
-      </div>
-    </MathBoard>
-  );
-};
+export const Perpendicular = () => <DiagramRenderer spec={PerpendicularSpec} />;

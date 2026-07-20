@@ -1,104 +1,193 @@
-import { MathBoard } from '@/shared/diagrams/core/MathBoard';
-import {
-  createPoint, createLine, createSegment
-} from '@/shared/diagrams/core/MathFactory';
+import { createDiagramSpec, DiagramRenderer } from '@/shared/diagrams/public';
 
-
-
-
-
-
-
-export const Semirrecta = () => {
-
-
-
-
-
-
-
-
-  const onInit = (board: any, els: any, theme: any) => {
-      void board; void els; void theme;
-      const pO = createPoint(board, [-1, 0], {
-      name: 'O',
-      size: 6,
-      fillColor: theme.pizarra,
-      strokeColor: theme.pizarra,
-      showInfobox: false,
-      fixed: true,
-    }, theme);
-
-    const pA = createPoint(board, [2, 0.5], {
-      name: 'A',
-      size: 6,
-      fillColor: theme.terracota,
-      strokeColor: theme.terracota,
-      showInfobox: false,
-      fixed: false,
-    }, theme);
-
-    const farEnd = board.create('point', [
-      function () { return pO.X() + 20 * (pA.X() - pO.X()); },
-      function () { return pO.Y() + 20 * (pA.Y() - pO.Y()); },
-    ], { visible: false, fixed: true });
-
-    const lineL = createLine(board, [pO, pA], {
-      strokeColor: theme.pizarra,
-      strokeWidth: 1,
-      dash: 2,
-      name: 'l',
-      withLabel: true,
-      label: { position: 'rt', offset: [10, 10] }
-    }, theme);
-
-    const ray = createSegment(board, [pO, farEnd], {
-      strokeColor: theme.carbon,
-      strokeWidth: 2,
-      lastArrow: { type: 2 },
-    }, theme);
-
-      // Registrar elementos para interactividad y auditoría
-      els.pO = pO;
-        els.pA = pA;
-        els.ray = ray;
-        els.lineL = lineL;
-    };;
-
-  const onUpdate = (board: any, els: any, theme: any, isStep: any, isHL: any) => {
-      const isHighlight = isHL;
-      void board; void els; void theme; void isStep; void isHL; void isHighlight;
-      const { pO, pA, ray, lineL } = els;
-      pO.setAttribute({ size: 6, fillColor: theme.pizarra, strokeColor: theme.pizarra });
-    pA.setAttribute({ size: 6, fillColor: theme.terracota, strokeColor: theme.terracota });
-    ray.setAttribute({ strokeColor: theme.carbon, strokeWidth: 2 });
-    lineL.setAttribute({ strokeColor: theme.pizarra, strokeWidth: 1, dash: 2 });
-
-    if (isHL('pO')) {
-      pO.setAttribute({ size: 10, fillColor: theme.ocre, strokeColor: theme.ocre });
+/* @matematika-diagram-spec:start */
+export const SemirrectaSpec = createDiagramSpec(
+{
+  "version": 2,
+  "renderer": "matematika-diagram-renderer-v2",
+  "title": "Semirrecta",
+  "componentId": "semirrecta",
+  "category": "Definiciones",
+  "mode": "simulation",
+  "axis": false,
+  "grid": false,
+  "showLabels": true,
+  "viewport": {
+    "bounds": [
+      -5,
+      5,
+      5,
+      -5
+    ],
+    "home": [
+      -5,
+      5,
+      5,
+      -5
+    ],
+    "minZoom": 0.2,
+    "maxZoom": 12,
+    "padding": 0.16
+  },
+  "layers": [
+    {
+      "id": "geometry",
+      "label": "Geometría",
+      "order": 0,
+      "visible": true,
+      "locked": false
+    },
+    {
+      "id": "controls",
+      "label": "Controles",
+      "order": 1,
+      "visible": true,
+      "locked": false
     }
-    if (isHL('pA')) {
-      pA.setAttribute({ size: 10, fillColor: theme.ocre, strokeColor: theme.ocre });
+  ],
+  "groups": [],
+  "points": [
+    {
+      "id": "pA",
+      "label": "A",
+      "color": "terracota",
+      "layerId": "geometry",
+      "order": 4000,
+      "visible": true,
+      "locked": false,
+      "groupIds": [],
+      "selection": {
+        "selectable": true,
+        "ariaLabel": "Punto A",
+        "role": "primary"
+      },
+      "target": true,
+      "targetId": "pA",
+      "style": {
+        "pointSize": 7,
+        "highlightPointSize": 10,
+        "preserveColorOnHighlight": true
+      },
+      "x": 1.16,
+      "y": 2.07,
+      "showLabel": true,
+      "fixed": false,
+      "constraint": "free"
+    },
+    {
+      "id": "pO",
+      "label": "O",
+      "color": "carbon",
+      "layerId": "geometry",
+      "order": 5000,
+      "visible": true,
+      "locked": false,
+      "groupIds": [],
+      "selection": {
+        "selectable": true,
+        "ariaLabel": "Punto B",
+        "role": "primary"
+      },
+      "target": true,
+      "targetId": "pB",
+      "style": {
+        "pointSize": 7,
+        "highlightPointSize": 10,
+        "preserveColorOnHighlight": true
+      },
+      "x": -2,
+      "y": 0,
+      "showLabel": true,
+      "fixed": false,
+      "constraint": "free"
     }
-    if (isHL('rayOA')) {
-      ray.setAttribute({ strokeColor: theme.terracota, strokeWidth: 4 });
+  ],
+  "elements": [
+    {
+      "id": "lineOA",
+      "label": "Recta",
+      "color": "pizarra",
+      "layerId": "geometry",
+      "order": 2000,
+      "visible": true,
+      "locked": false,
+      "groupIds": [],
+      "selection": {
+        "selectable": true,
+        "ariaLabel": "Recta",
+        "role": "secondary"
+      },
+      "target": true,
+      "targetId": "lineOA",
+      "style": {
+        "strokeWidth": 1,
+        "highlightStrokeWidth": 3,
+        "preserveColorOnHighlight": true
+      },
+      "kind": "line",
+      "refs": [
+        "pO",
+        "pA"
+      ],
+      "dashed": true
+    },
+    {
+      "id": "rayOA",
+      "label": "Semirrecta",
+      "color": "musgo",
+      "layerId": "geometry",
+      "order": 3000,
+      "visible": true,
+      "locked": false,
+      "groupIds": [],
+      "selection": {
+        "selectable": true,
+        "ariaLabel": "Semirrecta",
+        "role": "secondary"
+      },
+      "target": true,
+      "targetId": "rayOA",
+      "style": {
+        "strokeWidth": 2.4,
+        "highlightStrokeWidth": 3,
+        "preserveColorOnHighlight": true
+      },
+      "kind": "ray",
+      "refs": [
+        "pO",
+        "pA"
+      ]
     }
-    if (isHL('lineL')) {
-      lineL.setAttribute({ strokeColor: theme.terracota, strokeWidth: 2, dash: 0 });
+  ],
+  "sliders": [],
+  "steps": [],
+  "constraints": [],
+  "dependencies": [
+    {
+      "sourceId": "pO",
+      "targetId": "lineOA",
+      "relation": "construction"
+    },
+    {
+      "sourceId": "pA",
+      "targetId": "lineOA",
+      "relation": "construction"
+    },
+    {
+      "sourceId": "pO",
+      "targetId": "rayOA",
+      "relation": "construction"
+    },
+    {
+      "sourceId": "pA",
+      "targetId": "rayOA",
+      "relation": "construction"
     }
-    };;
+  ],
+  "note": "Arrastra el origen (O) o la dirección (A)",
+  "extensions": {}
+}
+);
+/* @matematika-diagram-spec:end */
 
-  return (
-    <MathBoard
-      boundingbox={[-4, 3, 5, -3]}
-      axis={false}
-      grid={false}
-      onInit={onInit}
-      onUpdate={onUpdate}
-    >
-      <div className="absolute top-2 left-3 z-10 text-xs font-serif italic text-pizarra/50">
-        Arrastra el punto <span className="font-bold not-italic text-terracota">A</span>
-      </div>
-    </MathBoard>
-  );
-};
+export const Semirrecta = () => <DiagramRenderer spec={SemirrectaSpec} />;

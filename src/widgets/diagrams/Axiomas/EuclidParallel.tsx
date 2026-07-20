@@ -7,7 +7,7 @@ export const EuclidParallelSpec = createDiagramSpec(
   "renderer": "matematika-diagram-renderer-v2",
   "title": "Axioma de las Paralelas de Euclides",
   "componentId": "axioma-de-las-paralelas-de-euclides",
-  "category": "Teoremas",
+  "category": "Axiomas",
   "mode": "simulation",
   "axis": false,
   "grid": false,

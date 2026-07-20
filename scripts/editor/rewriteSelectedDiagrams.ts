@@ -267,6 +267,10 @@ function makeSpec(config: {
       item.properties?.tickDistanceExpression,
       item.properties?.visibleWhen,
       ...(item.properties?.textRules?.map(rule => rule.when) ?? []),
+      ...(item.properties?.infoPanelBlocks?.flatMap(block => [
+        block.expression,
+        ...(block.rules?.flatMap(rule => [rule.when, rule.expression]) ?? []),
+      ]) ?? []),
     ].filter((value): value is string => Boolean(value));
     new Set(expressions.flatMap(expression => extractMathExpressionIdentifiers(expression).map(identifier => identifier.split('.')[0])))
       .forEach(sourceId => dependencies.push({ sourceId, targetId: item.id, relation: 'expression' }));

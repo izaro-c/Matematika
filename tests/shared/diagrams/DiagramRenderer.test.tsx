@@ -10,9 +10,7 @@ vi.mock('../../../src/shared/diagrams/core/MathBoard', () => ({
 }));
 
 import { DiagramRenderer } from '../../../src/shared/diagrams/runtime/DiagramRenderer';
-import { Pitagoras } from '../../../src/widgets/diagrams/Teoremas/Pitagoras';
-import { PitagorasSpec } from '../../../src/widgets/diagrams/Teoremas/Pitagoras';
-import { DemoAngulosOpuestos, DemoAngulosOpuestosSpec } from '../../../src/widgets/diagrams/Demos/DemoAngulosOpuestos';
+import { Pitagoras, PitagorasSpec } from '../../../src/widgets/diagrams/Teoremas/Pitagoras';
 import { DiagramStepsEditor } from '../../../src/features/editor/diagrams/ui/DiagramStepsEditor';
 
 describe('DiagramRenderer shared runtime', () => {
@@ -78,7 +76,7 @@ describe('DiagramRenderer shared runtime', () => {
   it('opens a real multi-step editor without requiring an outer MathProvider', () => {
     expect(() => render(
       <DiagramStepsEditor
-        model={DemoAngulosOpuestosSpec}
+        model={migrateDiagramSpec(v2Fixture).spec}
         activeStepId="step1"
         onActiveStepChange={vi.fn()}
         onModelEdit={vi.fn()}
@@ -89,13 +87,22 @@ describe('DiagramRenderer shared runtime', () => {
   });
 
   it('starts a published multi-step diagram at step 1 and only advances through its scoped navigator', () => {
-    render(<DemoAngulosOpuestos />);
+    const baseSpec = migrateDiagramSpec(v2Fixture).spec;
+    const spec = {
+      ...baseSpec,
+      steps: [
+        { id: 'step1', label: 'Paso 1', description: 'Figura base', visibleTargets: ['pA'] },
+        { id: 'step2', label: 'Paso 2', description: 'Figura avanzada', visibleTargets: ['pA', 'pB'] },
+      ],
+    };
+    render(<DiagramRenderer spec={spec} />);
     const renderer = document.querySelector('[data-diagram-renderer="matematika-diagram-renderer-v2"]');
     expect(renderer?.getAttribute('data-diagram-active-step')).toBe('step1');
     expect(screen.queryByLabelText('Lecturas dinámicas del diagrama')).toBeNull();
     const initialBounds = renderer?.getAttribute('data-diagram-viewport-bounds');
 
-    fireEvent.click(screen.getByRole('button', { name: 'Paso siguiente' }));
+    const nextBtn = screen.getByRole('button', { name: 'Paso siguiente' });
+    fireEvent.click(nextBtn);
     expect(renderer?.getAttribute('data-diagram-active-step')).toBe('step2');
     expect(renderer?.getAttribute('data-diagram-viewport-bounds')).toBe(initialBounds);
   });

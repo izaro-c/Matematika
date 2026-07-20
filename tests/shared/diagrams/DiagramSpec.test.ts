@@ -198,6 +198,49 @@ describe('DiagramSpec v2 schema and migrations', () => {
     });
   });
 
+  it('accepts another point as an ordered temporary attractor', () => {
+    const candidate = structuredClone(v2Fixture) as unknown as DiagramSpecV2;
+    const point = candidate.points.find(item => item.id === 'pC')!;
+    point.attractorIds = ['pA'];
+    candidate.dependencies = [{ sourceId: 'pA', targetId: 'pC', relation: 'constraint' }];
+
+    const parsed = parseDiagramSpecV2(candidate);
+
+    expect(parsed.success).toBe(true);
+    if (parsed.success) expect(parsed.data.points.find(item => item.id === 'pC')?.attractorIds).toEqual(['pA']);
+  });
+
+  it('allows three reciprocal drag attractors without treating magnetism as a construction cycle', () => {
+    const candidate = structuredClone(v2Fixture) as unknown as DiagramSpecV2;
+    const segmentAB = candidate.elements.find(item => item.id === 'segAB')!;
+    candidate.elements.push(
+      { ...segmentAB, id: 'segBC', label: 'Segmento BC', refs: ['pB', 'pC'] },
+      { ...segmentAB, id: 'segCA', label: 'Segmento CA', refs: ['pC', 'pA'] },
+    );
+    candidate.points.find(item => item.id === 'pA')!.attractorIds = ['segBC'];
+    candidate.points.find(item => item.id === 'pB')!.attractorIds = ['segCA'];
+    candidate.points.find(item => item.id === 'pC')!.attractorIds = ['segAB'];
+    candidate.dependencies = [
+      { sourceId: 'segBC', targetId: 'pA', relation: 'constraint' },
+      { sourceId: 'segCA', targetId: 'pB', relation: 'constraint' },
+      { sourceId: 'segAB', targetId: 'pC', relation: 'constraint' },
+    ];
+
+    expect(parseDiagramSpecV2(candidate).success).toBe(true);
+  });
+
+  it('rejects a drag attractor constructed from the point it would attract', () => {
+    const candidate = structuredClone(v2Fixture) as unknown as DiagramSpecV2;
+    const point = candidate.points.find(item => item.id === 'pA')!;
+    point.attractorIds = ['segAB'];
+    candidate.dependencies = [{ sourceId: 'segAB', targetId: 'pA', relation: 'constraint' }];
+
+    const parsed = parseDiagramSpecV2(candidate);
+
+    expect(parsed.success).toBe(false);
+    if (!parsed.success) expect(parsed.error.message).toContain('soporte depende del propio punto');
+  });
+
   it('requires normalized coordinates for viewport-relative information panels', () => {
     const candidate = structuredClone(v2Fixture);
     candidate.elements.push({

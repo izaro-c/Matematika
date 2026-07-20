@@ -8,7 +8,7 @@ import marksFixture from '../../fixtures/diagrams/phase3-marks-angles.json';
 import measurementsFixture from '../../fixtures/diagrams/phase3-measurements.json';
 import areasFixture from '../../fixtures/diagrams/phase3-area-grids.json';
 import annotationsFixture from '../../fixtures/diagrams/phase3-annotations-layers.json';
-import { migrateDiagramSpec } from '../../../src/shared/diagrams/public';
+import { migrateDiagramSpec, parseDiagramSpecV2 } from '../../../src/shared/diagrams/public';
 import { MathProvider, useMathStore } from '../../../src/shared/lib/MathStoreContext';
 
 const rendererState = vi.hoisted(() => ({
@@ -69,6 +69,13 @@ vi.mock('../../../src/shared/diagrams/core/MathBoard', () => ({
               handlers[eventName] = [...(handlers[eventName] ?? []), handler];
             }),
             handlers,
+            visProp: {},
+            slideObject: null,
+            slideObjects: [],
+            popSlideObject: vi.fn(() => {
+              geometry.slideObjects.pop();
+              geometry.slideObject = geometry.slideObjects.at(-1) ?? null;
+            }),
             rendNode: node,
           };
           if (args[0]?.X && args[1]?.X && kind !== 'intersection') {
@@ -119,7 +126,8 @@ import { Incidence2Spec } from '../../../src/widgets/diagrams/Axiomas/Incidence2
 import { Congruence1Spec } from '../../../src/widgets/diagrams/Axiomas/Congruence1';
 import { PaschSpec } from '../../../src/widgets/diagrams/Axiomas/Pasch';
 import { AxiomaArquimedesSpec } from '../../../src/widgets/diagrams/Axiomas/AxiomaArquimedes';
-import { addLabelToElement } from '../../../src/features/editor/diagrams/model/commands';
+import { TrianguloSpec } from '../../../src/widgets/diagrams/Definiciones/Triangulo';
+import { addLabelToElement, setPointAttractors } from '../../../src/features/editor/diagrams/model/commands';
 
 afterEach(() => {
   cleanup();
@@ -614,6 +622,48 @@ describe('Phase 3 shared renderer', () => {
     expect(renderedNonReflexAngle?.options.radius).toBe(0.55);
   });
 
+  it('uses degrees and radians from both angular types in live visibility conditions', () => {
+    const base = migrateDiagramSpec(marksFixture).spec;
+    const spec = {
+      ...base,
+      elements: base.elements.map(element => element.id === 'angleAVB'
+        ? {
+            ...element,
+            properties: {
+              ...element.properties,
+              visibleWhen: 'and(approx(angleAVB.degrees, 270), approx(nonReflexAngleAVB.radians, pi / 2))',
+            },
+          }
+        : element),
+      dependencies: [
+        ...(base.dependencies ?? []),
+        { sourceId: 'angleAVB', targetId: 'angleAVB', relation: 'expression' as const },
+        { sourceId: 'nonReflexAngleAVB', targetId: 'angleAVB', relation: 'expression' as const },
+      ],
+    };
+    const parsed = parseDiagramSpecV2(spec);
+    expect(parsed.success).toBe(true);
+    if (!parsed.success) return;
+
+    render(<MathProvider><DiagramRenderer spec={parsed.data} viewportControls={false} /></MathProvider>);
+
+    const angleIndex = rendererState.nodes.findIndex(node => node.dataset.diagramObjectId === 'angleAVB');
+    expect(rendererState.geometries[angleIndex].setAttribute).toHaveBeenCalledWith(expect.objectContaining({ visible: true }));
+  });
+
+  it('renders several conditional readings inside one responsive information panel', () => {
+    render(<MathProvider><DiagramRenderer spec={TrianguloSpec} viewportControls={false} /></MathProvider>);
+
+    const panelIndex = rendererState.nodes.findIndex(node => node.dataset.diagramObjectId === 'infoPanel26');
+    expect(panelIndex).toBeGreaterThanOrEqual(0);
+    const textFactory = rendererState.createdOptions[panelIndex]?.args[2];
+    expect(typeof textFactory).toBe('function');
+    const html = textFactory();
+    expect(html).toContain('data-info-panel-layout="stack"');
+    expect(html).toContain('data-info-panel-block="por-lados"');
+    expect(html).toContain('data-info-panel-block="por-angulos"');
+  });
+
   it('renders measure ticks as repeated ruler graduations while keeping congruence marks separate', () => {
     render(<MathProvider><DiagramRenderer spec={migrateDiagramSpec(marksFixture).spec} viewportControls={false} /></MathProvider>);
 
@@ -665,7 +715,52 @@ describe('Phase 3 shared renderer', () => {
 
     const point = rendererState.createdOptions.find(({ kind, options }) => kind === 'point' && options.name === 'A' && options.attractorDistance === 0.4);
     expect(point?.options).toMatchObject({ attractorDistance: 0.4, snatchDistance: 0.6 });
-    expect(point?.options.attractors).toHaveLength(1);
+    const pointIndex = rendererState.createdOptions.indexOf(point!);
+    expect(rendererState.geometries[pointIndex].visProp.attractors).toHaveLength(1);
+  });
+
+  it('keeps magnetism exclusive to the actively dragged point and releases it on pointer up', () => {
+    const onPointMove = vi.fn();
+    render(<MathProvider><DiagramRenderer spec={TrianguloSpec} viewportControls={false} onPointMove={onPointMove} /></MathProvider>);
+    const geometryFor = (id: string) => {
+      const index = rendererState.nodes.findIndex(node => node.dataset.diagramObjectId === id);
+      return rendererState.geometries[index];
+    };
+    const pointA = geometryFor('A');
+    const pointB = geometryFor('B');
+    const attractorA = geometryFor(TrianguloSpec.points.find(point => point.id === 'A')!.attractorIds![0]);
+    const attractorB = geometryFor(TrianguloSpec.points.find(point => point.id === 'B')!.attractorIds![0]);
+    pointA.slideObject = attractorA;
+    pointA.slideObjects = [attractorA];
+    pointB.slideObject = attractorB;
+    pointB.slideObjects = [attractorB];
+
+    pointA.handlers.drag[0]();
+
+    expect(pointB.popSlideObject).toHaveBeenCalledOnce();
+    expect(pointA.popSlideObject).not.toHaveBeenCalled();
+
+    pointA.handlers.up[0]();
+
+    expect(pointA.popSlideObject).toHaveBeenCalledOnce();
+    expect(pointA.slideObject).toBeNull();
+    expect(onPointMove).toHaveBeenCalledWith('A', pointA.X(), pointA.Y());
+  });
+
+  it('keeps all three perpendicular bisectors rendered with reciprocal vertex attractors', () => {
+    const withA = setPointAttractors(TrianguloSpec, 'A', ['lineMediatrizBC']);
+    const withB = setPointAttractors(withA, 'B', ['lineMediatrizAC']);
+    const spec = setPointAttractors(withB, 'C', ['lineMediatrizAB']);
+
+    render(<MathProvider><DiagramRenderer spec={spec} viewportControls={false} /></MathProvider>);
+
+    for (const id of ['lineMediatrizAB', 'lineMediatrizAC', 'lineMediatrizBC']) {
+      expect(rendererState.nodes.some(node => node.dataset.diagramObjectId === id)).toBe(true);
+    }
+    for (const id of ['A', 'B', 'C']) {
+      const index = rendererState.nodes.findIndex(node => node.dataset.diagramObjectId === id);
+      expect(rendererState.geometries[index].visProp.attractors).toHaveLength(1);
+    }
   });
 
   it('renders the Archimedean slider and copy graduations from live expressions with keyboard access', () => {

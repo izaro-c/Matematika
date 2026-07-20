@@ -174,6 +174,57 @@
   white-space: normal !important;
 }
 
+.matematika-info-panel__title {
+  display: block;
+  margin-bottom: 0.35rem;
+  color: var(--theme-carbon);
+  font-size: 0.9rem;
+}
+
+.matematika-info-panel__intro {
+  margin-bottom: 0.45rem;
+}
+
+.matematika-info-panel__blocks {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 0.35rem;
+}
+
+.matematika-info-panel__blocks[data-info-panel-layout="columns"] {
+  grid-template-columns: repeat(2, minmax(8rem, 1fr));
+}
+
+.matematika-info-panel__block {
+  min-width: 0;
+  border-left: 2px solid color-mix(in srgb, var(--theme-pavo) 45%, transparent);
+  padding: 0.2rem 0.45rem;
+  background: color-mix(in srgb, var(--theme-lienzo) 72%, transparent);
+}
+
+.matematika-info-panel__block--carbon { border-left-color: color-mix(in srgb, var(--theme-carbon) 60%, transparent); background: color-mix(in srgb, var(--theme-carbon) 5%, transparent); }
+.matematika-info-panel__block--terracota { border-left-color: color-mix(in srgb, var(--theme-terracota) 60%, transparent); background: color-mix(in srgb, var(--theme-terracota) 5%, transparent); }
+.matematika-info-panel__block--salvia { border-left-color: color-mix(in srgb, var(--theme-salvia) 60%, transparent); background: color-mix(in srgb, var(--theme-salvia) 5%, transparent); }
+.matematika-info-panel__block--pizarra { border-left-color: color-mix(in srgb, var(--theme-pizarra) 60%, transparent); background: color-mix(in srgb, var(--theme-pizarra) 5%, transparent); }
+.matematika-info-panel__block--ocre { border-left-color: color-mix(in srgb, var(--theme-ocre) 60%, transparent); background: color-mix(in srgb, var(--theme-ocre) 5%, transparent); }
+.matematika-info-panel__block--pavo { border-left-color: color-mix(in srgb, var(--theme-pavo) 60%, transparent); background: color-mix(in srgb, var(--theme-pavo) 5%, transparent); }
+.matematika-info-panel__block--granada { border-left-color: color-mix(in srgb, var(--theme-granada) 60%, transparent); background: color-mix(in srgb, var(--theme-granada) 5%, transparent); }
+.matematika-info-panel__block--musgo { border-left-color: color-mix(in srgb, var(--theme-musgo) 60%, transparent); background: color-mix(in srgb, var(--theme-musgo) 5%, transparent); }
+
+
+.matematika-info-panel__block-title {
+  display: block;
+  margin-bottom: 0.1rem;
+  color: var(--theme-carbon);
+  font-size: 0.72rem;
+}
+
+@media (max-width: 36rem) {
+  .matematika-info-panel__blocks[data-info-panel-layout="columns"] {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+
 @media (min-width: 36rem) and (max-height: 30rem) {
   [data-diagram-layout="rails"] .matematika-info-panel {
     max-width: min(18rem, calc(100% - var(--diagram-safe-left, 1rem) - var(--diagram-panel-right, var(--diagram-safe-right, 1rem)) - 1rem));

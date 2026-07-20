@@ -3,15 +3,16 @@ import { createHash } from 'node:crypto';
 import { spawn, type ChildProcess } from 'node:child_process';
 import path from 'node:path';
 import puppeteer, { type Page } from 'puppeteer';
+import { publishedDiagramArea, type PublishedDiagramLayout } from '../../../src/features/editor/diagrams/model/publishedDiagramLayout';
 
 const PORT = Number(process.env.MATEMATIKA_PHASE5_E2E_PORT || 5178);
 const BASE_URL = `http://127.0.0.1:${PORT}/Matematika`;
 
 const CASES = [
-  { name: 'Pitágoras', route: '/teorema/teorema-pitagoras', minObjects: 100, texts: ['a² =', 'b² =', 'c² ='], advanceSteps: 1 },
-  { name: 'Poincaré', route: '/modelo/modelo-poincare', minObjects: 40, texts: ['L₁', 'L₂'], advanceSteps: 0 },
-  { name: 'Congruencia ALA', route: '/teorema/teorema-congruencia-ala', minObjects: 100, texts: ['AB =', '∠A ='], advanceSteps: 0 },
-  { name: 'Paralelogramo', route: '/definicion/paralelogramo', minObjects: 90, texts: ['Clasificación', 'AM =', 'MC ='], advanceSteps: 2 },
+  { name: 'Pitágoras', route: '/teorema/teorema-pitagoras', layout: 'theorem', minObjects: 100, texts: ['a² =', 'b² =', 'c² ='], advanceSteps: 1 },
+  { name: 'Poincaré', route: '/modelo/modelo-poincare', layout: 'standard', minObjects: 40, texts: ['L₁', 'L₂'], advanceSteps: 0 },
+  { name: 'Congruencia ALA', route: '/teorema/teorema-congruencia-ala', layout: 'theorem', minObjects: 100, texts: ['AB =', '∠A ='], advanceSteps: 0 },
+  { name: 'Paralelogramo', route: '/definicion/paralelogramo', layout: 'balanced', minObjects: 90, texts: ['Clasificación', 'AM =', 'MC ='], advanceSteps: 2 },
 ] as const;
 
 function startVite(): ChildProcess {
@@ -148,6 +149,8 @@ async function verifyPublishedCase(page: Page, acceptanceCase: typeof CASES[numb
   }, acceptanceCase.texts);
 
   assert.ok(result.renderer && result.renderer[0] >= 360 && result.renderer[1] >= 360, `${acceptanceCase.name}: renderer colapsado`);
+  const expectedArea = publishedDiagramArea({ width: 1440, height: 900 }, acceptanceCase.layout as PublishedDiagramLayout);
+  assert.deepEqual(result.renderer?.map(value => Math.round(value)), [expectedArea.width, expectedArea.height], `${acceptanceCase.name}: el editor y el layout publicado discrepan en el tamaño del renderer`);
   assert.ok(result.board && result.board[0] >= 350 && result.board[1] >= 350, `${acceptanceCase.name}: board colapsado`);
   assert.ok(result.objects >= acceptanceCase.minObjects, `${acceptanceCase.name}: escena JSXGraph incompleta`);
   result.visibleTexts.forEach(text => assert.ok(text.visible, `${acceptanceCase.name}: texto no visible (${text.expected})`));

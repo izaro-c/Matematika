@@ -7,7 +7,7 @@ export const Congruence2Spec = createDiagramSpec(
   "renderer": "matematika-diagram-renderer-v2",
   "title": "Axioma de Congruencia II",
   "componentId": "axioma-de-congruencia-ii",
-  "category": "Teoremas",
+  "category": "Axiomas",
   "mode": "simulation",
   "axis": false,
   "grid": false,

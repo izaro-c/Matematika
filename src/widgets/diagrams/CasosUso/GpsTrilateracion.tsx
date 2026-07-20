@@ -13,9 +13,9 @@ export const GpsTrilateracionSpec = createDiagramSpec(
   "grid": false,
   "viewport": {
     "bounds": [
-      -10,
-      12,
-      10,
+      -6,
+      5,
+      6,
       -5
     ],
     "home": [
@@ -44,27 +44,7 @@ export const GpsTrilateracionSpec = createDiagramSpec(
       "locked": false
     }
   ],
-  "groups": [
-    {
-      "id": "group1",
-      "label": "triangulo recto",
-      "memberIds": [
-        "S1",
-        "H1",
-        "catH1",
-        "catV1",
-        "rad1"
-      ],
-      "visible": true,
-      "locked": false,
-      "selection": {
-        "selectable": true,
-        "role": "secondary"
-      },
-      "target": true,
-      "targetId": "trianguloRecto"
-    }
-  ],
+  "groups": [],
   "points": [
     {
       "id": "S1",
@@ -74,9 +54,7 @@ export const GpsTrilateracionSpec = createDiagramSpec(
       "order": 2720,
       "visible": true,
       "locked": false,
-      "groupIds": [
-        "group1"
-      ],
+      "groupIds": [],
       "selection": {
         "selectable": true,
         "ariaLabel": "Punto fijo S₁",
@@ -89,8 +67,8 @@ export const GpsTrilateracionSpec = createDiagramSpec(
         "highlightPointSize": 10,
         "preserveColorOnHighlight": true
       },
-      "x": 2,
-      "y": 8,
+      "x": -3.5,
+      "y": 2.7,
       "showLabel": true,
       "fixed": true,
       "constraint": "fixed"
@@ -116,8 +94,8 @@ export const GpsTrilateracionSpec = createDiagramSpec(
         "highlightPointSize": 10,
         "preserveColorOnHighlight": true
       },
-      "x": -4,
-      "y": 2,
+      "x": 3.4,
+      "y": 2.4,
       "showLabel": true,
       "fixed": true,
       "constraint": "fixed"
@@ -143,8 +121,8 @@ export const GpsTrilateracionSpec = createDiagramSpec(
         "highlightPointSize": 10,
         "preserveColorOnHighlight": true
       },
-      "x": 6,
-      "y": -2,
+      "x": 2.8,
+      "y": -2.8,
       "showLabel": true,
       "fixed": true,
       "constraint": "fixed"
@@ -186,9 +164,7 @@ export const GpsTrilateracionSpec = createDiagramSpec(
       "order": 2760,
       "visible": true,
       "locked": false,
-      "groupIds": [
-        "group1"
-      ],
+      "groupIds": [],
       "selection": {
         "selectable": true,
         "ariaLabel": "Punto construido H₁",
@@ -308,9 +284,7 @@ export const GpsTrilateracionSpec = createDiagramSpec(
       "order": 2800,
       "visible": true,
       "locked": false,
-      "groupIds": [
-        "group1"
-      ],
+      "groupIds": [],
       "selection": {
         "selectable": true,
         "ariaLabel": "d₁",
@@ -320,7 +294,7 @@ export const GpsTrilateracionSpec = createDiagramSpec(
       "targetId": "rad1",
       "style": {
         "strokeWidth": 2.4,
-        "highlightStrokeWidth": 4,
+        "highlightStrokeWidth": 3,
         "preserveColorOnHighlight": true
       },
       "kind": "segment",
@@ -391,9 +365,7 @@ export const GpsTrilateracionSpec = createDiagramSpec(
       "order": 2830,
       "visible": true,
       "locked": false,
-      "groupIds": [
-        "group1"
-      ],
+      "groupIds": [],
       "selection": {
         "selectable": true,
         "ariaLabel": "Δx",
@@ -421,9 +393,7 @@ export const GpsTrilateracionSpec = createDiagramSpec(
       "order": 2840,
       "visible": true,
       "locked": false,
-      "groupIds": [
-        "group1"
-      ],
+      "groupIds": [],
       "selection": {
         "selectable": true,
         "ariaLabel": "Δy",
@@ -469,6 +439,99 @@ export const GpsTrilateracionSpec = createDiagramSpec(
         "H1",
         "R"
       ]
+    },
+    {
+      "id": "d1",
+      "label": "d₁",
+      "color": "pizarra",
+      "layerId": "geometry",
+      "order": 2860,
+      "visible": true,
+      "locked": false,
+      "groupIds": [],
+      "selection": {
+        "selectable": true,
+        "ariaLabel": "d₁",
+        "role": "secondary"
+      },
+      "target": false,
+      "style": {
+        "strokeWidth": 2.4,
+        "highlightStrokeWidth": 3,
+        "preserveColorOnHighlight": true
+      },
+      "kind": "dimensionLine",
+      "refs": [
+        "S1",
+        "R"
+      ],
+      "text": "d₁ = {value}",
+      "properties": {
+        "precision": 2,
+        "offset": 0.25
+      }
+    },
+    {
+      "id": "d2",
+      "label": "d₂",
+      "color": "ocre",
+      "layerId": "geometry",
+      "order": 2870,
+      "visible": true,
+      "locked": false,
+      "groupIds": [],
+      "selection": {
+        "selectable": true,
+        "ariaLabel": "d₂",
+        "role": "secondary"
+      },
+      "target": false,
+      "style": {
+        "strokeWidth": 2.4,
+        "highlightStrokeWidth": 3,
+        "preserveColorOnHighlight": true
+      },
+      "kind": "dimensionLine",
+      "refs": [
+        "S2",
+        "R"
+      ],
+      "text": "d₂ = {value}",
+      "properties": {
+        "precision": 2,
+        "offset": 0.25
+      }
+    },
+    {
+      "id": "d3",
+      "label": "d₃",
+      "color": "pavo",
+      "layerId": "geometry",
+      "order": 2880,
+      "visible": true,
+      "locked": false,
+      "groupIds": [],
+      "selection": {
+        "selectable": true,
+        "ariaLabel": "d₃",
+        "role": "secondary"
+      },
+      "target": false,
+      "style": {
+        "strokeWidth": 2.4,
+        "highlightStrokeWidth": 3,
+        "preserveColorOnHighlight": true
+      },
+      "kind": "dimensionLine",
+      "refs": [
+        "S3",
+        "R"
+      ],
+      "text": "d₃ = {value}",
+      "properties": {
+        "precision": 2,
+        "offset": 0.25
+      }
     }
   ],
   "sliders": [],

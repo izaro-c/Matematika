@@ -11,6 +11,7 @@ import {
   updateStep,
   updateStepObjectState,
 } from '../model/commands';
+import { DiagramExpressionField } from './DiagramExpressionField';
 
 interface DiagramStepsEditorProps {
   model: VisualDiagramModel;
@@ -43,12 +44,14 @@ export const DiagramStepsEditor: React.FC<DiagramStepsEditorProps> = ({
 }) => {
   const items = [...model.points, ...model.elements, ...model.sliders];
   const [selectedCell, setSelectedCell] = useState<{ stepId: string; objectId: string } | null>(null);
+  const [objectQuery, setObjectQuery] = useState('');
   const activeStep = model.steps.find(item => item.id === activeStepId) ?? model.steps[0];
   const selectedStep = selectedCell ? model.steps.find(item => item.id === selectedCell.stepId) : undefined;
   const selectedObject = selectedCell ? items.find(item => item.id === selectedCell.objectId) : undefined;
   const selectedState = selectedStep && selectedObject
     ? selectedStep.objectStates?.[selectedObject.id] ?? { visible: selectedStep.visibleTargets.includes(selectedObject.id), emphasis: 'none' as const, interactive: true }
     : undefined;
+  const visibleItems = items.filter(item => `${item.label} ${item.id}`.toLocaleLowerCase('es').includes(objectQuery.trim().toLocaleLowerCase('es')));
 
   const editSteps = (steps: VisualDiagramModel['steps'], label: string) => onModelEdit({ ...model, steps }, { label });
   const addStep = () => {
@@ -83,6 +86,21 @@ export const DiagramStepsEditor: React.FC<DiagramStepsEditorProps> = ({
             onStepChange={onActiveStepChange}
             className="mt-3"
           />
+
+          <div className="mt-3 flex flex-wrap items-center gap-2 rounded border border-carbon/10 bg-carbon/[0.02] p-2">
+            <span className="text-[10px] font-bold text-carbon/55">Paso activo:</span>
+            <button type="button" className="rounded border border-carbon/15 bg-lienzo px-2 py-1 text-[10px] font-bold" onClick={() => {
+              if (!activeStep) return;
+              const steps = items.reduce((result, item) => updateStepObjectState(result, activeStep.id, item.id, { visible: true }), model.steps);
+              editSteps(steps, `Mostrar todo en ${activeStep.label}`);
+            }}>Mostrar todos los objetos</button>
+            <button type="button" className="rounded border border-carbon/15 bg-lienzo px-2 py-1 text-[10px] font-bold" onClick={() => {
+              if (!activeStep) return;
+              const steps = items.reduce((result, item) => updateStepObjectState(result, activeStep.id, item.id, { visible: false }), model.steps);
+              editSteps(steps, `Ocultar todo en ${activeStep.label}`);
+            }}>Ocultar todos</button>
+            <span className="ml-auto text-[9px] text-carbon/45">Después puede ajustar excepciones en la matriz.</span>
+          </div>
 
           <ol className="mt-3 flex gap-2 overflow-x-auto pb-1" aria-label="Edición de la línea temporal">
             {model.steps.map((item, index) => (
@@ -127,6 +145,7 @@ export const DiagramStepsEditor: React.FC<DiagramStepsEditorProps> = ({
 
           <div className="mt-4 grid items-start gap-3 lg:grid-cols-[minmax(0,1fr)_20rem]">
           <div className="overflow-x-auto rounded border border-carbon/10">
+            <div className="border-b border-carbon/10 bg-carbon/5 p-2"><input type="search" aria-label="Buscar objetos en la secuencia" placeholder="Buscar objetos en la matriz…" className="w-full max-w-sm rounded border border-carbon/15 bg-lienzo p-1.5 text-[10px]" value={objectQuery} onChange={event => setObjectQuery(event.target.value)} /></div>
             <table className="min-w-full border-collapse text-[10px]">
               <caption className="border-b border-carbon/10 bg-carbon/5 px-3 py-2 text-left font-bold uppercase tracking-widest text-carbon/50">Matriz objetos × pasos</caption>
               <thead>
@@ -136,7 +155,7 @@ export const DiagramStepsEditor: React.FC<DiagramStepsEditorProps> = ({
                 </tr>
               </thead>
               <tbody>
-                {items.map(item => (
+                {visibleItems.map(item => (
                   <tr key={item.id}>
                     <th scope="row" className="sticky left-0 z-10 border-r border-t border-carbon/10 bg-lienzo p-2 text-left">
                       <button type="button" className="font-bold text-carbon hover:text-terracota" onClick={() => onSelectObject(item.id)}>{item.label}</button>
@@ -197,7 +216,7 @@ export const DiagramStepsEditor: React.FC<DiagramStepsEditorProps> = ({
                     <label className="text-[10px] font-bold text-carbon/60">Título<input className="mt-1 w-full rounded border border-carbon/15 p-1.5 text-xs" value={selectedState.overlay.title} onChange={event => editState({ overlay: { ...selectedState.overlay!, title: event.target.value } }, 'Editar título del overlay')} /></label>
                     <label className="text-[10px] font-bold text-carbon/60">Posición<select className="mt-1 w-full rounded border border-carbon/15 p-1.5 text-xs" value={selectedState.overlay.position ?? 'bottom-right'} onChange={event => editState({ overlay: { ...selectedState.overlay!, position: event.target.value as NonNullable<DiagramStepObjectState['overlay']>['position'] } }, 'Mover overlay')}><option value="top-left">Arriba izquierda</option><option value="top-right">Arriba derecha</option><option value="bottom-left">Abajo izquierda</option><option value="bottom-right">Abajo derecha</option></select></label>
                     <label className="text-[10px] font-bold text-carbon/60">Contenido<input className="mt-1 w-full rounded border border-carbon/15 p-1.5 text-xs" value={selectedState.overlay.content} onChange={event => editState({ overlay: { ...selectedState.overlay!, content: event.target.value } }, 'Editar contenido del overlay')} /></label>
-                    <label className="text-[10px] font-bold text-carbon/60">Expresión reactiva<input className="mt-1 w-full rounded border border-carbon/15 p-1.5 font-mono text-xs" placeholder="segAB.length" value={selectedState.overlay.expression ?? ''} onChange={event => editState({ overlay: { ...selectedState.overlay!, expression: event.target.value || undefined } }, 'Editar expresión del overlay')} /></label>
+                    <div className="sm:col-span-2"><DiagramExpressionField model={model} label="Expresión reactiva del panel" value={selectedState.overlay.expression ?? ''} onChange={value => editState({ overlay: { ...selectedState.overlay!, expression: value || undefined } }, 'Editar expresión del overlay')} placeholder="segAB.length" optional help="El resultado sustituye a {value} en el contenido del panel durante este paso." /></div>
                   </div>
                 )}
               </div>

@@ -5,7 +5,7 @@ export const SegmentoSpec = createDiagramSpec(
 {
   "version": 2,
   "renderer": "matematika-diagram-renderer-v2",
-  "title": "Segmento",
+  "title": "Segmento y recta soporte",
   "componentId": "segmento",
   "category": "Definiciones",
   "mode": "simulation",
@@ -161,12 +161,43 @@ export const SegmentoSpec = createDiagramSpec(
         "A",
         "B"
       ]
+    },
+    {
+      "id": "length",
+      "label": "Longitud AB",
+      "color": "pizarra",
+      "layerId": "geometry",
+      "order": 780,
+      "visible": true,
+      "locked": false,
+      "groupIds": [],
+      "selection": {
+        "selectable": true,
+        "ariaLabel": "Longitud AB",
+        "role": "secondary"
+      },
+      "target": false,
+      "style": {
+        "strokeWidth": 2.4,
+        "highlightStrokeWidth": 3,
+        "preserveColorOnHighlight": true
+      },
+      "kind": "dimensionLine",
+      "refs": [
+        "A",
+        "B"
+      ],
+      "text": "|AB| = {value}",
+      "properties": {
+        "precision": 2,
+        "offset": 0.45
+      }
     }
   ],
   "sliders": [],
   "steps": [],
   "dependencies": [],
-  "note": "Mueve A o B",
+  "note": "Mueve A o B. La recta soporte es ilimitada; el segmento comprende únicamente los extremos y los puntos entre ellos.",
   "extensions": {}
 }
 );
