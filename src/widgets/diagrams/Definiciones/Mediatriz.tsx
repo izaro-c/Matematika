@@ -122,8 +122,8 @@ export const MediatrizSpec = createDiagramSpec(
         "highlightPointSize": 10,
         "preserveColorOnHighlight": true
       },
-      "x": -0.7301694761504384,
-      "y": 3.309958057700899,
+      "x": -1.1933190511529765,
+      "y": 3.1790338695111826,
       "showLabel": true,
       "fixed": false,
       "constraint": "glider",
@@ -297,36 +297,6 @@ export const MediatrizSpec = createDiagramSpec(
       "dashed": true
     },
     {
-      "id": "measEquidistancia",
-      "label": "Equidistancia",
-      "color": "carbon",
-      "layerId": "geometry",
-      "order": 1000,
-      "visible": true,
-      "locked": false,
-      "groupIds": [],
-      "selection": {
-        "selectable": true,
-        "ariaLabel": "Equidistancia",
-        "role": "annotation"
-      },
-      "target": true,
-      "targetId": "measEquidistancia",
-      "style": {
-        "textOffset": [
-          0.3,
-          0.4
-        ],
-        "labelSize": 15,
-        "preserveColorOnHighlight": true
-      },
-      "kind": "text",
-      "refs": [
-        "pP"
-      ],
-      "text": "PA = PB"
-    },
-    {
       "id": "congruenceMarkA4",
       "label": "Marca de congruencia",
       "color": "terracota",
@@ -441,6 +411,37 @@ export const MediatrizSpec = createDiagramSpec(
       "properties": {
         "markCount": 2
       }
+    },
+    {
+      "id": "measurementPB",
+      "label": "Medición",
+      "color": "pizarra",
+      "layerId": "geometry",
+      "order": 13000,
+      "visible": true,
+      "locked": false,
+      "groupIds": [],
+      "selection": {
+        "selectable": true,
+        "ariaLabel": "Medición",
+        "role": "annotation"
+      },
+      "target": true,
+      "targetId": "measurementPB",
+      "style": {
+        "preserveColorOnHighlight": true
+      },
+      "kind": "measurement",
+      "refs": [
+        "pP",
+        "pB"
+      ],
+      "text": "PA = PB = {value}",
+      "properties": {
+        "expression": "segPB.length",
+        "unit": "u",
+        "precision": 2
+      }
     }
   ],
   "sliders": [],
@@ -486,6 +487,21 @@ export const MediatrizSpec = createDiagramSpec(
       "sourceId": "pP",
       "targetId": "congruenceMarkAP",
       "relation": "construction"
+    },
+    {
+      "sourceId": "pP",
+      "targetId": "measurementPB",
+      "relation": "construction"
+    },
+    {
+      "sourceId": "pB",
+      "targetId": "measurementPB",
+      "relation": "construction"
+    },
+    {
+      "sourceId": "segPB",
+      "targetId": "measurementPB",
+      "relation": "expression"
     }
   ],
   "note": "Arrastra P sobre la mediatriz",

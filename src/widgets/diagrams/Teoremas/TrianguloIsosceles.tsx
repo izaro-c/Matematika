@@ -5,27 +5,28 @@ export const TrianguloIsoscelesSpec = createDiagramSpec(
 {
   "version": 2,
   "renderer": "matematika-diagram-renderer-v2",
-  "title": "Ángulos de la base de un triángulo isósceles",
+  "title": "Triangulo Isósceles",
   "componentId": "triangulo-isosceles",
   "category": "Teoremas",
   "mode": "simulation",
   "axis": false,
   "grid": false,
+  "showLabels": true,
   "viewport": {
     "bounds": [
       -5,
       5,
       5,
-      -4.5
+      -5
     ],
     "home": [
       -5,
       5,
       5,
-      -4.5
+      -5
     ],
-    "minZoom": 0.55,
-    "maxZoom": 5,
+    "minZoom": 0.2,
+    "maxZoom": 12,
     "padding": 0.16
   },
   "layers": [
@@ -37,142 +38,143 @@ export const TrianguloIsoscelesSpec = createDiagramSpec(
       "locked": false
     },
     {
-      "id": "annotations",
-      "label": "Lecturas y controles",
+      "id": "controls",
+      "label": "Controles",
       "order": 1,
       "visible": true,
       "locked": false
     }
   ],
-  "groups": [
-    {
-      "id": "gEqualSides",
-      "label": "Lados iguales AC y BC",
-      "memberIds": [
-        "AC",
-        "BC",
-        "markAC",
-        "markBC"
-      ],
-      "visible": true,
-      "locked": false,
-      "selection": {
-        "selectable": true,
-        "ariaLabel": "Lados iguales AC y BC",
-        "role": "primary"
-      },
-      "target": true,
-      "targetId": "lados-iguales",
-      "color": "terracota"
-    }
-  ],
+  "groups": [],
   "points": [
     {
-      "id": "A",
+      "id": "pA",
       "label": "A",
       "color": "terracota",
       "layerId": "geometry",
-      "order": 1690,
+      "order": 9000,
       "visible": true,
       "locked": false,
       "groupIds": [],
       "selection": {
         "selectable": true,
-        "ariaLabel": "Mover el punto A",
+        "ariaLabel": "Punto A",
         "role": "primary"
       },
-      "target": false,
+      "target": true,
+      "targetId": "pA",
       "style": {
         "pointSize": 7,
         "highlightPointSize": 10,
         "preserveColorOnHighlight": true
       },
-      "x": -3,
-      "y": -1.6,
+      "x": -3.35,
+      "y": -2.79,
       "showLabel": true,
       "fixed": false,
-      "constraint": "free",
-      "snapToGrid": true,
-      "snapSize": 0.25
+      "constraint": "free"
     },
     {
-      "id": "B",
+      "id": "pB",
       "label": "B",
       "color": "terracota",
       "layerId": "geometry",
-      "order": 1700,
+      "order": 8000,
       "visible": true,
       "locked": false,
       "groupIds": [],
       "selection": {
         "selectable": true,
-        "ariaLabel": "Mover el punto B",
+        "ariaLabel": "Punto B",
+        "role": "primary"
+      },
+      "target": true,
+      "targetId": "pB",
+      "style": {
+        "pointSize": 7,
+        "highlightPointSize": 10,
+        "preserveColorOnHighlight": true
+      },
+      "x": 3.83,
+      "y": -0.7,
+      "showLabel": true,
+      "fixed": false,
+      "constraint": "free"
+    },
+    {
+      "id": "pP",
+      "label": "P",
+      "color": "musgo",
+      "layerId": "geometry",
+      "order": 10000,
+      "visible": true,
+      "locked": false,
+      "groupIds": [],
+      "selection": {
+        "selectable": true,
+        "ariaLabel": "Punto P",
+        "role": "primary"
+      },
+      "target": true,
+      "targetId": "pP",
+      "style": {
+        "pointSize": 7,
+        "highlightPointSize": 10,
+        "preserveColorOnHighlight": true
+      },
+      "x": -1.1933190511529765,
+      "y": 3.1790338695111826,
+      "showLabel": true,
+      "fixed": false,
+      "constraint": "glider",
+      "gliderTarget": "lineMediatriz"
+    },
+    {
+      "id": "p4",
+      "label": "4",
+      "color": "ocre",
+      "layerId": "geometry",
+      "order": 2000,
+      "visible": false,
+      "locked": false,
+      "groupIds": [],
+      "selection": {
+        "selectable": true,
+        "ariaLabel": "Punto 4",
         "role": "primary"
       },
       "target": false,
+      "targetId": "p4",
       "style": {
         "pointSize": 7,
         "highlightPointSize": 10,
         "preserveColorOnHighlight": true
       },
-      "x": 3,
-      "y": -1.6,
+      "x": 0.2802461930667155,
+      "y": 0.5189181708510687,
       "showLabel": true,
       "fixed": false,
-      "constraint": "free",
-      "snapToGrid": true,
-      "snapSize": 0.25
-    },
-    {
-      "id": "C",
-      "label": "C",
-      "color": "terracota",
-      "layerId": "geometry",
-      "order": 1720,
-      "visible": true,
-      "locked": false,
-      "groupIds": [],
-      "selection": {
-        "selectable": true,
-        "ariaLabel": "Punto construido C",
-        "role": "construction"
-      },
-      "target": false,
-      "style": {
-        "pointSize": 7,
-        "highlightPointSize": 10,
-        "preserveColorOnHighlight": true
-      },
-      "x": 0,
-      "y": 1.6,
-      "showLabel": true,
-      "fixed": true,
-      "constraint": "derived",
-      "dependencies": [
-        "A",
-        "B",
-        "height"
-      ],
-      "xExpression": "(A.x + B.x) / 2 - height * (B.y - A.y) / hypot(B.x - A.x, B.y - A.y)",
-      "yExpression": "(A.y + B.y) / 2 + height * (B.x - A.x) / hypot(B.x - A.x, B.y - A.y)"
+      "constraint": "glider",
+      "gliderTarget": "midAB"
     }
   ],
   "elements": [
     {
-      "id": "base",
-      "label": "Base AB",
-      "color": "carbon",
+      "id": "segAB",
+      "label": "Segmento AB",
+      "color": "terracota",
       "layerId": "geometry",
-      "order": 1730,
+      "order": 1000,
       "visible": true,
       "locked": false,
       "groupIds": [],
       "selection": {
         "selectable": true,
-        "ariaLabel": "Base AB",
+        "ariaLabel": "Segmento AB",
         "role": "secondary"
       },
-      "target": false,
+      "target": true,
+      "targetId": "segAB",
       "style": {
         "strokeWidth": 2.4,
         "highlightStrokeWidth": 3,
@@ -180,284 +182,251 @@ export const TrianguloIsoscelesSpec = createDiagramSpec(
       },
       "kind": "segment",
       "refs": [
-        "A",
-        "B"
+        "pA",
+        "pB"
       ]
     },
     {
-      "id": "AC",
-      "label": "Lado AC",
-      "color": "terracota",
+      "id": "midAB",
+      "label": "M",
+      "color": "musgo",
       "layerId": "geometry",
-      "order": 1740,
-      "visible": true,
+      "order": 7000,
+      "visible": false,
       "locked": false,
-      "groupIds": [
-        "gEqualSides"
-      ],
+      "groupIds": [],
       "selection": {
         "selectable": true,
-        "ariaLabel": "Lado AC",
+        "ariaLabel": "Punto medio de AB",
         "role": "secondary"
       },
-      "target": false,
+      "target": true,
+      "targetId": "midAB",
       "style": {
-        "strokeWidth": 2.4,
-        "highlightStrokeWidth": 3,
         "preserveColorOnHighlight": true
       },
-      "kind": "segment",
+      "kind": "midpoint",
       "refs": [
-        "A",
-        "C"
+        "pA",
+        "pB"
       ]
     },
     {
-      "id": "BC",
-      "label": "Lado BC",
-      "color": "terracota",
+      "id": "lineMediatriz",
+      "label": "Mediatriz de AB",
+      "color": "musgo",
       "layerId": "geometry",
-      "order": 1750,
-      "visible": true,
+      "order": 1000,
+      "visible": false,
       "locked": false,
-      "groupIds": [
-        "gEqualSides"
-      ],
+      "groupIds": [],
       "selection": {
         "selectable": true,
-        "ariaLabel": "Lado BC",
+        "ariaLabel": "Mediatriz de AB",
         "role": "secondary"
       },
-      "target": false,
+      "target": true,
+      "targetId": "lineMediatriz",
       "style": {
         "strokeWidth": 2.4,
         "highlightStrokeWidth": 3,
         "preserveColorOnHighlight": true
       },
-      "kind": "segment",
+      "kind": "perpendicular",
       "refs": [
-        "B",
-        "C"
-      ]
+        "pA",
+        "pB",
+        "midAB"
+      ],
+      "dashed": true
     },
     {
-      "id": "poly",
-      "label": "Triángulo isósceles",
-      "color": "terracota",
+      "id": "segPA",
+      "label": "Distancia PA",
+      "color": "salvia",
       "layerId": "geometry",
-      "order": 1760,
+      "order": 1000,
       "visible": true,
       "locked": false,
       "groupIds": [],
       "selection": {
         "selectable": true,
-        "ariaLabel": "Triángulo isósceles",
+        "ariaLabel": "Distancia PA",
         "role": "secondary"
       },
-      "target": false,
+      "target": true,
+      "targetId": "segPA",
       "style": {
         "strokeWidth": 2.4,
-        "fillOpacity": 0.1,
-        "highlightFillOpacity": 0.28,
+        "highlightStrokeWidth": 3,
         "preserveColorOnHighlight": true
       },
-      "kind": "polygon",
+      "kind": "segment",
       "refs": [
-        "A",
-        "B",
-        "C"
-      ]
+        "pP",
+        "pA"
+      ],
+      "dashed": false
     },
     {
-      "id": "markAC",
-      "label": "Marca AC",
-      "color": "terracota",
+      "id": "segPB",
+      "label": "Distancia PB",
+      "color": "salvia",
       "layerId": "geometry",
-      "order": 1770,
+      "order": 1000,
       "visible": true,
       "locked": false,
-      "groupIds": [
-        "gEqualSides"
-      ],
+      "groupIds": [],
       "selection": {
         "selectable": true,
-        "ariaLabel": "Marca AC",
+        "ariaLabel": "Distancia PB",
         "role": "secondary"
       },
-      "target": false,
+      "target": true,
+      "targetId": "segPB",
       "style": {
+        "strokeWidth": 2.4,
+        "highlightStrokeWidth": 3,
+        "preserveColorOnHighlight": true
+      },
+      "kind": "segment",
+      "refs": [
+        "pP",
+        "pB"
+      ],
+      "dashed": false
+    },
+    {
+      "id": "congruenceMarkPB",
+      "label": "Marca de congruencia",
+      "color": "ocre",
+      "layerId": "geometry",
+      "order": 11000,
+      "visible": true,
+      "locked": false,
+      "groupIds": [],
+      "selection": {
+        "selectable": true,
+        "ariaLabel": "Marca de congruencia",
+        "role": "secondary"
+      },
+      "target": true,
+      "targetId": "congruenceMarkPB",
+      "style": {
+        "markHeight": 0.5,
         "preserveColorOnHighlight": true
       },
       "kind": "congruenceMark",
       "refs": [
-        "A",
-        "C"
+        "pP",
+        "pB"
       ],
       "properties": {
-        "markCount": 1
+        "markCount": 2
       }
     },
     {
-      "id": "markBC",
-      "label": "Marca BC",
-      "color": "terracota",
+      "id": "congruenceMarkAP",
+      "label": "Marca de congruencia",
+      "color": "ocre",
       "layerId": "geometry",
-      "order": 1780,
+      "order": 12000,
       "visible": true,
       "locked": false,
-      "groupIds": [
-        "gEqualSides"
-      ],
+      "groupIds": [],
       "selection": {
         "selectable": true,
-        "ariaLabel": "Marca BC",
+        "ariaLabel": "Marca de congruencia",
         "role": "secondary"
       },
-      "target": false,
+      "target": true,
+      "targetId": "congruenceMarkAP",
       "style": {
+        "markHeight": 0.5,
         "preserveColorOnHighlight": true
       },
       "kind": "congruenceMark",
       "refs": [
-        "B",
-        "C"
+        "pA",
+        "pP"
       ],
       "properties": {
-        "markCount": 1
+        "markCount": 2
       }
     },
     {
-      "id": "angA",
-      "label": "Ángulo de base A",
-      "color": "terracota",
+      "id": "measurementPB",
+      "label": "Medición",
+      "color": "pizarra",
       "layerId": "geometry",
-      "order": 1790,
+      "order": 13000,
       "visible": true,
       "locked": false,
       "groupIds": [],
       "selection": {
         "selectable": true,
-        "ariaLabel": "Ángulo de base A",
-        "role": "secondary"
-      },
-      "target": false,
-      "style": {
-        "fillOpacity": 0.22,
-        "angleRadius": 0.58,
-        "preserveColorOnHighlight": true
-      },
-      "kind": "nonReflexAngle",
-      "refs": [
-        "B",
-        "A",
-        "C"
-      ]
-    },
-    {
-      "id": "angB",
-      "label": "Ángulo de base B",
-      "color": "terracota",
-      "layerId": "geometry",
-      "order": 1800,
-      "visible": true,
-      "locked": false,
-      "groupIds": [],
-      "selection": {
-        "selectable": true,
-        "ariaLabel": "Ángulo de base B",
-        "role": "secondary"
-      },
-      "target": false,
-      "style": {
-        "fillOpacity": 0.22,
-        "angleRadius": 0.58,
-        "preserveColorOnHighlight": true
-      },
-      "kind": "nonReflexAngle",
-      "refs": [
-        "C",
-        "B",
-        "A"
-      ]
-    },
-    {
-      "id": "isoInfo",
-      "label": "Pons asinorum",
-      "color": "terracota",
-      "layerId": "annotations",
-      "order": 1810,
-      "visible": true,
-      "locked": false,
-      "groupIds": [],
-      "selection": {
-        "selectable": true,
-        "ariaLabel": "Pons asinorum",
-        "role": "annotation"
-      },
-      "target": false,
-      "style": {
-        "preserveColorOnHighlight": true
-      },
-      "kind": "infoPanel",
-      "refs": [],
-      "text": "AC = BC ⇒ ∠A = ∠B",
-      "properties": {
-        "title": "Pons asinorum",
-        "anchorMode": "viewport",
-        "viewportPosition": [
-          0.98,
-          0.03
-        ]
-      }
-    }
-  ],
-  "sliders": [
-    {
-      "id": "height",
-      "label": "altura",
-      "color": "terracota",
-      "layerId": "annotations",
-      "order": 1710,
-      "visible": true,
-      "locked": false,
-      "groupIds": [],
-      "selection": {
-        "selectable": true,
-        "ariaLabel": "Ajustar altura",
+        "ariaLabel": "Medición",
         "role": "annotation"
       },
       "target": true,
-      "targetId": "altura",
+      "targetId": "measurementPB",
       "style": {
         "preserveColorOnHighlight": true
       },
-      "x": -1.6,
-      "y": -3.1,
-      "min": 1,
-      "max": 5,
-      "value": 3.2,
-      "step": 0.1
+      "kind": "measurement",
+      "refs": [
+        "pP",
+        "pB"
+      ],
+      "text": "PA = PB = {value}",
+      "properties": {
+        "expression": "segPB.length",
+        "unit": "u",
+        "precision": 2
+      }
     }
   ],
+  "sliders": [],
   "steps": [],
+  "constraints": [],
   "dependencies": [
     {
-      "sourceId": "A",
-      "targetId": "C",
-      "relation": "expression"
+      "sourceId": "pP",
+      "targetId": "congruenceMarkPB",
+      "relation": "construction"
     },
     {
-      "sourceId": "B",
-      "targetId": "C",
-      "relation": "expression"
+      "sourceId": "pB",
+      "targetId": "congruenceMarkPB",
+      "relation": "construction"
     },
     {
-      "sourceId": "height",
-      "targetId": "C",
+      "sourceId": "pA",
+      "targetId": "congruenceMarkAP",
+      "relation": "construction"
+    },
+    {
+      "sourceId": "pP",
+      "targetId": "congruenceMarkAP",
+      "relation": "construction"
+    },
+    {
+      "sourceId": "pP",
+      "targetId": "measurementPB",
+      "relation": "construction"
+    },
+    {
+      "sourceId": "pB",
+      "targetId": "measurementPB",
+      "relation": "construction"
+    },
+    {
+      "sourceId": "segPB",
+      "targetId": "measurementPB",
       "relation": "expression"
     }
   ],
-  "note": "Mueve A o B y ajusta la altura. C permanece sobre la mediatriz de AB, de modo que AC = BC en toda configuración.",
+  "note": "Arrastra P sobre la mediatriz",
   "extensions": {}
 }
 );

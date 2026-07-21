@@ -68,11 +68,7 @@ export const SumaAngulosSpec = createDiagramSpec(
     {
       "id": "gAngles",
       "label": "Ángulos interiores",
-      "memberIds": [
-        "angA",
-        "angB",
-        "angC"
-      ],
+      "memberIds": [],
       "visible": true,
       "locked": false,
       "selection": {
@@ -91,7 +87,7 @@ export const SumaAngulosSpec = createDiagramSpec(
       "label": "A",
       "color": "terracota",
       "layerId": "geometry",
-      "order": 1580,
+      "order": 12640,
       "visible": true,
       "locked": false,
       "groupIds": [],
@@ -106,8 +102,8 @@ export const SumaAngulosSpec = createDiagramSpec(
         "highlightPointSize": 10,
         "preserveColorOnHighlight": true
       },
-      "x": -3,
-      "y": -2,
+      "x": -3.5,
+      "y": 0,
       "showLabel": true,
       "fixed": false,
       "constraint": "free",
@@ -119,7 +115,7 @@ export const SumaAngulosSpec = createDiagramSpec(
       "label": "B",
       "color": "terracota",
       "layerId": "geometry",
-      "order": 1590,
+      "order": 11640,
       "visible": true,
       "locked": false,
       "groupIds": [],
@@ -134,8 +130,8 @@ export const SumaAngulosSpec = createDiagramSpec(
         "highlightPointSize": 10,
         "preserveColorOnHighlight": true
       },
-      "x": 3,
-      "y": -1.5,
+      "x": 4.25,
+      "y": 0.25,
       "showLabel": true,
       "fixed": false,
       "constraint": "free",
@@ -147,7 +143,7 @@ export const SumaAngulosSpec = createDiagramSpec(
       "label": "C",
       "color": "terracota",
       "layerId": "geometry",
-      "order": 1600,
+      "order": 9640,
       "visible": true,
       "locked": false,
       "groupIds": [],
@@ -162,8 +158,8 @@ export const SumaAngulosSpec = createDiagramSpec(
         "highlightPointSize": 10,
         "preserveColorOnHighlight": true
       },
-      "x": 0.5,
-      "y": 2.7,
+      "x": 0.25,
+      "y": 4.75,
       "showLabel": true,
       "fixed": false,
       "constraint": "constrained",
@@ -180,7 +176,7 @@ export const SumaAngulosSpec = createDiagramSpec(
       "label": "Triángulo ABC",
       "color": "terracota",
       "layerId": "geometry",
-      "order": 1610,
+      "order": 10640,
       "visible": true,
       "locked": false,
       "groupIds": [
@@ -290,120 +286,233 @@ export const SumaAngulosSpec = createDiagramSpec(
       ]
     },
     {
-      "id": "angA",
-      "label": "α",
-      "color": "terracota",
+      "id": "nonReflexAngleBAC",
+      "label": "a",
+      "color": "musgo",
       "layerId": "geometry",
-      "order": 1650,
-      "visible": true,
-      "locked": false,
-      "groupIds": [
-        "gAngles"
-      ],
-      "selection": {
-        "selectable": true,
-        "ariaLabel": "α",
-        "role": "secondary"
-      },
-      "target": false,
-      "style": {
-        "fillOpacity": 0.22,
-        "angleRadius": 0.58,
-        "preserveColorOnHighlight": true
-      },
-      "kind": "angle",
-      "refs": [
-        "B",
-        "A",
-        "C"
-      ]
-    },
-    {
-      "id": "angB",
-      "label": "β",
-      "color": "terracota",
-      "layerId": "geometry",
-      "order": 1660,
-      "visible": true,
-      "locked": false,
-      "groupIds": [
-        "gAngles"
-      ],
-      "selection": {
-        "selectable": true,
-        "ariaLabel": "β",
-        "role": "secondary"
-      },
-      "target": false,
-      "style": {
-        "fillOpacity": 0.22,
-        "angleRadius": 0.58,
-        "preserveColorOnHighlight": true
-      },
-      "kind": "angle",
-      "refs": [
-        "C",
-        "B",
-        "A"
-      ]
-    },
-    {
-      "id": "angC",
-      "label": "γ",
-      "color": "terracota",
-      "layerId": "geometry",
-      "order": 1670,
-      "visible": true,
-      "locked": false,
-      "groupIds": [
-        "gAngles"
-      ],
-      "selection": {
-        "selectable": true,
-        "ariaLabel": "γ",
-        "role": "secondary"
-      },
-      "target": false,
-      "style": {
-        "fillOpacity": 0.22,
-        "angleRadius": 0.58,
-        "preserveColorOnHighlight": true
-      },
-      "kind": "angle",
-      "refs": [
-        "A",
-        "C",
-        "B"
-      ]
-    },
-    {
-      "id": "sumInfo",
-      "label": "Invariante euclidiano",
-      "color": "terracota",
-      "layerId": "annotations",
-      "order": 1680,
+      "order": 2640,
       "visible": true,
       "locked": false,
       "groupIds": [],
       "selection": {
         "selectable": true,
-        "ariaLabel": "Invariante euclidiano",
+        "ariaLabel": "Ángulo no reflejo (≤ 180°)",
+        "role": "secondary"
+      },
+      "target": true,
+      "targetId": "nonReflexAngleBAC",
+      "style": {
+        "angleRadius": 1,
+        "preserveColorOnHighlight": true
+      },
+      "kind": "nonReflexAngle",
+      "refs": [
+        "B",
+        "A",
+        "C"
+      ],
+      "showLabel": false
+    },
+    {
+      "id": "nonReflexAngleABC",
+      "label": "b",
+      "color": "musgo",
+      "layerId": "geometry",
+      "order": 3640,
+      "visible": true,
+      "locked": false,
+      "groupIds": [],
+      "selection": {
+        "selectable": true,
+        "ariaLabel": "Ángulo no reflejo (≤ 180°)",
+        "role": "secondary"
+      },
+      "target": true,
+      "targetId": "nonReflexAngleABC",
+      "style": {
+        "angleRadius": 1,
+        "preserveColorOnHighlight": true
+      },
+      "kind": "nonReflexAngle",
+      "refs": [
+        "A",
+        "B",
+        "C"
+      ],
+      "showLabel": false
+    },
+    {
+      "id": "nonReflexAngleACB",
+      "label": "c",
+      "color": "musgo",
+      "layerId": "geometry",
+      "order": 4640,
+      "visible": true,
+      "locked": false,
+      "groupIds": [],
+      "selection": {
+        "selectable": true,
+        "ariaLabel": "Ángulo no reflejo (≤ 180°)",
+        "role": "secondary"
+      },
+      "target": true,
+      "targetId": "nonReflexAngleACB",
+      "style": {
+        "angleRadius": 1,
+        "preserveColorOnHighlight": true
+      },
+      "kind": "nonReflexAngle",
+      "refs": [
+        "A",
+        "C",
+        "B"
+      ],
+      "showLabel": false
+    },
+    {
+      "id": "label-nonReflexAngleACB",
+      "label": "Etiqueta de c",
+      "color": "musgo",
+      "layerId": "geometry",
+      "order": 5640,
+      "visible": true,
+      "locked": false,
+      "groupIds": [],
+      "selection": {
+        "selectable": true,
+        "highlightable": true,
+        "dimOthersOnHighlight": false,
+        "ariaLabel": "Etiqueta de c",
         "role": "annotation"
       },
       "target": false,
+      "style": {
+        "textOffset": [
+          -0.5,
+          -0.25
+        ],
+        "labelSize": 17,
+        "preserveColorOnHighlight": true
+      },
+      "kind": "label",
+      "refs": [
+        "nonReflexAngleACB"
+      ],
+      "text": "{nonReflexAngleACB.degrees}º",
+      "properties": {
+        "anchorMode": "reference",
+        "anchorParameter": 0.99,
+        "textRules": []
+      }
+    },
+    {
+      "id": "label-nonReflexAngleBAC",
+      "label": "Etiqueta de a",
+      "color": "musgo",
+      "layerId": "geometry",
+      "order": 6640,
+      "visible": true,
+      "locked": false,
+      "groupIds": [],
+      "selection": {
+        "selectable": true,
+        "highlightable": true,
+        "dimOthersOnHighlight": false,
+        "ariaLabel": "Etiqueta de a",
+        "role": "annotation"
+      },
+      "target": false,
+      "style": {
+        "textOffset": [
+          0,
+          0
+        ],
+        "labelSize": 17,
+        "preserveColorOnHighlight": true
+      },
+      "kind": "label",
+      "refs": [
+        "nonReflexAngleBAC"
+      ],
+      "text": "{nonReflexAngleBAC.degrees}º",
+      "properties": {
+        "anchorMode": "reference",
+        "anchorParameter": 0.08
+      },
+      "showLabel": false
+    },
+    {
+      "id": "label-nonReflexAngleABC",
+      "label": "Etiqueta de b",
+      "color": "musgo",
+      "layerId": "geometry",
+      "order": 7640,
+      "visible": true,
+      "locked": false,
+      "groupIds": [],
+      "selection": {
+        "selectable": true,
+        "highlightable": true,
+        "dimOthersOnHighlight": false,
+        "ariaLabel": "Etiqueta de b",
+        "role": "annotation"
+      },
+      "target": false,
+      "style": {
+        "textOffset": [
+          -0.95,
+          -0.15
+        ],
+        "labelSize": 17,
+        "preserveColorOnHighlight": true
+      },
+      "kind": "label",
+      "refs": [
+        "nonReflexAngleABC"
+      ],
+      "text": "{nonReflexAngleABC.degrees}º",
+      "properties": {
+        "anchorMode": "reference",
+        "anchorParameter": 0.5
+      }
+    },
+    {
+      "id": "infoPanel11",
+      "label": "Panel informativo",
+      "color": "terracota",
+      "layerId": "geometry",
+      "order": 8640,
+      "visible": true,
+      "locked": false,
+      "groupIds": [],
+      "selection": {
+        "selectable": true,
+        "ariaLabel": "Panel informativo",
+        "role": "secondary"
+      },
+      "target": true,
+      "targetId": "infoPanel11",
       "style": {
         "preserveColorOnHighlight": true
       },
       "kind": "infoPanel",
       "refs": [],
-      "text": "α + β + γ = 180°",
+      "text": "",
       "properties": {
-        "title": "Invariante euclidiano",
         "anchorMode": "viewport",
         "viewportPosition": [
-          0.98,
-          0.03
-        ]
+          0,
+          0
+        ],
+        "infoPanelBlocks": [
+          {
+            "id": "bloque-1",
+            "text": "${nonReflexAngleBAC.degrees}º + {nonReflexAngleABC.degrees}º + {nonReflexAngleACB.degrees}º = {value}º$",
+            "expression": "nonReflexAngleBAC.degrees + nonReflexAngleABC.degrees + nonReflexAngleACB.degrees",
+            "rules": []
+          }
+        ],
+        "infoPanelLayout": "stack"
       }
     }
   ],
@@ -422,8 +531,84 @@ export const SumaAngulosSpec = createDiagramSpec(
       "enabled": true
     }
   ],
-  "dependencies": [],
-  "note": "Mueve los vértices. La figura cambia, pero el panel recuerda el invariante cuya demostración usa una paralela por C.",
+  "dependencies": [
+    {
+      "sourceId": "B",
+      "targetId": "nonReflexAngleBAC",
+      "relation": "construction"
+    },
+    {
+      "sourceId": "A",
+      "targetId": "nonReflexAngleBAC",
+      "relation": "construction"
+    },
+    {
+      "sourceId": "C",
+      "targetId": "nonReflexAngleBAC",
+      "relation": "construction"
+    },
+    {
+      "sourceId": "A",
+      "targetId": "nonReflexAngleABC",
+      "relation": "construction"
+    },
+    {
+      "sourceId": "B",
+      "targetId": "nonReflexAngleABC",
+      "relation": "construction"
+    },
+    {
+      "sourceId": "C",
+      "targetId": "nonReflexAngleABC",
+      "relation": "construction"
+    },
+    {
+      "sourceId": "A",
+      "targetId": "nonReflexAngleACB",
+      "relation": "construction"
+    },
+    {
+      "sourceId": "C",
+      "targetId": "nonReflexAngleACB",
+      "relation": "construction"
+    },
+    {
+      "sourceId": "B",
+      "targetId": "nonReflexAngleACB",
+      "relation": "construction"
+    },
+    {
+      "sourceId": "nonReflexAngleACB",
+      "targetId": "label-nonReflexAngleACB",
+      "relation": "construction"
+    },
+    {
+      "sourceId": "nonReflexAngleBAC",
+      "targetId": "label-nonReflexAngleBAC",
+      "relation": "construction"
+    },
+    {
+      "sourceId": "nonReflexAngleABC",
+      "targetId": "label-nonReflexAngleABC",
+      "relation": "construction"
+    },
+    {
+      "sourceId": "nonReflexAngleBAC",
+      "targetId": "infoPanel11",
+      "relation": "expression"
+    },
+    {
+      "sourceId": "nonReflexAngleABC",
+      "targetId": "infoPanel11",
+      "relation": "expression"
+    },
+    {
+      "sourceId": "nonReflexAngleACB",
+      "targetId": "infoPanel11",
+      "relation": "expression"
+    }
+  ],
+  "note": "Mueve A, B y C",
   "extensions": {}
 }
 );
