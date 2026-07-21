@@ -15,12 +15,12 @@ import { SITE_TAGLINE } from '@/shared/lib/constants';
 export const HeroSection = () => {
   return (
     <FadeIn as="header" className="relative w-full overflow-hidden border-b border-carbon/15">
-      <div className="relative z-10 max-w-5xl mx-auto px-8 pt-24 pb-20 flex flex-col items-center text-center">
+      <div className="relative z-10 max-w-5xl mx-auto px-4 sm:px-8 pt-16 sm:pt-24 pb-16 sm:pb-20 flex flex-col items-center text-center">
         {/* Logo + título en inline */}
-        <div className="flex items-end gap-3 mb-6">
-          <Logo className="w-24 h-24 md:w-[7.5rem] md:h-[7.5rem] opacity-90 mb-1" />
+        <div className="flex items-end gap-2 sm:gap-3 mb-6 max-w-full">
+          <Logo className="w-16 h-16 sm:w-24 sm:h-24 md:w-[7.5rem] md:h-[7.5rem] opacity-90 mb-1 shrink-0" />
           <h1
-            className="text-[4.5rem] md:text-[7rem] text-carbon tracking-tight leading-none"
+            className="text-[3.75rem] sm:text-[4.5rem] md:text-[7rem] text-carbon tracking-tight leading-none"
           >
             atematika
           </h1>
