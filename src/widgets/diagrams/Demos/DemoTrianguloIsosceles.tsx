@@ -1,168 +1,127 @@
 import { MathBoard } from '@/shared/diagrams/core/MathBoard';
 import {
-  createPoint, createSegment, createAngle, createPolygon, createTicks, createGlider
+  createAngle,
+  createGlider,
+  createMidpoint,
+  createPerpendicularLine,
+  createPoint,
+  createPolygon,
+  createSegment,
 } from '@/shared/diagrams/core/MathFactory';
-import { StyleManager } from '@/shared/diagrams/core/MathUtils';
 
 export const DemoTrianguloIsosceles = () => {
   return (
     <MathBoard
-      boundingbox={[-4, 4, 4, -2]}
-      onInit={(board: any, els: any, theme: any) => {
-        // Eje vertical para restringir el movimiento de A y mantener isósceles
-        els.yAxis = createSegment(board, [[0, 0], [0, 3.5]], { visible: false }, theme);
+      boundingbox={[-5, 6, 5, -3]}
+      onInit={(board, els, theme) => {
+        const B = createPoint(board, [-3, -2], {
+          name: 'B', size: 5,
+          fillColor: theme.carbon, strokeColor: theme.carbon, fixed: true,
+          label: { fontSize: 18, cssClass: 'font-serif font-bold italic', strokeColor: theme.carbon }
+        }, theme);
+        const C = createPoint(board, [3, -2], {
+          name: 'C', size: 5,
+          fillColor: theme.carbon, strokeColor: theme.carbon, fixed: true,
+          label: { fontSize: 18, cssClass: 'font-serif font-bold italic', strokeColor: theme.carbon }
+        }, theme);
+        const M = createMidpoint(board, [B, C], { visible: false }, theme);
+        const perp = createPerpendicularLine(board, [B, C, M], { visible: false }, theme);
 
-        els.A = createGlider(board, [0, 2, els.yAxis], {
-          name: 'A', label: { offset: [-5, 15] }
+        const A = createGlider(board, [0, 4, perp], {
+          name: 'A', size: 5,
+          fillColor: theme.terracota, strokeColor: theme.terracota,
+          label: { fontSize: 18, cssClass: 'font-serif font-bold italic', strokeColor: theme.terracota }
         }, theme);
 
-        els.B = createPoint(board, [-2, -1], {
-          name: 'B', fixed: true, label: { offset: [-15, -15] }
+        els.A = A;
+        els.B = B;
+        els.C = C;
+        els.ladoAB = createSegment(board, [A, B], { strokeColor: theme.carbon, strokeWidth: 2 }, theme);
+        els.ladoAC = createSegment(board, [A, C], { strokeColor: theme.carbon, strokeWidth: 2 }, theme);
+        els.ladoBC = createSegment(board, [B, C], { strokeColor: theme.carbon, strokeWidth: 2 }, theme);
+
+        els.polyABC = createPolygon(board, [A, B, C], {
+          fillColor: theme.salvia, fillOpacity: 0.1,
+          borders: { visible: false }, vertices: { visible: false }
         }, theme);
 
-        els.C = createPoint(board, [2, -1], {
-          name: 'C', fixed: true, label: { offset: [5, -15] }
+        const puntoD = createPoint(board, [() => M.X(), () => M.Y()], {
+          name: 'D', size: 3,
+          fillColor: theme.pizarra, strokeColor: theme.pizarra,
+          label: { fontSize: 14, cssClass: 'font-serif italic', strokeColor: theme.pizarra },
+          visible: false
+        }, theme);
+        els.puntoD = puntoD;
+        els.bisectriz = createSegment(board, [A, puntoD], {
+          dash: 2, strokeColor: theme.pizarra, strokeWidth: 1.5, visible: false
         }, theme);
 
-        // Lados del triángulo
-        els.segAB = createSegment(board, [els.A, els.B], { name: '', strokeWidth: 2 }, theme);
-        els.segAC = createSegment(board, [els.A, els.C], { name: '', strokeWidth: 2 }, theme);
-        els.segBC = createSegment(board, [els.B, els.C], { name: '', strokeWidth: 2 }, theme);
-
-        // Bisectriz / Mediana
-        els.D = createPoint(board, [0, -1], {
-          name: 'D', size: 4, fixed: true, label: { offset: [-5, -20] }
+        els.polyABD = createPolygon(board, [A, B, puntoD], {
+          fillColor: theme.terracota, fillOpacity: 0.3,
+          borders: { visible: false }, vertices: { visible: false }, visible: false
+        }, theme);
+        els.polyACD = createPolygon(board, [A, C, puntoD], {
+          fillColor: theme.salvia, fillOpacity: 0.3,
+          borders: { visible: false }, vertices: { visible: false }, visible: false
         }, theme);
 
-        els.bisectriz = createSegment(board, [els.A, els.D], { name: '', strokeColor: theme.terracota, strokeWidth: 2, dash: 2 }, theme);
-
-        // Ángulos
-        els.angBAD = createAngle(board, [els.B, els.A, els.D], {
-          radius: 1, fillColor: theme.terracota, fillOpacity: 0.2, strokeColor: theme.terracota, strokeWidth: 2
+        els.anguloBAD = createAngle(board, [puntoD, A, B], {
+          name: '', radius: 0.8,
+          fillColor: theme.terracota, strokeColor: theme.terracota, fillOpacity: 0.2, visible: false
         }, theme);
-
-        els.angCAD = createAngle(board, [els.D, els.A, els.C], {
-          radius: 1, fillColor: theme.salvia, fillOpacity: 0.2, strokeColor: theme.salvia, strokeWidth: 2
+        els.anguloCAD = createAngle(board, [C, A, puntoD], {
+          name: '', radius: 0.8,
+          fillColor: theme.salvia, strokeColor: theme.salvia, fillOpacity: 0.2, visible: false
         }, theme);
-
-        els.angB = createAngle(board, [els.C, els.B, els.A], {
-          radius: 0.8, fillColor: theme.terracota, fillOpacity: 0.2, strokeColor: theme.terracota, strokeWidth: 2
+        els.anguloB = createAngle(board, [C, B, A], {
+          name: '\\beta', radius: 1,
+          fillColor: theme.pizarra, strokeColor: theme.pizarra, fillOpacity: 0.2, visible: false
         }, theme);
-
-        els.angC = createAngle(board, [els.A, els.C, els.B], {
-          radius: 0.8, fillColor: theme.salvia, fillOpacity: 0.2, strokeColor: theme.salvia, strokeWidth: 2
+        els.anguloC = createAngle(board, [A, C, B], {
+          name: '\\gamma', radius: 1,
+          fillColor: theme.pizarra, strokeColor: theme.pizarra, fillOpacity: 0.2, visible: false
         }, theme);
-
-        // Polígonos para las áreas de los triángulos congruentes
-        els.polyIzq = createPolygon(board, [els.A, els.B, els.D], {
-          borders: { visible: false }, vertices: { visible: false }, fillColor: theme.terracota, fillOpacity: 0
-        }, theme);
-
-        els.polyDer = createPolygon(board, [els.A, els.C, els.D], {
-          borders: { visible: false }, vertices: { visible: false }, fillColor: theme.salvia, fillOpacity: 0
-        }, theme);
-
-        // Marcas de congruencia (tick marks en AB y AC)
-        els.tickAB = createTicks(board, [els.segAB, 1], { strokeWidth: 2 }, theme);
-        els.tickAC = createTicks(board, [els.segAC, 1], { strokeWidth: 2 }, theme);
       }}
-      onUpdate={(_board: any, els: any, theme: any, isStep: any, isHL: any) => {
-        const anyH = ['triangulo-abc', 'triangulo-izq', 'triangulo-der', 'bisectriz', 'punto-d', 'angulo-bad', 'angulo-cad', 'angulo-b', 'angulo-c', 'lado-ab', 'lado-ac', 'lado-ad'].some(isHL);
-        const styler = new StyleManager(isStep, isHL, anyH, theme);
+      onUpdate={(_board, els, theme, _isStep, isHL) => {
+        const isTriangulo = isHL('triangulo-abc');
+        const isLadoAB    = isHL('lado-ab');
+        const isLadoAC    = isHL('lado-ac');
+        const isLadoBC    = isHL('lado-bc');
+        const isBisectriz = isHL('bisectriz');
+        const isPuntoD    = isHL('punto-d');
+        const isBAD       = isHL('angulo-bad');
+        const isCAD       = isHL('angulo-cad');
+        const isLadoAD    = isHL('lado-ad');
+        const isTriIzq    = isHL('triangulo-izq');
+        const isTriDer    = isHL('triangulo-der');
+        const isAngB      = isHL('angulo-b');
+        const isAngC      = isHL('angulo-c');
 
-        // Puntos
-        const actA = styler.isStep(['triangulo-abc', 'lado-ab', 'lado-ac', 'bisectriz', 'angulo-bad', 'angulo-cad', 'triangulo-izq', 'triangulo-der', 'lado-ad']);
-        const hlA = styler.isHL(['triangulo-abc', 'lado-ab', 'lado-ac', 'bisectriz', 'angulo-bad', 'angulo-cad', 'triangulo-izq', 'triangulo-der', 'lado-ad']);
-        els.A.setAttribute({ strokeOpacity: styler.getOp(hlA, actA, 0.3), fillOpacity: styler.getOp(hlA, actA, 0.3) });
+        const anyHL = isTriangulo || isLadoAB || isLadoAC || isLadoBC ||
+          isBisectriz || isPuntoD || isBAD || isCAD || isLadoAD ||
+          isTriIzq || isTriDer || isAngB || isAngC;
 
-        const actB = styler.isStep(['triangulo-abc', 'lado-ab', 'angulo-b', 'triangulo-izq']);
-        const hlB_pt = styler.isHL(['triangulo-abc', 'lado-ab', 'angulo-b', 'triangulo-izq']);
-        els.B.setAttribute({ strokeOpacity: styler.getOp(hlB_pt, actB, 0.3), fillOpacity: styler.getOp(hlB_pt, actB, 0.3) });
+        els.polyABC.setAttribute({ fillOpacity: isTriangulo ? 0.35 : (anyHL ? 0.0 : 0.1) });
 
-        const actC = styler.isStep(['triangulo-abc', 'lado-ac', 'angulo-c', 'triangulo-der']);
-        const hlC_pt = styler.isHL(['triangulo-abc', 'lado-ac', 'angulo-c', 'triangulo-der']);
-        els.C.setAttribute({ strokeOpacity: styler.getOp(hlC_pt, actC, 0.3), fillOpacity: styler.getOp(hlC_pt, actC, 0.3) });
+        els.ladoAB.setAttribute({ strokeColor: isLadoAB ? theme.terracota : theme.carbon, strokeWidth: isLadoAB ? 4 : 2 });
+        els.ladoAC.setAttribute({ strokeColor: isLadoAC ? theme.terracota : theme.carbon, strokeWidth: isLadoAC ? 4 : 2 });
+        els.ladoBC.setAttribute({ strokeColor: isLadoBC ? theme.terracota : theme.carbon, strokeWidth: isLadoBC ? 4 : 2 });
 
-        const actD = styler.isStep(['punto-d', 'bisectriz', 'lado-ad', 'triangulo-izq', 'triangulo-der']);
-        const hlD_pt = styler.isHL(['punto-d', 'bisectriz', 'lado-ad', 'triangulo-izq', 'triangulo-der']);
-        const visD = actD || hlD_pt || styler.isStep(['angulo-bad', 'angulo-cad']) || styler.isHL(['angulo-bad', 'angulo-cad']);
-        els.D.setAttribute({
-          strokeOpacity: styler.getOp(hlD_pt, actD, 0.3),
-          fillOpacity: styler.getOp(hlD_pt, actD, 0.3),
-          visible: visD
-        });
-        if (els.D.label) els.D.label.setAttribute({ visible: visD });
-
-        // Lados perimetrales
-        const actAB = styler.isStep(['triangulo-abc', 'lado-ab', 'triangulo-izq']);
-        const hl_AB = styler.isHL(['triangulo-abc', 'lado-ab', 'triangulo-izq']);
-        els.segAB.setAttribute({
-          strokeOpacity: styler.getOp(hl_AB, actAB, 0.3),
-          strokeWidth: styler.getW(styler.isHL('lado-ab')),
-          strokeColor: styler.getC(styler.isHL('lado-ab'), theme.carbon, theme.terracota)
-        });
-        els.tickAB.setAttribute({ strokeOpacity: styler.getOp(hl_AB, actAB, 0.3) });
-
-        const actAC = styler.isStep(['triangulo-abc', 'lado-ac', 'triangulo-der']);
-        const hl_AC = styler.isHL(['triangulo-abc', 'lado-ac', 'triangulo-der']);
-        els.segAC.setAttribute({
-          strokeOpacity: styler.getOp(hl_AC, actAC, 0.3),
-          strokeWidth: styler.getW(styler.isHL('lado-ac')),
-          strokeColor: styler.getC(styler.isHL('lado-ac'), theme.carbon, theme.salvia)
-        });
-        els.tickAC.setAttribute({ strokeOpacity: styler.getOp(hl_AC, actAC, 0.3) });
-
-        const actBC = styler.isStep(['triangulo-abc', 'triangulo-izq', 'triangulo-der']);
-        const hl_BC = styler.isHL(['triangulo-abc', 'triangulo-izq', 'triangulo-der']);
-        els.segBC.setAttribute({ strokeOpacity: styler.getOp(hl_BC, actBC, 0.3) });
-
-        // Segmento interior AD
-        const actAD = styler.isStep(['bisectriz', 'lado-ad', 'triangulo-izq', 'triangulo-der']);
-        const hl_AD = styler.isHL(['bisectriz', 'lado-ad', 'triangulo-izq', 'triangulo-der']);
-        const visAD = actAD || styler.isStep(['angulo-bad', 'angulo-cad', 'punto-d']) || hl_AD || styler.isHL(['angulo-bad', 'angulo-cad', 'punto-d']);
+        const showBisectriz = isBisectriz || isLadoAD || isTriIzq || isTriDer || isBAD || isCAD || isPuntoD || isAngB;
         els.bisectriz.setAttribute({
-          strokeOpacity: styler.getOp(hl_AD, actAD, 0.3),
-          visible: visAD,
-          strokeWidth: styler.getW(styler.isHL(['bisectriz', 'lado-ad'])),
-          strokeColor: styler.getC(styler.isHL('lado-ad'), theme.terracota, theme.carbon)
+          visible: showBisectriz,
+          strokeColor: isLadoAD ? theme.terracota : theme.pizarra,
+          strokeWidth: isLadoAD ? 3 : 1.5
         });
+        els.puntoD.setAttribute({ visible: isPuntoD || showBisectriz });
 
-        // Ángulos
-        const actBAD = styler.isStep(['angulo-bad', 'triangulo-izq', 'bisectriz']);
-        const hl_BAD = styler.isHL(['angulo-bad', 'triangulo-izq', 'bisectriz']);
-        els.angBAD.setAttribute({
-          fillOpacity: styler.getOpAng(hl_BAD, actBAD, 0, 0.3, 0.2),
-          strokeOpacity: styler.getOp(hl_BAD, actBAD, 0),
-          visible: actBAD || hl_BAD
-        });
+        els.polyABD.setAttribute({ visible: isTriIzq });
+        els.polyACD.setAttribute({ visible: isTriDer });
 
-        const actCAD = styler.isStep(['angulo-cad', 'triangulo-der', 'bisectriz']);
-        const hl_CAD = styler.isHL(['angulo-cad', 'triangulo-der', 'bisectriz']);
-        els.angCAD.setAttribute({
-          fillOpacity: styler.getOpAng(hl_CAD, actCAD, 0, 0.3, 0.2),
-          strokeOpacity: styler.getOp(hl_CAD, actCAD, 0),
-          visible: actCAD || hl_CAD
-        });
-
-        const actB_ang = styler.isStep(['angulo-b', 'triangulo-izq']);
-        const hl_B_ang = styler.isHL(['angulo-b', 'triangulo-izq']);
-        els.angB.setAttribute({
-          fillOpacity: styler.getOpAng(hl_B_ang, actB_ang, 0, 0.3, 0.2),
-          strokeOpacity: styler.getOp(hl_B_ang, actB_ang, 0),
-          visible: actB_ang || hl_B_ang
-        });
-
-        const actC_ang = styler.isStep(['angulo-c', 'triangulo-der']);
-        const hl_C_ang = styler.isHL(['angulo-c', 'triangulo-der']);
-        els.angC.setAttribute({
-          fillOpacity: styler.getOpAng(hl_C_ang, actC_ang, 0, 0.3, 0.2),
-          strokeOpacity: styler.getOp(hl_C_ang, actC_ang, 0),
-          visible: actC_ang || hl_C_ang
-        });
-
-        // Polígonos para resaltado de áreas
-        els.polyIzq.setAttribute({ fillOpacity: styler.isHL('triangulo-izq') ? 0.15 : 0 });
-        els.polyDer.setAttribute({ fillOpacity: styler.isHL('triangulo-der') ? 0.15 : 0 });
+        els.anguloBAD.setAttribute({ visible: isBAD });
+        els.anguloCAD.setAttribute({ visible: isCAD });
+        els.anguloB.setAttribute({ visible: isAngB });
+        els.anguloC.setAttribute({ visible: isAngC });
       }}
     />
   );
