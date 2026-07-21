@@ -83,7 +83,7 @@ describe('catálogo seguro del editor', () => {
 
     expect(documents).toHaveLength(120);
     expect(documents.every(item => item.path.startsWith('database/content/') && item.path.endsWith('.mdx'))).toBe(true);
-    expect(diagrams).toHaveLength(85);
+    expect(diagrams).toHaveLength(84);
     expect(diagrams.every(item => item.path.startsWith('widgets/diagrams/') && item.path.endsWith('.tsx'))).toBe(true);
     expect(diagrams.filter(item => item.capability === 'visual-exact').map(item => item.path).sort()).toEqual([
       'widgets/diagrams/Axiomas/AxiomaArquimedes.tsx',
@@ -125,6 +125,7 @@ describe('catálogo seguro del editor', () => {
       'widgets/diagrams/Demos/DemoAreaRectangulo_Inconmensurable.tsx',
       'widgets/diagrams/Demos/DemoCongruenciaALA.tsx',
       'widgets/diagrams/Demos/DemoCongruenciaLLL.tsx',
+      'widgets/diagrams/Demos/DemoSumaAngulos.tsx',
       'widgets/diagrams/Models/ModeloCartesiano.tsx',
       'widgets/diagrams/Models/ModeloFano.tsx',
       'widgets/diagrams/Models/ModeloPoincare.tsx',
@@ -132,7 +133,6 @@ describe('catálogo seguro del editor', () => {
       'widgets/diagrams/Teoremas/AngulosOpuestos.tsx',
       'widgets/diagrams/Teoremas/CongruenciaALA.tsx',
       'widgets/diagrams/Teoremas/CongruenciaLLL.tsx',
-      'widgets/diagrams/Teoremas/DemoSumaAngulos.tsx',
       'widgets/diagrams/Teoremas/DesigualdadTriangular.tsx',
       'widgets/diagrams/Teoremas/DosRectasUnPunto.tsx',
       'widgets/diagrams/Teoremas/LemaPuntoMedio.tsx',
@@ -140,7 +140,7 @@ describe('catálogo seguro del editor', () => {
       'widgets/diagrams/Teoremas/SumaAngulos.tsx',
       'widgets/diagrams/Teoremas/TrianguloIsosceles.tsx',
     ]);
-    expect(diagrams.filter(item => item.capability === 'code-preview')).toHaveLength(32);
+    expect(diagrams.filter(item => item.capability === 'code-preview')).toHaveLength(31);
     expect(editable.some(item => ['MathBoard.tsx', 'MathFactory.ts', 'MathUtils.ts', 'InteractiveGeometryCanvas.tsx'].includes(item.name))).toBe(false);
   });
 });

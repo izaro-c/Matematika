@@ -72,7 +72,6 @@ describe('Codex diagram and proof-step synchronization', () => {
 
     const proofSteps = document.querySelectorAll<HTMLElement>('.proof-step');
     expect(proofSteps[1].classList.contains('is-active')).toBe(true);
-    expect(proofSteps[1].scrollIntoView).toHaveBeenCalledWith({ behavior: 'smooth', block: 'center' });
     expect(document.querySelector('[data-diagram-renderer]')?.getAttribute('data-diagram-active-step')).toBe('deduction');
     expect(screen.getByText(/2 \/ 3/)).toBeTruthy();
   });
@@ -80,11 +79,16 @@ describe('Codex diagram and proof-step synchronization', () => {
   it('shows the corresponding diagram state when a proof step reaches the reading focus', () => {
     render(<SyncHarness />);
     const proofSteps = document.querySelectorAll<HTMLElement>('.proof-step');
+    // step0 ha salido por arriba (top negativo) → activeIndex mínimo posible.
     vi.spyOn(proofSteps[0], 'getBoundingClientRect').mockReturnValue({
       top: -300, bottom: -100, left: 0, right: 100, width: 100, height: 200, x: 0, y: -300, toJSON: () => ({}),
     });
+    // step1.top=200 ≤ activationLine (35% × 800 = 280) → debe activarse.
     vi.spyOn(proofSteps[1], 'getBoundingClientRect').mockReturnValue({
-      top: 300, bottom: 500, left: 0, right: 100, width: 100, height: 200, x: 0, y: 300, toJSON: () => ({}),
+      top: 200, bottom: 400, left: 0, right: 100, width: 100, height: 200, x: 0, y: 200, toJSON: () => ({}),
+    });
+    vi.spyOn(proofSteps[2], 'getBoundingClientRect').mockReturnValue({
+      top: 600, bottom: 800, left: 0, right: 100, width: 100, height: 200, x: 0, y: 600, toJSON: () => ({}),
     });
     Object.defineProperty(window, 'scrollY', { configurable: true, value: 100 });
     Object.defineProperty(window, 'innerHeight', { configurable: true, value: 800 });
@@ -95,6 +99,29 @@ describe('Codex diagram and proof-step synchronization', () => {
     expect(proofSteps[1].classList.contains('is-active')).toBe(true);
     expect(document.querySelector('[data-diagram-renderer]')?.getAttribute('data-diagram-active-step')).toBe('deduction');
     expect(screen.getByText(/2 \/ 3/)).toBeTruthy();
+  });
+
+  it('activates the final proof step when it cannot cross the reading line at the end of the page', () => {
+    render(<SyncHarness />);
+    const proofSteps = document.querySelectorAll<HTMLElement>('.proof-step');
+    vi.spyOn(proofSteps[0], 'getBoundingClientRect').mockReturnValue({
+      top: -500, bottom: -300, left: 0, right: 100, width: 100, height: 200, x: 0, y: -500, toJSON: () => ({}),
+    });
+    vi.spyOn(proofSteps[1], 'getBoundingClientRect').mockReturnValue({
+      top: 120, bottom: 320, left: 0, right: 100, width: 100, height: 200, x: 0, y: 120, toJSON: () => ({}),
+    });
+    vi.spyOn(proofSteps[2], 'getBoundingClientRect').mockReturnValue({
+      top: 650, bottom: 800, left: 0, right: 100, width: 100, height: 150, x: 0, y: 650, toJSON: () => ({}),
+    });
+    Object.defineProperty(window, 'scrollY', { configurable: true, value: 1200 });
+    Object.defineProperty(window, 'innerHeight', { configurable: true, value: 800 });
+    Object.defineProperty(document.body, 'offsetHeight', { configurable: true, value: 2000 });
+
+    fireEvent.scroll(window);
+
+    expect(proofSteps[2].classList.contains('is-active')).toBe(true);
+    expect(document.querySelector('[data-diagram-renderer]')?.getAttribute('data-diagram-active-step')).toBe('conclusion');
+    expect(screen.getByText(/3 \/ 3/)).toBeTruthy();
   });
 
   it('keeps diagram and proof content together throughout automatic playback', () => {
@@ -108,7 +135,6 @@ describe('Codex diagram and proof-step synchronization', () => {
 
     const proofSteps = document.querySelectorAll<HTMLElement>('.proof-step');
     expect(proofSteps[2].classList.contains('is-active')).toBe(true);
-    expect(proofSteps[2].scrollIntoView).toHaveBeenCalledWith({ behavior: 'smooth', block: 'center' });
     expect(document.querySelector('[data-diagram-renderer]')?.getAttribute('data-diagram-active-step')).toBe('conclusion');
     expect(screen.getByText(/3 \/ 3/)).toBeTruthy();
   });

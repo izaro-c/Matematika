@@ -1,6 +1,7 @@
 import React, { useCallback, useEffect, useId, useMemo, useRef, useState } from 'react';
 import { useMathStore } from '@/shared/lib/MathStoreContext';
 import { DiagramStepSyncContext } from '@/shared/lib/DiagramStepSyncContext';
+import { useDemonstrationHeaderClaim } from '@/shared/lib/DemonstrationHeaderContext';
 import { db } from '@/entities/content';
 import { Link, useLocation } from 'wouter';
 import { TYPE_STYLES } from '@/shared/lib/constants';
@@ -32,6 +33,7 @@ export const CodexLayout: React.FC<CodexLayoutProps> = ({
   diagramLabel = 'Diagrama interactivo de la demostración',
   className = '',
 }) => {
+  const shouldRenderHeader = useDemonstrationHeaderClaim();
   const [isDiagramExpanded, setIsDiagramExpanded] = useState(true);
   const diagramId = useId();
   const setVariable = useMathStore((state) => state.setVariable);
@@ -40,11 +42,6 @@ export const CodexLayout: React.FC<CodexLayoutProps> = ({
   const rootRef = useRef<HTMLDivElement>(null);
   const [activeDiagramStepIndex, setActiveDiagramStepIndex] = useState<number | null>(null);
 
-  // Flag que bloquea el listener de scroll cuando el cambio de paso viene del diagrama,
-  // para evitar el bucle: diagrama → store → scroll → store.
-  const scrollLockRef = useRef(false);
-  const scrollLockTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
-  
   const hasDiagram = !!diagram;
 
   const isDemoPage = location.startsWith('/demo/');
@@ -57,7 +54,7 @@ export const CodexLayout: React.FC<CodexLayoutProps> = ({
     : [];
 
   const proofSteps = useCallback(
-    () => rootRef.current?.querySelectorAll<HTMLElement>('.proof-step') ?? [],
+    () => Array.from(rootRef.current?.querySelectorAll<HTMLElement>('.proof-step') ?? []),
     [],
   );
 
@@ -88,12 +85,6 @@ export const CodexLayout: React.FC<CodexLayoutProps> = ({
     if (!step) return;
 
     syncProofStepState(step);
-    scrollLockRef.current = true;
-    if (scrollLockTimer.current) clearTimeout(scrollLockTimer.current);
-    scrollLockTimer.current = setTimeout(() => {
-      scrollLockRef.current = false;
-    }, 600);
-    step.scrollIntoView({ behavior: 'smooth', block: 'center' });
   }, [proofSteps, syncProofStepState]);
 
   const diagramStepSyncValue = useMemo(() => ({
@@ -101,87 +92,91 @@ export const CodexLayout: React.FC<CodexLayoutProps> = ({
     selectDiagramStep,
   }), [activeDiagramStepIndex, selectDiagramStep]);
 
-  // Algoritmo de scrollytelling de precisión adaptable:
-  // - En móvil enfoca el paso en el centro de la zona de lectura.
-  // - En escritorio enfoca el paso en el centro vertical completo (50vh).
-  // - Restablece el foco a 'default' si el usuario se sitúa al inicio (scrollY < 80).
-  // - Respeta el flag scrollLockRef cuando el cambio viene del diagrama (no del scroll).
+  // Scrollytelling: el scroll desplaza el texto libremente.
+  // El diagrama refleja el paso activo con una transición ligera al cambiar.
+  //
+  // Algoritmo de umbral de entrada:
+  // - Al montar: activar el primer paso de esta sección si ninguno está activo aún.
+  // - En scroll: un paso se activa cuando su borde SUPERIOR cruza el umbral (35% del viewport).
+  //   El activo es el ÚLTIMO que lo ha cruzado. Solo se opera si algún paso ha cruzado el umbral;
+  //   si ninguno lo ha cruzado, esta sección no interfiere con la sección activa.
   useEffect(() => {
-    const handleScroll = () => {
-      // Ignorar scroll detectado mientras el diagrama controla la posición,
-      // pero renovar el bloqueo para que se libere solo cuando el scroll termine realmente.
-      if (scrollLockRef.current) {
-        if (scrollLockTimer.current) clearTimeout(scrollLockTimer.current);
-        scrollLockTimer.current = setTimeout(() => {
-          scrollLockRef.current = false;
-        }, 150);
-        return;
+    const activate = (index: number, steps: HTMLElement[]) => {
+      const currentActiveIndex = steps.findIndex(s => s.classList.contains('is-active'));
+      if (index !== currentActiveIndex) {
+        setActiveDiagramStepIndex(index);
+        syncProofStepState(steps[index]);
       }
+    };
 
-      // 1. Limpieza de foco si estamos arriba leyendo la introducción
-      if (window.scrollY < 80) {
-        setActiveDiagramStepIndex(null);
-        setVariable('step', 'default');
-        setVariable('activeJustifications', []);
-        return;
+    // Inicialización: en el primer frame de pintura, activar el paso 0 de esta sección
+    // si aún no hay ningún paso activo en el documento. Esto garantiza que la primera
+    // sección visible siempre muestra su estado inicial.
+    const initRafId = requestAnimationFrame(() => {
+      const steps = proofSteps();
+      if (steps.length === 0) return;
+      const anyActive = document.querySelector('.proof-step.is-active');
+      if (!anyActive) {
+        activate(0, steps);
       }
+    });
+
+    const handleScroll = () => {
+      const root = rootRef.current;
+      if (!root) return;
+
+      const rootRect = root.getBoundingClientRect();
+      // No actuar si esta sección está completamente fuera de pantalla.
+      if (rootRect.bottom < 0 || rootRect.top > window.innerHeight) return;
 
       const steps = proofSteps();
       if (steps.length === 0) return;
 
-      // 2. Viewport Center Adaptable (Móvil vs Escritorio)
+      // Línea de activación:
+      // En móvil con diagrama, el área de texto empieza por debajo del diagrama fijo (~46% viewport).
+      // En escritorio, el 35% desde arriba: el paso anterior se ha leído en su mayoría cuando
+      // el siguiente encabezado alcanza esa posición.
       const isMobile = window.innerWidth < 1024;
-      // Si hay diagrama en móvil, el centro de lectura está en la parte inferior (después del diagrama).
-      // Si no hay diagrama, el centro es simplemente la mitad de la pantalla.
-      const viewportCenter = isMobile && hasDiagram && isDiagramExpanded
-        ? (window.innerHeight * 0.46) + ((window.innerHeight * 0.54) / 2)
-        : window.innerHeight / 2;
+      const activationLine = isMobile && hasDiagram && isDiagramExpanded
+        ? window.innerHeight * 0.46
+        : window.innerHeight * 0.35;
 
-      let closestStep: HTMLElement | null = null;
-      let closestStepIndex = -1;
-      let minDistance = Infinity;
+      const documentHeight = Math.max(
+        document.documentElement.scrollHeight,
+        document.body.scrollHeight,
+        document.body.offsetHeight,
+      );
+      const isAtPageEnd = window.scrollY + window.innerHeight >= documentHeight - 2;
 
-      const isAtBottom = window.innerHeight + window.scrollY >= document.body.offsetHeight - 20;
-
-      if (isAtBottom && steps.length > 0) {
-        // Forzar el último paso si estamos al final absoluto de la página
-        closestStep = steps[steps.length - 1];
-        closestStepIndex = steps.length - 1;
-      } else {
-        steps.forEach((step, index) => {
-          const rect = step.getBoundingClientRect();
-          const stepCenter = rect.top + rect.height / 2;
-          const distance = Math.abs(viewportCenter - stepCenter);
-
-          if (distance < minDistance) {
-            minDistance = distance;
-            closestStep = step;
-            closestStepIndex = index;
-          }
-        });
+      if (isAtPageEnd) {
+        activate(steps.length - 1, steps);
+        return;
       }
 
-      if (closestStep && closestStepIndex >= 0) {
-        setActiveDiagramStepIndex(closestStepIndex);
-        syncProofStepState(closestStep);
-      }
+      // El paso activo es el ÚLTIMO cuyo borde superior está por encima de la línea.
+      let activeIndex = -1;
+      steps.forEach((step, index) => {
+        const top = step.getBoundingClientRect().top;
+        if (top <= activationLine) {
+          activeIndex = index;
+        }
+      });
+
+      // Si ningún paso de esta sección ha cruzado el umbral, no interferir.
+      // (Evita que la segunda sección active su paso 0 nada más entrar en pantalla.)
+      if (activeIndex === -1) return;
+
+      activate(activeIndex, steps);
     };
-
-    const timer = setTimeout(handleScroll, 100);
 
     window.addEventListener('scroll', handleScroll, { passive: true });
     window.addEventListener('resize', handleScroll, { passive: true });
-    
     return () => {
-      clearTimeout(timer);
+      cancelAnimationFrame(initRafId);
       window.removeEventListener('scroll', handleScroll);
       window.removeEventListener('resize', handleScroll);
     };
-  }, [hasDiagram, isDiagramExpanded, proofSteps, setVariable, syncProofStepState]);
-
-  useEffect(() => () => {
-    if (scrollLockTimer.current) clearTimeout(scrollLockTimer.current);
-  }, []);
+  }, [hasDiagram, isDiagramExpanded, proofSteps, syncProofStepState]);
 
   const renderedJustifications = () => {
     if (!activeJustifications || activeJustifications.length === 0) {
@@ -226,7 +221,7 @@ export const CodexLayout: React.FC<CodexLayoutProps> = ({
   };
 
   const renderHeader = (isMobile: boolean) => {
-    if (!isDemoPage || !demo) return null;
+    if (!shouldRenderHeader || !isDemoPage || !demo) return null;
     return (
       <div className={`pt-4 pb-4 ${isMobile ? 'lg:hidden mb-6' : 'hidden lg:block'}`}>
         <ContentHeader
@@ -270,9 +265,11 @@ export const CodexLayout: React.FC<CodexLayoutProps> = ({
       />
 
       {/* Cabecera en móviles: antes del grid para que no quede aplastada por el diagrama sticky */}
-      <div className="max-w-[80ch] mx-auto px-6 mobile-header-container">
-        {renderHeader(true)}
-      </div>
+      {shouldRenderHeader && isDemoPage && demo && (
+        <div className="max-w-[80ch] mx-auto px-6 mobile-header-container">
+          {renderHeader(true)}
+        </div>
+      )}
 
       <div className={`codex-content ${!hasDiagram ? 'is-single-column' : ''}`}>
         {/* Columna del Diagrama (va primero en el DOM para móvil, pero ordenado por CSS grid en escritorio) */}

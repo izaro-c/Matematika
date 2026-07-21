@@ -13,10 +13,14 @@ export const metadata = {
   "sources": [{ "title": "Pending Formalization", "author": "Matematika", "role": "primary" }]
 };
 
-import { DemoAreaRectangulo_Conmensurable } from '@/widgets/diagrams/Demos/DemoAreaRectangulo_Conmensurable';
-import { DemoAreaRectangulo_Inconmensurable } from '@/widgets/diagrams/Demos/DemoAreaRectangulo_Inconmensurable';
+import { DemoAreaRectanguloConmensurable } from '@/widgets/diagrams/Demos/DemoAreaRectangulo_Conmensurable';
+import { DemoAreaRectanguloInconmensurable } from '@/widgets/diagrams/Demos/DemoAreaRectangulo_Inconmensurable';
 
-<DemonstrationSection diagram={<DemoAreaRectangulo_Conmensurable />}>
+<DemonstrationSection diagrams={{
+  "step1": <DemoAreaRectanguloConmensurable />,
+  "step2": <DemoAreaRectanguloInconmensurable key="inconmensurable" />,
+  "step3": <DemoAreaRectanguloInconmensurable key="inconmensurable" />
+}}>
 
 <Formula>
   $$ \text{Cont}(\text{Rect}(b, h)) = b \cdot h $$
@@ -31,9 +35,6 @@ Supongamos que existe una <InteractiveElement target="cuadrado-unidad" color="te
 
 $$ \text{Cont}(R) = m \cdot n \cdot u^2 = (m \cdot u) \cdot (n \cdot u) = b \cdot h $$
 </ProofStep>
-</DemonstrationSection>
-
-<DemonstrationSection diagram={<DemoAreaRectangulo_Inconmensurable />}>
 
 <ProofStep number={2} title="Caso inconmensurable" target="step2" leanBlocks={metadata.stepTacticMap["2"]}>
 Si $b$ y $h$ no comparten medida común, por el <ConceptLink targetId="axioma-arquimedes" isDependency={true}>axioma de Arquímedes</ConceptLink> existen sucesiones de números racionales $b_k \to b$ y $h_k \to h$ por aproximación. Para cada $k$, constrúyanse <InteractiveElement target="rectangulo-k-min" color="musgo">rectángulos $R_k^-$ de lados $b_k - \varepsilon_k$ y $h_k - \varepsilon_k$ (interior)</InteractiveElement> y <InteractiveElement target="rectangulo-k-max" color="terracota">rectángulos $R_k^+$ de lados $b_k + \varepsilon_k$ y $h_k + \varepsilon_k$ (exterior)</InteractiveElement> al <InteractiveElement target="rectangulo-r" color="carbon">rectángulo $R$</InteractiveElement>. Por el caso conmensurable:
@@ -43,7 +44,7 @@ $$ \text{Cont}(R_k^-) = b_k^- \cdot h_k^- < \text{Cont}(R) < b_k^+ \cdot h_k^+ =
 Por el <ConceptLink targetId="axioma-completitud" isDependency={true}>axioma de completitud</ConceptLink>, el único número real que satisface todas estas desigualdades es $b \cdot h$.
 </ProofStep>
 
-<ProofStep number={3} title="Conclusión" leanBlocks={metadata.stepTacticMap["3"]}>
+<ProofStep number={3} title="Conclusión" target="step3" leanBlocks={metadata.stepTacticMap["3"]}>
 En ambos casos, $\text{Cont}(R) = b \cdot h$. $\blacksquare$
 </ProofStep>
 
