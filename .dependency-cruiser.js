@@ -5,18 +5,15 @@ export default {
 
     /*
      * shared/ — no debe importar de capas superiores.
-     * Las tres exclusiones de origen son deuda conocida y acotada. Las reglas
-     * siguientes limitan su alcance para que la excepción no pueda crecer.
+     * La exclusión MaterialPracticoSection es deuda de shim de re-exportación acotada.
      */
     {
       name: 'fsd-shared-no-upper-layers',
       comment: 'shared/ must not import from app, pages, widgets, features, entities',
-      severity: 'warn',
+      severity: 'error',
       from: {
         path: '^src/shared/',
         pathNot: [
-          '^src/shared/ui/MDXBlocks\\.tsx$',
-          '^src/shared/ui/ModelBadge\\.tsx$',
           '^src/shared/ui/MaterialPracticoSection\\.tsx$',
         ],
       },
@@ -26,25 +23,15 @@ export default {
     {
       name: 'fsd-mdxblocks-composition-scope',
       comment: 'MDXBlocks may compose features and widgets, but must not expand to app, pages, or entities',
-      severity: 'warn',
-      from: { path: '^src/shared/ui/MDXBlocks\\.tsx$' },
+      severity: 'error',
+      from: { path: '^src/widgets/mdx/MDXBlocks\\.tsx$' },
       to: { path: '^src/(app|pages|entities)/' },
     },
-    /* Excepciones acotadas: cada shim solo puede re-exportar su destino legado. */
-    {
-      name: 'fsd-model-badge-shim-scope',
-      comment: 'ModelBadge shim may only re-export features/graph/ui/ModelBadge',
-      severity: 'warn',
-      from: { path: '^src/shared/ui/ModelBadge\\.tsx$' },
-      to: {
-        path: '^src/(app|pages|widgets|features|entities)/',
-        pathNot: '^src/features/graph/ui/ModelBadge\\.tsx$',
-      },
-    },
+    /* Excepción acotada: cada shim solo puede re-exportar su destino legado. */
     {
       name: 'fsd-material-practico-shim-scope',
       comment: 'MaterialPracticoSection shim may only re-export widgets/content/MaterialPracticoSection',
-      severity: 'warn',
+      severity: 'error',
       from: { path: '^src/shared/ui/MaterialPracticoSection\\.tsx$' },
       to: {
         path: '^src/(app|pages|widgets|features|entities)/',
@@ -64,18 +51,21 @@ export default {
     /* features/ — no debe importar de app/ o pages/ */
     {
       name: 'fsd-features-no-upper-layers',
-      comment: 'features/ must not import from pages or app (warn: shared contexts live in app/)',
-      severity: 'warn',
+      comment: 'features/ must not import from pages or app',
+      severity: 'error',
       from: { path: '^src/features/' },
       to: { path: '^src/(pages|app)/' },
     },
 
-    /* widgets/ — no debe importar de features/ según el contrato actual */
+    /* widgets/ — no debe importar de features/ salvo el registro de composición MDXBlocks */
     {
       name: 'fsd-widgets-no-features',
       comment: 'widgets/ must not import from features/ (should use composition)',
-      severity: 'warn',
-      from: { path: '^src/widgets/' },
+      severity: 'error',
+      from: {
+        path: '^src/widgets/',
+        pathNot: '^src/widgets/mdx/MDXBlocks\\.tsx$',
+      },
       to: { path: '^src/features/' },
     },
 
@@ -83,7 +73,7 @@ export default {
     {
       name: 'fsd-pages-no-cross-imports',
       comment: 'pages/ must not import from another page slice',
-      severity: 'warn',
+      severity: 'error',
       from: { path: '^src/pages/([^/]+)(?:/|\\.[^/]+$)' },
       to: {
         path: '^src/pages/',
@@ -95,7 +85,7 @@ export default {
     {
       name: 'fsd-features-cross-imports',
       comment: 'features/ must not import from another feature slice',
-      severity: 'warn',
+      severity: 'error',
       from: { path: '^src/features/([^/]+)/' },
       to: {
         path: '^src/features/',
@@ -117,7 +107,7 @@ export default {
     /* No dependencias circulares */
     {
       name: 'no-circular',
-      severity: 'warn',
+      severity: 'error',
       from: {},
       to: { circular: true },
     },

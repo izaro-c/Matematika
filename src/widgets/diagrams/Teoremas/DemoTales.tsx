@@ -1,4 +1,4 @@
-import { useMathStore } from '@/app/providers/MathStoreContext';
+import { useMathStore } from '@/shared/lib/MathStoreContext';
 import { useStepBinding } from '@/shared/ui/StepBinding';
 import { MathBoard } from '@/shared/diagrams/core/MathBoard';
 import {

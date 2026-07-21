@@ -12,8 +12,8 @@ import {
   useNavigationStore,
   type SearchResult,
   type SearchResultType,
-} from '@/features/search/lib/searchApi';
-import { useGlossaryStore } from '@/features/glossary/GlossaryStore';
+} from '@/entities/content/searchApi';
+import { useGlossaryStore } from '@/shared/stores/GlossaryStore';
 
 type TypeFilter = SearchResultType | 'all';
 

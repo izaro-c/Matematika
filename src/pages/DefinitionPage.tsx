@@ -8,7 +8,7 @@ import { FadeIn } from '@/shared/ui/FadeIn';
 import { ContentHeader } from '@/widgets/content/ContentHeader';
 import { ContentBody } from '@/shared/ui/ContentBody';
 import { MaterialPracticoSection } from '@/widgets/content/MaterialPracticoSection';
-import { AplicacionesSection } from '@/shared/ui/AplicacionesSection';
+import { AplicacionesSection } from '@/widgets/content/AplicacionesSection';
 
 /**
  * Página para visualizar una Definición Matemática estricta.

@@ -3,7 +3,7 @@ import { getCSSVar } from '@/shared/diagrams/core/MathUtils';
 import { Canvas, useThree } from '@react-three/fiber';
 import * as THREE from 'three';
 import { OrbitControls, Html } from '@react-three/drei';
-import { useMathStore } from '@/app/providers/MathStoreContext';
+import { useMathStore } from '@/shared/lib/MathStoreContext';
 
 function SceneContent() {
   const { camera } = useThree();

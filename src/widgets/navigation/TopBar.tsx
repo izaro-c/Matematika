@@ -1,5 +1,5 @@
 import { useLocation, Link } from 'wouter';
-import { useNavigationStore } from '@/features/search/NavigationStore';
+import { useNavigationStore } from '@/shared/stores/NavigationStore';
 import { routePath } from '@/shared/lib/routeHelper';
 import { ThemeToggle } from '@/widgets/navigation/ThemeToggle';
 import { Logo } from '@/shared/ui/Logo';

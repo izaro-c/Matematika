@@ -1,6 +1,6 @@
-import { useMathStore } from '@/app/providers/MathStoreContext';
+import { useMathStore } from '@/shared/lib/MathStoreContext';
 import { useStepBinding } from '@/shared/ui/StepBinding';
-import { useExercise } from '@/features/exercises/ui/ExerciseContext';
+import { useExercise } from '@/shared/lib/ExerciseContext';
 import { MathBoard } from '@/shared/diagrams/core/MathBoard';
 import { DiagramTitle } from '@/shared/ui/DiagramOverlay';
 import {

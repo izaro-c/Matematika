@@ -131,6 +131,7 @@ describe('catálogo seguro del editor', () => {
       'widgets/diagrams/Models/ModeloTresPuntos.tsx',
       'widgets/diagrams/Teoremas/AngulosOpuestos.tsx',
       'widgets/diagrams/Teoremas/CongruenciaALA.tsx',
+      'widgets/diagrams/Teoremas/CongruenciaLLL.tsx',
       'widgets/diagrams/Teoremas/DemoSumaAngulos.tsx',
       'widgets/diagrams/Teoremas/DesigualdadTriangular.tsx',
       'widgets/diagrams/Teoremas/DosRectasUnPunto.tsx',
@@ -139,7 +140,7 @@ describe('catálogo seguro del editor', () => {
       'widgets/diagrams/Teoremas/SumaAngulos.tsx',
       'widgets/diagrams/Teoremas/TrianguloIsosceles.tsx',
     ]);
-    expect(diagrams.filter(item => item.capability === 'code-preview')).toHaveLength(33);
+    expect(diagrams.filter(item => item.capability === 'code-preview')).toHaveLength(32);
     expect(editable.some(item => ['MathBoard.tsx', 'MathFactory.ts', 'MathUtils.ts', 'InteractiveGeometryCanvas.tsx'].includes(item.name))).toBe(false);
   });
 });

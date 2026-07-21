@@ -1,8 +1,75 @@
+import type JXG from 'jsxgraph';
 import type { ThemeColors } from './MathBoard';
+import type { GeometryOptions, JXGCoord, JXGPolygon, JXGSlider, PointLike, PointSupport } from './MathUtils';
 import { DEFAULT_ANGLE_RADIUS, DEFAULT_RIGHT_ANGLE_RADIUS } from '../spec';
 
-type JXGCoord = number | (() => number);
 const diagramFontStyle = 'font-family: var(--font-diagram-family);';
+
+export interface PointOptions extends GeometryOptions {
+  size?: number;
+  highlightSize?: number;
+  fillColor?: string;
+  strokeColor?: string;
+  highlightFillColor?: string;
+  highlightStrokeColor?: string;
+  showInfobox?: boolean;
+  label?: Record<string, unknown>;
+}
+
+export interface AngleOptions extends GeometryOptions {
+  radius?: number;
+  type?: string;
+}
+
+export interface RightAngleMarkerOptions extends GeometryOptions {
+  size?: number;
+}
+
+export interface CongruenceMarkOptions extends GeometryOptions {
+  markHeight?: number;
+}
+
+export interface ParallelMarkOptions extends GeometryOptions {
+  markHeight?: number;
+}
+
+export interface DimensionLineOptions extends GeometryOptions {
+  fontSize?: number;
+}
+
+export interface TextOptions extends GeometryOptions {
+  color?: string;
+  cssClass?: string;
+  cssDefaultStyle?: string;
+  highlightCssDefaultStyle?: string;
+  display?: string;
+}
+
+export interface SliderOptions extends GeometryOptions {
+  name?: string;
+  baseline?: GeometryOptions;
+  highline?: GeometryOptions;
+  label?: Record<string, unknown>;
+}
+
+export interface TicksOptions extends GeometryOptions {
+  majorHeight?: number;
+  ticksDistance?: number;
+  minorTicks?: number;
+  minorHeight?: number;
+  drawLabels?: boolean;
+}
+
+export interface AreaDecompositionOptions extends GeometryOptions {
+  borders?: GeometryOptions;
+}
+
+export interface CompositeElement {
+  rendNode?: Element | SVGElement;
+  setAttribute: (attributes: Record<string, unknown>) => void;
+  on: (event: string, handler: (...args: unknown[]) => void) => void;
+  elements: (JXG.GeometryElement | CompositeElement | undefined)[];
+}
 
 function pointLabel(theme: ThemeColors, label: Record<string, unknown> = {}) {
   const cssClass = 'JXGtext JXgpointLabel matematika-point-label';
@@ -20,7 +87,12 @@ function pointLabel(theme: ThemeColors, label: Record<string, unknown> = {}) {
   };
 }
 
-export function createPoint(board: any, coords: [JXGCoord, JXGCoord], options: any = {}, theme: ThemeColors) {
+export function createPoint(
+  board: JXG.Board,
+  coords: [JXGCoord, JXGCoord],
+  options: PointOptions = {},
+  theme: ThemeColors,
+): JXG.Point {
   const { label, ...attributes } = options;
   return board.create('point', coords, {
     size: 4,
@@ -32,16 +104,16 @@ export function createPoint(board: any, coords: [JXGCoord, JXGCoord], options: a
     showInfobox: false,
     ...attributes,
     label: pointLabel(theme, label),
-  });
+  } as never) as JXG.Point;
 }
 
 export function createIntersection(
-  board: any,
-  supports: [any, any],
+  board: JXG.Board,
+  supports: [PointSupport, PointSupport],
   index: 0 | 1 = 0,
-  options: any = {},
+  options: PointOptions = {},
   theme: ThemeColors,
-) {
+): JXG.Point {
   const { label, ...attributes } = options;
   return board.create('intersection', [supports[0], supports[1], index], {
     size: 4,
@@ -54,93 +126,123 @@ export function createIntersection(
     fixed: true,
     ...attributes,
     label: pointLabel(theme, label),
-  });
+  } as never) as JXG.Point;
 }
 
-export function createSegment(board: any, points: [any, any], options: any = {}, theme: ThemeColors) {
+export function createSegment(
+  board: JXG.Board,
+  points: [PointSupport, PointSupport],
+  options: GeometryOptions = {},
+  theme: ThemeColors,
+): JXG.Segment {
   return board.create('segment', points, {
     strokeColor: theme.carbon,
     strokeWidth: 2,
     ...options,
-  });
+  } as never) as JXG.Segment;
 }
 
-export function createLine(board: any, points: [any, any], options: any = {}, theme: ThemeColors) {
+export function createLine(
+  board: JXG.Board,
+  points: [PointSupport, PointSupport],
+  options: GeometryOptions = {},
+  theme: ThemeColors,
+): JXG.Line {
   return board.create('line', points, {
     strokeColor: theme.carbon,
     strokeWidth: 2,
     ...options,
-  });
+  } as never) as JXG.Line;
 }
 
-export function createRay(board: any, points: [any, any], options: any = {}, theme: ThemeColors) {
+export function createRay(
+  board: JXG.Board,
+  points: [PointSupport, PointSupport],
+  options: GeometryOptions = {},
+  theme: ThemeColors,
+): JXG.Line {
   return board.create('line', points, {
     strokeColor: theme.carbon,
     strokeWidth: 2,
     straightFirst: false,
     straightLast: true,
     ...options,
-  });
+  } as never) as JXG.Line;
 }
 
-export function createPolygon(board: any, vertices: any[], options: any = {}, theme: ThemeColors) {
+export function createPolygon(
+  board: JXG.Board,
+  vertices: PointSupport[],
+  options: GeometryOptions = {},
+  theme: ThemeColors,
+): JXGPolygon {
   return board.create('polygon', vertices, {
     fillColor: theme.salvia,
     fillOpacity: 0.12,
     borders: { strokeColor: theme.salvia, strokeWidth: 1.5 },
     vertices: { visible: false },
     ...options,
-  });
+  } as never) as unknown as JXGPolygon;
 }
 
-export function createCircle(board: any, points: [any, any], options: any = {}, theme: ThemeColors) {
+export function createCircle(
+  board: JXG.Board,
+  points: [PointSupport, PointSupport | number],
+  options: GeometryOptions = {},
+  theme: ThemeColors,
+): JXG.Circle {
   return board.create('circle', points, {
     strokeColor: theme.salvia,
     strokeWidth: 2,
     fillOpacity: 0,
     ...options,
-  });
+  } as never) as JXG.Circle;
 }
 
-export function createArc(board: any, points: [any, any, any], options: any = {}, theme: ThemeColors) {
+export function createArc(
+  board: JXG.Board,
+  points: [PointSupport, PointSupport, PointSupport],
+  options: GeometryOptions = {},
+  theme: ThemeColors,
+): JXG.Curve {
   return board.create('arc', points, {
     strokeColor: theme.salvia,
     strokeWidth: 2,
     fillOpacity: 0,
     ...options,
-  });
+  } as never) as JXG.Curve;
 }
 
 export function createFunctionCurve(
-  board: any,
+  board: JXG.Board,
   evaluate: (x: number) => number,
   domain: [number, number],
-  options: any = {},
+  options: GeometryOptions = {},
   theme: ThemeColors,
-) {
+): JXG.Curve {
   return board.create('functiongraph', [evaluate, domain[0], domain[1]], {
     strokeColor: theme.pavo,
     strokeWidth: 2,
     ...options,
-  });
+  } as never) as JXG.Curve;
 }
 
 export function createParametricCurve(
-  board: any,
+  board: JXG.Board,
   evaluateX: (t: number) => number,
   evaluateY: (t: number) => number,
   domain: [number, number],
-  options: any = {},
+  options: GeometryOptions = {},
   theme: ThemeColors,
-) {
+): JXG.Curve {
   return board.create('curve', [evaluateX, evaluateY, domain[0], domain[1]], {
     strokeColor: theme.pavo,
     strokeWidth: 2,
     ...options,
-  });
+  } as never) as JXG.Curve;
 }
 
-function poincareCircle(center: any, boundary: any, a: any, b: any) {
+function poincareCircle(center: PointLike, boundary: PointLike, a: PointLike, b: PointLike) {
   const ox = center.X();
   const oy = center.Y();
   const ax = a.X();
@@ -169,11 +271,11 @@ function normalizedArcDelta(start: number, end: number): number {
 }
 
 export function createPoincareArc(
-  board: any,
-  points: [any, any, any, any],
-  options: any = {},
+  board: JXG.Board,
+  points: [PointLike, PointLike, PointLike, PointLike],
+  options: GeometryOptions = {},
   theme: ThemeColors,
-) {
+): JXG.Curve {
   const [center, boundary, a, b] = points;
   const coordinates = (t: number) => {
     const circle = poincareCircle(center, boundary, a, b);
@@ -187,11 +289,11 @@ export function createPoincareArc(
 }
 
 export function createPoincareGeodesic(
-  board: any,
-  points: [any, any, any, any],
-  options: any = {},
+  board: JXG.Board,
+  points: [PointLike, PointLike, PointLike, PointLike],
+  options: GeometryOptions = {},
   theme: ThemeColors,
-) {
+): JXG.Curve {
   const [center, boundary, a, b] = points;
   const coordinates = (t: number) => {
     const circle = poincareCircle(center, boundary, a, b);
@@ -200,8 +302,8 @@ export function createPoincareGeodesic(
       const dy = b.Y() - a.Y();
       const length = Math.hypot(dx, dy) || 1;
       return {
-        x: circle.ox + dx / length * circle.radius * (2 * t - 1),
-        y: circle.oy + dy / length * circle.radius * (2 * t - 1),
+        x: circle.ox + (dx / length) * circle.radius * (2 * t - 1),
+        y: circle.oy + (dy / length) * circle.radius * (2 * t - 1),
       };
     }
     const distance = Math.hypot(circle.cx - circle.ox, circle.cy - circle.oy) || 1;
@@ -226,23 +328,23 @@ export function createPoincareGeodesic(
   return createParametricCurve(board, t => coordinates(t).x, t => coordinates(t).y, [0, 1], options, theme);
 }
 
-function createComposite(elements: any[]) {
+function createComposite(elements: (JXG.GeometryElement | CompositeElement | undefined)[]): CompositeElement {
   const primary = elements.find(Boolean);
   return {
-    rendNode: primary?.rendNode,
-    setAttribute: (attributes: any) => elements.forEach(element => element?.setAttribute?.(attributes)),
-    on: (event: string, handler: (...args: any[]) => void) => elements.forEach(element => element?.on?.(event, handler)),
+    rendNode: primary && 'rendNode' in primary ? (primary.rendNode as Element | SVGElement | undefined) : undefined,
+    setAttribute: (attributes: Record<string, unknown>) => elements.forEach(element => element?.setAttribute?.(attributes)),
+    on: (event: string, handler: (...args: unknown[]) => void) => elements.forEach(element => element?.on?.(event, handler as never)),
     elements,
   };
 }
 
 export function createCongruenceMark(
-  board: any,
-  points: [any, any],
+  board: JXG.Board,
+  points: [PointLike, PointLike],
   count = 1,
-  options: any = {},
+  options: CongruenceMarkOptions = {},
   theme: ThemeColors,
-) {
+): CompositeElement {
   const [a, b] = points;
   const { markHeight = 0.32, ...markOptions } = options;
   const marks = Array.from({ length: count }, (_, index) => {
@@ -261,20 +363,20 @@ export function createCongruenceMark(
       const y = (a.Y() + b.Y()) / 2 + tangentY * offset + normalY * half * side;
       return axis === 'x' ? x : y;
     };
-    const p1 = board.create('point', [coordinate(-1, 'x'), coordinate(-1, 'y')], { visible: false });
-    const p2 = board.create('point', [coordinate(1, 'x'), coordinate(1, 'y')], { visible: false });
-    return board.create('segment', [p1, p2], { strokeColor: theme.ocre, strokeWidth: 2, fixed: true, ...markOptions });
+    const p1 = board.create('point', [coordinate(-1, 'x'), coordinate(-1, 'y')], { visible: false } as never);
+    const p2 = board.create('point', [coordinate(1, 'x'), coordinate(1, 'y')], { visible: false } as never);
+    return board.create('segment', [p1, p2], { strokeColor: theme.ocre, strokeWidth: 2, fixed: true, ...markOptions } as never) as JXG.Segment;
   });
   return createComposite(marks);
 }
 
 export function createParallelMark(
-  board: any,
-  points: [any, any],
+  board: JXG.Board,
+  points: [PointLike, PointLike],
   count = 1,
-  options: any = {},
+  options: ParallelMarkOptions = {},
   theme: ThemeColors,
-) {
+): CompositeElement {
   const [a, b] = points;
   const { markHeight = 0.42, ...markOptions } = options;
   const chevrons = Array.from({ length: count }, (_, index) => {
@@ -291,40 +393,42 @@ export function createParallelMark(
       const centerX = (a.X() + b.X()) / 2 + tangentX * offset;
       const centerY = (a.Y() + b.Y()) / 2 + tangentY * offset;
       const direction = part === 'tip' ? 0.5 : -0.5;
-      const normal = part === 'upper' ? 0.38 : part === 'lower' ? -0.38 : 0;
+      let normal = 0;
+      if (part === 'upper') normal = 0.38;
+      else if (part === 'lower') normal = -0.38;
       const x = centerX + tangentX * markHeight * direction + normalX * markHeight * normal;
       const y = centerY + tangentY * markHeight * direction + normalY * markHeight * normal;
       return axis === 'x' ? x : y;
     };
-    const tip = board.create('point', [coordinate('tip', 'x'), coordinate('tip', 'y')], { visible: false });
-    const upper = board.create('point', [coordinate('upper', 'x'), coordinate('upper', 'y')], { visible: false });
-    const lower = board.create('point', [coordinate('lower', 'x'), coordinate('lower', 'y')], { visible: false });
+    const tip = board.create('point', [coordinate('tip', 'x'), coordinate('tip', 'y')], { visible: false } as never);
+    const upper = board.create('point', [coordinate('upper', 'x'), coordinate('upper', 'y')], { visible: false } as never);
+    const lower = board.create('point', [coordinate('lower', 'x'), coordinate('lower', 'y')], { visible: false } as never);
     return [
-      board.create('segment', [upper, tip], { strokeColor: theme.pavo, strokeWidth: 2, fixed: true, ...markOptions }),
-      board.create('segment', [lower, tip], { strokeColor: theme.pavo, strokeWidth: 2, fixed: true, ...markOptions }),
+      board.create('segment', [upper, tip], { strokeColor: theme.pavo, strokeWidth: 2, fixed: true, ...markOptions } as never) as JXG.Segment,
+      board.create('segment', [lower, tip], { strokeColor: theme.pavo, strokeWidth: 2, fixed: true, ...markOptions } as never) as JXG.Segment,
     ];
   }).flat();
   return createComposite(chevrons);
 }
 
 export function createDimensionLine(
-  board: any,
-  points: [any, any],
+  board: JXG.Board,
+  points: [PointLike, PointLike],
   label: () => string,
   offset = 0.35,
-  options: any = {},
+  options: DimensionLineOptions = {},
   theme: ThemeColors,
-) {
+): CompositeElement {
   const [a, b] = points;
   const { fontSize, ...lineOptions } = options;
-  const shifted = (point: any, axis: 'x' | 'y') => () => {
+  const shifted = (point: PointLike, axis: 'x' | 'y') => () => {
     const dx = b.X() - a.X();
     const dy = b.Y() - a.Y();
     const length = Math.hypot(dx, dy) || 1;
-    return (axis === 'x' ? point.X() - dy / length * offset : point.Y() + dx / length * offset);
+    return axis === 'x' ? point.X() - (dy / length) * offset : point.Y() + (dx / length) * offset;
   };
-  const a2 = board.create('point', [shifted(a, 'x'), shifted(a, 'y')], { visible: false });
-  const b2 = board.create('point', [shifted(b, 'x'), shifted(b, 'y')], { visible: false });
+  const a2 = board.create('point', [shifted(a, 'x'), shifted(a, 'y')], { visible: false } as never) as JXG.Point;
+  const b2 = board.create('point', [shifted(b, 'x'), shifted(b, 'y')], { visible: false } as never) as JXG.Point;
   const line = createSegment(board, [a2, b2], { strokeColor: theme.pizarra, strokeWidth: 1.5, ...lineOptions }, theme);
   const highlightOptOut = lineOptions.highlight === false ? { highlight: false } : {};
   const ticks = createCongruenceMark(board, [a2, b2], 1, { strokeColor: theme.pizarra, strokeWidth: 1.5, ...highlightOptOut }, theme);
@@ -337,48 +441,52 @@ export function createDimensionLine(
 }
 
 export function createGridOverlay(
-  board: any,
-  points: [any, any, any, any],
+  board: JXG.Board,
+  points: [PointLike, PointLike, PointLike, PointLike],
   rows: number,
   columns: number,
-  options: any = {},
+  options: GeometryOptions = {},
   theme: ThemeColors,
-) {
+): CompositeElement {
   const [a, b, c, d] = points;
-  const lines: any[] = [];
-  const interpolate = (p: any, q: any, amount: number, axis: 'x' | 'y') => () => (
-    (axis === 'x' ? p.X() : p.Y()) + ((axis === 'x' ? q.X() : q.Y()) - (axis === 'x' ? p.X() : p.Y())) * amount
-  );
+  const lines: (JXG.Segment | CompositeElement)[] = [];
+  const interpolate = (p: PointLike, q: PointLike, amount: number, axis: 'x' | 'y') => () =>
+    (axis === 'x' ? p.X() : p.Y()) + ((axis === 'x' ? q.X() : q.Y()) - (axis === 'x' ? p.X() : p.Y())) * amount;
   for (let row = 1; row < rows; row += 1) {
     const amount = row / rows;
-    const left = board.create('point', [interpolate(a, d, amount, 'x'), interpolate(a, d, amount, 'y')], { visible: false });
-    const right = board.create('point', [interpolate(b, c, amount, 'x'), interpolate(b, c, amount, 'y')], { visible: false });
+    const left = board.create('point', [interpolate(a, d, amount, 'x'), interpolate(a, d, amount, 'y')], { visible: false } as never) as JXG.Point;
+    const right = board.create('point', [interpolate(b, c, amount, 'x'), interpolate(b, c, amount, 'y')], { visible: false } as never) as JXG.Point;
     lines.push(createSegment(board, [left, right], { strokeColor: theme.carbon, strokeWidth: 0.8, strokeOpacity: 0.35, ...options }, theme));
   }
   for (let column = 1; column < columns; column += 1) {
     const amount = column / columns;
-    const bottom = board.create('point', [interpolate(a, b, amount, 'x'), interpolate(a, b, amount, 'y')], { visible: false });
-    const top = board.create('point', [interpolate(d, c, amount, 'x'), interpolate(d, c, amount, 'y')], { visible: false });
+    const bottom = board.create('point', [interpolate(a, b, amount, 'x'), interpolate(a, b, amount, 'y')], { visible: false } as never) as JXG.Point;
+    const top = board.create('point', [interpolate(d, c, amount, 'x'), interpolate(d, c, amount, 'y')], { visible: false } as never) as JXG.Point;
     lines.push(createSegment(board, [bottom, top], { strokeColor: theme.carbon, strokeWidth: 0.8, strokeOpacity: 0.35, ...options }, theme));
   }
   return createComposite(lines);
 }
 
 export function createAreaDecomposition(
-  board: any,
-  points: any[],
+  board: JXG.Board,
+  points: PointSupport[],
   rows: number,
   columns: number,
-  options: any = {},
+  options: AreaDecompositionOptions = {},
   theme: ThemeColors,
-) {
+): JXGPolygon | CompositeElement {
   const polygon = createPolygon(board, points, options, theme);
   if (points.length !== 4) return polygon;
-  const grid = createGridOverlay(board, points as [any, any, any, any], rows, columns, options.borders ?? {}, theme);
+  const grid = createGridOverlay(board, points as [PointLike, PointLike, PointLike, PointLike], rows, columns, options.borders ?? {}, theme);
   return createComposite([polygon, grid]);
 }
 
-export function createMidpoint(board: any, points: [any, any], options: any = {}, theme: ThemeColors) {
+export function createMidpoint(
+  board: JXG.Board,
+  points: [PointSupport, PointSupport],
+  options: PointOptions = {},
+  theme: ThemeColors,
+): JXG.Point {
   const { label, ...attributes } = options;
   return board.create('midpoint', points, {
     size: 4,
@@ -390,10 +498,15 @@ export function createMidpoint(board: any, points: [any, any], options: any = {}
     showInfobox: false,
     ...attributes,
     label: pointLabel(theme, label),
-  });
+  } as never) as JXG.Point;
 }
 
-export function createGlider(board: any, coordsAndSupport: [JXGCoord, JXGCoord, any], options: any = {}, theme: ThemeColors) {
+export function createGlider(
+  board: JXG.Board,
+  coordsAndSupport: [JXGCoord, JXGCoord, JXG.GeometryElement | PointLike],
+  options: PointOptions = {},
+  theme: ThemeColors,
+): JXG.Point {
   const { label, ...attributes } = options;
   return board.create('glider', coordsAndSupport, {
     size: 4,
@@ -405,32 +518,47 @@ export function createGlider(board: any, coordsAndSupport: [JXGCoord, JXGCoord, 
     showInfobox: false,
     ...attributes,
     label: pointLabel(theme, label),
-  });
+  } as never) as JXG.Point;
 }
 
-export function createPerpendicularLine(board: any, points: [any, any, any], options: any = {}, theme: ThemeColors) {
+export function createPerpendicularLine(
+  board: JXG.Board,
+  points: [PointSupport, PointSupport, PointSupport],
+  options: GeometryOptions = {},
+  theme: ThemeColors,
+): JXG.Line {
   const [baseA, baseB, through] = points;
-  const baseLine = board.create('line', [baseA, baseB], { visible: false });
+  const baseLine = board.create('line', [baseA, baseB], { visible: false } as never);
   return board.create('perpendicular', [baseLine, through], {
     strokeColor: theme.pavo,
     strokeWidth: 2,
     dash: 2,
     ...options,
-  });
+  } as never) as JXG.Line;
 }
 
-export function createParallelLine(board: any, points: [any, any, any], options: any = {}, theme: ThemeColors) {
+export function createParallelLine(
+  board: JXG.Board,
+  points: [PointSupport, PointSupport, PointSupport],
+  options: GeometryOptions = {},
+  theme: ThemeColors,
+): JXG.Line {
   const [baseA, baseB, through] = points;
-  const baseLine = board.create('line', [baseA, baseB], { visible: false });
+  const baseLine = board.create('line', [baseA, baseB], { visible: false } as never);
   return board.create('parallel', [baseLine, through], {
     strokeColor: theme.salvia,
     strokeWidth: 2,
     dash: 2,
     ...options,
-  });
+  } as never) as JXG.Line;
 }
 
-export function createPerpendicularFoot(board: any, points: [any, any, any], options: any = {}, theme: ThemeColors) {
+export function createPerpendicularFoot(
+  board: JXG.Board,
+  points: [PointLike, PointLike, PointLike],
+  options: PointOptions = {},
+  theme: ThemeColors,
+): JXG.Point {
   const [baseA, baseB, source] = points;
   const projected = () => {
     const dx = baseB.X() - baseA.X();
@@ -454,10 +582,15 @@ export function createPerpendicularFoot(board: any, points: [any, any, any], opt
     showInfobox: false,
     ...attributes,
     label: pointLabel(theme, label),
-  });
+  } as never) as JXG.Point;
 }
 
-export function createBaseExtensionToFoot(board: any, points: [any, any, any], options: any = {}, theme: ThemeColors) {
+export function createBaseExtensionToFoot(
+  board: JXG.Board,
+  points: [PointLike, PointLike, PointLike],
+  options: GeometryOptions = {},
+  theme: ThemeColors,
+): JXG.Segment {
   const [baseA, baseB, foot] = points;
   const extensionEnd = board.create('point', [
     () => {
@@ -478,7 +611,7 @@ export function createBaseExtensionToFoot(board: any, points: [any, any, any], o
       if (t > 1) return baseB.Y();
       return foot.Y();
     },
-  ], { visible: false });
+  ], { visible: false } as never);
 
   return board.create('segment', [extensionEnd, foot], {
     strokeColor: theme.pizarra,
@@ -486,10 +619,15 @@ export function createBaseExtensionToFoot(board: any, points: [any, any, any], o
     dash: 2,
     visible: false,
     ...options,
-  });
+  } as never) as JXG.Segment;
 }
 
-export function createAngleBisectorRay(board: any, points: [any, any, any], options: any = {}, theme: ThemeColors) {
+export function createAngleBisectorRay(
+  board: JXG.Board,
+  points: [PointLike, PointLike, PointLike],
+  options: GeometryOptions = {},
+  theme: ThemeColors,
+): JXG.Line {
   const [legA, vertex, legB] = points;
   const direction = () => {
     const ax = legA.X() - vertex.X();
@@ -507,7 +645,7 @@ export function createAngleBisectorRay(board: any, points: [any, any, any], opti
   const directionPoint = board.create('point', [
     () => vertex.X() + direction().x,
     () => vertex.Y() + direction().y,
-  ], { visible: false });
+  ], { visible: false } as never);
 
   return board.create('line', [vertex, directionPoint], {
     strokeColor: theme.pavo,
@@ -516,10 +654,15 @@ export function createAngleBisectorRay(board: any, points: [any, any, any], opti
     straightFirst: false,
     straightLast: true,
     ...options,
-  });
+  } as never) as JXG.Line;
 }
 
-export function createAngle(board: any, points: [any, any, any], options: any = {}, theme: ThemeColors) {
+export function createAngle(
+  board: JXG.Board,
+  points: [PointSupport, PointSupport, PointSupport],
+  options: AngleOptions = {},
+  theme: ThemeColors,
+): JXG.Angle {
   const { radius = DEFAULT_ANGLE_RADIUS, ...attrs } = options;
   return board.create('angle', points, {
     type: 'sector',
@@ -530,10 +673,15 @@ export function createAngle(board: any, points: [any, any, any], options: any = 
     strokeWidth: 1.5,
     label: { visible: false },
     ...attrs,
-  });
+  } as never) as JXG.Angle;
 }
 
-export function createNonReflexAngle(board: any, points: [any, any, any], options: any = {}, theme: ThemeColors) {
+export function createNonReflexAngle(
+  board: JXG.Board,
+  points: [PointSupport, PointSupport, PointSupport],
+  options: AngleOptions = {},
+  theme: ThemeColors,
+): JXG.Angle {
   const { radius = DEFAULT_ANGLE_RADIUS, ...attrs } = options;
   return board.create('nonreflexangle', points, {
     type: 'sector',
@@ -544,31 +692,36 @@ export function createNonReflexAngle(board: any, points: [any, any, any], option
     strokeWidth: 1.5,
     label: { visible: false },
     ...attrs,
-  });
+  } as never) as JXG.Angle;
 }
 
-export function createRightAngleMarker(board: any, points: [any, any, any], options: any = {}, theme: ThemeColors) {
+export function createRightAngleMarker(
+  board: JXG.Board,
+  points: [PointLike, PointLike, PointLike],
+  options: RightAngleMarkerOptions = {},
+  theme: ThemeColors,
+): JXGPolygon {
   const [legA, vertex, legB] = points;
   const { size = DEFAULT_RIGHT_ANGLE_RADIUS, ...attrs } = options;
-  const unit = (from: any, to: any) => {
+  const unit = (from: PointLike, to: PointLike) => {
     const dx = to.X() - from.X();
     const dy = to.Y() - from.Y();
     const len = Math.hypot(dx, dy) || 1;
     return { x: dx / len, y: dy / len };
   };
-  const p0 = board.create('point', [() => vertex.X(), () => vertex.Y()], { visible: false });
+  const p0 = board.create('point', [() => vertex.X(), () => vertex.Y()], { visible: false } as never);
   const p1 = board.create('point', [
     () => vertex.X() + unit(vertex, legA).x * size,
     () => vertex.Y() + unit(vertex, legA).y * size,
-  ], { visible: false });
+  ], { visible: false } as never);
   const p2 = board.create('point', [
     () => vertex.X() + (unit(vertex, legA).x + unit(vertex, legB).x) * size,
     () => vertex.Y() + (unit(vertex, legA).y + unit(vertex, legB).y) * size,
-  ], { visible: false });
+  ], { visible: false } as never);
   const p3 = board.create('point', [
     () => vertex.X() + unit(vertex, legB).x * size,
     () => vertex.Y() + unit(vertex, legB).y * size,
-  ], { visible: false });
+  ], { visible: false } as never);
 
   return board.create('polygon', [p0, p1, p2, p3], {
     fillColor: theme.ocre,
@@ -578,10 +731,15 @@ export function createRightAngleMarker(board: any, points: [any, any, any], opti
     vertices: { visible: false },
     borders: { strokeColor: theme.ocre, strokeWidth: 1.5, ...(attrs.highlight === false ? { highlight: false } : {}) },
     ...attrs,
-  });
+  } as never) as unknown as JXGPolygon;
 }
 
-export function createText(board: any, coords: [JXGCoord, JXGCoord, string | (() => string)], options: any = {}, theme: ThemeColors) {
+export function createText(
+  board: JXG.Board,
+  coords: [JXGCoord, JXGCoord, string | (() => string)],
+  options: TextOptions = {},
+  theme: ThemeColors,
+): JXG.Text {
   return board.create('text', coords, {
     fixed: true,
     display: 'html',
@@ -590,16 +748,16 @@ export function createText(board: any, coords: [JXGCoord, JXGCoord, string | (()
     cssDefaultStyle: diagramFontStyle,
     highlightCssDefaultStyle: diagramFontStyle,
     ...options,
-  });
+  } as never) as JXG.Text;
 }
 
 export function createSlider(
-  board: any,
+  board: JXG.Board,
   anchors: [[number, number], [number, number]],
   values: [number, number, number],
-  options: any = {},
+  options: SliderOptions = {},
   theme: ThemeColors,
-) {
+): JXGSlider {
   const { label, ...attributes } = options;
   return board.create('slider', [anchors[0], anchors[1], values], {
     name: '',
@@ -616,10 +774,15 @@ export function createSlider(
       strokeColor: theme.carbon,
       ...label,
     },
-  });
+  } as never) as unknown as JXGSlider;
 }
 
-export function createTicks(board: any, elements: [any, number], options: any = {}, theme: ThemeColors) {
+export function createTicks(
+  board: JXG.Board,
+  elements: [JXG.GeometryElement, number],
+  options: TicksOptions = {},
+  theme: ThemeColors,
+): JXG.Ticks {
   const [support, ticksDistance] = elements;
   const { majorHeight = 10, ...tickOptions } = options;
   return board.create('ticks', [support], {
@@ -632,15 +795,21 @@ export function createTicks(board: any, elements: [any, number], options: any = 
     majorHeight,
     drawLabels: false,
     ...tickOptions,
-  });
+  } as never) as JXG.Ticks;
 }
 
-export function createRightAngle(board: any, points: [any, any, any], options: any = {}, theme: ThemeColors) {
+export function createRightAngle(
+  board: JXG.Board,
+  points: [PointSupport, PointSupport, PointSupport],
+  options: AngleOptions = {},
+  theme: ThemeColors,
+): JXG.Angle {
   return board.create('angle', points, {
     type: 'sectordot',
     size: 20,
     fillColor: theme.carbon,
     strokeColor: theme.carbon,
     ...options,
-  });
+  } as never) as JXG.Angle;
 }
+

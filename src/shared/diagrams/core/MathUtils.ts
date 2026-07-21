@@ -52,6 +52,49 @@ export type DiagramBoard = JXG.Board;
 export type DiagramElement = JXG.GeometryElement;
 export type DiagramElementRegistry = Record<string, unknown>;
 
+export interface PointLike {
+  X(): number;
+  Y(): number;
+  Dist?(other: PointLike): number;
+}
+
+export type JXGCoord = number | (() => number);
+export type PointSupport = JXG.Point | PointLike | string | [JXGCoord, JXGCoord];
+
+export type Evaluatable<T> = T | (() => T);
+
+export interface GeometryOptions {
+  strokeColor?: Evaluatable<string>;
+  strokeWidth?: Evaluatable<number>;
+  strokeOpacity?: Evaluatable<number>;
+  fillColor?: Evaluatable<string>;
+  fillOpacity?: Evaluatable<number>;
+  dash?: Evaluatable<number>;
+  fixed?: boolean;
+  visible?: Evaluatable<boolean>;
+  highlight?: boolean;
+  straightFirst?: boolean;
+  straightLast?: boolean;
+  showInfobox?: boolean;
+  label?: Record<string, unknown>;
+  borders?: GeometryOptions;
+  vertices?: Record<string, unknown>;
+  baseline?: GeometryOptions;
+  highline?: GeometryOptions;
+  [key: string]: unknown;
+}
+
+export interface JXGPolygon extends JXG.Polygon {
+  borders: JXG.Segment[];
+  vertices: JXG.Point[];
+  [key: string]: unknown;
+}
+
+export interface JXGSlider extends JXG.GeometryElement {
+  Value(): number;
+  [key: string]: unknown;
+}
+
 export class StyleManager {
   private isStepFn: (id: string) => boolean;
   private isHLFn: (id: string) => boolean;
@@ -108,8 +151,13 @@ export class StyleManager {
  * perpendicular al segmento p1-p2, orientado hacia fuera del punto opp.
  * Retorna los cuatro vértices del cuadrado [p1, p2, p3, p4] en sentido cíclico.
  */
-export function projectSquareVertices(board: any, p1: any, p2: any, opp: any): [any, any, any, any] {
-  const len = () => p1.Dist(p2);
+export function projectSquareVertices(
+  board: JXG.Board,
+  p1: PointLike,
+  p2: PointLike,
+  opp: PointLike
+): [PointLike, PointLike, JXG.Point, JXG.Point] {
+  const len = () => (p1.Dist ? p1.Dist(p2) : Math.hypot(p2.X() - p1.X(), p2.Y() - p1.Y()));
   const dx = () => p2.X() - p1.X();
   const dy = () => p2.Y() - p1.Y();
   const ndx = () => -dy() / Math.max(len(), 0.001);
@@ -135,12 +183,17 @@ export function projectSquareVertices(board: any, p1: any, p2: any, opp: any): [
  * Crea una cuadrícula interna unitaria de tamaño NxN apoyada sobre los cuatro
  * vértices de un cuadrado proyectado. Retorna los segmentos resultantes.
  */
-export function createSquareGrid(board: any, pts: [any, any, any, any], N: number, theme: ThemeColors): any[] {
+export function createSquareGrid(
+  board: JXG.Board,
+  pts: [PointLike, PointLike, PointLike, PointLike],
+  N: number,
+  theme: ThemeColors
+): JXG.Segment[] {
   const p1 = pts[0];
   const p2 = pts[1];
   const p3 = pts[2];
   const p4 = pts[3];
-  const segments: any[] = [];
+  const segments: JXG.Segment[] = [];
 
   for (let i = 1; i < N; i++) {
     const t = i / N;
@@ -155,7 +208,7 @@ export function createSquareGrid(board: any, pts: [any, any, any, any], N: numbe
     ], { visible: false });
     segments.push(board.create('segment', [ptStart1, ptEnd1], {
       strokeColor: theme.carbon, strokeWidth: 0.5, strokeOpacity: 0.2, fixed: true
-    }));
+    }) as JXG.Segment);
 
     const ptStart2 = board.create('point', [
       () => p1.X() + t * (p4.X() - p1.X()),
@@ -167,7 +220,7 @@ export function createSquareGrid(board: any, pts: [any, any, any, any], N: numbe
     ], { visible: false });
     segments.push(board.create('segment', [ptStart2, ptEnd2], {
       strokeColor: theme.carbon, strokeWidth: 0.5, strokeOpacity: 0.2, fixed: true
-    }));
+    }) as JXG.Segment);
   }
   return segments;
 }
@@ -178,14 +231,14 @@ export function createSquareGrid(board: any, pts: [any, any, any, any], N: numbe
  * evitando las distorsiones de 270 grados en las marcas nativas al cambiar de cuadrante.
  */
 export function createRobustRightAngle(
-  board: any,
-  vertex: any,
-  pBase: any,
-  pAlt: any,
+  board: JXG.Board,
+  vertex: PointLike,
+  pBase: PointLike,
+  pAlt: PointLike,
   size: number,
-  options: any = {},
+  options: GeometryOptions = {},
   theme: ThemeColors
-) {
+): JXG.Polygon {
   const baseDir = () => {
     const dx = pBase.X() - vertex.X();
     const len = Math.abs(dx);
@@ -218,5 +271,6 @@ export function createRobustRightAngle(
   };
 
   const finalOpts = { ...defaultOpts, ...options };
-  return board.create('polygon', [sq0, sq1, sq2, sq3], finalOpts);
+  return board.create('polygon', [sq0, sq1, sq2, sq3], finalOpts) as JXG.Polygon;
 }
+

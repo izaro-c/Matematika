@@ -171,6 +171,7 @@ export interface DiagramVisualStyle {
   /** Altura visual de rayas de congruencia o graduaciones de medida. */
   markHeight?: number;
   labelOffset?: [number, number];
+  labelPosition?: number | string;
   textOffset?: [number, number];
   /** Tamaño tipográfico en píxeles para etiquetas nativas o vinculadas. */
   labelSize?: number;

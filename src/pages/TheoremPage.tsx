@@ -10,7 +10,7 @@ import { ContentCard } from '@/shared/ui/ContentCard';
 import { ContentHeader } from '@/widgets/content/ContentHeader';
 import { ContentBody } from '@/shared/ui/ContentBody';
 import { MaterialPracticoSection } from '@/widgets/content/MaterialPracticoSection';
-import { AplicacionesSection } from '@/shared/ui/AplicacionesSection';
+import { AplicacionesSection } from '@/widgets/content/AplicacionesSection';
 import { SubtleSeparator } from '@/shared/ui/SubtleSeparator';
 import { SectionTitle } from '@/shared/ui/SectionTitle';
 import { useMetadataStore } from '@/features/metadata/MetadataStore';

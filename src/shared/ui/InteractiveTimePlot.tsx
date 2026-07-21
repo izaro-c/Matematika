@@ -1,8 +1,7 @@
 import React, { useMemo } from 'react';
-import type { Mathematician } from '@/entities/content';
 
 interface InteractiveTimePlotProps {
-  nodes: Mathematician[];
+  nodes: Array<{ birthYear?: number }>;
 }
 
 /**

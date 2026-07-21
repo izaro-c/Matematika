@@ -2,7 +2,7 @@ import React from 'react';
 import { Link } from 'wouter';
 import { useGlossaryStore, dictionary } from '@/features/glossary/GlossaryStore';
 import { db } from '@/entities/content';
-import { useProgressStore } from '@/features/progress/UserProgressStore';
+import { useProgressStore } from '@/shared/stores/UserProgressStore';
 import { useMathStore } from '@/shared/lib/MathStoreContext';
 
 interface ConceptLinkProps {

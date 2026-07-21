@@ -4,7 +4,7 @@ import { MDXProvider } from '@mdx-js/react';
 import { db } from '@/entities/content';
 import { useProgressStore } from '@/features/progress/UserProgressStore';
 import { Capitular, BlockTitle, OrnamentalDivider } from '@/widgets/mdx/MDXBlocks';
-import { StudyPlanContext } from '@/app/providers/StudyPlanContext';
+import { StudyPlanContext } from '@/features/progress/context/StudyPlanContext';
 import { GlossaryLink } from '@/shared/ui/GlossaryLink';
 import { publicAsset } from '@/shared/lib/routeHelper';
 

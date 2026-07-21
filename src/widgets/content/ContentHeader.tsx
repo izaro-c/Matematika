@@ -3,7 +3,7 @@ import { Link } from 'wouter';
 import { Breadcrumbs } from '@/shared/ui/Breadcrumbs';
 import type { Crumb } from '@/shared/ui/Breadcrumbs';
 import { ContentTypeBadge } from '@/shared/ui/ContentTypeBadge';
-import { ModelBadgeList } from '@/features/graph/ui/ModelBadge';
+import { ModelBadgeList } from '@/entities/content/ui/ModelBadge';
 import { db } from '@/entities/content';
 
 /**

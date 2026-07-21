@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { useDynamicVarStore } from '@/features/dynamic-vars/DynamicVarStore';
+import { useDynamicVarStore } from '@/shared/stores/DynamicVarStore';
 import { KatexText } from '@/shared/ui/KatexText';
 
 interface DeslizadorEnLineProps {

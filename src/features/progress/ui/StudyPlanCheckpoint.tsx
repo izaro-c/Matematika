@@ -1,6 +1,6 @@
 import React, { useState, useContext } from 'react';
 import { useProgressStore } from '@/features/progress/UserProgressStore';
-import { StudyPlanContext } from '@/app/providers/StudyPlanContext';
+import { StudyPlanContext } from '@/features/progress/context/StudyPlanContext';
 
 interface StudyPlanCheckpointProps {
   id: string;

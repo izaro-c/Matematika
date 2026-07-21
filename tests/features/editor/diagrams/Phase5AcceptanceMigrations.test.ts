@@ -148,12 +148,12 @@ describe('Phase 5 real acceptance migrations', () => {
         },
         {
           "componentId": "CongruenciaALA",
-          "derived": 2,
+          "derived": 0,
           "kinds": {
-            "angle": 6,
             "congruenceMark": 6,
             "dimensionLine": 2,
             "measurement": 2,
+            "nonReflexAngle": 6,
             "polygon": 2,
             "segment": 6,
           },
@@ -167,6 +167,18 @@ describe('Phase 5 real acceptance migrations', () => {
           "points": 6,
           "steps": [],
           "targets": [
+            "A1",
+            "B1",
+            "C1",
+            "A2",
+            "B2",
+            "C2",
+            "anguloA1",
+            "anguloB1",
+            "anguloC1",
+            "anguloB2",
+            "anguloA2",
+            "anguloC2",
             "globalmente-congruentes",
             "lado-ab",
             "angulo-a",
@@ -331,7 +343,7 @@ describe('Phase 5 real acceptance migrations', () => {
     expect(graph.edges).toContainEqual({ sourceId: 'guiaRectangulo', targetId: 'D', relation: 'constraint' });
     expect(model.points.find(point => point.id === 'D')?.attractorIds).toEqual(['guiaRectangulo', 'guiaLadosIguales']);
     const classificationPanel = model.elements.find(element => element.id === 'clasificacion');
-    expect(classificationPanel?.properties).toMatchObject({ anchorMode: 'viewport', viewportPosition: [0.97, 0.03] });
+    expect(classificationPanel?.properties).toMatchObject({ anchorMode: 'viewport', viewportPosition: [0, 0] });
     const [squareRule, rectangleRule, rhombusRule] = classificationPanel?.properties?.textRules ?? [];
     expect(evaluateMathExpression(squareRule.when, expressionVariables(square))).toBe(1);
     const rectangle = withMovedPoint(model, 'D', -3, 2);

@@ -96,7 +96,7 @@ export const ProofStep: React.FC<ProofStepProps> = ({
             className="page-accent-text font-serif italic font-bold text-2xl lg:text-4xl z-10"
             style={{
               fontFamily: 'Georgia, "Playfair Display", serif',
-              textShadow: '1px 1px 0px #FDFBF7, -1px -1px 0px #FDFBF7, 1px -1px 0px #FDFBF7, -1px 1px 0px #FDFBF7'
+              textShadow: '1px 1px 0px var(--theme-lienzo), -1px -1px 0px var(--theme-lienzo), 1px -1px 0px var(--theme-lienzo), -1px 1px 0px var(--theme-lienzo)'
             }}
           >
             {number}

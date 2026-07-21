@@ -3,7 +3,8 @@ import { KatexText } from '@/shared/ui/KatexText';
 import { parseInlineNodes } from '../../core/parser';
 import { InteractivePreviewToken } from './InteractivePreviewToken';
 
-export type EditLinkHandler = (blockId: string, rawMarkup: string, text: string, attrs: Record<string, unknown>, tag: string, event: React.MouseEvent) => void;
+import type { EditLinkHandler } from './previewTypes';
+export type { EditLinkHandler };
 
 export function insertSymbol(textareaId: string, symbol: string) {
   const textarea = document.getElementById(textareaId) as HTMLTextAreaElement | null;

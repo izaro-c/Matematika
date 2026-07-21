@@ -2,7 +2,7 @@ import React from 'react';
 import { Link } from 'wouter';
 import { useGlossaryStore } from '@/features/glossary/GlossaryStore';
 import { db } from '@/entities/content';
-import { useProgressStore } from '@/features/progress/UserProgressStore';
+import { useProgressStore } from '@/shared/stores/UserProgressStore';
 
 interface RefLinkProps {
   targetId: string;

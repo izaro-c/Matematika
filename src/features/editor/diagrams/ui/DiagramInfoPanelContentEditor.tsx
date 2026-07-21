@@ -1,4 +1,4 @@
-import React, { useRef, useEffect, useState } from 'react';
+import React, { useRef, useState } from 'react';
 import { createPortal } from 'react-dom';
 import type { DiagramInfoPanelBlock, DiagramInfoPanelRule, DiagramColorToken } from '@/shared/diagrams/public';
 import type { VisualDiagramModel, VisualElement } from '../model/types';

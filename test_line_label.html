@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/jsxgraph/distrib/jsxgraphcore.js"></script>
+</head>
+<body>
+  <div id="box" class="jxgbox" style="width:500px; height:500px;"></div>
+  <script>
+    var board = JXG.JSXGraph.initBoard('box', {boundingbox: [-5, 5, 5, -5], axis:true});
+    var p1 = board.create('point', [-2, -2]);
+    var p2 = board.create('point', [2, 2]);
+    var l1 = board.create('line', [p1, p2], {
+      name: 'l',
+      withLabel: true,
+      label: { visible: true, position: 'lft' }
+    });
+    
+    // Can we overwrite the coordinates function?
+    l1.label.X = function() { return p1.X() + 0.5 * (p2.X() - p1.X()); };
+    l1.label.Y = function() { return p1.Y() + 0.5 * (p2.Y() - p1.Y()); };
+    board.update();
+    
+    console.log("Coords:", l1.label.coords.usrCoords);
+  </script>
+</body>
+</html>
