@@ -259,11 +259,6 @@ export const BranchLibrary = () => {
             </article>
           );
         })}
-
-        <article className="relative border border-dashed border-carbon/30 bg-carbon/[0.02] flex flex-col items-center justify-center p-10 text-center min-h-[200px] opacity-70 rounded-[2px] shadow-[inset_0_4px_10px_rgba(0,0,0,0.02)] transition-colors hover:bg-carbon/[0.04] cursor-help">
-          <span className="text-4xl text-carbon/40 mb-3 font-serif">+</span>
-          <span className="text-xs uppercase tracking-widest text-carbon/50 font-sans font-bold">Nuevas ramas en expansión</span>
-        </article>
       </div>
     </main>
   );
