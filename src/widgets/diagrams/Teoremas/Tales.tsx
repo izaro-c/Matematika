@@ -1,166 +1,836 @@
-import { useRef } from 'react';
-import { MathBoard } from '@/shared/diagrams/core/MathBoard';
-import {
-  createPoint, createLine, createSegment, createGlider, createPolygon
-} from '@/shared/diagrams/core/MathFactory';
+import { createDiagramSpec, DiagramRenderer } from '@/shared/diagrams/public';
 
-
-
-
-
-export const Tales = () => {
-
-
-  const updatingRef = useRef(false);
-
-
-
-
-  const onInit = (board: any, els: any, theme: any) => {
-      void board; void els; void theme;
-      const C_PRIM = theme.carbon;
-    const C_ACC  = theme.terracota;
-    const C_PAR  = theme.salvia;
-    const C_POL  = theme.pavo;
-
-    const SNAP = 0.5;
-    const A = createPoint(board, [-3, -2], { name: 'A', size: 5, fillColor: C_PRIM, strokeColor: C_PRIM, showInfobox: false, snapToGrid: true, snapSizeX: SNAP, snapSizeY: SNAP }, theme);
-    const B = createPoint(board, [3, -2], { name: 'B', size: 5, fillColor: C_PRIM, strokeColor: C_PRIM, showInfobox: false, snapToGrid: true, snapSizeX: SNAP, snapSizeY: SNAP }, theme);
-    const C = createPoint(board, [4, 3], { name: 'C', size: 5, fillColor: C_PRIM, strokeColor: C_PRIM, showInfobox: false, snapToGrid: true, snapSizeX: SNAP, snapSizeY: SNAP }, theme);
-
-    const segAB = createSegment(board, [A, B], { strokeColor: C_PRIM, strokeWidth: 2 }, theme);
-    const segBC = createSegment(board, [B, C], { strokeColor: C_PAR, strokeWidth: 2.5 }, theme);
-    const segCA = createSegment(board, [C, A], { strokeColor: C_PRIM, strokeWidth: 2 }, theme);
-
-    const poly = createPolygon(board, [A, B, C], {
-      fillColor: C_POL, fillOpacity: 0.06,
-      borders: { visible: false }, vertices: { visible: false }
-    }, theme);
-
-    const lineBC = createLine(board, [B, C], { visible: false }, theme);
-    const lineAB = createLine(board, [A, B], { visible: false }, theme);
-    const lineCA = createLine(board, [C, A], { visible: false }, theme);
-
-    const D = createGlider(board, [-1, -2, segAB], { name: 'D', size: 4, fillColor: C_ACC, strokeColor: C_ACC, showInfobox: false }, theme);
-    const parDE = board.create('parallel', [lineBC, D], { visible: false });
-    const E = board.create('intersection', [parDE, lineCA, 0], { name: 'E', size: 4, fillColor: C_ACC, strokeColor: C_ACC, showInfobox: false });
-
-    const parE_line = board.create('parallel', [lineBC, E], { visible: false });
-    const Dcomp = board.create('intersection', [parE_line, lineAB, 0], { visible: false });
-
-    D.on('drag', () => {
-      if (updatingRef.current) return;
-      updatingRef.current = true;
-      D.setAttribute({ fillColor: C_ACC, strokeColor: C_ACC });
-      updatingRef.current = false;
-    });
-
-    E.on('drag', () => {
-      if (updatingRef.current) return;
-      updatingRef.current = true;
-      const nx = Dcomp.X(), ny = Dcomp.Y();
-      D.moveTo([nx, ny], 0);
-      updatingRef.current = false;
-    });
-
-    const segDE = createSegment(board, [D, E], { strokeColor: C_PAR, strokeWidth: 2.5, dash: 2 }, theme);
-    const segAD = createSegment(board, [A, D], { strokeColor: C_ACC, strokeWidth: 2, dash: 1 }, theme);
-    const segAE = createSegment(board, [A, E], { strokeColor: C_ACC, strokeWidth: 2, dash: 1 }, theme);
-
-    const infoText = board.create('text', [
-      -5.5, 5.5,
-      () => {
-        const dAD = A.Dist(D), dDB = D.Dist(B);
-        const dAE = A.Dist(E), dEC = E.Dist(C);
-        const ratio1 = dAD / Math.max(dDB, 0.001);
-        const ratio2 = dAE / Math.max(dEC, 0.001);
-        const ok = Math.abs(ratio1 - ratio2) < 0.01;
-        return `<div style="font-family: var(--font-serif); color: ${theme.carbon}; line-height:1.5;">
-          <strong style="font-size: 1.1rem;">Teorema de Tales</strong><br/>
-          <small>DE \u2225 BC</small><br/>
-          <span>AD/DB = ${ratio1.toFixed(2)}</span><br/>
-          <span>AE/EC = ${ratio2.toFixed(2)}</span><br/>
-          <strong style="color:${ok ? theme.musgo : theme.granada};">
-            ${ok ? 'AD/DB \u2261 AE/EC' : 'AD/DB \u2260 AE/EC'}
-          </strong>
-        </div>`;
+/* @matematika-diagram-spec:start */
+export const TalesSpec = createDiagramSpec(
+{
+  "version": 2,
+  "renderer": "matematika-diagram-renderer-v2",
+  "title": "Teorema de Tales",
+  "componentId": "teorema-de-tales",
+  "category": "Teoremas",
+  "mode": "simulation",
+  "axis": false,
+  "grid": false,
+  "showLabels": true,
+  "viewport": {
+    "bounds": [
+      -5,
+      5,
+      5,
+      -5
+    ],
+    "home": [
+      -5,
+      5,
+      5,
+      -5
+    ],
+    "minZoom": 0.2,
+    "maxZoom": 12,
+    "padding": 0.16
+  },
+  "layers": [
+    {
+      "id": "geometry",
+      "label": "Geometría",
+      "order": 0,
+      "visible": true,
+      "locked": false
+    },
+    {
+      "id": "controls",
+      "label": "Controles",
+      "order": 1,
+      "visible": true,
+      "locked": false
+    }
+  ],
+  "groups": [],
+  "points": [
+    {
+      "id": "pA",
+      "label": "A",
+      "color": "terracota",
+      "layerId": "geometry",
+      "order": 27000,
+      "visible": true,
+      "locked": false,
+      "groupIds": [],
+      "selection": {
+        "selectable": true,
+        "ariaLabel": "Punto A",
+        "role": "primary"
+      },
+      "target": true,
+      "targetId": "pA",
+      "style": {
+        "pointSize": 7,
+        "highlightPointSize": 10,
+        "preserveColorOnHighlight": true
+      },
+      "x": -3.19,
+      "y": 0.56,
+      "showLabel": true,
+      "fixed": false,
+      "constraint": "free"
+    },
+    {
+      "id": "pB",
+      "label": "B",
+      "color": "terracota",
+      "layerId": "geometry",
+      "order": 28000,
+      "visible": true,
+      "locked": false,
+      "groupIds": [],
+      "selection": {
+        "selectable": true,
+        "ariaLabel": "Punto B",
+        "role": "primary"
+      },
+      "target": true,
+      "targetId": "pB",
+      "style": {
+        "pointSize": 7,
+        "highlightPointSize": 10,
+        "preserveColorOnHighlight": true
+      },
+      "x": 3.98,
+      "y": 0.35,
+      "showLabel": true,
+      "fixed": false,
+      "constraint": "free"
+    },
+    {
+      "id": "pC",
+      "label": "C",
+      "color": "terracota",
+      "layerId": "geometry",
+      "order": 29000,
+      "visible": true,
+      "locked": false,
+      "groupIds": [],
+      "selection": {
+        "selectable": true,
+        "ariaLabel": "Punto C",
+        "role": "primary"
+      },
+      "target": true,
+      "targetId": "pC",
+      "style": {
+        "pointSize": 7,
+        "highlightPointSize": 10,
+        "preserveColorOnHighlight": true
+      },
+      "x": 2.26,
+      "y": 4.29,
+      "showLabel": true,
+      "fixed": false,
+      "constraint": "free"
+    },
+    {
+      "id": "pD",
+      "label": "D",
+      "color": "musgo",
+      "layerId": "geometry",
+      "order": 30000,
+      "visible": true,
+      "locked": false,
+      "groupIds": [],
+      "selection": {
+        "selectable": true,
+        "ariaLabel": "Punto D",
+        "role": "primary"
+      },
+      "target": true,
+      "targetId": "pD",
+      "style": {
+        "pointSize": 7,
+        "highlightPointSize": 10,
+        "preserveColorOnHighlight": true
+      },
+      "x": 1.520059996501662,
+      "y": 0.42204845198530694,
+      "showLabel": true,
+      "fixed": false,
+      "constraint": "glider",
+      "gliderTarget": "segAB"
+    }
+  ],
+  "elements": [
+    {
+      "id": "polygonABC",
+      "label": "Polígono",
+      "color": "salvia",
+      "layerId": "geometry",
+      "order": 3000,
+      "visible": true,
+      "locked": false,
+      "groupIds": [],
+      "selection": {
+        "selectable": true,
+        "ariaLabel": "Polígono",
+        "role": "secondary"
+      },
+      "target": true,
+      "targetId": "polygonABC",
+      "style": {
+        "preserveColorOnHighlight": true
+      },
+      "kind": "polygon",
+      "refs": [
+        "pA",
+        "pB",
+        "pC"
+      ]
+    },
+    {
+      "id": "segAB",
+      "label": "Segmento",
+      "color": "terracota",
+      "layerId": "geometry",
+      "order": 4000,
+      "visible": true,
+      "locked": false,
+      "groupIds": [],
+      "selection": {
+        "selectable": true,
+        "ariaLabel": "Segmento",
+        "role": "secondary"
+      },
+      "target": true,
+      "targetId": "segAB",
+      "style": {
+        "strokeWidth": 2.4,
+        "highlightStrokeWidth": 3,
+        "preserveColorOnHighlight": true
+      },
+      "kind": "segment",
+      "refs": [
+        "pA",
+        "pB"
+      ]
+    },
+    {
+      "id": "segBC",
+      "label": "Segmento",
+      "color": "terracota",
+      "layerId": "geometry",
+      "order": -3000,
+      "visible": true,
+      "locked": false,
+      "groupIds": [],
+      "selection": {
+        "selectable": true,
+        "ariaLabel": "Segmento",
+        "role": "secondary"
+      },
+      "target": true,
+      "targetId": "segBC",
+      "style": {
+        "strokeWidth": 2.4,
+        "highlightStrokeWidth": 3,
+        "preserveColorOnHighlight": true
+      },
+      "kind": "segment",
+      "refs": [
+        "pB",
+        "pC"
+      ]
+    },
+    {
+      "id": "segAC",
+      "label": "Segmento",
+      "color": "terracota",
+      "layerId": "geometry",
+      "order": 6000,
+      "visible": true,
+      "locked": false,
+      "groupIds": [],
+      "selection": {
+        "selectable": true,
+        "ariaLabel": "Segmento",
+        "role": "secondary"
+      },
+      "target": true,
+      "targetId": "segAC",
+      "style": {
+        "strokeWidth": 2.4,
+        "highlightStrokeWidth": 3,
+        "preserveColorOnHighlight": true
+      },
+      "kind": "segment",
+      "refs": [
+        "pA",
+        "pC"
+      ]
+    },
+    {
+      "id": "lineBC",
+      "label": "Recta",
+      "color": "pavo",
+      "layerId": "geometry",
+      "order": -4000,
+      "visible": true,
+      "locked": false,
+      "groupIds": [],
+      "selection": {
+        "selectable": true,
+        "ariaLabel": "Recta",
+        "role": "secondary"
+      },
+      "target": true,
+      "targetId": "lineBC",
+      "style": {
+        "strokeWidth": 1,
+        "highlightStrokeWidth": 3,
+        "preserveColorOnHighlight": true
+      },
+      "kind": "line",
+      "refs": [
+        "pB",
+        "pC"
+      ],
+      "dashed": true
+    },
+    {
+      "id": "parCBD",
+      "label": "Paralela",
+      "color": "pavo",
+      "layerId": "geometry",
+      "order": -5000,
+      "visible": true,
+      "locked": false,
+      "groupIds": [],
+      "selection": {
+        "selectable": true,
+        "ariaLabel": "Paralela",
+        "role": "secondary"
+      },
+      "target": true,
+      "targetId": "parCBD",
+      "style": {
+        "strokeWidth": 1,
+        "highlightStrokeWidth": 3,
+        "preserveColorOnHighlight": true
+      },
+      "kind": "parallel",
+      "refs": [
+        "pC",
+        "pB",
+        "pD"
+      ],
+      "dashed": true
+    },
+    {
+      "id": "intE",
+      "label": "E",
+      "color": "musgo",
+      "layerId": "geometry",
+      "order": 31000,
+      "visible": true,
+      "locked": false,
+      "groupIds": [],
+      "selection": {
+        "selectable": true,
+        "ariaLabel": "Intersección",
+        "role": "secondary"
+      },
+      "target": true,
+      "targetId": "intarCBDsegAC",
+      "style": {
+        "pointSize": 7,
+        "preserveColorOnHighlight": true
+      },
+      "kind": "intersection",
+      "refs": [
+        "parCBD",
+        "segAC"
+      ],
+      "properties": {
+        "restrictToSupports": true
       }
-    ], { fixed: true, anchorX: 'left', anchorY: 'top' });
+    },
+    {
+      "id": "segDE",
+      "label": "Segmento",
+      "color": "musgo",
+      "layerId": "geometry",
+      "order": 12000,
+      "visible": true,
+      "locked": false,
+      "groupIds": [],
+      "selection": {
+        "selectable": true,
+        "ariaLabel": "Segmento",
+        "role": "secondary"
+      },
+      "target": true,
+      "targetId": "segDE",
+      "style": {
+        "strokeWidth": 2.4,
+        "highlightStrokeWidth": 3,
+        "preserveColorOnHighlight": true
+      },
+      "kind": "segment",
+      "refs": [
+        "pD",
+        "intE"
+      ]
+    },
+    {
+      "id": "segAD",
+      "label": "Segmento",
+      "color": "terracota",
+      "layerId": "geometry",
+      "order": -6000,
+      "visible": true,
+      "locked": false,
+      "groupIds": [],
+      "selection": {
+        "selectable": true,
+        "ariaLabel": "Segmento",
+        "role": "secondary"
+      },
+      "target": true,
+      "targetId": "segAD",
+      "style": {
+        "strokeWidth": 2.4,
+        "highlightStrokeWidth": 3,
+        "preserveColorOnHighlight": true
+      },
+      "kind": "segment",
+      "refs": [
+        "pA",
+        "pD"
+      ]
+    },
+    {
+      "id": "segAE",
+      "label": "Segmento",
+      "color": "terracota",
+      "layerId": "geometry",
+      "order": -7000,
+      "visible": true,
+      "locked": false,
+      "groupIds": [],
+      "selection": {
+        "selectable": true,
+        "ariaLabel": "Segmento",
+        "role": "secondary"
+      },
+      "target": true,
+      "targetId": "segAE",
+      "style": {
+        "strokeWidth": 2.4,
+        "highlightStrokeWidth": 3,
+        "preserveColorOnHighlight": true
+      },
+      "kind": "segment",
+      "refs": [
+        "pA",
+        "intE"
+      ]
+    },
+    {
+      "id": "segEC",
+      "label": "Segmento",
+      "color": "terracota",
+      "layerId": "geometry",
+      "order": -8000,
+      "visible": true,
+      "locked": false,
+      "groupIds": [],
+      "selection": {
+        "selectable": true,
+        "ariaLabel": "Segmento",
+        "role": "secondary"
+      },
+      "target": true,
+      "targetId": "segEC",
+      "style": {
+        "strokeWidth": 2.4,
+        "highlightStrokeWidth": 3,
+        "preserveColorOnHighlight": true
+      },
+      "kind": "segment",
+      "refs": [
+        "intE",
+        "pC"
+      ]
+    },
+    {
+      "id": "segDB",
+      "label": "Segmento",
+      "color": "terracota",
+      "layerId": "geometry",
+      "order": -9000,
+      "visible": true,
+      "locked": false,
+      "groupIds": [],
+      "selection": {
+        "selectable": true,
+        "ariaLabel": "Segmento",
+        "role": "secondary"
+      },
+      "target": true,
+      "targetId": "segDB",
+      "style": {
+        "strokeWidth": 2.4,
+        "highlightStrokeWidth": 3,
+        "preserveColorOnHighlight": true
+      },
+      "kind": "segment",
+      "refs": [
+        "pD",
+        "pB"
+      ]
+    },
+    {
+      "id": "label-segDB",
+      "label": "Etiqueta de Segmento",
+      "color": "carbon",
+      "layerId": "geometry",
+      "order": 17000,
+      "visible": true,
+      "locked": false,
+      "groupIds": [],
+      "selection": {
+        "selectable": true,
+        "highlightable": true,
+        "dimOthersOnHighlight": false,
+        "ariaLabel": "Etiqueta de Segmento",
+        "role": "annotation"
+      },
+      "target": false,
+      "style": {
+        "textOffset": [
+          -0.25,
+          -0.3
+        ],
+        "labelSize": 14,
+        "preserveColorOnHighlight": true
+      },
+      "kind": "label",
+      "refs": [
+        "segDB"
+      ],
+      "text": "${segDB.length}$",
+      "properties": {
+        "anchorMode": "reference",
+        "anchorParameter": 0.5
+      },
+      "showLabel": true
+    },
+    {
+      "id": "label-segAD",
+      "label": "Etiqueta de Segmento",
+      "color": "carbon",
+      "layerId": "geometry",
+      "order": 18000,
+      "visible": true,
+      "locked": false,
+      "groupIds": [],
+      "selection": {
+        "selectable": true,
+        "highlightable": true,
+        "dimOthersOnHighlight": false,
+        "ariaLabel": "Etiqueta de Segmento",
+        "role": "annotation"
+      },
+      "target": false,
+      "style": {
+        "textOffset": [
+          -0.25,
+          -0.3
+        ],
+        "labelSize": 14,
+        "preserveColorOnHighlight": true
+      },
+      "kind": "label",
+      "refs": [
+        "segAD"
+      ],
+      "text": "${segAD.length}$",
+      "properties": {
+        "anchorMode": "reference",
+        "anchorParameter": 0.5
+      }
+    },
+    {
+      "id": "label-segAE",
+      "label": "Etiqueta de Segmento",
+      "color": "carbon",
+      "layerId": "geometry",
+      "order": 19000,
+      "visible": true,
+      "locked": false,
+      "groupIds": [],
+      "selection": {
+        "selectable": true,
+        "highlightable": true,
+        "dimOthersOnHighlight": false,
+        "ariaLabel": "Etiqueta de Segmento",
+        "role": "annotation"
+      },
+      "target": false,
+      "style": {
+        "textOffset": [
+          -0.25,
+          0.5
+        ],
+        "labelSize": 14,
+        "preserveColorOnHighlight": true
+      },
+      "kind": "label",
+      "refs": [
+        "segAE"
+      ],
+      "text": "${segAE.length}$",
+      "properties": {
+        "anchorMode": "reference",
+        "anchorParameter": 0.5
+      }
+    },
+    {
+      "id": "label-segEC",
+      "label": "Etiqueta de Segmento",
+      "color": "carbon",
+      "layerId": "geometry",
+      "order": 20000,
+      "visible": true,
+      "locked": false,
+      "groupIds": [],
+      "selection": {
+        "selectable": true,
+        "highlightable": true,
+        "dimOthersOnHighlight": false,
+        "ariaLabel": "Etiqueta de Segmento",
+        "role": "annotation"
+      },
+      "target": false,
+      "style": {
+        "textOffset": [
+          -0.25,
+          0.5
+        ],
+        "labelSize": 14,
+        "preserveColorOnHighlight": true
+      },
+      "kind": "label",
+      "refs": [
+        "segEC"
+      ],
+      "text": "${segEC.length}$",
+      "properties": {
+        "anchorMode": "reference",
+        "anchorParameter": 0.5
+      }
+    },
+    {
+      "id": "infoPanel17",
+      "label": "Panel informativo",
+      "color": "terracota",
+      "layerId": "geometry",
+      "order": 21000,
+      "visible": true,
+      "locked": false,
+      "groupIds": [],
+      "selection": {
+        "selectable": true,
+        "ariaLabel": "Panel informativo",
+        "role": "secondary"
+      },
+      "target": true,
+      "targetId": "infoPanel17",
+      "style": {
+        "preserveColorOnHighlight": true
+      },
+      "kind": "infoPanel",
+      "refs": [],
+      "properties": {
+        "anchorMode": "viewport",
+        "viewportPosition": [
+          0,
+          0
+        ],
+        "infoPanelBlocks": [
+          {
+            "id": "bloque-1",
+            "text": "$\\frac{AD}{DB}= {segAD.length / segDB.length}$",
+            "unit": "u",
+            "rules": []
+          },
+          {
+            "id": "bloque-2",
+            "text": "$\\frac{AE}{EC} = {segAE.length / segEC.length}$",
+            "unit": "u",
+            "rules": []
+          }
+        ],
+        "infoPanelLayout": "stack"
+      }
+    }
+  ],
+  "sliders": [],
+  "steps": [],
+  "constraints": [],
+  "dependencies": [
+    {
+      "sourceId": "pA",
+      "targetId": "polygonABC",
+      "relation": "construction"
+    },
+    {
+      "sourceId": "pB",
+      "targetId": "polygonABC",
+      "relation": "construction"
+    },
+    {
+      "sourceId": "pC",
+      "targetId": "polygonABC",
+      "relation": "construction"
+    },
+    {
+      "sourceId": "pA",
+      "targetId": "segAB",
+      "relation": "construction"
+    },
+    {
+      "sourceId": "pB",
+      "targetId": "segAB",
+      "relation": "construction"
+    },
+    {
+      "sourceId": "pB",
+      "targetId": "segBC",
+      "relation": "construction"
+    },
+    {
+      "sourceId": "pC",
+      "targetId": "segBC",
+      "relation": "construction"
+    },
+    {
+      "sourceId": "pA",
+      "targetId": "segAC",
+      "relation": "construction"
+    },
+    {
+      "sourceId": "pC",
+      "targetId": "segAC",
+      "relation": "construction"
+    },
+    {
+      "sourceId": "pB",
+      "targetId": "lineBC",
+      "relation": "construction"
+    },
+    {
+      "sourceId": "pC",
+      "targetId": "lineBC",
+      "relation": "construction"
+    },
+    {
+      "sourceId": "pC",
+      "targetId": "parCBD",
+      "relation": "construction"
+    },
+    {
+      "sourceId": "pB",
+      "targetId": "parCBD",
+      "relation": "construction"
+    },
+    {
+      "sourceId": "pD",
+      "targetId": "parCBD",
+      "relation": "construction"
+    },
+    {
+      "sourceId": "parCBD",
+      "targetId": "intE",
+      "relation": "construction"
+    },
+    {
+      "sourceId": "segAC",
+      "targetId": "intE",
+      "relation": "construction"
+    },
+    {
+      "sourceId": "pA",
+      "targetId": "segAD",
+      "relation": "construction"
+    },
+    {
+      "sourceId": "pD",
+      "targetId": "segAD",
+      "relation": "construction"
+    },
+    {
+      "sourceId": "pD",
+      "targetId": "segDB",
+      "relation": "construction"
+    },
+    {
+      "sourceId": "pB",
+      "targetId": "segDB",
+      "relation": "construction"
+    },
+    {
+      "sourceId": "segDB",
+      "targetId": "label-segDB",
+      "relation": "construction"
+    },
+    {
+      "sourceId": "segAD",
+      "targetId": "label-segAD",
+      "relation": "construction"
+    },
+    {
+      "sourceId": "segAE",
+      "targetId": "label-segAE",
+      "relation": "construction"
+    },
+    {
+      "sourceId": "segEC",
+      "targetId": "label-segEC",
+      "relation": "construction"
+    },
+    {
+      "sourceId": "pD",
+      "targetId": "segDE",
+      "relation": "construction"
+    },
+    {
+      "sourceId": "intE",
+      "targetId": "segDE",
+      "relation": "construction"
+    },
+    {
+      "sourceId": "pA",
+      "targetId": "segAE",
+      "relation": "construction"
+    },
+    {
+      "sourceId": "intE",
+      "targetId": "segAE",
+      "relation": "construction"
+    },
+    {
+      "sourceId": "intE",
+      "targetId": "segEC",
+      "relation": "construction"
+    },
+    {
+      "sourceId": "pC",
+      "targetId": "segEC",
+      "relation": "construction"
+    }
+  ],
+  "note": "Mueve A, B, C y D",
+  "extensions": {}
+}
+);
+/* @matematika-diagram-spec:end */
 
-    const orientABC = () => (B.X() - A.X()) * (C.Y() - A.Y()) - (B.Y() - A.Y()) * (C.X() - A.X());
-    const initialOrient = orientABC();
-    const lastValid: Record<string, [number, number]> = { A: [A.X(), A.Y()], B: [B.X(), B.Y()], C: [C.X(), C.Y()] };
-    [A, B, C].forEach((p: any, idx: number) => {
-      const name = String.fromCharCode(65 + idx);
-      p.on('drag', () => {
-        const cur = orientABC();
-        if (Math.abs(cur) < 0.01 || (initialOrient > 0.01 && cur < -0.01) || (initialOrient < -0.01 && cur > 0.01)) {
-          p.moveTo([lastValid[name][0], lastValid[name][1]], 0);
-        } else {
-          lastValid[name][0] = p.X();
-          lastValid[name][1] = p.Y();
-        }
-      });
-    });
-
-      // Registrar elementos para interactividad y auditoría
-      els.A = A;
-        els.B = B;
-        els.C = C;
-        els.D = D;
-        els.E = E;
-        els.poly = poly;
-        els.segAB = segAB;
-        els.segBC = segBC;
-        els.segCA = segCA;
-        els.segDE = segDE;
-        els.segAD = segAD;
-        els.segAE = segAE;
-        els.infoText = infoText;
-    };;
-
-  const onUpdate = (board: any, els: any, theme: any, isStep: any, isHL: any) => {
-      const isHighlight = isHL;
-      void board; void els; void theme; void isStep; void isHL; void isHighlight;
-      const { A, B, C, D, E, poly, segAB, segBC, segCA, segDE, segAD, segAE } = els;
-      const hRecta = isHighlight('recta-de');
-    const hTri = isHighlight('triangulo-abc');
-    const hSegD = isHighlight('segmento-ad');
-    const hSegE = isHighlight('segmento-ae');
-    const hProp = isHighlight('proporcion');
-    const showAll = !hRecta && !hTri && !hSegD && !hSegE && !hProp;
-
-    const dim = (active: boolean) => active || showAll ? 1 : 0.15;
-
-    segBC.setAttribute({ strokeOpacity: dim(hRecta), strokeWidth: hRecta ? 4 : 2.5 });
-    segDE.setAttribute({ strokeOpacity: dim(hRecta), strokeWidth: hRecta ? 4 : 2.5 });
-
-    segAB.setAttribute({ strokeOpacity: dim(showAll) });
-    segCA.setAttribute({ strokeOpacity: dim(showAll) });
-    segAD.setAttribute({ strokeOpacity: dim(hSegD || hProp || showAll), strokeWidth: hSegD ? 3 : 2 });
-    segAE.setAttribute({ strokeOpacity: dim(hSegE || hProp || showAll), strokeWidth: hSegE ? 3 : 2 });
-
-    [A, B, C].forEach((p: any) => p.setAttribute({ strokeOpacity: dim(showAll), fillOpacity: dim(showAll) }));
-    [D, E].forEach((p: any) => p.setAttribute({
-      strokeOpacity: dim(hRecta || hSegD || hSegE || hProp || showAll),
-      fillOpacity: dim(hRecta || hSegD || hSegE || hProp || showAll),
-      size: (hSegD || hSegE) ? 6 : 4,
-      fillColor: hTri ? theme.terracota : theme.carbon
-    }));
-    poly.setAttribute({ fillOpacity: hTri ? 0.18 : 0.06 });
-    };;
-
-  return (
-    <MathBoard
-      boundingbox={[-6, 6, 6, -5]}
-      axis={false}
-      grid={false}
-      onInit={onInit}
-      onUpdate={onUpdate}
-    >
-      <div className="absolute top-2 left-3 z-10 text-xs font-serif italic text-pizarra/50">
-        Arrastra <span className="font-bold not-italic text-terracota">D</span> o <span className="font-bold not-italic text-terracota">E</span>
-      </div>
-    </MathBoard>
-  );
-};
+export const Tales = () => <DiagramRenderer spec={TalesSpec} />;

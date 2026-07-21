@@ -5,7 +5,7 @@ export const DemoAngulosOpuestosSpec = createDiagramSpec(
 {
   "version": 2,
   "renderer": "matematika-diagram-renderer-v2",
-  "title": "Demostración de los ángulos opuestos por el vértice",
+  "title": "Ángulos opuestos",
   "componentId": "demo-angulos-opuestos",
   "category": "Demostraciones",
   "mode": "simulation",
@@ -184,8 +184,8 @@ export const DemoAngulosOpuestosSpec = createDiagramSpec(
         "highlightPointSize": 10,
         "preserveColorOnHighlight": true
       },
-      "x": 3.2,
-      "y": 1.4,
+      "x": 0.25,
+      "y": 2.75,
       "showLabel": true,
       "fixed": false,
       "constraint": "free",
@@ -212,8 +212,8 @@ export const DemoAngulosOpuestosSpec = createDiagramSpec(
         "highlightPointSize": 10,
         "preserveColorOnHighlight": true
       },
-      "x": -1.7,
-      "y": 2.8,
+      "x": -4,
+      "y": 1.25,
       "showLabel": true,
       "fixed": false,
       "constraint": "free",
@@ -286,8 +286,8 @@ export const DemoAngulosOpuestosSpec = createDiagramSpec(
   "elements": [
     {
       "id": "lineL",
-      "label": "Recta l",
-      "color": "carbon",
+      "label": "$l$",
+      "color": "granada",
       "layerId": "geometry",
       "order": 1070,
       "visible": true,
@@ -309,12 +309,13 @@ export const DemoAngulosOpuestosSpec = createDiagramSpec(
       "refs": [
         "A",
         "Ap"
-      ]
+      ],
+      "showLabel": true
     },
     {
       "id": "lineM",
-      "label": "Recta m",
-      "color": "carbon",
+      "label": "$m$",
+      "color": "pizarra",
       "layerId": "geometry",
       "order": 1080,
       "visible": true,
@@ -336,12 +337,13 @@ export const DemoAngulosOpuestosSpec = createDiagramSpec(
       "refs": [
         "B",
         "Bp"
-      ]
+      ],
+      "showLabel": true
     },
     {
       "id": "angle1",
       "label": "α",
-      "color": "granada",
+      "color": "pavo",
       "layerId": "geometry",
       "order": 1090,
       "visible": true,
@@ -360,7 +362,7 @@ export const DemoAngulosOpuestosSpec = createDiagramSpec(
       "targetId": "angle1",
       "style": {
         "fillOpacity": 0.28,
-        "angleRadius": 0.75,
+        "angleRadius": 1,
         "preserveColorOnHighlight": true
       },
       "kind": "nonReflexAngle",
@@ -373,7 +375,7 @@ export const DemoAngulosOpuestosSpec = createDiagramSpec(
     {
       "id": "angle2",
       "label": "β",
-      "color": "pizarra",
+      "color": "musgo",
       "layerId": "geometry",
       "order": 1100,
       "visible": true,
@@ -393,7 +395,7 @@ export const DemoAngulosOpuestosSpec = createDiagramSpec(
       "targetId": "angle2",
       "style": {
         "fillOpacity": 0.2,
-        "angleRadius": 0.58,
+        "angleRadius": 0.8,
         "preserveColorOnHighlight": true
       },
       "kind": "nonReflexAngle",
@@ -406,7 +408,7 @@ export const DemoAngulosOpuestosSpec = createDiagramSpec(
     {
       "id": "angle3",
       "label": "α'",
-      "color": "granada",
+      "color": "pavo",
       "layerId": "geometry",
       "order": 1110,
       "visible": true,
@@ -425,7 +427,7 @@ export const DemoAngulosOpuestosSpec = createDiagramSpec(
       "targetId": "angle3",
       "style": {
         "fillOpacity": 0.28,
-        "angleRadius": 0.75,
+        "angleRadius": 1,
         "preserveColorOnHighlight": true
       },
       "kind": "nonReflexAngle",
@@ -438,7 +440,7 @@ export const DemoAngulosOpuestosSpec = createDiagramSpec(
     {
       "id": "angle4",
       "label": "β'",
-      "color": "pizarra",
+      "color": "musgo",
       "layerId": "geometry",
       "order": 1120,
       "visible": true,
@@ -455,7 +457,7 @@ export const DemoAngulosOpuestosSpec = createDiagramSpec(
       "targetId": "angle4",
       "style": {
         "fillOpacity": 0.2,
-        "angleRadius": 0.58,
+        "angleRadius": 0.8,
         "preserveColorOnHighlight": true
       },
       "kind": "nonReflexAngle",
@@ -464,36 +466,6 @@ export const DemoAngulosOpuestosSpec = createDiagramSpec(
         "O",
         "A"
       ]
-    },
-    {
-      "id": "oppositeInfo",
-      "label": "Pares opuestos",
-      "color": "granada",
-      "layerId": "annotations",
-      "order": 1130,
-      "visible": true,
-      "locked": false,
-      "groupIds": [],
-      "selection": {
-        "selectable": true,
-        "ariaLabel": "Pares opuestos",
-        "role": "annotation"
-      },
-      "target": false,
-      "style": {
-        "preserveColorOnHighlight": true
-      },
-      "kind": "infoPanel",
-      "refs": [],
-      "text": "α = α' y β = β' para cualquier inclinación de l y m.",
-      "properties": {
-        "title": "Pares opuestos",
-        "anchorMode": "viewport",
-        "viewportPosition": [
-          0.98,
-          0.03
-        ]
-      }
     }
   ],
   "sliders": [],
@@ -509,7 +481,8 @@ export const DemoAngulosOpuestosSpec = createDiagramSpec(
         "angle2",
         "angle3",
         "angle4",
-        "oppositeInfo"
+        "A",
+        "B"
       ],
       "durationMs": 1800,
       "objectStates": {
@@ -543,7 +516,12 @@ export const DemoAngulosOpuestosSpec = createDiagramSpec(
           "emphasis": "none",
           "interactive": true
         },
-        "oppositeInfo": {
+        "A": {
+          "visible": true,
+          "emphasis": "none",
+          "interactive": true
+        },
+        "B": {
           "visible": true,
           "emphasis": "none",
           "interactive": true
@@ -561,7 +539,8 @@ export const DemoAngulosOpuestosSpec = createDiagramSpec(
         "angle2",
         "angle3",
         "angle4",
-        "oppositeInfo"
+        "A",
+        "B"
       ],
       "durationMs": 1800,
       "objectStates": {
@@ -595,7 +574,12 @@ export const DemoAngulosOpuestosSpec = createDiagramSpec(
           "emphasis": "none",
           "interactive": true
         },
-        "oppositeInfo": {
+        "A": {
+          "visible": true,
+          "emphasis": "none",
+          "interactive": true
+        },
+        "B": {
           "visible": true,
           "emphasis": "none",
           "interactive": true
@@ -613,7 +597,8 @@ export const DemoAngulosOpuestosSpec = createDiagramSpec(
         "angle2",
         "angle3",
         "angle4",
-        "oppositeInfo"
+        "A",
+        "B"
       ],
       "durationMs": 1800,
       "objectStates": {
@@ -647,7 +632,12 @@ export const DemoAngulosOpuestosSpec = createDiagramSpec(
           "emphasis": "none",
           "interactive": true
         },
-        "oppositeInfo": {
+        "A": {
+          "visible": true,
+          "emphasis": "none",
+          "interactive": true
+        },
+        "B": {
           "visible": true,
           "emphasis": "none",
           "interactive": true
@@ -665,7 +655,8 @@ export const DemoAngulosOpuestosSpec = createDiagramSpec(
         "angle2",
         "angle3",
         "angle4",
-        "oppositeInfo"
+        "A",
+        "B"
       ],
       "durationMs": 1800,
       "objectStates": {
@@ -699,7 +690,12 @@ export const DemoAngulosOpuestosSpec = createDiagramSpec(
           "emphasis": "none",
           "interactive": true
         },
-        "oppositeInfo": {
+        "A": {
+          "visible": true,
+          "emphasis": "none",
+          "interactive": true
+        },
+        "B": {
           "visible": true,
           "emphasis": "none",
           "interactive": true
@@ -717,7 +713,8 @@ export const DemoAngulosOpuestosSpec = createDiagramSpec(
         "angle2",
         "angle3",
         "angle4",
-        "oppositeInfo"
+        "A",
+        "B"
       ],
       "durationMs": 1800,
       "objectStates": {
@@ -751,7 +748,12 @@ export const DemoAngulosOpuestosSpec = createDiagramSpec(
           "emphasis": "primary",
           "interactive": true
         },
-        "oppositeInfo": {
+        "A": {
+          "visible": true,
+          "emphasis": "none",
+          "interactive": true
+        },
+        "B": {
           "visible": true,
           "emphasis": "none",
           "interactive": true
@@ -771,7 +773,7 @@ export const DemoAngulosOpuestosSpec = createDiagramSpec(
       "relation": "expression"
     }
   ],
-  "note": "Avanza por los cinco pasos y mueve A o B para comprobar que el argumento no depende de una figura particular.",
+  "note": "Mueve A y B",
   "extensions": {}
 }
 );

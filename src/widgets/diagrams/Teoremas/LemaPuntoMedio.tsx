@@ -5,7 +5,7 @@ export const LemaPuntoMedioSpec = createDiagramSpec(
 {
   "version": 2,
   "renderer": "matematika-diagram-renderer-v2",
-  "title": "Existencia y unicidad del punto medio",
+  "title": "Punto medio",
   "componentId": "lema-punto-medio",
   "category": "Lemas",
   "mode": "simulation",
@@ -13,10 +13,10 @@ export const LemaPuntoMedioSpec = createDiagramSpec(
   "grid": false,
   "viewport": {
     "bounds": [
-      -5,
-      3.5,
-      5,
-      -3.5
+      -5.053339646140849,
+      7.214733335572514,
+      4.9356899909801175,
+      -8.3237572110601
     ],
     "home": [
       -5,
@@ -260,7 +260,7 @@ export const LemaPuntoMedioSpec = createDiagramSpec(
       "label": "AM",
       "color": "pizarra",
       "layerId": "geometry",
-      "order": 1560,
+      "order": -2000,
       "visible": true,
       "locked": false,
       "groupIds": [
@@ -284,8 +284,9 @@ export const LemaPuntoMedioSpec = createDiagramSpec(
       ],
       "text": "AM = {value}",
       "properties": {
+        "unit": "u",
         "precision": 2,
-        "offset": 0.45
+        "offset": 0
       }
     },
     {
@@ -293,7 +294,7 @@ export const LemaPuntoMedioSpec = createDiagramSpec(
       "label": "MB",
       "color": "pizarra",
       "layerId": "geometry",
-      "order": 1570,
+      "order": -1000,
       "visible": true,
       "locked": false,
       "groupIds": [
@@ -317,15 +318,16 @@ export const LemaPuntoMedioSpec = createDiagramSpec(
       ],
       "text": "MB = {value}",
       "properties": {
+        "unit": "u",
         "precision": 2,
-        "offset": -0.45
+        "offset": 0
       }
     }
   ],
   "sliders": [],
   "steps": [],
   "dependencies": [],
-  "note": "Mueve A o B. M se recalcula como (A + B)/2 y las lecturas confirman AM = MB.",
+  "note": "Mueve A o B",
   "extensions": {}
 }
 );
