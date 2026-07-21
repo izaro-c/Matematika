@@ -1,5 +1,5 @@
 import { Redirect, Route, Switch } from "wouter";
-import { MathProvider } from "@/app/providers/MathStoreContext";
+import { MathProvider } from "@/shared/lib/MathStoreContext";
 import { Suspense, lazy } from 'react';
 import { BiographyLayout } from "@/widgets/layouts/BiographyLayout";
 import { Logo } from "@/shared/ui/Logo";

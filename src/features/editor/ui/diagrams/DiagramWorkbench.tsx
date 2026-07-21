@@ -83,14 +83,14 @@ interface ConfirmWorkbenchOptions {
   blocked: boolean;
   save: () => Promise<boolean>;
   reference: EditorDiagramReference;
-  confirm: (spec: EditorDiagramReference) => boolean | void | Promise<boolean | void>;
+  onConfirm: (spec: EditorDiagramReference) => boolean | void | Promise<boolean | void>;
   close: () => void;
 }
 
-async function confirmWorkbench({ shouldSave, blocked, save, reference, confirm, close }: ConfirmWorkbenchOptions): Promise<void> {
+async function confirmWorkbench({ shouldSave, blocked, save, reference, onConfirm, close }: ConfirmWorkbenchOptions): Promise<void> {
   if (shouldSave && !await save()) return;
   if (!shouldSave && blocked) return;
-  if (await confirm(reference) === false) return;
+  if (await onConfirm(reference) === false) return;
   close();
 }
 
@@ -289,7 +289,7 @@ export const DiagramWorkbenchCore: React.FC<DiagramWorkbenchCoreProps> = ({
       mode: model.mode,
       visualModel: model as unknown as Record<string, unknown>,
     },
-    confirm: onConfirm,
+    onConfirm,
     close: onClose,
   });
 

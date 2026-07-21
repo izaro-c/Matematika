@@ -143,7 +143,7 @@ export const AngulosOpuestosSpec = createDiagramSpec(
       "label": "O",
       "color": "carbon",
       "layerId": "geometry",
-      "order": 900,
+      "order": 6000,
       "visible": true,
       "locked": false,
       "groupIds": [],
@@ -169,7 +169,7 @@ export const AngulosOpuestosSpec = createDiagramSpec(
       "label": "A",
       "color": "terracota",
       "layerId": "geometry",
-      "order": 910,
+      "order": 2000,
       "visible": true,
       "locked": false,
       "groupIds": [],
@@ -197,7 +197,7 @@ export const AngulosOpuestosSpec = createDiagramSpec(
       "label": "B",
       "color": "pizarra",
       "layerId": "geometry",
-      "order": 920,
+      "order": 4000,
       "visible": true,
       "locked": false,
       "groupIds": [],
@@ -225,7 +225,7 @@ export const AngulosOpuestosSpec = createDiagramSpec(
       "label": "A'",
       "color": "terracota",
       "layerId": "geometry",
-      "order": 930,
+      "order": 3000,
       "visible": true,
       "locked": false,
       "groupIds": [],
@@ -256,7 +256,7 @@ export const AngulosOpuestosSpec = createDiagramSpec(
       "label": "B'",
       "color": "pizarra",
       "layerId": "geometry",
-      "order": 940,
+      "order": 5000,
       "visible": true,
       "locked": false,
       "groupIds": [],
@@ -464,36 +464,6 @@ export const AngulosOpuestosSpec = createDiagramSpec(
         "O",
         "A"
       ]
-    },
-    {
-      "id": "oppositeInfo",
-      "label": "Pares opuestos",
-      "color": "terracota",
-      "layerId": "annotations",
-      "order": 1010,
-      "visible": true,
-      "locked": false,
-      "groupIds": [],
-      "selection": {
-        "selectable": true,
-        "ariaLabel": "Pares opuestos",
-        "role": "annotation"
-      },
-      "target": false,
-      "style": {
-        "preserveColorOnHighlight": true
-      },
-      "kind": "infoPanel",
-      "refs": [],
-      "text": "α = α' y β = β' para cualquier inclinación de l y m.",
-      "properties": {
-        "title": "Pares opuestos",
-        "anchorMode": "viewport",
-        "viewportPosition": [
-          0.98,
-          0.03
-        ]
-      }
     }
   ],
   "sliders": [],
@@ -510,7 +480,7 @@ export const AngulosOpuestosSpec = createDiagramSpec(
       "relation": "expression"
     }
   ],
-  "note": "Mueve A o B para girar las rectas; cada par de sectores del mismo color conserva su medida.",
+  "note": "Mueve A o B para girar las rectas",
   "extensions": {}
 }
 );

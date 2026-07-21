@@ -1,23 +1,23 @@
 export const Colors = {
   palette: {
-    primary: '#3b82f6', // blue-500
-    secondary: '#10b981', // green-500
-    tertiary: '#f59e0b', // amber-500
-    text: '#1f2937', // gray-800
-    background: '#f9fafb', // gray-50
+    primary: 'var(--theme-pavo)',
+    secondary: 'var(--theme-musgo)',
+    tertiary: 'var(--theme-ocre)',
+    text: 'var(--theme-carbon)',
+    background: 'var(--theme-lienzo)',
   },
   point: {
     size: 3,
-    fillColor: '#3b82f6',
-    strokeColor: '#3b82f6',
+    fillColor: 'var(--theme-pavo)',
+    strokeColor: 'var(--theme-pavo)',
   },
   line: {
     strokeWidth: 2,
-    strokeColor: '#3b82f6',
+    strokeColor: 'var(--theme-pavo)',
   },
   angle: {
-    fillColor: '#10b981',
-    strokeColor: '#10b981',
+    fillColor: 'var(--theme-musgo)',
+    strokeColor: 'var(--theme-musgo)',
     fillOpacity: 0.2,
   }
 };

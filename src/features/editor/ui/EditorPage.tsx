@@ -1,24 +1,21 @@
 import React, { useEffect, useMemo, useState } from 'react';
 import { useLocation } from 'wouter';
-import { useNavigationStore } from '@/features/search/NavigationStore';
 import { useEditorCore } from '../core/useEditorCore';
 import { SemanticLinker } from './components/SemanticLinker';
 import { DiagramWorkbench, type DiagramWorkbenchMode } from './diagrams/DiagramWorkbench';
 import { DiagramRewriteDialog } from '../diagrams/ui/DiagramRewriteDialog';
 import type { EditorDiagramReference } from '../core/editorTypes';
-import { approveDiffReview, buildDiffReview, isDiffReviewStale, type DiffReview } from '../ux/diffReview';
 import { buildEditorSafetyPresentation } from '../ux/safetyPresentation';
 import { useDiagramUsages } from '../diagrams/hooks/useDiagramUsages';
 import { usePageDiagramTargets } from '../diagrams/hooks/usePageDiagramTargets';
 import { PublishedRuntimePreview } from './preview/PublishedRuntimePreview';
 import { CreatePageDialog } from './create/CreatePageDialog';
-import {
-  readEditorWorkspacePreferences,
-  recordRecentPath,
-  toggleFavoritePath,
-  writeEditorWorkspacePreferences,
-  type EditorWorkspacePreferences,
-} from '../navigation/editorNavigationModel';
+
+// Hooks extraídos y controladores
+import { useEditorNavigationFlow } from './hooks/useEditorNavigationFlow';
+import { useUnsavedChangesGuard } from './hooks/useUnsavedChangesGuard';
+import { EditorDiffController, reviewDiffForDocument } from './diff/EditorDiffController';
+import type { DiffReview } from '../ux/diffReview';
 
 // Componentes estructurales y paneles
 import { EditorShell } from './EditorShell';
@@ -29,10 +26,16 @@ import { CodeEditorPanel } from './panels/CodeEditorPanel';
 import { MetadataPanel } from './panels/MetadataPanel';
 import { DiagramSourcePanel } from './panels/DiagramSourcePanel';
 import { SafetySummary } from './safety/SafetySummary';
-import { DiffReviewPanel } from './diff/DiffReviewPanel';
 import { UnsavedChangesDialog } from './safety/UnsavedChangesDialog';
 import { EditorDiagnosticsPanel } from './panels/EditorDiagnosticsPanel';
-import { buildPageConnectionSummary, buildPageDiagramLinks, getDiagramWorkbenchMode, getInlineDiagramTargets, getPreviewPath, mergeDiagramTargets } from './editorPageModel';
+import {
+  buildPageConnectionSummary,
+  buildPageDiagramLinks,
+  getDiagramWorkbenchMode,
+  getInlineDiagramTargets,
+  getPreviewPath,
+  mergeDiagramTargets,
+} from './editorPageModel';
 
 function diagramComponentName(path: string): string {
   const fileName = path.split('/').pop()?.replace(/\.tsx$/, '') ?? 'DiagramaInteractivo';
@@ -81,18 +84,54 @@ export const EditorPage: React.FC = () => {
     compatibilityReasons,
     canMutateVisualStructure,
     canEditVisualMetadata,
-    persistenceLabel
+    persistenceLabel,
   } = useEditorCore();
 
   const isReadOnly = compatibility === 'read-only';
+  const hasLocalChanges = dirtyState !== 'clean' || rawBody !== baseSource;
+  const isDiagramFile = currentFile?.endsWith('.tsx') ?? false;
+  const currentResource = files.find(file => file.path === currentFile);
 
-  const [workspace, setWorkspace] = useState<EditorWorkspacePreferences>(() => readEditorWorkspacePreferences(window.localStorage));
-  const [isSidebarOpen, setIsSidebarOpen] = useState(() => window.innerWidth >= 768);
-  const [isInspectorOpen, setIsInspectorOpen] = useState(() => window.innerWidth >= 1100);
-  const [isDiagnosticsOpen, setIsDiagnosticsOpen] = useState(false);
+  const [, setLocation] = useLocation();
+
+  // 1. Guarda de cambios no guardados y diálogos (instanciada primero para proveer setPendingFileNavigation)
+  const {
+    pendingFileNavigation,
+    setPendingFileNavigation,
+    continuePendingNavigation,
+    cancelPendingNavigation,
+  } = useUnsavedChangesGuard({
+    hasLocalChanges,
+    openFile,
+    setLocation,
+  });
+
+  // 2. Flujo de navegación de pestañas y sincronización de URL / workspace
+  const {
+    workspace,
+    setWorkspace,
+    isSidebarOpen,
+    setIsSidebarOpen,
+    isInspectorOpen,
+    setIsInspectorOpen,
+    isDiagnosticsOpen,
+    setIsDiagnosticsOpen,
+    isDark,
+    toggleSearch,
+    openFileSafely,
+    toggleFavorite,
+  } = useEditorNavigationFlow({
+    files,
+    currentFile,
+    openFile,
+    loadFileList,
+    hasLocalChanges,
+    setPendingFileNavigation,
+  });
+
+  // Estado local para edición visual / diff review / modales
   const [editingBlockId, setEditingBlockId] = useState<string | null>(null);
   const [diffReview, setDiffReview] = useState<DiffReview | null>(null);
-  const [pendingFileNavigation, setPendingFileNavigation] = useState<string | null>(null);
   const [focusRange, setFocusRange] = useState<{ start: number; end: number } | undefined>(undefined);
   const [coordinatedView, setCoordinatedView] = useState(false);
   const [previewOpen, setPreviewOpen] = useState(false);
@@ -113,7 +152,7 @@ export const EditorPage: React.FC = () => {
     blockId: '',
     selectedText: '',
     selectionStart: 0,
-    selectionEnd: 0
+    selectionEnd: 0,
   });
   const [linkerPosition, setLinkerPosition] = useState({ top: 0, left: 0 });
 
@@ -124,49 +163,6 @@ export const EditorPage: React.FC = () => {
   const [activeDiagramBlockId, setActiveDiagramBlockId] = useState<string | null>(null);
   const [, setActiveDiagramIndex] = useState<number | null>(null);
 
-  const [, setLocation] = useLocation();
-  const { toggleSearch } = useNavigationStore();
-  const [isDark, setIsDark] = useState(document.documentElement.classList.contains('dark'));
-
-  // Sincronizar el modo oscuro mediante MutationObserver
-  useEffect(() => {
-    const observer = new MutationObserver(() => {
-      setIsDark(document.documentElement.classList.contains('dark'));
-    });
-    observer.observe(document.documentElement, { attributes: true, attributeFilter: ['class'] });
-    return () => observer.disconnect();
-  }, []);
-
-  // Escuchar evento personalizado de búsqueda para abrir archivos de forma reactiva e inmediata
-  useEffect(() => {
-    const handleOpenConcept = (e: Event) => {
-      const customEvent = e as CustomEvent<{ href: string }>;
-      const queryHref = customEvent.detail.href;
-      if (queryHref && files.length > 0) {
-        const slug = queryHref.split('/').pop()?.toLowerCase();
-        const matchedFile = files.find(f => {
-          const fileSlug = f.path.split('/').pop()?.replace('.mdx', '').toLowerCase();
-          return fileSlug === slug;
-        });
-        if (matchedFile) {
-          openFile(matchedFile.path);
-        }
-      }
-    };
-    window.addEventListener('editor-open-concept', handleOpenConcept);
-    return () => window.removeEventListener('editor-open-concept', handleOpenConcept);
-  }, [files, openFile]);
-
-  useEffect(() => {
-    loadFileList();
-  }, [loadFileList]);
-
-  useEffect(() => {
-    writeEditorWorkspacePreferences(workspace, window.localStorage);
-  }, [workspace]);
-
-  const isDiagramFile = currentFile?.endsWith('.tsx') ?? false;
-  const currentResource = files.find(file => file.path === currentFile);
   const diagramUsageLookup = useDiagramUsages(isDiagramFile ? currentFile : null, files);
 
   const handleMetadataChange = (key: string, value: any) => {
@@ -185,58 +181,47 @@ export const EditorPage: React.FC = () => {
     // La metadata visual sigue bloqueada por política lossless; se mantiene sin API nativa genérica.
   };
 
-  const hasLocalChanges = dirtyState !== 'clean' || rawBody !== baseSource;
   const canReviewDiff = Boolean(currentFile?.endsWith('.mdx') && rawBody !== baseSource);
   const canSaveDraft = Boolean(currentFile && hasLocalChanges && baseVersion);
-  const safetyPresentation = useMemo(() => buildEditorSafetyPresentation({
-    currentFile,
-    compatibility,
-    compatibilityReasons,
-    persistenceStatus,
-    validation,
-    editorMode,
-    isDiagramFile,
-  }), [compatibility, compatibilityReasons, currentFile, editorMode, isDiagramFile, persistenceStatus, validation]);
+  const safetyPresentation = useMemo(
+    () =>
+      buildEditorSafetyPresentation({
+        currentFile,
+        compatibility,
+        compatibilityReasons,
+        persistenceStatus,
+        validation,
+        editorMode,
+        isDiagramFile,
+      }),
+    [compatibility, compatibilityReasons, currentFile, editorMode, isDiagramFile, persistenceStatus, validation],
+  );
 
-  useEffect(() => {
-    const onBeforeUnload = (event: BeforeUnloadEvent) => {
-      if (!hasLocalChanges) return;
-      event.preventDefault();
-      event.returnValue = '';
-    };
-    window.addEventListener('beforeunload', onBeforeUnload);
-    return () => window.removeEventListener('beforeunload', onBeforeUnload);
-  }, [hasLocalChanges]);
+  const reviewCurrentDiff = () => {
+    reviewDiffForDocument(
+      {
+        currentFile,
+        baseSource,
+        rawBody,
+        localRevision,
+        baseVersion,
+        compatibility,
+        editorMode,
+        coordinatedView,
+        getExpectedDiffRanges,
+        saveCurrentFile,
+      },
+      setDiffReview,
+    );
+  };
 
-  // Interceptar clicks globales para proteger la navegación interna (wouter)
-  useEffect(() => {
-    const handleGlobalClick = (event: MouseEvent) => {
-      if (!hasLocalChanges) return;
-      const target = event.target as HTMLElement;
-      const anchor = target.closest('a');
-      if (anchor) {
-        const href = anchor.getAttribute('href');
-        if (href) {
-          // Si es una ruta interna o relativa:
-          if (href.startsWith('/') || href.startsWith('#') || href.includes(window.location.host)) {
-            event.preventDefault();
-            event.stopPropagation();
-            setPendingFileNavigation(href);
-          }
-        }
-      }
-    };
-    window.addEventListener('click', handleGlobalClick, true);
-    return () => window.removeEventListener('click', handleGlobalClick, true);
-  }, [hasLocalChanges]);
-
-  // Accesos rápidos de teclado (shortcuts) y tecla Escape
+  // Shortcuts de teclado y tecla Escape
   useEffect(() => {
     const handleKeyDown = (event: KeyboardEvent) => {
       if (event.key === 'Escape') {
         if (pendingFileNavigation) {
           event.preventDefault();
-          setPendingFileNavigation(null);
+          cancelPendingNavigation();
         }
         if (diffReview && !saving) {
           event.preventDefault();
@@ -280,67 +265,20 @@ export const EditorPage: React.FC = () => {
 
     window.addEventListener('keydown', handleKeyDown, true);
     return () => window.removeEventListener('keydown', handleKeyDown, true);
-  }, [currentFile, isDiagramFile, editorMode, canReviewDiff, pendingFileNavigation, diffReview, saving, toggleEditorMode]);
-
-  const openFileSafely = (path: string) => {
-    if (currentFile && currentFile !== path && hasLocalChanges) {
-      setPendingFileNavigation(path);
-      return;
-    }
-    setWorkspace(previous => ({ ...previous, recentPaths: recordRecentPath(previous.recentPaths, path) }));
-    openFile(path);
-    if (window.innerWidth < 1024) setIsSidebarOpen(false);
-  };
-
-  const toggleFavorite = (path: string) => {
-    setWorkspace(previous => ({ ...previous, favoritePaths: toggleFavoritePath(previous.favoritePaths, path) }));
-  };
-
-  function reviewCurrentDiff() {
-    if (!currentFile?.endsWith('.mdx')) {
-      void saveCurrentFile();
-      return;
-    }
-    const structuralRanges = getExpectedDiffRanges();
-    const explicitCodeEdit = structuralRanges.length === 0
-      && compatibility === 'fully-editable'
-      && (editorMode === 'code' || coordinatedView);
-    const expectedRanges = explicitCodeEdit ? [{
-      start: 0,
-      end: baseSource.length,
-      reason: 'Edición explícita del source completo en la vista de código.',
-      operationId: `code-edit:${localRevision}`,
-      blockId: 'source',
-    }] : structuralRanges;
-    setDiffReview(buildDiffReview({
-      documentId: currentFile,
-      baseSource,
-      candidateSource: rawBody,
-      localRevision,
-      baseVersion,
-      expectedRanges,
-    }));
-  };
-
-  const applyReviewedDiff = async () => {
-    if (!diffReview || isDiffReviewStale(diffReview, localRevision, baseVersion) || diffReview.status !== 'reviewable') return;
-    const approval = approveDiffReview(diffReview);
-    if (!approval) return;
-    const saved = await saveCurrentFile(approval);
-    if (saved) setDiffReview(null);
-  };
-
-  const continuePendingNavigation = () => {
-    const target = pendingFileNavigation;
-    setPendingFileNavigation(null);
-    if (target) {
-      if (target.startsWith('/') && !target.includes('database/content/')) {
-        setLocation(target);
-      } else {
-        openFile(target, { discardLocalChanges: true });
-      }
-    }
-  };
+  }, [
+    currentFile,
+    isDiagramFile,
+    editorMode,
+    canReviewDiff,
+    pendingFileNavigation,
+    diffReview,
+    saving,
+    toggleEditorMode,
+    cancelPendingNavigation,
+    setIsSidebarOpen,
+    setIsInspectorOpen,
+    setIsDiagnosticsOpen,
+  ]);
 
   const handleSelectIssue = (issue: any) => {
     if (issue.blockId) {
@@ -372,7 +310,7 @@ export const EditorPage: React.FC = () => {
 
   const inlineDiagramTargets = useMemo(() => getInlineDiagramTargets(blocks), [blocks]);
   const activeDiagramBlock = useMemo(
-    () => activeDiagramBlockId ? blocks.find(block => block.id === activeDiagramBlockId) : null,
+    () => (activeDiagramBlockId ? blocks.find(block => block.id === activeDiagramBlockId) : null),
     [activeDiagramBlockId, blocks],
   );
   const diagramWorkbenchMode = useMemo(
@@ -400,14 +338,14 @@ export const EditorPage: React.FC = () => {
       const rect = target.getBoundingClientRect();
       setLinkerPosition({
         top: rect.top + window.scrollY - 130,
-        left: rect.left + window.scrollX + (target.clientWidth / 4)
+        left: rect.left + window.scrollX + target.clientWidth / 4,
       });
       setLinkerState({
         isOpen: true,
         blockId,
         selectedText: text,
         selectionStart: start,
-        selectionEnd: end
+        selectionEnd: end,
       });
     }
   };
@@ -433,13 +371,13 @@ export const EditorPage: React.FC = () => {
     text: string,
     attrs: any,
     tag: string,
-    e: React.MouseEvent
+    e: React.MouseEvent,
   ) => {
     e.stopPropagation();
     const rect = (e.currentTarget as HTMLElement).getBoundingClientRect();
     setLinkerPosition({
       top: rect.top + window.scrollY - 180,
-      left: rect.left + window.scrollX + (rect.width / 2) - 160
+      left: rect.left + window.scrollX + rect.width / 2 - 160,
     });
     setLinkerState({
       isOpen: true,
@@ -449,7 +387,7 @@ export const EditorPage: React.FC = () => {
       selectionEnd: 0,
       editingMarkup: rawMarkup,
       editingTag: tag,
-      initialAttrs: attrs
+      initialAttrs: attrs,
     });
   };
 
@@ -473,10 +411,17 @@ export const EditorPage: React.FC = () => {
   const insertInteractiveTargetParagraph = (target: { id: string; label?: string; color?: string }) => {
     const label = target.label || target.id;
     const color = target.color || 'salvia';
-    addBlock(blocks.length, 'paragraph', `<InteractiveElement target="${target.id}" color="${color}">${label}</InteractiveElement>`);
+    addBlock(
+      blocks.length,
+      'paragraph',
+      `<InteractiveElement target="${target.id}" color="${color}">${label}</InteractiveElement>`,
+    );
   };
 
-  const pageConnectionSummary = useMemo(() => buildPageConnectionSummary(blocks, diagramTargets), [blocks, diagramTargets]);
+  const pageConnectionSummary = useMemo(
+    () => buildPageConnectionSummary(blocks, diagramTargets),
+    [blocks, diagramTargets],
+  );
 
   const renderContent = () => {
     if (loading) {
@@ -576,7 +521,6 @@ export const EditorPage: React.FC = () => {
             />
           </div>
         )}
-
       </>
     );
   };
@@ -697,7 +641,7 @@ export const EditorPage: React.FC = () => {
       diagnosticsOpen={isDiagnosticsOpen && Boolean(currentFile)}
       diagnosticsHeight={workspace.diagnosticsHeight}
       setDiagnosticsHeight={diagnosticsHeight => setWorkspace(previous => ({ ...previous, diagnosticsHeight }))}
-      persistPanelSizes={() => writeEditorWorkspacePreferences(workspace, window.localStorage)}
+      persistPanelSizes={() => setWorkspace(previous => ({ ...previous }))}
       safetySummary={
         <SafetySummary
           currentFile={currentFile}
@@ -762,19 +706,20 @@ export const EditorPage: React.FC = () => {
           }}
         />
       )}
-      <DiffReviewPanel
-        review={diffReview}
-        isStale={diffReview ? isDiffReviewStale(diffReview, localRevision, baseVersion) : false}
-        isApplying={saving}
-        onClose={() => setDiffReview(null)}
-        onApply={applyReviewedDiff}
-        onSelectChange={handleSelectDiffChange}
+      <EditorDiffController
+        diffReview={diffReview}
+        setDiffReview={setDiffReview}
+        saving={saving}
+        localRevision={localRevision}
+        baseVersion={baseVersion}
+        saveCurrentFile={saveCurrentFile}
+        onSelectDiffChange={handleSelectDiffChange}
       />
       <UnsavedChangesDialog
         isOpen={pendingFileNavigation !== null}
         targetLabel={pendingFileNavigation ?? 'otro archivo'}
         presentation={safetyPresentation}
-        onCancel={() => setPendingFileNavigation(null)}
+        onCancel={cancelPendingNavigation}
         onReviewDiff={reviewCurrentDiff}
         onSaveDraft={() => { void saveDraftCurrentFile(); }}
         onDiscardAndContinue={continuePendingNavigation}

@@ -77,7 +77,8 @@ export const Order3Spec = createDiagramSpec(
       "x": -1.5,
       "y": 0,
       "fixed": false,
-      "constraint": "free"
+      "constraint": "glider",
+      "gliderTarget": "lineDE"
     },
     {
       "id": "pB",
@@ -103,7 +104,8 @@ export const Order3Spec = createDiagramSpec(
       "x": 0.57,
       "y": 0,
       "fixed": false,
-      "constraint": "free"
+      "constraint": "glider",
+      "gliderTarget": "lineDE"
     },
     {
       "id": "pC",
@@ -129,7 +131,8 @@ export const Order3Spec = createDiagramSpec(
       "x": 2.5,
       "y": 0,
       "fixed": false,
-      "constraint": "free"
+      "constraint": "glider",
+      "gliderTarget": "lineDE"
     },
     {
       "id": "pD",

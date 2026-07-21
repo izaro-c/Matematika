@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <script src="https://cdn.jsdelivr.net/npm/jsxgraph/distrib/jsxgraphcore.js"></script>
+</head>
+<body>
+  <div id="box" style="width:500px; height:500px;"></div>
+  <script>
+    var board = JXG.JSXGraph.initBoard('box', {boundingbox: [-5, 5, 5, -5], axis:true});
+    var p1 = board.create('point', [-2, -2]);
+    var p2 = board.create('point', [2, 2]);
+    try {
+      var l = board.create('line', [p1, p2], {withLabel: true, name: 'm', label: { position: 0.5 }});
+      console.log("Label exists?", !!l.label);
+    } catch(e) {
+      console.log("Error!", e.message);
+    }
+  </script>
+</body>
+</html>

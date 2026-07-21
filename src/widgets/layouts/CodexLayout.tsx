@@ -1,5 +1,5 @@
 import React, { useCallback, useEffect, useId, useMemo, useRef, useState } from 'react';
-import { useMathStore } from '@/app/providers/MathStoreContext';
+import { useMathStore } from '@/shared/lib/MathStoreContext';
 import { DiagramStepSyncContext } from '@/shared/lib/DiagramStepSyncContext';
 import { db } from '@/entities/content';
 import { Link, useLocation } from 'wouter';

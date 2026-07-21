@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
 import { useLocation } from 'wouter';
-import { useGlossaryStore, texSymbolMap } from '@/features/glossary/GlossaryStore';
+import { useGlossaryStore, texSymbolMap } from '@/shared/stores/GlossaryStore';
 
 /**
  * Gestor invisible (sin UI) que escanea todo el DOM renderizado en busca de fórmulas LaTeX

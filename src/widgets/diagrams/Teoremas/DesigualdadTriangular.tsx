@@ -386,7 +386,7 @@ export const DesigualdadTriangularSpec = createDiagramSpec(
     {
       "id": "dAB",
       "label": "c",
-      "color": "pizarra",
+      "color": "terracota",
       "layerId": "geometry",
       "order": 1380,
       "visible": true,
@@ -402,6 +402,7 @@ export const DesigualdadTriangularSpec = createDiagramSpec(
       "target": false,
       "style": {
         "strokeWidth": 2.4,
+        "labelSize": 20,
         "highlightStrokeWidth": 3,
         "preserveColorOnHighlight": true
       },
@@ -412,14 +413,15 @@ export const DesigualdadTriangularSpec = createDiagramSpec(
       ],
       "text": "c = {value}",
       "properties": {
+        "unit": "u",
         "precision": 2,
-        "offset": 0.35
+        "offset": 0
       }
     },
     {
       "id": "dBC",
       "label": "a",
-      "color": "pizarra",
+      "color": "terracota",
       "layerId": "geometry",
       "order": 1390,
       "visible": true,
@@ -435,6 +437,7 @@ export const DesigualdadTriangularSpec = createDiagramSpec(
       "target": false,
       "style": {
         "strokeWidth": 2.4,
+        "labelSize": 20,
         "highlightStrokeWidth": 3,
         "preserveColorOnHighlight": true
       },
@@ -445,14 +448,15 @@ export const DesigualdadTriangularSpec = createDiagramSpec(
       ],
       "text": "a = {value}",
       "properties": {
+        "unit": "u",
         "precision": 2,
-        "offset": 0.35
+        "offset": 0
       }
     },
     {
       "id": "dCA",
       "label": "b",
-      "color": "pizarra",
+      "color": "terracota",
       "layerId": "geometry",
       "order": 1400,
       "visible": true,
@@ -468,6 +472,7 @@ export const DesigualdadTriangularSpec = createDiagramSpec(
       "target": false,
       "style": {
         "strokeWidth": 2.4,
+        "labelSize": 20,
         "highlightStrokeWidth": 3,
         "preserveColorOnHighlight": true
       },
@@ -478,8 +483,9 @@ export const DesigualdadTriangularSpec = createDiagramSpec(
       ],
       "text": "b = {value}",
       "properties": {
+        "unit": "u",
         "precision": 2,
-        "offset": 0.35
+        "offset": 0
       }
     },
     {
@@ -504,16 +510,36 @@ export const DesigualdadTriangularSpec = createDiagramSpec(
       },
       "kind": "infoPanel",
       "refs": [],
-      "text": "a + b − c = {value}",
+      "text": "",
       "properties": {
-        "expression": "BC.length + CA.length - AB.length",
         "precision": 2,
-        "title": "Margen de la desigualdad",
         "anchorMode": "viewport",
         "viewportPosition": [
-          0.98,
-          0.03
-        ]
+          0,
+          0
+        ],
+        "infoPanelBlocks": [
+          {
+            "id": "bloque-1",
+            "text": "$a + b = {value}$",
+            "expression": "BC.length + CA.length",
+            "unit": "u",
+            "rules": []
+          },
+          {
+            "id": "bloque-2",
+            "text": "$c = {value}$",
+            "expression": "AB.length",
+            "unit": "u",
+            "rules": []
+          },
+          {
+            "id": "bloque-3",
+            "text": "$a+b>c$",
+            "rules": []
+          }
+        ],
+        "infoPanelLayout": "columns"
       }
     }
   ],
@@ -571,7 +597,7 @@ export const DesigualdadTriangularSpec = createDiagramSpec(
       "relation": "expression"
     }
   ],
-  "note": "Mueve los vértices y compara las tres longitudes. El margen a + b − c permanece positivo mientras el triángulo no sea degenerado.",
+  "note": "Mueve A, B y C",
   "extensions": {}
 }
 );

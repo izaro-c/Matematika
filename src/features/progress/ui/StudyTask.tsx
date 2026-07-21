@@ -2,7 +2,7 @@ import React from 'react';
 import { Link } from 'wouter';
 import { useProgressStore } from '@/features/progress/UserProgressStore';
 import { db } from '@/entities/content';
-import { StudyPlanContext } from '@/app/providers/StudyPlanContext';
+import { StudyPlanContext } from '@/features/progress/context/StudyPlanContext';
 import { ContentThumbnail } from './ContentThumbnail';
 
 /**

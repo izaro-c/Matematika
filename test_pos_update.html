@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <script src="https://cdn.jsdelivr.net/npm/jsxgraph/distrib/jsxgraphcore.js"></script>
+</head>
+<body>
+  <div id="box" style="width:500px; height:500px;"></div>
+  <script>
+    var board = JXG.JSXGraph.initBoard('box', {boundingbox: [-5, 5, 5, -5], axis:true});
+    var p1 = board.create('point', [-2, -2]);
+    var p2 = board.create('point', [2, 2]);
+    var l = board.create('line', [p1, p2], {withLabel: true, name: 'm', label: { position: '0.2fr' }});
+    
+    setTimeout(() => {
+      l.label.setAttribute({ position: '0.8fr' });
+      board.update();
+      console.log("Updated to 0.8fr");
+      // Add a DOM text to show it ran
+      var d = document.createElement('div');
+      d.innerHTML = 'Test finished. Label position is ' + l.label.visProp.position;
+      document.body.appendChild(d);
+    }, 500);
+  </script>
+</body>
+</html>

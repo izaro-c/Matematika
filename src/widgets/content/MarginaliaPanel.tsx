@@ -1,4 +1,4 @@
-import { useGlossaryStore, dictionary } from '@/features/glossary/GlossaryStore';
+import { useGlossaryStore, dictionary } from '@/shared/stores/GlossaryStore';
 import { db } from '@/entities/content';
 import type { 
   Theorem, Definition, Mathematician, Method,

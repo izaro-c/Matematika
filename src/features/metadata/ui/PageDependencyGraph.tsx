@@ -2,7 +2,7 @@ import React, { useMemo, useCallback, useEffect, useRef, useState } from 'react'
 import ForceGraph2D from 'react-force-graph-2d';
 import { useLocation } from 'wouter';
 import { db } from '@/entities/content';
-import { dictionary } from '@/features/glossary/GlossaryStore';
+import { dictionary } from '@/shared/stores/GlossaryStore';
 import { useThemeColors } from '@/shared/hooks/useThemeColors';
 
 

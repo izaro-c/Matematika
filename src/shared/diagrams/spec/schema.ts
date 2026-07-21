@@ -113,6 +113,7 @@ const visualStyleSchema = z.object({
   angleRadius: finiteNumber.positive().max(10).optional(),
   markHeight: finiteNumber.positive().max(100).optional(),
   labelOffset: z.tuple([finiteNumber, finiteNumber]).optional(),
+  labelPosition: z.union([finiteNumber, z.string()]).optional(),
   textOffset: z.tuple([finiteNumber, finiteNumber]).optional(),
   labelSize: finiteNumber.min(6).max(72).optional(),
   highlightStrokeWidth: finiteNumber.min(0).max(30).optional(),

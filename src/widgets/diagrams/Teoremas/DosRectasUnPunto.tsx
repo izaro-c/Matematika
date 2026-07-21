@@ -85,7 +85,7 @@ export const DosRectasUnPuntoSpec = createDiagramSpec(
     {
       "id": "A",
       "label": "A",
-      "color": "terracota",
+      "color": "musgo",
       "layerId": "geometry",
       "order": 1420,
       "visible": true,
@@ -102,8 +102,8 @@ export const DosRectasUnPuntoSpec = createDiagramSpec(
         "highlightPointSize": 10,
         "preserveColorOnHighlight": true
       },
-      "x": -3,
-      "y": -1.8,
+      "x": -2.75,
+      "y": -2.25,
       "showLabel": true,
       "fixed": false,
       "constraint": "free",
@@ -113,7 +113,7 @@ export const DosRectasUnPuntoSpec = createDiagramSpec(
     {
       "id": "B",
       "label": "B",
-      "color": "terracota",
+      "color": "musgo",
       "layerId": "geometry",
       "order": 1430,
       "visible": true,
@@ -130,8 +130,8 @@ export const DosRectasUnPuntoSpec = createDiagramSpec(
         "highlightPointSize": 10,
         "preserveColorOnHighlight": true
       },
-      "x": 2.8,
-      "y": 1.6,
+      "x": 2.75,
+      "y": 1.5,
       "showLabel": true,
       "fixed": false,
       "constraint": "free",
@@ -141,7 +141,7 @@ export const DosRectasUnPuntoSpec = createDiagramSpec(
     {
       "id": "C",
       "label": "C",
-      "color": "pizarra",
+      "color": "pavo",
       "layerId": "geometry",
       "order": 1440,
       "visible": true,
@@ -158,8 +158,8 @@ export const DosRectasUnPuntoSpec = createDiagramSpec(
         "highlightPointSize": 10,
         "preserveColorOnHighlight": true
       },
-      "x": -2.8,
-      "y": 2,
+      "x": -3.25,
+      "y": 2.25,
       "showLabel": true,
       "fixed": false,
       "constraint": "free",
@@ -169,7 +169,7 @@ export const DosRectasUnPuntoSpec = createDiagramSpec(
     {
       "id": "D",
       "label": "D",
-      "color": "pizarra",
+      "color": "pavo",
       "layerId": "geometry",
       "order": 1450,
       "visible": true,
@@ -187,7 +187,7 @@ export const DosRectasUnPuntoSpec = createDiagramSpec(
         "preserveColorOnHighlight": true
       },
       "x": 3,
-      "y": -2.2,
+      "y": -2.25,
       "showLabel": true,
       "fixed": false,
       "constraint": "free",
@@ -198,8 +198,8 @@ export const DosRectasUnPuntoSpec = createDiagramSpec(
   "elements": [
     {
       "id": "line1",
-      "label": "Recta l",
-      "color": "terracota",
+      "label": "$l$",
+      "color": "musgo",
       "layerId": "geometry",
       "order": 1460,
       "visible": true,
@@ -216,6 +216,12 @@ export const DosRectasUnPuntoSpec = createDiagramSpec(
       "targetId": "line1",
       "style": {
         "strokeWidth": 2.4,
+        "labelOffset": [
+          10,
+          20
+        ],
+        "labelPosition": 0.02,
+        "labelSize": 16,
         "highlightStrokeWidth": 3,
         "preserveColorOnHighlight": true
       },
@@ -223,12 +229,13 @@ export const DosRectasUnPuntoSpec = createDiagramSpec(
       "refs": [
         "A",
         "B"
-      ]
+      ],
+      "showLabel": true
     },
     {
       "id": "line2",
-      "label": "Recta m",
-      "color": "pizarra",
+      "label": "$m$",
+      "color": "pavo",
       "layerId": "geometry",
       "order": 1470,
       "visible": true,
@@ -245,6 +252,12 @@ export const DosRectasUnPuntoSpec = createDiagramSpec(
       "targetId": "line2",
       "style": {
         "strokeWidth": 2.4,
+        "labelOffset": [
+          10,
+          10
+        ],
+        "labelPosition": 0.02,
+        "labelSize": 16,
         "highlightStrokeWidth": 3,
         "preserveColorOnHighlight": true
       },
@@ -252,14 +265,15 @@ export const DosRectasUnPuntoSpec = createDiagramSpec(
       "refs": [
         "C",
         "D"
-      ]
+      ],
+      "showLabel": true
     },
     {
       "id": "P",
       "label": "P",
       "color": "terracota",
       "layerId": "geometry",
-      "order": 1480,
+      "order": 2480,
       "visible": true,
       "locked": false,
       "groupIds": [
@@ -284,40 +298,41 @@ export const DosRectasUnPuntoSpec = createDiagramSpec(
       ]
     },
     {
-      "id": "incidenceInfo",
-      "label": "Unicidad",
-      "color": "terracota",
-      "layerId": "annotations",
-      "order": 1490,
+      "id": "infoPanel4",
+      "label": "Panel informativo",
+      "color": "salvia",
+      "layerId": "geometry",
+      "order": 3480,
       "visible": true,
       "locked": false,
       "groupIds": [],
       "selection": {
         "selectable": true,
-        "ariaLabel": "Unicidad",
-        "role": "annotation"
+        "ariaLabel": "Panel informativo",
+        "role": "secondary"
       },
-      "target": false,
+      "target": true,
+      "targetId": "infoPanel4",
       "style": {
         "preserveColorOnHighlight": true
       },
       "kind": "infoPanel",
       "refs": [],
-      "text": "Si l y m fueran distintas y compartieran dos puntos, I-1 obligaría a l = m.",
+      "text": "$P\\in l \\cap m$",
       "properties": {
-        "title": "Unicidad",
         "anchorMode": "viewport",
         "viewportPosition": [
-          0.98,
-          0.03
-        ]
+          0,
+          0
+        ],
+        "infoPanelLayout": "stack"
       }
     }
   ],
   "sliders": [],
   "steps": [],
   "dependencies": [],
-  "note": "Mueve los puntos que determinan l y m. Cuando no son paralelas, el renderer construye una única intersección P.",
+  "note": "Mueve A, B, C y D",
   "extensions": {}
 }
 );

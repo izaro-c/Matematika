@@ -121,7 +121,7 @@
   font-family: var(--font-diagram-family) !important;
   font-style: normal !important;
   font-weight: 600 !important;
-  font-size: 17px !important;
+  font-size: 17px;
   letter-spacing: 0.005em;
   paint-order: stroke;
   stroke: var(--theme-lienzo);
@@ -134,7 +134,7 @@
   color: inherit;
   fill: currentColor !important;
   font-style: italic !important;
-  font-size: 19px !important;
+  font-size: 19px;
   font-weight: 700 !important;
 }
 

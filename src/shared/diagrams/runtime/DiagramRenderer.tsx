@@ -1,69 +1,31 @@
-import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
-import { MathBoard, type ThemeColors } from '../core/MathBoard';
-import {
-  createAngle,
-  createAngleBisectorRay,
-  createArc,
-  createAreaDecomposition,
-  createBaseExtensionToFoot,
-  createCircle,
-  createCongruenceMark,
-  createDimensionLine,
-  createFunctionCurve,
-  createGlider,
-  createGridOverlay,
-  createIntersection,
-  createLine,
-  createMidpoint,
-  createNonReflexAngle,
-  createParallelMark,
-  createParallelLine,
-  createParametricCurve,
-  createPerpendicularFoot,
-  createPerpendicularLine,
-  createPoincareArc,
-  createPoincareGeodesic,
-  createPoint,
-  createPolygon,
-  createRay,
-  createRightAngleMarker,
-  createSegment,
-  createSlider,
-  createText,
-  createTicks,
-} from '../core/MathFactory';
-import { DiagramInfoPanel, DiagramTitle } from '@/shared/ui/DiagramOverlay';
-import { renderKatexTextToHtml } from '@/shared/ui/KatexText';
+import React, { useMemo, useRef, useState } from 'react';
+import { MathBoard } from '../core/MathBoard';
+import { DiagramTitle } from '@/shared/ui/DiagramOverlay';
 import { StepNavigator } from '@/shared/ui/StepNavigator';
 import { MathProviderBoundary, useMathStore } from '@/shared/lib/MathStoreContext';
 import { useDiagramStepSync } from '@/shared/lib/DiagramStepSyncContext';
-import { useDiagramTargetRegistry } from '@/shared/lib/DiagramTargetRegistryContext';
 import {
   DIAGRAM_RENDERER_ID,
-  DEFAULT_ANGLE_RADIUS,
-  DEFAULT_RIGHT_ANGLE_RADIUS,
-  createSceneConstructionPlan,
   createScenePlan,
-  angleMeasureRadians,
-  fitViewport,
-  itemLayerNumber,
-  offscreenItemIds,
   sceneRevision,
-  withMovedPoint,
   withResolvedPointConstraints,
-  withViewportBounds,
   zoomViewport,
-  evaluateMathExpression,
-  evaluateStepOverlayContent,
-  resolveInfoPanelBlock,
   type DiagramBounds,
-  type DiagramColorToken,
   type DiagramElement,
-  type DiagramPoint,
-  type DiagramSceneItem,
-  type DiagramSlider,
   type DiagramSpecV2,
 } from '../spec';
+
+import { useDiagramSelection } from './useDiagramSelection';
+import { useDiagramViewport } from './useDiagramViewport';
+import {
+  DiagramKatexOverlay,
+  ExplorationCue,
+  compactHeaderReadings,
+  headerReadingItems,
+  headerReadingText,
+  movableCueLabels,
+} from './DiagramKatexOverlay';
+import { liveVariables, useBoardLifecycle } from './useBoardLifecycle';
 
 export interface DiagramRendererProps {
   spec: DiagramSpecV2;
@@ -78,821 +40,6 @@ export interface DiagramRendererProps {
   onCanvasPointCreate?: (x: number, y: number) => void;
   onViewportChange?: (bounds: DiagramBounds) => void;
   stepControls?: boolean;
-}
-
-function outsideBaseExtension(baseA: any, baseB: any, foot: any): boolean {
-  if (!baseA || !baseB || !foot) return false;
-  const dx = baseB.X() - baseA.X();
-  const dy = baseB.Y() - baseA.Y();
-  const lengthSquared = dx * dx + dy * dy;
-  if (lengthSquared < 1e-10) return false;
-  const t = ((foot.X() - baseA.X()) * dx + (foot.Y() - baseA.Y()) * dy) / lengthSquared;
-  return t < -0.001 || t > 1.001;
-}
-
-function intersectionBelongsToSupports(
-  item: DiagramElement,
-  intersection: any,
-  elements: Record<string, any>,
-  spec: DiagramSpecV2,
-): boolean {
-  if (item.kind !== 'intersection' || item.properties?.restrictToSupports !== true) return true;
-  if (!intersection || !Number.isFinite(intersection.X?.()) || !Number.isFinite(intersection.Y?.())) return false;
-  return item.refs.every(supportId => {
-    const supportSpec = spec.elements.find(candidate => candidate.id === supportId);
-    if (!supportSpec || !['segment', 'ray', 'angleBisector'].includes(supportSpec.kind)) return true;
-    const support = elements[supportId];
-    const start = support?.point1;
-    const end = support?.point2;
-    if (!start || !end) return false;
-    const dx = end.X() - start.X();
-    const dy = end.Y() - start.Y();
-    const lengthSquared = dx * dx + dy * dy;
-    if (lengthSquared < 1e-10) return false;
-    const t = ((intersection.X() - start.X()) * dx + (intersection.Y() - start.Y()) * dy) / lengthSquared;
-    if (supportSpec.kind === 'segment') return t >= -0.001 && t <= 1.001;
-    return t >= -0.001;
-  });
-}
-
-function refsFor(item: DiagramElement, elements: Record<string, any>): any[] {
-  return item.refs.map(ref => elements[ref]).filter(Boolean);
-}
-
-function liveVariables(elements: Record<string, any>, spec: DiagramSpecV2): Record<string, number> {
-  const variables: Record<string, number> = {};
-  spec.points.forEach(point => {
-    const element = elements[point.id];
-    if (!element) return;
-    variables[`${point.id}.x`] = element.X();
-    variables[`${point.id}.y`] = element.Y();
-  });
-  spec.sliders.forEach(slider => {
-    const element = elements[slider.id];
-    variables[slider.id] = element?.Value?.() ?? slider.value;
-  });
-  spec.elements.forEach(item => {
-    const element = elements[item.id];
-    if (element?.X && element?.Y) {
-      variables[`${item.id}.x`] = element.X();
-      variables[`${item.id}.y`] = element.Y();
-    }
-    if (item.refs.length >= 2) {
-      const a = elements[item.refs[0]];
-      const b = elements[item.refs[1]];
-      if (a?.Dist && b) variables[`${item.id}.length`] = a.Dist(b);
-    }
-    if ((item.kind === 'angle' || item.kind === 'nonReflexAngle') && item.refs.length >= 3) {
-      const first = elements[item.refs[0]];
-      const vertex = elements[item.refs[1]];
-      const second = elements[item.refs[2]];
-      const radians = first?.X && vertex?.X && second?.X
-        ? angleMeasureRadians(
-            item.kind,
-            { x: first.X(), y: first.Y() },
-            { x: vertex.X(), y: vertex.Y() },
-            { x: second.X(), y: second.Y() },
-          )
-        : undefined;
-      if (radians !== undefined) {
-        variables[`${item.id}.value`] = radians;
-        variables[`${item.id}.radians`] = radians;
-        variables[`${item.id}.degrees`] = radians * 180 / Math.PI;
-      }
-    }
-  });
-  return variables;
-}
-
-function sliderMaximum(item: DiagramSlider, elements: Record<string, any>, spec: DiagramSpecV2): number {
-  if (!item.maxExpression) return item.max;
-  try {
-    const evaluated = evaluateMathExpression(item.maxExpression, liveVariables(elements, spec));
-    return evaluated > item.min ? evaluated : item.max;
-  } catch {
-    return item.max;
-  }
-}
-
-function StepOverlayPanels({
-  spec,
-  activeStepId,
-  variables,
-}: {
-  spec: DiagramSpecV2;
-  activeStepId?: string;
-  variables: Record<string, number>;
-}) {
-  const rawStoreStep = useMathStore(state => state.variables?.[`step:${spec.componentId}`] ?? state.variables?.['step']);
-  const storeStep = Array.isArray(rawStoreStep)
-    ? (rawStoreStep.find(item => typeof item === 'string' && spec.steps.some(step => step.id === item)) ?? rawStoreStep[0])
-    : rawStoreStep;
-  const stepId = activeStepId
-    ?? ((typeof storeStep === 'string' ? storeStep.replace(`${spec.componentId}:`, '') : '') || spec.steps[0]?.id);
-  const step = spec.steps.find(item => item.id === stepId);
-  const overlays = Object.entries(step?.objectStates ?? {})
-    .map(([objectId, state]) => ({ objectId, overlay: state.overlay }))
-    .filter((entry): entry is { objectId: string; overlay: NonNullable<typeof entry.overlay> } => (
-      Boolean(entry.overlay?.visible)
-      && !headerReadingItems(spec).some(item => item.id === entry.objectId)
-    ));
-  if (overlays.length === 0) return null;
-  const grouped = new Map<string, typeof overlays>();
-  overlays.forEach(entry => {
-    const position = entry.overlay.position ?? 'bottom-right';
-    grouped.set(position, [...(grouped.get(position) ?? []), entry]);
-  });
-  return <>{[...grouped.entries()].map(([position, entries]) => (
-    <DiagramInfoPanel key={position} title={step?.label ?? 'Información del paso'} position={position as 'top-left' | 'top-right' | 'bottom-left' | 'bottom-right'}>
-      <div className="space-y-2" aria-live="polite">
-        {entries.map(({ objectId, overlay }) => {
-          return (
-            <div key={objectId} data-step-overlay={objectId}>
-              {overlay.title && <strong className="block">{overlay.title}</strong>}
-              <span>{evaluateStepOverlayContent(overlay, variables)}</span>
-            </div>
-          );
-        })}
-      </div>
-    </DiagramInfoPanel>
-  ))}</>;
-}
-
-function evaluatedValue(item: DiagramElement, elements: Record<string, any>, spec: DiagramSpecV2): number | undefined {
-  const expression = item.properties?.expression;
-  try {
-    if (expression) return evaluateMathExpression(expression, liveVariables(elements, spec));
-    const refs = refsFor(item, elements);
-    if (refs.length >= 2 && refs[0]?.Dist) return refs[0].Dist(refs[1]);
-    return undefined;
-  } catch {
-    return undefined;
-  }
-}
-
-function measurementText(item: DiagramElement, elements: Record<string, any>, spec: DiagramSpecV2): string {
-  const text = item.text || `${item.label}: {value}`;
-  const variables = liveVariables(elements, spec);
-  const precision = item.properties?.precision ?? 2;
-  const unit = item.properties?.unit ? ` ${item.properties.unit}` : '';
-
-  const regex = /\{([^{}]+)\}/g;
-  return text.replace(regex, (original, expr) => {
-    if (expr === 'value') {
-      const val = evaluatedValue(item, elements, spec);
-      if (val === undefined) return 'valor no definido';
-      return `${val.toFixed(precision)}${unit}`;
-    }
-    try {
-      const val = evaluateMathExpression(expr, variables);
-      return `${val.toFixed(precision)}${unit}`;
-    } catch (err) {
-      console.error("ERROR EVALUANDO EXPRESIÓN:", expr, err, "VARIABLES DISPONIBLES:", Object.keys(variables));
-      return original;
-    }
-  });
-}
-
-function headerReadingItems(spec: DiagramSpecV2): DiagramElement[] {
-  const dynamicPanels = spec.elements.filter(item => item.kind === 'infoPanel' && item.properties?.expression);
-  if (dynamicPanels.length > 0) return dynamicPanels;
-  return spec.elements
-    .filter(item => (item.kind === 'measurement' || item.kind === 'dimensionLine') && (item.properties?.expression || item.refs.length >= 2))
-    .slice(0, 4);
-}
-
-function headerReadingText(item: DiagramElement, variables: Record<string, number>): string | null {
-  let value: number | undefined;
-  try {
-    if (item.properties?.expression) {
-      value = evaluateMathExpression(item.properties.expression, variables);
-    } else if (item.refs.length >= 2) {
-      const [a, b] = item.refs;
-      const ax = variables[`${a}.x`];
-      const ay = variables[`${a}.y`];
-      const bx = variables[`${b}.x`];
-      const by = variables[`${b}.y`];
-      if ([ax, ay, bx, by].every(Number.isFinite)) value = Math.hypot(bx - ax, by - ay);
-    }
-  } catch {
-    return null;
-  }
-  if (value === undefined || !Number.isFinite(value)) return null;
-  const precision = item.properties?.precision ?? 2;
-  const unit = item.properties?.unit ? ` ${item.properties.unit}` : '';
-  return (item.text || `${item.label}: {value}`).split('{value}').join(`${value.toFixed(precision)}${unit}`);
-}
-
-interface MovableCueLabel {
-  label: string;
-  color: DiagramColorToken;
-}
-
-function movableCueLabels(spec: DiagramSpecV2): MovableCueLabel[] {
-  const labels = new Map<string, DiagramColorToken>();
-  [
-    ...spec.points.filter(point => point.selection.selectable && !point.fixed && !point.locked && point.constraint !== 'derived'),
-    ...spec.sliders.filter(slider => slider.selection.selectable && !slider.locked),
-  ].forEach(item => {
-    const label = item.label.trim();
-    if (label && !labels.has(label)) labels.set(label, item.color);
-  });
-  return [...labels].map(([label, color]) => ({ label, color }))
-    .sort((left, right) => right.label.length - left.label.length);
-}
-
-function cueLabelRanges(text: string, labels: readonly MovableCueLabel[]): Array<{ start: number; end: number; color: DiagramColorToken }> {
-  const ranges: Array<{ start: number; end: number; color: DiagramColorToken }> = [];
-  const isWordCharacter = (character: string | undefined) => Boolean(character && /[\p{L}\p{N}_]/u.test(character));
-
-  labels.forEach(({ label, color }) => {
-    let offset = 0;
-    while (offset < text.length) {
-      const start = text.indexOf(label, offset);
-      if (start < 0) break;
-      const end = start + label.length;
-      const overlaps = ranges.some(range => start < range.end && end > range.start);
-      if (!overlaps && !isWordCharacter(text[start - 1]) && !isWordCharacter(text[end])) {
-        ranges.push({ start, end, color });
-      }
-      offset = end;
-    }
-  });
-
-  return ranges.sort((left, right) => left.start - right.start);
-}
-
-function ExplorationCue({ children, labels }: { children: string; labels: readonly MovableCueLabel[] }) {
-  const ranges = cueLabelRanges(children, labels);
-  if (ranges.length === 0) return <>{children}</>;
-
-  const fragments: React.ReactNode[] = [];
-  let offset = 0;
-  ranges.forEach(({ start, end, color }) => {
-    if (start > offset) fragments.push(children.slice(offset, start));
-    fragments.push(
-      <strong
-        key={`${start}-${end}`}
-        className="font-semibold"
-        style={{ color: `var(--theme-${color})` }}
-        data-interactive-label={children.slice(start, end)}
-        data-interactive-color={color}
-      >
-        {children.slice(start, end)}
-      </strong>,
-    );
-    offset = end;
-  });
-  if (offset < children.length) fragments.push(children.slice(offset));
-  return <>{fragments}</>;
-}
-
-function compactHeaderReadings(entries: Array<{ item: DiagramElement; text: string }>): Array<{ id: string; itemIds: string[]; text: string }> {
-  const compacted: Array<{ id: string; itemIds: string[]; text: string }> = [];
-  for (let index = 0; index < entries.length; index += 1) {
-    const current = entries[index];
-    const next = entries[index + 1];
-    if (current.item.kind === 'dimensionLine' && next?.item.kind === 'dimensionLine') {
-      const currentParts = current.text.split('=');
-      const nextParts = next.text.split('=');
-      const currentValue = currentParts.slice(1).join('=').trim();
-      const nextValue = nextParts.slice(1).join('=').trim();
-      if (currentValue && currentValue === nextValue) {
-        compacted.push({
-          id: `${current.item.id}-${next.item.id}`,
-          itemIds: [current.item.id, next.item.id],
-          text: `${currentParts[0].trim()} = ${nextParts[0].trim()} = ${currentValue}`,
-        });
-        index += 1;
-        continue;
-      }
-    }
-    compacted.push({ id: current.item.id, itemIds: [current.item.id], text: current.text });
-  }
-  return compacted;
-}
-
-function reactiveText(item: DiagramElement, elements: Record<string, any>, spec: DiagramSpecV2): string | undefined {
-  const variables = liveVariables(elements, spec);
-  const rule = item.properties?.textRules?.find(candidate => {
-    try { return evaluateMathExpression(candidate.when, variables) !== 0; } catch { return false; }
-  });
-  return rule?.text;
-}
-
-function annotationTextHtml(item: DiagramElement, elements: Record<string, any>, spec: DiagramSpecV2): string {
-  const hasBraces = typeof item.text === 'string' && item.text.includes('{') && item.text.includes('}');
-  const defaultText = item.kind === 'infoPanel' ? (item.text || '') : (item.text || item.label);
-  const body = reactiveText(item, elements, spec) ?? (item.kind === 'measurement' || item.properties?.expression || hasBraces
-    ? measurementText(item, elements, spec)
-    : defaultText);
-  const blocks = item.kind === 'infoPanel' ? item.properties?.infoPanelBlocks : undefined;
-  if (blocks?.length) {
-    const variables = liveVariables(elements, spec);
-    const layout = item.properties?.infoPanelLayout ?? 'stack';
-    const intro = body ? `<div class="matematika-info-panel__intro">${renderKatexTextToHtml(body)}</div>` : '';
-    const blockHtml = blocks.map(block => {
-      const resolved = resolveInfoPanelBlock(block, variables);
-      const title = resolved.title
-        ? `<strong class="matematika-info-panel__block-title">${renderKatexTextToHtml(resolved.title)}</strong>`
-        : '';
-      const colorClass = resolved.color ? ` matematika-info-panel__block--${resolved.color}` : '';
-      return `<div class="matematika-info-panel__block${colorClass}" data-info-panel-block="${block.id}">${title}<span>${renderKatexTextToHtml(resolved.text)}</span></div>`;
-    }).join('');
-    const title = item.properties?.title
-      ? `<strong class="matematika-info-panel__title">${renderKatexTextToHtml(item.properties.title)}</strong>`
-      : '';
-    return `${title}${intro}<div class="matematika-info-panel__blocks" data-info-panel-layout="${layout}">${blockHtml}</div>`;
-  }
-  return item.kind === 'infoPanel' && item.properties?.title
-    ? `<strong>${renderKatexTextToHtml(item.properties.title)}</strong><br/>${renderKatexTextToHtml(body)}`
-    : renderKatexTextToHtml(body);
-}
-
-function conditionAllows(item: DiagramSceneItem, elements: Record<string, any>, spec: DiagramSpecV2): boolean {
-  if ('kind' in item && item.kind === 'label' && spec.showLabels === false) return false;
-  if (!('kind' in item) || !item.properties?.visibleWhen) return true;
-  try { return evaluateMathExpression(item.properties.visibleWhen, liveVariables(elements, spec)) !== 0; } catch { return false; }
-}
-
-function tickDistance(item: DiagramElement, elements: Record<string, any>, spec: DiagramSpecV2): number {
-  if (!item.properties?.tickDistanceExpression) return item.properties?.tickDistance ?? 2;
-  try {
-    return evaluateMathExpression(item.properties.tickDistanceExpression, liveVariables(elements, spec));
-  } catch {
-    return item.properties.tickDistance ?? 2;
-  }
-}
-
-function renderedCoordinates(element: any, parameter?: number): [number, number] | null {
-  if (!element || typeof element.X !== 'function' || typeof element.Y !== 'function') return null;
-  try {
-    const x = parameter === undefined ? element.X() : element.X(parameter);
-    const y = parameter === undefined ? element.Y() : element.Y(parameter);
-    return Number.isFinite(x) && Number.isFinite(y) ? [x, y] : null;
-  } catch {
-    return null;
-  }
-}
-
-function referencedLabelAnchor(
-  referenceId: string,
-  parameter: number,
-  elements: Record<string, any>,
-  spec: DiagramSpecV2,
-): [number, number] {
-  const referencedItem = [...spec.points, ...spec.elements, ...spec.sliders].find(item => item.id === referenceId);
-  const rendered = elements[referenceId];
-  if (!referencedItem || !('kind' in referencedItem)) return renderedCoordinates(rendered) ?? [0, 0];
-
-  if (['poincareGeodesic', 'poincareArc', 'parametricCurve', 'functionCurve'].includes(referencedItem.kind)) {
-    const domain = referencedItem.kind === 'poincareGeodesic' || referencedItem.kind === 'poincareArc'
-      ? [0, 1]
-      : referencedItem.properties?.domain ?? (referencedItem.kind === 'functionCurve' ? [-5, 5] : [0, Math.PI * 2]);
-    const curveParameter = domain[0] + (domain[1] - domain[0]) * parameter;
-    const curveCoordinates = renderedCoordinates(rendered, curveParameter);
-    if (curveCoordinates) return curveCoordinates;
-  }
-
-  const referenceCoordinates = referencedItem.refs
-    .map(id => renderedCoordinates(elements[id]))
-    .filter((coordinates): coordinates is [number, number] => Boolean(coordinates));
-  if (referencedItem.kind === 'circle' && referenceCoordinates.length >= 2) {
-    const [center, boundary] = referenceCoordinates;
-    const radius = Math.hypot(boundary[0] - center[0], boundary[1] - center[1]);
-    const angle = Math.PI * 2 * parameter;
-    return [center[0] + radius * Math.cos(angle), center[1] + radius * Math.sin(angle)];
-  }
-  if (['segment', 'line', 'ray'].includes(referencedItem.kind) && referenceCoordinates.length >= 2) {
-    const [start, end] = referenceCoordinates;
-    return [start[0] + (end[0] - start[0]) * parameter, start[1] + (end[1] - start[1]) * parameter];
-  }
-  if (['angle', 'nonReflexAngle', 'rightAngle', 'perpendicularMark'].includes(referencedItem.kind)) {
-    const labelCoordinates = renderedCoordinates(rendered?.label);
-    if (labelCoordinates) return labelCoordinates;
-
-    if (referenceCoordinates.length >= 3) {
-      const [pA, pO, pB] = referenceCoordinates;
-      const a = Math.atan2(pA[1] - pO[1], pA[0] - pO[0]);
-      const b = Math.atan2(pB[1] - pO[1], pB[0] - pO[0]);
-      const diff = (b - a + 2 * Math.PI) % (2 * Math.PI);
-      let midAngle = a + diff / 2;
-      if (referencedItem.kind !== 'angle') {
-        if (diff > Math.PI) midAngle += Math.PI;
-      }
-      const radius = (referencedItem.style?.angleRadius ?? 1) * 1.5;
-      return [pO[0] + radius * Math.cos(midAngle), pO[1] + radius * Math.sin(midAngle)];
-    }
-  }
-
-  if (referenceCoordinates.length > 0) {
-    const total = referenceCoordinates.reduce(([x, y], coordinates) => [x + coordinates[0], y + coordinates[1]], [0, 0]);
-    return [total[0] / referenceCoordinates.length, total[1] / referenceCoordinates.length];
-  }
-  return renderedCoordinates(rendered) ?? [0, 0];
-}
-
-function viewportPositionCoordinates(
-  board: any,
-  position: [number, number],
-  fallbackBounds: DiagramBounds,
-): [number, number] {
-  const [left, top, right, bottom] = board.getBoundingBox?.() ?? fallbackBounds;
-  const width = board.__matematikaContainerSize?.width ?? board.canvasWidth ?? 1;
-  const height = board.__matematikaContainerSize?.height ?? board.canvasHeight ?? 1;
-  const safeArea = board.__matematikaViewportSafeArea ?? board.__matematikaSafeArea ?? {};
-  const safeLeft = Math.max(0, safeArea.left ?? 0);
-  const safeRight = Math.max(0, safeArea.right ?? 0);
-  const safeTop = Math.max(0, safeArea.top ?? 0);
-  const safeBottom = Math.max(0, safeArea.bottom ?? 0);
-  const pixelX = safeLeft + Math.max(1, width - safeLeft - safeRight) * position[0];
-  const pixelY = safeTop + Math.max(1, height - safeTop - safeBottom) * position[1];
-  return [
-    left + (right - left) * pixelX / width,
-    top - (top - bottom) * pixelY / height,
-  ];
-}
-
-function viewportPanelAnchors(position: [number, number]): { anchorX: 'left' | 'middle' | 'right'; anchorY: 'top' | 'middle' | 'bottom' } {
-  const [x, y] = position;
-  return {
-    anchorX: x < 0.34 ? 'left' : x > 0.66 ? 'right' : 'middle',
-    anchorY: y < 0.34 ? 'top' : y > 0.66 ? 'bottom' : 'middle',
-  };
-}
-
-function createElement(
-  board: any,
-  elements: Record<string, any>,
-  item: DiagramElement,
-  theme: ThemeColors,
-  layer: number,
-  spec: DiagramSpecV2,
-  liftedIntoHeader = false,
-) {
-  const refs = refsFor(item, elements);
-  const highlightable = item.selection.highlightable !== false;
-  const hoverColor = !highlightable || item.style?.preserveColorOnHighlight ? theme[item.color] : theme.ocre;
-  const lineOptions = {
-    highlight: highlightable,
-    strokeColor: theme[item.color],
-    highlightStrokeColor: hoverColor,
-    strokeWidth: item.style?.strokeWidth ?? 2,
-    highlightStrokeWidth: item.style?.highlightStrokeWidth ?? 3,
-    strokeOpacity: item.style?.strokeOpacity ?? 1,
-    dash: item.dashed ? 2 : 0,
-    fixed: true,
-    layer,
-  };
-  if (item.kind === 'segment') return refs.length >= 2 ? createSegment(board, [refs[0], refs[1]], lineOptions, theme) : null;
-  if (item.kind === 'line') return refs.length >= 2 ? createLine(board, [refs[0], refs[1]], lineOptions, theme) : null;
-  if (item.kind === 'ray') return refs.length >= 2 ? createRay(board, [refs[0], refs[1]], lineOptions, theme) : null;
-  if (item.kind === 'polygon') return refs.length >= 3 ? createPolygon(board, refs, {
-    highlight: highlightable,
-    fillColor: theme[item.color], highlightFillColor: hoverColor, fillOpacity: item.style?.fillOpacity ?? 0.1,
-    highlightFillOpacity: item.style?.highlightFillOpacity ?? 0.24,
-    fixed: true,
-    borders: { highlight: highlightable, strokeColor: theme[item.color], strokeWidth: item.style?.strokeWidth ?? 1.5, strokeOpacity: item.style?.strokeOpacity ?? 1, dash: item.dashed ? 2 : 0, fixed: true }, layer,
-  }, theme) : null;
-  if (item.kind === 'circle') return refs.length >= 2 ? createCircle(board, [refs[0], refs[1]], {
-    ...lineOptions, fillColor: theme[item.color], fillOpacity: item.style?.fillOpacity ?? 0,
-    highlightFillOpacity: item.style?.highlightFillOpacity ?? 0.2,
-  }, theme) : null;
-  if (item.kind === 'arc') return refs.length >= 3 ? createArc(board, [refs[0], refs[1], refs[2]], lineOptions, theme) : null;
-  if (item.kind === 'functionCurve' && item.properties?.expression) {
-    const domain = item.properties.domain ?? [-5, 5];
-    const parameter = item.properties.parameter ?? 'x';
-    return createFunctionCurve(board, value => {
-      try {
-        return evaluateMathExpression(item.properties?.expression ?? '0', { ...liveVariables(elements, spec), [parameter]: value, x: value });
-      } catch {
-        return Number.NaN;
-      }
-    }, domain, lineOptions, theme);
-  }
-  if (item.kind === 'parametricCurve' && item.properties?.xExpression && item.properties.yExpression) {
-    const domain = item.properties.domain ?? [0, Math.PI * 2];
-    const parameter = item.properties.parameter ?? 't';
-    const variables = (value: number) => ({ ...liveVariables(elements, spec), [parameter]: value, t: value });
-    return createParametricCurve(
-      board,
-      value => {
-        try { return evaluateMathExpression(item.properties?.xExpression ?? '0', variables(value)); } catch { return Number.NaN; }
-      },
-      value => {
-        try { return evaluateMathExpression(item.properties?.yExpression ?? '0', variables(value)); } catch { return Number.NaN; }
-      },
-      domain,
-      lineOptions,
-      theme,
-    );
-  }
-  if (item.kind === 'poincareGeodesic') return refs.length >= 4 ? createPoincareGeodesic(board, [refs[0], refs[1], refs[2], refs[3]], lineOptions, theme) : null;
-  if (item.kind === 'poincareArc') return refs.length >= 4 ? createPoincareArc(board, [refs[0], refs[1], refs[2], refs[3]], lineOptions, theme) : null;
-  if (item.kind === 'intersection') return refs.length >= 2 ? createIntersection(board, [refs[0], refs[1]], 0, {
-    highlight: highlightable,
-    name: renderKatexTextToHtml(item.label),
-    size: item.style?.pointSize ?? 4,
-    fillColor: theme[item.color],
-    strokeColor: theme[item.color],
-    highlightFillColor: hoverColor,
-    highlightStrokeColor: hoverColor,
-    label: { highlight: highlightable, highlightColor: hoverColor, highlightStrokeColor: hoverColor },
-    fixed: true,
-    layer,
-  }, theme) : null;
-  if (item.kind === 'midpoint') return refs.length >= 2 ? createMidpoint(board, [refs[0], refs[1]], {
-    highlight: highlightable,
-    name: renderKatexTextToHtml(item.label), fillColor: theme[item.color], strokeColor: theme[item.color],
-    size: item.style?.pointSize ?? 4,
-    highlightFillColor: hoverColor, highlightStrokeColor: hoverColor,
-    label: { highlight: highlightable, highlightColor: hoverColor, highlightStrokeColor: hoverColor },
-    fixed: true, layer,
-  }, theme) : null;
-  if (item.kind === 'perpendicularFoot') return refs.length >= 3 ? createPerpendicularFoot(board, [refs[0], refs[1], refs[2]], {
-    highlight: highlightable,
-    name: renderKatexTextToHtml(item.label), fillColor: theme[item.color], strokeColor: theme[item.color],
-    size: item.style?.pointSize ?? 4,
-    highlightFillColor: hoverColor, highlightStrokeColor: hoverColor,
-    label: { highlight: highlightable, highlightColor: hoverColor, highlightStrokeColor: hoverColor },
-    fixed: true, layer,
-  }, theme) : null;
-  if (item.kind === 'baseExtension') return refs.length >= 3 ? createBaseExtensionToFoot(board, [refs[0], refs[1], refs[2]], lineOptions, theme) : null;
-  if (item.kind === 'perpendicular') return refs.length >= 3 ? createPerpendicularLine(board, [refs[0], refs[1], refs[2]], lineOptions, theme) : null;
-  if (item.kind === 'parallel') return refs.length >= 3 ? createParallelLine(board, [refs[0], refs[1], refs[2]], lineOptions, theme) : null;
-  if (item.kind === 'angleBisector') return refs.length >= 3 ? createAngleBisectorRay(board, [refs[0], refs[1], refs[2]], lineOptions, theme) : null;
-  if (item.kind === 'angle') return refs.length >= 3 ? createAngle(board, [refs[0], refs[1], refs[2]], {
-    ...lineOptions, fillColor: theme[item.color], highlightFillColor: hoverColor,
-    fillOpacity: item.style?.fillOpacity ?? 0.1, highlightFillOpacity: item.style?.highlightFillOpacity ?? 0.28,
-    radius: item.style?.angleRadius ?? DEFAULT_ANGLE_RADIUS, fixed: true, layer,
-  }, theme) : null;
-  if (item.kind === 'nonReflexAngle') return refs.length >= 3 ? createNonReflexAngle(board, [refs[0], refs[1], refs[2]], {
-    ...lineOptions, fillColor: theme[item.color], highlightFillColor: hoverColor,
-    fillOpacity: item.style?.fillOpacity ?? 0.1, highlightFillOpacity: item.style?.highlightFillOpacity ?? 0.28,
-    radius: item.style?.angleRadius ?? DEFAULT_ANGLE_RADIUS, fixed: true, layer,
-  }, theme) : null;
-  if (item.kind === 'rightAngle') return refs.length >= 3 ? createRightAngleMarker(board, [refs[0], refs[1], refs[2]], {
-    ...lineOptions, fillColor: theme[item.color], highlightFillColor: hoverColor,
-    fillOpacity: item.style?.fillOpacity ?? 0.1, highlightFillOpacity: item.style?.highlightFillOpacity ?? 0.28,
-    size: item.style?.angleRadius ?? DEFAULT_RIGHT_ANGLE_RADIUS, fixed: true, layer,
-  }, theme) : null;
-  if (item.kind === 'perpendicularMark') return refs.length >= 3 ? createRightAngleMarker(board, [refs[0], refs[1], refs[2]], {
-    ...lineOptions, fillColor: theme[item.color], highlightFillColor: hoverColor,
-    fillOpacity: item.style?.fillOpacity ?? 0.1, highlightFillOpacity: item.style?.highlightFillOpacity ?? 0.28,
-    size: item.style?.angleRadius ?? DEFAULT_RIGHT_ANGLE_RADIUS, fixed: true, layer,
-  }, theme) : null;
-  if (item.kind === 'congruenceMark') return refs.length >= 2 ? createCongruenceMark(
-    board,
-    [refs[0], refs[1]],
-    item.properties?.markCount ?? 1,
-    { ...lineOptions, markHeight: item.style?.markHeight ?? 0.32 },
-    theme,
-  ) : null;
-  if (item.kind === 'parallelMark') return refs.length >= 2 ? createParallelMark(
-    board,
-    [refs[0], refs[1]],
-    item.properties?.markCount ?? 1,
-    { ...lineOptions, markHeight: item.style?.markHeight ?? 0.42 },
-    theme,
-  ) : null;
-  if (item.kind === 'measureTicks') return refs.length >= 1 ? createTicks(
-    board,
-    [refs[0], tickDistance(item, elements, spec)],
-    { ...lineOptions, majorHeight: item.style?.markHeight ?? 10, minorTicks: item.properties?.minorTickCount ?? 4 },
-    theme,
-  ) : null;
-  if (item.kind === 'dimensionLine') return refs.length >= 2 ? createDimensionLine(
-    board,
-    [refs[0], refs[1]],
-    () => liftedIntoHeader ? '' : reactiveText(item, elements, spec) ?? measurementText(item, elements, spec),
-    item.properties?.offset ?? 0.35,
-    { ...lineOptions, fontSize: item.style?.labelSize },
-    theme,
-  ) : null;
-  if (item.kind === 'grid') return refs.length >= 4 ? createGridOverlay(
-    board,
-    [refs[0], refs[1], refs[2], refs[3]],
-    item.properties?.rows ?? 4,
-    item.properties?.columns ?? 4,
-    lineOptions,
-    theme,
-  ) : null;
-  if (item.kind === 'areaDecomposition') return refs.length >= 3 ? createAreaDecomposition(
-    board,
-    refs,
-    item.properties?.rows ?? 2,
-    item.properties?.columns ?? 2,
-    { highlight: highlightable, fillColor: theme[item.color], fillOpacity: item.style?.fillOpacity ?? 0.1, borders: lineOptions, fixed: true, layer },
-    theme,
-  ) : null;
-  const anchor = refs[0];
-  const dynamicText = () => annotationTextHtml(item, elements, spec);
-  const textOffset = item.style?.textOffset ?? (item.kind === 'label' ? [0.04, 0.04] : [0.25, 0.35]);
-  const viewportPosition = item.kind === 'infoPanel' && item.properties?.anchorMode === 'viewport'
-    ? item.properties.viewportPosition
-    : undefined;
-  const viewportPanelAnchor = viewportPosition ? viewportPanelAnchors(viewportPosition) : undefined;
-  const textCoordinates: [() => number, () => number, () => string] | null = viewportPosition
-    ? [
-      () => viewportPositionCoordinates(board, viewportPosition, spec.viewport.bounds)[0],
-      () => viewportPositionCoordinates(board, viewportPosition, spec.viewport.bounds)[1],
-      dynamicText,
-    ]
-    : anchor
-      ? [
-        () => referencedLabelAnchor(item.refs[0], item.properties?.anchorParameter ?? 0.5, elements, spec)[0] + textOffset[0],
-        () => referencedLabelAnchor(item.refs[0], item.properties?.anchorParameter ?? 0.5, elements, spec)[1] + textOffset[1],
-        dynamicText,
-      ]
-      : null;
-  return textCoordinates ? createText(board, textCoordinates, {
-    highlight: highlightable,
-    color: theme[item.color],
-    fixed: true,
-    layer,
-    ...(item.style?.labelSize !== undefined ? { fontSize: item.style.labelSize } : {}),
-    ...(viewportPanelAnchor ?? {}),
-    cssClass: item.kind === 'formula'
-      ? 'font-diagram text-sm italic'
-      : item.kind === 'infoPanel'
-        ? 'JXGtext matematika-info-panel'
-        : 'font-diagram text-sm',
-    ...(item.kind === 'infoPanel' ? {
-      highlightCssClass: 'JXGtext matematika-info-panel',
-      highlightStrokeColor: theme[item.color],
-      highlightStrokeOpacity: 1,
-    } : {}),
-  }, theme) : null;
-}
-
-type KeyboardAdjustmentKey = 'ArrowLeft' | 'ArrowRight' | 'ArrowUp' | 'ArrowDown' | 'Home' | 'End';
-
-function attachSelection(
-  element: any,
-  item: DiagramSceneItem,
-  mode: DiagramRendererProps['mode'],
-  onSelectionChange?: (id: string) => void,
-  onTargetHighlight?: (target: string | null) => void,
-  onKeyboardAdjust?: (key: KeyboardAdjustmentKey, largeStep: boolean) => void,
-) {
-  if (!element) return;
-  const node = element.rendNode as HTMLElement | undefined;
-  node?.setAttribute('data-diagram-object-id', item.id);
-  node?.setAttribute('data-diagram-highlightable', String(item.selection.highlightable !== false));
-  node?.setAttribute('aria-label', item.selection.ariaLabel ?? item.label);
-  if (item.style?.preserveColorOnHighlight) node?.setAttribute('data-diagram-preserve-color', 'true');
-  if (item.selection.role) node?.setAttribute('data-selection-role', item.selection.role);
-  if (item.target) {
-    const target = item.targetId ?? item.id;
-    node?.setAttribute('data-diagram-target', target);
-    node?.setAttribute('tabindex', '0');
-    if (item.selection.highlightable !== false) {
-      node?.addEventListener('mouseenter', () => onTargetHighlight?.(target));
-      node?.addEventListener('mouseleave', () => onTargetHighlight?.(null));
-      node?.addEventListener('focus', () => onTargetHighlight?.(target));
-      node?.addEventListener('blur', () => onTargetHighlight?.(null));
-    }
-  }
-  if (!item.selection.selectable) return;
-  if (onKeyboardAdjust) {
-    node?.setAttribute('tabindex', '0');
-    node?.setAttribute('aria-keyshortcuts', 'ArrowLeft ArrowRight ArrowUp ArrowDown Home End');
-    if ('min' in item) {
-      node?.setAttribute('role', 'slider');
-      node?.setAttribute('aria-valuemin', String(item.min));
-      node?.setAttribute('aria-valuemax', String(item.max));
-      node?.setAttribute('aria-valuenow', String(item.value));
-    } else {
-      node?.setAttribute('role', 'button');
-      node?.setAttribute('aria-roledescription', 'punto móvil del diagrama');
-    }
-    node?.addEventListener('keydown', (event) => {
-      if (!['ArrowLeft', 'ArrowRight', 'ArrowUp', 'ArrowDown', 'Home', 'End'].includes(event.key)) return;
-      event.preventDefault();
-      onKeyboardAdjust(event.key as KeyboardAdjustmentKey, event.shiftKey);
-    });
-  }
-  if (mode !== 'editor') return;
-  node?.setAttribute('tabindex', '0');
-  node?.addEventListener('keydown', (event) => {
-    if (event.key !== 'Enter' && event.key !== ' ') return;
-    event.preventDefault();
-    onSelectionChange?.(item.id);
-  });
-  element.on?.('down', () => onSelectionChange?.(item.id));
-}
-
-function nativeElementLabel(element: any): any | null {
-  const label = element?.label;
-  return label && label !== element && typeof label.setAttribute === 'function' ? label : null;
-}
-
-function attachLabelSelection(
-  element: any,
-  item: DiagramSceneItem,
-  mode: DiagramRendererProps['mode'],
-  onSelectionChange?: (id: string) => void,
-  onTargetHighlight?: (target: string | null) => void,
-) {
-  const label = nativeElementLabel(element);
-  if (!label) return;
-  attachSelection(label, item, mode, onSelectionChange, onTargetHighlight);
-  const node = label.rendNode as HTMLElement | undefined;
-  node?.setAttribute('data-diagram-label-for', item.id);
-  // The geometric object remains the single keyboard stop; its label mirrors
-  // pointer interaction without duplicating the same control in the tab order.
-  node?.removeAttribute('tabindex');
-}
-
-function synchronizeElementAndLabelHover(element: any, item: DiagramSceneItem) {
-  if (item.selection.highlightable === false) return;
-  const label = nativeElementLabel(element);
-  if (!label) return;
-  const labelNode = label.rendNode as HTMLElement | undefined;
-  const pointLike = 'constraint' in item
-    || ('kind' in item && (item.kind === 'intersection' || item.kind === 'midpoint' || item.kind === 'perpendicularFoot'));
-  const highlightPair = () => {
-    if (pointLike) element.setAttribute?.({ size: item.style?.highlightPointSize ?? 6 });
-    element.highlight?.();
-    label.highlight?.();
-    labelNode?.classList.add('matematika-point-label--highlight');
-    labelNode?.style.setProperty('transform', 'scale(1.12)', 'important');
-  };
-  const restorePair = () => {
-    if (pointLike) element.setAttribute?.({ size: item.style?.pointSize ?? 4 });
-    element.noHighlight?.();
-    label.noHighlight?.();
-    labelNode?.classList.remove('matematika-point-label--highlight');
-    labelNode?.style.removeProperty('transform');
-  };
-  element.on?.('over', highlightPair);
-  element.on?.('out', restorePair);
-  label.on?.('over', highlightPair);
-  label.on?.('out', restorePair);
-}
-
-/**
- * JSXGraph implementa los atractores convirtiendo temporalmente un punto libre
- * en glider. Matematika usa una única política de imán: el ajuste solo dura
- * mientras ese punto se arrastra y nunca crea una relación persistente.
- */
-function releaseAuthoredAttraction(point: DiagramPoint, elements: Record<string, any>): boolean {
-  const renderedPoint = elements[point.id];
-  if (!renderedPoint || typeof renderedPoint.popSlideObject !== 'function') return false;
-  const authoredAttractors = (point.attractorIds ?? []).map(id => elements[id]).filter(Boolean);
-  if (authoredAttractors.length === 0) return false;
-  let released = false;
-  let remaining = authoredAttractors.length + 1;
-  while (remaining > 0 && renderedPoint.slideObject && authoredAttractors.includes(renderedPoint.slideObject)) {
-    renderedPoint.popSlideObject();
-    released = true;
-    remaining -= 1;
-  }
-  return released;
-}
-
-function releaseInactiveAttractions(spec: DiagramSpecV2, elements: Record<string, any>, activePointId: string): boolean {
-  return spec.points.reduce((released, point) => (
-    point.id === activePointId ? released : releaseAuthoredAttraction(point, elements) || released
-  ), false);
-}
-
-function suspendInactiveAttractors(spec: DiagramSpecV2, elements: Record<string, any>, activePointId: string): () => void {
-  const suspended = spec.points.flatMap(point => {
-    const renderedPoint = elements[point.id];
-    if (point.id === activePointId || !renderedPoint?.visProp) return [];
-    const attractors = renderedPoint.visProp.attractors;
-    renderedPoint.visProp.attractors = [];
-    return [{ renderedPoint, attractors }];
-  });
-  return () => suspended.forEach(({ renderedPoint, attractors }) => {
-    renderedPoint.visProp.attractors = attractors;
-  });
-}
-
-function syncNativeElementLabel(
-  element: any,
-  state: { visible: boolean; color: string; highlightColor: string; opacity: number; text: string; fontSize?: number },
-) {
-  const label = nativeElementLabel(element);
-  if (!label) return;
-  label.setText?.(renderKatexTextToHtml(state.text));
-  (label.rendNode as HTMLElement | undefined)?.style.setProperty('--diagram-label-highlight-color', state.highlightColor);
-  label.setAttribute({
-    visible: state.visible && state.text.trim().length > 0,
-    color: state.color,
-    strokeColor: state.color,
-    highlightColor: state.highlightColor,
-    highlightStrokeColor: state.highlightColor,
-    opacity: state.opacity,
-    strokeOpacity: state.opacity,
-    highlightStrokeOpacity: state.opacity,
-    ...(state.fontSize !== undefined ? { fontSize: state.fontSize } : {}),
-  });
-}
-
-function sameBounds(left: DiagramBounds, right: DiagramBounds): boolean {
-  return left.every((value, index) => Math.abs(value - right[index]) <= 1e-8);
 }
 
 const DiagramRendererContent: React.FC<DiagramRendererProps> = ({
@@ -910,17 +57,18 @@ const DiagramRendererContent: React.FC<DiagramRendererProps> = ({
   stepControls,
 }) => {
   const spec = useMemo(() => withResolvedPointConstraints(inputSpec), [inputSpec]);
-  const targetRegistry = useDiagramTargetRegistry();
-  const interactionCallbacksRef = useRef({ onSelectionChange, onPointMove, onCanvasPointCreate });
-  const localTargetHighlightRef = useRef<string | null>(null);
-  useEffect(() => {
-    interactionCallbacksRef.current = { onSelectionChange, onPointMove, onCanvasPointCreate };
-  }, [onCanvasPointCreate, onPointMove, onSelectionChange]);
-  const setVariable = useMathStore(state => state.setVariable);
-  const setTargetHighlight = useCallback((target: string | null) => {
-    localTargetHighlightRef.current = target;
-    setVariable('highlight', target ? `${spec.componentId}:${target}` : null);
-  }, [setVariable, spec.componentId]);
+
+  const {
+    interactionCallbacksRef,
+    localTargetHighlightRef,
+    setTargetHighlight,
+  } = useDiagramSelection({
+    spec,
+    mode,
+    onSelectionChange,
+    onPointMove,
+    onCanvasPointCreate,
+  });
 
   const scopedStoreStep = useMathStore(state => state.variables?.[`step:${spec.componentId}`]);
   const stepSync = useDiagramStepSync();
@@ -930,41 +78,13 @@ const DiagramRendererContent: React.FC<DiagramRendererProps> = ({
   const effectiveStepId = activeStepId
     ?? synchronizedStepId
     ?? ((typeof scopedStoreStep === 'string' ? scopedStoreStep.replace(`${spec.componentId}:`, '') : '') || spec.steps[0]?.id);
+
   const [liveSceneVariables, setLiveSceneVariables] = useState<Record<string, number>>(() => {
     try { return liveVariables({}, spec); } catch { return {}; }
   });
   const liveVariablesSignature = useRef('');
-  const runtimeSequenceTargets = mode === 'runtime'
-    ? [...new Set(spec.steps.flatMap(step => step.visibleTargets ?? []))]
-    : [];
-  const initialViewportBounds = runtimeSequenceTargets.length > 0
-    ? fitViewport(spec, runtimeSequenceTargets, Math.min(spec.viewport.padding, 0.06))
-    : spec.viewport.bounds;
-  const [viewportState, setViewportState] = useState({
-    base: spec.viewport.bounds,
-    current: initialViewportBounds,
-  });
-  const bounds = sameBounds(viewportState.base, spec.viewport.bounds)
-    ? viewportState.current
-    : spec.viewport.bounds;
-  const revision = useMemo(() => sceneRevision(spec), [spec]);
-  const registeredTargets = useMemo(() => [
-    ...[...spec.points, ...spec.elements, ...spec.sliders]
-      .filter(item => item.target)
-      .map(item => ({ targetId: item.targetId ?? item.id, objectId: item.id, label: item.label, kind: 'object' as const })),
-    ...spec.groups.filter(group => group.target)
-      .map(group => ({ targetId: group.targetId ?? group.id, objectId: group.id, label: group.label, kind: 'object' as const })),
-    ...spec.steps.map(step => ({ targetId: step.id, objectId: step.id, label: step.label, kind: 'step' as const })),
-  ], [spec.elements, spec.points, spec.sliders, spec.steps]);
 
-  useEffect(() => targetRegistry.register(spec.componentId, registeredTargets), [registeredTargets, spec.componentId, targetRegistry]);
-
-  const commitBounds = (next: DiagramBounds) => {
-    setViewportState({ base: spec.viewport.bounds, current: next });
-    onViewportChange?.(next);
-  };
-
-  const liveViewportSpec: DiagramSpecV2 = {
+  const liveViewportSpec: DiagramSpecV2 = useMemo(() => ({
     ...spec,
     points: spec.points.map(point => {
       const x = liveSceneVariables[`${point.id}.x`];
@@ -975,118 +95,78 @@ const DiagramRendererContent: React.FC<DiagramRendererProps> = ({
       const value = liveSceneVariables[slider.id];
       return Number.isFinite(value) ? { ...slider, value } : slider;
     }),
-  };
-  const viewportItemIds = runtimeSequenceTargets.length > 0
-    ? runtimeSequenceTargets
-    : createScenePlan(liveViewportSpec, { activeStepId: effectiveStepId })
-      .filter(entry => entry.visible)
-      .map(entry => entry.item.id);
-  const viewportItemIdSet = new Set(viewportItemIds);
-  const fitRelevantViewport = () => fitViewport(
-    liveViewportSpec,
-    viewportItemIds,
-    Math.min(spec.viewport.padding, 0.06),
-  );
-  const runtimeSpec = withViewportBounds(liveViewportSpec, bounds);
-  const missingItems = offscreenItemIds(runtimeSpec, bounds).filter(id => viewportItemIdSet.has(id));
+  }), [liveSceneVariables, spec]);
+
   const allHeaderItems = useMemo(() => headerReadingItems(spec), [spec]);
   const allHeaderItemIds = useMemo(() => new Set(allHeaderItems.map(item => item.id)), [allHeaderItems]);
+
   const hasTopViewportPanel = useMemo(() => spec.elements.some(item => (
     item.kind === 'infoPanel'
     && item.properties?.anchorMode === 'viewport'
     && (item.properties.viewportPosition?.[1] ?? 0) <= 0.34
     && !allHeaderItemIds.has(item.id)
   )), [allHeaderItemIds, spec.elements]);
+
   const headerItems = useMemo(() => {
     const visibleIds = new Set(createScenePlan(spec, { activeStepId: effectiveStepId })
       .filter(entry => entry.visible)
       .map(entry => entry.item.id));
     return allHeaderItems.filter(item => visibleIds.has(item.id));
   }, [allHeaderItems, effectiveStepId, spec]);
-  const headerItemIds = useMemo(() => new Set(headerItems.map(item => item.id)), [headerItems]);
+
   const allHeaderReadings = allHeaderItems
     .map(item => ({ item, text: headerReadingText(item, liveSceneVariables) }))
     .filter((entry): entry is { item: DiagramElement; text: string } => Boolean(entry.text));
   const compactReadings = compactHeaderReadings(allHeaderReadings);
   const visibleHeaderItemIds = new Set(headerItems.map(item => item.id));
+
   const rendererRef = useRef<HTMLDivElement>(null);
   const headerRef = useRef<HTMLElement>(null);
   const toolbarRef = useRef<HTMLDivElement>(null);
+
   const showStepControls = (stepControls ?? mode === 'runtime') && spec.steps.length > 0;
   const showToolbar = viewportControls || showStepControls;
-  const [safeArea, setSafeArea] = useState({ top: 150, right: 20, bottom: showToolbar ? 68 : 20, left: 20 });
-  const [viewportSafeArea, setViewportSafeArea] = useState({ top: 150, right: 20, bottom: showToolbar ? 68 : 20, left: 20 });
-  const [toolbarLayout, setToolbarLayout] = useState<'bar' | 'rails'>('bar');
-  const [viewportMenuOpen, setViewportMenuOpen] = useState(false);
 
-  useEffect(() => {
-    let cancelled = false;
-    const resizeObserver = typeof ResizeObserver === 'undefined' ? null : new ResizeObserver(() => updateSafeArea());
-    const updateSafeArea = () => {
-      const rootBounds = rendererRef.current?.getBoundingClientRect();
-      const headerChildren = [...(headerRef.current?.children ?? [])];
-      const visibleHeaderChildren = headerChildren.filter(child => (
-        child.tagName !== 'OUTPUT' || Boolean(child.querySelector('span:not(.invisible)'))
-      ));
-      const visibleHeaderContentBottom = rootBounds && visibleHeaderChildren.length > 0
-        ? Math.max(
-          ...visibleHeaderChildren.map(child => child.getBoundingClientRect().bottom - rootBounds.top),
-          0,
-        )
-        : headerRef.current?.getBoundingClientRect().height ?? 130;
-      const viewportHeaderBottom = Math.ceil(visibleHeaderContentBottom) + 10;
-      const stableHeaderBottom = Math.ceil(headerRef.current?.getBoundingClientRect().height ?? 130) + 10;
-      const bottom = Math.ceil(toolbarRef.current?.getBoundingClientRect().height ?? (showToolbar ? 56 : 0)) + (showToolbar ? 8 : 20);
-      const useRails = Boolean(showToolbar && rootBounds && (rootBounds.width < 480 || rootBounds.height < 400));
-      const headerInset = typeof window !== 'undefined'
-        && typeof window.matchMedia === 'function'
-        && window.matchMedia('(min-width: 640px)').matches ? 32 : 20;
-      setToolbarLayout(current => current === (useRails ? 'rails' : 'bar') ? current : (useRails ? 'rails' : 'bar'));
-      const viewportArea = {
-        top: viewportHeaderBottom,
-        right: headerInset,
-        bottom: useRails ? 16 : bottom,
-        left: headerInset,
-      };
-      const geometryBaseArea = useRails
-        ? {
-          top: stableHeaderBottom + (hasTopViewportPanel ? 84 : 0),
-          right: showStepControls ? 52 : 16,
-          bottom: 16,
-          left: viewportControls ? 52 : 16,
-        }
-        : { ...viewportArea, top: stableHeaderBottom + (hasTopViewportPanel ? 84 : 0) };
-      const geometryArea = geometryBaseArea;
-      const sameArea = (current: typeof geometryArea, next: typeof geometryArea) => (
-        current.top === next.top && current.right === next.right && current.bottom === next.bottom && current.left === next.left
-      );
-      setViewportSafeArea(current => sameArea(current, viewportArea) ? current : viewportArea);
-      setSafeArea(current => sameArea(current, geometryArea) ? current : geometryArea);
-    };
-    updateSafeArea();
-    if (headerRef.current) resizeObserver?.observe(headerRef.current);
-    if (toolbarRef.current) resizeObserver?.observe(toolbarRef.current);
-    if (rendererRef.current) resizeObserver?.observe(rendererRef.current);
-    const rendererNode = rendererRef.current;
-    const mutationObserver = typeof MutationObserver === 'undefined' || !rendererNode
-      ? null
-      : new MutationObserver(updateSafeArea);
-    if (rendererNode) mutationObserver?.observe(rendererNode, { childList: true, subtree: true });
-    const frameId = typeof window !== 'undefined' && typeof window.requestAnimationFrame === 'function'
-      ? window.requestAnimationFrame(() => updateSafeArea())
-      : null;
-    if (typeof document !== 'undefined' && document.fonts?.ready) {
-      void document.fonts.ready.then(() => {
-        if (!cancelled) updateSafeArea();
-      });
-    }
-    return () => {
-      cancelled = true;
-      if (frameId !== null) window.cancelAnimationFrame(frameId);
-      resizeObserver?.disconnect();
-      mutationObserver?.disconnect();
-    };
-  }, [effectiveStepId, hasTopViewportPanel, showStepControls, showToolbar, spec.componentId, viewportControls]);
+  const {
+    bounds,
+    commitBounds,
+    fitRelevantViewport,
+    missingItems,
+    safeArea,
+    viewportSafeArea,
+    toolbarLayout,
+    viewportMenuOpen,
+    setViewportMenuOpen,
+  } = useDiagramViewport({
+    spec: liveViewportSpec,
+    mode,
+    effectiveStepId,
+    hasTopViewportPanel,
+    viewportControls,
+    showStepControls,
+    showToolbar,
+    onViewportChange,
+    rendererRef,
+    headerRef,
+    toolbarRef,
+  });
+
+  const revision = useMemo(() => sceneRevision(spec), [spec]);
+
+  const { handleBoardInit, handleBoardUpdate } = useBoardLifecycle({
+    spec,
+    mode,
+    selectedIds,
+    highlightedIds,
+    effectiveStepId,
+    bounds,
+    interactionCallbacksRef,
+    setTargetHighlight,
+    localTargetHighlightRef,
+    allHeaderItemIds,
+    setLiveSceneVariables,
+    liveVariablesSignature,
+  });
 
   return (
     <div
@@ -1106,537 +186,115 @@ const DiagramRendererContent: React.FC<DiagramRendererProps> = ({
       } as React.CSSProperties}
     >
       <MathBoard
-          scopeId={spec.componentId}
-          boundingbox={bounds}
-          axis={spec.axis}
-          grid={spec.grid}
-          pan
-          zoom
-          revision={revision}
-          safeArea={safeArea}
-          viewportSafeArea={viewportSafeArea}
-          ariaLabel={`${spec.title}. Diagrama matemático interactivo.`}
-          className="relative min-h-[360px] h-full w-full overflow-hidden rounded-[20px] font-diagram"
-          onBoundingBoxChange={(next) => {
-            if (next.some((value, index) => Math.abs(value - bounds[index]) > 1e-7)) commitBounds(next);
-          }}
-          onInit={(board, elements, theme) => {
-          if (mode === 'editor') {
-            board.on('down', (event: unknown) => {
-              const createPointAt = interactionCallbacksRef.current.onCanvasPointCreate;
-              if (!createPointAt) return;
-              const objects = board.getAllObjectsUnderMouse?.(event);
-              if (Array.isArray(objects) && objects.length > 0) return;
-              const coordinates = board.getUsrCoordsOfMouse?.(event);
-              if (Array.isArray(coordinates) && coordinates.length >= 2) createPointAt(coordinates[0], coordinates[1]);
-            });
-          }
-          createSceneConstructionPlan(spec).forEach(entry => {
-            const sceneItem = entry.item;
-            const directInteractionLocked = entry.locked || !sceneItem.selection.selectable;
-            const highlightable = sceneItem.selection.highlightable !== false;
-            const hoverColor = !highlightable || sceneItem.style?.preserveColorOnHighlight ? theme[sceneItem.color] : theme.ocre;
-            const pointLabelOptions = {
-              highlight: highlightable,
-              visible: spec.showLabels !== false && (!('showLabel' in sceneItem) || sceneItem.showLabel !== false),
-              ...('constraint' in sceneItem && sceneItem.style?.labelSize !== undefined ? { fontSize: sceneItem.style.labelSize } : {}),
-              ...(sceneItem.style?.labelOffset ? { offset: sceneItem.style.labelOffset } : {}),
-              highlightColor: hoverColor,
-              highlightStrokeColor: hoverColor,
-            };
-            if ('constraint' in sceneItem) {
-              const onConstraint = sceneItem.constraint === 'constrained'
-                ? (spec.constraints ?? []).find(constraint => (
-                  constraint.enabled
-                  && constraint.kind === 'on'
-                  && constraint.refs[0] === sceneItem.id
-                  && elements[constraint.refs[1]]
-                ))
-                : undefined;
-              const gliderTarget = sceneItem.constraint === 'glider'
-                ? sceneItem.gliderTarget
-                : onConstraint?.refs[1];
-              const attractors = sceneItem.attractorIds?.map(id => elements[id]).filter(Boolean) ?? [];
-              const attractionOptions = !directInteractionLocked
-                ? {
-                  attractors,
-                  attractorDistance: sceneItem.attractorDistance ?? 0.4,
-                  snatchDistance: sceneItem.snatchDistance ?? 0.6,
-                }
-                : {};
-              const item = sceneItem.constraint === 'derived' && sceneItem.xExpression && sceneItem.yExpression
-                ? createPoint(board, [
-                  () => {
-                    try { return evaluateMathExpression(sceneItem.xExpression ?? '0', liveVariables(elements, spec)); } catch { return sceneItem.x; }
-                  },
-                  () => {
-                    try { return evaluateMathExpression(sceneItem.yExpression ?? '0', liveVariables(elements, spec)); } catch { return sceneItem.y; }
-                  },
-                ], {
-                  highlight: highlightable,
-                  name: renderKatexTextToHtml(sceneItem.label),
-                  fixed: true,
-                  ...(sceneItem.style?.pointSize !== undefined ? { size: sceneItem.style.pointSize } : {}),
-                  fillColor: theme[sceneItem.color],
-                  strokeColor: theme[sceneItem.color],
-                  highlightFillColor: hoverColor,
-                  highlightStrokeColor: hoverColor,
-                  label: pointLabelOptions,
-                  layer: itemLayerNumber(spec, sceneItem),
-                }, theme)
-                : gliderTarget
-                ? createGlider(board, [sceneItem.x, sceneItem.y, elements[gliderTarget]], {
-                  highlight: highlightable,
-                  name: renderKatexTextToHtml(sceneItem.label),
-                  fixed: directInteractionLocked,
-                  ...(sceneItem.style?.pointSize !== undefined ? { size: sceneItem.style.pointSize } : {}),
-                  fillColor: theme[sceneItem.color],
-                  strokeColor: theme[sceneItem.color],
-                  highlightFillColor: hoverColor,
-                  highlightStrokeColor: hoverColor,
-                  label: pointLabelOptions,
-                  layer: itemLayerNumber(spec, sceneItem),
-                }, theme)
-                : createPoint(board, [sceneItem.x, sceneItem.y], {
-                  highlight: highlightable,
-                  name: renderKatexTextToHtml(sceneItem.label),
-                  fixed: directInteractionLocked,
-                  ...(sceneItem.style?.pointSize !== undefined ? { size: sceneItem.style.pointSize } : {}),
-                  fillColor: theme[sceneItem.color],
-                  strokeColor: theme[sceneItem.color],
-                  highlightFillColor: hoverColor,
-                  highlightStrokeColor: hoverColor,
-                  label: pointLabelOptions,
-                  layer: itemLayerNumber(spec, sceneItem),
-                  ...attractionOptions,
-                  ...(sceneItem.snapToGrid && !directInteractionLocked ? {
-                    snapToGrid: true,
-                    snapSizeX: sceneItem.snapSize ?? 0.5,
-                    snapSizeY: sceneItem.snapSize ?? 0.5,
-                  } : {}),
-                }, theme);
-              elements[sceneItem.id] = item;
-              if (!directInteractionLocked && sceneItem.constraint !== 'derived') {
-                let enforcing = false;
-                item.on('drag', () => {
-                  if (enforcing) return;
-                  releaseInactiveAttractions(spec, elements, sceneItem.id);
-                  const liveSpec: DiagramSpecV2 = {
-                    ...spec,
-                    points: spec.points.map(point => elements[point.id]
-                      ? { ...point, x: elements[point.id].X(), y: elements[point.id].Y() }
-                      : point),
-                    sliders: spec.sliders.map(slider => elements[slider.id]?.Value
-                      ? { ...slider, value: elements[slider.id].Value() }
-                      : slider),
-                  };
-                  const nextSpec = withMovedPoint(liveSpec, sceneItem.id, item.X(), item.Y());
-                  enforcing = true;
-                  const restoreInactiveAttractors = suspendInactiveAttractors(spec, elements, sceneItem.id);
-                  try {
-                    nextSpec.points.forEach(nextPoint => {
-                      const renderedPoint = elements[nextPoint.id];
-                      if (!renderedPoint) return;
-                      if (Math.abs(nextPoint.x - renderedPoint.X()) <= 1e-8 && Math.abs(nextPoint.y - renderedPoint.Y()) <= 1e-8) return;
-                      renderedPoint.moveTo([nextPoint.x, nextPoint.y], 0);
-                    });
-                  } finally {
-                    restoreInactiveAttractors();
-                    enforcing = false;
-                  }
-                });
-              }
-              if (!directInteractionLocked && sceneItem.constraint !== 'derived') item.on('up', () => {
-                const finalX = item.X();
-                const finalY = item.Y();
-                const released = releaseAuthoredAttraction(sceneItem, elements);
-                const releasedOthers = releaseInactiveAttractions(spec, elements, sceneItem.id);
-                if (released || releasedOthers) board.update();
-                interactionCallbacksRef.current.onPointMove?.(sceneItem.id, finalX, finalY);
-              });
-            } else if ('kind' in sceneItem) {
-              elements[sceneItem.id] = createElement(
-                board,
-                elements,
-                sceneItem,
-                theme,
-                itemLayerNumber(spec, sceneItem),
-                spec,
-                mode === 'runtime' && allHeaderItemIds.has(sceneItem.id),
-              );
-            } else {
-              const maximum = sliderMaximum(sceneItem, elements, spec);
-              elements[sceneItem.id] = createSlider(board, [[sceneItem.x, sceneItem.y], [sceneItem.x + 2.6, sceneItem.y]], [sceneItem.min, Math.min(sceneItem.value, maximum), maximum], {
-                highlight: highlightable,
-                name: renderKatexTextToHtml(sceneItem.label),
-                snapWidth: sceneItem.step,
-                fillColor: theme[sceneItem.color],
-                strokeColor: theme[sceneItem.color],
-                highlightFillColor: hoverColor,
-                highlightStrokeColor: hoverColor,
-                ...(!highlightable ? {
-                  baseline: { highlight: false, strokeColor: theme.pizarra, strokeWidth: 2 },
-                  highline: { highlight: false, strokeColor: theme.terracota, strokeWidth: 3 },
-                  point1: { highlight: false },
-                  point2: { highlight: false },
-                } : {}),
-                label: { highlight: highlightable, highlightColor: hoverColor, highlightStrokeColor: hoverColor },
-                fixed: directInteractionLocked,
-                layer: itemLayerNumber(spec, sceneItem),
-              }, theme);
-            }
-            const element = elements[sceneItem.id];
-            const keyboardAdjust = 'constraint' in sceneItem && !directInteractionLocked && sceneItem.constraint !== 'derived'
-              ? (key: 'ArrowLeft' | 'ArrowRight' | 'ArrowUp' | 'ArrowDown' | 'Home' | 'End', largeStep: boolean) => {
-                if (key === 'Home' || key === 'End') return;
-                releaseInactiveAttractions(spec, elements, sceneItem.id);
-                const step = (bounds[2] - bounds[0]) / (largeStep ? 20 : 100);
-                const dx = key === 'ArrowLeft' ? -step : key === 'ArrowRight' ? step : 0;
-                const dy = key === 'ArrowDown' ? -step : key === 'ArrowUp' ? step : 0;
-                const requested = { x: element.X() + dx, y: element.Y() + dy };
-                const liveSpec: DiagramSpecV2 = {
-                  ...spec,
-                  points: spec.points.map(point => elements[point.id]
-                    ? { ...point, x: elements[point.id].X(), y: elements[point.id].Y() }
-                    : point),
-                  sliders: spec.sliders.map(slider => elements[slider.id]?.Value
-                    ? { ...slider, value: elements[slider.id].Value() }
-                    : slider),
-                };
-                const nextSpec = withMovedPoint(liveSpec, sceneItem.id, requested.x, requested.y);
-                const restoreInactiveAttractors = suspendInactiveAttractors(spec, elements, sceneItem.id);
-                try {
-                  nextSpec.points.forEach(nextPoint => {
-                    const renderedPoint = elements[nextPoint.id];
-                    if (!renderedPoint) return;
-                    renderedPoint.moveTo([nextPoint.x, nextPoint.y], 0);
-                  });
-                } finally {
-                  restoreInactiveAttractors();
-                }
-                releaseAuthoredAttraction(sceneItem, elements);
-                board.update();
-                interactionCallbacksRef.current.onPointMove?.(sceneItem.id, element.X(), element.Y());
-                const node = element.rendNode as HTMLElement | undefined;
-                node?.setAttribute('aria-label', `${sceneItem.selection.ariaLabel ?? sceneItem.label}: x ${element.X().toFixed(2)}, y ${element.Y().toFixed(2)}`);
-              }
-              : 'min' in sceneItem && !directInteractionLocked
-                ? (key: 'ArrowLeft' | 'ArrowRight' | 'ArrowUp' | 'ArrowDown' | 'Home' | 'End', largeStep: boolean) => {
-                  const delta = sceneItem.step * (largeStep ? 10 : 1);
-                  const current = element.Value?.() ?? sceneItem.value;
-                  const maximum = sliderMaximum(sceneItem, elements, spec);
-                  const next = key === 'Home'
-                    ? sceneItem.min
-                    : key === 'End'
-                      ? maximum
-                      : Math.min(maximum, Math.max(sceneItem.min, current + (key === 'ArrowLeft' || key === 'ArrowDown' ? -delta : delta)));
-                  element.setValue?.(next);
-                  board.update();
-                  const node = element.rendNode as HTMLElement | undefined;
-                  node?.setAttribute('aria-valuemax', String(maximum));
-                  node?.setAttribute('aria-valuenow', String(next));
-                  node?.setAttribute('aria-label', `${sceneItem.selection.ariaLabel ?? sceneItem.label}: ${next}`);
-                }
-                : undefined;
-            attachSelection(
-              element,
-              sceneItem,
-              mode,
-              id => interactionCallbacksRef.current.onSelectionChange?.(id),
-              setTargetHighlight,
-              keyboardAdjust,
-            );
-            if ('min' in sceneItem && sceneItem.maxExpression) {
-              element.rendNode?.setAttribute('aria-valuemax', String(sliderMaximum(sceneItem, elements, spec)));
-            }
-            attachLabelSelection(
-              element,
-              sceneItem,
-              mode,
-              id => interactionCallbacksRef.current.onSelectionChange?.(id),
-              setTargetHighlight,
-            );
-            synchronizeElementAndLabelHover(element, sceneItem);
-          });
-
-          // Bind point attractors dynamically after all elements are created to avoid creation-order crashes
-          spec.points.forEach(point => {
-            const element = elements[point.id];
-            if (!element) return;
-            const directInteractionLocked = point.locked || !point.selection.selectable;
-            if (directInteractionLocked) {
-              if (element.visProp) {
-                element.visProp.attractors = [];
-              }
-              return;
-            }
-            const attractors = point.attractorIds?.map(id => elements[id]).filter(Boolean) ?? [];
-            element.setAttribute({
-              attractorDistance: point.attractorDistance ?? 0.4,
-              snatchDistance: point.snatchDistance ?? 0.6,
-            });
-            if (element.visProp) {
-              element.visProp.attractors = attractors;
-            }
-          });
+        scopeId={spec.componentId}
+        boundingbox={bounds}
+        axis={spec.axis}
+        grid={spec.grid}
+        pan
+        zoom
+        revision={revision}
+        safeArea={safeArea}
+        viewportSafeArea={viewportSafeArea}
+        ariaLabel={`${spec.title}. Diagrama matemático interactivo.`}
+        className="relative min-h-[360px] h-full w-full overflow-hidden rounded-[20px] font-diagram"
+        onBoundingBoxChange={(next) => {
+          if (next.some((value, index) => Math.abs(value - bounds[index]) > 1e-7)) commitBounds(next);
         }}
-          onUpdate={(_board, elements, theme, isStep, isHL) => {
-          const storeStep = spec.steps.find(step => isStep(step.id))?.id;
-          const effectiveStep = effectiveStepId || storeStep;
-          const items = [...spec.points, ...spec.elements, ...spec.sliders];
-          const highlightSources = [...items, ...spec.groups];
-          const propHighlights = highlightSources
-            .filter(item => highlightedIds.includes(item.id) || highlightedIds.includes(item.targetId ?? item.id))
-            .map(item => item.id);
-          const storeHighlights = highlightSources
-            .filter(item => isHL(item.targetId ?? item.id))
-            .map(item => item.id);
-          const externalStoreHighlights = storeHighlights.filter(id => {
-            const source = highlightSources.find(item => item.id === id);
-            return (source?.targetId ?? source?.id) !== localTargetHighlightRef.current;
-          });
-          const effectiveHighlights = new Set([...propHighlights, ...storeHighlights]);
-          const externalHighlightSources = new Set([...propHighlights, ...externalStoreHighlights]);
-          const plan = createScenePlan(spec, {
-            activeStepId: effectiveStep,
-            highlightedIds: [...effectiveHighlights],
-            selectedIds,
-          });
-          const externalHighlightRequestsDimming = plan.some(entry => entry.highlighted)
-            && [...externalHighlightSources].some(id => {
-              const source = highlightSources.find(item => item.id === id);
-              return source?.selection.dimOthersOnHighlight !== false;
-            });
-          const shouldDimOthers = plan.some(entry => entry.selected) || externalHighlightRequestsDimming;
-          plan.forEach(entry => {
-            const item = entry.item;
-            const element = elements[item.id];
-            if (!element) return;
-            const externalActive = entry.highlighted || entry.selected;
-            const stepPrimary = entry.stepEmphasis === 'primary';
-            const stepSecondary = entry.stepEmphasis === 'secondary';
-            const active = externalActive || stepPrimary || stepSecondary;
-            const opacity = externalActive || !shouldDimOthers ? 1 : 0.28;
-            const color = externalActive && !item.style?.preserveColorOnHighlight
-              ? theme.ocre
-              : stepPrimary ? theme.terracota : stepSecondary ? theme.pavo : theme[item.color];
-            // Authoring previews must always reveal the object being inspected,
-            // even when the active step, its group or its base visibility hides it.
-            // Runtime publication keeps the explicit highlightVisible contract.
-            const sceneVisible = mode === 'editor' && externalActive
-              ? true
-              : entry.visible || (externalActive && item.style?.highlightVisible === true);
-            const conditionVisible = mode === 'editor' && externalActive
-              ? true
-              : externalActive && item.style?.highlightVisible === true
-              ? true
-              : conditionAllows(item, elements, spec);
-            const visible = sceneVisible && conditionVisible
-              && (('kind' in item && item.kind === 'baseExtension')
-                ? outsideBaseExtension(elements[item.refs[0]], elements[item.refs[1]], elements[item.refs[2]])
-                : true)
-              && (('kind' in item && item.kind === 'intersection')
-                ? intersectionBelongsToSupports(item, element, elements, spec)
-                : true);
-            const base = {
-              visible,
-              fixed: 'kind' in item ? true : entry.locked || !item.selection.selectable,
-            };
-            const hoverColor = item.selection.highlightable === false || item.style?.preserveColorOnHighlight ? theme[item.color] : theme.ocre;
-            const nativeLabelVisible = visible && spec.showLabels !== false
-              && (!('showLabel' in item) || item.showLabel !== false);
-            syncNativeElementLabel(element, {
-              visible: nativeLabelVisible,
-              color,
-              highlightColor: hoverColor,
-              opacity,
-              text: entry.label,
-              fontSize: item.style?.labelSize,
-            });
-            if (element.__matematikaStepLabel !== entry.label) {
-              element.setAttribute?.({ name: renderKatexTextToHtml(entry.label) });
-              element.__matematikaStepLabel = entry.label;
-            }
-            if ('constraint' in item || ('kind' in item && (item.kind === 'intersection' || item.kind === 'midpoint' || item.kind === 'perpendicularFoot'))) {
-              element.setAttribute({
-                ...base,
-                size: active ? item.style?.highlightPointSize ?? 7 : item.style?.pointSize ?? 4,
-                fillColor: color, strokeColor: color, fillOpacity: opacity,
-              });
-            } else if ('min' in item) {
-              const maximum = sliderMaximum(item, elements, spec);
-              if (element.__matematikaMaximum !== maximum) {
-                const current = element.Value?.() ?? item.value;
-                element.setMax?.(maximum);
-                element.setValue?.(Math.min(maximum, Math.max(item.min, current)));
-                element.__matematikaMaximum = maximum;
-              }
-              if (entry.stepValue !== undefined && element.__matematikaStepValue !== entry.stepValue) {
-                element.setValue?.(Math.min(maximum, entry.stepValue));
-                element.__matematikaStepValue = entry.stepValue;
-              } else if (entry.stepValue === undefined && element.__matematikaStepValue !== undefined) {
-                element.setValue?.(Math.min(maximum, item.value));
-                delete element.__matematikaStepValue;
-              }
-              element.rendNode?.setAttribute('aria-valuemax', String(maximum));
-              element.rendNode?.setAttribute('aria-valuenow', String(element.Value?.() ?? item.value));
-              element.setAttribute({ ...base, strokeColor: color, strokeOpacity: opacity });
-            } else if (item.kind === 'polygon' || item.kind === 'areaDecomposition') {
-              element.setAttribute({
-                ...base, fillColor: color,
-                fillOpacity: active ? item.style?.highlightFillOpacity ?? 0.24 : (item.style?.fillOpacity ?? 0.1) * opacity,
-              });
-            } else if (item.kind === 'angle' || item.kind === 'nonReflexAngle' || item.kind === 'rightAngle' || item.kind === 'perpendicularMark') {
-              element.setAttribute({
-                ...base, fillColor: color, strokeColor: color,
-                fillOpacity: active ? item.style?.highlightFillOpacity ?? 0.28 : (item.style?.fillOpacity ?? 0.1) * opacity,
-                strokeWidth: active ? item.style?.highlightStrokeWidth ?? 3 : item.style?.strokeWidth ?? 1.5,
-              });
-            } else if (item.kind === 'measureTicks') {
-              element.setAttribute({
-                ...base,
-                ticksDistance: tickDistance(item, elements, spec),
-                strokeColor: color,
-                strokeOpacity: (item.style?.strokeOpacity ?? 1) * opacity,
-                strokeWidth: externalActive ? item.style?.highlightStrokeWidth ?? 3.6 : item.style?.strokeWidth ?? 2,
-              });
-            } else if (item.kind === 'text' || item.kind === 'label' || item.kind === 'formula' || item.kind === 'infoPanel' || item.kind === 'measurement') {
-              const liftedIntoHeader = mode === 'runtime' && headerItemIds.has(item.id);
-              element.setAttribute({ ...base, visible: base.visible && !liftedIntoHeader, color, opacity });
-              if (item.kind !== 'label') {
-                const textContent = annotationTextHtml(item, elements, spec);
-                if (element.__matematikaLastText !== textContent) {
-                  if (typeof element.setText === 'function') {
-                    element.setText(textContent);
-                  }
-                  element.__matematikaLastText = textContent;
-                }
-              }
-            } else if (item.kind === 'circle') {
-              element.setAttribute({
-                ...base,
-                fillColor: theme[item.color],
-                fillOpacity: externalActive
-                  ? item.style?.highlightFillOpacity ?? 0.2
-                  : (item.style?.fillOpacity ?? 0) * opacity,
-                strokeColor: color,
-                strokeOpacity: (item.style?.strokeOpacity ?? 1) * opacity,
-                strokeWidth: externalActive
-                  ? item.style?.highlightStrokeWidth ?? 3.6
-                  : stepPrimary ? 3.2 : stepSecondary ? 2.6 : item.style?.strokeWidth ?? 2,
-              });
-            } else {
-              element.setAttribute({
-                ...base,
-                strokeColor: color,
-                strokeOpacity: (item.style?.strokeOpacity ?? 1) * opacity,
-                strokeWidth: externalActive
-                  ? item.style?.highlightStrokeWidth ?? 3.6
-                  : stepPrimary ? 3.2 : stepSecondary ? 2.6 : item.style?.strokeWidth ?? 2,
-              });
-            }
-          });
-
-          const nextLiveVariables = liveVariables(elements, spec);
-          const signature = JSON.stringify(nextLiveVariables);
-          if (signature !== liveVariablesSignature.current) {
-            liveVariablesSignature.current = signature;
-            setLiveSceneVariables(nextLiveVariables);
-          }
-        }}
-        >
-          <header ref={headerRef} className="pointer-events-none absolute inset-x-0 top-0 z-20 px-5 pt-5 sm:px-8 sm:pt-6" data-diagram-header>
-            {spec.note && (
-              <p className="mb-3 max-w-[44rem] font-diagram text-sm italic leading-snug text-carbon/65">
-                <ExplorationCue labels={movableCueLabels(spec)}>{spec.note}</ExplorationCue>
-              </p>
-            )}
-            <DiagramTitle layout="inline">{spec.title}</DiagramTitle>
-            {compactReadings.length > 0 && (
-              <output className="mt-2 flex flex-wrap items-baseline gap-x-3 gap-y-1 font-diagram text-base italic text-carbon/80" aria-live="polite" aria-label="Lecturas dinámicas del diagrama">
-                {compactReadings.map(({ id, itemIds, text }, index) => {
-                  const visible = itemIds.some(itemId => visibleHeaderItemIds.has(itemId));
-                  return (
-                    <React.Fragment key={id}>
-                      {index > 0 && <span className={`text-ocre/55 ${visible ? '' : 'invisible'}`} aria-hidden>·</span>}
-                      <span className={visible ? '' : 'invisible'} aria-hidden={visible ? undefined : true}>{text}</span>
-                    </React.Fragment>
-                  );
-                })}
-              </output>
-            )}
-          </header>
-          <StepOverlayPanels spec={spec} activeStepId={effectiveStepId} variables={liveSceneVariables} />
-          {showToolbar && (
-            <div
-              ref={toolbarRef}
-              className="absolute inset-x-0 bottom-0 z-30 grid grid-cols-[auto_1fr] items-center gap-2 px-3 pb-3 pt-2"
-              data-diagram-toolbar
-              data-diagram-toolbar-layout={toolbarLayout}
-            >
-              {viewportControls && (
-                <>
-                  <div className="flex h-9 items-stretch justify-self-start divide-x divide-carbon/10 overflow-hidden rounded-full border border-carbon/15 bg-lienzo/90 backdrop-blur-[2px]" role="group" aria-label="Controles del viewport">
-                    <button type="button" className="w-9 font-diagram text-base text-carbon transition-colors hover:bg-carbon/5 focus-visible:z-10 focus-visible:outline-2 focus-visible:outline-pavo" aria-label="Acercar" onClick={() => commitBounds(zoomViewport(spec, bounds, 1.25))}>+</button>
-                    <button type="button" className="w-9 font-diagram text-base text-carbon transition-colors hover:bg-carbon/5 focus-visible:z-10 focus-visible:outline-2 focus-visible:outline-pavo" aria-label="Alejar" onClick={() => commitBounds(zoomViewport(spec, bounds, 0.8))}>−</button>
-                    <button type="button" className="diagram-viewport-secondary px-2.5 font-diagram text-[11px] text-carbon transition-colors hover:bg-carbon/5 focus-visible:z-10 focus-visible:outline-2 focus-visible:outline-pavo" aria-label="Ajustar todos los objetos al viewport" title="Reencuadrar para mostrar todos los objetos visibles" onClick={() => commitBounds(fitRelevantViewport())}>Ajustar</button>
+        onInit={handleBoardInit}
+        onUpdate={handleBoardUpdate}
+      >
+        <header ref={headerRef} className="pointer-events-none absolute inset-x-0 top-0 z-20 px-5 pt-5 sm:px-8 sm:pt-6" data-diagram-header>
+          {spec.note && (
+            <p className="mb-3 max-w-[44rem] font-diagram text-sm italic leading-snug text-carbon/65">
+              <ExplorationCue labels={movableCueLabels(spec)}>{spec.note}</ExplorationCue>
+            </p>
+          )}
+          <DiagramTitle layout="inline">{spec.title}</DiagramTitle>
+          {compactReadings.length > 0 && (
+            <output className="mt-2 flex flex-wrap items-baseline gap-x-3 gap-y-1 font-diagram text-base italic text-carbon/80" aria-live="polite" aria-label="Lecturas dinámicas del diagrama">
+              {compactReadings.map(({ id, itemIds, text }, index) => {
+                const visible = itemIds.some(itemId => visibleHeaderItemIds.has(itemId));
+                return (
+                  <React.Fragment key={id}>
+                    {index > 0 && <span className={`text-ocre/55 ${visible ? '' : 'invisible'}`} aria-hidden>·</span>}
+                    <span className={visible ? '' : 'invisible'} aria-hidden={visible ? undefined : true}>{text}</span>
+                  </React.Fragment>
+                );
+              })}
+            </output>
+          )}
+        </header>
+        <DiagramKatexOverlay spec={spec} activeStepId={effectiveStepId} variables={liveSceneVariables} />
+        {showToolbar && (
+          <div
+            ref={toolbarRef}
+            className="absolute inset-x-0 bottom-0 z-30 grid grid-cols-[auto_1fr] items-center gap-2 px-3 pb-3 pt-2"
+            data-diagram-toolbar
+            data-diagram-toolbar-layout={toolbarLayout}
+          >
+            {viewportControls && (
+              <>
+                <div className="flex h-9 items-stretch justify-self-start divide-x divide-carbon/10 overflow-hidden rounded-full border border-carbon/15 bg-lienzo/90 backdrop-blur-[2px]" role="group" aria-label="Controles del viewport">
+                  <button type="button" className="w-9 font-diagram text-base text-carbon transition-colors hover:bg-carbon/5 focus-visible:z-10 focus-visible:outline-2 focus-visible:outline-pavo" aria-label="Acercar" onClick={() => commitBounds(zoomViewport(spec, bounds, 1.25))}>+</button>
+                  <button type="button" className="w-9 font-diagram text-base text-carbon transition-colors hover:bg-carbon/5 focus-visible:z-10 focus-visible:outline-2 focus-visible:outline-pavo" aria-label="Alejar" onClick={() => commitBounds(zoomViewport(spec, bounds, 0.8))}>−</button>
+                  <button type="button" className="diagram-viewport-secondary px-2.5 font-diagram text-[11px] text-carbon transition-colors hover:bg-carbon/5 focus-visible:z-10 focus-visible:outline-2 focus-visible:outline-pavo" aria-label="Ajustar todos los objetos al viewport" title="Reencuadrar para mostrar todos los objetos visibles" onClick={() => commitBounds(fitRelevantViewport())}>Ajustar</button>
+                  <button
+                    type="button"
+                    className="diagram-viewport-secondary px-2.5 font-diagram text-[11px] text-carbon transition-colors hover:bg-carbon/5 focus-visible:z-10 focus-visible:outline-2 focus-visible:outline-pavo disabled:opacity-35"
+                    disabled={missingItems.length === 0}
+                    aria-label="Recuperar objetos fuera del viewport"
+                    title={missingItems.length > 0 ? `${missingItems.length} objeto(s) visible(s) fuera de vista` : 'No hay objetos visibles fuera de vista'}
+                    onClick={() => commitBounds(fitRelevantViewport())}
+                  >
+                    Recuperar
+                  </button>
+                  {toolbarLayout === 'rails' && (
                     <button
                       type="button"
-                      className="diagram-viewport-secondary px-2.5 font-diagram text-[11px] text-carbon transition-colors hover:bg-carbon/5 focus-visible:z-10 focus-visible:outline-2 focus-visible:outline-pavo disabled:opacity-35"
-                      disabled={missingItems.length === 0}
-                      aria-label="Recuperar objetos fuera del viewport"
-                      title={missingItems.length > 0 ? `${missingItems.length} objeto(s) visible(s) fuera de vista` : 'No hay objetos visibles fuera de vista'}
-                      onClick={() => commitBounds(fitRelevantViewport())}
+                      className="w-9 font-diagram text-base text-carbon transition-colors hover:bg-carbon/5 focus-visible:z-10 focus-visible:outline-2 focus-visible:outline-pavo"
+                      aria-label="Opciones de encuadre"
+                      aria-expanded={viewportMenuOpen}
+                      title="Ajustar o recuperar el encuadre"
+                      onClick={() => setViewportMenuOpen(open => !open)}
                     >
-                      Recuperar
+                      ⌖
                     </button>
-                    {toolbarLayout === 'rails' && (
-                      <button
-                        type="button"
-                        className="w-9 font-diagram text-base text-carbon transition-colors hover:bg-carbon/5 focus-visible:z-10 focus-visible:outline-2 focus-visible:outline-pavo"
-                        aria-label="Opciones de encuadre"
-                        aria-expanded={viewportMenuOpen}
-                        title="Ajustar o recuperar el encuadre"
-                        onClick={() => setViewportMenuOpen(open => !open)}
-                      >
-                        ⌖
-                      </button>
-                    )}
-                  </div>
-                  {toolbarLayout === 'rails' && viewportMenuOpen && (
-                    <div className="absolute bottom-2 left-14 z-40 min-w-40 overflow-hidden rounded-xl border border-carbon/15 bg-lienzo/95 p-1 font-diagram text-xs text-carbon shadow-lg backdrop-blur-[3px]" role="menu" aria-label="Opciones de encuadre">
-                      <button
-                        type="button"
-                        className="block w-full rounded-lg px-3 py-2 text-left hover:bg-carbon/5 focus-visible:outline-2 focus-visible:outline-pavo"
-                        role="menuitem"
-                        onClick={() => { commitBounds(fitRelevantViewport()); setViewportMenuOpen(false); }}
-                      >
-                        Ajustar al contenido
-                      </button>
-                      <button
-                        type="button"
-                        className="block w-full rounded-lg px-3 py-2 text-left hover:bg-carbon/5 focus-visible:outline-2 focus-visible:outline-pavo disabled:opacity-35"
-                        role="menuitem"
-                        disabled={missingItems.length === 0}
-                        onClick={() => { commitBounds(fitRelevantViewport()); setViewportMenuOpen(false); }}
-                      >
-                        Recuperar fuera de vista
-                      </button>
-                    </div>
                   )}
-                </>
-              )}
-              {showStepControls && (
-                <StepNavigator
-                  steps={spec.steps}
-                  scopeId={spec.componentId}
-                  compact
-                  className="col-start-2 justify-self-end"
-                />
-              )}
-            </div>
-          )}
-        </MathBoard>
+                </div>
+                {toolbarLayout === 'rails' && viewportMenuOpen && (
+                  <div className="absolute bottom-2 left-14 z-40 min-w-40 overflow-hidden rounded-xl border border-carbon/15 bg-lienzo/95 p-1 font-diagram text-xs text-carbon shadow-lg backdrop-blur-[3px]" role="menu" aria-label="Opciones de encuadre">
+                    <button
+                      type="button"
+                      className="block w-full rounded-lg px-3 py-2 text-left hover:bg-carbon/5 focus-visible:outline-2 focus-visible:outline-pavo"
+                      role="menuitem"
+                      onClick={() => { commitBounds(fitRelevantViewport()); setViewportMenuOpen(false); }}
+                    >
+                      Ajustar al contenido
+                    </button>
+                    <button
+                      type="button"
+                      className="block w-full rounded-lg px-3 py-2 text-left hover:bg-carbon/5 focus-visible:outline-2 focus-visible:outline-pavo disabled:opacity-35"
+                      role="menuitem"
+                      disabled={missingItems.length === 0}
+                      onClick={() => { commitBounds(fitRelevantViewport()); setViewportMenuOpen(false); }}
+                    >
+                      Recuperar fuera de vista
+                    </button>
+                  </div>
+                )}
+              </>
+            )}
+            {showStepControls && (
+              <StepNavigator
+                steps={spec.steps}
+                scopeId={spec.componentId}
+                compact
+                className="col-start-2 justify-self-end"
+              />
+            )}
+          </div>
+        )}
+      </MathBoard>
     </div>
   );
 };

@@ -1,6 +1,6 @@
 import React from 'react';
 import { useMathStore } from '@/shared/lib/MathStoreContext';
-import type { EditLinkHandler } from './InlineContentPreview';
+import type { EditLinkHandler } from './previewTypes';
 
 interface InteractivePreviewTokenProps {
   blockId: string;
