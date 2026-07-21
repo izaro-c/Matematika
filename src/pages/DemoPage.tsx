@@ -2,6 +2,7 @@ import React, { Suspense } from 'react';
 import { useRoute, Link } from 'wouter';
 import { db } from '@/entities/content';
 import { FadeIn } from '@/shared/ui/FadeIn';
+import { DemonstrationHeaderProvider } from '@/shared/lib/DemonstrationHeaderContext';
 
 /**
  * Página aislada para visualizar una Demostración paso a paso.
@@ -33,7 +34,9 @@ export const DemoPage: React.FC = () => {
             Desenrollando pergamino...
           </div>
         }>
-          <demo.Component />
+          <DemonstrationHeaderProvider key={demoId}>
+            <demo.Component />
+          </DemonstrationHeaderProvider>
         </Suspense>
       </div>
     </FadeIn>

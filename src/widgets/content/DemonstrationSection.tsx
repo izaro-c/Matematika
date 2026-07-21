@@ -14,6 +14,38 @@ interface DemonstrationSectionProps {
   children: React.ReactNode;
 }
 
+interface DiagramFrame {
+  key: React.Key;
+  node: React.ReactNode;
+}
+
+const DiagramTransition: React.FC<{ activeKey: React.Key; frames: DiagramFrame[] }> = ({ activeKey, frames }) => {
+  const activeIndex = Math.max(0, frames.findIndex(frame => frame.key === activeKey));
+  return (
+    <div className="diagram-transition-stack" data-diagram-transition-key={String(activeKey)}>
+      {frames.map((frame, index) => {
+        const isCurrent = index === activeIndex;
+        return (
+          <div
+            key={frame.key}
+            className={`diagram-transition-frame ${isCurrent ? 'is-current' : 'is-inactive'}`}
+            data-diagram-transition-state={isCurrent ? 'current' : 'inactive'}
+            aria-hidden={isCurrent ? undefined : true}
+            style={{
+              opacity: isCurrent ? 1 : 0.35,
+              transform: `translateY(${(index - activeIndex) * 100}%)`,
+            }}
+          >
+            <Suspense fallback={<div className="animate-pulse text-carbon/40 font-serif">Cargando visualización...</div>}>
+              {frame.node}
+            </Suspense>
+          </div>
+        );
+      })}
+    </div>
+  );
+};
+
 /**
  * Componente layout para demostraciones interactivas.
  *
@@ -58,18 +90,27 @@ export const DemonstrationSection: React.FC<DemonstrationSectionProps> = ({ diag
   }, [diagram, diagrams, step]);
 
   const hasDiagram = diagram !== undefined || (diagrams !== undefined && Object.keys(diagrams).length > 0);
+  const transitionKey = React.isValidElement(activeDiagram) && activeDiagram.key !== null
+    ? activeDiagram.key
+    : activeKey;
+  const diagramFrames = useMemo(() => {
+    const entries: Array<[string, React.ReactNode]> = diagrams
+      ? Object.entries(diagrams)
+      : (diagram !== undefined ? [['default', diagram]] : []);
+    const uniqueFrames = new Map<React.Key, DiagramFrame>();
+
+    entries.forEach(([key, node]) => {
+      const frameKey = React.isValidElement(node) && node.key !== null ? node.key : key;
+      if (!uniqueFrames.has(frameKey)) uniqueFrames.set(frameKey, { key: frameKey, node });
+    });
+
+    return Array.from(uniqueFrames.values());
+  }, [diagram, diagrams]);
 
   return (
     <CodexLayout
       diagram={hasDiagram && activeDiagram ? (
-        <div
-          key={activeKey}
-          className="relative w-full h-full scale-animation overflow-hidden !p-0 !m-0 flex items-center justify-center"
-        >
-          <Suspense fallback={<div className="animate-pulse text-carbon/40 font-serif">Cargando visualización...</div>}>
-            {activeDiagram}
-          </Suspense>
-        </div>
+        <DiagramTransition activeKey={transitionKey} frames={diagramFrames} />
       ) : undefined}
       diagramLabel="Diagrama de la demostración"
     >

@@ -64,9 +64,14 @@ const StepNavigatorContent: React.FC<StepNavigatorProps> = ({
   const publishStep = useCallback((stepId: string) => {
     lastPublishedStepIdRef.current = stepId;
     const stepIndex = steps.findIndex(step => step.id === stepId);
-    if (stepIndex >= 0) selectSynchronizedStep?.(stepIndex);
-    if (onStepChange) onStepChange(stepId);
-    else setVariable(scopeId ? `step:${scopeId}` : 'step', stepId);
+    if (stepIndex >= 0 && selectSynchronizedStep) {
+      selectSynchronizedStep(stepIndex);
+    }
+    if (onStepChange) {
+      onStepChange(stepId);
+    } else if (!selectSynchronizedStep) {
+      setVariable(scopeId ? `step:${scopeId}` : 'step', stepId);
+    }
   }, [onStepChange, scopeId, selectSynchronizedStep, setVariable, steps]);
 
   const selectStep = (stepId: string) => {
