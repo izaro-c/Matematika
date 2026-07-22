@@ -8,6 +8,7 @@ import { DiagramConstraintEditor } from './DiagramConstraintEditor';
 import { constraintPresentation } from '../model/constraintOptions';
 import { DiagramSceneControls } from './DiagramSceneControls';
 import { SegmentLengthConstraintEditor } from './SegmentLengthConstraintEditor';
+import { SegmentReflectionConstraintEditor } from './SegmentReflectionConstraintEditor';
 import { SegmentMarksEditor } from './SegmentMarksEditor';
 import { AngleEqualityConstraintEditor } from './AngleEqualityConstraintEditor';
 import { DiagramExpressionField } from './DiagramExpressionField';
@@ -621,6 +622,12 @@ export const DiagramInspector: React.FC<DiagramInspectorProps> = ({
               />
               <SegmentLengthConstraintEditor
                 key={selectedElement.id}
+                model={model}
+                segment={selectedElement}
+                onModelEdit={onModelEdit}
+              />
+              <SegmentReflectionConstraintEditor
+                key={`refl-${selectedElement.id}`}
                 model={model}
                 segment={selectedElement}
                 onModelEdit={onModelEdit}

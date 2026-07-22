@@ -55,7 +55,8 @@ describe('Phase 4 step model', () => {
     expect(duplicated[2].objectStates).not.toBe(duplicated[1].objectStates);
 
     const moved = moveStep(duplicated, duplicated[2].id, -1);
-    expect(moved[1].id).toBe(duplicated[2].id);
+    expect(moved[1].label).toBe(duplicated[2].label);
+    expect(moved[1].id).toBe('step2');
     expect(removeStep(moved, moved[1].id)).toHaveLength(3);
   });
 

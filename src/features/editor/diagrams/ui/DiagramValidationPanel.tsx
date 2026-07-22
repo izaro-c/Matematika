@@ -10,6 +10,44 @@ interface DiagramValidationPanelProps {
   onSelectTarget: (target: DiagramTarget) => void;
 }
 
+export function humanizeDiagnosticMessage(message: string, targets: DiagramTarget[] = []): string {
+  let text = message;
+
+  text = text.replace(/^objects\.(\d+)\.([a-zA-Z0-9_.]+):\s*/, (_, index, path) => {
+    return `En objeto #${Number(index) + 1} (${path}): `;
+  });
+  text = text.replace(/^points\.(\d+)\.([a-zA-Z0-9_.]+):\s*/, (_, index, path) => {
+    return `En punto #${Number(index) + 1} (${path}): `;
+  });
+  text = text.replace(/^elements\.(\d+)\.([a-zA-Z0-9_.]+):\s*/, (_, index, path) => {
+    return `En elemento #${Number(index) + 1} (${path}): `;
+  });
+  text = text.replace(/^relations\.(\d+)\.([a-zA-Z0-9_.]+):\s*/, (_, index, path) => {
+    return `En relación #${Number(index) + 1} (${path}): `;
+  });
+  text = text.replace(/^constraints\.(\d+)\.([a-zA-Z0-9_.]+):\s*/, (_, index, path) => {
+    return `En la restricción #${Number(index) + 1} (${path}): `;
+  });
+  text = text.replace(/^steps\.(\d+)\.([a-zA-Z0-9_.]+):\s*/, (_, index, path) => {
+    return `En paso #${Number(index) + 1} (${path}): `;
+  });
+
+  text = text.replace(/Expected string, received (\w+)/g, 'Se esperaba un texto pero se recibió $1.');
+  text = text.replace(/Expected number, received (\w+)/g, 'Se esperaba un número pero se recibió $1.');
+  text = text.replace(/Invalid option: expected one of [^,\n]+/g, 'La opción o tipo seleccionado no pertenece a las opciones geométricas válidas.');
+  text = text.replace(/Invalid enum value/g, 'El valor no es válido.');
+  text = text.replace(/Required/g, 'Campo obligatorio no especificado.');
+
+  targets.forEach(target => {
+    if (target.label && target.label !== target.id) {
+      const regex = new RegExp(`\\b${target.id}\\b`, 'g');
+      text = text.replace(regex, `"${target.label}" (${target.id})`);
+    }
+  });
+
+  return text;
+}
+
 export const DiagramValidationPanel: React.FC<DiagramValidationPanelProps> = ({
   diagnostics,
   targets,
@@ -32,28 +70,40 @@ export const DiagramValidationPanel: React.FC<DiagramValidationPanelProps> = ({
   const errors = diagnostics.filter(d => d.severity === 'error');
   const warnings = diagnostics.filter(d => d.severity === 'warning' || d.severity === 'info');
 
+  const expandDiagnosticItems = (list: DiagramDiagnostic[]) => {
+    const items: string[] = [];
+    list.forEach(item => {
+      const parts = item.message.split(/(?=\b(?:elements|points|objects|relations|constraints|steps)\.\d+)/g).map(p => p.trim()).filter(Boolean);
+      items.push(...parts);
+    });
+    return items;
+  };
+
+  const errorMessages = expandDiagnosticItems(errors);
+  const warningMessages = expandDiagnosticItems(warnings);
+
   return (
     <div className="rounded border border-carbon/10 bg-lienzo overflow-hidden">
       <div className="flex flex-wrap items-center justify-between gap-2 border-b border-carbon/10 bg-carbon/5 px-3 py-3">
         <div><p className="text-[10px] font-bold uppercase tracking-widest text-carbon/45">Comprobación antes de guardar</p><p className="mt-0.5 text-[10px] text-carbon/50">Revise la coherencia del modelo y pruebe cada enlace disponible para MDX.</p></div>
-        <div className="flex gap-2"><span className={`rounded px-2 py-1 text-[10px] font-bold ${errors.length > 0 ? 'bg-granada/10 text-granada' : 'bg-salvia/10 text-salvia'}`}>{errors.length} errores</span><span className="rounded bg-ocre/10 px-2 py-1 text-[10px] font-bold text-ocre">{warnings.length} avisos</span><span className="rounded bg-pavo/10 px-2 py-1 text-[10px] font-bold text-pavo">{targets.length} enlaces</span></div>
+        <div className="flex gap-2"><span className={`rounded px-2 py-1 text-[10px] font-bold ${errorMessages.length > 0 ? 'bg-granada/10 text-granada' : 'bg-salvia/10 text-salvia'}`}>{errorMessages.length} errores</span><span className="rounded bg-ocre/10 px-2 py-1 text-[10px] font-bold text-ocre">{warningMessages.length} avisos</span><span className="rounded bg-pavo/10 px-2 py-1 text-[10px] font-bold text-pavo">{targets.length} enlaces</span></div>
       </div>
 
       <div className="grid min-h-72 lg:grid-cols-[minmax(0,0.9fr)_minmax(0,1.1fr)] lg:divide-x lg:divide-carbon/10">
         {/* Diagnostics list */}
         <div className="p-3 overflow-y-auto space-y-2">
           <p className="text-[10px] font-bold uppercase tracking-widest text-carbon/35">Diagnósticos</p>
-          {diagnostics.length === 0 && (
+          {errorMessages.length === 0 && warningMessages.length === 0 && (
             <p className="text-xs italic text-salvia font-semibold">✓ No se encontraron errores de coherencia.</p>
           )}
-          {errors.map((diag, index) => (
+          {errorMessages.map((msg, index) => (
             <div key={`err-${index}`} className="rounded border border-granada/20 bg-granada/5 p-2 text-xs text-granada">
-              <span className="font-bold">Error:</span> {diag.message}
+              <span className="font-bold">Error:</span> {humanizeDiagnosticMessage(msg, targets)}
             </div>
           ))}
-          {warnings.map((diag, index) => (
+          {warningMessages.map((msg, index) => (
             <div key={`warn-${index}`} className="rounded border border-ocre/20 bg-ocre/5 p-2 text-xs text-carbon">
-              <span className="font-bold">Advertencia:</span> {diag.message}
+              <span className="font-bold">Advertencia:</span> {humanizeDiagnosticMessage(msg, targets)}
             </div>
           ))}
         </div>

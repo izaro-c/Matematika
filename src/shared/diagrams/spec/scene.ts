@@ -160,14 +160,72 @@ function resolveConstructedPoint(spec: DiagramSpecV2, derived: DiagramElement, v
   return undefined;
 }
 
+function resolveReflectedPoint(
+  spec: DiagramSpecV2,
+  direct: DiagramPoint,
+  constraint: DiagramConstraint,
+  visiting: Set<string>,
+): Coordinates | undefined {
+  const targetId = constraint.refs[0];
+  const centerOrAxisId = constraint.refs[1];
+  const sourceId = constraint.refs.length >= 3 ? constraint.refs[2] : targetId;
+
+  let sourceCoords: Coordinates | undefined;
+  if (sourceId === direct.id) {
+    sourceCoords = { x: direct.x, y: direct.y };
+  } else {
+    sourceCoords = resolvePointCoordinates(spec, sourceId, visiting);
+  }
+  if (!sourceCoords) return undefined;
+
+  const centerCoords = resolvePointCoordinates(spec, centerOrAxisId, visiting);
+  if (centerCoords) {
+    return {
+      x: 2 * centerCoords.x - sourceCoords.x,
+      y: 2 * centerCoords.y - sourceCoords.y,
+    };
+  }
+
+  const carrier = linearSupportCarrier(spec, centerOrAxisId, visiting);
+  if (carrier) {
+    const dx = carrier.b.x - carrier.a.x;
+    const dy = carrier.b.y - carrier.a.y;
+    const lengthSquared = dx * dx + dy * dy || 1;
+    const t = ((sourceCoords.x - carrier.a.x) * dx + (sourceCoords.y - carrier.a.y) * dy) / lengthSquared;
+    const footX = carrier.a.x + t * dx;
+    const footY = carrier.a.y + t * dy;
+    return {
+      x: 2 * footX - sourceCoords.x,
+      y: 2 * footY - sourceCoords.y,
+    };
+  }
+
+  return undefined;
+}
+
 export function resolvePointCoordinates(spec: DiagramSpecV2, id: string, visiting = new Set<string>()): Coordinates | undefined {
   const direct = spec.points.find(point => point.id === id);
-  if (direct && direct.constraint !== 'derived') return { x: direct.x, y: direct.y };
   if (visiting.has(id)) return undefined;
   visiting.add(id);
-  if (direct?.constraint === 'derived' && direct.xExpression && direct.yExpression) {
-    return resolveExpressionPoint(spec, direct, visiting);
+
+  if (direct) {
+    if (direct.constraint === 'constrained' && direct.constraintIds?.length) {
+      const reflectionConstraint = spec.constraints?.find(c => (
+        c.enabled
+        && c.kind === 'reflection'
+        && direct.constraintIds?.includes(c.id)
+      ));
+      if (reflectionConstraint) {
+        const reflected = resolveReflectedPoint(spec, direct, reflectionConstraint, visiting);
+        if (reflected) return reflected;
+      }
+    }
+    if (direct.constraint === 'derived' && direct.xExpression && direct.yExpression) {
+      return resolveExpressionPoint(spec, direct, visiting);
+    }
+    return { x: direct.x, y: direct.y };
   }
+
   const derived = spec.elements.find(element => element.id === id);
   return derived ? resolveConstructedPoint(spec, derived, visiting) : undefined;
 }
@@ -707,6 +765,7 @@ function applyConstraint(spec: DiagramSpecV2, point: DiagramPoint, result: Coord
     case 'midpoint': return applyMidpointConstraint(spec, result, constraint);
     case 'insideDisk': return applyInsideDiskConstraint(spec, result, constraint);
     case 'sameSide': return applySameSideConstraint(spec, point, result, constraint);
+    case 'reflection': return resolveReflectedPoint(spec, point, constraint, new Set()) ?? result;
     case 'perpendicular': case 'parallel': return applyLinearConstraint(spec, result, constraint);
     default: return result;
   }

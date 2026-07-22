@@ -8,6 +8,8 @@ interface ProofStepProps {
   title: string;
   /** Si se provee, activa el estado global "highlight" con este valor cuando el bloque es visible en pantalla */
   target?: string | string[];
+  /** Especifica explícitamente el paso de diagrama a activar (ej. 'initial', 1, 'paso-congruencia'). */
+  diagramStep?: string | number;
   /** IDs de bloques de táctica Lean asociados a este paso. Se muestran colapsados por defecto. */
   leanBlocks?: string[];
   /** IDs de justificaciones (axiomas, teoremas) de este paso. Si no se provee, se extraen automáticamente de los ConceptLinks. */
@@ -49,6 +51,7 @@ export const ProofStep: React.FC<ProofStepProps> = ({
   number,
   title,
   target,
+  diagramStep,
   leanBlocks = [],
   justifications,
   children,
@@ -70,6 +73,7 @@ export const ProofStep: React.FC<ProofStepProps> = ({
     <div
       className={`mt-10 mb-6 w-full proof-step ${isActive ? 'is-active' : ''}`}
       data-target={typeof finalTarget === 'string' ? finalTarget : JSON.stringify(finalTarget)}
+      data-diagram-step={diagramStep !== undefined ? String(diagramStep) : ''}
       data-justifications={JSON.stringify(activeJustifications)}
       data-proof-step-number={number}
       id={`proof-step-${number}`}

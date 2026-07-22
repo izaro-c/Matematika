@@ -28,6 +28,21 @@ export function equalLengthConstraintForSegment(
   ));
 }
 
+export interface PointLikeEntity {
+  id: string;
+  label: string;
+}
+
+export function findPointLike(model: VisualDiagramModel, id: string): PointLikeEntity | undefined {
+  const pt = model.points.find(point => point.id === id);
+  if (pt) return { id: pt.id, label: pt.label };
+  const el = model.elements.find(element => (
+    element.id === id && ['midpoint', 'intersection', 'perpendicularFoot'].includes(element.kind)
+  ));
+  if (el) return { id: el.id, label: el.label };
+  return undefined;
+}
+
 export function editableSegmentEndpoints(model: VisualDiagramModel, segmentId: string): VisualPoint[] {
   const segment = model.elements.find(element => element.id === segmentId && element.kind === 'segment');
   if (!segment) return [];
@@ -69,7 +84,8 @@ export function setEqualLengthConstraint(
   const sourceSegment = model.elements.find(element => element.id === sourceSegmentId && element.kind === 'segment');
   const movingPoint = model.points.find(point => point.id === movingEndpointId);
   const anchorId = targetSegment?.refs.find(ref => ref !== movingEndpointId);
-  if (!targetSegment || !sourceSegment || targetSegment.id === sourceSegment.id || !movingPoint || !anchorId) return model;
+  const anchor = anchorId ? findPointLike(model, anchorId) : undefined;
+  if (!targetSegment || !sourceSegment || targetSegment.id === sourceSegment.id || !movingPoint || !anchorId || !anchor) return model;
   if (sourceSegment.refs.includes(movingEndpointId)) return model;
   if (!editableSegmentEndpoints(model, targetSegmentId).some(point => point.id === movingEndpointId)) return model;
 

@@ -3,6 +3,7 @@ import type { VisualDiagramModel, VisualElement } from '../model/types';
 import {
   editableSegmentEndpoints,
   equalLengthConstraintForSegment,
+  findPointLike,
   removeConstraintFromModel,
   setEqualLengthConstraint,
 } from '../model/segmentLengthConstraints';
@@ -29,10 +30,21 @@ export const SegmentLengthConstraintEditor: React.FC<SegmentLengthConstraintEdit
     : referenceSegments[0]?.id ?? '';
   const movingEndpoint = model.points.find(point => point.id === movingEndpointId);
   const anchor = segment.refs
-    .map(ref => model.points.find(point => point.id === ref))
+    .map(ref => findPointLike(model, ref))
     .find(point => point && point.id !== movingEndpointId);
   const sourceSegment = referenceSegments.find(candidate => candidate.id === effectiveSourceSegmentId);
   const ready = Boolean(movingEndpoint && anchor && sourceSegment);
+
+  let disabledReason = '';
+  if (endpoints.length === 0) {
+    disabledReason = 'Este segmento no tiene extremos móviles (sus puntos son fijos o derivados).';
+  } else if (allReferenceSegments.length === 0) {
+    disabledReason = 'No hay otros segmentos en el diagrama para copiar su longitud.';
+  } else if (referenceSegments.length === 0) {
+    disabledReason = 'El extremo seleccionado pertenece a todos los demás segmentos disponibles.';
+  } else if (!ready) {
+    disabledReason = 'Seleccione un extremo móvil válido y un segmento de referencia.';
+  }
 
   return (
     <details className="rounded border border-pavo/25 bg-pavo/5" open={Boolean(existing)}>
@@ -73,11 +85,15 @@ export const SegmentLengthConstraintEditor: React.FC<SegmentLengthConstraintEdit
                 {referenceSegments.map(candidate => <option key={candidate.id} value={candidate.id}>{candidate.label} ({candidate.id})</option>)}
               </select>
             </label>
-            {ready && (
+            {ready ? (
               <p className="rounded bg-lienzo px-2 py-1.5 text-[10px] leading-relaxed text-carbon/60" aria-live="polite">
                 Se ajustará <strong>{movingEndpoint?.label}</strong>; <strong>{anchor?.label}</strong> quedará como ancla. La longitud será la de <strong>{sourceSegment?.label}</strong>.
               </p>
-            )}
+            ) : disabledReason ? (
+              <p className="rounded bg-ocre/10 px-2 py-1.5 text-[10px] leading-relaxed text-ocre font-medium" aria-live="polite">
+                {disabledReason}
+              </p>
+            ) : null}
             <button
               type="button"
               disabled={!ready}
@@ -97,8 +113,8 @@ export const SegmentLengthConstraintEditor: React.FC<SegmentLengthConstraintEdit
             )}
           </>
         ) : (
-          <p className="rounded bg-lienzo p-2 text-[10px] leading-relaxed text-carbon/55">
-            Se necesitan otro segmento y al menos un extremo móvil. Los puntos fijos o derivados no pueden ser el extremo ajustado.
+          <p className="rounded bg-ocre/10 p-2 text-[10px] leading-relaxed text-ocre font-medium">
+            {disabledReason || 'Se necesitan otro segmento y al menos un extremo móvil. Los puntos fijos o derivados no pueden ser el extremo ajustado.'}
           </p>
         )}
       </div>

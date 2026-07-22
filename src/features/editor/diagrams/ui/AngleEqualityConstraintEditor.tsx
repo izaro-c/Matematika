@@ -7,6 +7,7 @@ import {
   removeConstraintFromModel,
   setEqualAngleConstraint,
 } from '../model/commands';
+import { findPointLike } from '../model/segmentLengthConstraints';
 
 interface AngleEqualityConstraintEditorProps {
   model: VisualDiagramModel;
@@ -29,12 +30,20 @@ export const AngleEqualityConstraintEditor: React.FC<AngleEqualityConstraintEdit
     ? sourceAngleId
     : candidates[0]?.id ?? '';
   const movingEndpoint = model.points.find(point => point.id === movingEndpointId);
-  const vertex = model.points.find(point => point.id === angle.refs[1]);
-  const fixedEndpoint = model.points.find(point => (
-    point.id === (angle.refs[0] === movingEndpointId ? angle.refs[2] : angle.refs[0])
-  ));
+  const vertex = findPointLike(model, angle.refs[1]);
+  const fixedEndpointId = angle.refs[0] === movingEndpointId ? angle.refs[2] : angle.refs[0];
+  const fixedEndpoint = findPointLike(model, fixedEndpointId);
   const sourceAngle = candidates.find(candidate => candidate.id === effectiveSourceAngleId);
   const ready = Boolean(movingEndpoint && vertex && fixedEndpoint && sourceAngle);
+
+  let disabledReason = '';
+  if (endpoints.length === 0) {
+    disabledReason = 'Este ángulo no tiene extremos móviles (sus puntos del lado son fijos o derivados).';
+  } else if (candidates.length === 0) {
+    disabledReason = 'No hay otros ángulos del mismo tipo en el diagrama para copiar su amplitud.';
+  } else if (!ready) {
+    disabledReason = 'Seleccione un extremo móvil del lado y un ángulo de referencia.';
+  }
 
   return (
     <details
@@ -82,11 +91,15 @@ export const AngleEqualityConstraintEditor: React.FC<AngleEqualityConstraintEdit
                 {candidates.map(candidate => <option key={candidate.id} value={candidate.id}>{candidate.label} ({candidate.id})</option>)}
               </select>
             </label>
-            {ready && (
+            {ready ? (
               <p className="rounded bg-lienzo px-2 py-1.5 text-[10px] leading-relaxed text-carbon/60" aria-live="polite">
                 Se ajustará <strong>{movingEndpoint?.label}</strong> alrededor de <strong>{vertex?.label}</strong>; el lado hacia <strong>{fixedEndpoint?.label}</strong> quedará como referencia. La amplitud será la de <strong>{sourceAngle?.label}</strong>.
               </p>
-            )}
+            ) : disabledReason ? (
+              <p className="rounded bg-ocre/10 px-2 py-1.5 text-[10px] leading-relaxed text-ocre font-medium" aria-live="polite">
+                {disabledReason}
+              </p>
+            ) : null}
             <button
               type="button"
               disabled={!ready}
@@ -106,8 +119,8 @@ export const AngleEqualityConstraintEditor: React.FC<AngleEqualityConstraintEdit
             )}
           </>
         ) : (
-          <p className="rounded bg-lienzo p-2 text-[10px] leading-relaxed text-carbon/55">
-            Se necesita otro ángulo del mismo tipo y al menos un extremo móvil. Los puntos fijos, derivados o ligados a otro objeto no pueden ser el lado ajustado.
+          <p className="rounded bg-ocre/10 p-2 text-[10px] leading-relaxed text-ocre font-medium">
+            {disabledReason || 'Se necesita otro ángulo del mismo tipo y al menos un extremo móvil. Los puntos fijos, derivados o ligados a otro objeto no pueden ser el lado ajustado.'}
           </p>
         )}
       </div>

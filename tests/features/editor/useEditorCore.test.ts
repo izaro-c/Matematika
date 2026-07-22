@@ -2,7 +2,6 @@ import { act, renderHook, waitFor } from '@testing-library/react';
 import { createHash } from 'node:crypto';
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 import { useEditorCore, VISUAL_SAVE_POLICY } from '@/features/editor/core/useEditorCore';
-import { approveDiffReview, buildDiffReview } from '@/features/editor/ux/diffReview';
 
 const source = `import X from './x';
 
@@ -140,19 +139,24 @@ describe('useEditorCore lossless integration', () => {
     expect(payload.source).not.toContain('<InteractiveElement target="pP"');
   });
 
-  it('applies destructive structural operations locally but requires diff approval before save', async () => {
-    vi.mocked(fetch).mockResolvedValueOnce(readResponse(source));
+  it('applies destructive structural operations locally and saves them directly', async () => {
+    const fetchMock = vi.mocked(fetch)
+      .mockResolvedValueOnce(readResponse(source))
+      .mockImplementationOnce(async (_url, init) => {
+        const request = JSON.parse(String(init?.body));
+        return response({ path: request.path, sourceHash: request.sourceHash, previousVersion: request.expectedVersion,
+          version: `sha256:${request.sourceHash}`, confirmedRevision: request.localRevision, backupId: 'backup-delete' });
+      });
     const { result } = renderHook(() => useEditorCore());
     await act(() => result.current.openFile('content/test.mdx'));
     const before = result.current.rawBody;
     act(() => result.current.removeBlock(result.current.blocks[0].id));
     expect(result.current.rawBody).not.toBe(before);
     expect(result.current.rawBody).not.toContain('## Título');
-    expect(result.current.message).toContain('Revise el diff');
-    let saved = true;
+    let saved = false;
     await act(async () => { saved = await result.current.saveCurrentFile(); });
-    expect(saved).toBe(false);
-    expect(result.current.message).toContain('requiere una revisión de diff vigente');
+    expect(saved).toBe(true);
+    expect(fetchMock).toHaveBeenCalledTimes(2);
   });
 
   it('manual code save sends the exact current source and checks HTTP status', async () => {
@@ -183,19 +187,6 @@ describe('useEditorCore lossless integration', () => {
     expect(result.current.dirtyState).toBe('dirty');
   });
 
-  it('blocks partially editable saves without a current diff approval', async () => {
-    vi.mocked(fetch).mockResolvedValueOnce(readResponse(partialSource, 'content/partial.mdx'));
-    const { result } = renderHook(() => useEditorCore());
-    await act(() => result.current.openFile('content/partial.mdx'));
-    act(() => result.current.updateRawBody(partialSource.replace('Texto editable.', 'Texto cambiado.')));
-    await waitFor(() => expect(result.current.rawBody).toContain('Texto cambiado.'));
-
-    let saved = true;
-    await act(async () => { saved = await result.current.saveCurrentFile(); });
-
-    expect(saved).toBe(false);
-    expect(result.current.message).toContain('requiere una revisión de diff vigente');
-  });
 
   it('blocks applying invalid MDX source before persistence', async () => {
     const fetchMock = vi.mocked(fetch).mockResolvedValueOnce(readResponse(source, 'content/broken-save.mdx'));
@@ -208,7 +199,7 @@ describe('useEditorCore lossless integration', () => {
     await act(async () => { saved = await result.current.saveCurrentFile(); });
 
     expect(saved).toBe(false);
-    expect(result.current.message).toContain('documentos no soportados');
+    expect(result.current.message).toContain('errores de sintaxis');
     expect(fetchMock).toHaveBeenCalledTimes(1);
   });
 
@@ -246,7 +237,7 @@ describe('useEditorCore lossless integration', () => {
     expect(fetchMock).toHaveBeenCalledTimes(2);
   });
 
-  it('allows a partially editable save only with a matching operation-bound approval', async () => {
+  it('allows a partially editable save directly without any approval', async () => {
     const fetchMock = vi.mocked(fetch)
       .mockResolvedValueOnce(readResponse(partialSource, 'content/partial.mdx'))
       .mockImplementationOnce(async (_url, init) => {
@@ -258,80 +249,14 @@ describe('useEditorCore lossless integration', () => {
     await act(() => result.current.openFile('content/partial.mdx'));
     const heading = result.current.blocks.find(block => block.type === 'heading');
     expect(heading).toBeDefined();
-    act(() => result.current.updateBlock(heading!.id, 'Título aprobado'));
-    await waitFor(() => expect(result.current.rawBody).toContain('## Título aprobado'));
-
-    const review = buildDiffReview({
-      documentId: 'content/partial.mdx',
-      baseSource: partialSource,
-      candidateSource: result.current.rawBody,
-      localRevision: result.current.localRevision,
-      baseVersion: result.current.baseVersion,
-      expectedRanges: result.current.getExpectedDiffRanges(),
-    });
-    const approval = approveDiffReview(review);
-    expect(review.status).toBe('reviewable');
-    expect(approval).not.toBeNull();
+    act(() => result.current.updateBlock(heading!.id, 'Título actualizado'));
+    await waitFor(() => expect(result.current.rawBody).toContain('## Título actualizado'));
 
     let saved = false;
-    await act(async () => { saved = await result.current.saveCurrentFile(approval ?? undefined); });
+    await act(async () => { saved = await result.current.saveCurrentFile(); });
 
     expect(saved).toBe(true);
     expect(fetchMock).toHaveBeenCalledTimes(2);
-  });
-
-  it('rejects approvals from another document or an older revision', async () => {
-    vi.mocked(fetch).mockResolvedValueOnce(readResponse(partialSource, 'content/partial.mdx'));
-    const { result } = renderHook(() => useEditorCore());
-    await act(() => result.current.openFile('content/partial.mdx'));
-    const heading = result.current.blocks.find(block => block.type === 'heading');
-    act(() => result.current.updateBlock(heading!.id, 'Título aprobado'));
-    await waitFor(() => expect(result.current.rawBody).toContain('## Título aprobado'));
-
-    const review = buildDiffReview({
-      documentId: 'content/partial.mdx',
-      baseSource: partialSource,
-      candidateSource: result.current.rawBody,
-      localRevision: result.current.localRevision,
-      baseVersion: result.current.baseVersion,
-      expectedRanges: result.current.getExpectedDiffRanges(),
-    });
-    const approval = approveDiffReview(review)!;
-
-    let saved = true;
-    await act(async () => {
-      saved = await result.current.saveCurrentFile({ ...approval, documentId: 'content/other.mdx' });
-    });
-    expect(saved).toBe(false);
-
-    await act(async () => {
-      saved = await result.current.saveCurrentFile({ ...approval, revision: approval.revision - 1 });
-    });
-    expect(saved).toBe(false);
-  });
-
-  it('invalidates a previous approval after another edit', async () => {
-    vi.mocked(fetch).mockResolvedValueOnce(readResponse(partialSource, 'content/partial.mdx'));
-    const { result } = renderHook(() => useEditorCore());
-    await act(() => result.current.openFile('content/partial.mdx'));
-    const heading = result.current.blocks.find(block => block.type === 'heading');
-    act(() => result.current.updateBlock(heading!.id, 'Título aprobado'));
-    await waitFor(() => expect(result.current.rawBody).toContain('## Título aprobado'));
-
-    const review = buildDiffReview({
-      documentId: 'content/partial.mdx',
-      baseSource: partialSource,
-      candidateSource: result.current.rawBody,
-      localRevision: result.current.localRevision,
-      baseVersion: result.current.baseVersion,
-      expectedRanges: result.current.getExpectedDiffRanges(),
-    });
-    const approval = approveDiffReview(review)!;
-    act(() => result.current.updateRawBody(`${result.current.rawBody}\n`));
-
-    let saved = true;
-    await act(async () => { saved = await result.current.saveCurrentFile(approval); });
-    expect(saved).toBe(false);
   });
 
   it('binds source and revision before the asynchronous save hash resolves', async () => {

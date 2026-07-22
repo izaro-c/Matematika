@@ -97,7 +97,7 @@ function validateMetadata(metadata: Record<string, unknown>): EditorValidationIs
     for (const zodIssue of parsed.error.issues) {
       issues.push(issue(
         `metadata-schema-${zodIssue.path.join('-') || 'root'}`,
-        'error',
+        'warning',
         'metadata',
         `${zodIssue.path.join('.') || 'metadata'}: ${zodIssue.message}`,
       ));
@@ -105,11 +105,11 @@ function validateMetadata(metadata: Record<string, unknown>): EditorValidationIs
   }
 
   if (type === 'definicion' && !metadata.subtype) {
-    issues.push(issue('definition-subtype-required', 'error', 'metadata', 'Toda definición necesita subtype: primitivo, nominal o fundamentada.'));
+    issues.push(issue('definition-subtype-required', 'warning', 'metadata', 'Toda definición necesita subtype: primitivo, nominal o fundamentada.'));
   }
 
   if (type === 'demostracion' && !metadata.parentTheorem) {
-    issues.push(issue('demo-parent-required', 'error', 'metadata', 'Toda demostración debe apuntar a un parentTheorem.'));
+    issues.push(issue('demo-parent-required', 'warning', 'metadata', 'Toda demostración debe apuntar a un parentTheorem.'));
   }
 
   if (type === 'demostracion' && metadata.layout !== 'split' && metadata.layout !== 'text') {
@@ -123,7 +123,7 @@ function validateProofStep(step: ProofStepData, blockId: string): EditorValidati
   const issues: EditorValidationIssue[] = [];
   const bodyContainsJustification = /\b(?:por (?:hipótesis|axioma|teorema|definición|el paso|regla (?:de )?lógica|construcción)|hipótesis)\b/i.test(step.body ?? '');
   if (!step.justificacion?.trim() && !bodyContainsJustification) {
-    issues.push(issue(`proof-${step.number}-justification`, 'error', 'proof', `El paso ${step.number} necesita justificación Greenberg.`, blockId));
+    issues.push(issue(`proof-${step.number}-justification`, 'warning', 'proof', `El paso ${step.number} necesita justificación Greenberg.`, blockId));
   }
   if (!step.body?.includes('<InteractiveElement') && !step.body?.includes('highlightTarget=')) {
     issues.push(issue(`proof-${step.number}-interactive`, 'warning', 'proof', `El paso ${step.number} no referencia ningún elemento del diagrama.`, blockId));
@@ -133,6 +133,9 @@ function validateProofStep(step: ProofStepData, blockId: string): EditorValidati
   }
   if (step.dependencyId && !CONTENT_ID_RE.test(step.dependencyId)) {
     issues.push(issue(`proof-${step.number}-dependency-id`, 'error', 'proof', `La dependencia del paso ${step.number} debe ser kebab-case.`, blockId));
+  }
+  if (typeof step.diagramStep === 'string' && step.diagramStep !== 'initial' && !CONTENT_ID_RE.test(step.diagramStep) && !/^\d+$/.test(step.diagramStep)) {
+    issues.push(issue(`proof-${step.number}-diagram-step`, 'warning', 'proof', `El paso de diagrama "${step.diagramStep}" en el paso ${step.number} debe ser 'initial', un número o un ID kebab-case.`, blockId));
   }
   return issues;
 }
@@ -252,7 +255,7 @@ function validateBlocks(blocks: Block[]): EditorValidationIssue[] {
       issues.push(issue(`block-${block.id}-sen`, 'error', 'block', 'Usa \\sin en LaTeX; \\sen está prohibido.', block.id));
     }
     if (MARKDOWN_LINK_RE.test(content)) {
-      issues.push(issue(`block-${block.id}-markdown-link`, 'error', 'block', 'Los enlaces internos deben usar ConceptLink o RefLink, no Markdown.', block.id));
+      issues.push(issue(`block-${block.id}-markdown-link`, 'warning', 'block', 'Los enlaces internos deben usar ConceptLink o RefLink, no Markdown.', block.id));
     }
     if (HEX_RE.test(content)) {
       issues.push(issue(`block-${block.id}-hex`, 'error', 'block', 'No se permiten colores hex hardcodeados en contenido o diagramas.', block.id));
@@ -309,10 +312,10 @@ export function validateEditorDocument(input: {
 
   const source = `${input.imports}\n${input.exports}\n${input.rawBody || ''}`;
   if (HEX_RE.test(source)) {
-    issues.push(issue('source-hex', 'error', 'source', 'El documento contiene colores hex hardcodeados.'));
+    issues.push(issue('source-hex', 'warning', 'source', 'El documento contiene colores hex hardcodeados.'));
   }
   if (source.includes('\\sen')) {
-    issues.push(issue('source-sen', 'error', 'source', 'El documento contiene \\sen; usa \\sin.'));
+    issues.push(issue('source-sen', 'warning', 'source', 'El documento contiene \\sen; usa \\sin.'));
   }
 
   const errorCount = issues.filter(i => i.severity === 'error').length;

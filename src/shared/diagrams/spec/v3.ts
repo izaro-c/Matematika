@@ -219,6 +219,7 @@ export type DiagramRelation =
   | { id: string; label: string; type: 'parallel'; supports: [string, string] | [[string, string], [string, string]]; enabled: boolean }
   | { id: string; label: string; type: 'inside-disk'; point: string; disk: string | { center: string; boundary: string }; enabled: boolean }
   | { id: string; label: string; type: 'same-half-plane'; points: [string, string]; boundary: string; enabled: boolean }
+  | { id: string; label: string; type: 'reflection'; refs: string[]; centerOrAxis?: string; drivenPoint?: string; enabled: boolean }
   | { id: string; label: string; type: 'expression'; refs: string[]; expression: string; value?: number; enabled: boolean };
 
 export interface DiagramSpecV3 {

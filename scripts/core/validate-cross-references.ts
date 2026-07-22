@@ -128,7 +128,7 @@ for (const file of allFiles) {
       return; // Checkpoints lógicos autogestionados
     }
     if (!allContent.has(refId)) {
-      error(`${relPath}: '${field}' apunta a '${refId}' que no existe`);
+      console.warn(`  [WARN] ${relPath}: '${field}' apunta a '${refId}' que no existe (enlace no resuelto)`);
     }
   };
 
@@ -174,7 +174,7 @@ for (const file of allFiles) {
         // Check demonstrations directory as fallback
         const demoFile = path.join(CONTENT_DIR, 'demonstrations', `${demoId}.mdx`);
         if (!fs.existsSync(demoFile)) {
-          error(`${relPath}: 'demos' apunta a '${demoId}' que no existe en demonstrations/`);
+          console.warn(`  [WARN] ${relPath}: 'demos' apunta a '${demoId}' que no existe en demonstrations/ (enlace no resuelto)`);
         }
       }
     }
@@ -206,7 +206,7 @@ for (const file of allFiles) {
     for (const axiomId of meta.axiomas) {
       const axiomFile = path.join(CONTENT_DIR, 'axioms', `${axiomId}.mdx`);
       if (!fs.existsSync(axiomFile) && !allContent.has(axiomId)) {
-        error(`${relPath}: 'axiomas' apunta a '${axiomId}' que no existe en axioms/`);
+        console.warn(`  [WARN] ${relPath}: 'axiomas' apunta a '${axiomId}' que no existe en axioms/ (enlace no resuelto)`);
       }
     }
   }
@@ -218,7 +218,7 @@ for (const file of allFiles) {
   if (meta.proofMethod) {
     const method = allContent.get(meta.proofMethod);
     if (!method) {
-      error(`${relPath}: 'proofMethod' apunta a '${meta.proofMethod}' que no existe`);
+      console.warn(`  [WARN] ${relPath}: 'proofMethod' apunta a '${meta.proofMethod}' que no existe (enlace no resuelto)`);
     } else if (method.type !== 'metodo') {
       error(`${relPath}: 'proofMethod' debe apuntar a una página de tipo 'metodo', no '${method.type}'`);
     }

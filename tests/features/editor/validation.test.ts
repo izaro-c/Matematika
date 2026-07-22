@@ -266,4 +266,56 @@ describe('editor validation', () => {
     expect(result.canSave).toBe(false);
     expect(result.issues.map(issue => issue.id)).toContain('diagram-diagram-bad-glider-pP-glider-target-missing');
   });
+
+  it('allows saving MDX documents containing unresolved ConceptLink and metadata references', () => {
+    const result = validateEditorDocument({
+      metadata: {
+        ...validDefinitionMetadata,
+        requires: ['concepto-unresolved-1'],
+        links: ['teorema-futuro-2'],
+      },
+      imports: '',
+      exports: '',
+      blocks: [
+        {
+          id: 'para-1',
+          type: 'paragraph',
+          content: 'Texto con <ConceptLink targetId="id-no-resuelto">enlace no resuelto</ConceptLink>.',
+        },
+      ],
+    });
+
+    expect(result.canSave).toBe(true);
+    expect(result.errorCount).toBe(0);
+  });
+
+  it('allows saving MDX documents with Lean metadata, diagramStep="initial" or unresolved diagram targets', () => {
+    const result = validateEditorDocument({
+      metadata: {
+        ...validDefinitionMetadata,
+        leanId: 'Lean.Theorem.Unchecked',
+        verificationStatus: 'none',
+      },
+      imports: '',
+      exports: '',
+      blocks: [
+        {
+          id: 'demo-1',
+          type: 'proof',
+          content: 'Demostración de prueba',
+          steps: [
+            {
+              number: 1,
+              body: 'Paso con <InteractiveElement target="targetPendiente">elemento</InteractiveElement>',
+              justificacion: 'por hipótesis',
+              diagramStep: 'initial',
+            },
+          ],
+        },
+      ],
+    });
+
+    expect(result.canSave).toBe(true);
+    expect(result.errorCount).toBe(0);
+  });
 });

@@ -11,6 +11,7 @@ import {
   updateStep,
   updateStepObjectState,
 } from '../model/commands';
+import { toggleInitialStep, reindexSteps } from '../model/diagramElements';
 import { DiagramExpressionField } from './DiagramExpressionField';
 import { COLOR_OPTIONS } from '../model/commands';
 
@@ -31,9 +32,9 @@ function matrixCellClass(selected: boolean, visible: boolean): string {
 }
 
 function emphasisSummary(emphasis: keyof typeof emphasisLabel): string {
-  if (emphasis === 'primary') return '★ Resaltado fuerte';
-  if (emphasis === 'secondary') return '◆ Resaltado suave';
-  return '— Sin resaltar';
+  if (emphasis === 'primary') return 'Resaltado fuerte';
+  if (emphasis === 'secondary') return 'Resaltado suave';
+  return 'Sin resaltar';
 }
 
 export const DiagramStepsEditor: React.FC<DiagramStepsEditorProps> = ({
@@ -54,17 +55,33 @@ export const DiagramStepsEditor: React.FC<DiagramStepsEditorProps> = ({
     : undefined;
   const visibleItems = items.filter(item => `${item.label} ${item.id}`.toLocaleLowerCase('es').includes(objectQuery.trim().toLocaleLowerCase('es')));
 
-  const editSteps = (steps: VisualDiagramModel['steps'], label: string) => onModelEdit({ ...model, steps }, { label });
+  const editSteps = (steps: VisualDiagramModel['steps'], label: string) => onModelEdit({ ...model, steps: reindexSteps(steps) }, { label });
   const addStep = () => {
     const id = nextStepId(model.steps);
     const visibleIds = items.filter(item => item.visible).map(item => item.id);
     editSteps([...model.steps, step(id, `Paso ${model.steps.length + 1}`, 'Describa qué cambia y por qué.', visibleIds)], 'Añadir paso');
     onActiveStepChange(id);
   };
+  const addInitialStep = () => {
+    if (model.steps.some(s => s.id === 'initial')) return;
+    const visibleIds = items.filter(item => item.visible).map(item => item.id);
+    const initialStep = step('initial', 'Figura inicial', 'Estado inicial del enunciado', visibleIds);
+    editSteps([initialStep, ...model.steps], 'Añadir paso inicial');
+    onActiveStepChange('initial');
+  };
+  const handleToggleInitial = () => {
+    if (!activeStep) return;
+    const nextSteps = toggleInitialStep(model.steps, activeStep.id);
+    editSteps(nextSteps, 'Cambiar estado inicial');
+    const newActiveId = activeStep.id === 'initial' ? 'step1' : 'initial';
+    onActiveStepChange(newActiveId);
+  };
   const editState = (update: Partial<DiagramStepObjectState>, label: string) => {
     if (!selectedCell) return;
     editSteps(updateStepObjectState(model.steps, selectedCell.stepId, selectedCell.objectId, update), label);
   };
+
+  const hasInitialStep = model.steps.some(s => s.id === 'initial');
 
   return (
     <section className="rounded border border-carbon/15 bg-lienzo p-3" aria-labelledby="diagram-steps-title">
@@ -73,7 +90,19 @@ export const DiagramStepsEditor: React.FC<DiagramStepsEditorProps> = ({
           <h3 id="diagram-steps-title" className="text-xs font-bold uppercase tracking-widest text-carbon/55">Línea temporal y comportamiento</h3>
           <p className="mt-1 text-[10px] text-carbon/55">Cada celda resume qué cambia. Selecciónela para editar todos sus detalles.</p>
         </div>
-        <button type="button" onClick={addStep} className="rounded bg-terracota px-3 py-1.5 text-xs font-bold text-lienzo">+ Crear paso</button>
+        <div className="flex items-center gap-2">
+          {!hasInitialStep && (
+            <button
+              type="button"
+              onClick={addInitialStep}
+              className="rounded border border-terracota/30 bg-terracota/10 px-2.5 py-1.5 text-xs font-bold text-terracota hover:bg-terracota/20"
+              title="Añade un paso inicial con ID 'initial' para la figura del enunciado"
+            >
+              + Paso inicial ('initial')
+            </button>
+          )}
+          <button type="button" onClick={addStep} className="rounded bg-terracota px-3 py-1.5 text-xs font-bold text-lienzo">+ Crear paso</button>
+        </div>
       </div>
 
       {model.steps.length === 0 ? (
@@ -107,12 +136,17 @@ export const DiagramStepsEditor: React.FC<DiagramStepsEditorProps> = ({
             {model.steps.map((item, index) => (
               <li key={item.id} className={`min-w-52 rounded border p-2 ${item.id === activeStep?.id ? 'border-terracota bg-terracota/5' : 'border-carbon/10'}`}>
                 <button type="button" className="w-full text-left" onClick={() => onActiveStepChange(item.id)} aria-current={item.id === activeStep?.id ? 'step' : undefined}>
-                  <span className="block text-xs font-bold text-carbon">{index + 1}. {item.label}</span>
+                  <div className="flex items-center justify-between gap-1">
+                    <span className="block text-xs font-bold text-carbon">{index + 1}. {item.label}</span>
+                    {item.id === 'initial' && (
+                      <span className="rounded bg-terracota/15 px-1.5 py-0.5 text-[8px] font-bold uppercase tracking-wider text-terracota">Initial</span>
+                    )}
+                  </div>
                   <span className="mt-0.5 block truncate text-[10px] text-carbon/55">{item.description || 'Sin descripción'}</span>
                 </button>
                 <div className="mt-2 flex gap-1">
-                  <button type="button" aria-label={`Mover ${item.label} a la izquierda`} disabled={index === 0} onClick={() => editSteps(moveStep(model.steps, item.id, -1), `Reordenar ${item.label}`)} className="rounded border border-carbon/15 px-1.5 text-xs disabled:opacity-30">←</button>
-                  <button type="button" aria-label={`Mover ${item.label} a la derecha`} disabled={index === model.steps.length - 1} onClick={() => editSteps(moveStep(model.steps, item.id, 1), `Reordenar ${item.label}`)} className="rounded border border-carbon/15 px-1.5 text-xs disabled:opacity-30">→</button>
+                  <button type="button" aria-label={`Mover ${item.label} a la izquierda`} disabled={index === 0} onClick={() => editSteps(moveStep(model.steps, item.id, -1), `Reordenar ${item.label}`)} className="rounded border border-carbon/15 px-1.5 text-xs disabled:opacity-30">Anterior</button>
+                  <button type="button" aria-label={`Mover ${item.label} a la derecha`} disabled={index === model.steps.length - 1} onClick={() => editSteps(moveStep(model.steps, item.id, 1), `Reordenar ${item.label}`)} className="rounded border border-carbon/15 px-1.5 text-xs disabled:opacity-30">Siguiente</button>
                   <button type="button" onClick={() => editSteps(duplicateStep(model.steps, item.id), `Duplicar ${item.label}`)} className="rounded border border-carbon/15 px-1.5 text-[10px]">Duplicar</button>
                   <button
                     type="button"
@@ -130,8 +164,35 @@ export const DiagramStepsEditor: React.FC<DiagramStepsEditorProps> = ({
           </ol>
 
           {activeStep && (
-            <fieldset className="mt-3 grid gap-2 rounded border border-carbon/10 bg-carbon/[0.02] p-3 sm:grid-cols-[1fr_2fr_110px]">
+            <fieldset className="mt-3 grid gap-2 rounded border border-carbon/10 bg-carbon/[0.02] p-3 sm:grid-cols-[1.2fr_1.5fr_2fr_110px]">
               <legend className="px-1 text-[10px] font-bold uppercase tracking-wider text-carbon/50">Datos del paso activo</legend>
+              <div>
+                <label className="block text-[10px] font-bold text-carbon/60 mb-1">Identificador del paso</label>
+                <div className="flex items-center gap-2">
+                  <span className="rounded bg-carbon/5 border border-carbon/15 px-2 py-1 text-xs font-mono text-carbon font-bold">
+                    {activeStep.id}
+                  </span>
+                  {activeStep.id !== 'initial' ? (
+                    <button
+                      type="button"
+                      onClick={handleToggleInitial}
+                      className="rounded border border-terracota/30 bg-terracota/10 px-2 py-1 text-[10px] font-bold text-terracota hover:bg-terracota/20"
+                      title="Establece este paso como la figura del enunciado (ID 'initial')"
+                    >
+                      Marcar como 'initial'
+                    </button>
+                  ) : (
+                    <button
+                      type="button"
+                      onClick={handleToggleInitial}
+                      className="rounded border border-carbon/20 bg-lienzo px-2 py-1 text-[10px] font-bold text-carbon/60 hover:bg-carbon/5"
+                      title="Convierte este paso a un paso numerado secuencial"
+                    >
+                      Convertir a numerado
+                    </button>
+                  )}
+                </div>
+              </div>
               <label className="text-[10px] font-bold text-carbon/60">Etiqueta
                 <input className="mt-1 w-full rounded border border-carbon/15 bg-lienzo p-1.5 text-xs" value={activeStep.label} onChange={event => editSteps(updateStep(model, activeStep.id, { label: event.target.value }).steps, 'Editar etiqueta del paso')} />
               </label>
@@ -180,9 +241,9 @@ export const DiagramStepsEditor: React.FC<DiagramStepsEditorProps> = ({
                             aria-pressed={selected}
                             className={`w-full rounded border p-1.5 text-left ${matrixCellClass(selected, visible)}`}
                           >
-                            <span className="block font-bold">{visible ? '● Visible' : '○ Oculto'}</span>
+                            <span className="block font-bold">{visible ? 'Visible' : 'Oculto'}</span>
                             <span className="block truncate text-[9px]">{emphasisSummary(emphasis)}</span>
-                            <span className="block text-[9px]">{state?.overlay?.visible ? '▣ Overlay' : ''}{state?.label ? ' · Aa' : ''}{state?.interactive === false ? ' · 🔒' : ''}</span>
+                            <span className="block text-[9px]">{state?.overlay?.visible ? 'Panel' : ''}{state?.label ? ' · Etiqueta' : ''}{state?.interactive === false ? ' · Bloqueado' : ''}</span>
                           </button>
                         </td>
                       );

@@ -97,9 +97,24 @@ const DiagramRendererContent: React.FC<DiagramRendererProps> = ({
 
   const scopedStoreStep = useMathStore(state => state.variables?.[`step:${spec.componentId}`]);
   const stepSync = useDiagramStepSync();
-  const synchronizedStepId = stepSync?.activeStepIndex == null
-    ? undefined
-    : spec.steps[stepSync.activeStepIndex]?.id;
+
+  const synchronizedStepId = useMemo(() => {
+    if (!stepSync) return undefined;
+    if (stepSync.activeStepId) {
+      if (stepSync.activeStepId === 'initial') {
+        return spec.steps[0]?.id;
+      }
+      const match = spec.steps.find(s => s.id === stepSync.activeStepId);
+      if (match) return match.id;
+    }
+    if (stepSync.activeStepIndex != null) {
+      const hasInitialStep = spec.steps[0]?.id === 'initial' || spec.steps[0]?.id === 'enunciado' || spec.steps[0]?.id === 'hipotesis';
+      const mappedIndex = hasInitialStep ? stepSync.activeStepIndex + 1 : stepSync.activeStepIndex;
+      return spec.steps[mappedIndex]?.id ?? spec.steps[spec.steps.length - 1]?.id;
+    }
+    return undefined;
+  }, [stepSync, spec.steps]);
+
   const effectiveStepId = activeStepId
     ?? synchronizedStepId
     ?? ((typeof scopedStoreStep === 'string' ? scopedStoreStep.replace(`${spec.componentId}:`, '') : '') || spec.steps[0]?.id);

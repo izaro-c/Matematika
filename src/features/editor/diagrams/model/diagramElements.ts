@@ -92,14 +92,41 @@ export function step(id: string, label: string, description: string, visibleTarg
   };
 }
 
+export function reindexSteps(steps: VisualStep[]): VisualStep[] {
+  let stepCounter = 1;
+  return steps.map((item, index) => {
+    if (index === 0 && item.id === 'initial') {
+      return { ...item, id: 'initial' };
+    }
+    return { ...item, id: `step${stepCounter++}` };
+  });
+}
+
+export function toggleInitialStep(steps: VisualStep[], stepId: string): VisualStep[] {
+  const targetIndex = steps.findIndex(s => s.id === stepId);
+  if (targetIndex < 0) return steps;
+
+  const targetStep = steps[targetIndex];
+  const isCurrentlyInitial = targetStep.id === 'initial';
+
+  let updatedSteps: VisualStep[];
+  if (isCurrentlyInitial) {
+    updatedSteps = steps.map(s => s.id === stepId ? { ...s, id: 'temp_step' } : s);
+  } else {
+    const withoutTarget = steps.filter(s => s.id !== stepId);
+    updatedSteps = [{ ...targetStep, id: 'initial' }, ...withoutTarget];
+  }
+
+  return reindexSteps(updatedSteps);
+}
+
 export function duplicateStep(steps: VisualStep[], stepId: string): VisualStep[] {
   const index = steps.findIndex(item => item.id === stepId);
   if (index < 0) return steps;
-  const id = nextStepId(steps);
   const source = steps[index];
   const copy: VisualStep = {
     ...source,
-    id,
+    id: `temp_copy`,
     label: `${source.label} (copia)`,
     visibleTargets: [...source.visibleTargets],
     objectStates: source.objectStates
@@ -110,11 +137,11 @@ export function duplicateStep(steps: VisualStep[], stepId: string): VisualStep[]
       : undefined,
     extensions: source.extensions ? { ...source.extensions } : undefined,
   };
-  return [...steps.slice(0, index + 1), copy, ...steps.slice(index + 1)];
+  return reindexSteps([...steps.slice(0, index + 1), copy, ...steps.slice(index + 1)]);
 }
 
 export function removeStep(steps: VisualStep[], stepId: string): VisualStep[] {
-  return steps.filter(item => item.id !== stepId);
+  return reindexSteps(steps.filter(item => item.id !== stepId));
 }
 
 export function moveStep(steps: VisualStep[], stepId: string, direction: -1 | 1): VisualStep[] {
@@ -123,7 +150,7 @@ export function moveStep(steps: VisualStep[], stepId: string, direction: -1 | 1)
   if (index < 0 || nextIndex < 0 || nextIndex >= steps.length) return steps;
   const reordered = [...steps];
   [reordered[index], reordered[nextIndex]] = [reordered[nextIndex], reordered[index]];
-  return reordered;
+  return reindexSteps(reordered);
 }
 
 export function updateStepObjectState(steps: VisualStep[], stepId: string, objectId: string, update: Partial<DiagramStepObjectState>): VisualStep[] {

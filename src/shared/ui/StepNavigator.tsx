@@ -28,9 +28,21 @@ const StepNavigatorContent: React.FC<StepNavigatorProps> = ({
   const setVariable = useMathStore(state => state.setVariable);
   const stepSync = useDiagramStepSync();
   const selectSynchronizedStep = stepSync?.selectDiagramStep;
-  const synchronizedStepId = stepSync?.activeStepIndex == null
-    ? undefined
-    : (steps[stepSync.activeStepIndex]?.id ?? '');
+  const synchronizedStepId = useMemo(() => {
+    if (!stepSync) return undefined;
+    if (stepSync.activeStepId) {
+      if (stepSync.activeStepId === 'initial') return steps[0]?.id;
+      const match = steps.find(s => s.id === stepSync.activeStepId);
+      if (match) return match.id;
+    }
+    if (stepSync.activeStepIndex != null) {
+      const hasInitialStep = steps[0]?.id === 'initial' || steps[0]?.id === 'enunciado' || steps[0]?.id === 'hipotesis';
+      const mappedIndex = hasInitialStep ? stepSync.activeStepIndex + 1 : stepSync.activeStepIndex;
+      return steps[mappedIndex]?.id ?? steps[steps.length - 1]?.id;
+    }
+    return undefined;
+  }, [stepSync, steps]);
+
   const storeStepId = typeof storeStep === 'string' ? storeStep.replace(`${scopeId}:`, '') : '';
   const externalStepId = activeStepId ?? synchronizedStepId ?? storeStepId;
   const seed = useMemo(() => initialDiagramPlaybackState(steps, externalStepId), [steps, externalStepId]);
@@ -64,8 +76,10 @@ const StepNavigatorContent: React.FC<StepNavigatorProps> = ({
   const publishStep = useCallback((stepId: string) => {
     lastPublishedStepIdRef.current = stepId;
     const stepIndex = steps.findIndex(step => step.id === stepId);
-    if (stepIndex >= 0 && selectSynchronizedStep) {
-      selectSynchronizedStep(stepIndex);
+    if (selectSynchronizedStep) {
+      const hasInitialStep = steps[0]?.id === 'initial' || steps[0]?.id === 'enunciado' || steps[0]?.id === 'hipotesis';
+      const proofStepIndex = hasInitialStep ? stepIndex - 1 : stepIndex;
+      selectSynchronizedStep(proofStepIndex >= 0 ? proofStepIndex : stepId);
     }
     if (onStepChange) {
       onStepChange(stepId);

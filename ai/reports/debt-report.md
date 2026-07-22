@@ -10,15 +10,15 @@
 
 ## Resumen ejecutivo
 
-**Hallazgos objetivos.** Se inspeccionaron 1074 archivos de texto, 542 archivos TS/TSX, 122 archivos de test y 120 archivos MDX.
+**Hallazgos objetivos.** Se inspeccionaron 1107 archivos de texto, 560 archivos TS/TSX, 130 archivos de test y 120 archivos MDX.
 
-**Heurísticas aproximadas.** Se localizaron 281 apariciones léxicas de `any`, 96 colores hex, 27 marcas TODO/FIXME, 102 archivos TS/TSX grandes y 20 rutas de importación potencialmente incompatibles con FSD.
+**Heurísticas aproximadas.** Se localizaron 263 apariciones léxicas de `any`, 96 colores hex, 27 marcas TODO/FIXME, 111 archivos TS/TSX grandes y 20 rutas de importación potencialmente incompatibles con FSD.
 
 **Recomendación.** Empezar por las rutas FSD y supresiones TypeScript, continuar con hex fuera de tokens, descomponer puntos de alta responsabilidad y cerrar después cobertura, contenido, Lean y duplicación IA.
 
 ## Deuda TypeScript
 
-**Hallazgo objetivo.** Hay 542 archivos TS/TSX en el alcance; 0 archivo(s) contienen 0 supresiones `@ts-*`.
+**Hallazgo objetivo.** Hay 560 archivos TS/TSX en el alcance; 0 archivo(s) contienen 0 supresiones `@ts-*`.
 
 _Ninguno detectado._
 
@@ -35,26 +35,25 @@ _Ninguno detectado._
 | `scripts/editor/migrate-legacy-diagrams.ts` | 26 |
 | `src/widgets/diagrams/Demos/DemoPitagorasEuclides.tsx` | 25 |
 | `src/widgets/diagrams/Demos/DemoPitagorasAreas.tsx` | 17 |
-| `src/shared/diagrams/runtime/diagramRuntimeUtils.ts` | 16 |
 | `src/features/editor/core/parser.ts` | 14 |
 | `scripts/ai/generate-debt-report.ts` | 11 |
 | `src/shared/diagrams/core/MathBoard.tsx` | 11 |
 | `src/shared/diagrams/runtime/useBoardLifecycle.ts` | 11 |
 | `src/widgets/diagrams/Demos/DemoTales.tsx` | 11 |
 | `scripts/editor/parseDiagramSourceAST.ts` | 9 |
-| `src/shared/diagrams/runtime/useDiagramSelection.ts` | 8 |
 | `src/shared/templates/diagrams/circulo-unitario.template.tsx` | 8 |
 | `src/shared/templates/diagrams/eje-coordenadas.template.tsx` | 8 |
 | `src/shared/templates/diagrams/triangulo-deformable.template.tsx` | 8 |
 | `src/widgets/diagrams/Demos/DemoInvarianciaTriangulacion.tsx` | 8 |
 | `src/widgets/diagrams/Demos/DemoRectasCoincidentes.tsx` | 8 |
 | `src/widgets/diagrams/Demos/DemoTriangulacionPoligono.tsx` | 8 |
+| `tests/shared/diagrams/Phase3Renderer.test.tsx` | 8 |
 | `tests/features/graph/GraphStore.test.ts` | 7 |
 | `tests/scripts/generate-test-report.ts` | 6 |
-| `tests/shared/diagrams/Phase3Renderer.test.tsx` | 6 |
 | `.auxiliary/.opencode/skills/diagrama/examples/JSXGraphCanon.tsx` | 5 |
 | `src/features/editor/ui/EditorPage.tsx` | 5 |
 | `src/features/editor/document/parseEditorDocument.ts` | 4 |
+| `src/shared/diagrams/runtime/DiagramKatexOverlay.tsx` | 4 |
 | `src/widgets/diagrams/Ejercicios/EjemploPitagorasCalculo.tsx` | 4 |
 | `src/widgets/diagrams/Ejercicios/EjercicioPitagorasCateto.tsx` | 4 |
 | `src/features/editor/ui/diff/EditorDiffController.tsx` | 3 |
@@ -123,108 +122,117 @@ _Ninguno detectado._
 
 | Archivo | Líneas | Bytes |
 | --- | --- | --- |
-| `src/widgets/diagrams/Definiciones/Cuadrilatero.tsx` | 2803 | 67749 |
-| `src/widgets/diagrams/Definiciones/Triangulo.tsx` | 1736 | 40210 |
-| `src/widgets/diagrams/Teoremas/CongruenciaALA.tsx` | 1537 | 31901 |
-| `src/widgets/diagrams/Definiciones/Paralelogramo.tsx` | 1517 | 34186 |
-| `src/widgets/diagrams/Teoremas/CongruenciaLLL.tsx` | 1280 | 27713 |
-| `src/widgets/diagrams/Axiomas/SAS.tsx` | 1175 | 25250 |
-| `src/widgets/diagrams/Models/ModeloPoincare.tsx` | 1062 | 24775 |
-| `src/widgets/diagrams/Demos/DemoCongruenciaALA.tsx` | 1034 | 22276 |
-| `src/widgets/diagrams/Demos/DemoSumaAngulos.tsx` | 988 | 21144 |
-| `src/widgets/diagrams/Axiomas/AxiomaArquimedes.tsx` | 981 | 21849 |
-| `src/features/editor/diagrams/ui/DiagramInspector.tsx` | 939 | 54001 |
-| `src/widgets/diagrams/Teoremas/Pitagoras.tsx` | 933 | 19213 |
-| `src/widgets/diagrams/Demos/DemoCongruenciaLLL.tsx` | 914 | 19920 |
-| `tests/shared/diagrams/Phase3Renderer.test.tsx` | 889 | 45205 |
-| `src/shared/diagrams/runtime/useBoardLifecycle.ts` | 872 | 39822 |
-| `src/widgets/diagrams/Axiomas/Congruence3.tsx` | 869 | 18295 |
-| `scripts/editor/rewriteSelectedDiagrams.ts` | 863 | 60615 |
-| `tests/e2e/editor/editor-safe-ux.e2e.ts` | 851 | 42805 |
+| `src/widgets/diagrams/Definiciones/Cuadrilatero.tsx` | 1946 | 51513 |
+| `src/widgets/diagrams/Demos/DemoAngulosOpuestos.tsx` | 1593 | 35530 |
+| `src/widgets/diagrams/Definiciones/Triangulo.tsx` | 1419 | 34193 |
+| `src/widgets/diagrams/Definiciones/Paralelogramo.tsx` | 1402 | 32344 |
+| `src/widgets/diagrams/Demos/DemoAnguloExterno.tsx` | 1373 | 31002 |
+| `src/widgets/diagrams/Teoremas/CongruenciaALA.tsx` | 1221 | 25825 |
+| `src/widgets/diagrams/Teoremas/CongruenciaLLL.tsx` | 1082 | 23675 |
+| `src/widgets/diagrams/Demos/DemoCongruenciaALA.tsx` | 1064 | 23093 |
+| `src/features/editor/diagrams/ui/DiagramInspector.tsx` | 1044 | 60635 |
+| `tests/e2e/editor/editor-safe-ux.e2e.ts` | 1010 | 51955 |
+| `src/widgets/diagrams/Demos/DemoSumaAngulos.tsx` | 1007 | 21771 |
+| `tests/shared/diagrams/Phase3Renderer.test.tsx` | 1001 | 51950 |
+| `src/widgets/diagrams/Axiomas/SAS.tsx` | 990 | 21396 |
+| `src/shared/diagrams/runtime/useBoardLifecycle.ts` | 973 | 45876 |
+| `src/widgets/diagrams/Demos/DemoCongruenciaLLL.tsx` | 950 | 20789 |
+| `src/shared/diagrams/spec/scene.ts` | 929 | 43488 |
+| `src/widgets/diagrams/Models/ModeloPoincare.tsx` | 883 | 21535 |
+| `src/widgets/diagrams/Axiomas/AxiomaArquimedes.tsx` | 877 | 19705 |
+| `src/features/editor/ui/diagrams/DiagramWorkbench.tsx` | 865 | 41920 |
+| `src/shared/diagrams/spec/v3Compatibility.ts` | 857 | 50319 |
 | `scripts/ai/generate-debt-report.ts` | 848 | 35233 |
-| `src/widgets/diagrams/Teoremas/Tales.tsx` | 836 | 17891 |
-| `src/features/editor/ui/diagrams/DiagramWorkbench.tsx` | 824 | 39325 |
+| `src/widgets/diagrams/Teoremas/Pitagoras.tsx` | 844 | 17636 |
 | `src/shared/diagrams/core/MathFactory.ts` | 815 | 27803 |
-| `src/shared/diagrams/spec/scene.ts` | 806 | 38583 |
-| `src/widgets/diagrams/Demos/DemoAngulosOpuestos.tsx` | 782 | 16813 |
+| `tests/features/editor/diagrams/Phase3Inspector.test.tsx` | 800 | 44149 |
 | `scripts/ai/generate-ai-indexes.ts` | 770 | 29276 |
-| `tests/features/editor/diagrams/Phase3Inspector.test.tsx` | 769 | 41799 |
+| `src/widgets/diagrams/Axiomas/Congruence3.tsx` | 769 | 16350 |
+| `src/shared/diagrams/spec/schema.ts` | 768 | 42177 |
+| `src/widgets/diagrams/Teoremas/Tales.tsx` | 753 | 16527 |
 | `src/features/editor/ui/EditorPage.tsx` | 735 | 27816 |
-| `src/shared/diagrams/spec/schema.ts` | 717 | 38482 |
-| `src/widgets/diagrams/Demos/DemoAreaRectangulo_Inconmensurable.tsx` | 684 | 15091 |
-| `src/features/editor/core/parser.ts` | 661 | 22489 |
-| `src/widgets/diagrams/Definiciones/Circunferencia.tsx` | 648 | 14355 |
-| `src/widgets/diagrams/Teoremas/SumaAngulos.tsx` | 617 | 13544 |
-| `src/widgets/diagrams/Teoremas/PuntoMedioPerpendicular.tsx` | 609 | 13222 |
-| `src/widgets/diagrams/Teoremas/DesigualdadTriangular.tsx` | 606 | 12311 |
-| `src/widgets/diagrams/Demos/DemoAreaAditividad.tsx` | 599 | 13026 |
-| `src/widgets/diagrams/Axiomas/Congruence2.tsx` | 592 | 12159 |
-| `src/widgets/diagrams/Models/ModeloFano.tsx` | 589 | 12769 |
+| `src/widgets/diagrams/Demos/DemoAreaRectangulo_Inconmensurable.tsx` | 668 | 14838 |
+| `src/features/editor/core/parser.ts` | 664 | 22760 |
+| `src/widgets/diagrams/Demos/DemoAreaAditividad.tsx` | 642 | 13983 |
+| `src/widgets/diagrams/Definiciones/Circunferencia.tsx` | 614 | 13892 |
+| `src/widgets/diagrams/Teoremas/DesigualdadTriangular.tsx` | 614 | 12608 |
+| `src/widgets/diagrams/Teoremas/PuntoMedioPerpendicular.tsx` | 606 | 13326 |
+| `src/widgets/diagrams/CasosUso/GpsTrilateracion.tsx` | 606 | 13234 |
+| `src/widgets/diagrams/Definiciones/Mediana.tsx` | 584 | 12249 |
+| `src/widgets/diagrams/Models/ModeloFano.tsx` | 582 | 12835 |
+| `src/widgets/diagrams/Teoremas/SumaAngulos.tsx` | 579 | 12712 |
 | `src/features/graph/graph.worker.ts` | 578 | 17905 |
-| `src/widgets/diagrams/Axiomas/HyperbolicParallel.tsx` | 570 | 12517 |
-| `src/widgets/diagrams/CasosUso/GpsTrilateracion.tsx` | 557 | 12012 |
+| `src/widgets/diagrams/Axiomas/Congruence2.tsx` | 561 | 11598 |
 | `tests/features/editor/useEditorCore.test.ts` | 556 | 25417 |
-| `scripts/editor/parseDiagramSourceAST.ts` | 553 | 21541 |
+| `scripts/editor/parseDiagramSourceAST.ts` | 554 | 21658 |
 | `src/features/editor/document/structuralOperations.ts` | 546 | 22387 |
-| `src/widgets/diagrams/Axiomas/Pasch.tsx` | 546 | 11826 |
+| `src/widgets/diagrams/Definiciones/Perpendicular.tsx` | 546 | 12074 |
 | `src/features/editor/core/useEditorCore.ts` | 536 | 27872 |
-| `src/widgets/diagrams/Definiciones/Mediana.tsx` | 524 | 10934 |
-| `src/widgets/diagrams/Definiciones/Mediatriz.tsx` | 513 | 11110 |
-| `src/widgets/diagrams/Definiciones/Bisectriz.tsx` | 507 | 10713 |
-| `src/widgets/diagrams/Definiciones/Perpendicular.tsx` | 506 | 11082 |
-| `src/widgets/diagrams/Axiomas/AxiomaDedekind.tsx` | 506 | 10900 |
-| `src/widgets/diagrams/Teoremas/AngulosOpuestos.tsx` | 489 | 10299 |
-| `src/widgets/diagrams/Axiomas/Congruence4.tsx` | 484 | 10423 |
+| `src/widgets/diagrams/Definiciones/Mediatriz.tsx` | 526 | 11505 |
+| `src/widgets/diagrams/Teoremas/AngulosOpuestos.tsx` | 524 | 11118 |
+| `src/widgets/diagrams/Axiomas/Pasch.tsx` | 510 | 11293 |
+| `src/widgets/diagrams/Axiomas/HyperbolicParallel.tsx` | 502 | 11393 |
 | `src/shared/lib/glossaryDictionary.ts` | 483 | 18549 |
+| `src/widgets/diagrams/Axiomas/AxiomaDedekind.tsx` | 481 | 10513 |
+| `src/widgets/diagrams/Definiciones/Bisectriz.tsx` | 481 | 10358 |
+| `src/widgets/diagrams/Demos/DemoAreaRectangulo_Conmensurable.tsx` | 479 | 10558 |
 | `src/widgets/navigation/SearchOmnibar.tsx` | 467 | 21003 |
+| `src/widgets/diagrams/Teoremas/TrianguloIsosceles.tsx` | 464 | 10129 |
 | `src/features/graph/GraphStore.ts` | 461 | 16852 |
 | `src/features/editor/ui/panels/VisualEditorBlock.tsx` | 459 | 27768 |
-| `src/widgets/diagrams/Axiomas/Congruence1.tsx` | 456 | 9228 |
-| `src/features/editor/diagrams/ui/DiagramInfoPanelContentEditor.tsx` | 453 | 31203 |
+| `src/widgets/diagrams/Axiomas/Congruence4.tsx` | 441 | 9524 |
 | `src/entities/content/ContentStore.ts` | 439 | 17441 |
 | `scripts/core/lean-graph-utils.ts` | 439 | 15008 |
-| `src/widgets/diagrams/Definiciones/Angulo.tsx` | 439 | 9427 |
 | `src/features/editor/ux/diffReview.ts` | 436 | 15737 |
-| `src/widgets/diagrams/Teoremas/TrianguloIsosceles.tsx` | 435 | 9422 |
+| `src/widgets/diagrams/Axiomas/Congruence1.tsx` | 432 | 8878 |
 | `src/entities/content/msc2020.ts` | 431 | 17110 |
 | `src/features/editor/ux/safetyPresentation.ts` | 431 | 16086 |
-| `src/widgets/diagrams/Demos/DemoAreaRectangulo_Conmensurable.tsx` | 426 | 9400 |
+| `src/features/editor/diagrams/ui/DiagramInfoPanelContentEditor.tsx` | 405 | 27912 |
+| `src/widgets/diagrams/Definiciones/Angulo.tsx` | 405 | 8909 |
 | `tests/features/editor/persistence/editorPersistenceBackend.test.ts` | 400 | 21891 |
 | `src/features/editor/ui/components/SemanticLinker.tsx` | 395 | 16964 |
+| `src/features/editor/diagrams/model/diagramElements.ts` | 392 | 17923 |
 | `tests/features/editor/diagrams/useDiagramState.test.tsx` | 392 | 15532 |
+| `src/widgets/diagrams/Teoremas/DosRectasUnPunto.tsx` | 385 | 8136 |
 | `src/widgets/content/MarginaliaPanel.tsx` | 384 | 15144 |
 | `src/features/graph/lib/graphWorkerContract.ts` | 379 | 9815 |
+| `src/shared/diagrams/spec/types.ts` | 375 | 11194 |
 | `src/features/graph/ui/AxiomaticTree.tsx` | 373 | 16429 |
-| `src/shared/diagrams/core/MathBoard.tsx` | 366 | 14426 |
-| `src/features/editor/diagrams/model/diagramElements.ts` | 364 | 16942 |
+| `src/shared/diagrams/spec/schemaV3.ts` | 371 | 27688 |
+| `src/shared/diagrams/core/MathBoard.tsx` | 371 | 14811 |
 | `tests/features/editor/diagrams/reducer.test.ts` | 364 | 14186 |
 | `scripts/ai/review-working-tree.ts` | 360 | 12260 |
 | `tests/features/editor/diagrams/Phase5AcceptanceMigrations.test.ts` | 358 | 14188 |
-| `src/widgets/diagrams/Models/ModeloTresPuntos.tsx` | 353 | 7487 |
+| `src/widgets/diagrams/Axiomas/Incidence4.tsx` | 357 | 7467 |
+| `src/widgets/diagrams/Teoremas/LemaPuntoMedio.tsx` | 357 | 7413 |
+| `src/shared/diagrams/runtime/DiagramRenderer.tsx` | 352 | 15288 |
+| `src/widgets/layouts/CodexLayout.tsx` | 351 | 12853 |
 | `src/widgets/diagrams/Demos/DemoPitagorasEuclides.tsx` | 345 | 13603 |
-| `src/shared/diagrams/spec/types.ts` | 345 | 9811 |
-| `src/widgets/diagrams/Teoremas/DosRectasUnPunto.tsx` | 341 | 7212 |
-| `src/widgets/diagrams/Axiomas/Incidence4.tsx` | 341 | 6954 |
+| `src/widgets/diagrams/Models/ModeloTresPuntos.tsx` | 342 | 7443 |
 | `src/features/editor/ui/panels/VisualEditorPanel.tsx` | 339 | 19538 |
-| `src/widgets/diagrams/Teoremas/LemaPuntoMedio.tsx` | 336 | 6944 |
 | `tests/shared/diagrams/Phase3GeometryLanguage.test.ts` | 335 | 14868 |
+| `tests/features/editor/diagrams/DiagramWorkbench.test.tsx` | 334 | 12938 |
 | `tests/features/editor/ux/diffReview.test.ts` | 334 | 12241 |
+| `src/widgets/diagrams/Definiciones/Altura.tsx` | 333 | 7145 |
+| `src/features/editor/core/validation.ts` | 331 | 15636 |
+| `src/features/editor/diagrams/ui/DiagramConstraintEditor.tsx` | 330 | 19231 |
 | `src/features/metadata/ui/PageDependencyGraph.tsx` | 329 | 9876 |
 | `scripts/core/validate-logical-graph.ts` | 328 | 11344 |
-| `src/features/editor/core/validation.ts` | 327 | 15058 |
+| `src/shared/diagrams/spec/expressions.ts` | 323 | 13895 |
+| `src/features/editor/diagrams/model/diagramClipboard.ts` | 322 | 14214 |
 | `src/features/progress/ui/TaxonomyGraph.tsx` | 322 | 11659 |
+| `tests/features/editor/validation.test.ts` | 321 | 10386 |
 | `tests/database/content-store.test.ts` | 320 | 9682 |
 | `src/features/editor/diagrams/hooks/useDiagramState.ts` | 318 | 11639 |
 | `scripts/editor/migrate-legacy-diagrams.ts` | 317 | 15294 |
 | `tests/features/editor/document/phase7AuthoringUx.test.ts` | 315 | 12692 |
 | `scripts/editor/editorPersistenceBackend.ts` | 311 | 15527 |
-| `src/widgets/layouts/CodexLayout.tsx` | 311 | 11944 |
-| `src/shared/diagrams/runtime/DiagramRenderer.tsx` | 310 | 13277 |
-| `src/widgets/diagrams/Models/ModeloCartesiano.tsx` | 309 | 6508 |
-| `src/features/editor/diagrams/model/diagramClipboard.ts` | 306 | 13560 |
+| `src/widgets/diagrams/Models/ModeloCartesiano.tsx` | 307 | 6585 |
+| `src/features/editor/diagrams/ui/DiagramStepsEditor.tsx` | 305 | 22565 |
 | `src/widgets/graph/LocalDependencyGraph.tsx` | 302 | 9130 |
 | `src/features/editor/ui/EditorNavigation.tsx` | 301 | 16424 |
 | `tests/features/editor/diagrams/model.test.ts` | 301 | 14189 |
+| `tests/features/editor/diagrams/Phase3Serialization.test.ts` | 300 | 15811 |
 
 **Recomendación.** Revisar cohesión antes de dividir: tamaño alto es una señal, no una prueba de mal diseño.
 
@@ -234,105 +242,109 @@ _Ninguno detectado._
 
 | Componente | Líneas | Imports | Hooks | Handlers |
 | --- | --- | --- | --- | --- |
-| `src/widgets/diagrams/Definiciones/Cuadrilatero.tsx` | 2803 | 1 | 0 | 0 |
-| `src/widgets/diagrams/Definiciones/Triangulo.tsx` | 1736 | 1 | 0 | 0 |
-| `src/widgets/diagrams/Teoremas/CongruenciaALA.tsx` | 1537 | 1 | 0 | 0 |
-| `src/widgets/diagrams/Definiciones/Paralelogramo.tsx` | 1517 | 1 | 0 | 0 |
-| `src/widgets/diagrams/Teoremas/CongruenciaLLL.tsx` | 1280 | 1 | 0 | 0 |
-| `src/widgets/diagrams/Axiomas/SAS.tsx` | 1175 | 1 | 0 | 0 |
-| `src/widgets/diagrams/Models/ModeloPoincare.tsx` | 1062 | 1 | 0 | 0 |
-| `src/widgets/diagrams/Demos/DemoCongruenciaALA.tsx` | 1034 | 1 | 0 | 0 |
-| `src/widgets/diagrams/Demos/DemoSumaAngulos.tsx` | 988 | 1 | 0 | 0 |
-| `src/widgets/diagrams/Axiomas/AxiomaArquimedes.tsx` | 981 | 1 | 0 | 0 |
-| `src/features/editor/diagrams/ui/DiagramInspector.tsx` | 939 | 20 | 0 | 202 |
-| `src/widgets/diagrams/Teoremas/Pitagoras.tsx` | 933 | 1 | 0 | 0 |
-| `src/widgets/diagrams/Demos/DemoCongruenciaLLL.tsx` | 914 | 1 | 0 | 0 |
-| `src/widgets/diagrams/Axiomas/Congruence3.tsx` | 869 | 1 | 0 | 0 |
-| `src/widgets/diagrams/Teoremas/Tales.tsx` | 836 | 1 | 0 | 0 |
-| `src/features/editor/ui/diagrams/DiagramWorkbench.tsx` | 824 | 29 | 5 | 131 |
-| `src/widgets/diagrams/Demos/DemoAngulosOpuestos.tsx` | 782 | 1 | 0 | 0 |
+| `src/widgets/diagrams/Definiciones/Cuadrilatero.tsx` | 1946 | 1 | 0 | 0 |
+| `src/widgets/diagrams/Demos/DemoAngulosOpuestos.tsx` | 1593 | 1 | 0 | 0 |
+| `src/widgets/diagrams/Definiciones/Triangulo.tsx` | 1419 | 1 | 0 | 0 |
+| `src/widgets/diagrams/Definiciones/Paralelogramo.tsx` | 1402 | 1 | 0 | 0 |
+| `src/widgets/diagrams/Demos/DemoAnguloExterno.tsx` | 1373 | 1 | 0 | 0 |
+| `src/widgets/diagrams/Teoremas/CongruenciaALA.tsx` | 1221 | 1 | 0 | 0 |
+| `src/widgets/diagrams/Teoremas/CongruenciaLLL.tsx` | 1082 | 1 | 0 | 0 |
+| `src/widgets/diagrams/Demos/DemoCongruenciaALA.tsx` | 1064 | 1 | 0 | 0 |
+| `src/features/editor/diagrams/ui/DiagramInspector.tsx` | 1044 | 23 | 0 | 215 |
+| `src/widgets/diagrams/Demos/DemoSumaAngulos.tsx` | 1007 | 1 | 0 | 0 |
+| `src/widgets/diagrams/Axiomas/SAS.tsx` | 990 | 1 | 0 | 0 |
+| `src/widgets/diagrams/Demos/DemoCongruenciaLLL.tsx` | 950 | 1 | 0 | 0 |
+| `src/widgets/diagrams/Models/ModeloPoincare.tsx` | 883 | 1 | 0 | 0 |
+| `src/widgets/diagrams/Axiomas/AxiomaArquimedes.tsx` | 877 | 1 | 0 | 0 |
+| `src/features/editor/ui/diagrams/DiagramWorkbench.tsx` | 865 | 30 | 5 | 142 |
+| `src/widgets/diagrams/Teoremas/Pitagoras.tsx` | 844 | 1 | 0 | 0 |
+| `src/widgets/diagrams/Axiomas/Congruence3.tsx` | 769 | 1 | 0 | 0 |
+| `src/widgets/diagrams/Teoremas/Tales.tsx` | 753 | 1 | 0 | 0 |
 | `src/features/editor/ui/EditorPage.tsx` | 735 | 27 | 20 | 60 |
-| `src/widgets/diagrams/Demos/DemoAreaRectangulo_Inconmensurable.tsx` | 684 | 1 | 0 | 0 |
-| `src/widgets/diagrams/Definiciones/Circunferencia.tsx` | 648 | 1 | 0 | 0 |
-| `src/widgets/diagrams/Teoremas/SumaAngulos.tsx` | 617 | 1 | 0 | 0 |
-| `src/widgets/diagrams/Teoremas/PuntoMedioPerpendicular.tsx` | 609 | 1 | 0 | 0 |
-| `src/widgets/diagrams/Teoremas/DesigualdadTriangular.tsx` | 606 | 1 | 0 | 0 |
-| `src/widgets/diagrams/Demos/DemoAreaAditividad.tsx` | 599 | 1 | 0 | 0 |
-| `src/widgets/diagrams/Axiomas/Congruence2.tsx` | 592 | 1 | 0 | 0 |
-| `src/widgets/diagrams/Models/ModeloFano.tsx` | 589 | 1 | 0 | 0 |
-| `src/widgets/diagrams/Axiomas/HyperbolicParallel.tsx` | 570 | 1 | 0 | 0 |
-| `src/widgets/diagrams/CasosUso/GpsTrilateracion.tsx` | 557 | 1 | 0 | 0 |
-| `src/widgets/diagrams/Axiomas/Pasch.tsx` | 546 | 1 | 0 | 0 |
-| `src/widgets/diagrams/Definiciones/Mediana.tsx` | 524 | 1 | 0 | 0 |
-| `src/widgets/diagrams/Definiciones/Mediatriz.tsx` | 513 | 1 | 0 | 0 |
-| `src/widgets/diagrams/Definiciones/Bisectriz.tsx` | 507 | 1 | 0 | 0 |
-| `src/widgets/diagrams/Axiomas/AxiomaDedekind.tsx` | 506 | 1 | 0 | 0 |
-| `src/widgets/diagrams/Definiciones/Perpendicular.tsx` | 506 | 1 | 0 | 0 |
-| `src/widgets/diagrams/Teoremas/AngulosOpuestos.tsx` | 489 | 1 | 0 | 0 |
-| `src/widgets/diagrams/Axiomas/Congruence4.tsx` | 484 | 1 | 0 | 0 |
+| `src/widgets/diagrams/Demos/DemoAreaRectangulo_Inconmensurable.tsx` | 668 | 1 | 0 | 0 |
+| `src/widgets/diagrams/Demos/DemoAreaAditividad.tsx` | 642 | 1 | 0 | 0 |
+| `src/widgets/diagrams/Definiciones/Circunferencia.tsx` | 614 | 1 | 0 | 0 |
+| `src/widgets/diagrams/Teoremas/DesigualdadTriangular.tsx` | 614 | 1 | 0 | 0 |
+| `src/widgets/diagrams/CasosUso/GpsTrilateracion.tsx` | 606 | 1 | 0 | 0 |
+| `src/widgets/diagrams/Teoremas/PuntoMedioPerpendicular.tsx` | 606 | 1 | 0 | 0 |
+| `src/widgets/diagrams/Definiciones/Mediana.tsx` | 584 | 1 | 0 | 0 |
+| `src/widgets/diagrams/Models/ModeloFano.tsx` | 582 | 1 | 0 | 0 |
+| `src/widgets/diagrams/Teoremas/SumaAngulos.tsx` | 579 | 1 | 0 | 0 |
+| `src/widgets/diagrams/Axiomas/Congruence2.tsx` | 561 | 1 | 0 | 0 |
+| `src/widgets/diagrams/Definiciones/Perpendicular.tsx` | 546 | 1 | 0 | 0 |
+| `src/widgets/diagrams/Definiciones/Mediatriz.tsx` | 526 | 1 | 0 | 0 |
+| `src/widgets/diagrams/Teoremas/AngulosOpuestos.tsx` | 524 | 1 | 0 | 0 |
+| `src/widgets/diagrams/Axiomas/Pasch.tsx` | 510 | 1 | 0 | 0 |
+| `src/widgets/diagrams/Axiomas/HyperbolicParallel.tsx` | 502 | 1 | 0 | 0 |
+| `src/widgets/diagrams/Axiomas/AxiomaDedekind.tsx` | 481 | 1 | 0 | 0 |
+| `src/widgets/diagrams/Definiciones/Bisectriz.tsx` | 481 | 1 | 0 | 0 |
+| `src/widgets/diagrams/Demos/DemoAreaRectangulo_Conmensurable.tsx` | 479 | 1 | 0 | 0 |
 | `src/widgets/navigation/SearchOmnibar.tsx` | 467 | 5 | 15 | 25 |
+| `src/widgets/diagrams/Teoremas/TrianguloIsosceles.tsx` | 464 | 1 | 0 | 0 |
 | `src/features/editor/ui/panels/VisualEditorBlock.tsx` | 459 | 11 | 0 | 63 |
-| `src/widgets/diagrams/Axiomas/Congruence1.tsx` | 456 | 1 | 0 | 0 |
-| `src/features/editor/diagrams/ui/DiagramInfoPanelContentEditor.tsx` | 453 | 7 | 1 | 103 |
-| `src/widgets/diagrams/Definiciones/Angulo.tsx` | 439 | 1 | 0 | 0 |
-| `src/widgets/diagrams/Teoremas/TrianguloIsosceles.tsx` | 435 | 1 | 0 | 0 |
-| `src/widgets/diagrams/Demos/DemoAreaRectangulo_Conmensurable.tsx` | 426 | 1 | 0 | 0 |
+| `src/widgets/diagrams/Axiomas/Congruence4.tsx` | 441 | 1 | 0 | 0 |
+| `src/widgets/diagrams/Axiomas/Congruence1.tsx` | 432 | 1 | 0 | 0 |
+| `src/features/editor/diagrams/ui/DiagramInfoPanelContentEditor.tsx` | 405 | 8 | 2 | 89 |
+| `src/widgets/diagrams/Definiciones/Angulo.tsx` | 405 | 1 | 0 | 0 |
 | `src/features/editor/ui/components/SemanticLinker.tsx` | 395 | 4 | 7 | 31 |
+| `src/widgets/diagrams/Teoremas/DosRectasUnPunto.tsx` | 385 | 1 | 0 | 0 |
 | `src/widgets/content/MarginaliaPanel.tsx` | 384 | 8 | 1 | 4 |
 | `src/features/graph/ui/AxiomaticTree.tsx` | 373 | 15 | 27 | 22 |
-| `src/shared/diagrams/core/MathBoard.tsx` | 366 | 4 | 14 | 25 |
-| `src/widgets/diagrams/Models/ModeloTresPuntos.tsx` | 353 | 1 | 0 | 0 |
+| `src/shared/diagrams/core/MathBoard.tsx` | 371 | 4 | 14 | 25 |
+| `src/widgets/diagrams/Axiomas/Incidence4.tsx` | 357 | 1 | 0 | 0 |
+| `src/widgets/diagrams/Teoremas/LemaPuntoMedio.tsx` | 357 | 1 | 0 | 0 |
+| `src/shared/diagrams/runtime/DiagramRenderer.tsx` | 352 | 12 | 14 | 32 |
+| `src/widgets/layouts/CodexLayout.tsx` | 351 | 10 | 11 | 6 |
 | `src/widgets/diagrams/Demos/DemoPitagorasEuclides.tsx` | 345 | 2 | 0 | 6 |
-| `src/widgets/diagrams/Axiomas/Incidence4.tsx` | 341 | 1 | 0 | 0 |
-| `src/widgets/diagrams/Teoremas/DosRectasUnPunto.tsx` | 341 | 1 | 0 | 0 |
+| `src/widgets/diagrams/Models/ModeloTresPuntos.tsx` | 342 | 1 | 0 | 0 |
 | `src/features/editor/ui/panels/VisualEditorPanel.tsx` | 339 | 9 | 5 | 52 |
-| `src/widgets/diagrams/Teoremas/LemaPuntoMedio.tsx` | 336 | 1 | 0 | 0 |
+| `src/widgets/diagrams/Definiciones/Altura.tsx` | 333 | 1 | 0 | 0 |
+| `src/features/editor/diagrams/ui/DiagramConstraintEditor.tsx` | 330 | 7 | 0 | 19 |
 | `src/features/metadata/ui/PageDependencyGraph.tsx` | 329 | 6 | 8 | 6 |
 | `src/features/progress/ui/TaxonomyGraph.tsx` | 322 | 7 | 13 | 9 |
-| `src/widgets/layouts/CodexLayout.tsx` | 311 | 10 | 11 | 6 |
-| `src/shared/diagrams/runtime/DiagramRenderer.tsx` | 310 | 11 | 13 | 26 |
-| `src/widgets/diagrams/Models/ModeloCartesiano.tsx` | 309 | 1 | 0 | 0 |
+| `src/widgets/diagrams/Models/ModeloCartesiano.tsx` | 307 | 1 | 0 | 0 |
+| `src/features/editor/diagrams/ui/DiagramStepsEditor.tsx` | 305 | 8 | 1 | 47 |
 | `src/widgets/graph/LocalDependencyGraph.tsx` | 302 | 6 | 2 | 3 |
 | `src/features/editor/ui/EditorNavigation.tsx` | 301 | 3 | 6 | 18 |
-| `src/widgets/diagrams/Definiciones/Altura.tsx` | 296 | 1 | 0 | 0 |
+| `src/widgets/diagrams/Definiciones/Paralelas.tsx` | 286 | 1 | 0 | 0 |
 | `src/widgets/mdx/MDXBlocks.tsx` | 285 | 25 | 3 | 1 |
 | `src/pages/GraphPage.tsx` | 283 | 12 | 15 | 17 |
-| `src/widgets/diagrams/Axiomas/Order1.tsx` | 267 | 1 | 0 | 0 |
-| `src/widgets/diagrams/Axiomas/Order2.tsx` | 267 | 1 | 0 | 0 |
+| `src/widgets/diagrams/Axiomas/Order1.tsx` | 282 | 1 | 0 | 0 |
+| `src/widgets/diagrams/Axiomas/Order2.tsx` | 282 | 1 | 0 | 0 |
+| `src/features/editor/ui/blocks/DemonstrationBlock.tsx` | 280 | 3 | 0 | 34 |
 | `src/pages/Home/components/BranchLibrary.tsx` | 265 | 3 | 1 | 0 |
 | `src/pages/TheoremPage.tsx` | 263 | 16 | 3 | 0 |
 | `src/features/exercises/ui/Emparejar.tsx` | 262 | 3 | 8 | 2 |
-| `src/widgets/diagrams/Definiciones/Paralelas.tsx` | 255 | 1 | 0 | 0 |
+| `src/widgets/diagrams/Axiomas/Order3.tsx` | 256 | 1 | 0 | 0 |
 | `src/features/progress/ui/StudyPlanMinimap.tsx` | 250 | 3 | 1 | 5 |
 | `src/features/editor/ui/panels/MetadataPanel.tsx` | 243 | 7 | 1 | 28 |
-| `src/features/editor/diagrams/ui/DiagramExpressionField.tsx` | 240 | 3 | 5 | 13 |
 | `src/features/graph/ui/components/AxiomaticSidebar.tsx` | 240 | 7 | 1 | 14 |
-| `src/features/editor/diagrams/ui/DiagramToolbar.tsx` | 233 | 3 | 2 | 55 |
-| `src/features/editor/diagrams/ui/DiagramStepsEditor.tsx` | 233 | 6 | 1 | 37 |
-| `src/features/editor/ui/blocks/DemonstrationBlock.tsx` | 228 | 3 | 0 | 28 |
+| `src/features/editor/diagrams/ui/DiagramToolbar.tsx` | 228 | 3 | 3 | 47 |
 | `src/features/graph/ui/components/AxiomaticAxiomPicker.tsx` | 221 | 3 | 0 | 16 |
 | `src/features/exercises/ui/Clasificador.tsx` | 220 | 3 | 4 | 16 |
-| `src/features/editor/diagrams/ui/DiagramConstraintEditor.tsx` | 212 | 6 | 0 | 17 |
 | `src/features/editor/ui/EditorToolbar.tsx` | 205 | 8 | 2 | 26 |
 | `src/features/graph/ui/components/AxiomaticUniversePicker.tsx` | 198 | 2 | 2 | 20 |
 | `src/features/exercises/ui/Hueco.tsx` | 195 | 2 | 5 | 16 |
 | `src/features/editor/diagrams/ui/DiagramOrganizationPanel.tsx` | 187 | 3 | 0 | 48 |
 | `src/features/editor/ui/components/MetadataInspector.tsx` | 170 | 2 | 1 | 24 |
+| `src/features/editor/diagrams/ui/DiagramHeaderReadingsEditor.tsx` | 164 | 3 | 0 | 19 |
 | `src/features/editor/ui/diff/DiffReviewPanel.tsx` | 153 | 3 | 0 | 15 |
-| `src/features/editor/diagrams/ui/DiagramPointMovementAidsEditor.tsx` | 132 | 3 | 0 | 19 |
-| `src/features/editor/diagrams/ui/DiagramNativeLabelEditor.tsx` | 125 | 1 | 0 | 18 |
+| `src/features/editor/diagrams/ui/DiagramTemplateField.tsx` | 144 | 4 | 4 | 14 |
+| `src/features/editor/diagrams/ui/DiagramPointMovementAidsEditor.tsx` | 118 | 3 | 0 | 17 |
+| `src/features/editor/diagrams/ui/DiagramSceneControls.tsx` | 115 | 3 | 0 | 19 |
 | `src/features/glossary/ui/ConceptLink.tsx` | 113 | 6 | 3 | 15 |
 | `src/features/editor/diagrams/ui/DiagramToolReferencePicker.tsx` | 113 | 3 | 0 | 12 |
-| `src/features/editor/diagrams/ui/DiagramSceneControls.tsx` | 111 | 3 | 0 | 19 |
 | `src/features/editor/ui/panels/ExerciseBlockEditor.tsx` | 106 | 4 | 2 | 14 |
 | `src/features/editor/diagrams/ui/DiagramTargetSelector.tsx` | 103 | 4 | 0 | 12 |
+| `src/features/editor/diagrams/ui/DiagramObjectList.tsx` | 102 | 4 | 2 | 29 |
 | `src/features/editor/ui/safety/UnsavedChangesDialog.tsx` | 96 | 3 | 0 | 17 |
+| `src/features/editor/diagrams/ui/DiagramCanvas.tsx` | 94 | 6 | 0 | 23 |
 | `src/features/editor/diagrams/ui/DiagramRewriteDialog.tsx` | 93 | 4 | 2 | 13 |
 | `src/features/editor/ui/panels/RegisteredMdxBlockEditor.tsx` | 93 | 3 | 1 | 27 |
-| `src/features/editor/diagrams/ui/DiagramCanvas.tsx` | 80 | 6 | 0 | 19 |
 | `src/features/editor/diagrams/ui/DiagramPointMovementCard.tsx` | 75 | 3 | 0 | 21 |
 | `src/features/editor/diagrams/ui/DiagramElementAppearanceEditor.tsx` | 73 | 5 | 0 | 30 |
-| `src/features/editor/diagrams/ui/DiagramMovementAidsPanel.tsx` | 72 | 4 | 0 | 12 |
+| `src/features/editor/diagrams/ui/DiagramMovementAidsPanel.tsx` | 70 | 4 | 0 | 12 |
+| `src/features/editor/diagrams/ui/DiagramNativeLabelEditor.tsx` | 67 | 1 | 0 | 16 |
 | `src/features/editor/diagrams/ui/SegmentMarksEditor.tsx` | 65 | 3 | 0 | 14 |
 | `src/features/editor/ui/create/CreatePageDialog.tsx` | 60 | 4 | 1 | 15 |
 | `src/features/editor/diagrams/ui/DiagramGuidedConstructions.tsx` | 52 | 3 | 0 | 12 |
@@ -343,16 +355,16 @@ _Ninguno detectado._
 
 ## Deuda de tests por zona
 
-**Hallazgo objetivo.** Se detectaron 122 archivos de test. La tabla cuenta archivos fuente y tests que importan directamente cada zona.
+**Hallazgo objetivo.** Se detectaron 130 archivos de test. La tabla cuenta archivos fuente y tests que importan directamente cada zona.
 
 | Zona | TS/TSX fuente | Tests con import directo |
 | --- | --- | --- |
 | app | 6 | 2 |
 | pages | 23 | 1 |
 | widgets | 105 | 19 |
-| features | 190 | 63 |
+| features | 195 | 67 |
 | entities | 12 | 11 |
-| shared | 70 | 43 |
+| shared | 75 | 48 |
 | database | 0 | 0 |
 
 **Heurística aproximada.** Cero imports directos no significa cero cobertura: una prueba puede cubrir una zona de forma transitiva. La tabla no usa instrumentación.
