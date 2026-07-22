@@ -7,7 +7,7 @@ import primitivesFixture from '../../../fixtures/diagrams/phase3-euclidean-primi
 import { parseDiagramSourceAST } from '../../../../scripts/editor/parseDiagramSourceAST';
 import { migrateDiagramSpec, projectDiagramSpecV3ToV2 } from '../../../../src/shared/diagrams/public';
 import { generateDiagramSource } from '../../../../src/features/editor/diagrams/source/generator';
-import { convertAngleKind, setEqualAngleConstraint, setSegmentMeasureTicks } from '../../../../src/features/editor/diagrams/model/commands';
+import { convertAngleKind, setEqualAngleConstraint, setSegmentMeasureTicks } from '../../../../src/features/editor/diagrams/model';
 import type { VisualDiagramModel } from '../../../../src/features/editor/diagrams/model/types';
 
 function withoutDerivedGraph(model: VisualDiagramModel): Omit<VisualDiagramModel, 'dependencies'> {

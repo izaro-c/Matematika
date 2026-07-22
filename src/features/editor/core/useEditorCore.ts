@@ -112,7 +112,6 @@ export const useEditorCore = () => {
   const saveIdentity = useMemo(() => new LiveSaveIdentity(), []);
   const editorSessionId = useMemo(() => crypto.randomUUID(), []);
   const isMountedRef = useRef(true);
-  const [coordinator, setCoordinator] = useState<SaveCoordinator | null>(null);
 
   useEffect(() => {
     isMountedRef.current = true;
@@ -141,11 +140,12 @@ export const useEditorCore = () => {
       }
   }, [saveIdentity]);
 
-  useEffect(() => {
-    const nextCoordinator = new SaveCoordinator(contentRepository, draftRepository, onCoordinatorEvent);
-    setCoordinator(nextCoordinator);
-    return () => nextCoordinator.dispose();
-  }, [onCoordinatorEvent]);
+  const coordinator = useMemo(
+    () => new SaveCoordinator(contentRepository, draftRepository, onCoordinatorEvent),
+    [onCoordinatorEvent],
+  );
+
+  useEffect(() => () => coordinator.dispose(), [coordinator]);
   useEffect(() => () => { loadControllerRef.current?.abort(); }, []);
 
   const currentFile = persistence.file?.path ?? null;
@@ -393,6 +393,17 @@ export const useEditorCore = () => {
   const saveCurrentFile = useCallback(async (): Promise<boolean> => {
     const state = persistenceRef.current;
     if (!state.file || !state.version) return false;
+    const captured = {
+      file: state.file,
+      source: sourceRef.current,
+      localRevision: revisionRef.current,
+      baseVersion: state.version
+    };
+    if (captured.file.path.endsWith('.mdx') && parseEditorDocument(captured.source).compatibility === 'unsupported') {
+      dispatch({ type: 'VALIDATION_FAILED', file: captured.file, localRevision: captured.localRevision, reason: 'Invalid MDX source' });
+      setMessage('No se puede guardar: el documento MDX contiene errores de sintaxis.');
+      return false;
+    }
     if (editorMode === 'visual' && !isDiagramSource) {
       if ((VISUAL_SAVE_POLICY as VisualSavePolicy) === 'disabled') {
         setMessage('El guardado visual está desactivado por contención de seguridad.');
@@ -407,29 +418,17 @@ export const useEditorCore = () => {
         return false;
       }
     }
-    const captured = {
-      file: state.file,
-      source: sourceRef.current,
-      localRevision: revisionRef.current,
-      baseVersion: state.version
-    };
-    if (captured.file.path.endsWith('.mdx') && parseEditorDocument(captured.source).compatibility === 'unsupported') {
-      dispatch({ type: 'VALIDATION_FAILED', file: captured.file, localRevision: captured.localRevision, reason: 'Invalid MDX source' });
-      setMessage('No se puede guardar: el documento MDX contiene errores de sintaxis.');
-      return false;
-    }
     const sourceHash = await hashSource(captured.source);
     if (persistenceRef.current.file?.path !== captured.file.path
       || revisionRef.current !== captured.localRevision
       || sourceRef.current !== captured.source) return false;
     const snapshot: EditorSaveSnapshot = { ...captured, sourceHash };
-    if (!coordinator) return false;
     const confirmed = await coordinator.applyNow(snapshot);
     return confirmed
       && revisionRef.current === snapshot.localRevision
       && sourceRef.current === snapshot.source
       && persistenceRef.current.file?.path === snapshot.file.path;
-  }, [coordinator]);
+  }, [coordinator, compatibility, editorMode, isDiagramSource]);
 
   const saveDraftCurrentFile = useCallback(async (): Promise<boolean> => {
     const state = persistenceRef.current;

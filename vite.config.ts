@@ -39,7 +39,7 @@ const editorStorageRoot = process.env.MATEMATIKA_EDITOR_STORAGE_ROOT
   : path.resolve(__dirname, '.matematika/editor');
 const diagramParserContractFiles = new Set([
   path.resolve(__dirname, 'scripts/editor/parseDiagramSourceAST.ts'),
-  path.resolve(__dirname, 'src/features/editor/diagrams/model/commands.ts'),
+  path.resolve(__dirname, 'src/features/editor/diagrams/model.ts'),
   path.resolve(__dirname, 'src/features/editor/diagrams/model/angleConstraints.ts'),
   path.resolve(__dirname, 'src/features/editor/diagrams/model/constraintOptions.ts'),
   path.resolve(__dirname, 'src/features/editor/diagrams/source/generator.ts'),

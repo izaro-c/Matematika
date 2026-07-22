@@ -8,11 +8,14 @@ import type {
   DiagramSceneItem,
   DiagramSceneState,
   DiagramSpecV2,
+  DiagramStepObjectState,
   DiagramStepOverlay,
+  DiagramVisualStyle,
 } from './types';
 import type { DiagramSpecV3 } from './v3';
 import { evaluateMathExpression, extractMathExpressionIdentifiers } from './expressions';
 import { interpolateDiagramTemplate } from './infoPanels';
+import { legacyElementCapabilities } from './semantics';
 import { projectDiagramSpecV3ToV2 } from './v3Compatibility';
 
 export interface DiagramDependencyEdge {
@@ -35,11 +38,30 @@ export interface PlannedSceneItem {
   selected: boolean;
   stepEmphasis: 'none' | 'secondary' | 'primary';
   stepEmphasisColor?: DiagramColorToken;
+  /** Color efectivo del objeto en el paso activo (base o temporal). */
+  color: DiagramColorToken;
   label: string;
   interactive: boolean;
   stepValue?: number;
+  stepShowLabel?: boolean;
+  stepDashed?: boolean;
+  /** Estilo efectivo tras fusionar el base con cualquier ajuste temporal del paso. */
+  style: DiagramVisualStyle;
   layerOrder: number;
   visualOrder: number;
+}
+
+export function resolveStepSceneAppearance(
+  item: DiagramSceneItem,
+  objectState?: DiagramStepObjectState,
+): Pick<PlannedSceneItem, 'color' | 'label' | 'stepShowLabel' | 'stepDashed' | 'style'> {
+  return {
+    color: objectState?.color ?? item.color,
+    label: objectState?.label || item.label,
+    stepShowLabel: objectState?.showLabel,
+    stepDashed: objectState?.dashed,
+    style: { ...item.style, ...objectState?.style },
+  };
 }
 
 function expressionUsesSource(source: string | undefined, sourceId: string): boolean {
@@ -334,10 +356,7 @@ export function angleMeasureRadians(
 }
 
 export function supportElements(spec: DiagramSpecV2): DiagramElement[] {
-  return spec.elements.filter(item => [
-    'segment', 'line', 'ray', 'circle', 'arc', 'functionCurve', 'parametricCurve',
-    'poincareGeodesic', 'poincareArc', 'perpendicular', 'parallel', 'angleBisector',
-  ].includes(item.kind));
+  return spec.elements.filter(item => legacyElementCapabilities(item.kind).has('support'));
 }
 
 function projectToCircle(spec: DiagramSpecV2, support: DiagramElement, coordinates: Coordinates): Coordinates {
@@ -401,6 +420,24 @@ export function projectPointToSupport(
   return { x: origin.x + direction.x * projectedT, y: origin.y + direction.y * projectedT };
 }
 
+function compareSceneItemOrder(left: DiagramSceneItem, right: DiagramSceneItem): number {
+  return left.order - right.order || left.id.localeCompare(right.id);
+}
+
+function buildSceneItemVisualRanks(spec: DiagramSpecV2): Map<string, number> {
+  const ranks = new Map<string, number>();
+  const itemsByLayer = new Map<string, DiagramSceneItem[]>();
+  [...spec.points, ...spec.elements, ...spec.sliders].forEach(item => {
+    const layerItems = itemsByLayer.get(item.layerId) ?? [];
+    layerItems.push(item);
+    itemsByLayer.set(item.layerId, layerItems);
+  });
+  itemsByLayer.forEach(layerItems => {
+    layerItems.sort(compareSceneItemOrder).forEach((item, index) => ranks.set(item.id, index));
+  });
+  return ranks;
+}
+
 export function createScenePlan(spec: DiagramSpecV2, state: DiagramSceneState = {}): PlannedSceneItem[] {
   const highlighted = new Set(state.highlightedIds ?? []);
   const selected = new Set(state.selectedIds ?? []);
@@ -409,6 +446,7 @@ export function createScenePlan(spec: DiagramSpecV2, state: DiagramSceneState = 
   const objectStates = activeStep?.objectStates ?? {};
   const layers = new Map(spec.layers.map(layer => [layer.id, layer]));
   const groups = new Map(spec.groups.map(group => [group.id, group]));
+  const visualRanks = buildSceneItemVisualRanks(spec);
 
   return [...spec.points, ...spec.elements, ...spec.sliders]
     .map(item => {
@@ -424,6 +462,7 @@ export function createScenePlan(spec: DiagramSpecV2, state: DiagramSceneState = 
       const layerOrder = layer?.order ?? 0;
       const highlightedByGroup = itemGroups.some(group => group?.selection.highlightable !== false && highlighted.has(group?.id ?? ''));
       const selectedByGroup = itemGroups.some(group => group?.selection.highlightable !== false && selected.has(group?.id ?? ''));
+      const appearance = resolveStepSceneAppearance(item, objectState);
       return {
         item,
         visible,
@@ -432,11 +471,15 @@ export function createScenePlan(spec: DiagramSpecV2, state: DiagramSceneState = 
         selected: selected.has(item.id) || selectedByGroup,
         stepEmphasis: objectState?.emphasis ?? 'none',
         stepEmphasisColor: objectState?.emphasisColor,
-        label: objectState?.label || item.label,
+        color: appearance.color,
+        label: appearance.label,
+        stepShowLabel: appearance.stepShowLabel,
+        stepDashed: appearance.stepDashed,
+        style: appearance.style,
         interactive,
         stepValue: objectState?.value,
         layerOrder,
-        visualOrder: layerOrder * 100_000 + item.order,
+        visualOrder: layerOrder * 10_000 + (visualRanks.get(item.id) ?? 0),
       };
     })
     .sort((left, right) => left.visualOrder - right.visualOrder || left.item.id.localeCompare(right.item.id));
@@ -919,9 +962,49 @@ export function sceneRevision(spec: DiagramSpecV2): string {
   });
 }
 
+/** Revisión sin campos de apilamiento: evita reiniciar el lienzo al reordenar o cambiar de capa. */
+export function sceneGeometryRevision(spec: DiagramSpecV2): string {
+  const stripStackFields = <T extends { order: number; layerId: string }>(item: T) => {
+    const {...rest } = item;
+    return rest;
+  };
+  return JSON.stringify({
+    points: spec.points.map(stripStackFields),
+    elements: spec.elements.map(stripStackFields),
+    sliders: spec.sliders.map(stripStackFields),
+    layers: spec.layers.map(({ id, label, visible, locked }) => ({ id, label, visible, locked })),
+    showLabels: spec.showLabels,
+    constraints: spec.constraints,
+    dependencies: spec.dependencies,
+  });
+}
+
+export function sceneStackRevision(spec: DiagramSpecV2): string {
+  return JSON.stringify(createScenePlan(spec).map(entry => [entry.item.id, entry.item.layerId, entry.visualOrder]));
+}
+
+const itemLayerNumberCache = new Map<string, Map<string, number>>();
+
 export function itemLayerNumber(spec: DiagramSpecV2, item: DiagramSceneItem): number {
-  const layerOrder = spec.layers.find(layer => layer.id === item.layerId)?.order ?? 0;
-  return Math.max(0, Math.min(20, 5 + layerOrder * 3 + Math.trunc(item.order / 1000)));
+  const revision = sceneRevision(spec);
+  let lookup = itemLayerNumberCache.get(revision);
+  if (!lookup) {
+    const plan = createScenePlan(spec);
+    lookup = new Map<string, number>();
+    if (plan.length <= 1) {
+      plan.forEach(entry => lookup!.set(entry.item.id, 10));
+    } else {
+      plan.forEach((entry, index) => {
+        lookup!.set(entry.item.id, Math.round(index * 20 / (plan.length - 1)));
+      });
+    }
+    itemLayerNumberCache.set(revision, lookup);
+    if (itemLayerNumberCache.size > 32) {
+      const oldest = itemLayerNumberCache.keys().next().value;
+      if (oldest) itemLayerNumberCache.delete(oldest);
+    }
+  }
+  return lookup.get(item.id) ?? 10;
 }
 
 export function isPointItem(item: DiagramSceneItem): item is DiagramPoint {

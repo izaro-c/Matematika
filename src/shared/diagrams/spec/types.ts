@@ -287,12 +287,27 @@ export interface DiagramStepOverlay {
   position?: DiagramOverlayPosition;
 }
 
+/** Estilo visual que puede sobrescribirse temporalmente en un paso concreto. */
+export type DiagramStepVisualStyle = Pick<
+  DiagramVisualStyle,
+  'strokeWidth' | 'strokeOpacity' | 'fillOpacity' | 'pointSize' | 'labelSize' | 'labelOffset' | 'angleRadius' | 'markHeight'
+>;
+
 export interface DiagramStepObjectState {
   visible?: boolean;
   emphasis?: DiagramStepEmphasis;
   /** Conserva el color del objeto si se omite; permite un acento explícito por paso. */
   emphasisColor?: DiagramColorToken;
+  /** Sustituye el color base del objeto durante este paso. */
+  color?: DiagramColorToken;
+  /** Sustituye la etiqueta del objeto durante este paso. */
   label?: string;
+  /** Controla si la etiqueta nativa se muestra durante este paso. */
+  showLabel?: boolean;
+  /** Sustituye el trazo discontinuo del objeto durante este paso. */
+  dashed?: boolean;
+  /** Ajustes visuales temporales que se fusionan con el estilo base del objeto. */
+  style?: DiagramStepVisualStyle;
   overlay?: DiagramStepOverlay;
   interactive?: boolean;
   /** Valor temporal de sliders; no modifica el valor persistente base. */

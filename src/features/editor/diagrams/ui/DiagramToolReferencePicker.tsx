@@ -8,7 +8,7 @@ import {
   toolReferenceCandidates,
   toolReferencesAreReady,
   updateToolReference,
-} from '../model/commands';
+} from '../model';
 
 interface DiagramToolReferencePickerProps {
   model: VisualDiagramModel;

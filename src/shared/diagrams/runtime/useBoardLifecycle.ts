@@ -1,4 +1,4 @@
-import type { MutableRefObject } from 'react';
+import { useEffect, useLayoutEffect, useRef, type MutableRefObject } from 'react';
 import JXG from 'jsxgraph';
 import type { ThemeColors } from '../core/MathBoard';
 import {
@@ -49,11 +49,11 @@ import {
 import {
   attachLabelSelection,
   attachSelection,
+  attachDiagramHoverHandlers,
   diagramPointerSelectionWasHandled,
   releaseAuthoredAttraction,
   releaseInactiveAttractions,
   suspendInactiveAttractors,
-  synchronizeElementAndLabelHover,
 } from './useDiagramSelection';
 import type { DiagramAnnotationPlacement, DiagramSelectionIntent } from './useDiagramSelection';
 import {
@@ -73,6 +73,29 @@ import {
   viewportPanelAnchors,
   viewportPositionCoordinates,
 } from './useDiagramViewport';
+import {
+  buildLineEmphasisAttributes,
+  buildMarkEmphasisAttributes,
+  buildPolygonEmphasisAttributes,
+  createStepEmphasisAnimation,
+  resolveStepEmphasisFillOpacity,
+  resolveStepEmphasisAngleRadius,
+  resolveStepEmphasisFontSize,
+  resolveStepEmphasisPointFillOpacity,
+  resolveStepEmphasisPointSize,
+  resolveStepEmphasisSceneOpacity,
+  resolveStepEmphasisTickHeights,
+  syncMarkLayoutEmphasis,
+  type StepEmphasisVisualState,
+} from './stepEmphasisAnimation';
+import {
+  commitElementVisuals,
+  createDiagramHoverController,
+  diagramVisualTransitionKey,
+  shouldAnimateDiagramVisuals,
+  withDiagramHoverTransition,
+  type DiagramHoverController,
+} from './diagramHover';
 
 export {
   conditionAllows,
@@ -83,6 +106,23 @@ export {
   sliderMaximum,
   tickDistance,
 };
+
+function applyRenderedStackLayer(element: any, layer: number) {
+  if (!element?.setAttribute) return;
+  element.setAttribute({ layer });
+  element.label?.setAttribute?.({ layer: layer + 1 });
+  if (Array.isArray(element.borders)) {
+    element.borders.forEach((border: { setAttribute?: (attrs: { layer: number }) => void }) => border?.setAttribute?.({ layer }));
+  }
+  ['point1', 'point2', 'center', 'arc', 'sector', 'ticks'].forEach(key => {
+    const child = element[key];
+    if (child?.setAttribute) child.setAttribute({ layer });
+    if (Array.isArray(child)) child.forEach((item: { setAttribute?: (attrs: { layer: number }) => void }) => item?.setAttribute?.({ layer }));
+  });
+  if (Array.isArray(element.vertices)) {
+    element.vertices.forEach((vertex: { setAttribute?: (attrs: { layer: number }) => void }) => vertex?.setAttribute?.({ layer }));
+  }
+}
 
 export function calculateLineLabelAnchor(element: any, t: number): any {
   if (!element.point1 || !element.point2) {
@@ -148,7 +188,7 @@ export function nativeElementLabel(element: any): any | null {
 
 export function syncNativeElementLabel(
   element: any,
-  state: { visible: boolean; color: string; highlightColor: string; opacity: number; text: string; fontSize?: number; labelPosition?: string | number; offset?: [number, number] },
+  state: { visible: boolean; color: string; highlightColor: string; opacity: number; text: string; fontSize?: number; labelPosition?: string | number; offset?: [number, number]; highlighted?: boolean },
 ) {
   const label = nativeElementLabel(element);
   if (!label) return;
@@ -160,8 +200,29 @@ export function syncNativeElementLabel(
     : state.labelPosition === undefined && previousCompassPosition
       ? 'urt'
       : undefined;
+  const labelSignature = JSON.stringify({
+    visible: state.visible && state.text.trim().length > 0,
+    color: state.color,
+    highlightColor: state.highlightColor,
+    opacity: state.opacity,
+    text: state.text,
+    fontSize: state.fontSize,
+    labelPosition: state.labelPosition,
+    offset: state.offset,
+    compassPosition,
+    highlighted: Boolean(state.highlighted),
+  });
+  if (element.__matematikaLabelSignature === labelSignature) return;
+  element.__matematikaLabelSignature = labelSignature;
+
   label.setText?.(renderKatexTextToHtml(state.text));
-  (label.rendNode as HTMLElement | undefined)?.style.setProperty('--diagram-label-highlight-color', state.highlightColor);
+  const labelNode = label.rendNode as HTMLElement | undefined;
+  labelNode?.style.setProperty('--diagram-label-highlight-color', state.highlightColor);
+  if (state.highlighted) {
+    labelNode?.classList.add('matematika-point-label--highlight');
+  } else {
+    labelNode?.classList.remove('matematika-point-label--highlight');
+  }
   if (state.fontSize !== undefined) {
     (label.rendNode as HTMLElement | undefined)?.style.setProperty('font-size', `${state.fontSize}px`);
   }
@@ -211,7 +272,6 @@ export function syncNativeElementLabel(
 
   label.needsUpdate = true;
   if (label.update) label.update();
-  if (label.fullUpdate) label.fullUpdate();
 }
 
 export function createElement(
@@ -231,13 +291,11 @@ export function createElement(
   const labelVisible = spec.showLabels !== false && (item.showLabel !== undefined ? item.showLabel : defaultShowLabel);
   const labelOptions = {
     visible: labelVisible,
-    highlight: highlightable,
     ...(item.style?.labelSize !== undefined ? { fontSize: item.style.labelSize } : {}),
     ...(typeof item.style?.labelPosition === 'string' ? { position: item.style.labelPosition } : {}),
     ...(item.style?.labelOffset !== undefined ? { offset: item.style.labelOffset } : {}),
   };
-  const lineOptions = {
-    highlight: highlightable,
+  const lineOptions = withDiagramHoverTransition({
     strokeColor: theme[item.color],
     highlightStrokeColor: hoverColor,
     strokeWidth: item.style?.strokeWidth ?? 2,
@@ -248,18 +306,17 @@ export function createElement(
     layer,
     name: renderKatexTextToHtml(item.label),
     ...(labelVisible ? { withLabel: true, label: labelOptions } : {}),
-  };
+  });
   if (item.kind === 'segment') return refs.length >= 2 ? createSegment(board, [refs[0], refs[1]], lineOptions, theme) : null;
   if (item.kind === 'line') return refs.length >= 2 ? createLine(board, [refs[0], refs[1]], lineOptions, theme) : null;
   if (item.kind === 'ray') return refs.length >= 2 ? createRay(board, [refs[0], refs[1]], lineOptions, theme) : null;
-  if (item.kind === 'polygon') return refs.length >= 3 ? createPolygon(board, refs, {
-    highlight: highlightable,
+  if (item.kind === 'polygon') return refs.length >= 3 ? createPolygon(board, refs, withDiagramHoverTransition({
     hasInnerPoints: true,
     fillColor: theme[item.color], highlightFillColor: hoverColor, fillOpacity: item.style?.fillOpacity ?? 0.1,
     highlightFillOpacity: item.style?.highlightFillOpacity ?? 0.24,
     fixed: true,
-    borders: { highlight: highlightable, strokeColor: theme[item.color], strokeWidth: item.style?.strokeWidth ?? 1.5, strokeOpacity: item.style?.strokeOpacity ?? 1, dash: item.dashed ? 2 : 0, fixed: true }, layer,
-  }, theme) : null;
+    borders: { strokeColor: theme[item.color], strokeWidth: item.style?.strokeWidth ?? 1.5, strokeOpacity: item.style?.strokeOpacity ?? 1, dash: item.dashed ? 2 : 0, fixed: true }, layer,
+  }), theme) : null;
   if (item.kind === 'circle') return refs.length >= 2 ? createCircle(board, [refs[0], refs[1]], {
     ...lineOptions, fillColor: theme[item.color], fillOpacity: item.style?.fillOpacity ?? 0,
     highlightFillOpacity: item.style?.highlightFillOpacity ?? 0.2,
@@ -303,34 +360,31 @@ export function createElement(
   }
   if (item.kind === 'poincareGeodesic') return refs.length >= 4 ? createPoincareGeodesic(board, [refs[0], refs[1], refs[2], refs[3]], lineOptions, theme) : null;
   if (item.kind === 'poincareArc') return refs.length >= 4 ? createPoincareArc(board, [refs[0], refs[1], refs[2], refs[3]], lineOptions, theme) : null;
-  if (item.kind === 'intersection') return refs.length >= 2 ? createIntersection(board, [refs[0], refs[1]], 0, {
-    highlight: highlightable,
+  if (item.kind === 'intersection') return refs.length >= 2 ? createIntersection(board, [refs[0], refs[1]], 0, withDiagramHoverTransition({
     name: renderKatexTextToHtml(item.label),
     size: item.style?.pointSize ?? 4,
     fillColor: theme[item.color],
     strokeColor: theme[item.color],
     highlightFillColor: hoverColor,
     highlightStrokeColor: hoverColor,
-    label: { highlight: highlightable, highlightStrokeColor: hoverColor },
+    label: { highlightStrokeColor: hoverColor },
     fixed: true,
     layer,
-  }, theme) : null;
-  if (item.kind === 'midpoint') return refs.length >= 2 ? createMidpoint(board, [refs[0], refs[1]], {
-    highlight: highlightable,
+  }, 'point'), theme) : null;
+  if (item.kind === 'midpoint') return refs.length >= 2 ? createMidpoint(board, [refs[0], refs[1]], withDiagramHoverTransition({
     name: renderKatexTextToHtml(item.label), fillColor: theme[item.color], strokeColor: theme[item.color],
     size: item.style?.pointSize ?? 4,
     highlightFillColor: hoverColor, highlightStrokeColor: hoverColor,
-    label: { highlight: highlightable, highlightStrokeColor: hoverColor },
+    label: { highlightStrokeColor: hoverColor },
     fixed: true, layer,
-  }, theme) : null;
-  if (item.kind === 'perpendicularFoot') return refs.length >= 3 ? createPerpendicularFoot(board, [refs[0], refs[1], refs[2]], {
-    highlight: highlightable,
+  }, 'point'), theme) : null;
+  if (item.kind === 'perpendicularFoot') return refs.length >= 3 ? createPerpendicularFoot(board, [refs[0], refs[1], refs[2]], withDiagramHoverTransition({
     name: renderKatexTextToHtml(item.label), fillColor: theme[item.color], strokeColor: theme[item.color],
     size: item.style?.pointSize ?? 4,
     highlightFillColor: hoverColor, highlightStrokeColor: hoverColor,
-    label: { highlight: highlightable, highlightStrokeColor: hoverColor },
+    label: { highlightStrokeColor: hoverColor },
     fixed: true, layer,
-  }, theme) : null;
+  }, 'point'), theme) : null;
   if (item.kind === 'baseExtension') return refs.length >= 3 ? createBaseExtensionToFoot(board, [refs[0], refs[1], refs[2]], lineOptions, theme) : null;
   if (item.kind === 'perpendicular') return refs.length >= 3 ? createPerpendicularLine(board, [refs[0], refs[1], refs[2]], lineOptions, theme) : null;
   if (item.kind === 'parallel') return refs.length >= 3 ? createParallelLine(board, [refs[0], refs[1], refs[2]], lineOptions, theme) : null;
@@ -398,7 +452,7 @@ export function createElement(
     refs,
     item.properties?.rows ?? 2,
     item.properties?.columns ?? 2,
-    { highlight: highlightable, hasInnerPoints: true, fillColor: theme[item.color], fillOpacity: item.style?.fillOpacity ?? 0.1, borders: lineOptions, fixed: true, layer },
+    { ...withDiagramHoverTransition({ hasInnerPoints: true, fillColor: theme[item.color], fillOpacity: item.style?.fillOpacity ?? 0.1, borders: lineOptions, fixed: true, layer }) },
     theme,
   ) : null;
   const anchor = refs[0];
@@ -424,8 +478,7 @@ export function createElement(
   const textCoordinates: [number | (() => number), number | (() => number), () => string] | null = reactiveTextCoordinates && editableAnnotation
     ? [reactiveTextCoordinates[0](), reactiveTextCoordinates[1](), dynamicText]
     : reactiveTextCoordinates;
-  return textCoordinates ? createText(board, textCoordinates, {
-    highlight: highlightable,
+  return textCoordinates ? createText(board, textCoordinates, withDiagramHoverTransition({
     color: theme[item.color],
     fixed: !editableAnnotation,
     layer,
@@ -441,7 +494,7 @@ export function createElement(
       highlightStrokeColor: theme[item.color],
       highlightStrokeOpacity: 1,
     } : {}),
-  }, theme) : null;
+  }), theme) : null;
 }
 
 export interface UseBoardLifecycleOptions {
@@ -462,7 +515,7 @@ export interface UseBoardLifecycleOptions {
   localTargetHighlightRef: MutableRefObject<string | null>;
   allHeaderItemIds: Set<string>;
   setLiveSceneVariables: React.Dispatch<React.SetStateAction<Record<string, number>>>;
-  liveVariablesSignature: MutableRefObject<string>;
+  liveVariablesSignatureRef: MutableRefObject<string>;
 }
 
 export function useBoardLifecycle({
@@ -477,9 +530,31 @@ export function useBoardLifecycle({
   localTargetHighlightRef,
   allHeaderItemIds,
   setLiveSceneVariables,
-  liveVariablesSignature,
+  liveVariablesSignatureRef,
 }: UseBoardLifecycleOptions) {
+  const stepEmphasisAnimationRef = useRef(createStepEmphasisAnimation());
+  const hoverControllerRef = useRef<DiagramHoverController>(createDiagramHoverController());
+  const emphasisPulseOnlyRef = useRef(false);
+  const emphasisSceneCacheRef = useRef<{
+    board: { update?: () => void };
+    elements: Record<string, any>;
+    theme: ThemeColors;
+    plan: ReturnType<typeof createScenePlan>;
+    hasExternalHighlight: boolean;
+    shouldDimOthers: boolean;
+  } | null>(null);
+  const applyPulseFromCacheRef = useRef<() => void>(() => {});
+  const lastStackLayoutRef = useRef('');
+
   const handleBoardInit = (board: any, elements: Record<string, any>, theme: ThemeColors) => {
+    hoverControllerRef.current = createDiagramHoverController();
+    board.dehighlightAll?.();
+    const hoverController = hoverControllerRef.current;
+    const requestSceneUpdate = () => {
+      if (!board.inUpdate) board.update();
+    };
+    const boardContainer = board.containerObj ?? board.renderer?.container;
+    boardContainer?.addEventListener('mouseleave', () => hoverController.clearAll(requestSceneUpdate));
     if (mode === 'editor') {
       board.on('down', (event: unknown) => {
         const objects = board.getAllObjectsUnderMouse?.(event);
@@ -525,7 +600,6 @@ export function useBoardLifecycle({
       const highlightable = sceneItem.selection.highlightable !== false;
       const hoverColor = !highlightable || sceneItem.style?.preserveColorOnHighlight ? theme[sceneItem.color] : theme.ocre;
       const pointLabelOptions = {
-        highlight: highlightable,
         visible: spec.showLabels !== false && (!('showLabel' in sceneItem) || sceneItem.showLabel !== false),
         ...('constraint' in sceneItem && sceneItem.style?.labelSize !== undefined ? { fontSize: sceneItem.style.labelSize } : {}),
         ...('constraint' in sceneItem && typeof sceneItem.style?.labelPosition === 'string' ? { position: sceneItem.style.labelPosition } : {}),
@@ -560,8 +634,7 @@ export function useBoardLifecycle({
             () => {
               try { return evaluateMathExpression(sceneItem.yExpression ?? '0', liveVariables(elements, spec)); } catch { return sceneItem.y; }
             },
-          ], {
-            highlight: highlightable,
+          ], withDiagramHoverTransition({
             name: renderKatexTextToHtml(sceneItem.label),
             fixed: true,
             ...(sceneItem.style?.pointSize !== undefined ? { size: sceneItem.style.pointSize } : {}),
@@ -572,10 +645,9 @@ export function useBoardLifecycle({
             highlightStrokeColor: hoverColor,
             label: pointLabelOptions,
             layer: itemLayerNumber(spec, sceneItem),
-          }, theme)
+          }, 'point'), theme)
           : gliderTarget
-          ? createGlider(board, [sceneItem.x, sceneItem.y, elements[gliderTarget]], {
-            highlight: highlightable,
+          ? createGlider(board, [sceneItem.x, sceneItem.y, elements[gliderTarget]], withDiagramHoverTransition({
             name: renderKatexTextToHtml(sceneItem.label),
             fixed: directInteractionLocked,
             ...(sceneItem.style?.pointSize !== undefined ? { size: sceneItem.style.pointSize } : {}),
@@ -586,9 +658,8 @@ export function useBoardLifecycle({
             highlightStrokeColor: hoverColor,
             label: pointLabelOptions,
             layer: itemLayerNumber(spec, sceneItem),
-          }, theme)
-          : createPoint(board, [sceneItem.x, sceneItem.y], {
-            highlight: highlightable,
+          }, 'point'), theme)
+          : createPoint(board, [sceneItem.x, sceneItem.y], withDiagramHoverTransition({
             name: renderKatexTextToHtml(sceneItem.label),
             fixed: directInteractionLocked,
             ...(sceneItem.style?.pointSize !== undefined ? { size: sceneItem.style.pointSize } : {}),
@@ -605,7 +676,7 @@ export function useBoardLifecycle({
               snapSizeX: sceneItem.snapSize ?? 0.5,
               snapSizeY: sceneItem.snapSize ?? 0.5,
             } : {}),
-          }, theme);
+          }, 'point'), theme);
         elements[sceneItem.id] = item;
         if (!directInteractionLocked && sceneItem.constraint !== 'derived') {
           let enforcing = false;
@@ -679,8 +750,7 @@ export function useBoardLifecycle({
         }
       } else {
         const maximum = sliderMaximum(sceneItem, elements, spec);
-        elements[sceneItem.id] = createSlider(board, [[sceneItem.x, sceneItem.y], [sceneItem.x + 2.6, sceneItem.y]], [sceneItem.min, Math.min(sceneItem.value, maximum), maximum], {
-          highlight: highlightable,
+        elements[sceneItem.id] = createSlider(board, [[sceneItem.x, sceneItem.y], [sceneItem.x + 2.6, sceneItem.y]], [sceneItem.min, Math.min(sceneItem.value, maximum), maximum], withDiagramHoverTransition({
           name: renderKatexTextToHtml(sceneItem.label),
           snapWidth: sceneItem.step,
           fillColor: theme[sceneItem.color],
@@ -693,10 +763,10 @@ export function useBoardLifecycle({
             point1: { highlight: false },
             point2: { highlight: false },
           } : {}),
-          label: { highlight: highlightable, highlightStrokeColor: hoverColor },
+          label: { highlightStrokeColor: hoverColor },
           fixed: directInteractionLocked,
           layer: itemLayerNumber(spec, sceneItem),
-        }, theme);
+        }), theme);
         if (!directInteractionLocked) elements[sceneItem.id]?.on?.('up', () => {
           interactionCallbacksRef.current.onSliderChange?.(sceneItem.id, elements[sceneItem.id].Value());
         });
@@ -773,7 +843,7 @@ export function useBoardLifecycle({
         (id, intent) => interactionCallbacksRef.current.onSelectionChange?.(id, intent),
         setTargetHighlight,
       );
-      synchronizeElementAndLabelHover(element, sceneItem);
+      attachDiagramHoverHandlers(element, sceneItem, hoverController, requestSceneUpdate);
     });
 
     spec.points.forEach(point => {
@@ -797,7 +867,327 @@ export function useBoardLifecycle({
     });
   };
 
+  const applyEntrySceneVisuals = (
+    entry: ReturnType<typeof createScenePlan>[number],
+    item: ReturnType<typeof createScenePlan>[number]['item'],
+    element: any,
+    sceneElements: Record<string, any>,
+    sceneTheme: ThemeColors,
+    sceneHasExternalHighlight: boolean,
+    sceneShouldDimOthers: boolean,
+    primaryPulseAmount: number,
+    options: { pulseVisualsOnly?: boolean } = {},
+  ) => {
+    const hoverController = hoverControllerRef.current;
+    const hoverActive = hoverController.isHovered(item.id);
+    const externalActive = entry.highlighted || entry.selected;
+    const stepPrimary = !sceneHasExternalHighlight && entry.stepEmphasis === 'primary';
+    const stepSecondary = !sceneHasExternalHighlight && entry.stepEmphasis === 'secondary';
+    const sceneHighlighted = externalActive || stepPrimary || stepSecondary;
+    const active = sceneHighlighted || hoverActive;
+    const emphasisState: StepEmphasisVisualState = {
+      hoverActive,
+      externalActive,
+      stepPrimary,
+      stepSecondary,
+      active,
+      pulseAmount: primaryPulseAmount,
+    };
+    const sceneStyle = entry.style;
+    const effectiveDashed = entry.stepDashed ?? ('dashed' in item ? Boolean(item.dashed) : false);
+    const opacity = externalActive || !sceneShouldDimOthers ? 1 : 0.28;
+    const hoverOnly = hoverActive && !sceneHighlighted;
+    const color = (externalActive || hoverOnly) && !sceneStyle?.preserveColorOnHighlight
+      ? sceneTheme.ocre
+      : (stepPrimary || stepSecondary) && entry.stepEmphasisColor
+        ? sceneTheme[entry.stepEmphasisColor]
+        : sceneTheme[entry.color];
+    const sceneVisible = mode === 'editor' && externalActive
+      ? true
+      : entry.visible || (externalActive && sceneStyle?.highlightVisible === true);
+    const conditionVisible = mode === 'editor' && externalActive
+      ? true
+      : externalActive && sceneStyle?.highlightVisible === true
+      ? true
+      : conditionAllows(item, sceneElements, spec);
+    const visible = sceneVisible && conditionVisible
+      && (('kind' in item && item.kind === 'baseExtension')
+        ? outsideBaseExtension(sceneElements[item.refs[0]], sceneElements[item.refs[1]], sceneElements[item.refs[2]])
+        : true)
+      && (('kind' in item && item.kind === 'intersection')
+        ? intersectionBelongsToSupports(item, element, sceneElements, spec)
+        : true);
+    const base = {
+      visible,
+      fixed: 'kind' in item ? true : entry.locked || !item.selection.selectable,
+    };
+    const hoverColor = item.selection.highlightable === false || sceneStyle?.preserveColorOnHighlight ? sceneTheme[entry.color] : sceneTheme.ocre;
+    const defaultShowLabel = 'constraint' in item || ('kind' in item && ['intersection', 'midpoint', 'perpendicularFoot', 'angle', 'nonReflexAngle'].includes(item.kind));
+    const nativeLabelVisible = visible && spec.showLabels !== false
+      && (entry.stepShowLabel !== undefined
+        ? entry.stepShowLabel
+        : ('showLabel' in item && item.showLabel !== undefined ? item.showLabel : defaultShowLabel));
+    const dimmed = opacity < 1;
+    const transitionKey = diagramVisualTransitionKey({
+      hoverActive,
+      externalActive,
+      stepPrimary,
+      stepSecondary,
+      visible,
+      dimmed,
+    });
+    const shouldAnimate = shouldAnimateDiagramVisuals(element, transitionKey, Boolean(options.pulseVisualsOnly));
+    element.__matematikaTransitionKey = transitionKey;
+    if (!options.pulseVisualsOnly) {
+      syncNativeElementLabel(element, {
+        visible: nativeLabelVisible,
+        color,
+        highlightColor: hoverColor,
+        opacity,
+        text: entry.label,
+        fontSize: sceneStyle?.labelSize,
+        labelPosition: sceneStyle?.labelPosition,
+        offset: sceneStyle?.labelOffset,
+        highlighted: active,
+      });
+      if (element.__matematikaStepLabel !== entry.label) {
+        element.setAttribute?.({ name: renderKatexTextToHtml(entry.label) });
+        element.__matematikaStepLabel = entry.label;
+      }
+    }
+    if ('constraint' in item || ('kind' in item && (item.kind === 'intersection' || item.kind === 'midpoint' || item.kind === 'perpendicularFoot'))) {
+      commitElementVisuals(element, base, {
+        size: resolveStepEmphasisPointSize(sceneStyle, emphasisState),
+        fillColor: color,
+        strokeColor: color,
+        fillOpacity: resolveStepEmphasisPointFillOpacity(opacity, emphasisState),
+      }, shouldAnimate);
+    } else if ('min' in item) {
+      const maximum = sliderMaximum(item, sceneElements, spec);
+      if (element.__matematikaMaximum !== maximum) {
+        const current = element.Value?.() ?? item.value;
+        element.setMax?.(maximum);
+        element.setValue?.(Math.min(maximum, Math.max(item.min, current)));
+        element.__matematikaMaximum = maximum;
+      }
+      if (entry.stepValue !== undefined && element.__matematikaStepValue !== entry.stepValue) {
+        element.setValue?.(Math.min(maximum, entry.stepValue));
+        element.__matematikaStepValue = entry.stepValue;
+      } else if (entry.stepValue === undefined && element.__matematikaStepValue !== undefined) {
+        element.setValue?.(Math.min(maximum, item.value));
+        delete element.__matematikaStepValue;
+      }
+      element.rendNode?.setAttribute('aria-valuemax', String(maximum));
+      element.rendNode?.setAttribute('aria-valuenow', String(element.Value?.() ?? item.value));
+      const sliderLine = buildLineEmphasisAttributes(color, sceneStyle, emphasisState, opacity, {
+        normal: 2,
+        primary: 3,
+        highlight: 3.4,
+        secondary: 2.6,
+      });
+      commitElementVisuals(element, { ...base, dash: effectiveDashed ? 2 : 0 }, sliderLine, shouldAnimate);
+    } else if (item.kind === 'polygon' || item.kind === 'areaDecomposition') {
+      const polygonAttrs = buildPolygonEmphasisAttributes(color, sceneStyle, emphasisState, opacity, {
+        fill: { normal: 0.1, highlight: 0.24 },
+        stroke: { normal: 1.5, primary: 2.4, highlight: 3.2, secondary: 2 },
+      });
+      const dashedBorder = { ...polygonAttrs.borderAttrs, dash: effectiveDashed ? 2 : 0 };
+      commitElementVisuals(
+        element,
+        {
+          ...base,
+          fillColor: polygonAttrs.fillColor,
+          borders: { ...polygonAttrs.borders, dash: effectiveDashed ? 2 : 0 },
+        },
+        { fillOpacity: polygonAttrs.fillOpacity },
+        shouldAnimate,
+        {
+          strokeWidth: dashedBorder.strokeWidth as number | undefined,
+          strokeOpacity: dashedBorder.strokeOpacity as number | undefined,
+          strokeColor: dashedBorder.strokeColor as string | undefined,
+        },
+      );
+    } else if (item.kind === 'angle' || item.kind === 'nonReflexAngle' || item.kind === 'rightAngle' || item.kind === 'perpendicularMark') {
+      const isPolygonAngle = item.kind === 'rightAngle' || item.kind === 'perpendicularMark';
+      if (isPolygonAngle) {
+        const polygonAttrs = buildPolygonEmphasisAttributes(color, sceneStyle, emphasisState, opacity, {
+          fill: { normal: 0.1, highlight: 0.28 },
+          stroke: { normal: 1.5, primary: 2.6, highlight: 3.2, secondary: 2.2 },
+        });
+        const angleSize = resolveStepEmphasisAngleRadius(sceneStyle, emphasisState, DEFAULT_RIGHT_ANGLE_RADIUS);
+        const dashedBorder = { ...polygonAttrs.borderAttrs, dash: effectiveDashed ? 2 : 0 };
+        commitElementVisuals(
+          element,
+          {
+            ...base,
+            fillColor: polygonAttrs.fillColor,
+            borders: { ...polygonAttrs.borders, dash: effectiveDashed ? 2 : 0 },
+          },
+          { fillOpacity: polygonAttrs.fillOpacity, radius: angleSize },
+          shouldAnimate,
+          {
+            strokeWidth: dashedBorder.strokeWidth as number | undefined,
+            strokeOpacity: dashedBorder.strokeOpacity as number | undefined,
+            strokeColor: dashedBorder.strokeColor as string | undefined,
+          },
+        );
+      } else {
+        const angleLine = buildLineEmphasisAttributes(color, sceneStyle, emphasisState, opacity, {
+          normal: 1.5,
+          primary: 3,
+          highlight: 3.6,
+          secondary: 2.6,
+        });
+        commitElementVisuals(
+          element,
+          { ...base, dash: effectiveDashed ? 2 : 0 },
+          {
+            ...angleLine,
+            fillColor: color,
+            fillOpacity: resolveStepEmphasisFillOpacity(sceneStyle, emphasisState, opacity, {
+              normal: 0.1,
+              highlight: 0.28,
+            }),
+            radius: resolveStepEmphasisAngleRadius(sceneStyle, emphasisState, DEFAULT_ANGLE_RADIUS),
+          },
+          shouldAnimate,
+        );
+      }
+    } else if (item.kind === 'measureTicks') {
+      const tickHeights = resolveStepEmphasisTickHeights(sceneStyle, emphasisState, sceneStyle?.markHeight ?? 10);
+      const markAttrs = buildMarkEmphasisAttributes(color, sceneStyle, emphasisState, opacity);
+      commitElementVisuals(
+        element,
+        {
+          ...base,
+          ticksDistance: tickDistance(item, sceneElements, spec),
+          ...tickHeights,
+          dash: effectiveDashed ? 2 : 0,
+        },
+        {
+          strokeWidth: markAttrs.strokeWidth as number | undefined,
+          strokeOpacity: markAttrs.strokeOpacity as number | undefined,
+          strokeColor: markAttrs.strokeColor as string | undefined,
+        },
+        shouldAnimate,
+      );
+    } else if (item.kind === 'congruenceMark' || item.kind === 'parallelMark') {
+      const defaultHeight = item.style?.markHeight ?? (item.kind === 'parallelMark' ? 0.42 : 0.32);
+      syncMarkLayoutEmphasis(element, sceneStyle, emphasisState, defaultHeight);
+      const markAttrs = buildMarkEmphasisAttributes(color, sceneStyle, emphasisState, opacity);
+      commitElementVisuals(
+        element,
+        { ...base, dash: effectiveDashed ? 2 : 0 },
+        {
+          strokeWidth: markAttrs.strokeWidth as number | undefined,
+          strokeOpacity: markAttrs.strokeOpacity as number | undefined,
+          strokeColor: markAttrs.strokeColor as string | undefined,
+        },
+        shouldAnimate,
+      );
+    } else if (item.kind === 'dimensionLine') {
+      const markAttrs = buildMarkEmphasisAttributes(color, sceneStyle, emphasisState, opacity);
+      commitElementVisuals(
+        element,
+        { ...base, dash: effectiveDashed ? 2 : 0 },
+        {
+          ...markAttrs,
+          fontSize: resolveStepEmphasisFontSize(sceneStyle, emphasisState, sceneStyle?.labelSize),
+        },
+        shouldAnimate,
+      );
+    } else if (item.kind === 'grid') {
+      const gridLine = buildLineEmphasisAttributes(color, sceneStyle, emphasisState, opacity, {
+        normal: 0.8,
+        primary: 2,
+        highlight: 2.8,
+        secondary: 1.2,
+      });
+      commitElementVisuals(element, { ...base, dash: effectiveDashed ? 2 : 0 }, gridLine, shouldAnimate);
+    } else if (item.kind === 'text' || item.kind === 'label' || item.kind === 'formula' || item.kind === 'infoPanel' || item.kind === 'measurement') {
+      const liftedIntoHeader = mode === 'runtime' && allHeaderItemIds.has(item.id);
+      const isAuthoredLabelHidden = item.kind === 'label' && spec.showLabels === false;
+      const sceneOpacity = resolveStepEmphasisSceneOpacity(emphasisState, opacity);
+      const annotationVisible = entry.stepShowLabel !== undefined
+        ? entry.stepShowLabel
+        : base.visible && !liftedIntoHeader && !isAuthoredLabelHidden;
+      const fontSize = resolveStepEmphasisFontSize(sceneStyle, emphasisState, sceneStyle?.labelSize);
+      commitElementVisuals(
+        element,
+        { ...base, visible: annotationVisible, color },
+        { opacity: sceneOpacity, fontSize },
+        shouldAnimate,
+      );
+      if (item.kind !== 'label') {
+        const textContent = annotationTextHtml(item, sceneElements, spec);
+        if (element.__matematikaLastText !== textContent) {
+          if (typeof element.setText === 'function') {
+            element.setText(textContent);
+          }
+          element.__matematikaLastText = textContent;
+        }
+      }
+    } else if (item.kind === 'circle') {
+      const polygonAttrs = buildPolygonEmphasisAttributes(sceneTheme[entry.color], sceneStyle, emphasisState, opacity, {
+        fill: { normal: 0, highlight: 0.2 },
+        stroke: { normal: 2, primary: 3.2, highlight: 3.6, secondary: 2.6 },
+      });
+      commitElementVisuals(
+        element,
+        { ...base, fillColor: sceneTheme[entry.color], strokeColor: color, dash: effectiveDashed ? 2 : 0 },
+        {
+          fillOpacity: polygonAttrs.fillOpacity,
+          strokeOpacity: polygonAttrs.borders.strokeOpacity as number | undefined,
+          strokeWidth: polygonAttrs.borders.strokeWidth as number | undefined,
+        },
+        shouldAnimate,
+      );
+    } else {
+      const lineAttrs = buildLineEmphasisAttributes(color, sceneStyle, emphasisState, opacity, {
+        normal: 2,
+        primary: 3.2,
+        highlight: 3.6,
+        secondary: 2.6,
+      });
+      commitElementVisuals(element, { ...base, dash: effectiveDashed ? 2 : 0 }, lineAttrs, shouldAnimate);
+    }
+  };
+
+  useLayoutEffect(() => {
+    applyPulseFromCacheRef.current = () => {
+      const cache = emphasisSceneCacheRef.current;
+      if (!cache) return;
+      const primaryPulseAmount = stepEmphasisAnimationRef.current.getPulseAmount();
+      cache.plan.forEach(entry => {
+        if (cache.hasExternalHighlight || entry.stepEmphasis !== 'primary' || !entry.visible) return;
+        const item = entry.item;
+        const element = cache.elements[item.id];
+        if (!element) return;
+        applyEntrySceneVisuals(
+          entry, item, element, cache.elements, cache.theme, cache.hasExternalHighlight, cache.shouldDimOthers, primaryPulseAmount,
+          { pulseVisualsOnly: true },
+        );
+      });
+      emphasisPulseOnlyRef.current = true;
+      cache.board.update?.();
+      emphasisPulseOnlyRef.current = false;
+    };
+  });
+
+  useEffect(() => {
+    const animation = stepEmphasisAnimationRef.current;
+    animation.setOnPulse(() => applyPulseFromCacheRef.current());
+    return () => {
+      animation.setOnPulse(null);
+      animation.dispose();
+    };
+  }, []);
+
   const handleBoardUpdate = (_board: any, elements: Record<string, any>, theme: ThemeColors, isStep: (id: string) => boolean, isHL: (id: string) => boolean) => {
+    if (emphasisPulseOnlyRef.current) {
+      return;
+    }
+
     const storeStep = spec.steps.find(step => isStep(step.id))?.id;
     const effectiveStep = effectiveStepId || storeStep;
     const items = [...spec.points, ...spec.elements, ...spec.sliders];
@@ -826,142 +1216,42 @@ export function useBoardLifecycle({
       });
     const shouldDimOthers = plan.some(entry => entry.selected) || externalHighlightRequestsDimming;
     const hasExternalHighlight = plan.some(entry => entry.highlighted);
+    const hasPrimaryStepEmphasis = !hasExternalHighlight
+      && plan.some(entry => entry.stepEmphasis === 'primary' && entry.visible);
+
+    stepEmphasisAnimationRef.current.setBoard(_board);
+    stepEmphasisAnimationRef.current.setActive(hasPrimaryStepEmphasis);
+    emphasisSceneCacheRef.current = {
+      board: _board,
+      elements,
+      theme,
+      plan,
+      hasExternalHighlight,
+      shouldDimOthers,
+    };
+    const primaryPulseAmount = stepEmphasisAnimationRef.current.getPulseAmount();
+    const stackLayoutKey = plan.map(entry => `${entry.item.id}:${entry.item.layerId}:${entry.visualOrder}`).join('|');
+    if (stackLayoutKey !== lastStackLayoutRef.current) {
+      lastStackLayoutRef.current = stackLayoutKey;
+      const stackCount = plan.length;
+      plan.forEach((entry, index) => {
+        const layerNum = stackCount <= 1 ? 10 : Math.round(index * 20 / (stackCount - 1));
+        applyRenderedStackLayer(elements[entry.item.id], layerNum);
+      });
+    }
     plan.forEach(entry => {
       const item = entry.item;
       const element = elements[item.id];
       if (!element) return;
-      const externalActive = entry.highlighted || entry.selected;
-      const stepPrimary = !hasExternalHighlight && entry.stepEmphasis === 'primary';
-      const stepSecondary = !hasExternalHighlight && entry.stepEmphasis === 'secondary';
-      const active = externalActive || stepPrimary || stepSecondary;
-      const opacity = externalActive || !shouldDimOthers ? 1 : 0.28;
-      const color = externalActive && !item.style?.preserveColorOnHighlight
-        ? theme.ocre
-        : (stepPrimary || stepSecondary) && entry.stepEmphasisColor
-          ? theme[entry.stepEmphasisColor]
-          : theme[item.color];
-      const sceneVisible = mode === 'editor' && externalActive
-        ? true
-        : entry.visible || (externalActive && item.style?.highlightVisible === true);
-      const conditionVisible = mode === 'editor' && externalActive
-        ? true
-        : externalActive && item.style?.highlightVisible === true
-        ? true
-        : conditionAllows(item, elements, spec);
-      const visible = sceneVisible && conditionVisible
-        && (('kind' in item && item.kind === 'baseExtension')
-          ? outsideBaseExtension(elements[item.refs[0]], elements[item.refs[1]], elements[item.refs[2]])
-          : true)
-        && (('kind' in item && item.kind === 'intersection')
-          ? intersectionBelongsToSupports(item, element, elements, spec)
-          : true);
-      const base = {
-        visible,
-        fixed: 'kind' in item ? true : entry.locked || !item.selection.selectable,
-      };
-      const hoverColor = item.selection.highlightable === false || item.style?.preserveColorOnHighlight ? theme[item.color] : theme.ocre;
-      const defaultShowLabel = 'constraint' in item || ('kind' in item && ['intersection', 'midpoint', 'perpendicularFoot', 'angle', 'nonReflexAngle'].includes(item.kind));
-      const nativeLabelVisible = visible && spec.showLabels !== false
-        && ('showLabel' in item && item.showLabel !== undefined ? item.showLabel : defaultShowLabel);
-      syncNativeElementLabel(element, {
-        visible: nativeLabelVisible,
-        color,
-        highlightColor: hoverColor,
-        opacity,
-        text: entry.label,
-        fontSize: item.style?.labelSize,
-        labelPosition: item.style?.labelPosition,
-        offset: item.style?.labelOffset,
-      });
-      if (element.__matematikaStepLabel !== entry.label) {
-        element.setAttribute?.({ name: renderKatexTextToHtml(entry.label) });
-        element.__matematikaStepLabel = entry.label;
-      }
-      if ('constraint' in item || ('kind' in item && (item.kind === 'intersection' || item.kind === 'midpoint' || item.kind === 'perpendicularFoot'))) {
-        element.setAttribute({
-          ...base,
-          size: active ? item.style?.highlightPointSize ?? 7 : item.style?.pointSize ?? 4,
-          fillColor: color, strokeColor: color, fillOpacity: opacity,
-        });
-      } else if ('min' in item) {
-        const maximum = sliderMaximum(item, elements, spec);
-        if (element.__matematikaMaximum !== maximum) {
-          const current = element.Value?.() ?? item.value;
-          element.setMax?.(maximum);
-          element.setValue?.(Math.min(maximum, Math.max(item.min, current)));
-          element.__matematikaMaximum = maximum;
-        }
-        if (entry.stepValue !== undefined && element.__matematikaStepValue !== entry.stepValue) {
-          element.setValue?.(Math.min(maximum, entry.stepValue));
-          element.__matematikaStepValue = entry.stepValue;
-        } else if (entry.stepValue === undefined && element.__matematikaStepValue !== undefined) {
-          element.setValue?.(Math.min(maximum, item.value));
-          delete element.__matematikaStepValue;
-        }
-        element.rendNode?.setAttribute('aria-valuemax', String(maximum));
-        element.rendNode?.setAttribute('aria-valuenow', String(element.Value?.() ?? item.value));
-        element.setAttribute({ ...base, strokeColor: color, strokeOpacity: opacity });
-      } else if (item.kind === 'polygon' || item.kind === 'areaDecomposition') {
-        element.setAttribute({
-          ...base, fillColor: color,
-          fillOpacity: active ? item.style?.highlightFillOpacity ?? 0.24 : (item.style?.fillOpacity ?? 0.1) * opacity,
-        });
-      } else if (item.kind === 'angle' || item.kind === 'nonReflexAngle' || item.kind === 'rightAngle' || item.kind === 'perpendicularMark') {
-        element.setAttribute({
-          ...base, fillColor: color, strokeColor: color,
-          fillOpacity: active ? item.style?.highlightFillOpacity ?? 0.28 : (item.style?.fillOpacity ?? 0.1) * opacity,
-          strokeWidth: active ? item.style?.highlightStrokeWidth ?? 3 : item.style?.strokeWidth ?? 1.5,
-        });
-      } else if (item.kind === 'measureTicks') {
-        element.setAttribute({
-          ...base,
-          ticksDistance: tickDistance(item, elements, spec),
-          strokeColor: color,
-          strokeOpacity: (item.style?.strokeOpacity ?? 1) * opacity,
-          strokeWidth: externalActive ? item.style?.highlightStrokeWidth ?? 3.6 : item.style?.strokeWidth ?? 2,
-        });
-      } else if (item.kind === 'text' || item.kind === 'label' || item.kind === 'formula' || item.kind === 'infoPanel' || item.kind === 'measurement') {
-        const liftedIntoHeader = mode === 'runtime' && allHeaderItemIds.has(item.id);
-        const isAuthoredLabelHidden = item.kind === 'label' && spec.showLabels === false;
-        element.setAttribute({ ...base, visible: base.visible && !liftedIntoHeader && !isAuthoredLabelHidden, color, opacity });
-        if (item.kind !== 'label') {
-          const textContent = annotationTextHtml(item, elements, spec);
-          if (element.__matematikaLastText !== textContent) {
-            if (typeof element.setText === 'function') {
-              element.setText(textContent);
-            }
-            element.__matematikaLastText = textContent;
-          }
-        }
-      } else if (item.kind === 'circle') {
-        element.setAttribute({
-          ...base,
-          fillColor: theme[item.color],
-          fillOpacity: externalActive
-            ? item.style?.highlightFillOpacity ?? 0.2
-            : (item.style?.fillOpacity ?? 0) * opacity,
-          strokeColor: color,
-          strokeOpacity: (item.style?.strokeOpacity ?? 1) * opacity,
-          strokeWidth: externalActive
-            ? item.style?.highlightStrokeWidth ?? 3.6
-            : stepPrimary ? 3.2 : stepSecondary ? 2.6 : item.style?.strokeWidth ?? 2,
-        });
-      } else {
-        element.setAttribute({
-          ...base,
-          strokeColor: color,
-          strokeOpacity: (item.style?.strokeOpacity ?? 1) * opacity,
-          strokeWidth: externalActive
-            ? item.style?.highlightStrokeWidth ?? 3.6
-            : stepPrimary ? 3.2 : stepSecondary ? 2.6 : item.style?.strokeWidth ?? 2,
-        });
-      }
+      applyEntrySceneVisuals(
+        entry, item, element, elements, theme, hasExternalHighlight, shouldDimOthers, primaryPulseAmount,
+      );
     });
 
     const nextLiveVariables = liveVariables(elements, spec);
     const signature = JSON.stringify(nextLiveVariables);
-    if (signature !== liveVariablesSignature.current) {
-      liveVariablesSignature.current = signature;
+    if (signature !== liveVariablesSignatureRef.current) {
+      liveVariablesSignatureRef.current = signature;
       setLiveSceneVariables(nextLiveVariables);
     }
   };

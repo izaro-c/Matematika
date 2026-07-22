@@ -1,7 +1,7 @@
 import { act, renderHook } from '@testing-library/react';
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 import { useDiagramState } from '../../../../src/features/editor/diagrams/hooks/useDiagramState';
-import { createTemplateModel } from '../../../../src/features/editor/diagrams/model/commands';
+import { createTemplateModel } from '../../../../src/features/editor/diagrams/model';
 import { PersistenceFailure } from '../../../../src/features/editor/persistence/persistenceErrors';
 
 const repositoryMocks = vi.hoisted(() => ({

@@ -7,7 +7,8 @@ import { useDiagramStepSync } from '@/shared/lib/DiagramStepSyncContext';
 import {
   DIAGRAM_RENDERER_ID,
   createScenePlan,
-  sceneRevision,
+  sceneGeometryRevision,
+  sceneStackRevision,
   withResolvedPointConstraints,
   zoomViewport,
   type DiagramBounds,
@@ -122,7 +123,7 @@ const DiagramRendererContent: React.FC<DiagramRendererProps> = ({
   const [liveSceneVariables, setLiveSceneVariables] = useState<Record<string, number>>(() => {
     try { return liveVariables({}, spec); } catch { return {}; }
   });
-  const liveVariablesSignature = useRef('');
+  const liveVariablesSignatureRef = useRef('');
 
   const liveViewportSpec: DiagramSpecV2 = useMemo(() => ({
     ...spec,
@@ -193,7 +194,8 @@ const DiagramRendererContent: React.FC<DiagramRendererProps> = ({
     toolbarRef,
   });
 
-  const revision = useMemo(() => sceneRevision(spec), [spec]);
+  const geometryRevision = useMemo(() => sceneGeometryRevision(spec), [spec]);
+  const stackRevision = useMemo(() => sceneStackRevision(spec), [spec]);
 
   const { handleBoardInit, handleBoardUpdate } = useBoardLifecycle({
     spec,
@@ -207,7 +209,7 @@ const DiagramRendererContent: React.FC<DiagramRendererProps> = ({
     localTargetHighlightRef,
     allHeaderItemIds,
     setLiveSceneVariables,
-    liveVariablesSignature,
+    liveVariablesSignatureRef,
   });
 
   return (
@@ -234,7 +236,8 @@ const DiagramRendererContent: React.FC<DiagramRendererProps> = ({
         grid={spec.grid}
         pan
         zoom
-        revision={revision}
+        revision={geometryRevision}
+        stackRevision={stackRevision}
         safeArea={safeArea}
         viewportSafeArea={viewportSafeArea}
         ariaLabel={`${spec.title}. Diagrama matemático interactivo.`}

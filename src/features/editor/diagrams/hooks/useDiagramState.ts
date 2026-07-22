@@ -1,9 +1,9 @@
-import { useReducer, useCallback, useRef, useEffect } from 'react';
+import { useReducer, useCallback, useRef, useEffect, useState } from 'react';
 import { diagramReducer, initialDiagramState } from '../state/reducer';
 import { diagramRepository } from '../persistence/repository';
 import { generateDiagramSource } from '../source/generator';
 import { parseDiagramSourceOnServer } from '../source/parser';
-import { getDiagramSaveCapability } from '../model/selectors';
+import { getDiagramSaveCapability, isDiagramStateDirty } from '../model/selectors';
 import type { VisualDiagramModel, CanvasTool } from '../model/types';
 import { asPersistenceError } from '../../persistence/persistenceErrors';
 
@@ -12,6 +12,7 @@ export function useDiagramState() {
   const stateRef = useRef(state);
   const versionRef = useRef<string>('');
   const parseDebounceTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const sourceSyncTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   const parseControllerRef = useRef<AbortController | null>(null);
   const parseRequestIdRef = useRef(0);
 
@@ -23,6 +24,7 @@ export function useDiagramState() {
   useEffect(() => {
     return () => {
       if (parseDebounceTimerRef.current) clearTimeout(parseDebounceTimerRef.current);
+      if (sourceSyncTimerRef.current) clearTimeout(sourceSyncTimerRef.current);
       parseControllerRef.current?.abort();
     };
   }, []);
@@ -127,6 +129,17 @@ export function useDiagramState() {
     }
   }, []);
 
+  const syncSourceFromModel = useCallback((nextModel: VisualDiagramModel) => {
+    const current = stateRef.current;
+    if (current.status !== 'synced' && current.status !== 'visual-authoritative') return;
+    const gen = generateDiagramSource(nextModel, current.componentName);
+    if (gen.ok) {
+      dispatch({ type: 'RESOLVE_TO_VISUAL', source: gen.source, diagnostics: gen.diagnostics });
+    } else {
+      dispatch({ type: 'SET_DIAGNOSTICS', diagnostics: gen.diagnostics });
+    }
+  }, []);
+
   const handleVisualEdit = useCallback((nextModel: VisualDiagramModel, command?: { label?: string; mergeKey?: string }) => {
     dispatch({
       type: 'VISUAL_EDIT', model: nextModel,
@@ -134,18 +147,18 @@ export function useDiagramState() {
       label: command?.label,
       mergeKey: command?.mergeKey,
     });
-    
-    // Automatically regenerate source from visual model if authoritative or synced
-    const current = stateRef.current;
-    if (current.status === 'synced' || current.status === 'visual-authoritative') {
-      const gen = generateDiagramSource(nextModel, current.componentName);
-      if (gen.ok) {
-        dispatch({ type: 'RESOLVE_TO_VISUAL', source: gen.source, diagnostics: gen.diagnostics });
-      } else {
-        dispatch({ type: 'SET_DIAGNOSTICS', diagnostics: gen.diagnostics });
-      }
+
+    if (command?.mergeKey) {
+      if (sourceSyncTimerRef.current) clearTimeout(sourceSyncTimerRef.current);
+      sourceSyncTimerRef.current = setTimeout(() => {
+        sourceSyncTimerRef.current = null;
+        syncSourceFromModel(stateRef.current.currentModel ?? nextModel);
+      }, 250);
+      return;
     }
-  }, []);
+
+    syncSourceFromModel(nextModel);
+  }, [syncSourceFromModel]);
 
   const regenerateFromHistory = useCallback((direction: 'undo' | 'redo') => {
     const current = stateRef.current;
@@ -279,26 +292,36 @@ export function useDiagramState() {
     }
   }, []);
 
+  const [mdxLinkNotice, setMdxLinkNotice] = useState<string | null>(null);
+
   const linkToMdxPage = useCallback(async (mdxPath: string, mode: 'simulation' | 'diagram' | 'inline') => {
     const current = stateRef.current;
-    if (!current.filePath) return;
+    if (!current.filePath) {
+      setMdxLinkNotice('No hay un archivo de diagrama guardado para vincular a una página MDX.');
+      return false;
+    }
     try {
       await diagramRepository.updateMdxImports(
         mdxPath,
         current.componentName,
         current.filePath,
-        mode
+        mode,
       );
+      setMdxLinkNotice(null);
+      return true;
     } catch (error) {
-      console.error('Error linking diagram to MDX page:', error);
+      const message = error instanceof Error ? error.message : 'No se pudo vincular el diagrama a la página MDX.';
+      setMdxLinkNotice(`No se pudo vincular el diagrama a la página MDX. ${message}`);
+      return false;
     }
   }, []);
 
-  const isDirty = state.currentSource !== state.originalSource || JSON.stringify(state.currentModel) !== JSON.stringify(state.originalModel);
+  const isDirty = isDiagramStateDirty(state);
 
   return {
     state,
     isDirty,
+    mdxLinkNotice,
     loadDiagram,
     loadInlineDiagram,
     loadNewDiagram,

@@ -1,6 +1,6 @@
 import { afterEach, describe, expect, it, vi } from 'vitest';
 import { DiagramRepository } from '../../../../src/features/editor/diagrams/persistence/repository';
-import { createTemplateModel } from '../../../../src/features/editor/diagrams/model/commands';
+import { createTemplateModel } from '../../../../src/features/editor/diagrams/model';
 import { generateDiagramSource } from '../../../../src/features/editor/diagrams/source/generator';
 
 const apiMocks = vi.hoisted(() => ({

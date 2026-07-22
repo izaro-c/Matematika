@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { fireEvent, render, screen } from '@testing-library/react';
 import { describe, expect, it } from 'vitest';
-import { createTemplateModel } from '../../../../src/features/editor/diagrams/model/commands';
+import { createTemplateModel } from '../../../../src/features/editor/diagrams/model';
 import { DiagramTemplateField } from '../../../../src/features/editor/diagrams/ui/DiagramTemplateField';
 
 function Harness() {

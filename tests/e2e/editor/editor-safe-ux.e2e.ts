@@ -3,7 +3,7 @@ import path from 'node:path';
 import os from 'node:os';
 import { spawn, type ChildProcess } from 'node:child_process';
 import puppeteer, { type Browser, type ConsoleMessage, type HTTPRequest, type Page } from 'puppeteer';
-import { createTemplateModel } from '../../../src/features/editor/diagrams/model/commands';
+import { createTemplateModel } from '../../../src/features/editor/diagrams/model';
 import { buildTargets } from '../../../src/features/editor/diagrams/model/selectors';
 import { generateDiagramSource } from '../../../src/features/editor/diagrams/source/generator';
 

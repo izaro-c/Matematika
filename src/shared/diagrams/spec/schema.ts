@@ -30,6 +30,21 @@ export const diagramElementKindSchema = z.enum([
   'grid', 'areaDecomposition', 'text', 'label', 'formula', 'infoPanel',
 ]);
 
+export const diagramElementKinds = diagramElementKindSchema.options;
+
+export const diagramPointConstraintSchema = z.enum([
+  'free', 'fixed', 'horizontal', 'vertical', 'glider', 'derived', 'constrained',
+]);
+
+export const diagramPointConstraints = diagramPointConstraintSchema.options;
+
+export const diagramPointLikeElementKinds = ['intersection', 'midpoint', 'perpendicularFoot'] as const;
+
+export const diagramGliderSupportElementKinds = [
+  'line', 'ray', 'segment', 'circle', 'functionCurve', 'parametricCurve',
+  'perpendicular', 'parallel', 'angleBisector', 'intersection', 'midpoint', 'perpendicularFoot',
+] as const;
+
 const expressionSchema = z.string().min(1).superRefine((source, context) => {
   try {
     parseMathExpression(source);
@@ -147,7 +162,7 @@ const pointSchema = z.object({
   y: finiteNumber,
   showLabel: z.boolean().optional(),
   fixed: z.boolean(),
-  constraint: z.enum(['free', 'fixed', 'horizontal', 'vertical', 'glider', 'derived', 'constrained']),
+  constraint: diagramPointConstraintSchema,
   gliderTarget: idSchema.optional(),
   dependencies: z.array(idSchema).optional(),
   xExpression: expressionSchema.optional(),
@@ -212,11 +227,26 @@ const stepOverlaySchema = z.object({
   position: z.enum(['top-left', 'top-right', 'bottom-left', 'bottom-right']).optional(),
 }).strict();
 
+const stepVisualStyleSchema = z.object({
+  strokeWidth: finiteNumber.min(0).max(20).optional(),
+  strokeOpacity: finiteNumber.min(0).max(1).optional(),
+  fillOpacity: finiteNumber.min(0).max(1).optional(),
+  pointSize: finiteNumber.min(0).max(30).optional(),
+  labelSize: finiteNumber.min(6).max(72).optional(),
+  labelOffset: z.tuple([finiteNumber, finiteNumber]).optional(),
+  angleRadius: finiteNumber.positive().max(10).optional(),
+  markHeight: finiteNumber.positive().max(100).optional(),
+}).strict();
+
 const stepObjectStateSchema = z.object({
   visible: z.boolean().optional(),
   emphasis: z.enum(['none', 'secondary', 'primary']).optional(),
   emphasisColor: diagramColorTokenSchema.optional(),
+  color: diagramColorTokenSchema.optional(),
   label: z.string().optional(),
+  showLabel: z.boolean().optional(),
+  dashed: z.boolean().optional(),
+  style: stepVisualStyleSchema.optional(),
   overlay: stepOverlaySchema.optional(),
   interactive: z.boolean().optional(),
   value: finiteNumber.optional(),
@@ -273,7 +303,7 @@ const headerSchema = z.object({
   readings: z.array(headerReadingSchema).max(12),
 }).strict();
 
-const minimumRefs: Record<string, number> = {
+export const diagramMinimumRefs: Record<string, number> = {
   segment: 2, line: 2, ray: 2, polygon: 3, circle: 2, arc: 3,
   functionCurve: 0, parametricCurve: 0, poincareGeodesic: 4, poincareArc: 4, intersection: 2, midpoint: 2,
   perpendicularFoot: 3, baseExtension: 3, perpendicular: 3, parallel: 3,
@@ -377,7 +407,7 @@ export const diagramSpecV2Schema = z.object({
 
   spec.elements.forEach((element, index) => {
     const viewportAnchoredPanel = element.kind === 'infoPanel' && element.properties?.anchorMode === 'viewport';
-    const required = viewportAnchoredPanel ? 0 : minimumRefs[element.kind] ?? 1;
+    const required = viewportAnchoredPanel ? 0 : diagramMinimumRefs[element.kind] ?? 1;
     if (element.refs.length < required) context.addIssue({ code: 'custom', message: `${element.id} necesita al menos ${required} referencias.`, path: ['elements', index, 'refs'] });
     element.refs.forEach(ref => {
       if (!referenceIds.has(ref)) context.addIssue({ code: 'custom', message: `${element.id} referencia el objeto inexistente ${ref}.`, path: ['elements', index, 'refs'] });
@@ -411,7 +441,7 @@ export const diagramSpecV2Schema = z.object({
     if (element.kind === 'congruenceMark' || element.kind === 'parallelMark') {
       const pointLikeIds = new Set([
         ...spec.points.map(point => point.id),
-        ...spec.elements.filter(item => ['intersection', 'midpoint', 'perpendicularFoot'].includes(item.kind)).map(item => item.id),
+        ...spec.elements.filter(item => diagramPointLikeElementKinds.includes(item.kind as typeof diagramPointLikeElementKinds[number])).map(item => item.id),
       ]);
       if (element.refs.length !== 2 || element.refs.some(ref => !pointLikeIds.has(ref))) {
         context.addIssue({
@@ -474,7 +504,7 @@ export const diagramSpecV2Schema = z.object({
     point.attractorIds?.forEach((attractorId, attractorIndex) => {
       const support = spec.elements.find(element => element.id === attractorId);
       const attractorPoint = spec.points.find(candidate => candidate.id === attractorId);
-      if ((!support || !['line', 'ray', 'segment', 'circle', 'functionCurve', 'parametricCurve', 'perpendicular', 'parallel', 'angleBisector', 'intersection', 'midpoint', 'perpendicularFoot'].includes(support.kind)) && !attractorPoint) {
+      if ((!support || !diagramGliderSupportElementKinds.includes(support.kind as typeof diagramGliderSupportElementKinds[number])) && !attractorPoint) {
         context.addIssue({
           code: 'custom',
           message: `${point.id} necesita que ${attractorId} sea un objeto geométrico apto para atracción.`,

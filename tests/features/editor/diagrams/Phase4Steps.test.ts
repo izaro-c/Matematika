@@ -13,7 +13,7 @@ import {
   removeStep,
   renameElement,
   updateStepObjectState,
-} from '../../../../src/features/editor/diagrams/model/commands';
+} from '../../../../src/features/editor/diagrams/model';
 import { generateDiagramSource } from '../../../../src/features/editor/diagrams/source/generator';
 import { classifyEmbeddedDiagramSource } from '../../../../src/features/editor/diagrams/source/parser';
 

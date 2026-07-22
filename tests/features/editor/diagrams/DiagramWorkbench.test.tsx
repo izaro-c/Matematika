@@ -1,7 +1,7 @@
-import { fireEvent, render, screen, waitFor } from '@testing-library/react';
+import { fireEvent, render, screen, waitFor, within } from '@testing-library/react';
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
-import { DiagramWorkbench } from '../../../../src/features/editor/ui/diagrams/DiagramWorkbench';
-import { createTemplateModel } from '../../../../src/features/editor/diagrams/model/commands';
+import { DiagramWorkbench } from '../../../../src/features/editor/diagrams/ui/DiagramWorkbench';
+import { createTemplateModel } from '../../../../src/features/editor/diagrams/model';
 import { generateDiagramSource } from '../../../../src/features/editor/diagrams/source/generator';
 
 const repositoryMocks = vi.hoisted(() => ({
@@ -199,6 +199,42 @@ describe('DiagramWorkbench authority adapters', () => {
     expect(screen.getAllByText(/Punto · Punto medio/).length).toBeGreaterThan(0);
   });
 
+  it('asks for confirmation in a dialog before deleting the selected object', async () => {
+    render(
+      <DiagramWorkbench
+        isOpen
+        mode={{ kind: 'new', componentName: 'DiagramaBorrable' }}
+        metadataType="definicion"
+        onClose={vi.fn()}
+        onConfirm={vi.fn()}
+      />,
+    );
+
+    await waitFor(() => expect(screen.getByText('Objetos')).toBeTruthy());
+    fireEvent.click(screen.getByRole('button', { name: 'Eliminar elemento' }));
+    expect(screen.getByRole('dialog', { name: /¿Eliminar pO\?/ })).toBeTruthy();
+    fireEvent.click(screen.getByRole('button', { name: 'Eliminar' }));
+    await waitFor(() => expect(screen.queryByText(/pO/)).toBeNull());
+  });
+
+  it('exposes copy and paste controls in the header on narrow viewports', async () => {
+    render(
+      <DiagramWorkbench
+        isOpen
+        mode={{ kind: 'new', componentName: 'DiagramaMovil' }}
+        metadataType="definicion"
+        onClose={vi.fn()}
+        onConfirm={vi.fn()}
+      />,
+    );
+
+    await waitFor(() => expect(screen.getByText('Objetos')).toBeTruthy());
+    const clipboardGroup = screen.getByLabelText('Copiar y pegar objetos');
+    expect(clipboardGroup.className).not.toMatch(/\bhidden\b/);
+    expect(within(clipboardGroup).getByRole('button', { name: 'Copiar selección' })).toBeTruthy();
+    expect(within(clipboardGroup).getByRole('button', { name: 'Pegar selección' })).toBeTruthy();
+  });
+
   it('copies and pastes the selected object without using the code tab', async () => {
     render(
       <DiagramWorkbench
@@ -211,9 +247,9 @@ describe('DiagramWorkbench authority adapters', () => {
     );
 
     await waitFor(() => expect(screen.getByText('Objetos')).toBeTruthy());
-    fireEvent.click(screen.getByRole('button', { name: 'Copiar' }));
+    fireEvent.click(screen.getByRole('button', { name: 'Copiar selección' }));
     await waitFor(() => expect(screen.getByText('Objeto copiado.')).toBeTruthy());
-    fireEvent.click(screen.getByRole('button', { name: 'Pegar' }));
+    fireEvent.click(screen.getByRole('button', { name: 'Pegar selección' }));
 
     await waitFor(() => expect(screen.getAllByText(/pO_copy/).length).toBeGreaterThan(0));
     expect(screen.getByText(/referencias internas se han actualizado/)).toBeTruthy();
@@ -236,7 +272,7 @@ describe('DiagramWorkbench authority adapters', () => {
     expect(screen.getByText('2 seleccionados')).toBeTruthy();
     fireEvent.click(screen.getByRole('button', { name: 'Copiar objetos seleccionados' }));
     await waitFor(() => expect(screen.getByText('2 objetos copiados.')).toBeTruthy());
-    fireEvent.click(screen.getByRole('button', { name: 'Pegar' }));
+    fireEvent.click(screen.getByRole('button', { name: 'Pegar selección' }));
 
     await waitFor(() => expect(screen.getByText('2 objeto(s) pegado(s). Las referencias internas se han actualizado.')).toBeTruthy());
     expect(screen.getByText('2 seleccionados')).toBeTruthy();
@@ -289,6 +325,47 @@ describe('DiagramWorkbench authority adapters', () => {
     fireEvent.click(screen.getByRole('tab', { name: /Comprobar/ }));
     expect(screen.getByText('Comprobación antes de guardar')).toBeTruthy();
     expect(screen.getByText('Referencias del Diagrama')).toBeTruthy();
+  });
+
+  it('shows a notice when linking the diagram to an MDX page fails', async () => {
+    const model = createTemplateModel('circunferencia', 'Enlace MDX', 'definicion');
+    const generated = generateDiagramSource(model, 'EnlaceMdx');
+    expect(generated.ok).toBe(true);
+    if (!generated.ok) return;
+    readDiagram.mockResolvedValueOnce({
+      source: generated.source,
+      model,
+      parseStatus: 'visual-exact',
+      diagnostics: [],
+      version: 'v1',
+    });
+    updateMdxImports.mockRejectedValueOnce(new Error('No se encontró la página MDX.'));
+
+    render(
+      <DiagramWorkbench
+        isOpen
+        mode={{ kind: 'file', path: 'src/shared/diagrams/EnlaceMdx.tsx' }}
+        metadataType="definicion"
+        onClose={vi.fn()}
+        onConfirm={vi.fn()}
+      />,
+    );
+
+    await waitFor(() => expect(screen.getByRole('tab', { name: /Comprobar/ })).toBeTruthy());
+    fireEvent.click(screen.getByRole('tab', { name: /Comprobar/ }));
+    fireEvent.change(screen.getByLabelText('Ruta de la página MDX'), {
+      target: { value: 'database/content/definitions/a.mdx' },
+    });
+    fireEvent.click(screen.getByRole('button', { name: 'Vincular a página MDX' }));
+
+    await waitFor(() => expect(screen.getByRole('alert').textContent).toMatch(/No se pudo vincular/i));
+    expect(screen.getByRole('alert').textContent).toMatch(/No se encontró la página MDX/i);
+    expect(updateMdxImports).toHaveBeenCalledWith(
+      'database/content/definitions/a.mdx',
+      'EnlaceMdx',
+      'src/shared/diagrams/EnlaceMdx.tsx',
+      'simulation',
+    );
   });
 
   it('does not lose axis, grid, note, mode or category when opening the raw visual model', async () => {

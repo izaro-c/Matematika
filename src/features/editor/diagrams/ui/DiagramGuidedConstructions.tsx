@@ -1,6 +1,6 @@
 import React from 'react';
 import type { ConstructionKind, ConstructionRefKey, VisualDiagramModel } from '../model/types';
-import { CONSTRUCTION_OPTIONS } from '../model/commands';
+import { CONSTRUCTION_OPTIONS } from '../model';
 
 interface DiagramGuidedConstructionsProps {
   model: VisualDiagramModel;

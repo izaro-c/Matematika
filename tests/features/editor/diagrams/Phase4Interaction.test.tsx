@@ -7,7 +7,7 @@ import { InteractiveElement } from '../../../../src/shared/ui/VisualBind';
 import { StepNavigator } from '../../../../src/shared/ui/StepNavigator';
 import { DiagramStepsEditor } from '../../../../src/features/editor/diagrams/ui/DiagramStepsEditor';
 import { DemonstrationBlock } from '../../../../src/features/editor/ui/blocks/DemonstrationBlock';
-import { createTemplateModel } from '../../../../src/features/editor/diagrams/model/commands';
+import { createTemplateModel } from '../../../../src/features/editor/diagrams/model';
 import { DemonstrationSection } from '../../../../src/widgets/content/DemonstrationSection';
 import { ProofStep } from '../../../../src/widgets/content/ProofStep';
 
@@ -87,18 +87,19 @@ describe('Phase 4 accessible interaction', () => {
       </MathProvider>,
     );
     expect(screen.getByRole('table', { name: 'Matriz objetos × pasos' })).toBeTruthy();
-    const cell = screen.getByRole('button', { name: /Base AB en Paso 1: Visible, Sin resaltar, interactivo/ });
+    const cell = screen.getByRole('button', { name: /Cambiar estado de Base AB en Paso 1/ });
     fireEvent.click(cell);
+    expect(screen.getByRole('button', { name: /Editar detalles de Base AB en Paso 1/ })).toBeTruthy();
+    fireEvent.click(screen.getByRole('button', { name: /Editar detalles de Base AB en Paso 1/ }));
     expect(screen.getByText('Base AB · Paso 1')).toBeTruthy();
     fireEvent.click(screen.getByRole('checkbox', { name: 'Visible' }));
     expect(onEdit).toHaveBeenCalledWith(expect.objectContaining({ steps: expect.any(Array) }), expect.objectContaining({ label: 'Cambiar visibilidad del paso' }));
     fireEvent.click(screen.getByRole('button', { name: '+ Crear paso' }));
     expect(onEdit).toHaveBeenCalledWith(expect.objectContaining({ steps: expect.arrayContaining([expect.objectContaining({ id: 'step4' })]) }), expect.any(Object));
 
-    const stepTwoCell = screen.getByRole('button', { name: /Base AB en Paso 2: Visible, Sin resaltar, interactivo/ });
+    const stepTwoCell = screen.getByRole('button', { name: /Cambiar estado de Base AB en Paso 2/ });
     fireEvent.click(stepTwoCell);
     expect(onActiveStepChange).toHaveBeenCalledWith('step2');
-    expect(stepTwoCell.getAttribute('aria-pressed')).toBe('true');
   });
 
   it('shows Lean traces as read-only information beside, not instead of, justification', () => {

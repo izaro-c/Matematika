@@ -1,7 +1,7 @@
 import React from 'react';
 import { DEFAULT_ANGLE_RADIUS, DEFAULT_RIGHT_ANGLE_RADIUS } from '@/shared/diagrams/public';
 import type { ColorToken, VisualElement } from '../model/types';
-import { COLOR_OPTIONS } from '../model/commands';
+import { COLOR_OPTIONS } from '../model';
 import { elementInspectorCapabilities } from '../model/elementInspectorCapabilities';
 
 interface DiagramElementAppearanceEditorProps {

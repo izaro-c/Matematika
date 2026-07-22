@@ -40,6 +40,7 @@ function preview(
   title: string,
   summary: string,
   edits: SourceEdit[],
+  requiresReview: boolean,
 ): MutationPreview {
   return {
     title,
@@ -47,6 +48,7 @@ function preview(
     originalSnippet: edits.map(edit => edit.expectedSource).join('\n⋯\n'),
     candidateSnippet: edits.map(edit => edit.replacement).join('\n⋯\n'),
     affectedRange: affectedRange(edits),
+    requiresReview,
   };
 }
 
@@ -136,6 +138,7 @@ export function planBlockReplacement(
     'Edición localizada de bloque',
     `Solo cambia el rango editable de ${blockId}; el envelope y los demás bloques quedan intactos.`,
     edits,
+    false,
   ));
 }
 
@@ -214,6 +217,7 @@ export function planBlockUpdate(
     'Edición estructurada de bloque',
     `Se reescribirá únicamente el bloque registrado ${blockId}; el resto del documento permanece byte a byte.`,
     edits,
+    true,
   ));
 }
 
@@ -261,6 +265,7 @@ export function planBlockInsertion(document: EditorDocument, input: InsertBlockI
     'Inserción de bloque registrado',
     `Se insertará un bloque ${input.blockType} en ${parentId}; no se reserializa el documento.`,
     edits,
+    false,
   ));
 }
 
@@ -282,6 +287,7 @@ export function planBlockDeletion(document: EditorDocument, blockId: string): Do
     'Borrado de bloque',
     `Se eliminará ${blockId} y únicamente su separador de espacio adyacente.`,
     edits,
+    true,
   ));
 }
 
@@ -306,6 +312,7 @@ export function planBlockDuplication(document: EditorDocument, blockId: string):
     'Duplicación de bloque',
     `Se copiará ${blockId} byte a byte junto a su posición actual.`,
     edits,
+    true,
   ));
 }
 
@@ -351,8 +358,9 @@ export function planBlockMove(
   }];
   return plan(document, 'move-block', id, edits, preview(
     'Reordenación estructural',
-    `Se reordenarán ${affected.length} bloques contiguos dentro de ${block.parentId}.`,
+    `Se reordenarán ${affected.length} bloques contiguos dentro de ${block.parentId}. Revise el diff antes de guardar.`,
     edits,
+    true,
   ));
 }
 
@@ -462,6 +470,7 @@ export function planMetadataUpdate(
     'Actualización localizada de metadatos',
     `${edits.length} parche(s) sobre propiedades concretas; imports, exports y cuerpo permanecen intactos.`,
     edits,
+    edits.length > 3 || removed.length > 0,
   ));
 }
 
@@ -532,5 +541,6 @@ export function planDiagramBinding(document: EditorDocument, input: BindDiagramI
     'Vinculación de diagrama',
     `Se actualizarán import, export publicado y metadatos en ${edits.length} regiones localizadas.`,
     edits,
+    true,
   ));
 }

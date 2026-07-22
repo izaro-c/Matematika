@@ -1,5 +1,5 @@
 import React, { useMemo, useRef, useState } from 'react';
-import { TEMPLATE_OPTIONS } from '../model/commands';
+import { TEMPLATE_OPTIONS } from '../model';
 import type { TemplateKind } from '../model/types';
 import { useModalFocus } from '../../ui/hooks/useModalFocus';
 

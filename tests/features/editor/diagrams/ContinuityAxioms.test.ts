@@ -3,7 +3,7 @@ import { describe, expect, it } from 'vitest';
 import { parseDiagramSourceAST } from '../../../../scripts/editor/parseDiagramSourceAST';
 import { generateDiagramSource } from '../../../../src/features/editor/diagrams/source/generator';
 import { buildTargets } from '../../../../src/features/editor/diagrams/model/selectors';
-import { updateElement, updateSlider } from '../../../../src/features/editor/diagrams/model/commands';
+import { updateElement, updateSlider } from '../../../../src/features/editor/diagrams/model';
 import {
   evaluateMathExpression,
   expressionVariables,

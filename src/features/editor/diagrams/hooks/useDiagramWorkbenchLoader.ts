@@ -1,7 +1,7 @@
 import { useEffect, useMemo } from 'react';
 import type { useDiagramState } from './useDiagramState';
 import type { TemplateKind } from '../model/types';
-import { createTemplateModel, normalizeVisualModel } from '../model/commands';
+import { createTemplateModel, normalizeVisualModel } from '../model';
 
 export type DiagramWorkbenchMode =
   | { kind: 'file'; path: string }

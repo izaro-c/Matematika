@@ -1,6 +1,6 @@
 import React from 'react';
 import type { CanvasTool, ElementKind, VisualDiagramModel } from '../model/types';
-import { completedToolReferenceCount, KIND_LABELS, normalizedToolReferences, refsNeededForTool, toolReferenceLabel, toolReferencePurpose, toolReferencesAreReady } from '../model/commands';
+import { completedToolReferenceCount, KIND_LABELS, normalizedToolReferences, refsNeededForTool, toolReferenceLabel, toolReferencePurpose, toolReferencesAreReady } from '../model';
 import { DiagramToolReferencePicker } from './DiagramToolReferencePicker';
 
 interface DiagramToolGuidanceProps {

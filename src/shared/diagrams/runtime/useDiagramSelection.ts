@@ -2,6 +2,7 @@ import { useCallback, useEffect, useMemo, useRef } from 'react';
 import type { DiagramPoint, DiagramSceneItem, DiagramSpecV2 } from '../spec';
 import { useDiagramTargetRegistry } from '@/shared/lib/DiagramTargetRegistryContext';
 import { useMathStore } from '@/shared/lib/MathStoreContext';
+import type { DiagramHoverController } from './diagramHover';
 import type { JxgElementAdapter, JxgElementMap } from './jsxgraphAdapter';
 
 export type KeyboardAdjustmentKey = 'ArrowLeft' | 'ArrowRight' | 'ArrowUp' | 'ArrowDown' | 'Home' | 'End';
@@ -150,28 +151,20 @@ export function attachLabelSelection(
   node?.removeAttribute('tabindex');
 }
 
-export function synchronizeElementAndLabelHover(element: JxgElementAdapter | undefined, item: DiagramSceneItem) {
-  if (!element) return;
-  if (item.selection.highlightable === false) return;
+export function attachDiagramHoverHandlers(
+  element: JxgElementAdapter | undefined,
+  item: DiagramSceneItem,
+  hover: DiagramHoverController,
+  requestSceneUpdate: () => void,
+) {
+  if (!element || item.selection.highlightable === false) return;
   const label = nativeElementLabel(element);
-  if (!label) return;
-  const labelNode = label.rendNode as HTMLElement | undefined;
-  const highlightPair = () => {
-    element.highlight?.();
-    label.highlight?.();
-    labelNode?.classList.add('matematika-point-label--highlight');
-    labelNode?.style.setProperty('transform', 'scale(1.12)', 'important');
-  };
-  const restorePair = () => {
-    element.noHighlight?.();
-    label.noHighlight?.();
-    labelNode?.classList.remove('matematika-point-label--highlight');
-    labelNode?.style.removeProperty('transform');
-  };
-  element.on?.('over', highlightPair);
-  element.on?.('out', restorePair);
-  label.on?.('over', highlightPair);
-  label.on?.('out', restorePair);
+  const activate = () => hover.setHovered(item.id, true, requestSceneUpdate);
+  const deactivate = () => hover.setHovered(item.id, false, requestSceneUpdate);
+  element.on?.('over', activate);
+  element.on?.('out', deactivate);
+  label?.on?.('over', activate);
+  label?.on?.('out', deactivate);
 }
 
 export function releaseAuthoredAttraction(point: DiagramPoint, elements: JxgElementMap): boolean {

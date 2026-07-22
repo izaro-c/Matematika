@@ -1,6 +1,11 @@
 import { describe, expect, it } from 'vitest';
 import { validateEditorDocument } from '@/features/editor/core/validation';
 import type { Block } from '@/features/editor/core/parser';
+import {
+  diagramElementKinds,
+  diagramMinimumRefs,
+  diagramPointConstraints,
+} from '@/shared/diagrams/spec/schema';
 
 const validDefinitionMetadata = {
   id: 'segmento',
@@ -265,6 +270,86 @@ describe('editor validation', () => {
 
     expect(result.canSave).toBe(false);
     expect(result.issues.map(issue => issue.id)).toContain('diagram-diagram-bad-glider-pP-glider-target-missing');
+  });
+
+  it('recognizes every diagram element kind declared in the schema', () => {
+    const pointIds = ['pA', 'pB', 'pC', 'pD', 'pE'];
+    const points = pointIds.map(id => ({ id, constraint: 'fixed' as const }));
+    const linearSupports = [
+      { id: 'segAB', kind: 'segment' as const, refs: ['pA', 'pB'] },
+      { id: 'lineAB', kind: 'line' as const, refs: ['pA', 'pB'] },
+    ];
+    const elements = diagramElementKinds.map(kind => {
+      const minRefs = diagramMinimumRefs[kind] ?? 1;
+      if (kind === 'intersection') {
+        return { id: 'ixAB', kind, refs: ['segAB', 'lineAB'] };
+      }
+      if (kind === 'measureTicks') {
+        return { id: 'ticksAB', kind, refs: ['segAB'] };
+      }
+      return {
+        id: `el-${kind}`,
+        kind,
+        refs: Array.from({ length: minRefs }, (_, index) => pointIds[index % pointIds.length]),
+      };
+    });
+
+    const result = validateEditorDocument({
+      metadata: validDefinitionMetadata,
+      imports: '',
+      exports: '',
+      blocks: [
+        {
+          id: 'diagram-kinds',
+          type: 'diagram',
+          content: 'KindsEditor',
+          metadata: {
+            visualModel: {
+              points,
+              elements: [...linearSupports, ...elements],
+            },
+          },
+        },
+      ],
+    });
+
+    expect(result.issues.map(issue => issue.id).filter(id => id.endsWith('-kind'))).toEqual([]);
+    expect(diagramElementKinds).toHaveLength(32);
+  });
+
+  it('accepts derived and constrained point mobility from the schema', () => {
+    const result = validateEditorDocument({
+      metadata: validDefinitionMetadata,
+      imports: '',
+      exports: '',
+      blocks: [
+        {
+          id: 'diagram-derived',
+          type: 'diagram',
+          content: 'DerivedEditor',
+          metadata: {
+            visualModel: {
+              points: [
+                { id: 'pA', constraint: 'fixed' },
+                {
+                  id: 'pDerived',
+                  constraint: 'derived',
+                  xExpression: 'pA.x + 1',
+                  yExpression: 'pA.y',
+                  dependencies: ['pA'],
+                },
+                { id: 'pGlider', constraint: 'glider', gliderTarget: 'segAB' },
+              ],
+              elements: [{ id: 'segAB', kind: 'segment', refs: ['pA', 'pDerived'] }],
+            },
+          },
+        },
+      ],
+    });
+
+    expect(result.issues.map(issue => issue.id)).not.toContain('diagram-diagram-derived-pDerived-constraint');
+    expect(result.issues.map(issue => issue.id)).not.toContain('diagram-diagram-derived-pGlider-glider-target-missing');
+    expect(diagramPointConstraints).toEqual(expect.arrayContaining(['derived', 'constrained']));
   });
 
   it('allows saving MDX documents containing unresolved ConceptLink and metadata references', () => {

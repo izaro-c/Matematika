@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import type { VisualDiagramModel } from '../model/types';
-import { KIND_LABELS } from '../model/commands';
+import { KIND_LABELS } from '../model';
+import { listLayerSceneItemsFrontFirst } from '../model/sceneOrdering';
 import { legacyElementCapabilities } from '@/shared/diagrams/public';
 
 interface DiagramObjectListProps {
@@ -44,10 +45,13 @@ export const DiagramObjectList: React.FC<DiagramObjectListProps> = ({ model, sel
     const text = `${item.label} ${item.id} ${kind}`.toLocaleLowerCase('es');
     return (!query.trim() || text.includes(query.trim().toLocaleLowerCase('es'))) && (!layerId || item.layerId === layerId);
   });
-  const filteredLayers = model.layers.slice().sort((a, b) => a.order - b.order).map(layer => ({
-    layer,
-    items: filteredItems.filter(({ item }) => item.layerId === layer.id),
-  })).filter(entry => entry.items.length > 0);
+  const filteredLayers = model.layers.slice().sort((a, b) => a.order - b.order).map(layer => {
+    const orderedIds = listLayerSceneItemsFrontFirst(model, layer.id).map(entry => entry.id);
+    const layerItems = orderedIds
+      .map(id => filteredItems.find(({ item }) => item.id === id))
+      .filter((entry): entry is typeof filteredItems[number] => Boolean(entry));
+    return { layer, items: layerItems };
+  }).filter(entry => entry.items.length > 0);
   const updateItem = (id: string, update: { visible?: boolean; locked?: boolean }) => {
     if (!onModelEdit) return;
     onModelEdit({
@@ -75,6 +79,7 @@ export const DiagramObjectList: React.FC<DiagramObjectListProps> = ({ model, sel
         <input type="search" aria-label="Buscar objetos" placeholder="Buscar por nombre, ID o tipo…" className="min-w-0 rounded border border-carbon/15 bg-lienzo p-1.5 text-[10px]" value={query} onChange={event => setQuery(event.target.value)} />
         <select aria-label="Filtrar objetos por capa" className="rounded border border-carbon/15 bg-lienzo p-1 text-[10px]" value={layerId} onChange={event => setLayerId(event.target.value)}><option value="">Todas las capas</option>{model.layers.slice().sort((a, b) => a.order - b.order).map(layer => <option key={layer.id} value={layer.id}>{layer.label}</option>)}</select>
       </div>
+      <p className="mb-2 text-[9px] leading-relaxed text-carbon/40">Lista de referencia. Para cambiar el orden o las capas, use la pestaña Organizar.</p>
       <div className="max-h-[60vh] space-y-2 overflow-y-auto pr-1" role="tree" aria-label="Árbol de escena por capas">
         {filteredLayers.map(({ layer, items: layerItems }) => <section key={layer.id} role="group" aria-label={layer.label}>
           <div className="sticky top-0 z-10 flex min-h-8 items-center justify-between bg-lienzo px-1 text-xs font-bold text-carbon/60"><span>{layer.label}</span><span className="font-mono text-carbon/40">{layerItems.length}</span></div>

@@ -10,10 +10,19 @@ import {
   step,
   updateStep,
   updateStepObjectState,
-} from '../model/commands';
+} from '../model';
 import { toggleInitialStep, reindexSteps } from '../model/diagramElements';
 import { DiagramExpressionField } from './DiagramExpressionField';
-import { COLOR_OPTIONS } from '../model/commands';
+import { DiagramStepObjectAppearanceEditor } from './DiagramStepObjectAppearanceEditor';
+import { COLOR_OPTIONS } from '../model';
+import { DiagramButton, DiagramField, DiagramPanel } from './primitives';
+import {
+  MATRIX_CELL_LABELS,
+  matrixCellVisualState,
+  nextMatrixCellState,
+  type MatrixCellVisualState,
+} from './stepMatrixUtils';
+import { summarizeStepObjectState } from './stepObjectStateSummary';
 
 interface DiagramStepsEditorProps {
   model: VisualDiagramModel;
@@ -23,18 +32,25 @@ interface DiagramStepsEditorProps {
   onSelectObject: (objectId: string) => void;
 }
 
-const emphasisLabel = { none: 'Sin resaltar', secondary: 'Resaltado suave', primary: 'Resaltado fuerte' } as const;
+const MATRIX_CELL_ICONS: Record<MatrixCellVisualState, string> = {
+  hidden: '○',
+  visible: '●',
+  'emphasis-secondary': '◐',
+  'emphasis-primary': '◉',
+};
 
-function matrixCellClass(selected: boolean, visible: boolean): string {
-  if (selected) return 'border-terracota bg-terracota/10';
-  if (visible) return 'border-salvia/40 bg-salvia/10';
-  return 'border-carbon/10 bg-carbon/[0.02] text-carbon/45';
-}
-
-function emphasisSummary(emphasis: keyof typeof emphasisLabel): string {
-  if (emphasis === 'primary') return 'Resaltado fuerte';
-  if (emphasis === 'secondary') return 'Resaltado suave';
-  return 'Sin resaltar';
+function matrixCellClass(selected: boolean, visual: MatrixCellVisualState): string {
+  if (selected) return 'border-terracota ring-1 ring-terracota/30 bg-terracota/10';
+  switch (visual) {
+    case 'hidden':
+      return 'border-carbon/10 bg-carbon/[0.03] text-carbon/35';
+    case 'visible':
+      return 'border-salvia/50 bg-salvia/15 text-carbon';
+    case 'emphasis-secondary':
+      return 'border-pavo/50 bg-pavo/15 text-carbon';
+    case 'emphasis-primary':
+      return 'border-terracota/60 bg-terracota/20 text-carbon';
+  }
 }
 
 export const DiagramStepsEditor: React.FC<DiagramStepsEditorProps> = ({
@@ -80,6 +96,24 @@ export const DiagramStepsEditor: React.FC<DiagramStepsEditorProps> = ({
     if (!selectedCell) return;
     editSteps(updateStepObjectState(model.steps, selectedCell.stepId, selectedCell.objectId, update), label);
   };
+  const cycleCellState = (stepId: string, objectId: string) => {
+    const stepItem = model.steps.find(item => item.id === stepId);
+    const objectItem = items.find(item => item.id === objectId);
+    if (!stepItem || !objectItem) return;
+    const current = matrixCellVisualState(stepItem, objectId);
+    const update = nextMatrixCellState(current);
+    const nextVisual: MatrixCellVisualState = update.visible === false
+      ? 'hidden'
+      : update.emphasis === 'primary'
+        ? 'emphasis-primary'
+        : update.emphasis === 'secondary'
+          ? 'emphasis-secondary'
+          : 'visible';
+    editSteps(
+      updateStepObjectState(model.steps, stepId, objectId, update),
+      `Cambiar ${objectItem.label} en ${stepItem.label} a ${MATRIX_CELL_LABELS[nextVisual]}`,
+    );
+  };
 
   const hasInitialStep = model.steps.some(s => s.id === 'initial');
 
@@ -92,16 +126,16 @@ export const DiagramStepsEditor: React.FC<DiagramStepsEditorProps> = ({
         </div>
         <div className="flex items-center gap-2">
           {!hasInitialStep && (
-            <button
-              type="button"
+            <DiagramButton
+              variant="danger"
+              className="border-terracota/30 bg-terracota/10 text-terracota hover:bg-terracota/20"
               onClick={addInitialStep}
-              className="rounded border border-terracota/30 bg-terracota/10 px-2.5 py-1.5 text-xs font-bold text-terracota hover:bg-terracota/20"
               title="Añade un paso inicial con ID 'initial' para la figura del enunciado"
             >
               + Paso inicial ('initial')
-            </button>
+            </DiagramButton>
           )}
-          <button type="button" onClick={addStep} className="rounded bg-terracota px-3 py-1.5 text-xs font-bold text-lienzo">+ Crear paso</button>
+          <DiagramButton variant="primary" className="bg-terracota hover:bg-terracota/90" onClick={addStep}>+ Crear paso</DiagramButton>
         </div>
       </div>
 
@@ -114,21 +148,22 @@ export const DiagramStepsEditor: React.FC<DiagramStepsEditorProps> = ({
             scopeId={model.componentId}
             activeStepId={activeStep?.id}
             onStepChange={onActiveStepChange}
+            editorMode
             className="mt-3"
           />
 
           <div className="mt-3 flex flex-wrap items-center gap-2 rounded border border-carbon/10 bg-carbon/[0.02] p-2">
             <span className="text-[10px] font-bold text-carbon/55">Paso activo:</span>
-            <button type="button" className="rounded border border-carbon/15 bg-lienzo px-2 py-1 text-[10px] font-bold" onClick={() => {
+            <DiagramButton variant="danger" className="!min-h-0 border-carbon/15 bg-lienzo px-2 py-1 text-[10px] text-carbon hover:bg-carbon/5" onClick={() => {
               if (!activeStep) return;
               const steps = items.reduce((result, item) => updateStepObjectState(result, activeStep.id, item.id, { visible: true }), model.steps);
               editSteps(steps, `Mostrar todo en ${activeStep.label}`);
-            }}>Mostrar todos los objetos</button>
-            <button type="button" className="rounded border border-carbon/15 bg-lienzo px-2 py-1 text-[10px] font-bold" onClick={() => {
+            }}>Mostrar todos los objetos</DiagramButton>
+            <DiagramButton variant="danger" className="!min-h-0 border-carbon/15 bg-lienzo px-2 py-1 text-[10px] text-carbon hover:bg-carbon/5" onClick={() => {
               if (!activeStep) return;
               const steps = items.reduce((result, item) => updateStepObjectState(result, activeStep.id, item.id, { visible: false }), model.steps);
               editSteps(steps, `Ocultar todo en ${activeStep.label}`);
-            }}>Ocultar todos</button>
+            }}>Ocultar todos</DiagramButton>
             <span className="ml-auto text-[9px] text-carbon/45">Después puede ajustar excepciones en la matriz.</span>
           </div>
 
@@ -145,69 +180,74 @@ export const DiagramStepsEditor: React.FC<DiagramStepsEditorProps> = ({
                   <span className="mt-0.5 block truncate text-[10px] text-carbon/55">{item.description || 'Sin descripción'}</span>
                 </button>
                 <div className="mt-2 flex gap-1">
-                  <button type="button" aria-label={`Mover ${item.label} a la izquierda`} disabled={index === 0} onClick={() => editSteps(moveStep(model.steps, item.id, -1), `Reordenar ${item.label}`)} className="rounded border border-carbon/15 px-1.5 text-xs disabled:opacity-30">Anterior</button>
-                  <button type="button" aria-label={`Mover ${item.label} a la derecha`} disabled={index === model.steps.length - 1} onClick={() => editSteps(moveStep(model.steps, item.id, 1), `Reordenar ${item.label}`)} className="rounded border border-carbon/15 px-1.5 text-xs disabled:opacity-30">Siguiente</button>
-                  <button type="button" onClick={() => editSteps(duplicateStep(model.steps, item.id), `Duplicar ${item.label}`)} className="rounded border border-carbon/15 px-1.5 text-[10px]">Duplicar</button>
-                  <button
-                    type="button"
+                  <DiagramButton variant="danger" aria-label={`Mover ${item.label} a la izquierda`} disabled={index === 0} className="!min-h-0 !min-w-0 border-carbon/15 px-2 text-sm disabled:opacity-30" onClick={() => editSteps(moveStep(model.steps, item.id, -1), `Reordenar ${item.label}`)}>←</DiagramButton>
+                  <DiagramButton variant="danger" aria-label={`Mover ${item.label} a la derecha`} disabled={index === model.steps.length - 1} className="!min-h-0 !min-w-0 border-carbon/15 px-2 text-sm disabled:opacity-30" onClick={() => editSteps(moveStep(model.steps, item.id, 1), `Reordenar ${item.label}`)}>→</DiagramButton>
+                  <DiagramButton variant="danger" className="!min-h-0 border-carbon/15 px-1.5 text-[10px]" onClick={() => editSteps(duplicateStep(model.steps, item.id), `Duplicar ${item.label}`)}>Duplicar</DiagramButton>
+                  <DiagramButton
+                    variant="danger"
+                    className="!min-h-0 ml-auto border-granada/20 px-1.5 text-[10px] text-granada"
                     onClick={() => {
                       const remaining = removeStep(model.steps, item.id);
                       editSteps(remaining, `Eliminar ${item.label}`);
                       if (item.id === activeStep?.id) onActiveStepChange(remaining[Math.max(0, index - 1)]?.id ?? '');
                     }}
-                    className="ml-auto rounded border border-granada/20 px-1.5 text-[10px] text-granada"
                     aria-label={`Eliminar ${item.label}`}
-                  >Eliminar</button>
+                  >Eliminar</DiagramButton>
                 </div>
               </li>
             ))}
           </ol>
 
           {activeStep && (
-            <fieldset className="mt-3 grid gap-2 rounded border border-carbon/10 bg-carbon/[0.02] p-3 sm:grid-cols-[1.2fr_1.5fr_2fr_110px]">
-              <legend className="px-1 text-[10px] font-bold uppercase tracking-wider text-carbon/50">Datos del paso activo</legend>
-              <div>
-                <label className="block text-[10px] font-bold text-carbon/60 mb-1">Identificador del paso</label>
-                <div className="flex items-center gap-2">
-                  <span className="rounded bg-carbon/5 border border-carbon/15 px-2 py-1 text-xs font-mono text-carbon font-bold">
-                    {activeStep.id}
-                  </span>
-                  {activeStep.id !== 'initial' ? (
-                    <button
-                      type="button"
-                      onClick={handleToggleInitial}
-                      className="rounded border border-terracota/30 bg-terracota/10 px-2 py-1 text-[10px] font-bold text-terracota hover:bg-terracota/20"
-                      title="Establece este paso como la figura del enunciado (ID 'initial')"
-                    >
-                      Marcar como 'initial'
-                    </button>
-                  ) : (
-                    <button
-                      type="button"
-                      onClick={handleToggleInitial}
-                      className="rounded border border-carbon/20 bg-lienzo px-2 py-1 text-[10px] font-bold text-carbon/60 hover:bg-carbon/5"
-                      title="Convierte este paso a un paso numerado secuencial"
-                    >
-                      Convertir a numerado
-                    </button>
-                  )}
+            <DiagramPanel title="Datos del paso activo" className="mt-3 border-carbon/10 bg-carbon/[0.02]">
+              <div className="grid gap-2 sm:grid-cols-[1.2fr_1.5fr_2fr_110px]">
+                <div>
+                  <p className="mb-1 text-[10px] font-bold text-carbon/60">Identificador del paso</p>
+                  <div className="flex items-center gap-2">
+                    <span className="rounded border border-carbon/15 bg-carbon/5 px-2 py-1 font-mono text-xs font-bold text-carbon">
+                      {activeStep.id}
+                    </span>
+                    {activeStep.id !== 'initial' ? (
+                      <DiagramButton
+                        variant="danger"
+                        className="!min-h-0 border-terracota/30 bg-terracota/10 px-2 py-1 text-[10px] text-terracota hover:bg-terracota/20"
+                        onClick={handleToggleInitial}
+                        title="Establece este paso como la figura del enunciado (ID 'initial')"
+                      >
+                        Marcar como 'initial'
+                      </DiagramButton>
+                    ) : (
+                      <DiagramButton
+                        variant="danger"
+                        className="!min-h-0 border-carbon/20 bg-lienzo px-2 py-1 text-[10px] text-carbon/60 hover:bg-carbon/5"
+                        onClick={handleToggleInitial}
+                        title="Convierte este paso a un paso numerado secuencial"
+                      >
+                        Convertir a numerado
+                      </DiagramButton>
+                    )}
+                  </div>
                 </div>
+                <DiagramField label="Etiqueta">
+                  <input value={activeStep.label} onChange={event => editSteps(updateStep(model, activeStep.id, { label: event.target.value }).steps, 'Editar etiqueta del paso')} />
+                </DiagramField>
+                <DiagramField label="Qué cambia">
+                  <input value={activeStep.description} onChange={event => editSteps(updateStep(model, activeStep.id, { description: event.target.value }).steps, 'Editar descripción del paso')} />
+                </DiagramField>
+                <DiagramField label="Duración (ms)">
+                  <input type="number" min="200" max="60000" step="100" value={activeStep.durationMs ?? 1800} onChange={event => editSteps(updateStep(model, activeStep.id, { durationMs: Number(event.target.value) }).steps, 'Editar duración del paso')} />
+                </DiagramField>
               </div>
-              <label className="text-[10px] font-bold text-carbon/60">Etiqueta
-                <input className="mt-1 w-full rounded border border-carbon/15 bg-lienzo p-1.5 text-xs" value={activeStep.label} onChange={event => editSteps(updateStep(model, activeStep.id, { label: event.target.value }).steps, 'Editar etiqueta del paso')} />
-              </label>
-              <label className="text-[10px] font-bold text-carbon/60">Qué cambia
-                <input className="mt-1 w-full rounded border border-carbon/15 bg-lienzo p-1.5 text-xs" value={activeStep.description} onChange={event => editSteps(updateStep(model, activeStep.id, { description: event.target.value }).steps, 'Editar descripción del paso')} />
-              </label>
-              <label className="text-[10px] font-bold text-carbon/60">Duración (ms)
-                <input type="number" min="200" max="60000" step="100" className="mt-1 w-full rounded border border-carbon/15 bg-lienzo p-1.5 text-xs" value={activeStep.durationMs ?? 1800} onChange={event => editSteps(updateStep(model, activeStep.id, { durationMs: Number(event.target.value) }).steps, 'Editar duración del paso')} />
-              </label>
-            </fieldset>
+            </DiagramPanel>
           )}
 
           <div className="mt-4 grid items-start gap-3 lg:grid-cols-[minmax(0,1fr)_20rem]">
           <div className="overflow-x-auto rounded border border-carbon/10">
-            <div className="border-b border-carbon/10 bg-carbon/5 p-2"><input type="search" aria-label="Buscar objetos en la secuencia" placeholder="Buscar objetos en la matriz…" className="w-full max-w-sm rounded border border-carbon/15 bg-lienzo p-1.5 text-[10px]" value={objectQuery} onChange={event => setObjectQuery(event.target.value)} /></div>
+            <div className="border-b border-carbon/10 bg-carbon/5 p-2">
+              <DiagramField label="Buscar objetos en la secuencia" className="max-w-sm">
+                <input type="search" aria-label="Buscar objetos en la secuencia" placeholder="Buscar objetos en la matriz…" className="text-[10px]" value={objectQuery} onChange={event => setObjectQuery(event.target.value)} />
+              </DiagramField>
+            </div>
             <table className="min-w-full border-collapse text-[10px]">
               <caption className="border-b border-carbon/10 bg-carbon/5 px-3 py-2 text-left font-bold uppercase tracking-widest text-carbon/50">Matriz objetos × pasos</caption>
               <thead>
@@ -224,27 +264,43 @@ export const DiagramStepsEditor: React.FC<DiagramStepsEditorProps> = ({
                       <span className="block font-mono text-[9px] font-normal text-carbon/45">{item.id}</span>
                     </th>
                     {model.steps.map(stepItem => {
+                      const visual = matrixCellVisualState(stepItem, item.id);
                       const state = stepItem.objectStates?.[item.id];
-                      const visible = state?.visible ?? stepItem.visibleTargets.includes(item.id);
-                      const emphasis = state?.emphasis ?? 'none';
                       const selected = selectedCell?.stepId === stepItem.id && selectedCell.objectId === item.id;
-                      const summary = [visible ? 'Visible' : 'Oculto', emphasisLabel[emphasis], state?.label ? 'etiqueta' : '', state?.overlay?.visible ? 'overlay' : '', state?.interactive === false ? 'bloqueado' : 'interactivo'].filter(Boolean).join(', ');
+                      const extras = summarizeStepObjectState(state).join(', ');
+                      const summary = [MATRIX_CELL_LABELS[visual], extras].filter(Boolean).join(', ');
                       return (
-                        <td key={stepItem.id} className="border-t border-carbon/10 p-1.5">
-                          <button
-                            type="button"
-                            onClick={() => {
-                              setSelectedCell({ stepId: stepItem.id, objectId: item.id });
-                              if (stepItem.id !== activeStep?.id) onActiveStepChange(stepItem.id);
-                            }}
-                            aria-label={`${item.label} en ${stepItem.label}: ${summary}`}
-                            aria-pressed={selected}
-                            className={`w-full rounded border p-1.5 text-left ${matrixCellClass(selected, visible)}`}
-                          >
-                            <span className="block font-bold">{visible ? 'Visible' : 'Oculto'}</span>
-                            <span className="block truncate text-[9px]">{emphasisSummary(emphasis)}</span>
-                            <span className="block text-[9px]">{state?.overlay?.visible ? 'Panel' : ''}{state?.label ? ' · Etiqueta' : ''}{state?.interactive === false ? ' · Bloqueado' : ''}</span>
-                          </button>
+                        <td key={stepItem.id} className="border-t border-carbon/10 p-1">
+                          <div className={`flex items-stretch gap-0.5 rounded border ${matrixCellClass(selected, visual)}`}>
+                            <button
+                              type="button"
+                              onClick={() => {
+                                cycleCellState(stepItem.id, item.id);
+                                if (stepItem.id !== activeStep?.id) onActiveStepChange(stepItem.id);
+                              }}
+                              aria-label={`Cambiar estado de ${item.label} en ${stepItem.label}: ${summary}`}
+                              className="min-w-0 flex-1 p-1.5 text-left"
+                            >
+                              <span className="flex items-center gap-1">
+                                <span className="text-sm leading-none" aria-hidden>{MATRIX_CELL_ICONS[visual]}</span>
+                                <span className="block truncate text-[9px] font-bold">{MATRIX_CELL_LABELS[visual]}</span>
+                              </span>
+                              {extras ? <span className="block truncate text-[8px] opacity-70">{extras}</span> : null}
+                            </button>
+                            <button
+                              type="button"
+                              onClick={() => {
+                                setSelectedCell({ stepId: stepItem.id, objectId: item.id });
+                                if (stepItem.id !== activeStep?.id) onActiveStepChange(stepItem.id);
+                              }}
+                              aria-label={`Editar detalles de ${item.label} en ${stepItem.label}`}
+                              aria-pressed={selected}
+                              className="shrink-0 border-l border-inherit px-1.5 text-[10px] text-carbon/50 hover:bg-carbon/5 hover:text-carbon"
+                              title="Editar etiqueta, panel y más opciones"
+                            >
+                              ⋯
+                            </button>
+                          </div>
                         </td>
                       );
                     })}
@@ -255,46 +311,51 @@ export const DiagramStepsEditor: React.FC<DiagramStepsEditorProps> = ({
           </div>
 
           {selectedCell && selectedStep && selectedObject && selectedState && (
-            <fieldset className="sticky top-3 space-y-3 rounded border border-terracota/25 bg-terracota/5 p-3">
-              <legend className="px-1 text-xs font-bold text-carbon">{selectedObject.label} · {selectedStep.label}</legend>
+            <DiagramPanel title={`${selectedObject.label} · ${selectedStep.label}`} className="sticky top-3 border-terracota/25 bg-terracota/5">
               <div className="grid gap-3 sm:grid-cols-3">
                 <label className="flex items-center gap-2 text-xs font-bold text-carbon"><input type="checkbox" checked={selectedState.visible !== false} onChange={event => editState({ visible: event.target.checked }, 'Cambiar visibilidad del paso')} />Visible</label>
                 <label className="flex items-center gap-2 text-xs font-bold text-carbon"><input type="checkbox" checked={selectedState.interactive !== false} onChange={event => editState({ interactive: event.target.checked }, 'Cambiar interacción del paso')} />Interactivo</label>
-                <label className="text-[10px] font-bold text-carbon/60">Resaltado en este paso
-                  <select className="ml-2 rounded border border-carbon/15 bg-lienzo p-1 text-xs" value={selectedState.emphasis ?? 'none'} onChange={event => editState({ emphasis: event.target.value as DiagramStepObjectState['emphasis'] }, 'Cambiar resaltado del paso')}>
+                <DiagramField label="Resaltado en este paso">
+                  <select value={selectedState.emphasis ?? 'none'} onChange={event => editState({ emphasis: event.target.value as DiagramStepObjectState['emphasis'] }, 'Cambiar resaltado del paso')}>
                     <option value="none">Sin resaltar</option><option value="primary">Resaltado fuerte</option><option value="secondary">Resaltado suave</option>
                   </select>
-                </label>
+                </DiagramField>
               </div>
-              {(selectedState.emphasis ?? 'none') !== 'none' && <label className="block text-[10px] font-bold text-carbon/60">Color del énfasis
-                <select aria-label="Color del énfasis del paso" className="mt-1 min-h-10 w-full rounded border border-carbon/15 bg-lienzo px-2 text-xs" value={selectedState.emphasisColor ?? ''} onChange={event => editState({ emphasisColor: (event.target.value || undefined) as DiagramStepObjectState['emphasisColor'] }, 'Cambiar color del énfasis')}>
+              {(selectedState.emphasis ?? 'none') !== 'none' && (
+                <span className="block text-[9px] font-normal leading-relaxed text-carbon/45">El resaltado fuerte pulsa grosor, relleno, radio (ángulos), tamaño (puntos y marcas) y tipografía (anotaciones). El suave adopta el grosor de resaltado definido en el inspector, igual que al pasar el cursor. Un enlace MDX activo sustituye ambos.</span>
+              )}
+              <DiagramField label="Color temporal del resaltado">
+                <select aria-label="Color temporal del resaltado" value={selectedState.emphasisColor ?? ''} onChange={event => editState({ emphasisColor: (event.target.value || undefined) as DiagramStepObjectState['emphasisColor'] }, 'Cambiar color temporal')}>
                   <option value="">Conservar color original</option>
                   {COLOR_OPTIONS.map(option => <option key={option.value} value={option.value}>{option.label}</option>)}
                 </select>
-                <span className="mt-1 block text-[9px] font-normal leading-relaxed text-carbon/45">El resaltado fuerte usa mayor grosor; el suave conserva menor intensidad. Un enlace MDX activo sustituye ambos.</span>
-              </label>}
-              <label className="block text-[10px] font-bold text-carbon/60">Etiqueta temporal
-                <input className="mt-1 w-full rounded border border-carbon/15 bg-lienzo p-1.5 text-xs" placeholder={selectedObject.label} value={selectedState.label ?? ''} onChange={event => editState({ label: event.target.value || undefined }, 'Editar etiqueta temporal')} />
-              </label>
+              </DiagramField>
+              {'min' in selectedObject ? null : (
+                <DiagramStepObjectAppearanceEditor
+                  object={selectedObject}
+                  state={selectedState}
+                  onStateChange={(update, label) => editState(update, label)}
+                />
+              )}
               {'min' in selectedObject && (
-                <label className="block text-[10px] font-bold text-carbon/60">Valor temporal del control
-                  <input type="number" min={selectedObject.min} max={selectedObject.max} step={selectedObject.step} className="mt-1 w-full rounded border border-carbon/15 bg-lienzo p-1.5 text-xs" value={selectedState.value ?? selectedObject.value} onChange={event => editState({ value: Number(event.target.value) }, 'Editar valor temporal')} />
-                </label>
+                <DiagramField label="Valor temporal del control">
+                  <input type="number" min={selectedObject.min} max={selectedObject.max} step={selectedObject.step} value={selectedState.value ?? selectedObject.value} onChange={event => editState({ value: Number(event.target.value) }, 'Editar valor temporal')} />
+                </DiagramField>
               )}
               <div className="rounded border border-carbon/10 bg-lienzo p-2">
                 <label className="flex items-center gap-2 text-xs font-bold text-carbon"><input type="checkbox" checked={selectedState.overlay?.visible ?? false} onChange={event => editState({ overlay: { visible: event.target.checked, title: selectedState.overlay?.title ?? selectedObject.label, content: selectedState.overlay?.content ?? '{value}', expression: selectedState.overlay?.expression, unit: selectedState.overlay?.unit, precision: selectedState.overlay?.precision, position: selectedState.overlay?.position ?? 'bottom-right' } }, 'Cambiar overlay del paso')} />Mostrar panel informativo</label>
                 {selectedState.overlay && (
                   <div className="mt-2 grid gap-2 sm:grid-cols-2">
-                    <label className="text-[10px] font-bold text-carbon/60">Título<input className="mt-1 w-full rounded border border-carbon/15 p-1.5 text-xs" value={selectedState.overlay.title} onChange={event => editState({ overlay: { ...selectedState.overlay!, title: event.target.value } }, 'Editar título del overlay')} /></label>
-                    <label className="text-[10px] font-bold text-carbon/60">Posición<select className="mt-1 w-full rounded border border-carbon/15 p-1.5 text-xs" value={selectedState.overlay.position ?? 'bottom-right'} onChange={event => editState({ overlay: { ...selectedState.overlay!, position: event.target.value as NonNullable<DiagramStepObjectState['overlay']>['position'] } }, 'Mover overlay')}><option value="top-left">Arriba izquierda</option><option value="top-right">Arriba derecha</option><option value="bottom-left">Abajo izquierda</option><option value="bottom-right">Abajo derecha</option></select></label>
-                    <label className="text-[10px] font-bold text-carbon/60">Contenido<input className="mt-1 w-full rounded border border-carbon/15 p-1.5 text-xs" value={selectedState.overlay.content} onChange={event => editState({ overlay: { ...selectedState.overlay!, content: event.target.value } }, 'Editar contenido del overlay')} /></label>
+                    <DiagramField label="Título"><input value={selectedState.overlay.title} onChange={event => editState({ overlay: { ...selectedState.overlay!, title: event.target.value } }, 'Editar título del overlay')} /></DiagramField>
+                    <DiagramField label="Posición"><select value={selectedState.overlay.position ?? 'bottom-right'} onChange={event => editState({ overlay: { ...selectedState.overlay!, position: event.target.value as NonNullable<DiagramStepObjectState['overlay']>['position'] } }, 'Mover overlay')}><option value="top-left">Arriba izquierda</option><option value="top-right">Arriba derecha</option><option value="bottom-left">Abajo izquierda</option><option value="bottom-right">Abajo derecha</option></select></DiagramField>
+                    <DiagramField label="Contenido"><input value={selectedState.overlay.content} onChange={event => editState({ overlay: { ...selectedState.overlay!, content: event.target.value } }, 'Editar contenido del overlay')} /></DiagramField>
                     <div className="sm:col-span-2"><DiagramExpressionField model={model} label="Expresión reactiva del panel" value={selectedState.overlay.expression ?? ''} onChange={value => editState({ overlay: { ...selectedState.overlay!, expression: value || undefined } }, 'Editar expresión del overlay')} placeholder="segAB.length" optional help="El resultado sustituye a {value} en el contenido del panel durante este paso." /></div>
                   </div>
                 )}
               </div>
-            </fieldset>
+            </DiagramPanel>
           )}
-          {!selectedCell && <aside className="sticky top-3 rounded border border-dashed border-carbon/20 bg-carbon/[0.02] p-4 text-center text-xs text-carbon/50">Seleccione una celda de la matriz para editar aquí su visibilidad, resaltado, interacción y panel informativo.</aside>}
+          {!selectedCell && <aside className="sticky top-3 rounded border border-dashed border-carbon/20 bg-carbon/[0.02] p-4 text-center text-xs text-carbon/50">Seleccione una celda de la matriz para editar aquí su visibilidad, resaltado, etiqueta, color, estilo y panel informativo.</aside>}
           </div>
         </>
       )}

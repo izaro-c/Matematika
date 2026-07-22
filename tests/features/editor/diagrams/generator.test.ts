@@ -1,7 +1,7 @@
 import { describe, expect, it } from 'vitest';
 import { readFileSync } from 'node:fs';
 import { parseDiagramSourceAST } from '../../../../scripts/editor/parseDiagramSourceAST';
-import { createTemplateModel, setPointAttractors, step } from '../../../../src/features/editor/diagrams/model/commands';
+import { createTemplateModel, setPointAttractors, step } from '../../../../src/features/editor/diagrams/model';
 import { generateDiagramSource } from '../../../../src/features/editor/diagrams/source/generator';
 
 describe('DiagramSpec v3 TSX adapter generator', () => {
