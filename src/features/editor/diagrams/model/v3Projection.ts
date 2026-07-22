@@ -1,4 +1,5 @@
 import {
+  isAreaElement,
   legacyItemHasCapability,
   legacyReferenceCandidates,
   migrateDiagramSpecV2ToV3,
@@ -62,6 +63,10 @@ export function angleCandidates(
 ): DiagramElement[] {
   const allowed = new Set(kinds);
   return model.elements.filter(element => allowed.has(element.kind as 'angle' | 'nonReflexAngle'));
+}
+
+export function areaCandidates(model: VisualDiagramModel): DiagramElement[] {
+  return model.elements.filter(item => isAreaElement(item));
 }
 
 export function segmentsSharingPoint(model: VisualDiagramModel, pointId: string): DiagramElement[] {

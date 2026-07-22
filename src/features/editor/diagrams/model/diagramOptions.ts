@@ -31,6 +31,7 @@ export const KIND_LABELS: Record<ElementKind, string> = {
   intersection: 'Intersección', midpoint: 'Punto medio', perpendicularFoot: 'Pie perpendicular', baseExtension: 'Extensión de base', perpendicular: 'Perpendicular', parallel: 'Paralela',
   angleBisector: 'Bisectriz', angle: 'Ángulo orientado', nonReflexAngle: 'Ángulo no reflejo (≤ 180°)', rightAngle: 'Ángulo recto', congruenceMark: 'Marca de congruencia', parallelMark: 'Marca de paralelismo', measureTicks: 'Marcas de medida', perpendicularMark: 'Marca de perpendicularidad',
   dimensionLine: 'Línea de cota', measurement: 'Medición', grid: 'Cuadrícula geométrica', areaDecomposition: 'Descomposición de área',
+  halfPlane: 'Semiplano', areaIntersection: 'Intersección de áreas',
   text: 'Etiqueta', label: 'Etiqueta matemática', formula: 'Fórmula', infoPanel: 'Panel informativo',
 };
 

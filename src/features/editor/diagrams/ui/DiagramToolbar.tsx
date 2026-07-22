@@ -8,6 +8,7 @@ const TOOL_GROUPS: Array<{ label: string; description: string; tools: CanvasTool
   { label: 'Líneas y contornos', description: 'Trazos básicos de la figura.', tools: ['segment', 'line', 'ray', 'circle', 'arc', 'polygon'] },
   { label: 'Construcciones', description: 'Geometría exacta a partir de referencias.', tools: ['midpoint', 'perpendicularFoot', 'baseExtension', 'perpendicular', 'parallel', 'angleBisector'] },
   { label: 'Ángulos y regiones', description: 'Zonas, ángulos y descomposiciones.', tools: ['polygon', 'angle', 'nonReflexAngle', 'rightAngle', 'areaDecomposition', 'grid'] },
+  { label: 'Áreas', description: 'Semiplanos e intersecciones. Los polígonos y círculos ya actúan como áreas.', tools: ['halfPlane', 'areaIntersection'] },
   { label: 'Medir y comparar', description: 'Medidas, cotas y marcas matemáticas.', tools: ['measurement', 'dimensionLine', 'angle', 'rightAngle', 'congruenceMark', 'parallelMark', 'perpendicularMark', 'measureTicks'] },
   { label: 'Texto y explicación', description: 'Contenido que acompaña a la figura.', tools: ['text', 'label', 'formula', 'infoPanel', 'measurement', 'dimensionLine'] },
   { label: 'Curvas y modelos', description: 'Gráficas y geometría no euclidiana.', tools: ['functionCurve', 'parametricCurve', 'poincareGeodesic', 'poincareArc'] },

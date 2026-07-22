@@ -1,7 +1,9 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { ProofStep } from "@/widgets/content/ProofStep";
+import { ProofStepLink } from "@/widgets/content/ProofStepLink";
 import { DemonstrationSection } from "@/widgets/content/DemonstrationSection";
 import { ProofStepExpander } from "@/widgets/content/ProofStepExpander";
+import { QedMark } from "@/widgets/content/QedMark";
 import { Concept } from "@/features/glossary/ui/Concept";
 import { Paso } from '@/features/exercises/ui/Paso';
 import { PasoEjercicio } from '@/features/exercises/ui/PasoEjercicio';
@@ -167,9 +169,7 @@ export const Demostracion: React.FC<DemostracionProps> = ({ children }) => (
     <div className="inline">
       {children}
     </div>
-    <div className="text-right mt-4 text-carbon font-bold text-lg opacity-80">
-      $\blacksquare$
-    </div>
+    <QedMark />
   </div>
 );
 
@@ -243,6 +243,7 @@ export const MDXComponents = {
   Capitular,
   DemonstrationSection,
   ProofStep,
+  ProofStepLink,
   ProofStepExpander,
   Concept,
   Paso,

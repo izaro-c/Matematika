@@ -19,6 +19,7 @@ export const CONSTRAINT_OPTIONS: Array<ConstraintPresentation & { value: VisualC
   { value: 'parallel', label: 'Sobre una paralela', description: 'Se mueve sobre una paralela a una dirección dada.', refs: 3 },
   { value: 'insideDisk', label: 'Dentro de un disco', description: 'No puede salir del disco definido por centro y borde.', refs: 3 },
   { value: 'sameSide', label: 'En el mismo semiplano', description: 'No puede cruzar la recta definida por dos puntos.', refs: 3 },
+  { value: 'insideArea', label: 'En un área', description: 'Mantiene el punto en el interior o en el perímetro de un semiplano, polígono, disco o intersección.', refs: 2 },
   { value: 'reflection', label: 'Reflejo simétrico', description: 'Posiciona un punto o segmento como reflejo respecto de un centro (punto) o eje (recta/segmento).', refs: 2 },
 ];
 
@@ -48,6 +49,12 @@ export function defaultConstraintRefs(model: VisualDiagramModel, kind: VisualCon
   if (kind === 'on') {
     const support = model.elements.find(item => SUPPORT_KINDS.has(item.kind));
     return support ? [targetId, support.id] : [targetId];
+  }
+  if (kind === 'insideArea') {
+    const area = model.elements.find(item => (
+      ['halfPlane', 'polygon', 'circle', 'areaIntersection', 'areaDecomposition', 'grid'].includes(item.kind)
+    ));
+    return area ? [targetId, area.id] : [targetId];
   }
   if (kind === 'reflection') {
     const centerOrAxis = model.points.find(item => item.id !== targetId)

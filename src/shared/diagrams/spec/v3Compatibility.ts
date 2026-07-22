@@ -22,6 +22,7 @@ import type {
   MarkObject,
   PathObject,
   PointObject,
+  AreaObject,
   RegionObject,
 } from './v3';
 import { DIAGRAM_RENDERER_ID, DIAGRAM_SPEC_VERSION } from './types';
@@ -156,8 +157,25 @@ function pathFromV2(element: DiagramElement): PathObject {
     case 'polygon': geometry = { type: 'polygon', points: element.refs as [string, string, string, ...string[]] }; break;
     case 'circle': geometry = { type: 'circle', center: element.refs[0], point: element.refs[1] }; break;
     case 'arc': geometry = { type: 'arc', points: [element.refs[0], element.refs[1], element.refs[2]], direction: props?.clockwise ? 'clockwise' : 'counterclockwise' }; break;
-    case 'functionCurve': geometry = { type: 'function', expression: props?.expression ?? '0', variable: props?.parameter ?? 'x', domain: props?.domain ?? [-5, 5], samples: props?.samples ?? 128 }; break;
-    case 'parametricCurve': geometry = { type: 'parametric', x: props?.xExpression ?? 't', y: props?.yExpression ?? '0', parameter: props?.parameter ?? 't', domain: props?.domain ?? [0, 1], samples: props?.samples ?? 128 }; break;
+    case 'functionCurve': geometry = {
+      type: 'function',
+      expression: props?.expression ?? '0',
+      variable: props?.parameter ?? 'x',
+      domain: props?.domain ?? [-5, 5],
+      samples: props?.samples ?? 64,
+      ...(props?.areaFill ? { areaFill: props.areaFill } : {}),
+      ...(element.refs[0] ? { areaSide: element.refs[0] } : {}),
+    }; break;
+    case 'parametricCurve': geometry = {
+      type: 'parametric',
+      x: props?.xExpression ?? 't',
+      y: props?.yExpression ?? '0',
+      parameter: props?.parameter ?? 't',
+      domain: props?.domain ?? [0, 1],
+      samples: props?.samples ?? 64,
+      ...(props?.areaFill ? { areaFill: props.areaFill } : {}),
+      ...(element.refs[0] ? { areaSide: element.refs[0] } : {}),
+    }; break;
     case 'poincareGeodesic': geometry = { type: 'poincare-geodesic', refs: element.refs as [string, string, string, string] }; break;
     case 'poincareArc': geometry = { type: 'poincare-arc', refs: element.refs as [string, string, string, string] }; break;
     default: geometry = { type: 'dimension', points: [element.refs[0], element.refs[1]], ...(props?.offset !== undefined ? { offset: props.offset } : {}) };
@@ -326,6 +344,30 @@ function regionFromV2(element: DiagramElement): RegionObject {
   };
 }
 
+function areaGeometryFromV2(element: DiagramElement): AreaObject['geometry'] {
+  if (element.kind === 'halfPlane') {
+    return { type: 'half-plane', boundary: [element.refs[0], element.refs[1]], side: element.refs[2] };
+  }
+  return { type: 'intersection', areas: element.refs as [string, string, ...string[]] };
+}
+
+function areaFromV2(element: DiagramElement): AreaObject {
+  return {
+    ...commonFromV2(element),
+    objectType: 'area',
+    ...(element.properties?.visibleWhen ? { visibleWhen: element.properties.visibleWhen } : {}),
+    geometry: areaGeometryFromV2(element),
+    appearance: {
+      ...(styleValue(element.style, 'strokeWidth') !== undefined ? { strokeWidth: styleValue(element.style, 'strokeWidth') } : {}),
+      ...(styleValue(element.style, 'strokeOpacity') !== undefined ? { strokeOpacity: styleValue(element.style, 'strokeOpacity') } : {}),
+      ...(styleValue(element.style, 'fillOpacity') !== undefined ? { fillOpacity: styleValue(element.style, 'fillOpacity') } : {}),
+      ...(styleValue(element.style, 'highlightFillOpacity') !== undefined ? { highlightFillOpacity: styleValue(element.style, 'highlightFillOpacity') } : {}),
+      ...(styleValue(element.style, 'preserveColorOnHighlight') !== undefined ? { preserveColorOnHighlight: styleValue(element.style, 'preserveColorOnHighlight') } : {}),
+    },
+  };
+}
+
+const areaKinds = new Set<DiagramElementKind>(['halfPlane', 'areaIntersection']);
 const pathKinds = new Set<DiagramElementKind>(['segment', 'line', 'ray', 'polygon', 'circle', 'arc', 'functionCurve', 'parametricCurve', 'poincareGeodesic', 'poincareArc', 'baseExtension', 'perpendicular', 'parallel', 'angleBisector', 'dimensionLine']);
 const angleKinds = new Set<DiagramElementKind>(['angle', 'nonReflexAngle', 'rightAngle', 'perpendicularMark']);
 const markKinds = new Set<DiagramElementKind>(['congruenceMark', 'parallelMark', 'measureTicks']);
@@ -337,6 +379,7 @@ function objectFromElement(element: DiagramElement): DiagramObject {
   if (angleKinds.has(element.kind)) return angleFromV2(element);
   if (markKinds.has(element.kind)) return markFromV2(element);
   if (annotationKinds.has(element.kind)) return annotationFromV2(element);
+  if (areaKinds.has(element.kind)) return areaFromV2(element);
   return regionFromV2(element);
 }
 
@@ -358,6 +401,13 @@ function relationFromConstraint(constraint: DiagramConstraint, spec: DiagramSpec
     case 'parallel': return { ...base, type: 'parallel', supports: [[constraint.refs[0], constraint.refs[1]], [constraint.refs[0], constraint.refs[2]]] };
     case 'insideDisk': return { ...base, type: 'inside-disk', point: constraint.refs[0], disk: { center: constraint.refs[1], boundary: constraint.refs[2] } };
     case 'sameSide': return { ...base, type: 'same-half-plane', points: [constraint.refs[0], constraint.refs[1]], boundary: constraint.refs[2] };
+    case 'insideArea': return {
+      ...base,
+      type: 'inside-area',
+      point: constraint.refs[0],
+      area: constraint.refs[1],
+      ...(constraint.areaMembership && constraint.areaMembership !== 'interior' ? { membership: constraint.areaMembership } : {}),
+    };
     case 'reflection': return { ...base, type: 'reflection', refs: [...constraint.refs] };
     case 'expression': return { ...base, type: 'expression', refs: [...constraint.refs], expression: constraint.expression ?? '0', ...(constraint.value !== undefined ? { value: constraint.value } : {}) };
   }
@@ -497,6 +547,9 @@ function pathReferences(object: PathObject): string[] {
   if ('points' in geometry) return [...geometry.points];
   if ('center' in geometry) return [geometry.center, geometry.point];
   if ('refs' in geometry) return [...geometry.refs];
+  if (geometry.type === 'function' || geometry.type === 'parametric') {
+    return geometry.areaSide ? [geometry.areaSide] : [];
+  }
   return [];
 }
 
@@ -508,6 +561,10 @@ export function objectReferences(object: DiagramObject): string[] {
   if (object.objectType === 'path') return pathReferences(object);
   if (object.objectType === 'angle') return [...object.points];
   if (object.objectType === 'region') return [...object.geometry.points];
+  if (object.objectType === 'area') {
+    if (object.geometry.type === 'half-plane') return [...object.geometry.boundary, object.geometry.side];
+    return [...object.geometry.areas];
+  }
   if (object.objectType === 'mark') {
     return object.anchor.type === 'path' ? [object.anchor.path] : [...object.anchor.points];
   }
@@ -561,6 +618,10 @@ function legacyStyle(object: DiagramObject): DiagramVisualStyle | undefined {
     result.highlightVisible = object.appearance.highlightVisible;
   }
   if (object.objectType === 'region') {
+    result.fillOpacity = object.appearance.fillOpacity;
+    result.highlightFillOpacity = object.appearance.highlightFillOpacity;
+  }
+  if (object.objectType === 'area') {
     result.fillOpacity = object.appearance.fillOpacity;
     result.highlightFillOpacity = object.appearance.highlightFillOpacity;
   }
@@ -618,9 +679,11 @@ function pathPropertiesToV2(object: PathObject): DiagramElementProperties | unde
   if (geometry.type === 'arc') properties.clockwise = geometry.direction === 'clockwise';
   if (geometry.type === 'function') Object.assign(properties, {
     expression: geometry.expression, parameter: geometry.variable, domain: geometry.domain, samples: geometry.samples,
+    ...(geometry.areaFill ? { areaFill: geometry.areaFill } : {}),
   });
   if (geometry.type === 'parametric') Object.assign(properties, {
     xExpression: geometry.x, yExpression: geometry.y, parameter: geometry.parameter, domain: geometry.domain, samples: geometry.samples,
+    ...(geometry.areaFill ? { areaFill: geometry.areaFill } : {}),
   });
   if (geometry.type === 'dimension' && geometry.offset !== undefined) properties.offset = geometry.offset;
   if (object.visibleWhen) properties.visibleWhen = object.visibleWhen;
@@ -653,6 +716,19 @@ function angleToElement(object: AngleObject): DiagramElement {
       ...(object.visibleWhen ? { visibleWhen: object.visibleWhen } : {}),
       ...(object.direction ? { clockwise: object.direction === 'clockwise' } : {}),
     },
+    ...(style ? { style } : {}),
+  };
+}
+
+function areaToElement(object: AreaObject): DiagramElement {
+  const style = legacyStyle(object);
+  const kind: DiagramElementKind = object.geometry.type === 'half-plane' ? 'halfPlane' : 'areaIntersection';
+  const refs = object.geometry.type === 'half-plane'
+    ? [...object.geometry.boundary, object.geometry.side]
+    : [...object.geometry.areas];
+  return {
+    ...commonToV2(object), kind, refs,
+    properties: { ...(object.visibleWhen ? { visibleWhen: object.visibleWhen } : {}) },
     ...(style ? { style } : {}),
   };
 }
@@ -713,6 +789,7 @@ function objectToElement(object: Exclude<DiagramObject, PointObject | ControlObj
     case 'path': return pathToElement(object);
     case 'angle': return angleToElement(object);
     case 'region': return regionToElement(object);
+    case 'area': return areaToElement(object);
     case 'mark': return markToElement(object);
     case 'annotation': return annotationToElement(object);
   }
@@ -808,6 +885,12 @@ function relationToConstraint(relation: DiagramRelation, objects: readonly Diagr
       return { ...base, kind: 'insideDisk', refs };
     }
     case 'same-half-plane': return { ...base, kind: 'sameSide', refs: [...relation.points, relation.boundary] };
+    case 'inside-area': return {
+      ...base,
+      kind: 'insideArea',
+      refs: [relation.point, relation.area],
+      ...(relation.membership && relation.membership !== 'interior' ? { areaMembership: relation.membership } : {}),
+    };
     case 'reflection': return { ...base, kind: 'reflection', refs: [...(relation.refs ?? [])] };
     case 'expression': return { ...base, kind: 'expression', refs: [...relation.refs], expression: relation.expression, ...(relation.value !== undefined ? { value: relation.value } : {}) };
   }

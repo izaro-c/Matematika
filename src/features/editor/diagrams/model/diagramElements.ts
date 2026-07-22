@@ -198,6 +198,7 @@ export function generatedElementId(kind: ElementKind, refs: string[], existing: 
   const suffix = refs.map(ref => ref.replace(/^p/, '')).join('');
   const prefixes: Partial<Record<ElementKind, string>> = {
     segment: 'seg', line: 'line', ray: 'ray', circle: 'circle', arc: 'arc', intersection: 'int', midpoint: 'mid',
+    halfPlane: 'half', areaIntersection: 'areaInt',
     perpendicularFoot: 'foot', baseExtension: 'ext', perpendicular: 'perp', parallel: 'par',
     angleBisector: 'bis', angle: 'angle', nonReflexAngle: 'nonReflexAngle', rightAngle: 'rightAngle', parallelMark: 'parallelMark', measureTicks: 'ticks',
   };
@@ -206,7 +207,7 @@ export function generatedElementId(kind: ElementKind, refs: string[], existing: 
 }
 
 export function elementColorForKind(kind: ElementKind): ColorToken {
-  if (kind === 'polygon' || kind === 'areaDecomposition' || kind === 'grid') return 'salvia';
+  if (kind === 'polygon' || kind === 'areaDecomposition' || kind === 'grid' || kind === 'halfPlane' || kind === 'areaIntersection') return 'salvia';
   if (kind === 'intersection' || kind === 'midpoint') return 'terracota';
   if (kind === 'measureTicks') return 'carbon';
   if (kind === 'perpendicularFoot' || kind === 'angle' || kind === 'nonReflexAngle' || kind === 'rightAngle' || kind === 'perpendicularMark' || kind === 'congruenceMark') return 'ocre';
@@ -219,8 +220,8 @@ export function elementColorForKind(kind: ElementKind): ColorToken {
 export function defaultElementProperties(kind: ElementKind): VisualElement['properties'] | undefined {
   switch (kind) {
     case 'intersection': return { restrictToSupports: true };
-    case 'functionCurve': return { expression: 'sin(x)', parameter: 'x', domain: [-5, 5], samples: 128 };
-    case 'parametricCurve': return { xExpression: '3*cos(t)', yExpression: '2*sin(t)', parameter: 't', domain: [0, 2 * Math.PI], samples: 128 };
+    case 'functionCurve': return { expression: 'sin(x)', parameter: 'x', domain: [-5, 5], samples: 64, areaFill: 'none' };
+    case 'parametricCurve': return { xExpression: '3*cos(t)', yExpression: '2*sin(t)', parameter: 't', domain: [0, 2 * Math.PI], samples: 64, areaFill: 'none' };
     case 'congruenceMark':
     case 'parallelMark': return { markCount: 1 };
     case 'measureTicks': return { tickDistance: 2 };

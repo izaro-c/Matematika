@@ -70,8 +70,8 @@ const pathGeometry = z.discriminatedUnion('type', [
   z.object({ type: z.literal('polygon'), points: z.tuple([id, id, id]).rest(id) }).strict(),
   z.object({ type: z.literal('circle'), center: id, point: id }).strict(),
   z.object({ type: z.literal('arc'), points: pointTriple, direction: z.enum(['clockwise', 'counterclockwise']) }).strict(),
-  z.object({ type: z.literal('function'), expression, variable: id, domain: z.tuple([number, number]), samples: z.number().int().min(8).max(2048) }).strict(),
-  z.object({ type: z.literal('parametric'), x: expression, y: expression, parameter: id, domain: z.tuple([number, number]), samples: z.number().int().min(8).max(2048) }).strict(),
+  z.object({ type: z.literal('function'), expression, variable: id, domain: z.tuple([number, number]), samples: z.number().int().min(8).max(2048), areaFill: z.enum(['none', 'interior', 'half-plane']).optional(), areaSide: id.optional() }).strict(),
+  z.object({ type: z.literal('parametric'), x: expression, y: expression, parameter: id, domain: z.tuple([number, number]), samples: z.number().int().min(8).max(2048), areaFill: z.enum(['none', 'interior', 'half-plane']).optional(), areaSide: id.optional() }).strict(),
   z.object({ type: z.literal('poincare-geodesic'), refs: z.tuple([id, id, id, id]) }).strict(),
   z.object({ type: z.literal('poincare-arc'), refs: z.tuple([id, id, id, id]) }).strict(),
   z.object({ type: z.literal('dimension'), points: pair, offset: number.optional() }).strict(),
@@ -91,6 +91,15 @@ const regionObject = z.object({
   ...objectBase, objectType: z.literal('region'), geometry: z.discriminatedUnion('type', [
     z.object({ type: z.literal('area-decomposition'), points: z.tuple([id, id, id]).rest(id), rows: z.number().int().min(1).max(100).optional(), columns: z.number().int().min(1).max(100).optional() }).strict(),
     z.object({ type: z.literal('grid-region'), points: z.tuple([id, id, id, id]), rows: z.number().int().min(1).max(100), columns: z.number().int().min(1).max(100) }).strict(),
+  ]), appearance: z.object({
+    strokeWidth: number.min(0).max(20).optional(), strokeOpacity: number.min(0).max(1).optional(), fillOpacity: number.min(0).max(1).optional(),
+    highlightFillOpacity: number.min(0).max(1).optional(), preserveColorOnHighlight: z.boolean().optional(),
+  }).strict().optional(),
+}).strict();
+const areaObject = z.object({
+  ...objectBase, objectType: z.literal('area'), geometry: z.discriminatedUnion('type', [
+    z.object({ type: z.literal('half-plane'), boundary: pair, side: id }).strict(),
+    z.object({ type: z.literal('intersection'), areas: z.tuple([id, id]).rest(id) }).strict(),
   ]), appearance: z.object({
     strokeWidth: number.min(0).max(20).optional(), strokeOpacity: number.min(0).max(1).optional(), fillOpacity: number.min(0).max(1).optional(),
     highlightFillOpacity: number.min(0).max(1).optional(), preserveColorOnHighlight: z.boolean().optional(),
@@ -137,7 +146,7 @@ const controlObject = z.object({
   ...objectBase, objectType: z.literal('control'), variant: z.literal('slider'), position: z.tuple([number, number]),
   range: z.object({ min: number, max: number, maxExpression: expression.optional(), step: number.positive() }).strict(), value: number,
 }).strict();
-const diagramObject = z.discriminatedUnion('objectType', [pointObject, pathObject, angleObject, regionObject, markObject, annotationObject, controlObject]);
+const diagramObject = z.discriminatedUnion('objectType', [pointObject, pathObject, angleObject, regionObject, areaObject, markObject, annotationObject, controlObject]);
 const relationBase = { id, label: z.string().min(1), enabled: z.boolean() };
 const linearPair = z.union([pair, z.tuple([pair, pair])]);
 const relation = z.discriminatedUnion('type', [
@@ -151,6 +160,7 @@ const relation = z.discriminatedUnion('type', [
   z.object({ ...relationBase, type: z.literal('parallel'), supports: linearPair }).strict(),
   z.object({ ...relationBase, type: z.literal('inside-disk'), point: id, disk: z.union([id, z.object({ center: id, boundary: id }).strict()]) }).strict(),
   z.object({ ...relationBase, type: z.literal('same-half-plane'), points: pair, boundary: id }).strict(),
+  z.object({ ...relationBase, type: z.literal('inside-area'), point: id, area: id, membership: z.enum(['interior', 'boundary']).optional() }).strict(),
   z.object({ ...relationBase, type: z.literal('reflection'), refs: z.array(id).min(2).max(3), centerOrAxis: id.optional(), drivenPoint: id.optional() }).strict(),
   z.object({ ...relationBase, type: z.literal('expression'), refs: z.array(id), expression, value: number.optional() }).strict(),
 ]);
@@ -308,6 +318,18 @@ function validateObject(object: DiagramObject, index: number, validation: Valida
   if (object.objectType === 'point') validatePointObject(object, index, validation, context);
   if (object.objectType === 'path') objectReferences(object).forEach((ref, refIndex) => validation.requirePoint(ref, ['objects', index, 'geometry', refIndex]));
   if (object.objectType === 'angle' || object.objectType === 'region') objectReferences(object).forEach((ref, refIndex) => validation.requirePoint(ref, ['objects', index, refIndex]));
+  if (object.objectType === 'area') {
+    if (object.geometry.type === 'intersection') {
+      object.geometry.areas.forEach((ref, refIndex) => {
+        const target = validation.objectMap.get(ref);
+        if (target?.objectType !== 'area' && target?.objectType !== 'region') {
+          addIssue(context, ['objects', index, 'geometry', 'areas', refIndex], `${ref} debe ser un área.`);
+        }
+      });
+    } else {
+      objectReferences(object).forEach((ref, refIndex) => validation.requirePoint(ref, ['objects', index, refIndex]));
+    }
+  }
   if (object.objectType === 'mark' && object.anchor.type === 'between-points') {
     object.anchor.points.forEach((ref, refIndex) => validation.requirePoint(ref, ['objects', index, 'anchor', 'points', refIndex]));
   }
@@ -354,6 +376,18 @@ function validateRelation(item: DiagramRelation, index: number, validation: Vali
       validation.requirePoint(item.disk.center, ['relations', index, 'disk', 'center']);
       validation.requirePoint(item.disk.boundary, ['relations', index, 'disk', 'boundary']);
     }
+  }
+  if (item.type === 'inside-area') {
+    validation.requirePoint(item.point, ['relations', index, 'point']);
+    const area = validation.objectMap.get(item.area);
+    const isPathArea = area?.objectType === 'path' && (area.geometry.type === 'polygon' || area.geometry.type === 'circle');
+    if (area?.objectType !== 'area' && area?.objectType !== 'region' && !isPathArea) {
+      addIssue(context, ['relations', index, 'area'], `${item.area} debe ser un área.`);
+    }
+  }
+  if (item.type === 'same-half-plane') {
+    item.points.forEach((ref, refIndex) => validation.requirePoint(ref, ['relations', index, 'points', refIndex]));
+    validation.requirePoint(item.boundary, ['relations', index, 'boundary']);
   }
   if (item.type === 'perpendicular' || item.type === 'parallel') validateLinearRelation(item, index, validation);
 }

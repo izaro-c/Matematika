@@ -1,7 +1,11 @@
-import type JXG from 'jsxgraph';
 import type { ThemeColors } from './MathBoard';
+import JXG from 'jsxgraph';
 import type { GeometryOptions, JXGCoord, JXGPolygon, JXGSlider, PointLike, PointSupport } from './MathUtils';
 import { DEFAULT_ANGLE_RADIUS, DEFAULT_RIGHT_ANGLE_RADIUS } from '../spec';
+import {
+  halfPlaneViewportPolygon,
+  type Coordinates,
+} from '../spec/areaGeometry';
 
 const diagramFontStyle = 'font-family: var(--font-diagram-family);';
 
@@ -222,31 +226,109 @@ export function createArc(
 
 export function createFunctionCurve(
   board: JXG.Board,
-  evaluate: (x: number) => number,
-  domain: [number, number],
+  points: Array<{ x: number; y: number }>,
   options: GeometryOptions = {},
   theme: ThemeColors,
 ): JXG.Curve {
-  return board.create('functiongraph', [evaluate, domain[0], domain[1]], {
-    strokeColor: theme.pavo,
-    strokeWidth: 2,
-    ...options,
-  } as never) as JXG.Curve;
+  return createSampledCurve(board, points, options, theme);
 }
 
 export function createParametricCurve(
   board: JXG.Board,
-  evaluateX: (t: number) => number,
-  evaluateY: (t: number) => number,
-  domain: [number, number],
+  points: Array<{ x: number; y: number }>,
   options: GeometryOptions = {},
   theme: ThemeColors,
 ): JXG.Curve {
-  return board.create('curve', [evaluateX, evaluateY, domain[0], domain[1]], {
+  return createSampledCurve(board, points, options, theme);
+}
+
+export function createSampledCurve(
+  board: JXG.Board,
+  points: Array<{ x: number; y: number }>,
+  options: GeometryOptions = {},
+  theme: ThemeColors,
+): JXG.Curve {
+  const safePoints = points.length >= 2 ? points : [{ x: 0, y: 0 }, { x: 0, y: 0 }];
+  const xs = safePoints.map(point => point.x);
+  const ys = safePoints.map(point => point.y);
+  const curve = board.create('curve', [xs, ys], {
     strokeColor: theme.pavo,
     strokeWidth: 2,
+    curveType: 'plot',
     ...options,
   } as never) as JXG.Curve;
+  (curve as { __matematikaSamplePoints?: Array<{ x: number; y: number }> }).__matematikaSamplePoints = safePoints;
+  return curve;
+}
+
+export function subsamplePolygonPoints(
+  points: readonly Coordinates[],
+  targetCount: number,
+): Coordinates[] {
+  if (points.length <= targetCount) return [...points];
+  const output: Coordinates[] = [];
+  for (let index = 0; index < targetCount; index += 1) {
+    const position = index * (points.length - 1) / Math.max(targetCount - 1, 1);
+    const lower = Math.floor(position);
+    const upper = Math.min(points.length - 1, lower + 1);
+    const amount = position - lower;
+    const start = points[lower];
+    const end = points[upper];
+    output.push({
+      x: start.x + (end.x - start.x) * amount,
+      y: start.y + (end.y - start.y) * amount,
+    });
+  }
+  return output;
+}
+
+export function updateStaticAreaPolygon(
+  polygon: JXG.Polygon | null | undefined,
+  points: Array<{ x: number; y: number }>,
+): void {
+  if (!polygon?.vertices || points.length < 3) return;
+  const vertices = polygon.vertices as JXG.Point[];
+  const sampled = subsamplePolygonPoints(points, vertices.length);
+  sampled.forEach((point, index) => {
+    vertices[index]?.setPosition(JXG.COORDS_BY_USER, [point.x, point.y]);
+  });
+}
+export function updateSampledCurve(
+  curve: JXG.Curve | undefined,
+  points: Array<{ x: number; y: number }>,
+): void {
+  if (!curve || points.length < 2) return;
+  const element = curve as JXG.Curve & {
+    dataX?: number[];
+    dataY?: number[];
+    fullUpdate?: () => void;
+    __matematikaSamplePoints?: Array<{ x: number; y: number }>;
+  };
+  element.dataX = points.map(point => point.x);
+  element.dataY = points.map(point => point.y);
+  element.__matematikaSamplePoints = points;
+  if (typeof element.fullUpdate === 'function') element.fullUpdate();
+}
+
+export function createStaticAreaPolygon(
+  board: JXG.Board,
+  points: Array<{ x: number; y: number }>,
+  options: GeometryOptions = {},
+  theme: ThemeColors,
+  maxVertices = 24,
+): JXGPolygon | null {
+  if (points.length < 3) return null;
+  const budget = Math.min(maxVertices, Math.max(12, points.length));
+  const vertexPoints = subsamplePolygonPoints(points, budget);
+  const polygonPoints = vertexPoints.map(point => board.create('point', [point.x, point.y], { visible: false } as never) as JXG.Point);
+  return createPolygon(board, polygonPoints, {
+    fillColor: theme.salvia,
+    fillOpacity: 0.12,
+    borders: { strokeColor: theme.salvia, strokeWidth: 1.2, strokeOpacity: 0.45 },
+    fixed: true,
+    hasInnerPoints: true,
+    ...options,
+  }, theme);
 }
 
 function poincareCircle(center: PointLike, boundary: PointLike, a: PointLike, b: PointLike) {
@@ -292,7 +374,8 @@ export function createPoincareArc(
     const angle = start + normalizedArcDelta(start, end) * t;
     return { x: circle.cx + circle.geodesicRadius * Math.cos(angle), y: circle.cy + circle.geodesicRadius * Math.sin(angle) };
   };
-  return createParametricCurve(board, t => coordinates(t).x, t => coordinates(t).y, [0, 1], options, theme);
+  const sampled = Array.from({ length: 65 }, (_, index) => coordinates(index / 64));
+  return createSampledCurve(board, sampled, options, theme);
 }
 
 export function createPoincareGeodesic(
@@ -332,10 +415,19 @@ export function createPoincareGeodesic(
     const angle = start + delta * t;
     return { x: circle.cx + circle.geodesicRadius * Math.cos(angle), y: circle.cy + circle.geodesicRadius * Math.sin(angle) };
   };
-  return createParametricCurve(board, t => coordinates(t).x, t => coordinates(t).y, [0, 1], options, theme);
+  const sampled = Array.from({ length: 65 }, (_, index) => coordinates(index / 64));
+  return createSampledCurve(board, sampled, options, theme);
 }
 
-function createComposite(
+export type CurveAreaComposite = CompositeElement & {
+  __matematikaCurveArea?: {
+    fills: JXGPolygon[];
+    curve: JXG.Curve;
+    lastAreaSignature?: string;
+  };
+};
+
+export function createComposite(
   elements: (JXG.GeometryElement | CompositeElement | undefined)[],
   markLayout?: MarkLayout,
 ): CompositeElement {
@@ -347,6 +439,46 @@ function createComposite(
     elements,
     ...(markLayout ? { __matematikaMarkLayout: markLayout } : {}),
   };
+}
+
+export function createCurveAreaComposite(
+  fills: JXGPolygon | JXGPolygon[] | null | undefined,
+  curve: JXG.Curve,
+): JXG.Curve | CurveAreaComposite {
+  const fillList = (Array.isArray(fills) ? fills : fills ? [fills] : []).filter(Boolean);
+  if (fillList.length === 0) return curve;
+  const composite = createComposite([...fillList, curve]) as CurveAreaComposite;
+  composite.__matematikaCurveArea = { fills: fillList, curve };
+  return composite;
+}
+
+export function createCurveAreaFills(
+  board: JXG.Board,
+  resolvePolygons: () => Coordinates[][],
+  options: GeometryOptions = {},
+  theme: ThemeColors,
+): JXGPolygon[] {
+  const polygons = resolvePolygons().filter(polygon => polygon.length >= 3);
+  if (polygons.length === 0) return [];
+  return polygons.map(polygon => createStaticAreaPolygon(board, polygon, {
+    fillOpacity: 0.12,
+    borders: { visible: false, strokeOpacity: 0 },
+    fixed: true,
+    ...options,
+  }, theme, Math.min(96, Math.max(32, polygon.length)))).filter((polygon): polygon is JXGPolygon => Boolean(polygon));
+}
+
+export function createCurveAreaFill(
+  board: JXG.Board,
+  resolvePolygon: () => Coordinates[],
+  options: GeometryOptions = {},
+  theme: ThemeColors,
+): JXGPolygon | null {
+  const fills = createCurveAreaFills(board, () => {
+    const polygon = resolvePolygon();
+    return polygon.length >= 3 ? [polygon] : [];
+  }, options, theme);
+  return fills[0] ?? null;
 }
 
 export function createCongruenceMark(
@@ -825,5 +957,105 @@ export function createRightAngle(
     strokeColor: theme.carbon,
     ...options,
   } as never) as JXG.Angle;
+}
+
+function pointCoords(point: PointSupport): Coordinates {
+  if (typeof point === 'string' || Array.isArray(point)) return { x: 0, y: 0 };
+  return { x: point.X(), y: point.Y() };
+}
+
+export const CURVE_AREA_MAX_VERTICES = 64;
+
+export function createDynamicAreaPolygon(
+  board: JXG.Board,
+  resolvePolygon: () => Coordinates[],
+  maxVertices = 12,
+  options: GeometryOptions = {},
+  theme: ThemeColors,
+): JXGPolygon {
+  const polygonPoints = Array.from({ length: maxVertices }, (_, index) => board.create('point', [
+    () => {
+      const vertices = resolvePolygon();
+      if (vertices.length < 3) return 0;
+      const effectiveIndex = Math.min(index, vertices.length - 1);
+      return vertices[effectiveIndex].x;
+    },
+    () => {
+      const vertices = resolvePolygon();
+      if (vertices.length < 3) return 0;
+      const effectiveIndex = Math.min(index, vertices.length - 1);
+      return vertices[effectiveIndex].y;
+    },
+  ], { visible: false } as never) as JXG.Point);
+  return createPolygon(board, polygonPoints, {
+    fillColor: theme.salvia,
+    fillOpacity: 0.12,
+    borders: { strokeColor: theme.salvia, strokeWidth: 1.2, strokeOpacity: 0.45 },
+    fixed: true,
+    ...options,
+  }, theme);
+}
+
+export function createHalfPlaneFill(
+  board: JXG.Board,
+  boundary: [PointSupport, PointSupport],
+  side: PointSupport,
+  bounds: [number, number, number, number] | (() => [number, number, number, number]),
+  options: GeometryOptions = {},
+  theme: ThemeColors,
+): JXGPolygon {
+  const resolveBounds = typeof bounds === 'function' ? bounds : () => bounds;
+  return createDynamicAreaPolygon(board, () => halfPlaneViewportPolygon(
+    pointCoords(boundary[0]),
+    pointCoords(boundary[1]),
+    pointCoords(side),
+    resolveBounds(),
+  ), 12, options, theme);
+}
+
+export type AreaIntersectionComposite = CompositeElement & {
+  __matematikaAreaIntersection?: {
+    fills: JXGPolygon[];
+    lastSignature?: string;
+  };
+};
+
+export function createAreaIntersectionFills(
+  board: JXG.Board,
+  resolvePolygons: () => Coordinates[][],
+  options: GeometryOptions = {},
+  theme: ThemeColors,
+): JXGPolygon[] {
+  const polygons = resolvePolygons().filter(polygon => polygon.length >= 3);
+  if (polygons.length === 0) return [];
+  return polygons.map(polygon => createStaticAreaPolygon(board, polygon, {
+    fillOpacity: 0.14,
+    borders: { strokeColor: theme.salvia, strokeWidth: 1.2, strokeOpacity: 0.5 },
+    fixed: true,
+    ...options,
+  }, theme, Math.min(96, Math.max(32, polygon.length)))).filter((polygon): polygon is JXGPolygon => Boolean(polygon));
+}
+
+export function createAreaIntersectionComposite(
+  fills: JXGPolygon[],
+): JXGPolygon | AreaIntersectionComposite | null {
+  if (fills.length === 0) return null;
+  if (fills.length === 1) return fills[0];
+  const composite = createComposite(fills) as AreaIntersectionComposite;
+  composite.__matematikaAreaIntersection = { fills };
+  return composite;
+}
+
+export function createAreaIntersectionFill(
+  board: JXG.Board,
+  resolvePolygon: () => Coordinates[],
+  options: GeometryOptions = {},
+  theme: ThemeColors,
+): JXGPolygon {
+  const fills = createAreaIntersectionFills(board, () => {
+    const polygon = resolvePolygon();
+    return polygon.length >= 3 ? [polygon] : [];
+  }, options, theme);
+  return createAreaIntersectionComposite(fills) as JXGPolygon;
 }
 

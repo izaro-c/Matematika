@@ -16,7 +16,7 @@ import type {
 } from './types';
 import { DIAGRAM_RENDERER_ID, DIAGRAM_SPEC_VERSION } from './types';
 
-export type DiagramObjectType = 'point' | 'path' | 'angle' | 'region' | 'mark' | 'annotation' | 'control';
+export type DiagramObjectType = 'point' | 'path' | 'angle' | 'region' | 'area' | 'mark' | 'annotation' | 'control';
 
 export interface DiagramObjectBase {
   id: string;
@@ -90,8 +90,8 @@ export type PathGeometry =
   | { type: 'polygon'; points: [string, string, string, ...string[]] }
   | { type: 'circle'; center: string; point: string }
   | { type: 'arc'; points: [string, string, string]; direction: 'clockwise' | 'counterclockwise' }
-  | { type: 'function'; expression: string; variable: string; domain: [number, number]; samples: number }
-  | { type: 'parametric'; x: string; y: string; parameter: string; domain: [number, number]; samples: number }
+  | { type: 'function'; expression: string; variable: string; domain: [number, number]; samples: number; areaFill?: 'none' | 'interior' | 'half-plane'; areaSide?: string }
+  | { type: 'parametric'; x: string; y: string; parameter: string; domain: [number, number]; samples: number; areaFill?: 'none' | 'interior' | 'half-plane'; areaSide?: string }
   | { type: 'poincare-geodesic'; refs: [string, string, string, string] }
   | { type: 'poincare-arc'; refs: [string, string, string, string] }
   | { type: 'dimension'; points: [string, string]; offset?: number };
@@ -154,6 +154,20 @@ export interface RegionObject extends DiagramObjectBase {
   };
 }
 
+export interface AreaObject extends DiagramObjectBase {
+  objectType: 'area';
+  geometry:
+    | { type: 'half-plane'; boundary: [string, string]; side: string }
+    | { type: 'intersection'; areas: [string, string, ...string[]] };
+  appearance?: {
+    strokeWidth?: number;
+    strokeOpacity?: number;
+    fillOpacity?: number;
+    highlightFillOpacity?: number;
+    preserveColorOnHighlight?: boolean;
+  };
+}
+
 export interface MarkObject extends DiagramObjectBase {
   objectType: 'mark';
   variant: 'congruence' | 'parallel' | 'graduation';
@@ -206,7 +220,7 @@ export interface ControlObject extends DiagramObjectBase {
   value: number;
 }
 
-export type DiagramObject = PointObject | PathObject | AngleObject | RegionObject | MarkObject | AnnotationObject | ControlObject;
+export type DiagramObject = PointObject | PathObject | AngleObject | RegionObject | AreaObject | MarkObject | AnnotationObject | ControlObject;
 
 export type DiagramRelation =
   | { id: string; label: string; type: 'coincident'; points: [string, string]; enabled: boolean }
@@ -219,6 +233,7 @@ export type DiagramRelation =
   | { id: string; label: string; type: 'parallel'; supports: [string, string] | [[string, string], [string, string]]; enabled: boolean }
   | { id: string; label: string; type: 'inside-disk'; point: string; disk: string | { center: string; boundary: string }; enabled: boolean }
   | { id: string; label: string; type: 'same-half-plane'; points: [string, string]; boundary: string; enabled: boolean }
+  | { id: string; label: string; type: 'inside-area'; point: string; area: string; membership?: 'interior' | 'boundary'; enabled: boolean }
   | { id: string; label: string; type: 'reflection'; refs: string[]; centerOrAxis?: string; drivenPoint?: string; enabled: boolean }
   | { id: string; label: string; type: 'expression'; refs: string[]; expression: string; value?: number; enabled: boolean };
 

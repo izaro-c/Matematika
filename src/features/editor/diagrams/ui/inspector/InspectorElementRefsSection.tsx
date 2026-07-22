@@ -26,12 +26,18 @@ export const InspectorElementRefsSection: React.FC<InspectorElementRefsSectionPr
 }) => {
   if (activeInspectorSection !== 'geometry') return null;
 
+  const isCurveHalfPlane = ['functionCurve', 'parametricCurve'].includes(selectedElement.kind)
+    && selectedElement.properties?.areaFill === 'half-plane';
+  const renderedRefs = isCurveHalfPlane
+    ? [selectedElement.refs[0] ?? '']
+    : selectedElement.refs;
+
   return (
     <>
-      {selectedElement.refs.length > 0 && selectedElement.kind !== 'infoPanel' && selectedElement.kind !== 'label' && (
+      {(renderedRefs.length > 0 || isCurveHalfPlane) && selectedElement.kind !== 'infoPanel' && selectedElement.kind !== 'label' && (
         <fieldset className="space-y-1 rounded border border-carbon/10 p-2">
           <legend className="px-1 text-[10px] font-bold uppercase tracking-wider text-carbon/45">Referencias geométricas</legend>
-          {selectedElement.refs.map((ref, index) => {
+          {renderedRefs.map((ref, index) => {
             const referenceLabel = toolReferenceLabel(selectedElement.kind, index);
             return (
               <label key={`${selectedElement.id}-ref-${index}`} className="block text-[10px] font-bold text-carbon/60">
@@ -40,8 +46,18 @@ export const InspectorElementRefsSection: React.FC<InspectorElementRefsSectionPr
                   aria-label={`${referenceLabel} de ${KIND_LABELS[selectedElement.kind]}`}
                   className="w-full rounded border border-carbon/15 bg-lienzo p-1.5 font-mono text-xs"
                   value={ref}
-                  onChange={(event) => handleElementChange({ refs: selectedElement.refs.map((value, refIndex) => refIndex === index ? event.target.value : value) })}
+                  onChange={(event) => {
+                    const nextRef = event.target.value;
+                    if (isCurveHalfPlane) {
+                      handleElementChange({ refs: nextRef ? [nextRef] : [] });
+                      return;
+                    }
+                    handleElementChange({
+                      refs: selectedElement.refs.map((value, refIndex) => refIndex === index ? nextRef : value),
+                    });
+                  }}
                 >
+                  {isCurveHalfPlane && <option value="">— Elegir punto —</option>}
                   {elementReferenceCandidates(model, selectedElement, index).map(item => (
                     <option key={item.id} value={item.id}>{item.label} ({item.id})</option>
                   ))}
@@ -68,6 +84,35 @@ export const InspectorElementRefsSection: React.FC<InspectorElementRefsSectionPr
                 onClick={() => handleElementChange({ refs: selectedElement.refs.slice(0, -1) })}
               >
                 − Último vértice
+              </button>
+            </div>
+          )}
+          {selectedElement.kind === 'areaIntersection' && (
+            <div className="flex gap-1 pt-1">
+              <button
+                type="button"
+                className="flex-1 rounded border border-carbon/15 px-2 py-1 text-[10px] font-bold"
+                onClick={() => {
+                  const candidate = model.elements.find(item => (
+                    ['halfPlane', 'polygon', 'circle', 'areaIntersection', 'areaDecomposition', 'grid', 'functionCurve', 'parametricCurve'].includes(item.kind)
+                    && (['functionCurve', 'parametricCurve'].includes(item.kind)
+                      ? item.properties?.areaFill && item.properties.areaFill !== 'none'
+                      : true)
+                    && !selectedElement.refs.includes(item.id)
+                    && item.id !== selectedElement.id
+                  ));
+                  if (candidate) handleElementChange({ refs: [...selectedElement.refs, candidate.id] });
+                }}
+              >
+                + Área
+              </button>
+              <button
+                type="button"
+                disabled={selectedElement.refs.length <= 2}
+                className="flex-1 rounded border border-carbon/15 px-2 py-1 text-[10px] font-bold disabled:opacity-35"
+                onClick={() => handleElementChange({ refs: selectedElement.refs.slice(0, -1) })}
+              >
+                − Última área
               </button>
             </div>
           )}

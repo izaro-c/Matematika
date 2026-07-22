@@ -76,7 +76,7 @@ describe('DiagramSpec v3 semantic contract', () => {
       'segment', 'line', 'ray', 'polygon', 'circle', 'arc', 'functionCurve', 'parametricCurve', 'poincareGeodesic', 'poincareArc',
       'intersection', 'midpoint', 'perpendicularFoot', 'baseExtension', 'perpendicular', 'parallel', 'angleBisector', 'angle', 'nonReflexAngle',
       'rightAngle', 'congruenceMark', 'parallelMark', 'measureTicks', 'perpendicularMark', 'dimensionLine', 'measurement', 'grid',
-      'areaDecomposition', 'text', 'label', 'formula', 'infoPanel',
+      'areaDecomposition', 'halfPlane', 'areaIntersection', 'text', 'label', 'formula', 'infoPanel',
     ];
     kinds.forEach(kind => expect(referenceSlotsForLegacyKind(kind), kind).toBeDefined());
   });

@@ -31,11 +31,8 @@ function sampleGeodesic(model: DiagramSpecV2, elementId: 'lineM' | 'lineN') {
     {},
     {} as never,
   );
-  const [xAt, yAt] = curveArgs as [(t: number) => number, (t: number) => number];
-  return Array.from({ length: 101 }, (_, index) => {
-    const t = index / 100;
-    return { x: xAt(t), y: yAt(t) };
-  });
+  const [xs, ys] = curveArgs as [number[], number[]];
+  return xs.map((x, index) => ({ x, y: ys[index] }));
 }
 
 describe('HyperbolicParallel', () => {

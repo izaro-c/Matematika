@@ -1,7 +1,7 @@
 import type { DiagramElement, DiagramElementKind, DiagramPoint, DiagramSceneItem, DiagramSpecV2 } from './types';
 import type { DiagramObject } from './v3';
 
-export type DiagramCapability = 'point' | 'linear-support' | 'support' | 'segment' | 'circle' | 'angle' | 'path' | 'measurable' | 'annotatable' | 'control';
+export type DiagramCapability = 'point' | 'linear-support' | 'support' | 'segment' | 'circle' | 'angle' | 'path' | 'area' | 'measurable' | 'annotatable' | 'control';
 
 export interface DiagramReferenceSlot {
   key: string;
@@ -9,6 +9,8 @@ export interface DiagramReferenceSlot {
   capability: DiagramCapability;
   optional?: boolean;
   repeatable?: boolean;
+  /** Mínimo de slots repetibles exigidos además de los fijos (por defecto 2). */
+  minimumRepeatable?: number;
 }
 
 const pointSlot = (key: string, label: string): DiagramReferenceSlot => ({ key, label, capability: 'point' });
@@ -17,10 +19,11 @@ const legacySlots: Record<DiagramElementKind, readonly DiagramReferenceSlot[]> =
   segment: [pointSlot('start', 'Extremo inicial'), pointSlot('end', 'Extremo final')],
   line: [pointSlot('first', 'Primer punto'), pointSlot('second', 'Segundo punto')],
   ray: [pointSlot('origin', 'Origen'), pointSlot('direction', 'Punto de dirección')],
-  polygon: [pointSlot('vertex-1', 'Primer vértice'), { ...pointSlot('vertex', 'Vértice'), repeatable: true }],
+  polygon: [pointSlot('vertex-1', 'Primer vértice'), { ...pointSlot('vertex', 'Vértice'), repeatable: true, minimumRepeatable: 2 }],
   circle: [pointSlot('center', 'Centro'), pointSlot('radius-point', 'Punto de la circunferencia')],
   arc: [pointSlot('center', 'Centro'), pointSlot('start', 'Inicio'), pointSlot('end', 'Final')],
-  functionCurve: [], parametricCurve: [],
+  functionCurve: [{ ...pointSlot('side', 'Punto del semiplano'), optional: true }],
+  parametricCurve: [{ ...pointSlot('side', 'Punto del semiplano'), optional: true }],
   poincareGeodesic: [pointSlot('boundary-1', 'Primer punto de frontera'), pointSlot('boundary-2', 'Segundo punto de frontera'), pointSlot('start', 'Primer extremo'), pointSlot('end', 'Segundo extremo')],
   poincareArc: [pointSlot('boundary-1', 'Primer punto de frontera'), pointSlot('boundary-2', 'Segundo punto de frontera'), pointSlot('start', 'Inicio'), pointSlot('end', 'Final')],
   intersection: [{ key: 'support-1', label: 'Primer soporte', capability: 'linear-support' }, { key: 'support-2', label: 'Segundo soporte', capability: 'linear-support' }],
@@ -40,7 +43,13 @@ const legacySlots: Record<DiagramElementKind, readonly DiagramReferenceSlot[]> =
   dimensionLine: [pointSlot('start', 'Primer extremo'), pointSlot('end', 'Segundo extremo')],
   measurement: [pointSlot('start', 'Primer punto'), pointSlot('end', 'Segundo punto')],
   grid: [pointSlot('corner-1', 'Primera esquina'), pointSlot('corner-2', 'Segunda esquina'), pointSlot('corner-3', 'Tercera esquina'), pointSlot('corner-4', 'Cuarta esquina')],
-  areaDecomposition: [pointSlot('vertex-1', 'Primer vértice'), { ...pointSlot('vertex', 'Vértice'), repeatable: true }],
+  areaDecomposition: [pointSlot('vertex-1', 'Primer vértice'), { ...pointSlot('vertex', 'Vértice'), repeatable: true, minimumRepeatable: 2 }],
+  halfPlane: [pointSlot('boundary-1', 'Primer punto de la frontera'), pointSlot('boundary-2', 'Segundo punto de la frontera'), pointSlot('side', 'Punto del semiplano')],
+  areaIntersection: [
+    { key: 'area-1', label: 'Primera área', capability: 'area' },
+    { key: 'area-2', label: 'Segunda área', capability: 'area' },
+    { key: 'area', label: 'Área adicional', capability: 'area', repeatable: true, optional: true, minimumRepeatable: 0 },
+  ],
   text: [{ key: 'anchor', label: 'Anclaje', capability: 'point' }],
   label: [{ key: 'anchor', label: 'Objeto etiquetado', capability: 'annotatable' }],
   formula: [{ key: 'anchor', label: 'Anclaje', capability: 'point' }],
@@ -48,7 +57,7 @@ const legacySlots: Record<DiagramElementKind, readonly DiagramReferenceSlot[]> =
 };
 
 export function referenceSlotsForLegacyKind(kind: DiagramElementKind): readonly DiagramReferenceSlot[] {
-  return legacySlots[kind];
+  return legacySlots[kind] ?? [];
 }
 
 export function legacyElementCapabilities(kind: DiagramElementKind): ReadonlySet<DiagramCapability> {
@@ -60,6 +69,9 @@ export function legacyElementCapabilities(kind: DiagramElementKind): ReadonlySet
   if (kind === 'segment') capabilities.add('segment');
   if (kind === 'circle') capabilities.add('circle');
   if (['angle', 'nonReflexAngle', 'rightAngle', 'perpendicularMark'].includes(kind)) capabilities.add('angle');
+  if (['grid', 'areaDecomposition', 'halfPlane', 'areaIntersection'].includes(kind)) capabilities.add('area');
+  if (kind === 'polygon' || kind === 'circle') capabilities.add('area');
+  if (['functionCurve', 'parametricCurve'].includes(kind)) capabilities.add('area');
   if (['segment', 'circle', 'angle', 'nonReflexAngle', 'measurement'].includes(kind)) capabilities.add('measurable');
   return capabilities;
 }
@@ -84,9 +96,11 @@ export function objectCapabilities(object: DiagramObject): ReadonlySet<DiagramCa
     if (['segment', 'line', 'ray'].includes(object.geometry.type)) capabilities.add('linear-support');
     if (object.geometry.type === 'segment') capabilities.add('segment');
     if (object.geometry.type === 'circle') capabilities.add('circle');
+    if (object.geometry.type === 'polygon' || object.geometry.type === 'circle') capabilities.add('area');
     if (['segment', 'circle'].includes(object.geometry.type)) capabilities.add('measurable');
   }
   if (object.objectType === 'angle') { capabilities.add('angle'); capabilities.add('measurable'); }
+  if (object.objectType === 'region' || object.objectType === 'area') capabilities.add('area');
   if (object.objectType === 'control') { capabilities.add('control'); capabilities.add('measurable'); }
   return capabilities;
 }

@@ -74,6 +74,8 @@ export const ELEMENT_INSPECTOR_CAPABILITIES = {
   measurement: annotation('measurement'),
   grid: { ...line, attachedLabel: false },
   areaDecomposition: { ...line, fill: true },
+  halfPlane: { ...line, fill: true, dashed: false, attachedLabel: false },
+  areaIntersection: { ...line, fill: true, dashed: false, attachedLabel: false },
   text: annotation('text'),
   label: annotation('label'),
   formula: annotation('formula'),

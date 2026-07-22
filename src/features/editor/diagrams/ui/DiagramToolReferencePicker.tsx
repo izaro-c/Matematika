@@ -31,6 +31,7 @@ export const DiagramToolReferencePicker: React.FC<DiagramToolReferencePickerProp
   let candidateKind = 'punto';
   if (tool === 'intersection') candidateKind = 'soporte';
   if (tool === 'measureTicks') candidateKind = 'segmento';
+  if (tool === 'areaIntersection') candidateKind = 'área';
 
   return (
     <section className="rounded border border-pavo/20 bg-pavo/5 p-3" aria-labelledby="manual-reference-title">
@@ -42,6 +43,7 @@ export const DiagramToolReferencePicker: React.FC<DiagramToolReferencePickerProp
           <p className="mt-1 text-[10px] leading-relaxed text-carbon/55">
             Alternativa al clic: asigne cada referencia y cree {KIND_LABELS[tool].toLocaleLowerCase()} cuando estén completas.
             {tool === 'polygon' && ' Puede añadir tantos vértices como necesite.'}
+            {tool === 'areaIntersection' && ' Puede añadir más de dos áreas si lo necesita.'}
           </p>
         </div>
         <span className="rounded bg-lienzo px-2 py-1 font-mono text-[9px] text-carbon/50">
@@ -94,6 +96,26 @@ export const DiagramToolReferencePicker: React.FC<DiagramToolReferencePickerProp
             className="rounded border border-carbon/15 bg-lienzo px-2 py-1 text-[10px] font-bold text-carbon/65 hover:bg-carbon/5 disabled:opacity-35"
           >
             Quitar último vértice
+          </button>
+        </div>
+      )}
+
+      {tool === 'areaIntersection' && (
+        <div className="mt-2 flex flex-wrap gap-2">
+          <button
+            type="button"
+            onClick={() => onRefsChange([...normalizedRefs, ''])}
+            className="rounded border border-carbon/15 bg-lienzo px-2 py-1 text-[10px] font-bold text-carbon/65 hover:bg-carbon/5"
+          >
+            + Añadir área
+          </button>
+          <button
+            type="button"
+            disabled={normalizedRefs.length <= 2}
+            onClick={() => onRefsChange(normalizedRefs.slice(0, -1))}
+            className="rounded border border-carbon/15 bg-lienzo px-2 py-1 text-[10px] font-bold text-carbon/65 hover:bg-carbon/5 disabled:opacity-35"
+          >
+            Quitar última área
           </button>
         </div>
       )}

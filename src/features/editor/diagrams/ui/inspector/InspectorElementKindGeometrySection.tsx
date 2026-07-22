@@ -3,7 +3,7 @@ import type { VisualDiagramModel, VisualElement } from '../../model/types';
 import { DiagramAnnotationPositionEditor } from '../DiagramAnnotationPositionEditor';
 import { DiagramExpressionField } from '../DiagramExpressionField';
 import type { InspectorHandlers } from './useInspectorHandlers';
-import { curveParameter } from './inspectorUtils';
+import { curveParameter, elementReferenceCandidates } from './inspectorUtils';
 import type { InspectorSection } from './inspectorUtils';
 
 interface InspectorElementKindGeometrySectionProps {
@@ -17,7 +17,7 @@ export const InspectorElementKindGeometrySection: React.FC<InspectorElementKindG
   model,
   element: selectedElement,
   activeSection: activeInspectorSection,
-  handlers: { handleElementPropertiesChange, handleElementStyleChange },
+  handlers: { handleElementChange, handleElementPropertiesChange, handleElementStyleChange },
 }) => {
   if (activeInspectorSection !== 'geometry') return null;
 
@@ -72,6 +72,99 @@ export const InspectorElementKindGeometrySection: React.FC<InspectorElementKindG
           <DiagramExpressionField model={model} label="x(t)" ariaLabel="Expresión paramétrica x" value={selectedElement.properties?.xExpression || ''} onChange={value => handleElementPropertiesChange({ xExpression: value })} parameter={selectedElement.properties?.parameter ?? 't'} />
           <DiagramExpressionField model={model} label="y(t)" ariaLabel="Expresión paramétrica y" value={selectedElement.properties?.yExpression || ''} onChange={value => handleElementPropertiesChange({ yExpression: value })} parameter={selectedElement.properties?.parameter ?? 't'} />
         </div>
+      )}
+
+      {selectedElement.kind === 'functionCurve' && (
+        <fieldset className="grid grid-cols-1 gap-2 rounded border border-carbon/10 p-2">
+          <legend className="px-1 text-[10px] font-bold uppercase tracking-wider text-carbon/45">Área</legend>
+          <label className="text-xs font-bold text-carbon">
+            Relleno de área
+            <select
+              aria-label="Modo de relleno de área de la gráfica"
+              className="mt-1 w-full rounded border border-carbon/15 bg-lienzo p-1.5 text-xs"
+              value={selectedElement.properties?.areaFill === 'half-plane' ? 'half-plane' : 'none'}
+              onChange={event => {
+                const areaFill = event.target.value as 'none' | 'half-plane';
+                handleElementPropertiesChange({ areaFill });
+                if (areaFill !== 'half-plane' && selectedElement.refs.length > 0) {
+                  handleElementChange({ refs: [] });
+                }
+              }}
+            >
+              <option value="none">Sin relleno</option>
+              <option value="half-plane">Semiplano acotado por la curva</option>
+            </select>
+          </label>
+          {selectedElement.properties?.areaFill === 'half-plane' && (
+            <label className="text-xs font-bold text-carbon">
+              Punto del semiplano
+              <select
+                aria-label="Punto que indica el lado del semiplano"
+                className="mt-1 w-full rounded border border-carbon/15 bg-lienzo p-1.5 font-mono text-xs"
+                value={selectedElement.refs[0] ?? ''}
+                onChange={event => {
+                  const nextRef = event.target.value;
+                  handleElementChange({ refs: nextRef ? [nextRef] : [] });
+                }}
+              >
+                <option value="">— Elegir punto —</option>
+                {elementReferenceCandidates(model, selectedElement, 0).map(item => (
+                  <option key={item.id} value={item.id}>{item.label} ({item.id})</option>
+                ))}
+              </select>
+            </label>
+          )}
+          <p className="text-[10px] leading-relaxed text-carbon/45">
+            El semiplano usa la gráfica como frontera entre los extremos del dominio y requiere un punto que indique el lado a rellenar.
+          </p>
+        </fieldset>
+      )}
+
+      {selectedElement.kind === 'parametricCurve' && (
+        <fieldset className="grid grid-cols-1 gap-2 rounded border border-carbon/10 p-2">
+          <legend className="px-1 text-[10px] font-bold uppercase tracking-wider text-carbon/45">Área</legend>
+          <label className="text-xs font-bold text-carbon">
+            Relleno de área
+            <select
+              aria-label="Modo de relleno de área de la curva"
+              className="mt-1 w-full rounded border border-carbon/15 bg-lienzo p-1.5 text-xs"
+              value={selectedElement.properties?.areaFill ?? 'none'}
+              onChange={event => {
+                const areaFill = event.target.value as 'none' | 'interior' | 'half-plane';
+                handleElementPropertiesChange({ areaFill });
+                if (areaFill !== 'half-plane' && selectedElement.refs.length > 0) {
+                  handleElementChange({ refs: [] });
+                }
+              }}
+            >
+              <option value="none">Sin relleno</option>
+              <option value="interior">Interior de curva cerrada</option>
+              <option value="half-plane">Semiplano acotado por la curva</option>
+            </select>
+          </label>
+          {selectedElement.properties?.areaFill === 'half-plane' && (
+            <label className="text-xs font-bold text-carbon">
+              Punto del semiplano
+              <select
+                aria-label="Punto que indica el lado del semiplano"
+                className="mt-1 w-full rounded border border-carbon/15 bg-lienzo p-1.5 font-mono text-xs"
+                value={selectedElement.refs[0] ?? ''}
+                onChange={event => {
+                  const nextRef = event.target.value;
+                  handleElementChange({ refs: nextRef ? [nextRef] : [] });
+                }}
+              >
+                <option value="">— Elegir punto —</option>
+                {elementReferenceCandidates(model, selectedElement, 0).map(item => (
+                  <option key={item.id} value={item.id}>{item.label} ({item.id})</option>
+                ))}
+              </select>
+            </label>
+          )}
+          <p className="text-[10px] leading-relaxed text-carbon/45">
+            El interior rellena lazos cerrados por autointersección. El semiplano acota la región entre los extremos del dominio paramétrico.
+          </p>
+        </fieldset>
       )}
 
       {(['functionCurve', 'parametricCurve'].includes(selectedElement.kind)) && (

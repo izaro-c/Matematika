@@ -6,6 +6,9 @@ import {
   createAngleBisectorRay,
   createArc,
   createAreaDecomposition,
+  createAreaIntersectionComposite,
+  createAreaIntersectionFills,
+  type AreaIntersectionComposite,
   createBaseExtensionToFoot,
   createCircle,
   createCongruenceMark,
@@ -13,6 +16,7 @@ import {
   createFunctionCurve,
   createGlider,
   createGridOverlay,
+  createHalfPlaneFill,
   createIntersection,
   createLine,
   createMidpoint,
@@ -20,6 +24,11 @@ import {
   createParallelMark,
   createParallelLine,
   createParametricCurve,
+  createCurveAreaComposite,
+  createCurveAreaFills,
+  type CurveAreaComposite,
+  updateSampledCurve,
+  updateStaticAreaPolygon,
   createPerpendicularFoot,
   createPerpendicularLine,
   createPoincareArc,
@@ -45,6 +54,13 @@ import {
   type DiagramBounds,
   type DiagramElement,
   type DiagramSpecV2,
+  resolveAreaDisplayPolygon,
+  resolveAreaDisplayPolygons,
+  type AreaPointResolver,
+  curveActsAsArea,
+  resolveCurveAreaPolygons,
+  resolvePointCoordinates,
+  sampleCurveElement,
 } from '../spec';
 import {
   attachLabelSelection,
@@ -107,8 +123,35 @@ export {
   tickDistance,
 };
 
+function createLiveAreaPointResolver(
+  elements: Record<string, any>,
+): AreaPointResolver {
+  return (model, id) => {
+    const live = elements[id];
+    if (live && typeof live.X === 'function') return { x: live.X(), y: live.Y() };
+    const point = model.points.find(candidate => candidate.id === id);
+    return point ? { x: point.x, y: point.y } : undefined;
+  };
+}
+
+function resolveBoardViewportBounds(
+  board: JXG.Board,
+  fallbackBounds: [number, number, number, number],
+): [number, number, number, number] {
+  const bbox = board.getBoundingBox?.();
+  if (bbox && bbox.length >= 4) return [bbox[0], bbox[1], bbox[2], bbox[3]];
+  return fallbackBounds;
+}
+
 function applyRenderedStackLayer(element: any, layer: number) {
   if (!element?.setAttribute) return;
+  if (element.__matematikaCurveArea) {
+    element.__matematikaCurveArea.fills.forEach((fill: { setAttribute?: (attrs: { layer: number }) => void }) => {
+      applyRenderedStackLayer(fill, layer);
+    });
+    applyRenderedStackLayer(element.__matematikaCurveArea.curve, layer + 1);
+    return;
+  }
   element.setAttribute({ layer });
   element.label?.setAttribute?.({ layer: layer + 1 });
   if (Array.isArray(element.borders)) {
@@ -122,6 +165,139 @@ function applyRenderedStackLayer(element: any, layer: number) {
   if (Array.isArray(element.vertices)) {
     element.vertices.forEach((vertex: { setAttribute?: (attrs: { layer: number }) => void }) => vertex?.setAttribute?.({ layer }));
   }
+  if (Array.isArray(element.elements)) {
+    element.elements.forEach((child: { setAttribute?: (attrs: { layer: number }) => void }) => applyRenderedStackLayer(child, layer));
+  }
+}
+
+function curveAreaSidePoint(
+  spec: DiagramSpecV2,
+  item: DiagramElement,
+  elements: Record<string, any>,
+): ReturnType<typeof resolvePointCoordinates> {
+  const sideRef = item.refs.find(ref => Boolean(ref));
+  if (!sideRef) return undefined;
+  const live = elements[sideRef];
+  if (live && typeof live.X === 'function') return { x: live.X(), y: live.Y() };
+  return resolvePointCoordinates(spec, sideRef);
+}
+
+function resolveCurveAreaBounds(board: JXG.Board, spec: DiagramSpecV2): DiagramBounds {
+  const bbox = board.getBoundingBox?.();
+  if (bbox && bbox.length >= 4) {
+    const [xMin, yMax, xMax, yMin] = bbox;
+    if (xMax > xMin && yMax > yMin) return [xMin, yMax, xMax, yMin];
+  }
+  return spec.viewport.bounds;
+}
+
+function curveAreaUpdateSignature(
+  spec: DiagramSpecV2,
+  item: DiagramElement,
+  elements: Record<string, any>,
+  board: JXG.Board,
+  variables: Record<string, number>,
+): string {
+  const side = curveAreaSidePoint(spec, item, elements);
+  return JSON.stringify({
+    side,
+    bounds: resolveCurveAreaBounds(board, spec),
+    variables,
+    areaFill: item.properties?.areaFill,
+    domain: item.properties?.domain,
+    samples: item.properties?.samples,
+    expression: item.properties?.expression,
+    xExpression: item.properties?.xExpression,
+    yExpression: item.properties?.yExpression,
+    refs: item.refs,
+  });
+}
+
+function updateCurveAreaFills(
+  composite: CurveAreaComposite,
+  spec: DiagramSpecV2,
+  item: DiagramElement,
+  elements: Record<string, any>,
+  board: JXG.Board,
+  variables: Record<string, number>,
+): void {
+  const areaState = composite.__matematikaCurveArea;
+  if (!areaState) return;
+  const signature = curveAreaUpdateSignature(spec, item, elements, board, variables);
+  if (areaState.lastAreaSignature === signature) return;
+  const polygons = resolveCurveAreaPolygons(
+    item,
+    sampleCurveElement(item, variables),
+    curveAreaSidePoint(spec, item, elements),
+    resolveCurveAreaBounds(board, spec),
+    variables,
+  );
+  areaState.fills.forEach((fill, index) => {
+    const polygon = polygons[index];
+    if (polygon && polygon.length >= 3) updateStaticAreaPolygon(fill, polygon);
+  });
+  areaState.lastAreaSignature = signature;
+}
+
+function updateAreaIntersectionFills(
+  composite: AreaIntersectionComposite,
+  spec: DiagramSpecV2,
+  item: DiagramElement,
+  elements: Record<string, any>,
+  board: JXG.Board,
+): void {
+  const areaState = composite.__matematikaAreaIntersection;
+  if (!areaState) return;
+  const liveResolver = createLiveAreaPointResolver(elements);
+  const bounds = resolveCurveAreaBounds(board, spec);
+  const signature = JSON.stringify({
+    bounds,
+    refs: item.refs,
+    elements: spec.elements.map(element => ({
+      id: element.id,
+      kind: element.kind,
+      refs: element.refs,
+      properties: element.properties,
+    })),
+    points: spec.points.map(point => ({ id: point.id, x: point.x, y: point.y })),
+    sliders: spec.sliders.map(slider => ({ id: slider.id, value: slider.value })),
+  });
+  if (areaState.lastSignature === signature) return;
+  const polygons = resolveAreaDisplayPolygons(
+    { ...spec, viewport: { ...spec.viewport, bounds } },
+    item,
+    liveResolver,
+  );
+  areaState.fills.forEach((fill, index) => {
+    const polygon = polygons[index];
+    if (polygon && polygon.length >= 3) updateStaticAreaPolygon(fill, polygon);
+  });
+  areaState.lastSignature = signature;
+}
+
+function createCurveAreaElement(
+  board: JXG.Board,
+  elements: Record<string, any>,
+  item: DiagramElement,
+  spec: DiagramSpecV2,
+  curve: JXG.Curve,
+  fillOptions: Record<string, unknown>,
+  theme: ThemeColors,
+) {
+  const resolveArea = () => {
+    const side = curveAreaSidePoint(spec, item, elements);
+    const variables = liveVariables(elements, spec);
+    const samples = sampleCurveElement(item, variables);
+    return resolveCurveAreaPolygons(
+      item,
+      samples,
+      side,
+      resolveCurveAreaBounds(board, spec),
+      variables,
+    );
+  };
+  const fills = createCurveAreaFills(board, resolveArea, fillOptions, theme);
+  return createCurveAreaComposite(fills, curve);
 }
 
 export function calculateLineLabelAnchor(element: any, t: number): any {
@@ -329,34 +505,26 @@ export function createElement(
     return createArc(board, directedRefs, lineOptions, theme);
   }
   if (item.kind === 'functionCurve' && item.properties?.expression) {
-    const domain = item.properties.domain ?? [-5, 5];
-    const parameter = item.properties.parameter ?? 'x';
-    const samples = item.properties.samples ?? 128;
-    return createFunctionCurve(board, value => {
-      try {
-        return evaluateMathExpression(item.properties?.expression ?? '0', { ...liveVariables(elements, spec), [parameter]: value, x: value });
-      } catch {
-        return Number.NaN;
-      }
-    }, domain, { ...lineOptions, numberPointsHigh: samples, numberPointsLow: Math.min(samples, 64) }, theme);
+    const samples = sampleCurveElement(item, liveVariables(elements, spec));
+    const curve = createFunctionCurve(board, samples, lineOptions, theme);
+    if (!curveActsAsArea(item)) return curve;
+    return createCurveAreaElement(board, elements, item, spec, curve, withDiagramHoverTransition({
+      fillColor: theme[item.color],
+      fillOpacity: item.style?.fillOpacity ?? 0.12,
+      fixed: true,
+      layer,
+    }), theme);
   }
-  if (item.kind === 'parametricCurve' && item.properties?.xExpression && item.properties.yExpression) {
-    const domain = item.properties.domain ?? [0, Math.PI * 2];
-    const parameter = item.properties.parameter ?? 't';
-    const samples = item.properties.samples ?? 128;
-    const variables = (value: number) => ({ ...liveVariables(elements, spec), [parameter]: value, t: value });
-    return createParametricCurve(
-      board,
-      value => {
-        try { return evaluateMathExpression(item.properties?.xExpression ?? '0', variables(value)); } catch { return Number.NaN; }
-      },
-      value => {
-        try { return evaluateMathExpression(item.properties?.yExpression ?? '0', variables(value)); } catch { return Number.NaN; }
-      },
-      domain,
-      { ...lineOptions, numberPointsHigh: samples, numberPointsLow: Math.min(samples, 64) },
-      theme,
-    );
+  if (item.kind === 'parametricCurve' && item.properties?.xExpression && item.properties?.yExpression) {
+    const samples = sampleCurveElement(item, liveVariables(elements, spec));
+    const curve = createParametricCurve(board, samples, lineOptions, theme);
+    if (!curveActsAsArea(item)) return curve;
+    return createCurveAreaElement(board, elements, item, spec, curve, withDiagramHoverTransition({
+      fillColor: theme[item.color],
+      fillOpacity: item.style?.fillOpacity ?? 0.12,
+      fixed: true,
+      layer,
+    }), theme);
   }
   if (item.kind === 'poincareGeodesic') return refs.length >= 4 ? createPoincareGeodesic(board, [refs[0], refs[1], refs[2], refs[3]], lineOptions, theme) : null;
   if (item.kind === 'poincareArc') return refs.length >= 4 ? createPoincareArc(board, [refs[0], refs[1], refs[2], refs[3]], lineOptions, theme) : null;
@@ -455,6 +623,44 @@ export function createElement(
     { ...withDiagramHoverTransition({ hasInnerPoints: true, fillColor: theme[item.color], fillOpacity: item.style?.fillOpacity ?? 0.1, borders: lineOptions, fixed: true, layer }) },
     theme,
   ) : null;
+  if (item.kind === 'halfPlane' && refs.length >= 3) {
+    const resolveBounds = () => resolveBoardViewportBounds(board, spec.viewport.bounds);
+    return createHalfPlaneFill(
+      board,
+      [refs[0], refs[1]],
+      refs[2],
+      resolveBounds,
+      withDiagramHoverTransition({
+        fillColor: theme[item.color],
+        fillOpacity: item.style?.fillOpacity ?? 0.12,
+        fixed: true,
+        layer,
+      }),
+      theme,
+    );
+  }
+  if (item.kind === 'areaIntersection' && refs.length >= 2) {
+    const liveResolver = createLiveAreaPointResolver(elements);
+    const resolveBounds = () => resolveBoardViewportBounds(board, spec.viewport.bounds);
+    const resolvePolygons = () => resolveAreaDisplayPolygons(
+      { ...spec, viewport: { ...spec.viewport, bounds: resolveBounds() } },
+      item,
+      liveResolver,
+    );
+    const fills = createAreaIntersectionFills(
+      board,
+      resolvePolygons,
+      withDiagramHoverTransition({
+        fillColor: theme[item.color],
+        fillOpacity: item.style?.fillOpacity ?? 0.14,
+        fixed: true,
+        layer,
+      }),
+      theme,
+    );
+    if (fills.length === 0) return null;
+    return createAreaIntersectionComposite(fills);
+  }
   const anchor = refs[0];
   const dynamicText = () => annotationTextHtml(item, elements, spec);
   const textOffset = item.style?.textOffset ?? (item.kind === 'label' ? [0.04, 0.04] : [0.25, 0.35]);
@@ -986,7 +1192,38 @@ export function useBoardLifecycle({
         secondary: 2.6,
       });
       commitElementVisuals(element, { ...base, dash: effectiveDashed ? 2 : 0 }, sliderLine, shouldAnimate);
-    } else if (item.kind === 'polygon' || item.kind === 'areaDecomposition') {
+    } else if ((item.kind === 'functionCurve' || item.kind === 'parametricCurve') && curveActsAsArea(item)) {
+      const composite = element as CurveAreaComposite;
+      const fills = composite.__matematikaCurveArea?.fills
+        ?? (Array.isArray(composite.elements)
+          ? composite.elements.slice(0, -1)
+          : []);
+      const curve = composite.__matematikaCurveArea?.curve
+        ?? (Array.isArray(composite.elements) ? composite.elements[composite.elements.length - 1] : undefined);
+      const polygonAttrs = buildPolygonEmphasisAttributes(color, sceneStyle, emphasisState, opacity, {
+        fill: { normal: 0.1, highlight: 0.24 },
+        stroke: { normal: 1.5, primary: 2.4, highlight: 3.2, secondary: 2 },
+      });
+      fills.forEach(fill => {
+        commitElementVisuals(
+          fill,
+          {
+            ...base,
+            fillColor: polygonAttrs.fillColor,
+            borders: { visible: false, strokeOpacity: 0 },
+          },
+          { fillOpacity: polygonAttrs.fillOpacity },
+          shouldAnimate,
+        );
+      });
+      const lineAttrs = buildLineEmphasisAttributes(color, sceneStyle, emphasisState, opacity, {
+        normal: 2,
+        primary: 3.2,
+        highlight: 3.6,
+        secondary: 2.6,
+      });
+      commitElementVisuals(curve, { ...base, dash: effectiveDashed ? 2 : 0 }, lineAttrs, shouldAnimate);
+    } else if (item.kind === 'polygon' || item.kind === 'areaDecomposition' || item.kind === 'halfPlane' || item.kind === 'areaIntersection') {
       const polygonAttrs = buildPolygonEmphasisAttributes(color, sceneStyle, emphasisState, opacity, {
         fill: { normal: 0.1, highlight: 0.24 },
         stroke: { normal: 1.5, primary: 2.4, highlight: 3.2, secondary: 2 },
@@ -1251,9 +1488,35 @@ export function useBoardLifecycle({
     const nextLiveVariables = liveVariables(elements, spec);
     const signature = JSON.stringify(nextLiveVariables);
     if (signature !== liveVariablesSignatureRef.current) {
+      spec.elements.forEach(sceneItem => {
+        if (sceneItem.kind !== 'functionCurve' && sceneItem.kind !== 'parametricCurve') return;
+        const rendered = elements[sceneItem.id];
+        if (!rendered) return;
+        const samples = sampleCurveElement(sceneItem, nextLiveVariables);
+        const curve = (rendered as CurveAreaComposite).__matematikaCurveArea?.curve
+          ?? (Array.isArray(rendered.elements)
+            ? rendered.elements[rendered.elements.length - 1]
+            : rendered);
+        updateSampledCurve(curve, samples);
+      });
       liveVariablesSignatureRef.current = signature;
       setLiveSceneVariables(nextLiveVariables);
     }
+
+    spec.elements.forEach(sceneItem => {
+      if (sceneItem.kind !== 'functionCurve' && sceneItem.kind !== 'parametricCurve') return;
+      if (!curveActsAsArea(sceneItem)) return;
+      const rendered = elements[sceneItem.id] as CurveAreaComposite;
+      if (!rendered) return;
+      updateCurveAreaFills(rendered, spec, sceneItem, elements, _board, nextLiveVariables);
+    });
+
+    spec.elements.forEach(sceneItem => {
+      if (sceneItem.kind !== 'areaIntersection') return;
+      const rendered = elements[sceneItem.id] as AreaIntersectionComposite;
+      if (!rendered?.__matematikaAreaIntersection) return;
+      updateAreaIntersectionFills(rendered, spec, sceneItem, elements, _board);
+    });
   };
 
   return {
