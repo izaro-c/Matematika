@@ -5,6 +5,7 @@ import {
   bringSceneItemToFront,
   listLayerSceneItems,
   listLayerSceneItemsFrontFirst,
+  listSceneItemIdsInLayerVisualOrder,
   moveSceneItem,
   moveSceneItemToLayer,
   moveSceneItemVisual,
@@ -91,5 +92,16 @@ describe('sceneOrdering', () => {
     const model = normalizeLayerItemOrders(sampleModel());
     const moved = moveSceneItemVisual(model, 'pA', 'geometry', 0);
     expect(listLayerSceneItemsFrontFirst(moved, 'geometry').map(item => item.id)[0]).toBe('pA');
+  });
+
+  it('lists scene item ids by layer order and visual stack order', () => {
+    const model = normalizeLayerItemOrders(sampleModel());
+    expect(listSceneItemIdsInLayerVisualOrder(model)).toEqual([
+      'segBC',
+      'segAB',
+      'pC',
+      'pB',
+      'pA',
+    ]);
   });
 });

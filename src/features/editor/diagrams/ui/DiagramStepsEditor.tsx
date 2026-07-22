@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useMemo, useState } from 'react';
 import { StepNavigator } from '@/shared/ui/StepNavigator';
 import type { DiagramStepObjectState } from '@/shared/diagrams/spec';
 import type { VisualDiagramModel } from '../model/types';
@@ -22,7 +22,10 @@ import {
   nextMatrixCellState,
   type MatrixCellVisualState,
 } from './stepMatrixUtils';
+import { listSceneItemIdsInLayerVisualOrder } from '../model/sceneOrdering';
 import { summarizeStepObjectState } from './stepObjectStateSummary';
+
+type SceneItem = VisualDiagramModel['points'][number] | VisualDiagramModel['elements'][number] | VisualDiagramModel['sliders'][number];
 
 interface DiagramStepsEditorProps {
   model: VisualDiagramModel;
@@ -39,18 +42,16 @@ const MATRIX_CELL_ICONS: Record<MatrixCellVisualState, string> = {
   'emphasis-primary': '◉',
 };
 
+const MATRIX_CELL_STYLES: Record<MatrixCellVisualState, string> = {
+  hidden: 'border-dashed border-carbon/35 bg-carbon/[0.06] text-carbon/35',
+  visible: 'border-musgo/70 bg-musgo/25 text-musgo',
+  'emphasis-secondary': 'border-ocre/80 bg-ocre/28 text-ocre',
+  'emphasis-primary': 'border-granada/85 bg-granada/32 text-granada',
+};
+
 function matrixCellClass(selected: boolean, visual: MatrixCellVisualState): string {
-  if (selected) return 'border-terracota ring-1 ring-terracota/30 bg-terracota/10';
-  switch (visual) {
-    case 'hidden':
-      return 'border-carbon/10 bg-carbon/[0.03] text-carbon/35';
-    case 'visible':
-      return 'border-salvia/50 bg-salvia/15 text-carbon';
-    case 'emphasis-secondary':
-      return 'border-pavo/50 bg-pavo/15 text-carbon';
-    case 'emphasis-primary':
-      return 'border-terracota/60 bg-terracota/20 text-carbon';
-  }
+  const base = MATRIX_CELL_STYLES[visual];
+  return selected ? `${base} ring-2 ring-terracota/55 ring-offset-1` : base;
 }
 
 export const DiagramStepsEditor: React.FC<DiagramStepsEditorProps> = ({
@@ -60,7 +61,13 @@ export const DiagramStepsEditor: React.FC<DiagramStepsEditorProps> = ({
   onModelEdit,
   onSelectObject,
 }) => {
-  const items = [...model.points, ...model.elements, ...model.sliders];
+  const items = useMemo(() => {
+    const byId = new Map<string, SceneItem>();
+    [...model.points, ...model.elements, ...model.sliders].forEach(item => byId.set(item.id, item));
+    return listSceneItemIdsInLayerVisualOrder(model)
+      .map(id => byId.get(id))
+      .filter((item): item is SceneItem => Boolean(item));
+  }, [model]);
   const [selectedCell, setSelectedCell] = useState<{ stepId: string; objectId: string } | null>(null);
   const [objectQuery, setObjectQuery] = useState('');
   const activeStep = model.steps.find(item => item.id === activeStepId) ?? model.steps[0];
@@ -69,7 +76,21 @@ export const DiagramStepsEditor: React.FC<DiagramStepsEditorProps> = ({
   const selectedState = selectedStep && selectedObject
     ? selectedStep.objectStates?.[selectedObject.id] ?? { visible: selectedStep.visibleTargets.includes(selectedObject.id), emphasis: 'none' as const, interactive: true }
     : undefined;
-  const visibleItems = items.filter(item => `${item.label} ${item.id}`.toLocaleLowerCase('es').includes(objectQuery.trim().toLocaleLowerCase('es')));
+  const normalizedQuery = objectQuery.trim().toLocaleLowerCase('es');
+  const visibleItems = items.filter(item => !normalizedQuery || `${item.label} ${item.id}`.toLocaleLowerCase('es').includes(normalizedQuery));
+  const matrixRows = useMemo(() => {
+    const rows: Array<{ kind: 'layer'; layerId: string; label: string } | { kind: 'object'; item: SceneItem }> = [];
+    let lastLayerId: string | null = null;
+    visibleItems.forEach(item => {
+      if (item.layerId !== lastLayerId) {
+        const layer = model.layers.find(entry => entry.id === item.layerId);
+        rows.push({ kind: 'layer', layerId: item.layerId, label: layer?.label ?? item.layerId });
+        lastLayerId = item.layerId;
+      }
+      rows.push({ kind: 'object', item });
+    });
+    return rows;
+  }, [visibleItems, model.layers]);
 
   const editSteps = (steps: VisualDiagramModel['steps'], label: string) => onModelEdit({ ...model, steps: reindexSteps(steps) }, { label });
   const addStep = () => {
@@ -241,61 +262,91 @@ export const DiagramStepsEditor: React.FC<DiagramStepsEditorProps> = ({
             </DiagramPanel>
           )}
 
-          <div className="mt-4 grid items-start gap-3 lg:grid-cols-[minmax(0,1fr)_20rem]">
-          <div className="overflow-x-auto rounded border border-carbon/10">
-            <div className="border-b border-carbon/10 bg-carbon/5 p-2">
-              <DiagramField label="Buscar objetos en la secuencia" className="max-w-sm">
-                <input type="search" aria-label="Buscar objetos en la secuencia" placeholder="Buscar objetos en la matriz…" className="text-[10px]" value={objectQuery} onChange={event => setObjectQuery(event.target.value)} />
-              </DiagramField>
+          <div className="mt-4 grid items-start gap-3 2xl:grid-cols-[minmax(0,1fr)_min(18rem,30%)]">
+          <div className="min-w-0 rounded border border-carbon/10">
+            <div className="flex flex-wrap items-center gap-x-3 gap-y-2 border-b border-carbon/10 bg-carbon/5 px-3 py-2">
+              <p className="text-[10px] font-bold uppercase tracking-widest text-carbon/50">Matriz objetos × pasos</p>
+              <div className="flex min-w-[12rem] flex-1 items-center gap-2">
+                <DiagramField label="Buscar objetos en la secuencia" className="min-w-[10rem] flex-1">
+                  <input type="search" aria-label="Buscar objetos en la secuencia" placeholder="Buscar por nombre o id…" className="text-[10px]" value={objectQuery} onChange={event => setObjectQuery(event.target.value)} />
+                </DiagramField>
+                {normalizedQuery ? (
+                  <span className="shrink-0 text-[9px] text-carbon/45">{visibleItems.length}/{items.length}</span>
+                ) : null}
+              </div>
+              <div className="flex flex-wrap gap-x-2 gap-y-1 text-[9px] text-carbon/55" aria-hidden>
+                {(Object.entries(MATRIX_CELL_ICONS) as Array<[MatrixCellVisualState, string]>).map(([state, icon]) => (
+                  <span key={state} className={`inline-flex items-center gap-1 rounded border px-1.5 py-0.5 ${MATRIX_CELL_STYLES[state]}`}>
+                    <span className="text-xs leading-none">{icon}</span>
+                    {MATRIX_CELL_LABELS[state]}
+                  </span>
+                ))}
+              </div>
             </div>
-            <table className="min-w-full border-collapse text-[10px]">
-              <caption className="border-b border-carbon/10 bg-carbon/5 px-3 py-2 text-left font-bold uppercase tracking-widest text-carbon/50">Matriz objetos × pasos</caption>
-              <thead>
+            <div className="max-h-[min(70vh,42rem)] overflow-auto">
+            <table className="w-max min-w-full border-collapse text-[10px]" aria-label="Matriz objetos × pasos">
+              <thead className="sticky top-0 z-20">
                 <tr>
-                  <th scope="col" className="sticky left-0 z-10 min-w-44 border-b border-r border-carbon/10 bg-lienzo p-2 text-left">Objeto</th>
-                  {model.steps.map((item, index) => <th key={item.id} scope="col" className="min-w-28 border-b border-carbon/10 p-2 text-left">{index + 1}. {item.label}</th>)}
+                  <th scope="col" className="sticky left-0 z-30 min-w-36 border-b border-r border-carbon/10 bg-lienzo p-1.5 text-left shadow-[2px_0_0_0_rgba(0,0,0,0.04)]">Objeto</th>
+                  {model.steps.map((item, index) => (
+                    <th
+                      key={item.id}
+                      scope="col"
+                      className={`min-w-[4.25rem] border-b border-carbon/10 p-1 text-center ${item.id === activeStep?.id ? 'bg-terracota/10 text-carbon' : 'bg-lienzo text-carbon/70'}`}
+                      title={`${index + 1}. ${item.label}`}
+                    >
+                      <span className="block text-[11px] font-bold leading-none">{index + 1}</span>
+                      <span className="mt-0.5 block max-w-[5.5rem] truncate text-[8px] font-normal leading-tight">{item.label}</span>
+                    </th>
+                  ))}
                 </tr>
               </thead>
               <tbody>
-                {visibleItems.map(item => (
-                  <tr key={item.id}>
-                    <th scope="row" className="sticky left-0 z-10 border-r border-t border-carbon/10 bg-lienzo p-2 text-left">
-                      <button type="button" className="font-bold text-carbon hover:text-terracota" onClick={() => onSelectObject(item.id)}>{item.label}</button>
-                      <span className="block font-mono text-[9px] font-normal text-carbon/45">{item.id}</span>
+                {matrixRows.length === 0 ? (
+                  <tr>
+                    <td colSpan={model.steps.length + 1} className="border-t border-carbon/10 p-4 text-center text-xs italic text-carbon/50">Ningún objeto coincide con la búsqueda.</td>
+                  </tr>
+                ) : matrixRows.map(row => row.kind === 'layer' ? (
+                  <tr key={`layer-${row.layerId}`} className="bg-carbon/[0.03]">
+                    <th scope="rowgroup" colSpan={model.steps.length + 1} className="sticky left-0 border-t border-carbon/10 px-2 py-1 text-left text-[9px] font-bold uppercase tracking-wider text-carbon/45">{row.label}</th>
+                  </tr>
+                ) : (
+                  <tr key={row.item.id}>
+                    <th scope="row" className="sticky left-0 z-10 border-r border-t border-carbon/10 bg-lienzo p-1.5 text-left shadow-[2px_0_0_0_rgba(0,0,0,0.04)]">
+                      <button type="button" className="max-w-[9rem] truncate font-bold text-carbon hover:text-terracota" title={row.item.label} onClick={() => onSelectObject(row.item.id)}>{row.item.label}</button>
+                      <span className="block truncate font-mono text-[8px] font-normal text-carbon/45">{row.item.id}</span>
                     </th>
                     {model.steps.map(stepItem => {
-                      const visual = matrixCellVisualState(stepItem, item.id);
-                      const state = stepItem.objectStates?.[item.id];
-                      const selected = selectedCell?.stepId === stepItem.id && selectedCell.objectId === item.id;
+                      const visual = matrixCellVisualState(stepItem, row.item.id);
+                      const state = stepItem.objectStates?.[row.item.id];
+                      const selected = selectedCell?.stepId === stepItem.id && selectedCell.objectId === row.item.id;
                       const extras = summarizeStepObjectState(state).join(', ');
                       const summary = [MATRIX_CELL_LABELS[visual], extras].filter(Boolean).join(', ');
                       return (
-                        <td key={stepItem.id} className="border-t border-carbon/10 p-1">
-                          <div className={`flex items-stretch gap-0.5 rounded border ${matrixCellClass(selected, visual)}`}>
+                        <td key={stepItem.id} className={`border-t border-carbon/10 p-0.5 ${stepItem.id === activeStep?.id ? 'bg-terracota/[0.04]' : ''}`}>
+                          <div className={`flex items-stretch rounded border ${matrixCellClass(selected, visual)}`}>
                             <button
                               type="button"
                               onClick={() => {
-                                cycleCellState(stepItem.id, item.id);
+                                cycleCellState(stepItem.id, row.item.id);
                                 if (stepItem.id !== activeStep?.id) onActiveStepChange(stepItem.id);
                               }}
-                              aria-label={`Cambiar estado de ${item.label} en ${stepItem.label}: ${summary}`}
-                              className="min-w-0 flex-1 p-1.5 text-left"
+                              aria-label={`Cambiar estado de ${row.item.label} en ${stepItem.label}: ${summary}`}
+                              title={summary}
+                              className="relative min-w-[2.25rem] flex-1 p-1 text-center"
                             >
-                              <span className="flex items-center gap-1">
-                                <span className="text-sm leading-none" aria-hidden>{MATRIX_CELL_ICONS[visual]}</span>
-                                <span className="block truncate text-[9px] font-bold">{MATRIX_CELL_LABELS[visual]}</span>
-                              </span>
-                              {extras ? <span className="block truncate text-[8px] opacity-70">{extras}</span> : null}
+                              <span className="text-base leading-none" aria-hidden>{MATRIX_CELL_ICONS[visual]}</span>
+                              {extras ? <span className="absolute right-0.5 top-0.5 size-1.5 rounded-full bg-carbon/35" aria-hidden /> : null}
                             </button>
                             <button
                               type="button"
                               onClick={() => {
-                                setSelectedCell({ stepId: stepItem.id, objectId: item.id });
+                                setSelectedCell({ stepId: stepItem.id, objectId: row.item.id });
                                 if (stepItem.id !== activeStep?.id) onActiveStepChange(stepItem.id);
                               }}
-                              aria-label={`Editar detalles de ${item.label} en ${stepItem.label}`}
+                              aria-label={`Editar detalles de ${row.item.label} en ${stepItem.label}`}
                               aria-pressed={selected}
-                              className="shrink-0 border-l border-inherit px-1.5 text-[10px] text-carbon/50 hover:bg-carbon/5 hover:text-carbon"
+                              className="shrink-0 border-l border-inherit px-1 text-[10px] leading-none text-carbon/50 hover:bg-carbon/5 hover:text-carbon"
                               title="Editar etiqueta, panel y más opciones"
                             >
                               ⋯
@@ -308,6 +359,7 @@ export const DiagramStepsEditor: React.FC<DiagramStepsEditorProps> = ({
                 ))}
               </tbody>
             </table>
+            </div>
           </div>
 
           {selectedCell && selectedStep && selectedObject && selectedState && (

@@ -52,7 +52,7 @@ export const DemoAnguloExternoSpec = createDiagramSpec(
       "label": "A",
       "color": "granada",
       "layerId": "geometry",
-      "order": 34,
+      "order": 37,
       "visible": true,
       "locked": false,
       "groupIds": [],
@@ -85,7 +85,7 @@ export const DemoAnguloExternoSpec = createDiagramSpec(
       "label": "B",
       "color": "granada",
       "layerId": "geometry",
-      "order": 33,
+      "order": 36,
       "visible": true,
       "locked": false,
       "groupIds": [],
@@ -118,7 +118,7 @@ export const DemoAnguloExternoSpec = createDiagramSpec(
       "label": "C",
       "color": "granada",
       "layerId": "geometry",
-      "order": 32,
+      "order": 35,
       "visible": true,
       "locked": false,
       "groupIds": [],
@@ -151,7 +151,7 @@ export const DemoAnguloExternoSpec = createDiagramSpec(
       "label": "D",
       "color": "pavo",
       "layerId": "geometry",
-      "order": 31,
+      "order": 34,
       "visible": true,
       "locked": false,
       "groupIds": [],
@@ -185,7 +185,7 @@ export const DemoAnguloExternoSpec = createDiagramSpec(
       "label": "Aux",
       "color": "terracota",
       "layerId": "geometry",
-      "order": 2,
+      "order": 5,
       "visible": false,
       "locked": false,
       "groupIds": [],
@@ -222,7 +222,7 @@ export const DemoAnguloExternoSpec = createDiagramSpec(
       "label": "F",
       "color": "salvia",
       "layerId": "geometry",
-      "order": 29,
+      "order": 32,
       "visible": true,
       "locked": false,
       "groupIds": [],
@@ -258,7 +258,7 @@ export const DemoAnguloExternoSpec = createDiagramSpec(
       "label": "H",
       "color": "terracota",
       "layerId": "geometry",
-      "order": 36,
+      "order": 39,
       "visible": true,
       "locked": false,
       "groupIds": [],
@@ -294,7 +294,7 @@ export const DemoAnguloExternoSpec = createDiagramSpec(
       "label": "Triángulo ABC",
       "color": "granada",
       "layerId": "geometry",
-      "order": 4,
+      "order": 7,
       "visible": true,
       "locked": false,
       "groupIds": [],
@@ -323,7 +323,7 @@ export const DemoAnguloExternoSpec = createDiagramSpec(
       "label": "Segmento AB",
       "color": "granada",
       "layerId": "geometry",
-      "order": 5,
+      "order": 8,
       "visible": true,
       "locked": false,
       "groupIds": [],
@@ -353,7 +353,7 @@ export const DemoAnguloExternoSpec = createDiagramSpec(
       "label": "Segmento BC",
       "color": "granada",
       "layerId": "geometry",
-      "order": 6,
+      "order": 9,
       "visible": true,
       "locked": false,
       "groupIds": [],
@@ -383,7 +383,7 @@ export const DemoAnguloExternoSpec = createDiagramSpec(
       "label": "Segmento AC",
       "color": "granada",
       "layerId": "geometry",
-      "order": 7,
+      "order": 10,
       "visible": true,
       "locked": false,
       "groupIds": [],
@@ -413,7 +413,7 @@ export const DemoAnguloExternoSpec = createDiagramSpec(
       "label": "Semirrecta BC",
       "color": "pavo",
       "layerId": "geometry",
-      "order": 8,
+      "order": 11,
       "visible": true,
       "locked": false,
       "groupIds": [],
@@ -444,7 +444,7 @@ export const DemoAnguloExternoSpec = createDiagramSpec(
       "label": "Ángulo ABC",
       "color": "musgo",
       "layerId": "geometry",
-      "order": 10,
+      "order": 13,
       "visible": true,
       "locked": false,
       "groupIds": [],
@@ -474,7 +474,7 @@ export const DemoAnguloExternoSpec = createDiagramSpec(
       "label": "Ángulo BAC",
       "color": "pavo",
       "layerId": "geometry",
-      "order": 24,
+      "order": 27,
       "visible": true,
       "locked": false,
       "groupIds": [],
@@ -504,7 +504,7 @@ export const DemoAnguloExternoSpec = createDiagramSpec(
       "label": "Ángulo BCA",
       "color": "musgo",
       "layerId": "geometry",
-      "order": 11,
+      "order": 14,
       "visible": true,
       "locked": false,
       "groupIds": [],
@@ -534,7 +534,7 @@ export const DemoAnguloExternoSpec = createDiagramSpec(
       "label": "Ángulo BCD",
       "color": "granada",
       "layerId": "geometry",
-      "order": 12,
+      "order": 15,
       "visible": true,
       "locked": false,
       "groupIds": [],
@@ -564,7 +564,7 @@ export const DemoAnguloExternoSpec = createDiagramSpec(
       "label": "E",
       "color": "salvia",
       "layerId": "geometry",
-      "order": 30,
+      "order": 33,
       "visible": true,
       "locked": false,
       "groupIds": [],
@@ -595,7 +595,7 @@ export const DemoAnguloExternoSpec = createDiagramSpec(
       "label": "Segmento EB",
       "color": "salvia",
       "layerId": "geometry",
-      "order": 13,
+      "order": 16,
       "visible": true,
       "locked": false,
       "groupIds": [],
@@ -625,7 +625,7 @@ export const DemoAnguloExternoSpec = createDiagramSpec(
       "label": "Semirrecta BE",
       "color": "pavo",
       "layerId": "geometry",
-      "order": 3,
+      "order": 6,
       "visible": true,
       "locked": false,
       "groupIds": [],
@@ -656,7 +656,7 @@ export const DemoAnguloExternoSpec = createDiagramSpec(
       "label": "Segmento EF",
       "color": "salvia",
       "layerId": "geometry",
-      "order": 14,
+      "order": 17,
       "visible": true,
       "locked": false,
       "groupIds": [],
@@ -686,7 +686,7 @@ export const DemoAnguloExternoSpec = createDiagramSpec(
       "label": "Segmento CF",
       "color": "salvia",
       "layerId": "geometry",
-      "order": 15,
+      "order": 18,
       "visible": true,
       "locked": false,
       "groupIds": [],
@@ -716,7 +716,7 @@ export const DemoAnguloExternoSpec = createDiagramSpec(
       "label": "Polígono ABE",
       "color": "salvia",
       "layerId": "geometry",
-      "order": 16,
+      "order": 19,
       "visible": true,
       "locked": false,
       "groupIds": [],
@@ -745,7 +745,7 @@ export const DemoAnguloExternoSpec = createDiagramSpec(
       "label": "Polígono CEF",
       "color": "salvia",
       "layerId": "geometry",
-      "order": 17,
+      "order": 20,
       "visible": true,
       "locked": false,
       "groupIds": [],
@@ -774,7 +774,7 @@ export const DemoAnguloExternoSpec = createDiagramSpec(
       "label": "Ángulo AEB",
       "color": "terracota",
       "layerId": "geometry",
-      "order": 18,
+      "order": 21,
       "visible": true,
       "locked": false,
       "groupIds": [],
@@ -804,7 +804,7 @@ export const DemoAnguloExternoSpec = createDiagramSpec(
       "label": "Ángulo CEF",
       "color": "terracota",
       "layerId": "geometry",
-      "order": 19,
+      "order": 22,
       "visible": true,
       "locked": false,
       "groupIds": [],
@@ -834,7 +834,7 @@ export const DemoAnguloExternoSpec = createDiagramSpec(
       "label": "Ángulo ECF",
       "color": "pavo",
       "layerId": "geometry",
-      "order": 26,
+      "order": 29,
       "visible": true,
       "locked": false,
       "groupIds": [],
@@ -864,7 +864,7 @@ export const DemoAnguloExternoSpec = createDiagramSpec(
       "label": "Semirrecta CF",
       "color": "pavo",
       "layerId": "geometry",
-      "order": 20,
+      "order": 23,
       "visible": true,
       "locked": false,
       "groupIds": [],
@@ -895,7 +895,7 @@ export const DemoAnguloExternoSpec = createDiagramSpec(
       "label": "Ángulo ACD",
       "color": "ocre",
       "layerId": "geometry",
-      "order": 9,
+      "order": 12,
       "visible": true,
       "locked": false,
       "groupIds": [],
@@ -925,7 +925,7 @@ export const DemoAnguloExternoSpec = createDiagramSpec(
       "label": "Segmento AE",
       "color": "terracota",
       "layerId": "geometry",
-      "order": 21,
+      "order": 24,
       "visible": true,
       "locked": false,
       "groupIds": [],
@@ -955,7 +955,7 @@ export const DemoAnguloExternoSpec = createDiagramSpec(
       "label": "Segmento EC",
       "color": "terracota",
       "layerId": "geometry",
-      "order": 22,
+      "order": 25,
       "visible": true,
       "locked": false,
       "groupIds": [],
@@ -985,7 +985,7 @@ export const DemoAnguloExternoSpec = createDiagramSpec(
       "label": "Marca de congruencia AE",
       "color": "terracota",
       "layerId": "geometry",
-      "order": 23,
+      "order": 26,
       "visible": true,
       "locked": false,
       "groupIds": [],
@@ -1017,7 +1017,7 @@ export const DemoAnguloExternoSpec = createDiagramSpec(
       "label": "Marca de congruencia EC",
       "color": "terracota",
       "layerId": "geometry",
-      "order": 25,
+      "order": 28,
       "visible": true,
       "locked": false,
       "groupIds": [],
@@ -1049,7 +1049,7 @@ export const DemoAnguloExternoSpec = createDiagramSpec(
       "label": "Marca de congruencia de Segmento EB",
       "color": "ocre",
       "layerId": "geometry",
-      "order": 27,
+      "order": 30,
       "visible": true,
       "locked": false,
       "groupIds": [],
@@ -1081,7 +1081,7 @@ export const DemoAnguloExternoSpec = createDiagramSpec(
       "label": "Marca de congruencia de Segmento EF",
       "color": "ocre",
       "layerId": "geometry",
-      "order": 28,
+      "order": 31,
       "visible": true,
       "locked": false,
       "groupIds": [],
@@ -1113,7 +1113,7 @@ export const DemoAnguloExternoSpec = createDiagramSpec(
       "label": "Semirrecta",
       "color": "pavo",
       "layerId": "geometry",
-      "order": 1,
+      "order": 4,
       "visible": true,
       "locked": false,
       "groupIds": [],
@@ -1144,7 +1144,7 @@ export const DemoAnguloExternoSpec = createDiagramSpec(
       "label": "G",
       "color": "terracota",
       "layerId": "geometry",
-      "order": 35,
+      "order": 38,
       "visible": true,
       "locked": false,
       "groupIds": [],
@@ -1175,7 +1175,7 @@ export const DemoAnguloExternoSpec = createDiagramSpec(
       "label": "Segmento",
       "color": "carbon",
       "layerId": "geometry",
-      "order": 37,
+      "order": 40,
       "visible": true,
       "locked": false,
       "groupIds": [],
@@ -1205,7 +1205,7 @@ export const DemoAnguloExternoSpec = createDiagramSpec(
       "label": "Marca de congruencia",
       "color": "ocre",
       "layerId": "geometry",
-      "order": 38,
+      "order": 41,
       "visible": true,
       "locked": false,
       "groupIds": [],
@@ -1235,7 +1235,7 @@ export const DemoAnguloExternoSpec = createDiagramSpec(
       "label": "Marca de congruencia",
       "color": "ocre",
       "layerId": "geometry",
-      "order": 39,
+      "order": 42,
       "visible": true,
       "locked": false,
       "groupIds": [],
@@ -1265,7 +1265,7 @@ export const DemoAnguloExternoSpec = createDiagramSpec(
       "label": "Segmento BE",
       "color": "ocre",
       "layerId": "geometry",
-      "order": 0,
+      "order": 3,
       "visible": true,
       "locked": false,
       "groupIds": [],
@@ -1285,6 +1285,100 @@ export const DemoAnguloExternoSpec = createDiagramSpec(
         ]
       },
       "appearance": {
+        "strokeWidth": 2.4,
+        "highlightStrokeWidth": 3,
+        "preserveColorOnHighlight": true
+      }
+    },
+    {
+      "id": "halfACD",
+      "label": "Semiplano",
+      "color": "terracota",
+      "layerId": "geometry",
+      "order": 1,
+      "visible": true,
+      "locked": false,
+      "groupIds": [],
+      "selection": {
+        "selectable": true,
+        "ariaLabel": "Semiplano",
+        "role": "secondary"
+      },
+      "target": true,
+      "targetId": "halfACD",
+      "objectType": "area",
+      "geometry": {
+        "type": "half-plane",
+        "boundary": [
+          "pA",
+          "pC"
+        ],
+        "side": "pD"
+      },
+      "appearance": {
+        "strokeOpacity": 1,
+        "fillOpacity": 0.1,
+        "highlightFillOpacity": 0.2,
+        "preserveColorOnHighlight": true
+      }
+    },
+    {
+      "id": "halfBCA",
+      "label": "Semiplano",
+      "color": "pavo",
+      "layerId": "geometry",
+      "order": 2,
+      "visible": true,
+      "locked": false,
+      "groupIds": [],
+      "selection": {
+        "selectable": true,
+        "ariaLabel": "Semiplano",
+        "role": "secondary"
+      },
+      "target": true,
+      "targetId": "halfBCA",
+      "objectType": "area",
+      "geometry": {
+        "type": "half-plane",
+        "boundary": [
+          "pB",
+          "pC"
+        ],
+        "side": "pA"
+      },
+      "appearance": {
+        "fillOpacity": 0.1,
+        "highlightFillOpacity": 0.2,
+        "preserveColorOnHighlight": true
+      }
+    },
+    {
+      "id": "rayCA",
+      "label": "Semirrecta",
+      "color": "pavo",
+      "layerId": "geometry",
+      "order": 0,
+      "visible": true,
+      "locked": false,
+      "groupIds": [],
+      "selection": {
+        "selectable": true,
+        "ariaLabel": "Semirrecta",
+        "role": "secondary"
+      },
+      "target": true,
+      "targetId": "rayCA",
+      "objectType": "path",
+      "geometry": {
+        "type": "ray",
+        "points": [
+          "pC",
+          "pA"
+        ]
+      },
+      "appearance": {
+        "dashed": true,
         "strokeWidth": 2.4,
         "highlightStrokeWidth": 3,
         "preserveColorOnHighlight": true
@@ -1551,6 +1645,21 @@ export const DemoAnguloExternoSpec = createDiagramSpec(
           "visible": false,
           "emphasis": "none",
           "interactive": true
+        },
+        "halfACD": {
+          "visible": false,
+          "emphasis": "none",
+          "interactive": true
+        },
+        "halfBCA": {
+          "visible": false,
+          "emphasis": "none",
+          "interactive": true
+        },
+        "rayCA": {
+          "visible": false,
+          "emphasis": "none",
+          "interactive": true
         }
       }
     },
@@ -1760,6 +1869,21 @@ export const DemoAnguloExternoSpec = createDiagramSpec(
         "segBmidAC_2": {
           "visible": true,
           "emphasis": "secondary",
+          "interactive": true
+        },
+        "halfACD": {
+          "visible": false,
+          "emphasis": "none",
+          "interactive": true
+        },
+        "halfBCA": {
+          "visible": false,
+          "emphasis": "none",
+          "interactive": true
+        },
+        "rayCA": {
+          "visible": false,
+          "emphasis": "none",
           "interactive": true
         }
       }
@@ -1972,6 +2096,21 @@ export const DemoAnguloExternoSpec = createDiagramSpec(
           "visible": true,
           "emphasis": "secondary",
           "interactive": true
+        },
+        "halfACD": {
+          "visible": false,
+          "emphasis": "none",
+          "interactive": true
+        },
+        "halfBCA": {
+          "visible": false,
+          "emphasis": "none",
+          "interactive": true
+        },
+        "rayCA": {
+          "visible": false,
+          "emphasis": "none",
+          "interactive": true
         }
       }
     },
@@ -1998,7 +2137,6 @@ export const DemoAnguloExternoSpec = createDiagramSpec(
         "segmidACC",
         "congruenceMarkAmidAC",
         "congruenceMarkmidACC",
-        "segCF",
         "congruenceMarkBmidAC",
         "congruenceMarkmidACF",
         "segBmidAC_2"
@@ -2027,7 +2165,7 @@ export const DemoAnguloExternoSpec = createDiagramSpec(
         },
         "pF": {
           "visible": true,
-          "emphasis": "none",
+          "emphasis": "secondary",
           "interactive": true
         },
         "polygonABC": {
@@ -2096,8 +2234,8 @@ export const DemoAnguloExternoSpec = createDiagramSpec(
           "interactive": true
         },
         "segCF": {
-          "visible": true,
-          "emphasis": "secondary",
+          "visible": false,
+          "emphasis": "none",
           "interactive": true
         },
         "polygonABmidAC": {
@@ -2197,6 +2335,21 @@ export const DemoAnguloExternoSpec = createDiagramSpec(
         },
         "segBmidAC_2": {
           "visible": true,
+          "emphasis": "none",
+          "interactive": true
+        },
+        "halfACD": {
+          "visible": false,
+          "emphasis": "none",
+          "interactive": true
+        },
+        "halfBCA": {
+          "visible": false,
+          "emphasis": "none",
+          "interactive": true
+        },
+        "rayCA": {
+          "visible": false,
           "emphasis": "none",
           "interactive": true
         }
@@ -2232,8 +2385,6 @@ export const DemoAnguloExternoSpec = createDiagramSpec(
         "polygonCFmidAC",
         "nonReflexAngleAmidACB",
         "nonReflexAngleCmidACF",
-        "nonReflexAnglemidACCF",
-        "nonReflexAngleBAC",
         "segBmidAC_2"
       ],
       "durationMs": 1800,
@@ -2294,8 +2445,8 @@ export const DemoAnguloExternoSpec = createDiagramSpec(
           "interactive": true
         },
         "nonReflexAngleBAC": {
-          "visible": true,
-          "emphasis": "secondary",
+          "visible": false,
+          "emphasis": "none",
           "interactive": true
         },
         "nonReflexAngleBCA": {
@@ -2354,8 +2505,8 @@ export const DemoAnguloExternoSpec = createDiagramSpec(
           "interactive": true
         },
         "nonReflexAnglemidACCF": {
-          "visible": true,
-          "emphasis": "secondary",
+          "visible": false,
+          "emphasis": "none",
           "interactive": true
         },
         "rayCF": {
@@ -2432,12 +2583,27 @@ export const DemoAnguloExternoSpec = createDiagramSpec(
           "visible": true,
           "emphasis": "none",
           "interactive": true
+        },
+        "halfACD": {
+          "visible": false,
+          "emphasis": "none",
+          "interactive": true
+        },
+        "halfBCA": {
+          "visible": false,
+          "emphasis": "none",
+          "interactive": true
+        },
+        "rayCA": {
+          "visible": false,
+          "emphasis": "none",
+          "interactive": true
         }
       }
     },
     {
       "id": "step5",
-      "label": "Contenencia angular",
+      "label": "Ángulos congruentes",
       "description": "Describa qué cambia y por qué.",
       "visibleTargets": [
         "pA",
@@ -2452,230 +2618,15 @@ export const DemoAnguloExternoSpec = createDiagramSpec(
         "rayBC",
         "midAC",
         "segBmidAC",
+        "rayBmidAC",
         "segmidACF",
         "segAmidAC",
         "segmidACC",
         "segCF",
-        "nonReflexAnglemidACCF",
+        "polygonABmidAC",
+        "polygonCFmidAC",
+        "segBmidAC_2",
         "nonReflexAngleBAC",
-        "rayCF_2",
-        "nonReflexAngleACD"
-      ],
-      "durationMs": 1800,
-      "objectStates": {
-        "pA": {
-          "visible": true,
-          "emphasis": "none",
-          "interactive": true
-        },
-        "pB": {
-          "visible": true,
-          "emphasis": "none",
-          "interactive": true
-        },
-        "pC": {
-          "visible": true,
-          "emphasis": "none",
-          "interactive": true
-        },
-        "pD": {
-          "visible": true,
-          "emphasis": "none",
-          "interactive": true
-        },
-        "pF": {
-          "visible": true,
-          "emphasis": "none",
-          "interactive": true
-        },
-        "polygonABC": {
-          "visible": true,
-          "emphasis": "none",
-          "interactive": true
-        },
-        "segAB": {
-          "visible": true,
-          "emphasis": "none",
-          "interactive": true
-        },
-        "segBC": {
-          "visible": true,
-          "emphasis": "none",
-          "interactive": true
-        },
-        "segAC": {
-          "visible": true,
-          "emphasis": "none",
-          "interactive": true
-        },
-        "rayBC": {
-          "visible": true,
-          "emphasis": "none",
-          "interactive": true
-        },
-        "nonReflexAngleABC": {
-          "visible": false,
-          "emphasis": "none",
-          "interactive": true
-        },
-        "nonReflexAngleBAC": {
-          "visible": true,
-          "emphasis": "secondary",
-          "interactive": true
-        },
-        "nonReflexAngleBCA": {
-          "visible": false,
-          "emphasis": "none",
-          "interactive": true
-        },
-        "nonReflexAngleBCD": {
-          "visible": false,
-          "emphasis": "none",
-          "interactive": true
-        },
-        "midAC": {
-          "visible": true,
-          "emphasis": "none",
-          "interactive": true
-        },
-        "segBmidAC": {
-          "visible": true,
-          "emphasis": "none",
-          "interactive": true
-        },
-        "rayBmidAC": {
-          "visible": false,
-          "emphasis": "none",
-          "interactive": true
-        },
-        "segmidACF": {
-          "visible": true,
-          "emphasis": "none",
-          "interactive": true
-        },
-        "segCF": {
-          "visible": true,
-          "emphasis": "none",
-          "interactive": true
-        },
-        "polygonABmidAC": {
-          "visible": false,
-          "emphasis": "none",
-          "interactive": true
-        },
-        "polygonCFmidAC": {
-          "visible": false,
-          "emphasis": "none",
-          "interactive": true
-        },
-        "nonReflexAngleAmidACB": {
-          "visible": false,
-          "emphasis": "none",
-          "interactive": true
-        },
-        "nonReflexAngleCmidACF": {
-          "visible": false,
-          "emphasis": "none",
-          "interactive": true
-        },
-        "nonReflexAnglemidACCF": {
-          "visible": true,
-          "emphasis": "primary",
-          "interactive": true
-        },
-        "rayCF": {
-          "visible": false,
-          "emphasis": "none",
-          "interactive": true
-        },
-        "nonReflexAngleACD": {
-          "visible": true,
-          "emphasis": "secondary",
-          "interactive": true
-        },
-        "segAmidAC": {
-          "visible": true,
-          "emphasis": "none",
-          "interactive": true
-        },
-        "segmidACC": {
-          "visible": true,
-          "emphasis": "none",
-          "interactive": true
-        },
-        "congruenceMarkAmidAC": {
-          "visible": false,
-          "emphasis": "none",
-          "interactive": true
-        },
-        "congruenceMarkmidACC": {
-          "visible": false,
-          "emphasis": "none",
-          "interactive": true
-        },
-        "congruenceMarkBmidAC": {
-          "visible": false,
-          "emphasis": "none",
-          "interactive": true
-        },
-        "congruenceMarkmidACF": {
-          "visible": false,
-          "emphasis": "none",
-          "interactive": true
-        },
-        "rayCF_2": {
-          "visible": true,
-          "emphasis": "secondary",
-          "interactive": true
-        },
-        "midG": {
-          "visible": false,
-          "emphasis": "none",
-          "interactive": true
-        },
-        "segAG": {
-          "visible": false,
-          "emphasis": "none",
-          "interactive": true
-        },
-        "congruenceMarkmidBCG": {
-          "visible": false,
-          "emphasis": "none",
-          "interactive": true
-        },
-        "congruenceMarkAmidBC": {
-          "visible": false,
-          "emphasis": "none",
-          "interactive": true
-        },
-        "pH": {
-          "visible": false,
-          "emphasis": "none",
-          "interactive": true
-        },
-        "segBmidAC_2": {
-          "visible": false,
-          "emphasis": "none",
-          "interactive": true
-        }
-      }
-    },
-    {
-      "id": "step6",
-      "label": "Conclusión para el ángulo A",
-      "description": "Describa qué cambia y por qué.",
-      "visibleTargets": [
-        "pA",
-        "pB",
-        "pC",
-        "pD",
-        "polygonABC",
-        "segAB",
-        "segBC",
-        "segAC",
-        "rayBC",
-        "nonReflexAngleBAC",
-        "nonReflexAngleACD",
         "nonReflexAnglemidACCF"
       ],
       "durationMs": 1800,
@@ -2701,7 +2652,7 @@ export const DemoAnguloExternoSpec = createDiagramSpec(
           "interactive": true
         },
         "pF": {
-          "visible": false,
+          "visible": true,
           "emphasis": "none",
           "interactive": true
         },
@@ -2737,7 +2688,7 @@ export const DemoAnguloExternoSpec = createDiagramSpec(
         },
         "nonReflexAngleBAC": {
           "visible": true,
-          "emphasis": "secondary",
+          "emphasis": "primary",
           "interactive": true
         },
         "nonReflexAngleBCA": {
@@ -2751,12 +2702,249 @@ export const DemoAnguloExternoSpec = createDiagramSpec(
           "interactive": true
         },
         "midAC": {
-          "visible": false,
+          "visible": true,
           "emphasis": "none",
           "interactive": true
         },
         "segBmidAC": {
+          "visible": true,
+          "emphasis": "none",
+          "interactive": true
+        },
+        "rayBmidAC": {
+          "visible": true,
+          "emphasis": "none",
+          "interactive": true
+        },
+        "segmidACF": {
+          "visible": true,
+          "emphasis": "none",
+          "interactive": true
+        },
+        "segCF": {
+          "visible": true,
+          "emphasis": "none",
+          "interactive": true
+        },
+        "polygonABmidAC": {
+          "visible": true,
+          "emphasis": "secondary",
+          "interactive": true
+        },
+        "polygonCFmidAC": {
+          "visible": true,
+          "emphasis": "secondary",
+          "interactive": true
+        },
+        "nonReflexAngleAmidACB": {
           "visible": false,
+          "emphasis": "none",
+          "interactive": true
+        },
+        "nonReflexAngleCmidACF": {
+          "visible": false,
+          "emphasis": "none",
+          "interactive": true
+        },
+        "nonReflexAnglemidACCF": {
+          "visible": true,
+          "emphasis": "primary",
+          "interactive": true
+        },
+        "rayCF": {
+          "visible": false,
+          "emphasis": "none",
+          "interactive": true
+        },
+        "nonReflexAngleACD": {
+          "visible": false,
+          "emphasis": "none",
+          "interactive": true
+        },
+        "segAmidAC": {
+          "visible": true,
+          "emphasis": "none",
+          "interactive": true
+        },
+        "segmidACC": {
+          "visible": true,
+          "emphasis": "none",
+          "interactive": true
+        },
+        "congruenceMarkAmidAC": {
+          "visible": false,
+          "emphasis": "none",
+          "interactive": true
+        },
+        "congruenceMarkmidACC": {
+          "visible": false,
+          "emphasis": "none",
+          "interactive": true
+        },
+        "congruenceMarkBmidAC": {
+          "visible": false,
+          "emphasis": "none",
+          "interactive": true
+        },
+        "congruenceMarkmidACF": {
+          "visible": false,
+          "emphasis": "none",
+          "interactive": true
+        },
+        "rayCF_2": {
+          "visible": false,
+          "emphasis": "none",
+          "interactive": true
+        },
+        "midG": {
+          "visible": false,
+          "emphasis": "none",
+          "interactive": true
+        },
+        "segAG": {
+          "visible": false,
+          "emphasis": "none",
+          "interactive": true
+        },
+        "congruenceMarkmidBCG": {
+          "visible": false,
+          "emphasis": "none",
+          "interactive": true
+        },
+        "congruenceMarkAmidBC": {
+          "visible": false,
+          "emphasis": "none",
+          "interactive": true
+        },
+        "pH": {
+          "visible": false,
+          "emphasis": "none",
+          "interactive": true
+        },
+        "segBmidAC_2": {
+          "visible": true,
+          "emphasis": "none",
+          "interactive": true
+        },
+        "halfACD": {
+          "visible": false,
+          "emphasis": "none",
+          "interactive": true
+        },
+        "halfBCA": {
+          "visible": false,
+          "emphasis": "none",
+          "interactive": true
+        },
+        "rayCA": {
+          "visible": false,
+          "emphasis": "none",
+          "interactive": true
+        }
+      }
+    },
+    {
+      "id": "step6",
+      "label": "Contenencia angular",
+      "description": "Describa qué cambia y por qué.",
+      "visibleTargets": [
+        "pA",
+        "pB",
+        "pC",
+        "pD",
+        "polygonABC",
+        "segAB",
+        "segBC",
+        "segAC",
+        "rayBC",
+        "nonReflexAngleACD",
+        "halfACD",
+        "halfBCA",
+        "rayCF",
+        "pF",
+        "midAC",
+        "segBmidAC",
+        "segmidACF"
+      ],
+      "durationMs": 1800,
+      "objectStates": {
+        "pA": {
+          "visible": true,
+          "emphasis": "none",
+          "interactive": true
+        },
+        "pB": {
+          "visible": true,
+          "emphasis": "none",
+          "interactive": true
+        },
+        "pC": {
+          "visible": true,
+          "emphasis": "none",
+          "interactive": true
+        },
+        "pD": {
+          "visible": true,
+          "emphasis": "none",
+          "interactive": true
+        },
+        "pF": {
+          "visible": true,
+          "emphasis": "primary",
+          "interactive": true
+        },
+        "polygonABC": {
+          "visible": true,
+          "emphasis": "none",
+          "interactive": true
+        },
+        "segAB": {
+          "visible": true,
+          "emphasis": "none",
+          "interactive": true
+        },
+        "segBC": {
+          "visible": true,
+          "emphasis": "none",
+          "interactive": true
+        },
+        "segAC": {
+          "visible": true,
+          "emphasis": "none",
+          "interactive": true
+        },
+        "rayBC": {
+          "visible": true,
+          "emphasis": "none",
+          "interactive": true
+        },
+        "nonReflexAngleABC": {
+          "visible": false,
+          "emphasis": "none",
+          "interactive": true
+        },
+        "nonReflexAngleBAC": {
+          "visible": false,
+          "emphasis": "none",
+          "interactive": true
+        },
+        "nonReflexAngleBCA": {
+          "visible": false,
+          "emphasis": "none",
+          "interactive": true
+        },
+        "nonReflexAngleBCD": {
+          "visible": false,
+          "emphasis": "none",
+          "interactive": true
+        },
+        "midAC": {
+          "visible": true,
+          "emphasis": "none",
+          "interactive": true
+        },
+        "segBmidAC": {
+          "visible": true,
           "emphasis": "none",
           "interactive": true
         },
@@ -2766,7 +2954,7 @@ export const DemoAnguloExternoSpec = createDiagramSpec(
           "interactive": true
         },
         "segmidACF": {
-          "visible": false,
+          "visible": true,
           "emphasis": "none",
           "interactive": true
         },
@@ -2796,13 +2984,13 @@ export const DemoAnguloExternoSpec = createDiagramSpec(
           "interactive": true
         },
         "nonReflexAnglemidACCF": {
-          "visible": true,
-          "emphasis": "secondary",
+          "visible": false,
+          "emphasis": "none",
           "interactive": true
         },
         "rayCF": {
-          "visible": false,
-          "emphasis": "none",
+          "visible": true,
+          "emphasis": "primary",
           "interactive": true
         },
         "nonReflexAngleACD": {
@@ -2872,6 +3060,257 @@ export const DemoAnguloExternoSpec = createDiagramSpec(
         },
         "segBmidAC_2": {
           "visible": false,
+          "emphasis": "none",
+          "interactive": true
+        },
+        "halfACD": {
+          "visible": true,
+          "emphasis": "none",
+          "interactive": true
+        },
+        "halfBCA": {
+          "visible": true,
+          "emphasis": "secondary",
+          "interactive": true
+        },
+        "rayCA": {
+          "visible": false,
+          "emphasis": "none",
+          "interactive": true
+        }
+      }
+    },
+    {
+      "id": "step7",
+      "label": "Contenencia angular 2",
+      "description": "Describa qué cambia y por qué.",
+      "visibleTargets": [
+        "pA",
+        "pB",
+        "pC",
+        "pD",
+        "polygonABC",
+        "segAB",
+        "segBC",
+        "segAC",
+        "rayBC",
+        "nonReflexAnglemidACCF",
+        "nonReflexAngleBAC",
+        "rayCF_2",
+        "pF",
+        "rayCA",
+        "nonReflexAngleACD",
+        "midAC"
+      ],
+      "durationMs": 1800,
+      "objectStates": {
+        "pA": {
+          "visible": true,
+          "emphasis": "none",
+          "interactive": true
+        },
+        "pB": {
+          "visible": true,
+          "emphasis": "none",
+          "interactive": true
+        },
+        "pC": {
+          "visible": true,
+          "emphasis": "none",
+          "interactive": true
+        },
+        "pD": {
+          "visible": true,
+          "emphasis": "none",
+          "interactive": true
+        },
+        "pF": {
+          "visible": true,
+          "emphasis": "none",
+          "interactive": true
+        },
+        "polygonABC": {
+          "visible": true,
+          "emphasis": "none",
+          "interactive": true
+        },
+        "segAB": {
+          "visible": true,
+          "emphasis": "none",
+          "interactive": true
+        },
+        "segBC": {
+          "visible": true,
+          "emphasis": "none",
+          "interactive": true
+        },
+        "segAC": {
+          "visible": true,
+          "emphasis": "none",
+          "interactive": true
+        },
+        "rayBC": {
+          "visible": true,
+          "emphasis": "none",
+          "interactive": true
+        },
+        "nonReflexAngleABC": {
+          "visible": false,
+          "emphasis": "none",
+          "interactive": true
+        },
+        "nonReflexAngleBAC": {
+          "visible": true,
+          "emphasis": "primary",
+          "interactive": true
+        },
+        "nonReflexAngleBCA": {
+          "visible": false,
+          "emphasis": "none",
+          "interactive": true
+        },
+        "nonReflexAngleBCD": {
+          "visible": false,
+          "emphasis": "none",
+          "interactive": true
+        },
+        "midAC": {
+          "visible": true,
+          "emphasis": "none",
+          "interactive": true
+        },
+        "segBmidAC": {
+          "visible": false,
+          "emphasis": "none",
+          "interactive": true
+        },
+        "rayBmidAC": {
+          "visible": false,
+          "emphasis": "none",
+          "interactive": true
+        },
+        "segmidACF": {
+          "visible": false,
+          "emphasis": "none",
+          "interactive": true
+        },
+        "segCF": {
+          "visible": false,
+          "emphasis": "none",
+          "interactive": true
+        },
+        "polygonABmidAC": {
+          "visible": false,
+          "emphasis": "none",
+          "interactive": true
+        },
+        "polygonCFmidAC": {
+          "visible": false,
+          "emphasis": "none",
+          "interactive": true
+        },
+        "nonReflexAngleAmidACB": {
+          "visible": false,
+          "emphasis": "none",
+          "interactive": true
+        },
+        "nonReflexAngleCmidACF": {
+          "visible": false,
+          "emphasis": "none",
+          "interactive": true
+        },
+        "nonReflexAnglemidACCF": {
+          "visible": true,
+          "emphasis": "primary",
+          "interactive": true
+        },
+        "rayCF": {
+          "visible": false,
+          "emphasis": "none",
+          "interactive": true
+        },
+        "nonReflexAngleACD": {
+          "visible": true,
+          "emphasis": "secondary",
+          "interactive": true
+        },
+        "segAmidAC": {
+          "visible": false,
+          "emphasis": "none",
+          "interactive": true
+        },
+        "segmidACC": {
+          "visible": false,
+          "emphasis": "none",
+          "interactive": true
+        },
+        "congruenceMarkAmidAC": {
+          "visible": false,
+          "emphasis": "none",
+          "interactive": true
+        },
+        "congruenceMarkmidACC": {
+          "visible": false,
+          "emphasis": "none",
+          "interactive": true
+        },
+        "congruenceMarkBmidAC": {
+          "visible": false,
+          "emphasis": "none",
+          "interactive": true
+        },
+        "congruenceMarkmidACF": {
+          "visible": false,
+          "emphasis": "none",
+          "interactive": true
+        },
+        "rayCF_2": {
+          "visible": true,
+          "emphasis": "secondary",
+          "interactive": true
+        },
+        "midG": {
+          "visible": false,
+          "emphasis": "none",
+          "interactive": true
+        },
+        "segAG": {
+          "visible": false,
+          "emphasis": "none",
+          "interactive": true
+        },
+        "congruenceMarkmidBCG": {
+          "visible": false,
+          "emphasis": "none",
+          "interactive": true
+        },
+        "congruenceMarkAmidBC": {
+          "visible": false,
+          "emphasis": "none",
+          "interactive": true
+        },
+        "pH": {
+          "visible": false,
+          "emphasis": "none",
+          "interactive": true
+        },
+        "segBmidAC_2": {
+          "visible": false,
+          "emphasis": "none",
+          "interactive": true
+        },
+        "halfACD": {
+          "visible": false,
+          "emphasis": "none",
+          "interactive": true
+        },
+        "halfBCA": {
+          "visible": false,
+          "emphasis": "none",
+          "interactive": true
+        },
+        "rayCA": {
+          "visible": true,
           "emphasis": "none",
           "interactive": true
         }
