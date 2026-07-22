@@ -3,8 +3,8 @@ import { createDiagramSpec, DiagramRenderer } from '@/shared/diagrams/public';
 /* @matematika-diagram-spec:start */
 export const Incidence3Spec = createDiagramSpec(
 {
-  "version": 2,
-  "renderer": "matematika-diagram-renderer-v2",
+  "version": 3,
+  "renderer": "matematika-diagram-renderer-v3",
   "title": "Axioma de Incidencia III",
   "componentId": "incidence3",
   "category": "Axiomas",
@@ -45,7 +45,7 @@ export const Incidence3Spec = createDiagramSpec(
     }
   ],
   "groups": [],
-  "points": [
+  "objects": [
     {
       "id": "pA",
       "label": "A",
@@ -62,15 +62,21 @@ export const Incidence3Spec = createDiagramSpec(
       },
       "target": true,
       "targetId": "pA",
-      "style": {
-        "pointSize": 7,
-        "highlightPointSize": 10,
+      "objectType": "point",
+      "definition": {
+        "type": "coordinates",
+        "x": -1.7,
+        "y": 3.71
+      },
+      "mobility": {
+        "type": "free"
+      },
+      "appearance": {
+        "size": 7,
+        "highlightSize": 10,
         "preserveColorOnHighlight": true
       },
-      "x": -1.7,
-      "y": 3.71,
-      "fixed": false,
-      "constraint": "free"
+      "interaction": {}
     },
     {
       "id": "pB",
@@ -88,15 +94,21 @@ export const Incidence3Spec = createDiagramSpec(
       },
       "target": true,
       "targetId": "pB",
-      "style": {
-        "pointSize": 7,
-        "highlightPointSize": 10,
+      "objectType": "point",
+      "definition": {
+        "type": "coordinates",
+        "x": -3.18,
+        "y": -2.64
+      },
+      "mobility": {
+        "type": "free"
+      },
+      "appearance": {
+        "size": 7,
+        "highlightSize": 10,
         "preserveColorOnHighlight": true
       },
-      "x": -3.18,
-      "y": -2.64,
-      "fixed": false,
-      "constraint": "free"
+      "interaction": {}
     },
     {
       "id": "pC",
@@ -114,18 +126,22 @@ export const Incidence3Spec = createDiagramSpec(
       },
       "target": true,
       "targetId": "pC",
-      "style": {
-        "pointSize": 7,
-        "highlightPointSize": 10,
+      "objectType": "point",
+      "definition": {
+        "type": "coordinates",
+        "x": 3.51,
+        "y": -0.24
+      },
+      "mobility": {
+        "type": "free"
+      },
+      "appearance": {
+        "size": 7,
+        "highlightSize": 10,
         "preserveColorOnHighlight": true
       },
-      "x": 3.51,
-      "y": -0.24,
-      "fixed": false,
-      "constraint": "free"
-    }
-  ],
-  "elements": [
+      "interaction": {}
+    },
     {
       "id": "polygonABC",
       "label": "Polígono",
@@ -142,41 +158,25 @@ export const Incidence3Spec = createDiagramSpec(
       },
       "target": true,
       "targetId": "polygonABC",
-      "style": {
+      "objectType": "path",
+      "geometry": {
+        "type": "polygon",
+        "points": [
+          "pA",
+          "pB",
+          "pC"
+        ]
+      },
+      "appearance": {
+        "dashed": true,
         "strokeWidth": 3,
         "fillOpacity": 0.2
-      },
-      "kind": "polygon",
-      "refs": [
-        "pA",
-        "pB",
-        "pC"
-      ],
-      "dashed": true
+      }
     }
   ],
-  "sliders": [],
+  "relations": [],
   "steps": [],
-  "constraints": [],
-  "dependencies": [
-    {
-      "sourceId": "pA",
-      "targetId": "polygonABC",
-      "relation": "construction"
-    },
-    {
-      "sourceId": "pB",
-      "targetId": "polygonABC",
-      "relation": "construction"
-    },
-    {
-      "sourceId": "pC",
-      "targetId": "polygonABC",
-      "relation": "construction"
-    }
-  ],
-  "note": "Arrastra A, B, y C",
-  "extensions": {}
+  "note": "Arrastra A, B, y C"
 }
 );
 /* @matematika-diagram-spec:end */

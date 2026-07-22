@@ -49,11 +49,13 @@ import {
 import {
   attachLabelSelection,
   attachSelection,
+  diagramPointerSelectionWasHandled,
   releaseAuthoredAttraction,
   releaseInactiveAttractions,
   suspendInactiveAttractors,
   synchronizeElementAndLabelHover,
 } from './useDiagramSelection';
+import type { DiagramAnnotationPlacement, DiagramSelectionIntent } from './useDiagramSelection';
 import {
   annotationTextHtml,
   conditionAllows,
@@ -150,6 +152,14 @@ export function syncNativeElementLabel(
 ) {
   const label = nativeElementLabel(element);
   if (!label) return;
+  const previousCompassPosition = typeof element.__matematikaLabelPosition === 'string'
+    ? element.__matematikaLabelPosition
+    : undefined;
+  const compassPosition = typeof state.labelPosition === 'string'
+    ? state.labelPosition
+    : state.labelPosition === undefined && previousCompassPosition
+      ? 'urt'
+      : undefined;
   label.setText?.(renderKatexTextToHtml(state.text));
   (label.rendNode as HTMLElement | undefined)?.style.setProperty('--diagram-label-highlight-color', state.highlightColor);
   if (state.fontSize !== undefined) {
@@ -160,15 +170,28 @@ export function syncNativeElementLabel(
     visible: state.visible && state.text.trim().length > 0,
     color: state.color,
     strokeColor: state.color,
-    highlightColor: state.highlightColor,
     highlightStrokeColor: state.highlightColor,
     opacity: state.opacity,
     strokeOpacity: state.opacity,
     highlightStrokeOpacity: state.opacity,
     ...(state.fontSize !== undefined ? { fontSize: state.fontSize } : {}),
-    ...(typeof state.labelPosition === 'string' ? { position: state.labelPosition } : {}),
+    ...(compassPosition ? { position: compassPosition } : {}),
     ...(state.offset !== undefined ? { offset: state.offset } : {}),
   });
+
+  // JSXGraph reads native-label placement from the owning geometry as well as
+  // from the generated Text node. Updating both is required for point labels,
+  // and remembering the last explicit value lets “Automática” restore the
+  // library default after a preset has already been selected.
+  if (compassPosition) {
+    element.setAttribute?.({
+      label: {
+        position: compassPosition,
+        ...(state.offset !== undefined ? { offset: state.offset } : {}),
+      },
+    });
+  }
+  element.__matematikaLabelPosition = typeof state.labelPosition === 'string' ? state.labelPosition : undefined;
 
   if (state.labelPosition !== undefined && typeof state.labelPosition === 'number' && (element.elType === 'line' || element.elType === 'segment' || element.elType === 'arrow')) {
     const t = state.labelPosition;
@@ -199,6 +222,7 @@ export function createElement(
   layer: number,
   spec: DiagramSpecV2,
   liftedIntoHeader = false,
+  editableAnnotation = false,
 ) {
   const refs = refsFor(item, elements);
   const highlightable = item.selection.highlightable !== false;
@@ -230,6 +254,7 @@ export function createElement(
   if (item.kind === 'ray') return refs.length >= 2 ? createRay(board, [refs[0], refs[1]], lineOptions, theme) : null;
   if (item.kind === 'polygon') return refs.length >= 3 ? createPolygon(board, refs, {
     highlight: highlightable,
+    hasInnerPoints: true,
     fillColor: theme[item.color], highlightFillColor: hoverColor, fillOpacity: item.style?.fillOpacity ?? 0.1,
     highlightFillOpacity: item.style?.highlightFillOpacity ?? 0.24,
     fixed: true,
@@ -239,21 +264,29 @@ export function createElement(
     ...lineOptions, fillColor: theme[item.color], fillOpacity: item.style?.fillOpacity ?? 0,
     highlightFillOpacity: item.style?.highlightFillOpacity ?? 0.2,
   }, theme) : null;
-  if (item.kind === 'arc') return refs.length >= 3 ? createArc(board, [refs[0], refs[1], refs[2]], lineOptions, theme) : null;
+  if (item.kind === 'arc') {
+    if (refs.length < 3) return null;
+    const directedRefs: [typeof refs[number], typeof refs[number], typeof refs[number]] = item.properties?.clockwise
+      ? [refs[0], refs[2], refs[1]]
+      : [refs[0], refs[1], refs[2]];
+    return createArc(board, directedRefs, lineOptions, theme);
+  }
   if (item.kind === 'functionCurve' && item.properties?.expression) {
     const domain = item.properties.domain ?? [-5, 5];
     const parameter = item.properties.parameter ?? 'x';
+    const samples = item.properties.samples ?? 128;
     return createFunctionCurve(board, value => {
       try {
         return evaluateMathExpression(item.properties?.expression ?? '0', { ...liveVariables(elements, spec), [parameter]: value, x: value });
       } catch {
         return Number.NaN;
       }
-    }, domain, lineOptions, theme);
+    }, domain, { ...lineOptions, numberPointsHigh: samples, numberPointsLow: Math.min(samples, 64) }, theme);
   }
   if (item.kind === 'parametricCurve' && item.properties?.xExpression && item.properties.yExpression) {
     const domain = item.properties.domain ?? [0, Math.PI * 2];
     const parameter = item.properties.parameter ?? 't';
+    const samples = item.properties.samples ?? 128;
     const variables = (value: number) => ({ ...liveVariables(elements, spec), [parameter]: value, t: value });
     return createParametricCurve(
       board,
@@ -264,7 +297,7 @@ export function createElement(
         try { return evaluateMathExpression(item.properties?.yExpression ?? '0', variables(value)); } catch { return Number.NaN; }
       },
       domain,
-      lineOptions,
+      { ...lineOptions, numberPointsHigh: samples, numberPointsLow: Math.min(samples, 64) },
       theme,
     );
   }
@@ -278,7 +311,7 @@ export function createElement(
     strokeColor: theme[item.color],
     highlightFillColor: hoverColor,
     highlightStrokeColor: hoverColor,
-    label: { highlight: highlightable, highlightColor: hoverColor, highlightStrokeColor: hoverColor },
+    label: { highlight: highlightable, highlightStrokeColor: hoverColor },
     fixed: true,
     layer,
   }, theme) : null;
@@ -287,7 +320,7 @@ export function createElement(
     name: renderKatexTextToHtml(item.label), fillColor: theme[item.color], strokeColor: theme[item.color],
     size: item.style?.pointSize ?? 4,
     highlightFillColor: hoverColor, highlightStrokeColor: hoverColor,
-    label: { highlight: highlightable, highlightColor: hoverColor, highlightStrokeColor: hoverColor },
+    label: { highlight: highlightable, highlightStrokeColor: hoverColor },
     fixed: true, layer,
   }, theme) : null;
   if (item.kind === 'perpendicularFoot') return refs.length >= 3 ? createPerpendicularFoot(board, [refs[0], refs[1], refs[2]], {
@@ -295,14 +328,16 @@ export function createElement(
     name: renderKatexTextToHtml(item.label), fillColor: theme[item.color], strokeColor: theme[item.color],
     size: item.style?.pointSize ?? 4,
     highlightFillColor: hoverColor, highlightStrokeColor: hoverColor,
-    label: { highlight: highlightable, highlightColor: hoverColor, highlightStrokeColor: hoverColor },
+    label: { highlight: highlightable, highlightStrokeColor: hoverColor },
     fixed: true, layer,
   }, theme) : null;
   if (item.kind === 'baseExtension') return refs.length >= 3 ? createBaseExtensionToFoot(board, [refs[0], refs[1], refs[2]], lineOptions, theme) : null;
   if (item.kind === 'perpendicular') return refs.length >= 3 ? createPerpendicularLine(board, [refs[0], refs[1], refs[2]], lineOptions, theme) : null;
   if (item.kind === 'parallel') return refs.length >= 3 ? createParallelLine(board, [refs[0], refs[1], refs[2]], lineOptions, theme) : null;
   if (item.kind === 'angleBisector') return refs.length >= 3 ? createAngleBisectorRay(board, [refs[0], refs[1], refs[2]], lineOptions, theme) : null;
-  if (item.kind === 'angle') return refs.length >= 3 ? createAngle(board, [refs[0], refs[1], refs[2]], {
+  if (item.kind === 'angle') return refs.length >= 3 ? createAngle(board, item.properties?.clockwise
+    ? [refs[2], refs[1], refs[0]]
+    : [refs[0], refs[1], refs[2]], {
     ...lineOptions, fillColor: theme[item.color], highlightFillColor: hoverColor,
     fillOpacity: item.style?.fillOpacity ?? 0.1, highlightFillOpacity: item.style?.highlightFillOpacity ?? 0.28,
     radius: item.style?.angleRadius ?? DEFAULT_ANGLE_RADIUS, fixed: true, layer,
@@ -313,12 +348,12 @@ export function createElement(
     radius: item.style?.angleRadius ?? DEFAULT_ANGLE_RADIUS, fixed: true, layer,
   }, theme) : null;
   if (item.kind === 'rightAngle') return refs.length >= 3 ? createRightAngleMarker(board, [refs[0], refs[1], refs[2]], {
-    ...lineOptions, fillColor: theme[item.color], highlightFillColor: hoverColor,
+    ...lineOptions, hasInnerPoints: true, fillColor: theme[item.color], highlightFillColor: hoverColor,
     fillOpacity: item.style?.fillOpacity ?? 0.1, highlightFillOpacity: item.style?.highlightFillOpacity ?? 0.28,
     size: item.style?.angleRadius ?? DEFAULT_RIGHT_ANGLE_RADIUS, fixed: true, layer,
   }, theme) : null;
   if (item.kind === 'perpendicularMark') return refs.length >= 3 ? createRightAngleMarker(board, [refs[0], refs[1], refs[2]], {
-    ...lineOptions, fillColor: theme[item.color], highlightFillColor: hoverColor,
+    ...lineOptions, hasInnerPoints: true, fillColor: theme[item.color], highlightFillColor: hoverColor,
     fillOpacity: item.style?.fillOpacity ?? 0.1, highlightFillOpacity: item.style?.highlightFillOpacity ?? 0.28,
     size: item.style?.angleRadius ?? DEFAULT_RIGHT_ANGLE_RADIUS, fixed: true, layer,
   }, theme) : null;
@@ -363,7 +398,7 @@ export function createElement(
     refs,
     item.properties?.rows ?? 2,
     item.properties?.columns ?? 2,
-    { highlight: highlightable, fillColor: theme[item.color], fillOpacity: item.style?.fillOpacity ?? 0.1, borders: lineOptions, fixed: true, layer },
+    { highlight: highlightable, hasInnerPoints: true, fillColor: theme[item.color], fillOpacity: item.style?.fillOpacity ?? 0.1, borders: lineOptions, fixed: true, layer },
     theme,
   ) : null;
   const anchor = refs[0];
@@ -373,7 +408,7 @@ export function createElement(
     ? item.properties.viewportPosition
     : undefined;
   const viewportPanelAnchor = viewportPosition ? viewportPanelAnchors(viewportPosition) : undefined;
-  const textCoordinates: [() => number, () => number, () => string] | null = viewportPosition
+  const reactiveTextCoordinates: [() => number, () => number, () => string] | null = viewportPosition
     ? [
       () => viewportPositionCoordinates(board, viewportPosition, spec.viewport.bounds)[0],
       () => viewportPositionCoordinates(board, viewportPosition, spec.viewport.bounds)[1],
@@ -386,10 +421,13 @@ export function createElement(
         dynamicText,
       ]
       : null;
+  const textCoordinates: [number | (() => number), number | (() => number), () => string] | null = reactiveTextCoordinates && editableAnnotation
+    ? [reactiveTextCoordinates[0](), reactiveTextCoordinates[1](), dynamicText]
+    : reactiveTextCoordinates;
   return textCoordinates ? createText(board, textCoordinates, {
     highlight: highlightable,
     color: theme[item.color],
-    fixed: true,
+    fixed: !editableAnnotation,
     layer,
     ...(item.style?.labelSize !== undefined ? { fontSize: item.style.labelSize } : {}),
     ...(viewportPanelAnchor ?? {}),
@@ -414,8 +452,10 @@ export interface UseBoardLifecycleOptions {
   effectiveStepId?: string;
   bounds: DiagramBounds;
   interactionCallbacksRef: MutableRefObject<{
-    onSelectionChange?: (id: string) => void;
+    onSelectionChange?: (id: string, intent?: DiagramSelectionIntent) => void;
     onPointMove?: (id: string, x: number, y: number) => void;
+    onSliderChange?: (id: string, value: number) => void;
+    onAnnotationMove?: (id: string, placement: DiagramAnnotationPlacement) => void;
     onCanvasPointCreate?: (x: number, y: number) => void;
   }>;
   setTargetHighlight: (target: string | null) => void;
@@ -442,9 +482,38 @@ export function useBoardLifecycle({
   const handleBoardInit = (board: any, elements: Record<string, any>, theme: ThemeColors) => {
     if (mode === 'editor') {
       board.on('down', (event: unknown) => {
+        const objects = board.getAllObjectsUnderMouse?.(event);
+        if (!diagramPointerSelectionWasHandled(event) && Array.isArray(objects)) {
+          const selectableIds = new Set([...spec.points, ...spec.elements, ...spec.sliders]
+            .filter(item => item.selection.selectable)
+            .map(item => item.id));
+          const pointerEvent = event as { target?: EventTarget | null; shiftKey?: boolean };
+          const pointerTarget = pointerEvent.target instanceof Element ? pointerEvent.target : null;
+          const targetNode = pointerTarget?.closest('[data-diagram-object-id], [data-diagram-part-of]');
+          const targetId = targetNode?.getAttribute('data-diagram-object-id') ?? targetNode?.getAttribute('data-diagram-part-of');
+          const hitIds = objects.flatMap(hit => {
+            const match = Object.entries(elements).find(([, rendered]) => (
+              rendered === hit
+              || rendered?.label === hit
+              || rendered?.borders?.includes(hit)
+            ));
+            return match && selectableIds.has(match[0]) ? [match[0]] : [];
+          });
+          const pointLikeIds = new Set([
+            ...spec.points.map(point => point.id),
+            ...spec.elements.filter(item => ['intersection', 'midpoint', 'perpendicularFoot'].includes(item.kind)).map(item => item.id),
+          ]);
+          const pointHitId = hitIds.find(id => pointLikeIds.has(id));
+          const selectedHitId = pointHitId
+            ?? (targetId && selectableIds.has(targetId) ? targetId : undefined)
+            ?? hitIds[hitIds.length - 1];
+          if (selectedHitId) {
+            interactionCallbacksRef.current.onSelectionChange?.(selectedHitId, { additive: pointerEvent.shiftKey === true });
+            return;
+          }
+        }
         const createPointAt = interactionCallbacksRef.current.onCanvasPointCreate;
         if (!createPointAt) return;
-        const objects = board.getAllObjectsUnderMouse?.(event);
         if (Array.isArray(objects) && objects.length > 0) return;
         const coordinates = board.getUsrCoordsOfMouse?.(event);
         if (Array.isArray(coordinates) && coordinates.length >= 2) createPointAt(coordinates[0], coordinates[1]);
@@ -459,8 +528,8 @@ export function useBoardLifecycle({
         highlight: highlightable,
         visible: spec.showLabels !== false && (!('showLabel' in sceneItem) || sceneItem.showLabel !== false),
         ...('constraint' in sceneItem && sceneItem.style?.labelSize !== undefined ? { fontSize: sceneItem.style.labelSize } : {}),
+        ...('constraint' in sceneItem && typeof sceneItem.style?.labelPosition === 'string' ? { position: sceneItem.style.labelPosition } : {}),
         ...(sceneItem.style?.labelOffset ? { offset: sceneItem.style.labelOffset } : {}),
-        highlightColor: hoverColor,
         highlightStrokeColor: hoverColor,
       };
       if ('constraint' in sceneItem) {
@@ -496,6 +565,7 @@ export function useBoardLifecycle({
             name: renderKatexTextToHtml(sceneItem.label),
             fixed: true,
             ...(sceneItem.style?.pointSize !== undefined ? { size: sceneItem.style.pointSize } : {}),
+            ...(sceneItem.style?.highlightPointSize !== undefined ? { highlightSize: sceneItem.style.highlightPointSize } : {}),
             fillColor: theme[sceneItem.color],
             strokeColor: theme[sceneItem.color],
             highlightFillColor: hoverColor,
@@ -509,6 +579,7 @@ export function useBoardLifecycle({
             name: renderKatexTextToHtml(sceneItem.label),
             fixed: directInteractionLocked,
             ...(sceneItem.style?.pointSize !== undefined ? { size: sceneItem.style.pointSize } : {}),
+            ...(sceneItem.style?.highlightPointSize !== undefined ? { highlightSize: sceneItem.style.highlightPointSize } : {}),
             fillColor: theme[sceneItem.color],
             strokeColor: theme[sceneItem.color],
             highlightFillColor: hoverColor,
@@ -521,6 +592,7 @@ export function useBoardLifecycle({
             name: renderKatexTextToHtml(sceneItem.label),
             fixed: directInteractionLocked,
             ...(sceneItem.style?.pointSize !== undefined ? { size: sceneItem.style.pointSize } : {}),
+            ...(sceneItem.style?.highlightPointSize !== undefined ? { highlightSize: sceneItem.style.highlightPointSize } : {}),
             fillColor: theme[sceneItem.color],
             strokeColor: theme[sceneItem.color],
             highlightFillColor: hoverColor,
@@ -582,7 +654,29 @@ export function useBoardLifecycle({
           itemLayerNumber(spec, sceneItem),
           spec,
           mode === 'runtime' && allHeaderItemIds.has(sceneItem.id),
+          mode === 'editor' && !directInteractionLocked && ['text', 'label', 'formula', 'infoPanel', 'measurement'].includes(sceneItem.kind),
         );
+        if (!directInteractionLocked && ['text', 'label', 'formula', 'infoPanel', 'measurement'].includes(sceneItem.kind)) {
+          elements[sceneItem.id]?.on?.('up', () => {
+            const rendered = elements[sceneItem.id];
+            const x = rendered?.X?.();
+            const y = rendered?.Y?.();
+            if (!Number.isFinite(x) || !Number.isFinite(y)) return;
+            if (sceneItem.kind === 'infoPanel' && sceneItem.properties?.anchorMode === 'viewport') {
+              const width = bounds[2] - bounds[0];
+              const height = bounds[1] - bounds[3];
+              const clamp = (value: number) => Math.max(0, Math.min(1, value));
+              interactionCallbacksRef.current.onAnnotationMove?.(sceneItem.id, {
+                viewportPosition: [clamp((x - bounds[0]) / width), clamp((bounds[1] - y) / height)],
+              });
+              return;
+            }
+            const anchor = referencedLabelAnchor(sceneItem.refs[0], sceneItem.properties?.anchorParameter ?? 0.5, elements, spec);
+            interactionCallbacksRef.current.onAnnotationMove?.(sceneItem.id, {
+              textOffset: [x - anchor[0], y - anchor[1]],
+            });
+          });
+        }
       } else {
         const maximum = sliderMaximum(sceneItem, elements, spec);
         elements[sceneItem.id] = createSlider(board, [[sceneItem.x, sceneItem.y], [sceneItem.x + 2.6, sceneItem.y]], [sceneItem.min, Math.min(sceneItem.value, maximum), maximum], {
@@ -599,10 +693,13 @@ export function useBoardLifecycle({
             point1: { highlight: false },
             point2: { highlight: false },
           } : {}),
-          label: { highlight: highlightable, highlightColor: hoverColor, highlightStrokeColor: hoverColor },
+          label: { highlight: highlightable, highlightStrokeColor: hoverColor },
           fixed: directInteractionLocked,
           layer: itemLayerNumber(spec, sceneItem),
         }, theme);
+        if (!directInteractionLocked) elements[sceneItem.id]?.on?.('up', () => {
+          interactionCallbacksRef.current.onSliderChange?.(sceneItem.id, elements[sceneItem.id].Value());
+        });
       }
       const element = elements[sceneItem.id];
       const keyboardAdjust = 'constraint' in sceneItem && !directInteractionLocked && sceneItem.constraint !== 'derived'
@@ -651,6 +748,7 @@ export function useBoardLifecycle({
                 : Math.min(maximum, Math.max(sceneItem.min, current + (key === 'ArrowLeft' || key === 'ArrowDown' ? -delta : delta)));
             element.setValue?.(next);
             board.update();
+            interactionCallbacksRef.current.onSliderChange?.(sceneItem.id, next);
             const node = element.rendNode as HTMLElement | undefined;
             node?.setAttribute('aria-valuemax', String(maximum));
             node?.setAttribute('aria-valuenow', String(next));
@@ -661,7 +759,7 @@ export function useBoardLifecycle({
         element,
         sceneItem,
         mode,
-        id => interactionCallbacksRef.current.onSelectionChange?.(id),
+        (id, intent) => interactionCallbacksRef.current.onSelectionChange?.(id, intent),
         setTargetHighlight,
         keyboardAdjust,
       );
@@ -672,7 +770,7 @@ export function useBoardLifecycle({
         element,
         sceneItem,
         mode,
-        id => interactionCallbacksRef.current.onSelectionChange?.(id),
+        (id, intent) => interactionCallbacksRef.current.onSelectionChange?.(id, intent),
         setTargetHighlight,
       );
       synchronizeElementAndLabelHover(element, sceneItem);
@@ -727,18 +825,21 @@ export function useBoardLifecycle({
         return source?.selection.dimOthersOnHighlight !== false;
       });
     const shouldDimOthers = plan.some(entry => entry.selected) || externalHighlightRequestsDimming;
+    const hasExternalHighlight = plan.some(entry => entry.highlighted);
     plan.forEach(entry => {
       const item = entry.item;
       const element = elements[item.id];
       if (!element) return;
       const externalActive = entry.highlighted || entry.selected;
-      const stepPrimary = entry.stepEmphasis === 'primary';
-      const stepSecondary = entry.stepEmphasis === 'secondary';
+      const stepPrimary = !hasExternalHighlight && entry.stepEmphasis === 'primary';
+      const stepSecondary = !hasExternalHighlight && entry.stepEmphasis === 'secondary';
       const active = externalActive || stepPrimary || stepSecondary;
       const opacity = externalActive || !shouldDimOthers ? 1 : 0.28;
       const color = externalActive && !item.style?.preserveColorOnHighlight
         ? theme.ocre
-        : stepPrimary ? theme.terracota : stepSecondary ? theme.pavo : theme[item.color];
+        : (stepPrimary || stepSecondary) && entry.stepEmphasisColor
+          ? theme[entry.stepEmphasisColor]
+          : theme[item.color];
       const sceneVisible = mode === 'editor' && externalActive
         ? true
         : entry.visible || (externalActive && item.style?.highlightVisible === true);

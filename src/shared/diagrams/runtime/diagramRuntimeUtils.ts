@@ -5,10 +5,16 @@ import type {
   DiagramSlider,
   DiagramSpecV2,
 } from '../spec';
-import { angleMeasureRadians, evaluateMathExpression, resolveInfoPanelBlock } from '../spec';
+import {
+  angleMeasureRadians,
+  evaluateMathExpression,
+  interpolateDiagramTemplate,
+  resolveInfoPanelBlock,
+} from '../spec';
+import { hasCoordinates, type JxgElementAdapter, type JxgElementMap } from './jsxgraphAdapter';
 
-export function outsideBaseExtension(baseA: any, baseB: any, foot: any): boolean {
-  if (!baseA || !baseB || !foot) return false;
+export function outsideBaseExtension(baseA: JxgElementAdapter | undefined, baseB: JxgElementAdapter | undefined, foot: JxgElementAdapter | undefined): boolean {
+  if (!hasCoordinates(baseA) || !hasCoordinates(baseB) || !hasCoordinates(foot)) return false;
   const dx = baseB.X() - baseA.X();
   const dy = baseB.Y() - baseA.Y();
   const lengthSquared = dx * dx + dy * dy;
@@ -19,19 +25,19 @@ export function outsideBaseExtension(baseA: any, baseB: any, foot: any): boolean
 
 export function intersectionBelongsToSupports(
   item: DiagramElement,
-  intersection: any,
-  elements: Record<string, any>,
+  intersection: JxgElementAdapter | undefined,
+  elements: JxgElementMap,
   spec: DiagramSpecV2,
 ): boolean {
   if (item.kind !== 'intersection' || item.properties?.restrictToSupports !== true) return true;
-  if (!intersection || !Number.isFinite(intersection.X?.()) || !Number.isFinite(intersection.Y?.())) return false;
+  if (!hasCoordinates(intersection) || !Number.isFinite(intersection.X()) || !Number.isFinite(intersection.Y())) return false;
   return item.refs.every(supportId => {
     const supportSpec = spec.elements.find(candidate => candidate.id === supportId);
     if (!supportSpec || !['segment', 'ray', 'angleBisector'].includes(supportSpec.kind)) return true;
     const support = elements[supportId];
     const start = support?.point1;
     const end = support?.point2;
-    if (!start || !end) return false;
+    if (!hasCoordinates(start) || !hasCoordinates(end)) return false;
     const dx = end.X() - start.X();
     const dy = end.Y() - start.Y();
     const lengthSquared = dx * dx + dy * dy;
@@ -42,15 +48,15 @@ export function intersectionBelongsToSupports(
   });
 }
 
-export function refsFor(item: DiagramElement, elements: Record<string, any>): any[] {
-  return item.refs.map(ref => elements[ref]).filter(Boolean);
+export function refsFor<T extends object>(item: DiagramElement, elements: Record<string, T | undefined>): T[] {
+  return item.refs.map(ref => elements[ref]).filter((element): element is T => Boolean(element));
 }
 
-export function liveVariables(elements: Record<string, any>, spec: DiagramSpecV2): Record<string, number> {
+export function liveVariables(elements: JxgElementMap, spec: DiagramSpecV2): Record<string, number> {
   const variables: Record<string, number> = {};
   spec.points.forEach(point => {
     const element = elements[point.id];
-    if (!element) return;
+    if (!hasCoordinates(element)) return;
     variables[`${point.id}.x`] = element.X();
     variables[`${point.id}.y`] = element.Y();
   });
@@ -60,7 +66,7 @@ export function liveVariables(elements: Record<string, any>, spec: DiagramSpecV2
   });
   spec.elements.forEach(item => {
     const element = elements[item.id];
-    if (element?.X && element?.Y) {
+    if (hasCoordinates(element)) {
       variables[`${item.id}.x`] = element.X();
       variables[`${item.id}.y`] = element.Y();
     }
@@ -73,7 +79,7 @@ export function liveVariables(elements: Record<string, any>, spec: DiagramSpecV2
       const first = elements[item.refs[0]];
       const vertex = elements[item.refs[1]];
       const second = elements[item.refs[2]];
-      const radians = first?.X && vertex?.X && second?.X
+      const radians = hasCoordinates(first) && hasCoordinates(vertex) && hasCoordinates(second)
         ? angleMeasureRadians(
             item.kind,
             { x: first.X(), y: first.Y() },
@@ -91,7 +97,7 @@ export function liveVariables(elements: Record<string, any>, spec: DiagramSpecV2
   return variables;
 }
 
-export function sliderMaximum(item: DiagramSlider, elements: Record<string, any>, spec: DiagramSpecV2): number {
+export function sliderMaximum(item: DiagramSlider, elements: JxgElementMap, spec: DiagramSpecV2): number {
   if (!item.maxExpression) return item.max;
   try {
     const evaluated = evaluateMathExpression(item.maxExpression, liveVariables(elements, spec));
@@ -101,17 +107,18 @@ export function sliderMaximum(item: DiagramSlider, elements: Record<string, any>
   }
 }
 
-export function conditionAllows(item: DiagramSceneItem, elements: Record<string, any>, spec: DiagramSpecV2): boolean {
-  const properties = (item as any).properties;
-  if (!properties?.showWhen) return true;
+export function conditionAllows(item: DiagramSceneItem, elements: JxgElementMap, spec: DiagramSpecV2): boolean {
+  const elementCondition = 'kind' in item ? item.properties?.visibleWhen : undefined;
+  const visibleWhen = item.visibleWhen ?? elementCondition;
+  if (!visibleWhen) return true;
   try {
-    return evaluateMathExpression(properties.showWhen, liveVariables(elements, spec)) !== 0;
+    return evaluateMathExpression(visibleWhen, liveVariables(elements, spec)) !== 0;
   } catch {
     return true;
   }
 }
 
-export function tickDistance(item: DiagramElement, elements: Record<string, any>, spec: DiagramSpecV2): number {
+export function tickDistance(item: DiagramElement, elements: JxgElementMap, spec: DiagramSpecV2): number {
   if (!item.properties?.tickDistanceExpression) return item.properties?.tickDistance ?? 1;
   try {
     const evaluated = evaluateMathExpression(item.properties.tickDistanceExpression, liveVariables(elements, spec));
@@ -121,7 +128,7 @@ export function tickDistance(item: DiagramElement, elements: Record<string, any>
   }
 }
 
-export function evaluatedValue(item: DiagramElement, elements: Record<string, any>, spec: DiagramSpecV2): number | undefined {
+export function evaluatedValue(item: DiagramElement, elements: JxgElementMap, spec: DiagramSpecV2): number | undefined {
   const expression = item.properties?.expression;
   try {
     if (expression) return evaluateMathExpression(expression, liveVariables(elements, spec));
@@ -133,38 +140,45 @@ export function evaluatedValue(item: DiagramElement, elements: Record<string, an
   }
 }
 
-export function measurementText(item: DiagramElement, elements: Record<string, any>, spec: DiagramSpecV2): string {
-  const text = item.text || `${item.label}: {value}`;
-  const variables = liveVariables(elements, spec);
-  const precision = item.properties?.precision ?? 2;
-  const unit = item.properties?.unit ? ` ${item.properties.unit}` : '';
-
-  const regex = /\{([^{}]+)\}/g;
-  return text.replace(regex, (original, expr) => {
-    if (expr === 'value') {
-      const val = evaluatedValue(item, elements, spec);
-      if (val === undefined) return 'valor no definido';
-      return `${val.toFixed(precision)}${unit}`;
-    }
-    try {
-      const val = evaluateMathExpression(expr, variables);
-      return `${val.toFixed(precision)}${unit}`;
-    } catch (err) {
-      console.error('ERROR EVALUANDO EXPRESIÓN:', expr, err, 'VARIABLES DISPONIBLES:', Object.keys(variables));
-      return original;
-    }
-  });
+function formatLegacyValue(value: number | undefined, precision: number, unit?: string): string {
+  if (value === undefined) return 'valor no definido';
+  const suffix = unit ? ` ${unit}` : '';
+  return `${value.toFixed(precision)}${suffix}`;
 }
 
-export function reactiveText(item: DiagramElement, elements: Record<string, any>, spec: DiagramSpecV2): string | undefined {
+function renderElementTemplate(
+  item: DiagramElement,
+  template: string,
+  elements: JxgElementMap,
+  spec: DiagramSpecV2,
+): string {
+  const variables = liveVariables(elements, spec);
+  const fallbackValue = evaluatedValue(item, elements, spec);
+  const precision = item.properties?.precision ?? 2;
+  const unit = item.properties?.unit;
+  const legacyValue = formatLegacyValue(fallbackValue, precision, unit);
+  return interpolateDiagramTemplate(template, variables, {
+    expression: item.properties?.expression,
+    precision,
+    unit,
+    undefinedValue: legacyValue,
+  }).split('{value}').join(legacyValue);
+}
+
+export function measurementText(item: DiagramElement, elements: JxgElementMap, spec: DiagramSpecV2): string {
+  const text = item.text || `${item.label}: {value}`;
+  return renderElementTemplate(item, text, elements, spec);
+}
+
+export function reactiveText(item: DiagramElement, elements: JxgElementMap, spec: DiagramSpecV2): string | undefined {
   const variables = liveVariables(elements, spec);
   const rule = item.properties?.textRules?.find(candidate => {
     try { return evaluateMathExpression(candidate.when, variables) !== 0; } catch { return false; }
   });
-  return rule?.text;
+  return rule ? renderElementTemplate(item, rule.text, elements, spec) : undefined;
 }
 
-export function annotationTextHtml(item: DiagramElement, elements: Record<string, any>, spec: DiagramSpecV2): string {
+export function annotationTextHtml(item: DiagramElement, elements: JxgElementMap, spec: DiagramSpecV2): string {
   const hasBraces = typeof item.text === 'string' && item.text.includes('{') && item.text.includes('}');
   const defaultText = item.kind === 'infoPanel' ? (item.text || '') : (item.text || item.label);
   const body = reactiveText(item, elements, spec) ?? (item.kind === 'measurement' || item.properties?.expression || hasBraces

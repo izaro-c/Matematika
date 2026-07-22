@@ -3,8 +3,8 @@ import { createDiagramSpec, DiagramRenderer } from '@/shared/diagrams/public';
 /* @matematika-diagram-spec:start */
 export const DesigualdadTriangularSpec = createDiagramSpec(
 {
-  "version": 2,
-  "renderer": "matematika-diagram-renderer-v2",
+  "version": 3,
+  "renderer": "matematika-diagram-renderer-v3",
   "title": "Desigualdad triangular",
   "componentId": "desigualdad-triangular",
   "category": "Teoremas",
@@ -160,7 +160,7 @@ export const DesigualdadTriangularSpec = createDiagramSpec(
       "color": "terracota"
     }
   ],
-  "points": [
+  "objects": [
     {
       "id": "A",
       "label": "A",
@@ -177,21 +177,28 @@ export const DesigualdadTriangularSpec = createDiagramSpec(
       },
       "target": true,
       "targetId": "A",
-      "style": {
-        "pointSize": 7,
-        "highlightPointSize": 10,
+      "objectType": "point",
+      "definition": {
+        "type": "coordinates",
+        "x": -3,
+        "y": -2
+      },
+      "mobility": {
+        "type": "constrained",
+        "relationIds": [
+          "sameA"
+        ]
+      },
+      "appearance": {
+        "size": 7,
+        "labelVisible": true,
+        "highlightSize": 10,
         "preserveColorOnHighlight": true
       },
-      "x": -3,
-      "y": -2,
-      "showLabel": true,
-      "fixed": false,
-      "constraint": "constrained",
-      "constraintIds": [
-        "sameA"
-      ],
-      "snapToGrid": true,
-      "snapSize": 0.25
+      "interaction": {
+        "snapToGrid": true,
+        "snapSize": 0.25
+      }
     },
     {
       "id": "B",
@@ -209,21 +216,28 @@ export const DesigualdadTriangularSpec = createDiagramSpec(
       },
       "target": true,
       "targetId": "B",
-      "style": {
-        "pointSize": 7,
-        "highlightPointSize": 10,
+      "objectType": "point",
+      "definition": {
+        "type": "coordinates",
+        "x": 3,
+        "y": -1.7
+      },
+      "mobility": {
+        "type": "constrained",
+        "relationIds": [
+          "sameB"
+        ]
+      },
+      "appearance": {
+        "size": 7,
+        "labelVisible": true,
+        "highlightSize": 10,
         "preserveColorOnHighlight": true
       },
-      "x": 3,
-      "y": -1.7,
-      "showLabel": true,
-      "fixed": false,
-      "constraint": "constrained",
-      "constraintIds": [
-        "sameB"
-      ],
-      "snapToGrid": true,
-      "snapSize": 0.25
+      "interaction": {
+        "snapToGrid": true,
+        "snapSize": 0.25
+      }
     },
     {
       "id": "C",
@@ -241,24 +255,29 @@ export const DesigualdadTriangularSpec = createDiagramSpec(
       },
       "target": true,
       "targetId": "C",
-      "style": {
-        "pointSize": 7,
-        "highlightPointSize": 10,
+      "objectType": "point",
+      "definition": {
+        "type": "coordinates",
+        "x": 0.3,
+        "y": 2.6
+      },
+      "mobility": {
+        "type": "constrained",
+        "relationIds": [
+          "sameC"
+        ]
+      },
+      "appearance": {
+        "size": 7,
+        "labelVisible": true,
+        "highlightSize": 10,
         "preserveColorOnHighlight": true
       },
-      "x": 0.3,
-      "y": 2.6,
-      "showLabel": true,
-      "fixed": false,
-      "constraint": "constrained",
-      "constraintIds": [
-        "sameC"
-      ],
-      "snapToGrid": true,
-      "snapSize": 0.25
-    }
-  ],
-  "elements": [
+      "interaction": {
+        "snapToGrid": true,
+        "snapSize": 0.25
+      }
+    },
     {
       "id": "poly",
       "label": "Triángulo ABC",
@@ -277,18 +296,21 @@ export const DesigualdadTriangularSpec = createDiagramSpec(
         "role": "secondary"
       },
       "target": false,
-      "style": {
+      "objectType": "path",
+      "geometry": {
+        "type": "polygon",
+        "points": [
+          "A",
+          "B",
+          "C"
+        ]
+      },
+      "appearance": {
         "strokeWidth": 3,
         "fillOpacity": 0.1,
         "highlightFillOpacity": 0.28,
         "preserveColorOnHighlight": true
-      },
-      "kind": "polygon",
-      "refs": [
-        "A",
-        "B",
-        "C"
-      ]
+      }
     },
     {
       "id": "AB",
@@ -310,16 +332,19 @@ export const DesigualdadTriangularSpec = createDiagramSpec(
         "role": "secondary"
       },
       "target": false,
-      "style": {
+      "objectType": "path",
+      "geometry": {
+        "type": "segment",
+        "points": [
+          "A",
+          "B"
+        ]
+      },
+      "appearance": {
         "strokeWidth": 2.4,
         "highlightStrokeWidth": 3,
         "preserveColorOnHighlight": true
-      },
-      "kind": "segment",
-      "refs": [
-        "A",
-        "B"
-      ]
+      }
     },
     {
       "id": "BC",
@@ -341,16 +366,19 @@ export const DesigualdadTriangularSpec = createDiagramSpec(
         "role": "secondary"
       },
       "target": false,
-      "style": {
+      "objectType": "path",
+      "geometry": {
+        "type": "segment",
+        "points": [
+          "B",
+          "C"
+        ]
+      },
+      "appearance": {
         "strokeWidth": 2.4,
         "highlightStrokeWidth": 3,
         "preserveColorOnHighlight": true
-      },
-      "kind": "segment",
-      "refs": [
-        "B",
-        "C"
-      ]
+      }
     },
     {
       "id": "CA",
@@ -372,16 +400,19 @@ export const DesigualdadTriangularSpec = createDiagramSpec(
         "role": "secondary"
       },
       "target": false,
-      "style": {
+      "objectType": "path",
+      "geometry": {
+        "type": "segment",
+        "points": [
+          "C",
+          "A"
+        ]
+      },
+      "appearance": {
         "strokeWidth": 2.4,
         "highlightStrokeWidth": 3,
         "preserveColorOnHighlight": true
-      },
-      "kind": "segment",
-      "refs": [
-        "C",
-        "A"
-      ]
+      }
     },
     {
       "id": "dAB",
@@ -400,22 +431,20 @@ export const DesigualdadTriangularSpec = createDiagramSpec(
         "role": "secondary"
       },
       "target": false,
-      "style": {
+      "objectType": "path",
+      "geometry": {
+        "type": "dimension",
+        "points": [
+          "A",
+          "B"
+        ],
+        "offset": 0
+      },
+      "appearance": {
         "strokeWidth": 2.4,
         "labelSize": 20,
         "highlightStrokeWidth": 3,
         "preserveColorOnHighlight": true
-      },
-      "kind": "dimensionLine",
-      "refs": [
-        "A",
-        "B"
-      ],
-      "text": "c = {value}",
-      "properties": {
-        "unit": "u",
-        "precision": 2,
-        "offset": 0
       }
     },
     {
@@ -435,22 +464,20 @@ export const DesigualdadTriangularSpec = createDiagramSpec(
         "role": "secondary"
       },
       "target": false,
-      "style": {
+      "objectType": "path",
+      "geometry": {
+        "type": "dimension",
+        "points": [
+          "B",
+          "C"
+        ],
+        "offset": 0
+      },
+      "appearance": {
         "strokeWidth": 2.4,
         "labelSize": 20,
         "highlightStrokeWidth": 3,
         "preserveColorOnHighlight": true
-      },
-      "kind": "dimensionLine",
-      "refs": [
-        "B",
-        "C"
-      ],
-      "text": "a = {value}",
-      "properties": {
-        "unit": "u",
-        "precision": 2,
-        "offset": 0
       }
     },
     {
@@ -470,22 +497,20 @@ export const DesigualdadTriangularSpec = createDiagramSpec(
         "role": "secondary"
       },
       "target": false,
-      "style": {
+      "objectType": "path",
+      "geometry": {
+        "type": "dimension",
+        "points": [
+          "C",
+          "A"
+        ],
+        "offset": 0
+      },
+      "appearance": {
         "strokeWidth": 2.4,
         "labelSize": 20,
         "highlightStrokeWidth": 3,
         "preserveColorOnHighlight": true
-      },
-      "kind": "dimensionLine",
-      "refs": [
-        "C",
-        "A"
-      ],
-      "text": "b = {value}",
-      "properties": {
-        "unit": "u",
-        "precision": 2,
-        "offset": 0
       }
     },
     {
@@ -505,20 +530,12 @@ export const DesigualdadTriangularSpec = createDiagramSpec(
         "role": "annotation"
       },
       "target": false,
-      "style": {
-        "preserveColorOnHighlight": true
-      },
-      "kind": "infoPanel",
-      "refs": [],
-      "text": "",
-      "properties": {
+      "objectType": "annotation",
+      "variant": "panel",
+      "content": {
+        "text": "",
         "precision": 2,
-        "anchorMode": "viewport",
-        "viewportPosition": [
-          0,
-          0
-        ],
-        "infoPanelBlocks": [
+        "blocks": [
           {
             "id": "bloque-1",
             "text": "$a + b = {value}$",
@@ -539,66 +556,57 @@ export const DesigualdadTriangularSpec = createDiagramSpec(
             "rules": []
           }
         ],
-        "infoPanelLayout": "columns"
+        "layout": "columns"
+      },
+      "anchor": {
+        "type": "viewport",
+        "position": [
+          0,
+          0
+        ]
+      },
+      "appearance": {
+        "preserveColorOnHighlight": true
       }
     }
   ],
-  "sliders": [],
-  "steps": [],
-  "constraints": [
+  "relations": [
     {
       "id": "sameA",
       "label": "A no cruza BC",
-      "kind": "sameSide",
-      "refs": [
+      "enabled": true,
+      "type": "same-half-plane",
+      "points": [
         "A",
-        "B",
-        "C"
+        "B"
       ],
-      "enabled": true
+      "boundary": "C"
     },
     {
       "id": "sameB",
       "label": "B no cruza CA",
-      "kind": "sameSide",
-      "refs": [
+      "enabled": true,
+      "type": "same-half-plane",
+      "points": [
         "B",
-        "C",
-        "A"
+        "C"
       ],
-      "enabled": true
+      "boundary": "A"
     },
     {
       "id": "sameC",
       "label": "C no cruza AB",
-      "kind": "sameSide",
-      "refs": [
+      "enabled": true,
+      "type": "same-half-plane",
+      "points": [
         "C",
-        "A",
-        "B"
+        "A"
       ],
-      "enabled": true
+      "boundary": "B"
     }
   ],
-  "dependencies": [
-    {
-      "sourceId": "BC",
-      "targetId": "slack",
-      "relation": "expression"
-    },
-    {
-      "sourceId": "CA",
-      "targetId": "slack",
-      "relation": "expression"
-    },
-    {
-      "sourceId": "AB",
-      "targetId": "slack",
-      "relation": "expression"
-    }
-  ],
-  "note": "Mueve A, B y C",
-  "extensions": {}
+  "steps": [],
+  "note": "Mueve A, B y C"
 }
 );
 /* @matematika-diagram-spec:end */

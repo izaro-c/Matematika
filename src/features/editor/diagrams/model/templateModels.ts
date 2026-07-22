@@ -1,4 +1,4 @@
-import { DIAGRAM_RENDERER_ID, DIAGRAM_SPEC_VERSION } from '../../../../shared/diagrams/spec';
+import { DIAGRAM_RENDERER_V2_ID, DIAGRAM_SPEC_V2_VERSION } from '../../../../shared/diagrams/spec';
 import { normalizeContentId } from '../../lib/editorContracts';
 import { element, point, slider, step } from './diagramElements';
 import { defaultCategory, defaultMode } from './diagramOptions';
@@ -6,8 +6,8 @@ import type { TemplateKind, VisualDiagramModel, VisualSlider, VisualStep } from 
 
 export function createTemplateModel(kind: TemplateKind, title: string, metadataType: string): VisualDiagramModel {
   const base = {
-    version: DIAGRAM_SPEC_VERSION,
-    renderer: DIAGRAM_RENDERER_ID,
+    version: DIAGRAM_SPEC_V2_VERSION,
+    renderer: DIAGRAM_RENDERER_V2_ID,
     title,
     componentId: normalizeContentId(title || 'diagrama-interactivo'),
     category: defaultCategory(metadataType),

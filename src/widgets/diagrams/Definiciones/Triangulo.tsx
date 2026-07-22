@@ -3,8 +3,8 @@ import { createDiagramSpec, DiagramRenderer } from '@/shared/diagrams/public';
 /* @matematika-diagram-spec:start */
 export const TrianguloSpec = createDiagramSpec(
 {
-  "version": 2,
-  "renderer": "matematika-diagram-renderer-v2",
+  "version": 3,
+  "renderer": "matematika-diagram-renderer-v3",
   "title": "Triángulo",
   "componentId": "triangulo",
   "category": "Definiciones",
@@ -45,7 +45,7 @@ export const TrianguloSpec = createDiagramSpec(
     }
   ],
   "groups": [],
-  "points": [
+  "objects": [
     {
       "id": "A",
       "label": "A",
@@ -62,27 +62,34 @@ export const TrianguloSpec = createDiagramSpec(
       },
       "target": true,
       "targetId": "vertice-a",
-      "style": {
-        "pointSize": 7,
-        "highlightPointSize": 10,
+      "objectType": "point",
+      "definition": {
+        "type": "coordinates",
+        "x": -3,
+        "y": -2
+      },
+      "mobility": {
+        "type": "free"
+      },
+      "appearance": {
+        "size": 7,
+        "labelVisible": true,
+        "highlightSize": 10,
         "preserveColorOnHighlight": true
       },
-      "x": -3,
-      "y": -2,
-      "showLabel": true,
-      "fixed": false,
-      "constraint": "free",
-      "snapSize": 0.25,
-      "attractorIds": [
-        "equilateralAPlus",
-        "equilateralAMinus",
-        "thalesBC",
-        "lineMediatrizBC",
-        "perpCBB",
-        "perpBCC"
-      ],
-      "attractorDistance": 0.31,
-      "snatchDistance": 0.51
+      "interaction": {
+        "snapSize": 0.25,
+        "attractorIds": [
+          "equilateralAPlus",
+          "equilateralAMinus",
+          "thalesBC",
+          "lineMediatrizBC",
+          "perpCBB",
+          "perpBCC"
+        ],
+        "attractorDistance": 0.31,
+        "snatchDistance": 0.51
+      }
     },
     {
       "id": "B",
@@ -100,27 +107,34 @@ export const TrianguloSpec = createDiagramSpec(
       },
       "target": true,
       "targetId": "vertice-b",
-      "style": {
-        "pointSize": 7,
-        "highlightPointSize": 10,
+      "objectType": "point",
+      "definition": {
+        "type": "coordinates",
+        "x": 3.27,
+        "y": -1.43
+      },
+      "mobility": {
+        "type": "free"
+      },
+      "appearance": {
+        "size": 7,
+        "labelVisible": true,
+        "highlightSize": 10,
         "preserveColorOnHighlight": true
       },
-      "x": 3.27,
-      "y": -1.43,
-      "showLabel": true,
-      "fixed": false,
-      "constraint": "free",
-      "snapSize": 0.25,
-      "attractorIds": [
-        "equilateralBPlus",
-        "equilateralBMinus",
-        "thalesAC",
-        "lineMediatrizAC",
-        "perpCAC",
-        "perpCAA"
-      ],
-      "attractorDistance": 0.31,
-      "snatchDistance": 0.51
+      "interaction": {
+        "snapSize": 0.25,
+        "attractorIds": [
+          "equilateralBPlus",
+          "equilateralBMinus",
+          "thalesAC",
+          "lineMediatrizAC",
+          "perpCAC",
+          "perpCAA"
+        ],
+        "attractorDistance": 0.31,
+        "snatchDistance": 0.51
+      }
     },
     {
       "id": "C",
@@ -138,27 +152,34 @@ export const TrianguloSpec = createDiagramSpec(
       },
       "target": true,
       "targetId": "vertice-c",
-      "style": {
-        "pointSize": 7,
-        "highlightPointSize": 10,
+      "objectType": "point",
+      "definition": {
+        "type": "coordinates",
+        "x": -1.99,
+        "y": 3.94
+      },
+      "mobility": {
+        "type": "free"
+      },
+      "appearance": {
+        "size": 7,
+        "labelVisible": true,
+        "highlightSize": 10,
         "preserveColorOnHighlight": true
       },
-      "x": -1.99,
-      "y": 3.94,
-      "showLabel": true,
-      "fixed": false,
-      "constraint": "free",
-      "snapSize": 0.25,
-      "attractorIds": [
-        "equilateralCPlus",
-        "equilateralCMinus",
-        "thalesAB",
-        "lineMediatrizAB",
-        "perpBAA",
-        "perpABB"
-      ],
-      "attractorDistance": 0.31,
-      "snatchDistance": 0.51
+      "interaction": {
+        "snapSize": 0.25,
+        "attractorIds": [
+          "equilateralCPlus",
+          "equilateralCMinus",
+          "thalesAB",
+          "lineMediatrizAB",
+          "perpBAA",
+          "perpABB"
+        ],
+        "attractorDistance": 0.31,
+        "snatchDistance": 0.51
+      }
     },
     {
       "id": "pA",
@@ -176,19 +197,25 @@ export const TrianguloSpec = createDiagramSpec(
       },
       "target": false,
       "targetId": "pA",
-      "style": {
-        "pointSize": 7,
-        "highlightPointSize": 10,
+      "objectType": "point",
+      "definition": {
+        "type": "coordinates",
+        "x": -3,
+        "y": -2
+      },
+      "mobility": {
+        "type": "constrained",
+        "relationIds": [
+          "constraint6"
+        ]
+      },
+      "appearance": {
+        "size": 7,
+        "labelVisible": true,
+        "highlightSize": 10,
         "preserveColorOnHighlight": true
       },
-      "x": -3,
-      "y": -2,
-      "showLabel": true,
-      "fixed": false,
-      "constraint": "constrained",
-      "constraintIds": [
-        "constraint6"
-      ]
+      "interaction": {}
     },
     {
       "id": "pB",
@@ -206,19 +233,25 @@ export const TrianguloSpec = createDiagramSpec(
       },
       "target": false,
       "targetId": "pB",
-      "style": {
-        "pointSize": 7,
-        "highlightPointSize": 10,
+      "objectType": "point",
+      "definition": {
+        "type": "coordinates",
+        "x": 3.27,
+        "y": -1.43
+      },
+      "mobility": {
+        "type": "constrained",
+        "relationIds": [
+          "constraint5"
+        ]
+      },
+      "appearance": {
+        "size": 7,
+        "labelVisible": true,
+        "highlightSize": 10,
         "preserveColorOnHighlight": true
       },
-      "x": 3.27,
-      "y": -1.43,
-      "showLabel": true,
-      "fixed": false,
-      "constraint": "constrained",
-      "constraintIds": [
-        "constraint5"
-      ]
+      "interaction": {}
     },
     {
       "id": "pC",
@@ -236,19 +269,25 @@ export const TrianguloSpec = createDiagramSpec(
       },
       "target": false,
       "targetId": "pC",
-      "style": {
-        "pointSize": 7,
-        "highlightPointSize": 10,
+      "objectType": "point",
+      "definition": {
+        "type": "coordinates",
+        "x": -1.99,
+        "y": 3.94
+      },
+      "mobility": {
+        "type": "constrained",
+        "relationIds": [
+          "constraint4"
+        ]
+      },
+      "appearance": {
+        "size": 7,
+        "labelVisible": true,
+        "highlightSize": 10,
         "preserveColorOnHighlight": true
       },
-      "x": -1.99,
-      "y": 3.94,
-      "showLabel": true,
-      "fixed": false,
-      "constraint": "constrained",
-      "constraintIds": [
-        "constraint4"
-      ]
+      "interaction": {}
     },
     {
       "id": "equilateralAPlus",
@@ -265,22 +304,26 @@ export const TrianguloSpec = createDiagramSpec(
         "role": "construction"
       },
       "target": false,
-      "style": {
-        "pointSize": 7,
-        "highlightPointSize": 10,
+      "objectType": "point",
+      "definition": {
+        "type": "expression",
+        "x": "(B.x+C.x)/2-sqrt(3)*(C.y-B.y)/2",
+        "y": "(B.y+C.y)/2+sqrt(3)*(C.x-B.x)/2",
+        "fallback": [
+          -2.118,
+          -2.522
+        ]
+      },
+      "mobility": {
+        "type": "fixed"
+      },
+      "appearance": {
+        "size": 7,
+        "labelVisible": false,
+        "highlightSize": 10,
         "preserveColorOnHighlight": true
       },
-      "x": -2.118,
-      "y": -2.522,
-      "showLabel": false,
-      "fixed": true,
-      "constraint": "derived",
-      "dependencies": [
-        "B",
-        "C"
-      ],
-      "xExpression": "(B.x+C.x)/2-sqrt(3)*(C.y-B.y)/2",
-      "yExpression": "(B.y+C.y)/2+sqrt(3)*(C.x-B.x)/2"
+      "interaction": {}
     },
     {
       "id": "equilateralAMinus",
@@ -297,22 +340,26 @@ export const TrianguloSpec = createDiagramSpec(
         "role": "construction"
       },
       "target": false,
-      "style": {
-        "pointSize": 7,
-        "highlightPointSize": 10,
+      "objectType": "point",
+      "definition": {
+        "type": "expression",
+        "x": "(B.x+C.x)/2+sqrt(3)*(C.y-B.y)/2",
+        "y": "(B.y+C.y)/2-sqrt(3)*(C.x-B.x)/2",
+        "fallback": [
+          5.018,
+          3.782
+        ]
+      },
+      "mobility": {
+        "type": "fixed"
+      },
+      "appearance": {
+        "size": 7,
+        "labelVisible": false,
+        "highlightSize": 10,
         "preserveColorOnHighlight": true
       },
-      "x": 5.018,
-      "y": 3.782,
-      "showLabel": false,
-      "fixed": true,
-      "constraint": "derived",
-      "dependencies": [
-        "B",
-        "C"
-      ],
-      "xExpression": "(B.x+C.x)/2+sqrt(3)*(C.y-B.y)/2",
-      "yExpression": "(B.y+C.y)/2-sqrt(3)*(C.x-B.x)/2"
+      "interaction": {}
     },
     {
       "id": "equilateralBPlus",
@@ -329,22 +376,26 @@ export const TrianguloSpec = createDiagramSpec(
         "role": "construction"
       },
       "target": false,
-      "style": {
-        "pointSize": 7,
-        "highlightPointSize": 10,
+      "objectType": "point",
+      "definition": {
+        "type": "expression",
+        "x": "(A.x+C.x)/2-sqrt(3)*(C.y-A.y)/2",
+        "y": "(A.y+C.y)/2+sqrt(3)*(C.x-A.x)/2",
+        "fallback": [
+          -5.746,
+          2.623
+        ]
+      },
+      "mobility": {
+        "type": "fixed"
+      },
+      "appearance": {
+        "size": 7,
+        "labelVisible": false,
+        "highlightSize": 10,
         "preserveColorOnHighlight": true
       },
-      "x": -5.746,
-      "y": 2.623,
-      "showLabel": false,
-      "fixed": true,
-      "constraint": "derived",
-      "dependencies": [
-        "A",
-        "C"
-      ],
-      "xExpression": "(A.x+C.x)/2-sqrt(3)*(C.y-A.y)/2",
-      "yExpression": "(A.y+C.y)/2+sqrt(3)*(C.x-A.x)/2"
+      "interaction": {}
     },
     {
       "id": "equilateralBMinus",
@@ -361,22 +412,26 @@ export const TrianguloSpec = createDiagramSpec(
         "role": "construction"
       },
       "target": false,
-      "style": {
-        "pointSize": 7,
-        "highlightPointSize": 10,
+      "objectType": "point",
+      "definition": {
+        "type": "expression",
+        "x": "(A.x+C.x)/2+sqrt(3)*(C.y-A.y)/2",
+        "y": "(A.y+C.y)/2-sqrt(3)*(C.x-A.x)/2",
+        "fallback": [
+          2.376,
+          -1.933
+        ]
+      },
+      "mobility": {
+        "type": "fixed"
+      },
+      "appearance": {
+        "size": 7,
+        "labelVisible": false,
+        "highlightSize": 10,
         "preserveColorOnHighlight": true
       },
-      "x": 2.376,
-      "y": -1.933,
-      "showLabel": false,
-      "fixed": true,
-      "constraint": "derived",
-      "dependencies": [
-        "A",
-        "C"
-      ],
-      "xExpression": "(A.x+C.x)/2+sqrt(3)*(C.y-A.y)/2",
-      "yExpression": "(A.y+C.y)/2-sqrt(3)*(C.x-A.x)/2"
+      "interaction": {}
     },
     {
       "id": "equilateralCPlus",
@@ -393,22 +448,26 @@ export const TrianguloSpec = createDiagramSpec(
         "role": "construction"
       },
       "target": false,
-      "style": {
-        "pointSize": 7,
-        "highlightPointSize": 10,
+      "objectType": "point",
+      "definition": {
+        "type": "expression",
+        "x": "(A.x+B.x)/2-sqrt(3)*(B.y-A.y)/2",
+        "y": "(A.y+B.y)/2+sqrt(3)*(B.x-A.x)/2",
+        "fallback": [
+          -0.359,
+          3.715
+        ]
+      },
+      "mobility": {
+        "type": "fixed"
+      },
+      "appearance": {
+        "size": 7,
+        "labelVisible": false,
+        "highlightSize": 10,
         "preserveColorOnHighlight": true
       },
-      "x": -0.359,
-      "y": 3.715,
-      "showLabel": false,
-      "fixed": true,
-      "constraint": "derived",
-      "dependencies": [
-        "A",
-        "B"
-      ],
-      "xExpression": "(A.x+B.x)/2-sqrt(3)*(B.y-A.y)/2",
-      "yExpression": "(A.y+B.y)/2+sqrt(3)*(B.x-A.x)/2"
+      "interaction": {}
     },
     {
       "id": "equilateralCMinus",
@@ -425,25 +484,27 @@ export const TrianguloSpec = createDiagramSpec(
         "role": "construction"
       },
       "target": false,
-      "style": {
-        "pointSize": 7,
-        "highlightPointSize": 10,
+      "objectType": "point",
+      "definition": {
+        "type": "expression",
+        "x": "(A.x+B.x)/2+sqrt(3)*(B.y-A.y)/2",
+        "y": "(A.y+B.y)/2-sqrt(3)*(B.x-A.x)/2",
+        "fallback": [
+          0.629,
+          -7.145
+        ]
+      },
+      "mobility": {
+        "type": "fixed"
+      },
+      "appearance": {
+        "size": 7,
+        "labelVisible": false,
+        "highlightSize": 10,
         "preserveColorOnHighlight": true
       },
-      "x": 0.629,
-      "y": -7.145,
-      "showLabel": false,
-      "fixed": true,
-      "constraint": "derived",
-      "dependencies": [
-        "A",
-        "B"
-      ],
-      "xExpression": "(A.x+B.x)/2+sqrt(3)*(B.y-A.y)/2",
-      "yExpression": "(A.y+B.y)/2-sqrt(3)*(B.x-A.x)/2"
-    }
-  ],
-  "elements": [
+      "interaction": {}
+    },
     {
       "id": "poly",
       "label": "Triángulo ABC",
@@ -460,18 +521,21 @@ export const TrianguloSpec = createDiagramSpec(
       },
       "target": true,
       "targetId": "triangulo",
-      "style": {
+      "objectType": "path",
+      "geometry": {
+        "type": "polygon",
+        "points": [
+          "A",
+          "B",
+          "C"
+        ]
+      },
+      "appearance": {
         "strokeWidth": 3,
         "fillOpacity": 0.14,
         "highlightFillOpacity": 0.28,
         "preserveColorOnHighlight": true
-      },
-      "kind": "polygon",
-      "refs": [
-        "A",
-        "B",
-        "C"
-      ]
+      }
     },
     {
       "id": "AB",
@@ -489,16 +553,19 @@ export const TrianguloSpec = createDiagramSpec(
       },
       "target": true,
       "targetId": "lado-ab",
-      "style": {
+      "objectType": "path",
+      "geometry": {
+        "type": "segment",
+        "points": [
+          "A",
+          "B"
+        ]
+      },
+      "appearance": {
         "strokeWidth": 2.4,
         "highlightStrokeWidth": 3,
         "preserveColorOnHighlight": true
-      },
-      "kind": "segment",
-      "refs": [
-        "A",
-        "B"
-      ]
+      }
     },
     {
       "id": "BC",
@@ -516,16 +583,19 @@ export const TrianguloSpec = createDiagramSpec(
       },
       "target": true,
       "targetId": "lado-bc",
-      "style": {
+      "objectType": "path",
+      "geometry": {
+        "type": "segment",
+        "points": [
+          "B",
+          "C"
+        ]
+      },
+      "appearance": {
         "strokeWidth": 2.4,
         "highlightStrokeWidth": 3,
         "preserveColorOnHighlight": true
-      },
-      "kind": "segment",
-      "refs": [
-        "B",
-        "C"
-      ]
+      }
     },
     {
       "id": "CA",
@@ -543,16 +613,19 @@ export const TrianguloSpec = createDiagramSpec(
       },
       "target": true,
       "targetId": "lado-ca",
-      "style": {
+      "objectType": "path",
+      "geometry": {
+        "type": "segment",
+        "points": [
+          "C",
+          "A"
+        ]
+      },
+      "appearance": {
         "strokeWidth": 2.4,
         "highlightStrokeWidth": 3,
         "preserveColorOnHighlight": true
-      },
-      "kind": "segment",
-      "refs": [
-        "C",
-        "A"
-      ]
+      }
     },
     {
       "id": "midAB",
@@ -570,14 +643,20 @@ export const TrianguloSpec = createDiagramSpec(
       },
       "target": false,
       "targetId": "midAB",
-      "style": {
-        "preserveColorOnHighlight": true
+      "objectType": "point",
+      "definition": {
+        "type": "midpoint",
+        "points": [
+          "A",
+          "B"
+        ]
       },
-      "kind": "midpoint",
-      "refs": [
-        "A",
-        "B"
-      ]
+      "mobility": {
+        "type": "fixed"
+      },
+      "appearance": {
+        "preserveColorOnHighlight": true
+      }
     },
     {
       "id": "lineMediatrizAB",
@@ -595,18 +674,24 @@ export const TrianguloSpec = createDiagramSpec(
       },
       "target": false,
       "targetId": "lineMediatrizAB",
-      "style": {
+      "objectType": "path",
+      "geometry": {
+        "type": "line",
+        "construction": {
+          "type": "perpendicular",
+          "linePoints": [
+            "A",
+            "B"
+          ],
+          "through": "midAB"
+        }
+      },
+      "appearance": {
+        "dashed": true,
         "strokeWidth": 2.4,
         "highlightStrokeWidth": 3,
         "preserveColorOnHighlight": true
-      },
-      "kind": "perpendicular",
-      "refs": [
-        "A",
-        "B",
-        "midAB"
-      ],
-      "dashed": true
+      }
     },
     {
       "id": "thalesAB",
@@ -623,17 +708,18 @@ export const TrianguloSpec = createDiagramSpec(
         "role": "construction"
       },
       "target": false,
-      "style": {
+      "objectType": "path",
+      "geometry": {
+        "type": "circle",
+        "center": "midAB",
+        "point": "A"
+      },
+      "appearance": {
+        "dashed": true,
         "strokeWidth": 2.4,
         "highlightStrokeWidth": 3,
         "preserveColorOnHighlight": true
-      },
-      "kind": "circle",
-      "refs": [
-        "midAB",
-        "A"
-      ],
-      "dashed": true
+      }
     },
     {
       "id": "midAC",
@@ -651,14 +737,20 @@ export const TrianguloSpec = createDiagramSpec(
       },
       "target": false,
       "targetId": "midAC",
-      "style": {
-        "preserveColorOnHighlight": true
+      "objectType": "point",
+      "definition": {
+        "type": "midpoint",
+        "points": [
+          "A",
+          "C"
+        ]
       },
-      "kind": "midpoint",
-      "refs": [
-        "A",
-        "C"
-      ]
+      "mobility": {
+        "type": "fixed"
+      },
+      "appearance": {
+        "preserveColorOnHighlight": true
+      }
     },
     {
       "id": "lineMediatrizAC",
@@ -676,18 +768,24 @@ export const TrianguloSpec = createDiagramSpec(
       },
       "target": false,
       "targetId": "lineMediatrizAC",
-      "style": {
+      "objectType": "path",
+      "geometry": {
+        "type": "line",
+        "construction": {
+          "type": "perpendicular",
+          "linePoints": [
+            "A",
+            "C"
+          ],
+          "through": "midAC"
+        }
+      },
+      "appearance": {
+        "dashed": true,
         "strokeWidth": 2.4,
         "highlightStrokeWidth": 3,
         "preserveColorOnHighlight": true
-      },
-      "kind": "perpendicular",
-      "refs": [
-        "A",
-        "C",
-        "midAC"
-      ],
-      "dashed": true
+      }
     },
     {
       "id": "thalesAC",
@@ -704,17 +802,18 @@ export const TrianguloSpec = createDiagramSpec(
         "role": "construction"
       },
       "target": false,
-      "style": {
+      "objectType": "path",
+      "geometry": {
+        "type": "circle",
+        "center": "midAC",
+        "point": "A"
+      },
+      "appearance": {
+        "dashed": true,
         "strokeWidth": 2.4,
         "highlightStrokeWidth": 3,
         "preserveColorOnHighlight": true
-      },
-      "kind": "circle",
-      "refs": [
-        "midAC",
-        "A"
-      ],
-      "dashed": true
+      }
     },
     {
       "id": "midBC",
@@ -732,14 +831,20 @@ export const TrianguloSpec = createDiagramSpec(
       },
       "target": false,
       "targetId": "midBC",
-      "style": {
-        "preserveColorOnHighlight": true
+      "objectType": "point",
+      "definition": {
+        "type": "midpoint",
+        "points": [
+          "B",
+          "C"
+        ]
       },
-      "kind": "midpoint",
-      "refs": [
-        "B",
-        "C"
-      ]
+      "mobility": {
+        "type": "fixed"
+      },
+      "appearance": {
+        "preserveColorOnHighlight": true
+      }
     },
     {
       "id": "lineMediatrizBC",
@@ -757,18 +862,24 @@ export const TrianguloSpec = createDiagramSpec(
       },
       "target": false,
       "targetId": "lineMediatrizBC",
-      "style": {
+      "objectType": "path",
+      "geometry": {
+        "type": "line",
+        "construction": {
+          "type": "perpendicular",
+          "linePoints": [
+            "B",
+            "C"
+          ],
+          "through": "midBC"
+        }
+      },
+      "appearance": {
+        "dashed": true,
         "strokeWidth": 2.4,
         "highlightStrokeWidth": 3,
         "preserveColorOnHighlight": true
-      },
-      "kind": "perpendicular",
-      "refs": [
-        "B",
-        "C",
-        "midBC"
-      ],
-      "dashed": true
+      }
     },
     {
       "id": "thalesBC",
@@ -785,17 +896,18 @@ export const TrianguloSpec = createDiagramSpec(
         "role": "construction"
       },
       "target": false,
-      "style": {
+      "objectType": "path",
+      "geometry": {
+        "type": "circle",
+        "center": "midBC",
+        "point": "B"
+      },
+      "appearance": {
+        "dashed": true,
         "strokeWidth": 2.4,
         "highlightStrokeWidth": 3,
         "preserveColorOnHighlight": true
-      },
-      "kind": "circle",
-      "refs": [
-        "midBC",
-        "B"
-      ],
-      "dashed": true
+      }
     },
     {
       "id": "perpBAA",
@@ -813,17 +925,23 @@ export const TrianguloSpec = createDiagramSpec(
       },
       "target": true,
       "targetId": "perpBAA",
-      "style": {
+      "objectType": "path",
+      "geometry": {
+        "type": "line",
+        "construction": {
+          "type": "perpendicular",
+          "linePoints": [
+            "pB",
+            "pA"
+          ],
+          "through": "A"
+        }
+      },
+      "appearance": {
         "strokeWidth": 2.4,
         "highlightStrokeWidth": 3,
         "preserveColorOnHighlight": true
-      },
-      "kind": "perpendicular",
-      "refs": [
-        "pB",
-        "pA",
-        "A"
-      ]
+      }
     },
     {
       "id": "perpABB",
@@ -841,17 +959,23 @@ export const TrianguloSpec = createDiagramSpec(
       },
       "target": false,
       "targetId": "perpABB",
-      "style": {
+      "objectType": "path",
+      "geometry": {
+        "type": "line",
+        "construction": {
+          "type": "perpendicular",
+          "linePoints": [
+            "pA",
+            "pB"
+          ],
+          "through": "B"
+        }
+      },
+      "appearance": {
         "strokeWidth": 2.4,
         "highlightStrokeWidth": 3,
         "preserveColorOnHighlight": true
-      },
-      "kind": "perpendicular",
-      "refs": [
-        "pA",
-        "pB",
-        "B"
-      ]
+      }
     },
     {
       "id": "perpCBB",
@@ -869,17 +993,23 @@ export const TrianguloSpec = createDiagramSpec(
       },
       "target": false,
       "targetId": "perpCBB",
-      "style": {
+      "objectType": "path",
+      "geometry": {
+        "type": "line",
+        "construction": {
+          "type": "perpendicular",
+          "linePoints": [
+            "pC",
+            "pB"
+          ],
+          "through": "B"
+        }
+      },
+      "appearance": {
         "strokeWidth": 2.4,
         "highlightStrokeWidth": 3,
         "preserveColorOnHighlight": true
-      },
-      "kind": "perpendicular",
-      "refs": [
-        "pC",
-        "pB",
-        "B"
-      ]
+      }
     },
     {
       "id": "perpBCC",
@@ -897,17 +1027,23 @@ export const TrianguloSpec = createDiagramSpec(
       },
       "target": false,
       "targetId": "perpBCC",
-      "style": {
+      "objectType": "path",
+      "geometry": {
+        "type": "line",
+        "construction": {
+          "type": "perpendicular",
+          "linePoints": [
+            "pB",
+            "pC"
+          ],
+          "through": "C"
+        }
+      },
+      "appearance": {
         "strokeWidth": 2.4,
         "highlightStrokeWidth": 3,
         "preserveColorOnHighlight": true
-      },
-      "kind": "perpendicular",
-      "refs": [
-        "pB",
-        "pC",
-        "C"
-      ]
+      }
     },
     {
       "id": "perpCAC",
@@ -925,17 +1061,23 @@ export const TrianguloSpec = createDiagramSpec(
       },
       "target": false,
       "targetId": "perpCAC",
-      "style": {
+      "objectType": "path",
+      "geometry": {
+        "type": "line",
+        "construction": {
+          "type": "perpendicular",
+          "linePoints": [
+            "pC",
+            "pA"
+          ],
+          "through": "C"
+        }
+      },
+      "appearance": {
         "strokeWidth": 2.4,
         "highlightStrokeWidth": 3,
         "preserveColorOnHighlight": true
-      },
-      "kind": "perpendicular",
-      "refs": [
-        "pC",
-        "pA",
-        "C"
-      ]
+      }
     },
     {
       "id": "perpCAA",
@@ -953,17 +1095,23 @@ export const TrianguloSpec = createDiagramSpec(
       },
       "target": true,
       "targetId": "perpCAA",
-      "style": {
+      "objectType": "path",
+      "geometry": {
+        "type": "line",
+        "construction": {
+          "type": "perpendicular",
+          "linePoints": [
+            "pC",
+            "pA"
+          ],
+          "through": "A"
+        }
+      },
+      "appearance": {
         "strokeWidth": 2.4,
         "highlightStrokeWidth": 3,
         "preserveColorOnHighlight": false
-      },
-      "kind": "perpendicular",
-      "refs": [
-        "pC",
-        "pA",
-        "A"
-      ]
+      }
     },
     {
       "id": "nonReflexAngleABC",
@@ -972,6 +1120,7 @@ export const TrianguloSpec = createDiagramSpec(
       "layerId": "geometry",
       "order": 11000,
       "visible": true,
+      "visibleWhen": "gte(nonReflexAngleABC.degrees,89.999999)",
       "locked": false,
       "groupIds": [],
       "selection": {
@@ -981,20 +1130,19 @@ export const TrianguloSpec = createDiagramSpec(
       },
       "target": true,
       "targetId": "nonReflexAngleABC",
-      "style": {
-        "angleRadius": 1,
-        "preserveColorOnHighlight": true
-      },
-      "kind": "nonReflexAngle",
-      "refs": [
+      "objectType": "angle",
+      "points": [
         "A",
         "B",
         "C"
       ],
-      "properties": {
-        "visibleWhen": "gte(nonReflexAngleABC.degrees,89.999999)"
-      },
-      "showLabel": false
+      "sweep": "non-reflex",
+      "marker": "arc",
+      "appearance": {
+        "radius": 1,
+        "labelVisible": false,
+        "preserveColorOnHighlight": true
+      }
     },
     {
       "id": "nonReflexAngleACB",
@@ -1003,6 +1151,7 @@ export const TrianguloSpec = createDiagramSpec(
       "layerId": "geometry",
       "order": 12000,
       "visible": true,
+      "visibleWhen": "gte(nonReflexAngleACB.degrees,89.999999)",
       "locked": false,
       "groupIds": [],
       "selection": {
@@ -1012,20 +1161,19 @@ export const TrianguloSpec = createDiagramSpec(
       },
       "target": true,
       "targetId": "nonReflexAngleACB",
-      "style": {
-        "angleRadius": 1,
-        "preserveColorOnHighlight": true
-      },
-      "kind": "nonReflexAngle",
-      "refs": [
+      "objectType": "angle",
+      "points": [
         "A",
         "C",
         "B"
       ],
-      "properties": {
-        "visibleWhen": "gte(nonReflexAngleACB.degrees,89.999999)"
-      },
-      "showLabel": false
+      "sweep": "non-reflex",
+      "marker": "arc",
+      "appearance": {
+        "radius": 1,
+        "labelVisible": false,
+        "preserveColorOnHighlight": true
+      }
     },
     {
       "id": "nonReflexAngleBAC",
@@ -1034,6 +1182,7 @@ export const TrianguloSpec = createDiagramSpec(
       "layerId": "geometry",
       "order": 13000,
       "visible": true,
+      "visibleWhen": "gte(nonReflexAngleBAC.degrees,89.999999)",
       "locked": false,
       "groupIds": [],
       "selection": {
@@ -1043,20 +1192,19 @@ export const TrianguloSpec = createDiagramSpec(
       },
       "target": true,
       "targetId": "nonReflexAngleBAC",
-      "style": {
-        "angleRadius": 1,
-        "preserveColorOnHighlight": true
-      },
-      "kind": "nonReflexAngle",
-      "refs": [
+      "objectType": "angle",
+      "points": [
         "B",
         "A",
         "C"
       ],
-      "properties": {
-        "visibleWhen": "gte(nonReflexAngleBAC.degrees,89.999999)"
-      },
-      "showLabel": false
+      "sweep": "non-reflex",
+      "marker": "arc",
+      "appearance": {
+        "radius": 1,
+        "labelVisible": false,
+        "preserveColorOnHighlight": true
+      }
     },
     {
       "id": "congruenceMarkBC",
@@ -1065,6 +1213,7 @@ export const TrianguloSpec = createDiagramSpec(
       "layerId": "geometry",
       "order": 14000,
       "visible": true,
+      "visibleWhen": "or(approx(BC.length,AB.length,max(0.00000001,max(AB.length,BC.length,CA.length)*0.00000001)),approx(BC.length,CA.length,max(0.00000001,max(AB.length,BC.length,CA.length)*0.00000001)))",
       "locked": false,
       "groupIds": [],
       "selection": {
@@ -1074,19 +1223,20 @@ export const TrianguloSpec = createDiagramSpec(
       },
       "target": true,
       "targetId": "congruenceMarkBC",
-      "style": {
-        "strokeWidth": 2,
-        "markHeight": 0.6,
-        "preserveColorOnHighlight": true
+      "objectType": "mark",
+      "variant": "congruence",
+      "anchor": {
+        "type": "between-points",
+        "points": [
+          "B",
+          "C"
+        ]
       },
-      "kind": "congruenceMark",
-      "refs": [
-        "B",
-        "C"
-      ],
-      "properties": {
-        "markCount": 2,
-        "visibleWhen": "or(approx(BC.length,AB.length,max(0.00000001,max(AB.length,BC.length,CA.length)*0.00000001)),approx(BC.length,CA.length,max(0.00000001,max(AB.length,BC.length,CA.length)*0.00000001)))"
+      "count": 2,
+      "height": 0.6,
+      "appearance": {
+        "strokeWidth": 2,
+        "preserveColorOnHighlight": true
       }
     },
     {
@@ -1096,6 +1246,7 @@ export const TrianguloSpec = createDiagramSpec(
       "layerId": "geometry",
       "order": 15000,
       "visible": true,
+      "visibleWhen": "or(approx(AB.length,BC.length,max(0.00000001,max(AB.length,BC.length,CA.length)*0.00000001)),approx(AB.length,CA.length,max(0.00000001,max(AB.length,BC.length,CA.length)*0.00000001)))",
       "locked": false,
       "groupIds": [],
       "selection": {
@@ -1105,19 +1256,20 @@ export const TrianguloSpec = createDiagramSpec(
       },
       "target": true,
       "targetId": "congruenceMarkAB",
-      "style": {
-        "strokeWidth": 2,
-        "markHeight": 0.6,
-        "preserveColorOnHighlight": true
+      "objectType": "mark",
+      "variant": "congruence",
+      "anchor": {
+        "type": "between-points",
+        "points": [
+          "A",
+          "B"
+        ]
       },
-      "kind": "congruenceMark",
-      "refs": [
-        "A",
-        "B"
-      ],
-      "properties": {
-        "markCount": 2,
-        "visibleWhen": "or(approx(AB.length,BC.length,max(0.00000001,max(AB.length,BC.length,CA.length)*0.00000001)),approx(AB.length,CA.length,max(0.00000001,max(AB.length,BC.length,CA.length)*0.00000001)))"
+      "count": 2,
+      "height": 0.6,
+      "appearance": {
+        "strokeWidth": 2,
+        "preserveColorOnHighlight": true
       }
     },
     {
@@ -1127,6 +1279,7 @@ export const TrianguloSpec = createDiagramSpec(
       "layerId": "geometry",
       "order": 16000,
       "visible": true,
+      "visibleWhen": "or(approx(CA.length,AB.length,max(0.00000001,max(AB.length,BC.length,CA.length)*0.00000001)),approx(CA.length,BC.length,max(0.00000001,max(AB.length,BC.length,CA.length)*0.00000001)))",
       "locked": false,
       "groupIds": [],
       "selection": {
@@ -1136,19 +1289,20 @@ export const TrianguloSpec = createDiagramSpec(
       },
       "target": true,
       "targetId": "congruenceMarkCA",
-      "style": {
-        "strokeWidth": 2,
-        "markHeight": 0.6,
-        "preserveColorOnHighlight": true
+      "objectType": "mark",
+      "variant": "congruence",
+      "anchor": {
+        "type": "between-points",
+        "points": [
+          "C",
+          "A"
+        ]
       },
-      "kind": "congruenceMark",
-      "refs": [
-        "C",
-        "A"
-      ],
-      "properties": {
-        "markCount": 2,
-        "visibleWhen": "or(approx(CA.length,AB.length,max(0.00000001,max(AB.length,BC.length,CA.length)*0.00000001)),approx(CA.length,BC.length,max(0.00000001,max(AB.length,BC.length,CA.length)*0.00000001)))"
+      "count": 2,
+      "height": 0.6,
+      "appearance": {
+        "strokeWidth": 2,
+        "preserveColorOnHighlight": true
       }
     },
     {
@@ -1167,19 +1321,11 @@ export const TrianguloSpec = createDiagramSpec(
       },
       "target": true,
       "targetId": "infoPanel26",
-      "style": {
-        "preserveColorOnHighlight": true
-      },
-      "kind": "infoPanel",
-      "refs": [],
-      "text": "",
-      "properties": {
-        "anchorMode": "viewport",
-        "viewportPosition": [
-          0,
-          0
-        ],
-        "infoPanelBlocks": [
+      "objectType": "annotation",
+      "variant": "panel",
+      "content": {
+        "text": "",
+        "blocks": [
           {
             "id": "por-lados",
             "text": "**Escaleno**",
@@ -1218,517 +1364,54 @@ export const TrianguloSpec = createDiagramSpec(
             ]
           }
         ],
-        "infoPanelLayout": "stack"
+        "layout": "stack"
       },
-      "showLabel": false
+      "anchor": {
+        "type": "viewport",
+        "position": [
+          0,
+          0
+        ]
+      },
+      "appearance": {
+        "preserveColorOnHighlight": true
+      }
     }
   ],
-  "sliders": [],
-  "steps": [],
-  "constraints": [
+  "relations": [
     {
       "id": "constraint4",
       "label": "Coincidir con un punto",
-      "kind": "coincident",
-      "refs": [
+      "enabled": true,
+      "type": "coincident",
+      "points": [
         "pC",
         "C"
-      ],
-      "enabled": true
+      ]
     },
     {
       "id": "constraint5",
       "label": "Coincidir con un punto",
-      "kind": "coincident",
-      "refs": [
+      "enabled": true,
+      "type": "coincident",
+      "points": [
         "pB",
         "B"
-      ],
-      "enabled": true
+      ]
     },
     {
       "id": "constraint6",
       "label": "Coincidir con un punto",
-      "kind": "coincident",
-      "refs": [
+      "enabled": true,
+      "type": "coincident",
+      "points": [
         "pA",
         "A"
-      ],
-      "enabled": true
+      ]
     }
   ],
-  "dependencies": [
-    {
-      "sourceId": "C",
-      "targetId": "pC",
-      "relation": "constraint",
-      "constraintId": "constraint4"
-    },
-    {
-      "sourceId": "B",
-      "targetId": "pB",
-      "relation": "constraint",
-      "constraintId": "constraint5"
-    },
-    {
-      "sourceId": "A",
-      "targetId": "pA",
-      "relation": "constraint",
-      "constraintId": "constraint6"
-    },
-    {
-      "sourceId": "B",
-      "targetId": "equilateralAPlus",
-      "relation": "expression"
-    },
-    {
-      "sourceId": "C",
-      "targetId": "equilateralAPlus",
-      "relation": "expression"
-    },
-    {
-      "sourceId": "B",
-      "targetId": "equilateralAMinus",
-      "relation": "expression"
-    },
-    {
-      "sourceId": "C",
-      "targetId": "equilateralAMinus",
-      "relation": "expression"
-    },
-    {
-      "sourceId": "A",
-      "targetId": "equilateralBPlus",
-      "relation": "expression"
-    },
-    {
-      "sourceId": "C",
-      "targetId": "equilateralBPlus",
-      "relation": "expression"
-    },
-    {
-      "sourceId": "A",
-      "targetId": "equilateralBMinus",
-      "relation": "expression"
-    },
-    {
-      "sourceId": "C",
-      "targetId": "equilateralBMinus",
-      "relation": "expression"
-    },
-    {
-      "sourceId": "A",
-      "targetId": "equilateralCPlus",
-      "relation": "expression"
-    },
-    {
-      "sourceId": "B",
-      "targetId": "equilateralCPlus",
-      "relation": "expression"
-    },
-    {
-      "sourceId": "A",
-      "targetId": "equilateralCMinus",
-      "relation": "expression"
-    },
-    {
-      "sourceId": "B",
-      "targetId": "equilateralCMinus",
-      "relation": "expression"
-    },
-    {
-      "sourceId": "midAB",
-      "targetId": "thalesAB",
-      "relation": "construction"
-    },
-    {
-      "sourceId": "A",
-      "targetId": "thalesAB",
-      "relation": "construction"
-    },
-    {
-      "sourceId": "midAC",
-      "targetId": "thalesAC",
-      "relation": "construction"
-    },
-    {
-      "sourceId": "A",
-      "targetId": "thalesAC",
-      "relation": "construction"
-    },
-    {
-      "sourceId": "midBC",
-      "targetId": "thalesBC",
-      "relation": "construction"
-    },
-    {
-      "sourceId": "B",
-      "targetId": "thalesBC",
-      "relation": "construction"
-    },
-    {
-      "sourceId": "pB",
-      "targetId": "perpBAA",
-      "relation": "construction"
-    },
-    {
-      "sourceId": "pA",
-      "targetId": "perpBAA",
-      "relation": "construction"
-    },
-    {
-      "sourceId": "A",
-      "targetId": "perpBAA",
-      "relation": "construction"
-    },
-    {
-      "sourceId": "pA",
-      "targetId": "perpABB",
-      "relation": "construction"
-    },
-    {
-      "sourceId": "pB",
-      "targetId": "perpABB",
-      "relation": "construction"
-    },
-    {
-      "sourceId": "B",
-      "targetId": "perpABB",
-      "relation": "construction"
-    },
-    {
-      "sourceId": "pC",
-      "targetId": "perpCBB",
-      "relation": "construction"
-    },
-    {
-      "sourceId": "pB",
-      "targetId": "perpCBB",
-      "relation": "construction"
-    },
-    {
-      "sourceId": "B",
-      "targetId": "perpCBB",
-      "relation": "construction"
-    },
-    {
-      "sourceId": "pB",
-      "targetId": "perpBCC",
-      "relation": "construction"
-    },
-    {
-      "sourceId": "pC",
-      "targetId": "perpBCC",
-      "relation": "construction"
-    },
-    {
-      "sourceId": "C",
-      "targetId": "perpBCC",
-      "relation": "construction"
-    },
-    {
-      "sourceId": "pC",
-      "targetId": "perpCAC",
-      "relation": "construction"
-    },
-    {
-      "sourceId": "pA",
-      "targetId": "perpCAC",
-      "relation": "construction"
-    },
-    {
-      "sourceId": "C",
-      "targetId": "perpCAC",
-      "relation": "construction"
-    },
-    {
-      "sourceId": "pC",
-      "targetId": "perpCAA",
-      "relation": "construction"
-    },
-    {
-      "sourceId": "pA",
-      "targetId": "perpCAA",
-      "relation": "construction"
-    },
-    {
-      "sourceId": "A",
-      "targetId": "perpCAA",
-      "relation": "construction"
-    },
-    {
-      "sourceId": "A",
-      "targetId": "nonReflexAngleABC",
-      "relation": "construction"
-    },
-    {
-      "sourceId": "B",
-      "targetId": "nonReflexAngleABC",
-      "relation": "construction"
-    },
-    {
-      "sourceId": "C",
-      "targetId": "nonReflexAngleABC",
-      "relation": "construction"
-    },
-    {
-      "sourceId": "A",
-      "targetId": "nonReflexAngleACB",
-      "relation": "construction"
-    },
-    {
-      "sourceId": "C",
-      "targetId": "nonReflexAngleACB",
-      "relation": "construction"
-    },
-    {
-      "sourceId": "B",
-      "targetId": "nonReflexAngleACB",
-      "relation": "construction"
-    },
-    {
-      "sourceId": "B",
-      "targetId": "nonReflexAngleBAC",
-      "relation": "construction"
-    },
-    {
-      "sourceId": "A",
-      "targetId": "nonReflexAngleBAC",
-      "relation": "construction"
-    },
-    {
-      "sourceId": "C",
-      "targetId": "nonReflexAngleBAC",
-      "relation": "construction"
-    },
-    {
-      "sourceId": "B",
-      "targetId": "congruenceMarkBC",
-      "relation": "construction"
-    },
-    {
-      "sourceId": "C",
-      "targetId": "congruenceMarkBC",
-      "relation": "construction"
-    },
-    {
-      "sourceId": "A",
-      "targetId": "congruenceMarkAB",
-      "relation": "construction"
-    },
-    {
-      "sourceId": "B",
-      "targetId": "congruenceMarkAB",
-      "relation": "construction"
-    },
-    {
-      "sourceId": "C",
-      "targetId": "congruenceMarkCA",
-      "relation": "construction"
-    },
-    {
-      "sourceId": "A",
-      "targetId": "congruenceMarkCA",
-      "relation": "construction"
-    },
-    {
-      "sourceId": "equilateralAPlus",
-      "targetId": "A",
-      "relation": "constraint"
-    },
-    {
-      "sourceId": "equilateralAMinus",
-      "targetId": "A",
-      "relation": "constraint"
-    },
-    {
-      "sourceId": "thalesBC",
-      "targetId": "A",
-      "relation": "constraint"
-    },
-    {
-      "sourceId": "lineMediatrizBC",
-      "targetId": "A",
-      "relation": "constraint"
-    },
-    {
-      "sourceId": "perpCBB",
-      "targetId": "A",
-      "relation": "constraint"
-    },
-    {
-      "sourceId": "perpBCC",
-      "targetId": "A",
-      "relation": "constraint"
-    },
-    {
-      "sourceId": "equilateralBPlus",
-      "targetId": "B",
-      "relation": "constraint"
-    },
-    {
-      "sourceId": "equilateralBMinus",
-      "targetId": "B",
-      "relation": "constraint"
-    },
-    {
-      "sourceId": "thalesAC",
-      "targetId": "B",
-      "relation": "constraint"
-    },
-    {
-      "sourceId": "lineMediatrizAC",
-      "targetId": "B",
-      "relation": "constraint"
-    },
-    {
-      "sourceId": "perpCAC",
-      "targetId": "B",
-      "relation": "constraint"
-    },
-    {
-      "sourceId": "perpCAA",
-      "targetId": "B",
-      "relation": "constraint"
-    },
-    {
-      "sourceId": "equilateralCPlus",
-      "targetId": "C",
-      "relation": "constraint"
-    },
-    {
-      "sourceId": "equilateralCMinus",
-      "targetId": "C",
-      "relation": "constraint"
-    },
-    {
-      "sourceId": "thalesAB",
-      "targetId": "C",
-      "relation": "constraint"
-    },
-    {
-      "sourceId": "lineMediatrizAB",
-      "targetId": "C",
-      "relation": "constraint"
-    },
-    {
-      "sourceId": "perpBAA",
-      "targetId": "C",
-      "relation": "constraint"
-    },
-    {
-      "sourceId": "perpABB",
-      "targetId": "C",
-      "relation": "constraint"
-    },
-    {
-      "sourceId": "CA",
-      "targetId": "congruenceMarkCA",
-      "relation": "expression"
-    },
-    {
-      "sourceId": "AB",
-      "targetId": "congruenceMarkCA",
-      "relation": "expression"
-    },
-    {
-      "sourceId": "BC",
-      "targetId": "congruenceMarkCA",
-      "relation": "expression"
-    },
-    {
-      "sourceId": "CA",
-      "targetId": "congruenceMarkAB",
-      "relation": "expression"
-    },
-    {
-      "sourceId": "AB",
-      "targetId": "congruenceMarkAB",
-      "relation": "expression"
-    },
-    {
-      "sourceId": "BC",
-      "targetId": "congruenceMarkAB",
-      "relation": "expression"
-    },
-    {
-      "sourceId": "CA",
-      "targetId": "congruenceMarkBC",
-      "relation": "expression"
-    },
-    {
-      "sourceId": "AB",
-      "targetId": "congruenceMarkBC",
-      "relation": "expression"
-    },
-    {
-      "sourceId": "BC",
-      "targetId": "congruenceMarkBC",
-      "relation": "expression"
-    },
-    {
-      "sourceId": "nonReflexAngleABC",
-      "targetId": "nonReflexAngleABC",
-      "relation": "expression"
-    },
-    {
-      "sourceId": "nonReflexAngleACB",
-      "targetId": "nonReflexAngleACB",
-      "relation": "expression"
-    },
-    {
-      "sourceId": "nonReflexAngleBAC",
-      "targetId": "nonReflexAngleBAC",
-      "relation": "expression"
-    },
-    {
-      "sourceId": "B",
-      "targetId": "infoPanel26",
-      "relation": "expression"
-    },
-    {
-      "sourceId": "A",
-      "targetId": "infoPanel26",
-      "relation": "expression"
-    },
-    {
-      "sourceId": "C",
-      "targetId": "infoPanel26",
-      "relation": "expression"
-    },
-    {
-      "sourceId": "AB",
-      "targetId": "infoPanel26",
-      "relation": "expression"
-    },
-    {
-      "sourceId": "BC",
-      "targetId": "infoPanel26",
-      "relation": "expression"
-    },
-    {
-      "sourceId": "CA",
-      "targetId": "infoPanel26",
-      "relation": "expression"
-    },
-    {
-      "sourceId": "nonReflexAngleABC",
-      "targetId": "infoPanel26",
-      "relation": "expression"
-    },
-    {
-      "sourceId": "nonReflexAngleBAC",
-      "targetId": "infoPanel26",
-      "relation": "expression"
-    },
-    {
-      "sourceId": "nonReflexAngleACB",
-      "targetId": "infoPanel26",
-      "relation": "expression"
-    }
-  ],
-  "note": "Mueve A, B o C. El vértice arrastrado se ajusta temporalmente a posiciones equiláteras, isósceles y rectángulas, y vuelve a quedar libre al soltarlo.",
-  "extensions": {}
+  "steps": [],
+  "note": "Mueve A, B o C. El vértice arrastrado se ajusta temporalmente a posiciones equiláteras, isósceles y rectángulas, y vuelve a quedar libre al soltarlo."
 }
 );
 /* @matematika-diagram-spec:end */

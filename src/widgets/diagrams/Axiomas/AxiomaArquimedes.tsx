@@ -3,8 +3,8 @@ import { createDiagramSpec, DiagramRenderer } from '@/shared/diagrams/public';
 /* @matematika-diagram-spec:start */
 export const AxiomaArquimedesSpec = createDiagramSpec(
 {
-  "version": 2,
-  "renderer": "matematika-diagram-renderer-v2",
+  "version": 3,
+  "renderer": "matematika-diagram-renderer-v3",
   "title": "Axioma de Arquímedes",
   "componentId": "axioma-arquimedes",
   "category": "Axiomas",
@@ -109,7 +109,7 @@ export const AxiomaArquimedesSpec = createDiagramSpec(
       "targetId": "dosSegmentos"
     }
   ],
-  "points": [
+  "objects": [
     {
       "id": "pA",
       "label": "A",
@@ -128,20 +128,26 @@ export const AxiomaArquimedesSpec = createDiagramSpec(
       },
       "target": true,
       "targetId": "pA",
-      "style": {
-        "pointSize": 6,
+      "objectType": "point",
+      "definition": {
+        "type": "coordinates",
+        "x": -3.5,
+        "y": 0
+      },
+      "mobility": {
+        "type": "fixed"
+      },
+      "appearance": {
+        "size": 6,
+        "labelVisible": true,
         "labelOffset": [
           -20,
           16
         ],
-        "highlightPointSize": 9,
+        "highlightSize": 9,
         "preserveColorOnHighlight": true
       },
-      "x": -3.5,
-      "y": 0,
-      "showLabel": true,
-      "fixed": true,
-      "constraint": "fixed"
+      "interaction": {}
     },
     {
       "id": "pBMin",
@@ -159,15 +165,21 @@ export const AxiomaArquimedesSpec = createDiagramSpec(
         "role": "construction"
       },
       "target": false,
-      "style": {
-        "pointSize": 0,
-        "highlightPointSize": 0
+      "objectType": "point",
+      "definition": {
+        "type": "coordinates",
+        "x": -3.4,
+        "y": 0
       },
-      "x": -3.4,
-      "y": 0,
-      "showLabel": false,
-      "fixed": true,
-      "constraint": "fixed"
+      "mobility": {
+        "type": "fixed"
+      },
+      "appearance": {
+        "size": 0,
+        "labelVisible": false,
+        "highlightSize": 0
+      },
+      "interaction": {}
     },
     {
       "id": "pBMax",
@@ -185,15 +197,21 @@ export const AxiomaArquimedesSpec = createDiagramSpec(
         "role": "construction"
       },
       "target": false,
-      "style": {
-        "pointSize": 0,
-        "highlightPointSize": 0
+      "objectType": "point",
+      "definition": {
+        "type": "coordinates",
+        "x": 1,
+        "y": 0
       },
-      "x": 1,
-      "y": 0,
-      "showLabel": false,
-      "fixed": true,
-      "constraint": "fixed"
+      "mobility": {
+        "type": "fixed"
+      },
+      "appearance": {
+        "size": 0,
+        "labelVisible": false,
+        "highlightSize": 0
+      },
+      "interaction": {}
     },
     {
       "id": "pB",
@@ -213,21 +231,27 @@ export const AxiomaArquimedesSpec = createDiagramSpec(
       },
       "target": true,
       "targetId": "pB",
-      "style": {
-        "pointSize": 7,
+      "objectType": "point",
+      "definition": {
+        "type": "coordinates",
+        "x": -2.5,
+        "y": 0
+      },
+      "mobility": {
+        "type": "on-support",
+        "support": "supportAB"
+      },
+      "appearance": {
+        "size": 7,
+        "labelVisible": true,
         "labelOffset": [
           10,
           16
         ],
-        "highlightPointSize": 10,
+        "highlightSize": 10,
         "preserveColorOnHighlight": true
       },
-      "x": -2.5,
-      "y": 0,
-      "showLabel": true,
-      "fixed": false,
-      "constraint": "glider",
-      "gliderTarget": "supportAB"
+      "interaction": {}
     },
     {
       "id": "pC",
@@ -247,16 +271,22 @@ export const AxiomaArquimedesSpec = createDiagramSpec(
       },
       "target": true,
       "targetId": "pC",
-      "style": {
-        "pointSize": 6,
-        "highlightPointSize": 9,
+      "objectType": "point",
+      "definition": {
+        "type": "coordinates",
+        "x": -3.5,
+        "y": 1.35
+      },
+      "mobility": {
+        "type": "fixed"
+      },
+      "appearance": {
+        "size": 6,
+        "labelVisible": true,
+        "highlightSize": 9,
         "preserveColorOnHighlight": true
       },
-      "x": -3.5,
-      "y": 1.35,
-      "showLabel": true,
-      "fixed": true,
-      "constraint": "fixed"
+      "interaction": {}
     },
     {
       "id": "pD",
@@ -276,16 +306,22 @@ export const AxiomaArquimedesSpec = createDiagramSpec(
       },
       "target": true,
       "targetId": "pD",
-      "style": {
-        "pointSize": 6,
-        "highlightPointSize": 9,
+      "objectType": "point",
+      "definition": {
+        "type": "coordinates",
+        "x": 2.5,
+        "y": 1.35
+      },
+      "mobility": {
+        "type": "fixed"
+      },
+      "appearance": {
+        "size": 6,
+        "labelVisible": true,
+        "highlightSize": 9,
         "preserveColorOnHighlight": true
       },
-      "x": 2.5,
-      "y": 1.35,
-      "showLabel": true,
-      "fixed": true,
-      "constraint": "fixed"
+      "interaction": {}
     },
     {
       "id": "pBase",
@@ -303,15 +339,21 @@ export const AxiomaArquimedesSpec = createDiagramSpec(
         "role": "construction"
       },
       "target": false,
-      "style": {
-        "pointSize": 0,
-        "highlightPointSize": 0
+      "objectType": "point",
+      "definition": {
+        "type": "coordinates",
+        "x": -3.5,
+        "y": -1.25
       },
-      "x": -3.5,
-      "y": -1.25,
-      "showLabel": false,
-      "fixed": true,
-      "constraint": "fixed"
+      "mobility": {
+        "type": "fixed"
+      },
+      "appearance": {
+        "size": 0,
+        "labelVisible": false,
+        "highlightSize": 0
+      },
+      "interaction": {}
     },
     {
       "id": "pThreshold",
@@ -329,15 +371,21 @@ export const AxiomaArquimedesSpec = createDiagramSpec(
         "role": "construction"
       },
       "target": false,
-      "style": {
-        "pointSize": 0,
-        "highlightPointSize": 0
+      "objectType": "point",
+      "definition": {
+        "type": "coordinates",
+        "x": 2.5,
+        "y": -1.25
       },
-      "x": 2.5,
-      "y": -1.25,
-      "showLabel": false,
-      "fixed": true,
-      "constraint": "fixed"
+      "mobility": {
+        "type": "fixed"
+      },
+      "appearance": {
+        "size": 0,
+        "labelVisible": false,
+        "highlightSize": 0
+      },
+      "interaction": {}
     },
     {
       "id": "pAccumulated",
@@ -357,27 +405,27 @@ export const AxiomaArquimedesSpec = createDiagramSpec(
       },
       "target": true,
       "targetId": "acumulado",
-      "style": {
-        "pointSize": 5,
-        "highlightPointSize": 8,
+      "objectType": "point",
+      "definition": {
+        "type": "expression",
+        "x": "pBase.x+n*abs(pB.x-pA.x)",
+        "y": "pBase.y",
+        "fallback": [
+          0.5,
+          -1.15
+        ]
+      },
+      "mobility": {
+        "type": "fixed"
+      },
+      "appearance": {
+        "size": 5,
+        "labelVisible": false,
+        "highlightSize": 8,
         "preserveColorOnHighlight": true
       },
-      "x": 0.5,
-      "y": -1.15,
-      "showLabel": false,
-      "fixed": true,
-      "constraint": "derived",
-      "dependencies": [
-        "pBase",
-        "n",
-        "pA",
-        "pB"
-      ],
-      "xExpression": "pBase.x+n*abs(pB.x-pA.x)",
-      "yExpression": "pBase.y"
-    }
-  ],
-  "elements": [
+      "interaction": {}
+    },
     {
       "id": "supportAB",
       "label": "Recorrido permitido de B",
@@ -394,15 +442,18 @@ export const AxiomaArquimedesSpec = createDiagramSpec(
         "role": "construction"
       },
       "target": false,
-      "style": {
+      "objectType": "path",
+      "geometry": {
+        "type": "segment",
+        "points": [
+          "pBMin",
+          "pBMax"
+        ]
+      },
+      "appearance": {
         "strokeWidth": 1,
         "strokeOpacity": 0
-      },
-      "kind": "segment",
-      "refs": [
-        "pBMin",
-        "pBMax"
-      ]
+      }
     },
     {
       "id": "segAB",
@@ -422,16 +473,19 @@ export const AxiomaArquimedesSpec = createDiagramSpec(
       },
       "target": true,
       "targetId": "segAB",
-      "style": {
+      "objectType": "path",
+      "geometry": {
+        "type": "segment",
+        "points": [
+          "pA",
+          "pB"
+        ]
+      },
+      "appearance": {
         "strokeWidth": 5,
         "highlightStrokeWidth": 7,
         "preserveColorOnHighlight": true
-      },
-      "kind": "segment",
-      "refs": [
-        "pA",
-        "pB"
-      ]
+      }
     },
     {
       "id": "segCD",
@@ -451,16 +505,19 @@ export const AxiomaArquimedesSpec = createDiagramSpec(
       },
       "target": true,
       "targetId": "segCD",
-      "style": {
+      "objectType": "path",
+      "geometry": {
+        "type": "segment",
+        "points": [
+          "pC",
+          "pD"
+        ]
+      },
+      "appearance": {
         "strokeWidth": 5,
         "highlightStrokeWidth": 7,
         "preserveColorOnHighlight": true
-      },
-      "kind": "segment",
-      "refs": [
-        "pC",
-        "pD"
-      ]
+      }
     },
     {
       "id": "readingAB",
@@ -477,18 +534,21 @@ export const AxiomaArquimedesSpec = createDiagramSpec(
         "role": "annotation"
       },
       "target": false,
-      "kind": "infoPanel",
-      "refs": [],
-      "text": "AB = {value}",
-      "properties": {
+      "objectType": "annotation",
+      "variant": "panel",
+      "content": {
+        "text": "AB = {value}",
         "expression": "segAB.length",
-        "precision": 2,
-        "anchorMode": "viewport",
-        "viewportPosition": [
+        "precision": 2
+      },
+      "anchor": {
+        "type": "viewport",
+        "position": [
           0.06,
           0.22
         ]
-      }
+      },
+      "appearance": {}
     },
     {
       "id": "readingN",
@@ -505,18 +565,21 @@ export const AxiomaArquimedesSpec = createDiagramSpec(
         "role": "annotation"
       },
       "target": false,
-      "kind": "infoPanel",
-      "refs": [],
-      "text": "n = {value}",
-      "properties": {
+      "objectType": "annotation",
+      "variant": "panel",
+      "content": {
+        "text": "n = {value}",
         "expression": "n",
-        "precision": 0,
-        "anchorMode": "viewport",
-        "viewportPosition": [
+        "precision": 0
+      },
+      "anchor": {
+        "type": "viewport",
+        "position": [
           0.25,
           0.22
         ]
-      }
+      },
+      "appearance": {}
     },
     {
       "id": "readingProduct",
@@ -533,18 +596,21 @@ export const AxiomaArquimedesSpec = createDiagramSpec(
         "role": "annotation"
       },
       "target": false,
-      "kind": "infoPanel",
-      "refs": [],
-      "text": "n · AB = {value}",
-      "properties": {
+      "objectType": "annotation",
+      "variant": "panel",
+      "content": {
+        "text": "n · AB = {value}",
         "expression": "n*segAB.length",
-        "precision": 2,
-        "anchorMode": "viewport",
-        "viewportPosition": [
+        "precision": 2
+      },
+      "anchor": {
+        "type": "viewport",
+        "position": [
           0.43,
           0.22
         ]
-      }
+      },
+      "appearance": {}
     },
     {
       "id": "readingCD",
@@ -561,18 +627,21 @@ export const AxiomaArquimedesSpec = createDiagramSpec(
         "role": "annotation"
       },
       "target": false,
-      "kind": "infoPanel",
-      "refs": [],
-      "text": "CD = {value}",
-      "properties": {
+      "objectType": "annotation",
+      "variant": "panel",
+      "content": {
+        "text": "CD = {value}",
         "expression": "segCD.length",
-        "precision": 2,
-        "anchorMode": "viewport",
-        "viewportPosition": [
+        "precision": 2
+      },
+      "anchor": {
+        "type": "viewport",
+        "position": [
           0.66,
           0.22
         ]
-      }
+      },
+      "appearance": {}
     },
     {
       "id": "accumulatedCarrier",
@@ -592,15 +661,18 @@ export const AxiomaArquimedesSpec = createDiagramSpec(
         "role": "construction"
       },
       "target": false,
-      "style": {
+      "objectType": "path",
+      "geometry": {
+        "type": "segment",
+        "points": [
+          "pBase",
+          "pAccumulated"
+        ]
+      },
+      "appearance": {
         "strokeWidth": 1,
         "strokeOpacity": 0
-      },
-      "kind": "segment",
-      "refs": [
-        "pBase",
-        "pAccumulated"
-      ]
+      }
     },
     {
       "id": "accumulatedBefore",
@@ -609,6 +681,7 @@ export const AxiomaArquimedesSpec = createDiagramSpec(
       "layerId": "constructions",
       "order": 9000,
       "visible": true,
+      "visibleWhen": "lte(n*segAB.length,segCD.length+0.000000001)",
       "locked": false,
       "groupIds": [
         "copies"
@@ -619,18 +692,18 @@ export const AxiomaArquimedesSpec = createDiagramSpec(
         "role": "secondary"
       },
       "target": false,
-      "style": {
+      "objectType": "path",
+      "geometry": {
+        "type": "segment",
+        "points": [
+          "pBase",
+          "pAccumulated"
+        ]
+      },
+      "appearance": {
         "strokeWidth": 8,
         "highlightStrokeWidth": 10,
         "preserveColorOnHighlight": true
-      },
-      "kind": "segment",
-      "refs": [
-        "pBase",
-        "pAccumulated"
-      ],
-      "properties": {
-        "visibleWhen": "lte(n*segAB.length,segCD.length+0.000000001)"
       }
     },
     {
@@ -640,6 +713,7 @@ export const AxiomaArquimedesSpec = createDiagramSpec(
       "layerId": "constructions",
       "order": 9100,
       "visible": true,
+      "visibleWhen": "gt(n*segAB.length,segCD.length+0.000000001)",
       "locked": false,
       "groupIds": [
         "copies"
@@ -651,18 +725,18 @@ export const AxiomaArquimedesSpec = createDiagramSpec(
       },
       "target": true,
       "targetId": "copiasSuperanCD",
-      "style": {
+      "objectType": "path",
+      "geometry": {
+        "type": "segment",
+        "points": [
+          "pBase",
+          "pAccumulated"
+        ]
+      },
+      "appearance": {
         "strokeWidth": 8,
         "highlightStrokeWidth": 10,
         "preserveColorOnHighlight": true
-      },
-      "kind": "segment",
-      "refs": [
-        "pBase",
-        "pAccumulated"
-      ],
-      "properties": {
-        "visibleWhen": "gt(n*segAB.length,segCD.length+0.000000001)"
       }
     },
     {
@@ -682,20 +756,20 @@ export const AxiomaArquimedesSpec = createDiagramSpec(
         "role": "construction"
       },
       "target": false,
-      "style": {
-        "strokeWidth": 2,
-        "markHeight": 14,
-        "highlightStrokeWidth": 4,
-        "preserveColorOnHighlight": true
+      "objectType": "mark",
+      "variant": "graduation",
+      "anchor": {
+        "type": "path",
+        "path": "accumulatedCarrier"
       },
-      "kind": "measureTicks",
-      "refs": [
-        "accumulatedCarrier"
-      ],
-      "properties": {
-        "tickDistance": 1,
-        "tickDistanceExpression": "abs(pB.x-pA.x)",
-        "minorTickCount": 0
+      "count": 1,
+      "height": 14,
+      "spacing": 1,
+      "spacingExpression": "abs(pB.x-pA.x)",
+      "subdivisions": 0,
+      "appearance": {
+        "strokeWidth": 2,
+        "preserveColorOnHighlight": true
       }
     },
     {
@@ -714,18 +788,21 @@ export const AxiomaArquimedesSpec = createDiagramSpec(
       },
       "target": true,
       "targetId": "nMinimo",
-      "kind": "infoPanel",
-      "refs": [],
-      "text": "n mínimo = {value}",
-      "properties": {
+      "objectType": "annotation",
+      "variant": "panel",
+      "content": {
+        "text": "n mínimo = {value}",
         "expression": "floor(segCD.length/segAB.length+0.000000001)+1",
-        "precision": 0,
-        "anchorMode": "viewport",
-        "viewportPosition": [
+        "precision": 0
+      },
+      "anchor": {
+        "type": "viewport",
+        "position": [
           0.38,
           0.22
         ]
-      }
+      },
+      "appearance": {}
     },
     {
       "id": "lineDThreshold",
@@ -743,18 +820,22 @@ export const AxiomaArquimedesSpec = createDiagramSpec(
       },
       "target": true,
       "targetId": "lineDThreshold",
-      "style": {
-        "preserveColorOnHighlight": true
+      "objectType": "path",
+      "geometry": {
+        "type": "line",
+        "construction": {
+          "type": "through-points",
+          "points": [
+            "pD",
+            "pThreshold"
+          ]
+        }
       },
-      "kind": "line",
-      "refs": [
-        "pD",
-        "pThreshold"
-      ],
-      "dashed": true
-    }
-  ],
-  "sliders": [
+      "appearance": {
+        "dashed": true,
+        "preserveColorOnHighlight": true
+      }
+    },
     {
       "id": "n",
       "label": "$n$",
@@ -771,209 +852,24 @@ export const AxiomaArquimedesSpec = createDiagramSpec(
       },
       "target": true,
       "targetId": "n",
-      "style": {
-        "preserveColorOnHighlight": true
+      "objectType": "control",
+      "variant": "slider",
+      "position": [
+        -1.2,
+        -2.35
+      ],
+      "range": {
+        "min": 1,
+        "max": 7,
+        "maxExpression": "floor(segCD.length/segAB.length+0.000000001)+1",
+        "step": 1
       },
-      "x": -1.2,
-      "y": -2.35,
-      "min": 1,
-      "max": 7,
-      "maxExpression": "floor(segCD.length/segAB.length+0.000000001)+1",
-      "value": 4,
-      "step": 1
+      "value": 4
     }
   ],
+  "relations": [],
   "steps": [],
-  "constraints": [],
-  "dependencies": [
-    {
-      "sourceId": "pBMin",
-      "targetId": "supportAB",
-      "relation": "construction"
-    },
-    {
-      "sourceId": "pBMax",
-      "targetId": "supportAB",
-      "relation": "construction"
-    },
-    {
-      "sourceId": "supportAB",
-      "targetId": "pB",
-      "relation": "constraint"
-    },
-    {
-      "sourceId": "pA",
-      "targetId": "segAB",
-      "relation": "construction"
-    },
-    {
-      "sourceId": "pB",
-      "targetId": "segAB",
-      "relation": "construction"
-    },
-    {
-      "sourceId": "pC",
-      "targetId": "segCD",
-      "relation": "construction"
-    },
-    {
-      "sourceId": "pD",
-      "targetId": "segCD",
-      "relation": "construction"
-    },
-    {
-      "sourceId": "segAB",
-      "targetId": "n",
-      "relation": "expression"
-    },
-    {
-      "sourceId": "segCD",
-      "targetId": "n",
-      "relation": "expression"
-    },
-    {
-      "sourceId": "pBase",
-      "targetId": "pAccumulated",
-      "relation": "expression"
-    },
-    {
-      "sourceId": "n",
-      "targetId": "pAccumulated",
-      "relation": "expression"
-    },
-    {
-      "sourceId": "pA",
-      "targetId": "pAccumulated",
-      "relation": "expression"
-    },
-    {
-      "sourceId": "pB",
-      "targetId": "pAccumulated",
-      "relation": "expression"
-    },
-    {
-      "sourceId": "pBase",
-      "targetId": "accumulatedCarrier",
-      "relation": "construction"
-    },
-    {
-      "sourceId": "pAccumulated",
-      "targetId": "accumulatedCarrier",
-      "relation": "construction"
-    },
-    {
-      "sourceId": "pBase",
-      "targetId": "accumulatedBefore",
-      "relation": "construction"
-    },
-    {
-      "sourceId": "pAccumulated",
-      "targetId": "accumulatedBefore",
-      "relation": "construction"
-    },
-    {
-      "sourceId": "n",
-      "targetId": "accumulatedBefore",
-      "relation": "expression"
-    },
-    {
-      "sourceId": "segAB",
-      "targetId": "accumulatedBefore",
-      "relation": "expression"
-    },
-    {
-      "sourceId": "segCD",
-      "targetId": "accumulatedBefore",
-      "relation": "expression"
-    },
-    {
-      "sourceId": "pBase",
-      "targetId": "accumulatedAfter",
-      "relation": "construction"
-    },
-    {
-      "sourceId": "pAccumulated",
-      "targetId": "accumulatedAfter",
-      "relation": "construction"
-    },
-    {
-      "sourceId": "n",
-      "targetId": "accumulatedAfter",
-      "relation": "expression"
-    },
-    {
-      "sourceId": "segAB",
-      "targetId": "accumulatedAfter",
-      "relation": "expression"
-    },
-    {
-      "sourceId": "segCD",
-      "targetId": "accumulatedAfter",
-      "relation": "expression"
-    },
-    {
-      "sourceId": "accumulatedCarrier",
-      "targetId": "copyTicks",
-      "relation": "construction"
-    },
-    {
-      "sourceId": "pA",
-      "targetId": "copyTicks",
-      "relation": "expression"
-    },
-    {
-      "sourceId": "pB",
-      "targetId": "copyTicks",
-      "relation": "expression"
-    },
-    {
-      "sourceId": "segAB",
-      "targetId": "readingAB",
-      "relation": "expression"
-    },
-    {
-      "sourceId": "n",
-      "targetId": "readingN",
-      "relation": "expression"
-    },
-    {
-      "sourceId": "n",
-      "targetId": "readingProduct",
-      "relation": "expression"
-    },
-    {
-      "sourceId": "segAB",
-      "targetId": "readingProduct",
-      "relation": "expression"
-    },
-    {
-      "sourceId": "segCD",
-      "targetId": "readingCD",
-      "relation": "expression"
-    },
-    {
-      "sourceId": "segAB",
-      "targetId": "readingRequired",
-      "relation": "expression"
-    },
-    {
-      "sourceId": "segCD",
-      "targetId": "readingRequired",
-      "relation": "expression"
-    },
-    {
-      "sourceId": "pD",
-      "targetId": "lineDThreshold",
-      "relation": "construction"
-    },
-    {
-      "sourceId": "pThreshold",
-      "targetId": "lineDThreshold",
-      "relation": "construction"
-    }
-  ],
-  "note": "Arrastra B para hacer AB tan pequeño como se desee; el máximo de n se recalcula y siempre permite rebasar CD.",
-  "extensions": {}
+  "note": "Arrastra B para hacer AB tan pequeño como se desee; el máximo de n se recalcula y siempre permite rebasar CD."
 }
 );
 /* @matematika-diagram-spec:end */

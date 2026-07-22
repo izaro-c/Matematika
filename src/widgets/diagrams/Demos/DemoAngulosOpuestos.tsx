@@ -3,8 +3,8 @@ import { createDiagramSpec, DiagramRenderer } from '@/shared/diagrams/public';
 /* @matematika-diagram-spec:start */
 export const DemoAngulosOpuestosSpec = createDiagramSpec(
 {
-  "version": 2,
-  "renderer": "matematika-diagram-renderer-v2",
+  "version": 3,
+  "renderer": "matematika-diagram-renderer-v3",
   "title": "Ángulos opuestos",
   "componentId": "demo-angulos-opuestos",
   "category": "Demostraciones",
@@ -137,7 +137,7 @@ export const DemoAngulosOpuestosSpec = createDiagramSpec(
       "color": "granada"
     }
   ],
-  "points": [
+  "objects": [
     {
       "id": "O",
       "label": "O",
@@ -153,16 +153,22 @@ export const DemoAngulosOpuestosSpec = createDiagramSpec(
         "role": "secondary"
       },
       "target": false,
-      "style": {
-        "pointSize": 7,
-        "highlightPointSize": 10,
+      "objectType": "point",
+      "definition": {
+        "type": "coordinates",
+        "x": 0,
+        "y": 0
+      },
+      "mobility": {
+        "type": "fixed"
+      },
+      "appearance": {
+        "size": 7,
+        "labelVisible": true,
+        "highlightSize": 10,
         "preserveColorOnHighlight": true
       },
-      "x": 0,
-      "y": 0,
-      "showLabel": true,
-      "fixed": true,
-      "constraint": "fixed"
+      "interaction": {}
     },
     {
       "id": "A",
@@ -179,18 +185,24 @@ export const DemoAngulosOpuestosSpec = createDiagramSpec(
         "role": "primary"
       },
       "target": false,
-      "style": {
-        "pointSize": 7,
-        "highlightPointSize": 10,
+      "objectType": "point",
+      "definition": {
+        "type": "coordinates",
+        "x": -0.5,
+        "y": 4
+      },
+      "mobility": {
+        "type": "free"
+      },
+      "appearance": {
+        "size": 7,
+        "labelVisible": true,
+        "highlightSize": 10,
         "preserveColorOnHighlight": true
       },
-      "x": 0.25,
-      "y": 2.75,
-      "showLabel": true,
-      "fixed": false,
-      "constraint": "free",
-      "snapToGrid": true,
-      "snapSize": 0.25
+      "interaction": {
+        "snapSize": 0.25
+      }
     },
     {
       "id": "B",
@@ -207,18 +219,24 @@ export const DemoAngulosOpuestosSpec = createDiagramSpec(
         "role": "primary"
       },
       "target": false,
-      "style": {
-        "pointSize": 7,
-        "highlightPointSize": 10,
+      "objectType": "point",
+      "definition": {
+        "type": "coordinates",
+        "x": -6.2,
+        "y": 0.91
+      },
+      "mobility": {
+        "type": "free"
+      },
+      "appearance": {
+        "size": 7,
+        "labelVisible": true,
+        "highlightSize": 10,
         "preserveColorOnHighlight": true
       },
-      "x": -4,
-      "y": 1.25,
-      "showLabel": true,
-      "fixed": false,
-      "constraint": "free",
-      "snapToGrid": true,
-      "snapSize": 0.25
+      "interaction": {
+        "snapSize": 0.25
+      }
     },
     {
       "id": "Ap",
@@ -235,21 +253,26 @@ export const DemoAngulosOpuestosSpec = createDiagramSpec(
         "role": "construction"
       },
       "target": false,
-      "style": {
-        "pointSize": 7,
-        "highlightPointSize": 10,
+      "objectType": "point",
+      "definition": {
+        "type": "expression",
+        "x": "-A.x",
+        "y": "-A.y",
+        "fallback": [
+          -3.2,
+          -1.4
+        ]
+      },
+      "mobility": {
+        "type": "fixed"
+      },
+      "appearance": {
+        "size": 7,
+        "labelVisible": true,
+        "highlightSize": 10,
         "preserveColorOnHighlight": true
       },
-      "x": -3.2,
-      "y": -1.4,
-      "showLabel": true,
-      "fixed": true,
-      "constraint": "derived",
-      "dependencies": [
-        "A"
-      ],
-      "xExpression": "-A.x",
-      "yExpression": "-A.y"
+      "interaction": {}
     },
     {
       "id": "Bp",
@@ -266,24 +289,343 @@ export const DemoAngulosOpuestosSpec = createDiagramSpec(
         "role": "construction"
       },
       "target": false,
-      "style": {
-        "pointSize": 7,
-        "highlightPointSize": 10,
+      "objectType": "point",
+      "definition": {
+        "type": "expression",
+        "x": "-B.x",
+        "y": "-B.y",
+        "fallback": [
+          1.7,
+          -2.8
+        ]
+      },
+      "mobility": {
+        "type": "fixed"
+      },
+      "appearance": {
+        "size": 7,
+        "labelVisible": true,
+        "highlightSize": 10,
         "preserveColorOnHighlight": true
       },
-      "x": 1.7,
-      "y": -2.8,
-      "showLabel": true,
-      "fixed": true,
-      "constraint": "derived",
-      "dependencies": [
-        "B"
-      ],
-      "xExpression": "-B.x",
-      "yExpression": "-B.y"
-    }
-  ],
-  "elements": [
+      "interaction": {}
+    },
+    {
+      "id": "O_copy",
+      "label": "O (copia)",
+      "color": "carbon",
+      "layerId": "geometry",
+      "order": 1021,
+      "visible": true,
+      "locked": false,
+      "groupIds": [],
+      "selection": {
+        "selectable": true,
+        "ariaLabel": "Punto fijo O",
+        "role": "secondary"
+      },
+      "target": false,
+      "objectType": "point",
+      "definition": {
+        "type": "coordinates",
+        "x": 4,
+        "y": 2
+      },
+      "mobility": {
+        "type": "free"
+      },
+      "appearance": {
+        "size": 7,
+        "labelVisible": true,
+        "highlightSize": 10,
+        "preserveColorOnHighlight": true
+      },
+      "interaction": {
+        "snapSize": 0.25
+      }
+    },
+    {
+      "id": "A_copy",
+      "label": "A (copia)",
+      "color": "granada",
+      "layerId": "geometry",
+      "order": 1031,
+      "visible": false,
+      "locked": false,
+      "groupIds": [],
+      "selection": {
+        "selectable": true,
+        "ariaLabel": "Mover el punto A",
+        "role": "primary"
+      },
+      "target": false,
+      "objectType": "point",
+      "definition": {
+        "type": "coordinates",
+        "x": 7.25,
+        "y": 2
+      },
+      "mobility": {
+        "type": "free"
+      },
+      "appearance": {
+        "size": 7,
+        "labelVisible": true,
+        "highlightSize": 10,
+        "preserveColorOnHighlight": true
+      },
+      "interaction": {
+        "snapSize": 0.25
+      }
+    },
+    {
+      "id": "B_copy",
+      "label": "B (copia)",
+      "color": "pizarra",
+      "layerId": "geometry",
+      "order": 1041,
+      "visible": false,
+      "locked": false,
+      "groupIds": [],
+      "selection": {
+        "selectable": true,
+        "ariaLabel": "Mover el punto B",
+        "role": "primary"
+      },
+      "target": false,
+      "objectType": "point",
+      "definition": {
+        "type": "coordinates",
+        "x": 5.041953149103954,
+        "y": 5.763553325658126
+      },
+      "mobility": {
+        "type": "constrained",
+        "relationIds": [
+          "equalAngleangle1_copy"
+        ]
+      },
+      "appearance": {
+        "size": 7,
+        "labelVisible": true,
+        "highlightSize": 10,
+        "preserveColorOnHighlight": true
+      },
+      "interaction": {
+        "snapSize": 0.25
+      }
+    },
+    {
+      "id": "Ap_copy",
+      "label": "A' (copia)",
+      "color": "granada",
+      "layerId": "geometry",
+      "order": 1051,
+      "visible": false,
+      "locked": false,
+      "groupIds": [],
+      "selection": {
+        "selectable": true,
+        "ariaLabel": "Punto construido A'",
+        "role": "construction"
+      },
+      "target": false,
+      "objectType": "point",
+      "definition": {
+        "type": "expression",
+        "x": "O_copy.x-(A_copy.x-O_copy.x)",
+        "y": "O_copy.y-(A_copy.y-O_copy.y)",
+        "fallback": [
+          -2.7,
+          -1.9
+        ]
+      },
+      "mobility": {
+        "type": "fixed"
+      },
+      "appearance": {
+        "size": 7,
+        "labelVisible": true,
+        "highlightSize": 10,
+        "preserveColorOnHighlight": true
+      },
+      "interaction": {}
+    },
+    {
+      "id": "O_copy_2",
+      "label": "O (copia)",
+      "color": "carbon",
+      "layerId": "geometry",
+      "order": 1021,
+      "visible": true,
+      "locked": false,
+      "groupIds": [],
+      "selection": {
+        "selectable": true,
+        "ariaLabel": "Punto fijo O",
+        "role": "secondary"
+      },
+      "target": false,
+      "objectType": "point",
+      "definition": {
+        "type": "coordinates",
+        "x": 8,
+        "y": 2
+      },
+      "mobility": {
+        "type": "free"
+      },
+      "appearance": {
+        "size": 7,
+        "labelVisible": true,
+        "highlightSize": 10,
+        "preserveColorOnHighlight": true
+      },
+      "interaction": {}
+    },
+    {
+      "id": "A_copy_2",
+      "label": "A (copia)",
+      "color": "granada",
+      "layerId": "geometry",
+      "order": 1031,
+      "visible": true,
+      "locked": false,
+      "groupIds": [],
+      "selection": {
+        "selectable": true,
+        "ariaLabel": "Mover el punto A",
+        "role": "primary"
+      },
+      "target": false,
+      "objectType": "point",
+      "definition": {
+        "type": "coordinates",
+        "x": 6.803707927150703,
+        "y": 6.321028266100319
+      },
+      "mobility": {
+        "type": "constrained",
+        "relationIds": [
+          "equalAngleangle2_copy_2"
+        ]
+      },
+      "appearance": {
+        "size": 7,
+        "labelVisible": true,
+        "highlightSize": 10,
+        "preserveColorOnHighlight": true
+      },
+      "interaction": {
+        "snapSize": 0.25
+      }
+    },
+    {
+      "id": "B_copy_2",
+      "label": "B (copia)",
+      "color": "pizarra",
+      "layerId": "geometry",
+      "order": 1041,
+      "visible": true,
+      "locked": false,
+      "groupIds": [],
+      "selection": {
+        "selectable": true,
+        "ariaLabel": "Mover el punto B",
+        "role": "primary"
+      },
+      "target": false,
+      "objectType": "point",
+      "definition": {
+        "type": "coordinates",
+        "x": 12.77,
+        "y": 2
+      },
+      "mobility": {
+        "type": "free"
+      },
+      "appearance": {
+        "size": 7,
+        "labelVisible": true,
+        "highlightSize": 10,
+        "preserveColorOnHighlight": true
+      },
+      "interaction": {
+        "snapSize": 0.25
+      }
+    },
+    {
+      "id": "Ap_copy_2",
+      "label": "A' (copia)",
+      "color": "granada",
+      "layerId": "geometry",
+      "order": 1051,
+      "visible": true,
+      "locked": false,
+      "groupIds": [],
+      "selection": {
+        "selectable": true,
+        "ariaLabel": "Punto construido A'",
+        "role": "construction"
+      },
+      "target": false,
+      "objectType": "point",
+      "definition": {
+        "type": "expression",
+        "x": "O_copy_2.x-(A_copy_2.x-O_copy_2.x)",
+        "y": "O_copy_2.y-(A_copy_2.y-O_copy_2.y)",
+        "fallback": [
+          -2.7,
+          -1.9
+        ]
+      },
+      "mobility": {
+        "type": "fixed"
+      },
+      "appearance": {
+        "size": 7,
+        "labelVisible": true,
+        "highlightSize": 10,
+        "preserveColorOnHighlight": true
+      },
+      "interaction": {}
+    },
+    {
+      "id": "Bp_copy",
+      "label": "B' (copia)",
+      "color": "pizarra",
+      "layerId": "geometry",
+      "order": 1061,
+      "visible": true,
+      "locked": false,
+      "groupIds": [],
+      "selection": {
+        "selectable": true,
+        "ariaLabel": "Punto construido B'",
+        "role": "construction"
+      },
+      "target": false,
+      "objectType": "point",
+      "definition": {
+        "type": "expression",
+        "x": "O_copy_2.x-(B_copy_2.x-O_copy_2.x)",
+        "y": "O_copy_2.y-(B_copy_2.y-O_copy_2.y)",
+        "fallback": [
+          2.2,
+          -3.3
+        ]
+      },
+      "mobility": {
+        "type": "fixed"
+      },
+      "appearance": {
+        "size": 7,
+        "labelVisible": true,
+        "highlightSize": 10,
+        "preserveColorOnHighlight": true
+      },
+      "interaction": {}
+    },
     {
       "id": "lineL",
       "label": "$l$",
@@ -300,17 +642,23 @@ export const DemoAngulosOpuestosSpec = createDiagramSpec(
       },
       "target": true,
       "targetId": "lineL",
-      "style": {
+      "objectType": "path",
+      "geometry": {
+        "type": "line",
+        "construction": {
+          "type": "through-points",
+          "points": [
+            "A",
+            "Ap"
+          ]
+        }
+      },
+      "appearance": {
         "strokeWidth": 2.4,
+        "labelVisible": true,
         "highlightStrokeWidth": 3,
         "preserveColorOnHighlight": true
-      },
-      "kind": "line",
-      "refs": [
-        "A",
-        "Ap"
-      ],
-      "showLabel": true
+      }
     },
     {
       "id": "lineM",
@@ -328,17 +676,23 @@ export const DemoAngulosOpuestosSpec = createDiagramSpec(
       },
       "target": true,
       "targetId": "lineM",
-      "style": {
+      "objectType": "path",
+      "geometry": {
+        "type": "line",
+        "construction": {
+          "type": "through-points",
+          "points": [
+            "B",
+            "Bp"
+          ]
+        }
+      },
+      "appearance": {
         "strokeWidth": 2.4,
+        "labelVisible": true,
         "highlightStrokeWidth": 3,
         "preserveColorOnHighlight": true
-      },
-      "kind": "line",
-      "refs": [
-        "B",
-        "Bp"
-      ],
-      "showLabel": true
+      }
     },
     {
       "id": "angle1",
@@ -360,17 +714,26 @@ export const DemoAngulosOpuestosSpec = createDiagramSpec(
       },
       "target": true,
       "targetId": "angle1",
-      "style": {
-        "fillOpacity": 0.28,
-        "angleRadius": 1,
-        "preserveColorOnHighlight": true
-      },
-      "kind": "nonReflexAngle",
-      "refs": [
+      "objectType": "angle",
+      "points": [
         "A",
         "O",
         "B"
-      ]
+      ],
+      "sweep": "non-reflex",
+      "marker": "arc",
+      "appearance": {
+        "radius": 1,
+        "fillOpacity": 0.28,
+        "labelOffset": [
+          0,
+          0
+        ],
+        "labelSize": 16,
+        "highlightStrokeWidth": 4.5,
+        "highlightFillOpacity": 0.6,
+        "preserveColorOnHighlight": true
+      }
     },
     {
       "id": "angle2",
@@ -393,17 +756,26 @@ export const DemoAngulosOpuestosSpec = createDiagramSpec(
       },
       "target": true,
       "targetId": "angle2",
-      "style": {
-        "fillOpacity": 0.2,
-        "angleRadius": 0.8,
-        "preserveColorOnHighlight": true
-      },
-      "kind": "nonReflexAngle",
-      "refs": [
+      "objectType": "angle",
+      "points": [
         "B",
         "O",
         "Ap"
-      ]
+      ],
+      "sweep": "non-reflex",
+      "marker": "arc",
+      "appearance": {
+        "radius": 0.8,
+        "fillOpacity": 0.2,
+        "labelOffset": [
+          0,
+          0
+        ],
+        "labelSize": 16,
+        "highlightStrokeWidth": 4.5,
+        "highlightFillOpacity": 0.6,
+        "preserveColorOnHighlight": true
+      }
     },
     {
       "id": "angle3",
@@ -425,17 +797,26 @@ export const DemoAngulosOpuestosSpec = createDiagramSpec(
       },
       "target": true,
       "targetId": "angle3",
-      "style": {
-        "fillOpacity": 0.28,
-        "angleRadius": 1,
-        "preserveColorOnHighlight": true
-      },
-      "kind": "nonReflexAngle",
-      "refs": [
+      "objectType": "angle",
+      "points": [
         "Ap",
         "O",
         "Bp"
-      ]
+      ],
+      "sweep": "non-reflex",
+      "marker": "arc",
+      "appearance": {
+        "radius": 1,
+        "fillOpacity": 0.28,
+        "labelOffset": [
+          0,
+          0
+        ],
+        "labelSize": 16,
+        "highlightStrokeWidth": 4.5,
+        "highlightFillOpacity": 0.6,
+        "preserveColorOnHighlight": true
+      }
     },
     {
       "id": "angle4",
@@ -455,20 +836,234 @@ export const DemoAngulosOpuestosSpec = createDiagramSpec(
       },
       "target": true,
       "targetId": "angle4",
-      "style": {
-        "fillOpacity": 0.2,
-        "angleRadius": 0.8,
-        "preserveColorOnHighlight": true
-      },
-      "kind": "nonReflexAngle",
-      "refs": [
+      "objectType": "angle",
+      "points": [
         "Bp",
         "O",
         "A"
-      ]
+      ],
+      "sweep": "non-reflex",
+      "marker": "arc",
+      "appearance": {
+        "radius": 0.8,
+        "fillOpacity": 0.2,
+        "labelOffset": [
+          0,
+          0
+        ],
+        "labelSize": 16,
+        "highlightStrokeWidth": 4.5,
+        "highlightFillOpacity": 0.6,
+        "preserveColorOnHighlight": true
+      }
+    },
+    {
+      "id": "angle1_copy",
+      "label": "α",
+      "color": "pavo",
+      "layerId": "geometry",
+      "order": 1091,
+      "visible": true,
+      "locked": false,
+      "groupIds": [],
+      "selection": {
+        "selectable": true,
+        "ariaLabel": "α",
+        "role": "secondary"
+      },
+      "target": true,
+      "targetId": "angle1_copy",
+      "objectType": "angle",
+      "points": [
+        "A_copy",
+        "O_copy",
+        "B_copy"
+      ],
+      "sweep": "non-reflex",
+      "marker": "arc",
+      "appearance": {
+        "radius": 1,
+        "fillOpacity": 0.28,
+        "labelOffset": [
+          0,
+          0
+        ],
+        "labelSize": 16,
+        "highlightStrokeWidth": 4.5,
+        "highlightFillOpacity": 0.6,
+        "preserveColorOnHighlight": true
+      }
+    },
+    {
+      "id": "angle2_copy",
+      "label": "β ",
+      "color": "musgo",
+      "layerId": "geometry",
+      "order": 1101,
+      "visible": true,
+      "locked": false,
+      "groupIds": [],
+      "selection": {
+        "selectable": true,
+        "ariaLabel": "β",
+        "role": "secondary"
+      },
+      "target": true,
+      "targetId": "angle2_copy",
+      "objectType": "angle",
+      "points": [
+        "B_copy",
+        "O_copy",
+        "Ap_copy"
+      ],
+      "sweep": "non-reflex",
+      "marker": "arc",
+      "appearance": {
+        "radius": 0.8,
+        "fillOpacity": 0.2,
+        "labelOffset": [
+          0,
+          0
+        ],
+        "labelSize": 15,
+        "highlightStrokeWidth": 4.5,
+        "highlightFillOpacity": 0.6,
+        "preserveColorOnHighlight": true
+      }
+    },
+    {
+      "id": "angle2_copy_2",
+      "label": "β ",
+      "color": "musgo",
+      "layerId": "geometry",
+      "order": 1101,
+      "visible": true,
+      "locked": false,
+      "groupIds": [],
+      "selection": {
+        "selectable": true,
+        "ariaLabel": "β",
+        "role": "secondary"
+      },
+      "target": true,
+      "targetId": "angle2_copy_2",
+      "objectType": "angle",
+      "points": [
+        "B_copy_2",
+        "O_copy_2",
+        "A_copy_2"
+      ],
+      "sweep": "non-reflex",
+      "marker": "arc",
+      "appearance": {
+        "radius": 0.8,
+        "fillOpacity": 0.2,
+        "labelOffset": [
+          0,
+          0
+        ],
+        "labelSize": 16,
+        "highlightStrokeWidth": 4.5,
+        "highlightFillOpacity": 0.6,
+        "preserveColorOnHighlight": true
+      }
+    },
+    {
+      "id": "angle3_copy",
+      "label": "α' ",
+      "color": "pavo",
+      "layerId": "geometry",
+      "order": 1111,
+      "visible": true,
+      "locked": false,
+      "groupIds": [],
+      "selection": {
+        "selectable": true,
+        "ariaLabel": "α'",
+        "role": "secondary"
+      },
+      "target": true,
+      "targetId": "angle3_copy",
+      "objectType": "angle",
+      "points": [
+        "A_copy_2",
+        "O_copy_2",
+        "Bp_copy"
+      ],
+      "sweep": "non-reflex",
+      "marker": "arc",
+      "appearance": {
+        "radius": 1,
+        "fillOpacity": 0.28,
+        "labelOffset": [
+          0,
+          0
+        ],
+        "labelSize": 16,
+        "highlightStrokeWidth": 4.5,
+        "highlightFillOpacity": 0.6,
+        "preserveColorOnHighlight": true
+      }
+    },
+    {
+      "id": "textO_copy_2",
+      "label": "igualdad",
+      "color": "carbon",
+      "layerId": "geometry",
+      "order": 2120,
+      "visible": true,
+      "locked": false,
+      "groupIds": [],
+      "selection": {
+        "selectable": true,
+        "ariaLabel": "Etiqueta",
+        "role": "annotation"
+      },
+      "target": true,
+      "targetId": "textO_copy_2",
+      "objectType": "annotation",
+      "variant": "text",
+      "content": {
+        "text": "**=**"
+      },
+      "anchor": {
+        "type": "object",
+        "object": "O_copy_2",
+        "offset": [
+          -2.1899999999999995,
+          0.48
+        ]
+      },
+      "appearance": {
+        "fontSize": 42,
+        "preserveColorOnHighlight": true
+      }
     }
   ],
-  "sliders": [],
+  "relations": [
+    {
+      "id": "equalAngleangle1_copy",
+      "label": "α (copia) tiene la misma amplitud que α",
+      "enabled": true,
+      "type": "equal-angle",
+      "angles": [
+        "angle1_copy",
+        "angle1"
+      ],
+      "drivenPoint": "B_copy"
+    },
+    {
+      "id": "equalAngleangle2_copy_2",
+      "label": "β  tiene la misma amplitud que β",
+      "enabled": true,
+      "type": "equal-angle",
+      "angles": [
+        "angle2_copy_2",
+        "angle2"
+      ],
+      "drivenPoint": "A_copy_2"
+    }
+  ],
   "steps": [
     {
       "id": "step1",
@@ -481,8 +1076,10 @@ export const DemoAngulosOpuestosSpec = createDiagramSpec(
         "angle2",
         "angle3",
         "angle4",
-        "A",
-        "B"
+        "B",
+        "angle1_copy",
+        "angle2_copy",
+        "A"
       ],
       "durationMs": 1800,
       "objectStates": {
@@ -523,6 +1120,51 @@ export const DemoAngulosOpuestosSpec = createDiagramSpec(
         },
         "B": {
           "visible": true,
+          "emphasis": "none",
+          "interactive": true
+        },
+        "angle1_copy": {
+          "visible": true,
+          "emphasis": "primary",
+          "interactive": true
+        },
+        "angle2_copy": {
+          "visible": true,
+          "emphasis": "primary",
+          "interactive": true
+        },
+        "A_copy": {
+          "visible": false,
+          "emphasis": "none",
+          "interactive": true
+        },
+        "B_copy": {
+          "visible": false,
+          "emphasis": "none",
+          "interactive": true
+        },
+        "angle2_copy_2": {
+          "visible": false,
+          "emphasis": "primary",
+          "interactive": true
+        },
+        "angle3_copy": {
+          "visible": false,
+          "emphasis": "none",
+          "interactive": true
+        },
+        "A_copy_2": {
+          "visible": false,
+          "emphasis": "none",
+          "interactive": true
+        },
+        "B_copy_2": {
+          "visible": false,
+          "emphasis": "none",
+          "interactive": true
+        },
+        "textO_copy_2": {
+          "visible": false,
           "emphasis": "none",
           "interactive": true
         }
@@ -540,7 +1182,11 @@ export const DemoAngulosOpuestosSpec = createDiagramSpec(
         "angle3",
         "angle4",
         "A",
-        "B"
+        "B",
+        "angle2_copy_2",
+        "angle3_copy",
+        "angle1_copy",
+        "angle2_copy"
       ],
       "durationMs": 1800,
       "objectStates": {
@@ -581,6 +1227,51 @@ export const DemoAngulosOpuestosSpec = createDiagramSpec(
         },
         "B": {
           "visible": true,
+          "emphasis": "none",
+          "interactive": true
+        },
+        "angle1_copy": {
+          "visible": true,
+          "emphasis": "none",
+          "interactive": true
+        },
+        "angle2_copy": {
+          "visible": true,
+          "emphasis": "primary",
+          "interactive": true
+        },
+        "A_copy": {
+          "visible": false,
+          "emphasis": "none",
+          "interactive": true
+        },
+        "B_copy": {
+          "visible": false,
+          "emphasis": "none",
+          "interactive": true
+        },
+        "angle2_copy_2": {
+          "visible": true,
+          "emphasis": "primary",
+          "interactive": true
+        },
+        "angle3_copy": {
+          "visible": true,
+          "emphasis": "primary",
+          "interactive": true
+        },
+        "A_copy_2": {
+          "visible": false,
+          "emphasis": "none",
+          "interactive": true
+        },
+        "B_copy_2": {
+          "visible": false,
+          "emphasis": "none",
+          "interactive": true
+        },
+        "textO_copy_2": {
+          "visible": false,
           "emphasis": "none",
           "interactive": true
         }
@@ -598,7 +1289,12 @@ export const DemoAngulosOpuestosSpec = createDiagramSpec(
         "angle3",
         "angle4",
         "A",
-        "B"
+        "B",
+        "angle1_copy",
+        "angle2_copy",
+        "angle2_copy_2",
+        "angle3_copy",
+        "textO_copy_2"
       ],
       "durationMs": 1800,
       "objectStates": {
@@ -639,6 +1335,46 @@ export const DemoAngulosOpuestosSpec = createDiagramSpec(
         },
         "B": {
           "visible": true,
+          "emphasis": "none",
+          "interactive": true
+        },
+        "angle1_copy": {
+          "visible": true,
+          "emphasis": "primary",
+          "interactive": true
+        },
+        "angle2_copy": {
+          "visible": true,
+          "emphasis": "primary",
+          "interactive": true
+        },
+        "A_copy": {
+          "visible": false,
+          "emphasis": "none",
+          "interactive": true
+        },
+        "B_copy": {
+          "visible": false,
+          "emphasis": "none",
+          "interactive": true
+        },
+        "angle2_copy_2": {
+          "visible": true,
+          "emphasis": "primary",
+          "interactive": true
+        },
+        "angle3_copy": {
+          "visible": true,
+          "emphasis": "primary",
+          "interactive": true
+        },
+        "A_copy_2": {
+          "visible": false,
+          "emphasis": "none",
+          "interactive": true
+        },
+        "B_copy_2": {
+          "visible": false,
           "emphasis": "none",
           "interactive": true
         }
@@ -656,7 +1392,10 @@ export const DemoAngulosOpuestosSpec = createDiagramSpec(
         "angle3",
         "angle4",
         "A",
-        "B"
+        "B",
+        "angle1_copy",
+        "angle3_copy",
+        "textO_copy_2"
       ],
       "durationMs": 1800,
       "objectStates": {
@@ -697,6 +1436,46 @@ export const DemoAngulosOpuestosSpec = createDiagramSpec(
         },
         "B": {
           "visible": true,
+          "emphasis": "none",
+          "interactive": true
+        },
+        "angle1_copy": {
+          "visible": true,
+          "emphasis": "primary",
+          "interactive": true
+        },
+        "angle2_copy": {
+          "visible": false,
+          "emphasis": "none",
+          "interactive": true
+        },
+        "A_copy": {
+          "visible": false,
+          "emphasis": "none",
+          "interactive": true
+        },
+        "B_copy": {
+          "visible": false,
+          "emphasis": "none",
+          "interactive": true
+        },
+        "angle2_copy_2": {
+          "visible": false,
+          "emphasis": "none",
+          "interactive": true
+        },
+        "angle3_copy": {
+          "visible": true,
+          "emphasis": "primary",
+          "interactive": true
+        },
+        "A_copy_2": {
+          "visible": false,
+          "emphasis": "none",
+          "interactive": true
+        },
+        "B_copy_2": {
+          "visible": false,
           "emphasis": "none",
           "interactive": true
         }
@@ -757,24 +1536,56 @@ export const DemoAngulosOpuestosSpec = createDiagramSpec(
           "visible": true,
           "emphasis": "none",
           "interactive": true
+        },
+        "angle1_copy": {
+          "visible": false,
+          "emphasis": "none",
+          "interactive": true
+        },
+        "angle2_copy": {
+          "visible": false,
+          "emphasis": "primary",
+          "interactive": true
+        },
+        "A_copy": {
+          "visible": false,
+          "emphasis": "none",
+          "interactive": true
+        },
+        "B_copy": {
+          "visible": false,
+          "emphasis": "none",
+          "interactive": true
+        },
+        "angle2_copy_2": {
+          "visible": false,
+          "emphasis": "primary",
+          "interactive": true
+        },
+        "angle3_copy": {
+          "visible": false,
+          "emphasis": "none",
+          "interactive": true
+        },
+        "A_copy_2": {
+          "visible": false,
+          "emphasis": "none",
+          "interactive": true
+        },
+        "B_copy_2": {
+          "visible": false,
+          "emphasis": "none",
+          "interactive": true
+        },
+        "textO_copy_2": {
+          "visible": false,
+          "emphasis": "none",
+          "interactive": true
         }
       }
     }
   ],
-  "dependencies": [
-    {
-      "sourceId": "A",
-      "targetId": "Ap",
-      "relation": "expression"
-    },
-    {
-      "sourceId": "B",
-      "targetId": "Bp",
-      "relation": "expression"
-    }
-  ],
-  "note": "Mueve A y B",
-  "extensions": {}
+  "note": "Mueve A y B"
 }
 );
 /* @matematika-diagram-spec:end */

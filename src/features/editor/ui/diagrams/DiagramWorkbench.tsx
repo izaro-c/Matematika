@@ -20,18 +20,20 @@ import { DiagramSectionOutlet } from '../../diagrams/ui/DiagramSectionOutlet';
 import { DiagramGuidedConstructions } from '../../diagrams/ui/DiagramGuidedConstructions';
 import { DiagramMovementAidsPanel } from '../../diagrams/ui/DiagramMovementAidsPanel';
 import { DiagramResponsivePreview } from '../../diagrams/ui/DiagramResponsivePreview';
+import { DiagramHeaderReadingsEditor } from '../../diagrams/ui/DiagramHeaderReadingsEditor';
 import { generateDiagramSource } from '../../diagrams/source/generator';
 import {
   KIND_LABELS, refsNeededForTool,
   addToolReference, toolReferencesAreReady,
-  point, element, slider, step, projectPointToSupport,
+  point, element, slider, projectPointToSupport,
   generatedElementId, elementColorForKind,
   defaultElementProperties,
   addLabelToElement,
   removeDiagramElements,
   supportElements, applyGuidedConstruction,
-  normalizeConstructionRefs, validConstructionRefs, nextStepId,
+  normalizeConstructionRefs, validConstructionRefs,
   toolReferenceCandidates,
+  deleteDiagramCascade,
 } from '../../diagrams/model/commands';
 import { useModalFocus } from '../hooks/useModalFocus';
 import { useDiagramClipboard } from '../../diagrams/hooks/useDiagramClipboard';
@@ -78,6 +80,94 @@ function makeVisibleInEveryStep(candidate: VisualDiagramModel, objectId: string)
   };
 }
 
+function addLabelsToEveryElement(model: VisualDiagramModel): VisualDiagramModel {
+  return model.elements.reduce((currentModel, diagramElement) => {
+    if (['label', 'text', 'formula', 'infoPanel', 'grid'].includes(diagramElement.kind)) return currentModel;
+    return addLabelToElement(currentModel, diagramElement.id).model;
+  }, model);
+}
+
+function removeEveryElementLabel(model: VisualDiagramModel): VisualDiagramModel | null {
+  const labelIds = new Set(model.elements.filter(item => item.kind === 'label').map(item => item.id));
+  return labelIds.size > 0 ? removeDiagramElements(model, labelIds) : null;
+}
+
+function workbenchIsBlocked(status: string, hasError: boolean): boolean {
+  return ['invalid-source', 'diverged', 'conflict'].includes(status) || hasError;
+}
+
+function sourceCanRegenerate(parseStatus: string, status: string): boolean {
+  return parseStatus === 'visual-exact' && !['source-authoritative', 'diverged'].includes(status);
+}
+
+function saveDiagramInFileMode(isFileMode: boolean, save: () => Promise<boolean>): void {
+  if (isFileMode) void save();
+}
+
+function shouldShowCodeFallback(model: VisualDiagramModel | null, source: string, diagnosticCount: number): boolean {
+  return !model && (source.length > 0 || diagnosticCount > 0);
+}
+
+function confirmCascadeDeletion(objectId: string, dependentIds: string[]): boolean {
+  const details = dependentIds.length > 0
+    ? `\n\nTambién se eliminarán ${dependentIds.length} dependiente(s): ${dependentIds.join(', ')}.`
+    : '';
+  return typeof globalThis.confirm !== 'function'
+    || globalThis.confirm(`¿Eliminar ${objectId}?${details}\n\nPuede deshacer esta operación.`);
+}
+
+interface DeleteSelectedDiagramObjectOptions {
+  model: VisualDiagramModel;
+  selectedId: string;
+  edit: (model: VisualDiagramModel, command: { label: string }) => void;
+  clearSelection: () => void;
+}
+
+function deleteSelectedDiagramObject({
+  model,
+  selectedId,
+  edit,
+  clearSelection,
+}: DeleteSelectedDiagramObjectOptions): void {
+  if (!selectedId) return;
+  const deletion = deleteDiagramCascade(model, selectedId);
+  if (!confirmCascadeDeletion(selectedId, deletion.impact.dependentIds)) return;
+  edit(deletion.model, { label: `Eliminar ${selectedId} y dependientes` });
+  clearSelection();
+}
+
+function appendDiagramElement(model: VisualDiagramModel, kind: ElementKind, explicitRefs?: string[]): { model: VisualDiagramModel; id: string } {
+  const refs = explicitRefs || toolReferenceCandidates(model, kind).map(item => item.id);
+  const elementRefs = refsForElementKind(kind, refs);
+  const id = generatedElementId(kind, elementRefs, model.elements);
+  const properties = defaultElementProperties(kind);
+  const baseElement = element(
+    id,
+    KIND_LABELS[kind],
+    kind,
+    elementRefs,
+    elementColorForKind(kind),
+    kind !== 'label',
+    {
+      ...(properties ? { properties } : {}),
+      ...(kind === 'label' ? { style: { textOffset: [0.04, 0.04] as [number, number], preserveColorOnHighlight: true } } : {}),
+    },
+  );
+  const nextElement = {
+    ...baseElement,
+    order: Math.max(0, ...[...model.points, ...model.elements].filter(item => item.layerId === baseElement.layerId).map(item => item.order)) + 1000,
+  };
+  const nextModel = makeVisibleInEveryStep({
+    ...model,
+    elements: [...model.elements, nextElement],
+    dependencies: [
+      ...(model.dependencies || []),
+      ...elementRefs.map(sourceId => ({ sourceId, targetId: id, relation: 'construction' as const })),
+    ],
+  }, id);
+  return { model: nextModel, id };
+}
+
 interface ConfirmWorkbenchOptions {
   shouldSave: boolean;
   blocked: boolean;
@@ -116,20 +206,17 @@ function chooseToolReference({ tool, pendingRefs, referenceId, addElement, setPe
   return true;
 }
 
-function topTabClass(active: boolean): string {
-  return `rounded px-3 py-1 text-xs font-bold transition-all ${active ? 'bg-carbon text-lienzo' : 'text-carbon/60 hover:bg-carbon/5'}`;
-}
-
 function sectionTabClass(active: boolean): string {
-  return `whitespace-nowrap rounded px-3 py-1.5 text-left text-xs font-bold ${active ? 'bg-carbon text-lienzo' : 'text-carbon/60 hover:bg-carbon/5'}`;
+  return `min-h-11 whitespace-nowrap rounded px-3 py-2 text-left text-xs font-bold transition-colors ${active ? 'bg-carbon text-lienzo' : 'text-carbon/60 hover:bg-carbon/5'}`;
 }
 
 function sectionDetailClass(active: boolean): string {
   return `ml-1 font-mono text-[9px] ${active ? 'text-lienzo/65' : 'text-carbon/35'}`;
 }
 
-function buildPanelTabClass(active: boolean): string {
-  return `rounded px-1 py-1.5 text-[10px] font-bold ${active ? 'bg-carbon text-lienzo' : 'text-carbon/55 hover:bg-carbon/5'}`;
+function paneDisplay(active: boolean, display: 'block' | 'flex'): string {
+  if (!active) return 'hidden';
+  return display;
 }
 
 function publicationPageType(metadataType: string, mode: DiagramWorkbenchMode): string {
@@ -137,6 +224,83 @@ function publicationPageType(metadataType: string, mode: DiagramWorkbenchMode): 
   const diagramId = mode.kind === 'file' || mode.kind === 'rewrite' ? mode.path : mode.componentName;
   if (!diagramId) return '';
   return pageTypeFromContentPath(getDiagramUsages(diagramId)[0]?.contentPath);
+}
+
+function effectiveWorkbenchSelection(
+  model: VisualDiagramModel | null,
+  localSelection: readonly string[],
+  primaryId: string,
+): string[] {
+  if (!model) return [];
+  const validIds = new Set([...model.points, ...model.elements, ...model.sliders].map(item => item.id));
+  const retained = localSelection.filter(id => validIds.has(id));
+  if (retained.length > 0) return retained;
+  return primaryId && validIds.has(primaryId) ? [primaryId] : [];
+}
+
+function toggledWorkbenchSelection(
+  current: readonly string[],
+  id: string,
+  primaryId: string,
+): { ids: string[]; primaryId: string } {
+  if (!current.includes(id)) return { ids: [...current, id], primaryId: id };
+  const ids = current.filter(selected => selected !== id);
+  return {
+    ids,
+    primaryId: primaryId === id ? ids[ids.length - 1] ?? '' : primaryId,
+  };
+}
+
+function primaryIdForSelection(ids: readonly string[], preferredId?: string): string {
+  if (preferredId && ids.includes(preferredId)) return preferredId;
+  return ids[ids.length - 1] ?? '';
+}
+
+interface WorkbenchKeyboardOptions {
+  event: React.KeyboardEvent<HTMLDivElement>;
+  canvasTool: CanvasTool;
+  selectedId: string;
+  handleClipboardKeyDown: (event: React.KeyboardEvent<HTMLDivElement>) => void;
+  selectTool: () => void;
+  deleteSelected: () => void;
+  undo: () => void;
+  redo: () => void;
+}
+
+function handleWorkbenchKeyboard({
+  event,
+  canvasTool,
+  selectedId,
+  handleClipboardKeyDown,
+  selectTool,
+  deleteSelected,
+  undo,
+  redo,
+}: WorkbenchKeyboardOptions): void {
+  handleClipboardKeyDown(event);
+  const target = event.target as HTMLElement;
+  if (target.matches('input, textarea, select, [contenteditable="true"]')) return;
+  if (event.key === 'Escape' && canvasTool !== 'select') {
+    event.preventDefault();
+    event.stopPropagation();
+    selectTool();
+    return;
+  }
+  if ((event.key === 'Delete' || event.key === 'Backspace') && selectedId) {
+    event.preventDefault();
+    deleteSelected();
+    return;
+  }
+  if ((event.ctrlKey || event.metaKey) && event.key.toLocaleLowerCase() === 'z') {
+    event.preventDefault();
+    if (event.shiftKey) redo();
+    else undo();
+    return;
+  }
+  if ((event.ctrlKey || event.metaKey) && event.key.toLocaleLowerCase() === 'y') {
+    event.preventDefault();
+    redo();
+  }
 }
 
 export const DiagramWorkbenchCore: React.FC<DiagramWorkbenchCoreProps> = ({
@@ -164,10 +328,11 @@ export const DiagramWorkbenchCore: React.FC<DiagramWorkbenchCoreProps> = ({
     saveDiagram,
   } = useDiagramState();
 
-  const [tab, setTab] = useState<'visual' | 'source'>('visual');
-  const [visualSection, setVisualSection] = useState<'build' | 'steps' | 'targets' | 'check'>('build');
-  const [buildPanel, setBuildPanel] = useState<'objects' | 'organize' | 'diagram'>('objects');
+  const [workspace, setWorkspace] = useState<'build' | 'steps' | 'targets' | 'check' | 'source'>('build');
   const [canvasDisplay, setCanvasDisplay] = useState<'edit' | 'preview'>('edit');
+  const [mobilePane, setMobilePane] = useState<'scene' | 'canvas' | 'properties'>('canvas');
+  const [leftPanel, setLeftPanel] = useState<'objects' | 'organization' | 'diagram'>('objects');
+  const [selectedIds, setSelectedIds] = useState<string[]>([]);
   const previewPageType = publicationPageType(metadataType, mode);
   const closeButtonRef = useRef<HTMLButtonElement>(null);
   const workbenchRef = useModalFocus<HTMLDivElement>(isOpen, onClose, closeButtonRef);
@@ -205,16 +370,32 @@ export const DiagramWorkbenchCore: React.FC<DiagramWorkbenchCoreProps> = ({
       referenceId,
       addElement: handleAddElement,
       setPendingRefs,
-      select: selectElement,
+      select: selectOnly,
     });
+  };
+
+  const effectiveSelectedIds = effectiveWorkbenchSelection(state.currentModel, selectedIds, state.selectedId);
+
+  const selectOnly = (id: string) => {
+    setSelectedIds(id ? [id] : []);
+    selectElement(id);
+  };
+  const selectMany = (ids: string[], primaryId?: string) => {
+    const uniqueIds = [...new Set(ids)];
+    setSelectedIds(uniqueIds);
+    selectElement(primaryIdForSelection(uniqueIds, primaryId));
+  };
+  const toggleSelection = (id: string) => {
+    const next = toggledWorkbenchSelection(effectiveSelectedIds, id, state.selectedId);
+    selectMany(next.ids, next.primaryId);
   };
 
   const clipboard = useDiagramClipboard({
     model: state.currentModel,
-    selectedId: state.selectedId,
+    selectedIds: effectiveSelectedIds,
     onModelEdit: handleVisualEdit,
-    onSelect: selectElement,
-    onShowObjects: () => setBuildPanel('objects'),
+    onSelectMany: selectMany,
+    onShowObjects: () => setMobilePane('scene'),
   });
 
   if (!isOpen) return null;
@@ -222,13 +403,10 @@ export const DiagramWorkbenchCore: React.FC<DiagramWorkbenchCoreProps> = ({
   const model: VisualDiagramModel | null = state.currentModel;
   const componentName = state.componentName || 'DiagramaInteractivo';
   const saveCapability = getDiagramSaveCapability(state);
-  const saveCodeOnlyDiagram = () => {
-    if (isFileMode) void saveDiagram();
-  };
+  const saveCodeOnlyDiagram = () => saveDiagramInFileMode(isFileMode, saveDiagram);
 
-  if (!model) {
-    if (state.currentSource || state.diagnostics.length > 0) {
-      return (
+  if (shouldShowCodeFallback(model, state.currentSource, state.diagnostics.length)) {
+    return (
         <div ref={workbenchRef} className="fixed inset-0 z-50 flex flex-col bg-lienzo text-carbon font-sans" role="dialog" aria-modal="true" aria-label="Editor de diagramas en código">
           <header className="flex items-center justify-between border-b border-carbon/15 px-4 py-3 bg-carbon/5">
             <div>
@@ -264,8 +442,9 @@ export const DiagramWorkbenchCore: React.FC<DiagramWorkbenchCoreProps> = ({
             onSave={saveCodeOnlyDiagram}
           />
         </div>
-      );
-    }
+    );
+  }
+  if (!model) {
     return (
       <div ref={workbenchRef} className="fixed inset-0 z-50 flex items-center justify-center bg-carbon/40 backdrop-blur-sm" role="dialog" aria-modal="true" aria-label="Cargando editor de diagramas" aria-busy="true" tabIndex={-1}>
         <div className="rounded bg-lienzo p-6 shadow-xl max-w-sm w-full text-center">
@@ -277,7 +456,7 @@ export const DiagramWorkbenchCore: React.FC<DiagramWorkbenchCoreProps> = ({
 
   const handleSaveAndConfirm = () => confirmWorkbench({
     shouldSave: isFileMode,
-    blocked: state.status === 'invalid-source' || state.status === 'diverged' || state.status === 'conflict' || state.diagnostics.some(diagnostic => diagnostic.severity === 'error'),
+    blocked: workbenchIsBlocked(state.status, state.diagnostics.some(diagnostic => diagnostic.severity === 'error')),
     save: saveDiagram,
     reference: {
       componentName,
@@ -304,62 +483,20 @@ export const DiagramWorkbenchCore: React.FC<DiagramWorkbenchCoreProps> = ({
       ...model,
       sliders: [...model.sliders, newSlider],
     }, id), { label: `Añadir control ${id}` });
-    selectElement(id);
+    selectOnly(id);
     activateCanvasTool('select');
-  };
-
-  const handleAddStep = () => {
-    const id = nextStepId(model.steps);
-    const visibleTargets = [
-      ...model.points.map(item => item.id),
-      ...model.elements.map(item => item.id),
-      ...model.sliders.map(item => item.id),
-    ];
-    const newStep = step(id, `Paso ${model.steps.length + 1}`, 'Describa qué construcción se ve.', visibleTargets);
-    handleVisualEdit({
-      ...model,
-      steps: [...model.steps, newStep],
-    });
-    selectElement(id);
-    setActiveStep(id);
   };
 
   const handleAddElement = (kind: ElementKind, explicitRefs?: string[]) => {
-    const refs = explicitRefs || toolReferenceCandidates(model, kind).map(item => item.id);
-    const elementRefs = refsForElementKind(kind, refs);
-
-    const id = generatedElementId(kind, elementRefs, model.elements);
-    const properties = defaultElementProperties(kind);
-    const baseElement = element(
-      id,
-      KIND_LABELS[kind],
-      kind,
-      elementRefs,
-      elementColorForKind(kind),
-      kind !== 'label',
-      {
-        ...(properties ? { properties } : {}),
-        ...(kind === 'label' ? { style: { textOffset: [0.04, 0.04] as [number, number], preserveColorOnHighlight: true } } : {}),
-      },
-    );
-    const newElement = {
-      ...baseElement,
-      order: Math.max(0, ...[...model.points, ...model.elements].filter(item => item.layerId === baseElement.layerId).map(item => item.order)) + 1000,
-    };
-    handleVisualEdit(makeVisibleInEveryStep({
-      ...model,
-      elements: [...model.elements, newElement],
-      dependencies: [
-        ...(model.dependencies || []),
-        ...elementRefs.map(sourceId => ({ sourceId, targetId: id, relation: 'construction' as const })),
-      ],
-    }, id), { label: `Añadir ${KIND_LABELS[kind]}` });
-    selectElement(id);
+    const result = appendDiagramElement(model, kind, explicitRefs);
+    handleVisualEdit(result.model, { label: `Añadir ${KIND_LABELS[kind]}` });
+    selectOnly(result.id);
     activateCanvasTool('select');
   };
 
-  const handleAddGliderPoint = () => {
-    const support = supportElements(model)[0];
+  const handleAddGliderPoint = (supportId?: string) => {
+    const candidates = supportElements(model);
+    const support = candidates.find(item => item.id === supportId) ?? candidates[0];
     if (!support) return;
     const id = `p${model.points.length + 1}`;
     const initial = { x: 0, y: 0 };
@@ -372,7 +509,7 @@ export const DiagramWorkbenchCore: React.FC<DiagramWorkbenchCoreProps> = ({
       ...model,
       points: [...model.points, { ...nextPoint, ...projected }],
     }, id), { label: `Añadir punto sobre ${support.id}` });
-    selectElement(id);
+    selectOnly(id);
     activateCanvasTool('select');
   };
 
@@ -380,73 +517,26 @@ export const DiagramWorkbenchCore: React.FC<DiagramWorkbenchCoreProps> = ({
     const result = addLabelToElement(model, elementId);
     const next = makeVisibleInEveryStep(result.model, result.labelId);
     handleVisualEdit(next, { label: `Añadir etiqueta a ${elementId}` });
-    selectElement(result.labelId);
+    selectOnly(result.labelId);
     activateCanvasTool('select');
   };
 
   const handleAddAllLabels = () => {
-    let currentModel = model;
-    model.elements.forEach(element => {
-      if (['label', 'text', 'formula', 'infoPanel', 'grid'].includes(element.kind)) return;
-      const { model: nextModel } = addLabelToElement(currentModel, element.id);
-      currentModel = nextModel;
-    });
-    handleVisualEdit(currentModel, { label: 'Añadir etiquetas a todos los elementos' });
+    handleVisualEdit(addLabelsToEveryElement(model), { label: 'Añadir etiquetas a todos los elementos' });
   };
 
   const handleRemoveAllLabels = () => {
-    const labelIds = new Set(model.elements.filter(e => e.kind === 'label').map(e => e.id));
-    if (labelIds.size === 0) return;
-    handleVisualEdit(removeDiagramElements(model, labelIds), { label: 'Quitar todas las etiquetas' });
+    const nextModel = removeEveryElementLabel(model);
+    if (nextModel) handleVisualEdit(nextModel, { label: 'Quitar todas las etiquetas' });
   };
 
   const handleDeleteSelected = () => {
-    const selectedId = state.selectedId;
-    if (!selectedId) return;
-
-    const removedSceneIds = new Set([
-      selectedId,
-      ...model.elements.filter(item => item.id === selectedId || item.refs.includes(selectedId)).map(item => item.id),
-    ]);
-    const removedConstraintIds = new Set((model.constraints ?? [])
-      .filter(constraint => constraint.id === selectedId || constraint.refs.some(ref => removedSceneIds.has(ref)))
-      .map(constraint => constraint.id));
-    const points = model.points
-      .filter(item => !removedSceneIds.has(item.id))
-      .map(item => {
-        const constraintIds = item.constraintIds?.filter(id => !removedConstraintIds.has(id));
-        const attractorIds = item.attractorIds?.filter(id => !removedSceneIds.has(id));
-        const attraction = attractorIds?.length
-          ? { attractorIds }
-          : { attractorIds: undefined, attractorDistance: undefined, snatchDistance: undefined };
-        if (item.constraint !== 'constrained' || constraintIds?.length) {
-          return { ...item, ...(constraintIds ? { constraintIds } : {}), ...attraction };
-        }
-        const next = { ...item, ...attraction, fixed: false, constraint: 'free' as const };
-        delete next.constraintIds;
-        return next;
-      });
-    handleVisualEdit({
-      ...model,
-      points,
-      elements: model.elements.filter(item => !removedSceneIds.has(item.id)),
-      sliders: model.sliders.filter(item => !removedSceneIds.has(item.id)),
-      steps: model.steps.filter(item => !removedSceneIds.has(item.id)).map(item => ({
-        ...item,
-        visibleTargets: item.visibleTargets.filter(targetId => !removedSceneIds.has(targetId)),
-        objectStates: item.objectStates
-          ? Object.fromEntries(Object.entries(item.objectStates).filter(([id]) => !removedSceneIds.has(id)))
-          : undefined,
-      })),
-      groups: model.groups.map(group => ({ ...group, memberIds: group.memberIds.filter(id => !removedSceneIds.has(id)) })),
-      constraints: model.constraints?.filter(constraint => !removedConstraintIds.has(constraint.id)),
-      dependencies: model.dependencies?.filter(dependency => (
-        !removedSceneIds.has(dependency.sourceId)
-        && !removedSceneIds.has(dependency.targetId)
-        && (!dependency.constraintId || !removedConstraintIds.has(dependency.constraintId))
-      )),
+    deleteSelectedDiagramObject({
+      model,
+      selectedId: state.selectedId,
+      edit: handleVisualEdit,
+      clearSelection: () => selectOnly(''),
     });
-    selectElement('');
   };
 
   const normalizedRefs = normalizeConstructionRefs(model.points, constructionRefs);
@@ -456,28 +546,37 @@ export const DiagramWorkbenchCore: React.FC<DiagramWorkbenchCoreProps> = ({
     if (!constructionReady) return;
     const result = applyGuidedConstruction(model, constructionKind, normalizedRefs);
     handleVisualEdit(result.model);
-    selectElement(result.selectedId);
+    selectOnly(result.selectedId);
     activateCanvasTool('select');
   };
 
   const mdxTargets = buildTargets(model);
 
   return (
-    <div ref={workbenchRef} onKeyDown={clipboard.handleKeyDown} className="fixed inset-0 z-50 flex flex-col bg-lienzo text-carbon font-sans" role="dialog" aria-modal="true" aria-labelledby="diagram-workbench-title">
+    <div ref={workbenchRef} onKeyDown={(event) => handleWorkbenchKeyboard({
+      event,
+      canvasTool: state.canvasTool,
+      selectedId: state.selectedId,
+      handleClipboardKeyDown: clipboard.handleKeyDown,
+      selectTool: () => activateCanvasTool('select'),
+      deleteSelected: handleDeleteSelected,
+      undo,
+      redo,
+    })} className="fixed inset-0 z-50 flex flex-col bg-lienzo text-carbon font-sans" role="dialog" aria-modal="true" aria-labelledby="diagram-workbench-title">
       {/* Header */}
-      <header className="flex flex-wrap items-center justify-between gap-3 border-b border-carbon/15 bg-carbon/5 px-3 py-3 sm:px-4">
-        <div className="min-w-0">
-          <h2 id="diagram-workbench-title" className="truncate text-sm font-bold text-carbon">Editor visual exacto: {model.title}</h2>
-          <p className="text-[11px] text-carbon/55 font-mono">{state.filePath}</p>
+      <header className="flex shrink-0 items-center justify-between gap-2 border-b border-carbon/15 bg-carbon/5 px-3 py-2 sm:gap-4 sm:px-4">
+        <div className="min-w-0 flex-1">
+          <h2 id="diagram-workbench-title" className="truncate text-sm font-bold text-carbon">{model.title}</h2>
+          <p className="hidden truncate text-[10px] font-mono text-carbon/45 sm:block">Editor visual exacto · {state.filePath}</p>
         </div>
 
-        <div className="flex items-center gap-3">
+        <div className="flex shrink-0 items-center gap-1.5 sm:gap-2">
           <div className="flex rounded border border-carbon/15 p-0.5 bg-lienzo" aria-label="Historial de comandos">
             <button
               type="button"
               onClick={undo}
               disabled={state.modelHistory.past.length === 0}
-              className="rounded px-2 py-1 text-xs font-bold text-carbon/70 hover:bg-carbon/5 disabled:opacity-35"
+              className="min-h-11 min-w-11 rounded px-2 text-base font-bold text-carbon/70 hover:bg-carbon/5 disabled:opacity-35"
               aria-label="Deshacer"
               title={state.modelHistory.past[state.modelHistory.past.length - 1]?.label ?? 'Nada que deshacer'}
             >
@@ -487,42 +586,22 @@ export const DiagramWorkbenchCore: React.FC<DiagramWorkbenchCoreProps> = ({
               type="button"
               onClick={redo}
               disabled={state.modelHistory.future.length === 0}
-              className="rounded px-2 py-1 text-xs font-bold text-carbon/70 hover:bg-carbon/5 disabled:opacity-35"
+              className="min-h-11 min-w-11 rounded px-2 text-base font-bold text-carbon/70 hover:bg-carbon/5 disabled:opacity-35"
               aria-label="Rehacer"
               title={state.modelHistory.future[0]?.label ?? 'Nada que rehacer'}
             >
               ↷
             </button>
           </div>
-          <div className="flex rounded border border-carbon/15 p-0.5 bg-lienzo" aria-label="Copiar y pegar objetos">
-            <button type="button" onClick={clipboard.copySelected} disabled={!state.selectedId || ![...model.points, ...model.elements, ...model.sliders, ...model.groups].some(item => item.id === state.selectedId)} className="rounded px-2 py-1 text-[10px] font-bold text-carbon/70 hover:bg-carbon/5 disabled:opacity-35" title="Copiar selección (Ctrl/Cmd+C)">Copiar</button>
-            <button type="button" onClick={clipboard.paste} disabled={!clipboard.canPaste} className="rounded px-2 py-1 text-[10px] font-bold text-carbon/70 hover:bg-carbon/5 disabled:opacity-35" title="Pegar (Ctrl/Cmd+V)">Pegar</button>
-          </div>
-          <div className="flex rounded border border-carbon/15 p-0.5 bg-lienzo" role="tablist" aria-label="Vista del diagrama">
-            <button
-              type="button"
-              role="tab"
-              aria-selected={tab === 'visual'}
-              onClick={() => setTab('visual')}
-              className={topTabClass(tab === 'visual')}
-            >
-              Modelo visual
-            </button>
-            <button
-              type="button"
-              role="tab"
-              aria-selected={tab === 'source'}
-              onClick={() => setTab('source')}
-              className={topTabClass(tab === 'source')}
-            >
-              Código TSX
-            </button>
+          <div className="hidden rounded border border-carbon/15 p-0.5 bg-lienzo sm:flex" aria-label="Copiar y pegar objetos">
+            <button type="button" onClick={clipboard.copySelected} disabled={effectiveSelectedIds.length === 0} className="min-h-11 rounded px-2 text-[10px] font-bold text-carbon/70 hover:bg-carbon/5 disabled:opacity-35" title="Copiar selección (Ctrl/Cmd+C)">Copiar {effectiveSelectedIds.length > 1 ? effectiveSelectedIds.length : ''}</button>
+            <button type="button" onClick={clipboard.paste} disabled={!clipboard.canPaste} className="min-h-11 rounded px-2 text-[10px] font-bold text-carbon/70 hover:bg-carbon/5 disabled:opacity-35" title="Pegar (Ctrl/Cmd+V)">Pegar</button>
           </div>
           <button
             ref={closeButtonRef}
             type="button"
             onClick={onClose}
-            className="rounded border border-carbon/20 px-3 py-1 text-xs font-bold text-carbon/75 hover:bg-carbon/5 transition-all"
+            className="min-h-11 rounded border border-carbon/20 px-3 text-xs font-bold text-carbon/75 hover:bg-carbon/5 transition-all"
           >
             Cerrar
           </button>
@@ -531,119 +610,75 @@ export const DiagramWorkbenchCore: React.FC<DiagramWorkbenchCoreProps> = ({
 
       <DiagramWorkbenchNotices clipboardStatus={clipboard.status} mode={mode} />
 
-      {tab === 'visual' ? (
-        <div className="flex min-h-0 flex-1 flex-col">
-          <nav className="flex shrink-0 items-center gap-1 overflow-x-auto border-b border-carbon/15 bg-lienzo px-3 py-2" role="tablist" aria-label="Tareas del editor visual">
+      <div className="flex min-h-0 flex-1 flex-col">
+          <label className="flex min-h-14 shrink-0 items-center gap-3 border-b border-carbon/15 bg-lienzo px-3 text-[10px] font-bold uppercase tracking-wider text-carbon/50 sm:hidden">
+            Tarea
+            <select aria-label="Tarea del editor de diagramas" className="min-h-10 min-w-0 flex-1 rounded border border-carbon/15 bg-lienzo px-2 text-xs font-bold normal-case tracking-normal text-carbon" value={workspace} onChange={event => setWorkspace(event.target.value as typeof workspace)}>
+              <option value="build">Diseñar</option>
+              <option value="steps">Secuencia</option>
+              <option value="targets">Enlaces MDX</option>
+              <option value="check">Comprobar</option>
+              <option value="source">Código TSX</option>
+            </select>
+          </label>
+          <nav className="hidden shrink-0 items-center gap-1 overflow-x-auto border-b border-carbon/15 bg-lienzo px-2 py-1.5 sm:flex sm:px-3" role="tablist" aria-label="Tareas del editor de diagramas">
             {([
-              ['build', 'Construir', `${model.points.length + model.elements.length + model.sliders.length} objetos`],
+              ['build', 'Diseñar', `${model.points.length + model.elements.length + model.sliders.length} objetos`],
               ['steps', 'Secuencia', `${model.steps.length} pasos`],
               ['targets', 'Enlaces MDX', `${mdxTargets.length} targets`],
               ['check', 'Comprobar', state.diagnostics.length > 0 ? `${state.diagnostics.length} avisos` : 'Sin errores'],
+              ['source', 'Código TSX', 'Avanzado'],
             ] as const).map(([id, label, detail]) => (
               <button
                 key={id}
                 type="button"
                 role="tab"
-                aria-selected={visualSection === id}
-                onClick={() => setVisualSection(id)}
-                className={sectionTabClass(visualSection === id)}
+                aria-label={label}
+                aria-selected={workspace === id}
+                onClick={() => setWorkspace(id)}
+                className={sectionTabClass(workspace === id)}
               >
-                {label} <span className={sectionDetailClass(visualSection === id)}>{detail}</span>
+                {label} <span className={`hidden sm:inline ${sectionDetailClass(workspace === id)}`}>{detail}</span>
               </button>
             ))}
           </nav>
 
-          <DiagramSectionOutlet active={visualSection === 'build'}><div className="grid min-h-0 flex-1 grid-cols-1 overflow-y-auto lg:grid-cols-[260px_minmax(0,1fr)] lg:overflow-hidden xl:grid-cols-[280px_minmax(0,1fr)_320px]">
+          <DiagramSectionOutlet active={workspace === 'build'}><div className="flex min-h-0 flex-1 flex-col">
+          <div className="relative grid min-h-0 flex-1 grid-cols-1 overflow-y-auto xl:grid-cols-[280px_minmax(0,1fr)_320px] xl:overflow-hidden 2xl:grid-cols-[320px_minmax(0,1fr)_360px]">
           {/* Left panel: tools & quick actions */}
-          <aside className="border-r border-carbon/15 bg-carbon/5 p-4 space-y-4 overflow-y-auto">
-            <div className="grid grid-cols-3 rounded border border-carbon/10 bg-lienzo p-0.5" role="tablist" aria-label="Panel de construcción">
-              {([['objects', 'Lista'], ['organize', 'Organizar'], ['diagram', 'Diagrama']] as const).map(([id, label]) => <button key={id} type="button" role="tab" aria-selected={buildPanel === id} onClick={() => setBuildPanel(id)} className={buildPanelTabClass(buildPanel === id)}>{label}</button>)}
+          <aside className={`${paneDisplay(mobilePane === 'scene', 'block')} overflow-y-auto border-r border-carbon/15 bg-lienzo md:absolute md:inset-y-0 md:left-0 md:z-40 md:w-80 md:shadow-2xl xl:static xl:z-auto xl:block xl:w-auto xl:shadow-none`}>
+            <nav className="sticky top-0 z-30 grid grid-cols-3 border-b border-carbon/10 bg-lienzo p-1.5" role="tablist" aria-label="Panel de escena">
+              {([['objects', 'Objetos'], ['organization', 'Organizar'], ['diagram', 'Diagrama']] as const).map(([id, label]) => <button key={id} type="button" role="tab" aria-selected={leftPanel === id} onClick={() => setLeftPanel(id)} className={`min-h-11 rounded px-1 text-[10px] font-bold ${leftPanel === id ? 'bg-carbon text-lienzo' : 'text-carbon/55 hover:bg-carbon/5'}`}>{label}</button>)}
+            </nav>
+            <div className="p-3">
+              {leftPanel === 'objects' && <DiagramObjectList model={model} selectedId={state.selectedId} selectedIds={effectiveSelectedIds} onSelect={selectOnly} onToggleSelection={toggleSelection} onSelectMany={ids => selectMany(ids)} onCopySelection={clipboard.copySelected} onModelEdit={handleVisualEdit} />}
+
+              {leftPanel === 'organization' && <DiagramOrganizationPanel model={model} onModelEdit={handleVisualEdit} onSelect={selectOnly} onCopyGroup={clipboard.copyGroup} />}
+
+              {leftPanel === 'diagram' && <div className="divide-y divide-carbon/10">
+                <section className="space-y-2 pb-4">
+                  <h3 className="text-xs font-bold text-carbon">Identidad y publicación</h3>
+                  <label className="block text-[10px] font-bold text-carbon/55">Título<input value={model.title} onChange={event => handleVisualEdit({ ...model, title: event.target.value }, { label: 'Editar título' })} className="mt-1 min-h-10 w-full rounded border border-carbon/15 bg-lienzo px-2 font-serif text-xs font-bold" /></label>
+                  <label className="block text-[10px] font-bold text-carbon/55">Nota introductoria<textarea value={model.note} onChange={event => handleVisualEdit({ ...model, note: event.target.value }, { label: 'Editar nota' })} className="mt-1 min-h-20 w-full rounded border border-carbon/15 bg-lienzo p-2 font-serif text-xs leading-relaxed" /></label>
+                  <div className="grid grid-cols-2 gap-2"><label className="text-[10px] font-bold text-carbon/55">Categoría<input value={model.category} onChange={event => handleVisualEdit({ ...model, category: event.target.value }, { label: 'Editar categoría' })} className="mt-1 min-h-10 w-full rounded border border-carbon/15 px-2 text-xs" /></label><label className="text-[10px] font-bold text-carbon/55">Uso<select value={model.mode} onChange={event => handleVisualEdit({ ...model, mode: event.target.value as VisualDiagramModel['mode'] }, { label: 'Editar modo' })} className="mt-1 min-h-10 w-full rounded border border-carbon/15 px-2 text-xs"><option value="diagram">Diagrama</option><option value="simulation">Simulación</option><option value="inline">Inline</option></select></label></div>
+                </section>
+                <div className="py-4"><DiagramHeaderReadingsEditor model={model} onModelEdit={handleVisualEdit} /></div>
+                <section className="space-y-2 py-4">
+                  <h3 className="text-xs font-bold text-carbon">Comprobar estados</h3>
+                  <label className="block text-[10px] font-bold text-carbon/55">Elemento resaltado<select className="mt-1 min-h-10 w-full rounded border border-carbon/15 bg-lienzo px-2 text-xs" value={previewHighlightId} onChange={(e) => setPreviewHighlightId(e.target.value)}><option value="">Ninguno</option>{mdxTargets.map(t => <option key={t.qualifiedId ?? t.id} value={t.objectId ?? t.id}>{t.label} ({t.id})</option>)}</select></label>
+                  <label className="block text-[10px] font-bold text-carbon/55">Paso activo<select className="mt-1 min-h-10 w-full rounded border border-carbon/15 bg-lienzo px-2 text-xs" value={state.activeStepId} onChange={(e) => setActiveStep(e.target.value)}><option value="">Mostrar todo</option>{model.steps.map(s => <option key={s.id} value={s.id}>{s.label} ({s.id})</option>)}</select></label>
+                </section>
+                <section className="py-4">
+                  <h3 className="mb-2 text-xs font-bold text-carbon">Plano y viewport</h3>
+                  <div className="grid grid-cols-2 gap-2 text-xs">{(['Min X', 'Max Y', 'Max X', 'Min Y'] as const).map((label, idx) => <label key={label} className="text-[10px] font-bold text-carbon/60">{label}<input type="number" step="0.5" className="mt-1 min-h-10 w-full rounded border border-carbon/15 bg-lienzo px-2 text-xs font-mono" value={model.viewport.bounds[idx]} onChange={(e) => { const val = Number(e.target.value); if (Number.isFinite(val)) { const nextBox = [...model.viewport.bounds] as [number, number, number, number]; nextBox[idx] = val; handleVisualEdit({ ...model, viewport: { ...model.viewport, bounds: nextBox } }, { label: 'Editar límites del viewport', mergeKey: 'viewport-input' }); } }} /></label>)}</div>
+                </section>
+                <div className="pt-4"><DiagramMovementAidsPanel model={model} onModelEdit={handleVisualEdit} onSelect={selectOnly} /></div>
+              </div>}
             </div>
-
-            {buildPanel === 'diagram' && <>
-            <section className="rounded border border-carbon/10 bg-lienzo p-3">
-              <p className="text-[10px] font-bold uppercase tracking-widest text-carbon/45">Cabecera del diagrama</p>
-              <label className="mt-2 block text-[10px] font-bold text-carbon/55">Título<input value={model.title} onChange={event => handleVisualEdit({ ...model, title: event.target.value }, { label: 'Editar título' })} className="mt-1 w-full rounded border border-carbon/15 bg-lienzo p-2 font-serif text-xs font-bold" /></label>
-              <label className="mt-2 block text-[10px] font-bold text-carbon/55">Nota para la lectura<textarea value={model.note} onChange={event => handleVisualEdit({ ...model, note: event.target.value }, { label: 'Editar nota' })} className="mt-1 min-h-16 w-full rounded border border-carbon/15 bg-lienzo p-2 font-serif text-xs leading-relaxed" /></label>
-              <div className="mt-2 grid grid-cols-2 gap-2"><label className="text-[10px] font-bold text-carbon/55">Categoría<input value={model.category} onChange={event => handleVisualEdit({ ...model, category: event.target.value }, { label: 'Editar categoría' })} className="mt-1 w-full rounded border border-carbon/15 p-1.5 text-xs" /></label><label className="text-[10px] font-bold text-carbon/55">Uso<select value={model.mode} onChange={event => handleVisualEdit({ ...model, mode: event.target.value as VisualDiagramModel['mode'] }, { label: 'Editar modo' })} className="mt-1 w-full rounded border border-carbon/15 p-1.5 text-xs"><option value="diagram">Diagrama</option><option value="simulation">Simulación</option><option value="inline">Inline</option></select></label></div>
-            </section>
-            <DiagramMovementAidsPanel model={model} onModelEdit={handleVisualEdit} onSelect={selectElement} />
-            </>}
-
-            {buildPanel === 'objects' && <>
-            <p className="rounded border border-pavo/20 bg-pavo/5 p-2 text-[10px] leading-relaxed text-carbon/60"><strong>Flujo recomendado:</strong> añada una forma en la barra central, elija sus referencias y edite aquí el objeto resultante. Las propiedades aparecen a la derecha.</p>
-            <DiagramObjectList model={model} selectedId={state.selectedId} onSelect={selectElement} />
-
-            </>}
-
-            {buildPanel === 'diagram' && <>
-            {/* Preview controls */}
-            <details className="group rounded border border-carbon/10 bg-lienzo">
-              <summary className="cursor-pointer list-none px-3 py-2 text-[10px] font-bold uppercase tracking-widest text-carbon/55 hover:bg-carbon/5 [&::-webkit-details-marker]:hidden">Vista previa <span className="float-right" aria-hidden="true">▾</span></summary>
-              <div className="space-y-2 border-t border-carbon/10 p-3">
-              <div>
-                <label className="block text-[10px] font-bold text-carbon mb-1">Elemento resaltado</label>
-                <select
-                  className="w-full rounded border border-carbon/15 bg-lienzo p-1.5 text-xs"
-                  value={previewHighlightId}
-                  onChange={(e) => setPreviewHighlightId(e.target.value)}
-                >
-                  <option value="">Ninguno</option>
-                  {mdxTargets.map(t => (
-                    <option key={t.qualifiedId ?? t.id} value={t.objectId ?? t.id}>{t.label} ({t.id})</option>
-                  ))}
-                </select>
-              </div>
-              <div>
-                <label className="block text-[10px] font-bold text-carbon mb-1">Paso Activo</label>
-                <select
-                  className="w-full rounded border border-carbon/15 bg-lienzo p-1.5 text-xs"
-                  value={state.activeStepId}
-                  onChange={(e) => setActiveStep(e.target.value)}
-                >
-                  <option value="">Mostrar todo</option>
-                  {model.steps.map(s => (
-                    <option key={s.id} value={s.id}>{s.label} ({s.id})</option>
-                  ))}
-                </select>
-              </div>
-              </div>
-            </details>
-
-            {/* Bounding box settings */}
-            <details className="group rounded border border-carbon/10 bg-lienzo">
-              <summary className="cursor-pointer list-none px-3 py-2 text-[10px] font-bold uppercase tracking-widest text-carbon/55 hover:bg-carbon/5 [&::-webkit-details-marker]:hidden">Plano y viewport <span className="float-right" aria-hidden="true">▾</span></summary>
-              <div className="border-t border-carbon/10 p-3">
-              <div className="grid grid-cols-2 gap-2 text-xs">
-                {(['Min X', 'Max Y', 'Max X', 'Min Y'] as const).map((label, idx) => (
-                  <div key={label}>
-                    <label className="block text-[10px] font-bold text-carbon/60 mb-0.5">{label}</label>
-                    <input
-                      type="number"
-                      step="0.5"
-                      className="w-full rounded border border-carbon/15 bg-lienzo p-1 text-xs font-mono"
-                      value={model.viewport.bounds[idx]}
-                      onChange={(e) => {
-                        const val = Number(e.target.value);
-                        if (Number.isFinite(val)) {
-                          const nextBox = [...model.viewport.bounds] as [number, number, number, number];
-                          nextBox[idx] = val;
-                          handleVisualEdit({ ...model, viewport: { ...model.viewport, bounds: nextBox } }, { label: 'Editar límites del viewport', mergeKey: 'viewport-input' });
-                        }
-                      }}
-                    />
-                  </div>
-                ))}
-              </div>
-              </div>
-            </details>
-            </>}
-
-            {buildPanel === 'organize' && <DiagramOrganizationPanel model={model} onModelEdit={handleVisualEdit} onSelect={selectElement} onCopyGroup={clipboard.copyGroup} />}
           </aside>
 
           {/* Center panel: toolbar + canvas + validation */}
-          <main className="flex min-h-[480px] min-w-0 flex-col gap-4 overflow-y-auto p-4">
+          <main className={`${paneDisplay(mobilePane === 'canvas', 'flex')} min-h-[480px] min-w-0 flex-col gap-3 overflow-y-auto p-3 md:flex`}>
             <DiagramToolbar
               model={model}
               canvasTool={state.canvasTool}
@@ -653,7 +688,6 @@ export const DiagramWorkbenchCore: React.FC<DiagramWorkbenchCoreProps> = ({
               onModelEdit={handleVisualEdit}
               onAddSlider={handleAddSlider}
               onAddGliderPoint={handleAddGliderPoint}
-              onAddStep={handleAddStep}
               onAddAllLabels={handleAddAllLabels}
               onRemoveAllLabels={handleRemoveAllLabels}
               onResolveDivergence={resolveDivergence}
@@ -679,11 +713,12 @@ export const DiagramWorkbenchCore: React.FC<DiagramWorkbenchCoreProps> = ({
               model={model}
               pageType={previewPageType}
               selectedId={state.selectedId}
+              selectedIds={effectiveSelectedIds}
               canvasTool={state.canvasTool}
               pendingRefs={pendingRefs}
               previewHighlightId={previewHighlightId}
               previewStepId={state.activeStepId}
-              onSelect={selectElement}
+              onSelect={(id, additive) => additive ? toggleSelection(id) : selectOnly(id)}
               onModelEdit={handleVisualEdit}
               onChooseReferenceForTool={chooseReferenceForTool}
               onCompleteTool={() => activateCanvasTool('select')}
@@ -692,19 +727,25 @@ export const DiagramWorkbenchCore: React.FC<DiagramWorkbenchCoreProps> = ({
           </main>
 
           {/* Right panel: contextual properties */}
-          <aside className="space-y-4 overflow-y-auto border-l border-carbon/15 bg-carbon/5 p-4 lg:col-span-2 lg:border-l-0 lg:border-t xl:col-span-1 xl:border-l xl:border-t-0">
+          <aside className={`${paneDisplay(mobilePane === 'properties', 'block')} overflow-y-auto border-l border-carbon/15 bg-lienzo md:absolute md:inset-y-0 md:right-0 md:z-40 md:w-96 md:shadow-2xl xl:static xl:z-auto xl:block xl:w-auto xl:shadow-none`}>
             <DiagramInspector
               model={model}
               selectedId={state.selectedId}
-              onSelect={selectElement}
+              selectedIds={effectiveSelectedIds}
+              onSelect={selectOnly}
               onModelEdit={handleVisualEdit}
               onDeleteSelected={handleDeleteSelected}
               onAddElementLabel={handleAddElementLabel}
+              onCopySelection={clipboard.copySelected}
             />
 
           </aside>
+        </div>
+          <nav className="grid shrink-0 grid-cols-3 border-t border-carbon/15 bg-lienzo p-1 xl:hidden" aria-label="Vistas del editor">
+            {([['scene', 'Escena'], ['canvas', 'Lienzo'], ['properties', 'Propiedades']] as const).map(([id, label]) => <button key={id} type="button" aria-current={mobilePane === id ? 'page' : undefined} onClick={() => setMobilePane(id)} className={`min-h-11 rounded px-3 text-sm font-bold ${mobilePane === id ? 'bg-carbon text-lienzo' : 'text-carbon/65'}`}>{label}</button>)}
+          </nav>
         </div></DiagramSectionOutlet>
-        <DiagramSectionOutlet active={visualSection === 'steps'}>
+        <DiagramSectionOutlet active={workspace === 'steps'}>
           <main className="min-h-0 flex-1 overflow-y-auto bg-carbon/[0.02] p-3 sm:p-5" aria-label="Edición de la secuencia">
             <div className="mx-auto grid max-w-[96rem] items-start gap-4 xl:grid-cols-[minmax(0,1fr)_minmax(24rem,0.8fr)]">
               <DiagramStepsEditor
@@ -713,25 +754,25 @@ export const DiagramWorkbenchCore: React.FC<DiagramWorkbenchCoreProps> = ({
                 onActiveStepChange={setActiveStep}
                 onModelEdit={handleVisualEdit}
                 onSelectObject={(id) => {
-                  selectElement(id);
-                  setVisualSection('build');
+                  selectOnly(id);
+                  setWorkspace('build');
                 }}
               />
               <div className="sticky top-0">
-                <DiagramCanvas model={model} pageType={previewPageType} selectedId={state.selectedId} canvasTool="select" pendingRefs={[]} previewHighlightId={previewHighlightId} previewStepId={state.activeStepId} onSelect={selectElement} onModelEdit={handleVisualEdit} onChooseReferenceForTool={() => false} onCompleteTool={() => {}} />
+                <DiagramCanvas model={model} pageType={previewPageType} selectedId={state.selectedId} selectedIds={effectiveSelectedIds} canvasTool="select" pendingRefs={[]} previewHighlightId={previewHighlightId} previewStepId={state.activeStepId} onSelect={(id, additive) => additive ? toggleSelection(id) : selectOnly(id)} onModelEdit={handleVisualEdit} onChooseReferenceForTool={() => false} onCompleteTool={() => {}} />
                 <p className="mt-2 rounded border border-carbon/10 bg-lienzo p-2 text-[10px] text-carbon/55">La vista muestra el paso activo. Cambie de paso en la matriz para comprobar exactamente qué aparece.</p>
               </div>
             </div>
           </main>
         </DiagramSectionOutlet>
-        <DiagramSectionOutlet active={visualSection === 'targets'}>
+        <DiagramSectionOutlet active={workspace === 'targets'}>
           <main className="min-h-0 flex-1 overflow-y-auto bg-carbon/[0.02] p-3 sm:p-5" aria-label="Enlaces entre el diagrama y MDX">
             <div className="mx-auto max-w-6xl">
               <DiagramTargetSelector
                 model={model}
                 selectedTargetId={selectedTargetId}
                 onSelectTarget={(objectId, targetId) => {
-                  selectElement(objectId);
+                  selectOnly(objectId);
                   setSelectedTargetId(targetId);
                   setPreviewHighlightId(objectId);
                 }}
@@ -740,7 +781,7 @@ export const DiagramWorkbenchCore: React.FC<DiagramWorkbenchCoreProps> = ({
             </div>
           </main>
         </DiagramSectionOutlet>
-        <DiagramSectionOutlet active={visualSection === 'check'}>
+        <DiagramSectionOutlet active={workspace === 'check'}>
           <main className="min-h-0 flex-1 overflow-y-auto bg-carbon/[0.02] p-3 sm:p-5" aria-label="Comprobaciones del diagrama">
             <div className="mx-auto grid max-w-6xl gap-4 lg:grid-cols-[minmax(0,2fr)_minmax(16rem,1fr)]">
               <DiagramValidationPanel
@@ -756,22 +797,22 @@ export const DiagramWorkbenchCore: React.FC<DiagramWorkbenchCoreProps> = ({
             </div>
           </main>
         </DiagramSectionOutlet>
-        </div>
-      ) : (
+        <DiagramSectionOutlet active={workspace === 'source'}>
         <DiagramCodePanel
           source={state.currentSource}
           sourceTouched={state.status === 'source-authoritative' || state.status === 'diverged'}
           filePath={state.filePath}
           componentName={componentName}
           onSourceChange={handleSourceEdit}
-          onRegenerate={state.parseStatus === 'visual-exact' && state.status !== 'source-authoritative' && state.status !== 'diverged' ? () => {
+          onRegenerate={sourceCanRegenerate(state.parseStatus, state.status) ? () => {
             const gen = generateDiagramSource(model, componentName);
             if (gen.ok) {
               handleSourceEdit(gen.source);
             }
           } : undefined}
         />
-      )}
+        </DiagramSectionOutlet>
+      </div>
 
       {/* Footer Status Bar */}
       <DiagramStatusBar

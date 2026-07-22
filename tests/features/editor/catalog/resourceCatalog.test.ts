@@ -137,10 +137,12 @@ describe('catálogo seguro del editor', () => {
       'widgets/diagrams/Teoremas/DosRectasUnPunto.tsx',
       'widgets/diagrams/Teoremas/LemaPuntoMedio.tsx',
       'widgets/diagrams/Teoremas/Pitagoras.tsx',
+      'widgets/diagrams/Teoremas/PuntoMedioPerpendicular.tsx',
       'widgets/diagrams/Teoremas/SumaAngulos.tsx',
+      'widgets/diagrams/Teoremas/Tales.tsx',
       'widgets/diagrams/Teoremas/TrianguloIsosceles.tsx',
     ]);
-    expect(diagrams.filter(item => item.capability === 'code-preview')).toHaveLength(31);
+    expect(diagrams.filter(item => item.capability === 'code-preview')).toHaveLength(29);
     expect(editable.some(item => ['MathBoard.tsx', 'MathFactory.ts', 'MathUtils.ts', 'InteractiveGeometryCanvas.tsx'].includes(item.name))).toBe(false);
   });
 });

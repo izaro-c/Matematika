@@ -15,13 +15,13 @@ Enumerar antes de programar:
 - targets públicos y conexión con `MathStore`;
 - operaciones que una persona debe poder realizar visualmente.
 
-Comparar cada elemento del inventario con `DiagramSpecV2`, `DiagramRenderer`, `DiagramToolbar`, `DiagramInspector`, `DiagramCanvas` y `DiagramWorkbench`. Una capacidad presente solo en el renderer no cuenta como editable.
+Comparar cada elemento del inventario con `DiagramSpecV3`, `spec/semantics.ts`, `DiagramRenderer`, `DiagramToolbar`, `DiagramInspector`, `DiagramCanvas` y `DiagramWorkbench`. Una capacidad presente solo en el renderer no cuenta como editable.
 
 ## 2. Extensión vertical obligatoria
 
 Cuando falte una capacidad, implementarla de extremo a extremo en este orden:
 
-1. **Contrato:** añadir el tipo declarativo en `src/shared/diagrams/spec/types.ts`, su validación estricta en `schema.ts` y, si cambia compatibilidad persistida, la migración explícita en `migrations.ts`.
+1. **Contrato:** añadir la variante o propiedad declarativa específica en `src/shared/diagrams/spec/v3.ts`, su validación estricta en `schemaV3.ts`, sus capacidades/slots en `semantics.ts` y, si cambia compatibilidad persistida, la migración explícita en `migrations.ts` y `v3Compatibility.ts`.
 2. **Semántica:** añadir planificación, restricciones, dependencias, historial o playback en `src/shared/diagrams/spec/` cuando corresponda. No guardar estado semántico en `extensions` para evitar modelarlo.
 3. **Render:** añadir o reutilizar la primitiva Arts & Crafts en `src/shared/diagrams/core/MathFactory.ts` y consumirla desde `src/shared/diagrams/runtime/DiagramRenderer.tsx`. Editor y runtime deben compartir este camino.
 4. **Creación visual:** incorporar la herramienta, plantilla o construcción guiada en `src/features/editor/diagrams/model/commands.ts` y `ui/DiagramToolbar.tsx`.
@@ -29,6 +29,10 @@ Cuando falte una capacidad, implementarla de extremo a extremo en este orden:
 6. **Orquestación:** integrar la capacidad en `src/features/editor/ui/diagrams/DiagramWorkbench.tsx`, incluidos borrar, reordenar, undo/redo, pasos y targets.
 7. **Persistencia exacta:** asegurar que `source/generator.ts`, `source/parser.ts`, el reducer y el repositorio conservan el modelo completo sin normalizaciones destructivas.
 8. **Validación:** añadir pruebas del schema, renderer, UI, accesibilidad y `generate → parse → generate`. Abrir, editar, guardar, cerrar y reabrir debe conservar fuente y spec.
+
+Todo punto construido sigue siendo `PointObject` y debe satisfacer cualquier slot con capacidad `point`. Perpendicular, paralela y bisectriz son construcciones de un path; las variantes de marcas y anotaciones se expresan como propiedades discriminadas. Las relaciones describen invariantes matemáticos, no objetos derivados.
+
+Las anotaciones reactivas usan una plantilla común. Insertar cálculos con `{= expresion | precision: 2 | unit: "cm"}`; se permiten varios tokens con precisión y unidad independientes en textos, fórmulas, etiquetas, paneles, variantes y overlays. El runtime preserva las llaves ordinarias de KaTeX. El editor visual debe construir el token, validar la expresión y derivar sus dependencias; `{value}` permanece únicamente como lector de compatibilidad.
 
 Si la capacidad necesita SVG, Canvas o HTML, modelar sus parámetros y comportamiento en la spec. La implementación imperativa queda detrás de `DiagramRenderer`; el componente publicado no contiene esa lógica.
 
@@ -54,6 +58,7 @@ Ejecutar como mínimo las pruebas dirigidas afectadas de `tests/features/editor/
 
 ```bash
 npm run editor:diagrams:check
+npm run editor:diagrams:v3-check
 npm run typecheck
 git diff --check
 ```

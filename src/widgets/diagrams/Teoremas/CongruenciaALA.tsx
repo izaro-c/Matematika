@@ -3,8 +3,8 @@ import { createDiagramSpec, DiagramRenderer } from '@/shared/diagrams/public';
 /* @matematika-diagram-spec:start */
 export const CongruenciaALASpec = createDiagramSpec(
 {
-  "version": 2,
-  "renderer": "matematika-diagram-renderer-v2",
+  "version": 3,
+  "renderer": "matematika-diagram-renderer-v3",
   "title": "Criterio de congruencia ALA",
   "componentId": "CongruenciaALA",
   "category": "Teoremas",
@@ -169,7 +169,7 @@ export const CongruenciaALASpec = createDiagramSpec(
       "color": "ocre"
     }
   ],
-  "points": [
+  "objects": [
     {
       "id": "A1",
       "label": "A",
@@ -187,15 +187,21 @@ export const CongruenciaALASpec = createDiagramSpec(
       },
       "target": true,
       "targetId": "A1",
-      "style": {
-        "pointSize": 7,
-        "highlightPointSize": 10,
+      "objectType": "point",
+      "definition": {
+        "type": "coordinates",
+        "x": 0,
+        "y": 0
+      },
+      "mobility": {
+        "type": "free"
+      },
+      "appearance": {
+        "size": 7,
+        "highlightSize": 10,
         "preserveColorOnHighlight": true
       },
-      "x": 0,
-      "y": 0,
-      "fixed": false,
-      "constraint": "free"
+      "interaction": {}
     },
     {
       "id": "B1",
@@ -214,15 +220,21 @@ export const CongruenciaALASpec = createDiagramSpec(
       },
       "target": true,
       "targetId": "B1",
-      "style": {
-        "pointSize": 7,
-        "highlightPointSize": 10,
+      "objectType": "point",
+      "definition": {
+        "type": "coordinates",
+        "x": 5,
+        "y": 0
+      },
+      "mobility": {
+        "type": "free"
+      },
+      "appearance": {
+        "size": 7,
+        "highlightSize": 10,
         "preserveColorOnHighlight": true
       },
-      "x": 5,
-      "y": 0,
-      "fixed": false,
-      "constraint": "free"
+      "interaction": {}
     },
     {
       "id": "C1",
@@ -241,18 +253,24 @@ export const CongruenciaALASpec = createDiagramSpec(
       },
       "target": true,
       "targetId": "C1",
-      "style": {
-        "pointSize": 7,
-        "highlightPointSize": 10,
+      "objectType": "point",
+      "definition": {
+        "type": "coordinates",
+        "x": 2.5,
+        "y": 4.3
+      },
+      "mobility": {
+        "type": "constrained",
+        "relationIds": [
+          "mismoSemiplano"
+        ]
+      },
+      "appearance": {
+        "size": 7,
+        "highlightSize": 10,
         "preserveColorOnHighlight": true
       },
-      "x": 2.5,
-      "y": 4.3,
-      "fixed": false,
-      "constraint": "constrained",
-      "constraintIds": [
-        "mismoSemiplano"
-      ]
+      "interaction": {}
     },
     {
       "id": "A2",
@@ -271,15 +289,21 @@ export const CongruenciaALASpec = createDiagramSpec(
       },
       "target": true,
       "targetId": "A2",
-      "style": {
-        "pointSize": 7,
-        "highlightPointSize": 10,
+      "objectType": "point",
+      "definition": {
+        "type": "coordinates",
+        "x": 0,
+        "y": -3
+      },
+      "mobility": {
+        "type": "fixed"
+      },
+      "appearance": {
+        "size": 7,
+        "highlightSize": 10,
         "preserveColorOnHighlight": true
       },
-      "x": 0,
-      "y": -3,
-      "fixed": true,
-      "constraint": "fixed"
+      "interaction": {}
     },
     {
       "id": "B2",
@@ -298,18 +322,24 @@ export const CongruenciaALASpec = createDiagramSpec(
       },
       "target": true,
       "targetId": "B2",
-      "style": {
-        "pointSize": 7,
-        "highlightPointSize": 10,
+      "objectType": "point",
+      "definition": {
+        "type": "coordinates",
+        "x": 5,
+        "y": -3
+      },
+      "mobility": {
+        "type": "constrained",
+        "relationIds": [
+          "equalLengthsegAB2"
+        ]
+      },
+      "appearance": {
+        "size": 7,
+        "highlightSize": 10,
         "preserveColorOnHighlight": true
       },
-      "x": 5,
-      "y": -3,
-      "fixed": false,
-      "constraint": "constrained",
-      "constraintIds": [
-        "equalLengthsegAB2"
-      ]
+      "interaction": {}
     },
     {
       "id": "C2",
@@ -328,22 +358,26 @@ export const CongruenciaALASpec = createDiagramSpec(
       },
       "target": true,
       "targetId": "C2",
-      "style": {
-        "pointSize": 7,
-        "highlightPointSize": 10,
+      "objectType": "point",
+      "definition": {
+        "type": "coordinates",
+        "x": 1.5,
+        "y": -7
+      },
+      "mobility": {
+        "type": "constrained",
+        "relationIds": [
+          "equalAngleanguloA2",
+          "equalAngleanguloB2"
+        ]
+      },
+      "appearance": {
+        "size": 7,
+        "highlightSize": 10,
         "preserveColorOnHighlight": true
       },
-      "x": 1.5,
-      "y": -7,
-      "fixed": false,
-      "constraint": "constrained",
-      "constraintIds": [
-        "equalAngleanguloA2",
-        "equalAngleanguloB2"
-      ]
-    }
-  ],
-  "elements": [
+      "interaction": {}
+    },
     {
       "id": "triangulo1",
       "label": "triángulo ABC",
@@ -360,18 +394,21 @@ export const CongruenciaALASpec = createDiagramSpec(
         "role": "secondary"
       },
       "target": false,
-      "style": {
+      "objectType": "path",
+      "geometry": {
+        "type": "polygon",
+        "points": [
+          "A1",
+          "B1",
+          "C1"
+        ]
+      },
+      "appearance": {
         "strokeWidth": 3,
         "fillOpacity": 0.07,
         "highlightFillOpacity": 0.22,
         "preserveColorOnHighlight": true
-      },
-      "kind": "polygon",
-      "refs": [
-        "A1",
-        "B1",
-        "C1"
-      ]
+      }
     },
     {
       "id": "triangulo2",
@@ -389,19 +426,22 @@ export const CongruenciaALASpec = createDiagramSpec(
         "role": "secondary"
       },
       "target": false,
-      "style": {
+      "objectType": "path",
+      "geometry": {
+        "type": "polygon",
+        "points": [
+          "A2",
+          "B2",
+          "C2"
+        ]
+      },
+      "appearance": {
         "strokeWidth": 3,
         "fillOpacity": 0.07,
         "highlightStrokeWidth": 5,
         "highlightFillOpacity": 0.22,
         "preserveColorOnHighlight": true
-      },
-      "kind": "polygon",
-      "refs": [
-        "A2",
-        "B2",
-        "C2"
-      ]
+      }
     },
     {
       "id": "segAB1",
@@ -420,16 +460,19 @@ export const CongruenciaALASpec = createDiagramSpec(
         "role": "secondary"
       },
       "target": false,
-      "style": {
+      "objectType": "path",
+      "geometry": {
+        "type": "segment",
+        "points": [
+          "A1",
+          "B1"
+        ]
+      },
+      "appearance": {
         "strokeWidth": 3,
         "highlightStrokeWidth": 5,
         "preserveColorOnHighlight": true
-      },
-      "kind": "segment",
-      "refs": [
-        "A1",
-        "B1"
-      ]
+      }
     },
     {
       "id": "segAC1",
@@ -447,16 +490,19 @@ export const CongruenciaALASpec = createDiagramSpec(
         "role": "secondary"
       },
       "target": false,
-      "style": {
+      "objectType": "path",
+      "geometry": {
+        "type": "segment",
+        "points": [
+          "A1",
+          "C1"
+        ]
+      },
+      "appearance": {
         "strokeWidth": 2.5,
         "highlightStrokeWidth": 4.5,
         "preserveColorOnHighlight": true
-      },
-      "kind": "segment",
-      "refs": [
-        "A1",
-        "C1"
-      ]
+      }
     },
     {
       "id": "segBC1",
@@ -474,16 +520,19 @@ export const CongruenciaALASpec = createDiagramSpec(
         "role": "secondary"
       },
       "target": false,
-      "style": {
+      "objectType": "path",
+      "geometry": {
+        "type": "segment",
+        "points": [
+          "B1",
+          "C1"
+        ]
+      },
+      "appearance": {
         "strokeWidth": 2.5,
         "highlightStrokeWidth": 4.5,
         "preserveColorOnHighlight": true
-      },
-      "kind": "segment",
-      "refs": [
-        "B1",
-        "C1"
-      ]
+      }
     },
     {
       "id": "segAB2",
@@ -502,16 +551,19 @@ export const CongruenciaALASpec = createDiagramSpec(
         "role": "secondary"
       },
       "target": false,
-      "style": {
+      "objectType": "path",
+      "geometry": {
+        "type": "segment",
+        "points": [
+          "A2",
+          "B2"
+        ]
+      },
+      "appearance": {
         "strokeWidth": 3,
         "highlightStrokeWidth": 5,
         "preserveColorOnHighlight": true
-      },
-      "kind": "segment",
-      "refs": [
-        "A2",
-        "B2"
-      ]
+      }
     },
     {
       "id": "segAC2",
@@ -529,16 +581,19 @@ export const CongruenciaALASpec = createDiagramSpec(
         "role": "secondary"
       },
       "target": false,
-      "style": {
+      "objectType": "path",
+      "geometry": {
+        "type": "segment",
+        "points": [
+          "A2",
+          "C2"
+        ]
+      },
+      "appearance": {
         "strokeWidth": 2.5,
         "highlightStrokeWidth": 4.5,
         "preserveColorOnHighlight": true
-      },
-      "kind": "segment",
-      "refs": [
-        "A2",
-        "C2"
-      ]
+      }
     },
     {
       "id": "segBC2",
@@ -556,16 +611,19 @@ export const CongruenciaALASpec = createDiagramSpec(
         "role": "secondary"
       },
       "target": false,
-      "style": {
+      "objectType": "path",
+      "geometry": {
+        "type": "segment",
+        "points": [
+          "B2",
+          "C2"
+        ]
+      },
+      "appearance": {
         "strokeWidth": 2.5,
         "highlightStrokeWidth": 4.5,
         "preserveColorOnHighlight": true
-      },
-      "kind": "segment",
-      "refs": [
-        "B2",
-        "C2"
-      ]
+      }
     },
     {
       "id": "marcaAB1",
@@ -584,19 +642,20 @@ export const CongruenciaALASpec = createDiagramSpec(
         "role": "secondary"
       },
       "target": false,
-      "style": {
-        "strokeWidth": 2.2,
-        "markHeight": 0.6,
-        "highlightStrokeWidth": 4,
-        "preserveColorOnHighlight": true
+      "objectType": "mark",
+      "variant": "congruence",
+      "anchor": {
+        "type": "between-points",
+        "points": [
+          "A1",
+          "B1"
+        ]
       },
-      "kind": "congruenceMark",
-      "refs": [
-        "A1",
-        "B1"
-      ],
-      "properties": {
-        "markCount": 1
+      "count": 1,
+      "height": 0.6,
+      "appearance": {
+        "strokeWidth": 2.2,
+        "preserveColorOnHighlight": true
       }
     },
     {
@@ -616,19 +675,20 @@ export const CongruenciaALASpec = createDiagramSpec(
         "role": "secondary"
       },
       "target": false,
-      "style": {
-        "strokeWidth": 2.2,
-        "markHeight": 0.6,
-        "highlightStrokeWidth": 4,
-        "preserveColorOnHighlight": true
+      "objectType": "mark",
+      "variant": "congruence",
+      "anchor": {
+        "type": "between-points",
+        "points": [
+          "A2",
+          "B2"
+        ]
       },
-      "kind": "congruenceMark",
-      "refs": [
-        "A2",
-        "B2"
-      ],
-      "properties": {
-        "markCount": 1
+      "count": 1,
+      "height": 0.6,
+      "appearance": {
+        "strokeWidth": 2.2,
+        "preserveColorOnHighlight": true
       }
     },
     {
@@ -647,20 +707,20 @@ export const CongruenciaALASpec = createDiagramSpec(
         "role": "secondary"
       },
       "target": false,
-      "style": {
-        "strokeWidth": 2.2,
-        "markHeight": 0.6,
-        "highlightStrokeWidth": 4,
-        "highlightVisible": true,
-        "preserveColorOnHighlight": true
+      "objectType": "mark",
+      "variant": "congruence",
+      "anchor": {
+        "type": "between-points",
+        "points": [
+          "A1",
+          "C1"
+        ]
       },
-      "kind": "congruenceMark",
-      "refs": [
-        "A1",
-        "C1"
-      ],
-      "properties": {
-        "markCount": 2
+      "count": 2,
+      "height": 0.6,
+      "appearance": {
+        "strokeWidth": 2.2,
+        "preserveColorOnHighlight": true
       }
     },
     {
@@ -679,20 +739,20 @@ export const CongruenciaALASpec = createDiagramSpec(
         "role": "secondary"
       },
       "target": false,
-      "style": {
-        "strokeWidth": 2.2,
-        "markHeight": 0.6,
-        "highlightStrokeWidth": 4,
-        "highlightVisible": true,
-        "preserveColorOnHighlight": true
+      "objectType": "mark",
+      "variant": "congruence",
+      "anchor": {
+        "type": "between-points",
+        "points": [
+          "A2",
+          "C2"
+        ]
       },
-      "kind": "congruenceMark",
-      "refs": [
-        "A2",
-        "C2"
-      ],
-      "properties": {
-        "markCount": 2
+      "count": 2,
+      "height": 0.6,
+      "appearance": {
+        "strokeWidth": 2.2,
+        "preserveColorOnHighlight": true
       }
     },
     {
@@ -711,20 +771,20 @@ export const CongruenciaALASpec = createDiagramSpec(
         "role": "secondary"
       },
       "target": false,
-      "style": {
-        "strokeWidth": 2.2,
-        "markHeight": 0.6,
-        "highlightStrokeWidth": 4,
-        "highlightVisible": true,
-        "preserveColorOnHighlight": true
+      "objectType": "mark",
+      "variant": "congruence",
+      "anchor": {
+        "type": "between-points",
+        "points": [
+          "B1",
+          "C1"
+        ]
       },
-      "kind": "congruenceMark",
-      "refs": [
-        "B1",
-        "C1"
-      ],
-      "properties": {
-        "markCount": 3
+      "count": 3,
+      "height": 0.6,
+      "appearance": {
+        "strokeWidth": 2.2,
+        "preserveColorOnHighlight": true
       }
     },
     {
@@ -743,20 +803,20 @@ export const CongruenciaALASpec = createDiagramSpec(
         "role": "secondary"
       },
       "target": false,
-      "style": {
-        "strokeWidth": 2.2,
-        "markHeight": 0.6,
-        "highlightStrokeWidth": 4,
-        "highlightVisible": true,
-        "preserveColorOnHighlight": true
+      "objectType": "mark",
+      "variant": "congruence",
+      "anchor": {
+        "type": "between-points",
+        "points": [
+          "B2",
+          "C2"
+        ]
       },
-      "kind": "congruenceMark",
-      "refs": [
-        "B2",
-        "C2"
-      ],
-      "properties": {
-        "markCount": 3
+      "count": 3,
+      "height": 0.6,
+      "appearance": {
+        "strokeWidth": 2.2,
+        "preserveColorOnHighlight": true
       }
     },
     {
@@ -776,21 +836,19 @@ export const CongruenciaALASpec = createDiagramSpec(
         "role": "secondary"
       },
       "target": false,
-      "style": {
+      "objectType": "path",
+      "geometry": {
+        "type": "dimension",
+        "points": [
+          "A1",
+          "B1"
+        ],
+        "offset": 0
+      },
+      "appearance": {
         "strokeWidth": 1.5,
         "highlightStrokeWidth": 3,
         "preserveColorOnHighlight": true
-      },
-      "kind": "dimensionLine",
-      "refs": [
-        "A1",
-        "B1"
-      ],
-      "text": "AB = {value}",
-      "properties": {
-        "unit": "u",
-        "precision": 1,
-        "offset": 0
       }
     },
     {
@@ -810,21 +868,19 @@ export const CongruenciaALASpec = createDiagramSpec(
         "role": "secondary"
       },
       "target": false,
-      "style": {
+      "objectType": "path",
+      "geometry": {
+        "type": "dimension",
+        "points": [
+          "A2",
+          "B2"
+        ],
+        "offset": 0
+      },
+      "appearance": {
         "strokeWidth": 1.5,
         "highlightStrokeWidth": 3,
         "preserveColorOnHighlight": true
-      },
-      "kind": "dimensionLine",
-      "refs": [
-        "A2",
-        "B2"
-      ],
-      "text": "A′B′ = {value}",
-      "properties": {
-        "unit": "u",
-        "precision": 1,
-        "offset": 0
       }
     },
     {
@@ -844,22 +900,30 @@ export const CongruenciaALASpec = createDiagramSpec(
         "role": "secondary"
       },
       "target": false,
-      "style": {
-        "textOffset": [
-          -2.4,
-          7.5
-        ],
-        "preserveColorOnHighlight": true
-      },
-      "kind": "measurement",
-      "refs": [
-        "A1"
-      ],
-      "text": "∠A = {value}",
-      "properties": {
+      "objectType": "annotation",
+      "variant": "measurement",
+      "content": {
+        "text": "∠A = {value}",
         "expression": "abs(atan2(C1.y-A1.y,C1.x-A1.x)-atan2(B1.y-A1.y,B1.x-A1.x))*180/pi",
         "unit": "°",
         "precision": 0
+      },
+      "anchor": {
+        "type": "object",
+        "object": "A1",
+        "offset": [
+          -2.4,
+          7.5
+        ]
+      },
+      "measurement": {
+        "refs": [
+          "A1"
+        ],
+        "mode": "value"
+      },
+      "appearance": {
+        "preserveColorOnHighlight": true
       }
     },
     {
@@ -879,22 +943,30 @@ export const CongruenciaALASpec = createDiagramSpec(
         "role": "secondary"
       },
       "target": false,
-      "style": {
-        "textOffset": [
-          -5.5,
-          7.5
-        ],
-        "preserveColorOnHighlight": true
-      },
-      "kind": "measurement",
-      "refs": [
-        "B1"
-      ],
-      "text": "∠B = {value}",
-      "properties": {
+      "objectType": "annotation",
+      "variant": "measurement",
+      "content": {
+        "text": "∠B = {value}",
         "expression": "abs(atan2(C1.y-B1.y,C1.x-B1.x)-atan2(A1.y-B1.y,A1.x-B1.x))*180/pi",
         "unit": "°",
         "precision": 0
+      },
+      "anchor": {
+        "type": "object",
+        "object": "B1",
+        "offset": [
+          -5.5,
+          7.5
+        ]
+      },
+      "measurement": {
+        "refs": [
+          "B1"
+        ],
+        "mode": "value"
+      },
+      "appearance": {
+        "preserveColorOnHighlight": true
       }
     },
     {
@@ -916,17 +988,19 @@ export const CongruenciaALASpec = createDiagramSpec(
       },
       "target": true,
       "targetId": "anguloA1",
-      "style": {
-        "angleRadius": 1,
-        "preserveColorOnHighlight": true
-      },
-      "kind": "nonReflexAngle",
-      "refs": [
+      "objectType": "angle",
+      "points": [
         "B1",
         "A1",
         "C1"
       ],
-      "showLabel": false
+      "sweep": "non-reflex",
+      "marker": "arc",
+      "appearance": {
+        "radius": 1,
+        "labelVisible": false,
+        "preserveColorOnHighlight": true
+      }
     },
     {
       "id": "anguloB1",
@@ -947,17 +1021,19 @@ export const CongruenciaALASpec = createDiagramSpec(
       },
       "target": true,
       "targetId": "anguloB1",
-      "style": {
-        "angleRadius": 1,
-        "preserveColorOnHighlight": true
-      },
-      "kind": "nonReflexAngle",
-      "refs": [
+      "objectType": "angle",
+      "points": [
         "C1",
         "B1",
         "A1"
       ],
-      "showLabel": false
+      "sweep": "non-reflex",
+      "marker": "arc",
+      "appearance": {
+        "radius": 1,
+        "labelVisible": false,
+        "preserveColorOnHighlight": true
+      }
     },
     {
       "id": "anguloC1",
@@ -977,17 +1053,19 @@ export const CongruenciaALASpec = createDiagramSpec(
       },
       "target": true,
       "targetId": "anguloC1",
-      "style": {
-        "angleRadius": 1,
-        "preserveColorOnHighlight": true
-      },
-      "kind": "nonReflexAngle",
-      "refs": [
+      "objectType": "angle",
+      "points": [
         "B1",
         "C1",
         "A1"
       ],
-      "showLabel": false
+      "sweep": "non-reflex",
+      "marker": "arc",
+      "appearance": {
+        "radius": 1,
+        "labelVisible": false,
+        "preserveColorOnHighlight": true
+      }
     },
     {
       "id": "anguloB2",
@@ -1008,17 +1086,19 @@ export const CongruenciaALASpec = createDiagramSpec(
       },
       "target": true,
       "targetId": "anguloB2",
-      "style": {
-        "angleRadius": 1,
-        "preserveColorOnHighlight": true
-      },
-      "kind": "nonReflexAngle",
-      "refs": [
+      "objectType": "angle",
+      "points": [
         "A2",
         "B2",
         "C2"
       ],
-      "showLabel": false
+      "sweep": "non-reflex",
+      "marker": "arc",
+      "appearance": {
+        "radius": 1,
+        "labelVisible": false,
+        "preserveColorOnHighlight": true
+      }
     },
     {
       "id": "anguloA2",
@@ -1039,17 +1119,19 @@ export const CongruenciaALASpec = createDiagramSpec(
       },
       "target": true,
       "targetId": "anguloA2",
-      "style": {
-        "angleRadius": 1,
-        "preserveColorOnHighlight": true
-      },
-      "kind": "nonReflexAngle",
-      "refs": [
+      "objectType": "angle",
+      "points": [
         "B2",
         "A2",
         "C2"
       ],
-      "showLabel": false
+      "sweep": "non-reflex",
+      "marker": "arc",
+      "appearance": {
+        "radius": 1,
+        "labelVisible": false,
+        "preserveColorOnHighlight": true
+      }
     },
     {
       "id": "anguloC2",
@@ -1069,467 +1151,69 @@ export const CongruenciaALASpec = createDiagramSpec(
       },
       "target": true,
       "targetId": "anguloC2",
-      "style": {
-        "angleRadius": 1,
-        "preserveColorOnHighlight": true
-      },
-      "kind": "nonReflexAngle",
-      "refs": [
+      "objectType": "angle",
+      "points": [
         "A2",
         "C2",
         "B2"
       ],
-      "showLabel": false
+      "sweep": "non-reflex",
+      "marker": "arc",
+      "appearance": {
+        "radius": 1,
+        "labelVisible": false,
+        "preserveColorOnHighlight": true
+      }
     }
   ],
-  "sliders": [],
-  "steps": [],
-  "constraints": [
+  "relations": [
     {
       "id": "mismoSemiplano",
       "label": "C conserva la orientación del triángulo",
-      "kind": "sameSide",
-      "refs": [
+      "enabled": true,
+      "type": "same-half-plane",
+      "points": [
         "C1",
-        "A1",
-        "B1"
+        "A1"
       ],
-      "enabled": true
+      "boundary": "B1"
     },
     {
       "id": "equalLengthsegAB2",
       "label": "lado A′B′ tiene la misma longitud que lado AB",
-      "kind": "equalLength",
-      "refs": [
-        "B2",
-        "A2",
+      "enabled": true,
+      "type": "equal-length",
+      "segments": [
+        "segAB2",
         "segAB1"
       ],
-      "enabled": true
+      "drivenPoint": "B2"
     },
     {
       "id": "equalAngleanguloA2",
       "label": "Ángulo no reflejo (≤ 180°) tiene la misma amplitud que Ángulo no reflejo (≤ 180°)",
-      "kind": "equalAngle",
-      "refs": [
-        "C2",
-        "A2",
-        "B2",
-        "anguloA1",
-        "anguloA2"
+      "enabled": true,
+      "type": "equal-angle",
+      "angles": [
+        "anguloA2",
+        "anguloA1"
       ],
-      "enabled": true
+      "drivenPoint": "C2"
     },
     {
       "id": "equalAngleanguloB2",
       "label": "Ángulo no reflejo (≤ 180°) tiene la misma amplitud que Ángulo no reflejo (≤ 180°)",
-      "kind": "equalAngle",
-      "refs": [
-        "C2",
-        "B2",
-        "A2",
-        "anguloB1",
-        "anguloB2"
+      "enabled": true,
+      "type": "equal-angle",
+      "angles": [
+        "anguloB2",
+        "anguloB1"
       ],
-      "enabled": true
+      "drivenPoint": "C2"
     }
   ],
-  "dependencies": [
-    {
-      "sourceId": "A1",
-      "targetId": "B2",
-      "relation": "expression"
-    },
-    {
-      "sourceId": "A2",
-      "targetId": "B2",
-      "relation": "expression"
-    },
-    {
-      "sourceId": "B1",
-      "targetId": "B2",
-      "relation": "expression"
-    },
-    {
-      "sourceId": "A1",
-      "targetId": "C2",
-      "relation": "expression"
-    },
-    {
-      "sourceId": "A2",
-      "targetId": "C2",
-      "relation": "expression"
-    },
-    {
-      "sourceId": "C1",
-      "targetId": "C2",
-      "relation": "expression"
-    },
-    {
-      "sourceId": "A1",
-      "targetId": "triangulo1",
-      "relation": "construction"
-    },
-    {
-      "sourceId": "B1",
-      "targetId": "triangulo1",
-      "relation": "construction"
-    },
-    {
-      "sourceId": "C1",
-      "targetId": "triangulo1",
-      "relation": "construction"
-    },
-    {
-      "sourceId": "A2",
-      "targetId": "triangulo2",
-      "relation": "construction"
-    },
-    {
-      "sourceId": "B2",
-      "targetId": "triangulo2",
-      "relation": "construction"
-    },
-    {
-      "sourceId": "C2",
-      "targetId": "triangulo2",
-      "relation": "construction"
-    },
-    {
-      "sourceId": "A1",
-      "targetId": "segAB1",
-      "relation": "construction"
-    },
-    {
-      "sourceId": "B1",
-      "targetId": "segAB1",
-      "relation": "construction"
-    },
-    {
-      "sourceId": "A1",
-      "targetId": "segAC1",
-      "relation": "construction"
-    },
-    {
-      "sourceId": "C1",
-      "targetId": "segAC1",
-      "relation": "construction"
-    },
-    {
-      "sourceId": "B1",
-      "targetId": "segBC1",
-      "relation": "construction"
-    },
-    {
-      "sourceId": "C1",
-      "targetId": "segBC1",
-      "relation": "construction"
-    },
-    {
-      "sourceId": "A2",
-      "targetId": "segAB2",
-      "relation": "construction"
-    },
-    {
-      "sourceId": "B2",
-      "targetId": "segAB2",
-      "relation": "construction"
-    },
-    {
-      "sourceId": "A2",
-      "targetId": "segAC2",
-      "relation": "construction"
-    },
-    {
-      "sourceId": "C2",
-      "targetId": "segAC2",
-      "relation": "construction"
-    },
-    {
-      "sourceId": "B2",
-      "targetId": "segBC2",
-      "relation": "construction"
-    },
-    {
-      "sourceId": "C2",
-      "targetId": "segBC2",
-      "relation": "construction"
-    },
-    {
-      "sourceId": "A1",
-      "targetId": "marcaAB1",
-      "relation": "construction"
-    },
-    {
-      "sourceId": "B1",
-      "targetId": "marcaAB1",
-      "relation": "construction"
-    },
-    {
-      "sourceId": "A2",
-      "targetId": "marcaAB2",
-      "relation": "construction"
-    },
-    {
-      "sourceId": "B2",
-      "targetId": "marcaAB2",
-      "relation": "construction"
-    },
-    {
-      "sourceId": "A1",
-      "targetId": "marcaAC1",
-      "relation": "construction"
-    },
-    {
-      "sourceId": "C1",
-      "targetId": "marcaAC1",
-      "relation": "construction"
-    },
-    {
-      "sourceId": "A2",
-      "targetId": "marcaAC2",
-      "relation": "construction"
-    },
-    {
-      "sourceId": "C2",
-      "targetId": "marcaAC2",
-      "relation": "construction"
-    },
-    {
-      "sourceId": "B1",
-      "targetId": "marcaBC1",
-      "relation": "construction"
-    },
-    {
-      "sourceId": "C1",
-      "targetId": "marcaBC1",
-      "relation": "construction"
-    },
-    {
-      "sourceId": "B2",
-      "targetId": "marcaBC2",
-      "relation": "construction"
-    },
-    {
-      "sourceId": "C2",
-      "targetId": "marcaBC2",
-      "relation": "construction"
-    },
-    {
-      "sourceId": "A1",
-      "targetId": "cotaAB1",
-      "relation": "construction"
-    },
-    {
-      "sourceId": "B1",
-      "targetId": "cotaAB1",
-      "relation": "construction"
-    },
-    {
-      "sourceId": "A2",
-      "targetId": "cotaAB2",
-      "relation": "construction"
-    },
-    {
-      "sourceId": "B2",
-      "targetId": "cotaAB2",
-      "relation": "construction"
-    },
-    {
-      "sourceId": "A1",
-      "targetId": "medidaA",
-      "relation": "construction"
-    },
-    {
-      "sourceId": "B1",
-      "targetId": "medidaB",
-      "relation": "construction"
-    },
-    {
-      "sourceId": "A1",
-      "targetId": "medidaA",
-      "relation": "expression"
-    },
-    {
-      "sourceId": "B1",
-      "targetId": "medidaA",
-      "relation": "expression"
-    },
-    {
-      "sourceId": "C1",
-      "targetId": "medidaA",
-      "relation": "expression"
-    },
-    {
-      "sourceId": "A1",
-      "targetId": "medidaB",
-      "relation": "expression"
-    },
-    {
-      "sourceId": "B1",
-      "targetId": "medidaB",
-      "relation": "expression"
-    },
-    {
-      "sourceId": "C1",
-      "targetId": "medidaB",
-      "relation": "expression"
-    },
-    {
-      "sourceId": "A1",
-      "targetId": "C1",
-      "relation": "constraint",
-      "constraintId": "mismoSemiplano"
-    },
-    {
-      "sourceId": "B1",
-      "targetId": "C1",
-      "relation": "constraint",
-      "constraintId": "mismoSemiplano"
-    },
-    {
-      "sourceId": "B1",
-      "targetId": "anguloA1",
-      "relation": "construction"
-    },
-    {
-      "sourceId": "A1",
-      "targetId": "anguloA1",
-      "relation": "construction"
-    },
-    {
-      "sourceId": "C1",
-      "targetId": "anguloA1",
-      "relation": "construction"
-    },
-    {
-      "sourceId": "C1",
-      "targetId": "anguloB1",
-      "relation": "construction"
-    },
-    {
-      "sourceId": "B1",
-      "targetId": "anguloB1",
-      "relation": "construction"
-    },
-    {
-      "sourceId": "A1",
-      "targetId": "anguloB1",
-      "relation": "construction"
-    },
-    {
-      "sourceId": "B1",
-      "targetId": "anguloC1",
-      "relation": "construction"
-    },
-    {
-      "sourceId": "C1",
-      "targetId": "anguloC1",
-      "relation": "construction"
-    },
-    {
-      "sourceId": "A1",
-      "targetId": "anguloC1",
-      "relation": "construction"
-    },
-    {
-      "sourceId": "A2",
-      "targetId": "anguloB2",
-      "relation": "construction"
-    },
-    {
-      "sourceId": "B2",
-      "targetId": "anguloB2",
-      "relation": "construction"
-    },
-    {
-      "sourceId": "C2",
-      "targetId": "anguloB2",
-      "relation": "construction"
-    },
-    {
-      "sourceId": "B2",
-      "targetId": "anguloA2",
-      "relation": "construction"
-    },
-    {
-      "sourceId": "A2",
-      "targetId": "anguloA2",
-      "relation": "construction"
-    },
-    {
-      "sourceId": "C2",
-      "targetId": "anguloA2",
-      "relation": "construction"
-    },
-    {
-      "sourceId": "A2",
-      "targetId": "anguloC2",
-      "relation": "construction"
-    },
-    {
-      "sourceId": "C2",
-      "targetId": "anguloC2",
-      "relation": "construction"
-    },
-    {
-      "sourceId": "B2",
-      "targetId": "anguloC2",
-      "relation": "construction"
-    },
-    {
-      "sourceId": "A2",
-      "targetId": "B2",
-      "relation": "constraint",
-      "constraintId": "equalLengthsegAB2"
-    },
-    {
-      "sourceId": "segAB1",
-      "targetId": "B2",
-      "relation": "constraint",
-      "constraintId": "equalLengthsegAB2"
-    },
-    {
-      "sourceId": "A2",
-      "targetId": "C2",
-      "relation": "constraint",
-      "constraintId": "equalAngleanguloA2"
-    },
-    {
-      "sourceId": "B2",
-      "targetId": "C2",
-      "relation": "constraint",
-      "constraintId": "equalAngleanguloA2"
-    },
-    {
-      "sourceId": "anguloA1",
-      "targetId": "C2",
-      "relation": "constraint",
-      "constraintId": "equalAngleanguloA2"
-    },
-    {
-      "sourceId": "B2",
-      "targetId": "C2",
-      "relation": "constraint",
-      "constraintId": "equalAngleanguloB2"
-    },
-    {
-      "sourceId": "A2",
-      "targetId": "C2",
-      "relation": "constraint",
-      "constraintId": "equalAngleanguloB2"
-    },
-    {
-      "sourceId": "anguloB1",
-      "targetId": "C2",
-      "relation": "constraint",
-      "constraintId": "equalAngleanguloB2"
-    }
-  ],
-  "note": "Arrastra A, B y C",
-  "extensions": {
-    "acceptanceCase": "phase-5-congruence-ala"
-  }
+  "steps": [],
+  "note": "Arrastra A, B y C"
 }
 );
 /* @matematika-diagram-spec:end */

@@ -6,13 +6,14 @@ import {
   fitViewport,
   migrateDiagramSpec,
   offscreenItemIds,
+  projectDiagramSpecV3ToV2,
   recoverViewport,
   resolvePointCoordinates,
   zoomViewport,
 } from '../../../src/shared/diagrams/public';
 import { TrianguloSpec } from '../../../src/widgets/diagrams/Definiciones/Triangulo';
 
-const spec = migrateDiagramSpec(v2Fixture).spec;
+const spec = projectDiagramSpecV3ToV2(migrateDiagramSpec(v2Fixture).spec);
 
 describe('shared diagram scene semantics', () => {
   it('combines layer order, steps, visibility, lock and selection deterministically', () => {

@@ -141,8 +141,8 @@ describe('Diagram TSX Parser (Local & AST)', () => {
     expect(generated.ok).toBe(true);
     if (!generated.ok) return;
     const locallyUnknown = generated.source.replace(
-      '"constraints": []',
-      '"constraints": [{"id":"future","label":"Contrato futuro","kind":"futureConstraint","refs":["pA"],"enabled":true}]',
+      '"relations": []',
+      '"relations": [{"id":"future","label":"Contrato futuro","type":"future-relation","enabled":true}]',
     );
     const serverResult = { status: 'visual-exact', model, diagnostics: [] };
     const fetchSpy = vi.fn().mockResolvedValue(new Response(JSON.stringify(serverResult), {

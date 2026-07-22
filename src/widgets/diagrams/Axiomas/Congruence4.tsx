@@ -3,8 +3,8 @@ import { createDiagramSpec, DiagramRenderer } from '@/shared/diagrams/public';
 /* @matematika-diagram-spec:start */
 export const Congruence4Spec = createDiagramSpec(
 {
-  "version": 2,
-  "renderer": "matematika-diagram-renderer-v2",
+  "version": 3,
+  "renderer": "matematika-diagram-renderer-v3",
   "title": "Axioma de Congruencia IV",
   "componentId": "axioma-de-congruencia-iv",
   "category": "Axiomas",
@@ -45,7 +45,7 @@ export const Congruence4Spec = createDiagramSpec(
     }
   ],
   "groups": [],
-  "points": [
+  "objects": [
     {
       "id": "pA",
       "label": "A",
@@ -62,15 +62,21 @@ export const Congruence4Spec = createDiagramSpec(
       },
       "target": true,
       "targetId": "pA",
-      "style": {
-        "pointSize": 7,
-        "highlightPointSize": 10,
+      "objectType": "point",
+      "definition": {
+        "type": "coordinates",
+        "x": 1,
+        "y": 1
+      },
+      "mobility": {
+        "type": "free"
+      },
+      "appearance": {
+        "size": 7,
+        "highlightSize": 10,
         "preserveColorOnHighlight": true
       },
-      "x": 1,
-      "y": 1,
-      "fixed": false,
-      "constraint": "free"
+      "interaction": {}
     },
     {
       "id": "pB",
@@ -88,15 +94,21 @@ export const Congruence4Spec = createDiagramSpec(
       },
       "target": true,
       "targetId": "pB",
-      "style": {
-        "pointSize": 7,
-        "highlightPointSize": 11,
+      "objectType": "point",
+      "definition": {
+        "type": "coordinates",
+        "x": 0.19,
+        "y": 3.48
+      },
+      "mobility": {
+        "type": "free"
+      },
+      "appearance": {
+        "size": 7,
+        "highlightSize": 11,
         "preserveColorOnHighlight": true
       },
-      "x": 0.19,
-      "y": 3.48,
-      "fixed": false,
-      "constraint": "free"
+      "interaction": {}
     },
     {
       "id": "pO",
@@ -114,15 +126,21 @@ export const Congruence4Spec = createDiagramSpec(
       },
       "target": true,
       "targetId": "pO",
-      "style": {
-        "pointSize": 7,
-        "highlightPointSize": 10,
+      "objectType": "point",
+      "definition": {
+        "type": "coordinates",
+        "x": -3,
+        "y": 1
+      },
+      "mobility": {
+        "type": "free"
+      },
+      "appearance": {
+        "size": 7,
+        "highlightSize": 10,
         "preserveColorOnHighlight": true
       },
-      "x": -3,
-      "y": 1,
-      "fixed": false,
-      "constraint": "free"
+      "interaction": {}
     },
     {
       "id": "pAA",
@@ -140,15 +158,21 @@ export const Congruence4Spec = createDiagramSpec(
       },
       "target": true,
       "targetId": "pAA",
-      "style": {
-        "pointSize": 7,
-        "highlightPointSize": 10,
+      "objectType": "point",
+      "definition": {
+        "type": "coordinates",
+        "x": 3.1,
+        "y": -2.43
+      },
+      "mobility": {
+        "type": "free"
+      },
+      "appearance": {
+        "size": 7,
+        "highlightSize": 10,
         "preserveColorOnHighlight": true
       },
-      "x": 3.1,
-      "y": -2.43,
-      "fixed": false,
-      "constraint": "free"
+      "interaction": {}
     },
     {
       "id": "pBB",
@@ -166,18 +190,24 @@ export const Congruence4Spec = createDiagramSpec(
       },
       "target": true,
       "targetId": "pBB",
-      "style": {
-        "pointSize": 7,
-        "highlightPointSize": 10,
+      "objectType": "point",
+      "definition": {
+        "type": "coordinates",
+        "x": 0.8024285065547914,
+        "y": -0.5431469981193691
+      },
+      "mobility": {
+        "type": "constrained",
+        "relationIds": [
+          "equalAnglenonReflexAngleAAOOBB"
+        ]
+      },
+      "appearance": {
+        "size": 7,
+        "highlightSize": 10,
         "preserveColorOnHighlight": true
       },
-      "x": 0.8024285065547914,
-      "y": -0.5431469981193691,
-      "fixed": false,
-      "constraint": "constrained",
-      "constraintIds": [
-        "equalAnglenonReflexAngleAAOOBB"
-      ]
+      "interaction": {}
     },
     {
       "id": "pOO",
@@ -195,18 +225,22 @@ export const Congruence4Spec = createDiagramSpec(
       },
       "target": true,
       "targetId": "pOO",
-      "style": {
-        "pointSize": 7,
-        "highlightPointSize": 10,
+      "objectType": "point",
+      "definition": {
+        "type": "coordinates",
+        "x": -1.62,
+        "y": -2.41
+      },
+      "mobility": {
+        "type": "free"
+      },
+      "appearance": {
+        "size": 7,
+        "highlightSize": 10,
         "preserveColorOnHighlight": true
       },
-      "x": -1.62,
-      "y": -2.41,
-      "fixed": false,
-      "constraint": "free"
-    }
-  ],
-  "elements": [
+      "interaction": {}
+    },
     {
       "id": "rayOB",
       "label": "Semirrecta",
@@ -224,14 +258,17 @@ export const Congruence4Spec = createDiagramSpec(
       },
       "target": true,
       "targetId": "rayOB",
-      "style": {
-        "preserveColorOnHighlight": true
+      "objectType": "path",
+      "geometry": {
+        "type": "ray",
+        "points": [
+          "pO",
+          "pB"
+        ]
       },
-      "kind": "ray",
-      "refs": [
-        "pO",
-        "pB"
-      ]
+      "appearance": {
+        "preserveColorOnHighlight": true
+      }
     },
     {
       "id": "rayOA",
@@ -250,11 +287,15 @@ export const Congruence4Spec = createDiagramSpec(
       },
       "target": true,
       "targetId": "rayOA",
-      "kind": "ray",
-      "refs": [
-        "pO",
-        "pA"
-      ]
+      "objectType": "path",
+      "geometry": {
+        "type": "ray",
+        "points": [
+          "pO",
+          "pA"
+        ]
+      },
+      "appearance": {}
     },
     {
       "id": "rayOOBB",
@@ -273,15 +314,18 @@ export const Congruence4Spec = createDiagramSpec(
       },
       "target": true,
       "targetId": "rayOOBB",
-      "style": {
-        "preserveColorOnHighlight": true
+      "objectType": "path",
+      "geometry": {
+        "type": "ray",
+        "points": [
+          "pOO",
+          "pBB"
+        ]
       },
-      "kind": "ray",
-      "refs": [
-        "pOO",
-        "pBB"
-      ],
-      "dashed": true
+      "appearance": {
+        "dashed": true,
+        "preserveColorOnHighlight": true
+      }
     },
     {
       "id": "rayOOAA",
@@ -300,14 +344,17 @@ export const Congruence4Spec = createDiagramSpec(
       },
       "target": true,
       "targetId": "rayOOAA",
-      "style": {
-        "preserveColorOnHighlight": true
+      "objectType": "path",
+      "geometry": {
+        "type": "ray",
+        "points": [
+          "pOO",
+          "pAA"
+        ]
       },
-      "kind": "ray",
-      "refs": [
-        "pOO",
-        "pAA"
-      ]
+      "appearance": {
+        "preserveColorOnHighlight": true
+      }
     },
     {
       "id": "nonReflexAngleAOB",
@@ -325,18 +372,20 @@ export const Congruence4Spec = createDiagramSpec(
       },
       "target": true,
       "targetId": "nonReflexAngleAOB",
-      "style": {
-        "fillOpacity": 0.2,
-        "angleRadius": 1,
-        "highlightFillOpacity": 0.4,
-        "preserveColorOnHighlight": true
-      },
-      "kind": "nonReflexAngle",
-      "refs": [
+      "objectType": "angle",
+      "points": [
         "pA",
         "pO",
         "pB"
-      ]
+      ],
+      "sweep": "non-reflex",
+      "marker": "arc",
+      "appearance": {
+        "radius": 1,
+        "fillOpacity": 0.2,
+        "highlightFillOpacity": 0.4,
+        "preserveColorOnHighlight": true
+      }
     },
     {
       "id": "nonReflexAngleAAOOBB",
@@ -354,129 +403,37 @@ export const Congruence4Spec = createDiagramSpec(
       },
       "target": true,
       "targetId": "nonReflexAngleAAOOBB",
-      "style": {
-        "fillOpacity": 0.2,
-        "angleRadius": 1,
-        "highlightFillOpacity": 0.4,
-        "preserveColorOnHighlight": true
-      },
-      "kind": "nonReflexAngle",
-      "refs": [
+      "objectType": "angle",
+      "points": [
         "pAA",
         "pOO",
         "pBB"
-      ]
+      ],
+      "sweep": "non-reflex",
+      "marker": "arc",
+      "appearance": {
+        "radius": 1,
+        "fillOpacity": 0.2,
+        "highlightFillOpacity": 0.4,
+        "preserveColorOnHighlight": true
+      }
     }
   ],
-  "sliders": [],
-  "steps": [],
-  "constraints": [
+  "relations": [
     {
       "id": "equalAnglenonReflexAngleAAOOBB",
       "label": "$\\alpha '$ tiene la misma amplitud que $\\alpha$",
-      "kind": "equalAngle",
-      "refs": [
-        "pBB",
-        "pOO",
-        "pAA",
-        "nonReflexAngleAOB",
-        "nonReflexAngleAAOOBB"
+      "enabled": true,
+      "type": "equal-angle",
+      "angles": [
+        "nonReflexAngleAAOOBB",
+        "nonReflexAngleAOB"
       ],
-      "enabled": true
+      "drivenPoint": "pBB"
     }
   ],
-  "dependencies": [
-    {
-      "sourceId": "pO",
-      "targetId": "rayOB",
-      "relation": "construction"
-    },
-    {
-      "sourceId": "pB",
-      "targetId": "rayOB",
-      "relation": "construction"
-    },
-    {
-      "sourceId": "pO",
-      "targetId": "rayOA",
-      "relation": "construction"
-    },
-    {
-      "sourceId": "pA",
-      "targetId": "rayOA",
-      "relation": "construction"
-    },
-    {
-      "sourceId": "pOO",
-      "targetId": "rayOOBB",
-      "relation": "construction"
-    },
-    {
-      "sourceId": "pBB",
-      "targetId": "rayOOBB",
-      "relation": "construction"
-    },
-    {
-      "sourceId": "pOO",
-      "targetId": "rayOOAA",
-      "relation": "construction"
-    },
-    {
-      "sourceId": "pAA",
-      "targetId": "rayOOAA",
-      "relation": "construction"
-    },
-    {
-      "sourceId": "pA",
-      "targetId": "nonReflexAngleAOB",
-      "relation": "construction"
-    },
-    {
-      "sourceId": "pO",
-      "targetId": "nonReflexAngleAOB",
-      "relation": "construction"
-    },
-    {
-      "sourceId": "pB",
-      "targetId": "nonReflexAngleAOB",
-      "relation": "construction"
-    },
-    {
-      "sourceId": "pAA",
-      "targetId": "nonReflexAngleAAOOBB",
-      "relation": "construction"
-    },
-    {
-      "sourceId": "pOO",
-      "targetId": "nonReflexAngleAAOOBB",
-      "relation": "construction"
-    },
-    {
-      "sourceId": "pBB",
-      "targetId": "nonReflexAngleAAOOBB",
-      "relation": "construction"
-    },
-    {
-      "sourceId": "pOO",
-      "targetId": "pBB",
-      "relation": "constraint",
-      "constraintId": "equalAnglenonReflexAngleAAOOBB"
-    },
-    {
-      "sourceId": "pAA",
-      "targetId": "pBB",
-      "relation": "constraint",
-      "constraintId": "equalAnglenonReflexAngleAAOOBB"
-    },
-    {
-      "sourceId": "nonReflexAngleAOB",
-      "targetId": "pBB",
-      "relation": "constraint",
-      "constraintId": "equalAnglenonReflexAngleAAOOBB"
-    }
-  ],
-  "note": "Arrastra A, B, O, A' y O'",
-  "extensions": {}
+  "steps": [],
+  "note": "Arrastra A, B, O, A' y O'"
 }
 );
 /* @matematika-diagram-spec:end */

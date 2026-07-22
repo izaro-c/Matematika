@@ -3,8 +3,8 @@ import { createDiagramSpec, DiagramRenderer } from '@/shared/diagrams/public';
 /* @matematika-diagram-spec:start */
 export const SemirrectaSpec = createDiagramSpec(
 {
-  "version": 2,
-  "renderer": "matematika-diagram-renderer-v2",
+  "version": 3,
+  "renderer": "matematika-diagram-renderer-v3",
   "title": "Semirrecta",
   "componentId": "semirrecta",
   "category": "Definiciones",
@@ -46,7 +46,7 @@ export const SemirrectaSpec = createDiagramSpec(
     }
   ],
   "groups": [],
-  "points": [
+  "objects": [
     {
       "id": "pA",
       "label": "A",
@@ -63,16 +63,22 @@ export const SemirrectaSpec = createDiagramSpec(
       },
       "target": true,
       "targetId": "pA",
-      "style": {
-        "pointSize": 7,
-        "highlightPointSize": 10,
+      "objectType": "point",
+      "definition": {
+        "type": "coordinates",
+        "x": 1.16,
+        "y": 2.07
+      },
+      "mobility": {
+        "type": "free"
+      },
+      "appearance": {
+        "size": 7,
+        "labelVisible": true,
+        "highlightSize": 10,
         "preserveColorOnHighlight": true
       },
-      "x": 1.16,
-      "y": 2.07,
-      "showLabel": true,
-      "fixed": false,
-      "constraint": "free"
+      "interaction": {}
     },
     {
       "id": "pO",
@@ -90,19 +96,23 @@ export const SemirrectaSpec = createDiagramSpec(
       },
       "target": true,
       "targetId": "pB",
-      "style": {
-        "pointSize": 7,
-        "highlightPointSize": 10,
+      "objectType": "point",
+      "definition": {
+        "type": "coordinates",
+        "x": -2,
+        "y": 0
+      },
+      "mobility": {
+        "type": "free"
+      },
+      "appearance": {
+        "size": 7,
+        "labelVisible": true,
+        "highlightSize": 10,
         "preserveColorOnHighlight": true
       },
-      "x": -2,
-      "y": 0,
-      "showLabel": true,
-      "fixed": false,
-      "constraint": "free"
-    }
-  ],
-  "elements": [
+      "interaction": {}
+    },
     {
       "id": "lineOA",
       "label": "Recta",
@@ -119,17 +129,23 @@ export const SemirrectaSpec = createDiagramSpec(
       },
       "target": true,
       "targetId": "lineOA",
-      "style": {
+      "objectType": "path",
+      "geometry": {
+        "type": "line",
+        "construction": {
+          "type": "through-points",
+          "points": [
+            "pO",
+            "pA"
+          ]
+        }
+      },
+      "appearance": {
+        "dashed": true,
         "strokeWidth": 1,
         "highlightStrokeWidth": 3,
         "preserveColorOnHighlight": true
-      },
-      "kind": "line",
-      "refs": [
-        "pO",
-        "pA"
-      ],
-      "dashed": true
+      }
     },
     {
       "id": "rayOA",
@@ -147,45 +163,24 @@ export const SemirrectaSpec = createDiagramSpec(
       },
       "target": true,
       "targetId": "rayOA",
-      "style": {
+      "objectType": "path",
+      "geometry": {
+        "type": "ray",
+        "points": [
+          "pO",
+          "pA"
+        ]
+      },
+      "appearance": {
         "strokeWidth": 2.4,
         "highlightStrokeWidth": 3,
         "preserveColorOnHighlight": true
-      },
-      "kind": "ray",
-      "refs": [
-        "pO",
-        "pA"
-      ]
+      }
     }
   ],
-  "sliders": [],
+  "relations": [],
   "steps": [],
-  "constraints": [],
-  "dependencies": [
-    {
-      "sourceId": "pO",
-      "targetId": "lineOA",
-      "relation": "construction"
-    },
-    {
-      "sourceId": "pA",
-      "targetId": "lineOA",
-      "relation": "construction"
-    },
-    {
-      "sourceId": "pO",
-      "targetId": "rayOA",
-      "relation": "construction"
-    },
-    {
-      "sourceId": "pA",
-      "targetId": "rayOA",
-      "relation": "construction"
-    }
-  ],
-  "note": "Arrastra el origen (O) o la dirección (A)",
-  "extensions": {}
+  "note": "Arrastra el origen (O) o la dirección (A)"
 }
 );
 /* @matematika-diagram-spec:end */

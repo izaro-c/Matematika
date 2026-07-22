@@ -3,8 +3,8 @@ import { createDiagramSpec, DiagramRenderer } from '@/shared/diagrams/public';
 /* @matematika-diagram-spec:start */
 export const DemoAreaRectanguloConmensurableSpec = createDiagramSpec(
 {
-  "version": 2,
-  "renderer": "matematika-diagram-renderer-v2",
+  "version": 3,
+  "renderer": "matematika-diagram-renderer-v3",
   "title": "Área del rectángulo: caso conmensurable",
   "componentId": "demo-area-rectangulo-conmensurable",
   "category": "Demostraciones",
@@ -45,7 +45,7 @@ export const DemoAreaRectanguloConmensurableSpec = createDiagramSpec(
     }
   ],
   "groups": [],
-  "points": [
+  "objects": [
     {
       "id": "A",
       "label": "A",
@@ -61,16 +61,22 @@ export const DemoAreaRectanguloConmensurableSpec = createDiagramSpec(
         "role": "secondary"
       },
       "target": false,
-      "style": {
-        "pointSize": 7,
-        "highlightPointSize": 10,
+      "objectType": "point",
+      "definition": {
+        "type": "coordinates",
+        "x": -3,
+        "y": -1.5
+      },
+      "mobility": {
+        "type": "fixed"
+      },
+      "appearance": {
+        "size": 7,
+        "labelVisible": false,
+        "highlightSize": 10,
         "preserveColorOnHighlight": true
       },
-      "x": -3,
-      "y": -1.5,
-      "showLabel": false,
-      "fixed": true,
-      "constraint": "fixed"
+      "interaction": {}
     },
     {
       "id": "B",
@@ -87,16 +93,22 @@ export const DemoAreaRectanguloConmensurableSpec = createDiagramSpec(
         "role": "secondary"
       },
       "target": false,
-      "style": {
-        "pointSize": 7,
-        "highlightPointSize": 10,
+      "objectType": "point",
+      "definition": {
+        "type": "coordinates",
+        "x": 3,
+        "y": -1.5
+      },
+      "mobility": {
+        "type": "fixed"
+      },
+      "appearance": {
+        "size": 7,
+        "labelVisible": false,
+        "highlightSize": 10,
         "preserveColorOnHighlight": true
       },
-      "x": 3,
-      "y": -1.5,
-      "showLabel": false,
-      "fixed": true,
-      "constraint": "fixed"
+      "interaction": {}
     },
     {
       "id": "C",
@@ -113,16 +125,22 @@ export const DemoAreaRectanguloConmensurableSpec = createDiagramSpec(
         "role": "secondary"
       },
       "target": false,
-      "style": {
-        "pointSize": 7,
-        "highlightPointSize": 10,
+      "objectType": "point",
+      "definition": {
+        "type": "coordinates",
+        "x": 3,
+        "y": 2.5
+      },
+      "mobility": {
+        "type": "fixed"
+      },
+      "appearance": {
+        "size": 7,
+        "labelVisible": false,
+        "highlightSize": 10,
         "preserveColorOnHighlight": true
       },
-      "x": 3,
-      "y": 2.5,
-      "showLabel": false,
-      "fixed": true,
-      "constraint": "fixed"
+      "interaction": {}
     },
     {
       "id": "D",
@@ -139,16 +157,22 @@ export const DemoAreaRectanguloConmensurableSpec = createDiagramSpec(
         "role": "secondary"
       },
       "target": false,
-      "style": {
-        "pointSize": 7,
-        "highlightPointSize": 10,
+      "objectType": "point",
+      "definition": {
+        "type": "coordinates",
+        "x": -3,
+        "y": 2.5
+      },
+      "mobility": {
+        "type": "fixed"
+      },
+      "appearance": {
+        "size": 7,
+        "labelVisible": false,
+        "highlightSize": 10,
         "preserveColorOnHighlight": true
       },
-      "x": -3,
-      "y": 2.5,
-      "showLabel": false,
-      "fixed": true,
-      "constraint": "fixed"
+      "interaction": {}
     },
     {
       "id": "U1",
@@ -165,16 +189,22 @@ export const DemoAreaRectanguloConmensurableSpec = createDiagramSpec(
         "role": "secondary"
       },
       "target": false,
-      "style": {
-        "pointSize": 7,
-        "highlightPointSize": 10,
+      "objectType": "point",
+      "definition": {
+        "type": "coordinates",
+        "x": -3,
+        "y": -1.5
+      },
+      "mobility": {
+        "type": "fixed"
+      },
+      "appearance": {
+        "size": 7,
+        "labelVisible": false,
+        "highlightSize": 10,
         "preserveColorOnHighlight": true
       },
-      "x": -3,
-      "y": -1.5,
-      "showLabel": false,
-      "fixed": true,
-      "constraint": "fixed"
+      "interaction": {}
     },
     {
       "id": "U2",
@@ -191,16 +221,22 @@ export const DemoAreaRectanguloConmensurableSpec = createDiagramSpec(
         "role": "secondary"
       },
       "target": false,
-      "style": {
-        "pointSize": 7,
-        "highlightPointSize": 10,
+      "objectType": "point",
+      "definition": {
+        "type": "coordinates",
+        "x": -2,
+        "y": -1.5
+      },
+      "mobility": {
+        "type": "fixed"
+      },
+      "appearance": {
+        "size": 7,
+        "labelVisible": false,
+        "highlightSize": 10,
         "preserveColorOnHighlight": true
       },
-      "x": -2,
-      "y": -1.5,
-      "showLabel": false,
-      "fixed": true,
-      "constraint": "fixed"
+      "interaction": {}
     },
     {
       "id": "U3",
@@ -217,16 +253,22 @@ export const DemoAreaRectanguloConmensurableSpec = createDiagramSpec(
         "role": "secondary"
       },
       "target": false,
-      "style": {
-        "pointSize": 7,
-        "highlightPointSize": 10,
+      "objectType": "point",
+      "definition": {
+        "type": "coordinates",
+        "x": -2,
+        "y": -0.5
+      },
+      "mobility": {
+        "type": "fixed"
+      },
+      "appearance": {
+        "size": 7,
+        "labelVisible": false,
+        "highlightSize": 10,
         "preserveColorOnHighlight": true
       },
-      "x": -2,
-      "y": -0.5,
-      "showLabel": false,
-      "fixed": true,
-      "constraint": "fixed"
+      "interaction": {}
     },
     {
       "id": "U4",
@@ -243,19 +285,23 @@ export const DemoAreaRectanguloConmensurableSpec = createDiagramSpec(
         "role": "secondary"
       },
       "target": false,
-      "style": {
-        "pointSize": 7,
-        "highlightPointSize": 10,
+      "objectType": "point",
+      "definition": {
+        "type": "coordinates",
+        "x": -3,
+        "y": -0.5
+      },
+      "mobility": {
+        "type": "fixed"
+      },
+      "appearance": {
+        "size": 7,
+        "labelVisible": false,
+        "highlightSize": 10,
         "preserveColorOnHighlight": true
       },
-      "x": -3,
-      "y": -0.5,
-      "showLabel": false,
-      "fixed": true,
-      "constraint": "fixed"
-    }
-  ],
-  "elements": [
+      "interaction": {}
+    },
     {
       "id": "rect",
       "label": "Rectángulo R",
@@ -272,19 +318,22 @@ export const DemoAreaRectanguloConmensurableSpec = createDiagramSpec(
       },
       "target": true,
       "targetId": "rectangulo-r",
-      "style": {
+      "objectType": "path",
+      "geometry": {
+        "type": "polygon",
+        "points": [
+          "A",
+          "B",
+          "C",
+          "D"
+        ]
+      },
+      "appearance": {
         "strokeWidth": 3,
         "fillOpacity": 0.08,
         "highlightFillOpacity": 0.28,
         "preserveColorOnHighlight": true
-      },
-      "kind": "polygon",
-      "refs": [
-        "A",
-        "B",
-        "C",
-        "D"
-      ]
+      }
     },
     {
       "id": "grid",
@@ -301,21 +350,22 @@ export const DemoAreaRectanguloConmensurableSpec = createDiagramSpec(
         "role": "secondary"
       },
       "target": false,
-      "style": {
+      "objectType": "region",
+      "geometry": {
+        "type": "grid-region",
+        "points": [
+          "A",
+          "B",
+          "C",
+          "D"
+        ],
+        "rows": 4,
+        "columns": 6
+      },
+      "appearance": {
         "strokeWidth": 1.2,
         "strokeOpacity": 0.45,
         "preserveColorOnHighlight": true
-      },
-      "kind": "grid",
-      "refs": [
-        "A",
-        "B",
-        "C",
-        "D"
-      ],
-      "properties": {
-        "rows": 4,
-        "columns": 6
       }
     },
     {
@@ -334,19 +384,22 @@ export const DemoAreaRectanguloConmensurableSpec = createDiagramSpec(
       },
       "target": true,
       "targetId": "cuadrado-unidad",
-      "style": {
+      "objectType": "path",
+      "geometry": {
+        "type": "polygon",
+        "points": [
+          "U1",
+          "U2",
+          "U3",
+          "U4"
+        ]
+      },
+      "appearance": {
         "strokeWidth": 3,
         "fillOpacity": 0.3,
         "highlightFillOpacity": 0.28,
         "preserveColorOnHighlight": true
-      },
-      "kind": "polygon",
-      "refs": [
-        "U1",
-        "U2",
-        "U3",
-        "U4"
-      ]
+      }
     },
     {
       "id": "gridInfo",
@@ -363,23 +416,25 @@ export const DemoAreaRectanguloConmensurableSpec = createDiagramSpec(
         "role": "annotation"
       },
       "target": false,
-      "style": {
-        "preserveColorOnHighlight": true
+      "objectType": "annotation",
+      "variant": "panel",
+      "content": {
+        "text": "6 × 4 cuadrados unidad ⇒ Cont(R) = b · h",
+        "title": "Conteo de unidades"
       },
-      "kind": "infoPanel",
-      "refs": [],
-      "text": "6 × 4 cuadrados unidad ⇒ Cont(R) = b · h",
-      "properties": {
-        "title": "Conteo de unidades",
-        "anchorMode": "viewport",
-        "viewportPosition": [
+      "anchor": {
+        "type": "viewport",
+        "position": [
           0.98,
           0.03
         ]
+      },
+      "appearance": {
+        "preserveColorOnHighlight": true
       }
     }
   ],
-  "sliders": [],
+  "relations": [],
   "steps": [
     {
       "id": "step1",
@@ -416,9 +471,7 @@ export const DemoAreaRectanguloConmensurableSpec = createDiagramSpec(
       }
     }
   ],
-  "dependencies": [],
-  "note": "La cuadrícula interna traduce el producto b · h en un conteo de cuadrados unidad.",
-  "extensions": {}
+  "note": "La cuadrícula interna traduce el producto b · h en un conteo de cuadrados unidad."
 }
 );
 /* @matematika-diagram-spec:end */

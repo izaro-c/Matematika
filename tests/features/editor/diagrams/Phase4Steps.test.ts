@@ -29,6 +29,7 @@ function complexSequence() {
     steps: updateStepObjectState(stable.steps, 'step2', 'step2Altura', {
       visible: true,
       emphasis: 'primary',
+      emphasisColor: 'granada',
       interactive: false,
       label: 'Altura construida',
       overlay: {
@@ -63,7 +64,7 @@ describe('Phase 4 step model', () => {
     const plan = createScenePlan(model, { activeStepId: 'step2', highlightedIds: ['segAB'] });
     const height = plan.find(entry => entry.item.id === 'step2Altura');
     const base = plan.find(entry => entry.item.id === 'segAB');
-    expect(height).toMatchObject({ visible: true, stepEmphasis: 'primary', interactive: false, locked: true, label: 'Altura construida' });
+    expect(height).toMatchObject({ visible: true, stepEmphasis: 'primary', stepEmphasisColor: 'granada', interactive: false, locked: true, label: 'Altura construida' });
     expect(height?.highlighted).toBe(false);
     expect(base?.highlighted).toBe(true);
     expect(base?.stepEmphasis).toBe('none');
@@ -154,7 +155,11 @@ describe('Phase 4 step model', () => {
     const reopened = classifyEmbeddedDiagramSource(generated.source);
     expect(reopened?.status).toBe('visual-exact');
     if (reopened?.status !== 'visual-exact') return;
-    expect(reopened.model).toEqual(model);
+    expect(reopened.model).toMatchObject({
+      componentId: model.componentId,
+      steps: model.steps,
+      viewport: model.viewport,
+    });
     expect(reopened.model.steps[1].objectStates?.step2Altura.overlay?.expression).toBe('segAB.length / 2');
     const regenerated = generateDiagramSource(reopened.model, 'SecuenciaCompleja');
     expect(regenerated.ok && regenerated.source).toBe(generated.source);

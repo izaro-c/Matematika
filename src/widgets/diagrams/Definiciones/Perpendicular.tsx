@@ -3,8 +3,8 @@ import { createDiagramSpec, DiagramRenderer } from '@/shared/diagrams/public';
 /* @matematika-diagram-spec:start */
 export const PerpendicularSpec = createDiagramSpec(
 {
-  "version": 2,
-  "renderer": "matematika-diagram-renderer-v2",
+  "version": 3,
+  "renderer": "matematika-diagram-renderer-v3",
   "title": "Perpendicular",
   "componentId": "perpendicular",
   "category": "Definiciones",
@@ -46,7 +46,7 @@ export const PerpendicularSpec = createDiagramSpec(
     }
   ],
   "groups": [],
-  "points": [
+  "objects": [
     {
       "id": "pA",
       "label": "A",
@@ -63,16 +63,22 @@ export const PerpendicularSpec = createDiagramSpec(
       },
       "target": true,
       "targetId": "pA",
-      "style": {
-        "pointSize": 7,
-        "highlightPointSize": 10,
+      "objectType": "point",
+      "definition": {
+        "type": "coordinates",
+        "x": -3.05,
+        "y": -1.11
+      },
+      "mobility": {
+        "type": "free"
+      },
+      "appearance": {
+        "size": 7,
+        "labelVisible": true,
+        "highlightSize": 10,
         "preserveColorOnHighlight": true
       },
-      "x": -3.05,
-      "y": -1.11,
-      "showLabel": true,
-      "fixed": false,
-      "constraint": "free"
+      "interaction": {}
     },
     {
       "id": "pB",
@@ -90,16 +96,22 @@ export const PerpendicularSpec = createDiagramSpec(
       },
       "target": true,
       "targetId": "pB",
-      "style": {
-        "pointSize": 7,
-        "highlightPointSize": 10,
+      "objectType": "point",
+      "definition": {
+        "type": "coordinates",
+        "x": 3.25,
+        "y": 1.14
+      },
+      "mobility": {
+        "type": "free"
+      },
+      "appearance": {
+        "size": 7,
+        "labelVisible": true,
+        "highlightSize": 10,
         "preserveColorOnHighlight": true
       },
-      "x": 3.25,
-      "y": 1.14,
-      "showLabel": true,
-      "fixed": false,
-      "constraint": "free"
+      "interaction": {}
     },
     {
       "id": "pP",
@@ -117,17 +129,23 @@ export const PerpendicularSpec = createDiagramSpec(
       },
       "target": true,
       "targetId": "p3",
-      "style": {
-        "pointSize": 7,
-        "highlightPointSize": 10,
+      "objectType": "point",
+      "definition": {
+        "type": "coordinates",
+        "x": 0.17000000000000037,
+        "y": 0.040000000000000036
+      },
+      "mobility": {
+        "type": "on-support",
+        "support": "lineAB"
+      },
+      "appearance": {
+        "size": 7,
+        "labelVisible": true,
+        "highlightSize": 10,
         "preserveColorOnHighlight": true
       },
-      "x": 0.17000000000000037,
-      "y": 0.040000000000000036,
-      "showLabel": true,
-      "fixed": false,
-      "constraint": "glider",
-      "gliderTarget": "lineAB"
+      "interaction": {}
     },
     {
       "id": "p4",
@@ -145,17 +163,23 @@ export const PerpendicularSpec = createDiagramSpec(
       },
       "target": false,
       "targetId": "p4",
-      "style": {
-        "pointSize": 7,
-        "highlightPointSize": 10,
+      "objectType": "point",
+      "definition": {
+        "type": "coordinates",
+        "x": -31.625443586631,
+        "y": -50
+      },
+      "mobility": {
+        "type": "on-support",
+        "support": "perpABP"
+      },
+      "appearance": {
+        "size": 7,
+        "labelVisible": true,
+        "highlightSize": 10,
         "preserveColorOnHighlight": true
       },
-      "x": -31.625443586631,
-      "y": -50,
-      "showLabel": true,
-      "fixed": false,
-      "constraint": "glider",
-      "gliderTarget": "perpABP"
+      "interaction": {}
     },
     {
       "id": "p5",
@@ -173,17 +197,23 @@ export const PerpendicularSpec = createDiagramSpec(
       },
       "target": false,
       "targetId": "p5",
-      "style": {
-        "pointSize": 7,
-        "highlightPointSize": 10,
+      "objectType": "point",
+      "definition": {
+        "type": "coordinates",
+        "x": 0,
+        "y": 50
+      },
+      "mobility": {
+        "type": "on-support",
+        "support": "perpABP"
+      },
+      "appearance": {
+        "size": 7,
+        "labelVisible": true,
+        "highlightSize": 10,
         "preserveColorOnHighlight": true
       },
-      "x": 0,
-      "y": 50,
-      "showLabel": true,
-      "fixed": false,
-      "constraint": "glider",
-      "gliderTarget": "perpABP"
+      "interaction": {}
     },
     {
       "id": "p6",
@@ -201,17 +231,23 @@ export const PerpendicularSpec = createDiagramSpec(
       },
       "target": true,
       "targetId": "p6",
-      "style": {
-        "pointSize": 7,
-        "highlightPointSize": 10,
+      "objectType": "point",
+      "definition": {
+        "type": "coordinates",
+        "x": 30,
+        "y": 0.08384592179283312
+      },
+      "mobility": {
+        "type": "on-support",
+        "support": "lineAB"
+      },
+      "appearance": {
+        "size": 7,
+        "labelVisible": true,
+        "highlightSize": 10,
         "preserveColorOnHighlight": true
       },
-      "x": 30,
-      "y": 0.08384592179283312,
-      "showLabel": true,
-      "fixed": false,
-      "constraint": "glider",
-      "gliderTarget": "lineAB"
+      "interaction": {}
     },
     {
       "id": "p7",
@@ -229,20 +265,24 @@ export const PerpendicularSpec = createDiagramSpec(
       },
       "target": true,
       "targetId": "p7",
-      "style": {
-        "pointSize": 7,
-        "highlightPointSize": 10,
+      "objectType": "point",
+      "definition": {
+        "type": "coordinates",
+        "x": -30,
+        "y": 0.9323477112952232
+      },
+      "mobility": {
+        "type": "on-support",
+        "support": "lineAB"
+      },
+      "appearance": {
+        "size": 7,
+        "labelVisible": true,
+        "highlightSize": 10,
         "preserveColorOnHighlight": true
       },
-      "x": -30,
-      "y": 0.9323477112952232,
-      "showLabel": true,
-      "fixed": false,
-      "constraint": "glider",
-      "gliderTarget": "lineAB"
-    }
-  ],
-  "elements": [
+      "interaction": {}
+    },
     {
       "id": "lineAB",
       "label": "Recta",
@@ -259,16 +299,22 @@ export const PerpendicularSpec = createDiagramSpec(
       },
       "target": true,
       "targetId": "lineAB",
-      "style": {
+      "objectType": "path",
+      "geometry": {
+        "type": "line",
+        "construction": {
+          "type": "through-points",
+          "points": [
+            "pA",
+            "pB"
+          ]
+        }
+      },
+      "appearance": {
         "strokeWidth": 2.4,
         "highlightStrokeWidth": 3,
         "preserveColorOnHighlight": true
-      },
-      "kind": "line",
-      "refs": [
-        "pA",
-        "pB"
-      ]
+      }
     },
     {
       "id": "perpABP",
@@ -286,17 +332,23 @@ export const PerpendicularSpec = createDiagramSpec(
       },
       "target": true,
       "targetId": "perpABP",
-      "style": {
+      "objectType": "path",
+      "geometry": {
+        "type": "line",
+        "construction": {
+          "type": "perpendicular",
+          "linePoints": [
+            "pA",
+            "pB"
+          ],
+          "through": "pP"
+        }
+      },
+      "appearance": {
         "strokeWidth": 2.4,
         "highlightStrokeWidth": 3,
         "preserveColorOnHighlight": true
-      },
-      "kind": "perpendicular",
-      "refs": [
-        "pA",
-        "pB",
-        "pP"
-      ]
+      }
     },
     {
       "id": "perpendicularMarkBP4",
@@ -314,16 +366,19 @@ export const PerpendicularSpec = createDiagramSpec(
       },
       "target": true,
       "targetId": "perpendicularMarkBP4",
-      "style": {
-        "angleRadius": 1,
-        "preserveColorOnHighlight": true
-      },
-      "kind": "perpendicularMark",
-      "refs": [
+      "objectType": "angle",
+      "points": [
         "p6",
         "pP",
         "p4"
-      ]
+      ],
+      "sweep": "non-reflex",
+      "marker": "square",
+      "perpendicularRelationId": "perpendicularMarkBP4-perpendicular",
+      "appearance": {
+        "radius": 1,
+        "preserveColorOnHighlight": true
+      }
     },
     {
       "id": "perpendicularMarkBP5",
@@ -341,16 +396,19 @@ export const PerpendicularSpec = createDiagramSpec(
       },
       "target": true,
       "targetId": "perpendicularMarkBP5",
-      "style": {
-        "angleRadius": 1,
-        "preserveColorOnHighlight": true
-      },
-      "kind": "perpendicularMark",
-      "refs": [
+      "objectType": "angle",
+      "points": [
         "p6",
         "pP",
         "p5"
-      ]
+      ],
+      "sweep": "non-reflex",
+      "marker": "square",
+      "perpendicularRelationId": "perpendicularMarkBP5-perpendicular",
+      "appearance": {
+        "radius": 1,
+        "preserveColorOnHighlight": true
+      }
     },
     {
       "id": "perpendicularMarkAP5",
@@ -368,16 +426,19 @@ export const PerpendicularSpec = createDiagramSpec(
       },
       "target": true,
       "targetId": "perpendicularMarkAP5",
-      "style": {
-        "angleRadius": 1,
-        "preserveColorOnHighlight": true
-      },
-      "kind": "perpendicularMark",
-      "refs": [
+      "objectType": "angle",
+      "points": [
         "p7",
         "pP",
         "p5"
-      ]
+      ],
+      "sweep": "non-reflex",
+      "marker": "square",
+      "perpendicularRelationId": "perpendicularMarkAP5-perpendicular",
+      "appearance": {
+        "radius": 1,
+        "preserveColorOnHighlight": true
+      }
     },
     {
       "id": "perpendicularMarkAP4",
@@ -395,110 +456,89 @@ export const PerpendicularSpec = createDiagramSpec(
       },
       "target": true,
       "targetId": "perpendicularMarkAP4",
-      "style": {
-        "angleRadius": 1,
-        "preserveColorOnHighlight": true
-      },
-      "kind": "perpendicularMark",
-      "refs": [
+      "objectType": "angle",
+      "points": [
         "p7",
         "pP",
         "p4"
+      ],
+      "sweep": "non-reflex",
+      "marker": "square",
+      "perpendicularRelationId": "perpendicularMarkAP4-perpendicular",
+      "appearance": {
+        "radius": 1,
+        "preserveColorOnHighlight": true
+      }
+    }
+  ],
+  "relations": [
+    {
+      "id": "perpendicularMarkBP4-perpendicular",
+      "label": "Perpendicularidad de Marca de perpendicularidad",
+      "enabled": true,
+      "type": "perpendicular",
+      "supports": [
+        [
+          "pP",
+          "p6"
+        ],
+        [
+          "pP",
+          "p4"
+        ]
+      ]
+    },
+    {
+      "id": "perpendicularMarkBP5-perpendicular",
+      "label": "Perpendicularidad de Marca de perpendicularidad",
+      "enabled": true,
+      "type": "perpendicular",
+      "supports": [
+        [
+          "pP",
+          "p6"
+        ],
+        [
+          "pP",
+          "p5"
+        ]
+      ]
+    },
+    {
+      "id": "perpendicularMarkAP5-perpendicular",
+      "label": "Perpendicularidad de Marca de perpendicularidad",
+      "enabled": true,
+      "type": "perpendicular",
+      "supports": [
+        [
+          "pP",
+          "p7"
+        ],
+        [
+          "pP",
+          "p5"
+        ]
+      ]
+    },
+    {
+      "id": "perpendicularMarkAP4-perpendicular",
+      "label": "Perpendicularidad de Marca de perpendicularidad",
+      "enabled": true,
+      "type": "perpendicular",
+      "supports": [
+        [
+          "pP",
+          "p7"
+        ],
+        [
+          "pP",
+          "p4"
+        ]
       ]
     }
   ],
-  "sliders": [],
   "steps": [],
-  "constraints": [],
-  "dependencies": [
-    {
-      "sourceId": "pA",
-      "targetId": "lineAB",
-      "relation": "construction"
-    },
-    {
-      "sourceId": "pB",
-      "targetId": "lineAB",
-      "relation": "construction"
-    },
-    {
-      "sourceId": "pA",
-      "targetId": "perpABP",
-      "relation": "construction"
-    },
-    {
-      "sourceId": "pB",
-      "targetId": "perpABP",
-      "relation": "construction"
-    },
-    {
-      "sourceId": "pP",
-      "targetId": "perpABP",
-      "relation": "construction"
-    },
-    {
-      "sourceId": "p7",
-      "targetId": "perpendicularMarkAP5",
-      "relation": "construction"
-    },
-    {
-      "sourceId": "pP",
-      "targetId": "perpendicularMarkAP5",
-      "relation": "construction"
-    },
-    {
-      "sourceId": "p5",
-      "targetId": "perpendicularMarkAP5",
-      "relation": "construction"
-    },
-    {
-      "sourceId": "p6",
-      "targetId": "perpendicularMarkBP5",
-      "relation": "construction"
-    },
-    {
-      "sourceId": "pP",
-      "targetId": "perpendicularMarkBP5",
-      "relation": "construction"
-    },
-    {
-      "sourceId": "p5",
-      "targetId": "perpendicularMarkBP5",
-      "relation": "construction"
-    },
-    {
-      "sourceId": "p7",
-      "targetId": "perpendicularMarkAP4",
-      "relation": "construction"
-    },
-    {
-      "sourceId": "pP",
-      "targetId": "perpendicularMarkAP4",
-      "relation": "construction"
-    },
-    {
-      "sourceId": "p4",
-      "targetId": "perpendicularMarkAP4",
-      "relation": "construction"
-    },
-    {
-      "sourceId": "p6",
-      "targetId": "perpendicularMarkBP4",
-      "relation": "construction"
-    },
-    {
-      "sourceId": "pP",
-      "targetId": "perpendicularMarkBP4",
-      "relation": "construction"
-    },
-    {
-      "sourceId": "p4",
-      "targetId": "perpendicularMarkBP4",
-      "relation": "construction"
-    }
-  ],
-  "note": "Arrastra A, B y P",
-  "extensions": {}
+  "note": "Arrastra A, B y P"
 }
 );
 /* @matematika-diagram-spec:end */

@@ -3,8 +3,8 @@ import { createDiagramSpec, DiagramRenderer } from '@/shared/diagrams/public';
 /* @matematika-diagram-spec:start */
 export const RectaSpec = createDiagramSpec(
 {
-  "version": 2,
-  "renderer": "matematika-diagram-renderer-v2",
+  "version": 3,
+  "renderer": "matematika-diagram-renderer-v3",
   "title": "Recta determinada por dos puntos",
   "componentId": "recta",
   "category": "Definiciones",
@@ -45,7 +45,7 @@ export const RectaSpec = createDiagramSpec(
     }
   ],
   "groups": [],
-  "points": [
+  "objects": [
     {
       "id": "A",
       "label": "A",
@@ -62,18 +62,25 @@ export const RectaSpec = createDiagramSpec(
       },
       "target": true,
       "targetId": "pA",
-      "style": {
-        "pointSize": 7,
-        "highlightPointSize": 10,
+      "objectType": "point",
+      "definition": {
+        "type": "coordinates",
+        "x": -2.5,
+        "y": -1
+      },
+      "mobility": {
+        "type": "free"
+      },
+      "appearance": {
+        "size": 7,
+        "labelVisible": true,
+        "highlightSize": 10,
         "preserveColorOnHighlight": true
       },
-      "x": -2.5,
-      "y": -1,
-      "showLabel": true,
-      "fixed": false,
-      "constraint": "free",
-      "snapToGrid": true,
-      "snapSize": 0.25
+      "interaction": {
+        "snapToGrid": true,
+        "snapSize": 0.25
+      }
     },
     {
       "id": "B",
@@ -91,21 +98,26 @@ export const RectaSpec = createDiagramSpec(
       },
       "target": true,
       "targetId": "pB",
-      "style": {
-        "pointSize": 7,
-        "highlightPointSize": 10,
+      "objectType": "point",
+      "definition": {
+        "type": "coordinates",
+        "x": 2,
+        "y": 1.5
+      },
+      "mobility": {
+        "type": "free"
+      },
+      "appearance": {
+        "size": 7,
+        "labelVisible": true,
+        "highlightSize": 10,
         "preserveColorOnHighlight": true
       },
-      "x": 2,
-      "y": 1.5,
-      "showLabel": true,
-      "fixed": false,
-      "constraint": "free",
-      "snapToGrid": true,
-      "snapSize": 0.25
-    }
-  ],
-  "elements": [
+      "interaction": {
+        "snapToGrid": true,
+        "snapSize": 0.25
+      }
+    },
     {
       "id": "line",
       "label": "Recta l = AB",
@@ -122,16 +134,22 @@ export const RectaSpec = createDiagramSpec(
       },
       "target": true,
       "targetId": "lineAB",
-      "style": {
+      "objectType": "path",
+      "geometry": {
+        "type": "line",
+        "construction": {
+          "type": "through-points",
+          "points": [
+            "A",
+            "B"
+          ]
+        }
+      },
+      "appearance": {
         "strokeWidth": 3,
         "highlightStrokeWidth": 3,
         "preserveColorOnHighlight": true
-      },
-      "kind": "line",
-      "refs": [
-        "A",
-        "B"
-      ]
+      }
     },
     {
       "id": "lineInfo",
@@ -148,27 +166,27 @@ export const RectaSpec = createDiagramSpec(
         "role": "annotation"
       },
       "target": false,
-      "style": {
-        "preserveColorOnHighlight": true
+      "objectType": "annotation",
+      "variant": "panel",
+      "content": {
+        "text": "Dos puntos distintos determinan una única recta.",
+        "title": "Incidencia"
       },
-      "kind": "infoPanel",
-      "refs": [],
-      "text": "Dos puntos distintos determinan una única recta.",
-      "properties": {
-        "title": "Incidencia",
-        "anchorMode": "viewport",
-        "viewportPosition": [
+      "anchor": {
+        "type": "viewport",
+        "position": [
           0.98,
           0.03
         ]
+      },
+      "appearance": {
+        "preserveColorOnHighlight": true
       }
     }
   ],
-  "sliders": [],
+  "relations": [],
   "steps": [],
-  "dependencies": [],
-  "note": "Mueve A o B. La recta se prolonga indefinidamente en ambos sentidos y siempre pasa por los dos puntos.",
-  "extensions": {}
+  "note": "Mueve A o B. La recta se prolonga indefinidamente en ambos sentidos y siempre pasa por los dos puntos."
 }
 );
 /* @matematika-diagram-spec:end */

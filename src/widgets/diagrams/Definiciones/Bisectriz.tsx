@@ -3,8 +3,8 @@ import { createDiagramSpec, DiagramRenderer } from '@/shared/diagrams/public';
 /* @matematika-diagram-spec:start */
 export const BisectrizSpec = createDiagramSpec(
 {
-  "version": 2,
-  "renderer": "matematika-diagram-renderer-v2",
+  "version": 3,
+  "renderer": "matematika-diagram-renderer-v3",
   "title": "Bisectriz",
   "componentId": "angulo",
   "category": "Definiciones",
@@ -46,7 +46,7 @@ export const BisectrizSpec = createDiagramSpec(
     }
   ],
   "groups": [],
-  "points": [
+  "objects": [
     {
       "id": "pA",
       "label": "A",
@@ -63,20 +63,27 @@ export const BisectrizSpec = createDiagramSpec(
       },
       "target": true,
       "targetId": "pA",
-      "style": {
-        "pointSize": 7,
-        "highlightPointSize": 10,
+      "objectType": "point",
+      "definition": {
+        "type": "coordinates",
+        "x": 0.61,
+        "y": 2.04
+      },
+      "mobility": {
+        "type": "free"
+      },
+      "appearance": {
+        "size": 7,
+        "labelVisible": true,
+        "highlightSize": 10,
         "preserveColorOnHighlight": true
       },
-      "x": 0.61,
-      "y": 2.04,
-      "showLabel": true,
-      "fixed": false,
-      "constraint": "free",
-      "attractorIds": [
-        "lineBO",
-        "perpB4O"
-      ]
+      "interaction": {
+        "attractorIds": [
+          "lineBO",
+          "perpB4O"
+        ]
+      }
     },
     {
       "id": "pB",
@@ -94,16 +101,22 @@ export const BisectrizSpec = createDiagramSpec(
       },
       "target": true,
       "targetId": "pB",
-      "style": {
-        "pointSize": 7,
-        "highlightPointSize": 10,
+      "objectType": "point",
+      "definition": {
+        "type": "coordinates",
+        "x": 2,
+        "y": 0
+      },
+      "mobility": {
+        "type": "free"
+      },
+      "appearance": {
+        "size": 7,
+        "labelVisible": true,
+        "highlightSize": 10,
         "preserveColorOnHighlight": true
       },
-      "x": 2,
-      "y": 0,
-      "showLabel": true,
-      "fixed": false,
-      "constraint": "free"
+      "interaction": {}
     },
     {
       "id": "pO",
@@ -121,16 +134,22 @@ export const BisectrizSpec = createDiagramSpec(
       },
       "target": true,
       "targetId": "pC",
-      "style": {
-        "pointSize": 7,
-        "highlightPointSize": 10,
+      "objectType": "point",
+      "definition": {
+        "type": "coordinates",
+        "x": 0,
+        "y": 0
+      },
+      "mobility": {
+        "type": "fixed"
+      },
+      "appearance": {
+        "size": 7,
+        "labelVisible": true,
+        "highlightSize": 10,
         "preserveColorOnHighlight": true
       },
-      "x": 0,
-      "y": 0,
-      "showLabel": true,
-      "fixed": true,
-      "constraint": "fixed"
+      "interaction": {}
     },
     {
       "id": "p4",
@@ -148,16 +167,22 @@ export const BisectrizSpec = createDiagramSpec(
       },
       "target": false,
       "targetId": "p4",
-      "style": {
-        "pointSize": 0,
-        "highlightPointSize": 0,
+      "objectType": "point",
+      "definition": {
+        "type": "coordinates",
+        "x": 0,
+        "y": 0
+      },
+      "mobility": {
+        "type": "fixed"
+      },
+      "appearance": {
+        "size": 0,
+        "labelVisible": false,
+        "highlightSize": 0,
         "preserveColorOnHighlight": true
       },
-      "x": 0,
-      "y": 0,
-      "showLabel": false,
-      "fixed": true,
-      "constraint": "fixed"
+      "interaction": {}
     },
     {
       "id": "p4_copy",
@@ -174,16 +199,22 @@ export const BisectrizSpec = createDiagramSpec(
         "role": "primary"
       },
       "target": false,
-      "style": {
-        "pointSize": 0,
-        "highlightPointSize": 0,
+      "objectType": "point",
+      "definition": {
+        "type": "coordinates",
+        "x": 0.5,
+        "y": -0.5
+      },
+      "mobility": {
+        "type": "fixed"
+      },
+      "appearance": {
+        "size": 0,
+        "labelVisible": false,
+        "highlightSize": 0,
         "preserveColorOnHighlight": true
       },
-      "x": 0.5,
-      "y": -0.5,
-      "showLabel": false,
-      "fixed": true,
-      "constraint": "fixed"
+      "interaction": {}
     },
     {
       "id": "p6",
@@ -201,20 +232,24 @@ export const BisectrizSpec = createDiagramSpec(
       },
       "target": true,
       "targetId": "p6",
-      "style": {
-        "pointSize": 7,
-        "highlightPointSize": 10,
+      "objectType": "point",
+      "definition": {
+        "type": "coordinates",
+        "x": 1.9792905393397042,
+        "y": 1.470954637714144
+      },
+      "mobility": {
+        "type": "on-support",
+        "support": "bisAOB"
+      },
+      "appearance": {
+        "size": 7,
+        "labelVisible": true,
+        "highlightSize": 10,
         "preserveColorOnHighlight": true
       },
-      "x": 1.9792905393397042,
-      "y": 1.470954637714144,
-      "showLabel": true,
-      "fixed": false,
-      "constraint": "glider",
-      "gliderTarget": "bisAOB"
-    }
-  ],
-  "elements": [
+      "interaction": {}
+    },
     {
       "id": "rayOA",
       "label": "Semirrecta",
@@ -231,16 +266,19 @@ export const BisectrizSpec = createDiagramSpec(
       },
       "target": true,
       "targetId": "rayOA",
-      "style": {
+      "objectType": "path",
+      "geometry": {
+        "type": "ray",
+        "points": [
+          "pO",
+          "pA"
+        ]
+      },
+      "appearance": {
         "strokeWidth": 2.4,
         "highlightStrokeWidth": 3,
         "preserveColorOnHighlight": true
-      },
-      "kind": "ray",
-      "refs": [
-        "pO",
-        "pA"
-      ]
+      }
     },
     {
       "id": "rayOB",
@@ -258,16 +296,19 @@ export const BisectrizSpec = createDiagramSpec(
       },
       "target": true,
       "targetId": "rayOB",
-      "style": {
+      "objectType": "path",
+      "geometry": {
+        "type": "ray",
+        "points": [
+          "pO",
+          "pB"
+        ]
+      },
+      "appearance": {
         "strokeWidth": 2.4,
         "highlightStrokeWidth": 3,
         "preserveColorOnHighlight": true
-      },
-      "kind": "ray",
-      "refs": [
-        "pO",
-        "pB"
-      ]
+      }
     },
     {
       "id": "lineBO",
@@ -285,16 +326,22 @@ export const BisectrizSpec = createDiagramSpec(
       },
       "target": false,
       "targetId": "lineBO",
-      "style": {
+      "objectType": "path",
+      "geometry": {
+        "type": "line",
+        "construction": {
+          "type": "through-points",
+          "points": [
+            "pB",
+            "pO"
+          ]
+        }
+      },
+      "appearance": {
         "strokeWidth": 2.4,
         "highlightStrokeWidth": 3,
         "preserveColorOnHighlight": true
-      },
-      "kind": "line",
-      "refs": [
-        "pB",
-        "pO"
-      ]
+      }
     },
     {
       "id": "perpB4O",
@@ -312,17 +359,23 @@ export const BisectrizSpec = createDiagramSpec(
       },
       "target": true,
       "targetId": "perpB4O",
-      "style": {
+      "objectType": "path",
+      "geometry": {
+        "type": "line",
+        "construction": {
+          "type": "perpendicular",
+          "linePoints": [
+            "pB",
+            "p4"
+          ],
+          "through": "pO"
+        }
+      },
+      "appearance": {
         "strokeWidth": 2.4,
         "highlightStrokeWidth": 3,
         "preserveColorOnHighlight": true
-      },
-      "kind": "perpendicular",
-      "refs": [
-        "pB",
-        "p4",
-        "pO"
-      ]
+      }
     },
     {
       "id": "bisAOB",
@@ -340,18 +393,24 @@ export const BisectrizSpec = createDiagramSpec(
       },
       "target": true,
       "targetId": "bisAOB",
-      "style": {
+      "objectType": "path",
+      "geometry": {
+        "type": "line",
+        "construction": {
+          "type": "angle-bisector",
+          "points": [
+            "pA",
+            "pO",
+            "pB"
+          ]
+        }
+      },
+      "appearance": {
+        "dashed": true,
         "strokeWidth": 2.4,
         "highlightStrokeWidth": 3,
         "preserveColorOnHighlight": true
-      },
-      "kind": "angleBisector",
-      "refs": [
-        "pA",
-        "pO",
-        "pB"
-      ],
-      "dashed": true
+      }
     },
     {
       "id": "nonReflexAngleBO6",
@@ -369,16 +428,18 @@ export const BisectrizSpec = createDiagramSpec(
       },
       "target": true,
       "targetId": "nonReflexAngleBO6",
-      "style": {
-        "angleRadius": 1,
-        "preserveColorOnHighlight": true
-      },
-      "kind": "nonReflexAngle",
-      "refs": [
+      "objectType": "angle",
+      "points": [
         "pB",
         "pO",
         "p6"
-      ]
+      ],
+      "sweep": "non-reflex",
+      "marker": "arc",
+      "appearance": {
+        "radius": 1,
+        "preserveColorOnHighlight": true
+      }
     },
     {
       "id": "nonReflexAngle6OA",
@@ -396,110 +457,23 @@ export const BisectrizSpec = createDiagramSpec(
       },
       "target": true,
       "targetId": "nonReflexAngle6OA",
-      "style": {
-        "angleRadius": 1,
-        "preserveColorOnHighlight": true
-      },
-      "kind": "nonReflexAngle",
-      "refs": [
+      "objectType": "angle",
+      "points": [
         "p6",
         "pO",
         "pA"
-      ]
+      ],
+      "sweep": "non-reflex",
+      "marker": "arc",
+      "appearance": {
+        "radius": 1,
+        "preserveColorOnHighlight": true
+      }
     }
   ],
-  "sliders": [],
+  "relations": [],
   "steps": [],
-  "constraints": [],
-  "dependencies": [
-    {
-      "sourceId": "pO",
-      "targetId": "rayOA",
-      "relation": "construction"
-    },
-    {
-      "sourceId": "pA",
-      "targetId": "rayOA",
-      "relation": "construction"
-    },
-    {
-      "sourceId": "pO",
-      "targetId": "rayOB",
-      "relation": "construction"
-    },
-    {
-      "sourceId": "pB",
-      "targetId": "rayOB",
-      "relation": "construction"
-    },
-    {
-      "sourceId": "pB",
-      "targetId": "lineBO",
-      "relation": "construction"
-    },
-    {
-      "sourceId": "pO",
-      "targetId": "lineBO",
-      "relation": "construction"
-    },
-    {
-      "sourceId": "pB",
-      "targetId": "perpB4O",
-      "relation": "construction"
-    },
-    {
-      "sourceId": "p4",
-      "targetId": "perpB4O",
-      "relation": "construction"
-    },
-    {
-      "sourceId": "pO",
-      "targetId": "perpB4O",
-      "relation": "construction"
-    },
-    {
-      "sourceId": "lineBO",
-      "targetId": "pA",
-      "relation": "constraint"
-    },
-    {
-      "sourceId": "perpB4O",
-      "targetId": "pA",
-      "relation": "constraint"
-    },
-    {
-      "sourceId": "pB",
-      "targetId": "nonReflexAngleBO6",
-      "relation": "construction"
-    },
-    {
-      "sourceId": "pO",
-      "targetId": "nonReflexAngleBO6",
-      "relation": "construction"
-    },
-    {
-      "sourceId": "p6",
-      "targetId": "nonReflexAngleBO6",
-      "relation": "construction"
-    },
-    {
-      "sourceId": "p6",
-      "targetId": "nonReflexAngle6OA",
-      "relation": "construction"
-    },
-    {
-      "sourceId": "pO",
-      "targetId": "nonReflexAngle6OA",
-      "relation": "construction"
-    },
-    {
-      "sourceId": "pA",
-      "targetId": "nonReflexAngle6OA",
-      "relation": "construction"
-    }
-  ],
-  "note": "Mueve A y B",
-  "extensions": {}
+  "note": "Mueve A y B"
 }
 );
 /* @matematika-diagram-spec:end */

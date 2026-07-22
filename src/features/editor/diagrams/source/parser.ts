@@ -1,4 +1,4 @@
-import { DiagramSpecMigrationError, migrateDiagramSpec } from '../../../../shared/diagrams/spec';
+import { DiagramSpecMigrationError, migrateDiagramSpec, projectDiagramSpecV3ToV2 } from '../../../../shared/diagrams/spec';
 import type { VisualDiagramModel } from '../model/types';
 import type { DiagramDiagnostic } from './generator';
 import { generateDiagramSource, SPEC_END, SPEC_START } from './generator';
@@ -50,7 +50,7 @@ export function parseDiagramSourceLocally(source?: string, _metadataType = ''): 
   const json = extractV2Json(source) ?? extractLegacyJson(source);
   if (!json) return null;
   try {
-    return migrateDiagramSpec(JSON.parse(json)).spec;
+    return projectDiagramSpecV3ToV2(migrateDiagramSpec(JSON.parse(json)).spec);
   } catch {
     return null;
   }
@@ -71,7 +71,7 @@ export function classifyEmbeddedDiagramSource(source: string, _metadataType = ''
   if (!componentName) {
     return {
       status: 'code-preview',
-      previewModel: migrated.spec,
+      previewModel: projectDiagramSpecV3ToV2(migrated.spec),
       diagnostics: [{
         code: 'embedded-spec-without-export',
         severity: 'warning',
@@ -81,14 +81,15 @@ export function classifyEmbeddedDiagramSource(source: string, _metadataType = ''
     };
   }
 
-  const generated = generateDiagramSource(migrated.spec, componentName);
+  const editorModel = projectDiagramSpecV3ToV2(migrated.spec);
+  const generated = generateDiagramSource(editorModel, componentName);
   if (generated.ok && generated.source === source && migrated.migratedFrom === null) {
-    return { status: 'visual-exact', model: migrated.spec, diagnostics: [] };
+    return { status: 'visual-exact', model: editorModel, diagnostics: [] };
   }
 
   return {
     status: 'code-preview',
-    previewModel: migrated.spec,
+    previewModel: editorModel,
     diagnostics: [{
       code: migrated.migratedFrom === null ? 'embedded-spec-not-lossless' : 'embedded-spec-migrated',
       severity: 'warning',

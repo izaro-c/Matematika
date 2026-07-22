@@ -3,8 +3,8 @@ import { createDiagramSpec, DiagramRenderer } from '@/shared/diagrams/public';
 /* @matematika-diagram-spec:start */
 export const DemoSumaAngulosSpec = createDiagramSpec(
 {
-  "version": 2,
-  "renderer": "matematika-diagram-renderer-v2",
+  "version": 3,
+  "renderer": "matematika-diagram-renderer-v3",
   "title": "Demostración de la suma angular",
   "componentId": "demo-suma-angulos",
   "category": "Demostraciones",
@@ -105,7 +105,7 @@ export const DemoSumaAngulosSpec = createDiagramSpec(
       "color": "granada"
     }
   ],
-  "points": [
+  "objects": [
     {
       "id": "A",
       "label": "A",
@@ -121,16 +121,22 @@ export const DemoSumaAngulosSpec = createDiagramSpec(
         "role": "secondary"
       },
       "target": false,
-      "style": {
-        "pointSize": 7,
-        "highlightPointSize": 10,
+      "objectType": "point",
+      "definition": {
+        "type": "coordinates",
+        "x": -3.2,
+        "y": -2.2
+      },
+      "mobility": {
+        "type": "fixed"
+      },
+      "appearance": {
+        "size": 7,
+        "labelVisible": true,
+        "highlightSize": 10,
         "preserveColorOnHighlight": true
       },
-      "x": -3.2,
-      "y": -2.2,
-      "showLabel": true,
-      "fixed": true,
-      "constraint": "fixed"
+      "interaction": {}
     },
     {
       "id": "B",
@@ -147,16 +153,22 @@ export const DemoSumaAngulosSpec = createDiagramSpec(
         "role": "secondary"
       },
       "target": false,
-      "style": {
-        "pointSize": 7,
-        "highlightPointSize": 10,
+      "objectType": "point",
+      "definition": {
+        "type": "coordinates",
+        "x": 3.2,
+        "y": -2.2
+      },
+      "mobility": {
+        "type": "fixed"
+      },
+      "appearance": {
+        "size": 7,
+        "labelVisible": true,
+        "highlightSize": 10,
         "preserveColorOnHighlight": true
       },
-      "x": 3.2,
-      "y": -2.2,
-      "showLabel": true,
-      "fixed": true,
-      "constraint": "fixed"
+      "interaction": {}
     },
     {
       "id": "C",
@@ -174,21 +186,28 @@ export const DemoSumaAngulosSpec = createDiagramSpec(
       },
       "target": true,
       "targetId": "vertice-c",
-      "style": {
-        "pointSize": 7,
-        "highlightPointSize": 10,
+      "objectType": "point",
+      "definition": {
+        "type": "coordinates",
+        "x": 0.7,
+        "y": 1.7
+      },
+      "mobility": {
+        "type": "constrained",
+        "relationIds": [
+          "sameC"
+        ]
+      },
+      "appearance": {
+        "size": 7,
+        "labelVisible": true,
+        "highlightSize": 10,
         "preserveColorOnHighlight": true
       },
-      "x": 0.7,
-      "y": 1.7,
-      "showLabel": true,
-      "fixed": false,
-      "constraint": "constrained",
-      "constraintIds": [
-        "sameC"
-      ],
-      "snapToGrid": true,
-      "snapSize": 0.25
+      "interaction": {
+        "snapToGrid": true,
+        "snapSize": 0.25
+      }
     },
     {
       "id": "L",
@@ -205,23 +224,26 @@ export const DemoSumaAngulosSpec = createDiagramSpec(
         "role": "construction"
       },
       "target": false,
-      "style": {
-        "pointSize": 7,
-        "highlightPointSize": 10,
+      "objectType": "point",
+      "definition": {
+        "type": "expression",
+        "x": "C.x - (B.x - A.x)",
+        "y": "C.y - (B.y - A.y)",
+        "fallback": [
+          -5.7,
+          1.7
+        ]
+      },
+      "mobility": {
+        "type": "fixed"
+      },
+      "appearance": {
+        "size": 7,
+        "labelVisible": true,
+        "highlightSize": 10,
         "preserveColorOnHighlight": true
       },
-      "x": -5.7,
-      "y": 1.7,
-      "showLabel": true,
-      "fixed": true,
-      "constraint": "derived",
-      "dependencies": [
-        "A",
-        "B",
-        "C"
-      ],
-      "xExpression": "C.x - (B.x - A.x)",
-      "yExpression": "C.y - (B.y - A.y)"
+      "interaction": {}
     },
     {
       "id": "R",
@@ -238,26 +260,27 @@ export const DemoSumaAngulosSpec = createDiagramSpec(
         "role": "construction"
       },
       "target": false,
-      "style": {
-        "pointSize": 7,
-        "highlightPointSize": 10,
+      "objectType": "point",
+      "definition": {
+        "type": "expression",
+        "x": "C.x + (B.x - A.x)",
+        "y": "C.y + (B.y - A.y)",
+        "fallback": [
+          7.1,
+          1.7
+        ]
+      },
+      "mobility": {
+        "type": "fixed"
+      },
+      "appearance": {
+        "size": 7,
+        "labelVisible": true,
+        "highlightSize": 10,
         "preserveColorOnHighlight": true
       },
-      "x": 7.1,
-      "y": 1.7,
-      "showLabel": true,
-      "fixed": true,
-      "constraint": "derived",
-      "dependencies": [
-        "A",
-        "B",
-        "C"
-      ],
-      "xExpression": "C.x + (B.x - A.x)",
-      "yExpression": "C.y + (B.y - A.y)"
-    }
-  ],
-  "elements": [
+      "interaction": {}
+    },
     {
       "id": "poly",
       "label": "Triángulo ABC",
@@ -275,18 +298,21 @@ export const DemoSumaAngulosSpec = createDiagramSpec(
         "role": "secondary"
       },
       "target": false,
-      "style": {
+      "objectType": "path",
+      "geometry": {
+        "type": "polygon",
+        "points": [
+          "A",
+          "B",
+          "C"
+        ]
+      },
+      "appearance": {
         "strokeWidth": 3,
         "fillOpacity": 0.1,
         "highlightFillOpacity": 0.28,
         "preserveColorOnHighlight": true
-      },
-      "kind": "polygon",
-      "refs": [
-        "A",
-        "B",
-        "C"
-      ]
+      }
     },
     {
       "id": "AB",
@@ -306,16 +332,19 @@ export const DemoSumaAngulosSpec = createDiagramSpec(
       },
       "target": true,
       "targetId": "base-ab",
-      "style": {
+      "objectType": "path",
+      "geometry": {
+        "type": "segment",
+        "points": [
+          "A",
+          "B"
+        ]
+      },
+      "appearance": {
         "strokeWidth": 2.4,
         "highlightStrokeWidth": 3,
         "preserveColorOnHighlight": true
-      },
-      "kind": "segment",
-      "refs": [
-        "A",
-        "B"
-      ]
+      }
     },
     {
       "id": "AC",
@@ -335,16 +364,19 @@ export const DemoSumaAngulosSpec = createDiagramSpec(
       },
       "target": true,
       "targetId": "transversal-ac",
-      "style": {
+      "objectType": "path",
+      "geometry": {
+        "type": "segment",
+        "points": [
+          "A",
+          "C"
+        ]
+      },
+      "appearance": {
         "strokeWidth": 2.4,
         "highlightStrokeWidth": 3,
         "preserveColorOnHighlight": true
-      },
-      "kind": "segment",
-      "refs": [
-        "A",
-        "C"
-      ]
+      }
     },
     {
       "id": "BC",
@@ -364,16 +396,19 @@ export const DemoSumaAngulosSpec = createDiagramSpec(
       },
       "target": true,
       "targetId": "transversal-bc",
-      "style": {
+      "objectType": "path",
+      "geometry": {
+        "type": "segment",
+        "points": [
+          "B",
+          "C"
+        ]
+      },
+      "appearance": {
         "strokeWidth": 2.4,
         "highlightStrokeWidth": 3,
         "preserveColorOnHighlight": true
-      },
-      "kind": "segment",
-      "refs": [
-        "B",
-        "C"
-      ]
+      }
     },
     {
       "id": "parallel",
@@ -393,17 +428,23 @@ export const DemoSumaAngulosSpec = createDiagramSpec(
       },
       "target": true,
       "targetId": "paralela",
-      "style": {
+      "objectType": "path",
+      "geometry": {
+        "type": "line",
+        "construction": {
+          "type": "through-points",
+          "points": [
+            "L",
+            "R"
+          ]
+        }
+      },
+      "appearance": {
+        "dashed": true,
         "strokeWidth": 2.4,
         "highlightStrokeWidth": 3,
         "preserveColorOnHighlight": true
-      },
-      "kind": "line",
-      "refs": [
-        "L",
-        "R"
-      ],
-      "dashed": true
+      }
     },
     {
       "id": "angA",
@@ -423,17 +464,19 @@ export const DemoSumaAngulosSpec = createDiagramSpec(
       },
       "target": true,
       "targetId": "angulo-a",
-      "style": {
-        "fillOpacity": 0.22,
-        "angleRadius": 0.58,
-        "preserveColorOnHighlight": true
-      },
-      "kind": "nonReflexAngle",
-      "refs": [
+      "objectType": "angle",
+      "points": [
         "B",
         "A",
         "C"
-      ]
+      ],
+      "sweep": "non-reflex",
+      "marker": "arc",
+      "appearance": {
+        "radius": 0.58,
+        "fillOpacity": 0.22,
+        "preserveColorOnHighlight": true
+      }
     },
     {
       "id": "angB",
@@ -453,17 +496,19 @@ export const DemoSumaAngulosSpec = createDiagramSpec(
       },
       "target": true,
       "targetId": "angulo-b",
-      "style": {
-        "fillOpacity": 0.22,
-        "angleRadius": 0.58,
-        "preserveColorOnHighlight": true
-      },
-      "kind": "nonReflexAngle",
-      "refs": [
+      "objectType": "angle",
+      "points": [
         "C",
         "B",
         "A"
-      ]
+      ],
+      "sweep": "non-reflex",
+      "marker": "arc",
+      "appearance": {
+        "radius": 0.58,
+        "fillOpacity": 0.22,
+        "preserveColorOnHighlight": true
+      }
     },
     {
       "id": "angC",
@@ -484,17 +529,19 @@ export const DemoSumaAngulosSpec = createDiagramSpec(
       },
       "target": true,
       "targetId": "angulo-c",
-      "style": {
-        "fillOpacity": 0.22,
-        "angleRadius": 0.58,
-        "preserveColorOnHighlight": true
-      },
-      "kind": "nonReflexAngle",
-      "refs": [
+      "objectType": "angle",
+      "points": [
         "A",
         "C",
         "B"
-      ]
+      ],
+      "sweep": "non-reflex",
+      "marker": "arc",
+      "appearance": {
+        "radius": 0.58,
+        "fillOpacity": 0.22,
+        "preserveColorOnHighlight": true
+      }
     },
     {
       "id": "altA",
@@ -514,17 +561,19 @@ export const DemoSumaAngulosSpec = createDiagramSpec(
       },
       "target": true,
       "targetId": "alterno-a",
-      "style": {
-        "fillOpacity": 0.22,
-        "angleRadius": 0.58,
-        "preserveColorOnHighlight": true
-      },
-      "kind": "nonReflexAngle",
-      "refs": [
+      "objectType": "angle",
+      "points": [
         "L",
         "C",
         "A"
-      ]
+      ],
+      "sweep": "non-reflex",
+      "marker": "arc",
+      "appearance": {
+        "radius": 0.58,
+        "fillOpacity": 0.22,
+        "preserveColorOnHighlight": true
+      }
     },
     {
       "id": "altB",
@@ -544,17 +593,19 @@ export const DemoSumaAngulosSpec = createDiagramSpec(
       },
       "target": true,
       "targetId": "alterno-b",
-      "style": {
-        "fillOpacity": 0.22,
-        "angleRadius": 0.58,
-        "preserveColorOnHighlight": true
-      },
-      "kind": "nonReflexAngle",
-      "refs": [
+      "objectType": "angle",
+      "points": [
         "B",
         "C",
         "R"
-      ]
+      ],
+      "sweep": "non-reflex",
+      "marker": "arc",
+      "appearance": {
+        "radius": 0.58,
+        "fillOpacity": 0.22,
+        "preserveColorOnHighlight": true
+      }
     },
     {
       "id": "sumProofInfo",
@@ -571,23 +622,37 @@ export const DemoSumaAngulosSpec = createDiagramSpec(
         "role": "annotation"
       },
       "target": false,
-      "style": {
-        "preserveColorOnHighlight": true
+      "objectType": "annotation",
+      "variant": "panel",
+      "content": {
+        "text": "α' + γ + β' = 180°",
+        "title": "Ángulo llano en C"
       },
-      "kind": "infoPanel",
-      "refs": [],
-      "text": "α' + γ + β' = 180°",
-      "properties": {
-        "title": "Ángulo llano en C",
-        "anchorMode": "viewport",
-        "viewportPosition": [
+      "anchor": {
+        "type": "viewport",
+        "position": [
           0.98,
           0.03
         ]
+      },
+      "appearance": {
+        "preserveColorOnHighlight": true
       }
     }
   ],
-  "sliders": [],
+  "relations": [
+    {
+      "id": "sameC",
+      "label": "C no cruza AB",
+      "enabled": true,
+      "type": "same-half-plane",
+      "points": [
+        "C",
+        "A"
+      ],
+      "boundary": "B"
+    }
+  ],
   "steps": [
     {
       "id": "step1",
@@ -934,53 +999,7 @@ export const DemoSumaAngulosSpec = createDiagramSpec(
       }
     }
   ],
-  "constraints": [
-    {
-      "id": "sameC",
-      "label": "C no cruza AB",
-      "kind": "sameSide",
-      "refs": [
-        "C",
-        "A",
-        "B"
-      ],
-      "enabled": true
-    }
-  ],
-  "dependencies": [
-    {
-      "sourceId": "A",
-      "targetId": "L",
-      "relation": "expression"
-    },
-    {
-      "sourceId": "B",
-      "targetId": "L",
-      "relation": "expression"
-    },
-    {
-      "sourceId": "C",
-      "targetId": "L",
-      "relation": "expression"
-    },
-    {
-      "sourceId": "A",
-      "targetId": "R",
-      "relation": "expression"
-    },
-    {
-      "sourceId": "B",
-      "targetId": "R",
-      "relation": "expression"
-    },
-    {
-      "sourceId": "C",
-      "targetId": "R",
-      "relation": "expression"
-    }
-  ],
-  "note": "Recorre los cinco pasos y mueve C. La paralela se reconstruye y los ángulos alternos siguen completando un ángulo llano.",
-  "extensions": {}
+  "note": "Recorre los cinco pasos y mueve C. La paralela se reconstruye y los ángulos alternos siguen completando un ángulo llano."
 }
 );
 /* @matematika-diagram-spec:end */

@@ -274,3 +274,50 @@ export function extractMathExpressionIdentifiers(source: string): string[] {
   visit(parseMathExpression(source));
   return [...identifiers];
 }
+
+function expressionPrecedence(node: DiagramExpressionNode): number {
+  if (node.kind === 'binary') {
+    if (node.operator === '+' || node.operator === '-') return 1;
+    if (node.operator === '*' || node.operator === '/') return 2;
+    return 4;
+  }
+  if (node.kind === 'unary') return 3;
+  return 5;
+}
+
+function printExpressionNode(node: DiagramExpressionNode, parentPrecedence = 0, rightOperand = false): string {
+  if (node.kind === 'number') return String(node.value);
+  if (node.kind === 'variable') return node.name;
+  if (node.kind === 'call') return `${node.name}(${node.args.map(argument => printExpressionNode(argument)).join(', ')})`;
+  if (node.kind === 'unary') {
+    const rendered = `${node.operator}${printExpressionNode(node.value, expressionPrecedence(node))}`;
+    return expressionPrecedence(node) < parentPrecedence ? `(${rendered})` : rendered;
+  }
+  const precedence = expressionPrecedence(node);
+  const left = printExpressionNode(node.left, precedence);
+  const rightNeedsEqualParentheses = node.operator === '-' || node.operator === '/' || node.operator === '^';
+  const right = printExpressionNode(node.right, precedence + (rightNeedsEqualParentheses ? 1 : 0), true);
+  const rendered = `${left} ${node.operator} ${right}`;
+  return precedence < parentPrecedence || (rightOperand && node.operator === '^' && precedence === parentPrecedence)
+    ? `(${rendered})`
+    : rendered;
+}
+
+export function printMathExpression(node: DiagramExpressionNode): string {
+  return printExpressionNode(node);
+}
+
+/** Renombra únicamente identificadores completos; nunca hace sustitución textual parcial. */
+export function renameMathExpressionIdentifier(source: string, oldId: string, newId: string): string {
+  const rename = (node: DiagramExpressionNode): DiagramExpressionNode => {
+    if (node.kind === 'variable') {
+      const [root, ...rest] = node.name.split('.');
+      return root === oldId ? { ...node, name: [newId, ...rest].join('.') } : node;
+    }
+    if (node.kind === 'unary') return { ...node, value: rename(node.value) };
+    if (node.kind === 'binary') return { ...node, left: rename(node.left), right: rename(node.right) };
+    if (node.kind === 'call') return { ...node, args: node.args.map(rename) };
+    return node;
+  };
+  return printMathExpression(rename(parseMathExpression(source)));
+}

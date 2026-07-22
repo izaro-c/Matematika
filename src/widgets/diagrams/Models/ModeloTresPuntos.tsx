@@ -3,8 +3,8 @@ import { createDiagramSpec, DiagramRenderer } from '@/shared/diagrams/public';
 /* @matematika-diagram-spec:start */
 export const ModeloTresPuntosSpec = createDiagramSpec(
 {
-  "version": 2,
-  "renderer": "matematika-diagram-renderer-v2",
+  "version": 3,
+  "renderer": "matematika-diagram-renderer-v3",
   "title": "Modelo de tres puntos",
   "componentId": "ModeloTresPuntos",
   "category": "Models",
@@ -59,7 +59,7 @@ export const ModeloTresPuntosSpec = createDiagramSpec(
     }
   ],
   "groups": [],
-  "points": [
+  "objects": [
     {
       "id": "A",
       "label": "A",
@@ -78,15 +78,21 @@ export const ModeloTresPuntosSpec = createDiagramSpec(
       },
       "target": true,
       "targetId": "A",
-      "style": {
-        "pointSize": 6,
-        "highlightPointSize": 9,
+      "objectType": "point",
+      "definition": {
+        "type": "coordinates",
+        "x": -2,
+        "y": -1
+      },
+      "mobility": {
+        "type": "fixed"
+      },
+      "appearance": {
+        "size": 6,
+        "highlightSize": 9,
         "preserveColorOnHighlight": true
       },
-      "x": -2,
-      "y": -1,
-      "fixed": true,
-      "constraint": "fixed"
+      "interaction": {}
     },
     {
       "id": "B",
@@ -106,15 +112,21 @@ export const ModeloTresPuntosSpec = createDiagramSpec(
       },
       "target": true,
       "targetId": "B",
-      "style": {
-        "pointSize": 6,
-        "highlightPointSize": 9,
+      "objectType": "point",
+      "definition": {
+        "type": "coordinates",
+        "x": 2,
+        "y": -1
+      },
+      "mobility": {
+        "type": "fixed"
+      },
+      "appearance": {
+        "size": 6,
+        "highlightSize": 9,
         "preserveColorOnHighlight": true
       },
-      "x": 2,
-      "y": -1,
-      "fixed": true,
-      "constraint": "fixed"
+      "interaction": {}
     },
     {
       "id": "C",
@@ -134,18 +146,22 @@ export const ModeloTresPuntosSpec = createDiagramSpec(
       },
       "target": true,
       "targetId": "C",
-      "style": {
-        "pointSize": 6,
-        "highlightPointSize": 9,
+      "objectType": "point",
+      "definition": {
+        "type": "coordinates",
+        "x": 0,
+        "y": 2
+      },
+      "mobility": {
+        "type": "fixed"
+      },
+      "appearance": {
+        "size": 6,
+        "highlightSize": 9,
         "preserveColorOnHighlight": true
       },
-      "x": 0,
-      "y": 2,
-      "fixed": true,
-      "constraint": "fixed"
-    }
-  ],
-  "elements": [
+      "interaction": {}
+    },
     {
       "id": "plano",
       "label": "plano",
@@ -164,18 +180,21 @@ export const ModeloTresPuntosSpec = createDiagramSpec(
       },
       "target": true,
       "targetId": "plano",
-      "style": {
+      "objectType": "path",
+      "geometry": {
+        "type": "polygon",
+        "points": [
+          "A",
+          "B",
+          "C"
+        ]
+      },
+      "appearance": {
         "strokeWidth": 0,
         "fillOpacity": 0.08,
         "highlightFillOpacity": 0.22,
         "preserveColorOnHighlight": true
-      },
-      "kind": "polygon",
-      "refs": [
-        "A",
-        "B",
-        "C"
-      ]
+      }
     },
     {
       "id": "rAB",
@@ -195,16 +214,22 @@ export const ModeloTresPuntosSpec = createDiagramSpec(
       },
       "target": true,
       "targetId": "rAB",
-      "style": {
+      "objectType": "path",
+      "geometry": {
+        "type": "line",
+        "construction": {
+          "type": "through-points",
+          "points": [
+            "A",
+            "B"
+          ]
+        }
+      },
+      "appearance": {
         "strokeWidth": 2,
         "highlightStrokeWidth": 3.5,
         "preserveColorOnHighlight": true
-      },
-      "kind": "line",
-      "refs": [
-        "A",
-        "B"
-      ]
+      }
     },
     {
       "id": "rBC",
@@ -224,16 +249,22 @@ export const ModeloTresPuntosSpec = createDiagramSpec(
       },
       "target": true,
       "targetId": "rBC",
-      "style": {
+      "objectType": "path",
+      "geometry": {
+        "type": "line",
+        "construction": {
+          "type": "through-points",
+          "points": [
+            "B",
+            "C"
+          ]
+        }
+      },
+      "appearance": {
         "strokeWidth": 2,
         "highlightStrokeWidth": 3.5,
         "preserveColorOnHighlight": true
-      },
-      "kind": "line",
-      "refs": [
-        "B",
-        "C"
-      ]
+      }
     },
     {
       "id": "rCA",
@@ -253,16 +284,22 @@ export const ModeloTresPuntosSpec = createDiagramSpec(
       },
       "target": true,
       "targetId": "rCA",
-      "style": {
+      "objectType": "path",
+      "geometry": {
+        "type": "line",
+        "construction": {
+          "type": "through-points",
+          "points": [
+            "C",
+            "A"
+          ]
+        }
+      },
+      "appearance": {
         "strokeWidth": 2,
         "highlightStrokeWidth": 3.5,
         "preserveColorOnHighlight": true
-      },
-      "kind": "line",
-      "refs": [
-        "C",
-        "A"
-      ]
+      }
     },
     {
       "id": "info",
@@ -278,74 +315,26 @@ export const ModeloTresPuntosSpec = createDiagramSpec(
         "role": "annotation"
       },
       "target": false,
-      "style": {
-        "strokeWidth": 0,
-        "preserveColorOnHighlight": true
+      "objectType": "annotation",
+      "variant": "panel",
+      "content": {
+        "text": "3 puntos · 3 rectas · 1 plano"
       },
-      "kind": "infoPanel",
-      "refs": [],
-      "text": "3 puntos · 3 rectas · 1 plano",
-      "properties": {
-        "anchorMode": "viewport",
-        "viewportPosition": [
+      "anchor": {
+        "type": "viewport",
+        "position": [
           0,
           0
         ]
+      },
+      "appearance": {
+        "preserveColorOnHighlight": true
       }
     }
   ],
-  "sliders": [],
+  "relations": [],
   "steps": [],
-  "constraints": [],
-  "dependencies": [
-    {
-      "sourceId": "A",
-      "targetId": "rAB",
-      "relation": "construction"
-    },
-    {
-      "sourceId": "B",
-      "targetId": "rAB",
-      "relation": "construction"
-    },
-    {
-      "sourceId": "B",
-      "targetId": "rBC",
-      "relation": "construction"
-    },
-    {
-      "sourceId": "C",
-      "targetId": "rBC",
-      "relation": "construction"
-    },
-    {
-      "sourceId": "C",
-      "targetId": "rCA",
-      "relation": "construction"
-    },
-    {
-      "sourceId": "A",
-      "targetId": "rCA",
-      "relation": "construction"
-    },
-    {
-      "sourceId": "A",
-      "targetId": "plano",
-      "relation": "construction"
-    },
-    {
-      "sourceId": "B",
-      "targetId": "plano",
-      "relation": "construction"
-    },
-    {
-      "sourceId": "C",
-      "targetId": "plano",
-      "relation": "construction"
-    }
-  ],
-  "note": "El modelo más pequeño que satisface los tres axiomas de incidencia: exactamente 3 puntos, 3 rectas y 1 plano.",
-  "extensions": {}
+  "note": "El modelo más pequeño que satisface los tres axiomas de incidencia: exactamente 3 puntos, 3 rectas y 1 plano."
 }
 );
 /* @matematika-diagram-spec:end */

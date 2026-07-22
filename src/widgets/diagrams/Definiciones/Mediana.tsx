@@ -3,8 +3,8 @@ import { createDiagramSpec, DiagramRenderer } from '@/shared/diagrams/public';
 /* @matematika-diagram-spec:start */
 export const MedianaSpec = createDiagramSpec(
 {
-  "version": 2,
-  "renderer": "matematika-diagram-renderer-v2",
+  "version": 3,
+  "renderer": "matematika-diagram-renderer-v3",
   "title": "Medianas y baricentro",
   "componentId": "mediana",
   "category": "Definiciones",
@@ -103,7 +103,7 @@ export const MedianaSpec = createDiagramSpec(
       "color": "pizarra"
     }
   ],
-  "points": [
+  "objects": [
     {
       "id": "A",
       "label": "A",
@@ -121,18 +121,25 @@ export const MedianaSpec = createDiagramSpec(
         "role": "primary"
       },
       "target": false,
-      "style": {
-        "pointSize": 7,
-        "highlightPointSize": 10,
+      "objectType": "point",
+      "definition": {
+        "type": "coordinates",
+        "x": -3,
+        "y": -2
+      },
+      "mobility": {
+        "type": "free"
+      },
+      "appearance": {
+        "size": 7,
+        "labelVisible": true,
+        "highlightSize": 10,
         "preserveColorOnHighlight": true
       },
-      "x": -3,
-      "y": -2,
-      "showLabel": true,
-      "fixed": false,
-      "constraint": "free",
-      "snapToGrid": true,
-      "snapSize": 0.25
+      "interaction": {
+        "snapToGrid": true,
+        "snapSize": 0.25
+      }
     },
     {
       "id": "B",
@@ -151,18 +158,25 @@ export const MedianaSpec = createDiagramSpec(
         "role": "primary"
       },
       "target": false,
-      "style": {
-        "pointSize": 7,
-        "highlightPointSize": 10,
+      "objectType": "point",
+      "definition": {
+        "type": "coordinates",
+        "x": 3,
+        "y": -1.4
+      },
+      "mobility": {
+        "type": "free"
+      },
+      "appearance": {
+        "size": 7,
+        "labelVisible": true,
+        "highlightSize": 10,
         "preserveColorOnHighlight": true
       },
-      "x": 3,
-      "y": -1.4,
-      "showLabel": true,
-      "fixed": false,
-      "constraint": "free",
-      "snapToGrid": true,
-      "snapSize": 0.25
+      "interaction": {
+        "snapToGrid": true,
+        "snapSize": 0.25
+      }
     },
     {
       "id": "C",
@@ -181,24 +195,29 @@ export const MedianaSpec = createDiagramSpec(
         "role": "primary"
       },
       "target": false,
-      "style": {
-        "pointSize": 7,
-        "highlightPointSize": 10,
+      "objectType": "point",
+      "definition": {
+        "type": "coordinates",
+        "x": 0.8,
+        "y": 3
+      },
+      "mobility": {
+        "type": "constrained",
+        "relationIds": [
+          "sameSideC"
+        ]
+      },
+      "appearance": {
+        "size": 7,
+        "labelVisible": true,
+        "highlightSize": 10,
         "preserveColorOnHighlight": true
       },
-      "x": 0.8,
-      "y": 3,
-      "showLabel": true,
-      "fixed": false,
-      "constraint": "constrained",
-      "constraintIds": [
-        "sameSideC"
-      ],
-      "snapToGrid": true,
-      "snapSize": 0.25
-    }
-  ],
-  "elements": [
+      "interaction": {
+        "snapToGrid": true,
+        "snapSize": 0.25
+      }
+    },
     {
       "id": "triangle",
       "label": "Triángulo ABC",
@@ -214,18 +233,21 @@ export const MedianaSpec = createDiagramSpec(
         "role": "secondary"
       },
       "target": false,
-      "style": {
+      "objectType": "path",
+      "geometry": {
+        "type": "polygon",
+        "points": [
+          "A",
+          "B",
+          "C"
+        ]
+      },
+      "appearance": {
         "strokeWidth": 2.4,
         "fillOpacity": 0.08,
         "highlightFillOpacity": 0.28,
         "preserveColorOnHighlight": true
-      },
-      "kind": "polygon",
-      "refs": [
-        "A",
-        "B",
-        "C"
-      ]
+      }
     },
     {
       "id": "Ma",
@@ -244,14 +266,20 @@ export const MedianaSpec = createDiagramSpec(
         "role": "secondary"
       },
       "target": false,
-      "style": {
-        "preserveColorOnHighlight": true
+      "objectType": "point",
+      "definition": {
+        "type": "midpoint",
+        "points": [
+          "B",
+          "C"
+        ]
       },
-      "kind": "midpoint",
-      "refs": [
-        "B",
-        "C"
-      ]
+      "mobility": {
+        "type": "fixed"
+      },
+      "appearance": {
+        "preserveColorOnHighlight": true
+      }
     },
     {
       "id": "Mb",
@@ -270,14 +298,20 @@ export const MedianaSpec = createDiagramSpec(
         "role": "secondary"
       },
       "target": false,
-      "style": {
-        "preserveColorOnHighlight": true
+      "objectType": "point",
+      "definition": {
+        "type": "midpoint",
+        "points": [
+          "C",
+          "A"
+        ]
       },
-      "kind": "midpoint",
-      "refs": [
-        "C",
-        "A"
-      ]
+      "mobility": {
+        "type": "fixed"
+      },
+      "appearance": {
+        "preserveColorOnHighlight": true
+      }
     },
     {
       "id": "Mc",
@@ -296,14 +330,20 @@ export const MedianaSpec = createDiagramSpec(
         "role": "secondary"
       },
       "target": false,
-      "style": {
-        "preserveColorOnHighlight": true
+      "objectType": "point",
+      "definition": {
+        "type": "midpoint",
+        "points": [
+          "A",
+          "B"
+        ]
       },
-      "kind": "midpoint",
-      "refs": [
-        "A",
-        "B"
-      ]
+      "mobility": {
+        "type": "fixed"
+      },
+      "appearance": {
+        "preserveColorOnHighlight": true
+      }
     },
     {
       "id": "medA",
@@ -322,16 +362,19 @@ export const MedianaSpec = createDiagramSpec(
         "role": "secondary"
       },
       "target": false,
-      "style": {
+      "objectType": "path",
+      "geometry": {
+        "type": "segment",
+        "points": [
+          "A",
+          "Ma"
+        ]
+      },
+      "appearance": {
         "strokeWidth": 2.4,
         "highlightStrokeWidth": 3,
         "preserveColorOnHighlight": true
-      },
-      "kind": "segment",
-      "refs": [
-        "A",
-        "Ma"
-      ]
+      }
     },
     {
       "id": "medB",
@@ -350,16 +393,19 @@ export const MedianaSpec = createDiagramSpec(
         "role": "secondary"
       },
       "target": false,
-      "style": {
+      "objectType": "path",
+      "geometry": {
+        "type": "segment",
+        "points": [
+          "B",
+          "Mb"
+        ]
+      },
+      "appearance": {
         "strokeWidth": 2.4,
         "highlightStrokeWidth": 3,
         "preserveColorOnHighlight": true
-      },
-      "kind": "segment",
-      "refs": [
-        "B",
-        "Mb"
-      ]
+      }
     },
     {
       "id": "medC",
@@ -378,16 +424,19 @@ export const MedianaSpec = createDiagramSpec(
         "role": "secondary"
       },
       "target": false,
-      "style": {
+      "objectType": "path",
+      "geometry": {
+        "type": "segment",
+        "points": [
+          "C",
+          "Mc"
+        ]
+      },
+      "appearance": {
         "strokeWidth": 2.4,
         "highlightStrokeWidth": 3,
         "preserveColorOnHighlight": true
-      },
-      "kind": "segment",
-      "refs": [
-        "C",
-        "Mc"
-      ]
+      }
     },
     {
       "id": "G",
@@ -405,16 +454,22 @@ export const MedianaSpec = createDiagramSpec(
       },
       "target": true,
       "targetId": "baricentro",
-      "style": {
-        "pointSize": 7,
-        "highlightPointSize": 10,
-        "preserveColorOnHighlight": true
+      "objectType": "point",
+      "definition": {
+        "type": "intersection",
+        "supports": [
+          "medA",
+          "medB"
+        ]
       },
-      "kind": "intersection",
-      "refs": [
-        "medA",
-        "medB"
-      ]
+      "mobility": {
+        "type": "fixed"
+      },
+      "appearance": {
+        "size": 7,
+        "highlightSize": 10,
+        "preserveColorOnHighlight": true
+      }
     },
     {
       "id": "AG",
@@ -431,16 +486,19 @@ export const MedianaSpec = createDiagramSpec(
         "role": "secondary"
       },
       "target": false,
-      "style": {
+      "objectType": "path",
+      "geometry": {
+        "type": "segment",
+        "points": [
+          "A",
+          "G"
+        ]
+      },
+      "appearance": {
         "strokeWidth": 2.4,
         "highlightStrokeWidth": 3,
         "preserveColorOnHighlight": true
-      },
-      "kind": "segment",
-      "refs": [
-        "A",
-        "G"
-      ]
+      }
     },
     {
       "id": "GMa",
@@ -457,16 +515,19 @@ export const MedianaSpec = createDiagramSpec(
         "role": "secondary"
       },
       "target": false,
-      "style": {
+      "objectType": "path",
+      "geometry": {
+        "type": "segment",
+        "points": [
+          "G",
+          "Ma"
+        ]
+      },
+      "appearance": {
         "strokeWidth": 2.4,
         "highlightStrokeWidth": 3,
         "preserveColorOnHighlight": true
-      },
-      "kind": "segment",
-      "refs": [
-        "G",
-        "Ma"
-      ]
+      }
     },
     {
       "id": "ratio",
@@ -483,40 +544,39 @@ export const MedianaSpec = createDiagramSpec(
         "role": "annotation"
       },
       "target": false,
-      "style": {
-        "preserveColorOnHighlight": true
+      "objectType": "annotation",
+      "variant": "panel",
+      "content": {
+        "text": "En cada mediana, vértice–G : G–punto medio = 2 : 1.",
+        "title": "Propiedad del baricentro"
       },
-      "kind": "infoPanel",
-      "refs": [],
-      "text": "En cada mediana, vértice–G : G–punto medio = 2 : 1.",
-      "properties": {
-        "title": "Propiedad del baricentro",
-        "anchorMode": "viewport",
-        "viewportPosition": [
+      "anchor": {
+        "type": "viewport",
+        "position": [
           0.98,
           0.03
         ]
+      },
+      "appearance": {
+        "preserveColorOnHighlight": true
       }
     }
   ],
-  "sliders": [],
-  "steps": [],
-  "constraints": [
+  "relations": [
     {
       "id": "sameSideC",
       "label": "C no cruza la base AB",
-      "kind": "sameSide",
-      "refs": [
+      "enabled": true,
+      "type": "same-half-plane",
+      "points": [
         "C",
-        "A",
-        "B"
+        "A"
       ],
-      "enabled": true
+      "boundary": "B"
     }
   ],
-  "dependencies": [],
-  "note": "Mueve A, B o C. Los puntos medios, las tres medianas y su intersección G se reconstruyen automáticamente.",
-  "extensions": {}
+  "steps": [],
+  "note": "Mueve A, B o C. Los puntos medios, las tres medianas y su intersección G se reconstruyen automáticamente."
 }
 );
 /* @matematika-diagram-spec:end */

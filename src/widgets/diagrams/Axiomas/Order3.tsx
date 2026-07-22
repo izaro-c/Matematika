@@ -3,8 +3,8 @@ import { createDiagramSpec, DiagramRenderer } from '@/shared/diagrams/public';
 /* @matematika-diagram-spec:start */
 export const Order3Spec = createDiagramSpec(
 {
-  "version": 2,
-  "renderer": "matematika-diagram-renderer-v2",
+  "version": 3,
+  "renderer": "matematika-diagram-renderer-v3",
   "title": "Axioma de Orden III",
   "componentId": "axioma-de-orden-iii",
   "category": "Axiomas",
@@ -52,7 +52,7 @@ export const Order3Spec = createDiagramSpec(
     }
   ],
   "groups": [],
-  "points": [
+  "objects": [
     {
       "id": "pA",
       "label": "A",
@@ -69,16 +69,22 @@ export const Order3Spec = createDiagramSpec(
       },
       "target": true,
       "targetId": "pA",
-      "style": {
-        "pointSize": 7,
-        "highlightPointSize": 10,
+      "objectType": "point",
+      "definition": {
+        "type": "coordinates",
+        "x": -1.5,
+        "y": 0
+      },
+      "mobility": {
+        "type": "on-support",
+        "support": "lineDE"
+      },
+      "appearance": {
+        "size": 7,
+        "highlightSize": 10,
         "preserveColorOnHighlight": true
       },
-      "x": -1.5,
-      "y": 0,
-      "fixed": false,
-      "constraint": "glider",
-      "gliderTarget": "lineDE"
+      "interaction": {}
     },
     {
       "id": "pB",
@@ -96,16 +102,22 @@ export const Order3Spec = createDiagramSpec(
       },
       "target": true,
       "targetId": "pB",
-      "style": {
-        "pointSize": 7,
-        "highlightPointSize": 10,
+      "objectType": "point",
+      "definition": {
+        "type": "coordinates",
+        "x": 0.57,
+        "y": 0
+      },
+      "mobility": {
+        "type": "on-support",
+        "support": "lineDE"
+      },
+      "appearance": {
+        "size": 7,
+        "highlightSize": 10,
         "preserveColorOnHighlight": true
       },
-      "x": 0.57,
-      "y": 0,
-      "fixed": false,
-      "constraint": "glider",
-      "gliderTarget": "lineDE"
+      "interaction": {}
     },
     {
       "id": "pC",
@@ -123,16 +135,22 @@ export const Order3Spec = createDiagramSpec(
       },
       "target": true,
       "targetId": "pC",
-      "style": {
-        "pointSize": 7,
-        "highlightPointSize": 10,
+      "objectType": "point",
+      "definition": {
+        "type": "coordinates",
+        "x": 2.5,
+        "y": 0
+      },
+      "mobility": {
+        "type": "on-support",
+        "support": "lineDE"
+      },
+      "appearance": {
+        "size": 7,
+        "highlightSize": 10,
         "preserveColorOnHighlight": true
       },
-      "x": 2.5,
-      "y": 0,
-      "fixed": false,
-      "constraint": "glider",
-      "gliderTarget": "lineDE"
+      "interaction": {}
     },
     {
       "id": "pD",
@@ -150,15 +168,21 @@ export const Order3Spec = createDiagramSpec(
       },
       "target": true,
       "targetId": "pD",
-      "style": {
-        "pointSize": 0,
-        "highlightPointSize": 0,
+      "objectType": "point",
+      "definition": {
+        "type": "coordinates",
+        "x": 0,
+        "y": 0
+      },
+      "mobility": {
+        "type": "free"
+      },
+      "appearance": {
+        "size": 0,
+        "highlightSize": 0,
         "preserveColorOnHighlight": true
       },
-      "x": 0,
-      "y": 0,
-      "fixed": false,
-      "constraint": "free"
+      "interaction": {}
     },
     {
       "id": "pE",
@@ -176,13 +200,18 @@ export const Order3Spec = createDiagramSpec(
       },
       "target": true,
       "targetId": "pE",
-      "x": 1.5,
-      "y": 0,
-      "fixed": false,
-      "constraint": "free"
-    }
-  ],
-  "elements": [
+      "objectType": "point",
+      "definition": {
+        "type": "coordinates",
+        "x": 1.5,
+        "y": 0
+      },
+      "mobility": {
+        "type": "free"
+      },
+      "appearance": {},
+      "interaction": {}
+    },
     {
       "id": "lineDE",
       "label": "Recta",
@@ -199,35 +228,27 @@ export const Order3Spec = createDiagramSpec(
       },
       "target": true,
       "targetId": "lineDE",
-      "style": {
+      "objectType": "path",
+      "geometry": {
+        "type": "line",
+        "construction": {
+          "type": "through-points",
+          "points": [
+            "pD",
+            "pE"
+          ]
+        }
+      },
+      "appearance": {
         "strokeWidth": 2,
         "highlightStrokeWidth": 2,
         "preserveColorOnHighlight": true
-      },
-      "kind": "line",
-      "refs": [
-        "pD",
-        "pE"
-      ]
+      }
     }
   ],
-  "sliders": [],
+  "relations": [],
   "steps": [],
-  "constraints": [],
-  "dependencies": [
-    {
-      "sourceId": "pD",
-      "targetId": "lineDE",
-      "relation": "construction"
-    },
-    {
-      "sourceId": "pE",
-      "targetId": "lineDE",
-      "relation": "construction"
-    }
-  ],
-  "note": "Arrastra A, B y C",
-  "extensions": {}
+  "note": "Arrastra A, B y C"
 }
 );
 /* @matematika-diagram-spec:end */

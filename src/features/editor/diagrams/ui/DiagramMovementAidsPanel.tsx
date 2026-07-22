@@ -38,8 +38,10 @@ export const DiagramMovementAidsPanel: React.FC<DiagramMovementAidsPanelProps> =
     onModelEdit(updatePointAttractors(model, pointId, nextIds), { label: `Editar magnetismo de ${point.label}` });
   };
 
+  if (movablePoints.length === 0) return null;
+
   return (
-    <section className="rounded border border-pavo/20 bg-pavo/5 p-3" aria-labelledby="movement-aids-title">
+    <section aria-labelledby="movement-aids-title">
       <div className="flex items-start justify-between gap-2">
         <div>
           <h3 id="movement-aids-title" className="text-[10px] font-bold uppercase tracking-widest text-pavo">Snap y magnetismo</h3>
@@ -50,10 +52,7 @@ export const DiagramMovementAidsPanel: React.FC<DiagramMovementAidsPanelProps> =
         </button>
       </div>
       <p className="mt-2 text-[9px] font-mono text-carbon/45">{snappedPoints.length}/{movablePoints.length} con snap · {magneticPoints.length}/{movablePoints.length} con magnetismo</p>
-      {movablePoints.length === 0 ? (
-        <p className="mt-2 rounded border border-dashed border-carbon/15 bg-lienzo p-2 text-[10px] text-carbon/50">Añada un punto libre o cambie su restricción para activar estas ayudas.</p>
-      ) : (
-        <div className="mt-2 max-h-96 space-y-2 overflow-y-auto pr-0.5">
+      <div className="mt-2 max-h-96 space-y-2 overflow-y-auto pr-0.5">
           {movablePoints.map(point => <DiagramPointMovementCard
             key={point.id}
             point={point}
@@ -62,8 +61,7 @@ export const DiagramMovementAidsPanel: React.FC<DiagramMovementAidsPanelProps> =
             onUpdate={(update, label) => updatePoint(point.id, update, label)}
             onSetAttractors={ids => setPointAttractors(point.id, ids)}
           />)}
-        </div>
-      )}
+      </div>
       <p className="mt-2 text-[9px] leading-relaxed text-carbon/45">Todos los ajustes se guardan por punto. Pulse su nombre solo si necesita abrir el resto de sus propiedades.</p>
     </section>
   );

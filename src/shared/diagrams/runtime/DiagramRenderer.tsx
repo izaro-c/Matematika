@@ -12,10 +12,14 @@ import {
   zoomViewport,
   type DiagramBounds,
   type DiagramElement,
+  type DiagramSpecV3,
+  type DiagramSpec,
   type DiagramSpecV2,
+  projectDiagramSpecV3ToV2,
 } from '../spec';
 
 import { useDiagramSelection } from './useDiagramSelection';
+import type { DiagramAnnotationPlacement, DiagramSelectionIntent } from './useDiagramSelection';
 import { useDiagramViewport } from './useDiagramViewport';
 import {
   DiagramKatexOverlay,
@@ -28,15 +32,17 @@ import {
 import { liveVariables, useBoardLifecycle } from './useBoardLifecycle';
 
 export interface DiagramRendererProps {
-  spec: DiagramSpecV2;
+  spec: DiagramSpecV2 | DiagramSpecV3;
   mode?: 'runtime' | 'editor' | 'preview';
   selectedIds?: readonly string[];
   highlightedIds?: readonly string[];
   activeStepId?: string;
   viewportControls?: boolean;
   className?: string;
-  onSelectionChange?: (id: string) => void;
+  onSelectionChange?: (id: string, intent?: DiagramSelectionIntent) => void;
   onPointMove?: (id: string, x: number, y: number) => void;
+  onSliderChange?: (id: string, value: number) => void;
+  onAnnotationMove?: (id: string, placement: DiagramAnnotationPlacement) => void;
   onCanvasPointCreate?: (x: number, y: number) => void;
   onViewportChange?: (bounds: DiagramBounds) => void;
   stepControls?: boolean;
@@ -52,11 +58,28 @@ const DiagramRendererContent: React.FC<DiagramRendererProps> = ({
   className,
   onSelectionChange,
   onPointMove,
+  onSliderChange,
+  onAnnotationMove,
   onCanvasPointCreate,
   onViewportChange,
   stepControls,
 }) => {
-  const spec = useMemo(() => withResolvedPointConstraints(inputSpec), [inputSpec]);
+  const spec = useMemo(() => {
+    if (inputSpec.version !== 3) return withResolvedPointConstraints(inputSpec);
+    const projected = projectDiagramSpecV3ToV2(inputSpec);
+    // Un spread v2 sobre una spec v3 puede materializar vistas deprecadas.
+    // Se respetan durante la ventana de compatibilidad, sin persistirlas.
+    const compatibility = inputSpec as DiagramSpec;
+    const materialized = Object.prototype.propertyIsEnumerable.call(inputSpec, 'points')
+      ? {
+        ...projected,
+        points: Array.isArray(compatibility.points) ? [...compatibility.points] : projected.points,
+        elements: Array.isArray(compatibility.elements) ? [...compatibility.elements] : projected.elements,
+        sliders: Array.isArray(compatibility.sliders) ? [...compatibility.sliders] : projected.sliders,
+      }
+      : projected;
+    return withResolvedPointConstraints(materialized);
+  }, [inputSpec]);
 
   const {
     interactionCallbacksRef,
@@ -67,6 +90,8 @@ const DiagramRendererContent: React.FC<DiagramRendererProps> = ({
     mode,
     onSelectionChange,
     onPointMove,
+    onSliderChange,
+    onAnnotationMove,
     onCanvasPointCreate,
   });
 
@@ -117,7 +142,7 @@ const DiagramRendererContent: React.FC<DiagramRendererProps> = ({
   const allHeaderReadings = allHeaderItems
     .map(item => ({ item, text: headerReadingText(item, liveSceneVariables) }))
     .filter((entry): entry is { item: DiagramElement; text: string } => Boolean(entry.text));
-  const compactReadings = compactHeaderReadings(allHeaderReadings);
+  const compactReadings = compactHeaderReadings(allHeaderReadings, spec);
   const visibleHeaderItemIds = new Set(headerItems.map(item => item.id));
 
   const rendererRef = useRef<HTMLDivElement>(null);
@@ -212,8 +237,10 @@ const DiagramRendererContent: React.FC<DiagramRendererProps> = ({
           <DiagramTitle layout="inline">{spec.title}</DiagramTitle>
           {compactReadings.length > 0 && (
             <output className="mt-2 flex flex-wrap items-baseline gap-x-3 gap-y-1 font-diagram text-base italic text-carbon/80" aria-live="polite" aria-label="Lecturas dinámicas del diagrama">
-              {compactReadings.map(({ id, itemIds, text }, index) => {
-                const visible = itemIds.some(itemId => visibleHeaderItemIds.has(itemId));
+              {compactReadings.map(({ id, itemIds, text, visibility }, index) => {
+                const visible = visibility === 'all'
+                  ? itemIds.every(itemId => visibleHeaderItemIds.has(itemId))
+                  : itemIds.some(itemId => visibleHeaderItemIds.has(itemId));
                 return (
                   <React.Fragment key={id}>
                     {index > 0 && <span className={`text-ocre/55 ${visible ? '' : 'invisible'}`} aria-hidden>·</span>}

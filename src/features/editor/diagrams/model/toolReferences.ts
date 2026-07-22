@@ -1,4 +1,5 @@
 import { refsNeededForTool } from './diagramElements';
+import { legacyReferenceCandidates, referenceSlotsForLegacyKind } from '../../../../shared/diagrams/spec';
 import type { CanvasTool, VisualDiagramModel } from './types';
 
 const ANGLE_REFERENCE_LABELS = ['Punto del primer lado', 'Vértice', 'Punto del segundo lado'] as const;
@@ -62,10 +63,16 @@ export function toolReferenceSequenceDescription(tool: CanvasTool): string {
 }
 
 export function toolReferenceCandidates(model: VisualDiagramModel, tool: CanvasTool) {
-  if (tool === 'intersection') return model.elements.filter(element => INTERSECTION_SUPPORT_KINDS.has(element.kind));
-  if (tool === 'measureTicks') return model.elements.filter(element => element.kind === 'segment');
-  if (tool === 'label') return [...model.points, ...model.elements.filter(element => element.kind !== 'label')];
-  return model.points;
+  if (tool === 'point' || tool === 'select') return [];
+  const firstSlot = referenceSlotsForLegacyKind(tool)[0];
+  return firstSlot ? legacyReferenceCandidates(model, firstSlot.capability) : [];
+}
+
+export function toolReferenceCandidatesForSlot(model: VisualDiagramModel, tool: CanvasTool, index: number) {
+  if (tool === 'point' || tool === 'select') return [];
+  const slots = referenceSlotsForLegacyKind(tool);
+  const slot = slots[index] ?? slots.find(candidate => candidate.repeatable) ?? slots[slots.length - 1];
+  return slot ? legacyReferenceCandidates(model, slot.capability) : [];
 }
 
 export function normalizedToolReferences(tool: CanvasTool, refs: readonly string[]): string[] {

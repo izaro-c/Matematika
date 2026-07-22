@@ -60,10 +60,10 @@ describe('element inspector capability matrix', () => {
     const model = { ...base, elements: [panel] };
     render(<DiagramInspector model={model} selectedId="panel" onSelect={vi.fn()} onModelEdit={vi.fn()} onDeleteSelected={vi.fn()} />);
 
-    const openBtn = screen.getByRole('button', { name: /Configurar Panel Informativo/i });
+    const openBtn = screen.getByRole('button', { name: /Editar contenido y diseño del panel/i });
     if (openBtn) fireEvent.click(openBtn);
     
-    expect(screen.getByText('Editor de Panel Informativo')).toBeTruthy();
+    expect(screen.getByRole('heading', { name: 'Panel informativo' })).toBeTruthy();
 
     expect(screen.queryByLabelText('Opacidad de relleno')).toBeNull();
     expect(screen.queryByLabelText('Grosor del elemento')).toBeNull();

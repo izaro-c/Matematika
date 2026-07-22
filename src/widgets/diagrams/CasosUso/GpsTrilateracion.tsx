@@ -3,8 +3,8 @@ import { createDiagramSpec, DiagramRenderer } from '@/shared/diagrams/public';
 /* @matematika-diagram-spec:start */
 export const GpsTrilateracionSpec = createDiagramSpec(
 {
-  "version": 2,
-  "renderer": "matematika-diagram-renderer-v2",
+  "version": 3,
+  "renderer": "matematika-diagram-renderer-v3",
   "title": "Trilateración en el plano",
   "componentId": "gps-trilateracion",
   "category": "Casos de uso",
@@ -45,7 +45,7 @@ export const GpsTrilateracionSpec = createDiagramSpec(
     }
   ],
   "groups": [],
-  "points": [
+  "objects": [
     {
       "id": "S1",
       "label": "S₁",
@@ -62,16 +62,22 @@ export const GpsTrilateracionSpec = createDiagramSpec(
       },
       "target": true,
       "targetId": "s1",
-      "style": {
-        "pointSize": 7,
-        "highlightPointSize": 10,
+      "objectType": "point",
+      "definition": {
+        "type": "coordinates",
+        "x": -3.5,
+        "y": 2.7
+      },
+      "mobility": {
+        "type": "fixed"
+      },
+      "appearance": {
+        "size": 7,
+        "labelVisible": true,
+        "highlightSize": 10,
         "preserveColorOnHighlight": true
       },
-      "x": -3.5,
-      "y": 2.7,
-      "showLabel": true,
-      "fixed": true,
-      "constraint": "fixed"
+      "interaction": {}
     },
     {
       "id": "S2",
@@ -89,16 +95,22 @@ export const GpsTrilateracionSpec = createDiagramSpec(
       },
       "target": true,
       "targetId": "s2",
-      "style": {
-        "pointSize": 7,
-        "highlightPointSize": 10,
+      "objectType": "point",
+      "definition": {
+        "type": "coordinates",
+        "x": 3.4,
+        "y": 2.4
+      },
+      "mobility": {
+        "type": "fixed"
+      },
+      "appearance": {
+        "size": 7,
+        "labelVisible": true,
+        "highlightSize": 10,
         "preserveColorOnHighlight": true
       },
-      "x": 3.4,
-      "y": 2.4,
-      "showLabel": true,
-      "fixed": true,
-      "constraint": "fixed"
+      "interaction": {}
     },
     {
       "id": "S3",
@@ -116,16 +128,22 @@ export const GpsTrilateracionSpec = createDiagramSpec(
       },
       "target": true,
       "targetId": "s3",
-      "style": {
-        "pointSize": 7,
-        "highlightPointSize": 10,
+      "objectType": "point",
+      "definition": {
+        "type": "coordinates",
+        "x": 2.8,
+        "y": -2.8
+      },
+      "mobility": {
+        "type": "fixed"
+      },
+      "appearance": {
+        "size": 7,
+        "labelVisible": true,
+        "highlightSize": 10,
         "preserveColorOnHighlight": true
       },
-      "x": 2.8,
-      "y": -2.8,
-      "showLabel": true,
-      "fixed": true,
-      "constraint": "fixed"
+      "interaction": {}
     },
     {
       "id": "R",
@@ -143,18 +161,25 @@ export const GpsTrilateracionSpec = createDiagramSpec(
       },
       "target": true,
       "targetId": "R",
-      "style": {
-        "pointSize": 7,
-        "highlightPointSize": 10,
+      "objectType": "point",
+      "definition": {
+        "type": "coordinates",
+        "x": 0.2,
+        "y": -0.2
+      },
+      "mobility": {
+        "type": "free"
+      },
+      "appearance": {
+        "size": 7,
+        "labelVisible": true,
+        "highlightSize": 10,
         "preserveColorOnHighlight": true
       },
-      "x": 0.2,
-      "y": -0.2,
-      "showLabel": true,
-      "fixed": false,
-      "constraint": "free",
-      "snapToGrid": true,
-      "snapSize": 0.25
+      "interaction": {
+        "snapToGrid": true,
+        "snapSize": 0.25
+      }
     },
     {
       "id": "H1",
@@ -171,25 +196,27 @@ export const GpsTrilateracionSpec = createDiagramSpec(
         "role": "construction"
       },
       "target": false,
-      "style": {
-        "pointSize": 7,
-        "highlightPointSize": 10,
+      "objectType": "point",
+      "definition": {
+        "type": "expression",
+        "x": "R.x",
+        "y": "S1.y",
+        "fallback": [
+          0.2,
+          2.7
+        ]
+      },
+      "mobility": {
+        "type": "fixed"
+      },
+      "appearance": {
+        "size": 7,
+        "labelVisible": true,
+        "highlightSize": 10,
         "preserveColorOnHighlight": true
       },
-      "x": 0.2,
-      "y": 2.7,
-      "showLabel": true,
-      "fixed": true,
-      "constraint": "derived",
-      "dependencies": [
-        "R",
-        "S1"
-      ],
-      "xExpression": "R.x",
-      "yExpression": "S1.y"
-    }
-  ],
-  "elements": [
+      "interaction": {}
+    },
     {
       "id": "circ1",
       "label": "Circunferencia de señal S₁",
@@ -206,17 +233,18 @@ export const GpsTrilateracionSpec = createDiagramSpec(
       },
       "target": true,
       "targetId": "circ1",
-      "style": {
+      "objectType": "path",
+      "geometry": {
+        "type": "circle",
+        "center": "S1",
+        "point": "R"
+      },
+      "appearance": {
         "strokeWidth": 2.4,
         "fillOpacity": 0.02,
         "highlightStrokeWidth": 3,
         "preserveColorOnHighlight": true
-      },
-      "kind": "circle",
-      "refs": [
-        "S1",
-        "R"
-      ]
+      }
     },
     {
       "id": "circ2",
@@ -234,18 +262,19 @@ export const GpsTrilateracionSpec = createDiagramSpec(
       },
       "target": true,
       "targetId": "circ2",
-      "style": {
+      "objectType": "path",
+      "geometry": {
+        "type": "circle",
+        "center": "S2",
+        "point": "R"
+      },
+      "appearance": {
+        "dashed": true,
         "strokeWidth": 2.4,
         "fillOpacity": 0,
         "highlightStrokeWidth": 3,
         "preserveColorOnHighlight": true
-      },
-      "kind": "circle",
-      "refs": [
-        "S2",
-        "R"
-      ],
-      "dashed": true
+      }
     },
     {
       "id": "circ3",
@@ -263,18 +292,19 @@ export const GpsTrilateracionSpec = createDiagramSpec(
       },
       "target": true,
       "targetId": "circ3",
-      "style": {
+      "objectType": "path",
+      "geometry": {
+        "type": "circle",
+        "center": "S3",
+        "point": "R"
+      },
+      "appearance": {
+        "dashed": true,
         "strokeWidth": 2.4,
         "fillOpacity": 0,
         "highlightStrokeWidth": 3,
         "preserveColorOnHighlight": true
-      },
-      "kind": "circle",
-      "refs": [
-        "S3",
-        "R"
-      ],
-      "dashed": true
+      }
     },
     {
       "id": "rad1",
@@ -292,16 +322,19 @@ export const GpsTrilateracionSpec = createDiagramSpec(
       },
       "target": true,
       "targetId": "rad1",
-      "style": {
+      "objectType": "path",
+      "geometry": {
+        "type": "segment",
+        "points": [
+          "S1",
+          "R"
+        ]
+      },
+      "appearance": {
         "strokeWidth": 2.4,
         "highlightStrokeWidth": 3,
         "preserveColorOnHighlight": true
-      },
-      "kind": "segment",
-      "refs": [
-        "S1",
-        "R"
-      ]
+      }
     },
     {
       "id": "rad2",
@@ -319,16 +352,19 @@ export const GpsTrilateracionSpec = createDiagramSpec(
       },
       "target": true,
       "targetId": "rad2",
-      "style": {
+      "objectType": "path",
+      "geometry": {
+        "type": "segment",
+        "points": [
+          "S2",
+          "R"
+        ]
+      },
+      "appearance": {
         "strokeWidth": 2.4,
         "highlightStrokeWidth": 3,
         "preserveColorOnHighlight": true
-      },
-      "kind": "segment",
-      "refs": [
-        "S2",
-        "R"
-      ]
+      }
     },
     {
       "id": "rad3",
@@ -346,16 +382,19 @@ export const GpsTrilateracionSpec = createDiagramSpec(
       },
       "target": true,
       "targetId": "rad3",
-      "style": {
+      "objectType": "path",
+      "geometry": {
+        "type": "segment",
+        "points": [
+          "S3",
+          "R"
+        ]
+      },
+      "appearance": {
         "strokeWidth": 2.4,
         "highlightStrokeWidth": 3,
         "preserveColorOnHighlight": true
-      },
-      "kind": "segment",
-      "refs": [
-        "S3",
-        "R"
-      ]
+      }
     },
     {
       "id": "catH1",
@@ -373,17 +412,20 @@ export const GpsTrilateracionSpec = createDiagramSpec(
       },
       "target": true,
       "targetId": "catH1",
-      "style": {
+      "objectType": "path",
+      "geometry": {
+        "type": "segment",
+        "points": [
+          "S1",
+          "H1"
+        ]
+      },
+      "appearance": {
+        "dashed": true,
         "strokeWidth": 2.4,
         "highlightStrokeWidth": 3,
         "preserveColorOnHighlight": true
-      },
-      "kind": "segment",
-      "refs": [
-        "S1",
-        "H1"
-      ],
-      "dashed": true
+      }
     },
     {
       "id": "catV1",
@@ -401,17 +443,20 @@ export const GpsTrilateracionSpec = createDiagramSpec(
       },
       "target": true,
       "targetId": "catV1",
-      "style": {
+      "objectType": "path",
+      "geometry": {
+        "type": "segment",
+        "points": [
+          "H1",
+          "R"
+        ]
+      },
+      "appearance": {
+        "dashed": true,
         "strokeWidth": 2.4,
         "highlightStrokeWidth": 3,
         "preserveColorOnHighlight": true
-      },
-      "kind": "segment",
-      "refs": [
-        "H1",
-        "R"
-      ],
-      "dashed": true
+      }
     },
     {
       "id": "right1",
@@ -428,17 +473,20 @@ export const GpsTrilateracionSpec = createDiagramSpec(
         "role": "secondary"
       },
       "target": false,
-      "style": {
-        "fillOpacity": 0.22,
-        "angleRadius": 0.45,
-        "preserveColorOnHighlight": true
-      },
-      "kind": "rightAngle",
-      "refs": [
+      "objectType": "angle",
+      "points": [
         "S1",
         "H1",
         "R"
-      ]
+      ],
+      "sweep": "non-reflex",
+      "marker": "square",
+      "perpendicularRelationId": "right1-perpendicular",
+      "appearance": {
+        "radius": 0.45,
+        "fillOpacity": 0.22,
+        "preserveColorOnHighlight": true
+      }
     },
     {
       "id": "d1",
@@ -455,20 +503,19 @@ export const GpsTrilateracionSpec = createDiagramSpec(
         "role": "secondary"
       },
       "target": false,
-      "style": {
+      "objectType": "path",
+      "geometry": {
+        "type": "dimension",
+        "points": [
+          "S1",
+          "R"
+        ],
+        "offset": 0.25
+      },
+      "appearance": {
         "strokeWidth": 2.4,
         "highlightStrokeWidth": 3,
         "preserveColorOnHighlight": true
-      },
-      "kind": "dimensionLine",
-      "refs": [
-        "S1",
-        "R"
-      ],
-      "text": "d₁ = {value}",
-      "properties": {
-        "precision": 2,
-        "offset": 0.25
       }
     },
     {
@@ -486,20 +533,19 @@ export const GpsTrilateracionSpec = createDiagramSpec(
         "role": "secondary"
       },
       "target": false,
-      "style": {
+      "objectType": "path",
+      "geometry": {
+        "type": "dimension",
+        "points": [
+          "S2",
+          "R"
+        ],
+        "offset": 0.25
+      },
+      "appearance": {
         "strokeWidth": 2.4,
         "highlightStrokeWidth": 3,
         "preserveColorOnHighlight": true
-      },
-      "kind": "dimensionLine",
-      "refs": [
-        "S2",
-        "R"
-      ],
-      "text": "d₂ = {value}",
-      "properties": {
-        "precision": 2,
-        "offset": 0.25
       }
     },
     {
@@ -517,39 +563,42 @@ export const GpsTrilateracionSpec = createDiagramSpec(
         "role": "secondary"
       },
       "target": false,
-      "style": {
+      "objectType": "path",
+      "geometry": {
+        "type": "dimension",
+        "points": [
+          "S3",
+          "R"
+        ],
+        "offset": 0.25
+      },
+      "appearance": {
         "strokeWidth": 2.4,
         "highlightStrokeWidth": 3,
         "preserveColorOnHighlight": true
-      },
-      "kind": "dimensionLine",
-      "refs": [
-        "S3",
-        "R"
-      ],
-      "text": "d₃ = {value}",
-      "properties": {
-        "precision": 2,
-        "offset": 0.25
       }
     }
   ],
-  "sliders": [],
-  "steps": [],
-  "dependencies": [
+  "relations": [
     {
-      "sourceId": "R",
-      "targetId": "H1",
-      "relation": "expression"
-    },
-    {
-      "sourceId": "S1",
-      "targetId": "H1",
-      "relation": "expression"
+      "id": "right1-perpendicular",
+      "label": "Perpendicularidad de Ángulo recto",
+      "enabled": true,
+      "type": "perpendicular",
+      "supports": [
+        [
+          "H1",
+          "S1"
+        ],
+        [
+          "H1",
+          "R"
+        ]
+      ]
     }
   ],
-  "note": "Mueve R. Cada distancia define una circunferencia de posiciones posibles; las tres restricciones coinciden en el receptor.",
-  "extensions": {}
+  "steps": [],
+  "note": "Mueve R. Cada distancia define una circunferencia de posiciones posibles; las tres restricciones coinciden en el receptor."
 }
 );
 /* @matematika-diagram-spec:end */

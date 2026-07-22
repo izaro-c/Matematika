@@ -2,9 +2,9 @@ import React, { useState } from 'react';
 import { fireEvent, render, screen } from '@testing-library/react';
 import { describe, expect, it } from 'vitest';
 import { createTemplateModel } from '../../../../src/features/editor/diagrams/model/commands';
-import { DiagramExpressionField, DiagramFormulaField } from '../../../../src/features/editor/diagrams/ui/DiagramExpressionField';
+import { DiagramExpressionField } from '../../../../src/features/editor/diagrams/ui/DiagramExpressionField';
 import marksFixture from '../../../fixtures/diagrams/phase3-marks-angles.json';
-import { migrateDiagramSpec } from '../../../../src/shared/diagrams/public';
+import { migrateDiagramSpec, projectDiagramSpecV3ToV2 } from '../../../../src/shared/diagrams/public';
 
 const model = createTemplateModel('circunferencia', 'Expresiones', 'definicion');
 
@@ -15,7 +15,7 @@ const ExpressionHarness = () => {
 
 const AngleExpressionHarness = () => {
   const [value, setValue] = useState('');
-  return <DiagramExpressionField model={migrateDiagramSpec(marksFixture).spec} label="Cálculo angular" value={value} onChange={setValue} optional />;
+  return <DiagramExpressionField model={projectDiagramSpecV3ToV2(migrateDiagramSpec(marksFixture).spec)} label="Cálculo angular" value={value} onChange={setValue} optional />;
 };
 
 describe('DiagramExpressionField', () => {
@@ -57,10 +57,4 @@ describe('DiagramExpressionField', () => {
     expect(screen.getByText(/Expresión válida · valor de prueba 90/)).toBeTruthy();
   });
 
-  it('documents visible KaTeX separately from the safe numeric expression', () => {
-    render(<DiagramFormulaField label="Fórmula visible" value="a^2 = {value}" onChange={() => {}} />);
-    fireEvent.click(screen.getByText('Cómo escribir la fórmula visible'));
-    expect(screen.getByText(/Se usa sintaxis KaTeX/)).toBeTruthy();
-    expect(screen.getByText(/se edita justo debajo/)).toBeTruthy();
-  });
 });

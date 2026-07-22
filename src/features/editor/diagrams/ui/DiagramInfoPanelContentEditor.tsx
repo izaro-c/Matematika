@@ -1,9 +1,10 @@
-import React, { useRef, useState } from 'react';
+import React, { useState } from 'react';
 import { createPortal } from 'react-dom';
 import type { DiagramInfoPanelBlock, DiagramInfoPanelRule, DiagramColorToken } from '@/shared/diagrams/public';
 import type { VisualDiagramModel, VisualElement } from '../model/types';
 import { DiagramExpressionField } from './DiagramExpressionField';
 import { DiagramTextRulesEditor } from './DiagramTextRulesEditor';
+import { DiagramTemplateField } from './DiagramTemplateField';
 import { COLOR_OPTIONS } from '../model/commands';
 
 interface DiagramInfoPanelContentEditorProps {
@@ -38,54 +39,6 @@ function panelAnchorReferences(model: VisualDiagramModel, element: VisualElement
   return model.points[0] ? [model.points[0].id] : [];
 }
 
-const RichTextArea = ({ value, onChange, placeholder, className, ariaLabel }: { value: string, onChange: (val: string) => void, placeholder?: string, className?: string, ariaLabel?: string }) => {
-  const ref = useRef<HTMLTextAreaElement>(null);
-  
-  const insertText = (before: string, after: string = '') => {
-    const el = ref.current;
-    if (!el) return;
-    const start = el.selectionStart;
-    const end = el.selectionEnd;
-    const text = el.value;
-    const selected = text.substring(start, end);
-    const replacement = before + selected + after;
-    onChange(text.substring(0, start) + replacement + text.substring(end));
-    setTimeout(() => {
-      if (el) {
-        el.focus();
-        el.setSelectionRange(start + before.length, start + before.length + selected.length);
-      }
-    }, 0);
-  };
-
-  return (
-    <div className={`flex flex-col border border-carbon/15 rounded bg-lienzo shadow-inner overflow-hidden ${className ?? ''}`}>
-      <div className="flex flex-wrap items-center gap-1 bg-carbon/5 px-2 py-1 border-b border-carbon/10">
-        <button type="button" onClick={() => insertText('**', '**')} className="px-2 py-0.5 text-[10px] font-bold text-carbon/80 hover:bg-carbon/10 hover:text-carbon rounded transition-colors" title="Negrita">B</button>
-        <button type="button" onClick={() => insertText('*', '*')} className="px-2 py-0.5 text-[10px] italic font-serif text-carbon/80 hover:bg-carbon/10 hover:text-carbon rounded transition-colors" title="Cursiva">I</button>
-        <div className="w-px h-3 bg-carbon/20 mx-1" />
-        <button type="button" onClick={() => insertText('[terracota:', ']')} className="w-3 h-3 rounded-full bg-terracota hover:scale-110 transition-transform shadow-sm" title="Terracota" />
-        <button type="button" onClick={() => insertText('[salvia:', ']')} className="w-3 h-3 rounded-full bg-salvia hover:scale-110 transition-transform shadow-sm" title="Salvia" />
-        <button type="button" onClick={() => insertText('[pavo:', ']')} className="w-3 h-3 rounded-full bg-pavo hover:scale-110 transition-transform shadow-sm" title="Pavo" />
-        <button type="button" onClick={() => insertText('[ocre:', ']')} className="w-3 h-3 rounded-full bg-ocre hover:scale-110 transition-transform shadow-sm" title="Ocre" />
-        <button type="button" onClick={() => insertText('[granada:', ']')} className="w-3 h-3 rounded-full bg-granada hover:scale-110 transition-transform shadow-sm" title="Granada" />
-        <button type="button" onClick={() => insertText('[carbon:', ']')} className="w-3 h-3 rounded-full bg-carbon hover:scale-110 transition-transform shadow-sm" title="Carbón" />
-        <div className="w-px h-3 bg-carbon/20 mx-1" />
-        <button type="button" onClick={() => insertText('$', '$')} className="px-1.5 py-0.5 text-[10px] font-serif font-bold text-carbon/80 hover:bg-carbon/10 hover:text-carbon rounded transition-colors" title="Fórmula Matemática">∑</button>
-        <button type="button" onClick={() => insertText('{', '}')} className="px-1.5 py-0.5 text-[10px] font-mono font-bold text-carbon/80 hover:bg-carbon/10 hover:text-carbon rounded transition-colors" title="Insertar variable">{"{x}"}</button>
-      </div>
-      <textarea 
-        ref={ref}
-        aria-label={ariaLabel}
-        className="w-full resize-y p-2 text-xs leading-relaxed bg-transparent border-none outline-none focus:ring-0 min-h-16"
-        value={value} 
-        onChange={event => onChange(event.target.value)} 
-        placeholder={placeholder} 
-      />
-    </div>
-  );
-};
-
 const ColorSelector = ({ value, onChange, label }: { value: DiagramColorToken | undefined, onChange: (v: DiagramColorToken | undefined) => void, label: string }) => (
   <label className="block text-xs font-bold text-carbon">{label}
     <select 
@@ -110,6 +63,7 @@ const PanelBlockEditor: React.FC<PanelBlockEditorProps> = ({
   onDuplicate,
   onDelete,
 }) => {
+  const [expanded, setExpanded] = useState(index === 0);
   const rules = block.rules ?? [];
   const patchRule = (ruleIndex: number, update: Partial<DiagramInfoPanelRule>) => onChange({
     ...block,
@@ -124,12 +78,12 @@ const PanelBlockEditor: React.FC<PanelBlockEditorProps> = ({
   };
 
   return (
-    <details className="rounded border border-pavo/20 bg-lienzo shadow-sm group">
-      <summary className="cursor-pointer border-b border-carbon/10 bg-pavo/5 px-3 py-2.5 text-xs font-bold text-carbon flex items-center justify-between transition-colors hover:bg-pavo/10">
+    <details className="border-b border-carbon/10 group" open={expanded} onToggle={event => setExpanded(event.currentTarget.open)}>
+      <summary className="flex min-h-11 cursor-pointer items-center justify-between py-2.5 text-xs font-bold text-carbon transition-colors hover:text-pavo">
         <span>{index + 1} · {block.title || block.id || 'Bloque sin título'}</span>
         <span className="text-carbon/50 transition-transform duration-200 group-open:rotate-180">▼</span>
       </summary>
-      <div className="space-y-4 p-3 sm:p-4">
+      <div className="space-y-4 pb-4 pl-3 pt-1">
         <div className="flex flex-wrap gap-2" role="group" aria-label={`Organizar ${block.title || block.id}`}>
           <button type="button" disabled={index === 0} className="rounded border border-carbon/15 bg-carbon/5 px-2 py-1 text-[10px] font-bold text-carbon/80 disabled:opacity-30 hover:bg-carbon/10 transition-colors" onClick={() => onMove(-1)}>↑ Subir</button>
           <button type="button" disabled={index === count - 1} className="rounded border border-carbon/15 bg-carbon/5 px-2 py-1 text-[10px] font-bold text-carbon/80 disabled:opacity-30 hover:bg-carbon/10 transition-colors" onClick={() => onMove(1)}>↓ Bajar</button>
@@ -147,25 +101,23 @@ const PanelBlockEditor: React.FC<PanelBlockEditorProps> = ({
         </div>
         
         <div className="space-y-1">
-          <label className="block text-xs font-bold text-carbon">Contenido por defecto
-            <RichTextArea ariaLabel={`Contenido por defecto del bloque ${index + 1}`} className="mt-1" value={block.text} onChange={val => onChange({ ...block, text: val })} placeholder="Se muestra si ninguna variante condicional coincide." />
-          </label>
+          <DiagramTemplateField richText model={model} label="Contenido por defecto" ariaLabel={`Contenido por defecto del bloque ${index + 1}`} value={block.text} onChange={text => onChange({ ...block, text })} placeholder="Se muestra si ninguna variante condicional coincide." rows={3} />
         </div>
         
         <ColorSelector label="Color de acento por defecto" value={block.color} onChange={color => onChange({ ...block, color })} />
 
-        <details className="rounded border border-carbon/10 bg-carbon/[0.02]" open={Boolean(block.expression)}>
-          <summary className="cursor-pointer px-3 py-2 text-[10px] font-bold uppercase tracking-wider text-carbon/60 hover:text-carbon transition-colors">Valor numérico base · {'{value}'}</summary>
-          <div className="space-y-3 border-t border-carbon/10 p-3">
-            <DiagramExpressionField model={model} label={`Cálculo base de ${block.title || block.id}`} value={block.expression ?? ''} onChange={expression => onChange({ ...block, expression: expression || undefined })} optional help="El resultado puede insertarse como {value} en el contenido por defecto o en una variante." />
+        {(block.expression || block.text.includes('{value}')) && <details className="border-l-2 border-carbon/10 pl-3" open={Boolean(block.expression)}>
+          <summary className="min-h-9 cursor-pointer py-2 text-[10px] font-bold text-carbon/55 hover:text-carbon transition-colors">Compatibilidad con {'{value}'}</summary>
+          <div className="space-y-3 pb-2">
+            <DiagramExpressionField compact model={model} label={`Cálculo heredado de ${block.title || block.id}`} value={block.expression ?? ''} onChange={expression => onChange({ ...block, expression: expression || undefined })} optional />
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
               <label className="text-xs font-bold text-carbon flex flex-col min-w-0">Unidad visual<input aria-label={`Unidad base de ${block.id}`} className="mt-1 w-full rounded border border-carbon/15 p-1.5 text-xs min-w-0" value={block.unit ?? ''} onChange={event => onChange({ ...block, unit: event.target.value || undefined })} /></label>
               <label className="text-xs font-bold text-carbon flex flex-col min-w-0">Precisión (decimales)<input type="number" min="0" max="12" aria-label={`Decimales base de ${block.id}`} className="mt-1 w-full rounded border border-carbon/15 p-1.5 text-xs min-w-0" value={block.precision ?? 2} onChange={event => onChange({ ...block, precision: Number(event.target.value) })} /></label>
             </div>
           </div>
-        </details>
+        </details>}
 
-        <section className="space-y-3 rounded-md border border-ocre/30 bg-ocre/5 p-3 shadow-inner" aria-label={`Variantes condicionales de ${block.title || block.id}`}>
+        <section className="space-y-3 border-t border-carbon/10 pt-3" aria-label={`Variantes condicionales de ${block.title || block.id}`}>
           <header>
             <h4 className="text-xs font-bold uppercase tracking-wider text-ocre">Variantes y Casos Específicos</h4>
             <p className="mt-1 text-[10px] leading-relaxed text-carbon/60">Se evalúan en orden. La primera condición que se cumpla reemplazará el texto, color y valor por defecto.</p>
@@ -173,12 +125,12 @@ const PanelBlockEditor: React.FC<PanelBlockEditorProps> = ({
           
           <div className="space-y-3">
             {rules.map((rule, ruleIndex) => (
-              <details key={`${block.id}-rule-${ruleIndex}`} className="rounded-md border border-carbon/15 bg-lienzo shadow-sm overflow-hidden group/rule">
-                <summary className="cursor-pointer border-b border-carbon/10 bg-carbon/5 px-3 py-2 text-[11px] font-bold text-carbon/80 hover:text-carbon hover:bg-carbon/10 transition-colors flex items-center justify-between">
+              <details key={`${block.id}-rule-${ruleIndex}`} className="border-t border-carbon/10 group/rule">
+                <summary className="flex min-h-10 cursor-pointer items-center justify-between py-2 text-[11px] font-bold text-carbon/80 hover:text-carbon transition-colors">
                   <span className="truncate min-w-0 pr-2">Caso {ruleIndex + 1} {rule.when ? <span className="font-normal opacity-70 ml-1">(Condición: {rule.when})</span> : ''}</span>
                   <span className="flex-shrink-0 text-carbon/50 transition-transform duration-200 group-open/rule:rotate-180">▼</span>
                 </summary>
-                <div className="space-y-3 p-3">
+                <div className="space-y-3 pb-3 pl-3">
                   <div className="flex flex-wrap gap-2">
                     <button type="button" disabled={ruleIndex === 0} aria-label={`Subir caso ${ruleIndex + 1}`} className="rounded border border-carbon/15 px-2 py-1 text-[10px] font-medium disabled:opacity-30 hover:bg-carbon/5 transition-colors" onClick={() => moveRule(ruleIndex, -1)}>↑ Subir</button>
                     <button type="button" disabled={ruleIndex === rules.length - 1} aria-label={`Bajar caso ${ruleIndex + 1}`} className="rounded border border-carbon/15 px-2 py-1 text-[10px] font-medium disabled:opacity-30 hover:bg-carbon/5 transition-colors" onClick={() => moveRule(ruleIndex, 1)}>↓ Bajar</button>
@@ -187,22 +139,20 @@ const PanelBlockEditor: React.FC<PanelBlockEditorProps> = ({
                   
                   <DiagramExpressionField model={model} label="¿Cuándo se activa este caso?" value={rule.when} onChange={when => patchRule(ruleIndex, { when })} help="Expresión matemática. Ej: approx(A.x, 0, 0.001) o dist(A, B) > 5." />
                   
-                  <label className="block text-xs font-bold text-carbon">Texto a mostrar en este caso
-                    <RichTextArea ariaLabel={`Contenido del caso ${ruleIndex + 1}`} className="mt-1" value={rule.text} onChange={val => patchRule(ruleIndex, { text: val })} />
-                  </label>
+                  <DiagramTemplateField richText model={model} label="Texto a mostrar en este caso" ariaLabel={`Contenido del caso ${ruleIndex + 1}`} value={rule.text} onChange={text => patchRule(ruleIndex, { text })} rows={3} />
                   
                   <ColorSelector label="Color de acento específico" value={rule.color} onChange={color => patchRule(ruleIndex, { color })} />
 
-                  <details className="rounded border border-pavo/20 bg-pavo/5" open={Boolean(rule.expression)}>
-                    <summary className="cursor-pointer px-3 py-2 text-[10px] font-bold text-pavo hover:bg-pavo/10 transition-colors">Valor numérico específico del caso</summary>
-                    <div className="space-y-3 border-t border-pavo/10 p-3">
-                      <DiagramExpressionField model={model} label="Fórmula para {value} si se cumple el caso" value={rule.expression ?? ''} onChange={expression => patchRule(ruleIndex, { expression: expression || undefined })} optional />
+                  {(rule.expression || rule.text.includes('{value}')) && <details className="border-t border-carbon/10 pt-1" open={Boolean(rule.expression)}>
+                    <summary className="min-h-9 cursor-pointer py-2 text-[10px] font-bold text-carbon/55">Compatibilidad con {'{value}'}</summary>
+                    <div className="space-y-3 pb-2">
+                      <DiagramExpressionField compact model={model} label="Cálculo heredado del caso" ariaLabel="Fórmula para {value} si se cumple el caso" value={rule.expression ?? ''} onChange={expression => patchRule(ruleIndex, { expression: expression || undefined })} optional />
                       <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                         <label className="text-xs font-bold text-carbon flex flex-col min-w-0">Unidad visual<input aria-label={`Unidad del caso ${ruleIndex + 1}`} className="mt-1 w-full rounded border border-carbon/15 bg-lienzo p-1.5 text-xs shadow-inner min-w-0" value={rule.unit ?? ''} onChange={event => patchRule(ruleIndex, { unit: event.target.value || undefined })} /></label>
                         <label className="text-xs font-bold text-carbon flex flex-col min-w-0">Precisión (decimales)<input type="number" min="0" max="12" aria-label={`Decimales del caso ${ruleIndex + 1}`} className="mt-1 w-full rounded border border-carbon/15 bg-lienzo p-1.5 text-xs shadow-inner min-w-0" value={rule.precision ?? block.precision ?? 2} onChange={event => patchRule(ruleIndex, { precision: Number(event.target.value) })} /></label>
                       </div>
                     </div>
-                  </details>
+                  </details>}
                 </div>
               </details>
             ))}
@@ -234,24 +184,25 @@ export const DiagramInfoPanelContentEditor: React.FC<DiagramInfoPanelContentEdit
   const addBlock = () => updateBlocks([...blocks, { id: nextBlockId(blocks), title: 'Nuevo bloque', text: 'Contenido...', rules: [] }]);
 
   const [isEditorOpen, setIsEditorOpen] = useState(false);
+  const [editorTab, setEditorTab] = useState<'content' | 'blocks' | 'position'>('content');
 
   return (
     <>
       <button 
         type="button" 
-        className="w-full rounded border border-carbon/20 bg-carbon/5 p-2 text-xs font-bold text-carbon hover:bg-carbon/10 transition-colors"
+        className="min-h-11 w-full rounded bg-carbon/5 px-3 text-xs font-bold text-carbon hover:bg-carbon/10 transition-colors"
         onClick={() => setIsEditorOpen(true)}
       >
-        Configurar Panel Informativo...
+        Editar contenido y diseño del panel
       </button>
 
       {isEditorOpen && createPortal(
       <div className="fixed inset-0 z-[100] m-auto flex items-center justify-center bg-carbon/50 p-2 sm:p-4 shadow-2xl backdrop-blur-sm" role="presentation">
-        <div className="flex flex-col max-h-[95vh] h-[800px] w-full min-w-0 max-w-3xl rounded-xl border border-carbon/20 bg-lienzo p-0 overflow-hidden shadow-2xl" role="dialog" aria-modal="true" aria-labelledby="info-panel-dialog-title">
+        <div className="flex h-[min(860px,95vh)] w-full min-w-0 max-w-4xl flex-col overflow-hidden rounded-lg border border-carbon/20 bg-lienzo shadow-2xl" role="dialog" aria-modal="true" aria-labelledby="info-panel-dialog-title">
           <header className="flex-shrink-0 flex items-center justify-between border-b border-carbon/10 bg-carbon/5 px-4 sm:px-6 py-4">
             <div>
-              <h2 id="info-panel-dialog-title" className="text-base sm:text-lg font-bold text-carbon">Editor de Panel Informativo</h2>
-              <p className="mt-1 text-[11px] leading-relaxed text-carbon/60 hidden sm:block">Configure la posición, textos descriptivos y lecturas dinámicas (bloques) que aparecerán en el panel.</p>
+              <h2 id="info-panel-dialog-title" className="text-base sm:text-lg font-bold text-carbon">Panel informativo</h2>
+              <p className="mt-1 hidden text-[11px] leading-relaxed text-carbon/60 sm:block">Edite por tarea: contenido general, bloques dinámicos o posición.</p>
             </div>
             <button 
               type="button" 
@@ -262,10 +213,14 @@ export const DiagramInfoPanelContentEditor: React.FC<DiagramInfoPanelContentEdit
               ✕
             </button>
           </header>
+          <nav className="grid grid-cols-3 border-b border-carbon/10 bg-lienzo p-2" role="tablist" aria-label="Secciones del panel informativo">
+            {([['content', 'Contenido'], ['blocks', `Bloques · ${blocks.length}`], ['position', 'Posición']] as const).map(([id, label]) => <button key={id} type="button" role="tab" aria-selected={editorTab === id} onClick={() => setEditorTab(id)} className={`min-h-11 rounded px-2 text-xs font-bold ${editorTab === id ? 'bg-carbon text-lienzo' : 'text-carbon/55 hover:bg-carbon/5'}`}>{label}</button>)}
+          </nav>
           
-          <div className="flex-1 overflow-y-auto p-4 sm:p-6 space-y-5 min-w-0">
+          <div className="min-w-0 flex-1 overflow-y-auto p-4 sm:p-6">
         {/* PANEL POSITION CONFIGURATION */}
-        <fieldset className="space-y-3 rounded-md border border-carbon/15 p-3 min-w-0">
+        <div className={editorTab === 'position' ? 'block' : 'hidden'}>
+        <fieldset className="min-w-0 space-y-3">
           <legend className="px-1 text-[10px] font-bold uppercase tracking-wider text-carbon/50">Posición en el Diagrama</legend>
           <label className="block text-xs font-bold text-carbon">
             Tipo de anclaje
@@ -344,20 +299,22 @@ export const DiagramInfoPanelContentEditor: React.FC<DiagramInfoPanelContentEdit
             </div>
           )}
         </fieldset>
+        </div>
 
         {/* HEADER CONFIGURATION */}
-        <fieldset className="space-y-3 rounded-md border border-carbon/15 p-3 bg-carbon/[0.02] min-w-0">
+        <div className={editorTab === 'content' ? 'block' : 'hidden'}>
+        <fieldset className="min-w-0 space-y-3">
           <legend className="px-1 text-[10px] font-bold uppercase tracking-wider text-carbon/60">Cabecera e Introducción</legend>
           <label className="block text-xs font-bold text-carbon">Título principal del panel
             <input aria-label="Título del panel" className="mt-1 w-full rounded border border-carbon/15 bg-lienzo p-2 text-xs font-semibold shadow-inner" value={panel.properties?.title ?? ''} onChange={event => onPropertiesChange({ title: event.target.value || undefined })} placeholder="Ej. Clasificación de Triángulos" />
           </label>
-          <label className="block text-xs font-bold text-carbon">Texto introductorio opcional
-            <RichTextArea ariaLabel="Contenido del panel" className="mt-1" value={panel.text || ''} onChange={val => onTextChange(val)} placeholder="Texto explicativo común que se muestra antes de todos los bloques..." />
-          </label>
+          <DiagramTemplateField richText model={model} label="Texto introductorio opcional" ariaLabel="Contenido del panel" value={panel.text || ''} onChange={onTextChange} placeholder="Texto explicativo común que se muestra antes de todos los bloques…" rows={3} />
         </fieldset>
+        </div>
 
         {/* BLOCKS CONFIGURATION */}
-        <fieldset className="space-y-3 rounded-md border-2 border-pavo/20 bg-pavo/5 p-3 min-w-0">
+        <div className={editorTab === 'blocks' ? 'block' : 'hidden'}>
+        <fieldset className="min-w-0 space-y-4">
           <legend className="px-2 text-xs font-bold uppercase tracking-wider text-pavo">Bloques Informativos</legend>
           
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 mb-2">
@@ -375,16 +332,17 @@ export const DiagramInfoPanelContentEditor: React.FC<DiagramInfoPanelContentEdit
             </div>
           </div>
           
-          <div className="rounded-md border border-pavo/30 bg-lienzo p-2 mb-3 shadow-sm">
+          <details className="border-l-2 border-pavo/20 pl-3">
+            <summary className="min-h-9 cursor-pointer py-2 text-[10px] font-bold text-pavo">Guía de formato</summary>
             <h4 className="text-[10px] font-bold text-pavo mb-1">Guía de formato para los textos</h4>
             <ul className="text-[9px] text-carbon/70 space-y-1 pl-3 list-disc">
               <li>Negrita: <strong className="font-bold">**texto**</strong></li>
               <li>Cursiva: <em className="italic">*texto*</em> o _texto_</li>
               <li>Matemáticas: <code>$x^2 + y^2 = r^2$</code></li>
-              <li>Variables del dibujo: <code>{'{A.x}'}</code>, <code>{'{dist(A,B)}'}</code></li>
+              <li>Cálculos: use «Insertar cálculo»; cada resultado puede tener su unidad y decimales.</li>
               <li>Color: <code>[granada:texto rojo]</code> (colores: carbon, pavo, granada, ocre, salvia, musgo, terracota, pizarra)</li>
             </ul>
-          </div>
+          </details>
 
           {blocks.length === 0 && <div className="rounded-md border-2 border-dashed border-pavo/30 bg-lienzo/50 p-6 text-center shadow-inner">
             <p className="text-[11px] font-medium text-carbon/60 mb-2">Este panel no tiene ningún bloque informativo.</p>
@@ -407,8 +365,8 @@ export const DiagramInfoPanelContentEditor: React.FC<DiagramInfoPanelContentEdit
             ))}
           </div>
           
-          <button type="button" className="w-full rounded-md bg-pavo px-3 py-2.5 text-xs font-bold text-lienzo hover:bg-pavo/90 transition-colors shadow-sm" onClick={addBlock}>
-            + Añadir Nuevo Bloque Informativo
+          <button type="button" className="min-h-11 w-full rounded bg-pavo px-3 text-xs font-bold text-lienzo hover:bg-pavo/90 transition-colors" onClick={addBlock}>
+            + Añadir bloque
           </button>
         </fieldset>
 
@@ -425,22 +383,16 @@ export const DiagramInfoPanelContentEditor: React.FC<DiagramInfoPanelContentEdit
             <DiagramTextRulesEditor model={model} element={panel} onChange={textRules => onPropertiesChange({ textRules })} />
           </div>
         </details>
+        </div>
           </div>
           
           <footer className="border-t border-carbon/10 bg-carbon/5 px-6 py-4 flex justify-end gap-3">
-            <button 
-              type="button" 
-              onClick={() => setIsEditorOpen(false)} 
-              className="rounded px-4 py-2 text-xs font-bold text-carbon/60 hover:bg-carbon/10 transition-colors"
-            >
-              Cancelar
-            </button>
             <button 
               type="button"
               onClick={() => setIsEditorOpen(false)}
               className="rounded bg-carbon px-6 py-2 text-xs font-bold text-lienzo hover:bg-carbon/80 transition-colors shadow-md"
             >
-              Aceptar
+              Hecho
             </button>
           </footer>
         </div>

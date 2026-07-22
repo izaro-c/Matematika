@@ -3,8 +3,8 @@ import { createDiagramSpec, DiagramRenderer } from '@/shared/diagrams/public';
 /* @matematika-diagram-spec:start */
 export const Incidence2Spec = createDiagramSpec(
 {
-  "version": 2,
-  "renderer": "matematika-diagram-renderer-v2",
+  "version": 3,
+  "renderer": "matematika-diagram-renderer-v3",
   "title": "Axioma de Incidencia II",
   "componentId": "axioma-de-incidencia-ii",
   "category": "Axiomas",
@@ -52,7 +52,7 @@ export const Incidence2Spec = createDiagramSpec(
     }
   ],
   "groups": [],
-  "points": [
+  "objects": [
     {
       "id": "pA",
       "label": "A",
@@ -69,16 +69,22 @@ export const Incidence2Spec = createDiagramSpec(
       },
       "target": true,
       "targetId": "pA",
-      "style": {
-        "pointSize": 7,
-        "highlightPointSize": 10,
+      "objectType": "point",
+      "definition": {
+        "type": "coordinates",
+        "x": -3.88,
+        "y": 0
+      },
+      "mobility": {
+        "type": "on-support",
+        "support": "lineCD"
+      },
+      "appearance": {
+        "size": 7,
+        "highlightSize": 10,
         "preserveColorOnHighlight": true
       },
-      "x": -3.88,
-      "y": 0,
-      "fixed": false,
-      "constraint": "glider",
-      "gliderTarget": "lineCD"
+      "interaction": {}
     },
     {
       "id": "pB",
@@ -96,16 +102,22 @@ export const Incidence2Spec = createDiagramSpec(
       },
       "target": true,
       "targetId": "pB",
-      "style": {
-        "pointSize": 7,
-        "highlightPointSize": 10,
+      "objectType": "point",
+      "definition": {
+        "type": "coordinates",
+        "x": 4.68,
+        "y": 0
+      },
+      "mobility": {
+        "type": "on-support",
+        "support": "lineCD"
+      },
+      "appearance": {
+        "size": 7,
+        "highlightSize": 10,
         "preserveColorOnHighlight": true
       },
-      "x": 4.68,
-      "y": 0,
-      "fixed": false,
-      "constraint": "glider",
-      "gliderTarget": "lineCD"
+      "interaction": {}
     },
     {
       "id": "pC",
@@ -123,15 +135,21 @@ export const Incidence2Spec = createDiagramSpec(
       },
       "target": true,
       "targetId": "pC",
-      "style": {
-        "pointSize": 0,
-        "highlightPointSize": 0,
+      "objectType": "point",
+      "definition": {
+        "type": "coordinates",
+        "x": 0,
+        "y": 0
+      },
+      "mobility": {
+        "type": "fixed"
+      },
+      "appearance": {
+        "size": 0,
+        "highlightSize": 0,
         "preserveColorOnHighlight": true
       },
-      "x": 0,
-      "y": 0,
-      "fixed": true,
-      "constraint": "fixed"
+      "interaction": {}
     },
     {
       "id": "pD",
@@ -149,13 +167,18 @@ export const Incidence2Spec = createDiagramSpec(
       },
       "target": true,
       "targetId": "pD",
-      "x": 2,
-      "y": 0,
-      "fixed": true,
-      "constraint": "fixed"
-    }
-  ],
-  "elements": [
+      "objectType": "point",
+      "definition": {
+        "type": "coordinates",
+        "x": 2,
+        "y": 0
+      },
+      "mobility": {
+        "type": "fixed"
+      },
+      "appearance": {},
+      "interaction": {}
+    },
     {
       "id": "lineCD",
       "label": "Recta",
@@ -172,34 +195,26 @@ export const Incidence2Spec = createDiagramSpec(
       },
       "target": true,
       "targetId": "lineCD",
-      "style": {
+      "objectType": "path",
+      "geometry": {
+        "type": "line",
+        "construction": {
+          "type": "through-points",
+          "points": [
+            "pC",
+            "pD"
+          ]
+        }
+      },
+      "appearance": {
         "highlightStrokeWidth": 2.4,
         "preserveColorOnHighlight": true
-      },
-      "kind": "line",
-      "refs": [
-        "pC",
-        "pD"
-      ]
+      }
     }
   ],
-  "sliders": [],
+  "relations": [],
   "steps": [],
-  "constraints": [],
-  "dependencies": [
-    {
-      "sourceId": "pC",
-      "targetId": "lineCD",
-      "relation": "construction"
-    },
-    {
-      "sourceId": "pD",
-      "targetId": "lineCD",
-      "relation": "construction"
-    }
-  ],
-  "note": "Toda recta contiene al menos dos puntos",
-  "extensions": {}
+  "note": "Toda recta contiene al menos dos puntos"
 }
 );
 /* @matematika-diagram-spec:end */

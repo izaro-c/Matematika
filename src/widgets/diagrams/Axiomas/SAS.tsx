@@ -3,8 +3,8 @@ import { createDiagramSpec, DiagramRenderer } from '@/shared/diagrams/public';
 /* @matematika-diagram-spec:start */
 export const SASSpec = createDiagramSpec(
 {
-  "version": 2,
-  "renderer": "matematika-diagram-renderer-v2",
+  "version": 3,
+  "renderer": "matematika-diagram-renderer-v3",
   "title": "Axioma de Congruencia V",
   "componentId": "axioma-de-congruencia-v",
   "category": "Axiomas",
@@ -128,7 +128,7 @@ export const SASSpec = createDiagramSpec(
       "targetId": "all"
     }
   ],
-  "points": [
+  "objects": [
     {
       "id": "pA",
       "label": "A",
@@ -148,15 +148,21 @@ export const SASSpec = createDiagramSpec(
       },
       "target": true,
       "targetId": "pA",
-      "style": {
-        "pointSize": 7,
-        "highlightPointSize": 10,
+      "objectType": "point",
+      "definition": {
+        "type": "coordinates",
+        "x": -4.21,
+        "y": 2.47
+      },
+      "mobility": {
+        "type": "free"
+      },
+      "appearance": {
+        "size": 7,
+        "highlightSize": 10,
         "preserveColorOnHighlight": true
       },
-      "x": -4.21,
-      "y": 2.47,
-      "fixed": false,
-      "constraint": "free"
+      "interaction": {}
     },
     {
       "id": "pB",
@@ -177,15 +183,21 @@ export const SASSpec = createDiagramSpec(
       },
       "target": true,
       "targetId": "pB",
-      "style": {
-        "pointSize": 7,
-        "highlightPointSize": 10,
+      "objectType": "point",
+      "definition": {
+        "type": "coordinates",
+        "x": -6,
+        "y": -2.4
+      },
+      "mobility": {
+        "type": "free"
+      },
+      "appearance": {
+        "size": 7,
+        "highlightSize": 10,
         "preserveColorOnHighlight": true
       },
-      "x": -6,
-      "y": -2.4,
-      "fixed": false,
-      "constraint": "free"
+      "interaction": {}
     },
     {
       "id": "pC",
@@ -206,15 +218,21 @@ export const SASSpec = createDiagramSpec(
       },
       "target": true,
       "targetId": "pC",
-      "style": {
-        "pointSize": 7,
-        "highlightPointSize": 10,
+      "objectType": "point",
+      "definition": {
+        "type": "coordinates",
+        "x": -1.53,
+        "y": -2
+      },
+      "mobility": {
+        "type": "free"
+      },
+      "appearance": {
+        "size": 7,
+        "highlightSize": 10,
         "preserveColorOnHighlight": true
       },
-      "x": -1.53,
-      "y": -2,
-      "fixed": false,
-      "constraint": "free"
+      "interaction": {}
     },
     {
       "id": "pAA",
@@ -235,15 +253,21 @@ export const SASSpec = createDiagramSpec(
       },
       "target": true,
       "targetId": "pAA",
-      "style": {
-        "pointSize": 7,
-        "highlightPointSize": 10,
+      "objectType": "point",
+      "definition": {
+        "type": "coordinates",
+        "x": 3.07,
+        "y": 2.76
+      },
+      "mobility": {
+        "type": "free"
+      },
+      "appearance": {
+        "size": 7,
+        "highlightSize": 10,
         "preserveColorOnHighlight": true
       },
-      "x": 3.07,
-      "y": 2.76,
-      "fixed": false,
-      "constraint": "free"
+      "interaction": {}
     },
     {
       "id": "pBB",
@@ -264,18 +288,24 @@ export const SASSpec = createDiagramSpec(
       },
       "target": true,
       "targetId": "pBB",
-      "style": {
-        "pointSize": 7,
-        "highlightPointSize": 10,
+      "objectType": "point",
+      "definition": {
+        "type": "coordinates",
+        "x": 1.7598904992544793,
+        "y": -2.2604196135439043
+      },
+      "mobility": {
+        "type": "constrained",
+        "relationIds": [
+          "equalLengthsegAABB"
+        ]
+      },
+      "appearance": {
+        "size": 7,
+        "highlightSize": 10,
         "preserveColorOnHighlight": true
       },
-      "x": 1.7598904992544793,
-      "y": -2.2604196135439043,
-      "fixed": false,
-      "constraint": "constrained",
-      "constraintIds": [
-        "equalLengthsegAABB"
-      ]
+      "interaction": {}
     },
     {
       "id": "pCC",
@@ -296,22 +326,26 @@ export const SASSpec = createDiagramSpec(
       },
       "target": true,
       "targetId": "pCC",
-      "style": {
-        "pointSize": 7,
-        "highlightPointSize": 10,
+      "objectType": "point",
+      "definition": {
+        "type": "coordinates",
+        "x": 6.17016740344622,
+        "y": -1.42954198816643
+      },
+      "mobility": {
+        "type": "constrained",
+        "relationIds": [
+          "equalLengthsegAACC",
+          "equalAnglenonReflexAngleBBAACC"
+        ]
+      },
+      "appearance": {
+        "size": 7,
+        "highlightSize": 10,
         "preserveColorOnHighlight": true
       },
-      "x": 6.17016740344622,
-      "y": -1.42954198816643,
-      "fixed": false,
-      "constraint": "constrained",
-      "constraintIds": [
-        "equalLengthsegAACC",
-        "equalAnglenonReflexAngleBBAACC"
-      ]
-    }
-  ],
-  "elements": [
+      "interaction": {}
+    },
     {
       "id": "segAB",
       "label": "Segmento",
@@ -331,16 +365,19 @@ export const SASSpec = createDiagramSpec(
       },
       "target": true,
       "targetId": "segAB",
-      "style": {
+      "objectType": "path",
+      "geometry": {
+        "type": "segment",
+        "points": [
+          "pA",
+          "pB"
+        ]
+      },
+      "appearance": {
         "strokeWidth": 3.5,
         "highlightStrokeWidth": 5.5,
         "preserveColorOnHighlight": true
-      },
-      "kind": "segment",
-      "refs": [
-        "pA",
-        "pB"
-      ]
+      }
     },
     {
       "id": "segAC",
@@ -361,16 +398,19 @@ export const SASSpec = createDiagramSpec(
       },
       "target": true,
       "targetId": "segAC",
-      "style": {
+      "objectType": "path",
+      "geometry": {
+        "type": "segment",
+        "points": [
+          "pA",
+          "pC"
+        ]
+      },
+      "appearance": {
         "strokeWidth": 3.5,
         "highlightStrokeWidth": 5.5,
         "preserveColorOnHighlight": true
-      },
-      "kind": "segment",
-      "refs": [
-        "pA",
-        "pC"
-      ]
+      }
     },
     {
       "id": "segBC",
@@ -391,14 +431,17 @@ export const SASSpec = createDiagramSpec(
       },
       "target": true,
       "targetId": "segBC",
-      "style": {
-        "preserveColorOnHighlight": true
+      "objectType": "path",
+      "geometry": {
+        "type": "segment",
+        "points": [
+          "pB",
+          "pC"
+        ]
       },
-      "kind": "segment",
-      "refs": [
-        "pB",
-        "pC"
-      ]
+      "appearance": {
+        "preserveColorOnHighlight": true
+      }
     },
     {
       "id": "nonReflexAngleBAC",
@@ -419,16 +462,18 @@ export const SASSpec = createDiagramSpec(
       },
       "target": true,
       "targetId": "nonReflexAngleBAC",
-      "style": {
-        "angleRadius": 1,
-        "preserveColorOnHighlight": true
-      },
-      "kind": "nonReflexAngle",
-      "refs": [
+      "objectType": "angle",
+      "points": [
         "pB",
         "pA",
         "pC"
-      ]
+      ],
+      "sweep": "non-reflex",
+      "marker": "arc",
+      "appearance": {
+        "radius": 1,
+        "preserveColorOnHighlight": true
+      }
     },
     {
       "id": "segAABB",
@@ -449,16 +494,19 @@ export const SASSpec = createDiagramSpec(
       },
       "target": true,
       "targetId": "segAABB",
-      "style": {
+      "objectType": "path",
+      "geometry": {
+        "type": "segment",
+        "points": [
+          "pAA",
+          "pBB"
+        ]
+      },
+      "appearance": {
+        "dashed": true,
         "strokeWidth": 3.5,
         "highlightStrokeWidth": 5.5
-      },
-      "kind": "segment",
-      "refs": [
-        "pAA",
-        "pBB"
-      ],
-      "dashed": true
+      }
     },
     {
       "id": "segAACC",
@@ -479,17 +527,20 @@ export const SASSpec = createDiagramSpec(
       },
       "target": true,
       "targetId": "segAACC",
-      "style": {
+      "objectType": "path",
+      "geometry": {
+        "type": "segment",
+        "points": [
+          "pAA",
+          "pCC"
+        ]
+      },
+      "appearance": {
+        "dashed": true,
         "strokeWidth": 3.5,
         "highlightStrokeWidth": 5.5,
         "preserveColorOnHighlight": true
-      },
-      "kind": "segment",
-      "refs": [
-        "pAA",
-        "pCC"
-      ],
-      "dashed": true
+      }
     },
     {
       "id": "segBBCC",
@@ -509,15 +560,18 @@ export const SASSpec = createDiagramSpec(
       },
       "target": true,
       "targetId": "segBBCC",
-      "style": {
-        "preserveColorOnHighlight": true
+      "objectType": "path",
+      "geometry": {
+        "type": "segment",
+        "points": [
+          "pBB",
+          "pCC"
+        ]
       },
-      "kind": "segment",
-      "refs": [
-        "pBB",
-        "pCC"
-      ],
-      "dashed": true
+      "appearance": {
+        "dashed": true,
+        "preserveColorOnHighlight": true
+      }
     },
     {
       "id": "nonReflexAngleBBAACC",
@@ -538,16 +592,18 @@ export const SASSpec = createDiagramSpec(
       },
       "target": true,
       "targetId": "nonReflexAngleBBAACC",
-      "style": {
-        "angleRadius": 1,
-        "preserveColorOnHighlight": true
-      },
-      "kind": "nonReflexAngle",
-      "refs": [
+      "objectType": "angle",
+      "points": [
         "pBB",
         "pAA",
         "pCC"
-      ]
+      ],
+      "sweep": "non-reflex",
+      "marker": "arc",
+      "appearance": {
+        "radius": 1,
+        "preserveColorOnHighlight": true
+      }
     },
     {
       "id": "congruenceMarkAB",
@@ -568,18 +624,20 @@ export const SASSpec = createDiagramSpec(
       },
       "target": true,
       "targetId": "congruenceMarkAB",
-      "style": {
-        "strokeWidth": 2,
-        "markHeight": 0.75,
-        "preserveColorOnHighlight": true
+      "objectType": "mark",
+      "variant": "congruence",
+      "anchor": {
+        "type": "between-points",
+        "points": [
+          "pA",
+          "pB"
+        ]
       },
-      "kind": "congruenceMark",
-      "refs": [
-        "pA",
-        "pB"
-      ],
-      "properties": {
-        "markCount": 1
+      "count": 1,
+      "height": 0.75,
+      "appearance": {
+        "strokeWidth": 2,
+        "preserveColorOnHighlight": true
       }
     },
     {
@@ -601,21 +659,20 @@ export const SASSpec = createDiagramSpec(
       },
       "target": true,
       "targetId": "congruenceMarkAC",
-      "style": {
-        "strokeWidth": 2,
-        "fillOpacity": 0.11,
-        "markHeight": 0.75,
-        "highlightStrokeWidth": 4.8,
-        "highlightFillOpacity": 0.26,
-        "preserveColorOnHighlight": true
+      "objectType": "mark",
+      "variant": "congruence",
+      "anchor": {
+        "type": "between-points",
+        "points": [
+          "pA",
+          "pC"
+        ]
       },
-      "kind": "congruenceMark",
-      "refs": [
-        "pA",
-        "pC"
-      ],
-      "properties": {
-        "markCount": 2
+      "count": 2,
+      "height": 0.75,
+      "appearance": {
+        "strokeWidth": 2,
+        "preserveColorOnHighlight": true
       }
     },
     {
@@ -637,18 +694,20 @@ export const SASSpec = createDiagramSpec(
       },
       "target": true,
       "targetId": "congruenceMarkAABB",
-      "style": {
-        "strokeWidth": 2,
-        "markHeight": 0.75,
-        "preserveColorOnHighlight": true
+      "objectType": "mark",
+      "variant": "congruence",
+      "anchor": {
+        "type": "between-points",
+        "points": [
+          "pAA",
+          "pBB"
+        ]
       },
-      "kind": "congruenceMark",
-      "refs": [
-        "pAA",
-        "pBB"
-      ],
-      "properties": {
-        "markCount": 1
+      "count": 1,
+      "height": 0.75,
+      "appearance": {
+        "strokeWidth": 2,
+        "preserveColorOnHighlight": true
       }
     },
     {
@@ -670,18 +729,20 @@ export const SASSpec = createDiagramSpec(
       },
       "target": true,
       "targetId": "congruenceMarkAACC",
-      "style": {
-        "strokeWidth": 2,
-        "markHeight": 0.75,
-        "preserveColorOnHighlight": true
+      "objectType": "mark",
+      "variant": "congruence",
+      "anchor": {
+        "type": "between-points",
+        "points": [
+          "pAA",
+          "pCC"
+        ]
       },
-      "kind": "congruenceMark",
-      "refs": [
-        "pAA",
-        "pCC"
-      ],
-      "properties": {
-        "markCount": 2
+      "count": 2,
+      "height": 0.75,
+      "appearance": {
+        "strokeWidth": 2,
+        "preserveColorOnHighlight": true
       }
     },
     {
@@ -702,18 +763,20 @@ export const SASSpec = createDiagramSpec(
       },
       "target": true,
       "targetId": "nonReflexAngleCBA",
-      "style": {
-        "strokeWidth": 0,
-        "fillOpacity": 0,
-        "angleRadius": 1,
-        "preserveColorOnHighlight": true
-      },
-      "kind": "nonReflexAngle",
-      "refs": [
+      "objectType": "angle",
+      "points": [
         "pC",
         "pB",
         "pA"
-      ]
+      ],
+      "sweep": "non-reflex",
+      "marker": "arc",
+      "appearance": {
+        "radius": 1,
+        "strokeWidth": 0,
+        "fillOpacity": 0,
+        "preserveColorOnHighlight": true
+      }
     },
     {
       "id": "nonReflexAngleACB",
@@ -733,18 +796,20 @@ export const SASSpec = createDiagramSpec(
       },
       "target": true,
       "targetId": "nonReflexAngleACB",
-      "style": {
-        "strokeWidth": 0,
-        "fillOpacity": 0,
-        "angleRadius": 1,
-        "preserveColorOnHighlight": true
-      },
-      "kind": "nonReflexAngle",
-      "refs": [
+      "objectType": "angle",
+      "points": [
         "pA",
         "pC",
         "pB"
-      ]
+      ],
+      "sweep": "non-reflex",
+      "marker": "arc",
+      "appearance": {
+        "radius": 1,
+        "strokeWidth": 0,
+        "fillOpacity": 0,
+        "preserveColorOnHighlight": true
+      }
     },
     {
       "id": "nonReflexAngleBBCCAA",
@@ -764,18 +829,20 @@ export const SASSpec = createDiagramSpec(
       },
       "target": true,
       "targetId": "nonReflexAngleBBCCAA",
-      "style": {
-        "strokeWidth": 0,
-        "fillOpacity": 0,
-        "angleRadius": 1,
-        "preserveColorOnHighlight": true
-      },
-      "kind": "nonReflexAngle",
-      "refs": [
+      "objectType": "angle",
+      "points": [
         "pBB",
         "pCC",
         "pAA"
-      ]
+      ],
+      "sweep": "non-reflex",
+      "marker": "arc",
+      "appearance": {
+        "radius": 1,
+        "strokeWidth": 0,
+        "fillOpacity": 0,
+        "preserveColorOnHighlight": true
+      }
     },
     {
       "id": "nonReflexAngleAABBCC",
@@ -795,18 +862,20 @@ export const SASSpec = createDiagramSpec(
       },
       "target": true,
       "targetId": "nonReflexAngleAABBCC",
-      "style": {
-        "strokeWidth": 0,
-        "fillOpacity": 0,
-        "angleRadius": 1,
-        "preserveColorOnHighlight": true
-      },
-      "kind": "nonReflexAngle",
-      "refs": [
+      "objectType": "angle",
+      "points": [
         "pAA",
         "pBB",
         "pCC"
-      ]
+      ],
+      "sweep": "non-reflex",
+      "marker": "arc",
+      "appearance": {
+        "radius": 1,
+        "strokeWidth": 0,
+        "fillOpacity": 0,
+        "preserveColorOnHighlight": true
+      }
     },
     {
       "id": "congruenceMarkBC",
@@ -826,18 +895,20 @@ export const SASSpec = createDiagramSpec(
       },
       "target": true,
       "targetId": "congruenceMarkBC",
-      "style": {
-        "strokeWidth": 0,
-        "markHeight": 1,
-        "preserveColorOnHighlight": true
+      "objectType": "mark",
+      "variant": "congruence",
+      "anchor": {
+        "type": "between-points",
+        "points": [
+          "pB",
+          "pC"
+        ]
       },
-      "kind": "congruenceMark",
-      "refs": [
-        "pB",
-        "pC"
-      ],
-      "properties": {
-        "markCount": 3
+      "count": 3,
+      "height": 1,
+      "appearance": {
+        "strokeWidth": 0,
+        "preserveColorOnHighlight": true
       }
     },
     {
@@ -858,316 +929,60 @@ export const SASSpec = createDiagramSpec(
       },
       "target": true,
       "targetId": "congruenceMarkBBCC",
-      "style": {
-        "strokeWidth": 0,
-        "markHeight": 1,
-        "preserveColorOnHighlight": true
+      "objectType": "mark",
+      "variant": "congruence",
+      "anchor": {
+        "type": "between-points",
+        "points": [
+          "pBB",
+          "pCC"
+        ]
       },
-      "kind": "congruenceMark",
-      "refs": [
-        "pBB",
-        "pCC"
-      ],
-      "properties": {
-        "markCount": 3
+      "count": 3,
+      "height": 1,
+      "appearance": {
+        "strokeWidth": 0,
+        "preserveColorOnHighlight": true
       }
     }
   ],
-  "sliders": [],
-  "steps": [],
-  "constraints": [
+  "relations": [
     {
       "id": "equalLengthsegAABB",
       "label": "Segmento tiene la misma longitud que Segmento",
-      "kind": "equalLength",
-      "refs": [
-        "pBB",
-        "pAA",
+      "enabled": true,
+      "type": "equal-length",
+      "segments": [
+        "segAABB",
         "segAB"
       ],
-      "enabled": true
+      "drivenPoint": "pBB"
     },
     {
       "id": "equalLengthsegAACC",
       "label": "Segmento tiene la misma longitud que Segmento",
-      "kind": "equalLength",
-      "refs": [
-        "pCC",
-        "pAA",
+      "enabled": true,
+      "type": "equal-length",
+      "segments": [
+        "segAACC",
         "segAC"
       ],
-      "enabled": true
+      "drivenPoint": "pCC"
     },
     {
       "id": "equalAnglenonReflexAngleBBAACC",
       "label": "$\\alpha'$ tiene la misma amplitud que $\\alpha$",
-      "kind": "equalAngle",
-      "refs": [
-        "pCC",
-        "pAA",
-        "pBB",
-        "nonReflexAngleBAC",
-        "nonReflexAngleBBAACC"
+      "enabled": true,
+      "type": "equal-angle",
+      "angles": [
+        "nonReflexAngleBBAACC",
+        "nonReflexAngleBAC"
       ],
-      "enabled": true
+      "drivenPoint": "pCC"
     }
   ],
-  "dependencies": [
-    {
-      "sourceId": "pA",
-      "targetId": "segAB",
-      "relation": "construction"
-    },
-    {
-      "sourceId": "pB",
-      "targetId": "segAB",
-      "relation": "construction"
-    },
-    {
-      "sourceId": "pA",
-      "targetId": "segAC",
-      "relation": "construction"
-    },
-    {
-      "sourceId": "pC",
-      "targetId": "segAC",
-      "relation": "construction"
-    },
-    {
-      "sourceId": "pB",
-      "targetId": "segBC",
-      "relation": "construction"
-    },
-    {
-      "sourceId": "pC",
-      "targetId": "segBC",
-      "relation": "construction"
-    },
-    {
-      "sourceId": "pB",
-      "targetId": "nonReflexAngleBAC",
-      "relation": "construction"
-    },
-    {
-      "sourceId": "pA",
-      "targetId": "nonReflexAngleBAC",
-      "relation": "construction"
-    },
-    {
-      "sourceId": "pC",
-      "targetId": "nonReflexAngleBAC",
-      "relation": "construction"
-    },
-    {
-      "sourceId": "pAA",
-      "targetId": "segAABB",
-      "relation": "construction"
-    },
-    {
-      "sourceId": "pBB",
-      "targetId": "segAABB",
-      "relation": "construction"
-    },
-    {
-      "sourceId": "pAA",
-      "targetId": "segAACC",
-      "relation": "construction"
-    },
-    {
-      "sourceId": "pCC",
-      "targetId": "segAACC",
-      "relation": "construction"
-    },
-    {
-      "sourceId": "pBB",
-      "targetId": "segBBCC",
-      "relation": "construction"
-    },
-    {
-      "sourceId": "pCC",
-      "targetId": "segBBCC",
-      "relation": "construction"
-    },
-    {
-      "sourceId": "pBB",
-      "targetId": "nonReflexAngleBBAACC",
-      "relation": "construction"
-    },
-    {
-      "sourceId": "pAA",
-      "targetId": "nonReflexAngleBBAACC",
-      "relation": "construction"
-    },
-    {
-      "sourceId": "pCC",
-      "targetId": "nonReflexAngleBBAACC",
-      "relation": "construction"
-    },
-    {
-      "sourceId": "pA",
-      "targetId": "congruenceMarkAB",
-      "relation": "construction"
-    },
-    {
-      "sourceId": "pB",
-      "targetId": "congruenceMarkAB",
-      "relation": "construction"
-    },
-    {
-      "sourceId": "pA",
-      "targetId": "congruenceMarkAC",
-      "relation": "construction"
-    },
-    {
-      "sourceId": "pC",
-      "targetId": "congruenceMarkAC",
-      "relation": "construction"
-    },
-    {
-      "sourceId": "pAA",
-      "targetId": "congruenceMarkAABB",
-      "relation": "construction"
-    },
-    {
-      "sourceId": "pBB",
-      "targetId": "congruenceMarkAABB",
-      "relation": "construction"
-    },
-    {
-      "sourceId": "pAA",
-      "targetId": "congruenceMarkAACC",
-      "relation": "construction"
-    },
-    {
-      "sourceId": "pCC",
-      "targetId": "congruenceMarkAACC",
-      "relation": "construction"
-    },
-    {
-      "sourceId": "pAA",
-      "targetId": "pBB",
-      "relation": "constraint",
-      "constraintId": "equalLengthsegAABB"
-    },
-    {
-      "sourceId": "segAB",
-      "targetId": "pBB",
-      "relation": "constraint",
-      "constraintId": "equalLengthsegAABB"
-    },
-    {
-      "sourceId": "pAA",
-      "targetId": "pCC",
-      "relation": "constraint",
-      "constraintId": "equalLengthsegAACC"
-    },
-    {
-      "sourceId": "segAC",
-      "targetId": "pCC",
-      "relation": "constraint",
-      "constraintId": "equalLengthsegAACC"
-    },
-    {
-      "sourceId": "pAA",
-      "targetId": "pCC",
-      "relation": "constraint",
-      "constraintId": "equalAnglenonReflexAngleBBAACC"
-    },
-    {
-      "sourceId": "pBB",
-      "targetId": "pCC",
-      "relation": "constraint",
-      "constraintId": "equalAnglenonReflexAngleBBAACC"
-    },
-    {
-      "sourceId": "nonReflexAngleBAC",
-      "targetId": "pCC",
-      "relation": "constraint",
-      "constraintId": "equalAnglenonReflexAngleBBAACC"
-    },
-    {
-      "sourceId": "pC",
-      "targetId": "nonReflexAngleCBA",
-      "relation": "construction"
-    },
-    {
-      "sourceId": "pB",
-      "targetId": "nonReflexAngleCBA",
-      "relation": "construction"
-    },
-    {
-      "sourceId": "pA",
-      "targetId": "nonReflexAngleCBA",
-      "relation": "construction"
-    },
-    {
-      "sourceId": "pA",
-      "targetId": "nonReflexAngleACB",
-      "relation": "construction"
-    },
-    {
-      "sourceId": "pC",
-      "targetId": "nonReflexAngleACB",
-      "relation": "construction"
-    },
-    {
-      "sourceId": "pB",
-      "targetId": "nonReflexAngleACB",
-      "relation": "construction"
-    },
-    {
-      "sourceId": "pBB",
-      "targetId": "nonReflexAngleBBCCAA",
-      "relation": "construction"
-    },
-    {
-      "sourceId": "pCC",
-      "targetId": "nonReflexAngleBBCCAA",
-      "relation": "construction"
-    },
-    {
-      "sourceId": "pAA",
-      "targetId": "nonReflexAngleBBCCAA",
-      "relation": "construction"
-    },
-    {
-      "sourceId": "pAA",
-      "targetId": "nonReflexAngleAABBCC",
-      "relation": "construction"
-    },
-    {
-      "sourceId": "pBB",
-      "targetId": "nonReflexAngleAABBCC",
-      "relation": "construction"
-    },
-    {
-      "sourceId": "pCC",
-      "targetId": "nonReflexAngleAABBCC",
-      "relation": "construction"
-    },
-    {
-      "sourceId": "pB",
-      "targetId": "congruenceMarkBC",
-      "relation": "construction"
-    },
-    {
-      "sourceId": "pC",
-      "targetId": "congruenceMarkBC",
-      "relation": "construction"
-    },
-    {
-      "sourceId": "pBB",
-      "targetId": "congruenceMarkBBCC",
-      "relation": "construction"
-    },
-    {
-      "sourceId": "pCC",
-      "targetId": "congruenceMarkBBCC",
-      "relation": "construction"
-    }
-  ],
-  "note": "Arrastra A, B y C",
-  "extensions": {}
+  "steps": [],
+  "note": "Arrastra A, B y C"
 }
 );
 /* @matematika-diagram-spec:end */

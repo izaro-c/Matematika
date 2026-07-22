@@ -51,11 +51,13 @@ describe('axiomas de continuidad editables', () => {
       step: 1,
       maxExpression: 'floor(segCD.length/segAB.length+0.000000001)+1',
     });
-    expect(model.points.find(item => item.id === 'pAccumulated')).toMatchObject({
+    const accumulatedPoint = model.points.find(item => item.id === 'pAccumulated');
+    expect(accumulatedPoint).toMatchObject({
       constraint: 'derived',
-      dependencies: ['pBase', 'n', 'pA', 'pB'],
       xExpression: 'pBase.x+n*abs(pB.x-pA.x)',
     });
+    expect(accumulatedPoint?.dependencies).toHaveLength(4);
+    expect(accumulatedPoint?.dependencies).toEqual(expect.arrayContaining(['pBase', 'n', 'pA', 'pB']));
     expect(model.elements.find(item => item.id === 'copyTicks')).toMatchObject({
       kind: 'measureTicks',
       properties: { tickDistanceExpression: 'abs(pB.x-pA.x)', minorTickCount: 0 },

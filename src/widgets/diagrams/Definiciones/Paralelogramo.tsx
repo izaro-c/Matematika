@@ -3,8 +3,8 @@ import { createDiagramSpec, DiagramRenderer } from '@/shared/diagrams/public';
 /* @matematika-diagram-spec:start */
 export const ParalelogramoSpec = createDiagramSpec(
 {
-  "version": 2,
-  "renderer": "matematika-diagram-renderer-v2",
+  "version": 3,
+  "renderer": "matematika-diagram-renderer-v3",
   "title": "Paralelogramo",
   "componentId": "paralelogramo",
   "category": "Definiciones",
@@ -193,7 +193,7 @@ export const ParalelogramoSpec = createDiagramSpec(
       "color": "pizarra"
     }
   ],
-  "points": [
+  "objects": [
     {
       "id": "A",
       "label": "A",
@@ -210,21 +210,27 @@ export const ParalelogramoSpec = createDiagramSpec(
         "role": "primary"
       },
       "target": false,
-      "style": {
-        "pointSize": 7,
+      "objectType": "point",
+      "definition": {
+        "type": "coordinates",
+        "x": -3,
+        "y": -1.5
+      },
+      "mobility": {
+        "type": "fixed"
+      },
+      "appearance": {
+        "size": 7,
+        "labelVisible": true,
         "labelOffset": [
           -16,
           10
         ],
         "labelSize": 19,
-        "highlightPointSize": 10,
+        "highlightSize": 10,
         "preserveColorOnHighlight": true
       },
-      "x": -3,
-      "y": -1.5,
-      "showLabel": true,
-      "fixed": true,
-      "constraint": "fixed"
+      "interaction": {}
     },
     {
       "id": "B",
@@ -242,21 +248,27 @@ export const ParalelogramoSpec = createDiagramSpec(
         "role": "primary"
       },
       "target": false,
-      "style": {
-        "pointSize": 7,
+      "objectType": "point",
+      "definition": {
+        "type": "coordinates",
+        "x": 1.5,
+        "y": -1.5
+      },
+      "mobility": {
+        "type": "fixed"
+      },
+      "appearance": {
+        "size": 7,
+        "labelVisible": true,
         "labelOffset": [
           10,
           10
         ],
         "labelSize": 19,
-        "highlightPointSize": 10,
+        "highlightSize": 10,
         "preserveColorOnHighlight": true
       },
-      "x": 1.5,
-      "y": -1.5,
-      "showLabel": true,
-      "fixed": true,
-      "constraint": "fixed"
+      "interaction": {}
     },
     {
       "id": "D",
@@ -275,32 +287,39 @@ export const ParalelogramoSpec = createDiagramSpec(
       },
       "target": true,
       "targetId": "vertice-movil",
-      "style": {
-        "pointSize": 7,
+      "objectType": "point",
+      "definition": {
+        "type": "coordinates",
+        "x": -1.5,
+        "y": 2
+      },
+      "mobility": {
+        "type": "constrained",
+        "relationIds": [
+          "mantenerConvexo"
+        ]
+      },
+      "appearance": {
+        "size": 7,
+        "labelVisible": true,
         "labelOffset": [
           -18,
           -18
         ],
         "labelSize": 19,
-        "highlightPointSize": 10,
+        "highlightSize": 10,
         "preserveColorOnHighlight": true
       },
-      "x": -1.5,
-      "y": 2,
-      "showLabel": true,
-      "fixed": false,
-      "constraint": "constrained",
-      "constraintIds": [
-        "mantenerConvexo"
-      ],
-      "snapToGrid": true,
-      "snapSize": 0.25,
-      "attractorIds": [
-        "guiaRectangulo",
-        "guiaLadosIguales"
-      ],
-      "attractorDistance": 0.45,
-      "snatchDistance": 0.62
+      "interaction": {
+        "snapToGrid": true,
+        "snapSize": 0.25,
+        "attractorIds": [
+          "guiaRectangulo",
+          "guiaLadosIguales"
+        ],
+        "attractorDistance": 0.45,
+        "snatchDistance": 0.62
+      }
     },
     {
       "id": "C",
@@ -318,31 +337,32 @@ export const ParalelogramoSpec = createDiagramSpec(
         "role": "construction"
       },
       "target": false,
-      "style": {
-        "pointSize": 7,
+      "objectType": "point",
+      "definition": {
+        "type": "expression",
+        "x": "B.x+D.x-A.x",
+        "y": "B.y+D.y-A.y",
+        "fallback": [
+          3,
+          2
+        ]
+      },
+      "mobility": {
+        "type": "fixed"
+      },
+      "appearance": {
+        "size": 7,
+        "labelVisible": true,
         "labelOffset": [
           10,
           -18
         ],
         "labelSize": 19,
-        "highlightPointSize": 10,
+        "highlightSize": 10,
         "preserveColorOnHighlight": true
       },
-      "x": 3,
-      "y": 2,
-      "showLabel": true,
-      "fixed": true,
-      "constraint": "derived",
-      "dependencies": [
-        "A",
-        "B",
-        "D"
-      ],
-      "xExpression": "B.x+D.x-A.x",
-      "yExpression": "B.y+D.y-A.y"
-    }
-  ],
-  "elements": [
+      "interaction": {}
+    },
     {
       "id": "guiaRectangulo",
       "label": "Guía perpendicular para rectángulos",
@@ -359,18 +379,24 @@ export const ParalelogramoSpec = createDiagramSpec(
         "role": "construction"
       },
       "target": false,
-      "style": {
+      "objectType": "path",
+      "geometry": {
+        "type": "line",
+        "construction": {
+          "type": "perpendicular",
+          "linePoints": [
+            "A",
+            "B"
+          ],
+          "through": "A"
+        }
+      },
+      "appearance": {
         "strokeWidth": 1.2,
         "strokeOpacity": 0.25,
         "highlightStrokeWidth": 4.2,
         "preserveColorOnHighlight": true
-      },
-      "kind": "perpendicular",
-      "refs": [
-        "A",
-        "B",
-        "A"
-      ]
+      }
     },
     {
       "id": "guiaLadosIguales",
@@ -388,18 +414,19 @@ export const ParalelogramoSpec = createDiagramSpec(
         "role": "construction"
       },
       "target": false,
-      "style": {
+      "objectType": "path",
+      "geometry": {
+        "type": "circle",
+        "center": "A",
+        "point": "B"
+      },
+      "appearance": {
         "strokeWidth": 1.2,
         "strokeOpacity": 0.25,
         "fillOpacity": 0,
         "highlightStrokeWidth": 4.2,
         "preserveColorOnHighlight": true
-      },
-      "kind": "circle",
-      "refs": [
-        "A",
-        "B"
-      ]
+      }
     },
     {
       "id": "poligono",
@@ -419,20 +446,23 @@ export const ParalelogramoSpec = createDiagramSpec(
         "role": "primary"
       },
       "target": false,
-      "style": {
+      "objectType": "path",
+      "geometry": {
+        "type": "polygon",
+        "points": [
+          "A",
+          "B",
+          "C",
+          "D"
+        ]
+      },
+      "appearance": {
         "strokeWidth": 2.4,
         "fillOpacity": 0.12,
         "highlightStrokeWidth": 4.2,
         "highlightFillOpacity": 0.28,
         "preserveColorOnHighlight": true
-      },
-      "kind": "polygon",
-      "refs": [
-        "A",
-        "B",
-        "C",
-        "D"
-      ]
+      }
     },
     {
       "id": "AB",
@@ -452,16 +482,19 @@ export const ParalelogramoSpec = createDiagramSpec(
         "role": "secondary"
       },
       "target": false,
-      "style": {
+      "objectType": "path",
+      "geometry": {
+        "type": "segment",
+        "points": [
+          "A",
+          "B"
+        ]
+      },
+      "appearance": {
         "strokeWidth": 2.4,
         "highlightStrokeWidth": 4.2,
         "preserveColorOnHighlight": true
-      },
-      "kind": "segment",
-      "refs": [
-        "A",
-        "B"
-      ]
+      }
     },
     {
       "id": "BC",
@@ -481,16 +514,19 @@ export const ParalelogramoSpec = createDiagramSpec(
         "role": "secondary"
       },
       "target": false,
-      "style": {
+      "objectType": "path",
+      "geometry": {
+        "type": "segment",
+        "points": [
+          "B",
+          "C"
+        ]
+      },
+      "appearance": {
         "strokeWidth": 2.4,
         "highlightStrokeWidth": 4.2,
         "preserveColorOnHighlight": true
-      },
-      "kind": "segment",
-      "refs": [
-        "B",
-        "C"
-      ]
+      }
     },
     {
       "id": "CD",
@@ -510,16 +546,19 @@ export const ParalelogramoSpec = createDiagramSpec(
         "role": "secondary"
       },
       "target": false,
-      "style": {
+      "objectType": "path",
+      "geometry": {
+        "type": "segment",
+        "points": [
+          "C",
+          "D"
+        ]
+      },
+      "appearance": {
         "strokeWidth": 2.4,
         "highlightStrokeWidth": 4.2,
         "preserveColorOnHighlight": true
-      },
-      "kind": "segment",
-      "refs": [
-        "C",
-        "D"
-      ]
+      }
     },
     {
       "id": "DA",
@@ -539,16 +578,19 @@ export const ParalelogramoSpec = createDiagramSpec(
         "role": "secondary"
       },
       "target": false,
-      "style": {
+      "objectType": "path",
+      "geometry": {
+        "type": "segment",
+        "points": [
+          "D",
+          "A"
+        ]
+      },
+      "appearance": {
         "strokeWidth": 2.4,
         "highlightStrokeWidth": 4.2,
         "preserveColorOnHighlight": true
-      },
-      "kind": "segment",
-      "refs": [
-        "D",
-        "A"
-      ]
+      }
     },
     {
       "id": "parAB",
@@ -568,19 +610,20 @@ export const ParalelogramoSpec = createDiagramSpec(
         "role": "secondary"
       },
       "target": false,
-      "style": {
-        "strokeWidth": 2.2,
-        "markHeight": 0.42,
-        "highlightStrokeWidth": 4.2,
-        "preserveColorOnHighlight": true
+      "objectType": "mark",
+      "variant": "parallel",
+      "anchor": {
+        "type": "between-points",
+        "points": [
+          "A",
+          "B"
+        ]
       },
-      "kind": "parallelMark",
-      "refs": [
-        "A",
-        "B"
-      ],
-      "properties": {
-        "markCount": 1
+      "count": 1,
+      "height": 0.42,
+      "appearance": {
+        "strokeWidth": 2.2,
+        "preserveColorOnHighlight": true
       }
     },
     {
@@ -601,19 +644,20 @@ export const ParalelogramoSpec = createDiagramSpec(
         "role": "secondary"
       },
       "target": false,
-      "style": {
-        "strokeWidth": 2.2,
-        "markHeight": 0.42,
-        "highlightStrokeWidth": 4.2,
-        "preserveColorOnHighlight": true
+      "objectType": "mark",
+      "variant": "parallel",
+      "anchor": {
+        "type": "between-points",
+        "points": [
+          "D",
+          "C"
+        ]
       },
-      "kind": "parallelMark",
-      "refs": [
-        "D",
-        "C"
-      ],
-      "properties": {
-        "markCount": 1
+      "count": 1,
+      "height": 0.42,
+      "appearance": {
+        "strokeWidth": 2.2,
+        "preserveColorOnHighlight": true
       }
     },
     {
@@ -634,19 +678,20 @@ export const ParalelogramoSpec = createDiagramSpec(
         "role": "secondary"
       },
       "target": false,
-      "style": {
-        "strokeWidth": 2.2,
-        "markHeight": 0.42,
-        "highlightStrokeWidth": 4.2,
-        "preserveColorOnHighlight": true
+      "objectType": "mark",
+      "variant": "parallel",
+      "anchor": {
+        "type": "between-points",
+        "points": [
+          "B",
+          "C"
+        ]
       },
-      "kind": "parallelMark",
-      "refs": [
-        "B",
-        "C"
-      ],
-      "properties": {
-        "markCount": 2
+      "count": 2,
+      "height": 0.42,
+      "appearance": {
+        "strokeWidth": 2.2,
+        "preserveColorOnHighlight": true
       }
     },
     {
@@ -667,19 +712,20 @@ export const ParalelogramoSpec = createDiagramSpec(
         "role": "secondary"
       },
       "target": false,
-      "style": {
-        "strokeWidth": 2.2,
-        "markHeight": 0.42,
-        "highlightStrokeWidth": 4.2,
-        "preserveColorOnHighlight": true
+      "objectType": "mark",
+      "variant": "parallel",
+      "anchor": {
+        "type": "between-points",
+        "points": [
+          "A",
+          "D"
+        ]
       },
-      "kind": "parallelMark",
-      "refs": [
-        "A",
-        "D"
-      ],
-      "properties": {
-        "markCount": 2
+      "count": 2,
+      "height": 0.42,
+      "appearance": {
+        "strokeWidth": 2.2,
+        "preserveColorOnHighlight": true
       }
     },
     {
@@ -689,6 +735,7 @@ export const ParalelogramoSpec = createDiagramSpec(
       "layerId": "properties",
       "order": 400,
       "visible": true,
+      "visibleWhen": "lt(abs(AB.length-BC.length)/max(AB.length,BC.length),0.04)",
       "locked": false,
       "groupIds": [
         "grupoIgualdad"
@@ -700,20 +747,20 @@ export const ParalelogramoSpec = createDiagramSpec(
         "role": "secondary"
       },
       "target": false,
-      "style": {
-        "strokeWidth": 2.2,
-        "markHeight": 0.34,
-        "highlightStrokeWidth": 4.2,
-        "preserveColorOnHighlight": true
+      "objectType": "mark",
+      "variant": "congruence",
+      "anchor": {
+        "type": "between-points",
+        "points": [
+          "A",
+          "B"
+        ]
       },
-      "kind": "congruenceMark",
-      "refs": [
-        "A",
-        "B"
-      ],
-      "properties": {
-        "markCount": 1,
-        "visibleWhen": "lt(abs(AB.length-BC.length)/max(AB.length,BC.length),0.04)"
+      "count": 1,
+      "height": 0.34,
+      "appearance": {
+        "strokeWidth": 2.2,
+        "preserveColorOnHighlight": true
       }
     },
     {
@@ -723,6 +770,7 @@ export const ParalelogramoSpec = createDiagramSpec(
       "layerId": "properties",
       "order": 410,
       "visible": true,
+      "visibleWhen": "lt(abs(AB.length-BC.length)/max(AB.length,BC.length),0.04)",
       "locked": false,
       "groupIds": [
         "grupoIgualdad"
@@ -734,20 +782,20 @@ export const ParalelogramoSpec = createDiagramSpec(
         "role": "secondary"
       },
       "target": false,
-      "style": {
-        "strokeWidth": 2.2,
-        "markHeight": 0.34,
-        "highlightStrokeWidth": 4.2,
-        "preserveColorOnHighlight": true
+      "objectType": "mark",
+      "variant": "congruence",
+      "anchor": {
+        "type": "between-points",
+        "points": [
+          "B",
+          "C"
+        ]
       },
-      "kind": "congruenceMark",
-      "refs": [
-        "B",
-        "C"
-      ],
-      "properties": {
-        "markCount": 1,
-        "visibleWhen": "lt(abs(AB.length-BC.length)/max(AB.length,BC.length),0.04)"
+      "count": 1,
+      "height": 0.34,
+      "appearance": {
+        "strokeWidth": 2.2,
+        "preserveColorOnHighlight": true
       }
     },
     {
@@ -757,6 +805,7 @@ export const ParalelogramoSpec = createDiagramSpec(
       "layerId": "properties",
       "order": 420,
       "visible": true,
+      "visibleWhen": "lt(abs(AB.length-BC.length)/max(AB.length,BC.length),0.04)",
       "locked": false,
       "groupIds": [
         "grupoIgualdad"
@@ -768,20 +817,20 @@ export const ParalelogramoSpec = createDiagramSpec(
         "role": "secondary"
       },
       "target": false,
-      "style": {
-        "strokeWidth": 2.2,
-        "markHeight": 0.34,
-        "highlightStrokeWidth": 4.2,
-        "preserveColorOnHighlight": true
+      "objectType": "mark",
+      "variant": "congruence",
+      "anchor": {
+        "type": "between-points",
+        "points": [
+          "C",
+          "D"
+        ]
       },
-      "kind": "congruenceMark",
-      "refs": [
-        "C",
-        "D"
-      ],
-      "properties": {
-        "markCount": 1,
-        "visibleWhen": "lt(abs(AB.length-BC.length)/max(AB.length,BC.length),0.04)"
+      "count": 1,
+      "height": 0.34,
+      "appearance": {
+        "strokeWidth": 2.2,
+        "preserveColorOnHighlight": true
       }
     },
     {
@@ -791,6 +840,7 @@ export const ParalelogramoSpec = createDiagramSpec(
       "layerId": "properties",
       "order": 430,
       "visible": true,
+      "visibleWhen": "lt(abs(AB.length-BC.length)/max(AB.length,BC.length),0.04)",
       "locked": false,
       "groupIds": [
         "grupoIgualdad"
@@ -802,20 +852,20 @@ export const ParalelogramoSpec = createDiagramSpec(
         "role": "secondary"
       },
       "target": false,
-      "style": {
-        "strokeWidth": 2.2,
-        "markHeight": 0.34,
-        "highlightStrokeWidth": 4.2,
-        "preserveColorOnHighlight": true
+      "objectType": "mark",
+      "variant": "congruence",
+      "anchor": {
+        "type": "between-points",
+        "points": [
+          "D",
+          "A"
+        ]
       },
-      "kind": "congruenceMark",
-      "refs": [
-        "D",
-        "A"
-      ],
-      "properties": {
-        "markCount": 1,
-        "visibleWhen": "lt(abs(AB.length-BC.length)/max(AB.length,BC.length),0.04)"
+      "count": 1,
+      "height": 0.34,
+      "appearance": {
+        "strokeWidth": 2.2,
+        "preserveColorOnHighlight": true
       }
     },
     {
@@ -825,6 +875,7 @@ export const ParalelogramoSpec = createDiagramSpec(
       "layerId": "properties",
       "order": 500,
       "visible": true,
+      "visibleWhen": "lt(abs((B.x-A.x)*(D.x-A.x)+(B.y-A.y)*(D.y-A.y))/(AB.length*DA.length),0.035)",
       "locked": false,
       "groupIds": [
         "grupoRectos"
@@ -836,22 +887,22 @@ export const ParalelogramoSpec = createDiagramSpec(
         "role": "secondary"
       },
       "target": false,
-      "style": {
-        "strokeWidth": 1.7,
-        "fillOpacity": 0.16,
-        "angleRadius": 0.42,
-        "highlightStrokeWidth": 4.2,
-        "highlightFillOpacity": 0.3,
-        "preserveColorOnHighlight": true
-      },
-      "kind": "rightAngle",
-      "refs": [
+      "objectType": "angle",
+      "points": [
         "B",
         "A",
         "D"
       ],
-      "properties": {
-        "visibleWhen": "lt(abs((B.x-A.x)*(D.x-A.x)+(B.y-A.y)*(D.y-A.y))/(AB.length*DA.length),0.035)"
+      "sweep": "non-reflex",
+      "marker": "square",
+      "perpendicularRelationId": "rectoA-perpendicular",
+      "appearance": {
+        "radius": 0.42,
+        "strokeWidth": 1.7,
+        "fillOpacity": 0.16,
+        "highlightStrokeWidth": 4.2,
+        "highlightFillOpacity": 0.3,
+        "preserveColorOnHighlight": true
       }
     },
     {
@@ -861,6 +912,7 @@ export const ParalelogramoSpec = createDiagramSpec(
       "layerId": "properties",
       "order": 510,
       "visible": true,
+      "visibleWhen": "lt(abs((B.x-A.x)*(D.x-A.x)+(B.y-A.y)*(D.y-A.y))/(AB.length*DA.length),0.035)",
       "locked": false,
       "groupIds": [
         "grupoRectos"
@@ -872,22 +924,22 @@ export const ParalelogramoSpec = createDiagramSpec(
         "role": "secondary"
       },
       "target": false,
-      "style": {
-        "strokeWidth": 1.7,
-        "fillOpacity": 0.16,
-        "angleRadius": 0.42,
-        "highlightStrokeWidth": 4.2,
-        "highlightFillOpacity": 0.3,
-        "preserveColorOnHighlight": true
-      },
-      "kind": "rightAngle",
-      "refs": [
+      "objectType": "angle",
+      "points": [
         "C",
         "B",
         "A"
       ],
-      "properties": {
-        "visibleWhen": "lt(abs((B.x-A.x)*(D.x-A.x)+(B.y-A.y)*(D.y-A.y))/(AB.length*DA.length),0.035)"
+      "sweep": "non-reflex",
+      "marker": "square",
+      "perpendicularRelationId": "rectoB-perpendicular",
+      "appearance": {
+        "radius": 0.42,
+        "strokeWidth": 1.7,
+        "fillOpacity": 0.16,
+        "highlightStrokeWidth": 4.2,
+        "highlightFillOpacity": 0.3,
+        "preserveColorOnHighlight": true
       }
     },
     {
@@ -897,6 +949,7 @@ export const ParalelogramoSpec = createDiagramSpec(
       "layerId": "properties",
       "order": 520,
       "visible": true,
+      "visibleWhen": "lt(abs((B.x-A.x)*(D.x-A.x)+(B.y-A.y)*(D.y-A.y))/(AB.length*DA.length),0.035)",
       "locked": false,
       "groupIds": [
         "grupoRectos"
@@ -908,22 +961,22 @@ export const ParalelogramoSpec = createDiagramSpec(
         "role": "secondary"
       },
       "target": false,
-      "style": {
-        "strokeWidth": 1.7,
-        "fillOpacity": 0.16,
-        "angleRadius": 0.42,
-        "highlightStrokeWidth": 4.2,
-        "highlightFillOpacity": 0.3,
-        "preserveColorOnHighlight": true
-      },
-      "kind": "rightAngle",
-      "refs": [
+      "objectType": "angle",
+      "points": [
         "D",
         "C",
         "B"
       ],
-      "properties": {
-        "visibleWhen": "lt(abs((B.x-A.x)*(D.x-A.x)+(B.y-A.y)*(D.y-A.y))/(AB.length*DA.length),0.035)"
+      "sweep": "non-reflex",
+      "marker": "square",
+      "perpendicularRelationId": "rectoC-perpendicular",
+      "appearance": {
+        "radius": 0.42,
+        "strokeWidth": 1.7,
+        "fillOpacity": 0.16,
+        "highlightStrokeWidth": 4.2,
+        "highlightFillOpacity": 0.3,
+        "preserveColorOnHighlight": true
       }
     },
     {
@@ -933,6 +986,7 @@ export const ParalelogramoSpec = createDiagramSpec(
       "layerId": "properties",
       "order": 530,
       "visible": true,
+      "visibleWhen": "lt(abs((B.x-A.x)*(D.x-A.x)+(B.y-A.y)*(D.y-A.y))/(AB.length*DA.length),0.035)",
       "locked": false,
       "groupIds": [
         "grupoRectos"
@@ -944,22 +998,22 @@ export const ParalelogramoSpec = createDiagramSpec(
         "role": "secondary"
       },
       "target": false,
-      "style": {
-        "strokeWidth": 1.7,
-        "fillOpacity": 0.16,
-        "angleRadius": 0.42,
-        "highlightStrokeWidth": 4.2,
-        "highlightFillOpacity": 0.3,
-        "preserveColorOnHighlight": true
-      },
-      "kind": "rightAngle",
-      "refs": [
+      "objectType": "angle",
+      "points": [
         "A",
         "D",
         "C"
       ],
-      "properties": {
-        "visibleWhen": "lt(abs((B.x-A.x)*(D.x-A.x)+(B.y-A.y)*(D.y-A.y))/(AB.length*DA.length),0.035)"
+      "sweep": "non-reflex",
+      "marker": "square",
+      "perpendicularRelationId": "rectoD-perpendicular",
+      "appearance": {
+        "radius": 0.42,
+        "strokeWidth": 1.7,
+        "fillOpacity": 0.16,
+        "highlightStrokeWidth": 4.2,
+        "highlightFillOpacity": 0.3,
+        "preserveColorOnHighlight": true
       }
     },
     {
@@ -980,21 +1034,23 @@ export const ParalelogramoSpec = createDiagramSpec(
         "role": "secondary"
       },
       "target": false,
-      "style": {
+      "objectType": "angle",
+      "points": [
+        "B",
+        "A",
+        "D"
+      ],
+      "sweep": "non-reflex",
+      "marker": "arc",
+      "appearance": {
+        "radius": 0.62,
         "strokeWidth": 1.5,
         "fillOpacity": 0.18,
-        "angleRadius": 0.62,
         "highlightStrokeWidth": 4.2,
         "highlightFillOpacity": 0.3,
         "highlightVisible": true,
         "preserveColorOnHighlight": true
-      },
-      "kind": "nonReflexAngle",
-      "refs": [
-        "B",
-        "A",
-        "D"
-      ]
+      }
     },
     {
       "id": "anguloB",
@@ -1014,21 +1070,23 @@ export const ParalelogramoSpec = createDiagramSpec(
         "role": "secondary"
       },
       "target": false,
-      "style": {
+      "objectType": "angle",
+      "points": [
+        "C",
+        "B",
+        "A"
+      ],
+      "sweep": "non-reflex",
+      "marker": "arc",
+      "appearance": {
+        "radius": 0.62,
         "strokeWidth": 1.5,
         "fillOpacity": 0.18,
-        "angleRadius": 0.62,
         "highlightStrokeWidth": 4.2,
         "highlightFillOpacity": 0.3,
         "highlightVisible": true,
         "preserveColorOnHighlight": true
-      },
-      "kind": "nonReflexAngle",
-      "refs": [
-        "C",
-        "B",
-        "A"
-      ]
+      }
     },
     {
       "id": "anguloC",
@@ -1048,21 +1106,23 @@ export const ParalelogramoSpec = createDiagramSpec(
         "role": "secondary"
       },
       "target": false,
-      "style": {
+      "objectType": "angle",
+      "points": [
+        "D",
+        "C",
+        "B"
+      ],
+      "sweep": "non-reflex",
+      "marker": "arc",
+      "appearance": {
+        "radius": 0.62,
         "strokeWidth": 1.5,
         "fillOpacity": 0.18,
-        "angleRadius": 0.62,
         "highlightStrokeWidth": 4.2,
         "highlightFillOpacity": 0.3,
         "highlightVisible": true,
         "preserveColorOnHighlight": true
-      },
-      "kind": "nonReflexAngle",
-      "refs": [
-        "D",
-        "C",
-        "B"
-      ]
+      }
     },
     {
       "id": "anguloD",
@@ -1082,21 +1142,23 @@ export const ParalelogramoSpec = createDiagramSpec(
         "role": "secondary"
       },
       "target": false,
-      "style": {
+      "objectType": "angle",
+      "points": [
+        "A",
+        "D",
+        "C"
+      ],
+      "sweep": "non-reflex",
+      "marker": "arc",
+      "appearance": {
+        "radius": 0.62,
         "strokeWidth": 1.5,
         "fillOpacity": 0.18,
-        "angleRadius": 0.62,
         "highlightStrokeWidth": 4.2,
         "highlightFillOpacity": 0.3,
         "highlightVisible": true,
         "preserveColorOnHighlight": true
-      },
-      "kind": "nonReflexAngle",
-      "refs": [
-        "A",
-        "D",
-        "C"
-      ]
+      }
     },
     {
       "id": "AC",
@@ -1116,18 +1178,21 @@ export const ParalelogramoSpec = createDiagramSpec(
         "role": "secondary"
       },
       "target": false,
-      "style": {
+      "objectType": "path",
+      "geometry": {
+        "type": "segment",
+        "points": [
+          "A",
+          "C"
+        ]
+      },
+      "appearance": {
+        "dashed": true,
         "strokeWidth": 1.6,
         "highlightStrokeWidth": 3.4,
         "highlightVisible": true,
         "preserveColorOnHighlight": true
-      },
-      "kind": "segment",
-      "refs": [
-        "A",
-        "C"
-      ],
-      "dashed": true
+      }
     },
     {
       "id": "BD",
@@ -1147,18 +1212,21 @@ export const ParalelogramoSpec = createDiagramSpec(
         "role": "secondary"
       },
       "target": false,
-      "style": {
+      "objectType": "path",
+      "geometry": {
+        "type": "segment",
+        "points": [
+          "B",
+          "D"
+        ]
+      },
+      "appearance": {
+        "dashed": true,
         "strokeWidth": 1.6,
         "highlightStrokeWidth": 3.4,
         "highlightVisible": true,
         "preserveColorOnHighlight": true
-      },
-      "kind": "segment",
-      "refs": [
-        "B",
-        "D"
-      ],
-      "dashed": true
+      }
     },
     {
       "id": "M",
@@ -1178,19 +1246,23 @@ export const ParalelogramoSpec = createDiagramSpec(
         "role": "secondary"
       },
       "target": false,
-      "style": {
-        "strokeWidth": 2.4,
-        "pointSize": 5,
-        "highlightStrokeWidth": 4.2,
-        "highlightPointSize": 8,
-        "highlightVisible": true,
-        "preserveColorOnHighlight": true
+      "objectType": "point",
+      "definition": {
+        "type": "intersection",
+        "supports": [
+          "AC",
+          "BD"
+        ]
       },
-      "kind": "intersection",
-      "refs": [
-        "AC",
-        "BD"
-      ]
+      "mobility": {
+        "type": "fixed"
+      },
+      "appearance": {
+        "size": 5,
+        "highlightSize": 8,
+        "preserveColorOnHighlight": true,
+        "highlightVisible": true
+      }
     },
     {
       "id": "clasificacion",
@@ -1209,21 +1281,11 @@ export const ParalelogramoSpec = createDiagramSpec(
       },
       "target": true,
       "targetId": "clasificacion",
-      "style": {
-        "strokeWidth": 2.4,
-        "highlightStrokeWidth": 4.2,
-        "preserveColorOnHighlight": true
-      },
-      "kind": "infoPanel",
-      "refs": [],
-      "text": "",
-      "properties": {
-        "anchorMode": "viewport",
-        "viewportPosition": [
-          0,
-          0
-        ],
-        "textRules": [
+      "objectType": "annotation",
+      "variant": "panel",
+      "content": {
+        "text": "",
+        "rules": [
           {
             "when": "and(lt(abs(AB.length-BC.length)/max(AB.length,BC.length),0.04),lt(abs((B.x-A.x)*(D.x-A.x)+(B.y-A.y)*(D.y-A.y))/(AB.length*DA.length),0.035))",
             "text": "Cuadrado $\\\\$ 4 lados iguales · 4 ángulos rectos"
@@ -1241,275 +1303,98 @@ export const ParalelogramoSpec = createDiagramSpec(
             "text": "Paralelogramo $\\\\$ 2 pares de lados opuestos paralelos"
           }
         ]
+      },
+      "anchor": {
+        "type": "viewport",
+        "position": [
+          0,
+          0
+        ]
+      },
+      "appearance": {
+        "preserveColorOnHighlight": true
       }
     }
   ],
-  "sliders": [],
-  "steps": [],
-  "constraints": [
+  "relations": [
     {
       "id": "mantenerConvexo",
       "label": "D permanece en el semiplano superior de AB",
-      "kind": "sameSide",
-      "refs": [
+      "enabled": true,
+      "type": "same-half-plane",
+      "points": [
         "D",
-        "A",
-        "B"
+        "A"
       ],
-      "enabled": true
+      "boundary": "B"
+    },
+    {
+      "id": "rectoA-perpendicular",
+      "label": "Perpendicularidad de Ángulo recto en A",
+      "enabled": true,
+      "type": "perpendicular",
+      "supports": [
+        [
+          "A",
+          "B"
+        ],
+        [
+          "A",
+          "D"
+        ]
+      ]
+    },
+    {
+      "id": "rectoB-perpendicular",
+      "label": "Perpendicularidad de Ángulo recto en B",
+      "enabled": true,
+      "type": "perpendicular",
+      "supports": [
+        [
+          "B",
+          "C"
+        ],
+        [
+          "B",
+          "A"
+        ]
+      ]
+    },
+    {
+      "id": "rectoC-perpendicular",
+      "label": "Perpendicularidad de Ángulo recto en C",
+      "enabled": true,
+      "type": "perpendicular",
+      "supports": [
+        [
+          "C",
+          "D"
+        ],
+        [
+          "C",
+          "B"
+        ]
+      ]
+    },
+    {
+      "id": "rectoD-perpendicular",
+      "label": "Perpendicularidad de Ángulo recto en D",
+      "enabled": true,
+      "type": "perpendicular",
+      "supports": [
+        [
+          "D",
+          "A"
+        ],
+        [
+          "D",
+          "C"
+        ]
+      ]
     }
   ],
-  "dependencies": [
-    {
-      "sourceId": "A",
-      "targetId": "guiaRectangulo",
-      "relation": "construction"
-    },
-    {
-      "sourceId": "B",
-      "targetId": "guiaRectangulo",
-      "relation": "construction"
-    },
-    {
-      "sourceId": "A",
-      "targetId": "guiaLadosIguales",
-      "relation": "construction"
-    },
-    {
-      "sourceId": "B",
-      "targetId": "guiaLadosIguales",
-      "relation": "construction"
-    },
-    {
-      "sourceId": "guiaRectangulo",
-      "targetId": "D",
-      "relation": "constraint"
-    },
-    {
-      "sourceId": "guiaLadosIguales",
-      "targetId": "D",
-      "relation": "constraint"
-    },
-    {
-      "sourceId": "A",
-      "targetId": "D",
-      "relation": "constraint",
-      "constraintId": "mantenerConvexo"
-    },
-    {
-      "sourceId": "B",
-      "targetId": "D",
-      "relation": "constraint",
-      "constraintId": "mantenerConvexo"
-    },
-    {
-      "sourceId": "A",
-      "targetId": "C",
-      "relation": "expression"
-    },
-    {
-      "sourceId": "B",
-      "targetId": "C",
-      "relation": "expression"
-    },
-    {
-      "sourceId": "D",
-      "targetId": "C",
-      "relation": "expression"
-    },
-    {
-      "sourceId": "AB",
-      "targetId": "igualAB",
-      "relation": "expression"
-    },
-    {
-      "sourceId": "BC",
-      "targetId": "igualAB",
-      "relation": "expression"
-    },
-    {
-      "sourceId": "AB",
-      "targetId": "igualBC",
-      "relation": "expression"
-    },
-    {
-      "sourceId": "BC",
-      "targetId": "igualBC",
-      "relation": "expression"
-    },
-    {
-      "sourceId": "AB",
-      "targetId": "igualCD",
-      "relation": "expression"
-    },
-    {
-      "sourceId": "BC",
-      "targetId": "igualCD",
-      "relation": "expression"
-    },
-    {
-      "sourceId": "AB",
-      "targetId": "igualDA",
-      "relation": "expression"
-    },
-    {
-      "sourceId": "BC",
-      "targetId": "igualDA",
-      "relation": "expression"
-    },
-    {
-      "sourceId": "A",
-      "targetId": "rectoA",
-      "relation": "expression"
-    },
-    {
-      "sourceId": "B",
-      "targetId": "rectoA",
-      "relation": "expression"
-    },
-    {
-      "sourceId": "D",
-      "targetId": "rectoA",
-      "relation": "expression"
-    },
-    {
-      "sourceId": "AB",
-      "targetId": "rectoA",
-      "relation": "expression"
-    },
-    {
-      "sourceId": "DA",
-      "targetId": "rectoA",
-      "relation": "expression"
-    },
-    {
-      "sourceId": "A",
-      "targetId": "rectoB",
-      "relation": "expression"
-    },
-    {
-      "sourceId": "B",
-      "targetId": "rectoB",
-      "relation": "expression"
-    },
-    {
-      "sourceId": "D",
-      "targetId": "rectoB",
-      "relation": "expression"
-    },
-    {
-      "sourceId": "AB",
-      "targetId": "rectoB",
-      "relation": "expression"
-    },
-    {
-      "sourceId": "DA",
-      "targetId": "rectoB",
-      "relation": "expression"
-    },
-    {
-      "sourceId": "A",
-      "targetId": "rectoC",
-      "relation": "expression"
-    },
-    {
-      "sourceId": "B",
-      "targetId": "rectoC",
-      "relation": "expression"
-    },
-    {
-      "sourceId": "D",
-      "targetId": "rectoC",
-      "relation": "expression"
-    },
-    {
-      "sourceId": "AB",
-      "targetId": "rectoC",
-      "relation": "expression"
-    },
-    {
-      "sourceId": "DA",
-      "targetId": "rectoC",
-      "relation": "expression"
-    },
-    {
-      "sourceId": "A",
-      "targetId": "rectoD",
-      "relation": "expression"
-    },
-    {
-      "sourceId": "B",
-      "targetId": "rectoD",
-      "relation": "expression"
-    },
-    {
-      "sourceId": "D",
-      "targetId": "rectoD",
-      "relation": "expression"
-    },
-    {
-      "sourceId": "AB",
-      "targetId": "rectoD",
-      "relation": "expression"
-    },
-    {
-      "sourceId": "DA",
-      "targetId": "rectoD",
-      "relation": "expression"
-    },
-    {
-      "sourceId": "AB",
-      "targetId": "clasificacion",
-      "relation": "expression"
-    },
-    {
-      "sourceId": "BC",
-      "targetId": "clasificacion",
-      "relation": "expression"
-    },
-    {
-      "sourceId": "B",
-      "targetId": "clasificacion",
-      "relation": "expression"
-    },
-    {
-      "sourceId": "A",
-      "targetId": "clasificacion",
-      "relation": "expression"
-    },
-    {
-      "sourceId": "D",
-      "targetId": "clasificacion",
-      "relation": "expression"
-    },
-    {
-      "sourceId": "DA",
-      "targetId": "clasificacion",
-      "relation": "expression"
-    },
-    {
-      "sourceId": "D",
-      "targetId": "parCD",
-      "relation": "construction"
-    },
-    {
-      "sourceId": "C",
-      "targetId": "parCD",
-      "relation": "construction"
-    },
-    {
-      "sourceId": "A",
-      "targetId": "parDA",
-      "relation": "construction"
-    },
-    {
-      "sourceId": "D",
-      "targetId": "parDA",
-      "relation": "construction"
-    }
-  ],
-  "note": "Mueve D para descubrir los diferentes tipos de paralelogramo",
-  "extensions": {}
+  "steps": [],
+  "note": "Mueve D para descubrir los diferentes tipos de paralelogramo"
 }
 );
 /* @matematika-diagram-spec:end */

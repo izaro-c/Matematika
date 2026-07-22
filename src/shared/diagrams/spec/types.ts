@@ -1,5 +1,9 @@
-export const DIAGRAM_SPEC_VERSION = 2 as const;
-export const DIAGRAM_RENDERER_ID = 'matematika-diagram-renderer-v2' as const;
+/** @deprecated Solo para leer fuentes históricas. */
+export const DIAGRAM_SPEC_V2_VERSION = 2 as const;
+/** @deprecated Solo para leer fuentes históricas. */
+export const DIAGRAM_RENDERER_V2_ID = 'matematika-diagram-renderer-v2' as const;
+export const DIAGRAM_SPEC_VERSION = 3 as const;
+export const DIAGRAM_RENDERER_ID = 'matematika-diagram-renderer-v3' as const;
 export const DEFAULT_ANGLE_RADIUS = 0.55;
 export const DEFAULT_RIGHT_ANGLE_RADIUS = 0.45;
 
@@ -76,6 +80,25 @@ export interface DiagramInfoPanelBlock {
   color?: DiagramColorToken;
   /** Se evalúan en orden y la primera condición verdadera sustituye el contenido base. */
   rules?: DiagramInfoPanelRule[];
+}
+
+export type DiagramHeaderReadingsMode = 'automatic' | 'custom' | 'hidden';
+export type DiagramHeaderReadingPresentation = 'label-value' | 'equality' | 'value';
+
+/** Una lectura declarativa situada bajo el título del diagrama. */
+export interface DiagramHeaderReading {
+  id: string;
+  /** Anotaciones de medida, cotas o paneles con expresión que aportan el valor. */
+  sourceIds: string[];
+  /** Controla si se muestra nombre y valor, solo valor o una igualdad explícita. */
+  presentation: DiagramHeaderReadingPresentation;
+  /** Sustituye el texto situado antes del valor; vacío usa los nombres de las fuentes. */
+  label?: string;
+}
+
+export interface DiagramHeaderConfiguration {
+  readingsMode: DiagramHeaderReadingsMode;
+  readings: DiagramHeaderReading[];
 }
 
 export interface DiagramElementProperties {
@@ -191,6 +214,8 @@ export interface DiagramSceneItemBase {
   layerId: string;
   order: number;
   visible: boolean;
+  /** Condición declarativa de visibilidad compartida por todas las familias. */
+  visibleWhen?: string;
   locked: boolean;
   groupIds: string[];
   selection: DiagramSelectionMetadata;
@@ -264,6 +289,8 @@ export interface DiagramStepOverlay {
 export interface DiagramStepObjectState {
   visible?: boolean;
   emphasis?: DiagramStepEmphasis;
+  /** Conserva el color del objeto si se omite; permite un acento explícito por paso. */
+  emphasisColor?: DiagramColorToken;
   label?: string;
   overlay?: DiagramStepOverlay;
   interactive?: boolean;
@@ -313,8 +340,8 @@ export interface DiagramViewport {
 }
 
 export interface DiagramSpecV2 {
-  version: typeof DIAGRAM_SPEC_VERSION;
-  renderer: typeof DIAGRAM_RENDERER_ID;
+  version: typeof DIAGRAM_SPEC_V2_VERSION;
+  renderer: typeof DIAGRAM_RENDERER_V2_ID;
   title: string;
   componentId: string;
   category: string;
@@ -323,6 +350,8 @@ export interface DiagramSpecV2 {
   grid: boolean;
   /** Permite ocultar en conjunto las etiquetas sin eliminar sus objetos editables. */
   showLabels?: boolean;
+  /** Configuración explícita de las lecturas situadas bajo el título. */
+  header?: DiagramHeaderConfiguration;
   viewport: DiagramViewport;
   layers: DiagramLayer[];
   groups: DiagramGroup[];

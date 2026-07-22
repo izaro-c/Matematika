@@ -43,6 +43,13 @@ function validationStatusClass(kind: 'empty' | 'error' | 'warning' | 'valid'): s
   return 'border-carbon/10 bg-carbon/[0.02] text-carbon/45';
 }
 
+function compactValidationStatusClass(kind: 'empty' | 'error' | 'warning' | 'valid'): string {
+  if (kind === 'error') return 'px-0.5 text-granada';
+  if (kind === 'warning') return 'px-0.5 text-ocre';
+  if (kind === 'valid') return 'px-0.5 text-musgo';
+  return 'px-0.5 text-carbon/45';
+}
+
 const EXPRESSION_SHORTCUTS = [
   { display: '+', token: '+', cursorBack: 0 },
   { display: '−', token: '-', cursorBack: 0 },
@@ -149,29 +156,34 @@ export const DiagramExpressionField: React.FC<DiagramExpressionFieldProps> = ({
   };
 
   const statusClass = validationStatusClass(validation.kind);
+  const validationClass = compact
+    ? compactValidationStatusClass(validation.kind)
+    : `rounded border px-2 py-1 ${statusClass}`;
 
   return (
-    <div className={compact ? 'space-y-1' : 'space-y-2 rounded border border-pavo/20 bg-pavo/5 p-2'}>
+    <div className="space-y-1.5">
       <label className="block text-xs font-bold text-carbon">
         {label}
         <input
           ref={inputRef}
           aria-label={ariaLabel ?? label}
           aria-describedby={`${ariaLabel ?? label}-expression-status`.replace(/\s+/g, '-').toLowerCase()}
-          className="mt-1 w-full rounded border border-carbon/15 bg-lienzo p-1.5 font-mono text-xs"
+          className="mt-1 min-h-10 w-full rounded border border-carbon/15 bg-lienzo px-2 font-mono text-xs focus:border-pavo focus:outline-none focus:ring-2 focus:ring-pavo/20"
           value={value}
           onChange={event => onChange(event.target.value)}
           placeholder={placeholder}
           spellCheck={false}
         />
       </label>
-      <p id={`${ariaLabel ?? label}-expression-status`.replace(/\s+/g, '-').toLowerCase()} className={`rounded border px-2 py-1 text-[9px] leading-relaxed break-words ${statusClass}`} role="status">
+      <p id={`${ariaLabel ?? label}-expression-status`.replace(/\s+/g, '-').toLowerCase()} className={`${validationClass} text-[9px] leading-relaxed break-words`} role="status">
         {validation.message}
       </p>
       {!compact && (
-        <>
+        <details className="border-t border-carbon/10 pt-1">
+          <summary className="min-h-9 cursor-pointer py-2 text-[10px] font-bold text-pavo">Qué se puede escribir y cómo</summary>
+          <div className="space-y-2 pb-1">
           {(variableGroups.length > 0 || variableSearch) && (
-            <div className="space-y-1 rounded border border-pavo/15 bg-lienzo/60 p-1.5">
+            <div className="space-y-1">
               <input
                 type="search"
                 aria-label={`Buscar variable para ${label}`}
@@ -197,9 +209,7 @@ export const DiagramExpressionField: React.FC<DiagramExpressionFieldProps> = ({
           <div className="flex flex-wrap gap-1" aria-label={`Atajos para ${label}`}>
             {EXPRESSION_SHORTCUTS.map(shortcut => <button key={shortcut.display} type="button" className="rounded border border-carbon/15 bg-lienzo px-1.5 py-0.5 font-mono text-[9px] text-carbon/65 hover:bg-carbon/5" onClick={() => insert(shortcut.token, shortcut.cursorBack)}>{shortcut.display}</button>)}
           </div>
-          <details className="rounded border border-carbon/10 bg-lienzo px-2 py-1.5">
-            <summary className="cursor-pointer text-[10px] font-bold text-carbon/65">Qué se puede escribir y cómo</summary>
-            <div className="mt-1 space-y-1 text-[9px] leading-relaxed text-carbon/55 break-words">
+            <div className="space-y-1 border-t border-carbon/10 pt-2 text-[9px] leading-relaxed text-carbon/55 break-words">
               {help && <p>{help}</p>}
               <p>Se admiten números, paréntesis y los operadores <code>+ − * / ^</code>. Las constantes son <code>pi</code> y <code>e</code>.</p>
               <p>Funciones: <code>sin</code>, <code>cos</code>, <code>tan</code>, <code>sqrt</code>, <code>abs</code>, <code>min</code>, <code>max</code>, <code>round</code>, <code>hypot</code> y logaritmos <code>ln</code>/<code>log</code>.</p>
@@ -207,34 +217,11 @@ export const DiagramExpressionField: React.FC<DiagramExpressionFieldProps> = ({
               <p>Las condiciones usan <code>lt(a,b)</code>, <code>lte</code>, <code>gt</code>, <code>gte</code>, <code>eq(a,b,…)</code>, <code>approx(a,b,tolerancia)</code>, <code>and</code>, <code>or</code> y <code>not</code>; producen 1 si se cumplen y 0 si no.</p>
               <p>No se ejecuta JavaScript: no se admiten asignaciones, llamadas arbitrarias ni acceso fuera de las variables enumeradas.</p>
             </div>
-          </details>
-        </>
+          </div>
+        </details>
       )}
     </div>
   );
 };
-
-interface DiagramFormulaFieldProps {
-  label: string;
-  value: string;
-  onChange: (value: string) => void;
-  placeholder?: string;
-}
-
-export const DiagramFormulaField: React.FC<DiagramFormulaFieldProps> = ({ label, value, onChange, placeholder }) => (
-  <div className="space-y-2 rounded border border-ocre/20 bg-ocre/5 p-2">
-    <label className="block text-xs font-bold text-carbon">
-      {label}
-      <input className="mt-1 w-full rounded border border-carbon/15 bg-lienzo p-1.5 font-mono text-xs" value={value} onChange={event => onChange(event.target.value)} placeholder={placeholder} spellCheck={false} />
-    </label>
-    <details className="rounded border border-carbon/10 bg-lienzo px-2 py-1.5">
-      <summary className="cursor-pointer text-[10px] font-bold text-carbon/65">Cómo escribir la fórmula visible</summary>
-      <div className="mt-1 space-y-1 text-[9px] leading-relaxed text-carbon/55">
-        <p>Se usa sintaxis KaTeX: <code>x^2</code> crea un exponente, <code>\frac{'{a}'}{'{b}'}</code> una fracción y <code>\sqrt{'{x}'}</code> una raíz.</p>
-        <p>Puede insertar valores reactivos con <code>{'{value}'}</code>, <code>{'{pA.x}'}</code>, <code>{'{pA.y}'}</code> o <code>{'{segAB.length}'}</code>. La fórmula matemática segura que calcula <code>{'{value}'}</code> se edita justo debajo.</p>
-      </div>
-    </details>
-  </div>
-);
 
 export default DiagramExpressionField;

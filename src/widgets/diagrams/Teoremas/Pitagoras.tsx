@@ -3,8 +3,8 @@ import { createDiagramSpec, DiagramRenderer } from '@/shared/diagrams/public';
 /* @matematika-diagram-spec:start */
 export const PitagorasSpec = createDiagramSpec(
 {
-  "version": 2,
-  "renderer": "matematika-diagram-renderer-v2",
+  "version": 3,
+  "renderer": "matematika-diagram-renderer-v3",
   "title": "Teorema de Pitágoras",
   "componentId": "Pitagoras",
   "category": "Teoremas",
@@ -134,7 +134,7 @@ export const PitagorasSpec = createDiagramSpec(
       "color": "ocre"
     }
   ],
-  "points": [
+  "objects": [
     {
       "id": "C",
       "label": "C",
@@ -151,15 +151,21 @@ export const PitagorasSpec = createDiagramSpec(
         "role": "primary"
       },
       "target": false,
-      "style": {
-        "pointSize": 7,
-        "highlightPointSize": 10,
+      "objectType": "point",
+      "definition": {
+        "type": "coordinates",
+        "x": 0,
+        "y": 0
+      },
+      "mobility": {
+        "type": "fixed"
+      },
+      "appearance": {
+        "size": 7,
+        "highlightSize": 10,
         "preserveColorOnHighlight": true
       },
-      "x": 0,
-      "y": 0,
-      "fixed": true,
-      "constraint": "fixed"
+      "interaction": {}
     },
     {
       "id": "ejeX",
@@ -175,10 +181,17 @@ export const PitagorasSpec = createDiagramSpec(
         "role": "construction"
       },
       "target": false,
-      "x": 1,
-      "y": 0,
-      "fixed": true,
-      "constraint": "fixed"
+      "objectType": "point",
+      "definition": {
+        "type": "coordinates",
+        "x": 1,
+        "y": 0
+      },
+      "mobility": {
+        "type": "fixed"
+      },
+      "appearance": {},
+      "interaction": {}
     },
     {
       "id": "ejeY",
@@ -194,10 +207,17 @@ export const PitagorasSpec = createDiagramSpec(
         "role": "construction"
       },
       "target": false,
-      "x": 0,
-      "y": 1,
-      "fixed": true,
-      "constraint": "fixed"
+      "objectType": "point",
+      "definition": {
+        "type": "coordinates",
+        "x": 0,
+        "y": 1
+      },
+      "mobility": {
+        "type": "fixed"
+      },
+      "appearance": {},
+      "interaction": {}
     },
     {
       "id": "A",
@@ -215,16 +235,22 @@ export const PitagorasSpec = createDiagramSpec(
         "role": "primary"
       },
       "target": false,
-      "style": {
-        "pointSize": 7,
-        "highlightPointSize": 10,
+      "objectType": "point",
+      "definition": {
+        "type": "coordinates",
+        "x": 0,
+        "y": 4
+      },
+      "mobility": {
+        "type": "on-support",
+        "support": "rayoY"
+      },
+      "appearance": {
+        "size": 7,
+        "highlightSize": 10,
         "preserveColorOnHighlight": true
       },
-      "x": 0,
-      "y": 4,
-      "fixed": false,
-      "constraint": "glider",
-      "gliderTarget": "rayoY"
+      "interaction": {}
     },
     {
       "id": "B",
@@ -242,16 +268,22 @@ export const PitagorasSpec = createDiagramSpec(
         "role": "primary"
       },
       "target": false,
-      "style": {
-        "pointSize": 7,
-        "highlightPointSize": 10,
+      "objectType": "point",
+      "definition": {
+        "type": "coordinates",
+        "x": 3,
+        "y": 0
+      },
+      "mobility": {
+        "type": "on-support",
+        "support": "rayoX"
+      },
+      "appearance": {
+        "size": 7,
+        "highlightSize": 10,
         "preserveColorOnHighlight": true
       },
-      "x": 3,
-      "y": 0,
-      "fixed": false,
-      "constraint": "glider",
-      "gliderTarget": "rayoX"
+      "interaction": {}
     },
     {
       "id": "sqA3",
@@ -267,16 +299,21 @@ export const PitagorasSpec = createDiagramSpec(
         "role": "construction"
       },
       "target": false,
-      "x": 0,
-      "y": 0,
-      "fixed": true,
-      "constraint": "derived",
-      "dependencies": [
-        "B",
-        "C"
-      ],
-      "xExpression": "C.x",
-      "yExpression": "C.y-B.x"
+      "objectType": "point",
+      "definition": {
+        "type": "expression",
+        "x": "C.x",
+        "y": "C.y-B.x",
+        "fallback": [
+          0,
+          0
+        ]
+      },
+      "mobility": {
+        "type": "fixed"
+      },
+      "appearance": {},
+      "interaction": {}
     },
     {
       "id": "cuadrado-a",
@@ -292,15 +329,21 @@ export const PitagorasSpec = createDiagramSpec(
         "role": "construction"
       },
       "target": false,
-      "x": 0,
-      "y": 0,
-      "fixed": true,
-      "constraint": "derived",
-      "dependencies": [
-        "B"
-      ],
-      "xExpression": "B.x",
-      "yExpression": "B.y-B.x"
+      "objectType": "point",
+      "definition": {
+        "type": "expression",
+        "x": "B.x",
+        "y": "B.y-B.x",
+        "fallback": [
+          0,
+          0
+        ]
+      },
+      "mobility": {
+        "type": "fixed"
+      },
+      "appearance": {},
+      "interaction": {}
     },
     {
       "id": "cuadrado-b",
@@ -316,15 +359,21 @@ export const PitagorasSpec = createDiagramSpec(
         "role": "construction"
       },
       "target": false,
-      "x": 0,
-      "y": 0,
-      "fixed": true,
-      "constraint": "derived",
-      "dependencies": [
-        "A"
-      ],
-      "xExpression": "A.x-A.y",
-      "yExpression": "A.y"
+      "objectType": "point",
+      "definition": {
+        "type": "expression",
+        "x": "A.x-A.y",
+        "y": "A.y",
+        "fallback": [
+          0,
+          0
+        ]
+      },
+      "mobility": {
+        "type": "fixed"
+      },
+      "appearance": {},
+      "interaction": {}
     },
     {
       "id": "sqB4",
@@ -340,16 +389,21 @@ export const PitagorasSpec = createDiagramSpec(
         "role": "construction"
       },
       "target": false,
-      "x": 0,
-      "y": 0,
-      "fixed": true,
-      "constraint": "derived",
-      "dependencies": [
-        "A",
-        "C"
-      ],
-      "xExpression": "C.x-A.y",
-      "yExpression": "C.y"
+      "objectType": "point",
+      "definition": {
+        "type": "expression",
+        "x": "C.x-A.y",
+        "y": "C.y",
+        "fallback": [
+          0,
+          0
+        ]
+      },
+      "mobility": {
+        "type": "fixed"
+      },
+      "appearance": {},
+      "interaction": {}
     },
     {
       "id": "cuadrado-c",
@@ -365,16 +419,21 @@ export const PitagorasSpec = createDiagramSpec(
         "role": "construction"
       },
       "target": false,
-      "x": 0,
-      "y": 0,
-      "fixed": true,
-      "constraint": "derived",
-      "dependencies": [
-        "A",
-        "B"
-      ],
-      "xExpression": "B.x+A.y",
-      "yExpression": "B.y+B.x"
+      "objectType": "point",
+      "definition": {
+        "type": "expression",
+        "x": "B.x+A.y",
+        "y": "B.y+B.x",
+        "fallback": [
+          0,
+          0
+        ]
+      },
+      "mobility": {
+        "type": "fixed"
+      },
+      "appearance": {},
+      "interaction": {}
     },
     {
       "id": "sqC4",
@@ -390,19 +449,22 @@ export const PitagorasSpec = createDiagramSpec(
         "role": "construction"
       },
       "target": false,
-      "x": 0,
-      "y": 0,
-      "fixed": true,
-      "constraint": "derived",
-      "dependencies": [
-        "A",
-        "B"
-      ],
-      "xExpression": "A.x+A.y",
-      "yExpression": "A.y+B.x"
-    }
-  ],
-  "elements": [
+      "objectType": "point",
+      "definition": {
+        "type": "expression",
+        "x": "A.x+A.y",
+        "y": "A.y+B.x",
+        "fallback": [
+          0,
+          0
+        ]
+      },
+      "mobility": {
+        "type": "fixed"
+      },
+      "appearance": {},
+      "interaction": {}
+    },
     {
       "id": "rayoX",
       "label": "semirrecta horizontal",
@@ -417,11 +479,15 @@ export const PitagorasSpec = createDiagramSpec(
         "role": "construction"
       },
       "target": false,
-      "kind": "ray",
-      "refs": [
-        "C",
-        "ejeX"
-      ]
+      "objectType": "path",
+      "geometry": {
+        "type": "ray",
+        "points": [
+          "C",
+          "ejeX"
+        ]
+      },
+      "appearance": {}
     },
     {
       "id": "rayoY",
@@ -437,11 +503,15 @@ export const PitagorasSpec = createDiagramSpec(
         "role": "construction"
       },
       "target": false,
-      "kind": "ray",
-      "refs": [
-        "C",
-        "ejeY"
-      ]
+      "objectType": "path",
+      "geometry": {
+        "type": "ray",
+        "points": [
+          "C",
+          "ejeY"
+        ]
+      },
+      "appearance": {}
     },
     {
       "id": "triangulo",
@@ -460,18 +530,21 @@ export const PitagorasSpec = createDiagramSpec(
         "role": "secondary"
       },
       "target": false,
-      "style": {
+      "objectType": "path",
+      "geometry": {
+        "type": "polygon",
+        "points": [
+          "A",
+          "B",
+          "C"
+        ]
+      },
+      "appearance": {
         "strokeWidth": 2.4,
         "fillOpacity": 0.06,
         "highlightFillOpacity": 0.22,
         "preserveColorOnHighlight": true
-      },
-      "kind": "polygon",
-      "refs": [
-        "A",
-        "B",
-        "C"
-      ]
+      }
     },
     {
       "id": "segBC",
@@ -490,16 +563,19 @@ export const PitagorasSpec = createDiagramSpec(
         "role": "secondary"
       },
       "target": false,
-      "style": {
+      "objectType": "path",
+      "geometry": {
+        "type": "segment",
+        "points": [
+          "B",
+          "C"
+        ]
+      },
+      "appearance": {
         "strokeWidth": 2.4,
         "highlightStrokeWidth": 4,
         "preserveColorOnHighlight": true
-      },
-      "kind": "segment",
-      "refs": [
-        "B",
-        "C"
-      ]
+      }
     },
     {
       "id": "segCA",
@@ -518,16 +594,19 @@ export const PitagorasSpec = createDiagramSpec(
         "role": "secondary"
       },
       "target": false,
-      "style": {
+      "objectType": "path",
+      "geometry": {
+        "type": "segment",
+        "points": [
+          "C",
+          "A"
+        ]
+      },
+      "appearance": {
         "strokeWidth": 2.4,
         "highlightStrokeWidth": 4,
         "preserveColorOnHighlight": true
-      },
-      "kind": "segment",
-      "refs": [
-        "C",
-        "A"
-      ]
+      }
     },
     {
       "id": "segAB",
@@ -546,16 +625,19 @@ export const PitagorasSpec = createDiagramSpec(
         "role": "secondary"
       },
       "target": false,
-      "style": {
+      "objectType": "path",
+      "geometry": {
+        "type": "segment",
+        "points": [
+          "A",
+          "B"
+        ]
+      },
+      "appearance": {
         "strokeWidth": 2.4,
         "highlightStrokeWidth": 4.5,
         "preserveColorOnHighlight": true
-      },
-      "kind": "segment",
-      "refs": [
-        "A",
-        "B"
-      ]
+      }
     },
     {
       "id": "anguloRecto",
@@ -573,19 +655,22 @@ export const PitagorasSpec = createDiagramSpec(
         "role": "secondary"
       },
       "target": false,
-      "style": {
-        "strokeWidth": 1.5,
-        "fillOpacity": 0.4,
-        "angleRadius": 0.6,
-        "highlightFillOpacity": 0.55,
-        "preserveColorOnHighlight": true
-      },
-      "kind": "rightAngle",
-      "refs": [
+      "objectType": "angle",
+      "points": [
         "B",
         "C",
         "A"
-      ]
+      ],
+      "sweep": "non-reflex",
+      "marker": "square",
+      "perpendicularRelationId": "anguloRecto-perpendicular",
+      "appearance": {
+        "radius": 0.6,
+        "strokeWidth": 1.5,
+        "fillOpacity": 0.4,
+        "highlightFillOpacity": 0.55,
+        "preserveColorOnHighlight": true
+      }
     },
     {
       "id": "cuadradoA",
@@ -604,23 +689,24 @@ export const PitagorasSpec = createDiagramSpec(
         "role": "secondary"
       },
       "target": false,
-      "style": {
+      "objectType": "region",
+      "geometry": {
+        "type": "area-decomposition",
+        "points": [
+          "B",
+          "C",
+          "sqA3",
+          "cuadrado-a"
+        ],
+        "rows": 3,
+        "columns": 3
+      },
+      "appearance": {
         "strokeWidth": 2.4,
         "strokeOpacity": 0.45,
         "fillOpacity": 0.1,
         "highlightFillOpacity": 0.3,
         "preserveColorOnHighlight": true
-      },
-      "kind": "areaDecomposition",
-      "refs": [
-        "B",
-        "C",
-        "sqA3",
-        "cuadrado-a"
-      ],
-      "properties": {
-        "rows": 3,
-        "columns": 3
       }
     },
     {
@@ -640,23 +726,24 @@ export const PitagorasSpec = createDiagramSpec(
         "role": "secondary"
       },
       "target": false,
-      "style": {
+      "objectType": "region",
+      "geometry": {
+        "type": "area-decomposition",
+        "points": [
+          "C",
+          "A",
+          "cuadrado-b",
+          "sqB4"
+        ],
+        "rows": 4,
+        "columns": 4
+      },
+      "appearance": {
         "strokeWidth": 2.4,
         "strokeOpacity": 0.45,
         "fillOpacity": 0.1,
         "highlightFillOpacity": 0.3,
         "preserveColorOnHighlight": true
-      },
-      "kind": "areaDecomposition",
-      "refs": [
-        "C",
-        "A",
-        "cuadrado-b",
-        "sqB4"
-      ],
-      "properties": {
-        "rows": 4,
-        "columns": 4
       }
     },
     {
@@ -676,23 +763,24 @@ export const PitagorasSpec = createDiagramSpec(
         "role": "secondary"
       },
       "target": false,
-      "style": {
+      "objectType": "region",
+      "geometry": {
+        "type": "area-decomposition",
+        "points": [
+          "A",
+          "B",
+          "cuadrado-c",
+          "sqC4"
+        ],
+        "rows": 5,
+        "columns": 5
+      },
+      "appearance": {
         "strokeWidth": 2.4,
         "strokeOpacity": 0.5,
         "fillOpacity": 0.12,
         "highlightFillOpacity": 0.35,
         "preserveColorOnHighlight": true
-      },
-      "kind": "areaDecomposition",
-      "refs": [
-        "A",
-        "B",
-        "cuadrado-c",
-        "sqC4"
-      ],
-      "properties": {
-        "rows": 5,
-        "columns": 5
       }
     },
     {
@@ -711,221 +799,44 @@ export const PitagorasSpec = createDiagramSpec(
       },
       "target": true,
       "targetId": "infoPanel14",
-      "style": {
-        "preserveColorOnHighlight": true
+      "objectType": "annotation",
+      "variant": "panel",
+      "content": {
+        "text": "$a^2 + b^2 = c^2 \\implies {B.x^2} + {A.y^2} = {B.x^2 + A.y^2}$",
+        "unit": "u²"
       },
-      "kind": "infoPanel",
-      "refs": [],
-      "text": "$a^2 + b^2 = c^2 \\implies {B.x^2} + {A.y^2} = {B.x^2 + A.y^2}$",
-      "properties": {
-        "unit": "u²",
-        "anchorMode": "viewport",
-        "viewportPosition": [
+      "anchor": {
+        "type": "viewport",
+        "position": [
           0,
           0
         ]
+      },
+      "appearance": {
+        "preserveColorOnHighlight": true
       }
     }
   ],
-  "sliders": [],
-  "steps": [],
-  "constraints": [],
-  "dependencies": [
+  "relations": [
     {
-      "sourceId": "B",
-      "targetId": "sqA3",
-      "relation": "expression"
-    },
-    {
-      "sourceId": "C",
-      "targetId": "sqA3",
-      "relation": "expression"
-    },
-    {
-      "sourceId": "B",
-      "targetId": "cuadrado-a",
-      "relation": "expression"
-    },
-    {
-      "sourceId": "A",
-      "targetId": "cuadrado-b",
-      "relation": "expression"
-    },
-    {
-      "sourceId": "A",
-      "targetId": "sqB4",
-      "relation": "expression"
-    },
-    {
-      "sourceId": "C",
-      "targetId": "sqB4",
-      "relation": "expression"
-    },
-    {
-      "sourceId": "A",
-      "targetId": "cuadrado-c",
-      "relation": "expression"
-    },
-    {
-      "sourceId": "B",
-      "targetId": "cuadrado-c",
-      "relation": "expression"
-    },
-    {
-      "sourceId": "A",
-      "targetId": "sqC4",
-      "relation": "expression"
-    },
-    {
-      "sourceId": "B",
-      "targetId": "sqC4",
-      "relation": "expression"
-    },
-    {
-      "sourceId": "C",
-      "targetId": "rayoX",
-      "relation": "construction"
-    },
-    {
-      "sourceId": "ejeX",
-      "targetId": "rayoX",
-      "relation": "construction"
-    },
-    {
-      "sourceId": "C",
-      "targetId": "rayoY",
-      "relation": "construction"
-    },
-    {
-      "sourceId": "ejeY",
-      "targetId": "rayoY",
-      "relation": "construction"
-    },
-    {
-      "sourceId": "A",
-      "targetId": "triangulo",
-      "relation": "construction"
-    },
-    {
-      "sourceId": "B",
-      "targetId": "triangulo",
-      "relation": "construction"
-    },
-    {
-      "sourceId": "C",
-      "targetId": "triangulo",
-      "relation": "construction"
-    },
-    {
-      "sourceId": "B",
-      "targetId": "segBC",
-      "relation": "construction"
-    },
-    {
-      "sourceId": "C",
-      "targetId": "segBC",
-      "relation": "construction"
-    },
-    {
-      "sourceId": "C",
-      "targetId": "segCA",
-      "relation": "construction"
-    },
-    {
-      "sourceId": "A",
-      "targetId": "segCA",
-      "relation": "construction"
-    },
-    {
-      "sourceId": "A",
-      "targetId": "segAB",
-      "relation": "construction"
-    },
-    {
-      "sourceId": "B",
-      "targetId": "segAB",
-      "relation": "construction"
-    },
-    {
-      "sourceId": "B",
-      "targetId": "anguloRecto",
-      "relation": "construction"
-    },
-    {
-      "sourceId": "C",
-      "targetId": "anguloRecto",
-      "relation": "construction"
-    },
-    {
-      "sourceId": "A",
-      "targetId": "anguloRecto",
-      "relation": "construction"
-    },
-    {
-      "sourceId": "B",
-      "targetId": "cuadradoA",
-      "relation": "construction"
-    },
-    {
-      "sourceId": "C",
-      "targetId": "cuadradoA",
-      "relation": "construction"
-    },
-    {
-      "sourceId": "sqA3",
-      "targetId": "cuadradoA",
-      "relation": "construction"
-    },
-    {
-      "sourceId": "cuadrado-a",
-      "targetId": "cuadradoA",
-      "relation": "construction"
-    },
-    {
-      "sourceId": "C",
-      "targetId": "cuadradoB",
-      "relation": "construction"
-    },
-    {
-      "sourceId": "A",
-      "targetId": "cuadradoB",
-      "relation": "construction"
-    },
-    {
-      "sourceId": "cuadrado-b",
-      "targetId": "cuadradoB",
-      "relation": "construction"
-    },
-    {
-      "sourceId": "sqB4",
-      "targetId": "cuadradoB",
-      "relation": "construction"
-    },
-    {
-      "sourceId": "A",
-      "targetId": "cuadradoC",
-      "relation": "construction"
-    },
-    {
-      "sourceId": "B",
-      "targetId": "cuadradoC",
-      "relation": "construction"
-    },
-    {
-      "sourceId": "cuadrado-c",
-      "targetId": "cuadradoC",
-      "relation": "construction"
-    },
-    {
-      "sourceId": "sqC4",
-      "targetId": "cuadradoC",
-      "relation": "construction"
+      "id": "anguloRecto-perpendicular",
+      "label": "Perpendicularidad de ángulo recto en C",
+      "enabled": true,
+      "type": "perpendicular",
+      "supports": [
+        [
+          "C",
+          "B"
+        ],
+        [
+          "C",
+          "A"
+        ]
+      ]
     }
   ],
-  "note": "Arrastre A y B sobre las semirrectas: las áreas y la igualdad se actualizan sin perder el ángulo recto.",
-  "extensions": {
-    "acceptanceCase": "phase-5-pythagoras"
-  }
+  "steps": [],
+  "note": "Arrastre A y B sobre las semirrectas: las áreas y la igualdad se actualizan sin perder el ángulo recto."
 }
 );
 /* @matematika-diagram-spec:end */

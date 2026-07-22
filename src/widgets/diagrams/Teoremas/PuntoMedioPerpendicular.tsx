@@ -3,8 +3,8 @@ import { createDiagramSpec, DiagramRenderer } from '@/shared/diagrams/public';
 /* @matematika-diagram-spec:start */
 export const PuntoMedioPerpendicularSpec = createDiagramSpec(
 {
-  "version": 2,
-  "renderer": "matematika-diagram-renderer-v2",
+  "version": 3,
+  "renderer": "matematika-diagram-renderer-v3",
   "title": "Mediatriz",
   "componentId": "perpendicular",
   "category": "Teoremas",
@@ -46,7 +46,7 @@ export const PuntoMedioPerpendicularSpec = createDiagramSpec(
     }
   ],
   "groups": [],
-  "points": [
+  "objects": [
     {
       "id": "pA",
       "label": "A",
@@ -63,16 +63,22 @@ export const PuntoMedioPerpendicularSpec = createDiagramSpec(
       },
       "target": true,
       "targetId": "pA",
-      "style": {
-        "pointSize": 7,
-        "highlightPointSize": 10,
+      "objectType": "point",
+      "definition": {
+        "type": "coordinates",
+        "x": -3.35,
+        "y": -2.79
+      },
+      "mobility": {
+        "type": "free"
+      },
+      "appearance": {
+        "size": 7,
+        "labelVisible": true,
+        "highlightSize": 10,
         "preserveColorOnHighlight": true
       },
-      "x": -3.35,
-      "y": -2.79,
-      "showLabel": true,
-      "fixed": false,
-      "constraint": "free"
+      "interaction": {}
     },
     {
       "id": "pB",
@@ -90,16 +96,22 @@ export const PuntoMedioPerpendicularSpec = createDiagramSpec(
       },
       "target": true,
       "targetId": "pB",
-      "style": {
-        "pointSize": 7,
-        "highlightPointSize": 10,
+      "objectType": "point",
+      "definition": {
+        "type": "coordinates",
+        "x": 3.83,
+        "y": -0.7
+      },
+      "mobility": {
+        "type": "free"
+      },
+      "appearance": {
+        "size": 7,
+        "labelVisible": true,
+        "highlightSize": 10,
         "preserveColorOnHighlight": true
       },
-      "x": 3.83,
-      "y": -0.7,
-      "showLabel": true,
-      "fixed": false,
-      "constraint": "free"
+      "interaction": {}
     },
     {
       "id": "pP",
@@ -117,17 +129,23 @@ export const PuntoMedioPerpendicularSpec = createDiagramSpec(
       },
       "target": true,
       "targetId": "pP",
-      "style": {
-        "pointSize": 7,
-        "highlightPointSize": 10,
+      "objectType": "point",
+      "definition": {
+        "type": "coordinates",
+        "x": -1.1933190511529765,
+        "y": 3.1790338695111826
+      },
+      "mobility": {
+        "type": "on-support",
+        "support": "lineMediatriz"
+      },
+      "appearance": {
+        "size": 7,
+        "labelVisible": true,
+        "highlightSize": 10,
         "preserveColorOnHighlight": true
       },
-      "x": -1.1933190511529765,
-      "y": 3.1790338695111826,
-      "showLabel": true,
-      "fixed": false,
-      "constraint": "glider",
-      "gliderTarget": "lineMediatriz"
+      "interaction": {}
     },
     {
       "id": "p4",
@@ -145,17 +163,25 @@ export const PuntoMedioPerpendicularSpec = createDiagramSpec(
       },
       "target": false,
       "targetId": "p4",
-      "style": {
-        "pointSize": 7,
-        "highlightPointSize": 10,
+      "objectType": "point",
+      "definition": {
+        "type": "coordinates",
+        "x": 0.2802461930667155,
+        "y": 0.5189181708510687
+      },
+      "mobility": {
+        "type": "constrained",
+        "relationIds": [
+          "p4-coincident-midAB"
+        ]
+      },
+      "appearance": {
+        "size": 7,
+        "labelVisible": true,
+        "highlightSize": 10,
         "preserveColorOnHighlight": true
       },
-      "x": 0.2802461930667155,
-      "y": 0.5189181708510687,
-      "showLabel": true,
-      "fixed": false,
-      "constraint": "glider",
-      "gliderTarget": "midAB"
+      "interaction": {}
     },
     {
       "id": "pM",
@@ -173,22 +199,24 @@ export const PuntoMedioPerpendicularSpec = createDiagramSpec(
       },
       "target": true,
       "targetId": "pC",
-      "style": {
-        "pointSize": 7,
-        "highlightPointSize": 10,
-        "preserveColorOnHighlight": true
+      "objectType": "point",
+      "definition": {
+        "type": "midpoint",
+        "points": [
+          "pA",
+          "pB"
+        ]
       },
-      "x": 0.24,
-      "y": -1.745,
-      "showLabel": false,
-      "fixed": false,
-      "constraint": "constrained",
-      "constraintIds": [
-        "constraint1"
-      ]
-    }
-  ],
-  "elements": [
+      "mobility": {
+        "type": "fixed"
+      },
+      "appearance": {
+        "size": 7,
+        "labelVisible": false,
+        "highlightSize": 10,
+        "preserveColorOnHighlight": true
+      }
+    },
     {
       "id": "segAB",
       "label": "Segmento AB",
@@ -205,16 +233,19 @@ export const PuntoMedioPerpendicularSpec = createDiagramSpec(
       },
       "target": true,
       "targetId": "segAB",
-      "style": {
+      "objectType": "path",
+      "geometry": {
+        "type": "segment",
+        "points": [
+          "pA",
+          "pB"
+        ]
+      },
+      "appearance": {
         "strokeWidth": 2.4,
         "highlightStrokeWidth": 3,
         "preserveColorOnHighlight": true
-      },
-      "kind": "segment",
-      "refs": [
-        "pA",
-        "pB"
-      ]
+      }
     },
     {
       "id": "midAB",
@@ -232,14 +263,20 @@ export const PuntoMedioPerpendicularSpec = createDiagramSpec(
       },
       "target": true,
       "targetId": "midAB",
-      "style": {
-        "preserveColorOnHighlight": true
+      "objectType": "point",
+      "definition": {
+        "type": "midpoint",
+        "points": [
+          "pA",
+          "pB"
+        ]
       },
-      "kind": "midpoint",
-      "refs": [
-        "pA",
-        "pB"
-      ]
+      "mobility": {
+        "type": "fixed"
+      },
+      "appearance": {
+        "preserveColorOnHighlight": true
+      }
     },
     {
       "id": "lineMediatriz",
@@ -257,18 +294,24 @@ export const PuntoMedioPerpendicularSpec = createDiagramSpec(
       },
       "target": true,
       "targetId": "lineMediatriz",
-      "style": {
+      "objectType": "path",
+      "geometry": {
+        "type": "line",
+        "construction": {
+          "type": "perpendicular",
+          "linePoints": [
+            "pA",
+            "pB"
+          ],
+          "through": "midAB"
+        }
+      },
+      "appearance": {
+        "dashed": true,
         "strokeWidth": 2.4,
         "highlightStrokeWidth": 3,
         "preserveColorOnHighlight": true
-      },
-      "kind": "perpendicular",
-      "refs": [
-        "pA",
-        "pB",
-        "midAB"
-      ],
-      "dashed": true
+      }
     },
     {
       "id": "segPA",
@@ -286,17 +329,20 @@ export const PuntoMedioPerpendicularSpec = createDiagramSpec(
       },
       "target": true,
       "targetId": "segPA",
-      "style": {
+      "objectType": "path",
+      "geometry": {
+        "type": "segment",
+        "points": [
+          "pP",
+          "pA"
+        ]
+      },
+      "appearance": {
+        "dashed": true,
         "strokeWidth": 2.4,
         "highlightStrokeWidth": 3,
         "preserveColorOnHighlight": true
-      },
-      "kind": "segment",
-      "refs": [
-        "pP",
-        "pA"
-      ],
-      "dashed": true
+      }
     },
     {
       "id": "segPB",
@@ -314,17 +360,20 @@ export const PuntoMedioPerpendicularSpec = createDiagramSpec(
       },
       "target": true,
       "targetId": "segPB",
-      "style": {
+      "objectType": "path",
+      "geometry": {
+        "type": "segment",
+        "points": [
+          "pP",
+          "pB"
+        ]
+      },
+      "appearance": {
+        "dashed": true,
         "strokeWidth": 2.4,
         "highlightStrokeWidth": 3,
         "preserveColorOnHighlight": true
-      },
-      "kind": "segment",
-      "refs": [
-        "pP",
-        "pB"
-      ],
-      "dashed": true
+      }
     },
     {
       "id": "congruenceMarkA4",
@@ -342,17 +391,19 @@ export const PuntoMedioPerpendicularSpec = createDiagramSpec(
       },
       "target": true,
       "targetId": "congruenceMarkA4",
-      "style": {
-        "markHeight": 0.5,
-        "preserveColorOnHighlight": true
+      "objectType": "mark",
+      "variant": "congruence",
+      "anchor": {
+        "type": "between-points",
+        "points": [
+          "pA",
+          "p4"
+        ]
       },
-      "kind": "congruenceMark",
-      "refs": [
-        "pA",
-        "p4"
-      ],
-      "properties": {
-        "markCount": 1
+      "count": 1,
+      "height": 0.5,
+      "appearance": {
+        "preserveColorOnHighlight": true
       }
     },
     {
@@ -371,17 +422,19 @@ export const PuntoMedioPerpendicularSpec = createDiagramSpec(
       },
       "target": true,
       "targetId": "congruenceMark4B",
-      "style": {
-        "markHeight": 0.5,
-        "preserveColorOnHighlight": true
+      "objectType": "mark",
+      "variant": "congruence",
+      "anchor": {
+        "type": "between-points",
+        "points": [
+          "p4",
+          "pB"
+        ]
       },
-      "kind": "congruenceMark",
-      "refs": [
-        "p4",
-        "pB"
-      ],
-      "properties": {
-        "markCount": 1
+      "count": 1,
+      "height": 0.5,
+      "appearance": {
+        "preserveColorOnHighlight": true
       }
     },
     {
@@ -400,17 +453,19 @@ export const PuntoMedioPerpendicularSpec = createDiagramSpec(
       },
       "target": true,
       "targetId": "congruenceMarkPB",
-      "style": {
-        "markHeight": 0.5,
-        "preserveColorOnHighlight": true
+      "objectType": "mark",
+      "variant": "congruence",
+      "anchor": {
+        "type": "between-points",
+        "points": [
+          "pP",
+          "pB"
+        ]
       },
-      "kind": "congruenceMark",
-      "refs": [
-        "pP",
-        "pB"
-      ],
-      "properties": {
-        "markCount": 2
+      "count": 2,
+      "height": 0.5,
+      "appearance": {
+        "preserveColorOnHighlight": true
       }
     },
     {
@@ -429,17 +484,19 @@ export const PuntoMedioPerpendicularSpec = createDiagramSpec(
       },
       "target": true,
       "targetId": "congruenceMarkAP",
-      "style": {
-        "markHeight": 0.5,
-        "preserveColorOnHighlight": true
+      "objectType": "mark",
+      "variant": "congruence",
+      "anchor": {
+        "type": "between-points",
+        "points": [
+          "pA",
+          "pP"
+        ]
       },
-      "kind": "congruenceMark",
-      "refs": [
-        "pA",
-        "pP"
-      ],
-      "properties": {
-        "markCount": 2
+      "count": 2,
+      "height": 0.5,
+      "appearance": {
+        "preserveColorOnHighlight": true
       }
     },
     {
@@ -458,19 +515,27 @@ export const PuntoMedioPerpendicularSpec = createDiagramSpec(
       },
       "target": true,
       "targetId": "measurementPB",
-      "style": {
-        "preserveColorOnHighlight": true
-      },
-      "kind": "measurement",
-      "refs": [
-        "pP",
-        "pB"
-      ],
-      "text": "PA = PB = {value}",
-      "properties": {
+      "objectType": "annotation",
+      "variant": "measurement",
+      "content": {
+        "text": "PA = PB = {value}",
         "expression": "segPB.length",
         "unit": "u",
         "precision": 2
+      },
+      "anchor": {
+        "type": "object",
+        "object": "pP"
+      },
+      "measurement": {
+        "refs": [
+          "pP",
+          "pB"
+        ],
+        "mode": "distance"
+      },
+      "appearance": {
+        "preserveColorOnHighlight": true
       }
     },
     {
@@ -489,119 +554,51 @@ export const PuntoMedioPerpendicularSpec = createDiagramSpec(
       },
       "target": true,
       "targetId": "perpendicularMarkBMP",
-      "style": {
-        "angleRadius": 1,
-        "preserveColorOnHighlight": true
-      },
-      "kind": "perpendicularMark",
-      "refs": [
+      "objectType": "angle",
+      "points": [
         "pB",
         "pM",
         "pP"
+      ],
+      "sweep": "non-reflex",
+      "marker": "square",
+      "perpendicularRelationId": "perpendicularMarkBMP-perpendicular",
+      "appearance": {
+        "radius": 1,
+        "preserveColorOnHighlight": true
+      }
+    }
+  ],
+  "relations": [
+    {
+      "id": "p4-coincident-midAB",
+      "label": "4 coincide con M",
+      "enabled": true,
+      "type": "coincident",
+      "points": [
+        "p4",
+        "midAB"
+      ]
+    },
+    {
+      "id": "perpendicularMarkBMP-perpendicular",
+      "label": "Perpendicularidad de Marca de perpendicularidad",
+      "enabled": true,
+      "type": "perpendicular",
+      "supports": [
+        [
+          "pM",
+          "pB"
+        ],
+        [
+          "pM",
+          "pP"
+        ]
       ]
     }
   ],
-  "sliders": [],
   "steps": [],
-  "constraints": [
-    {
-      "id": "constraint1",
-      "label": "Punto medio",
-      "kind": "midpoint",
-      "refs": [
-        "pM",
-        "pA",
-        "pB"
-      ],
-      "enabled": true
-    }
-  ],
-  "dependencies": [
-    {
-      "sourceId": "pA",
-      "targetId": "congruenceMarkA4",
-      "relation": "construction"
-    },
-    {
-      "sourceId": "p4",
-      "targetId": "congruenceMarkA4",
-      "relation": "construction"
-    },
-    {
-      "sourceId": "p4",
-      "targetId": "congruenceMark4B",
-      "relation": "construction"
-    },
-    {
-      "sourceId": "pB",
-      "targetId": "congruenceMark4B",
-      "relation": "construction"
-    },
-    {
-      "sourceId": "pP",
-      "targetId": "congruenceMarkPB",
-      "relation": "construction"
-    },
-    {
-      "sourceId": "pB",
-      "targetId": "congruenceMarkPB",
-      "relation": "construction"
-    },
-    {
-      "sourceId": "pA",
-      "targetId": "congruenceMarkAP",
-      "relation": "construction"
-    },
-    {
-      "sourceId": "pP",
-      "targetId": "congruenceMarkAP",
-      "relation": "construction"
-    },
-    {
-      "sourceId": "pP",
-      "targetId": "measurementPB",
-      "relation": "construction"
-    },
-    {
-      "sourceId": "pB",
-      "targetId": "measurementPB",
-      "relation": "construction"
-    },
-    {
-      "sourceId": "segPB",
-      "targetId": "measurementPB",
-      "relation": "expression"
-    },
-    {
-      "sourceId": "pA",
-      "targetId": "pM",
-      "relation": "constraint",
-      "constraintId": "constraint1"
-    },
-    {
-      "sourceId": "pB",
-      "targetId": "pM",
-      "relation": "constraint",
-      "constraintId": "constraint1"
-    },
-    {
-      "sourceId": "pB",
-      "targetId": "perpendicularMarkBMP",
-      "relation": "construction"
-    },
-    {
-      "sourceId": "pM",
-      "targetId": "perpendicularMarkBMP",
-      "relation": "construction"
-    },
-    {
-      "sourceId": "pP",
-      "targetId": "perpendicularMarkBMP",
-      "relation": "construction"
-    }
-  ],
-  "note": "Arrastra P sobre la mediatriz",
-  "extensions": {}
+  "note": "Arrastra P sobre la mediatriz"
 }
 );
 /* @matematika-diagram-spec:end */

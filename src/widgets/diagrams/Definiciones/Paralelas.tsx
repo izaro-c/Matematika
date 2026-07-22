@@ -3,8 +3,8 @@ import { createDiagramSpec, DiagramRenderer } from '@/shared/diagrams/public';
 /* @matematika-diagram-spec:start */
 export const ParalelasSpec = createDiagramSpec(
 {
-  "version": 2,
-  "renderer": "matematika-diagram-renderer-v2",
+  "version": 3,
+  "renderer": "matematika-diagram-renderer-v3",
   "title": "Rectas paralelas por un punto exterior",
   "componentId": "paralelas",
   "category": "Definiciones",
@@ -64,7 +64,7 @@ export const ParalelasSpec = createDiagramSpec(
       "color": "musgo"
     }
   ],
-  "points": [
+  "objects": [
     {
       "id": "A",
       "label": "A",
@@ -80,18 +80,25 @@ export const ParalelasSpec = createDiagramSpec(
         "role": "primary"
       },
       "target": false,
-      "style": {
-        "pointSize": 7,
-        "highlightPointSize": 10,
+      "objectType": "point",
+      "definition": {
+        "type": "coordinates",
+        "x": -3,
+        "y": -1.6
+      },
+      "mobility": {
+        "type": "free"
+      },
+      "appearance": {
+        "size": 7,
+        "labelVisible": true,
+        "highlightSize": 10,
         "preserveColorOnHighlight": true
       },
-      "x": -3,
-      "y": -1.6,
-      "showLabel": true,
-      "fixed": false,
-      "constraint": "free",
-      "snapToGrid": true,
-      "snapSize": 0.25
+      "interaction": {
+        "snapToGrid": true,
+        "snapSize": 0.25
+      }
     },
     {
       "id": "B",
@@ -108,18 +115,25 @@ export const ParalelasSpec = createDiagramSpec(
         "role": "primary"
       },
       "target": false,
-      "style": {
-        "pointSize": 7,
-        "highlightPointSize": 10,
+      "objectType": "point",
+      "definition": {
+        "type": "coordinates",
+        "x": 2.5,
+        "y": -0.5
+      },
+      "mobility": {
+        "type": "free"
+      },
+      "appearance": {
+        "size": 7,
+        "labelVisible": true,
+        "highlightSize": 10,
         "preserveColorOnHighlight": true
       },
-      "x": 2.5,
-      "y": -0.5,
-      "showLabel": true,
-      "fixed": false,
-      "constraint": "free",
-      "snapToGrid": true,
-      "snapSize": 0.25
+      "interaction": {
+        "snapToGrid": true,
+        "snapSize": 0.25
+      }
     },
     {
       "id": "P",
@@ -137,21 +151,26 @@ export const ParalelasSpec = createDiagramSpec(
       },
       "target": true,
       "targetId": "punto-p",
-      "style": {
-        "pointSize": 7,
-        "highlightPointSize": 10,
+      "objectType": "point",
+      "definition": {
+        "type": "coordinates",
+        "x": -0.5,
+        "y": 2.2
+      },
+      "mobility": {
+        "type": "free"
+      },
+      "appearance": {
+        "size": 7,
+        "labelVisible": true,
+        "highlightSize": 10,
         "preserveColorOnHighlight": true
       },
-      "x": -0.5,
-      "y": 2.2,
-      "showLabel": true,
-      "fixed": false,
-      "constraint": "free",
-      "snapToGrid": true,
-      "snapSize": 0.25
-    }
-  ],
-  "elements": [
+      "interaction": {
+        "snapToGrid": true,
+        "snapSize": 0.25
+      }
+    },
     {
       "id": "base",
       "label": "Recta l",
@@ -170,16 +189,22 @@ export const ParalelasSpec = createDiagramSpec(
       },
       "target": true,
       "targetId": "recta-base",
-      "style": {
+      "objectType": "path",
+      "geometry": {
+        "type": "line",
+        "construction": {
+          "type": "through-points",
+          "points": [
+            "A",
+            "B"
+          ]
+        }
+      },
+      "appearance": {
         "strokeWidth": 2.4,
         "highlightStrokeWidth": 3,
         "preserveColorOnHighlight": true
-      },
-      "kind": "line",
-      "refs": [
-        "A",
-        "B"
-      ]
+      }
     },
     {
       "id": "parallel",
@@ -199,18 +224,24 @@ export const ParalelasSpec = createDiagramSpec(
       },
       "target": true,
       "targetId": "recta-paralela",
-      "style": {
+      "objectType": "path",
+      "geometry": {
+        "type": "line",
+        "construction": {
+          "type": "parallel",
+          "linePoints": [
+            "A",
+            "B"
+          ],
+          "through": "P"
+        }
+      },
+      "appearance": {
+        "dashed": true,
         "strokeWidth": 2.4,
         "highlightStrokeWidth": 3,
         "preserveColorOnHighlight": true
-      },
-      "kind": "parallel",
-      "refs": [
-        "A",
-        "B",
-        "P"
-      ],
-      "dashed": true
+      }
     },
     {
       "id": "parallelInfo",
@@ -227,27 +258,27 @@ export const ParalelasSpec = createDiagramSpec(
         "role": "annotation"
       },
       "target": false,
-      "style": {
-        "preserveColorOnHighlight": true
+      "objectType": "annotation",
+      "variant": "panel",
+      "content": {
+        "text": "l ∥ m: comparten dirección y no comparten puntos.",
+        "title": "Invariante"
       },
-      "kind": "infoPanel",
-      "refs": [],
-      "text": "l ∥ m: comparten dirección y no comparten puntos.",
-      "properties": {
-        "title": "Invariante",
-        "anchorMode": "viewport",
-        "viewportPosition": [
+      "anchor": {
+        "type": "viewport",
+        "position": [
           0.98,
           0.03
         ]
+      },
+      "appearance": {
+        "preserveColorOnHighlight": true
       }
     }
   ],
-  "sliders": [],
+  "relations": [],
   "steps": [],
-  "dependencies": [],
-  "note": "Mueve A y B para cambiar la dirección común; mueve P para elegir por dónde pasa la paralela.",
-  "extensions": {}
+  "note": "Mueve A y B para cambiar la dirección común; mueve P para elegir por dónde pasa la paralela."
 }
 );
 /* @matematika-diagram-spec:end */

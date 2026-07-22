@@ -190,13 +190,13 @@ describe('DiagramWorkbench authority adapters', () => {
 
     await waitFor(() => expect(screen.getByText('Objetos')).toBeTruthy());
     fireEvent.click(screen.getByRole('button', { name: /Añadir objeto/ }));
-    fireEvent.click(screen.getByRole('menuitem', { name: 'Punto medio' }));
+    fireEvent.click(screen.getAllByRole('menuitem', { name: 'Punto medio' })[0]);
     fireEvent.change(screen.getByLabelText('Punto 1 para Punto medio'), { target: { value: 'pO' } });
     fireEvent.change(screen.getByLabelText('Punto 2 para Punto medio'), { target: { value: 'pA' } });
     fireEvent.click(screen.getByRole('button', { name: 'Crear Punto medio' }));
 
     await waitFor(() => expect(screen.getAllByText(/midOA/).length).toBeGreaterThan(0));
-    expect(screen.getByText(/Seleccione un objeto en el lienzo/)).toBeTruthy();
+    expect(screen.getAllByText(/Punto · Punto medio/).length).toBeGreaterThan(0);
   });
 
   it('copies and pastes the selected object without using the code tab', async () => {
@@ -220,6 +220,50 @@ describe('DiagramWorkbench authority adapters', () => {
     expect(screen.getByRole('tab', { name: 'Código TSX' }).getAttribute('aria-selected')).toBe('false');
   });
 
+  it('copies and pastes several explicitly selected objects as one coherent selection', async () => {
+    render(
+      <DiagramWorkbench
+        isOpen
+        mode={{ kind: 'new', componentName: 'DiagramaMultiseleccion' }}
+        metadataType="definicion"
+        onClose={vi.fn()}
+        onConfirm={vi.fn()}
+      />
+    );
+
+    await waitFor(() => expect(screen.getByRole('tab', { name: 'Objetos' })).toBeTruthy());
+    fireEvent.click(screen.getByRole('checkbox', { name: 'Seleccionar A' }));
+    expect(screen.getByText('2 seleccionados')).toBeTruthy();
+    fireEvent.click(screen.getByRole('button', { name: 'Copiar objetos seleccionados' }));
+    await waitFor(() => expect(screen.getByText('2 objetos copiados.')).toBeTruthy());
+    fireEvent.click(screen.getByRole('button', { name: 'Pegar' }));
+
+    await waitFor(() => expect(screen.getByText('2 objeto(s) pegado(s). Las referencias internas se han actualizado.')).toBeTruthy());
+    expect(screen.getByText('2 seleccionados')).toBeTruthy();
+    expect(screen.getAllByText(/pO_copy/).length).toBeGreaterThan(0);
+    expect(screen.getAllByText(/pA_copy/).length).toBeGreaterThan(0);
+  });
+
+  it('organizes the left panel into independent object, organization and diagram tabs', async () => {
+    render(
+      <DiagramWorkbench
+        isOpen
+        mode={{ kind: 'new', componentName: 'DiagramaConPaneles' }}
+        metadataType="definicion"
+        onClose={vi.fn()}
+        onConfirm={vi.fn()}
+      />
+    );
+
+    await waitFor(() => expect(screen.getByRole('tab', { name: 'Objetos' }).getAttribute('aria-selected')).toBe('true'));
+    expect(screen.getByLabelText('Árbol de escena por capas')).toBeTruthy();
+    fireEvent.click(screen.getByRole('tab', { name: 'Organizar' }));
+    expect(screen.getByRole('tab', { name: 'Organizar' }).getAttribute('aria-selected')).toBe('true');
+    fireEvent.click(screen.getByRole('tab', { name: 'Diagrama' }));
+    expect(screen.getByText('Información bajo el título')).toBeTruthy();
+    expect(screen.getByText('Plano y viewport')).toBeTruthy();
+  });
+
   it('separates construction, sequence, MDX links and checks into understandable tasks', async () => {
     render(
       <DiagramWorkbench
@@ -231,7 +275,7 @@ describe('DiagramWorkbench authority adapters', () => {
       />
     );
 
-    await waitFor(() => expect(screen.getByRole('tab', { name: /Construir/ }).getAttribute('aria-selected')).toBe('true'));
+    await waitFor(() => expect(screen.getByRole('tab', { name: /Diseñar/ }).getAttribute('aria-selected')).toBe('true'));
     expect(screen.getByText('Objetos')).toBeTruthy();
     expect(screen.queryByRole('heading', { name: 'Línea temporal y comportamiento' })).toBeNull();
 

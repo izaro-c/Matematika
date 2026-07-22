@@ -3,8 +3,8 @@ import { createDiagramSpec, DiagramRenderer } from '@/shared/diagrams/public';
 /* @matematika-diagram-spec:start */
 export const TrianguloIsoscelesSpec = createDiagramSpec(
 {
-  "version": 2,
-  "renderer": "matematika-diagram-renderer-v2",
+  "version": 3,
+  "renderer": "matematika-diagram-renderer-v3",
   "title": "Triangulo Isósceles",
   "componentId": "triangulo-isosceles",
   "category": "Teoremas",
@@ -46,7 +46,7 @@ export const TrianguloIsoscelesSpec = createDiagramSpec(
     }
   ],
   "groups": [],
-  "points": [
+  "objects": [
     {
       "id": "pA",
       "label": "A",
@@ -63,16 +63,22 @@ export const TrianguloIsoscelesSpec = createDiagramSpec(
       },
       "target": true,
       "targetId": "pA",
-      "style": {
-        "pointSize": 7,
-        "highlightPointSize": 10,
+      "objectType": "point",
+      "definition": {
+        "type": "coordinates",
+        "x": -3.35,
+        "y": -2.79
+      },
+      "mobility": {
+        "type": "free"
+      },
+      "appearance": {
+        "size": 7,
+        "labelVisible": true,
+        "highlightSize": 10,
         "preserveColorOnHighlight": true
       },
-      "x": -3.35,
-      "y": -2.79,
-      "showLabel": true,
-      "fixed": false,
-      "constraint": "free"
+      "interaction": {}
     },
     {
       "id": "pB",
@@ -90,16 +96,22 @@ export const TrianguloIsoscelesSpec = createDiagramSpec(
       },
       "target": true,
       "targetId": "pB",
-      "style": {
-        "pointSize": 7,
-        "highlightPointSize": 10,
+      "objectType": "point",
+      "definition": {
+        "type": "coordinates",
+        "x": 3.83,
+        "y": -0.7
+      },
+      "mobility": {
+        "type": "free"
+      },
+      "appearance": {
+        "size": 7,
+        "labelVisible": true,
+        "highlightSize": 10,
         "preserveColorOnHighlight": true
       },
-      "x": 3.83,
-      "y": -0.7,
-      "showLabel": true,
-      "fixed": false,
-      "constraint": "free"
+      "interaction": {}
     },
     {
       "id": "pP",
@@ -117,17 +129,23 @@ export const TrianguloIsoscelesSpec = createDiagramSpec(
       },
       "target": true,
       "targetId": "pP",
-      "style": {
-        "pointSize": 7,
-        "highlightPointSize": 10,
+      "objectType": "point",
+      "definition": {
+        "type": "coordinates",
+        "x": -1.1933190511529765,
+        "y": 3.1790338695111826
+      },
+      "mobility": {
+        "type": "on-support",
+        "support": "lineMediatriz"
+      },
+      "appearance": {
+        "size": 7,
+        "labelVisible": true,
+        "highlightSize": 10,
         "preserveColorOnHighlight": true
       },
-      "x": -1.1933190511529765,
-      "y": 3.1790338695111826,
-      "showLabel": true,
-      "fixed": false,
-      "constraint": "glider",
-      "gliderTarget": "lineMediatriz"
+      "interaction": {}
     },
     {
       "id": "p4",
@@ -145,20 +163,26 @@ export const TrianguloIsoscelesSpec = createDiagramSpec(
       },
       "target": false,
       "targetId": "p4",
-      "style": {
-        "pointSize": 7,
-        "highlightPointSize": 10,
+      "objectType": "point",
+      "definition": {
+        "type": "coordinates",
+        "x": 0.2802461930667155,
+        "y": 0.5189181708510687
+      },
+      "mobility": {
+        "type": "constrained",
+        "relationIds": [
+          "p4-coincident-midAB"
+        ]
+      },
+      "appearance": {
+        "size": 7,
+        "labelVisible": true,
+        "highlightSize": 10,
         "preserveColorOnHighlight": true
       },
-      "x": 0.2802461930667155,
-      "y": 0.5189181708510687,
-      "showLabel": true,
-      "fixed": false,
-      "constraint": "glider",
-      "gliderTarget": "midAB"
-    }
-  ],
-  "elements": [
+      "interaction": {}
+    },
     {
       "id": "segAB",
       "label": "Segmento AB",
@@ -175,16 +199,19 @@ export const TrianguloIsoscelesSpec = createDiagramSpec(
       },
       "target": true,
       "targetId": "segAB",
-      "style": {
+      "objectType": "path",
+      "geometry": {
+        "type": "segment",
+        "points": [
+          "pA",
+          "pB"
+        ]
+      },
+      "appearance": {
         "strokeWidth": 2.4,
         "highlightStrokeWidth": 3,
         "preserveColorOnHighlight": true
-      },
-      "kind": "segment",
-      "refs": [
-        "pA",
-        "pB"
-      ]
+      }
     },
     {
       "id": "midAB",
@@ -202,14 +229,20 @@ export const TrianguloIsoscelesSpec = createDiagramSpec(
       },
       "target": true,
       "targetId": "midAB",
-      "style": {
-        "preserveColorOnHighlight": true
+      "objectType": "point",
+      "definition": {
+        "type": "midpoint",
+        "points": [
+          "pA",
+          "pB"
+        ]
       },
-      "kind": "midpoint",
-      "refs": [
-        "pA",
-        "pB"
-      ]
+      "mobility": {
+        "type": "fixed"
+      },
+      "appearance": {
+        "preserveColorOnHighlight": true
+      }
     },
     {
       "id": "lineMediatriz",
@@ -227,18 +260,24 @@ export const TrianguloIsoscelesSpec = createDiagramSpec(
       },
       "target": true,
       "targetId": "lineMediatriz",
-      "style": {
+      "objectType": "path",
+      "geometry": {
+        "type": "line",
+        "construction": {
+          "type": "perpendicular",
+          "linePoints": [
+            "pA",
+            "pB"
+          ],
+          "through": "midAB"
+        }
+      },
+      "appearance": {
+        "dashed": true,
         "strokeWidth": 2.4,
         "highlightStrokeWidth": 3,
         "preserveColorOnHighlight": true
-      },
-      "kind": "perpendicular",
-      "refs": [
-        "pA",
-        "pB",
-        "midAB"
-      ],
-      "dashed": true
+      }
     },
     {
       "id": "segPA",
@@ -256,17 +295,20 @@ export const TrianguloIsoscelesSpec = createDiagramSpec(
       },
       "target": true,
       "targetId": "segPA",
-      "style": {
+      "objectType": "path",
+      "geometry": {
+        "type": "segment",
+        "points": [
+          "pP",
+          "pA"
+        ]
+      },
+      "appearance": {
+        "dashed": false,
         "strokeWidth": 2.4,
         "highlightStrokeWidth": 3,
         "preserveColorOnHighlight": true
-      },
-      "kind": "segment",
-      "refs": [
-        "pP",
-        "pA"
-      ],
-      "dashed": false
+      }
     },
     {
       "id": "segPB",
@@ -284,17 +326,20 @@ export const TrianguloIsoscelesSpec = createDiagramSpec(
       },
       "target": true,
       "targetId": "segPB",
-      "style": {
+      "objectType": "path",
+      "geometry": {
+        "type": "segment",
+        "points": [
+          "pP",
+          "pB"
+        ]
+      },
+      "appearance": {
+        "dashed": false,
         "strokeWidth": 2.4,
         "highlightStrokeWidth": 3,
         "preserveColorOnHighlight": true
-      },
-      "kind": "segment",
-      "refs": [
-        "pP",
-        "pB"
-      ],
-      "dashed": false
+      }
     },
     {
       "id": "congruenceMarkPB",
@@ -312,17 +357,19 @@ export const TrianguloIsoscelesSpec = createDiagramSpec(
       },
       "target": true,
       "targetId": "congruenceMarkPB",
-      "style": {
-        "markHeight": 0.5,
-        "preserveColorOnHighlight": true
+      "objectType": "mark",
+      "variant": "congruence",
+      "anchor": {
+        "type": "between-points",
+        "points": [
+          "pP",
+          "pB"
+        ]
       },
-      "kind": "congruenceMark",
-      "refs": [
-        "pP",
-        "pB"
-      ],
-      "properties": {
-        "markCount": 2
+      "count": 2,
+      "height": 0.5,
+      "appearance": {
+        "preserveColorOnHighlight": true
       }
     },
     {
@@ -341,17 +388,19 @@ export const TrianguloIsoscelesSpec = createDiagramSpec(
       },
       "target": true,
       "targetId": "congruenceMarkAP",
-      "style": {
-        "markHeight": 0.5,
-        "preserveColorOnHighlight": true
+      "objectType": "mark",
+      "variant": "congruence",
+      "anchor": {
+        "type": "between-points",
+        "points": [
+          "pA",
+          "pP"
+        ]
       },
-      "kind": "congruenceMark",
-      "refs": [
-        "pA",
-        "pP"
-      ],
-      "properties": {
-        "markCount": 2
+      "count": 2,
+      "height": 0.5,
+      "appearance": {
+        "preserveColorOnHighlight": true
       }
     },
     {
@@ -370,64 +419,44 @@ export const TrianguloIsoscelesSpec = createDiagramSpec(
       },
       "target": true,
       "targetId": "measurementPB",
-      "style": {
-        "preserveColorOnHighlight": true
-      },
-      "kind": "measurement",
-      "refs": [
-        "pP",
-        "pB"
-      ],
-      "text": "PA = PB = {value}",
-      "properties": {
+      "objectType": "annotation",
+      "variant": "measurement",
+      "content": {
+        "text": "PA = PB = {value}",
         "expression": "segPB.length",
         "unit": "u",
         "precision": 2
+      },
+      "anchor": {
+        "type": "object",
+        "object": "pP"
+      },
+      "measurement": {
+        "refs": [
+          "pP",
+          "pB"
+        ],
+        "mode": "distance"
+      },
+      "appearance": {
+        "preserveColorOnHighlight": true
       }
     }
   ],
-  "sliders": [],
-  "steps": [],
-  "constraints": [],
-  "dependencies": [
+  "relations": [
     {
-      "sourceId": "pP",
-      "targetId": "congruenceMarkPB",
-      "relation": "construction"
-    },
-    {
-      "sourceId": "pB",
-      "targetId": "congruenceMarkPB",
-      "relation": "construction"
-    },
-    {
-      "sourceId": "pA",
-      "targetId": "congruenceMarkAP",
-      "relation": "construction"
-    },
-    {
-      "sourceId": "pP",
-      "targetId": "congruenceMarkAP",
-      "relation": "construction"
-    },
-    {
-      "sourceId": "pP",
-      "targetId": "measurementPB",
-      "relation": "construction"
-    },
-    {
-      "sourceId": "pB",
-      "targetId": "measurementPB",
-      "relation": "construction"
-    },
-    {
-      "sourceId": "segPB",
-      "targetId": "measurementPB",
-      "relation": "expression"
+      "id": "p4-coincident-midAB",
+      "label": "4 coincide con M",
+      "enabled": true,
+      "type": "coincident",
+      "points": [
+        "p4",
+        "midAB"
+      ]
     }
   ],
-  "note": "Arrastra P sobre la mediatriz",
-  "extensions": {}
+  "steps": [],
+  "note": "Arrastra P sobre la mediatriz"
 }
 );
 /* @matematika-diagram-spec:end */
