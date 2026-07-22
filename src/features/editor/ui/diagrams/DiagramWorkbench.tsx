@@ -671,6 +671,7 @@ export const DiagramWorkbenchCore: React.FC<DiagramWorkbenchCoreProps> = ({
                 <section className="py-4">
                   <h3 className="mb-2 text-xs font-bold text-carbon">Plano y viewport</h3>
                   <div className="grid grid-cols-2 gap-2 text-xs">{(['Min X', 'Max Y', 'Max X', 'Min Y'] as const).map((label, idx) => <label key={label} className="text-[10px] font-bold text-carbon/60">{label}<input type="number" step="0.5" className="mt-1 min-h-10 w-full rounded border border-carbon/15 bg-lienzo px-2 text-xs font-mono" value={model.viewport.bounds[idx]} onChange={(e) => { const val = Number(e.target.value); if (Number.isFinite(val)) { const nextBox = [...model.viewport.bounds] as [number, number, number, number]; nextBox[idx] = val; handleVisualEdit({ ...model, viewport: { ...model.viewport, bounds: nextBox } }, { label: 'Editar límites del viewport', mergeKey: 'viewport-input' }); } }} /></label>)}</div>
+                  <button type="button" className="mt-2 min-h-10 w-full rounded border border-carbon/15 px-2 text-[10px] font-bold text-carbon/70 hover:bg-carbon/5" onClick={() => handleVisualEdit({ ...model, viewport: { ...model.viewport, home: [...model.viewport.bounds] as [number, number, number, number] } }, { label: 'Guardar vista inicial' })}>Guardar como vista inicial</button>
                 </section>
                 <div className="pt-4"><DiagramMovementAidsPanel model={model} onModelEdit={handleVisualEdit} onSelect={selectOnly} /></div>
               </div>}

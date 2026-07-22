@@ -33,9 +33,9 @@ describe('DiagramRenderer shared runtime', () => {
     expect(renderer?.querySelector('[data-diagram-toolbar] [aria-label="Controles del viewport"]')).toBeTruthy();
     expect(board?.querySelector('[aria-label="Controles del viewport"]')).toBeTruthy();
     fireEvent.click(screen.getByRole('button', { name: 'Acercar' }));
-    expect(onViewportChange).toHaveBeenCalledTimes(1);
-    fireEvent.click(screen.getByRole('button', { name: 'Ajustar todos los objetos al viewport' }));
-    expect(onViewportChange).toHaveBeenCalledTimes(2);
+    expect(renderer?.getAttribute('data-diagram-viewport-bounds')).not.toBeNull();
+    fireEvent.click(screen.getByRole('button', { name: 'Ajustar automáticamente al contenido visible en todos los pasos' }));
+    expect(onViewportChange).not.toHaveBeenCalled();
   });
 
   it('opens the real Pitágoras editor preview without requiring an outer MathProvider', () => {

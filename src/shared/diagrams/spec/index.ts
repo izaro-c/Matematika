@@ -6,6 +6,7 @@ export * from './migrations';
 export * from './v3Compatibility';
 export * from './semantics';
 export * from './scene';
+export * from './viewport';
 export * from './history';
 export * from './expressions';
 export * from './infoPanels';

@@ -67,6 +67,18 @@ describe('MathBoard controlled viewport', () => {
     expect(screen.getByText(/Use Tab para recorrer/).classList.contains('sr-only')).toBe(true);
   });
 
+  it('re-asserts the controlled viewport after programmatic board updates', () => {
+    const onUpdate = vi.fn();
+    render(<MathBoard boundingbox={[-2, 2, 2, -2]} onInit={vi.fn()} onUpdate={onUpdate} />);
+    mocks.board.getBoundingBox.mockReturnValue([-20, 20, 20, -20]);
+    mocks.board.setBoundingBox.mockClear();
+    act(() => { mocks.handlers.update(); });
+    expect(mocks.board.setBoundingBox).toHaveBeenCalled();
+    const lastCall = mocks.board.setBoundingBox.mock.calls.at(-1)?.[0];
+    expect(lastCall?.[0]).toBeCloseTo(-2, 0);
+    expect(lastCall?.[2]).toBeCloseTo(2, 0);
+  });
+
   it('reports the JSXGraph boundingbox event used by pan and wheel zoom', () => {
     const onBoundingBoxChange = vi.fn();
     render(<MathBoard onInit={vi.fn()} onBoundingBoxChange={onBoundingBoxChange} pan zoom />);

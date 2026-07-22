@@ -44,7 +44,7 @@ export interface DiagramRendererProps {
   onSliderChange?: (id: string, value: number) => void;
   onAnnotationMove?: (id: string, placement: DiagramAnnotationPlacement) => void;
   onCanvasPointCreate?: (x: number, y: number) => void;
-  onViewportChange?: (bounds: DiagramBounds) => void;
+  onViewportChange?: (bounds: DiagramBounds, options?: { persist?: boolean; persistHome?: boolean }) => void;
   stepControls?: boolean;
 }
 
@@ -154,8 +154,10 @@ const DiagramRendererContent: React.FC<DiagramRendererProps> = ({
 
   const {
     bounds,
-    commitBounds,
-    fitRelevantViewport,
+    commitCamera,
+    fitAutoViewport,
+    recoverVisibleViewport,
+    resetToHome,
     missingItems,
     safeArea,
     viewportSafeArea,
@@ -223,7 +225,7 @@ const DiagramRendererContent: React.FC<DiagramRendererProps> = ({
         ariaLabel={`${spec.title}. Diagrama matemático interactivo.`}
         className="relative min-h-[360px] h-full w-full overflow-hidden rounded-[20px] font-diagram"
         onBoundingBoxChange={(next) => {
-          if (next.some((value, index) => Math.abs(value - bounds[index]) > 1e-7)) commitBounds(next);
+          if (next.some((value, index) => Math.abs(value - bounds[index]) > 1e-7)) commitCamera(next);
         }}
         onInit={handleBoardInit}
         onUpdate={handleBoardUpdate}
@@ -262,19 +264,20 @@ const DiagramRendererContent: React.FC<DiagramRendererProps> = ({
             {viewportControls && (
               <>
                 <div className="flex h-9 items-stretch justify-self-start divide-x divide-carbon/10 overflow-hidden rounded-full border border-carbon/15 bg-lienzo/90 backdrop-blur-[2px]" role="group" aria-label="Controles del viewport">
-                  <button type="button" className="w-9 font-diagram text-base text-carbon transition-colors hover:bg-carbon/5 focus-visible:z-10 focus-visible:outline-2 focus-visible:outline-pavo" aria-label="Acercar" onClick={() => commitBounds(zoomViewport(spec, bounds, 1.25))}>+</button>
-                  <button type="button" className="w-9 font-diagram text-base text-carbon transition-colors hover:bg-carbon/5 focus-visible:z-10 focus-visible:outline-2 focus-visible:outline-pavo" aria-label="Alejar" onClick={() => commitBounds(zoomViewport(spec, bounds, 0.8))}>−</button>
-                  <button type="button" className="diagram-viewport-secondary px-2.5 font-diagram text-[11px] text-carbon transition-colors hover:bg-carbon/5 focus-visible:z-10 focus-visible:outline-2 focus-visible:outline-pavo" aria-label="Ajustar todos los objetos al viewport" title="Reencuadrar para mostrar todos los objetos visibles" onClick={() => commitBounds(fitRelevantViewport())}>Ajustar</button>
+                  <button type="button" className="w-9 font-diagram text-base text-carbon transition-colors hover:bg-carbon/5 focus-visible:z-10 focus-visible:outline-2 focus-visible:outline-pavo" aria-label="Acercar" onClick={() => commitCamera(zoomViewport(spec, bounds, 1.25))}>+</button>
+                  <button type="button" className="w-9 font-diagram text-base text-carbon transition-colors hover:bg-carbon/5 focus-visible:z-10 focus-visible:outline-2 focus-visible:outline-pavo" aria-label="Alejar" onClick={() => commitCamera(zoomViewport(spec, bounds, 0.8))}>−</button>
+                  <button type="button" className="diagram-viewport-secondary px-2.5 font-diagram text-[11px] text-carbon transition-colors hover:bg-carbon/5 focus-visible:z-10 focus-visible:outline-2 focus-visible:outline-pavo" aria-label="Ajustar automáticamente al contenido visible en todos los pasos" title="Reencuadrar para mostrar todos los objetos visibles en algún paso" onClick={() => fitAutoViewport()}>Ajustar</button>
                   <button
                     type="button"
                     className="diagram-viewport-secondary px-2.5 font-diagram text-[11px] text-carbon transition-colors hover:bg-carbon/5 focus-visible:z-10 focus-visible:outline-2 focus-visible:outline-pavo disabled:opacity-35"
                     disabled={missingItems.length === 0}
                     aria-label="Recuperar objetos fuera del viewport"
                     title={missingItems.length > 0 ? `${missingItems.length} objeto(s) visible(s) fuera de vista` : 'No hay objetos visibles fuera de vista'}
-                    onClick={() => commitBounds(fitRelevantViewport())}
+                    onClick={() => recoverVisibleViewport()}
                   >
                     Recuperar
                   </button>
+                  <button type="button" className="diagram-viewport-secondary px-2.5 font-diagram text-[11px] text-carbon transition-colors hover:bg-carbon/5 focus-visible:z-10 focus-visible:outline-2 focus-visible:outline-pavo" aria-label="Restablecer vista inicial" title="Volver a la vista inicial guardada" onClick={() => resetToHome()}>Inicio</button>
                   {toolbarLayout === 'rails' && (
                     <button
                       type="button"
@@ -294,7 +297,7 @@ const DiagramRendererContent: React.FC<DiagramRendererProps> = ({
                       type="button"
                       className="block w-full rounded-lg px-3 py-2 text-left hover:bg-carbon/5 focus-visible:outline-2 focus-visible:outline-pavo"
                       role="menuitem"
-                      onClick={() => { commitBounds(fitRelevantViewport()); setViewportMenuOpen(false); }}
+                      onClick={() => { fitAutoViewport(); setViewportMenuOpen(false); }}
                     >
                       Ajustar al contenido
                     </button>
@@ -303,9 +306,17 @@ const DiagramRendererContent: React.FC<DiagramRendererProps> = ({
                       className="block w-full rounded-lg px-3 py-2 text-left hover:bg-carbon/5 focus-visible:outline-2 focus-visible:outline-pavo disabled:opacity-35"
                       role="menuitem"
                       disabled={missingItems.length === 0}
-                      onClick={() => { commitBounds(fitRelevantViewport()); setViewportMenuOpen(false); }}
+                      onClick={() => { recoverVisibleViewport(); setViewportMenuOpen(false); }}
                     >
                       Recuperar fuera de vista
+                    </button>
+                    <button
+                      type="button"
+                      className="block w-full rounded-lg px-3 py-2 text-left hover:bg-carbon/5 focus-visible:outline-2 focus-visible:outline-pavo"
+                      role="menuitem"
+                      onClick={() => { resetToHome(); setViewportMenuOpen(false); }}
+                    >
+                      Restablecer vista
                     </button>
                   </div>
                 )}
