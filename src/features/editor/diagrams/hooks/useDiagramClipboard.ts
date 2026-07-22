@@ -12,9 +12,9 @@ type DiagramClipboardPayload = NonNullable<ReturnType<typeof createDiagramClipbo
 
 interface UseDiagramClipboardOptions {
   model: VisualDiagramModel | null;
-  selectedId: string;
+  selectedIds: readonly string[];
   onModelEdit: (model: VisualDiagramModel, options?: { label: string }) => void;
-  onSelect: (id: string) => void;
+  onSelectMany: (ids: string[], primaryId?: string) => void;
   onShowObjects: () => void;
 }
 
@@ -22,7 +22,7 @@ function browserClipboard(): Clipboard | undefined {
   return typeof navigator === 'undefined' ? undefined : navigator.clipboard;
 }
 
-export function useDiagramClipboard({ model, selectedId, onModelEdit, onSelect, onShowObjects }: UseDiagramClipboardOptions) {
+export function useDiagramClipboard({ model, selectedIds, onModelEdit, onSelectMany, onShowObjects }: UseDiagramClipboardOptions) {
   const [payload, setPayload] = useState<DiagramClipboardPayload | null>(null);
   const [status, setStatus] = useState('');
 
@@ -33,11 +33,10 @@ export function useDiagramClipboard({ model, selectedId, onModelEdit, onSelect, 
   };
 
   const copySelected = () => {
-    if (!model || !selectedId) return;
-    const group = model.groups.find(item => item.id === selectedId);
-    const nextPayload = createDiagramClipboard(model, group ? [] : [selectedId], group ? [group.id] : []);
+    if (!model || selectedIds.length === 0) return;
+    const nextPayload = createDiagramClipboard(model, selectedIds);
     if (!nextPayload) return;
-    store(nextPayload, group ? `Grupo «${group.label}» copiado.` : 'Objeto copiado.');
+    store(nextPayload, selectedIds.length === 1 ? 'Objeto copiado.' : `${selectedIds.length} objetos copiados.`);
   };
 
   const copyGroup = (groupId: string) => {
@@ -52,7 +51,7 @@ export function useDiagramClipboard({ model, selectedId, onModelEdit, onSelect, 
     if (!model) return;
     const result = pasteDiagramClipboard(model, nextPayload);
     onModelEdit(result.model, { label: `Pegar ${result.pastedIds.length} objeto(s)` });
-    onSelect(result.selectedId);
+    onSelectMany(result.pastedIds, result.selectedId);
     onShowObjects();
     setStatus(`${result.pastedIds.length} objeto(s) pegado(s). Las referencias internas se han actualizado.`);
   };
@@ -73,7 +72,7 @@ export function useDiagramClipboard({ model, selectedId, onModelEdit, onSelect, 
     if (target.matches('input, textarea, select, [contenteditable="true"]')) return;
     if (!(event.ctrlKey || event.metaKey) || event.altKey) return;
     const key = event.key.toLocaleLowerCase();
-    if (key === 'c' && selectedId) {
+    if (key === 'c' && selectedIds.length > 0) {
       event.preventDefault();
       copySelected();
     }

@@ -74,25 +74,31 @@ describe('Phase 4 accessible interaction', () => {
   it('exposes an understandable objects-by-steps matrix and editing actions', () => {
     const model = createTemplateModel('demostracion-pasos', 'Matriz', 'demostracion');
     const onEdit = vi.fn();
+    const onActiveStepChange = vi.fn();
     render(
       <MathProvider>
         <DiagramStepsEditor
           model={model}
           activeStepId="step1"
-          onActiveStepChange={vi.fn()}
+          onActiveStepChange={onActiveStepChange}
           onModelEdit={onEdit}
           onSelectObject={vi.fn()}
         />
       </MathProvider>,
     );
     expect(screen.getByRole('table', { name: 'Matriz objetos × pasos' })).toBeTruthy();
-    const cell = screen.getByRole('button', { name: /Base AB en Paso 1: Visible, Sin énfasis, interactivo/ });
+    const cell = screen.getByRole('button', { name: /Base AB en Paso 1: Visible, Sin resaltar, interactivo/ });
     fireEvent.click(cell);
     expect(screen.getByText('Base AB · Paso 1')).toBeTruthy();
     fireEvent.click(screen.getByRole('checkbox', { name: 'Visible' }));
     expect(onEdit).toHaveBeenCalledWith(expect.objectContaining({ steps: expect.any(Array) }), expect.objectContaining({ label: 'Cambiar visibilidad del paso' }));
     fireEvent.click(screen.getByRole('button', { name: '+ Crear paso' }));
     expect(onEdit).toHaveBeenCalledWith(expect.objectContaining({ steps: expect.arrayContaining([expect.objectContaining({ id: 'step4' })]) }), expect.any(Object));
+
+    const stepTwoCell = screen.getByRole('button', { name: /Base AB en Paso 2: Visible, Sin resaltar, interactivo/ });
+    fireEvent.click(stepTwoCell);
+    expect(onActiveStepChange).toHaveBeenCalledWith('step2');
+    expect(stepTwoCell.getAttribute('aria-pressed')).toBe('true');
   });
 
   it('shows Lean traces as read-only information beside, not instead of, justification', () => {

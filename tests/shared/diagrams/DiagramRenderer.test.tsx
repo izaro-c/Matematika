@@ -2,7 +2,7 @@ import React from 'react';
 import { fireEvent, render, screen } from '@testing-library/react';
 import { beforeEach, describe, expect, it, vi } from 'vitest';
 import v2Fixture from '../../fixtures/diagrams/diagram-spec-v2.json';
-import { migrateDiagramSpec } from '../../../src/shared/diagrams/public';
+import { migrateDiagramSpec, projectDiagramSpecV3ToV2 } from '../../../src/shared/diagrams/public';
 import { MathProvider } from '../../../src/shared/lib/MathStoreContext';
 
 vi.mock('../../../src/shared/diagrams/core/MathBoard', () => ({
@@ -20,11 +20,11 @@ describe('DiagramRenderer shared runtime', () => {
     const onViewportChange = vi.fn();
     render(
       <MathProvider>
-        <DiagramRenderer spec={migrateDiagramSpec(v2Fixture).spec} mode="preview" onViewportChange={onViewportChange} />
+        <DiagramRenderer spec={projectDiagramSpecV3ToV2(migrateDiagramSpec(v2Fixture).spec)} mode="preview" onViewportChange={onViewportChange} />
       </MathProvider>,
     );
     expect(screen.getByTestId('math-board')).toBeTruthy();
-    const renderer = document.querySelector('[data-diagram-renderer="matematika-diagram-renderer-v2"]');
+    const renderer = document.querySelector('[data-diagram-renderer="matematika-diagram-renderer-v3"]');
     expect(renderer).toBeTruthy();
     expect(renderer?.className).toContain('rounded-[20px]');
     const board = renderer?.querySelector('[data-testid="math-board"]');
@@ -76,7 +76,7 @@ describe('DiagramRenderer shared runtime', () => {
   it('opens a real multi-step editor without requiring an outer MathProvider', () => {
     expect(() => render(
       <DiagramStepsEditor
-        model={migrateDiagramSpec(v2Fixture).spec}
+        model={projectDiagramSpecV3ToV2(migrateDiagramSpec(v2Fixture).spec)}
         activeStepId="step1"
         onActiveStepChange={vi.fn()}
         onModelEdit={vi.fn()}
@@ -87,7 +87,7 @@ describe('DiagramRenderer shared runtime', () => {
   });
 
   it('starts a published multi-step diagram at step 1 and only advances through its scoped navigator', () => {
-    const baseSpec = migrateDiagramSpec(v2Fixture).spec;
+    const baseSpec = projectDiagramSpecV3ToV2(migrateDiagramSpec(v2Fixture).spec);
     const spec = {
       ...baseSpec,
       steps: [
@@ -96,7 +96,7 @@ describe('DiagramRenderer shared runtime', () => {
       ],
     };
     render(<DiagramRenderer spec={spec} />);
-    const renderer = document.querySelector('[data-diagram-renderer="matematika-diagram-renderer-v2"]');
+    const renderer = document.querySelector('[data-diagram-renderer="matematika-diagram-renderer-v3"]');
     expect(renderer?.getAttribute('data-diagram-active-step')).toBe('step1');
     expect(screen.queryByLabelText('Lecturas dinámicas del diagrama')).toBeNull();
     const initialBounds = renderer?.getAttribute('data-diagram-viewport-bounds');

@@ -3,8 +3,8 @@ import { createDiagramSpec, DiagramRenderer } from '@/shared/diagrams/public';
 /* @matematika-diagram-spec:start */
 export const AnguloSpec = createDiagramSpec(
 {
-  "version": 2,
-  "renderer": "matematika-diagram-renderer-v2",
+  "version": 3,
+  "renderer": "matematika-diagram-renderer-v3",
   "title": "Ángulo",
   "componentId": "angulo",
   "category": "Definiciones",
@@ -46,7 +46,7 @@ export const AnguloSpec = createDiagramSpec(
     }
   ],
   "groups": [],
-  "points": [
+  "objects": [
     {
       "id": "pA",
       "label": "A",
@@ -63,20 +63,27 @@ export const AnguloSpec = createDiagramSpec(
       },
       "target": true,
       "targetId": "pA",
-      "style": {
-        "pointSize": 7,
-        "highlightPointSize": 10,
+      "objectType": "point",
+      "definition": {
+        "type": "coordinates",
+        "x": 1.23,
+        "y": 1.8
+      },
+      "mobility": {
+        "type": "free"
+      },
+      "appearance": {
+        "size": 7,
+        "labelVisible": true,
+        "highlightSize": 10,
         "preserveColorOnHighlight": true
       },
-      "x": 1.23,
-      "y": 1.8,
-      "showLabel": true,
-      "fixed": false,
-      "constraint": "free",
-      "attractorIds": [
-        "lineBO",
-        "perpB4O"
-      ]
+      "interaction": {
+        "attractorIds": [
+          "lineBO",
+          "perpB4O"
+        ]
+      }
     },
     {
       "id": "pB",
@@ -94,16 +101,22 @@ export const AnguloSpec = createDiagramSpec(
       },
       "target": true,
       "targetId": "pB",
-      "style": {
-        "pointSize": 7,
-        "highlightPointSize": 10,
+      "objectType": "point",
+      "definition": {
+        "type": "coordinates",
+        "x": 2,
+        "y": 0
+      },
+      "mobility": {
+        "type": "free"
+      },
+      "appearance": {
+        "size": 7,
+        "labelVisible": true,
+        "highlightSize": 10,
         "preserveColorOnHighlight": true
       },
-      "x": 2,
-      "y": 0,
-      "showLabel": true,
-      "fixed": false,
-      "constraint": "free"
+      "interaction": {}
     },
     {
       "id": "pO",
@@ -121,16 +134,22 @@ export const AnguloSpec = createDiagramSpec(
       },
       "target": true,
       "targetId": "pC",
-      "style": {
-        "pointSize": 7,
-        "highlightPointSize": 10,
+      "objectType": "point",
+      "definition": {
+        "type": "coordinates",
+        "x": 0,
+        "y": 0
+      },
+      "mobility": {
+        "type": "fixed"
+      },
+      "appearance": {
+        "size": 7,
+        "labelVisible": true,
+        "highlightSize": 10,
         "preserveColorOnHighlight": true
       },
-      "x": 0,
-      "y": 0,
-      "showLabel": true,
-      "fixed": true,
-      "constraint": "fixed"
+      "interaction": {}
     },
     {
       "id": "p4",
@@ -148,19 +167,23 @@ export const AnguloSpec = createDiagramSpec(
       },
       "target": false,
       "targetId": "p4",
-      "style": {
-        "pointSize": 0,
-        "highlightPointSize": 0,
+      "objectType": "point",
+      "definition": {
+        "type": "coordinates",
+        "x": 0,
+        "y": 0
+      },
+      "mobility": {
+        "type": "fixed"
+      },
+      "appearance": {
+        "size": 0,
+        "labelVisible": false,
+        "highlightSize": 0,
         "preserveColorOnHighlight": true
       },
-      "x": 0,
-      "y": 0,
-      "showLabel": false,
-      "fixed": true,
-      "constraint": "fixed"
-    }
-  ],
-  "elements": [
+      "interaction": {}
+    },
     {
       "id": "rayOA",
       "label": "Semirrecta",
@@ -177,16 +200,19 @@ export const AnguloSpec = createDiagramSpec(
       },
       "target": true,
       "targetId": "rayOA",
-      "style": {
+      "objectType": "path",
+      "geometry": {
+        "type": "ray",
+        "points": [
+          "pO",
+          "pA"
+        ]
+      },
+      "appearance": {
         "strokeWidth": 2.4,
         "highlightStrokeWidth": 3,
         "preserveColorOnHighlight": true
-      },
-      "kind": "ray",
-      "refs": [
-        "pO",
-        "pA"
-      ]
+      }
     },
     {
       "id": "rayOB",
@@ -204,16 +230,19 @@ export const AnguloSpec = createDiagramSpec(
       },
       "target": true,
       "targetId": "rayOB",
-      "style": {
+      "objectType": "path",
+      "geometry": {
+        "type": "ray",
+        "points": [
+          "pO",
+          "pB"
+        ]
+      },
+      "appearance": {
         "strokeWidth": 2.4,
         "highlightStrokeWidth": 3,
         "preserveColorOnHighlight": true
-      },
-      "kind": "ray",
-      "refs": [
-        "pO",
-        "pB"
-      ]
+      }
     },
     {
       "id": "angleBOA",
@@ -231,16 +260,18 @@ export const AnguloSpec = createDiagramSpec(
       },
       "target": true,
       "targetId": "angleBOA",
-      "style": {
-        "angleRadius": 1,
-        "preserveColorOnHighlight": true
-      },
-      "kind": "angle",
-      "refs": [
+      "objectType": "angle",
+      "points": [
         "pB",
         "pO",
         "pA"
-      ]
+      ],
+      "sweep": "directed",
+      "marker": "arc",
+      "appearance": {
+        "radius": 1,
+        "preserveColorOnHighlight": true
+      }
     },
     {
       "id": "infoPanel4",
@@ -258,19 +289,11 @@ export const AnguloSpec = createDiagramSpec(
       },
       "target": true,
       "targetId": "infoPanel4",
-      "style": {
-        "preserveColorOnHighlight": true
-      },
-      "kind": "infoPanel",
-      "refs": [],
-      "text": "",
-      "properties": {
-        "anchorMode": "viewport",
-        "viewportPosition": [
-          0,
-          0
-        ],
-        "textRules": [
+      "objectType": "annotation",
+      "variant": "panel",
+      "content": {
+        "text": "",
+        "rules": [
           {
             "when": "and(gt(angleBOA.value, 0.05), lt(angleBOA.value, pi/2 - 0.05))",
             "text": "$\\text{Agudo }(0<\\alpha<\\pi/2)$"
@@ -292,6 +315,16 @@ export const AnguloSpec = createDiagramSpec(
             "text": "$\\text{Cóncavo }(\\pi <\\alpha<2\\pi)$"
           }
         ]
+      },
+      "anchor": {
+        "type": "viewport",
+        "position": [
+          0,
+          0
+        ]
+      },
+      "appearance": {
+        "preserveColorOnHighlight": true
       }
     },
     {
@@ -310,16 +343,22 @@ export const AnguloSpec = createDiagramSpec(
       },
       "target": false,
       "targetId": "lineBO",
-      "style": {
+      "objectType": "path",
+      "geometry": {
+        "type": "line",
+        "construction": {
+          "type": "through-points",
+          "points": [
+            "pB",
+            "pO"
+          ]
+        }
+      },
+      "appearance": {
         "strokeWidth": 2.4,
         "highlightStrokeWidth": 3,
         "preserveColorOnHighlight": true
-      },
-      "kind": "line",
-      "refs": [
-        "pB",
-        "pO"
-      ]
+      }
     },
     {
       "id": "perpB4O",
@@ -337,101 +376,28 @@ export const AnguloSpec = createDiagramSpec(
       },
       "target": true,
       "targetId": "perpB4O",
-      "style": {
+      "objectType": "path",
+      "geometry": {
+        "type": "line",
+        "construction": {
+          "type": "perpendicular",
+          "linePoints": [
+            "pB",
+            "p4"
+          ],
+          "through": "pO"
+        }
+      },
+      "appearance": {
         "strokeWidth": 2.4,
         "highlightStrokeWidth": 3,
         "preserveColorOnHighlight": true
-      },
-      "kind": "perpendicular",
-      "refs": [
-        "pB",
-        "p4",
-        "pO"
-      ]
+      }
     }
   ],
-  "sliders": [],
+  "relations": [],
   "steps": [],
-  "constraints": [],
-  "dependencies": [
-    {
-      "sourceId": "pO",
-      "targetId": "rayOA",
-      "relation": "construction"
-    },
-    {
-      "sourceId": "pA",
-      "targetId": "rayOA",
-      "relation": "construction"
-    },
-    {
-      "sourceId": "pO",
-      "targetId": "rayOB",
-      "relation": "construction"
-    },
-    {
-      "sourceId": "pB",
-      "targetId": "rayOB",
-      "relation": "construction"
-    },
-    {
-      "sourceId": "pB",
-      "targetId": "angleBOA",
-      "relation": "construction"
-    },
-    {
-      "sourceId": "pO",
-      "targetId": "angleBOA",
-      "relation": "construction"
-    },
-    {
-      "sourceId": "pA",
-      "targetId": "angleBOA",
-      "relation": "construction"
-    },
-    {
-      "sourceId": "angleBOA",
-      "targetId": "infoPanel4",
-      "relation": "expression"
-    },
-    {
-      "sourceId": "pB",
-      "targetId": "lineBO",
-      "relation": "construction"
-    },
-    {
-      "sourceId": "pO",
-      "targetId": "lineBO",
-      "relation": "construction"
-    },
-    {
-      "sourceId": "pB",
-      "targetId": "perpB4O",
-      "relation": "construction"
-    },
-    {
-      "sourceId": "p4",
-      "targetId": "perpB4O",
-      "relation": "construction"
-    },
-    {
-      "sourceId": "pO",
-      "targetId": "perpB4O",
-      "relation": "construction"
-    },
-    {
-      "sourceId": "lineBO",
-      "targetId": "pA",
-      "relation": "constraint"
-    },
-    {
-      "sourceId": "perpB4O",
-      "targetId": "pA",
-      "relation": "constraint"
-    }
-  ],
-  "note": "Mueve A y B",
-  "extensions": {}
+  "note": "Mueve A y B"
 }
 );
 /* @matematika-diagram-spec:end */

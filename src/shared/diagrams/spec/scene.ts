@@ -1,6 +1,7 @@
 import type {
   DiagramBounds,
   DiagramConstraint,
+  DiagramColorToken,
   DiagramDependency,
   DiagramElement,
   DiagramPoint,
@@ -9,7 +10,10 @@ import type {
   DiagramSpecV2,
   DiagramStepOverlay,
 } from './types';
+import type { DiagramSpecV3 } from './v3';
 import { evaluateMathExpression, extractMathExpressionIdentifiers } from './expressions';
+import { interpolateDiagramTemplate } from './infoPanels';
+import { projectDiagramSpecV3ToV2 } from './v3Compatibility';
 
 export interface DiagramDependencyEdge {
   sourceId: string;
@@ -30,6 +34,7 @@ export interface PlannedSceneItem {
   highlighted: boolean;
   selected: boolean;
   stepEmphasis: 'none' | 'secondary' | 'primary';
+  stepEmphasisColor?: DiagramColorToken;
   label: string;
   interactive: boolean;
   stepValue?: number;
@@ -83,44 +88,44 @@ export function dependencyDeterminesConstructionOrder(
 }
 
 export function evaluateStepOverlayContent(overlay: DiagramStepOverlay, variables: Record<string, number>): string {
-  if (!overlay.expression) return overlay.content;
+  const rendered = interpolateDiagramTemplate(overlay.content, variables, {
+    expression: overlay.expression,
+    precision: overlay.precision,
+    unit: overlay.unit,
+  });
+  if (!overlay.expression) return rendered;
   try {
     const evaluated = evaluateMathExpression(overlay.expression, variables);
     const suffix = overlay.unit ? ` ${overlay.unit}` : '';
     const value = `${evaluated.toFixed(overlay.precision ?? 2)}${suffix}`;
-    return overlay.content.split('{value}').join(value);
+    return rendered.split('{value}').join(value);
   } catch {
-    return overlay.content.split('{value}').join('valor no definido');
+    return rendered.split('{value}').join('valor no definido');
   }
 }
 
-export function resolvePointCoordinates(spec: DiagramSpecV2, id: string, visiting = new Set<string>()): { x: number; y: number } | undefined {
-  const direct = spec.points.find(point => point.id === id);
-  if (direct && direct.constraint !== 'derived') return { x: direct.x, y: direct.y };
-  if (visiting.has(id)) return undefined;
-  visiting.add(id);
-  if (direct?.constraint === 'derived' && direct.xExpression && direct.yExpression) {
-    const variables: Record<string, number> = {};
-    for (const dependencyId of direct.dependencies ?? []) {
-      const coordinates = resolvePointCoordinates(spec, dependencyId, new Set(visiting));
-      if (coordinates) {
-        variables[`${dependencyId}.x`] = coordinates.x;
-        variables[`${dependencyId}.y`] = coordinates.y;
-      }
-      const slider = spec.sliders.find(item => item.id === dependencyId);
-      if (slider) variables[dependencyId] = slider.value;
+function resolveExpressionPoint(spec: DiagramSpecV2, point: DiagramPoint, visiting: Set<string>): Coordinates {
+  const variables: Record<string, number> = {};
+  for (const dependencyId of point.dependencies ?? []) {
+    const coordinates = resolvePointCoordinates(spec, dependencyId, new Set(visiting));
+    if (coordinates) {
+      variables[`${dependencyId}.x`] = coordinates.x;
+      variables[`${dependencyId}.y`] = coordinates.y;
     }
-    try {
-      return {
-        x: evaluateMathExpression(direct.xExpression, variables),
-        y: evaluateMathExpression(direct.yExpression, variables),
-      };
-    } catch {
-      return { x: direct.x, y: direct.y };
-    }
+    const slider = spec.sliders.find(item => item.id === dependencyId);
+    if (slider) variables[dependencyId] = slider.value;
   }
-  const derived = spec.elements.find(element => element.id === id);
-  if (!derived) return undefined;
+  try {
+    return {
+      x: evaluateMathExpression(point.xExpression!, variables),
+      y: evaluateMathExpression(point.yExpression!, variables),
+    };
+  } catch {
+    return { x: point.x, y: point.y };
+  }
+}
+
+function resolveConstructedPoint(spec: DiagramSpecV2, derived: DiagramElement, visiting: Set<string>): Coordinates | undefined {
   if (derived.kind === 'intersection') {
     const first = linearSupportCarrier(spec, derived.refs[0], visiting);
     const second = linearSupportCarrier(spec, derived.refs[1], visiting);
@@ -153,6 +158,18 @@ export function resolvePointCoordinates(spec: DiagramSpecV2, id: string, visitin
     return { x: a.x + dx * t, y: a.y + dy * t };
   }
   return undefined;
+}
+
+export function resolvePointCoordinates(spec: DiagramSpecV2, id: string, visiting = new Set<string>()): Coordinates | undefined {
+  const direct = spec.points.find(point => point.id === id);
+  if (direct && direct.constraint !== 'derived') return { x: direct.x, y: direct.y };
+  if (visiting.has(id)) return undefined;
+  visiting.add(id);
+  if (direct?.constraint === 'derived' && direct.xExpression && direct.yExpression) {
+    return resolveExpressionPoint(spec, direct, visiting);
+  }
+  const derived = spec.elements.find(element => element.id === id);
+  return derived ? resolveConstructedPoint(spec, derived, visiting) : undefined;
 }
 
 function linearSupportCarrier(
@@ -265,6 +282,41 @@ export function supportElements(spec: DiagramSpecV2): DiagramElement[] {
   ].includes(item.kind));
 }
 
+function projectToCircle(spec: DiagramSpecV2, support: DiagramElement, coordinates: Coordinates): Coordinates {
+  const center = resolvePointCoordinates(spec, support.refs[0]);
+  const edge = resolvePointCoordinates(spec, support.refs[1]);
+  if (!center || !edge) return coordinates;
+  const radius = Math.hypot(edge.x - center.x, edge.y - center.y) || 1;
+  const dx = coordinates.x - center.x;
+  const dy = coordinates.y - center.y;
+  const length = Math.hypot(dx, dy) || 1;
+  return { x: center.x + (dx / length) * radius, y: center.y + (dy / length) * radius };
+}
+
+function angleBisectorDirection(a: Coordinates, vertex: Coordinates, other: Coordinates | undefined): Coordinates | undefined {
+  if (!other) return undefined;
+  const ux = a.x - vertex.x;
+  const uy = a.y - vertex.y;
+  const wx = other.x - vertex.x;
+  const wy = other.y - vertex.y;
+  const uLength = Math.hypot(ux, uy) || 1;
+  const wLength = Math.hypot(wx, wy) || 1;
+  const sumX = ux / uLength + wx / wLength;
+  const sumY = uy / uLength + wy / wLength;
+  const sumLength = Math.hypot(sumX, sumY);
+  return sumLength < 1e-6
+    ? { x: -uy / uLength, y: ux / uLength }
+    : { x: sumX / sumLength, y: sumY / sumLength };
+}
+
+function linearProjectionDirection(support: DiagramElement, a: Coordinates, b: Coordinates, through: Coordinates | undefined): Coordinates {
+  const dx = b.x - a.x;
+  const dy = b.y - a.y;
+  if (support.kind === 'angleBisector') return angleBisectorDirection(a, b, through) ?? { x: dx, y: dy };
+  if (support.kind === 'perpendicular') return { x: -dy, y: dx };
+  return { x: dx, y: dy };
+}
+
 export function projectPointToSupport(
   spec: DiagramSpecV2,
   point: DiagramPoint,
@@ -274,16 +326,7 @@ export function projectPointToSupport(
   const support = spec.elements.find(item => item.id === point.gliderTarget);
   if (!support) return coordinates;
 
-  if (support.kind === 'circle') {
-    const center = resolvePointCoordinates(spec, support.refs[0]);
-    const edge = resolvePointCoordinates(spec, support.refs[1]);
-    if (!center || !edge) return coordinates;
-    const radius = Math.hypot(edge.x - center.x, edge.y - center.y) || 1;
-    const dx = coordinates.x - center.x;
-    const dy = coordinates.y - center.y;
-    const length = Math.hypot(dx, dy) || 1;
-    return { x: center.x + (dx / length) * radius, y: center.y + (dy / length) * radius };
-  }
+  if (support.kind === 'circle') return projectToCircle(spec, support, coordinates);
 
   const a = resolvePointCoordinates(spec, support.refs[0]);
   const b = resolvePointCoordinates(spec, support.refs[1]);
@@ -291,38 +334,13 @@ export function projectPointToSupport(
   const lineA = support.kind === 'perpendicular' || support.kind === 'parallel' ? through : a;
   if (!lineA || !a || !b) return coordinates;
 
-  const dx = b.x - a.x;
-  const dy = b.y - a.y;
-  const angleLeg = support.kind === 'angleBisector' ? a : undefined;
   const angleVertex = support.kind === 'angleBisector' ? b : undefined;
-  const angleOtherLeg = support.kind === 'angleBisector' ? through : undefined;
-  const angleDirection = angleLeg && angleVertex && angleOtherLeg
-    ? (() => {
-      const ux = angleLeg.x - angleVertex.x;
-      const uy = angleLeg.y - angleVertex.y;
-      const wx = angleOtherLeg.x - angleVertex.x;
-      const wy = angleOtherLeg.y - angleVertex.y;
-      const uLength = Math.hypot(ux, uy) || 1;
-      const wLength = Math.hypot(wx, wy) || 1;
-      const sumX = ux / uLength + wx / wLength;
-      const sumY = uy / uLength + wy / wLength;
-      const sumLength = Math.hypot(sumX, sumY);
-      return sumLength < 1e-6
-        ? { x: -uy / uLength, y: ux / uLength }
-        : { x: sumX / sumLength, y: sumY / sumLength };
-    })()
-    : undefined;
-  const vx = support.kind === 'angleBisector' && angleDirection
-    ? angleDirection.x
-    : support.kind === 'perpendicular' ? -dy : dx;
-  const vy = support.kind === 'angleBisector' && angleDirection
-    ? angleDirection.y
-    : support.kind === 'perpendicular' ? dx : dy;
+  const direction = linearProjectionDirection(support, a, b, through);
   const origin = support.kind === 'angleBisector' && angleVertex ? angleVertex : lineA;
-  const lengthSquared = vx * vx + vy * vy || 1;
-  const t = ((coordinates.x - origin.x) * vx + (coordinates.y - origin.y) * vy) / lengthSquared;
+  const lengthSquared = direction.x * direction.x + direction.y * direction.y || 1;
+  const t = ((coordinates.x - origin.x) * direction.x + (coordinates.y - origin.y) * direction.y) / lengthSquared;
   const projectedT = support.kind === 'ray' || support.kind === 'angleBisector' ? Math.max(0, t) : t;
-  return { x: origin.x + vx * projectedT, y: origin.y + vy * projectedT };
+  return { x: origin.x + direction.x * projectedT, y: origin.y + direction.y * projectedT };
 }
 
 export function createScenePlan(spec: DiagramSpecV2, state: DiagramSceneState = {}): PlannedSceneItem[] {
@@ -355,6 +373,7 @@ export function createScenePlan(spec: DiagramSpecV2, state: DiagramSceneState = 
         highlighted: highlighted.has(item.id) || highlightedByGroup,
         selected: selected.has(item.id) || selectedByGroup,
         stepEmphasis: objectState?.emphasis ?? 'none',
+        stepEmphasisColor: objectState?.emphasisColor,
         label: objectState?.label || item.label,
         interactive,
         stepValue: objectState?.value,
@@ -375,29 +394,48 @@ function creationDependencies(item: DiagramSceneItem): string[] {
 }
 
 export function createSceneConstructionPlan(spec: DiagramSpecV2): PlannedSceneItem[] {
-  const pending = createScenePlan(spec);
-  const itemIds = new Set(pending.map(entry => entry.item.id));
-  const created = new Set<string>();
-  const ordered: PlannedSceneItem[] = [];
+  const scene = createScenePlan(spec);
+  const itemIds = new Set(scene.map(entry => entry.item.id));
+  const graphEdges = buildDependencyGraph(spec).edges.filter(dependency => dependencyDeterminesConstructionOrder(spec, dependency));
+  const entries = new Map(scene.map(entry => [entry.item.id, entry]));
+  const dependencies = new Map(scene.map(entry => [entry.item.id, new Set(
+    creationDependencies(entry.item).filter(sourceId => itemIds.has(sourceId)),
+  )]));
+  graphEdges.forEach(edge => {
+    if (!itemIds.has(edge.targetId) || !itemIds.has(edge.sourceId)) return;
+    dependencies.get(edge.targetId)?.add(edge.sourceId);
+  });
 
-  while (pending.length > 0) {
-    const ready = pending.filter(entry => {
-      const explicitSources = (spec.dependencies ?? [])
-        .filter(dependency => (
-          dependency.targetId === entry.item.id
-          && dependencyDeterminesConstructionOrder(spec, dependency)
-        ))
-        .map(dependency => dependency.sourceId);
-      return [...creationDependencies(entry.item), ...explicitSources].every(id => !itemIds.has(id) || created.has(id));
-    });
-    if (ready.length === 0) return [...ordered, ...pending];
-    ready.forEach(entry => {
-      ordered.push(entry);
-      created.add(entry.item.id);
-      pending.splice(pending.indexOf(entry), 1);
+  const dependents = new Map<string, string[]>();
+  dependencies.forEach((sourceIds, targetId) => sourceIds.forEach(sourceId => {
+    dependents.set(sourceId, [...(dependents.get(sourceId) ?? []), targetId]);
+  }));
+
+  const remainingDependencies = new Map(
+    [...dependencies].map(([targetId, sourceIds]) => [targetId, sourceIds.size]),
+  );
+  const ready = scene.filter(entry => remainingDependencies.get(entry.item.id) === 0);
+  const ordered: PlannedSceneItem[] = [];
+  const created = new Set<string>();
+  for (let cursor = 0; cursor < ready.length; cursor += 1) {
+    const entry = ready[cursor];
+    ordered.push(entry);
+    created.add(entry.item.id);
+    dependents.get(entry.item.id)?.forEach(targetId => {
+      const remaining = (remainingDependencies.get(targetId) ?? 1) - 1;
+      remainingDependencies.set(targetId, remaining);
+      if (remaining === 0) {
+        const dependent = entries.get(targetId);
+        if (dependent) ready.push(dependent);
+      }
     });
   }
-  return ordered;
+
+  // Los ciclos inválidos se conservan al final para que el renderer siga
+  // ofreciendo un diagnóstico útil en vez de descartar objetos silenciosamente.
+  return ordered.length === scene.length
+    ? ordered
+    : [...ordered, ...scene.filter(entry => !created.has(entry.item.id))];
 }
 
 function boundsFromCoordinates(coordinates: Array<{ x: number; y: number }>): DiagramBounds | null {
@@ -407,6 +445,32 @@ function boundsFromCoordinates(coordinates: Array<{ x: number; y: number }>): Di
   return [Math.min(...xs), Math.max(...ys), Math.max(...xs), Math.min(...ys)];
 }
 
+function curveCoordinates(spec: DiagramSpecV2, element: DiagramElement): Coordinates[] {
+  const properties = element.properties;
+  if (!properties?.domain) return [];
+  const variables = expressionVariables(spec);
+  const [minimum, maximum] = properties.domain;
+  const samples = Math.min(64, properties.samples ?? 32);
+  const parameter = properties.parameter ?? (element.kind === 'functionCurve' ? 'x' : 't');
+  const coordinates: Coordinates[] = [];
+  for (let index = 0; index <= samples; index += 1) {
+    const value = minimum + (maximum - minimum) * index / samples;
+    try {
+      if (element.kind === 'functionCurve' && properties.expression) {
+        coordinates.push({ x: value, y: evaluateMathExpression(properties.expression, { ...variables, [parameter]: value, x: value }) });
+      } else if (properties.xExpression && properties.yExpression) {
+        coordinates.push({
+          x: evaluateMathExpression(properties.xExpression, { ...variables, [parameter]: value, t: value }),
+          y: evaluateMathExpression(properties.yExpression, { ...variables, [parameter]: value, t: value }),
+        });
+      }
+    } catch {
+      // Invalid samples are omitted; schema validation reports invalid expressions.
+    }
+  }
+  return coordinates;
+}
+
 function elementCoordinates(spec: DiagramSpecV2, element: DiagramElement): Array<{ x: number; y: number }> {
   if (element.kind === 'intersection') {
     const intersection = resolvePointCoordinates(spec, element.id);
@@ -414,27 +478,7 @@ function elementCoordinates(spec: DiagramSpecV2, element: DiagramElement): Array
   }
   const refs = element.refs.map(ref => resolvePointCoordinates(spec, ref)).filter((point): point is { x: number; y: number } => Boolean(point));
   if ((element.kind === 'functionCurve' || element.kind === 'parametricCurve') && element.properties?.domain) {
-    const variables = expressionVariables(spec);
-    const [minimum, maximum] = element.properties.domain;
-    const samples = Math.min(64, element.properties.samples ?? 32);
-    const parameter = element.properties.parameter ?? (element.kind === 'functionCurve' ? 'x' : 't');
-    const coordinates: Array<{ x: number; y: number }> = [];
-    for (let index = 0; index <= samples; index += 1) {
-      const value = minimum + (maximum - minimum) * index / samples;
-      try {
-        if (element.kind === 'functionCurve' && element.properties.expression) {
-          coordinates.push({ x: value, y: evaluateMathExpression(element.properties.expression, { ...variables, [parameter]: value, x: value }) });
-        } else if (element.properties.xExpression && element.properties.yExpression) {
-          coordinates.push({
-            x: evaluateMathExpression(element.properties.xExpression, { ...variables, [parameter]: value, t: value }),
-            y: evaluateMathExpression(element.properties.yExpression, { ...variables, [parameter]: value, t: value }),
-          });
-        }
-      } catch {
-        // Invalid samples are omitted; schema validation reports invalid expressions.
-      }
-    }
-    return coordinates;
+    return curveCoordinates(spec, element);
   }
   if (element.kind !== 'circle' || refs.length < 2) return refs;
   const [center, edge] = refs;
@@ -523,7 +567,8 @@ export function withViewportBounds(spec: DiagramSpecV2, bounds: DiagramBounds): 
   return { ...spec, viewport: { ...spec.viewport, bounds } };
 }
 
-export function withMovedPoint(spec: DiagramSpecV2, pointId: string, x: number, y: number): DiagramSpecV2 {
+export function withMovedPoint(inputSpec: DiagramSpecV2 | DiagramSpecV3, pointId: string, x: number, y: number): DiagramSpecV2 {
+  const spec = inputSpec.version === 3 ? projectDiagramSpecV3ToV2(inputSpec) : inputSpec;
   const point = spec.points.find(item => item.id === pointId);
   if (!point || point.fixed || point.constraint === 'fixed' || point.constraint === 'derived') return spec;
   const constrained = constrainPointCoordinates(spec, point, { x, y });
@@ -531,6 +576,140 @@ export function withMovedPoint(spec: DiagramSpecV2, pointId: string, x: number, 
     ...spec,
     points: spec.points.map(item => item.id === pointId ? { ...item, ...constrained } : item),
   });
+}
+
+type Coordinates = { x: number; y: number };
+
+function applyDistanceConstraint(spec: DiagramSpecV2, result: Coordinates, other: Coordinates, constraint: DiagramConstraint): Coordinates {
+  const variables = expressionVariables(spec);
+  const distance = constraint.value ?? (constraint.expression ? evaluateMathExpression(constraint.expression, variables) : 0);
+  const dx = result.x - other.x;
+  const dy = result.y - other.y;
+  const length = Math.hypot(dx, dy) || 1;
+  return { x: other.x + dx / length * distance, y: other.y + dy / length * distance };
+}
+
+function applyEqualLengthConstraint(spec: DiagramSpecV2, point: DiagramPoint, result: Coordinates, constraint: DiagramConstraint): Coordinates {
+  if (constraint.refs.length < 3) return result;
+  const anchor = resolvePointCoordinates(spec, constraint.refs[1]);
+  const sourceSegment = spec.elements.find(element => element.id === constraint.refs[2] && element.kind === 'segment');
+  const sourceA = sourceSegment ? resolvePointCoordinates(spec, sourceSegment.refs[0]) : undefined;
+  const sourceB = sourceSegment ? resolvePointCoordinates(spec, sourceSegment.refs[1]) : undefined;
+  if (!anchor || !sourceA || !sourceB) return result;
+  const desiredLength = Math.hypot(sourceB.x - sourceA.x, sourceB.y - sourceA.y);
+  const requestedDx = result.x - anchor.x;
+  const requestedDy = result.y - anchor.y;
+  const previousDx = point.x - anchor.x;
+  const previousDy = point.y - anchor.y;
+  const directionLength = Math.hypot(requestedDx, requestedDy);
+  const fallbackLength = Math.hypot(previousDx, previousDy) || 1;
+  const directionX = directionLength > 1e-10 ? requestedDx / directionLength : previousDx / fallbackLength;
+  const directionY = directionLength > 1e-10 ? requestedDy / directionLength : previousDy / fallbackLength;
+  return { x: anchor.x + directionX * desiredLength, y: anchor.y + directionY * desiredLength };
+}
+
+function applyEqualAngleConstraint(spec: DiagramSpecV2, point: DiagramPoint, result: Coordinates, constraint: DiagramConstraint): Coordinates {
+  if (constraint.refs.length < 5) return result;
+  const vertex = resolvePointCoordinates(spec, constraint.refs[1]);
+  const fixedRayPoint = resolvePointCoordinates(spec, constraint.refs[2]);
+  const sourceAngle = spec.elements.find(element => element.id === constraint.refs[3]);
+  const targetAngle = spec.elements.find(element => element.id === constraint.refs[4]);
+  const desiredAngle = sourceAngle ? angleMagnitude(spec, sourceAngle) : undefined;
+  if (!vertex || !fixedRayPoint || !targetAngle || desiredAngle === undefined) return result;
+  const fixedDx = fixedRayPoint.x - vertex.x;
+  const fixedDy = fixedRayPoint.y - vertex.y;
+  const fixedLength = Math.hypot(fixedDx, fixedDy);
+  if (fixedLength < 1e-10) return result;
+  const requestedDx = result.x - vertex.x;
+  const requestedDy = result.y - vertex.y;
+  const previousDx = point.x - vertex.x;
+  const previousDy = point.y - vertex.y;
+  const requestedLength = Math.hypot(requestedDx, requestedDy);
+  const radius = requestedLength > 1e-10 ? requestedLength : Math.hypot(previousDx, previousDy);
+  if (radius < 1e-10) return result;
+  const fixedDirection = { x: fixedDx / fixedLength, y: fixedDy / fixedLength };
+  const orientedRotation = targetAngle.refs[0] === point.id ? -desiredAngle : desiredAngle;
+  let direction = rotateUnit(fixedDirection, orientedRotation);
+  if (targetAngle.kind === 'nonReflexAngle') {
+    const alternate = rotateUnit(fixedDirection, -orientedRotation);
+    const requestedDirection = requestedLength > 1e-10
+      ? { x: requestedDx / requestedLength, y: requestedDy / requestedLength }
+      : { x: previousDx / radius, y: previousDy / radius };
+    if (dot(alternate, requestedDirection) > dot(direction, requestedDirection)) direction = alternate;
+  }
+  return { x: vertex.x + direction.x * radius, y: vertex.y + direction.y * radius };
+}
+
+function applyMidpointConstraint(spec: DiagramSpecV2, result: Coordinates, constraint: DiagramConstraint): Coordinates {
+  if (constraint.refs.length < 3) return result;
+  const first = resolvePointCoordinates(spec, constraint.refs[1]);
+  const second = resolvePointCoordinates(spec, constraint.refs[2]);
+  return first && second ? { x: (first.x + second.x) / 2, y: (first.y + second.y) / 2 } : result;
+}
+
+function applyInsideDiskConstraint(spec: DiagramSpecV2, result: Coordinates, constraint: DiagramConstraint): Coordinates {
+  if (constraint.refs.length < 3) return result;
+  const center = resolvePointCoordinates(spec, constraint.refs[1]);
+  const boundary = resolvePointCoordinates(spec, constraint.refs[2]);
+  if (!center || !boundary) return result;
+  const radius = Math.hypot(boundary.x - center.x, boundary.y - center.y) * 0.999;
+  const dx = result.x - center.x;
+  const dy = result.y - center.y;
+  const length = Math.hypot(dx, dy);
+  return length > radius ? { x: center.x + dx / length * radius, y: center.y + dy / length * radius } : result;
+}
+
+function applySameSideConstraint(spec: DiagramSpecV2, point: DiagramPoint, result: Coordinates, constraint: DiagramConstraint): Coordinates {
+  if (constraint.refs.length < 3) return result;
+  const baseA = resolvePointCoordinates(spec, constraint.refs[1]);
+  const baseB = resolvePointCoordinates(spec, constraint.refs[2]);
+  if (!baseA || !baseB) return result;
+  const dx = baseB.x - baseA.x;
+  const dy = baseB.y - baseA.y;
+  const length = Math.hypot(dx, dy) || 1;
+  const initialCross = dx * (point.y - baseA.y) - dy * (point.x - baseA.x);
+  const currentCross = dx * (result.y - baseA.y) - dy * (result.x - baseA.x);
+  const side = Math.sign(initialCross) || 1;
+  if (currentCross * side > 0.01) return result;
+  const projection = ((result.x - baseA.x) * dx + (result.y - baseA.y) * dy) / (length * length);
+  return {
+    x: baseA.x + projection * dx - dy / length * side * 0.05,
+    y: baseA.y + projection * dy + dx / length * side * 0.05,
+  };
+}
+
+function applyLinearConstraint(spec: DiagramSpecV2, result: Coordinates, constraint: DiagramConstraint): Coordinates {
+  if (constraint.refs.length < 3) return result;
+  const baseA = resolvePointCoordinates(spec, constraint.refs[1]);
+  const baseB = resolvePointCoordinates(spec, constraint.refs[2]);
+  const origin = constraint.refs[3] ? resolvePointCoordinates(spec, constraint.refs[3]) : baseA;
+  if (!baseA || !baseB || !origin) return result;
+  const dx = baseB.x - baseA.x;
+  const dy = baseB.y - baseA.y;
+  const direction = constraint.kind === 'perpendicular' ? { x: -dy, y: dx } : { x: dx, y: dy };
+  const lengthSquared = direction.x * direction.x + direction.y * direction.y || 1;
+  const amount = ((result.x - origin.x) * direction.x + (result.y - origin.y) * direction.y) / lengthSquared;
+  return { x: origin.x + amount * direction.x, y: origin.y + amount * direction.y };
+}
+
+function applyConstraint(spec: DiagramSpecV2, point: DiagramPoint, result: Coordinates, constraint: DiagramConstraint): Coordinates {
+  const otherId = constraint.refs.find(ref => ref !== point.id);
+  const other = otherId ? resolvePointCoordinates(spec, otherId) : undefined;
+  switch (constraint.kind) {
+    case 'fixed': return { x: point.x, y: point.y };
+    case 'horizontal': return other ? { x: result.x, y: other.y } : result;
+    case 'vertical': return other ? { x: other.x, y: result.y } : result;
+    case 'coincident': return other ?? result;
+    case 'on': return otherId ? projectPointToSupport(spec, { ...point, constraint: 'glider', gliderTarget: otherId }, result) : result;
+    case 'distance': return other ? applyDistanceConstraint(spec, result, other, constraint) : result;
+    case 'equalLength': return applyEqualLengthConstraint(spec, point, result, constraint);
+    case 'equalAngle': return applyEqualAngleConstraint(spec, point, result, constraint);
+    case 'midpoint': return applyMidpointConstraint(spec, result, constraint);
+    case 'insideDisk': return applyInsideDiskConstraint(spec, result, constraint);
+    case 'sameSide': return applySameSideConstraint(spec, point, result, constraint);
+    case 'perpendicular': case 'parallel': return applyLinearConstraint(spec, result, constraint);
+    default: return result;
+  }
 }
 
 export function constrainPointCoordinates(
@@ -553,122 +732,7 @@ export function constrainPointCoordinates(
   if (exactSupportLength) result = exactSupportLength;
   for (const constraint of activeConstraints) {
     if (exactSupportLength && (constraint.id === onConstraint?.id || constraint.id === equalLengthConstraint?.id)) continue;
-    const otherId = constraint.refs.find(ref => ref !== point.id);
-    const other = otherId ? resolvePointCoordinates(spec, otherId) : undefined;
-    if (constraint.kind === 'fixed') result = { x: point.x, y: point.y };
-    else if (constraint.kind === 'horizontal' && other) result = { x: result.x, y: other.y };
-    else if (constraint.kind === 'vertical' && other) result = { x: other.x, y: result.y };
-    else if (constraint.kind === 'coincident' && other) result = other;
-    else if (constraint.kind === 'on' && otherId) result = projectPointToSupport(spec, { ...point, constraint: 'glider', gliderTarget: otherId }, result);
-    else if (constraint.kind === 'distance' && other) {
-      const variables = expressionVariables(spec);
-      const distance = constraint.value ?? (constraint.expression ? evaluateMathExpression(constraint.expression, variables) : 0);
-      const dx = result.x - other.x;
-      const dy = result.y - other.y;
-      const length = Math.hypot(dx, dy) || 1;
-      result = { x: other.x + dx / length * distance, y: other.y + dy / length * distance };
-    } else if (constraint.kind === 'equalLength' && constraint.refs.length >= 3) {
-      const anchor = resolvePointCoordinates(spec, constraint.refs[1]);
-      const sourceSegment = spec.elements.find(element => element.id === constraint.refs[2] && element.kind === 'segment');
-      const sourceA = sourceSegment ? resolvePointCoordinates(spec, sourceSegment.refs[0]) : undefined;
-      const sourceB = sourceSegment ? resolvePointCoordinates(spec, sourceSegment.refs[1]) : undefined;
-      if (!anchor || !sourceA || !sourceB) continue;
-      const desiredLength = Math.hypot(sourceB.x - sourceA.x, sourceB.y - sourceA.y);
-      const requestedDx = result.x - anchor.x;
-      const requestedDy = result.y - anchor.y;
-      const previousDx = point.x - anchor.x;
-      const previousDy = point.y - anchor.y;
-      const directionLength = Math.hypot(requestedDx, requestedDy);
-      const fallbackLength = Math.hypot(previousDx, previousDy) || 1;
-      const directionX = directionLength > 1e-10 ? requestedDx / directionLength : previousDx / fallbackLength;
-      const directionY = directionLength > 1e-10 ? requestedDy / directionLength : previousDy / fallbackLength;
-      result = {
-        x: anchor.x + directionX * desiredLength,
-        y: anchor.y + directionY * desiredLength,
-      };
-    } else if (constraint.kind === 'equalAngle' && constraint.refs.length >= 5) {
-      const vertex = resolvePointCoordinates(spec, constraint.refs[1]);
-      const fixedRayPoint = resolvePointCoordinates(spec, constraint.refs[2]);
-      const sourceAngle = spec.elements.find(element => element.id === constraint.refs[3]);
-      const targetAngle = spec.elements.find(element => element.id === constraint.refs[4]);
-      const desiredAngle = sourceAngle ? angleMagnitude(spec, sourceAngle) : undefined;
-      if (!vertex || !fixedRayPoint || !targetAngle || desiredAngle === undefined) continue;
-      const fixedDx = fixedRayPoint.x - vertex.x;
-      const fixedDy = fixedRayPoint.y - vertex.y;
-      const fixedLength = Math.hypot(fixedDx, fixedDy);
-      if (fixedLength < 1e-10) continue;
-      const requestedDx = result.x - vertex.x;
-      const requestedDy = result.y - vertex.y;
-      const previousDx = point.x - vertex.x;
-      const previousDy = point.y - vertex.y;
-      const requestedLength = Math.hypot(requestedDx, requestedDy);
-      const previousLength = Math.hypot(previousDx, previousDy);
-      const radius = requestedLength > 1e-10 ? requestedLength : previousLength;
-      if (radius < 1e-10) continue;
-      const fixedDirection = { x: fixedDx / fixedLength, y: fixedDy / fixedLength };
-      const movingFirst = targetAngle.refs[0] === point.id;
-      const orientedRotation = movingFirst ? -desiredAngle : desiredAngle;
-      let direction = rotateUnit(fixedDirection, orientedRotation);
-      if (targetAngle.kind === 'nonReflexAngle') {
-        const alternate = rotateUnit(fixedDirection, -orientedRotation);
-        const requestedDirection = requestedLength > 1e-10
-          ? { x: requestedDx / requestedLength, y: requestedDy / requestedLength }
-          : { x: previousDx / radius, y: previousDy / radius };
-        if (dot(alternate, requestedDirection) > dot(direction, requestedDirection)) direction = alternate;
-      }
-      result = {
-        x: vertex.x + direction.x * radius,
-        y: vertex.y + direction.y * radius,
-      };
-    } else if (constraint.kind === 'midpoint' && constraint.refs.length >= 3) {
-      const firstEndpoint = resolvePointCoordinates(spec, constraint.refs[1]);
-      const secondEndpoint = resolvePointCoordinates(spec, constraint.refs[2]);
-      if (!firstEndpoint || !secondEndpoint) continue;
-      result = {
-        x: (firstEndpoint.x + secondEndpoint.x) / 2,
-        y: (firstEndpoint.y + secondEndpoint.y) / 2,
-      };
-    } else if (constraint.kind === 'insideDisk' && constraint.refs.length >= 3) {
-      const center = resolvePointCoordinates(spec, constraint.refs[1]);
-      const boundary = resolvePointCoordinates(spec, constraint.refs[2]);
-      if (!center || !boundary) continue;
-      const radius = Math.hypot(boundary.x - center.x, boundary.y - center.y) * 0.999;
-      const dx = result.x - center.x;
-      const dy = result.y - center.y;
-      const length = Math.hypot(dx, dy);
-      if (length > radius) result = { x: center.x + dx / length * radius, y: center.y + dy / length * radius };
-    } else if (constraint.kind === 'sameSide' && constraint.refs.length >= 3) {
-      const baseA = resolvePointCoordinates(spec, constraint.refs[1]);
-      const baseB = resolvePointCoordinates(spec, constraint.refs[2]);
-      if (!baseA || !baseB) continue;
-      const dx = baseB.x - baseA.x;
-      const dy = baseB.y - baseA.y;
-      const length = Math.hypot(dx, dy) || 1;
-      const initialCross = dx * (point.y - baseA.y) - dy * (point.x - baseA.x);
-      const currentCross = dx * (result.y - baseA.y) - dy * (result.x - baseA.x);
-      const side = Math.sign(initialCross) || 1;
-      if (currentCross * side <= 0.01) {
-        const projection = ((result.x - baseA.x) * dx + (result.y - baseA.y) * dy) / (length * length);
-        const normalX = -dy / length * side;
-        const normalY = dx / length * side;
-        result = {
-          x: baseA.x + projection * dx + normalX * 0.05,
-          y: baseA.y + projection * dy + normalY * 0.05,
-        };
-      }
-    } else if ((constraint.kind === 'perpendicular' || constraint.kind === 'parallel') && constraint.refs.length >= 3) {
-      const baseA = resolvePointCoordinates(spec, constraint.refs[1]);
-      const baseB = resolvePointCoordinates(spec, constraint.refs[2]);
-      const origin = constraint.refs[3] ? resolvePointCoordinates(spec, constraint.refs[3]) : baseA;
-      if (!baseA || !baseB || !origin) continue;
-      const dx = baseB.x - baseA.x;
-      const dy = baseB.y - baseA.y;
-      const vx = constraint.kind === 'perpendicular' ? -dy : dx;
-      const vy = constraint.kind === 'perpendicular' ? dx : dy;
-      const lengthSquared = vx * vx + vy * vy || 1;
-      const amount = ((result.x - origin.x) * vx + (result.y - origin.y) * vy) / lengthSquared;
-      result = { x: origin.x + amount * vx, y: origin.y + amount * vy };
-    }
+    result = applyConstraint(spec, point, result, constraint);
   }
   return result;
 }

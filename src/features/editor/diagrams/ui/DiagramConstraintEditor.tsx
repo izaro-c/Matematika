@@ -145,33 +145,55 @@ export const DiagramConstraintEditor: React.FC<DiagramConstraintEditorProps> = (
     .filter((constraint): constraint is VisualConstraint => Boolean(constraint));
   const defaultRefs = defaultConstraintRefs(model, newKind, point.id);
 
+  const constraintOptions = (
+    <>
+      <optgroup label="Posición y guía">
+        {CONSTRAINT_OPTIONS.filter(option => ['fixed', 'horizontal', 'vertical', 'on'].includes(option.value)).map(option => <option key={option.value} value={option.value}>{option.label}</option>)}
+      </optgroup>
+      <optgroup label="Relaciones entre puntos">
+        {CONSTRAINT_OPTIONS.filter(option => ['coincident', 'distance', 'midpoint'].includes(option.value)).map(option => <option key={option.value} value={option.value}>{option.label}</option>)}
+      </optgroup>
+      <optgroup label="Dirección y región">
+        {CONSTRAINT_OPTIONS.filter(option => ['perpendicular', 'parallel', 'insideDisk', 'sameSide'].includes(option.value)).map(option => <option key={option.value} value={option.value}>{option.label}</option>)}
+      </optgroup>
+      <optgroup label="Congruencia">
+        {CONSTRAINT_OPTIONS.filter(option => option.value === 'equalLength').map(option => <option key={option.value} value={option.value}>{option.label}</option>)}
+      </optgroup>
+    </>
+  );
+
   return (
-    <div className="space-y-2 rounded border border-pavo/20 bg-pavo/5 p-2">
-      <div>
-        <p className="text-[10px] font-bold uppercase tracking-wider text-pavo">Cómo puede moverse este punto</p>
-        <p className="mt-1 text-[10px] leading-relaxed text-carbon/55">Las relaciones activas se cumplen simultáneamente al mover el punto. Cada tarjeta explica qué objetos intervienen.</p>
+    <section className="border-t border-carbon/10 pt-4" aria-label="Relaciones geométricas del punto">
+      <div className="flex items-start justify-between gap-3">
+        <div><h5 className="text-xs font-bold text-carbon">Relaciones geométricas</h5><p className="mt-1 text-[10px] leading-relaxed text-carbon/50">Todas las relaciones activas se cumplen a la vez. Se pueden pausar sin perder su configuración.</p></div>
+        <span className="shrink-0 rounded-full bg-pavo/10 px-2 py-1 text-[9px] font-bold text-pavo">{assignedConstraints.length} activa{assignedConstraints.length === 1 ? '' : 's'}</span>
       </div>
-      {assignedConstraints.length === 0 && <p className="rounded bg-lienzo p-2 text-[10px] text-carbon/55">Todavía no hay ninguna relación asignada.</p>}
+      {assignedConstraints.length === 0 && <p className="mt-3 border-l-2 border-carbon/15 pl-3 text-[10px] leading-relaxed text-carbon/50">Este punto todavía no depende de ninguna relación.</p>}
+      <div className="mt-3 divide-y divide-carbon/10 border-y border-carbon/10">
       {assignedConstraints.map(constraint => {
         const presentation = constraintPresentation(constraint.kind);
         return (
-          <details key={constraint.id} className="rounded border border-carbon/10 bg-lienzo" open>
-            <summary className="cursor-pointer list-none px-2 py-1.5 text-xs font-bold text-carbon [&::-webkit-details-marker]:hidden">
-              {presentation.label}<span className="float-right text-[9px] font-normal text-carbon/45">{constraint.enabled ? 'Activa' : 'Pausada'} ▾</span>
-            </summary>
-            <div className="space-y-2 border-t border-carbon/10 p-2">
+          <article key={constraint.id} className="space-y-3 py-3">
+            <header className="flex items-start gap-2">
+              <label className="flex min-h-9 flex-1 items-start gap-2 text-xs font-bold text-carbon">
+                <input aria-label={`Relación activa de ${constraint.id}`} type="checkbox" checked={constraint.enabled} onChange={event => onModelEdit({ ...model, constraints: model.constraints?.map(item => item.id === constraint.id ? { ...item, enabled: event.target.checked } : item) })} />
+                <span>{presentation.label}<span className="mt-0.5 block text-[9px] font-normal text-carbon/45">{constraint.enabled ? 'Activa' : 'Pausada'}</span></span>
+              </label>
+              <button type="button" aria-label="Eliminar relación" className="min-h-9 px-1 text-[10px] font-bold text-granada hover:underline" onClick={() => deleteConstraint(constraint.id)}>Eliminar</button>
+            </header>
               <p className="text-[10px] leading-relaxed text-carbon/55">{presentation.description}</p>
-              <select aria-label={`Tipo de ${constraint.id}`} className="w-full rounded border border-carbon/15 bg-lienzo p-1.5 text-xs" value={constraint.kind} onChange={event => changeKind(constraint, event.target.value as VisualConstraint['kind'])}>
-                {CONSTRAINT_OPTIONS.map(option => <option key={option.value} value={option.value}>{option.label}</option>)}
+              <label className="block text-[10px] font-bold text-carbon/60">Tipo de relación<select aria-label={`Tipo de ${constraint.id}`} className="mt-1 min-h-10 w-full rounded border border-carbon/15 bg-lienzo px-2 text-xs" value={constraint.kind} onChange={event => changeKind(constraint, event.target.value as VisualConstraint['kind'])}>
+                {constraintOptions}
                 {constraint.kind === 'equalAngle' && <option value="equalAngle">Misma amplitud que otro ángulo</option>}
                 {constraint.kind === 'expression' && <option value="expression">Relación por expresión</option>}
-              </select>
-              {constraint.refs.map((ref, index) => {
+              </select></label>
+              {constraint.refs.slice(1).map((ref, relativeIndex) => {
+                const index = relativeIndex + 1;
                 const candidates = referenceCandidates(model, constraint, index);
                 return (
                   <label key={`${constraint.id}-ref-${index}`} className="block text-[10px] font-bold text-carbon/60">
                     {referenceLabel(constraint, index)}
-                    <select aria-label={`Referencia ${index + 1} de ${constraint.id}`} className="mt-1 w-full rounded border border-carbon/15 bg-lienzo p-1.5 text-xs" value={ref} onChange={event => changeReference(constraint, index, event.target.value)}>
+                    <select aria-label={`Referencia ${index + 1} de ${constraint.id}`} className="mt-1 min-h-10 w-full rounded border border-carbon/15 bg-lienzo px-2 text-xs" value={ref} onChange={event => changeReference(constraint, index, event.target.value)}>
                       {candidates.map(item => <option key={item.id} value={item.id}>{item.label} ({item.id})</option>)}
                     </select>
                   </label>
@@ -179,33 +201,26 @@ export const DiagramConstraintEditor: React.FC<DiagramConstraintEditorProps> = (
               })}
               {constraint.kind === 'distance' && (
                 <label className="block text-[10px] font-bold text-carbon/60">Distancia
-                  <input type="number" min="0" step="0.1" aria-label={`Distancia de ${constraint.id}`} className="mt-1 w-full rounded border border-carbon/15 bg-lienzo p-1.5 text-xs" value={constraint.value ?? 1} onChange={event => onModelEdit({ ...model, constraints: model.constraints?.map(item => item.id === constraint.id ? { ...item, value: Number(event.target.value), expression: undefined } : item) })} />
+                  <input type="number" min="0" step="0.1" aria-label={`Distancia de ${constraint.id}`} className="mt-1 min-h-10 w-full rounded border border-carbon/15 bg-lienzo px-2 text-xs" value={constraint.value ?? 1} onChange={event => onModelEdit({ ...model, constraints: model.constraints?.map(item => item.id === constraint.id ? { ...item, value: Number(event.target.value), expression: undefined } : item) })} />
                 </label>
               )}
               {constraint.kind === 'expression' && (
                 <DiagramExpressionField model={model} label="Expresión conservada" ariaLabel={`Expresión de ${constraint.id}`} value={constraint.expression ?? ''} onChange={value => onModelEdit({ ...model, constraints: model.constraints?.map(item => item.id === constraint.id ? { ...item, expression: value } : item) })} help="La relación usa el mismo lenguaje matemático seguro que fórmulas, curvas y condiciones de visibilidad." />
               )}
-              <div className="flex items-center justify-between gap-2">
-                <label className="flex items-start gap-1.5 text-[10px] text-carbon">
-                  <input type="checkbox" checked={constraint.enabled} onChange={event => onModelEdit({ ...model, constraints: model.constraints?.map(item => item.id === constraint.id ? { ...item, enabled: event.target.checked } : item) })} />
-                  <span>Relación activa<span className="block font-normal leading-relaxed text-carbon/45">Desmarcar para pausarla sin eliminarla.</span></span>
-                </label>
-                <button type="button" className="text-[10px] font-bold text-granada hover:underline" onClick={() => deleteConstraint(constraint.id)}>Eliminar relación</button>
-              </div>
-            </div>
-          </details>
+          </article>
         );
       })}
-      <div className="rounded border border-dashed border-pavo/25 bg-lienzo p-2">
-        <label className="block text-[10px] font-bold text-carbon/60">Añadir una relación
-          <select aria-label="Nueva restricción" className="mt-1 w-full rounded border border-carbon/15 bg-lienzo p-1.5 text-xs" value={newKind} onChange={event => setNewKind(event.target.value as VisualConstraint['kind'])}>
-            {CONSTRAINT_OPTIONS.map(option => <option key={option.value} value={option.value}>{option.label}</option>)}
+      </div>
+      <div className="pt-4">
+        <label className="block text-xs font-bold text-carbon">Nueva relación
+          <select aria-label="Nueva restricción" className="mt-1 min-h-11 w-full rounded border border-carbon/15 bg-lienzo px-2 text-xs" value={newKind} onChange={event => setNewKind(event.target.value as VisualConstraint['kind'])}>
+            {constraintOptions}
           </select>
         </label>
         <p className="mt-1 text-[10px] leading-relaxed text-carbon/50">{constraintPresentation(newKind).description}</p>
-        <button type="button" disabled={defaultRefs.length < constraintPresentation(newKind).refs} className="mt-2 w-full rounded bg-pavo px-2 py-1.5 text-xs font-bold text-lienzo disabled:cursor-not-allowed disabled:opacity-35" onClick={addConstraint}>Añadir relación</button>
+        <button type="button" disabled={defaultRefs.length < constraintPresentation(newKind).refs} className="mt-3 min-h-11 w-full rounded bg-pavo px-3 text-xs font-bold text-lienzo disabled:cursor-not-allowed disabled:opacity-35" onClick={addConstraint}>Añadir relación</button>
       </div>
-    </div>
+    </section>
   );
 };
 

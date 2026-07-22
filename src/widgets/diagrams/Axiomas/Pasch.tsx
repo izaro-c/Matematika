@@ -3,8 +3,8 @@ import { createDiagramSpec, DiagramRenderer } from '@/shared/diagrams/public';
 /* @matematika-diagram-spec:start */
 export const PaschSpec = createDiagramSpec(
 {
-  "version": 2,
-  "renderer": "matematika-diagram-renderer-v2",
+  "version": 3,
+  "renderer": "matematika-diagram-renderer-v3",
   "title": "Axioma de Orden IV (de Pasch)",
   "componentId": "axioma-de-orden-iv-de-pasch",
   "category": "Axiomas",
@@ -63,7 +63,7 @@ export const PaschSpec = createDiagramSpec(
       "color": "terracota"
     }
   ],
-  "points": [
+  "objects": [
     {
       "id": "pA",
       "label": "A",
@@ -80,14 +80,20 @@ export const PaschSpec = createDiagramSpec(
       },
       "target": true,
       "targetId": "pA",
-      "style": {
-        "pointSize": 7,
-        "highlightPointSize": 10
+      "objectType": "point",
+      "definition": {
+        "type": "coordinates",
+        "x": -0.56,
+        "y": 4.25
       },
-      "x": -0.56,
-      "y": 4.25,
-      "fixed": false,
-      "constraint": "free"
+      "mobility": {
+        "type": "free"
+      },
+      "appearance": {
+        "size": 7,
+        "highlightSize": 10
+      },
+      "interaction": {}
     },
     {
       "id": "pB",
@@ -105,15 +111,21 @@ export const PaschSpec = createDiagramSpec(
       },
       "target": true,
       "targetId": "pB",
-      "style": {
-        "pointSize": 7,
-        "highlightPointSize": 10,
+      "objectType": "point",
+      "definition": {
+        "type": "coordinates",
+        "x": -2.41,
+        "y": -3.04
+      },
+      "mobility": {
+        "type": "free"
+      },
+      "appearance": {
+        "size": 7,
+        "highlightSize": 10,
         "preserveColorOnHighlight": true
       },
-      "x": -2.41,
-      "y": -3.04,
-      "fixed": false,
-      "constraint": "free"
+      "interaction": {}
     },
     {
       "id": "pC",
@@ -131,15 +143,21 @@ export const PaschSpec = createDiagramSpec(
       },
       "target": true,
       "targetId": "pC",
-      "style": {
-        "pointSize": 7,
-        "highlightPointSize": 10,
+      "objectType": "point",
+      "definition": {
+        "type": "coordinates",
+        "x": 5.18,
+        "y": -0.38
+      },
+      "mobility": {
+        "type": "free"
+      },
+      "appearance": {
+        "size": 7,
+        "highlightSize": 10,
         "preserveColorOnHighlight": true
       },
-      "x": 5.18,
-      "y": -0.38,
-      "fixed": false,
-      "constraint": "free"
+      "interaction": {}
     },
     {
       "id": "pP",
@@ -158,16 +176,22 @@ export const PaschSpec = createDiagramSpec(
       },
       "target": true,
       "targetId": "pP",
-      "style": {
-        "pointSize": 7,
-        "highlightPointSize": 10,
+      "objectType": "point",
+      "definition": {
+        "type": "coordinates",
+        "x": -1.3618042449077725,
+        "y": 1.0904578673634262
+      },
+      "mobility": {
+        "type": "on-support",
+        "support": "segAB"
+      },
+      "appearance": {
+        "size": 7,
+        "highlightSize": 10,
         "preserveColorOnHighlight": true
       },
-      "x": -1.3618042449077725,
-      "y": 1.0904578673634262,
-      "fixed": false,
-      "constraint": "glider",
-      "gliderTarget": "segAB"
+      "interaction": {}
     },
     {
       "id": "pDir",
@@ -186,18 +210,22 @@ export const PaschSpec = createDiagramSpec(
       },
       "target": true,
       "targetId": "pDir",
-      "style": {
-        "pointSize": 4,
-        "highlightPointSize": 4,
+      "objectType": "point",
+      "definition": {
+        "type": "coordinates",
+        "x": -6.35,
+        "y": 3.34
+      },
+      "mobility": {
+        "type": "free"
+      },
+      "appearance": {
+        "size": 4,
+        "highlightSize": 4,
         "preserveColorOnHighlight": true
       },
-      "x": -6.35,
-      "y": 3.34,
-      "fixed": false,
-      "constraint": "free"
-    }
-  ],
-  "elements": [
+      "interaction": {}
+    },
     {
       "id": "polyTriangulo",
       "label": "Triángulo",
@@ -215,16 +243,18 @@ export const PaschSpec = createDiagramSpec(
       },
       "target": true,
       "targetId": "triangle",
-      "style": {
-        "preserveColorOnHighlight": true
+      "objectType": "path",
+      "geometry": {
+        "type": "polygon",
+        "points": [
+          "pA",
+          "pB",
+          "pC"
+        ]
       },
-      "kind": "polygon",
-      "refs": [
-        "pA",
-        "pB",
-        "pC"
-      ],
-      "properties": {}
+      "appearance": {
+        "preserveColorOnHighlight": true
+      }
     },
     {
       "id": "segAB",
@@ -242,11 +272,15 @@ export const PaschSpec = createDiagramSpec(
       },
       "target": true,
       "targetId": "segAB",
-      "kind": "segment",
-      "refs": [
-        "pA",
-        "pB"
-      ]
+      "objectType": "path",
+      "geometry": {
+        "type": "segment",
+        "points": [
+          "pA",
+          "pB"
+        ]
+      },
+      "appearance": {}
     },
     {
       "id": "segBC",
@@ -264,11 +298,15 @@ export const PaschSpec = createDiagramSpec(
       },
       "target": true,
       "targetId": "segBC",
-      "kind": "segment",
-      "refs": [
-        "pB",
-        "pC"
-      ]
+      "objectType": "path",
+      "geometry": {
+        "type": "segment",
+        "points": [
+          "pB",
+          "pC"
+        ]
+      },
+      "appearance": {}
     },
     {
       "id": "segCA",
@@ -286,11 +324,15 @@ export const PaschSpec = createDiagramSpec(
       },
       "target": true,
       "targetId": "segCA",
-      "kind": "segment",
-      "refs": [
-        "pC",
-        "pA"
-      ]
+      "objectType": "path",
+      "geometry": {
+        "type": "segment",
+        "points": [
+          "pC",
+          "pA"
+        ]
+      },
+      "appearance": {}
     },
     {
       "id": "lineDirP",
@@ -308,16 +350,22 @@ export const PaschSpec = createDiagramSpec(
       },
       "target": true,
       "targetId": "lineL",
-      "style": {
+      "objectType": "path",
+      "geometry": {
+        "type": "line",
+        "construction": {
+          "type": "through-points",
+          "points": [
+            "pDir",
+            "pP"
+          ]
+        }
+      },
+      "appearance": {
         "strokeWidth": 2,
         "highlightStrokeWidth": 2,
         "preserveColorOnHighlight": true
-      },
-      "kind": "line",
-      "refs": [
-        "pDir",
-        "pP"
-      ]
+      }
     },
     {
       "id": "intQCA",
@@ -336,18 +384,22 @@ export const PaschSpec = createDiagramSpec(
         "role": "primary"
       },
       "target": false,
-      "style": {
-        "pointSize": 7,
-        "highlightPointSize": 10,
-        "preserveColorOnHighlight": true
-      },
-      "kind": "intersection",
-      "refs": [
-        "lineDirP",
-        "segCA"
-      ],
-      "properties": {
+      "objectType": "point",
+      "definition": {
+        "type": "intersection",
+        "supports": [
+          "lineDirP",
+          "segCA"
+        ],
         "restrictToSupports": true
+      },
+      "mobility": {
+        "type": "fixed"
+      },
+      "appearance": {
+        "size": 7,
+        "highlightSize": 10,
+        "preserveColorOnHighlight": true
       }
     },
     {
@@ -367,18 +419,22 @@ export const PaschSpec = createDiagramSpec(
         "role": "primary"
       },
       "target": false,
-      "style": {
-        "pointSize": 7,
-        "highlightPointSize": 10,
-        "preserveColorOnHighlight": true
-      },
-      "kind": "intersection",
-      "refs": [
-        "lineDirP",
-        "segBC"
-      ],
-      "properties": {
+      "objectType": "point",
+      "definition": {
+        "type": "intersection",
+        "supports": [
+          "lineDirP",
+          "segBC"
+        ],
         "restrictToSupports": true
+      },
+      "mobility": {
+        "type": "fixed"
+      },
+      "appearance": {
+        "size": 7,
+        "highlightSize": 10,
+        "preserveColorOnHighlight": true
       }
     },
     {
@@ -388,6 +444,7 @@ export const PaschSpec = createDiagramSpec(
       "layerId": "geometry",
       "order": 14001,
       "visible": true,
+      "visibleWhen": "and(gte(((pC.x-pDir.x)*(pP.y-pDir.y)-(pC.y-pDir.y)*(pP.x-pDir.x))/((pP.x-pDir.x)*(pA.y-pC.y)-(pP.y-pDir.y)*(pA.x-pC.x)),-0.001),lte(((pC.x-pDir.x)*(pP.y-pDir.y)-(pC.y-pDir.y)*(pP.x-pDir.x))/((pP.x-pDir.x)*(pA.y-pC.y)-(pP.y-pDir.y)*(pA.x-pC.x)),1.001))",
       "locked": false,
       "groupIds": [],
       "selection": {
@@ -397,18 +454,18 @@ export const PaschSpec = createDiagramSpec(
       },
       "target": true,
       "targetId": "segAC",
-      "style": {
+      "objectType": "path",
+      "geometry": {
+        "type": "segment",
+        "points": [
+          "pA",
+          "pC"
+        ]
+      },
+      "appearance": {
         "strokeWidth": 5,
         "highlightStrokeWidth": 5,
         "preserveColorOnHighlight": true
-      },
-      "kind": "segment",
-      "refs": [
-        "pA",
-        "pC"
-      ],
-      "properties": {
-        "visibleWhen": "and(gte(((pC.x-pDir.x)*(pP.y-pDir.y)-(pC.y-pDir.y)*(pP.x-pDir.x))/((pP.x-pDir.x)*(pA.y-pC.y)-(pP.y-pDir.y)*(pA.x-pC.x)),-0.001),lte(((pC.x-pDir.x)*(pP.y-pDir.y)-(pC.y-pDir.y)*(pP.x-pDir.x))/((pP.x-pDir.x)*(pA.y-pC.y)-(pP.y-pDir.y)*(pA.x-pC.x)),1.001))"
       }
     },
     {
@@ -418,6 +475,7 @@ export const PaschSpec = createDiagramSpec(
       "layerId": "geometry",
       "order": 13001,
       "visible": true,
+      "visibleWhen": "and(gte(((pB.x-pDir.x)*(pP.y-pDir.y)-(pB.y-pDir.y)*(pP.x-pDir.x))/((pP.x-pDir.x)*(pC.y-pB.y)-(pP.y-pDir.y)*(pC.x-pB.x)),-0.001),lte(((pB.x-pDir.x)*(pP.y-pDir.y)-(pB.y-pDir.y)*(pP.x-pDir.x))/((pP.x-pDir.x)*(pC.y-pB.y)-(pP.y-pDir.y)*(pC.x-pB.x)),1.001))",
       "locked": false,
       "groupIds": [],
       "selection": {
@@ -427,118 +485,24 @@ export const PaschSpec = createDiagramSpec(
       },
       "target": true,
       "targetId": "segBC_2",
-      "style": {
+      "objectType": "path",
+      "geometry": {
+        "type": "segment",
+        "points": [
+          "pB",
+          "pC"
+        ]
+      },
+      "appearance": {
         "strokeWidth": 5,
         "highlightStrokeWidth": 5,
         "preserveColorOnHighlight": true
-      },
-      "kind": "segment",
-      "refs": [
-        "pB",
-        "pC"
-      ],
-      "properties": {
-        "visibleWhen": "and(gte(((pB.x-pDir.x)*(pP.y-pDir.y)-(pB.y-pDir.y)*(pP.x-pDir.x))/((pP.x-pDir.x)*(pC.y-pB.y)-(pP.y-pDir.y)*(pC.x-pB.x)),-0.001),lte(((pB.x-pDir.x)*(pP.y-pDir.y)-(pB.y-pDir.y)*(pP.x-pDir.x))/((pP.x-pDir.x)*(pC.y-pB.y)-(pP.y-pDir.y)*(pC.x-pB.x)),1.001))"
       }
     }
   ],
-  "sliders": [],
+  "relations": [],
   "steps": [],
-  "constraints": [],
-  "dependencies": [
-    {
-      "sourceId": "pDir",
-      "targetId": "lineDirP",
-      "relation": "construction"
-    },
-    {
-      "sourceId": "pP",
-      "targetId": "lineDirP",
-      "relation": "construction"
-    },
-    {
-      "sourceId": "lineDirP",
-      "targetId": "intQCA",
-      "relation": "construction"
-    },
-    {
-      "sourceId": "segCA",
-      "targetId": "intQCA",
-      "relation": "construction"
-    },
-    {
-      "sourceId": "lineDirP",
-      "targetId": "intQBC",
-      "relation": "construction"
-    },
-    {
-      "sourceId": "segBC",
-      "targetId": "intQBC",
-      "relation": "construction"
-    },
-    {
-      "sourceId": "pA",
-      "targetId": "segAC",
-      "relation": "construction"
-    },
-    {
-      "sourceId": "pC",
-      "targetId": "segAC",
-      "relation": "construction"
-    },
-    {
-      "sourceId": "pC",
-      "targetId": "segAC",
-      "relation": "expression"
-    },
-    {
-      "sourceId": "pDir",
-      "targetId": "segAC",
-      "relation": "expression"
-    },
-    {
-      "sourceId": "pP",
-      "targetId": "segAC",
-      "relation": "expression"
-    },
-    {
-      "sourceId": "pA",
-      "targetId": "segAC",
-      "relation": "expression"
-    },
-    {
-      "sourceId": "pB",
-      "targetId": "segBC_2",
-      "relation": "construction"
-    },
-    {
-      "sourceId": "pC",
-      "targetId": "segBC_2",
-      "relation": "construction"
-    },
-    {
-      "sourceId": "pB",
-      "targetId": "segBC_2",
-      "relation": "expression"
-    },
-    {
-      "sourceId": "pDir",
-      "targetId": "segBC_2",
-      "relation": "expression"
-    },
-    {
-      "sourceId": "pP",
-      "targetId": "segBC_2",
-      "relation": "expression"
-    },
-    {
-      "sourceId": "pC",
-      "targetId": "segBC_2",
-      "relation": "expression"
-    }
-  ],
-  "note": "Arrastre los puntos para explorar la figura.",
-  "extensions": {}
+  "note": "Arrastre los puntos para explorar la figura."
 }
 );
 /* @matematika-diagram-spec:end */

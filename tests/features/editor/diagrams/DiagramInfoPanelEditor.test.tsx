@@ -31,13 +31,15 @@ function Harness() {
 describe('composite information panel editor', () => {
   it('adds, orders and configures independent conditional blocks without source editing', () => {
     render(<Harness />);
-    const openBtn = screen.getByRole('button', { name: /Configurar Panel Informativo/i });
+    const openBtn = screen.getByRole('button', { name: /Editar contenido y diseño del panel/i });
     if (openBtn) fireEvent.click(openBtn);
+    fireEvent.click(screen.getByRole('tab', { name: /Bloques/ }));
 
     expect(screen.getByRole('option', { name: 'Lista vertical (uno tras otro)' })).toBeTruthy();
     fireEvent.change(screen.getByLabelText('Distribución de bloques'), { target: { value: 'columns' } });
-    fireEvent.click(screen.getByRole('button', { name: '+ Añadir Nuevo Bloque Informativo' }));
+    fireEvent.click(screen.getByRole('button', { name: '+ Añadir bloque' }));
     expect(screen.getByText('2 · Nuevo bloque')).toBeTruthy();
+    fireEvent.click(screen.getByText('2 · Nuevo bloque'));
     expect(screen.getAllByRole('button', { name: '↑ Subir' })).toHaveLength(2);
 
     fireEvent.click(screen.getAllByRole('button', { name: '+ Añadir variante condicional' })[1]);

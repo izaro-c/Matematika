@@ -1,4 +1,4 @@
-import { formatDiagramSpecIssues, parseDiagramSpecV2 } from '../../../../shared/diagrams/spec';
+import { formatDiagramSpecIssues, migrateDiagramSpecV2ToV3, parseDiagramSpecV2, parseDiagramSpecV3 } from '../../../../shared/diagrams/spec';
 import type { VisualDiagramModel } from '../model/types';
 
 export interface DiagramDiagnostic {
@@ -20,7 +20,7 @@ function validComponentName(componentName: string): boolean {
   return /^[A-Z][A-Za-z0-9]*$/.test(componentName);
 }
 
-export function serializeDiagramSpec(model: VisualDiagramModel): string {
+export function serializeDiagramSpec(model: unknown): string {
   return JSON.stringify(model, null, 2);
 }
 
@@ -47,11 +47,17 @@ export function generateDiagramSource(model: VisualDiagramModel, componentName: 
   if (diagnostics.some(diagnostic => diagnostic.severity === 'error')) return { ok: false, diagnostics };
 
   const specName = `${componentName}Spec`;
+  const currentSpec = migrateDiagramSpecV2ToV3(parsed.success ? parsed.data : model as VisualDiagramModel);
+  const currentParsed = parseDiagramSpecV3(currentSpec);
+  if (!currentParsed.success) return {
+    ok: false,
+    diagnostics: [{ code: 'invalid-diagram-spec-v3', severity: 'error', message: formatDiagramSpecIssues(currentParsed.error.issues), source: 'model' }],
+  };
   const source = `import { createDiagramSpec, DiagramRenderer } from '@/shared/diagrams/public';
 
 ${SPEC_START}
 export const ${specName} = createDiagramSpec(
-${serializeDiagramSpec(parsed.success ? parsed.data : model)}
+${serializeDiagramSpec(currentParsed.data)}
 );
 ${SPEC_END}
 

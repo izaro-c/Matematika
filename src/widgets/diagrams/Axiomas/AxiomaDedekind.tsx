@@ -3,8 +3,8 @@ import { createDiagramSpec, DiagramRenderer } from '@/shared/diagrams/public';
 /* @matematika-diagram-spec:start */
 export const AxiomaDedekindSpec = createDiagramSpec(
 {
-  "version": 2,
-  "renderer": "matematika-diagram-renderer-v2",
+  "version": 3,
+  "renderer": "matematika-diagram-renderer-v3",
   "title": "Completitud: cortadura de Dedekind",
   "componentId": "axioma-dedekind",
   "category": "Axiomas",
@@ -104,7 +104,7 @@ export const AxiomaDedekindSpec = createDiagramSpec(
       "color": "salvia"
     }
   ],
-  "points": [
+  "objects": [
     {
       "id": "pLeft",
       "label": "Dirección izquierda",
@@ -121,15 +121,21 @@ export const AxiomaDedekindSpec = createDiagramSpec(
         "role": "construction"
       },
       "target": false,
-      "style": {
-        "pointSize": 0,
-        "highlightPointSize": 0
+      "objectType": "point",
+      "definition": {
+        "type": "coordinates",
+        "x": -11,
+        "y": 0
       },
-      "x": -11,
-      "y": 0,
-      "showLabel": false,
-      "fixed": true,
-      "constraint": "fixed"
+      "mobility": {
+        "type": "fixed"
+      },
+      "appearance": {
+        "size": 0,
+        "labelVisible": false,
+        "highlightSize": 0
+      },
+      "interaction": {}
     },
     {
       "id": "pRight",
@@ -147,15 +153,21 @@ export const AxiomaDedekindSpec = createDiagramSpec(
         "role": "construction"
       },
       "target": false,
-      "style": {
-        "pointSize": 0,
-        "highlightPointSize": 0
+      "objectType": "point",
+      "definition": {
+        "type": "coordinates",
+        "x": 11,
+        "y": 0
       },
-      "x": 11,
-      "y": 0,
-      "showLabel": false,
-      "fixed": true,
-      "constraint": "fixed"
+      "mobility": {
+        "type": "fixed"
+      },
+      "appearance": {
+        "size": 0,
+        "labelVisible": false,
+        "highlightSize": 0
+      },
+      "interaction": {}
     },
     {
       "id": "pP",
@@ -173,25 +185,29 @@ export const AxiomaDedekindSpec = createDiagramSpec(
       },
       "target": true,
       "targetId": "pP",
-      "style": {
-        "pointSize": 8,
+      "objectType": "point",
+      "definition": {
+        "type": "coordinates",
+        "x": 0,
+        "y": 0
+      },
+      "mobility": {
+        "type": "on-support",
+        "support": "realLine"
+      },
+      "appearance": {
+        "size": 8,
+        "labelVisible": true,
         "labelOffset": [
           0,
           18
         ],
         "labelSize": 19,
-        "highlightPointSize": 11,
+        "highlightSize": 11,
         "preserveColorOnHighlight": true
       },
-      "x": 0,
-      "y": 0,
-      "showLabel": true,
-      "fixed": false,
-      "constraint": "glider",
-      "gliderTarget": "realLine"
-    }
-  ],
-  "elements": [
+      "interaction": {}
+    },
     {
       "id": "realLine",
       "label": "Recta completa",
@@ -208,18 +224,24 @@ export const AxiomaDedekindSpec = createDiagramSpec(
       },
       "target": true,
       "targetId": "recta",
-      "style": {
+      "objectType": "path",
+      "geometry": {
+        "type": "line",
+        "construction": {
+          "type": "through-points",
+          "points": [
+            "pLeft",
+            "pRight"
+          ]
+        }
+      },
+      "appearance": {
+        "dashed": true,
         "strokeWidth": 1.5,
         "strokeOpacity": 0.65,
         "highlightStrokeWidth": 3,
         "preserveColorOnHighlight": true
-      },
-      "kind": "line",
-      "refs": [
-        "pLeft",
-        "pRight"
-      ],
-      "dashed": true
+      }
     },
     {
       "id": "rayL",
@@ -238,16 +260,19 @@ export const AxiomaDedekindSpec = createDiagramSpec(
         "role": "primary"
       },
       "target": false,
-      "style": {
+      "objectType": "path",
+      "geometry": {
+        "type": "ray",
+        "points": [
+          "pP",
+          "pLeft"
+        ]
+      },
+      "appearance": {
         "strokeWidth": 7,
         "highlightStrokeWidth": 9,
         "preserveColorOnHighlight": true
-      },
-      "kind": "ray",
-      "refs": [
-        "pP",
-        "pLeft"
-      ]
+      }
     },
     {
       "id": "labelL",
@@ -266,22 +291,23 @@ export const AxiomaDedekindSpec = createDiagramSpec(
         "role": "annotation"
       },
       "target": false,
-      "style": {
-        "textOffset": [
+      "objectType": "annotation",
+      "variant": "label",
+      "content": {
+        "text": "L: x ≤ P"
+      },
+      "anchor": {
+        "type": "object",
+        "object": "rayL",
+        "parameter": 0.58,
+        "offset": [
           0,
           0.58
-        ],
-        "labelSize": 18,
-        "preserveColorOnHighlight": true
+        ]
       },
-      "kind": "label",
-      "refs": [
-        "rayL"
-      ],
-      "text": "L: x ≤ P",
-      "properties": {
-        "anchorMode": "reference",
-        "anchorParameter": 0.58
+      "appearance": {
+        "fontSize": 18,
+        "preserveColorOnHighlight": true
       }
     },
     {
@@ -301,16 +327,19 @@ export const AxiomaDedekindSpec = createDiagramSpec(
         "role": "primary"
       },
       "target": false,
-      "style": {
+      "objectType": "path",
+      "geometry": {
+        "type": "ray",
+        "points": [
+          "pP",
+          "pRight"
+        ]
+      },
+      "appearance": {
         "strokeWidth": 7,
         "highlightStrokeWidth": 9,
         "preserveColorOnHighlight": true
-      },
-      "kind": "ray",
-      "refs": [
-        "pP",
-        "pRight"
-      ]
+      }
     },
     {
       "id": "labelR",
@@ -329,22 +358,23 @@ export const AxiomaDedekindSpec = createDiagramSpec(
         "role": "annotation"
       },
       "target": false,
-      "style": {
-        "textOffset": [
+      "objectType": "annotation",
+      "variant": "label",
+      "content": {
+        "text": "R: x > P"
+      },
+      "anchor": {
+        "type": "object",
+        "object": "rayR",
+        "parameter": 0.42,
+        "offset": [
           0,
           0.58
-        ],
-        "labelSize": 18,
-        "preserveColorOnHighlight": true
+        ]
       },
-      "kind": "label",
-      "refs": [
-        "rayR"
-      ],
-      "text": "R: x > P",
-      "properties": {
-        "anchorMode": "reference",
-        "anchorParameter": 0.42
+      "appearance": {
+        "fontSize": 18,
+        "preserveColorOnHighlight": true
       }
     },
     {
@@ -362,18 +392,21 @@ export const AxiomaDedekindSpec = createDiagramSpec(
         "role": "annotation"
       },
       "target": false,
-      "kind": "infoPanel",
-      "refs": [],
-      "text": "P = {value}",
-      "properties": {
+      "objectType": "annotation",
+      "variant": "panel",
+      "content": {
+        "text": "P = {value}",
         "expression": "pP.x",
-        "precision": 2,
-        "anchorMode": "viewport",
-        "viewportPosition": [
+        "precision": 2
+      },
+      "anchor": {
+        "type": "viewport",
+        "position": [
           0.1,
           0.22
         ]
-      }
+      },
+      "appearance": {}
     },
     {
       "id": "sampleL",
@@ -390,18 +423,21 @@ export const AxiomaDedekindSpec = createDiagramSpec(
         "role": "annotation"
       },
       "target": false,
-      "kind": "infoPanel",
-      "refs": [],
-      "text": "{value} ∈ L",
-      "properties": {
+      "objectType": "annotation",
+      "variant": "panel",
+      "content": {
+        "text": "{value} ∈ L",
         "expression": "pP.x-1",
-        "precision": 2,
-        "anchorMode": "viewport",
-        "viewportPosition": [
+        "precision": 2
+      },
+      "anchor": {
+        "type": "viewport",
+        "position": [
           0.32,
           0.22
         ]
-      }
+      },
+      "appearance": {}
     },
     {
       "id": "sampleR",
@@ -418,87 +454,26 @@ export const AxiomaDedekindSpec = createDiagramSpec(
         "role": "annotation"
       },
       "target": false,
-      "kind": "infoPanel",
-      "refs": [],
-      "text": "{value} ∈ R",
-      "properties": {
+      "objectType": "annotation",
+      "variant": "panel",
+      "content": {
+        "text": "{value} ∈ R",
         "expression": "pP.x+1",
-        "precision": 2,
-        "anchorMode": "viewport",
-        "viewportPosition": [
+        "precision": 2
+      },
+      "anchor": {
+        "type": "viewport",
+        "position": [
           0.55,
           0.22
         ]
-      }
+      },
+      "appearance": {}
     }
   ],
-  "sliders": [],
+  "relations": [],
   "steps": [],
-  "constraints": [],
-  "dependencies": [
-    {
-      "sourceId": "pLeft",
-      "targetId": "realLine",
-      "relation": "construction"
-    },
-    {
-      "sourceId": "pRight",
-      "targetId": "realLine",
-      "relation": "construction"
-    },
-    {
-      "sourceId": "realLine",
-      "targetId": "pP",
-      "relation": "constraint"
-    },
-    {
-      "sourceId": "pP",
-      "targetId": "rayL",
-      "relation": "construction"
-    },
-    {
-      "sourceId": "pLeft",
-      "targetId": "rayL",
-      "relation": "construction"
-    },
-    {
-      "sourceId": "rayL",
-      "targetId": "labelL",
-      "relation": "construction"
-    },
-    {
-      "sourceId": "pP",
-      "targetId": "rayR",
-      "relation": "construction"
-    },
-    {
-      "sourceId": "pRight",
-      "targetId": "rayR",
-      "relation": "construction"
-    },
-    {
-      "sourceId": "rayR",
-      "targetId": "labelR",
-      "relation": "construction"
-    },
-    {
-      "sourceId": "pP",
-      "targetId": "readingP",
-      "relation": "expression"
-    },
-    {
-      "sourceId": "pP",
-      "targetId": "sampleL",
-      "relation": "expression"
-    },
-    {
-      "sourceId": "pP",
-      "targetId": "sampleR",
-      "relation": "expression"
-    }
-  ],
-  "note": "Arrastra P sobre la recta: cambian L y R, pero la frontera sigue siendo única.",
-  "extensions": {}
+  "note": "Arrastra P sobre la recta: cambian L y R, pero la frontera sigue siendo única."
 }
 );
 /* @matematika-diagram-spec:end */

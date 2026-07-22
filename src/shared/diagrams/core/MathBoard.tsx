@@ -230,6 +230,10 @@ export const MathBoard: React.FC<MathBoardProps> = ({
       pan: { enabled: pan },
       zoom: { wheel: zoom, pinchHorizontal: zoom, pinchVertical: zoom },
       keepaspectratio,
+      // MathBoard owns resize synchronization below. Disabling JSXGraph's
+      // throttled observer avoids a queued callback touching a freed renderer
+      // when the editor saves, closes and immediately reopens the board.
+      resize: { enabled: false, throttle: 100 },
       showCopyright: false,
       showNavigation: false,
     });
@@ -280,7 +284,7 @@ export const MathBoard: React.FC<MathBoardProps> = ({
     board.on('boundingbox', reportBoundingBox);
 
     const resizeObserver = typeof ResizeObserver === 'undefined' ? null : new ResizeObserver(() => {
-      if (!containerRef.current) return;
+      if (boardObj.current !== board || !containerRef.current) return;
       const width = containerRef.current.clientWidth;
       const height = containerRef.current.clientHeight;
       if (width <= 2 || height <= 2) return;
@@ -301,6 +305,7 @@ export const MathBoard: React.FC<MathBoardProps> = ({
     if (resizeObserver && containerRef.current) resizeObserver.observe(containerRef.current);
 
     const themeObserver = new MutationObserver(() => {
+      if (boardObj.current !== board) return;
       const currentTheme = getTheme();
       const renderer = board.renderer as any;
       if (renderer?.container) {
@@ -313,8 +318,8 @@ export const MathBoard: React.FC<MathBoardProps> = ({
     return () => {
       themeObserver.disconnect();
       resizeObserver?.disconnect();
+      if (boardObj.current === board) boardObj.current = null;
       JXG.JSXGraph.freeBoard(board);
-      boardObj.current = null;
       elementsRef.current = {};
     };
   }, [ariaLabel, axis, generatedId, grid, id, instructionsId, keepaspectratio, pan, revision, scopeId, zoom]);

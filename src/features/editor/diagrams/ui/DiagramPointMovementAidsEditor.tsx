@@ -9,16 +9,6 @@ interface DiagramPointMovementAidsEditorProps {
   onAttractorsChange: (attractorIds: string[]) => void;
 }
 
-const MOVEMENT_LABELS: Record<VisualPoint['constraint'], string> = {
-  free: 'libre',
-  fixed: 'fijo',
-  horizontal: 'horizontal',
-  vertical: 'vertical',
-  glider: 'sobre un elemento',
-  derived: 'derivado por expresiones',
-  constrained: 'con relaciones geométricas',
-};
-
 export const DiagramPointMovementAidsEditor: React.FC<DiagramPointMovementAidsEditorProps> = ({
   model,
   point,
@@ -37,17 +27,13 @@ export const DiagramPointMovementAidsEditor: React.FC<DiagramPointMovementAidsEd
     onAttractorsChange(reordered);
   };
 
+  // Las ayudas no tienen efecto sobre puntos fijos, derivados o ligados a un
+  // soporte. Ocultarlas evita sugerir una capacidad incompatible.
+  if (!supportsMovementAids) return null;
+
   return (
     <section className="space-y-3" aria-label="Snap y magnetismo del punto">
-      {!supportsMovementAids && (
-        <div className="rounded border border-pavo/20 bg-pavo/5 p-2 text-[10px] leading-relaxed text-carbon/55">
-          <p>Snap y magnetismo están siempre disponibles en las propiedades, pero solo actúan sobre puntos que se pueden arrastrar directamente. Este punto es <strong>{MOVEMENT_LABELS[point.constraint]}</strong>.</p>
-          <button type="button" className="mt-2 rounded border border-pavo/25 bg-lienzo px-2 py-1 font-bold text-pavo" onClick={() => onPointChange({ constraint: 'free' })}>Cambiar a movimiento libre</button>
-          <p className="mt-1 text-[9px] text-carbon/45">El cambio sustituye el movimiento fijo, derivado o sobre elemento que tenga actualmente.</p>
-        </div>
-      )}
-
-      <fieldset disabled={!supportsMovementAids} className="space-y-2 rounded border border-pavo/25 bg-pavo/5 p-2 disabled:opacity-60">
+      <fieldset className="space-y-2 border-t border-carbon/10 pt-3">
         <legend className="px-1 text-[10px] font-bold uppercase tracking-wider text-pavo">Snap a cuadrícula</legend>
         <label className="flex items-center gap-1.5 text-xs font-bold text-carbon">
           <input
@@ -76,7 +62,7 @@ export const DiagramPointMovementAidsEditor: React.FC<DiagramPointMovementAidsEd
         )}
       </fieldset>
 
-      <fieldset disabled={!supportsMovementAids} className="rounded border border-ocre/25 bg-ocre/5 p-2 disabled:opacity-60">
+      <fieldset className="border-t border-carbon/10 pt-3">
         <legend className="px-1 text-xs font-bold text-ocre">Magnetismo hacia formas notables</legend>
         <p className="mt-1 text-[10px] leading-relaxed text-carbon/50">Solo el punto que se arrastra se adapta temporalmente. Al soltarlo conserva la posición exacta y vuelve a ser libre.</p>
         {selectedAttractors.length > 0 && (
@@ -105,7 +91,7 @@ export const DiagramPointMovementAidsEditor: React.FC<DiagramPointMovementAidsEd
                   type="checkbox"
                   aria-label={`Usar ${element.label} como atractor`}
                   checked={checked}
-                  disabled={createsCycle || !supportsMovementAids}
+                  disabled={createsCycle}
                   onChange={(event) => onAttractorsChange(event.target.checked
                     ? [...(point.attractorIds ?? []), element.id]
                     : (point.attractorIds ?? []).filter(id => id !== element.id))}

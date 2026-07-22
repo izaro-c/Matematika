@@ -3,8 +3,8 @@ import { createDiagramSpec, DiagramRenderer } from '@/shared/diagrams/public';
 /* @matematika-diagram-spec:start */
 export const SumaAngulosSpec = createDiagramSpec(
 {
-  "version": 2,
-  "renderer": "matematika-diagram-renderer-v2",
+  "version": 3,
+  "renderer": "matematika-diagram-renderer-v3",
   "title": "Suma de los ángulos de un triángulo",
   "componentId": "suma-angulos",
   "category": "Teoremas",
@@ -81,7 +81,7 @@ export const SumaAngulosSpec = createDiagramSpec(
       "color": "terracota"
     }
   ],
-  "points": [
+  "objects": [
     {
       "id": "A",
       "label": "A",
@@ -97,18 +97,25 @@ export const SumaAngulosSpec = createDiagramSpec(
         "role": "primary"
       },
       "target": false,
-      "style": {
-        "pointSize": 7,
-        "highlightPointSize": 10,
+      "objectType": "point",
+      "definition": {
+        "type": "coordinates",
+        "x": -3.5,
+        "y": 0
+      },
+      "mobility": {
+        "type": "free"
+      },
+      "appearance": {
+        "size": 7,
+        "labelVisible": true,
+        "highlightSize": 10,
         "preserveColorOnHighlight": true
       },
-      "x": -3.5,
-      "y": 0,
-      "showLabel": true,
-      "fixed": false,
-      "constraint": "free",
-      "snapToGrid": true,
-      "snapSize": 0.25
+      "interaction": {
+        "snapToGrid": true,
+        "snapSize": 0.25
+      }
     },
     {
       "id": "B",
@@ -125,18 +132,25 @@ export const SumaAngulosSpec = createDiagramSpec(
         "role": "primary"
       },
       "target": false,
-      "style": {
-        "pointSize": 7,
-        "highlightPointSize": 10,
+      "objectType": "point",
+      "definition": {
+        "type": "coordinates",
+        "x": 4.25,
+        "y": 0.25
+      },
+      "mobility": {
+        "type": "free"
+      },
+      "appearance": {
+        "size": 7,
+        "labelVisible": true,
+        "highlightSize": 10,
         "preserveColorOnHighlight": true
       },
-      "x": 4.25,
-      "y": 0.25,
-      "showLabel": true,
-      "fixed": false,
-      "constraint": "free",
-      "snapToGrid": true,
-      "snapSize": 0.25
+      "interaction": {
+        "snapToGrid": true,
+        "snapSize": 0.25
+      }
     },
     {
       "id": "C",
@@ -153,24 +167,29 @@ export const SumaAngulosSpec = createDiagramSpec(
         "role": "primary"
       },
       "target": false,
-      "style": {
-        "pointSize": 7,
-        "highlightPointSize": 10,
+      "objectType": "point",
+      "definition": {
+        "type": "coordinates",
+        "x": 0.25,
+        "y": 4.75
+      },
+      "mobility": {
+        "type": "constrained",
+        "relationIds": [
+          "sameC"
+        ]
+      },
+      "appearance": {
+        "size": 7,
+        "labelVisible": true,
+        "highlightSize": 10,
         "preserveColorOnHighlight": true
       },
-      "x": 0.25,
-      "y": 4.75,
-      "showLabel": true,
-      "fixed": false,
-      "constraint": "constrained",
-      "constraintIds": [
-        "sameC"
-      ],
-      "snapToGrid": true,
-      "snapSize": 0.25
-    }
-  ],
-  "elements": [
+      "interaction": {
+        "snapToGrid": true,
+        "snapSize": 0.25
+      }
+    },
     {
       "id": "poly",
       "label": "Triángulo ABC",
@@ -188,18 +207,21 @@ export const SumaAngulosSpec = createDiagramSpec(
         "role": "secondary"
       },
       "target": false,
-      "style": {
+      "objectType": "path",
+      "geometry": {
+        "type": "polygon",
+        "points": [
+          "A",
+          "B",
+          "C"
+        ]
+      },
+      "appearance": {
         "strokeWidth": 3,
         "fillOpacity": 0.1,
         "highlightFillOpacity": 0.28,
         "preserveColorOnHighlight": true
-      },
-      "kind": "polygon",
-      "refs": [
-        "A",
-        "B",
-        "C"
-      ]
+      }
     },
     {
       "id": "AB",
@@ -218,16 +240,19 @@ export const SumaAngulosSpec = createDiagramSpec(
         "role": "secondary"
       },
       "target": false,
-      "style": {
+      "objectType": "path",
+      "geometry": {
+        "type": "segment",
+        "points": [
+          "A",
+          "B"
+        ]
+      },
+      "appearance": {
         "strokeWidth": 2.4,
         "highlightStrokeWidth": 3,
         "preserveColorOnHighlight": true
-      },
-      "kind": "segment",
-      "refs": [
-        "A",
-        "B"
-      ]
+      }
     },
     {
       "id": "BC",
@@ -246,16 +271,19 @@ export const SumaAngulosSpec = createDiagramSpec(
         "role": "secondary"
       },
       "target": false,
-      "style": {
+      "objectType": "path",
+      "geometry": {
+        "type": "segment",
+        "points": [
+          "B",
+          "C"
+        ]
+      },
+      "appearance": {
         "strokeWidth": 2.4,
         "highlightStrokeWidth": 3,
         "preserveColorOnHighlight": true
-      },
-      "kind": "segment",
-      "refs": [
-        "B",
-        "C"
-      ]
+      }
     },
     {
       "id": "CA",
@@ -274,16 +302,19 @@ export const SumaAngulosSpec = createDiagramSpec(
         "role": "secondary"
       },
       "target": false,
-      "style": {
+      "objectType": "path",
+      "geometry": {
+        "type": "segment",
+        "points": [
+          "C",
+          "A"
+        ]
+      },
+      "appearance": {
         "strokeWidth": 2.4,
         "highlightStrokeWidth": 3,
         "preserveColorOnHighlight": true
-      },
-      "kind": "segment",
-      "refs": [
-        "C",
-        "A"
-      ]
+      }
     },
     {
       "id": "nonReflexAngleBAC",
@@ -301,17 +332,19 @@ export const SumaAngulosSpec = createDiagramSpec(
       },
       "target": true,
       "targetId": "nonReflexAngleBAC",
-      "style": {
-        "angleRadius": 1,
-        "preserveColorOnHighlight": true
-      },
-      "kind": "nonReflexAngle",
-      "refs": [
+      "objectType": "angle",
+      "points": [
         "B",
         "A",
         "C"
       ],
-      "showLabel": false
+      "sweep": "non-reflex",
+      "marker": "arc",
+      "appearance": {
+        "radius": 1,
+        "labelVisible": false,
+        "preserveColorOnHighlight": true
+      }
     },
     {
       "id": "nonReflexAngleABC",
@@ -329,17 +362,19 @@ export const SumaAngulosSpec = createDiagramSpec(
       },
       "target": true,
       "targetId": "nonReflexAngleABC",
-      "style": {
-        "angleRadius": 1,
-        "preserveColorOnHighlight": true
-      },
-      "kind": "nonReflexAngle",
-      "refs": [
+      "objectType": "angle",
+      "points": [
         "A",
         "B",
         "C"
       ],
-      "showLabel": false
+      "sweep": "non-reflex",
+      "marker": "arc",
+      "appearance": {
+        "radius": 1,
+        "labelVisible": false,
+        "preserveColorOnHighlight": true
+      }
     },
     {
       "id": "nonReflexAngleACB",
@@ -357,17 +392,19 @@ export const SumaAngulosSpec = createDiagramSpec(
       },
       "target": true,
       "targetId": "nonReflexAngleACB",
-      "style": {
-        "angleRadius": 1,
-        "preserveColorOnHighlight": true
-      },
-      "kind": "nonReflexAngle",
-      "refs": [
+      "objectType": "angle",
+      "points": [
         "A",
         "C",
         "B"
       ],
-      "showLabel": false
+      "sweep": "non-reflex",
+      "marker": "arc",
+      "appearance": {
+        "radius": 1,
+        "labelVisible": false,
+        "preserveColorOnHighlight": true
+      }
     },
     {
       "id": "label-nonReflexAngleACB",
@@ -386,23 +423,24 @@ export const SumaAngulosSpec = createDiagramSpec(
         "role": "annotation"
       },
       "target": false,
-      "style": {
-        "textOffset": [
+      "objectType": "annotation",
+      "variant": "label",
+      "content": {
+        "text": "{nonReflexAngleACB.degrees}º",
+        "rules": []
+      },
+      "anchor": {
+        "type": "object",
+        "object": "nonReflexAngleACB",
+        "parameter": 0.99,
+        "offset": [
           -0.5,
           -0.25
-        ],
-        "labelSize": 17,
-        "preserveColorOnHighlight": true
+        ]
       },
-      "kind": "label",
-      "refs": [
-        "nonReflexAngleACB"
-      ],
-      "text": "{nonReflexAngleACB.degrees}º",
-      "properties": {
-        "anchorMode": "reference",
-        "anchorParameter": 0.99,
-        "textRules": []
+      "appearance": {
+        "fontSize": 17,
+        "preserveColorOnHighlight": true
       }
     },
     {
@@ -422,24 +460,24 @@ export const SumaAngulosSpec = createDiagramSpec(
         "role": "annotation"
       },
       "target": false,
-      "style": {
-        "textOffset": [
+      "objectType": "annotation",
+      "variant": "label",
+      "content": {
+        "text": "{nonReflexAngleBAC.degrees}º"
+      },
+      "anchor": {
+        "type": "object",
+        "object": "nonReflexAngleBAC",
+        "parameter": 0.08,
+        "offset": [
           0,
           0
-        ],
-        "labelSize": 17,
+        ]
+      },
+      "appearance": {
+        "fontSize": 17,
         "preserveColorOnHighlight": true
-      },
-      "kind": "label",
-      "refs": [
-        "nonReflexAngleBAC"
-      ],
-      "text": "{nonReflexAngleBAC.degrees}º",
-      "properties": {
-        "anchorMode": "reference",
-        "anchorParameter": 0.08
-      },
-      "showLabel": false
+      }
     },
     {
       "id": "label-nonReflexAngleABC",
@@ -458,22 +496,23 @@ export const SumaAngulosSpec = createDiagramSpec(
         "role": "annotation"
       },
       "target": false,
-      "style": {
-        "textOffset": [
+      "objectType": "annotation",
+      "variant": "label",
+      "content": {
+        "text": "{nonReflexAngleABC.degrees}º"
+      },
+      "anchor": {
+        "type": "object",
+        "object": "nonReflexAngleABC",
+        "parameter": 0.5,
+        "offset": [
           -0.95,
           -0.15
-        ],
-        "labelSize": 17,
-        "preserveColorOnHighlight": true
+        ]
       },
-      "kind": "label",
-      "refs": [
-        "nonReflexAngleABC"
-      ],
-      "text": "{nonReflexAngleABC.degrees}º",
-      "properties": {
-        "anchorMode": "reference",
-        "anchorParameter": 0.5
+      "appearance": {
+        "fontSize": 17,
+        "preserveColorOnHighlight": true
       }
     },
     {
@@ -492,19 +531,11 @@ export const SumaAngulosSpec = createDiagramSpec(
       },
       "target": true,
       "targetId": "infoPanel11",
-      "style": {
-        "preserveColorOnHighlight": true
-      },
-      "kind": "infoPanel",
-      "refs": [],
-      "text": "",
-      "properties": {
-        "anchorMode": "viewport",
-        "viewportPosition": [
-          0,
-          0
-        ],
-        "infoPanelBlocks": [
+      "objectType": "annotation",
+      "variant": "panel",
+      "content": {
+        "text": "",
+        "blocks": [
           {
             "id": "bloque-1",
             "text": "${nonReflexAngleBAC.degrees}º + {nonReflexAngleABC.degrees}º + {nonReflexAngleACB.degrees}º = {value}º$",
@@ -512,104 +543,35 @@ export const SumaAngulosSpec = createDiagramSpec(
             "rules": []
           }
         ],
-        "infoPanelLayout": "stack"
+        "layout": "stack"
+      },
+      "anchor": {
+        "type": "viewport",
+        "position": [
+          0,
+          0
+        ]
+      },
+      "appearance": {
+        "preserveColorOnHighlight": true
       }
     }
   ],
-  "sliders": [],
-  "steps": [],
-  "constraints": [
+  "relations": [
     {
       "id": "sameC",
       "label": "C no cruza AB",
-      "kind": "sameSide",
-      "refs": [
+      "enabled": true,
+      "type": "same-half-plane",
+      "points": [
         "C",
-        "A",
-        "B"
+        "A"
       ],
-      "enabled": true
+      "boundary": "B"
     }
   ],
-  "dependencies": [
-    {
-      "sourceId": "B",
-      "targetId": "nonReflexAngleBAC",
-      "relation": "construction"
-    },
-    {
-      "sourceId": "A",
-      "targetId": "nonReflexAngleBAC",
-      "relation": "construction"
-    },
-    {
-      "sourceId": "C",
-      "targetId": "nonReflexAngleBAC",
-      "relation": "construction"
-    },
-    {
-      "sourceId": "A",
-      "targetId": "nonReflexAngleABC",
-      "relation": "construction"
-    },
-    {
-      "sourceId": "B",
-      "targetId": "nonReflexAngleABC",
-      "relation": "construction"
-    },
-    {
-      "sourceId": "C",
-      "targetId": "nonReflexAngleABC",
-      "relation": "construction"
-    },
-    {
-      "sourceId": "A",
-      "targetId": "nonReflexAngleACB",
-      "relation": "construction"
-    },
-    {
-      "sourceId": "C",
-      "targetId": "nonReflexAngleACB",
-      "relation": "construction"
-    },
-    {
-      "sourceId": "B",
-      "targetId": "nonReflexAngleACB",
-      "relation": "construction"
-    },
-    {
-      "sourceId": "nonReflexAngleACB",
-      "targetId": "label-nonReflexAngleACB",
-      "relation": "construction"
-    },
-    {
-      "sourceId": "nonReflexAngleBAC",
-      "targetId": "label-nonReflexAngleBAC",
-      "relation": "construction"
-    },
-    {
-      "sourceId": "nonReflexAngleABC",
-      "targetId": "label-nonReflexAngleABC",
-      "relation": "construction"
-    },
-    {
-      "sourceId": "nonReflexAngleBAC",
-      "targetId": "infoPanel11",
-      "relation": "expression"
-    },
-    {
-      "sourceId": "nonReflexAngleABC",
-      "targetId": "infoPanel11",
-      "relation": "expression"
-    },
-    {
-      "sourceId": "nonReflexAngleACB",
-      "targetId": "infoPanel11",
-      "relation": "expression"
-    }
-  ],
-  "note": "Mueve A, B y C",
-  "extensions": {}
+  "steps": [],
+  "note": "Mueve A, B y C"
 }
 );
 /* @matematika-diagram-spec:end */

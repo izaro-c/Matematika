@@ -3,8 +3,8 @@ import { createDiagramSpec, DiagramRenderer } from '@/shared/diagrams/public';
 /* @matematika-diagram-spec:start */
 export const ModeloCartesianoSpec = createDiagramSpec(
 {
-  "version": 2,
-  "renderer": "matematika-diagram-renderer-v2",
+  "version": 3,
+  "renderer": "matematika-diagram-renderer-v3",
   "title": "Modelo cartesiano ℝ²",
   "componentId": "ModeloCartesiano",
   "category": "Models",
@@ -52,7 +52,7 @@ export const ModeloCartesianoSpec = createDiagramSpec(
     }
   ],
   "groups": [],
-  "points": [
+  "objects": [
     {
       "id": "A",
       "label": "A",
@@ -71,15 +71,21 @@ export const ModeloCartesianoSpec = createDiagramSpec(
       },
       "target": true,
       "targetId": "A",
-      "style": {
-        "pointSize": 5,
-        "highlightPointSize": 8,
+      "objectType": "point",
+      "definition": {
+        "type": "coordinates",
+        "x": 1,
+        "y": 2
+      },
+      "mobility": {
+        "type": "free"
+      },
+      "appearance": {
+        "size": 5,
+        "highlightSize": 8,
         "preserveColorOnHighlight": true
       },
-      "x": 1,
-      "y": 2,
-      "fixed": false,
-      "constraint": "free"
+      "interaction": {}
     },
     {
       "id": "B",
@@ -99,15 +105,21 @@ export const ModeloCartesianoSpec = createDiagramSpec(
       },
       "target": true,
       "targetId": "B",
-      "style": {
-        "pointSize": 5,
-        "highlightPointSize": 8,
+      "objectType": "point",
+      "definition": {
+        "type": "coordinates",
+        "x": -3,
+        "y": -1
+      },
+      "mobility": {
+        "type": "free"
+      },
+      "appearance": {
+        "size": 5,
+        "highlightSize": 8,
         "preserveColorOnHighlight": true
       },
-      "x": -3,
-      "y": -1,
-      "fixed": false,
-      "constraint": "free"
+      "interaction": {}
     },
     {
       "id": "P",
@@ -127,18 +139,22 @@ export const ModeloCartesianoSpec = createDiagramSpec(
       },
       "target": true,
       "targetId": "P",
-      "style": {
-        "pointSize": 5,
-        "highlightPointSize": 8,
+      "objectType": "point",
+      "definition": {
+        "type": "coordinates",
+        "x": 3,
+        "y": -2
+      },
+      "mobility": {
+        "type": "free"
+      },
+      "appearance": {
+        "size": 5,
+        "highlightSize": 8,
         "preserveColorOnHighlight": true
       },
-      "x": 3,
-      "y": -2,
-      "fixed": false,
-      "constraint": "free"
-    }
-  ],
-  "elements": [
+      "interaction": {}
+    },
     {
       "id": "lineAB",
       "label": "l",
@@ -157,16 +173,22 @@ export const ModeloCartesianoSpec = createDiagramSpec(
       },
       "target": true,
       "targetId": "lineAB",
-      "style": {
+      "objectType": "path",
+      "geometry": {
+        "type": "line",
+        "construction": {
+          "type": "through-points",
+          "points": [
+            "A",
+            "B"
+          ]
+        }
+      },
+      "appearance": {
         "strokeWidth": 2.5,
         "highlightStrokeWidth": 4,
         "preserveColorOnHighlight": true
-      },
-      "kind": "line",
-      "refs": [
-        "A",
-        "B"
-      ]
+      }
     },
     {
       "id": "parallelP",
@@ -186,18 +208,24 @@ export const ModeloCartesianoSpec = createDiagramSpec(
       },
       "target": true,
       "targetId": "parallelP",
-      "style": {
+      "objectType": "path",
+      "geometry": {
+        "type": "line",
+        "construction": {
+          "type": "parallel",
+          "linePoints": [
+            "A",
+            "B"
+          ],
+          "through": "P"
+        }
+      },
+      "appearance": {
+        "dashed": true,
         "strokeWidth": 2,
         "highlightStrokeWidth": 3.5,
         "preserveColorOnHighlight": true
-      },
-      "kind": "parallel",
-      "refs": [
-        "A",
-        "B",
-        "P"
-      ],
-      "dashed": true
+      }
     },
     {
       "id": "distAB",
@@ -213,21 +241,29 @@ export const ModeloCartesianoSpec = createDiagramSpec(
         "role": "annotation"
       },
       "target": false,
-      "style": {
-        "textOffset": [
+      "objectType": "annotation",
+      "variant": "measurement",
+      "content": {
+        "text": "d(A, B) = {value}",
+        "precision": 2
+      },
+      "anchor": {
+        "type": "object",
+        "object": "A",
+        "offset": [
           -1.5,
           1.5
-        ],
-        "preserveColorOnHighlight": true
+        ]
       },
-      "kind": "measurement",
-      "refs": [
-        "A",
-        "B"
-      ],
-      "text": "d(A, B) = {value}",
-      "properties": {
-        "precision": 2
+      "measurement": {
+        "refs": [
+          "A",
+          "B"
+        ],
+        "mode": "distance"
+      },
+      "appearance": {
+        "preserveColorOnHighlight": true
       }
     },
     {
@@ -244,64 +280,26 @@ export const ModeloCartesianoSpec = createDiagramSpec(
         "role": "annotation"
       },
       "target": false,
-      "style": {
-        "strokeWidth": 0,
-        "preserveColorOnHighlight": true
+      "objectType": "annotation",
+      "variant": "panel",
+      "content": {
+        "text": "puntos → $(x, y)\\\\$ rectas → $ax + by + c = 0\\\\$$l' ∥ l$ por $P$"
       },
-      "kind": "infoPanel",
-      "refs": [],
-      "text": "puntos → $(x, y)\\\\$ rectas → $ax + by + c = 0\\\\$$l' ∥ l$ por $P$",
-      "properties": {
-        "anchorMode": "viewport",
-        "viewportPosition": [
+      "anchor": {
+        "type": "viewport",
+        "position": [
           0,
           0
         ]
+      },
+      "appearance": {
+        "preserveColorOnHighlight": true
       }
     }
   ],
-  "sliders": [],
+  "relations": [],
   "steps": [],
-  "constraints": [],
-  "dependencies": [
-    {
-      "sourceId": "A",
-      "targetId": "lineAB",
-      "relation": "construction"
-    },
-    {
-      "sourceId": "B",
-      "targetId": "lineAB",
-      "relation": "construction"
-    },
-    {
-      "sourceId": "A",
-      "targetId": "parallelP",
-      "relation": "construction"
-    },
-    {
-      "sourceId": "B",
-      "targetId": "parallelP",
-      "relation": "construction"
-    },
-    {
-      "sourceId": "P",
-      "targetId": "parallelP",
-      "relation": "construction"
-    },
-    {
-      "sourceId": "A",
-      "targetId": "distAB",
-      "relation": "construction"
-    },
-    {
-      "sourceId": "B",
-      "targetId": "distAB",
-      "relation": "construction"
-    }
-  ],
-  "note": "Arrastra A, B y P. La recta l′ permanece paralela a l.",
-  "extensions": {}
+  "note": "Arrastra A, B y P. La recta l′ permanece paralela a l."
 }
 );
 /* @matematika-diagram-spec:end */

@@ -3,8 +3,8 @@ import { createDiagramSpec, DiagramRenderer } from '@/shared/diagrams/public';
 /* @matematika-diagram-spec:start */
 export const TalesSpec = createDiagramSpec(
 {
-  "version": 2,
-  "renderer": "matematika-diagram-renderer-v2",
+  "version": 3,
+  "renderer": "matematika-diagram-renderer-v3",
   "title": "Teorema de Tales",
   "componentId": "teorema-de-tales",
   "category": "Teoremas",
@@ -46,7 +46,7 @@ export const TalesSpec = createDiagramSpec(
     }
   ],
   "groups": [],
-  "points": [
+  "objects": [
     {
       "id": "pA",
       "label": "A",
@@ -63,16 +63,22 @@ export const TalesSpec = createDiagramSpec(
       },
       "target": true,
       "targetId": "pA",
-      "style": {
-        "pointSize": 7,
-        "highlightPointSize": 10,
+      "objectType": "point",
+      "definition": {
+        "type": "coordinates",
+        "x": -3.19,
+        "y": 0.56
+      },
+      "mobility": {
+        "type": "free"
+      },
+      "appearance": {
+        "size": 7,
+        "labelVisible": true,
+        "highlightSize": 10,
         "preserveColorOnHighlight": true
       },
-      "x": -3.19,
-      "y": 0.56,
-      "showLabel": true,
-      "fixed": false,
-      "constraint": "free"
+      "interaction": {}
     },
     {
       "id": "pB",
@@ -90,16 +96,22 @@ export const TalesSpec = createDiagramSpec(
       },
       "target": true,
       "targetId": "pB",
-      "style": {
-        "pointSize": 7,
-        "highlightPointSize": 10,
+      "objectType": "point",
+      "definition": {
+        "type": "coordinates",
+        "x": 3.98,
+        "y": 0.35
+      },
+      "mobility": {
+        "type": "free"
+      },
+      "appearance": {
+        "size": 7,
+        "labelVisible": true,
+        "highlightSize": 10,
         "preserveColorOnHighlight": true
       },
-      "x": 3.98,
-      "y": 0.35,
-      "showLabel": true,
-      "fixed": false,
-      "constraint": "free"
+      "interaction": {}
     },
     {
       "id": "pC",
@@ -117,16 +129,22 @@ export const TalesSpec = createDiagramSpec(
       },
       "target": true,
       "targetId": "pC",
-      "style": {
-        "pointSize": 7,
-        "highlightPointSize": 10,
+      "objectType": "point",
+      "definition": {
+        "type": "coordinates",
+        "x": 2.26,
+        "y": 4.29
+      },
+      "mobility": {
+        "type": "free"
+      },
+      "appearance": {
+        "size": 7,
+        "labelVisible": true,
+        "highlightSize": 10,
         "preserveColorOnHighlight": true
       },
-      "x": 2.26,
-      "y": 4.29,
-      "showLabel": true,
-      "fixed": false,
-      "constraint": "free"
+      "interaction": {}
     },
     {
       "id": "pD",
@@ -144,20 +162,24 @@ export const TalesSpec = createDiagramSpec(
       },
       "target": true,
       "targetId": "pD",
-      "style": {
-        "pointSize": 7,
-        "highlightPointSize": 10,
+      "objectType": "point",
+      "definition": {
+        "type": "coordinates",
+        "x": 1.520059996501662,
+        "y": 0.42204845198530694
+      },
+      "mobility": {
+        "type": "on-support",
+        "support": "segAB"
+      },
+      "appearance": {
+        "size": 7,
+        "labelVisible": true,
+        "highlightSize": 10,
         "preserveColorOnHighlight": true
       },
-      "x": 1.520059996501662,
-      "y": 0.42204845198530694,
-      "showLabel": true,
-      "fixed": false,
-      "constraint": "glider",
-      "gliderTarget": "segAB"
-    }
-  ],
-  "elements": [
+      "interaction": {}
+    },
     {
       "id": "polygonABC",
       "label": "Polígono",
@@ -174,15 +196,18 @@ export const TalesSpec = createDiagramSpec(
       },
       "target": true,
       "targetId": "polygonABC",
-      "style": {
-        "preserveColorOnHighlight": true
+      "objectType": "path",
+      "geometry": {
+        "type": "polygon",
+        "points": [
+          "pA",
+          "pB",
+          "pC"
+        ]
       },
-      "kind": "polygon",
-      "refs": [
-        "pA",
-        "pB",
-        "pC"
-      ]
+      "appearance": {
+        "preserveColorOnHighlight": true
+      }
     },
     {
       "id": "segAB",
@@ -200,16 +225,19 @@ export const TalesSpec = createDiagramSpec(
       },
       "target": true,
       "targetId": "segAB",
-      "style": {
+      "objectType": "path",
+      "geometry": {
+        "type": "segment",
+        "points": [
+          "pA",
+          "pB"
+        ]
+      },
+      "appearance": {
         "strokeWidth": 2.4,
         "highlightStrokeWidth": 3,
         "preserveColorOnHighlight": true
-      },
-      "kind": "segment",
-      "refs": [
-        "pA",
-        "pB"
-      ]
+      }
     },
     {
       "id": "segBC",
@@ -227,16 +255,19 @@ export const TalesSpec = createDiagramSpec(
       },
       "target": true,
       "targetId": "segBC",
-      "style": {
+      "objectType": "path",
+      "geometry": {
+        "type": "segment",
+        "points": [
+          "pB",
+          "pC"
+        ]
+      },
+      "appearance": {
         "strokeWidth": 2.4,
         "highlightStrokeWidth": 3,
         "preserveColorOnHighlight": true
-      },
-      "kind": "segment",
-      "refs": [
-        "pB",
-        "pC"
-      ]
+      }
     },
     {
       "id": "segAC",
@@ -254,16 +285,19 @@ export const TalesSpec = createDiagramSpec(
       },
       "target": true,
       "targetId": "segAC",
-      "style": {
+      "objectType": "path",
+      "geometry": {
+        "type": "segment",
+        "points": [
+          "pA",
+          "pC"
+        ]
+      },
+      "appearance": {
         "strokeWidth": 2.4,
         "highlightStrokeWidth": 3,
         "preserveColorOnHighlight": true
-      },
-      "kind": "segment",
-      "refs": [
-        "pA",
-        "pC"
-      ]
+      }
     },
     {
       "id": "lineBC",
@@ -281,17 +315,23 @@ export const TalesSpec = createDiagramSpec(
       },
       "target": true,
       "targetId": "lineBC",
-      "style": {
+      "objectType": "path",
+      "geometry": {
+        "type": "line",
+        "construction": {
+          "type": "through-points",
+          "points": [
+            "pB",
+            "pC"
+          ]
+        }
+      },
+      "appearance": {
+        "dashed": true,
         "strokeWidth": 1,
         "highlightStrokeWidth": 3,
         "preserveColorOnHighlight": true
-      },
-      "kind": "line",
-      "refs": [
-        "pB",
-        "pC"
-      ],
-      "dashed": true
+      }
     },
     {
       "id": "parCBD",
@@ -309,18 +349,24 @@ export const TalesSpec = createDiagramSpec(
       },
       "target": true,
       "targetId": "parCBD",
-      "style": {
+      "objectType": "path",
+      "geometry": {
+        "type": "line",
+        "construction": {
+          "type": "parallel",
+          "linePoints": [
+            "pC",
+            "pB"
+          ],
+          "through": "pD"
+        }
+      },
+      "appearance": {
+        "dashed": true,
         "strokeWidth": 1,
         "highlightStrokeWidth": 3,
         "preserveColorOnHighlight": true
-      },
-      "kind": "parallel",
-      "refs": [
-        "pC",
-        "pB",
-        "pD"
-      ],
-      "dashed": true
+      }
     },
     {
       "id": "intE",
@@ -338,17 +384,21 @@ export const TalesSpec = createDiagramSpec(
       },
       "target": true,
       "targetId": "intarCBDsegAC",
-      "style": {
-        "pointSize": 7,
-        "preserveColorOnHighlight": true
-      },
-      "kind": "intersection",
-      "refs": [
-        "parCBD",
-        "segAC"
-      ],
-      "properties": {
+      "objectType": "point",
+      "definition": {
+        "type": "intersection",
+        "supports": [
+          "parCBD",
+          "segAC"
+        ],
         "restrictToSupports": true
+      },
+      "mobility": {
+        "type": "fixed"
+      },
+      "appearance": {
+        "size": 7,
+        "preserveColorOnHighlight": true
       }
     },
     {
@@ -367,16 +417,19 @@ export const TalesSpec = createDiagramSpec(
       },
       "target": true,
       "targetId": "segDE",
-      "style": {
+      "objectType": "path",
+      "geometry": {
+        "type": "segment",
+        "points": [
+          "pD",
+          "intE"
+        ]
+      },
+      "appearance": {
         "strokeWidth": 2.4,
         "highlightStrokeWidth": 3,
         "preserveColorOnHighlight": true
-      },
-      "kind": "segment",
-      "refs": [
-        "pD",
-        "intE"
-      ]
+      }
     },
     {
       "id": "segAD",
@@ -394,16 +447,19 @@ export const TalesSpec = createDiagramSpec(
       },
       "target": true,
       "targetId": "segAD",
-      "style": {
+      "objectType": "path",
+      "geometry": {
+        "type": "segment",
+        "points": [
+          "pA",
+          "pD"
+        ]
+      },
+      "appearance": {
         "strokeWidth": 2.4,
         "highlightStrokeWidth": 3,
         "preserveColorOnHighlight": true
-      },
-      "kind": "segment",
-      "refs": [
-        "pA",
-        "pD"
-      ]
+      }
     },
     {
       "id": "segAE",
@@ -421,16 +477,19 @@ export const TalesSpec = createDiagramSpec(
       },
       "target": true,
       "targetId": "segAE",
-      "style": {
+      "objectType": "path",
+      "geometry": {
+        "type": "segment",
+        "points": [
+          "pA",
+          "intE"
+        ]
+      },
+      "appearance": {
         "strokeWidth": 2.4,
         "highlightStrokeWidth": 3,
         "preserveColorOnHighlight": true
-      },
-      "kind": "segment",
-      "refs": [
-        "pA",
-        "intE"
-      ]
+      }
     },
     {
       "id": "segEC",
@@ -448,16 +507,19 @@ export const TalesSpec = createDiagramSpec(
       },
       "target": true,
       "targetId": "segEC",
-      "style": {
+      "objectType": "path",
+      "geometry": {
+        "type": "segment",
+        "points": [
+          "intE",
+          "pC"
+        ]
+      },
+      "appearance": {
         "strokeWidth": 2.4,
         "highlightStrokeWidth": 3,
         "preserveColorOnHighlight": true
-      },
-      "kind": "segment",
-      "refs": [
-        "intE",
-        "pC"
-      ]
+      }
     },
     {
       "id": "segDB",
@@ -475,16 +537,19 @@ export const TalesSpec = createDiagramSpec(
       },
       "target": true,
       "targetId": "segDB",
-      "style": {
+      "objectType": "path",
+      "geometry": {
+        "type": "segment",
+        "points": [
+          "pD",
+          "pB"
+        ]
+      },
+      "appearance": {
         "strokeWidth": 2.4,
         "highlightStrokeWidth": 3,
         "preserveColorOnHighlight": true
-      },
-      "kind": "segment",
-      "refs": [
-        "pD",
-        "pB"
-      ]
+      }
     },
     {
       "id": "label-segDB",
@@ -503,24 +568,24 @@ export const TalesSpec = createDiagramSpec(
         "role": "annotation"
       },
       "target": false,
-      "style": {
-        "textOffset": [
+      "objectType": "annotation",
+      "variant": "label",
+      "content": {
+        "text": "${segDB.length}$"
+      },
+      "anchor": {
+        "type": "object",
+        "object": "segDB",
+        "parameter": 0.5,
+        "offset": [
           -0.25,
           -0.3
-        ],
-        "labelSize": 14,
+        ]
+      },
+      "appearance": {
+        "fontSize": 14,
         "preserveColorOnHighlight": true
-      },
-      "kind": "label",
-      "refs": [
-        "segDB"
-      ],
-      "text": "${segDB.length}$",
-      "properties": {
-        "anchorMode": "reference",
-        "anchorParameter": 0.5
-      },
-      "showLabel": true
+      }
     },
     {
       "id": "label-segAD",
@@ -539,22 +604,23 @@ export const TalesSpec = createDiagramSpec(
         "role": "annotation"
       },
       "target": false,
-      "style": {
-        "textOffset": [
+      "objectType": "annotation",
+      "variant": "label",
+      "content": {
+        "text": "${segAD.length}$"
+      },
+      "anchor": {
+        "type": "object",
+        "object": "segAD",
+        "parameter": 0.5,
+        "offset": [
           -0.25,
           -0.3
-        ],
-        "labelSize": 14,
-        "preserveColorOnHighlight": true
+        ]
       },
-      "kind": "label",
-      "refs": [
-        "segAD"
-      ],
-      "text": "${segAD.length}$",
-      "properties": {
-        "anchorMode": "reference",
-        "anchorParameter": 0.5
+      "appearance": {
+        "fontSize": 14,
+        "preserveColorOnHighlight": true
       }
     },
     {
@@ -574,22 +640,23 @@ export const TalesSpec = createDiagramSpec(
         "role": "annotation"
       },
       "target": false,
-      "style": {
-        "textOffset": [
+      "objectType": "annotation",
+      "variant": "label",
+      "content": {
+        "text": "${segAE.length}$"
+      },
+      "anchor": {
+        "type": "object",
+        "object": "segAE",
+        "parameter": 0.5,
+        "offset": [
           -0.25,
           0.5
-        ],
-        "labelSize": 14,
-        "preserveColorOnHighlight": true
+        ]
       },
-      "kind": "label",
-      "refs": [
-        "segAE"
-      ],
-      "text": "${segAE.length}$",
-      "properties": {
-        "anchorMode": "reference",
-        "anchorParameter": 0.5
+      "appearance": {
+        "fontSize": 14,
+        "preserveColorOnHighlight": true
       }
     },
     {
@@ -609,22 +676,23 @@ export const TalesSpec = createDiagramSpec(
         "role": "annotation"
       },
       "target": false,
-      "style": {
-        "textOffset": [
+      "objectType": "annotation",
+      "variant": "label",
+      "content": {
+        "text": "${segEC.length}$"
+      },
+      "anchor": {
+        "type": "object",
+        "object": "segEC",
+        "parameter": 0.5,
+        "offset": [
           -0.25,
           0.5
-        ],
-        "labelSize": 14,
-        "preserveColorOnHighlight": true
+        ]
       },
-      "kind": "label",
-      "refs": [
-        "segEC"
-      ],
-      "text": "${segEC.length}$",
-      "properties": {
-        "anchorMode": "reference",
-        "anchorParameter": 0.5
+      "appearance": {
+        "fontSize": 14,
+        "preserveColorOnHighlight": true
       }
     },
     {
@@ -643,18 +711,11 @@ export const TalesSpec = createDiagramSpec(
       },
       "target": true,
       "targetId": "infoPanel17",
-      "style": {
-        "preserveColorOnHighlight": true
-      },
-      "kind": "infoPanel",
-      "refs": [],
-      "properties": {
-        "anchorMode": "viewport",
-        "viewportPosition": [
-          0,
-          0
-        ],
-        "infoPanelBlocks": [
+      "objectType": "annotation",
+      "variant": "panel",
+      "content": {
+        "text": "",
+        "blocks": [
           {
             "id": "bloque-1",
             "text": "$\\frac{AD}{DB}= {segAD.length / segDB.length}$",
@@ -668,167 +729,23 @@ export const TalesSpec = createDiagramSpec(
             "rules": []
           }
         ],
-        "infoPanelLayout": "stack"
+        "layout": "stack"
+      },
+      "anchor": {
+        "type": "viewport",
+        "position": [
+          0,
+          0
+        ]
+      },
+      "appearance": {
+        "preserveColorOnHighlight": true
       }
     }
   ],
-  "sliders": [],
+  "relations": [],
   "steps": [],
-  "constraints": [],
-  "dependencies": [
-    {
-      "sourceId": "pA",
-      "targetId": "polygonABC",
-      "relation": "construction"
-    },
-    {
-      "sourceId": "pB",
-      "targetId": "polygonABC",
-      "relation": "construction"
-    },
-    {
-      "sourceId": "pC",
-      "targetId": "polygonABC",
-      "relation": "construction"
-    },
-    {
-      "sourceId": "pA",
-      "targetId": "segAB",
-      "relation": "construction"
-    },
-    {
-      "sourceId": "pB",
-      "targetId": "segAB",
-      "relation": "construction"
-    },
-    {
-      "sourceId": "pB",
-      "targetId": "segBC",
-      "relation": "construction"
-    },
-    {
-      "sourceId": "pC",
-      "targetId": "segBC",
-      "relation": "construction"
-    },
-    {
-      "sourceId": "pA",
-      "targetId": "segAC",
-      "relation": "construction"
-    },
-    {
-      "sourceId": "pC",
-      "targetId": "segAC",
-      "relation": "construction"
-    },
-    {
-      "sourceId": "pB",
-      "targetId": "lineBC",
-      "relation": "construction"
-    },
-    {
-      "sourceId": "pC",
-      "targetId": "lineBC",
-      "relation": "construction"
-    },
-    {
-      "sourceId": "pC",
-      "targetId": "parCBD",
-      "relation": "construction"
-    },
-    {
-      "sourceId": "pB",
-      "targetId": "parCBD",
-      "relation": "construction"
-    },
-    {
-      "sourceId": "pD",
-      "targetId": "parCBD",
-      "relation": "construction"
-    },
-    {
-      "sourceId": "parCBD",
-      "targetId": "intE",
-      "relation": "construction"
-    },
-    {
-      "sourceId": "segAC",
-      "targetId": "intE",
-      "relation": "construction"
-    },
-    {
-      "sourceId": "pA",
-      "targetId": "segAD",
-      "relation": "construction"
-    },
-    {
-      "sourceId": "pD",
-      "targetId": "segAD",
-      "relation": "construction"
-    },
-    {
-      "sourceId": "pD",
-      "targetId": "segDB",
-      "relation": "construction"
-    },
-    {
-      "sourceId": "pB",
-      "targetId": "segDB",
-      "relation": "construction"
-    },
-    {
-      "sourceId": "segDB",
-      "targetId": "label-segDB",
-      "relation": "construction"
-    },
-    {
-      "sourceId": "segAD",
-      "targetId": "label-segAD",
-      "relation": "construction"
-    },
-    {
-      "sourceId": "segAE",
-      "targetId": "label-segAE",
-      "relation": "construction"
-    },
-    {
-      "sourceId": "segEC",
-      "targetId": "label-segEC",
-      "relation": "construction"
-    },
-    {
-      "sourceId": "pD",
-      "targetId": "segDE",
-      "relation": "construction"
-    },
-    {
-      "sourceId": "intE",
-      "targetId": "segDE",
-      "relation": "construction"
-    },
-    {
-      "sourceId": "pA",
-      "targetId": "segAE",
-      "relation": "construction"
-    },
-    {
-      "sourceId": "intE",
-      "targetId": "segAE",
-      "relation": "construction"
-    },
-    {
-      "sourceId": "intE",
-      "targetId": "segEC",
-      "relation": "construction"
-    },
-    {
-      "sourceId": "pC",
-      "targetId": "segEC",
-      "relation": "construction"
-    }
-  ],
-  "note": "Mueve A, B, C y D",
-  "extensions": {}
+  "note": "Mueve A, B, C y D"
 }
 );
 /* @matematika-diagram-spec:end */

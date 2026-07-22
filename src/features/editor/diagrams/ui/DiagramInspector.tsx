@@ -1,16 +1,17 @@
-import React from 'react';
+import React, { useState } from 'react';
 import type { VisualDiagramModel, VisualPoint, VisualElement, VisualSlider, VisualStep, ColorToken, PointConstraint } from '../model/types';
-import { COLOR_OPTIONS, KIND_LABELS, convertAngleKind, toolReferenceCandidates, toolReferenceLabel } from '../model/commands';
+import { COLOR_OPTIONS, KIND_LABELS, convertAngleKind, toolReferenceCandidatesForSlot, toolReferenceLabel } from '../model/commands';
 import { cleanTargetId, renamePoint, renameElement, renameSlider } from '../model/commands';
 import { removeDiagramElements, setPointAttractors, updatePoint, updateElement, updateSlider, updateStep } from '../model/commands';
-import { extractMathExpressionIdentifiers } from '@/shared/diagrams/public';
+import { diagramTemplateExpressions, extractMathExpressionIdentifiers, legacyElementCapabilities, legacyReferenceCandidates } from '@/shared/diagrams/public';
 import { DiagramConstraintEditor } from './DiagramConstraintEditor';
 import { constraintPresentation } from '../model/constraintOptions';
 import { DiagramSceneControls } from './DiagramSceneControls';
 import { SegmentLengthConstraintEditor } from './SegmentLengthConstraintEditor';
 import { SegmentMarksEditor } from './SegmentMarksEditor';
 import { AngleEqualityConstraintEditor } from './AngleEqualityConstraintEditor';
-import { DiagramExpressionField, DiagramFormulaField } from './DiagramExpressionField';
+import { DiagramExpressionField } from './DiagramExpressionField';
+import { DiagramTemplateField } from './DiagramTemplateField';
 import { DiagramElementAppearanceEditor } from './DiagramElementAppearanceEditor';
 import { DiagramElementBehaviorEditor } from './DiagramElementBehaviorEditor';
 import { DiagramTextRulesEditor } from './DiagramTextRulesEditor';
@@ -18,14 +19,17 @@ import { DiagramAnnotationPositionEditor } from './DiagramAnnotationPositionEdit
 import { DiagramInfoPanelContentEditor } from './DiagramInfoPanelContentEditor';
 import { DiagramPointMovementAidsEditor } from './DiagramPointMovementAidsEditor';
 import { elementInspectorCapabilities } from '../model/elementInspectorCapabilities';
+import { DiagramNativeLabelEditor } from './DiagramNativeLabelEditor';
 
 interface DiagramInspectorProps {
   model: VisualDiagramModel;
   selectedId: string;
+  selectedIds?: readonly string[];
   onSelect: (id: string) => void;
   onModelEdit: (model: VisualDiagramModel) => void;
   onDeleteSelected: () => void;
   onAddElementLabel?: (elementId: string) => void;
+  onCopySelection?: () => void;
 }
 
 function sceneItemLabel(model: VisualDiagramModel, id: string): string {
@@ -33,11 +37,8 @@ function sceneItemLabel(model: VisualDiagramModel, id: string): string {
   return item ? `${item.label} (${item.id})` : id;
 }
 
-function elementReferenceCandidates(model: VisualDiagramModel, element: VisualElement) {
-  if (element.kind === 'intersection') return toolReferenceCandidates(model, 'intersection');
-  if (element.kind === 'measureTicks') return toolReferenceCandidates(model, 'measureTicks');
-  if (element.kind === 'congruenceMark' || element.kind === 'parallelMark') return model.points;
-  return [...model.points, ...model.elements.filter(candidate => candidate.id !== element.id)];
+function elementReferenceCandidates(model: VisualDiagramModel, element: VisualElement, index: number) {
+  return toolReferenceCandidatesForSlot(model, element.kind, index).filter(candidate => candidate.id !== element.id);
 }
 
 function expressionDependencySources(model: VisualDiagramModel, expressions: Array<string | undefined>): string[] {
@@ -57,44 +58,109 @@ function expressionDependencySources(model: VisualDiagramModel, expressions: Arr
   return [...sources];
 }
 
+function elementExpressionSources(element: VisualElement): Array<string | undefined> {
+  const properties = element.properties;
+  return [
+    properties?.expression,
+    properties?.xExpression,
+    properties?.yExpression,
+    properties?.tickDistanceExpression,
+    properties?.visibleWhen,
+    ...diagramTemplateExpressions(element.text ?? '', properties?.expression).map(entry => entry.expression),
+    ...(properties?.textRules?.flatMap(rule => [
+      rule.when,
+      ...diagramTemplateExpressions(rule.text, properties.expression).map(entry => entry.expression),
+    ]) ?? []),
+    ...(properties?.infoPanelBlocks?.flatMap(block => [
+      block.expression,
+      ...diagramTemplateExpressions(block.text, block.expression).map(entry => entry.expression),
+      ...(block.rules?.flatMap(rule => [
+        rule.when,
+        rule.expression,
+        ...diagramTemplateExpressions(rule.text, rule.expression ?? block.expression).map(entry => entry.expression),
+      ]) ?? []),
+    ]) ?? []),
+  ];
+}
+
 
 
 function curveParameter(element: VisualElement): string {
   return element.properties?.parameter ?? (element.kind === 'functionCurve' ? 'x' : 't');
 }
 
+function labelCanMoveAlongPath(kind: VisualElement['kind']): boolean {
+  return ['segment', 'line', 'ray', 'baseExtension', 'perpendicular', 'parallel', 'angleBisector', 'dimensionLine'].includes(kind);
+}
+
+interface InspectorSelectionSummary {
+  type: string;
+  label: string;
+  id: string;
+}
+
+function inspectorSelectionSummary(
+  point: VisualPoint | undefined,
+  element: VisualElement | undefined,
+  slider: VisualSlider | undefined,
+  step: VisualStep | undefined,
+): InspectorSelectionSummary | null {
+  if (point) return { type: 'Punto', label: point.label, id: point.id };
+  if (element) {
+    const family = legacyElementCapabilities(element.kind).has('point') ? 'Punto construido' : KIND_LABELS[element.kind];
+    return { type: family, label: element.label, id: element.id };
+  }
+  if (slider) return { type: 'Control', label: slider.label, id: slider.id };
+  if (step) return { type: 'Paso', label: step.label, id: step.id };
+  return null;
+}
+
 export const DiagramInspector: React.FC<DiagramInspectorProps> = ({
   model,
   selectedId,
+  selectedIds = [],
   onSelect,
   onModelEdit,
   onDeleteSelected,
   onAddElementLabel,
+  onCopySelection,
 }) => {
+  const [inspectorSection, setInspectorSection] = useState<'general' | 'geometry' | 'appearance' | 'advanced'>('general');
   const selectedPoint = model.points.find(item => item.id === selectedId);
   const selectedElement = model.elements.find(item => item.id === selectedId);
   const selectedSlider = model.sliders.find(item => item.id === selectedId);
   const selectedStep = model.steps.find(item => item.id === selectedId);
+  const activeInspectorSection = selectedStep ? 'general' : inspectorSection;
   const selectedSceneItem = selectedPoint || selectedElement || selectedSlider;
+  const relatedConstraints = selectedSceneItem
+    ? (model.constraints ?? []).filter(constraint => constraint.refs.includes(selectedSceneItem.id))
+    : [];
+  const relatedDependencies = selectedSceneItem
+    ? (model.dependencies ?? []).filter(dependency => dependency.sourceId === selectedSceneItem.id || dependency.targetId === selectedSceneItem.id)
+    : [];
   const selectedElementCapabilities = selectedElement ? elementInspectorCapabilities(selectedElement.kind) : undefined;
   const attachedLabel = selectedElement?.kind === 'label'
     ? undefined
     : model.elements.find(item => item.kind === 'label' && item.refs[0] === selectedElement?.id);
 
   const hasSelection = selectedPoint || selectedElement || selectedSlider || selectedStep;
+  const selectionSummary = inspectorSelectionSummary(selectedPoint, selectedElement, selectedSlider, selectedStep);
 
   const handlePointChange = (update: Partial<VisualPoint>) => {
     if (!selectedPoint) return;
     const next = updatePoint(model, selectedPoint.id, update);
-    if (!update.dependencies) {
+    const expressionChanged = 'xExpression' in update || 'yExpression' in update || 'visibleWhen' in update;
+    if (!update.dependencies && !expressionChanged) {
       onModelEdit(next);
       return;
     }
+    const nextPoint = next.points.find(point => point.id === selectedPoint.id) ?? selectedPoint;
+    const sources = update.dependencies ?? expressionDependencySources(model, [nextPoint.xExpression, nextPoint.yExpression, nextPoint.visibleWhen]);
     onModelEdit({
       ...next,
       dependencies: [
         ...(model.dependencies || []).filter(dependency => dependency.targetId !== selectedPoint.id || dependency.relation !== 'expression'),
-        ...update.dependencies.map(sourceId => ({ sourceId, targetId: selectedPoint.id, relation: 'expression' as const })),
+        ...sources.map(sourceId => ({ sourceId, targetId: selectedPoint.id, relation: 'expression' as const })),
       ],
     });
   };
@@ -107,15 +173,18 @@ export const DiagramInspector: React.FC<DiagramInspectorProps> = ({
   const handleElementChange = (update: Partial<VisualElement>) => {
     if (!selectedElement) return;
     const next = updateElement(model, selectedElement.id, update);
-    if (!update.refs) {
+    if (!update.refs && !('text' in update)) {
       onModelEdit(next);
       return;
     }
+    const nextElement = next.elements.find(element => element.id === selectedElement.id) ?? selectedElement;
+    const expressionSources = expressionDependencySources(model, elementExpressionSources(nextElement));
     onModelEdit({
       ...next,
       dependencies: [
-        ...(model.dependencies || []).filter(dependency => dependency.targetId !== selectedElement.id || dependency.relation !== 'construction'),
-        ...update.refs.map(sourceId => ({ sourceId, targetId: selectedElement.id, relation: 'construction' as const })),
+        ...(model.dependencies || []).filter(dependency => dependency.targetId !== selectedElement.id || (dependency.relation !== 'construction' && dependency.relation !== 'expression')),
+        ...nextElement.refs.map(sourceId => ({ sourceId, targetId: selectedElement.id, relation: 'construction' as const })),
+        ...expressionSources.map(sourceId => ({ sourceId, targetId: selectedElement.id, relation: 'expression' as const })),
       ],
     });
   };
@@ -133,18 +202,8 @@ export const DiagramInspector: React.FC<DiagramInspectorProps> = ({
       onModelEdit(next);
       return;
     }
-    const sources = expressionDependencySources(model, [
-      properties.expression,
-      properties.xExpression,
-      properties.yExpression,
-      properties.tickDistanceExpression,
-      properties.visibleWhen,
-      ...(properties.textRules?.map(rule => rule.when) ?? []),
-      ...(properties.infoPanelBlocks?.flatMap(block => [
-        block.expression,
-        ...(block.rules?.flatMap(rule => [rule.when, rule.expression]) ?? []),
-      ]) ?? []),
-    ]);
+    const nextElement = next.elements.find(element => element.id === selectedElement.id) ?? { ...selectedElement, properties };
+    const sources = expressionDependencySources(model, elementExpressionSources(nextElement));
     onModelEdit({
       ...next,
       dependencies: [
@@ -165,14 +224,15 @@ export const DiagramInspector: React.FC<DiagramInspectorProps> = ({
   const handleSliderChange = (update: Partial<VisualSlider>) => {
     if (!selectedSlider) return;
     const next = updateSlider(model, selectedSlider.id, update);
-    if (!('maxExpression' in update)) {
+    if (!('maxExpression' in update) && !('visibleWhen' in update)) {
       onModelEdit(next);
       return;
     }
     const sources = new Set<string>();
-    if (update.maxExpression) {
+    for (const expression of [next.sliders.find(slider => slider.id === selectedSlider.id)?.maxExpression, next.sliders.find(slider => slider.id === selectedSlider.id)?.visibleWhen]) {
+      if (!expression) continue;
       try {
-        extractMathExpressionIdentifiers(update.maxExpression).forEach(identifier => {
+        extractMathExpressionIdentifiers(expression).forEach(identifier => {
           const root = identifier.split('.')[0];
           if ([...model.points, ...model.elements, ...model.sliders].some(item => item.id === root)) sources.add(root);
         });
@@ -195,15 +255,36 @@ export const DiagramInspector: React.FC<DiagramInspectorProps> = ({
   };
 
   return (
-    <section className="rounded border border-carbon/10 bg-lienzo p-3 h-full overflow-y-auto">
-      <h4 className="text-[10px] font-bold uppercase tracking-widest text-carbon/45 border-b border-carbon/10 pb-1 mb-3">Propiedades</h4>
+    <section className="diagram-inspector h-full overflow-y-auto bg-lienzo px-3 pb-4 [&_fieldset]:rounded-none [&_fieldset]:border-x-0 [&_fieldset]:border-b-0 [&_fieldset]:bg-transparent [&_details]:rounded-none [&_details]:border-x-0 [&_details]:border-b-0">
+      <header className="sticky top-0 z-20 mb-3 border-b border-carbon/10 bg-lienzo py-3">
+        <h4 className="text-[10px] font-bold uppercase tracking-widest text-carbon/45">Propiedades</h4>
+        {selectionSummary && <div className="mt-1 min-w-0">
+          <div className="flex items-start gap-2">
+            <div className="min-w-0 flex-1"><p className="truncate text-sm font-bold text-carbon">{selectionSummary.label}</p><p className="truncate text-[10px] text-carbon/50">{selectionSummary.type} · <code>{selectionSummary.id}</code>{selectedIds.length > 1 ? ` · ${selectedIds.length} seleccionados` : ''}</p></div>
+            {selectedIds.length > 1 && <button type="button" className="min-h-9 rounded bg-carbon px-2 text-[10px] font-bold text-lienzo" onClick={onCopySelection}>Copiar {selectedIds.length}</button>}
+          </div>
+        </div>}
+      </header>
+
+      {hasSelection && <nav className="sticky top-[4.6rem] z-10 mb-3 flex gap-1 overflow-x-auto border-b border-carbon/10 bg-lienzo pb-2" aria-label="Secciones de propiedades">
+        {([
+          ['general', 'Esencial'],
+          ...(!selectedStep ? [['geometry', 'Geometría']] : []),
+          ...(!selectedStep ? [['appearance', 'Estilo']] : []),
+          ...(!selectedStep ? [['advanced', 'Interacción']] : []),
+        ] as Array<[typeof inspectorSection, string]>).map(([id, label]) => <button key={id} type="button" aria-current={activeInspectorSection === id ? 'page' : undefined} onClick={() => setInspectorSection(id)} className={`min-h-9 whitespace-nowrap rounded px-2 text-[10px] font-bold ${activeInspectorSection === id ? 'bg-carbon text-lienzo' : 'text-carbon/55 hover:bg-carbon/5'}`}>{label}</button>)}
+      </nav>}
       
       {!hasSelection && (
-        <p className="text-xs italic text-carbon/55">Seleccione un punto, elemento o slider en el lienzo.</p>
+        <div className="rounded border border-dashed border-carbon/20 bg-carbon/[0.02] p-4 text-center">
+          <p className="text-sm font-bold text-carbon/70">Seleccione un objeto</p>
+          <p className="mt-1 text-xs leading-relaxed text-carbon/50">Puede hacerlo en el lienzo o en el árbol de escena. Aquí aparecerán únicamente las propiedades compatibles con su tipo.</p>
+        </div>
       )}
 
       {selectedPoint && (
         <div className="space-y-3">
+          {activeInspectorSection === 'general' && <>
           <div>
             <label className="block text-xs font-bold text-carbon mb-1">ID interno del objeto</label>
             <input
@@ -225,31 +306,19 @@ export const DiagramInspector: React.FC<DiagramInspectorProps> = ({
               onChange={(e) => handlePointChange({ label: e.target.value })}
             />
             <span className="mt-1 block text-[10px] text-carbon/45">Admite LaTeX entre <code>$...$</code> o <code>$$...$$</code>.</span>
-            <label className="mt-2 flex items-center gap-2 text-xs font-bold text-carbon">
-              <input
-                type="checkbox"
-                aria-label="Mostrar etiqueta del punto en el lienzo"
-                checked={selectedPoint.showLabel !== false}
-                onChange={(event) => handlePointChange({ showLabel: event.target.checked })}
-              />
-              Mostrar etiqueta en el lienzo
-            </label>
-            <label className="mt-2 block text-xs font-bold text-carbon">
-              Tamaño de la etiqueta
-              <input
-                type="number"
-                min="6"
-                max="72"
-                step="1"
-                aria-label="Tamaño de la etiqueta del punto"
-                className="mt-1 w-full rounded border border-carbon/15 bg-lienzo p-1.5 text-xs"
-                value={selectedPoint.style?.labelSize ?? 19}
-                onChange={(event) => handlePointStyleChange({ labelSize: Number(event.target.value) })}
-              />
-            </label>
-            <span className="mt-1 block text-[10px] leading-relaxed text-carbon/45">El nombre se conserva para el editor, la accesibilidad y los enlaces aunque no se dibuje.</span>
+            <DiagramNativeLabelEditor
+              label={selectedPoint.label}
+              visible={selectedPoint.showLabel !== false}
+              size={selectedPoint.style?.labelSize ?? 19}
+              offset={selectedPoint.style?.labelOffset}
+              position={selectedPoint.style?.labelPosition}
+              onVisibleChange={showLabel => handlePointChange({ showLabel })}
+              onStyleChange={handlePointStyleChange}
+            />
           </div>
+          </>}
 
+          {activeInspectorSection === 'geometry' && <>
           <div className="grid grid-cols-2 gap-2">
             <div>
               <label className="block text-xs font-bold text-carbon mb-1">Coordenada X</label>
@@ -317,8 +386,8 @@ export const DiagramInspector: React.FC<DiagramInspectorProps> = ({
                 onChange={(e) => handlePointChange({ gliderTarget: e.target.value })}
               >
                 <option value="">Seleccione elemento...</option>
-                {model.elements.map(el => (
-                  <option key={el.id} value={el.id}>{el.id} ({KIND_LABELS[el.kind]})</option>
+                {legacyReferenceCandidates(model, 'support').map(el => (
+                  <option key={el.id} value={el.id}>{el.id} ({'kind' in el ? KIND_LABELS[el.kind] : el.label})</option>
                 ))}
               </select>
             </div>
@@ -350,7 +419,22 @@ export const DiagramInspector: React.FC<DiagramInspectorProps> = ({
           )}
 
           {selectedPoint.constraint === 'constrained' && <DiagramConstraintEditor model={model} point={selectedPoint} onModelEdit={onModelEdit} />}
+          </>}
 
+          {activeInspectorSection === 'advanced' && (
+          <DiagramExpressionField
+            model={model}
+            label="Visible cuando"
+            ariaLabel="Condición de visibilidad del punto"
+            value={selectedPoint.visibleWhen ?? ''}
+            onChange={value => handlePointChange({ visibleWhen: value || undefined })}
+            placeholder="Vacío = siempre visible"
+            optional
+            help="La condición se reevalúa mientras cambia la construcción. Un resultado cero oculta el punto."
+          />
+          )}
+
+          {activeInspectorSection === 'appearance' && <>
           <div>
             <label className="block text-xs font-bold text-carbon mb-1">Color</label>
             <select
@@ -369,7 +453,9 @@ export const DiagramInspector: React.FC<DiagramInspectorProps> = ({
             <label className="text-xs font-bold text-carbon">Tamaño resaltado<input type="number" min="0" max="40" step="0.5" aria-label="Tamaño resaltado del punto" className="mt-1 w-full rounded border border-carbon/15 bg-lienzo p-1.5 text-xs" value={selectedPoint.style?.highlightPointSize ?? 10} onChange={(event) => handlePointStyleChange({ highlightPointSize: Number(event.target.value) })} /></label>
             <label className="col-span-2 flex items-center gap-1.5 text-xs font-bold text-carbon"><input type="checkbox" checked={selectedPoint.style?.preserveColorOnHighlight ?? true} onChange={(event) => handlePointStyleChange({ preserveColorOnHighlight: event.target.checked })} />Conservar color al resaltar</label>
           </div>
+          </>}
 
+          {activeInspectorSection === 'advanced' && (
           <label className="flex items-center gap-1.5 text-xs font-bold text-carbon">
             <input
               type="checkbox"
@@ -379,11 +465,13 @@ export const DiagramInspector: React.FC<DiagramInspectorProps> = ({
             />
             ¿Se puede enlazar desde MDX?
           </label>
+          )}
         </div>
       )}
 
       {selectedElement && (
         <div className="space-y-3">
+          {activeInspectorSection === 'general' && <>
           <div>
             <label className="block text-xs font-bold text-carbon mb-1">ID interno del objeto</label>
             <input
@@ -405,15 +493,6 @@ export const DiagramInspector: React.FC<DiagramInspectorProps> = ({
               onChange={(e) => handleElementChange({ label: e.target.value })}
             />
             <span className="mt-1 block text-[10px] text-carbon/45">Admite LaTeX entre <code>$...$</code> o <code>$$...$$</code>.</span>
-            <label className="mt-2 flex items-center gap-2 text-xs font-bold text-carbon">
-              <input
-                type="checkbox"
-                aria-label="Mostrar etiqueta en el lienzo"
-                checked={selectedElement.showLabel !== false}
-                onChange={(event) => handleElementChange({ showLabel: event.target.checked })}
-              />
-              Mostrar etiqueta en el lienzo
-            </label>
           </div>
 
           {(selectedElement.kind === 'angle' || selectedElement.kind === 'nonReflexAngle') ? (
@@ -437,6 +516,17 @@ export const DiagramInspector: React.FC<DiagramInspectorProps> = ({
               <p className="block text-xs font-bold text-carbon mb-1">Tipo: <span className="font-normal text-carbon/75">{KIND_LABELS[selectedElement.kind]}</span></p>
             </div>
           )}
+
+          {selectedElementCapabilities?.content === 'none' && <DiagramNativeLabelEditor
+            label={selectedElement.label}
+            visible={selectedElement.showLabel ?? (legacyElementCapabilities(selectedElement.kind).has('point') || selectedElement.kind === 'angle' || selectedElement.kind === 'nonReflexAngle')}
+            size={selectedElement.style?.labelSize ?? 16}
+            offset={selectedElement.style?.labelOffset}
+            position={selectedElement.style?.labelPosition}
+            alongPath={labelCanMoveAlongPath(selectedElement.kind)}
+            onVisibleChange={showLabel => handleElementChange({ showLabel })}
+            onStyleChange={handleElementStyleChange}
+          />}
 
           {selectedElementCapabilities?.attachedLabel && (
             <fieldset className="space-y-2 rounded border border-ocre/20 bg-ocre/5 p-2">
@@ -473,7 +563,9 @@ export const DiagramInspector: React.FC<DiagramInspectorProps> = ({
               <p className="text-[10px] leading-relaxed text-carbon/50">La etiqueta queda vinculada al objeto y lo sigue cuando cambia la geometría.</p>
             </fieldset>
           )}
+          </>}
 
+          {activeInspectorSection === 'geometry' && <>
           {selectedElement.refs.length > 0 && selectedElement.kind !== 'infoPanel' && selectedElement.kind !== 'label' && (
             <fieldset className="space-y-1 rounded border border-carbon/10 p-2">
               <legend className="px-1 text-[10px] font-bold uppercase tracking-wider text-carbon/45">Referencias geométricas</legend>
@@ -488,7 +580,7 @@ export const DiagramInspector: React.FC<DiagramInspectorProps> = ({
                       value={ref}
                       onChange={(event) => handleElementChange({ refs: selectedElement.refs.map((value, refIndex) => refIndex === index ? event.target.value : value) })}
                     >
-                      {elementReferenceCandidates(model, selectedElement).map(item => (
+                      {elementReferenceCandidates(model, selectedElement, index).map(item => (
                         <option key={item.id} value={item.id}>{item.label} ({item.id})</option>
                       ))}
                     </select>
@@ -558,7 +650,9 @@ export const DiagramInspector: React.FC<DiagramInspectorProps> = ({
               </label>
             </fieldset>
           )}
+          </>}
 
+          {activeInspectorSection === 'general' && <>
           {selectedElement.kind === 'infoPanel' && (
             <DiagramInfoPanelContentEditor
               model={model}
@@ -570,21 +664,16 @@ export const DiagramInspector: React.FC<DiagramInspectorProps> = ({
           )}
 
           {(selectedElement.kind === 'measurement' || selectedElement.kind === 'dimensionLine') && (
-            <div className="space-y-3 rounded border border-carbon/10 p-3 bg-carbon/5">
-              <p className="text-[10px] font-bold uppercase tracking-wider text-carbon/50">Contenido y Valor de Medida</p>
+            <section className="space-y-3" aria-label="Contenido y valor de medida">
+              <div><h5 className="text-xs font-bold text-carbon">Contenido de la medida</h5><p className="mt-1 text-[10px] text-carbon/45">Escriba el texto e inserte uno o varios cálculos donde deban aparecer.</p></div>
 
-              <label className="block text-xs font-bold text-carbon">
-                Plantilla del texto
-                <input
-                  className="mt-1 w-full rounded border border-carbon/15 bg-lienzo p-1.5 text-xs"
-                  value={selectedElement.text || ''}
-                  onChange={(event) => handleElementChange({ text: event.target.value })}
-                  placeholder={`${selectedElement.label}: {value}`}
-                />
-                <span className="mt-1 block text-[10px] text-carbon/45 leading-relaxed">
-                  Use <code>{'{value}'}</code> para mostrar el resultado medido o calculado.
-                </span>
-              </label>
+              <DiagramTemplateField
+                model={model}
+                label="Texto visible"
+                value={selectedElement.text || ''}
+                onChange={text => handleElementChange({ text })}
+                placeholder={`${selectedElement.label}: {= ${selectedElement.id}.length | precision: 2}`}
+              />
 
               {selectedElement.kind === 'dimensionLine' && (
                 <label className="block text-xs font-bold text-carbon">
@@ -594,9 +683,11 @@ export const DiagramInspector: React.FC<DiagramInspectorProps> = ({
                 </label>
               )}
 
-              <fieldset className="space-y-2 rounded border border-carbon/15 p-2 bg-lienzo/40">
-                <legend className="px-1 text-[10px] font-bold uppercase tracking-wider text-carbon/50">Cálculo de la medida</legend>
-                <DiagramExpressionField model={model} label="Fórmula matemática alternativa" ariaLabel="Fórmula de medida" value={selectedElement.properties?.expression || ''} onChange={value => handleElementPropertiesChange({ expression: value || undefined })} placeholder="Vacío = medir distancia automáticamente" optional />
+              <details className="border-t border-carbon/10 pt-2" open={Boolean(selectedElement.properties?.expression)}>
+                <summary className="min-h-9 cursor-pointer py-2 text-[10px] font-bold text-carbon/55">Compatibilidad con {'{value}'}</summary>
+                <div className="space-y-2 pb-2">
+                  <p className="text-[9px] leading-relaxed text-carbon/45">Solo es necesario para textos antiguos que todavía usan <code>{'{value}'}</code>. Los cálculos insertados llevan su propio formato.</p>
+                  <DiagramExpressionField compact model={model} label="Cálculo heredado" ariaLabel="Fórmula de medida" value={selectedElement.properties?.expression || ''} onChange={value => handleElementPropertiesChange({ expression: value || undefined })} placeholder="Vacío = medir distancia automáticamente" optional />
                 <div className="grid grid-cols-2 gap-2">
                   <label className="text-xs font-bold text-carbon">
                     Unidad
@@ -621,20 +712,22 @@ export const DiagramInspector: React.FC<DiagramInspectorProps> = ({
                     />
                   </label>
                 </div>
-              </fieldset>
+                </div>
+              </details>
               <DiagramTextRulesEditor model={model} element={selectedElement} onChange={textRules => handleElementPropertiesChange({ textRules })} />
-            </div>
+            </section>
           )}
 
           {selectedElement.kind === 'formula' && (
-            <div className="space-y-3 rounded border border-carbon/10 p-3 bg-carbon/5">
-              <p className="text-[10px] font-bold uppercase tracking-wider text-carbon/50">Fórmula KaTeX y Valor</p>
+            <section className="space-y-3" aria-label="Fórmula KaTeX y valor">
+              <div><h5 className="text-xs font-bold text-carbon">Fórmula visible</h5><p className="mt-1 text-[10px] text-carbon/45">Escriba primero lo que se verá; el valor dinámico es opcional.</p></div>
 
-              <DiagramFormulaField label="Fórmula visible (KaTeX)" value={selectedElement.text || ''} onChange={value => handleElementChange({ text: value })} placeholder="Ej. a^2 + b^2 = c^2 o a = {value}" />
+              <DiagramTemplateField formula model={model} label="Fórmula visible (KaTeX)" value={selectedElement.text || ''} onChange={value => handleElementChange({ text: value })} placeholder="Ej. a^2 + b^2 = c^2" />
 
-              <fieldset className="space-y-2 rounded border border-carbon/15 p-2 bg-lienzo/40">
-                <legend className="px-1 text-[10px] font-bold uppercase tracking-wider text-carbon/50">Fórmula de {'{value}'} (Opcional)</legend>
-                <DiagramExpressionField model={model} label="Fórmula matemática" value={selectedElement.properties?.expression || ''} onChange={value => handleElementPropertiesChange({ expression: value || undefined })} optional help="Calcula el número que sustituirá a {value} en la fórmula visible." />
+              <details className="border-t border-carbon/10 pt-2" open={Boolean(selectedElement.properties?.expression)}>
+                <summary className="min-h-9 cursor-pointer py-2 text-[10px] font-bold text-carbon/55">Compatibilidad con {'{value}'}</summary>
+                <div className="space-y-2 pb-2">
+                <DiagramExpressionField compact model={model} label="Cálculo heredado" value={selectedElement.properties?.expression || ''} onChange={value => handleElementPropertiesChange({ expression: value || undefined })} optional />
                 <div className="grid grid-cols-2 gap-2">
                   <label className="text-xs font-bold text-carbon">
                     Unidad
@@ -658,46 +751,31 @@ export const DiagramInspector: React.FC<DiagramInspectorProps> = ({
                     />
                   </label>
                 </div>
-              </fieldset>
+                </div>
+              </details>
               <DiagramTextRulesEditor model={model} element={selectedElement} onChange={textRules => handleElementPropertiesChange({ textRules })} />
-            </div>
+            </section>
           )}
 
           {selectedElement.kind === 'text' && (
-            <div className="space-y-3 rounded border border-carbon/10 bg-carbon/5 p-3">
-              <label className="block text-xs font-bold text-carbon mb-1">Contenido de texto</label>
-              <input
-                className="w-full rounded border border-carbon/15 bg-lienzo p-1.5 text-xs"
-                value={selectedElement.text || ''}
-                onChange={(e) => handleElementChange({ text: e.target.value })}
-                placeholder="Introduce el texto..."
-              />
-              <span className="mt-1 block text-[10px] text-carbon/45">
-                Admite texto y LaTeX (ej. <code>{'$\\alpha + \\beta$'}</code>). Puedes usar llaves (ej. <code>{'{a.x}'}</code>) para variables reactivas.
-              </span>
+            <section className="space-y-3" aria-label="Contenido de texto">
+              <DiagramTemplateField richText model={model} label="Contenido" value={selectedElement.text || ''} onChange={text => handleElementChange({ text })} placeholder="Introduce el texto…" rows={3} />
               <DiagramTextRulesEditor model={model} element={selectedElement} onChange={textRules => handleElementPropertiesChange({ textRules })} />
-            </div>
+            </section>
           )}
 
           {selectedElement.kind === 'label' && (
-            <div className="space-y-3 rounded border border-carbon/10 bg-carbon/5 p-3">
-              <label className="block text-xs font-bold text-carbon mb-1">Contenido de la etiqueta</label>
-              <input
-                className="w-full rounded border border-carbon/15 bg-lienzo p-1.5 text-xs"
-                value={selectedElement.text || ''}
-                onChange={(e) => handleElementChange({ text: e.target.value })}
-                placeholder={selectedElement.label}
-              />
-              <span className="mt-1 block text-[10px] text-carbon/45">
-                Texto de la etiqueta junto al elemento. Admite LaTeX (ej. <code>{'$A$'}</code>).
-              </span>
+            <section className="space-y-3" aria-label="Contenido de la etiqueta">
+              <DiagramTemplateField formula model={model} label="Texto visible" value={selectedElement.text || ''} onChange={text => handleElementChange({ text })} placeholder={selectedElement.label} />
               <DiagramTextRulesEditor model={model} element={selectedElement} onChange={textRules => handleElementPropertiesChange({ textRules })} />
-            </div>
+            </section>
           )}
+          </>}
 
+          {activeInspectorSection === 'geometry' && <>
           {selectedElement.kind === 'label' && (
-            <fieldset className="space-y-3 rounded border border-ocre/20 bg-ocre/5 p-2">
-              <legend className="px-1 text-[10px] font-bold uppercase tracking-wider text-ocre">Posición junto al elemento</legend>
+            <section className="space-y-3" aria-label="Posición junto al elemento">
+              <h5 className="text-xs font-bold text-carbon">Posición junto al elemento</h5>
               <label className="block text-xs font-bold text-carbon">
                 Tamaño de la etiqueta
                 <input
@@ -751,7 +829,7 @@ export const DiagramInspector: React.FC<DiagramInspectorProps> = ({
                 </label>
               </div>
               <p className="text-[10px] leading-relaxed text-carbon/50">0% corresponde al inicio y 100% al final. Las separaciones permiten evitar solapes sin crear puntos auxiliares.</p>
-            </fieldset>
+            </section>
           )}
 
           <DiagramAnnotationPositionEditor element={selectedElement} onStyleChange={handleElementStyleChange} />
@@ -800,14 +878,16 @@ export const DiagramInspector: React.FC<DiagramInspectorProps> = ({
               <label className="text-xs font-bold text-carbon">Columnas<input type="number" min="1" max="100" aria-label="Columnas" className="mt-1 w-full rounded border border-carbon/15 bg-lienzo p-1.5 text-xs" value={selectedElement.properties?.columns ?? 4} onChange={(event) => handleElementPropertiesChange({ columns: Number(event.target.value) })} /></label>
             </div>
           )}
+          </>}
 
-          <DiagramElementAppearanceEditor element={selectedElement} onElementChange={handleElementChange} onStyleChange={handleElementStyleChange} />
-          <DiagramElementBehaviorEditor model={model} element={selectedElement} onElementChange={handleElementChange} onPropertiesChange={handleElementPropertiesChange} />
+          {activeInspectorSection === 'appearance' && <DiagramElementAppearanceEditor element={selectedElement} onElementChange={handleElementChange} onStyleChange={handleElementStyleChange} />}
+          {activeInspectorSection === 'advanced' && <DiagramElementBehaviorEditor model={model} element={selectedElement} onElementChange={handleElementChange} onPropertiesChange={handleElementPropertiesChange} />}
         </div>
       )}
 
       {selectedSlider && (
         <div className="space-y-3">
+          {activeInspectorSection === 'general' && <>
           <div>
             <label className="block text-xs font-bold text-carbon mb-1">ID interno del objeto</label>
             <input
@@ -830,7 +910,9 @@ export const DiagramInspector: React.FC<DiagramInspectorProps> = ({
             />
             <span className="mt-1 block text-[10px] text-carbon/45">Admite LaTeX entre <code>$...$</code> o <code>$$...$$</code>.</span>
           </div>
+          </>}
 
+          {activeInspectorSection === 'geometry' && <>
           <div className="grid grid-cols-3 gap-1">
             <div>
               <label className="block text-[10px] font-bold text-carbon mb-1">Mínimo</label>
@@ -863,7 +945,22 @@ export const DiagramInspector: React.FC<DiagramInspectorProps> = ({
           </div>
 
           <DiagramExpressionField model={model} label="Expresión del máximo dinámico" ariaLabel="Expresión del máximo dinámico del slider" value={selectedSlider.maxExpression ?? ''} onChange={value => handleSliderChange({ maxExpression: value || undefined })} placeholder="Vacío = usar máximo fijo" optional help="El máximo fijo se conserva como respaldo si la expresión todavía no puede evaluarse." />
+          </>}
 
+          {activeInspectorSection === 'advanced' && (
+          <DiagramExpressionField
+            model={model}
+            label="Visible cuando"
+            ariaLabel="Condición de visibilidad del slider"
+            value={selectedSlider.visibleWhen ?? ''}
+            onChange={value => handleSliderChange({ visibleWhen: value || undefined })}
+            placeholder="Vacío = siempre visible"
+            optional
+            help="La condición se reevalúa mientras cambia la construcción. Un resultado cero oculta el control."
+          />
+          )}
+
+          {activeInspectorSection === 'appearance' && (
           <div>
             <label className="block text-xs font-bold text-carbon mb-1">Color</label>
             <select
@@ -876,27 +973,28 @@ export const DiagramInspector: React.FC<DiagramInspectorProps> = ({
               ))}
             </select>
           </div>
+          )}
         </div>
       )}
 
-      {(model.constraints?.length || model.dependencies?.length) ? (
+      {activeInspectorSection === 'advanced' && selectedSceneItem && (relatedConstraints.length > 0 || relatedDependencies.length > 0) ? (
         <details className="mt-4 border-t border-carbon/10 pt-3">
           <summary className="cursor-pointer list-none text-[10px] font-bold uppercase tracking-widest text-carbon/45 [&::-webkit-details-marker]:hidden">
-            Cómo se construye <span className="float-right font-mono font-normal">{model.constraints?.length ?? 0} relaciones ▾</span>
+            Enlaces de construcción <span className="float-right font-mono font-normal">{relatedConstraints.length + relatedDependencies.length} enlaces ▾</span>
           </summary>
-          <div className="mt-2 rounded border border-carbon/10 bg-carbon/[0.02] p-2">
-            <p className="text-[10px] leading-relaxed text-carbon/55">Estas dependencias se generan automáticamente al construir objetos. Indican qué debe recalcularse cuando se mueve un punto; no son una segunda lista de objetos.</p>
-            {(model.constraints?.length ?? 0) > 0 && (
+          <div className="mt-2 border-l-2 border-carbon/10 pl-3">
+            <p className="text-[10px] leading-relaxed text-carbon/55">Solo se muestran las relaciones que afectan al objeto seleccionado. Las dependencias se actualizan al cambiar sus referencias.</p>
+            {relatedConstraints.length > 0 && (
               <ul className="mt-2 space-y-1.5">
-                {model.constraints?.map(constraint => (
-                  <li key={constraint.id} className="rounded bg-lienzo px-2 py-1.5 text-[10px] text-carbon/65">
+                {relatedConstraints.map(constraint => (
+                  <li key={constraint.id} className="py-1 text-[10px] text-carbon/65">
                     <strong>{constraintPresentation(constraint.kind).label}</strong>: {constraint.refs.map(ref => sceneItemLabel(model, ref)).join(' → ')}
                     {!constraint.enabled && <span className="ml-1 text-carbon/40">(pausada)</span>}
                   </li>
                 ))}
               </ul>
             )}
-            <p className="mt-2 text-[9px] text-carbon/40">{model.dependencies?.length ?? 0} dependencias automáticas. Se editan cambiando las referencias del objeto o sus relaciones.</p>
+            <p className="mt-2 text-[9px] text-carbon/40">{relatedDependencies.length} dependencias automáticas relacionadas.</p>
           </div>
         </details>
       ) : null}
@@ -923,12 +1021,12 @@ export const DiagramInspector: React.FC<DiagramInspectorProps> = ({
         </div>
       )}
 
-      {selectedSceneItem && <DiagramSceneControls model={model} point={selectedPoint} element={selectedElement} slider={selectedSlider} onModelEdit={onModelEdit} />}
+      {activeInspectorSection === 'advanced' && selectedSceneItem && <DiagramSceneControls model={model} point={selectedPoint} element={selectedElement} slider={selectedSlider} onModelEdit={onModelEdit} />}
 
       {hasSelection && (
         <button
           onClick={onDeleteSelected}
-          className="mt-6 w-full rounded bg-granada/10 border border-granada/25 hover:bg-granada text-granada hover:text-lienzo transition-all py-1.5 text-xs font-bold"
+          className="mt-6 min-h-11 w-full rounded border border-granada/25 bg-granada/10 px-3 text-xs font-bold text-granada transition-all hover:bg-granada hover:text-lienzo"
         >
           Eliminar elemento
         </button>

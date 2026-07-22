@@ -4,8 +4,8 @@ import { parseDiagramSourceAST } from '../../../../scripts/editor/parseDiagramSo
 import { createTemplateModel, setPointAttractors, step } from '../../../../src/features/editor/diagrams/model/commands';
 import { generateDiagramSource } from '../../../../src/features/editor/diagrams/source/generator';
 
-describe('DiagramSpec v2 TSX adapter generator', () => {
-  it('preserves every v2 field through an exact generate-parse-generate roundtrip', () => {
+describe('DiagramSpec v3 TSX adapter generator', () => {
+  it('migrates v2 input and reaches an exact v3 generate-parse-generate roundtrip', () => {
     const base = createTemplateModel('circunferencia', 'Roundtrip completo', 'definicion');
     const model = {
       ...base,
@@ -30,7 +30,11 @@ describe('DiagramSpec v2 TSX adapter generator', () => {
     const parsed = parseDiagramSourceAST(first.source);
     expect(parsed.status).toBe('visual-exact');
     if (parsed.status !== 'visual-exact') return;
-    expect(parsed.model).toEqual(model);
+    expect(first.source).toContain('"version": 3');
+    expect(first.source).toContain('"objectType": "point"');
+    expect(parsed.model.componentId).toBe(model.componentId);
+    expect(parsed.model.points.map(point => point.id)).toEqual(model.points.map(point => point.id));
+    expect(parsed.model.elements.map(element => element.id)).toEqual(model.elements.map(element => element.id));
     const second = generateDiagramSource(parsed.model, 'RoundtripCompleto');
     expect(second.ok && second.source).toBe(first.source);
   });

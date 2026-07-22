@@ -3,8 +3,8 @@ import { createDiagramSpec, DiagramRenderer } from '@/shared/diagrams/public';
 /* @matematika-diagram-spec:start */
 export const DemoCongruenciaLLLSpec = createDiagramSpec(
 {
-  "version": 2,
-  "renderer": "matematika-diagram-renderer-v2",
+  "version": 3,
+  "renderer": "matematika-diagram-renderer-v3",
   "title": "Demostración del criterio LLL",
   "componentId": "demo-congruencia-lll",
   "category": "Demostraciones",
@@ -211,7 +211,7 @@ export const DemoCongruenciaLLLSpec = createDiagramSpec(
       "color": "pizarra"
     }
   ],
-  "points": [
+  "objects": [
     {
       "id": "A",
       "label": "A'",
@@ -227,16 +227,22 @@ export const DemoCongruenciaLLLSpec = createDiagramSpec(
         "role": "secondary"
       },
       "target": false,
-      "style": {
-        "pointSize": 7,
-        "highlightPointSize": 10,
+      "objectType": "point",
+      "definition": {
+        "type": "coordinates",
+        "x": -2.4,
+        "y": 0
+      },
+      "mobility": {
+        "type": "fixed"
+      },
+      "appearance": {
+        "size": 7,
+        "labelVisible": true,
+        "highlightSize": 10,
         "preserveColorOnHighlight": true
       },
-      "x": -2.4,
-      "y": 0,
-      "showLabel": true,
-      "fixed": true,
-      "constraint": "fixed"
+      "interaction": {}
     },
     {
       "id": "B",
@@ -253,16 +259,22 @@ export const DemoCongruenciaLLLSpec = createDiagramSpec(
         "role": "secondary"
       },
       "target": false,
-      "style": {
-        "pointSize": 7,
-        "highlightPointSize": 10,
+      "objectType": "point",
+      "definition": {
+        "type": "coordinates",
+        "x": 2.4,
+        "y": 0
+      },
+      "mobility": {
+        "type": "fixed"
+      },
+      "appearance": {
+        "size": 7,
+        "labelVisible": true,
+        "highlightSize": 10,
         "preserveColorOnHighlight": true
       },
-      "x": 2.4,
-      "y": 0,
-      "showLabel": true,
-      "fixed": true,
-      "constraint": "fixed"
+      "interaction": {}
     },
     {
       "id": "C",
@@ -279,18 +291,25 @@ export const DemoCongruenciaLLLSpec = createDiagramSpec(
         "role": "primary"
       },
       "target": false,
-      "style": {
-        "pointSize": 7,
-        "highlightPointSize": 10,
+      "objectType": "point",
+      "definition": {
+        "type": "coordinates",
+        "x": -0.7,
+        "y": 2.6
+      },
+      "mobility": {
+        "type": "free"
+      },
+      "appearance": {
+        "size": 7,
+        "labelVisible": true,
+        "highlightSize": 10,
         "preserveColorOnHighlight": true
       },
-      "x": -0.7,
-      "y": 2.6,
-      "showLabel": true,
-      "fixed": false,
-      "constraint": "free",
-      "snapToGrid": true,
-      "snapSize": 0.25
+      "interaction": {
+        "snapToGrid": true,
+        "snapSize": 0.25
+      }
     },
     {
       "id": "Cstar",
@@ -307,25 +326,27 @@ export const DemoCongruenciaLLLSpec = createDiagramSpec(
         "role": "construction"
       },
       "target": false,
-      "style": {
-        "pointSize": 7,
-        "highlightPointSize": 10,
+      "objectType": "point",
+      "definition": {
+        "type": "expression",
+        "x": "C.x",
+        "y": "2 * A.y - C.y",
+        "fallback": [
+          -0.7,
+          -2.6
+        ]
+      },
+      "mobility": {
+        "type": "fixed"
+      },
+      "appearance": {
+        "size": 7,
+        "labelVisible": true,
+        "highlightSize": 10,
         "preserveColorOnHighlight": true
       },
-      "x": -0.7,
-      "y": -2.6,
-      "showLabel": true,
-      "fixed": true,
-      "constraint": "derived",
-      "dependencies": [
-        "A",
-        "C"
-      ],
-      "xExpression": "C.x",
-      "yExpression": "2 * A.y - C.y"
-    }
-  ],
-  "elements": [
+      "interaction": {}
+    },
     {
       "id": "triPrime",
       "label": "Triángulo A'B'C'",
@@ -343,18 +364,21 @@ export const DemoCongruenciaLLLSpec = createDiagramSpec(
         "role": "secondary"
       },
       "target": false,
-      "style": {
+      "objectType": "path",
+      "geometry": {
+        "type": "polygon",
+        "points": [
+          "A",
+          "B",
+          "C"
+        ]
+      },
+      "appearance": {
         "strokeWidth": 3,
         "fillOpacity": 0.1,
         "highlightFillOpacity": 0.28,
         "preserveColorOnHighlight": true
-      },
-      "kind": "polygon",
-      "refs": [
-        "A",
-        "B",
-        "C"
-      ]
+      }
     },
     {
       "id": "triStar",
@@ -373,18 +397,21 @@ export const DemoCongruenciaLLLSpec = createDiagramSpec(
         "role": "secondary"
       },
       "target": false,
-      "style": {
+      "objectType": "path",
+      "geometry": {
+        "type": "polygon",
+        "points": [
+          "A",
+          "B",
+          "Cstar"
+        ]
+      },
+      "appearance": {
         "strokeWidth": 3,
         "fillOpacity": 0.08,
         "highlightFillOpacity": 0.28,
         "preserveColorOnHighlight": true
-      },
-      "kind": "polygon",
-      "refs": [
-        "A",
-        "B",
-        "Cstar"
-      ]
+      }
     },
     {
       "id": "AB",
@@ -405,16 +432,19 @@ export const DemoCongruenciaLLLSpec = createDiagramSpec(
         "role": "secondary"
       },
       "target": false,
-      "style": {
+      "objectType": "path",
+      "geometry": {
+        "type": "segment",
+        "points": [
+          "A",
+          "B"
+        ]
+      },
+      "appearance": {
         "strokeWidth": 2.4,
         "highlightStrokeWidth": 3,
         "preserveColorOnHighlight": true
-      },
-      "kind": "segment",
-      "refs": [
-        "A",
-        "B"
-      ]
+      }
     },
     {
       "id": "AC",
@@ -435,16 +465,19 @@ export const DemoCongruenciaLLLSpec = createDiagramSpec(
         "role": "secondary"
       },
       "target": false,
-      "style": {
+      "objectType": "path",
+      "geometry": {
+        "type": "segment",
+        "points": [
+          "A",
+          "C"
+        ]
+      },
+      "appearance": {
         "strokeWidth": 2.4,
         "highlightStrokeWidth": 3,
         "preserveColorOnHighlight": true
-      },
-      "kind": "segment",
-      "refs": [
-        "A",
-        "C"
-      ]
+      }
     },
     {
       "id": "BC",
@@ -465,16 +498,19 @@ export const DemoCongruenciaLLLSpec = createDiagramSpec(
         "role": "secondary"
       },
       "target": false,
-      "style": {
+      "objectType": "path",
+      "geometry": {
+        "type": "segment",
+        "points": [
+          "B",
+          "C"
+        ]
+      },
+      "appearance": {
         "strokeWidth": 2.4,
         "highlightStrokeWidth": 3,
         "preserveColorOnHighlight": true
-      },
-      "kind": "segment",
-      "refs": [
-        "B",
-        "C"
-      ]
+      }
     },
     {
       "id": "ACstar",
@@ -496,16 +532,19 @@ export const DemoCongruenciaLLLSpec = createDiagramSpec(
         "role": "secondary"
       },
       "target": false,
-      "style": {
+      "objectType": "path",
+      "geometry": {
+        "type": "segment",
+        "points": [
+          "A",
+          "Cstar"
+        ]
+      },
+      "appearance": {
         "strokeWidth": 2.4,
         "highlightStrokeWidth": 3,
         "preserveColorOnHighlight": true
-      },
-      "kind": "segment",
-      "refs": [
-        "A",
-        "Cstar"
-      ]
+      }
     },
     {
       "id": "BCstar",
@@ -527,16 +566,19 @@ export const DemoCongruenciaLLLSpec = createDiagramSpec(
         "role": "secondary"
       },
       "target": false,
-      "style": {
+      "objectType": "path",
+      "geometry": {
+        "type": "segment",
+        "points": [
+          "B",
+          "Cstar"
+        ]
+      },
+      "appearance": {
         "strokeWidth": 2.4,
         "highlightStrokeWidth": 3,
         "preserveColorOnHighlight": true
-      },
-      "kind": "segment",
-      "refs": [
-        "B",
-        "Cstar"
-      ]
+      }
     },
     {
       "id": "CCstar",
@@ -557,17 +599,20 @@ export const DemoCongruenciaLLLSpec = createDiagramSpec(
       },
       "target": true,
       "targetId": "lineCC",
-      "style": {
+      "objectType": "path",
+      "geometry": {
+        "type": "segment",
+        "points": [
+          "C",
+          "Cstar"
+        ]
+      },
+      "appearance": {
+        "dashed": true,
         "strokeWidth": 2.4,
         "highlightStrokeWidth": 3,
         "preserveColorOnHighlight": true
-      },
-      "kind": "segment",
-      "refs": [
-        "C",
-        "Cstar"
-      ],
-      "dashed": true
+      }
     },
     {
       "id": "angC",
@@ -585,17 +630,19 @@ export const DemoCongruenciaLLLSpec = createDiagramSpec(
       },
       "target": true,
       "targetId": "angleC",
-      "style": {
-        "fillOpacity": 0.22,
-        "angleRadius": 0.58,
-        "preserveColorOnHighlight": true
-      },
-      "kind": "nonReflexAngle",
-      "refs": [
+      "objectType": "angle",
+      "points": [
         "A",
         "C",
         "B"
-      ]
+      ],
+      "sweep": "non-reflex",
+      "marker": "arc",
+      "appearance": {
+        "radius": 0.58,
+        "fillOpacity": 0.22,
+        "preserveColorOnHighlight": true
+      }
     },
     {
       "id": "lllProofInfo",
@@ -612,23 +659,25 @@ export const DemoCongruenciaLLLSpec = createDiagramSpec(
         "role": "annotation"
       },
       "target": false,
-      "style": {
-        "preserveColorOnHighlight": true
+      "objectType": "annotation",
+      "variant": "panel",
+      "content": {
+        "text": "C′ y C* son las dos intersecciones de círculos con centros A′ y B′.",
+        "title": "Construcción espejo"
       },
-      "kind": "infoPanel",
-      "refs": [],
-      "text": "C′ y C* son las dos intersecciones de círculos con centros A′ y B′.",
-      "properties": {
-        "title": "Construcción espejo",
-        "anchorMode": "viewport",
-        "viewportPosition": [
+      "anchor": {
+        "type": "viewport",
+        "position": [
           0.98,
           0.03
         ]
+      },
+      "appearance": {
+        "preserveColorOnHighlight": true
       }
     }
   ],
-  "sliders": [],
+  "relations": [],
   "steps": [
     {
       "id": "step1",
@@ -893,20 +942,7 @@ export const DemoCongruenciaLLLSpec = createDiagramSpec(
       }
     }
   ],
-  "dependencies": [
-    {
-      "sourceId": "A",
-      "targetId": "Cstar",
-      "relation": "expression"
-    },
-    {
-      "sourceId": "C",
-      "targetId": "Cstar",
-      "relation": "expression"
-    }
-  ],
-  "note": "Mueve C′ y recorre los pasos. C* se mantiene como su reflejo respecto de A′B′, haciendo visibles los dos triángulos isósceles auxiliares.",
-  "extensions": {}
+  "note": "Mueve C′ y recorre los pasos. C* se mantiene como su reflejo respecto de A′B′, haciendo visibles los dos triángulos isósceles auxiliares."
 }
 );
 /* @matematika-diagram-spec:end */

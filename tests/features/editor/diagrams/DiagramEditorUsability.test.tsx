@@ -77,7 +77,7 @@ describe('diagram editor usability controls', () => {
 
   it('searches the complete object catalog and places guided constructions in the same menu', () => {
     const model = createTemplateModel('lienzo-inicial', 'Catálogo');
-    render(<DiagramToolbar model={model} canvasTool="select" syncStatus="synced" onSetCanvasTool={vi.fn()} onAddElement={vi.fn()} onModelEdit={vi.fn()} onAddSlider={vi.fn()} onAddGliderPoint={vi.fn()} onAddStep={vi.fn()} onResolveDivergence={vi.fn()} guidedConstructions={<p>Selector guiado de prueba</p>} />);
+    render(<DiagramToolbar model={model} canvasTool="select" syncStatus="synced" onSetCanvasTool={vi.fn()} onAddElement={vi.fn()} onModelEdit={vi.fn()} onAddSlider={vi.fn()} onAddGliderPoint={vi.fn()} onResolveDivergence={vi.fn()} guidedConstructions={<p>Selector guiado de prueba</p>} />);
 
     fireEvent.click(screen.getByRole('button', { name: /Añadir objeto/ }));
     fireEvent.change(screen.getByLabelText('Buscar objeto para añadir'), { target: { value: 'panel informativo' } });

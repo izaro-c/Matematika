@@ -5,9 +5,16 @@ import annotationsFixture from '../../../fixtures/diagrams/phase3-annotations-la
 import marksFixture from '../../../fixtures/diagrams/phase3-marks-angles.json';
 import primitivesFixture from '../../../fixtures/diagrams/phase3-euclidean-primitives.json';
 import { parseDiagramSourceAST } from '../../../../scripts/editor/parseDiagramSourceAST';
-import { migrateDiagramSpec } from '../../../../src/shared/diagrams/public';
+import { migrateDiagramSpec, projectDiagramSpecV3ToV2 } from '../../../../src/shared/diagrams/public';
 import { generateDiagramSource } from '../../../../src/features/editor/diagrams/source/generator';
 import { convertAngleKind, setEqualAngleConstraint, setSegmentMeasureTicks } from '../../../../src/features/editor/diagrams/model/commands';
+import type { VisualDiagramModel } from '../../../../src/features/editor/diagrams/model/types';
+
+function withoutDerivedGraph(model: VisualDiagramModel): Omit<VisualDiagramModel, 'dependencies'> {
+  const semantic: Partial<VisualDiagramModel> = { ...model };
+  delete semantic.dependencies;
+  return semantic as Omit<VisualDiagramModel, 'dependencies'>;
+}
 
 describe('Phase 3 source serialization', () => {
   it.each([
@@ -15,20 +22,20 @@ describe('Phase 3 source serialization', () => {
     ['reactive annotations', annotationsFixture, 'Phase3Annotations'],
     ['angular marks', marksFixture, 'Phase3Angles'],
   ] as const)('roundtrips %s through the production TSX adapter', (_family, fixture, componentName) => {
-    const model = migrateDiagramSpec(fixture).spec;
+    const model = projectDiagramSpecV3ToV2(migrateDiagramSpec(fixture).spec);
     const generated = generateDiagramSource(model, componentName);
     expect(generated.ok).toBe(true);
     if (!generated.ok) return;
     const parsed = parseDiagramSourceAST(generated.source);
     expect(parsed.status).toBe('visual-exact');
     if (parsed.status !== 'visual-exact') return;
-    expect(parsed.model).toEqual(model);
+    expect(withoutDerivedGraph(parsed.model)).toEqual(withoutDerivedGraph(model));
     const regenerated = generateDiagramSource(parsed.model, componentName);
     expect(regenerated.ok && regenerated.source).toBe(generated.source);
   });
 
   it('roundtrips an in-place angular type conversion byte for byte', () => {
-    const base = migrateDiagramSpec(marksFixture).spec;
+    const base = projectDiagramSpecV3ToV2(migrateDiagramSpec(marksFixture).spec);
     const converted = convertAngleKind(base, 'angleAVB', 'nonReflexAngle');
     const generated = generateDiagramSource(converted, 'ConvertedAngle');
     expect(generated.ok).toBe(true);
@@ -44,7 +51,7 @@ describe('Phase 3 source serialization', () => {
   });
 
   it('blocks unsafe expressions before source generation and reports their schema path', () => {
-    const model = migrateDiagramSpec(annotationsFixture).spec;
+    const model = projectDiagramSpecV3ToV2(migrateDiagramSpec(annotationsFixture).spec);
     const unsafe = {
       ...model,
       elements: model.elements.map(element => element.id === 'formulaA'
@@ -58,7 +65,7 @@ describe('Phase 3 source serialization', () => {
   });
 
   it('roundtrips viewport-relative information panel positions', () => {
-    const model = migrateDiagramSpec(annotationsFixture).spec;
+    const model = projectDiagramSpecV3ToV2(migrateDiagramSpec(annotationsFixture).spec);
     const positioned = {
       ...model,
       elements: model.elements.map(element => element.id === 'panelA'
@@ -70,11 +77,11 @@ describe('Phase 3 source serialization', () => {
     if (!generated.ok) return;
     const parsed = parseDiagramSourceAST(generated.source);
     expect(parsed.status).toBe('visual-exact');
-    if (parsed.status === 'visual-exact') expect(parsed.model).toEqual(positioned);
+    if (parsed.status === 'visual-exact') expect(withoutDerivedGraph(parsed.model)).toEqual(withoutDerivedGraph(positioned));
   });
 
   it('roundtrips composite panel blocks and their conditional values byte for byte', () => {
-    const base = migrateDiagramSpec(annotationsFixture).spec;
+    const base = projectDiagramSpecV3ToV2(migrateDiagramSpec(annotationsFixture).spec);
     const composed = {
       ...base,
       elements: base.elements.map(element => element.id === 'panelA'
@@ -101,8 +108,36 @@ describe('Phase 3 source serialization', () => {
     expect(generateDiagramSource(parsed.model, 'CompositePanel')).toMatchObject({ ok: true, source: generated.source });
   });
 
+  it('roundtrips an explicit, ordered header equality byte for byte', () => {
+    const base = projectDiagramSpecV3ToV2(migrateDiagramSpec(annotationsFixture).spec);
+    const firstPanel = base.elements.find(element => element.id === 'panelA')!;
+    const secondPanel = { ...firstPanel, id: 'panelB', label: 'Segunda medida', order: firstPanel.order + 1, groupIds: [], target: false, targetId: undefined };
+    const model = {
+      ...base,
+      elements: [...base.elements, secondPanel],
+      dependencies: [...(base.dependencies ?? []), { sourceId: 'pA', targetId: 'panelB', relation: 'expression' as const }],
+      header: {
+        readingsMode: 'custom' as const,
+        readings: [{
+          id: 'same-measure',
+          sourceIds: ['panelA', 'panelB'],
+          presentation: 'equality' as const,
+          label: 'AB = CD',
+        }],
+      },
+    };
+    const generated = generateDiagramSource(model, 'ExplicitHeaderEquality');
+    expect(generated.ok, generated.ok ? '' : JSON.stringify(generated.diagnostics)).toBe(true);
+    if (!generated.ok) return;
+    const parsed = parseDiagramSourceAST(generated.source);
+    expect(parsed.status).toBe('visual-exact');
+    if (parsed.status !== 'visual-exact') return;
+    expect(parsed.model.header).toEqual(model.header);
+    expect(generateDiagramSource(parsed.model, 'ExplicitHeaderEquality')).toMatchObject({ ok: true, source: generated.source });
+  });
+
   it('roundtrips the independent highlightability option exactly', () => {
-    const base = migrateDiagramSpec(primitivesFixture).spec;
+    const base = projectDiagramSpecV3ToV2(migrateDiagramSpec(primitivesFixture).spec);
     const target = base.elements[0];
     const model = {
       ...base,
@@ -122,7 +157,7 @@ describe('Phase 3 source serialization', () => {
   });
 
   it('adds per-element label visibility without reordering canonical point fields', () => {
-    const base = migrateDiagramSpec(primitivesFixture).spec;
+    const base = projectDiagramSpecV3ToV2(migrateDiagramSpec(primitivesFixture).spec);
     const model = {
       ...base,
       elements: base.elements.map((element, index) => index === 0 ? { ...element, showLabel: false } : element),
@@ -130,14 +165,14 @@ describe('Phase 3 source serialization', () => {
     const generated = generateDiagramSource(model, 'ElementLabelVisibility');
     expect(generated.ok).toBe(true);
     if (!generated.ok) return;
-    expect(generated.source.indexOf('"y":')).toBeLessThan(generated.source.indexOf('"showLabel":'));
+    expect(generated.source.indexOf('"y":')).toBeLessThan(generated.source.indexOf('"labelVisible":'));
     const parsed = parseDiagramSourceAST(generated.source);
     expect(parsed.status).toBe('visual-exact');
     if (parsed.status === 'visual-exact') expect(parsed.model.elements[0].showLabel).toBe(false);
   });
 
   it('roundtrips additive MDX highlighting exactly', () => {
-    const base = migrateDiagramSpec(primitivesFixture).spec;
+    const base = projectDiagramSpecV3ToV2(migrateDiagramSpec(primitivesFixture).spec);
     const target = base.elements[0];
     const model = {
       ...base,
@@ -157,7 +192,7 @@ describe('Phase 3 source serialization', () => {
   });
 
   it('roundtrips an editable intersection and its finite-support policy', () => {
-    const base = migrateDiagramSpec(primitivesFixture).spec;
+    const base = projectDiagramSpecV3ToV2(migrateDiagramSpec(primitivesFixture).spec);
     const line = { ...base.elements.find(item => item.id === 'lineBC')!, id: 'lineOC', label: 'Recta OC', refs: ['pO', 'pC'], target: false };
     const intersection = {
       ...base.elements.find(item => item.id === 'segAB')!,
@@ -181,7 +216,7 @@ describe('Phase 3 source serialization', () => {
   });
 
   it('roundtrips measure marks added from the segment inspector byte for byte', () => {
-    const base = migrateDiagramSpec(primitivesFixture).spec;
+    const base = projectDiagramSpecV3ToV2(migrateDiagramSpec(primitivesFixture).spec);
     const model = setSegmentMeasureTicks(base, 'segAB', 2);
     const generated = generateDiagramSource(model, 'SegmentMeasureMarks');
     expect(generated.ok).toBe(true);
@@ -189,7 +224,7 @@ describe('Phase 3 source serialization', () => {
     const parsed = parseDiagramSourceAST(generated.source);
     expect(parsed.status).toBe('visual-exact');
     if (parsed.status !== 'visual-exact') return;
-    expect(parsed.model).toEqual(model);
+    expect(withoutDerivedGraph(parsed.model)).toEqual(withoutDerivedGraph(model));
     const regenerated = generateDiagramSource(parsed.model, 'SegmentMeasureMarks');
     expect(regenerated.ok && regenerated.source).toBe(generated.source);
   });
@@ -222,7 +257,7 @@ describe('Phase 3 source serialization', () => {
   });
 
   it('roundtrips an equal-angle relation authored from the angle inspector byte for byte', () => {
-    const base = migrateDiagramSpec(marksFixture).spec;
+    const base = projectDiagramSpecV3ToV2(migrateDiagramSpec(marksFixture).spec);
     const pointTemplate = base.points[0];
     const angleTemplate = base.elements.find(element => element.kind === 'nonReflexAngle')!;
     const model = setEqualAngleConstraint({
@@ -245,7 +280,7 @@ describe('Phase 3 source serialization', () => {
     const parsed = parseDiagramSourceAST(generated.source);
     expect(parsed.status).toBe('visual-exact');
     if (parsed.status !== 'visual-exact') return;
-    expect(parsed.model).toEqual(model);
+    expect(withoutDerivedGraph(parsed.model)).toEqual(withoutDerivedGraph(model));
     const regenerated = generateDiagramSource(parsed.model, 'EqualAngles');
     expect(regenerated.ok && regenerated.source).toBe(generated.source);
   });

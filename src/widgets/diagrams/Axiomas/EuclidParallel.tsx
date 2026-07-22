@@ -3,8 +3,8 @@ import { createDiagramSpec, DiagramRenderer } from '@/shared/diagrams/public';
 /* @matematika-diagram-spec:start */
 export const EuclidParallelSpec = createDiagramSpec(
 {
-  "version": 2,
-  "renderer": "matematika-diagram-renderer-v2",
+  "version": 3,
+  "renderer": "matematika-diagram-renderer-v3",
   "title": "Axioma de las Paralelas de Euclides",
   "componentId": "axioma-de-las-paralelas-de-euclides",
   "category": "Axiomas",
@@ -45,7 +45,7 @@ export const EuclidParallelSpec = createDiagramSpec(
     }
   ],
   "groups": [],
-  "points": [
+  "objects": [
     {
       "id": "pP",
       "label": "P",
@@ -62,15 +62,21 @@ export const EuclidParallelSpec = createDiagramSpec(
       },
       "target": true,
       "targetId": "pA",
-      "style": {
-        "pointSize": 7,
-        "highlightPointSize": 10,
+      "objectType": "point",
+      "definition": {
+        "type": "coordinates",
+        "x": -0.18,
+        "y": -1.76
+      },
+      "mobility": {
+        "type": "free"
+      },
+      "appearance": {
+        "size": 7,
+        "highlightSize": 10,
         "preserveColorOnHighlight": true
       },
-      "x": -0.18,
-      "y": -1.76,
-      "fixed": false,
-      "constraint": "free"
+      "interaction": {}
     },
     {
       "id": "pB",
@@ -88,10 +94,17 @@ export const EuclidParallelSpec = createDiagramSpec(
       },
       "target": true,
       "targetId": "pB",
-      "x": -7.57,
-      "y": 2.57,
-      "fixed": false,
-      "constraint": "free"
+      "objectType": "point",
+      "definition": {
+        "type": "coordinates",
+        "x": -7.57,
+        "y": 2.57
+      },
+      "mobility": {
+        "type": "free"
+      },
+      "appearance": {},
+      "interaction": {}
     },
     {
       "id": "pC",
@@ -109,13 +122,18 @@ export const EuclidParallelSpec = createDiagramSpec(
       },
       "target": true,
       "targetId": "pC",
-      "x": 7.95,
-      "y": 1.79,
-      "fixed": false,
-      "constraint": "free"
-    }
-  ],
-  "elements": [
+      "objectType": "point",
+      "definition": {
+        "type": "coordinates",
+        "x": 7.95,
+        "y": 1.79
+      },
+      "mobility": {
+        "type": "free"
+      },
+      "appearance": {},
+      "interaction": {}
+    },
     {
       "id": "lineBC",
       "label": "Recta",
@@ -132,14 +150,20 @@ export const EuclidParallelSpec = createDiagramSpec(
       },
       "target": true,
       "targetId": "lineBC",
-      "style": {
-        "preserveColorOnHighlight": true
+      "objectType": "path",
+      "geometry": {
+        "type": "line",
+        "construction": {
+          "type": "through-points",
+          "points": [
+            "pB",
+            "pC"
+          ]
+        }
       },
-      "kind": "line",
-      "refs": [
-        "pB",
-        "pC"
-      ]
+      "appearance": {
+        "preserveColorOnHighlight": true
+      }
     },
     {
       "id": "parBCP",
@@ -157,49 +181,26 @@ export const EuclidParallelSpec = createDiagramSpec(
       },
       "target": true,
       "targetId": "parBCP",
-      "style": {
-        "preserveColorOnHighlight": true
+      "objectType": "path",
+      "geometry": {
+        "type": "line",
+        "construction": {
+          "type": "parallel",
+          "linePoints": [
+            "pB",
+            "pC"
+          ],
+          "through": "pP"
+        }
       },
-      "kind": "parallel",
-      "refs": [
-        "pB",
-        "pC",
-        "pP"
-      ]
+      "appearance": {
+        "preserveColorOnHighlight": true
+      }
     }
   ],
-  "sliders": [],
+  "relations": [],
   "steps": [],
-  "constraints": [],
-  "dependencies": [
-    {
-      "sourceId": "pB",
-      "targetId": "lineBC",
-      "relation": "construction"
-    },
-    {
-      "sourceId": "pC",
-      "targetId": "lineBC",
-      "relation": "construction"
-    },
-    {
-      "sourceId": "pB",
-      "targetId": "parBCP",
-      "relation": "construction"
-    },
-    {
-      "sourceId": "pC",
-      "targetId": "parBCP",
-      "relation": "construction"
-    },
-    {
-      "sourceId": "pP",
-      "targetId": "parBCP",
-      "relation": "construction"
-    }
-  ],
-  "note": "Arrastra el punto P",
-  "extensions": {}
+  "note": "Arrastra el punto P"
 }
 );
 /* @matematika-diagram-spec:end */

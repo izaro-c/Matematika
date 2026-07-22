@@ -3,8 +3,8 @@ import { createDiagramSpec, DiagramRenderer } from '@/shared/diagrams/public';
 /* @matematika-diagram-spec:start */
 export const Incidence4Spec = createDiagramSpec(
 {
-  "version": 2,
-  "renderer": "matematika-diagram-renderer-v2",
+  "version": 3,
+  "renderer": "matematika-diagram-renderer-v3",
   "title": "Axioma de Incidencia IV",
   "componentId": "incidence4",
   "category": "Axiomas",
@@ -45,7 +45,7 @@ export const Incidence4Spec = createDiagramSpec(
     }
   ],
   "groups": [],
-  "points": [
+  "objects": [
     {
       "id": "pA",
       "label": "A",
@@ -62,15 +62,21 @@ export const Incidence4Spec = createDiagramSpec(
       },
       "target": true,
       "targetId": "pA",
-      "style": {
-        "pointSize": 7,
-        "highlightPointSize": 10,
+      "objectType": "point",
+      "definition": {
+        "type": "coordinates",
+        "x": -0.73,
+        "y": 4.05
+      },
+      "mobility": {
+        "type": "free"
+      },
+      "appearance": {
+        "size": 7,
+        "highlightSize": 10,
         "preserveColorOnHighlight": true
       },
-      "x": -0.73,
-      "y": 4.05,
-      "fixed": false,
-      "constraint": "free"
+      "interaction": {}
     },
     {
       "id": "pB",
@@ -88,15 +94,21 @@ export const Incidence4Spec = createDiagramSpec(
       },
       "target": true,
       "targetId": "pB",
-      "style": {
-        "pointSize": 7,
-        "highlightPointSize": 10,
+      "objectType": "point",
+      "definition": {
+        "type": "coordinates",
+        "x": 2.27,
+        "y": 0.04
+      },
+      "mobility": {
+        "type": "free"
+      },
+      "appearance": {
+        "size": 7,
+        "highlightSize": 10,
         "preserveColorOnHighlight": true
       },
-      "x": 2.27,
-      "y": 0.04,
-      "fixed": false,
-      "constraint": "free"
+      "interaction": {}
     },
     {
       "id": "pC",
@@ -114,18 +126,22 @@ export const Incidence4Spec = createDiagramSpec(
       },
       "target": true,
       "targetId": "pC",
-      "style": {
-        "pointSize": 7,
-        "highlightPointSize": 10,
+      "objectType": "point",
+      "definition": {
+        "type": "coordinates",
+        "x": -4.13,
+        "y": -1.4
+      },
+      "mobility": {
+        "type": "free"
+      },
+      "appearance": {
+        "size": 7,
+        "highlightSize": 10,
         "preserveColorOnHighlight": true
       },
-      "x": -4.13,
-      "y": -1.4,
-      "fixed": false,
-      "constraint": "free"
-    }
-  ],
-  "elements": [
+      "interaction": {}
+    },
     {
       "id": "polyTriangulo",
       "label": "Triángulo",
@@ -142,12 +158,16 @@ export const Incidence4Spec = createDiagramSpec(
       },
       "target": true,
       "targetId": "polyTriangulo",
-      "kind": "polygon",
-      "refs": [
-        "pA",
-        "pB",
-        "pC"
-      ]
+      "objectType": "path",
+      "geometry": {
+        "type": "polygon",
+        "points": [
+          "pA",
+          "pB",
+          "pC"
+        ]
+      },
+      "appearance": {}
     },
     {
       "id": "segAB",
@@ -165,11 +185,15 @@ export const Incidence4Spec = createDiagramSpec(
       },
       "target": true,
       "targetId": "segAB",
-      "kind": "segment",
-      "refs": [
-        "pA",
-        "pB"
-      ]
+      "objectType": "path",
+      "geometry": {
+        "type": "segment",
+        "points": [
+          "pA",
+          "pB"
+        ]
+      },
+      "appearance": {}
     },
     {
       "id": "segBC",
@@ -187,11 +211,15 @@ export const Incidence4Spec = createDiagramSpec(
       },
       "target": true,
       "targetId": "segBC",
-      "kind": "segment",
-      "refs": [
-        "pB",
-        "pC"
-      ]
+      "objectType": "path",
+      "geometry": {
+        "type": "segment",
+        "points": [
+          "pB",
+          "pC"
+        ]
+      },
+      "appearance": {}
     },
     {
       "id": "segCA",
@@ -209,11 +237,15 @@ export const Incidence4Spec = createDiagramSpec(
       },
       "target": true,
       "targetId": "segCA",
-      "kind": "segment",
-      "refs": [
-        "pC",
-        "pA"
-      ]
+      "objectType": "path",
+      "geometry": {
+        "type": "segment",
+        "points": [
+          "pC",
+          "pA"
+        ]
+      },
+      "appearance": {}
     },
     {
       "id": "lineAB",
@@ -231,16 +263,22 @@ export const Incidence4Spec = createDiagramSpec(
       },
       "target": true,
       "targetId": "lineAB",
-      "style": {
+      "objectType": "path",
+      "geometry": {
+        "type": "line",
+        "construction": {
+          "type": "through-points",
+          "points": [
+            "pA",
+            "pB"
+          ]
+        }
+      },
+      "appearance": {
+        "dashed": true,
         "highlightStrokeWidth": 2.4,
         "preserveColorOnHighlight": true
-      },
-      "kind": "line",
-      "refs": [
-        "pA",
-        "pB"
-      ],
-      "dashed": true
+      }
     },
     {
       "id": "lineAC",
@@ -258,16 +296,22 @@ export const Incidence4Spec = createDiagramSpec(
       },
       "target": true,
       "targetId": "lineAC",
-      "style": {
+      "objectType": "path",
+      "geometry": {
+        "type": "line",
+        "construction": {
+          "type": "through-points",
+          "points": [
+            "pA",
+            "pC"
+          ]
+        }
+      },
+      "appearance": {
+        "dashed": true,
         "highlightStrokeWidth": 2.4,
         "preserveColorOnHighlight": true
-      },
-      "kind": "line",
-      "refs": [
-        "pA",
-        "pC"
-      ],
-      "dashed": true
+      }
     },
     {
       "id": "lineCB",
@@ -285,55 +329,27 @@ export const Incidence4Spec = createDiagramSpec(
       },
       "target": true,
       "targetId": "lineCB",
-      "style": {
+      "objectType": "path",
+      "geometry": {
+        "type": "line",
+        "construction": {
+          "type": "through-points",
+          "points": [
+            "pC",
+            "pB"
+          ]
+        }
+      },
+      "appearance": {
+        "dashed": true,
         "highlightStrokeWidth": 2.4,
         "preserveColorOnHighlight": true
-      },
-      "kind": "line",
-      "refs": [
-        "pC",
-        "pB"
-      ],
-      "dashed": true
+      }
     }
   ],
-  "sliders": [],
+  "relations": [],
   "steps": [],
-  "constraints": [],
-  "dependencies": [
-    {
-      "sourceId": "pA",
-      "targetId": "lineAB",
-      "relation": "construction"
-    },
-    {
-      "sourceId": "pB",
-      "targetId": "lineAB",
-      "relation": "construction"
-    },
-    {
-      "sourceId": "pA",
-      "targetId": "lineAC",
-      "relation": "construction"
-    },
-    {
-      "sourceId": "pC",
-      "targetId": "lineAC",
-      "relation": "construction"
-    },
-    {
-      "sourceId": "pC",
-      "targetId": "lineCB",
-      "relation": "construction"
-    },
-    {
-      "sourceId": "pB",
-      "targetId": "lineCB",
-      "relation": "construction"
-    }
-  ],
-  "note": "Arrastra A, B y C",
-  "extensions": {}
+  "note": "Arrastra A, B y C"
 }
 );
 /* @matematika-diagram-spec:end */

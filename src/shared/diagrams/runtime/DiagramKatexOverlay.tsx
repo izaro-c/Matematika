@@ -7,6 +7,7 @@ import type {
 import {
   evaluateMathExpression,
   evaluateStepOverlayContent,
+  interpolateDiagramTemplate,
 } from '../spec';
 import { DiagramInfoPanel } from '@/shared/ui/DiagramOverlay';
 import { useMathStore } from '@/shared/lib/MathStoreContext';
@@ -29,12 +30,28 @@ export interface MovableCueLabel {
   color: DiagramColorToken;
 }
 
-export function headerReadingItems(spec: DiagramSpecV2): DiagramElement[] {
+export interface HeaderReadingPresentation {
+  id: string;
+  itemIds: string[];
+  text: string;
+  visibility: 'any' | 'all';
+}
+
+function automaticHeaderReadingItems(spec: DiagramSpecV2): DiagramElement[] {
   const dynamicPanels = spec.elements.filter(item => item.kind === 'infoPanel' && item.properties?.expression);
   if (dynamicPanels.length > 0) return dynamicPanels;
   return spec.elements
     .filter(item => (item.kind === 'measurement' || item.kind === 'dimensionLine') && (item.properties?.expression || item.refs.length >= 2))
     .slice(0, 4);
+}
+
+export function headerReadingItems(spec: DiagramSpecV2): DiagramElement[] {
+  if (spec.header?.readingsMode === 'hidden') return [];
+  if (spec.header?.readingsMode !== 'custom') return automaticHeaderReadingItems(spec);
+  const byId = new Map(spec.elements.map(item => [item.id, item]));
+  return [...new Set(spec.header.readings.flatMap(reading => reading.sourceIds))]
+    .map(id => byId.get(id))
+    .filter((item): item is DiagramElement => Boolean(item));
 }
 
 export function headerReadingText(item: DiagramElement, variables: Record<string, number>): string | null {
@@ -56,7 +73,13 @@ export function headerReadingText(item: DiagramElement, variables: Record<string
   if (value === undefined || !Number.isFinite(value)) return null;
   const precision = item.properties?.precision ?? 2;
   const unit = item.properties?.unit ? ` ${item.properties.unit}` : '';
-  return (item.text || `${item.label}: {value}`).split('{value}').join(`${value.toFixed(precision)}${unit}`);
+  const template = item.text || `${item.label}: {value}`;
+  const rendered = interpolateDiagramTemplate(template, variables, {
+    expression: item.properties?.expression,
+    precision,
+    unit: item.properties?.unit,
+  });
+  return rendered.split('{value}').join(`${value.toFixed(precision)}${unit}`);
 }
 
 export function movableCueLabels(spec: DiagramSpecV2): MovableCueLabel[] {
@@ -118,8 +141,43 @@ export function ExplorationCue({ children, labels }: { children: string; labels:
   return <>{fragments}</>;
 }
 
-export function compactHeaderReadings(entries: Array<{ item: DiagramElement; text: string }>): Array<{ id: string; itemIds: string[]; text: string }> {
-  const compacted: Array<{ id: string; itemIds: string[]; text: string }> = [];
+function readingValue(text: string): string {
+  const equalityIndex = text.lastIndexOf('=');
+  if (equalityIndex >= 0) return text.slice(equalityIndex + 1).trim();
+  const labelIndex = text.lastIndexOf(':');
+  return labelIndex >= 0 ? text.slice(labelIndex + 1).trim() : text.trim();
+}
+
+function customHeaderReadings(
+  entries: Array<{ item: DiagramElement; text: string }>,
+  spec: DiagramSpecV2,
+): HeaderReadingPresentation[] {
+  const entryById = new Map(entries.map(entry => [entry.item.id, entry]));
+  return (spec.header?.readings ?? []).flatMap(reading => {
+    const sources = reading.sourceIds.map(id => entryById.get(id)).filter((entry): entry is { item: DiagramElement; text: string } => Boolean(entry));
+    if (sources.length !== reading.sourceIds.length || sources.length === 0) return [];
+    const value = readingValue(sources[0].text);
+    let text = `${sources[0].item.label}: ${value}`;
+    if (reading.presentation === 'value') text = value;
+    if (reading.presentation === 'equality') {
+      const names = sources.map(entry => entry.item.label).join(' = ');
+      text = `${names} = ${value}`;
+    }
+    return [{
+      id: reading.id,
+      itemIds: [...reading.sourceIds],
+      text,
+      visibility: reading.presentation === 'equality' ? 'all' as const : 'any' as const,
+    }];
+  });
+}
+
+export function compactHeaderReadings(
+  entries: Array<{ item: DiagramElement; text: string }>,
+  spec?: DiagramSpecV2,
+): HeaderReadingPresentation[] {
+  if (spec?.header?.readingsMode === 'custom') return customHeaderReadings(entries, spec);
+  const compacted: HeaderReadingPresentation[] = [];
   for (let index = 0; index < entries.length; index += 1) {
     const current = entries[index];
     const next = entries[index + 1];
@@ -133,12 +191,13 @@ export function compactHeaderReadings(entries: Array<{ item: DiagramElement; tex
           id: `${current.item.id}-${next.item.id}`,
           itemIds: [current.item.id, next.item.id],
           text: `${currentParts[0].trim()} = ${nextParts[0].trim()} = ${currentValue}`,
+          visibility: 'any',
         });
         index += 1;
         continue;
       }
     }
-    compacted.push({ id: current.item.id, itemIds: [current.item.id], text: current.text });
+    compacted.push({ id: current.item.id, itemIds: [current.item.id], text: current.text, visibility: 'any' });
   }
   return compacted;
 }

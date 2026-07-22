@@ -3,8 +3,8 @@ import { createDiagramSpec, DiagramRenderer } from '@/shared/diagrams/public';
 /* @matematika-diagram-spec:start */
 export const Incidence1Spec = createDiagramSpec(
 {
-  "version": 2,
-  "renderer": "matematika-diagram-renderer-v2",
+  "version": 3,
+  "renderer": "matematika-diagram-renderer-v3",
   "title": "Axioma de Incidencia 1",
   "componentId": "axioma-de-incidencia-1",
   "category": "Axiomas",
@@ -45,7 +45,7 @@ export const Incidence1Spec = createDiagramSpec(
     }
   ],
   "groups": [],
-  "points": [
+  "objects": [
     {
       "id": "pA",
       "label": "A",
@@ -62,15 +62,21 @@ export const Incidence1Spec = createDiagramSpec(
       },
       "target": true,
       "targetId": "pA",
-      "style": {
-        "pointSize": 7,
-        "highlightPointSize": 10,
+      "objectType": "point",
+      "definition": {
+        "type": "coordinates",
+        "x": -3.44,
+        "y": 2.3
+      },
+      "mobility": {
+        "type": "free"
+      },
+      "appearance": {
+        "size": 7,
+        "highlightSize": 10,
         "preserveColorOnHighlight": true
       },
-      "x": -3.44,
-      "y": 2.3,
-      "fixed": false,
-      "constraint": "free"
+      "interaction": {}
     },
     {
       "id": "pB",
@@ -88,18 +94,22 @@ export const Incidence1Spec = createDiagramSpec(
       },
       "target": true,
       "targetId": "pB",
-      "style": {
-        "pointSize": 7,
-        "highlightPointSize": 10,
+      "objectType": "point",
+      "definition": {
+        "type": "coordinates",
+        "x": 3.87,
+        "y": -1.34
+      },
+      "mobility": {
+        "type": "free"
+      },
+      "appearance": {
+        "size": 7,
+        "highlightSize": 10,
         "preserveColorOnHighlight": true
       },
-      "x": 3.87,
-      "y": -1.34,
-      "fixed": false,
-      "constraint": "free"
-    }
-  ],
-  "elements": [
+      "interaction": {}
+    },
     {
       "id": "lineAB",
       "label": "Recta",
@@ -116,34 +126,26 @@ export const Incidence1Spec = createDiagramSpec(
       },
       "target": true,
       "targetId": "lineAB",
-      "style": {
+      "objectType": "path",
+      "geometry": {
+        "type": "line",
+        "construction": {
+          "type": "through-points",
+          "points": [
+            "pA",
+            "pB"
+          ]
+        }
+      },
+      "appearance": {
         "strokeWidth": 2.4,
         "highlightStrokeWidth": 3
-      },
-      "kind": "line",
-      "refs": [
-        "pA",
-        "pB"
-      ]
+      }
     }
   ],
-  "sliders": [],
+  "relations": [],
   "steps": [],
-  "constraints": [],
-  "dependencies": [
-    {
-      "sourceId": "pA",
-      "targetId": "lineAB",
-      "relation": "construction"
-    },
-    {
-      "sourceId": "pB",
-      "targetId": "lineAB",
-      "relation": "construction"
-    }
-  ],
-  "note": "Arrastra los puntos A, B",
-  "extensions": {}
+  "note": "Arrastra los puntos A, B"
 }
 );
 /* @matematika-diagram-spec:end */

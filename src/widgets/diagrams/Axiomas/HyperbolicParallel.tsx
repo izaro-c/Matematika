@@ -3,8 +3,8 @@ import { createDiagramSpec, DiagramRenderer } from '@/shared/diagrams/public';
 /* @matematika-diagram-spec:start */
 export const HyperbolicParallelSpec = createDiagramSpec(
 {
-  "version": 2,
-  "renderer": "matematika-diagram-renderer-v2",
+  "version": 3,
+  "renderer": "matematika-diagram-renderer-v3",
   "title": "Paralelas de Lobachevski",
   "componentId": "HyperbolicParallel",
   "category": "Axiomas",
@@ -67,7 +67,7 @@ export const HyperbolicParallelSpec = createDiagramSpec(
     }
   ],
   "groups": [],
-  "points": [
+  "objects": [
     {
       "id": "O",
       "label": "centro del disco",
@@ -83,11 +83,19 @@ export const HyperbolicParallelSpec = createDiagramSpec(
         "role": "construction"
       },
       "target": false,
-      "x": 0,
-      "y": 0,
-      "showLabel": false,
-      "fixed": true,
-      "constraint": "fixed"
+      "objectType": "point",
+      "definition": {
+        "type": "coordinates",
+        "x": 0,
+        "y": 0
+      },
+      "mobility": {
+        "type": "fixed"
+      },
+      "appearance": {
+        "labelVisible": false
+      },
+      "interaction": {}
     },
     {
       "id": "R",
@@ -104,11 +112,19 @@ export const HyperbolicParallelSpec = createDiagramSpec(
         "role": "construction"
       },
       "target": false,
-      "x": 1,
-      "y": 0,
-      "showLabel": false,
-      "fixed": true,
-      "constraint": "fixed"
+      "objectType": "point",
+      "definition": {
+        "type": "coordinates",
+        "x": 1,
+        "y": 0
+      },
+      "mobility": {
+        "type": "fixed"
+      },
+      "appearance": {
+        "labelVisible": false
+      },
+      "interaction": {}
     },
     {
       "id": "L1",
@@ -125,15 +141,21 @@ export const HyperbolicParallelSpec = createDiagramSpec(
         "role": "construction"
       },
       "target": false,
-      "style": {
+      "objectType": "point",
+      "definition": {
+        "type": "coordinates",
+        "x": -1,
+        "y": 0
+      },
+      "mobility": {
+        "type": "on-support",
+        "support": "frontera"
+      },
+      "appearance": {
+        "labelVisible": false,
         "preserveColorOnHighlight": true
       },
-      "x": -1,
-      "y": 0,
-      "showLabel": false,
-      "fixed": false,
-      "constraint": "glider",
-      "gliderTarget": "frontera"
+      "interaction": {}
     },
     {
       "id": "L2",
@@ -150,15 +172,21 @@ export const HyperbolicParallelSpec = createDiagramSpec(
         "role": "construction"
       },
       "target": false,
-      "style": {
+      "objectType": "point",
+      "definition": {
+        "type": "coordinates",
+        "x": 1,
+        "y": 0
+      },
+      "mobility": {
+        "type": "on-support",
+        "support": "frontera"
+      },
+      "appearance": {
+        "labelVisible": false,
         "preserveColorOnHighlight": true
       },
-      "x": 1,
-      "y": 0,
-      "showLabel": false,
-      "fixed": false,
-      "constraint": "glider",
-      "gliderTarget": "frontera"
+      "interaction": {}
     },
     {
       "id": "pP",
@@ -178,24 +206,28 @@ export const HyperbolicParallelSpec = createDiagramSpec(
       },
       "target": true,
       "targetId": "pP",
-      "style": {
-        "pointSize": 6,
+      "objectType": "point",
+      "definition": {
+        "type": "coordinates",
+        "x": 0,
+        "y": 0.48
+      },
+      "mobility": {
+        "type": "constrained",
+        "relationIds": [
+          "pMismoSemiplano",
+          "pDentroDisco"
+        ]
+      },
+      "appearance": {
+        "size": 6,
+        "labelVisible": true,
         "labelSize": 18,
-        "highlightPointSize": 9,
+        "highlightSize": 9,
         "preserveColorOnHighlight": true
       },
-      "x": 0,
-      "y": 0.48,
-      "showLabel": true,
-      "fixed": false,
-      "constraint": "constrained",
-      "constraintIds": [
-        "pMismoSemiplano",
-        "pDentroDisco"
-      ]
-    }
-  ],
-  "elements": [
+      "interaction": {}
+    },
     {
       "id": "frontera",
       "label": "borde ideal del disco",
@@ -213,18 +245,19 @@ export const HyperbolicParallelSpec = createDiagramSpec(
         "role": "secondary"
       },
       "target": false,
-      "style": {
+      "objectType": "path",
+      "geometry": {
+        "type": "circle",
+        "center": "O",
+        "point": "R"
+      },
+      "appearance": {
+        "dashed": true,
         "strokeWidth": 2.2,
         "strokeOpacity": 0.72,
         "fillOpacity": 0.04,
         "preserveColorOnHighlight": true
-      },
-      "kind": "circle",
-      "refs": [
-        "O",
-        "R"
-      ],
-      "dashed": true
+      }
     },
     {
       "id": "lineL",
@@ -243,18 +276,21 @@ export const HyperbolicParallelSpec = createDiagramSpec(
         "role": "primary"
       },
       "target": false,
-      "style": {
+      "objectType": "path",
+      "geometry": {
+        "type": "poincare-geodesic",
+        "refs": [
+          "O",
+          "R",
+          "L1",
+          "L2"
+        ]
+      },
+      "appearance": {
         "strokeWidth": 3.2,
         "highlightStrokeWidth": 5,
         "preserveColorOnHighlight": true
-      },
-      "kind": "poincareGeodesic",
-      "refs": [
-        "O",
-        "R",
-        "L1",
-        "L2"
-      ]
+      }
     },
     {
       "id": "lineM",
@@ -274,18 +310,21 @@ export const HyperbolicParallelSpec = createDiagramSpec(
       },
       "target": true,
       "targetId": "lineM",
-      "style": {
+      "objectType": "path",
+      "geometry": {
+        "type": "poincare-geodesic",
+        "refs": [
+          "O",
+          "R",
+          "L1",
+          "pP"
+        ]
+      },
+      "appearance": {
         "strokeWidth": 2.8,
         "highlightStrokeWidth": 4.8,
         "preserveColorOnHighlight": true
-      },
-      "kind": "poincareGeodesic",
-      "refs": [
-        "O",
-        "R",
-        "L1",
-        "pP"
-      ]
+      }
     },
     {
       "id": "lineN",
@@ -305,18 +344,21 @@ export const HyperbolicParallelSpec = createDiagramSpec(
       },
       "target": true,
       "targetId": "lineN",
-      "style": {
+      "objectType": "path",
+      "geometry": {
+        "type": "poincare-geodesic",
+        "refs": [
+          "O",
+          "R",
+          "L2",
+          "pP"
+        ]
+      },
+      "appearance": {
         "strokeWidth": 2.8,
         "highlightStrokeWidth": 4.8,
         "preserveColorOnHighlight": true
-      },
-      "kind": "poincareGeodesic",
-      "refs": [
-        "O",
-        "R",
-        "L2",
-        "pP"
-      ]
+      }
     },
     {
       "id": "labelL",
@@ -335,22 +377,23 @@ export const HyperbolicParallelSpec = createDiagramSpec(
         "role": "annotation"
       },
       "target": false,
-      "style": {
-        "textOffset": [
+      "objectType": "annotation",
+      "variant": "label",
+      "content": {
+        "text": "$l$"
+      },
+      "anchor": {
+        "type": "object",
+        "object": "lineL",
+        "parameter": 0.4,
+        "offset": [
           0.02,
           -0.1
-        ],
-        "labelSize": 16,
-        "preserveColorOnHighlight": true
+        ]
       },
-      "kind": "label",
-      "refs": [
-        "lineL"
-      ],
-      "text": "$l$",
-      "properties": {
-        "anchorMode": "reference",
-        "anchorParameter": 0.4
+      "appearance": {
+        "fontSize": 16,
+        "preserveColorOnHighlight": true
       }
     },
     {
@@ -370,22 +413,23 @@ export const HyperbolicParallelSpec = createDiagramSpec(
         "role": "annotation"
       },
       "target": false,
-      "style": {
-        "textOffset": [
+      "objectType": "annotation",
+      "variant": "label",
+      "content": {
+        "text": "$m$"
+      },
+      "anchor": {
+        "type": "object",
+        "object": "lineM",
+        "parameter": 0.58,
+        "offset": [
           -0.1,
           0.05
-        ],
-        "labelSize": 16,
-        "preserveColorOnHighlight": true
+        ]
       },
-      "kind": "label",
-      "refs": [
-        "lineM"
-      ],
-      "text": "$m$",
-      "properties": {
-        "anchorMode": "reference",
-        "anchorParameter": 0.58
+      "appearance": {
+        "fontSize": 16,
+        "preserveColorOnHighlight": true
       }
     },
     {
@@ -405,164 +449,52 @@ export const HyperbolicParallelSpec = createDiagramSpec(
         "role": "annotation"
       },
       "target": false,
-      "style": {
-        "textOffset": [
+      "objectType": "annotation",
+      "variant": "label",
+      "content": {
+        "text": "$n$"
+      },
+      "anchor": {
+        "type": "object",
+        "object": "lineN",
+        "parameter": 0.42,
+        "offset": [
           0.1,
           0.05
-        ],
-        "labelSize": 16,
-        "preserveColorOnHighlight": true
+        ]
       },
-      "kind": "label",
-      "refs": [
-        "lineN"
-      ],
-      "text": "$n$",
-      "properties": {
-        "anchorMode": "reference",
-        "anchorParameter": 0.42
+      "appearance": {
+        "fontSize": 16,
+        "preserveColorOnHighlight": true
       }
     }
   ],
-  "sliders": [],
-  "steps": [],
-  "constraints": [
+  "relations": [
     {
       "id": "pMismoSemiplano",
       "label": "P permanece exterior a l",
-      "kind": "sameSide",
-      "refs": [
+      "enabled": true,
+      "type": "same-half-plane",
+      "points": [
         "pP",
-        "L1",
-        "L2"
+        "L1"
       ],
-      "enabled": true
+      "boundary": "L2"
     },
     {
       "id": "pDentroDisco",
       "label": "P permanece dentro del disco abierto",
-      "kind": "insideDisk",
-      "refs": [
-        "pP",
-        "O",
-        "R"
-      ],
-      "enabled": true
+      "enabled": true,
+      "type": "inside-disk",
+      "point": "pP",
+      "disk": {
+        "center": "O",
+        "boundary": "R"
+      }
     }
   ],
-  "dependencies": [
-    {
-      "sourceId": "L1",
-      "targetId": "pP",
-      "relation": "constraint",
-      "constraintId": "pMismoSemiplano"
-    },
-    {
-      "sourceId": "L2",
-      "targetId": "pP",
-      "relation": "constraint",
-      "constraintId": "pMismoSemiplano"
-    },
-    {
-      "sourceId": "O",
-      "targetId": "pP",
-      "relation": "constraint",
-      "constraintId": "pDentroDisco"
-    },
-    {
-      "sourceId": "R",
-      "targetId": "pP",
-      "relation": "constraint",
-      "constraintId": "pDentroDisco"
-    },
-    {
-      "sourceId": "O",
-      "targetId": "frontera",
-      "relation": "construction"
-    },
-    {
-      "sourceId": "R",
-      "targetId": "frontera",
-      "relation": "construction"
-    },
-    {
-      "sourceId": "O",
-      "targetId": "lineL",
-      "relation": "construction"
-    },
-    {
-      "sourceId": "R",
-      "targetId": "lineL",
-      "relation": "construction"
-    },
-    {
-      "sourceId": "L1",
-      "targetId": "lineL",
-      "relation": "construction"
-    },
-    {
-      "sourceId": "L2",
-      "targetId": "lineL",
-      "relation": "construction"
-    },
-    {
-      "sourceId": "O",
-      "targetId": "lineM",
-      "relation": "construction"
-    },
-    {
-      "sourceId": "R",
-      "targetId": "lineM",
-      "relation": "construction"
-    },
-    {
-      "sourceId": "L1",
-      "targetId": "lineM",
-      "relation": "construction"
-    },
-    {
-      "sourceId": "pP",
-      "targetId": "lineM",
-      "relation": "construction"
-    },
-    {
-      "sourceId": "O",
-      "targetId": "lineN",
-      "relation": "construction"
-    },
-    {
-      "sourceId": "R",
-      "targetId": "lineN",
-      "relation": "construction"
-    },
-    {
-      "sourceId": "L2",
-      "targetId": "lineN",
-      "relation": "construction"
-    },
-    {
-      "sourceId": "pP",
-      "targetId": "lineN",
-      "relation": "construction"
-    },
-    {
-      "sourceId": "lineL",
-      "targetId": "labelL",
-      "relation": "construction"
-    },
-    {
-      "sourceId": "lineM",
-      "targetId": "labelM",
-      "relation": "construction"
-    },
-    {
-      "sourceId": "lineN",
-      "targetId": "labelN",
-      "relation": "construction"
-    }
-  ],
-  "note": "Arrastre P: en cada posición exterior a l, las rectas m y n pasan por P sin cortar a l dentro del disco. El borde representa puntos ideales y no pertenece al plano.",
-  "extensions": {}
+  "steps": [],
+  "note": "Arrastre P: en cada posición exterior a l, las rectas m y n pasan por P sin cortar a l dentro del disco. El borde representa puntos ideales y no pertenece al plano."
 }
 );
 /* @matematika-diagram-spec:end */

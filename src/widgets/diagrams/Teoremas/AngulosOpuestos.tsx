@@ -3,8 +3,8 @@ import { createDiagramSpec, DiagramRenderer } from '@/shared/diagrams/public';
 /* @matematika-diagram-spec:start */
 export const AngulosOpuestosSpec = createDiagramSpec(
 {
-  "version": 2,
-  "renderer": "matematika-diagram-renderer-v2",
+  "version": 3,
+  "renderer": "matematika-diagram-renderer-v3",
   "title": "Ángulos opuestos por el vértice",
   "componentId": "angulos-opuestos",
   "category": "Teoremas",
@@ -137,7 +137,7 @@ export const AngulosOpuestosSpec = createDiagramSpec(
       "color": "terracota"
     }
   ],
-  "points": [
+  "objects": [
     {
       "id": "O",
       "label": "O",
@@ -153,16 +153,22 @@ export const AngulosOpuestosSpec = createDiagramSpec(
         "role": "secondary"
       },
       "target": false,
-      "style": {
-        "pointSize": 7,
-        "highlightPointSize": 10,
+      "objectType": "point",
+      "definition": {
+        "type": "coordinates",
+        "x": 0,
+        "y": 0
+      },
+      "mobility": {
+        "type": "fixed"
+      },
+      "appearance": {
+        "size": 7,
+        "labelVisible": true,
+        "highlightSize": 10,
         "preserveColorOnHighlight": true
       },
-      "x": 0,
-      "y": 0,
-      "showLabel": true,
-      "fixed": true,
-      "constraint": "fixed"
+      "interaction": {}
     },
     {
       "id": "A",
@@ -179,18 +185,25 @@ export const AngulosOpuestosSpec = createDiagramSpec(
         "role": "primary"
       },
       "target": false,
-      "style": {
-        "pointSize": 7,
-        "highlightPointSize": 10,
+      "objectType": "point",
+      "definition": {
+        "type": "coordinates",
+        "x": 3.2,
+        "y": 1.4
+      },
+      "mobility": {
+        "type": "free"
+      },
+      "appearance": {
+        "size": 7,
+        "labelVisible": true,
+        "highlightSize": 10,
         "preserveColorOnHighlight": true
       },
-      "x": 3.2,
-      "y": 1.4,
-      "showLabel": true,
-      "fixed": false,
-      "constraint": "free",
-      "snapToGrid": true,
-      "snapSize": 0.25
+      "interaction": {
+        "snapToGrid": true,
+        "snapSize": 0.25
+      }
     },
     {
       "id": "B",
@@ -207,18 +220,25 @@ export const AngulosOpuestosSpec = createDiagramSpec(
         "role": "primary"
       },
       "target": false,
-      "style": {
-        "pointSize": 7,
-        "highlightPointSize": 10,
+      "objectType": "point",
+      "definition": {
+        "type": "coordinates",
+        "x": -1.7,
+        "y": 2.8
+      },
+      "mobility": {
+        "type": "free"
+      },
+      "appearance": {
+        "size": 7,
+        "labelVisible": true,
+        "highlightSize": 10,
         "preserveColorOnHighlight": true
       },
-      "x": -1.7,
-      "y": 2.8,
-      "showLabel": true,
-      "fixed": false,
-      "constraint": "free",
-      "snapToGrid": true,
-      "snapSize": 0.25
+      "interaction": {
+        "snapToGrid": true,
+        "snapSize": 0.25
+      }
     },
     {
       "id": "Ap",
@@ -235,21 +255,26 @@ export const AngulosOpuestosSpec = createDiagramSpec(
         "role": "construction"
       },
       "target": false,
-      "style": {
-        "pointSize": 7,
-        "highlightPointSize": 10,
+      "objectType": "point",
+      "definition": {
+        "type": "expression",
+        "x": "-A.x",
+        "y": "-A.y",
+        "fallback": [
+          -3.2,
+          -1.4
+        ]
+      },
+      "mobility": {
+        "type": "fixed"
+      },
+      "appearance": {
+        "size": 7,
+        "labelVisible": true,
+        "highlightSize": 10,
         "preserveColorOnHighlight": true
       },
-      "x": -3.2,
-      "y": -1.4,
-      "showLabel": true,
-      "fixed": true,
-      "constraint": "derived",
-      "dependencies": [
-        "A"
-      ],
-      "xExpression": "-A.x",
-      "yExpression": "-A.y"
+      "interaction": {}
     },
     {
       "id": "Bp",
@@ -266,24 +291,27 @@ export const AngulosOpuestosSpec = createDiagramSpec(
         "role": "construction"
       },
       "target": false,
-      "style": {
-        "pointSize": 7,
-        "highlightPointSize": 10,
+      "objectType": "point",
+      "definition": {
+        "type": "expression",
+        "x": "-B.x",
+        "y": "-B.y",
+        "fallback": [
+          1.7,
+          -2.8
+        ]
+      },
+      "mobility": {
+        "type": "fixed"
+      },
+      "appearance": {
+        "size": 7,
+        "labelVisible": true,
+        "highlightSize": 10,
         "preserveColorOnHighlight": true
       },
-      "x": 1.7,
-      "y": -2.8,
-      "showLabel": true,
-      "fixed": true,
-      "constraint": "derived",
-      "dependencies": [
-        "B"
-      ],
-      "xExpression": "-B.x",
-      "yExpression": "-B.y"
-    }
-  ],
-  "elements": [
+      "interaction": {}
+    },
     {
       "id": "lineL",
       "label": "Recta l",
@@ -300,16 +328,22 @@ export const AngulosOpuestosSpec = createDiagramSpec(
       },
       "target": true,
       "targetId": "lineL",
-      "style": {
+      "objectType": "path",
+      "geometry": {
+        "type": "line",
+        "construction": {
+          "type": "through-points",
+          "points": [
+            "A",
+            "Ap"
+          ]
+        }
+      },
+      "appearance": {
         "strokeWidth": 2.4,
         "highlightStrokeWidth": 3,
         "preserveColorOnHighlight": true
-      },
-      "kind": "line",
-      "refs": [
-        "A",
-        "Ap"
-      ]
+      }
     },
     {
       "id": "lineM",
@@ -327,16 +361,22 @@ export const AngulosOpuestosSpec = createDiagramSpec(
       },
       "target": true,
       "targetId": "lineM",
-      "style": {
+      "objectType": "path",
+      "geometry": {
+        "type": "line",
+        "construction": {
+          "type": "through-points",
+          "points": [
+            "B",
+            "Bp"
+          ]
+        }
+      },
+      "appearance": {
         "strokeWidth": 2.4,
         "highlightStrokeWidth": 3,
         "preserveColorOnHighlight": true
-      },
-      "kind": "line",
-      "refs": [
-        "B",
-        "Bp"
-      ]
+      }
     },
     {
       "id": "angle1",
@@ -358,17 +398,19 @@ export const AngulosOpuestosSpec = createDiagramSpec(
       },
       "target": true,
       "targetId": "angle1",
-      "style": {
-        "fillOpacity": 0.28,
-        "angleRadius": 0.75,
-        "preserveColorOnHighlight": true
-      },
-      "kind": "nonReflexAngle",
-      "refs": [
+      "objectType": "angle",
+      "points": [
         "A",
         "O",
         "B"
-      ]
+      ],
+      "sweep": "non-reflex",
+      "marker": "arc",
+      "appearance": {
+        "radius": 0.75,
+        "fillOpacity": 0.28,
+        "preserveColorOnHighlight": true
+      }
     },
     {
       "id": "angle2",
@@ -391,17 +433,19 @@ export const AngulosOpuestosSpec = createDiagramSpec(
       },
       "target": true,
       "targetId": "angle2",
-      "style": {
-        "fillOpacity": 0.2,
-        "angleRadius": 0.58,
-        "preserveColorOnHighlight": true
-      },
-      "kind": "nonReflexAngle",
-      "refs": [
+      "objectType": "angle",
+      "points": [
         "B",
         "O",
         "Ap"
-      ]
+      ],
+      "sweep": "non-reflex",
+      "marker": "arc",
+      "appearance": {
+        "radius": 0.58,
+        "fillOpacity": 0.2,
+        "preserveColorOnHighlight": true
+      }
     },
     {
       "id": "angle3",
@@ -423,17 +467,19 @@ export const AngulosOpuestosSpec = createDiagramSpec(
       },
       "target": true,
       "targetId": "angle3",
-      "style": {
-        "fillOpacity": 0.28,
-        "angleRadius": 0.75,
-        "preserveColorOnHighlight": true
-      },
-      "kind": "nonReflexAngle",
-      "refs": [
+      "objectType": "angle",
+      "points": [
         "Ap",
         "O",
         "Bp"
-      ]
+      ],
+      "sweep": "non-reflex",
+      "marker": "arc",
+      "appearance": {
+        "radius": 0.75,
+        "fillOpacity": 0.28,
+        "preserveColorOnHighlight": true
+      }
     },
     {
       "id": "angle4",
@@ -453,35 +499,24 @@ export const AngulosOpuestosSpec = createDiagramSpec(
       },
       "target": true,
       "targetId": "angle4",
-      "style": {
-        "fillOpacity": 0.2,
-        "angleRadius": 0.58,
-        "preserveColorOnHighlight": true
-      },
-      "kind": "nonReflexAngle",
-      "refs": [
+      "objectType": "angle",
+      "points": [
         "Bp",
         "O",
         "A"
-      ]
+      ],
+      "sweep": "non-reflex",
+      "marker": "arc",
+      "appearance": {
+        "radius": 0.58,
+        "fillOpacity": 0.2,
+        "preserveColorOnHighlight": true
+      }
     }
   ],
-  "sliders": [],
+  "relations": [],
   "steps": [],
-  "dependencies": [
-    {
-      "sourceId": "A",
-      "targetId": "Ap",
-      "relation": "expression"
-    },
-    {
-      "sourceId": "B",
-      "targetId": "Bp",
-      "relation": "expression"
-    }
-  ],
-  "note": "Mueve A o B para girar las rectas",
-  "extensions": {}
+  "note": "Mueve A o B para girar las rectas"
 }
 );
 /* @matematika-diagram-spec:end */

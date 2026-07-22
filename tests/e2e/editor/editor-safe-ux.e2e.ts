@@ -2,7 +2,7 @@ import fs from 'node:fs/promises';
 import path from 'node:path';
 import os from 'node:os';
 import { spawn, type ChildProcess } from 'node:child_process';
-import puppeteer, { type Browser, type HTTPRequest, type Page } from 'puppeteer';
+import puppeteer, { type Browser, type ConsoleMessage, type HTTPRequest, type Page } from 'puppeteer';
 import { createTemplateModel } from '../../../src/features/editor/diagrams/model/commands';
 import { buildTargets } from '../../../src/features/editor/diagrams/model/selectors';
 import { generateDiagramSource } from '../../../src/features/editor/diagrams/source/generator';
@@ -28,6 +28,28 @@ if (!COMPLEX_DIAGRAM_TARGET || !COMPLEX_DIAGRAM_RESULT.ok) {
 }
 const COMPLEX_DIAGRAM_SOURCE = COMPLEX_DIAGRAM_RESULT.source;
 let currentDebugPage: Page | undefined;
+
+function serializeConsoleValue(value: unknown): string {
+  if (value instanceof Error) return value.stack ?? value.message;
+  if (typeof value === 'object' && value !== null) return JSON.stringify(value) ?? String(value);
+  return String(value);
+}
+
+async function describeConsoleMessage(message: ConsoleMessage): Promise<string> {
+  const details: string[] = [];
+  for (const handle of message.args()) {
+    try {
+      details.push(await handle.evaluate(serializeConsoleValue));
+    } catch {
+      details.push('');
+    }
+  }
+  return `${message.type()}: ${details.filter(Boolean).join(' ') || message.text()}`;
+}
+
+async function recordConsoleMessage(message: ConsoleMessage, destination: string[]): Promise<void> {
+  destination.push(await describeConsoleMessage(message));
+}
 
 async function writeFixture(root: string, relative: string, source: string) {
   const target = path.join(root, relative);
@@ -181,6 +203,18 @@ async function expectText(page: Page, text: string) {
     { timeout: 20_000 },
     text,
   );
+}
+
+async function waitForTwoAnimationFrames(page: Page): Promise<void> {
+  await page.evaluate(() => new Promise<void>(resolve => requestAnimationFrame(() => requestAnimationFrame(resolve))));
+}
+
+async function captureWorkbenchViewport(page: Page, evidenceDir: string, width: number, height: number, name: string): Promise<void> {
+  await page.setViewport({ width, height, deviceScaleFactor: 1 });
+  await waitForTwoAnimationFrames(page);
+  const overflow = await page.evaluate(() => document.documentElement.scrollWidth > window.innerWidth);
+  if (overflow) throw new Error(`The diagram workbench overflows horizontally at ${width}x${height}`);
+  await page.screenshot({ path: path.join(evidenceDir, name), fullPage: false });
 }
 
 async function setMonacoValue(page: Page, source: string) {
@@ -668,6 +702,13 @@ async function main() {
       const overflow = await page.evaluate(() => document.documentElement.scrollWidth > window.innerWidth);
       if (overflow) throw new Error('The mobile editor introduced horizontal page overflow');
       await page.screenshot({ path: path.join(evidenceDir, 'fase-1-mobile-390x844.png'), fullPage: false });
+
+      await page.setViewport({ width: 1600, height: 1100, deviceScaleFactor: 1 });
+      await page.reload({ waitUntil: 'domcontentloaded' });
+      await expectText(page, 'Ningún recurso abierto');
+      const desktopOverflow = await page.evaluate(() => document.documentElement.scrollWidth > window.innerWidth);
+      if (desktopOverflow) throw new Error('The wide desktop editor introduced horizontal page overflow');
+      await page.screenshot({ path: path.join(evidenceDir, 'fase-1-desktop-1600x1100.png'), fullPage: false });
       await page.setViewport({ width: 1440, height: 900, deviceScaleFactor: 1 });
     });
 
@@ -796,9 +837,7 @@ async function main() {
       await expectText(page, 'Cambios locales');
       // Esperar dos frames garantiza que el efecto que registra beforeunload
       // corresponde al estado dirty que ya se muestra en pantalla.
-      await page.evaluate(() => new Promise<void>(resolve => {
-        requestAnimationFrame(() => requestAnimationFrame(() => resolve()));
-      }));
+      await waitForTwoAnimationFrames(page);
       let resolveBeforeUnload: (() => void) | undefined;
       const beforeUnloadObserved = new Promise<void>(resolve => {
         resolveBeforeUnload = resolve;
@@ -825,6 +864,124 @@ async function main() {
       }
     });
 
+    await resetPage();
+    await runTest(results, '20 Workbench de diagramas responsive en claro y oscuro', evidenceDir, async () => {
+      const consoleProblems: string[] = [];
+      const pendingConsoleDiagnostics: Array<Promise<void>> = [];
+      const observeConsole = (message: ConsoleMessage) => {
+        const text = message.text();
+        if (message.type() === 'error' || message.type() === 'warn' || /(?:TypeError|ReferenceError|Error:)/.test(text)) {
+          pendingConsoleDiagnostics.push(recordConsoleMessage(message, consoleProblems));
+        }
+      };
+      const observePageError = (error: Error) => consoleProblems.push(`pageerror: ${error.message}`);
+      page.on('console', observeConsole);
+      page.on('pageerror', observePageError);
+      await page.setViewport({ width: 1440, height: 900, deviceScaleFactor: 1 });
+      await openEditor(page);
+      await clickByText(page, 'Diagramas');
+      await clickByText(page, 'Complejo');
+      await expectText(page, 'Edición visual exacta');
+      await clickByExactText(page, 'Abrir edición visual exacta');
+      await expectText(page, 'Diseñar');
+      await expectText(page, 'Propiedades');
+
+      await page.click('[data-diagram-object-id="segBC"]');
+      await page.waitForFunction(() => [...document.querySelectorAll('[role="treeitem"][aria-selected="true"]')]
+        .some(item => item.textContent?.includes('Lado BC')));
+      await page.keyboard.down('Shift');
+      await page.click('[data-diagram-object-id="pA"]');
+      await page.keyboard.up('Shift');
+      await page.waitForFunction(() => document.querySelectorAll('[role="treeitem"][aria-selected="true"]').length === 2);
+      const polygonCentroid = await page.evaluate(() => {
+        const centers = ['pA', 'pB', 'pC'].map(id => {
+          const node = document.querySelector(`[data-diagram-object-id="${id}"]`);
+          if (!(node instanceof SVGElement)) throw new Error(`Missing point ${id}`);
+          const bounds = node.getBoundingClientRect();
+          return { x: bounds.left + bounds.width / 2, y: bounds.top + bounds.height / 2 };
+        });
+        return {
+          x: centers.reduce((sum, point) => sum + point.x, 0) / centers.length,
+          y: centers.reduce((sum, point) => sum + point.y, 0) / centers.length,
+        };
+      });
+      await page.mouse.click(polygonCentroid.x, polygonCentroid.y);
+      try {
+        await page.waitForFunction(() => [...document.querySelectorAll('[role="treeitem"][aria-selected="true"]')]
+          .some(item => item.textContent?.includes('Triángulo')), { timeout: 5_000 });
+      } catch {
+        const hitDetails = await page.evaluate(({ x, y }) => ({
+          centroid: { x, y },
+          hits: document.elementsFromPoint(x, y).map(element => ({
+            tag: element.tagName,
+            objectId: element.getAttribute('data-diagram-object-id'),
+            partOf: element.getAttribute('data-diagram-part-of'),
+            id: element.id,
+            pointerEvents: getComputedStyle(element).pointerEvents,
+          })).slice(0, 8),
+          polygon: (() => {
+            const node = document.querySelector('[data-diagram-object-id="polyTriangulo"]');
+            if (!(node instanceof SVGElement)) return null;
+            const bounds = node.getBoundingClientRect();
+            return { tag: node.tagName, id: node.id, bounds: { x: bounds.x, y: bounds.y, width: bounds.width, height: bounds.height }, pointerEvents: getComputedStyle(node).pointerEvents };
+          })(),
+        }), polygonCentroid);
+        throw new Error(`Polygon selection failed: ${JSON.stringify(hitDetails)}`);
+      }
+
+      await captureWorkbenchViewport(page, evidenceDir, 390, 844, 'diagram-workbench-mobile-390x844-light.png');
+      await clickByExactText(page, 'Escena');
+      await page.waitForFunction(() => {
+        const tree = document.querySelector('[aria-label="Árbol de escena por capas"]');
+        return tree && getComputedStyle(tree.closest('aside')!).display !== 'none';
+      });
+      await clickByExactText(page, 'Propiedades');
+      await page.evaluate(() => document.documentElement.classList.add('dark'));
+      await captureWorkbenchViewport(page, evidenceDir, 390, 844, 'diagram-workbench-mobile-390x844-dark.png');
+
+      await clickByExactText(page, 'Lienzo');
+      await captureWorkbenchViewport(page, evidenceDir, 1024, 768, 'diagram-workbench-tablet-1024x768-dark.png');
+      await clickByExactText(page, 'Propiedades');
+      await captureWorkbenchViewport(page, evidenceDir, 1024, 768, 'diagram-workbench-tablet-1024x768-properties-dark.png');
+      await clickByExactText(page, 'Lienzo');
+      await page.evaluate(() => document.documentElement.classList.remove('dark'));
+      await captureWorkbenchViewport(page, evidenceDir, 1440, 900, 'diagram-workbench-desktop-1440x900-light.png');
+      await page.evaluate(() => document.documentElement.classList.add('dark'));
+      await captureWorkbenchViewport(page, evidenceDir, 1600, 1100, 'diagram-workbench-desktop-1600x1100-dark.png');
+      await page.evaluate(() => document.documentElement.classList.remove('dark'));
+      await page.setViewport({ width: 1440, height: 900, deviceScaleFactor: 1 });
+
+      await page.click('[data-diagram-object-id="pA"]');
+      await page.waitForFunction(() => [...document.querySelectorAll('[role="treeitem"][aria-selected="true"]')]
+        .some(item => item.textContent?.includes('Punto · pA')));
+
+      const labelChanged = await page.evaluate(() => {
+        const input = [...document.querySelectorAll('label')]
+          .find(label => label.textContent?.includes('Etiqueta del punto'))
+          ?.parentElement?.querySelector('input');
+        if (!(input instanceof HTMLInputElement)) return false;
+        Object.getOwnPropertyDescriptor(HTMLInputElement.prototype, 'value')?.set?.call(input, 'A verificado');
+        input.dispatchEvent(new Event('input', { bubbles: true }));
+        input.dispatchEvent(new Event('change', { bubbles: true }));
+        return true;
+      });
+      if (!labelChanged) throw new Error('The selected point label could not be edited');
+      await expectText(page, 'Modificado visualmente');
+      await clickByExactText(page, 'Guardar diagrama');
+      await page.waitForFunction(() => !document.body.textContent?.includes('Diseñar'));
+      await clickByExactText(page, 'Abrir edición visual exacta');
+      await expectText(page, 'Diseñar');
+      const reopenedLabel = await page.evaluate(() => [...document.querySelectorAll('label')]
+        .find(label => label.textContent?.includes('Etiqueta del punto'))
+        ?.parentElement?.querySelector('input')?.value);
+      if (reopenedLabel !== 'A verificado') throw new Error(`The point label did not survive reopen: ${reopenedLabel ?? 'missing'}`);
+
+      page.off('console', observeConsole);
+      page.off('pageerror', observePageError);
+      await Promise.all(pendingConsoleDiagnostics);
+      if (consoleProblems.length > 0) throw new Error(`The workbench emitted console diagnostics:\n${consoleProblems.join('\n')}`);
+    });
+
   } finally {
     await browser?.close();
     server.kill();
@@ -840,6 +997,8 @@ async function main() {
   if (failed.length > 0) {
     console.error(`Evidence written to ${evidenceDir}`);
     process.exitCode = 1;
+  } else if (process.env.MATEMATIKA_E2E_KEEP_EVIDENCE === '1') {
+    console.log(`Evidence kept at ${evidenceDir}`);
   } else {
     await fs.rm(evidenceDir, { recursive: true, force: true });
   }

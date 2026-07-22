@@ -3,8 +3,8 @@ import { createDiagramSpec, DiagramRenderer } from '@/shared/diagrams/public';
 /* @matematika-diagram-spec:start */
 export const CuadrilateroSpec = createDiagramSpec(
 {
-  "version": 2,
-  "renderer": "matematika-diagram-renderer-v2",
+  "version": 3,
+  "renderer": "matematika-diagram-renderer-v3",
   "title": "Cuadrilátero",
   "componentId": "cuadrilatero",
   "category": "Definiciones",
@@ -257,7 +257,7 @@ export const CuadrilateroSpec = createDiagramSpec(
       "color": "pizarra"
     }
   ],
-  "points": [
+  "objects": [
     {
       "id": "A",
       "label": "A",
@@ -276,21 +276,27 @@ export const CuadrilateroSpec = createDiagramSpec(
         "role": "primary"
       },
       "target": false,
-      "style": {
-        "pointSize": 7,
+      "objectType": "point",
+      "definition": {
+        "type": "coordinates",
+        "x": -3,
+        "y": -2
+      },
+      "mobility": {
+        "type": "fixed"
+      },
+      "appearance": {
+        "size": 7,
+        "labelVisible": true,
         "labelOffset": [
           -17,
           9
         ],
         "labelSize": 19,
-        "highlightPointSize": 10,
+        "highlightSize": 10,
         "preserveColorOnHighlight": true
       },
-      "x": -3,
-      "y": -2,
-      "showLabel": true,
-      "fixed": true,
-      "constraint": "fixed"
+      "interaction": {}
     },
     {
       "id": "B",
@@ -310,21 +316,27 @@ export const CuadrilateroSpec = createDiagramSpec(
         "role": "primary"
       },
       "target": false,
-      "style": {
-        "pointSize": 7,
+      "objectType": "point",
+      "definition": {
+        "type": "coordinates",
+        "x": 2,
+        "y": -2
+      },
+      "mobility": {
+        "type": "fixed"
+      },
+      "appearance": {
+        "size": 7,
+        "labelVisible": true,
         "labelOffset": [
           10,
           9
         ],
         "labelSize": 19,
-        "highlightPointSize": 10,
+        "highlightSize": 10,
         "preserveColorOnHighlight": true
       },
-      "x": 2,
-      "y": -2,
-      "showLabel": true,
-      "fixed": true,
-      "constraint": "fixed"
+      "interaction": {}
     },
     {
       "id": "C",
@@ -345,33 +357,40 @@ export const CuadrilateroSpec = createDiagramSpec(
         "role": "primary"
       },
       "target": false,
-      "style": {
-        "pointSize": 7,
+      "objectType": "point",
+      "definition": {
+        "type": "coordinates",
+        "x": 2.75,
+        "y": 1.35
+      },
+      "mobility": {
+        "type": "constrained",
+        "relationIds": [
+          "CEncimaAB",
+          "CNoCruzaBD"
+        ]
+      },
+      "appearance": {
+        "size": 7,
+        "labelVisible": true,
         "labelOffset": [
           10,
           -18
         ],
         "labelSize": 19,
-        "highlightPointSize": 10,
+        "highlightSize": 10,
         "preserveColorOnHighlight": true
       },
-      "x": 2.75,
-      "y": 1.35,
-      "showLabel": true,
-      "fixed": false,
-      "constraint": "constrained",
-      "constraintIds": [
-        "CEncimaAB",
-        "CNoCruzaBD"
-      ],
-      "snapToGrid": true,
-      "snapSize": 0.25,
-      "attractorIds": [
-        "guiaRectoB",
-        "guiaIgualBC"
-      ],
-      "attractorDistance": 0.42,
-      "snatchDistance": 0.6
+      "interaction": {
+        "snapToGrid": true,
+        "snapSize": 0.25,
+        "attractorIds": [
+          "guiaRectoB",
+          "guiaIgualBC"
+        ],
+        "attractorDistance": 0.42,
+        "snatchDistance": 0.6
+      }
     },
     {
       "id": "D",
@@ -392,39 +411,44 @@ export const CuadrilateroSpec = createDiagramSpec(
         "role": "primary"
       },
       "target": false,
-      "style": {
-        "pointSize": 7,
+      "objectType": "point",
+      "definition": {
+        "type": "coordinates",
+        "x": -1.6,
+        "y": 2.45
+      },
+      "mobility": {
+        "type": "constrained",
+        "relationIds": [
+          "DEncimaAB",
+          "DNoCruzaAC"
+        ]
+      },
+      "appearance": {
+        "size": 7,
+        "labelVisible": true,
         "labelOffset": [
           -18,
           -18
         ],
         "labelSize": 19,
-        "highlightPointSize": 10,
+        "highlightSize": 10,
         "preserveColorOnHighlight": true
       },
-      "x": -1.6,
-      "y": 2.45,
-      "showLabel": true,
-      "fixed": false,
-      "constraint": "constrained",
-      "constraintIds": [
-        "DEncimaAB",
-        "DNoCruzaAC"
-      ],
-      "snapToGrid": true,
-      "snapSize": 0.25,
-      "attractorIds": [
-        "guiaParalelaCD",
-        "guiaParalelaDA",
-        "guiaRectoA",
-        "guiaIgualDA",
-        "guiaIgualCD"
-      ],
-      "attractorDistance": 0.42,
-      "snatchDistance": 0.6
-    }
-  ],
-  "elements": [
+      "interaction": {
+        "snapToGrid": true,
+        "snapSize": 0.25,
+        "attractorIds": [
+          "guiaParalelaCD",
+          "guiaParalelaDA",
+          "guiaRectoA",
+          "guiaIgualDA",
+          "guiaIgualCD"
+        ],
+        "attractorDistance": 0.42,
+        "snatchDistance": 0.6
+      }
+    },
     {
       "id": "guiaRectoB",
       "label": "Guía perpendicular en B",
@@ -441,18 +465,24 @@ export const CuadrilateroSpec = createDiagramSpec(
         "role": "construction"
       },
       "target": false,
-      "style": {
+      "objectType": "path",
+      "geometry": {
+        "type": "line",
+        "construction": {
+          "type": "perpendicular",
+          "linePoints": [
+            "A",
+            "B"
+          ],
+          "through": "B"
+        }
+      },
+      "appearance": {
         "strokeWidth": 1.2,
         "strokeOpacity": 0.2,
         "highlightStrokeWidth": 4.2,
         "preserveColorOnHighlight": true
-      },
-      "kind": "perpendicular",
-      "refs": [
-        "A",
-        "B",
-        "B"
-      ]
+      }
     },
     {
       "id": "guiaIgualBC",
@@ -470,17 +500,18 @@ export const CuadrilateroSpec = createDiagramSpec(
         "role": "construction"
       },
       "target": false,
-      "style": {
+      "objectType": "path",
+      "geometry": {
+        "type": "circle",
+        "center": "B",
+        "point": "A"
+      },
+      "appearance": {
         "strokeWidth": 1.2,
         "strokeOpacity": 0.2,
         "highlightStrokeWidth": 4.2,
         "preserveColorOnHighlight": true
-      },
-      "kind": "circle",
-      "refs": [
-        "B",
-        "A"
-      ]
+      }
     },
     {
       "id": "guiaParalelaCD",
@@ -498,18 +529,24 @@ export const CuadrilateroSpec = createDiagramSpec(
         "role": "construction"
       },
       "target": false,
-      "style": {
+      "objectType": "path",
+      "geometry": {
+        "type": "line",
+        "construction": {
+          "type": "parallel",
+          "linePoints": [
+            "A",
+            "B"
+          ],
+          "through": "C"
+        }
+      },
+      "appearance": {
         "strokeWidth": 1.2,
         "strokeOpacity": 0.2,
         "highlightStrokeWidth": 4.2,
         "preserveColorOnHighlight": true
-      },
-      "kind": "parallel",
-      "refs": [
-        "A",
-        "B",
-        "C"
-      ]
+      }
     },
     {
       "id": "guiaParalelaDA",
@@ -527,18 +564,24 @@ export const CuadrilateroSpec = createDiagramSpec(
         "role": "construction"
       },
       "target": false,
-      "style": {
+      "objectType": "path",
+      "geometry": {
+        "type": "line",
+        "construction": {
+          "type": "parallel",
+          "linePoints": [
+            "B",
+            "C"
+          ],
+          "through": "A"
+        }
+      },
+      "appearance": {
         "strokeWidth": 1.2,
         "strokeOpacity": 0.2,
         "highlightStrokeWidth": 4.2,
         "preserveColorOnHighlight": true
-      },
-      "kind": "parallel",
-      "refs": [
-        "B",
-        "C",
-        "A"
-      ]
+      }
     },
     {
       "id": "guiaRectoA",
@@ -556,18 +599,24 @@ export const CuadrilateroSpec = createDiagramSpec(
         "role": "construction"
       },
       "target": false,
-      "style": {
+      "objectType": "path",
+      "geometry": {
+        "type": "line",
+        "construction": {
+          "type": "perpendicular",
+          "linePoints": [
+            "A",
+            "B"
+          ],
+          "through": "A"
+        }
+      },
+      "appearance": {
         "strokeWidth": 1.2,
         "strokeOpacity": 0.2,
         "highlightStrokeWidth": 4.2,
         "preserveColorOnHighlight": true
-      },
-      "kind": "perpendicular",
-      "refs": [
-        "A",
-        "B",
-        "A"
-      ]
+      }
     },
     {
       "id": "guiaIgualDA",
@@ -585,17 +634,18 @@ export const CuadrilateroSpec = createDiagramSpec(
         "role": "construction"
       },
       "target": false,
-      "style": {
+      "objectType": "path",
+      "geometry": {
+        "type": "circle",
+        "center": "A",
+        "point": "B"
+      },
+      "appearance": {
         "strokeWidth": 1.2,
         "strokeOpacity": 0.2,
         "highlightStrokeWidth": 4.2,
         "preserveColorOnHighlight": true
-      },
-      "kind": "circle",
-      "refs": [
-        "A",
-        "B"
-      ]
+      }
     },
     {
       "id": "guiaIgualCD",
@@ -613,17 +663,18 @@ export const CuadrilateroSpec = createDiagramSpec(
         "role": "construction"
       },
       "target": false,
-      "style": {
+      "objectType": "path",
+      "geometry": {
+        "type": "circle",
+        "center": "C",
+        "point": "B"
+      },
+      "appearance": {
         "strokeWidth": 1.2,
         "strokeOpacity": 0.2,
         "highlightStrokeWidth": 4.2,
         "preserveColorOnHighlight": true
-      },
-      "kind": "circle",
-      "refs": [
-        "C",
-        "B"
-      ]
+      }
     },
     {
       "id": "poligono",
@@ -643,20 +694,23 @@ export const CuadrilateroSpec = createDiagramSpec(
         "role": "primary"
       },
       "target": false,
-      "style": {
+      "objectType": "path",
+      "geometry": {
+        "type": "polygon",
+        "points": [
+          "A",
+          "B",
+          "C",
+          "D"
+        ]
+      },
+      "appearance": {
         "strokeWidth": 2.4,
         "fillOpacity": 0.12,
         "highlightStrokeWidth": 4.2,
         "highlightFillOpacity": 0.26,
         "preserveColorOnHighlight": true
-      },
-      "kind": "polygon",
-      "refs": [
-        "A",
-        "B",
-        "C",
-        "D"
-      ]
+      }
     },
     {
       "id": "AB",
@@ -676,16 +730,19 @@ export const CuadrilateroSpec = createDiagramSpec(
         "role": "secondary"
       },
       "target": false,
-      "style": {
+      "objectType": "path",
+      "geometry": {
+        "type": "segment",
+        "points": [
+          "A",
+          "B"
+        ]
+      },
+      "appearance": {
         "strokeWidth": 2.4,
         "highlightStrokeWidth": 4.2,
         "preserveColorOnHighlight": true
-      },
-      "kind": "segment",
-      "refs": [
-        "A",
-        "B"
-      ]
+      }
     },
     {
       "id": "BC",
@@ -705,16 +762,19 @@ export const CuadrilateroSpec = createDiagramSpec(
         "role": "secondary"
       },
       "target": false,
-      "style": {
+      "objectType": "path",
+      "geometry": {
+        "type": "segment",
+        "points": [
+          "B",
+          "C"
+        ]
+      },
+      "appearance": {
         "strokeWidth": 2.4,
         "highlightStrokeWidth": 4.2,
         "preserveColorOnHighlight": true
-      },
-      "kind": "segment",
-      "refs": [
-        "B",
-        "C"
-      ]
+      }
     },
     {
       "id": "CD",
@@ -734,16 +794,19 @@ export const CuadrilateroSpec = createDiagramSpec(
         "role": "secondary"
       },
       "target": false,
-      "style": {
+      "objectType": "path",
+      "geometry": {
+        "type": "segment",
+        "points": [
+          "C",
+          "D"
+        ]
+      },
+      "appearance": {
         "strokeWidth": 2.4,
         "highlightStrokeWidth": 4.2,
         "preserveColorOnHighlight": true
-      },
-      "kind": "segment",
-      "refs": [
-        "C",
-        "D"
-      ]
+      }
     },
     {
       "id": "DA",
@@ -763,16 +826,19 @@ export const CuadrilateroSpec = createDiagramSpec(
         "role": "secondary"
       },
       "target": false,
-      "style": {
+      "objectType": "path",
+      "geometry": {
+        "type": "segment",
+        "points": [
+          "D",
+          "A"
+        ]
+      },
+      "appearance": {
         "strokeWidth": 2.4,
         "highlightStrokeWidth": 4.2,
         "preserveColorOnHighlight": true
-      },
-      "kind": "segment",
-      "refs": [
-        "D",
-        "A"
-      ]
+      }
     },
     {
       "id": "parAB",
@@ -781,6 +847,7 @@ export const CuadrilateroSpec = createDiagramSpec(
       "layerId": "properties",
       "order": 300,
       "visible": true,
+      "visibleWhen": "and(lt(abs((B.x-A.x)*(D.y-C.y)-(B.y-A.y)*(D.x-C.x))/(AB.length*CD.length),0.035),not(and(lt(abs((B.x-A.x)*(D.x-A.x)+(B.y-A.y)*(D.y-A.y))/(AB.length*DA.length),0.035),lt(abs((A.x-B.x)*(C.x-B.x)+(A.y-B.y)*(C.y-B.y))/(AB.length*BC.length),0.035),lt(abs((B.x-A.x)*(D.y-C.y)-(B.y-A.y)*(D.x-C.x))/(AB.length*CD.length),0.035))),not(and(lt(abs(AB.length-BC.length)/max(AB.length,BC.length),0.04),lt(abs(AB.length-CD.length)/max(AB.length,CD.length),0.04),lt(abs(AB.length-DA.length)/max(AB.length,DA.length),0.04))))",
       "locked": false,
       "groupIds": [
         "grupoParalelismo"
@@ -792,20 +859,20 @@ export const CuadrilateroSpec = createDiagramSpec(
         "role": "secondary"
       },
       "target": false,
-      "style": {
-        "strokeWidth": 2.2,
-        "markHeight": 0.42,
-        "highlightStrokeWidth": 4.2,
-        "preserveColorOnHighlight": true
+      "objectType": "mark",
+      "variant": "parallel",
+      "anchor": {
+        "type": "between-points",
+        "points": [
+          "A",
+          "B"
+        ]
       },
-      "kind": "parallelMark",
-      "refs": [
-        "A",
-        "B"
-      ],
-      "properties": {
-        "markCount": 1,
-        "visibleWhen": "and(lt(abs((B.x-A.x)*(D.y-C.y)-(B.y-A.y)*(D.x-C.x))/(AB.length*CD.length),0.035),not(and(lt(abs((B.x-A.x)*(D.x-A.x)+(B.y-A.y)*(D.y-A.y))/(AB.length*DA.length),0.035),lt(abs((A.x-B.x)*(C.x-B.x)+(A.y-B.y)*(C.y-B.y))/(AB.length*BC.length),0.035),lt(abs((B.x-A.x)*(D.y-C.y)-(B.y-A.y)*(D.x-C.x))/(AB.length*CD.length),0.035))),not(and(lt(abs(AB.length-BC.length)/max(AB.length,BC.length),0.04),lt(abs(AB.length-CD.length)/max(AB.length,CD.length),0.04),lt(abs(AB.length-DA.length)/max(AB.length,DA.length),0.04))))"
+      "count": 1,
+      "height": 0.42,
+      "appearance": {
+        "strokeWidth": 2.2,
+        "preserveColorOnHighlight": true
       }
     },
     {
@@ -815,6 +882,7 @@ export const CuadrilateroSpec = createDiagramSpec(
       "layerId": "properties",
       "order": 310,
       "visible": true,
+      "visibleWhen": "and(lt(abs((B.x-A.x)*(D.y-C.y)-(B.y-A.y)*(D.x-C.x))/(AB.length*CD.length),0.035),not(and(lt(abs((B.x-A.x)*(D.x-A.x)+(B.y-A.y)*(D.y-A.y))/(AB.length*DA.length),0.035),lt(abs((A.x-B.x)*(C.x-B.x)+(A.y-B.y)*(C.y-B.y))/(AB.length*BC.length),0.035),lt(abs((B.x-A.x)*(D.y-C.y)-(B.y-A.y)*(D.x-C.x))/(AB.length*CD.length),0.035))),not(and(lt(abs(AB.length-BC.length)/max(AB.length,BC.length),0.04),lt(abs(AB.length-CD.length)/max(AB.length,CD.length),0.04),lt(abs(AB.length-DA.length)/max(AB.length,DA.length),0.04))))",
       "locked": false,
       "groupIds": [
         "grupoParalelismo"
@@ -826,20 +894,20 @@ export const CuadrilateroSpec = createDiagramSpec(
         "role": "secondary"
       },
       "target": false,
-      "style": {
-        "strokeWidth": 2.2,
-        "markHeight": 0.42,
-        "highlightStrokeWidth": 4.2,
-        "preserveColorOnHighlight": true
+      "objectType": "mark",
+      "variant": "parallel",
+      "anchor": {
+        "type": "between-points",
+        "points": [
+          "D",
+          "C"
+        ]
       },
-      "kind": "parallelMark",
-      "refs": [
-        "D",
-        "C"
-      ],
-      "properties": {
-        "markCount": 1,
-        "visibleWhen": "and(lt(abs((B.x-A.x)*(D.y-C.y)-(B.y-A.y)*(D.x-C.x))/(AB.length*CD.length),0.035),not(and(lt(abs((B.x-A.x)*(D.x-A.x)+(B.y-A.y)*(D.y-A.y))/(AB.length*DA.length),0.035),lt(abs((A.x-B.x)*(C.x-B.x)+(A.y-B.y)*(C.y-B.y))/(AB.length*BC.length),0.035),lt(abs((B.x-A.x)*(D.y-C.y)-(B.y-A.y)*(D.x-C.x))/(AB.length*CD.length),0.035))),not(and(lt(abs(AB.length-BC.length)/max(AB.length,BC.length),0.04),lt(abs(AB.length-CD.length)/max(AB.length,CD.length),0.04),lt(abs(AB.length-DA.length)/max(AB.length,DA.length),0.04))))"
+      "count": 1,
+      "height": 0.42,
+      "appearance": {
+        "strokeWidth": 2.2,
+        "preserveColorOnHighlight": true
       }
     },
     {
@@ -849,6 +917,7 @@ export const CuadrilateroSpec = createDiagramSpec(
       "layerId": "properties",
       "order": 320,
       "visible": true,
+      "visibleWhen": "and(lt(abs((C.x-B.x)*(A.y-D.y)-(C.y-B.y)*(A.x-D.x))/(BC.length*DA.length),0.035),not(and(lt(abs((B.x-A.x)*(D.x-A.x)+(B.y-A.y)*(D.y-A.y))/(AB.length*DA.length),0.035),lt(abs((A.x-B.x)*(C.x-B.x)+(A.y-B.y)*(C.y-B.y))/(AB.length*BC.length),0.035),lt(abs((B.x-A.x)*(D.y-C.y)-(B.y-A.y)*(D.x-C.x))/(AB.length*CD.length),0.035))),not(and(lt(abs(AB.length-BC.length)/max(AB.length,BC.length),0.04),lt(abs(AB.length-CD.length)/max(AB.length,CD.length),0.04),lt(abs(AB.length-DA.length)/max(AB.length,DA.length),0.04))))",
       "locked": false,
       "groupIds": [
         "grupoParalelismo"
@@ -860,20 +929,20 @@ export const CuadrilateroSpec = createDiagramSpec(
         "role": "secondary"
       },
       "target": false,
-      "style": {
-        "strokeWidth": 2.2,
-        "markHeight": 0.42,
-        "highlightStrokeWidth": 4.2,
-        "preserveColorOnHighlight": true
+      "objectType": "mark",
+      "variant": "parallel",
+      "anchor": {
+        "type": "between-points",
+        "points": [
+          "B",
+          "C"
+        ]
       },
-      "kind": "parallelMark",
-      "refs": [
-        "B",
-        "C"
-      ],
-      "properties": {
-        "markCount": 2,
-        "visibleWhen": "and(lt(abs((C.x-B.x)*(A.y-D.y)-(C.y-B.y)*(A.x-D.x))/(BC.length*DA.length),0.035),not(and(lt(abs((B.x-A.x)*(D.x-A.x)+(B.y-A.y)*(D.y-A.y))/(AB.length*DA.length),0.035),lt(abs((A.x-B.x)*(C.x-B.x)+(A.y-B.y)*(C.y-B.y))/(AB.length*BC.length),0.035),lt(abs((B.x-A.x)*(D.y-C.y)-(B.y-A.y)*(D.x-C.x))/(AB.length*CD.length),0.035))),not(and(lt(abs(AB.length-BC.length)/max(AB.length,BC.length),0.04),lt(abs(AB.length-CD.length)/max(AB.length,CD.length),0.04),lt(abs(AB.length-DA.length)/max(AB.length,DA.length),0.04))))"
+      "count": 2,
+      "height": 0.42,
+      "appearance": {
+        "strokeWidth": 2.2,
+        "preserveColorOnHighlight": true
       }
     },
     {
@@ -883,6 +952,7 @@ export const CuadrilateroSpec = createDiagramSpec(
       "layerId": "properties",
       "order": 330,
       "visible": true,
+      "visibleWhen": "and(lt(abs((C.x-B.x)*(A.y-D.y)-(C.y-B.y)*(A.x-D.x))/(BC.length*DA.length),0.035),not(and(lt(abs((B.x-A.x)*(D.x-A.x)+(B.y-A.y)*(D.y-A.y))/(AB.length*DA.length),0.035),lt(abs((A.x-B.x)*(C.x-B.x)+(A.y-B.y)*(C.y-B.y))/(AB.length*BC.length),0.035),lt(abs((B.x-A.x)*(D.y-C.y)-(B.y-A.y)*(D.x-C.x))/(AB.length*CD.length),0.035))),not(and(lt(abs(AB.length-BC.length)/max(AB.length,BC.length),0.04),lt(abs(AB.length-CD.length)/max(AB.length,CD.length),0.04),lt(abs(AB.length-DA.length)/max(AB.length,DA.length),0.04))))",
       "locked": false,
       "groupIds": [
         "grupoParalelismo"
@@ -894,20 +964,20 @@ export const CuadrilateroSpec = createDiagramSpec(
         "role": "secondary"
       },
       "target": false,
-      "style": {
-        "strokeWidth": 2.2,
-        "markHeight": 0.42,
-        "highlightStrokeWidth": 4.2,
-        "preserveColorOnHighlight": true
+      "objectType": "mark",
+      "variant": "parallel",
+      "anchor": {
+        "type": "between-points",
+        "points": [
+          "A",
+          "D"
+        ]
       },
-      "kind": "parallelMark",
-      "refs": [
-        "A",
-        "D"
-      ],
-      "properties": {
-        "markCount": 2,
-        "visibleWhen": "and(lt(abs((C.x-B.x)*(A.y-D.y)-(C.y-B.y)*(A.x-D.x))/(BC.length*DA.length),0.035),not(and(lt(abs((B.x-A.x)*(D.x-A.x)+(B.y-A.y)*(D.y-A.y))/(AB.length*DA.length),0.035),lt(abs((A.x-B.x)*(C.x-B.x)+(A.y-B.y)*(C.y-B.y))/(AB.length*BC.length),0.035),lt(abs((B.x-A.x)*(D.y-C.y)-(B.y-A.y)*(D.x-C.x))/(AB.length*CD.length),0.035))),not(and(lt(abs(AB.length-BC.length)/max(AB.length,BC.length),0.04),lt(abs(AB.length-CD.length)/max(AB.length,CD.length),0.04),lt(abs(AB.length-DA.length)/max(AB.length,DA.length),0.04))))"
+      "count": 2,
+      "height": 0.42,
+      "appearance": {
+        "strokeWidth": 2.2,
+        "preserveColorOnHighlight": true
       }
     },
     {
@@ -917,6 +987,7 @@ export const CuadrilateroSpec = createDiagramSpec(
       "layerId": "properties",
       "order": 400,
       "visible": true,
+      "visibleWhen": "and(lt(abs(AB.length-BC.length)/max(AB.length,BC.length),0.04),lt(abs(AB.length-CD.length)/max(AB.length,CD.length),0.04),lt(abs(AB.length-DA.length)/max(AB.length,DA.length),0.04))",
       "locked": false,
       "groupIds": [
         "grupoIgualdad"
@@ -928,20 +999,20 @@ export const CuadrilateroSpec = createDiagramSpec(
         "role": "secondary"
       },
       "target": false,
-      "style": {
-        "strokeWidth": 2.2,
-        "markHeight": 0.34,
-        "highlightStrokeWidth": 4.2,
-        "preserveColorOnHighlight": true
+      "objectType": "mark",
+      "variant": "congruence",
+      "anchor": {
+        "type": "between-points",
+        "points": [
+          "A",
+          "B"
+        ]
       },
-      "kind": "congruenceMark",
-      "refs": [
-        "A",
-        "B"
-      ],
-      "properties": {
-        "markCount": 1,
-        "visibleWhen": "and(lt(abs(AB.length-BC.length)/max(AB.length,BC.length),0.04),lt(abs(AB.length-CD.length)/max(AB.length,CD.length),0.04),lt(abs(AB.length-DA.length)/max(AB.length,DA.length),0.04))"
+      "count": 1,
+      "height": 0.34,
+      "appearance": {
+        "strokeWidth": 2.2,
+        "preserveColorOnHighlight": true
       }
     },
     {
@@ -951,6 +1022,7 @@ export const CuadrilateroSpec = createDiagramSpec(
       "layerId": "properties",
       "order": 410,
       "visible": true,
+      "visibleWhen": "and(lt(abs(AB.length-BC.length)/max(AB.length,BC.length),0.04),lt(abs(AB.length-CD.length)/max(AB.length,CD.length),0.04),lt(abs(AB.length-DA.length)/max(AB.length,DA.length),0.04))",
       "locked": false,
       "groupIds": [
         "grupoIgualdad"
@@ -962,20 +1034,20 @@ export const CuadrilateroSpec = createDiagramSpec(
         "role": "secondary"
       },
       "target": false,
-      "style": {
-        "strokeWidth": 2.2,
-        "markHeight": 0.34,
-        "highlightStrokeWidth": 4.2,
-        "preserveColorOnHighlight": true
+      "objectType": "mark",
+      "variant": "congruence",
+      "anchor": {
+        "type": "between-points",
+        "points": [
+          "B",
+          "C"
+        ]
       },
-      "kind": "congruenceMark",
-      "refs": [
-        "B",
-        "C"
-      ],
-      "properties": {
-        "markCount": 1,
-        "visibleWhen": "and(lt(abs(AB.length-BC.length)/max(AB.length,BC.length),0.04),lt(abs(AB.length-CD.length)/max(AB.length,CD.length),0.04),lt(abs(AB.length-DA.length)/max(AB.length,DA.length),0.04))"
+      "count": 1,
+      "height": 0.34,
+      "appearance": {
+        "strokeWidth": 2.2,
+        "preserveColorOnHighlight": true
       }
     },
     {
@@ -985,6 +1057,7 @@ export const CuadrilateroSpec = createDiagramSpec(
       "layerId": "properties",
       "order": 420,
       "visible": true,
+      "visibleWhen": "and(lt(abs(AB.length-BC.length)/max(AB.length,BC.length),0.04),lt(abs(AB.length-CD.length)/max(AB.length,CD.length),0.04),lt(abs(AB.length-DA.length)/max(AB.length,DA.length),0.04))",
       "locked": false,
       "groupIds": [
         "grupoIgualdad"
@@ -996,20 +1069,20 @@ export const CuadrilateroSpec = createDiagramSpec(
         "role": "secondary"
       },
       "target": false,
-      "style": {
-        "strokeWidth": 2.2,
-        "markHeight": 0.34,
-        "highlightStrokeWidth": 4.2,
-        "preserveColorOnHighlight": true
+      "objectType": "mark",
+      "variant": "congruence",
+      "anchor": {
+        "type": "between-points",
+        "points": [
+          "C",
+          "D"
+        ]
       },
-      "kind": "congruenceMark",
-      "refs": [
-        "C",
-        "D"
-      ],
-      "properties": {
-        "markCount": 1,
-        "visibleWhen": "and(lt(abs(AB.length-BC.length)/max(AB.length,BC.length),0.04),lt(abs(AB.length-CD.length)/max(AB.length,CD.length),0.04),lt(abs(AB.length-DA.length)/max(AB.length,DA.length),0.04))"
+      "count": 1,
+      "height": 0.34,
+      "appearance": {
+        "strokeWidth": 2.2,
+        "preserveColorOnHighlight": true
       }
     },
     {
@@ -1019,6 +1092,7 @@ export const CuadrilateroSpec = createDiagramSpec(
       "layerId": "properties",
       "order": 430,
       "visible": true,
+      "visibleWhen": "and(lt(abs(AB.length-BC.length)/max(AB.length,BC.length),0.04),lt(abs(AB.length-CD.length)/max(AB.length,CD.length),0.04),lt(abs(AB.length-DA.length)/max(AB.length,DA.length),0.04))",
       "locked": false,
       "groupIds": [
         "grupoIgualdad"
@@ -1030,20 +1104,20 @@ export const CuadrilateroSpec = createDiagramSpec(
         "role": "secondary"
       },
       "target": false,
-      "style": {
-        "strokeWidth": 2.2,
-        "markHeight": 0.34,
-        "highlightStrokeWidth": 4.2,
-        "preserveColorOnHighlight": true
+      "objectType": "mark",
+      "variant": "congruence",
+      "anchor": {
+        "type": "between-points",
+        "points": [
+          "D",
+          "A"
+        ]
       },
-      "kind": "congruenceMark",
-      "refs": [
-        "D",
-        "A"
-      ],
-      "properties": {
-        "markCount": 1,
-        "visibleWhen": "and(lt(abs(AB.length-BC.length)/max(AB.length,BC.length),0.04),lt(abs(AB.length-CD.length)/max(AB.length,CD.length),0.04),lt(abs(AB.length-DA.length)/max(AB.length,DA.length),0.04))"
+      "count": 1,
+      "height": 0.34,
+      "appearance": {
+        "strokeWidth": 2.2,
+        "preserveColorOnHighlight": true
       }
     },
     {
@@ -1053,6 +1127,7 @@ export const CuadrilateroSpec = createDiagramSpec(
       "layerId": "properties",
       "order": 450,
       "visible": true,
+      "visibleWhen": "and(lt(abs(AB.length-DA.length)/max(AB.length,DA.length),0.04),lt(abs(BC.length-CD.length)/max(BC.length,CD.length),0.04),not(and(lt(abs(AB.length-BC.length)/max(AB.length,BC.length),0.04),lt(abs(AB.length-CD.length)/max(AB.length,CD.length),0.04),lt(abs(AB.length-DA.length)/max(AB.length,DA.length),0.04))))",
       "locked": false,
       "groupIds": [
         "grupoIgualdad"
@@ -1064,20 +1139,20 @@ export const CuadrilateroSpec = createDiagramSpec(
         "role": "secondary"
       },
       "target": false,
-      "style": {
-        "strokeWidth": 2.2,
-        "markHeight": 0.34,
-        "highlightStrokeWidth": 4.2,
-        "preserveColorOnHighlight": true
+      "objectType": "mark",
+      "variant": "congruence",
+      "anchor": {
+        "type": "between-points",
+        "points": [
+          "A",
+          "B"
+        ]
       },
-      "kind": "congruenceMark",
-      "refs": [
-        "A",
-        "B"
-      ],
-      "properties": {
-        "markCount": 1,
-        "visibleWhen": "and(lt(abs(AB.length-DA.length)/max(AB.length,DA.length),0.04),lt(abs(BC.length-CD.length)/max(BC.length,CD.length),0.04),not(and(lt(abs(AB.length-BC.length)/max(AB.length,BC.length),0.04),lt(abs(AB.length-CD.length)/max(AB.length,CD.length),0.04),lt(abs(AB.length-DA.length)/max(AB.length,DA.length),0.04))))"
+      "count": 1,
+      "height": 0.34,
+      "appearance": {
+        "strokeWidth": 2.2,
+        "preserveColorOnHighlight": true
       }
     },
     {
@@ -1087,6 +1162,7 @@ export const CuadrilateroSpec = createDiagramSpec(
       "layerId": "properties",
       "order": 460,
       "visible": true,
+      "visibleWhen": "and(lt(abs(AB.length-DA.length)/max(AB.length,DA.length),0.04),lt(abs(BC.length-CD.length)/max(BC.length,CD.length),0.04),not(and(lt(abs(AB.length-BC.length)/max(AB.length,BC.length),0.04),lt(abs(AB.length-CD.length)/max(AB.length,CD.length),0.04),lt(abs(AB.length-DA.length)/max(AB.length,DA.length),0.04))))",
       "locked": false,
       "groupIds": [
         "grupoIgualdad"
@@ -1098,20 +1174,20 @@ export const CuadrilateroSpec = createDiagramSpec(
         "role": "secondary"
       },
       "target": false,
-      "style": {
-        "strokeWidth": 2.2,
-        "markHeight": 0.34,
-        "highlightStrokeWidth": 4.2,
-        "preserveColorOnHighlight": true
+      "objectType": "mark",
+      "variant": "congruence",
+      "anchor": {
+        "type": "between-points",
+        "points": [
+          "D",
+          "A"
+        ]
       },
-      "kind": "congruenceMark",
-      "refs": [
-        "D",
-        "A"
-      ],
-      "properties": {
-        "markCount": 1,
-        "visibleWhen": "and(lt(abs(AB.length-DA.length)/max(AB.length,DA.length),0.04),lt(abs(BC.length-CD.length)/max(BC.length,CD.length),0.04),not(and(lt(abs(AB.length-BC.length)/max(AB.length,BC.length),0.04),lt(abs(AB.length-CD.length)/max(AB.length,CD.length),0.04),lt(abs(AB.length-DA.length)/max(AB.length,DA.length),0.04))))"
+      "count": 1,
+      "height": 0.34,
+      "appearance": {
+        "strokeWidth": 2.2,
+        "preserveColorOnHighlight": true
       }
     },
     {
@@ -1121,6 +1197,7 @@ export const CuadrilateroSpec = createDiagramSpec(
       "layerId": "properties",
       "order": 470,
       "visible": true,
+      "visibleWhen": "and(lt(abs(AB.length-DA.length)/max(AB.length,DA.length),0.04),lt(abs(BC.length-CD.length)/max(BC.length,CD.length),0.04),not(and(lt(abs(AB.length-BC.length)/max(AB.length,BC.length),0.04),lt(abs(AB.length-CD.length)/max(AB.length,CD.length),0.04),lt(abs(AB.length-DA.length)/max(AB.length,DA.length),0.04))))",
       "locked": false,
       "groupIds": [
         "grupoIgualdad"
@@ -1132,20 +1209,20 @@ export const CuadrilateroSpec = createDiagramSpec(
         "role": "secondary"
       },
       "target": false,
-      "style": {
-        "strokeWidth": 2.2,
-        "markHeight": 0.34,
-        "highlightStrokeWidth": 4.2,
-        "preserveColorOnHighlight": true
+      "objectType": "mark",
+      "variant": "congruence",
+      "anchor": {
+        "type": "between-points",
+        "points": [
+          "B",
+          "C"
+        ]
       },
-      "kind": "congruenceMark",
-      "refs": [
-        "B",
-        "C"
-      ],
-      "properties": {
-        "markCount": 2,
-        "visibleWhen": "and(lt(abs(AB.length-DA.length)/max(AB.length,DA.length),0.04),lt(abs(BC.length-CD.length)/max(BC.length,CD.length),0.04),not(and(lt(abs(AB.length-BC.length)/max(AB.length,BC.length),0.04),lt(abs(AB.length-CD.length)/max(AB.length,CD.length),0.04),lt(abs(AB.length-DA.length)/max(AB.length,DA.length),0.04))))"
+      "count": 2,
+      "height": 0.34,
+      "appearance": {
+        "strokeWidth": 2.2,
+        "preserveColorOnHighlight": true
       }
     },
     {
@@ -1155,6 +1232,7 @@ export const CuadrilateroSpec = createDiagramSpec(
       "layerId": "properties",
       "order": 480,
       "visible": true,
+      "visibleWhen": "and(lt(abs(AB.length-DA.length)/max(AB.length,DA.length),0.04),lt(abs(BC.length-CD.length)/max(BC.length,CD.length),0.04),not(and(lt(abs(AB.length-BC.length)/max(AB.length,BC.length),0.04),lt(abs(AB.length-CD.length)/max(AB.length,CD.length),0.04),lt(abs(AB.length-DA.length)/max(AB.length,DA.length),0.04))))",
       "locked": false,
       "groupIds": [
         "grupoIgualdad"
@@ -1166,20 +1244,20 @@ export const CuadrilateroSpec = createDiagramSpec(
         "role": "secondary"
       },
       "target": false,
-      "style": {
-        "strokeWidth": 2.2,
-        "markHeight": 0.34,
-        "highlightStrokeWidth": 4.2,
-        "preserveColorOnHighlight": true
+      "objectType": "mark",
+      "variant": "congruence",
+      "anchor": {
+        "type": "between-points",
+        "points": [
+          "C",
+          "D"
+        ]
       },
-      "kind": "congruenceMark",
-      "refs": [
-        "C",
-        "D"
-      ],
-      "properties": {
-        "markCount": 2,
-        "visibleWhen": "and(lt(abs(AB.length-DA.length)/max(AB.length,DA.length),0.04),lt(abs(BC.length-CD.length)/max(BC.length,CD.length),0.04),not(and(lt(abs(AB.length-BC.length)/max(AB.length,BC.length),0.04),lt(abs(AB.length-CD.length)/max(AB.length,CD.length),0.04),lt(abs(AB.length-DA.length)/max(AB.length,DA.length),0.04))))"
+      "count": 2,
+      "height": 0.34,
+      "appearance": {
+        "strokeWidth": 2.2,
+        "preserveColorOnHighlight": true
       }
     },
     {
@@ -1189,6 +1267,7 @@ export const CuadrilateroSpec = createDiagramSpec(
       "layerId": "properties",
       "order": 500,
       "visible": true,
+      "visibleWhen": "and(lt(abs(AB.length-BC.length)/max(AB.length,BC.length),0.04),lt(abs(CD.length-DA.length)/max(CD.length,DA.length),0.04),not(and(lt(abs(AB.length-BC.length)/max(AB.length,BC.length),0.04),lt(abs(AB.length-CD.length)/max(AB.length,CD.length),0.04),lt(abs(AB.length-DA.length)/max(AB.length,DA.length),0.04))))",
       "locked": false,
       "groupIds": [
         "grupoIgualdad"
@@ -1200,20 +1279,20 @@ export const CuadrilateroSpec = createDiagramSpec(
         "role": "secondary"
       },
       "target": false,
-      "style": {
-        "strokeWidth": 2.2,
-        "markHeight": 0.34,
-        "highlightStrokeWidth": 4.2,
-        "preserveColorOnHighlight": true
+      "objectType": "mark",
+      "variant": "congruence",
+      "anchor": {
+        "type": "between-points",
+        "points": [
+          "A",
+          "B"
+        ]
       },
-      "kind": "congruenceMark",
-      "refs": [
-        "A",
-        "B"
-      ],
-      "properties": {
-        "markCount": 1,
-        "visibleWhen": "and(lt(abs(AB.length-BC.length)/max(AB.length,BC.length),0.04),lt(abs(CD.length-DA.length)/max(CD.length,DA.length),0.04),not(and(lt(abs(AB.length-BC.length)/max(AB.length,BC.length),0.04),lt(abs(AB.length-CD.length)/max(AB.length,CD.length),0.04),lt(abs(AB.length-DA.length)/max(AB.length,DA.length),0.04))))"
+      "count": 1,
+      "height": 0.34,
+      "appearance": {
+        "strokeWidth": 2.2,
+        "preserveColorOnHighlight": true
       }
     },
     {
@@ -1223,6 +1302,7 @@ export const CuadrilateroSpec = createDiagramSpec(
       "layerId": "properties",
       "order": 510,
       "visible": true,
+      "visibleWhen": "and(lt(abs(AB.length-BC.length)/max(AB.length,BC.length),0.04),lt(abs(CD.length-DA.length)/max(CD.length,DA.length),0.04),not(and(lt(abs(AB.length-BC.length)/max(AB.length,BC.length),0.04),lt(abs(AB.length-CD.length)/max(AB.length,CD.length),0.04),lt(abs(AB.length-DA.length)/max(AB.length,DA.length),0.04))))",
       "locked": false,
       "groupIds": [
         "grupoIgualdad"
@@ -1234,20 +1314,20 @@ export const CuadrilateroSpec = createDiagramSpec(
         "role": "secondary"
       },
       "target": false,
-      "style": {
-        "strokeWidth": 2.2,
-        "markHeight": 0.34,
-        "highlightStrokeWidth": 4.2,
-        "preserveColorOnHighlight": true
+      "objectType": "mark",
+      "variant": "congruence",
+      "anchor": {
+        "type": "between-points",
+        "points": [
+          "B",
+          "C"
+        ]
       },
-      "kind": "congruenceMark",
-      "refs": [
-        "B",
-        "C"
-      ],
-      "properties": {
-        "markCount": 1,
-        "visibleWhen": "and(lt(abs(AB.length-BC.length)/max(AB.length,BC.length),0.04),lt(abs(CD.length-DA.length)/max(CD.length,DA.length),0.04),not(and(lt(abs(AB.length-BC.length)/max(AB.length,BC.length),0.04),lt(abs(AB.length-CD.length)/max(AB.length,CD.length),0.04),lt(abs(AB.length-DA.length)/max(AB.length,DA.length),0.04))))"
+      "count": 1,
+      "height": 0.34,
+      "appearance": {
+        "strokeWidth": 2.2,
+        "preserveColorOnHighlight": true
       }
     },
     {
@@ -1257,6 +1337,7 @@ export const CuadrilateroSpec = createDiagramSpec(
       "layerId": "properties",
       "order": 520,
       "visible": true,
+      "visibleWhen": "and(lt(abs(AB.length-BC.length)/max(AB.length,BC.length),0.04),lt(abs(CD.length-DA.length)/max(CD.length,DA.length),0.04),not(and(lt(abs(AB.length-BC.length)/max(AB.length,BC.length),0.04),lt(abs(AB.length-CD.length)/max(AB.length,CD.length),0.04),lt(abs(AB.length-DA.length)/max(AB.length,DA.length),0.04))))",
       "locked": false,
       "groupIds": [
         "grupoIgualdad"
@@ -1268,20 +1349,20 @@ export const CuadrilateroSpec = createDiagramSpec(
         "role": "secondary"
       },
       "target": false,
-      "style": {
-        "strokeWidth": 2.2,
-        "markHeight": 0.34,
-        "highlightStrokeWidth": 4.2,
-        "preserveColorOnHighlight": true
+      "objectType": "mark",
+      "variant": "congruence",
+      "anchor": {
+        "type": "between-points",
+        "points": [
+          "C",
+          "D"
+        ]
       },
-      "kind": "congruenceMark",
-      "refs": [
-        "C",
-        "D"
-      ],
-      "properties": {
-        "markCount": 2,
-        "visibleWhen": "and(lt(abs(AB.length-BC.length)/max(AB.length,BC.length),0.04),lt(abs(CD.length-DA.length)/max(CD.length,DA.length),0.04),not(and(lt(abs(AB.length-BC.length)/max(AB.length,BC.length),0.04),lt(abs(AB.length-CD.length)/max(AB.length,CD.length),0.04),lt(abs(AB.length-DA.length)/max(AB.length,DA.length),0.04))))"
+      "count": 2,
+      "height": 0.34,
+      "appearance": {
+        "strokeWidth": 2.2,
+        "preserveColorOnHighlight": true
       }
     },
     {
@@ -1291,6 +1372,7 @@ export const CuadrilateroSpec = createDiagramSpec(
       "layerId": "properties",
       "order": 530,
       "visible": true,
+      "visibleWhen": "and(lt(abs(AB.length-BC.length)/max(AB.length,BC.length),0.04),lt(abs(CD.length-DA.length)/max(CD.length,DA.length),0.04),not(and(lt(abs(AB.length-BC.length)/max(AB.length,BC.length),0.04),lt(abs(AB.length-CD.length)/max(AB.length,CD.length),0.04),lt(abs(AB.length-DA.length)/max(AB.length,DA.length),0.04))))",
       "locked": false,
       "groupIds": [
         "grupoIgualdad"
@@ -1302,20 +1384,20 @@ export const CuadrilateroSpec = createDiagramSpec(
         "role": "secondary"
       },
       "target": false,
-      "style": {
-        "strokeWidth": 2.2,
-        "markHeight": 0.34,
-        "highlightStrokeWidth": 4.2,
-        "preserveColorOnHighlight": true
+      "objectType": "mark",
+      "variant": "congruence",
+      "anchor": {
+        "type": "between-points",
+        "points": [
+          "D",
+          "A"
+        ]
       },
-      "kind": "congruenceMark",
-      "refs": [
-        "D",
-        "A"
-      ],
-      "properties": {
-        "markCount": 2,
-        "visibleWhen": "and(lt(abs(AB.length-BC.length)/max(AB.length,BC.length),0.04),lt(abs(CD.length-DA.length)/max(CD.length,DA.length),0.04),not(and(lt(abs(AB.length-BC.length)/max(AB.length,BC.length),0.04),lt(abs(AB.length-CD.length)/max(AB.length,CD.length),0.04),lt(abs(AB.length-DA.length)/max(AB.length,DA.length),0.04))))"
+      "count": 2,
+      "height": 0.34,
+      "appearance": {
+        "strokeWidth": 2.2,
+        "preserveColorOnHighlight": true
       }
     },
     {
@@ -1325,6 +1407,7 @@ export const CuadrilateroSpec = createDiagramSpec(
       "layerId": "properties",
       "order": 560,
       "visible": true,
+      "visibleWhen": "and(lt(abs((B.x-A.x)*(D.x-A.x)+(B.y-A.y)*(D.y-A.y))/(AB.length*DA.length),0.035),lt(abs((A.x-B.x)*(C.x-B.x)+(A.y-B.y)*(C.y-B.y))/(AB.length*BC.length),0.035),lt(abs((B.x-A.x)*(D.y-C.y)-(B.y-A.y)*(D.x-C.x))/(AB.length*CD.length),0.035))",
       "locked": false,
       "groupIds": [
         "grupoRectos"
@@ -1336,22 +1419,22 @@ export const CuadrilateroSpec = createDiagramSpec(
         "role": "secondary"
       },
       "target": false,
-      "style": {
-        "strokeWidth": 1.7,
-        "fillOpacity": 0.16,
-        "angleRadius": 0.42,
-        "highlightStrokeWidth": 4.2,
-        "highlightFillOpacity": 0.3,
-        "preserveColorOnHighlight": true
-      },
-      "kind": "rightAngle",
-      "refs": [
+      "objectType": "angle",
+      "points": [
         "B",
         "A",
         "D"
       ],
-      "properties": {
-        "visibleWhen": "and(lt(abs((B.x-A.x)*(D.x-A.x)+(B.y-A.y)*(D.y-A.y))/(AB.length*DA.length),0.035),lt(abs((A.x-B.x)*(C.x-B.x)+(A.y-B.y)*(C.y-B.y))/(AB.length*BC.length),0.035),lt(abs((B.x-A.x)*(D.y-C.y)-(B.y-A.y)*(D.x-C.x))/(AB.length*CD.length),0.035))"
+      "sweep": "non-reflex",
+      "marker": "square",
+      "perpendicularRelationId": "rectoA-perpendicular",
+      "appearance": {
+        "radius": 0.42,
+        "strokeWidth": 1.7,
+        "fillOpacity": 0.16,
+        "highlightStrokeWidth": 4.2,
+        "highlightFillOpacity": 0.3,
+        "preserveColorOnHighlight": true
       }
     },
     {
@@ -1361,6 +1444,7 @@ export const CuadrilateroSpec = createDiagramSpec(
       "layerId": "properties",
       "order": 570,
       "visible": true,
+      "visibleWhen": "and(lt(abs((B.x-A.x)*(D.x-A.x)+(B.y-A.y)*(D.y-A.y))/(AB.length*DA.length),0.035),lt(abs((A.x-B.x)*(C.x-B.x)+(A.y-B.y)*(C.y-B.y))/(AB.length*BC.length),0.035),lt(abs((B.x-A.x)*(D.y-C.y)-(B.y-A.y)*(D.x-C.x))/(AB.length*CD.length),0.035))",
       "locked": false,
       "groupIds": [
         "grupoRectos"
@@ -1372,22 +1456,22 @@ export const CuadrilateroSpec = createDiagramSpec(
         "role": "secondary"
       },
       "target": false,
-      "style": {
-        "strokeWidth": 1.7,
-        "fillOpacity": 0.16,
-        "angleRadius": 0.42,
-        "highlightStrokeWidth": 4.2,
-        "highlightFillOpacity": 0.3,
-        "preserveColorOnHighlight": true
-      },
-      "kind": "rightAngle",
-      "refs": [
+      "objectType": "angle",
+      "points": [
         "C",
         "B",
         "A"
       ],
-      "properties": {
-        "visibleWhen": "and(lt(abs((B.x-A.x)*(D.x-A.x)+(B.y-A.y)*(D.y-A.y))/(AB.length*DA.length),0.035),lt(abs((A.x-B.x)*(C.x-B.x)+(A.y-B.y)*(C.y-B.y))/(AB.length*BC.length),0.035),lt(abs((B.x-A.x)*(D.y-C.y)-(B.y-A.y)*(D.x-C.x))/(AB.length*CD.length),0.035))"
+      "sweep": "non-reflex",
+      "marker": "square",
+      "perpendicularRelationId": "rectoB-perpendicular",
+      "appearance": {
+        "radius": 0.42,
+        "strokeWidth": 1.7,
+        "fillOpacity": 0.16,
+        "highlightStrokeWidth": 4.2,
+        "highlightFillOpacity": 0.3,
+        "preserveColorOnHighlight": true
       }
     },
     {
@@ -1397,6 +1481,7 @@ export const CuadrilateroSpec = createDiagramSpec(
       "layerId": "properties",
       "order": 580,
       "visible": true,
+      "visibleWhen": "and(lt(abs((B.x-A.x)*(D.x-A.x)+(B.y-A.y)*(D.y-A.y))/(AB.length*DA.length),0.035),lt(abs((A.x-B.x)*(C.x-B.x)+(A.y-B.y)*(C.y-B.y))/(AB.length*BC.length),0.035),lt(abs((B.x-A.x)*(D.y-C.y)-(B.y-A.y)*(D.x-C.x))/(AB.length*CD.length),0.035))",
       "locked": false,
       "groupIds": [
         "grupoRectos"
@@ -1408,22 +1493,22 @@ export const CuadrilateroSpec = createDiagramSpec(
         "role": "secondary"
       },
       "target": false,
-      "style": {
-        "strokeWidth": 1.7,
-        "fillOpacity": 0.16,
-        "angleRadius": 0.42,
-        "highlightStrokeWidth": 4.2,
-        "highlightFillOpacity": 0.3,
-        "preserveColorOnHighlight": true
-      },
-      "kind": "rightAngle",
-      "refs": [
+      "objectType": "angle",
+      "points": [
         "D",
         "C",
         "B"
       ],
-      "properties": {
-        "visibleWhen": "and(lt(abs((B.x-A.x)*(D.x-A.x)+(B.y-A.y)*(D.y-A.y))/(AB.length*DA.length),0.035),lt(abs((A.x-B.x)*(C.x-B.x)+(A.y-B.y)*(C.y-B.y))/(AB.length*BC.length),0.035),lt(abs((B.x-A.x)*(D.y-C.y)-(B.y-A.y)*(D.x-C.x))/(AB.length*CD.length),0.035))"
+      "sweep": "non-reflex",
+      "marker": "square",
+      "perpendicularRelationId": "rectoC-perpendicular",
+      "appearance": {
+        "radius": 0.42,
+        "strokeWidth": 1.7,
+        "fillOpacity": 0.16,
+        "highlightStrokeWidth": 4.2,
+        "highlightFillOpacity": 0.3,
+        "preserveColorOnHighlight": true
       }
     },
     {
@@ -1433,6 +1518,7 @@ export const CuadrilateroSpec = createDiagramSpec(
       "layerId": "properties",
       "order": 590,
       "visible": true,
+      "visibleWhen": "and(lt(abs((B.x-A.x)*(D.x-A.x)+(B.y-A.y)*(D.y-A.y))/(AB.length*DA.length),0.035),lt(abs((A.x-B.x)*(C.x-B.x)+(A.y-B.y)*(C.y-B.y))/(AB.length*BC.length),0.035),lt(abs((B.x-A.x)*(D.y-C.y)-(B.y-A.y)*(D.x-C.x))/(AB.length*CD.length),0.035))",
       "locked": false,
       "groupIds": [
         "grupoRectos"
@@ -1444,22 +1530,22 @@ export const CuadrilateroSpec = createDiagramSpec(
         "role": "secondary"
       },
       "target": false,
-      "style": {
-        "strokeWidth": 1.7,
-        "fillOpacity": 0.16,
-        "angleRadius": 0.42,
-        "highlightStrokeWidth": 4.2,
-        "highlightFillOpacity": 0.3,
-        "preserveColorOnHighlight": true
-      },
-      "kind": "rightAngle",
-      "refs": [
+      "objectType": "angle",
+      "points": [
         "A",
         "D",
         "C"
       ],
-      "properties": {
-        "visibleWhen": "and(lt(abs((B.x-A.x)*(D.x-A.x)+(B.y-A.y)*(D.y-A.y))/(AB.length*DA.length),0.035),lt(abs((A.x-B.x)*(C.x-B.x)+(A.y-B.y)*(C.y-B.y))/(AB.length*BC.length),0.035),lt(abs((B.x-A.x)*(D.y-C.y)-(B.y-A.y)*(D.x-C.x))/(AB.length*CD.length),0.035))"
+      "sweep": "non-reflex",
+      "marker": "square",
+      "perpendicularRelationId": "rectoD-perpendicular",
+      "appearance": {
+        "radius": 0.42,
+        "strokeWidth": 1.7,
+        "fillOpacity": 0.16,
+        "highlightStrokeWidth": 4.2,
+        "highlightFillOpacity": 0.3,
+        "preserveColorOnHighlight": true
       }
     },
     {
@@ -1480,21 +1566,23 @@ export const CuadrilateroSpec = createDiagramSpec(
         "role": "secondary"
       },
       "target": false,
-      "style": {
+      "objectType": "angle",
+      "points": [
+        "B",
+        "A",
+        "D"
+      ],
+      "sweep": "non-reflex",
+      "marker": "arc",
+      "appearance": {
+        "radius": 0.58,
         "strokeWidth": 1.5,
         "fillOpacity": 0.18,
-        "angleRadius": 0.58,
         "highlightStrokeWidth": 4.2,
         "highlightFillOpacity": 0.3,
         "highlightVisible": true,
         "preserveColorOnHighlight": true
-      },
-      "kind": "nonReflexAngle",
-      "refs": [
-        "B",
-        "A",
-        "D"
-      ]
+      }
     },
     {
       "id": "anguloB",
@@ -1514,21 +1602,23 @@ export const CuadrilateroSpec = createDiagramSpec(
         "role": "secondary"
       },
       "target": false,
-      "style": {
+      "objectType": "angle",
+      "points": [
+        "C",
+        "B",
+        "A"
+      ],
+      "sweep": "non-reflex",
+      "marker": "arc",
+      "appearance": {
+        "radius": 0.58,
         "strokeWidth": 1.5,
         "fillOpacity": 0.18,
-        "angleRadius": 0.58,
         "highlightStrokeWidth": 4.2,
         "highlightFillOpacity": 0.3,
         "highlightVisible": true,
         "preserveColorOnHighlight": true
-      },
-      "kind": "nonReflexAngle",
-      "refs": [
-        "C",
-        "B",
-        "A"
-      ]
+      }
     },
     {
       "id": "anguloC",
@@ -1548,21 +1638,23 @@ export const CuadrilateroSpec = createDiagramSpec(
         "role": "secondary"
       },
       "target": false,
-      "style": {
+      "objectType": "angle",
+      "points": [
+        "D",
+        "C",
+        "B"
+      ],
+      "sweep": "non-reflex",
+      "marker": "arc",
+      "appearance": {
+        "radius": 0.58,
         "strokeWidth": 1.5,
         "fillOpacity": 0.18,
-        "angleRadius": 0.58,
         "highlightStrokeWidth": 4.2,
         "highlightFillOpacity": 0.3,
         "highlightVisible": true,
         "preserveColorOnHighlight": true
-      },
-      "kind": "nonReflexAngle",
-      "refs": [
-        "D",
-        "C",
-        "B"
-      ]
+      }
     },
     {
       "id": "anguloD",
@@ -1582,21 +1674,23 @@ export const CuadrilateroSpec = createDiagramSpec(
         "role": "secondary"
       },
       "target": false,
-      "style": {
+      "objectType": "angle",
+      "points": [
+        "A",
+        "D",
+        "C"
+      ],
+      "sweep": "non-reflex",
+      "marker": "arc",
+      "appearance": {
+        "radius": 0.58,
         "strokeWidth": 1.5,
         "fillOpacity": 0.18,
-        "angleRadius": 0.58,
         "highlightStrokeWidth": 4.2,
         "highlightFillOpacity": 0.3,
         "highlightVisible": true,
         "preserveColorOnHighlight": true
-      },
-      "kind": "nonReflexAngle",
-      "refs": [
-        "A",
-        "D",
-        "C"
-      ]
+      }
     },
     {
       "id": "AC",
@@ -1616,19 +1710,22 @@ export const CuadrilateroSpec = createDiagramSpec(
         "role": "secondary"
       },
       "target": false,
-      "style": {
+      "objectType": "path",
+      "geometry": {
+        "type": "segment",
+        "points": [
+          "A",
+          "C"
+        ]
+      },
+      "appearance": {
+        "dashed": true,
         "strokeWidth": 1.8,
         "strokeOpacity": 0.8,
         "highlightStrokeWidth": 4.2,
         "highlightVisible": true,
         "preserveColorOnHighlight": true
-      },
-      "kind": "segment",
-      "refs": [
-        "A",
-        "C"
-      ],
-      "dashed": true
+      }
     },
     {
       "id": "BD",
@@ -1648,19 +1745,22 @@ export const CuadrilateroSpec = createDiagramSpec(
         "role": "secondary"
       },
       "target": false,
-      "style": {
+      "objectType": "path",
+      "geometry": {
+        "type": "segment",
+        "points": [
+          "B",
+          "D"
+        ]
+      },
+      "appearance": {
+        "dashed": true,
         "strokeWidth": 1.8,
         "strokeOpacity": 0.8,
         "highlightStrokeWidth": 4.2,
         "highlightVisible": true,
         "preserveColorOnHighlight": true
-      },
-      "kind": "segment",
-      "refs": [
-        "B",
-        "D"
-      ],
-      "dashed": true
+      }
     },
     {
       "id": "clasificacion",
@@ -1679,22 +1779,11 @@ export const CuadrilateroSpec = createDiagramSpec(
       },
       "target": true,
       "targetId": "clasificacion",
-      "style": {
-        "strokeWidth": 2.4,
-        "labelSize": 16,
-        "highlightStrokeWidth": 4.2,
-        "preserveColorOnHighlight": true
-      },
-      "kind": "infoPanel",
-      "refs": [],
-      "text": "",
-      "properties": {
-        "anchorMode": "viewport",
-        "viewportPosition": [
-          0,
-          0
-        ],
-        "textRules": [
+      "objectType": "annotation",
+      "variant": "panel",
+      "content": {
+        "text": "",
+        "rules": [
           {
             "when": "and(and(lt(abs(AB.length-BC.length)/max(AB.length,BC.length),0.04),lt(abs(AB.length-CD.length)/max(AB.length,CD.length),0.04),lt(abs(AB.length-DA.length)/max(AB.length,DA.length),0.04)),and(lt(abs((B.x-A.x)*(D.x-A.x)+(B.y-A.y)*(D.y-A.y))/(AB.length*DA.length),0.035),lt(abs((A.x-B.x)*(C.x-B.x)+(A.y-B.y)*(C.y-B.y))/(AB.length*BC.length),0.035),lt(abs((B.x-A.x)*(D.y-C.y)-(B.y-A.y)*(D.x-C.x))/(AB.length*CD.length),0.035)))",
             "text": "Cuadrado · 4 lados iguales · 4 ángulos rectos"
@@ -1724,1078 +1813,132 @@ export const CuadrilateroSpec = createDiagramSpec(
             "text": "Trapezoide · ningún par de lados opuestos paralelos"
           }
         ]
+      },
+      "anchor": {
+        "type": "viewport",
+        "position": [
+          0,
+          0
+        ]
+      },
+      "appearance": {
+        "fontSize": 16,
+        "preserveColorOnHighlight": true
       }
     }
   ],
-  "sliders": [],
-  "steps": [],
-  "constraints": [
+  "relations": [
     {
       "id": "CEncimaAB",
       "label": "C permanece sobre AB",
-      "kind": "sameSide",
-      "refs": [
+      "enabled": true,
+      "type": "same-half-plane",
+      "points": [
         "C",
-        "A",
-        "B"
+        "A"
       ],
-      "enabled": true
+      "boundary": "B"
     },
     {
       "id": "CNoCruzaBD",
       "label": "C no cruza la diagonal BD",
-      "kind": "sameSide",
-      "refs": [
+      "enabled": true,
+      "type": "same-half-plane",
+      "points": [
         "C",
-        "B",
-        "D"
+        "B"
       ],
-      "enabled": true
+      "boundary": "D"
     },
     {
       "id": "DEncimaAB",
       "label": "D permanece sobre AB",
-      "kind": "sameSide",
-      "refs": [
+      "enabled": true,
+      "type": "same-half-plane",
+      "points": [
         "D",
-        "A",
-        "B"
+        "A"
       ],
-      "enabled": true
+      "boundary": "B"
     },
     {
       "id": "DNoCruzaAC",
       "label": "D no cruza la diagonal AC",
-      "kind": "sameSide",
-      "refs": [
+      "enabled": true,
+      "type": "same-half-plane",
+      "points": [
         "D",
-        "A",
-        "C"
+        "A"
       ],
-      "enabled": true
+      "boundary": "C"
+    },
+    {
+      "id": "rectoA-perpendicular",
+      "label": "Perpendicularidad de Ángulo recto en A",
+      "enabled": true,
+      "type": "perpendicular",
+      "supports": [
+        [
+          "A",
+          "B"
+        ],
+        [
+          "A",
+          "D"
+        ]
+      ]
+    },
+    {
+      "id": "rectoB-perpendicular",
+      "label": "Perpendicularidad de Ángulo recto en B",
+      "enabled": true,
+      "type": "perpendicular",
+      "supports": [
+        [
+          "B",
+          "C"
+        ],
+        [
+          "B",
+          "A"
+        ]
+      ]
+    },
+    {
+      "id": "rectoC-perpendicular",
+      "label": "Perpendicularidad de Ángulo recto en C",
+      "enabled": true,
+      "type": "perpendicular",
+      "supports": [
+        [
+          "C",
+          "D"
+        ],
+        [
+          "C",
+          "B"
+        ]
+      ]
+    },
+    {
+      "id": "rectoD-perpendicular",
+      "label": "Perpendicularidad de Ángulo recto en D",
+      "enabled": true,
+      "type": "perpendicular",
+      "supports": [
+        [
+          "D",
+          "A"
+        ],
+        [
+          "D",
+          "C"
+        ]
+      ]
     }
   ],
-  "dependencies": [
-    {
-      "sourceId": "A",
-      "targetId": "guiaRectoB",
-      "relation": "construction"
-    },
-    {
-      "sourceId": "B",
-      "targetId": "guiaRectoB",
-      "relation": "construction"
-    },
-    {
-      "sourceId": "A",
-      "targetId": "guiaIgualBC",
-      "relation": "construction"
-    },
-    {
-      "sourceId": "B",
-      "targetId": "guiaIgualBC",
-      "relation": "construction"
-    },
-    {
-      "sourceId": "A",
-      "targetId": "guiaParalelaCD",
-      "relation": "construction"
-    },
-    {
-      "sourceId": "B",
-      "targetId": "guiaParalelaCD",
-      "relation": "construction"
-    },
-    {
-      "sourceId": "C",
-      "targetId": "guiaParalelaCD",
-      "relation": "construction"
-    },
-    {
-      "sourceId": "A",
-      "targetId": "guiaParalelaDA",
-      "relation": "construction"
-    },
-    {
-      "sourceId": "B",
-      "targetId": "guiaParalelaDA",
-      "relation": "construction"
-    },
-    {
-      "sourceId": "C",
-      "targetId": "guiaParalelaDA",
-      "relation": "construction"
-    },
-    {
-      "sourceId": "A",
-      "targetId": "guiaRectoA",
-      "relation": "construction"
-    },
-    {
-      "sourceId": "B",
-      "targetId": "guiaRectoA",
-      "relation": "construction"
-    },
-    {
-      "sourceId": "A",
-      "targetId": "guiaIgualDA",
-      "relation": "construction"
-    },
-    {
-      "sourceId": "B",
-      "targetId": "guiaIgualDA",
-      "relation": "construction"
-    },
-    {
-      "sourceId": "B",
-      "targetId": "guiaIgualCD",
-      "relation": "construction"
-    },
-    {
-      "sourceId": "C",
-      "targetId": "guiaIgualCD",
-      "relation": "construction"
-    },
-    {
-      "sourceId": "guiaRectoB",
-      "targetId": "C",
-      "relation": "constraint"
-    },
-    {
-      "sourceId": "guiaIgualBC",
-      "targetId": "C",
-      "relation": "constraint"
-    },
-    {
-      "sourceId": "guiaParalelaCD",
-      "targetId": "D",
-      "relation": "constraint"
-    },
-    {
-      "sourceId": "guiaParalelaDA",
-      "targetId": "D",
-      "relation": "constraint"
-    },
-    {
-      "sourceId": "guiaRectoA",
-      "targetId": "D",
-      "relation": "constraint"
-    },
-    {
-      "sourceId": "guiaIgualDA",
-      "targetId": "D",
-      "relation": "constraint"
-    },
-    {
-      "sourceId": "guiaIgualCD",
-      "targetId": "D",
-      "relation": "constraint"
-    },
-    {
-      "sourceId": "A",
-      "targetId": "C",
-      "relation": "constraint",
-      "constraintId": "CEncimaAB"
-    },
-    {
-      "sourceId": "B",
-      "targetId": "C",
-      "relation": "constraint",
-      "constraintId": "CEncimaAB"
-    },
-    {
-      "sourceId": "B",
-      "targetId": "C",
-      "relation": "constraint",
-      "constraintId": "CNoCruzaBD"
-    },
-    {
-      "sourceId": "A",
-      "targetId": "D",
-      "relation": "constraint",
-      "constraintId": "DEncimaAB"
-    },
-    {
-      "sourceId": "B",
-      "targetId": "D",
-      "relation": "constraint",
-      "constraintId": "DEncimaAB"
-    },
-    {
-      "sourceId": "A",
-      "targetId": "D",
-      "relation": "constraint",
-      "constraintId": "DNoCruzaAC"
-    },
-    {
-      "sourceId": "C",
-      "targetId": "D",
-      "relation": "constraint",
-      "constraintId": "DNoCruzaAC"
-    },
-    {
-      "sourceId": "A",
-      "targetId": "parAB",
-      "relation": "expression"
-    },
-    {
-      "sourceId": "B",
-      "targetId": "parAB",
-      "relation": "expression"
-    },
-    {
-      "sourceId": "C",
-      "targetId": "parAB",
-      "relation": "expression"
-    },
-    {
-      "sourceId": "D",
-      "targetId": "parAB",
-      "relation": "expression"
-    },
-    {
-      "sourceId": "AB",
-      "targetId": "parAB",
-      "relation": "expression"
-    },
-    {
-      "sourceId": "BC",
-      "targetId": "parAB",
-      "relation": "expression"
-    },
-    {
-      "sourceId": "CD",
-      "targetId": "parAB",
-      "relation": "expression"
-    },
-    {
-      "sourceId": "DA",
-      "targetId": "parAB",
-      "relation": "expression"
-    },
-    {
-      "sourceId": "A",
-      "targetId": "parCD",
-      "relation": "expression"
-    },
-    {
-      "sourceId": "B",
-      "targetId": "parCD",
-      "relation": "expression"
-    },
-    {
-      "sourceId": "C",
-      "targetId": "parCD",
-      "relation": "expression"
-    },
-    {
-      "sourceId": "D",
-      "targetId": "parCD",
-      "relation": "expression"
-    },
-    {
-      "sourceId": "AB",
-      "targetId": "parCD",
-      "relation": "expression"
-    },
-    {
-      "sourceId": "BC",
-      "targetId": "parCD",
-      "relation": "expression"
-    },
-    {
-      "sourceId": "CD",
-      "targetId": "parCD",
-      "relation": "expression"
-    },
-    {
-      "sourceId": "DA",
-      "targetId": "parCD",
-      "relation": "expression"
-    },
-    {
-      "sourceId": "A",
-      "targetId": "parBC",
-      "relation": "expression"
-    },
-    {
-      "sourceId": "B",
-      "targetId": "parBC",
-      "relation": "expression"
-    },
-    {
-      "sourceId": "C",
-      "targetId": "parBC",
-      "relation": "expression"
-    },
-    {
-      "sourceId": "D",
-      "targetId": "parBC",
-      "relation": "expression"
-    },
-    {
-      "sourceId": "AB",
-      "targetId": "parBC",
-      "relation": "expression"
-    },
-    {
-      "sourceId": "BC",
-      "targetId": "parBC",
-      "relation": "expression"
-    },
-    {
-      "sourceId": "CD",
-      "targetId": "parBC",
-      "relation": "expression"
-    },
-    {
-      "sourceId": "DA",
-      "targetId": "parBC",
-      "relation": "expression"
-    },
-    {
-      "sourceId": "A",
-      "targetId": "parDA",
-      "relation": "expression"
-    },
-    {
-      "sourceId": "B",
-      "targetId": "parDA",
-      "relation": "expression"
-    },
-    {
-      "sourceId": "C",
-      "targetId": "parDA",
-      "relation": "expression"
-    },
-    {
-      "sourceId": "D",
-      "targetId": "parDA",
-      "relation": "expression"
-    },
-    {
-      "sourceId": "AB",
-      "targetId": "parDA",
-      "relation": "expression"
-    },
-    {
-      "sourceId": "BC",
-      "targetId": "parDA",
-      "relation": "expression"
-    },
-    {
-      "sourceId": "CD",
-      "targetId": "parDA",
-      "relation": "expression"
-    },
-    {
-      "sourceId": "DA",
-      "targetId": "parDA",
-      "relation": "expression"
-    },
-    {
-      "sourceId": "A",
-      "targetId": "igualTodoAB",
-      "relation": "expression"
-    },
-    {
-      "sourceId": "B",
-      "targetId": "igualTodoAB",
-      "relation": "expression"
-    },
-    {
-      "sourceId": "C",
-      "targetId": "igualTodoAB",
-      "relation": "expression"
-    },
-    {
-      "sourceId": "D",
-      "targetId": "igualTodoAB",
-      "relation": "expression"
-    },
-    {
-      "sourceId": "AB",
-      "targetId": "igualTodoAB",
-      "relation": "expression"
-    },
-    {
-      "sourceId": "BC",
-      "targetId": "igualTodoAB",
-      "relation": "expression"
-    },
-    {
-      "sourceId": "CD",
-      "targetId": "igualTodoAB",
-      "relation": "expression"
-    },
-    {
-      "sourceId": "DA",
-      "targetId": "igualTodoAB",
-      "relation": "expression"
-    },
-    {
-      "sourceId": "A",
-      "targetId": "igualTodoBC",
-      "relation": "expression"
-    },
-    {
-      "sourceId": "B",
-      "targetId": "igualTodoBC",
-      "relation": "expression"
-    },
-    {
-      "sourceId": "C",
-      "targetId": "igualTodoBC",
-      "relation": "expression"
-    },
-    {
-      "sourceId": "D",
-      "targetId": "igualTodoBC",
-      "relation": "expression"
-    },
-    {
-      "sourceId": "AB",
-      "targetId": "igualTodoBC",
-      "relation": "expression"
-    },
-    {
-      "sourceId": "BC",
-      "targetId": "igualTodoBC",
-      "relation": "expression"
-    },
-    {
-      "sourceId": "CD",
-      "targetId": "igualTodoBC",
-      "relation": "expression"
-    },
-    {
-      "sourceId": "DA",
-      "targetId": "igualTodoBC",
-      "relation": "expression"
-    },
-    {
-      "sourceId": "A",
-      "targetId": "igualTodoCD",
-      "relation": "expression"
-    },
-    {
-      "sourceId": "B",
-      "targetId": "igualTodoCD",
-      "relation": "expression"
-    },
-    {
-      "sourceId": "C",
-      "targetId": "igualTodoCD",
-      "relation": "expression"
-    },
-    {
-      "sourceId": "D",
-      "targetId": "igualTodoCD",
-      "relation": "expression"
-    },
-    {
-      "sourceId": "AB",
-      "targetId": "igualTodoCD",
-      "relation": "expression"
-    },
-    {
-      "sourceId": "BC",
-      "targetId": "igualTodoCD",
-      "relation": "expression"
-    },
-    {
-      "sourceId": "CD",
-      "targetId": "igualTodoCD",
-      "relation": "expression"
-    },
-    {
-      "sourceId": "DA",
-      "targetId": "igualTodoCD",
-      "relation": "expression"
-    },
-    {
-      "sourceId": "A",
-      "targetId": "igualTodoDA",
-      "relation": "expression"
-    },
-    {
-      "sourceId": "B",
-      "targetId": "igualTodoDA",
-      "relation": "expression"
-    },
-    {
-      "sourceId": "C",
-      "targetId": "igualTodoDA",
-      "relation": "expression"
-    },
-    {
-      "sourceId": "D",
-      "targetId": "igualTodoDA",
-      "relation": "expression"
-    },
-    {
-      "sourceId": "AB",
-      "targetId": "igualTodoDA",
-      "relation": "expression"
-    },
-    {
-      "sourceId": "BC",
-      "targetId": "igualTodoDA",
-      "relation": "expression"
-    },
-    {
-      "sourceId": "CD",
-      "targetId": "igualTodoDA",
-      "relation": "expression"
-    },
-    {
-      "sourceId": "DA",
-      "targetId": "igualTodoDA",
-      "relation": "expression"
-    },
-    {
-      "sourceId": "A",
-      "targetId": "cometaACAB",
-      "relation": "expression"
-    },
-    {
-      "sourceId": "B",
-      "targetId": "cometaACAB",
-      "relation": "expression"
-    },
-    {
-      "sourceId": "C",
-      "targetId": "cometaACAB",
-      "relation": "expression"
-    },
-    {
-      "sourceId": "D",
-      "targetId": "cometaACAB",
-      "relation": "expression"
-    },
-    {
-      "sourceId": "AB",
-      "targetId": "cometaACAB",
-      "relation": "expression"
-    },
-    {
-      "sourceId": "BC",
-      "targetId": "cometaACAB",
-      "relation": "expression"
-    },
-    {
-      "sourceId": "CD",
-      "targetId": "cometaACAB",
-      "relation": "expression"
-    },
-    {
-      "sourceId": "DA",
-      "targetId": "cometaACAB",
-      "relation": "expression"
-    },
-    {
-      "sourceId": "A",
-      "targetId": "cometaACDA",
-      "relation": "expression"
-    },
-    {
-      "sourceId": "B",
-      "targetId": "cometaACDA",
-      "relation": "expression"
-    },
-    {
-      "sourceId": "C",
-      "targetId": "cometaACDA",
-      "relation": "expression"
-    },
-    {
-      "sourceId": "D",
-      "targetId": "cometaACDA",
-      "relation": "expression"
-    },
-    {
-      "sourceId": "AB",
-      "targetId": "cometaACDA",
-      "relation": "expression"
-    },
-    {
-      "sourceId": "BC",
-      "targetId": "cometaACDA",
-      "relation": "expression"
-    },
-    {
-      "sourceId": "CD",
-      "targetId": "cometaACDA",
-      "relation": "expression"
-    },
-    {
-      "sourceId": "DA",
-      "targetId": "cometaACDA",
-      "relation": "expression"
-    },
-    {
-      "sourceId": "A",
-      "targetId": "cometaACBC",
-      "relation": "expression"
-    },
-    {
-      "sourceId": "B",
-      "targetId": "cometaACBC",
-      "relation": "expression"
-    },
-    {
-      "sourceId": "C",
-      "targetId": "cometaACBC",
-      "relation": "expression"
-    },
-    {
-      "sourceId": "D",
-      "targetId": "cometaACBC",
-      "relation": "expression"
-    },
-    {
-      "sourceId": "AB",
-      "targetId": "cometaACBC",
-      "relation": "expression"
-    },
-    {
-      "sourceId": "BC",
-      "targetId": "cometaACBC",
-      "relation": "expression"
-    },
-    {
-      "sourceId": "CD",
-      "targetId": "cometaACBC",
-      "relation": "expression"
-    },
-    {
-      "sourceId": "DA",
-      "targetId": "cometaACBC",
-      "relation": "expression"
-    },
-    {
-      "sourceId": "A",
-      "targetId": "cometaACCD",
-      "relation": "expression"
-    },
-    {
-      "sourceId": "B",
-      "targetId": "cometaACCD",
-      "relation": "expression"
-    },
-    {
-      "sourceId": "C",
-      "targetId": "cometaACCD",
-      "relation": "expression"
-    },
-    {
-      "sourceId": "D",
-      "targetId": "cometaACCD",
-      "relation": "expression"
-    },
-    {
-      "sourceId": "AB",
-      "targetId": "cometaACCD",
-      "relation": "expression"
-    },
-    {
-      "sourceId": "BC",
-      "targetId": "cometaACCD",
-      "relation": "expression"
-    },
-    {
-      "sourceId": "CD",
-      "targetId": "cometaACCD",
-      "relation": "expression"
-    },
-    {
-      "sourceId": "DA",
-      "targetId": "cometaACCD",
-      "relation": "expression"
-    },
-    {
-      "sourceId": "A",
-      "targetId": "cometaBDAB",
-      "relation": "expression"
-    },
-    {
-      "sourceId": "B",
-      "targetId": "cometaBDAB",
-      "relation": "expression"
-    },
-    {
-      "sourceId": "C",
-      "targetId": "cometaBDAB",
-      "relation": "expression"
-    },
-    {
-      "sourceId": "D",
-      "targetId": "cometaBDAB",
-      "relation": "expression"
-    },
-    {
-      "sourceId": "AB",
-      "targetId": "cometaBDAB",
-      "relation": "expression"
-    },
-    {
-      "sourceId": "BC",
-      "targetId": "cometaBDAB",
-      "relation": "expression"
-    },
-    {
-      "sourceId": "CD",
-      "targetId": "cometaBDAB",
-      "relation": "expression"
-    },
-    {
-      "sourceId": "DA",
-      "targetId": "cometaBDAB",
-      "relation": "expression"
-    },
-    {
-      "sourceId": "A",
-      "targetId": "cometaBDBC",
-      "relation": "expression"
-    },
-    {
-      "sourceId": "B",
-      "targetId": "cometaBDBC",
-      "relation": "expression"
-    },
-    {
-      "sourceId": "C",
-      "targetId": "cometaBDBC",
-      "relation": "expression"
-    },
-    {
-      "sourceId": "D",
-      "targetId": "cometaBDBC",
-      "relation": "expression"
-    },
-    {
-      "sourceId": "AB",
-      "targetId": "cometaBDBC",
-      "relation": "expression"
-    },
-    {
-      "sourceId": "BC",
-      "targetId": "cometaBDBC",
-      "relation": "expression"
-    },
-    {
-      "sourceId": "CD",
-      "targetId": "cometaBDBC",
-      "relation": "expression"
-    },
-    {
-      "sourceId": "DA",
-      "targetId": "cometaBDBC",
-      "relation": "expression"
-    },
-    {
-      "sourceId": "A",
-      "targetId": "cometaBDCD",
-      "relation": "expression"
-    },
-    {
-      "sourceId": "B",
-      "targetId": "cometaBDCD",
-      "relation": "expression"
-    },
-    {
-      "sourceId": "C",
-      "targetId": "cometaBDCD",
-      "relation": "expression"
-    },
-    {
-      "sourceId": "D",
-      "targetId": "cometaBDCD",
-      "relation": "expression"
-    },
-    {
-      "sourceId": "AB",
-      "targetId": "cometaBDCD",
-      "relation": "expression"
-    },
-    {
-      "sourceId": "BC",
-      "targetId": "cometaBDCD",
-      "relation": "expression"
-    },
-    {
-      "sourceId": "CD",
-      "targetId": "cometaBDCD",
-      "relation": "expression"
-    },
-    {
-      "sourceId": "DA",
-      "targetId": "cometaBDCD",
-      "relation": "expression"
-    },
-    {
-      "sourceId": "A",
-      "targetId": "cometaBDDA",
-      "relation": "expression"
-    },
-    {
-      "sourceId": "B",
-      "targetId": "cometaBDDA",
-      "relation": "expression"
-    },
-    {
-      "sourceId": "C",
-      "targetId": "cometaBDDA",
-      "relation": "expression"
-    },
-    {
-      "sourceId": "D",
-      "targetId": "cometaBDDA",
-      "relation": "expression"
-    },
-    {
-      "sourceId": "AB",
-      "targetId": "cometaBDDA",
-      "relation": "expression"
-    },
-    {
-      "sourceId": "BC",
-      "targetId": "cometaBDDA",
-      "relation": "expression"
-    },
-    {
-      "sourceId": "CD",
-      "targetId": "cometaBDDA",
-      "relation": "expression"
-    },
-    {
-      "sourceId": "DA",
-      "targetId": "cometaBDDA",
-      "relation": "expression"
-    },
-    {
-      "sourceId": "A",
-      "targetId": "rectoA",
-      "relation": "expression"
-    },
-    {
-      "sourceId": "B",
-      "targetId": "rectoA",
-      "relation": "expression"
-    },
-    {
-      "sourceId": "C",
-      "targetId": "rectoA",
-      "relation": "expression"
-    },
-    {
-      "sourceId": "D",
-      "targetId": "rectoA",
-      "relation": "expression"
-    },
-    {
-      "sourceId": "AB",
-      "targetId": "rectoA",
-      "relation": "expression"
-    },
-    {
-      "sourceId": "BC",
-      "targetId": "rectoA",
-      "relation": "expression"
-    },
-    {
-      "sourceId": "CD",
-      "targetId": "rectoA",
-      "relation": "expression"
-    },
-    {
-      "sourceId": "DA",
-      "targetId": "rectoA",
-      "relation": "expression"
-    },
-    {
-      "sourceId": "A",
-      "targetId": "rectoB",
-      "relation": "expression"
-    },
-    {
-      "sourceId": "B",
-      "targetId": "rectoB",
-      "relation": "expression"
-    },
-    {
-      "sourceId": "C",
-      "targetId": "rectoB",
-      "relation": "expression"
-    },
-    {
-      "sourceId": "D",
-      "targetId": "rectoB",
-      "relation": "expression"
-    },
-    {
-      "sourceId": "AB",
-      "targetId": "rectoB",
-      "relation": "expression"
-    },
-    {
-      "sourceId": "BC",
-      "targetId": "rectoB",
-      "relation": "expression"
-    },
-    {
-      "sourceId": "CD",
-      "targetId": "rectoB",
-      "relation": "expression"
-    },
-    {
-      "sourceId": "DA",
-      "targetId": "rectoB",
-      "relation": "expression"
-    },
-    {
-      "sourceId": "A",
-      "targetId": "rectoC",
-      "relation": "expression"
-    },
-    {
-      "sourceId": "B",
-      "targetId": "rectoC",
-      "relation": "expression"
-    },
-    {
-      "sourceId": "C",
-      "targetId": "rectoC",
-      "relation": "expression"
-    },
-    {
-      "sourceId": "D",
-      "targetId": "rectoC",
-      "relation": "expression"
-    },
-    {
-      "sourceId": "AB",
-      "targetId": "rectoC",
-      "relation": "expression"
-    },
-    {
-      "sourceId": "BC",
-      "targetId": "rectoC",
-      "relation": "expression"
-    },
-    {
-      "sourceId": "CD",
-      "targetId": "rectoC",
-      "relation": "expression"
-    },
-    {
-      "sourceId": "DA",
-      "targetId": "rectoC",
-      "relation": "expression"
-    },
-    {
-      "sourceId": "A",
-      "targetId": "rectoD",
-      "relation": "expression"
-    },
-    {
-      "sourceId": "B",
-      "targetId": "rectoD",
-      "relation": "expression"
-    },
-    {
-      "sourceId": "C",
-      "targetId": "rectoD",
-      "relation": "expression"
-    },
-    {
-      "sourceId": "D",
-      "targetId": "rectoD",
-      "relation": "expression"
-    },
-    {
-      "sourceId": "AB",
-      "targetId": "rectoD",
-      "relation": "expression"
-    },
-    {
-      "sourceId": "BC",
-      "targetId": "rectoD",
-      "relation": "expression"
-    },
-    {
-      "sourceId": "CD",
-      "targetId": "rectoD",
-      "relation": "expression"
-    },
-    {
-      "sourceId": "DA",
-      "targetId": "rectoD",
-      "relation": "expression"
-    },
-    {
-      "sourceId": "A",
-      "targetId": "clasificacion",
-      "relation": "expression"
-    },
-    {
-      "sourceId": "B",
-      "targetId": "clasificacion",
-      "relation": "expression"
-    },
-    {
-      "sourceId": "C",
-      "targetId": "clasificacion",
-      "relation": "expression"
-    },
-    {
-      "sourceId": "D",
-      "targetId": "clasificacion",
-      "relation": "expression"
-    },
-    {
-      "sourceId": "AB",
-      "targetId": "clasificacion",
-      "relation": "expression"
-    },
-    {
-      "sourceId": "BC",
-      "targetId": "clasificacion",
-      "relation": "expression"
-    },
-    {
-      "sourceId": "CD",
-      "targetId": "clasificacion",
-      "relation": "expression"
-    },
-    {
-      "sourceId": "DA",
-      "targetId": "clasificacion",
-      "relation": "expression"
-    },
-    {
-      "sourceId": "D",
-      "targetId": "parCD",
-      "relation": "construction"
-    },
-    {
-      "sourceId": "C",
-      "targetId": "parCD",
-      "relation": "construction"
-    },
-    {
-      "sourceId": "A",
-      "targetId": "parDA",
-      "relation": "construction"
-    },
-    {
-      "sourceId": "D",
-      "targetId": "parDA",
-      "relation": "construction"
-    }
-  ],
-  "note": "Mueve C y D para descubrir los diferentes tipos de cuadriláteros",
-  "extensions": {}
+  "steps": [],
+  "note": "Mueve C y D para descubrir los diferentes tipos de cuadriláteros"
 }
 );
 /* @matematika-diagram-spec:end */

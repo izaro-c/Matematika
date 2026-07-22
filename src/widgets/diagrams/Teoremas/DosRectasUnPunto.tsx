@@ -3,8 +3,8 @@ import { createDiagramSpec, DiagramRenderer } from '@/shared/diagrams/public';
 /* @matematika-diagram-spec:start */
 export const DosRectasUnPuntoSpec = createDiagramSpec(
 {
-  "version": 2,
-  "renderer": "matematika-diagram-renderer-v2",
+  "version": 3,
+  "renderer": "matematika-diagram-renderer-v3",
   "title": "Dos rectas distintas comparten a lo sumo un punto",
   "componentId": "dos-rectas-un-punto",
   "category": "Teoremas",
@@ -81,7 +81,7 @@ export const DosRectasUnPuntoSpec = createDiagramSpec(
       "color": "terracota"
     }
   ],
-  "points": [
+  "objects": [
     {
       "id": "A",
       "label": "A",
@@ -97,18 +97,25 @@ export const DosRectasUnPuntoSpec = createDiagramSpec(
         "role": "primary"
       },
       "target": false,
-      "style": {
-        "pointSize": 7,
-        "highlightPointSize": 10,
+      "objectType": "point",
+      "definition": {
+        "type": "coordinates",
+        "x": -2.75,
+        "y": -2.25
+      },
+      "mobility": {
+        "type": "free"
+      },
+      "appearance": {
+        "size": 7,
+        "labelVisible": true,
+        "highlightSize": 10,
         "preserveColorOnHighlight": true
       },
-      "x": -2.75,
-      "y": -2.25,
-      "showLabel": true,
-      "fixed": false,
-      "constraint": "free",
-      "snapToGrid": true,
-      "snapSize": 0.25
+      "interaction": {
+        "snapToGrid": true,
+        "snapSize": 0.25
+      }
     },
     {
       "id": "B",
@@ -125,18 +132,25 @@ export const DosRectasUnPuntoSpec = createDiagramSpec(
         "role": "primary"
       },
       "target": false,
-      "style": {
-        "pointSize": 7,
-        "highlightPointSize": 10,
+      "objectType": "point",
+      "definition": {
+        "type": "coordinates",
+        "x": 2.75,
+        "y": 1.5
+      },
+      "mobility": {
+        "type": "free"
+      },
+      "appearance": {
+        "size": 7,
+        "labelVisible": true,
+        "highlightSize": 10,
         "preserveColorOnHighlight": true
       },
-      "x": 2.75,
-      "y": 1.5,
-      "showLabel": true,
-      "fixed": false,
-      "constraint": "free",
-      "snapToGrid": true,
-      "snapSize": 0.25
+      "interaction": {
+        "snapToGrid": true,
+        "snapSize": 0.25
+      }
     },
     {
       "id": "C",
@@ -153,18 +167,25 @@ export const DosRectasUnPuntoSpec = createDiagramSpec(
         "role": "primary"
       },
       "target": false,
-      "style": {
-        "pointSize": 7,
-        "highlightPointSize": 10,
+      "objectType": "point",
+      "definition": {
+        "type": "coordinates",
+        "x": -3.25,
+        "y": 2.25
+      },
+      "mobility": {
+        "type": "free"
+      },
+      "appearance": {
+        "size": 7,
+        "labelVisible": true,
+        "highlightSize": 10,
         "preserveColorOnHighlight": true
       },
-      "x": -3.25,
-      "y": 2.25,
-      "showLabel": true,
-      "fixed": false,
-      "constraint": "free",
-      "snapToGrid": true,
-      "snapSize": 0.25
+      "interaction": {
+        "snapToGrid": true,
+        "snapSize": 0.25
+      }
     },
     {
       "id": "D",
@@ -181,21 +202,26 @@ export const DosRectasUnPuntoSpec = createDiagramSpec(
         "role": "primary"
       },
       "target": false,
-      "style": {
-        "pointSize": 7,
-        "highlightPointSize": 10,
+      "objectType": "point",
+      "definition": {
+        "type": "coordinates",
+        "x": 3,
+        "y": -2.25
+      },
+      "mobility": {
+        "type": "free"
+      },
+      "appearance": {
+        "size": 7,
+        "labelVisible": true,
+        "highlightSize": 10,
         "preserveColorOnHighlight": true
       },
-      "x": 3,
-      "y": -2.25,
-      "showLabel": true,
-      "fixed": false,
-      "constraint": "free",
-      "snapToGrid": true,
-      "snapSize": 0.25
-    }
-  ],
-  "elements": [
+      "interaction": {
+        "snapToGrid": true,
+        "snapSize": 0.25
+      }
+    },
     {
       "id": "line1",
       "label": "$l$",
@@ -214,8 +240,20 @@ export const DosRectasUnPuntoSpec = createDiagramSpec(
       },
       "target": true,
       "targetId": "line1",
-      "style": {
+      "objectType": "path",
+      "geometry": {
+        "type": "line",
+        "construction": {
+          "type": "through-points",
+          "points": [
+            "A",
+            "B"
+          ]
+        }
+      },
+      "appearance": {
         "strokeWidth": 2.4,
+        "labelVisible": true,
         "labelOffset": [
           10,
           20
@@ -224,13 +262,7 @@ export const DosRectasUnPuntoSpec = createDiagramSpec(
         "labelSize": 16,
         "highlightStrokeWidth": 3,
         "preserveColorOnHighlight": true
-      },
-      "kind": "line",
-      "refs": [
-        "A",
-        "B"
-      ],
-      "showLabel": true
+      }
     },
     {
       "id": "line2",
@@ -250,8 +282,20 @@ export const DosRectasUnPuntoSpec = createDiagramSpec(
       },
       "target": true,
       "targetId": "line2",
-      "style": {
+      "objectType": "path",
+      "geometry": {
+        "type": "line",
+        "construction": {
+          "type": "through-points",
+          "points": [
+            "C",
+            "D"
+          ]
+        }
+      },
+      "appearance": {
         "strokeWidth": 2.4,
+        "labelVisible": true,
         "labelOffset": [
           10,
           10
@@ -260,13 +304,7 @@ export const DosRectasUnPuntoSpec = createDiagramSpec(
         "labelSize": 16,
         "highlightStrokeWidth": 3,
         "preserveColorOnHighlight": true
-      },
-      "kind": "line",
-      "refs": [
-        "C",
-        "D"
-      ],
-      "showLabel": true
+      }
     },
     {
       "id": "P",
@@ -286,16 +324,22 @@ export const DosRectasUnPuntoSpec = createDiagramSpec(
       },
       "target": true,
       "targetId": "P_interseccion",
-      "style": {
-        "pointSize": 7,
-        "highlightPointSize": 10,
-        "preserveColorOnHighlight": true
+      "objectType": "point",
+      "definition": {
+        "type": "intersection",
+        "supports": [
+          "line1",
+          "line2"
+        ]
       },
-      "kind": "intersection",
-      "refs": [
-        "line1",
-        "line2"
-      ]
+      "mobility": {
+        "type": "fixed"
+      },
+      "appearance": {
+        "size": 7,
+        "highlightSize": 10,
+        "preserveColorOnHighlight": true
+      }
     },
     {
       "id": "infoPanel4",
@@ -313,27 +357,27 @@ export const DosRectasUnPuntoSpec = createDiagramSpec(
       },
       "target": true,
       "targetId": "infoPanel4",
-      "style": {
-        "preserveColorOnHighlight": true
+      "objectType": "annotation",
+      "variant": "panel",
+      "content": {
+        "text": "$P\\in l \\cap m$",
+        "layout": "stack"
       },
-      "kind": "infoPanel",
-      "refs": [],
-      "text": "$P\\in l \\cap m$",
-      "properties": {
-        "anchorMode": "viewport",
-        "viewportPosition": [
+      "anchor": {
+        "type": "viewport",
+        "position": [
           0,
           0
-        ],
-        "infoPanelLayout": "stack"
+        ]
+      },
+      "appearance": {
+        "preserveColorOnHighlight": true
       }
     }
   ],
-  "sliders": [],
+  "relations": [],
   "steps": [],
-  "dependencies": [],
-  "note": "Mueve A, B, C y D",
-  "extensions": {}
+  "note": "Mueve A, B, C y D"
 }
 );
 /* @matematika-diagram-spec:end */

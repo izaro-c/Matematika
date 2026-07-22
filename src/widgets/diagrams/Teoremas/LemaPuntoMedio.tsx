@@ -3,8 +3,8 @@ import { createDiagramSpec, DiagramRenderer } from '@/shared/diagrams/public';
 /* @matematika-diagram-spec:start */
 export const LemaPuntoMedioSpec = createDiagramSpec(
 {
-  "version": 2,
-  "renderer": "matematika-diagram-renderer-v2",
+  "version": 3,
+  "renderer": "matematika-diagram-renderer-v3",
   "title": "Punto medio",
   "componentId": "lema-punto-medio",
   "category": "Lemas",
@@ -83,7 +83,7 @@ export const LemaPuntoMedioSpec = createDiagramSpec(
       "color": "granada"
     }
   ],
-  "points": [
+  "objects": [
     {
       "id": "A",
       "label": "A",
@@ -100,18 +100,25 @@ export const LemaPuntoMedioSpec = createDiagramSpec(
       },
       "target": true,
       "targetId": "A",
-      "style": {
-        "pointSize": 7,
-        "highlightPointSize": 10,
+      "objectType": "point",
+      "definition": {
+        "type": "coordinates",
+        "x": -3,
+        "y": 0
+      },
+      "mobility": {
+        "type": "free"
+      },
+      "appearance": {
+        "size": 7,
+        "labelVisible": true,
+        "highlightSize": 10,
         "preserveColorOnHighlight": true
       },
-      "x": -3,
-      "y": 0,
-      "showLabel": true,
-      "fixed": false,
-      "constraint": "free",
-      "snapToGrid": true,
-      "snapSize": 0.25
+      "interaction": {
+        "snapToGrid": true,
+        "snapSize": 0.25
+      }
     },
     {
       "id": "B",
@@ -129,21 +136,26 @@ export const LemaPuntoMedioSpec = createDiagramSpec(
       },
       "target": true,
       "targetId": "B",
-      "style": {
-        "pointSize": 7,
-        "highlightPointSize": 10,
+      "objectType": "point",
+      "definition": {
+        "type": "coordinates",
+        "x": 3,
+        "y": 1
+      },
+      "mobility": {
+        "type": "free"
+      },
+      "appearance": {
+        "size": 7,
+        "labelVisible": true,
+        "highlightSize": 10,
         "preserveColorOnHighlight": true
       },
-      "x": 3,
-      "y": 1,
-      "showLabel": true,
-      "fixed": false,
-      "constraint": "free",
-      "snapToGrid": true,
-      "snapSize": 0.25
-    }
-  ],
-  "elements": [
+      "interaction": {
+        "snapToGrid": true,
+        "snapSize": 0.25
+      }
+    },
     {
       "id": "AB",
       "label": "Segmento AB",
@@ -161,16 +173,19 @@ export const LemaPuntoMedioSpec = createDiagramSpec(
         "role": "secondary"
       },
       "target": false,
-      "style": {
+      "objectType": "path",
+      "geometry": {
+        "type": "segment",
+        "points": [
+          "A",
+          "B"
+        ]
+      },
+      "appearance": {
         "strokeWidth": 3,
         "highlightStrokeWidth": 3,
         "preserveColorOnHighlight": true
-      },
-      "kind": "segment",
-      "refs": [
-        "A",
-        "B"
-      ]
+      }
     },
     {
       "id": "M",
@@ -188,16 +203,22 @@ export const LemaPuntoMedioSpec = createDiagramSpec(
       },
       "target": true,
       "targetId": "punto-medio",
-      "style": {
-        "pointSize": 7,
-        "highlightPointSize": 10,
-        "preserveColorOnHighlight": true
+      "objectType": "point",
+      "definition": {
+        "type": "midpoint",
+        "points": [
+          "A",
+          "B"
+        ]
       },
-      "kind": "midpoint",
-      "refs": [
-        "A",
-        "B"
-      ]
+      "mobility": {
+        "type": "fixed"
+      },
+      "appearance": {
+        "size": 7,
+        "highlightSize": 10,
+        "preserveColorOnHighlight": true
+      }
     },
     {
       "id": "AM",
@@ -216,16 +237,19 @@ export const LemaPuntoMedioSpec = createDiagramSpec(
         "role": "secondary"
       },
       "target": false,
-      "style": {
+      "objectType": "path",
+      "geometry": {
+        "type": "segment",
+        "points": [
+          "A",
+          "M"
+        ]
+      },
+      "appearance": {
         "strokeWidth": 2.4,
         "highlightStrokeWidth": 3,
         "preserveColorOnHighlight": true
-      },
-      "kind": "segment",
-      "refs": [
-        "A",
-        "M"
-      ]
+      }
     },
     {
       "id": "MB",
@@ -244,16 +268,19 @@ export const LemaPuntoMedioSpec = createDiagramSpec(
         "role": "secondary"
       },
       "target": false,
-      "style": {
+      "objectType": "path",
+      "geometry": {
+        "type": "segment",
+        "points": [
+          "M",
+          "B"
+        ]
+      },
+      "appearance": {
         "strokeWidth": 2.4,
         "highlightStrokeWidth": 3,
         "preserveColorOnHighlight": true
-      },
-      "kind": "segment",
-      "refs": [
-        "M",
-        "B"
-      ]
+      }
     },
     {
       "id": "dAM",
@@ -272,21 +299,19 @@ export const LemaPuntoMedioSpec = createDiagramSpec(
         "role": "secondary"
       },
       "target": false,
-      "style": {
+      "objectType": "path",
+      "geometry": {
+        "type": "dimension",
+        "points": [
+          "A",
+          "M"
+        ],
+        "offset": 0
+      },
+      "appearance": {
         "strokeWidth": 2.4,
         "highlightStrokeWidth": 3,
         "preserveColorOnHighlight": true
-      },
-      "kind": "dimensionLine",
-      "refs": [
-        "A",
-        "M"
-      ],
-      "text": "AM = {value}",
-      "properties": {
-        "unit": "u",
-        "precision": 2,
-        "offset": 0
       }
     },
     {
@@ -306,29 +331,25 @@ export const LemaPuntoMedioSpec = createDiagramSpec(
         "role": "secondary"
       },
       "target": false,
-      "style": {
+      "objectType": "path",
+      "geometry": {
+        "type": "dimension",
+        "points": [
+          "M",
+          "B"
+        ],
+        "offset": 0
+      },
+      "appearance": {
         "strokeWidth": 2.4,
         "highlightStrokeWidth": 3,
         "preserveColorOnHighlight": true
-      },
-      "kind": "dimensionLine",
-      "refs": [
-        "M",
-        "B"
-      ],
-      "text": "MB = {value}",
-      "properties": {
-        "unit": "u",
-        "precision": 2,
-        "offset": 0
       }
     }
   ],
-  "sliders": [],
+  "relations": [],
   "steps": [],
-  "dependencies": [],
-  "note": "Mueve A o B",
-  "extensions": {}
+  "note": "Mueve A o B"
 }
 );
 /* @matematika-diagram-spec:end */

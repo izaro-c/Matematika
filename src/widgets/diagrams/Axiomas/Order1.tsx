@@ -3,8 +3,8 @@ import { createDiagramSpec, DiagramRenderer } from '@/shared/diagrams/public';
 /* @matematika-diagram-spec:start */
 export const Order1Spec = createDiagramSpec(
 {
-  "version": 2,
-  "renderer": "matematika-diagram-renderer-v2",
+  "version": 3,
+  "renderer": "matematika-diagram-renderer-v3",
   "title": "Axioma de Orden I",
   "componentId": "axioma-de-orden-i",
   "category": "Axiomas",
@@ -52,7 +52,7 @@ export const Order1Spec = createDiagramSpec(
     }
   ],
   "groups": [],
-  "points": [
+  "objects": [
     {
       "id": "pA",
       "label": "A",
@@ -69,16 +69,22 @@ export const Order1Spec = createDiagramSpec(
       },
       "target": true,
       "targetId": "pA",
-      "style": {
-        "pointSize": 7,
-        "highlightPointSize": 10,
+      "objectType": "point",
+      "definition": {
+        "type": "coordinates",
+        "x": -2.5,
+        "y": 0
+      },
+      "mobility": {
+        "type": "on-support",
+        "support": "lineDC"
+      },
+      "appearance": {
+        "size": 7,
+        "highlightSize": 10,
         "preserveColorOnHighlight": true
       },
-      "x": -2.5,
-      "y": 0,
-      "fixed": false,
-      "constraint": "glider",
-      "gliderTarget": "lineDC"
+      "interaction": {}
     },
     {
       "id": "pC",
@@ -96,16 +102,22 @@ export const Order1Spec = createDiagramSpec(
       },
       "target": true,
       "targetId": "pB",
-      "style": {
-        "pointSize": 7,
-        "highlightPointSize": 10,
+      "objectType": "point",
+      "definition": {
+        "type": "coordinates",
+        "x": 4.5,
+        "y": 0
+      },
+      "mobility": {
+        "type": "on-support",
+        "support": "lineDC"
+      },
+      "appearance": {
+        "size": 7,
+        "highlightSize": 10,
         "preserveColorOnHighlight": true
       },
-      "x": 4.5,
-      "y": 0,
-      "fixed": false,
-      "constraint": "glider",
-      "gliderTarget": "lineDC"
+      "interaction": {}
     },
     {
       "id": "pL",
@@ -123,15 +135,21 @@ export const Order1Spec = createDiagramSpec(
       },
       "target": true,
       "targetId": "pC",
-      "style": {
-        "pointSize": 0,
-        "highlightPointSize": 0,
+      "objectType": "point",
+      "definition": {
+        "type": "coordinates",
+        "x": 0,
+        "y": 0
+      },
+      "mobility": {
+        "type": "free"
+      },
+      "appearance": {
+        "size": 0,
+        "highlightSize": 0,
         "preserveColorOnHighlight": true
       },
-      "x": 0,
-      "y": 0,
-      "fixed": false,
-      "constraint": "free"
+      "interaction": {}
     },
     {
       "id": "pD",
@@ -149,10 +167,17 @@ export const Order1Spec = createDiagramSpec(
       },
       "target": true,
       "targetId": "pD",
-      "x": 1,
-      "y": 0,
-      "fixed": false,
-      "constraint": "free"
+      "objectType": "point",
+      "definition": {
+        "type": "coordinates",
+        "x": 1,
+        "y": 0
+      },
+      "mobility": {
+        "type": "free"
+      },
+      "appearance": {},
+      "interaction": {}
     },
     {
       "id": "pB",
@@ -170,19 +195,23 @@ export const Order1Spec = createDiagramSpec(
       },
       "target": true,
       "targetId": "pE",
-      "style": {
-        "pointSize": 7,
-        "highlightPointSize": 10,
+      "objectType": "point",
+      "definition": {
+        "type": "coordinates",
+        "x": 1,
+        "y": 0
+      },
+      "mobility": {
+        "type": "on-support",
+        "support": "segAB"
+      },
+      "appearance": {
+        "size": 7,
+        "highlightSize": 10,
         "preserveColorOnHighlight": true
       },
-      "x": 1,
-      "y": 0,
-      "fixed": false,
-      "constraint": "glider",
-      "gliderTarget": "segAB"
-    }
-  ],
-  "elements": [
+      "interaction": {}
+    },
     {
       "id": "lineDC",
       "label": "Recta",
@@ -199,16 +228,22 @@ export const Order1Spec = createDiagramSpec(
       },
       "target": true,
       "targetId": "lineDC",
-      "style": {
+      "objectType": "path",
+      "geometry": {
+        "type": "line",
+        "construction": {
+          "type": "through-points",
+          "points": [
+            "pD",
+            "pL"
+          ]
+        }
+      },
+      "appearance": {
         "strokeWidth": 2,
         "highlightStrokeWidth": 2,
         "preserveColorOnHighlight": true
-      },
-      "kind": "line",
-      "refs": [
-        "pD",
-        "pL"
-      ]
+      }
     },
     {
       "id": "segAB",
@@ -226,40 +261,20 @@ export const Order1Spec = createDiagramSpec(
       },
       "target": true,
       "targetId": "segAB",
-      "kind": "segment",
-      "refs": [
-        "pA",
-        "pC"
-      ]
+      "objectType": "path",
+      "geometry": {
+        "type": "segment",
+        "points": [
+          "pA",
+          "pC"
+        ]
+      },
+      "appearance": {}
     }
   ],
-  "sliders": [],
+  "relations": [],
   "steps": [],
-  "constraints": [],
-  "dependencies": [
-    {
-      "sourceId": "pD",
-      "targetId": "lineDC",
-      "relation": "construction"
-    },
-    {
-      "sourceId": "pL",
-      "targetId": "lineDC",
-      "relation": "construction"
-    },
-    {
-      "sourceId": "pA",
-      "targetId": "segAB",
-      "relation": "construction"
-    },
-    {
-      "sourceId": "pC",
-      "targetId": "segAB",
-      "relation": "construction"
-    }
-  ],
-  "note": "Arrastra B",
-  "extensions": {}
+  "note": "Arrastra B"
 }
 );
 /* @matematika-diagram-spec:end */

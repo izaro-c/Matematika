@@ -9,6 +9,7 @@ import {
 } from '../../src/features/editor/diagrams/source/parser';
 import { KIND_LABELS } from '../../src/features/editor/diagrams/model/commands';
 import { DiagramSpecMigrationError, migrateDiagramSpec } from '../../src/shared/diagrams/spec/migrations';
+import { projectDiagramSpecV3ToV2 } from '../../src/shared/diagrams/spec/v3Compatibility';
 
 function parseCoords(node?: ts.Expression): { x: number; y: number } | null {
   if (!node || !ts.isArrayLiteralExpression(node)) return null;
@@ -514,7 +515,7 @@ export function parseDiagramSourceAST(source: string, metadataType = ''): ParseD
   };
   let resultModel: VisualDiagramModel | undefined;
   try {
-    resultModel = migrateDiagramSpec(legacyResultModel).spec;
+    resultModel = projectDiagramSpecV3ToV2(migrateDiagramSpec(legacyResultModel).spec);
   } catch (error: unknown) {
     const message = error instanceof Error ? error.message : String(error);
     console.warn(`AST PARSER MIGRATION WARNING [${componentId}]:`, message);

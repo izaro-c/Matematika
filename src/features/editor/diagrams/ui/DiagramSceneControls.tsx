@@ -37,9 +37,9 @@ export const DiagramSceneControls: React.FC<DiagramSceneControlsProps> = ({ mode
   };
 
   return (
-    <div className="mt-4 space-y-3 border-t border-carbon/10 pt-3">
-      <p className="text-[10px] font-bold uppercase tracking-widest text-carbon/45">Comportamiento en el lienzo</p>
-      <div className="space-y-2 rounded border border-carbon/10 p-2">
+    <div className="mt-4 divide-y divide-carbon/10 border-y border-carbon/10">
+      <section className="space-y-3 py-4">
+        <div><h5 className="text-xs font-bold text-carbon">Disponibilidad</h5><p className="mt-1 text-[10px] text-carbon/45">Estado básico del objeto en el lienzo de edición.</p></div>
         <label className="flex items-start gap-1.5 text-xs font-bold text-carbon">
           <input type="checkbox" checked={item.visible} onChange={event => changeItem({ visible: event.target.checked })} />
           <span>Mostrar el objeto<span className="mt-0.5 block text-[9px] font-normal leading-relaxed text-carbon/45">Puede ocultarse además en una capa, grupo o paso de la secuencia.</span></span>
@@ -48,6 +48,9 @@ export const DiagramSceneControls: React.FC<DiagramSceneControlsProps> = ({ mode
           <input type="checkbox" checked={item.locked} onChange={event => changeItem({ locked: event.target.checked })} />
           <span>Impedir que se mueva<span className="mt-0.5 block text-[9px] font-normal leading-relaxed text-carbon/45">Sigue pudiendo seleccionarse y editarse desde este panel.</span></span>
         </label>
+      </section>
+      <section className="space-y-3 py-4">
+        <div><h5 className="text-xs font-bold text-carbon">Interacción local</h5><p className="mt-1 text-[10px] text-carbon/45">Cómo responde al puntero, teclado y foco dentro del diagrama.</p></div>
         <label className="flex items-start gap-1.5 text-xs font-bold text-carbon">
           <input type="checkbox" checked={item.selection.selectable} onChange={event => changeItem({ selection: { ...item.selection, selectable: event.target.checked } })} />
           <span>Permitir selección directa<span className="mt-0.5 block text-[9px] font-normal leading-relaxed text-carbon/45">Si se desactiva, no puede seleccionarse, arrastrarse ni ajustarse con el teclado en el lienzo. Conserva el foco y el resaltado; las relaciones aún pueden moverlo y se edita desde la lista.</span></span>
@@ -56,6 +59,9 @@ export const DiagramSceneControls: React.FC<DiagramSceneControlsProps> = ({ mode
           <input type="checkbox" checked={item.selection.highlightable !== false} onChange={event => changeItem({ selection: { ...item.selection, highlightable: event.target.checked } })} />
           <span>Resaltar por hover o foco<span className="mt-0.5 block text-[9px] font-normal leading-relaxed text-carbon/45">Si se desactiva, la interacción dentro del lienzo no cambia su aspecto. Las referencias MDX y la selección explícita sí pueden resaltarlo.</span></span>
         </label>
+      </section>
+      <section className="space-y-3 py-4">
+        <div><h5 className="text-xs font-bold text-carbon">Foco desde el contenido</h5><p className="mt-1 text-[10px] text-carbon/45">Respuesta cuando una página MDX enlaza o resalta este objeto.</p></div>
         <label className="flex items-start gap-1.5 text-xs font-bold text-carbon">
           <input type="checkbox" checked={item.selection.dimOthersOnHighlight !== false} onChange={event => changeItem({ selection: { ...item.selection, dimOthersOnHighlight: event.target.checked } })} />
           <span>Atenuar los demás desde MDX<span className="mt-0.5 block text-[9px] font-normal leading-relaxed text-carbon/45">Las referencias del texto usan este modo por defecto. El hover y el foco dentro del diagrama solo resaltan este objeto.</span></span>
@@ -68,10 +74,9 @@ export const DiagramSceneControls: React.FC<DiagramSceneControlsProps> = ({ mode
           />
           <span>Revelar desde un enlace MDX<span className="mt-0.5 block text-[9px] font-normal leading-relaxed text-carbon/45">Si el objeto está oculto, aparece mientras su target —o el grupo al que pertenece— recibe foco o resaltado desde el texto.</span></span>
         </label>
-      </div>
-      <details className="rounded border border-carbon/10">
-        <summary className="cursor-pointer list-none px-2 py-1.5 text-xs font-bold text-carbon/70 [&::-webkit-details-marker]:hidden">Organización visual <span className="float-right text-[9px] font-normal text-carbon/40">{layer?.label ?? item.layerId} ▾</span></summary>
-        <div className="space-y-3 border-t border-carbon/10 p-2">
+      </section>
+      <section className="space-y-3 py-4" aria-label="Organización visual">
+        <div><h5 className="text-xs font-bold text-carbon">Organización visual</h5><p className="mt-1 text-[10px] text-carbon/45">Capa actual: {layer?.label ?? item.layerId}.</p></div>
           <div>
             <label className="block text-xs font-bold text-carbon mb-1">Capa</label>
             <select className="w-full rounded border border-carbon/15 bg-lienzo p-1.5 text-xs" value={item.layerId} onChange={event => changeItem({ layerId: event.target.value })}>
@@ -85,14 +90,14 @@ export const DiagramSceneControls: React.FC<DiagramSceneControlsProps> = ({ mode
               <button type="button" className="rounded border border-carbon/15 px-2 py-1 text-[10px] font-bold text-carbon" onClick={() => changeItem({ order: Math.min(...sameLayerItems.map(candidate => candidate.order), 0) - 1000 })}>Enviar al fondo</button>
               <button type="button" className="rounded border border-carbon/15 px-2 py-1 text-[10px] font-bold text-carbon" onClick={() => changeItem({ order: Math.max(...sameLayerItems.map(candidate => candidate.order), 0) + 1000 })}>Traer al frente</button>
             </div>
-            <details className="mt-2">
+            <details className="mt-2 border-l-2 border-carbon/10 pl-2">
               <summary className="cursor-pointer text-[9px] text-carbon/45">Valor numérico avanzado</summary>
               <input aria-label="Orden visual avanzado" type="number" className="mt-1 w-full rounded border border-carbon/15 bg-lienzo p-1.5 text-xs font-mono" value={item.order} onChange={event => changeItem({ order: Number(event.target.value) })} />
             </details>
           </div>
           {model.groups.length > 0 && (
-            <fieldset className="space-y-1">
-              <legend className="text-xs font-bold text-carbon">Acciones conjuntas</legend>
+            <div className="space-y-1">
+              <p className="text-xs font-bold text-carbon">Acciones conjuntas</p>
               <p className="text-[9px] leading-relaxed text-carbon/45">Un grupo sirve para mostrar, bloquear o resaltar varios objetos a la vez; no cambia su orden visual.</p>
               {model.groups.map(group => (
                 <label key={group.id} className="flex items-center gap-1.5 text-xs text-carbon">
@@ -100,10 +105,9 @@ export const DiagramSceneControls: React.FC<DiagramSceneControlsProps> = ({ mode
                   {group.label}
                 </label>
               ))}
-            </fieldset>
+            </div>
           )}
-        </div>
-      </details>
+      </section>
     </div>
   );
 };

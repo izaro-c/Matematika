@@ -7,7 +7,7 @@ import annotationsFixture from '../../../fixtures/diagrams/phase3-annotations-la
 import areasFixture from '../../../fixtures/diagrams/phase3-area-grids.json';
 import primitivesFixture from '../../../fixtures/diagrams/phase3-euclidean-primitives.json';
 import marksFixture from '../../../fixtures/diagrams/phase3-marks-angles.json';
-import { migrateDiagramSpec } from '../../../../src/shared/diagrams/public';
+import { migrateDiagramSpec, projectDiagramSpecV3ToV2 } from '../../../../src/shared/diagrams/public';
 import { DiagramInspector } from '../../../../src/features/editor/diagrams/ui/DiagramInspector';
 import { DiagramToolbar } from '../../../../src/features/editor/diagrams/ui/DiagramToolbar';
 import { DiagramToolReferencePicker } from '../../../../src/features/editor/diagrams/ui/DiagramToolReferencePicker';
@@ -15,9 +15,13 @@ import { parseDiagramSourceAST } from '../../../../scripts/editor/parseDiagramSo
 import { addLabelToElement } from '../../../../src/features/editor/diagrams/model/commands';
 import { AxiomaArquimedesSpec } from '../../../../src/widgets/diagrams/Axiomas/AxiomaArquimedes';
 
+function openInspectorSection(name: 'Esencial' | 'Geometría' | 'Estilo' | 'Interacción') {
+  fireEvent.click(screen.getByRole('button', { name }));
+}
+
 describe('Phase 3 visual editing', () => {
   it('adds, hides and positions an element label from contextual visual controls', () => {
-    const base = migrateDiagramSpec(primitivesFixture).spec;
+    const base = projectDiagramSpecV3ToV2(migrateDiagramSpec(primitivesFixture).spec);
     const source = base.elements.find(item => item.kind === 'segment')!;
     const onAddElementLabel = vi.fn();
     const onModelEdit = vi.fn();
@@ -39,6 +43,7 @@ describe('Phase 3 visual editing', () => {
     expect(onSelect).toHaveBeenCalledWith(labelled.labelId);
 
     view.rerender(<DiagramInspector model={labelled.model} selectedId={labelled.labelId} onSelect={onSelect} onModelEdit={onModelEdit} onDeleteSelected={vi.fn()} />);
+    openInspectorSection('Geometría');
     fireEvent.change(screen.getByLabelText('Posición de la etiqueta sobre el elemento'), { target: { value: '0.7' } });
     expect(onModelEdit).toHaveBeenLastCalledWith(expect.objectContaining({
       elements: expect.arrayContaining([expect.objectContaining({ id: labelled.labelId, properties: expect.objectContaining({ anchorParameter: 0.7 }) })]),
@@ -54,7 +59,7 @@ describe('Phase 3 visual editing', () => {
   });
 
   it('makes all labels optional from the View menu', () => {
-    const model = migrateDiagramSpec(primitivesFixture).spec;
+    const model = projectDiagramSpecV3ToV2(migrateDiagramSpec(primitivesFixture).spec);
     const onModelEdit = vi.fn();
     render(
       <DiagramToolbar
@@ -66,7 +71,6 @@ describe('Phase 3 visual editing', () => {
         onModelEdit={onModelEdit}
         onAddSlider={vi.fn()}
         onAddGliderPoint={vi.fn()}
-        onAddStep={vi.fn()}
         onResolveDivergence={vi.fn()}
       />,
     );
@@ -76,28 +80,32 @@ describe('Phase 3 visual editing', () => {
   });
 
   it('chooses independently whether a point label is drawn on the canvas', () => {
-    const model = migrateDiagramSpec(pointsFixture).spec;
+    const model = projectDiagramSpecV3ToV2(migrateDiagramSpec(pointsFixture).spec);
     const target = model.points.find(point => point.visible)!;
     const onModelEdit = vi.fn();
     render(<DiagramInspector model={model} selectedId={target.id} onSelect={vi.fn()} onModelEdit={onModelEdit} onDeleteSelected={vi.fn()} />);
 
-    const control = screen.getByRole('checkbox', { name: 'Mostrar etiqueta del punto en el lienzo' });
+    const control = screen.getByRole('checkbox', { name: `Mostrar etiqueta nativa de ${target.label}` });
     expect((control as HTMLInputElement).checked).toBe(true);
     fireEvent.click(control);
 
     const edited = onModelEdit.mock.calls.at(-1)?.[0];
     expect(edited.points.find((item: { id: string }) => item.id === target.id)).toMatchObject({ showLabel: false });
 
-    fireEvent.change(screen.getByLabelText('Tamaño de la etiqueta del punto'), { target: { value: '24' } });
+    fireEvent.change(screen.getByLabelText(`Tamaño de etiqueta de ${target.label}`), { target: { value: '24' } });
     const resized = onModelEdit.mock.calls.at(-1)?.[0];
     expect(resized.points.find((item: { id: string }) => item.id === target.id)).toMatchObject({ style: { labelSize: 24 } });
+    fireEvent.change(screen.getByLabelText(`Desplazamiento horizontal de etiqueta de ${target.label}`), { target: { value: '12' } });
+    const shifted = onModelEdit.mock.calls.at(-1)?.[0];
+    expect(shifted.points.find((item: { id: string }) => item.id === target.id)).toMatchObject({ style: { labelOffset: [12, 0] } });
   });
 
   it('authors direct interaction separately from fixed position and relations', () => {
-    const model = migrateDiagramSpec(pointsFixture).spec;
+    const model = projectDiagramSpecV3ToV2(migrateDiagramSpec(pointsFixture).spec);
     const target = model.points.find(point => !point.fixed && point.selection.selectable)!;
     const onModelEdit = vi.fn();
     render(<DiagramInspector model={model} selectedId={target.id} onSelect={vi.fn()} onModelEdit={onModelEdit} onDeleteSelected={vi.fn()} />);
+    openInspectorSection('Interacción');
 
     const directSelectionControl = screen.getByRole('checkbox', { name: /Permitir selección directa/ });
     fireEvent.click(directSelectionControl);
@@ -113,10 +121,11 @@ describe('Phase 3 visual editing', () => {
   });
 
   it('disables local hover highlighting without blocking MDX references', () => {
-    const model = migrateDiagramSpec(pointsFixture).spec;
+    const model = projectDiagramSpecV3ToV2(migrateDiagramSpec(pointsFixture).spec);
     const target = model.points.find(point => point.selection.selectable)!;
     const onModelEdit = vi.fn();
     render(<DiagramInspector model={model} selectedId={target.id} onSelect={vi.fn()} onModelEdit={onModelEdit} onDeleteSelected={vi.fn()} />);
+    openInspectorSection('Interacción');
 
     const control = screen.getByRole('checkbox', { name: /Resaltar por hover o foco/ });
     expect(control.closest('label')?.textContent).toContain('Las referencias MDX');
@@ -130,10 +139,11 @@ describe('Phase 3 visual editing', () => {
   });
 
   it('authors additive MDX highlighting while keeping dimming as the default', () => {
-    const model = migrateDiagramSpec(pointsFixture).spec;
+    const model = projectDiagramSpecV3ToV2(migrateDiagramSpec(pointsFixture).spec);
     const target = model.points.find(point => point.selection.selectable)!;
     const onModelEdit = vi.fn();
     render(<DiagramInspector model={model} selectedId={target.id} onSelect={vi.fn()} onModelEdit={onModelEdit} onDeleteSelected={vi.fn()} />);
+    openInspectorSection('Interacción');
 
     const control = screen.getByRole('checkbox', { name: /Atenuar los demás desde MDX/ });
     expect((control as HTMLInputElement).checked).toBe(true);
@@ -146,10 +156,11 @@ describe('Phase 3 visual editing', () => {
   });
 
   it('authors the reveal-on-MDX-highlight behavior without editing source code', () => {
-    const model = migrateDiagramSpec(pointsFixture).spec;
+    const model = projectDiagramSpecV3ToV2(migrateDiagramSpec(pointsFixture).spec);
     const target = model.points.find(point => point.selection.selectable)!;
     const onModelEdit = vi.fn();
     render(<DiagramInspector model={model} selectedId={target.id} onSelect={vi.fn()} onModelEdit={onModelEdit} onDeleteSelected={vi.fn()} />);
+    openInspectorSection('Interacción');
 
     const control = screen.getByRole('checkbox', { name: /Revelar desde un enlace MDX/ });
     expect((control as HTMLInputElement).checked).toBe(false);
@@ -162,7 +173,7 @@ describe('Phase 3 visual editing', () => {
   });
 
   it('creates and edits an intersection from two compatible supports', () => {
-    const base = migrateDiagramSpec(primitivesFixture).spec;
+    const base = projectDiagramSpecV3ToV2(migrateDiagramSpec(primitivesFixture).spec);
     const line = { ...base.elements.find(item => item.id === 'lineBC')!, id: 'lineOC', label: 'Recta OC', refs: ['pO', 'pC'], target: false };
     const intersection = {
       ...base.elements.find(item => item.id === 'segAB')!,
@@ -180,15 +191,17 @@ describe('Phase 3 visual editing', () => {
     picker.unmount();
     const onModelEdit = vi.fn();
     render(<DiagramInspector model={model} selectedId="intQ" onSelect={vi.fn()} onModelEdit={onModelEdit} onDeleteSelected={vi.fn()} />);
+    openInspectorSection('Geometría');
     fireEvent.click(screen.getByRole('checkbox', { name: /Exigir pertenencia a los soportes finitos/ }));
     const edited = onModelEdit.mock.calls.at(-1)?.[0];
     expect(edited.elements.find((item: { id: string }) => item.id === 'intQ')).toMatchObject({ properties: { restrictToSupports: false } });
   });
 
   it('edits safe function properties in the contextual inspector', () => {
-    const model = migrateDiagramSpec(curvesFixture).spec;
+    const model = projectDiagramSpecV3ToV2(migrateDiagramSpec(curvesFixture).spec);
     const onModelEdit = vi.fn();
     render(<DiagramInspector model={model} selectedId="functionSin" onSelect={vi.fn()} onModelEdit={onModelEdit} onDeleteSelected={vi.fn()} />);
+    openInspectorSection('Geometría');
     fireEvent.change(screen.getByLabelText('Expresión de función'), { target: { value: 'cos(x)' } });
     expect(onModelEdit).toHaveBeenCalledWith(expect.objectContaining({
       elements: expect.arrayContaining([expect.objectContaining({ id: 'functionSin', properties: expect.objectContaining({ expression: 'cos(x)' }) })]),
@@ -198,6 +211,7 @@ describe('Phase 3 visual editing', () => {
   it('authors a reactive slider maximum and reactive copy spacing without using source code', () => {
     const onSliderEdit = vi.fn();
     const sliderView = render(<DiagramInspector model={AxiomaArquimedesSpec} selectedId="n" onSelect={vi.fn()} onModelEdit={onSliderEdit} onDeleteSelected={vi.fn()} />);
+    openInspectorSection('Geometría');
     fireEvent.change(screen.getByLabelText('Expresión del máximo dinámico del slider'), {
       target: { value: 'floor(segCD.length/segAB.length)+2' },
     });
@@ -212,6 +226,7 @@ describe('Phase 3 visual editing', () => {
     sliderView.unmount();
     const onTicksEdit = vi.fn();
     render(<DiagramInspector model={AxiomaArquimedesSpec} selectedId="copyTicks" onSelect={vi.fn()} onModelEdit={onTicksEdit} onDeleteSelected={vi.fn()} />);
+    openInspectorSection('Geometría');
     fireEvent.change(screen.getByLabelText('Expresión de separación entre marcas'), {
       target: { value: '2*abs(pB.x-pA.x)' },
     });
@@ -235,9 +250,10 @@ describe('Phase 3 visual editing', () => {
   });
 
   it('creates and assigns different point constraints from the point inspector', () => {
-    const model = migrateDiagramSpec(pointsFixture).spec;
+    const model = projectDiagramSpecV3ToV2(migrateDiagramSpec(pointsFixture).spec);
     const onModelEdit = vi.fn();
     render(<DiagramInspector model={model} selectedId="pC" onSelect={vi.fn()} onModelEdit={onModelEdit} onDeleteSelected={vi.fn()} />);
+    openInspectorSection('Geometría');
     fireEvent.change(screen.getByLabelText('Nueva restricción'), { target: { value: 'vertical' } });
     fireEvent.click(screen.getByRole('button', { name: 'Añadir relación' }));
     expect(onModelEdit).toHaveBeenCalledWith(expect.objectContaining({
@@ -247,7 +263,7 @@ describe('Phase 3 visual editing', () => {
   });
 
   it('authors equal-length and midpoint relations with geometry-specific references', () => {
-    const base = migrateDiagramSpec(primitivesFixture).spec;
+    const base = projectDiagramSpecV3ToV2(migrateDiagramSpec(primitivesFixture).spec);
     const model = {
       ...base,
       elements: [
@@ -260,6 +276,7 @@ describe('Phase 3 visual editing', () => {
     };
     const onModelEdit = vi.fn();
     const view = render(<DiagramInspector model={model} selectedId="pC" onSelect={vi.fn()} onModelEdit={onModelEdit} onDeleteSelected={vi.fn()} />);
+    openInspectorSection('Geometría');
 
     fireEvent.change(screen.getByLabelText('Nueva restricción'), { target: { value: 'equalLength' } });
     fireEvent.click(screen.getByRole('button', { name: 'Añadir relación' }));
@@ -287,7 +304,7 @@ describe('Phase 3 visual editing', () => {
   });
 
   it('explains and creates equal lengths directly from the selected segment', () => {
-    const base = migrateDiagramSpec(primitivesFixture).spec;
+    const base = projectDiagramSpecV3ToV2(migrateDiagramSpec(primitivesFixture).spec);
     const model = {
       ...base,
       elements: [
@@ -297,6 +314,7 @@ describe('Phase 3 visual editing', () => {
     };
     const onModelEdit = vi.fn();
     const view = render(<DiagramInspector model={model} selectedId="segOC" onSelect={vi.fn()} onModelEdit={onModelEdit} onDeleteSelected={vi.fn()} />);
+    openInspectorSection('Geometría');
 
     const summary = screen.getByText('Igualar longitudes');
     expect(summary.closest('details')?.open).toBe(false);
@@ -331,7 +349,7 @@ describe('Phase 3 visual editing', () => {
   });
 
   it('explains and creates equal angles directly from the selected angle', () => {
-    const base = migrateDiagramSpec(marksFixture).spec;
+    const base = projectDiagramSpecV3ToV2(migrateDiagramSpec(marksFixture).spec);
     const pointTemplate = base.points[0];
     const angleTemplate = base.elements.find(element => element.kind === 'nonReflexAngle')!;
     const model = {
@@ -349,6 +367,7 @@ describe('Phase 3 visual editing', () => {
     };
     const onModelEdit = vi.fn();
     const view = render(<DiagramInspector model={model} selectedId="nonReflexAngleAVB" onSelect={vi.fn()} onModelEdit={onModelEdit} onDeleteSelected={vi.fn()} />);
+    openInspectorSection('Geometría');
 
     const summary = screen.getByText('Igualar ángulos');
     expect(summary.closest('details')?.open).toBe(true);
@@ -384,6 +403,7 @@ describe('Phase 3 visual editing', () => {
     if (parsed.status !== 'visual-exact') return;
 
     render(<DiagramInspector model={parsed.model} selectedId="nonReflexAngleBAC" onSelect={vi.fn()} onModelEdit={vi.fn()} onDeleteSelected={vi.fn()} />);
+    openInspectorSection('Geometría');
 
     const summary = screen.getByText('Igualar ángulos');
     expect(summary.closest('details')?.open).toBe(true);
@@ -393,10 +413,11 @@ describe('Phase 3 visual editing', () => {
   });
 
   it('adds, edits and removes segment measure marks directly from the selected segment', () => {
-    const model = migrateDiagramSpec(primitivesFixture).spec;
+    const model = projectDiagramSpecV3ToV2(migrateDiagramSpec(primitivesFixture).spec);
     const segment = model.elements.find(element => element.id === 'segAB')!;
     const onModelEdit = vi.fn();
     const view = render(<DiagramInspector model={model} selectedId={segment.id} onSelect={vi.fn()} onModelEdit={onModelEdit} onDeleteSelected={vi.fn()} />);
+    openInspectorSection('Geometría');
 
     expect(screen.getByRole('region', { name: 'Marcas del segmento' })).toBeTruthy();
     expect(screen.getByRole('checkbox', { name: /Congruencia rayas centrales/ })).toBeTruthy();
@@ -437,9 +458,10 @@ describe('Phase 3 visual editing', () => {
   });
 
   it('adds compact congruence marks to a segment and edits their count and height separately', () => {
-    const model = migrateDiagramSpec(primitivesFixture).spec;
+    const model = projectDiagramSpecV3ToV2(migrateDiagramSpec(primitivesFixture).spec);
     const onModelEdit = vi.fn();
     const view = render(<DiagramInspector model={model} selectedId="segAB" onSelect={vi.fn()} onModelEdit={onModelEdit} onDeleteSelected={vi.fn()} />);
+    openInspectorSection('Geometría');
 
     fireEvent.click(screen.getByRole('checkbox', { name: /Congruencia rayas centrales/ }));
     const withCongruence = onModelEdit.mock.calls.at(-1)?.[0];
@@ -463,9 +485,10 @@ describe('Phase 3 visual editing', () => {
   });
 
   it('authors point attractors and their distances without editing source code', () => {
-    const model = migrateDiagramSpec(primitivesFixture).spec;
+    const model = projectDiagramSpecV3ToV2(migrateDiagramSpec(primitivesFixture).spec);
     const onModelEdit = vi.fn();
     const view = render(<DiagramInspector model={model} selectedId="pA" onSelect={vi.fn()} onModelEdit={onModelEdit} onDeleteSelected={vi.fn()} />);
+    openInspectorSection('Geometría');
 
     fireEvent.click(screen.getByText('Magnetismo hacia formas notables'));
     fireEvent.click(screen.getByRole('checkbox', { name: 'Usar Recta como atractor' }));
@@ -481,13 +504,15 @@ describe('Phase 3 visual editing', () => {
   });
 
   it('edits the count and size of a parallel mark from the visual inspector', () => {
-    const model = migrateDiagramSpec(marksFixture).spec;
+    const model = projectDiagramSpecV3ToV2(migrateDiagramSpec(marksFixture).spec);
     const onModelEdit = vi.fn();
     const view = render(<DiagramInspector model={model} selectedId="parallelAV" onSelect={vi.fn()} onModelEdit={onModelEdit} onDeleteSelected={vi.fn()} />);
+    openInspectorSection('Geometría');
 
     fireEvent.change(screen.getByLabelText('Número de marcas'), { target: { value: '1' } });
     const oneArrow = onModelEdit.mock.calls.at(-1)?.[0];
     view.rerender(<DiagramInspector model={oneArrow} selectedId="parallelAV" onSelect={vi.fn()} onModelEdit={onModelEdit} onDeleteSelected={vi.fn()} />);
+    openInspectorSection('Estilo');
     fireEvent.change(screen.getByLabelText('Altura de las marcas de paralelismo'), { target: { value: '0.5' } });
     const edited = onModelEdit.mock.calls.at(-1)?.[0];
 
@@ -498,17 +523,18 @@ describe('Phase 3 visual editing', () => {
   });
 
   it('describes relation activation as a reversible pause instead of an extra movement mode', () => {
-    const model = migrateDiagramSpec(pointsFixture).spec;
+    const model = projectDiagramSpecV3ToV2(migrateDiagramSpec(pointsFixture).spec);
     const onModelEdit = vi.fn();
     render(<DiagramInspector model={model} selectedId="pC" onSelect={vi.fn()} onModelEdit={onModelEdit} onDeleteSelected={vi.fn()} />);
+    openInspectorSection('Geometría');
 
-    expect(screen.getByText('Relación activa')).toBeTruthy();
-    expect(screen.getByText('Desmarcar para pausarla sin eliminarla.')).toBeTruthy();
+    expect(screen.getByRole('checkbox', { name: /Relación activa/ })).toBeTruthy();
+    expect(screen.getByText(/Se pueden pausar sin perder su configuración/)).toBeTruthy();
     expect(screen.queryByText('Aplicar al mover')).toBeNull();
   });
 
   it('unlocks a formerly fixed point when a movable constraint is selected', () => {
-    const base = migrateDiagramSpec(pointsFixture).spec;
+    const base = projectDiagramSpecV3ToV2(migrateDiagramSpec(pointsFixture).spec);
     const model = {
       ...base,
       points: base.points.map(item => item.id === 'pC'
@@ -517,6 +543,7 @@ describe('Phase 3 visual editing', () => {
     };
     const onModelEdit = vi.fn();
     render(<DiagramInspector model={model} selectedId="pC" onSelect={vi.fn()} onModelEdit={onModelEdit} onDeleteSelected={vi.fn()} />);
+    openInspectorSection('Geometría');
 
     fireEvent.change(screen.getByLabelText('Restricción del punto'), { target: { value: 'glider' } });
 
@@ -527,8 +554,8 @@ describe('Phase 3 visual editing', () => {
     });
   });
 
-  it('keeps snap and magnetism visible for a fixed point and offers a direct movable conversion', () => {
-    const base = migrateDiagramSpec(pointsFixture).spec;
+  it('hides snap and magnetism when fixed movement makes them unavailable', () => {
+    const base = projectDiagramSpecV3ToV2(migrateDiagramSpec(pointsFixture).spec);
     const model = {
       ...base,
       points: base.points.map(item => item.id === 'pC'
@@ -537,22 +564,19 @@ describe('Phase 3 visual editing', () => {
     };
     const onModelEdit = vi.fn();
     render(<DiagramInspector model={model} selectedId="pC" onSelect={vi.fn()} onModelEdit={onModelEdit} onDeleteSelected={vi.fn()} />);
+    openInspectorSection('Geometría');
 
-    expect(screen.getByText('Snap a cuadrícula')).toBeTruthy();
-    expect(screen.getByText('Magnetismo hacia formas notables')).toBeTruthy();
-    expect(screen.getByRole('checkbox', { name: 'Ajuste a cuadrícula' }).closest('fieldset')?.hasAttribute('disabled')).toBe(true);
-    fireEvent.click(screen.getByRole('button', { name: 'Cambiar a movimiento libre' }));
-
-    expect(onModelEdit.mock.calls.at(-1)?.[0].points.find((item: { id: string }) => item.id === 'pC')).toMatchObject({
-      fixed: false,
-      constraint: 'free',
-    });
+    expect(screen.queryByText('Snap a cuadrícula')).toBeNull();
+    expect(screen.queryByText('Magnetismo hacia formas notables')).toBeNull();
+    expect(screen.queryByRole('checkbox', { name: 'Ajuste a cuadrícula' })).toBeNull();
+    expect(onModelEdit).not.toHaveBeenCalled();
   });
 
   it('returns a point to free movement after deleting its final relation', () => {
-    const model = migrateDiagramSpec(pointsFixture).spec;
+    const model = projectDiagramSpecV3ToV2(migrateDiagramSpec(pointsFixture).spec);
     const onModelEdit = vi.fn();
     render(<DiagramInspector model={model} selectedId="pC" onSelect={vi.fn()} onModelEdit={onModelEdit} onDeleteSelected={vi.fn()} />);
+    openInspectorSection('Geometría');
 
     fireEvent.click(screen.getByRole('button', { name: 'Eliminar relación' }));
 
@@ -565,8 +589,8 @@ describe('Phase 3 visual editing', () => {
   });
 
   it('groups tools by purpose and creates expression-only curves without fake point references', () => {
-    const curveModel = migrateDiagramSpec(curvesFixture).spec;
-    const primitiveModel = migrateDiagramSpec(primitivesFixture).spec;
+    const curveModel = projectDiagramSpecV3ToV2(migrateDiagramSpec(curvesFixture).spec);
+    const primitiveModel = projectDiagramSpecV3ToV2(migrateDiagramSpec(primitivesFixture).spec);
     const model = { ...curveModel, points: primitiveModel.points, elements: [...curveModel.elements, ...primitiveModel.elements] };
     const onAddElement = vi.fn();
     const onSetCanvasTool = vi.fn();
@@ -580,7 +604,6 @@ describe('Phase 3 visual editing', () => {
         onModelEdit={vi.fn()}
         onAddSlider={vi.fn()}
         onAddGliderPoint={vi.fn()}
-        onAddStep={vi.fn()}
         onResolveDivergence={vi.fn()}
       />,
     );
@@ -588,14 +611,14 @@ describe('Phase 3 visual editing', () => {
     expect(addObjects.getAttribute('aria-expanded')).toBe('false');
     fireEvent.click(addObjects);
     expect(addObjects.getAttribute('aria-expanded')).toBe('true');
-    expect(screen.getByText('Geometría básica')).toBeTruthy();
-    expect(screen.getByText('Puntos y construcciones')).toBeTruthy();
-    expect(screen.getByText('Curvas')).toBeTruthy();
-    expect(screen.getByText('Ángulos y medidas')).toBeTruthy();
-    expect(screen.getByText('Explicación')).toBeTruthy();
+    expect(screen.getByText('Líneas y contornos')).toBeTruthy();
+    expect(screen.getByText('Puntos construidos')).toBeTruthy();
+    expect(screen.getByText('Curvas y modelos')).toBeTruthy();
+    expect(screen.getByText('Medir y comparar')).toBeTruthy();
+    expect(screen.getByText('Texto y explicación')).toBeTruthy();
     expect(screen.getByRole('menuitem', { name: 'Marca de congruencia' })).toBeTruthy();
     expect(screen.getByRole('menuitem', { name: 'Marcas de medida' })).toBeTruthy();
-    expect(screen.getByRole('menuitem', { name: 'Ángulo orientado' })).toBeTruthy();
+    expect(screen.getAllByRole('menuitem', { name: 'Ángulo orientado' }).length).toBeGreaterThan(1);
     fireEvent.click(screen.getByRole('menuitem', { name: 'Ángulo no reflejo (≤ 180°)' }));
     expect(onSetCanvasTool).toHaveBeenCalledWith('nonReflexAngle');
     fireEvent.click(addObjects);
@@ -609,13 +632,13 @@ describe('Phase 3 visual editing', () => {
     fireEvent.click(screen.getByRole('menuitem', { name: 'Intersección' }));
     expect(onSetCanvasTool).toHaveBeenCalledWith('intersection');
     fireEvent.click(addObjects);
-    fireEvent.click(screen.getByRole('menuitem', { name: 'Punto medio' }));
+    fireEvent.click(screen.getAllByRole('menuitem', { name: 'Punto medio' })[0]);
     expect(onSetCanvasTool).toHaveBeenCalledWith('midpoint');
     expect(addObjects.getAttribute('aria-expanded')).toBe('false');
   });
 
   it('chooses an existing segment, rather than two points, for ruler-like measure marks', () => {
-    const model = migrateDiagramSpec(primitivesFixture).spec;
+    const model = projectDiagramSpecV3ToV2(migrateDiagramSpec(primitivesFixture).spec);
     render(
       <DiagramToolReferencePicker
         model={model}
@@ -632,7 +655,7 @@ describe('Phase 3 visual editing', () => {
   });
 
   it('allows choosing tool references manually and polygons with more than three vertices', () => {
-    const model = migrateDiagramSpec(areasFixture).spec;
+    const model = projectDiagramSpecV3ToV2(migrateDiagramSpec(areasFixture).spec);
     const onRefsChange = vi.fn();
     const onCreate = vi.fn();
     const refs = model.points.slice(0, 3).map(point => point.id);
@@ -664,7 +687,7 @@ describe('Phase 3 visual editing', () => {
   });
 
   it('names angular references by role and edits the angular radius', () => {
-    const model = migrateDiagramSpec(marksFixture).spec;
+    const model = projectDiagramSpecV3ToV2(migrateDiagramSpec(marksFixture).spec);
     const onRefsChange = vi.fn();
     const picker = render(
       <DiagramToolReferencePicker
@@ -683,7 +706,9 @@ describe('Phase 3 visual editing', () => {
     picker.unmount();
     const onModelEdit = vi.fn();
     render(<DiagramInspector model={model} selectedId="angleAVB" onSelect={vi.fn()} onModelEdit={onModelEdit} onDeleteSelected={vi.fn()} />);
+    openInspectorSection('Geometría');
     expect(screen.getByLabelText('Vértice de Ángulo orientado')).toBeTruthy();
+    openInspectorSection('Estilo');
     fireEvent.change(screen.getByLabelText('Radio de la marca angular'), { target: { value: '0.8' } });
 
     const edited = onModelEdit.mock.calls.at(-1)?.[0];
@@ -691,11 +716,13 @@ describe('Phase 3 visual editing', () => {
   });
 
   it('edits the radius of a non-reflex angle through the same visual controls', () => {
-    const model = migrateDiagramSpec(marksFixture).spec;
+    const model = projectDiagramSpecV3ToV2(migrateDiagramSpec(marksFixture).spec);
     const onModelEdit = vi.fn();
     render(<DiagramInspector model={model} selectedId="nonReflexAngleAVB" onSelect={vi.fn()} onModelEdit={onModelEdit} onDeleteSelected={vi.fn()} />);
 
+    openInspectorSection('Geometría');
     expect(screen.getByLabelText('Vértice de Ángulo no reflejo (≤ 180°)')).toBeTruthy();
+    openInspectorSection('Estilo');
     fireEvent.change(screen.getByLabelText('Radio de la marca angular'), { target: { value: '0.9' } });
 
     const edited = onModelEdit.mock.calls.at(-1)?.[0];
@@ -703,10 +730,11 @@ describe('Phase 3 visual editing', () => {
   });
 
   it('persists the dashed option for a polygon', () => {
-    const model = migrateDiagramSpec(primitivesFixture).spec;
+    const model = projectDiagramSpecV3ToV2(migrateDiagramSpec(primitivesFixture).spec);
     const polygon = model.elements.find(item => item.kind === 'polygon');
     const onModelEdit = vi.fn();
     render(<DiagramInspector model={model} selectedId={polygon?.id ?? ''} onSelect={vi.fn()} onModelEdit={onModelEdit} onDeleteSelected={vi.fn()} />);
+    openInspectorSection('Estilo');
 
     fireEvent.click(screen.getByRole('checkbox', { name: '¿Línea discontinua?' }));
 
@@ -715,11 +743,12 @@ describe('Phase 3 visual editing', () => {
   });
 
   it('edits information panels in viewport-relative percentages', () => {
-    const model = migrateDiagramSpec(annotationsFixture).spec;
+    const model = projectDiagramSpecV3ToV2(migrateDiagramSpec(annotationsFixture).spec);
     const onModelEdit = vi.fn();
     render(<DiagramInspector model={model} selectedId="panelA" onSelect={vi.fn()} onModelEdit={onModelEdit} onDeleteSelected={vi.fn()} />);
-    const openBtn = screen.getByRole('button', { name: /Configurar Panel Informativo/i });
+    const openBtn = screen.getByRole('button', { name: /Editar contenido y diseño del panel/i });
     if (openBtn) fireEvent.click(openBtn);
+    fireEvent.click(screen.getByRole('tab', { name: 'Posición' }));
     fireEvent.change(screen.getByLabelText('Tipo de anclaje del panel'), { target: { value: 'viewport' } });
     const positioned = onModelEdit.mock.calls.at(-1)?.[0];
     expect(positioned.elements.find((item: { id: string }) => item.id === 'panelA')).toMatchObject({
@@ -729,7 +758,7 @@ describe('Phase 3 visual editing', () => {
   });
 
   it('offers title alignment as a viewport-position preset without removing manual coordinates', () => {
-    const baseModel = migrateDiagramSpec(annotationsFixture).spec;
+    const baseModel = projectDiagramSpecV3ToV2(migrateDiagramSpec(annotationsFixture).spec);
     const model = {
       ...baseModel,
       elements: baseModel.elements.map(item => item.id === 'panelA'
@@ -739,8 +768,9 @@ describe('Phase 3 visual editing', () => {
     const onModelEdit = vi.fn();
     render(<DiagramInspector model={model} selectedId="panelA" onSelect={vi.fn()} onModelEdit={onModelEdit} onDeleteSelected={vi.fn()} />);
 
-    const openBtn = screen.getByRole('button', { name: /Configurar Panel Informativo/i });
+    const openBtn = screen.getByRole('button', { name: /Editar contenido y diseño del panel/i });
     if (openBtn) fireEvent.click(openBtn);
+    fireEvent.click(screen.getByRole('tab', { name: 'Posición' }));
 
     expect(screen.getByLabelText('Posición horizontal del panel')).toBeTruthy();
     expect(screen.getByLabelText('Posición vertical del panel')).toBeTruthy();
@@ -753,10 +783,11 @@ describe('Phase 3 visual editing', () => {
   });
 
   it('uses explicit front and back actions instead of making authors guess numeric order', () => {
-    const model = migrateDiagramSpec(pointsFixture).spec;
+    const model = projectDiagramSpecV3ToV2(migrateDiagramSpec(pointsFixture).spec);
     const onModelEdit = vi.fn();
     render(<DiagramInspector model={model} selectedId="pC" onSelect={vi.fn()} onModelEdit={onModelEdit} onDeleteSelected={vi.fn()} />);
 
+    openInspectorSection('Interacción');
     fireEvent.click(screen.getByText(/Organización visual/));
     fireEvent.click(screen.getByRole('button', { name: 'Traer al frente' }));
 

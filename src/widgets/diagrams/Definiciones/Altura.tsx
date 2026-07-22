@@ -3,8 +3,8 @@ import { createDiagramSpec, DiagramRenderer } from '@/shared/diagrams/public';
 /* @matematika-diagram-spec:start */
 export const AlturaSpec = createDiagramSpec(
 {
-  "version": 2,
-  "renderer": "matematika-diagram-renderer-v2",
+  "version": 3,
+  "renderer": "matematika-diagram-renderer-v3",
   "title": "Altura",
   "componentId": "altura",
   "category": "Definiciones",
@@ -46,7 +46,7 @@ export const AlturaSpec = createDiagramSpec(
     }
   ],
   "groups": [],
-  "points": [
+  "objects": [
     {
       "id": "pA",
       "label": "A",
@@ -63,16 +63,22 @@ export const AlturaSpec = createDiagramSpec(
       },
       "target": true,
       "targetId": "pA",
-      "style": {
-        "pointSize": 7,
-        "highlightPointSize": 10,
+      "objectType": "point",
+      "definition": {
+        "type": "coordinates",
+        "x": -3.6,
+        "y": -2.44
+      },
+      "mobility": {
+        "type": "free"
+      },
+      "appearance": {
+        "size": 7,
+        "labelVisible": true,
+        "highlightSize": 10,
         "preserveColorOnHighlight": true
       },
-      "x": -3.6,
-      "y": -2.44,
-      "showLabel": true,
-      "fixed": false,
-      "constraint": "free"
+      "interaction": {}
     },
     {
       "id": "pB",
@@ -90,16 +96,22 @@ export const AlturaSpec = createDiagramSpec(
       },
       "target": true,
       "targetId": "pB",
-      "style": {
-        "pointSize": 7,
-        "highlightPointSize": 10,
+      "objectType": "point",
+      "definition": {
+        "type": "coordinates",
+        "x": 3.06,
+        "y": -1.5
+      },
+      "mobility": {
+        "type": "free"
+      },
+      "appearance": {
+        "size": 7,
+        "labelVisible": true,
+        "highlightSize": 10,
         "preserveColorOnHighlight": true
       },
-      "x": 3.06,
-      "y": -1.5,
-      "showLabel": true,
-      "fixed": false,
-      "constraint": "free"
+      "interaction": {}
     },
     {
       "id": "pC",
@@ -117,19 +129,23 @@ export const AlturaSpec = createDiagramSpec(
       },
       "target": true,
       "targetId": "pC",
-      "style": {
-        "pointSize": 7,
-        "highlightPointSize": 10,
+      "objectType": "point",
+      "definition": {
+        "type": "coordinates",
+        "x": -1.1,
+        "y": 3.64
+      },
+      "mobility": {
+        "type": "free"
+      },
+      "appearance": {
+        "size": 7,
+        "labelVisible": true,
+        "highlightSize": 10,
         "preserveColorOnHighlight": true
       },
-      "x": -1.1,
-      "y": 3.64,
-      "showLabel": true,
-      "fixed": false,
-      "constraint": "free"
-    }
-  ],
-  "elements": [
+      "interaction": {}
+    },
     {
       "id": "polygonABC",
       "label": "Polígono",
@@ -146,17 +162,20 @@ export const AlturaSpec = createDiagramSpec(
       },
       "target": true,
       "targetId": "polygonABC",
-      "style": {
+      "objectType": "path",
+      "geometry": {
+        "type": "polygon",
+        "points": [
+          "pA",
+          "pB",
+          "pC"
+        ]
+      },
+      "appearance": {
         "strokeWidth": 3,
         "highlightStrokeWidth": 5,
         "preserveColorOnHighlight": true
-      },
-      "kind": "polygon",
-      "refs": [
-        "pA",
-        "pB",
-        "pC"
-      ]
+      }
     },
     {
       "id": "footCAB",
@@ -174,15 +193,23 @@ export const AlturaSpec = createDiagramSpec(
       },
       "target": true,
       "targetId": "footCAB",
-      "style": {
-        "preserveColorOnHighlight": true
+      "objectType": "point",
+      "definition": {
+        "type": "projection",
+        "point": "pC",
+        "support": {
+          "points": [
+            "pA",
+            "pB"
+          ]
+        }
       },
-      "kind": "perpendicularFoot",
-      "refs": [
-        "pA",
-        "pB",
-        "pC"
-      ]
+      "mobility": {
+        "type": "fixed"
+      },
+      "appearance": {
+        "preserveColorOnHighlight": true
+      }
     },
     {
       "id": "extAlturaCAB",
@@ -200,16 +227,22 @@ export const AlturaSpec = createDiagramSpec(
       },
       "target": true,
       "targetId": "extAlturaCAB",
-      "style": {
-        "preserveColorOnHighlight": true
+      "objectType": "path",
+      "geometry": {
+        "type": "segment",
+        "points": [
+          "pA",
+          "pB"
+        ],
+        "construction": {
+          "type": "base-extension",
+          "foot": "footCAB"
+        }
       },
-      "kind": "baseExtension",
-      "refs": [
-        "pA",
-        "pB",
-        "footCAB"
-      ],
-      "dashed": true
+      "appearance": {
+        "dashed": true,
+        "preserveColorOnHighlight": true
+      }
     },
     {
       "id": "segAlturaCAB",
@@ -227,17 +260,20 @@ export const AlturaSpec = createDiagramSpec(
       },
       "target": true,
       "targetId": "segAlturaCAB",
-      "style": {
+      "objectType": "path",
+      "geometry": {
+        "type": "segment",
+        "points": [
+          "pC",
+          "footCAB"
+        ]
+      },
+      "appearance": {
+        "dashed": true,
         "strokeWidth": 2.4,
         "highlightStrokeWidth": 3,
         "preserveColorOnHighlight": true
-      },
-      "kind": "segment",
-      "refs": [
-        "pC",
-        "footCAB"
-      ],
-      "dashed": true
+      }
     },
     {
       "id": "rightAngleAlturaCAB",
@@ -255,40 +291,41 @@ export const AlturaSpec = createDiagramSpec(
       },
       "target": true,
       "targetId": "rightAngleAlturaCAB",
-      "style": {
-        "angleRadius": 0.45,
-        "preserveColorOnHighlight": true
-      },
-      "kind": "rightAngle",
-      "refs": [
+      "objectType": "angle",
+      "points": [
         "pA",
         "footCAB",
         "pC"
+      ],
+      "sweep": "non-reflex",
+      "marker": "square",
+      "perpendicularRelationId": "rightAngleAlturaCAB-perpendicular",
+      "appearance": {
+        "radius": 0.45,
+        "preserveColorOnHighlight": true
+      }
+    }
+  ],
+  "relations": [
+    {
+      "id": "rightAngleAlturaCAB-perpendicular",
+      "label": "Perpendicularidad de Ángulo recto de la altura",
+      "enabled": true,
+      "type": "perpendicular",
+      "supports": [
+        [
+          "footCAB",
+          "pA"
+        ],
+        [
+          "footCAB",
+          "pC"
+        ]
       ]
     }
   ],
-  "sliders": [],
   "steps": [],
-  "constraints": [],
-  "dependencies": [
-    {
-      "sourceId": "pA",
-      "targetId": "polygonABC",
-      "relation": "construction"
-    },
-    {
-      "sourceId": "pB",
-      "targetId": "polygonABC",
-      "relation": "construction"
-    },
-    {
-      "sourceId": "pC",
-      "targetId": "polygonABC",
-      "relation": "construction"
-    }
-  ],
-  "note": "Arrastra A, B y C",
-  "extensions": {}
+  "note": "Arrastra A, B y C"
 }
 );
 /* @matematika-diagram-spec:end */

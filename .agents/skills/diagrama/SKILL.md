@@ -1,11 +1,11 @@
 ---
 name: diagrama
-description: Crea o modifica diagramas matemáticos interactivos como DiagramSpec v2 con roundtrip visual-exact en el editor de Matematika. Usar para cualquier trabajo en src/widgets/diagrams/ o src/shared/diagrams/. Si el diagrama deseado requiere una primitiva, propiedad o interacción que el editor aún no ofrece, ampliar primero schema, renderer, workbench, persistencia y pruebas hasta que el diagrama sea 100% editable visualmente; nunca entregar un diagrama nuevo como code-preview.
+description: Crea o modifica diagramas matemáticos interactivos como DiagramSpec v3 con roundtrip visual-exact en el editor de Matematika. Usar para cualquier trabajo en src/widgets/diagrams/ o src/shared/diagrams/. Si el diagrama deseado requiere una primitiva, propiedad o interacción que el editor aún no ofrece, ampliar primero schema, renderer, workbench, persistencia y pruebas hasta que el diagrama sea 100% editable visualmente; nunca entregar un diagrama nuevo como code-preview.
 ---
 
 # Diagramas matemáticos editables
 
-Crear diagramas interactivos, accesibles y coherentes con la paleta Arts & Crafts. Hacer que la fuente autoritativa sea siempre una `DiagramSpec v2` completamente manipulable desde el editor visual.
+Crear diagramas interactivos, accesibles y coherentes con la paleta Arts & Crafts. Hacer que la fuente autoritativa sea siempre una `DiagramSpec v3` completamente manipulable desde el editor visual.
 
 ## Contrato innegociable
 
@@ -24,7 +24,7 @@ Reservar `code-preview` para fuentes heredadas no intervenidas. Al modificar un 
 
 1. Leer [references/visual-authoring.md](references/visual-authoring.md).
 2. Inventariar objetos visibles y auxiliares, relaciones, restricciones, expresiones, estilos, controles, pasos, overlays, targets y operaciones visuales requeridas.
-3. Comparar el inventario con `DiagramSpecV2`, `DiagramRenderer`, `DiagramToolbar`, `DiagramInspector`, `DiagramCanvas` y `DiagramWorkbench`.
+3. Comparar el inventario con `DiagramSpecV3`, el registro de capacidades de `spec/semantics.ts`, `DiagramRenderer`, `DiagramToolbar`, `DiagramInspector`, `DiagramCanvas` y `DiagramWorkbench`.
 4. Si falta cualquier capacidad, detener la creación del diagrama y ampliar primero schema, semántica, renderer, controles visuales, persistencia y pruebas. Incluir esa ampliación en la misma tarea; no aplazarla como deuda.
 5. Crear el diagrama mediante el modelo visual y el adaptador canónico. No escribir lógica manual en el componente publicado.
 6. Reabrirlo en el workbench, modificar visualmente al menos una propiedad de cada capacidad nueva, guardar y comprobar el roundtrip exacto.
@@ -39,13 +39,18 @@ Reservar `code-preview` para fuentes heredadas no intervenidas. Al modificar un 
 - Consumir únicamente `lienzo`, `carbon`, `salvia`, `terracota`, `pizarra`, `ocre`, `pavo`, `granada` y `musgo` mediante los tokens del tema.
 - Estandarizar tamaños visuales: usar siempre `pointSize: 7`, `highlightPointSize: 10`, `strokeWidth: 2.4` (o 3 para resaltar), y configurar `"preserveColorOnHighlight": true` en el `style` de todos los elementos para evitar el cambio por defecto al iluminarse.
 - Conectar pasos y targets con `MathStore`; mantener IDs públicos estables y bidireccionalidad entre texto y diagrama.
+- Modelar todo punto construido como `PointObject`; distinguir intersección, punto medio, proyección, expresión y coordenadas mediante `definition`, nunca mediante un tipo visual paralelo.
+- Modelar rectas construidas con `PathObject.geometry.construction`, y ángulos, marcas y anotaciones mediante sus uniones discriminadas. No reintroducir tipos v2 equivalentes.
+- Resolver referencias mediante capacidades y slots de `spec/semantics.ts`; no duplicar listas manuales en toolbar, inspector, schema o renderer.
+- Aplicar renombrado y borrado mediante los comandos de grafo. No hacer sustituciones textuales de expresiones ni dejar referencias colgantes.
+- Escribir valores reactivos de anotaciones con plantillas `{= expresion | precision: 2 | unit: "cm"}`. Cada texto puede contener tantos cálculos como necesite y cada cálculo conserva su formato local. Reservar `{value}` para compatibilidad v2; no confundir llaves KaTeX con interpolaciones.
 - Respetar las dependencias FSD: `shared` no puede depender de `features`, `widgets`, `pages` ni `app`.
 
 ## Extender el editor cuando falte funcionalidad
 
 Implementar una sección vertical completa:
 
-1. Tipos, schema estricto y migración en `src/shared/diagrams/spec/`.
+1. Tipos discriminados en `spec/v3.ts`, schema estricto en `schemaV3.ts`, capacidades en `semantics.ts` y migración en `migrations.ts`/`v3Compatibility.ts`.
 2. Primitiva Arts & Crafts en `MathFactory` y render en `DiagramRenderer`.
 3. Herramienta o construcción en `model/commands.ts` y `DiagramToolbar.tsx`.
 4. Todos los controles de propiedades en `DiagramInspector.tsx`.
@@ -68,6 +73,7 @@ Ejecutar pruebas dirigidas en `tests/features/editor/diagrams/` y `tests/shared/
 
 ```bash
 npm run editor:diagrams:check
+npm run editor:diagrams:v3-check
 npm run typecheck
 git diff --check
 ```

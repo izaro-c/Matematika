@@ -9,6 +9,7 @@ export * from './angleConstraints';
 export * from './segmentMarks';
 export * from './toolReferences';
 export * from './diagramClipboard';
+export * from './graphCommands';
 export * from './pointMovement';
 export * from './publishedDiagramLayout';
 export { projectPointToSupport, supportElements } from '../../../../shared/diagrams/spec';

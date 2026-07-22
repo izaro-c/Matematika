@@ -4,6 +4,7 @@ import type {
   DiagramGroup,
   DiagramStepObjectState,
 } from '../../../../shared/diagrams/spec';
+import { renameDiagramTemplateIdentifiers } from '../../../../shared/diagrams/spec';
 import type {
   VisualDiagramModel,
   VisualElement,
@@ -63,6 +64,14 @@ function rewriteExpression(source: string | undefined, idMap: ReadonlyMap<string
   });
 }
 
+function rewriteTemplate(source: string, idMap: ReadonlyMap<string, string>): string {
+  let result = source;
+  idMap.forEach((replacement, original) => {
+    result = renameDiagramTemplateIdentifiers(result, original, replacement);
+  });
+  return result;
+}
+
 function remapProperties(properties: VisualElement['properties'], idMap: ReadonlyMap<string, string>): VisualElement['properties'] {
   if (!properties) return properties;
   return {
@@ -72,12 +81,14 @@ function remapProperties(properties: VisualElement['properties'], idMap: Readonl
     yExpression: rewriteExpression(properties.yExpression, idMap),
     tickDistanceExpression: rewriteExpression(properties.tickDistanceExpression, idMap),
     visibleWhen: rewriteExpression(properties.visibleWhen, idMap),
-    textRules: properties.textRules?.map(rule => ({ ...rule, when: rewriteExpression(rule.when, idMap) ?? rule.when })),
+    textRules: properties.textRules?.map(rule => ({ ...rule, text: rewriteTemplate(rule.text, idMap), when: rewriteExpression(rule.when, idMap) ?? rule.when })),
     infoPanelBlocks: properties.infoPanelBlocks?.map(block => ({
       ...block,
+      text: rewriteTemplate(block.text, idMap),
       expression: rewriteExpression(block.expression, idMap),
       rules: block.rules?.map(rule => ({
         ...rule,
+        text: rewriteTemplate(rule.text, idMap),
         when: rewriteExpression(rule.when, idMap) ?? rule.when,
         expression: rewriteExpression(rule.expression, idMap),
       })),
@@ -230,6 +241,7 @@ export function pasteDiagramClipboard(model: VisualDiagramModel, payload: Diagra
     return remapTarget({
       ...clone(source),
       label: `${source.label} (copia)`,
+      text: source.text ? rewriteTemplate(source.text, idMap) : source.text,
       refs: source.refs.map(ref => idMap.get(ref) ?? ref),
       groupIds: remapGroupIds(source.groupIds),
       properties: {
@@ -282,7 +294,11 @@ export function pasteDiagramClipboard(model: VisualDiagramModel, payload: Diagra
       if (!id) return;
       objectStates[id] = {
         ...clone(state),
-        overlay: state.overlay ? { ...clone(state.overlay), expression: rewriteExpression(state.overlay.expression, idMap) } : undefined,
+        overlay: state.overlay ? {
+          ...clone(state.overlay),
+          content: rewriteTemplate(state.overlay.content, idMap),
+          expression: rewriteExpression(state.overlay.expression, idMap),
+        } : undefined,
       };
     });
     return { ...step, visibleTargets: [...new Set(visibleTargets)], objectStates };

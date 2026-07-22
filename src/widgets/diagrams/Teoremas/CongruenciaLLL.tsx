@@ -3,8 +3,8 @@ import { createDiagramSpec, DiagramRenderer } from '@/shared/diagrams/public';
 /* @matematika-diagram-spec:start */
 export const CongruenciaLLLSpec = createDiagramSpec(
 {
-  "version": 2,
-  "renderer": "matematika-diagram-renderer-v2",
+  "version": 3,
+  "renderer": "matematika-diagram-renderer-v3",
   "title": "Criterio de congruencia LLL",
   "componentId": "criterio-de-congruencia-lll",
   "category": "Teoremas",
@@ -150,7 +150,7 @@ export const CongruenciaLLLSpec = createDiagramSpec(
       "targetId": "lados-BC"
     }
   ],
-  "points": [
+  "objects": [
     {
       "id": "pA1",
       "label": "A",
@@ -171,16 +171,22 @@ export const CongruenciaLLLSpec = createDiagramSpec(
       },
       "target": true,
       "targetId": "pA1",
-      "style": {
-        "pointSize": 7,
-        "highlightPointSize": 10,
+      "objectType": "point",
+      "definition": {
+        "type": "coordinates",
+        "x": -3.05,
+        "y": 0.58
+      },
+      "mobility": {
+        "type": "free"
+      },
+      "appearance": {
+        "size": 7,
+        "labelVisible": true,
+        "highlightSize": 10,
         "preserveColorOnHighlight": true
       },
-      "x": -3.05,
-      "y": 0.58,
-      "showLabel": true,
-      "fixed": false,
-      "constraint": "free"
+      "interaction": {}
     },
     {
       "id": "pB1",
@@ -202,16 +208,22 @@ export const CongruenciaLLLSpec = createDiagramSpec(
       },
       "target": true,
       "targetId": "pB1",
-      "style": {
-        "pointSize": 7,
-        "highlightPointSize": 10,
+      "objectType": "point",
+      "definition": {
+        "type": "coordinates",
+        "x": 2.96,
+        "y": 0.63
+      },
+      "mobility": {
+        "type": "free"
+      },
+      "appearance": {
+        "size": 7,
+        "labelVisible": true,
+        "highlightSize": 10,
         "preserveColorOnHighlight": true
       },
-      "x": 2.96,
-      "y": 0.63,
-      "showLabel": true,
-      "fixed": false,
-      "constraint": "free"
+      "interaction": {}
     },
     {
       "id": "pC1",
@@ -233,16 +245,22 @@ export const CongruenciaLLLSpec = createDiagramSpec(
       },
       "target": true,
       "targetId": "pC1",
-      "style": {
-        "pointSize": 7,
-        "highlightPointSize": 10,
+      "objectType": "point",
+      "definition": {
+        "type": "coordinates",
+        "x": -0.05,
+        "y": 5
+      },
+      "mobility": {
+        "type": "free"
+      },
+      "appearance": {
+        "size": 7,
+        "labelVisible": true,
+        "highlightSize": 10,
         "preserveColorOnHighlight": true
       },
-      "x": -0.05,
-      "y": 5,
-      "showLabel": true,
-      "fixed": false,
-      "constraint": "free"
+      "interaction": {}
     },
     {
       "id": "pA2",
@@ -264,16 +282,22 @@ export const CongruenciaLLLSpec = createDiagramSpec(
       },
       "target": true,
       "targetId": "pA2",
-      "style": {
-        "pointSize": 7,
-        "highlightPointSize": 10,
+      "objectType": "point",
+      "definition": {
+        "type": "coordinates",
+        "x": -3.1,
+        "y": -1.09
+      },
+      "mobility": {
+        "type": "free"
+      },
+      "appearance": {
+        "size": 7,
+        "labelVisible": true,
+        "highlightSize": 10,
         "preserveColorOnHighlight": true
       },
-      "x": -3.1,
-      "y": -1.09,
-      "showLabel": true,
-      "fixed": false,
-      "constraint": "free"
+      "interaction": {}
     },
     {
       "id": "pB2",
@@ -295,19 +319,25 @@ export const CongruenciaLLLSpec = createDiagramSpec(
       },
       "target": true,
       "targetId": "pB2",
-      "style": {
-        "pointSize": 7,
-        "highlightPointSize": 10,
+      "objectType": "point",
+      "definition": {
+        "type": "coordinates",
+        "x": 2.9101956648599523,
+        "y": -1.077831594244687
+      },
+      "mobility": {
+        "type": "constrained",
+        "relationIds": [
+          "equalLengthsegA2B2"
+        ]
+      },
+      "appearance": {
+        "size": 7,
+        "labelVisible": true,
+        "highlightSize": 10,
         "preserveColorOnHighlight": true
       },
-      "x": 2.9101956648599523,
-      "y": -1.077831594244687,
-      "showLabel": true,
-      "fixed": false,
-      "constraint": "constrained",
-      "constraintIds": [
-        "equalLengthsegA2B2"
-      ]
+      "interaction": {}
     },
     {
       "id": "pC2",
@@ -329,23 +359,27 @@ export const CongruenciaLLLSpec = createDiagramSpec(
       },
       "target": true,
       "targetId": "pC2",
-      "style": {
-        "pointSize": 7,
-        "highlightPointSize": 10,
+      "objectType": "point",
+      "definition": {
+        "type": "coordinates",
+        "x": -0.05443987111835247,
+        "y": -5.478731422787957
+      },
+      "mobility": {
+        "type": "constrained",
+        "relationIds": [
+          "equalLengthsegB2C2",
+          "equalLengthsegA2C2"
+        ]
+      },
+      "appearance": {
+        "size": 7,
+        "labelVisible": true,
+        "highlightSize": 10,
         "preserveColorOnHighlight": true
       },
-      "x": -0.05443987111835247,
-      "y": -5.478731422787957,
-      "showLabel": true,
-      "fixed": false,
-      "constraint": "constrained",
-      "constraintIds": [
-        "equalLengthsegB2C2",
-        "equalLengthsegA2C2"
-      ]
-    }
-  ],
-  "elements": [
+      "interaction": {}
+    },
     {
       "id": "polygonA1B1C1",
       "label": "Polígono",
@@ -362,15 +396,18 @@ export const CongruenciaLLLSpec = createDiagramSpec(
       },
       "target": false,
       "targetId": "polygonA1B1C1",
-      "style": {
-        "preserveColorOnHighlight": true
+      "objectType": "path",
+      "geometry": {
+        "type": "polygon",
+        "points": [
+          "pA1",
+          "pB1",
+          "pC1"
+        ]
       },
-      "kind": "polygon",
-      "refs": [
-        "pA1",
-        "pB1",
-        "pC1"
-      ]
+      "appearance": {
+        "preserveColorOnHighlight": true
+      }
     },
     {
       "id": "polygonA2B2C2",
@@ -388,15 +425,18 @@ export const CongruenciaLLLSpec = createDiagramSpec(
       },
       "target": false,
       "targetId": "polygonA2B2C2",
-      "style": {
-        "preserveColorOnHighlight": true
+      "objectType": "path",
+      "geometry": {
+        "type": "polygon",
+        "points": [
+          "pA2",
+          "pB2",
+          "pC2"
+        ]
       },
-      "kind": "polygon",
-      "refs": [
-        "pA2",
-        "pB2",
-        "pC2"
-      ]
+      "appearance": {
+        "preserveColorOnHighlight": true
+      }
     },
     {
       "id": "segA1B1",
@@ -417,16 +457,19 @@ export const CongruenciaLLLSpec = createDiagramSpec(
       },
       "target": true,
       "targetId": "segA1B1",
-      "style": {
+      "objectType": "path",
+      "geometry": {
+        "type": "segment",
+        "points": [
+          "pA1",
+          "pB1"
+        ]
+      },
+      "appearance": {
         "strokeWidth": 2.4,
         "highlightStrokeWidth": 3,
         "preserveColorOnHighlight": true
-      },
-      "kind": "segment",
-      "refs": [
-        "pA1",
-        "pB1"
-      ]
+      }
     },
     {
       "id": "segB1C1",
@@ -447,16 +490,19 @@ export const CongruenciaLLLSpec = createDiagramSpec(
       },
       "target": true,
       "targetId": "segB1C1",
-      "style": {
+      "objectType": "path",
+      "geometry": {
+        "type": "segment",
+        "points": [
+          "pB1",
+          "pC1"
+        ]
+      },
+      "appearance": {
         "strokeWidth": 2.4,
         "highlightStrokeWidth": 3,
         "preserveColorOnHighlight": true
-      },
-      "kind": "segment",
-      "refs": [
-        "pB1",
-        "pC1"
-      ]
+      }
     },
     {
       "id": "segA1C1",
@@ -477,16 +523,19 @@ export const CongruenciaLLLSpec = createDiagramSpec(
       },
       "target": true,
       "targetId": "segA1C1",
-      "style": {
+      "objectType": "path",
+      "geometry": {
+        "type": "segment",
+        "points": [
+          "pA1",
+          "pC1"
+        ]
+      },
+      "appearance": {
         "strokeWidth": 2.4,
         "highlightStrokeWidth": 3,
         "preserveColorOnHighlight": true
-      },
-      "kind": "segment",
-      "refs": [
-        "pA1",
-        "pC1"
-      ]
+      }
     },
     {
       "id": "segA2B2",
@@ -507,16 +556,19 @@ export const CongruenciaLLLSpec = createDiagramSpec(
       },
       "target": true,
       "targetId": "segA2B2",
-      "style": {
+      "objectType": "path",
+      "geometry": {
+        "type": "segment",
+        "points": [
+          "pA2",
+          "pB2"
+        ]
+      },
+      "appearance": {
         "strokeWidth": 2.4,
         "highlightStrokeWidth": 3,
         "preserveColorOnHighlight": true
-      },
-      "kind": "segment",
-      "refs": [
-        "pA2",
-        "pB2"
-      ]
+      }
     },
     {
       "id": "segB2C2",
@@ -537,16 +589,19 @@ export const CongruenciaLLLSpec = createDiagramSpec(
       },
       "target": true,
       "targetId": "segB2C2",
-      "style": {
+      "objectType": "path",
+      "geometry": {
+        "type": "segment",
+        "points": [
+          "pB2",
+          "pC2"
+        ]
+      },
+      "appearance": {
         "strokeWidth": 2.4,
         "highlightStrokeWidth": 3,
         "preserveColorOnHighlight": true
-      },
-      "kind": "segment",
-      "refs": [
-        "pB2",
-        "pC2"
-      ]
+      }
     },
     {
       "id": "segA2C2",
@@ -567,16 +622,19 @@ export const CongruenciaLLLSpec = createDiagramSpec(
       },
       "target": true,
       "targetId": "segA2C2",
-      "style": {
+      "objectType": "path",
+      "geometry": {
+        "type": "segment",
+        "points": [
+          "pA2",
+          "pC2"
+        ]
+      },
+      "appearance": {
         "strokeWidth": 2.4,
         "highlightStrokeWidth": 3,
         "preserveColorOnHighlight": true
-      },
-      "kind": "segment",
-      "refs": [
-        "pA2",
-        "pC2"
-      ]
+      }
     },
     {
       "id": "congruenceMarkA1C1",
@@ -597,18 +655,20 @@ export const CongruenciaLLLSpec = createDiagramSpec(
       },
       "target": false,
       "targetId": "congruenceMarkA1C1",
-      "style": {
-        "strokeWidth": 2,
-        "markHeight": 0.6,
-        "preserveColorOnHighlight": true
+      "objectType": "mark",
+      "variant": "congruence",
+      "anchor": {
+        "type": "between-points",
+        "points": [
+          "pA1",
+          "pC1"
+        ]
       },
-      "kind": "congruenceMark",
-      "refs": [
-        "pA1",
-        "pC1"
-      ],
-      "properties": {
-        "markCount": 2
+      "count": 2,
+      "height": 0.6,
+      "appearance": {
+        "strokeWidth": 2,
+        "preserveColorOnHighlight": true
       }
     },
     {
@@ -630,18 +690,20 @@ export const CongruenciaLLLSpec = createDiagramSpec(
       },
       "target": false,
       "targetId": "congruenceMarkB1C1",
-      "style": {
-        "strokeWidth": 2,
-        "markHeight": 0.6,
-        "preserveColorOnHighlight": true
+      "objectType": "mark",
+      "variant": "congruence",
+      "anchor": {
+        "type": "between-points",
+        "points": [
+          "pB1",
+          "pC1"
+        ]
       },
-      "kind": "congruenceMark",
-      "refs": [
-        "pB1",
-        "pC1"
-      ],
-      "properties": {
-        "markCount": 3
+      "count": 3,
+      "height": 0.6,
+      "appearance": {
+        "strokeWidth": 2,
+        "preserveColorOnHighlight": true
       }
     },
     {
@@ -663,18 +725,20 @@ export const CongruenciaLLLSpec = createDiagramSpec(
       },
       "target": false,
       "targetId": "congruenceMarkA1B1",
-      "style": {
-        "strokeWidth": 2,
-        "markHeight": 0.6,
-        "preserveColorOnHighlight": true
+      "objectType": "mark",
+      "variant": "congruence",
+      "anchor": {
+        "type": "between-points",
+        "points": [
+          "pA1",
+          "pB1"
+        ]
       },
-      "kind": "congruenceMark",
-      "refs": [
-        "pA1",
-        "pB1"
-      ],
-      "properties": {
-        "markCount": 1
+      "count": 1,
+      "height": 0.6,
+      "appearance": {
+        "strokeWidth": 2,
+        "preserveColorOnHighlight": true
       }
     },
     {
@@ -696,18 +760,20 @@ export const CongruenciaLLLSpec = createDiagramSpec(
       },
       "target": false,
       "targetId": "congruenceMarkA2B2",
-      "style": {
-        "strokeWidth": 2,
-        "markHeight": 0.6,
-        "preserveColorOnHighlight": true
+      "objectType": "mark",
+      "variant": "congruence",
+      "anchor": {
+        "type": "between-points",
+        "points": [
+          "pA2",
+          "pB2"
+        ]
       },
-      "kind": "congruenceMark",
-      "refs": [
-        "pA2",
-        "pB2"
-      ],
-      "properties": {
-        "markCount": 1
+      "count": 1,
+      "height": 0.6,
+      "appearance": {
+        "strokeWidth": 2,
+        "preserveColorOnHighlight": true
       }
     },
     {
@@ -728,18 +794,20 @@ export const CongruenciaLLLSpec = createDiagramSpec(
       },
       "target": false,
       "targetId": "congruenceMarkB2C2",
-      "style": {
-        "strokeWidth": 2,
-        "markHeight": 0.6,
-        "preserveColorOnHighlight": true
+      "objectType": "mark",
+      "variant": "congruence",
+      "anchor": {
+        "type": "between-points",
+        "points": [
+          "pB2",
+          "pC2"
+        ]
       },
-      "kind": "congruenceMark",
-      "refs": [
-        "pB2",
-        "pC2"
-      ],
-      "properties": {
-        "markCount": 3
+      "count": 3,
+      "height": 0.6,
+      "appearance": {
+        "strokeWidth": 2,
+        "preserveColorOnHighlight": true
       }
     },
     {
@@ -761,18 +829,20 @@ export const CongruenciaLLLSpec = createDiagramSpec(
       },
       "target": false,
       "targetId": "congruenceMarkA2C2",
-      "style": {
-        "strokeWidth": 2,
-        "markHeight": 0.6,
-        "preserveColorOnHighlight": true
+      "objectType": "mark",
+      "variant": "congruence",
+      "anchor": {
+        "type": "between-points",
+        "points": [
+          "pA2",
+          "pC2"
+        ]
       },
-      "kind": "congruenceMark",
-      "refs": [
-        "pA2",
-        "pC2"
-      ],
-      "properties": {
-        "markCount": 2
+      "count": 2,
+      "height": 0.6,
+      "appearance": {
+        "strokeWidth": 2,
+        "preserveColorOnHighlight": true
       }
     },
     {
@@ -793,17 +863,19 @@ export const CongruenciaLLLSpec = createDiagramSpec(
       },
       "target": false,
       "targetId": "nonReflexAngleB1A1C1",
-      "style": {
-        "angleRadius": 1,
-        "preserveColorOnHighlight": true
-      },
-      "kind": "nonReflexAngle",
-      "refs": [
+      "objectType": "angle",
+      "points": [
         "pB1",
         "pA1",
         "pC1"
       ],
-      "showLabel": false
+      "sweep": "non-reflex",
+      "marker": "arc",
+      "appearance": {
+        "radius": 1,
+        "labelVisible": false,
+        "preserveColorOnHighlight": true
+      }
     },
     {
       "id": "nonReflexAngleC1B1A1",
@@ -823,17 +895,19 @@ export const CongruenciaLLLSpec = createDiagramSpec(
       },
       "target": false,
       "targetId": "nonReflexAngleC1B1A1",
-      "style": {
-        "angleRadius": 1,
-        "preserveColorOnHighlight": true
-      },
-      "kind": "nonReflexAngle",
-      "refs": [
+      "objectType": "angle",
+      "points": [
         "pC1",
         "pB1",
         "pA1"
       ],
-      "showLabel": false
+      "sweep": "non-reflex",
+      "marker": "arc",
+      "appearance": {
+        "radius": 1,
+        "labelVisible": false,
+        "preserveColorOnHighlight": true
+      }
     },
     {
       "id": "nonReflexAngleA1C1B1",
@@ -853,17 +927,19 @@ export const CongruenciaLLLSpec = createDiagramSpec(
       },
       "target": false,
       "targetId": "nonReflexAngleA1C1B1",
-      "style": {
-        "angleRadius": 1,
-        "preserveColorOnHighlight": true
-      },
-      "kind": "nonReflexAngle",
-      "refs": [
+      "objectType": "angle",
+      "points": [
         "pA1",
         "pC1",
         "pB1"
       ],
-      "showLabel": false
+      "sweep": "non-reflex",
+      "marker": "arc",
+      "appearance": {
+        "radius": 1,
+        "labelVisible": false,
+        "preserveColorOnHighlight": true
+      }
     },
     {
       "id": "nonReflexAngleA2B2C2",
@@ -883,17 +959,19 @@ export const CongruenciaLLLSpec = createDiagramSpec(
       },
       "target": false,
       "targetId": "nonReflexAngleA2B2C2",
-      "style": {
-        "angleRadius": 1,
-        "preserveColorOnHighlight": true
-      },
-      "kind": "nonReflexAngle",
-      "refs": [
+      "objectType": "angle",
+      "points": [
         "pA2",
         "pB2",
         "pC2"
       ],
-      "showLabel": false
+      "sweep": "non-reflex",
+      "marker": "arc",
+      "appearance": {
+        "radius": 1,
+        "labelVisible": false,
+        "preserveColorOnHighlight": true
+      }
     },
     {
       "id": "nonReflexAngleB2C2A2",
@@ -913,17 +991,19 @@ export const CongruenciaLLLSpec = createDiagramSpec(
       },
       "target": false,
       "targetId": "nonReflexAngleB2C2A2",
-      "style": {
-        "angleRadius": 1,
-        "preserveColorOnHighlight": true
-      },
-      "kind": "nonReflexAngle",
-      "refs": [
+      "objectType": "angle",
+      "points": [
         "pB2",
         "pC2",
         "pA2"
       ],
-      "showLabel": false
+      "sweep": "non-reflex",
+      "marker": "arc",
+      "appearance": {
+        "radius": 1,
+        "labelVisible": false,
+        "preserveColorOnHighlight": true
+      }
     },
     {
       "id": "nonReflexAngleC2A2B2",
@@ -943,336 +1023,58 @@ export const CongruenciaLLLSpec = createDiagramSpec(
       },
       "target": false,
       "targetId": "nonReflexAngleC2A2B2",
-      "style": {
-        "angleRadius": 1,
-        "preserveColorOnHighlight": true
-      },
-      "kind": "nonReflexAngle",
-      "refs": [
+      "objectType": "angle",
+      "points": [
         "pC2",
         "pA2",
         "pB2"
       ],
-      "showLabel": false
+      "sweep": "non-reflex",
+      "marker": "arc",
+      "appearance": {
+        "radius": 1,
+        "labelVisible": false,
+        "preserveColorOnHighlight": true
+      }
     }
   ],
-  "sliders": [],
-  "steps": [],
-  "constraints": [
+  "relations": [
     {
       "id": "equalLengthsegA2B2",
       "label": "Segmento tiene la misma longitud que Segmento",
-      "kind": "equalLength",
-      "refs": [
-        "pB2",
-        "pA2",
+      "enabled": true,
+      "type": "equal-length",
+      "segments": [
+        "segA2B2",
         "segA1B1"
       ],
-      "enabled": true
+      "drivenPoint": "pB2"
     },
     {
       "id": "equalLengthsegB2C2",
       "label": "Segmento tiene la misma longitud que Segmento",
-      "kind": "equalLength",
-      "refs": [
-        "pC2",
-        "pB2",
+      "enabled": true,
+      "type": "equal-length",
+      "segments": [
+        "segB2C2",
         "segB1C1"
       ],
-      "enabled": true
+      "drivenPoint": "pC2"
     },
     {
       "id": "equalLengthsegA2C2",
       "label": "Segmento tiene la misma longitud que Segmento",
-      "kind": "equalLength",
-      "refs": [
-        "pC2",
-        "pA2",
+      "enabled": true,
+      "type": "equal-length",
+      "segments": [
+        "segA2C2",
         "segA1C1"
       ],
-      "enabled": true
+      "drivenPoint": "pC2"
     }
   ],
-  "dependencies": [
-    {
-      "sourceId": "pA1",
-      "targetId": "polygonA1B1C1",
-      "relation": "construction"
-    },
-    {
-      "sourceId": "pB1",
-      "targetId": "polygonA1B1C1",
-      "relation": "construction"
-    },
-    {
-      "sourceId": "pC1",
-      "targetId": "polygonA1B1C1",
-      "relation": "construction"
-    },
-    {
-      "sourceId": "pA2",
-      "targetId": "polygonA2B2C2",
-      "relation": "construction"
-    },
-    {
-      "sourceId": "pB2",
-      "targetId": "polygonA2B2C2",
-      "relation": "construction"
-    },
-    {
-      "sourceId": "pC2",
-      "targetId": "polygonA2B2C2",
-      "relation": "construction"
-    },
-    {
-      "sourceId": "pA1",
-      "targetId": "segA1B1",
-      "relation": "construction"
-    },
-    {
-      "sourceId": "pB1",
-      "targetId": "segA1B1",
-      "relation": "construction"
-    },
-    {
-      "sourceId": "pB1",
-      "targetId": "segB1C1",
-      "relation": "construction"
-    },
-    {
-      "sourceId": "pC1",
-      "targetId": "segB1C1",
-      "relation": "construction"
-    },
-    {
-      "sourceId": "pA1",
-      "targetId": "segA1C1",
-      "relation": "construction"
-    },
-    {
-      "sourceId": "pC1",
-      "targetId": "segA1C1",
-      "relation": "construction"
-    },
-    {
-      "sourceId": "pA2",
-      "targetId": "segA2B2",
-      "relation": "construction"
-    },
-    {
-      "sourceId": "pB2",
-      "targetId": "segA2B2",
-      "relation": "construction"
-    },
-    {
-      "sourceId": "pB2",
-      "targetId": "segB2C2",
-      "relation": "construction"
-    },
-    {
-      "sourceId": "pC2",
-      "targetId": "segB2C2",
-      "relation": "construction"
-    },
-    {
-      "sourceId": "pA2",
-      "targetId": "segA2C2",
-      "relation": "construction"
-    },
-    {
-      "sourceId": "pC2",
-      "targetId": "segA2C2",
-      "relation": "construction"
-    },
-    {
-      "sourceId": "pA1",
-      "targetId": "congruenceMarkA1C1",
-      "relation": "construction"
-    },
-    {
-      "sourceId": "pC1",
-      "targetId": "congruenceMarkA1C1",
-      "relation": "construction"
-    },
-    {
-      "sourceId": "pB1",
-      "targetId": "congruenceMarkB1C1",
-      "relation": "construction"
-    },
-    {
-      "sourceId": "pC1",
-      "targetId": "congruenceMarkB1C1",
-      "relation": "construction"
-    },
-    {
-      "sourceId": "pA1",
-      "targetId": "congruenceMarkA1B1",
-      "relation": "construction"
-    },
-    {
-      "sourceId": "pB1",
-      "targetId": "congruenceMarkA1B1",
-      "relation": "construction"
-    },
-    {
-      "sourceId": "pA2",
-      "targetId": "congruenceMarkA2B2",
-      "relation": "construction"
-    },
-    {
-      "sourceId": "pB2",
-      "targetId": "congruenceMarkA2B2",
-      "relation": "construction"
-    },
-    {
-      "sourceId": "pA2",
-      "targetId": "pB2",
-      "relation": "constraint",
-      "constraintId": "equalLengthsegA2B2"
-    },
-    {
-      "sourceId": "segA1B1",
-      "targetId": "pB2",
-      "relation": "constraint",
-      "constraintId": "equalLengthsegA2B2"
-    },
-    {
-      "sourceId": "pB2",
-      "targetId": "congruenceMarkB2C2",
-      "relation": "construction"
-    },
-    {
-      "sourceId": "pC2",
-      "targetId": "congruenceMarkB2C2",
-      "relation": "construction"
-    },
-    {
-      "sourceId": "pB2",
-      "targetId": "pC2",
-      "relation": "constraint",
-      "constraintId": "equalLengthsegB2C2"
-    },
-    {
-      "sourceId": "segB1C1",
-      "targetId": "pC2",
-      "relation": "constraint",
-      "constraintId": "equalLengthsegB2C2"
-    },
-    {
-      "sourceId": "pA2",
-      "targetId": "congruenceMarkA2C2",
-      "relation": "construction"
-    },
-    {
-      "sourceId": "pC2",
-      "targetId": "congruenceMarkA2C2",
-      "relation": "construction"
-    },
-    {
-      "sourceId": "pA2",
-      "targetId": "pC2",
-      "relation": "constraint",
-      "constraintId": "equalLengthsegA2C2"
-    },
-    {
-      "sourceId": "segA1C1",
-      "targetId": "pC2",
-      "relation": "constraint",
-      "constraintId": "equalLengthsegA2C2"
-    },
-    {
-      "sourceId": "pB1",
-      "targetId": "nonReflexAngleB1A1C1",
-      "relation": "construction"
-    },
-    {
-      "sourceId": "pA1",
-      "targetId": "nonReflexAngleB1A1C1",
-      "relation": "construction"
-    },
-    {
-      "sourceId": "pC1",
-      "targetId": "nonReflexAngleB1A1C1",
-      "relation": "construction"
-    },
-    {
-      "sourceId": "pC1",
-      "targetId": "nonReflexAngleC1B1A1",
-      "relation": "construction"
-    },
-    {
-      "sourceId": "pB1",
-      "targetId": "nonReflexAngleC1B1A1",
-      "relation": "construction"
-    },
-    {
-      "sourceId": "pA1",
-      "targetId": "nonReflexAngleC1B1A1",
-      "relation": "construction"
-    },
-    {
-      "sourceId": "pA1",
-      "targetId": "nonReflexAngleA1C1B1",
-      "relation": "construction"
-    },
-    {
-      "sourceId": "pC1",
-      "targetId": "nonReflexAngleA1C1B1",
-      "relation": "construction"
-    },
-    {
-      "sourceId": "pB1",
-      "targetId": "nonReflexAngleA1C1B1",
-      "relation": "construction"
-    },
-    {
-      "sourceId": "pA2",
-      "targetId": "nonReflexAngleA2B2C2",
-      "relation": "construction"
-    },
-    {
-      "sourceId": "pB2",
-      "targetId": "nonReflexAngleA2B2C2",
-      "relation": "construction"
-    },
-    {
-      "sourceId": "pC2",
-      "targetId": "nonReflexAngleA2B2C2",
-      "relation": "construction"
-    },
-    {
-      "sourceId": "pB2",
-      "targetId": "nonReflexAngleB2C2A2",
-      "relation": "construction"
-    },
-    {
-      "sourceId": "pC2",
-      "targetId": "nonReflexAngleB2C2A2",
-      "relation": "construction"
-    },
-    {
-      "sourceId": "pA2",
-      "targetId": "nonReflexAngleB2C2A2",
-      "relation": "construction"
-    },
-    {
-      "sourceId": "pC2",
-      "targetId": "nonReflexAngleC2A2B2",
-      "relation": "construction"
-    },
-    {
-      "sourceId": "pA2",
-      "targetId": "nonReflexAngleC2A2B2",
-      "relation": "construction"
-    },
-    {
-      "sourceId": "pB2",
-      "targetId": "nonReflexAngleC2A2B2",
-      "relation": "construction"
-    }
-  ],
-  "note": "Arrastra A, B y C",
-  "extensions": {}
+  "steps": [],
+  "note": "Arrastra A, B y C"
 }
 );
 /* @matematika-diagram-spec:end */

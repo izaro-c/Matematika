@@ -3,8 +3,8 @@ import { createDiagramSpec, DiagramRenderer } from '@/shared/diagrams/public';
 /* @matematika-diagram-spec:start */
 export const Congruence2Spec = createDiagramSpec(
 {
-  "version": 2,
-  "renderer": "matematika-diagram-renderer-v2",
+  "version": 3,
+  "renderer": "matematika-diagram-renderer-v3",
   "title": "Axioma de Congruencia II",
   "componentId": "axioma-de-congruencia-ii",
   "category": "Axiomas",
@@ -112,7 +112,7 @@ export const Congruence2Spec = createDiagramSpec(
       "targetId": "CDEF"
     }
   ],
-  "points": [
+  "objects": [
     {
       "id": "pA",
       "label": "A",
@@ -132,15 +132,21 @@ export const Congruence2Spec = createDiagramSpec(
       },
       "target": true,
       "targetId": "pA",
-      "style": {
-        "pointSize": 7,
-        "highlightPointSize": 10,
+      "objectType": "point",
+      "definition": {
+        "type": "coordinates",
+        "x": -2,
+        "y": 2
+      },
+      "mobility": {
+        "type": "free"
+      },
+      "appearance": {
+        "size": 7,
+        "highlightSize": 10,
         "preserveColorOnHighlight": true
       },
-      "x": -2,
-      "y": 2,
-      "fixed": false,
-      "constraint": "free"
+      "interaction": {}
     },
     {
       "id": "pB",
@@ -161,15 +167,21 @@ export const Congruence2Spec = createDiagramSpec(
       },
       "target": true,
       "targetId": "pB",
-      "style": {
-        "pointSize": 7,
-        "highlightPointSize": 10,
+      "objectType": "point",
+      "definition": {
+        "type": "coordinates",
+        "x": 2,
+        "y": 2
+      },
+      "mobility": {
+        "type": "free"
+      },
+      "appearance": {
+        "size": 7,
+        "highlightSize": 10,
         "preserveColorOnHighlight": true
       },
-      "x": 2,
-      "y": 2,
-      "fixed": false,
-      "constraint": "free"
+      "interaction": {}
     },
     {
       "id": "pC",
@@ -190,15 +202,21 @@ export const Congruence2Spec = createDiagramSpec(
       },
       "target": true,
       "targetId": "pC",
-      "style": {
-        "pointSize": 7,
-        "highlightPointSize": 10,
+      "objectType": "point",
+      "definition": {
+        "type": "coordinates",
+        "x": -2,
+        "y": 0
+      },
+      "mobility": {
+        "type": "free"
+      },
+      "appearance": {
+        "size": 7,
+        "highlightSize": 10,
         "preserveColorOnHighlight": true
       },
-      "x": -2,
-      "y": 0,
-      "fixed": false,
-      "constraint": "free"
+      "interaction": {}
     },
     {
       "id": "pD",
@@ -219,18 +237,24 @@ export const Congruence2Spec = createDiagramSpec(
       },
       "target": true,
       "targetId": "pD",
-      "style": {
-        "pointSize": 7,
-        "highlightPointSize": 10,
+      "objectType": "point",
+      "definition": {
+        "type": "coordinates",
+        "x": 2,
+        "y": 0
+      },
+      "mobility": {
+        "type": "constrained",
+        "relationIds": [
+          "equalLengthsegCD"
+        ]
+      },
+      "appearance": {
+        "size": 7,
+        "highlightSize": 10,
         "preserveColorOnHighlight": true
       },
-      "x": 2,
-      "y": 0,
-      "fixed": false,
-      "constraint": "constrained",
-      "constraintIds": [
-        "equalLengthsegCD"
-      ]
+      "interaction": {}
     },
     {
       "id": "pE",
@@ -251,15 +275,21 @@ export const Congruence2Spec = createDiagramSpec(
       },
       "target": true,
       "targetId": "pE",
-      "style": {
-        "pointSize": 7,
-        "highlightPointSize": 10,
+      "objectType": "point",
+      "definition": {
+        "type": "coordinates",
+        "x": -2,
+        "y": -2
+      },
+      "mobility": {
+        "type": "free"
+      },
+      "appearance": {
+        "size": 7,
+        "highlightSize": 10,
         "preserveColorOnHighlight": true
       },
-      "x": -2,
-      "y": -2,
-      "fixed": false,
-      "constraint": "free"
+      "interaction": {}
     },
     {
       "id": "pF",
@@ -280,21 +310,25 @@ export const Congruence2Spec = createDiagramSpec(
       },
       "target": true,
       "targetId": "pF",
-      "style": {
-        "pointSize": 7,
-        "highlightPointSize": 10,
+      "objectType": "point",
+      "definition": {
+        "type": "coordinates",
+        "x": 2,
+        "y": -2
+      },
+      "mobility": {
+        "type": "constrained",
+        "relationIds": [
+          "equalLengthsegEF"
+        ]
+      },
+      "appearance": {
+        "size": 7,
+        "highlightSize": 10,
         "preserveColorOnHighlight": true
       },
-      "x": 2,
-      "y": -2,
-      "fixed": false,
-      "constraint": "constrained",
-      "constraintIds": [
-        "equalLengthsegEF"
-      ]
-    }
-  ],
-  "elements": [
+      "interaction": {}
+    },
     {
       "id": "segAB",
       "label": "Segmento",
@@ -314,16 +348,19 @@ export const Congruence2Spec = createDiagramSpec(
       },
       "target": true,
       "targetId": "segAB",
-      "style": {
+      "objectType": "path",
+      "geometry": {
+        "type": "segment",
+        "points": [
+          "pA",
+          "pB"
+        ]
+      },
+      "appearance": {
         "strokeWidth": 3,
         "highlightStrokeWidth": 5,
         "preserveColorOnHighlight": true
-      },
-      "kind": "segment",
-      "refs": [
-        "pA",
-        "pB"
-      ]
+      }
     },
     {
       "id": "segCD",
@@ -344,16 +381,19 @@ export const Congruence2Spec = createDiagramSpec(
       },
       "target": true,
       "targetId": "segCD",
-      "style": {
+      "objectType": "path",
+      "geometry": {
+        "type": "segment",
+        "points": [
+          "pC",
+          "pD"
+        ]
+      },
+      "appearance": {
         "strokeWidth": 3,
         "highlightStrokeWidth": 5,
         "preserveColorOnHighlight": true
-      },
-      "kind": "segment",
-      "refs": [
-        "pC",
-        "pD"
-      ]
+      }
     },
     {
       "id": "segEF",
@@ -374,16 +414,19 @@ export const Congruence2Spec = createDiagramSpec(
       },
       "target": true,
       "targetId": "segEF",
-      "style": {
+      "objectType": "path",
+      "geometry": {
+        "type": "segment",
+        "points": [
+          "pE",
+          "pF"
+        ]
+      },
+      "appearance": {
         "strokeWidth": 3,
         "highlightStrokeWidth": 5,
         "preserveColorOnHighlight": true
-      },
-      "kind": "segment",
-      "refs": [
-        "pE",
-        "pF"
-      ]
+      }
     },
     {
       "id": "tickssegCD",
@@ -404,18 +447,18 @@ export const Congruence2Spec = createDiagramSpec(
       },
       "target": true,
       "targetId": "tickssegCD",
-      "style": {
-        "strokeWidth": 2,
-        "markHeight": 15,
-        "highlightStrokeWidth": 2.5,
-        "preserveColorOnHighlight": true
+      "objectType": "mark",
+      "variant": "graduation",
+      "anchor": {
+        "type": "path",
+        "path": "segCD"
       },
-      "kind": "measureTicks",
-      "refs": [
-        "segCD"
-      ],
-      "properties": {
-        "tickDistance": 1
+      "count": 1,
+      "height": 15,
+      "spacing": 1,
+      "appearance": {
+        "strokeWidth": 2,
+        "preserveColorOnHighlight": true
       }
     },
     {
@@ -437,19 +480,18 @@ export const Congruence2Spec = createDiagramSpec(
       },
       "target": true,
       "targetId": "tickssegEF",
-      "style": {
-        "strokeWidth": 2,
-        "markHeight": 15,
-        "highlightStrokeWidth": 2.5,
-        "preserveColorOnHighlight": true
+      "objectType": "mark",
+      "variant": "graduation",
+      "anchor": {
+        "type": "path",
+        "path": "segEF"
       },
-      "kind": "measureTicks",
-      "refs": [
-        "segEF"
-      ],
-      "dashed": false,
-      "properties": {
-        "tickDistance": 1
+      "count": 1,
+      "height": 15,
+      "spacing": 1,
+      "appearance": {
+        "strokeWidth": 2,
+        "preserveColorOnHighlight": true
       }
     },
     {
@@ -471,120 +513,47 @@ export const Congruence2Spec = createDiagramSpec(
       },
       "target": true,
       "targetId": "tickssegAB",
-      "style": {
-        "strokeWidth": 2,
-        "markHeight": 15,
-        "highlightStrokeWidth": 2.5,
-        "preserveColorOnHighlight": true
+      "objectType": "mark",
+      "variant": "graduation",
+      "anchor": {
+        "type": "path",
+        "path": "segAB"
       },
-      "kind": "measureTicks",
-      "refs": [
-        "segAB"
-      ],
-      "properties": {
-        "tickDistance": 1
+      "count": 1,
+      "height": 15,
+      "spacing": 1,
+      "appearance": {
+        "strokeWidth": 2,
+        "preserveColorOnHighlight": true
       }
     }
   ],
-  "sliders": [],
-  "steps": [],
-  "constraints": [
+  "relations": [
     {
       "id": "equalLengthsegCD",
       "label": "Segmento tiene la misma longitud que Segmento",
-      "kind": "equalLength",
-      "refs": [
-        "pD",
-        "pC",
+      "enabled": true,
+      "type": "equal-length",
+      "segments": [
+        "segCD",
         "segAB"
       ],
-      "enabled": true
+      "drivenPoint": "pD"
     },
     {
       "id": "equalLengthsegEF",
       "label": "Segmento tiene la misma longitud que Segmento",
-      "kind": "equalLength",
-      "refs": [
-        "pF",
-        "pE",
+      "enabled": true,
+      "type": "equal-length",
+      "segments": [
+        "segEF",
         "segAB"
       ],
-      "enabled": true
+      "drivenPoint": "pF"
     }
   ],
-  "dependencies": [
-    {
-      "sourceId": "pA",
-      "targetId": "segAB",
-      "relation": "construction"
-    },
-    {
-      "sourceId": "pB",
-      "targetId": "segAB",
-      "relation": "construction"
-    },
-    {
-      "sourceId": "pC",
-      "targetId": "segCD",
-      "relation": "construction"
-    },
-    {
-      "sourceId": "pD",
-      "targetId": "segCD",
-      "relation": "construction"
-    },
-    {
-      "sourceId": "pE",
-      "targetId": "segEF",
-      "relation": "construction"
-    },
-    {
-      "sourceId": "pF",
-      "targetId": "segEF",
-      "relation": "construction"
-    },
-    {
-      "sourceId": "segCD",
-      "targetId": "tickssegCD",
-      "relation": "construction"
-    },
-    {
-      "sourceId": "segEF",
-      "targetId": "tickssegEF",
-      "relation": "construction"
-    },
-    {
-      "sourceId": "segAB",
-      "targetId": "tickssegAB",
-      "relation": "construction"
-    },
-    {
-      "sourceId": "pC",
-      "targetId": "pD",
-      "relation": "constraint",
-      "constraintId": "equalLengthsegCD"
-    },
-    {
-      "sourceId": "segAB",
-      "targetId": "pD",
-      "relation": "constraint",
-      "constraintId": "equalLengthsegCD"
-    },
-    {
-      "sourceId": "pE",
-      "targetId": "pF",
-      "relation": "constraint",
-      "constraintId": "equalLengthsegEF"
-    },
-    {
-      "sourceId": "segAB",
-      "targetId": "pF",
-      "relation": "constraint",
-      "constraintId": "equalLengthsegEF"
-    }
-  ],
-  "note": "Arrastra A, B, C, D, E y F",
-  "extensions": {}
+  "steps": [],
+  "note": "Arrastra A, B, C, D, E y F"
 }
 );
 /* @matematika-diagram-spec:end */

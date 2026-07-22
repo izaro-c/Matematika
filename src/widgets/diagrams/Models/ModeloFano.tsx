@@ -3,8 +3,8 @@ import { createDiagramSpec, DiagramRenderer } from '@/shared/diagrams/public';
 /* @matematika-diagram-spec:start */
 export const ModeloFanoSpec = createDiagramSpec(
 {
-  "version": 2,
-  "renderer": "matematika-diagram-renderer-v2",
+  "version": 3,
+  "renderer": "matematika-diagram-renderer-v3",
   "title": "Plano de Fano",
   "componentId": "ModeloFano",
   "category": "Models",
@@ -52,7 +52,7 @@ export const ModeloFanoSpec = createDiagramSpec(
     }
   ],
   "groups": [],
-  "points": [
+  "objects": [
     {
       "id": "p1",
       "label": "1",
@@ -71,15 +71,21 @@ export const ModeloFanoSpec = createDiagramSpec(
       },
       "target": true,
       "targetId": "p1",
-      "style": {
-        "pointSize": 5,
-        "highlightPointSize": 9,
+      "objectType": "point",
+      "definition": {
+        "type": "coordinates",
+        "x": 0,
+        "y": 2
+      },
+      "mobility": {
+        "type": "fixed"
+      },
+      "appearance": {
+        "size": 5,
+        "highlightSize": 9,
         "preserveColorOnHighlight": true
       },
-      "x": 0,
-      "y": 2,
-      "fixed": true,
-      "constraint": "fixed"
+      "interaction": {}
     },
     {
       "id": "p2",
@@ -99,15 +105,21 @@ export const ModeloFanoSpec = createDiagramSpec(
       },
       "target": true,
       "targetId": "p2",
-      "style": {
-        "pointSize": 5,
-        "highlightPointSize": 9,
+      "objectType": "point",
+      "definition": {
+        "type": "coordinates",
+        "x": -1.732,
+        "y": -1
+      },
+      "mobility": {
+        "type": "fixed"
+      },
+      "appearance": {
+        "size": 5,
+        "highlightSize": 9,
         "preserveColorOnHighlight": true
       },
-      "x": -1.732,
-      "y": -1,
-      "fixed": true,
-      "constraint": "fixed"
+      "interaction": {}
     },
     {
       "id": "p3",
@@ -127,15 +139,21 @@ export const ModeloFanoSpec = createDiagramSpec(
       },
       "target": true,
       "targetId": "p3",
-      "style": {
-        "pointSize": 5,
-        "highlightPointSize": 9,
+      "objectType": "point",
+      "definition": {
+        "type": "coordinates",
+        "x": 1.732,
+        "y": -1
+      },
+      "mobility": {
+        "type": "fixed"
+      },
+      "appearance": {
+        "size": 5,
+        "highlightSize": 9,
         "preserveColorOnHighlight": true
       },
-      "x": 1.732,
-      "y": -1,
-      "fixed": true,
-      "constraint": "fixed"
+      "interaction": {}
     },
     {
       "id": "p4",
@@ -155,15 +173,21 @@ export const ModeloFanoSpec = createDiagramSpec(
       },
       "target": true,
       "targetId": "p4",
-      "style": {
-        "pointSize": 5,
-        "highlightPointSize": 9,
+      "objectType": "point",
+      "definition": {
+        "type": "coordinates",
+        "x": 0,
+        "y": -1
+      },
+      "mobility": {
+        "type": "fixed"
+      },
+      "appearance": {
+        "size": 5,
+        "highlightSize": 9,
         "preserveColorOnHighlight": true
       },
-      "x": 0,
-      "y": -1,
-      "fixed": true,
-      "constraint": "fixed"
+      "interaction": {}
     },
     {
       "id": "p5",
@@ -183,15 +207,21 @@ export const ModeloFanoSpec = createDiagramSpec(
       },
       "target": true,
       "targetId": "p5",
-      "style": {
-        "pointSize": 5,
-        "highlightPointSize": 9,
+      "objectType": "point",
+      "definition": {
+        "type": "coordinates",
+        "x": 0.866,
+        "y": 0.5
+      },
+      "mobility": {
+        "type": "fixed"
+      },
+      "appearance": {
+        "size": 5,
+        "highlightSize": 9,
         "preserveColorOnHighlight": true
       },
-      "x": 0.866,
-      "y": 0.5,
-      "fixed": true,
-      "constraint": "fixed"
+      "interaction": {}
     },
     {
       "id": "p6",
@@ -211,15 +241,21 @@ export const ModeloFanoSpec = createDiagramSpec(
       },
       "target": true,
       "targetId": "p6",
-      "style": {
-        "pointSize": 5,
-        "highlightPointSize": 9,
+      "objectType": "point",
+      "definition": {
+        "type": "coordinates",
+        "x": -0.866,
+        "y": 0.5
+      },
+      "mobility": {
+        "type": "fixed"
+      },
+      "appearance": {
+        "size": 5,
+        "highlightSize": 9,
         "preserveColorOnHighlight": true
       },
-      "x": -0.866,
-      "y": 0.5,
-      "fixed": true,
-      "constraint": "fixed"
+      "interaction": {}
     },
     {
       "id": "p7",
@@ -239,15 +275,21 @@ export const ModeloFanoSpec = createDiagramSpec(
       },
       "target": true,
       "targetId": "p7",
-      "style": {
-        "pointSize": 5,
-        "highlightPointSize": 9,
+      "objectType": "point",
+      "definition": {
+        "type": "coordinates",
+        "x": 0,
+        "y": 0
+      },
+      "mobility": {
+        "type": "fixed"
+      },
+      "appearance": {
+        "size": 5,
+        "highlightSize": 9,
         "preserveColorOnHighlight": true
       },
-      "x": 0,
-      "y": 0,
-      "fixed": true,
-      "constraint": "fixed"
+      "interaction": {}
     },
     {
       "id": "pCircR",
@@ -263,13 +305,18 @@ export const ModeloFanoSpec = createDiagramSpec(
         "role": "construction"
       },
       "target": false,
-      "x": 0,
-      "y": -1,
-      "fixed": true,
-      "constraint": "fixed"
-    }
-  ],
-  "elements": [
+      "objectType": "point",
+      "definition": {
+        "type": "coordinates",
+        "x": 0,
+        "y": -1
+      },
+      "mobility": {
+        "type": "fixed"
+      },
+      "appearance": {},
+      "interaction": {}
+    },
     {
       "id": "l1",
       "label": "l₁",
@@ -288,16 +335,19 @@ export const ModeloFanoSpec = createDiagramSpec(
       },
       "target": true,
       "targetId": "l1",
-      "style": {
+      "objectType": "path",
+      "geometry": {
+        "type": "segment",
+        "points": [
+          "p1",
+          "p2"
+        ]
+      },
+      "appearance": {
         "strokeWidth": 2,
         "highlightStrokeWidth": 4,
         "preserveColorOnHighlight": true
-      },
-      "kind": "segment",
-      "refs": [
-        "p1",
-        "p2"
-      ]
+      }
     },
     {
       "id": "l2",
@@ -317,16 +367,19 @@ export const ModeloFanoSpec = createDiagramSpec(
       },
       "target": true,
       "targetId": "l2",
-      "style": {
+      "objectType": "path",
+      "geometry": {
+        "type": "segment",
+        "points": [
+          "p2",
+          "p3"
+        ]
+      },
+      "appearance": {
         "strokeWidth": 2,
         "highlightStrokeWidth": 4,
         "preserveColorOnHighlight": true
-      },
-      "kind": "segment",
-      "refs": [
-        "p2",
-        "p3"
-      ]
+      }
     },
     {
       "id": "l3",
@@ -346,16 +399,19 @@ export const ModeloFanoSpec = createDiagramSpec(
       },
       "target": true,
       "targetId": "l3",
-      "style": {
+      "objectType": "path",
+      "geometry": {
+        "type": "segment",
+        "points": [
+          "p3",
+          "p1"
+        ]
+      },
+      "appearance": {
         "strokeWidth": 2,
         "highlightStrokeWidth": 4,
         "preserveColorOnHighlight": true
-      },
-      "kind": "segment",
-      "refs": [
-        "p3",
-        "p1"
-      ]
+      }
     },
     {
       "id": "l4",
@@ -375,16 +431,19 @@ export const ModeloFanoSpec = createDiagramSpec(
       },
       "target": true,
       "targetId": "l4",
-      "style": {
+      "objectType": "path",
+      "geometry": {
+        "type": "segment",
+        "points": [
+          "p1",
+          "p4"
+        ]
+      },
+      "appearance": {
         "strokeWidth": 2,
         "highlightStrokeWidth": 4,
         "preserveColorOnHighlight": true
-      },
-      "kind": "segment",
-      "refs": [
-        "p1",
-        "p4"
-      ]
+      }
     },
     {
       "id": "l5",
@@ -404,16 +463,19 @@ export const ModeloFanoSpec = createDiagramSpec(
       },
       "target": true,
       "targetId": "l5",
-      "style": {
+      "objectType": "path",
+      "geometry": {
+        "type": "segment",
+        "points": [
+          "p2",
+          "p5"
+        ]
+      },
+      "appearance": {
         "strokeWidth": 2,
         "highlightStrokeWidth": 4,
         "preserveColorOnHighlight": true
-      },
-      "kind": "segment",
-      "refs": [
-        "p2",
-        "p5"
-      ]
+      }
     },
     {
       "id": "l6",
@@ -433,16 +495,19 @@ export const ModeloFanoSpec = createDiagramSpec(
       },
       "target": true,
       "targetId": "l6",
-      "style": {
+      "objectType": "path",
+      "geometry": {
+        "type": "segment",
+        "points": [
+          "p3",
+          "p6"
+        ]
+      },
+      "appearance": {
         "strokeWidth": 2,
         "highlightStrokeWidth": 4,
         "preserveColorOnHighlight": true
-      },
-      "kind": "segment",
-      "refs": [
-        "p3",
-        "p6"
-      ]
+      }
     },
     {
       "id": "l7",
@@ -462,17 +527,18 @@ export const ModeloFanoSpec = createDiagramSpec(
       },
       "target": true,
       "targetId": "l7",
-      "style": {
+      "objectType": "path",
+      "geometry": {
+        "type": "circle",
+        "center": "p7",
+        "point": "pCircR"
+      },
+      "appearance": {
+        "dashed": true,
         "strokeWidth": 1.5,
         "highlightStrokeWidth": 3,
         "preserveColorOnHighlight": true
-      },
-      "kind": "circle",
-      "refs": [
-        "p7",
-        "pCircR"
-      ],
-      "dashed": true
+      }
     },
     {
       "id": "info",
@@ -488,100 +554,27 @@ export const ModeloFanoSpec = createDiagramSpec(
         "role": "annotation"
       },
       "target": false,
-      "style": {
-        "strokeWidth": 0,
-        "preserveColorOnHighlight": true
+      "objectType": "annotation",
+      "variant": "panel",
+      "content": {
+        "text": "7 puntos · 7 rectas · cada punto en 3 rectas · cada recta con 3 puntos",
+        "title": "PG(2,2)"
       },
-      "kind": "infoPanel",
-      "refs": [],
-      "text": "7 puntos · 7 rectas · cada punto en 3 rectas · cada recta con 3 puntos",
-      "properties": {
-        "title": "PG(2,2)",
-        "anchorMode": "viewport",
-        "viewportPosition": [
+      "anchor": {
+        "type": "viewport",
+        "position": [
           0,
           0
         ]
+      },
+      "appearance": {
+        "preserveColorOnHighlight": true
       }
     }
   ],
-  "sliders": [],
+  "relations": [],
   "steps": [],
-  "constraints": [],
-  "dependencies": [
-    {
-      "sourceId": "p1",
-      "targetId": "l1",
-      "relation": "construction"
-    },
-    {
-      "sourceId": "p2",
-      "targetId": "l1",
-      "relation": "construction"
-    },
-    {
-      "sourceId": "p2",
-      "targetId": "l2",
-      "relation": "construction"
-    },
-    {
-      "sourceId": "p3",
-      "targetId": "l2",
-      "relation": "construction"
-    },
-    {
-      "sourceId": "p3",
-      "targetId": "l3",
-      "relation": "construction"
-    },
-    {
-      "sourceId": "p1",
-      "targetId": "l3",
-      "relation": "construction"
-    },
-    {
-      "sourceId": "p1",
-      "targetId": "l4",
-      "relation": "construction"
-    },
-    {
-      "sourceId": "p4",
-      "targetId": "l4",
-      "relation": "construction"
-    },
-    {
-      "sourceId": "p2",
-      "targetId": "l5",
-      "relation": "construction"
-    },
-    {
-      "sourceId": "p5",
-      "targetId": "l5",
-      "relation": "construction"
-    },
-    {
-      "sourceId": "p3",
-      "targetId": "l6",
-      "relation": "construction"
-    },
-    {
-      "sourceId": "p6",
-      "targetId": "l6",
-      "relation": "construction"
-    },
-    {
-      "sourceId": "p7",
-      "targetId": "l7",
-      "relation": "construction"
-    },
-    {
-      "sourceId": "pCircR",
-      "targetId": "l7",
-      "relation": "construction"
-    }
-  ],
-  "note": "El plano proyectivo de orden 2 (PG(2,2)): el plano finito más pequeño. Cada punto pertenece a exactamente 3 rectas y cada recta contiene exactamente 3 puntos.",
-  "extensions": {}
+  "note": "El plano proyectivo de orden 2 (PG(2,2)): el plano finito más pequeño. Cada punto pertenece a exactamente 3 rectas y cada recta contiene exactamente 3 puntos."
 }
 );
 /* @matematika-diagram-spec:end */

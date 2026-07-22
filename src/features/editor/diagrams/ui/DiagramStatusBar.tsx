@@ -43,31 +43,31 @@ export const DiagramStatusBar: React.FC<DiagramStatusBarProps> = ({
 
   return (
     <div
-      className="flex flex-wrap items-center justify-between gap-3 border-t border-carbon/15 bg-carbon/5 px-4 py-2 text-xs"
+      className="grid shrink-0 grid-cols-[minmax(0,1fr)_auto] items-center gap-x-2 border-t border-carbon/15 bg-carbon/5 px-3 py-2 text-xs sm:px-4"
       role={presentation.level === 'error' ? 'alert' : 'status'}
       aria-live={presentation.level === 'error' ? 'assertive' : 'polite'}
     >
       <div className="min-w-0 flex-1">
-        <div className="flex items-center gap-2">
+        <div className="flex min-w-0 items-center gap-2">
         <span className={`inline-block h-2 w-2 rounded-full ${config.color.split(' ')[0]}`} />
-        <span className={`font-bold uppercase tracking-wider text-[10px] ${config.textClass}`}>{config.label}</span>
-          <span className="text-[10px] font-bold uppercase tracking-wider text-carbon/45">{presentation.title}</span>
-          <span className="rounded bg-carbon/10 px-1.5 py-0.5 font-mono text-[9px] font-semibold text-carbon lowercase" title="Estado técnico de sincronización">
+        <span className={`truncate font-bold uppercase tracking-wider text-[10px] ${config.textClass}`}>{config.label}</span>
+          <span className="hidden text-[10px] font-bold uppercase tracking-wider text-carbon/45 lg:inline">{presentation.title}</span>
+          <span className="hidden rounded bg-carbon/10 px-1.5 py-0.5 font-mono text-[9px] font-semibold text-carbon lowercase sm:inline" title="Estado técnico de sincronización">
             sync:{status}
           </span>
         </div>
-        <p className="mt-1 truncate text-[10px] text-carbon/55">{presentation.description}</p>
+        <p className="mt-1 hidden truncate text-[10px] text-carbon/55 sm:block">{presentation.description}</p>
       </div>
 
-      <div className="flex items-center gap-3">
+      <div className="flex shrink-0 items-center gap-3">
         {isDirty && (
-          <span className="font-mono text-[10px] text-carbon/40 italic">Cambios locales sin guardar</span>
+          <span className="hidden font-mono text-[10px] italic text-carbon/40 xl:inline">Cambios locales sin guardar</span>
         )}
         <button
           type="button"
           onClick={onSave}
           disabled={isSaveBlocked}
-          className={`rounded px-4 py-1 text-xs font-bold transition-all ${
+          className={`min-h-11 rounded px-4 text-xs font-bold transition-all ${
             isSaveBlocked
               ? 'bg-carbon/10 text-carbon/35 cursor-not-allowed'
               : 'bg-carbon text-lienzo hover:bg-carbon/80 cursor-pointer'

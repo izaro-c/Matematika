@@ -1,10 +1,11 @@
 import { z } from 'zod';
 import {
-  DIAGRAM_RENDERER_ID,
-  DIAGRAM_SPEC_VERSION,
+  DIAGRAM_RENDERER_V2_ID,
+  DIAGRAM_SPEC_V2_VERSION,
   type DiagramSpecV2,
 } from './types';
 import { DiagramExpressionError, extractMathExpressionIdentifiers, parseMathExpression } from './expressions';
+import { diagramTemplateExpressions } from './infoPanels';
 import { dependencyDeterminesConstructionOrder } from './scene';
 
 const idSchema = z.string().min(1).regex(/^[A-Za-z][A-Za-z0-9_-]*$/, 'Debe empezar por una letra y usar solo letras, números, _ o -.');
@@ -130,6 +131,7 @@ const sceneBaseShape = {
   layerId: idSchema,
   order: z.number().int(),
   visible: z.boolean(),
+  visibleWhen: expressionSchema.optional(),
   locked: z.boolean(),
   groupIds: z.array(idSchema),
   selection: selectionSchema,
@@ -213,6 +215,7 @@ const stepOverlaySchema = z.object({
 const stepObjectStateSchema = z.object({
   visible: z.boolean().optional(),
   emphasis: z.enum(['none', 'secondary', 'primary']).optional(),
+  emphasisColor: diagramColorTokenSchema.optional(),
   label: z.string().optional(),
   overlay: stepOverlaySchema.optional(),
   interactive: z.boolean().optional(),
@@ -251,6 +254,25 @@ const groupSchema = z.object({
   extensions: optionalExtensionsSchema,
 }).strict();
 
+const headerReadingSchema = z.object({
+  id: idSchema,
+  sourceIds: z.array(idSchema).min(1).max(8),
+  presentation: z.enum(['label-value', 'equality', 'value']),
+  label: z.string().optional(),
+}).strict().superRefine((reading, context) => {
+  if (reading.presentation === 'equality' && reading.sourceIds.length < 2) {
+    context.addIssue({ code: 'custom', message: 'Una igualdad necesita al menos dos lecturas.', path: ['sourceIds'] });
+  }
+  if (reading.presentation !== 'equality' && reading.sourceIds.length !== 1) {
+    context.addIssue({ code: 'custom', message: 'Esta presentación necesita una única lectura.', path: ['sourceIds'] });
+  }
+});
+
+const headerSchema = z.object({
+  readingsMode: z.enum(['automatic', 'custom', 'hidden']),
+  readings: z.array(headerReadingSchema).max(12),
+}).strict();
+
 const minimumRefs: Record<string, number> = {
   segment: 2, line: 2, ray: 2, polygon: 3, circle: 2, arc: 3,
   functionCurve: 0, parametricCurve: 0, poincareGeodesic: 4, poincareArc: 4, intersection: 2, midpoint: 2,
@@ -261,8 +283,8 @@ const minimumRefs: Record<string, number> = {
 };
 
 export const diagramSpecV2Schema = z.object({
-  version: z.literal(DIAGRAM_SPEC_VERSION),
-  renderer: z.literal(DIAGRAM_RENDERER_ID),
+  version: z.literal(DIAGRAM_SPEC_V2_VERSION),
+  renderer: z.literal(DIAGRAM_RENDERER_V2_ID),
   title: z.string().min(1),
   componentId: idSchema,
   category: z.string().min(1),
@@ -270,6 +292,7 @@ export const diagramSpecV2Schema = z.object({
   axis: z.boolean(),
   grid: z.boolean(),
   showLabels: z.boolean().optional(),
+  header: headerSchema.optional(),
   viewport: z.object({
     bounds: boundsSchema,
     home: boundsSchema,
@@ -304,6 +327,17 @@ export const diagramSpecV2Schema = z.object({
   });
 
   const itemIds = new Set(items.map(item => item.id));
+  const readableIds = new Set(spec.elements.filter(item => (
+    (item.kind === 'measurement' || item.kind === 'dimensionLine')
+    || (item.kind === 'infoPanel' && Boolean(item.properties?.expression))
+  )).map(item => item.id));
+  spec.header?.readings.forEach((reading, readingIndex) => reading.sourceIds.forEach((sourceId, sourceIndex) => {
+    if (!readableIds.has(sourceId)) context.addIssue({
+      code: 'custom',
+      message: `${sourceId} no es una medida disponible para la cabecera.`,
+      path: ['header', 'readings', readingIndex, 'sourceIds', sourceIndex],
+    });
+  }));
   const referenceIds = new Set([...spec.points.map(item => item.id), ...spec.elements.map(item => item.id), ...spec.sliders.map(item => item.id)]);
   const layerIds = new Set(spec.layers.map(layer => layer.id));
   const groupIds = new Set(spec.groups.map(group => group.id));
@@ -488,27 +522,36 @@ export const diagramSpecV2Schema = z.object({
 
   const expressionEntries: Array<{ source: string; path: Array<string | number>; parameter?: string; targetId?: string }> = [];
   spec.points.forEach((point, index) => {
+    if (point.visibleWhen) expressionEntries.push({ source: point.visibleWhen, path: ['points', index, 'visibleWhen'], targetId: point.id });
     if (point.xExpression) expressionEntries.push({ source: point.xExpression, path: ['points', index, 'xExpression'], targetId: point.id });
     if (point.yExpression) expressionEntries.push({ source: point.yExpression, path: ['points', index, 'yExpression'], targetId: point.id });
   });
   spec.elements.forEach((element, index) => {
+    if (element.visibleWhen) expressionEntries.push({ source: element.visibleWhen, path: ['elements', index, 'visibleWhen'], targetId: element.id });
     const properties = element.properties;
+    diagramTemplateExpressions(element.text ?? '', properties?.expression).forEach((entry, templateIndex) => expressionEntries.push({ source: entry.expression, path: ['elements', index, 'text', templateIndex], targetId: element.id }));
     if (!properties) return;
     if (properties.expression) expressionEntries.push({ source: properties.expression, path: ['elements', index, 'properties', 'expression'], parameter: properties.parameter, targetId: element.id });
     if (properties.xExpression) expressionEntries.push({ source: properties.xExpression, path: ['elements', index, 'properties', 'xExpression'], parameter: properties.parameter, targetId: element.id });
     if (properties.yExpression) expressionEntries.push({ source: properties.yExpression, path: ['elements', index, 'properties', 'yExpression'], parameter: properties.parameter, targetId: element.id });
     if (properties.tickDistanceExpression) expressionEntries.push({ source: properties.tickDistanceExpression, path: ['elements', index, 'properties', 'tickDistanceExpression'], targetId: element.id });
     if (properties.visibleWhen) expressionEntries.push({ source: properties.visibleWhen, path: ['elements', index, 'properties', 'visibleWhen'], targetId: element.id });
-    properties.textRules?.forEach((rule, ruleIndex) => expressionEntries.push({ source: rule.when, path: ['elements', index, 'properties', 'textRules', ruleIndex, 'when'], targetId: element.id }));
+    properties.textRules?.forEach((rule, ruleIndex) => {
+      expressionEntries.push({ source: rule.when, path: ['elements', index, 'properties', 'textRules', ruleIndex, 'when'], targetId: element.id });
+      diagramTemplateExpressions(rule.text, properties.expression).forEach((entry, templateIndex) => expressionEntries.push({ source: entry.expression, path: ['elements', index, 'properties', 'textRules', ruleIndex, 'text', templateIndex], targetId: element.id }));
+    });
     properties.infoPanelBlocks?.forEach((block, blockIndex) => {
       if (block.expression) expressionEntries.push({ source: block.expression, path: ['elements', index, 'properties', 'infoPanelBlocks', blockIndex, 'expression'], targetId: element.id });
-      block.rules?.forEach((rule, ruleIndex) => {
+      diagramTemplateExpressions(block.text, block.expression).forEach((entry, templateIndex) => expressionEntries.push({ source: entry.expression, path: ['elements', index, 'properties', 'infoPanelBlocks', blockIndex, 'text', templateIndex], targetId: element.id }));
+      for (const [ruleIndex, rule] of (block.rules ?? []).entries()) {
         expressionEntries.push({ source: rule.when, path: ['elements', index, 'properties', 'infoPanelBlocks', blockIndex, 'rules', ruleIndex, 'when'], targetId: element.id });
         if (rule.expression) expressionEntries.push({ source: rule.expression, path: ['elements', index, 'properties', 'infoPanelBlocks', blockIndex, 'rules', ruleIndex, 'expression'], targetId: element.id });
-      });
+        diagramTemplateExpressions(rule.text, rule.expression ?? block.expression).forEach((entry, templateIndex) => expressionEntries.push({ source: entry.expression, path: ['elements', index, 'properties', 'infoPanelBlocks', blockIndex, 'rules', ruleIndex, 'text', templateIndex], targetId: element.id }));
+      }
     });
   });
   spec.sliders.forEach((slider, index) => {
+    if (slider.visibleWhen) expressionEntries.push({ source: slider.visibleWhen, path: ['sliders', index, 'visibleWhen'], targetId: slider.id });
     if (slider.maxExpression) expressionEntries.push({ source: slider.maxExpression, path: ['sliders', index, 'maxExpression'], targetId: slider.id });
   });
   spec.steps.forEach((step, stepIndex) => {
@@ -517,6 +560,10 @@ export const diagramSpecV2Schema = z.object({
         source: state.overlay.expression,
         path: ['steps', stepIndex, 'objectStates', objectId, 'overlay', 'expression'],
       });
+      if (state.overlay) diagramTemplateExpressions(state.overlay.content, state.overlay.expression).forEach((entry, templateIndex) => expressionEntries.push({
+        source: entry.expression,
+        path: ['steps', stepIndex, 'objectStates', objectId, 'overlay', 'content', templateIndex],
+      }));
     });
   });
   (spec.constraints ?? []).forEach((constraint, index) => {
@@ -710,7 +757,8 @@ export function parseDiagramSpecV2(value: unknown): { success: true; data: Diagr
   return { success: false, error: new DiagramSpecValidationError(result.error.issues) };
 }
 
-export function createDiagramSpec(value: unknown): DiagramSpecV2 {
+/** @deprecated Use createDiagramSpec desde el API v3. */
+export function createDiagramSpecV2(value: unknown): DiagramSpecV2 {
   const parsed = parseDiagramSpecV2(value);
   if (!parsed.success) throw parsed.error;
   return parsed.data;

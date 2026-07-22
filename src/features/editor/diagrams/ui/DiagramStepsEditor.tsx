@@ -12,6 +12,7 @@ import {
   updateStepObjectState,
 } from '../model/commands';
 import { DiagramExpressionField } from './DiagramExpressionField';
+import { COLOR_OPTIONS } from '../model/commands';
 
 interface DiagramStepsEditorProps {
   model: VisualDiagramModel;
@@ -21,7 +22,7 @@ interface DiagramStepsEditorProps {
   onSelectObject: (objectId: string) => void;
 }
 
-const emphasisLabel = { none: 'Sin énfasis', secondary: 'Secundario', primary: 'Primario' } as const;
+const emphasisLabel = { none: 'Sin resaltar', secondary: 'Resaltado suave', primary: 'Resaltado fuerte' } as const;
 
 function matrixCellClass(selected: boolean, visible: boolean): string {
   if (selected) return 'border-terracota bg-terracota/10';
@@ -30,9 +31,9 @@ function matrixCellClass(selected: boolean, visible: boolean): string {
 }
 
 function emphasisSummary(emphasis: keyof typeof emphasisLabel): string {
-  if (emphasis === 'primary') return '★ Primario';
-  if (emphasis === 'secondary') return '◆ Secundario';
-  return '— Sin énfasis';
+  if (emphasis === 'primary') return '★ Resaltado fuerte';
+  if (emphasis === 'secondary') return '◆ Resaltado suave';
+  return '— Sin resaltar';
 }
 
 export const DiagramStepsEditor: React.FC<DiagramStepsEditorProps> = ({
@@ -171,7 +172,10 @@ export const DiagramStepsEditor: React.FC<DiagramStepsEditorProps> = ({
                         <td key={stepItem.id} className="border-t border-carbon/10 p-1.5">
                           <button
                             type="button"
-                            onClick={() => setSelectedCell({ stepId: stepItem.id, objectId: item.id })}
+                            onClick={() => {
+                              setSelectedCell({ stepId: stepItem.id, objectId: item.id });
+                              if (stepItem.id !== activeStep?.id) onActiveStepChange(stepItem.id);
+                            }}
                             aria-label={`${item.label} en ${stepItem.label}: ${summary}`}
                             aria-pressed={selected}
                             className={`w-full rounded border p-1.5 text-left ${matrixCellClass(selected, visible)}`}
@@ -195,12 +199,19 @@ export const DiagramStepsEditor: React.FC<DiagramStepsEditorProps> = ({
               <div className="grid gap-3 sm:grid-cols-3">
                 <label className="flex items-center gap-2 text-xs font-bold text-carbon"><input type="checkbox" checked={selectedState.visible !== false} onChange={event => editState({ visible: event.target.checked }, 'Cambiar visibilidad del paso')} />Visible</label>
                 <label className="flex items-center gap-2 text-xs font-bold text-carbon"><input type="checkbox" checked={selectedState.interactive !== false} onChange={event => editState({ interactive: event.target.checked }, 'Cambiar interacción del paso')} />Interactivo</label>
-                <label className="text-[10px] font-bold text-carbon/60">Énfasis
-                  <select className="ml-2 rounded border border-carbon/15 bg-lienzo p-1 text-xs" value={selectedState.emphasis ?? 'none'} onChange={event => editState({ emphasis: event.target.value as DiagramStepObjectState['emphasis'] }, 'Cambiar énfasis del paso')}>
-                    <option value="none">Ninguno</option><option value="secondary">Secundario</option><option value="primary">Primario</option>
+                <label className="text-[10px] font-bold text-carbon/60">Resaltado en este paso
+                  <select className="ml-2 rounded border border-carbon/15 bg-lienzo p-1 text-xs" value={selectedState.emphasis ?? 'none'} onChange={event => editState({ emphasis: event.target.value as DiagramStepObjectState['emphasis'] }, 'Cambiar resaltado del paso')}>
+                    <option value="none">Sin resaltar</option><option value="primary">Resaltado fuerte</option><option value="secondary">Resaltado suave</option>
                   </select>
                 </label>
               </div>
+              {(selectedState.emphasis ?? 'none') !== 'none' && <label className="block text-[10px] font-bold text-carbon/60">Color del énfasis
+                <select aria-label="Color del énfasis del paso" className="mt-1 min-h-10 w-full rounded border border-carbon/15 bg-lienzo px-2 text-xs" value={selectedState.emphasisColor ?? ''} onChange={event => editState({ emphasisColor: (event.target.value || undefined) as DiagramStepObjectState['emphasisColor'] }, 'Cambiar color del énfasis')}>
+                  <option value="">Conservar color original</option>
+                  {COLOR_OPTIONS.map(option => <option key={option.value} value={option.value}>{option.label}</option>)}
+                </select>
+                <span className="mt-1 block text-[9px] font-normal leading-relaxed text-carbon/45">El resaltado fuerte usa mayor grosor; el suave conserva menor intensidad. Un enlace MDX activo sustituye ambos.</span>
+              </label>}
               <label className="block text-[10px] font-bold text-carbon/60">Etiqueta temporal
                 <input className="mt-1 w-full rounded border border-carbon/15 bg-lienzo p-1.5 text-xs" placeholder={selectedObject.label} value={selectedState.label ?? ''} onChange={event => editState({ label: event.target.value || undefined }, 'Editar etiqueta temporal')} />
               </label>
@@ -222,7 +233,7 @@ export const DiagramStepsEditor: React.FC<DiagramStepsEditorProps> = ({
               </div>
             </fieldset>
           )}
-          {!selectedCell && <aside className="sticky top-3 rounded border border-dashed border-carbon/20 bg-carbon/[0.02] p-4 text-center text-xs text-carbon/50">Seleccione una celda de la matriz para editar aquí su visibilidad, énfasis, interacción y panel informativo.</aside>}
+          {!selectedCell && <aside className="sticky top-3 rounded border border-dashed border-carbon/20 bg-carbon/[0.02] p-4 text-center text-xs text-carbon/50">Seleccione una celda de la matriz para editar aquí su visibilidad, resaltado, interacción y panel informativo.</aside>}
           </div>
         </>
       )}

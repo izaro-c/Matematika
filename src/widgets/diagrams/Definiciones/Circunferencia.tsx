@@ -3,8 +3,8 @@ import { createDiagramSpec, DiagramRenderer } from '@/shared/diagrams/public';
 /* @matematika-diagram-spec:start */
 export const CircunferenciaSpec = createDiagramSpec(
 {
-  "version": 2,
-  "renderer": "matematika-diagram-renderer-v2",
+  "version": 3,
+  "renderer": "matematika-diagram-renderer-v3",
   "title": "Circunferencia y sus elementos notables",
   "componentId": "circunferencia",
   "category": "Definiciones",
@@ -124,7 +124,7 @@ export const CircunferenciaSpec = createDiagramSpec(
       "color": "ocre"
     }
   ],
-  "points": [
+  "objects": [
     {
       "id": "O",
       "label": "O",
@@ -141,23 +141,30 @@ export const CircunferenciaSpec = createDiagramSpec(
       },
       "target": true,
       "targetId": "centro",
-      "style": {
-        "pointSize": 7,
+      "objectType": "point",
+      "definition": {
+        "type": "coordinates",
+        "x": -0.5,
+        "y": -0.25
+      },
+      "mobility": {
+        "type": "free"
+      },
+      "appearance": {
+        "size": 7,
+        "labelVisible": true,
         "labelOffset": [
           -14,
           -18
         ],
         "labelSize": 19,
-        "highlightPointSize": 10,
+        "highlightSize": 10,
         "preserveColorOnHighlight": true
       },
-      "x": -0.5,
-      "y": -0.25,
-      "showLabel": true,
-      "fixed": false,
-      "constraint": "free",
-      "snapToGrid": true,
-      "snapSize": 0.25
+      "interaction": {
+        "snapToGrid": true,
+        "snapSize": 0.25
+      }
     },
     {
       "id": "P",
@@ -175,23 +182,30 @@ export const CircunferenciaSpec = createDiagramSpec(
       },
       "target": true,
       "targetId": "punto-p",
-      "style": {
-        "pointSize": 7,
+      "objectType": "point",
+      "definition": {
+        "type": "coordinates",
+        "x": 2.5,
+        "y": 0.25
+      },
+      "mobility": {
+        "type": "free"
+      },
+      "appearance": {
+        "size": 7,
+        "labelVisible": true,
         "labelOffset": [
           10,
           -18
         ],
         "labelSize": 19,
-        "highlightPointSize": 10,
+        "highlightSize": 10,
         "preserveColorOnHighlight": true
       },
-      "x": 2.5,
-      "y": 0.25,
-      "showLabel": true,
-      "fixed": false,
-      "constraint": "free",
-      "snapToGrid": true,
-      "snapSize": 0.25
+      "interaction": {
+        "snapToGrid": true,
+        "snapSize": 0.25
+      }
     },
     {
       "id": "D",
@@ -210,28 +224,32 @@ export const CircunferenciaSpec = createDiagramSpec(
         "role": "construction"
       },
       "target": false,
-      "style": {
-        "pointSize": 7,
+      "objectType": "point",
+      "definition": {
+        "type": "expression",
+        "x": "2 * O.x - P.x",
+        "y": "2 * O.y - P.y",
+        "fallback": [
+          -3.5,
+          -0.75
+        ]
+      },
+      "mobility": {
+        "type": "fixed"
+      },
+      "appearance": {
+        "size": 7,
+        "labelVisible": true,
         "labelOffset": [
           -18,
           -18
         ],
         "labelSize": 19,
-        "highlightPointSize": 10,
-        "highlightVisible": true,
-        "preserveColorOnHighlight": true
+        "highlightSize": 10,
+        "preserveColorOnHighlight": true,
+        "highlightVisible": true
       },
-      "x": -3.5,
-      "y": -0.75,
-      "showLabel": true,
-      "fixed": true,
-      "constraint": "derived",
-      "dependencies": [
-        "O",
-        "P"
-      ],
-      "xExpression": "2 * O.x - P.x",
-      "yExpression": "2 * O.y - P.y"
+      "interaction": {}
     },
     {
       "id": "Q",
@@ -251,23 +269,29 @@ export const CircunferenciaSpec = createDiagramSpec(
         "role": "construction"
       },
       "target": false,
-      "style": {
-        "pointSize": 7,
+      "objectType": "point",
+      "definition": {
+        "type": "coordinates",
+        "x": 0.5,
+        "y": 2.62
+      },
+      "mobility": {
+        "type": "on-support",
+        "support": "circunferenciaBase"
+      },
+      "appearance": {
+        "size": 7,
+        "labelVisible": true,
         "labelOffset": [
           10,
           12
         ],
         "labelSize": 19,
-        "highlightPointSize": 10,
-        "highlightVisible": true,
-        "preserveColorOnHighlight": true
+        "highlightSize": 10,
+        "preserveColorOnHighlight": true,
+        "highlightVisible": true
       },
-      "x": 0.5,
-      "y": 2.62,
-      "showLabel": true,
-      "fixed": false,
-      "constraint": "glider",
-      "gliderTarget": "circunferenciaBase"
+      "interaction": {}
     },
     {
       "id": "R",
@@ -287,23 +311,29 @@ export const CircunferenciaSpec = createDiagramSpec(
         "role": "construction"
       },
       "target": false,
-      "style": {
-        "pointSize": 7,
+      "objectType": "point",
+      "definition": {
+        "type": "coordinates",
+        "x": -2.7,
+        "y": 1.85
+      },
+      "mobility": {
+        "type": "on-support",
+        "support": "circunferenciaBase"
+      },
+      "appearance": {
+        "size": 7,
+        "labelVisible": true,
         "labelOffset": [
           -20,
           8
         ],
         "labelSize": 19,
-        "highlightPointSize": 10,
-        "highlightVisible": true,
-        "preserveColorOnHighlight": true
+        "highlightSize": 10,
+        "preserveColorOnHighlight": true,
+        "highlightVisible": true
       },
-      "x": -2.7,
-      "y": 1.85,
-      "showLabel": true,
-      "fixed": false,
-      "constraint": "glider",
-      "gliderTarget": "circunferenciaBase"
+      "interaction": {}
     },
     {
       "id": "T",
@@ -322,26 +352,30 @@ export const CircunferenciaSpec = createDiagramSpec(
         "role": "construction"
       },
       "target": false,
-      "style": {
-        "pointSize": 7,
+      "objectType": "point",
+      "definition": {
+        "type": "coordinates",
+        "x": 1.9,
+        "y": -2.12
+      },
+      "mobility": {
+        "type": "on-support",
+        "support": "circunferenciaBase"
+      },
+      "appearance": {
+        "size": 7,
+        "labelVisible": true,
         "labelOffset": [
           10,
           -18
         ],
         "labelSize": 19,
-        "highlightPointSize": 10,
-        "highlightVisible": true,
-        "preserveColorOnHighlight": true
+        "highlightSize": 10,
+        "preserveColorOnHighlight": true,
+        "highlightVisible": true
       },
-      "x": 1.9,
-      "y": -2.12,
-      "showLabel": true,
-      "fixed": false,
-      "constraint": "glider",
-      "gliderTarget": "circunferenciaBase"
-    }
-  ],
-  "elements": [
+      "interaction": {}
+    },
     {
       "id": "discoInterior",
       "label": "Círculo interior",
@@ -359,19 +393,20 @@ export const CircunferenciaSpec = createDiagramSpec(
       },
       "target": true,
       "targetId": "circulo",
-      "style": {
+      "objectType": "path",
+      "geometry": {
+        "type": "circle",
+        "center": "O",
+        "point": "P"
+      },
+      "appearance": {
         "strokeWidth": 0,
         "fillOpacity": 0.08,
         "highlightStrokeWidth": 0,
         "highlightFillOpacity": 0.28,
         "highlightVisible": true,
         "preserveColorOnHighlight": true
-      },
-      "kind": "circle",
-      "refs": [
-        "O",
-        "P"
-      ]
+      }
     },
     {
       "id": "circunferenciaBase",
@@ -389,18 +424,19 @@ export const CircunferenciaSpec = createDiagramSpec(
       },
       "target": true,
       "targetId": "circunferencia",
-      "style": {
+      "objectType": "path",
+      "geometry": {
+        "type": "circle",
+        "center": "O",
+        "point": "P"
+      },
+      "appearance": {
         "strokeWidth": 3,
         "fillOpacity": 0,
         "highlightStrokeWidth": 4.5,
         "highlightFillOpacity": 0,
         "preserveColorOnHighlight": true
-      },
-      "kind": "circle",
-      "refs": [
-        "O",
-        "P"
-      ]
+      }
     },
     {
       "id": "diametroDP",
@@ -419,17 +455,20 @@ export const CircunferenciaSpec = createDiagramSpec(
         "role": "secondary"
       },
       "target": false,
-      "style": {
+      "objectType": "path",
+      "geometry": {
+        "type": "segment",
+        "points": [
+          "D",
+          "P"
+        ]
+      },
+      "appearance": {
         "strokeWidth": 2.4,
         "highlightStrokeWidth": 4.2,
         "highlightVisible": true,
         "preserveColorOnHighlight": true
-      },
-      "kind": "segment",
-      "refs": [
-        "D",
-        "P"
-      ]
+      }
     },
     {
       "id": "radioOP",
@@ -447,17 +486,20 @@ export const CircunferenciaSpec = createDiagramSpec(
       },
       "target": true,
       "targetId": "radio",
-      "style": {
+      "objectType": "path",
+      "geometry": {
+        "type": "segment",
+        "points": [
+          "O",
+          "P"
+        ]
+      },
+      "appearance": {
+        "dashed": true,
         "strokeWidth": 2.4,
         "highlightStrokeWidth": 4.2,
         "preserveColorOnHighlight": true
-      },
-      "kind": "segment",
-      "refs": [
-        "O",
-        "P"
-      ],
-      "dashed": true
+      }
     },
     {
       "id": "cuerdaQR",
@@ -476,17 +518,20 @@ export const CircunferenciaSpec = createDiagramSpec(
         "role": "secondary"
       },
       "target": false,
-      "style": {
+      "objectType": "path",
+      "geometry": {
+        "type": "segment",
+        "points": [
+          "Q",
+          "R"
+        ]
+      },
+      "appearance": {
         "strokeWidth": 2.4,
         "highlightStrokeWidth": 4.2,
         "highlightVisible": true,
         "preserveColorOnHighlight": true
-      },
-      "kind": "segment",
-      "refs": [
-        "Q",
-        "R"
-      ]
+      }
     },
     {
       "id": "arcoQR",
@@ -505,18 +550,22 @@ export const CircunferenciaSpec = createDiagramSpec(
         "role": "secondary"
       },
       "target": false,
-      "style": {
+      "objectType": "path",
+      "geometry": {
+        "type": "arc",
+        "points": [
+          "O",
+          "Q",
+          "R"
+        ],
+        "direction": "counterclockwise"
+      },
+      "appearance": {
         "strokeWidth": 2.4,
         "highlightStrokeWidth": 4.2,
         "highlightVisible": true,
         "preserveColorOnHighlight": true
-      },
-      "kind": "arc",
-      "refs": [
-        "O",
-        "Q",
-        "R"
-      ]
+      }
     },
     {
       "id": "tangenteT",
@@ -535,112 +584,29 @@ export const CircunferenciaSpec = createDiagramSpec(
         "role": "secondary"
       },
       "target": false,
-      "style": {
+      "objectType": "path",
+      "geometry": {
+        "type": "line",
+        "construction": {
+          "type": "perpendicular",
+          "linePoints": [
+            "O",
+            "T"
+          ],
+          "through": "T"
+        }
+      },
+      "appearance": {
         "strokeWidth": 2.4,
         "highlightStrokeWidth": 4.2,
         "highlightVisible": true,
         "preserveColorOnHighlight": true
-      },
-      "kind": "perpendicular",
-      "refs": [
-        "O",
-        "T",
-        "T"
-      ]
+      }
     }
   ],
-  "sliders": [],
+  "relations": [],
   "steps": [],
-  "constraints": [],
-  "dependencies": [
-    {
-      "sourceId": "O",
-      "targetId": "D",
-      "relation": "expression"
-    },
-    {
-      "sourceId": "P",
-      "targetId": "D",
-      "relation": "expression"
-    },
-    {
-      "sourceId": "O",
-      "targetId": "discoInterior",
-      "relation": "construction"
-    },
-    {
-      "sourceId": "P",
-      "targetId": "discoInterior",
-      "relation": "construction"
-    },
-    {
-      "sourceId": "O",
-      "targetId": "circunferenciaBase",
-      "relation": "construction"
-    },
-    {
-      "sourceId": "P",
-      "targetId": "circunferenciaBase",
-      "relation": "construction"
-    },
-    {
-      "sourceId": "D",
-      "targetId": "diametroDP",
-      "relation": "construction"
-    },
-    {
-      "sourceId": "P",
-      "targetId": "diametroDP",
-      "relation": "construction"
-    },
-    {
-      "sourceId": "O",
-      "targetId": "radioOP",
-      "relation": "construction"
-    },
-    {
-      "sourceId": "P",
-      "targetId": "radioOP",
-      "relation": "construction"
-    },
-    {
-      "sourceId": "Q",
-      "targetId": "cuerdaQR",
-      "relation": "construction"
-    },
-    {
-      "sourceId": "R",
-      "targetId": "cuerdaQR",
-      "relation": "construction"
-    },
-    {
-      "sourceId": "O",
-      "targetId": "arcoQR",
-      "relation": "construction"
-    },
-    {
-      "sourceId": "Q",
-      "targetId": "arcoQR",
-      "relation": "construction"
-    },
-    {
-      "sourceId": "R",
-      "targetId": "arcoQR",
-      "relation": "construction"
-    },
-    {
-      "sourceId": "O",
-      "targetId": "tangenteT",
-      "relation": "construction"
-    },
-    {
-      "sourceId": "T",
-      "targetId": "tangenteT",
-      "relation": "construction"
-    }
-  ],
-  "note": "Mueve O y P. Enfoca los enlaces del texto para revelar cada elemento notable sin recargar la figura.",
-  "extensions": {}
+  "note": "Mueve O y P. Enfoca los enlaces del texto para revelar cada elemento notable sin recargar la figura."
 }
 );
 /* @matematika-diagram-spec:end */

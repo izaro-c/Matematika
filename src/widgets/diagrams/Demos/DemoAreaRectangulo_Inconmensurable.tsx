@@ -3,8 +3,8 @@ import { createDiagramSpec, DiagramRenderer } from '@/shared/diagrams/public';
 /* @matematika-diagram-spec:start */
 export const DemoAreaRectanguloInconmensurableSpec = createDiagramSpec(
 {
-  "version": 2,
-  "renderer": "matematika-diagram-renderer-v2",
+  "version": 3,
+  "renderer": "matematika-diagram-renderer-v3",
   "title": "Área del rectángulo: caso inconmensurable",
   "componentId": "demo-area-rectangulo-inconmensurable",
   "category": "Demostraciones",
@@ -45,7 +45,7 @@ export const DemoAreaRectanguloInconmensurableSpec = createDiagramSpec(
     }
   ],
   "groups": [],
-  "points": [
+  "objects": [
     {
       "id": "A",
       "label": "A",
@@ -61,16 +61,22 @@ export const DemoAreaRectanguloInconmensurableSpec = createDiagramSpec(
         "role": "secondary"
       },
       "target": false,
-      "style": {
-        "pointSize": 7,
-        "highlightPointSize": 10,
+      "objectType": "point",
+      "definition": {
+        "type": "coordinates",
+        "x": -2.7,
+        "y": -1.5
+      },
+      "mobility": {
+        "type": "fixed"
+      },
+      "appearance": {
+        "size": 7,
+        "labelVisible": false,
+        "highlightSize": 10,
         "preserveColorOnHighlight": true
       },
-      "x": -2.7,
-      "y": -1.5,
-      "showLabel": false,
-      "fixed": true,
-      "constraint": "fixed"
+      "interaction": {}
     },
     {
       "id": "B",
@@ -87,16 +93,22 @@ export const DemoAreaRectanguloInconmensurableSpec = createDiagramSpec(
         "role": "secondary"
       },
       "target": false,
-      "style": {
-        "pointSize": 7,
-        "highlightPointSize": 10,
+      "objectType": "point",
+      "definition": {
+        "type": "coordinates",
+        "x": 2.7,
+        "y": -1.5
+      },
+      "mobility": {
+        "type": "fixed"
+      },
+      "appearance": {
+        "size": 7,
+        "labelVisible": false,
+        "highlightSize": 10,
         "preserveColorOnHighlight": true
       },
-      "x": 2.7,
-      "y": -1.5,
-      "showLabel": false,
-      "fixed": true,
-      "constraint": "fixed"
+      "interaction": {}
     },
     {
       "id": "C",
@@ -113,16 +125,22 @@ export const DemoAreaRectanguloInconmensurableSpec = createDiagramSpec(
         "role": "secondary"
       },
       "target": false,
-      "style": {
-        "pointSize": 7,
-        "highlightPointSize": 10,
+      "objectType": "point",
+      "definition": {
+        "type": "coordinates",
+        "x": 2.7,
+        "y": 2
+      },
+      "mobility": {
+        "type": "fixed"
+      },
+      "appearance": {
+        "size": 7,
+        "labelVisible": false,
+        "highlightSize": 10,
         "preserveColorOnHighlight": true
       },
-      "x": 2.7,
-      "y": 2,
-      "showLabel": false,
-      "fixed": true,
-      "constraint": "fixed"
+      "interaction": {}
     },
     {
       "id": "D",
@@ -139,16 +157,22 @@ export const DemoAreaRectanguloInconmensurableSpec = createDiagramSpec(
         "role": "secondary"
       },
       "target": false,
-      "style": {
-        "pointSize": 7,
-        "highlightPointSize": 10,
+      "objectType": "point",
+      "definition": {
+        "type": "coordinates",
+        "x": -2.7,
+        "y": 2
+      },
+      "mobility": {
+        "type": "fixed"
+      },
+      "appearance": {
+        "size": 7,
+        "labelVisible": false,
+        "highlightSize": 10,
         "preserveColorOnHighlight": true
       },
-      "x": -2.7,
-      "y": 2,
-      "showLabel": false,
-      "fixed": true,
-      "constraint": "fixed"
+      "interaction": {}
     },
     {
       "id": "Ai",
@@ -165,22 +189,26 @@ export const DemoAreaRectanguloInconmensurableSpec = createDiagramSpec(
         "role": "construction"
       },
       "target": false,
-      "style": {
-        "pointSize": 7,
-        "highlightPointSize": 10,
+      "objectType": "point",
+      "definition": {
+        "type": "expression",
+        "x": "A.x + epsilon",
+        "y": "A.y + epsilon",
+        "fallback": [
+          -2.3,
+          -1.1
+        ]
+      },
+      "mobility": {
+        "type": "fixed"
+      },
+      "appearance": {
+        "size": 7,
+        "labelVisible": true,
+        "highlightSize": 10,
         "preserveColorOnHighlight": true
       },
-      "x": -2.3,
-      "y": -1.1,
-      "showLabel": true,
-      "fixed": true,
-      "constraint": "derived",
-      "dependencies": [
-        "A",
-        "epsilon"
-      ],
-      "xExpression": "A.x + epsilon",
-      "yExpression": "A.y + epsilon"
+      "interaction": {}
     },
     {
       "id": "Bi",
@@ -197,22 +225,26 @@ export const DemoAreaRectanguloInconmensurableSpec = createDiagramSpec(
         "role": "construction"
       },
       "target": false,
-      "style": {
-        "pointSize": 7,
-        "highlightPointSize": 10,
+      "objectType": "point",
+      "definition": {
+        "type": "expression",
+        "x": "B.x - epsilon",
+        "y": "B.y + epsilon",
+        "fallback": [
+          2.3,
+          -1.1
+        ]
+      },
+      "mobility": {
+        "type": "fixed"
+      },
+      "appearance": {
+        "size": 7,
+        "labelVisible": true,
+        "highlightSize": 10,
         "preserveColorOnHighlight": true
       },
-      "x": 2.3,
-      "y": -1.1,
-      "showLabel": true,
-      "fixed": true,
-      "constraint": "derived",
-      "dependencies": [
-        "B",
-        "epsilon"
-      ],
-      "xExpression": "B.x - epsilon",
-      "yExpression": "B.y + epsilon"
+      "interaction": {}
     },
     {
       "id": "Ci",
@@ -229,22 +261,26 @@ export const DemoAreaRectanguloInconmensurableSpec = createDiagramSpec(
         "role": "construction"
       },
       "target": false,
-      "style": {
-        "pointSize": 7,
-        "highlightPointSize": 10,
+      "objectType": "point",
+      "definition": {
+        "type": "expression",
+        "x": "C.x - epsilon",
+        "y": "C.y - epsilon",
+        "fallback": [
+          2.3,
+          1.6
+        ]
+      },
+      "mobility": {
+        "type": "fixed"
+      },
+      "appearance": {
+        "size": 7,
+        "labelVisible": true,
+        "highlightSize": 10,
         "preserveColorOnHighlight": true
       },
-      "x": 2.3,
-      "y": 1.6,
-      "showLabel": true,
-      "fixed": true,
-      "constraint": "derived",
-      "dependencies": [
-        "C",
-        "epsilon"
-      ],
-      "xExpression": "C.x - epsilon",
-      "yExpression": "C.y - epsilon"
+      "interaction": {}
     },
     {
       "id": "Di",
@@ -261,22 +297,26 @@ export const DemoAreaRectanguloInconmensurableSpec = createDiagramSpec(
         "role": "construction"
       },
       "target": false,
-      "style": {
-        "pointSize": 7,
-        "highlightPointSize": 10,
+      "objectType": "point",
+      "definition": {
+        "type": "expression",
+        "x": "D.x + epsilon",
+        "y": "D.y - epsilon",
+        "fallback": [
+          -2.3,
+          1.6
+        ]
+      },
+      "mobility": {
+        "type": "fixed"
+      },
+      "appearance": {
+        "size": 7,
+        "labelVisible": true,
+        "highlightSize": 10,
         "preserveColorOnHighlight": true
       },
-      "x": -2.3,
-      "y": 1.6,
-      "showLabel": true,
-      "fixed": true,
-      "constraint": "derived",
-      "dependencies": [
-        "D",
-        "epsilon"
-      ],
-      "xExpression": "D.x + epsilon",
-      "yExpression": "D.y - epsilon"
+      "interaction": {}
     },
     {
       "id": "Ao",
@@ -293,22 +333,26 @@ export const DemoAreaRectanguloInconmensurableSpec = createDiagramSpec(
         "role": "construction"
       },
       "target": false,
-      "style": {
-        "pointSize": 7,
-        "highlightPointSize": 10,
+      "objectType": "point",
+      "definition": {
+        "type": "expression",
+        "x": "A.x - epsilon",
+        "y": "A.y - epsilon",
+        "fallback": [
+          -3.1,
+          -1.9
+        ]
+      },
+      "mobility": {
+        "type": "fixed"
+      },
+      "appearance": {
+        "size": 7,
+        "labelVisible": true,
+        "highlightSize": 10,
         "preserveColorOnHighlight": true
       },
-      "x": -3.1,
-      "y": -1.9,
-      "showLabel": true,
-      "fixed": true,
-      "constraint": "derived",
-      "dependencies": [
-        "A",
-        "epsilon"
-      ],
-      "xExpression": "A.x - epsilon",
-      "yExpression": "A.y - epsilon"
+      "interaction": {}
     },
     {
       "id": "Bo",
@@ -325,22 +369,26 @@ export const DemoAreaRectanguloInconmensurableSpec = createDiagramSpec(
         "role": "construction"
       },
       "target": false,
-      "style": {
-        "pointSize": 7,
-        "highlightPointSize": 10,
+      "objectType": "point",
+      "definition": {
+        "type": "expression",
+        "x": "B.x + epsilon",
+        "y": "B.y - epsilon",
+        "fallback": [
+          3.1,
+          -1.9
+        ]
+      },
+      "mobility": {
+        "type": "fixed"
+      },
+      "appearance": {
+        "size": 7,
+        "labelVisible": true,
+        "highlightSize": 10,
         "preserveColorOnHighlight": true
       },
-      "x": 3.1,
-      "y": -1.9,
-      "showLabel": true,
-      "fixed": true,
-      "constraint": "derived",
-      "dependencies": [
-        "B",
-        "epsilon"
-      ],
-      "xExpression": "B.x + epsilon",
-      "yExpression": "B.y - epsilon"
+      "interaction": {}
     },
     {
       "id": "Co",
@@ -357,22 +405,26 @@ export const DemoAreaRectanguloInconmensurableSpec = createDiagramSpec(
         "role": "construction"
       },
       "target": false,
-      "style": {
-        "pointSize": 7,
-        "highlightPointSize": 10,
+      "objectType": "point",
+      "definition": {
+        "type": "expression",
+        "x": "C.x + epsilon",
+        "y": "C.y + epsilon",
+        "fallback": [
+          3.1,
+          2.4
+        ]
+      },
+      "mobility": {
+        "type": "fixed"
+      },
+      "appearance": {
+        "size": 7,
+        "labelVisible": true,
+        "highlightSize": 10,
         "preserveColorOnHighlight": true
       },
-      "x": 3.1,
-      "y": 2.4,
-      "showLabel": true,
-      "fixed": true,
-      "constraint": "derived",
-      "dependencies": [
-        "C",
-        "epsilon"
-      ],
-      "xExpression": "C.x + epsilon",
-      "yExpression": "C.y + epsilon"
+      "interaction": {}
     },
     {
       "id": "Do",
@@ -389,25 +441,27 @@ export const DemoAreaRectanguloInconmensurableSpec = createDiagramSpec(
         "role": "construction"
       },
       "target": false,
-      "style": {
-        "pointSize": 7,
-        "highlightPointSize": 10,
+      "objectType": "point",
+      "definition": {
+        "type": "expression",
+        "x": "D.x - epsilon",
+        "y": "D.y + epsilon",
+        "fallback": [
+          -3.1,
+          2.4
+        ]
+      },
+      "mobility": {
+        "type": "fixed"
+      },
+      "appearance": {
+        "size": 7,
+        "labelVisible": true,
+        "highlightSize": 10,
         "preserveColorOnHighlight": true
       },
-      "x": -3.1,
-      "y": 2.4,
-      "showLabel": true,
-      "fixed": true,
-      "constraint": "derived",
-      "dependencies": [
-        "D",
-        "epsilon"
-      ],
-      "xExpression": "D.x - epsilon",
-      "yExpression": "D.y + epsilon"
-    }
-  ],
-  "elements": [
+      "interaction": {}
+    },
     {
       "id": "outer",
       "label": "Rectángulo exterior Rₖ⁺",
@@ -424,19 +478,22 @@ export const DemoAreaRectanguloInconmensurableSpec = createDiagramSpec(
       },
       "target": true,
       "targetId": "rectangulo-k-max",
-      "style": {
+      "objectType": "path",
+      "geometry": {
+        "type": "polygon",
+        "points": [
+          "Ao",
+          "Bo",
+          "Co",
+          "Do"
+        ]
+      },
+      "appearance": {
         "strokeWidth": 2.4,
         "fillOpacity": 0.05,
         "highlightFillOpacity": 0.28,
         "preserveColorOnHighlight": true
-      },
-      "kind": "polygon",
-      "refs": [
-        "Ao",
-        "Bo",
-        "Co",
-        "Do"
-      ]
+      }
     },
     {
       "id": "rect",
@@ -454,19 +511,22 @@ export const DemoAreaRectanguloInconmensurableSpec = createDiagramSpec(
       },
       "target": true,
       "targetId": "rectangulo-r",
-      "style": {
+      "objectType": "path",
+      "geometry": {
+        "type": "polygon",
+        "points": [
+          "A",
+          "B",
+          "C",
+          "D"
+        ]
+      },
+      "appearance": {
         "strokeWidth": 3,
         "fillOpacity": 0.12,
         "highlightFillOpacity": 0.28,
         "preserveColorOnHighlight": true
-      },
-      "kind": "polygon",
-      "refs": [
-        "A",
-        "B",
-        "C",
-        "D"
-      ]
+      }
     },
     {
       "id": "inner",
@@ -484,19 +544,22 @@ export const DemoAreaRectanguloInconmensurableSpec = createDiagramSpec(
       },
       "target": true,
       "targetId": "rectangulo-k-min",
-      "style": {
+      "objectType": "path",
+      "geometry": {
+        "type": "polygon",
+        "points": [
+          "Ai",
+          "Bi",
+          "Ci",
+          "Di"
+        ]
+      },
+      "appearance": {
         "strokeWidth": 2.4,
         "fillOpacity": 0.14,
         "highlightFillOpacity": 0.28,
         "preserveColorOnHighlight": true
-      },
-      "kind": "polygon",
-      "refs": [
-        "Ai",
-        "Bi",
-        "Ci",
-        "Di"
-      ]
+      }
     },
     {
       "id": "squeezeInfo",
@@ -513,23 +576,23 @@ export const DemoAreaRectanguloInconmensurableSpec = createDiagramSpec(
         "role": "annotation"
       },
       "target": false,
-      "style": {
-        "preserveColorOnHighlight": true
+      "objectType": "annotation",
+      "variant": "panel",
+      "content": {
+        "text": "Rₖ⁻ ⊂ R ⊂ Rₖ⁺; al reducir ε, ambas áreas acotan la de R.",
+        "title": "Encaje arquimediano"
       },
-      "kind": "infoPanel",
-      "refs": [],
-      "text": "Rₖ⁻ ⊂ R ⊂ Rₖ⁺; al reducir ε, ambas áreas acotan la de R.",
-      "properties": {
-        "title": "Encaje arquimediano",
-        "anchorMode": "viewport",
-        "viewportPosition": [
+      "anchor": {
+        "type": "viewport",
+        "position": [
           0.98,
           0.03
         ]
+      },
+      "appearance": {
+        "preserveColorOnHighlight": true
       }
-    }
-  ],
-  "sliders": [
+    },
     {
       "id": "epsilon",
       "label": "ε",
@@ -546,17 +609,21 @@ export const DemoAreaRectanguloInconmensurableSpec = createDiagramSpec(
       },
       "target": true,
       "targetId": "epsilon",
-      "style": {
-        "preserveColorOnHighlight": true
+      "objectType": "control",
+      "variant": "slider",
+      "position": [
+        -1.5,
+        -3.1
+      ],
+      "range": {
+        "min": 0.1,
+        "max": 0.8,
+        "step": 0.05
       },
-      "x": -1.5,
-      "y": -3.1,
-      "min": 0.1,
-      "max": 0.8,
-      "value": 0.4,
-      "step": 0.05
+      "value": 0.4
     }
   ],
+  "relations": [],
   "steps": [
     {
       "id": "step2",
@@ -593,90 +660,7 @@ export const DemoAreaRectanguloInconmensurableSpec = createDiagramSpec(
       }
     }
   ],
-  "dependencies": [
-    {
-      "sourceId": "A",
-      "targetId": "Ai",
-      "relation": "expression"
-    },
-    {
-      "sourceId": "epsilon",
-      "targetId": "Ai",
-      "relation": "expression"
-    },
-    {
-      "sourceId": "B",
-      "targetId": "Bi",
-      "relation": "expression"
-    },
-    {
-      "sourceId": "epsilon",
-      "targetId": "Bi",
-      "relation": "expression"
-    },
-    {
-      "sourceId": "C",
-      "targetId": "Ci",
-      "relation": "expression"
-    },
-    {
-      "sourceId": "epsilon",
-      "targetId": "Ci",
-      "relation": "expression"
-    },
-    {
-      "sourceId": "D",
-      "targetId": "Di",
-      "relation": "expression"
-    },
-    {
-      "sourceId": "epsilon",
-      "targetId": "Di",
-      "relation": "expression"
-    },
-    {
-      "sourceId": "A",
-      "targetId": "Ao",
-      "relation": "expression"
-    },
-    {
-      "sourceId": "epsilon",
-      "targetId": "Ao",
-      "relation": "expression"
-    },
-    {
-      "sourceId": "B",
-      "targetId": "Bo",
-      "relation": "expression"
-    },
-    {
-      "sourceId": "epsilon",
-      "targetId": "Bo",
-      "relation": "expression"
-    },
-    {
-      "sourceId": "C",
-      "targetId": "Co",
-      "relation": "expression"
-    },
-    {
-      "sourceId": "epsilon",
-      "targetId": "Co",
-      "relation": "expression"
-    },
-    {
-      "sourceId": "D",
-      "targetId": "Do",
-      "relation": "expression"
-    },
-    {
-      "sourceId": "epsilon",
-      "targetId": "Do",
-      "relation": "expression"
-    }
-  ],
-  "note": "Ajusta ε. Los rectángulos racionales interior y exterior se aproximan simultáneamente a R.",
-  "extensions": {}
+  "note": "Ajusta ε. Los rectángulos racionales interior y exterior se aproximan simultáneamente a R."
 }
 );
 /* @matematika-diagram-spec:end */

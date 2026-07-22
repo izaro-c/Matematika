@@ -71,12 +71,12 @@ describe('DiagramSpec v2 schema and migrations', () => {
   it('migrates an unversioned v1 scene explicitly and preserves its geometry', () => {
     const result = migrateDiagramSpec(legacyFixture);
     expect(result.migratedFrom).toBe(1);
-    expect(result.spec.version).toBe(2);
+    expect(result.spec.version).toBe(3);
     expect(result.spec.viewport.bounds).toEqual(legacyFixture.boundingBox);
     expect(result.spec.points.map(point => [point.id, point.x, point.y])).toEqual(
       legacyFixture.points.map(point => [point.id, point.x, point.y]),
     );
-    expect(result.warnings[0]).toContain('no se reescribe');
+    expect(result.warnings[0]).toContain('v3');
   });
 
   it('returns precise paths for invalid references and layers', () => {
@@ -255,9 +255,9 @@ describe('DiagramSpec v2 schema and migrations', () => {
   });
 
   it('distinguishes future and unsupported versions with understandable errors', () => {
-    expect(() => migrateDiagramSpec({ ...v2Fixture, version: 3 })).toThrowError(DiagramSpecMigrationError);
+    expect(() => migrateDiagramSpec({ ...v2Fixture, version: 4 })).toThrowError(DiagramSpecMigrationError);
     try {
-      migrateDiagramSpec({ ...v2Fixture, version: 3 });
+      migrateDiagramSpec({ ...v2Fixture, version: 4 });
     } catch (error) {
       expect(error).toMatchObject({ code: 'future-version' });
       expect((error as Error).message).toContain('más reciente');

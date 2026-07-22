@@ -11,6 +11,8 @@
     "diagram-usages:index": "tsx scripts/editor/generate-diagram-usages.ts",
     "diagram-usages:check": "tsx scripts/editor/generate-diagram-usages.ts --check",
     "editor:diagrams:check": "tsx scripts/editor/check-diagrams-support.ts",
+    "editor:diagrams:v3-check": "node --import tsx scripts/editor/migrateDiagramSpecsV3.ts",
+    "editor:diagrams:v3-migrate": "node --import tsx scripts/editor/migrateDiagramSpecsV3.ts --write-verified",
     "content:coverage": "tsx scripts/core/generate-content-coverage.ts",
     "ai:index": "tsx scripts/ai/generate-ai-indexes.ts",
     "ai:review": "tsx scripts/ai/review-working-tree.ts",
