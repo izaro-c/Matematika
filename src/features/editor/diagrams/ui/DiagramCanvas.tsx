@@ -85,7 +85,11 @@ export const DiagramCanvas: React.FC<DiagramCanvasProps> = ({
           onSelect(id);
           onCompleteTool();
         } : undefined}
-        onViewportChange={(bounds) => onModelEdit(withViewportBounds(model, bounds), { label: 'Cambiar viewport', mergeKey: 'viewport' })}
+        onViewportChange={(bounds, options) => {
+          if (options?.persist || options?.persistHome) {
+            onModelEdit(withViewportBounds(model, bounds), { label: 'Cambiar viewport', mergeKey: 'viewport' });
+          }
+        }}
       />
     </MathProvider>
   </DiagramViewportFrame>

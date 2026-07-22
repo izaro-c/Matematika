@@ -189,6 +189,47 @@ export const MathBoard: React.FC<MathBoardProps> = ({
   const instructionsId = `math-board-instructions-${generatedId}`;
   const suppressBoundingBoxReportRef = useRef(false);
   const programmaticBoundingBoxRef = useRef<[number, number, number, number] | null>(null);
+  const userNavigatingRef = useRef(false);
+  const userNavigationTimerRef = useRef<number | null>(null);
+
+  const markUserNavigation = () => {
+    userNavigatingRef.current = true;
+    if (userNavigationTimerRef.current !== null && typeof window !== 'undefined') {
+      window.clearTimeout(userNavigationTimerRef.current);
+    }
+    if (typeof window !== 'undefined') {
+      userNavigationTimerRef.current = window.setTimeout(() => {
+        userNavigatingRef.current = false;
+        userNavigationTimerRef.current = null;
+      }, 120);
+    }
+  };
+
+  const fittedDisplayBounds = (
+    contentBounds: [number, number, number, number],
+    width: number,
+    height: number,
+  ): [number, number, number, number] => (
+    keepaspectratio
+      ? fitBoundsToSafeArea(contentBounds, width, height, safeAreaRef.current)
+      : contentBounds
+  );
+
+  const assertControlledViewport = (board: any, width: number, height: number) => {
+    if (userNavigatingRef.current) return;
+    const fittedBounds = fittedDisplayBounds(boundingboxRef.current, width, height);
+    const current = board.getBoundingBox?.() as number[] | undefined;
+    const changed = !current || fittedBounds.some((value, index) => Math.abs(value - current[index]) > 1e-8);
+    if (!changed) return;
+    suppressBoundingBoxReportRef.current = true;
+    board.setBoundingBox(fittedBounds, keepaspectratio);
+    board.update();
+    const nextBounds = board.getBoundingBox?.();
+    if (Array.isArray(nextBounds) && nextBounds.length === 4) {
+      programmaticBoundingBoxRef.current = [...nextBounds] as [number, number, number, number];
+    }
+    suppressBoundingBoxReportRef.current = false;
+  };
 
   useEffect(() => {
     onInitRef.current = onInit;
@@ -220,9 +261,11 @@ export const MathBoard: React.FC<MathBoardProps> = ({
     if (!boardRef.current) return;
     boardRef.current.id ||= id || `shared-jxgbox-${generatedId}`;
 
-    const initialBounds = keepaspectratio
-      ? fitBoundsToSafeArea(boundingboxRef.current, boardRef.current.clientWidth, boardRef.current.clientHeight, safeAreaRef.current)
-      : boundingboxRef.current;
+    const initialBounds = fittedDisplayBounds(
+      boundingboxRef.current,
+      boardRef.current.clientWidth,
+      boardRef.current.clientHeight,
+    );
     const board = JXG.JSXGraph.initBoard(boardRef.current.id, {
       boundingbox: initialBounds,
       axis,
@@ -262,13 +305,23 @@ export const MathBoard: React.FC<MathBoardProps> = ({
       const isStep = (target: string) => matchesScopedDiagramTarget(stepRef.current, target, scopeId);
       const isHL = (target: string) => matchesScopedDiagramTarget(highlightRef.current, target, scopeId);
       onUpdateRef.current?.(board, elementsRef.current, currentTheme, isStep, isHL);
+      assertControlledViewport(
+        board,
+        boardRef.current?.clientWidth ?? 0,
+        boardRef.current?.clientHeight ?? 0,
+      );
     };
 
     board.on('update', runUpdate);
     runUpdate();
 
+    board.on('mousedown', markUserNavigation);
+    board.on('mousewheel', markUserNavigation);
+    board.on('touchstart', markUserNavigation);
+
     const reportBoundingBox = () => {
       if (suppressBoundingBoxReportRef.current) return;
+      markUserNavigation();
       const current = board.getBoundingBox?.();
       if (Array.isArray(current) && current.length === 4) {
         const programmatic = programmaticBoundingBoxRef.current;
@@ -290,9 +343,7 @@ export const MathBoard: React.FC<MathBoardProps> = ({
       if (width <= 2 || height <= 2) return;
       suppressBoundingBoxReportRef.current = true;
       board.resizeContainer(width, height);
-      const fittedBounds = keepaspectratio
-        ? fitBoundsToSafeArea(boundingboxRef.current, width, height, safeAreaRef.current)
-        : boundingboxRef.current;
+      const fittedBounds = fittedDisplayBounds(boundingboxRef.current, width, height);
       board.setBoundingBox(fittedBounds, keepaspectratio);
       (board as any).__matematikaContainerSize = { width, height };
       board.update();
@@ -318,6 +369,9 @@ export const MathBoard: React.FC<MathBoardProps> = ({
     return () => {
       themeObserver.disconnect();
       resizeObserver?.disconnect();
+      if (userNavigationTimerRef.current !== null && typeof window !== 'undefined') {
+        window.clearTimeout(userNavigationTimerRef.current);
+      }
       if (boardObj.current === board) boardObj.current = null;
       JXG.JSXGraph.freeBoard(board);
       elementsRef.current = {};
@@ -329,9 +383,7 @@ export const MathBoard: React.FC<MathBoardProps> = ({
     if (!board) return;
     const width = boardRef.current?.clientWidth ?? 0;
     const height = boardRef.current?.clientHeight ?? 0;
-    const fittedBounds = keepaspectratio
-      ? fitBoundsToSafeArea(boundingbox, width, height, safeArea)
-      : boundingbox;
+    const fittedBounds = fittedDisplayBounds(boundingbox, width, height);
     const current = board.getBoundingBox?.() as number[] | undefined;
     const changed = !current || fittedBounds.some((value, index) => Math.abs(value - current[index]) > 1e-8);
     if (changed) {

@@ -1,10 +1,14 @@
-import { useEffect, useState, type RefObject } from 'react';
+import { useEffect, useMemo, useRef, useState, type RefObject } from 'react';
 import {
-  createScenePlan,
-  fitViewport,
-  offscreenItemIds,
+  computeAutoFitBounds,
+  fitVisibleItemsAtStep,
+  offscreenVisibleItemIds,
+  resolveHomeViewport,
+  resolveInitialCamera,
+  normalizeViewportBounds,
   type DiagramBounds,
   type DiagramSpecV2,
+  type ViewportChangeOptions,
 } from '../spec';
 
 export function sameBounds(left: DiagramBounds, right: DiagramBounds): boolean {
@@ -19,7 +23,7 @@ export interface UseDiagramViewportOptions {
   viewportControls?: boolean;
   showStepControls?: boolean;
   showToolbar?: boolean;
-  onViewportChange?: (bounds: DiagramBounds) => void;
+  onViewportChange?: (bounds: DiagramBounds, options?: ViewportChangeOptions) => void;
   rendererRef: RefObject<HTMLDivElement | null>;
   headerRef: RefObject<HTMLElement | null>;
   toolbarRef: RefObject<HTMLDivElement | null>;
@@ -135,42 +139,44 @@ export function useDiagramViewport({
   headerRef,
   toolbarRef,
 }: UseDiagramViewportOptions) {
-  const runtimeSequenceTargets = mode === 'runtime'
-    ? [...new Set(spec.steps.flatMap(step => step.visibleTargets ?? []))]
-    : [];
-  const initialViewportBounds = runtimeSequenceTargets.length > 0
-    ? fitViewport(spec, runtimeSequenceTargets, Math.min(spec.viewport.padding, 0.06))
-    : spec.viewport.bounds;
-  const [viewportState, setViewportState] = useState({
-    base: spec.viewport.bounds,
-    current: initialViewportBounds,
-  });
-  const bounds = sameBounds(viewportState.base, spec.viewport.bounds)
-    ? viewportState.current
-    : spec.viewport.bounds;
+  const configuredBounds = useMemo(() => resolveInitialCamera(spec), [spec.viewport.bounds, spec.viewport.home]);
+  const configuredBoundsKey = configuredBounds.join(',');
+  const [cameraBounds, setCameraBounds] = useState<DiagramBounds>(configuredBounds);
+  const lastConfiguredKeyRef = useRef(configuredBoundsKey);
 
-  const commitBounds = (next: DiagramBounds) => {
-    setViewportState({ base: spec.viewport.bounds, current: next });
-    onViewportChange?.(next);
+  useEffect(() => {
+    if (lastConfiguredKeyRef.current !== configuredBoundsKey) {
+      lastConfiguredKeyRef.current = configuredBoundsKey;
+      setCameraBounds(configuredBounds);
+    }
+  }, [configuredBounds, configuredBoundsKey]);
+
+  const commitCamera = (next: DiagramBounds, options?: ViewportChangeOptions) => {
+    const normalized = normalizeViewportBounds(next);
+    if (!normalized) return;
+    setCameraBounds(normalized);
+    if (options?.persist || options?.persistHome) {
+      onViewportChange?.(normalized, options);
+    }
   };
 
-  const liveViewportSpec = spec;
-  const viewportItemIds = runtimeSequenceTargets.length > 0
-    ? runtimeSequenceTargets
-    : createScenePlan(liveViewportSpec, { activeStepId: effectiveStepId })
-      .filter(entry => entry.visible)
-      .map(entry => entry.item.id);
-  const viewportItemIdSet = new Set(viewportItemIds);
-  const fitRelevantViewport = () => fitViewport(
-    liveViewportSpec,
-    viewportItemIds,
-    Math.min(spec.viewport.padding, 0.06),
-  );
-  const runtimeSpec = {
-    ...liveViewportSpec,
-    viewport: { ...liveViewportSpec.viewport, bounds },
+  const fitAutoViewport = () => {
+    const next = computeAutoFitBounds(spec, spec.viewport.padding);
+    if (next) commitCamera(next, { persist: mode === 'editor' });
+    return next;
   };
-  const missingItems = offscreenItemIds(runtimeSpec, bounds).filter(id => viewportItemIdSet.has(id));
+
+  const recoverVisibleViewport = () => {
+    const next = fitVisibleItemsAtStep(spec, effectiveStepId, spec.viewport.padding);
+    if (next) commitCamera(next);
+    return next;
+  };
+
+  const resetToHome = () => {
+    commitCamera(resolveHomeViewport(spec));
+  };
+
+  const missingItems = offscreenVisibleItemIds(spec, cameraBounds, effectiveStepId);
 
   const [safeArea, setSafeArea] = useState({ top: 150, right: 20, bottom: showToolbar ? 68 : 20, left: 20 });
   const [viewportSafeArea, setViewportSafeArea] = useState({ top: 150, right: 20, bottom: showToolbar ? 68 : 20, left: 20 });
@@ -249,9 +255,12 @@ export function useDiagramViewport({
   }, [effectiveStepId, hasTopViewportPanel, headerRef, rendererRef, showStepControls, showToolbar, spec.componentId, toolbarRef, viewportControls]);
 
   return {
-    bounds,
-    commitBounds,
-    fitRelevantViewport,
+    bounds: cameraBounds,
+    configuredBounds,
+    commitCamera,
+    fitAutoViewport,
+    recoverVisibleViewport,
+    resetToHome,
     missingItems,
     safeArea,
     viewportSafeArea,
