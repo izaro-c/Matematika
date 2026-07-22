@@ -17,6 +17,9 @@ function guidanceText(tool: CanvasTool, refs: string[]): string {
   if (tool === 'point') return 'Haga clic una vez en el lugar exacto del lienzo. Después se volverá automáticamente a Seleccionar.';
   const selectedCount = completedToolReferenceCount(tool, refs);
   if (tool === 'polygon') return `Creando polígono: elija al menos 3 vértices distintos y pulse Crear polígono (${selectedCount} elegidos).`;
+  if (tool === 'areaIntersection') {
+    return `Creando intersección: elija al menos 2 áreas distintas (${selectedCount}/${refsNeededForTool(tool)} elegidas). Puede añadir más áreas si lo necesita.`;
+  }
   const normalized = normalizedToolReferences(tool, refs);
   const nextIndex = normalized.findIndex(reference => !reference);
   const nextInstruction = nextIndex >= 0 ? ` Siguiente: ${toolReferenceLabel(tool, nextIndex).toLocaleLowerCase('es')}; ${toolReferencePurpose(tool, nextIndex)}` : '';

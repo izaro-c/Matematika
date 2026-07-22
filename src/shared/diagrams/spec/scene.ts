@@ -17,6 +17,13 @@ import { evaluateMathExpression, extractMathExpressionIdentifiers } from './expr
 import { interpolateDiagramTemplate } from './infoPanels';
 import { legacyElementCapabilities } from './semantics';
 import { projectDiagramSpecV3ToV2 } from './v3Compatibility';
+import {
+  constrainPointForAreaMembership,
+} from './areaRegions';
+import {
+  clampCurveCoordinatesForBounds,
+  sampleCurveFromSpec,
+} from './curveGeometry';
 
 export interface DiagramDependencyEdge {
   sourceId: string;
@@ -547,29 +554,8 @@ function boundsFromCoordinates(coordinates: Array<{ x: number; y: number }>): Di
 }
 
 function curveCoordinates(spec: DiagramSpecV2, element: DiagramElement): Coordinates[] {
-  const properties = element.properties;
-  if (!properties?.domain) return [];
-  const variables = expressionVariables(spec);
-  const [minimum, maximum] = properties.domain;
-  const samples = Math.min(64, properties.samples ?? 32);
-  const parameter = properties.parameter ?? (element.kind === 'functionCurve' ? 'x' : 't');
-  const coordinates: Coordinates[] = [];
-  for (let index = 0; index <= samples; index += 1) {
-    const value = minimum + (maximum - minimum) * index / samples;
-    try {
-      if (element.kind === 'functionCurve' && properties.expression) {
-        coordinates.push({ x: value, y: evaluateMathExpression(properties.expression, { ...variables, [parameter]: value, x: value }) });
-      } else if (properties.xExpression && properties.yExpression) {
-        coordinates.push({
-          x: evaluateMathExpression(properties.xExpression, { ...variables, [parameter]: value, t: value }),
-          y: evaluateMathExpression(properties.yExpression, { ...variables, [parameter]: value, t: value }),
-        });
-      }
-    } catch {
-      // Invalid samples are omitted; schema validation reports invalid expressions.
-    }
-  }
-  return coordinates;
+  const samples = sampleCurveFromSpec(spec, element);
+  return clampCurveCoordinatesForBounds(samples, spec.viewport.home);
 }
 
 function elementCoordinates(spec: DiagramSpecV2, element: DiagramElement): Array<{ x: number; y: number }> {
@@ -779,6 +765,14 @@ function applySameSideConstraint(spec: DiagramSpecV2, point: DiagramPoint, resul
   };
 }
 
+function applyInsideAreaConstraint(spec: DiagramSpecV2, result: Coordinates, constraint: DiagramConstraint): Coordinates {
+  if (constraint.refs.length < 2) return result;
+  const area = spec.elements.find(element => element.id === constraint.refs[1]);
+  if (!area) return result;
+  const resolver = (model: DiagramSpecV2, id: string) => resolvePointCoordinates(model, id);
+  return constrainPointForAreaMembership(spec, area, result, constraint.areaMembership ?? 'interior', resolver);
+}
+
 function applyLinearConstraint(spec: DiagramSpecV2, result: Coordinates, constraint: DiagramConstraint): Coordinates {
   if (constraint.refs.length < 3) return result;
   const baseA = resolvePointCoordinates(spec, constraint.refs[1]);
@@ -808,6 +802,7 @@ function applyConstraint(spec: DiagramSpecV2, point: DiagramPoint, result: Coord
     case 'midpoint': return applyMidpointConstraint(spec, result, constraint);
     case 'insideDisk': return applyInsideDiskConstraint(spec, result, constraint);
     case 'sameSide': return applySameSideConstraint(spec, point, result, constraint);
+    case 'insideArea': return applyInsideAreaConstraint(spec, result, constraint);
     case 'reflection': return resolveReflectedPoint(spec, point, constraint, new Set()) ?? result;
     case 'perpendicular': case 'parallel': return applyLinearConstraint(spec, result, constraint);
     default: return result;

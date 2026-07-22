@@ -48,6 +48,8 @@ export type DiagramElementKind =
   | 'measurement'
   | 'grid'
   | 'areaDecomposition'
+  | 'halfPlane'
+  | 'areaIntersection'
   | 'text'
   | 'label'
   | 'formula'
@@ -118,6 +120,8 @@ export interface DiagramElementProperties {
   tickDistanceExpression?: string;
   /** Subdivisiones menores entre dos graduaciones principales. */
   minorTickCount?: number;
+  /** Relleno de área asociado a una curva muestreada. */
+  areaFill?: 'none' | 'interior' | 'half-plane';
   rows?: number;
   columns?: number;
   title?: string;
@@ -152,8 +156,12 @@ export type DiagramConstraintKind =
   | 'parallel'
   | 'insideDisk'
   | 'sameSide'
+  | 'insideArea'
   | 'reflection'
   | 'expression';
+
+/** Pertinencia a un área: interior cerrado o frontera topológica. */
+export type AreaMembership = 'interior' | 'boundary';
 
 export interface DiagramConstraint {
   id: string;
@@ -162,6 +170,8 @@ export interface DiagramConstraint {
   refs: string[];
   expression?: string;
   value?: number;
+  /** Solo para `insideArea`: interior (por defecto) o perímetro/frontera. */
+  areaMembership?: AreaMembership;
   enabled: boolean;
 }
 

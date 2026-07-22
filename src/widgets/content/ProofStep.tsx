@@ -1,7 +1,7 @@
 import React, { useMemo } from 'react';
-import { publicAsset } from '@/shared/lib/routeHelper';
 import { useMathStore } from '@/shared/lib/MathStoreContext';
 import { ProofStepExpander } from './ProofStepExpander';
+import { ProofStepNumberBadge } from './ProofStepNumberBadge';
 
 interface ProofStepProps {
   number: number;
@@ -80,32 +80,7 @@ export const ProofStep: React.FC<ProofStepProps> = ({
     >
       {/* Cabecera: número + título */}
       <div className="flex items-center gap-3 lg:gap-4 mb-4">
-        {/* Caja del número */}
-        <div
-          className="relative w-12 h-12 min-w-[3rem] lg:w-16 lg:h-16 lg:min-w-[4rem] flex items-center justify-center border border-carbon overflow-hidden rounded-sm bg-lienzo shrink-0"
-        >
-          {/* Fondo Arts & Crafts */}
-          <div
-            className="absolute inset-0 opacity-70 mix-blend-multiply"
-            style={{
-              backgroundImage: `url(${publicAsset('/images/bg-arts-crafts-2.png')})`,
-              backgroundSize: '200%',
-              backgroundPosition: 'center',
-            }}
-          />
-          {/* Marco interior */}
-          <div className="absolute inset-1 border border-carbon/20 pointer-events-none" />
-          {/* Número */}
-          <span
-            className="page-accent-text font-serif italic font-bold text-2xl lg:text-4xl z-10"
-            style={{
-              fontFamily: 'Georgia, "Playfair Display", serif',
-              textShadow: '1px 1px 0px var(--theme-lienzo), -1px -1px 0px var(--theme-lienzo), 1px -1px 0px var(--theme-lienzo), -1px 1px 0px var(--theme-lienzo)'
-            }}
-          >
-            {number}
-          </span>
-        </div>
+        <ProofStepNumberBadge number={number} size="header" />
 
         {/* Título */}
         <h3 className="text-xl lg:text-2xl font-serif m-0 border-b pb-1 flex-1 italic text-carbon border-carbon/20">

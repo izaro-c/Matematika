@@ -1,11 +1,17 @@
 import { refsNeededForTool } from './diagramElements';
-import { legacyReferenceCandidates, referenceSlotsForLegacyKind } from '../../../../shared/diagrams/spec';
+import {
+  legacyReferenceCandidates,
+  referenceSlotsForLegacyKind,
+  isAreaElement,
+} from '../../../../shared/diagrams/spec';
 import type { CanvasTool, VisualDiagramModel } from './types';
 
 const ANGLE_REFERENCE_LABELS = ['Punto del primer lado', 'Vértice', 'Punto del segundo lado'] as const;
 export const INTERSECTION_SUPPORT_KINDS = new Set(['segment', 'line', 'ray', 'perpendicular', 'parallel', 'angleBisector']);
 
 export function toolReferenceLabel(tool: CanvasTool, index: number): string {
+  const slotLabel = referenceSlotsForLegacyKind(tool)[index]?.label;
+  if (slotLabel) return slotLabel;
   if (tool === 'intersection') return `Soporte lineal ${index + 1}`;
   if (tool === 'measureTicks') return 'Segmento graduado';
   if (tool === 'parallelMark') return index === 0 ? 'Primer extremo del lado paralelo' : 'Segundo extremo del lado paralelo';
@@ -13,11 +19,12 @@ export function toolReferenceLabel(tool: CanvasTool, index: number): string {
   if (tool === 'angle' || tool === 'nonReflexAngle' || tool === 'rightAngle' || tool === 'perpendicularMark' || tool === 'angleBisector') {
     return ANGLE_REFERENCE_LABELS[index] ?? `Punto ${index + 1}`;
   }
-  return `${tool === 'polygon' ? 'Vértice' : 'Punto'} ${index + 1}`;
+  return `${tool === 'polygon' ? 'Vértice' : tool === 'areaIntersection' ? 'Área' : 'Punto'} ${index + 1}`;
 }
 
 export function toolReferencePurpose(tool: CanvasTool, index: number): string {
   if (tool === 'polygon') return index === 0 ? 'Primer vértice; fija el inicio del contorno.' : `Vértice ${index + 1} del contorno, siguiendo su orden.`;
+  if (tool === 'areaIntersection') return index === 0 ? 'Primera región que acota la intersección.' : `Área ${index + 1} que participa en la intersección.`;
   const purposes: Partial<Record<CanvasTool, readonly string[]>> = {
     segment: ['Extremo inicial del segmento.', 'Extremo final del segmento.'],
     line: ['Primer punto por el que pasa la recta.', 'Segundo punto que fija su dirección.'],
@@ -41,6 +48,8 @@ export function toolReferencePurpose(tool: CanvasTool, index: number): string {
     dimensionLine: ['Primer extremo de la distancia acotada.', 'Segundo extremo de la distancia acotada.'],
     measurement: ['Primer punto de la distancia que se calcula.', 'Segundo punto de la distancia que se calcula.'],
     areaDecomposition: ['Primer vértice de la región.', 'Segundo vértice que fija una dirección.', 'Tercer vértice que completa la región base.'],
+    halfPlane: ['Primer punto de la recta frontera.', 'Segundo punto de la recta frontera.', 'Punto que indica el semiplano deseado.'],
+    areaIntersection: ['Primera área que participa en la intersección.', 'Segunda área que participa en la intersección.'],
     poincareGeodesic: ['Primer punto de la frontera de referencia.', 'Segundo punto de esa frontera.', 'Primer extremo interior de la geodésica.', 'Segundo extremo interior de la geodésica.'],
     poincareArc: ['Primer punto de la frontera de referencia.', 'Segundo punto de esa frontera.', 'Inicio del arco hiperbólico.', 'Final del arco hiperbólico.'],
     grid: ['Esquina inferior izquierda.', 'Esquina inferior derecha.', 'Esquina superior derecha.', 'Esquina superior izquierda.'],
@@ -65,19 +74,34 @@ export function toolReferenceSequenceDescription(tool: CanvasTool): string {
 export function toolReferenceCandidates(model: VisualDiagramModel, tool: CanvasTool) {
   if (tool === 'point' || tool === 'select') return [];
   const firstSlot = referenceSlotsForLegacyKind(tool)[0];
-  return firstSlot ? legacyReferenceCandidates(model, firstSlot.capability) : [];
+  const candidates = firstSlot ? legacyReferenceCandidates(model, firstSlot.capability) : [];
+  if (tool === 'areaIntersection') {
+    return candidates.filter((item): item is VisualDiagramModel['elements'][number] => (
+      'kind' in item && isAreaElement(item)
+    ));
+  }
+  return candidates;
 }
 
 export function toolReferenceCandidatesForSlot(model: VisualDiagramModel, tool: CanvasTool, index: number) {
   if (tool === 'point' || tool === 'select') return [];
   const slots = referenceSlotsForLegacyKind(tool);
+  if (slots.length === 0) return [];
   const slot = slots[index] ?? slots.find(candidate => candidate.repeatable) ?? slots[slots.length - 1];
-  return slot ? legacyReferenceCandidates(model, slot.capability) : [];
+  const candidates = slot ? legacyReferenceCandidates(model, slot.capability) : [];
+  if (tool === 'areaIntersection') {
+    return candidates.filter((item): item is VisualDiagramModel['elements'][number] => (
+      'kind' in item && isAreaElement(item) && item.id !== undefined
+    ));
+  }
+  return candidates;
 }
 
 export function normalizedToolReferences(tool: CanvasTool, refs: readonly string[]): string[] {
   const required = refsNeededForTool(tool);
-  const length = tool === 'polygon' ? Math.max(required, refs.length) : required;
+  const length = tool === 'polygon' || tool === 'areaIntersection'
+    ? Math.max(required, refs.length)
+    : required;
   return Array.from({ length }, (_, index) => refs[index] ?? '');
 }
 
@@ -86,7 +110,7 @@ export function addToolReference(tool: CanvasTool, refs: readonly string[], refe
   if (normalized.includes(referenceId)) return normalized;
   const openIndex = normalized.findIndex(ref => ref === '');
   if (openIndex >= 0) normalized[openIndex] = referenceId;
-  else if (tool === 'polygon') normalized.push(referenceId);
+  else if (tool === 'polygon' || tool === 'areaIntersection') normalized.push(referenceId);
   return normalized;
 }
 
@@ -103,7 +127,7 @@ export function completedToolReferenceCount(tool: CanvasTool, refs: readonly str
 
 export function toolReferencesAreReady(tool: CanvasTool, refs: readonly string[]): boolean {
   const normalized = normalizedToolReferences(tool, refs);
-  const enoughReferences = tool === 'polygon'
+  const enoughReferences = tool === 'polygon' || tool === 'areaIntersection'
     ? normalized.filter(Boolean).length >= refsNeededForTool(tool)
     : normalized.length > 0;
   return enoughReferences

@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import type { AreaMembership } from '../../../../shared/diagrams/spec/types';
 import type { VisualConstraint, VisualDiagramModel, VisualPoint } from '../model/types';
 import { updatePoint } from '../model';
 import { CONSTRAINT_OPTIONS, constraintPresentation, defaultConstraintRefs, withConstraintDependencies } from '../model/constraintOptions';
@@ -7,6 +8,7 @@ import {
   anchorCandidatesForEqualLength,
   angleCandidates,
   otherSegmentCandidatesForEqualLength,
+  areaCandidates,
   pointLikeCandidates,
   reflectionAxisCandidates,
   segmentCandidates,
@@ -49,6 +51,7 @@ function getAddConstraintDisabledReason(model: VisualDiagramModel, kind: VisualC
       return 'Se necesitan otros dos puntos o una recta para definir la dirección de la referencia.';
     case 'insideDisk':
     case 'sameSide':
+    case 'insideArea':
       return 'Se necesitan más puntos en la escena para definir la región de esta restricción.';
     case 'horizontal':
     case 'vertical':
@@ -88,6 +91,7 @@ function equalAngleReferenceCandidates(model: VisualDiagramModel, constraint: Vi
 function referenceCandidates(model: VisualDiagramModel, constraint: VisualConstraint, index: number) {
   if (index === 0) return model.points;
   if (constraint.kind === 'on' && index === 1) return supportCandidates(model);
+  if (constraint.kind === 'insideArea' && index === 1) return areaCandidates(model);
   if (constraint.kind === 'equalLength') return equalLengthReferenceCandidates(model, constraint, index);
   if (constraint.kind === 'equalAngle') return equalAngleReferenceCandidates(model, constraint, index);
   if (constraint.kind === 'midpoint') {
@@ -119,6 +123,7 @@ function referenceLabel(constraint: VisualConstraint, index: number): string {
   if (constraint.kind === 'reflection') {
     return ['Punto ajustado (resultado)', 'Centro o eje de simetría (respecto a qué)', 'Objeto de origen (de qué objeto es reflejo)'][index] ?? `Referencia ${index}`;
   }
+  if (constraint.kind === 'insideArea' && index === 1) return 'Área';
   return index === 0 ? 'Punto restringido' : `Referencia ${index}`;
 }
 
@@ -157,9 +162,19 @@ export const DiagramConstraintEditor: React.FC<DiagramConstraintEditorProps> = (
         refs,
         value: kind === 'distance' ? item.value ?? 1 : undefined,
         expression,
+        ...(kind === 'insideArea' ? { areaMembership: item.areaMembership ?? 'interior' } : { areaMembership: undefined }),
       } : item),
     };
     onModelEdit(withResolvedPointConstraints(updatedModel));
+  };
+
+  const changeAreaMembership = (constraint: VisualConstraint, membership: AreaMembership) => {
+    onModelEdit(withResolvedPointConstraints({
+      ...model,
+      constraints: model.constraints?.map(item => (
+        item.id === constraint.id ? { ...item, areaMembership: membership } : item
+      )),
+    }));
   };
 
   const changeReference = (constraint: VisualConstraint, index: number, value: string) => {
@@ -212,7 +227,7 @@ export const DiagramConstraintEditor: React.FC<DiagramConstraintEditorProps> = (
         {CONSTRAINT_OPTIONS.filter(option => ['coincident', 'distance', 'midpoint'].includes(option.value)).map(option => <option key={option.value} value={option.value}>{option.label}</option>)}
       </optgroup>
       <optgroup label="Dirección y región">
-        {CONSTRAINT_OPTIONS.filter(option => ['perpendicular', 'parallel', 'insideDisk', 'sameSide'].includes(option.value)).map(option => <option key={option.value} value={option.value}>{option.label}</option>)}
+        {CONSTRAINT_OPTIONS.filter(option => ['perpendicular', 'parallel', 'insideDisk', 'sameSide', 'insideArea'].includes(option.value)).map(option => <option key={option.value} value={option.value}>{option.label}</option>)}
       </optgroup>
       <optgroup label="Congruencia y Simetría">
         {CONSTRAINT_OPTIONS.filter(option => ['equalLength', 'reflection'].includes(option.value)).map(option => <option key={option.value} value={option.value}>{option.label}</option>)}
@@ -288,17 +303,31 @@ export const DiagramConstraintEditor: React.FC<DiagramConstraintEditorProps> = (
                   </DiagramField>
                 </>
               ) : (
-                constraint.refs.slice(1).map((ref, relativeIndex) => {
-                  const index = relativeIndex + 1;
-                  const candidates = referenceCandidates(model, constraint, index);
-                  return (
-                    <DiagramField key={`${constraint.id}-ref-${index}`} label={referenceLabel(constraint, index)}>
-                      <select aria-label={`Referencia ${index + 1} de ${constraint.id}`} value={ref} onChange={event => changeReference(constraint, index, event.target.value)}>
-                        {candidates.map(item => <option key={item.id} value={item.id}>{item.label} ({item.id})</option>)}
+                <>
+                  {constraint.refs.slice(1).map((ref, relativeIndex) => {
+                    const index = relativeIndex + 1;
+                    const candidates = referenceCandidates(model, constraint, index);
+                    return (
+                      <DiagramField key={`${constraint.id}-ref-${index}`} label={referenceLabel(constraint, index)}>
+                        <select aria-label={`Referencia ${index + 1} de ${constraint.id}`} value={ref} onChange={event => changeReference(constraint, index, event.target.value)}>
+                          {candidates.map(item => <option key={item.id} value={item.id}>{item.label} ({item.id})</option>)}
+                        </select>
+                      </DiagramField>
+                    );
+                  })}
+                  {constraint.kind === 'insideArea' && (
+                    <DiagramField label="Pertenencia al área">
+                      <select
+                        aria-label={`Pertenencia al área de ${constraint.id}`}
+                        value={constraint.areaMembership ?? 'interior'}
+                        onChange={event => changeAreaMembership(constraint, event.target.value as AreaMembership)}
+                      >
+                        <option value="interior">Interior</option>
+                        <option value="boundary">Perímetro o frontera</option>
                       </select>
                     </DiagramField>
-                  );
-                })
+                  )}
+                </>
               )}
               {constraint.kind === 'distance' && (
                 <DiagramField label="Distancia">

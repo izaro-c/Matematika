@@ -27,7 +27,7 @@ export const diagramElementKindSchema = z.enum([
   'poincareGeodesic', 'poincareArc', 'intersection', 'midpoint', 'perpendicularFoot',
   'baseExtension', 'perpendicular', 'parallel', 'angleBisector', 'angle', 'nonReflexAngle',
   'rightAngle', 'congruenceMark', 'parallelMark', 'measureTicks', 'perpendicularMark', 'dimensionLine', 'measurement',
-  'grid', 'areaDecomposition', 'text', 'label', 'formula', 'infoPanel',
+  'grid', 'areaDecomposition', 'halfPlane', 'areaIntersection', 'text', 'label', 'formula', 'infoPanel',
 ]);
 
 export const diagramElementKinds = diagramElementKindSchema.options;
@@ -102,6 +102,7 @@ const elementPropertiesSchema = z.object({
   textRules: z.array(z.object({ when: expressionSchema, text: z.string() }).strict()).max(12).optional(),
   infoPanelBlocks: z.array(infoPanelBlockSchema).min(1).max(12).optional(),
   infoPanelLayout: z.enum(['stack', 'columns']).optional(),
+  areaFill: z.enum(['none', 'interior', 'half-plane']).optional(),
 }).strict().superRefine((properties, context) => {
   if (properties.domain && properties.domain[0] >= properties.domain[1]) {
     context.addIssue({ code: 'custom', message: 'El inicio del dominio debe ser menor que el final.', path: ['domain'] });
@@ -189,10 +190,11 @@ const elementSchema = z.object({
 const constraintSchema = z.object({
   id: idSchema,
   label: z.string().min(1),
-  kind: z.enum(['fixed', 'horizontal', 'vertical', 'coincident', 'on', 'distance', 'equalLength', 'equalAngle', 'midpoint', 'perpendicular', 'parallel', 'insideDisk', 'sameSide', 'reflection', 'expression']),
+  kind: z.enum(['fixed', 'horizontal', 'vertical', 'coincident', 'on', 'distance', 'equalLength', 'equalAngle', 'midpoint', 'perpendicular', 'parallel', 'insideDisk', 'sameSide', 'insideArea', 'reflection', 'expression']),
   refs: z.array(idSchema),
   expression: expressionSchema.optional(),
   value: finiteNumber.optional(),
+  areaMembership: z.enum(['interior', 'boundary']).optional(),
   enabled: z.boolean(),
 }).strict();
 
@@ -309,7 +311,7 @@ export const diagramMinimumRefs: Record<string, number> = {
   perpendicularFoot: 3, baseExtension: 3, perpendicular: 3, parallel: 3,
   angleBisector: 3, angle: 3, nonReflexAngle: 3, rightAngle: 3, congruenceMark: 2, parallelMark: 2, measureTicks: 1,
   perpendicularMark: 3, dimensionLine: 2, measurement: 1, grid: 4,
-  areaDecomposition: 3, text: 1, label: 1, formula: 1, infoPanel: 1,
+  areaDecomposition: 3, halfPlane: 3, areaIntersection: 2, text: 1, label: 1, formula: 1, infoPanel: 1,
 };
 
 export const diagramSpecV2Schema = z.object({
@@ -456,6 +458,13 @@ export const diagramSpecV2Schema = z.object({
     }
     if (element.kind === 'parametricCurve' && (!element.properties?.xExpression || !element.properties.yExpression)) {
       context.addIssue({ code: 'custom', message: `${element.id} necesita expresiones x e y.`, path: ['elements', index, 'properties'] });
+    }
+    if ((element.kind === 'functionCurve' || element.kind === 'parametricCurve') && element.properties?.areaFill === 'half-plane' && !element.refs[0]) {
+      context.addIssue({
+        code: 'custom',
+        message: `${element.id} necesita un punto que indique el semiplano deseado.`,
+        path: ['elements', index, 'refs'],
+      });
     }
     if (element.kind !== 'label' && element.properties?.anchorParameter !== undefined) {
       context.addIssue({
@@ -606,7 +615,7 @@ export const diagramSpecV2Schema = z.object({
         ? 5
         : constraint.kind === 'equalLength' || constraint.kind === 'midpoint'
         || constraint.kind === 'perpendicular' || constraint.kind === 'parallel'
-        || constraint.kind === 'insideDisk' || constraint.kind === 'sameSide'
+        || constraint.kind === 'insideDisk' || constraint.kind === 'sameSide' || constraint.kind === 'insideArea'
         ? 3
         : 2;
     if (constraint.refs.length < requiredRefs) context.addIssue({ code: 'custom', message: `${constraint.id} necesita al menos ${requiredRefs} referencias.`, path: ['constraints', index, 'refs'] });

@@ -22,10 +22,11 @@ describe('ElementReferenceRules', () => {
       expect(refsForKind('grid', ['pA', 'pB', 'pC', 'pD', 'pE'])).toEqual(['pA', 'pB', 'pC', 'pD']);
     });
 
-    it('devuelve lista vacía para tipos sin referencias obligatorias', () => {
-      expect(refsForKind('functionCurve', ['pA'])).toEqual([]);
-      expect(refsForKind('parametricCurve', ['pA'])).toEqual([]);
-      expect(refsForKind('infoPanel', ['segAB'])).toEqual([]);
+    it('conserva referencias opcionales cuando se proporcionan', () => {
+      expect(refsForKind('functionCurve', ['pA'])).toEqual(['pA']);
+      expect(refsForKind('parametricCurve', ['pA'])).toEqual(['pA']);
+      expect(refsForKind('infoPanel', ['segAB'])).toEqual(['segAB']);
+      expect(refsForKind('functionCurve', [])).toEqual([]);
     });
 
     it('limita a una referencia los tipos de anotación simple', () => {
@@ -41,6 +42,11 @@ describe('ElementReferenceRules', () => {
       expect(minimumRefsForKind('areaDecomposition')).toBe(3);
       expect(refsNeededForTool('polygon')).toBe(3);
       expect(refsNeededForTool('areaDecomposition')).toBe(3);
+    });
+
+    it('exige al menos dos áreas en una intersección', () => {
+      expect(minimumRefsForKind('areaIntersection')).toBe(2);
+      expect(refsNeededForTool('areaIntersection')).toBe(2);
     });
 
     it('alinea el mínimo con los slots semánticos de herramientas frecuentes', () => {

@@ -743,7 +743,7 @@
       "id": "demo-angulo-externo",
       "type": "demostracion",
       "title": "Demostración: Teorema del ángulo externo",
-      "description": "Prueba constructiva usando el lema del punto medio, el teorema de ángulos opuestos por el vértice y el criterio LAL. El punto construido cae en el interior del ángulo externo, forzando la desigualdad.",
+      "description": "Demostración constructiva del teorema del ángulo externo mediante puntos medios, congruencia LAL, separación del plano y orden angular.",
       "proofs": [],
       "directDependencies": []
     },

@@ -11,11 +11,11 @@ const ALL_KINDS: DiagramElementKind[] = [
   'poincareGeodesic', 'poincareArc', 'intersection', 'midpoint', 'perpendicularFoot',
   'baseExtension', 'perpendicular', 'parallel', 'angleBisector', 'angle', 'nonReflexAngle',
   'rightAngle', 'congruenceMark', 'parallelMark', 'measureTicks', 'perpendicularMark',
-  'dimensionLine', 'measurement', 'grid', 'areaDecomposition', 'text', 'label', 'formula',
+  'dimensionLine', 'measurement', 'grid', 'areaDecomposition', 'halfPlane', 'areaIntersection', 'text', 'label', 'formula',
   'infoPanel',
 ];
 
-const FILL_KINDS = new Set<DiagramElementKind>(['polygon', 'circle', 'angle', 'nonReflexAngle', 'rightAngle', 'perpendicularMark', 'areaDecomposition']);
+const FILL_KINDS = new Set<DiagramElementKind>(['polygon', 'circle', 'angle', 'nonReflexAngle', 'rightAngle', 'perpendicularMark', 'areaDecomposition', 'halfPlane', 'areaIntersection']);
 const POINT_KINDS = new Set<DiagramElementKind>(['intersection', 'midpoint', 'perpendicularFoot']);
 const ANNOTATION_KINDS = new Set<DiagramElementKind>(['dimensionLine', 'measurement', 'text', 'label', 'formula', 'infoPanel']);
 const TEXT_OFFSET_KINDS = new Set<DiagramElementKind>(['measurement', 'text', 'label', 'formula', 'infoPanel']);

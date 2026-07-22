@@ -220,6 +220,8 @@
   opacity: 0.45;
   filter: grayscale(15%);
   transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  scroll-margin-top: 7rem;
+  scroll-margin-bottom: 2rem;
 }
 
 .codex-layout.is-focus-mode .proof-step.is-active {
@@ -229,6 +231,11 @@
 
 .proof-step-content {
   padding-left: 0.5rem; /* Ajustado en móvil para no desaprovechar espacio lateral */
+}
+
+.proof-step-link {
+  cursor: pointer;
+  vertical-align: middle;
 }
 
 @media (min-width: 1024px) {

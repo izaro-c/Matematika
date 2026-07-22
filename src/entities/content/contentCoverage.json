@@ -973,8 +973,8 @@
       "leanVerified": true,
       "verificationStatus": "human-proof",
       "foundation": "pending",
-      "sourcesCount": 2,
-      "proofSteps": 7,
+      "sourcesCount": 3,
+      "proofSteps": 11,
       "mappedProofSteps": [
         "1",
         "2",
@@ -982,7 +982,11 @@
         "4",
         "5",
         "6",
-        "7"
+        "7",
+        "8",
+        "9",
+        "10",
+        "11"
       ],
       "parentTheorem": "teorema-angulo-externo",
       "demos": []

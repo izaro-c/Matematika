@@ -645,7 +645,7 @@ describe('Phase 3 shared renderer', () => {
 
   it.each([
     ['primitives', primitivesFixture, ['segment', 'line', 'polygon', 'circle', 'arc']],
-    ['curves', curvesFixture, ['functiongraph', 'curve']],
+    ['curves', curvesFixture, ['curve', 'curve']],
     ['Poincaré', poincareFixture, ['circle', 'curve']],
     ['marks', marksFixture, ['angle', 'nonreflexangle', 'polygon', 'segment', 'ticks']],
     ['measurements', measurementsFixture, ['segment', 'text']],

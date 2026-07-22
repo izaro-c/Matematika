@@ -1,6 +1,7 @@
 import React, { useMemo, Suspense } from 'react';
 import { useMathStore } from '@/shared/lib/MathStoreContext';
 import { CodexLayout } from '@/widgets/layouts/CodexLayout';
+import { insertQedAfterLastProofStep } from './insertQedAfterLastProofStep';
 
 /**
  * Propiedades para el componente DemonstrationSection.
@@ -107,6 +108,8 @@ export const DemonstrationSection: React.FC<DemonstrationSectionProps> = ({ diag
     return Array.from(uniqueFrames.values());
   }, [diagram, diagrams]);
 
+  const proofContent = useMemo(() => insertQedAfterLastProofStep(children), [children]);
+
   return (
     <CodexLayout
       diagram={hasDiagram && activeDiagram ? (
@@ -115,7 +118,7 @@ export const DemonstrationSection: React.FC<DemonstrationSectionProps> = ({ diag
       diagramLabel="Diagrama de la demostración"
     >
       <div className="prose prose-pizarra prose-lg max-w-none w-full editorial-reading">
-        {children}
+        {proofContent}
       </div>
     </CodexLayout>
   );

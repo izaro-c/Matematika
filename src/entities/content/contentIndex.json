@@ -1619,16 +1619,18 @@
       "id": "demo-angulo-externo",
       "type": "demostracion",
       "title": "Demostración: Teorema del ángulo externo",
-      "description": "Prueba constructiva usando el lema del punto medio, el teorema de ángulos opuestos por el vértice y el criterio LAL. El punto construido cae en el interior del ángulo externo, forzando la desigualdad.",
+      "description": "Demostración constructiva del teorema del ángulo externo mediante puntos medios, congruencia LAL, separación del plano y orden angular.",
       "parentTheorem": "teorema-angulo-externo",
-      "proofMethod": "metodo-directo",
+      "proofMethod": "constructivo",
       "authors": [
         "euclides"
       ],
       "tags": [
         "geometria",
         "angulos",
-        "triangulos"
+        "triangulos",
+        "orden",
+        "congruencia"
       ],
       "layout": "split",
       "sources": [
@@ -1642,6 +1644,11 @@
           "title": "Euclidean and Non-Euclidean Geometries",
           "author": "Marvin Jay Greenberg",
           "role": "secondary"
+        },
+        {
+          "title": "Grundlagen der Geometrie",
+          "author": "David Hilbert",
+          "role": "secondary"
         }
       ],
       "leanId": "Matematika.Geometry.Hilbert.demo_angulo_externo",
@@ -1652,7 +1659,11 @@
         "4": [],
         "5": [],
         "6": [],
-        "7": []
+        "7": [],
+        "8": [],
+        "9": [],
+        "10": [],
+        "11": []
       },
       "leanVerified": true,
       "verificationStatus": "human-proof"

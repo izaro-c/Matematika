@@ -1,4 +1,7 @@
 export * from './types';
+export * from './areaGeometry';
+export * from './areaRegions';
+export * from './curveGeometry';
 export * from './v3';
 export * from './schema';
 export * from './schemaV3';
