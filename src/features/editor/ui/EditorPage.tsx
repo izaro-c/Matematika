@@ -2,7 +2,7 @@ import React, { useEffect, useMemo, useState } from 'react';
 import { useLocation } from 'wouter';
 import { useEditorCore } from '../core/useEditorCore';
 import { SemanticLinker } from './components/SemanticLinker';
-import { DiagramWorkbench, type DiagramWorkbenchMode } from './diagrams/DiagramWorkbench';
+import { DiagramWorkbench, type DiagramWorkbenchMode } from '../diagrams/ui/DiagramWorkbench';
 import { DiagramRewriteDialog } from '../diagrams/ui/DiagramRewriteDialog';
 import type { EditorDiagramReference } from '../core/editorTypes';
 import { buildEditorSafetyPresentation } from '../ux/safetyPresentation';
@@ -202,10 +202,6 @@ export const EditorPage: React.FC = () => {
         if (pendingFileNavigation) {
           event.preventDefault();
           cancelPendingNavigation();
-        }
-        if (diffReview && !saving) {
-          event.preventDefault();
-          setDiffReview(null);
         }
       }
 
@@ -598,6 +594,8 @@ export const EditorPage: React.FC = () => {
         <SafetySummary
           currentFile={currentFile}
           presentation={safetyPresentation}
+          onReviewDiff={() => {}}
+          canReviewDiff={false}
           onSaveDraft={() => { void saveDraftCurrentFile(); }}
           canSaveDraft={canSaveDraft}
           compatibility={compatibility}
@@ -661,6 +659,8 @@ export const EditorPage: React.FC = () => {
         targetLabel={pendingFileNavigation ?? 'otro archivo'}
         presentation={safetyPresentation}
         onCancel={cancelPendingNavigation}
+        onReviewDiff={() => {}}
+        canReviewDiff={false}
         onSaveDraft={() => { void saveDraftCurrentFile(); }}
         onDiscardAndContinue={continuePendingNavigation}
         canSaveDraft={canSaveDraft}

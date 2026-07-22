@@ -1,8 +1,19 @@
 import { describe, it, expect } from 'vitest';
 import { initialDiagramState, diagramReducer } from '../../../../src/features/editor/diagrams/state/reducer';
 import type { DiagramState } from '../../../../src/features/editor/diagrams/state/types';
-import { createTemplateModel } from '../../../../src/features/editor/diagrams/model/commands';
-import { getDiagramSaveCapability } from '../../../../src/features/editor/diagrams/model/selectors';
+import { createTemplateModel } from '../../../../src/features/editor/diagrams/model';
+import { getDiagramSaveCapability, isDiagramStateDirty } from '../../../../src/features/editor/diagrams/model/selectors';
+
+function reorderKeysDeep<T>(value: T): T {
+  if (Array.isArray(value)) {
+    return value.map(item => reorderKeysDeep(item)) as T;
+  }
+  if (value && typeof value === 'object') {
+    const entries = Object.entries(value as Record<string, unknown>).reverse();
+    return Object.fromEntries(entries.map(([key, entry]) => [key, reorderKeysDeep(entry)])) as T;
+  }
+  return value;
+}
 
 describe('Diagram Reducer', () => {
   it('should return initial state', () => {
@@ -360,5 +371,56 @@ describe('Diagram Reducer', () => {
       diagnostics: [],
       expectedVersion: '',
     })).toEqual({ allowed: false, reason: 'stale-revision' });
+  });
+
+  it('does not mark dirty when models differ only by property order', () => {
+    const model = createTemplateModel('circunferencia', 'Stable', 'definicion');
+    const loadedState = diagramReducer(initialDiagramState, {
+      type: 'LOAD_DIAGRAM',
+      filePath: 'src/shared/diagrams/Stable.tsx',
+      componentName: 'Stable',
+      source: 'source',
+      model,
+    });
+    const reorderedState: DiagramState = {
+      ...loadedState,
+      currentModel: reorderKeysDeep(model),
+    };
+
+    expect(isDiagramStateDirty(loadedState)).toBe(false);
+    expect(isDiagramStateDirty(reorderedState)).toBe(false);
+  });
+
+  it('marks dirty when source or model content actually changes', () => {
+    const model = createTemplateModel('circunferencia', 'Changed', 'definicion');
+    const loadedState = diagramReducer(initialDiagramState, {
+      type: 'LOAD_DIAGRAM',
+      filePath: 'src/shared/diagrams/Changed.tsx',
+      componentName: 'Changed',
+      source: 'source',
+      model,
+    });
+
+    expect(isDiagramStateDirty(diagramReducer(loadedState, { type: 'SOURCE_EDIT', source: 'edited source' }))).toBe(true);
+    expect(isDiagramStateDirty(diagramReducer(loadedState, {
+      type: 'VISUAL_EDIT',
+      model: { ...model, title: 'Edited title' },
+    }))).toBe(true);
+  });
+
+  it('marks rewrite preparation dirty even when originalModel is null', () => {
+    const model = createTemplateModel('lienzo-inicial', 'Rewrite', 'definicion');
+    const rewriteState = diagramReducer(initialDiagramState, {
+      type: 'LOAD_REWRITE_DIAGRAM',
+      filePath: 'src/widgets/diagrams/Legacy.tsx',
+      componentName: 'Legacy',
+      originalSource: 'export const Legacy = () => <svg />;',
+      source: 'export const Legacy = () => createDiagramSpec(...);',
+      model,
+      expectedVersion: 'legacy-v1',
+    });
+
+    expect(rewriteState.originalModel).toBeNull();
+    expect(isDiagramStateDirty(rewriteState)).toBe(true);
   });
 });

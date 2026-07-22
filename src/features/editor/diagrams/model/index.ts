@@ -1,4 +1,7 @@
 export * from './diagramElements';
+export * from './sceneOrdering';
+export * from './referenceRules';
+export * from './v3Projection';
 export * from './diagramOptions';
 export * from './templateModels';
 export * from './guidedConstructions';

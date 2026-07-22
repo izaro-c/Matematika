@@ -69,6 +69,11 @@ export interface CompositeElement {
   setAttribute: (attributes: Record<string, unknown>) => void;
   on: (event: string, handler: (...args: unknown[]) => void) => void;
   elements: (JXG.GeometryElement | CompositeElement | undefined)[];
+  __matematikaMarkLayout?: MarkLayout;
+}
+
+export interface MarkLayout {
+  markHeight: number;
 }
 
 function pointLabel(theme: ThemeColors, label: Record<string, unknown> = {}) {
@@ -83,6 +88,8 @@ function pointLabel(theme: ThemeColors, label: Record<string, unknown> = {}) {
     strokeColor: theme.carbon,
     highlightStrokeColor: theme.ocre,
     highlightStrokeOpacity: 1,
+    transitionDuration: 250,
+    transitionProperties: ['color', 'opacity', 'fill', 'fill-opacity', 'stroke', 'stroke-opacity'],
     ...label,
   };
 }
@@ -328,13 +335,17 @@ export function createPoincareGeodesic(
   return createParametricCurve(board, t => coordinates(t).x, t => coordinates(t).y, [0, 1], options, theme);
 }
 
-function createComposite(elements: (JXG.GeometryElement | CompositeElement | undefined)[]): CompositeElement {
+function createComposite(
+  elements: (JXG.GeometryElement | CompositeElement | undefined)[],
+  markLayout?: MarkLayout,
+): CompositeElement {
   const primary = elements.find(Boolean);
   return {
     rendNode: primary && 'rendNode' in primary ? (primary.rendNode as Element | SVGElement | undefined) : undefined,
     setAttribute: (attributes: Record<string, unknown>) => elements.forEach(element => element?.setAttribute?.(attributes)),
     on: (event: string, handler: (...args: unknown[]) => void) => elements.forEach(element => element?.on?.(event, handler as never)),
     elements,
+    ...(markLayout ? { __matematikaMarkLayout: markLayout } : {}),
   };
 }
 
@@ -347,11 +358,12 @@ export function createCongruenceMark(
 ): CompositeElement {
   const [a, b] = points;
   const { markHeight = 0.32, ...markOptions } = options;
+  const layout: MarkLayout = { markHeight };
   const marks = Array.from({ length: count }, (_, index) => {
     const centered = index - (count - 1) / 2;
     const offset = centered * 0.14;
-    const half = markHeight / 2;
     const coordinate = (side: -1 | 1, axis: 'x' | 'y') => () => {
+      const half = layout.markHeight / 2;
       const dx = b.X() - a.X();
       const dy = b.Y() - a.Y();
       const length = Math.hypot(dx, dy) || 1;
@@ -367,7 +379,7 @@ export function createCongruenceMark(
     const p2 = board.create('point', [coordinate(1, 'x'), coordinate(1, 'y')], { visible: false } as never);
     return board.create('segment', [p1, p2], { strokeColor: theme.ocre, strokeWidth: 2, fixed: true, ...markOptions } as never) as JXG.Segment;
   });
-  return createComposite(marks);
+  return createComposite(marks, layout);
 }
 
 export function createParallelMark(
@@ -379,10 +391,12 @@ export function createParallelMark(
 ): CompositeElement {
   const [a, b] = points;
   const { markHeight = 0.42, ...markOptions } = options;
+  const layout: MarkLayout = { markHeight };
   const chevrons = Array.from({ length: count }, (_, index) => {
     const centered = index - (count - 1) / 2;
-    const offset = centered * markHeight * 0.72;
+    const offset = centered * layout.markHeight * 0.72;
     const coordinate = (part: 'tip' | 'upper' | 'lower', axis: 'x' | 'y') => () => {
+      const currentMarkHeight = layout.markHeight;
       const dx = b.X() - a.X();
       const dy = b.Y() - a.Y();
       const length = Math.hypot(dx, dy) || 1;
@@ -396,8 +410,8 @@ export function createParallelMark(
       let normal = 0;
       if (part === 'upper') normal = 0.38;
       else if (part === 'lower') normal = -0.38;
-      const x = centerX + tangentX * markHeight * direction + normalX * markHeight * normal;
-      const y = centerY + tangentY * markHeight * direction + normalY * markHeight * normal;
+      const x = centerX + tangentX * currentMarkHeight * direction + normalX * currentMarkHeight * normal;
+      const y = centerY + tangentY * currentMarkHeight * direction + normalY * currentMarkHeight * normal;
       return axis === 'x' ? x : y;
     };
     const tip = board.create('point', [coordinate('tip', 'x'), coordinate('tip', 'y')], { visible: false } as never);
@@ -408,7 +422,7 @@ export function createParallelMark(
       board.create('segment', [lower, tip], { strokeColor: theme.pavo, strokeWidth: 2, fixed: true, ...markOptions } as never) as JXG.Segment,
     ];
   }).flat();
-  return createComposite(chevrons);
+  return createComposite(chevrons, layout);
 }
 
 export function createDimensionLine(

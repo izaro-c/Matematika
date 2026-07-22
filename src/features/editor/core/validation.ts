@@ -14,34 +14,24 @@ import {
 } from '@/entities/content/schemas';
 import type { Block, ProofStepData } from './parser';
 import type { EditorValidationIssue, EditorValidationResult } from './editorTypes';
-import { parseDiagramSpecV2 } from '../../../shared/diagrams/spec';
+import {
+  diagramElementKinds,
+  diagramGliderSupportElementKinds,
+  diagramMinimumRefs,
+  diagramPointConstraints,
+  diagramPointLikeElementKinds,
+  parseDiagramSpecV2,
+} from '../../../shared/diagrams/spec';
 
 const CONTENT_ID_RE = /^[a-z0-9]+(?:-[a-z0-9]+)*$/;
 const HEX_RE = /#[0-9a-fA-F]{3,8}\b/;
 const MARKDOWN_LINK_RE = /\[[^\]]+\]\((?!https?:\/\/|mailto:|#)[^)]+\)/;
 const VISUAL_ARGUMENT_RE = /\b(como se ve|claramente|evidentemente|es obvio|vemos que|observamos que)\b/i;
-const DIAGRAM_ELEMENT_KINDS = new Set(['segment', 'line', 'ray', 'polygon', 'circle', 'midpoint', 'perpendicularFoot', 'baseExtension', 'perpendicular', 'parallel', 'angleBisector', 'angle', 'nonReflexAngle', 'rightAngle', 'measurement', 'text']);
-const DIAGRAM_MIN_REFS: Record<string, number> = {
-  segment: 2,
-  line: 2,
-  ray: 2,
-  polygon: 3,
-  circle: 2,
-  midpoint: 2,
-  perpendicularFoot: 3,
-  baseExtension: 3,
-  perpendicular: 3,
-  parallel: 3,
-  angleBisector: 3,
-  angle: 3,
-  nonReflexAngle: 3,
-  rightAngle: 3,
-  measurement: 1,
-  text: 1,
-};
-const DIAGRAM_POINT_CONSTRAINTS = new Set(['free', 'fixed', 'horizontal', 'vertical', 'glider']);
-const DIAGRAM_POINTLIKE_ELEMENT_KINDS = new Set(['midpoint', 'perpendicularFoot']);
-const DIAGRAM_GLIDER_SUPPORT_KINDS = new Set(['segment', 'line', 'ray', 'circle', 'perpendicular', 'parallel', 'angleBisector']);
+const DIAGRAM_ELEMENT_KINDS = new Set<string>(diagramElementKinds);
+const DIAGRAM_MIN_REFS: Record<string, number> = diagramMinimumRefs;
+const DIAGRAM_POINT_CONSTRAINTS = new Set<string>(diagramPointConstraints);
+const DIAGRAM_POINTLIKE_ELEMENT_KINDS = new Set<string>(diagramPointLikeElementKinds);
+const DIAGRAM_GLIDER_SUPPORT_KINDS = new Set<string>(diagramGliderSupportElementKinds);
 
 const SCHEMAS = {
   axioma: AxiomSchema,

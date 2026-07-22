@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { createTemplateModel, deleteDiagramCascade, element, renameDiagramId } from '../../../../src/features/editor/diagrams/model/commands';
+import { createTemplateModel, deleteDiagramCascade, element, renameDiagramId } from '../../../../src/features/editor/diagrams/model';
 
 describe('diagram graph commands', () => {
   it('renames globally and rewrites references plus expressions through the expression AST', () => {

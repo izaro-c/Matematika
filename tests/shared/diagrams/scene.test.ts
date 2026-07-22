@@ -135,4 +135,17 @@ describe('shared diagram scene semantics', () => {
     const fixedPoint = createScenePlan(fixedSpec).find(entry => entry.item.id === fixedSpec.points[0].id);
     expect(fixedPoint?.locked).toBe(true);
   });
+
+  it('orders items by within-layer rank instead of raw order magnitudes', () => {
+    const layeredSpec = {
+      ...spec,
+      points: spec.points.map((point, index) => ({ ...point, order: (index + 1) * 100_000 })),
+      elements: spec.elements.map((element, index) => ({ ...element, order: (index + 1) * 100_000 })),
+    };
+    const plan = createScenePlan(layeredSpec);
+    const geometryLayerOrder = layeredSpec.layers.find(layer => layer.id === 'geometry')?.order ?? 0;
+    const geometryItems = plan.filter(entry => entry.item.layerId === 'geometry');
+    expect(geometryItems.every((entry, index, items) => index === 0 || entry.visualOrder >= items[index - 1].visualOrder)).toBe(true);
+    expect(geometryItems.at(-1)?.visualOrder).toBeLessThan((geometryLayerOrder + 1) * 10_000);
+  });
 });

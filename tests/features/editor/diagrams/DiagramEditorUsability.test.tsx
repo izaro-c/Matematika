@@ -1,7 +1,7 @@
 import React from 'react';
 import { fireEvent, render, screen } from '@testing-library/react';
 import { describe, expect, it, vi } from 'vitest';
-import { createTemplateModel, movementAttractorCreatesCycle, movementAttractors, setPointAttractors } from '../../../../src/features/editor/diagrams/model/commands';
+import { createTemplateModel, movementAttractorCreatesCycle, movementAttractors, setPointAttractors } from '../../../../src/features/editor/diagrams/model';
 import { DiagramMovementAidsPanel } from '../../../../src/features/editor/diagrams/ui/DiagramMovementAidsPanel';
 import { DiagramOrganizationPanel } from '../../../../src/features/editor/diagrams/ui/DiagramOrganizationPanel';
 import { DiagramToolbar } from '../../../../src/features/editor/diagrams/ui/DiagramToolbar';
@@ -73,6 +73,30 @@ describe('diagram editor usability controls', () => {
     fireEvent.change(screen.getByLabelText(`Mover ${source.label} a otra capa`), { target: { value: destination.id } });
     const edited = onModelEdit.mock.calls.at(-1)?.[0];
     expect(edited.points.find((point: { id: string }) => point.id === source.id).layerId).toBe(destination.id);
+  });
+
+  it('opens a divergence dialog with previews instead of inline text links', () => {
+    const model = createTemplateModel('lienzo-inicial', 'Divergencia');
+    const source = 'export const Divergencia = () => <svg data-edited />;\n';
+    render(
+      <DiagramToolbar
+        model={model}
+        canvasTool="select"
+        syncStatus="diverged"
+        currentSource={source}
+        onSetCanvasTool={vi.fn()}
+        onAddElement={vi.fn()}
+        onModelEdit={vi.fn()}
+        onAddSlider={vi.fn()}
+        onAddGliderPoint={vi.fn()}
+        onResolveDivergence={vi.fn()}
+      />,
+    );
+
+    expect(screen.queryByRole('button', { name: 'Usar visual' })).toBeNull();
+    fireEvent.click(screen.getByRole('button', { name: 'Resolver divergencia' }));
+    expect(screen.getByRole('dialog', { name: 'Resolver divergencia' })).toBeTruthy();
+    expect(screen.getByLabelText('Código fuente actual')).toBeTruthy();
   });
 
   it('searches the complete object catalog and places guided constructions in the same menu', () => {

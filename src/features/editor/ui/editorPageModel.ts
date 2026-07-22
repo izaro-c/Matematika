@@ -1,4 +1,4 @@
-import type { DiagramWorkbenchMode } from './diagrams/DiagramWorkbench';
+import type { DiagramWorkbenchMode } from '../diagrams/hooks/useDiagramWorkbenchLoader';
 import type { DiagramTargetRegistry } from '../core/editorTypes';
 import { parseAttributes, type Block } from '../core/parser';
 import type { FileNode } from '../lib/editorContracts';

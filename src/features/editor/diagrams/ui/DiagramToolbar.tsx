@@ -1,6 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react';
 import type { VisualDiagramModel, CanvasTool } from '../model/types';
-import { KIND_LABELS, refsNeededForTool, toolReferenceCandidates, toolReferenceSequenceDescription } from '../model/commands';
+import { gliderSupportElements, KIND_LABELS, refsNeededForTool, toolReferenceCandidates, toolReferenceSequenceDescription } from '../model';
+import { DiagramDivergenceDialog } from './DiagramDivergenceDialog';
 
 const TOOL_GROUPS: Array<{ label: string; description: string; tools: CanvasTool[] }> = [
   { label: 'Puntos construidos', description: 'Puntos obtenidos de otros objetos.', tools: ['intersection', 'midpoint', 'perpendicularFoot'] },
@@ -44,6 +45,8 @@ interface DiagramToolbarProps {
   model: VisualDiagramModel;
   canvasTool: CanvasTool;
   syncStatus: string;
+  currentSource?: string;
+  pageType?: string;
   onSetCanvasTool: (tool: CanvasTool) => void;
   onAddElement: (tool: Exclude<CanvasTool, 'select' | 'point'>) => void;
   onModelEdit: (model: VisualDiagramModel) => void;
@@ -61,6 +64,8 @@ export const DiagramToolbar: React.FC<DiagramToolbarProps> = ({
   model,
   canvasTool,
   syncStatus,
+  currentSource = '',
+  pageType,
   onSetCanvasTool,
   onAddElement,
   onModelEdit,
@@ -75,6 +80,7 @@ export const DiagramToolbar: React.FC<DiagramToolbarProps> = ({
   const [catalogSection, setCatalogSection] = useState<'objects' | 'guided'>('objects');
   const [toolQuery, setToolQuery] = useState('');
   const [gliderSupportId, setGliderSupportId] = useState('');
+  const [divergenceOpen, setDivergenceOpen] = useState(false);
   const toolbarRef = useRef<HTMLDivElement>(null);
   const currentToolLabel = toolLabel(canvasTool);
 
@@ -96,7 +102,7 @@ export const DiagramToolbar: React.FC<DiagramToolbarProps> = ({
 
   const toggleMenu = (menu: Exclude<OpenMenu, null>) => setOpenMenu(current => current === menu ? null : menu);
   const normalizedQuery = toolQuery.trim().toLocaleLowerCase('es');
-  const gliderSupports = model.elements.filter(item => ['segment', 'line', 'ray', 'circle', 'arc', 'functionCurve', 'parametricCurve', 'perpendicular', 'parallel', 'angleBisector'].includes(item.kind));
+  const gliderSupports = gliderSupportElements(model.elements);
   const effectiveGliderSupportId = gliderSupports.some(item => item.id === gliderSupportId) ? gliderSupportId : gliderSupports[0]?.id ?? '';
   const matchingGroups = TOOL_GROUPS.map(group => ({
     ...group,
@@ -216,11 +222,28 @@ export const DiagramToolbar: React.FC<DiagramToolbarProps> = ({
 
       {syncStatus === 'diverged' && (
         <div className="flex w-full flex-wrap items-center gap-2 rounded bg-granada/10 px-2 py-1">
-          <span className="text-[10px] font-bold text-granada">DIVERGENCIA DETECTADA:</span>
-          <button onClick={() => onResolveDivergence('visual')} className="text-[10px] underline">Usar visual</button>
-          <button onClick={() => onResolveDivergence('source')} className="text-[10px] underline">Usar código</button>
+          <span className="text-[10px] font-bold text-granada">DIVERGENCIA DETECTADA</span>
+          <button
+            type="button"
+            onClick={() => setDivergenceOpen(true)}
+            className="min-h-9 rounded border border-granada/25 bg-lienzo px-2 text-[10px] font-bold text-granada hover:bg-granada/5"
+          >
+            Resolver divergencia
+          </button>
         </div>
       )}
+
+      <DiagramDivergenceDialog
+        isOpen={divergenceOpen}
+        model={model}
+        source={currentSource}
+        pageType={pageType}
+        onClose={() => setDivergenceOpen(false)}
+        onResolve={authority => {
+          setDivergenceOpen(false);
+          onResolveDivergence(authority);
+        }}
+      />
     </div>
   );
 };

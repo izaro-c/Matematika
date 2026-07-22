@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { fireEvent, render, screen } from '@testing-library/react';
 import { describe, expect, it } from 'vitest';
-import { createTemplateModel, element } from '../../../../src/features/editor/diagrams/model/commands';
+import { createTemplateModel, element } from '../../../../src/features/editor/diagrams/model';
 import type { VisualDiagramModel } from '../../../../src/features/editor/diagrams/model/types';
 import { DiagramInspector } from '../../../../src/features/editor/diagrams/ui/DiagramInspector';
 

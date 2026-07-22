@@ -1,4 +1,5 @@
 import { element, generatedElementId, refsMatch } from './diagramElements';
+import { nextLayerItemOrder } from './sceneOrdering';
 import type { VisualDiagramModel, VisualElement } from './types';
 
 function ticksForSegment(model: VisualDiagramModel, segment: VisualElement): VisualElement[] {
@@ -54,12 +55,7 @@ function removeSegmentMarks(model: VisualDiagramModel, removedIds: Set<string>):
 }
 
 function nextLayerOrder(model: VisualDiagramModel, layerId: string): number {
-  return Math.max(
-    0,
-    ...[...model.points, ...model.elements, ...model.sliders]
-      .filter(candidate => candidate.layerId === layerId)
-      .map(candidate => candidate.order),
-  ) + 1000;
+  return nextLayerItemOrder(model, layerId);
 }
 
 export function setSegmentMeasureTicks(

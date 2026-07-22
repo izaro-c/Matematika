@@ -1,5 +1,5 @@
 import React from 'react';
-import { cleanTargetId } from '../model/commands';
+import { cleanTargetId } from '../model';
 import { buildTargets, interactiveElementSnippet } from '../model/selectors';
 import type { VisualDiagramModel } from '../model/types';
 

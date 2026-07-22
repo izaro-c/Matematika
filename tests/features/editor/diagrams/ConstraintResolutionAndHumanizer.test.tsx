@@ -108,6 +108,16 @@ describe('Constraint Resolution & UI Explanations', () => {
     expect(screen.getByText('Relaciones geométricas')).toBeDefined();
   });
 
+  it('offers equalAngle and expression kinds in Nueva relación', () => {
+    const pointF = mockDemoModel.points.find(p => p.id === 'pF')!;
+    render(<DiagramConstraintEditor model={mockDemoModel} point={pointF} onModelEdit={vi.fn()} />);
+
+    const select = screen.getByLabelText('Nueva restricción') as HTMLSelectElement;
+    const optionLabels = Array.from(select.options).map(option => option.textContent);
+    expect(optionLabels).toContain('Misma amplitud que otro ángulo');
+    expect(optionLabels).toContain('Relación por expresión');
+  });
+
   it('humanizes Zod and technical code diagnostic messages cleanly', () => {
     const rawZod = 'objects.3.definition.supports.0: El soporte no es válido.';
     const humanized = humanizeDiagnosticMessage(rawZod, [{ id: 'pF', label: 'F', scopeId: 'demo', qualifiedId: 'demo:pF', color: 'ocre', kind: 'point' }]);

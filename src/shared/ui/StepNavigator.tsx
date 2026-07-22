@@ -13,6 +13,7 @@ interface StepNavigatorProps {
   activeStepId?: string;
   onStepChange?: (stepId: string) => void;
   compact?: boolean;
+  editorMode?: boolean;
   className?: string;
 }
 
@@ -22,6 +23,7 @@ const StepNavigatorContent: React.FC<StepNavigatorProps> = ({
   activeStepId,
   onStepChange,
   compact = false,
+  editorMode = false,
   className = '',
 }) => {
   const storeStep = useMathStore(state => state.variables?.[scopeId ? `step:${scopeId}` : 'step']);
@@ -134,11 +136,13 @@ const StepNavigatorContent: React.FC<StepNavigatorProps> = ({
           <span className={compact ? 'hidden sm:inline' : ''}>{playback.playing ? 'Pausa' : 'Reproducir'}</span>
         </button>
         <button type="button" onClick={next} disabled={activeIndex === steps.length - 1} className="flex size-8 items-center justify-center rounded-full border border-carbon/15 bg-lienzo/90 font-diagram text-lg leading-none text-carbon transition-colors hover:border-carbon/30 hover:bg-carbon/5 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-pavo disabled:opacity-35" aria-label="Paso siguiente">›</button>
+        {!editorMode && (
         <span className={`${compact ? 'sr-only sm:not-sr-only' : ''} min-w-8 font-diagram text-[11px] tabular-nums text-carbon/60`} aria-live="polite">
           {activeIndex + 1} / {steps.length}{compact ? '' : ` · ${activeStep?.label ?? ''}`}
         </span>
+        )}
       </div>
-      {!compact && (
+      {!compact && !editorMode && (
         <div className="mt-3 flex gap-1 overflow-x-auto border-t border-carbon/10 pt-3" role="list" aria-label="Línea temporal de pasos">
           {steps.map((step, index) => (
             <button

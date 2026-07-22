@@ -75,7 +75,7 @@ export const ELEMENT_INSPECTOR_CAPABILITIES = {
   grid: { ...line, attachedLabel: false },
   areaDecomposition: { ...line, fill: true },
   text: annotation('text'),
-  label: { ...annotation('label'), textOffset: false },
+  label: annotation('label'),
   formula: annotation('formula'),
   infoPanel: annotation('infoPanel'),
 } satisfies Record<DiagramElementKind, ElementInspectorCapabilities>;

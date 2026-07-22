@@ -2,6 +2,30 @@ import type { DiagramTarget, DiagramTargetRegistry } from '../../core/editorType
 import type { VisualDiagramModel, ElementKind, ColorToken } from './types';
 import type { DiagramState } from '../state/types';
 
+function deepEqual(left: unknown, right: unknown): boolean {
+  if (Object.is(left, right)) return true;
+  if (left === null || right === null || typeof left !== 'object' || typeof right !== 'object') {
+    return false;
+  }
+  if (Array.isArray(left)) {
+    return Array.isArray(right)
+      && left.length === right.length
+      && left.every((item, index) => deepEqual(item, right[index]));
+  }
+  const leftRecord = left as Record<string, unknown>;
+  const rightRecord = right as Record<string, unknown>;
+  const leftKeys = Object.keys(leftRecord);
+  const rightKeys = Object.keys(rightRecord);
+  if (leftKeys.length !== rightKeys.length) return false;
+  return leftKeys.every(key => Object.prototype.hasOwnProperty.call(rightRecord, key)
+    && deepEqual(leftRecord[key], rightRecord[key]));
+}
+
+export function isDiagramStateDirty(state: DiagramState): boolean {
+  if (state.currentSource !== state.originalSource) return true;
+  return !deepEqual(state.currentModel, state.originalModel);
+}
+
 export function targetKind(kind: ElementKind): DiagramTarget['kind'] {
   if (kind === 'segment' || kind === 'baseExtension' || kind === 'dimensionLine') return 'segment';
   if (kind === 'line' || kind === 'ray' || kind === 'perpendicular' || kind === 'parallel' || kind === 'angleBisector' || kind === 'functionCurve' || kind === 'parametricCurve' || kind === 'poincareGeodesic' || kind === 'poincareArc') return 'line';

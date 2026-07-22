@@ -7,7 +7,7 @@ import {
   pasteDiagramClipboard,
   serializeDiagramClipboard,
   step,
-} from '../../../../src/features/editor/diagrams/model/commands';
+} from '../../../../src/features/editor/diagrams/model';
 import { parseDiagramSpecV2 } from '../../../../src/shared/diagrams/public';
 
 describe('diagram structured clipboard', () => {

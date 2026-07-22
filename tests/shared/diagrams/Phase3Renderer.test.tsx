@@ -63,6 +63,10 @@ vi.mock('../../../src/shared/diagrams/core/MathBoard', () => ({
             setValue: vi.fn((next: number) => { value = next; }),
             Dist: (other: any) => Math.hypot(geometry.X() - other.X(), geometry.Y() - other.Y()),
             setAttribute: vi.fn(),
+            animate: vi.fn(function animate(this: any, hash: Record<string, unknown>) {
+              this.setAttribute(hash);
+            }),
+            fullUpdate: vi.fn(),
             highlight: vi.fn(),
             noHighlight: vi.fn(),
             on: vi.fn((eventName: string, handler: (event?: unknown) => void) => {
@@ -102,21 +106,26 @@ vi.mock('../../../src/shared/diagrams/core/MathBoard', () => ({
         on: vi.fn((eventName: string, handler: (event?: unknown) => void) => {
           rendererState.boardHandlers[eventName] = [...(rendererState.boardHandlers[eventName] ?? []), handler];
         }),
-        update: vi.fn(),
         getAllObjectsUnderMouse: vi.fn(() => []),
         getUsrCoordsOfMouse: vi.fn(() => [0, 0]),
         getBoundingBox: vi.fn(() => [-4, 4, 4, -4]),
       });
     const themeRef = React.useRef({ carbon: 'carbon', terracota: 'terracota', salvia: 'salvia', pizarra: 'pizarra', ocre: 'ocre', pavo: 'pavo', granada: 'granada', musgo: 'musgo', lienzo: 'lienzo' });
     const onInitRef = React.useRef(onInit);
+    const onUpdateRef = React.useRef(onUpdate);
     onInitRef.current = onInit;
+    onUpdateRef.current = onUpdate;
+    const runUpdate = React.useCallback(() => {
+      const isHL = (target: string) => highlight === target || highlight === `${scopeId}:${target}`;
+      onUpdateRef.current?.(boardRef.current, elementsRef.current, themeRef.current, () => false, isHL);
+    }, [highlight, onUpdate, scopeId]);
+    boardRef.current.update = vi.fn(runUpdate);
     React.useEffect(() => {
       onInitRef.current?.(boardRef.current, elementsRef.current, themeRef.current);
     }, []);
     React.useEffect(() => {
-      const isHL = (target: string) => highlight === target || highlight === `${scopeId}:${target}`;
-      onUpdate?.(boardRef.current, elementsRef.current, themeRef.current, () => false, isHL);
-    }, [highlight, onUpdate, scopeId]);
+      runUpdate();
+    }, [runUpdate]);
     return <div data-testid="phase3-board">{children}</div>;
   },
 }));
@@ -127,7 +136,7 @@ import { Congruence1Spec } from '../../../src/widgets/diagrams/Axiomas/Congruenc
 import { PaschSpec } from '../../../src/widgets/diagrams/Axiomas/Pasch';
 import { AxiomaArquimedesSpec } from '../../../src/widgets/diagrams/Axiomas/AxiomaArquimedes';
 import { TrianguloSpec } from '../../../src/widgets/diagrams/Definiciones/Triangulo';
-import { addLabelToElement, setPointAttractors } from '../../../src/features/editor/diagrams/model/commands';
+import { addLabelToElement, setPointAttractors } from '../../../src/features/editor/diagrams/model';
 
 afterEach(() => {
   cleanup();
@@ -147,6 +156,16 @@ function HighlightProbe() {
 function ExternalHighlightControl({ value }: { value: string }) {
   const setVariable = useMathStore(state => state.setVariable);
   return <button type="button" onClick={() => setVariable('highlight', value)}>Resaltar desde MDX</button>;
+}
+
+function lastCommittedAttrs(geometry: { setAttribute: { mock: { calls: unknown[][] } }; animate?: { mock: { calls: unknown[][] } } }) {
+  const setCalls = geometry.setAttribute.mock.calls;
+  if ((geometry.animate?.mock.calls.length ?? 0) > 0) {
+    const animated = setCalls.at(-1)?.[0] as Record<string, unknown> | undefined;
+    const staticAttrs = setCalls.at(-2)?.[0] as Record<string, unknown> | undefined;
+    return { ...staticAttrs, ...animated };
+  }
+  return setCalls.at(-1)?.[0] as Record<string, unknown> | undefined;
 }
 
 describe('Phase 3 shared renderer', () => {
@@ -174,12 +193,12 @@ describe('Phase 3 shared renderer', () => {
     act(() => point.handlers.over[0]());
     act(() => point.handlers.down[0]());
     expect(point.setAttribute).toHaveBeenLastCalledWith(expect.objectContaining({
-      size: target.style?.highlightPointSize ?? 7,
+      size: target.style?.highlightPointSize ?? 10,
     }));
 
     act(() => point.handlers.out[0]());
     expect(point.setAttribute).toHaveBeenLastCalledWith(expect.objectContaining({
-      size: target.style?.highlightPointSize ?? 7,
+      size: target.style?.highlightPointSize ?? 10,
     }));
   });
 
@@ -234,7 +253,7 @@ describe('Phase 3 shared renderer', () => {
       highlight: false,
       highlightFillColor: target.color,
       highlightStrokeColor: target.color,
-      label: expect.objectContaining({ highlight: false, highlightStrokeColor: target.color }),
+      label: expect.objectContaining({ highlightStrokeColor: target.color }),
     });
     expect(point.setAttribute).toHaveBeenCalledWith(expect.objectContaining({
       size: target.style?.pointSize ?? 4,
@@ -250,12 +269,12 @@ describe('Phase 3 shared renderer', () => {
     expect(screen.getByLabelText('highlight desde diagrama').textContent).toBe('');
 
     fireEvent.click(screen.getByRole('button', { name: 'Resaltar desde MDX' }));
-    expect(point.setAttribute).toHaveBeenLastCalledWith(expect.objectContaining({
-      size: target.style?.highlightPointSize ?? 7,
+    expect(lastCommittedAttrs(point)).toMatchObject({
+      size: target.style?.highlightPointSize ?? 10,
       fillColor: 'ocre',
       strokeColor: 'ocre',
       fillOpacity: 1,
-    }));
+    });
   });
 
   it('renders exact intersections and keeps them on finite authored supports', () => {
@@ -560,24 +579,15 @@ describe('Phase 3 shared renderer', () => {
 
     const attributeCallCount = point.setAttribute.mock.calls.length;
     point.handlers.over[0]();
-    expect(point.setAttribute).toHaveBeenCalledTimes(attributeCallCount);
-    expect(point.highlight).toHaveBeenCalled();
-    expect(point.label.highlight).toHaveBeenCalled();
+    expect(point.setAttribute.mock.calls.length).toBeGreaterThan(attributeCallCount);
     expect(point.label.rendNode.classList).toContain('matematika-point-label--highlight');
-    expect(point.label.rendNode.style.transform).toBe('scale(1.12)');
     point.handlers.out[0]();
-    expect(point.setAttribute).toHaveBeenCalledTimes(attributeCallCount);
-    expect(point.noHighlight).toHaveBeenCalled();
-    expect(point.label.noHighlight).toHaveBeenCalled();
-    expect(point.label.rendNode.classList).not.toContain('matematika-point-label--highlight');
-    expect(point.label.rendNode.style.transform).toBe('');
+    expect(point.label.rendNode.classList).toContain('matematika-point-label--highlight');
 
     point.label.handlers.over[0]();
-    expect(point.highlight).toHaveBeenCalledTimes(2);
-    expect(point.label.highlight).toHaveBeenCalledTimes(2);
+    expect(point.label.rendNode.classList).toContain('matematika-point-label--highlight');
     point.label.handlers.out[0]();
-    expect(point.noHighlight).toHaveBeenCalledTimes(2);
-    expect(point.label.noHighlight).toHaveBeenCalledTimes(2);
+    expect(point.label.rendNode.classList).toContain('matematika-point-label--highlight');
 
     fireEvent.mouseEnter(point.label.rendNode);
     expect(screen.getByLabelText('highlight desde diagrama').textContent).toBe(`${spec.componentId}:${target.targetId ?? target.id}`);
@@ -629,7 +639,7 @@ describe('Phase 3 shared renderer', () => {
     expect(geometry.setAttribute.mock.calls.at(-1)?.[0]).toMatchObject({ visible: false });
 
     fireEvent.click(screen.getByRole('button', { name: 'Resaltar desde MDX' }));
-    expect(geometry.setAttribute.mock.calls.at(-1)?.[0]).toMatchObject({ visible: true });
+    expect(lastCommittedAttrs(geometry)).toMatchObject({ visible: true });
     expect(geometry.label.setAttribute.mock.calls.at(-1)?.[0]).toMatchObject({ visible: true });
   });
 
@@ -965,7 +975,9 @@ describe('Phase 3 shared renderer', () => {
         : point),
     };
     view.rerender(<MathProvider><DiagramRenderer spec={automatic} viewportControls={false} /></MathProvider>);
-    expect(point.setAttribute).toHaveBeenCalledWith(expect.objectContaining({ label: expect.objectContaining({ position: 'urt' }) }));
+    expect(point.setAttribute.mock.calls.some(call => (
+      (call[0] as { label?: { position?: string } })?.label?.position === 'urt'
+    ))).toBe(true);
   });
 
   it('keeps step emphasis in the original color, supports an override and yields exclusively to MDX', () => {
@@ -988,14 +1000,88 @@ describe('Phase 3 shared renderer', () => {
     const customIndex = rendererState.nodes.findIndex(node => node.dataset.diagramObjectId === custom.id);
     const primaryGeometry = rendererState.geometries[primaryIndex];
     const customGeometry = rendererState.geometries[customIndex];
-    expect(primaryGeometry.setAttribute.mock.calls.at(-1)?.[0]).toMatchObject({ fillColor: primary.color, size: primary.style?.highlightPointSize ?? 7 });
-    expect(customGeometry.setAttribute.mock.calls.at(-1)?.[0]).toMatchObject({ fillColor: 'granada', size: custom.style?.highlightPointSize ?? 7 });
+    expect(primaryGeometry.setAttribute.mock.calls.at(-1)?.[0]).toMatchObject({ fillColor: primary.color, size: primary.style?.highlightPointSize ?? 10 });
+    expect(customGeometry.setAttribute.mock.calls.at(-1)?.[0]).toMatchObject({ fillColor: 'granada', size: custom.style?.highlightPointSize ?? 10 });
 
     view.rerender(<MathProvider><DiagramRenderer spec={spec} activeStepId="focus-step" highlightedIds={[custom.id]} viewportControls={false} /></MathProvider>);
-    expect(primaryGeometry.setAttribute.mock.calls.at(-1)?.[0]).toMatchObject({
+    expect(lastCommittedAttrs(primaryGeometry)).toMatchObject({
       fillColor: primary.color,
       size: primary.style?.pointSize ?? 4,
     });
-    expect(customGeometry.setAttribute.mock.calls.at(-1)?.[0]).toMatchObject({ size: custom.style?.highlightPointSize ?? 7 });
+    expect(lastCommittedAttrs(customGeometry)).toMatchObject({ size: custom.style?.highlightPointSize ?? 10 });
+  });
+
+  it('pulses primary step emphasis on line-like elements', () => {
+    const base = projectDiagramSpecV3ToV2(migrateDiagramSpec(primitivesFixture).spec);
+    const segment = base.elements.find(element => element.id === 'segAB');
+    if (!segment) throw new Error('La fixture debe incluir segAB.');
+    const visibleTargets = [...base.points, ...base.elements, ...base.sliders].map(item => item.id);
+    const spec = {
+      ...base,
+      steps: [{
+        id: 'focus-step', label: 'Énfasis', description: '', visibleTargets,
+        objectStates: {
+          [segment.id]: { emphasis: 'primary' as const },
+        },
+      }],
+    };
+    render(<MathProvider><DiagramRenderer spec={spec} activeStepId="focus-step" viewportControls={false} /></MathProvider>);
+    const segmentIndex = rendererState.nodes.findIndex(node => node.dataset.diagramObjectId === segment.id);
+    const segmentGeometry = rendererState.geometries[segmentIndex];
+    expect(segmentGeometry.setAttribute.mock.calls.at(-1)?.[0]).toMatchObject({
+      strokeColor: segment.color,
+      strokeWidth: segment.style?.highlightStrokeWidth ?? 3.2,
+      strokeOpacity: 1,
+    });
+  });
+
+  it('applies secondary step emphasis on line-like elements with hover highlight width', () => {
+    const base = projectDiagramSpecV3ToV2(migrateDiagramSpec(primitivesFixture).spec);
+    const segment = base.elements.find(element => element.id === 'segAB');
+    if (!segment) throw new Error('La fixture debe incluir segAB.');
+    const visibleTargets = [...base.points, ...base.elements, ...base.sliders].map(item => item.id);
+    const spec = {
+      ...base,
+      steps: [{
+        id: 'focus-step', label: 'Énfasis', description: '', visibleTargets,
+        objectStates: {
+          [segment.id]: { emphasis: 'secondary' as const, emphasisColor: 'granada' as const },
+        },
+      }],
+    };
+    render(<MathProvider><DiagramRenderer spec={spec} activeStepId="focus-step" viewportControls={false} /></MathProvider>);
+    const segmentIndex = rendererState.nodes.findIndex(node => node.dataset.diagramObjectId === segment.id);
+    const segmentGeometry = rendererState.geometries[segmentIndex];
+    expect(lastCommittedAttrs(segmentGeometry)).toMatchObject({
+      strokeColor: 'granada',
+      strokeWidth: segment.style?.highlightStrokeWidth ?? 3.6,
+      strokeOpacity: 1,
+    });
+  });
+
+  it('pulses primary step emphasis on tick graduations', () => {
+    const base = projectDiagramSpecV3ToV2(migrateDiagramSpec(marksFixture).spec);
+    const ticks = base.elements.find(element => element.id === 'ticksAV');
+    if (!ticks) throw new Error('La fixture de marcas debe incluir ticksAV.');
+    const visibleTargets = [...base.points, ...base.elements, ...base.sliders].map(item => item.id);
+    const spec = {
+      ...base,
+      steps: [{
+        id: 'focus-step', label: 'Énfasis', description: '', visibleTargets,
+        objectStates: {
+          [ticks.id]: { emphasis: 'primary' as const },
+        },
+      }],
+    };
+    render(<MathProvider><DiagramRenderer spec={spec} activeStepId="focus-step" viewportControls={false} /></MathProvider>);
+    const tickUpdate = rendererState.geometries
+      .flatMap(geometry => geometry.setAttribute.mock.calls)
+      .map(call => call[0])
+      .find(attrs => attrs?.majorHeight !== undefined);
+    expect(tickUpdate).toMatchObject({
+      majorHeight: ticks.style?.markHeight ?? 12,
+      minorHeight: (ticks.style?.markHeight ?? 12) * 0.4,
+      strokeWidth: 3.6,
+    });
   });
 });

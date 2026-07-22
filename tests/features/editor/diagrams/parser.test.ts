@@ -3,7 +3,7 @@ import { afterEach, vi } from 'vitest';
 import { parseDiagramSourceLocally, parseDiagramSourceOnServer } from '../../../../src/features/editor/diagrams/source/parser';
 import { parseDiagramSourceAST } from '../../../../scripts/editor/parseDiagramSourceAST';
 import { generateDiagramSource } from '../../../../src/features/editor/diagrams/source/generator';
-import { createTemplateModel } from '../../../../src/features/editor/diagrams/model/commands';
+import { createTemplateModel } from '../../../../src/features/editor/diagrams/model';
 
 describe('Diagram TSX Parser (Local & AST)', () => {
   afterEach(() => {

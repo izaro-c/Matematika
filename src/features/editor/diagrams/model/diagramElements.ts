@@ -3,8 +3,8 @@ import {
   DEFAULT_RIGHT_ANGLE_RADIUS,
   type DiagramStepObjectState,
 } from '../../../../shared/diagrams/spec';
+import { nextLayerItemOrder } from './sceneOrdering';
 import type {
-  CanvasTool,
   ColorToken,
   ElementKind,
   PointConstraint,
@@ -192,15 +192,7 @@ export function nextStepId(steps: VisualStep[]): string {
   return `step${index}`;
 }
 
-export function refsNeededForTool(tool: CanvasTool): number {
-  if (tool === 'measureTicks') return 1;
-  if (['segment', 'line', 'ray', 'circle', 'intersection', 'midpoint', 'congruenceMark', 'parallelMark', 'dimensionLine', 'measurement'].includes(tool)) return 2;
-  if (['arc', 'polygon', 'perpendicularFoot', 'baseExtension', 'perpendicular', 'parallel', 'angleBisector', 'angle', 'nonReflexAngle', 'rightAngle', 'perpendicularMark', 'areaDecomposition'].includes(tool)) return 3;
-  if (['poincareGeodesic', 'poincareArc', 'grid'].includes(tool)) return 4;
-  if (['text', 'label', 'formula'].includes(tool)) return 1;
-  if (tool === 'infoPanel') return 0;
-  return 0;
-}
+export { refsNeededForTool } from './referenceRules';
 
 export function generatedElementId(kind: ElementKind, refs: string[], existing: VisualElement[]): string {
   const suffix = refs.map(ref => ref.replace(/^p/, '')).join('');
@@ -334,7 +326,7 @@ export function addLabelToElement(model: VisualDiagramModel, sourceId: string): 
   const labelElement: VisualElement = {
     ...element(labelId, `Etiqueta de ${source.label}`, 'label', [sourceId], source.color, false),
     layerId: annotationLayer,
-    order: Math.max(0, ...model.elements.filter(item => item.layerId === annotationLayer).map(item => item.order)) + 1000,
+    order: nextLayerItemOrder(model, annotationLayer),
     selection: {
       selectable: true,
       highlightable: true,

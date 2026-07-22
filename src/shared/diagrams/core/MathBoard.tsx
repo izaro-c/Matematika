@@ -125,6 +125,8 @@ export interface MathBoardProps {
   pan?: boolean;
   zoom?: boolean;
   revision?: string;
+  /** Cambia cuando varía el apilamiento; fuerza un repintado sin reiniciar el board. */
+  stackRevision?: string;
   scopeId?: string;
   onBoundingBoxChange?: (bounds: [number, number, number, number]) => void;
   onInit: (board: any, elements: Record<string, any>, theme: ThemeColors) => void;
@@ -156,6 +158,7 @@ export const MathBoard: React.FC<MathBoardProps> = ({
   pan = false,
   zoom = false,
   revision = '',
+  stackRevision = '',
   scopeId = '',
   onBoundingBoxChange,
   onInit,
@@ -400,6 +403,10 @@ export const MathBoard: React.FC<MathBoardProps> = ({
     board.__matematikaViewportSafeArea = viewportSafeArea ?? safeArea ?? {};
     board.__matematikaContainerSize = { width, height };
   }, [boundingbox, keepaspectratio, safeArea, viewportSafeArea]);
+
+  useEffect(() => {
+    boardObj.current?.update();
+  }, [stackRevision]);
 
   return (
     <div ref={containerRef} className={`${className} h-full`}>

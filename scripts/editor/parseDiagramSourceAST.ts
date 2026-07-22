@@ -7,7 +7,7 @@ import {
   classifyEmbeddedDiagramSource,
   parseDiagramSourceLocally,
 } from '../../src/features/editor/diagrams/source/parser';
-import { KIND_LABELS } from '../../src/features/editor/diagrams/model/commands';
+import { KIND_LABELS } from '../../src/features/editor/diagrams/model';
 import { DiagramSpecMigrationError, migrateDiagramSpec } from '../../src/shared/diagrams/spec/migrations';
 import { projectDiagramSpecV3ToV2 } from '../../src/shared/diagrams/spec/v3Compatibility';
 

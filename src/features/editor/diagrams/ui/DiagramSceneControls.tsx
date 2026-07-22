@@ -1,13 +1,20 @@
 import React from 'react';
 import type { VisualDiagramModel, VisualElement, VisualPoint, VisualSlider } from '../model/types';
-import { updateElement, updatePoint, updateSlider } from '../model/commands';
+import {
+  bringSceneItemForward,
+  bringSceneItemToFront,
+  moveSceneItemToLayer,
+  sendSceneItemBackward,
+  sendSceneItemToBack,
+} from '../model/sceneOrdering';
+import { updateElement, updatePoint, updateSlider } from '../model';
 
 interface DiagramSceneControlsProps {
   model: VisualDiagramModel;
   point?: VisualPoint;
   element?: VisualElement;
   slider?: VisualSlider;
-  onModelEdit: (model: VisualDiagramModel) => void;
+  onModelEdit: (model: VisualDiagramModel, command?: { label?: string; mergeKey?: string }) => void;
 }
 
 type SceneUpdate = Partial<Pick<VisualPoint, 'layerId' | 'order' | 'visible' | 'locked' | 'selection' | 'style'>>;
@@ -22,9 +29,11 @@ export const DiagramSceneControls: React.FC<DiagramSceneControlsProps> = ({ mode
     else if (slider) onModelEdit(updateSlider(model, slider.id, update));
   };
 
-  const sceneItems = [...model.points, ...model.elements, ...model.sliders];
   const layer = model.layers.find(candidate => candidate.id === item.layerId);
-  const sameLayerItems = sceneItems.filter(candidate => candidate.layerId === item.layerId);
+
+  const applySceneOrdering = (nextModel: VisualDiagramModel, label: string) => {
+    onModelEdit(nextModel, { label, mergeKey: 'scene-stack' });
+  };
 
   const changeGroup = (groupId: string, checked: boolean) => {
     const groupIds = checked ? [...item.groupIds, groupId] : item.groupIds.filter(id => id !== groupId);
@@ -79,7 +88,7 @@ export const DiagramSceneControls: React.FC<DiagramSceneControlsProps> = ({ mode
         <div><h5 className="text-xs font-bold text-carbon">Organización visual</h5><p className="mt-1 text-[10px] text-carbon/45">Capa actual: {layer?.label ?? item.layerId}.</p></div>
           <div>
             <label className="block text-xs font-bold text-carbon mb-1">Capa</label>
-            <select className="w-full rounded border border-carbon/15 bg-lienzo p-1.5 text-xs" value={item.layerId} onChange={event => changeItem({ layerId: event.target.value })}>
+            <select className="w-full rounded border border-carbon/15 bg-lienzo p-1.5 text-xs" value={item.layerId} onChange={event => applySceneOrdering(moveSceneItemToLayer(model, item.id, event.target.value), `Mover ${item.label} de capa`)}>
               {model.layers.slice().sort((a, b) => a.order - b.order).map(candidate => <option key={candidate.id} value={candidate.id}>{candidate.label}</option>)}
             </select>
             <p className="mt-1 text-[9px] leading-relaxed text-carbon/45">Una capa superior siempre queda delante de una inferior. El orden interno solo compara objetos de esta misma capa.</p>
@@ -87,13 +96,12 @@ export const DiagramSceneControls: React.FC<DiagramSceneControlsProps> = ({ mode
           <div>
             <p className="text-xs font-bold text-carbon">Delante o detrás en esta capa</p>
             <div className="mt-1 grid grid-cols-2 gap-1">
-              <button type="button" className="rounded border border-carbon/15 px-2 py-1 text-[10px] font-bold text-carbon" onClick={() => changeItem({ order: Math.min(...sameLayerItems.map(candidate => candidate.order), 0) - 1000 })}>Enviar al fondo</button>
-              <button type="button" className="rounded border border-carbon/15 px-2 py-1 text-[10px] font-bold text-carbon" onClick={() => changeItem({ order: Math.max(...sameLayerItems.map(candidate => candidate.order), 0) + 1000 })}>Traer al frente</button>
+              <button type="button" className="rounded border border-carbon/15 px-2 py-1 text-[10px] font-bold text-carbon" onClick={() => applySceneOrdering(sendSceneItemBackward(model, item.id), `Enviar ${item.label} atrás`)}>Un paso atrás</button>
+              <button type="button" className="rounded border border-carbon/15 px-2 py-1 text-[10px] font-bold text-carbon" onClick={() => applySceneOrdering(bringSceneItemForward(model, item.id), `Traer ${item.label} adelante`)}>Un paso adelante</button>
+              <button type="button" className="rounded border border-carbon/15 px-2 py-1 text-[10px] font-bold text-carbon" onClick={() => applySceneOrdering(sendSceneItemToBack(model, item.id), `Enviar ${item.label} al fondo`)}>Al fondo</button>
+              <button type="button" className="rounded border border-carbon/15 px-2 py-1 text-[10px] font-bold text-carbon" onClick={() => applySceneOrdering(bringSceneItemToFront(model, item.id), `Traer ${item.label} al frente`)}>Al frente</button>
             </div>
-            <details className="mt-2 border-l-2 border-carbon/10 pl-2">
-              <summary className="cursor-pointer text-[9px] text-carbon/45">Valor numérico avanzado</summary>
-              <input aria-label="Orden visual avanzado" type="number" className="mt-1 w-full rounded border border-carbon/15 bg-lienzo p-1.5 text-xs font-mono" value={item.order} onChange={event => changeItem({ order: Number(event.target.value) })} />
-            </details>
+            <p className="mt-2 text-[9px] leading-relaxed text-carbon/45">Use la pestaña Organizar del panel izquierdo para reordenar por arrastre. Los botones mueven un paso dentro de la capa.</p>
           </div>
           {model.groups.length > 0 && (
             <div className="space-y-1">

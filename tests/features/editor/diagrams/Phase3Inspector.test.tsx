@@ -12,7 +12,7 @@ import { DiagramInspector } from '../../../../src/features/editor/diagrams/ui/Di
 import { DiagramToolbar } from '../../../../src/features/editor/diagrams/ui/DiagramToolbar';
 import { DiagramToolReferencePicker } from '../../../../src/features/editor/diagrams/ui/DiagramToolReferencePicker';
 import { parseDiagramSourceAST } from '../../../../scripts/editor/parseDiagramSourceAST';
-import { addLabelToElement } from '../../../../src/features/editor/diagrams/model/commands';
+import { addLabelToElement } from '../../../../src/features/editor/diagrams/model';
 import { AxiomaArquimedesSpec } from '../../../../src/widgets/diagrams/Axiomas/AxiomaArquimedes';
 
 function openInspectorSection(name: 'Esencial' | 'Geometría' | 'Estilo' | 'Interacción') {
@@ -370,6 +370,8 @@ describe('Phase 3 visual editing', () => {
     openInspectorSection('Geometría');
 
     const summary = screen.getByText('Igualar ángulos');
+    expect(summary.closest('details')?.open).toBe(false);
+    fireEvent.click(summary);
     expect(summary.closest('details')?.open).toBe(true);
     expect(screen.getByText(/girará alrededor del vértice/)).toBeTruthy();
     expect((screen.getByLabelText('Extremo que se ajusta para igualar ángulos') as HTMLSelectElement).value).toBe('pA');
@@ -406,6 +408,8 @@ describe('Phase 3 visual editing', () => {
     openInspectorSection('Geometría');
 
     const summary = screen.getByText('Igualar ángulos');
+    expect(summary.closest('details')?.open).toBe(false);
+    fireEvent.click(summary);
     expect(summary.closest('details')?.open).toBe(true);
     expect((screen.getByLabelText('Ángulo de referencia para igualar ángulos') as HTMLSelectElement).value)
       .toBe('nonReflexAngleBBAACC');
@@ -789,7 +793,7 @@ describe('Phase 3 visual editing', () => {
 
     openInspectorSection('Interacción');
     fireEvent.click(screen.getByText(/Organización visual/));
-    fireEvent.click(screen.getByRole('button', { name: 'Traer al frente' }));
+    fireEvent.click(screen.getByRole('button', { name: 'Al frente' }));
 
     const edited = onModelEdit.mock.calls.at(-1)?.[0];
     const selected = edited.points.find((item: { id: string }) => item.id === 'pC');

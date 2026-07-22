@@ -2,7 +2,7 @@ import React from 'react';
 import { DiagramRenderer, withMovedPoint, withViewportBounds } from '@/shared/diagrams/public';
 import { MathProvider } from '@/shared/lib/MathStoreContext';
 import type { VisualDiagramModel, CanvasTool } from '../model/types';
-import { nextPointId, point, toolReferenceCandidatesForSlot, updateElement, updateSlider } from '../model/commands';
+import { nextLayerItemOrder, nextPointId, point, toolReferenceCandidatesForSlot, updateElement, updateSlider } from '../model';
 import { DiagramViewportFrame } from './DiagramViewportFrame';
 
 interface DiagramCanvasProps {
@@ -72,7 +72,7 @@ export const DiagramCanvas: React.FC<DiagramCanvasProps> = ({
             ...model,
             points: [...model.points, {
               ...point(id, id.replace(/^p/, ''), snappedX, snappedY),
-              order: Math.max(0, ...[...model.points, ...model.elements].filter(item => item.layerId === 'geometry').map(item => item.order)) + 1000,
+              order: nextLayerItemOrder(model, 'geometry'),
             }],
             steps: model.steps.map(item => ({
               ...item,

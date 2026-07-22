@@ -16,7 +16,7 @@ import {
   toolReferenceLabel,
   toolReferenceCandidates,
   updatePoint,
-} from '../../../../src/features/editor/diagrams/model/commands';
+} from '../../../../src/features/editor/diagrams/model';
 import { DEFAULT_ANGLE_RADIUS, DEFAULT_RIGHT_ANGLE_RADIUS } from '../../../../src/shared/diagrams/public';
 import { buildTargets, targetKind } from '../../../../src/features/editor/diagrams/model/selectors';
 

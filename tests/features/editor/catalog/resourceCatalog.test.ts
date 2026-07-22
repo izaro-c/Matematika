@@ -6,7 +6,7 @@ import {
   buildEditorResourceCatalog,
   listEditableCatalogResources,
 } from '../../../../scripts/editor/buildEditorResourceCatalog';
-import { createTemplateModel } from '../../../../src/features/editor/diagrams/model/commands';
+import { createTemplateModel } from '../../../../src/features/editor/diagrams/model';
 import { generateDiagramSource } from '../../../../src/features/editor/diagrams/source/generator';
 
 const roots: string[] = [];

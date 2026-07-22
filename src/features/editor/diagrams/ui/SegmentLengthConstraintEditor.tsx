@@ -7,6 +7,7 @@ import {
   removeConstraintFromModel,
   setEqualLengthConstraint,
 } from '../model/segmentLengthConstraints';
+import { DiagramButton, DiagramField, DiagramPanel } from './primitives';
 
 interface SegmentLengthConstraintEditorProps {
   model: VisualDiagramModel;
@@ -22,6 +23,7 @@ export const SegmentLengthConstraintEditor: React.FC<SegmentLengthConstraintEdit
   const existing = equalLengthConstraintForSegment(model, segment.id);
   const endpoints = editableSegmentEndpoints(model, segment.id);
   const allReferenceSegments = model.elements.filter(element => element.kind === 'segment' && element.id !== segment.id);
+  const [expanded, setExpanded] = useState(Boolean(existing));
   const [movingEndpointId, setMovingEndpointId] = useState(existing?.refs[0] ?? endpoints[0]?.id ?? '');
   const [sourceSegmentId, setSourceSegmentId] = useState(existing?.refs[2] ?? allReferenceSegments[0]?.id ?? '');
   const referenceSegments = allReferenceSegments.filter(candidate => !candidate.refs.includes(movingEndpointId));
@@ -47,12 +49,13 @@ export const SegmentLengthConstraintEditor: React.FC<SegmentLengthConstraintEdit
   }
 
   return (
-    <details className="rounded border border-pavo/25 bg-pavo/5" open={Boolean(existing)}>
-      <summary className="cursor-pointer list-none px-2 py-2 text-xs font-bold text-pavo [&::-webkit-details-marker]:hidden">
-        Igualar longitudes
-        <span className="float-right text-[9px] font-normal text-carbon/45">{existing ? 'Configurada' : 'Opcional'} ▾</span>
-      </summary>
-      <div className="space-y-2 border-t border-pavo/15 p-2">
+    <DiagramPanel
+      title="Igualar longitudes"
+      badge={existing ? 'Configurada' : 'Opcional'}
+      collapsible
+      open={expanded}
+      onOpenChange={setExpanded}
+    >
         <p className="text-[10px] leading-relaxed text-carbon/60">
           Este segmento conservará la longitud de otro. Un extremo queda como ancla y el otro se ajusta automáticamente.
         </p>
@@ -63,28 +66,24 @@ export const SegmentLengthConstraintEditor: React.FC<SegmentLengthConstraintEdit
 
         {endpoints.length > 0 && referenceSegments.length > 0 ? (
           <>
-            <label className="block text-[10px] font-bold text-carbon/65">
-              Extremo que se ajusta
+            <DiagramField label="Extremo que se ajusta">
               <select
                 aria-label="Extremo que se ajusta para igualar longitudes"
-                className="mt-1 w-full rounded border border-carbon/15 bg-lienzo p-1.5 text-xs"
                 value={movingEndpointId}
                 onChange={event => setMovingEndpointId(event.target.value)}
               >
                 {endpoints.map(point => <option key={point.id} value={point.id}>{point.label} ({point.id})</option>)}
               </select>
-            </label>
-            <label className="block text-[10px] font-bold text-carbon/65">
-              Segmento de referencia
+            </DiagramField>
+            <DiagramField label="Segmento de referencia">
               <select
                 aria-label="Segmento de referencia para igualar longitudes"
-                className="mt-1 w-full rounded border border-carbon/15 bg-lienzo p-1.5 text-xs"
                 value={effectiveSourceSegmentId}
                 onChange={event => setSourceSegmentId(event.target.value)}
               >
                 {referenceSegments.map(candidate => <option key={candidate.id} value={candidate.id}>{candidate.label} ({candidate.id})</option>)}
               </select>
-            </label>
+            </DiagramField>
             {ready ? (
               <p className="rounded bg-lienzo px-2 py-1.5 text-[10px] leading-relaxed text-carbon/60" aria-live="polite">
                 Se ajustará <strong>{movingEndpoint?.label}</strong>; <strong>{anchor?.label}</strong> quedará como ancla. La longitud será la de <strong>{sourceSegment?.label}</strong>.
@@ -94,22 +93,22 @@ export const SegmentLengthConstraintEditor: React.FC<SegmentLengthConstraintEdit
                 {disabledReason}
               </p>
             ) : null}
-            <button
-              type="button"
+            <DiagramButton
+              variant="primary"
+              fullWidth
               disabled={!ready}
-              className="w-full rounded bg-pavo px-2 py-1.5 text-xs font-bold text-lienzo disabled:cursor-not-allowed disabled:opacity-35"
               onClick={() => onModelEdit(setEqualLengthConstraint(model, segment.id, movingEndpointId, effectiveSourceSegmentId))}
             >
               {existing ? 'Actualizar igualdad de longitudes' : 'Mantener la misma longitud'}
-            </button>
+            </DiagramButton>
             {existing && (
-              <button
-                type="button"
-                className="w-full rounded border border-granada/20 bg-lienzo px-2 py-1.5 text-xs font-bold text-granada"
+              <DiagramButton
+                variant="danger"
+                fullWidth
                 onClick={() => onModelEdit(removeConstraintFromModel(model, existing.id))}
               >
                 Quitar igualdad de longitudes
-              </button>
+              </DiagramButton>
             )}
           </>
         ) : (
@@ -117,8 +116,7 @@ export const SegmentLengthConstraintEditor: React.FC<SegmentLengthConstraintEdit
             {disabledReason || 'Se necesitan otro segmento y al menos un extremo móvil. Los puntos fijos o derivados no pueden ser el extremo ajustado.'}
           </p>
         )}
-      </div>
-    </details>
+    </DiagramPanel>
   );
 };
 

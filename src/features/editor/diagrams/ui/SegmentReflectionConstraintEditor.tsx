@@ -1,7 +1,12 @@
 import React, { useState } from 'react';
-import { editableReflectionCandidates, setReflectionConstraintForSegment } from '../model/reflectionConstraints';
-import { removeConstraintFromModel } from '../model/commands';
+import {
+  editableReflectionCandidates,
+  reflectionConstraintForSegment,
+  removeSegmentReflectionConstraint,
+  setReflectionConstraintForSegment,
+} from '../model/reflectionConstraints';
 import type { VisualDiagramModel, VisualElement } from '../model/types';
+import { DiagramButton, DiagramField, DiagramPanel } from './primitives';
 
 interface SegmentReflectionConstraintEditorProps {
   model: VisualDiagramModel;
@@ -14,12 +19,7 @@ export const SegmentReflectionConstraintEditor: React.FC<SegmentReflectionConstr
   segment,
   onModelEdit,
 }) => {
-  const activeReflectionConstraints = (model.constraints || []).filter(c => (
-    c.kind === 'reflection'
-    && c.enabled
-    && (c.refs.includes(segment.id) || segment.refs.some(ref => c.refs.includes(ref)))
-  ));
-
+  const existing = reflectionConstraintForSegment(model, segment.id);
   const candidates = editableReflectionCandidates(model, segment.id);
   const otherSegments = model.elements.filter(e => e.kind === 'segment' && e.id !== segment.id);
   const [selectedCenterOrAxis, setSelectedCenterOrAxis] = useState<string>(candidates[0]?.id || '');
@@ -38,23 +38,20 @@ export const SegmentReflectionConstraintEditor: React.FC<SegmentReflectionConstr
   };
 
   return (
-    <fieldset className="space-y-3 rounded border border-carbon/10 p-2">
-      <legend className="px-1 text-[10px] font-bold uppercase tracking-wider text-carbon/45">Reflejo simétrico de segmento</legend>
+    <DiagramPanel title="Reflejo simétrico de segmento">
 
-      {activeReflectionConstraints.length > 0 && (
+      {existing && (
         <div className="space-y-2 border-b border-carbon/10 pb-2">
-          {activeReflectionConstraints.map(constraint => (
-            <div key={constraint.id} className="flex items-center justify-between text-xs">
-              <span className="text-carbon/80">{constraint.label}</span>
-              <button
-                type="button"
-                className="text-[10px] font-bold text-granada hover:underline"
-                onClick={() => onModelEdit(removeConstraintFromModel(model, constraint.id))}
-              >
-                Eliminar
-              </button>
-            </div>
-          ))}
+          <div className="flex items-center justify-between text-xs">
+            <span className="text-carbon/80">{existing.label}</span>
+            <DiagramButton
+              variant="ghost"
+              aria-label={`Eliminar ${existing.label}`}
+              onClick={() => onModelEdit(removeSegmentReflectionConstraint(model, segment.id))}
+            >
+              Eliminar
+            </DiagramButton>
+          </div>
         </div>
       )}
 
@@ -64,11 +61,9 @@ export const SegmentReflectionConstraintEditor: React.FC<SegmentReflectionConstr
         </p>
       ) : (
         <div className="space-y-2">
-          <label className="block text-[10px] font-bold text-carbon/60">
-            Centro o eje de simetría (respecto a qué)
+          <DiagramField label="Centro o eje de simetría (respecto a qué)">
             <select
               aria-label={`Centro o eje de simetría para ${segment.label}`}
-              className="mt-1 w-full rounded border border-carbon/15 bg-lienzo p-1.5 text-xs"
               value={selectedCenterOrAxis || candidates[0]?.id || ''}
               onChange={e => setSelectedCenterOrAxis(e.target.value)}
             >
@@ -78,14 +73,12 @@ export const SegmentReflectionConstraintEditor: React.FC<SegmentReflectionConstr
                 </option>
               ))}
             </select>
-          </label>
+          </DiagramField>
 
           {otherSegments.length > 0 && (
-            <label className="block text-[10px] font-bold text-carbon/60">
-              Segmento de origen (de qué segmento es reflejo)
+            <DiagramField label="Segmento de origen (de qué segmento es reflejo)">
               <select
                 aria-label={`Segmento de origen para ${segment.label}`}
-                className="mt-1 w-full rounded border border-carbon/15 bg-lienzo p-1.5 text-xs"
                 value={selectedSourceSegment}
                 onChange={e => setSelectedSourceSegment(e.target.value)}
               >
@@ -96,19 +89,15 @@ export const SegmentReflectionConstraintEditor: React.FC<SegmentReflectionConstr
                   </option>
                 ))}
               </select>
-            </label>
+            </DiagramField>
           )}
 
-          <button
-            type="button"
-            className="w-full rounded bg-pavo px-3 py-1.5 text-xs font-bold text-lienzo hover:bg-pavo/90"
-            onClick={handleAddSegmentReflection}
-          >
+          <DiagramButton variant="primary" fullWidth onClick={handleAddSegmentReflection}>
             Establecer reflejo simétrico
-          </button>
+          </DiagramButton>
         </div>
       )}
-    </fieldset>
+    </DiagramPanel>
   );
 };
 export default SegmentReflectionConstraintEditor;

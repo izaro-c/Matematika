@@ -8,6 +8,7 @@ interface DiagramStatusBarProps {
   isDirty: boolean;
   saveCapability?: DiagramSaveCapability;
   onSave: () => void;
+  variant?: 'footer' | 'inline';
 }
 
 export const DiagramStatusBar: React.FC<DiagramStatusBarProps> = ({
@@ -15,6 +16,7 @@ export const DiagramStatusBar: React.FC<DiagramStatusBarProps> = ({
   isDirty,
   saveCapability,
   onSave,
+  variant = 'footer',
 }) => {
   const presentation = buildDiagramAuthorityPresentation(status, isDirty);
   const getStatusConfig = (s: DiagramSyncStatus) => {
@@ -40,6 +42,45 @@ export const DiagramStatusBar: React.FC<DiagramStatusBarProps> = ({
 
   const config = getStatusConfig(status);
   const isSaveBlocked = saveCapability ? !saveCapability.allowed : status === 'saving' || status === 'invalid-source' || status === 'diverged';
+  const saveButton = (
+    <button
+      type="button"
+      onClick={onSave}
+      disabled={isSaveBlocked}
+      className={`min-h-9 rounded px-3 text-[11px] font-bold transition-all ${
+        isSaveBlocked
+          ? 'bg-carbon/10 text-carbon/35 cursor-not-allowed'
+          : 'bg-carbon text-lienzo hover:bg-carbon/80 cursor-pointer'
+      }`}
+      title={isSaveBlocked ? saveCapability?.reason ?? presentation.description : 'Guardar el TSX del diagrama'}
+      aria-label="Guardar diagrama"
+    >
+      {variant === 'inline' ? 'Guardar' : 'Guardar diagrama'}
+    </button>
+  );
+
+  if (variant === 'inline') {
+    return (
+      <div
+        className="flex shrink-0 items-center gap-2 rounded border border-carbon/15 bg-lienzo px-2 py-1"
+        role={presentation.level === 'error' ? 'alert' : 'status'}
+        aria-live={presentation.level === 'error' ? 'assertive' : 'polite'}
+        title={presentation.description}
+      >
+        <span className="sr-only">sync:{status}</span>
+        <span className={`inline-block h-2 w-2 shrink-0 rounded-full ${config.color.split(' ')[0]}`} />
+        <span className={`hidden max-w-40 truncate text-[10px] font-bold uppercase tracking-wider xl:inline ${config.textClass}`}>
+          {config.label}
+        </span>
+        {isDirty && (
+          <span className="hidden text-[9px] font-mono italic text-carbon/40 2xl:inline" aria-hidden>
+            ·
+          </span>
+        )}
+        {saveButton}
+      </div>
+    );
+  }
 
   return (
     <div
@@ -49,8 +90,8 @@ export const DiagramStatusBar: React.FC<DiagramStatusBarProps> = ({
     >
       <div className="min-w-0 flex-1">
         <div className="flex min-w-0 items-center gap-2">
-        <span className={`inline-block h-2 w-2 rounded-full ${config.color.split(' ')[0]}`} />
-        <span className={`truncate font-bold uppercase tracking-wider text-[10px] ${config.textClass}`}>{config.label}</span>
+          <span className={`inline-block h-2 w-2 rounded-full ${config.color.split(' ')[0]}`} />
+          <span className={`truncate font-bold uppercase tracking-wider text-[10px] ${config.textClass}`}>{config.label}</span>
           <span className="hidden text-[10px] font-bold uppercase tracking-wider text-carbon/45 lg:inline">{presentation.title}</span>
           <span className="hidden rounded bg-carbon/10 px-1.5 py-0.5 font-mono text-[9px] font-semibold text-carbon lowercase sm:inline" title="Estado técnico de sincronización">
             sync:{status}
@@ -63,19 +104,7 @@ export const DiagramStatusBar: React.FC<DiagramStatusBarProps> = ({
         {isDirty && (
           <span className="hidden font-mono text-[10px] italic text-carbon/40 xl:inline">Cambios locales sin guardar</span>
         )}
-        <button
-          type="button"
-          onClick={onSave}
-          disabled={isSaveBlocked}
-          className={`min-h-11 rounded px-4 text-xs font-bold transition-all ${
-            isSaveBlocked
-              ? 'bg-carbon/10 text-carbon/35 cursor-not-allowed'
-              : 'bg-carbon text-lienzo hover:bg-carbon/80 cursor-pointer'
-          }`}
-          title={isSaveBlocked ? saveCapability?.reason ?? presentation.description : 'Guardar el TSX del diagrama'}
-        >
-          Guardar diagrama
-        </button>
+        {saveButton}
       </div>
     </div>
   );

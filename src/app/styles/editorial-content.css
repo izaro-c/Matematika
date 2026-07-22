@@ -138,14 +138,18 @@
   font-weight: 700 !important;
 }
 
+[data-diagram-renderer] {
+  --diagram-visual-transition: 0.25s;
+}
+
 .matematika-point-label {
   transform-origin: center;
   transition:
-    color var(--transition-fast) var(--ease-interactive),
-    fill var(--transition-fast) var(--ease-interactive),
-    opacity var(--transition-fast) var(--ease-interactive),
-    transform var(--transition-fast) var(--ease-interactive),
-    text-shadow var(--transition-fast) var(--ease-interactive);
+    color var(--diagram-visual-transition) var(--ease-interactive),
+    fill var(--diagram-visual-transition) var(--ease-interactive),
+    opacity var(--diagram-visual-transition) var(--ease-interactive),
+    transform var(--diagram-visual-transition) var(--ease-interactive),
+    text-shadow var(--diagram-visual-transition) var(--ease-interactive);
 }
 
 .matematika-point-label--highlight {
@@ -156,12 +160,21 @@
 }
 
 [data-diagram-renderer] [data-diagram-object-id],
-[data-diagram-renderer] [data-diagram-label-for] {
+[data-diagram-renderer] [data-diagram-label-for],
+[data-diagram-renderer] [data-diagram-part-of] {
   transition:
-    color var(--transition-fast) var(--ease-interactive),
-    fill var(--transition-fast) var(--ease-interactive),
-    stroke var(--transition-fast) var(--ease-interactive),
-    opacity var(--transition-fast) var(--ease-interactive);
+    color var(--diagram-visual-transition) var(--ease-interactive),
+    fill var(--diagram-visual-transition) var(--ease-interactive),
+    stroke var(--diagram-visual-transition) var(--ease-interactive),
+    stroke-width var(--diagram-visual-transition) var(--ease-interactive),
+    stroke-opacity var(--diagram-visual-transition) var(--ease-interactive),
+    fill-opacity var(--diagram-visual-transition) var(--ease-interactive),
+    opacity var(--diagram-visual-transition) var(--ease-interactive),
+    r var(--diagram-visual-transition) var(--ease-interactive),
+    rx var(--diagram-visual-transition) var(--ease-interactive),
+    ry var(--diagram-visual-transition) var(--ease-interactive),
+    width var(--diagram-visual-transition) var(--ease-interactive),
+    height var(--diagram-visual-transition) var(--ease-interactive);
 }
 
 /* Conserva el estilo editorial existente; solo limita la caja al espacio

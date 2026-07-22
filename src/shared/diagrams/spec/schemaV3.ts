@@ -157,7 +157,29 @@ const relation = z.discriminatedUnion('type', [
 const layer = z.object({ id, label: z.string().min(1), order: z.number().int(), visible: z.boolean(), locked: z.boolean() }).strict();
 const group = z.object({ id, label: z.string().min(1), memberIds: z.array(id), visible: z.boolean(), locked: z.boolean(), selection, target: z.boolean().optional(), targetId: id.optional(), color: color.optional() }).strict();
 const overlay = z.object({ visible: z.boolean(), title: z.string(), content: z.string(), expression: expression.optional(), unit: z.string().max(32).optional(), precision: z.number().int().min(0).max(12).optional(), position: z.enum(['top-left', 'top-right', 'bottom-left', 'bottom-right']).optional() }).strict();
-const objectState = z.object({ visible: z.boolean().optional(), emphasis: z.enum(['none', 'secondary', 'primary']).optional(), emphasisColor: color.optional(), label: z.string().optional(), overlay: overlay.optional(), interactive: z.boolean().optional(), value: number.optional() }).strict();
+const stepVisualStyle = z.object({
+  strokeWidth: number.min(0).max(20).optional(),
+  strokeOpacity: number.min(0).max(1).optional(),
+  fillOpacity: number.min(0).max(1).optional(),
+  pointSize: number.min(0).max(30).optional(),
+  labelSize: number.min(6).max(72).optional(),
+  labelOffset: z.tuple([number, number]).optional(),
+  angleRadius: number.positive().max(10).optional(),
+  markHeight: number.positive().max(100).optional(),
+}).strict();
+const objectState = z.object({
+  visible: z.boolean().optional(),
+  emphasis: z.enum(['none', 'secondary', 'primary']).optional(),
+  emphasisColor: color.optional(),
+  color: color.optional(),
+  label: z.string().optional(),
+  showLabel: z.boolean().optional(),
+  dashed: z.boolean().optional(),
+  style: stepVisualStyle.optional(),
+  overlay: overlay.optional(),
+  interactive: z.boolean().optional(),
+  value: number.optional(),
+}).strict();
 const step = z.object({ id, label: z.string().min(1), description: z.string(), visibleTargets: z.array(id), durationMs: z.number().int().min(0).optional(), objectStates: z.record(id, objectState).optional() }).strict();
 
 function addIssue(context: z.RefinementCtx, path: PropertyKey[], message: string): void {

@@ -5,7 +5,7 @@ import { MathProvider } from '@/shared/lib/MathStoreContext';
 import { ProofStep } from '@/widgets/content/ProofStep';
 import { CodexLayout } from '@/widgets/layouts/CodexLayout';
 import type { DiagramStep } from '@/shared/diagrams/spec';
-import { createTemplateModel } from '@/features/editor/diagrams/model/commands';
+import { createTemplateModel } from '@/features/editor/diagrams/model';
 
 vi.mock('@/shared/diagrams/core/MathBoard', () => ({
   MathBoard: ({ children }: { children?: React.ReactNode }) => <div data-testid="math-board">{children}</div>,
