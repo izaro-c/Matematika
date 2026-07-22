@@ -186,14 +186,19 @@ export function validateProjectedMetadata(
     return { valid: false, diagnostics };
   }
 
+  const LEAN_FIELDS = new Set(['leanId', 'leanCommitSha', 'leanVerified', 'verificationStatus', 'foundation', 'sources', 'stepTacticMap']);
+
   const parsed = schema.safeParse(value);
   if (!parsed.success) {
     for (const issue of parsed.error.issues) {
-      diagnostics.push(diagnostic(
-        `METADATA_SCHEMA_${issue.path.join('_').toUpperCase() || 'ROOT'}`,
-        `${issue.path.join('.') || 'metadata'}: ${issue.message}`,
-        objectRange,
-      ));
+      const isLean = issue.path.some(p => LEAN_FIELDS.has(String(p)));
+      diagnostics.push({
+        code: `METADATA_SCHEMA_${issue.path.join('_').toUpperCase() || 'ROOT'}`,
+        severity: isLean ? 'warning' : 'error',
+        message: `${issue.path.join('.') || 'metadata'}: ${issue.message}`,
+        sourceRange: objectRange,
+        panel: 'metadata',
+      });
     }
   }
   for (const key of REFERENCE_FIELDS) {
@@ -202,15 +207,18 @@ export function validateProjectedMetadata(
     const references = Array.isArray(raw) ? raw : [raw];
     for (const reference of references) {
       if (typeof reference !== 'string' || !CONTENT_ID_RE.test(reference)) {
-        diagnostics.push(diagnostic(
-          `METADATA_REFERENCE_${key.toUpperCase()}`,
-          `${key} contiene una referencia que no usa un ID kebab-case válido.`,
-          objectRange,
-        ));
+        diagnostics.push({
+          code: `METADATA_REFERENCE_${key.toUpperCase()}`,
+          severity: 'warning',
+          message: `${key} contiene una referencia que aún no usa un ID resuelto o kebab-case.`,
+          sourceRange: objectRange,
+          panel: 'metadata',
+        });
       }
     }
   }
-  return { valid: diagnostics.length === 0, schemaName: type, diagnostics };
+  const hasErrors = diagnostics.some(d => d.severity === 'error' || d.severity === 'critical');
+  return { valid: !hasErrors, schemaName: type, diagnostics };
 }
 
 export function projectMetadata(esmNodes: EstreeNode[]): {

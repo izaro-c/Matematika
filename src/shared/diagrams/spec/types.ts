@@ -152,6 +152,7 @@ export type DiagramConstraintKind =
   | 'parallel'
   | 'insideDisk'
   | 'sameSide'
+  | 'reflection'
   | 'expression';
 
 export interface DiagramConstraint {

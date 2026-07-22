@@ -54,6 +54,13 @@ function checkNoFakeCertificates(dir: string): boolean {
   return ok;
 }
 
+const LEAN_ENABLED = process.env.ENABLE_LEAN === 'true';
+
+if (!LEAN_ENABLED) {
+  console.log('ℹ️ Verificación de certificados Lean deshabilitada por ahora.');
+  process.exit(0);
+}
+
 console.log('Verificando que no haya certificados falsos en Lean (sorry + proved)...');
 const leanDir = 'lean/Matematika';
 

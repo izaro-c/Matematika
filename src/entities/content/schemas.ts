@@ -120,6 +120,7 @@ export const DemoSchema = z.object({
   layout: z.enum(['split', 'text']).optional(),
   dependencias: z.array(z.string()).optional(),
   stepTacticMap: z.record(z.string(), z.array(z.string())).optional(),
+  initialStep: z.union([z.string(), z.number()]).optional(),
   ...LeanMetadataSchema,
 });
 

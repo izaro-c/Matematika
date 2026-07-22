@@ -358,6 +358,7 @@ function relationFromConstraint(constraint: DiagramConstraint, spec: DiagramSpec
     case 'parallel': return { ...base, type: 'parallel', supports: [[constraint.refs[0], constraint.refs[1]], [constraint.refs[0], constraint.refs[2]]] };
     case 'insideDisk': return { ...base, type: 'inside-disk', point: constraint.refs[0], disk: { center: constraint.refs[1], boundary: constraint.refs[2] } };
     case 'sameSide': return { ...base, type: 'same-half-plane', points: [constraint.refs[0], constraint.refs[1]], boundary: constraint.refs[2] };
+    case 'reflection': return { ...base, type: 'reflection', refs: [...constraint.refs] };
     case 'expression': return { ...base, type: 'expression', refs: [...constraint.refs], expression: constraint.expression ?? '0', ...(constraint.value !== undefined ? { value: constraint.value } : {}) };
   }
 }
@@ -807,6 +808,7 @@ function relationToConstraint(relation: DiagramRelation, objects: readonly Diagr
       return { ...base, kind: 'insideDisk', refs };
     }
     case 'same-half-plane': return { ...base, kind: 'sameSide', refs: [...relation.points, relation.boundary] };
+    case 'reflection': return { ...base, kind: 'reflection', refs: [...(relation.refs ?? [])] };
     case 'expression': return { ...base, kind: 'expression', refs: [...relation.refs], expression: relation.expression, ...(relation.value !== undefined ? { value: relation.value } : {}) };
   }
 }

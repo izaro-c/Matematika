@@ -41,6 +41,8 @@ export const CodexLayout: React.FC<CodexLayoutProps> = ({
   const [location] = useLocation();
   const rootRef = useRef<HTMLDivElement>(null);
   const [activeDiagramStepIndex, setActiveDiagramStepIndex] = useState<number | null>(null);
+  const [activeDiagramStepId, setActiveDiagramStepId] = useState<string | null>(null);
+  const activeStepIndexRef = useRef<number | null>(-1);
 
   const hasDiagram = !!diagram;
 
@@ -58,9 +60,24 @@ export const CodexLayout: React.FC<CodexLayoutProps> = ({
     [],
   );
 
-  const syncProofStepState = useCallback((step: HTMLElement) => {
+  const syncProofStepState = useCallback((step: HTMLElement | null) => {
+    if (!step) {
+      setActiveDiagramStepIndex(null);
+      setActiveDiagramStepId('initial');
+      setVariable('step', 'initial');
+      setVariable('activeJustifications', []);
+      return;
+    }
+
     const targetValue = step.dataset.target;
     const justificationsValue = step.dataset.justifications;
+    const diagramStepValue = step.dataset.diagramStep;
+
+    if (diagramStepValue) {
+      setActiveDiagramStepId(diagramStepValue);
+    } else {
+      setActiveDiagramStepId(null);
+    }
 
     if (targetValue) {
       try {
@@ -79,44 +96,75 @@ export const CodexLayout: React.FC<CodexLayoutProps> = ({
     }
   }, [setVariable]);
 
-  const selectDiagramStep = useCallback((stepIndex: number) => {
-    const step = proofSteps()[stepIndex];
-    setActiveDiagramStepIndex(stepIndex);
-    if (!step) return;
-
-    syncProofStepState(step);
-  }, [proofSteps, syncProofStepState]);
+  const selectDiagramStep = useCallback((stepInput: number | string) => {
+    const steps = proofSteps();
+    if (typeof stepInput === 'number') {
+      setActiveDiagramStepIndex(stepInput);
+      activeStepIndexRef.current = stepInput;
+      const step = steps[stepInput];
+      if (step) {
+        syncProofStepState(step);
+      } else if (stepInput === 0 || stepInput === -1) {
+        syncProofStepState(null);
+      }
+    } else {
+      setActiveDiagramStepId(stepInput);
+      const matchingIndex = steps.findIndex(s => s.dataset.diagramStep === stepInput);
+      if (matchingIndex >= 0) {
+        setActiveDiagramStepIndex(matchingIndex);
+        activeStepIndexRef.current = matchingIndex;
+        syncProofStepState(steps[matchingIndex]);
+      } else {
+        setVariable('step', stepInput);
+      }
+    }
+  }, [proofSteps, syncProofStepState, setVariable]);
 
   const diagramStepSyncValue = useMemo(() => ({
     activeStepIndex: activeDiagramStepIndex,
+    activeStepId: activeDiagramStepId,
     selectDiagramStep,
-  }), [activeDiagramStepIndex, selectDiagramStep]);
+  }), [activeDiagramStepIndex, activeDiagramStepId, selectDiagramStep]);
 
   // Scrollytelling: el scroll desplaza el texto libremente.
   // El diagrama refleja el paso activo con una transición ligera al cambiar.
   //
   // Algoritmo de umbral de entrada:
-  // - Al montar: activar el primer paso de esta sección si ninguno está activo aún.
+  // - En el enunciado (arriba del primer .proof-step): muestra la figura inicial ('initial').
   // - En scroll: un paso se activa cuando su borde SUPERIOR cruza el umbral (35% del viewport).
-  //   El activo es el ÚLTIMO que lo ha cruzado. Solo se opera si algún paso ha cruzado el umbral;
-  //   si ninguno lo ha cruzado, esta sección no interfiere con la sección activa.
+  //   El activo es el ÚLTIMO que lo ha cruzado.
   useEffect(() => {
     const activate = (index: number, steps: HTMLElement[]) => {
-      const currentActiveIndex = steps.findIndex(s => s.classList.contains('is-active'));
-      if (index !== currentActiveIndex) {
+      if (index === -1) {
+        if (activeStepIndexRef.current !== -1) {
+          activeStepIndexRef.current = -1;
+          setActiveDiagramStepIndex(null);
+          syncProofStepState(null);
+        }
+        return;
+      }
+
+      if (index !== activeStepIndexRef.current) {
+        activeStepIndexRef.current = index;
         setActiveDiagramStepIndex(index);
         syncProofStepState(steps[index]);
       }
     };
 
-    // Inicialización: en el primer frame de pintura, activar el paso 0 de esta sección
-    // si aún no hay ningún paso activo en el documento. Esto garantiza que la primera
-    // sección visible siempre muestra su estado inicial.
+    // Inicialización en el primer frame de pintura
     const initRafId = requestAnimationFrame(() => {
       const steps = proofSteps();
       if (steps.length === 0) return;
-      const anyActive = document.querySelector('.proof-step.is-active');
-      if (!anyActive) {
+      const firstStepTop = steps[0]?.getBoundingClientRect().top ?? 0;
+      const isMobile = window.innerWidth < 1024;
+      const activationLine = isMobile && hasDiagram && isDiagramExpanded
+        ? window.innerHeight * 0.46
+        : window.innerHeight * 0.35;
+
+      if (firstStepTop > activationLine) {
+        // Scroll está en el enunciado
+        activate(-1, steps);
+      } else {
         activate(0, steps);
       }
     });
@@ -132,10 +180,6 @@ export const CodexLayout: React.FC<CodexLayoutProps> = ({
       const steps = proofSteps();
       if (steps.length === 0) return;
 
-      // Línea de activación:
-      // En móvil con diagrama, el área de texto empieza por debajo del diagrama fijo (~46% viewport).
-      // En escritorio, el 35% desde arriba: el paso anterior se ha leído en su mayoría cuando
-      // el siguiente encabezado alcanza esa posición.
       const isMobile = window.innerWidth < 1024;
       const activationLine = isMobile && hasDiagram && isDiagramExpanded
         ? window.innerHeight * 0.46
@@ -161,10 +205,6 @@ export const CodexLayout: React.FC<CodexLayoutProps> = ({
           activeIndex = index;
         }
       });
-
-      // Si ningún paso de esta sección ha cruzado el umbral, no interferir.
-      // (Evita que la segunda sección active su paso 0 nada más entrar en pantalla.)
-      if (activeIndex === -1) return;
 
       activate(activeIndex, steps);
     };

@@ -174,7 +174,7 @@ const elementSchema = z.object({
 const constraintSchema = z.object({
   id: idSchema,
   label: z.string().min(1),
-  kind: z.enum(['fixed', 'horizontal', 'vertical', 'coincident', 'on', 'distance', 'equalLength', 'equalAngle', 'midpoint', 'perpendicular', 'parallel', 'insideDisk', 'sameSide', 'expression']),
+  kind: z.enum(['fixed', 'horizontal', 'vertical', 'coincident', 'on', 'distance', 'equalLength', 'equalAngle', 'midpoint', 'perpendicular', 'parallel', 'insideDisk', 'sameSide', 'reflection', 'expression']),
   refs: z.array(idSchema),
   expression: expressionSchema.optional(),
   value: finiteNumber.optional(),
@@ -409,8 +409,11 @@ export const diagramSpecV2Schema = z.object({
       }
     }
     if (element.kind === 'congruenceMark' || element.kind === 'parallelMark') {
-      const pointIds = new Set(spec.points.map(point => point.id));
-      if (element.refs.length !== 2 || element.refs.some(ref => !pointIds.has(ref))) {
+      const pointLikeIds = new Set([
+        ...spec.points.map(point => point.id),
+        ...spec.elements.filter(item => ['intersection', 'midpoint', 'perpendicularFoot'].includes(item.kind)).map(item => item.id),
+      ]);
+      if (element.refs.length !== 2 || element.refs.some(ref => !pointLikeIds.has(ref))) {
         context.addIssue({
           code: 'custom',
           message: `${element.id} necesita exactamente dos puntos como extremos de la marca.`,

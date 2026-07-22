@@ -119,6 +119,7 @@ describe('catálogo seguro del editor', () => {
       'widgets/diagrams/Definiciones/Segmento.tsx',
       'widgets/diagrams/Definiciones/Semirrecta.tsx',
       'widgets/diagrams/Definiciones/Triangulo.tsx',
+      'widgets/diagrams/Demos/DemoAnguloExterno.tsx',
       'widgets/diagrams/Demos/DemoAngulosOpuestos.tsx',
       'widgets/diagrams/Demos/DemoAreaAditividad.tsx',
       'widgets/diagrams/Demos/DemoAreaRectangulo_Conmensurable.tsx',
@@ -142,7 +143,7 @@ describe('catálogo seguro del editor', () => {
       'widgets/diagrams/Teoremas/Tales.tsx',
       'widgets/diagrams/Teoremas/TrianguloIsosceles.tsx',
     ]);
-    expect(diagrams.filter(item => item.capability === 'code-preview')).toHaveLength(29);
+    expect(diagrams.filter(item => item.capability === 'code-preview')).toHaveLength(28);
     expect(editable.some(item => ['MathBoard.tsx', 'MathFactory.ts', 'MathUtils.ts', 'InteractiveGeometryCanvas.tsx'].includes(item.name))).toBe(false);
   });
 });

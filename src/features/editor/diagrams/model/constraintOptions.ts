@@ -19,6 +19,7 @@ export const CONSTRAINT_OPTIONS: Array<ConstraintPresentation & { value: VisualC
   { value: 'parallel', label: 'Sobre una paralela', description: 'Se mueve sobre una paralela a una dirección dada.', refs: 3 },
   { value: 'insideDisk', label: 'Dentro de un disco', description: 'No puede salir del disco definido por centro y borde.', refs: 3 },
   { value: 'sameSide', label: 'En el mismo semiplano', description: 'No puede cruzar la recta definida por dos puntos.', refs: 3 },
+  { value: 'reflection', label: 'Reflejo simétrico', description: 'Posiciona un punto o segmento como reflejo respecto de un centro (punto) o eje (recta/segmento).', refs: 2 },
 ];
 
 const SUPPORT_KINDS = new Set(['segment', 'line', 'ray', 'circle', 'arc', 'functionCurve', 'parametricCurve', 'perpendicular', 'parallel', 'angleBisector']);
@@ -47,6 +48,13 @@ export function defaultConstraintRefs(model: VisualDiagramModel, kind: VisualCon
   if (kind === 'on') {
     const support = model.elements.find(item => SUPPORT_KINDS.has(item.kind));
     return support ? [targetId, support.id] : [targetId];
+  }
+  if (kind === 'reflection') {
+    const centerOrAxis = model.points.find(item => item.id !== targetId)
+      ?? model.elements.find(item => ['segment', 'line', 'ray', 'midpoint', 'intersection'].includes(item.kind) && item.id !== targetId);
+    if (!centerOrAxis) return [targetId];
+    const sourcePoint = model.points.find(item => item.id !== targetId && item.id !== centerOrAxis.id);
+    return sourcePoint ? [targetId, centerOrAxis.id, sourcePoint.id] : [targetId, centerOrAxis.id];
   }
   if (kind === 'equalLength') {
     const targetSegment = model.elements.find(item => item.kind === 'segment' && item.refs.includes(targetId));

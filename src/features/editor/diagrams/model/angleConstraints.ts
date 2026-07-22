@@ -76,7 +76,7 @@ export function editableAngleEndpoints(model: VisualDiagramModel, angleId: strin
       point
       && !point.fixed
       && !point.locked
-      && ['free', 'constrained'].includes(point.constraint),
+      && ['free', 'glider', 'constrained'].includes(point.constraint),
     ));
 }
 

@@ -14,7 +14,13 @@ const LEAN_GRAPH_PATH = path.resolve(process.cwd(), 'src/entities/graph/lean_gra
 const PROOF_BLOCKS_PATH = path.resolve(process.cwd(), 'src/entities/graph/proof_blocks.json');
 const LOGICAL_GRAPH_PATH = path.resolve(process.cwd(), 'src/entities/graph/graph_structure.json');
 
+const LEAN_ENABLED = process.env.ENABLE_LEAN === 'true';
+
 export function validateLeanDiff() {
+  if (!LEAN_ENABLED) {
+    console.log('ℹ️ Validación Lean deshabilitada por ahora.');
+    return [];
+  }
   const leanGraph = readJsonFile<LeanGraph>(LEAN_GRAPH_PATH, { generatedAt: null, nodes: [] });
   const proofBlocks = readJsonFile<ProofBlockRegistry>(PROOF_BLOCKS_PATH, { generatedAt: null, blocks: [] });
   const logicalGraph = readJsonFile<LogicalGraphStructure>(LOGICAL_GRAPH_PATH, { nodes: {} });

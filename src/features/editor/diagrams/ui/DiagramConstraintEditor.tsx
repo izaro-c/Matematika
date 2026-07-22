@@ -3,11 +3,16 @@ import type { VisualConstraint, VisualDiagramModel, VisualPoint } from '../model
 import { updatePoint } from '../model/commands';
 import { CONSTRAINT_OPTIONS, constraintPresentation, defaultConstraintRefs, withConstraintDependencies } from '../model/constraintOptions';
 import { removeConstraintFromModel } from '../model/segmentLengthConstraints';
+import { withResolvedPointConstraints } from '../../../../shared/diagrams/spec/scene';
 import { DiagramExpressionField } from './DiagramExpressionField';
 
 function equalLengthReferenceCandidates(model: VisualDiagramModel, constraint: VisualConstraint, index: number) {
   if (index === 1) {
-    return model.points.filter(candidate => model.elements.some(element => (
+    const allPointLikes = [
+      ...model.points,
+      ...model.elements.filter(element => ['midpoint', 'intersection', 'perpendicularFoot'].includes(element.kind)),
+    ];
+    return allPointLikes.filter(candidate => model.elements.some(element => (
       element.kind === 'segment'
       && element.refs.includes(constraint.refs[0])
       && element.refs.includes(candidate.id)
@@ -20,6 +25,44 @@ function equalLengthReferenceCandidates(model: VisualDiagramModel, constraint: V
     && element.refs.includes(constraint.refs[1])
   ));
   return model.elements.filter(element => element.kind === 'segment' && element.id !== targetSegment?.id);
+}
+
+function getAddConstraintDisabledReason(model: VisualDiagramModel, kind: VisualConstraint['kind'], targetId: string): string | undefined {
+  const presentation = constraintPresentation(kind);
+  const refs = defaultConstraintRefs(model, kind, targetId);
+  if (refs.length >= presentation.refs) return undefined;
+
+  switch (kind) {
+    case 'equalLength': {
+      const targetSegment = model.elements.find(item => item.kind === 'segment' && item.refs.includes(targetId));
+      if (!targetSegment) return 'Este punto no forma parte de ningún segmento. Debe ser extremo de un segmento para igualar su longitud.';
+      const otherSegments = model.elements.filter(item => item.kind === 'segment' && item.id !== targetSegment.id);
+      if (otherSegments.length === 0) return 'No existe otro segmento en el diagrama para tomar como referencia de longitud.';
+      return 'Se requiere un segmento de referencia y un punto ancla para igualar la longitud.';
+    }
+    case 'equalAngle': {
+      const targetAngle = model.elements.find(item => (item.kind === 'angle' || item.kind === 'nonReflexAngle') && (item.refs[0] === targetId || item.refs[2] === targetId));
+      if (!targetAngle) return 'Este punto no es extremo del lado de ningún ángulo.';
+      return 'No hay otro ángulo del mismo tipo en la escena para copiar su amplitud.';
+    }
+    case 'on':
+      return 'No hay segmentos, rectas, semirrectas ni curvas en el diagrama sobre las que colocar este punto.';
+    case 'midpoint':
+      return 'Se necesitan al menos otros dos puntos para definir un punto medio.';
+    case 'perpendicular':
+    case 'parallel':
+      return 'Se necesitan otros dos puntos o una recta para definir la dirección de la referencia.';
+    case 'insideDisk':
+    case 'sameSide':
+      return 'Se necesitan más puntos en la escena para definir la región de esta restricción.';
+    case 'horizontal':
+    case 'vertical':
+    case 'coincident':
+    case 'distance':
+      return 'Se necesita al menos otro punto en la escena para relacionarlo con este punto.';
+    default:
+      return 'Se necesitan más objetos en el diagrama para establecer esta relación.';
+  }
 }
 
 function equalAngleReferenceCandidates(model: VisualDiagramModel, constraint: VisualConstraint, index: number) {
@@ -50,6 +93,18 @@ function referenceCandidates(model: VisualDiagramModel, constraint: VisualConstr
   if (constraint.kind === 'midpoint') {
     return model.points.filter(candidate => !constraint.refs.slice(0, index).includes(candidate.id));
   }
+  if (constraint.kind === 'reflection') {
+    if (index === 1) {
+      const allCandidates = [
+        ...model.points,
+        ...model.elements.filter(element => ['segment', 'line', 'ray', 'midpoint', 'intersection', 'perpendicularFoot'].includes(element.kind)),
+      ];
+      return allCandidates.filter(candidate => candidate.id !== constraint.refs[0]);
+    }
+    if (index === 2) {
+      return model.points.filter(candidate => candidate.id !== constraint.refs[0] && candidate.id !== constraint.refs[1]);
+    }
+  }
   return [...model.points, ...model.elements];
 }
 
@@ -62,6 +117,9 @@ function referenceLabel(constraint: VisualConstraint, index: number): string {
   }
   if (constraint.kind === 'equalAngle') {
     return ['Extremo ajustado', 'Vértice', 'Punto del lado fijo', 'Ángulo de referencia', 'Ángulo ajustado'][index] ?? `Referencia ${index}`;
+  }
+  if (constraint.kind === 'reflection') {
+    return ['Punto ajustado (resultado)', 'Centro o eje de simetría (respecto a qué)', 'Objeto de origen (de qué objeto es reflejo)'][index] ?? `Referencia ${index}`;
   }
   return index === 0 ? 'Punto restringido' : `Referencia ${index}`;
 }
@@ -79,10 +137,11 @@ export const DiagramConstraintEditor: React.FC<DiagramConstraintEditorProps> = (
     const constraint = model.constraints?.find(item => item.id === constraintId);
     const dependencyRefs = constraint?.kind === 'equalAngle' ? refs.slice(0, 4) : refs;
     const next = withConstraintDependencies(model, constraintId, dependencyRefs);
-    onModelEdit({
+    const updatedModel = {
       ...next,
       constraints: model.constraints?.map(constraint => constraint.id === constraintId ? { ...constraint, refs } : constraint),
-    });
+    };
+    onModelEdit(withResolvedPointConstraints(updatedModel));
   };
 
   const changeKind = (constraint: VisualConstraint, kind: VisualConstraint['kind']) => {
@@ -91,7 +150,7 @@ export const DiagramConstraintEditor: React.FC<DiagramConstraintEditorProps> = (
     let expression: string | undefined;
     if (kind === 'expression') expression = constraint.expression ?? '1';
     else if (kind === 'distance') expression = constraint.expression;
-    onModelEdit({
+    const updatedModel = {
       ...next,
       constraints: model.constraints?.map(item => item.id === constraint.id ? {
         ...item,
@@ -101,7 +160,8 @@ export const DiagramConstraintEditor: React.FC<DiagramConstraintEditorProps> = (
         value: kind === 'distance' ? item.value ?? 1 : undefined,
         expression,
       } : item),
-    });
+    };
+    onModelEdit(withResolvedPointConstraints(updatedModel));
   };
 
   const changeReference = (constraint: VisualConstraint, index: number, value: string) => {
@@ -130,10 +190,11 @@ export const DiagramConstraintEditor: React.FC<DiagramConstraintEditorProps> = (
       ...next,
       constraints: [...(model.constraints || []), constraint],
     };
-    onModelEdit(updatePoint(nextWithConstraint, point.id, {
+    const updatedWithPoint = updatePoint(nextWithConstraint, point.id, {
       constraint: 'constrained',
       constraintIds: [...(point.constraintIds || []), id],
-    }));
+    });
+    onModelEdit(withResolvedPointConstraints(updatedWithPoint));
   };
 
   const deleteConstraint = (constraintId: string) => {
@@ -143,7 +204,6 @@ export const DiagramConstraintEditor: React.FC<DiagramConstraintEditorProps> = (
   const assignedConstraints = (point.constraintIds || [])
     .map(id => model.constraints?.find(item => item.id === id))
     .filter((constraint): constraint is VisualConstraint => Boolean(constraint));
-  const defaultRefs = defaultConstraintRefs(model, newKind, point.id);
 
   const constraintOptions = (
     <>
@@ -156,11 +216,13 @@ export const DiagramConstraintEditor: React.FC<DiagramConstraintEditorProps> = (
       <optgroup label="Dirección y región">
         {CONSTRAINT_OPTIONS.filter(option => ['perpendicular', 'parallel', 'insideDisk', 'sameSide'].includes(option.value)).map(option => <option key={option.value} value={option.value}>{option.label}</option>)}
       </optgroup>
-      <optgroup label="Congruencia">
-        {CONSTRAINT_OPTIONS.filter(option => option.value === 'equalLength').map(option => <option key={option.value} value={option.value}>{option.label}</option>)}
+      <optgroup label="Congruencia y Simetría">
+        {CONSTRAINT_OPTIONS.filter(option => ['equalLength', 'reflection'].includes(option.value)).map(option => <option key={option.value} value={option.value}>{option.label}</option>)}
       </optgroup>
     </>
   );
+
+  const addDisabledReason = getAddConstraintDisabledReason(model, newKind, point.id);
 
   return (
     <section className="border-t border-carbon/10 pt-4" aria-label="Relaciones geométricas del punto">
@@ -187,18 +249,54 @@ export const DiagramConstraintEditor: React.FC<DiagramConstraintEditorProps> = (
                 {constraint.kind === 'equalAngle' && <option value="equalAngle">Misma amplitud que otro ángulo</option>}
                 {constraint.kind === 'expression' && <option value="expression">Relación por expresión</option>}
               </select></label>
-              {constraint.refs.slice(1).map((ref, relativeIndex) => {
-                const index = relativeIndex + 1;
-                const candidates = referenceCandidates(model, constraint, index);
-                return (
-                  <label key={`${constraint.id}-ref-${index}`} className="block text-[10px] font-bold text-carbon/60">
-                    {referenceLabel(constraint, index)}
-                    <select aria-label={`Referencia ${index + 1} de ${constraint.id}`} className="mt-1 min-h-10 w-full rounded border border-carbon/15 bg-lienzo px-2 text-xs" value={ref} onChange={event => changeReference(constraint, index, event.target.value)}>
-                      {candidates.map(item => <option key={item.id} value={item.id}>{item.label} ({item.id})</option>)}
+              {constraint.kind === 'reflection' ? (
+                <>
+                  <label key={`${constraint.id}-ref-1`} className="block text-[10px] font-bold text-carbon/60">
+                    Centro o eje de simetría (respecto a qué)
+                    <select
+                      aria-label={`Centro o eje de simetría de ${constraint.id}`}
+                      className="mt-1 min-h-10 w-full rounded border border-carbon/15 bg-lienzo px-2 text-xs"
+                      value={constraint.refs[1] || ''}
+                      onChange={event => changeReference(constraint, 1, event.target.value)}
+                    >
+                      {referenceCandidates(model, constraint, 1).map(item => (
+                        <option key={item.id} value={item.id}>{item.label} ({item.id})</option>
+                      ))}
                     </select>
                   </label>
-                );
-              })}
+                  <label key={`${constraint.id}-ref-2`} className="block text-[10px] font-bold text-carbon/60">
+                    Objeto de origen (de qué objeto es reflejo)
+                    <select
+                      aria-label={`Objeto de origen de ${constraint.id}`}
+                      className="mt-1 min-h-10 w-full rounded border border-carbon/15 bg-lienzo px-2 text-xs"
+                      value={constraint.refs[2] || ''}
+                      onChange={event => {
+                        const val = event.target.value;
+                        if (!val) changeRefs(constraint.id, [constraint.refs[0], constraint.refs[1]]);
+                        else changeRefs(constraint.id, [constraint.refs[0], constraint.refs[1], val]);
+                      }}
+                    >
+                      <option value="">Posición base de {point.label} ({point.id})</option>
+                      {referenceCandidates(model, constraint, 2).map(item => (
+                        <option key={item.id} value={item.id}>{item.label} ({item.id})</option>
+                      ))}
+                    </select>
+                  </label>
+                </>
+              ) : (
+                constraint.refs.slice(1).map((ref, relativeIndex) => {
+                  const index = relativeIndex + 1;
+                  const candidates = referenceCandidates(model, constraint, index);
+                  return (
+                    <label key={`${constraint.id}-ref-${index}`} className="block text-[10px] font-bold text-carbon/60">
+                      {referenceLabel(constraint, index)}
+                      <select aria-label={`Referencia ${index + 1} de ${constraint.id}`} className="mt-1 min-h-10 w-full rounded border border-carbon/15 bg-lienzo px-2 text-xs" value={ref} onChange={event => changeReference(constraint, index, event.target.value)}>
+                        {candidates.map(item => <option key={item.id} value={item.id}>{item.label} ({item.id})</option>)}
+                      </select>
+                    </label>
+                  );
+                })
+              )}
               {constraint.kind === 'distance' && (
                 <label className="block text-[10px] font-bold text-carbon/60">Distancia
                   <input type="number" min="0" step="0.1" aria-label={`Distancia de ${constraint.id}`} className="mt-1 min-h-10 w-full rounded border border-carbon/15 bg-lienzo px-2 text-xs" value={constraint.value ?? 1} onChange={event => onModelEdit({ ...model, constraints: model.constraints?.map(item => item.id === constraint.id ? { ...item, value: Number(event.target.value), expression: undefined } : item) })} />
@@ -218,7 +316,12 @@ export const DiagramConstraintEditor: React.FC<DiagramConstraintEditorProps> = (
           </select>
         </label>
         <p className="mt-1 text-[10px] leading-relaxed text-carbon/50">{constraintPresentation(newKind).description}</p>
-        <button type="button" disabled={defaultRefs.length < constraintPresentation(newKind).refs} className="mt-3 min-h-11 w-full rounded bg-pavo px-3 text-xs font-bold text-lienzo disabled:cursor-not-allowed disabled:opacity-35" onClick={addConstraint}>Añadir relación</button>
+        {addDisabledReason && (
+          <p className="mt-2 rounded bg-ocre/10 p-2 text-[10px] font-medium leading-relaxed text-ocre">
+            {addDisabledReason}
+          </p>
+        )}
+        <button type="button" disabled={Boolean(addDisabledReason)} className="mt-3 min-h-11 w-full rounded bg-pavo px-3 text-xs font-bold text-lienzo disabled:cursor-not-allowed disabled:opacity-35" onClick={addConstraint}>Añadir relación</button>
       </div>
     </section>
   );

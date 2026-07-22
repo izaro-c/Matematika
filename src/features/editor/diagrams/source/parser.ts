@@ -90,14 +90,19 @@ export function classifyEmbeddedDiagramSource(source: string, _metadataType = ''
   return {
     status: 'code-preview',
     previewModel: editorModel,
-    diagnostics: [{
-      code: migrated.migratedFrom === null ? 'embedded-spec-not-lossless' : 'embedded-spec-migrated',
-      severity: 'warning',
-      message: migrated.migratedFrom === null
-        ? 'La especificación embebida no regenera el TSX byte por byte. El código manual conserva la autoridad.'
-        : migrated.warnings.join(' '),
-      source: 'synchronization',
-    }],
+    diagnostics: migrated.migratedFrom === null
+      ? [{
+          code: 'embedded-spec-not-lossless',
+          severity: 'warning',
+          message: 'La especificación embebida no regenera el TSX byte por byte. El código manual conserva la autoridad.',
+          source: 'synchronization',
+        }]
+      : migrated.warnings.map((warningMessage, index) => ({
+          code: `embedded-spec-migrated-${index}`,
+          severity: 'warning',
+          message: warningMessage,
+          source: 'synchronization',
+        })),
   };
 }
 

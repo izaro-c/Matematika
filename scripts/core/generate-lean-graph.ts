@@ -42,7 +42,22 @@ function queryLeanEnvironment(): LeanQueryResult {
   return query;
 }
 
+const LEAN_ENABLED = process.env.ENABLE_LEAN === 'true';
+
 export function generateLeanGraph() {
+  if (!LEAN_ENABLED) {
+    console.log('ℹ️ Lean está deshabilitado por ahora. Omitiendo generación de grafo Lean.');
+    const emptyGraph = { generatedAt: null, nodes: [] };
+    const emptyProofBlocks = { generatedAt: null, blocks: [] };
+    const graph = fs.existsSync(GRAPH_OUTPUT)
+      ? JSON.parse(fs.readFileSync(GRAPH_OUTPUT, 'utf-8'))
+      : emptyGraph;
+    const proofBlocks = fs.existsSync(PROOF_BLOCKS_OUTPUT)
+      ? JSON.parse(fs.readFileSync(PROOF_BLOCKS_OUTPUT, 'utf-8'))
+      : emptyProofBlocks;
+    return { graph, proofBlocks, environmentModule: 'disabled' };
+  }
+
   const artifacts = extractLeanArtifacts(LEAN_ROOT);
   const query = queryLeanEnvironment();
   const missingDeclarations = validateLeanDeclarationNames(

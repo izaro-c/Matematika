@@ -29,6 +29,7 @@ export interface ProofStepData {
   title: string;
   justificacion: string;
   target?: string | string[];
+  diagramStep?: string | number;
   body?: string;
   justificationType?: 'hipotesis' | 'axioma' | 'teorema' | 'definicion' | 'paso-previo' | 'regla-logica' | 'construccion';
   dependencyId?: string;
@@ -328,6 +329,7 @@ export function parseBodyToBlocks(body: string): Block[] {
         title: attrs.title || '',
         justificacion: attrs.justificacion || '',
         target: attrs.target || '',
+        diagramStep: attrs.diagramStep !== undefined ? attrs.diagramStep : undefined,
         body: (stepMatch[2] || '').trim(),
         justificationType: attrs.justificationType || undefined,
         dependencyId: attrs.dependencyId || '',
@@ -628,6 +630,7 @@ export function stringifyBlocksToBody(blocks: Block[]): string {
         const attrs = [
           `number={${s.number}}`,
           serializeProofTarget(s.target),
+          s.diagramStep !== undefined ? (typeof s.diagramStep === 'number' ? `diagramStep={${s.diagramStep}}` : `diagramStep="${s.diagramStep}"`) : '',
           s.title ? `title="${s.title}"` : '',
           s.justificacion ? `justificacion="${s.justificacion}"` : '',
           s.justificationType ? `justificationType="${s.justificationType}"` : '',

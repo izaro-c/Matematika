@@ -20,8 +20,17 @@ const JUSTIFICATION_TYPES: Array<{ value: NonNullable<ProofStepData['justificati
 ];
 
 export const DemonstrationBlock: React.FC<DemonstrationBlockProps> = ({ steps, diagramTargets = [], onChange, singleStepMode = false }) => {
-  const handleStepChange = (index: number, field: keyof ProofStepData, value: string | number) => {
-    const updated = steps.map((s, i) => i === index ? { ...s, [field]: value } : s);
+  const handleStepChange = (index: number, field: keyof ProofStepData, value: string | number | undefined) => {
+    const updated = steps.map((s, i) => {
+      if (i !== index) return s;
+      const copy = { ...s };
+      if (value === undefined || value === '') {
+        delete (copy as Record<string, unknown>)[field];
+      } else {
+        (copy as Record<string, unknown>)[field] = value;
+      }
+      return copy;
+    });
     onChange(updated);
   };
 
@@ -117,7 +126,7 @@ export const DemonstrationBlock: React.FC<DemonstrationBlockProps> = ({ steps, d
                   </div>}
                 </div>
 
-                <div className="grid gap-3 sm:grid-cols-[minmax(0,1fr)_minmax(12rem,0.7fr)]">
+                <div className="grid gap-3 sm:grid-cols-[minmax(0,1fr)_minmax(10rem,0.7fr)_minmax(8rem,0.5fr)]">
                   <div>
                     <label className="block text-[8px] font-bold text-carbon/40 uppercase tracking-wider mb-1">Objetivo del paso</label>
                     <input
@@ -129,13 +138,16 @@ export const DemonstrationBlock: React.FC<DemonstrationBlockProps> = ({ steps, d
                     />
                   </div>
                   <div>
-                    <label className="block text-[8px] font-bold text-carbon/40 uppercase tracking-wider mb-1">Target del diagrama</label>
+                    <label className="block text-[8px] font-bold uppercase tracking-wider text-carbon/50 mb-0.5">
+                      Elemento a resaltar (target)
+                    </label>
+                    <p className="mb-1 text-[9px] text-carbon/45 leading-tight">Objeto del diagrama que se ilumina al activar este paso.</p>
                     <select
                       className="w-full bg-carbon/5 border border-carbon/15 text-carbon p-1.5 rounded text-xs focus:outline-none focus:border-terracota"
                       value={Array.isArray(step.target) ? JSON.stringify(step.target) : step.target || ''}
                       onChange={(e) => handleStepChange(index, 'target', e.target.value)}
                     >
-                      <option value="">Sin target</option>
+                      <option value="">(Ninguno — Sin objeto resaltado)</option>
                       {Array.isArray(step.target) && <option value={JSON.stringify(step.target)}>Grupo actual: {step.target.join(', ')}</option>}
                       {diagramTargets.map(target => (
                         <option
@@ -146,6 +158,40 @@ export const DemonstrationBlock: React.FC<DemonstrationBlockProps> = ({ steps, d
                         </option>
                       ))}
                     </select>
+                  </div>
+                  <div>
+                    <label className="block text-[8px] font-bold uppercase tracking-wider text-carbon/50 mb-0.5">
+                      Paso del diagrama (diagramStep)
+                    </label>
+                    <p className="mb-1 text-[9px] text-carbon/45 leading-tight">Momento de la figura mostrado al hacer scroll.</p>
+                    <div className="flex flex-wrap items-center gap-1.5">
+                      {index === 0 && (
+                        <button
+                          type="button"
+                          onClick={() => handleStepChange(index, 'diagramStep', 'initial')}
+                          className={`rounded border px-2 py-1 text-[10px] font-bold transition-colors ${
+                            step.diagramStep === 'initial'
+                              ? 'border-terracota bg-terracota/10 text-terracota'
+                              : 'border-carbon/15 bg-carbon/5 text-carbon/60 hover:bg-carbon/10'
+                          }`}
+                          title="Muestra el estado inicial del enunciado antes del primer paso"
+                        >
+                          Figura inicial (initial)
+                        </button>
+                      )}
+                      <button
+                        type="button"
+                        onClick={() => handleStepChange(index, 'diagramStep', undefined)}
+                        className={`rounded border px-2 py-1 text-[10px] font-bold transition-colors ${
+                          step.diagramStep === undefined || step.diagramStep === '' || (index > 0 && step.diagramStep === 'initial')
+                            ? 'border-salvia/40 bg-salvia/10 text-carbon'
+                            : 'border-carbon/15 bg-carbon/5 text-carbon/60 hover:bg-carbon/10'
+                        }`}
+                        title="Sincroniza automáticamente con el orden del diagrama (step1, step2...)"
+                      >
+                        Auto (Paso {index + 1})
+                      </button>
+                    </div>
                   </div>
                 </div>
 

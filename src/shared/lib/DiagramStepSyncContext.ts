@@ -2,7 +2,8 @@ import { createContext, useContext } from 'react';
 
 export interface DiagramStepSyncContextValue {
   activeStepIndex: number | null;
-  selectDiagramStep: (stepIndex: number) => void;
+  activeStepId: string | null;
+  selectDiagramStep: (step: number | string) => void;
 }
 
 /**

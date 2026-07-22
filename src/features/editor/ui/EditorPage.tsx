@@ -14,8 +14,6 @@ import { CreatePageDialog } from './create/CreatePageDialog';
 // Hooks extraídos y controladores
 import { useEditorNavigationFlow } from './hooks/useEditorNavigationFlow';
 import { useUnsavedChangesGuard } from './hooks/useUnsavedChangesGuard';
-import { EditorDiffController, reviewDiffForDocument } from './diff/EditorDiffController';
-import type { DiffReview } from '../ux/diffReview';
 
 // Componentes estructurales y paneles
 import { EditorShell } from './EditorShell';
@@ -79,7 +77,6 @@ export const EditorPage: React.FC = () => {
     setMetadata,
     bindDiagram,
     createPage,
-    getExpectedDiffRanges,
     compatibility,
     compatibilityReasons,
     canMutateVisualStructure,
@@ -131,7 +128,6 @@ export const EditorPage: React.FC = () => {
 
   // Estado local para edición visual / diff review / modales
   const [editingBlockId, setEditingBlockId] = useState<string | null>(null);
-  const [diffReview, setDiffReview] = useState<DiffReview | null>(null);
   const [focusRange, setFocusRange] = useState<{ start: number; end: number } | undefined>(undefined);
   const [coordinatedView, setCoordinatedView] = useState(false);
   const [previewOpen, setPreviewOpen] = useState(false);
@@ -181,7 +177,6 @@ export const EditorPage: React.FC = () => {
     // La metadata visual sigue bloqueada por política lossless; se mantiene sin API nativa genérica.
   };
 
-  const canReviewDiff = Boolean(currentFile?.endsWith('.mdx') && rawBody !== baseSource);
   const canSaveDraft = Boolean(currentFile && hasLocalChanges && baseVersion);
   const safetyPresentation = useMemo(
     () =>
@@ -197,23 +192,8 @@ export const EditorPage: React.FC = () => {
     [compatibility, compatibilityReasons, currentFile, editorMode, isDiagramFile, persistenceStatus, validation],
   );
 
-  const reviewCurrentDiff = () => {
-    reviewDiffForDocument(
-      {
-        currentFile,
-        baseSource,
-        rawBody,
-        localRevision,
-        baseVersion,
-        compatibility,
-        editorMode,
-        coordinatedView,
-        getExpectedDiffRanges,
-        saveCurrentFile,
-      },
-      setDiffReview,
-    );
-  };
+  // El botón de guardar siempre llama directamente a saveCurrentFile.
+  // No hay revisión de diff.
 
   // Shortcuts de teclado y tecla Escape
   useEffect(() => {
@@ -233,20 +213,7 @@ export const EditorPage: React.FC = () => {
       if (isModifier) {
         if (event.key.toLowerCase() === 's') {
           event.preventDefault();
-          if (currentFile) {
-            if (isDiagramFile) {
-              void saveCurrentFile();
-            } else if (editorMode === 'code') {
-              void saveCurrentFile();
-            } else if (editorMode === 'visual') {
-              reviewCurrentDiff();
-            }
-          }
-        } else if (event.key.toLowerCase() === 'd') {
-          event.preventDefault();
-          if (canReviewDiff) {
-            reviewCurrentDiff();
-          }
+          if (currentFile) void saveCurrentFile();
         } else if (event.key.toLowerCase() === 'm') {
           event.preventDefault();
           toggleEditorMode();
@@ -269,15 +236,14 @@ export const EditorPage: React.FC = () => {
     currentFile,
     isDiagramFile,
     editorMode,
-    canReviewDiff,
     pendingFileNavigation,
-    diffReview,
     saving,
     toggleEditorMode,
     cancelPendingNavigation,
     setIsSidebarOpen,
     setIsInspectorOpen,
     setIsDiagnosticsOpen,
+    saveCurrentFile,
   ]);
 
   const handleSelectIssue = (issue: any) => {
@@ -291,20 +257,6 @@ export const EditorPage: React.FC = () => {
     } else if (issue.sourceRange) {
       setEditorMode('code');
       setFocusRange(issue.sourceRange);
-    }
-  };
-
-  const handleSelectDiffChange = (change: any) => {
-    if (change.blockId) {
-      setEditorMode('visual');
-      setEditingBlockId(change.blockId);
-      setTimeout(() => {
-        const el = document.getElementById(`block-${change.blockId}`);
-        el?.scrollIntoView({ behavior: 'smooth', block: 'center' });
-      }, 50);
-    } else if (change.originalRange) {
-      setEditorMode('code');
-      setFocusRange(change.originalRange);
     }
   };
 
@@ -585,7 +537,7 @@ export const EditorPage: React.FC = () => {
           editorMode={editorMode}
           toggleEditorMode={toggleEditorMode}
           validation={validation}
-          saveCurrentFile={isDiagramFile ? saveCurrentFile : reviewCurrentDiff}
+          saveCurrentFile={saveCurrentFile}
           saving={saving}
           previewPath={previewPath}
           isInspectorOpen={isInspectorOpen}
@@ -646,9 +598,7 @@ export const EditorPage: React.FC = () => {
         <SafetySummary
           currentFile={currentFile}
           presentation={safetyPresentation}
-          onReviewDiff={reviewCurrentDiff}
           onSaveDraft={() => { void saveDraftCurrentFile(); }}
-          canReviewDiff={canReviewDiff}
           canSaveDraft={canSaveDraft}
           compatibility={compatibility}
           persistenceStatus={persistenceStatus.kind}
@@ -706,24 +656,13 @@ export const EditorPage: React.FC = () => {
           }}
         />
       )}
-      <EditorDiffController
-        diffReview={diffReview}
-        setDiffReview={setDiffReview}
-        saving={saving}
-        localRevision={localRevision}
-        baseVersion={baseVersion}
-        saveCurrentFile={saveCurrentFile}
-        onSelectDiffChange={handleSelectDiffChange}
-      />
       <UnsavedChangesDialog
         isOpen={pendingFileNavigation !== null}
         targetLabel={pendingFileNavigation ?? 'otro archivo'}
         presentation={safetyPresentation}
         onCancel={cancelPendingNavigation}
-        onReviewDiff={reviewCurrentDiff}
         onSaveDraft={() => { void saveDraftCurrentFile(); }}
         onDiscardAndContinue={continuePendingNavigation}
-        canReviewDiff={canReviewDiff}
         canSaveDraft={canSaveDraft}
       />
       <PublishedRuntimePreview open={previewOpen} path={previewPath} hasPendingChanges={hasLocalChanges} revision={localRevision} onClose={() => setPreviewOpen(false)} />

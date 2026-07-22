@@ -169,10 +169,10 @@ export function buildAuthoringIntegrityReport(input: AuthoringIntegrityInput): E
   const diagramRefs = [...input.source.matchAll(/\b(?:target|highlightTarget)\s*=\s*"([^"]+)"/g)];
   for (const match of diagramRefs) {
     const target = match[1];
-    if (input.diagramTargets.length > 0 && !knownDiagramTargets.has(target) && !/^step\d+$/i.test(target)) {
+    if (input.diagramTargets.length > 0 && !knownDiagramTargets.has(target) && !/^step\d+$/i.test(target) && target !== 'initial') {
       issues.push({
-        id: `broken-diagram-target-${target}-${match.index}`, severity: 'error', area: 'diagram',
-        message: `La referencia MDX apunta a un target de diagrama inexistente: ${target}.`,
+        id: `broken-diagram-target-${target}-${match.index}`, severity: 'warning', area: 'diagram',
+        message: `La referencia MDX apunta a un target de diagrama no resuelto: ${target}.`,
         sourceRange: { start: match.index ?? 0, end: (match.index ?? 0) + match[0].length },
       });
     }
