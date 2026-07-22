@@ -27,6 +27,14 @@ export function listLayerSceneItemsFrontFirst(model: VisualDiagramModel, layerId
   return listLayerSceneItems(model, layerId).reverse();
 }
 
+/** IDs de escena ordenados por capa (orden de capas) y, dentro de cada una, por pila visual. */
+export function listSceneItemIdsInLayerVisualOrder(model: VisualDiagramModel): string[] {
+  return model.layers
+    .slice()
+    .sort((left, right) => left.order - right.order)
+    .flatMap(layer => listLayerSceneItemsFrontFirst(model, layer.id).map(item => item.id));
+}
+
 export function moveSceneItemVisual(
   model: VisualDiagramModel,
   objectId: string,

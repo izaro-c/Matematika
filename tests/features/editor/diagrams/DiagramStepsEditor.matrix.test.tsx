@@ -3,6 +3,7 @@ import { describe, expect, it, vi } from 'vitest';
 import { MathProvider } from '../../../../src/shared/lib/MathStoreContext';
 import { DiagramStepsEditor } from '../../../../src/features/editor/diagrams/ui/DiagramStepsEditor';
 import { createTemplateModel } from '../../../../src/features/editor/diagrams/model';
+import { listSceneItemIdsInLayerVisualOrder } from '../../../../src/features/editor/diagrams/model/sceneOrdering';
 import {
   matrixCellVisualState,
   nextMatrixCellState,
@@ -78,5 +79,25 @@ describe('DiagramStepsEditor matrix UX', () => {
     const editButton = screen.getByRole('button', { name: /Editar detalles de Base AB en Paso 1/ });
     fireEvent.click(editButton);
     expect(screen.getByText('Base AB · Paso 1')).toBeTruthy();
+  });
+
+  it('lists matrix rows in the same order as scene layers', () => {
+    render(
+      <MathProvider>
+        <DiagramStepsEditor
+          model={model}
+          activeStepId="step1"
+          onActiveStepChange={vi.fn()}
+          onModelEdit={vi.fn()}
+          onSelectObject={vi.fn()}
+        />
+      </MathProvider>,
+    );
+
+    const objectButtons = screen.getAllByRole('button').filter(button => button.className.includes('truncate'));
+    const matrixObjectIds = objectButtons
+      .map(button => button.parentElement?.querySelector('.font-mono')?.textContent?.trim())
+      .filter((id): id is string => Boolean(id));
+    expect(matrixObjectIds).toEqual(listSceneItemIdsInLayerVisualOrder(model));
   });
 });
