@@ -1,0 +1,176 @@
+/* ==========================================================================
+   INK MATERIALITY — Papel y tinta (solo lectura)
+   Pigmento cálido + grano de papel; irregularidad de tinta sin filtros SVG.
+   ========================================================================== */
+
+:root {
+  --ink-noise-svg: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.72' numOctaves='4' stitchTiles='stitch'/%3E%3CfeColorMatrix type='matrix' values='0 0 0 0 0.42 0 0 0 0 0.38 0 0 0 0 0.34 0 0 0 1 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+.dark {
+  /* Fibra más oscura: el grano se lee sobre letras crema del códice */
+  --ink-noise-svg: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.72' numOctaves='4' stitchTiles='stitch'/%3E%3CfeColorMatrix type='matrix' values='0 0 0 0 0.12 0 0 0 0 0.10 0 0 0 0 0.08 0 0 0 1 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+/* Grano de papel: capa fija, muy tenue */
+.ac-paper-grain {
+  position: fixed;
+  inset: 0;
+  z-index: var(--ink-grain-z, 98);
+  pointer-events: none;
+  opacity: var(--ink-grain-opacity);
+  background-image: var(--ink-noise-svg);
+  background-repeat: repeat;
+  background-size: var(--ink-grain-size, 96px) var(--ink-grain-size, 96px);
+}
+
+/* ── Pigmento cálido en cuerpo ─────────────────────────────────────────── */
+
+.ac-ink-scope {
+  color: var(--ink-text-body);
+}
+
+.ac-ink-scope .prose {
+  color: var(--ink-text-body);
+}
+
+.ac-ink-scope .prose h3 {
+  color: color-mix(
+    in srgb,
+    var(--theme-terracota) calc(100% - var(--ink-pigment-mix)),
+    var(--ink-text)
+  );
+}
+
+.ac-ink-scope .prose p,
+.ac-ink-scope .content-header p,
+.ac-ink-scope .teoria-mdx p {
+  color: var(--ink-text-body);
+}
+
+.ac-ink-scope .prose strong {
+  color: var(--ink-text);
+}
+
+.ac-ink-scope .prose em,
+.ac-ink-scope .content-header .italic {
+  color: color-mix(in srgb, var(--ink-text-body) 88%, var(--theme-terracota));
+}
+
+.ac-ink-scope .prose a,
+.ac-ink-scope .ac-link {
+  color: color-mix(
+    in srgb,
+    var(--theme-terracota) calc(100% - var(--ink-pigment-mix)),
+    var(--ink-text)
+  );
+}
+
+.ac-ink-scope .prose a:hover,
+.ac-ink-scope .ac-link:hover {
+  color: color-mix(
+    in srgb,
+    var(--theme-granada) calc(100% - var(--ink-pigment-mix)),
+    var(--ink-text)
+  );
+}
+
+.ac-ink-scope .page-accent-text {
+  color: color-mix(
+    in srgb,
+    var(--page-accent, var(--theme-terracota)) calc(100% - var(--ink-pigment-mix)),
+    var(--ink-text)
+  );
+}
+
+.ac-ink-scope .ac-meta,
+.ac-ink-scope .ac-link-back,
+.ac-ink-scope .ac-breadcrumbs {
+  color: var(--ink-text-muted);
+}
+
+.ac-ink-scope .katex,
+.ac-ink-scope .katex-display {
+  color: var(--ink-text);
+}
+
+.ac-ink-scope .text-carbon {
+  color: var(--ink-text);
+}
+
+.ac-ink-scope .text-carbon\/20 { color: color-mix(in srgb, var(--ink-text) 20%, transparent); }
+.ac-ink-scope .text-carbon\/30 { color: color-mix(in srgb, var(--ink-text) 30%, transparent); }
+.ac-ink-scope .text-carbon\/40 { color: color-mix(in srgb, var(--ink-text) 40%, transparent); }
+.ac-ink-scope .text-carbon\/45 { color: color-mix(in srgb, var(--ink-text) 45%, transparent); }
+.ac-ink-scope .text-carbon\/50 { color: color-mix(in srgb, var(--ink-text) 50%, transparent); }
+.ac-ink-scope .text-carbon\/55 { color: color-mix(in srgb, var(--ink-text) 55%, transparent); }
+.ac-ink-scope .text-carbon\/60 { color: color-mix(in srgb, var(--ink-text-muted) 95%, transparent); }
+.ac-ink-scope .text-carbon\/70 { color: color-mix(in srgb, var(--ink-text-body) 90%, transparent); }
+.ac-ink-scope .text-carbon\/75 { color: color-mix(in srgb, var(--ink-text-body) 85%, transparent); }
+.ac-ink-scope .text-carbon\/80 { color: color-mix(in srgb, var(--ink-text-body) 95%, transparent); }
+.ac-ink-scope .text-carbon\/90 { color: color-mix(in srgb, var(--ink-text) 92%, transparent); }
+
+.ac-ink-stroke {
+  border-color: color-mix(in srgb, currentColor calc(var(--ink-stroke-opacity) * 100%), transparent);
+}
+
+.ac-ink-scope :is(.prose h1, .prose h2, .content-header h1) {
+  color: var(--ink-text);
+}
+
+.ac-ink-scope .page-accent-text.ac-ink-display,
+.ac-ink-scope .content-header h1 {
+  color: color-mix(
+    in srgb,
+    var(--page-accent, var(--theme-terracota)) calc(100% - var(--ink-pigment-mix)),
+    var(--ink-text)
+  );
+}
+
+/* Ornamentos */
+.ac-ink-scope .content-header__accent-rule,
+.ac-ink-scope .subtle-separator::before,
+.ac-ink-scope .subtle-separator::after {
+  opacity: var(--ink-stroke-opacity);
+}
+
+.ac-ink-scope .prose ul > li::before {
+  color: color-mix(
+    in srgb,
+    var(--page-accent, var(--theme-terracota)) calc(100% - var(--ink-pigment-mix)),
+    var(--ink-text-muted)
+  );
+}
+
+.ac-ink-scope .ac-cta-card {
+  border-color: color-mix(in srgb, var(--theme-carbon) calc(var(--ink-stroke-opacity) * 100%), transparent);
+}
+
+@media (prefers-reduced-transparency: reduce), (prefers-contrast: more) {
+  .ac-paper-grain {
+    display: none;
+  }
+
+  .ac-ink-scope .bg-arts-and-crafts::after {
+    opacity: 0.035;
+  }
+
+  .dark .ac-ink-scope .bg-arts-and-crafts::after {
+    opacity: 0.06;
+  }
+
+  .ac-ink-scope :is(
+    h1,
+    h2,
+    h3,
+    .prose,
+    .prose p,
+    .prose a,
+    .page-accent-text,
+    .katex,
+    .text-carbon,
+    .ac-ink-display
+  ) {
+    color: var(--theme-carbon);
+  }
+}

@@ -1621,7 +1621,7 @@
       "title": "Demostración: Teorema del ángulo externo",
       "description": "Demostración constructiva del teorema del ángulo externo mediante puntos medios, congruencia LAL, separación del plano y orden angular.",
       "parentTheorem": "teorema-angulo-externo",
-      "proofMethod": "constructivo",
+      "proofMethod": "metodo-constructivo",
       "authors": [
         "euclides"
       ],
