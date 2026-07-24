@@ -19,6 +19,8 @@ interface DiagramCanvasProps {
   onModelEdit: (model: VisualDiagramModel, command?: { label?: string; mergeKey?: string }) => void;
   onChooseReferenceForTool: (referenceId: string) => boolean;
   onCompleteTool: () => void;
+  referencePickActive?: boolean;
+  onReferencePick?: (referenceId: string) => boolean;
 }
 
 export const DiagramCanvas: React.FC<DiagramCanvasProps> = ({
@@ -35,6 +37,8 @@ export const DiagramCanvas: React.FC<DiagramCanvasProps> = ({
   onModelEdit,
   onChooseReferenceForTool,
   onCompleteTool,
+  referencePickActive = false,
+  onReferencePick,
 }) => (
   <DiagramViewportFrame title="Lienzo visual" subtitle="Espacio flexible de edición · arrastre para mover · rueda para zoom" pageType={pageType} testId="diagram-editor-canvas" editing>
     <MathProvider>
@@ -46,6 +50,9 @@ export const DiagramCanvas: React.FC<DiagramCanvasProps> = ({
         errorHighlightedIds={errorHighlightedIds}
         activeStepId={previewStepId || undefined}
         onSelectionChange={(id, intent) => {
+          if (referencePickActive && onReferencePick?.(id)) {
+            return;
+          }
           if (canvasTool !== 'select' && canvasTool !== 'point' && toolReferenceCandidatesForSlot(model, canvasTool, pendingRefs.length).some(item => item.id === id)) {
             onChooseReferenceForTool(id);
           }

@@ -1,8 +1,9 @@
 import React from 'react';
 import type { VisualDiagramModel, VisualPoint, ColorToken, PointConstraint } from '../../model/types';
-import { COLOR_OPTIONS, KIND_LABELS, cleanTargetId, renamePoint } from '../../model';
-import { legacyReferenceCandidates } from '@/shared/diagrams/public';
-import { DiagramConstraintEditor } from '../DiagramConstraintEditor';
+import { COLOR_OPTIONS, cleanTargetId, renamePoint } from '../../model';
+import { ensureConstrainedMode, migrateLegacyPointToConstrained } from '../../model/constraintOptions';
+import { DiagramRelationsSection } from '../relations';
+import { DiagramDerivedPositionEditor } from '../DiagramDerivedPositionEditor';
 import { DiagramExpressionField } from '../DiagramExpressionField';
 import { DiagramNativeLabelEditor } from '../DiagramNativeLabelEditor';
 import { DiagramPointMovementAidsEditor } from '../DiagramPointMovementAidsEditor';
@@ -40,14 +41,24 @@ export const InspectorPointPanel: React.FC<InspectorPointPanelProps> = ({
   const xError = fieldErrors?.get('x');
   const yError = fieldErrors?.get('y');
   const constraintError = fieldErrors?.get('constraint');
-  const gliderTargetError = fieldErrors?.get('gliderTarget');
   const constraintsError = fieldErrors?.get('constraints');
   const xExpressionError = fieldErrors?.get('xExpression');
   const yExpressionError = fieldErrors?.get('yExpression');
-  const dependenciesError = fieldErrors?.get('dependencies');
   const visibleWhenError = fieldErrors?.get('visibleWhen');
   const targetError = fieldErrors?.get('target');
   const colorError = fieldErrors?.get('color');
+
+  const isLegacyGuidedMode = ['horizontal', 'vertical', 'glider'].includes(selectedPoint.constraint);
+  const showRelations = selectedPoint.constraint === 'constrained' || isLegacyGuidedMode;
+  const showMovementAids = ['free', 'constrained'].includes(selectedPoint.constraint);
+
+  const handleMovementChange = (nextConstraint: PointConstraint) => {
+    if (nextConstraint === 'constrained') {
+      onModelEdit(ensureConstrainedMode(model, selectedPoint.id));
+      return;
+    }
+    handlePointChange({ constraint: nextConstraint });
+  };
 
   return (
   <div className="space-y-3">
@@ -118,100 +129,76 @@ export const InspectorPointPanel: React.FC<InspectorPointPanelProps> = ({
       <select
         aria-label="Restricción del punto"
         className="w-full rounded border border-carbon/15 bg-lienzo p-1.5 text-xs"
-        value={selectedPoint.constraint || 'free'}
-        onChange={(e) => handlePointChange({ constraint: e.target.value as PointConstraint })}
+        value={selectedPoint.constraint === 'constrained' || isLegacyGuidedMode ? 'constrained' : (selectedPoint.constraint || 'free')}
+        onChange={(e) => handleMovementChange(e.target.value as PointConstraint)}
       >
         <option value="free">Libre</option>
+        <option value="constrained">Relaciones geométricas</option>
+        <option value="derived">Calculado por expresiones</option>
         <option value="fixed">Fijo</option>
-        <option value="horizontal">Horizontal</option>
-        <option value="vertical">Vertical</option>
-        <option value="glider">Punto sobre elemento</option>
-        <option value="derived">Derivado por expresiones</option>
-        <option value="constrained">Combinar relaciones geométricas</option>
       </select>
       <p className="mt-1 text-[10px] leading-relaxed text-carbon/50">
         {selectedPoint.constraint === 'free' && 'Se puede mover en cualquier dirección.'}
-        {selectedPoint.constraint === 'fixed' && 'Su posición forma parte de la construcción y no se puede arrastrar.'}
-        {selectedPoint.constraint === 'horizontal' && 'Solo cambia su coordenada x; permanece en su altura actual.'}
-        {selectedPoint.constraint === 'vertical' && 'Solo cambia su coordenada y; permanece en su vertical actual.'}
-        {selectedPoint.constraint === 'glider' && 'Se mueve únicamente sobre el objeto base elegido.'}
-        {selectedPoint.constraint === 'derived' && 'La posición se calcula; no se arrastra directamente.'}
-        {selectedPoint.constraint === 'constrained' && 'Combina relaciones geométricas editables con otros objetos. Para igualar dos segmentos, resulta más directo seleccionar el segmento en el lienzo.'}
+        {(selectedPoint.constraint === 'constrained' || isLegacyGuidedMode) && 'Combina relaciones: movimiento horizontal o vertical, sobre un objeto, mismo semiplano, etc.'}
+        {selectedPoint.constraint === 'derived' && 'La posición se obtiene de fórmulas; no se arrastra.'}
+        {selectedPoint.constraint === 'fixed' && 'No se puede arrastrar. Use este modo en lugar de añadir «posición fija» en relaciones.'}
       </p>
       <InspectorFieldError message={constraintError} focused={focusedFieldKey === 'constraint'} />
     </div>
 
-    <DiagramPointMovementAidsEditor
-      model={model}
-      point={selectedPoint}
-      onPointChange={handlePointChange}
-      onAttractorsChange={handlePointAttractorsChange}
-    />
-
-    {selectedPoint.constraint === 'glider' && (
-
-      <div data-inspector-field="gliderTarget" className={`rounded p-1 ${inspectorFieldClass(Boolean(gliderTargetError), focusedFieldKey === 'gliderTarget')}`}>
-        <label className="block text-xs font-bold text-carbon mb-1">Elemento base</label>
-        <select
-          className="w-full rounded border border-carbon/15 bg-lienzo p-1.5 text-xs font-mono"
-          value={selectedPoint.gliderTarget || ''}
-          onChange={(e) => handlePointChange({ gliderTarget: e.target.value })}
-        >
-          <option value="">Seleccione elemento...</option>
-          {legacyReferenceCandidates(model, 'support').map(el => (
-            <option key={el.id} value={el.id}>{el.id} ({'kind' in el ? KIND_LABELS[el.kind] : el.label})</option>
-          ))}
-        </select>
-        <InspectorFieldError message={gliderTargetError} focused={focusedFieldKey === 'gliderTarget'} />
+    {showRelations && (
+      <div data-inspector-field="constraints" className={inspectorFieldClass(Boolean(constraintsError), focusedFieldKey === 'constraints')}>
+        {isLegacyGuidedMode && (
+          <div className="mb-3 rounded border border-ocre/25 bg-ocre/10 p-2">
+            <p className="text-[10px] leading-relaxed text-ocre">
+              Este punto usa un modo de movimiento antiguo que no se puede combinar con otras relaciones.
+            </p>
+            <button
+              type="button"
+              className="mt-2 min-h-11 w-full rounded border border-ocre/30 bg-lienzo px-2 text-[10px] font-bold text-ocre"
+              onClick={() => onModelEdit(migrateLegacyPointToConstrained(model, selectedPoint.id))}
+            >
+              Convertir a relaciones combinables
+            </button>
+          </div>
+        )}
+        <InspectorFieldError message={constraintsError} focused={focusedFieldKey === 'constraints'} />
+        {!isLegacyGuidedMode && (
+          <DiagramRelationsSection
+            model={model}
+            point={selectedPoint}
+            scope="point"
+            onModelEdit={onModelEdit}
+          />
+        )}
       </div>
     )}
 
     {selectedPoint.constraint === 'derived' && (
       <div
-        className={`space-y-2 rounded border p-2 ${
-          inspectorFieldClass(
-            Boolean(xExpressionError || yExpressionError || dependenciesError),
-            focusedFieldKey === 'xExpression'
-              || focusedFieldKey === 'yExpression'
-              || focusedFieldKey === 'dependencies',
-          ) || 'border-pavo/20 bg-pavo/5'
-        }`}
+        data-inspector-field="derived"
+        className={inspectorFieldClass(
+          Boolean(xExpressionError || yExpressionError),
+          focusedFieldKey === 'xExpression' || focusedFieldKey === 'yExpression',
+        )}
       >
-        <p className="ac-label ac-label--sm ac-label--pavo">Coordenadas derivadas</p>
-        <div data-inspector-field="xExpression" className={`rounded p-1 ${inspectorFieldClass(Boolean(xExpressionError), focusedFieldKey === 'xExpression')}`}>
-          <DiagramExpressionField model={model} label="Expresión x" ariaLabel="Expresión x derivada" value={selectedPoint.xExpression || ''} onChange={value => handlePointChange({ xExpression: value })} help="Puede combinar coordenadas de otros puntos, longitudes y controles para calcular la coordenada horizontal." />
-          <InspectorFieldError message={xExpressionError} focused={focusedFieldKey === 'xExpression'} />
-        </div>
-        <div data-inspector-field="yExpression" className={`rounded p-1 ${inspectorFieldClass(Boolean(yExpressionError), focusedFieldKey === 'yExpression')}`}>
-          <DiagramExpressionField model={model} label="Expresión y" ariaLabel="Expresión y derivada" value={selectedPoint.yExpression || ''} onChange={value => handlePointChange({ yExpression: value })} help="Puede combinar coordenadas de otros puntos, longitudes y controles para calcular la coordenada vertical." />
-          <InspectorFieldError message={yExpressionError} focused={focusedFieldKey === 'yExpression'} />
-        </div>
-        <fieldset data-inspector-field="dependencies" className={`rounded p-1 ${inspectorFieldClass(Boolean(dependenciesError), focusedFieldKey === 'dependencies')}`}>
-          <legend className="text-xs font-bold text-carbon">Dependencias</legend>
-          {[...model.points, ...model.elements, ...model.sliders].filter(item => item.id !== selectedPoint.id).map(item => (
-            <label key={item.id} className="mt-1 flex items-center gap-1.5 text-xs text-carbon">
-              <input
-                type="checkbox"
-                checked={(selectedPoint.dependencies || []).includes(item.id)}
-                onChange={(event) => handlePointChange({
-                  dependencies: event.target.checked
-                    ? [...(selectedPoint.dependencies || []), item.id]
-                    : (selectedPoint.dependencies || []).filter(id => id !== item.id),
-                })}
-              />
-              {item.label} <span className="font-mono text-carbon/45">{item.id}</span>
-            </label>
-          ))}
-          <InspectorFieldError message={dependenciesError} focused={focusedFieldKey === 'dependencies'} />
-        </fieldset>
+        <DiagramDerivedPositionEditor
+          model={model}
+          point={selectedPoint}
+          onPointChange={handlePointChange}
+          xExpressionError={xExpressionError}
+          yExpressionError={yExpressionError}
+        />
       </div>
     )}
 
-    {selectedPoint.constraint === 'constrained' && (
-      <div data-inspector-field="constraints" className={`rounded border p-2 ${inspectorFieldClass(Boolean(constraintsError), focusedFieldKey === 'constraints') || 'border-transparent'}`}>
-        <InspectorFieldError message={constraintsError} focused={focusedFieldKey === 'constraints'} />
-        <DiagramConstraintEditor model={model} point={selectedPoint} onModelEdit={onModelEdit} />
-      </div>
+    {showMovementAids && (
+      <DiagramPointMovementAidsEditor
+        model={model}
+        point={selectedPoint}
+        onPointChange={handlePointChange}
+        onAttractorsChange={handlePointAttractorsChange}
+      />
     )}
     </div>}
 

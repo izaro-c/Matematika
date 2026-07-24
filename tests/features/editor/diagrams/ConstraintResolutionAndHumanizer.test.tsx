@@ -1,5 +1,5 @@
 import { describe, expect, it, vi } from 'vitest';
-import { render, screen } from '@testing-library/react';
+import { fireEvent, render, screen } from '@testing-library/react';
 import React from 'react';
 import {
   editableSegmentEndpoints,
@@ -7,7 +7,6 @@ import {
   setEqualLengthConstraint,
 } from '../../../../src/features/editor/diagrams/model/segmentLengthConstraints';
 import { SegmentLengthConstraintEditor } from '../../../../src/features/editor/diagrams/ui/SegmentLengthConstraintEditor';
-import { AngleEqualityConstraintEditor } from '../../../../src/features/editor/diagrams/ui/AngleEqualityConstraintEditor';
 import { DiagramConstraintEditor } from '../../../../src/features/editor/diagrams/ui/DiagramConstraintEditor';
 import { parseDiagramSpecV2 } from '../../../../src/shared/diagrams/spec/schema';
 import { enrichDiagramDiagnostics } from '../../../../src/features/editor/diagrams/diagnostics';
@@ -109,14 +108,35 @@ describe('Constraint Resolution & UI Explanations', () => {
     expect(screen.getByText('Relaciones geométricas')).toBeDefined();
   });
 
-  it('offers equalAngle and expression kinds in Nueva relación', () => {
+  it('offers horizontal, vertical and region relations in Nueva relación', () => {
     const pointF = mockDemoModel.points.find(p => p.id === 'pF')!;
     render(<DiagramConstraintEditor model={mockDemoModel} point={pointF} onModelEdit={vi.fn()} />);
 
     const select = screen.getByLabelText('Nueva restricción') as HTMLSelectElement;
     const optionLabels = Array.from(select.options).map(option => option.textContent);
-    expect(optionLabels).toContain('Misma amplitud que otro ángulo');
-    expect(optionLabels).toContain('Relación por expresión');
+    expect(optionLabels).toContain('Movimiento horizontal');
+    expect(optionLabels).toContain('Movimiento vertical');
+    expect(optionLabels).toContain('En el mismo semiplano');
+    expect(optionLabels).not.toContain('Posición fija');
+    expect(optionLabels).not.toContain('Relación por expresión');
+  });
+
+  it('blocks incompatible midpoint and distance combinations', () => {
+    const model = {
+      ...mockDemoModel,
+      constraints: [
+        ...(mockDemoModel.constraints ?? []),
+        { id: 'constraintMid', label: 'Punto medio', kind: 'midpoint' as const, refs: ['pF', 'pA', 'pB'], enabled: true },
+      ],
+      points: mockDemoModel.points.map(point => point.id === 'pF'
+        ? { ...point, constraintIds: [...(point.constraintIds ?? []), 'constraintMid'] }
+        : point),
+    };
+    render(<DiagramConstraintEditor model={model} point={model.points.find(p => p.id === 'pF')!} onModelEdit={vi.fn()} />);
+
+    fireEvent.change(screen.getByLabelText('Nueva restricción'), { target: { value: 'distance' } });
+    expect(screen.getByRole('status').textContent).toMatch(/punto medio/i);
+    expect((screen.getByRole('button', { name: 'Añadir relación' }) as HTMLButtonElement).disabled).toBe(true);
   });
 
   it('humanizes Zod and technical code diagnostic messages cleanly', () => {

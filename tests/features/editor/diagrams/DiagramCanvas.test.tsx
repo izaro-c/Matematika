@@ -367,4 +367,29 @@ describe('DiagramCanvas', () => {
     expect(label?.style?.textOffset).toEqual([0.12, -0.08]);
     expect(command).toEqual({ label: 'Mover labelA', mergeKey: 'annotation:labelA' });
   });
+
+  it('routes canvas clicks to reference pick without changing selection', () => {
+    const onSelect = vi.fn();
+    const onReferencePick = vi.fn(() => true);
+    render(
+      <DiagramCanvas
+        model={modelWithSteps()}
+        selectedId="pA"
+        canvasTool="select"
+        pendingRefs={[]}
+        previewHighlightId=""
+        previewStepId=""
+        onSelect={onSelect}
+        onModelEdit={vi.fn()}
+        onChooseReferenceForTool={vi.fn()}
+        onCompleteTool={vi.fn()}
+        referencePickActive
+        onReferencePick={onReferencePick}
+      />,
+    );
+
+    fireEvent.click(screen.getByTestId('trigger-select'));
+    expect(onReferencePick).toHaveBeenCalledWith('pB');
+    expect(onSelect).not.toHaveBeenCalled();
+  });
 });
