@@ -1,4 +1,6 @@
-import type { VisualConstraint, VisualDiagramModel } from './types';
+import { updatePoint } from './diagramElements';
+import type { PointConstraint, VisualConstraint, VisualDiagramModel } from './types';
+import { getConstraintConflictReason } from './relationCompatibility';
 
 export interface ConstraintPresentation {
   label: string;
@@ -6,10 +8,21 @@ export interface ConstraintPresentation {
   refs: number;
 }
 
+export type RelationCategory = 'position' | 'points' | 'direction' | 'region' | 'congruence' | 'expression';
+export type RelationScope = 'point' | 'segment' | 'angle';
+export type RelationSurface = 'point' | 'element';
+
+export interface RelationCatalogEntry extends ConstraintPresentation {
+  value: VisualConstraint['kind'];
+  category: RelationCategory;
+  scopes: RelationScope[];
+  preferredSurface: RelationSurface;
+}
+
 export const CONSTRAINT_OPTIONS: Array<ConstraintPresentation & { value: VisualConstraint['kind'] }> = [
   { value: 'fixed', label: 'Posición fija', description: 'El punto no puede moverse.', refs: 1 },
-  { value: 'horizontal', label: 'A la misma altura', description: 'Conserva la misma coordenada y que otro punto.', refs: 2 },
-  { value: 'vertical', label: 'En la misma vertical', description: 'Conserva la misma coordenada x que otro punto.', refs: 2 },
+  { value: 'horizontal', label: 'Movimiento horizontal', description: 'Conserva la coordenada y (misma altura que el punto de referencia). Solo puede desplazarse en horizontal.', refs: 2 },
+  { value: 'vertical', label: 'Movimiento vertical', description: 'Conserva la coordenada x (misma vertical que el punto de referencia). Solo puede desplazarse en vertical.', refs: 2 },
   { value: 'coincident', label: 'Coincidir con un punto', description: 'Ocupa exactamente la posición de otro punto.', refs: 2 },
   { value: 'on', label: 'Sobre un objeto', description: 'Solo puede desplazarse sobre una recta, segmento, arco o circunferencia.', refs: 2 },
   { value: 'distance', label: 'A distancia fija', description: 'Mantiene una distancia numérica respecto de otro punto.', refs: 2 },
@@ -21,6 +34,60 @@ export const CONSTRAINT_OPTIONS: Array<ConstraintPresentation & { value: VisualC
   { value: 'sameSide', label: 'En el mismo semiplano', description: 'No puede cruzar la recta definida por dos puntos.', refs: 3 },
   { value: 'insideArea', label: 'En un área', description: 'Mantiene el punto en el interior o en el perímetro de un semiplano, polígono, disco o intersección.', refs: 2 },
   { value: 'reflection', label: 'Reflejo simétrico', description: 'Posiciona un punto o segmento como reflejo respecto de un centro (punto) o eje (recta/segmento).', refs: 2 },
+];
+
+export const RELATION_CATALOG: RelationCatalogEntry[] = [
+  ...CONSTRAINT_OPTIONS.map(option => ({
+    ...option,
+    category: (
+      ['fixed', 'horizontal', 'vertical', 'on'].includes(option.value) ? 'position'
+        : ['coincident', 'distance', 'midpoint'].includes(option.value) ? 'points'
+          : ['perpendicular', 'parallel'].includes(option.value) ? 'direction'
+            : ['insideDisk', 'sameSide', 'insideArea'].includes(option.value) ? 'region'
+              : 'congruence'
+    ) as RelationCategory,
+    scopes: (
+      option.value === 'reflection'
+        ? ['segment', 'point'] as RelationScope[]
+        : option.value === 'equalLength'
+          ? ['segment'] as RelationScope[]
+          : ['point'] as RelationScope[]
+    ),
+    preferredSurface: (
+      option.value === 'equalLength' || option.value === 'reflection' ? 'element' : 'point'
+    ) as RelationSurface,
+  })),
+  {
+    value: 'equalAngle',
+    label: 'Misma amplitud que otro ángulo',
+    description: 'Ajusta uno de los lados para que el ángulo conserve la amplitud de otro ángulo.',
+    refs: 5,
+    category: 'congruence',
+    scopes: ['angle'],
+    preferredSurface: 'element',
+  },
+  {
+    value: 'expression',
+    label: 'Relación por expresión',
+    description: 'Relación avanzada conservada por el modelo.',
+    refs: 1,
+    category: 'expression',
+    scopes: [] as RelationScope[],
+    preferredSurface: 'point',
+  },
+];
+
+export const RELATION_CATEGORY_LABELS: Record<RelationCategory, string> = {
+  position: 'Posición y guía',
+  points: 'Relaciones entre puntos',
+  direction: 'Dirección',
+  region: 'Región',
+  congruence: 'Congruencia y simetría',
+  expression: 'Medición y expresión',
+};
+
+export const RELATION_CATEGORY_ORDER: RelationCategory[] = [
+  'position', 'points', 'direction', 'region', 'congruence', 'expression',
 ];
 
 const SUPPORT_KINDS = new Set(['segment', 'line', 'ray', 'circle', 'arc', 'functionCurve', 'parametricCurve', 'perpendicular', 'parallel', 'angleBisector']);
@@ -97,4 +164,137 @@ export function withConstraintDependencies(model: VisualDiagramModel, constraint
       ...refs.slice(1).map(sourceId => ({ sourceId, targetId: refs[0], relation: 'constraint' as const, constraintId })),
     ],
   };
+}
+
+export function relationCatalogEntry(kind: VisualConstraint['kind']): RelationCatalogEntry {
+  const entry = RELATION_CATALOG.find(item => item.value === kind);
+  if (entry) return entry;
+  const presentation = constraintPresentation(kind);
+  return {
+    ...presentation,
+    value: kind,
+    category: 'expression',
+    scopes: ['point'],
+    preferredSurface: 'point',
+  };
+}
+
+export function relationsForScope(scope: RelationScope): RelationCatalogEntry[] {
+  return RELATION_CATALOG.filter(entry => entry.scopes.includes(scope));
+}
+
+export function relationsForPointPicker(): RelationCatalogEntry[] {
+  return relationsForScope('point').filter(entry => entry.value !== 'fixed' && entry.value !== 'expression');
+}
+
+export function combinedConstraintBlockReason(
+  model: VisualDiagramModel,
+  kind: VisualConstraint['kind'],
+  targetId: string,
+  activeKinds: readonly VisualConstraint['kind'][],
+  options?: { ignoreKind?: VisualConstraint['kind'] },
+): string | undefined {
+  return getConstraintDisabledReason(model, kind, targetId)
+    ?? getConstraintConflictReason(activeKinds, kind, options);
+}
+
+export function uniqueConstraintId(model: VisualDiagramModel): string {
+  let index = (model.constraints?.length ?? 0) + 1;
+  while (model.constraints?.some(item => item.id === `constraint${index}`)) index += 1;
+  return `constraint${index}`;
+}
+
+export function getConstraintDisabledReason(
+  model: VisualDiagramModel,
+  kind: VisualConstraint['kind'],
+  targetId: string,
+): string | undefined {
+  const presentation = constraintPresentation(kind);
+  const refs = defaultConstraintRefs(model, kind, targetId);
+  if (refs.length >= presentation.refs) return undefined;
+
+  switch (kind) {
+    case 'equalLength': {
+      const targetSegment = model.elements.find(item => item.kind === 'segment' && item.refs.includes(targetId));
+      if (!targetSegment) return 'Este punto no forma parte de ningún segmento. Seleccione el segmento en el lienzo para igualar longitudes.';
+      const otherSegments = model.elements.filter(item => item.kind === 'segment' && item.id !== targetSegment.id);
+      if (otherSegments.length === 0) return 'No existe otro segmento en el diagrama para tomar como referencia de longitud.';
+      return 'Se requiere un segmento de referencia y un punto ancla para igualar la longitud.';
+    }
+    case 'equalAngle': {
+      const targetAngle = model.elements.find(item => (item.kind === 'angle' || item.kind === 'nonReflexAngle') && (item.refs[0] === targetId || item.refs[2] === targetId));
+      if (!targetAngle) return 'Este punto no es extremo del lado de ningún ángulo. Seleccione el ángulo en el lienzo.';
+      return 'No hay otro ángulo del mismo tipo en la escena para copiar su amplitud.';
+    }
+    case 'on':
+      return 'No hay segmentos, rectas, semirrectas ni curvas en el diagrama sobre las que colocar este punto.';
+    case 'midpoint':
+      return 'Se necesitan al menos otros dos puntos para definir un punto medio.';
+    case 'perpendicular':
+    case 'parallel':
+      return 'Se necesitan otros dos puntos o una recta para definir la dirección de la referencia.';
+    case 'insideDisk':
+    case 'sameSide':
+    case 'insideArea':
+      return 'Se necesitan más puntos en la escena para definir la región de esta restricción.';
+    case 'horizontal':
+    case 'vertical':
+    case 'coincident':
+    case 'distance':
+      return 'Se necesita al menos otro punto en la escena para relacionarlo con este punto.';
+    default:
+      return 'Se necesitan más objetos en el diagrama para establecer esta relación.';
+  }
+}
+
+const LEGACY_MOVEMENT_MODES = new Set<PointConstraint>(['horizontal', 'vertical', 'glider']);
+
+/** Convierte modos de movimiento heredados a relaciones combinables en `constrained`. */
+export function migrateLegacyPointToConstrained(model: VisualDiagramModel, pointId: string): VisualDiagramModel {
+  const point = model.points.find(item => item.id === pointId);
+  if (!point || !LEGACY_MOVEMENT_MODES.has(point.constraint)) {
+    return model;
+  }
+
+  let next = model;
+  const constraintIds = [...(point.constraintIds ?? [])];
+  let kind: VisualConstraint['kind'];
+  if (point.constraint === 'horizontal') kind = 'horizontal';
+  else if (point.constraint === 'vertical') kind = 'vertical';
+  else kind = 'on';
+
+  const refs = point.constraint === 'glider' && point.gliderTarget
+    ? [pointId, point.gliderTarget]
+    : defaultConstraintRefs(next, kind, pointId);
+
+  if (refs.length >= constraintPresentation(kind).refs) {
+    const id = uniqueConstraintId(next);
+    const constraint: VisualConstraint = {
+      id,
+      label: constraintPresentation(kind).label,
+      kind,
+      refs,
+      enabled: true,
+    };
+    next = withConstraintDependencies(next, id, refs);
+    next = {
+      ...next,
+      constraints: [...(next.constraints || []), constraint],
+    };
+    constraintIds.push(id);
+  }
+
+  return updatePoint(next, pointId, {
+    constraint: 'constrained',
+    constraintIds,
+    gliderTarget: undefined,
+  });
+}
+
+export function ensureConstrainedMode(model: VisualDiagramModel, pointId: string): VisualDiagramModel {
+  const point = model.points.find(item => item.id === pointId);
+  if (!point) return model;
+  if (LEGACY_MOVEMENT_MODES.has(point.constraint)) return migrateLegacyPointToConstrained(model, pointId);
+  if (point.constraint === 'constrained') return model;
+  return updatePoint(model, pointId, { constraint: 'constrained' });
 }

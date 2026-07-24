@@ -254,6 +254,7 @@ describe('Phase 3 visual editing', () => {
     const onModelEdit = vi.fn();
     render(<DiagramInspector model={model} selectedId="pC" onSelect={vi.fn()} onModelEdit={onModelEdit} onDeleteSelected={vi.fn()} />);
     openInspectorSection('Geometría');
+    fireEvent.change(screen.getByLabelText('Restricción del punto'), { target: { value: 'constrained' } });
     fireEvent.change(screen.getByLabelText('Nueva restricción'), { target: { value: 'vertical' } });
     fireEvent.click(screen.getByRole('button', { name: 'Añadir relación' }));
     expect(onModelEdit).toHaveBeenCalledWith(expect.objectContaining({
@@ -262,7 +263,7 @@ describe('Phase 3 visual editing', () => {
     }));
   });
 
-  it('authors equal-length and midpoint relations with geometry-specific references', () => {
+  it('authors midpoint relations with geometry-specific references', () => {
     const base = projectDiagramSpecV3ToV2(migrateDiagramSpec(primitivesFixture).spec);
     const model = {
       ...base,
@@ -275,24 +276,9 @@ describe('Phase 3 visual editing', () => {
         : point),
     };
     const onModelEdit = vi.fn();
-    const view = render(<DiagramInspector model={model} selectedId="pC" onSelect={vi.fn()} onModelEdit={onModelEdit} onDeleteSelected={vi.fn()} />);
+    render(<DiagramInspector model={model} selectedId="pC" onSelect={vi.fn()} onModelEdit={onModelEdit} onDeleteSelected={vi.fn()} />);
     openInspectorSection('Geometría');
 
-    fireEvent.change(screen.getByLabelText('Nueva restricción'), { target: { value: 'equalLength' } });
-    fireEvent.click(screen.getByRole('button', { name: 'Añadir relación' }));
-    expect(onModelEdit).toHaveBeenLastCalledWith(expect.objectContaining({
-      constraints: expect.arrayContaining([expect.objectContaining({
-        kind: 'equalLength',
-        refs: ['pC', 'pO', 'segAB'],
-      })]),
-      dependencies: expect.arrayContaining([expect.objectContaining({
-        sourceId: 'segAB',
-        targetId: 'pC',
-        relation: 'constraint',
-      })]),
-    }));
-
-    view.rerender(<DiagramInspector model={model} selectedId="pC" onSelect={vi.fn()} onModelEdit={onModelEdit} onDeleteSelected={vi.fn()} />);
     fireEvent.change(screen.getByLabelText('Nueva restricción'), { target: { value: 'midpoint' } });
     fireEvent.click(screen.getByRole('button', { name: 'Añadir relación' }));
     expect(onModelEdit).toHaveBeenLastCalledWith(expect.objectContaining({
@@ -494,7 +480,7 @@ describe('Phase 3 visual editing', () => {
     const view = render(<DiagramInspector model={model} selectedId="pA" onSelect={vi.fn()} onModelEdit={onModelEdit} onDeleteSelected={vi.fn()} />);
     openInspectorSection('Geometría');
 
-    fireEvent.click(screen.getByText('Magnetismo hacia formas notables'));
+    fireEvent.click(screen.getByText('Snap y magnetismo'));
     fireEvent.click(screen.getByRole('checkbox', { name: 'Usar Recta como atractor' }));
     const withAttractor = onModelEdit.mock.calls.at(-1)?.[0];
     expect(withAttractor.points.find((point: { id: string }) => point.id === 'pA').attractorIds).toEqual(['lineBC']);
@@ -549,12 +535,12 @@ describe('Phase 3 visual editing', () => {
     render(<DiagramInspector model={model} selectedId="pC" onSelect={vi.fn()} onModelEdit={onModelEdit} onDeleteSelected={vi.fn()} />);
     openInspectorSection('Geometría');
 
-    fireEvent.change(screen.getByLabelText('Restricción del punto'), { target: { value: 'glider' } });
+    fireEvent.change(screen.getByLabelText('Restricción del punto'), { target: { value: 'constrained' } });
 
     const edited = onModelEdit.mock.calls.at(-1)?.[0];
     expect(edited.points.find((item: { id: string }) => item.id === 'pC')).toMatchObject({
       fixed: false,
-      constraint: 'glider',
+      constraint: 'constrained',
     });
   });
 
@@ -570,8 +556,7 @@ describe('Phase 3 visual editing', () => {
     render(<DiagramInspector model={model} selectedId="pC" onSelect={vi.fn()} onModelEdit={onModelEdit} onDeleteSelected={vi.fn()} />);
     openInspectorSection('Geometría');
 
-    expect(screen.queryByText('Snap a cuadrícula')).toBeNull();
-    expect(screen.queryByText('Magnetismo hacia formas notables')).toBeNull();
+    expect(screen.queryByText('Snap y magnetismo')).toBeNull();
     expect(screen.queryByRole('checkbox', { name: 'Ajuste a cuadrícula' })).toBeNull();
     expect(onModelEdit).not.toHaveBeenCalled();
   });

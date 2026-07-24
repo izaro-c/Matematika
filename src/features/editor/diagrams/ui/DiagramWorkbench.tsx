@@ -40,8 +40,37 @@ import { useDiagramClipboard } from '../hooks/useDiagramClipboard';
 import { useDiagramWorkbenchLoader, type DiagramWorkbenchMode } from '../hooks/useDiagramWorkbenchLoader';
 import { getDiagramUsages } from '../references/usageIndex';
 import { pageTypeFromContentPath } from '../model/publishedDiagramLayout';
+import { ReferencePickProvider } from './relations/ReferencePickContext';
+import { useReferencePick } from './relations/useReferencePick';
 
 export type { DiagramWorkbenchMode } from '../hooks/useDiagramWorkbenchLoader';
+
+type CanvasProps = React.ComponentProps<typeof DiagramCanvas>;
+
+const DiagramCanvasWithReferencePick: React.FC<Omit<CanvasProps, 'referencePickActive' | 'onReferencePick'>> = (props) => {
+  const { session, rejectMessage, handleCanvasId, clearPick } = useReferencePick();
+  return (
+    <div className="space-y-2">
+      {session && (
+        <div className="rounded border border-pavo/30 bg-pavo/10 px-2 py-1.5 text-[10px] font-medium text-pavo" role="status">
+          {session.hint}
+          {' · '}
+          <button type="button" className="underline" onClick={clearPick}>Cancelar (Esc)</button>
+        </div>
+      )}
+      {rejectMessage && (
+        <div className="rounded border border-ocre/25 bg-ocre/10 px-2 py-1.5 text-[10px] font-medium text-ocre" role="status">
+          {rejectMessage}
+        </div>
+      )}
+      <DiagramCanvas
+        {...props}
+        referencePickActive={Boolean(session)}
+        onReferencePick={handleCanvasId}
+      />
+    </div>
+  );
+};
 
 interface DiagramWorkbenchCoreProps {
   isOpen: boolean;
@@ -320,6 +349,7 @@ export const DiagramWorkbenchCore: React.FC<DiagramWorkbenchCoreProps> = ({
   const mdxTargets = buildTargets(model);
 
   return (
+    <ReferencePickProvider>
     <div ref={workbenchRef} onKeyDown={keyboard.onKeyDown} className="fixed inset-0 z-50 flex flex-col bg-lienzo text-carbon font-sans" role="dialog" aria-modal="true" aria-labelledby="diagram-workbench-title">
       {/* Header */}
       <header className="flex shrink-0 items-center justify-between gap-2 border-b border-carbon/15 bg-carbon/5 px-3 py-2 sm:gap-4 sm:px-4">
@@ -503,7 +533,7 @@ export const DiagramWorkbenchCore: React.FC<DiagramWorkbenchCoreProps> = ({
               )}
             </div>
 
-            {canvasDisplay === 'edit' ? <DiagramCanvas
+            {canvasDisplay === 'edit' ? <DiagramCanvasWithReferencePick
               model={model}
               pageType={previewPageType}
               selectedId={state.selectedId}
@@ -619,6 +649,7 @@ export const DiagramWorkbenchCore: React.FC<DiagramWorkbenchCoreProps> = ({
         </DiagramSectionOutlet>
       </div>
     </div>
+    </ReferencePickProvider>
   );
 };
 

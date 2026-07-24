@@ -1,6 +1,7 @@
-import React from 'react';
+import React, { useState } from 'react';
 import type { VisualDiagramModel, VisualPoint } from '../model/types';
 import { movementAttractorCreatesCycle, movementAttractors, pointSupportsMovementAids } from '../model/pointMovement';
+import { DiagramPanel } from './primitives';
 
 interface DiagramPointMovementAidsEditorProps {
   model: VisualDiagramModel;
@@ -15,6 +16,7 @@ export const DiagramPointMovementAidsEditor: React.FC<DiagramPointMovementAidsEd
   onPointChange,
   onAttractorsChange,
 }) => {
+  const [expanded, setExpanded] = useState(Boolean(point.snapToGrid || (point.attractorIds?.length ?? 0) > 0));
   const supportsMovementAids = pointSupportsMovementAids(point);
   const attractors = movementAttractors(model).filter(attractor => attractor.id !== point.id);
   const selectedAttractors = point.attractorIds ?? [];
@@ -27,13 +29,23 @@ export const DiagramPointMovementAidsEditor: React.FC<DiagramPointMovementAidsEd
     onAttractorsChange(reordered);
   };
 
-  // Las ayudas no tienen efecto sobre puntos fijos, derivados o ligados a un
-  // soporte. Ocultarlas evita sugerir una capacidad incompatible.
   if (!supportsMovementAids) return null;
 
+  const aidsActive = Boolean(point.snapToGrid || selectedAttractors.length > 0);
+
   return (
-    <section className="space-y-3" aria-label="Snap y magnetismo del punto">
-      <fieldset className="space-y-2 border-t border-carbon/10 pt-3">
+    <DiagramPanel
+      title="Snap y magnetismo"
+      badge={aidsActive ? 'Activo' : 'Opcional'}
+      collapsible
+      open={expanded}
+      onOpenChange={setExpanded}
+      className="mt-1"
+    >
+      <p className="text-[10px] leading-relaxed text-carbon/50">
+        Ayudas opcionales durante el arrastre. No sustituyen a las relaciones geométricas.
+      </p>
+      <fieldset className="space-y-2 border-t border-carbon/10 pt-2">
         <legend className="px-1 ac-label ac-label--sm ac-label--pavo">Snap a cuadrícula</legend>
         <label className="flex items-center gap-1.5 text-xs font-bold text-carbon">
           <input
@@ -44,7 +56,6 @@ export const DiagramPointMovementAidsEditor: React.FC<DiagramPointMovementAidsEd
           />
           Ajuste a cuadrícula
         </label>
-        <p className="text-[10px] leading-relaxed text-carbon/50">Durante el arrastre, aproxima las coordenadas del punto a múltiplos del tamaño de celda.</p>
         {point.snapToGrid && (
           <label className="block text-xs font-bold text-carbon">
             Tamaño de celda
@@ -62,9 +73,8 @@ export const DiagramPointMovementAidsEditor: React.FC<DiagramPointMovementAidsEd
         )}
       </fieldset>
 
-      <fieldset className="border-t border-carbon/10 pt-3">
-        <legend className="px-1 text-xs font-bold text-ocre">Magnetismo hacia formas notables</legend>
-        <p className="mt-1 text-[10px] leading-relaxed text-carbon/50">Solo el punto que se arrastra se adapta temporalmente. Al soltarlo conserva la posición exacta y vuelve a ser libre.</p>
+      <fieldset className="border-t border-carbon/10 pt-2">
+        <legend className="px-1 text-xs font-bold text-ocre">Magnetismo hacia formas</legend>
         {selectedAttractors.length > 0 && (
           <ol className="mt-2 space-y-1" aria-label={`Prioridad de atractores de ${point.label}`}>
             {selectedAttractors.map((attractorId, index) => {
@@ -101,9 +111,6 @@ export const DiagramPointMovementAidsEditor: React.FC<DiagramPointMovementAidsEd
             );
           })}
         </div>
-        {attractors.length === 0 && (
-          <p className="mt-2 rounded border border-dashed border-carbon/15 bg-lienzo p-2 text-[10px] text-carbon/50">Primero añada una recta, segmento, circunferencia o curva que pueda actuar como imán.</p>
-        )}
         {(point.attractorIds?.length ?? 0) > 0 && (
           <div className="mt-2 grid grid-cols-2 gap-2">
             <label className="text-[10px] font-bold text-carbon">Distancia de atracción<input type="number" min="0.01" max="20" step="0.05" aria-label="Distancia de atracción" className="mt-1 w-full rounded border border-carbon/15 bg-lienzo p-1.5 text-xs" value={point.attractorDistance ?? 0.4} onChange={(event) => onPointChange({ attractorDistance: Math.max(0.01, Number(event.target.value)) })} /></label>
@@ -111,7 +118,7 @@ export const DiagramPointMovementAidsEditor: React.FC<DiagramPointMovementAidsEd
           </div>
         )}
       </fieldset>
-    </section>
+    </DiagramPanel>
   );
 };
 
