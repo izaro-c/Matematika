@@ -5,6 +5,7 @@ import type { Crumb } from '@/shared/ui/Breadcrumbs';
 import { ContentTypeBadge } from '@/shared/ui/ContentTypeBadge';
 import { ModelBadgeList } from '@/entities/content/ui/ModelBadge';
 import { db } from '@/entities/content';
+import { UI } from '@/shared/design';
 
 /**
  * Propiedades de cabecera estandarizada para contenido matemático.
@@ -106,7 +107,7 @@ export const ContentHeader: React.FC<ContentHeaderProps> = ({
 
       {/* Título Principal (Arts & Crafts Serif) */}
       <h1
-        className="font-serif text-4xl md:text-5xl lg:text-6xl mb-4 text-carbon/90"
+        className={`${UI.inkDisplay} font-serif text-4xl md:text-5xl lg:text-6xl mb-4 text-carbon/90`}
         style={{ color: 'var(--page-accent, var(--theme-carbon))', letterSpacing: '-0.02em', lineHeight: '1.1' }}
       >
         {title}

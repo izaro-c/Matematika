@@ -207,6 +207,8 @@
   color: var(--theme-carbon);
 }
 
+/* Materialidad de tinta en lectura: pigmento en ac-link, ac-btn-accent y CTA vía ink-materiality.css */
+
 /* ── 3b. Breadcrumbs ────────────────────────────────────────────────────── */
 
 .ac-breadcrumbs {

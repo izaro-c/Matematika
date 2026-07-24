@@ -20,6 +20,10 @@ body {
   -webkit-font-smoothing: antialiased;
 }
 
+.ac-ink-scope {
+  font-feature-settings: "liga" 1, "kern" 1, "onum" 1;
+}
+
 /* Scrollbar Universal Estilo Arts & Crafts */
 * {
   scrollbar-width: thin;

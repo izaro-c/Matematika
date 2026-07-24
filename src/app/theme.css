@@ -75,6 +75,12 @@
   --ac-cta-shadow: 0 10px 30px -10px color-mix(in srgb, var(--theme-terracota) 35%, transparent);
   --ac-cta-shadow-hover: 0 20px 40px -10px color-mix(in srgb, var(--theme-terracota) 50%, transparent);
 
+  /* ── 4e. Materialidad de papel y tinta (lectura) ─────────────────────────── */
+  --ink-grain-opacity: 0.32;
+  --ink-stroke-opacity: 0.78;
+  --ink-grain-z: 98;
+  --ink-grain-size: 200px;
+
   /* ── 5. Paleta Arts & Crafts – Modo Pergamino ─────────────────────────── */
   --theme-lienzo:    #F3EFE7;  /* Papel de pergamino (Avena) */
   --theme-carbon:    #35312E;  /* Tinta de imprenta (Sepia) */
@@ -86,7 +92,13 @@
   --theme-salvia:    #9E5B22;  /* Definiciones — (Naranja/Cobre) */
   --theme-pavo:      #2A4B7C;  /* Modelos — (Azul Lapislázuli) */
   --theme-pizarra:   #63457A;  /* Ejemplos — (Violeta/Amatista) */
-  
+
+  /* Tinta cálida (tras definir paleta) */
+  --ink-text: color-mix(in srgb, var(--theme-carbon) 78%, var(--theme-terracota));
+  --ink-text-body: color-mix(in srgb, var(--theme-carbon) 72%, var(--theme-pizarra));
+  --ink-text-muted: color-mix(in srgb, var(--theme-carbon) 58%, var(--theme-lienzo));
+  --ink-pigment-mix: 26%;
+
   --theme-graph-bg-url: var(--bg-arts-and-crafts-light-url, url('/images/bg-arts-crafts-1.png'));
   --bg-arts-and-crafts-url: var(--theme-graph-bg-url);
 }
@@ -118,6 +130,14 @@
   /* Selección de Texto en Códice Nocturno */
   --theme-selection-bg: color-mix(in srgb, var(--theme-ocre) 22%, transparent);
   --theme-selection-text: var(--theme-carbon);
+
+  /* Materialidad de papel — códice nocturno (grano sobre letras) */
+  --ink-grain-opacity: 0.36;
+  --ink-stroke-opacity: 0.72;
+  --ink-text: color-mix(in srgb, var(--theme-carbon) 90%, var(--theme-ocre));
+  --ink-text-body: color-mix(in srgb, var(--theme-carbon) 86%, var(--theme-lienzo));
+  --ink-text-muted: color-mix(in srgb, var(--theme-carbon) 68%, var(--theme-lienzo));
+  --ink-pigment-mix: 14%;
 
 }
 

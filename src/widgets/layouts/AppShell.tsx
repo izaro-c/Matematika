@@ -3,8 +3,9 @@ import { SearchOmnibar } from "@/widgets/navigation/SearchOmnibar";
 import { MarginaliaPanel } from "@/widgets/content/MarginaliaPanel";
 import { SymbolDictionaryManager } from "@/widgets/content/SymbolDictionaryManager";
 import { db } from "@/entities/content";
-import { getContentPageAccent } from "@/shared/design";
+import { getContentPageAccent, UI } from "@/shared/design";
 import { useLocation } from "wouter";
+import { createPortal } from "react-dom";
 
 export const AppShell: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const [location] = useLocation();
@@ -60,7 +61,7 @@ export const AppShell: React.FC<{ children: React.ReactNode }> = ({ children }) 
 
   return (
     <div
-      className={`ac-page ${pageType ? 'page-accent-scope' : ''}`}
+      className={`ac-page ${!isEditor ? 'ac-ink-scope' : ''} ${pageType ? 'page-accent-scope' : ''}`}
       data-page-type={pageType}
       style={pageType ? ({ '--page-accent': getContentPageAccent(pageType) } as React.CSSProperties) : undefined}
     >
@@ -70,6 +71,11 @@ export const AppShell: React.FC<{ children: React.ReactNode }> = ({ children }) 
       {!isEditor && <MarginaliaPanel />}
 
       <div className="w-full">{children}</div>
+
+      {!isEditor && createPortal(
+        <div className={UI.paperGrain} aria-hidden="true" />,
+        document.body,
+      )}
     </div>
   );
 };

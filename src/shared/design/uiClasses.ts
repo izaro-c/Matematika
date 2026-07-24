@@ -64,6 +64,13 @@ export const UI = {
   textBalance: 'text-balance',
   textPretty: 'text-pretty',
   minViewport: 'min-h-viewport',
+
+  /** Opt-in: pigmento en ornamentos (no usar en cuerpo de lectura) */
+  pigment: 'ac-pigment',
+  inkStroke: 'ac-ink-stroke',
+  inkScope: 'ac-ink-scope',
+  inkDisplay: 'ac-ink-display',
+  paperGrain: 'ac-paper-grain',
 } as const;
 
 export type UIClassName = (typeof UI)[keyof typeof UI];
