@@ -78,7 +78,7 @@ function FrameworkMenu<T extends ModelInfo | SystemInfo>({
         if (!event.currentTarget.contains(event.relatedTarget as Node | null)) setIsOpen(false);
       }}
     >
-      <span className="mb-1.5 block font-sans text-[9px] font-bold uppercase tracking-[0.14em] text-carbon/55">
+      <span className="ac-label ac-label--xs ac-label--strong mb-1.5 block">
         {label}
       </span>
       <button

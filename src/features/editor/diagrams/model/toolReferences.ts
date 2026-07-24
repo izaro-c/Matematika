@@ -10,7 +10,9 @@ const ANGLE_REFERENCE_LABELS = ['Punto del primer lado', 'Vértice', 'Punto del 
 export const INTERSECTION_SUPPORT_KINDS = new Set(['segment', 'line', 'ray', 'perpendicular', 'parallel', 'angleBisector']);
 
 export function toolReferenceLabel(tool: CanvasTool, index: number): string {
-  const slotLabel = referenceSlotsForLegacyKind(tool)[index]?.label;
+  const slotLabel = tool === 'select' || tool === 'point'
+    ? undefined
+    : referenceSlotsForLegacyKind(tool)[index]?.label;
   if (slotLabel) return slotLabel;
   if (tool === 'intersection') return `Soporte lineal ${index + 1}`;
   if (tool === 'measureTicks') return 'Segmento graduado';

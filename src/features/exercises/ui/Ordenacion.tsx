@@ -143,7 +143,7 @@ export const Ordenacion: React.FC<OrdenacionProps> = ({ id, pasos }) => {
           <div className="mt-6 flex justify-end border-t border-carbon/10 pt-5">
             <button
               onClick={checkOrder}
-              className="page-accent-button px-6 py-3 text-xs font-sans uppercase tracking-widest border border-carbon/30 text-carbon transition-all shadow-sm hover:shadow-md hover:-translate-y-0.5"
+              className="ac-btn ac-interactive page-accent-button px-6 py-3 text-xs border border-carbon/30 text-carbon transition-all shadow-sm hover:shadow-md hover:-translate-y-0.5"
             >
               Comprobar Orden
             </button>

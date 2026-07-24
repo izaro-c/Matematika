@@ -159,7 +159,7 @@ const relation = z.discriminatedUnion('type', [
   z.object({ ...relationBase, type: z.literal('perpendicular'), supports: linearPair }).strict(),
   z.object({ ...relationBase, type: z.literal('parallel'), supports: linearPair }).strict(),
   z.object({ ...relationBase, type: z.literal('inside-disk'), point: id, disk: z.union([id, z.object({ center: id, boundary: id }).strict()]) }).strict(),
-  z.object({ ...relationBase, type: z.literal('same-half-plane'), points: pair, boundary: id }).strict(),
+  z.object({ ...relationBase, type: z.literal('same-half-plane'), points: pair, boundary: id, side: z.union([z.literal(1), z.literal(-1)]).optional() }).strict(),
   z.object({ ...relationBase, type: z.literal('inside-area'), point: id, area: id, membership: z.enum(['interior', 'boundary']).optional() }).strict(),
   z.object({ ...relationBase, type: z.literal('reflection'), refs: z.array(id).min(2).max(3), centerOrAxis: id.optional(), drivenPoint: id.optional() }).strict(),
   z.object({ ...relationBase, type: z.literal('expression'), refs: z.array(id), expression, value: number.optional() }).strict(),

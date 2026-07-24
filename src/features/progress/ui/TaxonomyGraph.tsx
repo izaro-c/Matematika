@@ -298,7 +298,7 @@ export const TaxonomyGraph: React.FC<TaxonomyGraphProps> = ({ taxonomy }) => {
       className="graph-theme-background w-full h-[400px] border-y border-carbon/20 overflow-hidden relative shadow-inner cursor-move"
       style={graphBackgroundStyle}
     >
-      <div className="absolute z-10 top-4 left-4 text-[10px] font-sans uppercase tracking-widest text-carbon/60 select-none pointer-events-none bg-lienzo/90 px-3 py-1.5 border border-carbon/10 shadow-sm backdrop-blur-sm rounded-none">
+      <div className="absolute z-10 top-4 left-4 ac-eyebrow ac-eyebrow--sm text-carbon/60 select-none pointer-events-none bg-lienzo/90 px-3 py-1.5 border border-carbon/10 shadow-sm backdrop-blur-sm rounded-none">
         Grafo de dependencias: {taxonomy.name || taxonomy.id}
       </div>
       <ForceGraph2D

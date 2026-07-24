@@ -15,6 +15,7 @@ import {
   supportCandidates,
 } from '../model/v3Projection';
 import { withResolvedPointConstraints } from '../../../../shared/diagrams/spec/scene';
+import { computeHalfPlaneSide } from '../../../../shared/diagrams/spec/areaGeometry';
 import { DiagramExpressionField } from './DiagramExpressionField';
 import { DiagramButton, DiagramField, DiagramPanel } from './primitives';
 
@@ -133,6 +134,22 @@ interface DiagramConstraintEditorProps {
   onModelEdit: (model: VisualDiagramModel) => void;
 }
 
+/**
+ * Calcula el signo del semiplano (1 ó -1) para una restricción `sameSide`.
+ * `refs[0]` = punto restringido, `refs[1]` = base A de la frontera, `refs[2]` = base B.
+ * El resultado se persiste en `constraint.side` y es invariante ante movimientos
+ * posteriores de los puntos de frontera.
+ */
+function computeSameSide(model: VisualDiagramModel, refs: string[]): 1 | -1 | undefined {
+  if (refs.length < 3) return undefined;
+  const findXY = (id: string) => model.points.find(p => p.id === id);
+  const p = findXY(refs[0]);
+  const a = findXY(refs[1]);
+  const b = findXY(refs[2]);
+  if (!p || !a || !b) return undefined;
+  return computeHalfPlaneSide(a, b, p);
+}
+
 export const DiagramConstraintEditor: React.FC<DiagramConstraintEditorProps> = ({ model, point, onModelEdit }) => {
   const [newKind, setNewKind] = useState<VisualConstraint['kind']>('horizontal');
 
@@ -140,9 +157,14 @@ export const DiagramConstraintEditor: React.FC<DiagramConstraintEditorProps> = (
     const constraint = model.constraints?.find(item => item.id === constraintId);
     const dependencyRefs = constraint?.kind === 'equalAngle' ? refs.slice(0, 4) : refs;
     const next = withConstraintDependencies(model, constraintId, dependencyRefs);
+    const sameSide = constraint?.kind === 'sameSide'
+      ? computeSameSide(model, refs)
+      : undefined;
     const updatedModel = {
       ...next,
-      constraints: model.constraints?.map(constraint => constraint.id === constraintId ? { ...constraint, refs } : constraint),
+      constraints: model.constraints?.map(c => c.id === constraintId
+        ? { ...c, refs, ...(sameSide !== undefined ? { side: sameSide } : {}) }
+        : c),
     };
     onModelEdit(withResolvedPointConstraints(updatedModel));
   };
@@ -153,6 +175,7 @@ export const DiagramConstraintEditor: React.FC<DiagramConstraintEditorProps> = (
     let expression: string | undefined;
     if (kind === 'expression') expression = constraint.expression ?? '1';
     else if (kind === 'distance') expression = constraint.expression;
+    const sameSide = kind === 'sameSide' ? computeSameSide(model, refs) : undefined;
     const updatedModel = {
       ...next,
       constraints: model.constraints?.map(item => item.id === constraint.id ? {
@@ -163,6 +186,7 @@ export const DiagramConstraintEditor: React.FC<DiagramConstraintEditorProps> = (
         value: kind === 'distance' ? item.value ?? 1 : undefined,
         expression,
         ...(kind === 'insideArea' ? { areaMembership: item.areaMembership ?? 'interior' } : { areaMembership: undefined }),
+        ...(sameSide !== undefined ? { side: sameSide } : { side: undefined }),
       } : item),
     };
     onModelEdit(withResolvedPointConstraints(updatedModel));
@@ -190,6 +214,7 @@ export const DiagramConstraintEditor: React.FC<DiagramConstraintEditorProps> = (
     let index = (model.constraints?.length ?? 0) + 1;
     while (model.constraints?.some(item => item.id === `constraint${index}`)) index += 1;
     const id = `constraint${index}`;
+    const sameSide = newKind === 'sameSide' ? computeSameSide(model, refs) : undefined;
     const constraint: VisualConstraint = {
       id,
       label: presentation.label,
@@ -197,6 +222,7 @@ export const DiagramConstraintEditor: React.FC<DiagramConstraintEditorProps> = (
       refs,
       enabled: true,
       ...(newKind === 'distance' ? { value: 1 } : {}),
+      ...(sameSide !== undefined ? { side: sameSide } : {}),
     };
     const next = withConstraintDependencies(model, id, newKind === 'equalAngle' ? refs.slice(0, 4) : refs);
     const nextWithConstraint = {

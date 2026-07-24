@@ -38,7 +38,7 @@ const ProgressBar: React.FC = () => {
         {score.answered > 0 && (
           <button
             onClick={reset}
-            className="page-accent-text text-[10px] font-sans uppercase tracking-widest opacity-60 hover:opacity-100 transition-opacity underline underline-offset-2 shrink-0"
+            className="page-accent-text ac-eyebrow ac-eyebrow--sm opacity-60 hover:opacity-100 transition-opacity underline underline-offset-2 shrink-0"
           >
             Reiniciar
           </button>
@@ -61,7 +61,7 @@ const ExerciseContent: React.FC<{ id: string }> = ({ id }) => {
 
   if (!exercise) {
     return (
-      <div className="min-h-screen bg-lienzo flex items-center justify-center font-serif text-carbon">
+      <div className="ac-page flex items-center justify-center">
         <h1 className="text-2xl italic text-carbon/50">Ejercicio no encontrado.</h1>
       </div>
     );
@@ -75,7 +75,7 @@ const ExerciseContent: React.FC<{ id: string }> = ({ id }) => {
 
   return (
     <ContentLayout pageType="ejercicio" diagram={exercise.Simulation ? <ContentDiagram component={exercise.Simulation} /> : undefined}>
-      <div className="min-h-screen bg-transparent text-carbon font-serif pb-32">
+      <div className="min-h-viewport bg-transparent text-carbon font-serif pb-32">
         <ProgressBar />
         <div className="w-full px-6 md:px-10 pt-4 pb-16">
           <ContentHeader
@@ -102,7 +102,7 @@ const ExerciseContent: React.FC<{ id: string }> = ({ id }) => {
               </p>
               {relatedTheorem && (
                 <Link href={`/teorema/${relatedTheorem.id}`}>
-                  <a className="inline-block mt-4 text-xs font-sans uppercase tracking-widest text-carbon/50 hover:text-carbon underline underline-offset-2 transition-colors">
+                  <a className="ac-link-back ac-interactive mt-4 text-xs hover:text-carbon underline underline-offset-2 transition-colors">
                     Volver al Teorema →
                   </a>
                 </Link>

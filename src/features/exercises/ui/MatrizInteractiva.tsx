@@ -126,7 +126,7 @@ export const MatrizInteractiva: React.FC<MatrizInteractivaProps> = ({ id, pregun
         {!isCompleted && (
           <button
             onClick={check}
-            className="page-accent-button mt-4 px-6 py-3 text-xs font-sans uppercase tracking-widest border border-carbon/30 text-carbon transition-all shadow-sm hover:shadow-md hover:-translate-y-0.5"
+            className="ac-btn ac-interactive page-accent-button mt-4 px-6 py-3 text-xs border border-carbon/30 text-carbon shadow-sm hover:shadow-md hover:-translate-y-0.5"
           >
             Comprobar Matriz
           </button>

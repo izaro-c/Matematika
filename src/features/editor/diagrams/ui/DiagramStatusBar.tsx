@@ -69,7 +69,7 @@ export const DiagramStatusBar: React.FC<DiagramStatusBarProps> = ({
       >
         <span className="sr-only">sync:{status}</span>
         <span className={`inline-block h-2 w-2 shrink-0 rounded-full ${config.color.split(' ')[0]}`} />
-        <span className={`hidden max-w-40 truncate text-[10px] font-bold uppercase tracking-wider xl:inline ${config.textClass}`}>
+        <span className={`hidden max-w-40 truncate ac-label ac-label--sm xl:inline ${config.textClass}`}>
           {config.label}
         </span>
         {isDirty && (
@@ -91,8 +91,8 @@ export const DiagramStatusBar: React.FC<DiagramStatusBarProps> = ({
       <div className="min-w-0 flex-1">
         <div className="flex min-w-0 items-center gap-2">
           <span className={`inline-block h-2 w-2 rounded-full ${config.color.split(' ')[0]}`} />
-          <span className={`truncate font-bold uppercase tracking-wider text-[10px] ${config.textClass}`}>{config.label}</span>
-          <span className="hidden text-[10px] font-bold uppercase tracking-wider text-carbon/45 lg:inline">{presentation.title}</span>
+          <span className={`truncate ac-label ac-label--sm ${config.textClass}`}>{config.label}</span>
+          <span className="hidden ac-label ac-label--sm ac-label--soft lg:inline">{presentation.title}</span>
           <span className="hidden rounded bg-carbon/10 px-1.5 py-0.5 font-mono text-[9px] font-semibold text-carbon lowercase sm:inline" title="Estado técnico de sincronización">
             sync:{status}
           </span>

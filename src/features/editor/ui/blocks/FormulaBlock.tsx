@@ -12,7 +12,7 @@ export const FormulaBlock: React.FC<FormulaBlockProps> = ({ id, content, onChang
 
   return (
     <div className="space-y-1">
-      <label className="block text-[9px] font-bold text-carbon/40 uppercase tracking-widest">Fórmula Matemática</label>
+      <label className="block ac-label ac-label--xs ac-label--faint">Fórmula Matemática</label>
       
       {isEditing ? (
         <div className="flex flex-col gap-1.5 bg-carbon/5 p-2.5 rounded border border-carbon/15 animate-in fade-in duration-100">

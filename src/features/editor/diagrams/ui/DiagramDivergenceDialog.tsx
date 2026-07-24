@@ -45,13 +45,13 @@ export const DiagramDivergenceDialog: React.FC<DiagramDivergenceDialogProps> = (
 
         <div className="grid min-h-0 flex-1 gap-4 overflow-y-auto p-4 md:grid-cols-2">
           <section aria-label="Vista previa del modelo visual" className="min-h-0 space-y-2">
-            <h3 className="text-[10px] font-bold uppercase tracking-widest text-carbon/50">Modelo visual actual</h3>
+            <h3 className="ac-label ac-label--sm">Modelo visual actual</h3>
             <div className="min-h-[220px] overflow-hidden rounded border border-carbon/15">
               <DiagramResponsivePreview model={model} pageType={pageType} />
             </div>
           </section>
           <section className="min-h-0 space-y-2">
-            <h3 id="diagram-divergence-source-title" className="text-[10px] font-bold uppercase tracking-widest text-carbon/50">Código fuente actual</h3>
+            <h3 id="diagram-divergence-source-title" className="ac-label ac-label--sm">Código fuente actual</h3>
             <textarea
               aria-labelledby="diagram-divergence-source-title"
               readOnly

@@ -44,7 +44,7 @@ export const DiagramViewportFrame: React.FC<DiagramViewportFrameProps> = ({ titl
     <section className="min-w-0 rounded border border-carbon/15 bg-carbon/[0.02]" aria-label={title} data-testid={testId}>
       <div className="flex flex-wrap items-center gap-2 border-b border-carbon/10 bg-lienzo px-3 py-2">
         <div className="mr-auto">
-          <h3 className="text-[10px] font-bold uppercase tracking-widest text-carbon/50">{title}</h3>
+          <h3 className="ac-label ac-label--sm">{title}</h3>
           <p className="text-[9px] text-carbon/45">{subtitle}</p>
         </div>
         {!editing && <><label className="text-xs font-bold text-carbon/55">

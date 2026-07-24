@@ -162,7 +162,7 @@ export function AxiomaticAxiomPicker({
                   return (
                     <div key={alternativeGroup} role="group" aria-label={formatAlternativeGroup(alternativeGroup)}>
                       {showAlternativeLabels && (
-                        <p className="px-2 pb-1 pt-2 font-sans text-[8px] font-bold uppercase tracking-[0.12em] text-carbon/45">
+                        <p className="ac-label ac-label--2xs ac-label--soft px-2 pb-1 pt-2 block">
                           {formatAlternativeGroup(alternativeGroup)}
                         </p>
                       )}

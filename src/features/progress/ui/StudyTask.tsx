@@ -90,7 +90,7 @@ export const StudyTask: React.FC<StudyTaskProps> = ({ id, type, title }) => {
           <span className="text-carbon/30 text-[10px]">◈</span>
         </div>
         <div>
-          <div className="text-[9px] font-sans uppercase tracking-[0.2em] text-carbon/50 mb-1 font-bold">{type}</div>
+          <div className="ac-label ac-label--xs ac-label--soft mb-1">{type}</div>
           <h3 className="text-xl font-serif text-carbon">{title}</h3>
           <div className="text-xs italic text-carbon/50 mt-1">Próximamente</div>
         </div>
@@ -110,7 +110,7 @@ export const StudyTask: React.FC<StudyTaskProps> = ({ id, type, title }) => {
           <span className="text-carbon/30 text-[10px]">◈</span>
         </div>
         <div className="flex-1">
-          <div className="text-[9px] font-sans uppercase tracking-[0.2em] text-carbon/40 mb-1 font-bold">
+          <div className="ac-label ac-label--xs ac-label--faint mb-1">
             {type} (Bloqueado)
           </div>
           <h3 className="text-xl font-serif text-carbon/50 font-bold">
@@ -118,7 +118,7 @@ export const StudyTask: React.FC<StudyTaskProps> = ({ id, type, title }) => {
           </h3>
           <div className="text-xs italic text-carbon/40 mt-1">Asimila los conceptos previos para desbloquear</div>
         </div>
-        <div className="text-[10px] font-sans uppercase tracking-widest font-bold text-carbon/30">
+        <div className="ac-eyebrow ac-eyebrow--sm font-bold text-carbon/30">
           {actionLabel}
         </div>
       </div>
@@ -143,7 +143,7 @@ export const StudyTask: React.FC<StudyTaskProps> = ({ id, type, title }) => {
           </div>
 
           <div className="flex-1">
-            <div className={`text-[9px] font-sans uppercase tracking-[0.2em] mb-1 font-bold transition-colors ${completed ? 'text-salvia/80' : 'page-accent-group-hover text-carbon/50'}`}>
+            <div className={`ac-label ac-label--xs mb-1 font-bold transition-colors ${completed ? 'text-salvia/80' : 'page-accent-group-hover text-carbon/50'}`}>
               {type}
             </div>
             <h3 className={`text-xl font-serif font-bold transition-colors ${completed ? 'text-salvia' : 'page-accent-group-hover text-carbon'}`}>
@@ -156,7 +156,7 @@ export const StudyTask: React.FC<StudyTaskProps> = ({ id, type, title }) => {
             <ContentThumbnail id={id} />
           </div>
 
-          <div className={`text-[10px] font-sans uppercase tracking-widest font-bold transition-colors ${completed ? 'text-salvia' : 'page-accent-group-hover text-carbon/40'}`}>
+          <div className={`ac-eyebrow ac-eyebrow--sm font-bold transition-colors ${completed ? 'text-salvia' : 'page-accent-group-hover text-carbon/40'}`}>
             {actionLabel}
           </div>
         </a>

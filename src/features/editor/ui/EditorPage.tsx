@@ -23,6 +23,7 @@ import { VisualEditorPanel } from './panels/VisualEditorPanel';
 import { CodeEditorPanel } from './panels/CodeEditorPanel';
 import { MetadataPanel } from './panels/MetadataPanel';
 import { DiagramSourcePanel } from './panels/DiagramSourcePanel';
+import { EditorApiStatusBanner } from './safety/EditorApiStatusBanner';
 import { SafetySummary } from './safety/SafetySummary';
 import { UnsavedChangesDialog } from './safety/UnsavedChangesDialog';
 import { EditorDiagnosticsPanel } from './panels/EditorDiagnosticsPanel';
@@ -394,7 +395,7 @@ export const EditorPage: React.FC = () => {
     if (!currentFile) {
       return (
         <div className="flex-1 flex flex-col items-center justify-center text-center p-8 bg-carbon/[0.025]">
-          <p className="text-[10px] font-bold uppercase tracking-widest text-salvia">Área de trabajo</p>
+          <p className="ac-label ac-label--sm ac-label--salvia">Área de trabajo</p>
           <h3 className="mt-2 text-xl font-serif font-bold text-carbon">Abra un recurso para comenzar</h3>
           <p className="text-sm text-carbon/55 max-w-md mt-2 font-serif">
             Documentos MDX y diagramas están separados en el explorador. Cada entrada explica si admite edición exacta o solo código con vista previa.
@@ -520,7 +521,9 @@ export const EditorPage: React.FC = () => {
   };
 
   return (
-    <EditorShell
+    <>
+      <EditorApiStatusBanner />
+      <EditorShell
       toolbar={
         <EditorToolbar
           isSidebarOpen={isSidebarOpen}
@@ -668,6 +671,7 @@ export const EditorPage: React.FC = () => {
       <PublishedRuntimePreview open={previewOpen} path={previewPath} hasPendingChanges={hasLocalChanges} revision={localRevision} onClose={() => setPreviewOpen(false)} />
       <CreatePageDialog open={createPageOpen} onClose={() => setCreatePageOpen(false)} onCreate={createPage} />
     </EditorShell>
+    </>
   );
 };
 

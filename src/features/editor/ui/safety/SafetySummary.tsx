@@ -60,7 +60,7 @@ export const SafetySummary: React.FC<SafetySummaryProps> = ({
       aria-label="Estado de seguridad del editor"
     >
       <div className="flex min-w-0 items-center gap-2">
-        <span className="shrink-0 rounded border border-current/25 px-2 py-0.5 text-[9px] font-bold uppercase tracking-wider">
+        <span className="shrink-0 ac-editor-badge rounded border border-current/25 px-2 py-0.5">
           {LEVEL_LABELS[presentation.level]}
         </span>
         <h2 className="shrink-0 font-serif text-xs font-bold text-carbon">{presentation.title}</h2>

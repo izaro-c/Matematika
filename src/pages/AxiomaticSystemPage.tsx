@@ -21,7 +21,7 @@ export function AxiomaticSystemPage() {
 
   if (!system) {
     return (
-      <div className="min-h-screen flex flex-col items-center justify-center bg-lienzo text-carbon">
+      <div className="min-h-viewport flex flex-col items-center justify-center bg-lienzo text-carbon">
         <h1 className="font-serif text-3xl mb-4">Sistema axiomático no encontrado</h1>
         <p className="text-pizarra mb-6">El sistema <code className="bg-carbon/5 px-2 py-0.5 rounded">{id}</code> no existe en la base de datos.</p>
       </div>
@@ -102,7 +102,7 @@ export function AxiomaticSystemPage() {
   );
 
   return (
-    <div className="min-h-screen flex flex-col w-full">
+    <div className="min-h-viewport flex flex-col w-full">
       <ContentLayout pageType="sistema-axiomatico" diagram={system.Simulation ? <ContentDiagram component={system.Simulation} /> : undefined}>
         {renderMainContent()}
       </ContentLayout>

@@ -1,6 +1,7 @@
 import { useEffect, useLayoutEffect, useRef, type MutableRefObject } from 'react';
 import JXG from 'jsxgraph';
 import type { ThemeColors } from '../core/MathBoard';
+import { safeBoardUpdate, setExactPointPosition } from '../core/MathUtils';
 import {
   createAngle,
   createAngleBisectorRay,
@@ -54,13 +55,13 @@ import {
   type DiagramBounds,
   type DiagramElement,
   type DiagramSpecV2,
-  resolveAreaDisplayPolygon,
   resolveAreaDisplayPolygons,
   type AreaPointResolver,
   curveActsAsArea,
   resolveCurveAreaPolygons,
   resolvePointCoordinates,
   sampleCurveElement,
+  onSupportTargetId,
 } from '../spec';
 import {
   attachLabelSelection,
@@ -112,6 +113,10 @@ import {
   withDiagramHoverTransition,
   type DiagramHoverController,
 } from './diagramHover';
+import {
+  buildVisualOrderById,
+  installTopmostOnlyHitTesting,
+} from './diagramTopmostHit';
 
 export {
   conditionAllows,
@@ -132,6 +137,31 @@ function createLiveAreaPointResolver(
     const point = model.points.find(candidate => candidate.id === id);
     return point ? { x: point.x, y: point.y } : undefined;
   };
+}
+
+/** Punto → extremos del soporte `on`/glider (p. ej. D → [B, C] en rayo BC). */
+function supportParentsByPointId(spec: DiagramSpecV2): Map<string, readonly string[]> {
+  const parents = new Map<string, readonly string[]>();
+  spec.points.forEach(point => {
+    const supportId = onSupportTargetId(spec, point);
+    if (!supportId) return;
+    const support = spec.elements.find(element => element.id === supportId);
+    if (!support?.refs.length) return;
+    parents.set(point.id, support.refs);
+  });
+  return parents;
+}
+
+function installDiagramHitTesting(
+  spec: DiagramSpecV2,
+  elements: Record<string, any>,
+  plan: ReturnType<typeof createScenePlan>,
+): void {
+  installTopmostOnlyHitTesting(
+    elements,
+    buildVisualOrderById(plan),
+    supportParentsByPointId(spec),
+  );
 }
 
 function resolveBoardViewportBounds(
@@ -703,6 +733,39 @@ export function createElement(
   }), theme) : null;
 }
 
+type ResolvedDragCoords = Map<string, { x: number; y: number }>;
+
+/**
+ * Durante un arrastre, el punto arrastrado encadena la última posición resuelta
+ * (restricciones 1D continuas). Los puntos sobre un soporte (glider / `on`) que
+ * no se están arrastrando usan siempre la posición viva de JSXGraph: el glider
+ * ya los mantiene en el soporte y una coordenada resuelta obsoleta los haría
+ * deslizar al re-proyectarse.
+ */
+function buildLiveDragSpec(
+  spec: DiagramSpecV2,
+  elements: Record<string, JXG.GeometryElement | undefined>,
+  draggedPointId: string,
+  resolvedCoords: ResolvedDragCoords,
+): DiagramSpecV2 {
+  return {
+    ...spec,
+    points: spec.points.map(point => {
+      const rendered = elements[point.id] as JXG.Point | undefined;
+      if (point.id !== draggedPointId && onSupportTargetId(spec, point) && rendered) {
+        return { ...point, x: rendered.X(), y: rendered.Y() };
+      }
+      const resolved = resolvedCoords.get(point.id);
+      if (resolved) return { ...point, ...resolved };
+      return rendered ? { ...point, x: rendered.X(), y: rendered.Y() } : point;
+    }),
+    sliders: spec.sliders.map(slider => {
+      const rendered = elements[slider.id] as JXG.Slider | undefined;
+      return rendered?.Value ? { ...slider, value: rendered.Value() } : slider;
+    }),
+  };
+}
+
 export interface UseBoardLifecycleOptions {
   spec: DiagramSpecV2;
   mode?: 'runtime' | 'editor' | 'preview';
@@ -753,12 +816,11 @@ export function useBoardLifecycle({
   const lastStackLayoutRef = useRef('');
 
   const handleBoardInit = (board: any, elements: Record<string, any>, theme: ThemeColors) => {
+    const resolvedDragCoordsRef: ResolvedDragCoords = new Map();
     hoverControllerRef.current = createDiagramHoverController();
     board.dehighlightAll?.();
     const hoverController = hoverControllerRef.current;
-    const requestSceneUpdate = () => {
-      if (!board.inUpdate) board.update();
-    };
+    const requestSceneUpdate = () => safeBoardUpdate(board);
     const boardContainer = board.containerObj ?? board.renderer?.container;
     boardContainer?.addEventListener('mouseleave', () => hoverController.clearAll(requestSceneUpdate));
     if (mode === 'editor') {
@@ -813,17 +875,7 @@ export function useBoardLifecycle({
         highlightStrokeColor: hoverColor,
       };
       if ('constraint' in sceneItem) {
-        const onConstraint = sceneItem.constraint === 'constrained'
-          ? (spec.constraints ?? []).find(constraint => (
-            constraint.enabled
-            && constraint.kind === 'on'
-            && constraint.refs[0] === sceneItem.id
-            && elements[constraint.refs[1]]
-          ))
-          : undefined;
-        const gliderTarget = sceneItem.constraint === 'glider'
-          ? sceneItem.gliderTarget
-          : onConstraint?.refs[1];
+        const gliderTarget = onSupportTargetId(spec, sceneItem);
         const attractors = sceneItem.attractorIds?.map(id => elements[id]).filter(Boolean) ?? [];
         const attractionOptions = !directInteractionLocked
           ? {
@@ -852,7 +904,7 @@ export function useBoardLifecycle({
             label: pointLabelOptions,
             layer: itemLayerNumber(spec, sceneItem),
           }, 'point'), theme)
-          : gliderTarget
+          : gliderTarget && elements[gliderTarget]
           ? createGlider(board, [sceneItem.x, sceneItem.y, elements[gliderTarget]], withDiagramHoverTransition({
             name: renderKatexTextToHtml(sceneItem.label),
             fixed: directInteractionLocked,
@@ -889,25 +941,37 @@ export function useBoardLifecycle({
           item.on('drag', () => {
             if (enforcing) return;
             releaseInactiveAttractions(spec, elements, sceneItem.id);
-            const liveSpec: DiagramSpecV2 = {
-              ...spec,
-              points: spec.points.map(point => elements[point.id]
-                ? { ...point, x: elements[point.id].X(), y: elements[point.id].Y() }
-                : point),
-              sliders: spec.sliders.map(slider => elements[slider.id]?.Value
-                ? { ...slider, value: elements[slider.id].Value() }
-                : slider),
-            };
+            // El punto arrastrado encadena la última posición resuelta (si existe) para
+            // que las restricciones 1D (on + sameSide) avancen de forma continua
+            // fotograma a fotograma. Los demás puntos usan la última posición
+            // resuelta por el motor de restricciones cuando existe; si no, la de
+            // JSXGraph (varios puntos arrastrados a la vez en el mismo gesto).
+            const liveSpec = buildLiveDragSpec(spec, elements, sceneItem.id, resolvedDragCoordsRef);
             const nextSpec = withMovedPoint(liveSpec, sceneItem.id, item.X(), item.Y());
+            nextSpec.points.forEach(point => {
+              resolvedDragCoordsRef.set(point.id, { x: point.x, y: point.y });
+            });
             enforcing = true;
             const restoreInactiveAttractors = suspendInactiveAttractors(spec, elements, sceneItem.id);
             try {
+              // Cada punto se reposiciona sin disparar su propio board.update()
+              // (JXG.Point#moveTo con time=0 llama a board.update() internamente);
+              // una única reconciliación al final evita repetir el trabajo por
+              // cada punto afectado en el mismo fotograma de arrastre.
+              // Se usa `setExactPointPosition` (no `setPosition` directo): esta
+              // coordenada ya es el resultado RESUELTO del motor de
+              // restricciones, y `setPosition` reaplicaría snapToGrid/attractToGrid
+              // sobre ella, pudiendo redondearla de vuelta al lado equivocado de
+              // un límite (p. ej. deshaciendo el recorte de sameSide).
+              let anyMoved = false;
               nextSpec.points.forEach(nextPoint => {
                 const renderedPoint = elements[nextPoint.id];
                 if (!renderedPoint) return;
                 if (Math.abs(nextPoint.x - renderedPoint.X()) <= 1e-8 && Math.abs(nextPoint.y - renderedPoint.Y()) <= 1e-8) return;
-                renderedPoint.moveTo([nextPoint.x, nextPoint.y], 0);
+                setExactPointPosition(renderedPoint, JXG.COORDS_BY_USER, [nextPoint.x, nextPoint.y]);
+                anyMoved = true;
               });
+              if (anyMoved) safeBoardUpdate(board);
             } finally {
               restoreInactiveAttractors();
               enforcing = false;
@@ -915,11 +979,12 @@ export function useBoardLifecycle({
           });
         }
         if (!directInteractionLocked && sceneItem.constraint !== 'derived') item.on('up', () => {
+          resolvedDragCoordsRef.clear();
           const finalX = item.X();
           const finalY = item.Y();
           const released = releaseAuthoredAttraction(sceneItem, elements);
           const releasedOthers = releaseInactiveAttractions(spec, elements, sceneItem.id);
-          if (released || releasedOthers) board.update();
+          if (released || releasedOthers) safeBoardUpdate(board);
           interactionCallbacksRef.current.onPointMove?.(sceneItem.id, finalX, finalY);
         });
       } else if ('kind' in sceneItem) {
@@ -986,28 +1051,27 @@ export function useBoardLifecycle({
           const dx = key === 'ArrowLeft' ? -step : key === 'ArrowRight' ? step : 0;
           const dy = key === 'ArrowDown' ? -step : key === 'ArrowUp' ? step : 0;
           const requested = { x: element.X() + dx, y: element.Y() + dy };
-          const liveSpec: DiagramSpecV2 = {
-            ...spec,
-            points: spec.points.map(point => elements[point.id]
-              ? { ...point, x: elements[point.id].X(), y: elements[point.id].Y() }
-              : point),
-            sliders: spec.sliders.map(slider => elements[slider.id]?.Value
-              ? { ...slider, value: elements[slider.id].Value() }
-              : slider),
-          };
+          const liveSpec = buildLiveDragSpec(spec, elements, sceneItem.id, resolvedDragCoordsRef);
           const nextSpec = withMovedPoint(liveSpec, sceneItem.id, requested.x, requested.y);
+          nextSpec.points.forEach(point => {
+            resolvedDragCoordsRef.set(point.id, { x: point.x, y: point.y });
+          });
           const restoreInactiveAttractors = suspendInactiveAttractors(spec, elements, sceneItem.id);
           try {
+            // Mismo patrón que el manejador de arrastre: reposicionar sin
+            // disparar un board.update() por punto, reconciliar una sola vez,
+            // y usar `setExactPointPosition` para que snapToGrid/attractToGrid
+            // no redondeen la coordenada ya resuelta por las restricciones.
             nextSpec.points.forEach(nextPoint => {
               const renderedPoint = elements[nextPoint.id];
               if (!renderedPoint) return;
-              renderedPoint.moveTo([nextPoint.x, nextPoint.y], 0);
+              setExactPointPosition(renderedPoint, JXG.COORDS_BY_USER, [nextPoint.x, nextPoint.y]);
             });
           } finally {
             restoreInactiveAttractors();
           }
           releaseAuthoredAttraction(sceneItem, elements);
-          board.update();
+          safeBoardUpdate(board);
           interactionCallbacksRef.current.onPointMove?.(sceneItem.id, element.X(), element.Y());
           const node = element.rendNode as HTMLElement | undefined;
           node?.setAttribute('aria-label', `${sceneItem.selection.ariaLabel ?? sceneItem.label}: x ${element.X().toFixed(2)}, y ${element.Y().toFixed(2)}`);
@@ -1023,7 +1087,7 @@ export function useBoardLifecycle({
                 ? maximum
                 : Math.min(maximum, Math.max(sceneItem.min, current + (key === 'ArrowLeft' || key === 'ArrowDown' ? -delta : delta)));
             element.setValue?.(next);
-            board.update();
+            safeBoardUpdate(board);
             interactionCallbacksRef.current.onSliderChange?.(sceneItem.id, next);
             const node = element.rendNode as HTMLElement | undefined;
             node?.setAttribute('aria-valuemax', String(maximum));
@@ -1071,6 +1135,9 @@ export function useBoardLifecycle({
         element.visProp.attractors = attractors;
       }
     });
+
+    // Hit preferido: cima del apilado, o glider dependiente si solapa con un extremo.
+    installDiagramHitTesting(spec, elements, createScenePlan(spec));
   };
 
   const applyEntrySceneVisuals = (
@@ -1475,6 +1542,7 @@ export function useBoardLifecycle({
         const layerNum = stackCount <= 1 ? 10 : Math.round(index * 20 / (stackCount - 1));
         applyRenderedStackLayer(elements[entry.item.id], layerNum);
       });
+      installDiagramHitTesting(spec, elements, plan);
     }
     plan.forEach(entry => {
       const item = entry.item;

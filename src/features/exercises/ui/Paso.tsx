@@ -52,12 +52,12 @@ export const Paso: React.FC<PasoProps> = ({ id, numero, titulo, children, visibl
         }}
       >
         {displayNum !== undefined && (
-          <div className="page-accent-group-border flex items-center justify-center w-7 h-7 bg-lienzo border border-carbon/30 rounded-none text-xs font-serif font-bold text-carbon/70 shrink-0 shadow-[inset_0_1px_2px_rgba(0,0,0,0.02)] transition-all">
+          <div className="page-accent-group-border flex items-center justify-center w-7 h-7 bg-lienzo border border-carbon/30 rounded-none text-xs font-serif font-bold text-carbon/70 shrink-0 ac-inset-shadow-sm transition-all">
             {displayNum}
           </div>
         )}
         {titulo && (
-          <h4 className="page-accent-group-hover text-sm font-bold text-carbon font-sans uppercase tracking-wider transition-colors flex items-center gap-2">
+          <h4 className="page-accent-group-hover text-sm font-semibold text-carbon font-sans transition-colors flex items-center gap-2">
             {titulo}
             <span className="text-[9px] text-carbon/30 group-hover:text-carbon/60 transition-colors">
               {revealed ? '▲' : '▼'}

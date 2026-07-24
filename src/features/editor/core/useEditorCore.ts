@@ -13,6 +13,7 @@ import {
   ContentRepository, DraftRepository, SaveCoordinator, editorApiClient, hashSource,
   type EditorSaveSnapshot, type PersistenceError, type SaveCoordinatorEvent
 } from '../persistence';
+import { editorApiUnavailableInProduction, editorWriteAccessGranted } from '../persistence/editorApiBase';
 import {
   editorPersistenceReducer, initialEditorPersistenceState, persistenceStatusLabel
 } from '../state';
@@ -367,6 +368,10 @@ export const useEditorCore = () => {
   }, [commitMutation, doc]);
 
   const createPage = useCallback(async (input: CreatePageInput): Promise<boolean> => {
+    if (editorApiUnavailableInProduction() || !editorWriteAccessGranted()) {
+      setMessage('No se puede crear la página: se requiere API configurada y token de edición.');
+      return false;
+    }
     try {
       const source = createPageSource(input);
       const path = createPagePath(input);
@@ -393,6 +398,14 @@ export const useEditorCore = () => {
   const saveCurrentFile = useCallback(async (): Promise<boolean> => {
     const state = persistenceRef.current;
     if (!state.file || !state.version) return false;
+    if (editorApiUnavailableInProduction()) {
+      setMessage('No se puede guardar: la API del editor no está configurada en este despliegue.');
+      return false;
+    }
+    if (!editorWriteAccessGranted()) {
+      setMessage('No se puede guardar: introduce el token de edición para persistir cambios.');
+      return false;
+    }
     const captured = {
       file: state.file,
       source: sourceRef.current,
@@ -433,6 +446,10 @@ export const useEditorCore = () => {
   const saveDraftCurrentFile = useCallback(async (): Promise<boolean> => {
     const state = persistenceRef.current;
     if (!coordinator || !state.file || !state.version || state.localRevision <= state.confirmedRevision) return false;
+    if (editorApiUnavailableInProduction() || !editorWriteAccessGranted()) {
+      setMessage('No se puede guardar borrador: se requiere API configurada y token de edición.');
+      return false;
+    }
     const source = sourceRef.current;
     const localRevision = revisionRef.current;
     const sourceHash = await hashSource(source);

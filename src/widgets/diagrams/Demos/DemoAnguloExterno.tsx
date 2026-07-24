@@ -14,10 +14,10 @@ export const DemoAnguloExternoSpec = createDiagramSpec(
   "showLabels": true,
   "viewport": {
     "bounds": [
-      -5.5,
-      5.5,
-      5,
-      -5
+      -4.1528,
+      4.882035121914315,
+      3.8728,
+      -3.6320048444019744
     ],
     "home": [
       -5,
@@ -66,8 +66,8 @@ export const DemoAnguloExternoSpec = createDiagramSpec(
       "objectType": "point",
       "definition": {
         "type": "coordinates",
-        "x": -4.04,
-        "y": -2.69
+        "x": -3.45,
+        "y": -2.09
       },
       "mobility": {
         "type": "free"
@@ -99,8 +99,8 @@ export const DemoAnguloExternoSpec = createDiagramSpec(
       "objectType": "point",
       "definition": {
         "type": "coordinates",
-        "x": 2.9,
-        "y": -2.6
+        "x": 2.68,
+        "y": -2.11
       },
       "mobility": {
         "type": "free"
@@ -132,8 +132,8 @@ export const DemoAnguloExternoSpec = createDiagramSpec(
       "objectType": "point",
       "definition": {
         "type": "coordinates",
-        "x": -0.38,
-        "y": 2.77
+        "x": 1.39,
+        "y": 1.31
       },
       "mobility": {
         "type": "free"
@@ -165,49 +165,12 @@ export const DemoAnguloExternoSpec = createDiagramSpec(
       "objectType": "point",
       "definition": {
         "type": "coordinates",
-        "x": -1.7524114088159028,
-        "y": 5.808910976663785
+        "x": 1.4620467301008886,
+        "y": 3.5652149600740386
       },
       "mobility": {
         "type": "on-support",
-        "support": "rayBC"
-      },
-      "appearance": {
-        "size": 7,
-        "labelVisible": true,
-        "highlightSize": 10,
-        "preserveColorOnHighlight": true
-      },
-      "interaction": {}
-    },
-    {
-      "id": "paux",
-      "label": "Aux",
-      "color": "terracota",
-      "layerId": "geometry",
-      "order": 5,
-      "visible": false,
-      "locked": false,
-      "groupIds": [],
-      "selection": {
-        "selectable": false,
-        "highlightable": false,
-        "ariaLabel": "Punto E",
-        "role": "primary"
-      },
-      "target": true,
-      "targetId": "paux",
-      "objectType": "point",
-      "definition": {
-        "type": "coordinates",
-        "x": -44.68272619644714,
-        "y": 75.30220721796377
-      },
-      "mobility": {
-        "type": "constrained",
-        "relationIds": [
-          "constraint1"
-        ]
+        "support": "rayCaux"
       },
       "appearance": {
         "size": 7,
@@ -236,8 +199,8 @@ export const DemoAnguloExternoSpec = createDiagramSpec(
       "objectType": "point",
       "definition": {
         "type": "coordinates",
-        "x": -7.32,
-        "y": 2.68
+        "x": -4.74,
+        "y": 1.33
       },
       "mobility": {
         "type": "constrained",
@@ -272,14 +235,48 @@ export const DemoAnguloExternoSpec = createDiagramSpec(
       "objectType": "point",
       "definition": {
         "type": "coordinates",
-        "x": 6.5600000000000005,
-        "y": 2.86
+        "x": 7.5200000000000005,
+        "y": 1.29
       },
       "mobility": {
         "type": "constrained",
         "relationIds": [
           "constraint4"
         ]
+      },
+      "appearance": {
+        "size": 7,
+        "labelVisible": true,
+        "highlightSize": 10,
+        "preserveColorOnHighlight": true
+      },
+      "interaction": {}
+    },
+    {
+      "id": "paux",
+      "label": "aux",
+      "color": "terracota",
+      "layerId": "geometry",
+      "order": 43,
+      "visible": false,
+      "locked": false,
+      "groupIds": [],
+      "selection": {
+        "selectable": true,
+        "ariaLabel": "Punto E",
+        "role": "primary"
+      },
+      "target": true,
+      "targetId": "paux",
+      "objectType": "point",
+      "definition": {
+        "type": "coordinates",
+        "x": 2.0512190957166068,
+        "y": 30
+      },
+      "mobility": {
+        "type": "on-support",
+        "support": "rayBC"
       },
       "appearance": {
         "size": 7,
@@ -428,8 +425,8 @@ export const DemoAnguloExternoSpec = createDiagramSpec(
       "geometry": {
         "type": "ray",
         "points": [
-          "pC",
-          "paux"
+          "pB",
+          "pC"
         ]
       },
       "appearance": {
@@ -912,7 +909,7 @@ export const DemoAnguloExternoSpec = createDiagramSpec(
         "pC",
         "pA"
       ],
-      "sweep": "directed",
+      "sweep": "non-reflex",
       "marker": "arc",
       "appearance": {
         "radius": 1,
@@ -1226,6 +1223,7 @@ export const DemoAnguloExternoSpec = createDiagramSpec(
         ]
       },
       "count": 1,
+      "height": 0.6,
       "appearance": {
         "preserveColorOnHighlight": true
       }
@@ -1256,6 +1254,7 @@ export const DemoAnguloExternoSpec = createDiagramSpec(
         ]
       },
       "count": 1,
+      "height": 0.6,
       "appearance": {
         "preserveColorOnHighlight": true
       }
@@ -1383,25 +1382,39 @@ export const DemoAnguloExternoSpec = createDiagramSpec(
         "highlightStrokeWidth": 3,
         "preserveColorOnHighlight": true
       }
+    },
+    {
+      "id": "rayCaux",
+      "label": "Semirrecta",
+      "color": "pavo",
+      "layerId": "geometry",
+      "order": 44,
+      "visible": false,
+      "locked": false,
+      "groupIds": [],
+      "selection": {
+        "selectable": true,
+        "ariaLabel": "Semirrecta",
+        "role": "secondary"
+      },
+      "target": true,
+      "targetId": "rayCaux",
+      "objectType": "path",
+      "geometry": {
+        "type": "ray",
+        "points": [
+          "pC",
+          "paux"
+        ]
+      },
+      "appearance": {
+        "strokeWidth": 2.4,
+        "highlightStrokeWidth": 3,
+        "preserveColorOnHighlight": true
+      }
     }
   ],
   "relations": [
-    {
-      "id": "constraint1",
-      "label": "Sobre una paralela",
-      "enabled": true,
-      "type": "parallel",
-      "supports": [
-        [
-          "paux",
-          "pB"
-        ],
-        [
-          "paux",
-          "pC"
-        ]
-      ]
-    },
     {
       "id": "constraint3",
       "label": "Reflejo simétrico",
@@ -1441,7 +1454,10 @@ export const DemoAnguloExternoSpec = createDiagramSpec(
         "nonReflexAngleABC",
         "pA",
         "pB",
-        "pC"
+        "pC",
+        "pD",
+        "paux",
+        "rayCaux"
       ],
       "durationMs": 1800,
       "objectStates": {
@@ -1467,7 +1483,7 @@ export const DemoAnguloExternoSpec = createDiagramSpec(
           "interactive": true
         },
         "pD": {
-          "visible": false,
+          "visible": true,
           "emphasis": "none",
           "interactive": true
         },
@@ -1682,7 +1698,9 @@ export const DemoAnguloExternoSpec = createDiagramSpec(
         "congruenceMarkAmidAC",
         "congruenceMarkmidACC",
         "midAC",
-        "segBmidAC_2"
+        "segBmidAC_2",
+        "paux",
+        "rayCaux"
       ],
       "durationMs": 1800,
       "objectStates": {
@@ -1908,7 +1926,9 @@ export const DemoAnguloExternoSpec = createDiagramSpec(
         "rayBmidAC",
         "midAC",
         "congruenceMarkAmidAC",
-        "congruenceMarkmidACC"
+        "congruenceMarkmidACC",
+        "paux",
+        "rayCaux"
       ],
       "durationMs": 1800,
       "objectStates": {
@@ -2139,7 +2159,9 @@ export const DemoAnguloExternoSpec = createDiagramSpec(
         "congruenceMarkmidACC",
         "congruenceMarkBmidAC",
         "congruenceMarkmidACF",
-        "segBmidAC_2"
+        "segBmidAC_2",
+        "paux",
+        "rayCaux"
       ],
       "durationMs": 1800,
       "objectStates": {
@@ -2385,7 +2407,9 @@ export const DemoAnguloExternoSpec = createDiagramSpec(
         "polygonCFmidAC",
         "nonReflexAngleAmidACB",
         "nonReflexAngleCmidACF",
-        "segBmidAC_2"
+        "segBmidAC_2",
+        "paux",
+        "rayCaux"
       ],
       "durationMs": 1800,
       "objectStates": {
@@ -2627,7 +2651,9 @@ export const DemoAnguloExternoSpec = createDiagramSpec(
         "polygonCFmidAC",
         "segBmidAC_2",
         "nonReflexAngleBAC",
-        "nonReflexAnglemidACCF"
+        "nonReflexAnglemidACCF",
+        "paux",
+        "rayCaux"
       ],
       "durationMs": 1800,
       "objectStates": {
@@ -2864,7 +2890,9 @@ export const DemoAnguloExternoSpec = createDiagramSpec(
         "pF",
         "midAC",
         "segBmidAC",
-        "segmidACF"
+        "segmidACF",
+        "paux",
+        "rayCaux"
       ],
       "durationMs": 1800,
       "objectStates": {
@@ -3100,7 +3128,9 @@ export const DemoAnguloExternoSpec = createDiagramSpec(
         "pF",
         "rayCA",
         "nonReflexAngleACD",
-        "midAC"
+        "midAC",
+        "paux",
+        "rayCaux"
       ],
       "durationMs": 1800,
       "objectStates": {

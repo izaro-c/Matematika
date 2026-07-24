@@ -68,11 +68,20 @@ describe('MathBoard controlled viewport', () => {
   });
 
   it('re-asserts the controlled viewport after programmatic board updates', () => {
+    // MathBoard envuelve board.update() con su propia lógica al montar; como
+    // este mock de board se reutiliza entre tests de este fichero sin
+    // desmontar, se restaura a un vi.fn() limpio para que el montaje de este
+    // test sea la única capa de envoltura activa.
+    mocks.board.update = vi.fn();
     const onUpdate = vi.fn();
     render(<MathBoard boundingbox={[-2, 2, 2, -2]} onInit={vi.fn()} onUpdate={onUpdate} />);
     mocks.board.getBoundingBox.mockReturnValue([-20, 20, 20, -20]);
     mocks.board.setBoundingBox.mockClear();
-    act(() => { mocks.handlers.update(); });
+    // MathBoard envuelve board.update() (no el evento 'update') para que la
+    // corrección del bounding box se aplique después de que board.inUpdate
+    // vuelva a false; se invoca aquí la versión ya envuelta, tal como haría
+    // cualquier llamador real de board.update().
+    act(() => { mocks.board.update(); });
     expect(mocks.board.setBoundingBox).toHaveBeenCalled();
     const lastCall = mocks.board.setBoundingBox.mock.calls.at(-1)?.[0];
     expect(lastCall?.[0]).toBeCloseTo(-2, 0);

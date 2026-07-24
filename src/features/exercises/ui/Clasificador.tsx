@@ -169,7 +169,7 @@ export const Clasificador: React.FC<ClasificadorProps> = ({ id, pregunta, bucket
                 className="flex flex-col min-h-[160px] bg-lienzo"
               >
                 {/* Cabecera del Cubo */}
-                <div className={`py-3 text-center text-sm font-bold uppercase tracking-widest font-sans border-b transition-colors ${isCompleted ? 'text-salvia border-salvia/40' : 'text-carbon border-carbon/60'}`}>
+                <div className={`py-3 text-center text-sm font-semibold ac-eyebrow border-b transition-colors ${isCompleted ? 'text-salvia border-salvia/40' : 'text-carbon border-carbon/60'}`}>
                   {bucket.title}
                 </div>
 
@@ -208,7 +208,7 @@ export const Clasificador: React.FC<ClasificadorProps> = ({ id, pregunta, bucket
           <div className="mt-8 flex justify-end border-t border-carbon/10 pt-5">
             <button
               onClick={check}
-              className="page-accent-button px-6 py-3 text-xs font-sans uppercase tracking-widest border border-carbon/30 text-carbon transition-colors"
+              className="ac-btn ac-interactive page-accent-button px-6 py-3 text-xs border border-carbon/30 text-carbon transition-colors"
             >
               Comprobar Clasificación
             </button>

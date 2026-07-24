@@ -48,3 +48,6 @@ docs/api/
 .vite/
 .matematika/
 
+# Codebase-memory artifacts (stamp.json se versiona)
+.codebase-memory/graph.db.zst
+

@@ -80,7 +80,7 @@ const InlineHueco: React.FC<{
           }`}
         />
         {input.trim() && (
-          <button onClick={onCheck} className="page-accent-text text-[10px] opacity-0 group-hover:opacity-100 transition-opacity uppercase tracking-widest font-sans">
+          <button onClick={onCheck} className="page-accent-text ac-eyebrow ac-eyebrow--sm opacity-0 group-hover:opacity-100 transition-opacity">
             ↵
           </button>
         )}
@@ -166,7 +166,7 @@ export const Hueco: React.FC<HuecoProps> = ({
           <button
             onClick={check}
             disabled={!input.trim()}
-            className="page-accent-button px-6 py-2 text-xs font-sans uppercase tracking-widest border border-carbon/40 text-carbon/80 transition-all shadow-sm disabled:opacity-30 disabled:cursor-not-allowed hover:-translate-y-0.5 hover:shadow-md"
+            className="ac-btn ac-interactive page-accent-button px-6 py-2 text-xs border border-carbon/40 text-carbon/80 transition-all shadow-sm disabled:opacity-30 disabled:cursor-not-allowed hover:-translate-y-0.5 hover:shadow-md"
           >
             Comprobar
           </button>
@@ -185,7 +185,7 @@ export const Hueco: React.FC<HuecoProps> = ({
       {canReveal && !isDone && (
         <button
           onClick={() => reveal(id)}
-          className="page-accent-text mt-4 text-[10px] uppercase font-sans tracking-widest underline underline-offset-4 opacity-70 hover:opacity-100 transition-opacity"
+          className="page-accent-text ac-eyebrow ac-eyebrow--sm mt-4 underline underline-offset-4 opacity-70 hover:opacity-100 transition-opacity"
         >
           Revelar Solución
         </button>

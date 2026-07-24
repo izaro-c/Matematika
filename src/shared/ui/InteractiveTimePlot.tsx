@@ -43,7 +43,7 @@ export const InteractiveTimePlot: React.FC<InteractiveTimePlotProps> = ({ nodes 
 
   return (
     <div className="w-full mt-6 mb-2 border-b border-carbon/20 pb-4">
-      <div className="text-[10px] uppercase font-sans tracking-widest text-carbon/40 mb-2">Densidad Histórica</div>
+      <div className="ac-eyebrow ac-eyebrow--sm ac-eyebrow--muted mb-2">Densidad histórica</div>
       <div className="relative w-full flex items-end group" style={{ height: `${height}px` }}>
         {bins.map(([century, count]) => {
           const h = maxCount > 0 ? (count / maxCount) * height : 0;

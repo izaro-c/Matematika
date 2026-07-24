@@ -1,6 +1,7 @@
 import type { ThemeColors } from './MathBoard';
 import JXG from 'jsxgraph';
 import type { GeometryOptions, JXGCoord, JXGPolygon, JXGSlider, PointLike, PointSupport } from './MathUtils';
+import { setExactPointPosition } from './MathUtils';
 import { DEFAULT_ANGLE_RADIUS, DEFAULT_RIGHT_ANGLE_RADIUS } from '../spec';
 import {
   halfPlaneViewportPolygon,
@@ -290,7 +291,8 @@ export function updateStaticAreaPolygon(
   const vertices = polygon.vertices as JXG.Point[];
   const sampled = subsamplePolygonPoints(points, vertices.length);
   sampled.forEach((point, index) => {
-    vertices[index]?.setPosition(JXG.COORDS_BY_USER, [point.x, point.y]);
+    const vertex = vertices[index];
+    if (vertex) setExactPointPosition(vertex, JXG.COORDS_BY_USER, [point.x, point.y]);
   });
 }
 export function updateSampledCurve(

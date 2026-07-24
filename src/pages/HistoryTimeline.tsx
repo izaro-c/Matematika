@@ -32,7 +32,7 @@ const EraInsignia: React.FC<{ era: string; year: number }> = ({ era, year }) => 
         className="inline-block w-2 h-2 rounded-full"
         style={{ backgroundColor: period.color }}
       />
-      <span className="text-[10px] font-sans uppercase tracking-[0.2em]" style={{ color: period.color }}>
+      <span className="ac-eyebrow ac-eyebrow--sm" style={{ color: period.color }}>
         {era}
       </span>
     </div>
@@ -82,7 +82,7 @@ export const HistoryTimeline = () => {
 
   return (
     <div
-      className="bg-lienzo bg-arts-and-crafts text-carbon font-serif pt-20 pb-32 relative min-h-screen"
+      className="bg-lienzo bg-arts-and-crafts text-carbon font-serif pt-20 pb-32 relative min-h-viewport"
       style={{ backgroundImage: `url(${publicAsset('/images/bg-botanical.png')})`, backgroundSize: '500px' }}
       ref={containerRef}
     >
@@ -93,13 +93,13 @@ export const HistoryTimeline = () => {
 
       {/* ── Cabecera ──────────────────────────────────────────────── */}
       <div className="relative z-20 max-w-4xl mx-auto px-6 md:px-0 mb-16">
-        <Link href="/" className="inline-flex items-center gap-2 text-xs font-sans tracking-widest uppercase text-carbon/40 hover:text-carbon transition-colors mb-10">
+        <Link href="/" className="inline-flex items-center gap-2 ac-eyebrow text-carbon/40 hover:text-carbon transition-colors mb-10">
           ← Biblioteca
         </Link>
 
         <div className="border-b border-carbon/10 pb-8 flex flex-col md:flex-row md:items-end justify-between gap-6">
           <div>
-            <div className="text-xs font-sans uppercase tracking-[0.3em] text-terracota/60 mb-2">
+            <div className="ac-eyebrow ac-eyebrow--accent text-terracota/60 mb-2">
               Crónica Universal
             </div>
             <h1 className="text-5xl text-carbon font-bold leading-none">
@@ -117,7 +117,7 @@ export const HistoryTimeline = () => {
               <button
                 key={era}
                 onClick={() => setFilter(era)}
-                className={`px-3 py-1.5 text-[10px] font-sans uppercase tracking-widest border transition-all ${filter === era
+                className={`px-3 py-1.5 ac-eyebrow ac-eyebrow--sm border transition-all ${filter === era
                   ? 'bg-carbon text-lienzo border-carbon'
                   : 'border-carbon/20 text-carbon/50 hover:border-carbon/50 hover:text-carbon'
                   }`}
@@ -202,7 +202,7 @@ export const HistoryTimeline = () => {
                             {theorems.map(t => (
                               <span
                                 key={t.id}
-                                className="text-[9px] font-sans uppercase tracking-widest border border-carbon/15 px-2 py-0.5 text-carbon/50"
+                                className="ac-eyebrow ac-eyebrow--xs border border-carbon/15 px-2 py-0.5 text-carbon/50"
                               >
                                 {t.title}
                               </span>

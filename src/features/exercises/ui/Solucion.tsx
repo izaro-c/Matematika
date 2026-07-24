@@ -28,7 +28,7 @@ export const Solucion: React.FC<SolucionProps> = ({ children, label = 'Ver Soluc
             setRevealed(true);
             setActiveStep('Solucion');
           }}
-          className="w-full flex items-center justify-center gap-3 py-4 elegant-panel text-carbon/60 hover:text-carbon text-[11px] font-sans uppercase tracking-widest group"
+          className="w-full flex items-center justify-center gap-3 py-4 elegant-panel ac-eyebrow text-carbon/60 hover:text-carbon group"
           style={{ '--hover-accent': 'var(--page-accent)' } as React.CSSProperties}
         >
           <span className="page-accent-text opacity-80 group-hover:opacity-100 transition-all">{label}</span>
@@ -44,14 +44,14 @@ export const Solucion: React.FC<SolucionProps> = ({ children, label = 'Ver Soluc
               setRevealed(false);
               setActiveStep(null);
             }}
-            className="page-accent-text-hover absolute top-4 right-4 text-[10px] font-sans uppercase tracking-widest text-carbon/30 transition-colors"
+            className="page-accent-text-hover absolute top-4 right-4 ac-eyebrow ac-eyebrow--sm text-carbon/30 transition-colors"
           >
             ✕ Cerrar
           </button>
 
           {/* Encabezado */}
           <div className="flex items-center gap-2 mb-6">
-            <span className="text-carbon/50 text-[10px] font-sans uppercase tracking-widest border-b border-carbon/20 pb-1">
+            <span className="text-carbon/50 ac-eyebrow ac-eyebrow--sm border-b border-carbon/20 pb-1">
               Solución Detallada
             </span>
           </div>

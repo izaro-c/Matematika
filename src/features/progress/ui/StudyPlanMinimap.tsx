@@ -91,7 +91,7 @@ export const StudyPlanMinimap: React.FC<StudyPlanMinimapProps> = ({ requiredNode
   return (
     <div className="w-full bg-arts-and-crafts border border-carbon/15 px-6 py-4 my-6 rounded-[2px] shadow-sm select-none relative overflow-hidden flex flex-col items-center">
       {/* Cabecera compacta */}
-      <div className="w-full flex items-center justify-between text-[9px] font-sans tracking-[0.25em] uppercase text-carbon/40 font-bold mb-3 border-b border-carbon/5 pb-2">
+      <div className="w-full flex items-center justify-between ac-label ac-label--xs ac-label--faint mb-3 border-b border-carbon/5 pb-2">
         <span>Mapa de la Ruta</span>
         <span className="text-[8px] tracking-normal font-normal normal-case italic text-carbon/50">Pulsa un hito para navegar</span>
       </div>
@@ -224,23 +224,23 @@ export const StudyPlanMinimap: React.FC<StudyPlanMinimapProps> = ({ requiredNode
       <div className="w-full flex justify-center text-center mt-2 h-6 items-center">
         {hoveredNode ? (
           <div className="text-xs font-sans tracking-wide text-carbon animate-fade-in">
-            <span className="font-bold uppercase text-[9px] page-accent-text mr-1.5">
+            <span className="ac-label ac-label--xs page-accent-text mr-1.5">
               {hoveredNode.type.split(':')[0]}:
             </span>
             <span className="font-serif italic text-carbon/80">{hoveredNode.title.split(':')[0]}</span>
             {hoveredNode.completed ? (
-              <span className="ml-2 text-[8px] font-sans uppercase font-bold tracking-widest text-salvia">✓ Asimilado</span>
+              <span className="ml-2 ac-label ac-label--2xs ac-label--salvia">✓ Asimilado</span>
             ) : (
-              <span className="ml-2 text-[8px] font-sans uppercase font-bold tracking-widest text-carbon/40">Pendiente</span>
+              <span className="ml-2 ac-label ac-label--2xs ac-label--faint">Pendiente</span>
             )}
           </div>
         ) : nextStepNode ? (
           <div className="text-[11px] font-sans tracking-wide text-carbon/50">
-            <span className="font-bold uppercase text-[8px] tracking-widest text-carbon/40 mr-1.5">Siguiente objetivo:</span>
+            <span className="ac-label ac-label--2xs ac-label--faint mr-1.5">Siguiente objetivo:</span>
             <span className="font-serif italic">{nextStepNode.title.split(':')[0]}</span>
           </div>
         ) : (
-          <div className="text-xs font-sans tracking-wide text-salvia font-bold uppercase">
+          <div className="text-xs ac-label ac-label--md ac-label--salvia">
             🎉 ¡Ruta completada!
           </div>
         )}

@@ -358,7 +358,7 @@ export const DiagramWorkbenchCore: React.FC<DiagramWorkbenchCoreProps> = ({
       <DiagramWorkbenchNotices clipboardStatus={clipboard.status} mode={mode} mdxLinkNotice={mdxLinkNotice} />
 
       <div className="flex min-h-0 flex-1 flex-col">
-          <label className="flex min-h-14 shrink-0 items-center gap-3 border-b border-carbon/15 bg-lienzo px-3 text-[10px] font-bold uppercase tracking-wider text-carbon/50 sm:hidden">
+          <label className="flex min-h-14 shrink-0 items-center gap-3 border-b border-carbon/15 bg-lienzo px-3 ac-label ac-label--sm sm:hidden">
             Tarea
             <select aria-label="Tarea del editor de diagramas" className="min-h-10 min-w-0 flex-1 rounded border border-carbon/15 bg-lienzo px-2 text-xs font-bold normal-case tracking-normal text-carbon" value={workspace} onChange={event => setWorkspace(event.target.value as typeof workspace)}>
               <option value="build">Diseñar</option>

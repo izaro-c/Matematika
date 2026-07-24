@@ -112,7 +112,7 @@ export const DiagramToolbar: React.FC<DiagramToolbarProps> = ({
 
   return (
     <div ref={toolbarRef} className="relative flex flex-wrap items-center gap-2 rounded border border-carbon/15 bg-carbon/5 p-2" aria-label="Herramientas del lienzo">
-      <span className="hidden pl-1 text-[9px] font-bold uppercase tracking-widest text-carbon/45 sm:inline">Herramienta</span>
+      <span className="hidden pl-1 ac-label ac-label--xs ac-label--soft sm:inline">Herramienta</span>
       {(['select', 'point'] as const).map(tool => (
         <button
           key={tool}
@@ -145,13 +145,13 @@ export const DiagramToolbar: React.FC<DiagramToolbarProps> = ({
                 <button type="button" role="tab" aria-selected={catalogSection === 'objects'} onClick={() => setCatalogSection('objects')} className={`min-h-11 rounded px-2 text-xs font-bold ${catalogSection === 'objects' ? 'bg-carbon text-lienzo' : 'text-carbon/55'}`}>Objetos</button>
                 <button type="button" role="tab" aria-selected={catalogSection === 'guided'} onClick={() => setCatalogSection('guided')} className={`min-h-11 rounded px-2 text-xs font-bold ${catalogSection === 'guided' ? 'bg-pavo text-lienzo' : 'text-carbon/55'}`}>Construcciones guiadas</button>
               </div>
-              {catalogSection === 'objects' && <label className="mt-2 block text-[9px] font-bold uppercase tracking-wider text-carbon/45">Buscar objeto
+              {catalogSection === 'objects' && <label className="mt-2 block ac-label ac-label--xs ac-label--soft">Buscar objeto
                 <input autoFocus type="search" aria-label="Buscar objeto para añadir" className="mt-1 min-h-11 w-full rounded border border-carbon/15 bg-lienzo px-3 text-sm font-normal normal-case tracking-normal" value={toolQuery} onChange={event => setToolQuery(event.target.value)} placeholder="Ej. circunferencia, medida, fórmula…" />
               </label>}
             </div>
             {catalogSection === 'objects' ? <div role="menu" className="grid max-h-[min(31rem,65vh)] gap-2 overflow-y-auto p-2">
             {!normalizedQuery && <section className="rounded border border-pavo/15 bg-pavo/5 p-2">
-              <h4 className="text-[9px] font-bold uppercase tracking-wider text-pavo">Empezar</h4>
+              <h4 className="ac-label ac-label--xs ac-label--pavo">Empezar</h4>
               <div className="grid gap-1 sm:grid-cols-2">
                 <button type="button" role="menuitem" className="min-h-11 rounded border border-carbon/10 px-2 py-2 text-left text-xs font-bold text-carbon/75 hover:bg-carbon/5" onClick={() => { setOpenMenu(null); onSetCanvasTool('point'); }}><span className="block">Punto libre</span><span className="block text-[10px] font-normal text-carbon/45">Haz clic en el lienzo</span></button>
                 <button type="button" role="menuitem" className="min-h-11 rounded border border-carbon/10 px-2 py-2 text-left text-xs font-bold text-carbon/75 hover:bg-carbon/5" onClick={() => { setOpenMenu(null); onAddSlider(); }}><span className="block">Control deslizante</span><span className="block text-[10px] font-normal text-carbon/45">Crea una variable numérica</span></button>
@@ -167,7 +167,7 @@ export const DiagramToolbar: React.FC<DiagramToolbarProps> = ({
             </section>}
             {matchingGroups.map(group => (
               <section key={group.label} className="rounded border border-carbon/10 p-2">
-                <h4 className="text-[9px] font-bold uppercase tracking-wider text-carbon/55">{group.label}</h4>
+                <h4 className="ac-label ac-label--xs ac-label--strong">{group.label}</h4>
                 <p className="mb-2 mt-0.5 text-[9px] leading-relaxed text-carbon/45">{group.description}</p>
                 <div className="grid gap-1 sm:grid-cols-2">
                   {group.tools.map(tool => {

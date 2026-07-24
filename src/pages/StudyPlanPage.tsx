@@ -153,7 +153,7 @@ export const StudyPlanPage = () => {
 
   if (!plan) {
     return (
-      <div className="min-h-screen bg-lienzo flex items-center justify-center font-serif text-carbon">
+      <div className="ac-page flex items-center justify-center">
         <h1 className="text-2xl italic opacity-50">El índice no existe.</h1>
       </div>
     );
@@ -167,7 +167,7 @@ export const StudyPlanPage = () => {
 
   return (
     <StudyPlanContext.Provider value={{ registerTaskRef, isLocked }}>
-      <div className="bg-lienzo text-carbon font-serif pt-24 pb-32 min-h-screen relative">
+      <div className="bg-lienzo text-carbon font-serif pt-24 pb-32 min-h-viewport relative">
         <div
           className="absolute inset-0 z-0 pointer-events-none opacity-[0.02] mix-blend-multiply fixed"
           style={{
@@ -181,11 +181,11 @@ export const StudyPlanPage = () => {
           
           <div className="mb-12 flex flex-col items-start">
             <Link href="/">
-              <a className="inline-block text-[9px] font-sans tracking-[0.2em] uppercase text-carbon/40 hover:text-carbon transition-colors mb-8">
+              <a className="ac-link-back ac-interactive text-[9px] text-carbon/40 mb-8 inline-block hover:text-carbon">
                 ← Retornar al Archivo
               </a>
             </Link>
-            <p className="page-accent-text text-xs tracking-[0.3em] uppercase font-sans mb-4 font-bold">
+            <p className="page-accent-text ac-eyebrow ac-eyebrow--accent mb-4">
               {plan.subtitle}
             </p>
             <h1 className="text-5xl md:text-6xl font-bold tracking-tight text-carbon leading-none mb-6">
@@ -194,7 +194,7 @@ export const StudyPlanPage = () => {
             <p className="text-xl text-carbon/60 italic leading-relaxed max-w-2xl">
               {plan.description}
             </p>
-            <div className="text-xs italic text-carbon/50 mt-6 font-sans tracking-widest uppercase">
+            <div className="ac-eyebrow text-xs italic text-carbon/50 mt-6">
               Progreso: {completedCount} de {totalItems} asimilados
             </div>
             <div className="w-16 h-px bg-carbon/20 mt-12 mb-8" />

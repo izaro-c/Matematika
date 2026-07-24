@@ -117,7 +117,7 @@ const PanelBlockEditor: React.FC<PanelBlockEditorProps> = ({
 
         <section className="space-y-3 border-t border-carbon/10 pt-3" aria-label={`Variantes condicionales de ${block.title || block.id}`}>
           <header>
-            <h4 className="text-xs font-bold uppercase tracking-wider text-ocre">Variantes y Casos Específicos</h4>
+            <h4 className="ac-label ac-label--md ac-label--ocre">Variantes y casos específicos</h4>
             <p className="mt-1 text-[10px] leading-relaxed text-carbon/60">Se evalúan en orden. La primera condición que se cumpla reemplazará el texto, color y valor por defecto.</p>
           </header>
 

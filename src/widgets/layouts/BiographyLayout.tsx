@@ -65,7 +65,7 @@ export const BiographyLayout: React.FC<BiographyLayoutProps> = ({ Component, Sid
       <div className="flex flex-col items-center text-center">
         
         {/* RETRATO */}
-        <div className="w-56 h-56 rounded-full overflow-hidden border-4 border-white/10 shadow-2xl relative mb-8 bg-carbon flex items-center justify-center">
+        <div className="w-56 h-56 rounded-full overflow-hidden border-4 border-lienzo/10 shadow-2xl relative mb-8 bg-carbon flex items-center justify-center">
           {image ? (
             <img 
               src={resolvePublicOrExternalAsset(image)} 
@@ -73,19 +73,19 @@ export const BiographyLayout: React.FC<BiographyLayoutProps> = ({ Component, Sid
               className="w-full h-full object-cover grayscale-[0.2] contrast-125 hover:grayscale-0 transition-all duration-700"
             />
           ) : (
-            <span className="font-serif text-8xl text-white/20">{firstName.charAt(0)}</span>
+            <span className="font-serif text-8xl text-lienzo/20">{firstName.charAt(0)}</span>
           )}
         </div>
         
         {/* NOMBRES */}
-        <h1 className="text-5xl font-serif text-white tracking-tight mb-2">{firstName}</h1>
-        {lastName && <h2 className="text-2xl font-serif text-white/50 mb-8">{lastName}</h2>}
+        <h1 className="text-5xl font-serif text-lienzo tracking-tight mb-2">{firstName}</h1>
+        {lastName && <h2 className="text-2xl font-serif text-lienzo/50 mb-8">{lastName}</h2>}
         {!lastName && <div className="mb-8" />}
         
         <div className="page-accent-bg w-16 h-px opacity-80 mb-8"></div>
         
         {/* FECHAS */}
-        <ul className="space-y-4 text-white/70 text-sm font-sans tracking-widest uppercase mb-12 w-full">
+        <ul className="space-y-4 text-lienzo/70 text-sm ac-eyebrow mb-12 w-full">
           {birthYear !== undefined && (
             <li>
               <span className="page-accent-text block font-serif capitalize text-xs mb-1 opacity-80">Nacimiento</span>
@@ -102,20 +102,20 @@ export const BiographyLayout: React.FC<BiographyLayoutProps> = ({ Component, Sid
 
         {/* APORTES Y TEOREMAS (Automático) */}
         {theorems && theorems.length > 0 && (
-          <div className="w-full text-left mt-4 border-t border-white/10 pt-8">
-            <h3 className="text-xs font-bold text-white/40 uppercase tracking-widest mb-6">Aportes Universales</h3>
+          <div className="w-full text-left mt-4 border-t border-lienzo/10 pt-8">
+            <h3 className="ac-label ac-label--xs text-lienzo/40 mb-6">Aportes universales</h3>
             
             <div className="flex flex-col gap-4">
               {theorems.map((th, idx) => {
-                const color = THEOREM_COLOR_CLASSES[th.color ?? ''] ?? { text: 'text-white/80', hover: 'group-hover:text-white' };
+                const color = THEOREM_COLOR_CLASSES[th.color ?? ''] ?? { text: 'text-lienzo/80', hover: 'group-hover:text-lienzo' };
 
                 return (
                   <Link key={idx} href={`/teorema/${th.id}`}>
-                    <a className="block bg-white/5 border border-white/10 p-4 rounded-md hover:bg-white/10 transition-colors group cursor-pointer">
+                    <a className="block bg-lienzo/5 border border-lienzo/10 p-4 rounded-md hover:bg-lienzo/10 transition-colors group cursor-pointer">
                        <h4 className={`${color.text} font-serif text-lg mb-1 ${color.hover}`}>{th.title}</h4>
-                      <p className="text-xs text-white/60 line-clamp-2 mb-2">{th.description}</p>
+                      <p className="text-xs text-lienzo/60 line-clamp-2 mb-2">{th.description}</p>
                       
-                      <span className="text-xs font-bold text-white/40 uppercase tracking-wider group-hover:text-white transition-colors">
+                      <span className="ac-label ac-label--md text-lienzo/40 group-hover:text-lienzo transition-colors">
                         Explorar Teorema &rarr;
                       </span>
                     </a>
@@ -131,13 +131,13 @@ export const BiographyLayout: React.FC<BiographyLayoutProps> = ({ Component, Sid
 
   return (
     <div
-      className="min-h-screen w-full lg:h-screen lg:overflow-hidden flex flex-col lg:flex-row bg-lienzo page-accent-scope"
+      className="min-h-viewport w-full lg:h-screen lg:overflow-hidden flex flex-col lg:flex-row bg-lienzo page-accent-scope"
       data-page-type="matematico"
       style={{ '--page-accent': getContentPageAccent('matematico') } as React.CSSProperties}
     >
 
       {/* PANEL IZQUIERDO: FIJO Y OSCURO (MUSEO) — colapsa en móvil */}
-      <div className="lg:w-[40%] bg-zinc-900 lg:border-r border-carbon/20 text-white lg:overflow-y-auto custom-scrollbar relative">
+      <div className="lg:w-[40%] bg-carbon lg:border-r border-carbon/20 text-lienzo lg:overflow-y-auto custom-scrollbar relative">
         <div className="absolute inset-0 bg-noise opacity-5 pointer-events-none" />
 
         <div className="p-6 sm:p-8 lg:p-12 relative z-10 flex flex-col min-h-full">
@@ -146,7 +146,7 @@ export const BiographyLayout: React.FC<BiographyLayoutProps> = ({ Component, Sid
           {/* Navegación de retorno */}
           <div className="mt-auto pt-8 lg:pt-16 w-full text-center">
             <Link href="/historia">
-              <a className="inline-flex items-center gap-2 text-white/50 font-serif font-bold hover:text-white transition-colors tracking-widest uppercase text-xs">
+              <a className="ac-link-back ac-interactive text-xs text-lienzo/50 font-serif font-semibold hover:text-lienzo">
                 <span>&larr;</span> Volver al Códice
               </a>
             </Link>

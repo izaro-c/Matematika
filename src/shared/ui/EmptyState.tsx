@@ -25,7 +25,7 @@ export const EmptyState: React.FC<EmptyStateProps> = ({
       <p className="text-carbon/40 italic font-serif max-w-md">{message}</p>
       {actionLabel && actionHref && (
         <Link href={actionHref}>
-          <a className="mt-6 text-sm font-sans tracking-widest uppercase text-terracota hover:text-carbon transition-colors">
+          <a className="ac-link ac-interactive mt-6 text-sm">
             {actionLabel}
           </a>
         </Link>

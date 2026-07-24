@@ -193,7 +193,7 @@ export const SemanticLinker: React.FC<SemanticLinkerProps> = ({
       }}
     >
       <div className="flex justify-between items-center border-b border-carbon/15 pb-1">
-        <span className="text-[10px] font-serif font-bold text-carbon/60 uppercase tracking-wider">Conectar texto</span>
+        <span className="ac-label ac-label--sm text-carbon/60 font-serif">Conectar texto</span>
         <button ref={closeButtonRef} type="button" onClick={onClose} className="text-xs text-carbon/40 hover:text-carbon font-bold" aria-label="Cerrar enlazador">✕</button>
       </div>
       
@@ -244,7 +244,7 @@ export const SemanticLinker: React.FC<SemanticLinkerProps> = ({
       {/* Contenido según pestaña */}
       {(linkType === 'concept' || linkType === 'reference' || linkType === 'combined') && (
         <div className="space-y-1.5">
-          <label className="block text-[9px] uppercase font-bold text-carbon/50 font-sans">Concepto en Biblioteca</label>
+          <label className="block ac-label ac-label--xs">Concepto en Biblioteca</label>
           {selectedConcept ? (
             <div className="flex items-center justify-between p-1.5 bg-salvia/5 border border-salvia/20 rounded text-xs">
               <span className="font-serif font-bold text-salvia">{Array.isArray(selectedConcept) ? selectedConcept.join(', ') : selectedConcept}</span>
@@ -307,7 +307,7 @@ export const SemanticLinker: React.FC<SemanticLinkerProps> = ({
       {(linkType === 'graphic' || linkType === 'combined') && (
         <div className="space-y-2 pt-1 border-t border-carbon/10">
           <div className="space-y-1">
-            <label className="block text-[9px] uppercase font-bold text-carbon/50 font-sans">Elemento del diagrama</label>
+            <label className="block ac-label ac-label--xs">Elemento del diagrama</label>
             {diagramTargets.length > 0 && (
               <div className="mt-1 max-h-32 space-y-1 overflow-y-auto rounded border border-carbon/10 bg-lienzo p-1">
                 {diagramTargets.map(target => (
@@ -338,7 +338,7 @@ export const SemanticLinker: React.FC<SemanticLinkerProps> = ({
           </div>
 
           <div className="space-y-1">
-            <label className="block text-[9px] uppercase font-bold text-carbon/50 font-sans">Color de Resaltado</label>
+            <label className="block ac-label ac-label--xs">Color de Resaltado</label>
             <div className="flex gap-1.5">
               {ARTS_CRAFTS_COLORS.map(c => (
                 <button
@@ -352,7 +352,7 @@ export const SemanticLinker: React.FC<SemanticLinkerProps> = ({
                   title={c.name}
                 >
                   {selectedColor === c.name && (
-                    <span className="text-[9px] text-white font-bold select-none">✓</span>
+                    <span className="text-[9px] text-lienzo font-bold select-none">✓</span>
                   )}
                 </button>
               ))}

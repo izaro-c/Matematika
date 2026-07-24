@@ -195,6 +195,7 @@ const constraintSchema = z.object({
   expression: expressionSchema.optional(),
   value: finiteNumber.optional(),
   areaMembership: z.enum(['interior', 'boundary']).optional(),
+  side: z.union([z.literal(1), z.literal(-1)]).optional(),
   enabled: z.boolean(),
 }).strict();
 

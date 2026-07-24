@@ -44,7 +44,7 @@ export const DiagramMovementAidsPanel: React.FC<DiagramMovementAidsPanelProps> =
     <section aria-labelledby="movement-aids-title">
       <div className="flex items-start justify-between gap-2">
         <div>
-          <h3 id="movement-aids-title" className="text-[10px] font-bold uppercase tracking-widest text-pavo">Snap y magnetismo</h3>
+          <h3 id="movement-aids-title" className="ac-label ac-label--sm ac-label--pavo">Snap y magnetismo</h3>
           <p className="mt-1 text-[10px] leading-relaxed text-carbon/55">El snap aproxima a la cuadrícula. El imán solo ajusta el punto arrastrado y lo libera al soltarlo.</p>
         </div>
         <button type="button" disabled={movablePoints.length === 0} onClick={setSnapForEveryPoint} className="shrink-0 rounded border border-pavo/25 bg-lienzo px-2 py-1 text-[9px] font-bold text-pavo disabled:opacity-35">

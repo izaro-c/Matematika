@@ -342,7 +342,7 @@ a:focus-visible, button:focus-visible {
 /* === ESCALA TIPOGRÁFICA CANÓNICA DE MATEMATIKA ===
  * Aplicada globalmente a .prose dentro de páginas de contenido.
  * Jerarquía: h1 (small-caps 5xl) → h2 (3xl serif) → h3 (2xl italic terracota)
- *             → body (lg serif) → captions (xs sans uppercase tracking-widest)
+ *             → body (lg serif) → captions (ac-eyebrow / ac-label)
  */
 .prose {
   font-family: ui-serif, Georgia, Cambria, "Times New Roman", Times, serif;
@@ -410,10 +410,12 @@ h1, h2, h3, h4, h5, h6 {
   font-style: italic;
 }
 
-/* Captions / small uppercase labels (used in badges, breadcrumbs, meta) */
+/* Captions / etiquetas editoriales (ac-eyebrow, ac-label) */
 .prose .caption,
+.prose .ac-eyebrow,
+.prose .ac-label,
 .prose [class*="tracking-widest"][class*="uppercase"] {
-  font-family: ui-sans-serif, system-ui, -apple-system, sans-serif;
+  font-family: var(--font-sans-family);
 }
 
 /* Links inside prose inherit terracota with subtle hover */

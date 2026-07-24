@@ -17,7 +17,7 @@ export const DemoPage: React.FC = () => {
   const demo = db.getDemo(demoId);
   if (!demo) {
     return (
-      <div className="min-h-screen bg-lienzo font-serif flex items-center justify-center text-carbon">
+      <div className="min-h-viewport bg-lienzo font-serif flex items-center justify-center text-carbon">
         <div className="text-center">
           <h1 className="text-4xl font-bold mb-4">Demostración no encontrada</h1>
           <Link href="/" className="page-accent-text hover:underline">Volver al inicio</Link>
@@ -28,7 +28,7 @@ export const DemoPage: React.FC = () => {
 
   return (
     <FadeIn>
-      <div className="min-h-screen bg-lienzo font-serif text-carbon relative w-full">
+      <div className="ac-page relative w-full">
         <Suspense fallback={
           <div className="py-20 text-center text-carbon/50 italic animate-pulse">
             Desenrollando pergamino...

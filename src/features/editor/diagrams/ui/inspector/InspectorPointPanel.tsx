@@ -142,7 +142,7 @@ export const InspectorPointPanel: React.FC<InspectorPointPanelProps> = ({
 
     {selectedPoint.constraint === 'derived' && (
       <div className="space-y-2 rounded border border-pavo/20 bg-pavo/5 p-2">
-        <p className="text-[10px] font-bold uppercase tracking-wider text-pavo">Coordenadas derivadas</p>
+        <p className="ac-label ac-label--sm ac-label--pavo">Coordenadas derivadas</p>
         <DiagramExpressionField model={model} label="Expresión x" ariaLabel="Expresión x derivada" value={selectedPoint.xExpression || ''} onChange={value => handlePointChange({ xExpression: value })} help="Puede combinar coordenadas de otros puntos, longitudes y controles para calcular la coordenada horizontal." />
         <DiagramExpressionField model={model} label="Expresión y" ariaLabel="Expresión y derivada" value={selectedPoint.yExpression || ''} onChange={value => handlePointChange({ yExpression: value })} help="Puede combinar coordenadas de otros puntos, longitudes y controles para calcular la coordenada vertical." />
         <fieldset>

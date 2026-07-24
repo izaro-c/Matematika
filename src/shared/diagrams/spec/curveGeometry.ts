@@ -12,7 +12,6 @@ export const DEFAULT_CURVE_SAMPLES = 64;
 export const MAX_CURVE_SAMPLES = 256;
 export const MAX_CURVE_INTERIOR_LOOPS = 8;
 const EXTERIOR_LOOP_AREA_RATIO = 0.85;
-const CURVE_AREA_POLYGON_VERTICES = 96;
 
 export function curveAreaFill(element: DiagramElement): CurveAreaFill {
   const mode = element.properties?.areaFill;

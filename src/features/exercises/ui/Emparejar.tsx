@@ -187,7 +187,7 @@ export const Emparejar: React.FC<EmparejarProps> = ({ id, pairs }) => {
               const isError = errorPair && errorPair[0] === item;
 
               let btnClass = "px-5 py-4 border rounded-none text-left transition-all duration-300 relative ";
-              if (isMatched) btnClass += "bg-salvia/10 border-salvia/40 text-salvia cursor-default shadow-[inset_0_2px_4px_rgba(0,0,0,0.05)]";
+              if (isMatched) btnClass += "bg-salvia/10 border-salvia/40 text-salvia cursor-default ac-inset-shadow";
               else if (isError) btnClass += "bg-terracota/5 border-terracota/60 text-terracota animate-shake";
               else if (isSelected) btnClass += "bg-carbon/10 border-carbon text-carbon transform scale-[1.02] shadow-md z-30";
               else btnClass += "page-accent-button bg-transparent border-carbon/20 cursor-pointer text-carbon hover:-translate-y-0.5 hover:shadow-sm";
@@ -226,7 +226,7 @@ export const Emparejar: React.FC<EmparejarProps> = ({ id, pairs }) => {
               const isError = errorPair && errorPair[1] === item;
 
               let btnClass = "px-5 py-4 border rounded-none text-left transition-all duration-300 relative ";
-              if (isMatched) btnClass += "bg-salvia/10 border-salvia/40 text-salvia cursor-default shadow-[inset_0_2px_4px_rgba(0,0,0,0.05)]";
+              if (isMatched) btnClass += "bg-salvia/10 border-salvia/40 text-salvia cursor-default ac-inset-shadow";
               else if (isError) btnClass += "bg-terracota/5 border-terracota/60 text-terracota animate-shake";
               else if (isSelected) btnClass += "bg-carbon/10 border-carbon text-carbon transform scale-[1.02] shadow-md z-30";
               else btnClass += "page-accent-button bg-transparent border-carbon/20 cursor-pointer text-carbon hover:-translate-y-0.5 hover:shadow-sm";

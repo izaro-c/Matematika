@@ -93,7 +93,7 @@ export const InspectorElementIdentitySection: React.FC<InspectorElementIdentityS
 
       {selectedElementCapabilities?.attachedLabel && (
         <fieldset className="space-y-2 rounded border border-ocre/20 bg-ocre/5 p-2">
-          <legend className="px-1 text-[10px] font-bold uppercase tracking-wider text-ocre">Etiqueta en el lienzo</legend>
+          <legend className="px-1 ac-label ac-label--sm ac-label--ocre">Etiqueta en el lienzo</legend>
           {attachedLabel ? (
             <>
               <label className="flex items-center gap-2 text-xs font-bold text-carbon">

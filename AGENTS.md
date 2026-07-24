@@ -6,7 +6,7 @@ Matematika es un jardín digital enciclopédico para explorar matemáticas como 
 
 1. Leer siempre este archivo.
 2. Para ejecutar trabajo, leer `ai/current-state.md` y solo el objetivo de `ai/goals/` relacionado con la tarea.
-3. Cargar la skill de `.agents/skills/` que corresponda antes de actuar.
+3. Cargar la skill de `.agents/skills/` que corresponda antes de actuar. Para explorar arquitectura, callers, impacto de refactors o dependencias entre capas FSD, cargar `code-graph` y usar el grafo MCP de forma proactiva.
 4. Consultar `docs/ai/` únicamente para gobierno, conflictos o cambios de protocolo.
 5. No cargar directorios completos ni copiar reglas entre capas.
 
@@ -46,6 +46,7 @@ Para interpretar estos principios, cargar `project-philosophy`.
 - Solo se usa la paleta Arts & Crafts: `lienzo`, `carbon`, `salvia`, `terracota`, `pizarra`, `ocre`, `pavo`, `granada` y `musgo`. En diagramas se leen variables `--theme-*`.
 - Se respetan las dependencias FSD: `shared` no depende de capas superiores; `entities` no depende de `features`, `widgets` ni `pages`; `features` no depende de `pages` ni `app`; `widgets` no depende de `features`.
 - No se editan archivos generados. Se conserva cualquier cambio del usuario ajeno a la tarea.
+- El grafo estructural del código (MCP `codebase-memory`) se mantiene con la skill `code-graph`. Comprobar `npm run code-graph:check` al iniciar tareas amplias en `src/`, `scripts/` o `tests/`; reindexar si el sello está obsoleto.
 
 ## Flujo de trabajo
 

@@ -60,7 +60,7 @@ export const AppShell: React.FC<{ children: React.ReactNode }> = ({ children }) 
 
   return (
     <div
-      className={`min-h-screen bg-lienzo text-carbon font-serif ${pageType ? 'page-accent-scope' : ''}`}
+      className={`ac-page ${pageType ? 'page-accent-scope' : ''}`}
       data-page-type={pageType}
       style={pageType ? ({ '--page-accent': getContentPageAccent(pageType) } as React.CSSProperties) : undefined}
     >

@@ -77,7 +77,7 @@ export const PasoEjercicio: React.FC<PasoEjercicioProps> = ({
           }`}>
             {isCompleted ? '✓' : numero}
           </div>
-          <h3 className={`font-sans font-bold text-sm uppercase tracking-wider transition-colors ${
+          <h3 className={`font-sans font-semibold text-sm transition-colors ${
             isCompleted
               ? 'text-salvia'
               : isUnlocked
@@ -95,7 +95,7 @@ export const PasoEjercicio: React.FC<PasoEjercicioProps> = ({
             // Vista bloqueada
             <div className="p-5 border border-dashed border-carbon/20 bg-carbon/5 select-none rounded-none text-xs text-carbon/40 italic flex items-center gap-3">
               <span className="text-carbon/30 text-sm">❦</span>
-              <span className="font-sans uppercase tracking-wider text-[9px] font-bold">Paso bloqueado — Resuelve el paso anterior para desbloquear</span>
+              <span className="ac-label ac-label--xs">Paso bloqueado — Resuelve el paso anterior para desbloquear</span>
             </div>
           ) : (
             // Vista activa/desbloqueada (mantenemos children totalmente interactivo para apoyar clicks en Apoyo)

@@ -21,7 +21,7 @@ export const ValidationPanel: React.FC<ValidationPanelProps> = ({ validation, on
   return (
     <section className="border-t border-carbon/15 p-4 animate-in fade-in duration-100">
       <div className="flex items-center justify-between">
-        <h3 className="text-[10px] font-bold uppercase tracking-widest text-carbon/55 select-none">Validación</h3>
+        <h3 className="ac-label ac-label--sm ac-label--strong select-none">Validación</h3>
         <span
           className={`rounded px-2 py-0.5 text-[10px] font-bold ${
             validation.canSave
@@ -63,11 +63,11 @@ export const ValidationPanel: React.FC<ValidationPanelProps> = ({ validation, on
                 {...extraProps}
               >
                 <div className="flex items-center justify-between gap-2">
-                  <span className="text-[9px] font-bold uppercase tracking-wider text-carbon/45">
+                  <span className="ac-label ac-label--xs ac-label--soft">
                     {AREA_LABELS[item.area] || item.area}
                   </span>
                   <span
-                    className={`text-[9px] font-bold uppercase ${
+                    className={`ac-label ac-label--xs ${
                       item.severity === 'error' ? 'text-granada' : 'text-ocre'
                     }`}
                   >

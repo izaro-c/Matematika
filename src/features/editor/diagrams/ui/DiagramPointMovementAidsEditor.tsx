@@ -34,7 +34,7 @@ export const DiagramPointMovementAidsEditor: React.FC<DiagramPointMovementAidsEd
   return (
     <section className="space-y-3" aria-label="Snap y magnetismo del punto">
       <fieldset className="space-y-2 border-t border-carbon/10 pt-3">
-        <legend className="px-1 text-[10px] font-bold uppercase tracking-wider text-pavo">Snap a cuadrícula</legend>
+        <legend className="px-1 ac-label ac-label--sm ac-label--pavo">Snap a cuadrícula</legend>
         <label className="flex items-center gap-1.5 text-xs font-bold text-carbon">
           <input
             type="checkbox"

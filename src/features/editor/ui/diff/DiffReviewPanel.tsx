@@ -110,7 +110,7 @@ export const DiffReviewPanel: React.FC<DiffReviewPanelProps> = ({
                       <span className="font-mono text-[9px] text-carbon/50">
                         {change.blockId ? `bloque:${change.blockId}` : change.operationId ? `operación:${change.operationId}` : 'Cambio global / código'}
                       </span>
-                      <span className={`rounded border px-2 py-0.5 text-[9px] font-bold uppercase ${CLASS_STYLE[change.classification]}`}>
+                      <span className={`ac-editor-badge rounded border px-2 py-0.5 ${CLASS_STYLE[change.classification]}`}>
                         {['outside-edited-range', 'unknown', 'blocking'].includes(change.classification) ? 'Hunk inesperado (bloqueante)' : CLASS_LABEL[change.classification]}
                       </span>
                     </div>

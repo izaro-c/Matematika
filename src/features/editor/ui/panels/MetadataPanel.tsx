@@ -68,7 +68,7 @@ export const MetadataPanel: React.FC<MetadataPanelProps> = ({
     if (pageDiagramLinks.length === 0) {
       return (
         <section className="border-t border-carbon/15 p-4">
-          <h3 className="text-[10px] font-bold uppercase tracking-widest text-carbon/55">Diagramas</h3>
+          <h3 className="ac-label ac-label--sm ac-label--strong">Diagramas</h3>
           <div className="mt-3 rounded border border-dashed border-carbon/20 bg-carbon/5 p-3">
             <p className="text-xs italic text-carbon/55">Esta página aún no tiene diagramas enlazados.</p>
             <p className="mt-2 text-[10px] text-carbon/45">El constructor añade import, export publicado y metadatos mediante un único plan lossless revisable.</p>
@@ -85,7 +85,7 @@ export const MetadataPanel: React.FC<MetadataPanelProps> = ({
     return (
       <section className="border-t border-carbon/15 p-4">
         <div className="flex items-center justify-between">
-          <h3 className="text-[10px] font-bold uppercase tracking-widest text-carbon/55">Diagramas de esta página</h3>
+          <h3 className="ac-label ac-label--sm ac-label--strong">Diagramas de esta página</h3>
           {canMutateVisualStructure && <button
             type="button"
             onClick={() => {
@@ -150,7 +150,7 @@ export const MetadataPanel: React.FC<MetadataPanelProps> = ({
           ))}
         </div>
         <div className="mt-4 rounded border border-carbon/10 bg-carbon/5 p-3" aria-label="Navegador de targets">
-          <div className="flex items-center justify-between"><h4 className="text-[10px] font-bold uppercase tracking-widest text-carbon/55">Targets publicados</h4>{diagramTargetsLoading && <span className="text-[9px] text-carbon/45">Analizando…</span>}</div>
+          <div className="flex items-center justify-between"><h4 className="ac-label ac-label--sm ac-label--strong">Targets publicados</h4>{diagramTargetsLoading && <span className="text-[9px] text-carbon/45">Analizando…</span>}</div>
           {diagramTargetsError && <p className="mt-2 text-[10px] text-granada" role="alert">{diagramTargetsError}</p>}
           {!diagramTargetsLoading && diagramTargets.length === 0 && <p className="mt-2 text-[10px] italic text-carbon/45">El diagrama no publica targets editables o requiere modo código.</p>}
           <div className="mt-2 flex flex-wrap gap-1">
@@ -165,7 +165,7 @@ export const MetadataPanel: React.FC<MetadataPanelProps> = ({
         </div>
         {(pageConnectionSummary.connected.length > 0 || pageConnectionSummary.missingTargets.length > 0) && (
           <div className="mt-4 rounded border border-carbon/10 bg-carbon/5 p-3">
-            <h4 className="text-[10px] font-bold uppercase tracking-widest text-carbon/55 select-none">Conexiones texto-diagrama</h4>
+            <h4 className="ac-label ac-label--sm ac-label--strong select-none">Conexiones texto-diagrama</h4>
             {pageConnectionSummary.invalidConnections.length > 0 && (
               <div className="mt-2 rounded border border-granada/25 bg-granada/5 p-2 text-[10px] text-granada" role="alert">
                 Referencias inexistentes: {pageConnectionSummary.invalidConnections.map(item => item.target).join(', ')}.
@@ -213,7 +213,7 @@ export const MetadataPanel: React.FC<MetadataPanelProps> = ({
   return (
     <div className="h-full w-full bg-lienzo flex flex-col overflow-hidden">
       <div className="border-b border-carbon/15 bg-carbon/5 p-3 select-none">
-        <h3 className="text-[10px] font-bold uppercase tracking-widest text-carbon/50">Inspector de la página</h3>
+        <h3 className="ac-label ac-label--sm">Inspector de la página</h3>
         <div className="mt-2 grid grid-cols-3 gap-1" role="tablist" aria-label="Secciones del inspector">
           {([
             ['page', 'Página', Object.keys(metadata).length],

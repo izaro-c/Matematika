@@ -59,7 +59,7 @@ export const DiagramRewriteDialog: React.FC<DiagramRewriteDialogProps> = ({
         </div>
 
         <div className="mt-4 space-y-4">
-          <label className="grid gap-1 text-[10px] font-bold uppercase tracking-wider text-carbon/55">
+          <label className="grid gap-1 ac-label ac-label--sm ac-label--strong">
             Título del nuevo modelo
             <input
               ref={titleRef}
@@ -68,7 +68,7 @@ export const DiagramRewriteDialog: React.FC<DiagramRewriteDialogProps> = ({
               className="rounded border border-carbon/15 bg-lienzo p-2 font-serif text-sm font-normal normal-case text-carbon"
             />
           </label>
-          <label className="grid gap-1 text-[10px] font-bold uppercase tracking-wider text-carbon/55">
+          <label className="grid gap-1 ac-label ac-label--sm ac-label--strong">
             Punto de partida
             <select
               value={template}

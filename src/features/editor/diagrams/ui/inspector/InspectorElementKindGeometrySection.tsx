@@ -76,7 +76,7 @@ export const InspectorElementKindGeometrySection: React.FC<InspectorElementKindG
 
       {selectedElement.kind === 'functionCurve' && (
         <fieldset className="grid grid-cols-1 gap-2 rounded border border-carbon/10 p-2">
-          <legend className="px-1 text-[10px] font-bold uppercase tracking-wider text-carbon/45">Área</legend>
+          <legend className="px-1 ac-label ac-label--sm ac-label--soft">Área</legend>
           <label className="text-xs font-bold text-carbon">
             Relleno de área
             <select
@@ -122,7 +122,7 @@ export const InspectorElementKindGeometrySection: React.FC<InspectorElementKindG
 
       {selectedElement.kind === 'parametricCurve' && (
         <fieldset className="grid grid-cols-1 gap-2 rounded border border-carbon/10 p-2">
-          <legend className="px-1 text-[10px] font-bold uppercase tracking-wider text-carbon/45">Área</legend>
+          <legend className="px-1 ac-label ac-label--sm ac-label--soft">Área</legend>
           <label className="text-xs font-bold text-carbon">
             Relleno de área
             <select
@@ -169,7 +169,7 @@ export const InspectorElementKindGeometrySection: React.FC<InspectorElementKindG
 
       {(['functionCurve', 'parametricCurve'].includes(selectedElement.kind)) && (
         <fieldset className="grid grid-cols-2 gap-2 rounded border border-carbon/10 p-2">
-          <legend className="px-1 text-[10px] font-bold uppercase tracking-wider text-carbon/45">Dominio y muestreo</legend>
+          <legend className="px-1 ac-label ac-label--sm ac-label--soft">Dominio y muestreo</legend>
           <label className="text-xs font-bold text-carbon">Dominio mínimo<input type="number" aria-label="Dominio mínimo" className="mt-1 w-full rounded border border-carbon/15 bg-lienzo p-1.5 text-xs" value={selectedElement.properties?.domain?.[0] ?? -5} onChange={(event) => handleElementPropertiesChange({ domain: [Number(event.target.value), selectedElement.properties?.domain?.[1] ?? 5] })} /></label>
           <label className="text-xs font-bold text-carbon">Dominio máximo<input type="number" aria-label="Dominio máximo" className="mt-1 w-full rounded border border-carbon/15 bg-lienzo p-1.5 text-xs" value={selectedElement.properties?.domain?.[1] ?? 5} onChange={(event) => handleElementPropertiesChange({ domain: [selectedElement.properties?.domain?.[0] ?? -5, Number(event.target.value)] })} /></label>
           <label className="text-xs font-bold text-carbon">Variable<input aria-label="Variable de la curva" className="mt-1 w-full rounded border border-carbon/15 bg-lienzo p-1.5 font-mono text-xs" value={curveParameter(selectedElement)} onChange={event => handleElementPropertiesChange({ parameter: event.target.value || curveParameter(selectedElement) })} /></label>

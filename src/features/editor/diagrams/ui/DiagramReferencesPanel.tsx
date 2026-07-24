@@ -20,7 +20,7 @@ export const DiagramReferencesPanel: React.FC<DiagramReferencesPanelProps> = ({
 
   return (
     <section className="rounded border border-carbon/10 bg-lienzo p-3 h-full overflow-y-auto">
-      <h4 className="text-[10px] font-bold uppercase tracking-widest text-carbon/45 border-b border-carbon/10 pb-1 mb-3">
+      <h4 className="ac-label ac-label--sm ac-label--soft border-b border-carbon/10 pb-1 mb-3">
         Referencias del Diagrama
       </h4>
 
@@ -70,7 +70,7 @@ export const DiagramReferencesPanel: React.FC<DiagramReferencesPanelProps> = ({
               >
                 <div className="flex items-center justify-between">
                   <span className="font-bold text-carbon truncate max-w-[180px]">{u.contentId}</span>
-                  <span className={`rounded-full px-1.5 py-0.5 text-[9px] font-bold uppercase tracking-wider ${
+                  <span className={`ac-editor-badge rounded-full px-1.5 py-0.5 ${
                     u.referenceKind === 'Simulation'
                       ? 'bg-pavo/15 text-pavo'
                       : u.referenceKind === 'Diagram'

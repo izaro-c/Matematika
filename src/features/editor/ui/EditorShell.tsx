@@ -1,6 +1,7 @@
 import React from 'react';
 import { EDITOR_PANEL_LIMITS } from '../navigation/editorNavigationModel';
 import { usePanelResize } from './hooks/usePanelResize';
+import { UI } from '@/shared/design';
 
 interface EditorShellProps {
   toolbar: React.ReactNode;
@@ -20,6 +21,9 @@ interface EditorShellProps {
   persistPanelSizes: () => void;
   children: React.ReactNode;
 }
+
+const resizeHandle = 'ac-editor-resize-handle hidden shrink-0 lg:block';
+const resizeHandleRow = 'ac-editor-resize-handle ac-editor-resize-handle--row hidden shrink-0 md:block';
 
 export const EditorShell: React.FC<EditorShellProps> = ({
   toolbar,
@@ -44,29 +48,49 @@ export const EditorShell: React.FC<EditorShellProps> = ({
   const diagnosticsResize = usePanelResize({ direction: 'vertical', value: diagnosticsHeight, inverted: true, ...EDITOR_PANEL_LIMITS.diagnostics, onChange: setDiagnosticsHeight, onCommit: persistPanelSizes });
 
   return (
-    <div className="flex h-dvh min-h-[32rem] overflow-hidden bg-lienzo font-sans text-carbon">
+    <div className={UI.editorShell}>
       {navigationOpen && navigation}
-      {navigationOpen && <div {...navigationResize} aria-label="Redimensionar explorador" className="relative z-20 hidden w-1 shrink-0 cursor-col-resize bg-carbon/5 hover:bg-salvia/30 focus:bg-salvia/30 lg:block" />}
+      {navigationOpen && (
+        <div
+          {...navigationResize}
+          aria-label="Redimensionar explorador"
+          className={`${resizeHandle} w-1`}
+        />
+      )}
       <div className="relative flex min-w-0 flex-1 flex-col overflow-hidden">
         {toolbar}
         {safetySummary}
         <div className="flex min-h-0 flex-1 overflow-hidden">
           <main className="flex min-w-0 flex-1 overflow-hidden" aria-label="Área de trabajo">{children}</main>
-          {inspectorOpen && inspector && <>
-            <div {...inspectorResize} aria-label="Redimensionar inspector" className="relative z-20 hidden w-1 shrink-0 cursor-col-resize bg-carbon/5 hover:bg-salvia/30 focus:bg-salvia/30 lg:block" />
-            <aside
-              aria-label="Inspector contextual"
-              className="fixed inset-y-0 right-0 z-40 max-w-[92vw] overflow-hidden border-l border-carbon/15 bg-lienzo shadow-xl lg:relative lg:z-auto lg:max-w-none lg:shadow-none"
-              style={{ width: inspectorWidth }}
-            >
-              {inspector}
-            </aside>
-          </>}
+          {inspectorOpen && inspector && (
+            <>
+              <div
+                {...inspectorResize}
+                aria-label="Redimensionar inspector"
+                className={`${resizeHandle} w-1`}
+              />
+              <aside
+                aria-label="Inspector contextual"
+                className={`${UI.editorPanel} fixed inset-y-0 right-0 z-40 max-w-[92vw] overflow-hidden border-l shadow-xl lg:relative lg:z-auto lg:max-w-none lg:shadow-none`}
+                style={{ width: inspectorWidth }}
+              >
+                {inspector}
+              </aside>
+            </>
+          )}
         </div>
-        {diagnosticsOpen && diagnostics && <>
-          <div {...diagnosticsResize} aria-label="Redimensionar diagnósticos" className="relative z-20 hidden h-1 shrink-0 cursor-row-resize bg-carbon/5 hover:bg-salvia/30 focus:bg-salvia/30 md:block" />
-          <div className="max-h-[55dvh] shrink-0 overflow-hidden border-t border-carbon/15" style={{ height: diagnosticsHeight }}>{diagnostics}</div>
-        </>}
+        {diagnosticsOpen && diagnostics && (
+          <>
+            <div
+              {...diagnosticsResize}
+              aria-label="Redimensionar diagnósticos"
+              className={resizeHandleRow}
+            />
+            <div className={`${UI.editorPanel} max-h-[55dvh] shrink-0 overflow-hidden border-t`} style={{ height: diagnosticsHeight }}>
+              {diagnostics}
+            </div>
+          </>
+        )}
       </div>
     </div>
   );

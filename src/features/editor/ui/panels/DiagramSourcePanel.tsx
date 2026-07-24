@@ -76,12 +76,12 @@ export const DiagramSourcePanel: React.FC<DiagramSourcePanelProps> = ({
   return (
     <div className="h-full w-full overflow-hidden bg-lienzo flex flex-col">
       <div className="border-b border-carbon/15 bg-carbon/5 p-4 select-none">
-        <h3 className="text-xs font-bold uppercase tracking-widest text-carbon/60">Diagrama TSX</h3>
+        <h3 className="ac-label ac-label--md ac-label--emphasis">Diagrama TSX</h3>
         <p className="mt-1 font-mono text-[10px] text-carbon/45 truncate">{currentFile}</p>
       </div>
       <div className="flex-1 overflow-y-auto">
         <section className="p-4">
-          <h4 className="text-[10px] font-bold uppercase tracking-widest text-carbon/55 select-none">Páginas conectadas</h4>
+          <h4 className="ac-label ac-label--sm ac-label--strong select-none">Páginas conectadas</h4>
           {renderLinkedPages()}
         </section>
         <section className="border-t border-carbon/15 p-4">

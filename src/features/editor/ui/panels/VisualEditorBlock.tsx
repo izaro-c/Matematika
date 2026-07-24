@@ -70,7 +70,7 @@ export const VisualEditorBlock: React.FC<VisualEditorBlockProps> = ({
               {block.type === 'paragraph' && (
                 <div className="space-y-1">
                   <div className="flex justify-between items-center opacity-0 group-hover/block:opacity-100 transition-opacity select-none">
-                    <label className="block text-[8px] font-bold text-carbon/40 uppercase tracking-widest font-sans">Párrafo</label>
+                    <label className="block ac-label ac-label--2xs ac-label--faint font-sans">Párrafo</label>
                     <span className="flex items-center gap-2 text-[8px] text-carbon/30 italic font-sans">
                       {hasDropCap && <label className="not-italic font-bold text-salvia">Capitular <input aria-label="Letra capitular" maxLength={1} value={dropCapLetter} onChange={event => updateBlock(block.id, block.content, { ...block.metadata, capitular: event.target.value.toUpperCase() })} className="ml-1 h-5 w-6 rounded border border-salvia/20 bg-lienzo text-center font-serif text-xs font-bold text-salvia" /></label>}
                       {editingBlockId === block.id ? 'Subraye texto para vincular concepto' : 'Haga clic para editar'}
@@ -122,7 +122,7 @@ export const VisualEditorBlock: React.FC<VisualEditorBlockProps> = ({
               {block.type === 'heading' && (
                 <div className="space-y-1 py-1">
                   <div className="flex justify-between items-center opacity-0 group-hover/block:opacity-100 transition-opacity select-none">
-                    <label className="block text-[8px] font-bold text-carbon/40 uppercase tracking-widest font-sans">Título</label>
+                    <label className="block ac-label ac-label--2xs ac-label--faint font-sans">Título</label>
                     <span className="text-[8px] text-carbon/30 italic font-sans">Haga clic para editar</span>
                   </div>
                   {editingBlockId === block.id ? (
@@ -150,8 +150,8 @@ export const VisualEditorBlock: React.FC<VisualEditorBlockProps> = ({
               {block.type === 'list' && (
                 <div className="space-y-1">
                   <div className="flex justify-between items-center opacity-0 group-hover/block:opacity-100 transition-opacity select-none">
-                    <label className="block text-[8px] font-bold text-carbon/40 uppercase tracking-widest font-sans">Lista</label>
-                    <label className="flex items-center gap-1 text-[8px] font-bold uppercase tracking-widest text-carbon/35 cursor-pointer">
+                    <label className="block ac-label ac-label--2xs ac-label--faint font-sans">Lista</label>
+                    <label className="flex items-center gap-1 ac-label ac-label--2xs ac-label--muted cursor-pointer">
                       Numerada
                       <input
                         type="checkbox"
@@ -196,7 +196,7 @@ export const VisualEditorBlock: React.FC<VisualEditorBlockProps> = ({
               {block.type === 'table' && (
                 <div className="space-y-1">
                   <div className="flex justify-between items-center opacity-0 group-hover/block:opacity-100 transition-opacity select-none">
-                    <label className="block text-[8px] font-bold text-carbon/40 uppercase tracking-widest font-sans">Tabla</label>
+                    <label className="block ac-label ac-label--2xs ac-label--faint font-sans">Tabla</label>
                     <span className="text-[8px] text-carbon/30 italic font-sans">Haga clic para editar Markdown de tabla</span>
                   </div>
                   {editingBlockId === block.id ? (
@@ -238,7 +238,7 @@ export const VisualEditorBlock: React.FC<VisualEditorBlockProps> = ({
               {block.type === 'separator' && (
                 <div className="py-2 select-none">
                   <div className="flex justify-between items-center opacity-0 group-hover/block:opacity-100 transition-opacity">
-                    <label className="block text-[8px] font-bold text-carbon/40 uppercase tracking-widest font-sans">Separador</label>
+                    <label className="block ac-label ac-label--2xs ac-label--faint font-sans">Separador</label>
                   </div>
                   <div className="h-px bg-gradient-to-r from-transparent via-carbon/15 to-transparent my-4" />
                 </div>
@@ -247,7 +247,7 @@ export const VisualEditorBlock: React.FC<VisualEditorBlockProps> = ({
               {block.type === 'note' && (
                 <div className="space-y-1">
                   <div className="flex justify-between items-center opacity-0 group-hover/block:opacity-100 transition-opacity select-none">
-                    <label className="block text-[8px] font-bold text-carbon/40 uppercase tracking-widest font-sans font-serif">Nota</label>
+                    <label className="block ac-label ac-label--2xs ac-label--faint font-sans font-serif">Nota</label>
                     <span className="text-[8px] text-carbon/30 italic font-sans">Haga clic para editar</span>
                   </div>
                   {editingBlockId === block.id ? (
@@ -279,7 +279,7 @@ export const VisualEditorBlock: React.FC<VisualEditorBlockProps> = ({
               {block.type === 'citation' && (
                 <div className="space-y-1">
                   <div className="flex justify-between items-center opacity-0 group-hover/block:opacity-100 transition-opacity select-none">
-                    <label className="block text-[8px] font-bold text-carbon/40 uppercase tracking-widest font-sans">Cita</label>
+                    <label className="block ac-label ac-label--2xs ac-label--faint font-sans">Cita</label>
                     <span className="text-[8px] text-carbon/30 italic font-sans">Haga clic para editar</span>
                   </div>
                   {editingBlockId === block.id ? (
@@ -318,7 +318,7 @@ export const VisualEditorBlock: React.FC<VisualEditorBlockProps> = ({
               {block.type === 'definition_box' && (
                 <div className="space-y-1">
                   <div className="flex justify-between items-center opacity-0 group-hover/block:opacity-100 transition-opacity select-none">
-                    <label className="block text-[8px] font-bold text-carbon/40 uppercase tracking-widest font-sans">Definición Inline</label>
+                    <label className="block ac-label ac-label--2xs ac-label--faint font-sans">Definición Inline</label>
                     <span className="text-[8px] text-carbon/30 italic font-sans">Haga clic para editar</span>
                   </div>
                   {editingBlockId === block.id ? (
@@ -345,7 +345,7 @@ export const VisualEditorBlock: React.FC<VisualEditorBlockProps> = ({
                       onClick={() => !isReadOnly && setEditingBlockId(block.id)}
                       className="p-4 border border-salvia/20 bg-salvia/5 rounded-sm font-serif text-sm text-carbon cursor-text"
                     >
-                      <div className="text-[10px] uppercase font-bold text-salvia tracking-widest mb-1 select-none">
+                      <div className="ac-label ac-label--sm ac-label--salvia mb-1 select-none">
                         Definición: {block.metadata?.title || 'Sin Título'}
                       </div>
                       <div>{renderFormattedText(block.content, block.id, handleEditLink) || <span className="text-carbon/25 italic">Cuerpo de la definición...</span>}</div>
@@ -357,9 +357,9 @@ export const VisualEditorBlock: React.FC<VisualEditorBlockProps> = ({
               {block.type === 'formula' && (
                 <div className="space-y-1">
                   <div className="flex justify-between items-center opacity-0 group-hover/block:opacity-100 transition-opacity select-none">
-                    <label className="block text-[8px] font-bold text-carbon/40 uppercase tracking-widest font-sans">Fórmula Destacada</label>
+                    <label className="block ac-label ac-label--2xs ac-label--faint font-sans">Fórmula Destacada</label>
                     <div className="flex gap-1 items-center">
-                      <span className="text-[8px] font-sans text-carbon/40 uppercase mr-1">Insertar:</span>
+                      <span className="ac-label ac-label--2xs ac-label--faint mr-1">Insertar:</span>
                       {LATEX_SYMBOLS.map(sym => (
                         <button
                           key={sym.label}
@@ -404,7 +404,7 @@ export const VisualEditorBlock: React.FC<VisualEditorBlockProps> = ({
               {block.type === 'diagram' && (
                 <div className="space-y-2">
                   <div className="flex justify-between items-center border-b border-carbon/10 pb-1 opacity-0 group-hover/block:opacity-100 transition-opacity select-none">
-                    <label className="block text-[8px] font-bold text-carbon/40 uppercase tracking-widest font-sans">
+                    <label className="block ac-label ac-label--2xs ac-label--faint font-sans">
                       Diagrama canónico ({block.content})
                     </label>
                     {canMutateVisualStructure && <button

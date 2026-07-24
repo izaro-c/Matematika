@@ -36,7 +36,7 @@ export function AxiomaticDetailPanel({
           const color = getNodeTypeColor(selectedNodeData.nodeType);
           return (
             <span
-              className="text-[9px] uppercase tracking-widest px-2.5 py-0.5 rounded-sm border font-sans font-bold"
+              className="ac-editor-badge px-2.5 py-0.5 rounded-sm border"
               style={{
                 backgroundColor: `color-mix(in srgb, ${color} 8%, transparent)`,
                 borderColor: `color-mix(in srgb, ${color} 30%, transparent)`,
@@ -61,7 +61,7 @@ export function AxiomaticDetailPanel({
 
       {nodeSystems.length > 0 && (
         <div className="mb-2">
-          <h4 className="font-sans text-[9px] uppercase tracking-widest text-carbon/50 mb-1">Sistemas</h4>
+          <h4 className="ac-label ac-label--xs ac-label--soft mb-1">Sistemas</h4>
           <div className="flex flex-wrap gap-1">
             {nodeSystems.map(s => {
               const color = getNodeTypeColor(selectedNodeData.nodeType);
@@ -85,7 +85,7 @@ export function AxiomaticDetailPanel({
 
       {dependencyList.length > 0 && (
         <div className="mb-2">
-          <h4 className="font-sans text-[9px] uppercase tracking-widest text-carbon/50 mb-1">Depende de</h4>
+          <h4 className="ac-label ac-label--xs ac-label--soft mb-1">Depende de</h4>
           <ul className="space-y-0.5">
             {dependencyList.map((dep) => (
               <li key={dep.id} className="flex items-center gap-1.5">

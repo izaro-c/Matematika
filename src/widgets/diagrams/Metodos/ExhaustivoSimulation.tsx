@@ -17,7 +17,7 @@ export const ExhaustivoSimulation = () => {
   return (
     <div className="w-full h-full flex flex-col items-center justify-center select-none font-serif">
       {/* Título */}
-      <p className="text-carbon/45 text-[10px] tracking-widest uppercase mb-4">Partición exhaustiva</p>
+      <p className="ac-eyebrow ac-eyebrow--sm text-carbon/45 mb-4">Partición exhaustiva</p>
 
       {/* Grid 2×2 con ejes */}
       <div className="relative" style={{ width: 300, height: 280 }}>

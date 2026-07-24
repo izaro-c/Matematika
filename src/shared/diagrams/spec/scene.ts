@@ -18,6 +18,12 @@ import { interpolateDiagramTemplate } from './infoPanels';
 import { legacyElementCapabilities } from './semantics';
 import { projectDiagramSpecV3ToV2 } from './v3Compatibility';
 import {
+  clampLinearParameterToHalfPlane,
+  computeHalfPlaneSide,
+  constrainToHalfPlaneWithSide,
+  signedCross,
+} from './areaGeometry';
+import {
   constrainPointForAreaMembership,
 } from './areaRegions';
 import {
@@ -401,12 +407,41 @@ function linearProjectionDirection(support: DiagramElement, a: Coordinates, b: C
   return { x: dx, y: dy };
 }
 
+function activePointConstraints(spec: DiagramSpecV2, point: DiagramPoint): DiagramConstraint[] {
+  return (point.constraintIds ?? [])
+    .map(constraintId => (spec.constraints ?? []).find(item => item.id === constraintId && item.enabled))
+    .filter((constraint): constraint is DiagramConstraint => Boolean(constraint));
+}
+
+/** Soporte de deslizamiento: `glider` directo o relación `on` en relaciones combinadas. */
+export function onSupportTargetId(spec: DiagramSpecV2, point: DiagramPoint): string | undefined {
+  if (point.constraint === 'glider' && point.gliderTarget) return point.gliderTarget;
+  if (point.constraint === 'constrained') {
+    const on = activePointConstraints(spec, point).find(constraint => (
+      constraint.kind === 'on' && constraint.refs[0] === point.id
+    ));
+    if (on) return on.refs[1];
+  }
+  return undefined;
+}
+
+/** Punto cuya posición en el soporte mantiene JSXGraph sin re-resolución pasiva. */
+function isJsxgraphOnSupportPoint(spec: DiagramSpecV2, point: DiagramPoint): boolean {
+  if (!onSupportTargetId(spec, point)) return false;
+  if (point.constraint === 'glider') return true;
+  return point.constraint === 'constrained' && activePointConstraints(spec, point).length === 1;
+}
+
+function asGliderPoint(point: DiagramPoint, supportId: string): DiagramPoint {
+  return { ...point, constraint: 'glider', gliderTarget: supportId };
+}
+
 export function projectPointToSupport(
   spec: DiagramSpecV2,
   point: DiagramPoint,
   coordinates: { x: number; y: number },
 ): { x: number; y: number } {
-  if (point.constraint !== 'glider' || !point.gliderTarget) return coordinates;
+  if (!point.gliderTarget) return coordinates;
   const support = spec.elements.find(item => item.id === point.gliderTarget);
   if (!support) return coordinates;
 
@@ -654,15 +689,40 @@ export function withViewportBounds(spec: DiagramSpecV2, bounds: DiagramBounds): 
   return { ...spec, viewport: { ...spec.viewport, bounds } };
 }
 
+/**
+ * Rellena `constraint.side` en restricciones `sameSide` que aún no lo tienen.
+ * El signo se congela en la geometría actual para que el semiplano sea
+ * invariante cuando se mueven los puntos de frontera.
+ */
+export function materializeSameSideConstraints(spec: DiagramSpecV2): DiagramSpecV2 {
+  if (!spec.constraints?.some(constraint => constraint.kind === 'sameSide' && constraint.side === undefined)) {
+    return spec;
+  }
+  const constraints = spec.constraints.map(constraint => {
+    if (constraint.kind !== 'sameSide' || constraint.side !== undefined || constraint.refs.length < 3) {
+      return constraint;
+    }
+    const sidePoint = resolvePointCoordinates(spec, constraint.refs[0]);
+    const lineA = resolvePointCoordinates(spec, constraint.refs[1]);
+    const lineB = resolvePointCoordinates(spec, constraint.refs[2]);
+    if (!sidePoint || !lineA || !lineB) return constraint;
+    return { ...constraint, side: computeHalfPlaneSide(lineA, lineB, sidePoint) };
+  });
+  return { ...spec, constraints };
+}
+
 export function withMovedPoint(inputSpec: DiagramSpecV2 | DiagramSpecV3, pointId: string, x: number, y: number): DiagramSpecV2 {
-  const spec = inputSpec.version === 3 ? projectDiagramSpecV3ToV2(inputSpec) : inputSpec;
+  const spec = materializeSameSideConstraints(
+    inputSpec.version === 3 ? projectDiagramSpecV3ToV2(inputSpec) : inputSpec,
+  );
   const point = spec.points.find(item => item.id === pointId);
   if (!point || point.fixed || point.constraint === 'fixed' || point.constraint === 'derived') return spec;
   const constrained = constrainPointCoordinates(spec, point, { x, y });
-  return withResolvedPointConstraints({
+  const moved = {
     ...spec,
     points: spec.points.map(item => item.id === pointId ? { ...item, ...constrained } : item),
-  });
+  };
+  return withResolvedPointConstraints(moved, { skipPointIds: [pointId] });
 }
 
 type Coordinates = { x: number; y: number };
@@ -746,23 +806,170 @@ function applyInsideDiskConstraint(spec: DiagramSpecV2, result: Coordinates, con
   return length > radius ? { x: center.x + dx / length * radius, y: center.y + dy / length * radius } : result;
 }
 
+function linearSupportFrame(
+  spec: DiagramSpecV2,
+  support: DiagramElement,
+): { origin: Coordinates; direction: Coordinates; minParameter: number } | undefined {
+  const a = resolvePointCoordinates(spec, support.refs[0]);
+  const b = resolvePointCoordinates(spec, support.refs[1]);
+  const through = resolvePointCoordinates(spec, support.refs[2]);
+  const lineA = support.kind === 'perpendicular' || support.kind === 'parallel' ? through : a;
+  if (!lineA || !a || !b) return undefined;
+  const direction = linearProjectionDirection(support, a, b, through);
+  const origin = support.kind === 'angleBisector' ? b : lineA;
+  const minParameter = support.kind === 'ray' || support.kind === 'angleBisector' ? 0 : -Infinity;
+  return { origin, direction, minParameter };
+}
+
+function parameterOnLinearSupport(
+  frame: { origin: Coordinates; direction: Coordinates },
+  support: DiagramElement,
+  coordinates: Coordinates,
+): number {
+  const lengthSquared = frame.direction.x * frame.direction.x + frame.direction.y * frame.direction.y || 1;
+  const t = ((coordinates.x - frame.origin.x) * frame.direction.x + (coordinates.y - frame.origin.y) * frame.direction.y) / lengthSquared;
+  if (support.kind === 'ray' || support.kind === 'angleBisector') return Math.max(0, t);
+  return t;
+}
+
+function pointAtLinearSupportParameter(
+  frame: { origin: Coordinates; direction: Coordinates },
+  parameter: number,
+): Coordinates {
+  return {
+    x: frame.origin.x + parameter * frame.direction.x,
+    y: frame.origin.y + parameter * frame.direction.y,
+  };
+}
+
+function normalizedLerp(a: Coordinates, b: Coordinates, t: number): Coordinates {
+  const x = a.x + (b.x - a.x) * t;
+  const y = a.y + (b.y - a.y) * t;
+  const length = Math.hypot(x, y) || 1;
+  return { x: x / length, y: y / length };
+}
+
+const LINE_CARRIER_EPSILON = 1e-6;
+const MAX_LINEAR_PROJECTION_STEP_ANGLE = Math.PI / 36; // ~5°
+
+/**
+ * Proyección estable de `position` sobre la recta que pasa por `origin` con
+ * dirección `targetDirection`. Subdivide giros grandes en pasos pequeños para
+ * evitar inversiones de signo y disparos de parámetro cuando el portador gira
+ * mucho en un solo fotograma. Compartida por restricciones `parallel`/`perpendicular`.
+ */
+function stabilizedProjectionOnDirection(
+  origin: Coordinates,
+  targetDirection: Coordinates,
+  position: Coordinates,
+): Coordinates {
+  const targetLengthSquared = targetDirection.x * targetDirection.x + targetDirection.y * targetDirection.y;
+  const targetLength = Math.sqrt(targetLengthSquared);
+  const previousVector = { x: position.x - origin.x, y: position.y - origin.y };
+  const previousLength = Math.hypot(previousVector.x, previousVector.y);
+
+  if (targetLength < LINE_CARRIER_EPSILON) {
+    if (previousLength < LINE_CARRIER_EPSILON) return position;
+    return { x: origin.x + previousVector.x, y: origin.y + previousVector.y };
+  }
+
+  if (previousLength < LINE_CARRIER_EPSILON) {
+    return {
+      x: origin.x + targetDirection.x / targetLength,
+      y: origin.y + targetDirection.y / targetLength,
+    };
+  }
+
+  const previousUnit = { x: previousVector.x / previousLength, y: previousVector.y / previousLength };
+  const targetUnit = { x: targetDirection.x / targetLength, y: targetDirection.y / targetLength };
+  const cosAngle = Math.max(-1, Math.min(1, previousUnit.x * targetUnit.x + previousUnit.y * targetUnit.y));
+  const angle = Math.acos(cosAngle);
+  const steps = Math.max(1, Math.ceil(angle / MAX_LINEAR_PROJECTION_STEP_ANGLE));
+
+  let currentVector = previousVector;
+  for (let step = 1; step <= steps; step += 1) {
+    const stepUnit = step === steps ? targetUnit : normalizedLerp(previousUnit, targetUnit, step / steps);
+    const stepDirection = { x: stepUnit.x * targetLength, y: stepUnit.y * targetLength };
+    const amount = (currentVector.x * stepDirection.x + currentVector.y * stepDirection.y) / targetLengthSquared;
+    currentVector = { x: amount * stepDirection.x, y: amount * stepDirection.y };
+  }
+
+  return { x: origin.x + currentVector.x, y: origin.y + currentVector.y };
+}
+
+function isPointInPersistedHalfPlane(
+  lineA: Coordinates,
+  lineB: Coordinates,
+  side: 1 | -1,
+  coordinates: Coordinates,
+): boolean {
+  return signedCross(lineA, lineB, coordinates) * side >= -1e-8;
+}
+
+/**
+ * `sameSide` sobre un soporte lineal: el semiplano 2D solo puede mover el punto
+ * a lo largo del soporte (no puede sacarlo del rayo/recta).
+ * Si el arrastre pediría salir y el punto ya está dentro, se mantiene (como
+ * `sameSide` solo impide cruzar).
+ */
+function clampOnSupportToSameSide(
+  spec: DiagramSpecV2,
+  supportId: string,
+  sameSideConstraint: DiagramConstraint,
+  point: DiagramPoint,
+  onSupport: Coordinates,
+): Coordinates {
+  const support = spec.elements.find(element => element.id === supportId);
+  if (!support) return onSupport;
+  const frame = linearSupportFrame(spec, support);
+  if (!frame) return onSupport;
+  const baseA = resolvePointCoordinates(spec, sameSideConstraint.refs[1]);
+  const baseB = resolvePointCoordinates(spec, sameSideConstraint.refs[2]);
+  if (!baseA || !baseB) return onSupport;
+  const side: 1 | -1 = sameSideConstraint.side ?? computeHalfPlaneSide(baseA, baseB, point);
+  if (isPointInPersistedHalfPlane(baseA, baseB, side, onSupport)) return onSupport;
+  if (isPointInPersistedHalfPlane(baseA, baseB, side, point)) {
+    return projectPointToSupport(spec, asGliderPoint(point, supportId), point);
+  }
+  const requested = parameterOnLinearSupport(frame, support, onSupport);
+  const bounded = frame.minParameter === -Infinity ? requested : Math.max(frame.minParameter, requested);
+  return pointAtLinearSupportParameter(frame, clampLinearParameterToHalfPlane(
+    frame.origin,
+    frame.direction,
+    baseA,
+    baseB,
+    side,
+    bounded,
+    frame.minParameter,
+  ));
+}
+
+function sameSideAllowsPoint(
+  spec: DiagramSpecV2,
+  point: DiagramPoint,
+  sameSideConstraint: DiagramConstraint,
+  coordinates: Coordinates,
+): boolean {
+  const baseA = resolvePointCoordinates(spec, sameSideConstraint.refs[1]);
+  const baseB = resolvePointCoordinates(spec, sameSideConstraint.refs[2]);
+  if (!baseA || !baseB) return true;
+  const side: 1 | -1 = sameSideConstraint.side ?? computeHalfPlaneSide(baseA, baseB, point);
+  return isPointInPersistedHalfPlane(baseA, baseB, side, coordinates);
+}
+
 function applySameSideConstraint(spec: DiagramSpecV2, point: DiagramPoint, result: Coordinates, constraint: DiagramConstraint): Coordinates {
   if (constraint.refs.length < 3) return result;
   const baseA = resolvePointCoordinates(spec, constraint.refs[1]);
   const baseB = resolvePointCoordinates(spec, constraint.refs[2]);
   if (!baseA || !baseB) return result;
-  const dx = baseB.x - baseA.x;
-  const dy = baseB.y - baseA.y;
-  const length = Math.hypot(dx, dy) || 1;
-  const initialCross = dx * (point.y - baseA.y) - dy * (point.x - baseA.x);
-  const currentCross = dx * (result.y - baseA.y) - dy * (result.x - baseA.x);
-  const side = Math.sign(initialCross) || 1;
-  if (currentCross * side > 0.01) return result;
-  const projection = ((result.x - baseA.x) * dx + (result.y - baseA.y) * dy) / (length * length);
-  return {
-    x: baseA.x + projection * dx - dy / length * side * 0.05,
-    y: baseA.y + projection * dy + dx / length * side * 0.05,
-  };
+
+  // `constraint.side` se materializa al cargar o al primer movimiento. El
+  // fallback desde la posición confirmada del punto solo cubre specs
+  // legadas durante el arrastre del punto restringido.
+  const side: 1 | -1 = constraint.side
+    ?? computeHalfPlaneSide(baseA, baseB, point);
+
+  return constrainToHalfPlaneWithSide(baseA, baseB, side, result);
 }
 
 function applyInsideAreaConstraint(spec: DiagramSpecV2, result: Coordinates, constraint: DiagramConstraint): Coordinates {
@@ -781,10 +988,8 @@ function applyLinearConstraint(spec: DiagramSpecV2, result: Coordinates, constra
   if (!baseA || !baseB || !origin) return result;
   const dx = baseB.x - baseA.x;
   const dy = baseB.y - baseA.y;
-  const direction = constraint.kind === 'perpendicular' ? { x: -dy, y: dx } : { x: dx, y: dy };
-  const lengthSquared = direction.x * direction.x + direction.y * direction.y || 1;
-  const amount = ((result.x - origin.x) * direction.x + (result.y - origin.y) * direction.y) / lengthSquared;
-  return { x: origin.x + amount * direction.x, y: origin.y + amount * direction.y };
+  const targetDirection = constraint.kind === 'perpendicular' ? { x: -dy, y: dx } : { x: dx, y: dy };
+  return stabilizedProjectionOnDirection(origin, targetDirection, result);
 }
 
 function applyConstraint(spec: DiagramSpecV2, point: DiagramPoint, result: Coordinates, constraint: DiagramConstraint): Coordinates {
@@ -814,13 +1019,25 @@ export function constrainPointCoordinates(
   point: DiagramPoint,
   coordinates: { x: number; y: number },
 ): { x: number; y: number } {
-  if (point.constraint === 'glider') return projectPointToSupport(spec, point, coordinates);
+  const supportId = onSupportTargetId(spec, point);
+  if (supportId && isJsxgraphOnSupportPoint(spec, point)) {
+    return projectPointToSupport(spec, asGliderPoint(point, supportId), coordinates);
+  }
   if (point.constraint === 'horizontal') return { x: coordinates.x, y: point.y };
   if (point.constraint === 'vertical') return { x: point.x, y: coordinates.y };
-  const activeConstraints = (point.constraintIds ?? [])
-    .map(constraintId => (spec.constraints ?? []).find(item => item.id === constraintId && item.enabled))
-    .filter((constraint): constraint is DiagramConstraint => Boolean(constraint));
+  const activeConstraints = activePointConstraints(spec, point);
   const onConstraint = activeConstraints.find(constraint => constraint.kind === 'on' && constraint.refs[0] === point.id);
+  const sameSideConstraint = activeConstraints.find(constraint => constraint.kind === 'sameSide' && constraint.refs[0] === point.id);
+  // Composición: `on` (como solo) y después `sameSide` a lo largo del soporte.
+  if (onConstraint && sameSideConstraint) {
+    let result = projectPointToSupport(spec, asGliderPoint(point, onConstraint.refs[1]), coordinates);
+    result = clampOnSupportToSameSide(spec, onConstraint.refs[1], sameSideConstraint, point, result);
+    for (const constraint of activeConstraints) {
+      if (constraint.kind === 'on' || constraint.kind === 'sameSide') continue;
+      result = applyConstraint(spec, point, result, constraint);
+    }
+    return result;
+  }
   const equalLengthConstraint = activeConstraints.find(constraint => constraint.kind === 'equalLength' && constraint.refs[0] === point.id);
   const exactSupportLength = onConstraint && equalLengthConstraint
     ? pointOnLinearSupportAtEqualLength(spec, point, coordinates, onConstraint.refs[1], equalLengthConstraint)
@@ -905,14 +1122,55 @@ function pointOnLinearSupportAtEqualLength(
   };
 }
 
-export function withResolvedPointConstraints(spec: DiagramSpecV2): DiagramSpecV2 {
+export function withResolvedPointConstraints(
+  spec: DiagramSpecV2,
+  options?: { skipPointIds?: readonly string[] },
+): DiagramSpecV2 {
+  const skipPointIds = new Set(options?.skipPointIds ?? []);
   let current = spec;
   const maximumPasses = Math.max(1, spec.points.length);
   for (let pass = 0; pass < maximumPasses; pass += 1) {
     let changed = false;
     for (const point of current.points) {
+      if (skipPointIds.has(point.id)) continue;
+      // Como `on` solo: el glider de JSXGraph mantiene el punto en el soporte.
+      if (isJsxgraphOnSupportPoint(current, point)) continue;
       if (!point.constraintIds?.length) continue;
-      const coordinates = constrainPointCoordinates(current, point, { x: point.x, y: point.y });
+
+      const activeConstraints = activePointConstraints(current, point);
+      const onConstraint = activeConstraints.find(constraint => (
+        constraint.kind === 'on' && constraint.refs[0] === point.id
+      ));
+      const sameSideConstraint = activeConstraints.find(constraint => (
+        constraint.kind === 'sameSide' && constraint.refs[0] === point.id
+      ));
+
+      let coordinates: Coordinates;
+      if (onConstraint && sameSideConstraint) {
+        // `on` como solo (no re-proyectar): el glider ya colocó el punto.
+        // `sameSide` como solo: solo actuar si sale del semiplano, y sin
+        // sacar el punto del soporte.
+        if (sameSideAllowsPoint(current, point, sameSideConstraint, point)) continue;
+        const onSupport = projectPointToSupport(
+          current,
+          asGliderPoint(point, onConstraint.refs[1]),
+          point,
+        );
+        coordinates = clampOnSupportToSameSide(
+          current,
+          onConstraint.refs[1],
+          sameSideConstraint,
+          point,
+          onSupport,
+        );
+        for (const constraint of activeConstraints) {
+          if (constraint.kind === 'on' || constraint.kind === 'sameSide') continue;
+          coordinates = applyConstraint(current, point, coordinates, constraint);
+        }
+      } else {
+        coordinates = constrainPointCoordinates(current, point, { x: point.x, y: point.y });
+      }
+
       if (Math.abs(coordinates.x - point.x) <= 1e-10 && Math.abs(coordinates.y - point.y) <= 1e-10) continue;
       current = {
         ...current,

@@ -38,7 +38,7 @@ export const DefinitionPage = () => {
 
   if (!definition) {
     return (
-      <div className="min-h-screen bg-lienzo flex items-center justify-center font-serif text-carbon">
+      <div className="ac-page flex items-center justify-center">
         <h1 className="text-2xl">La definición especificada no existe o no ha sido catalogada.</h1>
       </div>
     );
