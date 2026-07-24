@@ -1,4 +1,4 @@
-import type { ThemeColors } from './MathBoard';
+import type { ThemeColors } from './theme';
 
 // ─── Paleta Arts & Crafts ───────────────────────────────────────────────────
 

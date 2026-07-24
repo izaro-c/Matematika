@@ -1,6 +1,7 @@
 import { fireEvent, render, screen, waitFor } from '@testing-library/react';
 import React from 'react';
 import { beforeEach, describe, expect, it, vi } from 'vitest';
+import { resetRepositoryMocks } from '../../../../helpers/diagramWorkbench';
 import { DiagramWorkbench } from '../../../../../src/features/editor/diagrams/ui/DiagramWorkbench';
 import { DiagramStatusBar } from '../../../../../src/features/editor/diagrams/ui/DiagramStatusBar';
 import { DiagramStepPreviewControls } from '../../../../../src/features/editor/diagrams/ui/DiagramStepPreviewControls';
@@ -13,7 +14,7 @@ const repositoryMocks = vi.hoisted(() => ({
   updateMdxImports: vi.fn(),
 }));
 
-vi.mock('../../../../../src/features/editor/diagrams/persistence/repository', () => ({
+vi.mock('@/features/editor/diagrams/persistence/repository', () => ({
   diagramRepository: {
     readDiagram: repositoryMocks.readDiagram,
     saveDiagram: repositoryMocks.saveDiagram,
@@ -65,7 +66,7 @@ describe('DiagramStepPreviewControls', () => {
 
 describe('DiagramWorkbench integrated UX', () => {
   beforeEach(() => {
-    readDiagram.mockReset();
+    resetRepositoryMocks(repositoryMocks);
   });
 
   it('places save status in the header instead of a footer bar', async () => {

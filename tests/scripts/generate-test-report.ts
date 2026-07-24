@@ -4,7 +4,7 @@ import { execSync } from 'child_process';
 import { fileURLToPath } from 'url';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
-const rootDir = path.resolve(__dirname, '..');
+const rootDir = path.resolve(__dirname, '../..');
 const resultsPath = path.resolve(rootDir, 'test-results.json');
 const markdownPath = path.resolve(rootDir, 'docs/testing/Category_Partition_Tests.md');
 const defsPath = path.resolve(__dirname, 'test-definitions.json');
@@ -12,7 +12,7 @@ const defsPath = path.resolve(__dirname, 'test-definitions.json');
 console.log('Ejecutando pruebas CPT en Vitest...');
 
 try {
-  execSync('npx vitest run tests/cpt.test.tsx --reporter=json --outputFile=test-results.json', {
+  execSync('npx vitest run tests/boundary/cpt.test.tsx --reporter=json --outputFile=test-results.json', {
     cwd: rootDir,
     stdio: 'ignore'
   });

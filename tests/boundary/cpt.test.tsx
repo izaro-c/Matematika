@@ -1,5 +1,5 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest';
-import { render, screen, fireEvent } from '@testing-library/react';
+import { render, screen, fireEvent, waitFor } from '@testing-library/react';
 import { SearchOmnibar } from '@/widgets/navigation/SearchOmnibar';
 import { useNavigationStore } from '@/entities/content/searchApi';
 import { appPath, publicAsset } from '@/shared/lib/routeHelper';
@@ -39,9 +39,15 @@ describe('UC-1: Buscar Nodo (Omnibar)', () => {
     render(<SearchOmnibar />);
     const input = screen.getByRole('searchbox', { name: 'Buscar contenido matemático' });
     fireEvent.change(input, { target: { value: 'pitagoras' } });
-    
-    // Verifica que el input tiene el valor correcto
-    expect((input as HTMLInputElement).value).toBe('pitagoras');
+
+    await waitFor(() => {
+      const results = screen.getAllByRole('option').filter(option => option.closest('#search-results'));
+      const theorem = results.find(
+        option => option.getAttribute('data-result-type') === 'teorema'
+          && /pitágoras/i.test(option.textContent ?? ''),
+      );
+      expect(theorem).toBeDefined();
+    });
   });
 
   it('TC-1.3: Query inválida / Inexistente -> Lista vacía', () => {

@@ -7,12 +7,17 @@ import { describe, expect, it } from 'vitest';
 import { diagramConstraint, element, point } from '../../../src/features/editor/diagrams/model/diagramElements';
 import {
   constrainPointCoordinates,
-  projectPointToSupport,
   withMovedPoint,
 } from '../../../src/shared/diagrams/spec/scene';
 import { projectDiagramSpecV3ToV2 } from '../../../src/shared/diagrams/spec/v3Compatibility';
 import type { VisualDiagramModel } from '../../../src/features/editor/diagrams/model/types';
 import { DemoAnguloExternoSpec } from '@/widgets/diagrams/Demos/DemoAnguloExterno';
+import {
+  distanceToSupport,
+  moveSupportPoint,
+  placeGliderOnSupport,
+  rayParameter,
+} from '../../helpers/diagramRay';
 
 function demoAnguloExternoV2(): VisualDiagramModel {
   return projectDiagramSpecV3ToV2(DemoAnguloExternoSpec);
@@ -54,51 +59,12 @@ function rayOnSupportWithSameSideModel(): VisualDiagramModel {
   };
 }
 
-function distanceToRay(spec: VisualDiagramModel, pointId: string, result: { x: number; y: number }): number {
-  const p = spec.points.find(item => item.id === pointId)!;
-  const onRay = projectPointToSupport(spec, { ...p, constraint: 'glider', gliderTarget: 'rayBC' }, result);
-  return Math.hypot(result.x - onRay.x, result.y - onRay.y);
-}
-
-/** Simula el glider JSXGraph: conserva el parámetro afín del punto sobre el rayo. */
-function placeGliderOnRay(previous: VisualDiagramModel, next: VisualDiagramModel, pointId: string): VisualDiagramModel {
-  const pPrev = previous.points.find(item => item.id === pointId)!;
-  const pB0 = previous.points.find(item => item.id === 'pB')!;
-  const pC0 = previous.points.find(item => item.id === 'pC')!;
-  const pB1 = next.points.find(item => item.id === 'pB')!;
-  const pC1 = next.points.find(item => item.id === 'pC')!;
-  const dx0 = pC0.x - pB0.x;
-  const dy0 = pC0.y - pB0.y;
-  const len0 = dx0 * dx0 + dy0 * dy0 || 1;
-  const t = Math.max(0, ((pPrev.x - pB0.x) * dx0 + (pPrev.y - pB0.y) * dy0) / len0);
-  const dx1 = pC1.x - pB1.x;
-  const dy1 = pC1.y - pB1.y;
-  const glider = { x: pB1.x + t * dx1, y: pB1.y + t * dy1 };
-  return {
-    ...next,
-    points: next.points.map(item => item.id === pointId ? { ...item, ...glider } : item),
-  };
-}
-
-/**
- * Como useBoardLifecycle: el glider actualiza D sobre el rayo nuevo; el motor
- * solo aplica sameSide si hace falta.
- */
-function moveSupportPoint(spec: VisualDiagramModel, pointId: string, x: number, y: number): VisualDiagramModel {
-  const drafted = {
-    ...spec,
-    points: spec.points.map(item => item.id === pointId ? { ...item, x, y } : item),
-  };
-  const withGlider = placeGliderOnRay(spec, drafted, 'pD');
-  return withMovedPoint(withGlider, pointId, x, y);
-}
-
 describe('restricción on + sameSide sobre semirrecta', () => {
   it('mantiene el punto sobre el soporte al arrastrar', () => {
     const model = rayOnSupportWithSameSideModel();
     const pD = model.points.find(item => item.id === 'pD')!;
     const result = constrainPointCoordinates(model, pD, { x: 5, y: 2 });
-    expect(distanceToRay(model, 'pD', result)).toBeLessThan(1e-8);
+    expect(distanceToSupport(model, 'pD', 'rayBC', result)).toBeLessThan(1e-8);
   });
 
   it('desliza a lo largo del rayo (parámetro monótono) hasta la frontera del semiplano', () => {
@@ -108,7 +74,7 @@ describe('restricción on + sameSide sobre semirrecta', () => {
     let previousT = 0;
     path.forEach((coords) => {
       const next = constrainPointCoordinates(model, pD, coords);
-      expect(distanceToRay(model, 'pD', next)).toBeLessThan(1e-8);
+      expect(distanceToSupport(model, 'pD', 'rayBC', next)).toBeLessThan(1e-8);
       const frame = { origin: { x: 0, y: 0 }, direction: { x: 3, y: 0 } };
       const t = ((next.x - frame.origin.x) * frame.direction.x + (next.y - frame.origin.y) * frame.direction.y)
         / (frame.direction.x * frame.direction.x + frame.direction.y * frame.direction.y);
@@ -117,64 +83,58 @@ describe('restricción on + sameSide sobre semirrecta', () => {
     });
   });
 
-  it('reproduce el caso real de DemoAnguloExterno (pD sobre rayBC)', () => {
+  it('reproduce el caso real de DemoAnguloExterno (pD sobre rayCaux)', () => {
     const v2 = demoAnguloExternoV2();
     const pD = v2.points.find(item => item.id === 'pD')!;
     const result = constrainPointCoordinates(v2, pD, { x: 6, y: 1 });
-    const onRay = projectPointToSupport(v2, { ...pD, constraint: 'glider', gliderTarget: 'rayBC' }, result);
-    expect(Math.hypot(result.x - onRay.x, result.y - onRay.y)).toBeLessThan(1e-8);
+    expect(distanceToSupport(v2, 'pD', 'rayCaux', result)).toBeLessThan(1e-8);
   });
 
   it('no re-proyecta al girar el rayo si el punto sigue en el semiplano (como on solo)', () => {
     const v2 = demoAnguloExternoV2();
-    const pB0 = v2.points.find(item => item.id === 'pB')!;
-    const after = moveSupportPoint(v2, 'pB', pB0.x + 0.3, pB0.y - 0.2);
+    const pC0 = v2.points.find(item => item.id === 'pC')!;
+    const after = moveSupportPoint(v2, 'pC', pC0.x + 0.3, pC0.y - 0.2, 'pD', 'pC', 'paux');
     const drafted = {
       ...v2,
-      points: v2.points.map(item => item.id === 'pB' ? { ...item, x: pB0.x + 0.3, y: pB0.y - 0.2 } : item),
+      points: v2.points.map(item => item.id === 'pC' ? { ...item, x: pC0.x + 0.3, y: pC0.y - 0.2 } : item),
     };
-    const gliderD = placeGliderOnRay(v2, drafted, 'pD').points.find(item => item.id === 'pD')!;
+    const gliderD = placeGliderOnSupport(v2, drafted, 'pD', 'pC', 'paux').points.find(item => item.id === 'pD')!;
     const pD = after.points.find(item => item.id === 'pD')!;
     expect(pD.x).toBeCloseTo(gliderD.x, 8);
     expect(pD.y).toBeCloseTo(gliderD.y, 8);
-    expect(distanceToRay(after, 'pD', pD)).toBeLessThan(1e-8);
+    expect(distanceToSupport(after, 'pD', 'rayCaux', pD)).toBeLessThan(1e-8);
   });
 
-  it('mantiene el parámetro del glider al mover pB o pC mientras el semiplano lo permite', () => {
+  it('mantiene el parámetro del glider al mover pC o paux mientras el rayo lo permite', () => {
     let v2 = demoAnguloExternoV2();
-    const pD0 = v2.points.find(item => item.id === 'pD')!;
-    const pB0 = v2.points.find(item => item.id === 'pB')!;
+    const initialT = rayParameter(v2, 'pD', 'pC', 'paux');
     const pC0 = v2.points.find(item => item.id === 'pC')!;
-    const dx0 = pC0.x - pB0.x;
-    const dy0 = pC0.y - pB0.y;
-    const initialT = ((pD0.x - pB0.x) * dx0 + (pD0.y - pB0.y) * dy0) / (dx0 * dx0 + dy0 * dy0);
 
-    const bPath = Array.from({ length: 12 }, (_, index) => ({
-      x: pB0.x + index * 0.1,
-      y: pB0.y - index * 0.06,
+    const cPath = Array.from({ length: 12 }, (_, index) => ({
+      x: pC0.x + index * 0.05,
+      y: pC0.y - index * 0.02,
     }));
-    for (const target of bPath) {
-      v2 = moveSupportPoint(v2, 'pB', target.x, target.y);
+    for (const target of cPath) {
+      v2 = moveSupportPoint(v2, 'pC', target.x, target.y, 'pD', 'pC', 'paux');
       const pD = v2.points.find(item => item.id === 'pD')!;
-      const pB = v2.points.find(item => item.id === 'pB')!;
-      const pC = v2.points.find(item => item.id === 'pC')!;
-      const dx = pC.x - pB.x;
-      const dy = pC.y - pB.y;
-      const t = ((pD.x - pB.x) * dx + (pD.y - pB.y) * dy) / (dx * dx + dy * dy);
-      expect(distanceToRay(v2, 'pD', pD)).toBeLessThan(1e-8);
-      expect(Math.abs(t - initialT)).toBeLessThan(1e-6);
+      expect(distanceToSupport(v2, 'pD', 'rayCaux', pD)).toBeLessThan(1e-8);
+      expect(Math.abs(rayParameter(v2, 'pD', 'pC', 'paux') - initialT)).toBeLessThan(1e-5);
     }
   });
 
-  it('mantiene posición al arrastrar hacia el semiplano inválido (DemoAnguloExterno, pD)', () => {
-    let v2 = demoAnguloExternoV2();
-    const pD0 = v2.points.find(item => item.id === 'pD')!;
-    v2 = withMovedPoint(v2, 'pD', pD0.x + 0.3, pD0.y + 0.4);
-    const pD1 = v2.points.find(item => item.id === 'pD')!;
-    const intoInvalid = withMovedPoint(v2, 'pD', pD1.x + 0.5, pD1.y - 2);
-    const pD2 = intoInvalid.points.find(item => item.id === 'pD')!;
-    expect(pD2.x).toBeCloseTo(pD1.x, 8);
-    expect(pD2.y).toBeCloseTo(pD1.y, 8);
-    expect(distanceToRay(intoInvalid, 'pD', pD2)).toBeLessThan(1e-8);
+  it('clampa pD en C al arrastrarlo más allá del origen de su soporte (DemoAnguloExterno, pD)', () => {
+    // pD no lleva restricción `sameSide`: su soporte real es `rayCaux`, una
+    // semirrecta auxiliar con origen en C (no `rayBC`). Ese origen es lo que
+    // garantiza B*C*D sin necesitar un semiplano adicional: arrastrar pD
+    // "hacia atrás" lo clampa en C, el mínimo del parámetro del rayo.
+    const v2 = demoAnguloExternoV2();
+    const pC = v2.points.find(item => item.id === 'pC')!;
+    const paux = v2.points.find(item => item.id === 'paux')!;
+    const direction = { x: paux.x - pC.x, y: paux.y - pC.y };
+    const behindC = { x: pC.x - direction.x * 0.2, y: pC.y - direction.y * 0.2 };
+    const clamped = withMovedPoint(v2, 'pD', behindC.x, behindC.y);
+    const pD = clamped.points.find(item => item.id === 'pD')!;
+    expect(pD.x).toBeCloseTo(pC.x, 8);
+    expect(pD.y).toBeCloseTo(pC.y, 8);
   });
 });

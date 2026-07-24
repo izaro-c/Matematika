@@ -1,4 +1,4 @@
-import type { ThemeColors } from './MathBoard';
+import type { ThemeColors } from './theme';
 import JXG from 'jsxgraph';
 import type { GeometryOptions, JXGCoord, JXGPolygon, JXGSlider, PointLike, PointSupport } from './MathUtils';
 import { setExactPointPosition } from './MathUtils';

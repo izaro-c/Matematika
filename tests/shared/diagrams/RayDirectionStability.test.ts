@@ -12,7 +12,7 @@
 import { afterEach, beforeEach, describe, expect, it } from 'vitest';
 import JXG from 'jsxgraph';
 import { createLine, createPoint, createRay, createSegment } from '@/shared/diagrams/core/MathFactory';
-import type { ThemeColors } from '@/shared/diagrams/core/MathBoard';
+import type { ThemeColors } from '@/shared/diagrams/core/theme';
 
 const WIDTH = 600;
 const HEIGHT = 600;
