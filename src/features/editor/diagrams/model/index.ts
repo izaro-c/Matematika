@@ -6,6 +6,8 @@ export * from './diagramOptions';
 export * from './templateModels';
 export * from './guidedConstructions';
 export * from './modelRenaming';
+export * from './relationCompatibility';
+export * from './relationSlots';
 export * from './constraintOptions';
 export * from './segmentLengthConstraints';
 export * from './angleConstraints';
