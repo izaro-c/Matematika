@@ -1,10 +1,8 @@
 import React, { useState } from 'react';
 import type { DiagramTarget } from '@/features/editor/core/editorTypes';
-import type { EnrichedDiagramDiagnostic } from '../diagnostics/enrichDiagnostics';
+import type { EnrichedDiagramDiagnostic } from '../diagnostics/types';
 import { interactiveElementSnippet, conceptHighlightSnippet } from '../model/selectors';
 import { DiagramButton, DiagramPanel } from './primitives';
-
-export { humanizeDiagnosticMessage } from '../diagnostics/humanize';
 
 interface DiagramValidationPanelProps {
   diagnostics: EnrichedDiagramDiagnostic[];

@@ -1,19 +1,10 @@
-import React, { useMemo, useRef, useState } from 'react';
+import React, { useRef, useState } from 'react';
 import type { EditorDiagramReference } from '../../core/editorTypes';
 import type { ConstructionKind, VisualDiagramModel } from '../model/types';
 import { useDiagramState } from '../hooks/useDiagramState';
 import { buildTargets } from '../model/selectors';
-import { buildDiagramSaveCapability } from '../model/savePresentation';
-import {
-  enrichDiagramDiagnostics,
-  summarizeDiagnostics,
-  formatDiagnosticTabDetail,
-  fieldErrorsForObject,
-  buildInspectorNavigationIntent,
-  type EnrichedDiagramDiagnostic,
-  type DiagramInspectorSection,
-  type InspectorNavigationIntent,
-} from '../diagnostics';
+import { formatDiagnosticTabDetail } from '../diagnostics';
+import { useDiagramDiagnostics } from '../hooks/useDiagramDiagnostics';
 import { DiagramCanvas } from './DiagramCanvas';
 import { DiagramToolbar } from './DiagramToolbar';
 import { DiagramInspector } from './DiagramInspector';
@@ -151,13 +142,6 @@ export const DiagramWorkbenchCore: React.FC<DiagramWorkbenchCoreProps> = ({
 
   const [previewHighlightId, setPreviewHighlightId] = useState('');
   const [selectedTargetId, setSelectedTargetId] = useState('');
-  const [focusedDiagnosticId, setFocusedDiagnosticId] = useState('');
-  const [diagnosticsAcknowledged, setDiagnosticsAcknowledged] = useState(false);
-  const [inspectorSection, setInspectorSection] = useState<DiagramInspectorSection>('general');
-  const [focusedFieldKey, setFocusedFieldKey] = useState('');
-  const [listFocusObjectId, setListFocusObjectId] = useState('');
-  const [inspectorNavigation, setInspectorNavigation] = useState<InspectorNavigationIntent | null>(null);
-  const navigationRevisionRef = useRef(0);
 
   const [constructionKind, setConstructionKind] = useState<ConstructionKind>('mediatriz');
   const [constructionRefs, setConstructionRefs] = useState<Record<string, string>>({ a: '', b: '', c: '' });
@@ -232,70 +216,34 @@ export const DiagramWorkbenchCore: React.FC<DiagramWorkbenchCoreProps> = ({
     redo,
   });
 
-  const enrichedDiagnostics = useMemo(
-    () => enrichDiagramDiagnostics(state.diagnostics, state.currentModel, state.currentModel ? buildTargets(state.currentModel) : []),
-    [state.diagnostics, state.currentModel],
-  );
-  const diagnosticSummary = useMemo(() => summarizeDiagnostics(enrichedDiagnostics), [enrichedDiagnostics]);
-  const errorObjectIds = useMemo(() => new Set(diagnosticSummary.objectIdsWithErrors), [diagnosticSummary.objectIdsWithErrors]);
-  const passiveErrorHighlightIds = useMemo(
-    () => diagnosticSummary.objectIdsWithErrors.filter(id => id !== previewHighlightId),
-    [diagnosticSummary.objectIdsWithErrors, previewHighlightId],
-  );
-  const selectedFieldErrors = useMemo(
-    () => fieldErrorsForObject(enrichedDiagnostics, state.selectedId),
-    [enrichedDiagnostics, state.selectedId],
+  const diagnostics = useDiagramDiagnostics(
+    state.diagnostics,
+    state.currentModel,
+    state.selectedId,
+    state,
+    previewHighlightId,
   );
 
-  if (!isOpen) return null;
+  const navigationOptions = {
+    setWorkspace,
+    setLeftPanel,
+    setMobilePane,
+    selectOnly,
+    setPreviewHighlightId,
+  };
 
-  const navigateToDiagnostic = (diagnostic: EnrichedDiagramDiagnostic) => {
-    const location = diagnostic.location;
-    const nextWorkspace = location.workspace === 'check' ? 'build' : location.workspace;
-    const intent = buildInspectorNavigationIntent(diagnostic, navigationRevisionRef.current + 1);
-    navigationRevisionRef.current = intent.revision;
-
-    setWorkspace(nextWorkspace);
-    setFocusedDiagnosticId(diagnostic.id);
-    setDiagnosticsAcknowledged(true);
-    setLeftPanel(intent.leftPanel);
-    setInspectorSection(intent.section);
-    setFocusedFieldKey(intent.fieldKey);
-    setInspectorNavigation(intent);
-
-    if (intent.objectId) {
-      selectOnly(intent.objectId);
-      setPreviewHighlightId(intent.objectId);
-      setListFocusObjectId(intent.objectId);
-      setMobilePane(nextWorkspace === 'steps' ? 'canvas' : 'properties');
-    } else {
-      setMobilePane('scene');
-      setListFocusObjectId('');
-    }
+  const navigateToDiagnostic = (diagnostic: Parameters<typeof diagnostics.navigateToDiagnostic>[0]) => {
+    diagnostics.navigateToDiagnostic(diagnostic, navigationOptions);
   };
 
   const openDiagnostics = () => {
-    const capability = buildDiagramSaveCapability(state);
-    const preferred = capability.primaryDiagnosticId
-      ? enrichedDiagnostics.find(item => item.id === capability.primaryDiagnosticId)
-      : undefined;
-    const firstError = preferred ?? enrichedDiagnostics.find(item => item.severity === 'error');
-    setWorkspace('check');
-    setDiagnosticsAcknowledged(true);
-    setFocusedDiagnosticId(firstError?.id ?? '');
-    setInspectorNavigation(null);
+    diagnostics.openDiagnostics(setWorkspace);
   };
 
-  const handleInspectorSectionChange = (section: DiagramInspectorSection) => {
-    setInspectorSection(section);
-    if (inspectorNavigation && section !== inspectorNavigation.section) {
-      setInspectorNavigation(null);
-      setFocusedFieldKey('');
-    }
-  };
+  if (!isOpen) return null;
 
   const model: VisualDiagramModel | null = state.currentModel;
-  const saveCapability = buildDiagramSaveCapability(state);
+  const saveCapability = diagnostics.saveCapability;
   const saveCodeOnlyDiagram = () => saveDiagramInFileMode(isFileMode, saveDiagram);
 
   if (shouldShowCodeFallback(model, state.currentSource, state.diagnostics.length)) {
@@ -333,10 +281,10 @@ export const DiagramWorkbenchCore: React.FC<DiagramWorkbenchCoreProps> = ({
             onSourceChange={handleSourceEdit}
           />
           <DiagramValidationPanel
-            diagnostics={enrichedDiagnostics}
+            diagnostics={diagnostics.enrichedDiagnostics}
             targets={[]}
             selectedTargetId=""
-            focusedDiagnosticId={focusedDiagnosticId}
+            focusedDiagnosticId={diagnostics.focusedDiagnosticId}
             onSelectTarget={() => {}}
             onNavigate={navigateToDiagnostic}
           />
@@ -456,7 +404,7 @@ export const DiagramWorkbenchCore: React.FC<DiagramWorkbenchCoreProps> = ({
               ['build', 'Diseñar', `${model.points.length + model.elements.length + model.sliders.length} objetos`],
               ['steps', 'Secuencia', `${model.steps.length} pasos`],
               ['targets', 'Enlaces MDX', `${mdxTargets.length} targets`],
-              ['check', 'Comprobar', formatDiagnosticTabDetail(diagnosticSummary)],
+              ['check', 'Comprobar', formatDiagnosticTabDetail(diagnostics.diagnosticSummary)],
               ['source', 'Código TSX', 'Avanzado'],
             ] as const).map(([id, label, detail]) => (
               <button
@@ -467,11 +415,11 @@ export const DiagramWorkbenchCore: React.FC<DiagramWorkbenchCoreProps> = ({
                 aria-selected={workspace === id}
                 onClick={() => {
                   setWorkspace(id);
-                  if (id === 'check') setDiagnosticsAcknowledged(true);
+                  if (id === 'check') diagnostics.acknowledgeDiagnostics();
                 }}
-                className={sectionTabClass(workspace === id, id === 'check' && diagnosticSummary.errorCount > 0 && !diagnosticsAcknowledged)}
+                className={sectionTabClass(workspace === id, id === 'check' && diagnostics.diagnosticSummary.errorCount > 0 && !diagnostics.diagnosticsAcknowledged)}
               >
-                {label} <span className={`hidden sm:inline ${sectionDetailClass(workspace === id)} ${id === 'check' && diagnosticSummary.errorCount > 0 ? 'text-granada' : ''}`}>{detail}</span>
+                {label} <span className={`hidden sm:inline ${sectionDetailClass(workspace === id)} ${id === 'check' && diagnostics.diagnosticSummary.errorCount > 0 ? 'text-granada' : ''}`}>{detail}</span>
               </button>
             ))}
           </nav>
@@ -484,7 +432,7 @@ export const DiagramWorkbenchCore: React.FC<DiagramWorkbenchCoreProps> = ({
               {([['objects', 'Objetos'], ['organization', 'Organizar'], ['diagram', 'Diagrama']] as const).map(([id, label]) => <button key={id} type="button" role="tab" aria-selected={leftPanel === id} onClick={() => setLeftPanel(id)} className={`min-h-11 rounded px-1 text-[10px] font-bold ${leftPanel === id ? 'bg-carbon text-lienzo' : 'text-carbon/55 hover:bg-carbon/5'}`}>{label}</button>)}
             </nav>
             <div className="p-3">
-              {leftPanel === 'objects' && <DiagramObjectList model={model} selectedId={state.selectedId} selectedIds={effectiveSelectedIds} onSelect={selectOnly} onToggleSelection={toggleSelection} onSelectMany={ids => selectMany(ids)} onCopySelection={clipboard.copySelected} onModelEdit={handleVisualEdit} errorObjectIds={errorObjectIds} focusObjectId={listFocusObjectId} />}
+              {leftPanel === 'objects' && <DiagramObjectList model={model} selectedId={state.selectedId} selectedIds={effectiveSelectedIds} onSelect={selectOnly} onToggleSelection={toggleSelection} onSelectMany={ids => selectMany(ids)} onCopySelection={clipboard.copySelected} onModelEdit={handleVisualEdit} errorObjectIds={diagnostics.errorObjectIds} focusObjectId={diagnostics.listFocusObjectId} />}
 
               {leftPanel === 'organization' && <DiagramOrganizationPanel model={model} selectedId={state.selectedId} onModelEdit={handleVisualEdit} onSelect={selectOnly} onCopyGroup={clipboard.copyGroup} />}
 
@@ -563,7 +511,7 @@ export const DiagramWorkbenchCore: React.FC<DiagramWorkbenchCoreProps> = ({
               canvasTool={state.canvasTool}
               pendingRefs={pendingRefs}
               previewHighlightId={previewHighlightId}
-              errorHighlightedIds={passiveErrorHighlightIds}
+              errorHighlightedIds={diagnostics.passiveErrorHighlightIds}
               previewStepId={state.activeStepId}
               onSelect={(id, additive) => additive ? toggleSelection(id) : selectOnly(id)}
               onModelEdit={handleVisualEdit}
@@ -584,11 +532,10 @@ export const DiagramWorkbenchCore: React.FC<DiagramWorkbenchCoreProps> = ({
               onDeleteSelected={handleDeleteSelected}
               onAddElementLabel={handleAddElementLabel}
               onCopySelection={clipboard.copySelected}
-              fieldErrors={selectedFieldErrors}
-              focusedFieldKey={inspectorNavigation?.fieldKey ?? focusedFieldKey}
-              navigation={inspectorNavigation}
-              inspectorSection={inspectorSection}
-              onInspectorSectionChange={handleInspectorSectionChange}
+              fieldErrors={diagnostics.selectedFieldErrors}
+              navigation={diagnostics.inspectorNavigation}
+              inspectorSection={diagnostics.inspectorSection}
+              onInspectorSectionChange={diagnostics.handleInspectorSectionChange}
             />
 
           </aside>
@@ -611,7 +558,7 @@ export const DiagramWorkbenchCore: React.FC<DiagramWorkbenchCoreProps> = ({
                 }}
               />
               <div className="sticky top-0">
-                <DiagramCanvas model={model} pageType={previewPageType} selectedId={state.selectedId} selectedIds={effectiveSelectedIds} canvasTool="select" pendingRefs={[]} previewHighlightId={previewHighlightId} errorHighlightedIds={passiveErrorHighlightIds} previewStepId={state.activeStepId} onSelect={(id, additive) => additive ? toggleSelection(id) : selectOnly(id)} onModelEdit={handleVisualEdit} onChooseReferenceForTool={() => false} onCompleteTool={() => {}} />
+                <DiagramCanvas model={model} pageType={previewPageType} selectedId={state.selectedId} selectedIds={effectiveSelectedIds} canvasTool="select" pendingRefs={[]} previewHighlightId={previewHighlightId} errorHighlightedIds={diagnostics.passiveErrorHighlightIds} previewStepId={state.activeStepId} onSelect={(id, additive) => additive ? toggleSelection(id) : selectOnly(id)} onModelEdit={handleVisualEdit} onChooseReferenceForTool={() => false} onCompleteTool={() => {}} />
                 <p className="mt-2 rounded border border-carbon/10 bg-lienzo p-2 text-[10px] text-carbon/55">La vista muestra el paso activo. Cambie de paso en la matriz para comprobar exactamente qué aparece.</p>
               </div>
             </div>
@@ -637,10 +584,10 @@ export const DiagramWorkbenchCore: React.FC<DiagramWorkbenchCoreProps> = ({
           <main className="min-h-0 flex-1 overflow-y-auto bg-carbon/[0.02] p-3 sm:p-5" aria-label="Comprobaciones del diagrama">
             <div className="mx-auto grid max-w-6xl gap-4 lg:grid-cols-[minmax(0,2fr)_minmax(16rem,1fr)]">
               <DiagramValidationPanel
-                diagnostics={enrichedDiagnostics}
+                diagnostics={diagnostics.enrichedDiagnostics}
                 targets={mdxTargets}
                 selectedTargetId={selectedTargetId}
-                focusedDiagnosticId={focusedDiagnosticId}
+                focusedDiagnosticId={diagnostics.focusedDiagnosticId}
                 onSelectTarget={(target) => {
                   setSelectedTargetId(target.id);
                   setPreviewHighlightId(target.objectId ?? target.id);

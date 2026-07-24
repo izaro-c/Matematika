@@ -143,16 +143,3 @@ export function humanizeDiagnostic(
     hint: fieldHint(field, location),
   };
 }
-
-/** @deprecated Use enrichDiagramDiagnostics instead. Kept for existing tests. */
-export function humanizeDiagnosticMessage(message: string, targets: DiagramTarget[] = []): string {
-  let text = message;
-  text = text.replace(/^objects\.(\d+)\.([a-zA-Z0-9_.]+):\s*/, (_, index, path) => `En objeto #${Number(index) + 1} (${path}): `);
-  text = text.replace(/^points\.(\d+)\.([a-zA-Z0-9_.]+):\s*/, (_, index, path) => `En punto #${Number(index) + 1} (${path}): `);
-  text = text.replace(/^elements\.(\d+)\.([a-zA-Z0-9_.]+):\s*/, (_, index, path) => `En elemento #${Number(index) + 1} (${path}): `);
-  text = text.replace(/^relations\.(\d+)\.([a-zA-Z0-9_.]+):\s*/, (_, index, path) => `En relación #${Number(index) + 1} (${path}): `);
-  text = text.replace(/^constraints\.(\d+)\.([a-zA-Z0-9_.]+):\s*/, (_, index, path) => `En la restricción #${Number(index + 1)} (${path}): `);
-  text = text.replace(/^steps\.(\d+)\.([a-zA-Z0-9_.]+):\s*/, (_, index, path) => `En paso #${Number(index) + 1} (${path}): `);
-  text = humanizeZodMessage(text);
-  return replaceTargetIds(text, targets);
-}
