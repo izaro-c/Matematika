@@ -10,9 +10,8 @@ import { SegmentLengthConstraintEditor } from '../../../../src/features/editor/d
 import { AngleEqualityConstraintEditor } from '../../../../src/features/editor/diagrams/ui/AngleEqualityConstraintEditor';
 import { DiagramConstraintEditor } from '../../../../src/features/editor/diagrams/ui/DiagramConstraintEditor';
 import { parseDiagramSpecV2 } from '../../../../src/shared/diagrams/spec/schema';
-import { humanizeDiagnosticMessage } from '../../../../src/features/editor/diagrams/diagnostics/humanize';
+import { enrichDiagramDiagnostics } from '../../../../src/features/editor/diagrams/diagnostics';
 import { DiagramValidationPanel } from '../../../../src/features/editor/diagrams/ui/DiagramValidationPanel';
-import { enrichDiagramDiagnostics } from '../../../../src/features/editor/diagrams/diagnostics/enrichDiagnostics';
 import type { VisualDiagramModel } from '../../../../src/features/editor/diagrams/model/types';
 
 const mockDemoModel: VisualDiagramModel = {
@@ -121,12 +120,26 @@ describe('Constraint Resolution & UI Explanations', () => {
   });
 
   it('humanizes Zod and technical code diagnostic messages cleanly', () => {
-    const rawZod = 'objects.3.definition.supports.0: El soporte no es válido.';
-    const humanized = humanizeDiagnosticMessage(rawZod, [{ id: 'pF', label: 'F', scopeId: 'demo', qualifiedId: 'demo:pF', color: 'ocre', kind: 'point' }]);
-    expect(humanized).toBe('En objeto #4 (definition.supports.0): El soporte no es válido.');
+    const targets = [{ id: 'pF', label: 'F', scopeId: 'demo', qualifiedId: 'demo:pF', color: 'ocre' as const, kind: 'point' as const }];
+    const [pathDiagnostic, enumDiagnostic] = enrichDiagramDiagnostics([
+      {
+        code: 'invalid-diagram-spec-v2',
+        severity: 'error',
+        message: 'El soporte no es válido.',
+        source: 'model',
+        path: ['objects', 3, 'definition.supports.0'],
+      },
+      {
+        code: 'invalid-diagram-spec-v2',
+        severity: 'error',
+        message: 'Invalid enum value',
+        source: 'model',
+      },
+    ], mockDemoModel, targets);
 
-    const rawEnum = 'Invalid enum value';
-    expect(humanizeDiagnosticMessage(rawEnum)).toBe('El valor no es válido.');
+    expect(pathDiagnostic.message).toContain('definition.supports.0');
+    expect(pathDiagnostic.message).toMatch(/soporte no es válido/i);
+    expect(enumDiagnostic.message).toBe('El valor no es válido.');
   });
 
   it('validates congruenceMark referencing a constructed midpoint without error', () => {

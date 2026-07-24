@@ -1,9 +1,9 @@
 import { describe, expect, it } from 'vitest';
-import { buildInspectorNavigationIntent } from '../../../../../src/features/editor/diagrams/diagnostics/inspectorNavigation';
 import {
+  buildInspectorNavigationIntent,
   enrichDiagramDiagnostics,
-  resolveNavigationObjectId,
-} from '../../../../../src/features/editor/diagrams/diagnostics/enrichDiagnostics';
+} from '../../../../../src/features/editor/diagrams/diagnostics';
+import { resolveNavigationObjectId } from '../../../../../src/features/editor/diagrams/diagnostics/locationResolution';
 import { createTemplateModel } from '../../../../../src/features/editor/diagrams/model';
 
 describe('inspector navigation', () => {

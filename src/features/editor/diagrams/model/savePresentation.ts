@@ -1,4 +1,4 @@
-import { enrichDiagramDiagnostics } from '../diagnostics/enrichDiagnostics';
+import { enrichDiagramDiagnostics, summarizeDiagnostics } from '../diagnostics';
 import type { DiagramState } from '../state/types';
 import type { DiagramSaveBlockReason, DiagramSaveCapability } from './selectors';
 import { getDiagramSaveCapability } from './selectors';
@@ -17,7 +17,7 @@ export function buildDiagramSaveCapability(state: DiagramState): DiagramSaveCapa
   if (base.allowed) return base;
 
   const enriched = enrichDiagramDiagnostics(state.diagnostics, state.currentModel);
-  const errorCount = enriched.filter(item => item.severity === 'error').length;
+  const summary = summarizeDiagnostics(enriched);
   const firstError = enriched.find(item => item.severity === 'error');
   const reason = base.reason;
 
@@ -25,7 +25,7 @@ export function buildDiagramSaveCapability(state: DiagramState): DiagramSaveCapa
 
   return {
     ...base,
-    summary: BLOCK_SUMMARIES[reason](errorCount),
+    summary: BLOCK_SUMMARIES[reason](summary.errorCount),
     primaryDiagnosticId: firstError?.id,
   };
 }

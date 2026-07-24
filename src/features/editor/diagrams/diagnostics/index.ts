@@ -1,21 +1,12 @@
-export {
-  enrichDiagramDiagnostics,
-  summarizeDiagnostics,
-  formatDiagnosticTabDetail,
-  fieldErrorsForObject,
-  objectHasDiagnosticIssues,
-  parseDiagnosticPath,
-  resolveObjectId,
-  resolveInspectorSection,
-  resolveFieldKey,
-  resolveLeftPanel,
-  resolveNavigationObjectId,
-  type EnrichedDiagramDiagnostic,
-  type DiagramDiagnosticLocation,
-  type DiagramDiagnosticWorkspace,
-  type DiagramInspectorSection,
-  type DiagramLeftPanel,
-  type DiagnosticSummary,
-} from './enrichDiagnostics';
-export { humanizeDiagnostic, humanizeDiagnosticMessage } from './humanize';
+export { enrichDiagramDiagnostics } from './enrichDiagnostics';
+export { summarizeDiagnostics, formatDiagnosticTabDetail, fieldErrorsForObject } from './diagnosticSummary';
+export type {
+  EnrichedDiagramDiagnostic,
+  DiagramDiagnosticLocation,
+  DiagramDiagnosticWorkspace,
+  DiagramInspectorSection,
+  DiagramLeftPanel,
+  DiagnosticSummary,
+} from './types';
+export { humanizeDiagnostic } from './humanize';
 export { buildInspectorNavigationIntent, type InspectorNavigationIntent } from './inspectorNavigation';

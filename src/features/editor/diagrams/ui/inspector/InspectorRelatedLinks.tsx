@@ -9,8 +9,6 @@ interface InspectorRelatedLinksProps {
   activeSection: InspectorSection;
   relatedConstraints: NonNullable<VisualDiagramModel['constraints']>;
   relatedDependencies: NonNullable<VisualDiagramModel['dependencies']>;
-  fieldErrors?: Map<string, string>;
-  focusedFieldKey?: string;
 }
 
 export const InspectorRelatedLinks: React.FC<InspectorRelatedLinksProps> = ({
@@ -18,8 +16,6 @@ export const InspectorRelatedLinks: React.FC<InspectorRelatedLinksProps> = ({
   activeSection: activeInspectorSection,
   relatedConstraints,
   relatedDependencies,
-  fieldErrors: _fieldErrors,
-  focusedFieldKey: _focusedFieldKey = '',
 }) => {
   if (activeInspectorSection !== 'advanced' || (relatedConstraints.length === 0 && relatedDependencies.length === 0)) {
     return null;

@@ -1,6 +1,6 @@
 import React from 'react';
 import type { VisualDiagramModel } from '../model/types';
-import type { DiagramInspectorSection } from '../diagnostics/enrichDiagnostics';
+import type { DiagramInspectorSection } from '../diagnostics/types';
 import type { InspectorNavigationIntent } from '../diagnostics/inspectorNavigation';
 import { DiagramSceneControls } from './DiagramSceneControls';
 import { InspectorHeader } from './inspector/InspectorHeader';
@@ -23,7 +23,6 @@ interface DiagramInspectorProps {
   onAddElementLabel?: (elementId: string) => void;
   onCopySelection?: () => void;
   fieldErrors?: Map<string, string>;
-  focusedFieldKey?: string;
   navigation?: InspectorNavigationIntent | null;
   inspectorSection?: DiagramInspectorSection;
   onInspectorSectionChange?: (section: DiagramInspectorSection) => void;
@@ -39,7 +38,6 @@ export const DiagramInspector: React.FC<DiagramInspectorProps> = ({
   onAddElementLabel,
   onCopySelection,
   fieldErrors,
-  focusedFieldKey = '',
   navigation,
   inspectorSection,
   onInspectorSectionChange,
@@ -74,6 +72,8 @@ export const DiagramInspector: React.FC<DiagramInspectorProps> = ({
 
   const hasSelection = selectedPoint || selectedElement || selectedSlider || selectedStep;
   const selectionSummary = inspectorSelectionSummary(selectedPoint, selectedElement, selectedSlider, selectedStep);
+
+  const focusedFieldKey = navigation?.fieldKey ?? '';
 
   const handlers = useInspectorHandlers({
     model,
@@ -151,8 +151,6 @@ export const DiagramInspector: React.FC<DiagramInspectorProps> = ({
           activeSection={activeInspectorSection}
           relatedConstraints={relatedConstraints}
           relatedDependencies={relatedDependencies}
-          fieldErrors={fieldErrors}
-          focusedFieldKey={focusedFieldKey}
         />
       )}
 

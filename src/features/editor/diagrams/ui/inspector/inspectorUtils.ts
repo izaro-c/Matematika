@@ -2,7 +2,7 @@ import type { VisualDiagramModel, VisualPoint, VisualElement, VisualSlider, Visu
 import { KIND_LABELS, toolReferenceCandidatesForSlot } from '../../model';
 import { legacyElementCapabilities } from '@/shared/diagrams/public';
 
-export type InspectorSection = 'general' | 'geometry' | 'appearance' | 'advanced';
+export type { DiagramInspectorSection as InspectorSection } from '../../diagnostics/types';
 
 export function sceneItemLabel(model: VisualDiagramModel, id: string): string {
   const item = [...model.points, ...model.elements, ...model.sliders].find(candidate => candidate.id === id);
