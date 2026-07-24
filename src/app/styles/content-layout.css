@@ -720,9 +720,6 @@
 .content-header__accent-rule {
   background-color: color-mix(in srgb, var(--page-accent, var(--theme-carbon)) 45%, transparent);
 }
-
-/* Materialidad de tinta en cabeceras: ver ink-materiality.css (.ac-ink-scope) */
-
 .page-accent-link {
   color: var(--page-accent, var(--theme-terracota));
   border-color: color-mix(in srgb, var(--page-accent, var(--theme-terracota)) 45%, transparent);

@@ -7,7 +7,11 @@ interface DiagramWorkbenchNoticesProps {
   mdxLinkNotice?: string | null;
 }
 
-export const DiagramWorkbenchNotices: React.FC<DiagramWorkbenchNoticesProps> = ({ clipboardStatus, mode, mdxLinkNotice }) => <>
+export const DiagramWorkbenchNotices: React.FC<DiagramWorkbenchNoticesProps> = ({
+  clipboardStatus,
+  mode,
+  mdxLinkNotice,
+}) => <>
   {clipboardStatus && <div className="shrink-0 border-b border-salvia/25 bg-salvia/10 px-4 py-1.5 text-[10px] text-carbon" role="status">{clipboardStatus}</div>}
   {mdxLinkNotice && <div className="shrink-0 border-b border-granada/25 bg-granada/10 px-4 py-2 text-xs text-carbon" role="alert">{mdxLinkNotice}</div>}
   {mode.kind === 'rewrite' && (

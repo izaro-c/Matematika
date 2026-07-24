@@ -64,13 +64,19 @@ export const InspectorElementKindGeometrySection: React.FC<InspectorElementKindG
       )}
 
       {selectedElement.kind === 'functionCurve' && (
+        <div data-inspector-field="expression">
         <DiagramExpressionField model={model} label="f(x)" ariaLabel="Expresión de función" value={selectedElement.properties?.expression || ''} onChange={value => handleElementPropertiesChange({ expression: value })} parameter={selectedElement.properties?.parameter ?? 'x'} help="x representa cada punto del dominio; también pueden usarse controles y valores de la escena." />
+        </div>
       )}
 
       {selectedElement.kind === 'parametricCurve' && (
         <div className="space-y-2">
+          <div data-inspector-field="xExpression">
           <DiagramExpressionField model={model} label="x(t)" ariaLabel="Expresión paramétrica x" value={selectedElement.properties?.xExpression || ''} onChange={value => handleElementPropertiesChange({ xExpression: value })} parameter={selectedElement.properties?.parameter ?? 't'} />
+          </div>
+          <div data-inspector-field="yExpression">
           <DiagramExpressionField model={model} label="y(t)" ariaLabel="Expresión paramétrica y" value={selectedElement.properties?.yExpression || ''} onChange={value => handleElementPropertiesChange({ yExpression: value })} parameter={selectedElement.properties?.parameter ?? 't'} />
+          </div>
         </div>
       )}
 

@@ -496,8 +496,28 @@ export const diagramSpecV2Schema = z.object({
     if (point.constraint === 'glider' && (!point.gliderTarget || !referenceIds.has(point.gliderTarget))) {
       context.addIssue({ code: 'custom', message: `El glider ${point.id} necesita un soporte existente.`, path: ['points', index, 'gliderTarget'] });
     }
-    if (point.constraint === 'derived' && (!point.xExpression || !point.yExpression || !point.dependencies?.length)) {
-      context.addIssue({ code: 'custom', message: `El punto derivado ${point.id} necesita expresiones x/y y dependencias explícitas.`, path: ['points', index] });
+    if (point.constraint === 'derived') {
+      if (!point.xExpression) {
+        context.addIssue({
+          code: 'custom',
+          message: `El punto derivado ${point.id} necesita una expresión x.`,
+          path: ['points', index, 'xExpression'],
+        });
+      }
+      if (!point.yExpression) {
+        context.addIssue({
+          code: 'custom',
+          message: `El punto derivado ${point.id} necesita una expresión y.`,
+          path: ['points', index, 'yExpression'],
+        });
+      }
+      if (!point.dependencies?.length) {
+        context.addIssue({
+          code: 'custom',
+          message: `El punto derivado ${point.id} necesita dependencias explícitas.`,
+          path: ['points', index, 'dependencies'],
+        });
+      }
     }
     if (point.constraint === 'constrained' && !point.constraintIds?.length) {
       context.addIssue({ code: 'custom', message: `El punto restringido ${point.id} necesita al menos una restricción.`, path: ['points', index, 'constraintIds'] });

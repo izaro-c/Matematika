@@ -1,4 +1,5 @@
-import { formatDiagramSpecIssues, migrateDiagramSpecV2ToV3, parseDiagramSpecV2, parseDiagramSpecV3 } from '../../../../shared/diagrams/spec';
+import { migrateDiagramSpecV2ToV3, parseDiagramSpecV2, parseDiagramSpecV3 } from '../../../../shared/diagrams/spec';
+import { z } from 'zod';
 import type { VisualDiagramModel } from '../model/types';
 
 export interface DiagramDiagnostic {
@@ -7,6 +8,20 @@ export interface DiagramDiagnostic {
   message: string;
   source?: 'model' | 'source' | 'synchronization' | 'reference';
   elementId?: string;
+  path?: readonly (string | number)[];
+}
+
+function diagnosticsFromZodIssues(
+  issues: readonly z.core.$ZodIssue[],
+  code: string,
+): DiagramDiagnostic[] {
+  return issues.map((issue, index) => ({
+    code: issues.length === 1 ? code : `${code}-${index}`,
+    severity: 'error' as const,
+    message: issue.message,
+    source: 'model' as const,
+    path: issue.path.map(part => typeof part === 'symbol' ? String(part) : part),
+  }));
 }
 
 export type GenerateDiagramSourceResult =
@@ -37,22 +52,19 @@ export function generateDiagramSource(model: VisualDiagramModel, componentName: 
 
   const parsed = parseDiagramSpecV2(model);
   if (!parsed.success) {
-    diagnostics.push({
-      code: 'invalid-diagram-spec-v2',
-      severity: 'error',
-      message: formatDiagramSpecIssues(parsed.error.issues),
-      source: 'model',
-    });
+    diagnostics.push(...diagnosticsFromZodIssues(parsed.error.issues, 'invalid-diagram-spec-v2'));
   }
   if (diagnostics.some(diagnostic => diagnostic.severity === 'error')) return { ok: false, diagnostics };
 
   const specName = `${componentName}Spec`;
   const currentSpec = migrateDiagramSpecV2ToV3(parsed.success ? parsed.data : model as VisualDiagramModel);
   const currentParsed = parseDiagramSpecV3(currentSpec);
-  if (!currentParsed.success) return {
-    ok: false,
-    diagnostics: [{ code: 'invalid-diagram-spec-v3', severity: 'error', message: formatDiagramSpecIssues(currentParsed.error.issues), source: 'model' }],
-  };
+  if (!currentParsed.success) {
+    return {
+      ok: false,
+      diagnostics: diagnosticsFromZodIssues(currentParsed.error.issues, 'invalid-diagram-spec-v3'),
+    };
+  }
   const source = `import { createDiagramSpec, DiagramRenderer } from '@/shared/diagrams/public';
 
 ${SPEC_START}

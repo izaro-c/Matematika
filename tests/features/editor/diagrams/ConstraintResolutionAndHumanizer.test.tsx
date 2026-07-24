@@ -10,7 +10,9 @@ import { SegmentLengthConstraintEditor } from '../../../../src/features/editor/d
 import { AngleEqualityConstraintEditor } from '../../../../src/features/editor/diagrams/ui/AngleEqualityConstraintEditor';
 import { DiagramConstraintEditor } from '../../../../src/features/editor/diagrams/ui/DiagramConstraintEditor';
 import { parseDiagramSpecV2 } from '../../../../src/shared/diagrams/spec/schema';
-import { humanizeDiagnosticMessage, DiagramValidationPanel } from '../../../../src/features/editor/diagrams/ui/DiagramValidationPanel';
+import { humanizeDiagnosticMessage } from '../../../../src/features/editor/diagrams/diagnostics/humanize';
+import { DiagramValidationPanel } from '../../../../src/features/editor/diagrams/ui/DiagramValidationPanel';
+import { enrichDiagramDiagnostics } from '../../../../src/features/editor/diagrams/diagnostics/enrichDiagnostics';
 import type { VisualDiagramModel } from '../../../../src/features/editor/diagrams/model/types';
 
 const mockDemoModel: VisualDiagramModel = {
@@ -154,11 +156,12 @@ describe('Constraint Resolution & UI Explanations', () => {
   });
 
   it('splits multi-issue diagnostic strings into separate individual elements in DiagramValidationPanel', () => {
-    const diagnostics = [
-      { code: 'warn1', severity: 'warning' as const, message: 'elements.0.refs: Error uno. elements.1.refs: Error dos.', source: 'test' as const },
-    ];
-    render(<DiagramValidationPanel diagnostics={diagnostics} targets={[]} selectedTargetId="" onSelectTarget={vi.fn()} />);
+    const diagnostics = enrichDiagramDiagnostics([
+      { code: 'warn1', severity: 'warning', message: 'elements.0.refs: Error uno. elements.1.refs: Error dos.', source: 'model' },
+    ], mockDemoModel);
+    render(<DiagramValidationPanel diagnostics={diagnostics} targets={[]} selectedTargetId="" onSelectTarget={vi.fn()} onNavigate={vi.fn()} />);
 
     expect(screen.getByText('2 avisos')).toBeDefined();
+    expect(screen.getAllByText('Ir al origen →').length).toBeGreaterThan(0);
   });
 });

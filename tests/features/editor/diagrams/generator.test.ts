@@ -98,9 +98,9 @@ describe('DiagramSpec v3 TSX adapter generator', () => {
     const result = generateDiagramSource(invalid, 'Invalido');
     expect(result.ok).toBe(false);
     if (result.ok) return;
-    expect(result.diagnostics[0].code).toBe('invalid-diagram-spec-v2');
-    expect(result.diagnostics[0].message).toContain('componentId');
-    expect(result.diagnostics[0].message).toContain('points');
+    expect(result.diagnostics[0].code).toBe('invalid-diagram-spec-v2-0');
+    expect(result.diagnostics.some(d => d.path?.includes('componentId'))).toBe(true);
+    expect(result.diagnostics.some(d => d.path?.includes('points'))).toBe(true);
   });
 
   it('rejects component names that cannot be exported safely', () => {

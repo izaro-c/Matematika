@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import type { VisualDiagramModel } from '../model/types';
 import { KIND_LABELS } from '../model';
 import { listLayerSceneItemsFrontFirst } from '../model/sceneOrdering';
@@ -13,6 +13,8 @@ interface DiagramObjectListProps {
   onSelectMany: (ids: string[]) => void;
   onCopySelection?: () => void;
   onModelEdit?: (model: VisualDiagramModel, command?: { label?: string }) => void;
+  errorObjectIds?: ReadonlySet<string>;
+  focusObjectId?: string;
 }
 
 function sceneItemUpdateLabel(id: string, update: { visible?: boolean; locked?: boolean }): string {
@@ -33,9 +35,10 @@ function LockIcon({ locked }: { locked: boolean }) {
   return <svg viewBox="0 0 24 24" className="h-4 w-4" aria-hidden="true"><rect x="5" y="10" width="14" height="10" rx="2" fill="none" stroke="currentColor" strokeWidth="1.8"/><path d={locked ? 'M8 10V7a4 4 0 0 1 8 0v3' : 'M9 10V7a4 4 0 0 1 7.5-2'} fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round"/></svg>;
 }
 
-export const DiagramObjectList: React.FC<DiagramObjectListProps> = ({ model, selectedId, selectedIds, onSelect, onToggleSelection, onSelectMany, onCopySelection, onModelEdit }) => {
+export const DiagramObjectList: React.FC<DiagramObjectListProps> = ({ model, selectedId, selectedIds, onSelect, onToggleSelection, onSelectMany, onCopySelection, onModelEdit, errorObjectIds, focusObjectId }) => {
   const [query, setQuery] = useState('');
   const [layerId, setLayerId] = useState('');
+  const listRef = useRef<HTMLDivElement>(null);
   const items = [
     ...model.points.map(item => ({ item, kind: 'Punto' })),
     ...model.elements.map(item => ({ item, kind: elementKindLabel(item.kind) })),
@@ -63,6 +66,28 @@ export const DiagramObjectList: React.FC<DiagramObjectListProps> = ({ model, sel
   };
   const selectedSet = new Set(selectedIds);
 
+  useEffect(() => {
+    if (!focusObjectId || !listRef.current) return;
+    const frame = window.requestAnimationFrame(() => {
+      const row = listRef.current?.querySelector(`[data-object-id="${focusObjectId}"]`);
+      if (row && 'scrollIntoView' in row && typeof row.scrollIntoView === 'function') {
+        row.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+      }
+    });
+    return () => window.cancelAnimationFrame(frame);
+  }, [focusObjectId]);
+
+  const rowClassName = (itemId: string) => {
+    const hasError = Boolean(errorObjectIds?.has(itemId));
+    const isPrimary = selectedId === itemId;
+    const isMulti = selectedSet.has(itemId);
+    if (hasError && isPrimary) return 'border-2 border-granada bg-granada text-lienzo';
+    if (hasError) return 'border-2 border-granada bg-granada/20 text-carbon';
+    if (isPrimary) return 'border-carbon bg-carbon text-lienzo';
+    if (isMulti) return 'border-pavo/45 bg-pavo/10 text-carbon';
+    return 'border-carbon/10 text-carbon hover:bg-carbon/5';
+  };
+
   return (
     <section>
       <div className="mb-2 flex items-center justify-between border-b border-carbon/10 pb-1">
@@ -80,15 +105,15 @@ export const DiagramObjectList: React.FC<DiagramObjectListProps> = ({ model, sel
         <select aria-label="Filtrar objetos por capa" className="rounded border border-carbon/15 bg-lienzo p-1 text-[10px]" value={layerId} onChange={event => setLayerId(event.target.value)}><option value="">Todas las capas</option>{model.layers.slice().sort((a, b) => a.order - b.order).map(layer => <option key={layer.id} value={layer.id}>{layer.label}</option>)}</select>
       </div>
       <p className="mb-2 text-[9px] leading-relaxed text-carbon/40">Lista de referencia. Para cambiar el orden o las capas, use la pestaña Organizar.</p>
-      <div className="max-h-[60vh] space-y-2 overflow-y-auto pr-1" role="tree" aria-label="Árbol de escena por capas">
+      <div ref={listRef} className="max-h-[60vh] space-y-2 overflow-y-auto pr-1" role="tree" aria-label="Árbol de escena por capas">
         {filteredLayers.map(({ layer, items: layerItems }) => <section key={layer.id} role="group" aria-label={layer.label}>
           <div className="sticky top-0 z-10 flex min-h-8 items-center justify-between bg-lienzo px-1 text-xs font-bold text-carbon/60"><span>{layer.label}</span><span className="font-mono text-carbon/40">{layerItems.length}</span></div>
           <div className="space-y-1">{layerItems.map(({ item, kind }) => (
-            <div key={item.id} role="treeitem" aria-selected={selectedSet.has(item.id)} className={`grid grid-cols-[2.75rem_minmax(0,1fr)_2.75rem_2.75rem] items-stretch overflow-hidden rounded border ${selectedId === item.id ? 'border-carbon bg-carbon text-lienzo' : selectedSet.has(item.id) ? 'border-pavo/45 bg-pavo/10 text-carbon' : 'border-carbon/10 text-carbon hover:bg-carbon/5'}`}>
+            <div key={item.id} data-object-id={item.id} role="treeitem" aria-selected={selectedSet.has(item.id)} className={`grid grid-cols-[2.75rem_minmax(0,1fr)_2.75rem_2.75rem] items-stretch overflow-hidden rounded border ${rowClassName(item.id)}`}>
               <label className="flex min-h-11 items-center justify-center border-r border-current/15" title={`Incluir ${item.label} en la selección múltiple`}>
                 <input type="checkbox" aria-label={`Seleccionar ${item.label}`} checked={selectedSet.has(item.id)} onChange={() => onToggleSelection(item.id)} className="h-4 w-4 accent-pavo" />
               </label>
-              <button type="button" onClick={() => onSelect(item.id)} className="min-h-11 min-w-0 px-2 py-1.5 text-left">
+              <button type="button" onClick={() => onSelect(item.id)} className="min-h-11 min-w-0 px-2 py-1.5 text-left" aria-label={errorObjectIds?.has(item.id) ? `${item.label}, tiene errores` : item.label}>
                 <span className="block truncate text-sm font-bold">{item.label}</span>
                 <span className={`block truncate text-xs ${selectedId === item.id ? 'text-lienzo/70' : 'text-carbon/50'}`}>{kind} · {item.id}{item.groupIds.length ? ` · ${item.groupIds.length} grupo(s)` : ''}</span>
               </button>

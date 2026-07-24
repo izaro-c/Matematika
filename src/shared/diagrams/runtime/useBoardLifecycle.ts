@@ -771,6 +771,7 @@ export interface UseBoardLifecycleOptions {
   mode?: 'runtime' | 'editor' | 'preview';
   selectedIds?: readonly string[];
   highlightedIds?: readonly string[];
+  errorHighlightedIds?: readonly string[];
   effectiveStepId?: string;
   bounds: DiagramBounds;
   interactionCallbacksRef: MutableRefObject<{
@@ -792,6 +793,7 @@ export function useBoardLifecycle({
   mode = 'runtime',
   selectedIds = [],
   highlightedIds = [],
+  errorHighlightedIds = [],
   effectiveStepId,
   bounds,
   interactionCallbacksRef,
@@ -814,6 +816,14 @@ export function useBoardLifecycle({
   } | null>(null);
   const applyPulseFromCacheRef = useRef<() => void>(() => {});
   const lastStackLayoutRef = useRef('');
+  const highlightedIdsRef = useRef(highlightedIds);
+  useLayoutEffect(() => {
+    highlightedIdsRef.current = highlightedIds;
+  }, [highlightedIds]);
+  const errorHighlightedIdsRef = useRef(errorHighlightedIds);
+  useLayoutEffect(() => {
+    errorHighlightedIdsRef.current = errorHighlightedIds;
+  }, [errorHighlightedIds]);
 
   const handleBoardInit = (board: any, elements: Record<string, any>, theme: ThemeColors) => {
     const resolvedDragCoordsRef: ResolvedDragCoords = new Map();
@@ -1170,8 +1180,19 @@ export function useBoardLifecycle({
     const effectiveDashed = entry.stepDashed ?? ('dashed' in item ? Boolean(item.dashed) : false);
     const opacity = externalActive || !sceneShouldDimOthers ? 1 : 0.28;
     const hoverOnly = hoverActive && !sceneHighlighted;
-    const color = (externalActive || hoverOnly) && !sceneStyle?.preserveColorOnHighlight
+    const primaryHighlight = highlightedIdsRef.current.includes(item.id)
+      || highlightedIdsRef.current.includes(item.targetId ?? item.id);
+    const errorHighlight = !primaryHighlight && (
+      errorHighlightedIdsRef.current.includes(item.id)
+      || errorHighlightedIdsRef.current.includes(item.targetId ?? item.id)
+    );
+    const highlightColor = primaryHighlight
       ? sceneTheme.ocre
+      : errorHighlight
+        ? sceneTheme.granada
+        : sceneTheme.ocre;
+    const color = (externalActive || hoverOnly) && !sceneStyle?.preserveColorOnHighlight
+      ? highlightColor
       : (stepPrimary || stepSecondary) && entry.stepEmphasisColor
         ? sceneTheme[entry.stepEmphasisColor]
         : sceneTheme[entry.color];
@@ -1499,6 +1520,9 @@ export function useBoardLifecycle({
     const propHighlights = highlightSources
       .filter(item => highlightedIds.includes(item.id) || highlightedIds.includes(item.targetId ?? item.id))
       .map(item => item.id);
+    const errorHighlights = highlightSources
+      .filter(item => errorHighlightedIds.includes(item.id) || errorHighlightedIds.includes(item.targetId ?? item.id))
+      .map(item => item.id);
     const storeHighlights = highlightSources
       .filter(item => isHL(item.targetId ?? item.id))
       .map(item => item.id);
@@ -1506,7 +1530,7 @@ export function useBoardLifecycle({
       const source = highlightSources.find(item => item.id === id);
       return (source?.targetId ?? source?.id) !== localTargetHighlightRef.current;
     });
-    const effectiveHighlights = new Set([...propHighlights, ...storeHighlights]);
+    const effectiveHighlights = new Set([...propHighlights, ...storeHighlights, ...errorHighlights]);
     const externalHighlightSources = new Set([...propHighlights, ...externalStoreHighlights]);
     const plan = createScenePlan(spec, {
       activeStepId: effectiveStep,
