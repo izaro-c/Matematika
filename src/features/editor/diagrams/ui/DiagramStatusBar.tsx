@@ -8,6 +8,7 @@ interface DiagramStatusBarProps {
   isDirty: boolean;
   saveCapability?: DiagramSaveCapability;
   onSave: () => void;
+  onOpenDiagnostics?: () => void;
   variant?: 'footer' | 'inline';
 }
 
@@ -16,6 +17,7 @@ export const DiagramStatusBar: React.FC<DiagramStatusBarProps> = ({
   isDirty,
   saveCapability,
   onSave,
+  onOpenDiagnostics,
   variant = 'footer',
 }) => {
   const presentation = buildDiagramAuthorityPresentation(status, isDirty);
@@ -42,6 +44,9 @@ export const DiagramStatusBar: React.FC<DiagramStatusBarProps> = ({
 
   const config = getStatusConfig(status);
   const isSaveBlocked = saveCapability ? !saveCapability.allowed : status === 'saving' || status === 'invalid-source' || status === 'diverged';
+  const blockSummary = isSaveBlocked ? saveCapability?.summary ?? presentation.description : undefined;
+  const showDiagnosticsLink = isSaveBlocked && onOpenDiagnostics && saveCapability?.reason === 'validation-error';
+
   const saveButton = (
     <button
       type="button"
@@ -52,31 +57,44 @@ export const DiagramStatusBar: React.FC<DiagramStatusBarProps> = ({
           ? 'bg-carbon/10 text-carbon/35 cursor-not-allowed'
           : 'bg-carbon text-lienzo hover:bg-carbon/80 cursor-pointer'
       }`}
-      title={isSaveBlocked ? saveCapability?.reason ?? presentation.description : 'Guardar el TSX del diagrama'}
+      title={isSaveBlocked ? blockSummary ?? 'Guardado bloqueado' : 'Guardar el TSX del diagrama'}
       aria-label="Guardar diagrama"
     >
       {variant === 'inline' ? 'Guardar' : 'Guardar diagrama'}
     </button>
   );
 
+  const blockBadge = isSaveBlocked && blockSummary ? (
+    <span className="shrink-0 rounded bg-granada/10 px-2 py-1 text-[10px] font-bold text-granada" title={blockSummary}>
+      {blockSummary}
+    </span>
+  ) : null;
+
+  const diagnosticsLink = showDiagnosticsLink ? (
+    <button
+      type="button"
+      onClick={onOpenDiagnostics}
+      className="min-h-9 shrink-0 rounded px-2 text-[10px] font-bold text-granada underline decoration-granada/40 underline-offset-2 hover:text-granada/80"
+    >
+      Ver
+    </button>
+  ) : null;
+
   if (variant === 'inline') {
     return (
       <div
-        className="flex shrink-0 items-center gap-2 rounded border border-carbon/15 bg-lienzo px-2 py-1"
-        role={presentation.level === 'error' ? 'alert' : 'status'}
-        aria-live={presentation.level === 'error' ? 'assertive' : 'polite'}
+        className="flex max-w-full shrink-0 items-center gap-2 rounded border border-carbon/15 bg-lienzo px-2 py-1"
+        role={isSaveBlocked && saveCapability?.reason === 'validation-error' ? 'alert' : presentation.level === 'error' ? 'alert' : 'status'}
+        aria-live={isSaveBlocked ? 'assertive' : 'polite'}
         title={presentation.description}
       >
         <span className="sr-only">sync:{status}</span>
         <span className={`inline-block h-2 w-2 shrink-0 rounded-full ${config.color.split(' ')[0]}`} />
-        <span className={`hidden max-w-40 truncate ac-label ac-label--sm xl:inline ${config.textClass}`}>
+        <span className={`hidden max-w-32 truncate ac-label ac-label--sm xl:inline ${config.textClass}`}>
           {config.label}
         </span>
-        {isDirty && (
-          <span className="hidden text-[9px] font-mono italic text-carbon/40 2xl:inline" aria-hidden>
-            ·
-          </span>
-        )}
+        {blockBadge}
+        {diagnosticsLink}
         {saveButton}
       </div>
     );
@@ -85,25 +103,19 @@ export const DiagramStatusBar: React.FC<DiagramStatusBarProps> = ({
   return (
     <div
       className="grid shrink-0 grid-cols-[minmax(0,1fr)_auto] items-center gap-x-2 border-t border-carbon/15 bg-carbon/5 px-3 py-2 text-xs sm:px-4"
-      role={presentation.level === 'error' ? 'alert' : 'status'}
-      aria-live={presentation.level === 'error' ? 'assertive' : 'polite'}
+      role={isSaveBlocked && saveCapability?.reason === 'validation-error' ? 'alert' : presentation.level === 'error' ? 'alert' : 'status'}
+      aria-live={isSaveBlocked ? 'assertive' : 'polite'}
     >
       <div className="min-w-0 flex-1">
         <div className="flex min-w-0 items-center gap-2">
           <span className={`inline-block h-2 w-2 rounded-full ${config.color.split(' ')[0]}`} />
           <span className={`truncate ac-label ac-label--sm ${config.textClass}`}>{config.label}</span>
-          <span className="hidden ac-label ac-label--sm ac-label--soft lg:inline">{presentation.title}</span>
-          <span className="hidden rounded bg-carbon/10 px-1.5 py-0.5 font-mono text-[9px] font-semibold text-carbon lowercase sm:inline" title="Estado técnico de sincronización">
-            sync:{status}
-          </span>
+          {blockBadge}
         </div>
-        <p className="mt-1 hidden truncate text-[10px] text-carbon/55 sm:block">{presentation.description}</p>
       </div>
 
       <div className="flex shrink-0 items-center gap-3">
-        {isDirty && (
-          <span className="hidden font-mono text-[10px] italic text-carbon/40 xl:inline">Cambios locales sin guardar</span>
-        )}
+        {diagnosticsLink}
         {saveButton}
       </div>
     </div>

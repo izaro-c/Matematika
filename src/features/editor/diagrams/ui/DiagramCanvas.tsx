@@ -13,6 +13,7 @@ interface DiagramCanvasProps {
   canvasTool: CanvasTool;
   pendingRefs: string[];
   previewHighlightId: string;
+  errorHighlightedIds?: readonly string[];
   previewStepId: string;
   onSelect: (id: string, additive?: boolean) => void;
   onModelEdit: (model: VisualDiagramModel, command?: { label?: string; mergeKey?: string }) => void;
@@ -28,6 +29,7 @@ export const DiagramCanvas: React.FC<DiagramCanvasProps> = ({
   canvasTool,
   pendingRefs,
   previewHighlightId,
+  errorHighlightedIds = [],
   previewStepId,
   onSelect,
   onModelEdit,
@@ -41,6 +43,7 @@ export const DiagramCanvas: React.FC<DiagramCanvasProps> = ({
         mode="editor"
         selectedIds={[...new Set([...selectedIds, selectedId, ...pendingRefs].filter(Boolean))]}
         highlightedIds={previewHighlightId ? [previewHighlightId] : []}
+        errorHighlightedIds={errorHighlightedIds}
         activeStepId={previewStepId || undefined}
         onSelectionChange={(id, intent) => {
           if (canvasTool !== 'select' && canvasTool !== 'point' && toolReferenceCandidatesForSlot(model, canvasTool, pendingRefs.length).some(item => item.id === id)) {

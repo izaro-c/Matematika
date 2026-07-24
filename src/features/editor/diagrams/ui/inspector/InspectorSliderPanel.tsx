@@ -12,6 +12,8 @@ interface InspectorSliderPanelProps {
   handlers: Pick<InspectorHandlers, 'handleSliderChange'>;
   onModelEdit: (model: VisualDiagramModel) => void;
   onSelect: (id: string) => void;
+  fieldErrors?: Map<string, string>;
+  focusedFieldKey?: string;
 }
 
 export const InspectorSliderPanel: React.FC<InspectorSliderPanelProps> = ({
@@ -21,6 +23,8 @@ export const InspectorSliderPanel: React.FC<InspectorSliderPanelProps> = ({
   handlers: { handleSliderChange },
   onModelEdit,
   onSelect,
+  fieldErrors: _fieldErrors,
+  focusedFieldKey: _focusedFieldKey = '',
 }) => (
   <div className="space-y-3">
     {activeInspectorSection === 'general' && <>

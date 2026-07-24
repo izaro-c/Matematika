@@ -38,6 +38,7 @@ export interface DiagramRendererProps {
   mode?: 'runtime' | 'editor' | 'preview';
   selectedIds?: readonly string[];
   highlightedIds?: readonly string[];
+  errorHighlightedIds?: readonly string[];
   activeStepId?: string;
   viewportControls?: boolean;
   className?: string;
@@ -55,6 +56,7 @@ const DiagramRendererContent: React.FC<DiagramRendererProps> = ({
   mode = 'runtime',
   selectedIds = [],
   highlightedIds = [],
+  errorHighlightedIds = [],
   activeStepId,
   viewportControls = true,
   className,
@@ -203,6 +205,7 @@ const DiagramRendererContent: React.FC<DiagramRendererProps> = ({
     mode,
     selectedIds,
     highlightedIds,
+    errorHighlightedIds,
     effectiveStepId,
     bounds,
     interactionCallbacksRef,

@@ -10,6 +10,20 @@ interface InspectorHeaderProps {
   inspectorSection: InspectorSection;
   onSectionChange: (section: InspectorSection) => void;
   onCopySelection?: () => void;
+  sectionErrors?: Map<string, string>;
+  focusedFieldKey?: string;
+}
+
+const SECTION_FIELDS: Record<InspectorSection, readonly string[]> = {
+  general: ['id', 'label', 'general', 'title', 'componentId'],
+  geometry: ['refs', 'constraints', 'constraint', 'gliderTarget', 'kind', 'x', 'y', 'xExpression', 'yExpression', 'dependencies'],
+  appearance: ['color', 'style', 'label', 'showLabel'],
+  advanced: ['visibleWhen', 'target'],
+};
+
+function sectionHasError(fieldErrors: Map<string, string> | undefined, section: InspectorSection): boolean {
+  if (!fieldErrors || fieldErrors.size === 0) return false;
+  return SECTION_FIELDS[section].some(key => fieldErrors.has(key));
 }
 
 export const InspectorHeader: React.FC<InspectorHeaderProps> = ({
@@ -21,6 +35,8 @@ export const InspectorHeader: React.FC<InspectorHeaderProps> = ({
   inspectorSection,
   onSectionChange,
   onCopySelection,
+  sectionErrors,
+  focusedFieldKey = '',
 }) => (
   <>
     <header className="sticky top-0 z-20 mb-3 border-b border-carbon/10 bg-lienzo py-3">
@@ -39,7 +55,25 @@ export const InspectorHeader: React.FC<InspectorHeaderProps> = ({
         ...(!selectedStep ? [['geometry', 'Geometría']] : []),
         ...(!selectedStep ? [['appearance', 'Estilo']] : []),
         ...(!selectedStep ? [['advanced', 'Interacción']] : []),
-      ] as Array<[typeof inspectorSection, string]>).map(([id, label]) => <button key={id} type="button" aria-current={activeInspectorSection === id ? 'page' : undefined} onClick={() => onSectionChange(id)} className={`min-h-9 whitespace-nowrap rounded px-2 text-[10px] font-bold ${activeInspectorSection === id ? 'bg-carbon text-lienzo' : 'text-carbon/55 hover:bg-carbon/5'}`}>{label}</button>)}
+      ] as Array<[typeof inspectorSection, string]>).map(([id, label]) => {
+        const hasError = sectionHasError(sectionErrors, id);
+        const isFocused = Boolean(focusedFieldKey && SECTION_FIELDS[id].includes(focusedFieldKey));
+        return (
+          <button
+            key={id}
+            type="button"
+            aria-current={activeInspectorSection === id ? 'page' : undefined}
+            onClick={() => onSectionChange(id)}
+            className={`min-h-9 whitespace-nowrap rounded px-2 text-[10px] font-bold ${
+              activeInspectorSection === id
+                ? hasError ? 'bg-granada text-lienzo' : 'bg-carbon text-lienzo'
+                : hasError ? 'text-granada hover:bg-granada/10' : 'text-carbon/55 hover:bg-carbon/5'
+            } ${isFocused ? 'ring-2 ring-granada/35' : ''}`}
+          >
+            {label}
+          </button>
+        );
+      })}
     </nav>}
 
     {!hasSelection && (

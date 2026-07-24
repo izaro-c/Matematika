@@ -8,6 +8,7 @@ import { AngleEqualityConstraintEditor } from '../AngleEqualityConstraintEditor'
 import type { InspectorHandlers } from './useInspectorHandlers';
 import { elementReferenceCandidates } from './inspectorUtils';
 import type { InspectorSection } from './inspectorUtils';
+import { InspectorFieldError, inspectorFieldClass } from './InspectorFieldError';
 
 interface InspectorElementRefsSectionProps {
   model: VisualDiagramModel;
@@ -15,6 +16,8 @@ interface InspectorElementRefsSectionProps {
   activeSection: InspectorSection;
   handlers: InspectorHandlers;
   onModelEdit: (model: VisualDiagramModel) => void;
+  fieldErrors?: Map<string, string>;
+  focusedFieldKey?: string;
 }
 
 export const InspectorElementRefsSection: React.FC<InspectorElementRefsSectionProps> = ({
@@ -23,8 +26,15 @@ export const InspectorElementRefsSection: React.FC<InspectorElementRefsSectionPr
   activeSection: activeInspectorSection,
   handlers: { handleElementChange, handleElementPropertiesChange },
   onModelEdit,
+  fieldErrors,
+  focusedFieldKey = '',
 }) => {
   if (activeInspectorSection !== 'geometry') return null;
+
+  const refsError = fieldErrors?.get('refs');
+  const constraintsError = fieldErrors?.get('constraints');
+  const refsFocused = focusedFieldKey === 'refs';
+  const constraintsFocused = focusedFieldKey === 'constraints';
 
   const isCurveHalfPlane = ['functionCurve', 'parametricCurve'].includes(selectedElement.kind)
     && selectedElement.properties?.areaFill === 'half-plane';
@@ -33,10 +43,11 @@ export const InspectorElementRefsSection: React.FC<InspectorElementRefsSectionPr
     : selectedElement.refs;
 
   return (
-    <>
+    <div data-inspector-section="geometry" className="space-y-3">
       {(renderedRefs.length > 0 || isCurveHalfPlane) && selectedElement.kind !== 'infoPanel' && selectedElement.kind !== 'label' && (
-        <fieldset className="space-y-1 rounded border border-carbon/10 p-2">
+        <fieldset data-inspector-field="refs" className={`space-y-1 rounded border p-2 ${inspectorFieldClass(Boolean(refsError), refsFocused) || 'border-carbon/10'}`}>
           <legend className="px-1 ac-label ac-label--sm ac-label--soft">Referencias geométricas</legend>
+          <InspectorFieldError message={refsError} focused={refsFocused} />
           {renderedRefs.map((ref, index) => {
             const referenceLabel = toolReferenceLabel(selectedElement.kind, index);
             return (
@@ -120,7 +131,8 @@ export const InspectorElementRefsSection: React.FC<InspectorElementRefsSectionPr
       )}
 
       {selectedElement.kind === 'segment' && (
-        <>
+        <div data-inspector-field="constraints" className={`space-y-2 rounded border p-2 ${inspectorFieldClass(Boolean(constraintsError), constraintsFocused) || 'border-transparent'}`}>
+          <InspectorFieldError message={constraintsError} focused={constraintsFocused} />
           <SegmentMarksEditor
             model={model}
             segment={selectedElement}
@@ -138,16 +150,19 @@ export const InspectorElementRefsSection: React.FC<InspectorElementRefsSectionPr
             segment={selectedElement}
             onModelEdit={onModelEdit}
           />
-        </>
+        </div>
       )}
 
       {(selectedElement.kind === 'angle' || selectedElement.kind === 'nonReflexAngle') && (
-        <AngleEqualityConstraintEditor
+        <div data-inspector-field="constraints" className={`rounded border p-2 ${inspectorFieldClass(Boolean(constraintsError), constraintsFocused) || 'border-transparent'}`}>
+          <InspectorFieldError message={constraintsError} focused={constraintsFocused} />
+          <AngleEqualityConstraintEditor
           key={selectedElement.id}
           model={model}
           angle={selectedElement}
           onModelEdit={onModelEdit}
         />
+        </div>
       )}
 
       {selectedElement.kind === 'intersection' && (
@@ -163,6 +178,6 @@ export const InspectorElementRefsSection: React.FC<InspectorElementRefsSectionPr
           </label>
         </fieldset>
       )}
-    </>
+    </div>
   );
 };

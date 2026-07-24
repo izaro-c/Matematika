@@ -98,6 +98,8 @@ export type DiagramSaveBlockReason =
 export interface DiagramSaveCapability {
   allowed: boolean;
   reason?: DiagramSaveBlockReason;
+  summary?: string;
+  primaryDiagnosticId?: string;
 }
 
 export function getDiagramSaveCapability(state: DiagramState): DiagramSaveCapability {

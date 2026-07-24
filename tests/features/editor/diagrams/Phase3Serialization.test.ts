@@ -61,7 +61,7 @@ describe('Phase 3 source serialization', () => {
     const generated = generateDiagramSource(unsafe, 'UnsafeFormula');
     expect(generated.ok).toBe(false);
     if (generated.ok) return;
-    expect(generated.diagnostics[0].message).toContain('elements.1.properties.expression');
+    expect(generated.diagnostics[0].path).toEqual(['elements', 1, 'text', 0]);
   });
 
   it('roundtrips viewport-relative information panel positions', () => {

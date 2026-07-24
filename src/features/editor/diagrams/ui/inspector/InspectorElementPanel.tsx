@@ -18,6 +18,8 @@ interface InspectorElementPanelProps {
   onModelEdit: (model: VisualDiagramModel) => void;
   onSelect: (id: string) => void;
   onAddElementLabel?: (elementId: string) => void;
+  fieldErrors?: Map<string, string>;
+  focusedFieldKey?: string;
 }
 
 export const InspectorElementPanel: React.FC<InspectorElementPanelProps> = ({
@@ -29,6 +31,8 @@ export const InspectorElementPanel: React.FC<InspectorElementPanelProps> = ({
   onModelEdit,
   onSelect,
   onAddElementLabel,
+  fieldErrors,
+  focusedFieldKey = '',
 }) => (
   <div className="space-y-3">
     <InspectorElementIdentitySection
@@ -48,6 +52,8 @@ export const InspectorElementPanel: React.FC<InspectorElementPanelProps> = ({
       activeSection={activeSection}
       handlers={handlers}
       onModelEdit={onModelEdit}
+      fieldErrors={fieldErrors}
+      focusedFieldKey={focusedFieldKey}
     />
 
     <InspectorElementContentSection
