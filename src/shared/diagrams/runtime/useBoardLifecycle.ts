@@ -1,6 +1,6 @@
 import { useEffect, useLayoutEffect, useRef, type MutableRefObject } from 'react';
 import JXG from 'jsxgraph';
-import type { ThemeColors } from '../core/MathBoard';
+import type { ThemeColors } from '../core/theme';
 import { safeBoardUpdate, setExactPointPosition } from '../core/MathUtils';
 import {
   createAngle,

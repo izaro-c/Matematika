@@ -184,8 +184,8 @@ describe('Phase 3 visual editing', () => {
     const onRefsChange = vi.fn();
     const picker = render(<DiagramToolReferencePicker model={model} tool="intersection" refs={[]} onRefsChange={onRefsChange} onCreate={vi.fn()} />);
 
-    expect(screen.getByLabelText('Soporte lineal 1 para Intersección')).toBeTruthy();
-    expect(screen.getByLabelText('Soporte lineal 2 para Intersección')).toBeTruthy();
+    expect(screen.getByLabelText('Primer soporte para Intersección')).toBeTruthy();
+    expect(screen.getByLabelText('Segundo soporte para Intersección')).toBeTruthy();
     expect(screen.queryByRole('option', { name: /Polígono/ })).toBeNull();
 
     picker.unmount();

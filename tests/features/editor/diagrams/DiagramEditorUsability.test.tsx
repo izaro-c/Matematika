@@ -117,8 +117,8 @@ describe('diagram editor usability controls', () => {
 
     expect(screen.getByText('Centro de la circunferencia.')).toBeTruthy();
     expect(screen.getByText('Punto por el que pasa; determina el radio.')).toBeTruthy();
-    expect(screen.getByLabelText('Punto 1 para Circunferencia')).toBeTruthy();
-    expect(screen.getByLabelText('Punto 2 para Circunferencia')).toBeTruthy();
+    expect(screen.getByLabelText('Centro para Circunferencia')).toBeTruthy();
+    expect(screen.getByLabelText('Punto de la circunferencia para Circunferencia')).toBeTruthy();
   });
 
   it('starts every visual frame at the real desktop dimensions and supports screen presets', () => {

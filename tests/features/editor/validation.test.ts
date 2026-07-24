@@ -6,6 +6,7 @@ import {
   diagramMinimumRefs,
   diagramPointConstraints,
 } from '@/shared/diagrams/spec/schema';
+import { expectDiagramKindsAlignedWithInspector } from '../../helpers/assertions';
 
 const validDefinitionMetadata = {
   id: 'segmento',
@@ -314,7 +315,7 @@ describe('editor validation', () => {
     });
 
     expect(result.issues.map(issue => issue.id).filter(id => id.endsWith('-kind'))).toEqual([]);
-    expect(diagramElementKinds).toHaveLength(32);
+    expectDiagramKindsAlignedWithInspector();
   });
 
   it('accepts derived and constrained point mobility from the schema', () => {

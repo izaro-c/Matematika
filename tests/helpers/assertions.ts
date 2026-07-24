@@ -1,0 +1,11 @@
+import { expect } from 'vitest';
+import { diagramElementKinds } from '@/shared/diagrams/spec/schema';
+import { ELEMENT_INSPECTOR_CAPABILITIES } from '@/features/editor/diagrams/model/elementInspectorCapabilities';
+
+export function expectDiagramKindsAlignedWithInspector() {
+  const inspectorKinds = new Set(Object.keys(ELEMENT_INSPECTOR_CAPABILITIES));
+  for (const kind of diagramElementKinds) {
+    expect(inspectorKinds.has(kind), `kind ${kind} sin capacidades de inspector`).toBe(true);
+  }
+  expect(diagramElementKinds.length).toBeGreaterThanOrEqual(30);
+}

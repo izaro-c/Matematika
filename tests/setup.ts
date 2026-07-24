@@ -1,3 +1,6 @@
+import { afterEach } from 'vitest';
+import JXG from 'jsxgraph';
+
 if (typeof window !== 'undefined' && typeof window.matchMedia !== 'function') {
   Object.defineProperty(window, 'matchMedia', {
     configurable: true,
@@ -13,3 +16,15 @@ if (typeof window !== 'undefined' && typeof window.matchMedia !== 'function') {
     }),
   });
 }
+
+afterEach(() => {
+  if (typeof JXG === 'undefined' || !JXG.JSXGraph?.freeBoard) return;
+  const boards = JXG.JSXGraph.boards ?? [];
+  for (const board of [...boards]) {
+    try {
+      JXG.JSXGraph.freeBoard(board);
+    } catch {
+      // board ya liberado
+    }
+  }
+});

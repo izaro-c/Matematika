@@ -1,5 +1,6 @@
 import { fireEvent, render, screen, waitFor } from '@testing-library/react';
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
+import { resetRepositoryMocks } from '../../../helpers/diagramWorkbench';
 import { DiagramWorkbench } from '../../../../src/features/editor/diagrams/ui/DiagramWorkbench';
 
 const repositoryMocks = vi.hoisted(() => ({
@@ -8,7 +9,7 @@ const repositoryMocks = vi.hoisted(() => ({
   updateMdxImports: vi.fn(),
 }));
 
-vi.mock('../../../../src/features/editor/diagrams/persistence/repository', () => ({
+vi.mock('@/features/editor/diagrams/persistence/repository', () => ({
   diagramRepository: {
     readDiagram: repositoryMocks.readDiagram,
     saveDiagram: repositoryMocks.saveDiagram,
@@ -18,9 +19,7 @@ vi.mock('../../../../src/features/editor/diagrams/persistence/repository', () =>
 
 describe('DiagramWorkbench responsive layout', () => {
   beforeEach(() => {
-    repositoryMocks.readDiagram.mockReset();
-    repositoryMocks.saveDiagram.mockReset();
-    repositoryMocks.updateMdxImports.mockReset();
+    resetRepositoryMocks(repositoryMocks);
   });
 
   afterEach(() => {

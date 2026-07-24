@@ -3,18 +3,7 @@ import JXG from 'jsxgraph';
 import { useMathStore } from '@/shared/lib/MathStoreContext';
 import { matchesScopedDiagramTarget } from '@/shared/lib/DiagramTargetRegistryContext';
 import { safeBoardUpdate } from './MathUtils';
-
-export interface ThemeColors {
-  carbon: string;
-  terracota: string;
-  salvia: string;
-  lienzo: string;
-  pizarra: string;
-  ocre: string;
-  pavo: string;
-  granada: string;
-  musgo: string;
-}
+import type { ThemeColors } from './theme';
 
 function getCSSVar(name: keyof ThemeColors): string {
   if (typeof document === 'undefined') return '';

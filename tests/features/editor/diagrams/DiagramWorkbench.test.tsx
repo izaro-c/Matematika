@@ -1,5 +1,6 @@
 import { fireEvent, render, screen, waitFor, within } from '@testing-library/react';
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
+import { resetRepositoryMocks } from '../../../helpers/diagramWorkbench';
 import { DiagramWorkbench } from '../../../../src/features/editor/diagrams/ui/DiagramWorkbench';
 import { createTemplateModel } from '../../../../src/features/editor/diagrams/model';
 import { generateDiagramSource } from '../../../../src/features/editor/diagrams/source/generator';
@@ -10,7 +11,7 @@ const repositoryMocks = vi.hoisted(() => ({
   updateMdxImports: vi.fn(),
 }));
 
-vi.mock('../../../../src/features/editor/diagrams/persistence/repository', () => ({
+vi.mock('@/features/editor/diagrams/persistence/repository', () => ({
   diagramRepository: {
     readDiagram: repositoryMocks.readDiagram,
     saveDiagram: repositoryMocks.saveDiagram,
@@ -22,9 +23,7 @@ const { readDiagram, saveDiagram, updateMdxImports } = repositoryMocks;
 
 describe('DiagramWorkbench authority adapters', () => {
   beforeEach(() => {
-    readDiagram.mockReset();
-    saveDiagram.mockReset();
-    updateMdxImports.mockReset();
+    resetRepositoryMocks(repositoryMocks);
   });
 
   afterEach(() => {
@@ -191,8 +190,8 @@ describe('DiagramWorkbench authority adapters', () => {
     await waitFor(() => expect(screen.getByText('Objetos')).toBeTruthy());
     fireEvent.click(screen.getByRole('button', { name: /Añadir objeto/ }));
     fireEvent.click(screen.getAllByRole('menuitem', { name: 'Punto medio' })[0]);
-    fireEvent.change(screen.getByLabelText('Punto 1 para Punto medio'), { target: { value: 'pO' } });
-    fireEvent.change(screen.getByLabelText('Punto 2 para Punto medio'), { target: { value: 'pA' } });
+    fireEvent.change(screen.getByLabelText('Primer extremo para Punto medio'), { target: { value: 'pO' } });
+    fireEvent.change(screen.getByLabelText('Segundo extremo para Punto medio'), { target: { value: 'pA' } });
     fireEvent.click(screen.getByRole('button', { name: 'Crear Punto medio' }));
 
     await waitFor(() => expect(screen.getAllByText(/midOA/).length).toBeGreaterThan(0));

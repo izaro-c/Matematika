@@ -1,5 +1,5 @@
 // @vitest-environment jsdom
-import { cleanup, fireEvent, render, screen, within } from '@testing-library/react';
+import { cleanup, fireEvent, render, screen, waitFor, within } from '@testing-library/react';
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 import { useNavigationStore } from '@/features/search/NavigationStore';
 import { SearchOmnibar } from '@/widgets/navigation/SearchOmnibar';
@@ -38,6 +38,22 @@ describe('SearchOmnibar', () => {
 
     fireEvent.click(typeFilter);
     expect(within(screen.getByRole('listbox', { name: 'Tipos de contenido' })).getByRole('option', { name: 'Todo el contenido' })).toBeTruthy();
+  });
+
+  it('muestra resultados tipificados al buscar pitagoras (TC-1.1)', async () => {
+    render(<SearchOmnibar />);
+
+    const searchbox = screen.getByRole('searchbox');
+    fireEvent.change(searchbox, { target: { value: 'pitagoras' } });
+
+    await waitFor(() => {
+      const results = screen.getAllByRole('option').filter(option => option.closest('#search-results'));
+      const theorem = results.find(
+        option => option.getAttribute('data-result-type') === 'teorema'
+          && /pitágoras/i.test(option.textContent ?? ''),
+      );
+      expect(theorem).toBeDefined();
+    });
   });
 
   it('keeps the type filter separate from the written query', () => {
