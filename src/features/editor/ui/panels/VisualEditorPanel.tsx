@@ -134,7 +134,7 @@ export const VisualEditorPanel: React.FC<VisualEditorPanelProps> = ({
     return (
       <div className="mb-8 pb-6 border-b border-carbon/15 space-y-4">
         <div>
-          <span className="text-[10px] uppercase tracking-widest font-bold text-salvia select-none">
+          <span className="ac-label ac-label--sm ac-label--salvia select-none">
             {String(metadata.type || 'Concepto')}
           </span>
           <textarea
@@ -183,9 +183,9 @@ export const VisualEditorPanel: React.FC<VisualEditorPanelProps> = ({
         {showStatement && (
           <div className="p-4 border-l-4 border-ocre/50 bg-ocre/5 rounded-r space-y-2">
             <div className="flex justify-between items-center select-none">
-              <div className="text-[9px] uppercase tracking-widest font-bold text-ocre/70">Enunciado Formal</div>
+              <div className="ac-label ac-label--xs ac-label--ocre-soft">Enunciado Formal</div>
               <div className="flex gap-1 items-center">
-                <span className="text-[8px] font-sans text-carbon/40 uppercase mr-1">Insertar:</span>
+                <span className="ac-label ac-label--2xs ac-label--faint mr-1">Insertar:</span>
                 {LATEX_SYMBOLS.map(sym => (
                   <button
                     key={sym.label}
@@ -278,7 +278,7 @@ export const VisualEditorPanel: React.FC<VisualEditorPanelProps> = ({
       </button>
       {outlineOpen && <aside className="absolute bottom-3 left-3 top-12 z-30 w-52 overflow-y-auto rounded border border-carbon/15 bg-lienzo/95 p-3 shadow-xl backdrop-blur" aria-label="Outline del documento">
         <div className="mb-2 flex items-center justify-between">
-          <h2 className="text-[10px] font-bold uppercase tracking-widest text-carbon/50">Outline</h2>
+          <h2 className="ac-label ac-label--sm">Outline</h2>
           <button type="button" onClick={() => setOutlineOpen(false)} className="rounded px-1.5 py-0.5 text-[9px] font-bold text-carbon/55" aria-label="Cerrar índice">Cerrar</button>
         </div>
         <nav className="space-y-1" aria-label="Outline del documento">

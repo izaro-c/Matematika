@@ -8,6 +8,7 @@ import {
 } from './persistenceContracts';
 import { createContentRequestSchema, type CreateContentRequest } from './persistenceContracts';
 import { PersistenceFailure } from './persistenceErrors';
+import { editorApiPath, editorAuthHeaders } from './editorApiBase';
 
 const fileListSchema = z.array(z.object({
   path: z.string(),
@@ -28,7 +29,11 @@ async function readPayload(response: Response): Promise<unknown> {
 
 async function request<T>(url: string, schema: ZodType<T>, init?: RequestInit): Promise<T> {
   let response: Response;
-  try { response = await fetch(url, init); }
+  const headers = {
+    ...editorAuthHeaders(),
+    ...(init?.headers ?? {}),
+  };
+  try { response = await fetch(url, { ...init, headers }); }
   catch (error) {
     if (error instanceof DOMException && error.name === 'AbortError') throw new PersistenceFailure({ kind: 'aborted' });
     throw new PersistenceFailure({ kind: 'network-error', cause: error });
@@ -67,29 +72,36 @@ async function request<T>(url: string, schema: ZodType<T>, init?: RequestInit): 
 }
 
 function json(requestBody: unknown, signal?: AbortSignal): RequestInit {
-  return { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(requestBody), signal };
+  return {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(requestBody),
+    signal,
+  };
 }
 
 export class EditorApiClient {
   readContent(file: EditorFileIdentity, signal?: AbortSignal): Promise<ReadContentResponse> {
-    return request(`/api/content?path=${encodeURIComponent(file.path)}`, readContentResponseSchema, { signal });
+    return request(editorApiPath(`/api/content?path=${encodeURIComponent(file.path)}`), readContentResponseSchema, { signal });
   }
-  listContent(signal?: AbortSignal) { return request('/api/list-content', fileListSchema, { signal }); }
+  listContent(signal?: AbortSignal) {
+    return request(editorApiPath('/api/list-content'), fileListSchema, { signal });
+  }
   readDraft(file: EditorFileIdentity, signal?: AbortSignal): Promise<ReadDraftResponse> {
-    return request(`/api/draft?path=${encodeURIComponent(file.path)}`, readDraftResponseSchema, { signal });
+    return request(editorApiPath(`/api/draft?path=${encodeURIComponent(file.path)}`), readDraftResponseSchema, { signal });
   }
   saveDraft(value: SaveDraftRequest, signal?: AbortSignal): Promise<SaveDraftResponse> {
-    return request('/api/draft', saveDraftResponseSchema, json(value, signal));
+    return request(editorApiPath('/api/draft'), saveDraftResponseSchema, json(value, signal));
   }
   applyContent(value: ApplyContentRequest, signal?: AbortSignal): Promise<ApplyContentResponse> {
-    return request('/api/content', applyContentResponseSchema, json(value, signal));
+    return request(editorApiPath('/api/content'), applyContentResponseSchema, json(value, signal));
   }
   createContent(value: CreateContentRequest, signal?: AbortSignal): Promise<ApplyContentResponse> {
     const checked = createContentRequestSchema.parse(value);
-    return request('/api/content', applyContentResponseSchema, json(checked, signal));
+    return request(editorApiPath('/api/content'), applyContentResponseSchema, json(checked, signal));
   }
   restoreBackup(value: RestoreBackupRequest, signal?: AbortSignal): Promise<RestoreBackupResponse> {
-    return request('/api/content/restore', restoreBackupResponseSchema, json(value, signal));
+    return request(editorApiPath('/api/content/restore'), restoreBackupResponseSchema, json(value, signal));
   }
 }
 

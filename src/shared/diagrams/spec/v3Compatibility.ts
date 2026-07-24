@@ -1,4 +1,5 @@
 import { extractMathExpressionIdentifiers } from './expressions';
+import { computeHalfPlaneSide } from './areaGeometry';
 import { diagramTemplateExpressions } from './infoPanels';
 import type {
   DiagramConstraint,
@@ -400,7 +401,7 @@ function relationFromConstraint(constraint: DiagramConstraint, spec: DiagramSpec
     case 'perpendicular': return { ...base, type: 'perpendicular', supports: [[constraint.refs[0], constraint.refs[1]], [constraint.refs[0], constraint.refs[2]]] };
     case 'parallel': return { ...base, type: 'parallel', supports: [[constraint.refs[0], constraint.refs[1]], [constraint.refs[0], constraint.refs[2]]] };
     case 'insideDisk': return { ...base, type: 'inside-disk', point: constraint.refs[0], disk: { center: constraint.refs[1], boundary: constraint.refs[2] } };
-    case 'sameSide': return { ...base, type: 'same-half-plane', points: [constraint.refs[0], constraint.refs[1]], boundary: constraint.refs[2] };
+    case 'sameSide': return { ...base, type: 'same-half-plane', points: [constraint.refs[0], constraint.refs[1]], boundary: constraint.refs[2], ...(constraint.side !== undefined ? { side: constraint.side } : {}) };
     case 'insideArea': return {
       ...base,
       type: 'inside-area',
@@ -867,6 +868,18 @@ function equalAngleConstraint(
   return { id: relation.id, label: relation.label, enabled: relation.enabled, kind: 'equalAngle', refs: [driven, vertex, fixed, relation.angles[1], relation.angles[0]] };
 }
 
+function relationPointCoordinates(objects: readonly DiagramObject[], id: string): { x: number; y: number } | undefined {
+  const object = objects.find(item => item.id === id);
+  if (!object || object.objectType !== 'point') return undefined;
+  if (object.definition.type === 'coordinates') {
+    return { x: object.definition.x, y: object.definition.y };
+  }
+  if (object.definition.type === 'expression') {
+    return { x: object.definition.fallback[0], y: object.definition.fallback[1] };
+  }
+  return undefined;
+}
+
 function relationToConstraint(relation: DiagramRelation, objects: readonly DiagramObject[]): DiagramConstraint {
   const base = { id: relation.id, label: relation.label, enabled: relation.enabled };
   switch (relation.type) {
@@ -884,7 +897,22 @@ function relationToConstraint(relation: DiagramRelation, objects: readonly Diagr
         : [relation.point, relation.disk.center, relation.disk.boundary];
       return { ...base, kind: 'insideDisk', refs };
     }
-    case 'same-half-plane': return { ...base, kind: 'sameSide', refs: [...relation.points, relation.boundary] };
+    case 'same-half-plane': {
+      const refs = [...relation.points, relation.boundary];
+      const side = relation.side ?? (() => {
+        const sidePoint = relationPointCoordinates(objects, relation.points[0]);
+        const lineA = relationPointCoordinates(objects, relation.points[1]);
+        const lineB = relationPointCoordinates(objects, relation.boundary);
+        if (!sidePoint || !lineA || !lineB) return undefined;
+        return computeHalfPlaneSide(lineA, lineB, sidePoint);
+      })();
+      return {
+        ...base,
+        kind: 'sameSide',
+        refs,
+        ...(side !== undefined ? { side } : {}),
+      };
+    }
     case 'inside-area': return {
       ...base,
       kind: 'insideArea',

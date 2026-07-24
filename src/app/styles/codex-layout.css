@@ -3,7 +3,7 @@
 .codex-layout {
   --codex-top: 5.5rem;
   width: 100%;
-  min-height: 100vh;
+  min-height: 100dvh;
   /* Eliminado padding-top global para permitir full-bleed del diagrama */
   background: var(--theme-lienzo);
 }
@@ -202,15 +202,15 @@
 }
 
 .codex-justifications h4 {
-  font-family: var(--font-sans, sans-serif);
+  font-family: var(--font-sans-family);
   font-size: 0.7rem;
-  text-transform: uppercase;
-  letter-spacing: 0.12em;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: none;
   color: var(--theme-terracota);
   margin-top: 0;
   margin-bottom: 0.5rem;
   font-style: normal;
-  font-weight: 600;
 }
 
 /* Focus Mode en Demostraciones */

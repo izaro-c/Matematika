@@ -70,7 +70,7 @@ export const DemonstrationBlock: React.FC<DemonstrationBlockProps> = ({ steps, d
     <div className="space-y-4">
       <div className="flex justify-between items-center border-b border-carbon/10 pb-1.5">
         <div>
-          <label className="block text-[9px] font-bold text-carbon/40 uppercase tracking-widest">
+          <label className="block ac-label ac-label--xs ac-label--faint">
             {singleStepMode ? 'Paso de demostración' : 'Demostración por pasos'}
           </label>
           <p className="mt-1 text-[10px] italic text-carbon/45">Cada paso debe decir qué prueba, por qué es válido y qué elemento visual acompaña la lectura.</p>
@@ -128,7 +128,7 @@ export const DemonstrationBlock: React.FC<DemonstrationBlockProps> = ({ steps, d
 
                 <div className="grid gap-3 sm:grid-cols-[minmax(0,1fr)_minmax(10rem,0.7fr)_minmax(8rem,0.5fr)]">
                   <div>
-                    <label className="block text-[8px] font-bold text-carbon/40 uppercase tracking-wider mb-1">Objetivo del paso</label>
+                    <label className="block ac-label ac-label--2xs ac-label--faint mb-1">Objetivo del paso</label>
                     <input
                       type="text"
                       className="w-full bg-carbon/5 border border-carbon/15 text-carbon p-1.5 rounded text-xs focus:outline-none focus:border-terracota"
@@ -138,7 +138,7 @@ export const DemonstrationBlock: React.FC<DemonstrationBlockProps> = ({ steps, d
                     />
                   </div>
                   <div>
-                    <label className="block text-[8px] font-bold uppercase tracking-wider text-carbon/50 mb-0.5">
+                    <label className="block ac-label ac-label--2xs mb-0.5">
                       Elemento a resaltar (target)
                     </label>
                     <p className="mb-1 text-[9px] text-carbon/45 leading-tight">Objeto del diagrama que se ilumina al activar este paso.</p>
@@ -160,7 +160,7 @@ export const DemonstrationBlock: React.FC<DemonstrationBlockProps> = ({ steps, d
                     </select>
                   </div>
                   <div>
-                    <label className="block text-[8px] font-bold uppercase tracking-wider text-carbon/50 mb-0.5">
+                    <label className="block ac-label ac-label--2xs mb-0.5">
                       Paso del diagrama (diagramStep)
                     </label>
                     <p className="mb-1 text-[9px] text-carbon/45 leading-tight">Momento de la figura mostrado al hacer scroll.</p>
@@ -199,7 +199,7 @@ export const DemonstrationBlock: React.FC<DemonstrationBlockProps> = ({ steps, d
                   <summary className="cursor-pointer px-3 py-2 text-[10px] font-bold text-carbon/60">Por qué es válido {step.justificacion ? `· ${step.justificacion}` : '· falta justificar'} <span className="float-right" aria-hidden="true">▾</span></summary>
                 <div className="grid gap-3 border-t border-carbon/10 p-3 sm:grid-cols-3">
                   <div>
-                    <label className="block text-[8px] font-bold text-carbon/40 uppercase tracking-wider mb-1">Tipo de justificación</label>
+                    <label className="block ac-label ac-label--2xs ac-label--faint mb-1">Tipo de justificación</label>
                     <select
                       className="w-full bg-carbon/5 border border-carbon/15 text-carbon p-1.5 rounded text-xs focus:outline-none focus:border-terracota"
                       value={step.justificationType || 'paso-previo'}
@@ -211,7 +211,7 @@ export const DemonstrationBlock: React.FC<DemonstrationBlockProps> = ({ steps, d
                     </select>
                   </div>
                   <div>
-                    <label className="block text-[8px] font-bold text-carbon/40 uppercase tracking-wider mb-1">Dependencia enlazada</label>
+                    <label className="block ac-label ac-label--2xs ac-label--faint mb-1">Dependencia enlazada</label>
                     <input
                       type="text"
                       className="w-full bg-carbon/5 border border-carbon/15 text-carbon p-1.5 rounded text-xs focus:outline-none focus:border-terracota font-mono"
@@ -221,10 +221,10 @@ export const DemonstrationBlock: React.FC<DemonstrationBlockProps> = ({ steps, d
                     />
                   </div>
                   <div>
-                    <label className="block text-[8px] font-bold text-carbon/40 uppercase tracking-wider mb-1 flex justify-between">
+                    <label className="block ac-label ac-label--2xs ac-label--faint mb-1 flex justify-between">
                       <span>Justificación</span>
                       {hasNoJustification && (
-                        <span className="text-[7px] text-granada font-bold uppercase animate-pulse">Obligatoria</span>
+                        <span className="ac-label ac-label--2xs ac-label--granada animate-pulse">Obligatoria</span>
                       )}
                     </label>
                     <input
@@ -243,7 +243,7 @@ export const DemonstrationBlock: React.FC<DemonstrationBlockProps> = ({ steps, d
                 </details>
 
                 <div>
-                  <label className="block text-[8px] font-bold text-carbon/40 uppercase tracking-wider mb-1">Cuerpo visible del paso</label>
+                  <label className="block ac-label ac-label--2xs ac-label--faint mb-1">Cuerpo visible del paso</label>
                   <textarea
                     className="min-h-20 w-full rounded border border-carbon/15 bg-carbon/5 p-2 text-xs leading-relaxed text-carbon focus:outline-none focus:border-terracota"
                     placeholder="Escriba el argumento del paso. Use el enlazador para ConceptLink e InteractiveElement."
@@ -257,7 +257,7 @@ export const DemonstrationBlock: React.FC<DemonstrationBlockProps> = ({ steps, d
 
                 {(step.leanBlocks?.length || step.leanBlocksExpression) && (
                   <aside className="rounded border border-pavo/20 bg-pavo/5 p-2" aria-label={`Traza Lean del paso ${step.number}`}>
-                    <p className="text-[9px] font-bold uppercase tracking-wider text-pavo">Traza Lean · solo lectura</p>
+                    <p className="ac-label ac-label--xs ac-label--pavo">Traza Lean · solo lectura</p>
                     <p className="mt-1 font-mono text-[10px] text-carbon/65">
                       {step.leanBlocks?.join(', ') || step.leanBlocksExpression}
                     </p>

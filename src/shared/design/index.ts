@@ -1,4 +1,8 @@
 export {
+  UI,
+  type UIClassName,
+} from './uiClasses';
+export {
   THEME_COLOR_VARS,
   type ThemeColorName,
   type ThemeColorVar,

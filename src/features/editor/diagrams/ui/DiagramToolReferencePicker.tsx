@@ -37,7 +37,7 @@ export const DiagramToolReferencePicker: React.FC<DiagramToolReferencePickerProp
     <section className="rounded border border-pavo/20 bg-pavo/5 p-3" aria-labelledby="manual-reference-title">
       <div className="flex flex-wrap items-start justify-between gap-2">
         <div>
-          <h3 id="manual-reference-title" className="text-[10px] font-bold uppercase tracking-widest text-carbon/60">
+          <h3 id="manual-reference-title" className="ac-label ac-label--sm ac-label--emphasis">
             Elegir referencias sin usar el lienzo
           </h3>
           <p className="mt-1 text-[10px] leading-relaxed text-carbon/55">

@@ -1,5 +1,6 @@
 import React from 'react';
 import { Link } from 'wouter';
+import { UI } from '@/shared/design';
 
 interface NotFoundStateProps {
   title: string;
@@ -15,21 +16,22 @@ export const NotFoundState: React.FC<NotFoundStateProps> = ({
   showHomeLink = true,
 }) => {
   return (
-    <div className="min-h-screen bg-lienzo flex flex-col items-center justify-center font-serif text-carbon">
-      <h1 className="text-2xl md:text-3xl mb-4">{title}</h1>
+    <div className={`${UI.page} bg-arts-and-crafts flex flex-col items-center justify-center px-6`}>
+      <p className={`${UI.labelSm} ac-label--faint mb-3`}>Error 404</p>
+      <h1 className={`text-2xl md:text-3xl mb-4 ${UI.textBalance} text-center`}>{title}</h1>
       {(message || missingId) && (
-        <p className="text-pizarra mb-6 text-center max-w-md">
+        <p className={`text-pizarra mb-8 text-center max-w-md ${UI.textPretty} leading-relaxed`}>
           {message}
           {missingId && (
             <>
-              {' '}<code className="bg-carbon/5 px-2 py-0.5 rounded">{missingId}</code>{' '}
+              {' '}<code className={UI.codeInline}>{missingId}</code>{' '}
               no existe en la base de datos.
             </>
           )}
         </p>
       )}
       {showHomeLink && (
-        <Link href="/" className="text-terracota hover:underline font-serif">
+        <Link href="/" className={`${UI.link} font-medium`}>
           ← Volver al inicio
         </Link>
       )}

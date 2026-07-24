@@ -23,7 +23,7 @@ export const InspectorRelatedLinks: React.FC<InspectorRelatedLinksProps> = ({
 
   return (
     <details className="mt-4 border-t border-carbon/10 pt-3">
-      <summary className="cursor-pointer list-none text-[10px] font-bold uppercase tracking-widest text-carbon/45 [&::-webkit-details-marker]:hidden">
+      <summary className="cursor-pointer list-none ac-label ac-label--sm ac-label--soft [&::-webkit-details-marker]:hidden">
         Enlaces de construcción <span className="float-right font-mono font-normal">{relatedConstraints.length + relatedDependencies.length} enlaces ▾</span>
       </summary>
       <div className="mt-2 border-l-2 border-carbon/10 pl-3">

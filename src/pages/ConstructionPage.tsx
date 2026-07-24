@@ -7,7 +7,7 @@ export const ConstructionPage: React.FC = () => {
   const displayId = conceptId.replace(/-/g, ' ');
 
   return (
-    <div className="min-h-screen bg-arts-and-crafts flex items-center justify-center text-carbon font-serif">
+    <div className="min-h-viewport bg-arts-and-crafts flex items-center justify-center text-carbon font-serif">
       <FadeIn>
         <div className="text-center max-w-2xl mx-auto px-6 py-24">
           <div className="text-6xl mb-8 text-terracota/30">✦</div>
@@ -32,12 +32,12 @@ export const ConstructionPage: React.FC = () => {
             <div className="flex-1 h-px bg-carbon" />
           </div>
 
-          <p className="text-sm text-carbon/50 mb-10 font-sans tracking-widest uppercase">
+          <p className="ac-eyebrow text-sm text-carbon/50 mb-10">
             Mientras tanto, puedes seguir explorando la enciclopedia
           </p>
 
           <Link href="/">
-            <a className="inline-block px-8 py-3 border border-carbon/20 hover:border-terracota hover:text-terracota transition-all text-xs font-sans tracking-widest uppercase font-bold">
+            <a className="inline-block px-8 py-3 border border-carbon/20 hover:border-terracota hover:text-terracota transition-all ac-eyebrow font-bold">
               ← Volver a la Biblioteca
             </a>
           </Link>

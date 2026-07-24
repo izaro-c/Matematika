@@ -2,6 +2,7 @@
 @import "katex/dist/katex.min.css";
 @import "./styles/katex.css";
 @import "tailwindcss";
+@import "./styles/design-system.css";
 @import "./styles/base.css";
 @import "./styles/utilities.css";
 @import "./styles/editorial-content.css";

@@ -7,6 +7,7 @@ import { useDiagramStepSync } from '@/shared/lib/DiagramStepSyncContext';
 import {
   DIAGRAM_RENDERER_ID,
   createScenePlan,
+  materializeSameSideConstraints,
   sceneGeometryRevision,
   sceneStackRevision,
   withResolvedPointConstraints,
@@ -66,7 +67,7 @@ const DiagramRendererContent: React.FC<DiagramRendererProps> = ({
   stepControls,
 }) => {
   const spec = useMemo(() => {
-    if (inputSpec.version !== 3) return withResolvedPointConstraints(inputSpec);
+    if (inputSpec.version !== 3) return withResolvedPointConstraints(materializeSameSideConstraints(inputSpec));
     const projected = projectDiagramSpecV3ToV2(inputSpec);
     // Un spread v2 sobre una spec v3 puede materializar vistas deprecadas.
     // Se respetan durante la ventana de compatibilidad, sin persistirlas.
@@ -79,7 +80,7 @@ const DiagramRendererContent: React.FC<DiagramRendererProps> = ({
         sliders: Array.isArray(compatibility.sliders) ? [...compatibility.sliders] : projected.sliders,
       }
       : projected;
-    return withResolvedPointConstraints(materialized);
+    return withResolvedPointConstraints(materializeSameSideConstraints(materialized));
   }, [inputSpec]);
 
   const {

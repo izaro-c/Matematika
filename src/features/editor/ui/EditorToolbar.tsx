@@ -151,7 +151,7 @@ export const EditorToolbar: React.FC<EditorToolbarProps> = ({
           <div className="flex items-center gap-2">
             <span className={`h-2 w-2 shrink-0 rounded-full ${indicatorClass}`} aria-hidden="true" />
             <h1 className="truncate font-serif text-sm font-bold text-carbon">{fileName}</h1>
-            {currentFile && <span className={`hidden rounded px-1.5 py-0.5 text-[9px] font-bold uppercase tracking-wide md:inline ${resourceClass}`}>{resourceLabel}</span>}
+            {currentFile && <span className={`hidden ac-editor-badge rounded px-1.5 py-0.5 md:inline ${resourceClass}`}>{resourceLabel}</span>}
           </div>
           <p className="truncate text-[10px] text-carbon/45" aria-live="polite">{message || persistenceLabel}</p>
         </div>

@@ -24,7 +24,7 @@ export const DiagramGuidedConstructions: React.FC<DiagramGuidedConstructionsProp
   const selected = CONSTRUCTION_OPTIONS.find(option => option.value === kind) ?? CONSTRUCTION_OPTIONS[0];
   return (
     <section aria-labelledby="guided-construction-title">
-      <h3 id="guided-construction-title" className="text-[10px] font-bold uppercase tracking-widest text-pavo">Construcción guiada</h3>
+      <h3 id="guided-construction-title" className="ac-label ac-label--sm ac-label--pavo">Construcción guiada</h3>
       <p className="mt-1 text-[10px] leading-relaxed text-carbon/50">Crea de una vez los puntos auxiliares, rectas y marcas necesarios, conservándolos como objetos editables.</p>
       <label className="mt-3 block text-[10px] font-bold text-carbon">Construcción
         <select aria-label="Tipo de construcción guiada" className="mt-1 w-full rounded border border-carbon/15 bg-lienzo p-2 text-xs" value={kind} onChange={event => onKindChange(event.target.value as ConstructionKind)}>

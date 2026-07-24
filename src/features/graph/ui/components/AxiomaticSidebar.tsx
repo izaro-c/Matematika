@@ -93,7 +93,7 @@ export function AxiomaticSidebar({
       <header className={isMobile ? 'px-5 pb-4 pt-5' : 'px-5 pb-4 pt-24'}>
         <div className="flex items-start gap-3">
           <div className="min-w-0 flex-1">
-            <p className="font-sans text-[9px] font-bold uppercase tracking-[0.18em] text-terracota">
+            <p className="ac-label ac-label--xs ac-label--terracota">
               Explorador lógico
             </p>
             <h1 className="mt-1 font-serif text-xl leading-tight tracking-tight text-carbon">
@@ -128,7 +128,7 @@ export function AxiomaticSidebar({
       >
         <div className="flex items-baseline justify-between gap-3">
           <div className="min-w-0">
-            <p className="font-sans text-[8px] font-bold uppercase tracking-[0.15em] text-carbon/50">
+            <p className="ac-label ac-label--2xs">
               Base actual
             </p>
             <p className="mt-0.5 truncate font-serif text-sm font-semibold text-carbon">

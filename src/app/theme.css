@@ -71,6 +71,10 @@
   --theme-selection-bg: color-mix(in srgb, var(--theme-ocre) 16%, transparent);
   --theme-selection-text: var(--theme-carbon);
 
+  /* ── 4d. Sombras CTA (home y landings) ─────────────────────────────────── */
+  --ac-cta-shadow: 0 10px 30px -10px color-mix(in srgb, var(--theme-terracota) 35%, transparent);
+  --ac-cta-shadow-hover: 0 20px 40px -10px color-mix(in srgb, var(--theme-terracota) 50%, transparent);
+
   /* ── 5. Paleta Arts & Crafts – Modo Pergamino ─────────────────────────── */
   --theme-lienzo:    #F3EFE7;  /* Papel de pergamino (Avena) */
   --theme-carbon:    #35312E;  /* Tinta de imprenta (Sepia) */
@@ -129,4 +133,13 @@
 
 h1, h2, h3, h4, h5, h6 {
   letter-spacing: var(--letter-spacing-title);
+}
+
+h1, h2 {
+  text-wrap: balance;
+}
+
+.prose p {
+  text-wrap: pretty;
+  max-width: 65ch;
 }

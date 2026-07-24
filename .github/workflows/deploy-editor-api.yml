@@ -1,0 +1,39 @@
+# Deploys the Matematika editor persistence API (Node).
+# Required repository secrets:
+#   FLY_API_TOKEN — from `fly tokens create deploy`
+# Optional:
+#   EDITOR_API_TOKEN — Bearer token for write operations (set on Fly separately)
+
+name: Deploy editor API
+
+on:
+  workflow_dispatch:
+  push:
+    branches: ['main']
+    paths:
+      - 'scripts/editor/**'
+      - 'src/features/editor/persistence/**'
+      - 'src/features/editor/document/**'
+      - 'Dockerfile.editor-api'
+      - 'fly.editor-api.toml'
+      - '.github/workflows/deploy-editor-api.yml'
+
+concurrency:
+  group: editor-api
+  cancel-in-progress: true
+
+jobs:
+  deploy:
+    if: ${{ secrets.FLY_API_TOKEN != '' }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6
+
+      - name: Setup Flyctl
+        uses: superfly/flyctl-actions/setup-flyctl@63df46f09b8c0dba1d9040ddb63e4dd26ab23326
+
+      - name: Deploy to Fly.io
+        run: flyctl deploy --config fly.editor-api.toml --remote-only
+        env:
+          FLY_API_TOKEN: ${{ secrets.FLY_API_TOKEN }}

@@ -57,7 +57,7 @@ export const StudyPlanCheckpoint: React.FC<StudyPlanCheckpointProps> = ({
             <span>?</span>
           </div>
           <div className="flex-1">
-            <div className="text-[9px] font-sans uppercase tracking-[0.25em] font-bold text-carbon/40">
+            <div className="ac-label ac-label--xs ac-label--faint">
               Checkpoint (Bloqueado)
             </div>
             <h4 className="text-sm italic font-serif text-carbon/40">
@@ -108,7 +108,7 @@ export const StudyPlanCheckpoint: React.FC<StudyPlanCheckpointProps> = ({
         </div>
         <div className="flex-1">
           <div
-            className={`text-[9px] font-sans uppercase tracking-[0.25em] font-bold ${
+            className={`ac-label ac-label--xs font-bold ${
               completed ? 'text-salvia' : 'text-carbon/40'
             }`}
           >
@@ -157,7 +157,7 @@ export const StudyPlanCheckpoint: React.FC<StudyPlanCheckpointProps> = ({
             >
               <span>{option}</span>
               {completed && isCorrectOption && (
-                <span className="text-xs font-bold font-sans uppercase tracking-widest text-salvia">
+                <span className="ac-label ac-label--md ac-label--salvia">
                   Correcto
                 </span>
               )}
@@ -169,7 +169,7 @@ export const StudyPlanCheckpoint: React.FC<StudyPlanCheckpointProps> = ({
       {/* Explicación y feedback pedagógico */}
       {showExplanation && (
         <div className="mt-6 pt-5 border-t border-carbon/10 animate-fade-in">
-          <div className="text-[9px] font-sans uppercase tracking-[0.2em] text-salvia/80 font-bold mb-2">
+          <div className="ac-label ac-label--xs ac-label--salvia-soft mb-2">
             Justificación Pedagógica
           </div>
           <p className="text-sm font-serif italic text-carbon/70 leading-relaxed">

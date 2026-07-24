@@ -2,6 +2,7 @@ import React, { useEffect, useId, useRef } from 'react';
 import JXG from 'jsxgraph';
 import { useMathStore } from '@/shared/lib/MathStoreContext';
 import { matchesScopedDiagramTarget } from '@/shared/lib/DiagramTargetRegistryContext';
+import { safeBoardUpdate } from './MathUtils';
 
 export interface ThemeColors {
   carbon: string;
@@ -192,18 +193,39 @@ export const MathBoard: React.FC<MathBoardProps> = ({
   const instructionsId = `math-board-instructions-${generatedId}`;
   const suppressBoundingBoxReportRef = useRef(false);
   const programmaticBoundingBoxRef = useRef<[number, number, number, number] | null>(null);
+  // userNavigatingRef está activo mientras el usuario sostiene un gesto de
+  // arrastre/pan (entre 'down' y 'up') para que assertControlledViewport no
+  // reescriba el bounding box a mitad de gesto. Se rastrea el gesto real en
+  // vez de un temporizador fijo porque un arrastre puede durar más que
+  // cualquier ventana arbitraria — con un temporizador, un gesto lento vuelve
+  // a exponerse a que se recalcule el viewport mientras el punto sigue en
+  // movimiento (la causa confirmada del "flip" intermitente de la semirrecta).
   const userNavigatingRef = useRef(false);
-  const userNavigationTimerRef = useRef<number | null>(null);
+  const activeGestureRef = useRef(false);
+  const wheelNavigationTimerRef = useRef<number | null>(null);
 
-  const markUserNavigation = () => {
+  const beginUserGesture = () => {
+    activeGestureRef.current = true;
     userNavigatingRef.current = true;
-    if (userNavigationTimerRef.current !== null && typeof window !== 'undefined') {
-      window.clearTimeout(userNavigationTimerRef.current);
+  };
+
+  const endUserGesture = () => {
+    activeGestureRef.current = false;
+    userNavigatingRef.current = false;
+  };
+
+  // El scroll de la rueda no tiene un evento de "fin de gesto" fiable (cada
+  // tick es independiente), así que conserva una ventana corta tras el último
+  // evento para absorber un gesto de zoom continuo.
+  const markWheelNavigation = () => {
+    userNavigatingRef.current = true;
+    if (wheelNavigationTimerRef.current !== null && typeof window !== 'undefined') {
+      window.clearTimeout(wheelNavigationTimerRef.current);
     }
     if (typeof window !== 'undefined') {
-      userNavigationTimerRef.current = window.setTimeout(() => {
-        userNavigatingRef.current = false;
-        userNavigationTimerRef.current = null;
+      wheelNavigationTimerRef.current = window.setTimeout(() => {
+        if (!activeGestureRef.current) userNavigatingRef.current = false;
+        wheelNavigationTimerRef.current = null;
       }, 120);
     }
   };
@@ -220,13 +242,24 @@ export const MathBoard: React.FC<MathBoardProps> = ({
 
   const assertControlledViewport = (board: any, width: number, height: number) => {
     if (userNavigatingRef.current) return;
+    // board.setBoundingBox() sólo recalcula la transformación interna
+    // (unitX/unitY/origen); el redibujado real que la hace visible depende
+    // de un board.update() posterior. JSXGraph protege ese update() contra
+    // reentrancia (board.inUpdate) devolviéndose sin hacer nada si ya hay una
+    // pasada en curso, así que llamar a esta función DESDE DENTRO de esa
+    // pasada (p. ej. directamente desde el evento 'update') dejaría la
+    // transformación cambiada sin que el render la reflejase hasta el
+    // siguiente ciclo — la causa más probable del "flip" intermitente. Por
+    // eso el efecto de abajo la invoca envolviendo board.update() para que
+    // se ejecute siempre DESPUÉS de que board.inUpdate vuelva a false.
+    if (board.inUpdate) return;
     const fittedBounds = fittedDisplayBounds(boundingboxRef.current, width, height);
     const current = board.getBoundingBox?.() as number[] | undefined;
     const changed = !current || fittedBounds.some((value, index) => Math.abs(value - current[index]) > 1e-8);
     if (!changed) return;
     suppressBoundingBoxReportRef.current = true;
     board.setBoundingBox(fittedBounds, keepaspectratio);
-    board.update();
+    safeBoardUpdate(board);
     const nextBounds = board.getBoundingBox?.();
     if (Array.isArray(nextBounds) && nextBounds.length === 4) {
       programmaticBoundingBoxRef.current = [...nextBounds] as [number, number, number, number];
@@ -245,7 +278,7 @@ export const MathBoard: React.FC<MathBoardProps> = ({
       boardObj.current.__matematikaSafeArea = safeAreaRef.current;
       boardObj.current.__matematikaViewportSafeArea = viewportSafeAreaRef.current;
     }
-    boardObj.current?.update();
+    if (boardObj.current) safeBoardUpdate(boardObj.current);
   }, [boundingbox, onBoundingBoxChange, onInit, onUpdate, safeArea, viewportSafeArea]);
 
   useEffect(() => {
@@ -257,7 +290,7 @@ export const MathBoard: React.FC<MathBoardProps> = ({
     const isStep = (target: string) => matchesScopedDiagramTarget(stepRef.current, target, scopeId);
     const isHL = (target: string) => matchesScopedDiagramTarget(highlightRef.current, target, scopeId);
     onUpdateRef.current?.(boardObj.current, elementsRef.current, currentTheme, isStep, isHL);
-    boardObj.current.update();
+    safeBoardUpdate(boardObj.current);
   }, [highlight, scopeId, step]);
 
   useEffect(() => {
@@ -308,23 +341,60 @@ export const MathBoard: React.FC<MathBoardProps> = ({
       const isStep = (target: string) => matchesScopedDiagramTarget(stepRef.current, target, scopeId);
       const isHL = (target: string) => matchesScopedDiagramTarget(highlightRef.current, target, scopeId);
       onUpdateRef.current?.(board, elementsRef.current, currentTheme, isStep, isHL);
-      assertControlledViewport(
-        board,
-        boardRef.current?.clientWidth ?? 0,
-        boardRef.current?.clientHeight ?? 0,
-      );
     };
 
+    // El hook de estilo (onUpdate) sólo cambia atributos (color, visibilidad)
+    // vía setAttribute, que JSXGraph aplica al DOM inmediatamente sin
+    // necesitar una nueva pasada de update(); puede correr de forma segura
+    // dentro del propio evento 'update'.
     board.on('update', runUpdate);
     runUpdate();
 
-    board.on('mousedown', markUserNavigation);
-    board.on('mousewheel', markUserNavigation);
-    board.on('touchstart', markUserNavigation);
+    // Corregir el bounding box exige, a su vez, un update() para que el
+    // redibujado refleje la transformación nueva (ver assertControlledViewport).
+    // Esa llamada vuelve a pasar por el wrapper de abajo y desencadenaría de
+    // nuevo checkControlledViewport(); esta guarda asegura una única
+    // corrección por disparo real en vez de una recursión (potencialmente sin
+    // fin si el ajuste de aspecto de JSXGraph nunca converge exactamente al
+    // resultado esperado en el primer intento).
+    let checkingViewport = false;
+    const checkControlledViewport = () => {
+      if (checkingViewport) return;
+      checkingViewport = true;
+      try {
+        assertControlledViewport(
+          board,
+          boardRef.current?.clientWidth ?? 0,
+          boardRef.current?.clientHeight ?? 0,
+        );
+      } finally {
+        checkingViewport = false;
+      }
+    };
+
+    // A diferencia del hook de estilo, assertControlledViewport necesita que
+    // la pasada de actualización YA haya terminado (ver su comentario), así
+    // que en vez de escuchar 'update' (disparado con board.inUpdate todavía
+    // en true) se envuelve el propio método update() para ejecutarla justo
+    // después de que devuelva y board.inUpdate vuelva a false.
+    const originalBoardUpdate = board.update.bind(board);
+    board.update = ((...args: unknown[]) => {
+      const result = originalBoardUpdate(...(args as Parameters<typeof originalBoardUpdate>));
+      checkControlledViewport();
+      return result;
+    }) as typeof board.update;
+    checkControlledViewport();
+
+    // 'down'/'up' son los eventos unificados de JSXGraph (cubren mouse, touch
+    // y pointer) y se disparan a nivel de documento, por lo que capturan todo
+    // el gesto real incluso si el puntero se suelta fuera del contenedor.
+    board.on('down', beginUserGesture);
+    board.on('up', endUserGesture);
+    board.on('mousewheel', markWheelNavigation);
 
     const reportBoundingBox = () => {
       if (suppressBoundingBoxReportRef.current) return;
-      markUserNavigation();
+      markWheelNavigation();
       const current = board.getBoundingBox?.();
       if (Array.isArray(current) && current.length === 4) {
         const programmatic = programmaticBoundingBoxRef.current;
@@ -340,7 +410,7 @@ export const MathBoard: React.FC<MathBoardProps> = ({
     board.on('boundingbox', reportBoundingBox);
 
     const resizeObserver = typeof ResizeObserver === 'undefined' ? null : new ResizeObserver(() => {
-      if (boardObj.current !== board || !containerRef.current) return;
+      if (boardObj.current !== board || !containerRef.current || board.inUpdate) return;
       const width = containerRef.current.clientWidth;
       const height = containerRef.current.clientHeight;
       if (width <= 2 || height <= 2) return;
@@ -349,7 +419,7 @@ export const MathBoard: React.FC<MathBoardProps> = ({
       const fittedBounds = fittedDisplayBounds(boundingboxRef.current, width, height);
       board.setBoundingBox(fittedBounds, keepaspectratio);
       (board as any).__matematikaContainerSize = { width, height };
-      board.update();
+      safeBoardUpdate(board);
       const resizedBounds = board.getBoundingBox?.();
       if (Array.isArray(resizedBounds) && resizedBounds.length === 4) {
         programmaticBoundingBoxRef.current = [...resizedBounds] as [number, number, number, number];
@@ -365,15 +435,15 @@ export const MathBoard: React.FC<MathBoardProps> = ({
       if (renderer?.container) {
         renderer.container.style.backgroundColor = currentTheme.lienzo;
       }
-      board.update();
+      safeBoardUpdate(board);
     });
     themeObserver.observe(document.documentElement, { attributes: true, attributeFilter: ['class'] });
 
     return () => {
       themeObserver.disconnect();
       resizeObserver?.disconnect();
-      if (userNavigationTimerRef.current !== null && typeof window !== 'undefined') {
-        window.clearTimeout(userNavigationTimerRef.current);
+      if (wheelNavigationTimerRef.current !== null && typeof window !== 'undefined') {
+        window.clearTimeout(wheelNavigationTimerRef.current);
       }
       if (boardObj.current === board) boardObj.current = null;
       JXG.JSXGraph.freeBoard(board);
@@ -392,7 +462,7 @@ export const MathBoard: React.FC<MathBoardProps> = ({
     if (changed) {
       suppressBoundingBoxReportRef.current = true;
       board.setBoundingBox(fittedBounds, keepaspectratio);
-      board.update();
+      safeBoardUpdate(board);
       const nextBounds = board.getBoundingBox?.();
       if (Array.isArray(nextBounds) && nextBounds.length === 4) {
         programmaticBoundingBoxRef.current = [...nextBounds] as [number, number, number, number];
@@ -405,7 +475,7 @@ export const MathBoard: React.FC<MathBoardProps> = ({
   }, [boundingbox, keepaspectratio, safeArea, viewportSafeArea]);
 
   useEffect(() => {
-    boardObj.current?.update();
+    if (boardObj.current) safeBoardUpdate(boardObj.current);
   }, [stackRevision]);
 
   return (

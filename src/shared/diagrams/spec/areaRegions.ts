@@ -1,7 +1,6 @@
 import type { AreaMembership, DiagramElement, DiagramSpecV2 } from './types';
 import {
   clipPolygonByHalfPlane,
-  clipPolygonToPolygon,
   intersectPolygons,
   constrainToDisk,
   constrainToDiskBoundary,
@@ -61,14 +60,6 @@ function curveAreaPolygons(
   const sideRef = element.refs.find(ref => Boolean(ref));
   const side = sideRef ? resolveRef(spec, sideRef, resolver) : undefined;
   return resolveCurveAreaPolygons(element, curvePoints, side, spec.viewport.bounds, variables);
-}
-
-function curveAreaPolygon(
-  spec: DiagramSpecV2,
-  element: DiagramElement,
-  resolver: AreaPointResolver = defaultResolvePoint,
-): Coordinates[] {
-  return curveAreaPolygons(spec, element, resolver)[0] ?? [];
 }
 
 function constrainToCurveAreaPolygons(polygons: Coordinates[][], point: Coordinates): Coordinates {

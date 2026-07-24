@@ -76,7 +76,7 @@ export const ContentCard: React.FC<ContentCardProps> = ({
           <div className="flex items-center gap-3 mb-1.5">
             {type && <ContentTypeBadge type={type} label={badgeLabel ?? typeLabel} />}
             {domain && (
-              <span className="inline-flex items-center gap-1 text-[10px] font-sans uppercase tracking-widest text-carbon/50">
+              <span className="inline-flex items-center gap-1 ac-eyebrow ac-eyebrow--sm text-carbon/50">
                 {domainIcon && <span aria-hidden>{domainIcon}</span>}
                 {domain}
               </span>
@@ -89,7 +89,7 @@ export const ContentCard: React.FC<ContentCardProps> = ({
         </div>
         {action && (
           <span
-            className="hidden sm:inline text-xs font-sans tracking-widest uppercase font-bold opacity-50 group-hover:opacity-100 shrink-0 transition-opacity"
+            className="hidden sm:inline ac-eyebrow font-bold opacity-50 group-hover:opacity-100 shrink-0 transition-opacity"
             style={{ color: token }}
           >
             {action} →
@@ -128,7 +128,7 @@ export const ContentCard: React.FC<ContentCardProps> = ({
       )}
       {action && (
         <span
-          className="text-xs font-sans tracking-widest uppercase font-bold opacity-60 group-hover:opacity-100 mt-4 transition-opacity"
+          className="ac-eyebrow font-bold opacity-60 group-hover:opacity-100 mt-4 transition-opacity"
           style={{ color: token }}
         >
           {action} →

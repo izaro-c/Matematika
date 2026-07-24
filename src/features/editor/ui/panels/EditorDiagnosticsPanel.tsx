@@ -71,7 +71,7 @@ export const EditorDiagnosticsPanel: React.FC<EditorDiagnosticsPanelProps> = ({
     </header>
     <div className="grid flex-1 min-h-0 gap-0 overflow-y-auto md:grid-cols-2">
       <div className="border-b border-carbon/10 p-3 md:border-b-0 md:border-r">
-        <h3 className="mb-2 text-[9px] font-bold uppercase tracking-widest text-carbon/45">Validación</h3>
+        <h3 className="mb-2 ac-label ac-label--xs ac-label--soft">Validación</h3>
         {!currentFile && <p className="text-xs italic text-carbon/50">No hay un recurso abierto.</p>}
         {currentFile && validation.issues.length === 0 && <p className="rounded border border-salvia/20 bg-salvia/5 px-3 py-2 text-xs text-carbon/65">No se han detectado errores bloqueantes en esta vista.</p>}
         <div className="space-y-1">
@@ -83,7 +83,7 @@ export const EditorDiagnosticsPanel: React.FC<EditorDiagnosticsPanelProps> = ({
         </div>
       </div>
       <div className="p-3">
-        <h3 className="mb-2 text-[9px] font-bold uppercase tracking-widest text-carbon/45">Sesión actual</h3>
+        <h3 className="mb-2 ac-label ac-label--xs ac-label--soft">Sesión actual</h3>
         <div className="flex gap-3">
           <span className={`mt-1 h-2.5 w-2.5 shrink-0 rounded-full ${persistenceClass}`} />
           <div className="min-w-0">

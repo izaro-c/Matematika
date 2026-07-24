@@ -24,7 +24,7 @@ export const ProofStepExpander: React.FC<ProofStepExpanderProps> = ({ blockIds }
 
   return (
     <details className="mt-5 border border-carbon/15 bg-lienzo px-4 py-3 text-sm">
-      <summary className="page-accent-text cursor-pointer select-none font-sans text-xs uppercase tracking-widest">
+      <summary className="page-accent-text ac-eyebrow ac-eyebrow--sm cursor-pointer select-none">
         Ver en Lean
       </summary>
       <div className="mt-4 space-y-4">

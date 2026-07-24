@@ -38,7 +38,7 @@ export const ReadingButton: React.FC<ReadingButtonProps> = ({ id }) => {
           )}
         </div>
         
-        <span className={`whitespace-nowrap text-xs sm:text-sm font-sans uppercase tracking-[0.2em] sm:tracking-[0.3em] font-bold transition-colors duration-500 ${
+        <span className={`whitespace-nowrap ac-eyebrow text-xs sm:text-sm transition-colors duration-500 ${
           alreadyRead ? 'text-salvia' : 'page-accent-group-hover text-carbon/60'
         }`}>
           {alreadyRead ? 'Completado' : 'Marcar como Leído'}

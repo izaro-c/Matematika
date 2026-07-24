@@ -268,7 +268,7 @@ export const SearchOmnibar = () => {
         </div>
 
         <div className="flex flex-wrap items-center gap-2 border-b border-carbon/15 bg-carbon/[0.025] px-4 py-3 sm:px-5">
-          <label htmlFor="search-type" className="text-[10px] font-bold uppercase tracking-[0.18em] text-carbon/50">
+          <label htmlFor="search-type" className="ac-label ac-label--sm">
             Catálogo
           </label>
           <div ref={typeMenuRef} className="relative">
@@ -410,7 +410,7 @@ export const SearchOmnibar = () => {
                       )}
                     </span>
 
-                    <span className="mt-1 hidden shrink-0 text-[10px] font-bold uppercase tracking-[0.16em] text-carbon/40 sm:block">
+                    <span className="mt-1 hidden shrink-0 ac-label ac-label--sm ac-label--faint sm:block">
                       {isNavigable ? TYPE_RESULT_LABELS[item.type] : 'Sin página propia'}
                     </span>
                   </button>
@@ -431,7 +431,7 @@ export const SearchOmnibar = () => {
 
           {showIntroduction && (
             <div className="px-5 py-8 sm:px-8 sm:py-10">
-              <div className="mb-2 flex items-center gap-3 text-[10px] font-bold uppercase tracking-[0.2em] text-terracota/80">
+              <div className="mb-2 flex items-center gap-3 ac-label ac-label--sm ac-label--terracota-soft">
                 <span className="h-px w-8 bg-terracota/45" aria-hidden="true" />
                 Índice general
               </div>

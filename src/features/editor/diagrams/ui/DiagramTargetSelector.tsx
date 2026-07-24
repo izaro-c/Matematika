@@ -40,7 +40,7 @@ export const DiagramTargetSelector: React.FC<DiagramTargetSelectorProps> = ({
     <section className="rounded border border-carbon/15 bg-lienzo p-3" aria-labelledby="target-registry-title">
       <div className="flex items-start justify-between gap-3">
         <div>
-          <h3 id="target-registry-title" className="text-xs font-bold uppercase tracking-widest text-carbon/55">Registro estable de targets</h3>
+          <h3 id="target-registry-title" className="ac-label ac-label--md ac-label--strong">Registro estable de targets</h3>
           <p className="mt-1 text-[10px] text-carbon/55">El ID público permanece aunque cambie el ID interno. En páginas con varios diagramas se usa el ID cualificado.</p>
         </div>
         <span className="rounded bg-pavo/10 px-2 py-1 font-mono text-[10px] text-pavo">{model.componentId}:target</span>
@@ -73,7 +73,7 @@ export const DiagramTargetSelector: React.FC<DiagramTargetSelectorProps> = ({
               </div>
               {item.target && (
                 <>
-                  <label className="mt-2 block text-[9px] font-bold uppercase tracking-wider text-carbon/45">Target público
+                  <label className="mt-2 block ac-label ac-label--xs ac-label--soft">Target público
                     <input
                       className="mt-1 w-full rounded border border-carbon/15 bg-lienzo p-1 font-mono text-[10px]"
                       value={targetId}

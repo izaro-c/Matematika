@@ -254,7 +254,7 @@ export const MarginaliaPanel = () => {
               </p>
               {term.statement && (
                 <div className="page-accent-border mt-6 p-5 border-l-4" style={{ backgroundColor: 'color-mix(in srgb, var(--page-accent) 4%, transparent)' }}>
-                  <h5 className="page-accent-text font-sans font-bold text-[10px] uppercase tracking-widest mb-3">
+                  <h5 className="page-accent-text ac-label ac-label--sm mb-3">
                     Enunciado
                   </h5>
                   <p className="italic text-carbon/90 m-0 leading-relaxed text-base">
@@ -273,7 +273,7 @@ export const MarginaliaPanel = () => {
                   <Link href={term.href}>
                     <a
                       onClick={closeTerm}
-                      className="page-accent-hover inline-block px-8 py-3 border border-carbon/20 transition-all text-xs font-sans tracking-widest uppercase font-bold"
+                      className="page-accent-hover inline-block px-8 py-3 border border-carbon/20 transition-all ac-eyebrow font-bold"
                     >
                       Leer Artículo Completo →
                     </a>

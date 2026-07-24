@@ -59,7 +59,7 @@ export const DiagramStepObjectAppearanceEditor: React.FC<DiagramStepObjectAppear
   return (
     <div className="space-y-3">
       <fieldset className="space-y-3 rounded border border-carbon/10 bg-lienzo p-2">
-        <legend className="px-1 text-[10px] font-bold uppercase tracking-wider text-carbon/45">Etiqueta en este paso</legend>
+        <legend className="px-1 ac-label ac-label--sm ac-label--soft">Etiqueta en este paso</legend>
         <label className="flex items-center gap-2 text-xs font-bold text-carbon">
           <input
             type="checkbox"
@@ -146,7 +146,7 @@ export const DiagramStepObjectAppearanceEditor: React.FC<DiagramStepObjectAppear
 
       {!isSlider(object) && (
         <fieldset className="space-y-3 rounded border border-carbon/10 bg-lienzo p-2">
-          <legend className="px-1 text-[10px] font-bold uppercase tracking-wider text-carbon/45">Apariencia temporal</legend>
+          <legend className="px-1 ac-label ac-label--sm ac-label--soft">Apariencia temporal</legend>
           <DiagramField label="Color del objeto">
             <select
               aria-label="Color temporal del objeto"

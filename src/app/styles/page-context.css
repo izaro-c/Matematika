@@ -65,14 +65,15 @@
 }
 
 .local-dependency-graph-container h3 {
-  font-family: var(--font-sans, sans-serif);
+  font-family: var(--font-sans-family);
   font-size: 0.75rem;
-  text-transform: uppercase;
-  letter-spacing: 0.1em;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: none;
   color: var(--theme-pizarra);
   margin-top: 0;
   margin-bottom: 1rem;
-  border-b: 1px solid color-mix(in srgb, var(--theme-carbon) 12%, transparent);
+  border-bottom: 1px solid color-mix(in srgb, var(--theme-carbon) 12%, transparent);
   padding-bottom: 0.5rem;
 }
 

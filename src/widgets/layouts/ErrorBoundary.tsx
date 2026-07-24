@@ -37,8 +37,8 @@ export class ErrorBoundary extends Component<Props, State> {
         return this.props.fallback;
       }
       return (
-        <div className="min-h-screen bg-lienzo flex items-center justify-center p-8 font-serif text-carbon">
-          <div className="max-w-xl border-l-4 border-granada pl-6 py-4 bg-white/50 shadow-sm">
+        <div className="min-h-viewport bg-lienzo flex items-center justify-center p-8 font-serif text-carbon">
+          <div className="max-w-xl border-l-4 border-granada pl-6 py-4 bg-lienzo/50 shadow-sm">
             <h2 className="text-xl font-bold mb-2 text-granada">Error de renderizado</h2>
             <p className="text-carbon/70 mb-4">
               Ha ocurrido un problema al intentar mostrar esta página. Puede que el archivo contenga errores de sintaxis o referencias a componentes que no existen.
@@ -48,14 +48,14 @@ export class ErrorBoundary extends Component<Props, State> {
             </pre>
             <div className="mt-4 flex gap-3">
               <button 
-                className="px-4 py-2 bg-carbon text-white text-sm tracking-widest uppercase hover:bg-carbon/80 transition-colors"
+                className="ac-btn ac-btn-primary ac-interactive px-4 py-2 text-sm"
                 onClick={() => window.location.reload()}
               >
                 Reintentar
               </button>
               <a 
                 href="/"
-                className="px-4 py-2 border border-carbon/30 text-carbon text-sm tracking-widest uppercase hover:bg-carbon/5 transition-colors"
+                className="ac-btn ac-btn-ghost ac-interactive px-4 py-2 text-sm"
               >
                 Volver al inicio
               </a>

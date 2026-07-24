@@ -21,7 +21,7 @@ export const ExamplePage: React.FC = () => {
 
   if (!example) {
     return (
-      <div className="min-h-screen bg-lienzo flex items-center justify-center font-serif text-carbon">
+      <div className="ac-page flex items-center justify-center">
         <h1 className="text-2xl italic text-carbon/50">Ejemplo no encontrado.</h1>
       </div>
     );
@@ -36,7 +36,7 @@ export const ExamplePage: React.FC = () => {
 
   return (
     <ContentLayout pageType="ejemplo" diagram={example.Simulation ? <ContentDiagram component={example.Simulation} /> : undefined}>
-      <div className="min-h-screen bg-transparent text-carbon font-serif pb-32">
+      <div className="min-h-viewport bg-transparent text-carbon font-serif pb-32">
         <FadeIn className="w-full px-6 md:px-10 pt-4 pb-16">
           <ContentHeader
             type="ejemplo"
@@ -58,7 +58,7 @@ export const ExamplePage: React.FC = () => {
           {relatedExercises.length > 0 && (
             <section className="mt-16">
               <SubtleSeparator />
-              <h3 className="text-xs font-sans font-bold uppercase tracking-widest text-carbon/40 mb-4">
+              <h3 className="ac-label ac-label--md ac-label--faint mb-4">
                 Practica con ejercicios relacionados
               </h3>
               <div className="flex flex-col gap-3 max-w-2xl">

@@ -23,7 +23,7 @@ export const SegmentMarksEditor: React.FC<SegmentMarksEditorProps> = ({
 
   return (
     <section className="space-y-2 rounded border border-carbon/15 bg-carbon/[0.03] p-2" aria-label="Marcas del segmento">
-      <p className="text-[10px] font-bold uppercase tracking-wider text-carbon/55">Marcas del segmento</p>
+      <p className="ac-label ac-label--sm ac-label--strong">Marcas del segmento</p>
 
       <div className="rounded border border-carbon/10 bg-lienzo p-2">
         <label className="flex items-center gap-1.5 text-[10px] font-bold text-carbon">

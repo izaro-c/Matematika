@@ -124,7 +124,7 @@ export const TheoremPage = () => {
 
   if (!theorem) {
     return (
-      <div className="min-h-screen bg-lienzo flex items-center justify-center font-serif text-carbon">
+      <div className="ac-page flex items-center justify-center">
         <h1 className="text-2xl">El teorema especificado no existe o no ha sido catalogado.</h1>
       </div>
     );

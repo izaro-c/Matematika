@@ -1,6 +1,7 @@
 import { useState, useMemo } from 'react';
 import { Link } from 'wouter';
 import { Logo } from "@/shared/ui/Logo";
+import { UI } from '@/shared/design';
 import { dictionary } from '@/features/glossary/GlossaryStore';
 import { db } from '@/entities/content';
 import type { GlossaryCategory, GlossaryEntry } from '@/features/glossary/GlossaryStore';
@@ -101,7 +102,7 @@ export const DictionaryPage = () => {
   ];
 
   return (
-    <div className="min-h-screen font-serif text-carbon bg-lienzo bg-arts-and-crafts flex flex-col items-center py-24 relative">
+    <div className="min-h-viewport font-serif text-carbon bg-lienzo bg-arts-and-crafts flex flex-col items-center py-24 relative">
       <div className="absolute inset-4 border-2 border-carbon/10 pointer-events-none" />
       <div className="absolute inset-6 border border-carbon/5 pointer-events-none" />
 
@@ -137,7 +138,7 @@ export const DictionaryPage = () => {
           return (
             <div key={category} className="mb-24">
               <div className="flex items-center gap-6 mb-12">
-                <h2 className="text-3xl text-terracota font-bold tracking-widest uppercase">
+                <h2 className={`text-3xl text-terracota font-bold ${UI.textBalance}`}>
                   {category}
                 </h2>
                 <div className="flex-1 h-[1px] bg-carbon/10" />
@@ -163,7 +164,7 @@ export const DictionaryPage = () => {
 
                     {data.id && (
                       <Link href={`/definicion/${data.id}`}>
-                        <a className="inline-block mt-4 text-xs font-sans tracking-widest uppercase text-terracota hover:text-carbon transition-colors border-b border-terracota/30 pb-1">
+                        <a className="inline-block mt-4 ac-eyebrow text-terracota hover:text-carbon transition-colors border-b border-terracota/30 pb-1">
                           Leer Artículo Completo →
                         </a>
                       </Link>
@@ -183,7 +184,7 @@ export const DictionaryPage = () => {
 
         <div className="mt-32 text-center pb-24">
           <Link href="/">
-            <a className="inline-block px-12 py-4 border-2 border-carbon text-carbon font-bold tracking-widest uppercase hover:bg-carbon hover:text-lienzo transition-all duration-300">
+            <a className="ac-btn ac-interactive px-12 py-4 border-2 border-carbon text-carbon font-semibold hover:bg-carbon hover:text-lienzo">
               Volver a la Biblioteca
             </a>
           </Link>

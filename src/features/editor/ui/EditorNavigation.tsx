@@ -157,7 +157,7 @@ export const EditorNavigation: React.FC<EditorNavigationProps> = ({
     >
       <header className="flex items-center justify-between border-b border-carbon/15 px-4 py-3">
         <div>
-          <p className="text-[10px] font-bold uppercase tracking-widest text-salvia">Editor</p>
+          <p className="ac-label ac-label--sm ac-label--salvia">Editor</p>
           <h2 className="font-serif text-base font-bold text-carbon">Recursos matemáticos</h2>
         </div>
         <button type="button" onClick={close} className="rounded border border-carbon/15 px-2 py-1 text-xs text-carbon/65" aria-label="Ocultar explorador">Ocultar</button>
@@ -203,14 +203,14 @@ export const EditorNavigation: React.FC<EditorNavigationProps> = ({
           </summary>
           <div className="space-y-2 border-t border-carbon/10 p-2.5">
             <div className="grid grid-cols-2 gap-2">
-              <label className="text-[9px] font-bold uppercase tracking-wide text-carbon/50">
+              <label className="ac-label ac-label--xs">
                 Tipo
                 <select value={filters.type} onChange={event => updateFilter('type', event.target.value)} className="mt-1 w-full rounded border border-carbon/15 bg-lienzo px-2 py-1.5 text-xs font-normal normal-case text-carbon">
                   <option value="all">Todos</option>
                   {types.map(type => <option key={type} value={type}>{categoryLabel(type)}</option>)}
                 </select>
               </label>
-              <label className="text-[9px] font-bold uppercase tracking-wide text-carbon/50">
+              <label className="ac-label ac-label--xs">
                 Estado
                 <select value={filters.status} onChange={event => updateFilter('status', event.target.value as EditorCatalogFilters['status'])} className="mt-1 w-full rounded border border-carbon/15 bg-lienzo px-2 py-1.5 text-xs font-normal normal-case text-carbon">
                   <option value="all">Todos</option>
@@ -220,7 +220,7 @@ export const EditorNavigation: React.FC<EditorNavigationProps> = ({
                 </select>
               </label>
             </div>
-            <label className="block text-[9px] font-bold uppercase tracking-wide text-carbon/50">
+            <label className="block ac-label ac-label--xs">
               Capacidad de edición
               <select value={filters.capability} onChange={event => updateFilter('capability', event.target.value as EditorCatalogFilters['capability'])} className="mt-1 w-full rounded border border-carbon/15 bg-lienzo px-2 py-1.5 text-xs font-normal normal-case text-carbon">
                 <option value="all">Todas</option>
@@ -262,13 +262,13 @@ export const EditorNavigation: React.FC<EditorNavigationProps> = ({
 
         {!filtersActive && favorites.length > 0 && (
           <section className="mb-4" aria-labelledby="editor-favorites-heading">
-            <h3 id="editor-favorites-heading" className="mb-1.5 px-1 text-[10px] font-bold uppercase tracking-widest text-ocre">Favoritos</h3>
+            <h3 id="editor-favorites-heading" className="mb-1.5 px-1 ac-label ac-label--sm ac-label--ocre">Favoritos</h3>
             <div className="space-y-1">{favorites.map(file => <ResourceButton key={`favorite-${file.path}`} file={file} current={file.path === currentFile} favorite level={level} openFile={openFile} toggleFavorite={toggleFavorite} />)}</div>
           </section>
         )}
         {!filtersActive && recents.length > 0 && (
           <section className="mb-4" aria-labelledby="editor-recents-heading">
-            <h3 id="editor-recents-heading" className="mb-1.5 px-1 text-[10px] font-bold uppercase tracking-widest text-pizarra">Recientes</h3>
+            <h3 id="editor-recents-heading" className="mb-1.5 px-1 ac-label ac-label--sm ac-label--pizarra">Recientes</h3>
             <div className="space-y-1">{recents.slice(0, 4).map(file => <ResourceButton key={`recent-${file.path}`} file={file} current={file.path === currentFile} favorite={favoritePaths.includes(file.path)} level={level} openFile={openFile} toggleFavorite={toggleFavorite} />)}</div>
           </section>
         )}

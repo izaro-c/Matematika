@@ -50,7 +50,7 @@ export function GraphLegend({ nodeGroups }: GraphLegendProps) {
           </button>
 
           <h4
-            className="font-bold text-[10px] uppercase tracking-widest mb-4 text-carbon/50 text-center mt-1"
+            className="ac-label ac-label--sm ac-label--soft mb-4 text-center mt-1"
           >
             Leyenda
           </h4>

@@ -22,7 +22,7 @@ export const Apoyo: React.FC<ApoyoProps> = ({
     <div className="mt-4 pt-3 border-t border-dashed border-carbon/10 font-serif text-xs">
       <button
         onClick={() => setOpen(o => !o)}
-        className="flex items-center gap-2 text-carbon/50 hover:text-carbon/80 transition-colors cursor-pointer select-none font-sans uppercase tracking-widest text-[9px] font-bold"
+        className="ac-eyebrow ac-eyebrow--xs text-carbon/50 hover:text-carbon/80 cursor-pointer select-none flex items-center gap-2"
       >
         <span>{open ? '▼' : '▶'}</span>
         <span>{titulo}</span>

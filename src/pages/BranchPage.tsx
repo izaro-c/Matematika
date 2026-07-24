@@ -17,7 +17,7 @@ export const BranchPage = () => {
   const taxonomy = db.getBranchTaxonomy(branchSlug);
 
   return (
-    <div className="min-h-screen bg-lienzo text-carbon font-serif pt-24 pb-32">
+    <div className="ac-page pt-24 pb-32">
       <div className="max-w-4xl mx-auto px-6 md:px-12">
 
         {/* Navegación por Migas de Pan (Breadcrumbs) */}
@@ -58,7 +58,7 @@ export const BranchPage = () => {
             {/* Sub-ramas (Carpetas) */}
             {taxonomy.subBranches.length > 0 && (
               <div>
-                <h2 className="text-sm font-sans font-bold uppercase tracking-widest text-carbon/50 mb-6">Sub-ramas</h2>
+                <h2 className="ac-eyebrow ac-eyebrow--md text-carbon/50 mb-6">Sub-ramas</h2>
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
                   {taxonomy.subBranches.map(sub => (
                     <Link
@@ -83,7 +83,7 @@ export const BranchPage = () => {
             {/* Conceptos Directos (Archivos) */}
             {taxonomy.directItems.length > 0 && (
               <div>
-                <h2 className="text-sm font-sans font-bold uppercase tracking-widest text-carbon/50 mb-6">Conceptos Fundamentales</h2>
+                <h2 className="ac-eyebrow ac-eyebrow--md text-carbon/50 mb-6">Conceptos Fundamentales</h2>
                 <div className="flex flex-col gap-4">
                   {taxonomy.directItems.map((entry, idx) => {
                     let link = '/';

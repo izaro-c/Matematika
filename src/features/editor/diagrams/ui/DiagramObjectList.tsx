@@ -66,7 +66,7 @@ export const DiagramObjectList: React.FC<DiagramObjectListProps> = ({ model, sel
   return (
     <section>
       <div className="mb-2 flex items-center justify-between border-b border-carbon/10 pb-1">
-        <p className="text-[10px] font-bold uppercase tracking-widest text-carbon/45">Inventario</p>
+        <p className="ac-label ac-label--sm ac-label--soft">Inventario</p>
         <span className="font-mono text-[9px] text-carbon/40">{items.length}</span>
       </div>
       <div className="mb-2 flex min-h-11 items-center gap-2 border-b border-carbon/10 pb-2">

@@ -1,0 +1,470 @@
+/* ==========================================================================
+   MATEMATIKA DESIGN SYSTEM — Clases semánticas reutilizables
+   Fuente única de verdad para tipografía, superficies e interacción.
+   Los pigmentos viven en theme.css; aquí solo composición y roles.
+   ========================================================================== */
+
+/* ── 1. Tipografía editorial ─────────────────────────────────────────────── */
+
+.ac-eyebrow {
+  font-family: var(--font-sans-family);
+  font-size: var(--ac-eyebrow-size, 0.75rem);
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  line-height: 1.35;
+  text-transform: none;
+  color: var(--ac-eyebrow-color, color-mix(in srgb, var(--theme-carbon) 50%, transparent));
+}
+
+.ac-eyebrow--sm { --ac-eyebrow-size: 0.625rem; }
+.ac-eyebrow--xs { --ac-eyebrow-size: 0.5625rem; }
+.ac-eyebrow--muted { --ac-eyebrow-color: color-mix(in srgb, var(--theme-carbon) 40%, transparent); }
+.ac-eyebrow--faint { --ac-eyebrow-color: color-mix(in srgb, var(--theme-carbon) 30%, transparent); }
+.ac-eyebrow--accent { --ac-eyebrow-color: var(--page-accent, var(--theme-terracota)); }
+.ac-label--granada { --ac-label-color: var(--theme-granada); }
+.ac-eyebrow--granada { --ac-eyebrow-color: var(--theme-granada); }
+
+/* Etiquetas densas (editor, paneles, formularios) */
+.ac-label {
+  font-family: var(--font-sans-family);
+  font-size: var(--ac-label-size, 0.625rem);
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  line-height: 1.35;
+  text-transform: none;
+  color: var(--ac-label-color, color-mix(in srgb, var(--theme-carbon) 50%, transparent));
+}
+
+.ac-label--2xs { --ac-label-size: 0.5rem; }
+.ac-label--xs { --ac-label-size: 0.5625rem; }
+.ac-label--sm { --ac-label-size: 0.625rem; }
+.ac-label--md { --ac-label-size: 0.75rem; }
+
+.ac-label--muted { --ac-label-color: color-mix(in srgb, var(--theme-carbon) 35%, transparent); }
+.ac-label--faint { --ac-label-color: color-mix(in srgb, var(--theme-carbon) 40%, transparent); }
+.ac-label--soft { --ac-label-color: color-mix(in srgb, var(--theme-carbon) 45%, transparent); }
+.ac-label--strong { --ac-label-color: color-mix(in srgb, var(--theme-carbon) 55%, transparent); }
+.ac-label--emphasis { --ac-label-color: color-mix(in srgb, var(--theme-carbon) 60%, transparent); }
+
+.ac-label--terracota { --ac-label-color: var(--theme-terracota); }
+.ac-label--salvia { --ac-label-color: var(--theme-salvia); }
+.ac-label--pavo { --ac-label-color: var(--theme-pavo); }
+.ac-label--ocre { --ac-label-color: var(--theme-ocre); }
+.ac-label--granada { --ac-label-color: var(--theme-granada); }
+.ac-label--musgo { --ac-label-color: var(--theme-musgo); }
+.ac-label--pizarra { --ac-label-color: var(--theme-pizarra); }
+
+.ac-label--salvia-soft { --ac-label-color: color-mix(in srgb, var(--theme-salvia) 80%, transparent); }
+.ac-label--pavo-soft { --ac-label-color: color-mix(in srgb, var(--theme-pavo) 80%, transparent); }
+.ac-label--ocre-soft { --ac-label-color: color-mix(in srgb, var(--theme-ocre) 70%, transparent); }
+.ac-label--terracota-soft { --ac-label-color: color-mix(in srgb, var(--theme-terracota) 70%, transparent); }
+
+.ac-fieldset-legend {
+  padding-inline: 0.25rem;
+  font-family: var(--font-sans-family);
+  font-size: 0.625rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  line-height: 1.35;
+  text-transform: none;
+  color: var(--ac-label-color, color-mix(in srgb, var(--theme-carbon) 45%, transparent));
+}
+
+.ac-meta {
+  font-family: var(--font-sans-family);
+  font-size: 0.75rem;
+  font-weight: 500;
+  letter-spacing: 0.02em;
+  color: color-mix(in srgb, var(--theme-carbon) 45%, transparent);
+}
+
+.ac-code-inline {
+  font-family: var(--font-mono-family);
+  font-size: 0.875em;
+  font-variant-numeric: tabular-nums;
+  background: color-mix(in srgb, var(--theme-carbon) 5%, transparent);
+  padding: 0.125rem 0.5rem;
+  border-radius: var(--border-radius-base);
+}
+
+/* ── 2. Superficies y páginas ───────────────────────────────────────────── */
+
+.ac-page {
+  min-height: 100dvh;
+  background-color: var(--theme-lienzo);
+  color: var(--theme-carbon);
+  font-family: var(--font-body-family);
+}
+
+.ac-page--textured {
+  /* Combinar con .bg-arts-and-crafts para textura de pergamino */
+}
+
+.ac-surface-muted {
+  background: color-mix(in srgb, var(--theme-carbon) 5%, transparent);
+}
+
+/* ── 3. Interacción ─────────────────────────────────────────────────────── */
+
+.ac-interactive {
+  transition:
+    color var(--transition-normal) var(--ease-interactive),
+    background-color var(--transition-normal) var(--ease-interactive),
+    border-color var(--transition-normal) var(--ease-interactive),
+    box-shadow var(--transition-normal) var(--ease-interactive),
+    transform var(--transition-normal) var(--ease-interactive),
+    opacity var(--transition-normal) var(--ease-interactive);
+}
+
+.ac-interactive:focus-visible {
+  outline: 2px solid color-mix(in srgb, var(--theme-terracota) 60%, transparent);
+  outline-offset: 2px;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .ac-interactive:active {
+    transform: scale(0.98);
+  }
+}
+
+.ac-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 0.625rem 1.25rem;
+  font-family: var(--font-sans-family);
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.03em;
+  line-height: 1.2;
+  text-transform: none;
+  border: 1px solid color-mix(in srgb, var(--theme-carbon) 25%, transparent);
+  color: color-mix(in srgb, var(--theme-carbon) 80%, transparent);
+  background: transparent;
+  cursor: pointer;
+}
+
+.ac-btn:hover {
+  color: var(--theme-carbon);
+  border-color: color-mix(in srgb, var(--theme-carbon) 45%, transparent);
+  background: color-mix(in srgb, var(--theme-carbon) 4%, transparent);
+}
+
+.ac-btn-primary {
+  background: var(--theme-carbon);
+  color: var(--theme-lienzo);
+  border-color: var(--theme-carbon);
+}
+
+.ac-btn-primary:hover {
+  background: color-mix(in srgb, var(--theme-carbon) 88%, var(--theme-lienzo));
+  color: var(--theme-lienzo);
+  border-color: color-mix(in srgb, var(--theme-carbon) 88%, var(--theme-lienzo));
+}
+
+.ac-btn-ghost {
+  border-color: color-mix(in srgb, var(--theme-carbon) 20%, transparent);
+  color: color-mix(in srgb, var(--theme-carbon) 60%, transparent);
+}
+
+.ac-btn-accent {
+  border-color: color-mix(in srgb, var(--page-accent, var(--theme-terracota)) 35%, transparent);
+  color: var(--page-accent, var(--theme-terracota));
+}
+
+.ac-btn-accent:hover {
+  background: var(--page-accent, var(--theme-terracota));
+  color: var(--theme-lienzo);
+  border-color: var(--page-accent, var(--theme-terracota));
+}
+
+.ac-link {
+  color: var(--theme-terracota);
+  font-weight: 500;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  text-decoration-thickness: 1px;
+}
+
+.ac-link:hover {
+  color: var(--theme-granada);
+  text-decoration-thickness: 2px;
+}
+
+.ac-link-back {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-family: var(--font-sans-family);
+  font-size: 0.75rem;
+  font-weight: 500;
+  letter-spacing: 0.02em;
+  color: color-mix(in srgb, var(--theme-carbon) 40%, transparent);
+}
+
+.ac-link-back:hover {
+  color: var(--theme-carbon);
+}
+
+/* ── 3b. Breadcrumbs ────────────────────────────────────────────────────── */
+
+.ac-breadcrumbs {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.25rem 0.375rem;
+  font-family: var(--font-sans-family);
+  font-size: 0.75rem;
+  font-weight: 500;
+  letter-spacing: 0.02em;
+  color: color-mix(in srgb, var(--theme-carbon) 40%, transparent);
+}
+
+.ac-breadcrumbs__link {
+  color: inherit;
+  transition: color var(--transition-normal) var(--ease-interactive);
+}
+
+.ac-breadcrumbs__link:hover {
+  color: var(--page-accent, var(--theme-terracota));
+}
+
+.ac-breadcrumbs__sep {
+  flex-shrink: 0;
+  color: color-mix(in srgb, var(--theme-carbon) 20%, transparent);
+  user-select: none;
+}
+
+.ac-breadcrumbs__current {
+  color: color-mix(in srgb, var(--theme-carbon) 80%, transparent);
+  font-weight: 600;
+}
+
+.ac-breadcrumbs__ellipsis {
+  color: color-mix(in srgb, var(--theme-carbon) 20%, transparent);
+  letter-spacing: 0.1em;
+  user-select: none;
+}
+
+/* ── 4. Tarjetas CTA (home y landings) ───────────────────────────────────── */
+
+.ac-cta-card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+  overflow: hidden;
+  padding: 2rem 1.5rem;
+  border: 1px solid color-mix(in srgb, var(--theme-carbon) 30%, transparent);
+  outline: 1px solid color-mix(in srgb, var(--theme-carbon) 15%, transparent);
+  outline-offset: -6px;
+  border-radius: 2px;
+  box-shadow: var(--ac-cta-shadow, var(--theme-shadow-elegant));
+}
+
+.ac-cta-card::before,
+.ac-cta-card::after {
+  content: "";
+  position: absolute;
+  pointer-events: none;
+  border: 1px solid color-mix(in srgb, var(--theme-lienzo) 20%, transparent);
+  transition: inset var(--transition-slow) var(--ease-panels), border-color var(--transition-slow) var(--ease-panels);
+}
+
+.ac-cta-card::before { inset: 6px; }
+.ac-cta-card::after { inset: 10px; border-color: color-mix(in srgb, var(--theme-lienzo) 10%, transparent); }
+
+.ac-cta-card:hover::before { inset: 8px; border-color: color-mix(in srgb, var(--theme-lienzo) 40%, transparent); }
+.ac-cta-card:hover::after { inset: 12px; border-color: color-mix(in srgb, var(--theme-lienzo) 20%, transparent); }
+
+@media (prefers-reduced-motion: no-preference) {
+  .ac-cta-card:hover {
+    transform: translateY(-4px);
+    box-shadow: var(--ac-cta-shadow-hover, var(--theme-shadow-parchment));
+  }
+
+  .ac-cta-card:active {
+    transform: scale(0.98) translateY(0);
+  }
+}
+
+.ac-cta-card:focus-visible {
+  outline: 2px solid color-mix(in srgb, var(--theme-terracota) 60%, transparent);
+  outline-offset: 4px;
+}
+
+.ac-cta-card__eyebrow {
+  font-family: var(--font-sans-family);
+  font-size: 0.6875rem;
+  font-weight: 500;
+  letter-spacing: 0.02em;
+  opacity: 0.8;
+  margin-bottom: 0.5rem;
+}
+
+.ac-cta-card__title {
+  font-size: 1.5rem;
+  font-weight: 600;
+  line-height: 1.2;
+}
+
+.ac-cta-card__action {
+  margin-top: 0.75rem;
+  font-family: var(--font-sans-family);
+  font-size: 0.75rem;
+  letter-spacing: 0.02em;
+  opacity: 0.7;
+}
+
+.ac-cta-card:hover .ac-cta-card__action {
+  opacity: 1;
+}
+
+/* Variante centrada para la fila de accesos del hero (home) */
+.ac-cta-card--hero {
+  display: grid;
+  grid-template-rows: auto auto auto;
+  align-content: center;
+  justify-items: center;
+  text-align: center;
+  height: 100%;
+  padding: 1.375rem 1rem;
+  gap: 0.5rem;
+}
+
+.ac-cta-card--hero .ac-cta-card__eyebrow,
+.ac-cta-card--hero .ac-cta-card__title,
+.ac-cta-card--hero .ac-cta-card__action {
+  max-width: 11.5rem;
+}
+
+.ac-cta-card--hero .ac-cta-card__eyebrow {
+  font-size: 0.75rem;
+  opacity: 0.82;
+  margin-bottom: 0;
+}
+
+.ac-cta-card--hero .ac-cta-card__title {
+  font-family: var(--font-body-family);
+  font-size: clamp(1.1875rem, 1.05rem + 0.65vw, 1.375rem);
+  font-weight: 600;
+  line-height: 1.12;
+  letter-spacing: -0.015em;
+  text-wrap: balance;
+}
+
+.ac-cta-card--hero .ac-cta-card__action {
+  margin-top: 0.125rem;
+  font-size: 0.75rem;
+  opacity: 0.8;
+}
+
+@media (min-width: 640px) and (max-width: 1023px) {
+  .ac-cta-card--hero {
+    padding: 1.5rem 1.25rem;
+  }
+
+  .ac-cta-card--hero .ac-cta-card__title {
+    font-size: 1.4375rem;
+  }
+}
+
+/* ── 5. Editor (superficie densa, sans-serif) ───────────────────────────── */
+
+.ac-editor-shell {
+  display: flex;
+  height: 100dvh;
+  min-height: 32rem;
+  overflow: hidden;
+  background: var(--theme-lienzo);
+  color: var(--theme-carbon);
+  font-family: var(--font-sans-family);
+}
+
+.ac-editor-resize-handle {
+  position: relative;
+  z-index: 20;
+  flex-shrink: 0;
+  cursor: col-resize;
+  background: color-mix(in srgb, var(--theme-carbon) 5%, transparent);
+}
+
+.ac-editor-resize-handle:hover,
+.ac-editor-resize-handle:focus {
+  background: color-mix(in srgb, var(--theme-salvia) 30%, transparent);
+}
+
+.ac-editor-resize-handle--row {
+  cursor: row-resize;
+  height: 0.25rem;
+  width: 100%;
+}
+
+.ac-editor-panel {
+  overflow: hidden;
+  border-color: color-mix(in srgb, var(--theme-carbon) 15%, transparent);
+  background: var(--theme-lienzo);
+}
+
+.ac-editor-badge {
+  display: inline-flex;
+  align-items: center;
+  border-radius: 9999px;
+  padding: 0.125rem 0.375rem;
+  font-family: var(--font-sans-family);
+  font-size: 0.5625rem;
+  font-weight: 600;
+  letter-spacing: 0.03em;
+  line-height: 1;
+}
+
+.ac-editor-badge--terracota {
+  background: color-mix(in srgb, var(--theme-terracota) 15%, transparent);
+  color: var(--theme-terracota);
+}
+
+.ac-editor-badge--layer {
+  border-radius: var(--border-radius-base);
+  background: color-mix(in srgb, var(--theme-carbon) 10%, transparent);
+  color: color-mix(in srgb, var(--theme-carbon) 45%, transparent);
+  font-family: var(--font-mono-family);
+}
+
+/* Sombra de cabecera fija en tablas del editor */
+.ac-sticky-shadow-end {
+  box-shadow: 2px 0 0 0 color-mix(in srgb, var(--theme-carbon) 4%, transparent);
+}
+
+/* Texto de ayuda denso (editor, tooltips internos) */
+.ac-help-text {
+  font-family: var(--font-sans-family);
+  font-size: 0.625rem;
+  line-height: 1.625;
+  color: color-mix(in srgb, var(--theme-carbon) 45%, transparent);
+}
+
+.ac-help-text--sm {
+  font-size: 0.5625rem;
+  line-height: 1.5;
+  color: color-mix(in srgb, var(--theme-carbon) 50%, transparent);
+}
+
+.ac-help-text--md {
+  font-size: 0.6875rem;
+  line-height: 1.625;
+  color: color-mix(in srgb, var(--theme-carbon) 55%, transparent);
+}
+
+.tabular-nums {
+  font-variant-numeric: tabular-nums;
+}
+
+.text-balance {
+  text-wrap: balance;
+}
+
+.text-pretty {
+  text-wrap: pretty;
+}

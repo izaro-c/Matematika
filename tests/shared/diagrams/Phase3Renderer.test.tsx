@@ -60,6 +60,7 @@ vi.mock('../../../src/shared/diagrams/core/MathBoard', () => ({
             Y: () => y,
             Value: () => value,
             moveTo: vi.fn(([nextX, nextY]: [number, number]) => { x = nextX; y = nextY; }),
+            setPosition: vi.fn((_type: unknown, [nextX, nextY]: [number, number]) => { x = nextX; y = nextY; }),
             setValue: vi.fn((next: number) => { value = next; }),
             Dist: (other: any) => Math.hypot(geometry.X() - other.X(), geometry.Y() - other.Y()),
             setAttribute: vi.fn(),
@@ -431,7 +432,10 @@ describe('Phase 3 shared renderer', () => {
     pointA.geometry.moveTo([-8, 2], 0);
     pointA.geometry.handlers.drag[0]();
 
-    expect(pointD.geometry.moveTo).toHaveBeenCalled();
+    // El manejador de arrastre reposiciona los puntos dependientes con
+    // setPosition (no moveTo) para reconciliar una sola vez por gesto en vez
+    // de disparar un board.update() por punto — ver useBoardLifecycle.ts.
+    expect(pointD.geometry.setPosition).toHaveBeenCalled();
     expect(pointC.geometry.Dist(pointD.geometry)).toBeCloseTo(pointA.geometry.Dist(pointB.geometry));
     expect(spec.points.find(point => point.id === 'pD')).toMatchObject({
       fixed: false,

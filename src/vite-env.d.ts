@@ -1,6 +1,12 @@
+/// <reference types="vite/client" />
+
 declare module '*.mdx' {
   const MDXComponent: (props: Record<string, unknown>) => JSX.Element;
   export default MDXComponent;
+}
+
+interface ImportMetaEnv {
+  readonly VITE_EDITOR_API_URL?: string;
 }
 
 declare namespace JXG {
@@ -9,4 +15,3 @@ declare namespace JXG {
     highlightCssClass?: string;
   }
 }
-

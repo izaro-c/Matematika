@@ -55,7 +55,7 @@ export const UseCasePage: React.FC = () => {
 
   if (!usecase) {
     return (
-      <div className="min-h-screen bg-lienzo flex items-center justify-center font-serif text-carbon">
+      <div className="ac-page flex items-center justify-center">
         <div className="text-center">
           <div className="text-6xl mb-4 opacity-20">◎</div>
           <h1 className="text-2xl italic text-carbon/50">Caso de uso no encontrado.</h1>
@@ -87,7 +87,7 @@ export const UseCasePage: React.FC = () => {
     : [];
 
   const renderContent = () => (
-    <div className="min-h-screen bg-transparent text-carbon font-serif">
+    <div className="min-h-viewport bg-transparent text-carbon font-serif">
       <FadeIn>
         <div className="w-full px-6 md:px-10 pt-4 pb-16">
           <ContentHeader
@@ -119,7 +119,7 @@ export const UseCasePage: React.FC = () => {
         {related.length > 0 && (
           <div className="w-full px-6 md:px-10 pb-16">
             <SubtleSeparator />
-            <h3 className="text-xs font-sans font-bold uppercase tracking-widest text-carbon/40 mb-6">
+            <h3 className="ac-label ac-label--md ac-label--faint mb-6">
               Más aplicaciones de este concepto
             </h3>
             <div className="grid gap-4 sm:grid-cols-2">

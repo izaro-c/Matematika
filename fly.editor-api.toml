@@ -1,0 +1,34 @@
+# Fly.io deployment for the Matematika editor API.
+# Prerequisites: fly auth login && fly apps create matematika-editor-api
+# Deploy: fly deploy --config fly.editor-api.toml
+# Secrets: fly secrets set EDITOR_API_TOKEN=... EDITOR_CORS_ORIGIN=https://izaro-c.github.io
+
+app = 'matematika-editor-api'
+primary_region = 'cdg'
+
+[build]
+  dockerfile = 'Dockerfile.editor-api'
+
+[env]
+  EDITOR_API_PORT = '8787'
+  MATEMATIKA_PROJECT_ROOT = '/app'
+  EDITOR_CORS_ORIGIN = 'https://izaro-c.github.io'
+
+[http_service]
+  internal_port = 8787
+  force_https = true
+  auto_stop_machines = 'stop'
+  auto_start_machines = true
+  min_machines_running = 0
+
+  [[http_service.checks]]
+    grace_period = '10s'
+    interval = '30s'
+    method = 'GET'
+    path = '/api/health'
+    timeout = '5s'
+
+[[vm]]
+  memory = '512mb'
+  cpu_kind = 'shared'
+  cpus = 1

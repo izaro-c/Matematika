@@ -49,7 +49,7 @@ export const ErrorComun: React.FC<ErrorComunProps> = ({ titulo, children, questi
           {open ? '▾' : '▸'}
         </span>
         {/* Etiqueta */}
-        <span className="text-[10px] font-sans font-bold uppercase tracking-widest text-terracota/70 shrink-0">
+        <span className="ac-label ac-label--sm ac-label--terracota-soft shrink-0">
           Error frecuente:
         </span>
         {/* Título */}

@@ -40,7 +40,7 @@ export const MetadataInspector: React.FC<MetadataInspectorProps> = ({
 
     return (
       <label key={field.key} className="group grid gap-1 rounded border border-carbon/10 bg-carbon/5 p-2 shadow-sm">
-        <span className="flex items-center justify-between gap-2 text-[9px] font-bold uppercase tracking-widest text-carbon/50">
+        <span className="flex items-center justify-between gap-2 ac-label ac-label--xs">
           <span className="truncate">
             {field.label} {field.required && <span className="text-terracota">*</span>}
           </span>
@@ -141,7 +141,7 @@ export const MetadataInspector: React.FC<MetadataInspectorProps> = ({
           <div className="grid grid-cols-2 gap-3">
             {customKeys.map(key => (
               <label key={key} className="relative grid gap-1 rounded border border-salvia/20 bg-salvia/5 p-2 shadow-sm">
-                <span className="truncate pr-5 text-[9px] font-bold uppercase tracking-widest text-salvia/80">{key}</span>
+                <span className="truncate pr-5 ac-label ac-label--xs ac-label--salvia-soft">{key}</span>
                 <button
                   type="button"
                   onClick={() => onRemove(key)}

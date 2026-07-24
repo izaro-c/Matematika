@@ -87,7 +87,7 @@ export const SceneStackEditor: React.FC<SceneStackEditorProps> = ({
       >
         <div className={`absolute inset-x-0 top-1/2 flex -translate-y-1/2 items-center gap-1 px-1 ${active ? 'opacity-100' : 'opacity-35'}`}>
           <div className={`h-0.5 flex-1 rounded-full ${active ? 'bg-pavo shadow-[0_0_0_2px_color-mix(in_srgb,var(--theme-pavo)_30%,transparent)]' : 'bg-carbon/20'}`} />
-          {active && <span className="shrink-0 rounded bg-pavo/15 px-1.5 py-0.5 text-[8px] font-bold uppercase tracking-wide text-pavo">Soltar</span>}
+          {active && <span className="ac-editor-badge ac-editor-badge--pavo">Soltar</span>}
         </div>
       </div>
     );
@@ -110,7 +110,7 @@ export const SceneStackEditor: React.FC<SceneStackEditorProps> = ({
           >
             <header className="border-b border-carbon/10 bg-gradient-to-b from-carbon/[0.04] to-transparent px-2.5 py-2">
               <div className="flex items-center gap-2">
-                <span className="rounded bg-carbon/10 px-1.5 py-0.5 font-mono text-[8px] font-bold uppercase tracking-wider text-carbon/45">Capa</span>
+                <span className="ac-editor-badge ac-editor-badge--layer">Capa</span>
                 {onLayerLabelChange ? (
                   <input
                     aria-label={`Nombre de la capa ${layer.id}`}
@@ -124,7 +124,7 @@ export const SceneStackEditor: React.FC<SceneStackEditorProps> = ({
                 <span className="font-mono text-[9px] text-carbon/40">{layerEntries.length}</span>
               </div>
               <div className="mt-1 flex items-center justify-between gap-2">
-                <span className="text-[8px] font-bold uppercase tracking-wider text-pavo/80">↑ Delante</span>
+                <span className="ac-label ac-label--2xs ac-label--pavo-soft">↑ Delante</span>
                 {renderLayerActions && (
                   <div className="flex flex-wrap justify-end gap-1">
                     {renderLayerActions(layer, layerIndex, orderedLayers.length)}

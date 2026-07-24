@@ -33,7 +33,7 @@ export function AxiomPage() {
 
   if (!axiom) {
     return (
-      <div className="min-h-screen flex flex-col items-center justify-center bg-lienzo text-carbon">
+      <div className="min-h-viewport flex flex-col items-center justify-center bg-lienzo text-carbon">
         <h1 className="font-serif text-3xl mb-4">Axioma no encontrado</h1>
         <p className="text-pizarra mb-6">El axioma <code className="bg-carbon/5 px-2 py-0.5 rounded">{id}</code> no existe en la base de datos.</p>
       </div>
@@ -45,7 +45,7 @@ export function AxiomPage() {
     : [];
 
   const content = (
-    <div className="min-h-screen bg-transparent text-carbon font-serif pb-32">
+    <div className="min-h-viewport bg-transparent text-carbon font-serif pb-32">
       <FadeIn className="w-full px-6 md:px-12 pt-4 pb-16">
         <ContentHeader
           type="axioma"

@@ -1,0 +1,19 @@
+# Standalone Matematika editor persistence API.
+# Build: docker build -f Dockerfile.editor-api -t matematika-editor-api .
+# Run:   docker run --rm -p 8787:8787 -e EDITOR_API_TOKEN=secret -v "$(pwd):/app" matematika-editor-api
+
+FROM node:lts-bookworm-slim
+
+WORKDIR /app
+
+COPY package.json package-lock.json ./
+RUN npm ci --omit=dev=false
+
+COPY . .
+
+ENV EDITOR_API_PORT=8787
+ENV MATEMATIKA_PROJECT_ROOT=/app
+
+EXPOSE 8787
+
+CMD ["npm", "run", "editor:server"]

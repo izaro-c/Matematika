@@ -13,6 +13,15 @@ export function signedCross(
   return dx * (point.y - origin.y) - dy * (point.x - origin.x);
 }
 
+/** Signo persistido del semiplano: cross(lineA→lineB, sidePoint). */
+export function computeHalfPlaneSide(
+  lineA: Coordinates,
+  lineB: Coordinates,
+  sidePoint: Coordinates,
+): 1 | -1 {
+  return (Math.sign(signedCross(lineA, lineB, sidePoint)) || 1) as 1 | -1;
+}
+
 export function pointInHalfPlane(
   lineA: Coordinates,
   lineB: Coordinates,
@@ -20,20 +29,20 @@ export function pointInHalfPlane(
   point: Coordinates,
   tolerance = 1e-8,
 ): boolean {
-  const side = Math.sign(signedCross(lineA, lineB, sidePoint)) || 1;
+  const side = computeHalfPlaneSide(lineA, lineB, sidePoint);
   const cross = signedCross(lineA, lineB, point);
   return cross * side >= -tolerance;
 }
 
-export function constrainToHalfPlane(
+export function constrainToHalfPlaneWithSide(
   lineA: Coordinates,
   lineB: Coordinates,
-  sidePoint: Coordinates,
+  side: 1 | -1,
   point: Coordinates,
+  tolerance = 0.01,
 ): Coordinates {
-  const side = Math.sign(signedCross(lineA, lineB, sidePoint)) || 1;
   const cross = signedCross(lineA, lineB, point);
-  if (cross * side >= 0) return point;
+  if (cross * side > tolerance) return point;
   const dx = lineB.x - lineA.x;
   const dy = lineB.y - lineA.y;
   const length = Math.hypot(dx, dy) || 1;
@@ -42,6 +51,56 @@ export function constrainToHalfPlane(
     x: lineA.x + projection * dx - (dy / length) * side * 0.05,
     y: lineA.y + projection * dy + (dx / length) * side * 0.05,
   };
+}
+
+/**
+ * Restringe un parámetro escalar sobre un portador lineal para que el punto
+ * `origin + t·direction` permanezca en el semiplano indicado por `side`.
+ */
+export function clampLinearParameterToHalfPlane(
+  origin: Coordinates,
+  direction: Coordinates,
+  lineA: Coordinates,
+  lineB: Coordinates,
+  side: 1 | -1,
+  parameter: number,
+  minParameter = 0,
+): number {
+  const c0 = signedCross(lineA, lineB, origin);
+  const c1 = signedCross(lineA, lineB, { x: origin.x + direction.x, y: origin.y + direction.y }) - c0;
+  const crossAt = (t: number) => c0 + t * c1;
+
+  const t = minParameter === -Infinity ? parameter : Math.max(minParameter, parameter);
+  if (crossAt(t) * side > 0.01) return t;
+
+  if (Math.abs(c1) < 1e-10) {
+    const fallback = minParameter === -Infinity ? parameter : Math.max(minParameter, parameter);
+    return crossAt(fallback) * side > 0.01 ? fallback : (minParameter === -Infinity ? parameter : minParameter);
+  }
+
+  const dirLen = Math.hypot(direction.x, direction.y) || 1;
+  const tLine = -c0 / c1;
+  const delta = 0.05 / dirLen;
+  const candidateA = tLine + delta;
+  const candidateB = tLine - delta;
+  const tInterior = crossAt(candidateA) * side > crossAt(candidateB) * side ? candidateA : candidateB;
+  const tClamp = crossAt(tInterior) * side > 0.01 ? tInterior : tLine;
+  return minParameter === -Infinity ? tClamp : Math.max(minParameter, tClamp);
+}
+
+export function constrainToHalfPlane(
+  lineA: Coordinates,
+  lineB: Coordinates,
+  sidePoint: Coordinates,
+  point: Coordinates,
+): Coordinates {
+  return constrainToHalfPlaneWithSide(
+    lineA,
+    lineB,
+    computeHalfPlaneSide(lineA, lineB, sidePoint),
+    point,
+    0,
+  );
 }
 
 export function pointInPolygon(polygon: Coordinates[], point: Coordinates): boolean {

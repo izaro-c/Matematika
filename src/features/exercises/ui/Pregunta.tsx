@@ -86,7 +86,7 @@ export const Pregunta: React.FC<PreguntaProps> = ({ id, texto, question, correct
 
           let btnClass: string;
           if (showCorrect) {
-            btnClass = 'border-salvia bg-salvia/10 text-salvia shadow-[inset_0_2px_4px_rgba(0,0,0,0.05)]';
+            btnClass = 'border-salvia bg-salvia/10 text-salvia ac-inset-shadow';
           } else if (showWrong) {
             btnClass = 'border-terracota bg-terracota/5 text-terracota';
           } else if (isSelected) {
@@ -144,7 +144,7 @@ export const Pregunta: React.FC<PreguntaProps> = ({ id, texto, question, correct
           </div>
           <button
             onClick={() => setSelected(null)}
-            className="page-accent-button self-start mt-2 px-4 py-2 text-[10px] font-sans font-bold uppercase tracking-wider text-carbon/60 border border-carbon/20 hover:bg-carbon/5 transition-all cursor-pointer flex items-center gap-2"
+            className="ac-btn ac-btn-ghost ac-interactive self-start mt-2 px-4 py-2 text-[10px] text-carbon/60 flex items-center gap-2"
           >
             <span>❧</span> Intentar de nuevo
           </button>

@@ -34,7 +34,7 @@ export const DiagramElementAppearanceEditor: React.FC<DiagramElementAppearanceEd
 
   return (
     <fieldset className="space-y-3 rounded border border-carbon/10 p-2">
-      <legend className="px-1 text-[10px] font-bold uppercase tracking-wider text-carbon/45">Apariencia</legend>
+      <legend className="px-1 ac-label ac-label--sm ac-label--soft">Apariencia</legend>
       <label className="block text-xs font-bold text-carbon">
         Color
         <select aria-label="Color del elemento" className="mt-1 w-full rounded border border-carbon/15 bg-lienzo p-1.5 text-xs" value={element.color} onChange={event => onElementChange({ color: event.target.value as ColorToken })}>

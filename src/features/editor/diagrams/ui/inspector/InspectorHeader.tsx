@@ -24,7 +24,7 @@ export const InspectorHeader: React.FC<InspectorHeaderProps> = ({
 }) => (
   <>
     <header className="sticky top-0 z-20 mb-3 border-b border-carbon/10 bg-lienzo py-3">
-      <h4 className="text-[10px] font-bold uppercase tracking-widest text-carbon/45">Propiedades</h4>
+      <h4 className="ac-label ac-label--sm ac-label--soft">Propiedades</h4>
       {selectionSummary && <div className="mt-1 min-w-0">
         <div className="flex items-start gap-2">
           <div className="min-w-0 flex-1"><p className="truncate text-sm font-bold text-carbon">{selectionSummary.label}</p><p className="truncate text-[10px] text-carbon/50">{selectionSummary.type} · <code>{selectionSummary.id}</code>{selectedIds.length > 1 ? ` · ${selectedIds.length} seleccionados` : ''}</p></div>

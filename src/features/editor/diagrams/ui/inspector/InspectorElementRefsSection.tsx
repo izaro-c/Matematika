@@ -36,7 +36,7 @@ export const InspectorElementRefsSection: React.FC<InspectorElementRefsSectionPr
     <>
       {(renderedRefs.length > 0 || isCurveHalfPlane) && selectedElement.kind !== 'infoPanel' && selectedElement.kind !== 'label' && (
         <fieldset className="space-y-1 rounded border border-carbon/10 p-2">
-          <legend className="px-1 text-[10px] font-bold uppercase tracking-wider text-carbon/45">Referencias geométricas</legend>
+          <legend className="px-1 ac-label ac-label--sm ac-label--soft">Referencias geométricas</legend>
           {renderedRefs.map((ref, index) => {
             const referenceLabel = toolReferenceLabel(selectedElement.kind, index);
             return (
@@ -152,7 +152,7 @@ export const InspectorElementRefsSection: React.FC<InspectorElementRefsSectionPr
 
       {selectedElement.kind === 'intersection' && (
         <fieldset className="space-y-2 rounded border border-pavo/20 bg-pavo/5 p-2">
-          <legend className="px-1 text-[10px] font-bold uppercase tracking-wider text-pavo">Intersección exacta</legend>
+          <legend className="px-1 ac-label ac-label--sm ac-label--pavo">Intersección exacta</legend>
           <label className="flex items-start gap-1.5 text-xs font-bold text-carbon">
             <input
               type="checkbox"

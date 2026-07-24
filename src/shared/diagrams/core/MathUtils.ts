@@ -30,6 +30,70 @@ export function getCSSVar(name: string): string {
   return getComputedStyle(document.documentElement).getPropertyValue(name).trim();
 }
 
+// ─── Actualización segura del board ─────────────────────────────────────────
+
+interface BoardUpdateLike {
+  inUpdate?: boolean;
+  update: () => unknown;
+}
+
+/**
+ * Llama a `board.update()` salvo que el board ya esté en mitad de una pasada
+ * de actualización (`board.inUpdate`, la bandera real de JSXGraph). JSXGraph
+ * ya protege internamente su `update()` frente a reentrancia (una llamada
+ * anidada no vuelve a renderizar), pero comprobarlo antes evita además el
+ * trabajo previo de quien llama — p. ej. recalcular un bounding box que
+ * después se descartaría — y deja constancia explícita del porqué.
+ */
+export function safeBoardUpdate(board: BoardUpdateLike): void {
+  if (board.inUpdate) return;
+  board.update();
+}
+
+// ─── Reposicionamiento exacto (sin imán de JSXGraph) ────────────────────────
+
+interface SnappablePointLike {
+  visProp?: { [name: string]: unknown };
+  setPosition: (method: number, coords: number[]) => unknown;
+}
+
+/**
+ * JSXGraph reaplica `snapToGrid`/`attractToGrid`/`snapToPoints`/`attractors`
+ * dentro de `setPosition` (alias de `setPositionDirectly`) en *cada* llamada,
+ * sin distinguir si el origen es un arrastre real del usuario o una
+ * reasignación programática. Cuando reposicionamos un punto para reflejar el
+ * resultado YA RESUELTO de nuestro propio motor de restricciones (p. ej. el
+ * recorte de `sameSide`, que desplaza el punto una distancia submilimétrica
+ * respecto a la línea límite), ese imán vuelve a redondear la posición al
+ * cuadro de rejilla más cercano y puede reintroducir la violación que la
+ * restricción acababa de corregir. `setExactPointPosition` suspende
+ * temporalmente esos imanes para que la coordenada calculada llegue intacta,
+ * y los restaura inmediatamente después (afectan solo a este punto, no al
+ * resto del board).
+ */
+export function setExactPointPosition(point: SnappablePointLike, method: number, coords: number[]): void {
+  const visProp = point.visProp;
+  if (!visProp) {
+    point.setPosition(method, coords);
+    return;
+  }
+  const previous = {
+    snaptogrid: visProp.snaptogrid,
+    attracttogrid: visProp.attracttogrid,
+    snaptopoints: visProp.snaptopoints,
+  };
+  visProp.snaptogrid = false;
+  visProp.attracttogrid = false;
+  visProp.snaptopoints = false;
+  try {
+    point.setPosition(method, coords);
+  } finally {
+    visProp.snaptogrid = previous.snaptogrid;
+    visProp.attracttogrid = previous.attracttogrid;
+    visProp.snaptopoints = previous.snaptopoints;
+  }
+}
+
 // ─── Highlight helpers ───────────────────────────────────────────────────────
 
 export type DiagramTargetState = string | readonly string[] | null | undefined;

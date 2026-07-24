@@ -59,7 +59,7 @@ export const DiagramAnnotationPositionEditor: React.FC<DiagramAnnotationPosition
 
   return (
     <fieldset className="space-y-2 rounded border border-carbon/10 p-2">
-      <legend className="px-1 text-[10px] font-bold uppercase tracking-wider text-carbon/45">Separación respecto al anclaje</legend>
+      <legend className="px-1 ac-label ac-label--sm ac-label--soft">Separación respecto al anclaje</legend>
       {controls}
       <p className="text-[10px] leading-relaxed text-carbon/45">Ajusta la posición visual sin crear puntos auxiliares ni cambiar el objeto de referencia.</p>
     </fieldset>

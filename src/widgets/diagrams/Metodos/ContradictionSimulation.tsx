@@ -37,7 +37,7 @@ export const ContradictionSimulation = () => {
     <div className="w-full h-full flex flex-col items-center justify-center select-none font-serif overflow-hidden">
       {/* Título */}
       <div className="text-center mb-1">
-        <span className="text-carbon/50 text-[10px] tracking-widest uppercase">Reducción al absurdo</span>
+        <span className="ac-eyebrow ac-eyebrow--sm text-carbon/50">Reducción al absurdo</span>
       </div>
 
       {/* Área del diagrama */}

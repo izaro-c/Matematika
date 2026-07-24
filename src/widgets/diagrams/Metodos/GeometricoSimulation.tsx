@@ -13,7 +13,7 @@ export const GeometricoSimulation = () => {
 
   return (
     <div className="w-full h-full flex flex-col items-center justify-center select-none font-serif">
-      <p className="text-carbon/45 text-[10px] tracking-widest uppercase mb-3">
+      <p className="ac-eyebrow ac-eyebrow--sm text-carbon/45 mb-3">
         Demostracion por transformacion
       </p>
 

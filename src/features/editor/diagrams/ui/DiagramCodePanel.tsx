@@ -30,7 +30,7 @@ export const DiagramCodePanel: React.FC<DiagramCodePanelProps> = ({
       </div>
       <aside className="space-y-4 overflow-y-auto border-l border-carbon/15 bg-carbon/5 p-4">
         <div className="rounded border border-carbon/10 bg-lienzo p-3">
-          <h4 className="text-[10px] font-bold uppercase tracking-widest text-carbon/45">Vista previa del archivo guardado</h4>
+          <h4 className="ac-label ac-label--sm ac-label--soft">Vista previa del archivo guardado</h4>
           <p className="mt-2 text-[11px] text-carbon/55">
             La vista previa ejecuta el componente real. Los cambios de código aparecen aquí después de guardarlos correctamente.
           </p>
@@ -39,7 +39,7 @@ export const DiagramCodePanel: React.FC<DiagramCodePanelProps> = ({
           </div>
         </div>
         <div className="rounded border border-carbon/10 bg-lienzo p-3">
-          <h4 className="text-[10px] font-bold uppercase tracking-widest text-carbon/45">Edición de código</h4>
+          <h4 className="ac-label ac-label--sm ac-label--soft">Edición de código</h4>
           <p className="mt-2 text-xs italic text-carbon/60">
             El TSX completo es la autoridad. La edición visual solo se habilita cuando el modelo regenera todo el archivo de forma idéntica.
           </p>
@@ -59,7 +59,7 @@ export const DiagramCodePanel: React.FC<DiagramCodePanelProps> = ({
           )}
         </div>
         {onRegenerate && <div className="rounded border border-carbon/10 bg-lienzo p-3">
-          <p className="text-[10px] font-bold uppercase tracking-widest text-carbon/45">Garantías del generador visual</p>
+          <p className="ac-label ac-label--sm ac-label--soft">Garantías del generador visual</p>
           <ul className="mt-2 space-y-1 text-xs text-carbon/70 font-sans list-disc pl-4">
             <li>Usa MathBoard y MathFactory.</li>
             <li>Usa tokens Arts & Crafts, sin hex arbitrarios.</li>

@@ -90,7 +90,7 @@ export const DiagramOrganizationPanel: React.FC<DiagramOrganizationPanelProps> =
   return (
     <section>
       <div className="mb-2 flex items-center justify-between border-b border-carbon/10 pb-1">
-        <p className="text-[10px] font-bold uppercase tracking-widest text-carbon/45">Organización</p>
+        <p className="ac-label ac-label--sm ac-label--soft">Organización</p>
       </div>
       <div className="mb-2 grid grid-cols-2 gap-1 rounded border border-carbon/10 bg-carbon/[0.02] p-0.5" role="tablist" aria-label="Gestión de organización">
         {([

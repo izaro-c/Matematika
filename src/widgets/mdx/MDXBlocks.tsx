@@ -39,7 +39,7 @@ interface BlockTitleProps {
 export const BlockTitle: React.FC<BlockTitleProps> = ({ subtitle, children }) => {
   return (
     <div className="my-16 text-center">
-      {subtitle && <div className="page-accent-text text-[10px] uppercase tracking-[0.3em] font-sans mb-3 font-bold">{subtitle}</div>}
+      {subtitle && <div className="page-accent-text ac-eyebrow ac-eyebrow--sm ac-eyebrow--accent mb-3">{subtitle}</div>}
       <h2 className="text-4xl md:text-5xl font-serif text-carbon border-b border-carbon/10 pb-6 inline-block px-12">
         {children}
       </h2>
@@ -151,7 +151,7 @@ interface DefinicionProps {
 }
 export const Definicion: React.FC<DefinicionProps> = ({ title = "Definición", children }) => (
   <div className="page-accent-border my-12 py-6 border-t-4 border-b font-serif">
-    <div className="page-accent-text font-bold tracking-widest uppercase text-sm mb-4">
+    <div className="page-accent-text ac-eyebrow text-sm mb-4">
       {title}
     </div>
     <div className="italic leading-relaxed text-carbon/90 text-justify">
@@ -178,7 +178,7 @@ interface NotaProps {
 }
 export const Nota: React.FC<NotaProps> = ({ children }) => (
   <div className="page-accent-border my-8 pl-6 border-l-[1px] font-serif text-sm text-carbon/70 text-justify">
-    <span className="page-accent-text font-bold uppercase tracking-wider mr-2 text-xs">Nota.</span>
+    <span className="page-accent-text ac-label ac-label--md mr-2">Nota.</span>
     {children}
   </div>
 );
@@ -189,7 +189,7 @@ interface CitaProps {
 export const Cita: React.FC<CitaProps> = ({ author, children }) => (
   <blockquote className="my-12 mx-12 font-serif italic text-lg text-carbon/80 text-center leading-loose">
     {children}
-    {author && <div className="text-sm font-bold mt-4 not-italic font-sans text-carbon/60 uppercase tracking-widest">— {author}</div>}
+    {author && <div className="ac-eyebrow text-sm text-carbon/60 mt-4 not-italic">— {author}</div>}
   </blockquote>
 );
 
@@ -198,7 +198,7 @@ interface CorolarioProps {
 }
 export const Corolario: React.FC<CorolarioProps> = ({ children }) => (
   <div className="page-accent-border my-12 py-6 border-t-2 border-b font-serif">
-    <div className="page-accent-text font-bold tracking-widest uppercase text-sm mb-4">
+    <div className="page-accent-text ac-eyebrow text-sm mb-4">
       Corolario
     </div>
     <div className="leading-relaxed text-carbon/90 text-justify">

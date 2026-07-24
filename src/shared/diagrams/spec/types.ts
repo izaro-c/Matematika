@@ -172,6 +172,14 @@ export interface DiagramConstraint {
   value?: number;
   /** Solo para `insideArea`: interior (por defecto) o perímetro/frontera. */
   areaMembership?: AreaMembership;
+  /**
+   * Solo para `sameSide`: signo del producto vectorial cross(A→B, A→P) calculado
+   * en el momento de crear la restricción. Al persistirlo, el semiplano es
+   * invariante ante movimientos posteriores de los puntos de frontera (refs[1], refs[2]).
+   * Cuando falta (specs antiguas), `applySameSideConstraint` lo recalcula desde
+   * la posición base del punto como fallback.
+   */
+  side?: 1 | -1;
   enabled: boolean;
 }
 

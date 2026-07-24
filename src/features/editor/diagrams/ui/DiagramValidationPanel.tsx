@@ -99,7 +99,7 @@ export const DiagramValidationPanel: React.FC<DiagramValidationPanelProps> = ({
 
       <div className="grid min-h-72 lg:grid-cols-[minmax(0,0.9fr)_minmax(0,1.1fr)] lg:divide-x lg:divide-carbon/10">
         <div className="space-y-2 overflow-y-auto p-1">
-          <p className="text-[10px] font-bold uppercase tracking-widest text-carbon/35">Diagnósticos</p>
+          <p className="ac-label ac-label--sm ac-label--muted">Diagnósticos</p>
           {errorMessages.length === 0 && warningMessages.length === 0 && (
             <p className="text-xs font-semibold italic text-salvia">✓ No se encontraron errores de coherencia.</p>
           )}
@@ -116,7 +116,7 @@ export const DiagramValidationPanel: React.FC<DiagramValidationPanelProps> = ({
         </div>
 
         <div className="space-y-2 border-t border-carbon/10 p-1 lg:border-t-0">
-          <p className="text-[10px] font-bold uppercase tracking-widest text-carbon/35">Elementos enlazables desde MDX</p>
+          <p className="ac-label ac-label--sm ac-label--muted">Elementos enlazables desde MDX</p>
           {targets.length === 0 ? (
             <p className="text-xs italic text-carbon/50">Marque puntos o elementos como enlazables desde MDX para verlos aquí.</p>
           ) : (

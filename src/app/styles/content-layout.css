@@ -3,7 +3,7 @@
 .content-layout {
   --content-top: 5.5rem;
   width: 100%;
-  min-height: 100vh;
+  min-height: 100dvh;
   padding-top: var(--content-top);
 }
 

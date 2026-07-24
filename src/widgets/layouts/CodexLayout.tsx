@@ -247,7 +247,7 @@ export const CodexLayout: React.FC<CodexLayoutProps> = ({
               style={{ textDecoration: 'none' }}
             >
               <span
-                className="px-1 text-[8px] font-sans font-bold rounded text-white"
+                className="px-1 text-[8px] font-sans font-bold rounded text-lienzo"
                 style={{ backgroundColor: badgeColor }}
               >
                 {badgeText}

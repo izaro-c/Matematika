@@ -10,12 +10,12 @@ export const MethodsPage = () => {
     .sort((a, b) => (a.title ?? a.id).localeCompare(b.title ?? b.id, 'es'));
 
   return (
-    <main className="min-h-screen bg-lienzo bg-arts-and-crafts text-carbon font-serif">
+    <main className="ac-page bg-arts-and-crafts">
       <div className="mx-auto w-full max-w-5xl px-6 pb-24 pt-20 sm:px-10 sm:pt-24 lg:px-12 lg:pb-32">
         <Breadcrumbs crumbs={[{ name: 'Métodos de demostración' }]} className="mb-12" />
 
         <header className="max-w-3xl border-b border-carbon/15 pb-10 sm:pb-12">
-          <p className="mb-4 font-sans text-xs font-semibold uppercase tracking-[0.18em] text-granada">
+          <p className="ac-eyebrow ac-eyebrow--granada mb-4">
             Formas de razonar
           </p>
           <h1 className="text-4xl font-semibold leading-none tracking-tight sm:text-5xl lg:text-6xl">
@@ -32,7 +32,7 @@ export const MethodsPage = () => {
           <div className="mb-6 flex items-baseline justify-between gap-6">
             <h2
               id="methods-index-title"
-              className="font-sans text-xs font-semibold uppercase tracking-[0.18em] text-carbon/55"
+              className="ac-eyebrow text-carbon/55"
             >
               Índice
             </h2>
@@ -63,7 +63,7 @@ export const MethodsPage = () => {
                     </p>
                   )}
 
-                  <span className="mt-8 inline-flex items-center gap-2 self-start font-sans text-xs font-semibold uppercase tracking-[0.14em] text-granada">
+                  <span className="ac-eyebrow ac-eyebrow--granada mt-8 inline-flex items-center gap-2 self-start">
                     Abrir método
                     <span aria-hidden="true" className="transition-transform group-hover:translate-x-1">
                       →

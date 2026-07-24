@@ -123,14 +123,14 @@ export const BranchLibrary = () => {
       <div className="flex flex-col md:flex-row items-baseline justify-between gap-4 mb-10 border-b border-carbon/15 pb-4">
         <div className="flex items-baseline gap-4">
           <h2 className="text-2xl text-carbon">Biblioteca MSC2020</h2>
-          <span className="text-xs text-carbon/40 uppercase tracking-widest font-sans">
+          <span className="text-xs text-carbon/40 tracking-wide font-sans tabular-nums">
             {SECTIONS.length} secciones · {totalEntries} entradas
           </span>
         </div>
-        <div className="flex items-center gap-4 text-xs font-sans tracking-widest uppercase text-carbon/60 bg-carbon/5 px-4 py-2 rounded">
-          <span>Leídos: <strong className="text-salvia">{readConcepts.length}</strong></span>
-          <span>·</span>
-          <span>Ejercicios: <strong className="text-salvia">{completedExercises.length}</strong></span>
+        <div className="flex items-center gap-4 text-xs font-sans tracking-wide text-carbon/60 bg-carbon/5 px-4 py-2 rounded tabular-nums">
+          <span>Leídos: <strong className="text-salvia font-semibold">{readConcepts.length}</strong></span>
+          <span aria-hidden="true">·</span>
+          <span>Ejercicios: <strong className="text-salvia font-semibold">{completedExercises.length}</strong></span>
         </div>
       </div>
 
@@ -159,7 +159,7 @@ export const BranchLibrary = () => {
                 <div className="flex items-start justify-between mb-3">
                   <div>
                     <div
-                      className="text-[10px] uppercase tracking-[0.2em] font-sans font-bold mb-1"
+                      className="ac-label ac-label--sm mb-1"
                       style={{ color: section.accent }}
                     >
                       Sección {section.roman}
@@ -208,7 +208,7 @@ export const BranchLibrary = () => {
                       <Link
                         key={code}
                         href={`/rama/${code}`}
-                        className="text-[10px] font-sans font-bold uppercase tracking-wider px-2 py-0.5 rounded border transition-colors hover:bg-carbon/5"
+                        className="ac-label ac-label--sm px-2 py-0.5 rounded border transition-colors hover:bg-carbon/5"
                         style={{
                           color: section.accent,
                           borderColor: `color-mix(in srgb, ${section.accent}, transparent 75%)`,
@@ -232,7 +232,7 @@ export const BranchLibrary = () => {
                           {entry.item.title || entry.item.id}
                         </span>
                         <span
-                          className="text-[9px] uppercase tracking-wider font-sans px-1.5 py-0.5 rounded"
+                          className="ac-label ac-label--xs px-1.5 py-0.5 rounded"
                           style={{ color: section.accent, backgroundColor: `color-mix(in srgb, ${section.accent}, transparent 92%)` }}
                         >
                           {TYPE_LABELS[entry.type] || entry.type}
@@ -241,14 +241,14 @@ export const BranchLibrary = () => {
                     ))
                   ) : (
                     <div className="py-3 text-center">
-                      <span className="text-[10px] uppercase tracking-widest text-carbon/30 font-sans">En Preparación</span>
+                      <span className="ac-eyebrow ac-eyebrow--sm ac-eyebrow--faint">En Preparación</span>
                     </div>
                   )}
 
                   {hasMore && (
                     <Link
                       href={`/rama/${section.slug}`}
-                      className="mt-2 py-1.5 text-center text-xs font-sans tracking-widest uppercase transition-colors hover:underline"
+                      className="mt-2 py-1.5 text-center ac-eyebrow transition-colors hover:underline"
                       style={{ color: section.accent }}
                     >
                       Ver {uniqueItems.length - 5} entradas más →

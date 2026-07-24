@@ -142,7 +142,7 @@ export const DiagramStepsEditor: React.FC<DiagramStepsEditorProps> = ({
     <section className="rounded border border-carbon/15 bg-lienzo p-3" aria-labelledby="diagram-steps-title">
       <div className="flex items-start justify-between gap-3">
         <div>
-          <h3 id="diagram-steps-title" className="text-xs font-bold uppercase tracking-widest text-carbon/55">Línea temporal y comportamiento</h3>
+          <h3 id="diagram-steps-title" className="ac-label ac-label--md ac-label--strong">Línea temporal y comportamiento</h3>
           <p className="mt-1 text-[10px] text-carbon/55">Cada celda resume qué cambia. Selecciónela para editar todos sus detalles.</p>
         </div>
         <div className="flex items-center gap-2">
@@ -195,7 +195,7 @@ export const DiagramStepsEditor: React.FC<DiagramStepsEditorProps> = ({
                   <div className="flex items-center justify-between gap-1">
                     <span className="block text-xs font-bold text-carbon">{index + 1}. {item.label}</span>
                     {item.id === 'initial' && (
-                      <span className="rounded bg-terracota/15 px-1.5 py-0.5 text-[8px] font-bold uppercase tracking-wider text-terracota">Initial</span>
+                      <span className="ac-editor-badge ac-editor-badge--terracota">Initial</span>
                     )}
                   </div>
                   <span className="mt-0.5 block truncate text-[10px] text-carbon/55">{item.description || 'Sin descripción'}</span>
@@ -265,7 +265,7 @@ export const DiagramStepsEditor: React.FC<DiagramStepsEditorProps> = ({
           <div className="mt-4 grid items-start gap-3 2xl:grid-cols-[minmax(0,1fr)_min(18rem,30%)]">
           <div className="min-w-0 rounded border border-carbon/10">
             <div className="flex flex-wrap items-center gap-x-3 gap-y-2 border-b border-carbon/10 bg-carbon/5 px-3 py-2">
-              <p className="text-[10px] font-bold uppercase tracking-widest text-carbon/50">Matriz objetos × pasos</p>
+              <p className="ac-label ac-label--sm">Matriz objetos × pasos</p>
               <div className="flex min-w-[12rem] flex-1 items-center gap-2">
                 <DiagramField label="Buscar objetos en la secuencia" className="min-w-[10rem] flex-1">
                   <input type="search" aria-label="Buscar objetos en la secuencia" placeholder="Buscar por nombre o id…" className="text-[10px]" value={objectQuery} onChange={event => setObjectQuery(event.target.value)} />
@@ -287,7 +287,7 @@ export const DiagramStepsEditor: React.FC<DiagramStepsEditorProps> = ({
             <table className="w-max min-w-full border-collapse text-[10px]" aria-label="Matriz objetos × pasos">
               <thead className="sticky top-0 z-20">
                 <tr>
-                  <th scope="col" className="sticky left-0 z-30 min-w-36 border-b border-r border-carbon/10 bg-lienzo p-1.5 text-left shadow-[2px_0_0_0_rgba(0,0,0,0.04)]">Objeto</th>
+                  <th scope="col" className="sticky left-0 z-30 min-w-36 border-b border-r border-carbon/10 bg-lienzo p-1.5 text-left ac-sticky-shadow-end">Objeto</th>
                   {model.steps.map((item, index) => (
                     <th
                       key={item.id}
@@ -308,11 +308,11 @@ export const DiagramStepsEditor: React.FC<DiagramStepsEditorProps> = ({
                   </tr>
                 ) : matrixRows.map(row => row.kind === 'layer' ? (
                   <tr key={`layer-${row.layerId}`} className="bg-carbon/[0.03]">
-                    <th scope="rowgroup" colSpan={model.steps.length + 1} className="sticky left-0 border-t border-carbon/10 px-2 py-1 text-left text-[9px] font-bold uppercase tracking-wider text-carbon/45">{row.label}</th>
+                    <th scope="rowgroup" colSpan={model.steps.length + 1} className="sticky left-0 border-t border-carbon/10 px-2 py-1 text-left ac-label ac-label--xs ac-label--soft">{row.label}</th>
                   </tr>
                 ) : (
                   <tr key={row.item.id}>
-                    <th scope="row" className="sticky left-0 z-10 border-r border-t border-carbon/10 bg-lienzo p-1.5 text-left shadow-[2px_0_0_0_rgba(0,0,0,0.04)]">
+                    <th scope="row" className="sticky left-0 z-10 border-r border-t border-carbon/10 bg-lienzo p-1.5 text-left ac-sticky-shadow-end">
                       <button type="button" className="max-w-[9rem] truncate font-bold text-carbon hover:text-terracota" title={row.item.label} onClick={() => onSelectObject(row.item.id)}>{row.item.label}</button>
                       <span className="block truncate font-mono text-[8px] font-normal text-carbon/45">{row.item.id}</span>
                     </th>
