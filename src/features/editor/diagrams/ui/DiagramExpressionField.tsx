@@ -7,6 +7,7 @@ import {
   parseMathExpression,
 } from '@/shared/diagrams/public';
 import type { VisualDiagramModel } from '../model/types';
+import { DiagramFormField, diagramInputClassName } from './primitives/DiagramFormField';
 
 interface DiagramExpressionFieldProps {
   model: VisualDiagramModel;
@@ -19,6 +20,7 @@ interface DiagramExpressionFieldProps {
   parameter?: string;
   help?: string;
   compact?: boolean;
+  error?: string;
 }
 
 function variableLabel(variable: string, value?: number): string {
@@ -80,6 +82,7 @@ export const DiagramExpressionField: React.FC<DiagramExpressionFieldProps> = ({
   parameter,
   help,
   compact = false,
+  error,
 }) => {
   const inputRef = useRef<HTMLInputElement>(null);
   const [chosenVariable, setChosenVariable] = useState('');
@@ -161,23 +164,26 @@ export const DiagramExpressionField: React.FC<DiagramExpressionFieldProps> = ({
     : `rounded border px-2 py-1 ${statusClass}`;
 
   return (
-    <div className="space-y-1.5">
-      <label className="block text-xs font-bold text-carbon">
-        {label}
+    <DiagramFormField
+      label={label}
+      help={help}
+      error={error}
+      className="p-0 border-0" // We rely on DiagramFormField's wrapper for errors, but keep it tight
+    >
+      <div className="space-y-1.5">
         <input
           ref={inputRef}
           aria-label={ariaLabel ?? label}
           aria-describedby={`${ariaLabel ?? label}-expression-status`.replace(/\s+/g, '-').toLowerCase()}
-          className="mt-1 min-h-10 w-full rounded border border-carbon/15 bg-lienzo px-2 font-mono text-xs focus:border-pavo focus:outline-none focus:ring-2 focus:ring-pavo/20"
+          className={`font-mono ${diagramInputClassName}`}
           value={value}
           onChange={event => onChange(event.target.value)}
           placeholder={placeholder}
           spellCheck={false}
         />
-      </label>
-      <p id={`${ariaLabel ?? label}-expression-status`.replace(/\s+/g, '-').toLowerCase()} className={`${validationClass} text-[9px] leading-relaxed break-words`} role="status">
-        {validation.message}
-      </p>
+        <p id={`${ariaLabel ?? label}-expression-status`.replace(/\s+/g, '-').toLowerCase()} className={`${validationClass} text-[9px] leading-relaxed break-words`} role="status">
+          {validation.message}
+        </p>
       {!compact && (
         <details className="border-t border-carbon/10 pt-1">
           <summary className="min-h-9 cursor-pointer py-2 text-[10px] font-bold text-pavo">Qué se puede escribir y cómo</summary>
@@ -187,13 +193,13 @@ export const DiagramExpressionField: React.FC<DiagramExpressionFieldProps> = ({
               <input
                 type="search"
                 aria-label={`Buscar variable para ${label}`}
-                className="w-full rounded border border-carbon/15 bg-lienzo p-1 text-[10px]"
+                className={diagramInputClassName}
                 value={variableSearch}
                 onChange={event => setVariableSearch(event.target.value)}
                 placeholder="Buscar por objeto, ID o magnitud…"
               />
               <div className="flex gap-1">
-                <select aria-label={`Variable para ${label}`} className="min-w-0 flex-1 w-full rounded border border-carbon/15 bg-lienzo p-1 text-[10px]" value={chosenVariable} onChange={event => setChosenVariable(event.target.value)}>
+                <select aria-label={`Variable para ${label}`} className={`min-w-0 flex-1 ${diagramInputClassName}`} value={chosenVariable} onChange={event => setChosenVariable(event.target.value)}>
                   <option value="">{availableVariableCount > 0 ? `Elegir entre ${availableVariableCount} variables…` : 'No hay coincidencias'}</option>
                   {variableGroups.map(group => (
                     <optgroup key={group.group} label={group.group}>
@@ -207,10 +213,9 @@ export const DiagramExpressionField: React.FC<DiagramExpressionFieldProps> = ({
             </div>
           )}
           <div className="flex flex-wrap gap-1" aria-label={`Atajos para ${label}`}>
-            {EXPRESSION_SHORTCUTS.map(shortcut => <button key={shortcut.display} type="button" className="rounded border border-carbon/15 bg-lienzo px-1.5 py-0.5 font-mono text-[9px] text-carbon/65 hover:bg-carbon/5" onClick={() => insert(shortcut.token, shortcut.cursorBack)}>{shortcut.display}</button>)}
+            {EXPRESSION_SHORTCUTS.map(shortcut => <button key={shortcut.display} type="button" className="rounded-md border border-carbon/20 bg-lienzo shadow-sm px-2 py-1 font-mono text-[9px] text-carbon/70 hover:bg-carbon/5 hover:-translate-y-[0.5px] hover:shadow transition-all duration-200 active:translate-y-0 active:scale-95" onClick={() => insert(shortcut.token, shortcut.cursorBack)}>{shortcut.display}</button>)}
           </div>
             <div className="space-y-1 border-t border-carbon/10 pt-2 text-[9px] leading-relaxed text-carbon/55 break-words">
-              {help && <p>{help}</p>}
               <p>Se admiten números, paréntesis y los operadores <code>+ − * / ^</code>. Las constantes son <code>pi</code> y <code>e</code>.</p>
               <p>Funciones: <code>sin</code>, <code>cos</code>, <code>tan</code>, <code>sqrt</code>, <code>abs</code>, <code>min</code>, <code>max</code>, <code>round</code>, <code>hypot</code> y logaritmos <code>ln</code>/<code>log</code>.</p>
               <p>Los ángulos ofrecen <code>id.radians</code> e <code>id.degrees</code>, tanto si son orientados como no reflejos.</p>
@@ -220,7 +225,8 @@ export const DiagramExpressionField: React.FC<DiagramExpressionFieldProps> = ({
           </div>
         </details>
       )}
-    </div>
+      </div>
+    </DiagramFormField>
   );
 };
 

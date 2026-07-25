@@ -92,6 +92,43 @@ export const RELATION_CATEGORY_ORDER: RelationCategory[] = [
 
 const SUPPORT_KINDS = new Set(['segment', 'line', 'ray', 'circle', 'arc', 'functionCurve', 'parametricCurve', 'perpendicular', 'parallel', 'angleBisector']);
 
+export function getConstraintSlotLabel(kind: VisualConstraint['kind'], slotIndex: number): string {
+  switch (kind) {
+    case 'fixed':
+      return 'Punto a fijar (x, y)';
+    case 'horizontal':
+      return slotIndex === 0 ? 'Punto restringido' : 'Punto de referencia Y (misma altura)';
+    case 'vertical':
+      return slotIndex === 0 ? 'Punto restringido' : 'Punto de referencia X (misma vertical)';
+    case 'coincident':
+      return slotIndex === 0 ? 'Punto restringido' : 'Punto objetivo de coincidencia';
+    case 'on':
+      return slotIndex === 0 ? 'Punto deslizador' : 'Objeto de soporte (recta/segmento/círculo)';
+    case 'distance':
+      return slotIndex === 0 ? 'Punto móvil' : 'Centro / Punto de referencia de distancia';
+    case 'equalLength':
+      return slotIndex === 0 ? 'Extremo a ajustar' : slotIndex === 1 ? 'Punto ancla fijo' : 'Segmento de referencia';
+    case 'midpoint':
+      return slotIndex === 0 ? 'Punto medio resultante' : slotIndex === 1 ? 'Extremo A' : 'Extremo B';
+    case 'perpendicular':
+      return slotIndex === 0 ? 'Punto restringido' : slotIndex === 1 ? 'Punto o dirección 1' : 'Punto o recta base';
+    case 'parallel':
+      return slotIndex === 0 ? 'Punto restringido' : slotIndex === 1 ? 'Punto o dirección 1' : 'Punto o recta base';
+    case 'insideDisk':
+      return slotIndex === 0 ? 'Punto restringido' : slotIndex === 1 ? 'Centro del disco' : 'Punto en el borde';
+    case 'sameSide':
+      return slotIndex === 0 ? 'Punto restringido' : slotIndex === 1 ? 'Punto 1 del eje' : 'Punto 2 del eje';
+    case 'insideArea':
+      return slotIndex === 0 ? 'Punto restringido' : 'Región o polígono continente';
+    case 'reflection':
+      return slotIndex === 0 ? 'Punto reflejado' : slotIndex === 1 ? 'Centro o eje de simetría' : 'Punto origen';
+    case 'equalAngle':
+      return slotIndex === 0 ? 'Extremo móvil' : slotIndex === 1 ? 'Vértice' : slotIndex === 2 ? 'Extremo fijo' : slotIndex === 3 ? 'Ángulo de referencia' : 'Ángulo objetivo';
+    default:
+      return `Objeto de referencia ${slotIndex + 1}`;
+  }
+}
+
 export function constraintPresentation(kind: VisualConstraint['kind']): ConstraintPresentation {
   if (kind === 'equalAngle') {
     return {

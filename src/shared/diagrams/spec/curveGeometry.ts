@@ -16,7 +16,7 @@ const EXTERIOR_LOOP_AREA_RATIO = 0.85;
 export function curveAreaFill(element: DiagramElement): CurveAreaFill {
   const mode = element.properties?.areaFill;
   if (mode === 'half-plane') return 'half-plane';
-  if (mode === 'interior' && element.kind === 'parametricCurve') return 'interior';
+  if (mode === 'interior' && (element.kind === 'parametricCurve' || element.kind === 'functionCurve')) return 'interior';
   return 'none';
 }
 

@@ -1,6 +1,7 @@
 import React from 'react';
 import type { DiagramSceneItem } from '../../../../../shared/diagrams/spec';
 import { diagramControlClassName } from '../primitives';
+import { DiagramFormField } from '../primitives/DiagramFormField';
 import { useReferencePick } from './useReferencePick';
 
 interface RelationSlotFieldProps {
@@ -45,8 +46,7 @@ export const RelationSlotField: React.FC<RelationSlotFieldProps> = ({
 
   return (
     <div className="space-y-1">
-      <label className="block text-[10px] font-bold text-carbon/65">
-        {label}
+      <DiagramFormField label={label} labelClassName="text-[10px] font-bold text-carbon/65" className="p-0 border-0">
         <select
           aria-label={ariaLabel}
           className={diagramControlClassName}
@@ -66,7 +66,7 @@ export const RelationSlotField: React.FC<RelationSlotFieldProps> = ({
             </option>
           ))}
         </select>
-      </label>
+      </DiagramFormField>
       {candidates.length === 0 && !optionalEmptyOption ? (
         <p className="text-[10px] leading-relaxed text-ocre" role="status">{emptyHint}</p>
       ) : (

@@ -44,24 +44,28 @@ export const DiagramDerivedPositionEditor: React.FC<DiagramDerivedPositionEditor
       <p className="text-[10px] leading-relaxed text-carbon/55">
         Las coordenadas se obtienen de fórmulas. El punto no se arrastra: cambia cuando cambian los objetos referenciados en las expresiones.
       </p>
-      <DiagramExpressionField
-        model={model}
-        label="Coordenada x"
-        ariaLabel="Expresión x derivada"
-        value={point.xExpression || ''}
-        onChange={value => onPointChange({ xExpression: value })}
-        help="Ejemplo: pA.x + 2 o dist(segAB)."
-      />
-      {xExpressionError && <p className="text-[10px] text-granada">{xExpressionError}</p>}
-      <DiagramExpressionField
-        model={model}
-        label="Coordenada y"
-        ariaLabel="Expresión y derivada"
-        value={point.yExpression || ''}
-        onChange={value => onPointChange({ yExpression: value })}
-        help="Ejemplo: pA.y o 0.5 * (pB.y + pC.y)."
-      />
-      {yExpressionError && <p className="text-[10px] text-granada">{yExpressionError}</p>}
+      <div data-inspector-field="xExpression">
+        <DiagramExpressionField
+          model={model}
+          label="Coordenada x"
+          ariaLabel="Expresión x derivada"
+          value={point.xExpression || ''}
+          onChange={value => onPointChange({ xExpression: value })}
+          help="Ejemplo: pA.x + 2 o dist(segAB)."
+          error={xExpressionError}
+        />
+      </div>
+      <div data-inspector-field="yExpression">
+        <DiagramExpressionField
+          model={model}
+          label="Coordenada y"
+          ariaLabel="Expresión y derivada"
+          value={point.yExpression || ''}
+          onChange={value => onPointChange({ yExpression: value })}
+          help="Ejemplo: pA.y o 0.5 * (pB.y + pC.y)."
+          error={yExpressionError}
+        />
+      </div>
       <div className="rounded border border-carbon/10 bg-lienzo px-2 py-1.5">
         <p className="text-[10px] font-bold text-carbon/70">Objetos detectados en las expresiones</p>
         {inferredDependencies.length === 0 ? (
