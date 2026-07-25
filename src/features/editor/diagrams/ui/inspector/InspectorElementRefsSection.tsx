@@ -2,9 +2,7 @@ import React from 'react';
 import type { VisualDiagramModel, VisualElement } from '../../model/types';
 import { KIND_LABELS, toolReferenceLabel } from '../../model';
 import { SegmentMarksEditor } from '../SegmentMarksEditor';
-import { SegmentLengthConstraintEditor } from '../SegmentLengthConstraintEditor';
-import { SegmentReflectionConstraintEditor } from '../SegmentReflectionConstraintEditor';
-import { AngleEqualityConstraintEditor } from '../AngleEqualityConstraintEditor';
+import { DiagramRelationsSection } from '../relations';
 import type { InspectorHandlers } from './useInspectorHandlers';
 import { elementReferenceCandidates } from './inspectorUtils';
 import type { InspectorSection } from './inspectorUtils';
@@ -43,10 +41,10 @@ export const InspectorElementRefsSection: React.FC<InspectorElementRefsSectionPr
     : selectedElement.refs;
 
   return (
-    <div data-inspector-section="geometry" className="space-y-3">
+    <div data-inspector-section="geometry" className="space-y-4">
       {(renderedRefs.length > 0 || isCurveHalfPlane) && selectedElement.kind !== 'infoPanel' && selectedElement.kind !== 'label' && (
-        <fieldset data-inspector-field="refs" className={`space-y-1 rounded border p-2 ${inspectorFieldClass(Boolean(refsError), refsFocused) || 'border-carbon/10'}`}>
-          <legend className="px-1 ac-label ac-label--sm ac-label--soft">Referencias geométricas</legend>
+        <fieldset data-inspector-field="refs" className={`space-y-3 ${inspectorFieldClass(Boolean(refsError), refsFocused)}`}>
+          <legend className="mb-2 text-[10px] font-bold uppercase tracking-wider text-carbon/50">Referencias geométricas</legend>
           <InspectorFieldError message={refsError} focused={refsFocused} />
           {renderedRefs.map((ref, index) => {
             const referenceLabel = toolReferenceLabel(selectedElement.kind, index);
@@ -131,43 +129,39 @@ export const InspectorElementRefsSection: React.FC<InspectorElementRefsSectionPr
       )}
 
       {selectedElement.kind === 'segment' && (
-        <div data-inspector-field="constraints" className={`space-y-2 rounded border p-2 ${inspectorFieldClass(Boolean(constraintsError), constraintsFocused) || 'border-transparent'}`}>
+        <fieldset data-inspector-field="constraints" className={`space-y-3 border-t border-carbon/10 pt-3 ${inspectorFieldClass(Boolean(constraintsError), constraintsFocused)}`}>
+          <legend className="mb-2 text-[10px] font-bold uppercase tracking-wider text-carbon/50">Relaciones</legend>
           <InspectorFieldError message={constraintsError} focused={constraintsFocused} />
           <SegmentMarksEditor
             model={model}
             segment={selectedElement}
             onModelEdit={onModelEdit}
           />
-          <SegmentLengthConstraintEditor
-            key={selectedElement.id}
+          <DiagramRelationsSection
             model={model}
-            segment={selectedElement}
+            element={selectedElement}
+            scope="segment"
             onModelEdit={onModelEdit}
           />
-          <SegmentReflectionConstraintEditor
-            key={`refl-${selectedElement.id}`}
-            model={model}
-            segment={selectedElement}
-            onModelEdit={onModelEdit}
-          />
-        </div>
+        </fieldset>
       )}
 
       {(selectedElement.kind === 'angle' || selectedElement.kind === 'nonReflexAngle') && (
-        <div data-inspector-field="constraints" className={`rounded border p-2 ${inspectorFieldClass(Boolean(constraintsError), constraintsFocused) || 'border-transparent'}`}>
+        <fieldset data-inspector-field="constraints" className={`space-y-3 border-t border-carbon/10 pt-3 ${inspectorFieldClass(Boolean(constraintsError), constraintsFocused)}`}>
+          <legend className="mb-2 text-[10px] font-bold uppercase tracking-wider text-carbon/50">Relaciones</legend>
           <InspectorFieldError message={constraintsError} focused={constraintsFocused} />
-          <AngleEqualityConstraintEditor
-          key={selectedElement.id}
-          model={model}
-          angle={selectedElement}
-          onModelEdit={onModelEdit}
-        />
-        </div>
+          <DiagramRelationsSection
+            model={model}
+            element={selectedElement}
+            scope="angle"
+            onModelEdit={onModelEdit}
+          />
+        </fieldset>
       )}
 
       {selectedElement.kind === 'intersection' && (
-        <fieldset className="space-y-2 rounded border border-pavo/20 bg-pavo/5 p-2">
-          <legend className="px-1 ac-label ac-label--sm ac-label--pavo">Intersección exacta</legend>
+        <fieldset className="space-y-2 border-t border-carbon/10 pt-3">
+          <legend className="mb-2 text-[10px] font-bold uppercase tracking-wider text-carbon/50">Intersección exacta</legend>
           <label className="flex items-start gap-1.5 text-xs font-bold text-carbon">
             <input
               type="checkbox"

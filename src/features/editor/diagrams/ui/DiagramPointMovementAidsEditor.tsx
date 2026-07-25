@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import type { VisualDiagramModel, VisualPoint } from '../model/types';
 import { movementAttractorCreatesCycle, movementAttractors, pointSupportsMovementAids } from '../model/pointMovement';
 import { DiagramPanel } from './primitives';
+import { DiagramFormField, diagramInputClassName } from './primitives/DiagramFormField';
 
 interface DiagramPointMovementAidsEditorProps {
   model: VisualDiagramModel;
@@ -52,46 +53,46 @@ export const DiagramPointMovementAidsEditor: React.FC<DiagramPointMovementAidsEd
             type="checkbox"
             aria-label="Ajuste a cuadrícula"
             checked={point.snapToGrid ?? false}
-            onChange={(event) => onPointChange({ snapToGrid: event.target.checked || undefined })}
+            onChange={(event) => onPointChange({ snapToGrid: event.target.checked })}
+            className="h-3.5 w-3.5 rounded border-carbon/20 bg-lienzo accent-pavo cursor-pointer"
           />
           Ajuste a cuadrícula
         </label>
         {point.snapToGrid && (
-          <label className="block text-xs font-bold text-carbon">
-            Tamaño de celda
+          <DiagramFormField label="Tamaño de celda" className="p-0 border-0">
             <input
               type="number"
               min="0.01"
               max="10"
               step="0.25"
-              aria-label="Tamaño de celda de ajuste"
-              className="mt-1 w-full rounded border border-carbon/15 bg-lienzo p-1.5 text-xs"
+              aria-label="Tamaño de celda para ajustar a la cuadrícula"
+              className={diagramInputClassName}
               value={point.snapSize ?? 0.5}
               onChange={(event) => onPointChange({ snapSize: Math.max(0.01, Number(event.target.value)) })}
             />
-          </label>
+          </DiagramFormField>
         )}
       </fieldset>
 
       <fieldset className="border-t border-carbon/10 pt-2">
         <legend className="px-1 text-xs font-bold text-ocre">Magnetismo hacia formas</legend>
         {selectedAttractors.length > 0 && (
-          <ol className="mt-2 space-y-1" aria-label={`Prioridad de atractores de ${point.label}`}>
+          <ol className="mt-2 space-y-1.5" aria-label={`Prioridad de atractores de ${point.label}`}>
             {selectedAttractors.map((attractorId, index) => {
               const attractor = attractors.find(item => item.id === attractorId);
               return (
-                <li key={attractorId} className="flex items-center justify-between gap-2 rounded border border-ocre/15 bg-lienzo px-2 py-1 text-[10px] text-carbon">
+                <li key={attractorId} className="flex items-center justify-between gap-2 rounded border border-ocre/20 bg-ocre/5 px-2 py-1.5 text-[10px] text-carbon">
                   <span className="min-w-0 truncate"><strong>{index + 1}.</strong> {attractor?.label ?? attractorId}</span>
                   <span className="flex shrink-0 gap-1">
-                    <button type="button" aria-label={`Subir atractor ${attractor?.label ?? attractorId}`} disabled={index === 0} className="rounded border border-carbon/10 px-1 disabled:opacity-30" onClick={() => moveAttractor(attractorId, -1)}>↑</button>
-                    <button type="button" aria-label={`Bajar atractor ${attractor?.label ?? attractorId}`} disabled={index === selectedAttractors.length - 1} className="rounded border border-carbon/10 px-1 disabled:opacity-30" onClick={() => moveAttractor(attractorId, 1)}>↓</button>
+                    <button type="button" aria-label={`Subir atractor ${attractor?.label ?? attractorId}`} disabled={index === 0} className="rounded bg-lienzo border border-carbon/10 px-1.5 disabled:opacity-30 hover:bg-carbon/5 transition-colors" onClick={() => moveAttractor(attractorId, -1)}>↑</button>
+                    <button type="button" aria-label={`Bajar atractor ${attractor?.label ?? attractorId}`} disabled={index === selectedAttractors.length - 1} className="rounded bg-lienzo border border-carbon/10 px-1.5 disabled:opacity-30 hover:bg-carbon/5 transition-colors" onClick={() => moveAttractor(attractorId, 1)}>↓</button>
                   </span>
                 </li>
               );
             })}
           </ol>
         )}
-        <div className="mt-2 max-h-36 space-y-1 overflow-y-auto">
+        <div className="mt-3 max-h-40 space-y-1.5 overflow-y-auto rounded border border-carbon/10 p-2">
           {attractors.map(element => {
             const checked = point.attractorIds?.includes(element.id) ?? false;
             const createsCycle = !checked && movementAttractorCreatesCycle(model, point.id, element.id);
@@ -102,6 +103,7 @@ export const DiagramPointMovementAidsEditor: React.FC<DiagramPointMovementAidsEd
                   aria-label={`Usar ${element.label} como atractor`}
                   checked={checked}
                   disabled={createsCycle}
+                  className="h-3 w-3 rounded border-carbon/20 accent-ocre cursor-pointer"
                   onChange={(event) => onAttractorsChange(event.target.checked
                     ? [...(point.attractorIds ?? []), element.id]
                     : (point.attractorIds ?? []).filter(id => id !== element.id))}
@@ -112,9 +114,13 @@ export const DiagramPointMovementAidsEditor: React.FC<DiagramPointMovementAidsEd
           })}
         </div>
         {(point.attractorIds?.length ?? 0) > 0 && (
-          <div className="mt-2 grid grid-cols-2 gap-2">
-            <label className="text-[10px] font-bold text-carbon">Distancia de atracción<input type="number" min="0.01" max="20" step="0.05" aria-label="Distancia de atracción" className="mt-1 w-full rounded border border-carbon/15 bg-lienzo p-1.5 text-xs" value={point.attractorDistance ?? 0.4} onChange={(event) => onPointChange({ attractorDistance: Math.max(0.01, Number(event.target.value)) })} /></label>
-            <label className="text-[10px] font-bold text-carbon">Distancia de liberación<input type="number" min="0.01" max="20" step="0.05" aria-label="Distancia de liberación" className="mt-1 w-full rounded border border-carbon/15 bg-lienzo p-1.5 text-xs" value={point.snatchDistance ?? 0.6} onChange={(event) => onPointChange({ snatchDistance: Math.max(0.01, Number(event.target.value)) })} /></label>
+          <div className="mt-3 grid grid-cols-2 gap-3">
+            <DiagramFormField label="Atracción" className="p-0 border-0">
+              <input type="number" min="0.01" max="20" step="0.05" aria-label="Distancia de atracción" className={diagramInputClassName} value={point.attractorDistance ?? 0.4} onChange={(event) => onPointChange({ attractorDistance: Math.max(0.01, Number(event.target.value)) })} />
+            </DiagramFormField>
+            <DiagramFormField label="Liberación" className="p-0 border-0">
+              <input type="number" min="0.01" max="20" step="0.05" aria-label="Distancia de liberación" className={diagramInputClassName} value={point.snatchDistance ?? 0.6} onChange={(event) => onPointChange({ snatchDistance: Math.max(0.01, Number(event.target.value)) })} />
+            </DiagramFormField>
           </div>
         )}
       </fieldset>

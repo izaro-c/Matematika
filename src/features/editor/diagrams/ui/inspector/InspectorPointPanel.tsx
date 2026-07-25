@@ -9,7 +9,7 @@ import { DiagramNativeLabelEditor } from '../DiagramNativeLabelEditor';
 import { DiagramPointMovementAidsEditor } from '../DiagramPointMovementAidsEditor';
 import type { InspectorHandlers } from './useInspectorHandlers';
 import type { InspectorSection } from './inspectorUtils';
-import { InspectorFieldError, inspectorFieldClass } from './InspectorFieldError';
+import { DiagramFormField, diagramInputClassName } from '../primitives/DiagramFormField';
 
 interface InspectorPointPanelProps {
   model: VisualDiagramModel;
@@ -63,10 +63,14 @@ export const InspectorPointPanel: React.FC<InspectorPointPanelProps> = ({
   return (
   <div className="space-y-3">
     {activeInspectorSection === 'general' && <div data-inspector-section="general" className="space-y-3">
-    <div data-inspector-field="id" className={`rounded p-1 ${inspectorFieldClass(Boolean(idError), focusedFieldKey === 'id')}`}>
-      <label className="block text-xs font-bold text-carbon mb-1">ID interno del objeto</label>
+    <DiagramFormField
+      label="ID interno del objeto"
+      error={idError}
+      focused={focusedFieldKey === 'id'}
+      className="data-inspector-field-id"
+    >
       <input
-        className="w-full rounded border border-carbon/15 bg-lienzo p-1.5 font-mono text-xs"
+        className={`font-mono ${diagramInputClassName}`}
         value={selectedPoint.id}
         onChange={(e) => {
           const nextId = cleanTargetId(e.target.value, selectedPoint.id);
@@ -74,61 +78,78 @@ export const InspectorPointPanel: React.FC<InspectorPointPanelProps> = ({
           onSelect(nextId);
         }}
       />
-      <InspectorFieldError message={idError} focused={focusedFieldKey === 'id'} />
-    </div>
+    </DiagramFormField>
 
-    <div data-inspector-field="label" className={`rounded p-1 ${inspectorFieldClass(Boolean(labelError), focusedFieldKey === 'label')}`}>
-      <label className="block text-xs font-bold text-carbon mb-1">Etiqueta del punto</label>
+    <DiagramFormField
+      label="Etiqueta del punto"
+      help={<span>Admite LaTeX entre <code>$...$</code> o <code>$$...$$</code>.</span>}
+      error={labelError}
+      focused={focusedFieldKey === 'label'}
+      className="data-inspector-field-label"
+    >
       <input
-        className="w-full rounded border border-carbon/15 bg-lienzo p-1.5 text-xs"
+        className={diagramInputClassName}
         value={selectedPoint.label}
         onChange={(e) => handlePointChange({ label: e.target.value })}
       />
-      <span className="mt-1 block text-[10px] text-carbon/45">Admite LaTeX entre <code>$...$</code> o <code>$$...$$</code>.</span>
-      <DiagramNativeLabelEditor
-        label={selectedPoint.label}
-        visible={selectedPoint.showLabel !== false}
-        size={selectedPoint.style?.labelSize ?? 19}
-        offset={selectedPoint.style?.labelOffset}
-        position={selectedPoint.style?.labelPosition}
-        onVisibleChange={showLabel => handlePointChange({ showLabel })}
-        onStyleChange={handlePointStyleChange}
-      />
-      <InspectorFieldError message={labelError} focused={focusedFieldKey === 'label'} />
-    </div>
+      <div className="mt-2">
+        <DiagramNativeLabelEditor
+          label={selectedPoint.label}
+          visible={selectedPoint.showLabel !== false}
+          size={selectedPoint.style?.labelSize ?? 19}
+          offset={selectedPoint.style?.labelOffset}
+          position={selectedPoint.style?.labelPosition}
+          onVisibleChange={showLabel => handlePointChange({ showLabel })}
+          onStyleChange={handlePointStyleChange}
+        />
+      </div>
+    </DiagramFormField>
     </div>}
 
-    {activeInspectorSection === 'geometry' && <div data-inspector-section="geometry" className="space-y-3">
-    <div className="grid grid-cols-2 gap-2">
-      <div data-inspector-field="x" className={`rounded p-1 ${inspectorFieldClass(Boolean(xError), focusedFieldKey === 'x')}`}>
-        <label className="block text-xs font-bold text-carbon mb-1">Coordenada X</label>
+    {activeInspectorSection === 'geometry' && <div data-inspector-section="geometry" className="space-y-4">
+      <fieldset className="space-y-3">
+        <legend className="mb-2 text-[10px] font-bold uppercase tracking-wider text-carbon/50">1. Posición</legend>
+        <div className="grid grid-cols-2 gap-2">
+      <DiagramFormField label="Coordenada X" error={xError} focused={focusedFieldKey === 'x'}>
         <input
           type="number"
           step="0.5"
-          className="w-full rounded border border-carbon/15 bg-lienzo p-1.5 text-xs"
+          className={diagramInputClassName}
           value={selectedPoint.x}
           onChange={(e) => handlePointChange({ x: Number(e.target.value) })}
         />
-        <InspectorFieldError message={xError} focused={focusedFieldKey === 'x'} />
-      </div>
-      <div data-inspector-field="y" className={`rounded p-1 ${inspectorFieldClass(Boolean(yError), focusedFieldKey === 'y')}`}>
-        <label className="block text-xs font-bold text-carbon mb-1">Coordenada Y</label>
+      </DiagramFormField>
+      <DiagramFormField label="Coordenada Y" error={yError} focused={focusedFieldKey === 'y'}>
         <input
           type="number"
           step="0.5"
-          className="w-full rounded border border-carbon/15 bg-lienzo p-1.5 text-xs"
+          className={diagramInputClassName}
           value={selectedPoint.y}
           onChange={(e) => handlePointChange({ y: Number(e.target.value) })}
         />
-        <InspectorFieldError message={yError} focused={focusedFieldKey === 'y'} />
-      </div>
+      </DiagramFormField>
     </div>
+    </fieldset>
 
-    <div data-inspector-field="constraint" className={`rounded p-1 ${inspectorFieldClass(Boolean(constraintError), focusedFieldKey === 'constraint')}`}>
-      <label className="block text-xs font-bold text-carbon mb-1">Movimiento del punto</label>
+    <fieldset className="space-y-3 border-t border-carbon/10 pt-3">
+      <legend className="mb-2 text-[10px] font-bold uppercase tracking-wider text-carbon/50">2. Comportamiento</legend>
+
+    <DiagramFormField
+      label="Movimiento del punto"
+      error={constraintError}
+      focused={focusedFieldKey === 'constraint'}
+      help={
+        <>
+          {selectedPoint.constraint === 'free' && 'Se puede mover en cualquier dirección.'}
+          {(selectedPoint.constraint === 'constrained' || isLegacyGuidedMode) && 'Combina relaciones: movimiento horizontal o vertical, sobre un objeto, mismo semiplano, etc.'}
+          {selectedPoint.constraint === 'derived' && 'La posición se obtiene de fórmulas; no se arrastra.'}
+          {selectedPoint.constraint === 'fixed' && 'No se puede arrastrar. Use este modo en lugar de añadir «posición fija» en relaciones.'}
+        </>
+      }
+    >
       <select
         aria-label="Restricción del punto"
-        className="w-full rounded border border-carbon/15 bg-lienzo p-1.5 text-xs"
+        className={diagramInputClassName}
         value={selectedPoint.constraint === 'constrained' || isLegacyGuidedMode ? 'constrained' : (selectedPoint.constraint || 'free')}
         onChange={(e) => handleMovementChange(e.target.value as PointConstraint)}
       >
@@ -137,17 +158,14 @@ export const InspectorPointPanel: React.FC<InspectorPointPanelProps> = ({
         <option value="derived">Calculado por expresiones</option>
         <option value="fixed">Fijo</option>
       </select>
-      <p className="mt-1 text-[10px] leading-relaxed text-carbon/50">
-        {selectedPoint.constraint === 'free' && 'Se puede mover en cualquier dirección.'}
-        {(selectedPoint.constraint === 'constrained' || isLegacyGuidedMode) && 'Combina relaciones: movimiento horizontal o vertical, sobre un objeto, mismo semiplano, etc.'}
-        {selectedPoint.constraint === 'derived' && 'La posición se obtiene de fórmulas; no se arrastra.'}
-        {selectedPoint.constraint === 'fixed' && 'No se puede arrastrar. Use este modo en lugar de añadir «posición fija» en relaciones.'}
-      </p>
-      <InspectorFieldError message={constraintError} focused={focusedFieldKey === 'constraint'} />
-    </div>
+    </DiagramFormField>
 
     {showRelations && (
-      <div data-inspector-field="constraints" className={inspectorFieldClass(Boolean(constraintsError), focusedFieldKey === 'constraints')}>
+      <DiagramFormField
+        error={constraintsError}
+        focused={focusedFieldKey === 'constraints'}
+        className="p-0 border-0"
+      >
         {isLegacyGuidedMode && (
           <div className="mb-3 rounded border border-ocre/25 bg-ocre/10 p-2">
             <p className="text-[10px] leading-relaxed text-ocre">
@@ -162,7 +180,6 @@ export const InspectorPointPanel: React.FC<InspectorPointPanelProps> = ({
             </button>
           </div>
         )}
-        <InspectorFieldError message={constraintsError} focused={focusedFieldKey === 'constraints'} />
         {!isLegacyGuidedMode && (
           <DiagramRelationsSection
             model={model}
@@ -171,16 +188,14 @@ export const InspectorPointPanel: React.FC<InspectorPointPanelProps> = ({
             onModelEdit={onModelEdit}
           />
         )}
-      </div>
+      </DiagramFormField>
     )}
 
     {selectedPoint.constraint === 'derived' && (
-      <div
-        data-inspector-field="derived"
-        className={inspectorFieldClass(
-          Boolean(xExpressionError || yExpressionError),
-          focusedFieldKey === 'xExpression' || focusedFieldKey === 'yExpression',
-        )}
+      <DiagramFormField
+        error={xExpressionError || yExpressionError ? 'Error en expresiones' : undefined}
+        focused={focusedFieldKey === 'xExpression' || focusedFieldKey === 'yExpression'}
+        className="p-0 border-0"
       >
         <DiagramDerivedPositionEditor
           model={model}
@@ -189,7 +204,7 @@ export const InspectorPointPanel: React.FC<InspectorPointPanelProps> = ({
           xExpressionError={xExpressionError}
           yExpressionError={yExpressionError}
         />
-      </div>
+      </DiagramFormField>
     )}
 
     {showMovementAids && (
@@ -200,11 +215,12 @@ export const InspectorPointPanel: React.FC<InspectorPointPanelProps> = ({
         onAttractorsChange={handlePointAttractorsChange}
       />
     )}
+    </fieldset>
     </div>}
 
     {activeInspectorSection === 'advanced' && (
     <div data-inspector-section="advanced" className="space-y-3">
-    <div data-inspector-field="visibleWhen" className={`rounded p-1 ${inspectorFieldClass(Boolean(visibleWhenError), focusedFieldKey === 'visibleWhen')}`}>
+    <DiagramFormField error={visibleWhenError} focused={focusedFieldKey === 'visibleWhen'} className="p-0 border-0">
     <DiagramExpressionField
       model={model}
       label="Visible cuando"
@@ -215,26 +231,25 @@ export const InspectorPointPanel: React.FC<InspectorPointPanelProps> = ({
       optional
       help="La condición se reevalúa mientras cambia la construcción. Un resultado cero oculta el punto."
     />
-    <InspectorFieldError message={visibleWhenError} focused={focusedFieldKey === 'visibleWhen'} />
-    </div>
-    <label data-inspector-field="target" className={`flex items-center gap-1.5 rounded p-1 text-xs font-bold text-carbon ${inspectorFieldClass(Boolean(targetError), focusedFieldKey === 'target')}`}>
-      <input
-        type="checkbox"
-        checked={selectedPoint.target}
-        onChange={(e) => handlePointChange({ target: e.target.checked })}
-        className="rounded border-carbon/15 bg-lienzo"
-      />
-      ¿Se puede enlazar desde MDX?
-      <InspectorFieldError message={targetError} focused={focusedFieldKey === 'target'} />
-    </label>
+    </DiagramFormField>
+    <DiagramFormField error={targetError} focused={focusedFieldKey === 'target'}>
+      <label className="flex items-center gap-1.5 text-xs font-bold text-carbon">
+        <input
+          type="checkbox"
+          checked={selectedPoint.target}
+          onChange={(e) => handlePointChange({ target: e.target.checked })}
+          className="h-3.5 w-3.5 rounded border-carbon/20 bg-lienzo accent-pavo cursor-pointer"
+        />
+        ¿Se puede enlazar desde MDX?
+      </label>
+    </DiagramFormField>
     </div>
     )}
 
     {activeInspectorSection === 'appearance' && <div data-inspector-section="appearance" className="space-y-3">
-    <div data-inspector-field="color" className={`rounded p-1 ${inspectorFieldClass(Boolean(colorError), focusedFieldKey === 'color')}`}>
-      <label className="block text-xs font-bold text-carbon mb-1">Color</label>
+    <DiagramFormField label="Color" error={colorError} focused={focusedFieldKey === 'color'}>
       <select
-        className="w-full rounded border border-carbon/15 bg-lienzo p-1.5 text-xs"
+        className={diagramInputClassName}
         value={selectedPoint.color}
         onChange={(e) => handlePointChange({ color: e.target.value as ColorToken })}
       >
@@ -242,12 +257,11 @@ export const InspectorPointPanel: React.FC<InspectorPointPanelProps> = ({
           <option key={opt.value} value={opt.value}>{opt.label}</option>
         ))}
       </select>
-      <InspectorFieldError message={colorError} focused={focusedFieldKey === 'color'} />
-    </div>
+    </DiagramFormField>
 
     <div className="grid grid-cols-2 gap-2 rounded border border-carbon/10 p-2">
-      <label className="text-xs font-bold text-carbon">Tamaño<input type="number" min="0" max="30" step="0.5" aria-label="Tamaño del punto" className="mt-1 w-full rounded border border-carbon/15 bg-lienzo p-1.5 text-xs" value={selectedPoint.style?.pointSize ?? 7} onChange={(event) => handlePointStyleChange({ pointSize: Number(event.target.value) })} /></label>
-      <label className="text-xs font-bold text-carbon">Tamaño resaltado<input type="number" min="0" max="40" step="0.5" aria-label="Tamaño resaltado del punto" className="mt-1 w-full rounded border border-carbon/15 bg-lienzo p-1.5 text-xs" value={selectedPoint.style?.highlightPointSize ?? 10} onChange={(event) => handlePointStyleChange({ highlightPointSize: Number(event.target.value) })} /></label>
+      <label className="text-[10px] font-bold text-carbon/70 uppercase tracking-wider block mb-1">Tamaño<input type="number" min="0" max="30" step="0.5" aria-label="Tamaño del punto" className={`mt-1 ${diagramInputClassName}`} value={selectedPoint.style?.pointSize ?? 7} onChange={(event) => handlePointStyleChange({ pointSize: Number(event.target.value) })} /></label>
+      <label className="text-[10px] font-bold text-carbon/70 uppercase tracking-wider block mb-1">Tamaño resaltado<input type="number" min="0" max="40" step="0.5" aria-label="Tamaño resaltado del punto" className={`mt-1 ${diagramInputClassName}`} value={selectedPoint.style?.highlightPointSize ?? 10} onChange={(event) => handlePointStyleChange({ highlightPointSize: Number(event.target.value) })} /></label>
       <label className="col-span-2 flex items-center gap-1.5 text-xs font-bold text-carbon"><input type="checkbox" checked={selectedPoint.style?.preserveColorOnHighlight ?? true} onChange={(event) => handlePointStyleChange({ preserveColorOnHighlight: event.target.checked })} />Conservar color al resaltar</label>
     </div>
     </div>}

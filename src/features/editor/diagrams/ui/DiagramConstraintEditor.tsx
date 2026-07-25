@@ -22,7 +22,8 @@ import { computeHalfPlaneSide } from '../../../../shared/diagrams/spec/areaGeome
 import { DiagramExpressionField } from './DiagramExpressionField';
 import { RelationIntentPicker } from './relations/RelationIntentPicker';
 import { RelationSlotField } from './relations/RelationSlotField';
-import { DiagramButton, DiagramField, DiagramPanel } from './primitives';
+import { DiagramButton, DiagramPanel } from './primitives';
+import { DiagramFormField, diagramInputClassName } from './primitives/DiagramFormField';
 
 interface DiagramConstraintEditorProps {
   model: VisualDiagramModel;
@@ -284,15 +285,16 @@ export const DiagramConstraintEditor: React.FC<DiagramConstraintEditorProps> = (
                 </DiagramButton>
               </header>
               <p className="text-[10px] leading-relaxed text-carbon/55">{presentation.description}</p>
-              <DiagramField label="Tipo de relación">
+              <DiagramFormField label="Tipo de relación" className="p-0 border-0">
                 <select
                   aria-label={`Tipo de ${constraint.id}`}
+                  className={diagramInputClassName}
                   value={constraint.kind}
                   onChange={event => changeKind(constraint, event.target.value as VisualConstraint['kind'])}
                 >
                   {constraintOptions}
                 </select>
-              </DiagramField>
+              </DiagramFormField>
               {kindAvailability.status === 'disabled' && kindAvailability.reason && (
                 <p className="rounded bg-ocre/10 p-2 text-[10px] font-medium text-ocre" role="status">
                   {kindAvailability.reason}
@@ -300,24 +302,26 @@ export const DiagramConstraintEditor: React.FC<DiagramConstraintEditorProps> = (
               )}
               {renderSlots(constraint)}
               {constraint.kind === 'insideArea' && (
-                <DiagramField label="Pertenencia al área">
+                <DiagramFormField label="Pertenencia al área" className="p-0 border-0">
                   <select
                     aria-label={`Pertenencia al área de ${constraint.id}`}
+                    className={diagramInputClassName}
                     value={constraint.areaMembership ?? 'interior'}
                     onChange={event => changeAreaMembership(constraint, event.target.value as AreaMembership)}
                   >
                     <option value="interior">Interior</option>
                     <option value="boundary">Perímetro o frontera</option>
                   </select>
-                </DiagramField>
+                </DiagramFormField>
               )}
               {constraint.kind === 'distance' && (
-                <DiagramField label="Distancia">
+                <DiagramFormField label="Distancia" className="p-0 border-0">
                   <input
                     type="number"
                     min="0"
                     step="0.1"
                     aria-label={`Distancia de ${constraint.id}`}
+                    className={diagramInputClassName}
                     value={constraint.value ?? 1}
                     onChange={event => onModelEdit({
                       ...model,
@@ -326,7 +330,7 @@ export const DiagramConstraintEditor: React.FC<DiagramConstraintEditorProps> = (
                         : item),
                     })}
                   />
-                </DiagramField>
+                </DiagramFormField>
               )}
               {constraint.kind === 'expression' && (
                 <DiagramExpressionField

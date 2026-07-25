@@ -3,13 +3,10 @@ import type { EditorDiagramReference } from '../../core/editorTypes';
 import type { ConstructionKind, VisualDiagramModel } from '../model/types';
 import { useDiagramState } from '../hooks/useDiagramState';
 import { buildTargets } from '../model/selectors';
-import { formatDiagnosticTabDetail } from '../diagnostics';
 import { useDiagramDiagnostics } from '../hooks/useDiagramDiagnostics';
 import { DiagramCanvas } from './DiagramCanvas';
-import { DiagramToolbar } from './DiagramToolbar';
 import { DiagramInspector } from './DiagramInspector';
 import { DiagramStatusBar } from './DiagramStatusBar';
-import { DiagramStepPreviewControls } from './DiagramStepPreviewControls';
 import { DiagramReferencesPanel } from './DiagramReferencesPanel';
 import { DiagramCodePanel } from './DiagramCodePanel';
 import { DiagramValidationPanel } from './DiagramValidationPanel';
@@ -42,6 +39,20 @@ import { getDiagramUsages } from '../references/usageIndex';
 import { pageTypeFromContentPath } from '../model/publishedDiagramLayout';
 import { ReferencePickProvider } from './relations/ReferencePickContext';
 import { useReferencePick } from './relations/useReferencePick';
+import { WorkbenchHeader } from './workbench/WorkbenchHeader';
+import { WorkbenchWorkspaceNav } from './workbench/WorkbenchWorkspaceNav';
+import { CanvasToolbarDock } from './workbench/CanvasToolbarDock';
+import { CanvasControlsDock } from './workbench/CanvasControlsDock';
+
+if (typeof window !== 'undefined') {
+  if (!('popover' in HTMLElement.prototype)) {
+    import('@oddbird/popover-polyfill').catch(console.error);
+  }
+  if (!('anchorName' in document.documentElement.style)) {
+    import('@oddbird/css-anchor-positioning').catch(console.error);
+  }
+}
+
 
 export type { DiagramWorkbenchMode } from '../hooks/useDiagramWorkbenchLoader';
 
@@ -81,15 +92,6 @@ interface DiagramWorkbenchCoreProps {
 }
 
 type DiagramWorkbenchAdapterProps = Omit<DiagramWorkbenchCoreProps, 'mode'>;
-
-function sectionTabClass(active: boolean, hasErrors = false): string {
-  const errorBadge = hasErrors ? ' ring-2 ring-granada/40' : '';
-  return `min-h-11 whitespace-nowrap rounded px-3 py-2 text-left text-xs font-bold transition-colors${errorBadge} ${active ? 'bg-carbon text-lienzo' : 'text-carbon/60 hover:bg-carbon/5'}`;
-}
-
-function sectionDetailClass(active: boolean): string {
-  return `ml-1 font-mono text-[9px] ${active ? 'text-lienzo/65' : 'text-carbon/35'}`;
-}
 
 function paneDisplay(active: boolean, display: 'block' | 'flex'): string {
   if (!active) return 'hidden';
@@ -162,6 +164,7 @@ export const DiagramWorkbenchCore: React.FC<DiagramWorkbenchCoreProps> = ({
 
   const [workspace, setWorkspace] = useState<'build' | 'steps' | 'targets' | 'check' | 'source'>('build');
   const [canvasDisplay, setCanvasDisplay] = useState<'edit' | 'preview'>('edit');
+  const [showAllObjects, setShowAllObjects] = useState(false);
   const [mobilePane, setMobilePane] = useState<'scene' | 'canvas' | 'properties'>('canvas');
   const [leftPanel, setLeftPanel] = useState<'objects' | 'organization' | 'diagram'>('objects');
   const [selectedIds, setSelectedIds] = useState<string[]>([]);
@@ -351,58 +354,30 @@ export const DiagramWorkbenchCore: React.FC<DiagramWorkbenchCoreProps> = ({
   return (
     <ReferencePickProvider>
     <div ref={workbenchRef} onKeyDown={keyboard.onKeyDown} className="fixed inset-0 z-50 flex flex-col bg-lienzo text-carbon font-sans" role="dialog" aria-modal="true" aria-labelledby="diagram-workbench-title">
-      {/* Header */}
-      <header className="flex shrink-0 items-center justify-between gap-2 border-b border-carbon/15 bg-carbon/5 px-3 py-2 sm:gap-4 sm:px-4">
-        <div className="min-w-0 flex-1">
-          <h2 id="diagram-workbench-title" className="truncate text-sm font-bold text-carbon">{model.title}</h2>
-          <p className="hidden truncate text-[10px] font-mono text-carbon/45 sm:block">Editor visual exacto · {state.filePath}</p>
-        </div>
-
-        <div className="flex shrink-0 items-center gap-1.5 sm:gap-2">
-          <DiagramStatusBar
-            variant="inline"
-            status={state.status}
-            isDirty={isDirty}
-            saveCapability={isFileMode ? saveCapability : undefined}
-            onSave={handleSaveAndConfirm}
-            onOpenDiagnostics={openDiagnostics}
-          />
-          <div className="flex rounded border border-carbon/15 p-0.5 bg-lienzo" aria-label="Historial de comandos">
-            <button
-              type="button"
-              onClick={undo}
-              disabled={state.modelHistory.past.length === 0}
-              className="min-h-11 min-w-11 rounded px-2 text-base font-bold text-carbon/70 hover:bg-carbon/5 disabled:opacity-35"
-              aria-label="Deshacer"
-              title={state.modelHistory.past[state.modelHistory.past.length - 1]?.label ?? 'Nada que deshacer'}
-            >
-              ↶
-            </button>
-            <button
-              type="button"
-              onClick={redo}
-              disabled={state.modelHistory.future.length === 0}
-              className="min-h-11 min-w-11 rounded px-2 text-base font-bold text-carbon/70 hover:bg-carbon/5 disabled:opacity-35"
-              aria-label="Rehacer"
-              title={state.modelHistory.future[0]?.label ?? 'Nada que rehacer'}
-            >
-              ↷
-            </button>
-          </div>
-          <div className="flex rounded border border-carbon/15 p-0.5 bg-lienzo" aria-label="Copiar y pegar objetos">
-            <button type="button" onClick={clipboard.copySelected} disabled={effectiveSelectedIds.length === 0} aria-label="Copiar selección" className="min-h-11 rounded px-2 text-[10px] font-bold text-carbon/70 hover:bg-carbon/5 disabled:opacity-35" title="Copiar selección (Ctrl/Cmd+C)">Copiar {effectiveSelectedIds.length > 1 ? effectiveSelectedIds.length : ''}</button>
-            <button type="button" onClick={clipboard.paste} disabled={!clipboard.canPaste} aria-label="Pegar selección" className="min-h-11 rounded px-2 text-[10px] font-bold text-carbon/70 hover:bg-carbon/5 disabled:opacity-35" title="Pegar (Ctrl/Cmd+V)">Pegar</button>
-          </div>
-          <button
-            ref={closeButtonRef}
-            type="button"
-            onClick={onClose}
-            className="min-h-11 rounded border border-carbon/20 px-3 text-xs font-bold text-carbon/75 hover:bg-carbon/5 transition-all"
-          >
-            Cerrar
-          </button>
-        </div>
-      </header>
+      {/* Header Subcomponent */}
+      <WorkbenchHeader
+        model={model}
+        filePath={state.filePath}
+        status={state.status}
+        isDirty={isDirty}
+        isFileMode={isFileMode}
+        saveCapability={saveCapability}
+        selectedCount={effectiveSelectedIds.length}
+        undoPastCount={state.modelHistory.past.length}
+        undoFutureCount={state.modelHistory.future.length}
+        undoLabel={state.modelHistory.past[state.modelHistory.past.length - 1]?.label}
+        redoLabel={state.modelHistory.future[0]?.label}
+        canPaste={clipboard.canPaste}
+        clipboardStatus={clipboard.status}
+        closeButtonRef={closeButtonRef}
+        onSave={handleSaveAndConfirm}
+        onOpenDiagnostics={openDiagnostics}
+        onUndo={undo}
+        onRedo={redo}
+        onCopy={clipboard.copySelected}
+        onPaste={clipboard.paste}
+        onClose={onClose}
+      />
 
       <DiagramConfirmDialog
         isOpen={Boolean(deleteConfirmation)}
@@ -419,49 +394,26 @@ export const DiagramWorkbenchCore: React.FC<DiagramWorkbenchCoreProps> = ({
       <DiagramWorkbenchNotices clipboardStatus={clipboard.status} mode={mode} mdxLinkNotice={mdxLinkNotice} />
 
       <div className="flex min-h-0 flex-1 flex-col">
-          <label className="flex min-h-14 shrink-0 items-center gap-3 border-b border-carbon/15 bg-lienzo px-3 ac-label ac-label--sm sm:hidden">
-            Tarea
-            <select aria-label="Tarea del editor de diagramas" className="min-h-10 min-w-0 flex-1 rounded border border-carbon/15 bg-lienzo px-2 text-xs font-bold normal-case tracking-normal text-carbon" value={workspace} onChange={event => setWorkspace(event.target.value as typeof workspace)}>
-              <option value="build">Diseñar</option>
-              <option value="steps">Secuencia</option>
-              <option value="targets">Enlaces MDX</option>
-              <option value="check">Comprobar</option>
-              <option value="source">Código TSX</option>
-            </select>
-          </label>
-          <nav className="hidden shrink-0 items-center gap-1 overflow-x-auto border-b border-carbon/15 bg-lienzo px-2 py-1.5 sm:flex sm:px-3" role="tablist" aria-label="Tareas del editor de diagramas">
-            {([
-              ['build', 'Diseñar', `${model.points.length + model.elements.length + model.sliders.length} objetos`],
-              ['steps', 'Secuencia', `${model.steps.length} pasos`],
-              ['targets', 'Enlaces MDX', `${mdxTargets.length} targets`],
-              ['check', 'Comprobar', formatDiagnosticTabDetail(diagnostics.diagnosticSummary)],
-              ['source', 'Código TSX', 'Avanzado'],
-            ] as const).map(([id, label, detail]) => (
-              <button
-                key={id}
-                type="button"
-                role="tab"
-                aria-label={label}
-                aria-selected={workspace === id}
-                onClick={() => {
-                  setWorkspace(id);
-                  if (id === 'check') diagnostics.acknowledgeDiagnostics();
-                }}
-                className={sectionTabClass(workspace === id, id === 'check' && diagnostics.diagnosticSummary.errorCount > 0 && !diagnostics.diagnosticsAcknowledged)}
-              >
-                {label} <span className={`hidden sm:inline ${sectionDetailClass(workspace === id)} ${id === 'check' && diagnostics.diagnosticSummary.errorCount > 0 ? 'text-granada' : ''}`}>{detail}</span>
-              </button>
-            ))}
-          </nav>
+        {/* Workspace Task Navigation Subcomponent */}
+        <WorkbenchWorkspaceNav
+          model={model}
+          workspace={workspace}
+          mdxTargetsCount={mdxTargets.length}
+          diagnosticSummary={diagnostics.diagnosticSummary}
+          diagnosticsAcknowledged={diagnostics.diagnosticsAcknowledged}
+          onSelectWorkspace={setWorkspace}
+          onAcknowledgeDiagnostics={diagnostics.acknowledgeDiagnostics}
+        />
 
           <DiagramSectionOutlet active={workspace === 'build'}><div className="flex min-h-0 flex-1 flex-col">
-          <div className="relative grid min-h-0 flex-1 grid-cols-1 overflow-y-auto xl:grid-cols-[280px_minmax(0,1fr)_320px] xl:overflow-hidden 2xl:grid-cols-[320px_minmax(0,1fr)_360px]">
+
+          <div className="relative grid min-h-0 flex-1 grid-cols-1 overflow-hidden xl:grid-cols-[280px_minmax(0,1fr)_340px] 2xl:grid-cols-[320px_minmax(0,1fr)_360px]">
           {/* Left panel: tools & quick actions */}
-          <aside className={`${paneDisplay(mobilePane === 'scene', 'block')} overflow-y-auto border-r border-carbon/15 bg-lienzo md:absolute md:inset-y-0 md:left-0 md:z-40 md:w-80 md:shadow-2xl xl:static xl:z-auto xl:block xl:w-auto xl:shadow-none`}>
-            <nav className="sticky top-0 z-30 grid grid-cols-3 border-b border-carbon/10 bg-lienzo p-1.5" role="tablist" aria-label="Panel de escena">
+          <aside className={`${paneDisplay(mobilePane === 'scene', 'flex')} flex-col overflow-hidden border-r border-carbon/15 bg-lienzo md:absolute md:inset-y-0 md:left-0 md:z-40 md:w-80 md:shadow-2xl xl:static xl:z-auto xl:flex xl:w-auto xl:shadow-none`}>
+            <nav className="sticky top-0 z-30 grid shrink-0 grid-cols-3 border-b border-carbon/10 bg-lienzo p-1.5" role="tablist" aria-label="Panel de escena">
               {([['objects', 'Objetos'], ['organization', 'Organizar'], ['diagram', 'Diagrama']] as const).map(([id, label]) => <button key={id} type="button" role="tab" aria-selected={leftPanel === id} onClick={() => setLeftPanel(id)} className={`min-h-11 rounded px-1 text-[10px] font-bold ${leftPanel === id ? 'bg-carbon text-lienzo' : 'text-carbon/55 hover:bg-carbon/5'}`}>{label}</button>)}
             </nav>
-            <div className="p-3">
+            <div className="flex-1 overflow-y-auto p-3 overscroll-contain scrollbar-gutter-stable">
               {leftPanel === 'objects' && <DiagramObjectList model={model} selectedId={state.selectedId} selectedIds={effectiveSelectedIds} onSelect={selectOnly} onToggleSelection={toggleSelection} onSelectMany={ids => selectMany(ids)} onCopySelection={clipboard.copySelected} onModelEdit={handleVisualEdit} errorObjectIds={diagnostics.errorObjectIds} focusObjectId={diagnostics.listFocusObjectId} />}
 
               {leftPanel === 'organization' && <DiagramOrganizationPanel model={model} selectedId={state.selectedId} onModelEdit={handleVisualEdit} onSelect={selectOnly} onCopyGroup={clipboard.copyGroup} />}
@@ -489,9 +441,10 @@ export const DiagramWorkbenchCore: React.FC<DiagramWorkbenchCoreProps> = ({
             </div>
           </aside>
 
-          {/* Center panel: toolbar + canvas + validation */}
-          <main className={`${paneDisplay(mobilePane === 'canvas', 'flex')} min-h-[480px] min-w-0 flex-col gap-3 overflow-y-auto p-3 md:flex`}>
-            <DiagramToolbar
+          {/* Center panel: toolbar dock + canvas + controls dock */}
+          <main className={`${paneDisplay(mobilePane === 'canvas', 'flex')} relative min-h-0 min-w-0 flex-1 flex-col overflow-hidden bg-carbon/[0.02] md:flex`}>
+            {/* Top Toolbar Dock */}
+            <CanvasToolbarDock
               model={model}
               canvasTool={state.canvasTool}
               syncStatus={state.status}
@@ -516,58 +469,72 @@ export const DiagramWorkbenchCore: React.FC<DiagramWorkbenchCoreProps> = ({
               />}
             />
 
-            <DiagramToolGuidance model={model} tool={state.canvasTool} refs={pendingRefs} onRefsChange={setPendingRefs} onCreate={handleAddElement} onCancel={() => activateCanvasTool('select')} />
+            {/* Middle Canvas Area */}
+            <div className="relative flex min-h-0 flex-1 flex-col overflow-hidden p-2">
+              <DiagramToolGuidance
+                model={model}
+                tool={state.canvasTool}
+                refs={pendingRefs}
+                onRefsChange={setPendingRefs}
+                onCreate={handleAddElement}
+                onCancel={() => activateCanvasTool('select')}
+              />
 
-            <div className="flex flex-wrap items-center gap-2 self-start">
-              <div className="flex items-center gap-1 rounded border border-carbon/10 bg-carbon/[0.02] p-0.5" role="tablist" aria-label="Modo del lienzo">
-                <button type="button" role="tab" aria-selected={canvasDisplay === 'edit'} onClick={() => setCanvasDisplay('edit')} className={`rounded px-3 py-1.5 text-[10px] font-bold ${canvasDisplay === 'edit' ? 'bg-carbon text-lienzo' : 'text-carbon/55'}`}>Editar</button>
-                <button type="button" role="tab" aria-selected={canvasDisplay === 'preview'} onClick={() => setCanvasDisplay('preview')} className={`rounded px-3 py-1.5 text-[10px] font-bold ${canvasDisplay === 'preview' ? 'bg-pavo text-lienzo' : 'text-carbon/55'}`}>Previsualizar</button>
+              <div className="flex-1 overflow-hidden">
+                {canvasDisplay === 'edit' ? (
+                  <DiagramCanvasWithReferencePick
+                    model={model}
+                    pageType={previewPageType}
+                    selectedId={state.selectedId}
+                    selectedIds={effectiveSelectedIds}
+                    canvasTool={state.canvasTool}
+                    pendingRefs={pendingRefs}
+                    previewHighlightId={previewHighlightId}
+                    errorHighlightedIds={diagnostics.passiveErrorHighlightIds}
+                    previewStepId={state.activeStepId}
+                    showAllObjects={showAllObjects}
+                    onSelect={(id, additive) => additive ? toggleSelection(id) : selectOnly(id)}
+                    onModelEdit={handleVisualEdit}
+                    onChooseReferenceForTool={(referenceId) => chooseReferenceForTool(referenceId, state.canvasTool)}
+                    onCompleteTool={() => activateCanvasTool('select')}
+                  />
+                ) : (
+                  <DiagramResponsivePreview model={model} pageType={previewPageType} activeStepId={state.activeStepId} highlightedId={previewHighlightId} />
+                )}
               </div>
-              {model.steps.length > 0 && (
-                <DiagramStepPreviewControls
-                  steps={model.steps}
-                  activeStepId={state.activeStepId}
-                  onActiveStepChange={setActiveStep}
-                  className="min-w-0 flex-1 sm:flex-none"
-                />
-              )}
             </div>
 
-            {canvasDisplay === 'edit' ? <DiagramCanvasWithReferencePick
+            {/* Bottom Controls Dock */}
+            <CanvasControlsDock
               model={model}
-              pageType={previewPageType}
-              selectedId={state.selectedId}
-              selectedIds={effectiveSelectedIds}
-              canvasTool={state.canvasTool}
-              pendingRefs={pendingRefs}
-              previewHighlightId={previewHighlightId}
-              errorHighlightedIds={diagnostics.passiveErrorHighlightIds}
-              previewStepId={state.activeStepId}
-              onSelect={(id, additive) => additive ? toggleSelection(id) : selectOnly(id)}
+              canvasDisplay={canvasDisplay}
+              showAllObjects={showAllObjects}
+              activeStepId={state.activeStepId}
+              onCanvasDisplayChange={setCanvasDisplay}
+              onToggleShowAllObjects={setShowAllObjects}
+              onActiveStepChange={setActiveStep}
               onModelEdit={handleVisualEdit}
-              onChooseReferenceForTool={(referenceId) => chooseReferenceForTool(referenceId, state.canvasTool)}
-              onCompleteTool={() => activateCanvasTool('select')}
-            /> : <DiagramResponsivePreview model={model} pageType={previewPageType} activeStepId={state.activeStepId} highlightedId={previewHighlightId} />}
-
+            />
           </main>
 
           {/* Right panel: contextual properties */}
-          <aside className={`${paneDisplay(mobilePane === 'properties', 'block')} overflow-y-auto border-l border-carbon/15 bg-lienzo md:absolute md:inset-y-0 md:right-0 md:z-40 md:w-96 md:shadow-2xl xl:static xl:z-auto xl:block xl:w-auto xl:shadow-none`}>
-            <DiagramInspector
-              model={model}
-              selectedId={state.selectedId}
-              selectedIds={effectiveSelectedIds}
-              onSelect={selectOnly}
-              onModelEdit={handleVisualEdit}
-              onDeleteSelected={handleDeleteSelected}
-              onAddElementLabel={handleAddElementLabel}
-              onCopySelection={clipboard.copySelected}
-              fieldErrors={diagnostics.selectedFieldErrors}
-              navigation={diagnostics.inspectorNavigation}
-              inspectorSection={diagnostics.inspectorSection}
-              onInspectorSectionChange={diagnostics.handleInspectorSectionChange}
-            />
-
+          <aside className={`${paneDisplay(mobilePane === 'properties', 'flex')} flex-col overflow-hidden border-l border-carbon/15 bg-lienzo md:absolute md:inset-y-0 md:right-0 md:z-40 md:w-96 md:shadow-2xl xl:static xl:z-auto xl:flex xl:w-auto xl:shadow-none`}>
+            <div className="flex-1 overflow-y-auto p-3 overscroll-contain scrollbar-gutter-stable">
+              <DiagramInspector
+                model={model}
+                selectedId={state.selectedId}
+                selectedIds={effectiveSelectedIds}
+                onSelect={selectOnly}
+                onModelEdit={handleVisualEdit}
+                onDeleteSelected={handleDeleteSelected}
+                onAddElementLabel={handleAddElementLabel}
+                onCopySelection={clipboard.copySelected}
+                fieldErrors={diagnostics.selectedFieldErrors}
+                navigation={diagnostics.inspectorNavigation}
+                inspectorSection={diagnostics.inspectorSection}
+                onInspectorSectionChange={diagnostics.handleInspectorSectionChange}
+              />
+            </div>
           </aside>
         </div>
           <nav className="grid shrink-0 grid-cols-3 border-t border-carbon/15 bg-lienzo p-1 xl:hidden" aria-label="Vistas del editor">

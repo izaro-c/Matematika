@@ -14,7 +14,7 @@ interface DiagramResponsivePreviewProps {
 export const DiagramResponsivePreview: React.FC<DiagramResponsivePreviewProps> = ({ model, pageType, activeStepId, highlightedId }) => (
   <DiagramViewportFrame title="Previsualización real" subtitle="Renderer de publicación · dimensiones CSS reales" pageType={pageType} testId="diagram-responsive-preview">
     <MathProvider>
-      <DiagramRenderer spec={model} mode="runtime" activeStepId={activeStepId || undefined} highlightedIds={highlightedId ? [highlightedId] : []} />
+      <DiagramRenderer spec={model} mode="runtime" activeStepId={activeStepId} highlightedIds={highlightedId ? [highlightedId] : []} />
     </MathProvider>
   </DiagramViewportFrame>
 );

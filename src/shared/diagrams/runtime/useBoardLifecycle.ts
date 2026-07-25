@@ -1514,7 +1514,7 @@ export function useBoardLifecycle({
     }
 
     const storeStep = spec.steps.find(step => isStep(step.id))?.id;
-    const effectiveStep = effectiveStepId || storeStep;
+    const effectiveStep = effectiveStepId ?? storeStep;
     const items = [...spec.points, ...spec.elements, ...spec.sliders];
     const highlightSources = [...items, ...spec.groups];
     const propHighlights = highlightSources

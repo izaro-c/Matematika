@@ -6,7 +6,8 @@ import {
   setReflectionConstraintForSegment,
 } from '../model/reflectionConstraints';
 import type { VisualDiagramModel, VisualElement } from '../model/types';
-import { DiagramButton, DiagramField, DiagramPanel } from './primitives';
+import { DiagramButton, DiagramPanel } from './primitives';
+import { DiagramFormField, diagramInputClassName } from './primitives/DiagramFormField';
 
 interface SegmentReflectionConstraintEditorProps {
   model: VisualDiagramModel;
@@ -22,8 +23,13 @@ export const SegmentReflectionConstraintEditor: React.FC<SegmentReflectionConstr
   const existing = reflectionConstraintForSegment(model, segment.id);
   const candidates = editableReflectionCandidates(model, segment.id);
   const otherSegments = model.elements.filter(e => e.kind === 'segment' && e.id !== segment.id);
-  const [selectedCenterOrAxis, setSelectedCenterOrAxis] = useState<string>(candidates[0]?.id || '');
-  const [selectedSourceSegment, setSelectedSourceSegment] = useState<string>('');
+
+  const existingCenterOrAxisId = existing?.refs.length === 3 ? existing.refs[2] : existing?.refs[1];
+  const existingSourceSegmentId = existing?.refs.length === 3 ? existing.refs[1] : '';
+
+  const [selectedCenterOrAxis, setSelectedCenterOrAxis] = useState<string>(existingCenterOrAxisId || candidates[0]?.id || '');
+  const [selectedSourceSegment, setSelectedSourceSegment] = useState<string>(existingSourceSegmentId || '');
+  const [expanded, setExpanded] = useState(Boolean(existing));
 
   const handleAddSegmentReflection = () => {
     const targetCenterOrAxis = selectedCenterOrAxis || candidates[0]?.id;
@@ -38,32 +44,27 @@ export const SegmentReflectionConstraintEditor: React.FC<SegmentReflectionConstr
   };
 
   return (
-    <DiagramPanel title="Reflejo simétrico de segmento">
-
-      {existing && (
-        <div className="space-y-2 border-b border-carbon/10 pb-2">
-          <div className="flex items-center justify-between text-xs">
-            <span className="text-carbon/80">{existing.label}</span>
-            <DiagramButton
-              variant="ghost"
-              aria-label={`Eliminar ${existing.label}`}
-              onClick={() => onModelEdit(removeSegmentReflectionConstraint(model, segment.id))}
-            >
-              Eliminar
-            </DiagramButton>
-          </div>
-        </div>
-      )}
+    <DiagramPanel
+      title="Reflejo simétrico de segmento"
+      badge={existing ? 'Configurado' : 'Opcional'}
+      collapsible
+      open={expanded}
+      onOpenChange={setExpanded}
+    >
+      <p className="text-[10px] leading-relaxed text-carbon/60">
+        Este segmento será el reflejo simétrico de sí mismo o de otro respecto a un centro o eje.
+      </p>
 
       {candidates.length === 0 ? (
-        <p className="text-[10px] leading-relaxed text-carbon/50">
+        <p className="rounded bg-ocre/10 p-2 text-[10px] leading-relaxed text-ocre font-medium">
           No hay centros (puntos) ni ejes (rectas/segmentos) en la escena para definir la simetría.
         </p>
       ) : (
-        <div className="space-y-2">
-          <DiagramField label="Centro o eje de simetría (respecto a qué)">
+        <div className="space-y-2 mt-2">
+          <DiagramFormField label="Centro o eje de simetría (respecto a qué)" className="p-0 border-0">
             <select
               aria-label={`Centro o eje de simetría para ${segment.label}`}
+              className={diagramInputClassName}
               value={selectedCenterOrAxis || candidates[0]?.id || ''}
               onChange={e => setSelectedCenterOrAxis(e.target.value)}
             >
@@ -73,12 +74,13 @@ export const SegmentReflectionConstraintEditor: React.FC<SegmentReflectionConstr
                 </option>
               ))}
             </select>
-          </DiagramField>
+          </DiagramFormField>
 
           {otherSegments.length > 0 && (
-            <DiagramField label="Segmento de origen (de qué segmento es reflejo)">
+            <DiagramFormField label="Segmento de origen (de qué segmento es reflejo)" className="p-0 border-0">
               <select
                 aria-label={`Segmento de origen para ${segment.label}`}
+                className={diagramInputClassName}
                 value={selectedSourceSegment}
                 onChange={e => setSelectedSourceSegment(e.target.value)}
               >
@@ -89,12 +91,22 @@ export const SegmentReflectionConstraintEditor: React.FC<SegmentReflectionConstr
                   </option>
                 ))}
               </select>
-            </DiagramField>
+            </DiagramFormField>
           )}
 
           <DiagramButton variant="primary" fullWidth onClick={handleAddSegmentReflection}>
-            Establecer reflejo simétrico
+            {existing ? 'Actualizar reflejo simétrico' : 'Establecer reflejo simétrico'}
           </DiagramButton>
+
+          {existing && (
+            <DiagramButton
+              variant="danger"
+              fullWidth
+              onClick={() => onModelEdit(removeSegmentReflectionConstraint(model, segment.id))}
+            >
+              Eliminar reflejo simétrico
+            </DiagramButton>
+          )}
         </div>
       )}
     </DiagramPanel>

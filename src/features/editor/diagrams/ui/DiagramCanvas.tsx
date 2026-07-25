@@ -15,6 +15,7 @@ interface DiagramCanvasProps {
   previewHighlightId: string;
   errorHighlightedIds?: readonly string[];
   previewStepId: string;
+  showAllObjects?: boolean;
   onSelect: (id: string, additive?: boolean) => void;
   onModelEdit: (model: VisualDiagramModel, command?: { label?: string; mergeKey?: string }) => void;
   onChooseReferenceForTool: (referenceId: string) => boolean;
@@ -33,6 +34,7 @@ export const DiagramCanvas: React.FC<DiagramCanvasProps> = ({
   previewHighlightId,
   errorHighlightedIds = [],
   previewStepId,
+  showAllObjects = false,
   onSelect,
   onModelEdit,
   onChooseReferenceForTool,
@@ -48,7 +50,7 @@ export const DiagramCanvas: React.FC<DiagramCanvasProps> = ({
         selectedIds={[...new Set([...selectedIds, selectedId, ...pendingRefs].filter(Boolean))]}
         highlightedIds={previewHighlightId ? [previewHighlightId] : []}
         errorHighlightedIds={errorHighlightedIds}
-        activeStepId={previewStepId || undefined}
+        activeStepId={showAllObjects || !previewStepId ? '' : previewStepId}
         onSelectionChange={(id, intent) => {
           if (referencePickActive && onReferencePick?.(id)) {
             return;

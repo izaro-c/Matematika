@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useState } from 'react';
 import type { VisualDiagramModel, CanvasTool } from '../model/types';
 import { gliderSupportElements, KIND_LABELS, refsNeededForTool, toolReferenceCandidates, toolReferenceSequenceDescription } from '../model';
 import { DiagramDivergenceDialog } from './DiagramDivergenceDialog';
@@ -59,7 +59,7 @@ interface DiagramToolbarProps {
   guidedConstructions?: React.ReactNode;
 }
 
-type OpenMenu = 'objects' | 'view' | null;
+
 
 export const DiagramToolbar: React.FC<DiagramToolbarProps> = ({
   model,
@@ -77,31 +77,18 @@ export const DiagramToolbar: React.FC<DiagramToolbarProps> = ({
   onResolveDivergence,
   guidedConstructions,
 }) => {
-  const [openMenu, setOpenMenu] = useState<OpenMenu>(null);
   const [catalogSection, setCatalogSection] = useState<'objects' | 'guided'>('objects');
   const [toolQuery, setToolQuery] = useState('');
   const [gliderSupportId, setGliderSupportId] = useState('');
   const [divergenceOpen, setDivergenceOpen] = useState(false);
-  const toolbarRef = useRef<HTMLDivElement>(null);
   const currentToolLabel = toolLabel(canvasTool);
 
-  useEffect(() => {
-    if (!openMenu) return undefined;
-    const closeOutside = (event: PointerEvent) => {
-      if (!toolbarRef.current?.contains(event.target as Node)) setOpenMenu(null);
-    };
-    const closeWithEscape = (event: KeyboardEvent) => {
-      if (event.key === 'Escape') setOpenMenu(null);
-    };
-    document.addEventListener('pointerdown', closeOutside);
-    document.addEventListener('keydown', closeWithEscape);
-    return () => {
-      document.removeEventListener('pointerdown', closeOutside);
-      document.removeEventListener('keydown', closeWithEscape);
-    };
-  }, [openMenu]);
-
-  const toggleMenu = (menu: Exclude<OpenMenu, null>) => setOpenMenu(current => current === menu ? null : menu);
+  const closePopover = (id: string) => {
+    const el = document.getElementById(id);
+    if (el && 'hidePopover' in el) {
+      (el as any).hidePopover();
+    }
+  };
   const normalizedQuery = toolQuery.trim().toLocaleLowerCase('es');
   const gliderSupports = gliderSupportElements(model.elements);
   const effectiveGliderSupportId = gliderSupports.some(item => item.id === gliderSupportId) ? gliderSupportId : gliderSupports[0]?.id ?? '';
@@ -111,7 +98,7 @@ export const DiagramToolbar: React.FC<DiagramToolbarProps> = ({
   })).filter(group => group.tools.length > 0);
 
   return (
-    <div ref={toolbarRef} className="relative flex flex-wrap items-center gap-2 rounded border border-carbon/15 bg-carbon/5 p-2" aria-label="Herramientas del lienzo">
+    <div className="flex flex-wrap items-center gap-2 rounded-xl border border-carbon/15 bg-lienzo shadow-md p-2" aria-label="Herramientas del lienzo">
       <span className="hidden pl-1 ac-label ac-label--xs ac-label--soft sm:inline">Herramienta</span>
       {(['select', 'point'] as const).map(tool => (
         <button
@@ -120,7 +107,8 @@ export const DiagramToolbar: React.FC<DiagramToolbarProps> = ({
           aria-label={toolLabel(tool)}
           aria-pressed={canvasTool === tool}
           onClick={() => {
-            setOpenMenu(null);
+            closePopover('diagram-menu-add-objects');
+            closePopover('diagram-menu-view');
             onSetCanvasTool(tool);
           }}
           className={`min-h-11 rounded px-3 text-xs font-bold ${canvasTool === tool ? 'bg-carbon text-lienzo' : 'border border-carbon/15 bg-lienzo text-carbon/70 hover:bg-carbon/5'}`}
@@ -128,18 +116,21 @@ export const DiagramToolbar: React.FC<DiagramToolbarProps> = ({
           {toolLabel(tool)}
         </button>
       ))}
-      <div className="relative">
+      <div>
         <button
           type="button"
-          aria-haspopup="menu"
-          aria-expanded={openMenu === 'objects'}
-          onClick={() => toggleMenu('objects')}
+          popoverTarget="diagram-menu-add-objects"
+          style={{ anchorName: '--diagram-add-objects' } as React.CSSProperties}
           className="min-h-11 rounded border border-carbon/15 bg-lienzo px-3 text-xs font-bold text-carbon/70 hover:bg-carbon/5"
         >
           Añadir objeto <span aria-hidden="true">▾</span>
         </button>
-        {openMenu === 'objects' && (
-          <div className="absolute left-0 top-full z-30 mt-2 w-[min(34rem,calc(100vw-2rem))] overflow-hidden rounded border border-carbon/15 bg-lienzo shadow-xl">
+        <div
+          id="diagram-menu-add-objects"
+          popover="auto"
+          className="z-50 m-0 w-[min(34rem,calc(100vw-2rem))] overflow-hidden rounded border border-carbon/15 bg-lienzo shadow-xl"
+          style={{ positionAnchor: '--diagram-add-objects', inset: 'auto', top: 'calc(anchor(bottom) + 8px)', left: 'anchor(left)' } as React.CSSProperties}
+        >
             <div className="border-b border-carbon/10 bg-carbon/[0.02] p-2">
               <div className="grid grid-cols-2 rounded border border-carbon/10 bg-lienzo p-0.5" role="tablist" aria-label="Catálogo de adición">
                 <button type="button" role="tab" aria-selected={catalogSection === 'objects'} onClick={() => setCatalogSection('objects')} className={`min-h-11 rounded px-2 text-xs font-bold ${catalogSection === 'objects' ? 'bg-carbon text-lienzo' : 'text-carbon/55'}`}>Objetos</button>
@@ -153,8 +144,8 @@ export const DiagramToolbar: React.FC<DiagramToolbarProps> = ({
             {!normalizedQuery && <section className="rounded border border-pavo/15 bg-pavo/5 p-2">
               <h4 className="ac-label ac-label--xs ac-label--pavo">Empezar</h4>
               <div className="grid gap-1 sm:grid-cols-2">
-                <button type="button" role="menuitem" className="min-h-11 rounded border border-carbon/10 px-2 py-2 text-left text-xs font-bold text-carbon/75 hover:bg-carbon/5" onClick={() => { setOpenMenu(null); onSetCanvasTool('point'); }}><span className="block">Punto libre</span><span className="block text-[10px] font-normal text-carbon/45">Haz clic en el lienzo</span></button>
-                <button type="button" role="menuitem" className="min-h-11 rounded border border-carbon/10 px-2 py-2 text-left text-xs font-bold text-carbon/75 hover:bg-carbon/5" onClick={() => { setOpenMenu(null); onAddSlider(); }}><span className="block">Control deslizante</span><span className="block text-[10px] font-normal text-carbon/45">Crea una variable numérica</span></button>
+                <button type="button" role="menuitem" className="min-h-11 rounded border border-carbon/10 px-2 py-2 text-left text-xs font-bold text-carbon/75 hover:bg-carbon/5" onClick={() => { closePopover('diagram-menu-add-objects'); onSetCanvasTool('point'); }}><span className="block">Punto libre</span><span className="block text-[10px] font-normal text-carbon/45">Haz clic en el lienzo</span></button>
+                <button type="button" role="menuitem" className="min-h-11 rounded border border-carbon/10 px-2 py-2 text-left text-xs font-bold text-carbon/75 hover:bg-carbon/5" onClick={() => { closePopover('diagram-menu-add-objects'); onAddSlider(); }}><span className="block">Control deslizante</span><span className="block text-[10px] font-normal text-carbon/45">Crea una variable numérica</span></button>
               </div>
               <div className="mt-1 grid grid-cols-[minmax(0,1fr)_auto] gap-1">
                 <label className="sr-only" htmlFor="diagram-glider-support">Soporte del punto</label>
@@ -162,7 +153,7 @@ export const DiagramToolbar: React.FC<DiagramToolbarProps> = ({
                   {gliderSupports.length === 0 && <option value="">Añade antes una línea o curva</option>}
                   {gliderSupports.map(item => <option key={item.id} value={item.id}>{item.label}</option>)}
                 </select>
-                <button type="button" disabled={!effectiveGliderSupportId} onClick={() => { setOpenMenu(null); onAddGliderPoint(effectiveGliderSupportId); }} className="min-h-11 rounded border border-carbon/10 px-3 text-xs font-bold text-carbon/75 hover:bg-carbon/5 disabled:opacity-35">+ Punto sobre</button>
+                <button type="button" disabled={!effectiveGliderSupportId} onClick={() => { closePopover('diagram-menu-add-objects'); onAddGliderPoint(effectiveGliderSupportId); }} className="min-h-11 rounded border border-carbon/10 px-3 text-xs font-bold text-carbon/75 hover:bg-carbon/5 disabled:opacity-35">+ Punto sobre</button>
               </div>
             </section>}
             {matchingGroups.map(group => (
@@ -184,7 +175,7 @@ export const DiagramToolbar: React.FC<DiagramToolbarProps> = ({
                         disabled={disabled}
                         className={`min-h-11 rounded border px-2 py-2 text-left text-xs font-bold disabled:opacity-35 ${canvasTool === tool ? 'border-carbon bg-carbon text-lienzo' : 'border-carbon/10 text-carbon/75 hover:bg-carbon/5'}`}
                         onClick={() => {
-                          setOpenMenu(null);
+                          closePopover('diagram-menu-add-objects');
                           if (required === 0) onAddElement(tool as Exclude<CanvasTool, 'select' | 'point'>);
                           else onSetCanvasTool(tool);
                         }}
@@ -199,24 +190,31 @@ export const DiagramToolbar: React.FC<DiagramToolbarProps> = ({
             ))}
             {matchingGroups.length === 0 && <p className="rounded border border-dashed border-carbon/15 p-4 text-center text-xs text-carbon/50">No se encontró ningún objeto con “{toolQuery}”.</p>}
             </div> : <div className="max-h-[min(31rem,65vh)] overflow-y-auto p-3">{guidedConstructions ?? <p className="text-xs text-carbon/50">No hay construcciones guiadas disponibles.</p>}</div>}
-          </div>
-        )}
+        </div>
       </div>
 
-      <div className="relative">
-        <button type="button" aria-haspopup="menu" aria-expanded={openMenu === 'view'} onClick={() => toggleMenu('view')} className="min-h-11 rounded border border-carbon/15 bg-lienzo px-3 text-xs font-bold text-carbon/70 hover:bg-carbon/5">
+      <div>
+        <button
+          type="button"
+          popoverTarget="diagram-menu-view"
+          style={{ anchorName: '--diagram-view' } as React.CSSProperties}
+          className="min-h-11 rounded border border-carbon/15 bg-lienzo px-3 text-xs font-bold text-carbon/70 hover:bg-carbon/5"
+        >
           Vista <span aria-hidden="true">▾</span>
         </button>
-        {openMenu === 'view' && (
-          <div role="menu" className="absolute right-0 top-full z-30 mt-2 w-48 space-y-2 rounded border border-carbon/15 bg-lienzo p-3 shadow-xl">
-            <label className="flex items-center gap-2 text-xs text-carbon"><input type="checkbox" aria-label="Cuadrícula" checked={model.grid} onChange={(event) => { onModelEdit({ ...model, grid: event.target.checked }); setOpenMenu(null); }} />Cuadrícula</label>
-            <label className="flex items-center gap-2 text-xs text-carbon"><input type="checkbox" aria-label="Ejes" checked={model.axis} onChange={(event) => { onModelEdit({ ...model, axis: event.target.checked }); setOpenMenu(null); }} />Ejes</label>
-            <label className="flex items-center gap-2 text-xs text-carbon"><input type="checkbox" aria-label="Mostrar etiquetas" checked={model.showLabels !== false} onChange={(event) => { onModelEdit({ ...model, showLabels: event.target.checked }); setOpenMenu(null); }} />Etiquetas</label>
+        <div
+          id="diagram-menu-view"
+          popover="auto"
+          className="z-50 m-0 w-48 space-y-2 rounded border border-carbon/15 bg-lienzo p-3 shadow-xl"
+          style={{ positionAnchor: '--diagram-view', inset: 'auto', top: 'calc(anchor(bottom) + 8px)', right: 'anchor(right)' } as React.CSSProperties}
+        >
+            <label className="flex items-center gap-2 text-xs text-carbon"><input type="checkbox" aria-label="Cuadrícula" checked={model.grid} onChange={(event) => { onModelEdit({ ...model, grid: event.target.checked }); closePopover('diagram-menu-view'); }} />Cuadrícula</label>
+            <label className="flex items-center gap-2 text-xs text-carbon"><input type="checkbox" aria-label="Ejes" checked={model.axis} onChange={(event) => { onModelEdit({ ...model, axis: event.target.checked }); closePopover('diagram-menu-view'); }} />Ejes</label>
+            <label className="flex items-center gap-2 text-xs text-carbon"><input type="checkbox" aria-label="Mostrar etiquetas" checked={model.showLabels !== false} onChange={(event) => { onModelEdit({ ...model, showLabels: event.target.checked }); closePopover('diagram-menu-view'); }} />Etiquetas</label>
             <div className="border-t border-carbon/10" />
-            <button type="button" role="menuitem" onClick={() => { setOpenMenu(null); onAddAllLabels?.(); }} className="block min-h-11 w-full rounded px-2 text-left text-xs font-bold text-carbon hover:bg-carbon/5">Añadir etiquetas a todos</button>
-            <button type="button" role="menuitem" onClick={() => { setOpenMenu(null); onRemoveAllLabels?.(); }} className="block min-h-11 w-full rounded px-2 text-left text-xs font-bold text-carbon hover:bg-carbon/5">Quitar etiquetas a todos</button>
+            <button type="button" role="menuitem" onClick={() => { closePopover('diagram-menu-view'); onAddAllLabels?.(); }} className="block min-h-11 w-full rounded px-2 text-left text-xs font-bold text-carbon hover:bg-carbon/5">Añadir etiquetas a todos</button>
+            <button type="button" role="menuitem" onClick={() => { closePopover('diagram-menu-view'); onRemoveAllLabels?.(); }} className="block min-h-11 w-full rounded px-2 text-left text-xs font-bold text-carbon hover:bg-carbon/5">Quitar etiquetas a todos</button>
           </div>
-        )}
       </div>
 
       <span className="ml-auto hidden text-[10px] text-carbon/45 md:inline">Activa: <strong className="text-carbon/65">{currentToolLabel}</strong></span>

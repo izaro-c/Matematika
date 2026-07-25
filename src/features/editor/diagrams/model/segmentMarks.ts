@@ -167,3 +167,176 @@ export function setSegmentCongruenceMark(
     ],
   };
 }
+
+function parallelMarksForSegment(model: VisualDiagramModel, segment: VisualElement): VisualElement[] {
+  return model.elements.filter(candidate => (
+    candidate.kind === 'parallelMark'
+    && refsMatch(candidate.refs, segment.refs, true)
+  ));
+}
+
+export function parallelMarkForSegment(
+  model: VisualDiagramModel,
+  segmentId: string,
+): VisualElement | undefined {
+  const segment = model.elements.find(candidate => candidate.id === segmentId && candidate.kind === 'segment');
+  return segment ? parallelMarksForSegment(model, segment)[0] : undefined;
+}
+
+export function setSegmentParallelMark(
+  model: VisualDiagramModel,
+  segmentId: string,
+  requestedCount: number,
+  requestedHeight?: number,
+): VisualDiagramModel {
+  const segment = model.elements.find(candidate => candidate.id === segmentId && candidate.kind === 'segment');
+  if (!segment || segment.refs.length < 2) return model;
+
+  const existingMarks = parallelMarksForSegment(model, segment);
+  if (requestedCount <= 0) {
+    return removeSegmentMarks(model, new Set(existingMarks.map(mark => mark.id)));
+  }
+
+  const markCount = Math.max(1, Math.min(3, Math.round(requestedCount)));
+  const existing = existingMarks[0];
+  const markHeight = Math.max(0.05, requestedHeight ?? existing?.style?.markHeight ?? 0.42);
+  if (existing) {
+    return {
+      ...model,
+      elements: model.elements.map(candidate => candidate.id === existing.id
+        ? {
+            ...candidate,
+            properties: { ...candidate.properties, markCount },
+            style: { ...candidate.style, markHeight },
+          }
+        : candidate),
+    };
+  }
+
+  const id = generatedElementId('parallelMark', segment.refs, model.elements);
+  const label = `Marca de paralelismo de ${segment.label}`;
+  const mark = {
+    ...element(id, label, 'parallelMark', [...segment.refs], 'pavo', true, {
+      properties: { markCount },
+      style: { strokeWidth: 2, markHeight },
+    }),
+    layerId: segment.layerId,
+    order: nextLayerOrder(model, segment.layerId),
+  };
+
+  return {
+    ...model,
+    elements: [...model.elements, mark],
+    steps: model.steps.map(step => ({
+      ...step,
+      visibleTargets: step.visibleTargets.includes(id) ? step.visibleTargets : [...step.visibleTargets, id],
+    })),
+    dependencies: [
+      ...(model.dependencies ?? []),
+      ...segment.refs.map(sourceId => ({ sourceId, targetId: id, relation: 'construction' as const })),
+    ],
+  };
+}
+
+export function dimensionLineForSegment(
+  model: VisualDiagramModel,
+  segmentId: string,
+): VisualElement | undefined {
+  const segment = model.elements.find(candidate => candidate.id === segmentId && candidate.kind === 'segment');
+  if (!segment) return undefined;
+  return model.elements.find(candidate => (
+    candidate.kind === 'dimensionLine'
+    && (refsMatch(candidate.refs, segment.refs, true) || candidate.refs[0] === segment.id)
+  ));
+}
+
+export function toggleSegmentDimensionLine(
+  model: VisualDiagramModel,
+  segmentId: string,
+  enable: boolean,
+): VisualDiagramModel {
+  const segment = model.elements.find(candidate => candidate.id === segmentId && candidate.kind === 'segment');
+  if (!segment || segment.refs.length < 2) return model;
+
+  const existing = dimensionLineForSegment(model, segmentId);
+  if (!enable) {
+    return existing ? removeSegmentMarks(model, new Set([existing.id])) : model;
+  }
+  if (existing) return model;
+
+  const id = generatedElementId('dimensionLine', segment.refs, model.elements);
+  const label = `Cota de ${segment.label}`;
+  const dim = {
+    ...element(id, label, 'dimensionLine', [...segment.refs], 'carbon', true, {
+      properties: { offset: 0.4, precision: 2 },
+      style: { strokeWidth: 1.5 },
+    }),
+    layerId: segment.layerId,
+    order: nextLayerOrder(model, segment.layerId),
+  };
+
+  return {
+    ...model,
+    elements: [...model.elements, dim],
+    steps: model.steps.map(step => ({
+      ...step,
+      visibleTargets: step.visibleTargets.includes(id) ? step.visibleTargets : [...step.visibleTargets, id],
+    })),
+    dependencies: [
+      ...(model.dependencies ?? []),
+      ...segment.refs.map(sourceId => ({ sourceId, targetId: id, relation: 'construction' as const })),
+    ],
+  };
+}
+
+export function measurementForSegment(
+  model: VisualDiagramModel,
+  segmentId: string,
+): VisualElement | undefined {
+  const segment = model.elements.find(candidate => candidate.id === segmentId && candidate.kind === 'segment');
+  if (!segment) return undefined;
+  return model.elements.find(candidate => (
+    candidate.kind === 'measurement'
+    && (refsMatch(candidate.refs, segment.refs, true) || candidate.refs[0] === segment.id)
+  ));
+}
+
+export function toggleSegmentMeasurement(
+  model: VisualDiagramModel,
+  segmentId: string,
+  enable: boolean,
+): VisualDiagramModel {
+  const segment = model.elements.find(candidate => candidate.id === segmentId && candidate.kind === 'segment');
+  if (!segment || segment.refs.length < 2) return model;
+
+  const existing = measurementForSegment(model, segmentId);
+  if (!enable) {
+    return existing ? removeSegmentMarks(model, new Set([existing.id])) : model;
+  }
+  if (existing) return model;
+
+  const id = generatedElementId('measurement', segment.refs, model.elements);
+  const label = `Medida de ${segment.label}`;
+  const meas = {
+    ...element(id, label, 'measurement', [...segment.refs], 'carbon', true, {
+      properties: { precision: 2, unit: 'cm' },
+      style: { strokeWidth: 1.5 },
+    }),
+    layerId: segment.layerId,
+    order: nextLayerOrder(model, segment.layerId),
+  };
+
+  return {
+    ...model,
+    elements: [...model.elements, meas],
+    steps: model.steps.map(step => ({
+      ...step,
+      visibleTargets: step.visibleTargets.includes(id) ? step.visibleTargets : [...step.visibleTargets, id],
+    })),
+    dependencies: [
+      ...(model.dependencies ?? []),
+      ...segment.refs.map(sourceId => ({ sourceId, targetId: id, relation: 'construction' as const })),
+    ],
+  };
+}
+

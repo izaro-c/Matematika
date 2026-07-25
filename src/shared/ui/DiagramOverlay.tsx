@@ -30,6 +30,7 @@ interface DiagramInfoPanelProps {
   title?: string;
   position?: 'top-left' | 'top-right' | 'bottom-left' | 'bottom-right';
   layout?: 'overlay' | 'inline';
+  blockLayout?: 'stack' | 'columns';
   className?: string;
   children: React.ReactNode;
 }
@@ -42,6 +43,7 @@ export const DiagramInfoPanel: React.FC<DiagramInfoPanelProps> = ({
   title,
   position = 'bottom-right',
   layout = 'overlay',
+  blockLayout = 'stack',
   className = "",
   children
 }) => {
@@ -55,11 +57,16 @@ export const DiagramInfoPanel: React.FC<DiagramInfoPanelProps> = ({
     ? `absolute ${positionClasses[position]} z-10 bg-lienzo/90 backdrop-blur-[2px]`
     : 'relative w-full bg-transparent';
 
+  const blockLayoutClasses = blockLayout === 'columns'
+    ? 'flex flex-row flex-wrap gap-4 items-start'
+    : 'flex flex-col space-y-2';
+
   return (
     <aside
-      className={`${layoutClasses} max-w-[min(30rem,calc(100%-2rem))] min-w-[12rem] border-l-2 border-ocre/70 px-3 py-2 font-diagram text-xs leading-relaxed text-carbon/75 select-none ${className}`}
+      className={`${layoutClasses} max-w-[min(36rem,calc(100%-2rem))] min-w-[12rem] border-l-2 border-ocre/70 px-3 py-2 font-diagram text-xs leading-relaxed text-carbon/75 select-none ${className}`}
       data-diagram-info-panel
       data-layout={layout}
+      data-block-layout={blockLayout}
       data-position={position}
     >
       {title && (
@@ -67,7 +74,9 @@ export const DiagramInfoPanel: React.FC<DiagramInfoPanelProps> = ({
           {title}
         </div>
       )}
-      {children}
+      <div className={blockLayoutClasses}>
+        {children}
+      </div>
     </aside>
   );
 };

@@ -90,6 +90,7 @@ export const DiagramInspector: React.FC<DiagramInspectorProps> = ({
     <section
       ref={inspectorRef}
       className="diagram-inspector h-full overflow-y-auto bg-lienzo px-3 pb-4 [&_details]:rounded-none [&_details]:border-x-0 [&_details]:border-b-0"
+      style={{ scrollbarWidth: 'thin', scrollbarColor: 'var(--color-carbon, #333) transparent' }}
     >
       <InspectorHeader
         selectionSummary={selectionSummary}

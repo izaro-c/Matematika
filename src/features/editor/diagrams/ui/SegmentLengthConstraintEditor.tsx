@@ -7,7 +7,8 @@ import {
   removeConstraintFromModel,
   setEqualLengthConstraint,
 } from '../model/segmentLengthConstraints';
-import { DiagramButton, DiagramField, DiagramPanel } from './primitives';
+import { DiagramButton, DiagramPanel } from './primitives';
+import { DiagramFormField, diagramInputClassName } from './primitives/DiagramFormField';
 
 interface SegmentLengthConstraintEditorProps {
   model: VisualDiagramModel;
@@ -66,24 +67,26 @@ export const SegmentLengthConstraintEditor: React.FC<SegmentLengthConstraintEdit
 
         {endpoints.length > 0 && referenceSegments.length > 0 ? (
           <>
-            <DiagramField label="Extremo que se ajusta">
+            <DiagramFormField label="Extremo que se ajusta" className="p-0 border-0">
               <select
                 aria-label="Extremo que se ajusta para igualar longitudes"
+                className={diagramInputClassName}
                 value={movingEndpointId}
                 onChange={event => setMovingEndpointId(event.target.value)}
               >
                 {endpoints.map(point => <option key={point.id} value={point.id}>{point.label} ({point.id})</option>)}
               </select>
-            </DiagramField>
-            <DiagramField label="Segmento de referencia">
+            </DiagramFormField>
+            <DiagramFormField label="Segmento de referencia" className="p-0 border-0">
               <select
                 aria-label="Segmento de referencia para igualar longitudes"
+                className={diagramInputClassName}
                 value={effectiveSourceSegmentId}
                 onChange={event => setSourceSegmentId(event.target.value)}
               >
                 {referenceSegments.map(candidate => <option key={candidate.id} value={candidate.id}>{candidate.label} ({candidate.id})</option>)}
               </select>
-            </DiagramField>
+            </DiagramFormField>
             {ready ? (
               <p className="rounded bg-lienzo px-2 py-1.5 text-[10px] leading-relaxed text-carbon/60" aria-live="polite">
                 Se ajustará <strong>{movingEndpoint?.label}</strong>; <strong>{anchor?.label}</strong> quedará como ancla. La longitud será la de <strong>{sourceSegment?.label}</strong>.
