@@ -48,7 +48,7 @@ export const V2PublicationFrame: React.FC<V2PublicationFrameProps> = ({
         </span>
       </div>
 
-      <div className="flex flex-col bg-lienzo p-4" style={{ width: content.width }}>
+      <div className="flex flex-col bg-lienzo p-4">
         <header className="mb-4 space-y-2">
           <h1 className="font-serif text-xl font-bold text-carbon">{title ?? 'Sin título'}</h1>
           <div className="space-y-1.5">
