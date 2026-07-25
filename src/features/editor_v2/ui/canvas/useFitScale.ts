@@ -8,6 +8,8 @@ export function useFitScale(
   containerRef: RefObject<HTMLElement | null>,
   targetRef: RefObject<HTMLElement | null>,
   enabled: boolean,
+  /** Re-run when the scaled target remounts (e.g. publication frame mode switch). */
+  mountKey?: string | number | boolean,
 ): number {
   const [scale, setScale] = useState(1);
 
@@ -35,7 +37,7 @@ export function useFitScale(
     observer.observe(container);
     observer.observe(target);
     return () => observer.disconnect();
-  }, [enabled, containerRef, targetRef]);
+  }, [enabled, containerRef, targetRef, mountKey]);
 
   return enabled ? scale : 1;
 }
