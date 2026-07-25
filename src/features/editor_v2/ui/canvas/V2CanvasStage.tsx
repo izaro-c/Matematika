@@ -1,6 +1,7 @@
 import React, { useRef } from 'react';
 import type { VisualDiagramModel, CanvasTool } from '@/features/editor/diagrams/model/types';
 import { ReferencePickProvider } from '@/features/editor/diagrams/ui/relations';
+import { ErrorBoundary } from '@/widgets/layouts/ErrorBoundary';
 import { V2WorkshopSurface } from './V2WorkshopSurface';
 import { V2PublicationFrame } from './V2PublicationFrame';
 import { V2BoardHost } from './V2BoardHost';
@@ -64,7 +65,7 @@ export const V2CanvasStage: React.FC<V2CanvasStageProps> = ({
   const stageRef = useRef<HTMLDivElement>(null);
   const frameRef = useRef<HTMLDivElement>(null);
   const publication = isPublicationMode(frameMode);
-  const scale = useFitScale(stageRef, frameRef, publication);
+  const scale = useFitScale(stageRef, frameRef, publication, frameMode);
 
   if (!model) {
     return (
@@ -80,19 +81,29 @@ export const V2CanvasStage: React.FC<V2CanvasStageProps> = ({
       : model.steps[activeStepIndex]?.id ?? '';
 
   const boardHost = (
-    <V2BoardHost
-      model={model}
-      selectedIds={selectedIds}
-      activeTool={activeTool}
-      pendingRefs={pendingRefs}
-      previewHighlightId={previewHighlightId}
-      errorHighlightedIds={errorHighlightedIds}
-      activeStepId={activeStepId}
-      onSelect={onSelect}
-      onModelEdit={onModelEdit}
-      onChooseReferenceForTool={onChooseReferenceForTool}
-      onCompleteTool={onCompleteTool}
-    />
+    <ErrorBoundary
+      fallback={(
+        <div className="flex h-full w-full items-center justify-center p-6 font-serif text-carbon">
+          <p className="border-l-4 border-granada pl-4 text-carbon/70 italic" role="alert">
+            No se pudo renderizar el diagrama.
+          </p>
+        </div>
+      )}
+    >
+      <V2BoardHost
+        model={model}
+        selectedIds={selectedIds}
+        activeTool={activeTool}
+        pendingRefs={pendingRefs}
+        previewHighlightId={previewHighlightId}
+        errorHighlightedIds={errorHighlightedIds}
+        activeStepId={activeStepId}
+        onSelect={onSelect}
+        onModelEdit={onModelEdit}
+        onChooseReferenceForTool={onChooseReferenceForTool}
+        onCompleteTool={onCompleteTool}
+      />
+    </ErrorBoundary>
   );
 
   return (
