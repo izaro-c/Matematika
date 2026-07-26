@@ -1,10 +1,10 @@
 {
-  "indexedAt": "2026-07-25T13:21:06.320Z",
-  "gitHead": "c1d2892a6f355706c3bfa95a11426eb825e8da63",
-  "sourceFingerprint": "d6e1f8cb4445855a",
+  "indexedAt": "2026-07-26T11:25:52.813Z",
+  "gitHead": "8e436b71958d5ba9ab323fa4e1f4a6bf77e7aa1d",
+  "sourceFingerprint": "5ba5631c15c287b7",
   "mode": "full",
   "project": "home-izaro-Proiektuak-Matematika_Drafts",
   "nodes": 8696,
   "edges": 20771,
-  "reindexRequested": false
+  "reindexRequested": true
 }

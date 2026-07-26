@@ -1,7 +1,5 @@
 import React, { useEffect, useState } from 'react';
 import {
-  clearEditorAuthToken,
-  editorApiConfigured,
   editorApiUnavailableInProduction,
   editorRequiresAuthForWrites,
   editorWriteAccessGranted,
@@ -76,27 +74,3 @@ export const EditorApiStatusBanner: React.FC = () => {
   );
 };
 
-export const EditorApiWriteGuardNotice: React.FC<{ visible: boolean }> = ({ visible }) => {
-  if (!visible || !editorApiConfigured() || editorWriteAccessGranted()) return null;
-  return (
-    <p className="text-[11px] text-terracota">
-      Guardado desactivado hasta introducir el token de edición.
-    </p>
-  );
-};
-
-export function useEditorWriteAccess(): boolean {
-  const [granted, setGranted] = useState(editorWriteAccessGranted());
-
-  useEffect(() => {
-    const sync = () => setGranted(editorWriteAccessGranted());
-    window.addEventListener('storage', sync);
-    return () => window.removeEventListener('storage', sync);
-  }, []);
-
-  return granted;
-}
-
-export function revokeEditorWriteAccess(): void {
-  clearEditorAuthToken();
-}

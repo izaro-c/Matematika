@@ -470,7 +470,6 @@ function buildDesignTokenMap(): JsonRecord {
       const relPath = relative(filePath);
       return path.extname(filePath) === '.css'
         || /(^|\/)(tailwind|postcss)\.config\.[^/]+$/.test(relPath)
-        || relPath === 'src/shared/lib/theme.ts'
         || relPath === 'src/shared/lib/constants.ts';
     })
     .map(relative)
@@ -503,7 +502,6 @@ function buildDesignTokenMap(): JsonRecord {
   const tokenTexts = existingPaths([
     'src/app/index.css',
     'src/shared/lib/constants.ts',
-    'src/shared/lib/theme.ts',
   ]).map(filePath => readText(path.join(ROOT, filePath), 'design') ?? '').join('\n');
   const detectedThemeTokens = [...new Set(
     [...tokenTexts.matchAll(/--theme-([a-z0-9-]+)/g)].map(match => match[1]),
@@ -514,7 +512,6 @@ function buildDesignTokenMap(): JsonRecord {
     styleFiles,
     visualConstantFiles: existingPaths([
       'src/shared/lib/constants.ts',
-      'src/shared/lib/theme.ts',
       'src/app/index.css',
     ]),
     visualConstants,

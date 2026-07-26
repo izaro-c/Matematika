@@ -597,8 +597,6 @@ export const EditorPage: React.FC = () => {
         <SafetySummary
           currentFile={currentFile}
           presentation={safetyPresentation}
-          onReviewDiff={() => {}}
-          canReviewDiff={false}
           onSaveDraft={() => { void saveDraftCurrentFile(); }}
           canSaveDraft={canSaveDraft}
           compatibility={compatibility}
@@ -662,8 +660,6 @@ export const EditorPage: React.FC = () => {
         targetLabel={pendingFileNavigation ?? 'otro archivo'}
         presentation={safetyPresentation}
         onCancel={cancelPendingNavigation}
-        onReviewDiff={() => {}}
-        canReviewDiff={false}
         onSaveDraft={() => { void saveDraftCurrentFile(); }}
         onDiscardAndContinue={continuePendingNavigation}
         canSaveDraft={canSaveDraft}

@@ -1,5 +1,5 @@
 import { withResolvedPointConstraints } from '../../../../shared/diagrams/spec/scene';
-import { withConstraintDependencies } from './constraintOptions';
+import { uniqueConstraintId, withConstraintDependencies } from './constraintOptions';
 import { findPointLike, removeConstraintFromModel } from './segmentLengthConstraints';
 import type { VisualConstraint, VisualDiagramModel } from './types';
 
@@ -10,17 +10,6 @@ export function editableReflectionCandidates(model: VisualDiagramModel, targetId
     && element.id !== targetId
   ));
   return [...points, ...elements];
-}
-
-function uniqueConstraintId(model: VisualDiagramModel, basePrefix = 'cRefl'): string {
-  const existingIds = new Set((model.constraints || []).map(c => c.id));
-  let count = (model.constraints?.length || 0) + 1;
-  let candidate = `${basePrefix}${count}`;
-  while (existingIds.has(candidate)) {
-    count++;
-    candidate = `${basePrefix}${count}`;
-  }
-  return candidate;
 }
 
 export function reflectionConstraintForPoint(
@@ -79,7 +68,7 @@ export function setReflectionConstraintForPoint(
 
   const existing = reflectionConstraintForPoint(model, targetPointId);
   const next = existing ? removeConstraintFromModel(model, existing.id) : model;
-  const constraintId = existing?.id ?? uniqueConstraintId(next);
+  const constraintId = existing?.id ?? uniqueConstraintId(next, 'cRefl');
   const sourcePoint = sourcePointId ? findPointLike(next, sourcePointId) : undefined;
 
   const refs = sourcePoint
@@ -142,7 +131,7 @@ export function setReflectionConstraintForSegment(
     nextModel = setReflectionConstraintForPoint(nextModel, targetSegment.refs[1], centerOrAxisId);
   }
 
-  const constraintId = existingSegment?.id ?? uniqueConstraintId(nextModel);
+  const constraintId = existingSegment?.id ?? uniqueConstraintId(nextModel, 'cRefl');
   const centerOrAxis = findPointLike(nextModel, centerOrAxisId)
     ?? nextModel.elements.find(item => item.id === centerOrAxisId);
 

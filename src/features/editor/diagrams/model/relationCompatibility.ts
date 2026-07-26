@@ -1,8 +1,13 @@
 import type { VisualConstraint } from './types';
-import { constraintPresentation } from './constraintOptions';
 
 /** Relaciones que solo pueden existir una vez en el mismo punto. */
 const SINGLETON_KINDS = new Set<VisualConstraint['kind']>(['coincident', 'midpoint', 'reflection']);
+
+const SINGLETON_LABELS: Partial<Record<VisualConstraint['kind'], string>> = {
+  coincident: 'Coincidir con un punto',
+  midpoint: 'Punto medio',
+  reflection: 'Reflejo simétrico',
+};
 
 /** Pares de relaciones que no pueden coexistir en el mismo punto. */
 const INCOMPATIBLE_PAIRS: Array<[VisualConstraint['kind'], VisualConstraint['kind'], string]> = [
@@ -32,7 +37,8 @@ export function getConstraintConflictReason(
   const active = activeKinds.filter(kind => kind !== ignore);
 
   if (SINGLETON_KINDS.has(candidate) && active.includes(candidate)) {
-    return `Ya hay una relación «${constraintPresentation(candidate).label}». Edite la existente o elimínela antes de añadir otra.`;
+    const label = SINGLETON_LABELS[candidate] ?? candidate;
+    return `Ya hay una relación «${label}». Edite la existente o elimínela antes de añadir otra.`;
   }
 
   for (const kind of active) {

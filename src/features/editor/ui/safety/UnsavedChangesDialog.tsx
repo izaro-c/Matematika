@@ -7,10 +7,8 @@ interface UnsavedChangesDialogProps {
   targetLabel: string;
   presentation: SafetyPresentation;
   onCancel: () => void;
-  onReviewDiff: () => void;
   onSaveDraft: () => void;
   onDiscardAndContinue: () => void;
-  canReviewDiff: boolean;
   canSaveDraft: boolean;
 }
 
@@ -19,10 +17,8 @@ export const UnsavedChangesDialog: React.FC<UnsavedChangesDialogProps> = ({
   targetLabel,
   presentation,
   onCancel,
-  onReviewDiff,
   onSaveDraft,
   onDiscardAndContinue,
-  canReviewDiff,
   canSaveDraft,
 }) => {
   const cancelRef = useRef<HTMLButtonElement>(null);
@@ -71,14 +67,6 @@ export const UnsavedChangesDialog: React.FC<UnsavedChangesDialogProps> = ({
             className="rounded border border-carbon/20 px-3 py-2 text-xs font-bold text-carbon hover:bg-carbon/5 disabled:cursor-not-allowed disabled:opacity-45"
           >
             Guardar borrador
-          </button>
-          <button
-            type="button"
-            onClick={onReviewDiff}
-            disabled={!canReviewDiff}
-            className="rounded bg-carbon px-3 py-2 text-xs font-bold text-lienzo hover:bg-carbon/85 disabled:cursor-not-allowed disabled:opacity-45"
-          >
-            Revisar diff
           </button>
           <button
             type="button"

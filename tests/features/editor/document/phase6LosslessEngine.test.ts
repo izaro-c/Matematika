@@ -11,7 +11,6 @@ import {
   planBlockReplacement,
   planMetadataUpdate,
 } from '../../../../src/features/editor/document';
-import { buildDiffReview } from '../../../../src/features/editor/ux/diffReview';
 
 const validEnvelope = `export const metadata = {
   "id": "fase-seis-prueba",
@@ -112,26 +111,6 @@ Texto con <ConceptLink targetId="segmento">segmento</ConceptLink>.`;
     const deletion = planBlockDeletion(moved, movedParagraph.id);
     expect(deletion.preview.originalSnippet).toContain('Primero.');
     expect(applyMutationPlan(moved, deletion).source.length).toBeLessThan(moved.source.length);
-  });
-
-  it('produces a reviewable, operation-bound diff for a broad move', () => {
-    const source = `${validEnvelope}\n\n### Uno\n\nPrimero.\n\n### Dos\n\nSegundo.`;
-    const document = parseEditorDocument(source);
-    const headings = document.bodyBlocks.filter(block => block.kind === 'editable' && block.blockType === 'heading');
-    const move = planBlockMove(document, headings[1].id, 0);
-    const candidate = applyMutationPlan(document, move);
-    const review = buildDiffReview({
-      documentId: 'phase-6.mdx',
-      baseSource: source,
-      candidateSource: candidate.source,
-      localRevision: 1,
-      baseVersion: 'v1',
-      expectedRanges: move.edits.map(edit => ({ ...edit.range, operationId: edit.operationId, blockId: edit.blockId, reason: edit.reason ?? '' })),
-    });
-    expect(review.status).toBe('reviewable');
-    expect(review.blockingChangeCount).toBe(0);
-    expect(review.changes.length).toBeGreaterThan(0);
-    expect(review.changes.every(change => change.classification === 'expected')).toBe(true);
   });
 
   it('protects immutable IDs, invalid schemas, dynamic metadata and parse failures', () => {

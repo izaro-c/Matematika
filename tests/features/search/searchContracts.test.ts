@@ -10,7 +10,7 @@ import {
   TYPE_RESULT_LABELS,
   SEARCH_FUSE_OPTIONS,
   buildSearchIndex,
-} from '@/features/search/lib/searchContracts';
+} from '@/entities/content/searchApi';
 import { dictionary } from '@/shared/lib/glossaryDictionary';
 import { routePath } from '@/shared/lib/routeHelper';
 

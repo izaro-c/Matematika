@@ -9,7 +9,7 @@ import {
   ALL_TYPES,
   TYPE_COLORS,
   type SearchResult,
-} from '@/features/search/lib/searchContracts';
+} from '@/entities/content/searchApi';
 
 const BASELINE_TYPE_COLORS = {
   teorema: 'var(--theme-terracota)',

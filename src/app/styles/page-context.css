@@ -52,69 +52,6 @@
   }
 }
 
-/* === MINIGRAFO DE DEPENDENCIAS (LocalDependencyGraph) ====================== */
-.local-dependency-graph-container {
-  position: sticky;
-  top: var(--content-top);
-  max-height: calc(100svh - var(--content-top) - 2rem);
-  overflow-y: auto;
-  padding: 1.25rem;
-  border: 4px double color-mix(in srgb, var(--theme-carbon) 18%, transparent);
-  background: color-mix(in srgb, var(--theme-lienzo) 97%, var(--theme-pizarra));
-  box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--theme-carbon) 6%, transparent);
-}
-
-.local-dependency-graph-container h3 {
-  font-family: var(--font-sans-family);
-  font-size: 0.75rem;
-  font-weight: 600;
-  letter-spacing: 0.04em;
-  text-transform: none;
-  color: var(--theme-pizarra);
-  margin-top: 0;
-  margin-bottom: 1rem;
-  border-bottom: 1px solid color-mix(in srgb, var(--theme-carbon) 12%, transparent);
-  padding-bottom: 0.5rem;
-}
-
-.local-dependency-node {
-  transition: all 0.25s ease;
-  cursor: pointer;
-}
-
-.local-dependency-node:hover {
-  filter: brightness(0.9) contrast(1.1);
-}
-
-.local-dependency-edge {
-  stroke: color-mix(in srgb, var(--theme-carbon) 22%, transparent);
-  stroke-dasharray: 4 3;
-}
-
-@media (max-width: 1023px) {
-  .codex-diagram-sticky .local-dependency-graph-container {
-    display: none;
-  }
-}
-
-.metadata-sidebar .local-dependency-graph-container {
-  position: static;
-  max-height: none;
-  overflow-y: visible;
-  padding: 0;
-  border: none;
-  background: transparent;
-  box-shadow: none;
-  margin-top: 1rem;
-  margin-bottom: 2rem;
-}
-
-.metadata-sidebar .local-dependency-graph-container h3 {
-  font-size: 0.7rem;
-  color: var(--theme-terracota);
-  border-bottom-color: color-mix(in srgb, var(--theme-carbon) 10%, transparent);
-}
-
 /* === PATRONES CROMÁTICOS POR TIPO DE PÁGINA ============================== */
 .page-accent-scope .bg-arts-and-crafts {
   background-image:
@@ -128,12 +65,4 @@
   background-image:
     radial-gradient(circle at 20% 30%, color-mix(in srgb, var(--page-accent) 8%, transparent) 0%, transparent 40%),
     radial-gradient(circle at 80% 70%, color-mix(in srgb, var(--page-accent) 5%, transparent) 0%, transparent 40%);
-}
-
-.page-accent-scope .local-dependency-graph-container {
-  background-color: color-mix(in srgb, var(--theme-lienzo) 96%, var(--page-accent));
-}
-
-.page-accent-scope .metadata-sidebar .local-dependency-graph-container {
-  background: transparent;
 }

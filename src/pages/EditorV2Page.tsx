@@ -1,6 +1,6 @@
 import React, { useMemo } from 'react';
 import { useLocation } from 'wouter';
-import { EditorV2Main } from '@/features/editor_v2/ui/EditorV2Main';
+import { EditorV2Main } from '@/features/editor/v2/ui/EditorV2Main';
 import type { DiagramWorkbenchMode } from '@/features/editor/diagrams/hooks/useDiagramWorkbenchLoader';
 
 /**

@@ -24,7 +24,7 @@ export interface EditorDiagnostic {
   location?: SourceLocation;
   sourceRange?: SourceRange;
   blockId?: string;
-  panel?: 'visual' | 'code' | 'metadata' | 'diagram' | 'diff';
+  panel?: 'visual' | 'code' | 'metadata' | 'diagram';
   nodeType?: string;
   operationId?: string;
 }
