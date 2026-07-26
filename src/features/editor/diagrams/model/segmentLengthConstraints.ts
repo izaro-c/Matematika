@@ -1,19 +1,11 @@
-import { cleanTargetId, updatePoint } from './diagramElements';
-import { withConstraintDependencies } from './constraintOptions';
+import { updatePoint } from './diagramElements';
+import { uniqueConstraintId, withConstraintDependencies } from './constraintOptions';
 import type { VisualConstraint, VisualDiagramModel, VisualElement, VisualPoint } from './types';
 
 function sameEndpoints(segment: VisualElement, firstId: string, secondId: string): boolean {
   return segment.kind === 'segment'
     && segment.refs.includes(firstId)
     && segment.refs.includes(secondId);
-}
-
-function uniqueConstraintId(model: VisualDiagramModel, base: string): string {
-  const cleanBase = cleanTargetId(base, `constraint${(model.constraints?.length ?? 0) + 1}`);
-  let candidate = cleanBase;
-  let index = 2;
-  while (model.constraints?.some(constraint => constraint.id === candidate)) candidate = `${cleanBase}_${index++}`;
-  return candidate;
 }
 
 export function equalLengthConstraintForSegment(

@@ -24,9 +24,7 @@ function readablePersistenceStatus(status: string | undefined): string | undefin
 interface SafetySummaryProps {
   currentFile: string | null;
   presentation: SafetyPresentation;
-  onReviewDiff: () => void;
   onSaveDraft: () => void;
-  canReviewDiff: boolean;
   canSaveDraft: boolean;
   compatibility?: string;
   persistenceStatus?: string;
@@ -37,9 +35,7 @@ interface SafetySummaryProps {
 export const SafetySummary: React.FC<SafetySummaryProps> = ({
   currentFile,
   presentation,
-  onReviewDiff,
   onSaveDraft,
-  canReviewDiff,
   canSaveDraft,
   compatibility,
   persistenceStatus,
@@ -65,7 +61,7 @@ export const SafetySummary: React.FC<SafetySummaryProps> = ({
         </span>
         <h2 className="shrink-0 font-serif text-xs font-bold text-carbon">{presentation.title}</h2>
         <p className="hidden min-w-0 flex-1 truncate text-[10px] text-carbon/65 sm:block">{presentation.description}</p>
-        {(canSaveDraft || canReviewDiff) && <span className="hidden h-2 w-2 shrink-0 rounded-full bg-ocre sm:block" aria-label="Hay acciones de seguridad disponibles" />}
+        {canSaveDraft && <span className="hidden h-2 w-2 shrink-0 rounded-full bg-ocre sm:block" aria-label="Hay acciones de seguridad disponibles" />}
         <details className="group ml-auto shrink-0">
           <summary className="cursor-pointer list-none rounded border border-current/20 bg-lienzo/70 px-2 py-1 text-[10px] font-bold text-carbon/65 hover:bg-lienzo focus-visible:outline focus-visible:outline-2 focus-visible:outline-current [&::-webkit-details-marker]:hidden">
             Detalles <span aria-hidden="true">▾</span>
@@ -86,7 +82,6 @@ export const SafetySummary: React.FC<SafetySummaryProps> = ({
             </div>
             <div className="flex shrink-0 flex-wrap items-start gap-2">
               <button type="button" onClick={onSaveDraft} disabled={!canSaveDraft} className="rounded border border-carbon/20 bg-lienzo px-3 py-1.5 font-bold text-carbon hover:bg-carbon/5 disabled:cursor-not-allowed disabled:opacity-45" title={canSaveDraft ? 'Guardar borrador sin modificar el archivo real' : 'No hay cambios locales para guardar como borrador'}>Guardar borrador</button>
-              <button type="button" onClick={onReviewDiff} disabled={!canReviewDiff} className="rounded bg-carbon px-3 py-1.5 font-bold text-lienzo hover:bg-carbon/85 disabled:cursor-not-allowed disabled:opacity-45" title={canReviewDiff ? 'Revisar cambios antes de aplicar' : 'No hay diff pendiente o la validación bloquea la revisión'}>Revisar diff</button>
             </div>
           </div>
         </details>

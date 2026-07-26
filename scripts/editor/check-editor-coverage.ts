@@ -106,11 +106,6 @@ const criticalFiles: FileTarget[] = [
     thresholds: { lines: 90, branches: 80, functions: 90 },
   },
   {
-    name: 'Clasificación del diff',
-    pathSuffix: 'src/features/editor/ux/diffReview.ts',
-    thresholds: { lines: 95, branches: 80, functions: 95 },
-  },
-  {
     name: 'Guardas de guardado del editor',
     pathSuffix: 'src/features/editor/core/useEditorCore.ts',
     thresholds: { lines: 73, branches: 62, functions: 75 },

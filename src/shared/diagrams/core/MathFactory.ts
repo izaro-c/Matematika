@@ -470,19 +470,6 @@ export function createCurveAreaFills(
   }, theme, Math.min(96, Math.max(32, polygon.length)))).filter((polygon): polygon is JXGPolygon => Boolean(polygon));
 }
 
-export function createCurveAreaFill(
-  board: JXG.Board,
-  resolvePolygon: () => Coordinates[],
-  options: GeometryOptions = {},
-  theme: ThemeColors,
-): JXGPolygon | null {
-  const fills = createCurveAreaFills(board, () => {
-    const polygon = resolvePolygon();
-    return polygon.length >= 3 ? [polygon] : [];
-  }, options, theme);
-  return fills[0] ?? null;
-}
-
 export function createCongruenceMark(
   board: JXG.Board,
   points: [PointLike, PointLike],
@@ -1046,18 +1033,5 @@ export function createAreaIntersectionComposite(
   const composite = createComposite(fills) as AreaIntersectionComposite;
   composite.__matematikaAreaIntersection = { fills };
   return composite;
-}
-
-export function createAreaIntersectionFill(
-  board: JXG.Board,
-  resolvePolygon: () => Coordinates[],
-  options: GeometryOptions = {},
-  theme: ThemeColors,
-): JXGPolygon {
-  const fills = createAreaIntersectionFills(board, () => {
-    const polygon = resolvePolygon();
-    return polygon.length >= 3 ? [polygon] : [];
-  }, options, theme);
-  return createAreaIntersectionComposite(fills) as JXGPolygon;
 }
 

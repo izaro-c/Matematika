@@ -23,7 +23,6 @@ import type { DiagramTargetRegistry, EditorDiagramReference } from './editorType
 
 export type VisualSavePolicy = 'disabled' | 'manual-reviewed' | 'enabled';
 export const VISUAL_SAVE_POLICY: VisualSavePolicy = 'enabled';
-export const DRAFT_AUTOSAVE_ENABLED = false;
 
 interface OpenFileOptions {
   discardLocalChanges?: boolean;
@@ -263,12 +262,8 @@ export const useEditorCore = () => {
         return;
       }
       dispatch({ type: 'SOURCE_HASH_RESOLVED', file, source, sourceHash, localRevision: revision });
-      if (DRAFT_AUTOSAVE_ENABLED && active.version) {
-        coordinator?.scheduleDraft({ file, source, sourceHash, localRevision: revision,
-          baseVersion: active.version, editorSessionId });
-      }
     });
-  }, [coordinator, editorSessionId, saveIdentity, syncProjection]);
+  }, [saveIdentity, syncProjection]);
 
   const toggleEditorMode = useCallback(() => {
     if (editorMode === 'visual') { setEditorMode('code'); return; }

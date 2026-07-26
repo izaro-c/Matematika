@@ -53,7 +53,6 @@ if (typeof window !== 'undefined') {
   }
 }
 
-
 export type { DiagramWorkbenchMode } from '../hooks/useDiagramWorkbenchLoader';
 
 type CanvasProps = React.ComponentProps<typeof DiagramCanvas>;
@@ -83,15 +82,13 @@ const DiagramCanvasWithReferencePick: React.FC<Omit<CanvasProps, 'referencePickA
   );
 };
 
-interface DiagramWorkbenchCoreProps {
+type DiagramWorkbenchCoreProps = {
   isOpen: boolean;
   mode: DiagramWorkbenchMode;
   metadataType: string;
   onClose: () => void;
   onConfirm: (spec: EditorDiagramReference) => boolean | void | Promise<boolean | void>;
-}
-
-type DiagramWorkbenchAdapterProps = Omit<DiagramWorkbenchCoreProps, 'mode'>;
+};
 
 function paneDisplay(active: boolean, display: 'block' | 'flex'): string {
   if (!active) return 'hidden';
@@ -619,42 +616,6 @@ export const DiagramWorkbenchCore: React.FC<DiagramWorkbenchCoreProps> = ({
     </ReferencePickProvider>
   );
 };
-
-export const FileDiagramWorkbench: React.FC<DiagramWorkbenchAdapterProps & { path: string }> = ({
-  path,
-  ...props
-}) => (
-  <DiagramWorkbenchCore
-    {...props}
-    mode={{ kind: 'file', path }}
-  />
-);
-
-export const InlineDiagramWorkbench: React.FC<DiagramWorkbenchAdapterProps & {
-  source: string;
-  componentName?: string;
-  model?: Record<string, unknown> | null;
-}> = ({
-  source,
-  componentName,
-  model,
-  ...props
-}) => (
-  <DiagramWorkbenchCore
-    {...props}
-    mode={{ kind: 'inline', source, componentName, model }}
-  />
-);
-
-export const NewDiagramWorkbench: React.FC<DiagramWorkbenchAdapterProps & { componentName: string }> = ({
-  componentName,
-  ...props
-}) => (
-  <DiagramWorkbenchCore
-    {...props}
-    mode={{ kind: 'new', componentName }}
-  />
-);
 
 export const DiagramWorkbench = DiagramWorkbenchCore;
 export default DiagramWorkbench;

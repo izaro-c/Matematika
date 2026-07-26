@@ -1,4 +1,4 @@
-import { updatePoint } from './diagramElements';
+import { cleanTargetId, updatePoint } from './diagramElements';
 import type { PointConstraint, VisualConstraint, VisualDiagramModel } from './types';
 import { getConstraintConflictReason } from './relationCompatibility';
 
@@ -235,10 +235,17 @@ export function combinedConstraintBlockReason(
     ?? getConstraintConflictReason(activeKinds, kind, options);
 }
 
-export function uniqueConstraintId(model: VisualDiagramModel): string {
-  let index = (model.constraints?.length ?? 0) + 1;
-  while (model.constraints?.some(item => item.id === `constraint${index}`)) index += 1;
-  return `constraint${index}`;
+export function uniqueConstraintId(model: VisualDiagramModel, base?: string): string {
+  if (!base) {
+    let index = (model.constraints?.length ?? 0) + 1;
+    while (model.constraints?.some(item => item.id === `constraint${index}`)) index += 1;
+    return `constraint${index}`;
+  }
+  const cleanBase = cleanTargetId(base, `constraint${(model.constraints?.length ?? 0) + 1}`);
+  let candidate = cleanBase;
+  let index = 2;
+  while (model.constraints?.some(item => item.id === candidate)) candidate = `${cleanBase}_${index++}`;
+  return candidate;
 }
 
 export function getConstraintDisabledReason(
