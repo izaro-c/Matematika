@@ -2,7 +2,8 @@ import React, { useEffect, useMemo, useState } from 'react';
 import { useLocation } from 'wouter';
 import { useEditorCore } from '../core/useEditorCore';
 import { SemanticLinker } from './components/SemanticLinker';
-import { DiagramWorkbench, type DiagramWorkbenchMode } from '../diagrams/ui/DiagramWorkbench';
+import { DiagramWorkbenchHost } from '../diagrams/ui/DiagramWorkbenchHost';
+import type { DiagramWorkbenchMode } from '../diagrams/hooks/useDiagramWorkbenchLoader';
 import { DiagramRewriteDialog } from '../diagrams/ui/DiagramRewriteDialog';
 import type { EditorDiagramReference } from '../core/editorTypes';
 import { buildEditorSafetyPresentation } from '../ux/safetyPresentation';
@@ -623,7 +624,7 @@ export const EditorPage: React.FC = () => {
       />
 
       {/* Constructor Visual de Diagramas */}
-      <DiagramWorkbench
+      <DiagramWorkbenchHost
         isOpen={diagramBuilderOpen}
         mode={diagramWorkbenchMode}
         metadataType={String(metadata.type || '')}
