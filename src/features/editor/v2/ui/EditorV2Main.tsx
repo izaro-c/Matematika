@@ -35,7 +35,13 @@ import {
   supportElements,
   projectPointToSupport,
 } from '../../diagrams/model';
-import { makeVisibleInEveryStep } from '../../diagrams/hooks/useWorkbenchActions';
+import {
+  confirmWorkbench,
+  makeVisibleInEveryStep,
+  workbenchIsBlocked,
+} from '../../diagrams/hooks/useWorkbenchActions';
+import { buildTargets } from '../../diagrams/model/selectors';
+import type { EditorDiagramReference } from '../../core/editorTypes';
 import { V2Header } from './V2Header';
 import { V2Toolbar } from './V2Toolbar';
 import { V2CanvasStage } from './canvas/V2CanvasStage';
@@ -79,9 +85,17 @@ function ensureLayer(
 
 interface EditorV2MainProps {
   mode?: DiagramWorkbenchMode;
+  metadataType?: string;
+  onClose?: () => void;
+  onConfirm?: (spec: EditorDiagramReference) => boolean | void | Promise<boolean | void>;
 }
 
-export const EditorV2Main: React.FC<EditorV2MainProps> = ({ mode }) => {
+export const EditorV2Main: React.FC<EditorV2MainProps> = ({
+  mode,
+  metadataType = 'demostración',
+  onClose,
+  onConfirm,
+}) => {
   const {
     state,
     isDirty,
@@ -109,7 +123,7 @@ export const EditorV2Main: React.FC<EditorV2MainProps> = ({ mode }) => {
   useDiagramWorkbenchLoader({
     isOpen: Boolean(mode),
     mode: mode ?? { kind: 'new', componentName: 'TrianguloInteractivo' },
-    metadataType: 'demostración',
+    metadataType,
     loadDiagram,
     loadInlineDiagram,
     loadNewDiagram,
@@ -512,9 +526,61 @@ export const EditorV2Main: React.FC<EditorV2MainProps> = ({ mode }) => {
 
   const handleCloseEditor = useCallback(() => {
     if (isDirty && !window.confirm('Hay cambios sin guardar. ¿Cerrar el editor de todos modos?')) return;
+    if (onClose) {
+      onClose();
+      return;
+    }
     if (window.history.length > 1) window.history.back();
     else window.location.href = '/';
-  }, [isDirty]);
+  }, [isDirty, onClose]);
+
+  const handleSaveAndConfirm = useCallback(() => {
+    if (!model || !mode || !onConfirm) {
+      void saveDiagram();
+      return;
+    }
+    const isFileMode = mode.kind === 'file' || mode.kind === 'rewrite';
+    void confirmWorkbench({
+      shouldSave: isFileMode,
+      blocked: workbenchIsBlocked(
+        state.status,
+        state.diagnostics.some(diagnostic => diagnostic.severity === 'error'),
+      ),
+      save: saveDiagram,
+      reference: {
+        componentName: state.componentName,
+        category: model.category,
+        path: isFileMode ? mode.path : '',
+        importPath: isFileMode ? mode.path : '',
+        source: state.currentSource,
+        targets: buildTargets(model),
+        mode: model.mode,
+        visualModel: model as unknown as Record<string, unknown>,
+      },
+      onConfirm,
+      close: onClose ?? (() => undefined),
+    });
+  }, [
+    mode,
+    model,
+    onClose,
+    onConfirm,
+    saveDiagram,
+    state.componentName,
+    state.currentSource,
+    state.diagnostics,
+    state.status,
+  ]);
+
+  const handleSave = onConfirm ? handleSaveAndConfirm : () => { void saveDiagram(); };
+
+  const confirmBlocked = workbenchIsBlocked(
+    state.status,
+    state.diagnostics.some(diagnostic => diagnostic.severity === 'error'),
+  );
+  const effectiveSaveCapability = onConfirm
+    ? { ...saveCapability, allowed: Boolean(model) && !confirmBlocked }
+    : saveCapability;
 
   const clipboard = useDiagramClipboard({
     model,
@@ -568,8 +634,8 @@ export const EditorV2Main: React.FC<EditorV2MainProps> = ({ mode }) => {
         onTitleChange={handleTitleChange}
         sandboxMode={sandboxMode}
         isDirty={isDirty}
-        saveCapability={saveCapability}
-        onSave={() => void saveDiagram()}
+        saveCapability={effectiveSaveCapability}
+        onSave={handleSave}
         onCloseEditor={handleCloseEditor}
       />
 
@@ -592,8 +658,8 @@ export const EditorV2Main: React.FC<EditorV2MainProps> = ({ mode }) => {
             variant="inline"
             status={state.status}
             isDirty={isDirty}
-            saveCapability={saveCapability}
-            onSave={() => void saveDiagram()}
+            saveCapability={effectiveSaveCapability}
+            onSave={handleSave}
             onOpenDiagnostics={() => setActiveTab('diagnostics')}
           />
         </div>
