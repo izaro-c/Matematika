@@ -73,6 +73,20 @@ describe('DiagramStatusBar inline variant', () => {
     expect(screen.getByText('1 error')).toBeTruthy();
     expect(screen.getByRole('button', { name: 'Ver' })).toBeTruthy();
   });
+
+  it('shows Guardando… while saving and Guardado when up to date', () => {
+    const { rerender } = render(
+      <DiagramStatusBar variant="inline" status="saving" isDirty onSave={vi.fn()} />,
+    );
+    expect(screen.getByText('Guardando…')).toBeTruthy();
+    expect(screen.getByRole('button', { name: 'Guardar diagrama' })).toHaveProperty('disabled', true);
+
+    rerender(
+      <DiagramStatusBar variant="inline" status="synced" isDirty={false} onSave={vi.fn()} />,
+    );
+    expect(screen.getByText('Guardado')).toBeTruthy();
+    expect(screen.getByRole('button', { name: 'Guardar diagrama' })).toHaveProperty('disabled', true);
+  });
 });
 
 describe('DiagramStepPreviewControls', () => {

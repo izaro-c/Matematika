@@ -104,11 +104,11 @@ describe('diagram editor usability controls', () => {
     render(<DiagramToolbar model={model} canvasTool="select" syncStatus="synced" onSetCanvasTool={vi.fn()} onAddElement={vi.fn()} onModelEdit={vi.fn()} onAddSlider={vi.fn()} onAddGliderPoint={vi.fn()} onResolveDivergence={vi.fn()} guidedConstructions={<p>Selector guiado de prueba</p>} />);
 
     fireEvent.click(screen.getByRole('button', { name: /Añadir objeto/ }));
-    fireEvent.change(screen.getByLabelText('Buscar objeto para añadir'), { target: { value: 'panel informativo' } });
-    expect(screen.getByRole('menuitem', { name: 'Panel informativo' })).toBeTruthy();
+    fireEvent.change(screen.getByLabelText('Buscar objeto para añadir', { hidden: true }), { target: { value: 'panel informativo' } });
+    expect(screen.getByRole('menuitem', { name: 'Panel informativo', hidden: true })).toBeTruthy();
 
-    fireEvent.click(screen.getByRole('tab', { name: 'Construcciones guiadas' }));
-    expect(screen.getByText('Selector guiado de prueba')).toBeTruthy();
+    fireEvent.click(screen.getByRole('tab', { name: 'Construcciones guiadas', hidden: true }));
+    expect(screen.getByText('Selector guiado de prueba', { hidden: true })).toBeTruthy();
   });
 
   it('explains the geometric purpose of every selected reference', () => {

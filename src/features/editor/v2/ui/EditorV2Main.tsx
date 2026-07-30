@@ -57,7 +57,6 @@ import { V2MdxLinkModal } from './V2MdxLinkModal';
 import { V2GuidedConstructionsModal } from './V2GuidedConstructionsModal';
 import { DiagramConfirmDialog } from '../../diagrams/ui/DiagramConfirmDialog';
 import { DiagramDivergenceDialog } from '../../diagrams/ui/DiagramDivergenceDialog';
-import { DiagramStatusBar } from '../../diagrams/ui/DiagramStatusBar';
 import {
   effectiveSelection,
   primaryIdForSelection,
@@ -558,12 +557,10 @@ export const EditorV2Main: React.FC<EditorV2MainProps> = ({
         visualModel: model as unknown as Record<string, unknown>,
       },
       onConfirm,
-      close: onClose ?? (() => undefined),
     });
   }, [
     mode,
     model,
-    onClose,
     onConfirm,
     saveDiagram,
     state.componentName,
@@ -634,6 +631,8 @@ export const EditorV2Main: React.FC<EditorV2MainProps> = ({
         onTitleChange={handleTitleChange}
         sandboxMode={sandboxMode}
         isDirty={isDirty}
+        syncStatus={state.status}
+        allowCleanApply={Boolean(onConfirm) && mode?.kind !== 'file' && mode?.kind !== 'rewrite'}
         saveCapability={effectiveSaveCapability}
         onSave={handleSave}
         onCloseEditor={handleCloseEditor}
@@ -652,18 +651,7 @@ export const EditorV2Main: React.FC<EditorV2MainProps> = ({
         />
       </div>
 
-      {!sandboxMode && (
-        <div className="flex justify-end border-b border-carbon/10 bg-carbon/5 px-3 py-1">
-          <DiagramStatusBar
-            variant="inline"
-            status={state.status}
-            isDirty={isDirty}
-            saveCapability={effectiveSaveCapability}
-            onSave={handleSave}
-            onOpenDiagnostics={() => setActiveTab('diagnostics')}
-          />
-        </div>
-      )}
+
 
       <div className="flex flex-1 min-h-0 w-full overflow-hidden">
         <V2CanvasStage

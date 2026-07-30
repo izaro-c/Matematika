@@ -132,8 +132,8 @@ export const DemoAnguloExternoSpec = createDiagramSpec(
       "objectType": "point",
       "definition": {
         "type": "coordinates",
-        "x": 1.39,
-        "y": 1.31
+        "x": 1.32,
+        "y": 1.68
       },
       "mobility": {
         "type": "free"
@@ -199,8 +199,8 @@ export const DemoAnguloExternoSpec = createDiagramSpec(
       "objectType": "point",
       "definition": {
         "type": "coordinates",
-        "x": -4.74,
-        "y": 1.33
+        "x": -4.8100000000000005,
+        "y": 1.7
       },
       "mobility": {
         "type": "constrained",
@@ -235,8 +235,8 @@ export const DemoAnguloExternoSpec = createDiagramSpec(
       "objectType": "point",
       "definition": {
         "type": "coordinates",
-        "x": 7.5200000000000005,
-        "y": 1.29
+        "x": 7.45,
+        "y": 1.66
       },
       "mobility": {
         "type": "constrained",

@@ -231,7 +231,6 @@ export const DiagramWorkbenchCore: React.FC<DiagramWorkbenchCoreProps> = ({
     setPendingRefs,
     saveDiagram,
     onConfirm,
-    onClose,
     onRequestDeleteConfirmation: setDeleteConfirmation,
   });
 

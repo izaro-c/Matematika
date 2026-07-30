@@ -3,7 +3,7 @@ import type { VisualDiagramModel } from '../../diagrams/model/types';
 import type { EnrichedDiagramDiagnostic } from '../../diagrams/diagnostics';
 import type { DiagramSaveCapability } from '../../diagrams/model/selectors';
 import type { V2CanvasFrameMode } from './canvas/canvasFrameMode';
-import { IconSun, IconMoon, IconClose, IconSparkles } from './V2Icons';
+import { IconSun, IconMoon, IconClose } from './V2Icons';
 
 interface V2HeaderProps {
   model: VisualDiagramModel | null;
@@ -28,6 +28,9 @@ interface V2HeaderProps {
   onCloseEditor?: () => void;
   sandboxMode?: boolean;
   isDirty?: boolean;
+  syncStatus?: string;
+  /** When true, Guardar stays enabled even if clean (e.g. inline apply via onConfirm). */
+  allowCleanApply?: boolean;
   saveCapability?: DiagramSaveCapability;
   onSave?: () => void;
 }
@@ -45,7 +48,6 @@ export const V2Header: React.FC<V2HeaderProps> = ({
   onOpenCode,
   onOpenSettings,
   onOpenMdxLinks,
-  onOpenGuided,
   onResetViewport,
   diagnostics,
   errorCount,
@@ -55,6 +57,8 @@ export const V2Header: React.FC<V2HeaderProps> = ({
   onCloseEditor,
   sandboxMode = false,
   isDirty = false,
+  syncStatus,
+  allowCleanApply = false,
   saveCapability,
   onSave,
 }) => {
@@ -85,6 +89,17 @@ export const V2Header: React.FC<V2HeaderProps> = ({
   };
 
   const title = model?.title || 'Diagrama Sin Título';
+  const saving = syncStatus === 'saving';
+  const saveBlocked = saveCapability ? !saveCapability.allowed : false;
+  const saveUpToDate = !isDirty && !saving && !allowCleanApply;
+  const saveDisabled = saveBlocked || saving || saveUpToDate;
+  const saveChrome = saving
+    ? { label: 'Guardando…', className: 'bg-pizarra text-lienzo cursor-not-allowed', title: 'Guardando cambios…' }
+    : saveBlocked
+      ? { label: 'Guardar', className: 'bg-pavo/40 text-lienzo cursor-not-allowed', title: saveCapability?.summary ?? 'Guardado no disponible' }
+      : saveUpToDate
+        ? { label: 'Guardado', className: 'bg-musgo text-lienzo cursor-not-allowed', title: 'Diagrama al día' }
+        : { label: 'Guardar', className: 'bg-pavo text-lienzo hover:bg-pavo/80 cursor-pointer', title: 'Guardar cambios' };
 
   return (
     <header className="flex h-14 w-full items-center justify-between border-b border-carbon/15 bg-lienzo/95 px-4 backdrop-blur-md z-30 transition-colors">
@@ -214,15 +229,6 @@ export const V2Header: React.FC<V2HeaderProps> = ({
 
       {/* Sección Derecha: Acciones, Diagnósticos, Tema y Cerrar */}
       <div className="flex items-center space-x-1.5">
-        <button
-          type="button"
-          onClick={onOpenGuided}
-          className="flex items-center space-x-1 px-2.5 py-1.5 text-xs font-bold text-salvia hover:bg-salvia/10 rounded-lg transition-all cursor-pointer hidden lg:inline-flex"
-          title="Abrir asistente de construcciones guiadas"
-        >
-          <IconSparkles className="w-3.5 h-3.5" />
-          <span>Guiadas</span>
-        </button>
 
         <button
           type="button"
@@ -280,13 +286,13 @@ export const V2Header: React.FC<V2HeaderProps> = ({
           <button
             type="button"
             onClick={onSave}
-            disabled={!saveCapability?.allowed}
-            title={saveCapability?.allowed
-              ? (isDirty ? 'Guardar cambios' : 'No hay cambios pendientes')
-              : saveCapability?.summary ?? 'Guardado no disponible'}
-            className="flex items-center space-x-1 px-2.5 py-1.5 text-xs font-bold text-lienzo bg-pavo hover:bg-pavo/90 rounded-lg shadow-2xs transition-all cursor-pointer disabled:cursor-not-allowed disabled:opacity-40"
+            disabled={saveDisabled}
+            title={saveChrome.title}
+            aria-label="Guardar diagrama"
+            aria-busy={saving || undefined}
+            className={`flex items-center space-x-1 px-2.5 py-1.5 text-xs font-bold rounded-lg shadow-2xs transition-all ${saveChrome.className}`}
           >
-            Guardar
+            {saveChrome.label}
           </button>
         )}
 

@@ -119,19 +119,17 @@ export async function confirmWorkbench({
   save,
   reference,
   onConfirm,
-  close,
 }: {
   shouldSave: boolean;
   blocked: boolean;
   save: () => Promise<boolean>;
   reference: EditorDiagramReference;
   onConfirm: (spec: EditorDiagramReference) => boolean | void | Promise<boolean | void>;
-  close: () => void;
 }): Promise<void> {
+  // ponytail: save binds via onConfirm; exit is only Cerrar
   if (shouldSave && !await save()) return;
   if (!shouldSave && blocked) return;
-  if (await onConfirm(reference) === false) return;
-  close();
+  await onConfirm(reference);
 }
 
 export function chooseToolReference({
@@ -179,7 +177,6 @@ interface UseWorkbenchActionsOptions {
   setPendingRefs: (refs: string[]) => void;
   saveDiagram: () => Promise<boolean>;
   onConfirm: (spec: EditorDiagramReference) => boolean | void | Promise<boolean | void>;
-  onClose: () => void;
   onRequestDeleteConfirmation: (request: DeleteConfirmationRequest) => void;
 }
 
@@ -201,7 +198,6 @@ export function useWorkbenchActions({
   setPendingRefs,
   saveDiagram,
   onConfirm,
-  onClose,
   onRequestDeleteConfirmation,
 }: UseWorkbenchActionsOptions) {
   return useMemo(() => {
@@ -337,7 +333,6 @@ export function useWorkbenchActions({
       visualModel: model as unknown as Record<string, unknown>,
     },
     onConfirm,
-    close: onClose,
   });
 
   return {
@@ -373,7 +368,6 @@ export function useWorkbenchActions({
     setPendingRefs,
     saveDiagram,
     onConfirm,
-    onClose,
     onRequestDeleteConfirmation,
   ]);
 }

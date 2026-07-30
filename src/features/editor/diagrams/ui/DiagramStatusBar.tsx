@@ -44,23 +44,31 @@ export const DiagramStatusBar: React.FC<DiagramStatusBarProps> = ({
 
   const config = getStatusConfig(status);
   const isSaveBlocked = saveCapability ? !saveCapability.allowed : status === 'saving' || status === 'invalid-source' || status === 'diverged';
+  const saving = status === 'saving';
+  const upToDate = !isDirty && !saving;
+  const saveDisabled = isSaveBlocked || saving || upToDate;
   const blockSummary = isSaveBlocked ? saveCapability?.summary ?? presentation.description : undefined;
   const showDiagnosticsLink = isSaveBlocked && onOpenDiagnostics && saveCapability?.reason === 'validation-error';
+
+  const saveChrome = saving
+    ? { label: 'Guardando…', className: 'bg-pizarra text-lienzo cursor-not-allowed', title: 'Guardando cambios…' }
+    : isSaveBlocked
+      ? { label: variant === 'inline' ? 'Guardar' : 'Guardar diagrama', className: 'bg-carbon/10 text-carbon/35 cursor-not-allowed', title: blockSummary ?? 'Guardado bloqueado' }
+      : upToDate
+        ? { label: 'Guardado', className: 'bg-salvia text-lienzo cursor-not-allowed', title: 'Diagrama al día' }
+        : { label: variant === 'inline' ? 'Guardar' : 'Guardar diagrama', className: 'bg-carbon text-lienzo hover:bg-carbon/80 cursor-pointer', title: 'Guardar el TSX del diagrama' };
 
   const saveButton = (
     <button
       type="button"
       onClick={onSave}
-      disabled={isSaveBlocked}
-      className={`min-h-9 rounded px-3 text-[11px] font-bold transition-all ${
-        isSaveBlocked
-          ? 'bg-carbon/10 text-carbon/35 cursor-not-allowed'
-          : 'bg-carbon text-lienzo hover:bg-carbon/80 cursor-pointer'
-      }`}
-      title={isSaveBlocked ? blockSummary ?? 'Guardado bloqueado' : 'Guardar el TSX del diagrama'}
+      disabled={saveDisabled}
+      className={`min-h-9 rounded px-3 text-[11px] font-bold transition-all ${saveChrome.className}`}
+      title={saveChrome.title}
       aria-label="Guardar diagrama"
+      aria-busy={saving || undefined}
     >
-      {variant === 'inline' ? 'Guardar' : 'Guardar diagrama'}
+      {saveChrome.label}
     </button>
   );
 

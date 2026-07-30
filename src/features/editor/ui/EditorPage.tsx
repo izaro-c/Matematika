@@ -341,21 +341,12 @@ export const EditorPage: React.FC = () => {
     });
   };
 
-  const handleConfirmDiagram = async (spec: EditorDiagramReference): Promise<boolean> => {
+  const handleConfirmDiagram = async (spec: EditorDiagramReference): Promise<void> => {
     if (currentFile?.endsWith('.tsx')) {
       await loadFileList();
-      await openFile(currentFile, { discardLocalChanges: true });
-      setDiagramBuilderOpen(false);
-      setActiveDiagramBlockId(null);
-      setActiveDiagramIndex(null);
-      return true;
+      return;
     }
-
     bindDiagram(spec);
-    setDiagramBuilderOpen(false);
-    setActiveDiagramBlockId(null);
-    setActiveDiagramIndex(null);
-    return true;
   };
 
   const insertInteractiveTargetParagraph = (target: { id: string; label?: string; color?: string }) => {
