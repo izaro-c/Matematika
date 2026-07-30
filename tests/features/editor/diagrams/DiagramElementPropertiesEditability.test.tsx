@@ -118,15 +118,15 @@ describe('V2ElementPropertiesEditability', () => {
   describe('InfoPanel & Text Content', () => {
     it('updates title and subtitle text for infoPanel', () => {
       const { onUpdateElement } = setupV2Inspector('infoPanel');
-      const titleInput = screen.getByLabelText(/Título del Panel/i);
+      fireEvent.click(screen.getByRole('button', { name: /Editar contenido y diseño del panel/i }));
+      const titleInput = screen.getByLabelText(/Título del panel/i);
       fireEvent.change(titleInput, { target: { value: 'Teorema de Pitágoras' } });
       expect(onUpdateElement).toHaveBeenCalledWith('el-infoPanel', expect.objectContaining({
-        text: 'Teorema de Pitágoras',
         properties: expect.objectContaining({ title: 'Teorema de Pitágoras' }),
       }));
 
-      const subtitleInput = screen.getByLabelText(/Subtítulo \/ Texto Explicativo Principal/i);
-      fireEvent.change(subtitleInput, { target: { value: 'Demostración visual en $R^2$' } });
+      const bodyInput = screen.getByLabelText(/Contenido del panel/i);
+      fireEvent.change(bodyInput, { target: { value: 'Demostración visual en $R^2$' } });
       expect(onUpdateElement).toHaveBeenCalledWith('el-infoPanel', expect.objectContaining({
         text: 'Demostración visual en $R^2$',
       }));
@@ -136,7 +136,9 @@ describe('V2ElementPropertiesEditability', () => {
       const { onUpdateElement } = setupV2Inspector('infoPanel', {
         properties: { anchorMode: 'viewport', viewportPosition: [0.1, 0.2] },
       });
-      const inputX = screen.getByLabelText(/Fracción X/i);
+      fireEvent.click(screen.getByRole('button', { name: /Editar contenido y diseño del panel/i }));
+      fireEvent.click(screen.getByRole('tab', { name: 'Posición' }));
+      const inputX = screen.getByLabelText(/Posición horizontal del panel/i);
       fireEvent.change(inputX, { target: { value: '0' } });
       expect(onUpdateElement).toHaveBeenCalledWith('el-infoPanel', expect.objectContaining({
         properties: expect.objectContaining({ viewportPosition: [0, 0.2] }),

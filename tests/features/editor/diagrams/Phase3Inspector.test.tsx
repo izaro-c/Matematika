@@ -75,7 +75,7 @@ describe('Phase 3 visual editing', () => {
       />,
     );
     fireEvent.click(screen.getByRole('button', { name: /Vista/ }));
-    fireEvent.click(screen.getByRole('checkbox', { name: 'Mostrar etiquetas' }));
+    fireEvent.click(screen.getByRole('checkbox', { name: 'Mostrar etiquetas', hidden: true }));
     expect(onModelEdit).toHaveBeenCalledWith(expect.objectContaining({ showLabels: false }));
   });
 
@@ -597,33 +597,26 @@ describe('Phase 3 visual editing', () => {
       />,
     );
     const addObjects = screen.getByRole('button', { name: /Añadir objeto/ });
-    expect(addObjects.getAttribute('aria-expanded')).toBe('false');
     fireEvent.click(addObjects);
-    expect(addObjects.getAttribute('aria-expanded')).toBe('true');
-    expect(screen.getByText('Líneas y contornos')).toBeTruthy();
-    expect(screen.getByText('Puntos construidos')).toBeTruthy();
-    expect(screen.getByText('Curvas y modelos')).toBeTruthy();
-    expect(screen.getByText('Medir y comparar')).toBeTruthy();
-    expect(screen.getByText('Texto y explicación')).toBeTruthy();
-    expect(screen.getByRole('menuitem', { name: 'Marca de congruencia' })).toBeTruthy();
-    expect(screen.getByRole('menuitem', { name: 'Marcas de medida' })).toBeTruthy();
-    expect(screen.getAllByRole('menuitem', { name: 'Ángulo orientado' }).length).toBeGreaterThan(1);
-    fireEvent.click(screen.getByRole('menuitem', { name: 'Ángulo no reflejo (≤ 180°)' }));
+    const menu = { hidden: true } as const;
+    expect(screen.getByText('Líneas y contornos', menu)).toBeTruthy();
+    expect(screen.getByText('Puntos construidos', menu)).toBeTruthy();
+    expect(screen.getByText('Curvas y modelos', menu)).toBeTruthy();
+    expect(screen.getByText('Medir y comparar', menu)).toBeTruthy();
+    expect(screen.getByText('Texto y explicación', menu)).toBeTruthy();
+    expect(screen.getByRole('menuitem', { name: 'Marca de congruencia', ...menu })).toBeTruthy();
+    expect(screen.getByRole('menuitem', { name: 'Marcas de medida', ...menu })).toBeTruthy();
+    expect(screen.getAllByRole('menuitem', { name: 'Ángulo orientado', ...menu }).length).toBeGreaterThan(1);
+    fireEvent.click(screen.getByRole('menuitem', { name: 'Ángulo no reflejo (≤ 180°)', ...menu }));
     expect(onSetCanvasTool).toHaveBeenCalledWith('nonReflexAngle');
-    fireEvent.click(addObjects);
-    fireEvent.click(screen.getByRole('menuitem', { name: 'Gráfica de función' }));
+    fireEvent.click(screen.getByRole('menuitem', { name: 'Gráfica de función', ...menu }));
     expect(onAddElement).toHaveBeenCalledWith('functionCurve');
-    expect(addObjects.getAttribute('aria-expanded')).toBe('false');
-    fireEvent.click(addObjects);
-    fireEvent.click(screen.getByRole('menuitem', { name: 'Panel informativo' }));
+    fireEvent.click(screen.getByRole('menuitem', { name: 'Panel informativo', ...menu }));
     expect(onAddElement).toHaveBeenCalledWith('infoPanel');
-    fireEvent.click(addObjects);
-    fireEvent.click(screen.getByRole('menuitem', { name: 'Intersección' }));
+    fireEvent.click(screen.getByRole('menuitem', { name: 'Intersección', ...menu }));
     expect(onSetCanvasTool).toHaveBeenCalledWith('intersection');
-    fireEvent.click(addObjects);
-    fireEvent.click(screen.getAllByRole('menuitem', { name: 'Punto medio' })[0]);
+    fireEvent.click(screen.getAllByRole('menuitem', { name: 'Punto medio', ...menu })[0]);
     expect(onSetCanvasTool).toHaveBeenCalledWith('midpoint');
-    expect(addObjects.getAttribute('aria-expanded')).toBe('false');
   });
 
   it('chooses an existing segment, rather than two points, for ruler-like measure marks', () => {

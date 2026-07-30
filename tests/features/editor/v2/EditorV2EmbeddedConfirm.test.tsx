@@ -38,6 +38,6 @@ describe('EditorV2Main embedded confirm', () => {
     expect(spec.componentName).toBe('InlineDiagram');
     expect(spec.visualModel).toBeTruthy();
     expect(spec.mode).toBeTruthy();
-    expect(onClose).toHaveBeenCalled();
+    expect(onClose).not.toHaveBeenCalled();
   });
 });

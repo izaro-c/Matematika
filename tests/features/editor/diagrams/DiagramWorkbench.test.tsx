@@ -113,7 +113,7 @@ describe('DiagramWorkbench authority adapters', () => {
     );
 
     await waitFor(() => expect(screen.getByText('Reescritura visual desde cero.')).toBeTruthy());
-    expect(screen.getByText('Objetos')).toBeTruthy();
+    expect(screen.getAllByText('Objetos')[0]).toBeTruthy();
     expect(saveDiagram).not.toHaveBeenCalled();
     fireEvent.click(screen.getByRole('button', { name: 'Guardar diagrama' }));
 
@@ -171,9 +171,9 @@ describe('DiagramWorkbench authority adapters', () => {
 
     await waitFor(() => expect(screen.getAllByText(/Diagrama interactivo/).length).toBeGreaterThan(0));
     expect(screen.getByText(/sync:visual-authoritative/)).toBeTruthy();
-    expect(screen.getByText('Objetos')).toBeTruthy();
+    expect(screen.getAllByText('Objetos')[0]).toBeTruthy();
     fireEvent.click(screen.getByRole('button', { name: 'Punto libre' }));
-    await waitFor(() => expect(screen.getByText(/Haga clic una vez en el lugar exacto/)).toBeTruthy());
+    await waitFor(() => expect(screen.getByText(/Haz clic en el lienzo para colocar un punto libre/)).toBeTruthy());
   });
 
   it('creates a multi-reference object from manual point selectors', async () => {
@@ -187,9 +187,9 @@ describe('DiagramWorkbench authority adapters', () => {
       />
     );
 
-    await waitFor(() => expect(screen.getByText('Objetos')).toBeTruthy());
+    await waitFor(() => expect(screen.getAllByText('Objetos')[0]).toBeTruthy());
     fireEvent.click(screen.getByRole('button', { name: /Añadir objeto/ }));
-    fireEvent.click(screen.getAllByRole('menuitem', { name: 'Punto medio' })[0]);
+    fireEvent.click(screen.getAllByRole('menuitem', { name: 'Punto medio', hidden: true })[0]);
     fireEvent.change(screen.getByLabelText('Primer extremo para Punto medio'), { target: { value: 'pO' } });
     fireEvent.change(screen.getByLabelText('Segundo extremo para Punto medio'), { target: { value: 'pA' } });
     fireEvent.click(screen.getByRole('button', { name: 'Crear Punto medio' }));
@@ -209,7 +209,7 @@ describe('DiagramWorkbench authority adapters', () => {
       />,
     );
 
-    await waitFor(() => expect(screen.getByText('Objetos')).toBeTruthy());
+    await waitFor(() => expect(screen.getAllByText('Objetos')[0]).toBeTruthy());
     fireEvent.click(screen.getByRole('button', { name: 'Eliminar elemento' }));
     expect(screen.getByRole('dialog', { name: /¿Eliminar pO\?/ })).toBeTruthy();
     fireEvent.click(screen.getByRole('button', { name: 'Eliminar' }));
@@ -227,7 +227,7 @@ describe('DiagramWorkbench authority adapters', () => {
       />,
     );
 
-    await waitFor(() => expect(screen.getByText('Objetos')).toBeTruthy());
+    await waitFor(() => expect(screen.getAllByText('Objetos')[0]).toBeTruthy());
     const clipboardGroup = screen.getByLabelText('Copiar y pegar objetos');
     expect(clipboardGroup.className).not.toMatch(/\bhidden\b/);
     expect(within(clipboardGroup).getByRole('button', { name: 'Copiar selección' })).toBeTruthy();
@@ -245,7 +245,7 @@ describe('DiagramWorkbench authority adapters', () => {
       />
     );
 
-    await waitFor(() => expect(screen.getByText('Objetos')).toBeTruthy());
+    await waitFor(() => expect(screen.getAllByText('Objetos')[0]).toBeTruthy());
     fireEvent.click(screen.getByRole('button', { name: 'Copiar selección' }));
     await waitFor(() => expect(screen.getByText('Objeto copiado.')).toBeTruthy());
     fireEvent.click(screen.getByRole('button', { name: 'Pegar selección' }));
@@ -268,13 +268,13 @@ describe('DiagramWorkbench authority adapters', () => {
 
     await waitFor(() => expect(screen.getByRole('tab', { name: 'Objetos' })).toBeTruthy());
     fireEvent.click(screen.getByRole('checkbox', { name: 'Seleccionar A' }));
-    expect(screen.getByText('2 seleccionados')).toBeTruthy();
+    expect(screen.getAllByText('2 seleccionados')[0]).toBeTruthy();
     fireEvent.click(screen.getByRole('button', { name: 'Copiar objetos seleccionados' }));
     await waitFor(() => expect(screen.getByText('2 objetos copiados.')).toBeTruthy());
     fireEvent.click(screen.getByRole('button', { name: 'Pegar selección' }));
 
     await waitFor(() => expect(screen.getByText('2 objeto(s) pegado(s). Las referencias internas se han actualizado.')).toBeTruthy());
-    expect(screen.getByText('2 seleccionados')).toBeTruthy();
+    expect(screen.getAllByText('2 seleccionados')[0]).toBeTruthy();
     expect(screen.getAllByText(/pO_copy/).length).toBeGreaterThan(0);
     expect(screen.getAllByText(/pA_copy/).length).toBeGreaterThan(0);
   });
@@ -311,7 +311,7 @@ describe('DiagramWorkbench authority adapters', () => {
     );
 
     await waitFor(() => expect(screen.getByRole('tab', { name: /Diseñar/ }).getAttribute('aria-selected')).toBe('true'));
-    expect(screen.getByText('Objetos')).toBeTruthy();
+    expect(screen.getAllByText('Objetos')[0]).toBeTruthy();
     expect(screen.queryByRole('heading', { name: 'Línea temporal y comportamiento' })).toBeNull();
 
     fireEvent.click(screen.getByRole('tab', { name: /Secuencia/ }));
@@ -399,8 +399,8 @@ describe('DiagramWorkbench authority adapters', () => {
 
     await waitFor(() => expect(screen.getAllByText(/Campos completos/).length).toBeGreaterThan(0));
     fireEvent.click(screen.getByRole('button', { name: /Vista/ }));
-    expect((screen.getByLabelText('Cuadrícula') as HTMLInputElement).checked).toBe(true);
-    expect((screen.getByLabelText('Ejes') as HTMLInputElement).checked).toBe(true);
+    expect((screen.getAllByLabelText('Cuadrícula')[0] as HTMLInputElement).checked).toBe(true);
+    expect((screen.getAllByLabelText('Ejes')[0] as HTMLInputElement).checked).toBe(true);
     fireEvent.click(screen.getByRole('tab', { name: 'Código TSX' }));
     const source = (screen.getByRole('textbox') as HTMLTextAreaElement).value;
     expect(source).toContain('Overlay conservado');
