@@ -28,7 +28,7 @@ La revisión independiente se reserva para cambios de alto riesgo, dudas matemá
 
 - Una regla global cambia en `AGENTS.md`.
 - Un cambio de autoridad o protocolo cambia aquí.
-- Un estado, objetivo, prompt o informe cambia en `ai/`.
+- Un estado, objetivo o informe operativo cambia en `ai/`.
 - Un procedimiento reutilizable cambia en `.agents/skills/`.
 - Una integración específica cambia solo en su adaptador.
 

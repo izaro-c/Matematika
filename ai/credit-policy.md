@@ -1,26 +1,36 @@
-# Política de contexto y créditos
+# Política de contexto, créditos y rutas
 
 ## Paquete mínimo
 
-Toda sesión recibe:
+1. `AGENTS.md`
+2. `ai/current-state.md`
+3. Una fila de [`goals.md`](goals.md)
+4. La petición y los archivos directamente afectados
+5. Una skill solo si su descripción coincide
 
-1. `AGENTS.md`;
-2. `ai/current-state.md`;
-3. un objetivo de `ai/goals/`;
-4. la petición y los archivos directamente afectados;
-5. una skill solo cuando su descripción coincide.
+No adjuntar `docs/ai/` completo, todas las skills, árboles, logs ni informes previos salvo necesidad demostrada.
 
-No se adjuntan `docs/ai/`, todas las skills, árboles completos, logs largos ni informes previos salvo necesidad demostrada.
+## Ruta por tipo de trabajo
+
+| Trabajo | Goal | Skill / foco | Validación mínima |
+|---|---|---|---|
+| Refactor / bugfix | `code-quality` | code-graph si aplica; índices `project`/`component`/`debt` | `typecheck` → test dirigido → `depcruise` → `ai:review` |
+| UI / tokens | `ui-product` | índices `design-token`/`component` | `typecheck` → lint → test dirigido → `ai:review` |
+| Contenido MDX | `pedagogy` | `page-creator` (+ `diagrama` / `lean-formalizer` si toca) | refs → grafo → Lean si aplica |
+| Revisión pedagógica | `pedagogy` | solo lectura; hallazgos con evidencia | sin escritura hasta alcance explícito |
+| Grafo / navegación | `ui-product` o `code-quality` | índices `graph`/`content`; no editar JSON generado | validadores oficiales |
+| Lean | `pedagogy` | `lean-formalizer`; sin Mathlib | compile → regenerate → validate-lean |
+| Tooling | `automation` | scripts existentes; idempotente | caso ok + caso fallo; `ai:review` |
+| Antes de commit | el del diff | — | `ai:review` → comandos que recomiende |
+
+Declarar al empezar: objetivo, alcance, permitidos, prohibidos, validaciones, resultado esperado. Si cambia el alcance, parar y redeclarar.
 
 ## Escalado
 
-- Usar una sola herramienta para trabajo rutinario y verificable.
-- Añadir una revisión independiente solo ante alto riesgo, incertidumbre matemática, seguridad, migraciones o fallos repetidos.
-- Reservar modelos de mayor razonamiento para decisiones irreversibles o ambiguas; usar herramientas ligeras para inventarios, formato y comprobaciones mecánicas.
-- Reutilizar rutas, comandos y resultados; no volver a narrar el repositorio.
+- Una herramienta para lo rutinario.
+- Revisión independiente solo ante alto riesgo, duda matemática, seguridad, migraciones o fallos repetidos.
+- Segunda herramienta solo con hipótesis concreta.
 
-## Prompts y relevos
+## Relevo
 
-Un prompt operativo contiene objetivo, alcance permitido/prohibido, criterios de éxito y validación. El relevo contiene decisiones, diff, resultados, deuda y siguiente acción.
-
-Se recortan salidas de herramientas, se citan líneas o archivos y se resume lo ya comprobado. Si el estado cambia, se actualiza `current-state.md` en lugar de añadir contexto acumulativo a cada prompt.
+Objetivo, decisiones, archivos, resultados, deuda, siguiente acción. Actualizar `current-state.md` si el estado cambió.

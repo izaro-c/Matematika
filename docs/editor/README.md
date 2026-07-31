@@ -11,7 +11,7 @@ Referencia operativa del editor MDX y del workbench de diagramas. Los ADR explic
 | Persistencia | `src/features/editor/persistence/` | Versiones, conflictos, borradores, backups y recuperación. |
 | UI | `src/features/editor/ui/` | Navegación, autoría, diálogos, preview y estados. No accede al filesystem. |
 | Diagramas de autoría | `src/features/editor/diagrams/` | Modelo, parser/generador TSX, historial y workbench. |
-| Spec y runtime común | `src/shared/diagrams/spec/`, `runtime/` | `DiagramSpec v2`, semántica y renderer usado por editor, preview y publicación. |
+| Spec y runtime común | `src/shared/diagrams/spec/`, `runtime/` | `DiagramSpec v3` (lee v1/v2), semántica y renderer usado por editor, preview y publicación. |
 | Diagramas publicados | `src/widgets/diagrams/` | Componentes consumidos por MDX; usan el núcleo compartido. |
 | Backend local | `vite.config.ts`, `scripts/editor/editorPersistenceBackend.ts` | API de desarrollo y escritura atómica. |
 
@@ -26,9 +26,9 @@ El source completo es siempre la autoridad. Una edición visual nunca reconstruy
 | `read-only` | Lectura visual; escritura bloqueada. |
 | `unsupported` | Código autoritativo; conversión bloqueada. |
 
-La auditoría oficial del corpus actual mide 120/120 documentos como `fully-editable`, con metadata válida, 0 regiones opacas y roundtrip byte a byte 120/120. Es una métrica del corpus fechado, no una promesa de compatibilidad con MDX arbitrario: los clasificadores y bloqueos siguen siendo obligatorios para cualquier documento nuevo.
+La auditoría oficial del corpus actual mide roundtrip byte a byte y clasificación por documento; cifras vivas en [`ai/current-state.md`](../../ai/current-state.md). Es una métrica del corpus fechado, no una promesa de compatibilidad con MDX arbitrario.
 
-La auditoría de diagramas mide 85 componentes finales: 4 `visual-exact`, 81 `code-preview`, 26 componentes internos excluidos y 0 inválidos. No se anuncia edición visual exacta para los 81 casos de código.
+El soporte de diagramas (`visual-exact` vs `code-preview`) lo mide `npm run editor:diagrams:check`; no se anuncia edición visual exacta fuera de esa clasificación.
 
 ## Accesibilidad y responsive
 
