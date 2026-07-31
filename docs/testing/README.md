@@ -15,16 +15,16 @@
 |------|---------|--------------|
 | E2E editor | `npm run editor:test:e2e` | Puppeteer: UX segura del editor |
 | E2E diagramas | `npm run editor:test:visual` | Diagramas publicados (Pitágoras, Poincaré, ALA, Paralelogramo) |
-| Diagramas script | `npm run editor:diagrams:check` | 84 diagramas finales, visual-exact vs code-preview |
-| Roundtrip MDX | `npm run editor:roundtrip:check` | 120 MDX byte-a-byte |
+| Diagramas script | `npm run editor:diagrams:check` | Clasificación visual-exact vs code-preview |
+| Roundtrip MDX | `npm run editor:roundtrip:check` | Roundtrip byte-a-byte del corpus |
 
 ## Helpers compartidos
 
 | Archivo | Uso |
 |---------|-----|
-| [`tests/helpers/diagramRay.ts`](../helpers/diagramRay.ts) | Proyección sobre soportes, parámetro de rayo, simulación glider |
-| [`tests/helpers/assertions.ts`](../helpers/assertions.ts) | Alineación schema ↔ inspector |
-| [`tests/helpers/diagramWorkbench.ts`](../helpers/diagramWorkbench.ts) | Factory de mocks `diagramRepository` para tests del workbench |
+| [`tests/helpers/diagramRay.ts`](../../tests/helpers/diagramRay.ts) | Proyección sobre soportes, parámetro de rayo, simulación glider |
+| [`tests/helpers/assertions.ts`](../../tests/helpers/assertions.ts) | Alineación schema ↔ inspector |
+| [`tests/helpers/diagramWorkbench.ts`](../../tests/helpers/diagramWorkbench.ts) | Factory de mocks `diagramRepository` para tests del workbench |
 
 ## Convenciones
 
@@ -40,7 +40,7 @@
 
 ## CPT (Category Partition Tests)
 
-Teoría en [`tests/scripts/test-definitions.json`](../scripts/test-definitions.json). Regenerar tabla con:
+Teoría en [`tests/scripts/test-definitions.json`](../../tests/scripts/test-definitions.json). Regenerar tabla con:
 
 ```bash
 npm run test:report

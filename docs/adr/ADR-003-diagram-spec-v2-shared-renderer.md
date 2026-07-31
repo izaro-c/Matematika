@@ -2,7 +2,7 @@
 
 ## Estado
 
-Aceptada e implementada para escenas nuevas y fixtures representativos. Los diagramas TSX manuales de producción no se migran en esta fase.
+Superseded en el contrato serializable por **DiagramSpec v3** (`src/shared/diagrams/spec/v3.ts`; migración en `migrations.ts`). Siguen vigentes: renderer compartido, source como autoridad, y roundtrip exacto como umbral de `visual-exact`.
 
 ## Contexto
 

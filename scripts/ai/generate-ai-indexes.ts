@@ -262,7 +262,7 @@ function buildProjectMap(): JsonRecord {
     aiSourcesOfTruth: [
       { path: 'AGENTS.md', role: 'global rules and reading order' },
       { path: 'docs/ai/', role: 'multi-AI governance and formal protocol' },
-      { path: 'ai/', role: 'daily operational state, goals and generated indexes' },
+      { path: 'ai/', role: 'daily operational state, goals.md and generated indexes/reports' },
       { path: '.agents/skills/', role: 'reusable procedures loaded on demand' },
       { path: '.opencode/', role: 'official OpenCode adapter, not common policy' },
     ].filter(entry => fs.existsSync(path.join(ROOT, entry.path))),
