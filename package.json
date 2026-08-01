@@ -25,7 +25,7 @@
     "lint": "eslint .",
     "preview": "vite preview",
     "docs:build": "typedoc",
-    "docs:uml": "java -jar scripts/plantuml.jar docs/uml/lean_architecture.puml docs/uml/lean_pipeline_sequence.puml docs/uml/proof_trace_factor_bruijn.puml docs/uml/project_class_diagram.puml -o images",
+    "docs:uml": "bash -c '[ -f scripts/plantuml.jar ] || curl -fsSL -o scripts/plantuml.jar https://github.com/plantuml/plantuml/releases/download/v1.2025.2/plantuml-1.2025.2.jar' && java -jar scripts/plantuml.jar docs/uml/lean_architecture.puml docs/uml/lean_pipeline_sequence.puml docs/uml/proof_trace_factor_bruijn.puml docs/uml/project_class_diagram.puml -o images",
     "validate-graph": "tsx scripts/core/validate-logical-graph.ts",
     "validate-references": "tsx scripts/core/validate-cross-references.ts",
     "lean:build": "echo 'Lean deshabilitado por ahora'",

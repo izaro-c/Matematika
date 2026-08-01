@@ -2,7 +2,7 @@ import { Suspense, useEffect, useState, useRef, useCallback } from 'react';
 import { Link, useParams } from 'wouter';
 import { MDXProvider } from '@mdx-js/react';
 import { db } from '@/entities/content';
-import { useProgressStore } from '@/features/progress/UserProgressStore';
+import { useProgressStore } from '@/shared/stores/UserProgressStore';
 import { Capitular, BlockTitle, OrnamentalDivider } from '@/widgets/mdx/MDXBlocks';
 import { StudyPlanContext } from '@/features/progress/context/StudyPlanContext';
 import { GlossaryLink } from '@/shared/ui/GlossaryLink';

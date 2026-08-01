@@ -3,7 +3,7 @@ import { describe, expect, it } from 'vitest';
 import { parseDiagramSourceAST } from '../../../../scripts/editor/parseDiagramSourceAST';
 import { generateDiagramSource } from '../../../../src/features/editor/diagrams/source/generator';
 import { buildTargets } from '../../../../src/features/editor/diagrams/model/selectors';
-import { updateElement, updateSlider, editorV2 } from '../../../../src/features/editor/diagrams/model';
+import { updateElement, updateSlider, workingScene } from '../../../../src/features/editor/diagrams/model';
 import {
   evaluateMathExpression,
   expressionVariables,
@@ -32,7 +32,7 @@ function readModel(source: string): DiagramSpecV2 {
 
 /** Compare editor payloads ignoring meta that may differ on reopen. */
 function editorPayload(model: DiagramSpecV2) {
-  const payload = { ...editorV2(model) } as Record<string, unknown>;
+  const payload = { ...workingScene(model) } as Record<string, unknown>;
   delete payload.version;
   delete payload.renderer;
   delete payload.dependencies;

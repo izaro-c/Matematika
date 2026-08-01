@@ -9,7 +9,7 @@ import {
 import {
   createTemplateModel,
   duplicateStep,
-  editorV2,
+  workingScene,
   moveStep,
   removeStep,
   renameElement,
@@ -123,13 +123,13 @@ describe('Phase 4 step model', () => {
       ...model,
       points: model.points.map((item, index) => index < 2 ? { ...item, targetId: 'duplicado' } : item),
     };
-    expect(parseDiagramSpecV2(editorV2(duplicateTarget)).success).toBe(false);
+    expect(parseDiagramSpecV2(workingScene(duplicateTarget)).success).toBe(false);
 
     const missing = {
       ...model,
       steps: model.steps.map((item, index) => index === 0 ? { ...item, visibleTargets: [...item.visibleTargets, 'no-existe'] } : item),
     };
-    expect(parseDiagramSpecV2(editorV2(missing)).success).toBe(false);
+    expect(parseDiagramSpecV2(workingScene(missing)).success).toBe(false);
 
     const invalidOverlay = {
       ...model,
@@ -144,7 +144,7 @@ describe('Phase 4 step model', () => {
         },
       } : item),
     };
-    const parsed = parseDiagramSpecV2(editorV2(invalidOverlay));
+    const parsed = parseDiagramSpecV2(workingScene(invalidOverlay));
     expect(parsed.success).toBe(false);
     if (!parsed.success) expect(parsed.error.message).toContain('objetoFantasma.x');
   });

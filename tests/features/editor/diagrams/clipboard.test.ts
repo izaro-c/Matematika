@@ -2,7 +2,7 @@ import { describe, expect, it } from 'vitest';
 import {
   createDiagramClipboard,
   createTemplateModel,
-  editorV2,
+  workingScene,
   element,
   parseDiagramClipboard,
   pasteDiagramClipboard,
@@ -25,7 +25,7 @@ describe('diagram structured clipboard', () => {
     expect(pasted.refs).toEqual(segment.refs.map(ref => `${ref}_copy`));
     expect(pasted.targetId).not.toBe(segment.targetId);
     expect(result.selectedId).toBe(pasted.id);
-    expect(parseDiagramSpecV2(editorV2(result.model)).success).toBe(true);
+    expect(parseDiagramSpecV2(workingScene(result.model)).success).toBe(true);
   });
 
   it('copies a group as one coherent subgraph and rewrites expressions, targets and step states', () => {
@@ -71,7 +71,7 @@ describe('diagram structured clipboard', () => {
     expect(pastedGroup.targetId).not.toBe('construction-ab');
     expect(result.model.dependencies).toContainEqual({ sourceId: 'segAB_copy', targetId: 'formulaArea_copy', relation: 'expression', constraintId: undefined });
     expect(result.model.steps[0].visibleTargets).toEqual(expect.arrayContaining(['pA_copy', 'pB_copy', 'segAB_copy', 'formulaArea_copy']));
-    expect(parseDiagramSpecV2(editorV2(result.model)).success).toBe(true);
+    expect(parseDiagramSpecV2(workingScene(result.model)).success).toBe(true);
   });
 
   it('rewrites expressions nested in composite panel blocks and their variants', () => {
@@ -101,7 +101,7 @@ describe('diagram structured clipboard', () => {
       expression: 'segAB_copy.length',
       rules: [{ when: 'gt(segAB_copy.length,2)', expression: 'segAB_copy.length^2' }],
     });
-    expect(parseDiagramSpecV2(editorV2(result.model)).success).toBe(true);
+    expect(parseDiagramSpecV2(workingScene(result.model)).success).toBe(true);
   });
 
   it('rejects arbitrary clipboard text', () => {

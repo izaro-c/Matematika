@@ -2,7 +2,7 @@ import { useParams } from 'wouter';
 import { Suspense, useEffect } from 'react';
 import { db } from '@/entities/content';
 import { ContentDiagram, ContentLayout } from '@/widgets/layouts/ContentLayout';
-import { useProgressStore } from '@/features/progress/UserProgressStore';
+import { useProgressStore } from '@/shared/stores/UserProgressStore';
 import { ReadingButton } from '@/features/progress/ui/ReadingButton';
 import { FadeIn } from '@/shared/ui/FadeIn';
 import { ContentHeader } from '@/widgets/content/ContentHeader';

@@ -8,7 +8,7 @@ import {
   type DiagramSceneItem,
 } from '../../../../shared/diagrams/spec';
 import type { DiagramObject, DiagramSpecV3 } from '../../../../shared/diagrams/spec/v3';
-import { editorV2, toCanonicalV3 } from './editorModel';
+import { workingScene, toCanonicalV3 } from './editorModel';
 import type { VisualDiagramModel } from './types';
 
 const REFLECTION_AXIS_KINDS = new Set(['segment', 'line', 'ray']);
@@ -25,7 +25,7 @@ export function v3ObjectsWithCapability(model: VisualDiagramModel, capability: D
 
 /** Candidatos de escena filtrados por capacidad semántica. */
 export function legacySceneCandidates(model: VisualDiagramModel, capability: DiagramCapability): DiagramSceneItem[] {
-  return legacyReferenceCandidates(editorV2(model), capability);
+  return legacyReferenceCandidates(workingScene(model), capability);
 }
 
 export function pointLikeCandidates(model: VisualDiagramModel): DiagramSceneItem[] {

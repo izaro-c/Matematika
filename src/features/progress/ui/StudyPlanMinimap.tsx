@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useProgressStore } from '@/features/progress/UserProgressStore';
+import { useProgressStore } from '@/shared/stores/UserProgressStore';
 import { db } from '@/entities/content';
 
 interface StudyPlanMinimapProps {

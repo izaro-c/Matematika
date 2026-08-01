@@ -1,7 +1,7 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest';
 import { render, screen, fireEvent, waitFor } from '@testing-library/react';
 import { SearchOmnibar } from '@/widgets/navigation/SearchOmnibar';
-import { useNavigationStore } from '@/entities/content/searchApi';
+import { useNavigationStore } from '@/shared/stores/NavigationStore';
 import { appPath, publicAsset } from '@/shared/lib/routeHelper';
 
 // Mocks para wouter y stores para evitar errores de renderizado
@@ -9,15 +9,11 @@ vi.mock('wouter', () => ({
   useLocation: () => ['/', vi.fn()]
 }));
 
-vi.mock('@/entities/content/searchApi', async (importOriginal) => {
-  const actual = await importOriginal<typeof import('@/entities/content/searchApi')>();
-  return {
-    ...actual,
-    useNavigationStore: vi.fn(),
-  };
-});
+vi.mock('@/shared/stores/NavigationStore', () => ({
+  useNavigationStore: vi.fn(),
+}));
 
-vi.mock('@/features/glossary/GlossaryStore', () => ({
+vi.mock('@/shared/stores/GlossaryStore', () => ({
   useGlossaryStore: () => ({
     openTerm: vi.fn()
   }),

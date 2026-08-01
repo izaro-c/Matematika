@@ -59,7 +59,7 @@ export const PublicationFrame: React.FC<PublicationFrameProps> = ({
         </header>
 
         <div
-          data-testid="v2-publication-diagram-slot"
+          data-testid="publication-diagram-slot"
           className="overflow-hidden rounded border border-carbon/10 bg-lienzo"
           style={{ width: content.width, height: content.height }}
         >

@@ -3,10 +3,10 @@ import { PALETTE_TOKENS } from '../../paletteTokens';
 import type { ElementPanelProps } from '../../types';
 import { availableLayers } from '../../utils';
 import {
-  v2ShowsAngleRadius,
-  v2ShowsDashed,
-  v2ShowsFillOpacity,
-  v2ShowsStrokeControls,
+  showsAngleRadius,
+  showsDashed,
+  showsFillOpacity,
+  showsStrokeControls,
 } from '../../elementSections';
 import { DiagramNativeLabelEditor } from '@/features/editor/diagrams/ui/DiagramNativeLabelEditor';
 import { elementInspectorCapabilities } from '@/features/editor/diagrams/model/elementInspectorCapabilities';
@@ -18,10 +18,10 @@ export const ElementStyleSection: React.FC<ElementPanelProps> = ({
   onUpdateElement,
 }) => {
   const layers = availableLayers(model);
-  const showStroke = v2ShowsStrokeControls(element.kind);
-  const showFill = v2ShowsFillOpacity(element.kind, element.properties?.areaFill);
-  const showAngleRadius = v2ShowsAngleRadius(element.kind);
-  const showDashed = v2ShowsDashed(element.kind);
+  const showStroke = showsStrokeControls(element.kind);
+  const showFill = showsFillOpacity(element.kind, element.properties?.areaFill);
+  const showAngleRadius = showsAngleRadius(element.kind);
+  const showDashed = showsDashed(element.kind);
   const capabilities = elementInspectorCapabilities(element.kind);
   const attachedLabel = element.kind === 'label'
     ? undefined

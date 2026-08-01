@@ -1,6 +1,6 @@
 import { migrateDiagramSpecV2ToV3, parseDiagramSpecV3 } from '../../../../shared/diagrams/spec';
 import { z } from 'zod';
-import { editorV2 } from '../model/editorModel';
+import { workingScene } from '../model/editorModel';
 import type { VisualDiagramModel } from '../model/types';
 
 export interface DiagramDiagnostic {
@@ -54,7 +54,7 @@ export function generateDiagramSource(model: VisualDiagramModel, componentName: 
 
   // Preferir objetos V3 del modelo cuando ya están canónicos; reify desde escena
   // solo aporta el contrato validable sin pasar por resolve de runtime.
-  const currentSpec = migrateDiagramSpecV2ToV3(editorV2(model));
+  const currentSpec = migrateDiagramSpecV2ToV3(workingScene(model));
   const currentParsed = parseDiagramSpecV3(currentSpec);
   if (!currentParsed.success) {
     return {

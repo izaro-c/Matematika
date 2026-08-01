@@ -2,9 +2,9 @@ import { useState, useMemo } from 'react';
 import { Link } from 'wouter';
 import { Logo } from "@/shared/ui/Logo";
 import { UI } from '@/shared/design';
-import { dictionary } from '@/features/glossary/GlossaryStore';
+import { dictionary } from '@/shared/stores/GlossaryStore';
 import { db } from '@/entities/content';
-import type { GlossaryCategory, GlossaryEntry } from '@/features/glossary/GlossaryStore';
+import type { GlossaryCategory, GlossaryEntry } from '@/shared/stores/GlossaryStore';
 import katex from 'katex';
 
 /**

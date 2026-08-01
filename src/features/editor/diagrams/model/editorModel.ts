@@ -55,11 +55,10 @@ function mergeEnumerableScene(inputSpec: DiagramSpecV3, projected: DiagramSpecV2
 }
 
 /**
- * Copia de trabajo V2 para mutaciones / reify.
- * Si la escena ya está materializada (workbench), se usa tal cual — sin
- * project+resolve, que rompería roundtrip o fixtures incompletos.
+ * Escena de trabajo (proyección V2) para mutaciones del runtime shared.
+ * Preferir `applySceneMutation` desde UI — no usar esta proyección fuera del model.
  */
-export function editorV2(model: VisualDiagramModel | DiagramSpecV2 | DiagramSpec): DiagramSpecV2 {
+export function workingScene(model: VisualDiagramModel | DiagramSpecV2 | DiagramSpec): DiagramSpecV2 {
   if (model.version === 2) return model;
   if (Object.prototype.propertyIsEnumerable.call(model, 'points')) {
     return sceneFieldsToV2(model as VisualDiagramModel);
@@ -67,17 +66,17 @@ export function editorV2(model: VisualDiagramModel | DiagramSpecV2 | DiagramSpec
   return mergeEnumerableScene(model, toWorkingSceneV2(model));
 }
 
-/** Reifica una escena V2 como modelo de editor (V3 + escena enumerable). */
-export function fromEditorV2(v2: DiagramSpecV2): VisualDiagramModel {
-  const v3: DiagramSpecV3 = migrateDiagramSpecV2ToV3(v2);
+/** Reifica una escena de trabajo como modelo de editor (V3 + escena enumerable). */
+export function materializeEditorModel(scene: DiagramSpecV2): VisualDiagramModel {
+  const v3: DiagramSpecV3 = migrateDiagramSpecV2ToV3(scene);
   return {
     ...v3,
-    points: v2.points.map(point => ({ ...point })),
-    elements: v2.elements.map(element => ({ ...element })),
-    sliders: v2.sliders.map(slider => ({ ...slider })),
-    constraints: v2.constraints?.map(constraint => ({ ...constraint })),
-    dependencies: v2.dependencies?.map(dependency => ({ ...dependency })),
-    extensions: { ...(v2.extensions ?? {}) },
+    points: scene.points.map(point => ({ ...point })),
+    elements: scene.elements.map(element => ({ ...element })),
+    sliders: scene.sliders.map(slider => ({ ...slider })),
+    constraints: scene.constraints?.map(constraint => ({ ...constraint })),
+    dependencies: scene.dependencies?.map(dependency => ({ ...dependency })),
+    extensions: { ...(scene.extensions ?? {}) },
   };
 }
 
@@ -86,29 +85,39 @@ export function toEditorModel(value: unknown): VisualDiagramModel | null {
   if (!value || typeof value !== 'object') return null;
   const record = value as Record<string, unknown>;
   try {
-    // Ya materializado por el workbench (V3 + escena enumerable).
     if (record.version === 3 && Array.isArray(record.objects) && Array.isArray(record.points)) {
       return value as VisualDiagramModel;
     }
-    return fromEditorV2(editorV2(migrateDiagramSpec(value).spec));
+    return materializeEditorModel(workingScene(migrateDiagramSpec(value).spec));
   } catch {
     return null;
   }
 }
 
-/** Aplica un patch estilo V2 sobre el modelo canónico. */
+/** Aplica un patch estilo escena sobre el modelo canónico. */
 export function patchEditorScene(
   model: VisualDiagramModel,
-  patch: Partial<DiagramSpecV2> | ((v2: DiagramSpecV2) => DiagramSpecV2),
+  patch: Partial<DiagramSpecV2> | ((scene: DiagramSpecV2) => DiagramSpecV2),
 ): VisualDiagramModel {
-  const current = editorV2(model);
+  const current = workingScene(model);
   const next = typeof patch === 'function' ? patch(current) : { ...current, ...patch };
-  return fromEditorV2(next);
+  return materializeEditorModel(next);
+}
+
+/**
+ * Mutación V3-first: el caller opera sobre la escena de trabajo y recibe
+ * VisualDiagramModel canónico. Un solo roundtrip en el model layer.
+ */
+export function applySceneMutation(
+  model: VisualDiagramModel,
+  mutate: (scene: DiagramSpecV2) => DiagramSpecV2 | DiagramSpec,
+): VisualDiagramModel {
+  return materializeEditorModel(workingScene(mutate(workingScene(model))));
 }
 
 /** Reify V3 puro (sin campos de escena) para proyección/capacidades. */
 export function toCanonicalV3(model: VisualDiagramModel): DiagramSpecV3 {
-  return migrateDiagramSpecV2ToV3(editorV2(model));
+  return migrateDiagramSpecV2ToV3(workingScene(model));
 }
 
 export type { DiagramSpec };

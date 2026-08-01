@@ -1,5 +1,5 @@
 import { DiagramSpecMigrationError, migrateDiagramSpec } from '../../../../shared/diagrams/spec';
-import { fromEditorV2, editorV2 } from '../model/editorModel';
+import { materializeEditorModel, workingScene } from '../model/editorModel';
 import type { VisualDiagramModel } from '../model/types';
 import type { DiagramDiagnostic } from './generator';
 import { generateDiagramSource, SPEC_END, SPEC_START } from './generator';
@@ -47,7 +47,7 @@ function migrationDiagnostic(error: unknown): DiagramDiagnostic {
 }
 
 function toWorkbenchModel(spec: ReturnType<typeof migrateDiagramSpec>['spec']): VisualDiagramModel {
-  return fromEditorV2(editorV2(spec));
+  return materializeEditorModel(workingScene(spec));
 }
 
 export function parseDiagramSourceLocally(source?: string, _metadataType = ''): VisualDiagramModel | null {

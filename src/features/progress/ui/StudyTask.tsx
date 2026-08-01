@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'wouter';
-import { useProgressStore } from '@/features/progress/UserProgressStore';
+import { useProgressStore } from '@/shared/stores/UserProgressStore';
 import { db } from '@/entities/content';
 import { StudyPlanContext } from '@/features/progress/context/StudyPlanContext';
 import { ContentThumbnail } from './ContentThumbnail';

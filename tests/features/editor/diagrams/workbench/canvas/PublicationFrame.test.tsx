@@ -11,7 +11,7 @@ describe('PublicationFrame', () => {
         <div data-testid="board-slot" />
       </PublicationFrame>,
     );
-    const slot = screen.getByTestId('v2-publication-diagram-slot');
+    const slot = screen.getByTestId('publication-diagram-slot');
     expect(slot.style.width).toBe(`${content.width}px`);
     expect(slot.style.height).toBe(`${content.height}px`);
     expect(screen.getByText(/móvil/i)).toBeTruthy();

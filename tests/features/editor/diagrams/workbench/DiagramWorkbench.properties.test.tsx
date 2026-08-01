@@ -166,16 +166,16 @@ describe('Editor V2 - Property Completeness & Correctness', () => {
   });
 
   it('gates geometric constraints to segment and angle only', async () => {
-    const { v2ShowsConstraintsSection, constraintScopeForKind } = await import(
+    const { showsConstraintsSection, constraintScopeForKind } = await import(
       '@/features/editor/diagrams/ui/inspector/elementSections'
     );
-    expect(v2ShowsConstraintsSection('segment')).toBe(true);
+    expect(showsConstraintsSection('segment')).toBe(true);
     expect(constraintScopeForKind('segment')).toBe('segment');
-    expect(v2ShowsConstraintsSection('angle')).toBe(true);
-    expect(v2ShowsConstraintsSection('nonReflexAngle')).toBe(true);
-    expect(v2ShowsConstraintsSection('rightAngle')).toBe(false);
-    expect(v2ShowsConstraintsSection('infoPanel')).toBe(false);
-    expect(v2ShowsConstraintsSection('circle')).toBe(false);
+    expect(showsConstraintsSection('angle')).toBe(true);
+    expect(showsConstraintsSection('nonReflexAngle')).toBe(true);
+    expect(showsConstraintsSection('rightAngle')).toBe(false);
+    expect(showsConstraintsSection('infoPanel')).toBe(false);
+    expect(showsConstraintsSection('circle')).toBe(false);
     expect(constraintScopeForKind('infoPanel')).toBeNull();
   });
 });

@@ -1,7 +1,7 @@
 import { useEffect, useRef } from 'react';
 import { useLocation } from 'wouter';
 import { useNavigationStore } from '@/shared/stores/NavigationStore';
-import { useGlossaryStore } from '@/features/glossary/GlossaryStore';
+import { useGlossaryStore } from '@/shared/stores/GlossaryStore';
 
 function isEditing(): boolean {
   const el = document.activeElement;

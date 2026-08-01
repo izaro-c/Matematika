@@ -1,5 +1,5 @@
 import React from 'react';
-import { useGlossaryStore } from '@/features/glossary/GlossaryStore';
+import { useGlossaryStore } from '@/shared/stores/GlossaryStore';
 
 /**
  * Propiedades de Concept

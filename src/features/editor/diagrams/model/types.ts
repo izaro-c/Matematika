@@ -51,7 +51,7 @@ export type VisualDependency = DiagramDependency;
 
 /**
  * Modelo del workbench: V3 canónico + escena V2 materializada (mutable).
- * Persistencia reifica vía generator (`editorV2` → V3); no stringify crudo.
+ * Persistencia reifica vía generator (`workingScene` → V3); no stringify crudo.
  */
 export type VisualDiagramModel = DiagramSpecV3 & {
   points: DiagramPoint[];

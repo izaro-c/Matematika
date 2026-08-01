@@ -44,6 +44,7 @@ lean/.lake/
 docs/api/
 docs/dependency_report.html
 docs/uml/dependency_graph.svg
+scripts/plantuml.jar
 *.tsbuildinfo
 *.zip
 

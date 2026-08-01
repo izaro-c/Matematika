@@ -2,7 +2,7 @@ import React, { useMemo, useState, useCallback, useRef, useEffect } from 'react'
 import { navigate } from 'wouter/use-browser-location';
 import { routePath, publicAsset } from '@/shared/lib/routeHelper';
 import ForceGraph2D from 'react-force-graph-2d';
-import { useProgressStore } from '@/features/progress/UserProgressStore';
+import { useProgressStore } from '@/shared/stores/UserProgressStore';
 import { useThemeColors } from '@/shared/hooks/useThemeColors';
 import { getAllDescendantCodes } from '@/entities/content/msc2020';
 

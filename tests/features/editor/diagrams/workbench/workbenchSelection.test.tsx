@@ -41,7 +41,7 @@ function miniModel(overrides: Partial<VisualDiagramModel> = {}): VisualDiagramMo
   };
 }
 
-describe('editorV2Selection helpers', () => {
+describe('workingSceneSelection helpers', () => {
   it('does not revive state.selectedId after local selection is cleared', () => {
     const model = miniModel();
     expect(effectiveSelection(model, [], 'pA')).toEqual([]);
