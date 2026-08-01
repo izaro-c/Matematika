@@ -3,7 +3,9 @@ import {
   DEFAULT_RIGHT_ANGLE_RADIUS,
   type DiagramStepObjectState,
 } from '../../../../shared/diagrams/spec';
+import { DEFAULT_LAYER_ID } from '../../../../shared/diagrams/constants';
 import { nextLayerItemOrder } from './sceneOrdering';
+import { DEFAULT_NEW_ELEMENT_ORDER } from '../../constants';
 import type {
   ColorToken,
   ElementKind,
@@ -20,7 +22,7 @@ export function point(id: string, label: string, x: number, y: number, fixed = f
   const constraintLocksPosition = constraint === 'fixed' || constraint === 'derived';
   return {
     id, label, x, y, showLabel: true, fixed: constraintLocksPosition, color, target: true, targetId: id, constraint, gliderTarget,
-    layerId: 'geometry', order: 0, visible: true, locked: false, groupIds: [],
+    layerId: DEFAULT_LAYER_ID, order: 0, visible: true, locked: false, groupIds: [],
     selection: { selectable: true, role: 'primary', ariaLabel: `Punto ${label}` },
     style: {
       pointSize: 7,
@@ -67,7 +69,7 @@ export function element(id: string, label: string, kind: ElementKind, refs: stri
   };
   return {
     id, label, kind, refs, color, target, targetId: target ? id : undefined,
-    layerId: 'geometry', order: 1000, visible: true, locked: false, groupIds: [],
+    layerId: DEFAULT_LAYER_ID, order: DEFAULT_NEW_ELEMENT_ORDER, visible: true, locked: false, groupIds: [],
     selection: { selectable: true, role: kind === 'text' || kind === 'measurement' ? 'annotation' : 'secondary', ariaLabel: label },
     ...mergedExtra,
   };

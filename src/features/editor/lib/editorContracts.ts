@@ -1,3 +1,6 @@
+import type { ThemeColorName } from '@/shared/design';
+
+/** Misma lista que THEME_COLOR_VARS — editar pigmentos en theme.css + primitives.ts. */
 export const ARTS_AND_CRAFTS_COLORS = [
   'lienzo',
   'carbon',
@@ -8,7 +11,7 @@ export const ARTS_AND_CRAFTS_COLORS = [
   'pavo',
   'granada',
   'musgo',
-] as const;
+] as const satisfies ReadonlyArray<ThemeColorName>;
 
 export type ArtsAndCraftsColor = (typeof ARTS_AND_CRAFTS_COLORS)[number];
 

@@ -1,6 +1,12 @@
 import React, { useState } from 'react';
 import { useProgressStore } from '@/shared/stores/UserProgressStore';
 import { db } from '@/entities/content';
+import {
+  STUDY_PLAN_HIGHLIGHT_MS,
+  STUDY_PLAN_MINIMAP_HEIGHT,
+  STUDY_PLAN_MINIMAP_PADDING_X,
+  STUDY_PLAN_MINIMAP_WIDTH,
+} from '../constants';
 
 interface StudyPlanMinimapProps {
   requiredNodes: string[];
@@ -37,7 +43,7 @@ export const StudyPlanMinimap: React.FC<StudyPlanMinimapProps> = ({ requiredNode
       el.classList.add('ring-4', 'ring-accent/30');
       setTimeout(() => {
         el.classList.remove('ring-4', 'ring-accent/30');
-      }, 1500);
+      }, STUDY_PLAN_HIGHLIGHT_MS);
     }
   };
 
@@ -45,9 +51,9 @@ export const StudyPlanMinimap: React.FC<StudyPlanMinimapProps> = ({ requiredNode
   const nextStepNode = nodesData.find(node => !node.completed) || nodesData[nodesData.length - 1];
 
   // Configuración de la Barra Horizontal Compacta Curvada
-  const width = 600;
-  const height = 55;
-  const paddingX = 20;
+  const width = STUDY_PLAN_MINIMAP_WIDTH;
+  const height = STUDY_PLAN_MINIMAP_HEIGHT;
+  const paddingX = STUDY_PLAN_MINIMAP_PADDING_X;
   const stepX = (width - paddingX * 2) / Math.max(requiredNodes.length - 1, 1);
 
   const points = nodesData.map((node, index) => {

@@ -6,6 +6,7 @@ import { parseDiagramSourceOnServer } from '../source/parser';
 import { getDiagramSaveCapability, isDiagramStateDirty } from '../model/selectors';
 import type { VisualDiagramModel, CanvasTool } from '../model/types';
 import { asPersistenceError } from '../../persistence/persistenceErrors';
+import { DIAGRAM_STATE_SYNC_DEBOUNCE_MS } from '../../constants';
 
 export function useDiagramState() {
   const [state, dispatch] = useReducer(diagramReducer, initialDiagramState);
@@ -153,7 +154,7 @@ export function useDiagramState() {
       sourceSyncTimerRef.current = setTimeout(() => {
         sourceSyncTimerRef.current = null;
         syncSourceFromModel(stateRef.current.currentModel ?? nextModel);
-      }, 250);
+      }, DIAGRAM_STATE_SYNC_DEBOUNCE_MS);
       return;
     }
 

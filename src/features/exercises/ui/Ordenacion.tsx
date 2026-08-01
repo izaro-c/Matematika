@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useExercise } from '@/features/exercises/ui/ExerciseContext';
 import { KatexText } from '@/shared/ui/KatexText';
+import { EXERCISE_SHAKE_MS } from '../constants';
 
 interface OrdenacionProps {
   id: string;
@@ -74,7 +75,7 @@ export const Ordenacion: React.FC<OrdenacionProps> = ({ id, pasos }) => {
     answer(id, isCorrect);
     if (!isCorrect) {
       setIsShaking(true);
-      setTimeout(() => setIsShaking(false), 400);
+      setTimeout(() => setIsShaking(false), EXERCISE_SHAKE_MS);
     }
   };
 

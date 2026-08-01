@@ -5,6 +5,7 @@ Living sources of truth and generated artefacts. Prefer regenerating over writin
 | Path | Role | Keep current with |
 |------|------|-------------------|
 | `ai/` | Multi-AI governance | Edit when protocol changes |
+| `architecture/` | CODEMAP — dónde editar X | Tras reorg / nuevos dominios |
 | `adr/` | Architecture decisions | Append; don't rewrite history |
 | `editor/` | Editor stability / ops | After release gates |
 | `lean/bridge-debt.json` | Lean bridge debt | `npm run bridge:audit` |

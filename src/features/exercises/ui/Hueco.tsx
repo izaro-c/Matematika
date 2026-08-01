@@ -8,8 +8,9 @@
  */
 import React, { useCallback, useState, useEffect } from 'react';
 import { useExercise } from '@/features/exercises/ui/ExerciseContext';
+import { EXERCISE_MAX_TRIES, EXERCISE_SHAKE_MS } from '../constants';
 
-const MAX_TRIES = 3;
+const MAX_TRIES = EXERCISE_MAX_TRIES;
 
 interface HuecoProps {
   /** Identificador único dentro del ejercicio */
@@ -120,7 +121,7 @@ export const Hueco: React.FC<HuecoProps> = ({
     if (!ok) {
       setInput('');
       setIsShaking(true);
-      setTimeout(() => setIsShaking(false), 400);
+      setTimeout(() => setIsShaking(false), EXERCISE_SHAKE_MS);
     }
   }, [input, isDone, correct, tolerance, answer, id]);
 

@@ -2,28 +2,24 @@
 
 **Actualizado:** 2026-08-01
 
-**Fase:** Plan de mejora arquitectónica aplicado (Fases 0–4 parcial).
+**Fase:** Reorg estrangulador — Fases 0–3 aplicadas (mapa, tokens, fronteras, scene split, slices de producto).
 
-**Siguiente:** más migraciones `code-preview` → `visual-exact` con aceptación matemática; descomponer `scene.ts` solo con evidencia de cohesión.
+**Siguiente:** migraciones `code-preview` → `visual-exact` restantes; placeholders de demos; a11y lector de pantalla.
 
 ## Vivo
 
-- Estabilidad editor: [`docs/editor/stability.md`](../docs/editor/stability.md)
-- Gates: `editor:*`, `ai:index`, `ai:debt`, `full-check`
-- Diagramas: regenerar con `npm run editor:diagrams:check` (DemoExistenciaBisectriz ya es `visual-exact`)
-- MDX corpus: 120/120 roundtrip exacto (baselines en `reports/`)
-- UI `features/editor/v2/` colapsada en `diagrams/ui/`
-- Stores canónicos solo en `src/shared/stores/` (shims de features eliminados)
-- `entities/content/searchApi` sin Zustand (dictionary desde `glossaryDictionary`)
-- Diff review reconectado (`EditorDiffController` + aprobación en `useEditorCore`)
-- Editor model: `workingScene` / `materializeEditorModel` / `applySceneMutation` (sin `editorV2` en UI)
-- Runtime: `createElement` extraído a `createBoardElement.ts` + `boardElementHelpers.ts`
-- Excepción muerta `MaterialPracticoSection` eliminada de `.dependency-cruiser.js`
+- CODEMAP: [`docs/architecture/CODEMAP.md`](../docs/architecture/CODEMAP.md)
+- Tokens: `shared/design` (+ `diagramPalette.ts`); CSS en `app/theme.css` / `app/styles`
+- Constantes de dominio: `features/editor/constants.ts`, `shared/diagrams/constants.ts`, progress/graph/exercises
+- Depcruise: `widgets-diagrams-no-editor`, `design-no-diagrams` (+ FSD previo)
+- ADR-004: widgets/diagrams ↛ editor
+- Escena partida: `sceneTypes` / `sceneCoordinates` / `scenePointMotion` / `sceneBounds` / `scenePlan` (barrel `scene.ts`)
+- Stores canónicos en `src/shared/stores/`
+- READMEs por dominio (editor, diagrams, design, glossary, progress, graph, exercises)
 
 ## Bloqueos / deuda explícita
 
-- Modelo dual escena-de-trabajo ↔ V3 sigue en `shared`/`model` (aceptable; UI ya no lo ve)
-- Widgets 3D (`Incidence5–8`, `Plano`) fuera de DiagramSpec 2D
-- Placeholders restantes (`DemoExistenciaPerpendicular`, `DemoAngulosAlternosInternos`, …) y demos JSXGraph legacy
+- Modelo dual workingScene ↔ V3 sigue en shared/model (aceptable)
+- Widgets 3D fuera de DiagramSpec 2D
+- Placeholders demos + orphan warnings depcruise
 - Sin pasada humana con lector de pantalla
-- God-file residual: `scene.ts` (~1315)
