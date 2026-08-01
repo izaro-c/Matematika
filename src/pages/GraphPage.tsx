@@ -9,8 +9,8 @@ import type {
   LinkObject,
   NodeObject,
 } from 'react-force-graph-2d';
-import { useGlossaryStore } from '@/features/glossary/GlossaryStore';
-import { useProgressStore } from '@/features/progress/UserProgressStore';
+import { useGlossaryStore } from '@/shared/stores/GlossaryStore';
+import { useProgressStore } from '@/shared/stores/UserProgressStore';
 import { buildKnowledgeGraphData, GraphNode, GraphLink } from '@/features/graph/lib/knowledgeGraphBuilder';
 import { GraphLegend } from '@/features/graph/ui/components/GraphLegend';
 import { GraphSearch } from '@/features/graph/ui/components/GraphSearch';

@@ -5,11 +5,8 @@ import {
   PAGE_ACCENTS,
   type PageAccentType,
 } from '@/shared/design';
-import { dictionary } from '@/shared/stores/GlossaryStore';
+import { dictionary } from '@/shared/lib/glossaryDictionary';
 import { routePath } from '@/shared/lib/routeHelper';
-import { useNavigationStore } from '@/shared/stores/NavigationStore';
-
-export { useNavigationStore };
 
 export type SearchResultType = PageAccentType;
 

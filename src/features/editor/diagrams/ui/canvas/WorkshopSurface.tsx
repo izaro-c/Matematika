@@ -5,7 +5,7 @@ export const WorkshopSurface: React.FC<{ children: React.ReactNode; className?: 
   className,
 }) => (
   <div
-    data-testid="v2-workshop-surface"
+    data-testid="workshop-surface"
     className={`relative flex h-full w-full items-center justify-center bg-carbon/[0.03] ${className ?? ''}`}
     style={{
       backgroundImage: `

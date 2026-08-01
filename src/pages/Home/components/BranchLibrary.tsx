@@ -1,6 +1,6 @@
 import { Link } from 'wouter';
 import { db } from '@/entities/content';
-import { useProgressStore } from '@/features/progress/UserProgressStore';
+import { useProgressStore } from '@/shared/stores/UserProgressStore';
 
 interface SectionDef {
   title: string;

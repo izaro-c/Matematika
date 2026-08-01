@@ -2,11 +2,11 @@ import { DIAGRAM_RENDERER_V2_ID, DIAGRAM_SPEC_V2_VERSION, type DiagramSpecV2 } f
 import { normalizeContentId } from '../../lib/editorContracts';
 import { element, point, slider, step } from './diagramElements';
 import { defaultCategory, defaultMode } from './diagramOptions';
-import { fromEditorV2 } from './editorModel';
+import { materializeEditorModel } from './editorModel';
 import type { TemplateKind, VisualDiagramModel, VisualSlider, VisualStep } from './types';
 
 function asModel(spec: DiagramSpecV2): VisualDiagramModel {
-  return fromEditorV2(spec);
+  return materializeEditorModel(spec);
 }
 
 export function createTemplateModel(kind: TemplateKind, title: string, metadataType: string): VisualDiagramModel {

@@ -4,10 +4,10 @@ import { InspectorHeader } from '../WorkbenchInspectorHeader';
 import { PALETTE_TOKENS } from '../paletteTokens';
 import type { ElementPanelProps } from '../types';
 import {
-  v2ShowsConstraintsSection,
-  v2ShowsContentSection,
-  v2ShowsCurveSection,
-  v2ShowsMarksSection,
+  showsConstraintsSection,
+  showsContentSection,
+  showsCurveSection,
+  showsMarksSection,
 } from '../elementSections';
 import { ElementConstraintsSection } from './sections/ElementConstraintsSection';
 import { ElementContentSection } from './sections/ElementContentSection';
@@ -37,19 +37,19 @@ export const ElementInspectorPanel: React.FC<ElementPanelProps & {
         <ElementIdentitySection {...props} />
       </AccordionSection>
 
-      {v2ShowsMarksSection(element.kind) && (
+      {showsMarksSection(element.kind) && (
         <AccordionSection sec="marks_congruence" title="Marcas & Anotaciones Visuales" isOpen={openAccordion.marks_congruence} onToggle={onToggleAccordion}>
           <ElementMarksSection {...props} />
         </AccordionSection>
       )}
 
-      {v2ShowsCurveSection(element.kind) && (
+      {showsCurveSection(element.kind) && (
         <AccordionSection sec="geometry" title="Fórmula de la Curva, Dominio & Relleno de Área" isOpen={openAccordion.geometry} onToggle={onToggleAccordion}>
           <ElementCurveSection {...props} />
         </AccordionSection>
       )}
 
-      {v2ShowsContentSection(element.kind) && (
+      {showsContentSection(element.kind) && (
         <AccordionSection sec="content" title="Contenido del Panel, Bloques & Posición" isOpen={openAccordion.content} onToggle={onToggleAccordion}>
           <ElementContentSection {...props} />
         </AccordionSection>
@@ -69,7 +69,7 @@ export const ElementInspectorPanel: React.FC<ElementPanelProps & {
         />
       </AccordionSection>
 
-      {v2ShowsConstraintsSection(element.kind) && (
+      {showsConstraintsSection(element.kind) && (
         <AccordionSection sec="constraints" title="Restricciones Geométricas" isOpen={openAccordion.constraints} onToggle={onToggleAccordion}>
           <ElementConstraintsSection {...props} />
         </AccordionSection>

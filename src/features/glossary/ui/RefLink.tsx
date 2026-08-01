@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'wouter';
-import { useGlossaryStore } from '@/features/glossary/GlossaryStore';
+import { useGlossaryStore } from '@/shared/stores/GlossaryStore';
 import { db } from '@/entities/content';
 import { useProgressStore } from '@/shared/stores/UserProgressStore';
 

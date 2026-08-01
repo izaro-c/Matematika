@@ -3,7 +3,7 @@ import { DiagramRenderer, withMovedPoint, withViewportBounds } from '@/shared/di
 import { MathProvider } from '@/shared/lib/MathStoreContext';
 import type { VisualDiagramModel, CanvasTool } from '@/features/editor/diagrams/model/types';
 import {
-  fromEditorV2,
+  applySceneMutation,
   nextLayerItemOrder,
   nextPointId,
   point,
@@ -90,7 +90,7 @@ export const BoardHost: React.FC<BoardHostProps> = ({
               onSelect([id], activeTool === 'select' && intent?.additive === true);
             }}
             onPointMove={(id, x, y) => onModelEdit(
-              fromEditorV2(withMovedPoint(model, id, Number(x.toFixed(2)), Number(y.toFixed(2)))),
+              applySceneMutation(model, scene => withMovedPoint(scene, id, Number(x.toFixed(2)), Number(y.toFixed(2)))),
               { label: `Mover ${id}` },
             )}
             onSliderChange={(id, value) => onModelEdit(
@@ -134,7 +134,7 @@ export const BoardHost: React.FC<BoardHostProps> = ({
           />
         </MathProvider>
       ) : (
-        <div data-testid="v2-board-skeleton" className="h-full w-full" />
+        <div data-testid="board-skeleton" className="h-full w-full" />
       )}
     </div>
   );

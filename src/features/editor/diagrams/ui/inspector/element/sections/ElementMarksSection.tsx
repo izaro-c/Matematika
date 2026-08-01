@@ -11,9 +11,9 @@ import {
 } from '@/features/editor/diagrams/model/segmentMarks';
 import type { ElementPanelProps } from '../../types';
 import {
-  v2ShowsDirectMarkCount,
-  v2ShowsMeasureTicksProps,
-  v2ShowsSegmentMarks,
+  showsDirectMarkCount,
+  showsMeasureTicksProps,
+  showsSegmentMarks,
 } from '../../elementSections';
 import { elementInspectorCapabilities } from '@/features/editor/diagrams/model/elementInspectorCapabilities';
 
@@ -28,7 +28,7 @@ export const ElementMarksSection: React.FC<ElementPanelProps> = ({
 
   return (
     <div className="p-2.5 space-y-3 bg-carbon/5 rounded-xl border border-carbon/10 shadow-2xs">
-      {v2ShowsSegmentMarks(element.kind) && (
+      {showsSegmentMarks(element.kind) && (
         <>
           <div>
             <label className="block text-[11px] font-bold text-carbon/70 mb-1">
@@ -124,7 +124,7 @@ export const ElementMarksSection: React.FC<ElementPanelProps> = ({
         </>
       )}
 
-      {v2ShowsDirectMarkCount(element.kind) && (
+      {showsDirectMarkCount(element.kind) && (
         <div>
           <label className="block text-[11px] font-bold text-carbon/70 mb-0.5">
             Número de Marcas
@@ -168,7 +168,7 @@ export const ElementMarksSection: React.FC<ElementPanelProps> = ({
         </div>
       )}
 
-      {v2ShowsMeasureTicksProps(element.kind) && (
+      {showsMeasureTicksProps(element.kind) && (
         <div className="space-y-2 pt-1 border-t border-carbon/10">
           <div className="grid grid-cols-2 gap-2">
             <div>

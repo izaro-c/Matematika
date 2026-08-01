@@ -26,7 +26,7 @@ vi.mock('@/entities/content', () => ({
   },
 }));
 
-vi.mock('@/features/glossary/GlossaryStore', () => ({ dictionary: {} }));
+vi.mock('@/shared/stores/GlossaryStore', () => ({ dictionary: {} }));
 
 vi.mock('@/shared/hooks/useThemeColors', () => ({
   useThemeColors: () => ({

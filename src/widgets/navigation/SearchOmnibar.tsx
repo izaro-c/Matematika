@@ -9,11 +9,11 @@ import {
   TYPE_ICONS,
   TYPE_LABELS,
   TYPE_RESULT_LABELS,
-  useNavigationStore,
   type SearchResult,
   type SearchResultType,
 } from '@/entities/content/searchApi';
 import { useGlossaryStore } from '@/shared/stores/GlossaryStore';
+import { useNavigationStore } from '@/shared/stores/NavigationStore';
 
 type TypeFilter = SearchResultType | 'all';
 

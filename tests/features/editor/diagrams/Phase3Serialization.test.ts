@@ -7,7 +7,7 @@ import primitivesFixture from '../../../fixtures/diagrams/phase3-euclidean-primi
 import { parseDiagramSourceAST } from '../../../../scripts/editor/parseDiagramSourceAST';
 import { migrateDiagramSpec } from '../../../../src/shared/diagrams/public';
 import { generateDiagramSource } from '../../../../src/features/editor/diagrams/source/generator';
-import { convertAngleKind, setEqualAngleConstraint, setSegmentMeasureTicks, toEditorModel, editorV2 } from '../../../../src/features/editor/diagrams/model';
+import { convertAngleKind, setEqualAngleConstraint, setSegmentMeasureTicks, toEditorModel, workingScene } from '../../../../src/features/editor/diagrams/model';
 import type { VisualDiagramModel } from '../../../../src/features/editor/diagrams/model/types';
 
 function asModel(value: unknown): VisualDiagramModel {
@@ -18,7 +18,7 @@ function asModel(value: unknown): VisualDiagramModel {
 
 /** Compara la escena editable; objects/relations se reifican al generar. */
 function withoutDerivedGraph(model: VisualDiagramModel) {
-  const scene = editorV2(model);
+  const scene = workingScene(model);
   const semantic: Record<string, unknown> = { ...scene };
   delete semantic.dependencies;
   delete semantic.extensions;

@@ -6,11 +6,11 @@ const MARK_KINDS = new Set<DiagramElementKind>([
 ]);
 
 /** Secciones del inspector V2 por tipo de elemento. Basado en elementInspectorCapabilities. */
-export function v2ShowsMarksSection(kind: DiagramElementKind): boolean {
+export function showsMarksSection(kind: DiagramElementKind): boolean {
   return kind === 'segment' || MARK_KINDS.has(kind);
 }
 
-export function v2ShowsCurveSection(kind: DiagramElementKind): boolean {
+export function showsCurveSection(kind: DiagramElementKind): boolean {
   return kind === 'functionCurve' || kind === 'parametricCurve';
 }
 
@@ -18,36 +18,36 @@ const PANEL_OR_TEXT_KINDS = new Set<DiagramElementKind>([
   'infoPanel', 'text', 'label', 'formula', 'measurement',
 ]);
 
-export function v2ShowsContentSection(kind: DiagramElementKind): boolean {
+export function showsContentSection(kind: DiagramElementKind): boolean {
   return PANEL_OR_TEXT_KINDS.has(kind);
 }
 
-export function v2ShowsFillOpacity(kind: DiagramElementKind, areaFill?: string): boolean {
+export function showsFillOpacity(kind: DiagramElementKind, areaFill?: string): boolean {
   const cap = elementInspectorCapabilities(kind);
-  return cap.fill || (v2ShowsCurveSection(kind) && !!areaFill && areaFill !== 'none');
+  return cap.fill || (showsCurveSection(kind) && !!areaFill && areaFill !== 'none');
 }
 
-export function v2ShowsStrokeControls(kind: DiagramElementKind): boolean {
+export function showsStrokeControls(kind: DiagramElementKind): boolean {
   return elementInspectorCapabilities(kind).stroke;
 }
 
-export function v2ShowsAngleRadius(kind: DiagramElementKind): boolean {
+export function showsAngleRadius(kind: DiagramElementKind): boolean {
   return elementInspectorCapabilities(kind).angleRadius;
 }
 
-export function v2ShowsDashed(kind: DiagramElementKind): boolean {
+export function showsDashed(kind: DiagramElementKind): boolean {
   return elementInspectorCapabilities(kind).dashed;
 }
 
-export function v2ShowsSegmentMarks(kind: DiagramElementKind): boolean {
+export function showsSegmentMarks(kind: DiagramElementKind): boolean {
   return kind === 'segment';
 }
 
-export function v2ShowsDirectMarkCount(kind: DiagramElementKind): boolean {
+export function showsDirectMarkCount(kind: DiagramElementKind): boolean {
   return kind === 'congruenceMark' || kind === 'parallelMark';
 }
 
-export function v2ShowsMeasureTicksProps(kind: DiagramElementKind): boolean {
+export function showsMeasureTicksProps(kind: DiagramElementKind): boolean {
   return kind === 'measureTicks';
 }
 
@@ -58,6 +58,6 @@ export function constraintScopeForKind(kind: DiagramElementKind): 'segment' | 'a
   return null;
 }
 
-export function v2ShowsConstraintsSection(kind: DiagramElementKind): boolean {
+export function showsConstraintsSection(kind: DiagramElementKind): boolean {
   return constraintScopeForKind(kind) !== null;
 }

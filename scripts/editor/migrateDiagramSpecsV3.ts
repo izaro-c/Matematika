@@ -1,14 +1,10 @@
 import fs from 'node:fs';
 import path from 'node:path';
-import { execFileSync } from 'node:child_process';
 import { classifyEmbeddedDiagramSource, parseDiagramSourceLocally } from '../../src/features/editor/diagrams/source/parser';
 import { generateDiagramSource, SPEC_START } from '../../src/features/editor/diagrams/source/generator';
 
 const ROOT = path.resolve('src/widgets/diagrams');
 const writeVerified = process.argv.includes('--write-verified');
-const fromGitPath = process.argv.find(argument => argument.startsWith('--from-git='))?.slice('--from-git='.length);
-const fromGit = Boolean(fromGitPath);
-const fromEveryGitSource = fromGitPath === 'all';
 
 function sourceFiles(directory: string): string[] {
   return fs.readdirSync(directory, { withFileTypes: true }).flatMap(entry => {
@@ -42,30 +38,26 @@ function visualFingerprint(source: string): string | null {
 
 for (const file of sourceFiles(ROOT)) {
   const relativeFile = path.relative(process.cwd(), file);
-  if (fromGitPath && !fromEveryGitSource && relativeFile !== fromGitPath) continue;
-  const source = fromGit
-    ? execFileSync('/usr/bin/git', ['show', `HEAD:${relativeFile}`], { encoding: 'utf8', maxBuffer: 4 * 1024 * 1024 })
-    : fs.readFileSync(file, 'utf8');
+  const source = fs.readFileSync(file, 'utf8');
   if (!source.includes(SPEC_START)) continue;
   embedded += 1;
   const name = componentName(source);
   const model = parseDiagramSourceLocally(source);
   if (!name || !model) {
     const classification = classifyEmbeddedDiagramSource(source);
-    failures.push(`${path.relative(process.cwd(), file)}: ${classification?.diagnostics.map(item => item.message).join(' | ') || 'no se pudo recuperar componente y modelo.'}`);
+    failures.push(`${relativeFile}: ${classification?.diagnostics.map(item => item.message).join(' | ') || 'no se pudo recuperar componente y modelo.'}`);
     continue;
   }
   const generated = generateDiagramSource(model, name);
   if (!generated.ok) {
-    failures.push(`${path.relative(process.cwd(), file)}: ${generated.diagnostics.map(item => item.message).join(' | ')}`);
+    failures.push(`${relativeFile}: ${generated.diagnostics.map(item => item.message).join(' | ')}`);
     continue;
   }
   if (generated.source === source) continue;
   migrated += 1;
-  const relative = relativeFile;
-  changedFiles.push(relative);
+  changedFiles.push(relativeFile);
   if (visualFingerprint(source) !== visualFingerprint(generated.source)) {
-    unsafeFiles.push(relative);
+    unsafeFiles.push(relativeFile);
     continue;
   }
   if (writeVerified) fs.writeFileSync(file, generated.source, 'utf8');

@@ -3,20 +3,12 @@ export default {
   forbidden: [
     /* -- FSD (Feature-Sliced Design) Architecture rules -- */
 
-    /*
-     * shared/ — no debe importar de capas superiores.
-     * La exclusión MaterialPracticoSection es deuda de shim de re-exportación acotada.
-     */
+    /* shared/ — no debe importar de capas superiores. */
     {
       name: 'fsd-shared-no-upper-layers',
       comment: 'shared/ must not import from app, pages, widgets, features, entities',
       severity: 'error',
-      from: {
-        path: '^src/shared/',
-        pathNot: [
-          '^src/shared/ui/MaterialPracticoSection\\.tsx$',
-        ],
-      },
+      from: { path: '^src/shared/' },
       to: { path: '^src/(app|pages|widgets|features|entities)/' },
     },
     /* Excepción acotada: MDXBlocks compone bloques de features y widgets. */
@@ -26,17 +18,6 @@ export default {
       severity: 'error',
       from: { path: '^src/widgets/mdx/MDXBlocks\\.tsx$' },
       to: { path: '^src/(app|pages|entities)/' },
-    },
-    /* Excepción acotada: cada shim solo puede re-exportar su destino legado. */
-    {
-      name: 'fsd-material-practico-shim-scope',
-      comment: 'MaterialPracticoSection shim may only re-export widgets/content/MaterialPracticoSection',
-      severity: 'error',
-      from: { path: '^src/shared/ui/MaterialPracticoSection\\.tsx$' },
-      to: {
-        path: '^src/(app|pages|widgets|features|entities)/',
-        pathNot: '^src/widgets/content/MaterialPracticoSection\\.tsx$',
-      },
     },
 
     /* entities/ — dominio puro, no debe importar UI ni estado */

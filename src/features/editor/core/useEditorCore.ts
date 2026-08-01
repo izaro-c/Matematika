@@ -4,10 +4,10 @@ import type { DirtyState, EditorMode, EditorValidationResult } from './editorTyp
 import type { Block, BlockType } from './parser';
 import {
   openEditorDocument, enterVisualMode,
-  parseEditorDocument, getVisualCapabilities,
+  parseEditorDocument, getVisualCapabilities, computeFingerprint,
   applyMutationPlan, planBlockUpdate, planBlockInsertion, planBlockDeletion,
   planBlockDuplication, planBlockMove, planMetadataUpdate, planDiagramBinding,
-  type DocumentMutationPlan, type EditorDocument, type ProjectedBlock
+  type DocumentMutationPlan, type EditorDocument, type ProjectedBlock, type SourceRange
 } from '../document';
 import {
   ContentRepository, DraftRepository, SaveCoordinator, editorApiClient, hashSource,
@@ -17,6 +17,7 @@ import { editorApiUnavailableInProduction, editorWriteAccessGranted } from '../p
 import {
   editorPersistenceReducer, initialEditorPersistenceState, persistenceStatusLabel
 } from '../state';
+import type { ApprovedDiff, ExpectedDiffRange } from '../ux/diffReview';
 import { validateEditorDocument } from './validation';
 import { buildAuthoringIntegrityReport, createPagePath, createPageSource, type CreatePageInput } from '../ux/authoringModel';
 import type { DiagramTargetRegistry, EditorDiagramReference } from './editorTypes';
@@ -73,6 +74,14 @@ function persistenceMessage(error: PersistenceError): string {
 
 const blockedMessage = 'Acción bloqueada: no hay documento abierto.';
 
+interface TrackedVisualOperation {
+  operationId: string;
+  blockId: string;
+  range: SourceRange;
+  reason: string;
+  requiresReview: boolean;
+}
+
 class LiveSaveIdentity {
   private path: string | null = null;
   private source = '';
@@ -108,6 +117,7 @@ export const useEditorCore = () => {
   const persistenceRef = useRef(persistence);
   const sourceRef = useRef('');
   const revisionRef = useRef(0);
+  const visualOperationsRef = useRef<TrackedVisualOperation[]>([]);
   const loadControllerRef = useRef<AbortController | undefined>(undefined);
   const saveIdentity = useMemo(() => new LiveSaveIdentity(), []);
   const editorSessionId = useMemo(() => crypto.randomUUID(), []);
@@ -220,6 +230,7 @@ export const useEditorCore = () => {
       const response = await contentRepository.read(file, controller.signal);
       if (controller.signal.aborted) return;
       sourceRef.current = response.source;
+      visualOperationsRef.current = [];
       setBaseSource(response.source);
       revisionRef.current = 0;
       saveIdentity.set(file.path, response.source, 0);
@@ -241,10 +252,11 @@ export const useEditorCore = () => {
     }
   }, [coordinator, saveIdentity, syncProjection]);
 
-  const commitSourceChange = useCallback((source: string, nextDoc?: EditorDocument) => {
+  const commitSourceChange = useCallback((source: string, nextDoc?: EditorDocument, visualOperations?: TrackedVisualOperation[]) => {
     const file = persistenceRef.current.file;
     if (!file) return;
     sourceRef.current = source;
+    visualOperationsRef.current = visualOperations ? [...visualOperationsRef.current, ...visualOperations] : [];
     setMessage('');
     revisionRef.current += 1;
     const revision = revisionRef.current;
@@ -283,8 +295,18 @@ export const useEditorCore = () => {
     if (!doc) { setMessage(blockedMessage); return; }
     try {
       const nextDoc = applyMutationPlan(doc, mutation);
-      commitSourceChange(nextDoc.source, nextDoc);
-      setMessage(successMessage);
+      commitSourceChange(nextDoc.source, nextDoc, mutation.edits.map(edit => ({
+        operationId: edit.operationId,
+        blockId: edit.blockId,
+        range: edit.range.start === edit.range.end
+          ? { start: Math.max(0, edit.range.start - 2), end: Math.min(doc.source.length, edit.range.end + 2) }
+          : edit.range,
+        reason: edit.reason ?? mutation.preview.summary,
+        requiresReview: mutation.preview.requiresReview,
+      })));
+      setMessage(mutation.preview.requiresReview
+        ? `${successMessage} Revise el diff antes de guardar.`
+        : successMessage);
     } catch (error) {
       setMessage(`Cambio rechazado: ${error instanceof Error ? error.message : String(error)}`);
     }
@@ -390,7 +412,41 @@ export const useEditorCore = () => {
     }
   }, [loadFileList, openFile]);
 
-  const saveCurrentFile = useCallback(async (): Promise<boolean> => {
+  const getExpectedDiffRanges = useCallback((): ExpectedDiffRange[] => {
+    return visualOperationsRef.current.map(operation => ({
+      start: operation.range.start,
+      end: operation.range.end,
+      reason: operation.reason,
+      operationId: operation.operationId,
+      blockId: operation.blockId,
+    }));
+  }, []);
+
+  const hasValidPartialApproval = useCallback((
+    approval: ApprovedDiff | undefined,
+    captured: { file: { path: string }; source: string; localRevision: number; baseVersion: string },
+  ): boolean => {
+    if (!approval) return false;
+    const operationIds = getExpectedDiffRanges().map(range => range.operationId).sort();
+    return approval.documentId === captured.file.path
+      && approval.baseVersion === captured.baseVersion
+      && approval.baseSourceHash === computeFingerprint(baseSource)
+      && approval.candidateSourceHash === computeFingerprint(captured.source)
+      && approval.revision === captured.localRevision
+      && approval.operationIds.join('\0') === operationIds.join('\0')
+      && approval.expectedRanges.length === visualOperationsRef.current.length
+      && approval.expectedRanges.every(range => (
+        operationIds.includes(range.operationId)
+        && visualOperationsRef.current.some(operation => (
+          operation.operationId === range.operationId
+          && operation.blockId === range.blockId
+          && operation.range.start === range.start
+          && operation.range.end === range.end
+        ))
+      ));
+  }, [baseSource, getExpectedDiffRanges]);
+
+  const saveCurrentFile = useCallback(async (approval?: ApprovedDiff): Promise<boolean> => {
     const state = persistenceRef.current;
     if (!state.file || !state.version) return false;
     if (editorApiUnavailableInProduction()) {
@@ -399,17 +455,6 @@ export const useEditorCore = () => {
     }
     if (!editorWriteAccessGranted()) {
       setMessage('No se puede guardar: introduce el token de edición para persistir cambios.');
-      return false;
-    }
-    const captured = {
-      file: state.file,
-      source: sourceRef.current,
-      localRevision: revisionRef.current,
-      baseVersion: state.version
-    };
-    if (captured.file.path.endsWith('.mdx') && parseEditorDocument(captured.source).compatibility === 'unsupported') {
-      dispatch({ type: 'VALIDATION_FAILED', file: captured.file, localRevision: captured.localRevision, reason: 'Invalid MDX source' });
-      setMessage('No se puede guardar: el documento MDX contiene errores de sintaxis.');
       return false;
     }
     if (editorMode === 'visual' && !isDiagramSource) {
@@ -426,17 +471,45 @@ export const useEditorCore = () => {
         return false;
       }
     }
+    const captured = {
+      file: state.file,
+      source: sourceRef.current,
+      localRevision: revisionRef.current,
+      baseVersion: state.version
+    };
+    if (captured.file.path.endsWith('.mdx') && parseEditorDocument(captured.source).compatibility === 'unsupported') {
+      dispatch({ type: 'VALIDATION_FAILED', file: captured.file, localRevision: captured.localRevision, reason: 'Invalid MDX source' });
+      setMessage('No se puede aplicar: el source MDX actual no se puede analizar.');
+      return false;
+    }
+    if (captured.file.path.endsWith('.mdx')) {
+      const candidateDoc = parseEditorDocument(captured.source);
+      if (candidateDoc.metadata.status !== 'readable' || !candidateDoc.metadata.schemaValid) {
+        dispatch({ type: 'VALIDATION_FAILED', file: captured.file, localRevision: captured.localRevision, reason: 'Invalid MDX metadata' });
+        setMessage('No se puede aplicar: los metadatos no cumplen el schema de contenido autoritativo.');
+        return false;
+      }
+      const broadVisualChange = visualOperationsRef.current.some(operation => operation.requiresReview);
+      if ((candidateDoc.compatibility === 'partially-editable' || broadVisualChange) && !hasValidPartialApproval(approval, captured)) {
+        dispatch({ type: 'VALIDATION_FAILED', file: captured.file, localRevision: captured.localRevision, reason: 'Diff approval required' });
+        setMessage('No se puede aplicar: esta edición estructural requiere una revisión de diff vigente.');
+        return false;
+      }
+    }
     const sourceHash = await hashSource(captured.source);
     if (persistenceRef.current.file?.path !== captured.file.path
       || revisionRef.current !== captured.localRevision
       || sourceRef.current !== captured.source) return false;
     const snapshot: EditorSaveSnapshot = { ...captured, sourceHash };
     const confirmed = await coordinator.applyNow(snapshot);
+    if (confirmed && saveIdentity.matches(snapshot)) {
+      visualOperationsRef.current = [];
+    }
     return confirmed
       && revisionRef.current === snapshot.localRevision
       && sourceRef.current === snapshot.source
       && persistenceRef.current.file?.path === snapshot.file.path;
-  }, [coordinator, compatibility, editorMode, isDiagramSource]);
+  }, [coordinator, editorMode, isDiagramSource, compatibility, hasValidPartialApproval, saveIdentity]);
 
   const saveDraftCurrentFile = useCallback(async (): Promise<boolean> => {
     const state = persistenceRef.current;
@@ -472,5 +545,6 @@ export const useEditorCore = () => {
     removeBlock, addBlock, moveBlock, duplicateBlock, bindDiagram, createPage, setMetadata, setImports, setExports, setBlocks,
     canMutateVisualStructure: capabilities.canEditSafeBlocks,
     canEditVisualMetadata: doc?.metadata.status === 'readable' && doc.metadata.schemaValid,
+    getExpectedDiffRanges,
   };
 };

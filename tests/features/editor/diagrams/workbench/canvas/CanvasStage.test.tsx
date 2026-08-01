@@ -56,19 +56,19 @@ describe('CanvasStage', () => {
   it('shows empty state when model is null', () => {
     render(<CanvasStage {...defaultProps({ model: null })} />);
     expect(screen.getByText(/Cargando lienzo/i)).toBeTruthy();
-    expect(screen.queryByTestId('v2-workshop-surface')).toBeNull();
+    expect(screen.queryByTestId('workshop-surface')).toBeNull();
   });
 
   it('renders workshop surface with the board host and no publication frame in editor mode', () => {
     render(<CanvasStage {...defaultProps({ frameMode: 'editor' })} />);
-    expect(screen.getByTestId('v2-workshop-surface')).toBeTruthy();
+    expect(screen.getByTestId('workshop-surface')).toBeTruthy();
     expect(screen.getByTestId('mock-diagram-renderer')).toBeTruthy();
-    expect(screen.queryByTestId('v2-publication-diagram-slot')).toBeNull();
+    expect(screen.queryByTestId('publication-diagram-slot')).toBeNull();
   });
 
   it('renders a publication frame sized to device content in tablet mode', () => {
     render(<CanvasStage {...defaultProps({ frameMode: 'tablet' })} />);
-    const slot = screen.getByTestId('v2-publication-diagram-slot');
+    const slot = screen.getByTestId('publication-diagram-slot');
     const content = publicationContentSize('tablet');
     expect(slot.style.width).toBe(`${content.width}px`);
     expect(slot.style.height).toBe(`${content.height}px`);

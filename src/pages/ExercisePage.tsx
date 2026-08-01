@@ -3,7 +3,7 @@ import { useEffect } from 'react';
 import { db } from '@/entities/content';
 import { ExerciseProvider, useExercise } from '@/features/exercises/ui/ExerciseContext';
 import { ContentDiagram, ContentLayout } from '@/widgets/layouts/ContentLayout';
-import { useProgressStore } from '@/features/progress/UserProgressStore';
+import { useProgressStore } from '@/shared/stores/UserProgressStore';
 import { ContentHeader } from '@/widgets/content/ContentHeader';
 import { ContentBody } from '@/shared/ui/ContentBody';
 import { DifficultyBadge } from '@/shared/ui/DifficultyBadge';
