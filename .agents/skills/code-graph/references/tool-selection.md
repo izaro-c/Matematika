@@ -9,7 +9,7 @@ query: "diagram renderer"
 # Por patrón
 name_pattern: "DiagramRenderer"
 label: "Function"
-file_pattern: "src/shared/diagrams/**"
+file_pattern: "src/diagrams/**"
 
 # Semántico (modo full/moderate)
 semantic_query: ["persist", "editor", "save"]
@@ -34,7 +34,7 @@ Usar `inbound` antes de refactors destructivos.
 aspects: ["overview"]           # compacto
 aspects: ["clusters", "hotspots"] # módulos y acoplamiento
 aspects: ["boundaries", "layers"] # violaciones FSD
-path: "src/features/editor"      # acotar a directorio
+path: "src/fixed-pages/editor"      # acotar a directorio
 ```
 
 ## query_graph (ejemplos)

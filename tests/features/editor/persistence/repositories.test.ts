@@ -6,9 +6,9 @@ import {
   PersistenceFailure,
   hashSource,
   type EditorSaveSnapshot
-} from '@/features/editor/persistence';
+} from '@/fixed-pages/editor/persistence';
 
-const path = 'database/content/a.mdx';
+const path = 'content/mdx/a.mdx';
 
 async function snapshot(): Promise<EditorSaveSnapshot> {
   const source = 'Texto exacto.';
@@ -24,7 +24,7 @@ describe('persistence repositories semantic contracts', () => {
   it.each([
     ['previous version', { previousVersion: 'sha256:wrong' }],
     ['canonical version', { version: 'sha256:wrong' }],
-    ['path', { path: 'database/content/other.mdx' }],
+    ['path', { path: 'content/mdx/other.mdx' }],
     ['revision', { confirmedRevision: 8 }],
     ['source hash', { sourceHash: 'wrong' }]
   ])('rejects an incoherent apply response: %s', async (_name, override) => {

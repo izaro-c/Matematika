@@ -1,6 +1,6 @@
 ---
 name: page-creator
-description: Genera páginas MDX de contenido matemático con metadatos Zod validados, enlazado semántico con ConceptLink/RefLink, paleta Arts & Crafts exclusiva, y rigor matemático Greenberg/Hilbert. Usa esta skill para crear o modificar cualquier archivo MDX en src/database/content/.
+description: Genera páginas MDX de contenido matemático con metadatos Zod validados, enlazado semántico con ConceptLink/RefLink, paleta Arts & Crafts exclusiva, y rigor matemático Greenberg/Hilbert. Usa esta skill para crear o modificar cualquier archivo MDX en content/mdx/.
 ---
 
 # Skill: page_creator — Generador de Contenido Matemático para Matematika
@@ -11,7 +11,7 @@ description: Genera páginas MDX de contenido matemático con metadatos Zod vali
 
 - El source MDX completo es la única autoridad. El editor visual aplica parches por rangos y nunca serializa de nuevo el documento entero.
 - Las demostraciones se escriben en body MDX con `DemonstrationSection` y `ProofStep`; no exportan un `Component` alternativo.
-- Los diagramas publicados se importan desde `@/widgets/diagrams/...`; las escenas exactas convergen en `DiagramSpec v2` y `DiagramRenderer` de `src/shared/diagrams/`.
+- Los diagramas publicados se importan desde `@content/diagrams/...`; las escenas exactas convergen en `DiagramSpec v2` y `DiagramRenderer` de `src/diagrams/`.
 - `ConceptLink`, `RefLink` e `InteractiveElement` son componentes globales del runtime MDX. Los targets deben existir en el registro publicado o quedar diagnosticados.
 - La paleta se referencia solo por los nueve tokens canónicos; los valores concretos pertenecen a `src/app/theme.css` y no se copian como hex.
 
@@ -160,7 +160,7 @@ En demostraciones, `stepTacticMap` mapea el número 1-based de cada `<ProofStep>
 }
 ```
 
-El estado agregado de contenido se consulta en `src/entities/content/contentCoverage.json`, generado con `npm run content:coverage`. No se edita a mano: sirve para saber que paginas tienen diagrama declarado/exportado, que paginas estan enlazadas a Lean y que demostraciones tienen trazabilidad por paso.
+El estado agregado de contenido se consulta en `src/data/content/contentCoverage.json`, generado con `npm run content:coverage`. No se edita a mano: sirve para saber que paginas tienen diagrama declarado/exportado, que paginas estan enlazadas a Lean y que demostraciones tienen trazabilidad por paso.
 
 Las declaraciones Lean con `formalizationStatus: "bridge"` deben aparecer en `docs/lean/bridge-debt.json`. Tras enlazar contenido a Lean, `npm run bridge:audit` debe pasar; `npm run bridge:closed` solo pasa cuando la fase puente está realmente cerrada y no quedan declaraciones `bridge`.
 
@@ -168,7 +168,7 @@ Las declaraciones Lean con `formalizationStatus: "bridge"` deben aparecer en `do
 
 ## 5. Tipos de Contenido y Schemas Completos
 
-Cada archivo MDX DEBE exportar un objeto `metadata`. Los schemas Zod (`src/entities/content/schemas.ts`) son la fuente de verdad para los campos. A continuación, los **schemas completos** para cada tipo.
+Cada archivo MDX DEBE exportar un objeto `metadata`. Los schemas Zod (`src/data/content/schemas.ts`) son la fuente de verdad para los campos. A continuación, los **schemas completos** para cada tipo.
 
 ### 5.1 Axioma (`type: "axioma"`)
 
@@ -239,8 +239,8 @@ Cada archivo MDX DEBE exportar un objeto `metadata`. Los schemas Zod (`src/entit
 **Reglas:**
 - Un sistema axiomático es un **conjunto de axiomas** que define una teoría matemática. NO es un modelo.
 - El array `axiomas` DEBE listar los IDs en el orden lógico convencional
-- Todos los IDs en `axiomas` DEBEN existir en `src/database/content/axioms/`
-- Todos los IDs en `models` DEBEN existir en `src/database/content/models/`
+- Todos los IDs en `axiomas` DEBEN existir en `content/mdx/axioms/`
+- Todos los IDs en `models` DEBEN existir en `content/mdx/models/`
 
 ### 5.4 Teorema / Lema / Corolario (`type: "teorema" | "lema" | "corolario"`)
 
@@ -497,7 +497,7 @@ export const metadata = {
   "layout": "split"
 };
 
-import { DemoMiTeorema } from '@/widgets/diagrams/Demos/DemoMiTeorema';
+import { DemoMiTeorema } from '@content/diagrams/Demos/DemoMiTeorema';
 
 <DemonstrationSection diagram={<DemoMiTeorema />}>
 
@@ -642,10 +642,10 @@ El grafo DEBE ser un DAG topológico estricto. A partir de ahora, la distinción
 
 ### 12.1 Ubicación de archivos MDX
 
-Todo contenido MDX vive en `src/database/content/`, organizado por tipo:
+Todo contenido MDX vive en `content/mdx/`, organizado por tipo:
 
 ```
-src/database/content/
+content/mdx/
   axioms/             → axioma-*.mdx
   axiomatic-systems/  → sistema-*.mdx
   definitions/        → definicion-*.mdx
@@ -664,13 +664,13 @@ src/database/content/
 
 | Qué | Dónde |
 |---|---|
-| Diagramas interactivos | `src/widgets/diagrams/{Axiomas,Definiciones,Teoremas,Demos,Models}/` |
-| Plantillas MDX | `src/shared/templates/{tipo}.template.mdx` |
-| Schemas Zod | `src/entities/content/schemas.ts` |
-| Índice de contenido | `src/entities/content/contentIndex.json` |
-| Paleta y tema | `src/app/theme.css` y tokens tipados de `src/shared/design/` |
-| Componentes UI | `src/shared/ui/` |
-| Componentes de ejercicio | `src/features/exercises/ui/` |
+| Diagramas interactivos | `content/diagrams/{Axiomas,Definiciones,Teoremas,Demos,Models}/` |
+| Plantillas MDX | `src/content-pages/shared/templates/{tipo}.template.mdx` |
+| Schemas Zod | `src/data/content/schemas.ts` |
+| Índice de contenido | `src/data/content/contentIndex.json` |
+| Paleta y tema | `src/app/theme.css` y tokens tipados de `src/design/` |
+| Componentes UI | `src/components/ui/` |
+| Componentes de ejercicio | `src/content-pages/exercise/ui/` |
 
 ---
 

@@ -1,5 +1,5 @@
 import { describe, it, expect, beforeEach } from 'vitest';
-import { useProgressStore } from '@/shared/stores/UserProgressStore';
+import { useProgressStore } from '@/lib/stores/UserProgressStore';
 
 describe('useProgressStore', () => {
   beforeEach(() => {

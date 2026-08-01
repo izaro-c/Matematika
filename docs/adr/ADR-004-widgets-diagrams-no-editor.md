@@ -11,7 +11,7 @@ El estrangulador FSD+dominios exige que demos publicadas (`widgets/diagrams`) co
 ## Decisión
 
 1. `widgets/diagrams/**` no puede importar `features/editor/**` (regla `widgets-diagrams-no-editor` en `.dependency-cruiser.js`).
-2. El facade público es `@/shared/diagrams/public` (spec + `DiagramRenderer` + constants).
+2. El facade público es `@/diagrams/public` (spec + `DiagramRenderer` + constants).
 3. `shared/design` no importa `shared/diagrams` (regla `design-no-diagrams`) para evitar ciclo tokens↔spec.
 
 ## Consecuencias

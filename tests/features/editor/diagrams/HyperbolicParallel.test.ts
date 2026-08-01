@@ -1,12 +1,12 @@
 import fs from 'node:fs';
 import { describe, expect, it } from 'vitest';
 import { parseDiagramSourceAST } from '../../../../scripts/editor/parseDiagramSourceAST';
-import { generateDiagramSource } from '../../../../src/features/editor/diagrams/source/generator';
-import { buildTargets } from '../../../../src/features/editor/diagrams/model/selectors';
-import { withMovedPoint, type DiagramSpecV2 } from '../../../../src/shared/diagrams/public';
-import { createPoincareGeodesic } from '../../../../src/shared/diagrams/core/MathFactory';
+import { generateDiagramSource } from '../../../../src/fixed-pages/editor/diagrams/source/generator';
+import { buildTargets } from '../../../../src/fixed-pages/editor/diagrams/model/selectors';
+import { withMovedPoint, type DiagramSpecV2 } from '../../../../src/diagrams/public';
+import { createPoincareGeodesic } from '../../../../src/diagrams/core/MathFactory';
 
-const SOURCE = 'src/widgets/diagrams/Axiomas/HyperbolicParallel.tsx';
+const SOURCE = 'content/diagrams/Axiomas/HyperbolicParallel.tsx';
 
 function readModel(): DiagramSpecV2 {
   const parsed = parseDiagramSourceAST(fs.readFileSync(SOURCE, 'utf8'));

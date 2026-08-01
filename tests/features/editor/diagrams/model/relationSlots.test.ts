@@ -1,11 +1,11 @@
 import { describe, expect, it } from 'vitest';
-import { createTemplateModel, element, point } from '../../../../../src/features/editor/diagrams/model';
+import { createTemplateModel, element, point } from '../../../../../src/fixed-pages/editor/diagrams/model';
 import {
   candidatesForSlot,
   editableSlotsFor,
   isIdAllowedForSlot,
   relationAvailability,
-} from '../../../../../src/features/editor/diagrams/model/relationSlots';
+} from '../../../../../src/fixed-pages/editor/diagrams/model/relationSlots';
 
 function modelWithPointsAndLine() {
   const base = createTemplateModel('lienzo-inicial', 'Test', 'test');

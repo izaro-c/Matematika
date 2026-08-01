@@ -1,18 +1,18 @@
 import fs from 'node:fs';
 import { describe, expect, it } from 'vitest';
 import { parseDiagramSourceAST } from '../../../../scripts/editor/parseDiagramSourceAST';
-import { buildTargets } from '../../../../src/features/editor/diagrams/model/selectors';
-import { generateDiagramSource } from '../../../../src/features/editor/diagrams/source/generator';
+import { buildTargets } from '../../../../src/fixed-pages/editor/diagrams/model/selectors';
+import { generateDiagramSource } from '../../../../src/fixed-pages/editor/diagrams/source/generator';
 import {
   createScenePlan,
   evaluateMathExpression,
   expressionVariables,
   type DiagramElementKind,
   type DiagramSpecV2,
-} from '../../../../src/shared/diagrams/public';
+} from '../../../../src/diagrams/public';
 
-const sourcePath = 'src/widgets/diagrams/Definiciones/Cuadrilatero.tsx';
-const pagePath = 'src/database/content/definitions/cuadrilatero.mdx';
+const sourcePath = 'content/diagrams/Definiciones/Cuadrilatero.tsx';
+const pagePath = 'content/mdx/definitions/cuadrilatero.mdx';
 
 function readModel(): DiagramSpecV2 {
   const parsed = parseDiagramSourceAST(fs.readFileSync(sourcePath, 'utf8'));

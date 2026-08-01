@@ -5,10 +5,9 @@ import annotationsFixture from '../../../fixtures/diagrams/phase3-annotations-la
 import marksFixture from '../../../fixtures/diagrams/phase3-marks-angles.json';
 import primitivesFixture from '../../../fixtures/diagrams/phase3-euclidean-primitives.json';
 import { parseDiagramSourceAST } from '../../../../scripts/editor/parseDiagramSourceAST';
-import { migrateDiagramSpec } from '../../../../src/shared/diagrams/public';
-import { generateDiagramSource } from '../../../../src/features/editor/diagrams/source/generator';
-import { convertAngleKind, setEqualAngleConstraint, setSegmentMeasureTicks, toEditorModel, workingScene } from '../../../../src/features/editor/diagrams/model';
-import type { VisualDiagramModel } from '../../../../src/features/editor/diagrams/model/types';
+import { generateDiagramSource } from '../../../../src/fixed-pages/editor/diagrams/source/generator';
+import { convertAngleKind, setEqualAngleConstraint, setSegmentMeasureTicks, toEditorModel, workingScene } from '../../../../src/fixed-pages/editor/diagrams/model';
+import type { VisualDiagramModel } from '../../../../src/fixed-pages/editor/diagrams/model/types';
 
 function asModel(value: unknown): VisualDiagramModel {
   const model = toEditorModel(value);
@@ -241,7 +240,7 @@ describe('Phase 3 source serialization', () => {
   });
 
   it('roundtrips the equal-length relation authored in Congruence1 byte for byte', () => {
-    const source = readFileSync('src/widgets/diagrams/Axiomas/Congruence1.tsx', 'utf8');
+    const source = readFileSync('content/diagrams/Axiomas/Congruence1.tsx', 'utf8');
     const parsed = parseDiagramSourceAST(source);
     expect(parsed.status).toBe('visual-exact');
     if (parsed.status !== 'visual-exact') return;
@@ -253,7 +252,7 @@ describe('Phase 3 source serialization', () => {
   });
 
   it('reopens Congruence4 with its equal-angle relation as visual-exact', () => {
-    const source = readFileSync('src/widgets/diagrams/Axiomas/Congruence4.tsx', 'utf8');
+    const source = readFileSync('content/diagrams/Axiomas/Congruence4.tsx', 'utf8');
     const parsed = parseDiagramSourceAST(source);
     expect(parsed.status).toBe('visual-exact');
     if (parsed.status !== 'visual-exact') return;
@@ -297,7 +296,7 @@ describe('Phase 3 source serialization', () => {
   });
 
   it('reopens Congruence2 with independent ruler spacing and height controls', () => {
-    const source = readFileSync('src/widgets/diagrams/Axiomas/Congruence2.tsx', 'utf8');
+    const source = readFileSync('content/diagrams/Axiomas/Congruence2.tsx', 'utf8');
     const parsed = parseDiagramSourceAST(source);
     expect(parsed.status).toBe('visual-exact');
     if (parsed.status !== 'visual-exact') return;

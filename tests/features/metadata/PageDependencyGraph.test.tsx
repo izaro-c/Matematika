@@ -15,7 +15,7 @@ vi.mock('wouter', () => ({
   useLocation: () => ['/', vi.fn()],
 }));
 
-vi.mock('@/entities/content', () => ({
+vi.mock('@/data/content', () => ({
   db: {
     getTheorem: vi.fn(),
     getDefinition: vi.fn(),
@@ -26,9 +26,9 @@ vi.mock('@/entities/content', () => ({
   },
 }));
 
-vi.mock('@/shared/stores/GlossaryStore', () => ({ dictionary: {} }));
+vi.mock('@/lib/stores/GlossaryStore', () => ({ dictionary: {} }));
 
-vi.mock('@/shared/hooks/useThemeColors', () => ({
+vi.mock('@/lib/hooks/useThemeColors', () => ({
   useThemeColors: () => ({
     lienzo: '#F8F6F1',
     carbon: '#333333',
@@ -36,7 +36,7 @@ vi.mock('@/shared/hooks/useThemeColors', () => ({
   }),
 }));
 
-import { PageDependencyGraph } from '@/features/metadata/ui/PageDependencyGraph';
+import { PageDependencyGraph } from '@/content-pages/shared/metadata/PageDependencyGraph';
 
 describe('PageDependencyGraph', () => {
   beforeEach(() => {

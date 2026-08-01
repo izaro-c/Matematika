@@ -8,11 +8,17 @@
   "exclude": [
     "**/*.(test|spec).ts",
     "**/*.(test|spec).tsx",
-    "**/tests/**"
+    "**/tests/**",
+    "**/vite-env.d.ts"
   ],
   "excludePrivate": true,
   "excludeProtected": true,
   "excludeInternal": true,
+  "validation": {
+    "notExported": false,
+    "invalidLink": true,
+    "notDocumented": false
+  },
   "theme": "default",
   "plugin": []
 }

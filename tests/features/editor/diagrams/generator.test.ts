@@ -1,8 +1,8 @@
 import { describe, expect, it } from 'vitest';
 import { readFileSync } from 'node:fs';
 import { parseDiagramSourceAST } from '../../../../scripts/editor/parseDiagramSourceAST';
-import { createTemplateModel, setPointAttractors, step } from '../../../../src/features/editor/diagrams/model';
-import { generateDiagramSource } from '../../../../src/features/editor/diagrams/source/generator';
+import { createTemplateModel, setPointAttractors, step } from '../../../../src/fixed-pages/editor/diagrams/model';
+import { generateDiagramSource } from '../../../../src/fixed-pages/editor/diagrams/source/generator';
 
 describe('DiagramSpec v3 TSX adapter generator', () => {
   it('migrates v2 input and reaches an exact v3 generate-parse-generate roundtrip', () => {
@@ -40,7 +40,7 @@ describe('DiagramSpec v3 TSX adapter generator', () => {
   });
 
   it('roundtrips the three perpendicular-bisector attractors in Triangulo as valid exact TSX', () => {
-    const source = readFileSync('src/widgets/diagrams/Definiciones/Triangulo.tsx', 'utf8');
+    const source = readFileSync('content/diagrams/Definiciones/Triangulo.tsx', 'utf8');
     const initial = parseDiagramSourceAST(source);
     expect(initial.status).toBe('visual-exact');
     if (initial.status !== 'visual-exact') return;
@@ -68,7 +68,7 @@ describe('DiagramSpec v3 TSX adapter generator', () => {
     const result = generateDiagramSource(createTemplateModel('circunferencia', 'Círculo de prueba', 'definicion'), 'CirculoDePrueba');
     expect(result.ok).toBe(true);
     if (!result.ok) return;
-    expect(result.source).toContain("import { createDiagramSpec, DiagramRenderer } from '@/shared/diagrams/public'");
+    expect(result.source).toContain("import { createDiagramSpec, DiagramRenderer } from '@/diagrams/public'");
     expect(result.source).toContain('createDiagramSpec(');
     expect(result.source).toContain('export const CirculoDePrueba = () => <DiagramRenderer spec={CirculoDePruebaSpec} />;');
     expect(result.source).not.toContain('MathBoard');
@@ -76,11 +76,11 @@ describe('DiagramSpec v3 TSX adapter generator', () => {
   });
 
   it('keeps editor preview and published runtime on the same renderer import path', () => {
-    const previewAdapter = readFileSync('src/features/editor/diagrams/ui/DiagramResponsivePreview.tsx', 'utf8');
+    const previewAdapter = readFileSync('src/fixed-pages/editor/diagrams/ui/DiagramResponsivePreview.tsx', 'utf8');
     const generated = generateDiagramSource(createTemplateModel('modelo-estatico', 'Ruta común', 'modelo'), 'RutaComun');
     expect(generated.ok).toBe(true);
     if (!generated.ok) return;
-    const sharedImport = "from '@/shared/diagrams/public'";
+    const sharedImport = "from '@/diagrams/public'";
     expect(previewAdapter).toContain(`DiagramRenderer } ${sharedImport}`);
     expect(generated.source).toContain(`createDiagramSpec, DiagramRenderer } ${sharedImport}`);
     expect(generated.source).not.toContain('MathBoard');

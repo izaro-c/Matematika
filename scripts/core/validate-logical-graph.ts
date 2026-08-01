@@ -21,16 +21,6 @@ function parseMetadata(content: string, filePath: string) {
 
 
 
-function extractConceptLinksFromContent(content: string): string[] {
-  const regex = /<ConceptLink[^>]*targetId=["']([^"']+)["']/g;
-  const deps = new Set<string>();
-  let match;
-  while ((match = regex.exec(content)) !== null) {
-    deps.add(match[1]);
-  }
-  return Array.from(deps);
-}
-
 function getMdxFiles(dir: string, fileList: string[] = []) {
   if (!fs.existsSync(dir)) return fileList;
   const files = fs.readdirSync(dir);
@@ -47,14 +37,14 @@ function getMdxFiles(dir: string, fileList: string[] = []) {
 
 console.log("Iniciando validación del DAG lógico y reconstrucción del árbol...");
 
-const contentDir = path.resolve(process.cwd(), 'src/database/content');
+const contentDir = path.resolve(process.cwd(), 'content/mdx');
 const mdxFiles = getMdxFiles(contentDir);
 
 const allNodes = new Set<string>();
 const metadataMap = new Map<string, Record<string, unknown>>();
 const contentDepsMap = new Map<string, string[]>();
 
-const leanGraphPath = path.resolve(process.cwd(), 'src/entities/graph/lean_graph.json');
+const leanGraphPath = path.resolve(process.cwd(), 'src/data/graph/lean_graph.json');
 const leanDepsMap: Record<string, string[]> = {};
 if (fs.existsSync(leanGraphPath)) {
   try {
@@ -319,10 +309,10 @@ const graphStructure = {
   nodes: graphNodes
 };
 
-const storeDir = path.resolve(process.cwd(), 'src/entities/graph');
+const storeDir = path.resolve(process.cwd(), 'src/data/graph');
 if (!fs.existsSync(storeDir)) {
   fs.mkdirSync(storeDir, { recursive: true });
 }
 const structurePath = path.join(storeDir, 'graph_structure.json');
 fs.writeFileSync(structurePath, JSON.stringify(graphStructure, null, 2));
-console.log(`✅ Estructura estática exportada correctamente a src/entities/graph/graph_structure.json`);
+console.log(`✅ Estructura estática exportada correctamente a src/data/graph/graph_structure.json`);

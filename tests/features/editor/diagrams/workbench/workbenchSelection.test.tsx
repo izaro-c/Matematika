@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest';
-import { createTemplateModel } from '@/features/editor/diagrams/model/templateModels';
-import { validConstructionRefs } from '@/features/editor/diagrams/model/guidedConstructions';
+import { createTemplateModel } from '@/fixed-pages/editor/diagrams/model/templateModels';
+import { validConstructionRefs } from '@/fixed-pages/editor/diagrams/model/guidedConstructions';
 import {
   effectiveSelection,
   parseOptionalNumber,
@@ -8,9 +8,9 @@ import {
   repairBrokenReferences,
   syncStepObjectVisibility,
   toggleAdditiveSelection,
-} from '@/features/editor/diagrams/ui/workbenchSelection';
-import type { VisualDiagramModel, VisualStep } from '@/features/editor/diagrams/model/types';
-import { DIAGRAM_RENDERER_V2_ID, DIAGRAM_SPEC_V2_VERSION } from '@/shared/diagrams/spec';
+} from '@/fixed-pages/editor/diagrams/ui/workbenchSelection';
+import type { VisualDiagramModel, VisualStep } from '@/fixed-pages/editor/diagrams/model/types';
+import { DIAGRAM_RENDERER_V2_ID, DIAGRAM_SPEC_V2_VERSION } from '@/diagrams/spec';
 
 function miniModel(overrides: Partial<VisualDiagramModel> = {}): VisualDiagramModel {
   return {

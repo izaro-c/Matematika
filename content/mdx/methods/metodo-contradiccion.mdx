@@ -1,0 +1,65 @@
+export const metadata = {
+  "id": "metodo-contradiccion",
+  "type": "metodo",
+  "subtype": "demostracion",
+  "title": "Demostración por Contradicción",
+  "description": "Probar que una afirmación es verdadera mostrando que su negación conduce a una imposibilidad lógica. También conocida como reductio ad absurdum o reducción al absurdo.",
+  "tags": ["logica", "metodos", "demostracion", "absurdo"],
+  "authors": [],
+  "links": ["teorema-dos-rectas-un-punto", "demo-reciproco-triangulo-isosceles", "demo-congruencia-aal"],
+  "seeAlso": ["metodo-directo", "metodo-contraposicion"],
+  "hasSimulation": true,
+  "difficulty": "intermedio"
+};
+
+import { ContradictionSimulation } from "@content/diagrams/Metodos/ContradictionSimulation";
+export const Simulation = ContradictionSimulation;
+
+<Capitular letra="L" />a **demostración por contradicción** — conocida históricamente como *reductio ad absurdum* o reducción al absurdo — es una de las herramientas analíticas más poderosas del arsenal matemático. En lugar de probar directamente que $P$ implica $Q$, se adopta una estrategia indirecta: se supone que la conclusión es falsa ($\neg Q$) y se muestra que esta suposición, combinada con los hechos conocidos, conduce inevitablemente a una contradicción lógica.
+
+<Separador />
+
+### Estructura Lógica
+
+El argumento tiene tres fases:
+
+1. **Negación de la tesis**: Se asume $\neg Q$ (la negación de lo que se quiere probar).
+2. **Deducción**: Usando la hipótesis $P$, los <ConceptLink targetId="axioma" isDependency={false}>axiomas</ConceptLink> y los <ConceptLink targetId="teorema" isDependency={false}>teoremas</ConceptLink> ya establecidos, se derivan consecuencias de $\neg Q$.
+3. **Contradicción**: Se llega a una afirmación imposible — por ejemplo, $1 = 0$, un número es par e impar a la vez, o se viola un axioma fundamental.
+
+Dado que el razonamiento es correcto y las premisas (excepto $\neg Q$) son verdaderas, la única fuente posible del absurdo es la suposición $\neg Q$. Por lo tanto, $\neg Q$ debe ser falsa, y en consecuencia $Q$ es verdadera.
+
+$$ \frac{P,\ \neg Q \vdash \bot}{P \implies Q} $$
+
+<Separador />
+
+### Ejemplos Clásicos
+
+- **<ConceptLink targetId="teorema-dos-rectas-un-punto" isDependency={false}>Intersección única de rectas</ConceptLink>**: Para probar que dos rectas distintas no pueden cortarse en más de un punto, se asume que sí lo hacen en dos puntos $A$ y $B$. Esto contradice el Axioma de Incidencia 1 («por dos puntos pasa una única recta»).
+
+- **<ConceptLink targetId="demo-reciproco-triangulo-isosceles" isDependency={false}>Recíproco del triángulo isósceles</ConceptLink>**: Si dos ángulos de un triángulo son iguales, los lados opuestos también lo son. Se supone lo contrario (los lados no son iguales) y se llega a una contradicción con el teorema del ángulo externo.
+
+- **Irrationalidad de $\sqrt{2}$** (ejemplo clásico universal): Se supone que $\sqrt{2} = p/q$ en forma irreducible; elevando al cuadrado se obtiene $p^2 = 2q^2$, de donde $p$ es par, $q$ es par, y la fracción no era irreducible — contradicción.
+
+<Separador />
+
+### Cuándo Usarlo
+
+La contradicción es el método de elección cuando:
+
+- Negar la conclusión proporciona más información útil que afirmarla directamente.
+- Se quiere probar una propiedad universal («todo $x$ cumple $P(x)$») negando su existencia («existe un $x$ que no cumple $P(x)$»).
+- La afirmación a probar es de tipo negativo («no existe», «no es posible», «a lo sumo uno»).
+- Se trata de probar unicidad.
+
+<Separador />
+
+### Fortalezas y Debilidades
+
+<Nota>
+**Fortaleza**: Extremadamente versátil. A menudo resuelve problemas donde el método directo no encuentra asidero. Es la estrategia estándar para probar inexistencia, unicidad e infinitud.
+
+**Debilidad**: No es constructivo; prueba *que* algo es verdad pero no muestra *cómo* construirlo. Además, si se maneja mal, puede generar demostraciones innecesariamente largas cuando una prueba directa sería más simple.
+</Nota>
+
+

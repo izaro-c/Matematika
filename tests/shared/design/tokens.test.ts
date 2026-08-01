@@ -4,12 +4,12 @@ import {
   PAGE_ACCENT_ROLES,
   SEMANTIC_COLOR_ROLES,
   THEME_COLOR_VARS,
-} from '@/shared/design';
+} from '@/design';
 import {
   ALL_TYPES,
   TYPE_COLORS,
   type SearchResult,
-} from '@/entities/content/searchApi';
+} from '@/data/content/searchApi';
 
 const BASELINE_TYPE_COLORS = {
   teorema: 'var(--theme-terracota)',

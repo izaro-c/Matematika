@@ -2,8 +2,8 @@ import { describe, expect, it } from 'vitest';
 import {
   getKnowledgeGraphGroupPresentation,
   getKnowledgeGraphLegendTypes,
-} from '@/features/graph/lib/graphUtils';
-import { CONTENT_TYPE_CONFIG } from '@/shared/lib/constants';
+} from '@/fixed-pages/graph/lib/graphUtils';
+import { CONTENT_TYPE_CONFIG } from '@/lib/helpers/constants';
 
 describe('knowledge graph presentation', () => {
   it('builds the legend only from node groups that are present', () => {

@@ -1,0 +1,65 @@
+export const metadata = {
+  "id": "paralelogramo",
+  "type": "definicion",
+  "subtype": "fundamentada",
+  "title": "Paralelogramo",
+  "description": "Un paralelogramo es un cuadrilátero cuyos pares de lados opuestos son paralelos.",
+  "tags": ["geometria", "poligonos", "cuadrilateros"],
+  "authors": ["euclides"],
+  "links": ["cuadrilatero", "recta", "paralelas", "segmento", "angulo"],
+  "seeAlso": [],
+  "hasSimulation": true
+};
+
+import { Paralelogramo } from '@content/diagrams/Definiciones/Paralelogramo';
+
+export const Simulation = Paralelogramo;
+
+<Capitular letra="U" />n <ConceptLink targetId="paralelogramo" isDependency={false} highlightTarget="poligono" highlightColor="salvia">paralelogramo</ConceptLink> es un <ConceptLink targetId="cuadrilatero" isDependency={false}>cuadrilátero</ConceptLink> <ConceptLink targetId="convexidad" isDependency={false}>convexo</ConceptLink> cuyos dos pares de <ConceptLink targetId="lado" isDependency={false} highlightTarget="lados-opuestos" highlightColor="pavo">lados opuestos</ConceptLink> son <ConceptLink targetId="paralelas" isDependency={false} highlightTarget="lados-opuestos" highlightColor="pavo">paralelos</ConceptLink>. Los <ConceptLink targetId="rectangulo" isDependency={false} highlightTarget="angulos-rectos" highlightColor="ocre">rectángulos</ConceptLink>, los <ConceptLink targetId="rombo" isDependency={false} highlightTarget="lados-iguales" highlightColor="ocre">rombos</ConceptLink> y los <ConceptLink targetId="cuadrado" isDependency={false}>cuadrados</ConceptLink> son subclases de paralelogramos.
+
+En el diagrama se mueve únicamente el <InteractiveElement target="vertice-movil" color="terracota">vértice D</InteractiveElement>. El <InteractiveElement target="clasificacion" color="carbon">panel de clasificación</InteractiveElement> identifica la figura resultante; las guías magnéticas facilitan alcanzar las subclases exactas sin mostrarse en el lienzo.
+
+<Separador />
+
+### Enunciado Formal
+
+Un <ConceptLink targetId="cuadrilatero" isDependency={false}>cuadrilátero</ConceptLink> $ABCD$ es un <ConceptLink targetId="paralelogramo" isDependency={false} highlightTarget="poligono" highlightColor="salvia">paralelogramo</ConceptLink> si y solo si sus <ConceptLink targetId="lado" isDependency={false} highlightTarget="lados-opuestos" highlightColor="pavo">lados opuestos</ConceptLink> satisfacen:
+
+<Formula>
+  $$ \overleftrightarrow{AB} \parallel \overleftrightarrow{CD} \quad \land \quad \overleftrightarrow{BC} \parallel \overleftrightarrow{DA} $$
+</Formula>
+
+<Separador />
+
+### Propiedades
+
+A partir de la definición por <ConceptLink targetId="paralelas" isDependency={false}>paralelismo</ConceptLink> se demuestran formalmente las siguientes propiedades:
+
+- **Lados opuestos <ConceptLink targetId="congruencia" isDependency={false}>congruentes</ConceptLink>**: <InteractiveElement target="lados-opuestos" color="musgo">$\overline{AB} \cong \overline{CD}$</InteractiveElement> y $\overline{BC} \cong \overline{DA}$.
+- **Ángulos opuestos <ConceptLink targetId="congruencia" isDependency={false}>congruentes</ConceptLink>**: <InteractiveElement target="angulos-opuestos" color="ocre">$\angle A \cong \angle C$</InteractiveElement> y $\angle B \cong \angle D$.
+- **Ángulos consecutivos suplementarios**: $\angle A + \angle B = \angle B + \angle C = 180^\circ$.
+- **<ConceptLink targetId="diagonal" isDependency={false} highlightTarget="diagonales" highlightColor="pizarra">Diagonales</ConceptLink> que se bisecan**: $\overline{AC}$ y $\overline{BD}$ se cortan en sus respectivos <ConceptLink targetId={["lema-punto-medio", "punto"]}>puntos medios</ConceptLink>.
+
+<Separador />
+
+### Subclases
+
+La familia de los <ConceptLink targetId="paralelogramo" isDependency={false}>paralelogramos</ConceptLink> incluye como casos particulares:
+
+| Subclase | Condición adicional |
+|---|---|
+| **<ConceptLink targetId="rectangulo" isDependency={false} highlightTarget="angulos-rectos" highlightColor="ocre">Rectángulo</ConceptLink>** | Cuatro <ConceptLink targetId="angulo" isDependency={false} highlightTarget="angulos-rectos" highlightColor="ocre">ángulos rectos</ConceptLink> |
+| **<ConceptLink targetId="rombo" isDependency={false} highlightTarget="lados-iguales" highlightColor="ocre">Rombo</ConceptLink>** | Cuatro <ConceptLink targetId="lado" isDependency={false} highlightTarget="lados-iguales" highlightColor="ocre">lados congruentes</ConceptLink> |
+| **<ConceptLink targetId="cuadrado" isDependency={false}>Cuadrado</ConceptLink>** | <ConceptLink targetId="angulo" isDependency={false} highlightTarget="angulos-rectos" highlightColor="ocre">Cuatro ángulos rectos</ConceptLink> y <ConceptLink targetId="lado" isDependency={false} highlightTarget="lados-iguales" highlightColor="ocre">cuatro lados congruentes</ConceptLink> |
+
+<Nota>
+La relación es **jerárquica**: todo <ConceptLink targetId="cuadrado" isDependency={false}>cuadrado</ConceptLink> es <ConceptLink targetId="rectangulo" isDependency={false}>rectángulo</ConceptLink> y <ConceptLink targetId="rombo" isDependency={false}>rombo</ConceptLink>, y todo <ConceptLink targetId="rectangulo" isDependency={false}>rectángulo</ConceptLink> y <ConceptLink targetId="rombo" isDependency={false}>rombo</ConceptLink> es un <ConceptLink targetId="paralelogramo" isDependency={false}>paralelogramo</ConceptLink>.
+</Nota>
+
+<Separador />
+
+### Observaciones
+
+- La condición de <ConceptLink targetId="paralelas" isDependency={false}>paralelismo</ConceptLink> de ambos pares de <ConceptLink targetId="lado" isDependency={false}>lados</ConceptLink> opuestos es la **definición primaria**. Las demás propiedades (<ConceptLink targetId="congruencia" isDependency={false}>congruencia</ConceptLink> de <ConceptLink targetId="lado" isDependency={false}>lados</ConceptLink>, <ConceptLink targetId="congruencia" isDependency={false}>congruencia</ConceptLink> de <ConceptLink targetId="angulo" isDependency={false}>ángulos</ConceptLink>, bisección de <ConceptLink targetId="diagonal" isDependency={false}>diagonales</ConceptLink>) son **<ConceptLink targetId="teorema" isDependency={false}>teoremas</ConceptLink>** que se deducen de ella.
+- Un <ConceptLink targetId="cuadrilatero" isDependency={false}>cuadrilátero</ConceptLink> es <ConceptLink targetId="paralelogramo" isDependency={false}>paralelogramo</ConceptLink> si y solo si sus <ConceptLink targetId="diagonal" isDependency={false}>diagonales</ConceptLink> se bisecan mutuamente. Esta es una caracterización alternativa frecuentemente usada en <ConceptLink targetId="demostracion" isDependency={false}>demostraciones</ConceptLink>.
+- En un <ConceptLink targetId="paralelogramo" isDependency={false}>paralelogramo</ConceptLink>, el <ConceptLink targetId="area" isDependency={false}>área</ConceptLink> se calcula como $S = b \cdot h$ donde $b$ es la <ConceptLink targetId="longitud" isDependency={false}>longitud</ConceptLink> de un <ConceptLink targetId="lado" isDependency={false}>lado</ConceptLink> y $h$ la <ConceptLink targetId="altura" isDependency={false}>altura</ConceptLink> correspondiente.

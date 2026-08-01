@@ -1,7 +1,7 @@
 import { act, renderHook, waitFor } from '@testing-library/react';
 import { createHash } from 'node:crypto';
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
-import { useEditorCore, VISUAL_SAVE_POLICY } from '@/features/editor/core/useEditorCore';
+import { useEditorCore, VISUAL_SAVE_POLICY } from '@/fixed-pages/editor/core/useEditorCore';
 
 const source = `import X from './x';
 
@@ -139,24 +139,19 @@ describe('useEditorCore lossless integration', () => {
     expect(payload.source).not.toContain('<InteractiveElement target="pP"');
   });
 
-  it('applies destructive structural operations locally and saves them directly', async () => {
-    const fetchMock = vi.mocked(fetch)
-      .mockResolvedValueOnce(readResponse(source))
-      .mockImplementationOnce(async (_url, init) => {
-        const request = JSON.parse(String(init?.body));
-        return response({ path: request.path, sourceHash: request.sourceHash, previousVersion: request.expectedVersion,
-          version: `sha256:${request.sourceHash}`, confirmedRevision: request.localRevision, backupId: 'backup-delete' });
-      });
+  it('applies destructive structural operations locally but requires diff review to save', async () => {
+    const fetchMock = vi.mocked(fetch).mockResolvedValueOnce(readResponse(source));
     const { result } = renderHook(() => useEditorCore());
     await act(() => result.current.openFile('content/test.mdx'));
     const before = result.current.rawBody;
     act(() => result.current.removeBlock(result.current.blocks[0].id));
     expect(result.current.rawBody).not.toBe(before);
     expect(result.current.rawBody).not.toContain('## Título');
-    let saved = false;
+    let saved = true;
     await act(async () => { saved = await result.current.saveCurrentFile(); });
-    expect(saved).toBe(true);
-    expect(fetchMock).toHaveBeenCalledTimes(2);
+    expect(saved).toBe(false);
+    expect(result.current.message).toContain('revisión de diff');
+    expect(fetchMock).toHaveBeenCalledTimes(1);
   });
 
   it('manual code save sends the exact current source and checks HTTP status', async () => {
@@ -199,7 +194,7 @@ describe('useEditorCore lossless integration', () => {
     await act(async () => { saved = await result.current.saveCurrentFile(); });
 
     expect(saved).toBe(false);
-    expect(result.current.message).toContain('errores de sintaxis');
+    expect(result.current.message).toMatch(/no se puede analizar|no soportados/i);
     expect(fetchMock).toHaveBeenCalledTimes(1);
   });
 
@@ -237,14 +232,8 @@ describe('useEditorCore lossless integration', () => {
     expect(fetchMock).toHaveBeenCalledTimes(2);
   });
 
-  it('allows a partially editable save directly without any approval', async () => {
-    const fetchMock = vi.mocked(fetch)
-      .mockResolvedValueOnce(readResponse(partialSource, 'content/partial.mdx'))
-      .mockImplementationOnce(async (_url, init) => {
-        const request = JSON.parse(String(init?.body));
-        return response({ path: request.path, sourceHash: request.sourceHash, previousVersion: request.expectedVersion,
-          version: `sha256:${request.sourceHash}`, confirmedRevision: request.localRevision, backupId: 'backup-partial' });
-      });
+  it('blocks a partially editable save until diff review is approved', async () => {
+    const fetchMock = vi.mocked(fetch).mockResolvedValueOnce(readResponse(partialSource, 'content/partial.mdx'));
     const { result } = renderHook(() => useEditorCore());
     await act(() => result.current.openFile('content/partial.mdx'));
     const heading = result.current.blocks.find(block => block.type === 'heading');
@@ -252,11 +241,12 @@ describe('useEditorCore lossless integration', () => {
     act(() => result.current.updateBlock(heading!.id, 'Título actualizado'));
     await waitFor(() => expect(result.current.rawBody).toContain('## Título actualizado'));
 
-    let saved = false;
+    let saved = true;
     await act(async () => { saved = await result.current.saveCurrentFile(); });
 
-    expect(saved).toBe(true);
-    expect(fetchMock).toHaveBeenCalledTimes(2);
+    expect(saved).toBe(false);
+    expect(result.current.message).toContain('revisión de diff');
+    expect(fetchMock).toHaveBeenCalledTimes(1);
   });
 
   it('binds source and revision before the asynchronous save hash resolves', async () => {

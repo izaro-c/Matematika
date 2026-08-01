@@ -3,9 +3,9 @@ import path from 'node:path';
 import os from 'node:os';
 import { spawn, type ChildProcess } from 'node:child_process';
 import puppeteer, { type Browser, type ConsoleMessage, type HTTPRequest, type Page } from 'puppeteer';
-import { createTemplateModel } from '../../../src/features/editor/diagrams/model';
-import { buildTargets } from '../../../src/features/editor/diagrams/model/selectors';
-import { generateDiagramSource } from '../../../src/features/editor/diagrams/source/generator';
+import { createTemplateModel } from '../../../src/fixed-pages/editor/diagrams/model';
+import { buildTargets } from '../../../src/fixed-pages/editor/diagrams/model/selectors';
+import { generateDiagramSource } from '../../../src/fixed-pages/editor/diagrams/source/generator';
 
 interface E2EResult {
   name: string;
@@ -58,7 +58,7 @@ async function writeFixture(root: string, relative: string, source: string) {
 }
 
 async function seedFixtures(root: string) {
-  await writeFixture(root, 'database/content/definitions/compatible.mdx', [
+  await writeFixture(root, 'content/mdx/definitions/compatible.mdx', [
     'export const metadata = {',
     '  "id": "compatible",',
     '  "type": "definicion",',
@@ -71,7 +71,7 @@ async function seedFixtures(root: string) {
     '',
     'Texto inicial.',
   ].join('\n'));
-  await writeFixture(root, 'database/content/definitions/parcial.mdx', [
+  await writeFixture(root, 'content/mdx/definitions/parcial.mdx', [
     'export const metadata = {',
     '  "id": "parcial",',
     '  "type": "definicion",',
@@ -88,7 +88,7 @@ async function seedFixtures(root: string) {
     '',
     'Texto seguro.',
   ].join('\n'));
-  await writeFixture(root, 'database/content/definitions/no-soportado.mdx', [
+  await writeFixture(root, 'content/mdx/definitions/no-soportado.mdx', [
     'export const metadata = {',
     '  "id": "no-soportado",',
     '  "type": "definicion",',
@@ -99,7 +99,7 @@ async function seedFixtures(root: string) {
     '',
     'Texto { un syntax error here } y cierre.',
   ].join('\n'));
-  await writeFixture(root, 'database/content/definitions/enlace-anidado.mdx', [
+  await writeFixture(root, 'content/mdx/definitions/enlace-anidado.mdx', [
     'export const metadata = {',
     '  "id": "enlace-anidado",',
     '  "type": "definicion",',
@@ -353,7 +353,7 @@ async function main() {
       console.log(`[${new Date().toISOString()}] FLOW 1: Editor opened, clicking Compatible...`);
       await clickByText(page, 'Compatible');
       await expectText(page, 'Edición visual exacta');
-      const current = await readContent('database/content/definitions/compatible.mdx');
+      const current = await readContent('content/mdx/definitions/compatible.mdx');
       const next = current.source.replace('Texto inicial.', 'Texto editado desde E2E.');
       await setMonacoValue(page, next);
       await expectText(page, 'Cambios locales');
@@ -361,7 +361,7 @@ async function main() {
       await expectText(page, 'Diff listo para aplicar');
       await clickByText(page, 'Aplicar archivo');
       await expectText(page, 'Archivo guardado');
-      const saved = await readContent('database/content/definitions/compatible.mdx');
+      const saved = await readContent('content/mdx/definitions/compatible.mdx');
       if (!saved.source.includes('Texto editado desde E2E.')) throw new Error('Edited source was not persisted');
       console.log(`[${new Date().toISOString()}] FLOW 1: Completed`);
     });
@@ -374,7 +374,7 @@ async function main() {
       await clickByText(page, 'Parcial');
       await expectText(page, 'Edición visual exacta por rangos');
       console.log(`[${new Date().toISOString()}] FLOW 2: Document loaded. Reading content...`);
-      const before = await readContent('database/content/definitions/parcial.mdx');
+      const before = await readContent('content/mdx/definitions/parcial.mdx');
       console.log(`[${new Date().toISOString()}] FLOW 2: Setting Monaco value...`);
       await setMonacoValue(page, before.source.replace('Texto seguro.', 'Texto seguro editado.'));
       await waitForEnabledButton(page, 'Revisar diff');
@@ -387,7 +387,7 @@ async function main() {
       });
       if (!applyDisabled) throw new Error('Partial document code edit was not blocked without operation ranges');
       console.log(`[${new Date().toISOString()}] FLOW 2: Checking blocked persistence...`);
-      const saved = await readContent('database/content/definitions/parcial.mdx');
+      const saved = await readContent('content/mdx/definitions/parcial.mdx');
       if (saved.source !== before.source) throw new Error('Blocked partial source edit was persisted');
       console.log(`[${new Date().toISOString()}] FLOW 2: Completed`);
     });
@@ -402,7 +402,7 @@ async function main() {
       await clickByText(page, 'Edición visual exacta');
       await expectText(page, 'Recurso MDX inválido');
       console.log(`[${new Date().toISOString()}] FLOW 3: Reading content...`);
-      const saved = await readContent('database/content/definitions/no-soportado.mdx');
+      const saved = await readContent('content/mdx/definitions/no-soportado.mdx');
       if (!saved.source.includes('syntax error')) throw new Error('Unsupported source changed unexpectedly');
       console.log(`[${new Date().toISOString()}] FLOW 3: Completed`);
     });
@@ -413,7 +413,7 @@ async function main() {
       console.log(`[${new Date().toISOString()}] FLOW 4: Editor opened, clicking Compatible...`);
       await clickByText(page, 'Compatible');
       console.log(`[${new Date().toISOString()}] FLOW 4: Reading content...`);
-      const current = await readContent('database/content/definitions/compatible.mdx');
+      const current = await readContent('content/mdx/definitions/compatible.mdx');
       console.log(`[${new Date().toISOString()}] FLOW 4: Setting Monaco value...`);
       await setMonacoValue(page, `${current.source}\n\nError de red recuperado.`);
       console.log(`[${new Date().toISOString()}] FLOW 4: Setting request interception...`);
@@ -460,11 +460,11 @@ async function main() {
       console.log(`[${new Date().toISOString()}] FLOW 5: Editor opened, clicking Compatible...`);
       await clickByText(page, 'Compatible');
       console.log(`[${new Date().toISOString()}] FLOW 5: Reading content...`);
-      const opened = await readContent('database/content/definitions/compatible.mdx');
+      const opened = await readContent('content/mdx/definitions/compatible.mdx');
       console.log(`[${new Date().toISOString()}] FLOW 5: Setting Monaco value...`);
       await setMonacoValue(page, `${opened.source}\n\nCambio local en conflicto.`);
       console.log(`[${new Date().toISOString()}] FLOW 5: Applying external change behind the scenes...`);
-      const external = await applyContent('database/content/definitions/compatible.mdx', `${opened.source}\n\nCambio externo.`, opened.version, 99);
+      const external = await applyContent('content/mdx/definitions/compatible.mdx', `${opened.source}\n\nCambio externo.`, opened.version, 99);
       if (!external.response.ok) throw new Error('Could not create external change');
       console.log(`[${new Date().toISOString()}] FLOW 5: Clicking Revisar diff...`);
       await clickByText(page, 'Revisar diff');
@@ -477,16 +477,16 @@ async function main() {
     await runTest(results, '6 Restauración de backup', evidenceDir, async () => {
       console.log(`[${new Date().toISOString()}] FLOW 6: Starting`);
       console.log(`[${new Date().toISOString()}] FLOW 6: Reading content...`);
-      const current = await readContent('database/content/definitions/parcial.mdx');
+      const current = await readContent('content/mdx/definitions/parcial.mdx');
       console.log(`[${new Date().toISOString()}] FLOW 6: Applying temporal change and triggering backup...`);
-      const applied = await applyContent('database/content/definitions/parcial.mdx', `${current.source}\n\nVersión temporal.`, current.version, 101);
+      const applied = await applyContent('content/mdx/definitions/parcial.mdx', `${current.source}\n\nVersión temporal.`, current.version, 101);
       const body = applied.body as { backupId?: string; version?: string };
       if (!applied.response.ok || !body.backupId || !body.version) throw new Error('Could not create backup');
       console.log(`[${new Date().toISOString()}] FLOW 6: Calling API content restore...`);
       const restore = await fetch(`${BASE_URL}/api/content/restore`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ path: 'database/content/definitions/parcial.mdx', backupId: body.backupId, expectedVersion: body.version }),
+        body: JSON.stringify({ path: 'content/mdx/definitions/parcial.mdx', backupId: body.backupId, expectedVersion: body.version }),
       });
       if (!restore.ok) throw new Error(`Restore failed: ${restore.status}`);
       console.log(`[${new Date().toISOString()}] FLOW 6: Completed`);
@@ -498,7 +498,7 @@ async function main() {
       console.log(`[${new Date().toISOString()}] FLOW 7: Editor opened, clicking Parcial...`);
       await clickByText(page, 'Parcial');
       console.log(`[${new Date().toISOString()}] FLOW 7: Reading content...`);
-      const current = await readContent('database/content/definitions/parcial.mdx');
+      const current = await readContent('content/mdx/definitions/parcial.mdx');
       console.log(`[${new Date().toISOString()}] FLOW 7: Setting Monaco value...`);
       await setMonacoValue(page, `${current.source}\n\nPendiente.`);
       await waitForEnabledButton(page, 'Revisar diff');
@@ -560,7 +560,7 @@ async function main() {
       await openEditor(page);
       await clickByText(page, 'Parcial');
       await expectText(page, 'Edición visual exacta por rangos');
-      const before = await readContent('database/content/definitions/parcial.mdx');
+      const before = await readContent('content/mdx/definitions/parcial.mdx');
       await clickByExactText(page, 'Edición visual exacta');
       const openedParagraph = await page.evaluate(() => {
         const target = [...document.querySelectorAll('div.cursor-text')]
@@ -733,7 +733,7 @@ async function main() {
       await clickByText(page, 'Aplicar archivo');
       await expectText(page, 'El archivo real fue aplicado.');
 
-      const saved = await readContent('database/content/definitions/enlace-anidado.mdx');
+      const saved = await readContent('content/mdx/definitions/enlace-anidado.mdx');
       const expected = '<ConceptLink targetId="compatible" isDependency={false}>Documento compatible</ConceptLink>.';
       if (!saved.source.includes(expected)) throw new Error('The edited semantic link was not persisted');
       if (saved.source.includes('<InteractiveElement')) throw new Error('The stale outer interactive wrapper survived the edit');
@@ -768,7 +768,7 @@ async function main() {
         '  "hasSimulation": true',
         '};',
         '',
-        "import { Complejo } from '@/widgets/diagrams/Definitions/Complejo';",
+        "import { Complejo } from '@content/diagrams/Definitions/Complejo';",
         'export const Simulation = Complejo;',
         '',
         '<Capitular letra="U" />na definición visual conserva estructura y conexiones.',
@@ -799,19 +799,19 @@ async function main() {
       await clickByText(page, 'Aplicar archivo');
       await expectText(page, 'Archivo guardado');
 
-      const saved = await readContent('database/content/definitions/definicion-e2e-compleja.mdx');
+      const saved = await readContent('content/mdx/definitions/definicion-e2e-compleja.mdx');
       if (saved.source !== complexSource) {
         throw new Error(`The first complex save was not lossless: ${sourceDifference(complexSource, saved.source)}`);
       }
 
       await clickByText(page, 'Parcial');
-      await expectText(page, 'database/content/definitions/parcial.mdx');
+      await expectText(page, 'content/mdx/definitions/parcial.mdx');
       await page.waitForFunction(() => document.body.textContent?.includes('No hay cambios locales pendientes.')
         && !document.body.textContent?.includes('Cargando archivo'));
       await clickByText(page, 'E2e Compleja');
       await expectText(page, 'Edición visual exacta');
       await expectText(page, COMPLEX_DIAGRAM_TARGET.label);
-      const reopened = await readContent('database/content/definitions/definicion-e2e-compleja.mdx');
+      const reopened = await readContent('content/mdx/definitions/definicion-e2e-compleja.mdx');
       if (reopened.source !== complexSource) throw new Error('Reopening changed the complex MDX source');
 
       await clickByText(page, 'Vista publicada');
@@ -832,7 +832,7 @@ async function main() {
       await page.setViewport({ width: 1440, height: 900, deviceScaleFactor: 1 });
       await openEditor(page);
       await clickByText(page, 'Compatible');
-      const current = await readContent('database/content/definitions/compatible.mdx');
+      const current = await readContent('content/mdx/definitions/compatible.mdx');
       await setMonacoValue(page, `${current.source}\n\nCambio no guardado antes del cierre.`);
       await expectText(page, 'Cambios locales');
       // Esperar dos frames garantiza que el efecto que registra beforeunload
@@ -858,7 +858,7 @@ async function main() {
       } finally {
         page.off('dialog', observeBeforeUnload);
       }
-      const persisted = await readContent('database/content/definitions/compatible.mdx');
+      const persisted = await readContent('content/mdx/definitions/compatible.mdx');
       if (persisted.source.includes('Cambio no guardado antes del cierre.')) {
         throw new Error('Pending source was persisted without an explicit review and apply');
       }

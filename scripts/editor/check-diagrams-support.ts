@@ -1,7 +1,6 @@
-import path from 'node:path';
 import { buildEditorResourceCatalog } from './buildEditorResourceCatalog';
 
-const srcRoot = path.join(process.cwd(), 'src');
+const srcRoot = process.cwd();
 const catalog = buildEditorResourceCatalog({ srcRoot });
 const diagrams = catalog.filter(entry => entry.kind === 'diagram');
 const exact = diagrams.filter(entry => entry.capability === 'visual-exact');

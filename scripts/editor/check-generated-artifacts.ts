@@ -9,11 +9,11 @@ interface GateCommand {
 const generatedPaths = [
   'ai/indexes',
   'ai/reports/debt-report.md',
-  'src/entities/content/contentCoverage.json',
-  'src/entities/content/contentIndex.json',
-  'src/entities/content/diagramUsageIndex.json',
-  'src/entities/graph/lean_graph.json',
-  'src/entities/graph/proof_blocks.json',
+  'src/data/content/contentCoverage.json',
+  'src/data/content/contentIndex.json',
+  'src/data/content/diagramUsageIndex.json',
+  'src/data/graph/lean_graph.json',
+  'src/data/graph/proof_blocks.json',
 ];
 
 const commands: GateCommand[] = [

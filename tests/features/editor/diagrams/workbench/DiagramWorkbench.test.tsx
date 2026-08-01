@@ -1,7 +1,7 @@
 import { describe, it, expect } from 'vitest';
 import { render, screen, fireEvent } from '@testing-library/react';
 import React from 'react';
-import { DiagramWorkbench } from '@/features/editor/diagrams/ui/DiagramWorkbench';
+import { DiagramWorkbench } from '@/fixed-pages/editor/diagrams/ui/DiagramWorkbench';
 
 describe('DiagramWorkbench Component', () => {
   it('renderiza la cabecera, barra de herramientas y lienzo interactivo', () => {

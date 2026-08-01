@@ -1,12 +1,12 @@
 import fs from 'node:fs';
 import path from 'node:path';
-import { parseEditorDocument } from '../../src/features/editor/document/parseEditorDocument';
+import { parseEditorDocument } from '../../src/fixed-pages/editor/document/parseEditorDocument';
 import {
   RESOURCE_CAPABILITY_LABELS,
   isEditableCatalogResource,
   type EditorResourceCapability,
   type EditorResourceCatalogEntry,
-} from '../../src/features/editor/catalog/resourceCatalogTypes';
+} from '../../src/fixed-pages/editor/catalog/resourceCatalogTypes';
 import { parseDiagramSourceAST } from './parseDiagramSourceAST';
 
 function walkFiles(root: string): string[] {
@@ -92,11 +92,11 @@ export function buildEditorResourceCatalog({
   includeInternal = true,
 }: BuildEditorResourceCatalogOptions): EditorResourceCatalogEntry[] {
   const catalog: EditorResourceCatalogEntry[] = [];
-  const contentRoot = path.join(srcRoot, 'database', 'content');
-  const diagramsRoot = path.join(srcRoot, 'widgets', 'diagrams');
+  const contentRoot = path.join(srcRoot, 'content', 'mdx');
+  const diagramsRoot = path.join(srcRoot, 'content', 'diagrams');
   const internalRoots = [
-    path.join(srcRoot, 'shared', 'diagrams'),
-    path.join(srcRoot, 'shared', 'templates'),
+    path.join(srcRoot, 'src', 'shared', 'diagrams'),
+    path.join(srcRoot, 'src', 'content-pages', 'shared', 'templates'),
   ];
 
   for (const absolutePath of walkFiles(contentRoot)) {

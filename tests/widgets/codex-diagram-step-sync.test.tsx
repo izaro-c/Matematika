@@ -1,17 +1,17 @@
 import React from 'react';
 import { act, fireEvent, render, screen } from '@testing-library/react';
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
-import { MathProvider } from '@/shared/lib/MathStoreContext';
-import { ProofStep } from '@/widgets/content/ProofStep';
-import { CodexLayout } from '@/widgets/layouts/CodexLayout';
-import type { DiagramStep } from '@/shared/diagrams/spec';
-import { createTemplateModel } from '@/features/editor/diagrams/model';
+import { MathProvider } from '@/lib/helpers/MathStoreContext';
+import { ProofStep } from '@/components/content/ProofStep';
+import { CodexLayout } from '@/components/layouts/CodexLayout';
+import type { DiagramStep } from '@/diagrams/spec';
+import { createTemplateModel } from '@/fixed-pages/editor/diagrams/model';
 
-vi.mock('@/shared/diagrams/core/MathBoard', () => ({
+vi.mock('@/diagrams/core/MathBoard', () => ({
   MathBoard: ({ children }: { children?: React.ReactNode }) => <div data-testid="math-board">{children}</div>,
 }));
 
-import { DiagramRenderer } from '@/shared/diagrams/runtime/DiagramRenderer';
+import { DiagramRenderer } from '@/diagrams/runtime/DiagramRenderer';
 
 const steps: DiagramStep[] = [
   { id: 'construction', label: 'Construcción', description: '', visibleTargets: [], durationMs: 300 },

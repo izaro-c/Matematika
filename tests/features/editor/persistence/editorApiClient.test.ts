@@ -1,7 +1,7 @@
 import { afterEach, describe, expect, it, vi } from 'vitest';
-import { EditorApiClient, PersistenceFailure } from '@/features/editor/persistence';
+import { EditorApiClient, PersistenceFailure } from '@/fixed-pages/editor/persistence';
 
-const validRead = { path: 'database/content/a.mdx', source: 'Texto.', sourceHash: 'hash', version: 'v1' };
+const validRead = { path: 'content/mdx/a.mdx', source: 'Texto.', sourceHash: 'hash', version: 'v1' };
 function response(payload: unknown, status = 200): Response {
   return new Response(typeof payload === 'string' ? payload : JSON.stringify(payload), {
     status, headers: { 'Content-Type': 'application/json' }

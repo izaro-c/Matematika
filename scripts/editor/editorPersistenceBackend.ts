@@ -4,7 +4,7 @@ import crypto from 'node:crypto';
 import type {
   ApplyContentRequest, ApplyContentResponse, ReadContentResponse, ReadDraftResponse,
   RestoreBackupRequest, RestoreBackupResponse, SaveDraftRequest, SaveDraftResponse
-} from '../../src/features/editor/persistence/persistenceContracts';
+} from '../../src/fixed-pages/editor/persistence/persistenceContracts';
 
 export class BackendError extends Error {
   readonly status: number;

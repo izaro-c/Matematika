@@ -1,10 +1,10 @@
 import React from 'react';
 import { fireEvent, render, screen } from '@testing-library/react';
 import { describe, expect, it, vi } from 'vitest';
-import { createTemplateModel } from '../../../../../src/features/editor/diagrams/model';
-import { DiagramDivergenceDialog } from '../../../../../src/features/editor/diagrams/ui/DiagramDivergenceDialog';
+import { createTemplateModel } from '../../../../../src/fixed-pages/editor/diagrams/model';
+import { DiagramDivergenceDialog } from '../../../../../src/fixed-pages/editor/diagrams/ui/DiagramDivergenceDialog';
 
-vi.mock('../../../../../src/features/editor/diagrams/ui/DiagramResponsivePreview', () => ({
+vi.mock('@/fixed-pages/editor/diagrams/ui/DiagramResponsivePreview', () => ({
   DiagramResponsivePreview: () => <div data-testid="visual-divergence-preview">Vista visual</div>,
 }));
 

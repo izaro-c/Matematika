@@ -8,9 +8,9 @@ import {
   type LeanGraph,
 } from './lean-graph-utils.ts';
 
-const CONTENT_DIR = path.resolve('./src/database/content');
-const LEAN_GRAPH_PATH = path.resolve('./src/entities/graph/lean_graph.json');
-const OUTPUT_PATH = path.resolve('./src/entities/content/contentCoverage.json');
+const CONTENT_DIR = path.resolve('./content/mdx');
+const LEAN_GRAPH_PATH = path.resolve('./src/data/graph/lean_graph.json');
+const OUTPUT_PATH = path.resolve('./src/data/content/contentCoverage.json');
 
 type DiagramStatus = 'exported' | 'declared-missing-export' | 'exported-undeclared' | 'none';
 type CoverageStatus = 'none' | 'human-proof' | 'lean-checked' | 'lean-audited';
@@ -183,7 +183,7 @@ export function generateContentCoverage(options: GenerateContentCoverageOptions 
         generatedAt = existing.generatedAt;
       }
     }
-  } catch (err) {
+  } catch {
     // Ignore read errors
   }
 

@@ -1,0 +1,283 @@
+import React, { useMemo, useState, useCallback, useRef, useEffect } from 'react';
+import { useLocation } from 'wouter';
+import { publicAsset } from '@/lib/helpers/routeHelper';
+import ForceGraph2D from 'react-force-graph-2d';
+import type {
+  ForceGraphMethods,
+  ForceGraphProps,
+  GraphData,
+  LinkObject,
+  NodeObject,
+} from 'react-force-graph-2d';
+import { useGlossaryStore } from '@/lib/stores/GlossaryStore';
+import { useProgressStore } from '@/lib/stores/UserProgressStore';
+import { buildKnowledgeGraphData, GraphNode, GraphLink } from '@/fixed-pages/graph/lib/knowledgeGraphBuilder';
+import { GraphLegend } from '@/fixed-pages/graph/ui/components/GraphLegend';
+import { GraphSearch } from '@/fixed-pages/graph/ui/components/GraphSearch';
+import { getKnowledgeGraphContentType } from '@/fixed-pages/graph/lib/graphUtils';
+import { useThemeColors } from '@/lib/hooks/useThemeColors';
+
+type KnowledgeGraphNode = NodeObject<GraphNode>;
+type KnowledgeGraphLink = LinkObject<GraphNode, GraphLink>;
+type KnowledgeGraphProps = ForceGraphProps<GraphNode, GraphLink>;
+type KnowledgeGraphRef = ForceGraphMethods<KnowledgeGraphNode, KnowledgeGraphLink>;
+type ResolvedGraphLink = KnowledgeGraphLink & {
+  source: KnowledgeGraphNode;
+  target: KnowledgeGraphNode;
+};
+type ChargeForce = {
+  strength: (strength: number) => unknown;
+};
+type LinkForce = {
+  distance: (distance: (link: ResolvedGraphLink) => number) => unknown;
+};
+
+/**
+ * Página Explorador (Knowledge Graph).
+ * Renderiza una red tridimensional (2D proyectada) de todos los conceptos matemáticos.
+ * Permite explorar conexiones entre teoremas, métodos, biografías y demostraciones.
+ */
+export const GraphPage: React.FC = () => {
+  const [, setLocation] = useLocation();
+  const { openTerm } = useGlossaryStore();
+  const theme = useThemeColors();
+  const graphRef = useRef<KnowledgeGraphRef | undefined>(undefined);
+  const graphBackgroundStyle = {
+    '--graph-light-background': `url("${publicAsset('/images/bg-arts-crafts-1.png')}")`,
+    '--graph-dark-background': `url("${publicAsset('/images/bg-arts-crafts-dark.jpg')}")`,
+  } as React.CSSProperties;
+
+  // Extraer datos del ContentStore usando jerarquía MSC2020 definida
+  const graphData: GraphData<GraphNode, GraphLink> = useMemo(() => buildKnowledgeGraphData(), []);
+
+  const [hoverNode, setHoverNode] = useState<KnowledgeGraphNode | null>(null);
+  const [highlightNodes, setHighlightNodes] = useState(new Set<KnowledgeGraphNode>());
+  const [highlightLinks, setHighlightLinks] = useState(new Set<KnowledgeGraphLink>());
+  const [searchQuery, setSearchQuery] = useState('');
+  const [searchResults, setSearchResults] = useState<GraphNode[]>([]);
+
+  const handleSearchChange = (query: string) => {
+    setSearchQuery(query);
+    if (query.length > 1) {
+      const results = graphData.nodes
+        .filter(n => n.name && n.name.toLowerCase().includes(query.toLowerCase()))
+        .slice(0, 6);
+      setSearchResults(results);
+    } else {
+      setSearchResults([]);
+    }
+  };
+
+  const handleSearchResultClick = (node: GraphNode) => {
+    setSearchQuery('');
+    setSearchResults([]);
+    if (graphRef.current && node.x !== undefined && node.y !== undefined) {
+      graphRef.current.centerAt(node.x, node.y, 1000);
+      graphRef.current.zoom(3, 1000);
+    }
+    handleNodeHover(node, hoverNode);
+  };
+
+  const handleNodeHover: NonNullable<KnowledgeGraphProps['onNodeHover']> = useCallback((node) => {
+    const newHighlightNodes = new Set<KnowledgeGraphNode>();
+    const newHighlightLinks = new Set<KnowledgeGraphLink>();
+    
+    if (node) {
+      newHighlightNodes.add(node);
+      graphData.links.forEach((link) => {
+        const sourceId = typeof link.source === 'object' ? link.source.id : link.source;
+        const targetId = typeof link.target === 'object' ? link.target.id : link.target;
+        
+        if (sourceId === node.id) {
+          newHighlightLinks.add(link);
+          const tgt = typeof link.target === 'object' ? link.target : graphData.nodes.find(n => n.id === link.target);
+          if (tgt) newHighlightNodes.add(tgt);
+        }
+        if (targetId === node.id) {
+          newHighlightLinks.add(link);
+          const src = typeof link.source === 'object' ? link.source : graphData.nodes.find(n => n.id === link.source);
+          if (src) newHighlightNodes.add(src);
+        }
+      });
+    }
+    
+    setHoverNode(node || null);
+    setHighlightNodes(newHighlightNodes);
+    setHighlightLinks(newHighlightLinks);
+  }, [graphData]);
+
+   
+  const handleNodeClick: NonNullable<KnowledgeGraphProps['onNodeClick']> = useCallback((node) => {
+    if (node.group === 'branch' || node.group === 'central') {
+      if (node.group === 'branch') {
+        // Soporte tanto para ramas principales como sub-ramas
+        const isSubBranch = node.id.startsWith('subrama-');
+        const slug = node.id.replace(isSubBranch ? 'subrama-' : 'rama-', '');
+        setLocation(`/rama/${slug}`);
+      }
+    } else if (node.group === 'modelo') {
+      setLocation(`/modelo/${node.id}`);
+    } else {
+      openTerm(node.id);
+    }
+  }, [setLocation, openTerm]);
+
+  const getNodeColor = useCallback((node: GraphNode) => {
+    if (node.group === 'central') return theme.getHex('matematico');
+    if (node.group === 'branch') return theme.getHex('teorema');
+    return theme.getHex(getKnowledgeGraphContentType(node.group) ?? node.group);
+  }, [theme]);
+
+  const drawNodeLabel = useCallback((
+    ctx: CanvasRenderingContext2D,
+    node: KnowledgeGraphNode,
+    globalScale: number,
+    isHighlighted: boolean,
+    hoverNode: KnowledgeGraphNode | null,
+    highlightNodes: Set<KnowledgeGraphNode>,
+    radius: number,
+  ) => {
+    const isMainBranch = node.id?.startsWith('rama-');
+    const isSubBranch = node.id?.startsWith('subrama-');
+    const isActivelyHovered = hoverNode ? highlightNodes.has(node) : false;
+
+    if (!isActivelyHovered && node.group !== 'central' &&
+        !(isMainBranch && globalScale >= 0.4) &&
+        !(isSubBranch && globalScale >= 0.8) &&
+        globalScale < 1.2) return;
+
+    const label = node.name;
+    const nodeX = node.x!;
+    const nodeY = node.y!;
+
+    let baseSize: number;
+    if (node.group === 'central') {
+      baseSize = 18;
+    } else if (isMainBranch || isSubBranch) {
+      baseSize = 14;
+    } else {
+      baseSize = 10;
+    }
+    const fontSize = baseSize / globalScale;
+    ctx.font = `${node.group === 'central' ? 'bold' : 'normal'} ${fontSize}px "Georgia", serif`;
+    ctx.textAlign = 'center';
+    ctx.textBaseline = 'middle';
+
+    const textY = nodeY + radius + (fontSize / 2) + (4 / globalScale);
+
+    // Shadow for readability
+    ctx.shadowColor = `${theme.lienzo}E6`;
+    ctx.shadowBlur = 4 / globalScale;
+    ctx.lineWidth = 3 / globalScale;
+    ctx.strokeStyle = `${theme.lienzo}E6`;
+    ctx.strokeText(label, nodeX, textY);
+
+    ctx.shadowBlur = 0;
+    let textColor: string;
+    if (node.group === 'central') {
+      textColor = isHighlighted ? theme.getHex('teorema') : theme.getHex('teorema') + '80';
+    } else {
+      textColor = isHighlighted ? theme.carbon : theme.carbon + '80';
+    }
+
+    ctx.fillStyle = textColor;
+    ctx.fillText(label, nodeX, textY);
+  }, [theme]);
+
+  const drawNode: NonNullable<KnowledgeGraphProps['nodeCanvasObject']> = useCallback((node, ctx, globalScale) => {
+    if (node.x === undefined || node.y === undefined || !Number.isFinite(node.x) || !Number.isFinite(node.y)) return;
+
+    const isHighlighted = hoverNode ? highlightNodes.has(node) : true;
+    const isCompleted = useProgressStore.getState().isRead(node.id);
+
+    // Configuración base
+    const radius = node.val / 2;
+    let color = getNodeColor(node);
+
+    // Si está completado, dibujar un anillo concéntrico de estilo astrolabio/diagrama clásico
+    if (isCompleted && node.group !== 'central' && node.group !== 'branch') {
+      const completedColor = theme.getHex('corolario');
+      color = completedColor;
+      ctx.beginPath();
+      ctx.arc(node.x, node.y, radius + (3 / globalScale), 0, 2 * Math.PI, false);
+      ctx.strokeStyle = completedColor;
+      ctx.lineWidth = 1 / globalScale;
+      ctx.stroke();
+    }
+
+
+    // Dibujar Círculo
+    ctx.beginPath();
+    ctx.arc(node.x, node.y, radius, 0, 2 * Math.PI, false);
+    ctx.fillStyle = isHighlighted ? color : color + '40'; // Añadir transparencia si no está resaltado
+    ctx.fill();
+
+    // Borde de tinta clásico
+    ctx.strokeStyle = theme.carbon;
+
+    ctx.lineWidth = (isHighlighted ? 1.5 : 0.5) / globalScale;
+    ctx.stroke();
+
+    drawNodeLabel(ctx, node, globalScale, isHighlighted, hoverNode, highlightNodes, radius);
+  }, [hoverNode, highlightNodes, drawNodeLabel, getNodeColor, theme]);
+
+  // Ajustar cámara inicial
+  useEffect(() => {
+    if (graphRef.current) {
+      setTimeout(() => {
+        graphRef.current?.zoomToFit(400, 50);
+
+        // Ajustes de física (expandir la red de forma controlada)
+        (graphRef.current?.d3Force('charge') as ChargeForce | undefined)?.strength(-120); // Repulsión más suave para mantener los nodos juntos
+        (graphRef.current?.d3Force('link') as LinkForce | undefined)?.distance((link) => {
+          if (link.source.group === 'central' || link.target.group === 'central') return 100;
+          if (link.source.group === 'branch' || link.target.group === 'branch') return 60;
+          return 30;
+        });
+      }, 500);
+    }
+  }, []);
+
+  // Window resize handler
+  const [dimensions, setDimensions] = useState({ width: window.innerWidth, height: window.innerHeight });
+  useEffect(() => {
+    const handleResize = () => setDimensions({ width: window.innerWidth, height: window.innerHeight });
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
+
+  return (
+    <div className="graph-theme-background w-full h-screen bg-lienzo overflow-hidden font-serif relative" style={graphBackgroundStyle}>
+
+      <GraphSearch
+        searchQuery={searchQuery}
+        setSearchQuery={handleSearchChange}
+        searchResults={searchResults}
+        onSearchSelect={handleSearchResultClick}
+      />
+
+      <GraphLegend nodeGroups={graphData.nodes.map(node => node.group)} />
+
+      <div className="absolute inset-0 cursor-move">
+        <ForceGraph2D<GraphNode, GraphLink>
+          ref={graphRef}
+          width={dimensions.width}
+          height={dimensions.height}
+          graphData={graphData}
+          nodeLabel={() => ''} // El label nativo lo desactivamos
+          nodeCanvasObject={drawNode}
+          nodeCanvasObjectMode={() => 'replace'}
+          onNodeHover={handleNodeHover}
+          linkColor={(link: KnowledgeGraphLink) => highlightLinks.has(link) ? theme.getHex('teorema') : theme.carbon + '15'}
+
+          linkWidth={(link: KnowledgeGraphLink) => highlightLinks.has(link) ? 2 : 1}
+          linkDirectionalParticles={(link: KnowledgeGraphLink) => highlightLinks.has(link) ? 4 : 1}
+          linkDirectionalParticleWidth={(link: KnowledgeGraphLink) => highlightLinks.has(link) ? 6 : 2}
+          linkDirectionalParticleSpeed={0.005}
+          onNodeClick={handleNodeClick}
+          backgroundColor="transparent"
+        />
+      </div>
+    </div>
+  );
+};

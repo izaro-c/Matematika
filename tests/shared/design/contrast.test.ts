@@ -1,7 +1,7 @@
 import { describe, expect, it } from 'vitest';
 import { readFileSync } from 'node:fs';
 import { resolve } from 'node:path';
-import { CONTENT_TYPE_CONFIG, GRAPH_NODE_COLORS } from '@/shared/lib/constants';
+import { CONTENT_TYPE_CONFIG, GRAPH_NODE_COLORS } from '@/lib/helpers/constants';
 
 const CANONICAL_NAMES = ['lienzo', 'carbon', 'salvia', 'terracota', 'pizarra', 'ocre', 'pavo', 'granada', 'musgo'] as const;
 const ACCENT_NAMES = CANONICAL_NAMES.filter(name => name !== 'lienzo' && name !== 'carbon');

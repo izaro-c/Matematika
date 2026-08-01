@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { applySourceEdits, parseEditorDocument, reparseEditedDocument, type SourceEdit } from '../../../../src/features/editor/document';
+import { applySourceEdits, parseEditorDocument, reparseEditedDocument, type SourceEdit } from '../../../../src/fixed-pages/editor/document';
 
 function editFor(source: string, blockIndex: number, replacement: string, operationId = 'op-1'): { doc: ReturnType<typeof parseEditorDocument>; edit: SourceEdit } {
   const doc = parseEditorDocument(source);

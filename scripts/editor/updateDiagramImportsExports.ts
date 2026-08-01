@@ -20,7 +20,7 @@ export function updateMdxImportsExports(
   // so we extract the ESM import/export statements first, or parse them line by line if we can.
   // Wait! In Matematika, MDX files contain imports and exports at the top, like:
   // export const metadata = { ... };
-  // import { Pitagoras } from '@/widgets/diagrams/Teoremas/Pitagoras';
+  // import { Pitagoras } from '@content/diagrams/Teoremas/Pitagoras';
   // export const Simulation = Pitagoras;
   // <Capitular letra="E" />l ...
   

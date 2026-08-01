@@ -1,19 +1,19 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest';
 import { render, screen, fireEvent, waitFor } from '@testing-library/react';
-import { SearchOmnibar } from '@/widgets/navigation/SearchOmnibar';
-import { useNavigationStore } from '@/shared/stores/NavigationStore';
-import { appPath, publicAsset } from '@/shared/lib/routeHelper';
+import { SearchOmnibar } from '@/components/navigation/SearchOmnibar';
+import { useNavigationStore } from '@/lib/stores/NavigationStore';
+import { appPath, publicAsset } from '@/lib/helpers/routeHelper';
 
 // Mocks para wouter y stores para evitar errores de renderizado
 vi.mock('wouter', () => ({
   useLocation: () => ['/', vi.fn()]
 }));
 
-vi.mock('@/shared/stores/NavigationStore', () => ({
+vi.mock('@/lib/stores/NavigationStore', () => ({
   useNavigationStore: vi.fn(),
 }));
 
-vi.mock('@/shared/stores/GlossaryStore', () => ({
+vi.mock('@/lib/stores/GlossaryStore', () => ({
   useGlossaryStore: () => ({
     openTerm: vi.fn()
   }),
@@ -90,19 +90,19 @@ describe('ContentStore Rules', () => {
 describe('Editor API Security Rules', () => {
   const validatePath = (p: string) => {
     if (p.includes('..')) return false;
-    if (!p.startsWith('database/content/') && !p.startsWith('shared/templates/')) return false;
+    if (!p.startsWith('content/mdx/') && !p.startsWith('src/content-pages/shared/templates/')) return false;
     return true;
   };
 
   it('Should reject path traversal attempts (mock logic)', () => {
     // Simulator for the vite.config.ts logic
     expect(validatePath('../../etc/passwd')).toBe(false);
-    expect(validatePath('database/content/../../something')).toBe(false);
+    expect(validatePath('content/mdx/../../something')).toBe(false);
   });
 
   it('Should allow writing to database/content', () => {
-    expect(validatePath('database/content/theorems/mi_teorema.mdx')).toBe(true);
-    expect(validatePath('shared/templates/theorem.template.mdx')).toBe(true);
+    expect(validatePath('content/mdx/theorems/mi_teorema.mdx')).toBe(true);
+    expect(validatePath('src/content-pages/shared/templates/theorem.template.mdx')).toBe(true);
     expect(validatePath('src/main.tsx')).toBe(false); // Outside allowed folders
   });
 });

@@ -17,7 +17,7 @@ try {
     stdio: 'ignore'
   });
   console.log('Pruebas exitosas. Parseando JSON...');
-} catch (error) {
+} catch {
   console.log('Algunas pruebas fallaron, procesando resultados...');
 }
 

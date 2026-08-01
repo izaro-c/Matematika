@@ -1,7 +1,7 @@
 import { fireEvent, render, screen } from '@testing-library/react';
 import { describe, expect, it } from 'vitest';
-import { MathProvider } from '@/shared/lib/MathStoreContext';
-import { StepBind, useStepBinding } from '@/shared/ui/StepBinding';
+import { MathProvider } from '@/lib/helpers/MathStoreContext';
+import { StepBind, useStepBinding } from '@/components/ui/StepBinding';
 
 function Probe({ scopeId }: { scopeId?: string }) {
   const { activeStep } = useStepBinding(scopeId);

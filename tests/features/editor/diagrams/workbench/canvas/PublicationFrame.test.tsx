@@ -1,7 +1,7 @@
 import { render, screen } from '@testing-library/react';
 import { describe, expect, it } from 'vitest';
-import { PublicationFrame } from '@/features/editor/diagrams/ui/canvas/PublicationFrame';
-import { publicationContentSize } from '@/features/editor/diagrams/ui/canvas/canvasFrameMode';
+import { PublicationFrame } from '@/fixed-pages/editor/diagrams/ui/canvas/PublicationFrame';
+import { publicationContentSize } from '@/fixed-pages/editor/diagrams/ui/canvas/canvasFrameMode';
 
 describe('PublicationFrame', () => {
   it('sizes the diagram slot to publication content, not device chassis', () => {

@@ -1,12 +1,12 @@
 import { describe, expect, it, vi } from 'vitest';
 import { render, screen } from '@testing-library/react';
 import React from 'react';
-import { resolvePointCoordinates } from '../../../../src/shared/diagrams/spec/scene';
-import { migrateDiagramSpecV2ToV3, toWorkingSceneV2 } from '../../../../src/shared/diagrams/spec/v3Compatibility';
-import { parseDiagramSpecV3 } from '../../../../src/shared/diagrams/spec/schemaV3';
-import { setReflectionConstraintForPoint, setReflectionConstraintForSegment } from '../../../../src/features/editor/diagrams/model/reflectionConstraints';
-import { SegmentReflectionConstraintEditor } from '../../../../src/features/editor/diagrams/ui/SegmentReflectionConstraintEditor';
-import type { VisualDiagramModel } from '../../../../src/features/editor/diagrams/model/types';
+import { resolvePointCoordinates } from '../../../../src/diagrams/spec/scene';
+import { migrateDiagramSpecV2ToV3, toWorkingSceneV2 } from '../../../../src/diagrams/spec/v3Compatibility';
+import { parseDiagramSpecV3 } from '../../../../src/diagrams/spec/schemaV3';
+import { setReflectionConstraintForPoint, setReflectionConstraintForSegment } from '../../../../src/fixed-pages/editor/diagrams/model/reflectionConstraints';
+import { SegmentReflectionConstraintEditor } from '../../../../src/fixed-pages/editor/diagrams/ui/SegmentReflectionConstraintEditor';
+import type { VisualDiagramModel } from '../../../../src/fixed-pages/editor/diagrams/model/types';
 
 const baseModel: VisualDiagramModel = {
   version: '2.0',

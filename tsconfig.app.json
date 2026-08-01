@@ -24,8 +24,9 @@
     "baseUrl": ".",
     "ignoreDeprecations": "6.0",
     "paths": {
-      "@/*": ["src/*"]
+      "@/*": ["src/*"],
+      "@content/*": ["content/*"]
     }
   },
-  "include": ["src"]
+  "include": ["src", "content/diagrams", "content/glossary"]
 }

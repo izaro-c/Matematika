@@ -2,8 +2,8 @@
 import React from 'react';
 import { fireEvent, render, screen, waitFor, within } from '@testing-library/react';
 import { describe, expect, it, vi } from 'vitest';
-import { CreatePageDialog } from '@/features/editor/ui/create/CreatePageDialog';
-import { PublishedRuntimePreview } from '@/features/editor/ui/preview/PublishedRuntimePreview';
+import { CreatePageDialog } from '@/fixed-pages/editor/ui/create/CreatePageDialog';
+import { PublishedRuntimePreview } from '@/fixed-pages/editor/ui/preview/PublishedRuntimePreview';
 
 describe('editor modal accessibility', () => {
   it('moves focus into create-page, traps Tab, closes with Escape and restores focus', async () => {

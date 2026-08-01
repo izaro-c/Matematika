@@ -16,9 +16,9 @@ import {
   toolReferenceLabel,
   toolReferenceCandidates,
   updatePoint,
-} from '../../../../src/features/editor/diagrams/model';
-import { DEFAULT_ANGLE_RADIUS, DEFAULT_RIGHT_ANGLE_RADIUS } from '../../../../src/shared/diagrams/public';
-import { buildTargets, targetKind } from '../../../../src/features/editor/diagrams/model/selectors';
+} from '../../../../src/fixed-pages/editor/diagrams/model';
+import { DEFAULT_ANGLE_RADIUS, DEFAULT_RIGHT_ANGLE_RADIUS } from '../../../../src/diagrams/public';
+import { buildTargets, targetKind } from '../../../../src/fixed-pages/editor/diagrams/model/selectors';
 
 describe('Diagram Model & Selectors', () => {
   it('should construct visual point with correct options', () => {

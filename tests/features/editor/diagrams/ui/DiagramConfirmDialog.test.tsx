@@ -1,7 +1,7 @@
 import React from 'react';
 import { fireEvent, render, screen } from '@testing-library/react';
 import { describe, expect, it, vi } from 'vitest';
-import { DiagramConfirmDialog } from '../../../../../src/features/editor/diagrams/ui/DiagramConfirmDialog';
+import { DiagramConfirmDialog } from '../../../../../src/fixed-pages/editor/diagrams/ui/DiagramConfirmDialog';
 
 describe('DiagramConfirmDialog', () => {
   it('no renderiza nada cuando está cerrado', () => {

@@ -1,9 +1,9 @@
 import { describe, expect, it } from 'vitest';
 import { render, screen, waitFor } from '@testing-library/react';
 import React from 'react';
-import { DiagramWorkbench } from '@/features/editor/diagrams/ui/DiagramWorkbench';
-import { createTemplateModel } from '@/features/editor/diagrams/model/templateModels';
-import { generateDiagramSource } from '@/features/editor/diagrams/source/generator';
+import { DiagramWorkbench } from '@/fixed-pages/editor/diagrams/ui/DiagramWorkbench';
+import { createTemplateModel } from '@/fixed-pages/editor/diagrams/model/templateModels';
+import { generateDiagramSource } from '@/fixed-pages/editor/diagrams/source/generator';
 
 describe('Editor V2 persistence mode', () => {
   it('loads an inline mode without presenting it as a sandbox', async () => {

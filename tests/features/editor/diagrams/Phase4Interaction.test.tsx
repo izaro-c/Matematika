@@ -1,14 +1,14 @@
 import React, { useEffect, useState } from 'react';
 import { act, fireEvent, render, screen } from '@testing-library/react';
 import { afterEach, describe, expect, it, vi } from 'vitest';
-import { MathProvider, useMathStore } from '../../../../src/shared/lib/MathStoreContext';
-import { useDiagramTargetRegistry } from '../../../../src/shared/lib/DiagramTargetRegistryContext';
-import { InteractiveElement } from '../../../../src/shared/ui/VisualBind';
-import { StepNavigator } from '../../../../src/shared/ui/StepNavigator';
-import { DemonstrationBlock } from '../../../../src/features/editor/ui/blocks/DemonstrationBlock';
-import { createTemplateModel } from '../../../../src/features/editor/diagrams/model';
-import { DemonstrationSection } from '../../../../src/widgets/content/DemonstrationSection';
-import { ProofStep } from '../../../../src/widgets/content/ProofStep';
+import { MathProvider, useMathStore } from '../../../../src/lib/helpers/MathStoreContext';
+import { useDiagramTargetRegistry } from '../../../../src/lib/helpers/DiagramTargetRegistryContext';
+import { InteractiveElement } from '../../../../src/components/ui/VisualBind';
+import { StepNavigator } from '../../../../src/components/ui/StepNavigator';
+import { DemonstrationBlock } from '../../../../src/fixed-pages/editor/ui/blocks/DemonstrationBlock';
+import { createTemplateModel } from '../../../../src/fixed-pages/editor/diagrams/model';
+import { DemonstrationSection } from '../../../../src/components/content/DemonstrationSection';
+import { ProofStep } from '../../../../src/components/content/ProofStep';
 
 afterEach(() => {
   vi.useRealTimers();

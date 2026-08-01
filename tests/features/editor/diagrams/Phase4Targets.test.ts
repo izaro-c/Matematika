@@ -4,7 +4,7 @@ import {
   qualifiedDiagramTarget,
   validateDiagramTargetRegistrations,
   type RegisteredDiagramTarget,
-} from '../../../../src/shared/lib/DiagramTargetRegistryContext';
+} from '../../../../src/lib/helpers/DiagramTargetRegistryContext';
 
 const targets: RegisteredDiagramTarget[] = [
   { scopeId: 'diagrama-a', targetId: 'segAB', objectId: 'line1', label: 'AB', kind: 'object' },

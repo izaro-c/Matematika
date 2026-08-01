@@ -1,13 +1,13 @@
 import React from 'react';
 import { fireEvent, render, screen } from '@testing-library/react';
 import { describe, expect, it, vi, beforeEach } from 'vitest';
-import { createTemplateModel } from '@/features/editor/diagrams/model';
-import { BoardHost } from '@/features/editor/diagrams/ui/canvas/BoardHost';
+import { createTemplateModel } from '@/fixed-pages/editor/diagrams/model';
+import { BoardHost } from '@/fixed-pages/editor/diagrams/ui/canvas/BoardHost';
 
 const rendererState = vi.hoisted(() => ({ props: null as Record<string, unknown> | null }));
 
-vi.mock('@/shared/diagrams/public', async importOriginal => {
-  const actual = await importOriginal<typeof import('@/shared/diagrams/public')>();
+vi.mock('@/diagrams/public', async importOriginal => {
+  const actual = await importOriginal<typeof import('@/diagrams/public')>();
   return {
     ...actual,
     DiagramRenderer: (props: Record<string, unknown>) => {

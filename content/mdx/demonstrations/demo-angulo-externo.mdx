@@ -1,0 +1,135 @@
+export const metadata = {
+  "id": "demo-angulo-externo",
+  "type": "demostracion",
+  "title": "Demostración: Teorema del ángulo externo",
+  "description": "Demostración constructiva del teorema del ángulo externo mediante puntos medios, congruencia LAL, separación del plano y orden angular.",
+  "parentTheorem": "teorema-angulo-externo",
+  "proofMethod": "metodo-constructivo",
+  "authors": ["euclides"],
+  "tags": ["geometria", "angulos", "triangulos", "orden", "congruencia"],
+  "layout": "split",
+  "sources": [
+    { "title": "Elements", "author": "Euclid", "locator": "Book I, Proposition 16", "role": "primary" },
+    { "title": "Euclidean and Non-Euclidean Geometries", "author": "Marvin Jay Greenberg", "role": "secondary" },
+    { "title": "Grundlagen der Geometrie", "author": "David Hilbert", "role": "secondary" }
+  ],
+  "leanId": "Matematika.Geometry.Hilbert.demo_angulo_externo",
+  "stepTacticMap": {
+    "1": [], "2": [], "3": [], "4": [], "5": [], "6": [],
+    "7": [], "8": [], "9": [], "10": [], "11": []
+  }
+};
+
+import { DemoAnguloExterno } from "@content/diagrams/Demos/DemoAnguloExterno";
+
+<DemonstrationSection diagram={<DemoAnguloExterno />}>
+
+<Capitular letra="S" />ea $\triangle ABC$ un triángulo. Por la <ConceptLink targetId="axioma-orden-3" isDependency={true}>prolongación de segmentos</ConceptLink>, prolongamos $BC$ más allá de $C$ hasta un punto $D$, de modo que $B * C * D$. Debemos demostrar que el ángulo exterior $\angle ACD$ es mayor que los dos ángulos interiores no adyacentes:
+
+<Formula>
+  $$ \angle A < \angle ACD \qquad \text{y} \qquad \angle B < \angle ACD $$
+</Formula>
+
+<Separador />
+
+<ProofStep number={1} title="Tomamos el punto medio de AC" leanBlocks={metadata.stepTacticMap["1"]}>
+Por el <ConceptLink targetId="lema-punto-medio" isDependency={true}>teorema de existencia del punto medio</ConceptLink>, elegimos un punto $E$ en el segmento $AC$. Quedan fijadas las dos relaciones que usaremos después:
+
+<Formula>
+  $$ A * E * C \qquad \text{y} \qquad \overline{AE} \cong \overline{EC}$$
+</Formula>
+
+Así, $BE$ es la mediana trazada desde el vértice $B$ al lado $AC$.
+</ProofStep>
+
+<ProofStep number={2} title="Prolongamos la mediana BE" leanBlocks={metadata.stepTacticMap["2"]}>
+Por el <ConceptLink targetId="axioma-incidencia-1" isDependency={true}>axioma de incidencia</ConceptLink>, los puntos $B$ y $E$ determinan una recta. Aplicando la <ConceptLink targetId="axioma-orden-3" isDependency={true}>prolongación de segmentos</ConceptLink>, consideramos desde $E$ la semirrecta opuesta a $\overrightarrow{EB}$. Cualquier punto de esa semirrecta queda alineado con $B$ y $E$, más allá de $E$.
+</ProofStep>
+
+<ProofStep number={3} title="Construimos F con BE congruente con EF" leanBlocks={metadata.stepTacticMap["3"]}>
+Sobre la semirrecta anterior, el <ConceptLink targetId="axioma-congruencia-1" isDependency={true}>transporte de segmentos</ConceptLink> proporciona un punto $F$ tal que
+
+<Formula>
+  $$ \overline{BE} \cong \overline{EF}$$
+</Formula>
+
+El punto es único sobre la semirrecta elegida. Como $F$ pertenece a la semirrecta opuesta a $\overrightarrow{EB}$, la relación de orden queda determinada por
+
+<Formula>
+  $$ B * E * F$$
+</Formula>
+</ProofStep>
+
+<ProofStep number={4} title="Comparamos los triángulos por LAL" leanBlocks={metadata.stepTacticMap["4"]}>
+Comparamos $\triangle AEB$ y $\triangle CEF$ con la correspondencia $A \leftrightarrow C$, $E \leftrightarrow E$, $B \leftrightarrow F$. Tenemos $AE \cong CE$ y $EB \cong EF$. Además, $\angle AEB \cong \angle CEF$ por el <ConceptLink targetId="teorema-angulos-opuestos-verticales" isDependency={true}>teorema de los ángulos opuestos por el vértice</ConceptLink>. Estos son precisamente los ángulos comprendidos entre los dos pares de lados. Por <ConceptLink targetId="axioma-congruencia-5" isDependency={true}>LAL</ConceptLink>:
+
+<Formula>
+  $$ \triangle AEB \cong \triangle CEF$$
+</Formula>
+</ProofStep>
+
+<ProofStep number={5} title="Identificamos los ángulos congruentes" leanBlocks={metadata.stepTacticMap["5"]}>
+Por la <ConceptLink targetId="congruencia" isDependency={true}>correspondencia de elementos en triángulos congruentes</ConceptLink>, el ángulo del vértice $A$ corresponde al del vértice $C$:
+
+<Formula>
+  $$ \angle BAE \cong \angle ECF$$
+</Formula>
+
+Como $A * E * C$, las semirrectas $\overrightarrow{AE}$ y $\overrightarrow{AC}$ coinciden. Por tanto, $\angle BAE = \angle BAC = \angle A$, y obtenemos $\angle A \cong \angle ECF$.
+</ProofStep>
+
+<ProofStep number={6} title="Situamos el ángulo dentro del ángulo exterior" leanBlocks={metadata.stepTacticMap["6"]}>
+Por el <ConceptLink targetId="teorema-separacion" isDependency={true}>teorema de separación del plano</ConceptLink>, consecuencia del <ConceptLink targetId="axioma-orden-4" isDependency={true}>axioma de Pasch</ConceptLink>, las relaciones $A * E * C$, $B * E * F$ y $B * C * D$ sitúan a $F$ en el mismo semiplano que $D$ respecto de $AC$, y en el mismo semiplano que $A$ respecto de $BC$. Por la <ConceptLink targetId="interior-angulo" isDependency={true}>caracterización del interior de un ángulo</ConceptLink>:
+
+<Formula>
+  $$ \overrightarrow{CF}\setminus\{C\} \subset \operatorname{int}(\angle ACD)$$
+</Formula>
+</ProofStep>
+
+<ProofStep number={7} title="Concluimos la desigualdad para el ángulo A" leanBlocks={metadata.stepTacticMap["7"]}>
+Como $A * E * C$, la semirrecta $\overrightarrow{CE}$ coincide con $\overrightarrow{CA}$. El paso <ProofStepLink step={6} /> hace de $\angle ECF$ una parte propia de $\angle ACD$; por el <ConceptLink targetId="orden-angular" isDependency={true}>orden angular</ConceptLink>, $\angle ECF < \angle ACD$. Junto con $\angle A \cong \angle ECF$ y la <ConceptLink targetId="compatibilidad-orden-congruencia-angular" isDependency={true}>compatibilidad del orden con la congruencia</ConceptLink>, podemos reemplazar el subángulo por cualquier ángulo congruente:
+
+<Formula>
+  $$ \angle A < \angle ACD$$
+</Formula>
+</ProofStep>
+
+<ProofStep number={8} title="Repetimos la construcción desde el punto medio de BC" leanBlocks={metadata.stepTacticMap["8"]}>
+Tomamos el punto medio $G$ de $BC$, de modo que $B * G * C$ y $BG \cong GC$. Trazamos $AG$, lo prolongamos más allá de $G$ y construimos $H$ con $A * G * H$ y $AG \cong GH$. Unimos $C$ con $H$. Finalmente, prolongamos $AC$ más allá de $C$ hasta $K$, de modo que $A * C * K$. Usamos únicamente <ConceptLink targetId="lema-punto-medio" isDependency={true}>punto medio</ConceptLink>, <ConceptLink targetId="axioma-orden-3" isDependency={true}>prolongación</ConceptLink> y <ConceptLink targetId="axioma-congruencia-1" isDependency={true}>transporte de segmentos</ConceptLink>.
+</ProofStep>
+
+<ProofStep number={9} title="Obtenemos la desigualdad para B respecto del segundo ángulo exterior" leanBlocks={metadata.stepTacticMap["9"]}>
+Aplicamos el mismo argumento a $\triangle AGB$ y $\triangle HGC$, con correspondencia $A \leftrightarrow H$, $G \leftrightarrow G$, $B \leftrightarrow C$. Tenemos $AG \cong GH$, $GB \cong GC$ y $\angle AGB \cong \angle HGC$ por ser opuestos por el vértice. Por <ConceptLink targetId="axioma-congruencia-5" isDependency={true}>LAL</ConceptLink>, $\angle ABG \cong \angle HCG$. Como $B * G * C$, $\angle ABG = \angle ABC = \angle B$. La <ConceptLink targetId="teorema-separacion" isDependency={true}>separación del plano</ConceptLink> sitúa $\overrightarrow{CH}$ dentro de $\angle BCK$; el <ConceptLink targetId="orden-angular" isDependency={true}>orden angular</ConceptLink> y su <ConceptLink targetId="compatibilidad-orden-congruencia-angular" isDependency={true}>compatibilidad con la congruencia</ConceptLink> dan:
+
+<Formula>
+  $$ \angle B < \angle BCK$$
+</Formula>
+</ProofStep>
+
+<ProofStep number={10} title="Identificamos los dos ángulos exteriores" leanBlocks={metadata.stepTacticMap["10"]}>
+Las relaciones $A * C * K$ y $B * C * D$ muestran que las rectas $AC$ y $BD$ se cortan en $C$. Las semirrectas $\overrightarrow{CA}$ y $\overrightarrow{CK}$ son opuestas, al igual que $\overrightarrow{CB}$ y $\overrightarrow{CD}$. Por tanto, $\angle BCK$ y $\angle ACD$ son <ConceptLink targetId="teorema-angulos-opuestos-verticales" isDependency={true}>ángulos opuestos por el vértice</ConceptLink>:
+
+<Formula>
+  $$ \angle BCK \cong \angle ACD $$
+</Formula>
+</ProofStep>
+
+<ProofStep number={11} title="Reunimos las dos desigualdades" leanBlocks={metadata.stepTacticMap["11"]}>
+El paso <ProofStepLink step={7} /> da $\angle A < \angle ACD$. El paso <ProofStepLink step={9} /> da $\angle B < \angle BCK$, y el paso <ProofStepLink step={10} /> establece $\angle BCK \cong \angle ACD$. Por la <ConceptLink targetId="compatibilidad-orden-congruencia-angular" isDependency={true}>compatibilidad del orden angular con la congruencia</ConceptLink>, la segunda desigualdad se conserva al reemplazar $\angle BCK$ por $\angle ACD$. Reunimos entonces ambos resultados. El ángulo exterior original domina estrictamente a cada uno de los dos ángulos interiores no adyacentes:
+
+<Formula>
+  $$ \angle A < \angle ACD \space \text{ y } \space \angle B < \angle ACD $$
+</Formula>
+</ProofStep>
+
+<Separador />
+
+### Análisis
+
+La prueba sigue la construcción clásica de la Proposición I.16 de <ConceptLink targetId="euclides" isDependency={false}>Euclides</ConceptLink>. La congruencia LAL transporta cada ángulo interior a una parte propia de un ángulo exterior. La desigualdad no procede de una medida numérica, sino del <ConceptLink targetId="orden-angular" isDependency={true}>orden entre ángulos</ConceptLink>: una parte propia es menor que el ángulo que la contiene.
+
+<Nota>
+La formulación rigurosa del paso <ProofStepLink step={6} /> utiliza el <ConceptLink targetId="axioma-orden-4" isDependency={true}>axioma de Pasch</ConceptLink>, el <ConceptLink targetId="teorema-separacion" isDependency={true}>teorema de separación del plano</ConceptLink> y la <ConceptLink targetId="interior-angulo" isDependency={true}>caracterización del interior de un ángulo</ConceptLink>. Son resultados generales de orden geométrico; no se vuelven a demostrar aquí.
+</Nota>
+
+</DemonstrationSection>

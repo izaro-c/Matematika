@@ -1,8 +1,8 @@
 import { render, screen } from '@testing-library/react';
 import { afterEach, describe, expect, it, vi } from 'vitest';
-import { DiagramWorkbenchHost } from '../../../../src/features/editor/diagrams/ui/DiagramWorkbenchHost';
+import { DiagramWorkbenchHost } from '../../../../src/fixed-pages/editor/diagrams/ui/DiagramWorkbenchHost';
 
-vi.mock('../../../../src/features/editor/diagrams/ui/DiagramWorkbench', () => ({
+vi.mock('@/fixed-pages/editor/diagrams/ui/DiagramWorkbench', () => ({
   DiagramWorkbench: () => <div data-testid="diagram-workbench">Workbench</div>,
 }));
 

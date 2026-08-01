@@ -55,10 +55,11 @@ export default defineConfig([
        generar IDs únicos de tableros interactivos no criptográficos.
        Revisado y aceptado como falso positivo. */
     files: [
-      'src/boundary/components/diagrams/**/*.tsx',
-      'src/shared/diagrams/**/*.tsx',
-      'src/widgets/diagrams/**/*.tsx',
-      'Matematika/src/shared/diagrams/**/*.tsx'
+      'src/diagrams/**/*.tsx',
+      'src/diagrams/**/*.tsx',
+      'content/diagrams/**/*.tsx',
+      'content/diagrams/**/*.tsx',
+      'Matematika/src/diagrams/**/*.tsx'
     ],
     rules: {
       'sonarjs/pseudo-random': 'off',

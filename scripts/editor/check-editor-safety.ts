@@ -14,22 +14,22 @@ const sourceExtensions = new Set(['.ts', '.tsx', '.js', '.jsx']);
 const rules: Rule[] = [
   {
     name: 'editor-ui-no-fetch',
-    roots: ['src/features/editor/ui', 'src/features/editor/diagrams/ui'],
+    roots: ['src/fixed-pages/editor/ui', 'src/fixed-pages/editor/diagrams/ui'],
     pattern: /\bfetch\s*\(/,
   },
   {
     name: 'editor-no-dynamic-code-execution',
-    roots: ['src/features/editor'],
+    roots: ['src/fixed-pages/editor'],
     pattern: /\b(?:eval|Function)\s*\(/,
   },
   {
     name: 'editor-no-browser-blocking-dialogs',
-    roots: ['src/features/editor'],
+    roots: ['src/fixed-pages/editor'],
     pattern: /\b(?:prompt|alert|confirm)\s*\(/,
   },
   {
     name: 'editor-no-ts-suppression',
-    roots: ['src/features/editor', 'tests/features/editor', 'scripts/editor'],
+    roots: ['src/fixed-pages/editor', 'tests/features/editor', 'scripts/editor'],
     pattern: /@ts-(?:ignore|nocheck)/,
   },
 ];

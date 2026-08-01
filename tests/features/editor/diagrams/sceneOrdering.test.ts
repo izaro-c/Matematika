@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import type { VisualDiagramModel } from '../../../../src/features/editor/diagrams/model/types';
+import type { VisualDiagramModel } from '../../../../src/fixed-pages/editor/diagrams/model/types';
 import {
   bringSceneItemForward,
   bringSceneItemToFront,
@@ -13,8 +13,8 @@ import {
   normalizeLayerItemOrders,
   sendSceneItemBackward,
   sendSceneItemToBack,
-} from '../../../../src/features/editor/diagrams/model/sceneOrdering';
-import { element, point } from '../../../../src/features/editor/diagrams/model/diagramElements';
+} from '../../../../src/fixed-pages/editor/diagrams/model/sceneOrdering';
+import { element, point } from '../../../../src/fixed-pages/editor/diagrams/model/diagramElements';
 
 function sampleModel(): VisualDiagramModel {
   return {

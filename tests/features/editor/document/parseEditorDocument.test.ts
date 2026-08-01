@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { parseEditorDocument } from '../../../../src/features/editor/document/parseEditorDocument';
+import { parseEditorDocument } from '../../../../src/fixed-pages/editor/document/parseEditorDocument';
 
 describe('Production Lossless MDX Parser', () => {
   it('parses correct MDX source and computes a stable hash', () => {

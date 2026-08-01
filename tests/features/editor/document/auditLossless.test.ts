@@ -13,7 +13,7 @@ describe('lossless corpus oracle', () => {
   });
 
   it('discovers the corpus recursively and audits every discovered MDX', () => {
-    const root = path.resolve('src/database/content');
+    const root = path.resolve('content/mdx');
     const discovered = discoverMdxFiles(root);
     const report = runCorpusAudit();
     expect(discovered).toHaveLength(120);

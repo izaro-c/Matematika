@@ -1,9 +1,9 @@
 import fs from 'node:fs';
 import path from 'node:path';
-import { classifyEmbeddedDiagramSource, parseDiagramSourceLocally } from '../../src/features/editor/diagrams/source/parser';
-import { generateDiagramSource, SPEC_START } from '../../src/features/editor/diagrams/source/generator';
+import { classifyEmbeddedDiagramSource, parseDiagramSourceLocally } from '../../src/fixed-pages/editor/diagrams/source/parser';
+import { generateDiagramSource, SPEC_START } from '../../src/fixed-pages/editor/diagrams/source/generator';
 
-const ROOT = path.resolve('src/widgets/diagrams');
+const ROOT = path.resolve('content/diagrams');
 const writeVerified = process.argv.includes('--write-verified');
 
 function sourceFiles(directory: string): string[] {

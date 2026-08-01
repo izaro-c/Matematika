@@ -3,7 +3,7 @@ import path from 'node:path';
 import { afterEach, beforeEach, describe, expect, it } from 'vitest';
 import { BackendError, EditorPersistenceBackend, contentHash, contentVersion } from '../../../../scripts/editor/editorPersistenceBackend';
 
-const relativePath = 'database/content/test.mdx';
+const relativePath = 'content/mdx/test.mdx';
 let root: string;
 let srcRoot: string;
 let contentRoot: string;
@@ -23,8 +23,8 @@ function applyRequest(source: string, expectedVersion = contentVersion('original
 beforeEach(async () => {
   root = path.join(process.cwd(), '.matematika', `test-editor-persistence-${process.pid}`);
   await fs.promises.rm(root, { recursive: true, force: true });
-  srcRoot = path.join(root, 'src');
-  contentRoot = path.join(srcRoot, 'database/content');
+  srcRoot = root;
+  contentRoot = path.join(srcRoot, 'content/mdx');
   file = path.join(contentRoot, 'test.mdx');
   await fs.promises.mkdir(contentRoot, { recursive: true });
   await fs.promises.writeFile(file, 'original', 'utf8');
@@ -40,7 +40,7 @@ describe('EditorPersistenceBackend', () => {
   it.each([
     ['path traversal', '../secret.mdx'],
     ['absolute path', path.join(path.sep, 'outside', 'secret.mdx')],
-    ['extension', 'database/content/secret.json']
+    ['extension', 'content/mdx/secret.json']
   ])('rejects %s', async (_name, candidate) => {
     await expect(backend().readContent(candidate)).rejects.toBeInstanceOf(BackendError);
   });
@@ -121,7 +121,7 @@ describe('EditorPersistenceBackend', () => {
   });
 
   it('does not serialize writes to different paths', async () => {
-    const secondPath = 'database/content/second.mdx';
+    const secondPath = 'content/mdx/second.mdx';
     await fs.promises.writeFile(path.join(contentRoot, 'second.mdx'), 'original', 'utf8');
     let arrivals = 0;
     let release!: () => void;
@@ -149,7 +149,7 @@ describe('EditorPersistenceBackend', () => {
   });
 
   it('creates a new TSX atomically and refuses a concurrent overwrite', async () => {
-    const target = 'database/content/new.tsx';
+    const target = 'content/mdx/new.tsx';
     const source = 'export const A = 1;';
     const service = backend();
     await expect(service.createContent({ path: target, source, sourceHash: contentHash(source), localRevision: 0 }))
@@ -284,9 +284,9 @@ describe('EditorPersistenceBackend', () => {
 
   it('handles concurrent applyContent requests using multiple aliases of the same file path', async () => {
     const service = backend();
-    const alias1 = 'database/content/test.mdx';
-    const alias2 = 'database/content/./test.mdx';
-    const alias3 = 'database//content/test.mdx';
+    const alias1 = 'content/mdx/test.mdx';
+    const alias2 = 'content/mdx/./test.mdx';
+    const alias3 = 'content//mdx/test.mdx';
 
     const req1 = { path: alias1, source: 'payload-1', sourceHash: contentHash('payload-1'), expectedVersion: contentVersion('original'), localRevision: 1 };
     const req2 = { path: alias2, source: 'payload-2', sourceHash: contentHash('payload-2'), expectedVersion: contentVersion('original'), localRevision: 1 };
@@ -326,8 +326,8 @@ describe('EditorPersistenceBackend', () => {
   it('serializes restoreBackup and applyContent against same file using aliases', async () => {
     const service = backend();
     const applied = await service.applyContent(applyRequest('base-for-race'));
-    const alias1 = 'database/content/test.mdx';
-    const alias2 = 'database/content/./test.mdx';
+    const alias1 = 'content/mdx/test.mdx';
+    const alias2 = 'content/mdx/./test.mdx';
 
     const results = await Promise.allSettled([
       service.restoreBackup({ path: alias1, backupId: applied.backupId, expectedVersion: applied.version }),
@@ -343,8 +343,8 @@ describe('EditorPersistenceBackend', () => {
     await fs.promises.symlink('test.mdx', symlinkPath);
 
     const service = backend();
-    const alias1 = 'database/content/test.mdx';
-    const alias2 = 'database/content/symlink.mdx';
+    const alias1 = 'content/mdx/test.mdx';
+    const alias2 = 'content/mdx/symlink.mdx';
 
     const req1 = { path: alias1, source: 'payload-1', sourceHash: contentHash('payload-1'), expectedVersion: contentVersion('original'), localRevision: 1 };
     const req2 = { path: alias2, source: 'payload-2', sourceHash: contentHash('payload-2'), expectedVersion: contentVersion('original'), localRevision: 1 };

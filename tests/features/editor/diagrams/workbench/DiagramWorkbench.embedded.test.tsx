@@ -1,9 +1,9 @@
 import { fireEvent, render, screen, waitFor } from '@testing-library/react';
 import { describe, expect, it, vi } from 'vitest';
 import React from 'react';
-import { DiagramWorkbench } from '@/features/editor/diagrams/ui/DiagramWorkbench';
-import { createTemplateModel } from '@/features/editor/diagrams/model/templateModels';
-import { generateDiagramSource } from '@/features/editor/diagrams/source/generator';
+import { DiagramWorkbench } from '@/fixed-pages/editor/diagrams/ui/DiagramWorkbench';
+import { createTemplateModel } from '@/fixed-pages/editor/diagrams/model/templateModels';
+import { generateDiagramSource } from '@/fixed-pages/editor/diagrams/source/generator';
 
 describe('DiagramWorkbench embedded confirm', () => {
   it('calls onConfirm when saving with embedded callbacks', async () => {

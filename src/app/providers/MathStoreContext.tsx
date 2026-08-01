@@ -1,1 +1,1 @@
-export { MathProvider, useMathStore } from '@/shared/lib/MathStoreContext';
+export { MathProvider, useMathStore } from '@/lib/helpers/MathStoreContext';

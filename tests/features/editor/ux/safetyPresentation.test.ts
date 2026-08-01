@@ -1,7 +1,7 @@
 import { describe, expect, it } from 'vitest';
-import { buildDiagramAuthorityPresentation, buildEditorSafetyPresentation } from '../../../../src/features/editor/ux/safetyPresentation';
-import type { EditorValidationResult } from '../../../../src/features/editor/core/editorTypes';
-import type { EditorPersistenceStatus } from '../../../../src/features/editor/state/editorPersistenceState';
+import { buildDiagramAuthorityPresentation, buildEditorSafetyPresentation } from '../../../../src/fixed-pages/editor/ux/safetyPresentation';
+import type { EditorValidationResult } from '../../../../src/fixed-pages/editor/core/editorTypes';
+import type { EditorPersistenceStatus } from '../../../../src/fixed-pages/editor/state/editorPersistenceState';
 
 const valid: EditorValidationResult = {
   issues: [],
@@ -12,7 +12,7 @@ const valid: EditorValidationResult = {
 
 function presentation(status: EditorPersistenceStatus, validation = valid) {
   return buildEditorSafetyPresentation({
-    currentFile: 'database/content/definitions/test.mdx',
+    currentFile: 'content/mdx/definitions/test.mdx',
     compatibility: 'fully-editable',
     compatibilityReasons: [],
     persistenceStatus: status,
@@ -26,7 +26,7 @@ describe('safe editor presentation', () => {
   it('distinguishes a draft from a real file save', () => {
     const draft = presentation({
       kind: 'draft-saved',
-      file: { path: 'database/content/definitions/test.mdx' },
+      file: { path: 'content/mdx/definitions/test.mdx' },
       localRevision: 2,
       draftId: 'draft-1',
     });
@@ -39,7 +39,7 @@ describe('safe editor presentation', () => {
   it('blocks applying a dirty document when validation fails', () => {
     const unsafe = presentation({
       kind: 'ready-dirty',
-      file: { path: 'database/content/definitions/test.mdx' },
+      file: { path: 'content/mdx/definitions/test.mdx' },
       version: 'sha256:base',
       localRevision: 3,
     }, {
@@ -56,12 +56,12 @@ describe('safe editor presentation', () => {
 
   it('explains unsupported visual compatibility without destructive projection', () => {
     const unsafe = buildEditorSafetyPresentation({
-      currentFile: 'database/content/definitions/test.mdx',
+      currentFile: 'content/mdx/definitions/test.mdx',
       compatibility: 'unsupported',
       compatibilityReasons: ['Expresión MDX no soportada en línea 4.'],
       persistenceStatus: {
         kind: 'ready-clean',
-        file: { path: 'database/content/definitions/test.mdx' },
+        file: { path: 'content/mdx/definitions/test.mdx' },
         version: 'sha256:base',
         confirmedRevision: 0,
       },

@@ -1,8 +1,8 @@
 import fs from 'node:fs';
 import { describe, expect, it } from 'vitest';
 import { parseDiagramSourceAST } from '../../../../scripts/editor/parseDiagramSourceAST';
-import { generateDiagramSource } from '../../../../src/features/editor/diagrams/source/generator';
-import { buildTargets } from '../../../../src/features/editor/diagrams/model/selectors';
+import { generateDiagramSource } from '../../../../src/fixed-pages/editor/diagrams/source/generator';
+import { buildTargets } from '../../../../src/fixed-pages/editor/diagrams/model/selectors';
 import {
   buildDependencyGraph,
   createScenePlan,
@@ -11,32 +11,32 @@ import {
   resolvePointCoordinates,
   withMovedPoint,
   type DiagramSpecV2,
-} from '../../../../src/shared/diagrams/public';
-import { createPoincareGeodesic } from '../../../../src/shared/diagrams/core/MathFactory';
+} from '../../../../src/diagrams/public';
+import { createPoincareGeodesic } from '../../../../src/diagrams/core/MathFactory';
 
 const CASES = [
   {
     component: 'Pitagoras',
-    source: 'src/widgets/diagrams/Teoremas/Pitagoras.tsx',
-    page: 'src/database/content/theorems/teorema-pitagoras.mdx',
+    source: 'content/diagrams/Teoremas/Pitagoras.tsx',
+    page: 'content/mdx/theorems/teorema-pitagoras.mdx',
     exportKind: 'Simulation',
   },
   {
     component: 'ModeloPoincare',
-    source: 'src/widgets/diagrams/Models/ModeloPoincare.tsx',
-    page: 'src/database/content/models/modelo-poincare.mdx',
+    source: 'content/diagrams/Models/ModeloPoincare.tsx',
+    page: 'content/mdx/models/modelo-poincare.mdx',
     exportKind: 'Diagram',
   },
   {
     component: 'CongruenciaALA',
-    source: 'src/widgets/diagrams/Teoremas/CongruenciaALA.tsx',
-    page: 'src/database/content/theorems/teorema-congruencia-ala.mdx',
+    source: 'content/diagrams/Teoremas/CongruenciaALA.tsx',
+    page: 'content/mdx/theorems/teorema-congruencia-ala.mdx',
     exportKind: 'Simulation',
   },
   {
     component: 'Paralelogramo',
-    source: 'src/widgets/diagrams/Definiciones/Paralelogramo.tsx',
-    page: 'src/database/content/definitions/paralelogramo.mdx',
+    source: 'content/diagrams/Definiciones/Paralelogramo.tsx',
+    page: 'content/mdx/definitions/paralelogramo.mdx',
     exportKind: 'Simulation',
   },
 ] as const;
@@ -259,8 +259,8 @@ describe('Phase 5 real acceptance migrations', () => {
   });
 
   it('keeps Circunferencia visually quiet and reveals every extra construction through a valid MDX target', () => {
-    const source = 'src/widgets/diagrams/Definiciones/Circunferencia.tsx';
-    const page = 'src/database/content/definitions/circunferencia.mdx';
+    const source = 'content/diagrams/Definiciones/Circunferencia.tsx';
+    const page = 'content/mdx/definitions/circunferencia.mdx';
     const model = readModel(source);
     const mdx = fs.readFileSync(page, 'utf8');
     const publicTargets = new Set(buildTargets(model).map(target => target.id));

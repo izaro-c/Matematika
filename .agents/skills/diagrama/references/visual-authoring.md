@@ -21,12 +21,12 @@ Comparar cada elemento del inventario con `DiagramSpecV3`, `spec/semantics.ts`, 
 
 Cuando falte una capacidad, implementarla de extremo a extremo en este orden:
 
-1. **Contrato:** añadir la variante o propiedad declarativa específica en `src/shared/diagrams/spec/v3.ts`, su validación estricta en `schemaV3.ts`, sus capacidades/slots en `semantics.ts` y, si cambia compatibilidad persistida, la migración explícita en `migrations.ts` y `v3Compatibility.ts`.
-2. **Semántica:** añadir planificación, restricciones, dependencias, historial o playback en `src/shared/diagrams/spec/` cuando corresponda. No guardar estado semántico en `extensions` para evitar modelarlo.
-3. **Render:** añadir o reutilizar la primitiva Arts & Crafts en `src/shared/diagrams/core/MathFactory.ts` y consumirla desde `src/shared/diagrams/runtime/DiagramRenderer.tsx`. Editor y runtime deben compartir este camino.
-4. **Creación visual:** incorporar la herramienta, plantilla o construcción guiada en `src/features/editor/diagrams/model/commands.ts` y `ui/WorkbenchToolbar.tsx`.
+1. **Contrato:** añadir la variante o propiedad declarativa específica en `src/diagrams/spec/v3.ts`, su validación estricta en `schemaV3.ts`, sus capacidades/slots en `semantics.ts` y, si cambia compatibilidad persistida, la migración explícita en `migrations.ts` y `v3Compatibility.ts`.
+2. **Semántica:** añadir planificación, restricciones, dependencias, historial o playback en `src/diagrams/spec/` cuando corresponda. No guardar estado semántico en `extensions` para evitar modelarlo.
+3. **Render:** añadir o reutilizar la primitiva Arts & Crafts en `src/diagrams/core/MathFactory.ts` y consumirla desde `src/diagrams/runtime/DiagramRenderer.tsx`. Editor y runtime deben compartir este camino.
+4. **Creación visual:** incorporar la herramienta, plantilla o construcción guiada en `src/fixed-pages/editor/diagrams/model/commands.ts` y `ui/WorkbenchToolbar.tsx`.
 5. **Edición visual:** exponer todas las propiedades en `ui/WorkbenchElementInspector.tsx` (+ `ui/inspector/`); incorporar selección, manipulación directa y teclado en `ui/canvas/CanvasStage.tsx` o `DiagramRenderer` según corresponda.
-6. **Orquestación:** integrar la capacidad en `src/features/editor/diagrams/ui/DiagramWorkbench.tsx`, incluidos borrar, reordenar, undo/redo, pasos y targets.
+6. **Orquestación:** integrar la capacidad en `src/fixed-pages/editor/diagrams/ui/DiagramWorkbench.tsx`, incluidos borrar, reordenar, undo/redo, pasos y targets.
 7. **Persistencia exacta:** asegurar que `source/generator.ts`, `source/parser.ts`, el reducer y el repositorio conservan el modelo completo sin normalizaciones destructivas.
 8. **Validación:** añadir pruebas del schema, renderer, UI, accesibilidad y `generate → parse → generate`. Abrir, editar, guardar, cerrar y reabrir debe conservar fuente y spec.
 

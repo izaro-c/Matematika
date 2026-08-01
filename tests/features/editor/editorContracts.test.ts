@@ -12,18 +12,18 @@ import {
   normalizeContentId,
   normalizeWizardData,
   type WizardData,
-} from '@/features/editor/lib/editorContracts';
+} from '@/fixed-pages/editor/lib/editorContracts';
 import {
   buildDiagramPath,
   buildContentPath,
   getInternalLinkUrl,
-} from '@/features/editor/lib/editorPaths';
+} from '@/fixed-pages/editor/lib/editorPaths';
 import {
   applyTemplateReplacements,
   applyTypeSpecificMetadata,
-} from '@/features/editor/lib/editorUtils';
-import { generateMissingComponentImports } from '@/features/editor/lib/editorImports';
-import { TheoremSchema } from '@/entities/content/schemas';
+} from '@/fixed-pages/editor/lib/editorUtils';
+import { generateMissingComponentImports } from '@/fixed-pages/editor/lib/editorImports';
+import { TheoremSchema } from '@/data/content/schemas';
 
 const wizardData: WizardData = {
   type: 'theorems',
@@ -50,13 +50,13 @@ describe('editor identity and path contracts', () => {
   it('normalizes generated content IDs and paths to kebab-case', () => {
     expect(normalizeContentId('  Teorema del Ángulo_Recto  ')).toBe('teorema-del-angulo-recto');
     expect(buildContentPath('Theorems', 'Ángulo Recto_II.mdx')).toBe(
-      'database/content/theorems/angulo-recto-ii.mdx',
+      'content/mdx/theorems/angulo-recto-ii.mdx',
     );
     expect(buildDiagramPath('Definiciones', 'Triángulo.tsx')).toBe(
-      'widgets/diagrams/definiciones/triangulo.tsx',
+      'content/diagrams/definiciones/triangulo.tsx',
     );
     expect(getInternalLinkUrl({
-      path: 'database/content/theorems/Ángulo Recto.mdx',
+      path: 'content/mdx/theorems/Ángulo Recto.mdx',
       name: 'Ángulo Recto.mdx',
       type: 'theorems',
       kind: 'mdx-document',
@@ -151,8 +151,8 @@ describe('editor metadata and import contracts', () => {
   it('generates missing component imports without duplicating existing imports', () => {
     const result = generateMissingComponentImports({
       body: '<DemoTales />\n<Formula />\n<DemoTales />',
-      currentImports: "import { Formula } from '@/shared/ui/Formula';",
-      currentFile: 'database/content/theorems/teorema-tales.mdx',
+      currentImports: "import { Formula } from '@/components/ui/Formula';",
+      currentFile: 'content/mdx/theorems/teorema-tales.mdx',
       files: [
         {
           path: 'widgets/diagrams/Teoremas/DemoTales.tsx',
@@ -174,7 +174,7 @@ describe('editor metadata and import contracts', () => {
   });
 
   it('keeps pure editor modules free from React, Monaco and fetch', () => {
-    const libDirectory = path.resolve(import.meta.dirname, '../../../src/features/editor/lib');
+    const libDirectory = path.resolve(import.meta.dirname, '../../../src/fixed-pages/editor/lib');
     const pureModules = [
       'editorContracts.ts',
       'editorImports.ts',

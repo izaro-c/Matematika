@@ -1,6 +1,6 @@
 import { fireEvent, render, screen } from '@testing-library/react';
 import { describe, expect, it } from 'vitest';
-import { ContentLayout } from '@/widgets/layouts/ContentLayout';
+import { ContentLayout } from '@/components/layouts/ContentLayout';
 
 describe('ContentLayout', () => {
   it('mantiene un único diagrama y expone su tratamiento visual', () => {

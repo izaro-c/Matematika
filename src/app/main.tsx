@@ -3,7 +3,7 @@ import { createRoot } from 'react-dom/client'
 import './index.css'
 import App from './App'
 
-import { publicAsset } from '@/shared/lib/routeHelper';
+import { publicAsset } from '@/lib/helpers/routeHelper';
 
 // Configurar las dos texturas con BASE_URL. El tema elige cuál queda activa
 // desde CSS, de modo que el atributo inline no bloquee el cambio a modo oscuro.

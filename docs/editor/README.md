@@ -6,13 +6,13 @@ Referencia operativa del editor MDX y del workbench de diagramas. Los ADR explic
 
 | Área | Ruta | Responsabilidad |
 | --- | --- | --- |
-| Documento lossless | `src/features/editor/document/` | Source autoritativo, proyección posicional, parches localizados y compatibilidad. |
-| Orquestación y estado | `src/features/editor/core/`, `state/` | Apertura, revisión, guardado y estados visibles. |
-| Persistencia | `src/features/editor/persistence/` | Versiones, conflictos, borradores, backups y recuperación. |
-| UI | `src/features/editor/ui/` | Navegación, autoría, diálogos, preview y estados. No accede al filesystem. |
-| Diagramas de autoría | `src/features/editor/diagrams/` | Modelo, parser/generador TSX, historial y workbench UI (`ui/DiagramWorkbench.tsx`; sandbox `/editor_v2`). |
-| Spec y runtime común | `src/shared/diagrams/spec/`, `runtime/` | `DiagramSpec v3` (lee v1/v2), semántica y renderer usado por editor, preview y publicación. |
-| Diagramas publicados | `src/widgets/diagrams/` | Componentes consumidos por MDX; usan el núcleo compartido. |
+| Documento lossless | `src/fixed-pages/editor/document/` | Source autoritativo, proyección posicional, parches localizados y compatibilidad. |
+| Orquestación y estado | `src/fixed-pages/editor/core/`, `state/` | Apertura, revisión, guardado y estados visibles. |
+| Persistencia | `src/fixed-pages/editor/persistence/` | Versiones, conflictos, borradores, backups y recuperación. |
+| UI | `src/fixed-pages/editor/ui/` | Navegación, autoría, diálogos, preview y estados. No accede al filesystem. |
+| Diagramas de autoría | `src/fixed-pages/editor/diagrams/` | Modelo, parser/generador TSX, historial y workbench UI (`ui/DiagramWorkbench.tsx`; sandbox `/editor_v2`). |
+| Spec y runtime común | `src/diagrams/spec/`, `runtime/` | `DiagramSpec v3` (lee v1/v2), semántica y renderer usado por editor, preview y publicación. |
+| Diagramas publicados | `content/diagrams/` | Componentes consumidos por MDX; usan el núcleo compartido. |
 | Backend local | `vite.config.ts`, `scripts/editor/editorPersistenceBackend.ts` | API de desarrollo y escritura atómica. |
 
 El source completo es siempre la autoridad. Una edición visual nunca reconstruye el documento completo ni escribe fuera de los rangos autorizados. Una fuente de diagrama manual permanece en `code-preview` salvo que el roundtrip AST completo sea exacto.

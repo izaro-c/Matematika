@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest';
-import { parseMDX, stringifyMDX } from '@/shared/lib/mdxParser';
+import { parseMDX, stringifyMDX } from '@/lib/helpers/mdxParser';
 
 describe('mdxParser', () => {
   it('parseMDX parses valid MDX with metadata, imports and body', () => {
@@ -8,14 +8,14 @@ describe('mdxParser', () => {
   "title": "Test Title"
 };
 
-import { Demo } from '@/shared/diagrams/Demo';
+import { Demo } from '@/diagrams/Demo';
 
 # Hello World
 This is the body.`;
 
     const result = parseMDX(raw);
     expect(result.metadata).toEqual({ id: 'test', title: 'Test Title' });
-    expect(result.imports).toBe("import { Demo } from '@/shared/diagrams/Demo';");
+    expect(result.imports).toBe("import { Demo } from '@/diagrams/Demo';");
     expect(result.body).toBe("# Hello World\nThis is the body.");
   });
 
@@ -62,7 +62,7 @@ Body.`;
   it('stringifyMDX separates ESM exports from the MDX body for Acorn', () => {
     const result = stringifyMDX(
       { id: 'altura', type: 'definicion', title: 'Altura', description: 'Altura' },
-      "import { Altura } from '@/widgets/diagrams/Definiciones/Altura';",
+      "import { Altura } from '@content/diagrams/Definiciones/Altura';",
       '<Capitular letra="L" />a altura.',
       'export const Simulation = Altura;',
     );
@@ -78,7 +78,7 @@ Body.`;
   "parentTheorem": "teorema"
 };
 
-import { DemonstrationSection } from '@/widgets/content/DemonstrationSection';
+import { DemonstrationSection } from '@/components/content/DemonstrationSection';
 
 export const Component = () => {
   return (

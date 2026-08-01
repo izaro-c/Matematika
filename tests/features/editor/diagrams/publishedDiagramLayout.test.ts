@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { pageTypeFromContentPath, publishedDiagramArea, publishedLayoutForPageType } from '../../../../src/features/editor/diagrams/model/publishedDiagramLayout';
+import { pageTypeFromContentPath, publishedDiagramArea, publishedLayoutForPageType } from '../../../../src/fixed-pages/editor/diagrams/model/publishedDiagramLayout';
 
 describe('published diagram layout dimensions', () => {
   it.each([
@@ -28,9 +28,9 @@ describe('published diagram layout dimensions', () => {
   });
 
   it('infers the page type of standalone diagrams from the generated usage index path', () => {
-    expect(pageTypeFromContentPath('src/database/content/theorems/teorema-pitagoras.mdx')).toBe('teorema');
-    expect(pageTypeFromContentPath('src/database/content/definitions/paralelogramo.mdx')).toBe('definicion');
-    expect(pageTypeFromContentPath('src/database/content/demonstrations/demo-pitagoras-areas.mdx')).toBe('demostracion');
-    expect(pageTypeFromContentPath('src/database/content/models/modelo-poincare.mdx')).toBe('modelo');
+    expect(pageTypeFromContentPath('content/mdx/theorems/teorema-pitagoras.mdx')).toBe('teorema');
+    expect(pageTypeFromContentPath('content/mdx/definitions/paralelogramo.mdx')).toBe('definicion');
+    expect(pageTypeFromContentPath('content/mdx/demonstrations/demo-pitagoras-areas.mdx')).toBe('demostracion');
+    expect(pageTypeFromContentPath('content/mdx/models/modelo-poincare.mdx')).toBe('modelo');
   });
 });

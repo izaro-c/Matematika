@@ -2,9 +2,9 @@ import fs from 'fs';
 import path from 'path';
 import { pathToFileURL } from 'url';
 
-const CONTENT_DIR = path.resolve('./src/database/content');
-const OUTPUT_PATH = path.resolve('./src/entities/content/contentIndex.json');
-const LEAN_GRAPH_PATH = path.resolve('./src/entities/graph/lean_graph.json');
+const CONTENT_DIR = path.resolve('./content/mdx');
+const OUTPUT_PATH = path.resolve('./src/data/content/contentIndex.json');
+const LEAN_GRAPH_PATH = path.resolve('./src/data/graph/lean_graph.json');
 
 interface ContentEntry {
   id: string;

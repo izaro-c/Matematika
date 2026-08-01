@@ -282,7 +282,7 @@ function buildProjectMap(): JsonRecord {
 }
 
 function buildContentMap(): JsonRecord {
-  const contentRoot = path.join(ROOT, 'src/database/content');
+  const contentRoot = path.join(ROOT, 'content/mdx');
   const mdxFiles = walkFiles(contentRoot, 'content', true)
     .filter(filePath => path.extname(filePath) === '.mdx');
   const contentDirectories = fs.existsSync(contentRoot)
@@ -298,7 +298,7 @@ function buildContentMap(): JsonRecord {
       .sort((left, right) => left.path.localeCompare(right.path))
     : [];
 
-  const contentIndexPath = path.join(ROOT, 'src/entities/content/contentIndex.json');
+  const contentIndexPath = path.join(ROOT, 'src/data/content/contentIndex.json');
   const contentIndex = readJson(contentIndexPath, 'content');
   const indexEntries = isRecord(contentIndex) ? Object.values(contentIndex) : [];
   const indexedFilePaths = new Set(
@@ -314,7 +314,7 @@ function buildContentMap(): JsonRecord {
     );
   }
 
-  const schemasPath = path.join(ROOT, 'src/entities/content/schemas.ts');
+  const schemasPath = path.join(ROOT, 'src/data/content/schemas.ts');
   const schemasText = readText(schemasPath, 'content');
   const schemaNames = schemasText === null
     ? []
@@ -326,15 +326,15 @@ function buildContentMap(): JsonRecord {
     schemaVersion: 1,
     contentSources: contentDirectories,
     existingIndexes: existingPaths([
-      'src/entities/content/contentIndex.json',
-      'src/entities/content/contentCoverage.json',
-      'src/entities/content/model_badges_registry.json',
+      'src/data/content/contentIndex.json',
+      'src/data/content/contentCoverage.json',
+      'src/data/content/model_badges_registry.json',
     ]),
     relevantSchemasAndTypes: existingPaths([
-      'src/entities/content/schemas.ts',
-      'src/entities/content/types.ts',
-      'src/entities/content/msc2020.ts',
-      'src/entities/content/ContentStore.ts',
+      'src/data/content/schemas.ts',
+      'src/data/content/types.ts',
+      'src/data/content/msc2020.ts',
+      'src/data/content/ContentStore.ts',
     ]),
     detectedSchemas: schemaNames,
     approximateMdxFileCount: mdxFiles.length,
@@ -344,7 +344,7 @@ function buildContentMap(): JsonRecord {
       note: 'Entry count may exceed file count when an entry is indexed by both id and slug.',
     },
     notes: [
-      'MDX metadata authority: src/entities/content/schemas.ts.',
+      'MDX metadata authority: src/data/content/schemas.ts.',
       'Counts describe files and existing indexes; MDX metadata is not evaluated by this generator.',
     ],
     warnings: warningValues('content'),
@@ -380,7 +380,7 @@ function deriveGraphCounts(structure: unknown): JsonRecord | null {
 }
 
 function buildGraphMap(): JsonRecord {
-  const graphRoot = path.join(ROOT, 'src/entities/graph');
+  const graphRoot = path.join(ROOT, 'src/data/graph');
   const graphFiles = walkFiles(graphRoot, 'graph', true).map(relative);
   const structurePath = path.join(graphRoot, 'graph_structure.json');
   const structure = readJson(structurePath, 'graph');
@@ -398,8 +398,8 @@ function buildGraphMap(): JsonRecord {
       topologicalOrderEntries: null,
     },
     leanRelatedFiles: existingPaths([
-      'src/entities/graph/lean_graph.json',
-      'src/entities/graph/proof_blocks.json',
+      'src/data/graph/lean_graph.json',
+      'src/data/graph/proof_blocks.json',
       'scripts/core/generate-lean-graph.ts',
       'scripts/core/lean-graph-utils.ts',
     ]),
@@ -432,7 +432,7 @@ function buildComponentMap(): JsonRecord {
     .filter((metric): metric is FileMetric => metric !== null)
     .sort(compareMetrics);
   const pages = tsxFiles
-    .filter(filePath => relative(filePath).startsWith('src/pages/'))
+    .filter(filePath => relative(filePath).startsWith('src/content-pages/pages/'))
     .map(relative)
     .sort();
   const srcLayers = ['app', 'pages', 'widgets', 'features', 'entities', 'shared', 'database']
@@ -470,11 +470,11 @@ function buildDesignTokenMap(): JsonRecord {
       const relPath = relative(filePath);
       return path.extname(filePath) === '.css'
         || /(^|\/)(tailwind|postcss)\.config\.[^/]+$/.test(relPath)
-        || relPath === 'src/shared/lib/constants.ts';
+        || relPath === 'src/lib/helpers/constants.ts';
     })
     .map(relative)
     .sort();
-  const visualConstantsPath = path.join(ROOT, 'src/shared/lib/constants.ts');
+  const visualConstantsPath = path.join(ROOT, 'src/lib/helpers/constants.ts');
   const constantsText = readText(visualConstantsPath, 'design');
   const visualConstants = constantsText === null
     ? []
@@ -501,7 +501,7 @@ function buildDesignTokenMap(): JsonRecord {
 
   const tokenTexts = existingPaths([
     'src/app/index.css',
-    'src/shared/lib/constants.ts',
+    'src/lib/helpers/constants.ts',
   ]).map(filePath => readText(path.join(ROOT, filePath), 'design') ?? '').join('\n');
   const detectedThemeTokens = [...new Set(
     [...tokenTexts.matchAll(/--theme-([a-z0-9-]+)/g)].map(match => match[1]),
@@ -511,7 +511,7 @@ function buildDesignTokenMap(): JsonRecord {
     schemaVersion: 1,
     styleFiles,
     visualConstantFiles: existingPaths([
-      'src/shared/lib/constants.ts',
+      'src/lib/helpers/constants.ts',
       'src/app/index.css',
     ]),
     visualConstants,
@@ -540,7 +540,7 @@ function buildLeanMap(): JsonRecord {
       approximateDeclarations: text === null ? null : countLeanDeclarations(text),
     };
   });
-  const leanGraph = readJson(path.join(ROOT, 'src/entities/graph/lean_graph.json'), 'lean');
+  const leanGraph = readJson(path.join(ROOT, 'src/data/graph/lean_graph.json'), 'lean');
   const leanNodes = isRecord(leanGraph) && Array.isArray(leanGraph.nodes) ? leanGraph.nodes : null;
   const statusCounts: Record<string, number> = {};
   const foundationCounts: Record<string, number> = {};
@@ -569,8 +569,8 @@ function buildLeanMap(): JsonRecord {
         .sort(([left], [right]) => left.localeCompare(right)),
     ),
     existingLeanIndexes: existingPaths([
-      'src/entities/graph/lean_graph.json',
-      'src/entities/graph/proof_blocks.json',
+      'src/data/graph/lean_graph.json',
+      'src/data/graph/proof_blocks.json',
       'docs/lean/bridge-debt.json',
     ]),
     existingIndexSummary: {

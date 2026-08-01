@@ -8,8 +8,8 @@ import {
   pasteDiagramClipboard,
   serializeDiagramClipboard,
   step,
-} from '../../../../src/features/editor/diagrams/model';
-import { parseDiagramSpecV2 } from '../../../../src/shared/diagrams/public';
+} from '../../../../src/fixed-pages/editor/diagrams/model';
+import { parseDiagramSpecV2 } from '../../../../src/diagrams/public';
 
 describe('diagram structured clipboard', () => {
   it('copies and pastes one object with the supporting references it needs', () => {

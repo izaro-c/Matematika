@@ -11,6 +11,7 @@ export default defineConfig({
   resolve: {
     alias: {
       '@': path.resolve(__dirname, './src'),
+      '@content': path.resolve(__dirname, './content'),
     },
   },
   test: {
@@ -21,7 +22,7 @@ export default defineConfig({
     include: ['tests/**/*.test.ts', 'tests/**/*.test.tsx'],
     coverage: {
       provider: 'v8',
-      include: ['src/features/**', 'src/entities/**', 'src/shared/lib/**'],
+      include: ['src/fixed-pages/editor/**', 'src/data/**', 'src/lib/helpers/**'],
     },
   },
 });

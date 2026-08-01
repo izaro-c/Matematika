@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import type { FileNode } from '../../../../src/features/editor/lib/editorContracts';
+import type { FileNode } from '../../../../src/fixed-pages/editor/lib/editorContracts';
 import {
   DEFAULT_EDITOR_CATALOG_FILTERS,
   DEFAULT_EDITOR_WORKSPACE_PREFERENCES,
@@ -11,11 +11,11 @@ import {
   resourceStatus,
   toggleFavoritePath,
   writeEditorWorkspacePreferences,
-} from '../../../../src/features/editor/navigation/editorNavigationModel';
+} from '../../../../src/fixed-pages/editor/navigation/editorNavigationModel';
 
 const files: FileNode[] = [
-  { path: 'database/content/definitions/punto.mdx', name: 'definicion-punto.mdx', type: 'definitions', kind: 'mdx-document', capability: 'visual-exact', capabilityLabel: 'Edición visual exacta', reason: 'Documento lossless.' },
-  { path: 'database/content/theorems/tales.mdx', name: 'teorema-tales.mdx', type: 'theorems', kind: 'mdx-document', capability: 'invalid', capabilityLabel: 'Recurso inválido', reason: 'Sintaxis inválida.' },
+  { path: 'content/mdx/definitions/punto.mdx', name: 'definicion-punto.mdx', type: 'definitions', kind: 'mdx-document', capability: 'visual-exact', capabilityLabel: 'Edición visual exacta', reason: 'Documento lossless.' },
+  { path: 'content/mdx/theorems/tales.mdx', name: 'teorema-tales.mdx', type: 'theorems', kind: 'mdx-document', capability: 'invalid', capabilityLabel: 'Recurso inválido', reason: 'Sintaxis inválida.' },
   { path: 'widgets/diagrams/Definitions/Punto.tsx', name: 'Punto.tsx', type: 'diagram-definitions', kind: 'diagram', capability: 'code-preview', capabilityLabel: 'Edición de código con vista previa', reason: 'TSX autoritativo.' },
 ];
 

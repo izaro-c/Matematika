@@ -55,11 +55,11 @@ type RecommendedCommand = (typeof COMMAND_ORDER)[number];
 
 const SOURCE_ORDER: ChangeSource[] = ['unstaged', 'staged', 'untracked'];
 const GENERATED_FILES = new Set([
-  'src/entities/content/contentCoverage.json',
-  'src/entities/content/contentIndex.json',
-  'src/entities/graph/graph_structure.json',
-  'src/entities/graph/lean_graph.json',
-  'src/entities/graph/proof_blocks.json',
+  'src/data/content/contentCoverage.json',
+  'src/data/content/contentIndex.json',
+  'src/data/graph/graph_structure.json',
+  'src/data/graph/lean_graph.json',
+  'src/data/graph/proof_blocks.json',
   'docs/uml/dependency_graph.svg',
 ]);
 
@@ -140,20 +140,21 @@ function isSrcAppCode(file: string): boolean {
 }
 
 function isSharedUiDesign(file: string): boolean {
-  return file.startsWith('src/shared/')
-    || file.startsWith('src/widgets/')
+  return file.startsWith('src/')
+    || file.startsWith('content/diagrams/')
     || file === 'src/app/index.css'
     || /(?:theme|tailwind|postcss)/i.test(file);
 }
 
 function isContentSchemaOrType(file: string): boolean {
-  return file === 'src/entities/content/schemas.ts'
-    || file === 'src/entities/content/types.ts'
-    || file === 'src/entities/content/msc2020.ts';
+  return file === 'src/data/content/schemas.ts'
+    || file === 'src/data/content/types.ts'
+    || file === 'src/data/content/msc2020.ts';
 }
 
 function isGraphData(file: string): boolean {
-  return /^src\/entities\/graph\/[^/]+\.json$/.test(file);
+  return /^src\/data\/graph\/[^/]+\.json$/.test(file)
+    || /^src\/entities\/graph\/[^/]+\.json$/.test(file);
 }
 
 function isLeanRelated(file: string): boolean {
@@ -166,9 +167,9 @@ function isLeanRelated(file: string): boolean {
     || file.startsWith('scripts/lean/')
     || file.endsWith('.lean')
     || /(?:lean|bridge|proof)/i.test(coreScriptName)
-    || file === 'src/entities/graph/lean_graph.json'
-    || file === 'src/entities/graph/proof_blocks.json'
-    || (file.startsWith('src/database/content/') && file.endsWith('.mdx'));
+    || file === 'src/data/graph/lean_graph.json'
+    || file === 'src/data/graph/proof_blocks.json'
+    || (file.startsWith('content/mdx/') && file.endsWith('.mdx'));
 }
 
 function isTest(file: string): boolean {
@@ -252,9 +253,9 @@ const FILE_COMMAND_RULES: Array<[(file: string) => boolean, RecommendedCommand[]
   [file => /vitest/i.test(file), ['test']],
   [file => /eslint/i.test(file), ['lint']],
   [file => /tsconfig/i.test(file), ['typecheck']],
-  [file => file === 'src/entities/content/contentIndex.json', ['generate-index']],
-  [file => file === 'src/entities/content/contentCoverage.json', ['content:coverage']],
-  [file => file === 'src/entities/graph/graph_structure.json', ['validate-graph']],
+  [file => file === 'src/data/content/contentIndex.json', ['generate-index']],
+  [file => file === 'src/data/content/contentCoverage.json', ['content:coverage']],
+  [file => file === 'src/data/graph/graph_structure.json', ['validate-graph']],
   [file => file.startsWith('ai/indexes/'), ['ai:index']],
   [file => file.includes('reference'), ['validate-references']],
   [file => file.includes('logical-graph'), ['validate-graph']],
@@ -287,7 +288,7 @@ function recommendCommands(
 function buildWarnings(files: string[]): string[] {
   const warnings: string[] = [];
   if (files.some(isGraphData)) {
-    warnings.push('Hay JSON bajo src/entities/graph/: comprobar su generador y la coherencia del grafo.');
+    warnings.push('Hay JSON bajo src/data/graph/: comprobar su generador y la coherencia del grafo.');
   }
   if (files.some(isGenerated)) {
     warnings.push('Hay artefactos generados: no deben editarse a mano; hay que regenerarlos desde su fuente.');

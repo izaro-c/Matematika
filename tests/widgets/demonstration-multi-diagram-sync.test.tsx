@@ -1,9 +1,9 @@
 import React from 'react';
 import { fireEvent, render, screen } from '@testing-library/react';
 import { afterEach, describe, expect, it } from 'vitest';
-import { MathProvider } from '@/shared/lib/MathStoreContext';
-import { DemonstrationSection } from '@/widgets/content/DemonstrationSection';
-import { ProofStep } from '@/widgets/content/ProofStep';
+import { MathProvider } from '@/lib/helpers/MathStoreContext';
+import { DemonstrationSection } from '@/components/content/DemonstrationSection';
+import { ProofStep } from '@/components/content/ProofStep';
 
 const originalScrollY = window.scrollY;
 const originalInnerHeight = window.innerHeight;

@@ -10,7 +10,7 @@ import {
   type EditorDiagnostic,
   type EditorDocument,
   type VisualCompatibility
-} from '../../src/features/editor/document/index';
+} from '../../src/fixed-pages/editor/document/index';
 
 export type RoundTripClassification = 'exact' | 'format-only' | 'semantic-risk' | 'non-idempotent' | 'parse-error' | 'unknown';
 
@@ -157,7 +157,7 @@ export function auditSource(source: string, relativePath: string): CorpusAuditEn
 
 export function runCorpusAudit(
   repositoryRoot = process.cwd(),
-  corpusRoot = path.join(repositoryRoot, 'src/database/content')
+  corpusRoot = path.join(repositoryRoot, 'content/mdx')
 ): CorpusAuditReport {
   const files = discoverMdxFiles(corpusRoot);
   const counts: Record<VisualCompatibility, number> = {

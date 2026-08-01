@@ -1,9 +1,9 @@
 import { cleanup, render, screen } from '@testing-library/react';
 import { afterEach, describe, expect, it, vi } from 'vitest';
-import type { DiagramElementKind } from '../../../../src/shared/diagrams/public';
-import { WorkbenchElementInspector } from '../../../../src/features/editor/diagrams/ui/WorkbenchElementInspector';
-import { element, createTemplateModel } from '../../../../src/features/editor/diagrams/model';
-import type { VisualDiagramModel, VisualElement } from '../../../../src/features/editor/diagrams/model/types';
+import type { DiagramElementKind } from '../../../../src/diagrams/public';
+import { WorkbenchElementInspector } from '../../../../src/fixed-pages/editor/diagrams/ui/WorkbenchElementInspector';
+import { element, createTemplateModel } from '../../../../src/fixed-pages/editor/diagrams/model';
+import type { VisualDiagramModel, VisualElement } from '../../../../src/fixed-pages/editor/diagrams/model/types';
 
 afterEach(cleanup);
 

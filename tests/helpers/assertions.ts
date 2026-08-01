@@ -1,6 +1,6 @@
 import { expect } from 'vitest';
-import { diagramElementKinds } from '@/shared/diagrams/spec/schema';
-import { ELEMENT_INSPECTOR_CAPABILITIES } from '@/features/editor/diagrams/model/elementInspectorCapabilities';
+import { diagramElementKinds } from '@/diagrams/spec/schema';
+import { ELEMENT_INSPECTOR_CAPABILITIES } from '@/fixed-pages/editor/diagrams/model/elementInspectorCapabilities';
 
 export function expectDiagramKindsAlignedWithInspector() {
   const inspectorKinds = new Set(Object.keys(ELEMENT_INSPECTOR_CAPABILITIES));

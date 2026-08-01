@@ -1,11 +1,11 @@
 // @vitest-environment jsdom
 import { fireEvent, render, screen } from '@testing-library/react';
 import { describe, expect, it, vi } from 'vitest';
-import { DiagramRewriteDialog } from '../../../../src/features/editor/diagrams/ui/DiagramRewriteDialog';
-import { DiagramSourcePanel } from '../../../../src/features/editor/ui/panels/DiagramSourcePanel';
+import { DiagramRewriteDialog } from '../../../../src/fixed-pages/editor/diagrams/ui/DiagramRewriteDialog';
+import { DiagramSourcePanel } from '../../../../src/fixed-pages/editor/ui/panels/DiagramSourcePanel';
 
 const panelProps = {
-  currentFile: 'src/widgets/diagrams/Legacy.tsx',
+  currentFile: 'content/diagrams/Legacy.tsx',
   diagramLinkedPages: [],
   openFile: vi.fn(),
   setActiveDiagramBlockId: vi.fn(),
@@ -28,7 +28,7 @@ describe('code-preview visual rewrite entry point', () => {
     const onStart = vi.fn();
     render(
       <DiagramRewriteDialog
-        path="src/widgets/diagrams/Legacy.tsx"
+        path="content/diagrams/Legacy.tsx"
         initialTitle="Legacy"
         onClose={vi.fn()}
         onStart={onStart}

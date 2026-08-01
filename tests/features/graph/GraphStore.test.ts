@@ -3,7 +3,7 @@ import {
   parseGraphWorkerRequest,
   type GraphWorkerOutput,
   type GraphWorkerResponse,
-} from '@/features/graph/lib/graphWorkerContract';
+} from '@/fixed-pages/graph/lib/graphWorkerContract';
 
 class FakeWorker {
   static readonly instances: FakeWorker[] = [];
@@ -76,7 +76,7 @@ describe('GraphStore worker coordination', () => {
   });
 
   it('preserves the existing public consumer shape and applies a valid result', async () => {
-    const { useGraphStore } = await import('@/features/graph/GraphStore');
+    const { useGraphStore } = await import('@/fixed-pages/graph/GraphStore');
     const initial = useGraphStore.getState();
 
     expect(initial).toEqual(expect.objectContaining({
@@ -124,7 +124,7 @@ describe('GraphStore worker coordination', () => {
   });
 
   it('keeps alternative parallel postulates mutually exclusive', async () => {
-    const { useGraphStore } = await import('@/features/graph/GraphStore');
+    const { useGraphStore } = await import('@/fixed-pages/graph/GraphStore');
 
     useGraphStore.getState().toggleAxiom('axioma-paralelas-euclides');
     expect(useGraphStore.getState().disabledAxioms).not.toContain('axioma-paralelas-euclides');
@@ -136,7 +136,7 @@ describe('GraphStore worker coordination', () => {
   });
 
   it('neutralizes contradictory bulk selections and restores named systems exactly', async () => {
-    const { useGraphStore } = await import('@/features/graph/GraphStore');
+    const { useGraphStore } = await import('@/fixed-pages/graph/GraphStore');
     const state = useGraphStore.getState();
 
     state.setActiveAxioms(state.axioms);
@@ -154,7 +154,7 @@ describe('GraphStore worker coordination', () => {
   });
 
   it('migrates a legacy all-active state to a domain-neutral manual base', async () => {
-    const { db } = await import('@/entities/content');
+    const { db } = await import('@/data/content');
     localStorage.setItem('graph-model-storage', JSON.stringify({
       state: {
         inactiveModels: db.getAllModels().map((model) => model.id),
@@ -164,7 +164,7 @@ describe('GraphStore worker coordination', () => {
       version: 0,
     }));
 
-    const { useGraphStore } = await import('@/features/graph/GraphStore');
+    const { useGraphStore } = await import('@/fixed-pages/graph/GraphStore');
     const migrated = useGraphStore.getState();
 
     expect(migrated.disabledAxioms).toEqual(expect.arrayContaining([
@@ -175,7 +175,7 @@ describe('GraphStore worker coordination', () => {
   });
 
   it('keeps the layout cached and coalesces rapid logical evaluations', async () => {
-    const { useGraphStore } = await import('@/features/graph/GraphStore');
+    const { useGraphStore } = await import('@/fixed-pages/graph/GraphStore');
     useGraphStore.getState().initWorker();
 
     const worker = FakeWorker.instances[0];
@@ -238,7 +238,7 @@ describe('GraphStore worker coordination', () => {
   });
 
   it('represents the empty universe in the main store without a secondary mode', async () => {
-    const { useGraphStore } = await import('@/features/graph/GraphStore');
+    const { useGraphStore } = await import('@/fixed-pages/graph/GraphStore');
     const axiomIds = useGraphStore.getState().axioms;
 
     useGraphStore.getState().setActiveAxioms([]);
@@ -267,7 +267,7 @@ describe('GraphStore worker coordination', () => {
   });
 
   it('stores a normalized initialization error and clears loading', async () => {
-    const { useGraphStore } = await import('@/features/graph/GraphStore');
+    const { useGraphStore } = await import('@/fixed-pages/graph/GraphStore');
 
     useGraphStore.getState().toggleAxiom('axioma-incidencia-1');
     const worker = FakeWorker.instances[0];
