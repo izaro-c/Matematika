@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useMemo } from 'react';
 import { useExercise } from '@/features/exercises/ui/ExerciseContext';
 import { KatexText } from '@/shared/ui/KatexText';
+import { EXERCISE_SHAKE_MS } from '../constants';
 
 interface BucketDef {
   id: string;
@@ -89,7 +90,7 @@ export const Clasificador: React.FC<ClasificadorProps> = ({ id, pregunta, bucket
     // Verificar si todos están colocados
     if (Object.keys(placedItems).length !== items.length) {
       setIsShaking(true);
-      setTimeout(() => setIsShaking(false), 400);
+      setTimeout(() => setIsShaking(false), EXERCISE_SHAKE_MS);
       return;
     }
 
@@ -105,7 +106,7 @@ export const Clasificador: React.FC<ClasificadorProps> = ({ id, pregunta, bucket
     
     if (!allCorrect) {
       setIsShaking(true);
-      setTimeout(() => setIsShaking(false), 400);
+      setTimeout(() => setIsShaking(false), EXERCISE_SHAKE_MS);
     }
   };
 

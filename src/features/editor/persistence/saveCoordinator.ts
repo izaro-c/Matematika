@@ -2,6 +2,7 @@ import type { ContentRepository } from './contentRepository';
 import type { DraftRepository } from './draftRepository';
 import { asPersistenceError } from './persistenceErrors';
 import type { EditorDraftSnapshot, EditorFileIdentity, EditorSaveSnapshot } from './persistenceContracts';
+import { SAVE_COORDINATOR_DEBOUNCE_MS } from '../constants';
 
 export type SaveCoordinatorEvent =
   | { type: 'draft-started'; snapshot: EditorSaveSnapshot }
@@ -32,7 +33,7 @@ export class SaveCoordinator {
     private readonly content: ContentRepository,
     private readonly drafts: DraftRepository,
     private readonly emit: (event: SaveCoordinatorEvent) => void,
-    private readonly debounceMs = 500,
+    private readonly debounceMs = SAVE_COORDINATOR_DEBOUNCE_MS,
     private readonly timers: TimerApi = browserTimers
   ) {}
 

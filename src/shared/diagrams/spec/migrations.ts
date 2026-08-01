@@ -8,6 +8,12 @@ import {
 } from './types';
 import type { DiagramSpec } from './v3';
 import { migrateDiagramSpecV2ToV3 } from './v3Compatibility';
+import {
+  DEFAULT_LAYER_ID,
+  DEFAULT_VIEWPORT_MAX_ZOOM,
+  DEFAULT_VIEWPORT_MIN_ZOOM,
+  DEFAULT_VIEWPORT_PADDING,
+} from '../constants';
 
 export type DiagramSpecMigrationCode =
   | 'invalid-root'
@@ -34,8 +40,6 @@ export interface DiagramSpecMigrationResult {
   migratedFrom: number | null;
   warnings: string[];
 }
-
-const DEFAULT_LAYER_ID = 'geometry';
 
 function recordOf(value: unknown): Record<string, unknown> | null {
   return value && typeof value === 'object' && !Array.isArray(value) ? value as Record<string, unknown> : null;
@@ -93,7 +97,13 @@ function migrateV1ToV2(record: Record<string, unknown>): DiagramSpecV2 {
     mode: record.mode,
     axis: record.axis === true,
     grid: record.grid === true,
-    viewport: { bounds, home: bounds, minZoom: 0.2, maxZoom: 12, padding: 0.16 },
+    viewport: {
+      bounds,
+      home: bounds,
+      minZoom: DEFAULT_VIEWPORT_MIN_ZOOM,
+      maxZoom: DEFAULT_VIEWPORT_MAX_ZOOM,
+      padding: DEFAULT_VIEWPORT_PADDING,
+    },
     layers: [{ id: DEFAULT_LAYER_ID, label: 'Geometría', order: 0, visible: true, locked: false }],
     groups: [], points, elements, sliders, steps: legacyArray(record, 'steps'),
     note: typeof record.note === 'string' ? record.note : '', extensions: {},

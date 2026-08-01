@@ -1,23 +1,20 @@
+import type { DiagramPaletteColorId } from '@/shared/design';
+export {
+  DEFAULT_ANGLE_RADIUS,
+  DEFAULT_RIGHT_ANGLE_RADIUS,
+} from '../constants';
+
 /** @deprecated Solo para leer fuentes históricas. */
 export const DIAGRAM_SPEC_V2_VERSION = 2 as const;
 /** @deprecated Solo para leer fuentes históricas. */
 export const DIAGRAM_RENDERER_V2_ID = 'matematika-diagram-renderer-v2' as const;
 export const DIAGRAM_SPEC_VERSION = 3 as const;
 export const DIAGRAM_RENDERER_ID = 'matematika-diagram-renderer-v3' as const;
-export const DEFAULT_ANGLE_RADIUS = 0.55;
-export const DEFAULT_RIGHT_ANGLE_RADIUS = 0.45;
 
 export type DiagramBounds = [number, number, number, number];
 
-export type DiagramColorToken =
-  | 'carbon'
-  | 'terracota'
-  | 'salvia'
-  | 'pizarra'
-  | 'ocre'
-  | 'pavo'
-  | 'granada'
-  | 'musgo';
+/** Alineado con pigmentos de `shared/design` (sin lienzo). */
+export type DiagramColorToken = DiagramPaletteColorId;
 
 export type DiagramElementKind =
   | 'segment'

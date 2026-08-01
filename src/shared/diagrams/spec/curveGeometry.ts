@@ -5,10 +5,11 @@ import {
   polygonSignedArea,
   type Coordinates,
 } from './areaGeometry';
+import { DEFAULT_CURVE_SAMPLES } from '../constants';
 
 export type CurveAreaFill = 'none' | 'interior' | 'half-plane';
 
-export const DEFAULT_CURVE_SAMPLES = 64;
+export { DEFAULT_CURVE_SAMPLES } from '../constants';
 export const MAX_CURVE_SAMPLES = 256;
 export const MAX_CURVE_INTERIOR_LOOPS = 8;
 const EXTERIOR_LOOP_AREA_RATIO = 0.85;

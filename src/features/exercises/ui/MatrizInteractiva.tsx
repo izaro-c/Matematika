@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useExercise } from '@/features/exercises/ui/ExerciseContext';
+import { EXERCISE_SHAKE_MS } from '../constants';
 
 interface MatrizInteractivaProps {
   id: string;
@@ -68,7 +69,7 @@ export const MatrizInteractiva: React.FC<MatrizInteractivaProps> = ({ id, pregun
     
     if (!isAllCorrect) {
       setIsShaking(true);
-      setTimeout(() => setIsShaking(false), 400);
+      setTimeout(() => setIsShaking(false), EXERCISE_SHAKE_MS);
     }
   };
 

@@ -20,3 +20,8 @@ export {
   type ContentPageAccentType,
   type PageAccentType,
 } from './pageAccents';
+export {
+  DIAGRAM_PALETTE_TOKENS,
+  PALETTE_TOKENS,
+  type DiagramPaletteColorId,
+} from './diagramPalette';

@@ -24,6 +24,7 @@ import {
 } from '@/entities/graph/axiomSelection';
 import { db } from '@/entities/content';
 import graphStructureData from '@/entities/graph/graph_structure.json';
+import { GRAPH_MODEL_STORAGE_KEY } from './constants';
 
 let graphInitialized = false;
 let workerDisabledAxioms: string[] | null = null;
@@ -376,7 +377,7 @@ export const useGraphStore = create<GraphState>()(
       getDependsOn: () => get().dependsOn,
     }),
     {
-      name: 'graph-model-storage',
+      name: GRAPH_MODEL_STORAGE_KEY,
       version: 2,
       // La migración estructural se completa en `merge`, donde está disponible
       // el catálogo vigente para retirar alternativas contradictorias.

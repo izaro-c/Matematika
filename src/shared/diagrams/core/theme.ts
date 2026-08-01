@@ -1,9 +1,5 @@
-// ─── Paleta de tema para diagramas ──────────────────────────────────────────
-// Tipo compartido entre MathBoard (que resuelve los valores desde las
-// variables CSS `--theme-*`) y el resto del núcleo de diagramas (MathUtils,
-// MathFactory, runtime), que solo consumen la forma del tema. Vive en su
-// propio módulo para que ninguno de esos consumidores dependa de MathBoard.tsx
-// y así evitar un ciclo de importación entre MathBoard y MathUtils.
+// Forma resuelta de pigmentos (valores CSS ya evaluados). Fuente de nombres:
+// `shared/design/primitives.ts` + `app/theme.css`. No duplicar hex aquí.
 export interface ThemeColors {
   carbon: string;
   terracota: string;

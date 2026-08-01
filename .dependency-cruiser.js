@@ -74,6 +74,24 @@ export default {
       },
     },
 
+    /* widgets/diagrams — no puede acoplarse al editor (solo shared/diagrams) */
+    {
+      name: 'widgets-diagrams-no-editor',
+      comment: 'widgets/diagrams must not import from features/editor; use shared/diagrams',
+      severity: 'error',
+      from: { path: '^src/widgets/diagrams/' },
+      to: { path: '^src/features/editor/' },
+    },
+
+    /* shared/design — no debe depender del dominio diagrams (evita ciclo tokens↔spec) */
+    {
+      name: 'design-no-diagrams',
+      comment: 'shared/design must not import shared/diagrams',
+      severity: 'error',
+      from: { path: '^src/shared/design/' },
+      to: { path: '^src/shared/diagrams/' },
+    },
+
     /* -- General quality rules -- */
 
     /* Los tests NO deben importarse desde código de producción */
